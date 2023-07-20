@@ -14,12 +14,9 @@ UI.Tests.HotKeyTest comment: ''!
 classToTest
 	^HotKey!
 
-oldDolphinVersionsForStbUpgrade
-	^#(1 3 4)!
-
-verifyUpgradedView: anInteger
+verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	| view |
-	super verifyUpgradedView: anInteger.
+	super verifyUpgradedView: anInteger identifier: aResourceIdentifier.
 	view := self view.
 	self assert: view backcolor identicalTo: Color default.
 	self assert: view interactor identicalTo: view.
@@ -28,17 +25,10 @@ verifyUpgradedView: anInteger
 	anInteger < 3
 		ifTrue: 
 			["ComparisonPolicy should have been replaced"
-			self assert: presenter model comparisonPolicy class equals: NeverSearchPolicy]!
-
-vuFile
-	"Up to D3 was actually AcceleratorPresenter.Hot key.vu"
-
-	^'AcceleratorPresenter.Default view.vu'! !
+			self assert: presenter model comparisonPolicy class equals: NeverSearchPolicy]! !
 !UI.Tests.HotKeyTest categoriesForMethods!
 classToTest!helpers!private! !
-oldDolphinVersionsForStbUpgrade!constants!private! !
-verifyUpgradedView:!helpers!private! !
-vuFile!constants!private! !
+verifyUpgradedView:identifier:!helpers!private! !
 !
 
 !UI.Tests.HotKeyTest class methodsFor!

@@ -14,9 +14,6 @@ UI.Tests.StaticTextTest comment: ''!
 classToTest
 	^StaticText!
 
-oldDolphinVersionsForStbUpgrade
-	^1 to: 4!
-
 testCalculateExtentMultiline
 	"Test preferred extent calculation in multi-line 'alignment' modes:
 		- In #leftNoWrap mode we expect that the calculated width is that required for the longest line, and that the height is the number of actual cr/lf separated lines.
@@ -79,23 +76,18 @@ lines'.
 	"The width calculated by the GDI GetTextExtentPoint32 function is slightly different than the DrawTextEx calculation used by the control (and now#calculateExtent:) so we don't expect a precise result"
 	self assert: (actual x - expected x) abs < 3!
 
-verifyUpgradedView: anInteger
+verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	| view |
-	super verifyUpgradedView: anInteger.
+	super verifyUpgradedView: anInteger identifier: aResourceIdentifier.
 	view := self view.
 	"Backcolor of StaticViews left as nil in v12 to inherit from parent"
 	self assertIsNil: view backcolor.
-	self assert: view interactor identicalTo: view!
-
-vuFile
-	^'TextPresenter.Static text.vu'! !
+	self assert: view interactor identicalTo: view! !
 !UI.Tests.StaticTextTest categoriesForMethods!
 classToTest!helpers!private! !
-oldDolphinVersionsForStbUpgrade!constants!private! !
 testCalculateExtentMultiline!public!unit tests! !
 testCalculateExtentSimple!public!unit tests! !
-verifyUpgradedView:!helpers!private! !
-vuFile!constants!private! !
+verifyUpgradedView:identifier:!helpers!private! !
 !
 
 !UI.Tests.StaticTextTest class methodsFor!

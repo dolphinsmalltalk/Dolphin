@@ -1,8 +1,8 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Tests.DolphinTest
+UI.Tests.PresenterTest
 	subclass: #'Tools.Tests.PackageBrowserShellTest'
-	instanceVariableNames: 'packageA packageB packageC dolphinTestA dolphinTestB dolphinTestC shell cardsPresenter classesPresenter methodsPresenter variablesPresenter resourcesPresenter dependencyPresenters methodAA methodAB methodAC methodBA methodBB methodCA'
+	instanceVariableNames: 'packageA packageB packageC dolphinTestA dolphinTestB dolphinTestC cardsPresenter classesPresenter methodsPresenter variablesPresenter resourcesPresenter dependencyPresenters methodAA methodAB methodAC methodBA methodBB methodCA'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -27,14 +27,14 @@ addRemoveRenameClasses
 assertClassesInSync
 	| classes |
 	classes := OrderedCollection new.
-	shell packages do: [:each | classes addAll: each classes].
+	presenter packages do: [:each | classes addAll: each classes].
 	self assert: (classesPresenter model noDifference: classes)!
 
 assertCurrentCardInSync
 	| card |
 	card := self currentCard.
 	"PB should think the current card is up to date"
-	self assert: (shell isCardUpToDate: card).
+	self assert: (presenter isCardUpToDate: card).
 	card == #classes ifTrue: [^self assertClassesInSync].
 	card == #methods ifTrue: [^self assertMethodsInSync].
 	card == #variables ifTrue: [^self assertVariablesInSync].
@@ -49,37 +49,40 @@ assertDependencyCard: aSymbol inSync: aBoolean
 	tree := dependencyPresenter instVarNamed: 'treePresenter'.
 	"If this fails, then the test is bogus and needs attention"
 	self assert: tree isKindOf: TreePresenter.
-	aBoolean | (shell isCardUpToDate: aSymbol)
+	aBoolean | (presenter isCardUpToDate: aSymbol)
 		ifTrue: 
 			[| packages |
-			packages := shell packages.
+			packages := presenter packages.
 			self assert: ((tree model roots collect: [:each | each key]) noDifference: packages).
 			self assert: (tree model rootNodes allSatisfy: [:each | each getChildren isNil])]
 		ifFalse: [self assert: tree model roots isEmpty]!
 
 assertMethodsInSync
-	(shell isCardUpToDate: #methods) 
+	(presenter isCardUpToDate: #methods) 
 		ifTrue: 
 			[| methods |
 			methods := OrderedCollection new.
-			shell packages do: [:each | methods addAll: each methods].
+			presenter packages do: [:each | methods addAll: each methods].
 			self assert: (methodsPresenter model noDifference: methods)]
 		ifFalse: [self assert: methodsPresenter model isEmpty]!
 
 assertResourcesInSync
-	(shell isCardUpToDate: #resources)
+	(presenter isCardUpToDate: #resources)
 		ifTrue: 
 			[| resources |
 			resources := OrderedCollection new.
-			shell packages do: [:each | resources addAll: each allResourceIdentifiers].
+			presenter packages do: [:each | resources addAll: each allResourceIdentifiers].
 			self assert: (resourcesPresenter model noDifference: resources)]
 		ifFalse: [self assert: resourcesPresenter model isEmpty]!
 
 assertVariablesInSync
 	| globals |
 	globals := OrderedCollection new.
-	shell packages do: [:each | globals addAll: each variableNames].
+	presenter packages do: [:each | globals addAll: each variableNames].
 	self assert: (variablesPresenter model noDifference: globals)!
+
+classToTest
+	^PackageBrowserShell!
 
 create: aClassSymbol subclassOf: aClass
 	| newClass |
@@ -155,7 +158,24 @@ createMethods
 	self assert: methodCC isLoose not!
 
 currentCard
-	^shell instVarAt: (shell class indexOfInstVar: 'currentCard')!
+	^presenter instVarAt: (presenter class indexOfInstVar: 'currentCard')!
+
+destroyPresenter
+	cardsPresenter := classesPresenter := methodsPresenter := variablesPresenter := resourcesPresenter := dependencyPresenters := nil.
+	super destroyPresenter!
+
+initializePresenter
+	presenter := self classToTest create showShell.
+	cardsPresenter := presenter instVarAt: (presenter class indexOfInstVar: 'cardsPresenter').
+	classesPresenter := presenter instVarAt: (presenter class indexOfInstVar: 'classesPresenter').
+	methodsPresenter := presenter instVarAt: (presenter class indexOfInstVar: 'methodsPresenter').
+	variablesPresenter := presenter instVarAt: (presenter class indexOfInstVar: 'variablesPresenter').
+	resourcesPresenter := presenter instVarAt: (presenter class indexOfInstVar: 'resourcesPresenter').
+	dependencyPresenters := IdentityDictionary new.
+	dependencyPresenters at: #prerequisites
+		put: (presenter instVarAt: (presenter class indexOfInstVar: 'prerequisitesPresenter')).
+	dependencyPresenters at: #dependents
+		put: (presenter instVarAt: (presenter class indexOfInstVar: 'dependentsPresenter'))!
 
 removeClass: aClass
 	ClassBuilder removeClass: aClass ignoreInstances: true.
@@ -221,23 +241,12 @@ resourceManager
 	^SessionManager current resourceManager!
 
 setUp
-	super setUp.
 	self assertIsNil: Package manager defaultPackage.
 	packageA := Core.Tests.DolphinTestPackages current a.
 	packageB := Core.Tests.DolphinTestPackages current b.
 	packageC := Core.Tests.DolphinTestPackages current c.
-	{packageA. packageB. packageC} do: [:each | self assert: each variableNames isEmpty].
-	shell := PackageBrowserShell create showShell.
-	cardsPresenter := shell instVarAt: (shell class indexOfInstVar: 'cardsPresenter').
-	classesPresenter := shell instVarAt: (shell class indexOfInstVar: 'classesPresenter').
-	methodsPresenter := shell instVarAt: (shell class indexOfInstVar: 'methodsPresenter').
-	variablesPresenter := shell instVarAt: (shell class indexOfInstVar: 'variablesPresenter').
-	resourcesPresenter := shell instVarAt: (shell class indexOfInstVar: 'resourcesPresenter').
-	dependencyPresenters := IdentityDictionary new.
-	dependencyPresenters at: #prerequisites
-		put: (shell instVarAt: (shell class indexOfInstVar: 'prerequisitesPresenter')).
-	dependencyPresenters at: #dependents
-		put: (shell instVarAt: (shell class indexOfInstVar: 'dependentsPresenter')).
+	{ packageA. packageB. packageC } do: [:each | self assert: each variableNames isEmpty].
+	super setUp.
 	self createGlobals!
 
 showClassesPane
@@ -246,8 +255,6 @@ showClassesPane
 
 tearDown
 	super tearDown.
-	shell destroy.
-	shell := cardsPresenter := classesPresenter := methodsPresenter := variablesPresenter := resourcesPresenter := dependencyPresenters := nil.
 	self removeClasses.
 	self removeGlobals.
 	packageA := packageB := packageC := nil!
@@ -255,7 +262,7 @@ tearDown
 testAddRemoveClasses
 	"Test adding and removing classes"
 
-	shell packages: {packageA. packageC}.
+	presenter packages: {packageA. packageC}.
 	classesPresenter ensureVisible.
 	self assert: self currentCard identicalTo: #classes.
 	self addRemoveRenameClasses.
@@ -272,7 +279,7 @@ testAddRemoveClasses
 testAddRemoveMethods
 	| methodA methodC |
 	self createClassesABC.
-	shell packages: {packageA. packageC}.
+	presenter packages: {packageA. packageC}.
 	methodsPresenter ensureVisible.
 	dolphinTestA
 		compile: 'testNotLoose ^1'
@@ -297,7 +304,7 @@ testAddRemoveMethods
 				categories: #()
 				package: packageA.
 	self assert: methodsPresenter model isEmpty.
-	self assert: (shell isCardUpToDate: #methods) not.
+	self assert: (presenter isCardUpToDate: #methods) not.
 	methodsPresenter ensureVisible.
 	self assertMethodsInSync.
 	"Remove a visible loose method"
@@ -314,14 +321,14 @@ testAddRemoveMethods
 	classesPresenter ensureVisible.
 	dolphinTestA removeSelector: #testLooseInC.
 	self assert: methodsPresenter model isEmpty.
-	self assert: (shell isCardUpToDate: #methods) not.
+	self assert: (presenter isCardUpToDate: #methods) not.
 	methodsPresenter ensureVisible.
 	self assertMethodsInSync!
 
 testGlobals
 	"Test adding, removing, renaming and repackaging globals"
 
-	shell packages: {packageA. packageC}.
+	presenter packages: {packageA. packageC}.
 	variablesPresenter ensureVisible.
 
 	"Add to displayed package"
@@ -373,7 +380,7 @@ testGlobals
 	self assert: variablesPresenter model isEmpty!
 
 testRepackageClasses
-	shell packages: {packageA. packageC}.
+	presenter packages: {packageA. packageC}.
 	classesPresenter ensureVisible.
 	self assert: self currentCard identicalTo: #classes.
 	self repackageClasses.
@@ -389,7 +396,7 @@ testRepackageClasses
 
 testRepackageMethods
 	self createClassesABC.
-	shell packages: {packageA. packageC}.
+	presenter packages: {packageA. packageC}.
 	methodsPresenter ensureVisible.
 	self createMethods.
 	self assertMethodsInSync.
@@ -453,7 +460,7 @@ testRepackageMethods
 	self assertMethodsInSync.
 
 	"Remove selection from A so no longer displayed"
-	shell packages: {packageC}.
+	presenter packages: {packageC}.
 	self assertMethodsInSync.
 
 	"Move AA back to B"
@@ -478,7 +485,7 @@ testRepackageMethods
 	self assertMethodsInSync.
 
 	"Now just verify that the other panes are not updating incorrectly"
-	shell packages: {packageB}.
+	presenter packages: {packageB}.
 	self assertMethodsInSync.
 	self showClassesPane.
 	packageB addMethod: methodAC.
@@ -489,7 +496,10 @@ testRepackageMethods
 	packageB addMethod: methodBA.
 	self assertMethodsInSync.
 	methodsPresenter ensureVisible.
-	self assertMethodsInSync! !
+	self assertMethodsInSync!
+
+viewClass
+	^ShellView! !
 !Tools.Tests.PackageBrowserShellTest categoriesForMethods!
 addRemoveRenameClasses!private!unit tests! !
 assertClassesInSync!private!unit tests! !
@@ -498,12 +508,15 @@ assertDependencyCard:inSync:!private!unit tests! !
 assertMethodsInSync!private!unit tests! !
 assertResourcesInSync!private!unit tests! !
 assertVariablesInSync!private!unit tests! !
+classToTest!helpers!private! !
 create:subclassOf:!helpers!private! !
 create:subclassOf:inPackage:!helpers!private! !
 createClassesABC!helpers!private! !
 createGlobals!helpers!private! !
 createMethods!helpers!private! !
 currentCard!public!unit tests! !
+destroyPresenter!public!Running! !
+initializePresenter!private!Running! !
 removeClass:!private!unit tests! !
 removeClasses!public!Running! !
 removeGlobals!public!Running! !
@@ -518,6 +531,7 @@ testAddRemoveMethods!public!unit tests! !
 testGlobals!public!unit tests! !
 testRepackageClasses!public!unit tests! !
 testRepackageMethods!public!unit tests! !
+viewClass!constants!private! !
 !
 
 !Tools.Tests.PackageBrowserShellTest class methodsFor!

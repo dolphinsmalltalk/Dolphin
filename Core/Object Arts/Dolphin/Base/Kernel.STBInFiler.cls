@@ -12,6 +12,11 @@ Kernel.STBInFiler comment: ''!
 !Kernel.STBInFiler categoriesForClass!System-Binary storage! !
 !Kernel.STBInFiler methodsFor!
 
+basicNext
+	"Private - Answer the next object from the receiver's stream."
+
+	^policy readObject: self withPrefix: stream nextInt32!
+
 classLocator
 	"Answer the receiver's classLocator inst var. This holds the context of any remote
 	class references and provides the mechanism of resolving them."
@@ -25,24 +30,22 @@ classLocator: aClassLocator
 
 	classLocator := aClassLocator!
 
+defaultClassLocatorClass
+	"Answer the class of Class Locator to use by default for finding and validating
+	classes in the receiver's input stream."
+
+	^ClassLocator!
+
 initialize
 	"Private - Initialize the receiver."
 
 	classLocator := self defaultClassLocatorClass new.
-	^super initialize!
-
-newClassLocator
-	^classLocator copyWithCodeBase!
-
-readClassLocator: anIntegerFlags
-	| locatorString |
-	locatorString := (stream next: (anIntegerFlags bitShift: STBPrefix.LocatorLenShift)) asString.
-	^(classLocator key: locatorString) locateClass! !
+	^super initialize! !
 !Kernel.STBInFiler categoriesForMethods!
+basicNext!accessing!private! !
 classLocator!accessing!public! !
 classLocator:!accessing!public! !
+defaultClassLocatorClass!constants!private! !
 initialize!initializing!private! !
-newClassLocator!helpers!private! !
-readClassLocator:!helpers!private! !
 !
 

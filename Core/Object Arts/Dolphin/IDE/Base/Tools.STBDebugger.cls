@@ -24,52 +24,56 @@ For example to view the contents of a view resource, one can proceed as follows:
 basicNext
 	"Private - Answer the next object from the receiver's stream."
 
-	| prefix class anObject newObjectIndex offset |
+	| class anObject newObjectIndex prefixCode |
 	traceStream cr.
 	printOffsets
 		ifTrue: 
-			[offset := stream position.
-			6 - offset displayString size timesRepeat: [traceStream nextPut: $0].
-			traceStream display: offset].
+			[stream position
+				printOn: traceStream
+				base: 10
+				nDigits: 6].
 	indentLevel timesRepeat: [traceStream nextPutAll: '    '].
 
 	"First, read the prefix."
-	prefix := STBPrefix fromInteger: self readInteger.
-	prefix isSmallInteger
+	prefixCode := policy readIntegerFrom: stream.
+	"Now decode"
+	(prefixCode allMask: PrefixSmallIntegerMask)
 		ifTrue: 
-			[anObject := prefix smallInteger.
+			[anObject := prefixCode bitShift: -1.
 			traceStream
 				nextPut: $[;
 				print: anObject;
 				nextPut: $].
 			^anObject].
-	prefix isDataPrefix
+	(prefixCode allMask: PrefixDataMask)
 		ifFalse: 
-			[prefix isCharacter
+			[(prefixCode anyMask: PrefixCharacterMask)
 				ifTrue: 
-					[anObject := prefix character.
+					[anObject := Character value: (prefixCode bitShift: PrefixRefUnshift).
 					traceStream
 						nextPut: $[;
 						print: anObject;
 						nextPut: $]]
 				ifFalse: 
-					[anObject := self objectAt: prefix refIndex.
-					traceStream
-						nextPutAll: '[<';
-						print: anObject;
-						nextPutAll: '>]'].
+					[anObject := self objectAt: (prefixCode bitShift: PrefixRefUnshift).
+					traceStream nextPutAll: '[<'.
+					anObject printOn: (LimitedWriteStream over: traceStream).
+					traceStream nextPutAll: '>]'].
 			^anObject].
 
 	"Ascertain the class of the object."
 	indentLevel := indentLevel + 1.
 	traceStream nextPut: $[.
-	prefix isClassPrefix
+	(prefixCode allMask: PrefixClassMask)
 		ifTrue: 
-			[class := self readClassData: prefix uint32.
-			traceStream print: class name displayString]
+			[class := policy readClassData: self prefix: prefixCode.
+			traceStream
+				nextPutAll: (policy classLocatorStringFor: class);
+				nextPut: $;.
+			(converters lookup: class) ifNotNil: [:converter | traceStream print: converter version]]
 		ifFalse: 
-			[class := self objectAt: prefix refIndex.
-			traceStream nextPutAll: class name].
+			[class := self classAt: (prefixCode bitShift: PrefixRefUnshift).
+			traceStream nextPutAll: (policy classLocatorStringFor: class)].
 	traceStream nextPut: $].
 
 	"Now read the object data."
@@ -81,9 +85,21 @@ basicNext
 				space;
 				print: anObject].
 	indentLevel := indentLevel - 1.
-	"If anObject was a proxy for the real one, evaluate it now."
-	prefix isProxy ifTrue: [anObject := anObject stbFixup: self at: newObjectIndex].
+	"If anObject was a proxy for the real one, or has some other need of fix up, do that now."
+	anObject := anObject stbFixup: self at: newObjectIndex.
 	^anObject!
+
+dump
+	traceStream
+		nextPutAll: 'STB version ';
+		print: self version;
+		nextPut: $:.
+	[self atEnd] whileFalse: [self next].
+	traceStream
+		nextPutAll: 'End of ';
+		print: readMap size;
+		nextPutAll: ' objects';
+		cr!
 
 initialize
 	printOffsets := true.
@@ -144,6 +160,7 @@ traceStream: aPuttableStream
 	traceStream := aPuttableStream! !
 !Tools.STBDebugger categoriesForMethods!
 basicNext!accessing!private! !
+dump!operations!public! !
 initialize!initializing!private! !
 next!accessing!public! !
 objectAt:!accessing!private! !
@@ -152,5 +169,15 @@ printOffsets:!accessing!public! !
 readSizeBlock!operations!private! !
 traceStream!accessing!public! !
 traceStream:!accessing!public! !
+!
+
+!Tools.STBDebugger class methodsFor!
+
+dumpToTranscript: aReadStream
+	(self on: aReadStream)
+		traceStream: Transcript;
+		dump! !
+!Tools.STBDebugger class categoriesForMethods!
+dumpToTranscript:!public! !
 !
 

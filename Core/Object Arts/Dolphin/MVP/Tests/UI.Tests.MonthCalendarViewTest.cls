@@ -14,9 +14,9 @@ UI.Tests.MonthCalendarViewTest comment: ''!
 classToTest
 	^MonthCalendarView!
 
-verifyUpgradedView: anInteger
+verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	| view |
-	super verifyUpgradedView: anInteger.
+	super verifyUpgradedView: anInteger identifier: aResourceIdentifier.
 	view := self view.
 	self assert: view backcolor identicalTo: Color default.
 	self assert: view typeconverter isNullConverter.
@@ -26,10 +26,14 @@ verifyUpgradedView: anInteger
 	self assertIsNil: view maximum.
 	self assertIsNil: view minimum.
 	self assert: view firstDayOfWeek equals: 1.
-	self assert: view value equals: (Date year: 2003 month: 3 day: 14)! !
+	self assert: view value
+		equals: (Date
+				year: 2003
+				month: 3
+				day: 14)! !
 !UI.Tests.MonthCalendarViewTest categoriesForMethods!
 classToTest!helpers!private! !
-verifyUpgradedView:!helpers!private! !
+verifyUpgradedView:identifier:!helpers!private! !
 !
 
 !UI.Tests.MonthCalendarViewTest class methodsFor!

@@ -165,6 +165,17 @@ environmentName
 
 	^self subclassResponsibility!
 
+fullName
+	^self bindingOrNil
+		ifNil: 
+			["Not bindable, so try to bind environment to answer full name relative to that"
+			self environment
+				ifNil: 
+					["Environment not bindable either, so just answer the fullest name we have"
+					self pathString]
+				ifNotNil: [:ns | ns fullNameFor: self basicUnqualifiedName]]
+		ifNotNil: [:binding | binding fullName]!
+
 hash
 	"Answer the <integer> hash value for the receiver."
 
@@ -380,6 +391,7 @@ declare:!operations!public! !
 displayOn:!displaying!public! !
 environment!accessing!public! !
 environmentName!accessing!public! !
+fullName!accessing!public! !
 hash!comparing!public! !
 home!accessing!public! !
 ifDefined:!evaluating!public! !
@@ -479,6 +491,7 @@ newFull: aString private: aBoolean
 		private: aBoolean!
 
 newFullPath: anArray private: aBoolean
+	anArray do: [:each | self assert: [each isString]].
 	^FullBindingReference
 		pathString: nil
 		path: anArray
@@ -639,11 +652,9 @@ stbConvertFrom: anSTBClassFormat
 		- RelativeBindingReference introduced - context pushed down
 		- flags replaced with private inst var"
 
-	^
-	[:data |
-	| ver |
-	ver := anSTBClassFormat version.
-	ver < 1 ifTrue: [self stbConvertFromVersion0: data] ifFalse: [self stbConvertFromVersion1: data]]!
+	^anSTBClassFormat version < 1
+		ifTrue: [[:data | self stbConvertFromVersion0: data]]
+		ifFalse: [[:data | self stbConvertFromVersion1: data]]!
 
 stbConvertFromVersion0: anArray
 	"Private - Version 0 inst vars: 'pathString path context flags binding generation'

@@ -22,9 +22,6 @@ initializePresenter
 				yourself).
 	presenter layoutManager shouldStretchToFit: false!
 
-oldDolphinVersionsForStbUpgrade
-	^#(5)!
-
 testMultipleSubViews
 	self should: [presenter addSubView: ContainerView new] raise: Error!
 
@@ -60,20 +57,15 @@ testSubViewResizeSmallerThanParent
 
 	presenter subViews first extent: 50 @ 50.
 	presenter layout.
-	self assert: presenter subViews first extent equals: 50 @ 50!
-
-vuFile
-	^'Presenter.Scrolling container.vu'! !
+	self assert: presenter subViews first extent equals: 50 @ 50! !
 !UI.Tests.ScrollingDecoratorTest categoriesForMethods!
 classToTest!helpers!private! !
 initializePresenter!public!Running! !
-oldDolphinVersionsForStbUpgrade!constants!private! !
 testMultipleSubViews!public!unit tests! !
 testResizeLargeAndSmall!public!unit tests! !
 testResizeToNothing!public!unit tests! !
 testSubViewResizeLargerThanParent!public!unit tests! !
 testSubViewResizeSmallerThanParent!public!unit tests! !
-vuFile!constants!private! !
 !
 
 !UI.Tests.ScrollingDecoratorTest class methodsFor!

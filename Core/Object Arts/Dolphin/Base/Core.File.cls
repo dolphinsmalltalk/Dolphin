@@ -28,7 +28,7 @@ Core.Object
 			'PathDelimiters' -> '/\'.
 			'ShareModes' -> (IdentityDictionary
 						withAll: { #exclusive -> 16r0. #read -> 16r1. #readWrite -> 16r3. #write -> 16r2 }).
-			'SniffSize' -> 16r400
+			'SniffSize' -> 16r1000
 		}!
 Core.File guid: (Core.GUID fromString: '{87b4c48a-026e-11d3-9fd7-00a0cc3e4a32}')!
 Core.File comment: 'File is a class that exposes low-level (e.g. unbuffered) file I/O operations. It also includes a number of class side methods for manipulating file names and manipulating the file system.
@@ -476,7 +476,7 @@ sniffEncoding
 				ifFalse: 
 					[| utf8Stream |
 					self reset.
-					"Do a minimal evaluation of the unknown encoding. If the first 1k reads as UTF-8 (allowing for that fact that we may have truncated the final character) then assume it is UTF-8, otherwise some ANSI code page."
+					"Do a minimal evaluation of the unknown encoding. If the sniff block read as UTF-8 (allowing for that fact that we may have truncated the final character) then assume it is UTF-8, otherwise some ANSI code page."
 					utf8Stream := (Utf8String fromByteArray: buf) readStream.
 					((utf8Stream skipTo: Character.Replacement) not or: [utf8Stream atEnd])
 						ifTrue: [String.EncodingUtf8]

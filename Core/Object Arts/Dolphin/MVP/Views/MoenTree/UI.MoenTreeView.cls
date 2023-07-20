@@ -663,10 +663,7 @@ initialize
 	getTextBlock := self class defaultGetTextBlock.
 	getImageBlock := self class defaultGetImageBlock.
 	imageManager := IconImageManager current.
-	self linePen: (Pen
-				withStyle: PS_SOLID
-				width: 1
-				color: Color.Face3d).
+	self linePen: (Pen color: Color.Face3d).
 	anchorNode := MoenTreeNode object: nil parent: nil.
 	anchorNode
 		hasExpanded: true;

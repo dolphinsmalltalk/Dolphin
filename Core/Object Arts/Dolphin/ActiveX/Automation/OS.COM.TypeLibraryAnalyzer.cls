@@ -757,54 +757,50 @@ open: pathName
 
 	^self onTypeLib: (ITypeLib open: pathName)!
 
-stbConvertFrom: anSTBClassFormat 
+stbConvertFrom: anSTBClassFormat
 	"Convert from earlier binary filed versions."
 
-	^
-	[:data | 
-	| converted ver newInstance |
-	converted := data.
+	| ver |
 	ver := anSTBClassFormat version.
-	ver < 1 ifTrue: [converted := self stbConvertToVersion1: converted].
-	ver < 2 ifTrue: [converted := self stbConvertToVersion2: converted].
-	ver < 3 ifTrue: [converted := self stbConvertToVersion3: converted].
-	newInstance := self basicNew.
-	1 to: converted size
-		do: [:i | newInstance instVarAt: i put: (converted at: i)].
-	newInstance]!
+	ver == 0 ifTrue: [^[:data | (self stbConvertFromVersion0: data) becomeA: self]].
+	ver == 1 ifTrue: [^[:data | (self stbConvertFromVersion1: data) becomeA: self]].
+	ver == 2 ifTrue: [^[:data | (self stbConvertFromVersion2: data) becomeA: self]].
+	^super stbConvertFrom: anSTBClassFormat!
 
-stbConvertToVersion1: anArray
-	"Convert from version 0 instance. - aliasMap and typeAnalyzers instance variables added."
+stbConvertFromVersion0: anArray
+	"Private - Convert from version 0 instance. - aliasMap and typeAnalyzers instance variables added."
 
-	^anArray , {self new aliasMap. nil}!
+	^self stbConvertFromVersion1: anArray , { self new aliasMap. nil }!
 
-stbConvertToVersion2: anArray 
-	"Convert from version 1 instance.
+stbConvertFromVersion1: anArray
+	"Private - Convert from version 1 instance.
 	Version 2 refactored to share a common superclass with AXTypeInfoAnalyzer, and some inst. vars pushed up
 	causing some inst. var reordering to take place."
 
 	| answer |
 	answer := anArray copy.
 	answer at: 2 put: (anArray at: 4).
-	answer 
+	answer
 		replaceFrom: 3
 		to: 4
 		with: anArray
 		startingAt: 2.
-	^answer!
+	^self stbConvertFromVersion2: answer!
 
-stbConvertToVersion3: anArray
-	"Convert from version 2 instance.
+stbConvertFromVersion2: anArray
+	"Private - Convert from version 2 instance.
 	In version 3 the prefix is replaced with a namespaceName and binding instance variable is added in the superclass."
 
-	| instVars |
-	instVars := Array new: 10.
-	instVars
+	^(Array new: 10)
 		at: 1 put: (anArray at: 1);
 		at: 2 put: (anArray at: 2);
-		at: 4 put: (anArray at: 3).
-	5 to: 9 do: [:i | instVars at: i + 1 put: (anArray at: i)].
-	^instVars!
+		at: 4 put: (anArray at: 3);
+		replaceFrom: 6
+			to: 10
+			with: anArray
+			startingAt: 5;
+		yourself
+	"End of the chain"!
 
 stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
@@ -827,9 +823,9 @@ onStartup!event handling!public! !
 onTypeLib:!instance creation!public! !
 open:!instance creation!public! !
 stbConvertFrom:!binary filing!public! !
-stbConvertToVersion1:!binary filing!public! !
-stbConvertToVersion2:!binary filing!public! !
-stbConvertToVersion3:!binary filing!public! !
+stbConvertFromVersion0:!binary filing!private! !
+stbConvertFromVersion1:!binary filing!private! !
+stbConvertFromVersion2:!binary filing!private! !
 stbVersion!binary filing!public! !
 uninitialize!class hierarchy-removing!private! !
 !

@@ -14,47 +14,58 @@ After instantiating an instance of STBValidatingInFiler, it can be configured wi
 !Kernel.STBValidatingInFiler categoriesForClass!System-Binary storage! !
 !Kernel.STBValidatingInFiler methodsFor!
 
-classAt: anInteger
-	"Private - Answer the map value for a class at anInteger. If anInteger is zero then answer nil.
-	Signal an exception if there is no such entry."
-
-	| class |
-	class := super classAt: anInteger.
-	(self validationBlock value: class fullName)
-		ifFalse: [STBValidatingInFiler errorInvalidClass: class fullName].
-	^class!
-
 defaultClassLocatorClass
 	"Answer the class of Class Locator to use by default for finding and validating
 	classes in the receiver's input stream."
 
-	^ValidatingClassLocator!
+	^RestrictedClassLocator!
 
-validationBlock
-	"Private - Answer the monadic valuable (usually a block) that when passed a class name symbol will answer true if objects
-	of this class are valid for loading from the receiver."
+initializeObjectMap
+	"We defer initializing the object map so that we can run the predefined classes through the validator"
 
-	^classLocator validationBlock
-!
+	readMap := nil!
 
-validationBlock: aMonadicValuable 
-	"Set the monadic valuable (usually a block) that when passed a class name symbol will answer true if objects
-	of this class are valid for loading from the receiver."
+next
+	"Answer the next object from the receiver's stream."
 
-	classLocator validationBlock: aMonadicValuable.! !
+	readMap ifNil: [self initializeReadMap].
+	^super next!
+
+objectAt: anInteger
+	"Pre-registered classes in the serialised graph are written as direct references, so we need to look out for these implicit class references."
+
+	^(anInteger > PredefinedClassOffset and: [anInteger <= policy lastPredefined])
+		ifTrue: [self classAt: anInteger]
+		ifFalse: [readMap at: anInteger]!
+
+registerAllClasses: anArrayOfClass
+	anArrayOfClass do: [:each | readMap addLast: ((classLocator includesClass: each) ifTrue: [each])]!
+
+validationBlock: aMonadicValuable
+	"Set the monadic valuable (usually a block) that when passed a class name, will answer true if objects of that class are valid for loading from the receiver."
+
+	classLocator := ValidatingClassLocator validationBlock: aMonadicValuable!
+
+validClasses: aCollection
+	"Restrict the set of classes that can be loaded to those in the collection argument. The collection can contain Class objects, class names, or binding references to classes, in any mixture."
+
+	classLocator := RestrictedClassLocator forClasses: aCollection! !
 !Kernel.STBValidatingInFiler categoriesForMethods!
-classAt:!accessing!private! !
 defaultClassLocatorClass!constants!private! !
-validationBlock!accessing!private! !
+initializeObjectMap!initializing!private! !
+next!operations!public! !
+objectAt:!accessing!private! !
+registerAllClasses:!private! !
 validationBlock:!accessing!public! !
+validClasses:!public! !
 !
 
 !Kernel.STBValidatingInFiler class methodsFor!
 
-errorInvalidClass: aClassName
+errorInvalidClass: aBindingReference
 	"Private - Signal an exception to warn that an input stream contains an invalid class."
 
-	STBError signal: ('Input stream contains an invalid class (<1s>)' expandMacrosWith: aClassName)! !
+	STBError signal: ('Input stream contains an invalid class (<1d>)' expandMacrosWith: aBindingReference)! !
 !Kernel.STBValidatingInFiler class categoriesForMethods!
 errorInvalidClass:!exceptions!private! !
 !

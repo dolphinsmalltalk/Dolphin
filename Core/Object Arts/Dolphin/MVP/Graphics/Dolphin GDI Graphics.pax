@@ -9,6 +9,7 @@ package setClassNames: #(
 	#{External.SIZE}
 	#{Graphics.AbstractBitmapFromBlankInitializer}
 	#{Graphics.AbstractFont}
+	#{Graphics.AbstractPen}
 	#{Graphics.AbstractRGB}
 	#{Graphics.ARGB}
 	#{Graphics.Bitmap}
@@ -363,6 +364,16 @@ Graphics.GraphicsTool
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Graphics.GraphicsTool
+	subclass: #'Graphics.AbstractPen'
+	instanceVariableNames: 'logPen'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'LineJoinNames'
+				-> #('LineJoinMiter' 'LineJoinBevel' 'LineJoinRound' 'LineJoinMiterClipped')
+		}!
+Graphics.GraphicsTool
 	subclass: #'Graphics.Brush'
 	instanceVariableNames: 'logBrush'
 	classVariableNames: ''
@@ -410,16 +421,6 @@ Graphics.GraphicsTool
 			'ILD_TRANSPARENT' -> 16r1
 		}!
 Graphics.GraphicsTool
-	subclass: #'Graphics.Pen'
-	instanceVariableNames: 'logPen'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-			'LineJoinNames'
-				-> #('LineJoinMiter' 'LineJoinBevel' 'LineJoinRound' 'LineJoinMiterClipped')
-		}!
-Graphics.GraphicsTool
 	subclass: #'Graphics.Region'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -449,6 +450,20 @@ Graphics.SystemFont
 	classConstants: {
 			'StockNames' -> (IdentityDictionary withAll: { 16rD -> #system. 16r11 -> #default })
 		}!
+Graphics.AbstractPen
+	subclass: #'Graphics.Pen'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.AbstractPen
+	subclass: #'Graphics.StockPen'
+	instanceVariableNames: 'id'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Graphics.Brush
 	subclass: #'Graphics.HatchBrush'
 	instanceVariableNames: 'id color'
@@ -476,7 +491,7 @@ Graphics.Image
 	classVariableNames: 'SharedBitmaps'
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: { 'IsSharedMask' -> 16r2 }!
+	classConstants: { '_Map3DColorsMask_Obsolete' -> 16r1. 'IsSharedMask' -> 16r2 }!
 Graphics.Image
 	subclass: #'Graphics.Icon'
 	instanceVariableNames: ''
@@ -502,13 +517,6 @@ Graphics.Icon
 	subclass: #'Graphics.NullIcon'
 	instanceVariableNames: ''
 	classVariableNames: 'Current'
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Graphics.Pen
-	subclass: #'Graphics.StockPen'
-	instanceVariableNames: 'id'
-	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!

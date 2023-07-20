@@ -153,12 +153,15 @@ image: anImage wrapMode: aNumber rectangle: aRectangle
 		rectangle: aRectangle!
 
 stbConvertFrom: anSTBClassFormat
-	^
-	[:data |
-	self
-		image: (data at: 2)
-		wrapMode: (data at: 3)
-		rectangle: (data at: 4)]! !
+	anSTBClassFormat version == 0
+		ifTrue: 
+			[^
+			[:data |
+			self
+				image: (data at: 2)
+				wrapMode: (data at: 3)
+				rectangle: (data at: 4)]].
+	^super stbConvertFrom: anSTBClassFormat! !
 !Graphics.Gdiplus.TextureBrushInitializer class categoriesForMethods!
 image:wrapMode:rectangle:!instance creation!public! !
 stbConvertFrom:!binary filing!public! !

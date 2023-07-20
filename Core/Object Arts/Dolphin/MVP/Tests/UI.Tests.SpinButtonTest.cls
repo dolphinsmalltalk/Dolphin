@@ -14,9 +14,9 @@ UI.Tests.SpinButtonTest comment: ''!
 classToTest
 	^SpinButton!
 
-verifyUpgradedView: anInteger
+verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	| view |
-	super verifyUpgradedView: anInteger.
+	super verifyUpgradedView: anInteger identifier: aResourceIdentifier.
 	view := self view.
 	self assert: view interactor identicalTo: view.
 	self assert: view isEnabled.
@@ -24,7 +24,7 @@ verifyUpgradedView: anInteger
 	self assert: view range equals: (1 to: 100)! !
 !UI.Tests.SpinButtonTest categoriesForMethods!
 classToTest!helpers!private! !
-verifyUpgradedView:!helpers!private! !
+verifyUpgradedView:identifier:!helpers!private! !
 !
 
 !UI.Tests.SpinButtonTest class methodsFor!

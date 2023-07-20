@@ -14,6 +14,7 @@ package setClassNames: #(
 	#{Graphics.Tests.Point3DTest}
 	#{Graphics.Tests.PointTest}
 	#{Graphics.Tests.RectangleTest}
+	#{Graphics.Tests.TextTileIconTest}
 	#{OS.Tests.CCITEMTest}
 	#{OS.Tests.LVITEMWTest}
 	#{OS.Tests.NMGETINFOTIPTest}
@@ -33,6 +34,7 @@ package setClassNames: #(
 	#{UI.Tests.AbstractTabViewTest}
 	#{UI.Tests.AbstractTextEditTest}
 	#{UI.Tests.AcceleratorTableTest}
+	#{UI.Tests.BooleanToTextTest}
 	#{UI.Tests.BorderLayoutTest}
 	#{UI.Tests.CardContainerTest}
 	#{UI.Tests.CheckBoxTest}
@@ -45,15 +47,18 @@ package setClassNames: #(
 	#{UI.Tests.CommandDescriptionTest}
 	#{UI.Tests.ContainerViewTest}
 	#{UI.Tests.DateTimePickerTest}
+	#{UI.Tests.DateToTextTest}
 	#{UI.Tests.DialogViewTest}
 	#{UI.Tests.DifferencesPresenterTest}
 	#{UI.Tests.DisplayMonitorTest}
+	#{UI.Tests.DurationToTextTest}
 	#{UI.Tests.EvaluationConverterTest}
 	#{UI.Tests.FakeUserLibrary}
 	#{UI.Tests.FileDialogTest}
 	#{UI.Tests.FlowLayoutTest}
 	#{UI.Tests.FolderTest}
 	#{UI.Tests.FontViewTest}
+	#{UI.Tests.FramingConstraintsTest}
 	#{UI.Tests.FramingLayoutTest}
 	#{UI.Tests.GridLayoutTest}
 	#{UI.Tests.GroupBoxTest}
@@ -61,20 +66,22 @@ package setClassNames: #(
 	#{UI.Tests.ImageViewAbstractTest}
 	#{UI.Tests.ImageViewTest}
 	#{UI.Tests.InplaceTextEditorTest}
+	#{UI.Tests.IntegerToTextTest}
 	#{UI.Tests.KeyboardTest}
 	#{UI.Tests.LayoutManagerTest}
 	#{UI.Tests.LinkButtonTest}
 	#{UI.Tests.ListBoxTest}
 	#{UI.Tests.ListControlTest}
+	#{UI.Tests.ListModelTest}
 	#{UI.Tests.ListPresenterTest}
 	#{UI.Tests.ListViewTest}
 	#{UI.Tests.MenuTest}
 	#{UI.Tests.MoenTreeViewTest}
-	#{UI.Tests.MoenTreeViewTest2}
 	#{UI.Tests.MonthCalendarViewTest}
 	#{UI.Tests.MultilineTextEditTest}
 	#{UI.Tests.MultiSelectListBoxTest}
 	#{UI.Tests.MultiSelectListViewTest}
+	#{UI.Tests.NumberToTextTest}
 	#{UI.Tests.PositionEventTest}
 	#{UI.Tests.PresenterTest}
 	#{UI.Tests.ProgressBarTest}
@@ -85,6 +92,7 @@ package setClassNames: #(
 	#{UI.Tests.ReferenceViewTest}
 	#{UI.Tests.ResourceIdentifierTest}
 	#{UI.Tests.RichTextEditTest}
+	#{UI.Tests.ScribbleViewTest}
 	#{UI.Tests.ScrollBarTest}
 	#{UI.Tests.ScrollingDecoratorTest}
 	#{UI.Tests.SelectableItemsTest}
@@ -109,11 +117,14 @@ package setClassNames: #(
 	#{UI.Tests.TabViewTest}
 	#{UI.Tests.TabViewXPTest}
 	#{UI.Tests.TextEditTest}
+	#{UI.Tests.TimeToTextTest}
 	#{UI.Tests.ToolbarTest}
 	#{UI.Tests.TreePresenterTest}
 	#{UI.Tests.TreeViewTest}
 	#{UI.Tests.TypeConverterTest}
+	#{UI.Tests.ValueBufferTest}
 	#{UI.Tests.ValueConverterTest}
+	#{UI.Tests.ValueHolderTest}
 	#{UI.Tests.ViewTest}
 	#{UI.Tests.WindowsEventTest}
 	#{UI.Tests.WizardCardContainerTest}
@@ -183,10 +194,12 @@ package setPrerequisites: #(
 	'..\Views\Styled Views\Dolphin Styled Views'
 	'..\Views\SysLink\Dolphin SysLink Control'
 	'..\Presenters\Text\Dolphin Text Presenter'
+	'..\Icons\Dolphin Text Tile Icons'
 	'..\Models\Tree\Dolphin Tree Models'
 	'..\Presenters\Tree\Dolphin Tree Presenter'
 	'..\Type Converters\Dolphin Type Converters'
 	'..\Models\Value\Dolphin Value Models'
+	'..\..\..\Samples\MVP\Scribble\Scribble'
 	'Send Input'
 	'..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
 	'..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnitPreload'
@@ -292,6 +305,13 @@ Core.Tests.DolphinTest
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Tests.DolphinTest
+	subclass: #'UI.Tests.FramingConstraintsTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.DolphinTest
 	subclass: #'UI.Tests.LayoutManagerTest'
 	instanceVariableNames: 'shell'
 	classVariableNames: ''
@@ -301,13 +321,6 @@ Core.Tests.DolphinTest
 Core.Tests.DolphinTest
 	subclass: #'UI.Tests.MenuTest'
 	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Core.Tests.DolphinTest
-	subclass: #'UI.Tests.MoenTreeViewTest'
-	instanceVariableNames: 'treeModel treeView nodeA nodeB nodeC nodeD nodeE nodeF shell scroller useShell'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -341,15 +354,15 @@ Core.Tests.DolphinTest
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Tests.DolphinTest
-	subclass: #'UI.Tests.RadioButtonSetPresenterTest'
-	instanceVariableNames: 'radioSet'
+	subclass: #'UI.Tests.ResourceIdentifierTest'
+	instanceVariableNames: 'tempViewResource'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Tests.DolphinTest
-	subclass: #'UI.Tests.ResourceIdentifierTest'
-	instanceVariableNames: 'tempViewResource'
+	subclass: #'Graphics.Tests.TextTileIconTest'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -362,8 +375,22 @@ Core.Tests.DolphinTest
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Tests.DolphinTest
+	subclass: #'UI.Tests.ValueBufferTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.DolphinTest
 	subclass: #'UI.Tests.ValueConverterTest'
 	instanceVariableNames: 'converter value startTime newTime changed'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.DolphinTest
+	subclass: #'UI.Tests.ValueHolderTest'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -454,6 +481,13 @@ OS.Tests.CCITEMTest
 	classConstants: {}!
 OS.Tests.CCITEMTest
 	subclass: #'OS.Tests.TVITEMWTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.SequencedGrowableCollectionTest
+	subclass: #'UI.Tests.ListModelTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -628,7 +662,21 @@ UI.Tests.PresenterTest
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.Tests.PresenterTest
+	subclass: #'UI.Tests.RadioButtonSetPresenterTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.PresenterTest
 	subclass: #'UI.Tests.ReferenceViewTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.PresenterTest
+	subclass: #'UI.Tests.ScribbleViewTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -901,8 +949,8 @@ UI.Tests.ListViewTest
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.Tests.SelectableTreeItemsTest
-	subclass: #'UI.Tests.MoenTreeViewTest2'
-	instanceVariableNames: ''
+	subclass: #'UI.Tests.MoenTreeViewTest'
+	instanceVariableNames: 'nodeA nodeB nodeC nodeD nodeE nodeF shell scroller useShell'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -972,6 +1020,48 @@ UI.Tests.StaticViewTest
 	classConstants: {}!
 UI.Tests.ImageViewAbstractTest
 	subclass: #'UI.Tests.ImageViewTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.TypeConverterTest
+	subclass: #'UI.Tests.BooleanToTextTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.TypeConverterTest
+	subclass: #'UI.Tests.DateToTextTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.TypeConverterTest
+	subclass: #'UI.Tests.DurationToTextTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.TypeConverterTest
+	subclass: #'UI.Tests.IntegerToTextTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.TypeConverterTest
+	subclass: #'UI.Tests.NumberToTextTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.TypeConverterTest
+	subclass: #'UI.Tests.TimeToTextTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

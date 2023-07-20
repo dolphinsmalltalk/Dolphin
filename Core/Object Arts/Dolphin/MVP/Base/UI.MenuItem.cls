@@ -3,15 +3,10 @@
 Core.Object
 	subclass: #'UI.MenuItem'
 	instanceVariableNames: 'flags'
-	classVariableNames: ''
+	classVariableNames: 'Dividers'
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
-	classConstants: {
-			'Dividers'
-				-> (LookupTable withAll: { '-' -> #separator. '|' -> #break. '||' -> #barBreak }).
-			'StringSeparator' -> $/.
-			'StylesMask' -> 16rFFFFF
-		}!
+	classConstants: { 'StringSeparator' -> $/. 'StylesMask' -> 16rFFFFF }!
 UI.MenuItem guid: (Core.GUID fromString: '{87b4c49d-026e-11d3-9fd7-00a0cc3e4a32}')!
 UI.MenuItem isNonInstantiable: true!
 UI.MenuItem comment: 'MenuItem is an abstract class whose subclasses represent the items held by a <Menu>.
@@ -174,7 +169,16 @@ styleFlags: flagsInteger
 text
 	"Answer the menu text (i.e. the text that appears in the menu) for the receiver."
 
-	^self subclassResponsibility! !
+	^self subclassResponsibility!
+
+toStrings
+	^String writeStream
+		nextPutAll: self description;
+		nextPut: $/;
+		nextPutAll: self commandDescription acceleratorKeyDisplayString;
+		nextPut: $/;
+		nextPutAll: self command;
+		contents! !
 !UI.MenuItem categoriesForMethods!
 acceleratorKey!accessing!public! !
 acceleratorKey:!accessing!private! !
@@ -204,11 +208,33 @@ registerAcceleratorKeyIn:!menus!public! !
 styleFlags!accessing!private! !
 styleFlags:!accessing!not an aspect!private! !
 text!accessing!public! !
+toStrings!public! !
 !
 
 UI.MenuItem methodProtocol: #menuItem attributes: #(#readOnly) selectors: #(#acceleratorKey #command #hasSubmenu #id #image #insertIntoMenu:at:info: #items #menuFromHandle: #queryAlong: #registerAcceleratorKeyIn: #text)!
 
 !UI.MenuItem class methodsFor!
+
+dividers
+	^Dividers
+		ifNil: 
+			[Dividers := LookupTable new
+						at: '-'
+							put: (DividerMenuItem basicNew
+									flags: MFT_SEPARATOR;
+									beImmutableObject;
+									yourself);
+						at: '||'
+							put: (DividerMenuItem basicNew
+									flags: MFT_MENUBARBREAK;
+									beImmutableObject;
+									yourself);
+						at: '|'
+							put: (DividerMenuItem basicNew
+									flags: MFT_MENUBREAK;
+									beImmutableObject;
+									yourself);
+						yourself]!
 
 errorIllegalMenuString: illegalString
 	"Private - Raise an error to inform that illegalString can not be
@@ -216,23 +242,20 @@ errorIllegalMenuString: illegalString
 
 	self error: 'Illegal menu string: ', illegalString!
 
-fromString: menuString
+fromString: aString
 	"Answer a new sub-instance of the receiver generated from menuString."
 
-	| divider |
-	divider := Dividers lookup: menuString.
-	divider notNil
-		ifTrue: [^DividerMenuItem perform: divider]
-		ifFalse: 
+	^(self dividers lookup: aString)
+		ifNil: 
 			[| subStrings |
-			(subStrings := StringSeparator split: menuString) size == 3
+			(subStrings := StringSeparator split: aString) size == 3
 				ifTrue: 
 					[| commandDescription accel |
 					commandDescription := CommandDescription command: (subStrings at: 3) asSymbol.
 					commandDescription description: (subStrings at: 1).
 					(accel := subStrings at: 2) notEmpty ifTrue: [commandDescription acceleratorKeyString: accel].
-					^CommandMenuItem new commandDescription: commandDescription]
-				ifFalse: [self errorIllegalMenuString: menuString]]!
+					CommandMenuItem commandDescription: commandDescription]
+				ifFalse: [self errorIllegalMenuString: aString]]!
 
 new
 	"Private - MenuItem is abstract"
@@ -240,37 +263,21 @@ new
 	^self subclassResponsibility
 !
 
-stbConvertFrom: anSTBClassFormat 
-	"Convert from earlier version models.
-		1: Added 'typeFlags' instance variable.
-		2: 'image' instance variable added to CommandMenuItem subclass"
+onPreStripImage
+	"Private - The image is about to be stripped. Nil the lazily initialized class variables."
 
-	^anSTBClassFormat version < 1 
-		ifTrue: 
-			[
-			[:data | 
-			| newInst |
-			newInst := self basicNew.
-			data keysAndValuesDo: [:i :v | newInst instVarAt: i + 1 put: v].
-			newInst flags: MFT_STRING.
-			newInst]]
-		ifFalse: 
-			[
-			[:data | 
-			| newInst |
-			newInst := self basicNew.
-			1 to: data size do: [:i | newInst instVarAt: i put: (data at: i)].
-			newInst]]!
+	self uninitialize!
 
-stbVersion
-	"Answer the current binary filer version number for instances of the receiver."
+uninitialize
+	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
-	^1! !
+	Dividers := nil! !
 !UI.MenuItem class categoriesForMethods!
+dividers!public! !
 errorIllegalMenuString:!exceptions!private! !
 fromString:!instance creation!public! !
 new!instance creation!private! !
-stbConvertFrom:!binary filing!public! !
-stbVersion!binary filing!public! !
+onPreStripImage!class hierarchy-removing!private! !
+uninitialize!class hierarchy-removing!private! !
 !
 

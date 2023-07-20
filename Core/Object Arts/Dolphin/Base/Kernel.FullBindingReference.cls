@@ -100,6 +100,9 @@ environmentName
 				nextPutAll: (parts at: i)].
 	^stream contents!
 
+fullName
+	^self pathString!
+
 getBinding
 	"Private - For testing purposes only. Does not attempt to resolve the binding."
 
@@ -233,6 +236,7 @@ bindingOrNil!accessing!public! !
 bindingScope!accessing!public! !
 displayOn:!displaying!public! !
 environmentName!accessing!public! !
+fullName!accessing!public! !
 getBinding!accessing!private! !
 hash!comparing!public! !
 home!accessing!public! !

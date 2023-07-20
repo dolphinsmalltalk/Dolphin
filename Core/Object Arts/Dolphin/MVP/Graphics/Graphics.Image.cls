@@ -328,56 +328,43 @@ newSystemInitializer: anInteger
 	^self newResourceInitializer: anInteger module: 0!
 
 stbConvertFrom: anSTBClassFormat
-	"Version 3 adds locator instance variable."
-
-	^
-	[:data |
-	| answer instVars version |
+	| version |
 	version := anSTBClassFormat version.
-	instVars := data.
-	version < 4
-		ifTrue: 
-			[version < 3
-				ifTrue: 
-					[version < 2
-						ifTrue: 
-							[version < 1 ifTrue: [instVars := self stbConvertFromVersion0: instVars].
-							instVars := self stbConvertFromVersion1: instVars].
-					instVars := self stbConvertFromVersion2: instVars].
-			instVars := self stbConvertFromVersion3: instVars].
-	answer := self basicNew.
-	1 to: instVars size do: [:i | answer instVarAt: i put: (instVars at: i)].
-	answer]!
+	version == 3 ifTrue: [^[:data | (self stbConvertFromVersion3: data) becomeA: self]].
+	version == 2 ifTrue: [^[:data | (self stbConvertFromVersion2: data) becomeA: self]].
+	version == 1 ifTrue: [^[:data | (self stbConvertFromVersion1: data) becomeA: self]].
+	version == 0 ifTrue: [^[:data | (self stbConvertFromVersion0: data) becomeA: self]].
+	^super stbConvertFrom: anSTBClassFormat!
 
 stbConvertFromVersion0: anArray
-	"Only relevant for Bitmaps"
+	"Private - Only relevant for Bitmaps"
 
-	^anArray!
+	^self stbConvertFromVersion1: anArray!
 
 stbConvertFromVersion1: anArray
-	"Only relevant for Bitmaps"
+	"Private - Only relevant for Bitmaps"
 
-	^anArray!
+	^self stbConvertFromVersion2: anArray!
 
 stbConvertFromVersion2: anArray
-	"Version 3 added locator instance variable."
+	"Private - Version 3 added locator (FileLocator) instance variable."
 
 	| count |
 	count := anArray size + 1.
-	^(Array new: count)
-		replaceFrom: 1
-			to: 2
-			with: anArray
-			startingAt: 1;
-		at: 3 put: FileLocator default;
-		replaceFrom: 4
-			to: count
-			with: anArray
-			startingAt: 3;
-		yourself!
+	^self stbConvertFromVersion3: ((Array new: count)
+				replaceFrom: 1
+					to: 2
+					with: anArray
+					startingAt: 1;
+				at: 3 put: FileLocator default;
+				replaceFrom: 4
+					to: count
+					with: anArray
+					startingAt: 3;
+				yourself)!
 
 stbConvertFromVersion3: anArray
-	"Version 4 replaces the identifier, fileLocator and instanceHandle instance variables with initializer."
+	"Private - Version 4 replaces the identifier, fileLocator and instanceHandle instance variables with initializer."
 
 	| count |
 	count := anArray size - 2.
@@ -426,10 +413,10 @@ newFileInitializer:locator:!helpers!private! !
 newResourceInitializer:module:!helpers!private! !
 newSystemInitializer:!helpers!private! !
 stbConvertFrom:!binary filing!public! !
-stbConvertFromVersion0:!binary filing!public! !
-stbConvertFromVersion1:!binary filing!public! !
-stbConvertFromVersion2:!binary filing!public! !
-stbConvertFromVersion3:!binary filing!public! !
+stbConvertFromVersion0:!binary filing!private! !
+stbConvertFromVersion1:!binary filing!private! !
+stbConvertFromVersion2:!binary filing!private! !
+stbConvertFromVersion3:!binary filing!private! !
 stbVersion!binary filing!public! !
 !
 

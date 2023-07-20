@@ -104,6 +104,7 @@ package setClassNames: #(
 	#{External.Tests.Int16ArrayTest}
 	#{External.Tests.Int32ArrayTest}
 	#{External.Tests.Int8ArrayTest}
+	#{External.Tests.IntegerBytesTest}
 	#{External.Tests.INTEGERTest}
 	#{External.Tests.ResourceLibraryTest}
 	#{External.Tests.StructureArrayFieldTest}
@@ -112,6 +113,7 @@ package setClassNames: #(
 	#{External.Tests.StructureTest}
 	#{External.Tests.UInt16ArrayTest}
 	#{External.Tests.UInt32ArrayTest}
+	#{External.Tests.UInt32BytesTest}
 	#{External.Tests.WCHARFieldTest}
 	#{Graphics.Tests}
 	#{Kernel.Tests}
@@ -159,6 +161,7 @@ package setClassNames: #(
 	#{Kernel.Tests.StableSortAlgorithmTest}
 	#{Kernel.Tests.StackFrameTest}
 	#{Kernel.Tests.STBTest}
+	#{Kernel.Tests.STBValidatingInFilerTest}
 	#{Kernel.Tests.SystemNamespaceTest}
 	#{Kernel.Tests.VariableBindingTest}
 	#{Kernel.Tests.VMTest}
@@ -178,6 +181,7 @@ package setClassNames: #(
 
 package setMethodNames: #(
 	#(#{Kernel.STBFiler class} #correspondingTestCase)
+	#(#{Kernel.STBValidatingInFiler class} #correspondingTestCase)
 	#(#{OS.CRTLibrary} #_chmod:pmode:)
 	#(#{OS.CRTLibrary} #strcat_s:bufferSize:strSource:)
 	#(#{OS.CRTLibraryNonBlocking} #_chmod:pmode:)
@@ -214,6 +218,7 @@ package setPrerequisites: #(
 	'..\..\Registry\Dolphin Registry Access'
 	'..\Dolphin SizeIs Fields'
 	'..\Dolphin Source Fileout'
+	'..\..\IDE\Base\Dolphin Transcript'
 	'..\..\..\..\Contributions\Camp Smalltalk\SUnit\OA SUnit Extensions'
 	'..\..\ActiveX\COM\OLE COM'
 	'..\..\..\Samples\MVP\Scribble\Scribble'
@@ -548,6 +553,13 @@ Core.Tests.DolphinTest
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Tests.DolphinTest
+	subclass: #'External.Tests.IntegerBytesTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.DolphinTest
 	subclass: #'Core.Tests.IntegerTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -809,6 +821,13 @@ Kernel.Tests.SystemNamespaceTest
 Kernel.Tests.AbstractSTBFilerTest
 	subclass: #'Kernel.Tests.STBTest'
 	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.Tests.STBTest
+	subclass: #'Kernel.Tests.STBValidatingInFilerTest'
+	instanceVariableNames: 'locator'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -1163,6 +1182,13 @@ External.Tests.ExternalFieldTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+External.Tests.IntegerBytesTest
+	subclass: #'External.Tests.UInt32BytesTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Core.Tests.IntegerTest
 	subclass: #'Core.Tests.LargeIntegerTest'
 	instanceVariableNames: ''
@@ -1421,6 +1447,14 @@ Smalltalk.DolphinTest := Core.Tests.DolphinTest!
 correspondingTestCase
 	^Tests.STBTest! !
 !Kernel.STBFiler class categoriesForMethods!
+correspondingTestCase!public! !
+!
+
+!Kernel.STBValidatingInFiler class methodsFor!
+
+correspondingTestCase
+	^Tests.STBValidatingInFilerTest! !
+!Kernel.STBValidatingInFiler class categoriesForMethods!
 correspondingTestCase!public! !
 !
 

@@ -153,10 +153,13 @@ onPreStripImage
 	self uninitialize!
 
 stbConvertFrom: anSTBClassFormat
-	^
-	[:data |
-	StringFormatFromFlagsInitializer flags: (data at: 2)
-		language: (data at: 3) ?? OS.NlsConstants.LANG_NEUTRAL]!
+	anSTBClassFormat version == 0
+		ifTrue: 
+			[^
+			[:data |
+			StringFormatFromFlagsInitializer flags: (data at: 2)
+				language: (data at: 3) ?? OS.NlsConstants.LANG_NEUTRAL]].
+	^super stbConvertFrom: anSTBClassFormat!
 
 uninitialize
 	GenericDefault := GenericTypographic := nil! !

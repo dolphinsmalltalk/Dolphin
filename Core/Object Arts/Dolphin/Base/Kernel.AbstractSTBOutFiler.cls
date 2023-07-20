@@ -17,27 +17,44 @@ basicNextPut: anObject
 	"Private - Write anObject to the stream in STB format."
 
 	| class objectToSave |
-	anObject isNil ifTrue: [^self writeNil].
+	anObject
+		ifNil: 
+			[policy putNilOn: stream.
+			^self].
 	"If anObject has been registered as a global then we wrap it up as an STBGlobalObjectProxy
 	and output that instead."
 	(self objectIsGlobal: anObject) ifTrue: [^self putGlobal: anObject].
 
 	"Some objects can be encoded entirely within the prefix."
 	class := anObject class.
-	class == SmallInteger ifTrue: [^self writeInteger: (STBPrefix encodeSmallInteger: anObject)].
-	class == Character ifTrue: [^self putCharacter: anObject].
+	class == SmallInteger
+		ifTrue: 
+			[policy putSmallInteger: anObject on: stream.
+			^self].
+	class == Character
+		ifTrue: 
+			[policy putCharacter: anObject on: stream.
+			^self].
 
 	"References to objects already output can also be encoded entirely within the prefix."
 	(self refForObject: anObject)
-		ifNotNil: [:refIndex | ^self writeInteger: (STBPrefix encodeObjectRef: refIndex)].
+		ifNotNil: 
+			[:refIndex |
+			policy writeReference: refIndex on: stream.
+			^self].
 
 	"If anObject is the subject of an override:with: message then we output the 'with' proxy object instead."
 	objectToSave := proxyOverrides at: anObject ifAbsent: Collection.AbsentCookie.
 	objectToSave == Collection.AbsentCookie
-		ifTrue: [self serializeObject: anObject]
+		ifTrue: [policy serializeObject: anObject with: self]
 		ifFalse: 
 			[objectToSave notNil ifTrue: [proxyOverrides removeKey: anObject].
 			self saveObject: anObject as: objectToSave]!
+
+initializeObjectMap
+	refOffset := 1.
+	writeMap := IdentityDictionary new: 128.
+	policy registerPredefined: self!
 
 nextPut: anObject
 	"Write anObject to the stream in STB format."
@@ -48,7 +65,7 @@ nextPut: anObject
 objectIsGlobal: anObject
 	"Private - Answer true if anObject has been registered as global."
 
-	^anObject isNil ifTrue: [globalNils isEmpty not] ifFalse: [globals includesKey: anObject]!
+	^anObject ifNil: [globalNils notNil] ifNotNil: [globals notNil and: [globals includesKey: anObject]]!
 
 override: anObject with: anObjectToSave
 	"This is an opportunity circumvent the running of anObject's #stbSaveOn: method by
@@ -64,27 +81,27 @@ override: anObject with: anObjectToSave
 
 	anObject isNil ifFalse: [proxyOverrides at: anObject put: anObjectToSave]!
 
-putCharacter: aCharacter
-	self subclassResponsibility!
-
 putGlobal: anObject
 	"Private - Wrap anObject up as an STBGlobalObjectProxy and output that instead."
 
 	| symbol |
-	anObject isNil
-		ifTrue: [symbol := globalNils removeFirst]
-		ifFalse: 
+	anObject
+		ifNil: 
+			[symbol := globalNils removeFirst.
+			globalNils isEmpty ifTrue: [globalNils := nil]]
+		ifNotNil: 
 			[| symbolCollection |
 			symbolCollection := globals at: anObject.
 			symbol := symbolCollection removeFirst.
-			symbolCollection isEmpty ifTrue: [globals removeKey: anObject]].
+			symbolCollection isEmpty ifTrue: [globals removeKey: anObject].
+			globals isEmpty ifTrue: [globals := nil]].
 	self basicNextPut: (STBGlobalObjectProxy for: anObject name: symbol)!
 
 refForObject: anObject
 	"Private - Answer the map index of anObject or nil if it is not present.
 	The nil object has a conceptual index of zero."
 
-	anObject isNil ifTrue: [^0].
+	anObject ifNil: [^0].
 	^writeMap lookup: anObject!
 
 register: anObject
@@ -97,11 +114,17 @@ register: anObject asGlobal: aSymbol
 	When this object is output it will be wrapped in an STBGlobalObjectProxy.
 	When the proxy is subsequently loaded it be added to Smalltalk with the
 	name aSymbol. If the same object is registered as several global symbols
-	then it must be #nextPut: a corresponding number of times." 
+	then it must be #nextPut: a corresponding number of times."
 
-	(anObject isNil
-		ifTrue: [globalNils]
-		ifFalse: [globals at: anObject ifAbsentPutClean: [OrderedCollection new]]) add: aSymbol!
+	anObject
+		ifNil: [(globalNils ifNil: [globalNils := OrderedCollection new]) addLast: aSymbol]
+		ifNotNil: 
+			[globals
+				ifNil: 
+					[globals := IdentityDictionary new
+								at: aSymbol put: OrderedCollection new;
+								yourself]
+				ifNotNil: [(globals at: anObject ifAbsentPutClean: [OrderedCollection new]) addLast: aSymbol]]!
 
 removeOverrideFor: anObject
 	anObject isNil ifFalse: [proxyOverrides removeKey: anObject ifAbsent: nil]!
@@ -111,16 +134,10 @@ reset
 	Write the fixed-format header to stream. This enables the reader to identify
 	the version of the written data."
 
-	refOffset := 1.
-	writeMap := IdentityDictionary new: 128.
-	globals := IdentityDictionary new: 8.
-	globalNils := OrderedCollection new: 8.
+	globals := globalNils := nil.
 	proxyOverrides := IdentityDictionary new.
-	self resetStream.
-	super reset!
-
-resetStream
-	self subclassResponsibility!
+	policy writeSignatureAndVersionOn: stream.
+	self initializeObjectMap!
 
 saveObject: aNonImmediateObject
 	"Write anObject to the stream in STB format as normal.
@@ -129,7 +146,9 @@ saveObject: aNonImmediateObject
 	This is a low-level method, and is not intended for normal binary object streaming - 
 	use #nextPut: instead."
 
-	self writeObject: aNonImmediateObject as: aNonImmediateObject withPrefix: STBPrefix.DataPrefix !
+	self
+		writePreambleFor: aNonImmediateObject;
+		writeInstanceVariables: aNonImmediateObject!
 
 saveObject: anObject as: anObjectToSave
 	"Write anObject to the stream in STB format as anObjectToSave."
@@ -139,39 +158,33 @@ saveObject: anObject as: anObjectToSave
 	anObjectToSave == 0 ifTrue: [^self saveObject: anObject].
 
 	"A proxy of nil means output nil instead of anObject."
-	anObjectToSave isNil ifTrue: [^self basicNextPut: nil].
+	anObjectToSave ifNil: [^self basicNextPut: nil].
 
-	"Output anObject to save instead of anObject marking it as a proxy so the STBInFiler
-	knows to do a #fixup:to on input."
+	"Output anObjectToSave (usually a proxy) instead of anObject"
 	self
-		writeObject: anObject
-		as: anObjectToSave
-		withPrefix: STBPrefix forProxy!
-
-serializeObject: anObject
-	self subclassResponsibility!
+		writeClassPrefix: anObjectToSave basicClass;
+		register: anObject;
+		writeInstanceVariables: anObjectToSave!
 
 setRefOffset: anInteger
 	refOffset := anInteger - writeMap size + 1!
 
-writeClass: anObject withLocator: locatorString
-	self subclassResponsibility!
+stream: aStream policy: anSTBVersionPolicy
+	stream := aStream.
+	policy := anSTBVersionPolicy.
+	self initialize!
 
-writeClass: aClass withPrefix: anSTBPrefix
-	"Private - An object of the <Class> specified by the first argument, is about to be written to the binary stream, output an appropriate class prefix for it."
+writeClassPrefix: aClass
+	"An object of the <Class> specified by the first argument, is about to be written to the binary stream, output an appropriate class prefix for it."
 
 	(self refForObject: aClass)
 		ifNotNil: 
 			[:refIndex |
 			"class has already been output so we can encode a short reference to the class within the prefix."
-			self writeInteger: (anSTBPrefix encodeClassRef: refIndex)]
+			policy writeClassReference: refIndex on: stream]
 		ifNil: 
-			[| classVersion locatorString |
-			"hitherto unencountered class so we need to save full class details in the object header."
-			locatorString := aClass fullName.
-			self writeInteger: (anSTBPrefix encodeClass: aClass locator: locatorString).
-			(classVersion := aClass stbVersion) == 0 ifFalse: [self writeInteger: classVersion].
-			self writeClass: aClass withLocator: locatorString.
+			["hitherto unencountered class so we need to save full class details in the object header."
+			policy writeClass: aClass on: stream.
 			self register: aClass]!
 
 writeInstanceVariables: objectToSave
@@ -183,7 +196,7 @@ writeInstanceVariables: objectToSave
 		ifTrue: 
 			[| basicSize |
 			basicSize := objectToSave basicSize.
-			self writeInteger: basicSize.
+			policy writeInteger: basicSize on: stream.
 			(instanceSpec anyMask: Behavior._PointersMask)
 				ifFalse: [1 to: basicSize do: [:i | stream nextPut: (objectToSave basicAt: i)]]
 				ifTrue: 
@@ -193,63 +206,48 @@ writeInstanceVariables: objectToSave
 			[1 to: (instanceSpec bitAnd: Behavior._SizeMask)
 				do: [:i | self basicNextPut: (objectToSave instVarAt: i)]]!
 
-writeInteger: anInteger
-	self subclassResponsibility!
-
-writeNil
-	self subclassResponsibility!
-
-writeObject: anObject as: objectToSave withPrefix: anSTBPrefix
-	"Private - Represent anObject on the stream as objectToSave giving it a prefix of anSTBPrefix."
-
-	self 
-		writeClass: objectToSave class withPrefix: anSTBPrefix;
-		register: anObject;
-		writeInstanceVariables: objectToSave!
-
 writePreambleFor: anObject
 	"Write the normal STB pre-amble for anObject to the output stream. The object is also
 	registered in the write map so that any subsequent refs are shared. This method is intended
 	for use from custom implementations of the class side #stbSaveOn: message."
 
 	self
-		writeClass: anObject class withPrefix: STBPrefix.DataPrefix;
+		writeClassPrefix: anObject basicClass;
 		register: anObject! !
 !Kernel.AbstractSTBOutFiler categoriesForMethods!
 basicNextPut:!operations!private! !
+initializeObjectMap!initializing!private! !
 nextPut:!operations!public! !
 objectIsGlobal:!globals!private! !
 override:with:!proxies!public! !
-putCharacter:!helpers!private! !
 putGlobal:!globals!private! !
 refForObject:!private!searching! !
 register:!accessing!private! !
 register:asGlobal:!globals!public! !
 removeOverrideFor:!proxies!public! !
 reset!initializing!private! !
-resetStream!initializing!private! !
 saveObject:!operations!public! !
 saveObject:as:!operations!public! !
-serializeObject:!operations!private! !
 setRefOffset:!accessing!private! !
-writeClass:withLocator:!operations!private! !
-writeClass:withPrefix:!operations!private! !
+stream:policy:!initializing!private! !
+writeClassPrefix:!operations!public! !
 writeInstanceVariables:!operations!private! !
-writeInteger:!helpers!private! !
-writeNil!operations!private! !
-writeObject:as:withPrefix:!operations!private! !
 writePreambleFor:!binary filing!public! !
 !
 
 !Kernel.AbstractSTBOutFiler class methodsFor!
 
-uninitialize
-	"Private - STBPrefix is only used by STBOutFiler now so if STBOutFiler is going, we no longer need it.
-	However it has some static instances that will prevent it being stripped if we don't clear
-	them away."
+on: aStream
+	"Answer a new instance attached to the binary stream aStream."
 
-	STBPrefix uninitialize! !
+	^self on: aStream version: self version!
+
+on: aStream version: anInteger
+	"Answer a new instance attached to the binary stream aStream."
+
+	^self new stream: aStream policy: (self versionPolicyClass forVersion: anInteger)! !
 !Kernel.AbstractSTBOutFiler class categoriesForMethods!
-uninitialize!class hierarchy-removing!private! !
+on:!instance creation!public! !
+on:version:!instance creation!public! !
 !
 

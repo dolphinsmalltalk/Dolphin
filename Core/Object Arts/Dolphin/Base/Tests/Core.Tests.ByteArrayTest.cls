@@ -121,6 +121,15 @@ testMixedConcatenation
 	self should: [#[] , Character dolphin asUtf8String] raise: Error.
 	self should: [#[] , Character dolphin asUtf16String] raise: Error!
 
+testStbRoundTrip
+	| subject bytes rehydrated |
+	subject := (0 to: 255) asByteArray.
+	bytes := subject binaryStoreBytes.
+	rehydrated := Object fromBinaryStoreBytes: bytes.
+	self assert: rehydrated size equals: 256.
+	self assert: rehydrated class identicalTo: ByteArray.
+	self assert: rehydrated equals: subject!
+
 testUInt16AtOffsetPut
 	"#1457"
 
@@ -170,6 +179,7 @@ testInt32AtOffsetPut!public!unit tests! !
 testInt8AtOffset!public!unit tests! !
 testInt8AtOffsetPut!public!unit tests! !
 testMixedConcatenation!public! !
+testStbRoundTrip!public! !
 testUInt16AtOffsetPut!public!unit tests! !
 testUInt32AtOffsetPut!public!unit tests! !
 uint16Values!constants!private! !

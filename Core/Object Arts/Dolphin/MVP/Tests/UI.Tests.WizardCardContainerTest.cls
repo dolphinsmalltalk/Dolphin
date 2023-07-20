@@ -12,17 +12,9 @@ UI.Tests.WizardCardContainerTest comment: ''!
 !UI.Tests.WizardCardContainerTest methodsFor!
 
 classToTest
-	^WizardCardContainer!
-
-oldDolphinVersionsForStbUpgrade
-	^2 to: 4!
-
-vuFile
-	^'CompositePresenter.Wizard card container.vu'! !
+	^WizardCardContainer! !
 !UI.Tests.WizardCardContainerTest categoriesForMethods!
 classToTest!helpers!private! !
-oldDolphinVersionsForStbUpgrade!constants!private! !
-vuFile!constants!private! !
 !
 
 !UI.Tests.WizardCardContainerTest class methodsFor!

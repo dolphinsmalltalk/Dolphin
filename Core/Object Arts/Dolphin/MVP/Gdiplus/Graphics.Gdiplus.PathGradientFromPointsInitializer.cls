@@ -69,7 +69,8 @@ printAttributesOn:!printing!private! !
 !Graphics.Gdiplus.PathGradientFromPointsInitializer class methodsFor!
 
 stbConvertFrom: anSTBClassFormat
-	^[:data | self points: (data at: 2) wrapMode: (data at: 3)]! !
+	anSTBClassFormat version == 0 ifTrue: [^[:data | self points: (data at: 2) wrapMode: (data at: 3)]].
+	^super stbConvertFrom: anSTBClassFormat! !
 !Graphics.Gdiplus.PathGradientFromPointsInitializer class categoriesForMethods!
 stbConvertFrom:!binary filing!public! !
 !

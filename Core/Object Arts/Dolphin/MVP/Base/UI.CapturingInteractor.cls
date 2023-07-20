@@ -273,20 +273,21 @@ setCapture!helpers!private! !
 
 !UI.CapturingInteractor class methodsFor!
 
-stbConvertToVersion1: instVars
+stbConvertFromVersion0: anArray
+	"Adds stateFlags@3"
+
 	| converted |
-	converted := Array new: instVars size + 1.
-	converted
-		at: 1 put: (instVars at: 1);
-		at: 2 put: (instVars at: 2);
-		at: 3 put: 0.
-	converted
+	converted := Array new: anArray size + 1.
+	^converted
+		at: 1 put: (anArray at: 1);
+		at: 2 put: (anArray at: 2);
+		at: 3 put: 0;
 		replaceFrom: 4
-		to: converted size
-		with: instVars
-		startingAt: 3.
-	^converted! !
+			to: converted size
+			with: anArray
+			startingAt: 3;
+		yourself! !
 !UI.CapturingInteractor class categoriesForMethods!
-stbConvertToVersion1:!binary filing!private! !
+stbConvertFromVersion0:!binary filing!private! !
 !
 

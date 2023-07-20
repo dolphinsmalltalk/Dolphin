@@ -316,29 +316,56 @@ startingId
 stbConvertFrom: anSTBClassFormat
 	"Convert from earlier CommandDescription versions."
 
-	^
-	[:data |
-	| newInstance |
-	newInstance := self basicNew.
-	1 to: data size do: [:i | newInstance instVarAt: i put: (data at: i)].
-	anSTBClassFormat version < 2
-		ifTrue: 
-			[newInstance instVarAt: 1 put: (data at: 1).	"command"
-			newInstance instVarAt: 2 put: (data at: 3).	"description <- shortDescription"
-			newInstance instVarAt: 3
-				put: (anSTBClassFormat version < 1
-						ifFalse: [data at: 4]
-						ifTrue: 
-							[(data at: 4) isNil ifTrue: [0] ifFalse: [AcceleratorTable keyCodeFromInvariantString: (data at: 4)]]).
-			4 to: self instSize do: [:i | newInstance instVarAt: i put: (data at: i + 1)]].
-	anSTBClassFormat version < 4
-		ifTrue: 
-			["Ensure flags zeroed"
-			(newInstance instVarAt: 4) isNil ifTrue: [newInstance instVarAt: 4 put: 0]].
-	newInstance]!
+	| ver |
+	ver := anSTBClassFormat version.
+	ver <= 1 ifTrue: [^[:data | (self stbConvertFromVersion1: data) becomeA: self]].
+	ver <= 3 ifTrue: [^[:data | (self stbConvertFromVersion3: data) becomeA: self]].
+	^super stbConvertFrom: anSTBClassFormat!
+
+stbConvertFromVersion1: anArray
+	"Convert from earlier CommandDescription versions. In version 2, the shortDescription became the only description. The formerly unused 'bitmap' instance variable went through an unversioned transition to become the flags."
+
+	| accelKey |
+	accelKey := anArray at: 4.
+	^self stbConvertFromVersion3: {
+				anArray at: 1.
+				anArray at: 3.
+				accelKey isString
+					ifTrue: [AcceleratorTable keyCodeFromInvariantString: accelKey]
+					ifFalse: [accelKey].
+				nil
+			}!
+
+stbConvertFromVersion3: anArray
+	"Convert from earlier CommandDescription versions. Version 4 added the image inst var. Here we also patch up the flags, as not really sure what happened in V3."
+
+	| data flags |
+	data := Array new: self instSize.	"Last in chain"
+	data
+		replaceFrom: 1
+		to: 3
+		with: anArray
+		startingAt: 1.
+	flags := anArray at: 4.
+	data at: 4 put: (flags isInteger ifTrue: [flags] ifFalse: [0]).
+	"image defaults to nil, so copy any remaining inst vars after that"
+	data
+		replaceFrom: 6
+		to: data size
+		with: anArray
+		startingAt: 5.
+	^data!
 
 stbVersion
-	"Answer the current STB filer version  for instances of the receiver"
+	"Answer the current STB filer version for instances of the receiver
+		Version 0: command description shortDescription acceleratorKey (integer) bitmap (not used)
+		Version 1: command description shortDescription acceleratorKey (string) bitmap (not used)
+		Version 2 (D2): command description acceleratorKey bitmap (not used)
+		Version 2 (D3) command description acceleratorKey unused
+		Version 2 (D4): command description acceleratorKey flags
+		Version 3 ?:
+		Version 4 (D5): command description acceleratorKey flags image
+	"
 
 	^4!
 
@@ -358,6 +385,8 @@ new!instance creation!public! !
 nextId!command registry!private! !
 startingId!command registry!private! !
 stbConvertFrom:!binary filing!public! !
+stbConvertFromVersion1:!binary filing!public! !
+stbConvertFromVersion3:!binary filing!public! !
 stbVersion!binary filing!public! !
 withId:ifAbsent:!command registry!public! !
 !

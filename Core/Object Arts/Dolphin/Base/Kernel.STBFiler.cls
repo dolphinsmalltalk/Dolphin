@@ -2,11 +2,31 @@
 
 Core.Object
 	subclass: #'Kernel.STBFiler'
-	instanceVariableNames: 'stream context version'
+	instanceVariableNames: 'stream context policy'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: { 'MaxPredefinedRef' -> 16r18. 'STLFilerVersion' -> 16r5 }!
+	classConstants: {
+			'PredefinedClassOffset' -> 16r4.
+			'PrefixBytesMask' -> 16r30.
+			'PrefixCharacterMask' -> 16r4.
+			'PrefixClassMask' -> 16r6.
+			'PrefixDataMask' -> 16r2.
+			'PrefixInstSizeMask' -> 16rFF.
+			'PrefixInstSizeShift' -> 16r8.
+			'PrefixInstSizeUnshift' -> -16r8.
+			'PrefixLiteralMask' -> 16r8.
+			'PrefixLocatorLenShift' -> 16r10.
+			'PrefixLocatorLenUnshift' -> -16r10.
+			'PrefixNonZeroVersionMask' -> 16r40.
+			'PrefixRefShift' -> 16r4.
+			'PrefixRefUnshift' -> -16r4.
+			'PrefixSmallIntegerMask' -> 16r1.
+			'PrefixVariableMask' -> 16r20.
+			'STBFormatName' -> 'STB'.
+			'STLFilerVersion' -> 16r6.
+			'STLFormatName' -> 'STL'
+		}!
 Kernel.STBFiler guid: (Core.GUID fromString: '{87b4c4c1-026e-11d3-9fd7-00a0cc3e4a32}')!
 Kernel.STBFiler isNonInstantiable: true!
 Kernel.STBFiler comment: ''!
@@ -32,9 +52,14 @@ context: anObject
 	context := anObject!
 
 initialize
-	version isNil ifTrue: [version := self class version].
 	self reset.
 	^self!
+
+initializeObjectMap
+	^self subclassResponsibility!
+
+policy
+	^policy!
 
 position: anInteger
 	"Position the receiver's stream to anInteger, read/write a header at this
@@ -48,28 +73,13 @@ register: anObject
 
 	^self subclassResponsibility!
 
-registerAll: anArray
+registerAllClasses: anArray
 	anArray do: [:each | self register: each]!
 
-registerPredefinedClasses
-	self registerAll: self class fixedClasses.
-	self setRefOffset: MaxPredefinedRef!
-
-registerPredefinedObjects
-	self
-		register: true;
-		register: false;
-		register: Smalltalk;
-		register: Processor.
-	version > 0 ifFalse: [^self].
-	self registerPredefinedClasses!
-
 reset
-	"Private - Reset the instance. We pre-register objects that must never be recreated - note
-	that if the 'fixed' list of pre-registered objects is changed, then the STB version must be
-	changed and the old versions handled appropriately."
+	"Private - Reset the instance."
 
-	self registerPredefinedObjects!
+	self subclassResponsibility!
 
 setRefOffset: anInteger
 	^self subclassResponsibility!
@@ -79,32 +89,24 @@ stream
 
 	^stream!
 
-stream: aStream
-	"Set stream to aStream."
-
-	stream := aStream!
-
 version
-	^version!
+	"Answer the format version of the STB stream."
 
-version: anInteger
-	version := anInteger! !
+	^policy version! !
 !Kernel.STBFiler categoriesForMethods!
 atEnd!public!testing! !
 context!accessing!public! !
 context:!accessing!public! !
 initialize!initializing!private! !
+initializeObjectMap!initializing!private! !
+policy!accessing!public! !
 position:!operations!public! !
 register:!helpers!public! !
-registerAll:!initializing!private! !
-registerPredefinedClasses!initializing!private! !
-registerPredefinedObjects!initializing!private! !
+registerAllClasses:!initializing!private! !
 reset!initializing!private! !
 setRefOffset:!initializing!private! !
 stream!accessing!public! !
-stream:!accessing!public! !
 version!accessing!public! !
-version:!accessing!public! !
 !
 
 !Kernel.STBFiler class methodsFor!
@@ -113,75 +115,55 @@ errorInconsistentSTB: anObject
 	"Private - Signal an STBError indicating that the stream being
 	read contains inconsistent STB data."
 
-	STBError signal: ('<2s> input stream is inconsistent (object <1p> referenced but not yet defined)'
-				expandMacrosWith: anObject
-				with: self signature)!
+	STBError
+		signal: 'Input stream is inconsistent (object <1p> referenced but not yet defined)' << anObject!
 
 errorUnrecognisedClass: aClass version: version
 	"Private - Signal an STBError indicating that the STB data contains
 	instances of aClass of version that we don't know how to convert."
 
-	STBError
-		signal: self signature , ' contains a version ' , version displayString , ' instance of '
-				, aClass name , ' and is unable to convert it.'!
+	STBError signal: 'Input stream contains an unsupported version <1d> of <2p>' << { version. aClass }!
 
 fixedClasses
-	"Answer a <sequencedReadableCollection> of the classes that are pre-registered in every STB
-	file. These make it possible to binary file the classes STBClassProxy and String. Also these
-	clases are almost always needed, so we can save space pre-registering them so that they
-	don't need to be written into the filer."
+	"Answer a <sequencedReadableCollection> of the classes that are pre-registered in every STB file. These make it possible to binary file the classes STBClassProxy and String. Also these clases are almost always needed, so we can save space pre-registering them so that they don't need to be written into the filer."
 
-	"Note that pre-registering classes does not inflate the size of the binary file, it just
-	pre-allocates a range of indices for fixed uses. Changing the order of these (or deleting
-	registrations) will break existing binary files. Lastly a consequence of pre-registering
-	these classes is that normal STB versioning will have no effect - the #stbVersion is only
-	checked when a class is first read from the file. In order to version these classes it is
-	necessary to increment the global STB version number."
+	"Note that pre-registering classes does not inflate the size of the binary file, it just pre-allocates a range of indices for fixed uses. Changing the order of these (or deleting registrations) will break existing binary files. Lastly a consequence of pre-registering these classes is that normal STB versioning will have no effect - the #stbVersion is only checked when a class is first read from the file. In order to version these classes it is necessary to increment the global STB version number."
 
-	^##({AnsiString.
-		Array.
-		ByteArray.
-		LargeInteger.
-		STBClassProxy.
-		STBMetaclassProxy.
-		Symbol.
-		STBCollectionProxy.
-		OrderedCollection.
-		STBIdentityDictionaryProxy.
-		LookupTable.
-		IdentityDictionary.
-		Utf8String.
-		Utf16String})!
+	^STBVersionPolicy.PredefinedClasses!
+
+formatName
+	"Private - Answer the format name."
+
+	^STBFormatName!
+
+initialize
+	self addClassConstant: 'STBSignature' value: '!!STB ' asByteArray!
 
 on: aStream
 	"Answer a new instance attached to the binary stream aStream."
 
-	^self new
-		stream: aStream;
-		initialize!
-
-signature
-	"Private - Answer the signature that identifies the data as
-	being in Smalltalk Binary (STB) format."
-
-	^##('!!STB ' asByteArray)
-!
+	^self subclassResponsibility!
 
 version
 	"Private - Answer the version number of the format produced by the receiver.
 		Version 1 - Preregisters certain commonly occurring classes
 		Version 2 - Delegates save/load to class, format changed for certain pre-registered classes.
 		Version 3 - Only writes basicSize for objects of variable classes.
-		Version 4 - Literal filer stores true, false, Smalltalk, etc as literals rather than special predefined object indices, and stores the full set of atomic objects, and arrays of atomic objects, as literals, not just Strings, Symbols, Integers, ByteArrays, classes and pool dictionaries."
+		Version 4 - Literal filer stores true, false, Smalltalk, etc as literals rather than special predefined object indices, and stores the full set of atomic objects, and arrays of atomic objects, as literals, not just Strings, Symbols, Integers, ByteArrays, classes and pool dictionaries.
+		Version 5 - Fully-qualified class names written. Literal filer stores classes as fully-qualified BindingReferences."
 
-	^4
-! !
+	^5!
+
+versionPolicyClass
+	^STBVersion0Policy! !
 !Kernel.STBFiler class categoriesForMethods!
 errorInconsistentSTB:!exceptions!private! !
 errorUnrecognisedClass:version:!exceptions!private! !
 fixedClasses!constants!public! !
+formatName!constants!private! !
+initialize!constants!private! !
 on:!instance creation!public! !
-signature!constants!private! !
 version!constants!private! !
+versionPolicyClass!constants!private! !
 !
 

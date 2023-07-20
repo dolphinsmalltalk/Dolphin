@@ -14,24 +14,16 @@ UI.Tests.FontViewTest comment: ''!
 classToTest
 	^FontView!
 
-oldDolphinVersionsForStbUpgrade
-	^1 to: 4!
-
-verifyUpgradedView: anInteger
+verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	| view |
-	super verifyUpgradedView: anInteger.
+	super verifyUpgradedView: anInteger identifier: aResourceIdentifier.
 	view := self view.
 	self assertIsNil: view backcolor.
 	self assertIsNil: view previewText.
-	self assertIsNil: view font!
-
-vuFile
-	^'FontPresenter.Font view.vu'! !
+	self assertIsNil: view font! !
 !UI.Tests.FontViewTest categoriesForMethods!
 classToTest!helpers!private! !
-oldDolphinVersionsForStbUpgrade!constants!private! !
-verifyUpgradedView:!helpers!private! !
-vuFile!constants!private! !
+verifyUpgradedView:identifier:!helpers!private! !
 !
 
 !UI.Tests.FontViewTest class methodsFor!

@@ -14,28 +14,20 @@ UI.Tests.ProgressBarTest comment: ''!
 classToTest
 	^ProgressBar!
 
-oldDolphinVersionsForStbUpgrade
-	^1 to: 4!
-
 testRange
 	presenter range: (50 to: 32768).
 	self assert: presenter range equals: (50 to: 32768)!
 
-verifyUpgradedView: anInteger
+verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	| view |
-	super verifyUpgradedView: anInteger.
+	super verifyUpgradedView: anInteger identifier: aResourceIdentifier.
 	view := self view.
 	self assert: view backcolor identicalTo: Color default.
-	self assert: view typeconverter isNullConverter!
-
-vuFile
-	^'NumberPresenter.Progress bar.vu'! !
+	self assert: view typeconverter isNullConverter! !
 !UI.Tests.ProgressBarTest categoriesForMethods!
 classToTest!helpers!private! !
-oldDolphinVersionsForStbUpgrade!constants!private! !
 testRange!public!unit tests! !
-verifyUpgradedView:!helpers!private! !
-vuFile!constants!private! !
+verifyUpgradedView:identifier:!helpers!private! !
 !
 
 !UI.Tests.ProgressBarTest class methodsFor!

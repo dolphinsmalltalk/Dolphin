@@ -287,40 +287,36 @@ stbConvertFromVersion1: anArray
 	"Private - Perform an STB conversion from a version 1 <Model> to version 2.
 	Version 2 added 'searchPolicy' instance variable."
 
-	| answer |
-	answer := Array new: anArray size + 1.
-	answer
+	| size |
+	size := anArray size + 1.
+	^(Array new: size)
 		replaceFrom: 1
-		to: 3
-		with: anArray
-		startingAt: 1.
-	answer at: 4 put: self defaultSearchPolicy.
-	answer
+			to: 3
+			with: anArray
+			startingAt: 1;
+		at: 4 put: self defaultSearchPolicy;
 		replaceFrom: 5
-		to: anArray size + 1
-		with: anArray
-		startingAt: 4.
-	^answer!
+			to: size
+			with: anArray
+			startingAt: 4;
+		yourself!
 
 stbConvertFromVersion2: anArray
 	"Private - Perform an STB conversion from a version 2 <Model> to version 3.
 	Version 3 moves 'searchPolicy' instance variable (pushed up)."
 
-	| answer |
-	answer := Array new: anArray size.
-	answer at: 1 put: (anArray at: 1).
-	answer at: 2 put: (anArray at: 4).
-	answer
+	^anArray shallowCopy
+		at: 1 put: (anArray at: 1);
+		at: 2 put: (anArray at: 4);
 		replaceFrom: 3
-		to: 4
-		with: anArray
-		startingAt: 2.
-	answer
+			to: 4
+			with: anArray
+			startingAt: 2;
 		replaceFrom: 5
-		to: anArray size
-		with: anArray
-		startingAt: 5.
-	^answer! !
+			to: anArray size
+			with: anArray
+			startingAt: 5;
+		yourself! !
 !UI.TreeModel class categoriesForMethods!
 new!instance creation!public! !
 stbConvertFromVersion1:!binary filing!private! !

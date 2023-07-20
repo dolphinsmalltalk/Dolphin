@@ -269,17 +269,20 @@ stbSaveOn:!binary filing!public! !
 stbConvertFrom: anSTBClassFormat
 	"Version 1 adds event instance variable and two spares."
 
-	^
-	[:data |
-	| newInstance |
-	newInstance := self basicNew.
-	1 to: data size do: [:i | newInstance instVarAt: i put: (data at: i)].
-	newInstance]!
+	anSTBClassFormat version == 0
+		ifTrue: [^[:data | (self stbConvertFromVersion0: data) becomeA: self]].
+	^super stbConvertFrom: anSTBClassFormat!
+
+stbConvertFromVersion0: anArray
+	"Version 1 adds event instance variable and two spares."
+
+	^anArray resize: anArray size + 3!
 
 stbVersion
 	^1! !
 !UI.CardLayout class categoriesForMethods!
 stbConvertFrom:!binary filing!private! !
+stbConvertFromVersion0:!binary filing!private! !
 stbVersion!binary filing!public! !
 !
 

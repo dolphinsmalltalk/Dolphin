@@ -49,9 +49,9 @@ testNewSelectionsClickOutsideListWithModifiers
 verifyClicks: anArray
 	self assert: clicks size equals: anArray size!
 
-verifyUpgradedView: anInteger
+verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	| view |
-	super verifyUpgradedView: anInteger.
+	super verifyUpgradedView: anInteger identifier: aResourceIdentifier.
 	view := self view.
 	self assert: view backcolor identicalTo: Color default.
 	self assert: view lastSelIndices equals: #()! !
@@ -61,6 +61,6 @@ newSelectionAfterLeftClickOutsideList:!helpers!private! !
 setupClickIntercept!helpers!private! !
 testNewSelectionsClickOutsideListWithModifiers!public!unit tests! !
 verifyClicks:!helpers!private! !
-verifyUpgradedView:!helpers!private! !
+verifyUpgradedView:identifier:!helpers!private! !
 !
 

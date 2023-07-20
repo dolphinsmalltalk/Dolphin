@@ -18,28 +18,18 @@ about
 	self aboutBlock notNil ifTrue: [self aboutBlock value: self]!
 
 aboutBlock
-	"Answer the <monadicValuable> that will display an About screen
-	or nil if there is none. The receiver is passed as the parameter."
+	"Answer the <monadicValuable> that will display an About screen or nil if there is none. The receiver is passed as the parameter to the block when evaluated."
 
-	^aboutBlock
-!
+	aboutBlock ifNil: [^nil].
+	^#{Kernel.STLInFiler} valueOrNil ifNotNil: [:filer | (filer on: aboutBlock readStream) next]!
 
-aboutBlock: aMonadicValuableOrNil
-	"Set the <monadicValuable> that will display an About screen.  The receiver
-	will be passed as the parameter to the valuable. 
-	When a package is created it does not have an about operation set. 
-	To set a default splash screen see #defaultAbout."
+aboutBlockLiteralStoreArray
+	^aboutBlock!
 
-	aboutBlock := aMonadicValuableOrNil.
-	self isChanged: true.
+aboutBlockLiteralStoreArray: anArray
+	"Private - Set the receiver's about block by rehydrating that in serialized form in the <ByteArray> argument."
 
-!
-
-aboutBlockBytes: aByteArray
-	"Private - Set the receiver's about block by rehydrating that in serialized
-	form in the <ByteArray> argument."
-
-	aboutBlock := Object fromBinaryStoreBytes: aByteArray!
+	aboutBlock := anArray!
 
 addAllPrerequisitesTo: aSet
 	"Private - Add to <aSet> all those Packages which must be loaded in
@@ -256,7 +246,7 @@ binaryGlobalNames: aCollectionOfSymbols
 	"Private - Used in pre-v2 packages to set the symbolic names of binary variables owned by the package in the system dictionary.
 	We will convert these at version upgrade time to BindingReferences."
 
-	aCollectionOfSymbols notEmpty ifTrue: [self setBinaryVariableNames: (aCollectionOfSymbols collect: [:each | each asQualifiedReference])]!
+	aCollectionOfSymbols notEmpty ifTrue: [self setBinaryVariableNames: aCollectionOfSymbols]!
 
 binaryVariableNames
 	"Private - Answer a <Collection> of <BindingReference>s, being the names of all binary global variables in this package."
@@ -388,7 +378,7 @@ convertOldMethodNames
 			[:each |
 			| parts className |
 			parts := each key subStrings.
-			className := classes addIfAbsent: (BindingReference pathString: parts first).
+			className := classes addIfAbsent: (BindingReference path: { #Smalltalk. parts first }).
 			parts size > 1 ifTrue: [className := classes addIfAbsent: className meta].
 			names add: (MethodName className: className selector: each value)].
 	methodNames := names!
@@ -398,7 +388,7 @@ convertOldNames: aCollectionOfSymbols
 		ifNotNil: 
 			[| refs |
 			refs := Set new: aCollectionOfSymbols size.
-			aCollectionOfSymbols do: [:each | refs add: each asQualifiedReference].
+			aCollectionOfSymbols do: [:each | refs add: (BindingReference path: { #Smalltalk. each })].
 			refs]!
 
 convertOldNamesProperty: aSymbol
@@ -572,20 +562,27 @@ fileInScript: aSymbol
 	aString isEmpty ifTrue: [^self].
 	self evaluateScript: aSymbol source: aString!
 
-fileNameForBinaryVariable: globalName extension: aString
-	"Private - Answer a filename for storing the binary globalName."
+fileNameForBinaryVariable: aBindingReference
+	"Private - Answer a filename for storing the named binary global object."
+
+	^self isLegacySourceFormat
+		ifTrue: 
+			[File
+				composePath: self path
+				stem: aBindingReference path last
+				extension: 'stb']
+		ifFalse: 
+			[File
+				composePath: self path
+				stem: aBindingReference asString
+				extension: 'ston']!
+
+fileNameForSourceVariable: aBindingReference
+	"Private - Answer a filename for storing the named source global object."
 
 	^File
 		composePath: self path
-		stem: globalName asString
-		extension: aString!
-
-fileNameForSourceVariable: globalName
-	"Private - Answer a filename for storing the source globalObject."
-
-	^File
-		composePath: self path
-		stem: globalName asString
+		stem: (self isLegacySourceFormat ifTrue: [aBindingReference path last] ifFalse: [aBindingReference asString])
 		extension: self sourceVariableExtension!
 
 fileOutName
@@ -742,7 +739,7 @@ initializeGlobals
 			[:each |
 			| target |
 			target := each value.
-			target class isMeta ifTrue: [ClassLocator addAlias: each asSymbol forClass: target]]!
+			target class isMeta ifTrue: [ClassLocator addAlias: each forClass: target]]!
 
 initializeLegacyResources
 	"Private - For old (pre-D6) packages, we have to make sure that the resources loaded by this package actually
@@ -834,7 +831,7 @@ loadBinaryVariables
 			[varNames do: 
 					[:each |
 					| globalStream |
-					globalStream := FileStream read: (self fileNameForBinaryVariable: each extension: 'stb') text: false.
+					globalStream := FileStream read: (self fileNameForBinaryVariable: each) text: false.
 					each declare: (Object binaryReadFrom: globalStream).
 					globalStream close]]
 		ifFalse: 
@@ -843,7 +840,7 @@ loadBinaryVariables
 			varNames do: 
 					[:each |
 					| globalStream |
-					globalStream := FileStream read: (self fileNameForBinaryVariable: each extension: 'ston') text: true.
+					globalStream := FileStream read: (self fileNameForBinaryVariable: each) text: true.
 					each declare: (ston readFrom: globalStream).
 					globalStream close]]!
 
@@ -859,7 +856,8 @@ loadPAC
 	[timestamp := stream file lastWriteTime asInteger.
 	(STBInFiler peekForSignatureIn: stream)
 		ifTrue: 
-			[stream reset.
+			[stream close.
+			stream := FileStream read: filename text: false.
 			BinaryPacLoader
 				ifNil: [self error: 'Legacy binary package loading support is not available']
 				ifNotNil: [:loader | loader value: self value: stream]]
@@ -1951,8 +1949,8 @@ warnChangingDefaultNamespaceFrom: currentNamespace to: newNamespace
 !Kernel.Package categoriesForMethods!
 about!commands!public! !
 aboutBlock!accessing!public! !
-aboutBlock:!accessing!public! !
-aboutBlockBytes:!accessing!private! !
+aboutBlockLiteralStoreArray!accessing!public! !
+aboutBlockLiteralStoreArray:!accessing!private! !
 addAllPrerequisitesTo:!accessing!private! !
 addClass:!adding!public! !
 addLooseMethod:!adding!private! !
@@ -2016,7 +2014,7 @@ errorFileCorrupt!exceptions!private! !
 evaluateScript:source:!private!source filing! !
 fileInClasses!private!source filing! !
 fileInScript:!private!source filing! !
-fileNameForBinaryVariable:extension:!helpers!private! !
+fileNameForBinaryVariable:!helpers!private! !
 fileNameForSourceVariable:!helpers!private! !
 fileOutName!public!source filing! !
 getEvents!accessing!private! !
@@ -2327,104 +2325,73 @@ stbConvertFrom: anSTBClassFormat
 	"Convert version 0 packages by mutating class names from Strings
 	into Symbols. There is no layout change."
 
+	| ver |
+	ver := anSTBClassFormat version.
 	Notification
-		signal: 'Converting package from version ' , anSTBClassFormat version printString , ' to: '
-				, self stbVersion printString.
-	^
-	[:data |
-	(anSTBClassFormat version to: self stbVersion - 1) inject: data
-		into: [:inject :version | self perform: ('stbConvertFromVersion' , version displayString , ':') asSymbol with: inject]]!
+		signal: 'Converting package from version ' , ver printString , ' to: ' , self stbVersion printString.
+	ver == 7 ifTrue: [^[:data | self stbConvertFromVersion7: data]].
+	ver == 6 ifTrue: [^[:data | self stbConvertFromVersion6: data]].
+	ver == 5 ifTrue: [^[:data | self stbConvertFromVersion5: data]].
+	ver == 4 ifTrue: [^[:data | self stbConvertFromVersion4: data]].
+	ver == 3 ifTrue: [^[:data | self stbConvertFromVersion3: data]].
+	ver == 2 ifTrue: [^[:data | self stbConvertFromVersion2: data]].
+	ver == 1 ifTrue: [^[:data | self stbConvertFromVersion1: data]].
+	ver == 0 ifTrue: [^[:data | self stbConvertFromVersion1: data]].
+	^super stbConvertFrom: anSTBClassFormat!
 
-stbConvertFromVersion0: data
-	"Private - Convert version 0 packages by mutating class names from Strings
-	into Symbols. There is no layout change. Answer the mutated data.
+stbConvertFromVersion0: anArray
+	"Private - Convert version 0 packages by mutating class names from Strings	into Symbols. There is no layout change. Answer the mutated data.
+	Version 0 packages preceeded even the first beta release, so there are probably none of these in the wild. Even if there were, the UI framework was radically different, so although they may be loadable they will not work.
 
 	Version 0 Package		-->		Version 1 Package
-	1	name						1	name
+	1	name					1	name
 	2	packagePathname			2	packagePathname
 	3	comment					3	comment
-	4	classNames				4	classNames
+	4	classNames (Set)			4	classNames (IdentitySet)
 	5	methodNames				5	methodNames
-	6	globalNames				6	globalNames
+	6	globalNames (Set)			6	globalNames (IdentitySet)
 	7	prerequisiteNames			7	prerequisiteNames
-	8	preinstall				8	preinstall
+	8	preinstall					8	preinstall
 	9	postinstall				9	postinstall
-	10	singleFile				10	singleFile"
+	10	singleFile					10	singleFile"
 
-	| classNames globalNames |
-	classNames := data instVarAt: 4.
-	classNames become: (classNames collect: [:n | n asSymbol]).
-	classNames becomeA: IdentitySet.
-	globalNames := data instVarAt: 6.
-	globalNames becomeA: IdentitySet.
-	^data!
+	anArray at: 4 put: ((anArray at: 4) collect: [:n | n asSymbol]) asIdentitySet.
+	anArray at: 6 put: (anArray at: 6) asIdentitySet.
+	^self stbConvertFromVersion1: anArray!
 
 stbConvertFromVersion1: anArray
-	"Private - Convert version 1 packages  to version2. The preinstall and
-	postinstall instance variables are replaced by a dictionary which holds
-	those scripts and any more we define. Answer the mutated data.
+	"Private - Convert version 1 packages  to version2. The preinstall and postinstall instance variables are replaced by a dictionary which holds those scripts and any more we define. Answer the mutated data.
 
 	Version 1 Package		-->		Version 2 Package
-	1	name						1	name
+	1	name					1	name
 	2	packagePathname			2	packagePathname
 	3	comment					3	comment
 	4	classNames				4	classNames
 	5	methodNames				5	methodNames
 	6	globalNames				6	globalNames
 	7	prerequisiteNames			7	prerequisiteNames
-	8	preinstall				8	singleFile
+	8	preinstall					8	singleFile
 	9	postinstall				9	scripts
 	10	singleFile"
 
 	| preinstall postinstall newData scripts |
-	preinstall := anArray at: 8.
-	postinstall := anArray at: 9.
-	"need to temporarily convert data Array into a Package so we can
-	use public methods to add preinstall/postinstall scripts"
 	newData := Array new: 9.
-	1 to: 7 do: [:index | newData at: index put: (anArray at: index)].
+	newData replaceFrom: 1 to: 7 with: anArray startingAt: 1.
 	newData at: 8 put: (anArray at: 10).
 	scripts := IdentityDictionary new.
+	preinstall := anArray at: 8.
 	(preinstall notNil and: [preinstall notEmpty]) ifTrue: [scripts at: #preinstall put: preinstall].
+	postinstall := anArray at: 9.
 	(postinstall notNil and: [postinstall notEmpty])
 		ifTrue: [scripts at: #postinstall put: postinstall].
 	newData at: 9 put: scripts.
-	^newData!
+	^self stbConvertFromVersion2: newData!
 
 stbConvertFromVersion2: anArray
-	"Private - Convert version 2 packages to version3. The only change is the
-	addition of a list of resources owned by a packkage which doesn't also
-	own the class which the resource is from. This is similar to the methodNames
-	support.
+	"Private - Convert version 2 packages to version 3. For package version 3, resources had been introduced into Dolphin and so resourceNames was added for tracking loose resources, similar to methodNames for loose methods.
 
 	Version 2 Package		-->		Version 3 Package
-	1	name						1	name
-	2	packagePathname			2	packagePathname
-	3	comment					3	comment
-	4	classNames				4	classNames
-	5	methodNames				5	methodNames
-	6	globalNames				6	globalNames
-	7	prerequisiteNames			7	prerequisiteNames
-	8	singleFile				8	singleFile
-	9	scripts					9	scripts
-								10 resourceNames"
-
-	^anArray copyWith: Set new!
-
-stbConvertFromVersion3: anArray
-	"Private - Convert version 3 packages to version 4. The main change is the
-	addition of an imageStripperBytes instance variable to hold a filed imageStripper
-	to be associated with the package. We hold the image stripper in this form to allow
-	filing of the package into images that do not have ImageStripper installed. 
-	Additionally we must convert the full stored pathname of the package to a
-	name relative to the image base."
-
-	"Note that this is currently the last converter in the chain and answers the
-	coverted Package object rather than an Array. This will need to be changed
-	to answer an Array if an additional converter is added."
-
-	"Version 3 Package		-->		Version 4 Package
-	1	name						1	name
+	1	name					1	name
 	2	packagePathname			2	packagePathname
 	3	comment					3	comment
 	4	classNames				4	classNames
@@ -2433,70 +2400,89 @@ stbConvertFromVersion3: anArray
 	7	prerequisiteNames			7	prerequisiteNames
 	8	singleFile					8	singleFile
 	9	scripts					9	scripts
-	10 	resourceNames				10	resourceNames
-								11 imageStripperBytes"
+								10	resourceNames"
 
-	"Copy over adding a nil imageStripperBytes slot"
+	^self stbConvertFromVersion3: (anArray copyWith: Set new)!
 
-	| newData packagePathName |
-	newData := anArray copyWith: nil.
+stbConvertFromVersion3: anArray
+	"Private - Convert version 3 packages to version 4. The main change is the addition of an imageStripperBytes instance variable to hold a filed imageStripper to be associated with the package. We hold the image stripper in this form to allow filing of the package into images that do not have ImageStripper installed. Additionally we must convert the full stored pathname of the package to a name relative to the image base."
 
-	"Convert the imagePathName to a relative path"
-	packagePathName := File relativePathOf: (anArray at: 2) to: SessionManager current imageBase.
-	newData at: 2 put: packagePathName.
-	^newData!
-
-stbConvertFromVersion4: anArray
-	"Private - Convert version 4 packages (Dolphin 3.0) to version 5 (Dolphin 3.05).
-	Adds an aboutBlock (12) and versionString (13) instance variables."
-
-	^(Array new: 13)
-		replaceFrom: 1
-			to: 11
-			with: anArray
-			startingAt: 1;
-		yourself!
-
-stbConvertFromVersion5: anArray 
-	"Private - Convert version 5 (Dolphin 3.05) packages to version 6 (new PAX format).
-	singleFile instance variable is no longer used."
-
-	"Version 5 Package		-->		Version 4 Package
-	1	name						1	name
+	"Version 3 Package		-->		Version 4 Package
+	1	name					1	name
 	2	packagePathname			2	packagePathname
 	3	comment					3	comment
 	4	classNames				4	classNames
 	5	methodNames				5	methodNames
 	6	globalNames				6	globalNames
 	7	prerequisiteNames			7	prerequisiteNames
-	8	singleFile					8	events
+	8	singleFile					8	singleFile
 	9	scripts					9	scripts
-	10 	resourceNames				10	doNotReuse
-	11 	imageStripperBytes			11	imageStripperBytes
-	12 	aboutBlock				12	aboutBlock
-	13 	packageVersion			13	packageVersion
-								14	manualPrerequisites
-								15	timestamp
-								16	untracedGlobals"
+	10 	resourceNames			10	resourceNames
+								11	imageStripperBytes"
 
-	anArray at: 8 put: nil.	"singleFile"
-	anArray at: 10 put: nil.
-	^anArray!
+	"Copy over adding a nil imageStripperBytes slot"
+
+	| v4vars  |
+	v4vars := anArray copyWith: nil.
+
+	"Convert the imagePathName to a relative path"
+	v4vars at: 2 put: (File relativePathOf: (anArray at: 2) to: SessionManager current imageBase).
+
+	^self stbConvertFromVersion4: v4vars!
+
+stbConvertFromVersion4: anArray
+	"Private - Convert version 4 packages (Dolphin 1.0b2e) to version 5 (Dolphin 3.05).
+	Adds an aboutBlock (12) and versionString (13) instance variables."
+
+	| scripts |
+	"Discard empty scripts"
+	scripts := anArray at: 9.
+	scripts := scripts select: [:each | each notEmpty].
+	anArray at: 9 put: (scripts isEmpty ifFalse: [scripts]).
+	^self stbConvertFromVersion5: (anArray resize: 13)!
+
+stbConvertFromVersion5: anArray
+	"Private - Convert version 5 (Dolphin 3.05) packages to version 6 for D5, and then D6 (new PAX format).
+	singleFile instance variable is no longer used. The format was change again in D6 without updating the stbVersion - this was wrong but worked because the change was additive and the converter was tolerant.
+	The resourceNames were no longer required becaues of the introduction of the literal method representation."
+
+	"Version 5 Package		-->		Version 6 Package (D5)				Version 6 Package (D6)
+	1	name					1	name						1	name
+	2	packagePathname			2	packagePathname				2	packagePathname
+	3	comment					3	comment                                         3	comment
+	4	classNames				4	classNames					4	classNames
+	5	methodNames				5	methodNames					5	methodNames
+	6	globalNames				6	globalNames                                   6	globalNames
+	7	prerequisiteNames			7	prerequisiteNames				7	prerequisiteNames
+	8	singleFile					8	events						8	events
+	9	scripts					9	scripts						9	scripts
+	10 	resourceNames			10	resourceNames (not required)		10	doNotReuse
+	11 	imageStripperBytes			11	imageStripperBytes				11	imageStripperBytes
+	12 	aboutBlock				12	aboutBlock					12	aboutBlock
+	13 	packageVersion			13	packageVersion				13	packageVersion
+								14	manualPrerequisites			14	manualPrerequisites
+								15	_unused2						15	timeStamp
+																16	untracedGlobals"
+	^self stbConvertFromVersion6: ((Array new: 16)
+				replaceFrom: 1
+					to: anArray size
+					with: anArray
+					startingAt: 1;
+				at: 10 put: (anArray at: 8);
+				at: 8 put: nil;
+				yourself)!
 
 stbConvertFromVersion6: anArray
 	"Private - Convert version 6 to 7: Adds changeIndex and paxVersion instance variables."
 
-	"We don't need to do anything as the subsequent converter will cope with the absence of the new variables in the data Array"
-
-	^anArray!
+	^self stbConvertFromVersion7: (anArray resize: 17)!
 
 stbConvertFromVersion7: anArray
 	"Private - Convert version 7 to 8: New format package using BindingReferences."
 
 	| newPackage |
 	"Last converter in the chain"
-	newPackage := self new.
-	anArray keysAndValuesDo: [:eachKey :eachValue | newPackage instVarAt: eachKey put: eachValue].
+	newPackage := (anArray resize: 19) becomeA: self.
 	newPackage upgradeToVersion2.
 	^newPackage!
 

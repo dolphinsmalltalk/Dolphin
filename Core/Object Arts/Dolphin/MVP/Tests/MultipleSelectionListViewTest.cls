@@ -11,17 +11,9 @@ MultipleSelectionListViewTest comment: 'Test that the behaviour of the deprecate
 !MultipleSelectionListViewTest methodsFor!
 
 classToTest
-	^MultipleSelectionListView!
-
-oldDolphinVersionsForStbUpgrade
-	^#(1 3 4)!
-
-vuFile
-	^'ListPresenter.Multi-selection enhanced list view.vu'! !
+	^MultipleSelectionListView! !
 !MultipleSelectionListViewTest categoriesForMethods!
 classToTest!constants!private! !
-oldDolphinVersionsForStbUpgrade!constants!private! !
-vuFile!constants!private! !
 !
 
 !MultipleSelectionListViewTest class methodsFor!

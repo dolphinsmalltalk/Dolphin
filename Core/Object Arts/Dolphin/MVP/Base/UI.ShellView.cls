@@ -1400,61 +1400,66 @@ shutdownOnExit
 	^false!
 
 stbConvertFromVersion0: anArray
-	"Private - Perform an STB conversion from a version 0 <View> to version 1.
-	i.e. insert largeIcon/smallIcon inst vars in 	ShellView and subclasses."
+	"Private - Perform an STB conversion from a version 0 <View> to version 1 (Dolphin 2.0). i.e. insert largeIcon/smallIcon inst vars, initially nil."
 
-	| newArray array |
-	array := super stbConvertFromVersion0: anArray.
-	newArray := Array new: array size + 2.
-	newArray
+	| data size |
+	data := super stbConvertFromVersion0: anArray.
+	size := data size + 2.
+	^(Array new: size)
 		replaceFrom: 1
-		to: 18
-		with: array
-		startingAt: 1.
-	19 to: array size do: [:i | newArray at: i + 2 put: (array at: i)].
-	^newArray!
+			to: 18
+			with: data
+			startingAt: 1;
+		replaceFrom: 21
+			to: size
+			with: data
+			startingAt: 19;
+		yourself!
 
 stbConvertFromVersion4: anArray
 	"Private - Perform an STB conversion from a version 4 (or earlier) <View> to version 5,
 	i.e. insert maxExtent/minExtent inst vars in ShellView and subclasses."
 
-	| newArray array |
-	array := super stbConvertFromVersion4: anArray.
-	newArray := Array new: array size + 2.
-	newArray
+	| data size |
+	data := super stbConvertFromVersion4: anArray.
+	size := data size + 2.
+	^(Array new: size)
 		replaceFrom: 1
-		to: 20
-		with: array
-		startingAt: 1.
-	21 to: array size do: [:i | newArray at: i + 2 put: (array at: i)].
-	^newArray!
+			to: 20
+			with: data
+			startingAt: 1;
+		replaceFrom: 23
+			to: size
+			with: data
+			startingAt: 21;
+		yourself!
 
-stbConvertFromVersion8: anArray 
+stbConvertFromVersion8: anArray
 	"Private - Perform an STB conversion from a version 8 (or earlier) <View> to version 9,
 	i.e. convert defaultButton inst. var. of <ShellView> and subclasses to integer id."
 
-	| array |
-	array := super stbConvertFromVersion8: anArray.
 	"The defaultButtonId does not need to be persisted, as <PushButton>s remember and reset on creation"
-	array at: DefaultButtonIndex put: 0.
-	^array!
+
+	^(super stbConvertFromVersion8: anArray)
+		at: DefaultButtonIndex put: 0;
+		yourself!
 
 stbConvertFromVersion9: anArray
 	"Private - Perform an STB conversion from a version 9 (or earlier) <ShellView> to version 10,
 	i.e. append 'flashes' and a couple of dummy instance variables."
 
-	| newSize array |
-	array := super stbConvertFromVersion9: anArray.
-	newSize := array size + 3.	"3 instance variables were added"
-	^(Array new: newSize)
+	| data size |
+	data := super stbConvertFromVersion9: anArray.
+	size := data size + 3.	"3 instance variables were added"
+	^(Array new: size)
 		replaceFrom: 1
 			to: 24
-			with: array
+			with: data
 			startingAt: 1;
 		at: 25 put: 0;
 		replaceFrom: 28
-			to: newSize
-			with: array
+			to: size
+			with: data
 			startingAt: 25;
 		yourself!
 

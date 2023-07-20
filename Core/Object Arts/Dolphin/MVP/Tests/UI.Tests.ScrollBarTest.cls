@@ -14,24 +14,16 @@ UI.Tests.ScrollBarTest comment: ''!
 classToTest
 	^ScrollBar!
 
-oldDolphinVersionsForStbUpgrade
-	^1 to: 5!
-
-verifyUpgradedView: anInteger
+verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	| view |
-	super verifyUpgradedView: anInteger.
+	super verifyUpgradedView: anInteger identifier: aResourceIdentifier.
 	view := self view.
 	self assert: view backcolor identicalTo: Color default.
 	self assert: view isTrackingContinuous.
-	self assert: view typeconverter isNullConverter!
-
-vuFile
-	^'NumberPresenter.Vertical scroll bar.vu'! !
+	self assert: view typeconverter isNullConverter! !
 !UI.Tests.ScrollBarTest categoriesForMethods!
 classToTest!helpers!private! !
-oldDolphinVersionsForStbUpgrade!constants!private! !
-verifyUpgradedView:!helpers!private! !
-vuFile!constants!private! !
+verifyUpgradedView:identifier:!helpers!private! !
 !
 
 !UI.Tests.ScrollBarTest class methodsFor!

@@ -81,12 +81,17 @@ onStartup
 !
 
 stbConvertFrom: anSTBClassFormat
+	anSTBClassFormat version == 0
+		ifTrue: [^[:data | (self stbConvertFromVersion0: data) becomeA: self]].
+	^super stbConvertFrom: anSTBClassFormat!
+
+stbConvertFromVersion0: anArray
 	"Version 1 is refactored so that bitmap and bitmapIndex instance variables are no longer inherited.
 
 	Version 0 inst var layout was:
 		ToolbarItem
 			1: commandId
-			2: unused
+			2: text (unused)
 			3: window (toolbar)
 			4: style
 			5: commandDescription
@@ -105,13 +110,7 @@ stbConvertFrom: anSTBClassFormat
 		ToolbarIconButton
 	"
 
-	^
-	[:data |
-	| newInstance |
-	newInstance := self basicNew.
-	1 to: 3 do: [:i | newInstance instVarAt: i put: (data at: i + 2)].
-	newInstance instVarAt: 4 put: (data at: 1).
-	newInstance]! !
+	^{ anArray at: 3. anArray at: 4. anArray at: 5. anArray at: 1 }! !
 !UI.ToolbarIconButton class categoriesForMethods!
 command:description:image:!instance creation!public! !
 commandDescription:!instance creation!public! !
@@ -119,5 +118,6 @@ defaultImage!public! !
 new!instance creation!public! !
 onStartup!public! !
 stbConvertFrom:!binary filing!private! !
+stbConvertFromVersion0:!binary filing!private! !
 !
 

@@ -1,8 +1,8 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Tests.DolphinTest
+UI.Tests.PresenterTest
 	subclass: #'Tools.Tests.SmalltalkSystemShellTest'
-	instanceVariableNames: 'systemShell'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -11,17 +11,11 @@ Tools.Tests.SmalltalkSystemShellTest guid: (Core.GUID fromString: '{6d373cd5-f02
 Tools.Tests.SmalltalkSystemShellTest comment: ''!
 !Tools.Tests.SmalltalkSystemShellTest methodsFor!
 
-setUp
-	super setUp.
-	systemShell := SmalltalkSystemShell show.!
+classToTest
+	^SmalltalkSystemShell!
 
 systemFolderPresenter
-	^systemShell instVarNamed: 'systemFolderPresenter'!
-
-tearDown
-	systemShell topShell view destroy.
-	systemShell := nil.
-	super tearDown!
+	^presenter instVarNamed: 'systemFolderPresenter'!
 
 testIconOrdering
 	| initialContents sampleApps finalContents |
@@ -32,11 +26,14 @@ testIconOrdering
 	self systemFolderPresenter onActionPerformed.
 	self systemFolderPresenter up.
 	finalContents := self systemFolderPresenter contents asArray.
-	self assert: finalContents equals: initialContents! !
+	self assert: finalContents equals: initialContents!
+
+viewClass
+	^ShellView! !
 !Tools.Tests.SmalltalkSystemShellTest categoriesForMethods!
-setUp!private!unit tests! !
+classToTest!helpers!private! !
 systemFolderPresenter!private!unit tests! !
-tearDown!private!unit tests! !
 testIconOrdering!public!unit tests! !
+viewClass!constants!private! !
 !
 

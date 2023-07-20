@@ -468,72 +468,6 @@ localScope
 	^methodClass localScope
 !
 
-mapIp: anInteger toDebug: debugCompiledMethod
-	| i interp first map debugMap debugDispatcher debugFirst |
-	map := self debugInfo textMap.
-	debugMap := debugCompiledMethod debugInfo textMap.
-	i := self class findIp: anInteger inTextMap: map.
-	i == 0
-		ifTrue: [first := debugFirst := 1]
-		ifFalse: 
-			[first := (map at: i) key.
-			debugFirst := (debugMap at: i) key].
-	first == anInteger
-		ifTrue: 
-			["Directly corresponding entry"
-			^debugFirst].
-	self assert: [first < anInteger].
-	"We should have the map entry for the previous sync point (send instruction), and need to step forward from there"
-	interp := self byteCodeDispatcher.
-	debugDispatcher := debugCompiledMethod byteCodeDispatcher.
-	interp ip: first.
-	debugDispatcher ip: debugFirst.
-	"Note: If there is more than one step here, the results are unreliable. In use from the debugger, this should not happen though, because any release frame should have been suspended just after a send."
-	
-	[debugDispatcher next.
-	(interp
-		next;
-		ip) == anInteger] whileFalse.
-	^debugDispatcher ip!
-
-mapIP: anInteger toDebug: debugCompiledMethod
-	| i interp offset prev map debugMap debugDispatcher |
-	map := self debugInfo textMap.
-	debugMap := debugCompiledMethod debugInfo textMap.
-	i := self class findIP: anInteger inTextMap: map.
-	(map at: i) key == anInteger
-		ifTrue: 
-			["Directly corresponding entry"
-			^(debugMap at: i) key].
-	"We expect to be mapping from a bytecode immediately after a send (or a jump replacing an optimised send), so we need to remap that previous send instructions IP and then step to the next instruction in the debug method"
-	interp := self byteCodeDispatcher.
-	prev := interp prevIP: anInteger.
-	i := self class findIP: prev inTextMap: map.
-	offset := prev - (map at: i) key.
-	offset == 0
-		ifTrue: 
-			["Text map entry exists for previous instruction, so step forward once from there in the debug method"
-			^interp
-				method: debugCompiledMethod;
-				ip: (debugMap at: i) key;
-				next;
-				ip].
-	"Intermediate bytecode, so find the prior map entry and step forward from there."
-	debugDispatcher := debugCompiledMethod byteCodeDispatcher.
-	[i > 1 and: 
-			["We must skip over any voided entries"
-			(map at: (i := i - 1)) key == 0]]
-		whileTrue.
-	interp ip: (map at: i) key.
-	debugDispatcher ip: (debugMap at: i) key.
-	"Note: If there is more than one step here, the results are unreliable. In use from the debugger, this should not happen though, because any release frame should have been suspended just after a send."
-	[interp ip == prev] whileFalse: 
-			[interp next.
-			debugDispatcher next].
-	^debugDispatcher
-		next;
-		ip!
-
 messages
 	"Answer a <collection> of the messages sent by the receiver."
 
@@ -820,8 +754,6 @@ literalsDo:!enumerating!private! !
 localCount!accessing!method header!private! !
 localEnvironment!accessing!private! !
 localScope!accessing!public! !
-mapIp:toDebug:!private! !
-mapIP:toDebug:!private! !
 messages!accessing!development!public! !
 messagesDo:!development!enumerating!public! !
 methodClass!accessing!public! !

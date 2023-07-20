@@ -401,9 +401,9 @@ verifyClicks: anArray
 verifyColumnWidths: widths
 	presenter columnsList with: widths do: [:col :width | self assert: col width equals: width]!
 
-verifyUpgradedView: anInteger
+verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	| view |
-	super verifyUpgradedView: anInteger.
+	super verifyUpgradedView: anInteger identifier: aResourceIdentifier.
 	view := self view.
 	self assert: view backcolor identicalTo: Color default.
 	self assert: view allColumns size equals: 1.
@@ -442,6 +442,6 @@ testSetTextBlockDoesNotAffectSelection!public!unit tests! !
 testSetTextImageDoesNotAffectSelection!public!unit tests! !
 verifyClicks:!helpers!private! !
 verifyColumnWidths:!helpers!private! !
-verifyUpgradedView:!helpers!private! !
+verifyUpgradedView:identifier:!helpers!private! !
 !
 

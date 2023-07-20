@@ -47,9 +47,6 @@ testNamed
 testNameOfDay
 	self verifyEnglishNamesOfDays: self defaultSubject!
 
-testStbConvertFromVersion0
-	self subclassResponsibility!
-
 testStbRoundTrip
 	| rehydrated bytes subject |
 	subject := self defaultSubject.
@@ -67,7 +64,10 @@ testStbRoundTripUserDefault
 	Locale userDefault: (Locale named: 'es-ES').
 	self deny: Locale userDefault equals: subject.
 	subject := Object fromBinaryStoreBytes: bytes.
-	self assert: subject identicalTo: Locale userDefault! !
+	self assert: subject identicalTo: Locale userDefault!
+
+testStlConvertFromVersion0
+	self subclassResponsibility! !
 !OS.Tests.AbstractInvariantLocaleTest categoriesForMethods!
 subjectName!constants!private! !
 testDayOfWeek!public!unit tests! !
@@ -80,8 +80,8 @@ testMonthName!public!unit tests! !
 testName!public!unit tests! !
 testNamed!public!unit tests! !
 testNameOfDay!public!unit tests! !
-testStbConvertFromVersion0!public!unit tests! !
 testStbRoundTrip!public!unit tests! !
 testStbRoundTripUserDefault!public!unit tests! !
+testStlConvertFromVersion0!public!unit tests! !
 !
 

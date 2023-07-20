@@ -563,10 +563,38 @@ testRataDie
 testSecond
 	self assert: self canonicalInstance second equals: 59 + (666666666/1000000000)!
 
-testStbConvertFrom
+testStbConvertFrom0
+	"Test upgrade from version 0.
+	The stored instances I have do not have a Duration instance for seconds (JGF)"
+
+	"Create a ByteArray from 96fc6fa776aff7f8e76246917a28cda0195e27be (24 April 2019)
+	
+	| ts date time dat |
+	ts := TimeStamp current.
+	date := ts date.
+	time := ts time.
+	time seconds class == Fraction ifFalse: [self error: 'wrong class!!'].
+	dat := DateAndTime
+		year: date year 
+		month: date month 
+		day: date dayOfMonth 
+		hour: time hour 
+		minute: time minute 
+		second: time second.
+	dat binaryStoreBytes.
+	 "
+
+	| bytes dat string |
+	bytes := #[33 83 84 66 32 52 32 6 3 11 0 68 97 116 101 65 110 100 84 105 109 101 131 127 22 0 6 2 8 0 70 114 97 99 116 105 111 110 183 217 116 4 209 7 0 0 33 59 255 255].	"Obtained from the code above"
+	dat := DateAndTime fromBinaryStoreBytes: bytes.
+	string := dat printString.
+	self assert: string equals: ' 2019-06-07T10:23:03.387-07:00'	"What is with the leading space? [See Ansi standard. This is the required format]"!
+
+testStlConvertFrom
 	"Test upgrade from the original IDB DateAndTime representation to the day number and seconds representation."
 
-	{#(#'!!STL' 4 721670 ##(Smalltalk.DateAndTime) 524806 ##(Smalltalk.Fraction) 8 31845933559313 1001 524550 ##(Smalltalk.Duration) 7201 34 7 4039 9 51 19 37 434 38627 1001 11).
+	{
+		#(#'!!STL' 4 721670 ##(Smalltalk.DateAndTime) 524806 ##(Smalltalk.Fraction) 8 31845933559313 1001 524550 ##(Smalltalk.Duration) 7201 34 7 4039 9 51 19 37 434 38627 1001 11).
 		DateAndTime
 			year: 2019
 			month: 4
@@ -602,38 +630,12 @@ testStbConvertFrom
 		DateAndTime
 			year: 1901
 			day: 1
-			offset: Duration zero} pairsDo: 
+			offset: Duration zero
+	} pairsDo: 
 				[:stl :expected |
 				| actual |
 				actual := Object fromLiteralStoreArray: stl.
 				self assert: actual equals: expected]!
-
-testStbConvertFrom0
-	"Test upgrade from version 0.
-	The stored instances I have do not have a Duration instance for seconds (JGF)"
-
-	"Create a ByteArray from 96fc6fa776aff7f8e76246917a28cda0195e27be (24 April 2019)
-	
-	| ts date time dat |
-	ts := TimeStamp current.
-	date := ts date.
-	time := ts time.
-	time seconds class == Fraction ifFalse: [self error: 'wrong class!!'].
-	dat := DateAndTime
-		year: date year 
-		month: date month 
-		day: date dayOfMonth 
-		hour: time hour 
-		minute: time minute 
-		second: time second.
-	dat binaryStoreBytes.
-	 "
-
-	| bytes dat string |
-	bytes := #[33 83 84 66 32 52 32 6 3 11 0 68 97 116 101 65 110 100 84 105 109 101 131 127 22 0 6 2 8 0 70 114 97 99 116 105 111 110 183 217 116 4 209 7 0 0 33 59 255 255].	"Obtained from the code above"
-	dat := DateAndTime fromBinaryStoreBytes: bytes.
-	string := dat printString.
-	self assert: string equals: ' 2019-06-07T10:23:03.387-07:00'	"What is with the leading space?"!
 
 testStoreOn
 	| now stored collection |
@@ -804,8 +806,8 @@ testOffsetBy!public!unit tests! !
 testPrintOn!public!unit tests! !
 testRataDie!public!unit tests! !
 testSecond!public!unit tests! !
-testStbConvertFrom!public!unit tests! !
 testStbConvertFrom0!public!unit tests! !
+testStlConvertFrom!public!unit tests! !
 testStoreOn!public!testing! !
 testToday!public!unit tests! !
 testYearMonthDay!public!unit tests! !

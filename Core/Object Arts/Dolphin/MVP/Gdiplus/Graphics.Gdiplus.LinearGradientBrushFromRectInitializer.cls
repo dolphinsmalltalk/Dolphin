@@ -93,13 +93,16 @@ rect:color1:color2:mode:!initializing!private! !
 !Graphics.Gdiplus.LinearGradientBrushFromRectInitializer class methodsFor!
 
 stbConvertFrom: anSTBClassFormat
-	^
-	[:data |
-	self
-		rect: (data at: 2)
-		color1: (data at: 3)
-		color2: (data at: 4)
-		mode: (data at: 5)]! !
+	anSTBClassFormat version == 0
+		ifTrue: 
+			[^
+			[:data |
+			self
+				rect: (data at: 2)
+				color1: (data at: 3)
+				color2: (data at: 4)
+				mode: (data at: 5)]].
+	^super stbConvertFrom: anSTBClassFormat! !
 !Graphics.Gdiplus.LinearGradientBrushFromRectInitializer class categoriesForMethods!
 stbConvertFrom:!binary filing!public! !
 !

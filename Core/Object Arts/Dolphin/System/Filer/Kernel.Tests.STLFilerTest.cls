@@ -38,6 +38,12 @@ simpleReadWriteOf: value context: anObject
 	in context: anObject.
 	^in next!
 
+stl5Literals
+	"Private - STL v5 format from Dolphin 8 of: #(1 'abc' 1.0 true false nil #(123) #[123] $🐬) 
+	Note that the top-level array itself cannot be written in literal form because some of the objects it contains are not atomic. It has to be written as individual elements in case the non-atomic content is referenced from more than one location in the object stream, in order to maintain identity of the shared references."
+
+	^#(#'!!STL' 5 34 9 3 8 'abc' 8 1.0 true false nil 8 #(123) 8 #[123] $🐬)!
+
 testArrayOfAtomics
 	| array1 storeArray rehydrated array2 |
 	array1 := {Object. #abc. 123. $a}.
@@ -96,7 +102,7 @@ testBindingReference
 	self assert: rehydrated key class identicalTo: FullBindingReference.
 	self assert: rehydrated key equals: ref.
 	self assert: rehydrated value identicalTo: Object.
-	text := STLPrinter print: storeArray.
+	text := STLPrinter printLiteralStoreArray: storeArray.
 	restoredArray := Compiler evaluate: text.
 	self deny: (restoredArray includes: Object).
 	rehydrated := Object fromLiteralStoreArray: restoredArray.
@@ -151,6 +157,63 @@ testInvalidStream
 	self should: [STLInFiler on: #('') readStream] raise: STBError.
 	self should: [STLInFiler on: #(#[]) readStream] raise: STBError!
 
+testStl3Literals
+	"STL v3 format from Dolphin 6. Only SmallIntegers, Strings and ByteArrays actually get emitted as literals, not even nil, true and false. Classes were emitted as ##() expression, as (weirdly) were PoolConstantDictionary objects, although in practice the latter are very unlikely to be encountered. Processor and Smalltalk globals were pre-registered."
+
+	| stl3Literals |
+	stl3Literals := #(#'!!STL' 3 98 13 3 8 'abc' 8 #foo 327734 ##(Smalltalk.Float) 8 0 0 0 0 0 0 240 63 16 32 0 98 1 247 8 #[123] 1044 48 64 8 ##(Smalltalk.Win32Constants)).
+	self assert: (Object fromLiteralStoreArray: stl3Literals)
+		equals: #(1 'abc' #foo 1.0 true false nil #(123) #[123] $A ##(Smalltalk) ##(Processor) ##(Win32Constants))!
+
+testStl4Literals
+	"Private - STL v4 format from Dolphin 7 of: #(1 'abc' 1.0 true false nil #(123) #[123] $🐬 ##(Object)).
+	In STL4 nils and Characters (which can be non-ascii) are written as literals. Main difference from 5 for this case is that the Float is not written as a literal in STL4."
+
+	self assert: (Object
+				fromLiteralStoreArray: #(#'!!STL' 4 34 14 3 8 'abc' #foo 327734 ##(Smalltalk.Float) 8 0 0 0 0 0 0 240 63 true false nil 8 #(123) 8 #[123] $\x1F42C ##(Smalltalk.Object) ##(Smalltalk) ##(Smalltalk.Processor) ##(Smalltalk.Win32Constants)))
+		equals: #(1 'abc' #foo 1.0 true false nil #(123) #[123] $🐬 ##(Object) ##(Smalltalk) ##(Smalltalk.Processor) ##(Smalltalk.Win32Constants))!
+
+testStl5Literals
+	self assert: (Object fromLiteralStoreArray: self stl5Literals)
+		equals: #(1 'abc' 1.0 true false nil #(123) #[123] $🐬)!
+
+testStl6Literals
+	"STL v6 format from Dolphin 8 of: #(1 'abc' 1.0 true false nil #(123) #[123] $🐬 Object. #{Core.Object}) 
+	Differs from STL5 in that there are no pre-registered classes, so the class ref for the top level Array is included."
+
+	| literals storeArray |
+	literals := { 1. 'abc'. #foo. 1.0. true. false. nil. #(123). #[123]. $🐬. Object. #{Core.Object} }.
+	self assert: (Object
+				fromLiteralStoreArray: #(#'!!STL' 6 38 #{Core.Array} 12 3 8 'abc' #foo 8 1.0 true false nil 8 #(123) 8 #[123] $🐬 #{Core.Object} 8 #{Core.Object}))
+		equals: literals.
+	storeArray := literals literalStoreArray.
+	"This helps to show how the stream is structured. Atomic objects (i.e. Symbols, booleans, nil, Characters, class references) do not need the literal prefix because for any one value they can have only one instance (or, in the case of classes, are the single instance of a metaclass). String and floats requires the prefix because these may have more than one instance with the same value and must be inserted into the read-map to preserve identity across potentially multiple references in the object graph"
+	self assert: storeArray
+		equals: {
+				#'!!STL'.
+				6.
+				STBFiler.PrefixVariableMask | STBFiler.PrefixClassMask.
+				Array.
+				literals size.
+				1 << 1 | 1.
+				STBFiler.PrefixLiteralMask.
+				'abc'.
+				#foo.
+				STBFiler.PrefixLiteralMask.
+				1.0.
+				true.
+				false.
+				nil.
+				STBFiler.PrefixLiteralMask.
+				#(123).
+				STBFiler.PrefixLiteralMask.
+				#[123].
+				$🐬.
+				Object.
+				STBFiler.PrefixLiteralMask.
+				#{Core.Object}
+			}!
+
 testSymbolReadWrite
 	| contents deserialized data testSymbol |
 	testSymbol := 'testSymbol' asSymbol.
@@ -181,6 +244,7 @@ deserialize:!helpers!private! !
 serialize:!helpers!private! !
 simpleReadWriteOf:!private!unit tests! !
 simpleReadWriteOf:context:!private!unit tests! !
+stl5Literals!constants!private! !
 testArrayOfAtomics!public!unit tests! !
 testArraysWithSharedLiterals!public!unit tests! !
 testBindingReference!public!unit tests! !
@@ -189,6 +253,10 @@ testClassReadWrite!public!unit tests! !
 testEmptyStream!public!unit tests! !
 testIntegerReadWrite!public!unit tests! !
 testInvalidStream!public!unit tests! !
+testStl3Literals!public!unit tests! !
+testStl4Literals!public!unit tests! !
+testStl5Literals!public!unit tests! !
+testStl6Literals!public!unit tests! !
 testSymbolReadWrite!public!unit tests! !
 verifyRehydrateNonExistantClass:!helpers!private! !
 writeLiteralsFor:!private!unit tests! !

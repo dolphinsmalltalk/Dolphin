@@ -322,11 +322,10 @@ receiveMessagesOn: aStream
 	a validating in-filer to avoid creating a security hole that might execute code."
 
 	
-	[| filer validClasses |
+	[| filer |
 	"The messages are a pair of strings in an Assocation. We don't allow any other objects to be deserialised."
-	validClasses := Set withAll: { Association fullName. AnsiString fullName. Utf8String fullName. Utf16String fullName }.
 	filer := (Kernel.STBValidatingInFiler on: aStream)
-				validationBlock: [:className | validClasses includes: className];
+				validClasses: #(#{Core.Association} #{Core.AnsiString} #{Core.Utf8String} #{Core.Utf16String});
 				yourself.
 	
 	[| message |
@@ -334,8 +333,10 @@ receiveMessagesOn: aStream
 	self enqueueInboundMessage: message.
 	filer stream atEnd]
 			whileFalse: [filer reset]]
-			on: Stream endOfStreamSignal , Kernel.STBError
-			do: [:ex | ]!
+			on: Kernel.STBError
+			do: [:ex | self enqueueInboundMessage: 'Chat' -> ex description]
+			on: Stream endOfStreamSignal
+			do: [:ex | self enqueueInboundMessage: 'Chat' -> 'Disconnected']!
 
 send
 	"Send the current outgoing message to the remote socket"
@@ -356,7 +357,8 @@ senderMain
 
 	
 	[| filer |
-	filer := Kernel.STBOutFiler on: socket writeStream.
+	"For interop with D7 Chat client"
+	filer := Kernel.STBOutFiler on: socket writeStream version: 4.
 	
 	[| msg |
 	msg := sendQueue next.
@@ -380,7 +382,7 @@ socketConnected: aSocket2
 	self dontAcceptCalls.
 	self forkReceiverOn: socket readStream.
 	self forkSender.
-	messageDisplay clear.
+	messageDisplay clearAll.
 	calleeAddress value: self peerAddress.
 	self status: #connected.
 	"Must validate before attempting to set focus, as can't set focus to a disabled view."

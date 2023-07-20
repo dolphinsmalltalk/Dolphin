@@ -3,10 +3,13 @@
 Core.Object
 	subclass: #'Security.DolphinSureTrustedData'
 	instanceVariableNames: 'data description signature publisherCertificate'
-	classVariableNames: 'ValidStbClasses'
+	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'ValidStbClasses'
+				-> #(#{Core.AnsiString} #{Core.Utf8String} #{Core.ByteArray} #{Security.DolphinSureTrustedData} #{Security.DolphinSureCertificate} #{Security.DolphinSurePersonalCertificate})
+		}!
 Security.DolphinSureTrustedData guid: (Core.GUID fromString: '{6ba876e9-8f00-4f03-bed6-f2f6af4edbf1}')!
 Security.DolphinSureTrustedData comment: 'A DolphinSureTrustedData object represents data that has been encrypted with a particular publisher''s certificate.  The intent is that the data can be guaranteed as originating from a particular publisher (identified by the encapsulated certificate) and that it can also be trusted not to have been modified since it was published.  It is not used as a means of transmitting "secret" data (since anyone can directly see it) but as a means of transmitting signed data.
 
@@ -164,11 +167,11 @@ validDataPublishedBy:!accessing!public! !
 !Security.DolphinSureTrustedData class methodsFor!
 
 binaryReadFrom: aStream context: anObject
-	"Answers an object read from its binary STB representation on aStream. Because STB is inherently an insecure format (loading objects can cause arbitrary code to be run) we must 	use a special STBInFiler (an STBValidatingInFiler) that will only load a restricted set of classes that we know to be passive."
+	"Answers an object read from its binary STB representation on aStream. Because STB is inherently an insecure format (loading objects can cause arbitrary code to be run) we must use a special STBInFiler (an STBValidatingInFiler) that will only load a restricted set of classes that we know to be passive."
 
 	^(STBValidatingInFiler on: aStream)
 		context: anObject;
-		validationBlock: [:className | ValidStbClasses includes: className];
+		validClasses: #(#{Core.AnsiString} #{Core.Utf8String} #{Core.ByteArray} #{Security.DolphinSureTrustedData} #{Security.DolphinSureCertificate} #{Security.DolphinSurePersonalCertificate});
 		next!
 
 data: aByteArray description: aString publisherCertificate: certificate privateKey: privateKey
@@ -193,16 +196,7 @@ initialize
 		self initialize
 	"
 
-	| addNames |
-	ValidStbClasses := Set new.
-	addNames := 
-			[:each |
-			ValidStbClasses
-				add: each unqualifiedName;
-				add: each asString].
-	#(#{Core.AnsiString} #{Core.Utf8String} #{Core.ByteArray}) do: addNames.
-	addNames value: self asQualifiedReference.
-	self secureCertificateClassNames do: addNames!
+	self addClassConstant: 'ValidStbClasses' value: #(#{Core.AnsiString} #{Core.Utf8String} #{Core.ByteArray} #{Security.DolphinSureTrustedData}), self secureCertificateClassNames !
 
 keyGroup
 	"Private - Answers the key group for all instances of the receiver. This is a partial key that can be combined with

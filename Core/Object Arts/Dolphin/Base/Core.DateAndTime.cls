@@ -705,24 +705,27 @@ readOffsetFrom: aStream sign: aCharacter ifInvalid: aNiladicValuable
 stbConvertFrom: anSTBClassFormat
 	"Version 1 changes the internal representation to a RataDie day number and seconds in the day."
 
-	^
-	[:data |
-	(data at: 2) class == Duration
+	anSTBClassFormat version == 0
 		ifTrue: 
-			[| totalSeconds offset |
-			"Original code satisfies one set of tests"
-			offset := data second.
-			totalSeconds := data first - 59958230400 - offset asSeconds.
-			self utcSeconds: totalSeconds offset: offset asSeconds]
-		ifFalse: 
-			[| days seconds offset totalSeconds |
-			"This satisfied another format found in the wild"
-			days := data at: 1.	"Days since Sunday, December 31, 0000"
-			days := days - 693961.	"Days since December 31, 1900"
-			seconds := data at: 2.	"Likely to be a Fraction"
-			offset := data at: 3.
-			totalSeconds := days * 86400 + seconds - offset.	"86400 == (24 * 60 * 60)"
-			self utcSeconds: totalSeconds offset: offset]]!
+			[^
+			[:data |
+			| t |
+			t := data at: 2.
+			t class == Duration
+				ifTrue: 
+					["Original code satisfies one set of tests:
+						1: RataDie seconds
+						2: UTC offset as a Duration"
+					t := t asSeconds.
+					self utcSeconds: (data at: 1) - ##(SmalltalkEpochRD * 24 * 60 * 60) - t offset: t]
+				ifFalse: 
+					["DateAndTime was adopted into core based on Ian Bartholomew's original by commit a2d0d522231454fd0c0c39272d152a730e9633b3 on 2019-04-16. However the internal format was changed from the original RataDie seconds and UTC offset Duration to:
+						1: RataDie Days (i.e. days since Sunday, December 31, 0000), rather than seconds. 
+						2: Seconds since midnight (likely to be a Fraction)
+						3. UTC offset seconds (integer)
+					The original representation was simpler, but had performance issues due to the large integer fraction required to represent the number of seconds since the start of year 1. The seconds past midnight in the new format is also likely to be a fraction, but a SmallInteger one. The commit did not include an STB version change or conversion from the original format. This oversight was corrected a week or so later, on 2019-04-25, with commit 6fc834a2fcbae440ef94fa9c4df18efc44b199f6. This included bumping the stbVersion to 1, but in the meantime some instances of the new format had apparently escaped into the wild and been STB'd. This means that some version 0 format STB instances are really in the version 1 format already, and so don't require any conversion at all."
+					data becomeA: DateAndTime]]].
+	^super stbConvertFrom: anSTBClassFormat!
 
 stbVersion
 	"Answer the current binary filer version number for instances of the receiver."

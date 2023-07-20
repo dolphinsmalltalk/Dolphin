@@ -204,9 +204,9 @@ testSelectionIfAbsent
 				trigger: #selectionChanged
 				against: box]!
 
-verifyUpgradedView: anInteger
+verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	| view |
-	super verifyUpgradedView: anInteger.
+	super verifyUpgradedView: anInteger identifier: aResourceIdentifier.
 	view := self view.
 	"The multi-select view will have been converted to a ListView with the isMultiSelect flag set"
 	self assert: view isMultiSelect! !
@@ -215,6 +215,6 @@ assertAllSelectionAre:!helpers!private! !
 testSelection!public!unit tests! !
 testSelectionCacheUpdated!public!unit tests! !
 testSelectionIfAbsent!public!unit tests! !
-verifyUpgradedView:!helpers!private! !
+verifyUpgradedView:identifier:!helpers!private! !
 !
 

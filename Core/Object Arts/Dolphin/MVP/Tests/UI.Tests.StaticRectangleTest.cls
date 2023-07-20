@@ -14,22 +14,14 @@ UI.Tests.StaticRectangleTest comment: ''!
 classToTest
 	^StaticRectangle!
 
-oldDolphinVersionsForStbUpgrade
-	^#(4 5)!
-
-verifyUpgradedView: anInteger
+verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	| view |
-	super verifyUpgradedView: anInteger.
+	super verifyUpgradedView: anInteger identifier: aResourceIdentifier.
 	view := self view.
-	self assert: view style identicalTo: #blackFrame!
-
-vuFile
-	^'StaticRectangle.Default view.vu'! !
+	self assert: view style identicalTo: #blackFrame! !
 !UI.Tests.StaticRectangleTest categoriesForMethods!
 classToTest!helpers!private! !
-oldDolphinVersionsForStbUpgrade!constants!private! !
-verifyUpgradedView:!helpers!private! !
-vuFile!constants!private! !
+verifyUpgradedView:identifier:!helpers!private! !
 !
 
 !UI.Tests.StaticRectangleTest class methodsFor!

@@ -414,19 +414,19 @@ stbConvertFromVersion9: anArray
 		10: append iconTitleFont inst. var., and a couple more reserved for future use
 	"
 
-	| newArray array |
-	array := super stbConvertFromVersion9: anArray.
-	newArray := Array new: array size + 3.
-	newArray
+	| data size |
+	data := super stbConvertFromVersion9: anArray.
+	size := data size + 3.
+	^(Array new: size)
 		replaceFrom: 1
 			to: 13
-			with: array
+			with: data
 			startingAt: 1;
 		replaceFrom: 17
-			to: newArray size
-			with: array
-			startingAt: 13.
-	^newArray!
+			to: size
+			with: data
+			startingAt: 13;
+		yourself!
 
 uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."

@@ -14,9 +14,6 @@ UI.Tests.ContainerViewTest comment: ''!
 classToTest
 	^ContainerView!
 
-oldDolphinVersionsForStbUpgrade
-	^1 to: 4!
-
 test1PixBorderPaint
 	"Tests the validity of WM_PAINT of a 1 pixel border"
 	<skipIf: #isCiBuild>	"Fails on AppVeyor only"
@@ -97,17 +94,12 @@ testBordersPrintAndPaintIdentical
 	paintPixelsBordered := (self bitmapOfPaintView: containerView) pixelData.
 	printPixelsBordered := (self bitmapOfPrintView: containerView) pixelData.
 	self assert: paintPixelsBordered = printPixelsBordered.
-	self deny: paintPixels = paintPixelsBordered!
-
-vuFile
-	^'CompositePresenter.Container view.vu'! !
+	self deny: paintPixels = paintPixelsBordered! !
 !UI.Tests.ContainerViewTest categoriesForMethods!
 classToTest!helpers!private! !
-oldDolphinVersionsForStbUpgrade!constants!private! !
 test1PixBorderPaint!public!unit tests! !
 test1PixBorderPrint!public!unit tests! !
 testBordersPrintAndPaintIdentical!public!unit tests! !
-vuFile!constants!private! !
 !
 
 !UI.Tests.ContainerViewTest class methodsFor!

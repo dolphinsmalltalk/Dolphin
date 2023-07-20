@@ -45,14 +45,20 @@ locale:!accessing!public! !
 stbConvertFrom: anSTBClassFormat
 	"Convert from version 0 DateToText. Version 1 adds a locale inst var"
 
-	^
-	[:data |
-	| newInstance |
-	newInstance := self basicNew.
-	1 to: 2 do: [:i | newInstance instVarAt: i put: (data at: i)].
-	newInstance locale: Locale default.
-	3 to: data size do: [:i | newInstance instVarAt: i + 1 put: (data at: i)].
-	newInstance]!
+	anSTBClassFormat version == 0
+		ifTrue: 
+			[^
+			[:data |
+			(Array new: self instSize)
+				at: 1 put: (data at: 1);
+				at: 2 put: (data at: 2);
+				at: 3 put: Locale default;
+				replaceFrom: 4
+					to: 4 + data size - 3
+					with: data
+					startingAt: 3;
+				becomeA: self]].
+	^super stbConvertFrom: anSTBClassFormat!
 
 stbVersion
 	"Answer the current binary filer version number for instances of the receiver."

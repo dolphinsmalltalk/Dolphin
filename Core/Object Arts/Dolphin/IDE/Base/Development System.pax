@@ -409,6 +409,8 @@ package setMethodNames: #(
 	#(#{Kernel.CompiledCode} #isAbstract)
 	#(#{Kernel.CompiledCode} #isDeprecated)
 	#(#{Kernel.CompiledCode} #isSimpleSelfSend:)
+	#(#{Kernel.CompiledCode} #mapIp:toDebug:)
+	#(#{Kernel.CompiledCode} #mapIP:toDebug:)
 	#(#{Kernel.CompiledCode} #parseContext)
 	#(#{Kernel.CompiledCode} #stylerClass)
 	#(#{Kernel.CompiledCode class} #publishedAspectsOfInstances)
@@ -435,6 +437,7 @@ package setMethodNames: #(
 	#(#{Kernel.Namespace class} #newInstanceAspect:class:)
 	#(#{Kernel.Namespace class} #publishedAspects)
 	#(#{Kernel.Namespace class} #publishedKeyedAspects)
+	#(#{Kernel.Package} #aboutBlock:)
 	#(#{Kernel.Package} #browse)
 	#(#{Kernel.Package} #defaultAbout)
 	#(#{Kernel.Package} #defaultAboutBitmap)
@@ -701,12 +704,14 @@ package setMethodNames: #(
 	#(#{UI.ReferenceView class} #publishedAspectsOfInstances)
 	#(#{UI.ResourceIdentifier} #assign:)
 	#(#{UI.ResourceIdentifier} #assignLiteralResourceData:)
+	#(#{UI.ResourceIdentifier} #assignView:)
 	#(#{UI.ResourceIdentifier} #browse)
 	#(#{UI.ResourceIdentifier} #edit)
 	#(#{UI.ResourceIdentifier} #editViewUsing:)
 	#(#{UI.ResourceIdentifier} #prompt)
 	#(#{UI.ResourceIdentifier} #publishedAspects)
 	#(#{UI.ResourceIdentifier} #reassign)
+	#(#{UI.ResourceIdentifier} #sourceFilerClass)
 	#(#{UI.ResourceIdentifier class} #prompt)
 	#(#{UI.ResourceIdentifier class} #publishedAspectsOfInstances)
 	#(#{UI.RichTextEdit class} #publishedAspectsOfInstances)
@@ -946,7 +951,7 @@ Core.Object
 	classConstants: {}!
 Core.Object
 	subclass: #'Tools.MethodSearch'
-	instanceVariableNames: 'findDetails regexp literal'
+	instanceVariableNames: 'findDetails regexp literal referenceFilter'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -1617,7 +1622,7 @@ Tools.SmalltalkToolShell
 	classConstants: { 'FilterObjectMethodsMask' -> 16r200. 'ShowInheritedMethodsMask' -> 16r100 }!
 Tools.SmalltalkToolShell
 	subclass: #'Tools.Debugger'
-	instanceVariableNames: 'process topFrame localAccessor depth flags breakWhen stackPresenter sourcePresenter variablesPresenter inspectorPresenter breakAction suspendingList _method refactoringTool'
+	instanceVariableNames: 'process topFrame localAccessor depth flags breakWhen stackPresenter sourcePresenter variablesPresenter inspectorPresenter breakAction suspendingList _method refactoringTool sourceInterval'
 	classVariableNames: 'AnimatePause DefaultStackDepth EnableDynamicMenus RestartOnMethodSave RunToCursorBehavior ShowWalkbacks SkipTable'
 	imports: #(#{Kernel.CompilerFlags} #{Kernel.OpcodePool})
 	classInstanceVariableNames: ''
@@ -4665,7 +4670,9 @@ publishedAspectsOfInstances!constants!public! !
 
 debugIpFor: debugMethod 
 	^self ip = self block initialIP 
-		ifTrue: [self mapInitialIpFrom: self basicMethod to: debugMethod]
+		ifTrue: [
+			"We've just stepping into a block"
+			self mapInitialIpFrom: self basicMethod to: debugMethod]
 		ifFalse: [super debugIpFor: debugMethod]!
 
 isRestartable
@@ -4677,12 +4684,11 @@ makeDebug
 	"Private - Convert the receiver to a debug frame. "
 
 	| method debugMethod block |
-	method := self basicMethod.
-	method isDebugMethod
-		ifTrue: 
+	method := super makeDebug.
+	method
+		ifNil: 
 			["Already a debug frame"
-			^self].
-	super makeDebug.
+			^nil].
 	debugMethod := self basicMethod.
 	block := self block.
 	"Debug version of method will have different initialIP for the block, so we must remap"
@@ -4694,17 +4700,14 @@ makeDebug
 		ifNotNil: 
 			[:home |
 			home makeDebug.
-			home sender ifNotNil: [:sender | sender makeDebug]]!
+			home sender ifNotNil: [:sender | sender makeDebug]].
+	^method!
 
-mapInitialIpFrom: aCompiledMethod to: debugCompiledMethod 
-	| map debugMap i ip |
+mapInitialIpFrom: aCompiledMethod to: debugCompiledMethod
+	| map debugMap |
 	map := aCompiledMethod debugInfo textMap.
 	debugMap := debugCompiledMethod debugInfo textMap.
-	self assert: [map size == debugMap size].
-	ip := self block initialIP.
-	i := self class findIP: ip inTextMap: map.
-	self assert: [(map at: i) key = ip].
-	^(debugMap at: i) key! !
+	^(debugMap at: (self class findInitialIP: self block initialIP inTextMap: map)) key! !
 !Kernel.BlockFrame categoriesForMethods!
 debugIpFor:!private! !
 isRestartable!private!testing! !
@@ -4809,6 +4812,72 @@ isSimpleSelfSend: aSymbol
 		or: [byteCodes == ##(self packByteCodes: {ShortSendSelfZeroArgs. PopReturnSelf} asByteArray)])
 			and: [(self basicAt: 1) == aSymbol and: [self extraIndex == 0]]!
 
+mapIp: anInteger toDebug: debugCompiledMethod
+	| i interp first map debugMap debugDispatcher debugFirst |
+	map := self debugInfo textMap.
+	debugMap := debugCompiledMethod debugInfo textMap.
+	i := self class findIp: anInteger inTextMap: map.
+	i == 0
+		ifTrue: [first := debugFirst := 1]
+		ifFalse: 
+			[first := (map at: i) key.
+			debugFirst := (debugMap at: i) key].
+	first == anInteger
+		ifTrue: 
+			["Directly corresponding entry"
+			^debugFirst].
+	self assert: [first < anInteger].
+	"We should have the map entry for the previous sync point (send instruction), and need to step forward from there"
+	interp := self byteCodeDispatcher.
+	debugDispatcher := debugCompiledMethod byteCodeDispatcher.
+	interp ip: first.
+	debugDispatcher ip: debugFirst.
+	"Note: If there is more than one step here, the results are unreliable. In use from the debugger, this should not happen though, because any release frame should have been suspended just after a send."
+	
+	[debugDispatcher next.
+	(interp
+		next;
+		ip) == anInteger] whileFalse.
+	^debugDispatcher ip!
+
+mapIP: anInteger toDebug: debugCompiledMethod
+	| i interp offset prev map debugMap debugDispatcher |
+	map := self debugInfo textMap.
+	debugMap := debugCompiledMethod debugInfo textMap.
+	i := self class findIP: anInteger inTextMap: map.
+	(map at: i) key == anInteger
+		ifTrue: 
+			["Directly corresponding entry"
+			^(debugMap at: i) key].
+	"We expect to be mapping from a bytecode immediately after a send (or a jump replacing an optimised send), so we need to remap that previous send instructions IP and then step to the next instruction in the debug method"
+	interp := self byteCodeDispatcher.
+	prev := interp prevIP: anInteger.
+	i := self class findIP: prev inTextMap: map.
+	offset := prev - (map at: i) key.
+	offset == 0
+		ifTrue: 
+			["Text map entry exists for previous instruction, so step forward once from there in the debug method"
+			^interp
+				method: debugCompiledMethod;
+				ip: (debugMap at: i) key;
+				next;
+				ip].
+	"Intermediate bytecode, so find the prior map entry and step forward from there."
+	debugDispatcher := debugCompiledMethod byteCodeDispatcher.
+	[i > 1 and: 
+			["We must skip over any voided entries"
+			(map at: (i := i - 1)) key == 0]]
+		whileTrue.
+	interp ip: (map at: i) key.
+	debugDispatcher ip: (debugMap at: i) key.
+	"Note: If there is more than one step here, the results are unreliable. In use from the debugger, this should not happen though, because any release frame should have been suspended just after a send."
+	[interp ip == prev] whileFalse: 
+			[interp next.
+			debugDispatcher next].
+	^debugDispatcher
+		next;
+		ip!
+
 parseContext
 	^ParseContext method: self!
 
@@ -4824,6 +4893,8 @@ indexOfIP:!enquiries!private! !
 isAbstract!public!testing! !
 isDeprecated!enquiries!private! !
 isSimpleSelfSend:!private!testing! !
+mapIp:toDebug:!private! !
+mapIP:toDebug:!private! !
 parseContext!accessing!public! !
 stylerClass!constants!public! !
 !
@@ -5098,6 +5169,18 @@ publishedKeyedAspects!constants!public! !
 
 !Kernel.Package methodsFor!
 
+aboutBlock: aMonadicValuableOrNil
+	"Set the <monadicValuable> that will display an About screen.  The receiver
+	will be passed as the parameter to the valuable. 
+	When a package is created it does not have an about operation set. 
+	To set a default splash screen see #defaultAbout."
+
+	| newArray |
+	newArray := aMonadicValuableOrNil ifNotNil: [aMonadicValuableOrNil literalStoreArray].
+	newArray = aboutBlock ifTrue: [^self].
+	aboutBlock := newArray.
+	self isChanged: true!
+
 browse
 	"Open a suitable browser onto the receiver."
 
@@ -5176,6 +5259,7 @@ toggleUsingPAX
 
 	^self isUsingPAX: self isUsingPAX not! !
 !Kernel.Package categoriesForMethods!
+aboutBlock:!accessing!public! !
 browse!commands!public! !
 defaultAbout!constants!public! !
 defaultAboutBitmap!accessing!public! !
@@ -5381,7 +5465,7 @@ emitResourceMethod: aResourceIdentifier literals: aLiteralArray
 	stream
 		tab;
 		nextPut: $^.
-	(STLPrinter on: stream) printArray: aLiteralArray!
+	STLPrinter printLiteralStoreArray: aLiteralArray on: stream!
 
 emitResourceMethodHeader: aResourceIdentifier
 	stream
@@ -5419,47 +5503,11 @@ canReturn
 
 	^(self isDead or: [self sender isNil]) not!
 
-debugIpFor: debugMethod 
-	| interp debugPrev method prev i offset map debugMap ip |
+debugIpFor: debugCompiledMethod
+	| ip |
 	ip := self ip.
-	ip = 1 ifTrue: [^1].
-	method := self basicMethod.
-	map := method debugInfo textMap.
-	debugMap := debugMethod debugInfo textMap.
-	self assert: [map size == debugMap size].
-	i := self class findIP: ip inTextMap: map.
-	(map at: i) key = ip 
-		ifTrue: 
-			["Directly corresponding entry"
-			^(debugMap at: i) key].
-	"More often mapping from bytecode immediately after a send, so we need to remap that
-	previous instructions IP and then step to the next instruction in the debug method"
-	interp := method byteCodeDispatcher.
-	prev := interp prevIP: ip.
-	i := self class findIP: prev inTextMap: map.
-	offset := prev - (map at: i) key.
-	debugPrev := offset = 0 
-				ifTrue: [(debugMap at: i) key]
-				ifFalse: 
-					[| debugDispatcher steps |
-					self assert: [offset < 0].
-					debugDispatcher := debugMethod byteCodeDispatcher.
-					i > 1 
-						ifTrue: 
-							[interp ip: (map at: i - 1) key.
-							debugDispatcher ip: (debugMap at: i - 1) key].
-					steps := 0.
-					[interp ip = prev] whileFalse: 
-							[steps := steps + 1.
-							interp next.
-							debugDispatcher next].
-					self assert: [steps = 1].
-					debugDispatcher ip].
-	interp
-		method: debugMethod;
-		ip: debugPrev.
-	interp next.
-	^interp ip!
+	ip == 1 ifTrue: [^1].
+	^self basicMethod mapIP: ip toDebug: debugCompiledMethod!
 
 debugPrintOn: aStream
 	self basicPrintOn: aStream!
@@ -5475,11 +5523,11 @@ isRestartable
 					method isExpression or: [('not restartable' asMethodCategory includesMethod: method) not]]]!
 
 makeDebug
-	"Private - Convert the receiver to a debug frame. This is for the use of the debugger."
+	"Private - Convert the receiver to a debug frame. Returns the non-debug method that was replaced, or nil if already a debug frame. This is for the use of the debugger."
 
 	| method debugMethod ip |
 	method := self basicMethod.
-	(method isDebugMethod or: [method sourceDescriptor isNil]) ifTrue: [^self].	"nothing to do"
+	(method isDebugMethod or: [method sourceDescriptor isNil]) ifTrue: [^nil].	"nothing to do"
 	debugMethod := method asDebugMethod.
 	ip := self debugIpFor: debugMethod.
 
@@ -5487,7 +5535,8 @@ makeDebug
     	packed to unpacked. Also the method must be set first for #ip: to work correctly."
 	self
 		method: debugMethod;
-		ip: ip!
+		ip: ip.
+	^method!
 
 stackWorkspace
 	"Private - Answer the number of additional stack temps currently in use
@@ -5667,7 +5716,7 @@ valueClass: aStackFrame
 	^(self valueInFrame: aStackFrame) class!
 
 valueInFrame: aStackFrame
-	^aStackFrame receiver instVarAt: index! !
+	^aStackFrame receiver ifNotNil: [:receiver | receiver instVarAt: index]! !
 !Kernel.StInstanceVariable categoriesForMethods!
 classification!accessing!public! !
 icon!constants!public! !
@@ -6040,8 +6089,9 @@ valueClassIn:!public! !
 !Kernel.StStaticVariable methodsFor!
 
 classification
-	binding isClassVariable ifTrue: [^#class].
-	binding isClassBinding ifTrue: [^#classGlobal].
+	binding ifNotNil: [
+		binding isClassVariable ifTrue: [^#class].
+		binding isClassBinding ifTrue: [^#classGlobal]].
 	^#global!
 
 displayOn: aStream
@@ -6054,7 +6104,7 @@ printInfoTipOn: aStream
 
 	"Here we try to provide some useful information, such as the fully qualified name of a class referenced only by a short name, whether the variable is a class or shared variable, or a class constant."
 
-	| prefix |
+	| prefix value |
 	binding isNil
 		ifTrue: 
 			[aStream nextPutAll: 'Undeclared'.
@@ -6072,8 +6122,14 @@ printInfoTipOn: aStream
 	aStream
 		nextPutAll: prefix;
 		nextPutAll: binding fullName;
-		nextPutAll: ': ';
-		debugPrint: binding value!
+		nextPutAll: ': '.
+	value := binding value.
+	value debugPrintOn: aStream.
+	value isInteger ifFalse: [^self].
+	aStream
+		nextPutAll: ' (';
+		nextPutAll: value printString;
+		nextPut: $)!
 
 staticValueClass
 	"Answer the class that the variable should be assumed to hold for the purposes of deducing what messages it may understand, or nil if not known with any certainty."
@@ -8266,7 +8322,10 @@ assignLiteralResourceData: aLiteralArray
 
 	| stream filer source methodClass categories |
 	stream := String writeStream: 512.
-	filer := (self owningPackage ifNil: [self owningClass]) sourceFilerClass on: stream.
+	"The 2nd entry in the literal array is the STL version; if < 5, then this is pre-D8 content and we need to use the legacy filer"
+	filer := ((aLiteralArray at: 2) < 5
+				ifTrue: [#{LegacyChunkSourceFiler} value]
+				ifFalse: [ChunkSourceFiler]) on: stream.
 	"Historically integers have been written in decimal format in resource method literals"
 	stream locale: SmalltalkLocale.Current.
 	filer emitResourceMethod: self literals: aLiteralArray.
@@ -8275,6 +8334,12 @@ assignLiteralResourceData: aLiteralArray
 	categories := Set with: self class viewResourceCategoryName.
 	(methodClass whichCategoriesIncludeSelector: selector) do: [:each | categories add: each name].
 	methodClass compile: source categories: categories!
+
+assignView: aView
+	| stream |
+	stream := Array writeStream: 128.
+	aView literalStoreOn: stream version: self stlVersion.
+	self assign: stream contents!
 
 browse
 	^self edit!
@@ -8288,7 +8353,7 @@ editViewUsing: aMonadicBlock
 	| view | 
 	view := self loadWithContext: View desktop.
 	aMonadicBlock value: view.
-	self assign: view literalStoreArray.
+	self assignView: view.
 	view destroy!
 
 prompt
@@ -8314,17 +8379,22 @@ publishedAspects
 reassign
 	| view |
 	view := SmalltalkSystem current loadViewResource: self resource inContext: View desktop.
-	self assign: view literalStoreArray.
-	view destroy! !
+	self assignView: view.
+	view destroy!
+
+sourceFilerClass
+	^(self owningPackage ifNil: [self owningClass]) sourceFilerClass! !
 !UI.ResourceIdentifier categoriesForMethods!
 assign:!accessing!public! !
 assignLiteralResourceData:!development!private! !
+assignView:!public! !
 browse!commands!public! !
 edit!operations!public! !
 editViewUsing:!operations!public! !
 prompt!operations!public! !
 publishedAspects!constants!public! !
 reassign!public! !
+sourceFilerClass!development!private! !
 !
 
 !UI.ResourceIdentifier class methodsFor!
@@ -9072,6 +9142,7 @@ publishedAspectsOfInstances
 	#(#canHScroll #isReadOnly #isStatic #isSelectionKept #isFindEnabled)
 		do: [:each | aspects add: (Aspect boolean: each)].
 	^aspects
+		add: (Aspect symbol: #updateMode from: #(#focusLost #perChar #explicit));
 		add: (Aspect symbol: #alignment from: ##(AlignmentMap keys asSortedArray));
 		add: (Aspect symbol: #format from: ##(FormatMap keys asSortedArray));
 		add: (Aspect string: #cueBanner);
@@ -9414,7 +9485,7 @@ help
 
 	SmalltalkSystem current openHelpTopicForTool: self! !
 !UI.TranscriptShell categoriesForMethods!
-help!commands!public! !
+help!commands-actions!public! !
 !
 
 !UI.TranscriptShell class methodsFor!
@@ -9435,7 +9506,7 @@ resource_Scintilla_view
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Scintilla_view)
 	"
 
-	^#(#'!!STL' 5 985166 10 #{UI.STBViewProxy} #{UI.ShellView} 34 27 nil nil 8 #(13565952 65536) 416 nil 917510 #{Graphics.Color} #default 918022 #{Graphics.Point} 1079 655 551 nil nil nil 416 984838 #{UI.BorderLayout} 1 1 nil nil nil nil 410 #{UI.Scintilla.ScintillaView} 34 52 nil 416 34 2 8 1174470916 262145 560 918598 2 #{UI.ValueHolder} nil false 1769478 #{Kernel.EqualitySearchPolicy} nil nil nil 23 461638 4 #{UI.Menu} nil true 34 8 1180742 2 #{UI.CommandMenuItem} 1 1377606 4 #{UI.CommandDescription} #copySelection 8 '&Copy' 9351 1 852806 4 #{Graphics.Icon} nil true 2819078 #{Graphics.ImageFromStringResourceInitializer} 8 'EditCopy.ico' 2490894 #{Kernel.STBExternalResourceLibraryProxy} 8 'dolphindr8.dll' nil 65541 nil nil nil 738 1 770 #selectAll 8 'Select &All' 8323 1 nil nil nil 738 1 770 #clearAll 8 'Clea&r' 1 1 818 nil true 850 8 'ClearDocument.ico' 912 65541 nil nil nil 1179974 1 #{UI.DividerMenuItem} 4097 738 1 770 #find 8 '&Find…' 9357 1 818 nil true 850 8 'Find.ico' 912 65541 nil nil nil 738 1 770 #findNext 8 'Find &Next' 1253 1 818 nil true 850 8 'FindNext.ico' 912 65541 nil nil nil 1090 4097 690 nil true 34 5 738 1 770 #toggleIndentationGuides 8 'Indentation &Guides' 1 1 nil nil nil 738 1 770 #toggleLineEndings 8 'Line &Endings' 1 1 1378630 2 #{Graphics.TextTileIcon} $¶ 8 'Arial' nil nil nil nil 1 nil nil nil nil 738 1 770 #toggleLineNumbers 8 'Line N&umbers' 1 1 nil nil nil 738 1 770 #toggleWhitespace 8 'W&hitespace' 1 1 nil nil nil 738 1 770 #toggleWordWrap 8 '&Word Wrap' 1 1 nil nil nil 8 '&Options' nil 134217729 818 nil true 850 8 'Preferences.ico' 912 65541 nil nil nil nil nil 8 '&Edit' nil 134217729 nil nil nil nil nil nil nil 560 nil 8 1395533126 1049094 #{UI.NullConverter} nil 8 '' 3 nil 170 192 34 10 #indentGuide 1444934 1 #{UI.Scintilla.TextStyle} 75 466 #gray nil 1 nil nil nil nil #indentGuide 8 'Indentation guides, when visible' nil nil #whitespace 1826 53 466 #silver nil 1 nil nil nil nil #whitespace 8 'Whitespace, when visible' nil nil #callTip 1826 77 1856 466 #white 1 nil nil nil nil #callTip nil nil nil #normal 1826 1 nil nil 1 nil nil nil nil #normal nil nil nil #lineNumber 1826 67 nil nil 1 nil 1601 nil nil #lineNumber nil nil nil nil 1507654 1 #{UI.Scintilla.NullStyler} #normal 170 192 34 2 #default 1903686 2 #{UI.Scintilla.MarkerDefinition} nil nil nil nil 560 #circle nil nil nil nil nil nil 138 #{Core.IdentitySet} 8 #() nil 170 176 2112 nil nil nil 170 176 34 4 121 466 #mediumSlateBlue 81 1856 nil nil 2162950 #{UI.Scintilla.NullScintillaLibrary} nil nil nil nil nil nil 1 170 192 34 4 #text 170 192 34 10 #indentGuide 1840 #whitespace 1888 #callTip 1936 #normal 1968 #lineNumber 1984 #null 1792 nil nil nil nil 208 nil nil nil nil 170 192 34 6 #Notification 1826 7 nil 466 #gainsboro 1 nil nil nil nil #Notification nil nil nil #Error 1826 3 466 #firebrick 466 #floralWhite 1 nil nil nil nil #Error nil nil nil #Warning 1826 5 466 #darkGoldenrod 466 #ivory 1 nil nil nil nil #Warning nil nil nil nil nil nil 1310982 #{Core.MessageSequence} 34 10 1049350 #{Core.MessageSend} #createAt:extent: 34 2 498 1 1 498 1047 537 560 2498 #contextMenu: 34 1 704 560 2498 #wordWrap: 8 #(true) 560 2498 #margins: 34 1 34 5 1247302 3 #{UI.Scintilla.Margin} 1 560 1 3 nil nil nil nil 2690 3 560 1 nil nil 67108863 nil nil 2690 5 560 1 nil nil nil nil nil 2690 7 560 1 nil nil nil nil nil 2690 9 560 1 nil nil nil nil nil 560 2498 #canHScroll: 8 #(false) 560 2498 #tabWidth: 8 #(4) 560 2498 #maxCompletionListHeight: 8 #(9) 560 2498 #setLexerLanguage: 8 #(#null) 560 2498 #sciSetFontQuality: 8 #(3) 560 2498 #whitespaceMarkerSize: 8 #(2) 560 1179910 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 11 2 0 0 12 1 0 0] 8 #() 498 193 193 nil 35 170 192 34 2 560 8 'workspace' nil 658246 4 #{UI.MenuBar} nil true 34 5 690 nil true 34 9 738 1 770 #fileNew 8 '&New Workspace' 9373 1 818 nil true 850 8 'NewWorkspace.ico' 912 65541 nil nil nil 738 1 770 #fileOpen 8 '&Open Workspace…' 9375 1 818 nil true 850 8 'OpenWorkspace.ico' 912 65541 nil nil nil 738 1 770 #fileFileIn 8 '&File In…' 1 1 nil nil nil 1090 4097 738 1 770 #saveImage 8 'Sa&ve Image' 1 1 818 nil true 850 8 'Snapshot.ico' 912 65541 nil nil nil 738 1 770 #saveImageAs 8 'Save Image As…' 1 1 nil nil nil 738 1 770 #compressChanges 8 '&Compress Changes' 1 1 nil nil nil 1090 4097 738 1 770 #smalltalkExit 8 'E&xit Dolphin' 1 1 818 nil true 850 8 'PowerSwitch.ico' 912 65541 nil nil nil 8 '&File' nil 134217729 nil nil 45753 nil nil 690 nil true 34 8 738 1 770 #cr 8 'New&line' 1 1 nil nil nil 1090 4097 738 1 770 #copySelection 8 '&Copy' 9351 1 818 nil true 850 8 'EditCopy.ico' 912 65541 nil nil nil 738 1 770 #selectAll 8 'Select &All' 9347 1 nil nil nil 738 1 770 #clearAll 8 'Clea&r' 9393 1 818 nil true 850 8 'ClearDocument.ico' 912 65541 nil nil nil 1090 4097 738 1 770 #editFind 8 '&Find…' 9357 1 818 nil true 850 8 'Find.ico' 912 65541 nil nil nil 738 1 770 #findNext 8 'Find &Next' 1253 1 818 nil true 850 8 'FindNext.ico' 912 65541 nil nil nil 8 '&Edit' nil 134217729 nil nil 45767 nil nil 690 nil true 8 #() 8 '&Tools' #toolsMenu 134217729 nil nil 45769 nil nil 690 nil true 8 #() 8 'Wi&ndow' #windowMenu 134217729 nil nil 45771 nil nil 690 nil true 34 6 738 1 770 #help 8 '&Help on this tool' 1249 1 818 nil true 850 8 'Help.ico' 912 65541 nil nil nil 1090 4097 738 1 770 #guidedTour 8 '&Guided tour' 1 1 nil nil nil 738 1 770 #educationCenter 8 '&Education centre' 1 1 nil nil nil 1090 4097 738 1 770 #aboutDolphin 8 '&About Dolphin Smalltalk' 1 1 nil nil nil 8 '&Help' nil 134217729 nil nil 45781 nil nil 8 '' nil 134217729 nil nil nil nil nil nil nil nil 1 nil nil nil nil 1 nil nil 2450 34 2 2498 #createAt:extent: 34 2 498 12287 21 498 1079 655 416 2498 #text: 34 1 8 'System Transcript' 416 2978 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 23 0 0 10 0 0 0 26 26 0 0 81 1 0 0] 34 1 560 3040 nil 27)! !
+	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.ShellView} 38 #{Core.Array} 27 nil nil 8 #(13565952 65536) 32 nil 6 #{Graphics.Color} #default 518 #{Graphics.Point} 1079 655 551 nil nil nil 32 1798 #{UI.BorderLayout} 1 1 nil nil nil nil 18 #{UI.Scintilla.ScintillaView} 50 56 nil 32 50 2 8 1174470916 262145 192 1094 2 #{UI.ValueHolder} nil false 6 #{Kernel.EqualitySearchPolicy} nil nil nil 23 2886 4 #{UI.Menu} nil true 50 8 1094 2 #{UI.CommandMenuItem} 1 1350 4 #{UI.CommandDescription} #copySelection 8 '&Copy' 9351 1 838 4 #{Graphics.Icon} nil true 1030 #{Graphics.ImageFromStringResourceInitializer} 8 'EditCopy.ico' 518 #{Kernel.STBExternalResourceLibraryProxy} 8 'dolphindr8.dll' nil 65541 nil nil nil 370 1 402 #selectAll 8 'Select &All' 8323 1 nil nil nil 370 1 402 #clearAll 8 'Clea&r' 1 1 450 nil true 482 8 'ClearDocument.ico' 544 65541 nil nil nil 326 1 #{UI.DividerMenuItem} 4097 370 1 402 #find 8 '&Find…' 9357 1 450 nil true 482 8 'Find.ico' 544 65541 nil nil nil 370 1 402 #findNext 8 'Find &Next' 1253 1 450 nil true 482 8 'FindNext.ico' 544 65541 nil nil nil 722 4097 322 nil true 50 5 370 1 402 #toggleIndentationGuides 8 'Indentation &Guides' 1 1 nil nil nil 370 1 402 #toggleLineEndings 8 'Line &Endings' 1 1 2374 2 #{Graphics.TextTileIcon} $¶ 8 'Arial' nil nil nil nil 1 nil nil nil nil 370 1 402 #toggleLineNumbers 8 'Line N&umbers' 1 1 nil nil nil 370 1 402 #toggleWhitespace 8 'W&hitespace' 1 1 nil nil nil 370 1 402 #toggleWordWrap 8 '&Word Wrap' 1 1 nil nil nil 8 '&Options' nil 134217729 450 nil true 482 8 'Preferences.ico' 544 65541 nil nil nil nil nil 8 '&Edit' nil 134217729 nil nil nil nil nil nil nil 192 nil 8 1833015712 518 #{UI.NullConverter} nil 8 '' 3 #focusLost nil nil nil nil 518 #{Kernel.STBIdentityDictionaryProxy} #{Core.IdentityDictionary} 50 10 #indentGuide 3142 1 #{UI.Scintilla.TextStyle} 75 98 #gray nil 1 nil nil nil nil #indentGuide 8 'Indentation guides, when visible' nil nil #callTip 1474 77 1504 98 #white 1 nil nil nil nil #callTip nil nil nil #whitespace 1474 53 98 #silver nil 1 nil nil nil nil #whitespace 8 'Whitespace, when visible' nil nil #lineNumber 1474 67 nil nil 1 nil 1601 nil nil #lineNumber nil nil nil #normal 1474 1 nil nil 1 nil nil nil nil #normal nil nil nil nil 326 1 #{UI.Scintilla.NullStyler} #normal 1426 #{Core.IdentityDictionary} 50 2 #default 3142 2 #{UI.Scintilla.MarkerDefinition} nil nil nil nil 192 #circle nil nil nil nil nil nil 518 #{Kernel.STBCollectionProxy} #{Core.IdentitySet} 8 #() nil 1426 #{Core.LookupTable} 1776 nil nil nil 1426 #{Core.LookupTable} 50 4 121 98 #mediumSlateBlue 81 1504 nil nil 262 #{UI.Scintilla.NullScintillaLibrary} nil nil nil nil nil nil 1 1426 #{Core.IdentityDictionary} 50 4 #null 1440 #text 1426 #{Core.IdentityDictionary} 50 10 #indentGuide 1488 #callTip 1536 #whitespace 1568 #lineNumber 1616 #normal 1632 nil nil nil nil #{Core.Utf8String} nil nil nil nil 1426 #{Core.IdentityDictionary} 50 6 #Notification 1474 7 nil 98 #gainsboro 1 nil nil nil nil #Notification nil nil nil #Warning 1474 5 98 #darkGoldenrod 98 #ivory 1 nil nil nil nil #Warning nil nil nil #Error 1474 3 98 #firebrick 98 #floralWhite 1 nil nil nil nil #Error nil nil nil nil nil nil 262 #{Core.MessageSequence} 50 10 774 #{Core.MessageSend} #createAt:extent: 50 2 130 1 1 130 1047 537 192 2162 #wordWrap: 8 #(true) 192 2162 #margins: 50 1 50 5 2118 3 #{UI.Scintilla.Margin} 1 192 nil 3 nil nil nil nil 2322 3 192 nil nil nil 67108863 nil nil 2322 5 192 nil nil nil nil nil nil 2322 7 192 nil nil nil nil nil nil 2322 9 192 nil nil nil nil nil nil 192 2162 #sciSetHScrollBar: 8 #(false) 192 2162 #tabWidth: 8 #(4) 192 2162 #maxCompletionListHeight: 8 #(9) 192 2162 #setLexerLanguage: 8 #(#null) 192 2162 #sciSetFontQuality: 8 #(3) 192 2162 #whitespaceMarkerSize: 8 #(2) 192 2162 #isUndoEnabled: 8 #(false) 192 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 11 2 0 0 12 1 0 0] 8 #() 130 193 193 nil 45 1426 #{Core.IdentityDictionary} 50 2 192 8 'workspace' nil 2886 4 #{UI.MenuBar} nil true 50 5 322 nil true 50 9 370 1 402 #fileNew 8 '&New Workspace' 9373 1 450 nil true 482 8 'NewWorkspace.ico' 544 65541 nil nil nil 370 1 402 #fileOpen 8 '&Open Workspace…' 9375 1 450 nil true 482 8 'OpenWorkspace.ico' 544 65541 nil nil nil 370 1 402 #fileFileIn 8 '&File In…' 1 1 nil nil nil 722 4097 370 1 402 #saveImage 8 'Sa&ve Image' 1 1 450 nil true 482 8 'Snapshot.ico' 544 65541 nil nil nil 370 1 402 #saveImageAs 8 'Save Image As…' 1 1 nil nil nil 370 1 402 #compressChanges 8 '&Compress Changes' 1 1 nil nil nil 722 4097 370 1 402 #smalltalkExit 8 'E&xit Dolphin' 1 1 450 nil true 482 8 'PowerSwitch.ico' 544 65541 nil nil nil 8 '&File' nil 134217729 nil nil 61181 nil nil 322 nil true 50 8 370 1 402 #cr 8 'New&line' 1 1 nil nil nil 722 4097 370 1 402 #copySelection 8 '&Copy' 9351 1 450 nil true 482 8 'EditCopy.ico' 544 65541 nil nil nil 370 1 402 #selectAll 8 'Select &All' 9347 1 nil nil nil 370 1 402 #clearAll 8 'Clea&r' 9393 1 450 nil true 482 8 'ClearDocument.ico' 544 65541 nil nil nil 722 4097 370 1 402 #editFind 8 '&Find…' 9357 1 450 nil true 482 8 'Find.ico' 544 65541 nil nil nil 370 1 402 #findNext 8 'Find &Next' 1253 1 450 nil true 482 8 'FindNext.ico' 544 65541 nil nil nil 8 '&Edit' nil 134217729 nil nil 61195 nil nil 322 nil true 8 #() 8 '&Tools' #toolsMenu 134217729 nil nil 61197 nil nil 322 nil true 8 #() 8 'Wi&ndow' #windowMenu 134217729 nil nil 61199 nil nil 322 nil true 50 6 370 1 402 #help 8 '&Help on this tool' 1249 1 450 nil true 482 8 'Help.ico' 544 65541 nil nil nil 722 4097 370 1 402 #guidedTour 8 '&Guided tour' 1 1 nil nil nil 370 1 402 #educationCenter 8 '&Education centre' 1 1 nil nil nil 722 4097 370 1 402 #aboutDolphin 8 '&About Dolphin Smalltalk' 1 1 nil nil nil 8 '&Help' nil 134217729 nil nil 61209 nil nil 8 '' nil 134217729 nil nil nil nil nil nil nil nil 1 nil nil nil nil 1 nil nil 2114 50 2 2162 #createAt:extent: 50 2 130 6143 21 130 1079 655 32 2162 #text: 50 1 8 'System Transcript' 32 2642 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 26 14 0 0 81 1 0 0] 50 1 192 2704 nil 27)! !
 !UI.TranscriptShell class categoriesForMethods!
 publishedAspects!public! !
 resource_Scintilla_view!public!resources-views! !
@@ -9630,7 +9701,7 @@ editNewDefaultView
 				headline: 'Overwrite existing view?';
 				confirm: '<1p> already exists. Do you wish to overwrite it?' << resourceIdentifier])
 		ifFalse: [^self].
-	resourceIdentifier assign: view literalStoreArray.
+	resourceIdentifier assignView: view.
 	view destroy.
 	SmalltalkSystem current openViewComposerOn: resourceIdentifier!
 
@@ -9644,7 +9715,7 @@ makeResource: aStringName inClass: aClass
 	| resID view shell |
 	shell := ShellView new create.
 	view := shell addSubView: self new.
-	(resID := ResourceIdentifier class: aClass name: aStringName) assign: view literalStoreArray.
+	(resID := ResourceIdentifier class: aClass name: aStringName) assignView: view.
 	shell destroy.
 	^resID!
 

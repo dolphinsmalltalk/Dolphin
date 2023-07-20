@@ -14,9 +14,6 @@ UI.Tests.StatusBarTest comment: ''!
 classToTest
 	^StatusBar!
 
-oldDolphinVersionsForStbUpgrade
-	^1 to: 4!
-
 testAddAndRemoveItems
 	| items |
 	"There must always at least one item - a dummy one is present if we haven't added any"
@@ -184,26 +181,22 @@ testToggleItemAutoResize
 	self assert: subject width equals: -1.
 	self assert: subject rectangle width equals: expectedWidth!
 
-verifyUpgradedView: anInteger
+verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	| view |
-	super verifyUpgradedView: anInteger.
+	super verifyUpgradedView: anInteger identifier: aResourceIdentifier.
 	view := self view.
 	self assert: view backcolor
 		identicalTo: (anInteger < 13 ifTrue: [Color face3d] ifFalse: [Color default]).
-	self assert: (view contents allSatisfy: [:each | each isKindOf: StatusBarItemAbstract]).
-	self assert: (view baseStyleAllMask: OS.CommCtrlConstants.CCS_NOPARENTALIGN)!
-
-vuFile
-	^'StatusBar.Status bar.vu'! !
+	self assert: (view contents
+				allSatisfy: [:each | (each isKindOf: StatusBarItemAbstract) and: [each isOwnerDrawn]]).
+	self assert: (view baseStyleAllMask: OS.CommCtrlConstants.CCS_NOPARENTALIGN)! !
 !UI.Tests.StatusBarTest categoriesForMethods!
 classToTest!helpers!private! !
-oldDolphinVersionsForStbUpgrade!constants!private! !
 testAddAndRemoveItems!public!unit tests! !
 testItemLayout!public!unit tests! !
 testItemLayout:!helpers!private! !
 testToggleItemAutoResize!public!unit tests! !
-verifyUpgradedView:!helpers!private! !
-vuFile!constants!private! !
+verifyUpgradedView:identifier:!helpers!private! !
 !
 
 !UI.Tests.StatusBarTest class methodsFor!

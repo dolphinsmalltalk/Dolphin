@@ -20,9 +20,6 @@ margins
 nonProportionalFont
 	^Font name: 'Consolas'!
 
-oldDolphinVersionsForStbUpgrade
-	^1 to: 4!
-
 setUp
 	super setUp.
 	savedLocale := Locale userDefault.
@@ -147,26 +144,22 @@ text
 
 	^'Ḽơᶉëᶆ ȋṕšᶙṁ ḍỡḽǭᵳ ʂǐť ӓṁệẗ, ĉṓɲṩḙċťᶒțûɾ ấɖḯƥĭṩčįɳġ ḝłįʈ'!
 
-verifyUpgradedView: anInteger
-	super verifyUpgradedView: anInteger.
+verifyUpgradedView: anInteger identifier: aResourceIdentifier
+	super verifyUpgradedView: anInteger identifier: aResourceIdentifier.
 	self view plainText: self printString.
-	self assert: (self view instVarNamed: 'teFlags') equals: 4!
-
-vuFile
-	^'RichTextPresenter.Default view.vu'! !
+	self assert: (self view instVarNamed: 'teFlags') equals: TextEdit.WantTabMask.
+	self assert: (self view instVarAt: RichTextEdit instSize) isKindOf: OS.EDITSTREAM! !
 !UI.Tests.RichTextEditTest categoriesForMethods!
 classToTest!helpers!private! !
 margins!private!unit tests! !
 nonProportionalFont!constants!private! !
-oldDolphinVersionsForStbUpgrade!constants!private! !
 setUp!private!unit tests! !
 tearDown!private!running! !
 testCharNearestPosition!public!unit tests! !
 testStreamInAnsiText!public!unit tests! !
 testStreamInUtfText!public!unit tests! !
 text!constants!public! !
-verifyUpgradedView:!helpers!private! !
-vuFile!constants!private! !
+verifyUpgradedView:identifier:!helpers!private! !
 !
 
 !UI.Tests.RichTextEditTest class methodsFor!
@@ -195,9 +188,24 @@ resource_Default_view_D7
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.RichTextEdit) 34 18 nil nil 34 2 8 1140920644 1025 416 nil 327686 ##(Smalltalk.Color) #default nil 7 265030 4 ##(Smalltalk.Menu) nil true 34 10 984134 2 ##(Smalltalk.CommandMenuItem) 1 1180998 4 ##(Smalltalk.CommandDescription) #chooseSelectionFont 8 '&Font...' 1 1 nil nil nil 983366 1 ##(Smalltalk.DividerMenuItem) 4097 562 1 594 #bePlain 8 '&Plain' 1 1 nil nil nil 562 1 594 #toggleBold 8 '&Bold' 1 1 nil nil nil 562 1 594 #toggleItalic 8 '&Italic' 1 1 nil nil nil 562 1 594 #toggleUnderlined 8 '&Underlined' 1 1 nil nil nil 642 4097 514 nil true 34 3 562 1025 594 #alignParagraphLeft 8 '&Left' 1 1 nil nil nil 562 1025 594 #alignParagraphCenter 8 '&Centre' 1 1 nil nil nil 562 1025 594 #alignParagraphRight 8 '&Right' 1 1 nil nil nil 8 '&Align' nil 1 nil nil nil nil nil 642 4097 562 1 594 #chooseSelectionColor 8 '&Colour...' 1 1 nil nil nil 8 '' nil 1 nil nil nil nil nil nil nil 416 nil 8 2063088144 852486 ##(Smalltalk.NullConverter) nil nil 9 nil 655622 ##(Smalltalk.EDITSTREAM) 8 #[0 0 0 0 0 0 0 0 16 0 13 4] 983302 ##(Smalltalk.MessageSequence) 138 144 34 5 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 1362 421 351 416 1314 #contextMenu: 34 1 528 416 1314 #text: 34 1 524550 ##(Smalltalk.RichText) 8 '{\urtf1\ansi\ansicpg1252\deff0\deflang2057{\fonttbl{\f0\froman Times New Roman;}}
 \viewkind4\uc1\pard\f0\fs22\par
 }
-' 416 1314 #textLimit: 8 #(1073741823) 416 1314 #resetCharFormat 8 #() 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 81 8 0 0 185 0 0 0] 8 #() 1362 193 193 nil 27 )! !
+' 416 1314 #textLimit: 8 #(1073741823) 416 1314 #resetCharFormat 8 #() 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 81 8 0 0 185 0 0 0] 8 #() 1362 193 193 nil 27 )!
+
+resource_Default_view_D8_13
+	"A copy of the ealier stbVersion 13 Dolphin 8 RichTextPresenter default view, prior to the introduction of the updateMode inst var in the TextEdit superclass. STB version is the same as D7, but now in STL5 format.
+
+	If you wish to modify this resource evaluate:
+	Tools.ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view_D8_13)
+
+	DO NOT EDIT, as doing so will invalidate the test. Revert any changes from rename refactorings too.
+	"
+
+	^#(#'!!STL' 5 985166 10 #{UI.STBViewProxy} #{UI.RichTextEdit} 34 18 nil nil 34 2 8 1140920644 1025 416 nil 917510 #{Graphics.Color} #default nil 7 461638 4 #{UI.Menu} nil true 34 10 1180742 2 #{UI.CommandMenuItem} 1 1377606 4 #{UI.CommandDescription} #chooseSelectionFont 8 '&Font…' 1 1 nil nil nil 1179974 1 #{UI.DividerMenuItem} 4097 562 1 594 #bePlain 8 '&Plain' 1 1 nil nil nil 562 1 594 #toggleBold 8 '&Bold' 1 1 nil nil nil 562 1 594 #toggleItalic 8 '&Italic' 1 1 nil nil nil 562 1 594 #toggleUnderlined 8 '&Underlined' 1 1 nil nil nil 642 4097 514 nil true 34 3 562 1025 594 #alignParagraphLeft 8 '&Left' 1 1 nil nil nil 562 1025 594 #alignParagraphCenter 8 '&Centre' 1 1 nil nil nil 562 1025 594 #alignParagraphRight 8 '&Right' 1 1 nil nil nil 8 '&Align' nil 1 nil nil nil nil nil 642 4097 562 1 594 #chooseSelectionColor 8 '&Colour…' 1 1 nil nil nil 8 '' nil 1 nil nil nil nil nil nil nil 416 nil 8 1559970672 1049094 #{UI.NullConverter} nil nil 9 nil 852230 #{OS.EDITSTREAM} 8 #[0 0 0 0 0 0 0 0 32 0 198 4] 1310982 #{Core.MessageSequence} 34 4 1049350 #{Core.MessageSend} #createAt:extent: 34 2 918022 #{Graphics.Point} 6143 21 1346 421 351 416 1298 #text: 34 1 721158 #{UI.RichText} 8 '{\urtf1\ansi\ansicpg1252\deff0\deflang2057{\fonttbl{\f0\froman Times New Roman;}}
+\viewkind4\uc1\pard\f0\fs22\par
+}
+' 416 1298 #textLimit: 8 #(1073741823) 416 1298 #resetCharFormat 8 #() 416 1179910 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 209 12 0 0 185 0 0 0] 8 #() 1346 193 193 nil 27)! !
 !UI.Tests.RichTextEditTest class categoriesForMethods!
 resource_Default_view_D6!public!resources-views! !
 resource_Default_view_D7!public!resources-views! !
+resource_Default_view_D8_13!public!resources-views! !
 !
 

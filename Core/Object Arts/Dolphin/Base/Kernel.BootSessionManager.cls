@@ -52,7 +52,6 @@ initializeBootPackages: anOrderedCollection
 	all safe to re-run. Therefore we must do this selectively."
 
 	PackageManager systemPackage basicComment: PackageManager systemPackageComment.
-	STBPrefix initialize.
 	Delay initializeTimingSemaphore.
 	CompilerNotification initialize.
 	#{Utf8String} value initialize.

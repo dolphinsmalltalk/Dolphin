@@ -20,21 +20,25 @@ copyWithCodeBase
 	"Private - Answer a instance of the same class as the receiver with the same codeBase.
 	This allows both the codeBase and the mechanism for using it to be propagated."
 
-	^super copyWithCodeBase validationBlock: self validationBlock!
+	^super copyWithCodeBase validationBlock: validationBlock!
 
-findResidentClass
-	"Private - Answer the class referred to by the receiver if it is fully resident in the image. 
+findResidentClass: aBindingReference
+	"Answer the class referred to by the receiver if it is fully resident in the image. 
 	First see if the requested class is valid."
 
-	(self validationBlock value: self key asSymbol)
-		ifFalse: [STBValidatingInFiler errorInvalidClass: self key].
-	^super findResidentClass!
+	(validationBlock value: aBindingReference pathString) ifFalse: [STBValidatingInFiler errorInvalidClass: aBindingReference].
+	^super findResidentClass: aBindingReference!
+
+includesClass: aClass
+	"Answer whether the <Class> argument is within the allowed set."
+
+	^validationBlock value: aClass fullName!
 
 initialize
 	"Private - Initialize the receiver"
 
 	super initialize.
-	self validationBlock: [:className | true]!
+	validationBlock := [:className | true]!
 
 validationBlock
 	"Answer the monadic valuable (usually a block) that when passed a class name symbol will answer true if objects
@@ -43,16 +47,33 @@ validationBlock
 	^validationBlock!
 
 validationBlock: aMonadicValuable 
-	"Set the monadic valuable (usually a block) that when passed a class name symbol will answer true if objects
+	"Private - Set the monadic valuable (usually a block) that when passed a class name symbol will answer true if objects
 	of this class are valid for loading into the image from the input stream associated with the receiver."
 
+	super initialize.
 	validationBlock := aMonadicValuable.
+	^self
 ! !
 !Kernel.ValidatingClassLocator categoriesForMethods!
 copyWithCodeBase!copying!private! !
-findResidentClass!operations!private! !
+findResidentClass:!operations!public! !
+includesClass:!operations!public! !
 initialize!initializing!private! !
 validationBlock!accessing!public! !
+validationBlock:!initializing!private! !
+!
+
+!Kernel.ValidatingClassLocator class methodsFor!
+
+new
+	"This will not be very useful, but it is secure by default as it effectively refuses to load anything."
+
+	^self validationBlock: [:className | false]!
+
+validationBlock: aMonadicValuable
+	^self basicNew validationBlock: aMonadicValuable! !
+!Kernel.ValidatingClassLocator class categoriesForMethods!
+new!public! !
 validationBlock:!accessing!public! !
 !
 

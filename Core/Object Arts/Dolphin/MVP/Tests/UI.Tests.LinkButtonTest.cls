@@ -53,9 +53,9 @@ testQueryCommandEnablement
 		validateUserInterface.
 	self assert: presenter isEnabled!
 
-verifyUpgradedView: anInteger
+verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	| view command |
-	super verifyUpgradedView: anInteger.
+	super verifyUpgradedView: anInteger identifier: aResourceIdentifier.
 	view := self view.
 	self assert: view backcolor identicalTo: Color default.
 	self assert: view text equals: '<a>Click to Close</a>'.
@@ -71,7 +71,7 @@ classToTest!helpers!private! !
 testClickLinkFiresCommand!public!unit tests! !
 testGetSetText!public!unit tests! !
 testQueryCommandEnablement!public!unit tests! !
-verifyUpgradedView:!helpers!private! !
+verifyUpgradedView:identifier:!helpers!private! !
 !
 
 !UI.Tests.LinkButtonTest class methodsFor!

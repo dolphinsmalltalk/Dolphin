@@ -20,36 +20,26 @@ Instance Variables:
 !Kernel.STBOutFiler categoriesForClass!System-Binary storage! !
 !Kernel.STBOutFiler methodsFor!
 
-putCharacter: aCharacter
-	self writeInteger: (STBPrefix encodeCharacter: aCharacter)!
-
-resetStream
+writeByteObject: aByteObject
+	| size |
+	self writePreambleFor: aByteObject.
+	size := aByteObject basicSize.
+	policy writeInteger: size on: stream.
 	stream
-		nextPutAll: self class signature;
-		nextPutAll: version displayString asByteArray;
-		nextPut: 16r20!
-
-serializeObject: anObject
-	"Let anObject output itself."
-
-	anObject stbSaveOn: self!
-
-writeClass: anObject withLocator: locatorString 
-	stream nextPutAll: locatorString asByteArray!
-
-writeInteger: anInteger
-	"Private - Write anInteger to the stream."
-
-	stream nextInt32Put: anInteger!
-
-writeNil
-	self writeInteger: 0! !
+		next: size
+		putAll: aByteObject
+		startingAt: 1! !
 !Kernel.STBOutFiler categoriesForMethods!
-putCharacter:!helpers!private! !
-resetStream!initializing!private! !
-serializeObject:!operations!private! !
-writeClass:withLocator:!operations!private! !
-writeInteger:!helpers!private! !
-writeNil!operations!private! !
+writeByteObject:!binary filing!public! !
+!
+
+!Kernel.STBOutFiler class methodsFor!
+
+formatName
+	"Private - Answer the format name."
+
+	^STLFormatName! !
+!Kernel.STBOutFiler class categoriesForMethods!
+formatName!constants!private! !
 !
 

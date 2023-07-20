@@ -19,6 +19,7 @@ package setClassNames: #(
 	#{Tools.Tests.ProductReleaseTest}
 	#{Tools.Tests.SmalltalkSystemTest}
 	#{Tools.Tests.SmalltalkWorkspaceTest}
+	#{Tools.Tests.SourceBrowserTest}
 	#{Tools.Tests.StStyler}
 ).
 
@@ -44,6 +45,7 @@ package setPrerequisites: #(
 	'..\..\MVP\Base\Dolphin Basic Geometry'
 	'..\..\MVP\Dialogs\Common\Dolphin Common Dialogs'
 	'..\..\MVP\Dialogs\Common\Dolphin Common Print Dialog'
+	'..\Community Edition\Dolphin Community Edition Tools'
 	'..\..\MVP\Graphics\Dolphin GDI Graphics'
 	'..\..\MVP\Base\Dolphin MVP Base'
 	'..\..\MVP\Tests\Dolphin MVP Tests'
@@ -141,6 +143,13 @@ Core.Tests.DolphinTest
 	classConstants: {}!
 UI.Tests.PresenterTest
 	subclass: #'Tools.Tests.SmalltalkWorkspaceTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.PresenterTest
+	subclass: #'Tools.Tests.SourceBrowserTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

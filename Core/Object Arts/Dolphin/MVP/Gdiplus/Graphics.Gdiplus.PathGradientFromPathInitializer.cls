@@ -58,7 +58,8 @@ printAttributesOn:!printing!private! !
 !Graphics.Gdiplus.PathGradientFromPathInitializer class methodsFor!
 
 stbConvertFrom: anSTBClassFormat
-	^[:data | self path: (data at: 2) wrapMode: WrapModeClamp]! !
+	anSTBClassFormat version == 0 ifTrue: [^[:data | self path: (data at: 2) wrapMode: WrapModeClamp]].
+	^super stbConvertFrom: anSTBClassFormat! !
 !Graphics.Gdiplus.PathGradientFromPathInitializer class categoriesForMethods!
 stbConvertFrom:!binary filing!public! !
 !

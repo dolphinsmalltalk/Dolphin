@@ -75,11 +75,13 @@ testNonExistentClass
 				poolDictionaries: ''
 				classInstanceVariableNames: ''.
 	
-	[| rehydrated dessicated |
+	[| dessicated dessicatedInstance |
 	dessicated := self serialize: testClass.
+	dessicatedInstance := self serialize: testClass new.
 	testClass removeFromSystem.
 	testClass := nil.
-	self verifyRehydrateNonExistantClass: dessicated]
+	self verifyRehydrateNonExistantClass: dessicated.
+	self should: [self deserialize: dessicatedInstance] raise: NotFoundError]
 			ensure: [#{STBTest_TestClass} ifDefined: [:c | c removeFromSystem]]!
 
 testProcessor

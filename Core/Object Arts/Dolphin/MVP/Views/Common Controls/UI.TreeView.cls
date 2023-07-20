@@ -1403,17 +1403,17 @@ stbConvertFromVersion10: anArray
 	"Private - Perform an STB conversion from a version 10 <TreeView> to version 11,
 	i.e. append tvFlags and reserve another slot for later use."
 
-	| newArray size array |
+	| size array |
 	array := super stbConvertFromVersion10: anArray.
 	size := array size.
-	newArray := Array new: size + 2.	"2 instance variables were added"
-	newArray
+	"2 instance variables were added"
+	^(Array new: size + 2)
 		replaceFrom: 1
-		to: size
-		with: array
-		startingAt: 1.
-	newArray at: size + 1 put: 0.
-	^newArray!
+			to: size
+			with: array
+			startingAt: 1;
+		at: size + 1 put: 0;
+		yourself!
 
 themePartName
 	^#TreeView!

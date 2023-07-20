@@ -191,13 +191,16 @@ fillPath: fillPath strokePath: strokePath baseCap: baseCap baseInset: baseInset
 		baseInset: baseInset!
 
 stbConvertFrom: anSTBClassFormat
-	^
-	[:data |
-	self
-		fillPath: (data at: 2)
-		strokePath: (data at: 3)
-		baseCap: (data at: 4)
-		baseInset: (data at: 5)]! !
+	anSTBClassFormat version == 0
+		ifTrue: 
+			[^
+			[:data |
+			self
+				fillPath: (data at: 2)
+				strokePath: (data at: 3)
+				baseCap: (data at: 4)
+				baseInset: (data at: 5)]].
+	^super stbConvertFrom: anSTBClassFormat! !
 !Graphics.Gdiplus.CustomLineCapInitializer class categoriesForMethods!
 fillPath:strokePath:baseCap:baseInset:!instance creation!public! !
 stbConvertFrom:!binary filing!public! !

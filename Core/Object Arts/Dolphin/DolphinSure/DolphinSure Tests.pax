@@ -12,8 +12,10 @@ package setClassNames: #(
 ).
 
 package setPrerequisites: #(
+	'..\IDE\Base\Development System'
 	'..\Base\Dolphin'
 	'..\Base\Tests\Dolphin Base Tests'
+	'..\Base\Dolphin Legacy Date & Time'
 	'DolphinSure'
 ).
 

@@ -90,7 +90,62 @@ testShortName
 	self assert: Core.Tests binding shortName equals: #Tests.
 	self assert: Core.Tests.ClassTest binding shortName equals: 'Tests.ClassTest'.
 	self assert: self class environment binding shortName equals: 'Kernel.Tests'.
-	self assert: self class binding shortName equals: 'Kernel.Tests.VariableBindingTest'! !
+	self assert: self class binding shortName equals: 'Kernel.Tests.VariableBindingTest'!
+
+testStbConvertFromVersion0_Class
+	| bytes subject |
+	bytes := #[33 83 84 66 32 52 32 6 2 15 0 86 97 114 105 97 98 108 101 66 105 110 100 105 110 103 178 0 0 0 6 0 0 0 79 98 106 101 99 116 154 0 0 0 18 1 0 0 7 0 0 0 68 111 108 112 104 105 110 18 1 0 0 6 0 0 0 79 98 106 101 99 116].
+	"Tools.STBDebugger dumpToTranscript: bytes readStream"
+	subject := Object fromBinaryStoreBytes: bytes.
+	self assert: subject isKindOf: VariableBinding.
+	self assert: subject key identicalTo: #Object.
+	self assert: subject value identicalTo: Object.
+	self assert: subject isClassBinding.
+	self deny: subject isClassVariable.
+	self assert: subject environment identicalTo: Core!
+
+testStbConvertFromVersion0_ClassVariable
+	| bytes subject |
+	bytes := #[33 83 84 66 32 52 32 6 2 15 0 86 97 114 105 97 98 108 101 66 105 110 100 105 110 103 82 0 0 0 23 0 0 0 95 65 115 115 101 114 116 105 111 110 70 97 105 108 117 114 101 83 105 103 110 97 108 6 2 6 0 83 105 103 110 97 108 82 0 0 0 17 0 0 0 97 115 115 101 114 116 105 111 110 32 102 97 105 108 117 114 101 16 0 0 0].
+	"Tools.STBDebugger dumpToTranscript: bytes readStream"
+	subject := Object fromBinaryStoreBytes: bytes.
+	self assert: subject isKindOf: VariableBinding.
+	self assert: subject key equals: '_AssertionFailureSignal'.
+	self assert: subject value isKindOf: Signal.
+	self assert: subject value description equals: 'assertion failure'.
+	self deny: subject isClassBinding.
+	self assert: subject isClassVariable.
+	"It's a class variable of Object of course, but we don't know that from the key/value we have, not for certain"
+	self assertIsNil: subject environment!
+
+testStbConvertFromVersion0_Global
+	| bytes subject |
+	bytes := #[33 83 84 66 32 52 32 6 2 15 0 86 97 114 105 97 98 108 101 66 105 110 100 105 110 103 178 0 0 0 9 0 0 0 80 114 111 99 101 115 115 111 114 64 0 0 0].
+	"Tools.STBDebugger dumpToTranscript: bytes readStream"
+	subject := Object fromBinaryStoreBytes: bytes.
+	self assert: subject isKindOf: VariableBinding.
+	self assert: subject key identicalTo: #Processor.
+	self assert: subject value identicalTo: Processor.
+	self deny: subject isClassBinding.
+	self deny: subject isClassVariable.
+	self assert: subject environment equals: Smalltalk!
+
+testStbConvertFromVersion0_SharedPool
+	| bytes subject |
+	bytes := #[33 83 84 66 32 52 32 6 2 15 0 86 97 114 105 97 98 108 101 66 105 110 100 105 110 103 178 0 0 0 13 0 0 0 67 111 109 112 105 108 101 114 70 108 97 103 115 202 0 0 0 154 0 0 0 18 1 0 0 7 0 0 0 68 111 108 112 104 105 110 18 1 0 0 23 0 0 0 80 111 111 108 67 111 110 115 116 97 110 116 115 68 105 99 116 105 111 110 97 114 121 98 0 0 0 8 0 0 0 146 1 0 0 82 0 0 0 12 0 0 0 83 101 110 100 89 111 117 114 115 101 108 102 1 8 0 0 146 1 0 0 82 0 0 0 7 0 0 0 84 101 120 116 77 97 112 33 0 0 0 146 1 0 0 82 0 0 0 10 0 0 0 78 111 79 112 116 105 109 105 122 101 17 0 0 0 146 1 0 0 82 0 0 0 11 0 0 0 68 101 98 117 103 77 101 116 104 111 100 129 0 0 0 146 1 0 0 82 0 0 0 9 0 0 0 78 111 116 76 111 103 103 101 100 3 0 0 0 146 1 0 0 82 0 0 0 8 0 0 0 84 101 109 112 115 77 97 112 65 0 0 0 146 1 0 0 82 0 0 0 11 0 0 0 73 110 116 101 114 97 99 116 105 118 101 1 4 0 0 146 1 0 0 82 0 0 0 15 0 0 0 83 121 110 116 97 120 67 104 101 99 107 79 110 108 121 5 0 0 0].
+	"Tools.STBDebugger dumpToTranscript: bytes readStream"
+	subject := Object fromBinaryStoreBytes: bytes.
+	self assert: subject isKindOf: VariableBinding.
+	self assert: subject key identicalTo: #CompilerFlags.
+	self assert: subject value isKindOf: Smalltalk.PoolConstantsDictionary.
+	subject value associations sort with: CompilerFlags associations sort
+		do: 
+			[:v1 :v2 |
+			self assert: v1 key equals: v2 key.
+			self assert: v1 value equals: v2 value].
+	self deny: subject isClassBinding.
+	self deny: subject isClassVariable.
+	self assert: subject environment identicalTo: Smalltalk! !
 !Kernel.Tests.VariableBindingTest categoriesForMethods!
 testAbsoluteName!public!unit tests! !
 testFullName!public! !
@@ -98,5 +153,9 @@ testFullyQualifiedReference!public! !
 testIsClassBinding!public! !
 testRefersToLiteral!public!unit tests! !
 testShortName!public! !
+testStbConvertFromVersion0_Class!public!unit tests! !
+testStbConvertFromVersion0_ClassVariable!public!unit tests! !
+testStbConvertFromVersion0_Global!public!unit tests! !
+testStbConvertFromVersion0_SharedPool!public!unit tests! !
 !
 

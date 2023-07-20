@@ -84,12 +84,23 @@ testNilMultiChoice
 	presenter value: #(2 3).
 	self assert: presenter view hasSelection.
 	self assert: presenter view selectionsByIndex equals: #(3 4).
-	self assert: presenter value equals: #(2 3)! !
+	self assert: presenter value equals: #(2 3)!
+
+verifyUpgradedView: anInteger identifier: aResourceIdentifier
+	| view |
+	view := self view.
+	self assert: ((view isKindOf: ListBox) or: [view isKindOf: ListView]).
+	self assert: view isOpen!
+
+viewClass
+	^ListBox! !
 !UI.Tests.ChoicePresenterTest categoriesForMethods!
 classToTest!helpers!private! !
 testChangeChoices!public!unit tests! !
 testChangeMultiChoices!public!unit tests! !
 testNilChoice!public!unit tests! !
 testNilMultiChoice!public!unit tests! !
+verifyUpgradedView:identifier:!public! !
+viewClass!helpers!private! !
 !
 

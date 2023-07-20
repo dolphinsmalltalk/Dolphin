@@ -11,9 +11,6 @@ UI.Tests.SingleSelectListBoxTest guid: (Core.GUID fromString: '{8e5a59a5-f500-4d
 UI.Tests.SingleSelectListBoxTest comment: ''!
 !UI.Tests.SingleSelectListBoxTest methodsFor!
 
-oldDolphinVersionsForStbUpgrade
-	^1 to: 4!
-
 testSelectionModeChange
 	| objects |
 	self deny: self isMultiSelect.
@@ -51,21 +48,15 @@ testSelectionModeChange
 	"#115: Changing list box selection mode fails if there are selections"
 	self assert: presenter view selectionsByIndex equals: #(2)!
 
-verifyUpgradedView: anInteger
+verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	| view |
-	super verifyUpgradedView: anInteger.
+	super verifyUpgradedView: anInteger identifier: aResourceIdentifier.
 	view := self view.
-	self deny: view isMultiSelect!
-
-vuFile
-	"Was originally ListPresenter.List box, at least in D1 & 2"
-
-	^'ListPresenter.Default view.vu'! !
+	self assert: view isMultiSelect
+		equals: aResourceIdentifier selector == #resource_Multiselection_list_box! !
 !UI.Tests.SingleSelectListBoxTest categoriesForMethods!
-oldDolphinVersionsForStbUpgrade!constants!private! !
 testSelectionModeChange!public!unit tests! !
-verifyUpgradedView:!helpers!private! !
-vuFile!constants!private! !
+verifyUpgradedView:identifier:!helpers!private! !
 !
 
 !UI.Tests.SingleSelectListBoxTest class methodsFor!

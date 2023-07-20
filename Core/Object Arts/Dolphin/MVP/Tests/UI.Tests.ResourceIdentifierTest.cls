@@ -30,7 +30,7 @@ setUp
 	filer := STLOutFiler on: Array writeStream.
 	filer nextPut: shellView.
 	shellView destroy.
-	tempViewResource := Compiler evaluate: (STLPrinter print: filer stream contents)!
+	tempViewResource := Compiler evaluate: (STLPrinter printLiteralStoreArray: filer stream contents)!
 
 tempViewResource
 	^tempViewResource!
@@ -93,6 +93,15 @@ testResourceSelector
 	rid := ResourceIdentifier class: self class name: '1Default:view'.
 	self assert: (rid class selectorFromName: rid name) identicalTo: #resource_1Defaultview!
 
+testStbConvertFromVersion0
+	| bytes subject |
+	bytes := #[33 83 84 66 32 48 32 6 2 18 0 82 101 115 111 117 114 99 101 73 100 101 110 116 105 102 105 101 114 0 0 0 0 78 2 13 0 1 0 0 0 83 84 66 67 108 97 115 115 80 114 111 120 121 0 0 0 0 54 0 6 0 83 116 114 105 110 103 7 0 0 0 68 111 108 112 104 105 110 146 0 0 0 7 0 0 0 84 111 111 108 98 97 114 146 0 0 0 11 0 0 0 73 109 97 103 101 32 116 111 111 108 115].
+	"Tools.STBDebugger dumpToTranscript: bytes readStream"
+	subject := Object fromBinaryStoreBytes: bytes.
+	self assert: subject isKindOf: ResourceIdentifier.
+	self assert: subject owningClass identicalTo: Toolbar.
+	self assert: subject selector identicalTo: #resource_Image_tools!
+
 testStoreOn
 	| rid restored storeString |
 	rid := ResourceIdentifier class: self class name: 'Default view'.
@@ -109,6 +118,7 @@ testAssignResource!public!unit tests! !
 testDeserializeAll!public!unit tests! !
 testReferenceToNonExistentView!public!unit tests! !
 testResourceSelector!public!unit tests! !
+testStbConvertFromVersion0!public! !
 testStoreOn!public!unit tests! !
 !
 

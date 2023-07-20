@@ -108,6 +108,10 @@ package setMethodNames: #(
 	#(#{Kernel.ProcessorScheduler class} #icon)
 	#(#{Kernel.SharedPool class} #icon)
 	#(#{Kernel.SourceManager class} #icon)
+	#(#{Kernel.STBClassConversion class} #icon)
+	#(#{Kernel.STBFiler class} #icon)
+	#(#{Kernel.STBProxy class} #icon)
+	#(#{Kernel.STBVersionPolicy class} #icon)
 	#(#{Kernel.VariableBinding} #icon)
 	#(#{OS class} #icon)
 	#(#{OS.DiskVolumeInformation class} #icon)
@@ -1269,6 +1273,48 @@ icon
 
 	^##(self) defaultIcon! !
 !Kernel.SourceManager class categoriesForMethods!
+icon!constants!public! !
+!
+
+!Kernel.STBClassConversion class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^STBFiler icon! !
+!Kernel.STBClassConversion class categoriesForMethods!
+icon!constants!public! !
+!
+
+!Kernel.STBFiler class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##((TextTileIcon text: $\x2707 fontName: 'Georgia')
+		textcolor: Color navy;
+		yourself)! !
+!Kernel.STBFiler class categoriesForMethods!
+icon!constants!public! !
+!
+
+!Kernel.STBProxy class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^STBFiler icon! !
+!Kernel.STBProxy class categoriesForMethods!
+icon!constants!public! !
+!
+
+!Kernel.STBVersionPolicy class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^STBFiler icon! !
+!Kernel.STBVersionPolicy class categoriesForMethods!
 icon!constants!public! !
 !
 

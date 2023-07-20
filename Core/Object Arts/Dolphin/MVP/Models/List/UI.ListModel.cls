@@ -271,7 +271,8 @@ resize: anInteger
 	"Private - Resize the receiver to accommodate anInteger elements.
 	Answer the receiver."
 
-	^self list resize: anInteger!
+	self list resize: anInteger.
+	^self!
 
 searchPolicy
 	"Answer the receiver's current <searchPolicy>."
@@ -308,6 +309,10 @@ size
 	^self list size
 
 !
+
+sort: aDyadicValuable
+	list sort: aDyadicValuable.
+	self notifyListChanged!
 
 sortAlgorithmClass
 	"Answer the class of algorithm to be used for sorting the receiver's contents. Use a stable sorting algorithm."
@@ -363,6 +368,7 @@ select:!enumerating!public! !
 setEvents:!events!private! !
 setList:searchPolicy:!initializing!private! !
 size!accessing!public! !
+sort:!public! !
 sortAlgorithmClass!public!sorting! !
 species!constants!public! !
 stbSaveOn:!binary filing!public! !
@@ -400,6 +406,9 @@ newWithSearchPolicy: searchPolicy
 
 	^self on: OrderedCollection new searchPolicy: searchPolicy!
 
+ofSize: anInteger
+	^self on: (OrderedCollection ofSize: anInteger)!
+
 on: aSequenceableCollection
 	"Answer an instance of the receiver wrapped around the <sequencedCollection> argument
 	and using the default <SearchPolicy>."
@@ -419,11 +428,14 @@ stbConvertFrom: anSTBClassFormat
 	1: Added 'events' instance variable to ListModel.
 	2: Added 'searchPolicy' instance variable."
 
-	^[:data | | newInst |
-		newInst := self basicNew.
-		newInst searchPolicy: self defaultSearchPolicy.
-		data keysAndValuesDo: [:i :v | newInst instVarAt: i put: v].
-		newInst]!
+	anSTBClassFormat version < 2
+		ifTrue: [^[:data | (self stbConvertFromVersions0and1: data) becomeA: self]].
+	^super stbConvertFrom: anSTBClassFormat!
+
+stbConvertFromVersions0and1: data
+	^(data resize: self instSize)
+		at: 3 put: self defaultSearchPolicy;
+		yourself!
 
 stbVersion
 	^2! !
@@ -433,9 +445,11 @@ new!instance creation!public! !
 new:!instance creation!public! !
 newEquality!instance creation!public! !
 newWithSearchPolicy:!instance creation!public! !
+ofSize:!instance creation!private! !
 on:!instance creation!public! !
 on:searchPolicy:!instance creation!public! !
 stbConvertFrom:!binary filing!public! !
+stbConvertFromVersions0and1:!binary filing!public! !
 stbVersion!binary filing!public! !
 !
 

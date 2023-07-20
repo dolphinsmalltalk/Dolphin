@@ -189,37 +189,59 @@ unqualifiedName!accessing!public! !
 stbConvertFrom: anSTBClassFormat
 	"Convert from previous version resource. 
 	Version Changes:
-		1) Adds 'environment'
+		1) Adds 'environment' (early D8)
 		2) Adds 'flags'
 	"
 
-	^
-	[:data |
-	| binding value |
-	binding := self basicNew.
-	1 to: data size do: [:i | binding instVarAt: i put: (data at: i)].
-	binding setFlags: 0.
-	binding environment
-		ifNil: 
-			["In most cases a VariableBinding will be in STB/STL because it is referenced from the literal frame of a method. We have to try and deduce the environment:
-				- If the variable has the same name as a variable in Smalltalk that references the exact same value, we patch the environment to Smalltalk; or
-				- If the variable refers to a class and has the same unqualified name as the class, we patch it to the environment of that class; otherwise
-				- we leave the envionment as we are unable to determine the correct class"
-			value := binding value.
-			(Smalltalk at: binding key ifAbsent: Collection.AbsentCookie) == value
-				ifTrue: [binding environment: Smalltalk]
+	| ver |
+	ver := anSTBClassFormat version.
+	ver == 1 ifTrue: [^[:data | (self stbConvertFromVersion1: data) becomeA: self]].
+	ver == 0 ifTrue: [^[:data | (self stbConvertFromVersion0: data) becomeA: self]].
+	^super stbConvertFrom: anSTBClassFormat!
+
+stbConvertFromVersion0: data
+	"Private - Convert from version 0 resource. Need to deduce the environment as best we can and flags accordingly."
+
+	| key value namespace flags |
+	key := data at: 1.
+	value := data at: 2.
+	flags := 0.
+	"In most cases a VariableBinding will be in STB/STL because it is referenced from the literal frame of a method. We have to try and deduce the environment:
+		- If the variable has the same name as a variable in Smalltalk that references the exact same value, we patch the environment to Smalltalk; or
+		- If the variable refers to a class and has the same unqualified name as the class, we patch it to the environment of that class; otherwise
+		- we leave the envionment as we are unable to determine the correct class"
+	((Smalltalk at: key ifAbsent: Collection.AbsentCookie) == value or: 
+			[value class == #{Smalltalk.PoolConstantsDictionary} valueOrNil
+				or: [##(#(#Processor #Transcript #Trace #SourceFiles) asSet) includes: key]])
+		ifTrue: [namespace := Smalltalk]
+		ifFalse: 
+			[(value class isMeta and: [key == value name])
+				ifTrue: [namespace := value environment]
 				ifFalse: 
-					[(value class isMeta and: [binding key == value name])
-						ifTrue: [binding environment: value environment]
-						ifFalse: 
-							["Mark it as a class variable which will exclude it from treatment as a class binding"
-							binding isClassVariable: true]]].
-	binding]!
+					["Mark it as a class variable which will exclude it from treatment as a class binding"
+					flags := ClassMask]].
+	^{ key. value. namespace. flags }!
+
+stbConvertFromVersion1: data
+	"Private - Convert from version 1 resource. V2 just adds flags."
+
+	| key value namespace flags |
+	key := data at: 1.
+	value := data at: 2.
+	namespace := data at: 3.
+	flags := (value class isMetaclass not or: [value name ~~ key or: [value environment ~~ namespace]])
+				ifTrue: 
+					["Not a class binding, so just mark as a class variable"
+					ClassMask]
+				ifFalse: [0].
+	^{ key. value. namespace. flags }!
 
 stbVersion
 	^2! !
 !Kernel.VariableBinding class categoriesForMethods!
 stbConvertFrom:!binary filing!public! !
+stbConvertFromVersion0:!binary filing!private! !
+stbConvertFromVersion1:!binary filing!private! !
 stbVersion!binary filing!public! !
 !
 

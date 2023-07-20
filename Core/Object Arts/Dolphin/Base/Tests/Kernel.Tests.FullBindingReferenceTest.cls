@@ -179,15 +179,6 @@ testLiteralImplicitExplicitEnvironmentRelative
 	self assert: method customEnvironment identicalTo: env.
 	self assert: (method value: Object new withArguments: #()) identicalTo: self class!
 
-testStbConvertFromVersion0
-	| subject |
-	subject := Compiler
-				evaluate: 'Object
-				fromLiteralStoreArray: #(#''!!STL'' 4 1508870 ##(Kernel.BindingReference) nil 34 2 8 ''Core'' 8 ''Object'' nil 5 1442886 2 ##(Kernel.VariableBinding) #Object ##(Core.Object) ##(Core) 1 1)'.
-	self assert: subject class identicalTo: self subjectClass.
-	self assert: subject isPrivate.
-	self assert: subject value identicalTo: Object!
-
 testStbConvertFromVersion1
 	| subject |
 	subject := Object
@@ -212,6 +203,15 @@ testStbConvertRelativeFromVersion1
 	self assert: subject class identicalTo: RelativeBindingReference.
 	self deny: subject isPrivate.
 	self assert: subject scope identicalTo: Core.
+	self assert: subject value identicalTo: Object!
+
+testStlConvertFromVersion0
+	| subject |
+	subject := Compiler
+				evaluate: 'Object
+				fromLiteralStoreArray: #(#''!!STL'' 4 1508870 ##(Kernel.BindingReference) nil 34 2 8 ''Core'' 8 ''Object'' nil 5 1442886 2 ##(Kernel.VariableBinding) #Object ##(Core.Object) ##(Core) 1 1)'.
+	self assert: subject class identicalTo: self subjectClass.
+	self assert: subject isPrivate.
 	self assert: subject value identicalTo: Object!
 
 testStlConvertFromVersion1
@@ -244,10 +244,10 @@ testLiteralExplicitEnvironmentRelative!public!unit tests! !
 testLiteralExplicitEnvironmentRelative2!public!unit tests! !
 testLiteralImplicitEnvironmentRelative!public!unit tests! !
 testLiteralImplicitExplicitEnvironmentRelative!public!unit tests! !
-testStbConvertFromVersion0!public!unit tests! !
 testStbConvertFromVersion1!public!unit tests! !
 testStbConvertRelativeFromVersion0!public!unit tests! !
 testStbConvertRelativeFromVersion1!public!unit tests! !
+testStlConvertFromVersion0!public!unit tests! !
 testStlConvertFromVersion1!public!unit tests! !
 testStlConvertRelativeFromVersion1!public!unit tests! !
 !

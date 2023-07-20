@@ -240,20 +240,19 @@ findCommand: aSymbol
 flags: anInteger 
 	flags := anInteger!
 
-fromStrings: menuArray
+fromStrings: anArray
 	"Private - Convert menuArray into a series of MenuItems.
 	menuArray is an array of strings. 
 	NB: Not realized yet."
 
-	self text: (menuArray at: 1 ifAbsent: [^self]).
-	menuArray
-		from: 2
-		to: menuArray size
+	| label |
+	label := anArray lookup: 1.
+	label ifNil: [^self].
+	self text: label.
+	anArray from: 2
 		do: 
-			[:menuString |
-			self addItem: ((menuString isMemberOf: Array)
-						ifTrue: [self class fromStrings: menuString]
-						ifFalse: [MenuItem fromString: menuString])]!
+			[:each |
+			self addItem: (each isString ifTrue: [MenuItem fromString: each] ifFalse: [Menu fromStrings: each])]!
 
 hasSharedImageColumn
 	"Answer whether the checkmark column is also used for images - if the answer is false then separate
@@ -651,6 +650,9 @@ text: textString
 
 	text := textString	!
 
+toStrings
+	^{ text } , (items collect: [:each | each toStrings])!
+
 typeFlags
 	"Private - Answer the MENUITEMINFO style flags of the receiver (see
 	Win32 SDK docs for fType field)."
@@ -748,6 +750,7 @@ size!accessing!public! !
 styleFlags!private!realizing/unrealizing! !
 text!accessing!public! !
 text:!accessing!public! !
+toStrings!converting!private! !
 typeFlags!private!realizing/unrealizing! !
 updateItem:id:text:!accessing!private! !
 !
@@ -811,45 +814,47 @@ menuMessageMappings
 
 stbConvertFrom: anSTBClassFormat
 	"Convert from earlier Menu versions."
-	^
-	[:data | 
-	| converted ver newInstance |
-	converted := data.
+
+	| ver |
 	ver := anSTBClassFormat version.
-	ver < 1 ifTrue: [converted := self stbConvertToVersion1: converted].
-	ver < 2 ifTrue: [converted := self stbConvertToVersion2: converted].
-	ver < 3 ifTrue: [converted := self stbConvertToVersion3: converted].
-	ver < 4 ifTrue: ["No conversion needed - just adds inst vars"].
-	newInstance := self basicNew.
-	1 to: converted size
-		do: [:i | newInstance instVarAt: i put: (converted at: i)].
-	newInstance]!
+	ver < 1 ifTrue: [^[:data | self stbConvertFromVersion0: data]].
+	"Version 2 adds 'name' instance variable, but as it default to nil, we can skip it"
+	ver < 3 ifTrue: [^[:data | self stbConvertFromVersion2: data]].
+	ver < 4 ifTrue: [^[:data | self stbConvertFromVersion3: data]].
+	^super stbConvertFrom: anSTBClassFormat!
 
-stbConvertToVersion1: anArray 
-	"Hmmm, what happened from version 1 to version 2?"
+stbConvertFromVersion0: anArray
+	"1: items becomes an Array"
 
-	^anArray!
+	^self stbConvertFromVersion2: (anArray shallowCopy
+				at: 3 put: (anArray at: 3) asArray;
+				yourself)!
 
-stbConvertToVersion2: anArray 
-	"Private - Version 2 adds 'name' instance variable, defaulting to nil."
-
-	^anArray copyWith: nil!
-
-stbConvertToVersion3: anArray
-	"Private - Version 3 adds flags, image, and bitmap instance variables.
+stbConvertFromVersion2: anArray
+	"Private - Version 3 (D6) adds flags, image, and bitmap instance variables.
 	The flags must be zeroed, but the other two default to nil."
 
-	| vars |
-	self assert: [anArray size = 5].
-	vars := (Array new: 8)
+	^self stbConvertFromVersion3: ((Array new: 8)
 				replaceFrom: 1
-				to: anArray size
-				with: anArray.
-	vars at: 6 put: 0.
-	^vars!
+					to: anArray size
+					with: anArray;
+				at: 6 put: 0;
+				yourself)!
+
+stbConvertFromVersion3: anArray
+	"Private - Just more vars - all nil initially"
+
+	"End of the chain"
+	^(anArray resize: 11) becomeA: self!
 
 stbVersion
-	"Answer the current binary filer version number for instances of the receiver."
+	"Answer the current binary filer version number for instances of the receiver.
+		0: Dolphin 1-2: items, text
+		1: ?
+		2: Dolphin 4,5: Adds name
+		3: Dolphin 6: Adds flags (0), image), and bitmap
+		4: ? Adds imageManager, id, _reserved1, reserved2
+	"
 
 	^4!
 
@@ -865,9 +870,9 @@ icon!constants!public! !
 initialize!class initialization!development!public! !
 menuMessageMappings!constants!must not strip!private! !
 stbConvertFrom:!binary filing!public! !
-stbConvertToVersion1:!binary filing!private! !
-stbConvertToVersion2:!binary filing!private! !
-stbConvertToVersion3:!binary filing!private! !
+stbConvertFromVersion0:!binary filing!private! !
+stbConvertFromVersion2:!binary filing!private! !
+stbConvertFromVersion3:!binary filing!private! !
 stbVersion!binary filing!public! !
 uninitialize!class hierarchy-removing!private! !
 !

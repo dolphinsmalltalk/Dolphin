@@ -11,10 +11,11 @@ Tools.Tests.SystemBrowserTest guid: (Core.GUID fromString: '{2e020526-2bd1-4fb6-
 Tools.Tests.SystemBrowserTest comment: ''!
 !Tools.Tests.SystemBrowserTest methodsFor!
 
-browserClass
+classToTest
 	^SystemBrowserShell!
 
 testBrowseItOpensSystemBrowserOnPackageOfLooseMethod
+	<nocreate>
 	| default |
 	#'1512'.
 	default := SmalltalkSystem current defaultBrowserClass.
@@ -23,11 +24,11 @@ testBrowseItOpensSystemBrowserOnPackageOfLooseMethod
 	SmalltalkSystem current defaultBrowserClass: SystemBrowserShell.
 	method := Object compiledMethodAt: #asValue.
 	self assert: method isLoose.
-	browser := method browse.
-	self assert: browser packages equals: {method owningPackage}]
+	presenter := method browse.
+	self assert: presenter packages equals: {method owningPackage}]
 			ensure: [SmalltalkSystem current defaultBrowserClass: default]! !
 !Tools.Tests.SystemBrowserTest categoriesForMethods!
-browserClass!public!Running! !
+classToTest!public!Running! !
 testBrowseItOpensSystemBrowserOnPackageOfLooseMethod!public!unit tests! !
 !
 

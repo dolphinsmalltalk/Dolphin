@@ -101,13 +101,16 @@ printAttributesOn:!printing!private! !
 !Graphics.Gdiplus.LinearGradientBrushFromPointsInitializer class methodsFor!
 
 stbConvertFrom: anSTBClassFormat
-	^
-	[:data |
-	self
-		point1: (data at: 2)
-		point2: (data at: 3)
-		color1: (data at: 4)
-		color2: (data at: 5)]! !
+	anSTBClassFormat version == 0
+		ifTrue: 
+			[^
+			[:data |
+			self
+				point1: (data at: 2)
+				point2: (data at: 3)
+				color1: (data at: 4)
+				color2: (data at: 5)]].
+	^super stbConvertFrom: anSTBClassFormat! !
 !Graphics.Gdiplus.LinearGradientBrushFromPointsInitializer class categoriesForMethods!
 stbConvertFrom:!binary filing!public! !
 !
