@@ -2,7 +2,7 @@
 
 Core.Object
 	subclass: #'Tools.MethodSearch'
-	instanceVariableNames: 'findDetails regexp literal'
+	instanceVariableNames: 'findDetails regexp literal referenceFilter'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -21,8 +21,21 @@ Class Variables:
 !Tools.MethodSearch categoriesForClass!Kernel-Objects! !
 !Tools.MethodSearch methodsFor!
 
+definitionFilter
+	"Answer a <monadicValuable> which can be used to discriminate between <CompiledMethod>s that
+	match this selector search and those that do not."
+
+	| type |
+	type := self searchMode.
+	^type == #regularExpression
+		ifTrue: [self regexpDefinitionFilter]
+		ifFalse: 
+			[type == #wildcardExpression
+				ifTrue: [self wildcardDefinitionFilter]
+				ifFalse: [self literalDefinitionFilter]]!
+
 definitionsIn: aBrowserEnvironment
-	^(aBrowserEnvironment filterMethods: self methodDefinitionFilter)
+	^(aBrowserEnvironment filterMethods: self definitionFilter)
 		label: (aBrowserEnvironment subEnvironmentLabel: #definitions for: self pattern);
 		search: self;
 		yourself!
@@ -61,32 +74,6 @@ literalSymbolsFilter: matchBlock
 matchesIn: aBrowserEnvironment
 	^{ self definitionsIn: aBrowserEnvironment. self referencesIn: aBrowserEnvironment }!
 
-methodDefinitionFilter
-	"Private - Answer a <monadicValuable> which can be used to discriminate between <CompiledMethod>s that
-	match this selector search and those that do not."
-
-	| type |
-	type := self searchMode.
-	^type == #regularExpression 
-		ifTrue: [self regexpDefinitionFilter]
-		ifFalse: 
-			[type == #wildcardExpression 
-				ifTrue: [self wildcardDefinitionFilter]
-				ifFalse: [self literalDefinitionFilter]]!
-
-methodReferenceFilter
-	"Private - Answer a <monadicValuable> which can be used to discriminate between <CompiledMethod>s that
-	match this selector search and those that do not."
-
-	| type |
-	type := self searchMode.
-	^type == #regularExpression 
-		ifTrue: [self regexpReferenceFilter]
-		ifFalse: 
-			[type == #wildcardExpression 
-				ifTrue: [self wildcardReferenceFilter]
-				ifFalse: [self simpleReferenceFilter]]!
-
 pattern
 	"Answer the receiver's current search pattern <String>. The interpretation of this string is
 	dependant upon the search type mode."
@@ -96,8 +83,22 @@ pattern
 pattern: aString 
 	findDetails pattern: aString!
 
+referenceFilter
+	"Answer a <monadicValuable> which can be used to discriminate between <CompiledMethod>s that match this selector search and those that do not."
+
+	^referenceFilter
+		ifNil: 
+			[| type |
+			type := self searchMode.
+			referenceFilter := type == #regularExpression
+						ifTrue: [self regexpReferenceFilter]
+						ifFalse: 
+							[type == #wildcardExpression
+								ifTrue: [self wildcardReferenceFilter]
+								ifFalse: [self simpleReferenceFilter]]]!
+
 referencesIn: aBrowserEnvironment
-	^(aBrowserEnvironment filterMethods: self methodReferenceFilter)
+	^(aBrowserEnvironment filterMethods: self referenceFilter)
 		label: (aBrowserEnvironment labelFormats at: self referencesLabelTag)
 					<< { self pattern. aBrowserEnvironment. self searchMode asPhrase };
 		search: self;
@@ -188,19 +189,19 @@ wildcardReferenceFilter
 	ignoreCase := findDetails isCaseSensitive not.
 	^self literalSymbolsFilter: [:each | match match: each ignoreCase: ignoreCase]! !
 !Tools.MethodSearch categoriesForMethods!
+definitionFilter!accessing!public! !
 definitionsIn:!enquiries!public! !
 findDetails!accessing!public! !
 findDetails:!accessing!public! !
 initialize!initializing!public! !
-literal!public! !
+literal!accessing!public! !
 literal:!accessing!public! !
 literalDefinitionFilter!helpers!private! !
 literalSymbolsFilter:!helpers!private! !
 matchesIn:!enquiries!public! !
-methodDefinitionFilter!helpers!private! !
-methodReferenceFilter!helpers!private! !
 pattern!accessing!public! !
 pattern:!accessing!public! !
+referenceFilter!accessing!public! !
 referencesIn:!enquiries!public! !
 referencesLabelTag!constants!public! !
 regexpDefinitionFilter!helpers!private! !

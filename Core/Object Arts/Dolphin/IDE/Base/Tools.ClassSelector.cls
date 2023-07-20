@@ -196,7 +196,7 @@ buildAllVariablesMenu: aMenu
 			[self
 				populateVarMenu: aMenu
 				class: class
-				command: #browseReferencesToInstVars:inHierarchyOf:within:
+				command: #browseReferencesToInstVar:inHierarchyOf:within:
 				variables: instVars
 				format: '<1s>.<2s>'
 				abortable: false].
@@ -211,7 +211,7 @@ buildAllVariablesMenu: aMenu
 			[self
 				populateVarMenu: aMenu
 				class: class
-				command: #browseReferencesToClassVars:of:within:
+				command: #browseReferencesToClassVar:of:within:
 				variables: classVars
 				format: '<1s>.<2s>'
 				abortable: false]!
@@ -810,7 +810,7 @@ populateVarMenu: aMenu class: class command: cmdSelector variables: aCollection 
 			msg := MessageSend
 						receiver: self developmentSystem
 						selector: cmdSelector
-						arguments: { { each value }. class. self searchEnvironment }.
+						arguments: { each value. class. self searchEnvironment }.
 			(aMenu addCommand: msg
 				description: (aString expandMacrosWithArguments: { each key name. each value }
 						locale: Locale smalltalk))

@@ -17,7 +17,7 @@ testNewSelector
 	self assert: subject pattern identicalTo: #testNewSelector.
 	self assert: subject literal identicalTo: #testNewSelector.
 	self assert: subject searchMode identicalTo: #text.
-	filter := subject methodDefinitionFilter.
+	filter := subject definitionFilter.
 	self assert: (filter value: self class >> self selector).
 	self deny: (filter value: Object >> #size)! !
 !Tools.Tests.MethodSearchTest categoriesForMethods!

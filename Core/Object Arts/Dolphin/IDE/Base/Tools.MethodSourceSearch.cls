@@ -15,11 +15,11 @@ Tools.MethodSourceSearch comment: ''!
 methodFilter: aMonadicValuable 
 	^[:each | each getSource ifNil: [false] ifNotNil: [:src | aMonadicValuable value: src]]!
 
-methodReferenceFilter
+referenceFilter
 	"Private - Answer a <monadicValuable> which can be used to discriminate between <CompiledMethod>s that
 	match this search and those that do not."
 
-	^self methodFilter: super methodReferenceFilter!
+	^self methodFilter: super referenceFilter!
 
 referencesLabelTag
 	^#containing!
@@ -58,7 +58,7 @@ wildcardReferenceFilter
 	^[:text | match match: text ignoreCase: ignoreCase]! !
 !Tools.MethodSourceSearch categoriesForMethods!
 methodFilter:!helpers!private! !
-methodReferenceFilter!helpers!private! !
+referenceFilter!accessing!private! !
 referencesLabelTag!constants!public! !
 regexpReferenceFilter!helpers!private! !
 simpleReferenceFilter!helpers!private! !
