@@ -27,11 +27,11 @@ classToTest
 	^(self selector beginsWith: 'testStbUpgrade') ifFalse: [ScintillaView]!
 
 initializePresenter
-	| margins |
 	super initializePresenter.
 	presenter
 		ifNotNil: 
-			[presenter drawingTechnology: #default.
+			[| margins |
+			presenter drawingTechnology: #default.
 			margins := presenter margins.
 			margins do: [:each | each width: 0].
 			presenter margins: margins]!
@@ -116,10 +116,8 @@ testChangeWordChars
 
 testFindStringStartingAt
 	| found found2 |
-	presenter codePage: #utf8.
-	self assert: (presenter findString: 'Object' startingAt: 1) equals: 0.
+	self assert: presenter codePage identicalTo: #utf8.
 	"This test relies on 'Object' appearing in the text multiple times"
-	presenter text: self text.
 	found := presenter findString: 'Object' startingAt: 1.
 	self assert: found equals: (self text indexOfSubCollection: 'Object').
 	self assert: (presenter findString: 'Object' startingAt: found) equals: found.
@@ -137,7 +135,10 @@ testFindStringStartingAt
 	found := presenter findString: '🐬' startingAt: 8.
 	self assert: found equals: 0.
 	found := presenter findString: '🐬' startingAt: 50.
-	self assert: found equals: 0!
+	self assert: found equals: 0.
+	presenter clearAll.
+	self assert: (presenter findString: 'Object' startingAt: 1) equals: 0.
+!
 
 testImmersiveColorSetChange
 	| textColor settingName requested settableNotGettable rnd |
@@ -226,7 +227,7 @@ testOverrideDefaultKeyBindings
 
 testSetGetAnnotations
 	| annotations |
-	presenter text: self text; annotationMode: #boxed.
+	presenter annotationMode: #boxed.
 	annotations := {Annotation
 					line: 1
 					text: 'Wobble'
@@ -244,7 +245,6 @@ testSetGetAnnotations
 
 testSetGetEndOfLineAnnotations
 	| expected actual |
-	presenter text: self text.
 	presenter endOfLineAnnotationMode: #angleFlat.
 	expected := {Annotation
 					line: 1
@@ -261,6 +261,11 @@ testSetGetEndOfLineAnnotations
 	presenter endOfLineAnnotations: expected.
 	actual := presenter endOfLineAnnotations.
 	self assert: actual equals: expected!
+
+undoOnlyModification
+	super undoOnlyModification.
+	self deny: presenter isTextModified.
+	self deny: presenter canUndo!
 
 verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	| view offset |
@@ -367,6 +372,7 @@ testLexerIndicatorStateRestoral!public!unit tests! !
 testOverrideDefaultKeyBindings!public!unit tests! !
 testSetGetAnnotations!public!unit tests! !
 testSetGetEndOfLineAnnotations!public!unit tests! !
+undoOnlyModification!helpers!private! !
 verifyUpgradedView:identifier:!helpers!private! !
 verifyUpgradedViewFrom16:!helpers!private! !
 verifyUpgradedViewFrom17:!helpers!private! !

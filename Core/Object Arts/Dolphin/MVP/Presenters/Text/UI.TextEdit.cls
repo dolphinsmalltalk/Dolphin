@@ -60,7 +60,9 @@ apply
 	^modified!
 
 basicClearAll
-	self value: ''!
+	self
+		basicSelectAll;
+		basicClearSelection!
 
 basicClearSelection
 	self sendMessage: WM_CLEAR!
@@ -120,7 +122,7 @@ basicSelectionStart: start end: end
 	self sendMessage: EM_SETSEL wParam: start lParam: end!
 
 basicUndo
-	self sendMessage: EM_UNDO!
+	^(self sendMessage: EM_UNDO) asBoolean!
 
 calcRectangleFromClientRectangle: aRectangle
 	"Private - Given a client rectangle represented by the <Rectangle> argument, answer the
@@ -213,8 +215,13 @@ charNearestPosition: aPoint
 		wParam: 0
 		lParam: pt asUIntPtr) lowWord + 1!
 
+clear
+	"Reset the receiver to an empty state; no text, empty undo buffer, not modified. See also the #clearAll command (which clears the text, but as an undoable action)"
+
+	self value: ''!
+
 clearAll
-	"Clears the contents of the receiver"
+	"Delete all the text in the receiver."
 
 	<commandQuery: #canCut>
 	self basicClearAll!
@@ -582,8 +589,7 @@ isModified: aBoolean
 	may be lost."
 
 	aBoolean ifFalse: [self updateModel].
-	teFlags := teFlags mask: ModifiedMask set: aBoolean.
-	self assert: [self isModified == aBoolean]!
+	teFlags := teFlags mask: ModifiedMask set: aBoolean!
 
 isPassword
 	"Answer whether the receiver is a password entry field (i.e. it has the
@@ -1164,10 +1170,10 @@ textRange
 !
 
 undo
-	"Undo the last undoable edit action."
+	"Undo the last undoable edit action. Answer an undo took place (although for a single-line Edit control, this will always claim to be true)"
 
 	<commandQuery: #canUndo>
-	self basicUndo!
+	^self basicUndo!
 
 updateMode
 	"Answer the update mode of the receiver:
@@ -1322,6 +1328,7 @@ canUndo!public!testing!undo & redo! !
 caretPosition!caret!public! !
 caretPosition:!accessing!caret!public! !
 charNearestPosition:!accessing!public! !
+clear!commands-actions!public! !
 clearAll!commands-actions!public! !
 clearSelection!clipboard operations!commands-actions!public! !
 command:id:!commands-routing!private! !

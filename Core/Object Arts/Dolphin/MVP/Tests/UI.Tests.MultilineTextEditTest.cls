@@ -17,6 +17,14 @@ classToTest
 margins
 	^1 @ 1!
 
+testClearing
+	"Multiline-edit control will delete text restored through undo if it exceeds the display height and/or width and horizontal/vertical scrolling styles are not set."
+
+	presenter
+		canVScroll: true;
+		canHScroll: true.
+	super testClearing!
+
 verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	| view |
 	super verifyUpgradedView: anInteger identifier: aResourceIdentifier.
@@ -26,6 +34,7 @@ verifyUpgradedView: anInteger identifier: aResourceIdentifier
 !UI.Tests.MultilineTextEditTest categoriesForMethods!
 classToTest!constants!private! !
 margins!constants!private! !
+testClearing!public!unit tests! !
 verifyUpgradedView:identifier:!helpers!private! !
 !
 

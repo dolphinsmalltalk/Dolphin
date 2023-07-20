@@ -42,6 +42,12 @@ testCalculateExtent
 	"The width calculated by the GDI GetTextExtentPoint32 function is slightly different than the DrawTextEx calculation used by the control (and now#calculateExtent:) so we don't expect a precise result"
 	self assert: (actual x - expected x) abs < 3!
 
+testClearing
+	"Single-line edit control will truncate text that exceeds the display area unless ES_AUTOHSCROLL is set."
+
+	presenter canHScroll: true.
+	super testClearing!
+
 text
 	^'The quick brown fox jumped over the lazy dog'!
 
@@ -67,6 +73,7 @@ verifyUpgradedView: anInteger identifier: aResourceIdentifier
 classToTest!constants!private! !
 margins!constants!private! !
 testCalculateExtent!public!unit tests! !
+testClearing!public!unit tests! !
 text!constants!private! !
 verifyUpgradedView:identifier:!helpers!private! !
 !

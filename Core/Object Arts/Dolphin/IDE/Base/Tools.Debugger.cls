@@ -1038,7 +1038,7 @@ onTempSelected
 		ifNil: 
 			[self displayLocal: nil.
 			inspectorPresenter view
-				clearAll;
+				clear;
 				disable]!
 
 onTerminate
