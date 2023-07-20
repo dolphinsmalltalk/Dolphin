@@ -290,14 +290,12 @@ transform
 	sourceMethod := class methodFor: selector.
 	existingSelector
 		ifNil: 
-			[| packageAndEnv |
-			"Creating a new method, as opposed to an extract where there was an existing match to use. We want the new method to be in the same package and namespace as the source method"
-			packageAndEnv := sourceMethod existingPackageAndEnvironment.
+			["Creating a new method, as opposed to an extract where there was an existing match to use. We want the new method to be in the same package and namespace as the source method"
 			class
 				compile: extractedParseTree newSource
-				environment: packageAndEnv second
+				environment: sourceMethod parseEnvironment
 				categories: sourceMethod categories
-				package: packageAndEnv first].
+				package: sourceMethod owningPackageIfLoose].
 	model compileTree: modifiedParseTree forMethod: sourceMethod! !
 !Refactory.Browser.ExtractMethodRefactoring categoriesForMethods!
 checkAssignments:!public!transforming! !

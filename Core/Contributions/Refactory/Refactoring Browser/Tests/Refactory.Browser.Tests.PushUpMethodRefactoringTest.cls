@@ -56,6 +56,43 @@ testPushUpClassMethod
 	self assert: method boundParseTree equals: (self parseMethod: 'foo ^Foo').
 	self deny: ((model classFor: Object class) directlyDefinesMethod: #foo)!
 
+testPushUpExtensionMethodWithPackageNamespace
+	"Tests pushing up an extension method relying on its package default namespace to bind an external variable reference."
+
+	| refactoring targetClass pushedUp pushedUp2 expectedAst sourceClass |
+	sourceClass := model classFor: ClassToRename.
+	refactoring := PushUpMethodRefactoring
+				model: model
+				pushUp: #(#refersToClassInPackageDefaultNamespace)
+				from: sourceClass.
+	self executeRefactoring: refactoring.
+	targetClass := model classFor: Model.
+	pushedUp := targetClass methodFor: #refersToClassInPackageDefaultNamespace.
+	self assertNotNil: pushedUp.
+	self deny: (sourceClass directlyDefinesMethod: #refersToClassInPackageDefaultNamespace).
+	expectedAst := self
+				parseMethod: 'refersToClassInPackageDefaultNamespace ^{RefactoryTestDataApp. BasicLintRuleTestData}'.
+	self assert: pushedUp boundParseTree equals: expectedAst.
+	self assertIsNil: pushedUp realMethod.
+	"Existing package association must be carried with the pushed-up method"
+	self assert: pushedUp customEnvironment equals: (Refactory.Browser.TestData classInModel: model).
+	self assert: pushedUp owningPackageIfLoose
+		equals: (ClassToRename >> #refersToClassInPackageDefaultNamespace) owningPackage.
+	"Now push it up again (so now a model only method)"
+	refactoring := PushUpMethodRefactoring
+				model: model
+				pushUp: #(#refersToClassInPackageDefaultNamespace)
+				from: Model.
+	self executeRefactoring: refactoring.
+	pushedUp2 := (model classFor: Object) methodFor: #refersToClassInPackageDefaultNamespace.
+	self assertNotNil: pushedUp.
+	self deny: (targetClass directlyDefinesMethod: #refersToClassInPackageDefaultNamespace).
+	self assert: pushedUp2 boundParseTree equals: expectedAst.
+	self assertIsNil: pushedUp2 realMethod.
+	self assert: pushedUp customEnvironment equals: (Refactory.Browser.TestData classInModel: model).
+	self assert: pushedUp owningPackageIfLoose
+		equals: (ClassToRename >> #refersToClassInPackageDefaultNamespace) owningPackage!
+
 testPushUpMethodReferencingClassVariable
 	"This used to be blocked, but is possible in Dolphin 8 (and actually earlier) by using qualified names, if the class variable in question is not private. The reference to the subclass class variable is just made qualified (enough) so that it binds in the superclass. The result is still a pure refactoring, although not necessarily a desirable end state. The subclass class variable can then be pulled up, if desired."
 
@@ -71,6 +108,19 @@ testPushUpMethodReferencingClassVariable
 				parseMethod: 'runRecursiveSelfRule: aParseTree ^TransformationRuleTestData.RecursiveSelfRule executeTree: aParseTree initialAnswer: false').
 	self
 		deny: ((model classFor: TransformationRuleTestData) directlyDefinesMethod: #runRecursiveSelfRule:)!
+
+testPushUpMethodTwice
+	| refactoring |
+	refactoring := PushUpMethodRefactoring
+				model: model
+				pushUp: #(#runRecursiveSelfRule:)
+				from: TransformationRuleTestData.
+	self executeRefactoring: refactoring.
+	refactoring := PushUpMethodRefactoring
+				model: model
+				pushUp: #(#runRecursiveSelfRule:)
+				from: TransformationRuleTestData.
+	self shouldFail: refactoring withMessage: 'TransformationRuleTestData does not define #runRecursiveSelfRule:'!
 
 testPushUpMethodWithCopyOverriddenMethodsDown
 	| refactoring |
@@ -93,6 +143,39 @@ testPushUpMethodWithCopyOverriddenMethodsDown
 		equals: (self parseMethod: 'isComposite ^true').
 	self
 		deny: ((model classNamed: CompositeLintRuleTestData fullName) directlyDefinesMethod: #isComposite)!
+
+testPushUpMethodWithCustomEnvironment
+	| refactoring targetClass pushedUp pushedUp2 source expectedAst sourceClass |
+	sourceClass := model classFor: TransformationRuleTestData.
+	refactoring := PushUpMethodRefactoring
+				model: model
+				pushUp: #(#unqualifiedRefToClassInCustomNamespace)
+				from: sourceClass.
+	self executeRefactoring: refactoring.
+	targetClass := model classFor: FooLintRuleTestData.
+	pushedUp := targetClass methodFor: #unqualifiedRefToClassInCustomNamespace.
+	self assertNotNil: pushedUp.
+	self deny: (sourceClass directlyDefinesMethod: #unqualifiedRefToClassInCustomNamespace).
+	source := (TransformationRuleTestData >> #unqualifiedRefToClassInCustomNamespace) getSource.
+	expectedAst := self parseMethod: source.
+	self assert: pushedUp boundParseTree equals: expectedAst.
+	self assertIsNil: pushedUp realMethod.
+	"Existing package association must be carried with the pushed-up method"
+	self assert: pushedUp customEnvironment equals: (Tools classInModel: model).
+	self assert: pushedUp owningPackageIfLoose equals: self class owningPackage.
+	"Now push it up again (so now a model only method)"
+	refactoring := PushUpMethodRefactoring
+				model: model
+				pushUp: #(#unqualifiedRefToClassInCustomNamespace)
+				from: FooLintRuleTestData.
+	self executeRefactoring: refactoring.
+	pushedUp2 := (model classFor: LintRuleTestData) methodFor: #unqualifiedRefToClassInCustomNamespace.
+	self assertNotNil: pushedUp.
+	self deny: (targetClass directlyDefinesMethod: #unqualifiedRefToClassInCustomNamespace).
+	self assert: pushedUp2 boundParseTree equals: expectedAst.
+	self assertIsNil: pushedUp2 realMethod.
+	self assert: pushedUp2 customEnvironment equals: (Tools classInModel: model).
+	self assert: pushedUp2 owningPackageIfLoose equals: self class owningPackage!
 
 testPushUpMethodWithImportedVariableExpandingImports
 	| refactoring targetClass pushedUp |
@@ -172,7 +255,7 @@ testPushUpWithInvalidSuperSend
 				model: model
 				pushUp: #(#yourself)
 				from: class)
-		withMessage: 'Cannot push up #yourself since Foo2>>yourself sends a super message to it.'!
+		withMessage: 'Cannot push up #yourself since Foo2>>yourself sends a super message to Object that would be intercepted'!
 
 testPushUpWithMethodThatCannotBePushedDown
 	model
@@ -205,8 +288,11 @@ testPushUpWithSuperSendThatCannotBeCopiedDown
 !Refactory.Browser.Tests.PushUpMethodRefactoringTest categoriesForMethods!
 testPushUpAndCopyDown!public!tests! !
 testPushUpClassMethod!failure tests!public! !
+testPushUpExtensionMethodWithPackageNamespace!public!tests! !
 testPushUpMethodReferencingClassVariable!public!tests! !
+testPushUpMethodTwice!public!tests! !
 testPushUpMethodWithCopyOverriddenMethodsDown!public!tests! !
+testPushUpMethodWithCustomEnvironment!public!tests! !
 testPushUpMethodWithImportedVariableExpandingImports!public!tests! !
 testPushUpMethodWithImportedVariableNotExpandingImports!public!tests! !
 testPushUpReferencesInstVar!failure tests!public! !

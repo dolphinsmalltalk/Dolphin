@@ -69,7 +69,7 @@ testExtractFailure
 			withMessage: 'Cannot extract assignment without all references: #(detector subclassResponsibilitySymbol)'!
 
 testExtractFromMethodInCustomNamespace
-	| method source refactoring class start stop rectangleMetaclass selector |
+	| method source refactoring class start stop rectangleMetaclass selector extractedMethod |
 	rectangleMetaclass := #{Graphics.Rectangle class} value.
 	method := rectangleMetaclass compiledMethodAt: #publishedAspectsOfInstances.
 	self assert: method environment equals: Tools.
@@ -104,9 +104,13 @@ testExtractFromMethodInCustomNamespace
 					defaultValue: 0;
 					yourself);
 		yourself').
-	self assert: (class metaclass parseTreeFor: selector)
+	extractedMethod := class metaclass methodFor: selector.
+	self assertNotNil: extractedMethod.
+	self assert: extractedMethod parseTree
 		equals: (self parseMethod: 'topAspect
 	^(Aspect integer: #top) defaultValue: 0; yourself').
+	self assert: extractedMethod owningPackageIfLoose identicalTo: method owningPackage.
+	self assert: extractedMethod environment equals: (refactoring model classFor: Tools).
 	self assert: refactoring model changes changes first environment identicalTo: Tools!
 
 testExtractMethodAtEndOfMethodThatNeedsReturn

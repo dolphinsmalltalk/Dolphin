@@ -6,7 +6,7 @@ Core.Object
 	classVariableNames: 'ClassVar1 ClassVar2'
 	imports: #(#{OS.CRTConstants})
 	classInstanceVariableNames: ''
-	classConstants: { 'ClassConst1' -> 'ClassConst1 of RefactoryTestDataApp' }!
+	classConstants: { 'AppConst1' -> 'ClassConst1 of RefactoryTestDataApp' }!
 Refactory.Browser.TestData.RefactoryTestDataApp guid: (Core.GUID fromString: '{dd22adf0-7b3f-4465-aa71-377108619c45}')!
 Refactory.Browser.TestData.RefactoryTestDataApp comment: 'Test class for Smalllint. Contains lots of smelly code'!
 !Refactory.Browser.TestData.RefactoryTestDataApp categoriesForClass!Refactory-Test data! !
@@ -714,13 +714,13 @@ yourselfNotUsed!lint!public! !
 !Refactory.Browser.TestData.RefactoryTestDataApp class methodsFor!
 
 classSideClassVarRefs
-	RefactoryTestDataApp.ClassVar2 := {
+	ClassVar2 := {
 				ClassVar1.
-				Refactory.Browser.TestData.RefactoryTestDataApp.ClassConst1.
+				AppConst1.
 				#{ClassVar1}.
 				#{Refactory.Browser.TestData.RefactoryTestDataApp.ClassVar1}.
 				#{ClassVar2}.
-				#{ClassConst1}
+				#{AppConst1}
 			}!
 
 classSideGlobalRef

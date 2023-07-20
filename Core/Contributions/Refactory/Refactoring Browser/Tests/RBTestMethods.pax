@@ -64,7 +64,7 @@ Core.Object
 	classVariableNames: 'ClassVar1 ClassVar2'
 	imports: #(#{OS.CRTConstants})
 	classInstanceVariableNames: ''
-	classConstants: { 'ClassConst1' -> 'ClassConst1 of RefactoryTestDataApp' }!
+	classConstants: { 'AppConst1' -> 'ClassConst1 of RefactoryTestDataApp' }!
 Refactory.Browser.TestData.LintRuleTestData
 	subclass: #'Refactory.Browser.TestData.BasicLintRuleTestData'
 	instanceVariableNames: 'classBlock methodBlock result'

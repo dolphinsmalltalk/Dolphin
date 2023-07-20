@@ -168,7 +168,7 @@ testModelInlineClassMethodAccessingClassVariables
 	source := 'foo RefactoryTestDataApp classSideClassVarRefs'.
 	refDataApp := model classFor: RefactoryTestDataApp.
 	(refDataApp bindingFor: 'ClassVar2') isPrivate: true.
-	(refDataApp bindingFor: 'ClassConst1') isPrivate: true.
+	(refDataApp bindingFor: 'AppConst1') isPrivate: true.
 	object
 		imports: #(#{Refactory.Browser.TestData});
 		compile: source classified: #accessing.
@@ -182,7 +182,7 @@ testModelInlineClassMethodAccessingClassVariables
 	refactoring setOption: #abstractVariables
 		toUse: 
 			[:ref |
-			self assert: ref privateClassVarReaders single key equals: 'ClassConst1'.
+			self assert: ref privateClassVarReaders single key equals: 'AppConst1'.
 			self assert: ref privateClassVarWriters single key equals: 'ClassVar2'.
 			true].
 	self executeRefactoring: refactoring.
@@ -192,11 +192,11 @@ testModelInlineClassMethodAccessingClassVariables
 				parseMethod: 'foo
 	RefactoryTestDataApp classVar2: {
 				RefactoryTestDataApp.ClassVar1.
-				RefactoryTestDataApp classConst1.
+				RefactoryTestDataApp appConst1.
 				#{_.RefactoryTestDataApp.ClassVar1}.
 				#{Refactory.Browser.TestData.RefactoryTestDataApp.ClassVar1}.
 				#{Refactory.Browser.TestData.RefactoryTestDataApp.ClassVar2}.
-				#{Refactory.Browser.TestData.RefactoryTestDataApp.ClassConst1}
+				#{Refactory.Browser.TestData.RefactoryTestDataApp.AppConst1}
 			}').
 	self
 		verifyMethod: #classVar2
@@ -205,13 +205,13 @@ testModelInlineClassMethodAccessingClassVariables
 		verifyMethod: #classVar2:
 			of: refDataApp metaclass
 			equals: 'classVar2: anObject ClassVar2 := anObject';
-		verifyMethod: #classConst1
+		verifyMethod: #appConst1
 			of: refDataApp metaclass
-			equals: 'classConst1 ^ClassConst1'.
+			equals: 'appConst1 ^AppConst1'.
 	self
 		deny: (refDataApp metaclass includesSelector: #classVar1);
 		deny: (refDataApp metaclass includesSelector: #classVar1);
-		deny: (refDataApp metaclass includesSelector: #classConst1:)!
+		deny: (refDataApp metaclass includesSelector: #appConst1:)!
 
 testModelInlineMethodReadingPrivateClassVariable
 	"Private class variables have to be abstracted before methods accessing them can be inlined"

@@ -123,18 +123,38 @@ allSubclasses
 	"Answer a <collection> of the receiver's subclasses in breadth-first order, with the immediate subclasses first. 
 	Breadth-first traversal is slightly less efficient, but results in a more useful ordering (the standard does not specify the order). 
 
-	N.B. The original Smalltalk-80 definition specified that this method should answer a Set, and the draft ANSI standard specifiesonly <collection>. The defacto standard (e.g. See IBM Common Base) is now an OrderedCollection, and we follow suit as this maintains the ordering, which is often useful."
+	N.B. The original Smalltalk-80 definition specified that this method should answer a Set, and the draft ANSI standard specifies only <collection>. The defacto standard (e.g. See IBM Common Base) is now an OrderedCollection, and we follow suit as in any case we want to answer a breadth-first ordering."
 
 	| answer |
+	#todo.	"This is not actually a breadth-first ordering."
 	answer := OrderedCollection new.
 	self allSubclassesBreadthFirstDo: [:each | answer addLast: each].
-	^answer!
+	^answer
+
+	"An actual breadth-first ordering with the same optimisations so it is no slower:
+
+	| answer i |
+	answer := self subclasses asOrderedCollection sort.
+	i := 1.
+	[i <= answer size] whileTrue: 
+			[| subbies size |
+			subbies := (answer at: i) subclasses.
+			size := subbies size.
+			""~70% of classes are leaves""
+			size ~~ 0
+				ifTrue: 
+					[""~40% of non-leaf classes have only one subclass""
+					size > 1 ifTrue: [answer addAllLast: subbies asSortedArray]
+						ifFalse: [answer addLast: (subbies at: 1)]].
+			i := i + 1].
+	^answer"!
 
 allSubclassesBreadthFirstDo: aMonadicValuable
 	"Evaluate the <monadicValuable> argument with each of the receiver's subclasses in breadth-first order. The standard #allSubclassesDo: method performs a depth-first traversal (which is quicker as it does not need to enumerate the subclasses collection twice).
 	We also enumerate the subclasses in name order."
 
 	| subbies size |
+	#todo.	"This is not actually a breadth-first ordering."
 	subbies := self subclasses.
 	size := subbies size.
 	"~70% of classes are leaves"

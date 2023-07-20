@@ -124,6 +124,15 @@ errorSignal
 exampleClasses
 	^{Parser. Scanner. StProgramNode}!
 
+isEquivalentMethod: method1 to: method2
+	| count |
+	method1 == method2 ifTrue: [^true].
+	method1 class = method2 class ifFalse: [^false].
+	method1 byteCodes = method2 byteCodes ifFalse: [^false].
+	count := method1 literalCount.
+	method2 literalCount = count ifFalse: [^false].
+	^method1 disassembly = method2 disassembly!
+
 parseError: each
 	Parser parseExpression: each first onError: [:string :pos | ^self assert: pos equals: each last].
 	self error: 'Parser didn''t fail'!
@@ -703,8 +712,8 @@ verifySelector: aSelector inClass: aClass
 	source isNil ifTrue: [^self].
 	myTree := aClass parseTreeFor: aSelector.
 	self denyIsNil: myTree.
-	self assert: ((Compiler compile: myTree formattedCode in: aClass)
-				isEqualTo: (Compiler compile: source in: aClass))!
+	self assert: (self isEquivalentMethod: (Compiler compile: myTree formattedCode in: aClass)
+				to: (Compiler compile: source in: aClass))!
 
 verifyTree: copiedNode isDeepCopyOf: originalNode
 	self assert: originalNode class identicalTo: copiedNode class.
@@ -731,6 +740,7 @@ createSearchWith:selectors:inClass:!accessing!public! !
 currentSelector!accessing!public! !
 errorSignal!public! !
 exampleClasses!private! !
+isEquivalentMethod:to:!private! !
 parseError:!private! !
 setUp!accessing!public! !
 testAllSearches!public!unit tests! !

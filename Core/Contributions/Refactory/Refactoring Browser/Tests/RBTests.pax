@@ -86,18 +86,12 @@ package setClassNames: #(
 ).
 
 package setMethodNames: #(
-	#(#{Core.ByteArray} #isEqualTo:)
-	#(#{Core.Collection} #isEqualTo:)
-	#(#{Core.Interval} #isEqualTo:)
-	#(#{Core.Object} #isEqualTo:)
-	#(#{Core.String} #isEqualTo:)
 	#(#{Core.String} #withCRs)
-	#(#{Kernel.BlockClosure} #isEqualTo:)
-	#(#{Kernel.CompiledCode} #isEqualTo:)
 	#(#{Refactory.Browser.TestData.RefactoryTestDataApp} #inlineParameterMethod:)
 	#(#{Refactory.Browser.TestData.RefactoryTestDataApp} #sendInlineParameterMethod)
 	#(#{Refactory.Browser.TestData.RefactoryTestDataApp} #testMethod1)
-	#(#{Smalltalk class} #isEqualTo:)
+	#(#{Refactory.Browser.TestData.TransformationRuleTestData} #unqualifiedRefToClassInCustomNamespace)
+	#(#{Refactory.Browser.Tests.ClassToRename} #testFailure)
 ).
 
 package setVariableNames: #(
@@ -111,6 +105,7 @@ package setAliasVariableNames: #(
 package setPrerequisites: #(
 	'..\..\..\..\Object Arts\Dolphin\Base\Dolphin'
 	'..\..\..\..\Object Arts\Dolphin\Base\Tests\Dolphin Base Tests'
+	'..\..\..\..\Object Arts\Dolphin\IDE\Base\Dolphin Browser Environments'
 	'..\Change Objects\RBChangeObjects'
 	'..\Environments\RBEnvironments'
 	'..\Formatters\RBFormatters'
@@ -120,9 +115,15 @@ package setPrerequisites: #(
 	'..\Refactorings\RBReferenceFinder'
 	'..\SmallLint\RBSmallLint'
 	'RBTestMethods'
+	'RBTestMethodsExtra'
 	'..\..\..\..\Object Arts\Samples\MVP\Scribble\Scribble'
 	'..\..\..\..\Object Arts\Dolphin\System\Compiler\Smalltalk Parser'
 	'..\..\..\Camp Smalltalk\SUnit\SUnit'
+	'..\..\..\Camp Smalltalk\SUnit\SUnitPreload'
+).
+
+package setManualPrerequisites: #(
+	'RBTestMethodsExtra'
 ).
 
 package!
@@ -676,48 +677,7 @@ Refactory.Browser.RBFormatter1 := Refactory.Browser.RBConfigurableFormatter!
 
 "Loose Methods"!
 
-!Core.ByteArray methodsFor!
-
-isEqualTo: aByteArray
-	^self = aByteArray! !
-!Core.ByteArray categoriesForMethods!
-isEqualTo:!comparing!public! !
-!
-
-!Core.Collection methodsFor!
-
-isEqualTo: anObject
-	^self class == anObject class and: 
-			[self size = anObject size and: 
-					[| notFound |
-					notFound := Object new.
-					self allSatisfy: 
-							[:each |
-							(anObject detect: [:eachOther | each isEqualTo: eachOther] ifNone: [notFound]) ~~ notFound]]]! !
-!Core.Collection categoriesForMethods!
-isEqualTo:!comparing!public! !
-!
-
-!Core.Interval methodsFor!
-
-isEqualTo: anObject
-	^self class == anObject class and: [self = anObject]! !
-!Core.Interval categoriesForMethods!
-isEqualTo:!public! !
-!
-
-!Core.Object methodsFor!
-
-isEqualTo: anObject
-	^self = anObject! !
-!Core.Object categoriesForMethods!
-isEqualTo:!public!testing! !
-!
-
 !Core.String methodsFor!
-
-isEqualTo: aString
-	^self = aString!
 
 withCRs
 	| stream |
@@ -725,43 +685,7 @@ withCRs
 	self do: [:each | each = $\ ifTrue: [stream nextPutAll: self class lineDelimiter] ifFalse: [stream nextPut: each]].
 	^stream contents! !
 !Core.String categoriesForMethods!
-isEqualTo:!comparing!public! !
 withCRs!converting!public! !
-!
-
-!Kernel.BlockClosure methodsFor!
-
-isEqualTo: aBlockClosure
-	self class = aBlockClosure class ifFalse: [^false].
-	^self method isEqualTo: aBlockClosure method! !
-!Kernel.BlockClosure categoriesForMethods!
-isEqualTo:!public!testing! !
-!
-
-!Kernel.CompiledCode methodsFor!
-
-isEqualTo: aMethod
-	| count |
-	self == aMethod ifTrue: [^true].
-	self class = aMethod class ifFalse: [^false].
-	self byteCodes = aMethod byteCodes ifFalse: [^false].
-	count := self literalCount.
-	aMethod literalCount = count ifFalse: [^false].
-	"We need to special case static blocks in the literal frame to avoid infinite recursion"
-	1 to: count
-		do: 
-			[:i |
-			| a b |
-			a := self basicAt: i.
-			b := aMethod basicAt: i.
-			"The static blocks must be equal if they are implemented by this method and
-			the bytecodes and all other literals are identical"
-			(a class == BlockClosure and: [a method == self])
-				ifTrue: [(b class == BlockClosure and: [b method == aMethod]) ifFalse: [^false]]
-				ifFalse: [(a isEqualTo: b) ifFalse: [^false]]].
-	^true! !
-!Kernel.CompiledCode categoriesForMethods!
-isEqualTo:!public!testing! !
 !
 
 !Refactory.Browser.TestData.RefactoryTestDataApp methodsFor!
@@ -783,12 +707,24 @@ sendInlineParameterMethod!public!test! !
 testMethod1!public!test! !
 !
 
-!Smalltalk class methodsFor!
+!Refactory.Browser.TestData.TransformationRuleTestData methodsFor!
 
-isEqualTo: aSystemDictionary 
-	^aSystemDictionary == self! !
-!Smalltalk class categoriesForMethods!
-isEqualTo:!comparing!public! !
+unqualifiedRefToClassInCustomNamespace
+	<namespace: Tools>
+	^PackageEnvironment onEnvironment: Refactory.Browser.BrowserEnvironment new
+		packages: { PluggableEnvironment owningPackage }! !
+!Refactory.Browser.TestData.TransformationRuleTestData categoriesForMethods!
+unqualifiedRefToClassInCustomNamespace!private! !
+!
+
+!Refactory.Browser.Tests.ClassToRename methodsFor!
+
+testFailure
+	"Can be resolved by unqualified name through the import into the receiver's namespace"
+
+	^TestFailure! !
+!Refactory.Browser.Tests.ClassToRename categoriesForMethods!
+testFailure!performing!public! !
 !
 
 "End of package definition"!

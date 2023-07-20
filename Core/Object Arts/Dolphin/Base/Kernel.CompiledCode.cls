@@ -538,19 +538,6 @@ readsInstVar: aString at: anInteger
 realMethod
 	^self!
 
-refersToAnyOf: anArray
-	"Private - Answer whether the receiver refers directly from its literal frame (or indirectly as an element of an array in the literal frame) to any of the literal objects in <Array> argument."
-
-	| count |
-	count := anArray size.
-	1 to: self size
-		do: 
-			[:i |
-			| literal |
-			literal := self basicAt: i.
-			1 to: count do: [:j | (literal refersTo: (anArray at: j) asLiteralOf: self) ifTrue: [^true]]].
-	^false!
-
 refersToLiteral: anObject
 	"Private - Answer whether the receiver refers directly from its literal frame (or indirectly as an element of an array in the literal frame) to the argument, anObject."
 
@@ -776,7 +763,6 @@ primitiveIndex!method header!private! !
 readsInstVar:!development!public!testing! !
 readsInstVar:at:!development!public!testing! !
 realMethod!converting!public! !
-refersToAnyOf:!private!testing! !
 refersToLiteral:!private!testing! !
 replaceElementsOf:from:to:startingAt:!private!replacing! !
 selector!accessing!public! !

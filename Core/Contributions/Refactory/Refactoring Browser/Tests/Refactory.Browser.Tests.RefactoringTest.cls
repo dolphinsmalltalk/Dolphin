@@ -389,9 +389,11 @@ tearDown
 		ifAbsent: [RefactoringManager classPool associationAt: 'Instance']) value: manager!
 
 verifyMethod: aSymbol of: aClass equals: aString
-	| parseTree modelClass |
+	| parseTree modelClass method |
 	modelClass := aClass classInModel: model.
-	parseTree := (modelClass methodFor: aSymbol) boundParseTree.
+	method := modelClass methodFor: aSymbol.
+	self assertNotNil: method.
+	parseTree := method boundParseTree.
 	self assert: parseTree equals: (self parseMethod: aString in: modelClass)! !
 !Refactory.Browser.Tests.RefactoringTest categoriesForMethods!
 abstractVariableTestData!constants!private! !
