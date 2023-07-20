@@ -274,11 +274,15 @@ setTabStops: anInteger
 		wParam: 1
 		lpParam: width yourAddress!
 
-showVerticalScrollBar: aBoolean 
-	(self 
+showVerticalScrollBar: aBoolean
+	"Add/remove vertical scrollbar."
+
+	"As noted in the [edit control documentation](https://learn.microsoft.com/en-us/windows/win32/controls/edit-control-styles), the styles cannot generally be set are creation, so we need to recreate the control to add/remove ES_AUTOVSCROLL."
+
+	(self
 		baseStyleMask: ##(WS_VSCROLL | ES_AUTOVSCROLL)
 		set: aBoolean
-		recreateIfChanged: false) ifTrue: [self frameChanged]!
+		recreateIfChanged: true) ifTrue: [self frameChanged]!
 
 tabFocus
 	"Private - Sets focus to the receiver. Answers the View which previously had focus,

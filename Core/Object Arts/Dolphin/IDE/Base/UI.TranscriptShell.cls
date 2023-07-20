@@ -33,9 +33,8 @@ addToCommandRoute: route
 	to go next.
 	Implementation Note: We want to include the development system if it is present."
 
-	route 
-		appendPresenter: self;
-		appendTarget: Smalltalk developmentSystem!
+	super addToCommandRoute: route.
+	route appendTarget: Smalltalk developmentSystem!
 
 alertUser
 	"Private - Attempt to catch the users attention to inform them that output has been
@@ -61,9 +60,10 @@ clear
 clearAll
 	"Remove all contents in the receiver's view"
 
+	<commandQuery: #hasOutput>
 	| newBuffer |
 	self flush.
-	self hasOutputWindow ifTrue: [outputWindow clear].
+	self hasOutputWindow ifTrue: [outputWindow clearAll].
 	newBuffer := String smalltalkWriteStream.
 	bufferProtect critical: [buffer := newBuffer]!
 
@@ -147,12 +147,19 @@ flush
 forgetSize
 	"Forget the default size for new instances of this tool."
 
+	<commandQuery: #hasRememberedSize>
 	self class defaultExtent: nil!
+
+hasOutput
+	^buffer position ~~ 0 or: [outputWindow textLength > 0]!
 
 hasOutputWindow
 	"Private - Answer whether the receiver has an open output window available."
 
 	^outputWindow isOpen == true!
+
+hasRememberedSize
+	^DefaultExtent notNil!
 
 initialize
 	"Private - Initialize the receiver."
@@ -237,18 +244,6 @@ print: anObject
 
 	bufferProtect critical: [anObject printOn: buffer]!
 
-queryCommand: aCommandQuery
-	"Private - Enter details about a potential command for the receiver into the 
-	<CommandQuery>."
-
-	| command |
-	command := aCommandQuery commandSymbol.
-	#forgetSize == command 
-		ifTrue: 
-			[aCommandQuery isEnabled: self class defaultExtent notNil.
-			^true].
-	^super queryCommand: aCommandQuery!
-
 rememberThisSize
 	"Record the size of the receiver as the default extent for its tool class."
 
@@ -321,11 +316,11 @@ visit: anObject do: aNiladicValuable
 	aNiladicValuable value! !
 !UI.TranscriptShell categoriesForMethods!
 <<!public! !
-addToCommandRoute:!commands!public! !
+addToCommandRoute:!commands-routing!public! !
 alertUser!operations!private! !
 basicPrint:!printing!private! !
 clear!initializing!public! !
-clearAll!initializing!public! !
+clearAll!commands-actions!public! !
 close!operations!public! !
 contents!accessing!public! !
 cr!adding!public! !
@@ -336,10 +331,12 @@ crtab:!adding!public! !
 defaultHelpId!public! !
 display:!printing!public! !
 encodedSizeOf:!public! !
-fileFileIn!commands!public! !
+fileFileIn!commands-actions!public! !
 flush!buffer!public! !
-forgetSize!commands!public! !
+forgetSize!commands-actions!public! !
+hasOutput!commands-queries!private! !
 hasOutputWindow!accessing!private! !
+hasRememberedSize!commands-queries!private! !
 initialize!initializing!private! !
 isEmpty!public!testing! !
 locale!accessing!public! !
@@ -353,8 +350,7 @@ onViewOpened!event handling!private! !
 position!accessing!public! !
 position:!accessing!public! !
 print:!printing!public! !
-queryCommand:!commands!private! !
-rememberThisSize!commands!public! !
+rememberThisSize!commands-actions!public! !
 reset!positioning!public! !
 setToEnd!operations!public! !
 show!operations!public! !
