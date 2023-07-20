@@ -53,7 +53,7 @@ Core.Object
 	classConstants: {}!
 Core.Object
 	subclass: #'XProgramming.SUnit.TestSuite'
-	instanceVariableNames: 'tests resources name'
+	instanceVariableNames: 'tests resources name dependents'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

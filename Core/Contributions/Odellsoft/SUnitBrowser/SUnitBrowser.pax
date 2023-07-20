@@ -105,7 +105,6 @@ package setPrerequisites: #(
 	'..\..\..\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter'
 	'..\..\..\Object Arts\Dolphin\MVP\Icons\Dolphin Text Tile Icons'
 	'..\..\..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters'
-	'..\..\Refactory\Refactoring Browser\Environments\RBEnvironments'
 	'..\..\Camp Smalltalk\SUnit\SUnit'
 	'SUnitBrowserModelApp').
 

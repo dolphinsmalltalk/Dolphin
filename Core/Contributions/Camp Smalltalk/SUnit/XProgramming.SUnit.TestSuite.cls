@@ -2,7 +2,7 @@
 
 Core.Object
 	subclass: #'XProgramming.SUnit.TestSuite'
-	instanceVariableNames: 'tests resources name'
+	instanceVariableNames: 'tests resources name dependents'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -29,6 +29,9 @@ defaultResources
 			coll
 				addAll: testCase resources;
 				yourself]!
+
+getDependents
+	^dependents!
 
 name
 	^name!
@@ -63,6 +66,9 @@ run: aResult
 			each run: aResult]]
 		ensure: [aResult duration: (Delay microsecondClockValue - start) microseconds]!
 
+setDependents: aDependentsCollectionOrNil
+	dependents := aDependentsCollectionOrNil!
+
 tests
 	tests isNil ifTrue: [tests := OrderedCollection new].
 	^tests! !
@@ -71,6 +77,7 @@ addDependentToHierachy:!Dependencies!public! !
 addTest:!Accessing!public! !
 addTests:!Accessing!public! !
 defaultResources!Accessing!public! !
+getDependents!dependency!private! !
 name!Accessing!public! !
 name:!Accessing!public! !
 removeDependentFromHierachy:!Dependencies!public! !
@@ -78,6 +85,7 @@ resources!Accessing!public! !
 resources:!Accessing!public! !
 run!public!Running! !
 run:!public!Running! !
+setDependents:!dependency!private! !
 tests!Accessing!public! !
 !
 
