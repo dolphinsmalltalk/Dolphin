@@ -11,15 +11,21 @@ External.Tests.UInt32BytesTest guid: (Core.GUID fromString: '{df15ebf5-f6c2-4cd6
 External.Tests.UInt32BytesTest comment: ''!
 !External.Tests.UInt32BytesTest methodsFor!
 
-testStbRoundTrip
-	| subject bytes rehydrated |
-	subject := UInt32Bytes fromInteger: 16rDEADBEEF.
-	bytes := subject binaryStoreBytes.
-	rehydrated := Object fromBinaryStoreBytes: bytes.
-	self assert: rehydrated size equals: 4.
-	self assert: rehydrated class identicalTo: UInt32Bytes.
-	self assert: rehydrated equals: subject! !
+canonicalValue
+	^16rDEADBEEF!
+
+stlVersion4
+	^{ #'!!STL'. 4. 655414. Smalltalk.DWORDBytes. 4. 239. 190. 173. 222 }!
+
+stlVersion6
+	^{ #'!!STL'. 6. 54. External.UInt32Bytes. 4. #[239 190 173 222] }!
+
+subjectClass
+	^UInt32Bytes! !
 !External.Tests.UInt32BytesTest categoriesForMethods!
-testStbRoundTrip!public! !
+canonicalValue!constants!private! !
+stlVersion4!constants!private! !
+stlVersion6!constants!private! !
+subjectClass!constants!private! !
 !
 

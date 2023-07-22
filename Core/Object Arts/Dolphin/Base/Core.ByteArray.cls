@@ -547,14 +547,6 @@ retryUIntPtrAtOffset: anInteger put: anObject failureCode: failureCode
 				ifTrue: [^self uintPtrAtOffset: anInteger put: intVal]].
 	^self updatePrimitiveFailed: failureCode atOffset: anInteger!
 
-stbSaveOn: anSTBOutFiler
-	"Save out a binary representation of the receiver to anSTBOutFiler."
-
-	"We override as an optimization because we know we can use a block write here. The format of the serialized byte array in the resulting STB stream is the same though. 
-	Note that this won't be invoked by the STL filer because ByteArrays have a literal form and are written directly to the stream as is."
-
-	anSTBOutFiler writeByteObject: self!
-
 storeOn: puttableStream
 	"Print the literal string representation of the receiver to the <puttableStream> argument.
 	Implementation Note. This is written for speed, not elegance. We avoid #do:separatedBy: because it requires full blocks. Also we know that SmallInteger>>#printString has a primitive implementation."
@@ -754,7 +746,6 @@ retryInt32AtOffset:put:failureCode:!accessing!private! !
 retryUInt16AtOffset:put:failureCode:!accessing!private! !
 retryUInt32AtOffset:put:failureCode:!accessing!private! !
 retryUIntPtrAtOffset:put:failureCode:!accessing!helpers!private! !
-stbSaveOn:!binary filing!public! !
 storeOn:!printing!public! !
 uint16AtOffset:!accessing!public! !
 uint16AtOffset:put:!accessing!public! !
@@ -822,18 +813,6 @@ fromHexString: aString
 			answer at: i
 				put: (digits at: (aString basicAt: (j := i + i) - 1) - ##($0 codePoint - 1)) * 16
 						+ (digits at: (aString basicAt: j) - ##($0 codePoint - 1))].
-	^answer!
-
-stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
-	"Read an instance of the receiver from the binary filer, aSTBInFiler. Note that we can ignore the format argument, since ByteArray is a pre-registered class that cannot be versioned. The format we read here is the same as that which would be read by the in-filer itself, but we can do the job more efficiently since we know that a block read from the byte stream is possible."
-
-	| answer |
-	answer := self basicNew: anInteger.
-	anSTBInFiler stream
-		basicNext: anInteger
-		into: answer
-		startingAt: 1.
-	anSTBInFiler register: answer.
 	^answer! !
 !Core.ByteArray class categoriesForMethods!
 elementSize!constants!private! !
@@ -842,6 +821,5 @@ encoding!constants!public! !
 fromAddress:length:!instance creation!public! !
 fromGlobalHandle:!instance creation!public! !
 fromHexString:!instance creation!public! !
-stbReadFrom:format:size:!binary filing!public! !
 !
 

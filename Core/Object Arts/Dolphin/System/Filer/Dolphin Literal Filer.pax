@@ -2,7 +2,8 @@
 package := Package name: 'Dolphin Literal Filer'.
 package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
-	basicComment: ''.
+	basicComment: 'Dolphin 🐬 Smalltalk STL binary filer
+Copyright © Object Arts Ltd. 1997-2023'.
 
 package basicPackageVersion: '6.1'.
 
@@ -37,6 +38,7 @@ package setMethodNames: #(
 
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
+	'Dolphin STB Filer'
 ).
 
 package!

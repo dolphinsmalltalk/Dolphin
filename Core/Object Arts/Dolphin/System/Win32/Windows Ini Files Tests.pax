@@ -14,6 +14,7 @@ package setClassNames: #(
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
 	'..\..\Base\Tests\Dolphin Base Tests'
+	'..\..\Base\Deprecated\Dolphin Legacy FFI Types (Old Names)'
 	'..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
 	'Windows Ini Files'
 ).

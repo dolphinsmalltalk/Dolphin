@@ -19,8 +19,7 @@ basicNext
 		ifFalse: 
 			["Atomic values, or an indirection to them; classes are represented by BindingReferences as these have a literal form that can be embedded in literal arrays. This will not include integers, but does include nil, true, false, Symbols, BindingReferences (except as an indirection to a class object), and (in old version STL content) class objects. It cannot include arrays, even of atomic objects, because the array itself is not atomic and may be shared."
 			^prefixOrLiteral value].
-	PrefixLiteralMask == prefixOrLiteral
-		ifFalse: [^policy readObject: self withPrefix: prefixOrLiteral].
+	PrefixLiteralMask == prefixOrLiteral ifFalse: [^policy readObjectWithPrefix: prefixOrLiteral].
 	^self readLiteralData!
 
 classLocator
@@ -29,6 +28,15 @@ classLocator
 	"No longer required for STL, but older resources may contain STBClassProxy or STBMetaclassProxy objects"
 
 	^ClassLocator new!
+
+readBytes: aByteObject
+	| byteArray |
+	byteArray := stream next.
+	byteArray
+		replaceBytesOf: aByteObject
+		from: 1
+		to: aByteObject basicSize
+		startingAt: 1!
 
 readLiteralData
 	| newObject |
@@ -45,6 +53,7 @@ readLiteralData
 !Kernel.STLInFiler categoriesForMethods!
 basicNext!accessing!private! !
 classLocator!accessing!public! !
+readBytes:!binary filing!public! !
 readLiteralData!helpers!private! !
 !
 

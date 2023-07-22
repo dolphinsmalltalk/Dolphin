@@ -2,39 +2,42 @@
 
 Core.Object
 	subclass: #'Kernel.STBVersionPolicy'
-	instanceVariableNames: 'version'
+	instanceVariableNames: 'filer stream version'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: 'version signatureBytes'
-	classConstants: {
-			'FirstPredefinedClassRef' -> 16r5.
-			'LastPredefinedClassRef' -> 16r18.
-			'PredefinedClasses' -> {
-						AnsiString.
-						Array.
-						ByteArray.
-						LargeInteger.
-						STBClassProxy.
-						STBMetaclassProxy.
-						Symbol.
-						STBCollectionProxy.
-						OrderedCollection.
-						STBIdentityDictionaryProxy.
-						LookupTable.
-						IdentityDictionary.
-						Utf8String.
-						Utf16String
-					}
-		}!
+	classConstants: { 'LastPredefinedClassRef' -> 16r18 }!
 Kernel.STBVersionPolicy guid: (Core.GUID fromString: '{c3707a61-0143-415a-b869-e30ff4ad09bd}')!
 Kernel.STBVersionPolicy isNonInstantiable: true!
 Kernel.STBVersionPolicy comment: ''!
 !Kernel.STBVersionPolicy methodsFor!
 
+classLocatorStringFor: aClass
+	^(Smalltalk oldNames lookup: aClass)
+		ifNil: 
+			[| name |
+			name := aClass shortName.
+			(BindingReference isQualifiedName: name)
+				ifTrue: 
+					[STBError
+						signal: '<1p> does not have an unqualified short name for use in version <2d> object stream'
+								<< { aClass. self version }]
+				ifFalse: [name]]!
+
+filer: anSTBFiler version: anInteger
+	filer := anSTBFiler.
+	"The stream is cached locally for perf reasons only"
+	stream := anSTBFiler stream.
+	version := anInteger!
+
 lastPredefined
 	"Answer the index of the last pre-defined object. The indices of all objects actually present in the stream are offset from this."
 
 	^self subclassResponsibility!
+
+on: aStream version: anInteger
+	stream := aStream.
+	version := anInteger!
 
 predefinedClasses
 	"Answer a <sequencedReadableCollection> of the classes that are pre-registered in every STB file. 
@@ -45,22 +48,28 @@ predefinedClasses
 
 	^self subclassResponsibility!
 
-putCharacter: aCharacter on: aPuttableStream
+putCharacter: aCharacter
 	self subclassResponsibility!
 
-putNilOn: aPuttableStream
+putNil
 	self subclassResponsibility!
 
-putSmallInteger: aSmallInteger on: aStream
+putSmallInteger: aSmallInteger
 	self subclassResponsibility!
 
-readClassData: anSTBFiler prefix: anInteger
+readByteObject: aByteObject
+	self subclassResponsibility!
+
+readClassDataWithPrefix: anInteger
 	^self subclassResponsibility!
 
-readIntegerFrom: aGettableStream
+readInteger
 	self subclassResponsibility!
 
-readObject: anSTBInFiler withPrefix: anInteger
+readObjectSize: aClass
+	^self subclassResponsibility!
+
+readObjectWithPrefix: anInteger
 	| anObject newObjectIndex class |
 	anInteger == 0 ifTrue: [^nil].	"optimize for nil"
 
@@ -70,22 +79,19 @@ readObject: anSTBInFiler withPrefix: anInteger
 		ifFalse: 
 			[^(anInteger allMask: STBFiler.PrefixCharacterMask)
 				ifTrue: [Character value: (anInteger bitShift: STBFiler.PrefixRefUnshift)]
-				ifFalse: [anSTBInFiler objectAt: (anInteger bitShift: STBFiler.PrefixRefUnshift)]].
+				ifFalse: [filer objectAt: (anInteger bitShift: STBFiler.PrefixRefUnshift)]].
 
 	"Ascertain the class of the object."
 	class := (anInteger allMask: STBFiler.PrefixClassMask)
-				ifTrue: [self readClassData: anSTBInFiler prefix: anInteger]
-				ifFalse: [anSTBInFiler classAt: (anInteger bitShift: STBFiler.PrefixRefUnshift)].
+				ifTrue: [self readClassDataWithPrefix: anInteger]
+				ifFalse: [filer classAt: (anInteger bitShift: STBFiler.PrefixRefUnshift)].
 
 	"Now read the object data."
-	newObjectIndex := anSTBInFiler readMap size + 1.
-	anObject := class stbReadFrom: anSTBInFiler format: (anSTBInFiler converters lookup: class).
+	newObjectIndex := filer readMap size + 1.
+	anObject := class stbReadFrom: filer format: (filer converters lookup: class).
 
 	"If anObject was a proxy for the real one, evaluate it now."
-	^anObject stbFixup: anSTBInFiler at: newObjectIndex!
-
-readObjectSize: aClass from: aPositionableStream
-	^aPositionableStream nextInt32!
+	^anObject stbFixup: filer at: newObjectIndex!
 
 registerPredefined: anSTBFiler
 	self registerPredefinedObjects: anSTBFiler.
@@ -106,78 +112,67 @@ registerPredefinedObjects: anSTBFiler
 		register: Smalltalk;
 		register: Processor!
 
-serializeObject: anObject with: anSTxOutFiler
+serializeObject: anObject
 	self subclassResponsibility!
 
 version
 	^version!
 
-version: anInteger
-	version := anInteger!
-
-writeClass: aClass on: aStream
+writeByteObject: aByteObject
 	self subclassResponsibility!
 
-writeClassReference: refIndex on: aStream
+writeClass: aClass
 	self subclassResponsibility!
 
-writeInteger: anInteger on: aPuttableStream
+writeClassReference: anInteger
 	self subclassResponsibility!
 
-writeReference: refIndex on: aStream
+writeInteger: anInteger
 	self subclassResponsibility!
 
-writeSignatureAndVersionOn: aPuttableStream
+writeReference: anInteger
+	self subclassResponsibility!
+
+writeSignatureAndVersion
 	self subclassResponsibility! !
 !Kernel.STBVersionPolicy categoriesForMethods!
+classLocatorStringFor:!helpers!private! !
+filer:version:!initializing!private! !
 lastPredefined!constants!public! !
+on:version:!initializing!private! !
 predefinedClasses!constants!public! !
-putCharacter:on:!helpers!public! !
-putNilOn:!operations!public! !
-putSmallInteger:on:!operations!public! !
-readClassData:prefix:!helpers!public! !
-readIntegerFrom:!operations!public! !
-readObject:withPrefix:!accessing!public! !
-readObjectSize:from:!operations!public! !
-registerPredefined:!public! !
-registerPredefinedClasses:!operations!private! !
-registerPredefinedObjects:!operations!private! !
-serializeObject:with:!operations!private! !
+putCharacter:!operations!public! !
+putNil!operations!public! !
+putSmallInteger:!operations!public! !
+readByteObject:!operations!public! !
+readClassDataWithPrefix:!operations!public! !
+readInteger!operations!public! !
+readObjectSize:!operations!public! !
+readObjectWithPrefix:!accessing!public! !
+registerPredefined:!initializing!public! !
+registerPredefinedClasses:!initializing!private! !
+registerPredefinedObjects:!initializing!private! !
+serializeObject:!operations!private! !
 version!accessing!public! !
-version:!initializing!private! !
-writeClass:on:!operations!private! !
-writeClassReference:on:!operations!public! !
-writeInteger:on:!operations!public! !
-writeReference:on:!operations!public! !
-writeSignatureAndVersionOn:!operations!public! !
+writeByteObject:!operations!public! !
+writeClass:!operations!private! !
+writeClassReference:!operations!public! !
+writeInteger:!operations!public! !
+writeReference:!operations!public! !
+writeSignatureAndVersion!operations!public! !
 !
 
 !Kernel.STBVersionPolicy class methodsFor!
 
-forVersion: anInteger
+classForVersion: anInteger
 	^(self versions lookup: anInteger + 1)
 		ifNil: 
 			[STBError
 				signal: 'Unsupported <2s> format (version <1d>)' << { anInteger. self name copyFrom: 1 to: 3 }]!
 
-initialize
-	self addClassConstant: 'PredefinedClasses'
-		value: {
-				AnsiString.
-				Array.
-				ByteArray.
-				LargeInteger.
-				STBClassProxy.
-				STBMetaclassProxy.
-				Symbol.
-				STBCollectionProxy.
-				OrderedCollection.
-				STBIdentityDictionaryProxy.
-				LookupTable.
-				IdentityDictionary.
-				Utf8String.
-				Utf16String
-			}!
+filer: anSTBFiler version: anInteger
+	^(self classForVersion: anInteger)
+		new filer: anSTBFiler version: anInteger!
 
 readVersionFrom: aByteStream
 	^self subclassResponsibility!
@@ -185,8 +180,8 @@ readVersionFrom: aByteStream
 versions
 	^self subclassResponsibility! !
 !Kernel.STBVersionPolicy class categoriesForMethods!
-forVersion:!accessing!public! !
-initialize!public! !
+classForVersion:!accessing!public! !
+filer:version:!instance creation!public! !
 readVersionFrom:!instance creation!public! !
 versions!accessing!public! !
 !

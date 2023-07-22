@@ -130,6 +130,10 @@ objects
 policy: anObject
 	policy := anObject!
 
+readByteObject: aByteObject
+	self register: aByteObject.
+	policy readByteObject: aByteObject!
+
 readMap
 	"Private - Answer the value of the receiver's readMap. This is an OrderedCollection of all
 	the object read so far from the filer. It is used  to map the object identifiers in
@@ -164,10 +168,10 @@ readObjectOfClass: aClass size: anInteger
 	^newObject!
 
 readSizeOf: aClass
-	^policy readObjectSize: aClass from: stream!
+	^policy readObjectSize: aClass!
 
 readVersion
-	policy := self class versionPolicyClass readVersionFrom: stream.
+	policy := self class versionPolicyClass readVersionFrom: self.
 	^policy notNil!
 
 register: anObject
@@ -231,6 +235,7 @@ next!operations!public! !
 objectAt:!accessing!private! !
 objects!accessing!private! !
 policy:!accessing!private! !
+readByteObject:!public! !
 readMap!accessing!private! !
 readObjectOfClass:format:size:!operations!public! !
 readObjectOfClass:size:!operations!private! !

@@ -23,17 +23,10 @@ handle
 	^self value!
 
 isInvalid
-	^(self intPtrAtOffset: 0) == ##(OS.Win32Constants.INVALID_HANDLE_VALUE int32AtOffset: 0)!
-
-stbSaveOn: anSTBOutFiler
-	"Save out a binary representation of the receiver to anSTBOutFiler.
-	Output nil in place of the receiver as the future validity of an external handle is uncertain."
-
-	anSTBOutFiler saveObject: self as: nil! !
+	^(self intPtrAtOffset: 0) == ##(OS.Win32Constants.INVALID_HANDLE_VALUE int32AtOffset: 0)! !
 !External.Handle categoriesForMethods!
 asExternalHandle!converting!public! !
 handle!accessing!private! !
 isInvalid!public!testing! !
-stbSaveOn:!binary filing!public! !
 !
 

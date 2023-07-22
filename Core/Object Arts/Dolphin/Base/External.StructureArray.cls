@@ -150,28 +150,6 @@ length: countInteger elementSize: sizeInteger
 
 	^self shouldNotImplement!
 
-stbConvertFrom: anSTBClassFormat
-	"Convert from earlier version models.
-		1: Added 'owner' instance variable, default to nil.
-
-		Version 0: bytes length elementClass
-		Version 1: bytes length elementClass owner elementSpacing"
-
-	anSTBClassFormat version == 0
-		ifTrue: 
-			[^
-			[:data |
-			(data resize: 5) becomeA: StructureArray.
-			"Ensure the elementSpacing is set correctly in case importing data from 2.1"
-			data elementClass: data elementClass.
-			data]].
-	^super stbConvertFrom: anSTBClassFormat!
-
-stbVersion
-	"Answer the current binary filer version number for instances of the receiver."
-
-	^1!
-
 with: anExternalStructure
 	^(self length: 1 elementClass: anExternalStructure class)
 		at: 1 put: anExternalStructure;
@@ -196,8 +174,6 @@ fromAddress:length:elementClass:!instance creation!public! !
 length:elementClass:!instance creation!public! !
 length:elementClass:initializer:!instance creation!public! !
 length:elementSize:!public! !
-stbConvertFrom:!binary filing!public! !
-stbVersion!binary filing!public! !
 with:!instance creation!public! !
 withAll:!instance creation!public! !
 withAll:elementClass:initializer:!instance creation!public! !

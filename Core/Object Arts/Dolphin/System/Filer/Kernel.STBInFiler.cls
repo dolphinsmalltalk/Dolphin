@@ -15,7 +15,7 @@ Kernel.STBInFiler comment: ''!
 basicNext
 	"Private - Answer the next object from the receiver's stream."
 
-	^policy readObject: self withPrefix: stream nextInt32!
+	^policy readObjectWithPrefix: stream nextInt32!
 
 classLocator
 	"Answer the receiver's classLocator inst var. This holds the context of any remote
@@ -40,12 +40,27 @@ initialize
 	"Private - Initialize the receiver."
 
 	classLocator := self defaultClassLocatorClass new.
-	^super initialize! !
+	^super initialize!
+
+readBytes: answer
+	self stream
+		basicNext: answer basicSize
+		into: answer
+		startingAt: 1! !
 !Kernel.STBInFiler categoriesForMethods!
 basicNext!accessing!private! !
 classLocator!accessing!public! !
 classLocator:!accessing!public! !
 defaultClassLocatorClass!constants!private! !
 initialize!initializing!private! !
+readBytes:!binary filing!public! !
+!
+
+!Kernel.STBInFiler class methodsFor!
+
+versionPolicyClass
+	^STBVersion0Policy! !
+!Kernel.STBInFiler class categoriesForMethods!
+versionPolicyClass!constants!private! !
 !
 

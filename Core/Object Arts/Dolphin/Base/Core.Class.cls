@@ -940,40 +940,10 @@ sourceFilerClass
 		ifNil: [environment == Smalltalk ifTrue: [self legacySourceFilerClass] ifFalse: [ChunkSourceFiler]]
 		ifNotNil: [:package | package sourceFilerClass]!
 
-stbConvertFrom: anSTBClassFormat
-	"Private - Answer a block that answers a new instance initialised from the block's single
-	parameter, an Array or ByteArray representing the old object whose format is
-	described by anSTBClassFormat.
-
-	By default, classes only know about the current format."
-
-	^nil!
-
 stbModifyExportProxy: anSTBImportedClassProxy
 	"Private - This is an opportunity to modifiy the classes' binary export proxy just before it is
 	output (to an STC file). The default is to do nothing - the standard STBImportedClassProxy is
 	generally sufficient for nearly all cases."!
-
-stbSaveOn: anSTBOutFiler
-	"Save out a binary representation of the receiver to anSTBOutFiler."
-
-	"Note that the STL filer does not use this - Classes are stored as literal references in the literal store array"
-
-	anSTBOutFiler saveObject: self as: (STBClassProxy forClass: self)!
-
-stbVersion
-	"If instances of a class are saved out to an STBOutFiler and must
-	remain loadable even if the class format changes then we need to be able
-	to distinguish between the different formats. A new binary format is
-	created whenever the number or order of instance variables in a class
-	are changed. All classes initially answer a version number of zero.
-
-	This identification of a changed format is achieved by overriding this
-	class method in the changed subclass to answer a new SmallInteger.
-	Also, in order to 'upgrade' an old instance to a new one, you must
-	provide or amend the class method #stbConvertFrom:."
-
-	^0!
 
 storeGUID
 	"Private - Record the receiver's GUID to the change log."
@@ -1249,10 +1219,7 @@ simpleName!accessing!public! !
 sourceDescriptor!accessing!public!source filing! !
 sourceDescriptor:!accessing!private!source filing! !
 sourceFilerClass!development!private!source filing-class definition! !
-stbConvertFrom:!binary filing!private! !
 stbModifyExportProxy:!binary filing!private! !
-stbSaveOn:!binary filing!public! !
-stbVersion!binary filing!public! !
 storeGUID!private!source filing-class definition! !
 subclass:instanceVariableNames:classVariableNames:imports:!class hierarchy-adding!public! !
 subclass:instanceVariableNames:classVariableNames:imports:classInstanceVariableNames:classConstants:!class hierarchy-adding!public! !

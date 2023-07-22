@@ -35,7 +35,7 @@ basicNext
 	indentLevel timesRepeat: [traceStream nextPutAll: '    '].
 
 	"First, read the prefix."
-	prefixCode := policy readIntegerFrom: stream.
+	prefixCode := policy readInteger.
 	"Now decode"
 	(prefixCode allMask: PrefixSmallIntegerMask)
 		ifTrue: 
@@ -66,7 +66,7 @@ basicNext
 	traceStream nextPut: $[.
 	(prefixCode allMask: PrefixClassMask)
 		ifTrue: 
-			[class := policy readClassData: self prefix: prefixCode.
+			[class := policy readClassDataWithPrefix: prefixCode.
 			traceStream
 				nextPutAll: (policy classLocatorStringFor: class);
 				nextPut: $;.

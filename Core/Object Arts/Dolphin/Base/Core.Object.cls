@@ -474,23 +474,6 @@ beWeak
 		ifTrue: [self setSpecialBehavior: ##(Behavior._GetSpecialMask bitOr: Behavior._IsWeakMask)]
 		ifFalse: [self error: 'byte objects cannot be weak']!
 
-binaryStoreBytes
-	"Answers a ByteArray representation of the receiver stored in a binary form.
-	This can be reconstituted using Object class>>fromBinaryStoreBytes:"
-
-	| stream |
-	stream := ByteArray writeStream: 256.
-	self binaryStoreOn: stream.
-	^stream contents!
-
-binaryStoreOn: aStream
-	"Stores the receiver in a binary form on aStream that can be reconstituted using Object class>>binaryReadFrom:.
-	Uses the STB filing mechanism to achieve this. This implementation is sufficient for all objects
-	that do not need to isolate themselves from their surroundings. Sub-classes may override this
-	method to perform such isolation"
-
-	(STBOutFiler on: aStream) nextPut: self!
-
 breakDependents
 	"Break the connection with all objects which have registered a dependency on the reciever."
 
@@ -1317,26 +1300,6 @@ stbFixup: anSTBInFiler at: newObjectIndex
 
 	^self!
 
-stbSaveOn: anSTBOutFiler
-	"Save out a binary representation of the receiver to anSTBOutFiler.
-	The options are:
-	1.	to let the filer output the receiver as normal using
-			STBOutFiler>>#saveObject: self.
-				or
-			STBOutFiler>>#saveObject: self as: 0.
-
-	2.	to output nil instead of the receiver using
-			STBOutFiler>>#saveObject: self as: nil.
-
-	3.	to output a proxy in place of the receiver using
-			STBOutFiler>>#saveObject: self as: anSTBProxy.
-		The proxy will be sent a #fixup:at: message at load time (see STB classes) and should then
-		answer the object it represents.
-
-	By default, objects are happy to be saved and loaded just as they are (option 1)."
-
-	anSTBOutFiler saveObject: self!
-
 storeOn: aStream
 	"Append to the <puttableStream> argument, target, an expression which when 
 	evaluated will answer a collection similar to the receiver."
@@ -1581,8 +1544,6 @@ beImmutableObject!initializing!public! !
 beStrong!accessing!public! !
 beUnfinalizable!accessing!public! !
 beWeak!accessing!public! !
-binaryStoreBytes!binary filing!public! !
-binaryStoreOn:!binary filing!public! !
 breakDependents!dependency!public! !
 broadcast:!dependency!public! !
 broadcast:with:!dependency!public! !
@@ -1679,7 +1640,6 @@ shouldNotImplement!exceptions!public! !
 size!accessing!public! !
 species!accessing!public! !
 stbFixup:at:!binary filing!public! !
-stbSaveOn:!binary filing!public! !
 storeOn:!printing!public! !
 storeString!printing!public! !
 subclassResponsibility!exceptions!public! !
@@ -1707,22 +1667,6 @@ Core.Object methodProtocol: #Object attributes: #(#ansi #readOnly) selectors: #(
 
 !Core.Object class methodsFor!
 
-binaryReadFrom: aStream
-	"Answers an object read from its binary representation on aStream.
-	This must have been saved using Object>>binaryStoreOn:"
-
-	^self binaryReadFrom: aStream context: nil
-
-!
-
-binaryReadFrom: aStream context: anObject
-	"Answers an object read from its binary representation on aStream.
-	This must have been saved using Object>>binaryStoreOn:"
-
-	^(STBInFiler on: aStream)
-		context: anObject;
-		next!
-
 fromBinaryStoreBytes: aByteArray
 	"Answers an object read from its binary representation in aByteArray.
 	This must have been created using Object>>binaryStoreBytes"
@@ -1730,17 +1674,6 @@ fromBinaryStoreBytes: aByteArray
 	| stream |
 	stream := aByteArray readStream.
 	^self binaryReadFrom: stream.
-
-
-!
-
-fromBinaryStoreBytes: aByteArray context: anObject
-	"Answers an object read from its binary representation in aByteArray.
-	This must have been created using Object>>binaryStoreBytes"
-
-	| stream |
-	stream := aByteArray readStream.
-	^self binaryReadFrom: stream context: anObject
 
 
 !
@@ -1801,10 +1734,7 @@ resourcesLocator
 
 	^SessionManager current resourcesLocatorForClass: self! !
 !Core.Object class categoriesForMethods!
-binaryReadFrom:!binary filing!public! !
-binaryReadFrom:context:!binary filing!public! !
 fromBinaryStoreBytes:!binary filing!public! !
-fromBinaryStoreBytes:context:!binary filing!public! !
 initialize!development!initializing!public! !
 initializeDependencyMechanism!initializing!private! !
 initializeEventsRegister!initializing!private! !

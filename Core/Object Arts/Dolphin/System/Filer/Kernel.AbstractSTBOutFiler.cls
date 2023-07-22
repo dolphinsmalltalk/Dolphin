@@ -19,7 +19,7 @@ basicNextPut: anObject
 	| class objectToSave |
 	anObject
 		ifNil: 
-			[policy putNilOn: stream.
+			[policy putNil.
 			^self].
 	"If anObject has been registered as a global then we wrap it up as an STBGlobalObjectProxy
 	and output that instead."
@@ -29,24 +29,24 @@ basicNextPut: anObject
 	class := anObject class.
 	class == SmallInteger
 		ifTrue: 
-			[policy putSmallInteger: anObject on: stream.
+			[policy putSmallInteger: anObject.
 			^self].
 	class == Character
 		ifTrue: 
-			[policy putCharacter: anObject on: stream.
+			[policy putCharacter: anObject.
 			^self].
 
 	"References to objects already output can also be encoded entirely within the prefix."
 	(self refForObject: anObject)
 		ifNotNil: 
 			[:refIndex |
-			policy writeReference: refIndex on: stream.
+			policy writeReference: refIndex.
 			^self].
 
 	"If anObject is the subject of an override:with: message then we output the 'with' proxy object instead."
 	objectToSave := proxyOverrides at: anObject ifAbsent: Collection.AbsentCookie.
 	objectToSave == Collection.AbsentCookie
-		ifTrue: [policy serializeObject: anObject with: self]
+		ifTrue: [policy serializeObject: anObject]
 		ifFalse: 
 			[objectToSave notNil ifTrue: [proxyOverrides removeKey: anObject].
 			self saveObject: anObject as: objectToSave]!
@@ -136,7 +136,7 @@ reset
 
 	globals := globalNils := nil.
 	proxyOverrides := IdentityDictionary new.
-	policy writeSignatureAndVersionOn: stream.
+	policy writeSignatureAndVersion.
 	self initializeObjectMap!
 
 saveObject: aNonImmediateObject
@@ -169,10 +169,14 @@ saveObject: anObject as: anObjectToSave
 setRefOffset: anInteger
 	refOffset := anInteger - writeMap size + 1!
 
-stream: aStream policy: anSTBVersionPolicy
+stream: aStream version: anInteger
 	stream := aStream.
-	policy := anSTBVersionPolicy.
+	policy := (self class versionPolicyClass filer: self version: anInteger).
 	self initialize!
+
+writeByteObject: aByteObject
+	self writePreambleFor: aByteObject.
+	policy writeByteObject: aByteObject!
 
 writeClassPrefix: aClass
 	"An object of the <Class> specified by the first argument, is about to be written to the binary stream, output an appropriate class prefix for it."
@@ -181,10 +185,10 @@ writeClassPrefix: aClass
 		ifNotNil: 
 			[:refIndex |
 			"class has already been output so we can encode a short reference to the class within the prefix."
-			policy writeClassReference: refIndex on: stream]
+			policy writeClassReference: refIndex]
 		ifNil: 
 			["hitherto unencountered class so we need to save full class details in the object header."
-			policy writeClass: aClass on: stream.
+			policy writeClass: aClass.
 			self register: aClass]!
 
 writeInstanceVariables: objectToSave
@@ -196,7 +200,7 @@ writeInstanceVariables: objectToSave
 		ifTrue: 
 			[| basicSize |
 			basicSize := objectToSave basicSize.
-			policy writeInteger: basicSize on: stream.
+			policy writeInteger: basicSize.
 			(instanceSpec anyMask: Behavior._PointersMask)
 				ifFalse: [1 to: basicSize do: [:i | stream nextPut: (objectToSave basicAt: i)]]
 				ifTrue: 
@@ -229,7 +233,8 @@ reset!initializing!private! !
 saveObject:!operations!public! !
 saveObject:as:!operations!public! !
 setRefOffset:!accessing!private! !
-stream:policy:!initializing!private! !
+stream:version:!initializing!private! !
+writeByteObject:!public! !
 writeClassPrefix:!operations!public! !
 writeInstanceVariables:!operations!private! !
 writePreambleFor:!binary filing!public! !
@@ -245,7 +250,7 @@ on: aStream
 on: aStream version: anInteger
 	"Answer a new instance attached to the binary stream aStream."
 
-	^self new stream: aStream policy: (self versionPolicyClass forVersion: anInteger)! !
+	^self new stream: aStream version: anInteger! !
 !Kernel.AbstractSTBOutFiler class categoriesForMethods!
 on:!instance creation!public! !
 on:version:!instance creation!public! !

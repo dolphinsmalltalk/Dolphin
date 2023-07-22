@@ -234,12 +234,8 @@ on: aWriteStream sourceFileIndex: anInteger
 
 	^(self on: aWriteStream)
 		sourceFileIndex: anInteger;
-		yourself!
-
-stlVersion
-	^STBFiler.STLFilerVersion! !
+		yourself! !
 !Kernel.AbstractChunkSourceFiler class categoriesForMethods!
 on:sourceFileIndex:!public! !
-stlVersion!constants!public! !
 !
 

@@ -1,0 +1,472 @@
+﻿| package |
+package := Package name: 'Dolphin Binary Filer'.
+package paxVersion: 2.1;
+	basicComment: 'Dolphin 🐬 Smalltalk STB Binary Filer.
+Copyright © Object Arts Ltd. 1997-2023'.
+
+
+package setClassNames: #(
+	#{Kernel.RestrictedClassLocator}
+	#{Kernel.STBClassProxy}
+	#{Kernel.STBInFiler}
+	#{Kernel.STBMetaclassProxy}
+	#{Kernel.STBOutFiler}
+	#{Kernel.STBValidatingInFiler}
+	#{Kernel.STBVersion0Policy}
+	#{Kernel.STBVersion1Policy}
+	#{Kernel.STBVersion3Policy}
+	#{Kernel.STBVersion5Policy}
+	#{Kernel.ValidatingClassLocator}
+).
+
+package setMethodNames: #(
+	#(#{Core.ByteArray} #stbSaveOn:)
+	#(#{Core.ByteArray class} #stbReadFrom:format:size:)
+	#(#{Core.Class} #stbSaveOn:)
+	#(#{Core.ClassDescription} #stbReadFrom:format:size:)
+	#(#{Core.Locale class} #stbReadFrom:format:size:)
+	#(#{Core.Metaclass} #stbSaveOn:)
+	#(#{Core.Object} #binaryStoreBytes)
+	#(#{Core.Object} #binaryStoreOn:)
+	#(#{Core.Object class} #binaryReadFrom:)
+	#(#{Core.Object class} #binaryReadFrom:context:)
+	#(#{Core.Object class} #fromBinaryStoreBytes:context:)
+	#(#{Core.Stream} #binaryStore:)
+	#(#{Core.Symbol class} #stbReadFrom:format:size:)
+	#(#{Core.Symbol class} #stbReadFromProxy:)
+	#(#{Core.Utf16String} #stbSaveOn:)
+	#(#{External.DynamicLinkLibrary class} #stbReadFrom:format:size:)
+	#(#{External.Structure class} #stbReadFrom:format:size:)
+	#(#{Kernel.AbsoluteFileLocator class} #stbReadFrom:format:size:)
+	#(#{Kernel.ImageRelativeFileLocator class} #stbReadFrom:format:size:)
+	#(#{Kernel.InstallRelativeFileLocator class} #stbReadFrom:format:size:)
+	#(#{Kernel.SingletonSearchPolicy class} #stbReadFrom:format:size:)
+	#(#{Kernel.SmalltalkLocale class} #stbReadFrom:format:size:)
+	#(#{OS.InvariantLocale class} #stbReadFrom:format:size:)
+	#(#{OS.WindowsLocale class} #stbReadFrom:format:size:)
+).
+
+package setPrerequisites: #(
+	'..\..\Base\Dolphin'
+	'Dolphin STB Filer'
+).
+
+package!
+
+"Class Definitions"!
+
+Kernel.ClassLocator
+	subclass: #'Kernel.RestrictedClassLocator'
+	instanceVariableNames: 'classMap'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.ClassLocator
+	subclass: #'Kernel.ValidatingClassLocator'
+	instanceVariableNames: 'validationBlock'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.AbstractSTBInFiler
+	subclass: #'Kernel.STBInFiler'
+	instanceVariableNames: 'classLocator'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.STBInFiler
+	subclass: #'Kernel.STBValidatingInFiler'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.AbstractSTBOutFiler
+	subclass: #'Kernel.STBOutFiler'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.STBProxy
+	subclass: #'Kernel.STBClassProxy'
+	instanceVariableNames: 'packageName locatorKey'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.STBClassProxy
+	subclass: #'Kernel.STBMetaclassProxy'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.STBVersionPolicy
+	subclass: #'Kernel.STBVersion0Policy'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'Signature' -> #[33 83 84 66 32].
+			'Versions' -> {
+						STBVersion0Policy.
+						STBVersion1Policy.
+						STBVersion1Policy.
+						STBVersion3Policy.
+						STBVersion3Policy.
+						STBVersion5Policy
+					}
+		}!
+Kernel.STBVersion0Policy
+	subclass: #'Kernel.STBVersion1Policy'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.STBVersion1Policy
+	subclass: #'Kernel.STBVersion3Policy'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.STBVersion3Policy
+	subclass: #'Kernel.STBVersion5Policy'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+"Loose Methods"!
+
+!Core.ByteArray methodsFor!
+
+stbSaveOn: anSTBOutFiler
+	"Save out a binary representation of the receiver to anSTBOutFiler."
+
+	"We override as an optimization because we know we can use a block write here. The format of the serialized byte array in the resulting STB stream is the same though. 
+	Note that this won't be invoked by the STL filer for ByteArrays because these have a literal form and are written directly to the stream as is. It will be invoked for some subclasses of ByteArray though."
+
+	anSTBOutFiler writeByteObject: self! !
+!Core.ByteArray categoriesForMethods!
+stbSaveOn:!binary filing!public! !
+!
+
+!Core.ByteArray class methodsFor!
+
+stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
+	"Read an instance of the receiver from the binary filer, aSTBInFiler. Note that we can ignore the format argument, since ByteArray is a pre-registered class that cannot be versioned. The format we read here is the same as that which would be read by the in-filer itself, but we can do the job more efficiently since we know that a block read from the byte stream is possible."
+
+	| answer |
+	answer := self basicNew: anInteger.
+	anSTBInFiler readByteObject: answer.
+	^answer! !
+!Core.ByteArray class categoriesForMethods!
+stbReadFrom:format:size:!binary filing!public! !
+!
+
+!Core.Class methodsFor!
+
+stbSaveOn: anSTBOutFiler
+	"Save out a binary representation of the receiver to anSTBOutFiler."
+
+	"Note that the STL filer does not use this - Classes are stored as literal references in the literal store array"
+
+	anSTBOutFiler saveObject: self as: (STBClassProxy forClass: self)! !
+!Core.Class categoriesForMethods!
+stbSaveOn:!binary filing!public! !
+!
+
+!Core.ClassDescription methodsFor!
+
+stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
+	"Read an instance of the receiver from the binary filer, aSTBInFiler. In most cases we can just bat this right back to the in-filer, and let it read its standard format from the stream. Custom format (or read routines) are useful where the standard STB format, and/or reader, is too inefficient in terms of space, or time, or both. It can also be used to avoid the need to create a proxy class; an example of this is the filing of symbols, which relegates the old STBSymbolProxy class to use only for reading older STB files."
+
+	^anSTBInFiler
+		readObjectOfClass: self
+		format: anSTBClassConversion
+		size: anInteger! !
+!Core.ClassDescription categoriesForMethods!
+stbReadFrom:format:size:!binary filing!public! !
+!
+
+!Core.Locale class methodsFor!
+
+stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
+	"Read an instance of the receiver from the binary filer, aSTBInFiler."
+
+	"Implementation Note: Overridden in order to maintain unique instances without using a STBSingletonProxy."
+
+	| locale id ref |
+	ref := anSTBInFiler register: nil.
+	id := anSTBInFiler basicNext.
+	locale := id isInteger
+				ifTrue: [self lcid: id]
+				ifFalse: 
+					[(#(#userDefault #smalltalk #invariant #systemDefault #uiDefault) identityIncludes: id)
+						ifTrue: [self perform: id]
+						ifFalse: [self named: id]].
+	anSTBInFiler fixup: ref to: locale.
+	^locale! !
+!Core.Locale class categoriesForMethods!
+stbReadFrom:format:size:!public! !
+!
+
+!Core.Metaclass methodsFor!
+
+stbSaveOn: anSTBOutFiler
+	"Save out a binary representation of the receiver to anSTBOutFiler."
+
+	anSTBOutFiler saveObject: self as: (STBMetaclassProxy forClass: self)! !
+!Core.Metaclass categoriesForMethods!
+stbSaveOn:!binary filing!public! !
+!
+
+!Core.Object methodsFor!
+
+binaryStoreBytes
+	"Answers a ByteArray representation of the receiver stored in a binary form.
+	This can be reconstituted using Object class>>fromBinaryStoreBytes:"
+
+	| stream |
+	stream := ByteArray writeStream: 256.
+	self binaryStoreOn: stream.
+	^stream contents!
+
+binaryStoreOn: aStream
+	"Stores the receiver in a binary form on aStream that can be reconstituted using Object class>>binaryReadFrom:.
+	Uses the STB filing mechanism to achieve this. This implementation is sufficient for all objects
+	that do not need to isolate themselves from their surroundings. Sub-classes may override this
+	method to perform such isolation"
+
+	(STBOutFiler on: aStream) nextPut: self! !
+!Core.Object categoriesForMethods!
+binaryStoreBytes!binary filing!public! !
+binaryStoreOn:!binary filing!public! !
+!
+
+!Core.Object class methodsFor!
+
+binaryReadFrom: aStream
+	"Answers an object read from its binary representation on aStream.
+	This must have been saved using Object>>binaryStoreOn:"
+
+	^self binaryReadFrom: aStream context: nil
+
+!
+
+binaryReadFrom: aStream context: anObject
+	"Answers an object read from its binary representation on aStream.
+	This must have been saved using Object>>binaryStoreOn:"
+
+	^(STBInFiler on: aStream)
+		context: anObject;
+		next!
+
+fromBinaryStoreBytes: aByteArray context: anObject
+	"Answers an object read from its binary representation in aByteArray.
+	This must have been created using Object>>binaryStoreBytes"
+
+	| stream |
+	stream := aByteArray readStream.
+	^self binaryReadFrom: stream context: anObject
+
+
+! !
+!Core.Object class categoriesForMethods!
+binaryReadFrom:!binary filing!public! !
+binaryReadFrom:context:!binary filing!public! !
+fromBinaryStoreBytes:context:!binary filing!public! !
+!
+
+!Core.Stream methodsFor!
+
+binaryStore: anObject
+	"Ask anObject to append to the receiver binary byte which when
+	read will result in an Object equivalent to anObject"
+
+	anObject binaryStoreOn: self
+! !
+!Core.Stream categoriesForMethods!
+binaryStore:!binary filing!public!storing! !
+!
+
+!Core.Symbol class methodsFor!
+
+stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
+	"Read an instance of the receiver from the binary filer, aSTBInFiler."
+
+	| stream answer stringClass |
+	stringClass := anSTBInFiler version < 4
+				ifTrue: 
+					[anSTBInFiler version < 2 ifTrue: [^self stbReadFromProxy: anSTBInFiler].
+					"Symbols would definitely have been ANSI encoded. Unfortunately there was no STB version change specifically for the switch to unicode, and because Symbol's are a built-in class they do not benefit from the normal STB versioning mechanism, so there is nothing we can do now to correct any misencodings read from Symbols in STB files created in versions of 7.0 post 7.0.30 up to the first 7.1 versions with Unicode."
+					AnsiString]
+				ifFalse: [Utf8String].
+	stream := anSTBInFiler stream.
+	answer := self intern: (stringClass fromByteArray: (stream next: anInteger)).
+	anSTBInFiler register: answer.
+	^answer!
+
+stbReadFromProxy: anSTBInFiler
+	"Read and answer a <Symbol> from the binary in-filer argument, which is attached to an old
+	format STB stream which used a proxy to store symbols."
+
+	| answer ref |
+	ref := anSTBInFiler register: nil.
+	"Then read the string and intern it"
+	answer := anSTBInFiler basicNext asSymbol.
+	anSTBInFiler fixup: ref to: answer.
+	^answer! !
+!Core.Symbol class categoriesForMethods!
+stbReadFrom:format:size:!binary filing!public! !
+stbReadFromProxy:!binary filing!private! !
+!
+
+!Core.Utf16String methodsFor!
+
+stbSaveOn: anSTBOutFiler
+	"At present this is needed because STB doesn't work correctly with double-byte objects. It
+	is may be desirable, anyway, to save as UTF-8 to save space, and the intention is that
+	Utf8String and Utf16String instances be largely interchangeable."
+
+	^self asUtf8String stbSaveOn: anSTBOutFiler! !
+!Core.Utf16String categoriesForMethods!
+stbSaveOn:!binary filing!public! !
+!
+
+!External.DynamicLinkLibrary class methodsFor!
+
+stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
+	"Read an instance of the receiver from the binary filer, aSTBInFiler."
+
+	| singleton |
+	singleton := self default.
+	anSTBInFiler register: singleton.
+	^singleton! !
+!External.DynamicLinkLibrary class categoriesForMethods!
+stbReadFrom:format:size:!binary filing!public! !
+!
+
+!External.Structure class methodsFor!
+
+stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
+	self ensureDefined.
+	^anSTBInFiler
+		readObjectOfClass: self
+		format: anSTBClassConversion
+		size: anInteger! !
+!External.Structure class categoriesForMethods!
+stbReadFrom:format:size:!binary filing!public! !
+!
+
+!Kernel.AbsoluteFileLocator class methodsFor!
+
+stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
+	"Read an instance of the receiver from the binary filer, aSTBInFiler."
+
+	| singleton |
+	singleton := self current.
+	anSTBInFiler register: singleton.
+	^singleton! !
+!Kernel.AbsoluteFileLocator class categoriesForMethods!
+stbReadFrom:format:size:!binary filing!public! !
+!
+
+!Kernel.ImageRelativeFileLocator class methodsFor!
+
+stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
+	"Read an instance of the receiver from the binary filer, aSTBInFiler."
+
+	| singleton |
+	singleton := self current.
+	anSTBInFiler register: singleton.
+	^singleton! !
+!Kernel.ImageRelativeFileLocator class categoriesForMethods!
+stbReadFrom:format:size:!binary filing!public! !
+!
+
+!Kernel.InstallRelativeFileLocator class methodsFor!
+
+stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
+	"Read an instance of the receiver from the binary filer, aSTBInFiler."
+
+	| singleton |
+	singleton := self current.
+	anSTBInFiler register: singleton.
+	^singleton! !
+!Kernel.InstallRelativeFileLocator class categoriesForMethods!
+stbReadFrom:format:size:!binary filing!public! !
+!
+
+!Kernel.SingletonSearchPolicy class methodsFor!
+
+stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
+	"Read an instance of the receiver from the binary filer, aSTBInFiler."
+
+	| singleton |
+	singleton := self current.
+	anSTBInFiler register: singleton.
+	^singleton! !
+!Kernel.SingletonSearchPolicy class categoriesForMethods!
+stbReadFrom:format:size:!binary filing!public! !
+!
+
+!Kernel.SmalltalkLocale class methodsFor!
+
+stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
+	"Read an instance of the receiver from the binary filer, aSTBInFiler."
+
+	^anSTBClassConversion
+		ifNotNil: 
+			[anSTBInFiler register: Current.
+			anSTBClassConversion instSize timesRepeat: [anSTBInFiler basicNext].
+			Current]
+		ifNil: [self error: 'Unexpected SmalltalkLocale instance in STB stream']! !
+!Kernel.SmalltalkLocale class categoriesForMethods!
+stbReadFrom:format:size:!binary filing!public! !
+!
+
+!OS.InvariantLocale class methodsFor!
+
+stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
+	"Read an instance of the receiver from the binary filer, aSTBInFiler."
+
+	^self error: 'Unexpected InvariantLocale instance in STB stream'! !
+!OS.InvariantLocale class categoriesForMethods!
+stbReadFrom:format:size:!binary filing!public! !
+!
+
+!OS.WindowsLocale class methodsFor!
+
+stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
+	"Read an instance of the receiver from the binary filer, aSTBInFiler."
+
+	"Implementation Note: Overridden in order to maintain unique instances without using an
+	STBSingletonProxy."
+
+	^anSTBClassConversion
+		ifNotNil: 
+			[| ref lcid locale |
+			ref := anSTBInFiler register: nil.
+			"Version 0 had 3 inst vars: 'numberFormat', 'lcid', and 'info'. The first and last are cached info and can be discarded."
+			self assert: [anSTBClassConversion instSize == 3].
+			anSTBInFiler basicNext.
+			lcid := anSTBInFiler basicNext.
+			anSTBInFiler basicNext.
+			locale := self lcid: lcid.
+			anSTBInFiler fixup: ref to: locale.
+			locale]
+		ifNil: [self error: 'Unexpected WindowsLocale instance in STB stream']! !
+!OS.WindowsLocale class categoriesForMethods!
+stbReadFrom:format:size:!binary filing!public! !
+!
+
+"End of package definition"!
+

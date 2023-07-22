@@ -307,12 +307,7 @@ shrink
 	"Rebuild the collection with the optimal size for its current number of elements,
 	as #rehash, but doesn't resize if already correct size."
 
-	mutex critical: [super shrink]!
-
-stbSaveOn: anSTBOutFiler
-	"Save out a binary representation of the receiver to anSTBOutFiler."
-
-	mutex critical: [super stbSaveOn: anSTBOutFiler]! !
+	mutex critical: [super shrink]! !
 !Core.SharedLookupTable categoriesForMethods!
 allKeysSatisfy:!enumerating!public! !
 allSatisfy:!enumerating!public! !
@@ -344,6 +339,5 @@ removeAllKeys:!public!removing! !
 removeKey:ifAbsent:!accessing!public! !
 resize:!mutating!private! !
 shrink!operations!public! !
-stbSaveOn:!binary filing!public! !
 !
 

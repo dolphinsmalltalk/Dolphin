@@ -140,6 +140,14 @@ testClassReadWrite
 testEmptyStream
 	self should: [STLInFiler on: #() readStream] raise: STBError!
 
+testIntegerBytesStl4
+	"IntegerBytes is a subclass of ByteArray, which has special handling for STB"
+
+	| dessicated rehydrated |
+	dessicated := '(Object fromLiteralStoreArray: #(#''!!STL'' 4 655414 ##(Smalltalk.DWORDBytes) 4 239 190 173 222))'.
+	rehydrated := self deserialize: dessicated.
+	self assert: rehydrated equals: (External.UInt32Bytes fromInteger: 16rDEADBEEF)!
+
 testIntegerReadWrite
 
 	| contents int |
@@ -251,6 +259,7 @@ testBindingReference!public!unit tests! !
 testBlockReadWrite!public!unit tests! !
 testClassReadWrite!public!unit tests! !
 testEmptyStream!public!unit tests! !
+testIntegerBytesStl4!public!unit tests! !
 testIntegerReadWrite!public!unit tests! !
 testInvalidStream!public!unit tests! !
 testStl3Literals!public!unit tests! !

@@ -30,16 +30,10 @@ printOn: aStream
 
 	aStream
 		print: self class;
-		nextPutAll: ' current'!
-
-stbSaveOn: anSTBOutFiler 
-	"Save out a binary representation of the receiver to anSTBOutFiler."
-
-	anSTBOutFiler writePreambleFor: self! !
+		nextPutAll: ' current'! !
 !Kernel.ImageRelativeFileLocator categoriesForMethods!
 isSelfEvaluating!public!testing! !
 printOn:!printing!public! !
-stbSaveOn:!binary filing!public! !
 !
 
 !Kernel.ImageRelativeFileLocator class methodsFor!
@@ -56,14 +50,6 @@ onPreStripImage
 
 	self uninitialize!
 
-stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
-	"Read an instance of the receiver from the binary filer, aSTBInFiler."
-
-	| singleton |
-	singleton := self current.
-	anSTBInFiler register: singleton.
-	^singleton!
-
 uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
@@ -71,7 +57,6 @@ uninitialize
 !Kernel.ImageRelativeFileLocator class categoriesForMethods!
 current!accessing!public! !
 onPreStripImage!class hierarchy-removing!private! !
-stbReadFrom:format:size:!binary filing!public! !
 uninitialize!class hierarchy-removing!private! !
 !
 

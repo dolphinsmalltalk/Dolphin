@@ -11,11 +11,11 @@ Kernel.STBVersion3Policy guid: (Core.GUID fromString: '{0d80f5bc-67f6-4a70-a725-
 Kernel.STBVersion3Policy comment: ''!
 !Kernel.STBVersion3Policy methodsFor!
 
-readObjectSize: aClass from: aPositionableStream
+readObjectSize: aClass
 	"As of STB version 3, the out-filer only writes the object size for indexable objects."
 
-	^aClass isVariable ifTrue: [aPositionableStream nextInt32] ifFalse: [0]! !
+	^aClass isVariable ifTrue: [stream nextInt32] ifFalse: [0]! !
 !Kernel.STBVersion3Policy categoriesForMethods!
-readObjectSize:from:!public! !
+readObjectSize:!operations!public! !
 !
 

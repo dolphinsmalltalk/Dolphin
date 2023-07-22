@@ -206,14 +206,6 @@ setPathString: aString
 setScope: aBindingScope
 	self shouldNotImplement!
 
-stbSaveOn: anSTBOutFiler
-	"Implmentation Note: We don't want to save out any cached binding. Easiest is to flush it - it isn't that expensive to re-cache when needed"
-
-	self
-		setBinding: nil;
-		setGeneration: nil.
-	^super stbSaveOn: anSTBOutFiler!
-
 undeclare
 	"Remove the binding in the target namespace that would be resolved by the receiver, if it exists."
 
@@ -256,7 +248,6 @@ setGeneration:!initializing!private! !
 setPath:!initializing!private! !
 setPathString:!initializing!private! !
 setScope:!initializing!private! !
-stbSaveOn:!binary filing!public! !
 undeclare!operations!public! !
 valueOrNil!accessing!public! !
 !

@@ -12,21 +12,20 @@ Kernel.STBVersion5Policy comment: ''!
 !Kernel.STBVersion5Policy methodsFor!
 
 classLocatorStringFor: aClass
-	"In STB v5, class locator strings are full names"
+	"Private - In STB v5, class locator strings are full names"
 
 	^aClass fullName!
 
-readClass: anSTBInFiler prefix: anInteger
-	| locatorString stream |
+readClassWithPrefix: anInteger
+	| locatorString |
 	locatorString := Utf8String new: (anInteger bitShift: STBFiler.PrefixLocatorLenUnshift).
-	stream := anSTBInFiler stream.
 	1 to: locatorString size do: [:i | locatorString basicAt: i put: stream next].
-	^anSTBInFiler classLocator locateClass: (FullBindingReference
+	^filer classLocator locateClass: (FullBindingReference
 				pathString: locatorString
 				path: nil
 				private: false)!
 
-readObject: anSTBInFiler withPrefix: anInteger
+readObjectWithPrefix: anInteger
 	| anObject newObjectIndex class |
 	anInteger == 0 ifTrue: [^nil].	"optimize for nil"
 
@@ -36,25 +35,25 @@ readObject: anSTBInFiler withPrefix: anInteger
 		ifFalse: 
 			[^(anInteger allMask: STBFiler.PrefixCharacterMask)
 				ifTrue: [Character value: (anInteger bitShift: STBFiler.PrefixRefUnshift)]
-				ifFalse: [anSTBInFiler objectAt: (anInteger bitShift: STBFiler.PrefixRefUnshift)]].
+				ifFalse: [filer objectAt: (anInteger bitShift: STBFiler.PrefixRefUnshift)]].
 
 	"Ascertain the class of the object."
 	class := (anInteger allMask: STBFiler.PrefixClassMask)
-				ifTrue: [self readClassData: anSTBInFiler prefix: anInteger]
-				ifFalse: [anSTBInFiler classAt: (anInteger bitShift: STBFiler.PrefixRefUnshift)].
+				ifTrue: [self readClassDataWithPrefix: anInteger]
+				ifFalse: [filer classAt: (anInteger bitShift: STBFiler.PrefixRefUnshift)].
 
 	"Now read the object data."
-	newObjectIndex := anSTBInFiler readMap size + 1.
+	newObjectIndex := filer readMap size + 1.
 	anObject := class
-				stbReadFrom: anSTBInFiler
-				format: (anSTBInFiler converters lookup: class)
-				size: (class isVariable ifTrue: [anSTBInFiler stream nextInt32] ifFalse: [0]).
+				stbReadFrom: filer
+				format: (filer converters lookup: class)
+				size: (class isVariable ifTrue: [filer stream nextInt32] ifFalse: [0]).
 
 	"If anObject was a proxy for the real one, evaluate it now."
-	^anObject stbFixup: anSTBInFiler at: newObjectIndex! !
+	^anObject stbFixup: filer at: newObjectIndex! !
 !Kernel.STBVersion5Policy categoriesForMethods!
-classLocatorStringFor:!public! !
-readClass:prefix:!operations!private! !
-readObject:withPrefix:!accessing!public! !
+classLocatorStringFor:!accessing!helpers!operations!private! !
+readClassWithPrefix:!operations!private! !
+readObjectWithPrefix:!accessing!public! !
 !
 

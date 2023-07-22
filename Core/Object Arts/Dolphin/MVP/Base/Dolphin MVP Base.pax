@@ -312,9 +312,11 @@ package setPrerequisites: #(
 	'..\..\System\Win32\CommCtrl\Common Controls Library'
 	'..\..\Base\Dolphin'
 	'Dolphin Basic Geometry'
+	'..\..\System\Filer\Dolphin Binary Filer'
 	'..\..\Base\Dolphin Command-line Parser'
 	'..\Graphics\Dolphin GDI Graphics'
 	'..\..\System\Filer\Dolphin Literal Filer'
+	'..\..\System\Filer\Dolphin STB Filer'
 	'..\Type Converters\Dolphin Type Converters'
 	'..\Models\Value\Dolphin Value Models'
 ).

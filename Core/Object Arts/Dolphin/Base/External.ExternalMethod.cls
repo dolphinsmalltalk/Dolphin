@@ -119,17 +119,7 @@ procAddress
 returnType
 	"Private - Answer the return type for the receiver."
 
-	^self descriptor returnType!
-
-stbSaveOn: anSTBOutFiler
-	"Output the receiver to anSTBOutFiler. We must ensure that the cached proc. address is cleared."
-
-	| descriptor |
-	descriptor := self descriptorLiteral.
-	anSTBOutFiler override: descriptor with: (descriptor copy replaceFrom: 1 to: 4 withObject: 0; yourself).
-	super stbSaveOn: anSTBOutFiler.
-
-! !
+	^self descriptor returnType! !
 !External.ExternalMethod categoriesForMethods!
 argsLen!accessing!private! !
 argumentTypes!accessing!private! !
@@ -143,7 +133,6 @@ isVirtualFunction!private!testing! !
 printOn:!development!printing!public! !
 procAddress!accessing!private! !
 returnType!accessing!private! !
-stbSaveOn:!binary filing!public! !
 !
 
 !External.ExternalMethod class methodsFor!

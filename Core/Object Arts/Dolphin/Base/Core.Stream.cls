@@ -100,13 +100,6 @@ basicNextPutAll: aCollection
 basicPrint: anObject
 	anObject basicPrintOn: self!
 
-binaryStore: anObject
-	"Ask anObject to append to the receiver binary byte which when
-	read will result in an Object equivalent to anObject"
-
-	anObject binaryStoreOn: self
-!
-
 close
 	"Relinquish any external resources associated with the receiver, and put the
 	receiver into a 'closed' state (as appropriate to the subclass). Answer the receiver."
@@ -395,7 +388,6 @@ basicNextAvailable:!accessing!private! !
 basicNextPut:!accessing!private! !
 basicNextPutAll:!accessing!private! !
 basicPrint:!public! !
-binaryStore:!binary filing!public!storing! !
 close!operations!public! !
 contentsSpecies!constants!private! !
 cr!accessing!public! !

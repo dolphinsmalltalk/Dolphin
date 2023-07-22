@@ -193,12 +193,6 @@ resize: anInteger
 	We ignore the request, since we don't know how to resize the object
 	pointed at (or even if it is resizable)."!
 
-stbSaveOn: anSTBOutFiler
-	"Save out a binary representation of the receiver to anSTBOutFiler.
-	Output nil in place of the receiver as the future validity of an external address is uncertain."
-
-	anSTBOutFiler saveObject: self as: nil!
-
 uint16AtOffset: anInteger
 	"Answer the unsigned 2-byte integer at offset (i.e. zero relative) anInteger in the memory pointed at by the receiver.
 	On iX86 the high and low order bytes are reversed; i.e. the bytes are ordered least significant first. 
@@ -352,7 +346,6 @@ intPtrAtOffset:!accessing!primitives!public! !
 intPtrAtOffset:put:!accessing!primitives!public! !
 replaceBytesOf:from:to:startingAt:!double dispatch!primitives!private!replacing! !
 resize:!mutating!public! !
-stbSaveOn:!binary filing!public! !
 uint16AtOffset:!accessing!primitives!public! !
 uint16AtOffset:put:!accessing!primitives!public! !
 uint32AtOffset:!accessing!primitives!public! !

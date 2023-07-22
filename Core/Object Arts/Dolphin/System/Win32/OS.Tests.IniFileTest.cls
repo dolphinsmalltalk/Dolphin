@@ -25,6 +25,9 @@ makeModifiableIniFile
 	File copy: self fileResource iniFile1 to: iniFile.
 	^IniFile open: iniFile!
 
+stlVersion4
+	^{ #'!!STL'. 4. 655414. Smalltalk.DWORDBytes. 4. 239. 190. 173. 222 }!
+
 tearDown
 	(iniFile notNil and: [File exists: iniFile]) ifTrue: [File delete: iniFile].
 	^super tearDown!
@@ -236,6 +239,7 @@ fileResource!accessing!private! !
 makeEmptyIniFile!helpers!private! !
 makeIniFile!helpers!private! !
 makeModifiableIniFile!helpers!private! !
+stlVersion4!constants!private! !
 tearDown!private!running! !
 testAdd!public!unit tests! !
 testAsByteArray!public!unit tests! !

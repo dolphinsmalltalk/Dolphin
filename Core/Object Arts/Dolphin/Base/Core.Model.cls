@@ -48,20 +48,12 @@ setEvents: anEventsCollectionOrNil
 	"Private - Set the EventsCollection of the receiver to be anEventsCollectionOrNil.
 	Answer the receiver."
 
-	events := anEventsCollectionOrNil!
-
-stbSaveOn: anSTBOutFiler
-	"Output the receiver to anSTBOutFiler. We must ensure that the local events collection
-	is NOT saved to the filer"
-
-	anSTBOutFiler override: events with: nil.
-	super stbSaveOn: anSTBOutFiler.! !
+	events := anEventsCollectionOrNil! !
 !Core.Model categoriesForMethods!
 getEvents!events!private! !
 isValid!public!testing! !
 postCopy!copying!public! !
 setEvents:!events!private! !
-stbSaveOn:!binary filing!public! !
 !
 
 Core.Model methodProtocol: #model attributes: #(#readOnly) selectors: #()!
@@ -84,18 +76,6 @@ stbConvert: anArray fromVersion: anInteger
 	anInteger < 3 ifTrue: [instVars := self stbConvertFromVersion2: instVars].
 	^instVars!
 
-stbConvertFrom: anSTBClassFormat
-	"Convert from previous version resource. 
-	Version Changes:
-		1: Added 'events' instance variable to Model."
-
-	^
-	[:data |
-	| instVars |
-	instVars := self stbConvert: data fromVersion: anSTBClassFormat version.
-	"Allow for the fact that the conversions may be assuming that appending inst vars with a default value of nil does not require conversion"
-	(instVars resize: self instSize) becomeA: self]!
-
 stbConvertFromVersion0: anArray
 	"Private - Perform an STB conversion from a version 0 <Model> to version 1.
 	i.e. insert 'events' instance variable (which should always be nil in an STB stream)."
@@ -117,19 +97,12 @@ stbConvertFromVersion2: anArray
 	"Private - Perform an STB conversion from a version 2 <Model> to version 3.
 	No change at this level."
 
-	^anArray!
-
-stbVersion
-	"Answer the current binary filer version number for instances of the receiver."
-
-	^1! !
+	^anArray! !
 !Core.Model class categoriesForMethods!
 new!instance creation!public! !
 stbConvert:fromVersion:!binary filing!private! !
-stbConvertFrom:!binary filing!public! !
 stbConvertFromVersion0:!binary filing!private! !
 stbConvertFromVersion1:!binary filing!private! !
 stbConvertFromVersion2:!binary filing!private! !
-stbVersion!binary filing!public! !
 !
 

@@ -2107,19 +2107,6 @@ literalStoreOn: aStream version: anInteger
 		override: self with: viewProxy;
 		nextPut: self!
 
-loadViewResource: aResourceArray forEdit: isLoadingForEdit
-	"Add an instance of the resource held in anSTLArray. Answer the new view."
-
-	| stream filerClass |
-	filerClass := (aResourceArray isKindOf: ByteArray) ifTrue: [STBInFiler] ifFalse: [STLInFiler].
-	stream := aResourceArray readStream.
-	^
-	[(filerClass on: stream)
-		isUpgrading: isLoadingForEdit;
-		context: self;
-		next]
-			ensure: [stream close]!
-
 managedSubViews
 	"Answer a <sequencedReadableCollection> of the sub views of the receiver that are managed.
 	Managed sub views can be edited by the ViewComposer and are arranged by the layout manager (if any)"
@@ -4842,7 +4829,6 @@ layoutExtent:!geometry!public! !
 layoutManager!geometry!public! !
 literalStoreOn:!literal filing!public! !
 literalStoreOn:version:!literal filing!public! !
-loadViewResource:forEdit:!binary filing!public! !
 managedSubViews!hierarchy!public!sub views! !
 managedSubViewsDo:!hierarchy!public!sub views! !
 mapPoint:to:!geometry!public! !

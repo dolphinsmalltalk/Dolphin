@@ -81,7 +81,7 @@ basicNext
 	traceStream nextPut: $[.
 	(prefixOrLiteral allMask: PrefixClassMask)
 		ifTrue: 
-			[class := policy readClassData: self prefix: prefixOrLiteral.
+			[class := policy readClassDataWithPrefix: prefixOrLiteral.
 			traceStream display: class name]
 		ifFalse: 
 			[class := self classAt: (prefixOrLiteral bitShift: PrefixRefUnshift).

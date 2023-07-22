@@ -73,28 +73,3 @@ printOn:!development!printing!public! !
 tag!constants!public! !
 !
 
-!OS.WindowsLocale class methodsFor!
-
-stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
-	"Read an instance of the receiver from the binary filer, aSTBInFiler."
-
-	"Implementation Note: Overridden in order to maintain unique instances without using an
-	STBSingletonProxy."
-
-	^anSTBClassConversion
-		ifNotNil: 
-			[| ref lcid locale |
-			ref := anSTBInFiler register: nil.
-			"Version 0 had 3 inst vars: 'numberFormat', 'lcid', and 'info'. The first and last are cached info and can be discarded."
-			self assert: [anSTBClassConversion instSize == 3].
-			anSTBInFiler basicNext.
-			lcid := anSTBInFiler basicNext.
-			anSTBInFiler basicNext.
-			locale := self lcid: lcid.
-			anSTBInFiler fixup: ref to: locale.
-			locale]
-		ifNil: [self error: 'Unexpected WindowsLocale instance in STB stream']! !
-!OS.WindowsLocale class categoriesForMethods!
-stbReadFrom:format:size:!binary filing!public! !
-!
-

@@ -89,19 +89,11 @@ pathString: aString scope: anObject
 	"Answer a new instance of the receiver representing the qualified name identified by the <readableString> argument, which is relative to the binding context, anObject. If anObject is nil, then an AbsoluteBindingPath is returned. 
 	If anObject is not nil, then it is expected to be some kind of name binding context (i.e. a namespace, class, or method), and the new instance will be a contextual BindingReference with that object as its starting point for resolving the binding."
 
-	^self instance: (super pathString: aString scope: anObject)!
-
-stbConvertFrom: anSTBClassFormat
-	"Version 0: Did not exist
-	Version 1: Introduced
-	Version 2: No change"
-
-	^[:data | self instance: (data at: 1)]! !
+	^self instance: (super pathString: aString scope: anObject)! !
 !Kernel.MetaBindingReference class categoriesForMethods!
 instance:!instance creation!public! !
 newPath:private:scope:!instance creation!private! !
 pathString:private:scope:!instance creation!public! !
 pathString:scope:!instance creation!public! !
-stbConvertFrom:!binary filing!public! !
 !
 

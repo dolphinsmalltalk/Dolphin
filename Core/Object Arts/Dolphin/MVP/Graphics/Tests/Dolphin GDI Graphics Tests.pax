@@ -27,6 +27,7 @@ package setPrerequisites: #(
 	'..\..\..\Base\Tests\Dolphin Base Tests'
 	'..\Dolphin GDI Graphics'
 	'..\..\Metafiles\Dolphin Metafiles'
+	'..\..\..\System\Filer\Dolphin STB Filer'
 	'..\..\..\ActiveX\Shell\Windows Shell'
 ).
 

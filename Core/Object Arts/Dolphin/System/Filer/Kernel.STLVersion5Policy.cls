@@ -11,32 +11,57 @@ Kernel.STLVersion5Policy guid: (Core.GUID fromString: '{fd7ff8a8-b50f-4fa1-a6cc-
 Kernel.STLVersion5Policy comment: ''!
 !Kernel.STLVersion5Policy methodsFor!
 
-literalPrinterClass
-	^STLPrinter!
+predefinedClasses
+	"Answer a <sequencedReadableCollection> of the classes that are pre-registered for every STL stream. 
+	There is relatively little benefit in pre-registering classes in STL, since we do not have the chicken-before-egg problem that STB has with, for example, Strings, since all the types that are required to support the format have a literal representation and will be instantiated by the compiler. The classes for objects with literal form do not need to be registered. We also do not need the STB class proxies in the STL representation. However, in all STL versions up to and including 5, the pre-registered classes were retained. We don't expect to encounter STBClassProxy or STBMetaclassProxy references, however, since these are internal implementation detail that is not used in STL."
 
-readClassData: anSTBFiler prefix: anInteger
+	^##({
+		AnsiString.
+		Array.
+		ByteArray.
+		LargeInteger.
+		#STBClassProxy.
+		#STBMetaclassProxy.
+		Symbol.
+		STBCollectionProxy.
+		OrderedCollection.
+		STBIdentityDictionaryProxy.
+		LookupTable.
+		IdentityDictionary.
+		Utf8String.
+		Utf16String
+	})!
+
+readByteObject: aByteObject
+	| byteArray |
+	byteArray := stream next.
+	byteArray
+		replaceBytesOf: aByteObject
+		from: 1
+		to: aByteObject basicSize
+		startingAt: 1!
+
+readClassDataWithPrefix: anInteger
 	"As of STL5 the class refs are printed into the STL as BindingReferences. These are true literals (so don't need the ##() expressions to be embedded in the literal array) but need to be resolved back to the class by sending them #value. Note that the resolved binding is cached by the literal BindingReference object, so this is still relatively efficient after the first run through."
 
 	^(anInteger allMask: STBFiler.PrefixNonZeroVersionMask)
 		ifTrue: 
-			[| versionBeingRead stream |
-			stream := anSTBFiler stream.
+			[| versionBeingRead |
 			versionBeingRead := stream next.
-			anSTBFiler
+			filer
 				registerClass: stream next value
 				version: versionBeingRead
 				prefix: anInteger]
 		ifFalse: 
-			[anSTBFiler
-				registerClass: anSTBFiler stream next value
+			[filer
+				registerClass: stream next value
 				version: 0
 				prefix: anInteger]!
 
-readObject: anSTBInFiler withPrefix: anInteger
+readObjectWithPrefix: anInteger
 	"In STL version 5 and later, the input stream won't contain encoded nil's or Characters, as these are written as literals. SmallIntegers are still encoded though, as this is necessary to distinguish these from the prefix values."
 
 	| anObject newObjectIndex class |
-	"SmallInteger?"
 	(anInteger allMask: STBFiler.PrefixSmallIntegerMask)
 		ifTrue: 
 			["Encoded in the prefix"
@@ -44,28 +69,68 @@ readObject: anSTBInFiler withPrefix: anInteger
 	(anInteger allMask: STBFiler.PrefixDataMask)
 		ifFalse: 
 			["Must be an object reference"
-			^anSTBInFiler objectAt: (anInteger bitShift: STBFiler.PrefixRefUnshift)].
+			^filer objectAt: (anInteger bitShift: STBFiler.PrefixRefUnshift)].
 
 	"Ascertain the class of the object."
 	class := (anInteger allMask: STBFiler.PrefixClassMask)
-				ifTrue: [self readClassData: anSTBInFiler prefix: anInteger]
+				ifTrue: [self readClassDataWithPrefix: anInteger]
 				ifFalse: 
 					["Previously encountered class"
-					anSTBInFiler classAt: (anInteger bitShift: STBFiler.PrefixRefUnshift)].
+					filer classAt: (anInteger bitShift: STBFiler.PrefixRefUnshift)].
 
 	"Now read the object data."
-	newObjectIndex := anSTBInFiler readMap size + 1.
-	anObject := class stbReadFrom: anSTBInFiler format: (anSTBInFiler converters lookup: class).
+	newObjectIndex := filer readMap size + 1.
+	anObject := class stbReadFrom: filer format: (filer converters lookup: class).
 
 	"If anObject was a proxy for the real one, evaluate it now."
-	^anObject stbFixup: anSTBInFiler at: newObjectIndex!
+	^anObject stbFixup: filer at: newObjectIndex!
 
 registerPredefinedObjects: anSTLFiler
-	"Private - Post version 3, don't pre-register standard objects with literal representation as we write these directly to the stream."! !
+	"Private - Post version 3, don't pre-register standard objects with literal representation as we write these directly to the stream."!
+
+writeByteObject: aByteObject
+	| size bytes |
+	size := aByteObject basicSize.
+	bytes := ByteArray new: size.
+	aByteObject
+		replaceBytesOf: bytes
+		from: 1
+		to: size
+		startingAt: 1.
+	stream
+		nextPut: size;
+		nextPut: bytes!
+
+writeClass: aClass
+	| code |
+	"STL doesn't write or use the locator string, so its length need not be encoded in the prefix, although it was prior to D8"
+	code := STBFiler.PrefixClassMask bitOr: (aClass instSize bitShift: STBFiler.PrefixInstSizeShift).
+	aClass isVariable
+		ifTrue: 
+			[code := code
+						bitOr: (aClass isBytes ifTrue: [STBFiler.PrefixBytesMask] ifFalse: [STBFiler.PrefixVariableMask])].
+	aClass stbVersion == 0
+		ifTrue: [stream nextPut: code]
+		ifFalse: 
+			[stream
+				nextPut: (code bitOr: STBFiler.PrefixNonZeroVersionMask);
+				nextPut: aClass stbVersion].
+	stream nextPut: aClass! !
 !Kernel.STLVersion5Policy categoriesForMethods!
-literalPrinterClass!public! !
-readClassData:prefix:!helpers!public! !
-readObject:withPrefix:!accessing!public! !
-registerPredefinedObjects:!private! !
+predefinedClasses!constants!public! !
+readByteObject:!operations!public! !
+readClassDataWithPrefix:!operations!public! !
+readObjectWithPrefix:!accessing!public! !
+registerPredefinedObjects:!initializing!private! !
+writeByteObject:!operations!public! !
+writeClass:!operations!public! !
+!
+
+!Kernel.STLVersion5Policy class methodsFor!
+
+literalPrinterClass
+	^STLPrinter! !
+!Kernel.STLVersion5Policy class categoriesForMethods!
+literalPrinterClass!constants!public! !
 !
 

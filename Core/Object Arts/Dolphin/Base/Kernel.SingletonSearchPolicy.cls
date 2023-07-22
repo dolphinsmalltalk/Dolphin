@@ -16,15 +16,9 @@ Kernel.SingletonSearchPolicy comment: ''!
 name
 	"Answer the name of the `SearchPolicy`. This is nil apart from the named singletons."
 
-	^self subclassResponsibility!
-
-stbSaveOn: anSTBOutFiler 
-	"Save out a binary representation of the receiver to anSTBOutFiler."
-
-	anSTBOutFiler writePreambleFor: self! !
+	^self subclassResponsibility! !
 !Kernel.SingletonSearchPolicy categoriesForMethods!
 name!accessing!public! !
-stbSaveOn:!binary filing!public! !
 !
 
 !Kernel.SingletonSearchPolicy class methodsFor!
@@ -40,14 +34,6 @@ onPreStripImage
 
 	self allSubclassesDo: [:each | each uninitialize]!
 
-stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
-	"Read an instance of the receiver from the binary filer, aSTBInFiler."
-
-	| singleton |
-	singleton := self current.
-	anSTBInFiler register: singleton.
-	^singleton!
-
 uninitialize
 	"Private - Tidy up the receiver in preparation for removal from the system."
 
@@ -55,7 +41,6 @@ uninitialize
 !Kernel.SingletonSearchPolicy class categoriesForMethods!
 current!instance creation!public! !
 onPreStripImage!class hierarchy-removing!private! !
-stbReadFrom:format:size:!binary filing!public! !
 uninitialize!class hierarchy-removing!private! !
 !
 

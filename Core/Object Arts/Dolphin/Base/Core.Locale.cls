@@ -711,28 +711,6 @@ shortTimeFormat
 
 	^self subclassResponsibility!
 
-stbSaveOn: anSTBOutFiler
-	"Output the receiver to anSTBOutFiler."
-
-	| id |
-	anSTBOutFiler
-		writeClassPrefix: Locale;
-		register: self.
-	self = UserDefault
-		ifTrue: 
-			[anSTBOutFiler nextPut: #userDefault.
-			^self].
-	id := self basicLcid.
-	id = OS.Kernel32 getSystemDefaultLCID
-		ifTrue: 
-			[anSTBOutFiler nextPut: #systemDefault.
-			^self].
-	id = OS.Kernel32 getThreadUILanguage
-		ifTrue: 
-			[anSTBOutFiler nextPut: #uiDefault.
-			^self].
-	anSTBOutFiler nextPut: id!
-
 subLanguageId
 	"Answer the <integer> Windows sub-language id (the 6 high-order bits of the LCID)."
 
@@ -858,7 +836,6 @@ shortAmDesignator!constants!public! !
 shortDateFormat!constants!public! !
 shortPmDesignator!constants!public! !
 shortTimeFormat!constants!public! !
-stbSaveOn:!binary filing!public! !
 subLanguageId!accessing!public! !
 tag!constants!public! !
 thousandSeparator!constants!public! !
@@ -989,33 +966,6 @@ standard: aString
 
 	^self named: aString withOverrides: false!
 
-stbConvertFrom: anSTBClassFormat
-	"Convert from previous version resource. 
-	In version 1 the STB format was changed to store just the locale identifier and to preserve logical locales such as userDefault.
-	We don't use the STB conversion mechanism to perform the upgrade, but we are required to supply a conversion block anyway."
-
-	^[:data | data error: 'Not used']!
-
-stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
-	"Read an instance of the receiver from the binary filer, aSTBInFiler."
-
-	"Implementation Note: Overridden in order to maintain unique instances without using a STBSingletonProxy."
-
-	| locale id ref |
-	ref := anSTBInFiler register: nil.
-	id := anSTBInFiler basicNext.
-	locale := id isInteger
-				ifTrue: [self lcid: id]
-				ifFalse: 
-					[(#(#userDefault #smalltalk #invariant #systemDefault #uiDefault) identityIncludes: id)
-						ifTrue: [self perform: id]
-						ifFalse: [self named: id]].
-	anSTBInFiler fixup: ref to: locale.
-	^locale!
-
-stbVersion
-	^1!
-
 supportedSystemLocales
 	"Private - Answer the supported Win32 system locales.
 		Locale supportedSystemLocales
@@ -1062,9 +1012,6 @@ onStartup!event handling!private! !
 reset!initializing!public! !
 smalltalk!instance creation!public! !
 standard:!instance creation!public! !
-stbConvertFrom:!public! !
-stbReadFrom:format:size:!public! !
-stbVersion!public! !
 supportedSystemLocales!enquiries!private! !
 systemDefault!instance creation!public! !
 timeZoneInformation!enquiries!public! !

@@ -22,6 +22,7 @@ package setMethodNames: #(
 	#(#{Kernel.ConsoleSessionManager class} #icon)
 	#(#{Kernel.Package} #hasImageStripper)
 	#(#{Kernel.Package} #imageStripper)
+	#(#{Kernel.Package} #imageStripper:)
 	#(#{Kernel.Package} #rehydrateImageStripper:)
 	#(#{OS.VersionResource class} #publishedAspectsOfInstances)
 	#(#{OS.VS_VERSION_INFO_HEADER} #printOn:)
@@ -90,6 +91,7 @@ package setPrerequisites: #(
 	'..\MVP\Base\Dolphin MVP Base'
 	'..\MVP\Views\Buttons\Dolphin Push Buttons'
 	'..\MVP\Presenters\Text\Dolphin Rich Text Presenter'
+	'..\System\Filer\Dolphin STB Filer'
 	'..\MVP\Presenters\Text\Dolphin Text Presenter'
 	'..\MVP\Type Converters\Dolphin Type Converters'
 	'..\MVP\Models\Value\Dolphin Value Models'
@@ -134,6 +136,18 @@ imageStripper
 
 	^self rehydrateImageStripper: Smalltalk.ImageStripper!
 
+imageStripper: anImageStripper 
+	"Set the image stripper for the receiver to anImageStripper. 
+	Since we have to be able to load the receiver into images that do no necessarily 
+	have the ImageStripper class installed, we hold the stripper as a binary filed out ByteArray 
+	in imageStripperBytes"
+
+	| newBytes |
+	newBytes := anImageStripper isNil ifFalse: [anImageStripper binaryStoreBytes].
+	imageStripperBytes = newBytes ifTrue: [^self].
+	self imageStripperBytes: newBytes.
+	self isChanged: true!
+
 rehydrateImageStripper: stripperClass 
 	| stripper |
 	stripper := imageStripperBytes notNil ifTrue: [Object fromBinaryStoreBytes: imageStripperBytes].
@@ -150,6 +164,7 @@ rehydrateImageStripper: stripperClass
 !Kernel.Package categoriesForMethods!
 hasImageStripper!private!testing! !
 imageStripper!accessing!public! !
+imageStripper:!accessing!public! !
 rehydrateImageStripper:!accessing!private! !
 !
 

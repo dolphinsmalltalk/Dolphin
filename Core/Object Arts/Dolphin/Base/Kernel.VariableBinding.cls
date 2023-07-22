@@ -186,19 +186,6 @@ unqualifiedName!accessing!public! !
 
 !Kernel.VariableBinding class methodsFor!
 
-stbConvertFrom: anSTBClassFormat
-	"Convert from previous version resource. 
-	Version Changes:
-		1) Adds 'environment' (early D8)
-		2) Adds 'flags'
-	"
-
-	| ver |
-	ver := anSTBClassFormat version.
-	ver == 1 ifTrue: [^[:data | (self stbConvertFromVersion1: data) becomeA: self]].
-	ver == 0 ifTrue: [^[:data | (self stbConvertFromVersion0: data) becomeA: self]].
-	^super stbConvertFrom: anSTBClassFormat!
-
 stbConvertFromVersion0: data
 	"Private - Convert from version 0 resource. Need to deduce the environment as best we can and flags accordingly."
 
@@ -234,14 +221,9 @@ stbConvertFromVersion1: data
 					["Not a class binding, so just mark as a class variable"
 					ClassMask]
 				ifFalse: [0].
-	^{ key. value. namespace. flags }!
-
-stbVersion
-	^2! !
+	^{ key. value. namespace. flags }! !
 !Kernel.VariableBinding class categoriesForMethods!
-stbConvertFrom:!binary filing!public! !
 stbConvertFromVersion0:!binary filing!private! !
 stbConvertFromVersion1:!binary filing!private! !
-stbVersion!binary filing!public! !
 !
 

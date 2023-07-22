@@ -408,11 +408,6 @@ sortSelfEvaluatingElements: anArray locale: aLocale
 					bp := stream contents.
 					ap <==> bp <= 0]]!
 
-stbSaveOn: anSTBOutFiler
-	"Save out a binary representation of the receiver to anSTBOutFiler."
-
-	anSTBOutFiler saveObject: self as: (STBCollectionProxy forCollection: self)!
-
 uncheckedAdd: newObject
 	"Private - Add newObject to the receiver, without checking to see if it is already present.
 	We also assume the receiver is large enough to accommodate the new element, and so do not
@@ -465,7 +460,6 @@ resize:!mutating!private! !
 shrink!mutating!public! !
 size!accessing!public! !
 sortSelfEvaluatingElements:locale:!printing!private! !
-stbSaveOn:!binary filing!public! !
 uncheckedAdd:!adding!private! !
 !
 

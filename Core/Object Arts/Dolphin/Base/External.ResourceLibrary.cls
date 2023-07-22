@@ -87,13 +87,7 @@ printOn: aWriteStream
 		display: #open:;
 		space;
 		print: self fileName;
-		nextPut: $)!
-
-stbSaveOn: anSTBOutFiler
-	"Save out a binary representation of the receiver to anSTBOutFiler.
-	Use a special proxy in order to share a common instance on reload."
-
-	anSTBOutFiler saveObject: self as: (STBExternalResourceLibraryProxy forLibrary: self)! !
+		nextPut: $)! !
 !External.ResourceLibrary categoriesForMethods!
 =!comparing!public! !
 attemptToOpen:!helpers!instance creation!private! !
@@ -104,7 +98,6 @@ loadFlags!constants!private! !
 loadFlags:!accessing!private! !
 open:!helpers!private! !
 printOn:!public! !
-stbSaveOn:!binary filing!instance creation!public! !
 !
 
 !External.ResourceLibrary class methodsFor!
@@ -197,20 +190,7 @@ open: aString withAliases: aCollection flags: anInteger
 									newLib close.
 									Libraries at: path put: existing]]].
 	aliases do: [:alias | Libraries at: (File default: alias extension: 'dll') put: lib].
-	^lib!
-
-stbConvertFrom: anSTBClassFormat
-	"Convert from version 1 ExternalResourceLibrary (adds loadFlags inst. var)"
-
-	"Shouldn't be needed, as resource libraries are proxied?"
-
-	anSTBClassFormat version == 0 ifTrue: [^[:data | { data at: 1. 0 } becomeA: self]].
-	^super stbConvertFrom: anSTBClassFormat!
-
-stbVersion
-	"Answer the current binary filer version number for instances of the receiver."
-
-	^1! !
+	^lib! !
 !External.ResourceLibrary class categoriesForMethods!
 aliasFor:!enquiries!public! !
 defaultLoadFlags!constants!private! !
@@ -220,7 +200,5 @@ open:!instance creation!public! !
 open:withAlias:!instance creation!public! !
 open:withAliases:!instance creation!public! !
 open:withAliases:flags:!instance creation!public! !
-stbConvertFrom:!binary filing!public! !
-stbVersion!binary filing!public! !
 !
 

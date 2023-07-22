@@ -532,11 +532,6 @@ sortUsing: aSortAlgorithm
 		from: firstIndex
 		to: lastIndex!
 
-stbSaveOn: anSTBOutFiler
-	"Save out a binary representation of the receiver to anSTBOutFiler."
-
-	anSTBOutFiler saveObject: self as: (STBCollectionProxy forCollection: self)!
-
 uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: aDyadicValuable 
 	"Private - Evaluate the <dyadicValuable> argument for each element of the receiver
 	between the specified <integer> indices, inclusive, with the element and its index as
@@ -594,7 +589,6 @@ size!accessing!public! !
 sort!public!sorting! !
 sort:!public!sorting! !
 sortUsing:!public!sorting! !
-stbSaveOn:!binary filing!public! !
 uncheckedFrom:to:keysAndValuesDo:!enumerating!private! !
 !
 

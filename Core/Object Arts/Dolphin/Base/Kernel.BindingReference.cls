@@ -647,15 +647,6 @@ simpleName: aString in: aNamespace
 splitQualifiedName: aString
 	^PathSeparator split: aString!
 
-stbConvertFrom: anSTBClassFormat
-	"Convert from version 0:
-		- RelativeBindingReference introduced - context pushed down
-		- flags replaced with private inst var"
-
-	^anSTBClassFormat version < 1
-		ifTrue: [[:data | self stbConvertFromVersion0: data]]
-		ifFalse: [[:data | self stbConvertFromVersion1: data]]!
-
 stbConvertFromVersion0: anArray
 	"Private - Version 0 inst vars: 'pathString path context flags binding generation'
 	Version 1&2 inst vars: 'pathString path private binding generation'"
@@ -679,10 +670,7 @@ stbConvertFromVersion1: anArray
 	| newInstance |
 	newInstance := FullBindingReference basicNew.
 	1 to: anArray size do: [:i | newInstance instVarAt: i put: (anArray at: i)].
-	^newInstance!
-
-stbVersion
-	^2! !
+	^newInstance! !
 !Kernel.BindingReference class categoriesForMethods!
 clearCachedBindings!operations!private! !
 flushBindings!operations!private! !
@@ -711,9 +699,7 @@ pathString:scope:flags:!instance creation!private! !
 simpleName:!instance creation!public! !
 simpleName:in:!instance creation!public! !
 splitQualifiedName:!helpers!public! !
-stbConvertFrom:!binary filing!public! !
 stbConvertFromVersion0:!binary filing!private! !
 stbConvertFromVersion1:!binary filing!private! !
-stbVersion!binary filing!public! !
 !
 

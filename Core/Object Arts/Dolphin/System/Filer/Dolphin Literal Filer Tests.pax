@@ -36,6 +36,7 @@ package setPrerequisites: #(
 	'..\..\MVP\Models\List\Dolphin List Models'
 	'Dolphin Literal Filer'
 	'..\..\MVP\Base\Dolphin MVP Base'
+	'Dolphin STB Filer'
 	'..\..\..\Samples\MVP\Scribble\Scribble'
 ).
 
