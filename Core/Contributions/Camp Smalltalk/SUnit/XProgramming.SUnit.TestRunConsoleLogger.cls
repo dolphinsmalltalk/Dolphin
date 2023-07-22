@@ -93,7 +93,7 @@ stream: aWriteStream
 
 summarizeFailures: aTestResult
 	| failures errors |
-	failures := aTestResult failures.
+	failures := aTestResult failures asSortedArray.
 	failures notEmpty
 		ifTrue: 
 			[stream
@@ -105,7 +105,7 @@ summarizeFailures: aTestResult
 					stream
 						print: each;
 						cr]].
-	errors := aTestResult errors.
+	errors := aTestResult errors asSortedArray.
 	errors notEmpty
 		ifTrue: 
 			[stream
