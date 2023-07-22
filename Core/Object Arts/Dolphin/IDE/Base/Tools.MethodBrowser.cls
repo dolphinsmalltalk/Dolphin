@@ -970,7 +970,7 @@ saveMethod: aString in: aClass environment: aNamespace categories: aCollection p
 				environment: aNamespace
 				categories: aCollection
 				package: aPackageOrNil
-				extraFlags: (sourcePresenter isAutoParseEnabled ifTrue: [0] ifFalse: [Interactive])]
+				extraFlags: Interactive]
 			on: Compiler notificationClass
 			do: [:cn | sourcePresenter compilerNotification: cn offset: 0].
 	newMethod := change ifNotNil: [change method].
