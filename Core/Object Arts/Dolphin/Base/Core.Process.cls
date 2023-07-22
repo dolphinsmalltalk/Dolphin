@@ -547,13 +547,6 @@ state
 						ifFalse: [self basicSuspendedFrame isNil ifTrue: [#dead] ifFalse: [#suspended]]]
 				ifFalse: [(list isKindOf: Semaphore) ifTrue: [#waiting] ifFalse: [#ready]]]!
 
-stbSaveOn: anSTBOutFiler
-	"Save out a binary representation of the receiver to anSTBOutFiler. 
-	Processes cannot be saved and restored correctly so output them as 
-	nil by default"
-
-	anSTBOutFiler saveObject: self as: nil.!
-
 suspend
 	"Transition the receiver from Running (if active), Waiting (if waiting on a Semaphore) or Ready (if waiting to be scheduled by the Processor) states to the Suspended state (i.e. not runnable). If the receiver is the activeProcess, suspend it and schedule another,  otherwise remove the receiver from the list of Ready processes in the Processor, or the  list of Waiting processes in a Semaphore, and nil out its suspending list backpointer. The receiver may be transitioned back to the Ready state at any time by sending it #resume (but remember that resuming a Process that was waiting on a Semaphore when it was suspended may upset process synchronisation because it will not return to the Semaphores waiting list).
 	Report an error if the receiver is already Suspended (which is recognised by a null backpointer, as this indicates that the process is not waiting in a list).
@@ -705,7 +698,6 @@ size!accessing!public! !
 spOfIndex:!private!stack frames! !
 stackTrace:!helpers!private! !
 state!private!states-changing! !
-stbSaveOn:!binary filing!public! !
 suspend!public!states-changing! !
 suspendedFrame!private!stack frames! !
 suspendedFrame:!private!stack frames! !

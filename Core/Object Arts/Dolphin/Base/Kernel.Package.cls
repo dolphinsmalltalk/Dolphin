@@ -3,7 +3,7 @@
 Core.Object
 	subclass: #'Kernel.Package'
 	instanceVariableNames: 'name packagePathname comment classNames methodNames variableNames prerequisiteNames events scripts doNotReuse imageStripperBytes aboutBlock packageVersion manualPrerequisites timestamp untracedVariables changeIndex properties preDeclareClassesOnLoad'
-	classVariableNames: '_Uncommitted BinaryPacLoader ChangedIcon CheckTimestamps ClashSignal PreDeclareClassesOnLoad SourcePackageIcon UnsaveableSignal'
+	classVariableNames: '_Uncommitted ChangedIcon CheckTimestamps ClashSignal PreDeclareClassesOnLoad SourcePackageIcon UnsaveableSignal'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -524,12 +524,6 @@ environmentName: aBindingReference
 		ifTrue: [self removePropertyAt: #environmentName]
 		ifFalse: [self propertyAt: #environmentName put: aBindingReference]!
 
-errorFileCorrupt
-	"Private - Filing in the receiver's owned objects has failed because the
-	file is corrupt."
-
-	self error: ('FileIn of <1s> package has failed, file is corrupt' expandMacrosWith: self name)!
-
 evaluateScript: aSymbol source: aString
 	| filer |
 	filer := self sourceFilerOn: aString readStream.
@@ -659,18 +653,6 @@ hierarchyOrderOfClasses: aCollection
 	being first if it is owned by the receiver."
 
 	^Smalltalk allClasses intersection: aCollection!
-
-imageStripper: anImageStripper 
-	"Set the image stripper for the receiver to anImageStripper. 
-	Since we have to be able to load the receiver into images that do no necessarily 
-	have the ImageStripper class installed, we hold the stripper as a binary filed out ByteArray 
-	in imageStripperBytes"
-
-	| newBytes |
-	newBytes := anImageStripper isNil ifFalse: [anImageStripper binaryStoreBytes].
-	imageStripperBytes = newBytes ifTrue: [^self].
-	self imageStripperBytes: newBytes.
-	self isChanged: true!
 
 imageStripperBytes
 	^imageStripperBytes!
@@ -852,23 +834,22 @@ loadPAC
 	filename := self packageFileName.
 	Notification signal: ('Loading package <1p> from: <2s>' expandMacrosWith: self name with: filename).
 	stream := FileStream read: filename text: true.
-	
-	[timestamp := stream file lastWriteTime asInteger.
-	(STBInFiler peekForSignatureIn: stream)
+	timestamp := stream file lastWriteTime asInteger.
+	(stream nextAvailable: 4) = '!!STB'
 		ifTrue: 
 			[stream close.
-			stream := FileStream read: filename text: false.
-			BinaryPacLoader
-				ifNil: [self error: 'Legacy binary package loading support is not available']
-				ifNotNil: [:loader | loader value: self value: stream]]
-		ifFalse: [self loadPAC: stream]]
-			ensure: [stream close]!
+			#{Kernel.LegacyBinaryPackageLoader} valueOrNil
+				ifNotNil: [:binaryLoader | binaryLoader loadPackage: self]
+				ifNil: [self error: 'Legacy binary package loading support is not available']]
+		ifFalse: [
+			[stream reset.
+			self loadPAC: stream] ensure: [stream close]]!
 
-loadPAC: stream
-	"Private - Load a chunked source text .PAC from the <readableStream>, stream."
+loadPAC: aReadStream
+	"Private - Load a chunked source text .PAC from the <readableStream> argument."
 
 	| filer |
-	filer := self sourceFilerOn: stream.
+	filer := self sourceFilerOn: aReadStream.
 	filer environment: self environment.
 
 	"Skip the first chunk since it represents the receiver."
@@ -1214,6 +1195,10 @@ paxVersion: aNumber
 		ifTrue: [self removePropertyAt: #paxVersion ifAbsent: nil]
 		ifFalse: [self propertyAt: #paxVersion put: aNumber]!
 
+postinstall
+	doNotReuse := nil.
+	self fileInScript: #postinstall!
+
 postLoadInitialization: aNiladicValuable
 	self isLegacySourceFormat ifTrue: [self updateMethodNamesToFullyQualified].
 	self initializeGlobals.
@@ -1237,6 +1222,9 @@ preDeclareClassesOnLoad: aBoolean
 
 predeclareClassesSetting
 	^preDeclareClassesOnLoad!
+
+preinstall
+	self fileInScript: #preinstall!
 
 prerequisiteNames
 	"Private - Answer the <readableString> names of the receiver's prerequisite packages, i.e.
@@ -1508,13 +1496,6 @@ sourceVariableNames
 
 	^self variableNames select: [:var | (self isSourceObject: var value) and: [(self isAlias: var) not]]!
 
-stbSaveOn: anSTBOutFiler
-	"Output the receiver to anSTBOutFiler. We must ensure that the local events collection
-	is NOT saved to the filer"
-
-	anSTBOutFiler override: events with: nil.
-	super stbSaveOn: anSTBOutFiler.!
-
 storeComment
 	self assert: [comment isKindOf: String].
 	self sourceManager storeCommentString: comment forPackage: self!
@@ -1644,11 +1625,13 @@ tracePrerequisitesOfEnvironment: anIdentityDictionary
 tracePrerequisitesOfImageStripper: anIdentityDictionary
 	"Only possible to trace the stripper prereqs in DPRO"
 
-	| stream hiddenObjects |
+	| stream hiddenObjects filer |
 	(imageStripperBytes isNil or: [#{Smalltalk.ImageStripper} isDefined not]) ifTrue: [^self].
+	filer := #{Kernel.STBInFiler} valueOrNil.
+	filer ifNil: [^self].
 	stream := imageStripperBytes readStream.
 	hiddenObjects := 
-			[(STBInFiler on: stream)
+			[(filer on: stream)
 				basicNext;
 				readMap] ensure: [stream close].
 	hiddenObjects do: 
@@ -1909,25 +1892,6 @@ variables
 versionIfRequired
 	Package manager versionPackageIfRequired: self!
 
-vmVersionCheck: verWhenSaved
-	"Private - Raise a warning to the effect that the package being loaded
-	was saved with an older, and incompatible, version of the VM, and so
-	it may need to be modified (e.g. by recompiling blocks in version resources)
-	in order to work - it should load OK though."
-
-	| versionString verOnLoad |
-	verOnLoad := VM bytecodeVersion.
-	verWhenSaved = verOnLoad ifTrue: [^self].
-	versionString := verWhenSaved > 0
-				ifTrue: [verWhenSaved highWord displayString , '.' , verWhenSaved lowWord displayString]
-				ifFalse: ['unknown'].
-	Notification
-		signal: ('The package <1p> was saved with a different version of the Dolphin VM (<2s>). 
-It will probably load, but it may not operate correctly. 
-If you experience subsequent problems please contact the package supplier for an updated version.'
-				expandMacrosWith: self name
-				with: versionString)!
-
 warnChangingDefaultNamespaceFrom: currentNamespace to: newNamespace
 	| preamble |
 	preamble := currentNamespace isNil
@@ -2010,7 +1974,6 @@ ensureNamesFullyQualified!loading!private! !
 environment!helpers!private! !
 environment:!helpers!private! !
 environmentName:!initializing!private! !
-errorFileCorrupt!exceptions!private! !
 evaluateScript:source:!private!source filing! !
 fileInClasses!private!source filing! !
 fileInScript:!private!source filing! !
@@ -2025,7 +1988,6 @@ hasCyclicPrerequisites!private!testing! !
 hasCyclicPrerequisites:safe:!private!testing! !
 hasUncommittedPrerequisites!private!testing! !
 hierarchyOrderOfClasses:!helpers!private! !
-imageStripper:!accessing!public! !
 imageStripperBytes!accessing!private! !
 imageStripperBytes:!accessing!private! !
 includesClass:!public!testing! !
@@ -2083,10 +2045,12 @@ packageVersion:!accessing!public! !
 path!accessing!public! !
 paxVersion!accessing!private! !
 paxVersion:!initializing!private! !
+postinstall!private! !
 postLoadInitialization:!loading!private! !
 preDeclareClassesOnLoad!accessing!public! !
 preDeclareClassesOnLoad:!accessing!public! !
 predeclareClassesSetting!accessing!private! !
+preinstall!private! !
 prerequisiteNames!accessing!private! !
 prerequisites!accessing!public! !
 printOn:!initializing!public! !
@@ -2131,7 +2095,6 @@ sourceFilerOn:!loading!private! !
 sourceManager!accessing!public! !
 sourceVariableExtension!constants!private! !
 sourceVariableNames!accessing!private! !
-stbSaveOn:!binary filing!public! !
 storeComment!helpers!private! !
 synchronizeNames!helpers!private! !
 timestamp!accessing!public! !
@@ -2163,14 +2126,10 @@ variableNames!accessing!public! !
 variableNames:!private! !
 variables!private!source filing! !
 versionIfRequired!public! !
-vmVersionCheck:!constants!private! !
 warnChangingDefaultNamespaceFrom:to:!helpers!private! !
 !
 
 !Kernel.Package class methodsFor!
-
-binaryPacLoader: aDyadicValuable
-	BinaryPacLoader := aDyadicValuable!
 
 clashSignal
 	"Private - Answer the <Signal> which is raised should overlapping/clashing membership
@@ -2214,14 +2173,16 @@ fromPACFile: pathname
 	| pacStream answer |
 	pacStream := FileStream read: pathname text: true.
 	answer := 
-			[(STBInFiler peekForSignatureIn: pacStream)
+			[(pacStream nextAvailable: 4) = '!!STB'
 				ifTrue: 
 					[pacStream close.
 					pacStream := FileStream read: pathname text: false.
 					self binaryReadFrom: pacStream]
-				ifFalse: [self readFrom: pacStream]]
+				ifFalse: 
+					[pacStream reset.
+					self readFrom: pacStream]]
 					ensure: [pacStream close].
-	answer isNil ifTrue: [self errorInvalidPACFile: pathname].
+	answer ifNil: [self errorInvalidPACFile: pathname].
 	^answer!
 
 fromPAXFile: pathname
@@ -2232,7 +2193,7 @@ fromPAXFile: pathname
 	| paxStream answer |
 	paxStream := FileStream read: pathname.
 	answer := [self readFrom: paxStream] ensure: [paxStream close].
-	answer isNil ifTrue: [self errorInvalidPAXFile: pathname].
+	answer ifNil: [self errorInvalidPAXFile: pathname].
 	^answer!
 
 initialize
@@ -2247,8 +2208,7 @@ initialize
 	ClashSignal := Signal resumableDescription: 'Package contents clash'.
 	UnsaveableSignal := Signal
 				description: 'Package cannot be saved (check for cyclic dependencies or unpackaged prerequisites)'.
-	CheckTimestamps := true.
-	BinaryPacLoader := nil!
+	CheckTimestamps := true!
 
 manager
 	"Answer the object responsible for managing the collection of installed packages."
@@ -2321,176 +2281,6 @@ sourcePackageExtension
 
 	^ 'pax'!
 
-stbConvertFrom: anSTBClassFormat
-	"Convert version 0 packages by mutating class names from Strings
-	into Symbols. There is no layout change."
-
-	| ver |
-	ver := anSTBClassFormat version.
-	Notification
-		signal: 'Converting package from version ' , ver printString , ' to: ' , self stbVersion printString.
-	ver == 7 ifTrue: [^[:data | self stbConvertFromVersion7: data]].
-	ver == 6 ifTrue: [^[:data | self stbConvertFromVersion6: data]].
-	ver == 5 ifTrue: [^[:data | self stbConvertFromVersion5: data]].
-	ver == 4 ifTrue: [^[:data | self stbConvertFromVersion4: data]].
-	ver == 3 ifTrue: [^[:data | self stbConvertFromVersion3: data]].
-	ver == 2 ifTrue: [^[:data | self stbConvertFromVersion2: data]].
-	ver == 1 ifTrue: [^[:data | self stbConvertFromVersion1: data]].
-	ver == 0 ifTrue: [^[:data | self stbConvertFromVersion1: data]].
-	^super stbConvertFrom: anSTBClassFormat!
-
-stbConvertFromVersion0: anArray
-	"Private - Convert version 0 packages by mutating class names from Strings	into Symbols. There is no layout change. Answer the mutated data.
-	Version 0 packages preceeded even the first beta release, so there are probably none of these in the wild. Even if there were, the UI framework was radically different, so although they may be loadable they will not work.
-
-	Version 0 Package		-->		Version 1 Package
-	1	name					1	name
-	2	packagePathname			2	packagePathname
-	3	comment					3	comment
-	4	classNames (Set)			4	classNames (IdentitySet)
-	5	methodNames				5	methodNames
-	6	globalNames (Set)			6	globalNames (IdentitySet)
-	7	prerequisiteNames			7	prerequisiteNames
-	8	preinstall					8	preinstall
-	9	postinstall				9	postinstall
-	10	singleFile					10	singleFile"
-
-	anArray at: 4 put: ((anArray at: 4) collect: [:n | n asSymbol]) asIdentitySet.
-	anArray at: 6 put: (anArray at: 6) asIdentitySet.
-	^self stbConvertFromVersion1: anArray!
-
-stbConvertFromVersion1: anArray
-	"Private - Convert version 1 packages  to version2. The preinstall and postinstall instance variables are replaced by a dictionary which holds those scripts and any more we define. Answer the mutated data.
-
-	Version 1 Package		-->		Version 2 Package
-	1	name					1	name
-	2	packagePathname			2	packagePathname
-	3	comment					3	comment
-	4	classNames				4	classNames
-	5	methodNames				5	methodNames
-	6	globalNames				6	globalNames
-	7	prerequisiteNames			7	prerequisiteNames
-	8	preinstall					8	singleFile
-	9	postinstall				9	scripts
-	10	singleFile"
-
-	| preinstall postinstall newData scripts |
-	newData := Array new: 9.
-	newData replaceFrom: 1 to: 7 with: anArray startingAt: 1.
-	newData at: 8 put: (anArray at: 10).
-	scripts := IdentityDictionary new.
-	preinstall := anArray at: 8.
-	(preinstall notNil and: [preinstall notEmpty]) ifTrue: [scripts at: #preinstall put: preinstall].
-	postinstall := anArray at: 9.
-	(postinstall notNil and: [postinstall notEmpty])
-		ifTrue: [scripts at: #postinstall put: postinstall].
-	newData at: 9 put: scripts.
-	^self stbConvertFromVersion2: newData!
-
-stbConvertFromVersion2: anArray
-	"Private - Convert version 2 packages to version 3. For package version 3, resources had been introduced into Dolphin and so resourceNames was added for tracking loose resources, similar to methodNames for loose methods.
-
-	Version 2 Package		-->		Version 3 Package
-	1	name					1	name
-	2	packagePathname			2	packagePathname
-	3	comment					3	comment
-	4	classNames				4	classNames
-	5	methodNames				5	methodNames
-	6	globalNames				6	globalNames
-	7	prerequisiteNames			7	prerequisiteNames
-	8	singleFile					8	singleFile
-	9	scripts					9	scripts
-								10	resourceNames"
-
-	^self stbConvertFromVersion3: (anArray copyWith: Set new)!
-
-stbConvertFromVersion3: anArray
-	"Private - Convert version 3 packages to version 4. The main change is the addition of an imageStripperBytes instance variable to hold a filed imageStripper to be associated with the package. We hold the image stripper in this form to allow filing of the package into images that do not have ImageStripper installed. Additionally we must convert the full stored pathname of the package to a name relative to the image base."
-
-	"Version 3 Package		-->		Version 4 Package
-	1	name					1	name
-	2	packagePathname			2	packagePathname
-	3	comment					3	comment
-	4	classNames				4	classNames
-	5	methodNames				5	methodNames
-	6	globalNames				6	globalNames
-	7	prerequisiteNames			7	prerequisiteNames
-	8	singleFile					8	singleFile
-	9	scripts					9	scripts
-	10 	resourceNames			10	resourceNames
-								11	imageStripperBytes"
-
-	"Copy over adding a nil imageStripperBytes slot"
-
-	| v4vars  |
-	v4vars := anArray copyWith: nil.
-
-	"Convert the imagePathName to a relative path"
-	v4vars at: 2 put: (File relativePathOf: (anArray at: 2) to: SessionManager current imageBase).
-
-	^self stbConvertFromVersion4: v4vars!
-
-stbConvertFromVersion4: anArray
-	"Private - Convert version 4 packages (Dolphin 1.0b2e) to version 5 (Dolphin 3.05).
-	Adds an aboutBlock (12) and versionString (13) instance variables."
-
-	| scripts |
-	"Discard empty scripts"
-	scripts := anArray at: 9.
-	scripts := scripts select: [:each | each notEmpty].
-	anArray at: 9 put: (scripts isEmpty ifFalse: [scripts]).
-	^self stbConvertFromVersion5: (anArray resize: 13)!
-
-stbConvertFromVersion5: anArray
-	"Private - Convert version 5 (Dolphin 3.05) packages to version 6 for D5, and then D6 (new PAX format).
-	singleFile instance variable is no longer used. The format was change again in D6 without updating the stbVersion - this was wrong but worked because the change was additive and the converter was tolerant.
-	The resourceNames were no longer required becaues of the introduction of the literal method representation."
-
-	"Version 5 Package		-->		Version 6 Package (D5)				Version 6 Package (D6)
-	1	name					1	name						1	name
-	2	packagePathname			2	packagePathname				2	packagePathname
-	3	comment					3	comment                                         3	comment
-	4	classNames				4	classNames					4	classNames
-	5	methodNames				5	methodNames					5	methodNames
-	6	globalNames				6	globalNames                                   6	globalNames
-	7	prerequisiteNames			7	prerequisiteNames				7	prerequisiteNames
-	8	singleFile					8	events						8	events
-	9	scripts					9	scripts						9	scripts
-	10 	resourceNames			10	resourceNames (not required)		10	doNotReuse
-	11 	imageStripperBytes			11	imageStripperBytes				11	imageStripperBytes
-	12 	aboutBlock				12	aboutBlock					12	aboutBlock
-	13 	packageVersion			13	packageVersion				13	packageVersion
-								14	manualPrerequisites			14	manualPrerequisites
-								15	_unused2						15	timeStamp
-																16	untracedGlobals"
-	^self stbConvertFromVersion6: ((Array new: 16)
-				replaceFrom: 1
-					to: anArray size
-					with: anArray
-					startingAt: 1;
-				at: 10 put: (anArray at: 8);
-				at: 8 put: nil;
-				yourself)!
-
-stbConvertFromVersion6: anArray
-	"Private - Convert version 6 to 7: Adds changeIndex and paxVersion instance variables."
-
-	^self stbConvertFromVersion7: (anArray resize: 17)!
-
-stbConvertFromVersion7: anArray
-	"Private - Convert version 7 to 8: New format package using BindingReferences."
-
-	| newPackage |
-	"Last converter in the chain"
-	newPackage := (anArray resize: 19) becomeA: self.
-	newPackage upgradeToVersion2.
-	^newPackage!
-
-stbVersion
-	"Answer the current binary filer version number for instances of the receiver."
-
-	^8!
-
 uncommitted
 	"Answer the special package used to 'hold' uncommitted classes and other globals."
 
@@ -2507,7 +2297,6 @@ unsaveableSignal
 
 	^UnsaveableSignal! !
 !Kernel.Package class categoriesForMethods!
-binaryPacLoader:!accessing!private! !
 clashSignal!constants!private! !
 defaultSortBlock!constants!public! !
 errorInvalidPACFile:!exceptions!private! !
@@ -2528,16 +2317,6 @@ preDeclareClassesOnLoad!accessing!public! !
 preDeclareClassesOnLoad:!accessing!public! !
 readFrom:!instance creation!private! !
 sourcePackageExtension!constants!private! !
-stbConvertFrom:!binary filing!public! !
-stbConvertFromVersion0:!binary filing!private! !
-stbConvertFromVersion1:!binary filing!private! !
-stbConvertFromVersion2:!binary filing!private! !
-stbConvertFromVersion3:!binary filing!private! !
-stbConvertFromVersion4:!binary filing!private! !
-stbConvertFromVersion5:!binary filing!private! !
-stbConvertFromVersion6:!binary filing!private! !
-stbConvertFromVersion7:!binary filing!private! !
-stbVersion!binary filing!public! !
 uncommitted!accessing!public! !
 uninitialize!class hierarchy-removing!private! !
 unsaveableSignal!constants!private! !

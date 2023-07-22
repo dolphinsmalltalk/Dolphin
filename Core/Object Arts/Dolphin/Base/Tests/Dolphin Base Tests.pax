@@ -114,6 +114,7 @@ package setClassNames: #(
 	#{External.Tests.UInt16ArrayTest}
 	#{External.Tests.UInt32ArrayTest}
 	#{External.Tests.UInt32BytesTest}
+	#{External.Tests.UInt64BytesTest}
 	#{External.Tests.WCHARFieldTest}
 	#{Graphics.Tests}
 	#{Kernel.Tests}
@@ -208,16 +209,20 @@ package setPrerequisites: #(
 	'..\Dolphin Anonymous Classes'
 	'..\Deprecated\Dolphin Base (Old Names)'
 	'..\..\MVP\Base\Dolphin Basic Geometry'
+	'..\..\System\Filer\Dolphin Binary Filer'
 	'..\Dolphin Command-line Parser'
 	'..\..\System\Random\Dolphin CRT Random Stream'
 	'..\..\System\Win32\Dolphin File System Info'
 	'..\Dolphin Legacy Date & Time'
+	'..\Deprecated\Dolphin Legacy FFI Types (Old Names)'
 	'..\Deprecated\Dolphin Legacy Package Support'
+	'..\..\System\Filer\Dolphin Literal Filer'
 	'..\..\System\Win32\MessageBox\Dolphin Message Box'
 	'..\..\System\Random\Dolphin Random Stream'
 	'..\..\Registry\Dolphin Registry Access'
 	'..\Dolphin SizeIs Fields'
 	'..\Dolphin Source Fileout'
+	'..\..\System\Filer\Dolphin STB Filer'
 	'..\..\IDE\Base\Dolphin Transcript'
 	'..\..\..\..\Contributions\Camp Smalltalk\SUnit\OA SUnit Extensions'
 	'..\..\ActiveX\COM\OLE COM'
@@ -1184,6 +1189,13 @@ External.Tests.ExternalFieldTest
 	classConstants: {}!
 External.Tests.IntegerBytesTest
 	subclass: #'External.Tests.UInt32BytesTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+External.Tests.IntegerBytesTest
+	subclass: #'External.Tests.UInt64BytesTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

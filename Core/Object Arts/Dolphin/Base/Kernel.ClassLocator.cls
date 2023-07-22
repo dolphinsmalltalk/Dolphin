@@ -285,22 +285,6 @@ removeAlias: aString
 
 	Aliases removeKey: aString asQualifiedReference ifAbsent: nil!
 
-stbConvertFrom: anSTBClassFormat
-	"Convert from earlier version models.
-	1: Added 'packageName' instance variable."
-
-	^
-	[:data |
-	self basicNew
-		codeBase: (data at: 1);
-		key: (data at: 2);
-		yourself]!
-
-stbVersion
-	"Answer the current binary filer version number for instances of the receiver."
-
-	^1!
-
 uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
@@ -319,8 +303,6 @@ isImportedClass:!public!testing! !
 new!instance creation!public! !
 onStartup!events-session!private! !
 removeAlias:!accessing!public! !
-stbConvertFrom:!binary filing!public! !
-stbVersion!binary filing!public! !
 uninitialize!class hierarchy-removing!private! !
 !
 

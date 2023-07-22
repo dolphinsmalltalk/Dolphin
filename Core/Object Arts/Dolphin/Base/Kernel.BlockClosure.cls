@@ -837,17 +837,3 @@ Kernel.BlockClosure methodProtocol: #dyadicValuable attributes: #(#readOnly) sel
 Kernel.BlockClosure methodProtocol: #monadicValuable attributes: #(#readOnly) selectors: #(#argumentCount #value: #valueWithArguments:)!
 Kernel.BlockClosure methodProtocol: #niladicValuable attributes: #(#readOnly) selectors: #(#argumentCount #value #valueWithArguments:)!
 
-!Kernel.BlockClosure class methodsFor!
-
-stbVersion
-	"Answer the current binary filer version number for instances of the receiver.
-		0 	- Original Smalltalk-80 style blocks (pre Dolphin 6.0)
-		1..2	- Interim formats used during development of proper closures.
-		3	- Dolphin 6.0 closures.
-	"
-
-	^3! !
-!Kernel.BlockClosure class categoriesForMethods!
-stbVersion!binary filing!public! !
-!
-

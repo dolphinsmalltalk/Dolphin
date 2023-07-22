@@ -300,11 +300,6 @@ printOn: aStream
 		print: self fileName;
 		nextPut: $)!
 
-stbSaveOn: anSTBOutFiler 
-	"Save out a binary representation of the receiver to anSTBOutFiler."
-
-	anSTBOutFiler writePreambleFor: self!
-
 systemError
 	"Generate an error based on the last recorded host system error"
 
@@ -362,7 +357,6 @@ moduleFileName!accessing!private! !
 open!private!realizing/unrealizing! !
 open:!private!realizing/unrealizing! !
 printOn:!printing!public! !
-stbSaveOn:!binary filing!public! !
 systemError!exceptions!public! !
 systemError:!exceptions!public! !
 versionFormatString!constants!private! !
@@ -519,14 +513,6 @@ sharedVariableName
 
 	^nil!
 
-stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
-	"Read an instance of the receiver from the binary filer, aSTBInFiler."
-
-	| singleton |
-	singleton := self default.
-	anSTBInFiler register: singleton.
-	^singleton!
-
 uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
@@ -571,7 +557,6 @@ open:!instance creation!public! !
 openDefault!instance creation!private!realizing/unrealizing! !
 setDefault:!initializing!private! !
 sharedVariableName!constants!private! !
-stbReadFrom:format:size:!binary filing!public! !
 uninitialize!class hierarchy-removing!private! !
 uninitializeBeforeRemove!class hierarchy-removing!private! !
 versionInfo!accessing-version!public! !

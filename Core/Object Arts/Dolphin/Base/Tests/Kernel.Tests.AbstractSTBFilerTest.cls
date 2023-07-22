@@ -18,6 +18,15 @@ deserialize: aString
 serialize: anObject
 	^self subclassResponsibility!
 
+testAddress
+	"Addresses should always be replaced by nil"
+
+	| object dessicated rehydrated |
+	object := External.Address fromInteger: 16rDEADBEEF.
+	dessicated := self serialize: object.
+	rehydrated := self deserialize: dessicated.
+	self assertIsNil: rehydrated!
+
 testByteArray
 	"#1483"
 
@@ -56,6 +65,24 @@ testExistentClass
 	dessicated := self serialize: self class.
 	rehydrated := self deserialize: dessicated.
 	self assert: rehydrated identicalTo: self class!
+
+testHandle
+	"Handles should always be replaced by nil"
+
+	| object dessicated rehydrated |
+	object := External.Handle fromInteger: 16rDEADBEEF.
+	dessicated := self serialize: object.
+	rehydrated := self deserialize: dessicated.
+	self assertIsNil: rehydrated!
+
+testIntegerBytes
+	"IntegerBytes is a subclass of ByteArray, which has special handling for STB"
+
+	| object dessicated rehydrated |
+	object := External.UInt32Bytes fromInteger: 16rDEADBEEF.
+	dessicated := self serialize: object.
+	rehydrated := self deserialize: dessicated.
+	self assert: rehydrated equals: object!
 
 testInvalidStream
 	self subclassResponsibility!
@@ -170,10 +197,13 @@ verifyRoundTripSingleton: anObject
 !Kernel.Tests.AbstractSTBFilerTest categoriesForMethods!
 deserialize:!helpers!private! !
 serialize:!helpers!private! !
+testAddress!public!unit tests! !
 testByteArray!public!unit tests! !
 testCharacters!public!unit tests! !
 testEmptyStream!public!unit tests! !
 testExistentClass!public!unit tests! !
+testHandle!public!unit tests! !
+testIntegerBytes!public!unit tests! !
 testInvalidStream!public!unit tests! !
 testMetaclass!public!unit tests! !
 testNonExistentClass!public!unit tests! !

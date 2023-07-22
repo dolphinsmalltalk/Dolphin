@@ -124,13 +124,6 @@ errorUnrecognisedClass: aClass version: version
 
 	STBError signal: 'Input stream contains an unsupported version <1d> of <2p>' << { version. aClass }!
 
-fixedClasses
-	"Answer a <sequencedReadableCollection> of the classes that are pre-registered in every STB file. These make it possible to binary file the classes STBClassProxy and String. Also these clases are almost always needed, so we can save space pre-registering them so that they don't need to be written into the filer."
-
-	"Note that pre-registering classes does not inflate the size of the binary file, it just pre-allocates a range of indices for fixed uses. Changing the order of these (or deleting registrations) will break existing binary files. Lastly a consequence of pre-registering these classes is that normal STB versioning will have no effect - the #stbVersion is only checked when a class is first read from the file. In order to version these classes it is necessary to increment the global STB version number."
-
-	^STBVersionPolicy.PredefinedClasses!
-
 formatName
 	"Private - Answer the format name."
 
@@ -155,11 +148,10 @@ version
 	^5!
 
 versionPolicyClass
-	^STBVersion0Policy! !
+	^self subclassResponsibility! !
 !Kernel.STBFiler class categoriesForMethods!
 errorInconsistentSTB:!exceptions!private! !
 errorUnrecognisedClass:version:!exceptions!private! !
-fixedClasses!constants!public! !
 formatName!constants!private! !
 initialize!constants!private! !
 on:!instance creation!public! !

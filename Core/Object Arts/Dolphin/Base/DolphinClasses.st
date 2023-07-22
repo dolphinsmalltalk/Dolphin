@@ -2853,7 +2853,7 @@ Core.Object
 Core.Object
 	subclass: #'Kernel.Package'
 	instanceVariableNames: 'name packagePathname comment classNames methodNames variableNames prerequisiteNames events scripts doNotReuse imageStripperBytes aboutBlock packageVersion manualPrerequisites timestamp untracedVariables changeIndex properties preDeclareClassesOnLoad'
-	classVariableNames: '_Uncommitted BinaryPacLoader ChangedIcon CheckTimestamps ClashSignal PreDeclareClassesOnLoad SourcePackageIcon UnsaveableSignal'
+	classVariableNames: '_Uncommitted ChangedIcon CheckTimestamps ClashSignal PreDeclareClassesOnLoad SourcePackageIcon UnsaveableSignal'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -2969,95 +2969,6 @@ Core.Object
 			'MethodOffset' -> 16r0.
 			'ReturnOffset' -> 16r2.
 			'SPOffset' -> 16r4
-		}!
-Core.Object
-	subclass: #'Kernel.STBClassConversion'
-	instanceVariableNames: 'version instSize prefix converterBlock filer'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Core.Object
-	subclass: #'Kernel.STBFiler'
-	instanceVariableNames: 'stream context policy'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-			'PredefinedClassOffset' -> 16r4.
-			'PrefixBytesMask' -> 16r30.
-			'PrefixCharacterMask' -> 16r4.
-			'PrefixClassMask' -> 16r6.
-			'PrefixDataMask' -> 16r2.
-			'PrefixInstSizeMask' -> 16rFF.
-			'PrefixInstSizeShift' -> 16r8.
-			'PrefixInstSizeUnshift' -> -16r8.
-			'PrefixLiteralMask' -> 16r8.
-			'PrefixLocatorLenShift' -> 16r10.
-			'PrefixLocatorLenUnshift' -> -16r10.
-			'PrefixNonZeroVersionMask' -> 16r40.
-			'PrefixRefShift' -> 16r4.
-			'PrefixRefUnshift' -> -16r4.
-			'PrefixSmallIntegerMask' -> 16r1.
-			'PrefixVariableMask' -> 16r20.
-			'STBFormatName' -> 'STB'.
-			'STLFilerVersion' -> 16r6.
-			'STLFormatName' -> 'STL'
-		}!
-Core.Object
-	subclass: #'Kernel.STBPrefix'
-	instanceVariableNames: 'uint32'
-	classVariableNames: 'DataPrefix ProxyPrefix'
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-			'BytesMask' -> 16r10.
-			'CharacterMask' -> 16r4.
-			'ClassPrefixMask' -> 16r4.
-			'DataPrefixMask' -> 16r2.
-			'IndexShift' -> -16r4.
-			'InstSizeMask' -> 16rFF.
-			'InstSizeShift' -> -16r8.
-			'LiteralPrefixMask' -> 16r8.
-			'LocatorLenShift' -> -16r10.
-			'MaxPredefinedRef' -> 16r18.
-			'NonZeroVersionMask' -> 16r40.
-			'ProxyMask' -> 16r8.
-			'SmallIntegerMask' -> 16r1.
-			'VariableMask' -> 16r20
-		}!
-Core.Object
-	subclass: #'Kernel.STBProxy'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Core.Object
-	subclass: #'Kernel.STBVersionPolicy'
-	instanceVariableNames: 'version'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: 'version signatureBytes'
-	classConstants: {
-			'FirstPredefinedClassRef' -> 16r5.
-			'LastPredefinedClassRef' -> 16r18.
-			'PredefinedClasses' -> {
-						AnsiString.
-						Array.
-						ByteArray.
-						LargeInteger.
-						STBClassProxy.
-						STBMetaclassProxy.
-						Symbol.
-						STBCollectionProxy.
-						OrderedCollection.
-						STBIdentityDictionaryProxy.
-						LookupTable.
-						IdentityDictionary.
-						Utf8String.
-						Utf16String
-					}
 		}!
 Core.Object
 	subclass: #'Core.Stream'
@@ -4060,13 +3971,6 @@ Core.Error
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Error
-	subclass: #'Kernel.STBError'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Core.Error
 	subclass: #'Kernel.SubclassResponsibilityError'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -4309,20 +4213,6 @@ Core.FileLocator
 Core.FileLocator
 	subclass: #'Kernel.RelativeFileLocator'
 	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Kernel.ClassLocator
-	subclass: #'Kernel.RestrictedClassLocator'
-	instanceVariableNames: 'classMap'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Kernel.ClassLocator
-	subclass: #'Kernel.ValidatingClassLocator'
-	instanceVariableNames: 'validationBlock'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -4739,125 +4629,6 @@ Kernel.AbstractChunkSourceFiler
 	classConstants: {}!
 Kernel.StackFrame
 	subclass: #'Kernel.BlockFrame'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Kernel.STBFiler
-	subclass: #'Kernel.AbstractSTBInFiler'
-	instanceVariableNames: 'readMap converters deferredActions flags'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: { 'UpgradingMask' -> 16r1 }!
-Kernel.STBFiler
-	subclass: #'Kernel.AbstractSTBOutFiler'
-	instanceVariableNames: 'writeMap globals globalNils proxyOverrides refOffset'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Kernel.AbstractSTBInFiler
-	subclass: #'Kernel.STBInFiler'
-	instanceVariableNames: 'classLocator'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Kernel.STBInFiler
-	subclass: #'Kernel.STBValidatingInFiler'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Kernel.AbstractSTBOutFiler
-	subclass: #'Kernel.STBOutFiler'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Kernel.STBProxy
-	subclass: #'Kernel.STBClassProxy'
-	instanceVariableNames: 'packageName locatorKey'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Kernel.STBProxy
-	subclass: #'Kernel.STBCollectionProxy'
-	instanceVariableNames: 'class array'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Kernel.STBProxy
-	subclass: #'Kernel.STBExternalResourceLibraryProxy'
-	instanceVariableNames: 'fileName _reserved1'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Kernel.STBProxy
-	subclass: #'Kernel.STBGlobalObjectProxy'
-	instanceVariableNames: 'symbol object'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Kernel.STBProxy
-	subclass: #'Kernel.STBSingletonProxy'
-	instanceVariableNames: 'class selector'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Kernel.STBClassProxy
-	subclass: #'Kernel.STBMetaclassProxy'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Kernel.STBCollectionProxy
-	subclass: #'Kernel.STBIdentityDictionaryProxy'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Kernel.STBCollectionProxy
-	subclass: #'Kernel.STBSortedCollectionProxy'
-	instanceVariableNames: 'sortAlgorithm'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Kernel.STBVersionPolicy
-	subclass: #'Kernel.STBVersion0Policy'
-	instanceVariableNames: 'headerBytes'
-	classVariableNames: 'Versions'
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: { 'Signature' -> #[33 83 84 66 32] }!
-Kernel.STBVersion0Policy
-	subclass: #'Kernel.STBVersion1Policy'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Kernel.STBVersion1Policy
-	subclass: #'Kernel.STBVersion3Policy'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Kernel.STBVersion3Policy
-	subclass: #'Kernel.STBVersion5Policy'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

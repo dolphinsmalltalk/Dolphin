@@ -45,14 +45,6 @@ printOn: aStream
 		space;
 		display: #invariant!
 
-stbSaveOn: anSTBOutFiler
-	"Output the receiver to anSTBOutFiler."
-
-	anSTBOutFiler
-		writeClassPrefix: Locale;
-		register: self.
-	anSTBOutFiler nextPut: #invariant!
-
 tag
 	"Answer the RFC4646 language aka tag for this locale."
 
@@ -64,7 +56,6 @@ isInstalled!public!testing! !
 name!accessing!public! !
 primary!printing!public! !
 printOn:!printing!public! !
-stbSaveOn:!binary filing!public! !
 tag!constants!public! !
 !
 
@@ -74,15 +65,9 @@ current
 	^Invariant!
 
 reset
-	Invariant := nil!
-
-stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
-	"Read an instance of the receiver from the binary filer, aSTBInFiler."
-
-	^self error: 'Unexpected InvariantLocale instance in STB stream'! !
+	Invariant := nil! !
 !OS.InvariantLocale class categoriesForMethods!
 current!instance creation!public! !
 reset!initializing!public! !
-stbReadFrom:format:size:!binary filing!public! !
 !
 

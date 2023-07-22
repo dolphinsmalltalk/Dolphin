@@ -1645,16 +1645,6 @@ smalltalkWriteStream: anInteger
 		locale: Locale smalltalk;
 		yourself!
 
-stbConvertFrom: aSTBClassConversion
-	"As of version 1, String is abstract and non-instantiable. We want to create AnsiString instances instead.
-	This will only be used for reading very old (version 0) STB data, as after version 0 there is special case
-	handling for Strings and they are automatically mapped to AnsiStrings."
-
-	^[:data | AnsiString fromByteArray: data]!
-
-stbVersion
-	^1!
-
 supportedCodePages
 	"Answer details of all code pages installed on the host system.
 		self supportedCodePages
@@ -1780,8 +1770,6 @@ newFixed:!instance creation!public! !
 readFrom:!instance creation!public! !
 smalltalkWriteStream!instance creation!public!streaming! !
 smalltalkWriteStream:!instance creation!public!streaming! !
-stbConvertFrom:!binary filing!public! !
-stbVersion!binary filing!constants!public! !
 supportedCodePages!enquiries!public! !
 systemCodePages:!enquiries!private! !
 tab!instance creation!public! !

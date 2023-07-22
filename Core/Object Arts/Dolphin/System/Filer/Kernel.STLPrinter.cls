@@ -31,7 +31,7 @@ printLiteralStoreArray: aLiteralStoreArray
 	^stream contents!
 
 printLiteralStoreArray: aLiteralStoreArray on: aPuttableStream
-	((STLVersionPolicy forVersion: (aLiteralStoreArray at: 2)) literalPrinterClass
+	((STLVersionPolicy classForVersion: (aLiteralStoreArray at: 2)) literalPrinterClass
 		on: aPuttableStream) printArray: aLiteralStoreArray! !
 !Kernel.STLPrinter class categoriesForMethods!
 printLiteralStoreArray:!instance creation!public! !

@@ -947,13 +947,6 @@ shouldCompileNewFields
 
 	^flags anyMask: CompileNewFieldsMask!
 
-stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
-	self ensureDefined.
-	^anSTBInFiler
-		readObjectOfClass: self
-		format: anSTBClassConversion
-		size: anInteger!
-
 structurePacker
 	"Answer the object which implements the structure packing algorithm
 	for use with the receiver.  The object must respond to the <structurePacker>
@@ -1047,7 +1040,6 @@ removeRedundantOffsetConstants!private!template definition! !
 resetTemplate!public!template definition! !
 setGuid:!accessing!private! !
 shouldCompileNewFields!private!testing! !
-stbReadFrom:format:size:!binary filing!public! !
 structurePacker!public!template definition! !
 template!accessing!private! !
 uninitializeBeforeRemove!class hierarchy-removing!public! !

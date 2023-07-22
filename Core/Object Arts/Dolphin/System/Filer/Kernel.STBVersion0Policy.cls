@@ -2,26 +2,24 @@
 
 Kernel.STBVersionPolicy
 	subclass: #'Kernel.STBVersion0Policy'
-	instanceVariableNames: 'headerBytes'
-	classVariableNames: 'Versions'
+	instanceVariableNames: ''
+	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: { 'Signature' -> #[33 83 84 66 32] }!
+	classConstants: {
+			'Signature' -> #[33 83 84 66 32].
+			'Versions' -> {
+						STBVersion0Policy.
+						STBVersion1Policy.
+						STBVersion1Policy.
+						STBVersion3Policy.
+						STBVersion3Policy.
+						STBVersion5Policy
+					}
+		}!
 Kernel.STBVersion0Policy guid: (Core.GUID fromString: '{645b2749-5dfa-4fc3-afd3-708ede25667b}')!
 Kernel.STBVersion0Policy comment: ''!
 !Kernel.STBVersion0Policy methodsFor!
-
-classLocatorStringFor: aClass
-	^(Smalltalk oldNames lookup: aClass)
-		ifNil: 
-			[| name |
-			name := aClass shortName.
-			(BindingReference isQualifiedName: name)
-				ifTrue: 
-					[STBError
-						signal: '<1p> does not have an unqualified short name for use in version <2d> object stream'
-								<< { aClass. self version }]
-				ifFalse: [name]]!
 
 lastPredefined
 	"Answer the index of the last pre-defined object. The indices of all objects actually present in the stream are offset from this."
@@ -36,47 +34,60 @@ predefinedClasses
 
 	^#()!
 
-putCharacter: aCharacter on: aPuttableStream
-	aPuttableStream
-		nextInt32Put: ((aCharacter codePoint bitShift: STBFiler.PrefixRefShift) bitOr: STBFiler.PrefixCharacterMask)!
+putCharacter: aCharacter
+	stream nextInt32Put: ((aCharacter codePoint bitShift: STBFiler.PrefixRefShift)
+				bitOr: STBFiler.PrefixCharacterMask)!
 
-putNilOn: aByteStream
-	aByteStream nextInt32Put: 0!
+putNil
+	stream nextInt32Put: 0!
 
-putSmallInteger: aSmallInteger on: aStream
-	aStream nextInt32Put: ((aSmallInteger bitShift: 1) bitOr: 1)!
+putSmallInteger: aSmallInteger
+	stream nextInt32Put: ((aSmallInteger bitShift: 1) bitOr: 1)!
 
-readClass: anSTBInFiler prefix: anInteger
-	| locatorString stream |
+readByteObject: aByteObject
+	stream
+		basicNext: aByteObject basicSize
+		into: aByteObject
+		startingAt: 1!
+
+readClassDataWithPrefix: anInteger
+	| versionBeingRead |
+	versionBeingRead := (anInteger allMask: STBFiler.PrefixNonZeroVersionMask)
+				ifTrue: [stream nextInt32]
+				ifFalse: [0].
+	^filer
+		registerClass: (self readClassWithPrefix: anInteger)
+		version: versionBeingRead
+		prefix: anInteger!
+
+readClassWithPrefix: anInteger
+	| locatorString |
 	locatorString := AnsiString new: (anInteger bitShift: STBFiler.PrefixLocatorLenUnshift).
-	stream := anSTBInFiler stream.
 	1 to: locatorString size do: [:i | locatorString basicAt: i put: stream next].
-	^anSTBInFiler classLocator locateClass: (BindingReference
+	^filer classLocator locateClass: (BindingReference
 				pathString: locatorString
 				private: false
 				scope: Smalltalk)!
 
-readClassData: anSTBFiler prefix: anInteger
-	| versionBeingRead |
-	versionBeingRead := (anInteger allMask: STBFiler.PrefixNonZeroVersionMask)
-				ifTrue: [anSTBFiler stream nextInt32]
-				ifFalse: [0].
-	^anSTBFiler
-		registerClass: (self readClass: anSTBFiler prefix: anInteger)
-		version: versionBeingRead
-		prefix: anInteger!
+readInteger
+	^stream nextInt32!
 
-readIntegerFrom: aByteStream
-	^aByteStream nextInt32!
+readObjectSize: aClass
+	^stream nextInt32!
 
-serializeObject: anObject with: anSTBOutFiler
-	anObject stbSaveOn: anSTBOutFiler!
+serializeObject: anObject
+	anObject stbSaveOn: filer!
 
-version: anInteger
-	super version: anInteger.
-	headerBytes := ('!!STB <1d> ' << anInteger) asByteArray!
+writeByteObject: aByteObject
+	| size |
+	size := aByteObject basicSize.
+	stream
+		nextInt32Put: size;
+		next: size
+			putAll: aByteObject
+			startingAt: 1!
 
-writeClass: aClass on: aByteStream
+writeClass: aClass
 	| locatorString prefixCode |
 	locatorString := self classLocatorStringFor: aClass.
 	prefixCode := STBFiler.PrefixClassMask
@@ -87,42 +98,45 @@ writeClass: aClass on: aByteStream
 			[prefixCode := prefixCode
 						bitOr: (aClass isBytes ifTrue: [STBFiler.PrefixBytesMask] ifFalse: [STBFiler.PrefixVariableMask])].
 	aClass stbVersion == 0
-		ifTrue: [aByteStream nextInt32Put: prefixCode]
+		ifTrue: [stream nextInt32Put: prefixCode]
 		ifFalse: 
-			[aByteStream
+			[stream
 				nextInt32Put: (prefixCode bitOr: STBFiler.PrefixNonZeroVersionMask);
 				nextInt32Put: aClass stbVersion].
-	aByteStream nextPutAll: locatorString asByteArray!
+	stream nextPutAll: locatorString asByteArray!
 
-writeClassReference: anInteger on: aStream
-	aStream
-		nextInt32Put: (STBFiler.PrefixDataMask bitOr: (anInteger bitShift: STBFiler.PrefixRefShift))!
+writeClassReference: anInteger
+	stream nextInt32Put: (STBFiler.PrefixDataMask bitOr: (anInteger bitShift: STBFiler.PrefixRefShift))!
 
-writeInteger: anInteger on: aByteStream
-	aByteStream nextInt32Put: anInteger!
+writeInteger: anInteger
+	stream nextInt32Put: anInteger!
 
-writeReference: anInteger on: aStream
-	aStream nextInt32Put: (anInteger bitShift: STBFiler.PrefixRefShift)!
+writeReference: anInteger
+	stream nextInt32Put: (anInteger bitShift: STBFiler.PrefixRefShift)!
 
-writeSignatureAndVersionOn: aByteStream
-	aByteStream nextPutAll: headerBytes! !
+writeSignatureAndVersion
+	stream
+		nextPutAll: Signature;
+		nextPutAll: version printString asByteArray;
+		nextPut: 16r20! !
 !Kernel.STBVersion0Policy categoriesForMethods!
-classLocatorStringFor:!public! !
 lastPredefined!constants!public! !
 predefinedClasses!constants!public! !
-putCharacter:on:!operations!public! !
-putNilOn:!operations!public! !
-putSmallInteger:on:!operations!public! !
-readClass:prefix:!operations!private! !
-readClassData:prefix:!helpers!public! !
-readIntegerFrom:!operations!public! !
-serializeObject:with:!operations!public! !
-version:!private! !
-writeClass:on:!operations!public! !
-writeClassReference:on:!operations!public! !
-writeInteger:on:!operations!public! !
-writeReference:on:!operations!public! !
-writeSignatureAndVersionOn:!public! !
+putCharacter:!operations!public! !
+putNil!operations!public! !
+putSmallInteger:!operations!public! !
+readByteObject:!operations!public! !
+readClassDataWithPrefix:!operations!public! !
+readClassWithPrefix:!operations!private! !
+readInteger!operations!public! !
+readObjectSize:!operations!public! !
+serializeObject:!operations!public! !
+writeByteObject:!operations!public! !
+writeClass:!operations!public! !
+writeClassReference:!operations!public! !
+writeInteger:!operations!public! !
+writeReference:!operations!public! !
+writeSignatureAndVersion!operations!public! !
 !
 
 !Kernel.STBVersion0Policy class methodsFor!
@@ -139,13 +153,13 @@ initialize
 	self initialize
 	"
 
-	Versions := {
-				STBVersion0Policy new version: 0.
-				STBVersion1Policy new version: 1.
-				STBVersion1Policy new version: 2.
-				STBVersion3Policy new version: 3.
-				STBVersion3Policy new version: 4.
-				STBVersion5Policy new version: 5
+	self addClassConstant: 'Versions' value: {
+				STBVersion0Policy.
+				STBVersion1Policy.
+				STBVersion1Policy.
+				STBVersion3Policy.
+				STBVersion3Policy.
+				STBVersion5Policy
 			}!
 
 peekForSignatureIn: aReadStream
@@ -156,8 +170,9 @@ peekForSignatureIn: aReadStream
 	^(aReadStream nextAvailable: ##(Signature size)) asByteArray = Signature
 		or: [aReadStream position: position. false]!
 
-readVersionFrom: aByteStream
-	| byte ver |
+readVersionFrom: anSTBFiler
+	| byte ver aByteStream |
+	aByteStream := anSTBFiler stream.
 	byte := aByteStream nextAvailable.
 	byte isNil ifTrue: [^nil].
 	ver := byte - ##($0 asciiValue).
@@ -167,7 +182,7 @@ readVersionFrom: aByteStream
 	byte notNil and: [byte >= ##($0 asciiValue) and: [byte <= ##($9 asciiValue)]]]
 			whileTrue: [ver := ver * 10 + (byte - ##($0 asciiValue))].
 	byte == ##(Character space asciiValue) ifFalse: [^nil].
-	^self forVersion: ver!
+	^self filer: anSTBFiler version: ver!
 
 versions
 	^Versions! !

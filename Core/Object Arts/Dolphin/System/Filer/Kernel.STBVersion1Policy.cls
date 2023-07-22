@@ -29,7 +29,22 @@ predefinedClasses
 	checked when a class is first read from the file. In order to version these classes it is
 	necessary to increment the global STB version number."
 
-	^PredefinedClasses! !
+	^{
+		AnsiString.
+		Array.
+		ByteArray.
+		LargeInteger.
+		STBClassProxy.
+		STBMetaclassProxy.
+		Symbol.
+		STBCollectionProxy.
+		OrderedCollection.
+		STBIdentityDictionaryProxy.
+		LookupTable.
+		IdentityDictionary.
+		Utf8String.
+		Utf16String
+	}! !
 !Kernel.STBVersion1Policy categoriesForMethods!
 lastPredefined!constants!public! !
 predefinedClasses!constants!public! !

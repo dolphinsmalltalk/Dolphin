@@ -18,28 +18,17 @@ Instance Variables:
 
 '!
 !Kernel.STBOutFiler categoriesForClass!System-Binary storage! !
-!Kernel.STBOutFiler methodsFor!
-
-writeByteObject: aByteObject
-	| size |
-	self writePreambleFor: aByteObject.
-	size := aByteObject basicSize.
-	policy writeInteger: size on: stream.
-	stream
-		next: size
-		putAll: aByteObject
-		startingAt: 1! !
-!Kernel.STBOutFiler categoriesForMethods!
-writeByteObject:!binary filing!public! !
-!
-
 !Kernel.STBOutFiler class methodsFor!
 
 formatName
 	"Private - Answer the format name."
 
-	^STLFormatName! !
+	^STLFormatName!
+
+versionPolicyClass
+	^STBVersion0Policy! !
 !Kernel.STBOutFiler class categoriesForMethods!
 formatName!constants!private! !
+versionPolicyClass!constants!private! !
 !
 

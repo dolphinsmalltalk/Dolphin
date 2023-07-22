@@ -76,6 +76,8 @@ contents
 		add: #('Core\Object Arts\Dolphin\System\Win32\CommCtrl\Common Controls Library.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\System\Win32\MessageBox\Dolphin Message Box.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\Base\Dolphin Source Fileout.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\System\Filer\Dolphin STB Filer.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\System\Filer\Dolphin Binary Filer.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\System\STON\Dolphin STON-Core.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\Base\Dolphin Source Package Fileout.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\System\SemVer\Dolphin SemVer.pax' #plain #imageBased);

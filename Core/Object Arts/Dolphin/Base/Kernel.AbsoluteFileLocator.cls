@@ -42,18 +42,12 @@ relativePathTo: aFilename
 	specified <readableString> path, which the receiver can map back to a full
 	path via its #localFileSpecFor: method. In this case we need an absolute path."
 
-	^File fullPathOf: aFilename!
-
-stbSaveOn: anSTBOutFiler 
-	"Save out a binary representation of the receiver to anSTBOutFiler."
-
-	anSTBOutFiler writePreambleFor: self! !
+	^File fullPathOf: aFilename! !
 !Kernel.AbsoluteFileLocator categoriesForMethods!
 isSelfEvaluating!public!testing! !
 localFileSpecFor:!accessing!public! !
 printOn:!printing!public! !
 relativePathTo:!accessing!public! !
-stbSaveOn:!binary filing!public! !
 !
 
 !Kernel.AbsoluteFileLocator class methodsFor!
@@ -70,14 +64,6 @@ onPreStripImage
 
 	self uninitialize!
 
-stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
-	"Read an instance of the receiver from the binary filer, aSTBInFiler."
-
-	| singleton |
-	singleton := self current.
-	anSTBInFiler register: singleton.
-	^singleton!
-
 uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
@@ -85,7 +71,6 @@ uninitialize
 !Kernel.AbsoluteFileLocator class categoriesForMethods!
 current!accessing!public! !
 onPreStripImage!class hierarchy-removing!private! !
-stbReadFrom:format:size:!binary filing!public! !
 uninitialize!class hierarchy-removing!private! !
 !
 

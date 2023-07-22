@@ -274,24 +274,6 @@ selectorFromName: aString
 				ifFalse: [('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789' includes: each) ifTrue: [selector nextPut: each]]].
 	^selector contents asSymbol!
 
-stbConvertFrom: anSTBClassFormat
-	"Convert from previous version resource. 
-	Version Changes:
-		1) removes stores a selector as the resource name rather than a string name (this change was made an age ago, and not properly converted)
-	"
-
-	anSTBClassFormat version == 0
-		ifTrue: 
-			[^
-			[:data |
-			data becomeA: self.
-			data selector isSymbol ifFalse: [data name: data selector].
-			data]].
-	^super stbConvertFrom: anSTBClassFormat!
-
-stbVersion
-	^1!
-
 value: a value: b
 	"Private - The receiver acts as the default sort block for its instances."
 
@@ -315,8 +297,6 @@ newClass:selector:!instance creation!private! !
 onPreStripImage!class hierarchy-removing!private! !
 removeResource:!public!removing! !
 selectorFromName:!helpers!public! !
-stbConvertFrom:!binary filing!private! !
-stbVersion!binary filing!public! !
 value:value:!helpers!private! !
 viewResourceCategoryName!constants!private! !
 !

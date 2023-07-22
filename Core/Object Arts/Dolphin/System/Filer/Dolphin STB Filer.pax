@@ -1,0 +1,801 @@
+﻿| package |
+package := Package name: 'Dolphin STB Filer'.
+package paxVersion: 2.1;
+	basicComment: 'Dolphin 🐬 Smalltalk STB Filer Common Core.
+Copyright © Object Arts Ltd. 1997-2023'.
+
+
+package setClassNames: #(
+	#{Kernel.AbstractSTBInFiler}
+	#{Kernel.AbstractSTBOutFiler}
+	#{Kernel.STBClassConversion}
+	#{Kernel.STBCollectionProxy}
+	#{Kernel.STBError}
+	#{Kernel.STBExternalResourceLibraryProxy}
+	#{Kernel.STBFiler}
+	#{Kernel.STBGlobalObjectProxy}
+	#{Kernel.STBIdentityDictionaryProxy}
+	#{Kernel.STBProxy}
+	#{Kernel.STBSingletonProxy}
+	#{Kernel.STBSortedCollectionProxy}
+	#{Kernel.STBVersionPolicy}
+).
+
+package setMethodNames: #(
+	#(#{Core.Class} #stbConvertFrom:)
+	#(#{Core.Class} #stbVersion)
+	#(#{Core.ClassDescription} #stbReadFrom:format:)
+	#(#{Core.DateAndTime class} #stbConvertFrom:)
+	#(#{Core.DateAndTime class} #stbVersion)
+	#(#{Core.Dictionary} #stbSaveOn:)
+	#(#{Core.Locale} #stbSaveOn:)
+	#(#{Core.Locale class} #stbConvertFrom:)
+	#(#{Core.Locale class} #stbVersion)
+	#(#{Core.LookupTable} #stbSaveOn:)
+	#(#{Core.Model} #stbSaveOn:)
+	#(#{Core.Model class} #stbConvertFrom:)
+	#(#{Core.Model class} #stbVersion)
+	#(#{Core.Object} #stbSaveOn:)
+	#(#{Core.OrderedCollection} #stbSaveOn:)
+	#(#{Core.Process} #stbSaveOn:)
+	#(#{Core.Set} #stbSaveOn:)
+	#(#{Core.SharedLookupTable} #stbSaveOn:)
+	#(#{Core.SharedSet} #stbSaveOn:)
+	#(#{Core.SortedCollection} #stbSaveOn:)
+	#(#{Core.String class} #stbConvertFrom:)
+	#(#{Core.String class} #stbVersion)
+	#(#{Core.Utf16String class} #stbConvertFrom:)
+	#(#{External.Address} #stbSaveOn:)
+	#(#{External.DynamicLinkLibrary} #stbSaveOn:)
+	#(#{External.ExternalMethod} #stbSaveOn:)
+	#(#{External.Handle} #stbSaveOn:)
+	#(#{External.ResourceLibrary} #stbSaveOn:)
+	#(#{External.ResourceLibrary class} #stbConvertFrom:)
+	#(#{External.ResourceLibrary class} #stbVersion)
+	#(#{External.StructureArray class} #stbConvertFrom:)
+	#(#{External.StructureArray class} #stbVersion)
+	#(#{Kernel.AbsoluteFileLocator} #stbSaveOn:)
+	#(#{Kernel.BindingReference class} #stbConvertFrom:)
+	#(#{Kernel.BindingReference class} #stbVersion)
+	#(#{Kernel.BlockClosure class} #stbVersion)
+	#(#{Kernel.ClassLocator class} #stbConvertFrom:)
+	#(#{Kernel.ClassLocator class} #stbVersion)
+	#(#{Kernel.FullBindingReference} #stbSaveOn:)
+	#(#{Kernel.ImageRelativeFileLocator} #stbSaveOn:)
+	#(#{Kernel.InstallRelativeFileLocator} #stbSaveOn:)
+	#(#{Kernel.MetaBindingReference class} #stbConvertFrom:)
+	#(#{Kernel.Package} #stbSaveOn:)
+	#(#{Kernel.SingletonSearchPolicy} #stbSaveOn:)
+	#(#{Kernel.SmalltalkLocale} #stbSaveOn:)
+	#(#{Kernel.VariableBinding class} #stbConvertFrom:)
+	#(#{Kernel.VariableBinding class} #stbVersion)
+	#(#{OS.InvariantLocale} #stbSaveOn:)
+	#(#{UI.ResourceIdentifier class} #stbConvertFrom:)
+	#(#{UI.ResourceIdentifier class} #stbVersion)
+).
+
+package setPrerequisites: #(
+	'..\..\Base\Dolphin'
+).
+
+package!
+
+"Class Definitions"!
+
+Core.Object
+	subclass: #'Kernel.STBClassConversion'
+	instanceVariableNames: 'version instSize prefix converterBlock filer'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Object
+	subclass: #'Kernel.STBFiler'
+	instanceVariableNames: 'stream context policy'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'PredefinedClassOffset' -> 16r4.
+			'PrefixBytesMask' -> 16r30.
+			'PrefixCharacterMask' -> 16r4.
+			'PrefixClassMask' -> 16r6.
+			'PrefixDataMask' -> 16r2.
+			'PrefixInstSizeMask' -> 16rFF.
+			'PrefixInstSizeShift' -> 16r8.
+			'PrefixInstSizeUnshift' -> -16r8.
+			'PrefixLiteralMask' -> 16r8.
+			'PrefixLocatorLenShift' -> 16r10.
+			'PrefixLocatorLenUnshift' -> -16r10.
+			'PrefixNonZeroVersionMask' -> 16r40.
+			'PrefixRefShift' -> 16r4.
+			'PrefixRefUnshift' -> -16r4.
+			'PrefixSmallIntegerMask' -> 16r1.
+			'PrefixVariableMask' -> 16r20.
+			'STBFormatName' -> 'STB'.
+			'STBSignature' -> #[33 83 84 66 32].
+			'STLFilerVersion' -> 16r6.
+			'STLFormatName' -> 'STL'
+		}!
+Core.Object
+	subclass: #'Kernel.STBProxy'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Object
+	subclass: #'Kernel.STBVersionPolicy'
+	instanceVariableNames: 'filer stream version'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: 'version signatureBytes'
+	classConstants: { 'LastPredefinedClassRef' -> 16r18 }!
+Core.Error
+	subclass: #'Kernel.STBError'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.STBFiler
+	subclass: #'Kernel.AbstractSTBInFiler'
+	instanceVariableNames: 'readMap converters deferredActions flags'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: { 'UpgradingMask' -> 16r1 }!
+Kernel.STBFiler
+	subclass: #'Kernel.AbstractSTBOutFiler'
+	instanceVariableNames: 'writeMap globals globalNils proxyOverrides refOffset'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.STBProxy
+	subclass: #'Kernel.STBCollectionProxy'
+	instanceVariableNames: 'class array'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.STBProxy
+	subclass: #'Kernel.STBExternalResourceLibraryProxy'
+	instanceVariableNames: 'fileName _reserved1'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.STBProxy
+	subclass: #'Kernel.STBGlobalObjectProxy'
+	instanceVariableNames: 'symbol object'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.STBProxy
+	subclass: #'Kernel.STBSingletonProxy'
+	instanceVariableNames: 'class selector'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.STBCollectionProxy
+	subclass: #'Kernel.STBIdentityDictionaryProxy'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.STBCollectionProxy
+	subclass: #'Kernel.STBSortedCollectionProxy'
+	instanceVariableNames: 'sortAlgorithm'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+"Loose Methods"!
+
+!Core.Class methodsFor!
+
+stbConvertFrom: anSTBClassFormat
+	"Private - Answer a block that answers a new instance initialised from the block's single
+	parameter, an Array or ByteArray representing the old object whose format is
+	described by anSTBClassFormat.
+
+	By default, classes only know about the current format."
+
+	^nil!
+
+stbVersion
+	"If instances of a class are saved out to an STBOutFiler and must
+	remain loadable even if the class format changes then we need to be able
+	to distinguish between the different formats. A new binary format is
+	created whenever the number or order of instance variables in a class
+	are changed. All classes initially answer a version number of zero.
+
+	This identification of a changed format is achieved by overriding this
+	class method in the changed subclass to answer a new SmallInteger.
+	Also, in order to 'upgrade' an old instance to a new one, you must
+	provide or amend the class method #stbConvertFrom:."
+
+	^0! !
+!Core.Class categoriesForMethods!
+stbConvertFrom:!binary filing!private! !
+stbVersion!binary filing!public! !
+!
+
+!Core.ClassDescription methodsFor!
+
+stbReadFrom: anSTBInFiler format: anSTBClassConversion
+	"Read an instance of the receiver from the binary filer, aSTBInFiler.
+	Classes in D8 now override the new stbReadFrom:format:size: method, in order to avoid dealing with the complexities of the object size value. In older STB streams there is always a size. From STB v3, the size is only present for indexable classes (i.e. indexable pointer objects, variable byte objects). The filer still sends this message to the class being read for backwards compatibility."
+
+	^self
+		stbReadFrom: anSTBInFiler
+		format: anSTBClassConversion
+		size: (anSTBInFiler readSizeOf: self)! !
+!Core.ClassDescription categoriesForMethods!
+stbReadFrom:format:!binary filing!public! !
+!
+
+!Core.DateAndTime class methodsFor!
+
+stbConvertFrom: anSTBClassFormat
+	"Version 1 changes the internal representation to a RataDie day number and seconds in the day."
+
+	anSTBClassFormat version == 0
+		ifTrue: 
+			[^
+			[:data |
+			| t |
+			t := data at: 2.
+			t class == Duration
+				ifTrue: 
+					["Original code satisfies one set of tests:
+						1: RataDie seconds
+						2: UTC offset as a Duration"
+					t := t asSeconds.
+					self utcSeconds: (data at: 1) - ##(SmalltalkEpochRD * 24 * 60 * 60) - t offset: t]
+				ifFalse: 
+					["DateAndTime was adopted into core based on Ian Bartholomew's original by commit a2d0d522231454fd0c0c39272d152a730e9633b3 on 2019-04-16. However the internal format was changed from the original RataDie seconds and UTC offset Duration to:
+						1: RataDie Days (i.e. days since Sunday, December 31, 0000), rather than seconds. 
+						2: Seconds since midnight (likely to be a Fraction)
+						3. UTC offset seconds (integer)
+					The original representation was simpler, but had performance issues due to the large integer fraction required to represent the number of seconds since the start of year 1. The seconds past midnight in the new format is also likely to be a fraction, but a SmallInteger one. The commit did not include an STB version change or conversion from the original format. This oversight was corrected a week or so later, on 2019-04-25, with commit 6fc834a2fcbae440ef94fa9c4df18efc44b199f6. This included bumping the stbVersion to 1, but in the meantime some instances of the new format had apparently escaped into the wild and been STB'd. This means that some version 0 format STB instances are really in the version 1 format already, and so don't require any conversion at all."
+					data becomeA: DateAndTime]]].
+	^super stbConvertFrom: anSTBClassFormat!
+
+stbVersion
+	"Answer the current binary filer version number for instances of the receiver."
+
+	^1! !
+!Core.DateAndTime class categoriesForMethods!
+stbConvertFrom:!binary filing!public! !
+stbVersion!binary filing!development!public! !
+!
+
+!Core.Dictionary methodsFor!
+
+stbSaveOn: anSTBOutFiler
+	"Save out a binary representation of the receiver to anSTBOutFiler."
+
+	anSTBOutFiler saveObject: self as: (STBCollectionProxy class: self class array: self associations)! !
+!Core.Dictionary categoriesForMethods!
+stbSaveOn:!binary filing!public! !
+!
+
+!Core.Locale methodsFor!
+
+stbSaveOn: anSTBOutFiler
+	"Output the receiver to anSTBOutFiler."
+
+	| id |
+	anSTBOutFiler
+		writeClassPrefix: Locale;
+		register: self.
+	self = UserDefault
+		ifTrue: 
+			[anSTBOutFiler nextPut: #userDefault.
+			^self].
+	id := self basicLcid.
+	id = OS.Kernel32 getSystemDefaultLCID
+		ifTrue: 
+			[anSTBOutFiler nextPut: #systemDefault.
+			^self].
+	id = OS.Kernel32 getThreadUILanguage
+		ifTrue: 
+			[anSTBOutFiler nextPut: #uiDefault.
+			^self].
+	anSTBOutFiler nextPut: id! !
+!Core.Locale categoriesForMethods!
+stbSaveOn:!binary filing!public! !
+!
+
+!Core.Locale class methodsFor!
+
+stbConvertFrom: anSTBClassFormat
+	"Convert from previous version resource. 
+	In version 1 the STB format was changed to store just the locale identifier and to preserve logical locales such as userDefault.
+	We don't use the STB conversion mechanism to perform the upgrade, but we are required to supply a conversion block anyway."
+
+	^[:data | data error: 'Not used']!
+
+stbVersion
+	^1! !
+!Core.Locale class categoriesForMethods!
+stbConvertFrom:!public! !
+stbVersion!public! !
+!
+
+!Core.LookupTable methodsFor!
+
+stbSaveOn: anSTBOutFiler
+	"Save out a binary representation of the receiver to anSTBOutFiler."
+
+	anSTBOutFiler saveObject: self as: (STBIdentityDictionaryProxy forCollection: self)! !
+!Core.LookupTable categoriesForMethods!
+stbSaveOn:!binary filing!public! !
+!
+
+!Core.Model methodsFor!
+
+stbSaveOn: anSTBOutFiler
+	"Output the receiver to anSTBOutFiler. We must ensure that the local events collection
+	is NOT saved to the filer"
+
+	anSTBOutFiler override: events with: nil.
+	super stbSaveOn: anSTBOutFiler.! !
+!Core.Model categoriesForMethods!
+stbSaveOn:!binary filing!public! !
+!
+
+!Core.Model class methodsFor!
+
+stbConvertFrom: anSTBClassFormat
+	"Convert from previous version resource. 
+	Version Changes:
+		1: Added 'events' instance variable to Model."
+
+	^
+	[:data |
+	| instVars |
+	instVars := self stbConvert: data fromVersion: anSTBClassFormat version.
+	"Allow for the fact that the conversions may be assuming that appending inst vars with a default value of nil does not require conversion"
+	(instVars resize: self instSize) becomeA: self]!
+
+stbVersion
+	"Answer the current binary filer version number for instances of the receiver."
+
+	^1! !
+!Core.Model class categoriesForMethods!
+stbConvertFrom:!binary filing!public! !
+stbVersion!binary filing!public! !
+!
+
+!Core.Object methodsFor!
+
+stbSaveOn: anSTBOutFiler
+	"Save out a binary representation of the receiver to anSTBOutFiler.
+	The options are:
+	1.	to let the filer output the receiver as normal using
+			STBOutFiler>>#saveObject: self.
+				or
+			STBOutFiler>>#saveObject: self as: 0.
+
+	2.	to output nil instead of the receiver using
+			STBOutFiler>>#saveObject: self as: nil.
+
+	3.	to output a proxy in place of the receiver using
+			STBOutFiler>>#saveObject: self as: anSTBProxy.
+		The proxy will be sent a #fixup:at: message at load time (see STB classes) and should then
+		answer the object it represents.
+
+	By default, objects are happy to be saved and loaded just as they are (option 1)."
+
+	anSTBOutFiler saveObject: self! !
+!Core.Object categoriesForMethods!
+stbSaveOn:!binary filing!public! !
+!
+
+!Core.OrderedCollection methodsFor!
+
+stbSaveOn: anSTBOutFiler
+	"Save out a binary representation of the receiver to anSTBOutFiler."
+
+	anSTBOutFiler saveObject: self as: (STBCollectionProxy forCollection: self)! !
+!Core.OrderedCollection categoriesForMethods!
+stbSaveOn:!binary filing!public! !
+!
+
+!Core.Process methodsFor!
+
+stbSaveOn: anSTBOutFiler
+	"Save out a binary representation of the receiver to anSTBOutFiler. 
+	Processes cannot be saved and restored correctly so output them as 
+	nil by default"
+
+	anSTBOutFiler saveObject: self as: nil.! !
+!Core.Process categoriesForMethods!
+stbSaveOn:!binary filing!public! !
+!
+
+!Core.Set methodsFor!
+
+stbSaveOn: anSTBOutFiler
+	"Save out a binary representation of the receiver to anSTBOutFiler."
+
+	anSTBOutFiler saveObject: self as: (STBCollectionProxy forCollection: self)! !
+!Core.Set categoriesForMethods!
+stbSaveOn:!binary filing!public! !
+!
+
+!Core.SharedLookupTable methodsFor!
+
+stbSaveOn: anSTBOutFiler
+	"Save out a binary representation of the receiver to anSTBOutFiler."
+
+	mutex critical: [super stbSaveOn: anSTBOutFiler]! !
+!Core.SharedLookupTable categoriesForMethods!
+stbSaveOn:!binary filing!public! !
+!
+
+!Core.SharedSet methodsFor!
+
+stbSaveOn: anSTBOutFiler
+	"Save out a binary representation of the receiver to anSTBOutFiler."
+
+	mutex critical: [super stbSaveOn: anSTBOutFiler]! !
+!Core.SharedSet categoriesForMethods!
+stbSaveOn:!binary filing!public! !
+!
+
+!Core.SortedCollection methodsFor!
+
+stbSaveOn: anSTBOutFiler
+	"Save out a binary representation of the receiver to anSTBOutFiler."
+
+	algorithm ~~ self class defaultSortAlgorithm
+		ifTrue: [^anSTBOutFiler saveObject: self as: (STBSortedCollectionProxy forCollection: self)].
+	super stbSaveOn: anSTBOutFiler! !
+!Core.SortedCollection categoriesForMethods!
+stbSaveOn:!binary filing!public! !
+!
+
+!Core.String class methodsFor!
+
+stbConvertFrom: aSTBClassConversion
+	"As of version 1, String is abstract and non-instantiable. We want to create AnsiString instances instead.
+	This will only be used for reading very old (version 0) STB data, as after version 0 there is special case
+	handling for Strings and they are automatically mapped to AnsiStrings."
+
+	^[:data | AnsiString fromByteArray: data]!
+
+stbVersion
+	^1! !
+!Core.String class categoriesForMethods!
+stbConvertFrom:!binary filing!public! !
+stbVersion!binary filing!constants!public! !
+!
+
+!Core.Utf16String class methodsFor!
+
+stbConvertFrom: aSTBClassConversion
+	"version 0 would have been a UnicodeString instance, which will translate directly to a Utf16String."
+
+	^[:data | self fromByteArray: data]! !
+!Core.Utf16String class categoriesForMethods!
+stbConvertFrom:!binary filing!public! !
+!
+
+!External.Address methodsFor!
+
+stbSaveOn: anSTBOutFiler
+	"Save out a binary representation of the receiver to anSTBOutFiler.
+	Output nil in place of the receiver as the future validity of an external address is uncertain."
+
+	anSTBOutFiler saveObject: self as: nil! !
+!External.Address categoriesForMethods!
+stbSaveOn:!binary filing!public! !
+!
+
+!External.DynamicLinkLibrary methodsFor!
+
+stbSaveOn: anSTBOutFiler 
+	"Save out a binary representation of the receiver to anSTBOutFiler."
+
+	anSTBOutFiler writePreambleFor: self! !
+!External.DynamicLinkLibrary categoriesForMethods!
+stbSaveOn:!binary filing!public! !
+!
+
+!External.ExternalMethod methodsFor!
+
+stbSaveOn: anSTBOutFiler
+	"Output the receiver to anSTBOutFiler. We must ensure that the cached proc. address is cleared."
+
+	| descriptor |
+	descriptor := self descriptorLiteral.
+	anSTBOutFiler override: descriptor with: (descriptor copy replaceFrom: 1 to: 4 withObject: 0; yourself).
+	super stbSaveOn: anSTBOutFiler.
+
+! !
+!External.ExternalMethod categoriesForMethods!
+stbSaveOn:!binary filing!public! !
+!
+
+!External.Handle methodsFor!
+
+stbSaveOn: anSTBOutFiler
+	"Save out a binary representation of the receiver to anSTBOutFiler.
+	Output nil in place of the receiver as the future validity of an external handle is uncertain."
+
+	anSTBOutFiler saveObject: self as: nil! !
+!External.Handle categoriesForMethods!
+stbSaveOn:!binary filing!public! !
+!
+
+!External.ResourceLibrary methodsFor!
+
+stbSaveOn: anSTBOutFiler
+	"Save out a binary representation of the receiver to anSTBOutFiler.
+	Use a special proxy in order to share a common instance on reload."
+
+	anSTBOutFiler saveObject: self as: (STBExternalResourceLibraryProxy forLibrary: self)! !
+!External.ResourceLibrary categoriesForMethods!
+stbSaveOn:!binary filing!instance creation!public! !
+!
+
+!External.ResourceLibrary class methodsFor!
+
+stbConvertFrom: anSTBClassFormat
+	"Convert from version 1 ExternalResourceLibrary (adds loadFlags inst. var)"
+
+	"Shouldn't be needed, as resource libraries are proxied?"
+
+	anSTBClassFormat version == 0 ifTrue: [^[:data | { data at: 1. 0 } becomeA: self]].
+	^super stbConvertFrom: anSTBClassFormat!
+
+stbVersion
+	"Answer the current binary filer version number for instances of the receiver."
+
+	^1! !
+!External.ResourceLibrary class categoriesForMethods!
+stbConvertFrom:!binary filing!public! !
+stbVersion!binary filing!public! !
+!
+
+!External.StructureArray class methodsFor!
+
+stbConvertFrom: anSTBClassFormat
+	"Convert from earlier version models.
+		1: Added 'owner' instance variable, default to nil.
+
+		Version 0: bytes length elementClass
+		Version 1: bytes length elementClass owner elementSpacing"
+
+	anSTBClassFormat version == 0
+		ifTrue: 
+			[^
+			[:data |
+			(data resize: 5) becomeA: StructureArray.
+			"Ensure the elementSpacing is set correctly in case importing data from 2.1"
+			data elementClass: data elementClass.
+			data]].
+	^super stbConvertFrom: anSTBClassFormat!
+
+stbVersion
+	"Answer the current binary filer version number for instances of the receiver."
+
+	^1! !
+!External.StructureArray class categoriesForMethods!
+stbConvertFrom:!binary filing!public! !
+stbVersion!binary filing!public! !
+!
+
+!Kernel.AbsoluteFileLocator methodsFor!
+
+stbSaveOn: anSTBOutFiler 
+	"Save out a binary representation of the receiver to anSTBOutFiler."
+
+	anSTBOutFiler writePreambleFor: self! !
+!Kernel.AbsoluteFileLocator categoriesForMethods!
+stbSaveOn:!binary filing!public! !
+!
+
+!Kernel.BindingReference class methodsFor!
+
+stbConvertFrom: anSTBClassFormat
+	"Convert from version 0:
+		- RelativeBindingReference introduced - context pushed down
+		- flags replaced with private inst var"
+
+	^anSTBClassFormat version < 1
+		ifTrue: [[:data | self stbConvertFromVersion0: data]]
+		ifFalse: [[:data | self stbConvertFromVersion1: data]]!
+
+stbVersion
+	^2! !
+!Kernel.BindingReference class categoriesForMethods!
+stbConvertFrom:!binary filing!public! !
+stbVersion!binary filing!public! !
+!
+
+!Kernel.BlockClosure class methodsFor!
+
+stbVersion
+	"Answer the current binary filer version number for instances of the receiver.
+		0 	- Original Smalltalk-80 style blocks (pre Dolphin 6.0)
+		1..2	- Interim formats used during development of proper closures.
+		3	- Dolphin 6.0 closures.
+	"
+
+	^3! !
+!Kernel.BlockClosure class categoriesForMethods!
+stbVersion!binary filing!public! !
+!
+
+!Kernel.ClassLocator class methodsFor!
+
+stbConvertFrom: anSTBClassFormat
+	"Convert from earlier version models.
+	1: Added 'packageName' instance variable."
+
+	^
+	[:data |
+	self basicNew
+		codeBase: (data at: 1);
+		key: (data at: 2);
+		yourself]!
+
+stbVersion
+	"Answer the current binary filer version number for instances of the receiver."
+
+	^1! !
+!Kernel.ClassLocator class categoriesForMethods!
+stbConvertFrom:!binary filing!public! !
+stbVersion!binary filing!public! !
+!
+
+!Kernel.FullBindingReference methodsFor!
+
+stbSaveOn: anSTBOutFiler
+	"Implmentation Note: We don't want to save out any cached binding. Easiest is to flush it - it isn't that expensive to re-cache when needed"
+
+	self
+		setBinding: nil;
+		setGeneration: nil.
+	^super stbSaveOn: anSTBOutFiler! !
+!Kernel.FullBindingReference categoriesForMethods!
+stbSaveOn:!binary filing!public! !
+!
+
+!Kernel.ImageRelativeFileLocator methodsFor!
+
+stbSaveOn: anSTBOutFiler 
+	"Save out a binary representation of the receiver to anSTBOutFiler."
+
+	anSTBOutFiler writePreambleFor: self! !
+!Kernel.ImageRelativeFileLocator categoriesForMethods!
+stbSaveOn:!binary filing!public! !
+!
+
+!Kernel.InstallRelativeFileLocator methodsFor!
+
+stbSaveOn: anSTBOutFiler 
+	"Save out a binary representation of the receiver to anSTBOutFiler."
+
+	anSTBOutFiler writePreambleFor: self! !
+!Kernel.InstallRelativeFileLocator categoriesForMethods!
+stbSaveOn:!binary filing!public! !
+!
+
+!Kernel.MetaBindingReference class methodsFor!
+
+stbConvertFrom: anSTBClassFormat
+	"Version 0: Did not exist
+	Version 1: Introduced
+	Version 2: No change"
+
+	^[:data | self instance: (data at: 1)]! !
+!Kernel.MetaBindingReference class categoriesForMethods!
+stbConvertFrom:!binary filing!public! !
+!
+
+!Kernel.Package methodsFor!
+
+stbSaveOn: anSTBOutFiler
+	"Output the receiver to anSTBOutFiler. We must ensure that the local events collection
+	is NOT saved to the filer"
+
+	anSTBOutFiler override: events with: nil.
+	super stbSaveOn: anSTBOutFiler.! !
+!Kernel.Package categoriesForMethods!
+stbSaveOn:!binary filing!public! !
+!
+
+!Kernel.SingletonSearchPolicy methodsFor!
+
+stbSaveOn: anSTBOutFiler 
+	"Save out a binary representation of the receiver to anSTBOutFiler."
+
+	anSTBOutFiler writePreambleFor: self! !
+!Kernel.SingletonSearchPolicy categoriesForMethods!
+stbSaveOn:!binary filing!public! !
+!
+
+!Kernel.SmalltalkLocale methodsFor!
+
+stbSaveOn: anSTBOutFiler
+	"Output the receiver to anSTBOutFiler."
+
+	anSTBOutFiler
+		writeClassPrefix: Locale;
+		register: self.
+	anSTBOutFiler nextPut: #smalltalk! !
+!Kernel.SmalltalkLocale categoriesForMethods!
+stbSaveOn:!binary filing!public! !
+!
+
+!Kernel.VariableBinding class methodsFor!
+
+stbConvertFrom: anSTBClassFormat
+	"Convert from previous version resource. 
+	Version Changes:
+		1) Adds 'environment' (early D8)
+		2) Adds 'flags'
+	"
+
+	| ver |
+	ver := anSTBClassFormat version.
+	ver == 1 ifTrue: [^[:data | (self stbConvertFromVersion1: data) becomeA: self]].
+	ver == 0 ifTrue: [^[:data | (self stbConvertFromVersion0: data) becomeA: self]].
+	^super stbConvertFrom: anSTBClassFormat!
+
+stbVersion
+	^2! !
+!Kernel.VariableBinding class categoriesForMethods!
+stbConvertFrom:!binary filing!public! !
+stbVersion!binary filing!public! !
+!
+
+!OS.InvariantLocale methodsFor!
+
+stbSaveOn: anSTBOutFiler
+	"Output the receiver to anSTBOutFiler."
+
+	anSTBOutFiler
+		writeClassPrefix: Locale;
+		register: self.
+	anSTBOutFiler nextPut: #invariant! !
+!OS.InvariantLocale categoriesForMethods!
+stbSaveOn:!binary filing!public! !
+!
+
+!UI.ResourceIdentifier class methodsFor!
+
+stbConvertFrom: anSTBClassFormat
+	"Convert from previous version resource. 
+	Version Changes:
+		1) removes stores a selector as the resource name rather than a string name (this change was made an age ago, and not properly converted)
+	"
+
+	anSTBClassFormat version == 0
+		ifTrue: 
+			[^
+			[:data |
+			data becomeA: self.
+			data selector isSymbol ifFalse: [data name: data selector].
+			data]].
+	^super stbConvertFrom: anSTBClassFormat!
+
+stbVersion
+	^1! !
+!UI.ResourceIdentifier class categoriesForMethods!
+stbConvertFrom:!binary filing!private! !
+stbVersion!binary filing!public! !
+!
+
+"End of package definition"!
+

@@ -272,11 +272,15 @@ environment: aNamespace
 equivalentLegacyPrerequisites
 	"Private - Some packages have been split into multiple packages in Dolphin 8. If a legacy package is dependent on one of those new packages that is part of the original package, we want to file out a pre-requisite that is the original package. This will maintain the correct pre-reqs when roundtripping back to D7 so that the package remains loadable (unless it has been modified to add dependencies only in Dolphin 8). The pre-reqs should generally be at least sufficient for Dolphin 8 too, since typically the original package has the new package that contains part of it as one of its own pre-requisites."
 
-	^##(LookupTable withAll: {'Dolphin GDI Graphics' -> 'Dolphin MVP Base'.
+	^##(LookupTable withAll: {
+				'Dolphin GDI Graphics' -> 'Dolphin MVP Base'.
 				'Common Controls Library' -> 'Dolphin MVP Base'.
 				'Dolphin Check Buttons' -> 'Dolphin MVP Base'.
 				'Dolphin Push Buttons' -> 'Dolphin MVP Base'.
-				'Dolphin Splitter Control' -> 'Dolphin MVP Base'})!
+				'Dolphin Splitter Control' -> 'Dolphin MVP Base'.
+				'Dolphin STB Filer' -> 'Dolphin'.
+				'Dolphin Binary Filer' -> 'Dolphin'
+			})!
 
 fileOutAttributesOfClass: aClass
 	"File-out any attributes of the aClass (e.g. the comment, GUID, etc) not included in the basic

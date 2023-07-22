@@ -549,11 +549,6 @@ select: discriminator
 			(discriminator value: assoc value) ifTrue: [answer add: assoc]].
 	^answer!
 
-stbSaveOn: anSTBOutFiler
-	"Save out a binary representation of the receiver to anSTBOutFiler."
-
-	anSTBOutFiler saveObject: self as: (STBCollectionProxy class: self class array: self associations)!
-
 storeOn: aStream
 	"Append to the <puttableStream> argument, target, an expression which when 
 	evaluated will answer a collection similar to the receiver."
@@ -638,7 +633,6 @@ removeKey:!public!removing! !
 removeKey:ifAbsent:!public!removing! !
 searchPolicy!constants!public! !
 select:!enumerating!public! !
-stbSaveOn:!binary filing!public! !
 storeOn:!printing!public! !
 values!accessing!public! !
 !

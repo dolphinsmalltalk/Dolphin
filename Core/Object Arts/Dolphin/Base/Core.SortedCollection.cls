@@ -330,14 +330,7 @@ sortUsing: aSortAlgorithm
 	Note that this must change the receiver's sort algorithm, as well as perform an in-place sort, in order to maintain the invariant that the receiver's elements are maintained in the order determined by the receiver's sort comparison."
 
 	algorithm := aSortAlgorithm.
-	super sortUsing: aSortAlgorithm!
-
-stbSaveOn: anSTBOutFiler
-	"Save out a binary representation of the receiver to anSTBOutFiler."
-
-	algorithm ~~ self class defaultSortAlgorithm
-		ifTrue: [^anSTBOutFiler saveObject: self as: (STBSortedCollectionProxy forCollection: self)].
-	super stbSaveOn: anSTBOutFiler! !
+	super sortUsing: aSortAlgorithm! !
 !Core.SortedCollection categoriesForMethods!
 ,!copying!public! !
 add:!adding!public! !
@@ -371,7 +364,6 @@ setSortAlgorithm:!initializing!private! !
 sortBlock!accessing!public! !
 sortBlock:!accessing!operations!public! !
 sortUsing:!public!sorting! !
-stbSaveOn:!binary filing!public! !
 !
 
 Core.SortedCollection methodProtocol: #SortedCollection attributes: #(#ansi #readOnly) selectors: #(#, #add: #addAll: #after: #allSatisfy: #anySatisfy: #asArray #asBag #asByteArray #asOrderedCollection #asSet #asSortedCollection #asSortedCollection: #at: #at:ifAbsent: #before: #collect: #copyFrom:to: #copyReplaceAll:with: #copyReplaceFrom:to:with: #copyReplaceFrom:to:withObject: #copyReplacing:withObject: #copyWith: #copyWithout: #detect: #detect:ifNone: #do: #do:separatedBy: #findFirst: #findLast: #first #from:to:do: #from:to:keysAndValuesDo: #includes: #indexOf: #indexOf:ifAbsent: #indexOfSubCollection:startingAt: #indexOfSubCollection:startingAt:ifAbsent: #inject:into: #isEmpty #keysAndValuesDo: #last #notEmpty #occurrencesOf: #rehash #reject: #remove: #remove:ifAbsent: #removeAll: #removeAtIndex: #removeFirst #removeLast #reverse #reverseDo: #select: #size #sortBlock #sortBlock: #with:do:)!

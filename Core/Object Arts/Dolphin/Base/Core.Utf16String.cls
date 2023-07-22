@@ -282,13 +282,6 @@ skipEncodingMarkerFrom: aGettableStream
 
 	^Error notYetImplemented!
 
-stbSaveOn: anSTBOutFiler
-	"At present this is needed because STB doesn't work correctly with double-byte objects. It
-	is may be desirable, anyway, to save as UTF-8 to save space, and the intention is that
-	Utf8String and Utf16String instances be largely interchangeable."
-
-	^self asUtf8String stbSaveOn: anSTBOutFiler!
-
 strcspn: aString start: anInteger
 	^OS.Ucrt wcscspn: self yourAddress + ((anInteger - 1) * 2) strCharSet: aString asUtf16String!
 
@@ -350,7 +343,6 @@ replaceFrom:to:with:startingAt:!public!replacing! !
 resize:!mutating!public! !
 reversedFrom:to:!copying!public! !
 skipEncodingMarkerFrom:!encode/decode!private! !
-stbSaveOn:!binary filing!public! !
 strcspn:start:!private!searching! !
 strlen!accessing!private! !
 uint16AtOffset:!accessing!primitives!private! !
@@ -422,11 +414,6 @@ initialize
 	self addClassConstant: 'SurrogateOffset'
 		value: (LeadSurrogateMask bitShift: 10) + TrailSurrogateMask - 16r10000!
 
-stbConvertFrom: aSTBClassConversion
-	"version 0 would have been a UnicodeString instance, which will translate directly to a Utf16String."
-
-	^[:data | self fromByteArray: data]!
-
 with: aCharacter
 	"Answer a new instance of the receiver containing the single <Character> element,
 	aCharacter."
@@ -452,7 +439,6 @@ fromAddress:length:!instance creation!public! !
 fromBytes:codePage:!instance creation!public! !
 fromUtf16String:!instance creation!public! !
 initialize!development!initializing!public! !
-stbConvertFrom:!binary filing!public! !
 with:!instance creation!public! !
 !
 

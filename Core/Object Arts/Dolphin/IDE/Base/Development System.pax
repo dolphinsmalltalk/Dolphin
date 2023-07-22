@@ -391,6 +391,7 @@ package setMethodNames: #(
 	#(#{Graphics.Point3D class} #publishedAspectsOfInstances)
 	#(#{Graphics.Rectangle class} #publishedAspectsOfInstances)
 	#(#{Graphics.TextTileIcon class} #newInstanceAspect:class:)
+	#(#{Kernel.AbstractChunkSourceFiler class} #stlVersion)
 	#(#{Kernel.BindingReference} #browse)
 	#(#{Kernel.BlockClosure} #cpuCyclesToRun)
 	#(#{Kernel.BlockClosure class} #publishedAspectsOfInstances)
@@ -801,6 +802,7 @@ package setMethodNames: #(
 	#(#{UI.ValueModel class} #publishedEventsOfInstances)
 	#(#{UI.ValuePresenter class} #publishedEventsOfInstances)
 	#(#{UI.View} #aspectDisplayOn:)
+	#(#{UI.View} #loadViewResource:forEdit:)
 	#(#{UI.View} #publishedAspects)
 	#(#{UI.View} #visualObjectAtPoint:)
 	#(#{UI.View class} #editNewDefaultView)
@@ -824,6 +826,7 @@ package setPrerequisites: #(
 	'..\..\MVP\Presenters\Accelerator\Dolphin Accelerator Presenter'
 	'..\..\MVP\Base\Dolphin Base Dialogs'
 	'..\..\MVP\Base\Dolphin Basic Geometry'
+	'..\..\System\Filer\Dolphin Binary Filer'
 	'..\..\MVP\Presenters\Boolean\Dolphin Boolean Presenter'
 	'Dolphin Browser Environments'
 	'..\..\MVP\Views\Cards\Dolphin Card Containers'
@@ -872,6 +875,7 @@ package setPrerequisites: #(
 	'..\..\Base\Dolphin Source Fileout'
 	'..\..\MVP\Views\SpinButton\Dolphin SpinButton Control'
 	'..\..\MVP\Views\Splitter\Dolphin Splitter Control'
+	'..\..\System\Filer\Dolphin STB Filer'
 	'..\..\MVP\Views\Styled Views\Dolphin Styled Views'
 	'..\..\MVP\Presenters\Text\Dolphin Text Presenter'
 	'..\..\MVP\Icons\Dolphin Text Tile Icons'
@@ -4613,6 +4617,14 @@ newInstanceAspect: aSymbol class: aspectClass
 	^aspectClass icon: aSymbol! !
 !Graphics.TextTileIcon class categoriesForMethods!
 newInstanceAspect:class:!adapters!private! !
+!
+
+!Kernel.AbstractChunkSourceFiler class methodsFor!
+
+stlVersion
+	^STBFiler.STLFilerVersion! !
+!Kernel.AbstractChunkSourceFiler class categoriesForMethods!
+stlVersion!constants!public! !
 !
 
 !Kernel.BindingReference methodsFor!
@@ -9660,6 +9672,19 @@ aspectDisplayOn: aStream
   
   	self printOn: aStream!
 
+loadViewResource: aResourceArray forEdit: isLoadingForEdit
+	"Add an instance of the resource held in anSTLArray. Answer the new view."
+
+	| stream filerClass |
+	filerClass := (aResourceArray isKindOf: ByteArray) ifTrue: [STBInFiler] ifFalse: [STLInFiler].
+	stream := aResourceArray readStream.
+	^
+	[(filerClass on: stream)
+		isUpgrading: isLoadingForEdit;
+		context: self;
+		next]
+			ensure: [stream close]!
+
 publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by the receiver."
 
@@ -9679,6 +9704,7 @@ visualObjectAtPoint: aPoint
 	^self presenter! !
 !UI.View categoriesForMethods!
 aspectDisplayOn:!private! !
+loadViewResource:forEdit:!binary filing!public! !
 publishedAspects!constants!public! !
 visualObjectAtPoint:!enquiries!private! !
 !

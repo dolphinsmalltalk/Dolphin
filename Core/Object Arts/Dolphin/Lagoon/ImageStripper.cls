@@ -667,7 +667,7 @@ _logRemainingClasses
 	totalMemory := statsForClass at: 2.
 	totalMethods := 0.
 	totalClassMethods := 0.
-	self _startElement: 'Classes' attributes: {'count' -> stats size}.
+	self _startElement: 'Classes' attributes: { 'count' -> stats size }.
 	classes := Array writeStream: stats size.
 	stats associationsDo: [:each | classes nextPut: each].
 	stats := classes contents sort.
@@ -690,7 +690,7 @@ _logRemainingClasses
 			(devClasses includes: each key) ifTrue: [attributes nextPut: 'development' -> true].
 			self
 				_startElement: 'Class' attributes: attributes contents;
-				_startElement: 'Methods' attributes: {'count' -> each key methodDictionary size}.
+				_startElement: 'Methods' attributes: { 'count' -> each key methodDictionary size }.
 			selectors := WriteStream on: {}.
 			each key methodDictionary do: [:m | selectors nextPut: m selector].
 			selectors contents sort do: 
@@ -700,7 +700,7 @@ _logRemainingClasses
 						attributes: #()
 						value: selector].
 			self _endElement: true.
-			self _startElement: 'ClassMethods' attributes: {'count' -> each key class methodDictionary size}.
+			self _startElement: 'ClassMethods' attributes: { 'count' -> each key class methodDictionary size }.
 			selectors reset.
 			each key class methodDictionary do: [:m | selectors nextPut: m selector].
 			selectors contents sort do: 
@@ -716,11 +716,6 @@ _logRemainingClasses
 			totalMemory := totalMemory + memory.
 			totalMethods := totalMethods + each key methodDictionary size.
 			totalClassMethods := totalClassMethods + each key class methodDictionary size].
-	#{Kernel.EventsCollection} valueOrNil
-		ifNotNil: 
-			[:ec |
-			ec allInstances
-				do: [:each | self _logComment: each printString , ': ' , each allReferences printString]].
 	self
 		_endElement: true;
 		_logElement: 'TotalInstances'

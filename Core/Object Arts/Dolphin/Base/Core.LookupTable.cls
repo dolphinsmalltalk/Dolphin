@@ -314,11 +314,6 @@ species
 
 	^LookupTable!
 
-stbSaveOn: anSTBOutFiler
-	"Save out a binary representation of the receiver to anSTBOutFiler."
-
-	anSTBOutFiler saveObject: self as: (STBIdentityDictionaryProxy forCollection: self)!
-
 uncheckedAdd: newObject 
 	"Private - Add newObject to the receiver, without checking to see if it is already present.
 	We also assume the receiver is large enough to accommodate the new element, and so do not
@@ -376,7 +371,6 @@ removeAssociationAt:ifAbsent:!public!removing! !
 removeKey:ifAbsent:!public!removing! !
 select:!enumerating!public! !
 species!accessing!public! !
-stbSaveOn:!binary filing!public! !
 uncheckedAdd:!adding!private! !
 uncheckedAt:put:!accessing!private! !
 valuesClass!constants!public! !

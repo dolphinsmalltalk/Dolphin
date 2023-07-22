@@ -469,14 +469,6 @@ shortTimeFormat
 
 	^'HH:mm'!
 
-stbSaveOn: anSTBOutFiler
-	"Output the receiver to anSTBOutFiler."
-
-	anSTBOutFiler
-		writeClassPrefix: Locale;
-		register: self.
-	anSTBOutFiler nextPut: #smalltalk!
-
 tag
 	"Answer the RFC4646 language tag for this locale."
 
@@ -546,7 +538,6 @@ shortAmDesignator!constants!public! !
 shortDateFormat!constants!public! !
 shortPmDesignator!constants!public! !
 shortTimeFormat!constants!public! !
-stbSaveOn:!binary filing!public! !
 tag!constants!public! !
 thousandSeparator!constants!public! !
 yearMonthFormat!constants!public! !
@@ -577,21 +568,10 @@ initialize
 	self addClassConstant: 'ControlCodePictures' value: controlPictures!
 
 reset
-	Current ifNotNil: [:current | current numberFormat: nil]!
-
-stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
-	"Read an instance of the receiver from the binary filer, aSTBInFiler."
-
-	^anSTBClassConversion
-		ifNotNil: 
-			[anSTBInFiler register: Current.
-			anSTBClassConversion instSize timesRepeat: [anSTBInFiler basicNext].
-			Current]
-		ifNil: [self error: 'Unexpected SmalltalkLocale instance in STB stream']! !
+	Current ifNotNil: [:current | current numberFormat: nil]! !
 !Kernel.SmalltalkLocale class categoriesForMethods!
 current!instance creation!public! !
 initialize!class initialization!public! !
 reset!initializing!private! !
-stbReadFrom:format:size:!binary filing!public! !
 !
 

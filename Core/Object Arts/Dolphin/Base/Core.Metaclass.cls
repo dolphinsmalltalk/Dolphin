@@ -204,11 +204,6 @@ setImports: anArray
 shortName
 	^instanceClass shortName , ' class'!
 
-stbSaveOn: anSTBOutFiler
-	"Save out a binary representation of the receiver to anSTBOutFiler."
-
-	anSTBOutFiler saveObject: self as: (STBMetaclassProxy forClass: self)!
-
 subclassesDo: aMonadicValuable
 	"Evaluate the <monadicValuable> argument for each of the receiver's subclasses."
 
@@ -250,7 +245,6 @@ removeClassVarName:!class variables!public! !
 removeFromSuper!operations!private! !
 setImports:!accessing!private! !
 shortName!public! !
-stbSaveOn:!binary filing!public! !
 subclassesDo:!class hierarchy-accessing!public! !
 unqualifiedName!accessing!public! !
 !
