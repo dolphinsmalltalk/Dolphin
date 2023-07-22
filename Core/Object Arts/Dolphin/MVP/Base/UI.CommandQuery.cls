@@ -290,11 +290,12 @@ new
 validateQueriesIn: aCompilationResult
 	"Private - Validate the commandQuery: annotations in the <CompilationResult>, and return whether the command queries collection should be (lazily) rebuilt because of a valid change."
 
-	| method affectsQueries annotations |
+	| method affectsQueries annotations isInteractive |
 	method := aCompilationResult oldMethod.
 	"If the method previously had commandQuery: annotations, we assume there is a change"
 	affectsQueries := method notNil and: [method hasAnnotation: #commandQuery:].
 	method := aCompilationResult method.
+	isInteractive := aCompilationResult isInteractive.
 	(method notNil and: 
 			[(annotations := method annotations) notNil
 				and: [affectsQueries := annotations includesSelector: #commandQuery:]])
@@ -306,13 +307,16 @@ validateQueriesIn: aCompilationResult
 					[:each |
 					| selector |
 					selector := each first.
-					(self validateQuerySelector: selector in: class)
-						ifFalse: 
-							["As there are validation issues, we want the change to be ignored, rather than used to build an invalid set of command queries"
-							^false]]].
+					(self
+						validateQuerySelector: selector
+						in: class
+						interactive: isInteractive)
+							ifFalse: 
+								["As there are validation issues, we want the change to be ignored, rather than used to build an invalid set of command queries"
+								^false]]].
 	^affectsQueries!
 
-validateQuerySelector: aSymbol in: aClass
+validateQuerySelector: aSymbol in: aClass interactive: aBoolean
 	| argc |
 	argc := aSymbol argumentCount.
 	argc > 1
@@ -320,9 +324,11 @@ validateQuerySelector: aSymbol in: aClass
 			[Warning signal: 'Command query selectors must have at most 1 argument, not the <2d> of <1p>'
 						<< { aSymbol. argc }.
 			^false].
-	(aClass canUnderstand: aSymbol)
+	(aBoolean not or: [aClass canUnderstand: aSymbol])
 		ifFalse: 
-			[Warning signal: '<1p> does not understand the command query selector <2p>' << { aClass. aSymbol }.
+			["If you get this warning, you have defined a commandQuery: annotation with a selector that is not understood by the class.
+			If you proceed (Ignore the warning), the individual commandQuery: will be skipped to avoid it generating an invalid query handler that will cause errors when checking command status. If you cancel at the warning, the rebuild of the command query handlers is aborted entirely. Either action will leave the handlers in a state which is not up-to-date with respect to the code. This will be corrected once you fix the offending commandQuery: annotation(s) and resave the command method. In general it is a good idea to define the handler, at least minimally, before adding a commandQuery: annotation that references it. If you don't you will get the warning and even if ignored you will still need to go back and re-save the command method after adding the command query in order to trigger a rebuild of the handlers. This validation is not performed during a non-interactive compile, e.g. when loading code, to avoid generating misleading warnings that only occur because of load-order."
+			Warning signal: '<1p> does not understand the command query selector <2p>' << { aClass. aSymbol }.
 			^false].
 	^true! !
 !UI.CommandQuery class categoriesForMethods!
@@ -330,6 +336,6 @@ commandDescription:source:!instance creation!public! !
 findQueryHandlersIn:!public! !
 new!instance creation!public! !
 validateQueriesIn:!private! !
-validateQuerySelector:in:!private! !
+validateQuerySelector:in:interactive:!private! !
 !
 

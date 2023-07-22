@@ -63,7 +63,8 @@ compile: aString in: aClass environment: aNamespaceOrNil flags: anInteger
 	^CompilationResult
 		method: results first
 		rawTextMap: results second
-		rawTempsMap: results third!
+		rawTempsMap: results third
+		flags: anInteger!
 
 compileDebugExpression: aString in: aClass environment: aNamespaceOrNil evaluationPools: anArray
 	^(self
@@ -148,7 +149,8 @@ compileForEvaluation: aString in: aBehaviorOrNil environment: aNamespaceOrNil ev
 	results := CompilationResult
 				method: expression
 				rawTextMap: results second
-				rawTempsMap: results third.
+				rawTempsMap: results third
+				flags: anInteger.
 	expression notNil
 		ifTrue: 
 			[aBehaviorOrNil ifNotNil: [expression methodClass: aBehaviorOrNil].

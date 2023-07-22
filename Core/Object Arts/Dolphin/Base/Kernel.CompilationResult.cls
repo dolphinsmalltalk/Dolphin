@@ -2,7 +2,7 @@
 
 Core.Object
 	subclass: #'Kernel.CompilationResult'
-	instanceVariableNames: 'method rawTextMap rawTempsMap textMap tempsMap oldMethod package'
+	instanceVariableNames: 'method rawTextMap rawTempsMap flags textMap tempsMap oldMethod package'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -51,6 +51,9 @@ fireSystemUpdateEvent
 		ifTrue: [method methodClass annotationsUpdated: self].
 	Smalltalk trigger: (self isNew ifTrue: [#methodAdded:] ifFalse: [#methodUpdated:]) with: self!
 
+isInteractive
+	^flags allMask: CompilerFlags.Interactive!
+
 isNew
 	^oldMethod isNil!
 
@@ -65,10 +68,11 @@ method: aCompiledMethod
 
 	method := aCompiledMethod!
 
-method: aCompiledMethod rawTextMap: textArray rawTempsMap: tempsArray
+method: aCompiledMethod rawTextMap: textArray rawTempsMap: tempsArray flags: anInteger
 	method := aCompiledMethod.
 	rawTextMap := textArray.
-	rawTempsMap := tempsArray!
+	rawTempsMap := tempsArray.
+	flags := anInteger!
 
 oldMethod
 	^oldMethod!
@@ -112,10 +116,11 @@ affectsAnnotation:!enquiries!public! !
 buildTempsMap!development!private! !
 buildTextMap!development!private! !
 fireSystemUpdateEvent!helpers!private! !
+isInteractive!public!testing! !
 isNew!accessing!public! !
 method!accessing!public! !
 method:!accessing!private! !
-method:rawTextMap:rawTempsMap:!initializing!private! !
+method:rawTextMap:rawTempsMap:flags:!initializing!private! !
 oldMethod!accessing!public! !
 oldMethod:!accessing!public! !
 package!accessing!public! !
@@ -129,13 +134,14 @@ textMap!accessing!development!public! !
 
 !Kernel.CompilationResult class methodsFor!
 
-method: aCompiledMethod rawTextMap: textArray rawTempsMap: tempsArray
+method: aCompiledMethod rawTextMap: textArray rawTempsMap: tempsArray flags: anInteger
 	<primitive: 157>
 	^self new
 		method: aCompiledMethod
 		rawTextMap: textArray
-		rawTempsMap: tempsArray! !
+		rawTempsMap: tempsArray
+		flags: anInteger! !
 !Kernel.CompilationResult class categoriesForMethods!
-method:rawTextMap:rawTempsMap:!instance creation!public! !
+method:rawTextMap:rawTempsMap:flags:!instance creation!public! !
 !
 

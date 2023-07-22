@@ -2502,7 +2502,7 @@ Core.Object
 	classConstants: {}!
 Core.Object
 	subclass: #'Kernel.CompilationResult'
-	instanceVariableNames: 'method rawTextMap rawTempsMap textMap tempsMap oldMethod package'
+	instanceVariableNames: 'method rawTextMap rawTempsMap flags textMap tempsMap oldMethod package'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
