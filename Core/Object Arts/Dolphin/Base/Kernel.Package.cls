@@ -414,7 +414,7 @@ declareClasses
 	(self classNames reject: [:each | each isDefined]) do: 
 			[:each |
 			Object
-				subclass: each
+				subclass: each pathString
 				instanceVariableNames: ''
 				classVariableNames: ''
 				imports: #()]!

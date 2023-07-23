@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'ScribbleTest72'.
 package paxVersion: 2;
+	preDeclareClassesOnLoad: true;	"Not required, but for test coverage"
 	basicComment: ''.
 
 

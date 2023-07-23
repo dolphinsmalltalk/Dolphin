@@ -1,6 +1,7 @@
 ﻿| package |
 package := Package name: 'Dolphin Binary Filer'.
 package paxVersion: 2.1;
+	preDeclareClassesOnLoad: true;
 	basicComment: 'Dolphin 🐬 Smalltalk STB Binary Filer.
 Copyright © Object Arts Ltd. 1997-2023'.
 
