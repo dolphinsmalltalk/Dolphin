@@ -253,8 +253,10 @@ testEquals
 	self assert: Color default equals: Color default.
 	self assert: IndexedColor yellow equals: Color yellow.
 	self
-		assert: (IndexedColor.InstancesByIndex allSatisfy: 
-					[:each |
+		assert: (IndexedColor.Names allSatisfy: 
+					[:name |
+					| each |
+					each := IndexedColor named: name.
 					each ~= Color default
 						and: [Color default ~= each and: [each ~= Color none and: [Color none ~= each]]]]).
 	self assert: ((Color named: #gradientActiveCaption) alpha: 63)
@@ -311,7 +313,8 @@ testHash
 	self assert: (Color.NamedColors select: [:each | each hash = Color default hash]) keys asArray
 		equals: #(#default).
 	self assert: IndexedColor yellow hash equals: Color yellow hash.
-	self assert: (IndexedColor.InstancesByIndex allSatisfy: [:each | each hash ~= Color default hash])!
+	self assert: (IndexedColor.Names
+				allSatisfy: [:each | (IndexedColor named: each) hash ~= Color default hash])!
 
 testHls
 	| hls actual |

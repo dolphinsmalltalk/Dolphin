@@ -220,10 +220,29 @@ Graphics.Color
 Graphics.Color
 	subclass: #'Graphics.IndexedColor'
 	instanceVariableNames: 'index'
-	classVariableNames: 'InstancesByIndex InstancesByName'
+	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+			'Indices'
+				-> (IdentityDictionary withAll: {
+								#black -> 16r1000000.
+								#blue -> 16r1000010.
+								#brown -> 16r1000003.
+								#cyan -> 16r1000012.
+								#darkBlue -> 16r1000004.
+								#darkCyan -> 16r1000006.
+								#darkGray -> 16r100000C.
+								#darkGreen -> 16r1000002.
+								#darkMagenta -> 16r1000005.
+								#darkRed -> 16r1000001.
+								#gray -> 16r1000007.
+								#green -> 16r100000E.
+								#magenta -> 16r1000011.
+								#red -> 16r100000D.
+								#white -> 16r1000013.
+								#yellow -> 16r100000F
+							}).
 			'Names'
 				-> (IdentityDictionary withAll: {
 								16r1000000 -> #black.

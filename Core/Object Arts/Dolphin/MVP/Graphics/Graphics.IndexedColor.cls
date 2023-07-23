@@ -3,10 +3,29 @@
 Graphics.Color
 	subclass: #'Graphics.IndexedColor'
 	instanceVariableNames: 'index'
-	classVariableNames: 'InstancesByIndex InstancesByName'
+	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+			'Indices'
+				-> (IdentityDictionary withAll: {
+								#black -> 16r1000000.
+								#blue -> 16r1000010.
+								#brown -> 16r1000003.
+								#cyan -> 16r1000012.
+								#darkBlue -> 16r1000004.
+								#darkCyan -> 16r1000006.
+								#darkGray -> 16r100000C.
+								#darkGreen -> 16r1000002.
+								#darkMagenta -> 16r1000005.
+								#darkRed -> 16r1000001.
+								#gray -> 16r1000007.
+								#green -> 16r100000E.
+								#magenta -> 16r1000011.
+								#red -> 16r100000D.
+								#white -> 16r1000013.
+								#yellow -> 16r100000F
+							}).
 			'Names'
 				-> (IdentityDictionary withAll: {
 								16r1000000 -> #black.
@@ -156,35 +175,13 @@ stbSaveOn:!binary filing!public! !
 black
 	^self named: #black!
 
-initialize
-	"Initialise the map of standard colour names to indices. Note that the colour names are not completely consistent with the common colour names used by the Color superclass.
-		self initialize.
-	"
-
-	| byName byIndex names |
-	byName := LookupTable new.
-	byIndex := IdentityDictionary new.
-	names := IdentityDictionary new.
-	#(#black 16r1000000 #darkRed 16r1000001 #darkGreen 16r1000002 #brown 16r1000003 #darkBlue 16r1000004 #darkMagenta 16r1000005 #darkCyan 16r1000006 #gray 16r1000007 #darkGray 16r100000C #red 16r100000D #green 16r100000E #yellow 16r100000F #blue 16r1000010 #magenta 16r1000011 #cyan 16r1000012 #white 16r1000013)
-		pairsDo: 
-			[:s :i |
-			| color |
-			color := self basicNew setIndex: i.
-			color beImmutableObject.
-			byIndex at: i put: color.
-			byName at: s put: color.
-			names at: i put: s].
-	self addClassVariable: 'InstancesByName' value: byName.
-	self addClassVariable: 'InstancesByIndex' value: byIndex.
-	self addClassConstant: 'Names' value: names!
-
 named: aString
 	"Answer the named <IndexedColor>."
 
 	"Note that the indexed colour names are not directly compatible with the common colour names used by the rest of the Color hierarchy, e.g. IndexedColor brown = (Color named: #olive) and IndexedColor darkRed = (Color named: #maroon) .
 	The legacy names are retained for some backwards compatibility in existing uses, but it is recommended that IndexedColors be avoided where possible."
 
-	^InstancesByName at: aString!
+	^self withIndex: (Indices at: aString)!
 
 stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
 	"Read a sub-instance of the receiver from the binary filer, aSTBInFiler."
@@ -203,10 +200,11 @@ white
 withIndex: anInteger
 	"Answer the unique <IndexedColor> whose index is the <integer> argument."
 
-	^InstancesByIndex at: anInteger! !
+	^(self basicNew setIndex: anInteger)
+		beImmutableObject;
+		yourself! !
 !Graphics.IndexedColor class categoriesForMethods!
 black!common colors!public! !
-initialize!development!initializing!public! !
 named:!instance creation!named colors!public! !
 stbReadFrom:format:size:!binary filing!public! !
 white!common colors!public! !
