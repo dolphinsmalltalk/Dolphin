@@ -35,6 +35,9 @@ lastPredefined
 
 	^self subclassResponsibility!
 
+lookupPredefinedClass: anInteger
+	^self predefinedClasses lookup: anInteger - self predefinedClassOffset!
+
 on: aStream version: anInteger
 	stream := aStream.
 	version := anInteger!
@@ -47,6 +50,9 @@ predefinedClasses
 	"Note that pre-registering classes does not inflate the size of the binary file, it just pre-allocates a range of indices for fixed uses. Changing the order of these (or deleting registrations) will break existing binary files. Lastly a consequence of pre-registering these classes is that normal STB versioning will have no effect - the #stbVersion is only checked when a class is first read from the file. In order to version these classes it is necessary to increment the global STB version number."
 
 	^self subclassResponsibility!
+
+predefinedClassOffset
+	^4!
 
 putCharacter: aCharacter
 	self subclassResponsibility!
@@ -139,8 +145,10 @@ writeSignatureAndVersion
 classLocatorStringFor:!helpers!private! !
 filer:version:!initializing!private! !
 lastPredefined!constants!public! !
+lookupPredefinedClass:!accessing!public! !
 on:version:!initializing!private! !
 predefinedClasses!constants!public! !
+predefinedClassOffset!accessing!public! !
 putCharacter:!operations!public! !
 putNil!operations!public! !
 putSmallInteger:!operations!public! !

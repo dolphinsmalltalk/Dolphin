@@ -35,6 +35,7 @@ package setMethodNames: #(
 	#(#{Core.Model} #stbSaveOn:)
 	#(#{Core.Model class} #stbConvertFrom:)
 	#(#{Core.Model class} #stbVersion)
+	#(#{Core.Object} #stbFixup:at:)
 	#(#{Core.Object} #stbSaveOn:)
 	#(#{Core.OrderedCollection} #stbSaveOn:)
 	#(#{Core.Process} #stbSaveOn:)
@@ -96,7 +97,6 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-			'PredefinedClassOffset' -> 16r4.
 			'PrefixBytesMask' -> 16r30.
 			'PrefixCharacterMask' -> 16r4.
 			'PrefixClassMask' -> 16r6.
@@ -112,9 +112,6 @@ Core.Object
 			'PrefixRefUnshift' -> -16r4.
 			'PrefixSmallIntegerMask' -> 16r1.
 			'PrefixVariableMask' -> 16r20.
-			'STBFormatName' -> 'STB'.
-			'STBSignature' -> #[33 83 84 66 32].
-			'STLFilerVersion' -> 16r6.
 			'STLFormatName' -> 'STL'
 		}!
 Core.Object
@@ -376,6 +373,13 @@ stbVersion!binary filing!public! !
 
 !Core.Object methodsFor!
 
+stbFixup: anSTBInFiler at: newObjectIndex
+	"Answer the true object that must be used to represent the receiver when read from anSTBInFiler.
+	Typically this is overridden by subclasses of STBProxy to answer the proxied object. Other classes
+	may also override this method to effectively 'one way become' the receiver to some other object"
+
+	^self!
+
 stbSaveOn: anSTBOutFiler
 	"Save out a binary representation of the receiver to anSTBOutFiler.
 	The options are:
@@ -396,6 +400,7 @@ stbSaveOn: anSTBOutFiler
 
 	anSTBOutFiler saveObject: self! !
 !Core.Object categoriesForMethods!
+stbFixup:at:!binary filing!public! !
 stbSaveOn:!binary filing!public! !
 !
 

@@ -49,6 +49,44 @@ isTextUnicode: lpv iSize: iSize lpiResult: lpiResult
 	<stdcall: bool IsTextUnicode lpvoid int32 int32*>
 	^self invalidCall: _failureCode!
 
+regGetString: hiveInteger key: keyString value: valueString
+	| sizeBuf status buf |
+	sizeBuf := ByteArray newFixed: 4.
+	status := AdvApi32
+				regGetValue: hiveInteger
+				lpSubKey: keyString
+				lpValue: valueString
+				dwFlags: WinRegConstants.RRF_RT_REG_SZ
+				pdwType: nil
+				pvData: nil
+				pcbData: sizeBuf.
+	status = ERROR_SUCCESS ifFalse: [^nil].
+	"Note that the size returned seems to be one larger than needed, but we can't assume that is always the case"
+	buf := Utf16String newFixed: ((sizeBuf uint32AtOffset: 0) bitShift: -1) - 1.
+	status := AdvApi32
+				regGetValue: hiveInteger
+				lpSubKey: keyString
+				lpValue: valueString
+				dwFlags: WinRegConstants.RRF_RT_REG_SZ
+				pdwType: nil
+				pvData: buf
+				pcbData: sizeBuf.
+	^status == ERROR_SUCCESS ifTrue: [buf resize: ((sizeBuf uint32AtOffset: 0) bitShift: -1) - 1]!
+
+regGetUInt32: hiveInteger key: keyString value: valueString
+	| status buf |
+	buf := ByteArray newFixed: 8.
+	buf uint32AtOffset: 4 put: 4.
+	status := self
+				regGetValue: hiveInteger
+				lpSubKey: keyString
+				lpValue: valueString
+				dwFlags: WinRegConstants.RRF_RT_DWORD
+				pdwType: nil
+				pvData: buf
+				pcbData: buf yourAddress + 4.
+	^status == ERROR_SUCCESS ifTrue: [buf uint32AtOffset: 0]!
+
 regGetValue: hKey lpSubKey: lpSubKey lpValue: lpValue dwFlags: dwFlags pdwType: pdwType pvData: pvData pcbData: pcbData
 	"Invoke the RegGetValue() function of the module wrapped by the receiver.
 	Helpstring: Retrieves the type and data for the specified registry value.
@@ -101,6 +139,8 @@ deregisterEventSource:!public!win32 functions-events! !
 getUserName:nSize:!public!win32 functions-system information! !
 invalidCall:!exceptions!private! !
 isTextUnicode:iSize:lpiResult:!public!win32 functions-unicode and character set! !
+regGetString:key:value:!helpers!public! !
+regGetUInt32:key:value:!helpers!public! !
 regGetValue:lpSubKey:lpValue:dwFlags:pdwType:pvData:pcbData:!public!win32 functions-registry! !
 regSetKeyValue:lpSubKey:lpValueName:dwType:lpData:cbData:!public!win32 functions-registry! !
 reportEvent:wType:wCategory:dwEventId:lpUserSid:wNumStrings:dwDataSize:lpStrings:lpRawData:!public!win32 functions-events! !

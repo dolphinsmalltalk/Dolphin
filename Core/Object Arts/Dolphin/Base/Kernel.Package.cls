@@ -810,11 +810,17 @@ loadBinaryVariables
 	varNames isNil ifTrue: [^self].
 	self isLegacySourceFormat
 		ifTrue: 
-			[varNames do: 
+			[| filer |
+			filer := #{Kernel.STBInFiler} value.
+			varNames do: 
 					[:each |
 					| globalStream |
-					globalStream := FileStream read: (self fileNameForBinaryVariable: each) text: false.
-					each declare: (Object binaryReadFrom: globalStream).
+					globalStream := FileStream read: (File
+										composePath: self path
+										stem: each path last
+										extension: 'stb')
+								text: false.
+					each declare: (filer on: globalStream) next.
 					globalStream close]]
 		ifFalse: 
 			["We have a chicken-and-egg problem in that we need STON to load packages with binary variables, but STON is not part of the base system. This means that any packages loaded up to and including the STON packages cannot contain any binary variables."
@@ -822,7 +828,11 @@ loadBinaryVariables
 			varNames do: 
 					[:each |
 					| globalStream |
-					globalStream := FileStream read: (self fileNameForBinaryVariable: each) text: true.
+					globalStream := FileStream read: (File
+										composePath: self path
+										stem: each asString
+										extension: 'ston')
+								text: true.
 					each declare: (ston readFrom: globalStream).
 					globalStream close]]!
 
@@ -838,9 +848,7 @@ loadPAC
 	(stream nextAvailable: 4) = '!!STB'
 		ifTrue: 
 			[stream close.
-			#{Kernel.LegacyBinaryPackageLoader} valueOrNil
-				ifNotNil: [:binaryLoader | binaryLoader loadPackage: self]
-				ifNil: [self error: 'Legacy binary package loading support is not available']]
+			self class binaryPackageLoader loadPackage: self]
 		ifFalse: [
 			[stream reset.
 			self loadPAC: stream] ensure: [stream close]]!
@@ -1633,7 +1641,7 @@ tracePrerequisitesOfImageStripper: anIdentityDictionary
 	hiddenObjects := 
 			[(filer on: stream)
 				basicNext;
-				readMap] ensure: [stream close].
+				elements] ensure: [stream close].
 	hiddenObjects do: 
 			[:each |
 			(each class isMeta and: 
@@ -2131,6 +2139,10 @@ warnChangingDefaultNamespaceFrom:to:!helpers!private! !
 
 !Kernel.Package class methodsFor!
 
+binaryPackageLoader
+	^#{Kernel.LegacyBinaryPackageLoader} valueOrNil
+		ifNil: [self error: 'Legacy binary package loading support is not available']!
+
 clashSignal
 	"Private - Answer the <Signal> which is raised should overlapping/clashing membership
 	be detected when attempting to install a package."
@@ -2177,7 +2189,7 @@ fromPACFile: pathname
 				ifTrue: 
 					[pacStream close.
 					pacStream := FileStream read: pathname text: false.
-					self binaryReadFrom: pacStream]
+					self binaryPackageLoader readFrom: pacStream]
 				ifFalse: 
 					[pacStream reset.
 					self readFrom: pacStream]]
@@ -2297,6 +2309,7 @@ unsaveableSignal
 
 	^UnsaveableSignal! !
 !Kernel.Package class categoriesForMethods!
+binaryPackageLoader!loading!private! !
 clashSignal!constants!private! !
 defaultSortBlock!constants!public! !
 errorInvalidPACFile:!exceptions!private! !

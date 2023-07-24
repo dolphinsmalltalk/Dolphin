@@ -127,13 +127,6 @@ next
 	traceStream cr.
 	^answer!
 
-objectAt: anInteger
-	"Private - Answer the map value at anInteger. If anInteger is zero then answer nil.
-	Signal an exception if there is no such entry."
-
-	^anInteger == 0
-		ifFalse: [(readMap lookup: anInteger) ifNil: [self class errorInconsistentSTB: anInteger]]!
-
 printOffsets
 	^printOffsets!
 
@@ -163,7 +156,6 @@ basicNext!accessing!private! !
 dump!operations!public! !
 initialize!initializing!private! !
 next!accessing!public! !
-objectAt:!accessing!private! !
 printOffsets!accessing!public! !
 printOffsets:!accessing!public! !
 readSizeBlock!operations!private! !

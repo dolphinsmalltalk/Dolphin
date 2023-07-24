@@ -151,7 +151,7 @@ bitmapWithExtent: aPoint
 				width: aPoint x
 				height: aPoint y
 				format: PixelFormat32bppPARGB.
-	graphics := bitmap graphics.
+	graphics := GdiplusGraphics fromImage: bitmap.
 	self
 		drawOnGraphics: graphics
 		at: Point.Zero

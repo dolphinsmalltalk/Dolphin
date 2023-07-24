@@ -20,6 +20,7 @@ package setPrerequisites: #(
 	'..\IDE\Base\Development System Tests'
 	'..\Base\Dolphin'
 	'..\Base\Tests\Dolphin Base Tests'
+	'..\System\Filer\Dolphin Binary Filer'
 	'..\..\Samples\MVP\Etch-a-Sketch\Etch-a-Sketch'
 	'..\..\Samples\MVP\Hello World\Hello World'
 	'..\..\Samples\Console\Hello World\Hello World (Console)'

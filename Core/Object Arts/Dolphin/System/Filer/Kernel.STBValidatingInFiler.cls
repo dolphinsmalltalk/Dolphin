@@ -34,7 +34,7 @@ next
 objectAt: anInteger
 	"Pre-registered classes in the serialised graph are written as direct references, so we need to look out for these implicit class references."
 
-	^(anInteger > PredefinedClassOffset and: [anInteger <= policy lastPredefined])
+	^(anInteger > policy predefinedClassOffset and: [anInteger <= policy lastPredefined])
 		ifTrue: [self classAt: anInteger]
 		ifFalse: [readMap at: anInteger]!
 
@@ -58,15 +58,5 @@ objectAt:!accessing!private! !
 registerAllClasses:!private! !
 validationBlock:!accessing!public! !
 validClasses:!public! !
-!
-
-!Kernel.STBValidatingInFiler class methodsFor!
-
-errorInvalidClass: aBindingReference
-	"Private - Signal an exception to warn that an input stream contains an invalid class."
-
-	STBError signal: ('Input stream contains an invalid class (<1d>)' expandMacrosWith: aBindingReference)! !
-!Kernel.STBValidatingInFiler class categoriesForMethods!
-errorInvalidClass:!exceptions!private! !
 !
 

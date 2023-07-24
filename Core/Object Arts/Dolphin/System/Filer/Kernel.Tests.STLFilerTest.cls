@@ -159,6 +159,50 @@ testIntegerReadWrite
 	contents := self checkSimpleReadWriteOf: int.
 	self assert: (contents includes: int)!
 
+testInvalidClassReference
+	| stl rehydrated |
+	stl := { #'!!STL'. 6. 38. Array. 2. 518. Association. #foo. 6. Object. 50. #bar. 96 }.
+	rehydrated := Object fromLiteralStoreArray: stl.
+	self assert: rehydrated size equals: 2.
+	self assert: rehydrated first key equals: #foo.
+	self assert: rehydrated second key equals: #bar.
+	self assert: rehydrated first value identicalTo: rehydrated second value.
+	"Now corrupt the stream by replacing the final class reference (to Association in the read map) with the ref index of an non-class object, and indices that are out of range"
+	#(6 -1 0 1234) do: 
+			[:i |
+			stl at: 11 put: (i bitShift: STBFiler.PrefixRefShift) | STBFiler.PrefixDataMask.
+			self
+				should: [Object fromLiteralStoreArray: stl]
+				raise: Error
+				matching: 
+					[:ex |
+					ex description = ('STBFiler - STL input stream contains an invalid class reference (<1d>)' << i)]]!
+
+testInvalidObjectReference
+	| stl rehydrated |
+	stl := { #'!!STL'. 6. 38. Array. 2. 6. Object. 64 }.
+	rehydrated := Object fromLiteralStoreArray: stl.
+	self assert: rehydrated size equals: 2.
+	self assert: rehydrated first identicalTo: rehydrated second.
+	"Now corrupt the stream by replacing the final class reference (to Association in the read map) with the ref index of an non-class object, and indices that are out of range"
+	#(6 -1 0 1234) do: 
+			[:i |
+			stl at: 8 put: (i bitShift: STBFiler.PrefixRefShift).
+			self
+				should: [Object fromLiteralStoreArray: stl]
+				raise: Error
+				matching: 
+					[:ex |
+					ex description = ('STBFiler - STL input stream is inconsistent (object <1d> referenced but not yet defined)' << i)]]!
+
+testInvalidPredefinedClass
+	"Test error for a reference to STBClassProxy, which is not expected in STL."
+
+	self
+		should: [	(STLInFiler on: #(#'!!STL' 5 82 8 'Dolphin' 8 'Core.Object') readStream) next]
+		raise: Error
+		matching: [:ex | ex description = 'STBFiler - STL input stream contains an invalid class (STBClassProxy)']!
+
 testInvalidStream
 	self should: [STLInFiler on: #('Test') readStream] raise: STBError.
 	self should: [STLInFiler on: #('!!STL' 9999) readStream] raise: STBError.
@@ -261,6 +305,9 @@ testClassReadWrite!public!unit tests! !
 testEmptyStream!public!unit tests! !
 testIntegerBytesStl4!public!unit tests! !
 testIntegerReadWrite!public!unit tests! !
+testInvalidClassReference!public!unit tests! !
+testInvalidObjectReference!public!unit tests! !
+testInvalidPredefinedClass!public!unit tests! !
 testInvalidStream!public!unit tests! !
 testStl3Literals!public!unit tests! !
 testStl4Literals!public!unit tests! !

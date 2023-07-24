@@ -173,7 +173,7 @@ UnregisterServer
 	| hr |
 
 	[
-		self coclasses do: [:coclass | coclass unregister].
+		self coclasses do: [:coclass | coclass unregisterComServer].
 		hr := S_OK.
 	] on: Error do: [:e |
 		e toTrace.

@@ -39,7 +39,7 @@ testEtchASketch
 	self verifyPackageClosure: env missing: #(#ttmRelayEvent: #defineTemplate).
 	"This isn't necessarily sufficient for InternalIcon, etc, to survive into the deployed app, but is necessary for that to be so."
 	self assert: (env includesClass: InternalIcon).
-	self assert: (env includesClass: STBOutFiler).
+	self deny: (env includesClass: STBOutFiler).
 	self assert: (env includesSelector: #owningPackage in: ClassDescription).
 	self deny: (env includesSelector: #owningPackage in: Class)!
 

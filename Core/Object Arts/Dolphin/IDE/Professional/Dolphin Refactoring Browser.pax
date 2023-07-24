@@ -347,6 +347,7 @@ package setPrerequisites: #(
 	'..\..\MVP\Views\Buttons\Dolphin Push Buttons'
 	'..\..\MVP\Views\Scintilla\Dolphin Scintilla View'
 	'..\..\MVP\Views\Splitter\Dolphin Splitter Control'
+	'..\..\System\Filer\Dolphin STB Filer'
 	'..\..\MVP\Presenters\Text\Dolphin Text Presenter'
 	'..\..\MVP\Icons\Dolphin Text Tile Icons'
 	'..\..\MVP\Views\Tooltips\Dolphin Tooltips'

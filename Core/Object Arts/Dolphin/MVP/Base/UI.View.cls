@@ -2094,7 +2094,7 @@ literalStoreOn: aStream
 	"Stores the receiver in a literal form on aStream that can be reconstituted using Object class>>literalReadFrom:.
 	We must arrange to snip this view from any parent hierarchy before the save"
 
-	self literalStoreOn: aStream version: STBFiler.STLFilerVersion!
+	self literalStoreOn: aStream version: STLOutFiler version!
 
 literalStoreOn: aStream version: anInteger
 	| viewProxy filer |

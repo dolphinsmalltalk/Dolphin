@@ -526,7 +526,11 @@ fileOutBinaryVariables
 					
 					[:each |
 					| stream |
-					stream := FileStream write: (self fileNameForBinaryVariable: each) text: true.
+					stream := FileStream write: (File
+										composePath: self path
+										stem: each asString
+										extension: 'ston')
+								text: true.
 					STON put: each value onStreamPretty: stream.
 					stream
 						cr;
@@ -551,13 +555,18 @@ fileOutNames
 	binary globals, etc. It does not include the source files for the	<sourceObject>s held by the 
 	receiver."
 
-	^self isSystemPackage
-		ifTrue: [Set with: self classDefinitionsFileName]
-		ifFalse: 
-			[Set new
-				add: self fileOutName;
-				addAll: (self binaryVariableNames collect: [:each | self fileNameForBinaryVariable: each]);
-				yourself]!
+	| fileExtension |
+	self isSystemPackage ifTrue: [^Set with: self classDefinitionsFileName].
+	fileExtension := self isLegacySourceFormat ifTrue: ['stb'] ifFalse: ['ston'].
+	^Set new
+		add: self fileOutName;
+		addAll: (self binaryVariableNames collect: 
+						[:each |
+						File
+							composePath: self path
+							stem: each path last
+							extension: fileExtension]);
+		yourself!
 
 fileOutOn: aSourceFiler
 	"Append the definition of the receiver in PAX format onto the

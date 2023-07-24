@@ -126,7 +126,7 @@ initialize
 				nil.
 				nil.
 				nil.
-				STLVersion5Policy.
+				nil.
 				STLVersion6Policy
 			}!
 

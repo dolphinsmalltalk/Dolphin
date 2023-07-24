@@ -709,6 +709,7 @@ package setMethodNames: #(
 	#(#{UI.ResourceIdentifier} #browse)
 	#(#{UI.ResourceIdentifier} #edit)
 	#(#{UI.ResourceIdentifier} #editViewUsing:)
+	#(#{UI.ResourceIdentifier} #hiddenObjects)
 	#(#{UI.ResourceIdentifier} #prompt)
 	#(#{UI.ResourceIdentifier} #publishedAspects)
 	#(#{UI.ResourceIdentifier} #reassign)
@@ -4622,7 +4623,7 @@ newInstanceAspect:class:!adapters!private! !
 !Kernel.AbstractChunkSourceFiler class methodsFor!
 
 stlVersion
-	^STBFiler.STLFilerVersion! !
+	^STLOutFiler version! !
 !Kernel.AbstractChunkSourceFiler class categoriesForMethods!
 stlVersion!constants!public! !
 !
@@ -8368,6 +8369,18 @@ editViewUsing: aMonadicBlock
 	self assignView: view.
 	view destroy!
 
+hiddenObjects
+	"Private - Answers a <collection> of the <Object>s that are contained in the receiver's resource
+	The View resources will not be realized as actual windows."
+
+	self resource
+		ifNil: [self error: 'Resource [' , owningClass fullName , '>>#' , selector , '] does not exist']
+		ifNotNil: 
+			[:resource |
+			^(STLInFiler on: resource readStream)
+				basicNext;
+				elements]!
+
 prompt
 	"Prompt for and answer a new ResourceIdentifier using the receiver to give the default settings."
 
@@ -8403,6 +8416,7 @@ assignView:!public! !
 browse!commands!public! !
 edit!operations!public! !
 editViewUsing:!operations!public! !
+hiddenObjects!accessing!private! !
 prompt!operations!public! !
 publishedAspects!constants!public! !
 reassign!public! !

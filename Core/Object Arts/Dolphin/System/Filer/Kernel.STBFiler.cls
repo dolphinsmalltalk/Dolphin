@@ -7,7 +7,6 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-			'PredefinedClassOffset' -> 16r4.
 			'PrefixBytesMask' -> 16r30.
 			'PrefixCharacterMask' -> 16r4.
 			'PrefixClassMask' -> 16r6.
@@ -23,8 +22,6 @@ Core.Object
 			'PrefixRefUnshift' -> -16r4.
 			'PrefixSmallIntegerMask' -> 16r1.
 			'PrefixVariableMask' -> 16r20.
-			'STBFormatName' -> 'STB'.
-			'STLFilerVersion' -> 16r6.
 			'STLFormatName' -> 'STL'
 		}!
 Kernel.STBFiler guid: (Core.GUID fromString: '{87b4c4c1-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -111,51 +108,21 @@ version!accessing!public! !
 
 !Kernel.STBFiler class methodsFor!
 
-errorInconsistentSTB: anObject
-	"Private - Signal an STBError indicating that the stream being
-	read contains inconsistent STB data."
-
-	STBError
-		signal: 'Input stream is inconsistent (object <1p> referenced but not yet defined)' << anObject!
-
-errorUnrecognisedClass: aClass version: version
-	"Private - Signal an STBError indicating that the STB data contains
-	instances of aClass of version that we don't know how to convert."
-
-	STBError signal: 'Input stream contains an unsupported version <1d> of <2p>' << { version. aClass }!
-
 formatName
 	"Private - Answer the format name."
 
-	^STBFormatName!
-
-initialize
-	self addClassConstant: 'STBSignature' value: '!!STB ' asByteArray!
+	^'STB'!
 
 on: aStream
 	"Answer a new instance attached to the binary stream aStream."
 
 	^self subclassResponsibility!
 
-version
-	"Private - Answer the version number of the format produced by the receiver.
-		Version 1 - Preregisters certain commonly occurring classes
-		Version 2 - Delegates save/load to class, format changed for certain pre-registered classes.
-		Version 3 - Only writes basicSize for objects of variable classes.
-		Version 4 - Literal filer stores true, false, Smalltalk, etc as literals rather than special predefined object indices, and stores the full set of atomic objects, and arrays of atomic objects, as literals, not just Strings, Symbols, Integers, ByteArrays, classes and pool dictionaries.
-		Version 5 - Fully-qualified class names written. Literal filer stores classes as fully-qualified BindingReferences."
-
-	^5!
-
 versionPolicyClass
 	^self subclassResponsibility! !
 !Kernel.STBFiler class categoriesForMethods!
-errorInconsistentSTB:!exceptions!private! !
-errorUnrecognisedClass:version:!exceptions!private! !
 formatName!constants!private! !
-initialize!constants!private! !
 on:!instance creation!public! !
-version!constants!private! !
 versionPolicyClass!constants!private! !
 !
 

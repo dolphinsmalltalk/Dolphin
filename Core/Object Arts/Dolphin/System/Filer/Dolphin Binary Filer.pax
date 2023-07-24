@@ -31,6 +31,7 @@ package setMethodNames: #(
 	#(#{Core.Object} #binaryStoreOn:)
 	#(#{Core.Object class} #binaryReadFrom:)
 	#(#{Core.Object class} #binaryReadFrom:context:)
+	#(#{Core.Object class} #fromBinaryStoreBytes:)
 	#(#{Core.Object class} #fromBinaryStoreBytes:context:)
 	#(#{Core.Stream} #binaryStore:)
 	#(#{Core.Symbol class} #stbReadFrom:format:size:)
@@ -270,6 +271,17 @@ binaryReadFrom: aStream context: anObject
 		context: anObject;
 		next!
 
+fromBinaryStoreBytes: aByteArray
+	"Answers an object read from its binary representation in aByteArray.
+	This must have been created using Object>>binaryStoreBytes"
+
+	| stream |
+	stream := aByteArray readStream.
+	^self binaryReadFrom: stream.
+
+
+!
+
 fromBinaryStoreBytes: aByteArray context: anObject
 	"Answers an object read from its binary representation in aByteArray.
 	This must have been created using Object>>binaryStoreBytes"
@@ -283,6 +295,7 @@ fromBinaryStoreBytes: aByteArray context: anObject
 !Core.Object class categoriesForMethods!
 binaryReadFrom:!binary filing!public! !
 binaryReadFrom:context:!binary filing!public! !
+fromBinaryStoreBytes:!binary filing!public! !
 fromBinaryStoreBytes:context:!binary filing!public! !
 !
 

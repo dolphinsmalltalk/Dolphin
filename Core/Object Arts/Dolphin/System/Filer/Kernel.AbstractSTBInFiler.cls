@@ -19,21 +19,25 @@ basicNext
 	^self subclassResponsibility!
 
 classAt: anInteger
-	"Private - Answer the map value for a class at anInteger. If anInteger is zero then answer nil.
+	"Private - Answer the map value for a class at anInteger.
 	Signal an exception if the class reference is invalid or not to one of the permitted classes."
 
 	| class |
-	class := readMap at: anInteger.
+	class := readMap lookup: anInteger.
 	class class isMeta
 		ifTrue: 
 			["Any class already in the read map must have passed any validator previously. Even the pre-defined classes are validated before addition."
 			^class].
-	(policy predefinedClasses lookup: anInteger - PredefinedClassOffset)
+	"The index did not identify a class."
+	(policy lookupPredefinedClass: anInteger)
 		ifNil: 
 			["Corrupt input stream - the reference object is not a class, e.g. a malicious user could construct a stream that loads an object of a valid class, and then direct the filer to treat it as the class of another entry by modifying the class reference to the reference generated for the prior object that is not actually a class."
 			STBError signal: '<1s> input stream contains an invalid class reference (<2d>)'
 						<< { self class formatName. anInteger }]
-		ifNotNil: [:predefined | self class errorInvalidClass: predefined asQualifiedReference]!
+		ifNotNil: 
+			[:predefined |
+			"A pre-defined class that is not among those allowed (e.g. when using an STBValidatingInFiler), so report the class that would have been  referenced if permitted."
+			self class errorInvalidClass: predefined asQualifiedReference]!
 
 classLocator
 	"Answer a <ClassLocator> for use in resolving classes from the receiver's input stream."
@@ -76,6 +80,18 @@ deferAction: aNiladicValuable
 
 	deferredActions isNil ifTrue: [deferredActions := OrderedCollection new].
 	deferredActions addLast: aNiladicValuable!
+
+elements
+	"Answer all the objects that have been read from the stream up to this point, disregarding any pre-registered classes or objects.
+	Once the deserialisation is complete, this should be the complete set of objects in the object graph, excluding pre-registered objects."
+
+	^readMap copyFrom: self policy lastPredefined + 1!
+
+errorUnrecognisedClass: aClass version: version
+	"Private - Signal an STBError indicating that the STB data contains
+	instances of aClass of version that we don't know how to convert."
+
+	STBError signal: 'Input stream contains an unsupported version <1d> of <2p>' << { version. aClass }!
 
 evaluateDeferredActions
 	"Private - Evaluate any deferred actions then clear the deferredActions collection."
@@ -120,12 +136,7 @@ next
 objectAt: anInteger
 	"Private - Answer the map value at anInteger. Signal an exception if there is no such entry."
 
-	^readMap at: anInteger!
-
-objects
-	"Answer the objects that have been read from the stream up to this point, disregarding any pre-registered classes or objects."
-
-	^readMap copyFrom: self policy lastPredefined + 1!
+	^(readMap lookup: anInteger) ifNil: [self class errorInconsistentSTB: anInteger]!
 
 policy: anObject
 	policy := anObject!
@@ -191,7 +202,7 @@ registerClass: aClass version: versionInteger prefix: prefixInteger
 				class: aClass
 				version: versionInteger
 				prefix: prefixInteger.
-	format converterBlock ifNil: [^STBFiler errorUnrecognisedClass: aClass version: versionInteger].
+	format converterBlock ifNil: [^self errorUnrecognisedClass: aClass version: versionInteger].
 	converters at: aClass put: format.
 	^aClass!
 
@@ -224,6 +235,8 @@ contents!enumerating!public! !
 converters!accessing!private! !
 convertObjectOfClass:size:format:!operations!private! !
 deferAction:!deferred actions!public! !
+elements!accessing!public! !
+errorUnrecognisedClass:version:!exceptions!private! !
 evaluateDeferredActions!deferred actions!private! !
 fixup:to:!operations!public! !
 initialize!initializing!private! !
@@ -233,7 +246,6 @@ isUpgrading!public!testing! !
 isUpgrading:!accessing!public! !
 next!operations!public! !
 objectAt:!accessing!private! !
-objects!accessing!private! !
 policy:!accessing!private! !
 readByteObject:!public! !
 readMap!accessing!private! !
@@ -252,6 +264,18 @@ stream:!initializing!private! !
 
 !Kernel.AbstractSTBInFiler class methodsFor!
 
+errorInconsistentSTB: anInteger
+	"Private - Signal an STBError indicating that the stream being read contains inconsistent STB data."
+
+	STBError signal: '<1s> input stream is inconsistent (object <2d> referenced but not yet defined)'
+				<< { self formatName. anInteger }!
+
+errorInvalidClass: aBindingReference
+	"Private - Signal an exception to warn that an input stream contains an invalid class."
+
+	STBError signal: '<1s> input stream contains an invalid class (<2d>)'
+				<< { self formatName. aBindingReference }!
+
 on: aStream
 	"Answer a new instance attached to the binary stream aStream."
 
@@ -262,6 +286,8 @@ peekForSignatureIn: aReadStream
 
 	^self versionPolicyClass peekForSignatureIn: aReadStream! !
 !Kernel.AbstractSTBInFiler class categoriesForMethods!
+errorInconsistentSTB:!exceptions!private! !
+errorInvalidClass:!exceptions!private! !
 on:!instance creation!public! !
 peekForSignatureIn:!public!testing! !
 !

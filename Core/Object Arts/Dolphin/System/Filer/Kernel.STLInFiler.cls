@@ -64,17 +64,10 @@ formatName
 
 	^STLFormatName!
 
-version
-	"Private - Answer the version number of the format produced by the receiver.
-		Version 5 - Literal filer saves class locators as BindingReferences"
-
-	^STLFilerVersion!
-
 versionPolicyClass
 	^STLVersionPolicy! !
 !Kernel.STLInFiler class categoriesForMethods!
 formatName!constants!private! !
-version!public! !
 versionPolicyClass!constants!private! !
 !
 

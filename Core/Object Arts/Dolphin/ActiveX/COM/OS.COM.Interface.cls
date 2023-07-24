@@ -969,7 +969,7 @@ onExit
 	"Ensure all the receiver's subinstances are in their clean state on exit
 	so that they have released any external resources they are holding."
 
-	ClassFactory onExit.
+	#{ClassFactory} valueOrNil ifNotNil: [:classFactory | classFactory onExit].
 	self primAllSubinstances do: [:i | i onExit].
 	ObjectStub onExit
 	!
@@ -982,7 +982,7 @@ onStartup
 	self primAllSubinstances do: [:i | i onStartup].
 	Processor unregisterCOMStubs.					"remove old COM stubs (now invalid)"
 	ObjectStub onStartup.						"clear down any old registy entries"
-	ClassFactory onStartup					"now safe to register class factories"!
+	#{ClassFactory} valueOrNil ifNotNil: [:classFactory | classFactory onStartup]					"now safe to register class factories"!
 
 queryOn: server
 	"Answer a pointer to a (new or existing) instance of the receiver suitable for use
