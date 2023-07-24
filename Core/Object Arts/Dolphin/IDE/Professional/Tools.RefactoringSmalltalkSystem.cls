@@ -632,7 +632,9 @@ inlineMessage: aStMessageNode inMethod: aSelector of: aBehavior
 					[| binding |
 					binding := receiver binding.
 					(binding isClassBinding and: [binding value respondsTo: aStMessageNode selector])
-						ifTrue: [refactoring inlineClass: (binding value classInModel: refactoring model) metaclass]]].
+						ifTrue: 
+							[refactoring inlineClass: ((binding value classInModel: refactoring model) metaclass
+										whoDefinesMethod: aStMessageNode selector)]]].
 	self performRefactoring: refactoring!
 
 inlineParameter: aString from: aSelector in: aClass
