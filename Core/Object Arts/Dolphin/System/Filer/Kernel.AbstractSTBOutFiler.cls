@@ -250,9 +250,20 @@ on: aStream
 on: aStream version: anInteger
 	"Answer a new instance attached to the binary stream aStream."
 
-	^self new stream: aStream version: anInteger! !
+	^self new stream: aStream version: anInteger!
+
+version
+	"Private - Answer the version number of the format produced by the receiver.
+		Version 1 - Preregisters certain commonly occurring classes
+		Version 2 - Delegates save/load to class, format changed for certain pre-registered classes.
+		Version 3 - Only writes basicSize for objects of variable classes.
+		Version 4 - Literal filer stores true, false, Smalltalk, etc as literals rather than special predefined object indices, and stores the full set of atomic objects, and arrays of atomic objects, as literals, not just Strings, Symbols, Integers, ByteArrays, classes and pool dictionaries.
+		Version 5 - Fully-qualified class names written. Literal filer stores classes as fully-qualified BindingReferences."
+
+	^5! !
 !Kernel.AbstractSTBOutFiler class categoriesForMethods!
 on:!instance creation!public! !
 on:version:!instance creation!public! !
+version!constants!private! !
 !
 

@@ -911,7 +911,9 @@ setName: aSymbolOrNil environment: aNamespace
 shortName
 	"Answer the shortest <String> name of the receiver that is bindable from Smalltalk. i.e. for classes defined directly in Smalltalk, or in any of its imports, this will be an unqualified name. Otherwise it is the fully qualified name relative to Smalltalk."
 
-	^name ifNil: [super name] ifNotNil: [environment shortNameFor: name]!
+	^name
+		ifNil: [super name]
+		ifNotNil: [environment ifNil: [fullName] ifNotNil: [environment shortNameFor: name]]!
 
 shortNameFor: aString
 	"Private - Answer the short name for the receiver's variable named, aString. The short name is the shortest name that binds to variable starting from the Smalltalk namespace. This may be unqualified, partially qualified, or fully-qualified."

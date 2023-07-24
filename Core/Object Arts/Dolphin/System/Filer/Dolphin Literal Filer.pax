@@ -18,6 +18,7 @@ package setClassNames: #(
 	#{Kernel.STLVersion5Policy}
 	#{Kernel.STLVersion6Policy}
 	#{Kernel.STLVersionPolicy}
+	#{Kernel.STLVersionPolicyForNamespaces}
 ).
 
 package setMethodNames: #(
@@ -95,13 +96,37 @@ Kernel.STBVersionPolicy
 	classInstanceVariableNames: ''
 	classConstants: { 'Signature' -> #'!!STL' }!
 Kernel.STLVersionPolicy
-	subclass: #'Kernel.STLVersion5Policy'
+	subclass: #'Kernel.STLVersionPolicyForNamespaces'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.STLVersion5Policy
+Kernel.STLVersionPolicyForNamespaces
+	subclass: #'Kernel.STLVersion5Policy'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'PredefinedClassesV5' -> {
+						AnsiString.
+						Array.
+						ByteArray.
+						LargeInteger.
+						#STBClassProxy.
+						#STBMetaclassProxy.
+						Symbol.
+						STBCollectionProxy.
+						OrderedCollection.
+						STBIdentityDictionaryProxy.
+						LookupTable.
+						IdentityDictionary.
+						Utf8String.
+						Utf16String
+					}
+		}!
+Kernel.STLVersionPolicyForNamespaces
 	subclass: #'Kernel.STLVersion6Policy'
 	instanceVariableNames: ''
 	classVariableNames: ''

@@ -62,7 +62,18 @@ testBlockClass
 		raise: STBError
 		matching: 
 			[:ex |
-			ex description = 'STBFiler - Input stream contains an invalid class (XProgramming.SUnit.TestCase)']!
+			ex description = 'STBFiler - STB input stream contains an invalid class (XProgramming.SUnit.TestCase)']!
+
+testDisallowedPredefinedClass
+	"Test error for a predefined class that is not among the allowed classes."
+
+	| bytes |
+	locator excludeClass: Array.
+	bytes := #[33 83 84 66 32 53 32 98 0 0 0 3 0 0 0 3 0 0 0 5 0 0 0 7 0 0 0].
+	self
+		should: [self deserialize: bytes]
+		raise: Error
+		matching: [:ex | ex description = 'STBFiler - STB input stream contains an invalid class (Core.Array)']!
 
 testEggsBeforeChicken
 	"In the original STB version, there was an obscure boundary case where String and STBClassFormat classes could not be deserialised from the STB bytes. This was fixed in v1 by pre-registering certain classes."
@@ -109,7 +120,7 @@ testSecureByDefault
 					raise: STBError
 					matching: 
 						[:ex |
-						ex description = ('STBFiler - Input stream contains an invalid class (<1s>)' << class fullName)]].
+						ex description = ('STBFiler - STB input stream contains an invalid class (<1s>)' << class fullName)]].
 	{ LookupTable with: 123 -> 456. IdentityDictionary with: 123 -> 456 } do: 
 			[:each |
 			| filer |
@@ -120,7 +131,7 @@ testSecureByDefault
 				matching: 
 					[:ex |
 					ex description
-						= 'STBFiler - Input stream contains an invalid class (Kernel.STBIdentityDictionaryProxy)']]!
+						= 'STBFiler - STB input stream contains an invalid class (Kernel.STBIdentityDictionaryProxy)']]!
 
 testSortedCollection
 	locator includeClass: STBSortedCollectionProxy.
@@ -156,6 +167,7 @@ setUp!public!running! !
 testArrayClass0!public!unit tests! !
 testArrayMetaclass0!public!unit tests! !
 testBlockClass!public!unit tests! !
+testDisallowedPredefinedClass!public!unit tests! !
 testEggsBeforeChicken!public!unit tests! !
 testEggsBeforeChickenVersion0!public!unit tests! !
 testSecureByDefault!public!unit tests! !

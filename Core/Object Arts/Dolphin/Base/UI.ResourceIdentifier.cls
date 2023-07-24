@@ -54,29 +54,6 @@ hash
 
 	^owningClass hash bitXor: self name hash!
 
-hiddenClasses
-	"Private - Answers a <collection> of the <Class>es that are referenced directly or indirectly (i.e. as instances) in the receiver's resource."
-
-	#{Kernel.STLClassCollector} valueOrNil
-		ifNotNil: [:stlInFilerClass | self resource ifNotNil: [:resource | ^(stlInFilerClass on: resource readStream) contents]].
-	^#()!
-
-hiddenObjects
-	"Private - Answers a <collection> of the <Object>s that are contained in the receiver's resource
-	The View resources will not be realized as actual windows."
-
-	#{Kernel.STLInFiler} valueOrNil
-		ifNotNil: 
-			[:stlInFilerClass |
-			self resource
-				ifNil: [self error: 'Resource [' , owningClass fullName , '>>#' , selector , '] does not exist']
-				ifNotNil: 
-					[:resource |
-					^(stlInFilerClass on: resource readStream)
-						basicNext;
-						objects]].
-	^#()!
-
 icon: anIcon
 	anIcon isNil
 		ifTrue: [self removePropertyAt: #icon ifAbsent: nil]
@@ -170,8 +147,6 @@ copy!copying!public! !
 exists!public!testing! !
 exportedFileName!accessing!development!private! !
 hash!comparing!public! !
-hiddenClasses!accessing!private! !
-hiddenObjects!accessing!private! !
 icon:!accessing!public! !
 isChanged!development!public!source filing!testing! !
 isChanged:!development!public!source filing! !

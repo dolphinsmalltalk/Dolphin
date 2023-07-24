@@ -22,7 +22,7 @@ alpha: anAlphaInteger
 	"Answer a `Color` which has the same red, green and blue components as the receiver, but with the <integer> alpha, anAlphaInteger.
 	The alpha component is expected to be in the range [0,255], but is clamped to that if not."
 
-	^ColorAlpha color: color alpha: alpha * (anAlphaInteger clampBetween: 0 and: 255) // 255!
+	^self class color: color alpha: alpha * (anAlphaInteger clampBetween: 0 and: 255) // 255!
 
 isOpaque
 	"Answer whether this <Color> is completely opaque."

@@ -40,7 +40,7 @@ And to examine the content:
 ```
 Smalltalk developmentSystem browseDeploymentLog: ''dcalc.xml''.
 "Or just view the log"
-XmlPad filename: ''dcalc.xml''
+UI.Examples.XmlPad filename: ''dcalc.xml''
 ```
 '.
 

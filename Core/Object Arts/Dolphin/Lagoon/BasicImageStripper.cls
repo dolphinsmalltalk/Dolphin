@@ -361,29 +361,32 @@ _removeClassBuilder: anArray
 _removeClassMetaInfo
 	"Private - Remove all (presumably) redundant class info"
 
-	self stripClassInfo
-		ifTrue: 
-			[| keepInstVars |
-			self _startElement: 'RemoveClassMetaInfo' attributes: #().
-			keepInstVars := self retainInstVarNames.
-			Class allClassesDo: 
-					[:each |
-					| classPool newPool |
-					"We used to empty the class pool entirely here, but it is certainly not safe to do that for Namespace classes.
+	| keepInstVars |
+	self stripClassInfo ifFalse: [^self].
+	self _startElement: 'RemoveClassMetaInfo' attributes: #().
+	keepInstVars := self retainInstVarNames.
+	Class allClassesDo: 
+			[:each |
+			| classPool newPool |
+			"We used to empty the class pool entirely here, but it is certainly not safe to do that for Namespace classes.
 					We now remove all the class vars and clear the environment back pointer."
-					classPool := each classPool.
-					newPool := classPool class new.
-					classPool
-						associationsDo: [:var | var isClassVariable ifTrue: [var environment: nil] ifFalse: [newPool add: var]].
-					each basicClassPool: newPool.
+			classPool := each classPool.
+			newPool := classPool class new.
+			classPool
+				associationsDo: [:var | var isClassVariable ifTrue: [
+					Notification signal: 'niling environment of ', var fullName.
+					var environment: nil] ifFalse: [
+					Notification signal: 'Retained non-class variable binding ', var fullName.
+					newPool add: var]].
+			each basicClassPool: newPool.
 
-					"We can't nil out the imports in general, as these are required to resolve BindingReferences that are not fully qualified."
+			"We can't nil out the imports in general, as these are required to resolve BindingReferences that are not fully qualified."
 
-					"each imports: #()."
+			"each imports: #()."
 
-					"If retaining inst vars, they are collapsed into a string for compactness"
-					each instanceVariableString: (keepInstVars ifTrue: [each instanceVariableString])].
-			self _endTag]!
+			"If retaining inst vars, they are collapsed into a string for compactness"
+			each instanceVariableString: (keepInstVars ifTrue: [each instanceVariableString])].
+	self _endTag!
 
 _removeClassUninstallation: aCollection
 	"Private - Removal of classes has finished. If the image doesn't have the ClassBuilder in it, 
@@ -922,38 +925,8 @@ BasicImageStripper methodProtocol: #model attributes: #(#readOnly) selectors: #(
 !BasicImageStripper class methodsFor!
 
 new
-	^super new initialize!
-
-stbConvertFrom: anSTBClassFormat
-	"Private - Convert from previous version resource. 
-	Version Changes:
-		1: Added 'events' instance variable to Model."
-
-	^
-	[:data |
-	| answer instVars |
-	instVars := anSTBClassFormat version < 1
-				ifTrue: 
-					[| c |
-					c := data size + 1.
-					(Array new: c)
-						replaceFrom: 2
-							to: c
-							with: data
-							startingAt: 1;
-						yourself]
-				ifFalse: [data].
-	answer := self basicNew.
-	1 to: instVars size do: [:i | answer instVarAt: i put: (instVars at: i)].
-	answer]!
-
-stbVersion
-	"Answer the current binary filer version number for instances of the receiver."
-
-	^1! !
+	^super new initialize! !
 !BasicImageStripper class categoriesForMethods!
 new!development!instance creation!public! !
-stbConvertFrom:!binary filing!development!private! !
-stbVersion!binary filing!development!public! !
 !
 

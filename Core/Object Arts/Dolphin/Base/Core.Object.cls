@@ -1293,13 +1293,6 @@ species
 	<primitive: 111>
 	^self primitiveFailed: _failureCode!
 
-stbFixup: anSTBInFiler at: newObjectIndex
-	"Answer the true object that must be used to represent the receiver when read from anSTBInFiler.
-	Typically this is overridden by subclasses of STBProxy to answer the proxied object. Other classes
-	may also override this method to effectively 'one way become' the receiver to some other object"
-
-	^self!
-
 storeOn: aStream
 	"Append to the <puttableStream> argument, target, an expression which when 
 	evaluated will answer a collection similar to the receiver."
@@ -1639,7 +1632,6 @@ shallowCopy!copying!public! !
 shouldNotImplement!exceptions!public! !
 size!accessing!public! !
 species!accessing!public! !
-stbFixup:at:!binary filing!public! !
 storeOn:!printing!public! !
 storeString!printing!public! !
 subclassResponsibility!exceptions!public! !
@@ -1666,17 +1658,6 @@ yourself!accessing!public! !
 Core.Object methodProtocol: #Object attributes: #(#ansi #readOnly) selectors: #(#~~ #~= #= #== #class #copy #doesNotUnderstand: #error: #hash #identityHash #isKindOf: #isMemberOf: #isNil #notNil #perform: #perform:with: #perform:with:with: #perform:with:with:with: #perform:withArguments: #printOn: #printString #respondsTo: #yourself)!
 
 !Core.Object class methodsFor!
-
-fromBinaryStoreBytes: aByteArray
-	"Answers an object read from its binary representation in aByteArray.
-	This must have been created using Object>>binaryStoreBytes"
-
-	| stream |
-	stream := aByteArray readStream.
-	^self binaryReadFrom: stream.
-
-
-!
 
 initialize
 	"Initialise the receiver's class variables
@@ -1734,7 +1715,6 @@ resourcesLocator
 
 	^SessionManager current resourcesLocatorForClass: self! !
 !Core.Object class categoriesForMethods!
-fromBinaryStoreBytes:!binary filing!public! !
 initialize!development!initializing!public! !
 initializeDependencyMechanism!initializing!private! !
 initializeEventsRegister!initializing!private! !

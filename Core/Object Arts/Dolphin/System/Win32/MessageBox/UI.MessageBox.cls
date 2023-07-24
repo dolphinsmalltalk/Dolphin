@@ -402,18 +402,10 @@ footerText: aString
 	self setElement: TDE_FOOTER text: (footerText := aString)!
 
 getDefaultButton
-	| status buf |
-	buf := ByteArray newFixed: 8.
-	buf uint32AtOffset: 4 put: 4.
-	status := AdvApi32
-				regGetValue: HKEY_CURRENT_USER
-				lpSubKey: self defaultablesKeyName
-				lpValue: self uniqueId displayString
-				dwFlags: RRF_RT_DWORD
-				pdwType: nil
-				pvData: buf
-				pcbData: buf yourAddress + 4.
-	^status == ERROR_SUCCESS ifTrue: [buf uint32AtOffset: 0]!
+	^AdvApi32
+		regGetUInt32: HKEY_CURRENT_USER
+		key: self defaultablesKeyName
+		value: self uniqueId displayString!
 
 getEvents
 	"Private - Answer the EventsCollection belonging to the receiver, or nil if the receiver has no events registered for it"
@@ -635,19 +627,10 @@ isSizedToContent: aBoolean
 isSuppressed
 	"Answer whether this message has been previously suppressed by the current user."
 
-	| sizeBuf status buf |
-	buf := Utf16String newFixed: 2.	"Note that the value must be 'NO'. Anything else appears to be ignored."
-	sizeBuf := ByteArray newFixed: 4.
-	sizeBuf uint32AtOffset: 0 put: buf byteSize.
-	status := AdvApi32
-				regGetValue: HKEY_CURRENT_USER
-				lpSubKey: self suppressionsKeyName
-				lpValue: self globallyUniqueId
-				dwFlags: RRF_RT_REG_SZ
-				pdwType: nil
-				pvData: buf
-				pcbData: sizeBuf.
-	^status == ERROR_SUCCESS and: [buf = 'NO']!
+	^(AdvApi32
+		regGetString: HKEY_CURRENT_USER
+		key: self suppressionsKeyName
+		value: self globallyUniqueId) = 'NO'!
 
 isSuppressible
 	"Answer whether this message box will be give the user the option of not seeing further occurrences with the same uniqueId in the future."

@@ -29,6 +29,8 @@ package setMethodNames: #(
 	#(#{Smalltalk.BasicImageStripper} #getEvents)
 	#(#{Smalltalk.BasicImageStripper} #postCopy)
 	#(#{Smalltalk.BasicImageStripper} #setEvents:)
+	#(#{Smalltalk.BasicImageStripper class} #stbConvertFrom:)
+	#(#{Smalltalk.BasicImageStripper class} #stbVersion)
 	#(#{Smalltalk.ImageStripper} #canDeploy)
 	#(#{Smalltalk.ImageStripper} #compileExternalStructures:)
 	#(#{Smalltalk.ImageStripper} #defaultSessionManagerClass)
@@ -224,6 +226,40 @@ setEvents: anEventsCollectionOrNil
 getEvents!events!private! !
 postCopy!copying!public! !
 setEvents:!events!private! !
+!
+
+!BasicImageStripper class methodsFor!
+
+stbConvertFrom: anSTBClassFormat
+	"Private - Convert from previous version resource. 
+	Version Changes:
+		1: Added 'events' instance variable to Model."
+
+	^
+	[:data |
+	| answer instVars |
+	instVars := anSTBClassFormat version < 1
+				ifTrue: 
+					[| c |
+					c := data size + 1.
+					(Array new: c)
+						replaceFrom: 2
+							to: c
+							with: data
+							startingAt: 1;
+						yourself]
+				ifFalse: [data].
+	answer := self basicNew.
+	1 to: instVars size do: [:i | answer instVarAt: i put: (instVars at: i)].
+	answer]!
+
+stbVersion
+	"Answer the current binary filer version number for instances of the receiver."
+
+	^1! !
+!BasicImageStripper class categoriesForMethods!
+stbConvertFrom:!binary filing!development!private! !
+stbVersion!binary filing!development!public! !
 !
 
 !ImageStripper methodsFor!

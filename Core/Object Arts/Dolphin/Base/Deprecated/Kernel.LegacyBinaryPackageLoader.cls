@@ -215,25 +215,19 @@ icon
 loadPackage: aPackage
 	(self package: aPackage) load!
 
-on: aStream
-	^self new
-		package: aStream;
-		yourself!
-
 package: aPackage
 	^self new
 		package: aPackage;
 		yourself!
 
-readBinaryPackageFile: aString
-	| stream |
-	stream := FileStream read: aString text: false.
-	^(self on: stream) loadPackage! !
+readFrom: aReadStream
+	| package |
+	package := (STBInFiler on: aReadStream) next.
+	^(package isKindOf: Package) ifTrue: [package]! !
 !Kernel.LegacyBinaryPackageLoader class categoriesForMethods!
-icon!public! !
-loadPackage:!public! !
-on:!public! !
-package:!public! !
-readBinaryPackageFile:!public! !
+icon!constants!public! !
+loadPackage:!operations!public! !
+package:!instance creation!public! !
+readFrom:!operations!public! !
 !
 

@@ -48,8 +48,12 @@ initialize
 	self initialize
 	"
 
-	Versions at: 4+1 put: self! !
+	Versions at: 4+1 put: self!
+
+uninitialize
+	Versions at: 4+1 put: nil! !
 !Kernel.STLVersion4Policy class categoriesForMethods!
 initialize!class initialization!public! !
+uninitialize!class hierarchy-removing!public! !
 !
 

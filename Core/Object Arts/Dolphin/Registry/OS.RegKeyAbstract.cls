@@ -125,29 +125,6 @@ copyingClass
 
 	^Dictionary!
 
-createKey: aString
-	"Create or open a registry key under the receiver with the specified <readableString> relative path from here (note that this implies that more than one level can be created at once, and this is indeed the case, although only up to 32 levels can be created this way). Answers the new key."
-
-	| utf16 subHandle needsFree |
-	needsFree := self realize.
-	"This FFI function is declared with errno return type, so will throw an exception automatically; we don't need to check the return value here"
-	AdvApi32
-		regCreateKeyEx: handle
-		lpSubKey: (utf16 := aString asUtf16String)
-		reserved: nil
-		lpClass: nil
-		dwOptions: REG_OPTION_NON_VOLATILE
-		samDesired: sam
-		lpSecurityAttributes: nil
-		phkResult: (subHandle := Handle new)
-		lpdwDisposition: nil.
-	keyInfo := nil.	"keyInfo invalidated"
-	needsFree ifTrue: [self free].
-	^(self newSubKey: utf16 sam: sam)
-		handle: subHandle;
-		beFinalizable;
-		yourself!
-
 displayOn: aPuttableStream
 	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
@@ -265,29 +242,6 @@ name
 
 name: aString
 	name := aString!
-
-newSubKey: aString sam: anInteger
-	^(aString
-		nextIdentityIndexOf: $\
-		from: 1
-		to: aString size) == 0
-		ifTrue: 
-			[RegKey
-				tally: nil
-				name: aString
-				parentPath: self pathFromRoot
-				rootKey: rootKey
-				sam: anInteger]
-		ifFalse: 
-			[| path splits |
-			path := self pathFromRoot.
-			splits := self splitPath: (path isEmpty ifTrue: [aString] ifFalse: [path , PathSeparator , aString]).
-			RegKey
-				tally: nil
-				name: (splits at: 2)
-				parentPath: (splits at: 1)
-				rootKey: rootKey
-				sam: anInteger]!
 
 noneAtPut: aString
 	"Write a REG_NONE value to the receiver's registry key with the <readableString> name, aString. As a special case if the value name is nil, then the default value is removed."
@@ -808,7 +762,6 @@ basicValueAt:put:type:size:!accessing!public! !
 binaryAt:put:!accessing!public! !
 bytesAt:put:as:!public!serializing! !
 copyingClass!copying!private! !
-createKey:!adding!public! !
 displayOn:!displaying!public! !
 do:!enumerating!public! !
 dwordAt:put:!accessing!public! !
@@ -830,7 +783,6 @@ lookup:!accessing!public! !
 mode:!accessing!public! !
 name!accessing!public! !
 name:!initializing!private! !
-newSubKey:sam:!helpers!private! !
 noneAtPut:!accessing!public! !
 objectFromValue:type:size:!helpers!private! !
 parentKey!accessing!public! !

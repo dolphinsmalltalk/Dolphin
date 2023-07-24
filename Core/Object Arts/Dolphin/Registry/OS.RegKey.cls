@@ -84,6 +84,29 @@ basicAt: aString put: aByteObject type: anInteger
 	keyInfo := nil.
 	^aByteObject!
 
+createKey: aString
+	"Create or open a registry key under the receiver with the specified <readableString> relative path from here (note that this implies that more than one level can be created at once, and this is indeed the case, although only up to 32 levels can be created this way). Answers the new key."
+
+	| utf16 subHandle needsFree |
+	needsFree := self realize.
+	"This FFI function is declared with errno return type, so will throw an exception automatically; we don't need to check the return value here"
+	AdvApi32
+		regCreateKeyEx: handle
+		lpSubKey: (utf16 := aString asUtf16String)
+		reserved: nil
+		lpClass: nil
+		dwOptions: REG_OPTION_NON_VOLATILE
+		samDesired: sam
+		lpSecurityAttributes: nil
+		phkResult: (subHandle := Handle new)
+		lpdwDisposition: nil.
+	keyInfo := nil.	"keyInfo invalidated"
+	needsFree ifTrue: [self free].
+	^(self newSubKey: utf16 sam: sam)
+		handle: subHandle;
+		beFinalizable;
+		yourself!
+
 fileOutOn: aStream
 	"File out the receiver in the regedit text representation to the <puttableStream> argument."
 
@@ -121,7 +144,7 @@ keysAndValuesDo: aDyadicValuable
 	^self subKeyNamesDo: 
 			[:each |
 			aDyadicValuable value: each
-				value: (RegKey
+				value: (self class
 						tally: nil
 						name: each
 						parentPath: path
@@ -132,6 +155,29 @@ keysDo: aMonadicValuable
 	"Evaluate the <monadicValuable> argument for each of the receiver's sub-key names."
 
 	^self subKeyNamesDo: aMonadicValuable!
+
+newSubKey: aString sam: anInteger
+	^(aString
+		nextIdentityIndexOf: $\
+		from: 1
+		to: aString size) == 0
+		ifTrue: 
+			[self class
+				tally: nil
+				name: aString
+				parentPath: self pathFromRoot
+				rootKey: rootKey
+				sam: anInteger]
+		ifFalse: 
+			[| path splits |
+			path := self pathFromRoot.
+			splits := self splitPath: (path isEmpty ifTrue: [aString] ifFalse: [path , PathSeparator , aString]).
+			self class
+				tally: nil
+				name: (splits at: 2)
+				parentPath: (splits at: 1)
+				rootKey: rootKey
+				sam: anInteger]!
 
 removeAssociationAt: anObject ifAbsent: aNiladicValuable
 	"Remove the key and value association with the specified key from the receiver. If the key is not in the receiver, return the result of evaluating the <NiladicValuable>, aNiladicValuable. Otherwise, answer the removed <association>."
@@ -173,10 +219,12 @@ at:ifAbsent:!accessing!public! !
 at:put:!accessing!public! !
 at:put:type:!public! !
 basicAt:put:type:!public! !
+createKey:!adding!public! !
 fileOutOn:!public!storing! !
 includesKey:!public!searching! !
 keysAndValuesDo:!enumerating!public! !
 keysDo:!enumerating!public! !
+newSubKey:sam:!helpers!private! !
 removeAssociationAt:ifAbsent:!public!removing! !
 removeKey:ifAbsent:!public!removing! !
 size!accessing!public! !

@@ -65,9 +65,8 @@ _actualRequiredPackages
 	"Private - Answers a <Set> of the actual Packages required by the application taking account 
 	of those that are prerequisites of those explicitly listed as required."
 
-	| names required pacman |
+	| names required pacman mypackage |
 	names := self requiredPackageNames.
-	names add: 'Lagoon Image Stripper'.	"Not a good idea to uninstall this"
 	pacman := self _systemPackageManager.
 	required := Set new.
 	names do: 
@@ -78,6 +77,14 @@ _actualRequiredPackages
 					required
 						add: package;
 						addAll: package allPrerequisites]].
+	"If the app doesn't require STL, then it doesn't contain any literal resources that we need to trace as part of the object graph, so we can break our own dependency on the package so that it is uninstalled up front"
+	(required includes: #{Kernel.STLClassCollector} value owningPackage)
+		ifFalse: [self _finishedWithAll: #(#_hiddenClassReferencesInResourceMethod:)].
+	"We need to ensure that our own pre-reqs are not uninstalled until we no longer need them"
+	mypackage := self class owningPackage.
+	required
+		add: mypackage;
+		addAll: mypackage allPrerequisites.
 	^required!
 
 _addClassesReferencedByClass: aClass to: aSet
@@ -105,7 +112,7 @@ _addReferencedViews: resid to: referenced
 	stbProxy := #{UI.STBViewProxy} valueOrNil.
 	(refView isNil or: [stbProxy isNil]) ifTrue: [^self].
 	idIndex := refView superclass instSize - 1.
-	proxies := resid hiddenObjects
+	proxies := (self hiddenObjectsInResource: resid)
 				select: [:each | (each isKindOf: stbProxy) and: [each viewClass == refView]].
 	proxies do: 
 			[:each |
@@ -284,10 +291,6 @@ _clearChangedProperties
 
 	Class allSubinstances do: [:b | b isChanged: false]!
 
-_clearSharedPoolConstantsEnvironmentReferences
-	SharedPool allSubclasses do: [:each | each bindingsDo: [:var | var environment: nil]].
-	self _finishedWithAll: #(#_clearSharedPoolConstantsEnvironmentReferences)!
-
 _closeAllDevelopmentTools
 	"Private - Forcibly close all development tools so that they may be stripped from the image."
 
@@ -440,7 +443,7 @@ _findPotentialAspectAccessorsIn: aClass excluding: aCollection
 
 _finishedStrippingResources
 	self
-		_finishedWithAll: #(#_addReferencedViews:to: #_allResourcesStripped #_resourcesForClasses: #_scanResourcesForViewReferences: #_removeRedundantResources: #_deleteResources:reason: #_deleteResource:)!
+		_finishedWithAll: #(#_addReferencedViews:to: #_allResourcesStripped #_resourcesForClasses: #_scanResourcesForViewReferences: #_removeRedundantResources: #_deleteResources:reason: #_deleteResource: #hiddenObjectsInResource:)!
 
 _finishedWithAll: aCollectionOfSymbols
 	| methods |
@@ -781,7 +784,7 @@ _logRemainingSharedVariables
 				ifFalse: 
 					[self
 						_logElement: 'VariableBinding'
-						attributes: #()
+						attributes: { 'isClassVariable' -> each isClassVariable }
 						value: each fullName]].
 	self _endElement: true!
 
@@ -931,8 +934,6 @@ _packageDrivenStage
 	self
 		_buildPreservedMessages;
 		_logPreservedMessages.
-	"The environment pointers from the variable bindings of pool constants are not needed. We nil them out early while they are easier to reach, but only after determing package pre-requisites."
-	self _clearSharedPoolConstantsEnvironmentReferences.
 	self _snapshotRootClasses.
 	self _logPreservedClasses.
 	self _collectGarbage: 3!
@@ -1054,7 +1055,7 @@ _referencesFromObjectsInClasses: aCollection
 
 	"Add all messages that can be triggered by events"
 	_EventsRegister
-		do: [:each | each do: [:mseq | mseq messages do: [:ms | messageMap at: ms put: {ms selector}]]].
+		do: [:each | each do: [:mseq | mseq messages do: [:ms | messageMap at: ms put: { ms selector }]]].
 
 	"Note that we don't add the preserved aspect setters to the sent messages as this would prevent removal of non-aspect setter 
 	methods with the same selectors. Rather we prebuild a collection of potential aspect setters, and block deletion of these."
@@ -1064,7 +1065,7 @@ _referencesFromObjectsInClasses: aCollection
 			[:eachResId |
 			| hiddenSymbols |
 			hiddenSymbols := Set new.
-			eachResId hiddenObjects do: 
+			(self hiddenObjectsInResource: eachResId) do: 
 					[:eachObject |
 					(eachObject class conformsToProtocol: #messageSender)
 						ifTrue: 
@@ -1638,6 +1639,14 @@ exeFileExtension
 
 	^self runtimeSessionManagerClass asSessionManagerClass imageExtension!
 
+hiddenObjectsInResource: aResourceIdentifier
+	| filer resource |
+	filer := #{Kernel.STLInFiler} valueOrNil.
+	(filer isNil or: [(resource := aResourceIdentifier resource) isNil]) ifTrue: [^#()].
+	^(filer on: resource readStream)
+		basicNext;
+		elements!
+
 ignoreViewReferences
 	"Answer whether view resources should NOT be scanned for references to other
 	view resources."
@@ -2004,7 +2013,6 @@ _classesReferencedByMethod:!helpers!private! !
 _classReferencesToIgnore!configuration!private! !
 _classRemovingMethods!accessing!private! !
 _clearChangedProperties!operations!private! !
-_clearSharedPoolConstantsEnvironmentReferences!operations!private! !
 _closeAllDevelopmentTools!operations!private! !
 _closeChangeLog!helpers!private! !
 _closeExternalLibraries!operations!private! !
@@ -2103,6 +2111,7 @@ emptyMethodDictionariesOfStubbornClasses!public!testing! !
 executableName!accessing!public! !
 executablePath!accessing!public! !
 exeFileExtension!constants!public! !
+hiddenObjectsInResource:!helpers!private! !
 ignoreViewReferences!accessing!public! !
 includeManifestResource!accessing!public!testing! !
 isConsoleApplication!public!testing! !

@@ -28,7 +28,10 @@ interfaceName
 	not registered. This depends on the registry and is primarily included for
 	development/debugging and tools, rather than for use in applications."
 
-	^(((RegKey classesRoot: #read) at: 'Interface') at: self asString ifAbsent: [^nil]) value! !
+	^AdvApi32
+		regGetString: WinRegConstants.HKEY_CLASSES_ROOT
+		key: 'Interface\' , self asString
+		value: nil! !
 !OS.COM.IID categoriesForMethods!
 displayOn:!displaying!public! !
 interfaceName!accessing!public! !

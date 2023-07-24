@@ -79,9 +79,13 @@ initialize
 	Versions at: 3+1 put: self!
 
 literalPrinterClass
-	^LegacySTLPrinter! !
+	^LegacySTLPrinter!
+
+uninitialize
+	Versions at: 3+1 put: nil! !
 !Kernel.STLVersion3Policy class categoriesForMethods!
 initialize!class initialization!public! !
 literalPrinterClass!constants!public! !
+uninitialize!class hierarchy-removing!public! !
 !
 

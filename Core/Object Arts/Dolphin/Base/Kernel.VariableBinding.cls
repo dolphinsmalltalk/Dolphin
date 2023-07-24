@@ -145,9 +145,9 @@ setFlags: anInteger
 	flags := anInteger!
 
 shortName
-	"Answer the <String> fully qualified name of this variable, which is a dot-separated path from (but not including) Smalltalk."
+	"Answer the shortest <String> name of this variable that is bindable from Smalltalk. i.e. for variables defined directly in Smalltalk, or in any of its imports, this will be an unqualified name. Otherwise it is the fully qualified name relative to Smalltalk."
 
-	^environment shortNameFor: key!
+	^environment ifNotNil: [environment shortNameFor: key] ifNil: [key]!
 
 targetVariable
 	^self!

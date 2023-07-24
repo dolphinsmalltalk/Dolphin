@@ -153,51 +153,12 @@ progID
 	^nil!
 
 register
-	"Make the necessary registry entries to expose the receiver as a COM object which can be used by
-	other applications. Registry entries for both in-process and out-of-process use are created if the 
-	necessary components are present. This (along with #unregister) provides the necessary mechanism 
-	for self-registration."
-
-	| sesh |
-	sesh := SessionManager current.
-	self register: (sesh isDLL 
-				ifTrue: [CLSCTX_INPROC_SERVER]
-				ifFalse: 
-					[sesh isRuntime 
-						ifTrue: [CLSCTX_LOCAL_SERVER]
-						ifFalse: 
-							["For development, register both generic stubs"
-
-							CLSCTX_INPROC_SERVER | CLSCTX_LOCAL_SERVER]])!
+	Notification deprecated.
+	self registerComServer!
 
 register: anInteger
-	"Make the necessary registry entries to expose the receiver as a COM object which can be used by
-	other applications for serving objects with the specified class creation context flags."
-
-	| desc clsid pid clsidKey |
-	clsid := self clsid asString.
-	desc := self progDescription.
-	pid := self progID.
-	"First the ProgID to CLSID mappings (if ProgId available)"
-	pid notNil 
-		ifTrue: 
-			[| vipid pidKey vipidKey |
-			vipid := self versionIndependentProgID.
-			pidKey := RegKey classesRoot createKey: pid.
-			pidKey value: desc.
-			pidKey at: 'CLSID' put: clsid.
-			vipidKey := RegKey classesRoot createKey: vipid.
-			vipidKey
-				value: desc;
-				at: 'CLSID' put: clsid;
-				at: 'CurVer' put: pid].
-
-	"Then the CLSID to server .EXE/.DLL mappings."
-	clsidKey := (RegKey classesRoot at: 'CLSID') createKey: clsid.
-	clsidKey value: desc.
-	pid notNil ifTrue: [clsidKey at: 'ProgID' put: pid].
-	(anInteger allMask: CLSCTX_LOCAL_SERVER) ifTrue: [self registerAsLocalServer: clsidKey].
-	(anInteger allMask: CLSCTX_INPROC_SERVER) ifTrue: [self registerAsInProcServer: clsidKey]!
+	Notification deprecated.
+	self registerComServer: anInteger!
 
 registerAsInProcServer: aRegKey
 	| sesh imageFileName |
@@ -236,6 +197,53 @@ registerClassFactory
 
 	^ClassFactory on: self!
 
+registerComServer
+	"Make the necessary registry entries to expose the receiver as a COM object which can be used by
+	other applications. Registry entries for both in-process and out-of-process use are created if the 
+	necessary components are present. This (along with #unregister) provides the necessary mechanism 
+	for self-registration."
+
+	| sesh |
+	sesh := SessionManager current.
+	self registerComServer: (sesh isDLL 
+				ifTrue: [CLSCTX_INPROC_SERVER]
+				ifFalse: 
+					[sesh isRuntime 
+						ifTrue: [CLSCTX_LOCAL_SERVER]
+						ifFalse: 
+							["For development, register both generic stubs"
+
+							CLSCTX_INPROC_SERVER | CLSCTX_LOCAL_SERVER]])!
+
+registerComServer: anInteger
+	"Make the necessary registry entries to expose the receiver as a COM object which can be used by
+	other applications for serving objects with the specified class creation context flags."
+
+	| desc clsid pid clsidKey |
+	clsid := self clsid asString.
+	desc := self progDescription.
+	pid := self progID.
+	"First the ProgID to CLSID mappings (if ProgId available)"
+	pid notNil 
+		ifTrue: 
+			[| vipid pidKey vipidKey |
+			vipid := self versionIndependentProgID.
+			pidKey := RegKey classesRoot createKey: pid.
+			pidKey value: desc.
+			pidKey at: 'CLSID' put: clsid.
+			vipidKey := RegKey classesRoot createKey: vipid.
+			vipidKey
+				value: desc;
+				at: 'CLSID' put: clsid;
+				at: 'CurVer' put: pid].
+
+	"Then the CLSID to server .EXE/.DLL mappings."
+	clsidKey := (RegKey classesRoot at: 'CLSID') createKey: clsid.
+	clsidKey value: desc.
+	pid notNil ifTrue: [clsidKey at: 'ProgID' put: pid].
+	(anInteger allMask: CLSCTX_LOCAL_SERVER) ifTrue: [self registerAsLocalServer: clsidKey].
+	(anInteger allMask: CLSCTX_INPROC_SERVER) ifTrue: [self registerAsInProcServer: clsidKey]!
+
 revokeClassFactories
 	"Revoke any class factories on the receiver."
 
@@ -258,6 +266,15 @@ uninitializeBeforeRemove
 	self uninitialize!
 
 unregister
+	Notification deprecated.
+	self unregisterComServer!
+
+unregisterClassFactory
+	"Revoke and unregistery any class factories on the receiver."
+
+	^ClassFactory unregister: self!
+
+unregisterComServer
 	"Tidy away the residue of a previous #register from the Windows registration database."
 
 	self progID
@@ -267,11 +284,6 @@ unregister
 				removeKey: pid ifAbsent: nil;
 				removeKey: self versionIndependentProgID ifAbsent: nil].
 	(RegKey classesRoot at: 'CLSID') removeKey: self clsid asString ifAbsent: nil!
-
-unregisterClassFactory
-	"Revoke and unregistery any class factories on the receiver."
-
-	^ClassFactory unregister: self!
 
 versionIndependentProgID
 	"Answer the receiver's version independent programmatic ID, typically used from 
@@ -293,11 +305,14 @@ register:!operations!public! !
 registerAsInProcServer:!helpers!private! !
 registerAsLocalServer:!helpers!private! !
 registerClassFactory!operations!public! !
+registerComServer!operations!public! !
+registerComServer:!operations!public! !
 revokeClassFactories!operations!public! !
 uninitialize!class hierarchy-removing!private! !
 uninitializeBeforeRemove!class hierarchy-removing!private! !
 unregister!operations!public! !
 unregisterClassFactory!operations!public! !
+unregisterComServer!operations!public! !
 versionIndependentProgID!constants!public! !
 !
 

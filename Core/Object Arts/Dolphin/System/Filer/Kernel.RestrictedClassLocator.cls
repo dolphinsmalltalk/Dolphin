@@ -31,6 +31,13 @@ copyWithCodeBase
 
 	^super copyWithCodeBase classMap: classMap!
 
+excludeClass: aClass
+	| ref |
+	ref := aClass asQualifiedReference.
+	classMap
+		removeKey: ref shortName ifAbsent: nil;
+		removeKey: ref fullName ifAbsent: nil!
+
 findResidentClass: aBindingReference
 	"Answer the class referred to by the receiver if it is fully resident in the image and is within the allowed set."
 
@@ -53,6 +60,7 @@ includesClass: aClass
 classes:!initializing!private! !
 classMap:!accessing!private! !
 copyWithCodeBase!copying!private! !
+excludeClass:!initializing!public! !
 findResidentClass:!operations!public! !
 includeClass:!initializing!public! !
 includesClass:!public!testing! !

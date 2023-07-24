@@ -20,15 +20,9 @@ Instance Variables:
 !Kernel.STBOutFiler categoriesForClass!System-Binary storage! !
 !Kernel.STBOutFiler class methodsFor!
 
-formatName
-	"Private - Answer the format name."
-
-	^STLFormatName!
-
 versionPolicyClass
 	^STBVersion0Policy! !
 !Kernel.STBOutFiler class categoriesForMethods!
-formatName!constants!private! !
 versionPolicyClass!constants!private! !
 !
 
