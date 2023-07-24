@@ -48,6 +48,7 @@ package setPrerequisites: #(
 	'..\..\Base\Dolphin'
 	'..\..\Base\Dolphin Legacy Date & Time'
 	'..\COM\OLE COM'
+	'..\Structured Storage\OLE Streams'
 	'..\Structured Storage\OLE Structured Storage'
 ).
 

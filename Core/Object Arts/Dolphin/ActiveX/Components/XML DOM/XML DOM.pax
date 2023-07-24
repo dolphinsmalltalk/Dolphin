@@ -202,7 +202,7 @@ package setPrerequisites: #(
 	'..\..\Automation\ActiveX Automation'
 	'..\..\..\Base\Dolphin'
 	'..\..\COM\OLE COM'
-	'..\..\Structured Storage\OLE Structured Storage'
+	'..\..\Structured Storage\OLE Streams'
 ).
 
 package!

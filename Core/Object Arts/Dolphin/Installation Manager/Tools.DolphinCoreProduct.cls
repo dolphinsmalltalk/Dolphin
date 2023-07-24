@@ -31,6 +31,7 @@ contents
 
 		add: #('Core\Object Arts\Dolphin\ActiveX\COM\OLE COM.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\COM\OLE COM (Old Names).pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\ActiveX\Structured Storage\OLE Streams.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Structured Storage\OLE Structured Storage.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Structured Storage\OLE Structured Storage (Old Names).pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Shell\Windows Shell.pax' #plain #imageBased);

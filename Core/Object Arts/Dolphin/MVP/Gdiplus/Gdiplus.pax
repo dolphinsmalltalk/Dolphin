@@ -288,7 +288,7 @@ package setPrerequisites: #(
 	'..\Models\List\Dolphin List Models'
 	'..\Base\Dolphin MVP Base'
 	'..\..\ActiveX\COM\OLE COM'
-	'..\..\ActiveX\Structured Storage\OLE Structured Storage'
+	'..\..\ActiveX\Structured Storage\OLE Streams'
 ).
 
 package!

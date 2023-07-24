@@ -29,7 +29,7 @@ package setPrerequisites: #(
 	'..\..\..\MVP\Base\Dolphin Basic Geometry'
 	'..\..\..\MVP\Graphics\Dolphin GDI Graphics'
 	'..\..\COM\OLE COM'
-	'..\..\Structured Storage\OLE Structured Storage'
+	'..\..\Structured Storage\OLE Streams'
 ).
 
 package!

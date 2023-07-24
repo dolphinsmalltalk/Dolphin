@@ -45,6 +45,7 @@ package setPrerequisites: #(
 	'..\..\Base\Dolphin'
 	'..\COM\OLE COM'
 	'OLE Persistence Base'
+	'..\Structured Storage\OLE Streams'
 	'..\Structured Storage\OLE Structured Storage'
 ).
 

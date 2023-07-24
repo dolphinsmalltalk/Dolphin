@@ -19,7 +19,7 @@ package setPrerequisites: #(
 	'..\..\..\Base\Tests\Dolphin Base Tests'
 	'..\..\COM\OLE COM'
 	'..\..\COM\Tests\OLE COM Tests'
-	'..\OLE Structured Storage'
+	'..\OLE Streams'
 ).
 
 package!

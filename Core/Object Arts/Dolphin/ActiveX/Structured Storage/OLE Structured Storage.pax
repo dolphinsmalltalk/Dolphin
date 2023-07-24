@@ -23,13 +23,9 @@ package basicPackageVersion: '6.1'.
 package setClassNames: #(
 	#{OS.COM.ILockBytes}
 	#{OS.COM.IRootStorage}
-	#{OS.COM.ISequentialStream}
 	#{OS.COM.IStorage}
-	#{OS.COM.IStream}
 	#{OS.COM.LockBytes}
 	#{OS.COM.LockBytesAbstract}
-	#{OS.COM.STATSTG}
-	#{OS.COM.StorageConstants}
 	#{OS.COM.URLMonLibrary}
 ).
 
@@ -50,6 +46,7 @@ package setMethodNames: #(
 	#(#{Core.SequencedStream} #UnlockRegion:cb:dwLockType:)
 	#(#{Core.SequencedStream} #Write:cb:pcbWritten:)
 	#(#{Core.WriteStream} #SetSize:)
+	#(#{OS.COM.IStream class} #onURL:)
 	#(#{OS.COM.OLELibrary} #createILockBytesOnHGlobal:fDeleteOnRelease:pplkbyt:)
 	#(#{OS.COM.OLELibrary} #createStreamOnHGlobal:fDeleteOnRelease:ppstm:)
 	#(#{OS.COM.OLELibrary} #getConvertStg:)
@@ -81,64 +78,13 @@ package setMethodNames: #(
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
 	'..\COM\OLE COM'
+	'OLE Streams'
 ).
 
 package!
 
 "Class Definitions"!
 
-Kernel.SharedPool
-	subclass: #'OS.COM.StorageConstants'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-			'LOCK_EXCLUSIVE' -> 16r2.
-			'LOCK_ONLYONCE' -> 16r4.
-			'LOCK_WRITE' -> 16r1.
-			'STATFLAG_DEFAULT' -> 16r0.
-			'STATFLAG_NONAME' -> 16r1.
-			'STATFLAG_NOOPEN' -> 16r2.
-			'STG_E_ACCESSDENIED' -> -16r7FFCFFFB.
-			'STG_E_INVALIDFUNCTION' -> -16r7FFCFFFF.
-			'STG_E_SEEKERROR' -> -16r7FFCFFE7.
-			'STGC_DANGEROUSLYCOMMITMERELYTODISKCACHE' -> 16r4.
-			'STGC_DEFAULT' -> 16r0.
-			'STGC_ONLYIFCURRENT' -> 16r2.
-			'STGC_OVERWRITE' -> 16r1.
-			'STGFMT_CATALOG' -> 16r2.
-			'STGFMT_DIRECTORY' -> 16r1.
-			'STGFMT_DOCUMENT' -> 16r0.
-			'STGFMT_FILE' -> 16r3.
-			'STGM_CONVERT' -> 16r20000.
-			'STGM_CREATE' -> 16r1000.
-			'STGM_DELETEONRELEASE' -> 16r4000000.
-			'STGM_DIRECT' -> 16r0.
-			'STGM_FAILIFTHERE' -> 16r0.
-			'STGM_NOSCRATCH' -> 16r100000.
-			'STGM_NOSNAPSHOT' -> 16r200000.
-			'STGM_PRIORITY' -> 16r40000.
-			'STGM_READ' -> 16r0.
-			'STGM_READWRITE' -> 16r2.
-			'STGM_SHARE_DENY_NONE' -> 16r40.
-			'STGM_SHARE_DENY_READ' -> 16r30.
-			'STGM_SHARE_DENY_WRITE' -> 16r20.
-			'STGM_SHARE_EXCLUSIVE' -> 16r10.
-			'STGM_SIMPLE' -> 16r8000000.
-			'STGM_TRANSACTED' -> 16r10000.
-			'STGM_WRITE' -> 16r1.
-			'STGMOVE_COPY' -> 16r1.
-			'STGMOVE_MOVE' -> 16r0.
-			'STGMOVE_SHALLOWCOPY' -> 16r2.
-			'STGTY_LOCKBYTES' -> 16r3.
-			'STGTY_PROPERTY' -> 16r4.
-			'STGTY_STORAGE' -> 16r1.
-			'STGTY_STREAM' -> 16r2.
-			'STREAM_SEEK_CUR' -> 16r1.
-			'STREAM_SEEK_END' -> 16r2.
-			'STREAM_SEEK_SET' -> 16r0
-		}!
 External.DynamicLinkLibrary
 	subclass: #'OS.COM.URLMonLibrary'
 	instanceVariableNames: ''
@@ -175,49 +121,12 @@ OS.COM.IUnknown
 	classInstanceVariableNames: ''
 	classConstants: {}!
 OS.COM.IUnknown
-	subclass: #'OS.COM.ISequentialStream'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #(#{OS.COM.StorageConstants})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-OS.COM.IUnknown
 	subclass: #'OS.COM.IStorage'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.COM.StorageConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.ISequentialStream
-	subclass: #'OS.COM.IStream'
-	instanceVariableNames: 'name mode'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-			'WriteOpenModes'
-				-> (IdentityDictionary withAll: { #append -> 16r11. #create -> 16r11. #truncate -> 16r1011 })
-		}!
-OS.COM.FinalizableStructure
-	subclass: #'OS.COM.STATSTG'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #(#{OS.COM.StorageConstants})
-	classInstanceVariableNames: ''
-	classConstants: {
-			'_OffsetOf_atime' -> 16r20.
-			'_OffsetOf_cbSize' -> 16r8.
-			'_OffsetOf_clsid' -> 16r30.
-			'_OffsetOf_ctime' -> 16r18.
-			'_OffsetOf_grfLocksSupported' -> 16r2C.
-			'_OffsetOf_grfMode' -> 16r28.
-			'_OffsetOf_grfStateBits' -> 16r40.
-			'_OffsetOf_mtime' -> 16r10.
-			'_OffsetOf_pwcsName' -> 16r0.
-			'_OffsetOf_reserved' -> 16r44.
-			'_OffsetOf_type' -> 16r4.
-			'_STATSTG_Size' -> 16r48
-		}!
 
 "Loose Methods"!
 
@@ -514,6 +423,25 @@ SetSize: libNewSize
 	^S_OK! !
 !Core.WriteStream categoriesForMethods!
 SetSize:!COM Interfaces-IStream!public! !
+!
+
+!OS.COM.IStream class methodsFor!
+
+onURL: urlString
+	"Answer a new instance of the receiver on the file, web page, etc, with the specified
+	URL."
+
+	| answer |
+	answer := self newPointer.
+	URLMonLibrary default
+		urlOpenBlockingStream: nil
+		szURL: urlString
+		ppStream: answer
+		dwReserved: 0
+		lpfnCB: nil.
+	^answer! !
+!OS.COM.IStream class categoriesForMethods!
+onURL:!instance creation!public! !
 !
 
 !OS.COM.OLELibrary methodsFor!

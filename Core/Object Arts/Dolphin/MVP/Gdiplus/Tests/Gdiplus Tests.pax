@@ -87,7 +87,7 @@ package setPrerequisites: #(
 	'..\..\Tests\Dolphin MVP Tests'
 	'..\Gdiplus'
 	'..\Gdiplus (Old Names)'
-	'..\..\..\ActiveX\Structured Storage\OLE Structured Storage'
+	'..\..\..\ActiveX\Structured Storage\OLE Streams'
 	'..\..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
 	'..\..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnitPreload'
 	'..\..\..\ActiveX\Shell\Windows Shell'

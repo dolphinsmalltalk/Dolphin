@@ -255,7 +255,7 @@ package setPrerequisites: #(
 	'..\..\..\MVP\Models\Value\Dolphin Value Models'
 	'..\..\COM\OLE COM'
 	'..\..\Persist\OLE Persistence and Data Transfer'
-	'..\..\Structured Storage\OLE Structured Storage'
+	'..\..\Structured Storage\OLE Streams'
 	'..\..\Shell\Windows Shell'
 ).
 
