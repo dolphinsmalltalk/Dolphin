@@ -206,7 +206,7 @@ fromIStream: pStream
 	^self fromInitializer: (BitmapFromIStreamInitializer iStream: pStream)!
 
 fromView: aView 
-	^self fromBitmap: (Bitmap fromView: aView)
+	^self fromBitmap: (Graphics.Bitmap fromView: aView)
 !
 
 new

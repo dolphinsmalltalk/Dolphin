@@ -965,7 +965,7 @@ translateTransform:order:!public!transformations! !
 !Graphics.Gdiplus.GdiplusGraphics class methodsFor!
 
 desktop
-	^self fromView: nil!
+	^self fromInitializer: (GraphicsFromHWNDInitializer on: nil)!
 
 fromCanvas: aCanvas
 	^self fromInitializer: (GraphicsFromHDCInitializer on: aCanvas)!

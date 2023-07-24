@@ -108,6 +108,15 @@ testFromIconXP
 	self assertPersistedValid free.
 	self assertClonedValid free!
 
+testFromView
+	| subject view |
+	view := Tools.SmalltalkSystemShell default view.
+	subject := Bitmap fromView: view.
+	self assertNotNil: subject handle.
+	self assert: subject extent equals: view extent.
+	self assert: subject pixelFormatName equals: 'PixelFormat32bppRGB'.
+	subject free!
+
 testFromWidthHeight
 	model := self subjectClass width: 50 height: 100.
 	self assert: model isPersistent.
@@ -177,6 +186,7 @@ testFromBitmap!public!unit tests! !
 testFromFile!public!unit tests! !
 testFromIcon!public!unit tests! !
 testFromIconXP!public!unit tests! !
+testFromView!public! !
 testFromWidthHeight!public!unit tests! !
 testGetPixel!public!unit tests! !
 testLockBits!public!unit tests! !
