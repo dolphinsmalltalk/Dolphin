@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.AbstractSTBOutFiler
+Kernel.STxOutFiler
 	subclass: #'Kernel.STLOutFiler'
 	instanceVariableNames: ''
 	classVariableNames: ''

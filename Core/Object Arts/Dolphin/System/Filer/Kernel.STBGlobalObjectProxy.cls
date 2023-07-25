@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.STBProxy
+Kernel.STxProxy
 	subclass: #'Kernel.STBGlobalObjectProxy'
 	instanceVariableNames: 'symbol object'
 	classVariableNames: ''

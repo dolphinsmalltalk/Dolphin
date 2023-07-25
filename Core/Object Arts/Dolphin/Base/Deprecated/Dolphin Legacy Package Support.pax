@@ -107,7 +107,7 @@ Kernel.AbstractChunkSourceFiler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.STBProxy
+Kernel.STxProxy
 	subclass: #STBSymbolProxy
 	instanceVariableNames: 'string'
 	classVariableNames: ''

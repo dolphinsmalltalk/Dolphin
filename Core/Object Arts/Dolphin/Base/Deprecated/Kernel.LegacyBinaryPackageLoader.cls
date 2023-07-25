@@ -210,7 +210,7 @@ vmVersionCheck:!constants!private! !
 !Kernel.LegacyBinaryPackageLoader class methodsFor!
 
 icon	
-	^STBFiler icon!
+	^STxFiler icon!
 
 loadPackage: aPackage
 	(self package: aPackage) load!

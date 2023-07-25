@@ -48,18 +48,18 @@ writeByteObject: aByteObject
 writeClass: aClass
 	| code locatorString |
 	locatorString := self classLocatorStringFor: aClass.
-	code := STBFiler.PrefixClassMask
-				bitOr: ((locatorString size bitShift: STBFiler.PrefixLocatorLenShift)
-						bitOr: (aClass instSize bitShift: STBFiler.PrefixInstSizeShift)).
+	code := STxFiler.PrefixClassMask
+				bitOr: ((locatorString size bitShift: STxFiler.PrefixLocatorLenShift)
+						bitOr: (aClass instSize bitShift: STxFiler.PrefixInstSizeShift)).
 	aClass isVariable
 		ifTrue: 
 			[code := code
-						bitOr: (aClass isBytes ifTrue: [STBFiler.PrefixBytesMask] ifFalse: [STBFiler.PrefixVariableMask])].
+						bitOr: (aClass isBytes ifTrue: [STxFiler.PrefixBytesMask] ifFalse: [STxFiler.PrefixVariableMask])].
 	aClass stbVersion == 0
 		ifTrue: [stream nextPut: code]
 		ifFalse: 
 			[stream
-				nextPut: (code bitOr: STBFiler.PrefixNonZeroVersionMask);
+				nextPut: (code bitOr: STxFiler.PrefixNonZeroVersionMask);
 				nextPut: aClass stbVersion].
 	stream nextPut: aClass! !
 !Kernel.STLVersion3Policy categoriesForMethods!

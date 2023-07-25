@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.STBProxy
+Kernel.STxProxy
 	subclass: #'UI.STBViewProxy'
 	instanceVariableNames: 'viewClass instVars state placement subViews resolution events version'
 	classVariableNames: ''

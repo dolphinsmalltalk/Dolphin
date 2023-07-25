@@ -60,7 +60,7 @@ Kernel.LiteralPrinter
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.AbstractSTBInFiler
+Kernel.STxInFiler
 	subclass: #'Kernel.STLInFiler'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -81,14 +81,14 @@ Kernel.STLInFiler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.AbstractSTBOutFiler
+Kernel.STxOutFiler
 	subclass: #'Kernel.STLOutFiler'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.STBVersionPolicy
+Kernel.STxVersionPolicy
 	subclass: #'Kernel.STLVersionPolicy'
 	instanceVariableNames: ''
 	classVariableNames: 'Versions'

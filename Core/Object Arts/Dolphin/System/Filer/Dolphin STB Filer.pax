@@ -6,19 +6,19 @@ Copyright © Object Arts Ltd. 1997-2023'.
 
 
 package setClassNames: #(
-	#{Kernel.AbstractSTBInFiler}
-	#{Kernel.AbstractSTBOutFiler}
-	#{Kernel.STBClassConversion}
 	#{Kernel.STBCollectionProxy}
 	#{Kernel.STBError}
 	#{Kernel.STBExternalResourceLibraryProxy}
-	#{Kernel.STBFiler}
 	#{Kernel.STBGlobalObjectProxy}
 	#{Kernel.STBIdentityDictionaryProxy}
-	#{Kernel.STBProxy}
 	#{Kernel.STBSingletonProxy}
 	#{Kernel.STBSortedCollectionProxy}
-	#{Kernel.STBVersionPolicy}
+	#{Kernel.STxClassConversion}
+	#{Kernel.STxFiler}
+	#{Kernel.STxInFiler}
+	#{Kernel.STxOutFiler}
+	#{Kernel.STxProxy}
+	#{Kernel.STxVersionPolicy}
 ).
 
 package setMethodNames: #(
@@ -84,14 +84,14 @@ package!
 "Class Definitions"!
 
 Core.Object
-	subclass: #'Kernel.STBClassConversion'
+	subclass: #'Kernel.STxClassConversion'
 	instanceVariableNames: 'version instSize prefix converterBlock filer'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Object
-	subclass: #'Kernel.STBFiler'
+	subclass: #'Kernel.STxFiler'
 	instanceVariableNames: 'stream context policy'
 	classVariableNames: ''
 	imports: #()
@@ -115,14 +115,14 @@ Core.Object
 			'STLFormatName' -> 'STL'
 		}!
 Core.Object
-	subclass: #'Kernel.STBProxy'
+	subclass: #'Kernel.STxProxy'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Object
-	subclass: #'Kernel.STBVersionPolicy'
+	subclass: #'Kernel.STxVersionPolicy'
 	instanceVariableNames: 'filer stream version'
 	classVariableNames: ''
 	imports: #()
@@ -135,42 +135,42 @@ Core.Error
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.STBFiler
-	subclass: #'Kernel.AbstractSTBInFiler'
+Kernel.STxFiler
+	subclass: #'Kernel.STxInFiler'
 	instanceVariableNames: 'readMap converters deferredActions flags'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'UpgradingMask' -> 16r1 }!
-Kernel.STBFiler
-	subclass: #'Kernel.AbstractSTBOutFiler'
+Kernel.STxFiler
+	subclass: #'Kernel.STxOutFiler'
 	instanceVariableNames: 'writeMap globals globalNils proxyOverrides refOffset'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.STBProxy
+Kernel.STxProxy
 	subclass: #'Kernel.STBCollectionProxy'
 	instanceVariableNames: 'class array'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.STBProxy
+Kernel.STxProxy
 	subclass: #'Kernel.STBExternalResourceLibraryProxy'
 	instanceVariableNames: 'fileName _reserved1'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.STBProxy
+Kernel.STxProxy
 	subclass: #'Kernel.STBGlobalObjectProxy'
 	instanceVariableNames: 'symbol object'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.STBProxy
+Kernel.STxProxy
 	subclass: #'Kernel.STBSingletonProxy'
 	instanceVariableNames: 'class selector'
 	classVariableNames: ''

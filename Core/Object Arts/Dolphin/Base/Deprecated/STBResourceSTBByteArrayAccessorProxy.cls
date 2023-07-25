@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.STBProxy
+Kernel.STxProxy
 	subclass: #STBResourceSTBByteArrayAccessorProxy
 	instanceVariableNames: 'bytes'
 	classVariableNames: ''

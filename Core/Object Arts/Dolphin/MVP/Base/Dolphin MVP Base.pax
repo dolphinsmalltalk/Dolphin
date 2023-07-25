@@ -1799,18 +1799,6 @@ UI.RuntimeSessionManager
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.STBProxy
-	subclass: #'UI.STBViewProxy'
-	instanceVariableNames: 'viewClass instVars state placement subViews resolution events version'
-	classVariableNames: ''
-	imports: #(#{OS.Win32Constants})
-	classInstanceVariableNames: ''
-	classConstants: {
-			'CreationParentIndex' -> 16r2.
-			'CreationStyleIndex' -> 16r3.
-			'EventsIndex' -> 16rB.
-			'HandleIndex' -> 16r1
-		}!
 External.Structure
 	subclass: #'OS.NCCALCSIZE_PARAMS'
 	instanceVariableNames: ''
@@ -2190,6 +2178,18 @@ OS.OwnerDrawStruct
 			'_OffsetOf_itemData' -> 16r14.
 			'_OffsetOf_itemHeight' -> 16r10.
 			'_OffsetOf_itemWidth' -> 16rC
+		}!
+Kernel.STxProxy
+	subclass: #'UI.STBViewProxy'
+	instanceVariableNames: 'viewClass instVars state placement subViews resolution events version'
+	classVariableNames: ''
+	imports: #(#{OS.Win32Constants})
+	classInstanceVariableNames: ''
+	classConstants: {
+			'CreationParentIndex' -> 16r2.
+			'CreationStyleIndex' -> 16r3.
+			'EventsIndex' -> 16rB.
+			'HandleIndex' -> 16r1
 		}!
 UI.View
 	subclass: #'UI.AbstractDelegatingView'

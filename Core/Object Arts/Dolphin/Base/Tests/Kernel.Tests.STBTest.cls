@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.Tests.AbstractSTBFilerTest
+Kernel.Tests.STxFilerTest
 	subclass: #'Kernel.Tests.STBTest'
 	instanceVariableNames: ''
 	classVariableNames: ''

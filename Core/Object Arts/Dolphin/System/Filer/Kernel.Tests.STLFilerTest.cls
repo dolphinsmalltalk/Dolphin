@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.Tests.AbstractSTBFilerTest
+Kernel.Tests.STxFilerTest
 	subclass: #'Kernel.Tests.STLFilerTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -170,7 +170,7 @@ testInvalidClassReference
 	"Now corrupt the stream by replacing the final class reference (to Association in the read map) with the ref index of an non-class object, and indices that are out of range"
 	#(6 -1 0 1234) do: 
 			[:i |
-			stl at: 11 put: (i bitShift: STBFiler.PrefixRefShift) | STBFiler.PrefixDataMask.
+			stl at: 11 put: (i bitShift: STxFiler.PrefixRefShift) | STxFiler.PrefixDataMask.
 			self
 				should: [Object fromLiteralStoreArray: stl]
 				raise: Error
@@ -187,7 +187,7 @@ testInvalidObjectReference
 	"Now corrupt the stream by replacing the final class reference (to Association in the read map) with the ref index of an non-class object, and indices that are out of range"
 	#(6 -1 0 1234) do: 
 			[:i |
-			stl at: 8 put: (i bitShift: STBFiler.PrefixRefShift).
+			stl at: 8 put: (i bitShift: STxFiler.PrefixRefShift).
 			self
 				should: [Object fromLiteralStoreArray: stl]
 				raise: Error
@@ -244,25 +244,25 @@ testStl6Literals
 		equals: {
 				#'!!STL'.
 				6.
-				STBFiler.PrefixVariableMask | STBFiler.PrefixClassMask.
+				STxFiler.PrefixVariableMask | STxFiler.PrefixClassMask.
 				Array.
 				literals size.
 				1 << 1 | 1.
-				STBFiler.PrefixLiteralMask.
+				STxFiler.PrefixLiteralMask.
 				'abc'.
 				#foo.
-				STBFiler.PrefixLiteralMask.
+				STxFiler.PrefixLiteralMask.
 				1.0.
 				true.
 				false.
 				nil.
-				STBFiler.PrefixLiteralMask.
+				STxFiler.PrefixLiteralMask.
 				#(123).
-				STBFiler.PrefixLiteralMask.
+				STxFiler.PrefixLiteralMask.
 				#[123].
 				$🐬.
 				Object.
-				STBFiler.PrefixLiteralMask.
+				STxFiler.PrefixLiteralMask.
 				#{Core.Object}
 			}!
 

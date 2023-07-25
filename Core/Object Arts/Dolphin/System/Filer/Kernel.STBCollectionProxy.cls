@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.STBProxy
+Kernel.STxProxy
 	subclass: #'Kernel.STBCollectionProxy'
 	instanceVariableNames: 'class array'
 	classVariableNames: ''

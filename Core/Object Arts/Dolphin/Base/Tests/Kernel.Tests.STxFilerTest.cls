@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest
-	subclass: #'Kernel.Tests.AbstractSTBFilerTest'
+	subclass: #'Kernel.Tests.STxFilerTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.Tests.AbstractSTBFilerTest guid: (Core.GUID fromString: '{5927e3bd-eb27-4032-a460-08beb17878b3}')!
-Kernel.Tests.AbstractSTBFilerTest isNonInstantiable: true!
-Kernel.Tests.AbstractSTBFilerTest comment: ''!
-!Kernel.Tests.AbstractSTBFilerTest methodsFor!
+Kernel.Tests.STxFilerTest guid: (Core.GUID fromString: '{5927e3bd-eb27-4032-a460-08beb17878b3}')!
+Kernel.Tests.STxFilerTest isNonInstantiable: true!
+Kernel.Tests.STxFilerTest comment: ''!
+!Kernel.Tests.STxFilerTest methodsFor!
 
 deserialize: aString
 	^self subclassResponsibility!
@@ -22,7 +22,7 @@ testAddress
 	"Addresses should always be replaced by nil"
 
 	| object dessicated rehydrated |
-	object := External.Address fromInteger: 16rDEADBEEF.
+	object := Address fromInteger: 16rDEADBEEF.
 	dessicated := self serialize: object.
 	rehydrated := self deserialize: dessicated.
 	self assertIsNil: rehydrated!
@@ -70,7 +70,7 @@ testHandle
 	"Handles should always be replaced by nil"
 
 	| object dessicated rehydrated |
-	object := External.Handle fromInteger: 16rDEADBEEF.
+	object := Handle fromInteger: 16rDEADBEEF.
 	dessicated := self serialize: object.
 	rehydrated := self deserialize: dessicated.
 	self assertIsNil: rehydrated!
@@ -79,7 +79,7 @@ testIntegerBytes
 	"IntegerBytes is a subclass of ByteArray, which has special handling for STB"
 
 	| object dessicated rehydrated |
-	object := External.UInt32Bytes fromInteger: 16rDEADBEEF.
+	object := UInt32Bytes fromInteger: 16rDEADBEEF.
 	dessicated := self serialize: object.
 	rehydrated := self deserialize: dessicated.
 	self assert: rehydrated equals: object!
@@ -194,7 +194,7 @@ verifyRoundTripSingleton: anObject
 	rehydrated := self deserialize: dessicated.
 	self assert: rehydrated equals: array.
 	self assert: rehydrated first identicalTo: anObject! !
-!Kernel.Tests.AbstractSTBFilerTest categoriesForMethods!
+!Kernel.Tests.STxFilerTest categoriesForMethods!
 deserialize:!helpers!private! !
 serialize:!helpers!private! !
 testAddress!public!unit tests! !

@@ -71,7 +71,7 @@ Kernel.ClassLocator
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.AbstractSTBInFiler
+Kernel.STxInFiler
 	subclass: #'Kernel.STBInFiler'
 	instanceVariableNames: 'classLocator'
 	classVariableNames: ''
@@ -85,14 +85,14 @@ Kernel.STBInFiler
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.AbstractSTBOutFiler
+Kernel.STxOutFiler
 	subclass: #'Kernel.STBOutFiler'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.STBProxy
+Kernel.STxProxy
 	subclass: #'Kernel.STBClassProxy'
 	instanceVariableNames: 'packageName locatorKey'
 	classVariableNames: ''
@@ -106,7 +106,7 @@ Kernel.STBClassProxy
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.STBVersionPolicy
+Kernel.STxVersionPolicy
 	subclass: #'Kernel.STBVersion0Policy'
 	instanceVariableNames: ''
 	classVariableNames: ''
