@@ -14,12 +14,8 @@ package setClassNames: #(
 	#{Kernel.Bytecode}
 	#{Kernel.LegacyBinaryPackageLoader}
 	#{Kernel.LegacyChunkSourceFiler}
-	#{Kernel.LegacySTLPrinter}
-	#{Kernel.STLVersion3Policy}
-	#{Kernel.STLVersion4Policy}
 	#{Smalltalk.MethodContext}
 	#{Smalltalk.PoolConstantsDictionary}
-	#{Smalltalk.STBSymbolProxy}
 ).
 
 package setMethodNames: #(
@@ -56,9 +52,15 @@ package setMethodNames: #(
 package setPrerequisites: #(
 	'..\Dolphin'
 	'..\..\System\Filer\Dolphin Binary Filer'
-	'..\..\System\Filer\Dolphin Literal Filer'
+	'..\..\System\Filer\Dolphin Binary Filer (Old versions)'
+	'..\..\System\Filer\Dolphin Literal Filer (Old versions)'
 	'..\Dolphin Source Fileout'
 	'..\..\System\Filer\Dolphin STB Filer'
+).
+
+package setManualPrerequisites: #(
+	'Dolphin Binary Filer (Old versions)'
+	'Dolphin Literal Filer (Old versions)'
 ).
 
 package!
@@ -93,36 +95,8 @@ Kernel.PoolDictionary
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.LiteralPrinter
-	subclass: #'Kernel.LegacySTLPrinter'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
 Kernel.AbstractChunkSourceFiler
 	subclass: #'Kernel.LegacyChunkSourceFiler'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Kernel.STxProxy
-	subclass: #STBSymbolProxy
-	instanceVariableNames: 'string'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Kernel.STLVersionPolicy
-	subclass: #'Kernel.STLVersion3Policy'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Kernel.STLVersion3Policy
-	subclass: #'Kernel.STLVersion4Policy'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

@@ -14,6 +14,7 @@ package setClassNames: #(
 	#{Kernel.STBSingletonProxy}
 	#{Kernel.STBSortedCollectionProxy}
 	#{Kernel.STBVersionPolicy}
+	#{Kernel.STBVersionPolicyForNamespaces}
 	#{Kernel.STxClassConversion}
 	#{Kernel.STxFiler}
 	#{Kernel.STxInFiler}
@@ -199,6 +200,13 @@ Kernel.STxVersionPolicy
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'Signature' -> #[33 83 84 66 32] }!
+Kernel.STBVersionPolicy
+	subclass: #'Kernel.STBVersionPolicyForNamespaces'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 

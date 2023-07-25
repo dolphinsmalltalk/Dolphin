@@ -217,6 +217,7 @@ package setPrerequisites: #(
 	'..\Deprecated\Dolphin Legacy FFI Types (Old Names)'
 	'..\Deprecated\Dolphin Legacy Package Support'
 	'..\..\System\Filer\Dolphin Literal Filer'
+	'..\..\System\Filer\Dolphin Literal Filer (Old versions)'
 	'..\..\System\Win32\MessageBox\Dolphin Message Box'
 	'..\..\System\Random\Dolphin Random Stream'
 	'..\..\Registry\Dolphin Registry Access'
