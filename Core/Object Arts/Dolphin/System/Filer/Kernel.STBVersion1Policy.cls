@@ -6,7 +6,24 @@ Kernel.STBVersion0Policy
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'PredefinedClasses' -> {
+						AnsiString.
+						Array.
+						ByteArray.
+						LargeInteger.
+						STBClassProxy.
+						STBMetaclassProxy.
+						Symbol.
+						STBCollectionProxy.
+						OrderedCollection.
+						STBIdentityDictionaryProxy.
+						LookupTable.
+						IdentityDictionary.
+						Utf8String.
+						Utf16String
+					}
+		}!
 Kernel.STBVersion1Policy guid: (Core.GUID fromString: '{2e444423-06ca-467d-8a6b-fd12b1d095d1}')!
 Kernel.STBVersion1Policy comment: ''!
 !Kernel.STBVersion1Policy methodsFor!
@@ -29,22 +46,8 @@ predefinedClasses
 	checked when a class is first read from the file. In order to version these classes it is
 	necessary to increment the global STB version number."
 
-	^{
-		AnsiString.
-		Array.
-		ByteArray.
-		LargeInteger.
-		STBClassProxy.
-		STBMetaclassProxy.
-		Symbol.
-		STBCollectionProxy.
-		OrderedCollection.
-		STBIdentityDictionaryProxy.
-		LookupTable.
-		IdentityDictionary.
-		Utf8String.
-		Utf16String
-	}! !
+	^PredefinedClasses
+	! !
 !Kernel.STBVersion1Policy categoriesForMethods!
 lastPredefined!constants!public! !
 predefinedClasses!constants!public! !

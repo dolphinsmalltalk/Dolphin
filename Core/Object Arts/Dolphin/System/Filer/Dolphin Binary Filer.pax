@@ -13,9 +13,6 @@ package setClassNames: #(
 	#{Kernel.STBMetaclassProxy}
 	#{Kernel.STBOutFiler}
 	#{Kernel.STBValidatingInFiler}
-	#{Kernel.STBVersion0Policy}
-	#{Kernel.STBVersion1Policy}
-	#{Kernel.STBVersion3Policy}
 	#{Kernel.STBVersion5Policy}
 	#{Kernel.ValidatingClassLocator}
 ).
@@ -50,6 +47,7 @@ package setMethodNames: #(
 
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
+	'Dolphin Binary Filer (Old versions)'
 	'Dolphin STB Filer'
 ).
 
@@ -106,28 +104,7 @@ Kernel.STBClassProxy
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.STBVersionPolicy
-	subclass: #'Kernel.STBVersion0Policy'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Kernel.STBVersion0Policy
-	subclass: #'Kernel.STBVersion1Policy'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Kernel.STBVersion1Policy
-	subclass: #'Kernel.STBVersion3Policy'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Kernel.STBVersion3Policy
+Kernel.STBVersionPolicyForNamespaces
 	subclass: #'Kernel.STBVersion5Policy'
 	instanceVariableNames: ''
 	classVariableNames: ''
