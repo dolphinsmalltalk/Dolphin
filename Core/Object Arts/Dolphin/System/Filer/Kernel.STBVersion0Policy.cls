@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.STBVersionPolicy
+Kernel.STxVersionPolicy
 	subclass: #'Kernel.STBVersion0Policy'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -35,8 +35,8 @@ predefinedClasses
 	^#()!
 
 putCharacter: aCharacter
-	stream nextInt32Put: ((aCharacter codePoint bitShift: STBFiler.PrefixRefShift)
-				bitOr: STBFiler.PrefixCharacterMask)!
+	stream nextInt32Put: ((aCharacter codePoint bitShift: STxFiler.PrefixRefShift)
+				bitOr: STxFiler.PrefixCharacterMask)!
 
 putNil
 	stream nextInt32Put: 0!
@@ -52,7 +52,7 @@ readByteObject: aByteObject
 
 readClassDataWithPrefix: anInteger
 	| versionBeingRead |
-	versionBeingRead := (anInteger allMask: STBFiler.PrefixNonZeroVersionMask)
+	versionBeingRead := (anInteger allMask: STxFiler.PrefixNonZeroVersionMask)
 				ifTrue: [stream nextInt32]
 				ifFalse: [0].
 	^filer
@@ -62,7 +62,7 @@ readClassDataWithPrefix: anInteger
 
 readClassWithPrefix: anInteger
 	| locatorString |
-	locatorString := AnsiString new: (anInteger bitShift: STBFiler.PrefixLocatorLenUnshift).
+	locatorString := AnsiString new: (anInteger bitShift: STxFiler.PrefixLocatorLenUnshift).
 	1 to: locatorString size do: [:i | locatorString basicAt: i put: stream next].
 	^filer classLocator locateClass: (BindingReference
 				pathString: locatorString
@@ -90,29 +90,29 @@ writeByteObject: aByteObject
 writeClass: aClass
 	| locatorString prefixCode |
 	locatorString := self classLocatorStringFor: aClass.
-	prefixCode := STBFiler.PrefixClassMask
-				bitOr: ((locatorString size bitShift: STBFiler.PrefixLocatorLenShift)
-						bitOr: (aClass instSize bitShift: STBFiler.PrefixInstSizeShift)).
+	prefixCode := STxFiler.PrefixClassMask
+				bitOr: ((locatorString size bitShift: STxFiler.PrefixLocatorLenShift)
+						bitOr: (aClass instSize bitShift: STxFiler.PrefixInstSizeShift)).
 	aClass isVariable
 		ifTrue: 
 			[prefixCode := prefixCode
-						bitOr: (aClass isBytes ifTrue: [STBFiler.PrefixBytesMask] ifFalse: [STBFiler.PrefixVariableMask])].
+						bitOr: (aClass isBytes ifTrue: [STxFiler.PrefixBytesMask] ifFalse: [STxFiler.PrefixVariableMask])].
 	aClass stbVersion == 0
 		ifTrue: [stream nextInt32Put: prefixCode]
 		ifFalse: 
 			[stream
-				nextInt32Put: (prefixCode bitOr: STBFiler.PrefixNonZeroVersionMask);
+				nextInt32Put: (prefixCode bitOr: STxFiler.PrefixNonZeroVersionMask);
 				nextInt32Put: aClass stbVersion].
 	stream nextPutAll: locatorString asByteArray!
 
 writeClassReference: anInteger
-	stream nextInt32Put: (STBFiler.PrefixDataMask bitOr: (anInteger bitShift: STBFiler.PrefixRefShift))!
+	stream nextInt32Put: (STxFiler.PrefixDataMask bitOr: (anInteger bitShift: STxFiler.PrefixRefShift))!
 
 writeInteger: anInteger
 	stream nextInt32Put: anInteger!
 
 writeReference: anInteger
-	stream nextInt32Put: (anInteger bitShift: STBFiler.PrefixRefShift)!
+	stream nextInt32Put: (anInteger bitShift: STxFiler.PrefixRefShift)!
 
 writeSignatureAndVersion
 	stream

@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object
-	subclass: #'Kernel.STBFiler'
+	subclass: #'Kernel.STxFiler'
 	instanceVariableNames: 'stream context policy'
 	classVariableNames: ''
 	imports: #()
@@ -24,11 +24,11 @@ Core.Object
 			'PrefixVariableMask' -> 16r20.
 			'STLFormatName' -> 'STL'
 		}!
-Kernel.STBFiler guid: (Core.GUID fromString: '{87b4c4c1-026e-11d3-9fd7-00a0cc3e4a32}')!
-Kernel.STBFiler isNonInstantiable: true!
-Kernel.STBFiler comment: ''!
-!Kernel.STBFiler categoriesForClass!System-Binary storage! !
-!Kernel.STBFiler methodsFor!
+Kernel.STxFiler guid: (Core.GUID fromString: '{87b4c4c1-026e-11d3-9fd7-00a0cc3e4a32}')!
+Kernel.STxFiler isNonInstantiable: true!
+Kernel.STxFiler comment: ''!
+!Kernel.STxFiler categoriesForClass!System-Binary storage! !
+!Kernel.STxFiler methodsFor!
 
 atEnd
 	"Answer true if the receiver is positioned at end of its stream."
@@ -90,7 +90,7 @@ version
 	"Answer the format version of the STB stream."
 
 	^policy version! !
-!Kernel.STBFiler categoriesForMethods!
+!Kernel.STxFiler categoriesForMethods!
 atEnd!public!testing! !
 context!accessing!public! !
 context:!accessing!public! !
@@ -106,7 +106,7 @@ stream!accessing!public! !
 version!accessing!public! !
 !
 
-!Kernel.STBFiler class methodsFor!
+!Kernel.STxFiler class methodsFor!
 
 formatName
 	"Private - Answer the format name."
@@ -120,7 +120,7 @@ on: aStream
 
 versionPolicyClass
 	^self subclassResponsibility! !
-!Kernel.STBFiler class categoriesForMethods!
+!Kernel.STxFiler class categoriesForMethods!
 formatName!constants!private! !
 on:!instance creation!public! !
 versionPolicyClass!constants!private! !

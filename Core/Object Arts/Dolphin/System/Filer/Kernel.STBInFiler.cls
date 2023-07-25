@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.AbstractSTBInFiler
+Kernel.STxInFiler
 	subclass: #'Kernel.STBInFiler'
 	instanceVariableNames: 'classLocator'
 	classVariableNames: ''

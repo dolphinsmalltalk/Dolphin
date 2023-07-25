@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object
-	subclass: #'Kernel.STBVersionPolicy'
+	subclass: #'Kernel.STxVersionPolicy'
 	instanceVariableNames: 'filer stream version'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: 'version signatureBytes'
 	classConstants: { 'LastPredefinedClassRef' -> 16r18 }!
-Kernel.STBVersionPolicy guid: (Core.GUID fromString: '{c3707a61-0143-415a-b869-e30ff4ad09bd}')!
-Kernel.STBVersionPolicy isNonInstantiable: true!
-Kernel.STBVersionPolicy comment: ''!
-!Kernel.STBVersionPolicy methodsFor!
+Kernel.STxVersionPolicy guid: (Core.GUID fromString: '{c3707a61-0143-415a-b869-e30ff4ad09bd}')!
+Kernel.STxVersionPolicy isNonInstantiable: true!
+Kernel.STxVersionPolicy comment: ''!
+!Kernel.STxVersionPolicy methodsFor!
 
 classLocatorStringFor: aClass
 	^(Smalltalk oldNames lookup: aClass)
@@ -80,17 +80,17 @@ readObjectWithPrefix: anInteger
 	anInteger == 0 ifTrue: [^nil].	"optimize for nil"
 
 	"SmallInteger?"
-	(anInteger allMask: STBFiler.PrefixSmallIntegerMask) ifTrue: [^anInteger bitShift: -1].
-	(anInteger allMask: STBFiler.PrefixDataMask)
+	(anInteger allMask: STxFiler.PrefixSmallIntegerMask) ifTrue: [^anInteger bitShift: -1].
+	(anInteger allMask: STxFiler.PrefixDataMask)
 		ifFalse: 
-			[^(anInteger allMask: STBFiler.PrefixCharacterMask)
-				ifTrue: [Character value: (anInteger bitShift: STBFiler.PrefixRefUnshift)]
-				ifFalse: [filer objectAt: (anInteger bitShift: STBFiler.PrefixRefUnshift)]].
+			[^(anInteger allMask: STxFiler.PrefixCharacterMask)
+				ifTrue: [Character value: (anInteger bitShift: STxFiler.PrefixRefUnshift)]
+				ifFalse: [filer objectAt: (anInteger bitShift: STxFiler.PrefixRefUnshift)]].
 
 	"Ascertain the class of the object."
-	class := (anInteger allMask: STBFiler.PrefixClassMask)
+	class := (anInteger allMask: STxFiler.PrefixClassMask)
 				ifTrue: [self readClassDataWithPrefix: anInteger]
-				ifFalse: [filer classAt: (anInteger bitShift: STBFiler.PrefixRefUnshift)].
+				ifFalse: [filer classAt: (anInteger bitShift: STxFiler.PrefixRefUnshift)].
 
 	"Now read the object data."
 	newObjectIndex := filer readMap size + 1.
@@ -141,7 +141,7 @@ writeReference: anInteger
 
 writeSignatureAndVersion
 	self subclassResponsibility! !
-!Kernel.STBVersionPolicy categoriesForMethods!
+!Kernel.STxVersionPolicy categoriesForMethods!
 classLocatorStringFor:!helpers!private! !
 filer:version:!initializing!private! !
 lastPredefined!constants!public! !
@@ -170,7 +170,7 @@ writeReference:!operations!public! !
 writeSignatureAndVersion!operations!public! !
 !
 
-!Kernel.STBVersionPolicy class methodsFor!
+!Kernel.STxVersionPolicy class methodsFor!
 
 classForVersion: anInteger
 	^(self versions lookup: anInteger + 1)
@@ -187,7 +187,7 @@ readVersionFrom: aByteStream
 
 versions
 	^self subclassResponsibility! !
-!Kernel.STBVersionPolicy class categoriesForMethods!
+!Kernel.STxVersionPolicy class categoriesForMethods!
 classForVersion:!accessing!public! !
 filer:version:!instance creation!public! !
 readVersionFrom:!instance creation!public! !

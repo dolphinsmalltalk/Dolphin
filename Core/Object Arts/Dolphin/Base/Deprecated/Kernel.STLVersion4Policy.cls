@@ -18,14 +18,14 @@ readObjectWithPrefix: anInteger
 	| anObject newObjectIndex class |
 	anInteger == 0 ifTrue: [^nil].	"optimize for nil"
 	"SmallInteger?"
-	(anInteger allMask: STBFiler.PrefixSmallIntegerMask) ifTrue: [^anInteger bitShift: -1].
-	(anInteger allMask: STBFiler.PrefixDataMask)
-		ifFalse: [^filer objectAt: (anInteger bitShift: STBFiler.PrefixRefUnshift)].
+	(anInteger allMask: STxFiler.PrefixSmallIntegerMask) ifTrue: [^anInteger bitShift: -1].
+	(anInteger allMask: STxFiler.PrefixDataMask)
+		ifFalse: [^filer objectAt: (anInteger bitShift: STxFiler.PrefixRefUnshift)].
 
 	"Ascertain the class of the object."
-	class := (anInteger allMask: STBFiler.PrefixClassMask)
+	class := (anInteger allMask: STxFiler.PrefixClassMask)
 				ifTrue: [self readClassDataWithPrefix: anInteger]
-				ifFalse: [filer classAt: (anInteger bitShift: STBFiler.PrefixRefUnshift)].
+				ifFalse: [filer classAt: (anInteger bitShift: STxFiler.PrefixRefUnshift)].
 
 	"Now read the object data."
 	newObjectIndex := filer readMap size + 1.

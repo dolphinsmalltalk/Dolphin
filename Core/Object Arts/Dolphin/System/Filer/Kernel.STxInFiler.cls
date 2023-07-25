@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.STBFiler
-	subclass: #'Kernel.AbstractSTBInFiler'
+Kernel.STxFiler
+	subclass: #'Kernel.STxInFiler'
 	instanceVariableNames: 'readMap converters deferredActions flags'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'UpgradingMask' -> 16r1 }!
-Kernel.AbstractSTBInFiler guid: (Core.GUID fromString: '{28fb7b4f-ca63-4a50-af05-a1c54269e4ff}')!
-Kernel.AbstractSTBInFiler isNonInstantiable: true!
-Kernel.AbstractSTBInFiler comment: ''!
-!Kernel.AbstractSTBInFiler categoriesForClass!System-Binary storage! !
-!Kernel.AbstractSTBInFiler methodsFor!
+Kernel.STxInFiler guid: (Core.GUID fromString: '{28fb7b4f-ca63-4a50-af05-a1c54269e4ff}')!
+Kernel.STxInFiler isNonInstantiable: true!
+Kernel.STxInFiler comment: ''!
+!Kernel.STxInFiler categoriesForClass!System-Binary storage! !
+!Kernel.STxInFiler methodsFor!
 
 basicNext
 	"Private - Answer the next object from the receiver's stream."
@@ -197,7 +197,7 @@ registerClass: aClass version: versionInteger prefix: prefixInteger
 	| format |
 	self register: aClass.
 	versionInteger == aClass stbVersion ifTrue: [^aClass].
-	format := STBClassConversion
+	format := STxClassConversion
 				forFiler: self
 				class: aClass
 				version: versionInteger
@@ -227,7 +227,7 @@ setRefOffset: anInteger
 stream: aStream
 	stream := aStream.
 	self initialize! !
-!Kernel.AbstractSTBInFiler categoriesForMethods!
+!Kernel.STxInFiler categoriesForMethods!
 basicNext!accessing!private! !
 classAt:!accessing!private! !
 classLocator!accessing!public! !
@@ -262,7 +262,7 @@ setRefOffset:!accessing!private! !
 stream:!initializing!private! !
 !
 
-!Kernel.AbstractSTBInFiler class methodsFor!
+!Kernel.STxInFiler class methodsFor!
 
 errorInconsistentSTB: anInteger
 	"Private - Signal an STBError indicating that the stream being read contains inconsistent STB data."
@@ -285,7 +285,7 @@ peekForSignatureIn: aReadStream
 	"Answer whether the <readableStream> argument, aReadStream, appears to be an STB stream (or is positioned at the start of an STB stream). If the STB signature is found, then the stream is left positioned immediately after it, otherwise the stream position is not changed."
 
 	^self versionPolicyClass peekForSignatureIn: aReadStream! !
-!Kernel.AbstractSTBInFiler class categoriesForMethods!
+!Kernel.STxInFiler class categoriesForMethods!
 errorInconsistentSTB:!exceptions!private! !
 errorInvalidClass:!exceptions!private! !
 on:!instance creation!public! !

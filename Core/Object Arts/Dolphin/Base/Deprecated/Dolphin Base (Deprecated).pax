@@ -25,8 +25,6 @@ package methodNames
 	add: #_FPIEEE_RECORD -> #causeCode;
 	add: #_FPIEEE_RECORD -> #causeName;
 	add: #_FPIEEE_VALUE -> #valueType;
-	add: #AbstractSTBInFiler -> #readObjectOfClass:format:;
-	add: #AbstractSTBOutFiler -> #stream:;
 	add: #AbstractWindowsLocale -> #dateOrder;
 	add: #AbstractWindowsLocale -> #dateSeparator;
 	add: #ArithmeticValue -> #quoAndRem:;
@@ -71,6 +69,8 @@ package methodNames
 	add: #Stream -> #nextOrNil;
 	add: #String -> #asUnicodeString;
 	add: #String -> #equals:;
+	add: #STxInFiler -> #readObjectOfClass:format:;
+	add: #STxOutFiler -> #stream:;
 	add: #TimeStamp -> #date:;
 	add: #TimeStamp -> #dateAndTime;
 	add: #TimeStamp -> #time:;
@@ -200,27 +200,6 @@ valueType
 	^self format! !
 !_FPIEEE_VALUE categoriesForMethods!
 valueType!accessing!public! !
-!
-
-!AbstractSTBInFiler methodsFor!
-
-readObjectOfClass: aClass format: anSTBClassConversion
-	#deprecated.
-	^self
-		readObjectOfClass: aClass
-		format: anSTBClassConversion
-		size: (self readSizeOf: aClass)! !
-!AbstractSTBInFiler categoriesForMethods!
-readObjectOfClass:format:!operations!public! !
-!
-
-!AbstractSTBOutFiler methodsFor!
-
-stream: aStream
-	Notification deprecated.
-	stream := aStream! !
-!AbstractSTBOutFiler categoriesForMethods!
-stream:!accessing!public! !
 !
 
 !AbstractWindowsLocale methodsFor!
@@ -872,6 +851,27 @@ do: operation separatedBy: separator
 !ExternalStructure categoriesForMethods!
 do:!enumerating!public! !
 do:separatedBy:!enumerating!public! !
+!
+
+!STxInFiler methodsFor!
+
+readObjectOfClass: aClass format: anSTBClassConversion
+	#deprecated.
+	^self
+		readObjectOfClass: aClass
+		format: anSTBClassConversion
+		size: (self readSizeOf: aClass)! !
+!STxInFiler categoriesForMethods!
+readObjectOfClass:format:!operations!public! !
+!
+
+!STxOutFiler methodsFor!
+
+stream: aStream
+	Notification deprecated.
+	stream := aStream! !
+!STxOutFiler categoriesForMethods!
+stream:!accessing!public! !
 !
 
 !Time class methodsFor!

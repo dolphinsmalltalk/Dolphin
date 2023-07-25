@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object
-	subclass: #'Kernel.STBClassConversion'
+	subclass: #'Kernel.STxClassConversion'
 	instanceVariableNames: 'version instSize prefix converterBlock filer'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.STBClassConversion guid: (Core.GUID fromString: '{87b4c4c0-026e-11d3-9fd7-00a0cc3e4a32}')!
-Kernel.STBClassConversion comment: ''!
-!Kernel.STBClassConversion categoriesForClass!System-Binary storage! !
-!Kernel.STBClassConversion methodsFor!
+Kernel.STxClassConversion guid: (Core.GUID fromString: '{87b4c4c0-026e-11d3-9fd7-00a0cc3e4a32}')!
+Kernel.STxClassConversion comment: ''!
+!Kernel.STxClassConversion categoriesForClass!System-Binary storage! !
+!Kernel.STxClassConversion methodsFor!
 
 converterBlock
 	"Answer the receiver's converterBlock.
@@ -42,7 +42,7 @@ instSize
 isBytes
 	"Answer whether the class being converted is a byte class."
 
-	^prefix allMask: STBFiler.PrefixBytesMask!
+	^prefix allMask: STxFiler.PrefixBytesMask!
 
 isUpgrading
 	^filer isUpgrading!
@@ -50,7 +50,7 @@ isUpgrading
 isVariable
 	"Answer whether the class being converted can have indexed instance variables."
 
-	^prefix allMask: STBFiler.PrefixVariableMask!
+	^prefix allMask: STxFiler.PrefixVariableMask!
 
 version
 	"Answer the receiver's version inst var."
@@ -61,10 +61,10 @@ version: versionInteger prefix: anInteger filer: anSTBInFiler
 	"Private - Initialise the receiver from the arguments."
 
 	version := versionInteger.
-	instSize := ((prefix := anInteger) bitShift: STBFiler.PrefixInstSizeUnshift)
-				bitAnd: STBFiler.PrefixInstSizeMask.
+	instSize := ((prefix := anInteger) bitShift: STxFiler.PrefixInstSizeUnshift)
+				bitAnd: STxFiler.PrefixInstSizeMask.
 	filer := anSTBInFiler! !
-!Kernel.STBClassConversion categoriesForMethods!
+!Kernel.STxClassConversion categoriesForMethods!
 converterBlock!accessing!public! !
 converterBlock:!accessing!public! !
 instSize!accessing!public! !
@@ -75,7 +75,7 @@ version!accessing!public! !
 version:prefix:filer:!accessing!private! !
 !
 
-!Kernel.STBClassConversion class methodsFor!
+!Kernel.STxClassConversion class methodsFor!
 
 forFiler: anSTBInFiler class: aClass version: oldVersion prefix: anInteger 
 	"Answer a new instance representing the STB format of oldVersion of aClass."
@@ -87,7 +87,7 @@ forFiler: anSTBInFiler class: aClass version: oldVersion prefix: anInteger
 				filer: anSTBInFiler.
 	format converterBlock: (aClass stbConvertFrom: format).
 	^format! !
-!Kernel.STBClassConversion class categoriesForMethods!
+!Kernel.STxClassConversion class categoriesForMethods!
 forFiler:class:version:prefix:!instance creation!public! !
 !
 

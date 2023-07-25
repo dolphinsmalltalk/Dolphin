@@ -108,10 +108,10 @@ package setMethodNames: #(
 	#(#{Kernel.ProcessorScheduler class} #icon)
 	#(#{Kernel.SharedPool class} #icon)
 	#(#{Kernel.SourceManager class} #icon)
-	#(#{Kernel.STBClassConversion class} #icon)
-	#(#{Kernel.STBFiler class} #icon)
-	#(#{Kernel.STBProxy class} #icon)
-	#(#{Kernel.STBVersionPolicy class} #icon)
+	#(#{Kernel.STxClassConversion class} #icon)
+	#(#{Kernel.STxFiler class} #icon)
+	#(#{Kernel.STxProxy class} #icon)
+	#(#{Kernel.STxVersionPolicy class} #icon)
 	#(#{Kernel.VariableBinding} #icon)
 	#(#{OS class} #icon)
 	#(#{OS.DiskVolumeInformation class} #icon)
@@ -154,6 +154,7 @@ package setPrerequisites: #(
 	'..\Presenters\Radio\Dolphin Radio Buttons'
 	'..\Views\Scrollbars\Dolphin Scrollbars'
 	'..\..\System\SemVer\Dolphin SemVer'
+	'..\..\System\Filer\Dolphin STB Filer'
 	'..\..\System\STON\Dolphin STON-Core'
 	'Dolphin Text Tile Icons'
 ).
@@ -1276,17 +1277,17 @@ icon
 icon!constants!public! !
 !
 
-!Kernel.STBClassConversion class methodsFor!
+!Kernel.STxClassConversion class methodsFor!
 
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^STBFiler icon! !
-!Kernel.STBClassConversion class categoriesForMethods!
+	^STxFiler icon! !
+!Kernel.STxClassConversion class categoriesForMethods!
 icon!constants!public! !
 !
 
-!Kernel.STBFiler class methodsFor!
+!Kernel.STxFiler class methodsFor!
 
 icon
 	"Answers an Icon that can be used to represent this class"
@@ -1294,27 +1295,27 @@ icon
 	^##((TextTileIcon text: $\x2707 fontName: 'Georgia')
 		textcolor: Color navy;
 		yourself)! !
-!Kernel.STBFiler class categoriesForMethods!
+!Kernel.STxFiler class categoriesForMethods!
 icon!constants!public! !
 !
 
-!Kernel.STBProxy class methodsFor!
+!Kernel.STxProxy class methodsFor!
 
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^STBFiler icon! !
-!Kernel.STBProxy class categoriesForMethods!
+	^STxFiler icon! !
+!Kernel.STxProxy class categoriesForMethods!
 icon!constants!public! !
 !
 
-!Kernel.STBVersionPolicy class methodsFor!
+!Kernel.STxVersionPolicy class methodsFor!
 
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^STBFiler icon! !
-!Kernel.STBVersionPolicy class categoriesForMethods!
+	^STxFiler icon! !
+!Kernel.STxVersionPolicy class categoriesForMethods!
 icon!constants!public! !
 !
 

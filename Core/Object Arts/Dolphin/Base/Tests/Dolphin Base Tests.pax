@@ -119,7 +119,6 @@ package setClassNames: #(
 	#{Graphics.Tests}
 	#{Kernel.Tests}
 	#{Kernel.Tests.AbstractNamespaceTest}
-	#{Kernel.Tests.AbstractSTBFilerTest}
 	#{Kernel.Tests.AlwaysSearchPolicyTest}
 	#{Kernel.Tests.BindingReferenceTest}
 	#{Kernel.Tests.BlockClosureTest}
@@ -163,6 +162,7 @@ package setClassNames: #(
 	#{Kernel.Tests.StackFrameTest}
 	#{Kernel.Tests.STBTest}
 	#{Kernel.Tests.STBValidatingInFilerTest}
+	#{Kernel.Tests.STxFilerTest}
 	#{Kernel.Tests.SystemNamespaceTest}
 	#{Kernel.Tests.VariableBindingTest}
 	#{Kernel.Tests.VMTest}
@@ -181,8 +181,8 @@ package setClassNames: #(
 ).
 
 package setMethodNames: #(
-	#(#{Kernel.STBFiler class} #correspondingTestCase)
 	#(#{Kernel.STBValidatingInFiler class} #correspondingTestCase)
+	#(#{Kernel.STxFiler class} #correspondingTestCase)
 	#(#{OS.CRTLibrary} #_chmod:pmode:)
 	#(#{OS.CRTLibrary} #strcat_s:bufferSize:strSource:)
 	#(#{OS.CRTLibraryNonBlocking} #_chmod:pmode:)
@@ -301,13 +301,6 @@ XProgramming.SUnit.TestCase
 Core.Tests.DolphinTest
 	subclass: #'Kernel.Tests.AbstractNamespaceTest'
 	instanceVariableNames: 'removedVariables'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Core.Tests.DolphinTest
-	subclass: #'Kernel.Tests.AbstractSTBFilerTest'
-	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -768,6 +761,13 @@ Core.Tests.DolphinTest
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Tests.DolphinTest
+	subclass: #'Kernel.Tests.STxFilerTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.DolphinTest
 	subclass: #'Core.Tests.TimeStampTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -819,20 +819,6 @@ Kernel.Tests.SystemNamespaceTest
 Kernel.Tests.SystemNamespaceTest
 	subclass: #'Kernel.Tests.SmalltalkNamespaceTest'
 	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Kernel.Tests.AbstractSTBFilerTest
-	subclass: #'Kernel.Tests.STBTest'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Kernel.Tests.STBTest
-	subclass: #'Kernel.Tests.STBValidatingInFilerTest'
-	instanceVariableNames: 'locator'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -1397,6 +1383,20 @@ Core.Tests.WriteStreamTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+Kernel.Tests.STxFilerTest
+	subclass: #'Kernel.Tests.STBTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.Tests.STBTest
+	subclass: #'Kernel.Tests.STBValidatingInFilerTest'
+	instanceVariableNames: 'locator'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 XProgramming.SUnit.TestResource
 	subclass: #'Core.Tests.DolphinTestResource'
 	instanceVariableNames: ''
@@ -1454,19 +1454,19 @@ Smalltalk.DolphinTest := Core.Tests.DolphinTest!
 
 "Loose Methods"!
 
-!Kernel.STBFiler class methodsFor!
-
-correspondingTestCase
-	^Tests.STBTest! !
-!Kernel.STBFiler class categoriesForMethods!
-correspondingTestCase!public! !
-!
-
 !Kernel.STBValidatingInFiler class methodsFor!
 
 correspondingTestCase
 	^Tests.STBValidatingInFilerTest! !
 !Kernel.STBValidatingInFiler class categoriesForMethods!
+correspondingTestCase!public! !
+!
+
+!Kernel.STxFiler class methodsFor!
+
+correspondingTestCase
+	^Tests.STBTest! !
+!Kernel.STxFiler class categoriesForMethods!
 correspondingTestCase!public! !
 !
 

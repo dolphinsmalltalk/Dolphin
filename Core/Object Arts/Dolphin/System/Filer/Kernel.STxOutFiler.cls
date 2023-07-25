@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.STBFiler
-	subclass: #'Kernel.AbstractSTBOutFiler'
+Kernel.STxFiler
+	subclass: #'Kernel.STxOutFiler'
 	instanceVariableNames: 'writeMap globals globalNils proxyOverrides refOffset'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.AbstractSTBOutFiler guid: (Core.GUID fromString: '{1a85a928-daab-4ce8-a1d9-cd785d6a90df}')!
-Kernel.AbstractSTBOutFiler isNonInstantiable: true!
-Kernel.AbstractSTBOutFiler comment: ''!
-!Kernel.AbstractSTBOutFiler categoriesForClass!System-Binary storage! !
-!Kernel.AbstractSTBOutFiler methodsFor!
+Kernel.STxOutFiler guid: (Core.GUID fromString: '{1a85a928-daab-4ce8-a1d9-cd785d6a90df}')!
+Kernel.STxOutFiler isNonInstantiable: true!
+Kernel.STxOutFiler comment: ''!
+!Kernel.STxOutFiler categoriesForClass!System-Binary storage! !
+!Kernel.STxOutFiler methodsFor!
 
 basicNextPut: anObject
 	"Private - Write anObject to the stream in STB format."
@@ -218,7 +218,7 @@ writePreambleFor: anObject
 	self
 		writeClassPrefix: anObject basicClass;
 		register: anObject! !
-!Kernel.AbstractSTBOutFiler categoriesForMethods!
+!Kernel.STxOutFiler categoriesForMethods!
 basicNextPut:!operations!private! !
 initializeObjectMap!initializing!private! !
 nextPut:!operations!public! !
@@ -240,7 +240,7 @@ writeInstanceVariables:!operations!private! !
 writePreambleFor:!binary filing!public! !
 !
 
-!Kernel.AbstractSTBOutFiler class methodsFor!
+!Kernel.STxOutFiler class methodsFor!
 
 on: aStream
 	"Answer a new instance attached to the binary stream aStream."
@@ -261,7 +261,7 @@ version
 		Version 5 - Fully-qualified class names written. Literal filer stores classes as fully-qualified BindingReferences."
 
 	^5! !
-!Kernel.AbstractSTBOutFiler class categoriesForMethods!
+!Kernel.STxOutFiler class categoriesForMethods!
 on:!instance creation!public! !
 on:version:!instance creation!public! !
 version!constants!private! !

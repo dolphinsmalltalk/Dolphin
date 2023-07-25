@@ -18,7 +18,7 @@ classLocatorStringFor: aClass
 
 readClassWithPrefix: anInteger
 	| locatorString |
-	locatorString := Utf8String new: (anInteger bitShift: STBFiler.PrefixLocatorLenUnshift).
+	locatorString := Utf8String new: (anInteger bitShift: STxFiler.PrefixLocatorLenUnshift).
 	1 to: locatorString size do: [:i | locatorString basicAt: i put: stream next].
 	^filer classLocator locateClass: (FullBindingReference
 				pathString: locatorString
@@ -30,17 +30,17 @@ readObjectWithPrefix: anInteger
 	anInteger == 0 ifTrue: [^nil].	"optimize for nil"
 
 	"SmallInteger?"
-	(anInteger allMask: STBFiler.PrefixSmallIntegerMask) ifTrue: [^anInteger bitShift: -1].
-	(anInteger allMask: STBFiler.PrefixDataMask)
+	(anInteger allMask: STxFiler.PrefixSmallIntegerMask) ifTrue: [^anInteger bitShift: -1].
+	(anInteger allMask: STxFiler.PrefixDataMask)
 		ifFalse: 
-			[^(anInteger allMask: STBFiler.PrefixCharacterMask)
-				ifTrue: [Character value: (anInteger bitShift: STBFiler.PrefixRefUnshift)]
-				ifFalse: [filer objectAt: (anInteger bitShift: STBFiler.PrefixRefUnshift)]].
+			[^(anInteger allMask: STxFiler.PrefixCharacterMask)
+				ifTrue: [Character value: (anInteger bitShift: STxFiler.PrefixRefUnshift)]
+				ifFalse: [filer objectAt: (anInteger bitShift: STxFiler.PrefixRefUnshift)]].
 
 	"Ascertain the class of the object."
-	class := (anInteger allMask: STBFiler.PrefixClassMask)
+	class := (anInteger allMask: STxFiler.PrefixClassMask)
 				ifTrue: [self readClassDataWithPrefix: anInteger]
-				ifFalse: [filer classAt: (anInteger bitShift: STBFiler.PrefixRefUnshift)].
+				ifFalse: [filer classAt: (anInteger bitShift: STxFiler.PrefixRefUnshift)].
 
 	"Now read the object data."
 	newObjectIndex := filer readMap size + 1.

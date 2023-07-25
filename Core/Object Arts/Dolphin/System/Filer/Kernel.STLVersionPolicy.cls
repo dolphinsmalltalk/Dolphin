@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.STBVersionPolicy
+Kernel.STxVersionPolicy
 	subclass: #'Kernel.STLVersionPolicy'
 	instanceVariableNames: ''
 	classVariableNames: 'Versions'
@@ -27,7 +27,7 @@ putSmallInteger: aSmallInteger
 	stream nextPut: ((aSmallInteger bitShift: 1) bitOr: 1)!
 
 readClassDataWithPrefix: anInteger
-	^(anInteger allMask: STBFiler.PrefixNonZeroVersionMask)
+	^(anInteger allMask: STxFiler.PrefixNonZeroVersionMask)
 		ifTrue: 
 			[| versionBeingRead |
 			versionBeingRead := stream next.
@@ -59,7 +59,7 @@ serializeObject: anObject
 				ifFalse: [anObject isLiteral])
 					ifTrue: 
 						[stream
-							nextPut: STBFiler.PrefixLiteralMask;
+							nextPut: STxFiler.PrefixLiteralMask;
 							nextPut: anObject.
 						filer register: anObject]
 					ifFalse: 
@@ -69,27 +69,27 @@ serializeObject: anObject
 writeClass: aClass
 	| code |
 	"STL doesn't write the locator string, so its length does not need to be encoded in the prefix"
-	code := STBFiler.PrefixClassMask bitOr: (aClass instSize bitShift: STBFiler.PrefixInstSizeShift).
+	code := STxFiler.PrefixClassMask bitOr: (aClass instSize bitShift: STxFiler.PrefixInstSizeShift).
 	aClass isVariable
 		ifTrue: 
 			[code := code
-						bitOr: (aClass isBytes ifTrue: [STBFiler.PrefixBytesMask] ifFalse: [STBFiler.PrefixVariableMask])].
+						bitOr: (aClass isBytes ifTrue: [STxFiler.PrefixBytesMask] ifFalse: [STxFiler.PrefixVariableMask])].
 	aClass stbVersion == 0
 		ifTrue: [stream nextPut: code]
 		ifFalse: 
 			[stream
-				nextPut: (code bitOr: STBFiler.PrefixNonZeroVersionMask);
+				nextPut: (code bitOr: STxFiler.PrefixNonZeroVersionMask);
 				nextPut: aClass stbVersion].
 	stream nextPut: aClass!
 
 writeClassReference: anInteger
-	stream nextPut: (STBFiler.PrefixDataMask bitOr: (anInteger bitShift: STBFiler.PrefixRefShift))!
+	stream nextPut: (STxFiler.PrefixDataMask bitOr: (anInteger bitShift: STxFiler.PrefixRefShift))!
 
 writeInteger: anInteger
 	stream nextPut: anInteger!
 
 writeReference: anInteger
-	stream nextPut: (anInteger bitShift: STBFiler.PrefixRefShift)!
+	stream nextPut: (anInteger bitShift: STxFiler.PrefixRefShift)!
 
 writeSignatureAndVersion
 	stream

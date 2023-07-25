@@ -43,8 +43,10 @@ package setMethodNames: #(
 
 package setPrerequisites: #(
 	'..\Dolphin'
+	'..\..\System\Filer\Dolphin Binary Filer'
 	'Dolphin Legacy Package Support'
 	'..\..\MVP\Base\Dolphin MVP Base'
+	'..\..\System\Filer\Dolphin STB Filer'
 ).
 
 package!
@@ -135,14 +137,14 @@ ResourceSTBAccessor
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.STBProxy
+Kernel.STxProxy
 	subclass: #STBResourceSTBByteArrayAccessorProxy
 	instanceVariableNames: 'bytes'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.STBProxy
+Kernel.STxProxy
 	subclass: #STBResourceSTBFileAccessorProxy
 	instanceVariableNames: 'fileName bytes'
 	classVariableNames: ''
