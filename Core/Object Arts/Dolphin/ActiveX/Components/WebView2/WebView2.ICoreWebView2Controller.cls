@@ -695,6 +695,6 @@ defineFunctions
 			argumentTypes: 'ICoreWebView2**'
 ! !
 !WebView2.ICoreWebView2Controller class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 !
 

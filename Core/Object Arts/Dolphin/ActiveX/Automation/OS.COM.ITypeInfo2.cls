@@ -422,6 +422,6 @@ defineFunctions
 			argumentTypes: 'uint32 CUSTDATA*'
 ! !
 !OS.COM.ITypeInfo2 class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 !
 

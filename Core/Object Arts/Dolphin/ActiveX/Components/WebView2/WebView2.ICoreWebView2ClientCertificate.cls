@@ -84,6 +84,6 @@ defineFunctions
 
 	self defineFunction: #get_Kind: argumentTypes: 'sdword*'! !
 !WebView2.ICoreWebView2ClientCertificate class categoriesForMethods!
-defineFunctions!initializing!public! !
+defineFunctions!initializing!public!template definition! !
 !
 

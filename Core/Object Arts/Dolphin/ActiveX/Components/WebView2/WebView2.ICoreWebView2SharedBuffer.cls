@@ -153,6 +153,6 @@ defineFunctions
 		defineFunction: #Close
 ! !
 !WebView2.ICoreWebView2SharedBuffer class categoriesForMethods!
-defineFunctions!initializing!public! !
+defineFunctions!initializing!public!template definition! !
 !
 

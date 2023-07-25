@@ -184,6 +184,6 @@ defineFunctions
 			argumentTypes: 'ICoreWebView2Deferral**'
 ! !
 !WebView2.ICoreWebView2BasicAuthenticationRequestedEventArgs class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 !
 

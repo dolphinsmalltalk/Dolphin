@@ -148,6 +148,6 @@ defineFunctions
 			argumentTypes: 'ICoreWebView2Environment**'
 ! !
 !WebView2.ICoreWebView2_2 class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 !
 

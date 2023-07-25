@@ -99,6 +99,6 @@ defineFunctions
 			argumentTypes: 'dword ICoreWebView2CustomSchemeRegistration**'
 ! !
 !WebView2.ICoreWebView2EnvironmentOptions4 class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 !
 

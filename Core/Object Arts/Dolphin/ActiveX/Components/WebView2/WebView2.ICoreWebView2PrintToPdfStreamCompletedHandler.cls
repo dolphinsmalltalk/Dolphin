@@ -41,6 +41,6 @@ defineFunctions
 			argumentTypes: 'hresult IStream*'
 ! !
 !WebView2.ICoreWebView2PrintToPdfStreamCompletedHandler class categoriesForMethods!
-defineFunctions!initializing!public! !
+defineFunctions!initializing!public!template definition! !
 !
 

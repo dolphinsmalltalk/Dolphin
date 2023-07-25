@@ -694,7 +694,7 @@ stbConvertFrom: anSTBClassFormat
 stbVersion
 	^1! !
 !OS.COM.ITypeInfo class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 stbConvertFrom:!binary filing!public! !
 stbVersion!binary filing!public! !
 !

@@ -58,7 +58,7 @@ eventName
 
 	^#zoomFactorChanged! !
 !WebView2.ICoreWebView2ZoomFactorChangedEventHandler class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 eventName!constants!public! !
 !
 

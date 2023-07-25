@@ -127,7 +127,7 @@ uninitialize
 
 	VM registryAt: self name put: nil! !
 !OS.COM.IUnknown class categoriesForMethods!
-defineFunctions!initializing!public! !
+defineFunctions!initializing!public!template definition! !
 on:outerUnknown:!instance creation!private! !
 uninitialize!class hierarchy-removing!private! !
 !

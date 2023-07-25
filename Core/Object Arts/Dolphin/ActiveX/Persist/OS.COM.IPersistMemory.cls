@@ -143,6 +143,6 @@ defineFunctions
 		defineFunction: #InitNew
 ! !
 !OS.COM.IPersistMemory class categoriesForMethods!
-defineFunctions!initializing!public! !
+defineFunctions!initializing!public!template definition! !
 !
 

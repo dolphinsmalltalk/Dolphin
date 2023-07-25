@@ -372,7 +372,7 @@ queryPath: libid major: major minor: minor locale: locale ifNone: exceptionHandl
 			[hr = TYPE_E_LIBNOTREGISTERED ifTrue: [exceptionHandler value] ifFalse: [HRESULTError signalWith: hr]]
 		ifFalse: [answer asString trimNulls]! !
 !OS.COM.ITypeLib class categoriesForMethods!
-defineFunctions!initializing!public! !
+defineFunctions!initializing!public!template definition! !
 fromAttributes:!instance creation!public! !
 load:major:minor:locale:!instance creation!public! !
 open:!instance creation!public! !

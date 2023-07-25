@@ -132,6 +132,6 @@ defineFunctions
 			argumentTypes: 'sdword*'
 ! !
 !WebView2.ICoreWebView2ProcessInfo class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 !
 

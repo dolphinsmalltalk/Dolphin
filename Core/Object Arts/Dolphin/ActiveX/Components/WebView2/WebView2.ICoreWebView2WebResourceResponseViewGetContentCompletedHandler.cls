@@ -39,6 +39,6 @@ defineFunctions
 
 	self defineFunction: #Invoke:arg: argumentTypes: 'hresult IStream*'! !
 !WebView2.ICoreWebView2WebResourceResponseViewGetContentCompletedHandler class categoriesForMethods!
-defineFunctions!initializing!public! !
+defineFunctions!initializing!public!template definition! !
 !
 

@@ -177,6 +177,6 @@ defineFunctions
 			argumentTypes: 'bool'
 ! !
 !WebView2.ICoreWebView2ControllerOptions class categoriesForMethods!
-defineFunctions!initializing!public! !
+defineFunctions!initializing!public!template definition! !
 !
 

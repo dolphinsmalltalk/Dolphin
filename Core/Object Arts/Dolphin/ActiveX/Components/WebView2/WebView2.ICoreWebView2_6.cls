@@ -51,6 +51,6 @@ defineFunctions
 		defineFunction: #OpenTaskManagerWindow
 ! !
 !WebView2.ICoreWebView2_6 class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 !
 

@@ -126,7 +126,7 @@ clear: addressOrBytes
 	"Free an instance of the structure which instances of the receiver wrap
 	which resides at the specified address."
 
-	TaskMemory free: (addressOrBytes uintPtrAtOffset: 4)!
+	Ole32 coTaskMemFree: (addressOrBytes uintPtrAtOffset: 4)!
 
 defineFields
 	"Define the count field common to OLE counted array structures.

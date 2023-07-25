@@ -86,6 +86,6 @@ defineFunctions
 			argumentTypes: 'lpwstr*'
 ! !
 !WebView2.ICoreWebView2_12 class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 !
 

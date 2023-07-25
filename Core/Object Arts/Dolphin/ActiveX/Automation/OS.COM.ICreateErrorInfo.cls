@@ -125,7 +125,7 @@ new
 	OleAut32 createErrorInfo: answer.
 	^answer! !
 !OS.COM.ICreateErrorInfo class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 fromEXCEPINFO:guid:!instance creation!public! !
 new!instance creation!public! !
 !

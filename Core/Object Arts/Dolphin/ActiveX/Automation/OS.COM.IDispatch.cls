@@ -806,7 +806,7 @@ vt
 
 	^VT_DISPATCH! !
 !OS.COM.IDispatch class categoriesForMethods!
-defineFunctions!initializing!public! !
+defineFunctions!initializing!public!template definition! !
 uninitialize!class hierarchy-removing!private! !
 vt!constants!public! !
 !

@@ -106,6 +106,6 @@ defineFunctions
 			argumentTypes: 'ICoreWebView2ClearBrowsingDataCompletedHandler*'
 ! !
 !WebView2.ICoreWebView2Profile2 class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 !
 

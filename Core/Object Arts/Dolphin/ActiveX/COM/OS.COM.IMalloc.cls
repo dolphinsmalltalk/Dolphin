@@ -3,7 +3,7 @@
 OS.COM.IUnknown
 	subclass: #'OS.COM.IMalloc'
 	instanceVariableNames: ''
-	classVariableNames: 'Shared Task'
+	classVariableNames: 'Task'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -96,7 +96,7 @@ OS.COM.IMalloc methodProtocol: #IMalloc attributes: #(#readOnly) selectors: #(#A
 clear
 	"Private - Clear down the standard task/shared allocators (e.g. on startup)."
 
-	Task := Shared := nil!
+	Task := nil!
 
 default
 	"Answer the default IMalloc (task allocator)."
@@ -131,14 +131,7 @@ defineFunctions
 free
 	"Private - Free the standard task/shared allocators."
 
-	self freeTask.
-	self freeShared!
-
-freeShared
-	"Private - Release the default IMalloc (task allocator)."
-
-	Shared free.
-	Shared := nil!
+	self freeTask!
 
 freeTask
 	"Private - Release the default IMalloc (task allocator)."
@@ -168,9 +161,8 @@ uninitialize
 !OS.COM.IMalloc class categoriesForMethods!
 clear!initializing!private! !
 default!accessing!public! !
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 free!private!realizing/unrealizing! !
-freeShared!private!realizing/unrealizing! !
 freeTask!private!realizing/unrealizing! !
 task!accessing!public! !
 uninitialize!accessing!class hierarchy-removing!private! !

@@ -49,9 +49,9 @@ initializeFromHandle: aGpHatchBrushHandle
 	"Private - Cache all the attributes of the native Gdiplus SolidBrush identified by the specified <External.Handle> into the receiver."
 
 	| buf |
-	buf := ARGBBytes new.
+	buf := UInt32Bytes new.
 	Gdip gdipGetSolidFillColor: aGpHatchBrushHandle color: buf.
-	color := buf value!
+	color := Color fromArgbCode: buf asInteger!
 
 isSelfEvaluating
 	"Answer whether or not the receiver has a printString representation that evaluates back to an equivalent object."

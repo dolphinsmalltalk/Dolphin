@@ -75,6 +75,6 @@ defineFunctions
 			argumentTypes: 'uint32*'
 ! !
 !WebView2.ICoreWebView2PermissionSettingCollectionView class categoriesForMethods!
-defineFunctions!initializing!public! !
+defineFunctions!initializing!public!template definition! !
 !
 

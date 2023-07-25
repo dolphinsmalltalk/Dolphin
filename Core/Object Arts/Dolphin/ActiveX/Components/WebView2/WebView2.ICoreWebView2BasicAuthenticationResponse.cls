@@ -145,6 +145,6 @@ defineFunctions
 			argumentTypes: 'lpwstr'
 ! !
 !WebView2.ICoreWebView2BasicAuthenticationResponse class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 !
 

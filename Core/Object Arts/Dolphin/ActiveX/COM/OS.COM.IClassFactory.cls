@@ -91,6 +91,6 @@ defineFunctions
 !OS.COM.IClassFactory class categoriesForMethods!
 ctxAll!constants!public! !
 ctxServer!constants!public! !
-defineFunctions!initializing!public! !
+defineFunctions!initializing!public!template definition! !
 !
 

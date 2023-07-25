@@ -59,6 +59,6 @@ defineFunctions
 			argumentTypes: 'GUID* GUID* IUnknown**'
 ! !
 !OS.COM.IServiceProvider class categoriesForMethods!
-defineFunctions!initializing!public! !
+defineFunctions!initializing!public!template definition! !
 !
 

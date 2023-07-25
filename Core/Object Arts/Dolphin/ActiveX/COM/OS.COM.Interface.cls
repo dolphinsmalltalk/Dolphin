@@ -1100,16 +1100,16 @@ compileFunctionsIntoImplementor:!automatic generation!development!public! !
 createContextFlags!constants!public! !
 createObject:!instance creation!public! !
 defineFields!automatic generation!public!template definition! !
-defineFunction:!automatic generation!public! !
-defineFunction:argumentTypes:!automatic generation!public! !
-defineFunction:descriptor:!automatic generation!public! !
-defineFunction:returnType:!automatic generation!public! !
-defineFunction:returnType:argumentTypes:!automatic generation!public! !
-defineFunction:type:returnType:argumentTypes:!automatic generation!public! !
-defineFunctions!initializing!public! !
+defineFunction:!automatic generation!public!template definition! !
+defineFunction:argumentTypes:!automatic generation!public!template definition! !
+defineFunction:descriptor:!automatic generation!public!template definition! !
+defineFunction:returnType:!automatic generation!public!template definition! !
+defineFunction:returnType:argumentTypes:!automatic generation!public!template definition! !
+defineFunction:type:returnType:argumentTypes:!automatic generation!public!template definition! !
+defineFunctions!initializing!public!template definition! !
 defineSizeConstant:!private!template definition! !
 defineTemplate!public!template definition! !
-defineVTable!automatic generation!public! !
+defineVTable!automatic generation!public!template definition! !
 elementSize!accessing!public! !
 functions!debugger-step over!initializing!private! !
 generatedFunctionCategories!constants!public! !

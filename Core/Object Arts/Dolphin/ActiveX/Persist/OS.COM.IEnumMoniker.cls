@@ -28,7 +28,7 @@ elementClass
 
 	^IMoniker! !
 !OS.COM.IEnumMoniker class categoriesForMethods!
-defineFunctions!initializing!public! !
+defineFunctions!initializing!public!template definition! !
 elementClass!constants!public! !
 !
 

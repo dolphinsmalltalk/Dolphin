@@ -67,6 +67,6 @@ defineFunctions
 			argumentTypes: 'qword*'
 ! !
 !WebView2.ICoreWebView2DOMContentLoadedEventArgs class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 !
 

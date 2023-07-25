@@ -4668,7 +4668,7 @@ generateDefineFunctions
 					target nextPut: $']]
 		separatedBy: [target nextPut: $;].
 	target cr.
-	self compileClassMethod: target contents categories: self classInitializerCategories!
+	self compileClassMethod: target contents categories: (self classInitializerCategories copyWith: 'template definition')!
 
 generatePropertyAccessors
 	"Private - Generate get/set wrappers for the properties accessible via the dispinterface.

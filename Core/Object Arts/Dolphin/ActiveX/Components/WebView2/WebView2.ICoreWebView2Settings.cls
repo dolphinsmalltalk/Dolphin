@@ -743,6 +743,6 @@ defineFunctions
 ! !
 !WebView2.ICoreWebView2Settings class categoriesForMethods!
 defaultUserAgent!COM Interfaces-ICoreWebView2Settings2!private! !
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 !
 

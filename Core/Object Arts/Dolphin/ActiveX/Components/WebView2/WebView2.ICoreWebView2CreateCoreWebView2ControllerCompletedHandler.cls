@@ -39,6 +39,6 @@ defineFunctions
 
 	self defineFunction: #Invoke:arg: argumentTypes: 'hresult ICoreWebView2Controller*'! !
 !WebView2.ICoreWebView2CreateCoreWebView2ControllerCompletedHandler class categoriesForMethods!
-defineFunctions!initializing!public! !
+defineFunctions!initializing!public!template definition! !
 !
 

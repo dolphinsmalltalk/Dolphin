@@ -58,7 +58,7 @@ eventName
 
 	^#cursorChanged! !
 !WebView2.ICoreWebView2CursorChangedEventHandler class categoriesForMethods!
-defineFunctions!initializing!public! !
+defineFunctions!initializing!public!template definition! !
 eventName!constants!public! !
 !
 

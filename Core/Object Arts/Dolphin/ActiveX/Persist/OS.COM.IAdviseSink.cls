@@ -95,6 +95,6 @@ defineFunctions
 			returnType: 'void'
 ! !
 !OS.COM.IAdviseSink class categoriesForMethods!
-defineFunctions!initializing!public! !
+defineFunctions!initializing!public!template definition! !
 !
 

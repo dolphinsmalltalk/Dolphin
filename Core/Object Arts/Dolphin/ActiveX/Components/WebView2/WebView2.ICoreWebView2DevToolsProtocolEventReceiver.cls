@@ -71,6 +71,6 @@ defineFunctions
 			argumentTypes: 'sqword'
 ! !
 !WebView2.ICoreWebView2DevToolsProtocolEventReceiver class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 !
 

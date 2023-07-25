@@ -62,7 +62,7 @@ eventName
 	^#contextMenuRequested:! !
 !WebView2.ICoreWebView2ContextMenuRequestedEventHandler class categoriesForMethods!
 argsClass!constants!public! !
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 eventName!constants!public! !
 !
 

@@ -86,6 +86,6 @@ defineFunctions
 			argumentTypes: 'ICoreWebView2ProcessInfoCollection**'
 ! !
 !WebView2.ICoreWebView2Environment8 class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 !
 

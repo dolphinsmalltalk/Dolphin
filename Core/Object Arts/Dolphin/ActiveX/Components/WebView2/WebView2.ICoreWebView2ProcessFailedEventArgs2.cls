@@ -99,6 +99,6 @@ defineFunctions
 			argumentTypes: 'ICoreWebView2FrameInfoCollection**'
 ! !
 !WebView2.ICoreWebView2ProcessFailedEventArgs2 class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 !
 

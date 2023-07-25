@@ -349,6 +349,6 @@ defineFunctions
 			argumentTypes: 'void*'
 ! !
 !OS.COM.IRecordInfo class categoriesForMethods!
-defineFunctions!initializing!public! !
+defineFunctions!initializing!public!template definition! !
 !
 

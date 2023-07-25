@@ -247,6 +247,6 @@ defineFunctions
 		defineFunction: #DUnadvise: argumentTypes: 'uint32';
 		defineFunction: #EnumDAdvise: argumentTypes: 'IUnknown**'! !
 !OS.COM.IDataObject class categoriesForMethods!
-defineFunctions!initializing!public! !
+defineFunctions!initializing!public!template definition! !
 !
 

@@ -2112,8 +2112,8 @@ RecordCreate
 
 		void* __stdcall RecordCreate();
 	"
-
-	^(COM.TaskMemory new: self byteSize) detach!
+	
+	^COM.Ole32 coTaskMemAlloc: self byteSize!
 
 RecordCreateCopy: pvSource ppvDest: ppvDest
 	"Implement the IRecordInfo::RecordCreate() method for the UDT described by the receiver
@@ -2138,7 +2138,7 @@ RecordDestroy: pvRecord
 	"
 
 	self RecordClear: pvRecord.
-	COM.TaskMemory free: pvRecord.
+	COM.Ole32 coTaskMemFree: pvRecord.
 	^0	"S_OK"!
 
 recordInfo

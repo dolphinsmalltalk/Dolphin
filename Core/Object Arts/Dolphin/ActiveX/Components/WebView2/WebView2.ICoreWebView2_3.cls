@@ -115,6 +115,6 @@ defineFunctions
 			argumentTypes: 'lpwstr'
 ! !
 !WebView2.ICoreWebView2_3 class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 !
 

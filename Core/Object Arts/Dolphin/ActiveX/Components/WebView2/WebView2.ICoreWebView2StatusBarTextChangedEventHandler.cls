@@ -58,7 +58,7 @@ eventName
 
 	^#statusBarTextChanged! !
 !WebView2.ICoreWebView2StatusBarTextChangedEventHandler class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 eventName!constants!public! !
 !
 

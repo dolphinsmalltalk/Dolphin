@@ -58,7 +58,7 @@ eventName
 
 	^#windowCloseRequested! !
 !WebView2.ICoreWebView2WindowCloseRequestedEventHandler class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 eventName!constants!public! !
 !
 

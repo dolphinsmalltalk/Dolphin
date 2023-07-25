@@ -56,6 +56,6 @@ defineFunctions
 			argumentTypes: 'dword GUID*'
 ! !
 !OS.COM.IProvideClassInfo2 class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 !
 

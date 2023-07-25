@@ -38,6 +38,6 @@ defineFunctions
 
 	self defineFunction: #Invoke: argumentTypes: 'hresult'! !
 !WebView2.ICoreWebView2ClearBrowsingDataCompletedHandler class categoriesForMethods!
-defineFunctions!initializing!public! !
+defineFunctions!initializing!public!template definition! !
 !
 

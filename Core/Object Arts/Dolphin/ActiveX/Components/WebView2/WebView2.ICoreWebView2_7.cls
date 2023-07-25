@@ -62,6 +62,6 @@ defineFunctions
 			argumentTypes: 'lpwstr ICoreWebView2PrintSettings* ICoreWebView2PrintToPdfCompletedHandler*'
 ! !
 !WebView2.ICoreWebView2_7 class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 !
 

@@ -39,6 +39,6 @@ defineFunctions
 
 	self defineFunction: #Invoke:arg: argumentTypes: 'hresult sdword'! !
 !WebView2.ICoreWebView2TrySuspendCompletedHandler class categoriesForMethods!
-defineFunctions!initializing!public! !
+defineFunctions!initializing!public!template definition! !
 !
 

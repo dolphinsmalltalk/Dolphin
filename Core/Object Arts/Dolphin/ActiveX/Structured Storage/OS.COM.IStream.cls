@@ -4,7 +4,7 @@ OS.COM.ISequentialStream
 	subclass: #'OS.COM.IStream'
 	instanceVariableNames: 'name mode'
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.COM.StorageConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'WriteOpenModes'
@@ -358,7 +358,7 @@ size
 	"Answer the current size of the receiver's stream."
 
 	| struct |
-	struct := STATSTG new.
+	struct := STATSTG newBuffer.
 	struct beUnfinalizable.
 	self Stat: struct grfStatFlag: STATFLAG_NONAME.
 	^struct cbSize!
@@ -548,20 +548,6 @@ onHGLOBAL: hGlobal
 		ppstm: answer.
 	^answer!
 
-onURL: urlString
-	"Answer a new instance of the receiver on the file, web page, etc, with the specified
-	URL."
-
-	| answer |
-	answer := self newPointer.
-	URLMonLibrary default
-		urlOpenBlockingStream: nil
-		szURL: urlString
-		ppStream: answer
-		dwReserved: 0
-		lpfnCB: nil.
-	^answer!
-
 read: aString
 	"Answer an instance of the receiver for streaming over the contents of the file whose file system path is specified by the readableString> argument."
 
@@ -601,11 +587,10 @@ write: aString mode: aSymbol
 	aSymbol == #append ifTrue: [instance setToEnd].
 	^instance! !
 !OS.COM.IStream class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 fromBytes:!instance creation!public! !
 onHGLOBAL!instance creation!public! !
 onHGLOBAL:!instance creation!public! !
-onURL:!instance creation!public! !
 read:!instance creation!public! !
 write:!instance creation!public! !
 write:mode:!instance creation!public! !

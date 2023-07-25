@@ -88,6 +88,6 @@ defineFunctions
 			argumentTypes: 'ICoreWebView2PrintSettings* ICoreWebView2PrintToPdfStreamCompletedHandler*'
 ! !
 !WebView2.ICoreWebView2_16 class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 !
 

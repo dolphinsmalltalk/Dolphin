@@ -56,6 +56,6 @@ defineFunctions
 			argumentTypes: 'uint64 ICoreWebView2SharedBuffer**'
 ! !
 !WebView2.ICoreWebView2Environment12 class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 !
 

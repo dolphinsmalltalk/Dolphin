@@ -83,6 +83,6 @@ defineFunctions
 		defineFunction: #CreateInstanceLic:pUnkReserved:riid:bstrKey:ppvObject:
 						argumentTypes: 'IUnknown* IUnknown* GUID* bstr IUnknown**'! !
 !OS.COM.IClassFactory2 class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 !
 

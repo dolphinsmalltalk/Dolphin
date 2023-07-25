@@ -114,7 +114,7 @@ coGetMalloc: dwMemContext ppMalloc: ppMalloc
 			[in]unsigned long dwMemContext,
 			[out, retval]IMalloc** ppMalloc);"
 
-	<stdcall: hresult CoGetMalloc uint32 IMalloc**>
+	<stdcall: hresult CoGetMalloc uint32 void**>
 	^self invalidCall: _failureCode!
 
 coGetObject: aUtf16String pBindOptions: aBIND_OPTS riid: anIID ppv: aCOMInterface
@@ -227,7 +227,7 @@ initialize
 	OR set the default library using #default:, OR perform a subsequent
 	initialize passing the IMalloc you want to use."
 
-	IMalloc clear.
+	#{IMalloc} ifDefined: [:imalloc | imalloc clear].
 	comOnly := false.
 	self initialize: DefaultIMalloc!
 
@@ -292,7 +292,7 @@ supportsDCOM
 uninitialize
 	"Private - Reverse the initialize"
 
-	IMalloc free.
+	#{IMalloc} ifDefined: [:imalloc | imalloc free].
 	self comOnly ifTrue: [self coUninitialize] ifFalse: [self oleUninitialize]! !
 !OS.COM.OLELibrary categoriesForMethods!
 basicFree!private!realizing/unrealizing! !

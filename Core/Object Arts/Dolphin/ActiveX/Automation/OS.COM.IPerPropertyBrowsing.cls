@@ -195,6 +195,6 @@ defineFunctions
 			argumentTypes: 'int32 uint32 VARIANT*'
 ! !
 !OS.COM.IPerPropertyBrowsing class categoriesForMethods!
-defineFunctions!initializing!public! !
+defineFunctions!initializing!public!template definition! !
 !
 

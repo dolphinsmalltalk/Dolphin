@@ -54,6 +54,6 @@ defineFunctions
 			argumentTypes: 'ICoreWebView2PrintSettings**'
 ! !
 !WebView2.ICoreWebView2Environment6 class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 !
 

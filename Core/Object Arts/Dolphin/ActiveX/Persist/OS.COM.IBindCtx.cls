@@ -191,7 +191,7 @@ new
 	Ole32 createBindCtx: 0 ppbc: answer.
 	^answer! !
 !OS.COM.IBindCtx class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 new!instance creation!public! !
 !
 

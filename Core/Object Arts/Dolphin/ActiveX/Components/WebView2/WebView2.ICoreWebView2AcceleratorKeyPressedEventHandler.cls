@@ -62,7 +62,7 @@ eventName
 	^#acceleratorKeyPressed:! !
 !WebView2.ICoreWebView2AcceleratorKeyPressedEventHandler class categoriesForMethods!
 argsClass!constants!public! !
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 eventName!constants!public! !
 !
 

@@ -130,6 +130,6 @@ defineFunctions
 			argumentTypes: 'int32*'
 ! !
 !WebView2.ICoreWebView2PermissionSetting class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 !
 

@@ -176,7 +176,7 @@ new
 	Ole32 getRunningObjectTable: 0 pprot: answer.
 	^answer! !
 !OS.COM.IRunningObjectTable class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 new!instance creation!public! !
 !
 

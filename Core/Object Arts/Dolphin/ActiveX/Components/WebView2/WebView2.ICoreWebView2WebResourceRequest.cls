@@ -209,6 +209,6 @@ defineFunctions
 			argumentTypes: 'ICoreWebView2HttpRequestHeaders**'
 ! !
 !WebView2.ICoreWebView2WebResourceRequest class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 !
 

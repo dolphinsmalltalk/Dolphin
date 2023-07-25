@@ -363,7 +363,7 @@ OS.COM.IUnknown
 OS.COM.IUnknown
 	subclass: #'OS.COM.IMalloc'
 	instanceVariableNames: ''
-	classVariableNames: 'Shared Task'
+	classVariableNames: 'Task'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!

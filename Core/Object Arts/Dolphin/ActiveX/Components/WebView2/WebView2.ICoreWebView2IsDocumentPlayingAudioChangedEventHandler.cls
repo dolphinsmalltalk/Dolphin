@@ -58,7 +58,7 @@ eventName
 
 	^#isDocumentPlayingAudioChanged! !
 !WebView2.ICoreWebView2IsDocumentPlayingAudioChangedEventHandler class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 eventName!constants!public! !
 !
 

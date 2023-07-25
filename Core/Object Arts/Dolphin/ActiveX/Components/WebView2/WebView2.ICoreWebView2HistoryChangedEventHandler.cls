@@ -58,7 +58,7 @@ eventName
 
 	^#historyChanged! !
 !WebView2.ICoreWebView2HistoryChangedEventHandler class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 eventName!constants!public! !
 !
 

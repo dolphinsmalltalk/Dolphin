@@ -298,25 +298,35 @@ _prepareExternalStructures
 	"Private - Fully compile all ExternalStructure subclasses if required. They must already
 	have fully defined templates."
 
-	| structs defineFields |
+	| structs methods |
 	structs := self _externalStructureClasses.
 	self _defineExternalStructures: structs.
 	self _startElement: 'PrepareExternalStructures' attributes: #().
 	self compileExternalStructures ifTrue: [self _compileExternalStructuresNow: structs].
 	"Having defined all the templates, we can now remove the methods used to define them"
 	"Remove the structure template definition and compiling mechanisms"
-	#('compiling' 'template definition') do: 
-			[:each |
-			self
-				_removeMethods: (each asMethodCategory methodsInBehavior: External.Structure class)
-				reason: 'structure definition: ' , each
-				force: true].
+	#(#{External.Structure class} #{OS.COM.Interface class}) do: 
+			[:ref |
+			ref ifDefined: 
+					[:structClass |
+					#('compiling' 'template definition') do: 
+							[:each |
+							self
+								_removeMethods: (each asMethodCategory methodsInBehavior: structClass)
+								reason: 'structure definition: ' , each
+								force: true]]].
 	"Remove all Structure defineFields methods"
-	defineFields := IdentitySet new.
-	structs do: [:each | defineFields add: (each class compiledMethodAt: #defineFields ifAbsent: nil)].
+	methods := IdentitySet new.
+	structs do: [:each | methods add: (each class compiledMethodAt: #defineFields ifAbsent: nil)].
 	self
-		_removeMethods: defineFields
+		_removeMethods: methods
 		reason: 'structure definition: defineFields'
+		force: true.
+	methods := IdentitySet new.
+	structs do: [:each | methods add: (each class compiledMethodAt: #defineFunctions ifAbsent: nil)].
+	self
+		_removeMethods: methods
+		reason: 'structure definition: defineFunctions'
 		force: true.
 	self _endElement: true.
 	self

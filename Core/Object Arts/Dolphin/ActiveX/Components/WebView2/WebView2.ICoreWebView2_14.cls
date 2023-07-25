@@ -86,6 +86,6 @@ defineFunctions
 			argumentTypes: 'ICoreWebView2ClearServerCertificateErrorActionsCompletedHandler*'
 ! !
 !WebView2.ICoreWebView2_14 class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 !
 

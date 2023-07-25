@@ -62,6 +62,6 @@ defineFunctions
 			argumentTypes: 'lpwstr lpwstr IStream* lpwstr ICoreWebView2WebResourceRequest**'
 ! !
 !WebView2.ICoreWebView2Environment2 class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 !
 

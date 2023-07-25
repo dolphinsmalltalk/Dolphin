@@ -262,7 +262,7 @@ onHGLOBAL: hGlobal
 		pplkbyt: answer.
 	^answer! !
 !OS.COM.ILockBytes class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 onHGLOBAL!instance creation!public! !
 onHGLOBAL:!instance creation!public! !
 !

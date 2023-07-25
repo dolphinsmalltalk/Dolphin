@@ -45,7 +45,7 @@ defineFunctions
 iid
 	^##(self) guid! !
 !WebView2.ICoreWebView2FocusChangedEventHandler class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 iid!constants!public! !
 !
 

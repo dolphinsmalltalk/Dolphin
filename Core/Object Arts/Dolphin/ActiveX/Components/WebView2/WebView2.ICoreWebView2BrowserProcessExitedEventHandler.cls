@@ -62,7 +62,7 @@ eventName
 	^#processExited:! !
 !WebView2.ICoreWebView2BrowserProcessExitedEventHandler class categoriesForMethods!
 argsClass!constants!public! !
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 eventName!constants!public! !
 !
 

@@ -57,6 +57,6 @@ defineFunctions
 		defineFunction: #Complete
 ! !
 !WebView2.ICoreWebView2Deferral class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 !
 

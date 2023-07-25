@@ -172,6 +172,6 @@ defineFunctions
 			argumentTypes: 'POINTL'
 ! !
 !WebView2.ICoreWebView2_9 class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 !
 

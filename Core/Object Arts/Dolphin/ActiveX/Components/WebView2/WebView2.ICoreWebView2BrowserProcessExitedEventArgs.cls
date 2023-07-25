@@ -95,6 +95,6 @@ defineFunctions
 			argumentTypes: 'dword*'
 ! !
 !WebView2.ICoreWebView2BrowserProcessExitedEventArgs class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 !
 

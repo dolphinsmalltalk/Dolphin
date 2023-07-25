@@ -273,7 +273,7 @@ elementClass
 	^self subclassResponsibility
 ! !
 !OS.COM.IEnumXXXX class categoriesForMethods!
-defineFunctions!initializing!public! !
+defineFunctions!initializing!public!template definition! !
 elementClass!constants!private! !
 !
 

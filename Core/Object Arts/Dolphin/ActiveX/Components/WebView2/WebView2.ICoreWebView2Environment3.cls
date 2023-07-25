@@ -71,6 +71,6 @@ defineFunctions
 			argumentTypes: 'ICoreWebView2PointerInfo**'
 ! !
 !WebView2.ICoreWebView2Environment3 class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 !
 

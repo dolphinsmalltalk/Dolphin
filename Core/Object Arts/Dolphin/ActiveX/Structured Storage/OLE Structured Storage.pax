@@ -48,13 +48,10 @@ package setMethodNames: #(
 	#(#{Core.WriteStream} #SetSize:)
 	#(#{OS.COM.IStream class} #onURL:)
 	#(#{OS.COM.OLELibrary} #createILockBytesOnHGlobal:fDeleteOnRelease:pplkbyt:)
-	#(#{OS.COM.OLELibrary} #createStreamOnHGlobal:fDeleteOnRelease:ppstm:)
 	#(#{OS.COM.OLELibrary} #getConvertStg:)
 	#(#{OS.COM.OLELibrary} #getHGlobalFromILockBytes:phglobal:)
-	#(#{OS.COM.OLELibrary} #getHGlobalFromStream:phglobal:)
 	#(#{OS.COM.OLELibrary} #oleDoAutoConvert:pClsidNew:)
 	#(#{OS.COM.OLELibrary} #readClassStg:pclsid:)
-	#(#{OS.COM.OLELibrary} #readClassStm:pclsid:)
 	#(#{OS.COM.OLELibrary} #readFmtUserTypeStg:pcf:lplpszUserType:)
 	#(#{OS.COM.OLELibrary} #setConvertStg:fConvert:)
 	#(#{OS.COM.OLELibrary} #stgCreateDocfile:grfMode:reserved:ppstgOpen:)
@@ -65,10 +62,7 @@ package setMethodNames: #(
 	#(#{OS.COM.OLELibrary} #stgOpenStorageOnILockBytes:pstgPriority:grfMode:snbExclude:reserved:ppstgOpen:)
 	#(#{OS.COM.OLELibrary} #stgSetTimes:pctime:patime:pmtime:)
 	#(#{OS.COM.OLELibrary} #writeClassStg:rclsid:)
-	#(#{OS.COM.OLELibrary} #writeClassStm:rclsid:)
 	#(#{OS.COM.OLELibrary} #writeFmtUserTypeStg:cf:lpszUserType:)
-	#(#{OS.ShlwapiLibrary} #shCreateMemStream:cbInit:)
-	#(#{OS.ShlwapiLibrary} #shCreateStreamOnFileEx:grfMode:dwAttributes:fCreate:pstmTemplate:ppstm:)
 	#(#{OS.StdioFileStream} #Read:cb:pcbRead:)
 	#(#{OS.StdioFileStream} #SetSize:)
 	#(#{OS.StdioFileStream} #Stat:grfStatFlag:)
@@ -458,20 +452,6 @@ createILockBytesOnHGlobal: hglobal fDeleteOnRelease: fDeleteOnRelease pplkbyt: p
 	<stdcall: hresult CreateILockBytesOnHGlobal handle bool ILockBytes**>
 	^self invalidCall: _failureCode!
 
-createStreamOnHGlobal: hGlobal fDeleteOnRelease: aBoolean ppstm: anIStream
-	"Create an IStream on the specified global memory handle, answering it via the out parameter, 
-	anIStream. hGlobal may be null, in which case the function allocates a zero sized
-	global memory block.
-
-		HRESULT CreateStreamOnHGlobal(
-			HGLOBAL hGlobal,	 	//Memory handle for the stream object 
- 			BOOL fDeleteOnRelease,	//Whether to free memory when the object is released 
- 			LPSTREAM *ppstm 		//Indirect pointer to the new stream object 
- 		); "
-
-	<stdcall: hresult CreateStreamOnHGlobal handle bool lppvoid>
-	^self invalidCall: _failureCode!
-
 getConvertStg: pStg
 	"Answer the convert bit of the specified storage (see setConvertStg:fConvert:)
 
@@ -489,17 +469,6 @@ getHGlobalFromILockBytes: plkbyt phglobal: phglobal
 			[out, retval]HGLOBAL* phglobal);"
 
 	<stdcall: hresult GetHGlobalFromILockBytes ILockBytes* handle*>
-	^self invalidCall: _failureCode!
-
-getHGlobalFromStream: pstm phglobal: phglobal
-	"Invoke the GetHGlobalFromStream() function of the module wrapped by the receiver.
-	Helpstring: Retrieves the global memory handle to a stream that was created through a call to the CreateStreamOnHGlobal function
-
-		HRESULT __stdcall GetHGlobalFromStream(
-			[in]IStream* pstm,
-			[out, retval]HGLOBAL* phglobal);"
-
-	<stdcall: hresult GetHGlobalFromStream IStream* handle*>
 	^self invalidCall: _failureCode!
 
 oleDoAutoConvert: pStg pClsidNew: aCLSID
@@ -523,17 +492,6 @@ readClassStg: pStg pclsid: pclsid
 			GUID* pclsid);"
 
 	<stdcall: hresult ReadClassStg IStorage* guid*>
-	^self invalidCall: _failureCode!
-
-readClassStm: pstm pclsid: pclsid
-	"Invoke the ReadClassStm() function of the module wrapped by the receiver.
-	Helpstring: Reads a CLSID previously written to a stream object with WriteClassStm
-
-		HRESULT __stdcall ReadClassStm(
-			IStream* pstm,
-			GUID* pclsid);"
-
-	<stdcall: hresult ReadClassStm IStream* guid*>
 	^self invalidCall: _failureCode!
 
 readFmtUserTypeStg: pStg pcf: pcf lplpszUserType: lplpszUserType
@@ -660,17 +618,6 @@ writeClassStg: pStg rclsid: rclsid
 	<stdcall: hresult WriteClassStg IStorage* guid*>
 	^self invalidCall: _failureCode!
 
-writeClassStm: pstm rclsid: rclsid
-	"Invoke the WriteClassStm() function of the module wrapped by the receiver.
-	Helpstring: Stores the specified CLSID in a stream
-
-		HRESULT __stdcall WriteClassStm(
-			IStream* pstm,
-			GUID* rclsid);"
-
-	<stdcall: hresult WriteClassStm IStream* guid*>
-	^self invalidCall: _failureCode!
-
 writeFmtUserTypeStg: pStg cf: cf lpszUserType: lpszUserType
 	"Invoke the WriteFmtUserTypeStg() function of the module wrapped by the receiver.
 	Helpstring: Writes a clipboard format and user type to a storage object
@@ -684,13 +631,10 @@ writeFmtUserTypeStg: pStg cf: cf lpszUserType: lpszUserType
 	^self invalidCall: _failureCode! !
 !OS.COM.OLELibrary categoriesForMethods!
 createILockBytesOnHGlobal:fDeleteOnRelease:pplkbyt:!**auto generated**!OLE Functions-Structured Storage!public! !
-createStreamOnHGlobal:fDeleteOnRelease:ppstm:!OLE Functions-Structured Storage!public! !
 getConvertStg:!OLE Functions-Structured Storage!primitives!public! !
 getHGlobalFromILockBytes:phglobal:!**auto generated**!OLE Functions-Structured Storage!public! !
-getHGlobalFromStream:phglobal:!**auto generated**!OLE Functions-Structured Storage!public! !
 oleDoAutoConvert:pClsidNew:!OLE Functions-Structured Storage!primitives!public! !
 readClassStg:pclsid:!**auto generated**!OLE Functions-Structured Storage!public! !
-readClassStm:pclsid:!**auto generated**!OLE Functions-Structured Storage!public! !
 readFmtUserTypeStg:pcf:lplpszUserType:!**auto generated**!OLE Functions-Structured Storage!public! !
 setConvertStg:fConvert:!OLE Functions-Structured Storage!primitives!public! !
 stgCreateDocfile:grfMode:reserved:ppstgOpen:!**auto generated**!OLE Functions-Structured Storage!public! !
@@ -701,40 +645,7 @@ stgOpenStorage:pstgPriority:grfMode:snbExclude:reserved:ppstgOpen:!**auto genera
 stgOpenStorageOnILockBytes:pstgPriority:grfMode:snbExclude:reserved:ppstgOpen:!**auto generated**!OLE Functions-Structured Storage!public! !
 stgSetTimes:pctime:patime:pmtime:!**auto generated**!OLE Functions-Structured Storage!public! !
 writeClassStg:rclsid:!**auto generated**!OLE Functions-Structured Storage!public! !
-writeClassStm:rclsid:!**auto generated**!OLE Functions-Structured Storage!public! !
 writeFmtUserTypeStg:cf:lpszUserType:!**auto generated**!OLE Functions-Structured Storage!public! !
-!
-
-!OS.ShlwapiLibrary methodsFor!
-
-shCreateMemStream: pInit cbInit: cbInit
-	"Invoke the SHCreateMemStream() function of the module wrapped by the receiver.
-	Helpstring: Creates a memory stream on a copy of a byte buffer
-
-		IStream* __stdcall SHCreateMemStream(
-			[in]BYTE* pInit,
-			[in]unsigned int cbInit);"
-
-	<stdcall: IStream* 12 uint8* uint32>
-	^self invalidCall: _failureCode!
-
-shCreateStreamOnFileEx: pszFile grfMode: grfMode dwAttributes: dwAttributes fCreate: fCreate pstmTemplate: pstmTemplate ppstm: ppstm
-	"
-	grfMode			fCreate	File exists?	Behavior
-	STGM_CREATE		(ignored)	Yes			File is opened (old contents lost)
-	STGM_CREATE		(ignored)	No			File is created
-	STGM_FAILIFTHERE	FALSE	Yes			File is opened (old contents preserved)
-	STGM_FAILIFTHERE	FALSE	No			Fails
-	STGM_FAILIFTHERE	TRUE	Yes			Fails
-	STGM_FAILIFTHERE	TRUE	No			File is created
-
-	From: https://devblogs.microsoft.com/oldnewthing/20070119-01/?p=28343"
-
-	<stdcall: hresult SHCreateStreamOnFileEx lpwstr uint32 uint32 bool IStream* IStream**>
-	^self invalidCall: _failureCode! !
-!OS.ShlwapiLibrary categoriesForMethods!
-shCreateMemStream:cbInit:!**auto generated**!public! !
-shCreateStreamOnFileEx:grfMode:dwAttributes:fCreate:pstmTemplate:ppstm:!public! !
 !
 
 !OS.StdioFileStream methodsFor!

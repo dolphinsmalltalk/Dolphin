@@ -51,6 +51,6 @@ defineFunctions
 			argumentTypes: 'GUID*'
 ! !
 !OS.COM.ISupportErrorInfo class categoriesForMethods!
-defineFunctions!**auto generated**!public! !
+defineFunctions!**auto generated**!public!template definition! !
 !
 

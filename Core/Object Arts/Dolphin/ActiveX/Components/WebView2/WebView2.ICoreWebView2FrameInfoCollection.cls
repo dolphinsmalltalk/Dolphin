@@ -58,6 +58,6 @@ defineFunctions
 			argumentTypes: 'ICoreWebView2FrameInfoCollectionIterator**'
 ! !
 !WebView2.ICoreWebView2FrameInfoCollection class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 !
 

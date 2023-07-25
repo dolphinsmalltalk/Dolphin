@@ -52,6 +52,6 @@ defineFunctions
 			argumentTypes: 'ITypeInfo**'
 ! !
 !OS.COM.IProvideClassInfo class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 !
 

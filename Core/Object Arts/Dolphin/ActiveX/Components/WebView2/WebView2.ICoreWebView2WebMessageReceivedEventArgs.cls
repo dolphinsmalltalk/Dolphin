@@ -117,6 +117,6 @@ defineFunctions
 			argumentTypes: 'lpwstr*'
 ! !
 !WebView2.ICoreWebView2WebMessageReceivedEventArgs class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 !
 

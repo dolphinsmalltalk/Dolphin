@@ -135,6 +135,6 @@ defineFunctions
 			argumentTypes: 'ICoreWebView2HttpHeadersCollectionIterator**'
 ! !
 !WebView2.ICoreWebView2HttpResponseHeaders class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 !
 

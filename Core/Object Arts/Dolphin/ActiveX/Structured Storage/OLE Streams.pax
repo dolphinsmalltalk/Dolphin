@@ -14,6 +14,15 @@ package setClassNames: #(
 	#{OS.COM.StorageConstants}
 ).
 
+package setMethodNames: #(
+	#(#{OS.COM.OLELibrary} #createStreamOnHGlobal:fDeleteOnRelease:ppstm:)
+	#(#{OS.COM.OLELibrary} #getHGlobalFromStream:phglobal:)
+	#(#{OS.COM.OLELibrary} #readClassStm:pclsid:)
+	#(#{OS.COM.OLELibrary} #writeClassStm:rclsid:)
+	#(#{OS.ShlwapiLibrary} #shCreateMemStream:cbInit:)
+	#(#{OS.ShlwapiLibrary} #shCreateStreamOnFileEx:grfMode:dwAttributes:fCreate:pstmTemplate:ppstm:)
+).
+
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
 	'..\COM\OLE COM'
@@ -112,6 +121,95 @@ OS.COM.FinalizableStructure
 			'_OffsetOf_type' -> 16r4.
 			'_STATSTG_Size' -> 16r48
 		}!
+
+"Loose Methods"!
+
+!OS.COM.OLELibrary methodsFor!
+
+createStreamOnHGlobal: hGlobal fDeleteOnRelease: aBoolean ppstm: anIStream
+	"Create an IStream on the specified global memory handle, answering it via the out parameter, 
+	anIStream. hGlobal may be null, in which case the function allocates a zero sized
+	global memory block.
+
+		HRESULT CreateStreamOnHGlobal(
+			HGLOBAL hGlobal,	 	//Memory handle for the stream object 
+ 			BOOL fDeleteOnRelease,	//Whether to free memory when the object is released 
+ 			LPSTREAM *ppstm 		//Indirect pointer to the new stream object 
+ 		); "
+
+	<stdcall: hresult CreateStreamOnHGlobal handle bool lppvoid>
+	^self invalidCall: _failureCode!
+
+getHGlobalFromStream: pstm phglobal: phglobal
+	"Invoke the GetHGlobalFromStream() function of the module wrapped by the receiver.
+	Helpstring: Retrieves the global memory handle to a stream that was created through a call to the CreateStreamOnHGlobal function
+
+		HRESULT __stdcall GetHGlobalFromStream(
+			[in]IStream* pstm,
+			[out, retval]HGLOBAL* phglobal);"
+
+	<stdcall: hresult GetHGlobalFromStream IStream* handle*>
+	^self invalidCall: _failureCode!
+
+readClassStm: pstm pclsid: pclsid
+	"Invoke the ReadClassStm() function of the module wrapped by the receiver.
+	Helpstring: Reads a CLSID previously written to a stream object with WriteClassStm
+
+		HRESULT __stdcall ReadClassStm(
+			IStream* pstm,
+			GUID* pclsid);"
+
+	<stdcall: hresult ReadClassStm IStream* guid*>
+	^self invalidCall: _failureCode!
+
+writeClassStm: pstm rclsid: rclsid
+	"Invoke the WriteClassStm() function of the module wrapped by the receiver.
+	Helpstring: Stores the specified CLSID in a stream
+
+		HRESULT __stdcall WriteClassStm(
+			IStream* pstm,
+			GUID* rclsid);"
+
+	<stdcall: hresult WriteClassStm IStream* guid*>
+	^self invalidCall: _failureCode! !
+!OS.COM.OLELibrary categoriesForMethods!
+createStreamOnHGlobal:fDeleteOnRelease:ppstm:!OLE Functions-Structured Storage!public! !
+getHGlobalFromStream:phglobal:!**auto generated**!OLE Functions-Structured Storage!public! !
+readClassStm:pclsid:!**auto generated**!OLE Functions-Structured Storage!public! !
+writeClassStm:rclsid:!**auto generated**!OLE Functions-Structured Storage!public! !
+!
+
+!OS.ShlwapiLibrary methodsFor!
+
+shCreateMemStream: pInit cbInit: cbInit
+	"Invoke the SHCreateMemStream() function of the module wrapped by the receiver.
+	Helpstring: Creates a memory stream on a copy of a byte buffer
+
+		IStream* __stdcall SHCreateMemStream(
+			[in]BYTE* pInit,
+			[in]unsigned int cbInit);"
+
+	<stdcall: IStream* 12 uint8* uint32>
+	^self invalidCall: _failureCode!
+
+shCreateStreamOnFileEx: pszFile grfMode: grfMode dwAttributes: dwAttributes fCreate: fCreate pstmTemplate: pstmTemplate ppstm: ppstm
+	"
+	grfMode			fCreate	File exists?	Behavior
+	STGM_CREATE		(ignored)	Yes			File is opened (old contents lost)
+	STGM_CREATE		(ignored)	No			File is created
+	STGM_FAILIFTHERE	FALSE	Yes			File is opened (old contents preserved)
+	STGM_FAILIFTHERE	FALSE	No			Fails
+	STGM_FAILIFTHERE	TRUE	Yes			Fails
+	STGM_FAILIFTHERE	TRUE	No			File is created
+
+	From: https://devblogs.microsoft.com/oldnewthing/20070119-01/?p=28343"
+
+	<stdcall: hresult SHCreateStreamOnFileEx lpwstr uint32 uint32 bool IStream* IStream**>
+	^self invalidCall: _failureCode! !
+!OS.ShlwapiLibrary categoriesForMethods!
+shCreateMemStream:cbInit:!**auto generated**!public! !
+shCreateStreamOnFileEx:grfMode:dwAttributes:fCreate:pstmTemplate:ppstm:!public! !
+!
 
 "End of package definition"!
 

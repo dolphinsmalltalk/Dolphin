@@ -439,6 +439,6 @@ defineFunctions
 			argumentTypes: 'sdword*'
 ! !
 !WebView2.ICoreWebView2DownloadOperation class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 !
 

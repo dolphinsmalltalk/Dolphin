@@ -34,6 +34,6 @@ defineFunctions
 	self
 		defineFunction: #OnLinkSrcChange: returnType: 'void' argumentTypes: 'IMoniker*'! !
 !OS.COM.IAdviseSink2 class categoriesForMethods!
-defineFunctions!initializing!public! !
+defineFunctions!initializing!public!template definition! !
 !
 

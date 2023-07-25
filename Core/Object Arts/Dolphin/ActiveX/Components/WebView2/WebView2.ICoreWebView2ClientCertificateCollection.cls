@@ -65,6 +65,6 @@ defineFunctions
 			argumentTypes: 'dword ICoreWebView2ClientCertificate**'
 ! !
 !WebView2.ICoreWebView2ClientCertificateCollection class categoriesForMethods!
-defineFunctions!initializing!public! !
+defineFunctions!initializing!public!template definition! !
 !
 

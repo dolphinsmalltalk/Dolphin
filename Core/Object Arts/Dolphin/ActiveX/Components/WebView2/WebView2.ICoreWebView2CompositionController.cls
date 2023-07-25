@@ -240,6 +240,6 @@ defineFunctions
 			argumentTypes: 'sqword'
 ! !
 !WebView2.ICoreWebView2CompositionController class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 !
 

@@ -3,7 +3,7 @@
 UI.MessageBoxAbstract
 	subclass: #'UI.MessageBox'
 	instanceVariableNames: 'handle events flags uniqueId modality iconStyle icon headline detailsText expandLabel collapseLabel checkboxText footerIcon footerText buttonStyle defaultButton customButtons buttonNames buttonIds radioButtons defaultRadioButton progressRange verified button radioButtonId'
-	classVariableNames: ''
+	classVariableNames: 'NotificationCallbackDescriptor'
 	imports: #(#{OS.Win32Constants private} #{OS.TaskDialogConstants private} #{OS.Win32Errors private} #{OS.WinRegConstants private})
 	classInstanceVariableNames: ''
 	classConstants: {
@@ -697,8 +697,7 @@ notificationCallback
 							perform: selector
 							with: wParam
 							with: lParam]]
-		descriptor: (FunctionDescriptor returnType: 'hresult'
-				argumentTypes: 'handle uint32 uintptr intptr intptr')!
+		descriptor: NotificationCallbackDescriptor!
 
 open
 	"Display a Windows Task Dialog for the receiver, and answer a portable symbolic constant for the button pressed by the user."
@@ -1262,7 +1261,9 @@ initialize
 				at: IDHELP put: 0;
 				at: IDTRYAGAIN put: 0;
 				at: IDCONTINUE put: 0;
-				yourself)! !
+				yourself).
+	self addClassConstant: 'NotificationCallbackDescriptor'
+		value: (FunctionDescriptor returnType: 'hresult' argumentTypes: 'handle uint32 uintptr intptr intptr')! !
 !UI.MessageBox class categoriesForMethods!
 confirm:!instance creation!public! !
 confirm:caption:!instance creation!public! !

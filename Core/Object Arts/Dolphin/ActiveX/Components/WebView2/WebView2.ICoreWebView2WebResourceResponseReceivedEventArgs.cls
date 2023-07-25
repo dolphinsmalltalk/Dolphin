@@ -95,6 +95,6 @@ defineFunctions
 			argumentTypes: 'ICoreWebView2WebResourceResponseView**'
 ! !
 !WebView2.ICoreWebView2WebResourceResponseReceivedEventArgs class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 !
 

@@ -103,6 +103,6 @@ defineFunctions
 			argumentTypes: 'sdword ICoreWebView2GetFaviconCompletedHandler*'
 ! !
 !WebView2.ICoreWebView2_15 class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 !
 

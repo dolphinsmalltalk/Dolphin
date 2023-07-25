@@ -41,6 +41,6 @@ defineFunctions
 			argumentTypes: 'hresult ICoreWebView2PermissionSettingCollectionView*'
 ! !
 !WebView2.ICoreWebView2GetNonDefaultPermissionSettingsCompletedHandler class categoriesForMethods!
-defineFunctions!initializing!public! !
+defineFunctions!initializing!public!template definition! !
 !
 

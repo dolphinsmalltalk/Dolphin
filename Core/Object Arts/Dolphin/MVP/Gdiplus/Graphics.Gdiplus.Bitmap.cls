@@ -73,13 +73,13 @@ pixelAt: aPoint
 	"Answer an ARGB that is the color of the receiver at aPoint."
 
 	| color |
-	color := ARGBBytes new.
+	color := UInt32Bytes new.
 	Gdip
 		gdipBitmapGetPixel: self handle
 		x: aPoint x
 		y: aPoint y
 		color: color.
-	^color value!
+	^Color fromArgbCode: color asInteger!
 
 pixelAt: aPoint put: anARGB
 	"Set the pixel at aPoint to be anARGB"

@@ -39,6 +39,6 @@ defineFunctions
 
 	self defineFunction: #Invoke:arg: argumentTypes: 'hresult bool'! !
 !WebView2.ICoreWebView2PrintToPdfCompletedHandler class categoriesForMethods!
-defineFunctions!initializing!public! !
+defineFunctions!initializing!public!template definition! !
 !
 

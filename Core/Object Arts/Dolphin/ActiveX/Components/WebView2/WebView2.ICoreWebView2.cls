@@ -1890,6 +1890,6 @@ defineFunctions
 			argumentTypes: 'sqword'
 ! !
 !WebView2.ICoreWebView2 class categoriesForMethods!
-defineFunctions!initializing!public! !
+defineFunctions!initializing!public!template definition! !
 !
 

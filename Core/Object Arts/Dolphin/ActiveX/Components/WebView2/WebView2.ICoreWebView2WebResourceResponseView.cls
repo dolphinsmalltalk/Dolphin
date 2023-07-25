@@ -142,6 +142,6 @@ defineFunctions
 			argumentTypes: 'ICoreWebView2WebResourceResponseViewGetContentCompletedHandler*'
 ! !
 !WebView2.ICoreWebView2WebResourceResponseView class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 !
 

@@ -75,6 +75,6 @@ defineFunctions
 			argumentTypes: 'ICoreWebView2GetNonDefaultPermissionSettingsCompletedHandler*'
 ! !
 !WebView2.ICoreWebView2Profile4 class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 !
 

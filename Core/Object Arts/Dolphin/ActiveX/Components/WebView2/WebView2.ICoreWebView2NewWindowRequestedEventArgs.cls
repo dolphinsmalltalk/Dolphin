@@ -239,6 +239,6 @@ defineFunctions
 			argumentTypes: 'ICoreWebView2WindowFeatures**'
 ! !
 !WebView2.ICoreWebView2NewWindowRequestedEventArgs class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 !
 

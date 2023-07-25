@@ -155,9 +155,9 @@ gdipTranslateTransform: aHandle dx: dxFloat dy: dyFloat order: aMatrixOrderConst
 
 getCenterColor: aHandle
 	| color |
-	color := ARGBBytes new.
+	color := UInt32Bytes new.
 	Gdip gdipGetPathGradientCenterColor: aHandle colors: color.
-	^color value!
+	^Color fromArgbCode: color asInteger!
 
 getCenterPoint: aHandle
 	| point |

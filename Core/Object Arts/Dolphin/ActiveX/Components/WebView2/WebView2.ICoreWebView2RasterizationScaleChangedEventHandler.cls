@@ -58,7 +58,7 @@ eventName
 
 	^#rasterizationScaleChanged! !
 !WebView2.ICoreWebView2RasterizationScaleChangedEventHandler class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 eventName!constants!public! !
 !
 

@@ -240,6 +240,6 @@ defineFunctions
 		defineFunction: #DeleteAllCookies
 ! !
 !WebView2.ICoreWebView2CookieManager class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 !
 

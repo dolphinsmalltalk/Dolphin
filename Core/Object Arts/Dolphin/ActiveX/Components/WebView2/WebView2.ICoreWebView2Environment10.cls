@@ -92,6 +92,6 @@ defineFunctions
 			argumentTypes: 'handle ICoreWebView2ControllerOptions* ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler*'
 ! !
 !WebView2.ICoreWebView2Environment10 class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 !
 

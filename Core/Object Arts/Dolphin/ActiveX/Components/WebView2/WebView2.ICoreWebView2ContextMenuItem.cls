@@ -364,6 +364,6 @@ defineFunctions
 			argumentTypes: 'sqword'
 ! !
 !WebView2.ICoreWebView2ContextMenuItem class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 !
 

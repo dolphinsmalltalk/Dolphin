@@ -4,7 +4,7 @@ OS.COM.IUnknown
 	subclass: #'OS.COM.ISequentialStream'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.COM.StorageConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 OS.COM.ISequentialStream guid: (OS.COM.IID fromString: '{0c733a30-2a1c-11ce-ade5-00aa0044773d}')!
@@ -238,6 +238,6 @@ defineFunctions
 		defineFunction: #Read:cb:pcbRead: argumentTypes: 'sbyte* dword dword*';
 		defineFunction: #Write:cb:pcbWritten: argumentTypes: 'sbyte* dword dword*'! !
 !OS.COM.ISequentialStream class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 !
 

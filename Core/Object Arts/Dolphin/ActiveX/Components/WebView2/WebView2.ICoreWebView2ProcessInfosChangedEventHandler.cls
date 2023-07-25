@@ -58,7 +58,7 @@ eventName
 
 	^#processInfosChanged! !
 !WebView2.ICoreWebView2ProcessInfosChangedEventHandler class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 eventName!constants!public! !
 !
 

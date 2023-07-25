@@ -37,6 +37,6 @@ defineFunctions
 
 	self defineFunction: #OnViewStatusChange: argumentTypes: 'dword'! !
 !OS.COM.IAdviseSinkEx class categoriesForMethods!
-defineFunctions!initializing!public! !
+defineFunctions!initializing!public!template definition! !
 !
 

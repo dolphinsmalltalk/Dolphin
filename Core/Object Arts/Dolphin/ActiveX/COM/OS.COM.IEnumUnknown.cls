@@ -46,7 +46,7 @@ elementClass
 
 	^IUnknown! !
 !OS.COM.IEnumUnknown class categoriesForMethods!
-defineFunctions!initializing!public! !
+defineFunctions!initializing!public!template definition! !
 elementClass!constants!public! !
 !
 

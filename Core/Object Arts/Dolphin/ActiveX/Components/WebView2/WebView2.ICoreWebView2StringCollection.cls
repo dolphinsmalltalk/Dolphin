@@ -76,6 +76,6 @@ defineFunctions
 			argumentTypes: 'dword lpwstr*'
 ! !
 !WebView2.ICoreWebView2StringCollection class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 !
 

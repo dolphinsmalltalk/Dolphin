@@ -52,6 +52,6 @@ defineFunctions
 	self
 		defineFunction: #InitNew returnType: 'int32'! !
 !OS.COM.IPersistStreamInit class categoriesForMethods!
-defineFunctions!initializing!public! !
+defineFunctions!initializing!public!template definition! !
 !
 

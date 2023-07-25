@@ -41,6 +41,6 @@ defineFunctions
 			argumentTypes: 'hresult sdword'
 ! !
 !WebView2.ICoreWebView2PrintCompletedHandler class categoriesForMethods!
-defineFunctions!initializing!public! !
+defineFunctions!initializing!public!template definition! !
 !
 

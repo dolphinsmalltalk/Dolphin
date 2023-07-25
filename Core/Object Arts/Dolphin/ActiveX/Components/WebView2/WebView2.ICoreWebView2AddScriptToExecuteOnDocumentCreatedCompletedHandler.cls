@@ -39,6 +39,6 @@ defineFunctions
 
 	self defineFunction: #Invoke:arg: argumentTypes: 'hresult lpwstr'! !
 !WebView2.ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler class categoriesForMethods!
-defineFunctions!initializing!public! !
+defineFunctions!initializing!public!template definition! !
 !
 

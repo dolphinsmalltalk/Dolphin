@@ -42,6 +42,6 @@ defineFunctions
 			argumentTypes: 'hresult IStream*'
 ! !
 !WebView2.ICoreWebView2GetFaviconCompletedHandler class categoriesForMethods!
-defineFunctions!initializing!public! !
+defineFunctions!initializing!public!template definition! !
 !
 

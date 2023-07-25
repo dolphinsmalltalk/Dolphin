@@ -62,6 +62,6 @@ defineFunctions
 		defineFunction: #BindType:lHashVal:ppTInfo:ppTComp:        
 			 argumentTypes: 'lpwstr dword ITypeInfo** ITypeComp**'! !
 !OS.COM.ITypeComp class categoriesForMethods!
-defineFunctions!initializing!public! !
+defineFunctions!initializing!public!template definition! !
 !
 

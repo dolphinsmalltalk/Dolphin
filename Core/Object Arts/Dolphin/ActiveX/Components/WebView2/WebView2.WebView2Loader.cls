@@ -30,10 +30,10 @@ getAvailableCoreWebView2BrowserVersionString: browserExecutableFolder
 	"
 
 	| ptr versionInfo |
-	ptr := TaskMemory new.
+	ptr := Address new.
 	self getAvailableCoreWebView2BrowserVersionString: browserExecutableFolder versionInfo: ptr.
 	versionInfo := Utf16String fromAddress: ptr.
-	ptr free.
+	Ole32 coTaskMemFree: ptr.
 	^versionInfo!
 
 getAvailableCoreWebView2BrowserVersionString: browserExecutableFolder versionInfo: versionInfo

@@ -526,7 +526,7 @@ forPointer: anIUnknown
 	Ole32 createPointerMoniker: anIUnknown ppmk: answer.
 	^answer! !
 !OS.COM.IMoniker class categoriesForMethods!
-defineFunctions!initializing!public! !
+defineFunctions!initializing!public!template definition! !
 forCLSID:!instance creation!public! !
 forItem:!instance creation!public! !
 forItem:delimiter:!instance creation!public! !

@@ -62,7 +62,7 @@ eventName
 	^#frameNavigationCompleted:! !
 !WebView2.ICoreWebView2FrameNavigationCompletedEventHandler class categoriesForMethods!
 argsClass!constants!public! !
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 eventName!constants!public! !
 !
 

@@ -65,6 +65,6 @@ defineFunctions
 			argumentTypes: 'dword ICoreWebView2Cookie**'
 ! !
 !WebView2.ICoreWebView2CookieList class categoriesForMethods!
-defineFunctions!initializing!public! !
+defineFunctions!initializing!public!template definition! !
 !
 

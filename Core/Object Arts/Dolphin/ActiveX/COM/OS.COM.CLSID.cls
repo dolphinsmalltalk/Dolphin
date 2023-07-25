@@ -25,10 +25,10 @@ progID
 	If the registry contains no relevant entry, then an appropriate HRESULTError will be raised. Note that a ProgID has a maximum of 39 characters."
 
 	| pProgId answer |
-	pProgId := TaskMemory new.
+	pProgId := Address new.
 	Ole32 progIDFromCLSID: self lplpszProgID: pProgId.
 	answer := String fromUtf16String: pProgId.
-	pProgId free.
+	Ole32 coTaskMemFree: pProgId.
 	^answer! !
 !OS.COM.CLSID categoriesForMethods!
 displayOn:!displaying!public! !

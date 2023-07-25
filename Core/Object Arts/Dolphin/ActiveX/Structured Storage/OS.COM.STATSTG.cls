@@ -146,11 +146,17 @@ name
 name: aString
 	"Set the <readableString> name of the object whose status the receiver is recording."
 
-	| name |
-	name := aString asUtf16String copyToCOMTaskMemory.
-	self pwcsName: name.
-	"struct now has ownership of the name"
-	name beUnfinalizable!
+	| name size utf16 |
+	utf16 := aString asUtf16String.
+	size := utf16 byteSize.
+	name := Ole32 coTaskMemAlloc: size.
+	name
+		replaceFrom: 1
+		to: size - 2
+		with: utf16
+		startingAt: 1.
+	self pwcsName: name
+	"struct now has ownership of the name"!
 
 pwcsName
 	"Answer the <Utf16String> value of the receiver's 'pwcsName' field."
@@ -209,7 +215,7 @@ clear: addressOrBytes
 
 	| addr |
 	addr := addressOrBytes uint32AtOffset: 0.
-	addr isNull ifFalse: [TaskMemory free: addr]!
+	addr isNull ifFalse: [Ole32 coTaskMemFree: addr]!
 
 defineFields
 	"Define the fields of the STATSTG structure.

@@ -63,7 +63,7 @@ triggerBlockFor: aUrlPresenter
 	event := self eventName.
 	^[:source :args | aUrlPresenter trigger: event with: source]! !
 !WebView2.ICoreWebView2CustomItemSelectedEventHandler class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 eventName!constants!public! !
 triggerBlockFor:!helpers!private! !
 !

@@ -750,7 +750,7 @@ createOnILockBytes:!instance creation!public! !
 createOnILockBytes:mode:!instance creation!public! !
 defaultCreateMode!constants!public! !
 defaultOpenMode!constants!public! !
-defineFunctions!initializing!public! !
+defineFunctions!initializing!public!template definition! !
 initializeModeMaps!initializing!private! !
 onILockBytes!instance creation!public! !
 onILockBytes:!instance creation!public! !

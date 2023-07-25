@@ -182,6 +182,6 @@ defineFunctions
 			argumentTypes: 'dword*'
 ! !
 !OS.COM.IErrorInfo class categoriesForMethods!
-defineFunctions!**auto generated**!public! !
+defineFunctions!**auto generated**!public!template definition! !
 !
 

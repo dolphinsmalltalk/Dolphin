@@ -39,6 +39,6 @@ defineFunctions
 
 	self defineFunction: #SwitchToFile: argumentTypes: 'lpwstr'! !
 !OS.COM.IRootStorage class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 !
 

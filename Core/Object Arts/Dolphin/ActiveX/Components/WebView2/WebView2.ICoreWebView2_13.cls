@@ -54,6 +54,6 @@ defineFunctions
 			argumentTypes: 'ICoreWebView2Profile**'
 ! !
 !WebView2.ICoreWebView2_13 class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 !
 

@@ -58,6 +58,6 @@ defineFunctions
 			argumentTypes: 'ICoreWebView2SharedBuffer* int32 lpwstr'
 ! !
 !WebView2.ICoreWebView2_17 class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 !
 

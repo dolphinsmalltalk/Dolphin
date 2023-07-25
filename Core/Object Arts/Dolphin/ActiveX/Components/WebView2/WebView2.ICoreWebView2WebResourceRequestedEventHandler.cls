@@ -62,7 +62,7 @@ eventName
 	^#webResourceRequested:! !
 !WebView2.ICoreWebView2WebResourceRequestedEventHandler class categoriesForMethods!
 argsClass!constants!public! !
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!**auto generated**!initializing!public!template definition! !
 eventName!constants!public! !
 !
 

@@ -118,6 +118,6 @@ defineFunctions
 			argumentTypes: 'uint64*'
 ! !
 !OS.COM.IPersistStream class categoriesForMethods!
-defineFunctions!initializing!public! !
+defineFunctions!initializing!public!template definition! !
 !
 

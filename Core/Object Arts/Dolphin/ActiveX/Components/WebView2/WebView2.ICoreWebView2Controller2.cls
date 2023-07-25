@@ -70,6 +70,6 @@ defineFunctions
 			argumentTypes: 'qword'
 ! !
 !WebView2.ICoreWebView2Controller2 class categoriesForMethods!
-defineFunctions!initializing!public! !
+defineFunctions!initializing!public!template definition! !
 !
 

@@ -65,6 +65,6 @@ defineFunctions
 			argumentTypes: 'dword ICoreWebView2ProcessInfo**'
 ! !
 !WebView2.ICoreWebView2ProcessInfoCollection class categoriesForMethods!
-defineFunctions!initializing!public! !
+defineFunctions!initializing!public!template definition! !
 !
 
