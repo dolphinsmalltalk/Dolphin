@@ -13,6 +13,7 @@ package setClassNames: #(
 	#{Kernel.STBIdentityDictionaryProxy}
 	#{Kernel.STBSingletonProxy}
 	#{Kernel.STBSortedCollectionProxy}
+	#{Kernel.STBVersionPolicy}
 	#{Kernel.STxClassConversion}
 	#{Kernel.STxFiler}
 	#{Kernel.STxInFiler}
@@ -191,6 +192,13 @@ Kernel.STBCollectionProxy
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+Kernel.STxVersionPolicy
+	subclass: #'Kernel.STBVersionPolicy'
+	instanceVariableNames: ''
+	classVariableNames: 'Versions'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: { 'Signature' -> #[33 83 84 66 32] }!
 
 "Loose Methods"!
 

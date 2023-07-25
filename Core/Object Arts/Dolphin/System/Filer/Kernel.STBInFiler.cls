@@ -59,7 +59,7 @@ readBytes:!binary filing!public! !
 !Kernel.STBInFiler class methodsFor!
 
 versionPolicyClass
-	^STBVersion0Policy! !
+	^STBVersionPolicy! !
 !Kernel.STBInFiler class categoriesForMethods!
 versionPolicyClass!constants!private! !
 !

@@ -106,23 +106,13 @@ Kernel.STBClassProxy
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.STxVersionPolicy
+Kernel.STBVersionPolicy
 	subclass: #'Kernel.STBVersion0Policy'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-			'Signature' -> #[33 83 84 66 32].
-			'Versions' -> {
-						STBVersion0Policy.
-						STBVersion1Policy.
-						STBVersion1Policy.
-						STBVersion3Policy.
-						STBVersion3Policy.
-						STBVersion5Policy
-					}
-		}!
+	classConstants: {}!
 Kernel.STBVersion0Policy
 	subclass: #'Kernel.STBVersion1Policy'
 	instanceVariableNames: ''

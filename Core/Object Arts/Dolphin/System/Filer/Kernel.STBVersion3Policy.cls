@@ -19,3 +19,19 @@ readObjectSize: aClass
 readObjectSize:!operations!public! !
 !
 
+!Kernel.STBVersion3Policy class methodsFor!
+
+initialize
+	"
+	self initialize
+	"
+
+	3 to: 4 do: [:i | Versions at: i+1 put: self]!
+
+uninitialize
+	3 to: 4 do: [:i | Versions at: i+1 put: nil]! !
+!Kernel.STBVersion3Policy class categoriesForMethods!
+initialize!class initialization!public! !
+uninitialize!class hierarchy-removing!public! !
+!
+

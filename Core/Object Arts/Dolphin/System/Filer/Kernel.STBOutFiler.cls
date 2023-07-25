@@ -21,7 +21,7 @@ Instance Variables:
 !Kernel.STBOutFiler class methodsFor!
 
 versionPolicyClass
-	^STBVersion0Policy! !
+	^STBVersionPolicy! !
 !Kernel.STBOutFiler class categoriesForMethods!
 versionPolicyClass!constants!private! !
 !

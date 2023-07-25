@@ -50,3 +50,19 @@ lastPredefined!constants!public! !
 predefinedClasses!constants!public! !
 !
 
+!Kernel.STBVersion1Policy class methodsFor!
+
+initialize
+	"
+	self initialize
+	"
+
+	1 to: 2 do: [:i | Versions at: i+1 put: self]!
+
+uninitialize
+	1 to: 2 do: [:i | Versions at: i+1 put: nil]! !
+!Kernel.STBVersion1Policy class categoriesForMethods!
+initialize!class initialization!public! !
+uninitialize!class hierarchy-removing!public! !
+!
+
