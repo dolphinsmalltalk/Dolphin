@@ -57,3 +57,19 @@ readClassWithPrefix:!operations!private! !
 readObjectWithPrefix:!accessing!public! !
 !
 
+!Kernel.STBVersion5Policy class methodsFor!
+
+initialize
+	"
+	self initialize
+	"
+
+	Versions at: 5+1 put: self!
+
+uninitialize
+	Versions at: 5+1 put: nil! !
+!Kernel.STBVersion5Policy class categoriesForMethods!
+initialize!class initialization!public! !
+uninitialize!class hierarchy-removing!public! !
+!
+
