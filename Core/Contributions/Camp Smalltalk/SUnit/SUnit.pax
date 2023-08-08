@@ -25,11 +25,11 @@ package!
 
 Core.Object
 	subclass: #'XProgramming.SUnit.TestCase'
-	instanceVariableNames: 'testSelector'
+	instanceVariableNames: 'testSelector flags'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'DebugMask' -> 16r1 }!
 Core.Object
 	subclass: #'XProgramming.SUnit.TestCaseResult'
 	instanceVariableNames: 'case outcome duration signal stacktrace ip testMethod'
