@@ -2,11 +2,11 @@
 
 Core.Object
 	subclass: #'XProgramming.SUnit.TestCase'
-	instanceVariableNames: 'testSelector'
+	instanceVariableNames: 'testSelector flags'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'DebugMask' -> 16r1 }!
 XProgramming.SUnit.TestCase guid: (Core.GUID fromString: '{5e96793a-0810-11d4-a876-0050da643bf9}')!
 XProgramming.SUnit.TestCase isNonInstantiable: true!
 XProgramming.SUnit.TestCase comment: ''!
@@ -52,7 +52,11 @@ comparingStringBetween: expectedObject and: actualObject
 
 debug
 	self resources do: [:res | res isAvailable ifFalse: [^res signalInitializationError]].
-	[(self class selector: testSelector) runCase] ensure: [self resources do: [:each | each reset]]!
+	
+	[(self class selector: testSelector)
+		isDebug: true;
+		runCase]
+			ensure: [self resources do: [:each | each reset]]!
 
 debugAsFailure
 	| semaphore |
@@ -61,7 +65,9 @@ debugAsFailure
 	
 	[semaphore wait.
 	self resources do: [:each | each reset]] fork.
-	(self class selector: testSelector) runCaseAsFailure: semaphore!
+	(self class selector: testSelector)
+		isDebug: true;
+		runCaseAsFailure: semaphore!
 
 deny: aBoolean
 	self assert: aBoolean not!
@@ -86,6 +92,12 @@ failureLog
 	
 	^Transcript
 !
+
+isDebug
+	^flags allMask: DebugMask!
+
+isDebug: aBoolean
+	flags := flags mask: DebugMask set: aBoolean!
 
 isLogging
 	^false!
@@ -157,7 +169,8 @@ selector
 	^testSelector!
 
 setTestSelector: aSymbol
-	testSelector := aSymbol!
+	testSelector := aSymbol.
+	flags := 0!
 
 setUp
 	| annotations |
@@ -241,6 +254,8 @@ deny:description:!asserting!public! !
 deny:description:resumable:!asserting!public! !
 fail:!asserting!public! !
 failureLog!Accessing!public! !
+isDebug!public!running! !
+isDebug:!public!running! !
 isLogging!accessing!public! !
 logFailure:!asserting!public! !
 openDebuggerOnFailingTestMethod!public!running! !

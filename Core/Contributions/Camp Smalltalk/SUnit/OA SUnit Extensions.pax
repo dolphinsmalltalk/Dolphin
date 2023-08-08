@@ -386,6 +386,7 @@ debugCase: aTestCase
 	"Same as runCase:, but must pass out an errors so caught by the debugger"
 
 	| start |
+	aTestCase isDebug: true.
 	start := Delay microsecondClockValue.
 	
 	[aTestCase runCase.
