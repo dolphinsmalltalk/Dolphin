@@ -1240,10 +1240,11 @@ getOptionInlineExpression: aString
 				collapseLabel: 'Hide help';
 				isCancellable: true;
 				checkboxText: SmalltalkSystem current showChangesText;
+				isChecked: self shouldShowChanges;
 				yourself.
 	response := prompt confirmOrCancel.
 	response == #cancel ifTrue: [^self refactoringAborted].
-	prompt isChecked ifTrue: [self shouldShowChanges: true].
+	self shouldShowChanges: prompt isChecked.
 	^response == #yes!
 
 getOptionNewMethodName: aRBMethodName classes: anArray
