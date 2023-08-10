@@ -53,7 +53,7 @@ class: aClass array: anArray
 forCollection: aCollection 
 	"Answer a new instance representing aCollection."
 
-	^self class: aCollection class array: aCollection asArray! !
+	^self class: aCollection basicClass array: aCollection asArray! !
 !Kernel.STBCollectionProxy class categoriesForMethods!
 class:array:!instance creation!public! !
 forCollection:!instance creation!public! !

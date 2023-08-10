@@ -87,7 +87,7 @@ package setPrerequisites: #(
 	'..\..\MVP\Graphics\Dolphin GDI Graphics'
 	'..\..\System\Win32\MessageBox\Dolphin Message Box'
 	'..\..\MVP\Base\Dolphin MVP Base'
-	'..\..\System\Filer\Dolphin STB Filer'
+	'..\..\System\Filer\Dolphin STx Filer (Old versions)'
 	'..\..\MVP\Type Converters\Dolphin Type Converters'
 	'..\..\MVP\Models\Value\Dolphin Value Models'
 	'..\COM\OLE COM'

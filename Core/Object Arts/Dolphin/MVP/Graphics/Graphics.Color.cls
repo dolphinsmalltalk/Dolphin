@@ -501,9 +501,8 @@ stbSaveOn: anSTBOutFiler
 		ifNotNil: 
 			[:symbol |
 			anSTBOutFiler
-				writeClassPrefix: Color;
-				register: self.
-			anSTBOutFiler nextPut: symbol]! !
+				writePreambleFor: self class: Color;
+				nextPut: symbol]! !
 !Graphics.Color categoriesForMethods!
 =!comparing!public! !
 actualColor!accessing!public! !

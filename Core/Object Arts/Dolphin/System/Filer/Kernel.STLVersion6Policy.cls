@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.STLVersionPolicyForNamespaces
+Kernel.STLVersionPolicy
 	subclass: #'Kernel.STLVersion6Policy'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -26,7 +26,31 @@ predefinedClasses
 	^#()! !
 !Kernel.STLVersion6Policy categoriesForMethods!
 lastPredefined!constants!public! !
-lookupPredefinedClass:!public! !
+lookupPredefinedClass:!accessing!public! !
 predefinedClasses!constants!public! !
+!
+
+!Kernel.STLVersion6Policy class methodsFor!
+
+initialize
+	"
+	self initialize
+	"
+
+	self register!
+
+literalPrinterClass
+	^STLPrinter!
+
+uninitialize
+	self unregister!
+
+version
+	^6! !
+!Kernel.STLVersion6Policy class categoriesForMethods!
+initialize!class initialization!public! !
+literalPrinterClass!constants!public! !
+uninitialize!class hierarchy-removing!public! !
+version!constants!public! !
 !
 

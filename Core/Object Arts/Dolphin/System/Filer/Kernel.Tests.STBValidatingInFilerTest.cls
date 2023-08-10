@@ -1,0 +1,324 @@
+﻿"Filed out from Dolphin Smalltalk"!
+
+Kernel.Tests.STBTest
+	subclass: #'Kernel.Tests.STBValidatingInFilerTest'
+	instanceVariableNames: 'locator'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.Tests.STBValidatingInFilerTest guid: (Core.GUID fromString: '{078c50e0-a124-4739-8f98-fab43c74c0d7}')!
+Kernel.Tests.STBValidatingInFilerTest comment: ''!
+!Kernel.Tests.STBValidatingInFilerTest methodsFor!
+
+infilerClass
+	^STBValidatingInFiler!
+
+initializeLocator: anInteger
+	"Additional classes are derestricted in specific tests, or if #serialized:"
+
+	^locator
+		ifNil: 
+			[locator := RestrictedClassLocator forClasses: (anInteger < 4
+								ifTrue: 
+									[#(#{Core.ByteArray} #{Core.String} #{Core.AnsiString}#{Smalltalk.STBSymbolProxy} #{Core.Array})]
+								ifFalse: [#(#{Core.ByteArray} #{Core.Utf8String} #{Core.Array} #{Core.Symbol} #{Core.AnsiString})])]!
+
+newInFilerOn: aByteArray
+	| stream inFiler |
+	stream := aByteArray readStream.
+	inFiler := self infilerClass on: stream.
+	^inFiler
+		classLocator: (self initializeLocator: inFiler version);
+		yourself!
+
+newLocator: anInteger
+	locator := nil.
+	self initializeLocator: anInteger!
+
+serialize: anObject version: anInteger
+	self initializeLocator: anInteger.
+	anObject isBehavior
+		ifTrue: 
+			[anObject isMeta
+				ifTrue: 
+					[locator
+						includeClass: STBMetaclassProxy;
+						includeClass: anObject instanceClass]
+				ifFalse: 
+					[locator
+						includeClass: STBClassProxy;
+						includeClass: anObject]]
+		ifFalse: [locator includeClass: anObject class].
+	^super serialize: anObject version: anInteger!
+
+testBlockClass
+	| bytes filer |
+	bytes := self serialize: { self class. Core.Tests.DolphinTest. TestCase }.
+	"Utf8String is required for the class names, and classes are represented by STBClassProxy. Then each specific class has to be allowed. Since we don't allow TestCase, an error is raised when it is encountered."
+	self dumpToTranscriptIfDebug: bytes.
+	filer := (STBValidatingInFiler on: bytes readStream)
+				validClasses: { Array. Utf8String. #{Kernel.STBClassProxy}. self class. #{Core.Tests.DolphinTest} };
+				yourself.
+	self
+		should: [filer next]
+		raise: STBError
+		matching: 
+			[:ex |
+			ex description = 'STBFiler - STB input stream contains an invalid class (XProgramming.SUnit.TestCase)']!
+
+testClassProxy0
+	self initializeLocator: 0.
+	locator includeClass: STBClassProxy.
+	super testClassProxy0!
+
+testDisallowedPredefinedClass
+	"Test error for a predefined class that is not among the allowed classes."
+
+	| bytes subject |
+	bytes := #[33 83 84 66 32 53 32 98 0 0 0 3 0 0 0 3 0 0 0 5 0 0 0 7 0 0 0].
+	subject := self newInFilerOn: bytes.
+	subject classLocator excludeClass: Array.
+	self
+		should: [subject next]
+		raise: Error
+		matching: [:ex | ex description = 'STBFiler - STB input stream contains an invalid class (Core.Array)']!
+
+testEggsBeforeChickenVersion0
+	self initializeLocator: 0.
+	locator includeClass: STBClassProxy.
+	^super testEggsBeforeChickenVersion0!
+
+testGlobalProxyingVersion0
+	self initializeLocator: 0.
+	locator includeClass: Smalltalk.STBGlobalObjectProxy.
+	super testGlobalProxyingVersion0!
+
+testGlobalProxyingVersion1
+	self initializeLocator: 1.
+	locator includeClass: Smalltalk.STBGlobalObjectProxy.
+	super testGlobalProxyingVersion1!
+
+testGlobalProxyingVersion3
+	self initializeLocator: 3.
+	locator includeClass: Smalltalk.STBGlobalObjectProxy; includeClass: Symbol.
+	super testGlobalProxyingVersion3!
+
+testGlobalProxyingVersion4
+	self initializeLocator: 4.
+	locator includeClass: Smalltalk.STBGlobalObjectProxy.
+	super testGlobalProxyingVersion4!
+
+testMetaclassProxy0
+	self initializeLocator: 0.
+	locator includeClass: STBMetaclassProxy.
+	super testMetaclassProxy0!
+
+testSecureByDefault
+	"SmallIntegers and nil can always be loaded"
+
+	#(123 nil) do: 
+			[:each |
+			| filer |
+			filer := STBValidatingInFiler on: 123 binaryStoreBytes readStream.
+			self assert: filer next equals: 123].
+	"But nothing else, not even a string, or array, and certainly not a class"
+	{
+		'foo'.
+		#(123).
+		#[123].
+		#foo.
+		Symbol.
+		2 ** 64.
+		1 -> 2.
+		Association class
+	} do: 
+				[:each |
+				| filer class serialised |
+				serialised := each binaryStoreBytes.
+				self dumpToTranscriptIfDebug: serialised.
+				filer := STBValidatingInFiler on: serialised readStream.
+				class := each isBehavior
+							ifTrue: 
+								[(filer policy predefinedClasses includes: each)
+									ifTrue: [each]
+									ifFalse: [each isMeta ifTrue: [STBMetaclassProxy] ifFalse: [STBClassProxy]]]
+							ifFalse: [each class].
+				self
+					should: [filer next]
+					raise: STBError
+					matching: 
+						[:ex |
+						ex description = ('STBFiler - STB input stream contains an invalid class (<1s>)' << class fullName)]].
+	{ LookupTable with: 123 -> 456. IdentityDictionary with: 123 -> 456 } do: 
+			[:each |
+			| filer |
+			filer := STBValidatingInFiler on: each binaryStoreBytes readStream.
+			self
+				should: [filer next]
+				raise: STBError
+				matching: 
+					[:ex |
+					ex description
+						= ('STBFiler - STB input stream contains an invalid class (<1s>)' << each class fullName)]]!
+
+testSortedCollections
+	self initializeLocator: STBOutFiler version.
+	locator includeClass: STBSortedCollectionProxy.
+	"The STBSortedCollectionProxy hasn't been changed from its original design, and writes out a class proxy for SortedCollection, which is a bit overkill but does allow for subclasses (in theory). Allowing class proxies is potentially insecure in an untrusted STB stream, but the class it is proxying (i.e. SortedCollection) still has to be allowed as well."
+	locator includeClass: STBClassProxy.
+	"Here the test is also serializing a pluggable algorithm with a block, which is not something one would want to allow in an untrusted stream in practice"
+	locator includeClass: MergesortAlgorithm.
+	locator includeClass: BlockClosure.	"Never do this"
+	locator includeClass: CompiledMethod.	"Or this - allows loading of arbitrary code from the stream"
+	locator includeClass: STBMetaclassProxy.	"The home method of the default sort block is a class method..."
+	locator includeClass: PluggableSortAlgorithm.	"... of PluggableSortAlgorithm"
+	super testSortedCollections!
+
+testStringsVersion0
+	self initializeLocator: 0.
+	locator includeClass: #{Smalltalk.UnicodeString}.
+	super testStringsVersion0!
+
+testStringsVersion1
+	self initializeLocator: 1.
+	locator includeClass: #{Smalltalk.UnicodeString}.
+	super testStringsVersion1!
+
+testSymbolUpgrade
+	"The point of this test is that the test STB stream contains the legacy symbol proxy"
+	self initializeLocator: 0.
+	locator includeClass: Symbol.
+	super testSymbolUpgrade!
+
+testTranscript
+	self initializeLocator: STBOutFiler version.
+	locator
+		includeClass: STBSingletonProxy;
+		includeClass: STBClassProxy;
+		includeClass: UI.TranscriptShell.
+	^super testTranscript!
+
+testUnicodeStringUpgrade
+	self initializeLocator: 0.
+	locator includeClass: 'UnicodeString'.
+	^super testUnicodeStringUpgrade!
+
+testUnicodeStringVersion0
+	self initializeLocator: 0.
+	locator includeClass: #{Smalltalk.UnicodeString}.
+	super testUnicodeStringVersion0!
+
+verifyBindingReferencesAtVersion: anInteger
+	self newLocator: anInteger.
+	locator
+		includeClass: STBClassProxy;
+		includeClass: Object.
+	super verifyBindingReferencesAtVersion: anInteger!
+
+verifyEggsBeforeChicken: anInteger
+	self newLocator: anInteger.
+	locator includeClass: STBClassProxy!
+
+verifyFloatsAtVersion: anInteger
+	self initializeLocator: anInteger.
+	locator includeClass: Float.
+	super verifyFloatsAtVersion: anInteger!
+
+verifyLookupTablesAtVersion: anInteger
+	self newLocator: anInteger.
+	locator includeClass: Graphics.Point.
+	anInteger < 1 ifTrue: [locator includeClass: STBClassProxy].
+	anInteger < 6
+		ifTrue: [locator includeClass: STBIdentityDictionaryProxy]
+		ifFalse: [locator excludeClass: STBIdentityDictionaryProxy].
+	super verifyLookupTablesAtVersion: anInteger!
+
+verifyOrderedCollectionsAtVersion: anInteger
+	self newLocator: anInteger.
+	anInteger < 1 ifTrue: [locator includeClass: STBClassProxy].
+	anInteger < 6
+		ifTrue: [locator includeClass: STBCollectionProxy]
+		ifFalse: [locator excludeClass: STBCollectionProxy].
+	super verifyOrderedCollectionsAtVersion: anInteger!
+
+verifyResourceLibraryAtVersion: anInteger
+	self initializeLocator: anInteger.
+	anInteger < 6
+		ifTrue: 
+			[locator includeClass: STBExternalResourceLibraryProxy.
+			anInteger < 4
+				ifTrue: 
+					[locator
+						includeClass: #{Smalltalk.UnicodeString};
+						includeClass: String]]
+		ifFalse: [locator includeClass: ResourceLibrary].
+	super verifyResourceLibraryAtVersion: anInteger!
+
+verifyRoundTripSingleton: anObject version: anInteger
+	self initializeLocator: anInteger.
+	locator includeClass: anObject class.
+	anInteger < 2
+		ifTrue: 
+			[locator
+				includeClass: String;
+				includeClass: Smalltalk.STBSymbolProxy].
+	super verifyRoundTripSingleton: anObject version: anInteger!
+
+verifySaveStaticVariableReferenceAtVersion: anInteger
+	self initializeLocator: anInteger.
+	locator
+		includeClass: STBStaticVariableProxy;
+		includeClass: Kernel.FullBindingReference.
+	super verifySaveStaticVariableReferenceAtVersion: anInteger!
+
+verifyScaledDecimalsAtVersion: anInteger
+	self initializeLocator: anInteger.
+	locator includeClass: ScaledDecimal; includeClass: Fraction.
+	super verifyScaledDecimalsAtVersion: anInteger!
+
+verifyStrings: anArray atVersion: anInteger
+	self newLocator: anInteger.
+	locator includeClass: (anInteger < 4 ifTrue: [#{Smalltalk.UnicodeString}] ifFalse: [Utf16String]).
+	super verifyStrings: anArray atVersion: anInteger!
+
+verifySymbolsAtVersion: anInteger
+	self newLocator: anInteger.
+	anInteger > 1 ifTrue: [locator includeClass: Symbol].
+	super verifySymbolsAtVersion: anInteger! !
+!Kernel.Tests.STBValidatingInFilerTest categoriesForMethods!
+infilerClass!helpers!private! !
+initializeLocator:!private!running! !
+newInFilerOn:!helpers!private! !
+newLocator:!helpers!private! !
+serialize:version:!helpers!private! !
+testBlockClass!public!unit tests! !
+testClassProxy0!public!unit tests! !
+testDisallowedPredefinedClass!public!unit tests! !
+testEggsBeforeChickenVersion0!public!unit tests! !
+testGlobalProxyingVersion0!public!unit tests! !
+testGlobalProxyingVersion1!public!unit tests! !
+testGlobalProxyingVersion3!public!unit tests! !
+testGlobalProxyingVersion4!public!unit tests! !
+testMetaclassProxy0!public!unit tests! !
+testSecureByDefault!public!unit tests! !
+testSortedCollections!public!unit tests! !
+testStringsVersion0!public!unit tests! !
+testStringsVersion1!public!unit tests! !
+testSymbolUpgrade!public!unit tests! !
+testTranscript!public!unit tests! !
+testUnicodeStringUpgrade!public!unit tests! !
+testUnicodeStringVersion0!public!unit tests! !
+verifyBindingReferencesAtVersion:!helpers!private! !
+verifyEggsBeforeChicken:!helpers!private! !
+verifyFloatsAtVersion:!helpers!private! !
+verifyLookupTablesAtVersion:!helpers!private! !
+verifyOrderedCollectionsAtVersion:!helpers!private! !
+verifyResourceLibraryAtVersion:!helpers!private! !
+verifyRoundTripSingleton:version:!helpers!private! !
+verifySaveStaticVariableReferenceAtVersion:!helpers!private! !
+verifyScaledDecimalsAtVersion:!helpers!private! !
+verifyStrings:atVersion:!helpers!private! !
+verifySymbolsAtVersion:!helpers!private! !
+!
+

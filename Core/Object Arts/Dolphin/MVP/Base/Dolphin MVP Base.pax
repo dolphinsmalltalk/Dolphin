@@ -316,7 +316,8 @@ package setPrerequisites: #(
 	'..\..\Base\Dolphin Command-line Parser'
 	'..\Graphics\Dolphin GDI Graphics'
 	'..\..\System\Filer\Dolphin Literal Filer'
-	'..\..\System\Filer\Dolphin STB Filer'
+	'..\..\System\Filer\Dolphin STx Filer (Old versions)'
+	'..\..\System\Filer\Dolphin STx Filer Core'
 	'..\Type Converters\Dolphin Type Converters'
 	'..\Models\Value\Dolphin Value Models'
 ).

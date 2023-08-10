@@ -15,7 +15,9 @@ package setPrerequisites: #(
 	'..\IDE\Base\Development System'
 	'..\Base\Dolphin'
 	'..\Base\Tests\Dolphin Base Tests'
+	'..\System\Filer\Dolphin Binary Filer'
 	'..\Base\Dolphin Legacy Date & Time'
+	'..\System\Filer\Dolphin STx Filer (Old versions)'
 	'DolphinSure'
 ).
 

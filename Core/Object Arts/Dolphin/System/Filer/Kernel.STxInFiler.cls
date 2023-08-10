@@ -16,7 +16,7 @@ Kernel.STxInFiler comment: ''!
 basicNext
 	"Private - Answer the next object from the receiver's stream."
 
-	^self subclassResponsibility!
+	^policy next!
 
 classAt: anInteger
 	"Private - Answer the map value for a class at anInteger.
@@ -32,8 +32,7 @@ classAt: anInteger
 	(policy lookupPredefinedClass: anInteger)
 		ifNil: 
 			["Corrupt input stream - the reference object is not a class, e.g. a malicious user could construct a stream that loads an object of a valid class, and then direct the filer to treat it as the class of another entry by modifying the class reference to the reference generated for the prior object that is not actually a class."
-			STBError signal: '<1s> input stream contains an invalid class reference (<2d>)'
-						<< { self class formatName. anInteger }]
+			STBError signal: self invalidClassReferenceErrorFormat << { policy formatName. anInteger. class }]
 		ifNotNil: 
 			[:predefined |
 			"A pre-defined class that is not among those allowed (e.g. when using an STBValidatingInFiler), so report the class that would have been  referenced if permitted."
@@ -87,11 +86,18 @@ elements
 
 	^readMap copyFrom: self policy lastPredefined + 1!
 
+errorInconsistentSTB: anInteger
+	"Private - Signal an STBError indicating that the stream being read contains inconsistent STB data."
+
+	STBError signal: '<1s> input stream is inconsistent (object <2d> referenced but not yet defined)'
+				<< { policy formatName. anInteger }!
+
 errorUnrecognisedClass: aClass version: version
 	"Private - Signal an STBError indicating that the STB data contains
 	instances of aClass of version that we don't know how to convert."
 
-	STBError signal: 'Input stream contains an unsupported version <1d> of <2p>' << { version. aClass }!
+	STBError signal: '<1s> input stream contains an unsupported version <2d> of <3p>'
+				<< { policy formatName. version. aClass }!
 
 evaluateDeferredActions
 	"Private - Evaluate any deferred actions then clear the deferredActions collection."
@@ -119,6 +125,9 @@ initializeReadMap
 	readMap := OrderedCollection new: 512.
 	policy registerPredefined: self!
 
+invalidClassReferenceErrorFormat
+	^'<1s> input stream contains an invalid class reference (<2d>)'!
+
 isUpgrading
 	^flags allMask: UpgradingMask!
 
@@ -136,14 +145,25 @@ next
 objectAt: anInteger
 	"Private - Answer the map value at anInteger. Signal an exception if there is no such entry."
 
-	^(readMap lookup: anInteger) ifNil: [self class errorInconsistentSTB: anInteger]!
+	^(readMap lookup: anInteger) ifNil: [self errorInconsistentSTB: anInteger]!
 
 policy: anObject
 	policy := anObject!
 
-readByteObject: aByteObject
-	self register: aByteObject.
-	policy readByteObject: aByteObject!
+readByteObject: aClass size: anInteger
+	^policy readByteObject: aClass size: anInteger!
+
+readCollection: aClass format: anSTBClassConversion size: anInteger
+	^policy
+		readCollection: aClass
+		format: anSTBClassConversion
+		size: anInteger!
+
+readLookupTable: aClass format: anSTBClassConversion size: anInteger
+	^policy
+		readLookupTable: aClass
+		format: anSTBClassConversion
+		size: anInteger!
 
 readMap
 	"Private - Answer the value of the receiver's readMap. This is an OrderedCollection of all
@@ -181,8 +201,14 @@ readObjectOfClass: aClass size: anInteger
 readSizeOf: aClass
 	^policy readObjectSize: aClass!
 
+readString: aClass
+	| string |
+	string := policy readString: aClass.
+	self register: string.
+	^string!
+
 readVersion
-	policy := self class versionPolicyClass readVersionFrom: self.
+	policy := self class policyClass readVersionFrom: self.
 	^policy notNil!
 
 register: anObject
@@ -236,22 +262,27 @@ converters!accessing!private! !
 convertObjectOfClass:size:format:!operations!private! !
 deferAction:!deferred actions!public! !
 elements!accessing!public! !
+errorInconsistentSTB:!exceptions!private! !
 errorUnrecognisedClass:version:!exceptions!private! !
 evaluateDeferredActions!deferred actions!private! !
 fixup:to:!operations!public! !
 initialize!initializing!private! !
 initializeObjectMap!initializing!private! !
 initializeReadMap!initializing!private! !
+invalidClassReferenceErrorFormat!constants!exceptions!private! !
 isUpgrading!public!testing! !
 isUpgrading:!accessing!public! !
 next!operations!public! !
 objectAt:!accessing!private! !
 policy:!accessing!private! !
-readByteObject:!public! !
+readByteObject:size:!public! !
+readCollection:format:size:!operations!public! !
+readLookupTable:format:size:!operations!public! !
 readMap!accessing!private! !
 readObjectOfClass:format:size:!operations!public! !
 readObjectOfClass:size:!operations!private! !
 readSizeOf:!operations!public! !
+readString:!accessing!public! !
 readVersion!initializing!private! !
 register:!helpers!private! !
 registerAllClasses:!private! !
@@ -263,12 +294,6 @@ stream:!initializing!private! !
 !
 
 !Kernel.STxInFiler class methodsFor!
-
-errorInconsistentSTB: anInteger
-	"Private - Signal an STBError indicating that the stream being read contains inconsistent STB data."
-
-	STBError signal: '<1s> input stream is inconsistent (object <2d> referenced but not yet defined)'
-				<< { self formatName. anInteger }!
 
 errorInvalidClass: aBindingReference
 	"Private - Signal an exception to warn that an input stream contains an invalid class."
@@ -284,9 +309,8 @@ on: aStream
 peekForSignatureIn: aReadStream
 	"Answer whether the <readableStream> argument, aReadStream, appears to be an STB stream (or is positioned at the start of an STB stream). If the STB signature is found, then the stream is left positioned immediately after it, otherwise the stream position is not changed."
 
-	^self versionPolicyClass peekForSignatureIn: aReadStream! !
+	^self policyClass peekForSignatureIn: aReadStream! !
 !Kernel.STxInFiler class categoriesForMethods!
-errorInconsistentSTB:!exceptions!private! !
 errorInvalidClass:!exceptions!private! !
 on:!instance creation!public! !
 peekForSignatureIn:!public!testing! !

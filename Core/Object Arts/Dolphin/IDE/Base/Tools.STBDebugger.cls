@@ -24,20 +24,21 @@ For example to view the contents of a view resource, one can proceed as follows:
 basicNext
 	"Private - Answer the next object from the receiver's stream."
 
-	| class anObject newObjectIndex prefixCode |
+	| class anObject newObjectIndex prefixCode refIndex |
 	traceStream cr.
 	printOffsets
 		ifTrue: 
 			[stream position
 				printOn: traceStream
 				base: 10
-				nDigits: 6].
+				nDigits: 6.
+			traceStream space].
 	indentLevel timesRepeat: [traceStream nextPutAll: '    '].
 
 	"First, read the prefix."
 	prefixCode := policy readInteger.
 	"Now decode"
-	(prefixCode allMask: PrefixSmallIntegerMask)
+	(prefixCode allMask: STxVersionPolicy.PrefixSmallIntegerMask)
 		ifTrue: 
 			[anObject := prefixCode bitShift: -1.
 			traceStream
@@ -45,18 +46,22 @@ basicNext
 				print: anObject;
 				nextPut: $].
 			^anObject].
-	(prefixCode allMask: PrefixDataMask)
+	refIndex := prefixCode bitShift: STxVersionPolicy.PrefixRefUnshift.
+	(prefixCode allMask: STxVersionPolicy.PrefixDataMask)
 		ifFalse: 
-			[(prefixCode anyMask: PrefixCharacterMask)
+			[(prefixCode anyMask: STxVersionPolicy.PrefixCharacterMask)
 				ifTrue: 
-					[anObject := Character value: (prefixCode bitShift: PrefixRefUnshift).
+					[anObject := Character value: refIndex.
 					traceStream
 						nextPut: $[;
 						print: anObject;
 						nextPut: $]]
 				ifFalse: 
-					[anObject := self objectAt: (prefixCode bitShift: PrefixRefUnshift).
-					traceStream nextPutAll: '[<'.
+					[anObject := self objectAt: refIndex.
+					traceStream
+						nextPutAll: '[<';
+						print: refIndex;
+						nextPutAll: ': '.
 					anObject printOn: (LimitedWriteStream over: traceStream).
 					traceStream nextPutAll: '>]'].
 			^anObject].
@@ -64,16 +69,16 @@ basicNext
 	"Ascertain the class of the object."
 	indentLevel := indentLevel + 1.
 	traceStream nextPut: $[.
-	(prefixCode allMask: PrefixClassMask)
+	(prefixCode allMask: STxVersionPolicy.PrefixClassMask)
 		ifTrue: 
 			[class := policy readClassDataWithPrefix: prefixCode.
 			traceStream
-				nextPutAll: (policy classLocatorStringFor: class);
+				nextPutAll: (policy locatorKeyFor: class);
 				nextPut: $;.
 			(converters lookup: class) ifNotNil: [:converter | traceStream print: converter version]]
 		ifFalse: 
-			[class := self classAt: (prefixCode bitShift: PrefixRefUnshift).
-			traceStream nextPutAll: (policy classLocatorStringFor: class)].
+			[class := self classAt: refIndex.
+			traceStream nextPutAll: (policy locatorKeyFor: class)].
 	traceStream nextPut: $].
 
 	"Now read the object data."
@@ -83,11 +88,12 @@ basicNext
 		ifTrue: 
 			[traceStream
 				space;
+				print: newObjectIndex;
+				nextPutAll: ': ';
 				print: anObject].
 	indentLevel := indentLevel - 1.
 	"If anObject was a proxy for the real one, or has some other need of fix up, do that now."
-	anObject := anObject stbFixup: self at: newObjectIndex.
-	^anObject!
+	^anObject stbFixup: self at: newObjectIndex!
 
 dump
 	traceStream
@@ -106,6 +112,9 @@ initialize
 	traceStream := String writeStream.
 	indentLevel := 0.
 	^super initialize!
+
+invalidClassReferenceErrorFormat
+	^'<1s> input stream contains an invalid class reference: <2d> -> <3p>'!
 
 next
 	"Answer the next object from the receiver's stream."
@@ -126,6 +135,12 @@ next
 					ex resume].
 	traceStream cr.
 	^answer!
+
+objectAt: anInteger
+	"Private - Answer the map value at anInteger. If anInteger is zero then answer nil.
+	Signal an exception if there is no such entry."
+
+	^anInteger == 0 ifFalse: [super objectAt: anInteger]!
 
 printOffsets
 	^printOffsets!
@@ -155,7 +170,9 @@ traceStream: aPuttableStream
 basicNext!accessing!private! !
 dump!operations!public! !
 initialize!initializing!private! !
+invalidClassReferenceErrorFormat!constants!exceptions!private! !
 next!accessing!public! !
+objectAt:!accessing!private! !
 printOffsets!accessing!public! !
 printOffsets:!accessing!public! !
 readSizeBlock!operations!private! !
@@ -165,11 +182,17 @@ traceStream:!accessing!public! !
 
 !Tools.STBDebugger class methodsFor!
 
+dump: aReadStream
+	^((self on: aReadStream)
+		dump;
+		traceStream) contents!
+
 dumpToTranscript: aReadStream
 	(self on: aReadStream)
 		traceStream: Transcript;
 		dump! !
 !Tools.STBDebugger class categoriesForMethods!
+dump:!public! !
 dumpToTranscript:!public! !
 !
 

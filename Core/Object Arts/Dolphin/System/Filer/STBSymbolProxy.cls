@@ -20,10 +20,26 @@ stbFixup: inFiler at: anInteger
 	inFiler fixup: anInteger to: anObject.
 	^anObject!
 
+string: aString
+	string := aString!
+
 value
 	^string asSymbol! !
 !STBSymbolProxy categoriesForMethods!
 stbFixup:at:!converting!public! !
+string:!accessing!private! !
 value!converting!public! !
+!
+
+!STBSymbolProxy class methodsFor!
+
+for: aSymbol
+	"Answer a new instance representing aSymbol."
+
+	^self basicNew
+		string: aSymbol asAnsiString;
+		yourself! !
+!STBSymbolProxy class categoriesForMethods!
+for:!instance creation!public! !
 !
 

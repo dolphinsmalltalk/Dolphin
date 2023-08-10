@@ -46,6 +46,13 @@ Instance Variables:
 !Security.DolphinSureTrustedData categoriesForClass!Cryptography-Support! !
 !Security.DolphinSureTrustedData methodsFor!
 
+binaryStoreOn: aStream
+	"Stores the receiver in a binary form on aStream that can be reconstituted using Object class>>binaryReadFrom:."
+
+	"We deliberately save down in the format of the STB version of D6 (3) to maintain backwards/forwards compatibility of the certs"
+
+	(STBOutFiler on: aStream policy: STBVersion3Policy) nextPut: self!
+
 data
 	"Answers the decoded information for the receiver without verifying that it is correct."
 
@@ -148,6 +155,7 @@ validDataPublishedBy: aPublisherCertificate
 	self publisherCertificate = aPublisherCertificate ifFalse: [Security.TrustedDataError signal].
 	^self validData! !
 !Security.DolphinSureTrustedData categoriesForMethods!
+binaryStoreOn:!binary filing!public! !
 data!accessing!public! !
 data:description:privateKey:!accessing!public! !
 data:description:signature:!accessing!public! !

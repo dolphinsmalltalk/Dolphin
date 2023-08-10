@@ -15,10 +15,10 @@ beachBallColorDepth
 	^SystemMetrics current defaultColorDepth!
 
 stlVersion3_file
-	^#(#'!!STL' 4 395334 3 ##(Smalltalk.Bitmap) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'resources\Beach Ball.bmp' nil nil 1 nil)!
+	^#(#'!!STL' 3 395334 3 ##(Smalltalk.Bitmap) 0 16 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'resources\Beach Ball.bmp' 0 0 1 0)!
 
 stlVersion3_resource
-	^#(#'!!STL' 4 395334 3 ##(Smalltalk.Bitmap) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'tools.bmp' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil nil 1 nil)!
+	^#(#'!!STL' 3 395334 3 ##(Smalltalk.Bitmap)  0 16 1572870 ##(Smalltalk.ImageRelativeFileLocator)  8 'tools.bmp' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy)  8 'dolphindr006.dll' 0 0 1 0)!
 
 subjectClass
 	^Bitmap!
@@ -51,7 +51,20 @@ testStbConvertFromVersion3
 	self assert: bitmap initializer module equals: SessionManager current defaultResourceLibrary.
 	self assert: bitmap initializer isLoadMap3dColors.
 	self assert: bitmap extent y equals: 16.
-	bitmap free! !
+	bitmap free!
+
+testStlConvertFromVersion3_file
+	| rehydrated comparand |
+	rehydrated := Object fromLiteralStoreArray: self stlVersion3_file.
+	self assert: rehydrated isPersistent.
+	self assert: rehydrated printString
+		equals: '<1p> fromFile: ''resources\Beach Ball.bmp''' << self subjectClass.
+	comparand := self subjectClass fromFile: 'Resources\beach ball.bmp'.
+	self assert: rehydrated equals: comparand.
+	"Icon's loaded from files are not shared, so the handles will be different"
+	self deny: rehydrated initializer isLoadShared.
+	self deny: rehydrated handle equals: comparand handle.
+	self assert: rehydrated extent equals: comparand extent! !
 !Graphics.Tests.BitmapTest categoriesForMethods!
 beachBallColorDepth!constants!private! !
 stlVersion3_file!constants!private! !
@@ -59,5 +72,6 @@ stlVersion3_resource!constants!private! !
 subjectClass!constants!private! !
 testStbConvertFromVersion1!public!unit tests! !
 testStbConvertFromVersion3!public!unit tests! !
+testStlConvertFromVersion3_file!public! !
 !
 

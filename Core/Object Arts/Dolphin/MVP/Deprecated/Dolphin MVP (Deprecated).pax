@@ -79,7 +79,6 @@ package methodNames
 	add: #Slider -> #selection;
 	add: #Slider -> #selection:;
 	add: #StatusBarItemAbstract -> #beFullWidth;
-	add: #STBViewProxy -> #for:;
 	add: #SystemMetrics -> #hasButtonNotes;
 	add: #SystemMetrics -> #hasDesktopComposition;
 	add: #SystemMetrics -> #hasEnhancedThemes;
@@ -122,7 +121,6 @@ package methodNames
 	add: 'Presenter class' -> #addCommandQueryHandler:;
 	add: 'Presenter class' -> #removeCommandQueryHandler:;
 	add: 'RGB class' -> #stdColor:;
-	add: 'STBViewProxy class' -> #for:;
 	add: 'SystemColor class' -> #fromId:;
 	add: 'TextTileIcon class' -> #text:font:color:;
 	add: 'ThemeLibrary class' -> #isAppThemed;
@@ -164,6 +162,8 @@ package setPrerequisites: #(
 	'..\Presenters\Prompters\Dolphin Prompter'
 	'..\Views\Scrollbars\Dolphin Scrollbars'
 	'..\Views\Slider\Dolphin Slider Control'
+	'..\..\System\Filer\Dolphin STx Filer (Old versions)'
+	'..\..\System\Filer\Dolphin STx Filer Core'
 	'..\Presenters\Text\Dolphin Text Presenter'
 	'..\Icons\Dolphin Text Tile Icons'
 	'..\Type Converters\Dolphin Type Converters').
@@ -852,24 +852,6 @@ beFullWidth
 	self isAutoResize: true! !
 !StatusBarItemAbstract categoriesForMethods!
 beFullWidth!accessing!public! !
-!
-
-!STBViewProxy methodsFor!
-
-for: aView 
-	#deprecated.
-	self setView: aView! !
-!STBViewProxy categoriesForMethods!
-for:!accessing!public! !
-!
-
-!STBViewProxy class methodsFor!
-
-for: aView 
-	#deprecated.
-	^self forView: aView! !
-!STBViewProxy class categoriesForMethods!
-for:!instance creation!public! !
 !
 
 !SystemColor class methodsFor!

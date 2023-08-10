@@ -33,13 +33,3 @@ resolveWithClassLocator:!converting!private! !
 withClassLocator:!converting!private! !
 !
 
-!Kernel.STBMetaclassProxy class methodsFor!
-
-forClass: aMetaclass
-	"Answer a new instance representing aMetaclass."
-
-	^super forClass: aMetaclass instanceClass! !
-!Kernel.STBMetaclassProxy class categoriesForMethods!
-forClass:!instance creation!public! !
-!
-

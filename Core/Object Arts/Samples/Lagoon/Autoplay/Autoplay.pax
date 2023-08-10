@@ -60,6 +60,7 @@ package setPrerequisites: #(
 	'..\..\..\Dolphin\MVP\Base\Dolphin Basic Geometry'
 	'..\..\..\Dolphin\MVP\Graphics\Dolphin GDI Graphics'
 	'..\..\..\Dolphin\MVP\Base\Dolphin MVP Base'
+	'..\..\..\Dolphin\System\Filer\Dolphin STx Filer (Old versions)'
 	'..\..\..\Dolphin\MVP\Type Converters\Dolphin Type Converters'
 	'..\..\..\Dolphin\MVP\Models\Value\Dolphin Value Models'
 	'..\..\MVP\UI Examples'

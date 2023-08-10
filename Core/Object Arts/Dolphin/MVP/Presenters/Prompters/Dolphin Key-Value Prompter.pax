@@ -19,6 +19,7 @@ package setPrerequisites: #(
 	'..\..\Graphics\Dolphin GDI Graphics'
 	'..\..\Base\Dolphin MVP Base'
 	'..\..\Views\Buttons\Dolphin Push Buttons'
+	'..\..\..\System\Filer\Dolphin STx Filer (Old versions)'
 	'..\Text\Dolphin Text Presenter'
 	'..\..\Type Converters\Dolphin Type Converters'
 	'..\..\Models\Value\Dolphin Value Models'

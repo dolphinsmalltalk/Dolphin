@@ -16,7 +16,7 @@ basicNext
 	| prefixOrLiteral |
 	prefixOrLiteral := stream next.
 	prefixOrLiteral isInteger ifFalse: [^self collectClassOf: prefixOrLiteral value].
-	PrefixLiteralMask == prefixOrLiteral ifFalse: [^policy readObjectWithPrefix: prefixOrLiteral].
+	STLVersionPolicy.PrefixLiteralMask == prefixOrLiteral ifFalse: [^policy readObjectWithPrefix: prefixOrLiteral].
 	^self readLiteralData!
 
 classes

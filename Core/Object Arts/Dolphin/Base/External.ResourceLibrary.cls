@@ -35,6 +35,9 @@ fileName
 
 	^fileName!
 
+fileName: aString 
+	fileName := aString!
+
 hash
 	"Answer whether the receiver and anObject are equivalent."
 
@@ -92,6 +95,7 @@ printOn: aWriteStream
 =!comparing!public! !
 attemptToOpen:!helpers!instance creation!private! !
 fileName!accessing!public! !
+fileName:!public! !
 hash!comparing!public! !
 isSelfEvaluating!public!testing! !
 loadFlags!constants!private! !

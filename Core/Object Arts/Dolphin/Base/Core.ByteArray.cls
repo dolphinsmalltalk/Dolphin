@@ -79,6 +79,17 @@ asString
 
 	^self asAnsiString!
 
+asUtf8String
+	"Answer an Utf8String from the assumed UTF-8 encoded characters in the receiver. Note that if the receiver doesn't really contain UTF-8 encoded characters, then the result may be an invalid string."
+
+	| size |
+	size := self basicSize.
+	^self
+		replaceBytesOf: (Utf8String new: size)
+		from: 1
+		to: size
+		startingAt: 1!
+
 basicUInt32AtOffset: anInteger
 	"Answer the unsigned 32-bit integer at offset (i.e. zero relative) anInteger in the receiver.
 
@@ -704,6 +715,7 @@ asAnsiString!public! !
 asByteArray!converting!public! !
 asHexString!converting!public! !
 asString!converting!public! !
+asUtf8String!public! !
 basicUInt32AtOffset:!accessing!public! !
 basicUInt32AtOffset:put:!accessing!private! !
 basicUIntPtrAtOffset:!accessing!public! !

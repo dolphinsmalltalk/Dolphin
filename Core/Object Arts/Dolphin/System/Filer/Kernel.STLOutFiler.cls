@@ -12,24 +12,13 @@ Kernel.STLOutFiler comment: ''!
 !Kernel.STLOutFiler categoriesForClass!System-Binary storage! !
 !Kernel.STLOutFiler class methodsFor!
 
-formatName
-	"Private - Answer the format name."
+newStream
+	^WriteStream on: (Array new: 64)!
 
-	^STLFormatName!
-
-version
-	"Private - Answer the version number of the format produced by the receiver. After version 5 the STL version advances separately from STB.
-		Versions 1 to 5. See superclass.
-		Version 6 - No pre-registered classes, so all referenced classes are immediately visible in the literal array"
-
-	^6
-!
-
-versionPolicyClass
-	^STLVersionPolicy! !
+policyClass
+	^STLVersion6Policy! !
 !Kernel.STLOutFiler class categoriesForMethods!
-formatName!constants!private! !
-version!public! !
-versionPolicyClass!constants!private! !
+newStream!helpers!private! !
+policyClass!constants!private! !
 !
 

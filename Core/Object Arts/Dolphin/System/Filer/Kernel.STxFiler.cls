@@ -6,24 +6,7 @@ Core.Object
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-			'PrefixBytesMask' -> 16r30.
-			'PrefixCharacterMask' -> 16r4.
-			'PrefixClassMask' -> 16r6.
-			'PrefixDataMask' -> 16r2.
-			'PrefixInstSizeMask' -> 16rFF.
-			'PrefixInstSizeShift' -> 16r8.
-			'PrefixInstSizeUnshift' -> -16r8.
-			'PrefixLiteralMask' -> 16r8.
-			'PrefixLocatorLenShift' -> 16r10.
-			'PrefixLocatorLenUnshift' -> -16r10.
-			'PrefixNonZeroVersionMask' -> 16r40.
-			'PrefixRefShift' -> 16r4.
-			'PrefixRefUnshift' -> -16r4.
-			'PrefixSmallIntegerMask' -> 16r1.
-			'PrefixVariableMask' -> 16r20.
-			'STLFormatName' -> 'STL'
-		}!
+	classConstants: {}!
 Kernel.STxFiler guid: (Core.GUID fromString: '{87b4c4c1-026e-11d3-9fd7-00a0cc3e4a32}')!
 Kernel.STxFiler isNonInstantiable: true!
 Kernel.STxFiler comment: ''!
@@ -78,6 +61,9 @@ reset
 
 	self subclassResponsibility!
 
+saveBoolean: aBoolean 
+	policy saveBoolean: aBoolean!
+
 setRefOffset: anInteger
 	^self subclassResponsibility!
 
@@ -101,6 +87,7 @@ position:!operations!public! !
 register:!helpers!public! !
 registerAllClasses:!initializing!private! !
 reset!initializing!private! !
+saveBoolean:!public! !
 setRefOffset:!initializing!private! !
 stream!accessing!public! !
 version!accessing!public! !
@@ -109,20 +96,20 @@ version!accessing!public! !
 !Kernel.STxFiler class methodsFor!
 
 formatName
-	"Private - Answer the format name."
+	"Answer the format name."
 
-	^'STB'!
+	^self policyClass formatName!
 
 on: aStream
 	"Answer a new instance attached to the binary stream aStream."
 
 	^self subclassResponsibility!
 
-versionPolicyClass
+policyClass
 	^self subclassResponsibility! !
 !Kernel.STxFiler class categoriesForMethods!
-formatName!constants!private! !
+formatName!constants!public! !
 on:!instance creation!public! !
-versionPolicyClass!constants!private! !
+policyClass!constants!private! !
 !
 

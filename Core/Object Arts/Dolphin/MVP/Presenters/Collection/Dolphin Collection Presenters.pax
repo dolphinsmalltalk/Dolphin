@@ -32,6 +32,7 @@ package setPrerequisites: #(
 	'..\..\..\System\Win32\MessageBox\Dolphin Message Box'
 	'..\..\Base\Dolphin MVP Base'
 	'..\Prompters\Dolphin Prompter'
+	'..\..\..\System\Filer\Dolphin STx Filer (Old versions)'
 	'..\..\Icons\Dolphin Text Tile Icons'
 ).
 

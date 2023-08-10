@@ -12,11 +12,6 @@ Kernel.STBInFiler comment: ''!
 !Kernel.STBInFiler categoriesForClass!System-Binary storage! !
 !Kernel.STBInFiler methodsFor!
 
-basicNext
-	"Private - Answer the next object from the receiver's stream."
-
-	^policy readObjectWithPrefix: stream nextInt32!
-
 classLocator
 	"Answer the receiver's classLocator inst var. This holds the context of any remote
 	class references and provides the mechanism of resolving them."
@@ -40,27 +35,21 @@ initialize
 	"Private - Initialize the receiver."
 
 	classLocator := self defaultClassLocatorClass new.
-	^super initialize!
-
-readBytes: answer
-	self stream
-		basicNext: answer basicSize
-		into: answer
-		startingAt: 1! !
+	^super initialize! !
 !Kernel.STBInFiler categoriesForMethods!
-basicNext!accessing!private! !
 classLocator!accessing!public! !
 classLocator:!accessing!public! !
 defaultClassLocatorClass!constants!private! !
 initialize!initializing!private! !
-readBytes:!binary filing!public! !
 !
 
 !Kernel.STBInFiler class methodsFor!
 
-versionPolicyClass
-	^STBVersionPolicy! !
+policyClass
+	"We deliberately reference the latest version to establish a dependency that prevents the latest version policy from being removed at app deployment time if the STBInFiler is used."
+
+	^STBVersion6Policy! !
 !Kernel.STBInFiler class categoriesForMethods!
-versionPolicyClass!constants!private! !
+policyClass!constants!private! !
 !
 

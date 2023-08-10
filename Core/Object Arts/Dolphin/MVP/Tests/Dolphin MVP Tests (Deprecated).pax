@@ -23,7 +23,9 @@ package setPrerequisites: #(
 	'..\Models\List\Dolphin List Models'
 	'..\Deprecated\Dolphin MVP (Deprecated)'
 	'..\Base\Dolphin MVP Base'
-	'Dolphin MVP Tests').
+	'Dolphin MVP Tests'
+	'..\..\System\Filer\Dolphin STx Filer (Old versions)'
+	'..\..\System\Filer\Dolphin STx Filer Core').
 
 package!
 

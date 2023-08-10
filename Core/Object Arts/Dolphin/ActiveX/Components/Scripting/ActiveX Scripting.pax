@@ -50,6 +50,7 @@ package setPrerequisites: #(
 	'..\..\..\MVP\Base\Dolphin MVP Base'
 	'..\..\..\MVP\Views\Buttons\Dolphin Push Buttons'
 	'..\..\..\MVP\Views\Scintilla\Dolphin Scintilla View'
+	'..\..\..\System\Filer\Dolphin STx Filer (Old versions)'
 	'..\..\..\MVP\Presenters\Text\Dolphin Text Presenter'
 	'..\..\..\MVP\Type Converters\Dolphin Type Converters'
 	'..\..\..\MVP\Models\Value\Dolphin Value Models'

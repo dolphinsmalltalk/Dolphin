@@ -1,9 +1,10 @@
 ﻿| package |
 package := Package name: 'Dolphin Binary Filer'.
 package paxVersion: 2.1;
-	preDeclareClassesOnLoad: true;
-	basicComment: 'Dolphin 🐬 Smalltalk STB Binary Filer.
-Copyright © Object Arts Ltd. 1997-2023'.
+	basicComment: 'Dolphin 🐬 Smalltalk STB Binary object graph serialiser.
+Copyright © Object Arts Ltd. 1997-2023
+
+Latest version of the STB filer for binary serialisation of object graphs.'.
 
 
 package setClassNames: #(
@@ -13,7 +14,8 @@ package setClassNames: #(
 	#{Kernel.STBMetaclassProxy}
 	#{Kernel.STBOutFiler}
 	#{Kernel.STBValidatingInFiler}
-	#{Kernel.STBVersion5Policy}
+	#{Kernel.STBVersion6Policy}
+	#{Kernel.STBVersionPolicy}
 	#{Kernel.ValidatingClassLocator}
 ).
 
@@ -23,6 +25,7 @@ package setMethodNames: #(
 	#(#{Core.Class} #stbSaveOn:)
 	#(#{Core.ClassDescription} #stbReadFrom:format:size:)
 	#(#{Core.Locale class} #stbReadFrom:format:size:)
+	#(#{Core.LookupTable class} #stbReadFrom:format:size:)
 	#(#{Core.Metaclass} #stbSaveOn:)
 	#(#{Core.Object} #binaryStoreBytes)
 	#(#{Core.Object} #binaryStoreOn:)
@@ -30,11 +33,15 @@ package setMethodNames: #(
 	#(#{Core.Object class} #binaryReadFrom:context:)
 	#(#{Core.Object class} #fromBinaryStoreBytes:)
 	#(#{Core.Object class} #fromBinaryStoreBytes:context:)
+	#(#{Core.OrderedCollection class} #stbReadFrom:format:size:)
+	#(#{Core.Set class} #stbReadFrom:format:size:)
 	#(#{Core.Stream} #binaryStore:)
-	#(#{Core.Symbol class} #stbReadFrom:format:size:)
+	#(#{Core.String class} #stbReadFrom:format:)
+	#(#{Core.Symbol} #stbSaveOn:)
+	#(#{Core.Symbol class} #stbReadFrom:format:)
 	#(#{Core.Symbol class} #stbReadFromProxy:)
-	#(#{Core.Utf16String} #stbSaveOn:)
 	#(#{External.DynamicLinkLibrary class} #stbReadFrom:format:size:)
+	#(#{External.IntegerBytes} #stbSaveOn:)
 	#(#{External.Structure class} #stbReadFrom:format:size:)
 	#(#{Kernel.AbsoluteFileLocator class} #stbReadFrom:format:size:)
 	#(#{Kernel.ImageRelativeFileLocator class} #stbReadFrom:format:size:)
@@ -47,8 +54,7 @@ package setMethodNames: #(
 
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
-	'Dolphin Binary Filer (Old versions)'
-	'Dolphin STB Filer'
+	'Dolphin STx Filer Core'
 ).
 
 package!
@@ -104,8 +110,15 @@ Kernel.STBClassProxy
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.STBVersionPolicyForNamespaces
-	subclass: #'Kernel.STBVersion5Policy'
+Kernel.STxVersionPolicy
+	subclass: #'Kernel.STBVersionPolicy'
+	instanceVariableNames: ''
+	classVariableNames: 'Versions'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: { 'Signature' -> #[33 83 84 66 32] }!
+Kernel.STBVersionPolicy
+	subclass: #'Kernel.STBVersion6Policy'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -116,38 +129,30 @@ Kernel.STBVersionPolicyForNamespaces
 
 !Core.ByteArray methodsFor!
 
-stbSaveOn: anSTBOutFiler
-	"Save out a binary representation of the receiver to anSTBOutFiler."
+stbSaveOn: anSTxOutFiler
+	"Save out a serialised representation of the receiver to anSTxOutFiler."
 
-	"We override as an optimization because we know we can use a block write here. The format of the serialized byte array in the resulting STB stream is the same though. 
-	Note that this won't be invoked by the STL filer for ByteArrays because these have a literal form and are written directly to the stream as is. It will be invoked for some subclasses of ByteArray though."
-
-	anSTBOutFiler writeByteObject: self! !
+	anSTxOutFiler saveByteArray: self! !
 !Core.ByteArray categoriesForMethods!
 stbSaveOn:!binary filing!public! !
 !
 
 !Core.ByteArray class methodsFor!
 
-stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
-	"Read an instance of the receiver from the binary filer, aSTBInFiler. Note that we can ignore the format argument, since ByteArray is a pre-registered class that cannot be versioned. The format we read here is the same as that which would be read by the in-filer itself, but we can do the job more efficiently since we know that a block read from the byte stream is possible."
+stbReadFrom: anSTxInFiler format: anSTBClassConversion size: anInteger
+	"Read an instance of the receiver from the <STxInfiler> first argument. Note that we can ignore the format argument, since ByteArray is a pre-registered class that cannot be versioned. "
 
-	| answer |
-	answer := self basicNew: anInteger.
-	anSTBInFiler readByteObject: answer.
-	^answer! !
+	^anSTxInFiler readByteObject: self size: anInteger! !
 !Core.ByteArray class categoriesForMethods!
 stbReadFrom:format:size:!binary filing!public! !
 !
 
 !Core.Class methodsFor!
 
-stbSaveOn: anSTBOutFiler
-	"Save out a binary representation of the receiver to anSTBOutFiler."
+stbSaveOn: anSTxOutFiler
+	"Save out a serialized representation of the receiver to STxOutFiler argument."
 
-	"Note that the STL filer does not use this - Classes are stored as literal references in the literal store array"
-
-	anSTBOutFiler saveObject: self as: (STBClassProxy forClass: self)! !
+	anSTxOutFiler saveClass: self! !
 !Core.Class categoriesForMethods!
 stbSaveOn:!binary filing!public! !
 !
@@ -187,12 +192,23 @@ stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
 stbReadFrom:format:size:!public! !
 !
 
+!Core.LookupTable class methodsFor!
+
+stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
+	^anSTBInFiler
+		readLookupTable: self
+		format: anSTBClassConversion
+		size: anInteger! !
+!Core.LookupTable class categoriesForMethods!
+stbReadFrom:format:size:!binary filing!public! !
+!
+
 !Core.Metaclass methodsFor!
 
 stbSaveOn: anSTBOutFiler
 	"Save out a binary representation of the receiver to anSTBOutFiler."
 
-	anSTBOutFiler saveObject: self as: (STBMetaclassProxy forClass: self)! !
+	anSTBOutFiler saveMetaclass: self! !
 !Core.Metaclass categoriesForMethods!
 stbSaveOn:!binary filing!public! !
 !
@@ -266,6 +282,28 @@ fromBinaryStoreBytes:!binary filing!public! !
 fromBinaryStoreBytes:context:!binary filing!public! !
 !
 
+!Core.OrderedCollection class methodsFor!
+
+stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
+	^anSTBInFiler
+		readCollection: self
+		format: anSTBClassConversion
+		size: anInteger! !
+!Core.OrderedCollection class categoriesForMethods!
+stbReadFrom:format:size:!binary filing!public! !
+!
+
+!Core.Set class methodsFor!
+
+stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
+	^anSTBInFiler
+		readCollection: self
+		format: anSTBClassConversion
+		size: anInteger! !
+!Core.Set class categoriesForMethods!
+stbReadFrom:format:size:!binary filing!public! !
+!
+
 !Core.Stream methodsFor!
 
 binaryStore: anObject
@@ -278,12 +316,31 @@ binaryStore: anObject
 binaryStore:!binary filing!public!storing! !
 !
 
+!Core.String class methodsFor!
+
+stbReadFrom: anSTBInFiler format: anSTBClassConversion
+	"Note that this is only used for STB. STL stores all Strings as literals, which means they are always read back as Utf8Strings anyway."
+
+	^anSTBInFiler readString: self! !
+!Core.String class categoriesForMethods!
+stbReadFrom:format:!constants!public! !
+!
+
+!Core.Symbol methodsFor!
+
+stbSaveOn: anSTBOutFiler
+	anSTBOutFiler saveSymbol: self! !
+!Core.Symbol categoriesForMethods!
+stbSaveOn:!binary filing!public! !
+!
+
 !Core.Symbol class methodsFor!
 
-stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
+stbReadFrom: anSTBInFiler format: anSTBClassConversion
 	"Read an instance of the receiver from the binary filer, aSTBInFiler."
 
-	| stream answer stringClass |
+	| stream answer stringClass size |
+	size := anSTBInFiler readSizeOf: self.
 	stringClass := anSTBInFiler version < 4
 				ifTrue: 
 					[anSTBInFiler version < 2 ifTrue: [^self stbReadFromProxy: anSTBInFiler].
@@ -291,7 +348,7 @@ stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
 					AnsiString]
 				ifFalse: [Utf8String].
 	stream := anSTBInFiler stream.
-	answer := self intern: (stringClass fromByteArray: (stream next: anInteger)).
+	answer := self intern: (stringClass fromByteArray: (stream next: size)).
 	anSTBInFiler register: answer.
 	^answer!
 
@@ -306,20 +363,8 @@ stbReadFromProxy: anSTBInFiler
 	anSTBInFiler fixup: ref to: answer.
 	^answer! !
 !Core.Symbol class categoriesForMethods!
-stbReadFrom:format:size:!binary filing!public! !
+stbReadFrom:format:!binary filing!public! !
 stbReadFromProxy:!binary filing!private! !
-!
-
-!Core.Utf16String methodsFor!
-
-stbSaveOn: anSTBOutFiler
-	"At present this is needed because STB doesn't work correctly with double-byte objects. It
-	is may be desirable, anyway, to save as UTF-8 to save space, and the intention is that
-	Utf8String and Utf16String instances be largely interchangeable."
-
-	^self asUtf8String stbSaveOn: anSTBOutFiler! !
-!Core.Utf16String categoriesForMethods!
-stbSaveOn:!binary filing!public! !
 !
 
 !External.DynamicLinkLibrary class methodsFor!
@@ -333,6 +378,16 @@ stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
 	^singleton! !
 !External.DynamicLinkLibrary class categoriesForMethods!
 stbReadFrom:format:size:!binary filing!public! !
+!
+
+!External.IntegerBytes methodsFor!
+
+stbSaveOn: anSTxOutFiler
+	"Save out a serialised representation of the receiver to anSTxOutFiler."
+
+	anSTxOutFiler saveByteObject: self! !
+!External.IntegerBytes categoriesForMethods!
+stbSaveOn:!binary filing!public! !
 !
 
 !External.Structure class methodsFor!

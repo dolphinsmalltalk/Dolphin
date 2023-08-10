@@ -160,9 +160,6 @@ package setClassNames: #(
 	#{Kernel.Tests.SmalltalkNamespaceTest}
 	#{Kernel.Tests.StableSortAlgorithmTest}
 	#{Kernel.Tests.StackFrameTest}
-	#{Kernel.Tests.STBTest}
-	#{Kernel.Tests.STBValidatingInFilerTest}
-	#{Kernel.Tests.STxFilerTest}
 	#{Kernel.Tests.SystemNamespaceTest}
 	#{Kernel.Tests.VariableBindingTest}
 	#{Kernel.Tests.VMTest}
@@ -181,8 +178,6 @@ package setClassNames: #(
 ).
 
 package setMethodNames: #(
-	#(#{Kernel.STBValidatingInFiler class} #correspondingTestCase)
-	#(#{Kernel.STxFiler class} #correspondingTestCase)
 	#(#{OS.CRTLibrary} #_chmod:pmode:)
 	#(#{OS.CRTLibrary} #strcat_s:bufferSize:strSource:)
 	#(#{OS.CRTLibraryNonBlocking} #_chmod:pmode:)
@@ -209,7 +204,6 @@ package setPrerequisites: #(
 	'..\Dolphin Anonymous Classes'
 	'..\Deprecated\Dolphin Base (Old Names)'
 	'..\..\MVP\Base\Dolphin Basic Geometry'
-	'..\..\System\Filer\Dolphin Binary Filer'
 	'..\Dolphin Command-line Parser'
 	'..\..\System\Random\Dolphin CRT Random Stream'
 	'..\..\System\Win32\Dolphin File System Info'
@@ -217,14 +211,11 @@ package setPrerequisites: #(
 	'..\Deprecated\Dolphin Legacy FFI Types (Old Names)'
 	'..\Deprecated\Dolphin Legacy Package Support'
 	'..\..\System\Filer\Dolphin Literal Filer'
-	'..\..\System\Filer\Dolphin Literal Filer (Old versions)'
 	'..\..\System\Win32\MessageBox\Dolphin Message Box'
 	'..\..\System\Random\Dolphin Random Stream'
 	'..\..\Registry\Dolphin Registry Access'
 	'..\Dolphin SizeIs Fields'
 	'..\Dolphin Source Fileout'
-	'..\..\System\Filer\Dolphin STB Filer'
-	'..\..\IDE\Base\Dolphin Transcript'
 	'..\..\..\..\Contributions\Camp Smalltalk\SUnit\OA SUnit Extensions'
 	'..\..\ActiveX\COM\OLE COM'
 	'..\..\..\Samples\MVP\Scribble\Scribble'
@@ -756,13 +747,6 @@ Core.Tests.DolphinTest
 	classConstants: {}!
 Core.Tests.DolphinTest
 	subclass: #'External.Tests.StructureTest'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Core.Tests.DolphinTest
-	subclass: #'Kernel.Tests.STxFilerTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1384,20 +1368,6 @@ Core.Tests.WriteStreamTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.Tests.STxFilerTest
-	subclass: #'Kernel.Tests.STBTest'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Kernel.Tests.STBTest
-	subclass: #'Kernel.Tests.STBValidatingInFilerTest'
-	instanceVariableNames: 'locator'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
 XProgramming.SUnit.TestResource
 	subclass: #'Core.Tests.DolphinTestResource'
 	instanceVariableNames: ''
@@ -1454,22 +1424,6 @@ Smalltalk.DolphinTest := Core.Tests.DolphinTest!
 
 
 "Loose Methods"!
-
-!Kernel.STBValidatingInFiler class methodsFor!
-
-correspondingTestCase
-	^Tests.STBValidatingInFilerTest! !
-!Kernel.STBValidatingInFiler class categoriesForMethods!
-correspondingTestCase!public! !
-!
-
-!Kernel.STxFiler class methodsFor!
-
-correspondingTestCase
-	^Tests.STBTest! !
-!Kernel.STxFiler class categoriesForMethods!
-correspondingTestCase!public! !
-!
 
 !OS.CRTLibrary methodsFor!
 

@@ -4024,10 +4024,10 @@ splashShowAtStartup
 splashShowAtStartup: aBoolean 
 	self sessionManager splashShowAtStartup: aBoolean!
 
-stbSaveOn: anSTBOutFiler
-	"Output the singleton receiver to anSTBOutFiler."
+stbSaveOn: anSTxOutFiler
+	"Output the singleton receiver to anSTxOutFiler."
 
-	anSTBOutFiler saveObject: self as: (STBSingletonProxy forClass: self class)!
+	anSTxOutFiler saveObject: self as: (STBSingletonProxy forClass: self class)!
 
 stonOn: stonWriter
 	stonWriter writeObject: self listSingleton: #current!

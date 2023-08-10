@@ -20,9 +20,15 @@ Instance Variables:
 !Kernel.STBOutFiler categoriesForClass!System-Binary storage! !
 !Kernel.STBOutFiler class methodsFor!
 
-versionPolicyClass
-	^STBVersionPolicy! !
+newStream
+	^WriteStream on: (ByteArray new: 256)!
+
+policyClass
+	"We deliberately reference the latest version to establish a dependency that prevents the latest version policy from being removed at app deployment time if the STBOutFiler is used."
+
+	^STBVersion6Policy! !
 !Kernel.STBOutFiler class categoriesForMethods!
-versionPolicyClass!constants!private! !
+newStream!helpers!private! !
+policyClass!constants!private! !
 !
 

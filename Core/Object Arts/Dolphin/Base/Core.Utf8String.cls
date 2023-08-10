@@ -544,6 +544,12 @@ encodeOn: aPuttableStream put: aCharacter
 isLeadCodeUnit: anInteger
 	^anInteger <= 16r7F or: [anInteger >= LeadByteMask2]!
 
+isLiteral
+	"Answer whether the receiver can be represented as a literal (i.e. it has a printed
+	representation which can be directly understood by the compiler)."
+
+	^(self identityIncludes: $\0) not!
+
 isTrailSurrogate: anInteger 
 	^(anInteger bitAnd: 16rC0) == TrailByteMask!
 
@@ -710,6 +716,7 @@ encodedSizeAt:!encode/decode!private! !
 encodedSizeOf:!encode/decode!private! !
 encodeOn:put:!encode/decode!private! !
 isLeadCodeUnit:!encode/decode!public!testing! !
+isLiteral!public!testing! !
 isTrailSurrogate:!public! !
 matchPatternFrom:in:from:!private!searching! !
 maxEncoding!constants!private! !
