@@ -391,7 +391,7 @@ toggleToTestsClass
 	testClasses := self testClasses.
 	testClasses size == 1 ifFalse: [^nil].
 	testClass := testClasses single.
-	^testClass = self browser actualClass ifTrue: [self classUnderTest] ifFalse: [testClass]!
+	^testClass = self browser selectedClass ifTrue: [self classUnderTest] ifFalse: [testClass]!
 
 toggleToTestsClassDescription
 	^(self toggleToTestsClass ?? TestCase) shortName!
