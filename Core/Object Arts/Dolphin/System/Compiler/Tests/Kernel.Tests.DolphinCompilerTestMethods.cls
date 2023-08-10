@@ -18,6 +18,11 @@ Kernel.Tests.DolphinCompilerTestMethods comment: ''!
 == x
 	^super == x!
 
+appendToStream: puttableStream
+	"Packed method with `Pop; Return Self` instruction"
+
+	puttableStream nextPut: self!
+
 associationAt: aString
 	"Answer an <Association> with the specified key and the associated value from the receiver.
 	If the key is not found, raise an exception."
@@ -552,6 +557,7 @@ testWarnUnimplementedAbstractMethod
 !Kernel.Tests.DolphinCompilerTestMethods categoriesForMethods!
 ~~!public!unit tests! !
 ==!public!unit tests! !
+appendToStream:!public!unit tests! !
 associationAt:!accessing!public! !
 basicSize!public!unit tests! !
 ifNil:!public!unit tests! !
