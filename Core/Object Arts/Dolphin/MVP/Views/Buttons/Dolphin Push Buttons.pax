@@ -20,7 +20,6 @@ package setPrerequisites: #(
 	'..\..\Base\Dolphin Basic Geometry'
 	'..\..\Graphics\Dolphin GDI Graphics'
 	'..\..\Base\Dolphin MVP Base'
-	'..\..\..\System\Filer\Dolphin STx Filer (Old versions)'
 ).
 
 package!
@@ -70,7 +69,7 @@ resource_OK_Cancel_button_block
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_OK_Cancel_button_block)
 	"
 
-	^#(#'!!STL' 5 985166 10 #{UI.STBViewProxy} #{UI.ContainerView} 34 15 nil nil 34 2 8 1409286144 131073 416 nil nil nil 5 nil nil nil 416 852806 1 #{UI.FlowLayout} 17 17 21 170 192 8 #() 1180166 #{Graphics.Rectangle} 918022 #{Graphics.Point} 11 17 578 1 1 1310982 #{Core.MessageSequence} 34 1 1049350 #{Core.MessageSend} #createAt:extent: 34 2 578 12287 21 578 341 65 416 1179910 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 23 0 0 10 0 0 0 169 24 0 0 42 0 0 0] 34 2 410 #{UI.PushButton} 34 20 nil 416 34 2 8 1141055488 1 816 nil nil nil 5 nil nil nil 816 nil 8 1829974144 1377606 4 #{UI.CommandDescription} #ok 8 'OK' 1 1 nil nil true nil nil nil 626 34 2 674 #createAt:extent: 34 2 578 25 17 578 151 47 816 674 #text: 34 1 8 'OK' 816 754 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 12 0 0 0 8 0 0 0 87 0 0 0 31 0 0 0] 8 #() 578 193 193 nil 29 410 #{UI.PushButton} 34 20 nil 416 34 2 8 1140924416 1 1152 nil nil nil 5 nil nil nil 1152 nil 8 1829974144 898 #cancel 8 'Cancel' 1 1 nil nil false nil nil nil 626 34 2 674 #createAt:extent: 34 2 578 191 17 578 151 47 1152 674 #text: 34 1 8 'Cancel' 1152 754 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 95 0 0 0 8 0 0 0 170 0 0 0 31 0 0 0] 8 #() 1136 nil 29 1136 nil 27)! !
+	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.ContainerView} 38 #{Core.Array} 15 nil nil 50 2 8 1409286144 131073 32 nil nil nil 5 nil nil nil 32 838 1 #{UI.FlowLayout} 17 17 21 550 #{Core.IdentityDictionary} 0 518 #{Graphics.Rectangle} 518 #{Graphics.Point} 11 17 210 1 1 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createAt:extent: 50 2 210 6143 21 210 341 65 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 169 12 0 0 42 0 0 0] 50 2 18 #{UI.PushButton} 50 20 nil 32 50 2 8 1141055488 1 448 nil nil nil 5 nil nil nil 448 nil 8 1853182784 1350 4 #{UI.CommandDescription} #ok 8 'OK' 1 1 nil nil true nil nil nil 258 50 2 306 #createAt:extent: 50 2 210 25 17 210 151 47 448 306 #text: 50 1 8 'OK' 448 386 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 12 0 0 0 8 0 0 0 87 0 0 0 31 0 0 0] 8 #() 210 193 193 nil 29 18 #{UI.PushButton} 50 20 nil 32 50 2 8 1140924416 1 784 nil nil nil 5 nil nil nil 784 nil 8 1853182784 530 #cancel 8 'Cancel' 1 1 nil nil false nil nil nil 258 50 2 306 #createAt:extent: 50 2 210 191 17 210 151 47 784 306 #text: 50 1 8 'Cancel' 784 386 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 95 0 0 0 8 0 0 0 170 0 0 0 31 0 0 0] 8 #() 768 nil 29 768 nil 27)! !
 !UI.Presenter class categoriesForMethods!
 resource_OK_Cancel_button_block!public!resources-views! !
 !

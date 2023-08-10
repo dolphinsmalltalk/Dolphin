@@ -31,7 +31,7 @@ resource_Default_view
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 5 985166 10 #{UI.STBViewProxy} #{UI.HotKey} 34 17 nil nil 34 2 8 1409351680 1 416 918598 2 #{UI.ValueHolder} nil nil 1572870 #{Kernel.NeverSearchPolicy} 1 917510 #{Graphics.Color} #default nil 5 nil nil nil 416 nil 8 1815486448 1049094 #{UI.AccelToHotKey} nil nil 1 1 1310982 #{Core.MessageSequence} 34 1 1049350 #{Core.MessageSend} #createAt:extent: 34 2 918022 #{Graphics.Point} 12287 21 722 211 51 416 1179910 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 23 0 0 10 0 0 0 104 24 0 0 35 0 0 0] 8 #() 722 193 193 nil 27)! !
+	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.HotKey} 38 #{Core.Array} 17 nil nil 50 2 8 1409351680 1 32 1094 2 #{UI.ValueHolder} nil nil 6 #{Kernel.NeverSearchPolicy} 1 6 #{Graphics.Color} #default nil 5 nil nil nil 32 nil 8 1853645712 518 #{UI.AccelToHotKey} nil nil 1 1 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 6143 21 354 211 51 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 104 12 0 0 35 0 0 0] 8 #() 354 193 193 nil 27)! !
 !UI.AcceleratorPresenter class categoriesForMethods!
 defaultModel!constants!public! !
 icon!constants!public! !

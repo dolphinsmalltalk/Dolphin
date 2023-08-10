@@ -20,7 +20,6 @@ package setPrerequisites: #(
 	'..\..\Models\List\Dolphin List Models'
 	'..\List\Dolphin List Presenter'
 	'..\..\Base\Dolphin MVP Base'
-	'..\..\..\System\Filer\Dolphin STx Filer (Old versions)'
 ).
 
 package!

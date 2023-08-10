@@ -25,7 +25,6 @@ package setPrerequisites: #(
 	'..\..\Base\Dolphin MVP Base'
 	'..\..\Presenters\Number\Dolphin Number Presenter'
 	'..\..\Views\SpinButton\Dolphin SpinButton Control'
-	'..\..\..\System\Filer\Dolphin STx Filer (Old versions)'
 	'..\..\Presenters\Text\Dolphin Text Presenter'
 	'..\..\Type Converters\Dolphin Type Converters'
 	'..\..\Models\Value\Dolphin Value Models'
