@@ -2,7 +2,7 @@
 
 UI.Tests.PresenterTest
 	subclass: #'WebView2.Tests.WebView2ViewTest'
-	instanceVariableNames: 'domContentLoaded navigationCompleted processFailed webViewReady processExitedSink webviewEnvironment processExited'
+	instanceVariableNames: 'domContentLoaded navigationCompleted processFailed webViewReady processExitedSink webviewEnvironment processExited navigationStarting'
 	classVariableNames: ''
 	imports: #(#{UI})
 	classInstanceVariableNames: ''
@@ -19,6 +19,9 @@ initializePresenter
 	presenter
 		when: #domContentLoaded:
 			send: #onDomContentLoaded:
+			to: self;
+		when: #navigationStarting:
+			send: #onNavigationStarting:
 			to: self;
 		when: #navigationCompleted:
 			send: #onNavigationCompleted:
@@ -49,6 +52,9 @@ onDomContentLoaded: anICoreWebView2DOMContentLoadedEventArgs
 onNavigationCompleted: anICoreWebView2NavigationCompletedEventArgs2
 	navigationCompleted := anICoreWebView2NavigationCompletedEventArgs2!
 
+onNavigationStarting: anICoreWebView2NavigationStartedEventArgs3
+	navigationStarting := anICoreWebView2NavigationStartedEventArgs3!
+
 onProcessFailed: anICoreWebView2ProcessFailedEventArgs2 
 	processFailed := anICoreWebView2ProcessFailedEventArgs2 processFailedKind
 !
@@ -58,6 +64,10 @@ onWebViewAvailable
 
 tearDown
 	presenter isNil ifTrue: [^self].
+	navigationStarting
+		ifNotNil: 
+			[navigationStarting free.
+			navigationStarting := nil].
 	navigationCompleted
 		ifNotNil: 
 			[navigationCompleted free.
@@ -132,6 +142,8 @@ testNavigateToString
 	navigationCompleted := domContentLoaded := nil.
 	presenter model value: '<html><title>Greetings</title><body>Hello World!!</body></html>'.
 	self assert: self waitForNavigationCompleted.
+	self assert: navigationStarting isKindOf: ICoreWebView2NavigationStartingEventArgs3.
+	self assert: navigationStarting navigationKind equals: COREWEBVIEW2_NAVIGATION_KIND_NEW_DOCUMENT.
 	self assert: navigationCompleted isKindOf: ICoreWebView2NavigationCompletedEventArgs2.
 	self assert: navigationCompleted isSuccess.
 	self assert: webview displayValue equals: 'about:blank'.
@@ -173,8 +185,6 @@ testWebBrowserCrashRecovery
 	self assert: navigationCompleted navigationId equals: domContentLoaded!
 
 verifySharedBuffer
-	"Private - Test browser recovery after a crash of the browser process that causes it to exit"
-
 	| webview buf testBytes bytes fv env |
 	webview := presenter view.
 	env := webview webviewEnvironment.
@@ -276,18 +286,31 @@ verifyWebViewEnvironmentProperties
 	^environment!
 
 verifyWebViewProfile
-	| profile |
+	"In general we can't assert for particular profile property values, as these may have been altered from the defaults in a persistent profile."
+
+	| profile cookieManager |
 	profile := presenter view webview profile.
+	self assert: profile isKindOf: ICoreWebView2Profile6.
 	self assert: (profile profilePath beginsWith: presenter view defaultUserDataFolder).
-	"How do we query the user's default downloads directory?"
 	self assert: profile defaultDownloadFolderPath equals: SessionManager current downloadsDirectory.
+	"ICoreWebView2Profile2: No new properties"
+	"ICoreWebView2Profile3: preferredTrackingPreventionLevel"
 	"The tracking prevention level may have been adjusted in the profile, so we can only assert that it is in range"
-	self assert: (profile preferredTrackingPreventionLevel between: COREWEBVIEW2_TRACKING_PREVENTION_LEVEL_NONE and: COREWEBVIEW2_TRACKING_PREVENTION_LEVEL_STRICT).!
+	self assert: (profile preferredTrackingPreventionLevel
+				between: COREWEBVIEW2_TRACKING_PREVENTION_LEVEL_NONE
+				and: COREWEBVIEW2_TRACKING_PREVENTION_LEVEL_STRICT).
+	"ICoreWebView2Profile4: No new properties"
+	"ICoreWebView2Profile5: Cookie manager"
+	cookieManager := profile cookieManager.
+	self assert: cookieManager isKindOf: ICoreWebView2CookieManager.
+	"ICoreWebView2Profile6: isGeneralAutofillEnabled, isPasswordAutosaveEnabled"
+	self assert: profile isGeneralAutofillEnabled isKindOf: Boolean.
+	self assert: profile isPasswordAutosaveEnabled isKindOf: Boolean!
 
 verifyWebViewProperties
 	| defaultMargin webview2 baseInterface |
 	webview2 := presenter view webview.
-	self assert: webview2 isKindOf: ICoreWebView2_16.
+	self assert: webview2 isKindOf: ICoreWebView2_19.
 	baseInterface := webview2 queryInterface: ICoreWebView2.
 	"ICoreWebView2: browserProcessId, canGoBack, canGoForward, containsFullScreenElement, documentTitle, settings, source"
 	self assert: baseInterface browserProcessId equals: webview2 browserProcessId.
@@ -353,7 +376,17 @@ verifyWebViewProperties
 	"ICoreWebView2_14: No new properties"
 	"ICoreWebView2_15: faviconUri"
 	self assert: baseInterface faviconUri equals: ''.
-	self assert: webview2 faviconUri equals: ''!
+	self assert: webview2 faviconUri equals: ''.
+	"ICoreWebView2_16: No new properties"
+	"ICoreWebView2_17: No new properties"
+	"ICoreWebView2_18: No new properties"
+	"ICoreWebView2_19: memoryUsageTargetLevel"
+	self assert: baseInterface memoryUsageTargetLevel equals: COREWEBVIEW2_MEMORY_USAGE_TARGET_LEVEL_NORMAL.
+	self assert: webview2 memoryUsageTargetLevel equals: COREWEBVIEW2_MEMORY_USAGE_TARGET_LEVEL_NORMAL.
+	webview2 memoryUsageTargetLevel: COREWEBVIEW2_MEMORY_USAGE_TARGET_LEVEL_LOW.
+	self assert: baseInterface memoryUsageTargetLevel equals: COREWEBVIEW2_MEMORY_USAGE_TARGET_LEVEL_NORMAL.
+	self assert: webview2 memoryUsageTargetLevel equals: COREWEBVIEW2_MEMORY_USAGE_TARGET_LEVEL_LOW.
+!
 
 verifyWebViewSettings
 	| settings baseSettings userAgent hidden |
@@ -461,6 +494,7 @@ classToTest!constants!private! !
 initializePresenter!public!Running! !
 onDomContentLoaded:!event handling!private! !
 onNavigationCompleted:!event handling!private! !
+onNavigationStarting:!event handling!private! !
 onProcessFailed:!event handling!private! !
 onWebViewAvailable!event handling!private! !
 tearDown!public!Running! !

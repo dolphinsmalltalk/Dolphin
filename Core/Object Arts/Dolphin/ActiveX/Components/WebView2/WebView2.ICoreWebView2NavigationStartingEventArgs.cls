@@ -116,6 +116,15 @@ get_NavigationId: navigationId
 	<virtual stdcall: hresult 10 uint64*>
 	^self invalidCall: _failureCode!
 
+get_NavigationKind: navigation_kind
+	"Private - Get the value of the 'NavigationKind' property of the receiver.
+
+		HRESULT __stdcall NavigationKind(
+			[out, retval]COREWEBVIEW2_NAVIGATION_KIND* navigation_kind);"
+
+	navigation_kind value: COREWEBVIEW2_NAVIGATION_KIND_NEW_DOCUMENT.
+	^E_NOTIMPL!
+
 get_RequestHeaders: requestHeaders
 	"Private - Get the value of the 'RequestHeaders' property of the receiver.
 
@@ -158,8 +167,16 @@ navigationId
 	self get_NavigationId: answer.
 	^answer asObject!
 
+navigationKind
+	"Answer the <int32> value of the 'NavigationKind' property of the receiver."
+
+	| answer |
+	answer := Int32 new.
+	self get_NavigationKind: answer.
+	^answer asObject!
+
 printableProperties
-	^#(#navigationId #uri)!
+	^#(#navigationId #uri #navigationKind)!
 
 put_AdditionalAllowedFrameAncestors: value
 	"Private - Set the value of the 'AdditionalAllowedFrameAncestors' property of the object wrapped by the 
@@ -207,11 +224,13 @@ get_Cancel:!**auto generated**!COM Interfaces-ICoreWebView2NavigationStartingEve
 get_IsRedirected:!**auto generated**!COM Interfaces-ICoreWebView2NavigationStartingEventArgs!private! !
 get_IsUserInitiated:!**auto generated**!COM Interfaces-ICoreWebView2NavigationStartingEventArgs!private! !
 get_NavigationId:!**auto generated**!COM Interfaces-ICoreWebView2NavigationStartingEventArgs!private! !
+get_NavigationKind:!COM Interfaces-ICoreWebView2NavigationStartingEventArgs3!private! !
 get_RequestHeaders:!**auto generated**!COM Interfaces-ICoreWebView2NavigationStartingEventArgs!private! !
 get_uri:!**auto generated**!COM Interfaces-ICoreWebView2NavigationStartingEventArgs!private! !
 isRedirected!properties!public! !
 isUserInitiated!properties!public! !
-navigationId!**auto generated**!properties!public! !
+navigationId!properties!public! !
+navigationKind!properties!public! !
 printableProperties!printing!private! !
 put_AdditionalAllowedFrameAncestors:!COM Interfaces-ICoreWebView2NavigationStartingEventArgs2!private! !
 put_Cancel:!**auto generated**!COM Interfaces-ICoreWebView2NavigationStartingEventArgs!private! !

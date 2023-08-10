@@ -333,6 +333,11 @@ Add_IsMutedChanged: eventHandler token: token
 
 	^E_NOTIMPL!
 
+Add_LaunchingExternalUriScheme: eventHandler token: token
+	"Not supported by this version"
+
+	^E_NOTIMPL!
+
 Add_NavigationCompleted: eventHandler token: token
 	"Private - Invoke the add_NavigationCompleted() method of the COM object.
 
@@ -883,6 +888,16 @@ get_IsSuspended: isSuspended
 	isSuspended value: 0.
 	^S_FALSE!
 
+get_MemoryUsageTargetLevel: level
+	"Private - Get the value of the 'MemoryUsageTargetLevel' property of the receiver.
+
+		HRESULT __stdcall MemoryUsageTargetLevel(
+			[out, retval]COREWEBVIEW2_MEMORY_USAGE_TARGET_LEVEL* level);"
+
+	"Not really supported by this version, but provide the default"
+	level value: COREWEBVIEW2_MEMORY_USAGE_TARGET_LEVEL_NORMAL.
+	^S_FALSE!
+
 get_Profile: value
 	"Private - Get the value of the 'Profile' property of the receiver.
 
@@ -1007,6 +1022,19 @@ isSuspended
 	buf := UInt32Bytes new.
 	self get_IsSuspended: buf.
 	^buf asBoolean!
+
+memoryUsageTargetLevel
+	"Answer the <int32> value of the 'MemoryUsageTargetLevel' property of the receiver."
+
+	| answer |
+	answer := Int32 new.
+	self get_MemoryUsageTargetLevel: answer.
+	^answer asObject!
+
+memoryUsageTargetLevel: level
+	"Set the 'MemoryUsageTargetLevel' property of the receiver to the <int32> value of the argument."
+
+	self put_MemoryUsageTargetLevel: level!
 
 navigate: uri
 	"Invoke the Navigate() method of the COM object."
@@ -1220,6 +1248,16 @@ put_IsMuted: value
 
 	^E_NOTIMPL!
 
+put_MemoryUsageTargetLevel: level
+	"Private - Set the value of the 'MemoryUsageTargetLevel' property of the object wrapped by the 
+	 receiver to the <int32> argument, level.
+
+		HRESULT __stdcall MemoryUsageTargetLevel(
+			[in]COREWEBVIEW2_MEMORY_USAGE_TARGET_LEVEL level);"
+
+	"Not supported by this version"
+	^E_NOTIMPL!
+
 reload
 	"Invoke the Reload() method of the COM object."
 
@@ -1334,6 +1372,11 @@ Remove_IsDocumentPlayingAudioChanged: token
 
 Remove_IsMutedChanged: token
 	"Not supported at this level"
+
+	^E_NOTIMPL!
+
+Remove_LaunchingExternalUriScheme: token
+	"Not supported by this version"
 
 	^E_NOTIMPL!
 
@@ -1612,6 +1655,7 @@ Add_HistoryChanged:token:!**auto generated**!COM Interfaces-ICoreWebView2!events
 Add_IsDefaultDownloadDialogOpenChanged:token:!COM Interfaces-ICoreWebView2_9!private! !
 Add_IsDocumentPlayingAudioChanged:token:!COM Interfaces-ICoreWebView2_8!private! !
 Add_IsMutedChanged:token:!COM Interfaces-ICoreWebView2_8!private! !
+Add_LaunchingExternalUriScheme:token:!COM Interfaces-ICoreWebView2_18!private! !
 Add_NavigationCompleted:token:!**auto generated**!COM Interfaces-ICoreWebView2!events!private! !
 Add_NavigationStarting:token:!**auto generated**!COM Interfaces-ICoreWebView2!events!private! !
 Add_NewWindowRequested:token:!**auto generated**!COM Interfaces-ICoreWebView2!events!private! !
@@ -1673,6 +1717,7 @@ get_IsDefaultDownloadDialogOpen:!COM Interfaces-ICoreWebView2_9!private! !
 get_IsDocumentPlayingAudio:!COM Interfaces-ICoreWebView2_8!private! !
 get_IsMuted:!COM Interfaces-ICoreWebView2_8!private! !
 get_IsSuspended:!COM Interfaces-ICoreWebView2_3!private! !
+get_MemoryUsageTargetLevel:!**auto generated**!COM Interfaces-ICoreWebView2_19!private! !
 get_Profile:!COM Interfaces-ICoreWebView2_13!private! !
 get_Settings:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 get_Source:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
@@ -1690,6 +1735,8 @@ isDocumentPlayingAudio!properties!public! !
 isMuted!properties!public! !
 isMuted:!properties!public! !
 isSuspended!properties!public! !
+memoryUsageTargetLevel!properties!public! !
+memoryUsageTargetLevel:!properties!public! !
 navigate:!**auto generated**!methods!public! !
 Navigate:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 navigateToString:!**auto generated**!methods!public! !
@@ -1717,6 +1764,7 @@ profile!properties!public! !
 put_DefaultDownloadDialogCornerAlignment:!COM Interfaces-ICoreWebView2_9!private! !
 put_DefaultDownloadDialogMargin:!COM Interfaces-ICoreWebView2_9!private! !
 put_IsMuted:!COM Interfaces-ICoreWebView2_8!private! !
+put_MemoryUsageTargetLevel:!**auto generated**!COM Interfaces-ICoreWebView2_19!private! !
 reload!**auto generated**!methods!public! !
 Reload!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 Remove_BasicAuthenticationRequested:!COM Interfaces-ICoreWebView2_10!private! !
@@ -1735,6 +1783,7 @@ Remove_HistoryChanged:!**auto generated**!COM Interfaces-ICoreWebView2!private! 
 Remove_IsDefaultDownloadDialogOpenChanged:!COM Interfaces-ICoreWebView2_9!private! !
 Remove_IsDocumentPlayingAudioChanged:!COM Interfaces-ICoreWebView2_8!private! !
 Remove_IsMutedChanged:!COM Interfaces-ICoreWebView2_8!private! !
+Remove_LaunchingExternalUriScheme:!COM Interfaces-ICoreWebView2_18!private! !
 Remove_NavigationCompleted:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 Remove_NavigationStarting:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 Remove_NewWindowRequested:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
