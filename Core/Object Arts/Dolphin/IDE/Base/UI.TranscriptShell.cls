@@ -86,7 +86,7 @@ contents
 cr
 	"Append a line delimiter to the receiver (N.B. For Windows this is a CR-LF sequence)."
 
-	self nextPutAll: String lineDelimiter; flush!
+	self nextPutAll: String.LineDelimiter; flush!
 
 createComponents
 	"Create the presenters contained by the receiver.
@@ -142,7 +142,7 @@ flush
 
 	buffer position == 0 ifTrue: [^self].
 	bufferProtect critical: [self hasOutputWindow ifTrue: [self updateWindow]].
-	(self class flashOnOutput and: [self view isActive not]) ifTrue: [self alertUser]!
+	(FlashOnOutput and: [self view isActive not]) ifTrue: [self alertUser]!
 
 forgetSize
 	"Forget the default size for new instances of this tool."
@@ -304,12 +304,9 @@ tab: tabCount
 	tabCount timesRepeat: [self tab]!
 
 updateWindow
-	| newText length |
-	newText := buffer contents.
-	length := outputWindow textLength.
 	outputWindow
-		caretPosition: length + 1;
-		replaceSelection: newText.
+		appendText: buffer contents;
+		scrollToEnd.
 	^buffer reset!
 
 visit: anObject do: aNiladicValuable
