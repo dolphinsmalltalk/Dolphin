@@ -392,7 +392,8 @@ observeWindowEvents
 				interfaceClass: ICoreWebView2HistoryChangedEventHandler
 				handler: [:source :args | self onHistoryChanged]).
 	"For all other events we just trigger a Smalltalk event, so we can follow a generic pattern to set up the handler"
-	##({ICoreWebView2BasicAuthenticationRequestedEventHandler.
+	##({
+		ICoreWebView2BasicAuthenticationRequestedEventHandler.
 		ICoreWebView2ClientCertificateRequestedEventHandler.
 		ICoreWebView2ContainsFullScreenElementChangedEventHandler.
 		ICoreWebView2ContentLoadingEventHandler.
@@ -418,7 +419,9 @@ observeWindowEvents
 		ICoreWebView2WebMessageReceivedEventHandler.
 		ICoreWebView2WebResourceRequestedEventHandler.
 		ICoreWebView2WebResourceResponseReceivedEventHandler.
-		ICoreWebView2WindowCloseRequestedEventHandler}) do: [:each | self observeEvent: each from: webview]!
+		ICoreWebView2WindowCloseRequestedEventHandler.
+		ICoreWebView2LaunchingExternalUriSchemeEventHandler
+	}) do: [:each | self observeEvent: each from: webview]!
 
 onControllerCreated: anICoreWebView2Controller
 	webviewController := self queryControllerInterface: anICoreWebView2Controller.
@@ -806,7 +809,7 @@ stbVersion
 webview2Events
 	"This is the full set of events. Not all are actually published currently; for example the frame and download events are not."
 
-	^#(#acceleratorKeyPressed: #basicAuthenticationRequested: #bytesReceivedChanged #clientCertificateRequested: #containsFullScreenElementChanged #contentLoading: #contextMenuRequested: #cursorChanged #devToolsProtocolEvent: #documentTitleChanged #domContentLoaded: #dowloadStateChanged #downloadStarting: #favIconChanged #focusGained #focusLost #frameContentLoading: #frameCreated: #frameDestroyed #frameDomContentLoaded: #frameNameChanged #frameNavigationCompleted: #frameNavigationStarting: #framePermissionRequested: #frameWebMessageReceived: #historyChanged #isDefaultDownloadDialogOpenChanged #isDocumentPlayingAudioChanged #isMutedChanged #moveFocusRequested: #navigationCompleted: #navigationStarting: #newBrowserVersionAvailable #newWindowRequested: #permissionRequested: #processExited: #processFailed: #processInfosChanged #rasterizationScaleChanged #scriptDialogOpening: #serverCertificateErrorDetected: #sourceChanged: #statusBarTextChanged #webMessageReceived: #webResourceRequested: #webResourceResponseReceived: #webviewAvailable #windowCloseRequested #zoomFactorChanged)!
+	^#(#acceleratorKeyPressed: #basicAuthenticationRequested: #bytesReceivedChanged #clientCertificateRequested: #containsFullScreenElementChanged #contentLoading: #contextMenuRequested: #cursorChanged #devToolsProtocolEvent: #documentTitleChanged #domContentLoaded: #dowloadStateChanged #downloadStarting: #favIconChanged #focusGained #focusLost #frameContentLoading: #frameCreated: #frameDestroyed #frameDomContentLoaded: #frameNameChanged #frameNavigationCompleted: #frameNavigationStarting: #framePermissionRequested: #frameWebMessageReceived: #historyChanged #isDefaultDownloadDialogOpenChanged #isDocumentPlayingAudioChanged #isMutedChanged #launchingExternalUriScheme: #moveFocusRequested: #navigationCompleted: #navigationStarting: #newBrowserVersionAvailable #newWindowRequested: #permissionRequested: #processExited: #processFailed: #processInfosChanged #rasterizationScaleChanged #scriptDialogOpening: #serverCertificateErrorDetected: #sourceChanged: #statusBarTextChanged #webMessageReceived: #webResourceRequested: #webResourceResponseReceived: #webviewAvailable #windowCloseRequested #zoomFactorChanged)!
 
 winClassName
 	"Private - Answer the Windows class name, or atom, to be used when creating Windows attached

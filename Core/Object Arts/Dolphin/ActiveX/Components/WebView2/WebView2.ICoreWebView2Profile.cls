@@ -112,6 +112,14 @@ clearBrowsingDataThenDo: aMonadicValuable
 	self ClearBrowsingDataAll: handler.
 	handler free!
 
+cookieManager
+	"Answer the <ICoreWebView2CookieManager> value of the 'CookieManager' property of the receiver."
+
+	| answer |
+	answer := ICoreWebView2CookieManager newPointer.
+	self get_CookieManager: answer.
+	^answer asObject!
+
 defaultDownloadFolderPath
 	"Answer the <readableString> value of the 'DefaultDownloadFolderPath' property of the receiver."
 
@@ -136,6 +144,14 @@ displayOn: aStream
 	name := self profileName.
 	aStream nextPutAll: (name isEmpty ifTrue: ['Default profile'] ifFalse: [name])!
 
+get_CookieManager: cookieManager
+	"Private - Get the value of the 'CookieManager' property of the receiver.
+
+		HRESULT __stdcall CookieManager(
+			[out, retval]ICoreWebView2CookieManager** CookieManager);"
+
+	^E_NOTIMPL!
+
 get_DefaultDownloadFolderPath: value
 	"Private - Get the value of the 'DefaultDownloadFolderPath' property of the receiver.
 
@@ -145,6 +161,15 @@ get_DefaultDownloadFolderPath: value
 	<virtual stdcall: hresult 7 lpwstr*>
 	^self invalidCall: _failureCode!
 
+get_IsGeneralAutofillEnabled: value
+	"Private - Get the value of the 'IsGeneralAutofillEnabled' property of the receiver.
+
+		HRESULT __stdcall IsGeneralAutofillEnabled(
+			[out, retval]long* value);"
+
+	value value: 0.
+	^S_FALSE!
+
 get_IsInPrivateModeEnabled: value
 	"Private - Get the value of the 'IsInPrivateModeEnabled' property of the receiver.
 
@@ -153,6 +178,15 @@ get_IsInPrivateModeEnabled: value
 
 	<virtual stdcall: hresult 5 bool*>
 	^self invalidCall: _failureCode!
+
+get_IsPasswordAutosaveEnabled: value
+	"Private - Get the value of the 'IsPasswordAutosaveEnabled' property of the receiver.
+
+		HRESULT __stdcall IsPasswordAutosaveEnabled(
+			[out, retval]long* value);"
+
+	value value: 1.
+	^S_FALSE!
 
 get_PreferredColorScheme: value
 	"Private - Get the value of the 'PreferredColorScheme' property of the receiver.
@@ -212,6 +246,19 @@ icon
 		ifTrue: [Graphics.TextTileIcon text: $⛔]
 		ifFalse: [Graphics.Icon null]!
 
+isGeneralAutofillEnabled
+	"Answer the <Boolean> value of the 'IsGeneralAutofillEnabled' property of the receiver."
+
+	| answer |
+	answer := UInt32Bytes new.
+	self get_IsGeneralAutofillEnabled: answer.
+	^answer asBoolean!
+
+isGeneralAutofillEnabled: value
+	"Set the 'IsGeneralAutofillEnabled' property of the receiver to the <int32> value of the argument."
+
+	self put_IsGeneralAutofillEnabled: value!
+
 isInPrivateModeEnabled
 	"Answer the <Boolean> value of the 'IsInPrivateModeEnabled' property of the receiver."
 
@@ -219,6 +266,19 @@ isInPrivateModeEnabled
 	answer := BOOL newBuffer.
 	self get_IsInPrivateModeEnabled: answer.
 	^answer value!
+
+isPasswordAutosaveEnabled
+	"Answer the <Boolean> value of the 'IsPasswordAutosaveEnabled' property of the receiver."
+
+	| answer |
+	answer := UInt32Bytes new.
+	self get_IsPasswordAutosaveEnabled: answer.
+	^answer asBoolean!
+
+isPasswordAutosaveEnabled: value
+	"Set the 'IsPasswordAutosaveEnabled' property of the receiver to the <int32> value of the argument."
+
+	self put_IsPasswordAutosaveEnabled: value!
 
 preferredColorScheme
 	"Answer the <sdword> value of the 'PreferredColorScheme' property of the receiver."
@@ -287,6 +347,24 @@ put_DefaultDownloadFolderPath: value
 	<virtual stdcall: hresult 8 lpwstr>
 	^self invalidCall: _failureCode!
 
+put_IsGeneralAutofillEnabled: value
+	"Private - Set the value of the 'IsGeneralAutofillEnabled' property of the object wrapped by the 
+	 receiver to the <int32> argument, value.
+
+		HRESULT __stdcall IsGeneralAutofillEnabled(
+			[in]long value);"
+
+	^E_NOTIMPL!
+
+put_IsPasswordAutosaveEnabled: value
+	"Private - Set the value of the 'IsPasswordAutosaveEnabled' property of the object wrapped by the 
+	 receiver to the <int32> argument, value.
+
+		HRESULT __stdcall IsPasswordAutosaveEnabled(
+			[in]long value);"
+
+	^E_NOTIMPL!
+
 put_PreferredColorScheme: value
 	"Private - Set the value of the 'PreferredColorScheme' property of the object wrapped by the 
 	 receiver to the <sdword> argument, value.
@@ -336,12 +414,16 @@ ClearBrowsingDataAll:!COM Interfaces-ICoreWebView2Profile2!private! !
 clearBrowsingDataAllThenDo:!methods!public! !
 ClearBrowsingDataInTimeRange:startTime:endTime:handler:!COM Interfaces-ICoreWebView2Profile2!private! !
 clearBrowsingDataThenDo:!methods!public! !
+cookieManager!properties!public! !
 defaultDownloadFolderPath!properties!public! !
 defaultDownloadFolderPath:!**auto generated**!properties!public! !
 defaultTrackingPreventionLevel!constants!private! !
 displayOn:!displaying!public! !
+get_CookieManager:!COM Interfaces-ICoreWebView2Profile5!private! !
 get_DefaultDownloadFolderPath:!**auto generated**!COM Interfaces-ICoreWebView2Profile!private! !
+get_IsGeneralAutofillEnabled:!COM Interfaces-ICoreWebView2Profile6!private! !
 get_IsInPrivateModeEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Profile!private! !
+get_IsPasswordAutosaveEnabled:!COM Interfaces-ICoreWebView2Profile6!private! !
 get_PreferredColorScheme:!**auto generated**!COM Interfaces-ICoreWebView2Profile!private! !
 get_PreferredTrackingPreventionLevel:!COM Interfaces-ICoreWebView2Profile3!private! !
 get_ProfileName:!**auto generated**!COM Interfaces-ICoreWebView2Profile!private! !
@@ -349,7 +431,11 @@ get_ProfilePath:!**auto generated**!COM Interfaces-ICoreWebView2Profile!private!
 GetNonDefaultPermissionSettings:!COM Interfaces-ICoreWebView2Profile4!public! !
 getNonDefaultPermissionSettingsThenDo:!methods!public! !
 icon!displaying!public! !
+isGeneralAutofillEnabled!properties!public! !
+isGeneralAutofillEnabled:!properties!public! !
 isInPrivateModeEnabled!properties!public! !
+isPasswordAutosaveEnabled!properties!public! !
+isPasswordAutosaveEnabled:!properties!public! !
 preferredColorScheme!**auto generated**!properties!public! !
 preferredColorScheme:!**auto generated**!properties!public! !
 preferredTrackingPreventionLevel!properties!public! !
@@ -358,6 +444,8 @@ printableProperties!printing!private! !
 profileName!properties!public! !
 profilePath!properties!public! !
 put_DefaultDownloadFolderPath:!**auto generated**!COM Interfaces-ICoreWebView2Profile!private! !
+put_IsGeneralAutofillEnabled:!COM Interfaces-ICoreWebView2Profile6!private! !
+put_IsPasswordAutosaveEnabled:!COM Interfaces-ICoreWebView2Profile6!private! !
 put_PreferredColorScheme:!**auto generated**!COM Interfaces-ICoreWebView2Profile!private! !
 put_PreferredTrackingPreventionLevel:!COM Interfaces-ICoreWebView2Profile3!private! !
 SetPermissionState:origin:state:completedHandler:!COM Interfaces-ICoreWebView2Profile4!public! !

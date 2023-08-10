@@ -37,6 +37,22 @@ interface ICoreWebView2WebMessageReceivedEventArgs : IUnknown
 !WebView2.ICoreWebView2WebMessageReceivedEventArgs categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
 !WebView2.ICoreWebView2WebMessageReceivedEventArgs methodsFor!
 
+additionalObjects
+	"Answer the <ICoreWebView2ObjectCollectionView> value of the 'AdditionalObjects' property of the receiver."
+
+	| answer |
+	answer := ICoreWebView2ObjectCollectionView newPointer.
+	self get_AdditionalObjects: answer.
+	^answer asObject!
+
+get_AdditionalObjects: value
+	"Private - Get the value of the 'AdditionalObjects' property of the receiver.
+
+		HRESULT __stdcall AdditionalObjects(
+			[out, retval]ICoreWebView2ObjectCollectionView** value);"
+
+	^E_NOTIMPL!
+
 get_Source: source
 	"Private - Get the value of the 'Source' property of the receiver.
 
@@ -94,6 +110,8 @@ webMessageAsJson
 	ptr free.
 	^answer! !
 !WebView2.ICoreWebView2WebMessageReceivedEventArgs categoriesForMethods!
+additionalObjects!properties!public! !
+get_AdditionalObjects:!COM Interfaces-ICoreWebView2WebMessageReceivedEventArgs2!private! !
 get_Source:!**auto generated**!COM Interfaces-ICoreWebView2WebMessageReceivedEventArgs!private! !
 get_webMessageAsJson:!**auto generated**!COM Interfaces-ICoreWebView2WebMessageReceivedEventArgs!private! !
 source!properties!public! !

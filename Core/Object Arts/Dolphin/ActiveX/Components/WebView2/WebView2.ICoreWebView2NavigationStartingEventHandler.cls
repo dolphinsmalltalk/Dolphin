@@ -45,7 +45,7 @@ basicUnregister!private!realizing/unrealizing! !
 !WebView2.ICoreWebView2NavigationStartingEventHandler class methodsFor!
 
 argsClass
-	^ICoreWebView2NavigationStartingEventArgs2!
+	^ICoreWebView2NavigationStartingEventArgs!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2NavigationStartingEventHandler'
