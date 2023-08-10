@@ -158,6 +158,7 @@ testWebBrowserCrashRecovery
 
 	<knownSlowTest>
 	| webview |
+	self skipIfCiBuild.
 	webview := presenter view.
 	webview canNavigateToStrings: true.
 	processFailed := navigationCompleted := domContentLoaded := nil.
