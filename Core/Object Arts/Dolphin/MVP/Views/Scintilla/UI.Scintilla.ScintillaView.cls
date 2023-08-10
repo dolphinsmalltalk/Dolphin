@@ -4038,8 +4038,8 @@ modifyText: niladicBlock
 	self isReadOnly
 		ifFalse: [niladicBlock value]
 		ifTrue: 
-			[self isReadOnly: false.
-			niladicBlock ensure: [self isReadOnly: true]]!
+			[self setReadOnly: false.
+			niladicBlock ensure: [self setReadOnly: true]]!
 
 mouseDwellTime
 	"Retrieve the <Duration> that the mouse must sit still to generate a mouse hovering event. Answer nil if this is effectively infinite to indicate that the dwell is not set and no hover events will be generated."
