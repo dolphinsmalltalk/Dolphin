@@ -1064,7 +1064,6 @@ testLiteralStringEncoding
 
 testMapIpWithVoidedEntry
 	| method debugMap textMap debugMethod |
-	self skip. "Work in progress - works with old mapIP:toDebug:, but not replacement yet"
 	method := self getTestMethod: #performOn:.
 	"If the bytecode generation changes, then this test will be inconclusive, so we need to detect that"
 	self assert: method disassembly
@@ -1152,6 +1151,7 @@ testMapIpWithVoidedEntry
 				29 -> (197 to: 378).
 				31 -> (197 to: 378)
 			}.
+	self skip. 'Work in progress - works with old mapIP:toDebug:, but not replacement yet as doesn''t skip voided entry'.
 	"Verify that we can remap every ip in the method to the correct ip in the debug method, although in practice we only need to map bytecodes for the potential break points (mainly sends)."
 	#(#(1 3) #(2 5) #(3 7) #(4 8) #(5 9) #(6 10) #(8 13) #(9 14) #(11 16) #(12 18) #(13 19) #(14 21) #(15 23) #(16 24) #(17 25) #(18 27) #(19 29) #(20 31))
 		do: [:pair | self assert: (method mapIp: pair first toDebug: debugMethod) equals: pair second]!
@@ -1243,6 +1243,40 @@ testOptimizedLoopReadBeforeWritten
 	actual := expr value.
 	self skip: 'Results of actual block evaluation in a loop and optimized loop should be the same - any	read-before-written locals must be reinitialized to nil on each iteration'.
 	self assert: actual equals: expected!
+
+testPopReturn
+	| method debugMap textMap debugMethod |
+	method := self getTestMethod: #appendToStream:.
+	"If the bytecode generation changes, then this test will be inconclusive, so we need to detect that"
+	self assert: method disassembly
+		equals: 'Normal, 1 args, 1 literals
+
+	1	Push Temp[0]
+	2	Push Self
+	3	Send[0]: #nextPut: with 1 args
+	4	Pop; Return self'.
+	textMap := method debugInfo textMap.
+	self assert: textMap equals: { 3 -> (90 to: 117). 4 -> (118 to: 117) }.
+	debugMethod := method asDebugMethod.
+	"Note that the debug method is still 'optimised', as this is necessary so that the text maps (used by the debugger to remap normal frames to debug frames) align.
+	There will be fewer optimisation opportunities due to the Break instructions, in particular macro instructions such as send-to-self, will be split"
+	self assert: debugMethod disassembly
+		equals: 'Normal, 1 args, 1 literals, debug
+
+	1	Push Temp[0]
+	2	Push Self
+	3	*Break
+	4	Send[0]: #nextPut: with 1 args
+	5	Pop
+	6	*Break
+	7	Return self'.
+	debugMap := debugMethod debugInfo textMap.
+	debugMap with: textMap do: [:debug :nondebug | self assert: debug value equals: nondebug value].
+
+	"Verify that we can remap every ip in the method to the correct ip in the debug method, although in practice we only need to map bytecodes for the potential break points (mainly sends)."
+	self skip: 'BUG: Debug IP remap incorrect because of Pop; Return optimisation'.
+	#(#(1 1) #(2 2) #(3 4) #(4 5))
+		do: [:pair | self assert: (method mapIp: pair first toDebug: debugMethod) equals: pair second]!
 
 testQualifiedReference
 	{Array. #(). nil. nil} pairsDo: 
@@ -1354,52 +1388,14 @@ testReturnIfNotNil
 	15	Store Temp[1]
 	16	*Break
 	17	Return'.
+
 	"Verify that we can remap every ip in the method to the correct ip in the debug method, although in practice we only need to map bytecodes for the potential break points (mainly sends)."
 	#(#(1 1) #(2 2) #(3 4) #(4 7) #(5 9) #(6 12) #(7 14))
-		do: [:pair | self assert: (method mapIp: pair first toDebug: debugMethod) equals: pair second]!
+		do: [:pair | self assert: (method mapIp: pair first toDebug: debugMethod) equals: pair second].
 
-testReturnIfNotNilOptimization
-	| method textMap debugMethod |
-	method := self getTestMethod: #associationAt:.
-	"If the bytecode generation changes, then this test will be inconclusive, so we need to detect that"
-	self assert: method disassembly
-		equals: 'Normal, 1 args, 1 stack temps, 3 literals
-
-	1	Push Self; Push Temp[0]
-	2	Push nil
-	3	Send[0]: #associationAt:ifAbsent: with 2 args
-	4	Return If Not Nil
-	5	Push Self; Push Temp[0]
-	6	Send[1]: #errorKeyNotFound: with 1 args
-	7	Return'.
-	textMap := method debugInfo textMap.
-	self assert: textMap
-		equals: { 3 -> (172 to: 212). 4 -> (171 to: 286). 6 -> (226 to: 255). 7 -> (170 to: 286) }.
-	debugMethod := method asDebugMethod.
-	"Note that the debug method is still 'optimised', as this is necessary so that the text maps (used by the debugger to remap normal frames to debug frames) align.
-	There will be fewer optimisation opportunities due to the Break instructions, in particular macro instructions such as send-to-self, will be split"
-	self assert: debugMethod disassembly
-		equals: 'Normal, 1 args, 1 stack temps, 3 literals, debug
-
-	1	Push Self; Push Temp[0]
-	2	Push nil
-	3	*Break
-	4	Send[0]: #associationAt:ifAbsent: with 2 args
-	5	Dup
-	6	*Break
-	7	Jump If Not Nil +6 to 15
-	9	Pop; Push Self
-	10	Push Temp[0]
-	11	*Break
-	12	Send[1]: #errorKeyNotFound: with 1 args
-	13	*Break
-	14	Return
-	15	Store Temp[1]
-	16	*Break
-	17	Return'.
-	"Verify that we can remap every ip in the method to the correct ip in the debug method, although in practice we only need to map bytecodes for the potential break points (mainly sends)."
-	#(#(1 1) #(2 2) #(3 4) #(4 7) #(5 9) #(6 12) #(7 14))
-		do: [:pair | self assert: (method mapIp: pair first toDebug: debugMethod) equals: pair second]!
+	self skip: 'BUG: Text maps are of different sizes. This should never be the case'.
+	debugMap := debugMethod debugInfo textMap.
+	debugMap with: textMap do: [:debug :nondebug | self assert: debug value equals: nondebug value].!
 
 testReturnImmediate
 	"#397"
@@ -2121,11 +2117,11 @@ testNestedCopyingBlocks!public!unit tests! !
 testNestedWhileTrueAtStartOfCleanBlock!public!unit tests! !
 testNotIdentical!public!unit tests! !
 testOptimizedLoopReadBeforeWritten!public!unit tests! !
+testPopReturn!public!unit tests!unit tests-text maps! !
 testQualifiedReference!public!unit tests! !
 testRadixInteger!public!unit tests! !
 testReturnFromOptimizedBlock!public!unit tests! !
 testReturnIfNotNil!public!unit tests!unit tests-text maps! !
-testReturnIfNotNilOptimization!public!unit tests-text maps! !
 testReturnImmediate!exceptions!public!unit tests! !
 testReturnPseudoVar!public!unit tests! !
 testScanningScaledDecimals!public!unit tests! !
