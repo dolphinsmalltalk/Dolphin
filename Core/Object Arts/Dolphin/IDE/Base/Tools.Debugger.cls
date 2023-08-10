@@ -147,6 +147,7 @@ beBroken
 
 	flags := flags maskClear: RunMask.	"no longer running"
 	Processor enableInterrupts.
+	breakWhen removeAll.
 	self mainView enable
 
 	!
@@ -191,7 +192,7 @@ break: interruptFrame
 	self suspend
 	"N.B. There must be no further code after this point"!
 
-breakFrame: aStackFrame 
+breakFrame: aStackFrame
 	"Private - Set the frame on which to break."
 
 	self makeDebugFrame: aStackFrame.
@@ -1921,6 +1922,7 @@ userBreak
 
 validateUserInterface
 	super validateUserInterface.
+	self isRunning ifTrue: [^self].
 	sourcePresenter isModified
 		ifTrue: 
 			[sourceInterval
