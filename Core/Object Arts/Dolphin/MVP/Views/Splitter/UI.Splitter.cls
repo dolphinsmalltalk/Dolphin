@@ -249,7 +249,7 @@ resource_Horizontalvertical_splitter
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Horizontalvertical_splitter)
 	"
 
-	^#(#'!!STL' 5 985166 10 #{UI.STBViewProxy} #{UI.Splitter} 34 12 nil nil 34 2 8 1140850688 1 416 nil 917510 #{Graphics.Color} #default nil 519 nil nil nil 1707078 1 #{UI.DraggableViewInteractor} 416 nil 1 #left nil nil nil 918022 #{Graphics.Point} 1 1 546 9 9 nil 560 nil 1310982 #{Core.MessageSequence} 34 1 1049350 #{Core.MessageSend} #createAt:extent: 34 2 546 12287 21 546 951 11 416 1179910 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 23 0 0 10 0 0 0 218 25 0 0 15 0 0 0] 8 #() 546 193 193 nil 27)!
+	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.Splitter} 38 #{Core.Array} 12 nil nil 50 2 8 1140850688 1 32 nil 6 #{Graphics.Color} #default nil 519 nil nil nil 3142 1 #{UI.DraggableViewInteractor} 32 nil 1 #left nil nil nil 518 #{Graphics.Point} 1 1 178 9 9 nil 192 nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createAt:extent: 50 2 178 6143 21 178 951 11 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 218 13 0 0 15 0 0 0] 8 #() 178 193 193 nil 27)!
 
 stbConvertFromVersion12: anArray
 	"Private - Perform an STB conversion from a version 12 <View> to version 13. 13 adds

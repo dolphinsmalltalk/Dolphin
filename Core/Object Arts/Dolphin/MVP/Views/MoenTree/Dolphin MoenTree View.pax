@@ -27,7 +27,6 @@ package setPrerequisites: #(
 	'..\..\Graphics\Dolphin GDI Graphics'
 	'..\..\Base\Dolphin MVP Base'
 	'..\..\Presenters\Prompters\Dolphin Prompter'
-	'..\..\..\System\Filer\Dolphin STx Filer (Old versions)'
 	'..\..\Models\Tree\Dolphin Tree Models'
 	'..\..\Presenters\Tree\Dolphin Tree Presenter'
 ).
@@ -91,7 +90,7 @@ resource_Moen_tree
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Moen_tree)
 	"
 
-	^#(#'!!STL' 5 985166 10 #{UI.STBViewProxy} #{UI.MoenTreeView} 34 30 nil nil 34 2 8 1409286144 1 416 787526 3 #{UI.TreeModel} nil 1769478 #{Kernel.IdentitySearchPolicy} 721670 #{UI.TreeNode} nil nil nil 170 192 8 #() 917510 #{Graphics.Color} #default nil 517 nil nil nil 416 985606 #{UI.MoenTreeNode} nil 918534 #{UI.MoenContour} nil nil nil nil 918022 #{Graphics.Point} 1 1 720 nil nil nil nil nil 7 786950 #{Core.Message} #displayString 8 #() #{UI.MoenTreeView} 268435457 706 5 3 1639750 1 #{Graphics.IconImageManager} 706 1 1 41 nil 787206 #{Graphics.Pen} nil true 590086 #{OS.LOGPEN} 8 #[0 0 0 0 1 0 0 0 0 0 0 0 192 192 192 0] 706 33 33 706 19999 19999 114721 832 706 35 1 nil nil nil 1310982 #{Core.MessageSequence} 34 1 1049350 #{Core.MessageSend} #createAt:extent: 34 2 706 12287 21 706 271 251 416 1179910 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 23 0 0 10 0 0 0 134 24 0 0 135 0 0 0] 8 #() 706 193 193 nil 27)! !
+	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.MoenTreeView} 38 #{Core.Array} 30 nil nil 50 2 8 1409286144 1 32 1094 3 #{UI.TreeModel} nil 6 #{Kernel.IdentitySearchPolicy} 774 #{UI.TreeNode} nil nil nil 550 #{Core.IdentityDictionary} 0 6 #{Graphics.Color} #default nil 517 nil nil nil 32 2566 #{UI.MoenTreeNode} nil 1030 #{UI.MoenContour} nil nil nil nil 518 #{Graphics.Point} 1 1 352 nil nil nil nil nil 7 518 #{Core.Message} #displayString 8 #() #{UI.MoenTreeView} 268435457 338 5 3 1350 1 #{Graphics.IconImageManager} 338 1 1 41 nil 774 #{Graphics.Pen} nil true 262 #{OS.LOGPEN} 8 #[0 0 0 0 1 0 0 0 0 0 0 0 192 192 192 0] 338 33 33 338 19999 19999 114721 464 338 35 1 nil nil nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createAt:extent: 50 2 338 6143 21 338 271 251 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 134 12 0 0 135 0 0 0] 8 #() 338 193 193 nil 27)! !
 !UI.TreePresenter class categoriesForMethods!
 resource_Moen_tree!public!resources-views! !
 !

@@ -123,7 +123,7 @@ resource_Slider_view
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Slider_view)
 	"
 
-	^#(#'!!STL' 5 985166 10 #{UI.STBViewProxy} #{UI.Slider} 34 18 nil nil 34 2 8 1140916225 1 416 918598 2 #{UI.ValueHolder} nil false 1835526 #{Kernel.PluggableSearchPolicy} 786950 #{Core.Message} #= 8 #() 546 #hash 8 #() 1 nil nil 7 nil nil nil 416 nil 8 1814871328 1049094 #{UI.NullConverter} nil nil 21 nil nil 1310982 #{Core.MessageSequence} 34 2 1049350 #{Core.MessageSend} #createAt:extent: 34 2 918022 #{Graphics.Point} 12287 21 770 501 71 416 722 #range: 34 1 852742 #{Core.Interval} 1 201 21 416 1179910 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 23 0 0 10 0 0 0 249 24 0 0 45 0 0 0] 8 #() 770 193 193 nil 27)! !
+	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.Slider} 38 #{Core.Array} 18 nil nil 50 2 8 1140916225 1 32 1094 2 #{UI.ValueHolder} nil false 518 #{Kernel.PluggableSearchPolicy} 518 #{Core.Message} #= 8 #() 178 #hash 8 #() 1 nil nil 7 nil nil nil 32 nil 8 1852832256 518 #{UI.NullConverter} nil nil 21 nil nil 262 #{Core.MessageSequence} 50 2 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 6143 21 402 501 71 32 354 #range: 50 1 774 #{Core.Interval} 1 201 21 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 249 12 0 0 45 0 0 0] 8 #() 402 193 193 nil 27)! !
 !UI.NumberPresenter class categoriesForMethods!
 resource_Slider_view!public!resources-views! !
 !

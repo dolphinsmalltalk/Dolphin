@@ -61,7 +61,6 @@ package setPrerequisites: #(
 	'..\..\..\Dolphin\MVP\Base\Dolphin MVP Base'
 	'..\..\..\Dolphin\Registry\Dolphin Registry Access'
 	'..\..\..\Dolphin\MVP\Views\Splitter\Dolphin Splitter Control'
-	'..\..\..\Dolphin\System\Filer\Dolphin STx Filer (Old versions)'
 	'..\..\..\Dolphin\MVP\Models\Tree\Dolphin Tree Models'
 	'..\..\..\Dolphin\MVP\Presenters\Tree\Dolphin Tree Presenter'
 	'..\..\..\Dolphin\MVP\Models\Value\Dolphin Value Models'

@@ -64,7 +64,7 @@ resource_Default_view
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 5 985166 10 #{UI.STBViewProxy} #{UI.GroupBox} 34 14 nil nil 34 2 8 1140850695 65 416 nil 917510 #{Graphics.Color} #default nil 7 nil nil nil 416 nil 8 1815097472 1310982 #{Core.MessageSequence} 34 1 1049350 #{Core.MessageSend} #createAt:extent: 34 2 918022 #{Graphics.Point} 12287 21 626 301 201 416 1179910 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 23 0 0 10 0 0 0 149 24 0 0 110 0 0 0] 8 #() 626 193 193 nil 27)!
+	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.GroupBox} 38 #{Core.Array} 14 nil nil 50 2 8 1140850695 65 32 nil 6 #{Graphics.Color} #default nil 7 nil nil nil 32 nil 8 1853182784 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 6143 21 258 301 201 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 149 12 0 0 110 0 0 0] 8 #() 258 193 193 nil 27)!
 
 resource_Static_group_box
 	"Answer the literal data from which the 'Static group box' resource can be reconstituted.
@@ -74,7 +74,7 @@ resource_Static_group_box
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Static_group_box)
 	"
 
-	^#(#'!!STL' 5 985166 10 #{UI.STBViewProxy} #{UI.GroupBox} 34 14 nil nil 34 2 8 1140850695 65 416 nil 917510 #{Graphics.Color} #transparent nil 7 nil nil nil 416 nil 8 1815097472 1310982 #{Core.MessageSequence} 34 2 1049350 #{Core.MessageSend} #createAt:extent: 34 2 918022 #{Graphics.Point} 12287 21 626 299 201 416 578 #text: 34 1 8 'Text here' 416 1179910 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 23 0 0 10 0 0 0 148 24 0 0 110 0 0 0] 8 #() 626 193 193 nil 27)!
+	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.GroupBox} 38 #{Core.Array} 14 nil nil 50 2 8 1140850695 65 32 nil 6 #{Graphics.Color} #transparent nil 7 nil nil nil 32 nil 8 1853182784 262 #{Core.MessageSequence} 50 2 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 6143 21 258 299 201 32 210 #text: 50 1 8 'Text here' 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 148 12 0 0 110 0 0 0] 8 #() 258 193 193 nil 27)!
 
 themePartName
 	^'BUTTON'!

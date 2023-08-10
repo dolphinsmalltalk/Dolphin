@@ -58,7 +58,6 @@ package setPrerequisites: #(
 	'..\..\MVP\Presenters\Prompters\Dolphin Prompter'
 	'..\..\MVP\Views\Scintilla\Dolphin Scintilla View'
 	'..\..\MVP\Views\Splitter\Dolphin Splitter Control'
-	'..\..\System\Filer\Dolphin STx Filer (Old versions)'
 	'..\..\MVP\Icons\Dolphin Text Tile Icons'
 	'..\..\MVP\Models\Tree\Dolphin Tree Models'
 	'..\..\MVP\Type Converters\Dolphin Type Converters'
@@ -173,7 +172,7 @@ resource_Protocol_tools
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Protocol_tools)
 	"
 
-	^#(#'!!STL' 5 985166 10 #{UI.STBViewProxy} #{UI.Toolbar} 34 28 nil nil 34 2 8 1409289036 131137 416 nil nil nil 517 nil nil nil 416 917510 #{Graphics.Color} #default 8 1815075056 170 192 8 #() nil nil nil 170 192 34 4 41935 1311814 1 #{UI.ToolbarIconButton} 416 1 1377606 4 #{UI.CommandDescription} #toggleReadOnly 8 'Lock/unlock protocol' 1 1 852806 4 #{Graphics.Icon} nil true 2819078 #{Graphics.ImageFromStringResourceInitializer} 8 'Mutex.ico' 2490894 #{Kernel.STBExternalResourceLibraryProxy} 8 'dolphindr8.dll' nil 65541 nil 41935 41937 594 416 1 626 #toggleANSI 8 'Toggle ANSI status' 1 1 1378630 2 #{Graphics.TextTileIcon} $\x1F5FD 8 'Segoe UI Emoji' nil nil nil nil 1 nil nil 41937 34 3 608 800 1245766 1 #{UI.ToolbarSeparator} 416 1 nil nil 1 nil nil nil nil nil 1310982 #{Core.MessageSequence} 34 1 1049350 #{Core.MessageSend} #createAt:extent: 34 2 918022 #{Graphics.Point} 12287 21 1042 111 51 416 1179910 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 23 0 0 10 0 0 0 54 24 0 0 35 0 0 0] 8 #() 1042 193 193 nil 29)! !
+	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.Toolbar} 38 #{Core.Array} 28 nil nil 50 2 8 1409289036 131137 32 nil nil nil 517 nil nil nil 32 6 #{Graphics.Color} #default 8 1853287488 550 #{Core.IdentityDictionary} 0 nil nil nil 162 2 52229 1094 1 #{UI.ToolbarIconButton} 32 1 1350 4 #{UI.CommandDescription} #toggleReadOnly 8 'Lock/unlock protocol' 1 1 838 4 #{Graphics.Icon} nil true 1030 #{Graphics.ImageFromStringResourceInitializer} 8 'Mutex.ico' 838 1 #{External.ResourceLibrary} 8 'dolphindr8.dll' 65541 nil 52229 52231 210 32 1 242 #toggleANSI 8 'Toggle ANSI status' 1 1 2374 2 #{Graphics.TextTileIcon} 8 $🗽 8 'Segoe UI Emoji' nil nil nil nil 1 nil nil 52231 50 3 224 416 582 1 #{UI.ToolbarSeparator} 32 1 nil nil 1 nil nil nil nil nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 6143 21 674 111 51 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 54 12 0 0 35 0 0 0] 8 #() 674 193 193 nil 29)! !
 !UI.Toolbar class categoriesForMethods!
 resource_Protocol_tools!public!resources-views! !
 !

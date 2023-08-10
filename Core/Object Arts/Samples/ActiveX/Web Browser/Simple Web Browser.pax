@@ -49,7 +49,6 @@ package setPrerequisites: #(
 	'..\..\..\Dolphin\System\Win32\MessageBox\Dolphin Message Box'
 	'..\..\..\Dolphin\MVP\Base\Dolphin MVP Base'
 	'..\..\..\Dolphin\MVP\Views\Buttons\Dolphin Push Buttons'
-	'..\..\..\Dolphin\System\Filer\Dolphin STx Filer (Old versions)'
 	'..\..\..\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter'
 	'..\..\..\Dolphin\MVP\Icons\Dolphin Text Tile Icons'
 	'..\..\..\Dolphin\MVP\Type Converters\Dolphin Type Converters'
