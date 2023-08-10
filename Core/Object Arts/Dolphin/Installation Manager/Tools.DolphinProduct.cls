@@ -76,7 +76,7 @@ contents
 		add: #('Core\Object Arts\Dolphin\System\Win32\CommCtrl\Common Controls Library.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\System\Win32\MessageBox\Dolphin Message Box.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\Base\Dolphin Source Fileout.pax' #plain #imageBased);
-		add: #('Core\Object Arts\Dolphin\System\Filer\Dolphin STB Filer.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\System\Filer\Dolphin STx Filer Core.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\System\Filer\Dolphin Binary Filer.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\System\STON\Dolphin STON-Core.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\Base\Dolphin Source Package Fileout.pax' #plain #imageBased);
@@ -90,6 +90,7 @@ contents
 		add: #('Core\Object Arts\Dolphin\System\Compiler\Smalltalk Parser.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\Base\Dolphin SizeIs Fields.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\System\Filer\Dolphin Literal Filer.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\System\Filer\Dolphin STx Filer (Old Versions).pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\Registry\Dolphin Registry Access.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\System\Base64\Dolphin Base64.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\System\Compiler\Smalltalk Parser (Old Names).pax' #plain #imageBased);

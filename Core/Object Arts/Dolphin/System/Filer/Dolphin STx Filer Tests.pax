@@ -1,17 +1,21 @@
 ﻿| package |
-package := Package name: 'Dolphin Literal Filer Tests'.
+package := Package name: 'Dolphin STx Filer Tests'.
 package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
 
 package setClassNames: #(
+	#{Kernel.Tests.STBTest}
+	#{Kernel.Tests.STBValidatingInFilerTest}
 	#{Kernel.Tests.STLClassCollectorTest}
 	#{Kernel.Tests.STLFilerTest}
+	#{Kernel.Tests.STxFilerTest}
 ).
 
 package setMethodNames: #(
 	#(#{Core.Tests.ArrayTest} #testLiteralStoreOn)
+	#(#{Core.Tests.FileLocatorTest} #testSingletonSerialisationToStb)
 	#(#{Core.Tests.FileLocatorTest} #testSingletonSerialisationToStl)
 	#(#{External.Tests.DynamicLinkLibraryTest} #testSingletonSerialisationToStl)
 	#(#{Graphics.Tests.ColorTest} #testSingletonSerialisationToStl)
@@ -20,6 +24,9 @@ package setMethodNames: #(
 	#(#{Graphics.Tests.ColorTest} #testStlRoundTripPluggableColor)
 	#(#{Graphics.Tests.ColorTest} #testStlRoundTripUnnamedARGB)
 	#(#{Graphics.Tests.ColorTest} #testStlRoundTripUnnamedRGB)
+	#(#{Kernel.STBInFiler class} #correspondingTestCase)
+	#(#{Kernel.STBOutFiler class} #correspondingTestCase)
+	#(#{Kernel.STBValidatingInFiler class} #correspondingTestCase)
 	#(#{Kernel.STLClassCollector class} #correspondingTestCase)
 	#(#{Kernel.STLInFiler class} #correspondingTestCase)
 	#(#{Kernel.STLOutFiler class} #correspondingTestCase)
@@ -28,16 +35,22 @@ package setMethodNames: #(
 ).
 
 package setPrerequisites: #(
+	'..\..\IDE\Base\Development System'
 	'..\..\Base\Dolphin'
+	'..\..\Base\Dolphin Additional Sort Algorithms'
 	'..\..\Base\Tests\Dolphin Base Tests'
 	'..\..\MVP\Base\Dolphin Basic Geometry'
+	'Dolphin Binary Filer'
 	'..\..\MVP\Graphics\Dolphin GDI Graphics'
 	'..\..\MVP\Graphics\Tests\Dolphin GDI Graphics Tests'
 	'..\..\MVP\Models\List\Dolphin List Models'
 	'Dolphin Literal Filer'
 	'..\..\MVP\Base\Dolphin MVP Base'
-	'Dolphin STB Filer'
+	'Dolphin STx Filer (Old versions)'
+	'Dolphin STx Filer Core'
+	'..\..\IDE\Base\Dolphin Transcript'
 	'..\..\..\Samples\MVP\Scribble\Scribble'
+	'..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
 ).
 
 package!
@@ -51,9 +64,30 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+Core.Tests.DolphinTest
+	subclass: #'Kernel.Tests.STxFilerTest'
+	instanceVariableNames: ''
+	classVariableNames: 'TestVar'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.Tests.STxFilerTest
+	subclass: #'Kernel.Tests.STBTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Kernel.Tests.STxFilerTest
 	subclass: #'Kernel.Tests.STLFilerTest'
 	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.Tests.STBTest
+	subclass: #'Kernel.Tests.STBValidatingInFilerTest'
+	instanceVariableNames: 'locator'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -82,6 +116,14 @@ testLiteralStoreOn!public!unit tests! !
 
 !Core.Tests.FileLocatorTest methodsFor!
 
+testSingletonSerialisationToStb
+	| singletons bytes |
+	singletons := {FileLocator absolute. FileLocator imageRelative. FileLocator installRelative}.
+	bytes := #[33 83 84 66 32 51 32 98 0 0 0 3 0 0 0 14 2 17 0 83 84 66 83 105 110 103 108 101 116 111 110 80 114 111 120 121 154 0 0 0 82 0 0 0 7 0 0 0 68 111 108 112 104 105 110 82 0 0 0 19 0 0 0 65 98 115 111 108 117 116 101 70 105 108 101 76 111 99 97 116 111 114 178 0 0 0 7 0 0 0 99 117 114 114 101 110 116 170 1 0 0 154 0 0 0 208 1 0 0 82 0 0 0 24 0 0 0 73 109 97 103 101 82 101 108 97 116 105 118 101 70 105 108 101 76 111 99 97 116 111 114 240 1 0 0 170 1 0 0 154 0 0 0 208 1 0 0 82 0 0 0 26 0 0 0 73 110 115 116 97 108 108 82 101 108 97 116 105 118 101 70 105 108 101 76 111 99 97 116 111 114 240 1 0 0].
+	self assert: ((Object fromBinaryStoreBytes: bytes) asIdentitySet - singletons) isEmpty.
+	bytes := singletons binaryStoreBytes.
+	self assert: ((Object fromBinaryStoreBytes: bytes) asIdentitySet - singletons) isEmpty!
+
 testSingletonSerialisationToStl
 	| singletons array |
 	singletons := {FileLocator absolute. FileLocator imageRelative. FileLocator installRelative}.
@@ -90,6 +132,7 @@ testSingletonSerialisationToStl
 	array := singletons literalStoreArray.
 	self assert: ((Object fromLiteralStoreArray: array) asIdentitySet - singletons) isEmpty! !
 !Core.Tests.FileLocatorTest categoriesForMethods!
+testSingletonSerialisationToStb!public!unit tests! !
 testSingletonSerialisationToStl!public!unit tests! !
 !
 
@@ -194,6 +237,30 @@ testStlRoundTripColourAlpha!public! !
 testStlRoundTripPluggableColor!public! !
 testStlRoundTripUnnamedARGB!public! !
 testStlRoundTripUnnamedRGB!public! !
+!
+
+!Kernel.STBInFiler class methodsFor!
+
+correspondingTestCase
+	^Tests.STBTest! !
+!Kernel.STBInFiler class categoriesForMethods!
+correspondingTestCase!public! !
+!
+
+!Kernel.STBOutFiler class methodsFor!
+
+correspondingTestCase
+	^Tests.STBTest! !
+!Kernel.STBOutFiler class categoriesForMethods!
+correspondingTestCase!public! !
+!
+
+!Kernel.STBValidatingInFiler class methodsFor!
+
+correspondingTestCase
+	^Tests.STBValidatingInFilerTest! !
+!Kernel.STBValidatingInFiler class categoriesForMethods!
+correspondingTestCase!public! !
 !
 
 !Kernel.STLClassCollector class methodsFor!

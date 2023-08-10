@@ -754,12 +754,6 @@ indexOfSubCollection: aSequencedReadableCollection startingAt: startInteger
 				ifTrue: [^self indexOfSubCollection: encoded startingAt: startInteger]].
 	^self basicIndexOfSubCollection: aSequencedReadableCollection startingAt: startInteger!
 
-isLiteral
-	"Answer whether the receiver can be represented as a literal (i.e. it has a printed
-	representation which can be directly understood by the compiler)."
-
-	^(self identityIncludes: $\0) not!
-
 isString
 	"Answer whether the receiver is a <String>."
 
@@ -1311,7 +1305,6 @@ hash!comparing!public! !
 hashOrdinalsIgnoringCase!comparing!public! !
 indexOfAnyOf:startingAt:!public!searching! !
 indexOfSubCollection:startingAt:!public!searching! !
-isLiteral!public!testing! !
 isString!public!testing! !
 join:!printing!public! !
 lastCodeUnit!accessing!public! !

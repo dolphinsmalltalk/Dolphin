@@ -65,9 +65,6 @@ isChanged
 isChanged: aBoolean 
 	self shouldNotImplement!
 
-legacyStlVersion
-	^4!
-
 load
 	"Load and answer the resource represented by the receiver."
 
@@ -150,7 +147,6 @@ hash!comparing!public! !
 icon:!accessing!public! !
 isChanged!development!public!source filing!testing! !
 isChanged:!development!public!source filing! !
-legacyStlVersion!private! !
 load!operations!public! !
 name!accessing!public! !
 name:!accessing!public! !

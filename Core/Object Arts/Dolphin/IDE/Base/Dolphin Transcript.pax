@@ -17,6 +17,7 @@ package setPrerequisites: #(
 	'..\..\MVP\Dialogs\Common\Dolphin Common Dialogs'
 	'..\..\MVP\Graphics\Dolphin GDI Graphics'
 	'..\..\MVP\Base\Dolphin MVP Base'
+	'..\..\System\Filer\Dolphin STx Filer Core'
 	'..\..\MVP\Presenters\Text\Dolphin Text Presenter'
 	'..\..\MVP\Type Converters\Dolphin Type Converters'
 ).

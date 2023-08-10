@@ -22,11 +22,20 @@ getShortName: aProgramObject
 nameForClass: aClass
 	^(Smalltalk oldNames lookup: aClass) ifNil: [self getShortName: aClass]!
 
+print: aLiteralObject
+	"In STL4 strings with embedded nulls were just trimmed so they would not serialize correctly. Not great, but that is what it did."
+
+	(aLiteralObject isString ifTrue: [aLiteralObject trimNulls] ifFalse: [aLiteralObject])
+		printOn: stream!
+
 printClass: aClass
-	stream
-		nextPutAll: '##(Smalltalk.';
-		nextPutAll: (self nameForClass: aClass);
-		nextPut: $)!
+	stream nextPutAll: '##(Smalltalk'.
+	aClass == Smalltalk
+		ifFalse: 
+			[stream
+				nextPut: $.;
+				nextPutAll: (self nameForClass: aClass)].
+	stream nextPut: $)!
 
 printMetaclass: aMetaclass
 	stream
@@ -39,6 +48,7 @@ printProcessor: aProcessor
 !Kernel.LegacySTLPrinter categoriesForMethods!
 getShortName:!helpers!private! !
 nameForClass:!helpers!printing!private! !
+print:!printing!public! !
 printClass:!printing!public! !
 printMetaclass:!printing!public! !
 printProcessor:!printing!public! !

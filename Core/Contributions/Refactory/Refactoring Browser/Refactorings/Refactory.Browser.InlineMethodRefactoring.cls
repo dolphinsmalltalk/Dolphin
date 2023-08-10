@@ -341,6 +341,7 @@ rewriteInlinedTree
 				normalizeReturns;
 				addSelfReturn].
 	"Bind the variables for subsequent analysis"
+	inlineParseTree methodClass: inlineClass.
 	RBVariableAnalyser analyseParseTree: inlineParseTree.
 	"Even when inlining from self, we may encounter static variables refs that require rewriting because the inlined method might have a custom namespace."
 	self qualifyInlinedStatics!

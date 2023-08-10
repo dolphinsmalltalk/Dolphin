@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.STBVersionPolicyForNamespaces
+Kernel.STBVersionPolicy
 	subclass: #'Kernel.STBVersion5Policy'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -12,21 +12,46 @@ Kernel.STBVersion5Policy comment: ''!
 !Kernel.STBVersion5Policy methodsFor!
 
 predefinedClasses
-	"Answer a <sequencedReadableCollection> of the classes that are pre-registered in every STB
-	file. These make it possible to binary file the classes STBClassProxy and String. Also these
-	clases are almost always needed, so we can save space pre-registering them so that they
-	don't need to be written into the filer."
+	"Answer a <sequencedReadableCollection> of the classes that are pre-registered in every STB v5 file. Same as STB v4."
 
-	"Note that pre-registering classes does not inflate the size of the binary file, it just
-	pre-allocates a range of indices for fixed uses. Changing the order of these (or deleting
-	registrations) will break existing binary files. Lastly a consequence of pre-registering
-	these classes is that normal STB versioning will have no effect - the #stbVersion is only
-	checked when a class is first read from the file. In order to version these classes it is
-	necessary to increment the global STB version number."
+	^##({
+		AnsiString.
+		Array.
+		ByteArray.
+		LargeInteger.
+		STBClassProxy.
+		STBMetaclassProxy.
+		Symbol.
+		STBCollectionProxy.
+		OrderedCollection.
+		STBIdentityDictionaryProxy.
+		LookupTable.
+		IdentityDictionary.
+		Utf8String.
+		Utf16String
+	})!
 
-	^STBVersion1Policy.PredefinedClasses! !
+readCollection: aClass format: anSTBClassConversion size: anInteger
+	"Should not be received as this version emits STBIdentityDictionaryProxy for LookupTables"
+
+	^self shouldNotImplement!
+
+readLookupTable: aClass format: anSTBClassConversion size: anInteger
+	"Should not be received as this version emits STBIdentityDictionaryProxy for LookupTables"
+
+	^self shouldNotImplement!
+
+saveLookupTable: aLookupTable
+	self saveObject: aLookupTable as: (STBIdentityDictionaryProxy forCollection: aLookupTable)!
+
+saveResourceLibrary: aResourceLibrary
+	self saveObject: aResourceLibrary as: (STBExternalResourceLibraryProxy forLibrary: aResourceLibrary)! !
 !Kernel.STBVersion5Policy categoriesForMethods!
-predefinedClasses!public! !
+predefinedClasses!constants!public! !
+readCollection:format:size:!operations!public! !
+readLookupTable:format:size:!operations!public! !
+saveLookupTable:!operations!public! !
+saveResourceLibrary:!binary filing!public! !
 !
 
 !Kernel.STBVersion5Policy class methodsFor!
@@ -36,12 +61,16 @@ initialize
 	self initialize
 	"
 
-	Versions at: 5+1 put: self!
+	self register!
 
 uninitialize
-	Versions at: 5+1 put: nil! !
+	self unregister!
+
+version
+	^5! !
 !Kernel.STBVersion5Policy class categoriesForMethods!
 initialize!class initialization!public! !
 uninitialize!class hierarchy-removing!public! !
+version!constants!public! !
 !
 

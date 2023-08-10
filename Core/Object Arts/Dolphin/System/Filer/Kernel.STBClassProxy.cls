@@ -30,6 +30,18 @@ packageName: aString
 
 	packageName := aString!
 
+printOn: aStream
+	super printOn: aStream.
+	aStream nextPut: $(.
+	packageName
+		ifNotNil: 
+			[aStream
+				print: packageName;
+				nextPutAll: ': '].
+	aStream
+		display: locatorKey;
+		nextPut: $)!
+
 resolveWithClassLocator: aClassLocator
 	"Private - If the class represented by the <ClassLocator> argument is a resident class or a
 	loaded imported class then answer the class. Otherwise answer a <ClassStub> representing the
@@ -59,6 +71,7 @@ locatorKey!accessing!private! !
 locatorKey:!accessing!private! !
 packageName!accessing!private! !
 packageName:!accessing!private! !
+printOn:!printing!public! !
 resolveWithClassLocator:!converting!private! !
 stbFixup:at:!converting!public! !
 withClassLocator:!converting!private! !
@@ -66,14 +79,11 @@ withClassLocator:!converting!private! !
 
 !Kernel.STBClassProxy class methodsFor!
 
-forClass: aClass
-	"Answer a new instance with its locator key representing aClass."
-
-	| answer |
-	answer := self basicNew.
-	answer locatorKey: aClass fullName asString.
-	aClass owningPackage ifNotNil: [:package | answer packageName: package name].
-	^answer!
+locatorKey: aString package: aPackage
+	^self basicNew
+		locatorKey: aString;
+		packageName: aPackage name asUtf8String;
+		yourself!
 
 stbConvertFrom: anSTBClassFormat
 	"Convert from earlier version models.
@@ -90,7 +100,7 @@ stbVersion
 
 	^1! !
 !Kernel.STBClassProxy class categoriesForMethods!
-forClass:!instance creation!public! !
+locatorKey:package:!instance creation!public! !
 stbConvertFrom:!binary filing!public! !
 stbVersion!binary filing!public! !
 !

@@ -55,8 +55,7 @@ shallowCopy
 	^Font fromLogFont: self logFont!
 
 stbSaveOn: anSTBOutFiler
-	"Output the receiver to anSTBOutFiler. We must ensure that the local events collection
-	is NOT saved to the filer"
+	"Output the receiver to anSTBOutFiler. For systems fonts we do not want to persist the cached LOGFONT information."
 
 	anSTBOutFiler override: logfont with: nil.
 	super stbSaveOn: anSTBOutFiler.! !

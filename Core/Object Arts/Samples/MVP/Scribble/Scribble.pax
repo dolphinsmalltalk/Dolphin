@@ -68,7 +68,8 @@ package setPrerequisites: #(
 	'..\..\..\Dolphin\MVP\Dialogs\Common\Dolphin Common Dialogs'
 	'..\..\..\Dolphin\MVP\Presenters\Shell\Dolphin Document Presenter'
 	'..\..\..\Dolphin\MVP\Models\List\Dolphin List Models'
-	'..\..\..\Dolphin\MVP\Base\Dolphin MVP Base').
+	'..\..\..\Dolphin\MVP\Base\Dolphin MVP Base'
+	'..\..\..\Dolphin\System\Filer\Dolphin STx Filer (Old versions)').
 
 package!
 

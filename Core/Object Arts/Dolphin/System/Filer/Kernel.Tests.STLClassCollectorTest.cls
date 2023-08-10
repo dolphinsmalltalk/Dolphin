@@ -12,27 +12,47 @@ Kernel.Tests.STLClassCollectorTest comment: ''!
 !Kernel.Tests.STLClassCollectorTest methodsFor!
 
 testClassAndBindingReference
+	"A BindingReference in the original object graph will appear in the STL like any literal (i.e. immediately after the literal prefix code, 8), and will not be resolved when the STL is read. A BindingReference that is representing a class (or metaclass) will not have a literal prefix. These will get resolved when the STL is read and replaced in the output object graph with the value of the referenced static variable, usually a class."
+
 	| subject classes |
 	subject := STLClassCollector
 				on: #(#'!!STL' 5 34 1 1049094 #{Core.Association} 8 #{Core.Object} #{Core.Object}) readStream.
 	classes := subject contents.
 	self assert: classes asSortedArray
-		equals: {Array. Association. FullBindingReference. Object. SmallInteger. Symbol}!
+		equals: { Array. Association. FullBindingReference. Object. SmallInteger. Symbol }!
 
 testEmptyArray
 	| subject classes expected |
 	subject := STLClassCollector on: #() literalStoreArray readStream.
 	classes := subject contents.
+	"All STL arrays must consist of instance of at least these 3 classes
+		- the store array itself is obviously an Array
+		- at the very least there will be a SmallInteger for the STL version, although usually at least one prefix code too.
+		- the STL signature is a Symbol"
 	expected := {Array. SmallInteger. Symbol}.
 	self assert: classes asSortedArray equals: expected!
 
 testLiterals
 	| subject classes expected |
 	subject := STLClassCollector
-				on: #(#'!!STL' 5 34 6 $a 8 #(true false nil) 247 8 1.23 8 1.2s 8 1073741824) readStream.
+				on: #(#'!!STL' 5 34 6 $a 8 #(true false nil) 247 8 1.23 8 1.2s 8 9223372036854775808 'abc' #[1 2 3] 8 #{Core.Object})
+						readStream.
 	classes := subject contents.
-	expected := #(#{Core.Array} #{Core.Character} #{Core.False} #{Core.Float} #{Core.LargeInteger} #{Core.ScaledDecimal} #{Core.SmallInteger} #{Core.Symbol} #{Core.True} #{Core.UndefinedObject})
-				collect: [:each | each value].
+	expected := {
+				Array.
+				ByteArray.
+				Character.
+				False.
+				Float.
+				FullBindingReference.
+				LargeInteger.
+				ScaledDecimal.
+				SmallInteger.
+				Symbol.
+				True.
+				UndefinedObject.
+				Utf8String
+			}.
 	self assert: classes asSortedArray equals: expected!
 
 testMetaclass
@@ -74,6 +94,20 @@ testVersion5ViewResource
 		equals: (#(#{Core.Array} #{UI.BorderLayout} #{Core.ByteArray} #{Graphics.Color} #{UI.CommandDescription} #{UI.CommandMenuItem} #{Graphics.Icon} #{Core.IdentityDictionary} #{Graphics.ImageFromStringResourceInitializer} #{Core.LargeInteger} #{UI.Menu} #{UI.MenuBar} #{Core.MessageSend} #{Core.MessageSequence} #{Graphics.Point} #{UI.ReferenceView} #{UI.ResourceIdentifier} #{Smalltalk.Scribble} #{UI.ShellView} #{Core.SmallInteger} #{Kernel.STBExternalResourceLibraryProxy} #{Kernel.STBIdentityDictionaryProxy} #{UI.STBViewProxy} #{Core.Symbol} #{Core.True} #{Core.UndefinedObject} #{Core.Utf8String} #{OS.WINDOWPLACEMENT})
 				collect: [:each | each value])!
 
+testVersion6ViewResource
+	| subject classes stl6 expectedClasses |
+	stl6 := self version6ViewResource.
+	subject := STLClassCollector on: stl6 readStream.
+	classes := subject contents.
+	"Note: STBIdentityDictonaryProxy is absent because the collection proxies are no longer used in version 6"
+	expectedClasses := #(#{Core.Array} #{UI.BorderLayout} #{Core.ByteArray} #{Graphics.Color} #{UI.CommandDescription} #{UI.CommandMenuItem} #{Graphics.Icon} #{Core.IdentityDictionary} #{Graphics.ImageFromStringResourceInitializer} #{Core.LargeInteger} #{UI.Menu} #{UI.MenuBar} #{Core.MessageSend} #{Core.MessageSequence} #{Graphics.Point} #{UI.ReferenceView} #{UI.ResourceIdentifier} #{Smalltalk.Scribble} #{UI.ShellView} #{Core.SmallInteger} #{Kernel.STBExternalResourceLibraryProxy} #{UI.STBViewProxy} #{Core.Symbol} #{Core.True} #{Core.UndefinedObject} #{Core.Utf8String} #{OS.WINDOWPLACEMENT})
+				collect: [:each | each value].
+	self assert: classes asSortedArray equals: expectedClasses.
+	"In STL 6 there are also no pre-registered classes, so the only classes not represented as BindingReferences in the STL will be those of literals"
+	self assert: (expectedClasses
+				difference: ((stl6 select: [:each | each isKindOf: BindingReference]) collect: [:each | each value]))
+		equals: { ByteArray. LargeInteger. SmallInteger. Symbol. True. UndefinedObject. Utf8String }!
+
 version3ViewResource
 	"A resource in STL 3 format, from Dolphin 6"
 
@@ -88,7 +122,23 @@ version4ViewResource
 version5ViewResource
 	"A resource in STL 5 format from Dolphin 8, with direct class references replaced by BindingReferences, and namespaces."
 
-	^#(#'!!STL' 5 985166 10 #{UI.STBViewProxy} #{UI.ShellView} 34 27 nil nil 8 #(13565952 65536) 416 nil 917510 #{Graphics.Color} #default nil 551 nil nil nil 416 984838 #{UI.BorderLayout} 1 1 nil nil nil nil 410 #{UI.ReferenceView} 34 14 nil 416 34 2 8 1140850688 131073 528 nil nil nil 7 nil nil nil 528 1376838 1 #{UI.ResourceIdentifier} #{Smalltalk.Scribble} #resource_Default_view nil 1310982 #{Core.MessageSequence} 34 1 1049350 #{Core.MessageSend} #createAt:extent: 34 2 918022 #{Graphics.Point} 1 1 722 1169 683 528 1179910 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 72 2 0 0 85 1 0 0] 8 #() 722 193 193 nil 27 170 192 34 2 528 8 'scribble' nil 658246 4 #{UI.MenuBar} nil true 34 1 461638 4 #{UI.Menu} nil true 34 4 1180742 2 #{UI.CommandMenuItem} 1 1377606 4 #{UI.CommandDescription} #fileNew 8 '&New' 9373 1 852806 4 #{Graphics.Icon} nil true 2819078 #{Graphics.ImageFromStringResourceInitializer} 8 'DocumentShell.ico' 2490894 #{Kernel.STBExternalResourceLibraryProxy} 8 'dolphindr8.dll' nil 65541 nil nil nil 994 1 1026 #fileOpen 8 '&Open…' 9375 1 1074 nil true 1106 8 'OpenWorkspace.ico' 1168 65541 nil nil nil 994 1 1026 #fileSave 8 '&Save' 9383 1 1074 nil true 1106 8 'FileSave.ico' 1168 65541 nil nil nil 994 1 1026 #fileSaveAs 8 'Save &As…' 1 1 nil nil nil 8 '&File' nil 134217729 nil nil 21855 nil nil 8 '' nil 134217729 nil nil nil nil nil nil nil nil 1 1074 nil true 1106 8 'Scribble.ico' 1168 65541 nil nil nil nil 1 nil nil 626 34 1 674 #createAt:extent: 34 2 722 12287 21 722 1201 801 416 770 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 23 0 0 10 0 0 0 87 26 0 0 154 1 0 0] 34 1 528 832 nil 27)! !
+	^#(#'!!STL' 5 985166 10 #{UI.STBViewProxy} #{UI.ShellView} 34 27 nil nil 8 #(13565952 65536) 416 nil 917510 #{Graphics.Color} #default nil 551 nil nil nil 416 984838 #{UI.BorderLayout} 1 1 nil nil nil nil 410 #{UI.ReferenceView} 34 14 nil 416 34 2 8 1140850688 131073 528 nil nil nil 7 nil nil nil 528 1376838 1 #{UI.ResourceIdentifier} #{Smalltalk.Scribble} #resource_Default_view nil 1310982 #{Core.MessageSequence} 34 1 1049350 #{Core.MessageSend} #createAt:extent: 34 2 918022 #{Graphics.Point} 1 1 722 1169 683 528 1179910 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 72 2 0 0 85 1 0 0] 8 #() 722 193 193 nil 27 170 192 34 2 528 8 'scribble' nil 658246 4 #{UI.MenuBar} nil true 34 1 461638 4 #{UI.Menu} nil true 34 4 1180742 2 #{UI.CommandMenuItem} 1 1377606 4 #{UI.CommandDescription} #fileNew 8 '&New' 9373 1 852806 4 #{Graphics.Icon} nil true 2819078 #{Graphics.ImageFromStringResourceInitializer} 8 'DocumentShell.ico' 2490894 #{Kernel.STBExternalResourceLibraryProxy} 8 'dolphindr8.dll' nil 65541 nil nil nil 994 1 1026 #fileOpen 8 '&Open…' 9375 1 1074 nil true 1106 8 'OpenWorkspace.ico' 1168 65541 nil nil nil 994 1 1026 #fileSave 8 '&Save' 9383 1 1074 nil true 1106 8 'FileSave.ico' 1168 65541 nil nil nil 994 1 1026 #fileSaveAs 8 'Save &As…' 1 1 nil nil nil 8 '&File' nil 134217729 nil nil 21855 nil nil 8 '' nil 134217729 nil nil nil nil nil nil nil nil 1 1074 nil true 1106 8 'Scribble.ico' 1168 65541 nil nil nil nil 1 nil nil 626 34 1 674 #createAt:extent: 34 2 722 12287 21 722 1201 801 416 770 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 23 0 0 10 0 0 0 87 26 0 0 154 1 0 0] 34 1 528 832 nil 27)!
+
+version6ViewResource
+	"A resource in STL 6 format from Dolphin 8, with direct class references replaced by BindingReferences, and namespaces.
+	Created from the v5 rsource as follows:
+
+	shell := (STLInFiler on: self new version5ViewResource readStream)
+				context: UI.DesktopView current;
+				next.
+	stl := (STLOutFiler on: Array writeStream)
+				nextPut: shell;
+				stream.
+	stl := stl contents.
+	text := STLPrinter printLiteralStoreArray: stl.
+	"
+
+	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.ShellView} 38 #{Core.Array} 27 nil nil 8 #(13565952 65536) 32 nil 6 #{Graphics.Color} #default nil 517 nil nil nil 32 1798 #{UI.BorderLayout} 1 1 nil nil nil nil 18 #{UI.ReferenceView} 50 14 nil 32 50 2 8 1140850688 131073 160 nil nil nil 5 nil nil nil 160 582 1 #{UI.ResourceIdentifier} #{Smalltalk.Scribble} #resource_Default_view nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 1 1 354 1169 683 160 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 72 2 0 0 85 1 0 0] 8 #() 354 193 193 nil 27 550 #{Core.IdentityDictionary} 1 160 8 'scribble' nil 2886 4 #{UI.MenuBar} nil true 50 1 2886 4 #{UI.Menu} nil true 50 4 1094 2 #{UI.CommandMenuItem} 1 1350 4 #{UI.CommandDescription} #fileNew 8 '&New' 9373 1 838 4 #{Graphics.Icon} nil true 1030 #{Graphics.ImageFromStringResourceInitializer} 8 'DocumentShell.ico' 518 #{Kernel.STBExternalResourceLibraryProxy} 8 'dolphindr8.dll' nil 65541 nil nil nil 626 1 658 #fileOpen 8 '&Open…' 9375 1 706 nil true 738 8 'OpenWorkspace.ico' 800 65541 nil nil nil 626 1 658 #fileSave 8 '&Save' 9383 1 706 nil true 738 8 'FileSave.ico' 800 65541 nil nil nil 626 1 658 #fileSaveAs 8 'Save &As…' 1 1 nil nil nil 8 '&File' nil 134217729 nil nil 38585 nil nil 8 '' nil 134217729 nil nil nil nil nil nil nil nil 1 706 nil true 738 8 'Scribble.ico' 800 65541 nil nil nil nil 1 nil nil 258 50 1 306 #createAt:extent: 50 2 354 781 781 354 4609 2443 32 402 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 134 1 0 0 134 1 0 0 134 10 0 0 75 6 0 0] 50 1 160 464 nil 27)! !
 !Kernel.Tests.STLClassCollectorTest categoriesForMethods!
 testClassAndBindingReference!public! !
 testEmptyArray!public! !
@@ -98,8 +148,10 @@ testNil!public! !
 testVersion3ViewResource!public! !
 testVersion4ViewResource!public! !
 testVersion5ViewResource!public! !
+testVersion6ViewResource!public! !
 version3ViewResource!constants!private! !
 version4ViewResource!constants!private! !
 version5ViewResource!constants!private! !
+version6ViewResource!constants!private! !
 !
 

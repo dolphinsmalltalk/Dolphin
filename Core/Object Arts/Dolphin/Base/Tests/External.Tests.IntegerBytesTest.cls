@@ -43,11 +43,11 @@ testStlVersion4
 	self assert: subject asInteger equals: self canonicalValue.
 	stream := Array writeStream.
 	(STLOutFiler on: stream version: 4) nextPut: subject.
-	self assert: (LegacySTLPrinter print: stream contents)
-		equals: (LegacySTLPrinter print: self stlVersion4)!
+	self assert: (STLPrinter printLiteralStoreArray: stream contents)
+		equals: (STLPrinter printLiteralStoreArray: self stlVersion4)!
 
 testStlVersion6
-	"STL 4 representation from D8 - the bytes are written as a ByteArray. This is faster to read because it is precompiled. Note also that the class prefix doesn't encode the length of the class name as that is not needed"
+	"STL 6 representation from D8 - the bytes are written as a ByteArray. This is faster to read because it is precompiled. Note also that the class prefix doesn't encode the length of the class name as that is not needed"
 
 	| subject stream |
 	subject := Object fromLiteralStoreArray: self stlVersion6.
@@ -55,8 +55,8 @@ testStlVersion6
 	self assert: subject class identicalTo: self subjectClass.
 	self assert: subject asInteger equals: self canonicalValue.
 	stream := Array writeStream.
-	(STLOutFiler on: stream) nextPut: subject.
-	self assert: (STLPrinter print: stream contents) equals: (STLPrinter print: self stlVersion6)! !
+	(STLOutFiler on: stream version: 6) nextPut: subject.
+	self assert: (STLPrinter printLiteralStoreArray: stream contents) equals: (STLPrinter printLiteralStoreArray: self stlVersion6)! !
 !External.Tests.IntegerBytesTest categoriesForMethods!
 canonicalValue!constants!private! !
 stlVersion4!constants!private! !

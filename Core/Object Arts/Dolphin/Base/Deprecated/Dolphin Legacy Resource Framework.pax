@@ -36,7 +36,7 @@ package setMethodNames: #(
 	#(#{Kernel.BlockClosure class} #rewriterClass)
 	#(#{Kernel.BlockClosure class} #stbConvertFrom:)
 	#(#{UI.ResourceIdentifier} #assignBinaryResourceData:)
-	#(#{UI.ResourceIdentifier} #stlVersion)
+	#(#{UI.ResourceIdentifier} #stlPolicy)
 	#(#{UI.ResourceIdentifier class} #resourceAt:ifAbsent:)
 	#(#{UI.RuntimeSessionManager} #initializeFromSessionManager:)
 ).
@@ -46,7 +46,8 @@ package setPrerequisites: #(
 	'..\..\System\Filer\Dolphin Binary Filer'
 	'Dolphin Legacy Package Support'
 	'..\..\MVP\Base\Dolphin MVP Base'
-	'..\..\System\Filer\Dolphin STB Filer'
+	'..\..\System\Filer\Dolphin STx Filer (Old versions)'
+	'..\..\System\Filer\Dolphin STx Filer Core'
 ).
 
 package!
@@ -302,15 +303,15 @@ assignBinaryResourceData: aViewResource
 	| view stream |
 	view := aViewResource loadWithContext: #{View} value desktop forEdit: true.
 	stream := Array writeStream: 128.
-	view literalStoreOn: stream version: self legacyStlVersion.
+	view literalStoreOn: stream policy: STLVersion4Policy.
 	self assign: stream contents.
 	view destroy!
 
-stlVersion
-	^self sourceFilerClass stlVersion! !
+stlPolicy
+	^self sourceFilerClass stlPolicy! !
 !UI.ResourceIdentifier categoriesForMethods!
 assignBinaryResourceData:!private! !
-stlVersion!development!private! !
+stlPolicy!development!private! !
 !
 
 !UI.ResourceIdentifier class methodsFor!

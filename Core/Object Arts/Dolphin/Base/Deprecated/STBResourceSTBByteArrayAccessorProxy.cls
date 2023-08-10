@@ -35,10 +35,6 @@ stbFixup:at:!converting!public! !
 
 !STBResourceSTBByteArrayAccessorProxy class methodsFor!
 
-for: aResourceSTBByteArrayAccessor 
-	#deprecated.
-	^self forAccessor: aResourceSTBByteArrayAccessor!
-
 forAccessor: aResourceSTBByteArrayAccessor
 	"Answer a new initialized instance of the receiver encoding aResourceSTBByteArrayAccessor.
 	This proxy allows us the opportunity to set up the accessor's classLocator to that held by the
@@ -49,7 +45,6 @@ forAccessor: aResourceSTBByteArrayAccessor
 		bytes: aResourceSTBByteArrayAccessor byteArray;
 		yourself! !
 !STBResourceSTBByteArrayAccessorProxy class categoriesForMethods!
-for:!instance creation!public! !
 forAccessor:!instance creation!public! !
 !
 

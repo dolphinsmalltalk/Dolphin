@@ -279,7 +279,9 @@ equivalentLegacyPrerequisites
 				'Dolphin Push Buttons' -> 'Dolphin MVP Base'.
 				'Dolphin Splitter Control' -> 'Dolphin MVP Base'.
 				'Dolphin STB Filer' -> 'Dolphin'.
-				'Dolphin Binary Filer' -> 'Dolphin'
+				'Dolphin Binary Filer' -> 'Dolphin'.
+				'Dolphin STx Filer Core' -> 'Dolphin'.
+				'Dolphin STx Filer (Old versions)' -> 'Dolphin'
 			})!
 
 fileOutAttributesOfClass: aClass
@@ -538,10 +540,10 @@ specialBehaviorAttributes!constants!public! !
 fileOutExtensionForClass: aClass
 	^(aClass inheritsFrom: SharedPool) ifTrue: ['st'] ifFalse: ['cls']!
 
-stlVersion
-	^4! !
+stlPolicy
+	^STLVersion4Policy! !
 !Kernel.LegacyChunkSourceFiler class categoriesForMethods!
 fileOutExtensionForClass:!enquiries!public! !
-stlVersion!constants!public! !
+stlPolicy!constants!public! !
 !
 

@@ -32,7 +32,7 @@ basicNext: countInteger into: aSequenceableCollection startingAt: startInteger
 	the receiver. Answer aSequenceableCollection."
 
 	startInteger to: startInteger + countInteger - 1
-		do: [:i | aSequenceableCollection at: i put: self next].
+		do: [:i | aSequenceableCollection basicAt: i put: self next].
 	^aSequenceableCollection!
 
 contents

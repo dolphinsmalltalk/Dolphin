@@ -69,8 +69,6 @@ package methodNames
 	add: #Stream -> #nextOrNil;
 	add: #String -> #asUnicodeString;
 	add: #String -> #equals:;
-	add: #STxInFiler -> #readObjectOfClass:format:;
-	add: #STxOutFiler -> #stream:;
 	add: #TimeStamp -> #date:;
 	add: #TimeStamp -> #dateAndTime;
 	add: #TimeStamp -> #time:;
@@ -109,10 +107,6 @@ package methodNames
 	add: 'NTLibrary class' -> #isWine;
 	add: 'SortAlgorithm class' -> #sortBlock:;
 	add: 'SortedCollection class' -> #value:value:;
-	add: 'STBClassProxy class' -> #for:;
-	add: 'STBCollectionProxy class' -> #for:;
-	add: 'STBSingletonProxy class' -> #for:;
-	add: 'STBSingletonProxy class' -> #for:using:;
 	add: 'String class' -> #fromId:;
 	add: 'String class' -> #fromId:in:;
 	add: 'String class' -> #fromUnicodeString:;
@@ -760,38 +754,6 @@ value: anObject1 value: anObject2
 value:value:!evaluating!private! !
 !
 
-!STBClassProxy class methodsFor!
-
-for: aClass 
-	#deprecated.
-	^self forClass: aClass! !
-!STBClassProxy class categoriesForMethods!
-for:!instance creation!public! !
-!
-
-!STBCollectionProxy class methodsFor!
-
-for: aCollection 
-	#deprecated.
-	^self forCollection: aCollection! !
-!STBCollectionProxy class categoriesForMethods!
-for:!instance creation!public! !
-!
-
-!STBSingletonProxy class methodsFor!
-
-for: aClass 
-	#deprecated.
-	^self forClass: aClass!
-
-for: aClass using: aSelectorSymbol 
-	#deprecated.
-	^self forClass: aClass using: aSelectorSymbol! !
-!STBSingletonProxy class categoriesForMethods!
-for:!instance creation!public! !
-for:using:!instance creation!public! !
-!
-
 !Stream methodsFor!
 
 nextOrNil
@@ -851,27 +813,6 @@ do: operation separatedBy: separator
 !ExternalStructure categoriesForMethods!
 do:!enumerating!public! !
 do:separatedBy:!enumerating!public! !
-!
-
-!STxInFiler methodsFor!
-
-readObjectOfClass: aClass format: anSTBClassConversion
-	#deprecated.
-	^self
-		readObjectOfClass: aClass
-		format: anSTBClassConversion
-		size: (self readSizeOf: aClass)! !
-!STxInFiler categoriesForMethods!
-readObjectOfClass:format:!operations!public! !
-!
-
-!STxOutFiler methodsFor!
-
-stream: aStream
-	Notification deprecated.
-	stream := aStream! !
-!STxOutFiler categoriesForMethods!
-stream:!accessing!public! !
 !
 
 !Time class methodsFor!

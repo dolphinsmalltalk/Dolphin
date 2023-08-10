@@ -2094,15 +2094,15 @@ literalStoreOn: aStream
 	"Stores the receiver in a literal form on aStream that can be reconstituted using Object class>>literalReadFrom:.
 	We must arrange to snip this view from any parent hierarchy before the save"
 
-	self literalStoreOn: aStream version: STLOutFiler version!
+	self literalStoreOn: aStream policy: STLOutFiler policyClass!
 
-literalStoreOn: aStream version: anInteger
+literalStoreOn: aStream policy: anSTLVersionPolicyClass
 	| viewProxy filer |
 	viewProxy := self whileInvisibleDo: 
 					[self filerProxy
 						beTopView;
 						yourself].
-	filer := STLOutFiler on: aStream version: anInteger.
+	filer := STLOutFiler on: aStream policy: anSTLVersionPolicyClass.
 	filer
 		override: self with: viewProxy;
 		nextPut: self!
@@ -3423,15 +3423,15 @@ state: aMessageSequence
 
 	aMessageSequence value!
 
-stbSaveOn: anSTBOutFiler
-	"Output the receiver to anSTBOutFiler.
+stbSaveOn: anSTxOutFiler
+	"Output the receiver to anSTxOutFiler.
 	Implementation Note: No need to override events collection with nil, as filed out as a proxy
 	which will do that. Note, however, that (for performance reasons) STBViewProxy statically
 	records the indices of certain instance variables here defined, and if new instance variables
 	are added not only must the STBViewProxy conversion block be updated, but it may also
 	be necessary to re-initialize STBViewProxy so the class variables are updated."
 
-	anSTBOutFiler saveObject: self as: self filerProxy!
+	anSTxOutFiler saveObject: self as: self filerProxy!
 
 styles
 	"Answer a two element Array containing the creation style bits for the receiver.
@@ -4828,7 +4828,7 @@ layout:!geometry!private! !
 layoutExtent:!geometry!public! !
 layoutManager!geometry!public! !
 literalStoreOn:!literal filing!public! !
-literalStoreOn:version:!literal filing!public! !
+literalStoreOn:policy:!literal filing!public! !
 managedSubViews!hierarchy!public!sub views! !
 managedSubViewsDo:!hierarchy!public!sub views! !
 mapPoint:to:!geometry!public! !

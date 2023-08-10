@@ -15,10 +15,11 @@ beachBallColorDepth
 	^24!
 
 stlVersion3_file
-	^#(#'!!STL' 4 657990 3 ##(Smalltalk.DIBSection) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'resources\Beach Ball.bmp' nil nil 1 nil nil nil)!
+	^#(#'!!STL' 3 657990 3 ##(Smalltalk.DIBSection)  0 16 1572870 ##(Smalltalk.ImageRelativeFileLocator)  8 'resources\Beach Ball.bmp' 0 0 1 0 0 0)
+!
 
 stlVersion3_resource
-	^#(#'!!STL' 4 657990 3 ##(Smalltalk.DIBSection) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'tools.bmp' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil nil 1 nil nil nil)!
+	^#(#'!!STL' 3 657990 3 ##(Smalltalk.DIBSection)  0 16 1572870 ##(Smalltalk.ImageRelativeFileLocator)  8 'tools.bmp' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy)  8 'dolphindr006.dll' 0 0 1 0 0 0)!
 
 subjectClass
 	^DIBSection!

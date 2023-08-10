@@ -1,16 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Kernel.STxProxy
-	subclass: #'Kernel.STBGlobalObjectProxy'
+	subclass: #STBGlobalObjectProxy
 	instanceVariableNames: 'symbol object'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.STBGlobalObjectProxy guid: (Core.GUID fromString: '{87b4c6ed-026e-11d3-9fd7-00a0cc3e4a32}')!
-Kernel.STBGlobalObjectProxy comment: ''!
-!Kernel.STBGlobalObjectProxy categoriesForClass!System-Binary storage! !
-!Kernel.STBGlobalObjectProxy methodsFor!
+STBGlobalObjectProxy guid: (Core.GUID fromString: '{87b4c6ed-026e-11d3-9fd7-00a0cc3e4a32}')!
+STBGlobalObjectProxy comment: 'STBGlobalObjectProxy is part of a mechanism used in the original binary format Dolphin packages that was used to save/restore ''global'' variables (i.e. static variables in the Smalltalk namespace). It was not used in the source format packages introduced in Dolphin 5. 
+
+The mechanism is now retained only to enable loading of old STB files. It was designed rather specifically for code packages, as in other cases having the side effect of creating a global variable when deserialising an object graph from STB is rather undesirable. The mechanism is no longer supported by the latest version of the STx filers in Dolphin 8 and should be considered deprecated.'!
+!STBGlobalObjectProxy categoriesForClass!System-Binary storage! !
+!STBGlobalObjectProxy methodsFor!
 
 object: anObject
 	"Private - Set the receiver's object inst var."
@@ -32,12 +34,12 @@ stbFixup: inFiler at: anInteger
 	inFiler fixup: anInteger to: anObject.
 	^anObject!
 
-stbSaveOn: anSTBOutFiler
-	"Save out a binary representation of the receiver to anSTBOutFiler.
+stbSaveOn: anSTxOutFiler
+	"Save out a serialised representation of the receiver to anSTBOutFiler.
 	This is a rather unusual case. This outputs itself as its own proxy.
 	Mmm... It's just a trick used by STBOutFiler, best not to copy this idea."
 
-	anSTBOutFiler saveObject: self as: self!
+	anSTxOutFiler saveObject: self as: self!
 
 symbol: aSymbol
 	"Private - Set the symbol inst var to aSymbol."
@@ -47,9 +49,8 @@ symbol: aSymbol
 value
 	"Install object as a global in the Smalltalk System Dictionary and answer it."
 
-	#namespaceToDo.	"Need to place with qualified name here and current untested"
 	^Smalltalk at: symbol put: object! !
-!Kernel.STBGlobalObjectProxy categoriesForMethods!
+!STBGlobalObjectProxy categoriesForMethods!
 object:!accessing!private! !
 stbFixup:at:!accessing!public! !
 stbSaveOn:!binary filing!public! !
@@ -57,7 +58,7 @@ symbol:!accessing!private! !
 value!converting!public! !
 !
 
-!Kernel.STBGlobalObjectProxy class methodsFor!
+!STBGlobalObjectProxy class methodsFor!
 
 for: anObject name: aSymbol
 	"Answer an instance of the receiver representing the global anObject
@@ -67,7 +68,7 @@ for: anObject name: aSymbol
 		symbol: aSymbol;
 		object: anObject;
 		yourself! !
-!Kernel.STBGlobalObjectProxy class categoriesForMethods!
+!STBGlobalObjectProxy class categoriesForMethods!
 for:name:!instance creation!public! !
 !
 

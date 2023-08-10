@@ -1,8 +1,8 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.STBCollectionProxy
+Kernel.STxProxy
 	subclass: #'Kernel.STBSortedCollectionProxy'
-	instanceVariableNames: 'sortAlgorithm'
+	instanceVariableNames: 'class array sortAlgorithm'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -11,6 +11,22 @@ Kernel.STBSortedCollectionProxy guid: (Core.GUID fromString: '{87b4c6f7-026e-11d
 Kernel.STBSortedCollectionProxy comment: ''!
 !Kernel.STBSortedCollectionProxy categoriesForClass!System-Binary storage! !
 !Kernel.STBSortedCollectionProxy methodsFor!
+
+array: anArray
+	"Private - Set the array inst var to anArray, the elements of the collection represented by the receiver.
+	The use of the empty array literal enables the STBOutFiler to issue a shorter object reference for
+	any subsequent empty instances of the receiver."
+
+	array := anArray isEmpty
+		ifTrue: [#()]
+		ifFalse: [anArray]
+!
+
+class: aClass
+	"Private - Set the class of the object represented by the receiver."
+
+	class := aClass
+!
 
 sortAlgorithm
 	^sortAlgorithm!
@@ -33,6 +49,8 @@ value
 		basicAddAll: array;
 		yourself! !
 !Kernel.STBSortedCollectionProxy categoriesForMethods!
+array:!accessing!private! !
+class:!accessing!private! !
 sortAlgorithm!accessing!private! !
 sortAlgorithm:!accessing!private! !
 value!converting!public! !
@@ -40,10 +58,12 @@ value!converting!public! !
 
 !Kernel.STBSortedCollectionProxy class methodsFor!
 
-forCollection: aSortedCollection 
+forCollection: aSortedCollection
 	"Answer a new instance representing aSortedCollection."
 
-	^(super forCollection: aSortedCollection)
+	^self basicNew
+		class: aSortedCollection basicClass;
+		array: aSortedCollection asArray;
 		sortAlgorithm: aSortedCollection algorithm;
 		yourself!
 
