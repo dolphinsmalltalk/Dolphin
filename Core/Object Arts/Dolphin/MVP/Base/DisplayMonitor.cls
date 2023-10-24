@@ -190,8 +190,8 @@ forCanvas: aCanvas intersecting: aRectangle do: aMonadicValuable
 					[:hMonitor :hdc :lprect :lparam |
 					aMonadicValuable value: (DisplayMonitor fromHandle: hMonitor).
 					true]
-				descriptor: (ExternalDescriptor returnType: 'bool'
-						argumentTypes: 'handle handle RECTL* dword').
+				descriptor: ##(ExternalDescriptor returnType: 'bool'
+						argumentTypes: 'handle handle <1p>* dword' << RECTL).
 	answer := user32
 				enumDisplayMonitors: aCanvas asParameter
 				lprcClip: aRectangle asParameter

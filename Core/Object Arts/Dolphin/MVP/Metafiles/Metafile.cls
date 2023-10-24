@@ -109,7 +109,7 @@ loadFromFile: pathString extent: aPoint
 
 	^GDILibrary default getEnhMetaFile: pathString!
 
-play: operation on: aCanvas at: originPoint extent: sizePoint 
+play: operation on: aCanvas at: originPoint extent: sizePoint
 	"Play the records in the metafile through the triadic valuable, operation, onto the
 	<Canvas>, aCanvas, at origin, originPoint, and with extent, sizePoint. The operation is
 	passed the <Canvas> to which the metafile is being rendered (not necessarily aCanvas), a
@@ -119,18 +119,18 @@ play: operation on: aCanvas at: originPoint extent: sizePoint
 
 	| callback answer lpRect |
 	callback := ExternalCallback block: 
-					[:hDC :lpHTable :lpEMFR :nObj :lpData | 
+					[:hDC :lpHTable :lpEMFR :nObj :lpData |
 					| handles emfr |
 					handles := HandleArray fromAddress: lpHTable length: nObj.
 					emfr := ENHMETARECORD fromAddress: lpEMFR.
-					operation 
+					operation
 						value: (Canvas withNonOwnedDC: hDC)
 						value: emfr
 						value: handles]
-				descriptor: (ExternalDescriptor returnType: 'int'
+				descriptor: (ExternalDescriptor returnType: 'sdword'
 						argumentTypes: 'handle lpvoid lpvoid sdword lpvoid').
 	lpRect := RECT origin: originPoint extent: sizePoint.
-	answer := GDILibrary default 
+	answer := GDILibrary default
 				enumEnhMetaFile: aCanvas asParameter
 				hemf: self asParameter
 				lpEnhMetaFunc: callback asParameter

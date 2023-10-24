@@ -61,7 +61,7 @@ initialize
 	Descriptor := IUnknown descriptorClass
 				callingConvention: IUnknown stdMethodCallType
 				returnType: 'sdword'
-				argumentTypes: 'GUID* void**'!
+				argumentTypes: '<1p>* void**' << GUID!
 
 uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."

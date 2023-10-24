@@ -998,7 +998,7 @@ initialize
 	StreamInIndex := self indexOfInstVar: 'streamIn'.
 
 	"Descriptor for stream out callback"
-	StreamingDescriptor := ExternalDescriptor argumentTypes: 'dword lpvoid sdword DWORD*'.
+	StreamingDescriptor := ExternalDescriptor argumentTypes: 'dword lpvoid sdword <1p>*' << DWORD.
 	ParagraphAlignmentMap := (IdentityDictionary new)
 				at: #left put: PFA_LEFT;
 				at: #right put: PFA_RIGHT;
