@@ -226,13 +226,13 @@ verifyWebViewProperties
 	self assert: webview2 isMuted.
 	self deny: baseInterface isMuted.
 	"ICoreWebView2_9: defaultDownloadDialogCornerAlignment, defaultDownloadDialogMargin, isDefaultDownloadDialogOpen"
-	self assert: baseInterface defaultDownloadDialogCornerAlignment equals: 1.
-	baseInterface defaultDownloadDialogCornerAlignment: 5.
-	self assert: baseInterface defaultDownloadDialogCornerAlignment equals: 1.
-	self assert: webview2 defaultDownloadDialogCornerAlignment equals: 1.
-	webview2 defaultDownloadDialogCornerAlignment: 5.
-	self assert: webview2 defaultDownloadDialogCornerAlignment equals: 5.
-	self assert: baseInterface defaultDownloadDialogCornerAlignment equals: 1.
+	self assert: baseInterface defaultDownloadDialogCornerAlignment equals: COREWEBVIEW2_DEFAULT_DOWNLOAD_DIALOG_CORNER_ALIGNMENT_TOP_RIGHT.
+	baseInterface defaultDownloadDialogCornerAlignment: COREWEBVIEW2_DEFAULT_DOWNLOAD_DIALOG_CORNER_ALIGNMENT_BOTTOM_RIGHT.
+	self assert: baseInterface defaultDownloadDialogCornerAlignment equals: COREWEBVIEW2_DEFAULT_DOWNLOAD_DIALOG_CORNER_ALIGNMENT_TOP_RIGHT.
+	self assert: webview2 defaultDownloadDialogCornerAlignment equals: COREWEBVIEW2_DEFAULT_DOWNLOAD_DIALOG_CORNER_ALIGNMENT_TOP_RIGHT.
+	webview2 defaultDownloadDialogCornerAlignment: COREWEBVIEW2_DEFAULT_DOWNLOAD_DIALOG_CORNER_ALIGNMENT_BOTTOM_RIGHT.
+	self assert: webview2 defaultDownloadDialogCornerAlignment equals: COREWEBVIEW2_DEFAULT_DOWNLOAD_DIALOG_CORNER_ALIGNMENT_BOTTOM_RIGHT.
+	self assert: baseInterface defaultDownloadDialogCornerAlignment equals: COREWEBVIEW2_DEFAULT_DOWNLOAD_DIALOG_CORNER_ALIGNMENT_TOP_RIGHT.
 	defaultMargin := webview2 defaultDownloadDialogMargin.
 	self deny: defaultMargin equals: 0.
 	self assert: baseInterface defaultDownloadDialogMargin equals: defaultMargin.
