@@ -85,7 +85,8 @@ initialize
 		LPOVERLAPPED lpOverlapped
 	);"
 
-	FileIOCompletionRoutineDescriptor := ExternalDescriptor argumentTypes: 'DWORD DWORD OVERLAPPED*'.
+	FileIOCompletionRoutineDescriptor := ExternalDescriptor
+				argumentTypes: 'dword dword <1p>*' << OVERLAPPED.
 	ActionMap := #(#fileAdded: #fileRemoved: #fileModified: #fileRenamedFrom:to: 5)! !
 !FileSystemWatcher class categoriesForMethods!
 initialize!initializing!public! !

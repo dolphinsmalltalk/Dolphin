@@ -190,14 +190,14 @@ description
 description: aString 
 	self text: aString!
 
-drawItemImage: itemImage on: hDC at: topLeft disabled: aBoolean 
+drawItemImage: itemImage on: hDC at: topLeft disabled: aBoolean
 	| imageList extent imageIndex callback |
 	extent := SystemMetrics current menuImageExtent.
 	imageList := self imageManager imageListWithExtent: extent.
 	imageIndex := self imageManager indexOfImage: itemImage.
-	aBoolean 
+	aBoolean
 		ifFalse: 
-			[imageList 
+			[imageList
 				draw: imageIndex
 				on: hDC
 				at: topLeft.
@@ -205,16 +205,16 @@ drawItemImage: itemImage on: hDC at: topLeft disabled: aBoolean
 	"Use DrawState() API to get the correct disabled image look, but use the callback option
 	because we want to draw out of an image list rather than from an icon or bitmap"
 	callback := ExternalCallback block: 
-					[:hdc :lData :wData :cx :cy | 
+					[:hdc :lData :wData :cx :cy |
 					"Must draw on the DC supplied to the callback, not the original DC"
-					imageList 
+					imageList
 						draw: wData
 						on: hdc
 						at: 0 @ 0.
 					true]
-				descriptor: (ExternalDescriptor returnType: 'bool'
+				descriptor: ##(ExternalDescriptor returnType: 'bool'
 						argumentTypes: 'handle intptr uintptr sdword sdword').
-	UserLibrary default 
+	UserLibrary default
 		drawState: hDC
 		hbr: nil
 		lpOutputFunc: callback asParameter

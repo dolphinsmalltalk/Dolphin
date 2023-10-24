@@ -18,7 +18,7 @@ aboutToForkUI
 allTopLevelWindowHandlesDo: aMonadicValuable
 	| callback answer |
 	callback := ExternalCallback block: [:hwnd :lParam | aMonadicValuable value: hwnd]
-				descriptor: (ExternalDescriptor returnType: 'bool' argumentTypes: 'ExternalHandle uintptr').
+				descriptor: ##(ExternalDescriptor returnType: 'bool' argumentTypes: 'handle uintptr').
 	answer := UserLibrary default enumWindows: callback asParameter lParam: 0.
 	callback free.
 	^answer!
@@ -49,8 +49,11 @@ isDolphinWindow: hWnd
 topLevelWindowHandlesDo: aMonadicValuable
 	| callback answer |
 	callback := ExternalCallback block: [:hwnd :lParam | aMonadicValuable value: hwnd]
-				descriptor: (ExternalDescriptor returnType: 'bool' argumentTypes: 'ExternalHandle uintptr').
-	answer := UserLibrary default enumThreadWindows: (KernelLibrary default getCurrentThreadId) lpfn: callback asParameter lParam: 0.
+				descriptor: ##(ExternalDescriptor returnType: 'bool' argumentTypes: 'handle uintptr').
+	answer := UserLibrary default
+				enumThreadWindows: KernelLibrary default getCurrentThreadId
+				lpfn: callback asParameter
+				lParam: 0.
 	callback free.
 	^answer!
 

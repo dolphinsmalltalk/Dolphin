@@ -323,7 +323,7 @@ fontNames
 			true].
 	^answer!
 
-fonts: aString do: operation 
+fonts: aString do: operation
 	"Enumerate the fonts in a specified font family that are available on the receiver's device.
 	The triadic valuable argument, operation, is passed the LOGFONTW, TEXTMETRICW and font 
 	type as its three arguments, and should answer true to continue the enueration, false to 
@@ -338,13 +338,14 @@ fonts: aString do: operation
 
 	| callback answer |
 	callback := ExternalCallback block: 
-					[:lplf :lptm :dwType :lpData | 
-					operation 
+					[:lplf :lptm :dwType :lpData |
+					operation
 						value: lplf
 						value: lptm
 						value: dwType]
-				descriptor: (ExternalDescriptor returnType: 'sdword' argumentTypes: 'LOGFONTW* lpvoid dword uintptr').
-	answer := GDILibrary default 
+				descriptor: ##(ExternalDescriptor returnType: 'sdword'
+						argumentTypes: '<1p>* lpvoid dword uintptr' << LOGFONTW).
+	answer := GDILibrary default
 				enumFonts: self asParameter
 				lpFaceName: aString
 				lpFontFunc: callback asParameter

@@ -402,7 +402,8 @@ initialize
 		LPOVERLAPPED lpOverlapped
 	);"
 
-	FileIOCompletionRoutineDescriptor := ExternalDescriptor argumentTypes: 'DWORD DWORD OVERLAPPED*'!
+	FileIOCompletionRoutineDescriptor := ExternalDescriptor
+				argumentTypes: 'dword dword <1p>*' << OVERLAPPED!
 
 monitorDirectory: aString 
 	^(self directory: aString)
