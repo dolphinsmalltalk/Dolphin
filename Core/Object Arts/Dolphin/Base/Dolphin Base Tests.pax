@@ -292,7 +292,7 @@ DolphinTest subclass: #ExternalArrayTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #ExternalDescriptorTest
-	instanceVariableNames: 'savedShared'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ExtCallArgTypes'
 	classInstanceVariableNames: ''!

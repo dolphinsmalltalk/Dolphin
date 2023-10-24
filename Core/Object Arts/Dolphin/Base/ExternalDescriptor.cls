@@ -2,7 +2,7 @@
 
 Object variableSubclass: #ExternalDescriptor
 	instanceVariableNames: 'descriptor'
-	classVariableNames: 'CallingConventions ExternalReferenceTypes ExternalValueTypes RetClassIndex RetTypeMask Shared TypeNames TypeSizes'
+	classVariableNames: 'CallingConventions ExternalReferenceTypes ExternalValueTypes RetClassIndex RetTypeMask TypeNames TypeSizes'
 	poolDictionaries: 'ExtCallArgTypes'
 	classInstanceVariableNames: ''!
 ExternalDescriptor guid: (GUID fromString: '{87b4c487-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -305,16 +305,11 @@ fromString: aString
 	is a Dolphin format external function descriptor, e.g:
 
 		ExternalDescriptor fromString: 'stdcall: hresult Blah GUID* lppvoid'
+	"
 
-	Implementation Note: As ExternalDescriptors are immutable, they can be shared
-	in order to save space. This facility can be turned off by setting the Shared
-	lookup table (which is weak by default) to nil. Bear in mind, however, that
-	quite a lot of space might otherwise be occupied by descriptors if there
-	are a large number of callback functions in the image."
-
-	Shared isNil ifTrue: [^self newFromString: aString].	
-	^Shared at: aString 
-		ifAbsentPut: [self newFromString: aString]!
+	| array |
+	array := self parseDescriptor: aString.
+	^self descriptor: array first literals: array second!
 
 initialize
 	"Private - Initialize the class variables of the receiver.
@@ -335,8 +330,7 @@ initialize
 				at: ExtCallArgUINTPTR + 1 put: VMConstants.IntPtrSize].
 	self assert: [ExternalValueTypes asSortedCollection last < TypeSizes size].
 	self initializeCallingConventions.
-	self addClassConstant: 'RetClassIndex' value: 4.
-	Shared isNil ifTrue: [Shared := WeakLookupTable new]!
+	self addClassConstant: 'RetClassIndex' value: 4!
 
 initializeCallingConventions
 	"Private - All possible calling conventions (not all are supported)"
@@ -471,17 +465,6 @@ nameOfConvention: anInteger
 	"Answer the calling convention name for the specified convention type ordinal."
 
 	^CallingConventions at: anInteger + 1!
-
-newFromString: aString 
-	"Private - Answer a new, unshared, instance of the receiver instantiated from 
-	the argument, which is a Dolphin format external function descriptor, e.g:
-
-		ExternalDescriptor fromString: 'stdcall: hresult GUID* lppvoid'
-	"
-
-	| array |
-	array := self parseDescriptor: aString.
-	^self descriptor: array first literals: array second!
 
 parseArgDesc: aString 
 	"Private - Parse the next argument type from the input stream argument, aStream, answering
@@ -645,7 +628,6 @@ initializeExternalTypes!development!initializing!private! !
 isPointerToStruct:!helpers!private! !
 nameOf:type:!constants!public! !
 nameOfConvention:!constants!public! !
-newFromString:!instance creation!private! !
 parseArgDesc:!parsing!private! !
 parseCallingConvention:!parsing!private! !
 parseDescriptor:!parsing!public! !
