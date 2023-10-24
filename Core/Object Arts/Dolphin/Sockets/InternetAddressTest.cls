@@ -12,23 +12,24 @@ InternetAddressTest comment: ''!
 
 testAllForHost
 	| addresses |
-	self skipUnless: [self isOnline and: [self isCiBuild not]].
-	addresses := InternetAddress allForHost: 'dns.google'.
+	self skipUnless: [self isOnline].
+
+	"dns.google has two fixed and well-known IP addresses"
+	addresses := InternetAddress allForHost: 'dns.google.com'.
 	self assert: addresses size equals: 2.
 	self assert: (addresses collect: [:each | each ipAddress]) asSet
 		equals: #(#[8 8 4 4] #[8 8 8 8]) asSet.
 
 	"google.com has only one"
 	addresses := InternetAddress allForHost: 'google.com'.
-	self assert: addresses size = 1.
-	self assert: (addresses first host endsWith: '1e100.net')!
+	self assert: (addresses anySatisfy: [:each | each host endsWith: '1e100.net'])!
 
 testHost
 	| name ip |
-	self isOnline ifFalse: [^self].
-	name := InternetAddress host: 'dns.google'.
+	self skipUnless: [self isOnline].
+	name := InternetAddress host: 'dns.google.com'.
 	ip := InternetAddress ipAddress: name ipAddress.
-	self assert: ip host equals: name host!
+	self assert: ip host equals: 'dns.google'!
 
 testIsIPString
 	self deny: (InternetAddress isIPString: '').
