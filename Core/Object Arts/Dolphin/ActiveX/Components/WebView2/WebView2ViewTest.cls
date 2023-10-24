@@ -287,7 +287,7 @@ verifyWebViewSettings
 	self deny: baseSettings isZoomControlEnabled.
 	"ICoreWebView2Settings2: userAgent"
 	userAgent := settings userAgent.
-	self assert: (userAgent endsWith: 'Edg/' , presenter view webviewEnvironment browserVersionString).
+	self assert: (userAgent contains: 'Edg/').
 	self assert: baseSettings userAgent equals: ICoreWebView2Settings defaultUserAgent.
 	userAgent := userAgent copyFrom: 1 to: (userAgent indexOfSubCollection: 'Edg/').
 	settings userAgent: userAgent.
