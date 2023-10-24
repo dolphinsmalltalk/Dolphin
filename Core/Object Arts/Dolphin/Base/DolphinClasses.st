@@ -132,7 +132,7 @@ Object subclass: #ExternalCallback
 	classInstanceVariableNames: ''!
 Object variableSubclass: #ExternalDescriptor
 	instanceVariableNames: 'descriptor'
-	classVariableNames: 'CallingConventions ExternalReferenceTypes ExternalValueTypes RetClassIndex RetTypeMask Shared TypeNames TypeSizes'
+	classVariableNames: 'CallingConventions ExternalReferenceTypes ExternalValueTypes RetClassIndex RetTypeMask TypeNames TypeSizes'
 	poolDictionaries: 'ExtCallArgTypes'
 	classInstanceVariableNames: ''!
 Object subclass: #ExternalLibrary

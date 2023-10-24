@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 DolphinTest subclass: #ExternalDescriptorTest
-	instanceVariableNames: 'savedShared'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ExtCallArgTypes'
 	classInstanceVariableNames: ''!
@@ -11,19 +11,14 @@ ExternalDescriptorTest comment: ''!
 !ExternalDescriptorTest methodsFor!
 
 externalTypes
-	| typeTable |
-	typeTable := ExternalDescriptor classPool at: 'ExternalValueTypes'.
-	^typeTable!
-
-newDescriptor: source 
-	^ExternalDescriptor newFromString: source!
+	^ExternalDescriptor.ExternalValueTypes!
 
 parseStructArg: structClass valueType: typeCodeOrName refType: ptrCodeOrName
 	"First pass-by-value"
 
 	| source desc argTypes |
 	source := 'cdecl: void ' , structClass name.
-	desc := self newDescriptor: source.
+	desc := self subjectClass fromString: source.
 	argTypes := desc argumentTypes.
 	self assert: argTypes size equals: 1.
 	desc argumentsDo: 
@@ -31,12 +26,12 @@ parseStructArg: structClass valueType: typeCodeOrName refType: ptrCodeOrName
 			| type |
 			type := typeCodeOrName isInteger
 						ifTrue: [typeCodeOrName]
-						ifFalse: [ExternalDescriptor typeFromName: typeCodeOrName].
+						ifFalse: [self subjectClass typeFromName: typeCodeOrName].
 			self assert: eachType identicalTo: type.
 			self assert: eachClass identicalTo: structClass].
 	"Now pass-by-ref"
 	source := source , '*'.
-	desc := self newDescriptor: source.
+	desc := self subjectClass fromString: source.
 	argTypes := desc argumentTypes.
 	self assert: argTypes size equals: 1.
 	desc argumentsDo: 
@@ -44,19 +39,12 @@ parseStructArg: structClass valueType: typeCodeOrName refType: ptrCodeOrName
 			| type |
 			type := ptrCodeOrName isInteger
 						ifTrue: [ptrCodeOrName]
-						ifFalse: [ExternalDescriptor typeFromName: ptrCodeOrName].
+						ifFalse: [self subjectClass typeFromName: ptrCodeOrName].
 			self assert: eachType identicalTo: type.
 			self assert: eachClass identicalTo: structClass]!
 
-setUp
-	savedShared := ExternalDescriptor.Shared.
-	ExternalDescriptor.Shared := nil!
-
 subjectClass
 	^ExternalDescriptor!
-
-tearDown
-	ExternalDescriptor.Shared := savedShared!
 
 testBuiltins
 	| typeTable typeNames |
@@ -66,17 +54,17 @@ testBuiltins
 			[:eachKey :eachValue |
 			| argTypes source desc |
 			source := 'cdecl: void ' , eachKey.
-			desc := self newDescriptor: source.
+			desc := self subjectClass fromString: source.
 			argTypes := desc argumentTypes.
 			self assert: eachValue isInteger.
 			self assert: argTypes single equals: (typeNames at: eachValue + 1).
 			source := source , '*'.
 			eachKey = 'lppvoid'
-				ifTrue: [self should: [self newDescriptor: source] raise: Error]
+				ifTrue: [self should: [self subjectClass fromString: source] raise: Error]
 				ifFalse: 
 					[| refType |
 					"Single indirection"
-					desc := self newDescriptor: source.
+					desc := self subjectClass fromString: source.
 					argTypes := desc argumentTypes.
 					refType := self subjectClass referenceTypeFor: eachValue.
 					refType isInteger
@@ -118,10 +106,6 @@ testIndirections
 			source := source , '*'.
 			self should: [desc := self subjectClass fromString: source] raise: Notification]!
 
-testSharedRegister
-	self deny: savedShared hasWeakKeys.
-	self assert: savedShared hasWeakValues!
-
 testSmokeTest
 	"Verify that the compiler is parsing the descriptors in the same way as ExternalDescriptor by
 	checking the descriptor of every ExternalMethod."
@@ -130,7 +114,7 @@ testSmokeTest
 			[:each |
 			| desc text |
 			text := each descriptor description.
-			desc := self newDescriptor: (text copyWithout: $,).
+			desc := self subjectClass fromString: (text copyWithout: $,).
 			self assert: text equals: desc description]!
 
 testStruct4
@@ -160,14 +144,10 @@ testStructs
 		refType: ExtCallArgLP! !
 !ExternalDescriptorTest categoriesForMethods!
 externalTypes!accessing!private! !
-newDescriptor:!private!unit tests! !
 parseStructArg:valueType:refType:!private!unit tests! !
-setUp!public! !
 subjectClass!public!unit tests! !
-tearDown!public! !
 testBuiltins!public!unit tests! !
 testIndirections!public!unit tests! !
-testSharedRegister!public!unit tests! !
 testSmokeTest!public!unit tests! !
 testStruct4!public!unit tests! !
 testStruct8!public!unit tests! !
