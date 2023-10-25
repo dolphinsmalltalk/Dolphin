@@ -699,6 +699,27 @@ getFinalPathNameByHandle: hFile lpszFilePath: lpszFilePath cchFilePath: cchFileP
 	<stdcall: dword GetFinalPathNameByHandleW handle lpwstr dword dword>
 	^self invalidCall: _failureCode!
 
+getFullPathName: aPathnameString
+	| buffer path bufferSize pathLength |
+	"The 'A' version of the API is limited to paths up to MAX_PATH - it errors on long filenames - so even if the system code page is CP_UTF8, we have to use the 'W' version of the function."
+	path := aPathnameString asUtf16String.
+	(bufferSize := self
+				getFullPathName: path
+				nBufferLength: 0
+				lpBuffer: nil
+				lpFilePart: nil) == 0
+		ifTrue: [^self systemError].
+	"The API is a bit asymmetric. If the buffer is large enough, it returns the number of characters copied to the buffer. If the buffer is too small, it returns the required size of buffer required, including null terminator (i.e. characters + 1). Also the API has a bug that if the path to be expanded starts with .\, then the buffer size returned includes space for the leading .\, even though these will be removed, so the buffer is too large and will have two extra nulls at its end. In this case the returned size written will be 3 less than the buffer size reported (rather than 1)."
+	buffer := Utf16String newFixed: bufferSize - 1.
+	^(pathLength := self
+				getFullPathName: path
+				nBufferLength: bufferSize
+				lpBuffer: buffer
+				lpFilePart: nil) + 1
+		== bufferSize
+			ifTrue: [buffer]
+			ifFalse: [pathLength == 0 ifTrue: [self systemError] ifFalse: [buffer copyFrom: 1 to: pathLength]]!
+
 getFullPathName: fname nBufferLength: anInteger lpBuffer: path lpFilePart: aDWORD
 	"Retrieves the full path and filename of the file with name fname, into the buffer, path.
 
@@ -1727,6 +1748,7 @@ getFileSizeEx:lpFileSize:!**auto generated**!public!win32 functions-file managem
 getFileTime:lpCreationTime:lpLastAccessTime:lpLastWriteTime:!public!win32 functions-file management! !
 getFileType:!public!win32 functions-file system! !
 getFinalPathNameByHandle:lpszFilePath:cchFilePath:dwFlags:!public!win32 functions-file management! !
+getFullPathName:!public!win32 functions-file management! !
 getFullPathName:nBufferLength:lpBuffer:lpFilePart:!public!win32 functions-file management! !
 getLastError!public!win32 functions-error! !
 getLocaleInfo:lCType:lpLCData:cchData:!public!win32 functions-national language support! !

@@ -82,3 +82,72 @@ fileInFrom: aSourceFiler
 	^endAction value! !
 
 #(#initialize #fromString:) do: [:each | ExternalDescriptor class removeSelector: each]!
+
+ExternalLibrary subclass: #PathCchLibrary
+	instanceVariableNames: ''
+	classVariableNames: 'PATHCCH_ALLOW_LONG_PATHS PATHCCH_MAX_CCH'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+!PathCchLibrary class methodsFor!
+
+fileName
+	"Answer the host system file name for the library"
+
+	^'api-ms-win-core-path-l1-1-0'! !
+
+!PathCchLibrary methodsFor!
+
+pathAllocCombine: pszPathIn pszMore: pszMore dwFlags: dwFlags ppszPathOut: ppszPathOut
+	"Private - Invoke the PathAllocCombine() function of the module wrapped by the receiver.
+	Helpstring: Concatenates two path fragments into a single path. This function also canonicalizes any relative path elements, replacing path elements such as '.' and '..'.
+
+		HRESULT __stdcall PathAllocCombine(
+			LPCWSTR pszPathIn,
+			LPCWSTR pszMore,
+			ULONG dwFlags,
+			LPWSTR* ppszPathOut);"
+
+	<stdcall: hresult PathAllocCombine lpwstr lpwstr dword lpwstr*>
+	^self invalidCall: _failureCode!
+
+pathCombine: pszPathIn pszMore: pszMore dwFlags: dwFlags
+	| pszPathOut result |
+	pszPathOut := ExternalAddress new.
+	self
+		pathAllocCombine: pszPathIn
+		pszMore: pszMore
+		dwFlags: dwFlags
+		ppszPathOut: pszPathOut.
+	result := Utf16String fromAddress: pszPathOut.
+	KernelLibrary default localFree: pszPathOut.
+	^result! !
+
+!KernelLibrary methodsFor!
+
+getFullPathName: aPathnameString
+	| buffer path bufferSize pathLength |
+	"The 'A' version of the API is limited to paths up to MAX_PATH - it errors on long filenames - so even if the system code page is CP_UTF8, we have to use the 'W' version of the function."
+	path := aPathnameString asUtf16String.
+	(bufferSize := self
+				getFullPathName: path
+				nBufferLength: 0
+				lpBuffer: nil
+				lpFilePart: nil) == 0
+		ifTrue: [^self systemError].
+	"The API is a bit asymmetric. If the buffer is large enough, it returns the number of characters copied to the buffer. If the buffer is too small, it returns the required size of buffer required, including null terminator (i.e. characters + 1). Also the API has a bug that if the path to be expanded starts with .\, then the buffer size returned includes space for the leading .\, even though these will be removed, so the buffer is too large and will have two extra nulls at its end. In this case the returned size written will be 3 less than the buffer size reported (rather than 1)."
+	buffer := Utf16String newFixed: bufferSize - 1.
+	^(pathLength := self
+				getFullPathName: path
+				nBufferLength: bufferSize
+				lpBuffer: buffer
+				lpFilePart: nil) + 1
+		== bufferSize
+			ifTrue: [buffer]
+			ifFalse: [pathLength == 0 ifTrue: [self systemError] ifFalse: [buffer copyFrom: 1 to: pathLength]]! !
+
+!FileStream methodsFor!
+
+primitiveNextPutAll: aCollection
+	<primitive: 173>
+	^aCollection appendToStream: self! !

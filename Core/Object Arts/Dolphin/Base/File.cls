@@ -595,6 +595,11 @@ attributesEx: aString
 		fInfoLevelId: 0
 		lpFileInformation: attributes) ifTrue: [attributes]!
 
+canonicalizePath: aString
+	"Converts the path <String> argument into a canonical form, removing any embedded '..' and '.' components, and adding a long path prefix if required."
+
+	^PathCchLibrary default pathCanonicalize: aString dwFlags: PathCchLibrary.PATHCCH_ALLOW_LONG_PATHS!
+
 commonPrefixOf: pathString1 and: pathString2
 	"Answer the <readableString> common prefix shared between the two paths.
 	This will be empty if the paths share no common prefix."
@@ -620,15 +625,15 @@ composePath: aPathString stem: aStemString extension: anExtensionString
 
 	^self makePath: {nil. aPathString. aStemString. anExtensionString}!
 
-composePath: path subPath: subpath
+composePath: pathString subPath: subpathString
 	"Composes a full pathname from path and subpath components."
 
-	| fullName |
-	fullName := self pathBuffer.
-	^ShlwapiLibrary default
-		pathCombine: fullName
-		lpszDir: path
-		lpszFile: subpath!
+	^PathCchLibrary default
+		pathCombine: pathString
+		pszMore: subpathString
+		dwFlags: PathCchLibrary.PATHCCH_ALLOW_LONG_PATHS
+
+!
 
 composeShortStem: aStemString extension: anExtensionString 
 	"Answer a String which is a file name abbreviated from aStemString and anExtensionString.
@@ -643,16 +648,13 @@ composeShortStem: aStemString extension: anExtensionString
 	^self composeStem: stemResult extension: extResult!
 
 composeStem: aStemString extension: anExtensionString
-	"Composes a full pathname from aStemString and anExtensionString components.
-	Implementation Note: This could be implemented in terms of #composePath:stem:extension:,
-	which ultimately is implemented in terms of #makePath:, however it is a very frequently
-	used method so an optimized version which takes advantage of private knowledge of
-	how file names are constructed is warranted. Note that the dot separator may be
-	specified in the extension, or not."
+	"Composes a full pathname from aStemString and anExtensionString components. Note that the dot separator may be specified in the extension, or not."
 
-	^anExtensionString first == $.
-		ifTrue: [aStemString, anExtensionString]
-		ifFalse: [aStemString, '.', anExtensionString]!
+	"Implementation Note: This could be implemented in terms of #composePath:stem:extension:, which ultimately is implemented in terms of #makePath:, however it is a very frequently used method so an optimized version which takes advantage of private knowledge of how file names are constructed is warranted."
+
+	^(anExtensionString at: 1) == $.
+		ifTrue: [aStemString , anExtensionString]
+		ifFalse: [aStemString , '.' , anExtensionString]!
 
 copy: oldFileNameString to: newFileNameString
 	"Copy the file specified by oldFileNameString to newFileNameString.
@@ -911,36 +913,19 @@ forDirectoriesIn: aString do: operation
 		in: aString
 		do: operation!
 
-fromHandle: aHandle 
+fromHandle: aHandle
 	"Answer a new instance of the receiver on the specified file handle.
 	The instance will not automatically close the handle before it is GC'd (it assumes
 	it does not own it)."
 
-	^(super new)
-		setHandle: aHandle asExternalHandle flags: ##(GENERIC_READ | GENERIC_WRITE);
+	^super new
+		setHandle: aHandle asExternalHandle flags: ##(GENERIC_READ bitOr: GENERIC_WRITE);
 		yourself!
 
 fullPathOf: aPathnameString
 	"Answers the full path of aPathnameString"
 
-	| fullpath len path kernel |
-	path := aPathnameString asUtf16String.
-	kernel := KernelLibrary default.
-	(len := kernel
-				getFullPathName: path
-				nBufferLength: 0
-				lpBuffer: nil
-				lpFilePart: nil) == 0
-		ifTrue: [kernel systemError].
-	"Note: Returns the length including the terminating null"
-	fullpath := Utf16String newFixed: len - 1.
-	(kernel
-		getFullPathName: path
-		nBufferLength: len
-		lpBuffer: fullpath
-		lpFilePart: nil) == 0
-		ifTrue: [kernel systemError].
-	^fullpath!
+	^KernelLibrary default getFullPathName: aPathnameString!
 
 fullPathOf: aPathnameString relativeTo: aBasePathString
 	"Answers the full path of aPathnameString. If this is a truly relative
@@ -1005,16 +990,26 @@ isDirectory: aString
 	attribs := self attributes: aString.
 	^attribs ~= -1 and: [attribs allMask: FILE_ATTRIBUTE_DIRECTORY]!
 
-isRelativePath: aFileNameString
-	"Answers true if aFileNameString is a relative path with no absolute components"
+isRelativePath: aString
+	"Answers whether the <String> argument is a relative path with no absolute components. See [Fully Qualified vs. Relative Paths](https://learn.microsoft.com/en-us/windows/win32/fileio/naming-a-file#fully-qualified-vs-relative-paths)."
 
-	^ShlwapiLibrary default pathIsRelative: aFileNameString
-!
+	"The Microsoft documentation does not seem to specify the expected treatment of paths with the long path prefix, '\\?\', but empirically it seems these are always considered absolute. This would be consistent with treatment of UNC paths."
+
+	| size first |
+	aString ifNil: [^true].
+	size := aString size.
+	size == 0 ifTrue: [^true].
+	first := aString at: 1.
+	(first == $\ or: [first == $/]) ifTrue: [^false].
+	(size <= 2 or: [first isEnglishLetter not]) ifTrue: [^true].
+	^(aString at: 2) ~~ $: or: 
+			[first := aString at: 3.
+			first ~~ $\ and: [first ~~ $/]]!
 
 isRootPath: aString
 	"Answer whether the <String> argument is a root path, e.g. 'c:\'"
 
-	^ShlwapiLibrary default pathIsRoot: aString!
+	^PathCchLibrary default pathCchIsRoot: aString!
 
 isWriteable: aString 
 	"Answer whether the file at the specified path is writeable. If there is no such file, then
@@ -1165,8 +1160,7 @@ path: pathString extension: extString
 			whileFalse: [i := i - 1].
 	^extString size == 0
 		ifTrue: [pathString]
-		ifFalse: 
-			[(extString at: 1) == $. ifTrue: [pathString , extString] ifFalse: [pathString , '.' , extString]]!
+		ifFalse: [self composeStem: pathString extension: extString]!
 
 pathBuffer
 	"Answer a buffer of sufficient size to contain a full path."
@@ -1580,6 +1574,7 @@ workingDirectory: aString
 appendPathDelimiter:!filename manipulation!public! !
 attributes:!enquiries!public! !
 attributesEx:!enquiries!public! !
+canonicalizePath:!filename manipulation!public! !
 commonPrefixOf:and:!filename manipulation!public! !
 composePath:stem:extension:!filename manipulation!public! !
 composePath:subPath:!filename manipulation!public! !

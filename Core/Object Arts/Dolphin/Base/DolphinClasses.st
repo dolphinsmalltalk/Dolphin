@@ -1015,6 +1015,11 @@ ExternalLibrary subclass: #ExternalResourceLibrary
 	classVariableNames: 'Libraries'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+ExternalLibrary subclass: #PathCchLibrary
+	instanceVariableNames: ''
+	classVariableNames: 'PATHCCH_ALLOW_LONG_PATHS PATHCCH_MAX_CCH'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 ExternalLibrary subclass: #PermanentLibrary
 	instanceVariableNames: ''
 	classVariableNames: ''
