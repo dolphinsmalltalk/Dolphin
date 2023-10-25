@@ -99,6 +99,7 @@ package setMethodNames: #(
 	#(#{Kernel.DeafObject class} #icon)
 	#(#{Kernel.FullBindingReference class} #icon)
 	#(#{Kernel.InputState class} #icon)
+	#(#{Kernel.LiteralPrinter class} #icon)
 	#(#{Kernel.MemoryManager class} #icon)
 	#(#{Kernel.MetaBindingReference class} #icon)
 	#(#{Kernel.MethodProtocol class} #icon)
@@ -108,10 +109,10 @@ package setMethodNames: #(
 	#(#{Kernel.ProcessorScheduler class} #icon)
 	#(#{Kernel.SharedPool class} #icon)
 	#(#{Kernel.SourceManager class} #icon)
+	#(#{Kernel.STBValidatingInFiler class} #icon)
 	#(#{Kernel.STxClassConversion class} #icon)
 	#(#{Kernel.STxFiler class} #icon)
 	#(#{Kernel.STxProxy class} #icon)
-	#(#{Kernel.STxVersionPolicy class} #icon)
 	#(#{Kernel.VariableBinding} #icon)
 	#(#{OS class} #icon)
 	#(#{OS.DiskVolumeInformation class} #icon)
@@ -150,6 +151,7 @@ package setPrerequisites: #(
 	'..\..\System\Win32\Dolphin File System Info'
 	'..\Graphics\Dolphin GDI Graphics'
 	'..\..\Base\Dolphin Legacy Date & Time'
+	'..\..\System\Filer\Dolphin Literal Out Filer'
 	'..\Base\Dolphin MVP Base'
 	'..\Presenters\Radio\Dolphin Radio Buttons'
 	'..\Views\Scrollbars\Dolphin Scrollbars'
@@ -157,6 +159,7 @@ package setPrerequisites: #(
 	'..\..\System\STON\Dolphin STON-Core'
 	'..\..\System\Filer\Dolphin STx Filer Core'
 	'Dolphin Text Tile Icons'
+	'..\..\System\Filer\Dolphin Validating Binary Filer'
 ).
 
 package!
@@ -1174,6 +1177,16 @@ icon
 icon!constants!public! !
 !
 
+!Kernel.LiteralPrinter class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^STLOutFiler icon! !
+!Kernel.LiteralPrinter class categoriesForMethods!
+icon!constants!public! !
+!
+
 !Kernel.MemoryManager class methodsFor!
 
 icon
@@ -1277,6 +1290,16 @@ icon
 icon!constants!public! !
 !
 
+!Kernel.STBValidatingInFiler class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^STxFiler icon! !
+!Kernel.STBValidatingInFiler class categoriesForMethods!
+icon!constants!public! !
+!
+
 !Kernel.STxClassConversion class methodsFor!
 
 icon
@@ -1306,16 +1329,6 @@ icon
 
 	^STxFiler icon! !
 !Kernel.STxProxy class categoriesForMethods!
-icon!constants!public! !
-!
-
-!Kernel.STxVersionPolicy class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^STxFiler icon! !
-!Kernel.STxVersionPolicy class categoriesForMethods!
 icon!constants!public! !
 !
 

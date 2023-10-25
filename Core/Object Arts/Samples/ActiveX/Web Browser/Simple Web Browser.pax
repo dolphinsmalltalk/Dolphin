@@ -46,6 +46,7 @@ package setPrerequisites: #(
 	'..\..\..\Dolphin\MVP\Dialogs\Common\Dolphin Common Dialogs'
 	'..\..\..\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars'
 	'..\..\..\Dolphin\MVP\Graphics\Dolphin GDI Graphics'
+	'..\..\..\Dolphin\System\Filer\Dolphin Literal Filer'
 	'..\..\..\Dolphin\System\Win32\MessageBox\Dolphin Message Box'
 	'..\..\..\Dolphin\MVP\Base\Dolphin MVP Base'
 	'..\..\..\Dolphin\MVP\Views\Buttons\Dolphin Push Buttons'

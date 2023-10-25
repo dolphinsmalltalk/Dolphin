@@ -58,7 +58,7 @@ package!
 Core.Dictionary
 	variableSubclass: #'OS.RegKeyAbstract'
 	instanceVariableNames: 'name parentPath rootKey sam handle keyInfo'
-	classVariableNames: ''
+	classVariableNames: 'PathSeparator'
 	imports: #(#{OS.WinRegConstants} #{OS.Win32Errors})
 	classInstanceVariableNames: ''
 	classConstants: {
@@ -70,7 +70,6 @@ Core.Dictionary
 								#readWrite -> 16r2001F.
 								#write -> 16r20006
 							}).
-			'PathSeparator' -> '\'.
 			'ValueTypes'
 				-> (IdentityDictionary withAll: {
 								#binary -> 16r3.

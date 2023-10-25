@@ -41,11 +41,9 @@ testBinaryReadD7Certificate
 	self assert: oaCert binaryStoreBytes equals: oaCert2 binaryStoreBytes.
 	"Note that the D7 bytes are not the same bytes as in the `ObjectArtsCertificate class>>#new` method, because Dolphin 7.1 could only save STB in the latest format at the time, not the earlier format of D6, so it effectively forced an upgrade of the serialised bytes so the certificate could not be read by earlier Dolphin versions. Dolphin 8 can save the D6 format, or the D6 one."
 	self deny: oaCert2 binaryStoreBytes equals: d7bytes.
-	self
-		assert: ((STBOutFiler policy: STBVersion4Policy)
+	self assert: (STBOutFiler4 new
 				nextPut: oaCert2;
-				stream) contents
-		equals: d7bytes!
+				stream) contents equals: d7bytes!
 
 testBinaryReadOldCertificate
 	| oaCert oaCert2 oldBytes |

@@ -236,19 +236,17 @@ stbConvertFrom: anSTBClassFormat
 	"Convert from earlier schema.
 	1) Former 'alignment' instance variable becomes 'flags', in which alignment is encoded."
 
-	^
-	[:data |
-	| newInstance |
-	newInstance := self new.
-	newInstance
-		horizontalGap: data first;
-		verticalGap: data second;
-		alignment: (##(IdentityDictionary new
-					at: #left put: #leftTop;
-					at: #center put: #topCenter;
-					at: #right put: #topRight;
-					yourself) at: data third).
-	newInstance]!
+	anSTBClassFormat version == 0
+		ifTrue: 
+			[^
+			[:data |
+			self new
+				horizontalGap: data first;
+				verticalGap: data second;
+				alignment: (##(IdentityDictionary
+							withAll: { #left -> #leftTop. #center -> #topCenter. #right -> #topRight }) at: data third);
+				yourself]].
+	^super stbConvertFrom: anSTBClassFormat!
 
 stbVersion
 	^1! !

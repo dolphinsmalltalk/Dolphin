@@ -33,7 +33,7 @@ emitBinaryVariableDefinition: aBindingReference
 		space;
 		cr.
 	binaryStream := ByteArray writeStream: 256.
-	(STBOutFiler on: binaryStream version: 4) nextPut: value.
+	(STBOutFiler4 on: binaryStream) nextPut: value.
 	binaryStream contents base64StoreOn: stream.
 	stream
 		nextPut: $!!;
@@ -281,7 +281,8 @@ equivalentLegacyPrerequisites
 				'Dolphin STB Filer' -> 'Dolphin'.
 				'Dolphin Binary Filer' -> 'Dolphin'.
 				'Dolphin STx Filer Core' -> 'Dolphin'.
-				'Dolphin STx Filer (Old versions)' -> 'Dolphin'
+				'Dolphin STx Filer Core (Old versions)' -> 'Dolphin'.
+				'Dolphin Literal Filer (Old versions)' -> 'Dolphin'
 			})!
 
 fileOutAttributesOfClass: aClass
@@ -540,10 +541,10 @@ specialBehaviorAttributes!constants!public! !
 fileOutExtensionForClass: aClass
 	^(aClass inheritsFrom: SharedPool) ifTrue: ['st'] ifFalse: ['cls']!
 
-stlPolicy
-	^STLVersion4Policy! !
+stlFilerClass
+	^STLOutFiler4! !
 !Kernel.LegacyChunkSourceFiler class categoriesForMethods!
 fileOutExtensionForClass:!enquiries!public! !
-stlPolicy!constants!public! !
+stlFilerClass!constants!public! !
 !
 

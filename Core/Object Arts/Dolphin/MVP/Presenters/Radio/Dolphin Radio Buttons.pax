@@ -25,6 +25,7 @@ package setPrerequisites: #(
 	'..\Boolean\Dolphin Boolean Presenter'
 	'..\..\Views\Buttons\Dolphin Check Buttons'
 	'..\..\Graphics\Dolphin GDI Graphics'
+	'..\..\..\System\Filer\Dolphin Literal Filer'
 	'..\..\Base\Dolphin MVP Base'
 	'..\..\Type Converters\Dolphin Type Converters'
 	'..\..\Models\Value\Dolphin Value Models'

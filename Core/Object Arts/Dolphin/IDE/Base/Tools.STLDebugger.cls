@@ -1,22 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.STLInFiler
+Tools.STxDebugger
 	subclass: #'Tools.STLDebugger'
-	instanceVariableNames: 'indentLevel traceStream printOffsets slotName'
+	instanceVariableNames: 'slotName'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Tools.STLDebugger guid: (Core.GUID fromString: '{2594ee50-2952-4436-bb8b-a33cafe7790e}')!
-Tools.STLDebugger comment: 'The `STLDebugger` is an `STLInFiler` that prints an indented trace of the contents of the STL file it is reading as it proceeds. 
-It is useful for debugging issues with serialized objects, such as tracking down the cause of excessive size of a view resource.
+Tools.STLDebugger comment: ' `STLDebugger` is an `STLInFiler` decorator that prints an indented trace of the contents of the STL file it is reading as it proceeds. `STLDebugger` can be useful for debugging issues with serialized objects, such as tracking down the cause of excessive size of a view resource.
 
 For example to view the contents of a view resource, one can proceed as follows:
 ```
 	rid := UI.ResourceIdentifier class: UI.Shell.
-	in := (STLDebugger on: rid resource readStream).
-	in next.
-	in traceStream contents.	"Display-it"
+	(STLDebugger dump: rid resource readStream) "Display-it"
 ''
 '!
 !Tools.STLDebugger categoriesForClass!System-Binary storage! !
@@ -27,13 +24,7 @@ basicNext
 
 	| prefixOrLiteral class anObject newObjectIndex refIndex |
 	traceStream cr.
-	printOffsets
-		ifTrue: 
-			[stream position
-				printOn: traceStream
-				base: 10
-				nDigits: 6.
-			traceStream space].
+	printOffsets value.
 	indentLevel timesRepeat: [traceStream nextPutAll: '    '].
 	slotName
 		ifNotNil: 
@@ -47,32 +38,37 @@ basicNext
 	prefixOrLiteral := stream next.
 	prefixOrLiteral isInteger
 		ifFalse: 
-			[traceStream print: prefixOrLiteral.
+			[count := count + 1.
+			traceStream print: prefixOrLiteral.
 			^prefixOrLiteral value].
 
 	"SmallInteger?"
-	(prefixOrLiteral allMask: STxVersionPolicy.PrefixSmallIntegerMask)
+	(prefixOrLiteral allMask: STxFiler.PrefixSmallIntegerMask)
 		ifTrue: 
 			[anObject := prefixOrLiteral bitShift: -1.
+			count := count + 1.
 			traceStream print: anObject.
 			^anObject].
 
 	"Literal?"
-	prefixOrLiteral == STLVersionPolicy.PrefixLiteralMask
+	prefixOrLiteral == STxFiler.PrefixLiteralMask
 		ifTrue: 
 			[| literal |
-			literal := policy readLiteralData.
+			literal := decorated readLiteralData.
+			count := count + 1.
 			traceStream
-				print: readMap size;
+				print: decorated readMap size;
 				nextPutAll: ': '.
 			literal printOn: (LimitedWriteStream over: traceStream).
 			^literal].
-	refIndex := prefixOrLiteral bitShift: STxVersionPolicy.PrefixRefUnshift.
-	(prefixOrLiteral allMask: STxVersionPolicy.PrefixDataMask)
+	refIndex := prefixOrLiteral bitShift: STxFiler.PrefixRefUnshift.
+	(prefixOrLiteral allMask: STxFiler.PrefixDataMask)
 		ifFalse: 
-			[(prefixOrLiteral anyMask: STxVersionPolicy.PrefixCharacterMask)
+			[(prefixOrLiteral anyMask: STxFiler.PrefixCharacterMask)
 				ifTrue: 
-					[anObject := Character value: refIndex.
+					["Should only be encountered in STL 3 streams"
+					anObject := self characterValue: refIndex.
+					count := count + 1.
 					traceStream
 						nextPut: $[;
 						print: anObject;
@@ -90,9 +86,9 @@ basicNext
 	"Ascertain the class of the object."
 	indentLevel := indentLevel + 1.
 	traceStream nextPut: $[.
-	(prefixOrLiteral allMask: STxVersionPolicy.PrefixClassMask)
+	(prefixOrLiteral allMask: STxFiler.PrefixClassMask)
 		ifTrue: 
-			[class := policy readClassDataWithPrefix: prefixOrLiteral.
+			[class := decorated readClassDataWithPrefix: prefixOrLiteral.
 			traceStream display: class name]
 		ifFalse: 
 			[class := self classAt: refIndex.
@@ -100,8 +96,9 @@ basicNext
 	traceStream nextPut: $].
 
 	"Now read the object data."
-	newObjectIndex := readMap size + 1.
-	anObject := class stbReadFrom: self format: (converters lookup: class).
+	count := count + 1.
+	newObjectIndex := decorated nextIndex.
+	anObject := class stbReadFrom: self format: (decorated converterFor: class).
 	class isBytes
 		ifTrue: 
 			[traceStream
@@ -113,101 +110,10 @@ basicNext
 	"If anObject was a proxy for the real one, evaluate it now."
 	^anObject stbFixup: self at: newObjectIndex!
 
-dump
-	traceStream
-		nextPutAll: 'STL version ';
-		print: self version;
-		nextPut: $:.
-	[self atEnd] whileFalse: [self next].
-	traceStream
-		nextPutAll: 'End of ';
-		print: readMap size;
-		nextPutAll: ' objects';
-		cr!
-
-initialize
-	printOffsets := true.
-	traceStream := String writeStream.
-	indentLevel := 0.
-	^super initialize!
-
-next
-	"Answer the next object from the receiver's stream."
-
-	| answer |
-	indentLevel := 0.
-	answer := [self basicNext] on: Notification
-				do: 
-					[:ex |
-					traceStream
-						cr;
-						cr;
-						next: 80 put: $*;
-						cr;
-						display: ex;
-						cr;
-						next: 80 put: $*;
-						cr.
-					ex resume].
-	traceStream cr.
-	^answer!
-
-objectAt: anInteger
-	"Private - Answer the map value at anInteger. If anInteger is zero then answer nil.
-	Signal an exception if there is no such entry."
-
-	^anInteger == 0 ifFalse: [super objectAt: anInteger]!
-
-printOffsets
-	^printOffsets!
-
-printOffsets: aBoolean
-	printOffsets := aBoolean!
-
-readSizeBlock
-	| read |
-	read := super readSizeBlock.
-	^
-	[:class |
-	| size |
-	size := read value: class.
-	traceStream
-		nextPut: $[;
-		print: size;
-		nextPut: $].
-	size]!
-
-traceStream
-	^traceStream!
-
-traceStream: aPuttableStream 
-	traceStream := aPuttableStream! !
+inFilerClass
+	^STLInFiler! !
 !Tools.STLDebugger categoriesForMethods!
 basicNext!accessing!private! !
-dump!operations!public! !
-initialize!initializing!private! !
-next!accessing!public! !
-objectAt:!accessing!private! !
-printOffsets!accessing!public! !
-printOffsets:!accessing!public! !
-readSizeBlock!operations!private! !
-traceStream!accessing!public! !
-traceStream:!accessing!public! !
-!
-
-!Tools.STLDebugger class methodsFor!
-
-dump: aReadStream
-	^((self on: aReadStream)
-		dump;
-		traceStream) contents!
-
-dumpToTranscript: aReadStream
-	(self on: aReadStream)
-		traceStream: Transcript;
-		dump! !
-!Tools.STLDebugger class categoriesForMethods!
-dump:!public! !
-dumpToTranscript:!public! !
+inFilerClass!constants!private! !
 !
 

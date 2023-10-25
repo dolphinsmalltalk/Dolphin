@@ -34,10 +34,10 @@ newImages
 	bitmaps := LookupTable new.
 	^super newImages!
 
-stbSaveOn: anSTBOutFiler 
+stbSaveOn: anSTBOutFiler
 	"Save out a binary representation of the receiver to anSTBOutFiler."
 
-	anSTBOutFiler writePreambleFor: self! !
+	anSTBOutFiler saveSingleton: self! !
 !Graphics.IconImageManager categoriesForMethods!
 bitmapForIcon:extent:!public!searching! !
 initialize!initializing!private! !

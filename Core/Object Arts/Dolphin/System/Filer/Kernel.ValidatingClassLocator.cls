@@ -26,7 +26,7 @@ findResidentClass: aBindingReference
 	"Answer the class referred to by the receiver if it is fully resident in the image. 
 	First see if the requested class is valid."
 
-	(validationBlock value: aBindingReference pathString) ifFalse: [STBValidatingInFiler errorInvalidClass: aBindingReference].
+	(validationBlock value: aBindingReference pathString) ifFalse: [STxInFiler errorInvalidClass: aBindingReference].
 	^super findResidentClass: aBindingReference!
 
 includesClass: aClass

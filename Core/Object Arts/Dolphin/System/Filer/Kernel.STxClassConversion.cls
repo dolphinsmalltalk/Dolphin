@@ -42,7 +42,7 @@ instSize
 isBytes
 	"Answer whether the class being converted is a byte class."
 
-	^prefix allMask: STxVersionPolicy.PrefixBytesMask!
+	^prefix allMask: STxFiler.PrefixBytesMask!
 
 isUpgrading
 	^filer isUpgrading!
@@ -50,7 +50,7 @@ isUpgrading
 isVariable
 	"Answer whether the class being converted can have indexed instance variables."
 
-	^prefix allMask: STxVersionPolicy.PrefixVariableMask!
+	^prefix allMask: STxFiler.PrefixVariableMask!
 
 version
 	"Answer the receiver's version inst var."
@@ -61,8 +61,8 @@ version: versionInteger prefix: anInteger filer: anSTBInFiler
 	"Private - Initialise the receiver from the arguments."
 
 	version := versionInteger.
-	instSize := ((prefix := anInteger) bitShift: STxVersionPolicy.PrefixInstSizeUnshift)
-				bitAnd: STxVersionPolicy.PrefixInstSizeMask.
+	instSize := ((prefix := anInteger) bitShift: STxFiler.PrefixInstSizeUnshift)
+				bitAnd: STxFiler.PrefixInstSizeMask.
 	filer := anSTBInFiler! !
 !Kernel.STxClassConversion categoriesForMethods!
 converterBlock!accessing!public! !

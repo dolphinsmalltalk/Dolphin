@@ -32,6 +32,7 @@ package setPrerequisites: #(
 	'..\..\Base\Dolphin Basic Geometry'
 	'..\..\Graphics\Dolphin GDI Graphics'
 	'..\..\Presenters\Prompters\Dolphin Integer Prompter'
+	'..\..\..\System\Filer\Dolphin Literal Filer'
 	'..\..\Base\Dolphin MVP Base'
 	'..\..\Presenters\Number\Dolphin Number Presenter'
 	'..\Buttons\Dolphin Push Buttons'

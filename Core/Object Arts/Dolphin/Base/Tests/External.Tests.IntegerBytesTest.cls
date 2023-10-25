@@ -42,7 +42,7 @@ testStlVersion4
 	self assert: subject class identicalTo: self subjectClass.
 	self assert: subject asInteger equals: self canonicalValue.
 	stream := Array writeStream.
-	(STLOutFiler on: stream version: 4) nextPut: subject.
+	(STLOutFiler4 on: stream) nextPut: subject.
 	self assert: (STLPrinter printLiteralStoreArray: stream contents)
 		equals: (STLPrinter printLiteralStoreArray: self stlVersion4)!
 
@@ -55,8 +55,9 @@ testStlVersion6
 	self assert: subject class identicalTo: self subjectClass.
 	self assert: subject asInteger equals: self canonicalValue.
 	stream := Array writeStream.
-	(STLOutFiler on: stream version: 6) nextPut: subject.
-	self assert: (STLPrinter printLiteralStoreArray: stream contents) equals: (STLPrinter printLiteralStoreArray: self stlVersion6)! !
+	(STLOutFiler on: stream) nextPut: subject.
+	self assert: (STLPrinter printLiteralStoreArray: stream contents)
+		equals: (STLPrinter printLiteralStoreArray: self stlVersion6)! !
 !External.Tests.IntegerBytesTest categoriesForMethods!
 canonicalValue!constants!private! !
 stlVersion4!constants!private! !

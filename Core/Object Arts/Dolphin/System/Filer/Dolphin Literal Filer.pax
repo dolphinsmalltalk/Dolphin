@@ -2,38 +2,23 @@
 package := Package name: 'Dolphin Literal Filer'.
 package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
-	basicComment: 'Dolphin 🐬 Smalltalk STL (Literal) object graph serialiser
-Copyright © Object Arts Ltd. 1997-2023
+	basicComment: 'Dolphin 🐬 Smalltalk STL (Literal) object graph deserialiser
+Copyright ©️ Object Arts Ltd. 1997-2023.
 
-Latest version of the STL filer for serialisation of object graphs as arrays of literals.'.
+Latest version of the `STLInFiler` for deserialisation of object graphs as arrays of literals written by the `STLOutFiler` (which is packaged separately)'.
 
 package basicPackageVersion: '6.1'.
 
 
 package setClassNames: #(
-	#{Kernel.LiteralPrinter}
-	#{Kernel.STLClassCollector}
 	#{Kernel.STLInFiler}
-	#{Kernel.STLOutFiler}
-	#{Kernel.STLPrinter}
-	#{Kernel.STLVersion6Policy}
-	#{Kernel.STLVersionPolicy}
 ).
 
 package setMethodNames: #(
-	#(#{Core.Array} #literalPrintOn:)
-	#(#{Core.Class} #literalPrintOn:)
-	#(#{Core.Metaclass} #literalPrintOn:)
-	#(#{Core.Object} #literalPrintOn:)
-	#(#{Core.Object} #literalStoreArray)
-	#(#{Core.Object} #literalStoreEvaluationOn:)
-	#(#{Core.Object} #literalStoreEvaluationString)
-	#(#{Core.Object} #literalStoreOn:)
 	#(#{Core.Object class} #fromLiteralStoreArray:)
 	#(#{Core.Object class} #fromLiteralStoreArray:context:)
 	#(#{Core.Object class} #literalReadFrom:)
 	#(#{Core.Object class} #literalReadFrom:context:)
-	#(#{Kernel.ProcessorScheduler} #literalPrintOn:)
 ).
 
 package setPrerequisites: #(
@@ -45,135 +30,15 @@ package!
 
 "Class Definitions"!
 
-Core.Object
-	subclass: #'Kernel.LiteralPrinter'
-	instanceVariableNames: 'stream'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Kernel.LiteralPrinter
-	subclass: #'Kernel.STLPrinter'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
 Kernel.STxInFiler
 	subclass: #'Kernel.STLInFiler'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Kernel.STLInFiler
-	subclass: #'Kernel.STLClassCollector'
-	instanceVariableNames: 'classes resourceIdentifiers'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Kernel.STxOutFiler
-	subclass: #'Kernel.STLOutFiler'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Kernel.STxVersionPolicy
-	subclass: #'Kernel.STLVersionPolicy'
-	instanceVariableNames: ''
+	instanceVariableNames: 'policy'
 	classVariableNames: 'Versions'
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: { 'PrefixLiteralMask' -> 16r8. 'Signature' -> #'!!STL' }!
-Kernel.STLVersionPolicy
-	subclass: #'Kernel.STLVersion6Policy'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'Signature' -> #'!!STL' }!
 
 "Loose Methods"!
-
-!Core.Array methodsFor!
-
-literalPrintOn: aLiteralPrinter
-	aLiteralPrinter printArray: self! !
-!Core.Array categoriesForMethods!
-literalPrintOn:!public! !
-!
-
-!Core.Class methodsFor!
-
-literalPrintOn: aLiteralPrinter
-	aLiteralPrinter printClass: self! !
-!Core.Class categoriesForMethods!
-literalPrintOn:!printing!public! !
-!
-
-!Core.Metaclass methodsFor!
-
-literalPrintOn: aLiteralPrinter
-	aLiteralPrinter printMetaclass: self! !
-!Core.Metaclass categoriesForMethods!
-literalPrintOn:!printing!public! !
-!
-
-!Core.Object methodsFor!
-
-literalPrintOn: aLiteralPrinter
-	aLiteralPrinter print: self!
-
-literalStoreArray
-	"Answers an Array representation of the receiver stored in a literal form.
-	This can be reconstituted using Object class>>fromLiteralStoreArray:"
-
-	| stream |
-	stream := Array writeStream: 128.
-	self literalStoreOn: stream.
-	^stream contents!
-
-literalStoreEvaluationOn: aPuttableStream
-	"Stores the receiver in a <readableString> form on aStream that can be reconstituted by
-	evaluating the string. Uses the STL filing mechanism to achieve this. This operation
-	provides an alternative to the legacy #storeOn:/#storeString mechanism. While still used in
-	some parts of the image, #storeOn:, has NOT been implemented as a general case throughout
-	Dolphin. This is where #literalStoreEvaluationOn: can come in handy (although it is
-	difficult to supply a completely general case that will meet all needs)"
-
-	aPuttableStream nextPutAll: '(Object fromLiteralStoreArray: '.
-	STLPrinter printLiteralStoreArray: self literalStoreArray on: aPuttableStream.
-	aPuttableStream nextPut: $)!
-
-literalStoreEvaluationString
-	"Stores the receiver in a <readableString> form that can be reconstituted by evaluating the
-	string. Uses the STL filing mechanism to achieve this. This operation provides an
-	alternative to the legacy #storeOn:/#storeString mechanism. While still used in some parts
-	of the image, #storeOn:, has NOT been implemented as a general case throughout Dolphin. This
-	is where #literalStoreEvaluationString can come in handy (although it is difficult to supply
-	a completely general case that will meet all needs)"
-
-	| stream |
-	stream := String writeStream.
-	self literalStoreEvaluationOn: stream.
-	^stream contents!
-
-literalStoreOn: aStream
-	"Stores the receiver in a literal form on aStream that can be reconstituted using Object class>>literalReadFrom:.
-	Uses the STL filing mechanism to achieve this. This implementation is sufficient for all objects
-	that do not need to isolate themselves from their surroundings. Sub-classes may override this
-	method to perform such isolation"
-
-	(STLOutFiler on: aStream) nextPut: self! !
-!Core.Object categoriesForMethods!
-literalPrintOn:!literal filing!public! !
-literalStoreArray!literal filing!public! !
-literalStoreEvaluationOn:!literal filing!public! !
-literalStoreEvaluationString!literal filing!public! !
-literalStoreOn:!literal filing!public! !
-!
 
 !Core.Object class methodsFor!
 
@@ -211,14 +76,6 @@ fromLiteralStoreArray:!literal filing!public! !
 fromLiteralStoreArray:context:!literal filing!public! !
 literalReadFrom:!literal filing!public! !
 literalReadFrom:context:!binary filing!literal filing!public! !
-!
-
-!Kernel.ProcessorScheduler methodsFor!
-
-literalPrintOn: aLiteralPrinter
-	aLiteralPrinter printProcessor: self! !
-!Kernel.ProcessorScheduler categoriesForMethods!
-literalPrintOn:!public! !
 !
 
 "End of package definition"!

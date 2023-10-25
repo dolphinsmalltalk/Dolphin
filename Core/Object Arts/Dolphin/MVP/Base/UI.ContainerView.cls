@@ -104,6 +104,17 @@ errorDuplicateName: aString
 
 	^self error: 'duplicate name: ' , aString!
 
+filerProxyIn: anSTxOutFiler
+	"Private - Answer a filer proxy that represents the receiver for use with the <STxOutFiler> argument."
+
+	(anSTxOutFiler isStable and: [names notEmpty])
+		ifTrue: 
+			["We override the names lookup table with a proxy in order that we can sort by the names to get a stable order."
+			anSTxOutFiler override: names
+				with: (STBIdentityDictionaryProxy class: names class
+						associations: (names associations asSortedArray: [:a :b | a value <= b value]))].
+	^super filerProxyIn: anSTxOutFiler!
+
 implicitInsets: aLayoutContext
 	"Private - Answer a <Rectangle> whose edges specify the implicit distance (in pixels) by
 	which the sub views have to be inset from the border of the receiver. This method should be
@@ -294,6 +305,7 @@ defaultExtentOf:!geometry!public! !
 defaultLayoutManager!constants!private! !
 defaultWindowExStyle!constants!private! !
 errorDuplicateName:!exceptions!public! !
+filerProxyIn:!binary filing!private! !
 implicitInsets:!accessing!private! !
 initialize!initializing!private! !
 insets!accessing!public! !

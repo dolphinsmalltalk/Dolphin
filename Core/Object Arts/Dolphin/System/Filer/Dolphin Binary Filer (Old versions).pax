@@ -1,0 +1,130 @@
+﻿| package |
+package := Package name: 'Dolphin Binary Filer (Old versions)'.
+package paxVersion: 2.1;
+	basicComment: 'Dolphin 🐬 Smalltalk STB Binary object graph serialiser, old versions.
+Copyright ©️ Object Arts Ltd. 1997-2023. Portions Copyright ©️ CGI Group (Europe) Ltd. 1997.
+
+Old versions of the STB Filer for interchange of serialised objects with older Dolphin versions.'.
+
+
+package setClassNames: #(
+	#{Kernel.STBInFiler0}
+	#{Kernel.STBInFiler1}
+	#{Kernel.STBInFiler2}
+	#{Kernel.STBInFiler3}
+	#{Kernel.STBInFiler4}
+	#{Kernel.STBInFiler5}
+	#{Kernel.STBLegacyOutFiler}
+	#{Kernel.STBOutFiler0}
+	#{Kernel.STBOutFiler1}
+	#{Kernel.STBOutFiler2}
+	#{Kernel.STBOutFiler3}
+	#{Kernel.STBOutFiler4}
+	#{Kernel.STBOutFiler5}
+).
+
+package setPrerequisites: #(
+	'..\..\Base\Dolphin'
+	'Dolphin Binary Filer'
+	'Dolphin STx Filer Core'
+	'Dolphin STx Filer Core (Old versions)'
+).
+
+package!
+
+"Class Definitions"!
+
+Kernel.STBInFiler
+	subclass: #'Kernel.STBInFiler0'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.STBInFiler
+	subclass: #'Kernel.STBInFiler5'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.STBInFiler0
+	subclass: #'Kernel.STBInFiler1'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.STBInFiler1
+	subclass: #'Kernel.STBInFiler2'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.STBInFiler2
+	subclass: #'Kernel.STBInFiler3'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.STBInFiler3
+	subclass: #'Kernel.STBInFiler4'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.STBOutFiler
+	subclass: #'Kernel.STBLegacyOutFiler'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.STBLegacyOutFiler
+	subclass: #'Kernel.STBOutFiler0'
+	instanceVariableNames: 'globals globalNils'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.STBLegacyOutFiler
+	subclass: #'Kernel.STBOutFiler5'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.STBOutFiler0
+	subclass: #'Kernel.STBOutFiler1'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.STBOutFiler1
+	subclass: #'Kernel.STBOutFiler2'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.STBOutFiler2
+	subclass: #'Kernel.STBOutFiler3'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.STBOutFiler3
+	subclass: #'Kernel.STBOutFiler4'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+"End of package definition"!
+

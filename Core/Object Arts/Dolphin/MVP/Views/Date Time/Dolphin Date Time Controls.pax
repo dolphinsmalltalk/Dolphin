@@ -32,6 +32,7 @@ package setPrerequisites: #(
 	'..\..\Presenters\Date Time\Dolphin Date Time Presenters'
 	'..\..\Graphics\Dolphin GDI Graphics'
 	'..\..\..\Base\Dolphin Legacy Date & Time'
+	'..\..\..\System\Filer\Dolphin Literal Filer'
 	'..\..\Base\Dolphin MVP Base'
 	'..\..\Type Converters\Dolphin Type Converters'
 	'..\..\Models\Value\Dolphin Value Models'

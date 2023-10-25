@@ -24,6 +24,7 @@ package setPrerequisites: #(
 	'..\..\Views\Buttons\Dolphin Check Buttons'
 	'..\..\Graphics\Dolphin GDI Graphics'
 	'..\..\Views\GroupBox\Dolphin GroupBox'
+	'..\..\..\System\Filer\Dolphin Literal Filer'
 	'..\..\Base\Dolphin MVP Base'
 	'..\..\Views\Buttons\Dolphin Push Buttons'
 	'..\..\Presenters\Radio\Dolphin Radio Buttons'

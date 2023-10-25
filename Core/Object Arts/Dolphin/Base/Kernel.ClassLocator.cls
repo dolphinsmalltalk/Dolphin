@@ -110,6 +110,11 @@ hasPackageName
 
 	^self packageName notNil!
 
+includesClass: aClass
+	"Answer whether the <Class> argument is within the allowed set."
+
+	^true!
+
 initialize
 	"Private - Initialize the receiver's identity instance variables."
 
@@ -189,6 +194,7 @@ fullClassKey!accessing!private! !
 fullClassKey:!helpers!private! !
 fullPackageKey!accessing!public! !
 hasPackageName!accessing!private! !
+includesClass:!public!testing! !
 initialize!initializing!private! !
 installImportedClass:!operations!private! !
 key!accessing!public! !

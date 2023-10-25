@@ -41,6 +41,7 @@ package setPrerequisites: #(
 	'..\..\..\Dolphin\Base\Dolphin'
 	'..\..\..\Dolphin\MVP\Base\Dolphin Basic Geometry'
 	'..\..\..\Dolphin\MVP\Graphics\Dolphin GDI Graphics'
+	'..\..\..\Dolphin\System\Filer\Dolphin Literal Filer'
 	'..\..\..\Dolphin\MVP\Base\Dolphin MVP Base'
 	'..\..\..\Dolphin\MVP\Views\Buttons\Dolphin Push Buttons'
 	'..\..\..\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter'

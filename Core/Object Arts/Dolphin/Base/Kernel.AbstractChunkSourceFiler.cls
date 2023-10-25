@@ -129,6 +129,12 @@ fileIn
 					beep;
 					resumeWithStubMethod]!
 
+fileOutBasicDefinitionOfClass: aClass
+	"Print a definition of the <Class>, aClass, onto the receiver's stream."
+
+	self printBasicDefinitionOfClass: aClass.
+	stream nextPut: $!!!
+
 fileOutExpression: aString
 	"Append an immediate expression evaluation to the source stream."
 
@@ -182,6 +188,62 @@ normalizeLineEndings
 normalizeLineEndings: aBoolean
 	flags := flags mask: NormalizeEolsMask set: aBoolean!
 
+printBasicDefinitionOfClass: aClass
+	self printBasicDefinitionOfClass: aClass on: stream!
+
+printBasicDefinitionOfClass: aClass on: aPuttableStream
+	| classConstants |
+	aClass superclass
+		ifNil: [aPuttableStream nextPutAll: 'nil']
+		ifNotNil: [:base | self emitClassName: base on: aPuttableStream].
+	aPuttableStream
+		space;
+		nextPutAll: aClass kindOfSubclass;
+		space;
+		print: (aClass isInBaseEnvironment
+					ifTrue: [aClass unqualifiedName]
+					ifFalse: [aClass fullName asSymbol]);
+		crtab.
+	self
+		printVariables: aClass instanceVariableNames
+		string: 'instanceVariableNames:'
+		on: aPuttableStream.
+	aPuttableStream crtab.
+	self
+		printVariables: aClass classVariableNames asSortedArray
+		string: 'classVariableNames:'
+		on: aPuttableStream.
+	aPuttableStream
+		crtab;
+		nextPutAll: 'imports: ';
+		print: aClass imports;
+		crtab.
+	self
+		printVariables: aClass classInstanceVariableNames
+		string: 'classInstanceVariableNames:'
+		on: aPuttableStream.
+	aPuttableStream
+		crtab;
+		nextPutAll: 'classConstants: {'.
+	classConstants := aClass classConstants.
+	classConstants isEmpty
+		ifFalse: 
+			[classConstants asSortedArray do: 
+					[:each |
+					aPuttableStream
+						crtab: 2;
+						print: each]
+				separatedBy: [aPuttableStream nextPut: $.].
+			aPuttableStream crtab].
+	aPuttableStream nextPut: $}!
+
+printVariables: aCollection string: aString on: aPuttableStream
+	aPuttableStream
+		nextPutAll: aString;
+		nextPutAll: ' '''.
+	aCollection do: [:each | aPuttableStream nextPutAll: each] separatedBy: [aPuttableStream space].
+	aPuttableStream nextPut: $'!
+
 sourceDescriptorForIndex: indexInteger position: positionInteger 
 	"Private - Answer an <integer> source descriptor which encodes the <integer> source file
 	index, indexInteger, and the <integer> source file position, positionInteger. The source
@@ -214,12 +276,16 @@ endChunk!private!source filing-file out! !
 environment!accessing!public! !
 environment:!accessing!public! !
 fileIn!public!source filing-file in! !
+fileOutBasicDefinitionOfClass:!public!source filing-file out! !
 fileOutExpression:!public!source filing-file out! !
 getSourceFromDescriptor:!public!source filing-file in! !
 nextChunk!private!source filing-file in! !
 nextChunkPut:!private!source filing-file out! !
 normalizeLineEndings!accessing!public! !
 normalizeLineEndings:!accessing!public! !
+printBasicDefinitionOfClass:!public!source filing-file out! !
+printBasicDefinitionOfClass:on:!private!source filing-file out! !
+printVariables:string:on:!private!source filing-file out! !
 sourceDescriptorForIndex:position:!private!source filing-file in! !
 storeSourceString:forMethod:!private!source filing-file out! !
 !

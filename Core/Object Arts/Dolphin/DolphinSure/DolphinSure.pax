@@ -61,11 +61,11 @@ package setBinaryVariableNames: #(
 
 package setPrerequisites: #(
 	'..\Base\Dolphin'
-	'..\System\Filer\Dolphin Binary Filer'
+	'..\System\Filer\Dolphin Binary Filer (Old versions)'
 	'..\Base\Dolphin Legacy Date & Time'
 	'..\System\Random\Dolphin Random Stream'
 	'..\Registry\Dolphin Registry Access'
-	'..\System\Filer\Dolphin STx Filer (Old versions)'
+	'..\System\Filer\Dolphin Validating Binary Filer'
 ).
 
 package!

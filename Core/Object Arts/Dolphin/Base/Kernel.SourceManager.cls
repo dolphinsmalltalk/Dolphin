@@ -244,6 +244,18 @@ isMethodChanged: aCompiledMethod
 					ifNil: [false]
 					ifNotNil: [:i | (self changePositionOf: aCompiledMethod) >= i]]!
 
+logDefinitionOfClass: aClassDescription
+	self changesFiler
+		ifNotNil: 
+			[:logger |
+			mutex critical: 
+					[logger
+						setToEnd;
+						fileOutBasicDefinitionOfClass: aClassDescription instanceClass;
+						cr;
+						cr;
+						flush]]!
+
 logEvaluate: aString
 	"Record aString to the change log as an expression which has been evaluated."
 
@@ -255,6 +267,32 @@ logEvaluate: aString
 						setToEnd;
 						fileOutExpression: aString;
 						flush]]!
+
+logRemoveSelector: aSymbol of: aClassDescription
+	self changesFiler
+		ifNotNil: 
+			[:logger |
+			mutex critical: 
+					[logger
+						setToEnd;
+						logRemoveSelector: aSymbol of: aClassDescription;
+						flush]]!
+
+logRemoveSelectors: aCollection of: aClassDescription
+	self changesFiler
+		ifNotNil: 
+			[:logger |
+			mutex critical: 
+					[logger
+						setToEnd;
+						logRemoveSelectors: aCollection of: aClassDescription;
+						flush]]!
+
+mutex
+	^mutex!
+
+mutex: anObject
+	mutex := anObject!
 
 onExit
 	"Private - The system is about to exit, close the source files."
@@ -457,7 +495,12 @@ hasSources!private!testing! !
 ignoreSources!operations-source files!private! !
 initialize!initializing!private! !
 isMethodChanged:!development!private!testing! !
+logDefinitionOfClass:!class hierarchy-mutating!instance variables!public! !
 logEvaluate:!operations-logging!public! !
+logRemoveSelector:of:!development!helpers!public! !
+logRemoveSelectors:of:!development!helpers!public! !
+mutex!accessing!private! !
+mutex:!accessing!private! !
 onExit!event handling!private! !
 openChangesFile:!operations-source files!private! !
 openNewChangesFile:!helpers!private! !

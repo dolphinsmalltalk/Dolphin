@@ -39,6 +39,7 @@ package setPrerequisites: #(
 	'..\..\Base\Dolphin Basic Geometry'
 	'..\..\Dialogs\Common\Dolphin Common Dialogs'
 	'..\..\Graphics\Dolphin GDI Graphics'
+	'..\..\..\System\Filer\Dolphin Literal Filer'
 	'..\..\Base\Dolphin MVP Base'
 	'Dolphin Text Presenter'
 	'..\..\Type Converters\Dolphin Type Converters'
@@ -447,8 +448,7 @@ UI.MultilineTextEdit
 	classConstants: {
 			'AutoUrlDetectionMask' -> 16r1000000.
 			'ParagraphAlignmentMap'
-				-> (IdentityDictionary withAll: { #center -> 16r3. #left -> 16r1. #right -> 16r2 }).
-			'StreamInIndex' -> 16r15
+				-> (IdentityDictionary withAll: { #center -> 16r3. #left -> 16r1. #right -> 16r2 })
 		}!
 
 "Loose Methods"!

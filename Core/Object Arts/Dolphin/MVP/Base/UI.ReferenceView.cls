@@ -38,19 +38,16 @@ createDelegate
 	"Force load of referred resource"
 	self referee!
 
-filerProxy
+filerProxyIn: anSTxOutFiler
 	"Private - Answer a filer proxy that represents the receiver."
 
-	"Implementation Note: We must not save the referee, as the whole point is that this must be
-	restored from the referenced resource in its latest state."
+	"Implementation Note: We must not save the referee, as the whole point is that this must be restored from the referenced resource in its latest state."
 
-	| temp |
-	temp := referee.
-	referee := nil.
-	^
-	[super filerProxy
-		clearSubViews;
-		yourself] ensure: [referee := temp]!
+	| proxy |
+	proxy := super filerProxyIn: anSTxOutFiler.
+	proxy clearSubViews.
+	proxy instVars at: ##(self indexOfInstVar: 'referee') put: nil.
+	^proxy!
 
 loadReferee
 	referee := resourceIdentifier loadWithContext: self.
@@ -138,7 +135,7 @@ validateUserInterface
 !UI.ReferenceView categoriesForMethods!
 configureReferee!helpers!private! !
 createDelegate!event handling!private! !
-filerProxy!binary filing!private! !
+filerProxyIn:!binary filing!private! !
 loadReferee!helpers!private! !
 nonReferenceAncestor!accessing!public! !
 presenterConnectionPoint!public! !

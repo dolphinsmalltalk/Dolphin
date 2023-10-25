@@ -130,6 +130,7 @@ package setClassNames: #(
 	#{Tools.STBDebugger}
 	#{Tools.STLDebugger}
 	#{Tools.StructureInspector}
+	#{Tools.STxDebugger}
 	#{Tools.ThisContextSearch}
 	#{Tools.TwinLevelInspector}
 	#{Tools.UnclassifiedMethodsCategory}
@@ -392,7 +393,7 @@ package setMethodNames: #(
 	#(#{Graphics.Point3D class} #publishedAspectsOfInstances)
 	#(#{Graphics.Rectangle class} #publishedAspectsOfInstances)
 	#(#{Graphics.TextTileIcon class} #newInstanceAspect:class:)
-	#(#{Kernel.AbstractChunkSourceFiler class} #stlPolicy)
+	#(#{Kernel.AbstractChunkSourceFiler class} #stlFilerClass)
 	#(#{Kernel.BindingReference} #browse)
 	#(#{Kernel.BlockClosure} #cpuCyclesToRun)
 	#(#{Kernel.BlockClosure class} #publishedAspectsOfInstances)
@@ -857,6 +858,7 @@ package setPrerequisites: #(
 	'..\..\MVP\Presenters\List\Dolphin List Presenter'
 	'..\..\MVP\Presenters\ListTree\Dolphin List Tree Presenter'
 	'..\..\System\Filer\Dolphin Literal Filer'
+	'..\..\System\Filer\Dolphin Literal Out Filer'
 	'..\..\System\Win32\MessageBox\Dolphin Message Box'
 	'..\..\MVP\Metafiles\Dolphin Metafiles'
 	'..\..\MVP\Views\MoenTree\Dolphin MoenTree View'
@@ -1838,16 +1840,23 @@ Tools.SmalltalkSystemIcon
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.STBInFiler
-	subclass: #'Tools.STBDebugger'
-	instanceVariableNames: 'indentLevel traceStream printOffsets'
+Kernel.STxInFilerWrapper
+	subclass: #'Tools.STxDebugger'
+	instanceVariableNames: 'indentLevel count traceStream printOffsets'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.STLInFiler
+Tools.STxDebugger
+	subclass: #'Tools.STBDebugger'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Tools.STxDebugger
 	subclass: #'Tools.STLDebugger'
-	instanceVariableNames: 'indentLevel traceStream printOffsets slotName'
+	instanceVariableNames: 'slotName'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -4630,10 +4639,10 @@ newInstanceAspect:class:!adapters!private! !
 
 !Kernel.AbstractChunkSourceFiler class methodsFor!
 
-stlPolicy
-	^STLOutFiler policyClass! !
+stlFilerClass
+	^STLOutFiler! !
 !Kernel.AbstractChunkSourceFiler class categoriesForMethods!
-stlPolicy!constants!public! !
+stlFilerClass!constants!public! !
 !
 
 !Kernel.BindingReference methodsFor!
@@ -8359,7 +8368,7 @@ assignLiteralResourceData: aLiteralArray
 assignView: aView
 	| stream |
 	stream := Array writeStream: 128.
-	aView literalStoreOn: stream policy: self stlPolicy.
+	aView binaryStoreUsing: (self stlFilerClass on: stream).
 	self assign: stream contents!
 
 browse
@@ -9695,7 +9704,7 @@ aspectDisplayOn: aStream
   	self printOn: aStream!
 
 loadViewResource: aResourceArray forEdit: isLoadingForEdit
-	"Add an instance of the resource held in anSTLArray. Answer the new view."
+	"Add an instance of the resource held in aResourceArray. Answer the new view."
 
 	| stream filerClass |
 	filerClass := (aResourceArray isKindOf: ByteArray) ifTrue: [STBInFiler] ifFalse: [STLInFiler].

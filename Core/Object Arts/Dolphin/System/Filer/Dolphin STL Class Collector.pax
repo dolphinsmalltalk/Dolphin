@@ -1,0 +1,33 @@
+﻿| package |
+package := Package name: 'Dolphin STL Class Collector'.
+package paxVersion: 2.1;
+	basicComment: 'Dolphin 🐬 Smalltalk STL (Literal) object graph class collector
+Copyright © Object Arts Ltd. 2021-2023
+
+Determines classes required to deserialize an STL object stream. Used to help trace package prerequisites and by the Lagoon application deployment image stripper for finding hidden class references in resources.'.
+
+
+package setClassNames: #(
+	#{Kernel.STLClassCollector}
+).
+
+package setPrerequisites: #(
+	'..\..\Base\Dolphin'
+	'Dolphin Literal Filer'
+	'Dolphin STx Filer Core'
+).
+
+package!
+
+"Class Definitions"!
+
+Kernel.STxInFilerWrapper
+	subclass: #'Kernel.STLClassCollector'
+	instanceVariableNames: 'classes resourceIdentifiers'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+"End of package definition"!
+

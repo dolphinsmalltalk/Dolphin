@@ -20,7 +20,10 @@ package setClassNames: #(
 	#{Tools.Tests.SmalltalkSystemTest}
 	#{Tools.Tests.SmalltalkWorkspaceTest}
 	#{Tools.Tests.SourceBrowserTest}
+	#{Tools.Tests.STBDebuggerTest}
+	#{Tools.Tests.STLDebuggerTest}
 	#{Tools.Tests.StStyler}
+	#{Tools.Tests.STxDebuggerTest}
 ).
 
 package setMethodNames: #(
@@ -41,17 +44,21 @@ package setMethodNames: #(
 package setPrerequisites: #(
 	'Development System'
 	'..\..\Base\Dolphin'
+	'..\..\Base\Dolphin Additional Sort Algorithms'
 	'..\..\Base\Tests\Dolphin Base Tests'
 	'..\..\MVP\Base\Dolphin Basic Geometry'
+	'..\..\System\Filer\Dolphin Binary Filer'
 	'..\..\MVP\Dialogs\Common\Dolphin Common Dialogs'
 	'..\..\MVP\Dialogs\Common\Dolphin Common Print Dialog'
 	'..\Community Edition\Dolphin Community Edition Tools'
 	'..\..\MVP\Graphics\Dolphin GDI Graphics'
+	'..\..\System\Filer\Dolphin Literal Filer (Old versions)'
+	'..\..\System\Filer\Dolphin Literal Out Filer'
 	'..\..\MVP\Base\Dolphin MVP Base'
 	'..\..\MVP\Tests\Dolphin MVP Tests'
 	'..\..\MVP\Presenters\Text\Dolphin Rich Text Presenter'
 	'..\..\MVP\Views\Scintilla\Tests\Dolphin Scintilla View Tests'
-	'..\..\System\Filer\Dolphin STx Filer (Old versions)'
+	'..\..\System\Filer\Dolphin STx Filer Core'
 	'..\..\MVP\Presenters\Text\Dolphin Text Presenter'
 	'..\..\MVP\Type Converters\Dolphin Type Converters'
 	'..\..\MVP\Models\Value\Dolphin Value Models'
@@ -136,6 +143,13 @@ Core.Tests.DolphinTest
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Tests.DolphinTest
+	subclass: #'Tools.Tests.STxDebuggerTest'
+	instanceVariableNames: ''
+	classVariableNames: 'TestVar'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.DolphinTest
 	subclass: #'OS.Tests.VersionResourceTest'
 	instanceVariableNames: 'updatePath sourceModule sourceSize sourceBytes'
 	classVariableNames: ''
@@ -158,6 +172,20 @@ UI.Tests.PresenterTest
 	classConstants: {}!
 UI.Tests.ImageViewAbstractTest
 	subclass: #'Tools.Tests.ImageListViewTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Tools.Tests.STxDebuggerTest
+	subclass: #'Tools.Tests.STBDebuggerTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Tools.Tests.STxDebuggerTest
+	subclass: #'Tools.Tests.STLDebuggerTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

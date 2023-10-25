@@ -2,85 +2,69 @@
 package := Package name: 'Dolphin STx Filer Core'.
 package paxVersion: 2.1;
 	basicComment: 'Dolphin 🐬 Smalltalk STx Filer Common Core.
-Copyright © Object Arts Ltd. 1997-2023
+Copyright ©️ Object Arts Ltd. 1997-2023. Portions Copyright ©️ CGI Group (Europe) Ltd. 1997.
 
 Contains common abstract and support classes, and extensions to the base Dolphin package, for the STx family of binary and literal (source format) serialisers.'.
 
 
 package setClassNames: #(
+	#{Kernel.STBClassProxy}
+	#{Kernel.STBCollectionProxy}
 	#{Kernel.STBError}
+	#{Kernel.STBIdentityDictionaryProxy}
+	#{Kernel.STBMetaclassProxy}
 	#{Kernel.STBSingletonProxy}
 	#{Kernel.STBSortedCollectionProxy}
 	#{Kernel.STBStaticVariableProxy}
 	#{Kernel.STxClassConversion}
 	#{Kernel.STxFiler}
 	#{Kernel.STxInFiler}
-	#{Kernel.STxOutFiler}
+	#{Kernel.STxInFilerWrapper}
 	#{Kernel.STxProxy}
-	#{Kernel.STxVersionPolicy}
 ).
 
 package setMethodNames: #(
-	#(#{Core.Array} #stbSaveOn:)
-	#(#{Core.Boolean} #stbSaveOn:)
-	#(#{Core.Character} #stbSaveOn:)
 	#(#{Core.Class} #stbConvertFrom:)
 	#(#{Core.Class} #stbVersion)
 	#(#{Core.ClassDescription} #stbReadFrom:format:)
+	#(#{Core.ClassDescription} #stbReadFrom:format:size:)
 	#(#{Core.DateAndTime class} #stbConvertFrom:)
 	#(#{Core.DateAndTime class} #stbVersion)
-	#(#{Core.Dictionary} #stbSaveOn:)
-	#(#{Core.Float} #stbSaveOn:)
-	#(#{Core.LargeInteger} #stbSaveOn:)
-	#(#{Core.Locale} #stbSaveOn:)
 	#(#{Core.Locale class} #stbConvertFrom:)
+	#(#{Core.Locale class} #stbReadFrom:format:size:)
 	#(#{Core.Locale class} #stbVersion)
-	#(#{Core.LookupTable} #stbSaveOn:)
-	#(#{Core.Model} #stbSaveOn:)
+	#(#{Core.LookupTable class} #stbReadFrom:format:size:)
 	#(#{Core.Model class} #stbConvertFrom:)
 	#(#{Core.Model class} #stbVersion)
 	#(#{Core.Object} #stbFixup:at:)
-	#(#{Core.Object} #stbSaveOn:)
-	#(#{Core.OrderedCollection} #stbSaveOn:)
-	#(#{Core.Process} #stbSaveOn:)
-	#(#{Core.ScaledDecimal} #stbSaveOn:)
-	#(#{Core.Set} #stbSaveOn:)
-	#(#{Core.SharedLookupTable} #stbSaveOn:)
-	#(#{Core.SharedSet} #stbSaveOn:)
-	#(#{Core.SmallInteger} #stbSaveOn:)
-	#(#{Core.SortedCollection} #stbSaveOn:)
-	#(#{Core.String} #stbSaveOn:)
+	#(#{Core.OrderedCollection class} #stbReadFrom:format:size:)
+	#(#{Core.Set class} #stbReadFrom:format:size:)
 	#(#{Core.String class} #stbConvertFrom:)
+	#(#{Core.String class} #stbReadFrom:format:)
 	#(#{Core.String class} #stbVersion)
 	#(#{Core.Utf16String class} #stbConvertFrom:)
-	#(#{External.Address} #stbSaveOn:)
-	#(#{External.DynamicLinkLibrary} #stbSaveOn:)
-	#(#{External.ExternalMethod} #stbSaveOn:)
-	#(#{External.Handle} #stbSaveOn:)
-	#(#{External.ResourceLibrary} #stbSaveOn:)
+	#(#{External.DynamicLinkLibrary class} #stbReadFrom:format:size:)
 	#(#{External.ResourceLibrary class} #stbConvertFrom:)
 	#(#{External.ResourceLibrary class} #stbReadFrom:format:size:)
 	#(#{External.ResourceLibrary class} #stbVersion)
+	#(#{External.Structure class} #stbReadFrom:format:size:)
 	#(#{External.StructureArray class} #stbConvertFrom:)
 	#(#{External.StructureArray class} #stbVersion)
-	#(#{Kernel.AbsoluteFileLocator} #stbSaveOn:)
-	#(#{Kernel.BindingReference} #stbSaveOn:)
+	#(#{Kernel.AbsoluteFileLocator class} #stbReadFrom:format:size:)
 	#(#{Kernel.BindingReference class} #stbConvertFrom:)
 	#(#{Kernel.BindingReference class} #stbVersion)
 	#(#{Kernel.BlockClosure class} #stbVersion)
 	#(#{Kernel.ClassLocator class} #stbConvertFrom:)
 	#(#{Kernel.ClassLocator class} #stbVersion)
-	#(#{Kernel.FullBindingReference} #stbSaveOn:)
-	#(#{Kernel.ImageRelativeFileLocator} #stbSaveOn:)
-	#(#{Kernel.InstallRelativeFileLocator} #stbSaveOn:)
+	#(#{Kernel.ImageRelativeFileLocator class} #stbReadFrom:format:size:)
+	#(#{Kernel.InstallRelativeFileLocator class} #stbReadFrom:format:size:)
 	#(#{Kernel.MetaBindingReference class} #stbConvertFrom:)
-	#(#{Kernel.Package} #stbSaveOn:)
-	#(#{Kernel.ProcessorScheduler} #stbSaveOn:)
-	#(#{Kernel.SingletonSearchPolicy} #stbSaveOn:)
-	#(#{Kernel.SmalltalkLocale} #stbSaveOn:)
+	#(#{Kernel.SingletonSearchPolicy class} #stbReadFrom:format:size:)
+	#(#{Kernel.SmalltalkLocale class} #stbReadFrom:format:size:)
 	#(#{Kernel.VariableBinding class} #stbConvertFrom:)
 	#(#{Kernel.VariableBinding class} #stbVersion)
-	#(#{OS.InvariantLocale} #stbSaveOn:)
+	#(#{OS.InvariantLocale class} #stbReadFrom:format:size:)
+	#(#{OS.WindowsLocale class} #stbReadFrom:format:size:)
 	#(#{UI.ResourceIdentifier class} #stbConvertFrom:)
 	#(#{UI.ResourceIdentifier class} #stbVersion)
 ).
@@ -102,7 +86,32 @@ Core.Object
 	classConstants: {}!
 Core.Object
 	subclass: #'Kernel.STxFiler'
-	instanceVariableNames: 'stream context policy'
+	instanceVariableNames: 'stream predefinedClassOffset flags'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'LastPredefinedClassRef' -> 16r18.
+			'PrefixBytesMask' -> 16r30.
+			'PrefixCharacterMask' -> 16r4.
+			'PrefixClassMask' -> 16r6.
+			'PrefixDataMask' -> 16r2.
+			'PrefixInstSizeMask' -> 16rFF.
+			'PrefixInstSizeShift' -> 16r8.
+			'PrefixInstSizeUnshift' -> -16r8.
+			'PrefixLiteralMask' -> 16r8.
+			'PrefixLocatorLenShift' -> 16r10.
+			'PrefixLocatorLenUnshift' -> -16r10.
+			'PrefixNonZeroVersionMask' -> 16r40.
+			'PrefixProxyMask' -> 16r8.
+			'PrefixRefShift' -> 16r4.
+			'PrefixRefUnshift' -> -16r4.
+			'PrefixSmallIntegerMask' -> 16r1.
+			'PrefixVariableMask' -> 16r20
+		}!
+Core.Object
+	subclass: #'Kernel.STxInFilerWrapper'
+	instanceVariableNames: 'stream decorated'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -114,30 +123,6 @@ Core.Object
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object
-	subclass: #'Kernel.STxVersionPolicy'
-	instanceVariableNames: 'filer stream version'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: 'version signatureBytes'
-	classConstants: {
-			'LastPredefinedClassRef' -> 16r18.
-			'PrefixBytesMask' -> 16r30.
-			'PrefixCharacterMask' -> 16r4.
-			'PrefixClassMask' -> 16r6.
-			'PrefixDataMask' -> 16r2.
-			'PrefixInstSizeMask' -> 16rFF.
-			'PrefixInstSizeShift' -> 16r8.
-			'PrefixInstSizeUnshift' -> -16r8.
-			'PrefixLocatorLenShift' -> 16r10.
-			'PrefixLocatorLenUnshift' -> -16r10.
-			'PrefixNonZeroVersionMask' -> 16r40.
-			'PrefixProxyMask' -> 16r8.
-			'PrefixRefShift' -> 16r4.
-			'PrefixRefUnshift' -> -16r4.
-			'PrefixSmallIntegerMask' -> 16r1.
-			'PrefixVariableMask' -> 16r20
-		}!
 Core.Error
 	subclass: #'Kernel.STBError'
 	instanceVariableNames: ''
@@ -147,14 +132,21 @@ Core.Error
 	classConstants: {}!
 Kernel.STxFiler
 	subclass: #'Kernel.STxInFiler'
-	instanceVariableNames: 'readMap converters deferredActions flags'
+	instanceVariableNames: 'decorator readMap converters deferredActions classLocator context'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'UpgradingMask' -> 16r1 }!
-Kernel.STxFiler
-	subclass: #'Kernel.STxOutFiler'
-	instanceVariableNames: 'writeMap proxyOverrides refOffset'
+Kernel.STxProxy
+	subclass: #'Kernel.STBClassProxy'
+	instanceVariableNames: 'packageName locatorKey'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.STxProxy
+	subclass: #'Kernel.STBCollectionProxy'
+	instanceVariableNames: 'class array'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -180,36 +172,22 @@ Kernel.STxProxy
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+Kernel.STBClassProxy
+	subclass: #'Kernel.STBMetaclassProxy'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.STBCollectionProxy
+	subclass: #'Kernel.STBIdentityDictionaryProxy'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
-
-!Core.Array methodsFor!
-
-stbSaveOn: anSTxOutFiler
-	"Save a serialised representation of the receiver to the <STxOutFiler> argument. Some Arrays can be stored as literals in STL, although only if all the elements are atomic."
-
-	anSTxOutFiler saveArray: self! !
-!Core.Array categoriesForMethods!
-stbSaveOn:!binary filing!public! !
-!
-
-!Core.Boolean methodsFor!
-
-stbSaveOn: aSTxOutFiler 
-	^aSTxOutFiler saveBoolean: self! !
-!Core.Boolean categoriesForMethods!
-stbSaveOn:!public! !
-!
-
-!Core.Character methodsFor!
-
-stbSaveOn: anSTxOutFiler
-	"Save a serialised representation of the receiver to the <STxOutFiler> argument. Characters can be stored as literals in STL."
-
-	anSTxOutFiler saveCharacter: self! !
-!Core.Character categoriesForMethods!
-stbSaveOn:!binary filing!public! !
-!
 
 !Core.Class methodsFor!
 
@@ -249,9 +227,18 @@ stbReadFrom: anSTBInFiler format: anSTBClassConversion
 	^self
 		stbReadFrom: anSTBInFiler
 		format: anSTBClassConversion
-		size: (anSTBInFiler readSizeOf: self)! !
+		size: (anSTBInFiler readSizeOf: self)!
+
+stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
+	"Read an instance of the receiver from the binary filer, aSTBInFiler. In most cases we can just bat this right back to the in-filer, and let it read its standard format from the stream. Custom format (or read routines) are useful where the standard STB format, and/or reader, is too inefficient in terms of space, or time, or both. It can also be used to avoid the need to create a proxy class; an example of this is the filing of symbols, which relegates the old STBSymbolProxy class to use only for reading older STB files."
+
+	^anSTBInFiler
+		readObjectOfClass: self
+		format: anSTBClassConversion
+		size: anInteger! !
 !Core.ClassDescription categoriesForMethods!
 stbReadFrom:format:!binary filing!public! !
+stbReadFrom:format:size:!binary filing!public! !
 !
 
 !Core.DateAndTime class methodsFor!
@@ -290,60 +277,6 @@ stbConvertFrom:!binary filing!public! !
 stbVersion!binary filing!development!public! !
 !
 
-!Core.Dictionary methodsFor!
-
-stbSaveOn: anSTxOutFiler
-	"Save a serialised representation of the receiver to the <STxOutFiler> argument.
-	In older STB representations <Dictionary>s were proxied by <STCollectionProxy>s that held the associations in an array. As of STx version 6 collection proxies are no longer used, and the associations are written directly to the stream after the class."
-
-	anSTxOutFiler saveSet: self elements: self associations! !
-!Core.Dictionary categoriesForMethods!
-stbSaveOn:!binary filing!public! !
-!
-
-!Core.Float methodsFor!
-
-stbSaveOn: anSTxOutFiler
-	"Save a serialised representation of the receiver to the <STxOutFiler> argument. Floats can be stored as literals in STL."
-
-	anSTxOutFiler saveFloat: self! !
-!Core.Float categoriesForMethods!
-stbSaveOn:!binary filing!public! !
-!
-
-!Core.LargeInteger methodsFor!
-
-stbSaveOn: anSTxOutFiler
-	"Save a serialised representation of the receiver to the <STxOutFiler> argument. LargeIntegers can be stored as literals in STL."
-
-	anSTxOutFiler saveLargeInteger: self! !
-!Core.LargeInteger categoriesForMethods!
-stbSaveOn:!binary filing!public! !
-!
-
-!Core.Locale methodsFor!
-
-stbSaveOn: anSTxOutFiler
-	| id |
-	anSTxOutFiler writePreambleFor: self class: Locale.
-	self = UserDefault
-		ifTrue: 
-			[anSTxOutFiler nextPut: #userDefault.
-			^self].
-	id := self basicLcid.
-	id = OS.Kernel32 getSystemDefaultLCID
-		ifTrue: 
-			[anSTxOutFiler nextPut: #systemDefault.
-			^self].
-	id = OS.Kernel32 getThreadUILanguage
-		ifTrue: 
-			[anSTxOutFiler nextPut: #uiDefault.
-			^self].
-	anSTxOutFiler nextPut: id! !
-!Core.Locale categoriesForMethods!
-stbSaveOn:!binary filing!public! !
-!
-
 !Core.Locale class methodsFor!
 
 stbConvertFrom: anSTBClassFormat
@@ -353,33 +286,40 @@ stbConvertFrom: anSTBClassFormat
 
 	^[:data | data error: 'Not used']!
 
+stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
+	"Read an instance of the receiver from the binary filer, aSTBInFiler."
+
+	"Implementation Note: Overridden in order to maintain unique instances without using a STBSingletonProxy."
+
+	| locale id ref |
+	ref := anSTBInFiler register: nil.
+	id := anSTBInFiler basicNext.
+	locale := id isInteger
+				ifTrue: [self lcid: id]
+				ifFalse: 
+					[(#(#userDefault #smalltalk #invariant #systemDefault #uiDefault) identityIncludes: id)
+						ifTrue: [self perform: id]
+						ifFalse: [self named: id]].
+	anSTBInFiler fixup: ref to: locale.
+	^locale!
+
 stbVersion
 	^1! !
 !Core.Locale class categoriesForMethods!
 stbConvertFrom:!public! !
+stbReadFrom:format:size:!public! !
 stbVersion!public! !
 !
 
-!Core.LookupTable methodsFor!
+!Core.LookupTable class methodsFor!
 
-stbSaveOn: anSTxOutFiler
-	"Save a serialised representation of the receiver to the <STxOutFiler> argument.
-	In older STB representations <LookupTable>s were proxied by <STBIdentityDictionaryProxy>s that held the key:value pairs as successive pairs of elements in a single array. As of STx version 6 collection proxies are no longer used, and the pairs are written directly to the stream after the class."
-
-	anSTxOutFiler saveLookupTable: self! !
-!Core.LookupTable categoriesForMethods!
-stbSaveOn:!binary filing!public! !
-!
-
-!Core.Model methodsFor!
-
-stbSaveOn: anSTxOutFiler
-	"Output the receiver to anSTxOutFiler. We must ensure that the local events collection	is NOT saved to the filer"
-
-	anSTxOutFiler override: events with: nil.
-	super stbSaveOn: anSTxOutFiler.! !
-!Core.Model categoriesForMethods!
-stbSaveOn:!binary filing!public! !
+stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
+	^anSTBInFiler
+		readLookupTable: self
+		format: anSTBClassConversion
+		size: anInteger! !
+!Core.LookupTable class categoriesForMethods!
+stbReadFrom:format:size:!binary filing!public! !
 !
 
 !Core.Model class methodsFor!
@@ -412,135 +352,50 @@ stbFixup: anSTBInFiler at: newObjectIndex
 	Typically this is overridden by subclasses of STBProxy to answer the proxied object. Other classes
 	may also override this method to effectively 'one way become' the receiver to some other object"
 
-	^self!
-
-stbSaveOn: anSTxOutFiler
-	"Save out a serialised representation of the receiver to the <STxOutFiler> argument.
-	The options are:
-	1.	to let the filer output the receiver as normal using
-			STxOutFiler>>#saveObject: self.
-				or
-			STxOutFiler>>#saveObject: self as: 0.
-
-	2.	to output nil instead of the receiver using
-			STxOutFiler>>#saveObject: self as: nil.
-
-	3.	to output a proxy in place of the receiver using
-			STxOutFiler>>#saveObject: self as: anSTBProxy.
-		The proxy will be sent a #fixup:at: message at load time (see STB classes) and should then
-		answer the object it represents.
-
-	By default, objects are happy to be saved and loaded just as they are (option 1)."
-
-	anSTxOutFiler saveObject: self! !
+	^self! !
 !Core.Object categoriesForMethods!
 stbFixup:at:!binary filing!public! !
-stbSaveOn:!binary filing!public! !
 !
 
-!Core.OrderedCollection methodsFor!
+!Core.OrderedCollection class methodsFor!
 
-stbSaveOn: anSTxOutFiler
-	"Save a serialised representation of the receiver to the <STxOutFiler> argument.
-	In older STB representations <OrderedCollection>s were proxied by <STCollectionProxy>s that held the elements in an array. As of STx version 6 collection proxies are no longer used, and the elements are written directly to the stream after the class."
-
-	anSTxOutFiler saveCollection: self! !
-!Core.OrderedCollection categoriesForMethods!
-stbSaveOn:!binary filing!public! !
+stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
+	^anSTBInFiler
+		readExtensibleCollection: self
+		format: anSTBClassConversion
+		size: anInteger! !
+!Core.OrderedCollection class categoriesForMethods!
+stbReadFrom:format:size:!binary filing!public! !
 !
 
-!Core.Process methodsFor!
+!Core.Set class methodsFor!
 
-stbSaveOn: anSTxOutFiler
-	"Save out a serialised representation of the receiver to anSTxOutFiler. 
-	Processes cannot be saved and restored correctly so output them as 
-	nil by default"
-
-	anSTxOutFiler saveObject: self as: nil.! !
-!Core.Process categoriesForMethods!
-stbSaveOn:!binary filing!public! !
-!
-
-!Core.ScaledDecimal methodsFor!
-
-stbSaveOn: anSTxOutFiler
-	"Save a serialised representation of the receiver to the <STxOutFiler> argument. Some ScaledDecimals can be stored as literals in STL."
-
-	anSTxOutFiler saveScaledDecimal: self! !
-!Core.ScaledDecimal categoriesForMethods!
-stbSaveOn:!binary filing!public! !
-!
-
-!Core.Set methodsFor!
-
-stbSaveOn: anSTxOutFiler
-	"Save a serialised representation of the receiver to the <STxOutFiler> argument.
-	In older STB representations <Set's>s were proxied by <STCollectionProxy>s that held the elements in an array. As of STx version 6 collection proxies are no longer used, and the elements are written directly to the stream after the class."
-
-	anSTxOutFiler saveSet: self elements: self! !
-!Core.Set categoriesForMethods!
-stbSaveOn:!binary filing!public! !
-!
-
-!Core.SharedLookupTable methodsFor!
-
-stbSaveOn: anSTxOutFiler
-	mutex critical: [super stbSaveOn: anSTxOutFiler]! !
-!Core.SharedLookupTable categoriesForMethods!
-stbSaveOn:!binary filing!public! !
-!
-
-!Core.SharedSet methodsFor!
-
-stbSaveOn: anSTxOutFiler
-	mutex critical: [super stbSaveOn: anSTxOutFiler]! !
-!Core.SharedSet categoriesForMethods!
-stbSaveOn:!binary filing!public! !
-!
-
-!Core.SmallInteger methodsFor!
-
-stbSaveOn: anSTxOutFiler
-	"Save a serialised representation of the receiver to the <STxOutFiler> argument. SmallIntegers have a special representation in STB and STL for efficiency."
-
-	anSTxOutFiler saveSmallInteger: self! !
-!Core.SmallInteger categoriesForMethods!
-stbSaveOn:!binary filing!public! !
-!
-
-!Core.SortedCollection methodsFor!
-
-stbSaveOn: anSTxOutFiler
-	algorithm ~~ self class defaultSortAlgorithm
-		ifTrue: [^anSTxOutFiler saveObject: self as: (STBSortedCollectionProxy forCollection: self)].
-	super stbSaveOn: anSTxOutFiler! !
-!Core.SortedCollection categoriesForMethods!
-stbSaveOn:!binary filing!public! !
-!
-
-!Core.String methodsFor!
-
-stbSaveOn: anSTxOutFiler
-	"Save a serialised representation of the receiver to the <STxOutFiler> argument. Strings are now always stored with UTF-8 encoding, and most can be stored as literals in STL."
-
-	anSTxOutFiler saveString: self! !
-!Core.String categoriesForMethods!
-stbSaveOn:!binary filing!public! !
+stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
+	^anSTBInFiler
+		readExtensibleCollection: self
+		format: anSTBClassConversion
+		size: anInteger! !
+!Core.Set class categoriesForMethods!
+stbReadFrom:format:size:!binary filing!public! !
 !
 
 !Core.String class methodsFor!
 
 stbConvertFrom: aSTBClassConversion
-	"As of version 1, String is abstract and non-instantiable. We want to create AnsiString instances instead.
-	This will only be used for reading very old (version 0) STB data, as after version 0 there is special case
-	handling for Strings and they are automatically mapped to AnsiStrings."
+	"As of version 1, String is abstract and non-instantiable. We want to create AnsiString instances instead, but this will be done by the STBVersion0Policy.  We have to supply a conversion block because the String stbVersion was incremented, but we don't expect it to be called."
 
-	^[:data | AnsiString fromByteArray: data]!
+	^[:data | _AssertionFailureSignal signal]!
+
+stbReadFrom: anSTxInFiler format: anSTxClassConversion
+	"Note that although this is primarily used by STB, since STL stores the majority of Strings as literals, some unprintable strings do not have a literal form, so may be saved as raw UTF-8 bytes even in STL."
+
+	^anSTxInFiler readString: self format: anSTxClassConversion!
 
 stbVersion
 	^1! !
 !Core.String class categoriesForMethods!
 stbConvertFrom:!binary filing!public! !
+stbReadFrom:format:!constants!public! !
 stbVersion!binary filing!constants!public! !
 !
 
@@ -554,59 +409,17 @@ stbConvertFrom: aSTBClassConversion
 stbConvertFrom:!binary filing!public! !
 !
 
-!External.Address methodsFor!
+!External.DynamicLinkLibrary class methodsFor!
 
-stbSaveOn: anSTxOutFiler
-	"Save out a serialised representation of the receiver to anSTxOutFiler.
-	Output nil in place of the receiver as the future validity of an external address is uncertain."
+stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
+	"Read an instance of the receiver from the binary filer, aSTBInFiler."
 
-	anSTxOutFiler saveObject: self as: nil! !
-!External.Address categoriesForMethods!
-stbSaveOn:!binary filing!public! !
-!
-
-!External.DynamicLinkLibrary methodsFor!
-
-stbSaveOn: anSTxOutFiler
-	anSTxOutFiler writePreambleFor: self! !
-!External.DynamicLinkLibrary categoriesForMethods!
-stbSaveOn:!binary filing!public! !
-!
-
-!External.ExternalMethod methodsFor!
-
-stbSaveOn: anSTxOutFiler
-	"Output the receiver to anSTxOutFiler. We must ensure that the cached proc. address is cleared."
-
-	| descriptor |
-	descriptor := self descriptorLiteral.
-	anSTxOutFiler override: descriptor with: (descriptor copy replaceFrom: 1 to: 4 withObject: 0; yourself).
-	super stbSaveOn: anSTxOutFiler.
-
-! !
-!External.ExternalMethod categoriesForMethods!
-stbSaveOn:!binary filing!public! !
-!
-
-!External.Handle methodsFor!
-
-stbSaveOn: anSTxOutFiler
-	"Save out a serialised representation of the receiver to anSTxOutFiler.
-	Output nil in place of the receiver as the future validity of an external handle is uncertain."
-
-	anSTxOutFiler saveObject: self as: nil! !
-!External.Handle categoriesForMethods!
-stbSaveOn:!binary filing!public! !
-!
-
-!External.ResourceLibrary methodsFor!
-
-stbSaveOn: anSTxOutFiler
-	"Save out a serialised representation of the receiver to anSTxOutFiler."
-
-	anSTxOutFiler saveResourceLibrary: self! !
-!External.ResourceLibrary categoriesForMethods!
-stbSaveOn:!binary filing!instance creation!public! !
+	| singleton |
+	singleton := self default.
+	anSTBInFiler register: singleton.
+	^singleton! !
+!External.DynamicLinkLibrary class categoriesForMethods!
+stbReadFrom:format:size:!binary filing!public! !
 !
 
 !External.ResourceLibrary class methodsFor!
@@ -641,6 +454,18 @@ stbReadFrom:format:size:!binary filing!public! !
 stbVersion!binary filing!public! !
 !
 
+!External.Structure class methodsFor!
+
+stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
+	self ensureDefined.
+	^anSTBInFiler
+		readObjectOfClass: self
+		format: anSTBClassConversion
+		size: anInteger! !
+!External.Structure class categoriesForMethods!
+stbReadFrom:format:size:!binary filing!public! !
+!
+
 !External.StructureArray class methodsFor!
 
 stbConvertFrom: anSTBClassFormat
@@ -669,22 +494,17 @@ stbConvertFrom:!binary filing!public! !
 stbVersion!binary filing!public! !
 !
 
-!Kernel.AbsoluteFileLocator methodsFor!
+!Kernel.AbsoluteFileLocator class methodsFor!
 
-stbSaveOn: anSTxOutFiler 
-	"Save out a serialised representation of the receiver to anSTxOutFiler. The receiver is a singleton, so can be described by its class alone."
+stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
+	"Read an instance of the receiver from the binary filer, aSTBInFiler."
 
-	anSTxOutFiler writePreambleFor: self! !
-!Kernel.AbsoluteFileLocator categoriesForMethods!
-stbSaveOn:!binary filing!public! !
-!
-
-!Kernel.BindingReference methodsFor!
-
-stbSaveOn: anSTxOutFiler
-	anSTxOutFiler saveBindingReference: self! !
-!Kernel.BindingReference categoriesForMethods!
-stbSaveOn:!binary filing!public! !
+	| singleton |
+	singleton := self current.
+	anSTBInFiler register: singleton.
+	^singleton! !
+!Kernel.AbsoluteFileLocator class categoriesForMethods!
+stbReadFrom:format:size:!binary filing!public! !
 !
 
 !Kernel.BindingReference class methodsFor!
@@ -741,37 +561,30 @@ stbConvertFrom:!binary filing!public! !
 stbVersion!binary filing!public! !
 !
 
-!Kernel.FullBindingReference methodsFor!
+!Kernel.ImageRelativeFileLocator class methodsFor!
 
-stbSaveOn: anSTxOutFiler
-	"Implmentation Note: We don't want to save out any cached binding. Easiest is to flush it - it isn't that expensive to re-cache when needed"
+stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
+	"Read an instance of the receiver from the binary filer, aSTBInFiler."
 
-	self
-		setBinding: nil;
-		setGeneration: nil.
-	^super stbSaveOn: anSTxOutFiler! !
-!Kernel.FullBindingReference categoriesForMethods!
-stbSaveOn:!binary filing!public! !
+	| singleton |
+	singleton := self current.
+	anSTBInFiler register: singleton.
+	^singleton! !
+!Kernel.ImageRelativeFileLocator class categoriesForMethods!
+stbReadFrom:format:size:!binary filing!public! !
 !
 
-!Kernel.ImageRelativeFileLocator methodsFor!
+!Kernel.InstallRelativeFileLocator class methodsFor!
 
-stbSaveOn: anSTxOutFiler 
-	"Save out a serialised representation of the receiver to anSTxOutFiler. The receiver is a singleton, so just store the class."
+stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
+	"Read an instance of the receiver from the binary filer, aSTBInFiler."
 
-	anSTxOutFiler writePreambleFor: self! !
-!Kernel.ImageRelativeFileLocator categoriesForMethods!
-stbSaveOn:!binary filing!public! !
-!
-
-!Kernel.InstallRelativeFileLocator methodsFor!
-
-stbSaveOn: anSTxOutFiler 
-	"Save out a serialised representation of the receiver to anSTxOutFiler. The receiver is a singleton so just store the class"
-
-	anSTxOutFiler writePreambleFor: self! !
-!Kernel.InstallRelativeFileLocator categoriesForMethods!
-stbSaveOn:!binary filing!public! !
+	| singleton |
+	singleton := self current.
+	anSTBInFiler register: singleton.
+	^singleton! !
+!Kernel.InstallRelativeFileLocator class categoriesForMethods!
+stbReadFrom:format:size:!binary filing!public! !
 !
 
 !Kernel.MetaBindingReference class methodsFor!
@@ -786,45 +599,32 @@ stbConvertFrom: anSTBClassFormat
 stbConvertFrom:!binary filing!public! !
 !
 
-!Kernel.Package methodsFor!
+!Kernel.SingletonSearchPolicy class methodsFor!
 
-stbSaveOn: anSTxOutFiler
-	"Output the receiver to anSTxOutFiler. We must ensure that the local events collection	is NOT saved to the filer"
+stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
+	"Read an instance of the receiver from the binary filer, aSTBInFiler."
 
-	anSTxOutFiler override: events with: nil.
-	super stbSaveOn: anSTxOutFiler.! !
-!Kernel.Package categoriesForMethods!
-stbSaveOn:!binary filing!public! !
+	| singleton |
+	singleton := self current.
+	anSTBInFiler register: singleton.
+	^singleton! !
+!Kernel.SingletonSearchPolicy class categoriesForMethods!
+stbReadFrom:format:size:!binary filing!public! !
 !
 
-!Kernel.ProcessorScheduler methodsFor!
+!Kernel.SmalltalkLocale class methodsFor!
 
-stbSaveOn: anSTxOutFiler
-	"Save out a serialised representation of the receiver to anSTxOutFiler. The receiver is a singleton global, so save as a static reference."
+stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
+	"Read an instance of the receiver from the binary filer, aSTBInFiler."
 
-	anSTxOutFiler saveStatic: #{Core.Processor}! !
-!Kernel.ProcessorScheduler categoriesForMethods!
-stbSaveOn:!binary filing!public! !
-!
-
-!Kernel.SingletonSearchPolicy methodsFor!
-
-stbSaveOn: anSTxOutFiler 
-	"Save out a serialised representation of the receiver to anSTxOutFiler. As a singleton, we need only the class."
-
-	anSTxOutFiler writePreambleFor: self! !
-!Kernel.SingletonSearchPolicy categoriesForMethods!
-stbSaveOn:!binary filing!public! !
-!
-
-!Kernel.SmalltalkLocale methodsFor!
-
-stbSaveOn: anSTxOutFiler
-	anSTxOutFiler
-		writePreambleFor: self class: Locale;
-		nextPut: #smalltalk! !
-!Kernel.SmalltalkLocale categoriesForMethods!
-stbSaveOn:!binary filing!public! !
+	^anSTBClassConversion
+		ifNotNil: 
+			[anSTBInFiler register: Current.
+			anSTBClassConversion instSize timesRepeat: [anSTBInFiler basicNext].
+			Current]
+		ifNil: [self error: 'Unexpected SmalltalkLocale instance in STB stream']! !
+!Kernel.SmalltalkLocale class categoriesForMethods!
+stbReadFrom:format:size:!binary filing!public! !
 !
 
 !Kernel.VariableBinding class methodsFor!
@@ -849,14 +649,39 @@ stbConvertFrom:!binary filing!public! !
 stbVersion!binary filing!public! !
 !
 
-!OS.InvariantLocale methodsFor!
+!OS.InvariantLocale class methodsFor!
 
-stbSaveOn: anSTxOutFiler
-	anSTxOutFiler
-		writePreambleFor: self class: Locale;
-		nextPut: #invariant! !
-!OS.InvariantLocale categoriesForMethods!
-stbSaveOn:!binary filing!public! !
+stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
+	"Read an instance of the receiver from the binary filer, aSTBInFiler."
+
+	^self error: 'Unexpected InvariantLocale instance in STB stream'! !
+!OS.InvariantLocale class categoriesForMethods!
+stbReadFrom:format:size:!binary filing!public! !
+!
+
+!OS.WindowsLocale class methodsFor!
+
+stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
+	"Read an instance of the receiver from the binary filer, aSTBInFiler."
+
+	"Implementation Note: Overridden in order to maintain unique instances without using an
+	STBSingletonProxy."
+
+	^anSTBClassConversion
+		ifNotNil: 
+			[| ref lcid locale |
+			ref := anSTBInFiler register: nil.
+			"Version 0 had 3 inst vars: 'numberFormat', 'lcid', and 'info'. The first and last are cached info and can be discarded."
+			self assert: [anSTBClassConversion instSize == 3].
+			anSTBInFiler basicNext.
+			lcid := anSTBInFiler basicNext.
+			anSTBInFiler basicNext.
+			locale := self lcid: lcid.
+			anSTBInFiler fixup: ref to: locale.
+			locale]
+		ifNil: [self error: 'Unexpected WindowsLocale instance in STB stream']! !
+!OS.WindowsLocale class categoriesForMethods!
+stbReadFrom:format:size:!binary filing!public! !
 !
 
 !UI.ResourceIdentifier class methodsFor!

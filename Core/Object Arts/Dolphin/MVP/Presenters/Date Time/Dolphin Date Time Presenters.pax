@@ -23,6 +23,7 @@ package setPrerequisites: #(
 	'..\..\Base\Dolphin Basic Geometry'
 	'..\..\Graphics\Dolphin GDI Graphics'
 	'..\..\..\Base\Dolphin Legacy Date & Time'
+	'..\..\..\System\Filer\Dolphin Literal Filer'
 	'..\..\Base\Dolphin MVP Base'
 	'..\Text\Dolphin Text Presenter'
 	'..\..\Type Converters\Dolphin Type Converters'

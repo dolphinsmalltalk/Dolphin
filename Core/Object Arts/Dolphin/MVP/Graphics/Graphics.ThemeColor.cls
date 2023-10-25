@@ -69,8 +69,10 @@ shallowCopy
 stbSaveOn: anSTBOutFiler
 	"Output the singleton receiver to anSTBOutFiler."
 
-	anSTBOutFiler writePreambleFor: self.
-	anSTBOutFiler nextPut: self name! !
+	anSTBOutFiler
+		saveSingleton: self
+		class: self basicClass
+		name: self name! !
 !Graphics.ThemeColor categoriesForMethods!
 actualColor!accessing!public! !
 actualColor:!accessing!public! !

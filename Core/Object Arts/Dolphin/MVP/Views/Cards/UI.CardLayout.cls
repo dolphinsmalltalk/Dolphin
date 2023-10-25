@@ -23,22 +23,17 @@ The arrangement aspects of the managed views are used as a descriptive names for
 !UI.CardLayout categoriesForClass!MVP-Layout Managers-Specialized! !
 !UI.CardLayout methodsFor!
 
-arrangementOf: aView 
+arrangementOf: aView
 	"Answer the arrangement parameter of aView in the receiver"
 
-	names do: [:each | each value == aView ifTrue: [^each key]].
-	^nil!
+	^(names detect: [:each | each value == aView] ifNone: [##(Association new)]) key!
 
 arrangementOf: aView put: anObject
 	"Set the arrangement parameter of aView in the receiver to be anObject."
 
-	| previous |
-	"If the view already has an arrangement, we need to remove it."
-	previous := names detect: [:each | each value == aView] ifNone: nil.
-	previous notNil ifTrue: [names remove: previous].
-
-	"Now, we can add the new arrangement"
-	names add: anObject -> aView!
+	(names detect: [:each | each value == aView] ifNone: nil)
+		ifNotNil: [:previous | previous key: anObject]
+		ifNil: [names add: anObject -> aView]!
 
 cards
 	"Private - Answer an OrderedCollection of views that are managed by the 
@@ -142,6 +137,9 @@ layoutContainer: aCompositeView context: aLayoutContext
 	rect := (0 @ 0 extent: (aLayoutContext clientExtentOf: aCompositeView)) 
 				insetBy: (aCompositeView actualInsets: aLayoutContext).
 	aCompositeView managedSubViewsDo: [:view | aLayoutContext setView: view rectangle: rect]!
+
+names
+	^names!
 
 nextCard
 	"Show the card which is next in the z-order sequence of the associated container after the
@@ -254,6 +252,7 @@ getEvents!events!private! !
 initialize!initializing!private! !
 lastCard!operations!public! !
 layoutContainer:context:!geometry!private! !
+names!accessing!private! !
 nextCard!operations!public! !
 preferredLayoutExtentOf:context:!public! !
 previousCard!operations!public! !

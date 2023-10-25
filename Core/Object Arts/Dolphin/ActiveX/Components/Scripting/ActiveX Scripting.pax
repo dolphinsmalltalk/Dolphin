@@ -46,6 +46,7 @@ package setPrerequisites: #(
 	'..\..\..\MVP\Views\GroupBox\Dolphin GroupBox'
 	'..\..\..\MVP\Models\List\Dolphin List Models'
 	'..\..\..\MVP\Presenters\List\Dolphin List Presenter'
+	'..\..\..\System\Filer\Dolphin Literal Filer'
 	'..\..\..\System\Win32\MessageBox\Dolphin Message Box'
 	'..\..\..\MVP\Base\Dolphin MVP Base'
 	'..\..\..\MVP\Views\Buttons\Dolphin Push Buttons'

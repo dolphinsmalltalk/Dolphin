@@ -16,6 +16,7 @@ package setPrerequisites: #(
 	'..\..\Base\Dolphin'
 	'..\..\MVP\Base\Dolphin Basic Geometry'
 	'..\..\MVP\Graphics\Dolphin GDI Graphics'
+	'..\..\System\Filer\Dolphin Literal Filer'
 	'..\..\MVP\Base\Dolphin MVP Base'
 	'..\..\MVP\Views\Scintilla\Dolphin Scintilla View'
 	'..\..\MVP\Views\SysLink\Dolphin SysLink Control'

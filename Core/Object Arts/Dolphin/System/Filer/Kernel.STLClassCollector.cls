@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.STLInFiler
+Kernel.STxInFilerWrapper
 	subclass: #'Kernel.STLClassCollector'
 	instanceVariableNames: 'classes resourceIdentifiers'
 	classVariableNames: ''
@@ -8,7 +8,7 @@ Kernel.STLInFiler
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Kernel.STLClassCollector guid: (Core.GUID fromString: '{bf23d8df-102a-469c-90f6-0698b66b6fa6}')!
-Kernel.STLClassCollector comment: ''!
+Kernel.STLClassCollector comment: '`STLClassCollector` is a `STLInFiler` decorator that captures the class of all objects in an STL stream. This is useful for tracking dependencies between classes resulting from STL resources that might otherwise not be visible. This helps, for example, to build a complete picture of package prerequisites, and also when stripping an image for application deployment to retain classes that resources may depend on.'!
 !Kernel.STLClassCollector categoriesForClass!System-Binary storage! !
 !Kernel.STLClassCollector methodsFor!
 
@@ -16,8 +16,24 @@ basicNext
 	| prefixOrLiteral |
 	prefixOrLiteral := stream next.
 	prefixOrLiteral isInteger ifFalse: [^self collectClassOf: prefixOrLiteral value].
-	STLVersionPolicy.PrefixLiteralMask == prefixOrLiteral ifFalse: [^policy readObjectWithPrefix: prefixOrLiteral].
+	STxFiler.PrefixLiteralMask == prefixOrLiteral ifFalse: [^decorated readObjectWithPrefix: prefixOrLiteral].
 	^self readLiteralData!
+
+characterValue: anInteger
+	"Answer the <Character> for the specified <Integer> code from the object stream."
+
+	"Intercede to capture that the STL contains at least one encoded Character. This will only occur when deserializing STL 3 data."
+
+	classes add: Character.
+	^decorated characterValue: anInteger!
+
+classAt: anInteger
+	"Answer the read map value for a <Class> with the specified reference."
+
+	| class |
+	class := decorated classAt: anInteger.
+	classes add: class.
+	^class!
 
 classes
 	^self contents!
@@ -30,37 +46,37 @@ contents
 	[self atEnd] whileFalse: [self basicNext].
 	^classes!
 
+elements
+	^decorated elements!
+
 findResourceIdentifiers
 	| rids mapStream |
 	self contents.
 	rids := Set new.
-	mapStream := readMap asArray readStream.
+	mapStream := decorated readMap asArray readStream.
 	[mapStream atEnd] whileFalse: 
 			[| next |
 			next := mapStream next.
 			next == UI.ResourceIdentifier ifTrue: [rids add: mapStream nextAvailable]].
 	^rids!
 
-initialize
-	"Private - Initialize the receiver."
+fixup: anInteger to: anObject
+	self collectClassOf: anObject.
+	^decorated fixup: anInteger to: anObject!
 
-	classes := DeafObject.Current.
-	super initialize.
-	classes := IdentitySet new: 64.
-	"Even an empty STL store array will contain the Symbol, #'STL!!', a SmallInteger for the version, and the Array itself)."
-	classes
-		add: Array;
-		add: Symbol;
-		add: SmallInteger.!
+inFilerClass
+	^STLInFiler!
 
 objectAt: anInteger
 	"Private - Answer the map value at anInteger. Signal an exception if there is no such entry."
 
-	^anInteger <= policy lastPredefined
+	| object |
+	object := decorated objectAt: anInteger.
+	anInteger <= decorated lastPredefined
 		ifTrue: 
 			["Record a reference to a pre-registered class so we know it is used in this stream"
-			self collectClassOf: (readMap at: anInteger)]
-		ifFalse: [readMap at: anInteger]!
+			self collectClassOf: object].
+	^object!
 
 readLiteralData
 	| newObject |
@@ -70,28 +86,53 @@ readLiteralData
 	newObject basicClass == Array
 		ifTrue: [1 to: newObject size do: [:i | self collectClassOf: (newObject at: i) value]]
 		ifFalse: [self collectClassOf: newObject].
-	readMap addLast: newObject.
+	decorated register: newObject.
 	^newObject!
+
+readNil
+	"Read a nil from the object stream"
+
+	classes add: UndefinedObject.
+	^nil!
 
 register: anObject
 	"Private - Add anObject to the readMap, answering the index of the object in the map. This is important for some classes that might want to fixup the reference later."
 
 	self collectClassOf: anObject.
-	^readMap addAnsweringIndex: anObject!
+	^decorated register: anObject!
 
 resourceIdentifiers
-	^resourceIdentifiers ifNil: [resourceIdentifiers := self findResourceIdentifiers]! !
+	^resourceIdentifiers ifNil: [resourceIdentifiers := self findResourceIdentifiers]!
+
+stream: aStream
+	classes := DeafObject.Current.
+	classes := IdentitySet new: 64.	
+	super stream: aStream.
+	"Even an empty STL store array will contain the Symbol, #'STL!!', a SmallInteger for the version, and the Array itself). We also have the dependency on the STLInFiler class for the underlying version"
+	classes
+		add: Array;
+		add: Symbol;
+		add: SmallInteger;
+		add: decorated class
+
+	! !
 !Kernel.STLClassCollector categoriesForMethods!
 basicNext!accessing!private! !
+characterValue:!helpers!public! !
+classAt:!public! !
 classes!accessing!public! !
 collectClassOf:!helpers!private! !
 contents!public! !
+elements!public! !
 findResourceIdentifiers!helpers!private! !
-initialize!initializing!private! !
+fixup:to:!public! !
+inFilerClass!constants!private! !
 objectAt:!accessing!private! !
 readLiteralData!helpers!private! !
+readNil!deserializing!public! !
 register:!helpers!private! !
 resourceIdentifiers!accessing!public! !
+stream:!initializing!private! !
 !
 
 !Kernel.STLClassCollector class methodsFor!

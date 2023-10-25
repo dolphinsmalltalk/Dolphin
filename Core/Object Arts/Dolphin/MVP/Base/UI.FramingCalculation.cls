@@ -59,12 +59,14 @@ printOn: aPuttableStream
 		space;
 		display: self name!
 
-stbSaveOn: anSTBOutFiler 
+stbSaveOn: anSTBOutFiler
 	"Private - There should be only one instance of the receiver for each of the standard framing calculations
 	(though only to reduce memory usage), so arrange for the binary filer to recognise this."
 
-	anSTBOutFiler writePreambleFor: self.
-	anSTBOutFiler nextPut: self name! !
+	anSTBOutFiler
+		saveSingleton: self
+		class: self basicClass
+		name: self name! !
 !UI.FramingCalculation categoriesForMethods!
 calculateEdge:context:!calculations!public! !
 calculateOffset:context:!calculations!public! !

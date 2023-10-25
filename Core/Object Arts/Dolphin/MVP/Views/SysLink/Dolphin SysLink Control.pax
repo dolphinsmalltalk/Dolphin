@@ -35,6 +35,7 @@ package setPrerequisites: #(
 	'..\..\Base\Dolphin Basic Geometry'
 	'..\Common Controls\Dolphin Common Controls'
 	'..\..\Graphics\Dolphin GDI Graphics'
+	'..\..\..\System\Filer\Dolphin Literal Filer'
 	'..\..\Base\Dolphin MVP Base'
 	'..\Buttons\Dolphin Push Buttons'
 	'..\..\Presenters\Text\Dolphin Text Presenter'

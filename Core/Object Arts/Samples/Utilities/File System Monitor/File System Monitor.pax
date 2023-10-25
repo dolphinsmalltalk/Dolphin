@@ -50,6 +50,7 @@ package setPrerequisites: #(
 	'..\..\..\Dolphin\MVP\Graphics\Dolphin GDI Graphics'
 	'..\..\..\Dolphin\MVP\Models\List\Dolphin List Models'
 	'..\..\..\Dolphin\MVP\Presenters\List\Dolphin List Presenter'
+	'..\..\..\Dolphin\System\Filer\Dolphin Literal Filer'
 	'..\..\..\Dolphin\System\Win32\MessageBox\Dolphin Message Box'
 	'..\..\..\Dolphin\MVP\Base\Dolphin MVP Base'
 	'..\..\..\Dolphin\MVP\Views\Buttons\Dolphin Push Buttons'

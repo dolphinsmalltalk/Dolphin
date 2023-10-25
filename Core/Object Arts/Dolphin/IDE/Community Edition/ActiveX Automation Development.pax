@@ -563,6 +563,7 @@ package setPrerequisites: #(
 	'..\..\Base\Dolphin Legacy Date & Time'
 	'..\..\MVP\Models\List\Dolphin List Models'
 	'..\..\MVP\Presenters\List\Dolphin List Presenter'
+	'..\..\System\Filer\Dolphin Literal Filer'
 	'..\..\System\Win32\MessageBox\Dolphin Message Box'
 	'..\..\MVP\Base\Dolphin MVP Base'
 	'..\..\MVP\Dialogs\Progress\Dolphin Progress Dialog'
@@ -6316,7 +6317,7 @@ printOn: aStream
 	aStream
 		basicPrint: self;
 		nextPut: $(.
-	self tlbInterface isNull 
+	tlbInterface isNull 
 		ifTrue: [aStream display: 'NULL']
 		ifFalse: [aStream print: self basicName].
 	aStream nextPut: $)!

@@ -66,6 +66,16 @@ Arithmetic operations can be carried out between two Points or between a Point a
 	aPoint := aMagnitude asGenericPoint.
 	^x <= aPoint x and: [y <= aPoint y]!
 
+<=> aMagnitude
+	"Answer the receiver's <integer> collation order with respect to the <Number> argument. Colloquially known as the spaceship operator.
+	The answer is < 0 if the receiver should collate before the argument, 0 if they have the same collation order, or > 0 if the receiver should collate after the argument."
+
+	| aPoint |
+	aPoint := aMagnitude asGenericPoint.
+	^y = aPoint y
+		ifTrue: [x = aPoint x ifTrue: [0] ifFalse: [x < aPoint x ifTrue: [-1] ifFalse: [1]]]
+		ifFalse: [y < aPoint y ifTrue: [-1] ifFalse: [1]]!
+
 = anObject
 	"Answer whether the receiver is considered equivalent to the	<Object> argument."
 
@@ -300,6 +310,7 @@ y: aNumber
 +!arithmetic!public! !
 <!comparing!public! !
 <=!comparing!public! !
+<=>!comparing!public! !
 =!comparing!public! !
 abs!arithmetic!public! !
 addToPoint:!double dispatch!private! !

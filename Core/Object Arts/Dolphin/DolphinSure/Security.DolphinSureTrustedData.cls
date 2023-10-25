@@ -51,7 +51,7 @@ binaryStoreOn: aStream
 
 	"We deliberately save down in the format of the STB version of D6 (3) to maintain backwards/forwards compatibility of the certs"
 
-	(STBOutFiler on: aStream policy: STBVersion3Policy) nextPut: self!
+	(STBOutFiler3 on: aStream) nextPut: self!
 
 data
 	"Answers the decoded information for the receiver without verifying that it is correct."
@@ -177,9 +177,9 @@ validDataPublishedBy:!accessing!public! !
 binaryReadFrom: aStream context: anObject
 	"Answers an object read from its binary STB representation on aStream. Because STB is inherently an insecure format (loading objects can cause arbitrary code to be run) we must use a special STBInFiler (an STBValidatingInFiler) that will only load a restricted set of classes that we know to be passive."
 
-	^(STBValidatingInFiler on: aStream)
+	^(STBValidatingInFiler on: aStream
+		validClasses: #(#{Core.AnsiString} #{Core.Utf8String} #{Core.ByteArray} #{Security.DolphinSureTrustedData} #{Security.DolphinSureCertificate} #{Security.DolphinSurePersonalCertificate}))
 		context: anObject;
-		validClasses: #(#{Core.AnsiString} #{Core.Utf8String} #{Core.ByteArray} #{Security.DolphinSureTrustedData} #{Security.DolphinSureCertificate} #{Security.DolphinSurePersonalCertificate});
 		next!
 
 data: aByteArray description: aString publisherCertificate: certificate privateKey: privateKey

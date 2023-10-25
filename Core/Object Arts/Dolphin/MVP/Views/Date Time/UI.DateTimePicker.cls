@@ -185,7 +185,10 @@ setSystemTime: aSYSTEMTIMEOrNil
 	st := aSYSTEMTIMEOrNil.
 	aSYSTEMTIMEOrNil isNil
 		ifTrue: [self canShowNone ifTrue: [gd := GDT_NONE] ifFalse: [st := DateAndTime now asSYSTEMTIME]].
-	self dtmSetSystemTime: gd lpSysTime: st! !
+	self dtmSetSystemTime: gd lpSysTime: st!
+
+stateText
+	^''! !
 !UI.DateTimePicker categoriesForMethods!
 canShowNone!accessing-styles!public! !
 canShowNone:!accessing-styles!public! !
@@ -211,6 +214,7 @@ nmFirst!constants!private! !
 onViewCreated!event handling!public! !
 setRangeMessage!constants!private! !
 setSystemTime:!accessing!private! !
+stateText!accessing!private! !
 !
 
 !UI.DateTimePicker class methodsFor!

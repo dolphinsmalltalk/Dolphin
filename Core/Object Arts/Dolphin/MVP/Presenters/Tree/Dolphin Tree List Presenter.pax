@@ -20,6 +20,7 @@ package setPrerequisites: #(
 	'..\..\Views\Common Controls\Dolphin Common Controls'
 	'..\..\Graphics\Dolphin GDI Graphics'
 	'..\..\Models\List\Dolphin List Models'
+	'..\..\..\System\Filer\Dolphin Literal Filer'
 	'..\..\Base\Dolphin MVP Base'
 	'..\..\Models\Tree\Dolphin Tree Models'
 	'Dolphin Tree Presenter'

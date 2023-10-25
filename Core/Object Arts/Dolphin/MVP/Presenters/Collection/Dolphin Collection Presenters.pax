@@ -29,6 +29,7 @@ package setPrerequisites: #(
 	'..\Prompters\Dolphin Key-Value Prompter'
 	'..\..\Models\List\Dolphin List Models'
 	'..\List\Dolphin List Presenter'
+	'..\..\..\System\Filer\Dolphin Literal Filer'
 	'..\..\..\System\Win32\MessageBox\Dolphin Message Box'
 	'..\..\Base\Dolphin MVP Base'
 	'..\Prompters\Dolphin Prompter'

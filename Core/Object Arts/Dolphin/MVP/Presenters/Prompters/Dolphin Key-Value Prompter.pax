@@ -17,6 +17,7 @@ package setPrerequisites: #(
 	'..\..\Base\Dolphin Base Dialogs'
 	'..\..\Base\Dolphin Basic Geometry'
 	'..\..\Graphics\Dolphin GDI Graphics'
+	'..\..\..\System\Filer\Dolphin Literal Filer'
 	'..\..\Base\Dolphin MVP Base'
 	'..\..\Views\Buttons\Dolphin Push Buttons'
 	'..\Text\Dolphin Text Presenter'

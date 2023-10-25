@@ -35,6 +35,7 @@ package setPrerequisites: #(
 	'..\..\Dialogs\Common\Dolphin Common Dialogs'
 	'..\Shell\Dolphin Document Presenter'
 	'..\..\Graphics\Dolphin GDI Graphics'
+	'..\..\..\System\Filer\Dolphin Literal Filer'
 	'..\..\..\System\Win32\MessageBox\Dolphin Message Box'
 	'..\..\Base\Dolphin MVP Base'
 	'..\..\Type Converters\Dolphin Type Converters'

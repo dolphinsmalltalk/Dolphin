@@ -20,12 +20,10 @@ canvas
 		yourself
 		!
 
-filerProxy
-	| saved proxy |
-	saved := backSurface.
-	backSurface := nil.
-	proxy := super filerProxy.
-	backSurface := saved.
+filerProxyIn: anSTxOutFiler
+	| proxy |
+	proxy := super filerProxyIn: anSTxOutFiler.
+	proxy instVars at: ##(self indexOfInstVar: 'backSurface') put: nil.
 	^proxy!
 
 flip
@@ -120,7 +118,7 @@ wmNcHitTest: message wParam: wParam lParam: lParam
 		lParam: lParam! !
 !UI.DoubleBufferedView categoriesForMethods!
 canvas!accessing!public! !
-filerProxy!binary filing!private! !
+filerProxyIn:!binary filing!private! !
 flip!operations!public! !
 initialize!initializing!private! !
 initializeSurfacesFor:!initializing!private! !

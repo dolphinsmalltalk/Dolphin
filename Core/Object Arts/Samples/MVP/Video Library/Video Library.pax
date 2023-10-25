@@ -36,6 +36,7 @@ package setPrerequisites: #(
 	'..\..\..\Dolphin\Base\Dolphin Legacy Date & Time'
 	'..\..\..\Dolphin\MVP\Models\List\Dolphin List Models'
 	'..\..\..\Dolphin\MVP\Presenters\List\Dolphin List Presenter'
+	'..\..\..\Dolphin\System\Filer\Dolphin Literal Filer'
 	'..\..\..\Dolphin\System\Win32\MessageBox\Dolphin Message Box'
 	'..\..\..\Dolphin\MVP\Base\Dolphin MVP Base'
 	'..\..\..\Dolphin\MVP\Presenters\Number\Dolphin Number Presenter'

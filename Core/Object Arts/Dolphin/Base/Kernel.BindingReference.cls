@@ -352,6 +352,9 @@ unqualifiedName
 
 	^self path last!
 
+unqualifiedPathLiteralPrefix
+	^self subclassResponsibility!
+
 value
 	"Answer the value of the variable named by the receiver. Raise an error if the variable is not defined."
 
@@ -423,6 +426,7 @@ shortName!accessing!public! !
 simpleName!accessing!public! !
 undeclare!operations!public! !
 unqualifiedName!accessing!public! !
+unqualifiedPathLiteralPrefix!constants!private! !
 value!accessing!public! !
 valueOfBinding:!helpers!private! !
 valueOrDo:!accessing!public! !

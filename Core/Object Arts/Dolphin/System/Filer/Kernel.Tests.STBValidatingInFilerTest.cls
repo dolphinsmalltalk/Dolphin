@@ -28,9 +28,9 @@ newInFilerOn: aByteArray
 	| stream inFiler |
 	stream := aByteArray readStream.
 	inFiler := self infilerClass on: stream.
-	^inFiler
-		classLocator: (self initializeLocator: inFiler version);
-		yourself!
+	self initializeLocator: inFiler version.
+	inFiler classLocator: locator.
+	^inFiler!
 
 newLocator: anInteger
 	locator := nil.
@@ -57,15 +57,14 @@ testBlockClass
 	bytes := self serialize: { self class. Core.Tests.DolphinTest. TestCase }.
 	"Utf8String is required for the class names, and classes are represented by STBClassProxy. Then each specific class has to be allowed. Since we don't allow TestCase, an error is raised when it is encountered."
 	self dumpToTranscriptIfDebug: bytes.
-	filer := (STBValidatingInFiler on: bytes readStream)
-				validClasses: { Array. Utf8String. #{Kernel.STBClassProxy}. self class. #{Core.Tests.DolphinTest} };
-				yourself.
+	filer := self infilerClass on: bytes readStream
+				validClasses: { Array. Utf8String. #{Kernel.STBClassProxy}. self class. #{Core.Tests.DolphinTest} }.
 	self
 		should: [filer next]
 		raise: STBError
 		matching: 
 			[:ex |
-			ex description = 'STBFiler - STB input stream contains an invalid class (XProgramming.SUnit.TestCase)']!
+			ex description = 'STBFiler - Input stream contains an invalid class (XProgramming.SUnit.TestCase)']!
 
 testClassProxy0
 	self initializeLocator: 0.
@@ -82,7 +81,7 @@ testDisallowedPredefinedClass
 	self
 		should: [subject next]
 		raise: Error
-		matching: [:ex | ex description = 'STBFiler - STB input stream contains an invalid class (Core.Array)']!
+		matching: [:ex | ex description = 'STBFiler - Input stream contains an invalid class (Core.Array)']!
 
 testEggsBeforeChickenVersion0
 	self initializeLocator: 0.
@@ -109,58 +108,53 @@ testGlobalProxyingVersion4
 	locator includeClass: Smalltalk.STBGlobalObjectProxy.
 	super testGlobalProxyingVersion4!
 
+testLargeIntegers0
+	self initializeLocator: 0.
+	locator includeClass: LargeInteger.
+	super testLargeIntegers0!
+
 testMetaclassProxy0
 	self initializeLocator: 0.
 	locator includeClass: STBMetaclassProxy.
 	super testMetaclassProxy0!
 
 testSecureByDefault
-	"SmallIntegers and nil can always be loaded"
+	"SmallIntegers, nil, true and false can always be loaded"
 
-	#(123 nil) do: 
+	#(123 nil true false) do: 
 			[:each |
 			| filer |
-			filer := STBValidatingInFiler on: 123 binaryStoreBytes readStream.
-			self assert: filer next equals: 123].
-	"But nothing else, not even a string, or array, and certainly not a class"
-	{
-		'foo'.
-		#(123).
-		#[123].
-		#foo.
-		Symbol.
-		2 ** 64.
-		1 -> 2.
-		Association class
-	} do: 
-				[:each |
-				| filer class serialised |
-				serialised := each binaryStoreBytes.
-				self dumpToTranscriptIfDebug: serialised.
-				filer := STBValidatingInFiler on: serialised readStream.
-				class := each isBehavior
-							ifTrue: 
-								[(filer policy predefinedClasses includes: each)
-									ifTrue: [each]
-									ifFalse: [each isMeta ifTrue: [STBMetaclassProxy] ifFalse: [STBClassProxy]]]
-							ifFalse: [each class].
-				self
-					should: [filer next]
-					raise: STBError
-					matching: 
-						[:ex |
-						ex description = ('STBFiler - STB input stream contains an invalid class (<1s>)' << class fullName)]].
-	{ LookupTable with: 123 -> 456. IdentityDictionary with: 123 -> 456 } do: 
+			filer := self infilerClass on: (self serialize: each) readStream.
+			self assert: filer next equals: each].
+	"But nothing else, not even a string, or array, and certainly not a class - not even the class of one of the default allowed types"
+	{ 'foo'. #(123). #[123]. #foo. Symbol. 2 ** 64. 1 -> 2. Association class. UndefinedObject. True. False. SmallInteger } do: 
 			[:each |
-			| filer |
-			filer := STBValidatingInFiler on: each binaryStoreBytes readStream.
+			| filer class serialised |
+			serialised := self serialize: each.
+			self dumpToTranscriptIfDebug: serialised.
+			filer := self infilerClass on: serialised readStream.
+			class := each isBehavior
+						ifTrue: 
+							[(filer predefinedClasses includes: each)
+								ifTrue: [each]
+								ifFalse: [each isMeta ifTrue: [STBMetaclassProxy] ifFalse: [STBClassProxy]]]
+						ifFalse: [each class].
 			self
 				should: [filer next]
 				raise: STBError
 				matching: 
 					[:ex |
-					ex description
-						= ('STBFiler - STB input stream contains an invalid class (<1s>)' << each class fullName)]]!
+					ex description = ('STBFiler - Input stream contains an invalid class (<1s>)' << class fullName)]].
+	{ LookupTable with: 123 -> 456. IdentityDictionary with: 123 -> 456 } do: 
+			[:each |
+			| filer |
+			filer := STBValidatingInFiler on: (self serialize: each) readStream.
+			self
+				should: [filer next]
+				raise: STBError
+				matching: 
+					[:ex |
+					ex description = ('STBFiler - Input stream contains an invalid class (<1s>)' << each class fullName)]]!
 
 testSortedCollections
 	self initializeLocator: STBOutFiler version.
@@ -216,6 +210,26 @@ verifyBindingReferencesAtVersion: anInteger
 		includeClass: Object.
 	super verifyBindingReferencesAtVersion: anInteger!
 
+verifyByteArraysAtVersion: anInteger
+	self newLocator: anInteger.
+"	locator includeClass: (anInteger < 4 ifTrue: [#{Smalltalk.UnicodeString}] ifFalse: [Utf16String])."
+	super verifyByteArraysAtVersion: anInteger
+!
+
+verifyDictionariesAtVersion: anInteger
+	self newLocator: anInteger.
+	locator
+		includeClass: Graphics.Point;
+		includeClass: Association.
+	anInteger < 5 ifTrue: [locator includeClass: STBClassProxy].
+	anInteger < 6
+		ifTrue: 
+			[locator
+				includeClass: STBClassProxy;
+				includeClass: STBCollectionProxy]
+		ifFalse: [locator excludeClass: STBCollectionProxy].
+	super verifyDictionariesAtVersion: anInteger!
+
 verifyEggsBeforeChicken: anInteger
 	self newLocator: anInteger.
 	locator includeClass: STBClassProxy!
@@ -224,6 +238,11 @@ verifyFloatsAtVersion: anInteger
 	self initializeLocator: anInteger.
 	locator includeClass: Float.
 	super verifyFloatsAtVersion: anInteger!
+
+verifyLargeIntegersAtVersion: anInteger
+	self initializeLocator: anInteger.
+	locator includeClass: LargeInteger.
+	super verifyLargeIntegersAtVersion: anInteger!
 
 verifyLookupTablesAtVersion: anInteger
 	self newLocator: anInteger.
@@ -277,6 +296,20 @@ verifyScaledDecimalsAtVersion: anInteger
 	locator includeClass: ScaledDecimal; includeClass: Fraction.
 	super verifyScaledDecimalsAtVersion: anInteger!
 
+verifySetsAtVersion: anInteger
+	self newLocator: anInteger.
+	locator includeClass: Core.Symbol.
+	anInteger < 6
+		ifTrue: 
+			[locator
+				includeClass: STBClassProxy;
+				includeClass: STBCollectionProxy]
+		ifFalse: 
+			[locator
+				excludeClass: STBClassProxy;
+				excludeClass: STBCollectionProxy].
+	super verifySetsAtVersion: anInteger!
+
 verifyStrings: anArray atVersion: anInteger
 	self newLocator: anInteger.
 	locator includeClass: (anInteger < 4 ifTrue: [#{Smalltalk.UnicodeString}] ifFalse: [Utf16String]).
@@ -300,6 +333,7 @@ testGlobalProxyingVersion0!public!unit tests! !
 testGlobalProxyingVersion1!public!unit tests! !
 testGlobalProxyingVersion3!public!unit tests! !
 testGlobalProxyingVersion4!public!unit tests! !
+testLargeIntegers0!public!unit tests! !
 testMetaclassProxy0!public!unit tests! !
 testSecureByDefault!public!unit tests! !
 testSortedCollections!public!unit tests! !
@@ -310,14 +344,18 @@ testTranscript!public!unit tests! !
 testUnicodeStringUpgrade!public!unit tests! !
 testUnicodeStringVersion0!public!unit tests! !
 verifyBindingReferencesAtVersion:!helpers!private! !
+verifyByteArraysAtVersion:!helpers!private! !
+verifyDictionariesAtVersion:!helpers!private! !
 verifyEggsBeforeChicken:!helpers!private! !
 verifyFloatsAtVersion:!helpers!private! !
+verifyLargeIntegersAtVersion:!helpers!private! !
 verifyLookupTablesAtVersion:!helpers!private! !
 verifyOrderedCollectionsAtVersion:!helpers!private! !
 verifyResourceLibraryAtVersion:!helpers!private! !
 verifyRoundTripSingleton:version:!helpers!private! !
 verifySaveStaticVariableReferenceAtVersion:!helpers!private! !
 verifyScaledDecimalsAtVersion:!helpers!private! !
+verifySetsAtVersion:!helpers!private! !
 verifyStrings:atVersion:!helpers!private! !
 verifySymbolsAtVersion:!helpers!private! !
 !
