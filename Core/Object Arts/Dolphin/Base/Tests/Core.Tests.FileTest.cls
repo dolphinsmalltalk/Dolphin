@@ -508,23 +508,42 @@ testFullPathOf
 	self assert: longPath size > MAX_PATH.
 	self assert: (File fullPathOf: longPath) equals: longPath!
 
-testIsRootPath
-	"Test File class>>isRootPath:"
+testIsRelativePath
+	#('c:\' '\\?\c:\' 'c:\.' 'c:\foo\..' '\\?\c:\foo\..' '\' 'c:/' 'c:\blah.txt' 'c:\foo\..\bar.txt')
+		do: [:each | self deny: (File isRelativePath: each)].
+	#('.' '..' '.\' '..\' 'blah' 'blah.txt' 'foo\bar' 'foo\bar.txt' '.\foo' '.\foo\bar' '.\foo.txt' '.\foo\bar.txt' '..\foo' '..\foo\bar.txt' 'c:' '-' '-:\')
+		do: [:each | self assert: (File isRelativePath: each)].
+	"Some boundary cases"
+	self assert: (File isRelativePath: ':').
+	self assert: (File isRelativePath: nil).
+	self assert: (File isRelativePath: '').
+	"PathIsRelative API also doesn't recognise long path prefix, but just treats as if a root path. This appears consistent with the OpenFile API."
+	self deny: (File isRelativePath: '\\?\foo.txt')!
 
-	self assert: (File isRootPath: 'c:\').
-	self assert: (File isRootPath: '\\?\c:\').
+testIsRelativePathForwardSlash
+	self deny: (File isRelativePath: '/').
+	self deny: (File isRelativePath: 'c:/').
+	self deny: (File isRelativePath: 'D:/').
+	self assert: (File isRelativePath: 'a/').
+	self assert: (File isRelativePath: './').!
+
+testIsRelativePathOnDrive
+	"There is a current directory for every drive, so paths that start with a drive can still be relative, See [Fully Qualified vs. Relative Paths](https://learn.microsoft.com/en-us/windows/win32/fileio/naming-a-file#fully-qualified-vs-relative-paths)"
+
+	self assert: (File isRelativePath: 'c:foo.txt').
+	self assert: (File isRelativePath: 'c:foo\bar')!
+
+testIsRootPath
+	#('\' 'c:\' '\\?\c:\' '\\server\share' '\\server' '\\' '\\?\UNC\' '\\?\UNC\server\share' '\\?\UNC\server')
+		do: [:each | self assert: (File isRootPath: each)].
+	#(nil '' 'c:' 'c:\foo' '\foo' 'c:\foo\..' '\\server\' '\\server\share\' '\\server\share\file' '\\?\UNC\server\share\' '\\?\c:' '\\?\c:\foo' '\\?\c:\foo\..' '/' 'c:\blah.txt' '.\blah.txt' 'con:\')
+		do: [:each | self deny: (File isRootPath: each)].
+	"Note that the Unix directory separator is not accepted (a Windows API is used)"
+	self deny: (File isRootPath: 'c:/').
 	"This is really a root path, but uncanonicalized"
 	self deny: (File isRootPath: 'c:\.').
 	"Ditto"
-	self deny: (File isRootPath: 'c:\foo\..').
-	self deny: (File isRootPath: '\\?\c:\foo\..').
-	self assert: (File isRootPath: '\').
-	self deny: (File isRootPath: '/').
-	self deny: (File isRootPath: 'c:/').
-	self deny: (File isRootPath: 'c:\blah.txt').
-	self deny: (File isRootPath: '.\blah.txt').
-	self deny: (File isRootPath: 'c:').
-	self deny: (File isRootPath: 'con:\')!
+	self deny: (File isRootPath: 'c:\foo\..')!
 
 testLastWriteTime
 	| expected actual |
@@ -654,39 +673,51 @@ testShortPath
 	self assert: (File exists: short)]
 			ensure: [File deleteDirectory: tmpDir]!
 
-testSniffEncoding
+testSniffEncodingAnsi
 	tempFile := File temporary.
-	{Utf16String.Bom.
+	{ Utf16String.Bom , 'odd' asByteArray. $£. ' informações'. 'süß«'. $€ } do: 
+			[:each |
+			tempFile
+				size: 0;
+				write: each asAnsiString asByteArray.
+			self assert: tempFile sniffEncoding equals: String.EncodingAnsi.
+			self assert: tempFile position equals: 0]!
+
+testSniffEncodingUtf16
+	tempFile := File temporary.
+	{
+		Utf16String.Bom.
 		Utf16String.Bom , 'even' asAnsiString asByteArray.
 		Utf16String.Bom , Character dolphin asUtf8String asByteArray.
 		('a ' asAnsiString , Character dolphin asUtf16String) asByteArray.
-		'a £' asUtf16String asByteArray} do: 
+		'a £' asUtf16String asByteArray
+	} do: 
 				[:each |
 				tempFile
 					size: 0;
 					write: each.
 				self assert: tempFile sniffEncoding equals: String.EncodingUtf16.
 				self assert: tempFile position
-					equals: ((each beginsWith: Utf16String.Bom) ifTrue: [Utf16String.Bom size] ifFalse: [0])].
-	{Utf8String.Bom.
+					equals: ((each beginsWith: Utf16String.Bom) ifTrue: [Utf16String.Bom size] ifFalse: [0])]!
+
+testSniffEncodingUtf8
+	"The sniffing will regard short sequences as most likely to be UTF-8 if they can be decoded as UTF-8, even if they in fact ANSI text. If the content is pure ASCII, then it makes no difference anyway as both UTF-8 and ANSI encodings (with any code page) are the same for this case."
+
+	tempFile := File temporary.
+	{
+		Utf8String.Bom.
 		Utf8String.Bom , $£ asAnsiString asByteArray.
 		'a b c ' asByteArray.
 		$£ asUtf8String asByteArray.
-		('a ' , Character dolphin asUtf8String) asByteArray} do: 
+		'a 🐬' asUtf8String asByteArray
+	} do: 
 				[:each |
 				tempFile
 					size: 0;
 					write: each.
 				self assert: tempFile sniffEncoding equals: String.EncodingUtf8.
 				self assert: tempFile position
-					equals: ((each beginsWith: Utf8String.Bom) ifTrue: [Utf8String.Bom size] ifFalse: [0])].
-	{Utf16String.Bom , 'odd' asAnsiString asByteArray. $£ asAnsiString asByteArray} do: 
-			[:each |
-			tempFile
-				size: 0;
-				write: each.
-			self assert: tempFile sniffEncoding equals: String.EncodingAnsi.
-			self assert: tempFile position equals: 0]!
+					equals: ((each beginsWith: Utf8String.Bom) ifTrue: [Utf8String.Bom size] ifFalse: [0])]!
 
 testSplitDriveFrom
 	self should: [File splitDriveFrom: nil] raise: Error.
@@ -840,6 +871,9 @@ testFileTimes!public!unit tests! !
 testFindFiles!public!unit tests! !
 testForDirectoriesIn!public!unit tests! !
 testFullPathOf!public!unit tests! !
+testIsRelativePath!public!unit tests! !
+testIsRelativePathForwardSlash!public!unit tests! !
+testIsRelativePathOnDrive!public!unit tests! !
 testIsRootPath!public!unit tests! !
 testLastWriteTime!public!unit tests! !
 testMakePath!public!unit tests! !
@@ -849,7 +883,9 @@ testRemoveExtension!public!unit tests! !
 testRemovePathDelimiter!public!unit tests! !
 testSetReadOnly!public!unit tests! !
 testShortPath!public!unit tests! !
-testSniffEncoding!public!unit tests! !
+testSniffEncodingAnsi!public!unit tests! !
+testSniffEncodingUtf16!public!unit tests! !
+testSniffEncodingUtf8!public!unit tests! !
 testSplitDriveFrom!public!unit tests! !
 testSplitExtensionFrom!public!unit tests! !
 testSplitFilenameFrom!public!unit tests! !

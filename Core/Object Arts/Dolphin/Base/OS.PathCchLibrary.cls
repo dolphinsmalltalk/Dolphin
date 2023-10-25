@@ -19,7 +19,7 @@ The type library contains the following helpstring for this module
 !OS.PathCchLibrary methodsFor!
 
 pathAllocCanonicalize: pszPathIn dwFlags: dwFlags ppszPathOut: ppszPathOut
-	"Invoke the PathAllocCanonicalize() function of the module wrapped by the receiver.
+	"Private - Invoke the PathAllocCanonicalize() function of the module wrapped by the receiver.
 	Helpstring: Converts a path string into a canonical form.
 
 		HRESULT __stdcall PathAllocCanonicalize(
@@ -31,7 +31,7 @@ pathAllocCanonicalize: pszPathIn dwFlags: dwFlags ppszPathOut: ppszPathOut
 	^self invalidCall: _failureCode!
 
 pathAllocCombine: pszPathIn pszMore: pszMore dwFlags: dwFlags ppszPathOut: ppszPathOut
-	"Invoke the PathAllocCombine() function of the module wrapped by the receiver.
+	"Private - Invoke the PathAllocCombine() function of the module wrapped by the receiver.
 	Helpstring: Concatenates two path fragments into a single path. This function also canonicalizes any relative path elements, replacing path elements such as '.' and '..'.
 
 		HRESULT __stdcall PathAllocCombine(
@@ -113,58 +113,6 @@ pathCchAppendEx: pszPath cchPath: cchPath pszMore: pszMore dwFlags: dwFlags
 			ULONG dwFlags);"
 
 	<stdcall: hresult PathCchAppendEx lpwstr uintptr lpwstr uint32>
-	^self invalidCall: _failureCode!
-
-pathCchCanonicalize: pszPathOut cchPathOut: cchPathOut pszPathIn: pszPathIn
-	"Invoke the PathCchCanonicalize() function of the module wrapped by the receiver.
-	Helpstring: Simplifies a path by removing navigation elements such as '.' and '..' to produce a direct, well-formed path.
-
-		HRESULT __stdcall PathCchCanonicalize(
-			LPWSTR pszPathOut,
-			ULONG_PTR cchPathOut,
-			LPCWSTR pszPathIn);"
-
-	<stdcall: hresult PathCchCanonicalize lpwstr uintptr lpwstr>
-	^self invalidCall: _failureCode!
-
-pathCchCanonicalizeEx: pszPathOut cchPathOut: cchPathOut pszPathIn: pszPathIn dwFlags: dwFlags
-	"Invoke the PathCchCanonicalizeEx() function of the module wrapped by the receiver.
-	Helpstring: Simplifies a path by removing navigation elements such as '.' and '..' to produce a direct, well-formed path.
-
-		HRESULT __stdcall PathCchCanonicalizeEx(
-			LPWSTR pszPathOut,
-			ULONG_PTR cchPathOut,
-			LPCWSTR pszPathIn,
-			ULONG dwFlags);"
-
-	<stdcall: hresult PathCchCanonicalizeEx lpwstr uintptr lpwstr uint32>
-	^self invalidCall: _failureCode!
-
-pathCchCombine: pszPathOut cchPathOut: cchPathOut pszPathIn: pszPathIn pszMore: pszMore
-	"Invoke the PathCchCombine() function of the module wrapped by the receiver.
-	Helpstring: Combines two path fragments into a single path. This function also canonicalizes any relative path elements, removing '.' and '..' elements to simplify the final path.
-
-		HRESULT __stdcall PathCchCombine(
-			LPWSTR pszPathOut,
-			ULONG_PTR cchPathOut,
-			LPCWSTR pszPathIn,
-			LPCWSTR pszMore);"
-
-	<stdcall: hresult PathCchCombine lpwstr uintptr lpwstr lpwstr>
-	^self invalidCall: _failureCode!
-
-pathCchCombineEx: pszPathOut cchPathOut: cchPathOut pszPathIn: pszPathIn pszMore: pszMore dwFlags: dwFlags
-	"Invoke the PathCchCombineEx() function of the module wrapped by the receiver.
-	Helpstring: Combines two path fragments into a single path. This function also canonicalizes any relative path elements, removing '.' and '..' elements to simplify the final path.
-
-		HRESULT __stdcall PathCchCombineEx(
-			LPWSTR pszPathOut,
-			ULONG_PTR cchPathOut,
-			LPCWSTR pszPathIn,
-			LPCWSTR pszMore,
-			ULONG dwFlags);"
-
-	<stdcall: hresult PathCchCombineEx lpwstr uintptr lpwstr lpwstr uint32>
 	^self invalidCall: _failureCode!
 
 pathCchFindExtension: pszPath cchPath: cchPath ppszExt: ppszExt
@@ -303,18 +251,14 @@ pathIsUNCEx: pszPath ppszServer: ppszServer
 	<stdcall: bool PathIsUNCEx lpwstr lpwstr*>
 	^self invalidCall: _failureCode! !
 !OS.PathCchLibrary categoriesForMethods!
-pathAllocCanonicalize:dwFlags:ppszPathOut:!**auto generated**!public!win32 functions-path! !
-pathAllocCombine:pszMore:dwFlags:ppszPathOut:!**auto generated**!public!win32 functions-path! !
+pathAllocCanonicalize:dwFlags:ppszPathOut:!**auto generated**!private!win32 functions-path! !
+pathAllocCombine:pszMore:dwFlags:ppszPathOut:!**auto generated**!private!win32 functions-path! !
 pathCanonicalize:dwFlags:!public!win32 functions-path! !
 pathCchAddBackslash:cchPath:!**auto generated**!public!win32 functions-path! !
 pathCchAddBackslashEx:cchPath:ppszEnd:pcchRemaining:!**auto generated**!public!win32 functions-path! !
 pathCchAddExtension:cchPath:pszExt:!**auto generated**!public!win32 functions-path! !
 pathCchAppend:cchPath:pszMore:!**auto generated**!public!win32 functions-path! !
 pathCchAppendEx:cchPath:pszMore:dwFlags:!**auto generated**!public!win32 functions-path! !
-pathCchCanonicalize:cchPathOut:pszPathIn:!**auto generated**!public!win32 functions-path! !
-pathCchCanonicalizeEx:cchPathOut:pszPathIn:dwFlags:!**auto generated**!public!win32 functions-path! !
-pathCchCombine:cchPathOut:pszPathIn:pszMore:!**auto generated**!public!win32 functions-path! !
-pathCchCombineEx:cchPathOut:pszPathIn:pszMore:dwFlags:!**auto generated**!public!win32 functions-path! !
 pathCchFindExtension:cchPath:ppszExt:!**auto generated**!public!win32 functions-path! !
 pathCchIsRoot:!**auto generated**!public!win32 functions-path! !
 pathCchRemoveBackslash:cchPath:!**auto generated**!public!win32 functions-path! !

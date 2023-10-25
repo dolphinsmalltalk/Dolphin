@@ -24,18 +24,6 @@ pathCommonPrefix: pszFile1 pszFile2: pszFile2 achPath: achPath
 	<stdcall: int32 PathCommonPrefixW lpwstr lpwstr lpwstr>
 	^self invalidCall: _failureCode!
 
-pathCompactPath: hdc pszPath: pszPath dx: dx
-	"Invoke the PathCompactPath() function of the module wrapped by the receiver.
-	Helpstring: Truncates a file path to fit within a given pixel width by replacing path components with ellipses
-
-		BOOL __stdcall PathCompactPath(
-			HDC HDC,
-			LPWSTR pszPath,
-			UINT dx);"
-
-	<stdcall: bool PathCompactPathW handle lpwstr uint32>
-	^self invalidCall: _failureCode!
-
 pathCompactPathEx: pszOut pszSrc: pszSrc cchMax: cchMax dwFlags: dwFlags
 	"Invoke the PathCompactPathEx() function of the module wrapped by the receiver.
 	Helpstring: Truncates a path to fit within a certain number of characters by replacing path components with ellipses
@@ -49,26 +37,6 @@ pathCompactPathEx: pszOut pszSrc: pszSrc cchMax: cchMax dwFlags: dwFlags
 	<stdcall: bool PathCompactPathExW lpwstr lpwstr uint32 uint32>
 	^self invalidCall: _failureCode!
 
-pathFindNextComponent: pszPath
-	"Invoke the PathFindNextComponent() function of the module wrapped by the receiver.
-	Helpstring: Parses a path for the next path component. Paths are delimited by backslashes or by the NULL at the end of the path
-
-		LPCWSTR __stdcall PathFindNextComponent(
-			LPCWSTR pszPath);"
-
-	<stdcall: lpwstr PathFindNextComponentW lpwstr>
-	^self invalidCall: _failureCode!
-
-pathIsRelative: pszPath
-	"Invoke the PathIsRelative() function of the module wrapped by the receiver.
-	Helpstring: Searches a path and determines if it is relative
-
-		BOOL __stdcall PathIsRelative(
-			LPCWSTR pszPath);"
-
-	<stdcall: bool PathIsRelativeW lpwstr>
-	^self invalidCall: _failureCode!
-
 pathIsURL: pszPath
 	"Invoke the PathIsURL() function of the module wrapped by the receiver.
 	Helpstring: Tests a given string to determine if it conforms to the URL format. This function does not verify that the path points to an existing site only that it is a legal URL format
@@ -77,16 +45,6 @@ pathIsURL: pszPath
 			LPCWSTR pszPath);"
 
 	<stdcall: bool PathIsURLW lpwstr>
-	^self invalidCall: _failureCode!
-
-pathParseIconLocation: pszIconFile
-	"Invoke the PathParseIconLocation() function of the module wrapped by the receiver.
-	Helpstring: Parses a file location string for its file component and icon index
-
-		int __stdcall PathParseIconLocation(
-			LPWSTR pszIconFile);"
-
-	<stdcall: int32 PathParseIconLocationW lpwstr>
 	^self invalidCall: _failureCode!
 
 pathRelativePathTo: pszPath pszFrom: pszFrom dwAttrFrom: dwAttrFrom pszTo: pszTo dwAttrTo: dwAttrTo
@@ -104,12 +62,8 @@ pathRelativePathTo: pszPath pszFrom: pszFrom dwAttrFrom: dwAttrFrom pszTo: pszTo
 	^self invalidCall: _failureCode! !
 !OS.ShlwapiLibrary categoriesForMethods!
 pathCommonPrefix:pszFile2:achPath:!public!win32 functions-path! !
-pathCompactPath:pszPath:dx:!public!win32 functions-path! !
 pathCompactPathEx:pszSrc:cchMax:dwFlags:!public!win32 functions-path! !
-pathFindNextComponent:!public!win32 functions-path! !
-pathIsRelative:!public!win32 functions-path! !
 pathIsURL:!public!win32 functions-path! !
-pathParseIconLocation:!public!win32 functions-path! !
 pathRelativePathTo:pszFrom:dwAttrFrom:pszTo:dwAttrTo:!public!win32 functions-path! !
 !
 

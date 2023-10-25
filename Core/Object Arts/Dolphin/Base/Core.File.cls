@@ -657,16 +657,13 @@ composeShortStem: aStemString extension: anExtensionString
 	^self composeStem: stemResult extension: extResult!
 
 composeStem: aStemString extension: anExtensionString
-	"Composes a full pathname from aStemString and anExtensionString components.
-	Implementation Note: This could be implemented in terms of #composePath:stem:extension:,
-	which ultimately is implemented in terms of #makePath:, however it is a very frequently
-	used method so an optimized version which takes advantage of private knowledge of
-	how file names are constructed is warranted. Note that the dot separator may be
-	specified in the extension, or not."
+	"Composes a full pathname from aStemString and anExtensionString components. Note that the dot separator may be specified in the extension, or not."
+
+	"Implementation Note: This could be implemented in terms of #composePath:stem:extension:, which ultimately is implemented in terms of #makePath:, however it is a very frequently used method so an optimized version which takes advantage of private knowledge of how file names are constructed is warranted."
 
 	^(anExtensionString at: 1) == $.
-		ifTrue: [aStemString, anExtensionString]
-		ifFalse: [aStemString, '.', anExtensionString]!
+		ifTrue: [aStemString , anExtensionString]
+		ifFalse: [aStemString , '.' , anExtensionString]!
 
 copy: oldFileNameString to: newFileNameString
 	"Copy the file specified by oldFileNameString to newFileNameString.
@@ -915,13 +912,13 @@ forDirectoriesIn: aString do: operation
 		in: aString
 		do: operation!
 
-fromHandle: aHandle 
+fromHandle: aHandle
 	"Answer a new instance of the receiver on the specified file handle.
 	The instance will not automatically close the handle before it is GC'd (it assumes
 	it does not own it)."
 
-	^(super new)
-		setHandle: aHandle asExternalHandle flags: ##(GENERIC_READ | GENERIC_WRITE);
+	^super new
+		setHandle: aHandle asExternalHandle flags: ##(GENERIC_READ bitOr: GENERIC_WRITE);
 		yourself!
 
 fullPathOf: aPathnameString
@@ -984,10 +981,21 @@ isDirectory: aString
 	attribs := self attributes: aString.
 	^attribs ~= -1 and: [attribs allMask: FILE_ATTRIBUTE_DIRECTORY]!
 
-isRelativePath: aFileNameString
-	"Answers true if aFileNameString is a relative path with no absolute components"
+isRelativePath: aString
+	"Answers whether the <String> argument is a relative path with no absolute components. See [Fully Qualified vs. Relative Paths](https://learn.microsoft.com/en-us/windows/win32/fileio/naming-a-file#fully-qualified-vs-relative-paths)."
 
-	^Shlwapi pathIsRelative: aFileNameString!
+	"The Microsoft documentation does not seem to specify the expected treatment of paths with the long path prefix, '\\?\', but empirically it seems these are always considered absolute. This would be consistent with treatment of UNC paths."
+
+	| size first |
+	aString ifNil: [^true].
+	size := aString size.
+	size == 0 ifTrue: [^true].
+	first := aString at: 1.
+	(first == $\ or: [first == $/]) ifTrue: [^false].
+	(size <= 2 or: [first isEnglishLetter not]) ifTrue: [^true].
+	^(aString at: 2) ~~ $: or: 
+			[first := aString at: 3.
+			first ~~ $\ and: [first ~~ $/]]!
 
 isRootPath: aString
 	"Answer whether the <String> argument is a root path, e.g. 'c:\'"
@@ -1139,8 +1147,7 @@ path: pathString extension: extString
 			whileFalse: [i := i - 1].
 	^extString size == 0
 		ifTrue: [pathString]
-		ifFalse: 
-			[(extString at: 1) == $. ifTrue: [pathString , extString] ifFalse: [pathString , '.' , extString]]!
+		ifFalse: [self composeStem: pathString extension: extString]!
 
 pathDelimiter
 	"Answers the character that delimits a path (or parts thereof)"
