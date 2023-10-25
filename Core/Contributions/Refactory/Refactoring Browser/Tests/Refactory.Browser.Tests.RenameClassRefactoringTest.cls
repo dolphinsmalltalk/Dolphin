@@ -251,7 +251,7 @@ testRenameAmbiguousClassName
 testRenameChangeNamespace
 	"Tests a rename that changes a class' namespace (i.e. moves it to a new namespace), but not it's unqualified name"
 
-	| refactoring oldName newClass classToRename foo smalltalk change package method |
+	| refactoring oldName newClass classToRename foo smalltalk change package method selector |
 	oldName := 'Refactory.Browser.Tests.ClassToRename'.
 	classToRename := oldName asQualifiedReference value.
 	#('Foo' 'Kernel.Bar' 'Refactory.Browser.Tests.FooBar') do: 
@@ -294,15 +294,16 @@ testRenameChangeNamespace
 	self assert: change packageName equals: 'RBTests'.
 	"An extension method containing an unqualified external reference relying on package default namespace to bind"
 	self assertIsNil: (newClass fullBindingFor: 'RefactoryTestDataApp').
+	selector := 'refersToClassInPackageDefaultNamespace' asSymbol.
 	self
-		verifyMethod: #refersToClassInPackageDefaultNamespace
+		verifyMethod: selector
 		of: newClass
 		equals: 'refersToClassInPackageDefaultNamespace ^{ RefactoryTestDataApp. BasicLintRuleTestData }'.
-	method := newClass methodFor: #refersToClassInPackageDefaultNamespace.
+	method := newClass methodFor: selector.
 	self assert: method owningPackageIfLoose name equals: 'RBTestMethodsExtra'.
 	self assert: method environment equals: (Refactory.Browser.TestData classInModel: model).
 	change := model changes changeForClassNamed: newClass fullyQualifiedReference
-				selector: #refersToClassInPackageDefaultNamespace.
+				selector: selector.
 	"Check that a change to a method of the renamed class has the correct (new) namespace (nil, so the class' namespace is used), and that the package is preserved"
 	self assert: change environment equals: Refactory.Browser.TestData.
 	self assert: change packageName equals: 'RBTestMethodsExtra'.

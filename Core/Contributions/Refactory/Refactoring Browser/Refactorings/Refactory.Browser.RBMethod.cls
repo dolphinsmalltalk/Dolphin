@@ -112,6 +112,9 @@ parseTree: aStMethodNode
 	"Assume that the parse tree has been rewritten and does not have valid source positions - reparsing will be needed if those are required"
 	hasSourceIntervals := false!
 
+parseTreeNoError
+	^self parseTree!
+
 parseTreeWithSourceIntervals
 	hasSourceIntervals ifFalse: [parseTree := nil].
 	^self parseTree!
@@ -193,6 +196,7 @@ modelClass:selector:source:!initializing!private! !
 parseEnvironment!accessing!private! !
 parseTree!accessing!public! !
 parseTree:!public! !
+parseTreeNoError!parsing!public! !
 parseTreeWithSourceIntervals!accessing!public! !
 printOn:!printing!public! !
 realMethod!accessing!public! !

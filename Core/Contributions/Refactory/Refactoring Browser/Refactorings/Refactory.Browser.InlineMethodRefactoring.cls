@@ -144,16 +144,18 @@ isPrimitive
 	^inlineParseTree isPrimitive!
 
 moveComments
-	inlineParseTree nodesDo: 
-			[:each | 
-			each 
+	"Private - Relocate any embedded comments from the inlined code. Method level comments are discarded."
+
+	inlineParseTree comments: nil.
+	inlineParseTree allChildrenDo: 
+			[:each |
+			each
 				comments: (each comments collect: 
-							[:anInterval | 
+							[:anInterval |
 							| start stop source |
 							source := sourceParseTree source.
 							start := source size + 1.
-							source := source 
-										, (inlineParseTree source copyFrom: anInterval first to: anInterval last).
+							source := source , (inlineParseTree source copyFrom: anInterval first to: anInterval last).
 							stop := source size.
 							sourceParseTree source: source.
 							start to: stop])]!

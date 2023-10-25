@@ -59,6 +59,9 @@ allArgumentVariables
 	self allArgumentVariableNodesDo: [:each | answer add: each name].
 	^answer!
 
+allChildrenDo: aBlock
+	self childrenDo: [:each | each nodesDo: aBlock]!
+
 allDefinedVariableNodes
 	| answer |
 	answer := OrderedCollection new.
@@ -322,7 +325,7 @@ methodNode
 newSource
 	^self formattedCode!
 
-nodesDo: aBlock 
+nodesDo: aBlock
 	aBlock value: self.
 	self childrenDo: [:each | each nodesDo: aBlock]!
 
@@ -444,10 +447,11 @@ addComments:!accessing!public! !
 addStatementCommentsTo:!helpers!private! !
 allArgumentVariableNodesDo:!enumerating!public! !
 allArgumentVariables!accessing!public! !
+allChildrenDo:!enumerating!public! !
 allDefinedVariableNodes!accessing!public! !
 allDefinedVariableNodesDo:!enumerating!public! !
 allDefinedVariables!accessing!public! !
-allSubNodes!iterating!public! !
+allSubNodes!accessing!public! !
 allTemporaryVariableNodes!accessing!public! !
 allTemporaryVariableNodesDo:!enumerating!public! !
 allTemporaryVariables!accessing!public! !
@@ -507,7 +511,7 @@ methodClass!accessing!public! !
 methodComments!accessing!public! !
 methodNode!accessing!public! !
 newSource!accessing!public! !
-nodesDo:!iterating!public! !
+nodesDo:!enumerating!public! !
 outer!accessing!public! !
 parent!accessing!public! !
 parent:!accessing!public! !

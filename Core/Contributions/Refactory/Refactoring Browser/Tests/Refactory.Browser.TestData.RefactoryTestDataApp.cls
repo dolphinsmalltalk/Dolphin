@@ -56,7 +56,9 @@ booleanPrecedence
 braceArray
 	^{1. 2. 3. 4. 5}!
 
-called: anObject on: aBlock 
+called: anObject on: aBlock
+	"Method-level comment from #called:on:🐬"
+
 	Transcript
 		show: anObject printString;
 		cr.
@@ -148,7 +150,10 @@ fileBlocks
 	file contents] ensure: [file close]!
 
 foo: aValue
-	^(1 to: 10) inject: aValue into: [:sum :each | sum + each]!
+	"🐬 Method-level comment from #foo:"
+
+	^(1 to: 10) inject: aValue into: [:sum :each | sum + each] 	"🐭 Statement-level comment from #foo:"
+!
 
 fullBlocks
 	^[^thisContext]!
@@ -365,8 +370,10 @@ refersToClassPartiallyQualifiedName
 	^#'Tests.ClassToRename'!
 
 refersToClassUnqualified
+	"🐬 Method-level comment from #refersToClassUnqualified"
+
 	<namespace: Refactory.Browser.Tests>
-	^ClassToRename!
+	^ClassToRename	"🐭 Statement-level comment from #refersToClassUnqualified"!
 
 refersToClassUnqualifiedBinding
 	<namespace: Refactory.Browser.Tests>
@@ -523,6 +530,16 @@ stringConcatenation
 
 symbolReference
 	^#(#renameThisMethod: #(4 #renameThisMethod:))!
+
+temporaryVariable
+	"🐬 method-level comment from temporaryVariable accessor"
+
+	"🐬 another method-level comment from temporaryVariable accessor"
+
+	^temporaryVariable	"🐭 statement-level comment from temporaryVariable accessor"!
+
+temporaryVariable2
+	^self temporaryVariable + self temporaryVariable!
 
 tempsReadBeforeWritten
 	| temp |
@@ -697,6 +714,8 @@ smalltalkRemoveKey!performing!public! !
 smalltalkRemoveKeyIfAbsent!performing!public! !
 stringConcatenation!lint!public! !
 symbolReference!public!test! !
+temporaryVariable!accessing!private! !
+temporaryVariable2!accessing!private! !
 tempsReadBeforeWritten!lint!public! !
 tempVarOverridesInstVar!lint!public! !
 testFoo:!public!test! !

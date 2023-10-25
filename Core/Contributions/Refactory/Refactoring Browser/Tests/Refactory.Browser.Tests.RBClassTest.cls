@@ -212,20 +212,22 @@ testMethodsReferencingExternals1
 	| class referers expectedSelectors subclass newMethod |
 	class := model classNamed: #'Refactory.Browser.Tests.ClassToRename'.
 	referers := (class methodsReferencingExternals asArray collect: [:each | each selector]) sort.
-	expectedSelectors := #(#mySubclass #refersToClassInCustomNamespace #refersToClassInPackageDefaultNamespace #refersToClassVariableInCustomNamespace #refersToClassVariablePartiallyQualified #selfReference #testFailure).
+	expectedSelectors := #('mySubclass' 'refersToClassInCustomNamespace' 'refersToClassInPackageDefaultNamespace' 'refersToClassVariableInCustomNamespace' 'refersToClassVariablePartiallyQualified' 'selfReference' 'testFailure')
+				collect: [:each | each asSymbol].
 	self assert: referers equals: expectedSelectors.
 	expectedSelectors do: [:each | class removeSelector: each].
 	self assert: class methodsReferencingExternals isEmpty.
 	"Modify an existing method (should no longer see the real method)."
 	class compile: 'selfReference ^Core.Object'.
-	newMethod := class newMethods at: #selfReference.
+	newMethod := class newMethods at: 'selfReference' asSymbol.
 	self assert: class methodsReferencingExternals asArray equals: { newMethod }.
 	"initialize method references class var ClassVar1, but that is locally defined and so should not be considered an external reference"
 	self assert: class metaclass methodsReferencingExternals single
-		equals: (class metaclass methodFor: #testSkip).
+		equals: (class metaclass methodFor: 'testSkip' asSymbol).
 	subclass := class subclasses first.
 	self assert: (subclass methodsReferencingExternals collect: [:each | each selector]) asSortedArray
-		equals: #(#externalReference:_: #refersToClassFullyQualified #refersToClassPartiallyQualified1 #refersToClassPartiallyQualified2 #refersToClassPartiallyQualifiedBinding1 #refersToClassPartiallyQualifiedBinding2 #refersToClassUnqualified #refersToClassUnqualifiedBinding #refersToClassUnqualifiedHybrid #refersToClassUnqualifiedStaticExpression #refersToInheritedClassVariableUnqualifiedBinding #refersToOtherClassPartiallyQualifiedBinding #testSkip #unqualifiedBindingReference)!
+		equals: (#('externalReference:_:' 'refersToClassFullyQualified' 'refersToClassPartiallyQualified1' 'refersToClassPartiallyQualified2' 'refersToClassPartiallyQualifiedBinding1' 'refersToClassPartiallyQualifiedBinding2' 'refersToClassUnqualified' 'refersToClassUnqualifiedBinding' 'refersToClassUnqualifiedHybrid' 'refersToClassUnqualifiedStaticExpression' 'refersToInheritedClassVariableUnqualifiedBinding' 'refersToOtherClassPartiallyQualifiedBinding' 'testSkip' 'unqualifiedBindingReference')
+				collect: [:each | each asSymbol])!
 
 testMethodsReferencingExternals2
 	| class referers |

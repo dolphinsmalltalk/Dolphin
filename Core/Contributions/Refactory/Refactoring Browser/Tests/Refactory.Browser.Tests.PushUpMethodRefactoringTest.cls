@@ -59,39 +59,38 @@ testPushUpClassMethod
 testPushUpExtensionMethodWithPackageNamespace
 	"Tests pushing up an extension method relying on its package default namespace to bind an external variable reference."
 
-	| refactoring targetClass pushedUp pushedUp2 expectedAst sourceClass |
+	| refactoring targetClass pushedUp pushedUp2 expectedAst sourceClass selector |
 	sourceClass := model classFor: ClassToRename.
+	selector := 'refersToClassInPackageDefaultNamespace' asSymbol.
 	refactoring := PushUpMethodRefactoring
 				model: model
-				pushUp: #(#refersToClassInPackageDefaultNamespace)
+				pushUp: { selector }
 				from: sourceClass.
 	self executeRefactoring: refactoring.
 	targetClass := model classFor: Model.
-	pushedUp := targetClass methodFor: #refersToClassInPackageDefaultNamespace.
+	pushedUp := targetClass methodFor: selector.
 	self assertNotNil: pushedUp.
-	self deny: (sourceClass directlyDefinesMethod: #refersToClassInPackageDefaultNamespace).
+	self deny: (sourceClass directlyDefinesMethod: selector).
 	expectedAst := self
 				parseMethod: 'refersToClassInPackageDefaultNamespace ^{RefactoryTestDataApp. BasicLintRuleTestData}'.
 	self assert: pushedUp boundParseTree equals: expectedAst.
 	self assertIsNil: pushedUp realMethod.
 	"Existing package association must be carried with the pushed-up method"
 	self assert: pushedUp customEnvironment equals: (Refactory.Browser.TestData classInModel: model).
-	self assert: pushedUp owningPackageIfLoose
-		equals: (ClassToRename >> #refersToClassInPackageDefaultNamespace) owningPackage.
+	self assert: pushedUp owningPackageIfLoose equals: (ClassToRename >> selector) owningPackage.
 	"Now push it up again (so now a model only method)"
 	refactoring := PushUpMethodRefactoring
 				model: model
-				pushUp: #(#refersToClassInPackageDefaultNamespace)
+				pushUp: { selector }
 				from: Model.
 	self executeRefactoring: refactoring.
-	pushedUp2 := (model classFor: Object) methodFor: #refersToClassInPackageDefaultNamespace.
+	pushedUp2 := (model classFor: Object) methodFor: selector.
 	self assertNotNil: pushedUp.
-	self deny: (targetClass directlyDefinesMethod: #refersToClassInPackageDefaultNamespace).
+	self deny: (targetClass directlyDefinesMethod: selector).
 	self assert: pushedUp2 boundParseTree equals: expectedAst.
 	self assertIsNil: pushedUp2 realMethod.
 	self assert: pushedUp customEnvironment equals: (Refactory.Browser.TestData classInModel: model).
-	self assert: pushedUp owningPackageIfLoose
-		equals: (ClassToRename >> #refersToClassInPackageDefaultNamespace) owningPackage!
+	self assert: pushedUp owningPackageIfLoose equals: (ClassToRename >> selector) owningPackage!
 
 testPushUpMethodReferencingClassVariable
 	"This used to be blocked, but is possible in Dolphin 8 (and actually earlier) by using qualified names, if the class variable in question is not private. The reference to the subclass class variable is just made qualified (enough) so that it binds in the superclass. The result is still a pure refactoring, although not necessarily a desirable end state. The subclass class variable can then be pulled up, if desired."

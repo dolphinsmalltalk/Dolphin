@@ -12,6 +12,10 @@ Refactory.Browser.Tests.InlineMethodRefactoringTest comment: ''!
 !Refactory.Browser.Tests.InlineMethodRefactoringTest categoriesForClass!Refactory-Testing! !
 !Refactory.Browser.Tests.InlineMethodRefactoringTest methodsFor!
 
+expected
+	^self
+		parseMethod: 'inlineWithNamespace ^{ Tests.ClassToRename. #(#{Refactory.Browser.Tests.ClassToRename}) }'!
+
 testBadInterval
 	self
 		shouldFail: (InlineMethodRefactoring
@@ -34,6 +38,21 @@ testBadInterval
 					inMethod: #testMethod
 					forClass: RefactoryTestDataApp)
 			withMessage: 'The selection doesn''t appear to be a message send'!
+
+testInlineAccessor
+	| refactoring actual expected source |
+	source := RefactoryTestDataApp sourceCodeAt: #temporaryVariable2.
+	refactoring := InlineMethodRefactoring
+				inline: ((source indexOf: $^) + 1 to: (source indexOf: $+) - 1)
+				inMethod: #temporaryVariable2
+				forClass: RefactoryTestDataApp.
+	self setupInlineExpressionFor: refactoring toReturn: false.
+	self executeRefactoring: refactoring.
+	actual := (refactoring model classFor: RefactoryTestDataApp) compiledMethodAt: #temporaryVariable2.
+	expected := self parseMethod: 'temporaryVariable2  ^temporaryVariable + self temporaryVariable'.
+	self assert: actual parseTree equals: expected.
+	self deny: (actual source includes: $🐬).
+	self assert: (actual source includes: $🐭)!
 
 testInlineEmptyInterval
 	| source |
@@ -94,15 +113,15 @@ testInlineMethod
 									^detector')!
 
 testInlineMethod1
-	| refactoring |
+	| refactoring actual expected |
 	refactoring := InlineMethodRefactoring
 				inline: (self convertInterval: (39 to: 84) for: (RefactoryTestDataApp sourceCodeAt: #caller))
 				inMethod: #caller
 				forClass: RefactoryTestDataApp.
 	self setupInlineExpressionFor: refactoring toReturn: false.
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classFor: RefactoryTestDataApp) parseTreeFor: #caller)
-		equals: (self
+	actual := (refactoring model classFor: RefactoryTestDataApp) compiledMethodAt: #caller.
+	expected := self
 				parseMethod: 'caller 
 									| anObject anObject1 | 
 									anObject := 5.
@@ -110,7 +129,9 @@ testInlineMethod1
 									Transcript
 										show: anObject1 printString;
 										cr.
-									^anObject')!
+									^anObject'.
+	self assert: actual parseTree equals: expected.
+	self deny: (actual source includes: $🐬)!
 
 testInlineMethod2
 	| refactoring |
@@ -133,17 +154,20 @@ testInlineMethod2
 								[:each | each printString. ^anObject] value: each1')!
 
 testInlineMethod3
-	| refactoring |
+	| refactoring actual expected |
 	refactoring := InlineMethodRefactoring
 				inline: (self convertInterval: (58 to: 73) for: (RefactoryTestDataApp sourceCodeAt: #caller2))
 				inMethod: #caller2
 				forClass: RefactoryTestDataApp.
 	self setupInlineExpressionFor: refactoring toReturn: false.
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classFor: RefactoryTestDataApp) parseTreeFor: #caller2)
-		equals: (self
+	actual := (refactoring model classFor: RefactoryTestDataApp) compiledMethodAt: #caller2.
+	expected := self
 				parseMethod: 'caller2
-								^(1 to: 10) inject: 1 into: [:sum :each | sum * ((1 to: 10) inject: each into: [:sum1 :each1 | sum1 + each1])]	')!
+								^(1 to: 10) inject: 1 into: [:sum :each | sum * ((1 to: 10) inject: each into: [:sum1 :each1 | sum1 + each1])]	'.
+	self assert: actual parseTree equals: expected.
+	self deny: (actual source includes: $🐬).
+	self assert: (actual source includes: $🐭)!
 
 testInlineMethod4
 	| refactoring |
@@ -245,7 +269,7 @@ testInlineRecursiveCascadedMethod
 testInlineWithNamespace
 	"Inlining a method with a custom namespace may require additional qualifications for static variable refs in the inlined code"
 
-	| refactoring refDataApp source |
+	| refactoring refDataApp source actual |
 	refDataApp := model classFor: RefactoryTestDataApp.
 	source := refDataApp sourceCodeFor: #inlineWithNamespace.
 	refactoring := InlineMethodRefactoring
@@ -264,9 +288,10 @@ testInlineWithNamespace
 				inMethod: #inlineWithNamespace
 				forClass: RefactoryTestDataApp.
 	self executeRefactoring: refactoring.
-	self assert: ((model classFor: RefactoryTestDataApp) parseTreeFor: #inlineWithNamespace)
-		equals: (self
-				parseMethod: 'inlineWithNamespace ^{ Tests.ClassToRename. #(#{Refactory.Browser.Tests.ClassToRename}) }')!
+	actual := (model classFor: RefactoryTestDataApp) parseTreeFor: #inlineWithNamespace.
+	self assert: actual equals: self expected.
+	self deny: (actual formattedCode includes: $🐬).
+	self assert: (actual formattedCode includes: $🐭)!
 
 testModelInlineRecursiveMethod
 	| refactoring class |
@@ -333,7 +358,9 @@ testReturn
 				forClass: BasicLintRuleTestData class)
 		withMessage: 'The selection doesn''t appear to be a message send'! !
 !Refactory.Browser.Tests.InlineMethodRefactoringTest categoriesForMethods!
+expected!public!tests! !
 testBadInterval!failure tests!public! !
+testInlineAccessor!public!tests! !
 testInlineEmptyInterval!public! !
 testInlineMethod!public!tests! !
 testInlineMethod1!public!tests! !

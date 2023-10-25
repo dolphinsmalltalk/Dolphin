@@ -48,6 +48,19 @@ testMultipleSelectors
 	self shouldAbort: subject.
 	self assert: optionCalled!
 
+testRenameOfMethodWithUnbindableStatic
+	| refactoring selector |
+	selector := 'refersToClassInPackageDefaultNamespace' asSymbol.
+	refactoring := RenameMethodRefactoring
+				renameMethod: selector
+				in: ClassToRename
+				to: #testMethod2
+				permutation: (1 to: 0).
+	model := refactoring model.
+	"Make the method unbindable"
+	model removeClass: (model classFor: RefactoryTestDataApp).
+	self shouldFail: refactoring withMessage: 'Variable not bindable: RefactoryTestDataApp'!
+
 testRenamePermuteArgs
 	| refactoring class |
 	refactoring := RenameMethodRefactoring
@@ -138,6 +151,7 @@ testRenameTestMethod1
 setUp!public!set up! !
 testExistingSelector!failure tests!public! !
 testMultipleSelectors!failure tests!public! !
+testRenameOfMethodWithUnbindableStatic!public!tests! !
 testRenamePermuteArgs!public!tests! !
 testRenamePrimitive!public!tests! !
 testRenameTestMethod!public!tests! !

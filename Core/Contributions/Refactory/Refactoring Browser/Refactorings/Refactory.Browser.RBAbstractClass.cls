@@ -225,6 +225,12 @@ compile: aString environment: aNamespace categories: aSymbolCollection package: 
 				categories: aSymbolCollection
 				package: aPackage)!
 
+compiledMethodAt: aSymbol
+	"Answer the compiled method associated with the selector argument, aSymbol, in 
+	the receiver's local method dictionary. Report an error if the selector cannot be found."
+
+	^self compiledMethodAt: aSymbol ifAbsent: [NotFoundError receiver: self object: aSymbol]!
+
 compiledMethodAt: aSelector ifAbsent: aNiladicValuable
 	^(self methodFor: aSelector) ifNil: [aNiladicValuable value]!
 
@@ -864,6 +870,7 @@ compile:!compiling!public! !
 compile:categories:!compiling!public! !
 compile:classified:!compiling!public! !
 compile:environment:categories:package:!compiling!public! !
+compiledMethodAt:!methods-accessing!public! !
 compiledMethodAt:ifAbsent:!methods-accessing!public! !
 compileTree:environment:categories:package:!compiling!public! !
 conformsToProtocol:!protocols!public! !
