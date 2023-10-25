@@ -127,15 +127,15 @@ int32AtOffset: anInteger
 	^answer > 16r7FFFFFFF ifTrue: [(answer bitXor: 16rFFFFFFFF) bitInvert] ifFalse: [answer]!
 
 int32AtOffset: anInteger put: anObject
-	"Store anObject as a signed integer at anInteger offset in the receiver. anInteger must 
-	be representable in 32-bits. Uses the dwordAtOffset:put: primitive."
+	"Store anObject as a signed integer at anInteger offset in the receiver. anInteger must be representable in 32-bits."
+
+	"Uses primitiveIndirectInt32AtPut."
 
 	<primitive: 137>
-	| value |
-	value := anObject asInteger.
-	value isInt32 ifFalse: [^self errorCantHold: anObject].
-	1 to: 4 do: [:index | self at: anInteger + index put: (value digitAt: index)].
-	^anObject!
+	^self
+		retryInt32AtOffset: anInteger
+		put: anObject
+		failureCode: _failureCode!
 
 intPtrAtOffset: anInteger
 	"Answer the machine-word sized signed integer value (i.e. may be 32 or 64-bit, depending on host OS) at offset (i.e. zero relative) anInteger in the receiver."
@@ -158,11 +158,10 @@ intPtrAtOffset: anInteger put: anObject
 	be representable in a machine word. Uses the longPtrAtOffset:put: primitive."
 
 	<primitive: 187>
-	| value |
-	value := anObject asInteger.
-	value byteSize > VMConstants.IntPtrSize ifFalse: [^self errorCantHold: anObject].
-	1 to: VMConstants.IntPtrSize do: [:index | self at: anInteger + index put: (value digitAt: index)].
-	^anObject!
+	^self
+		retryIntPtrAtOffset: anInteger
+		put: anObject
+		failureCode: _failureCode!
 
 replaceBytesOf: aByteObject from: start to: stop startingAt: fromStart
 	"Private - Standard method for transfering bytes from one variable

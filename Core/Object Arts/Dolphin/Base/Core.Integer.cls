@@ -547,6 +547,11 @@ isInt32
 
 	^self >= ##(-2 raisedToInteger: 31) and: [self < ##(2 raisedToInteger: 31)]!
 
+isInt64
+	"Answer whether the receiver can be represented as a 64-bit two's complement signed integer."
+
+	^self >= ##(-2 raisedToInteger: 63) and: [self <= ##((2 raisedToInteger: 63) - 1)]!
+
 isInteger
 	"Answer whether the receiver is an <integer>."
 
@@ -692,6 +697,12 @@ numberOfDigitsInBase: anInteger
 	(q := q quo: (anInteger raisedToInteger: nDigits)) < anInteger]
 			whileFalse.
 	^q == 0 ifTrue: [total] ifFalse: [total + 1]!
+
+odd
+	"Answer whether the receiver is an odd integer. Zero is considered even.
+	Override superclass as we've a more efficient implementation."
+
+	^(self bitAnd: 1) ~~ 0!
 
 printOn: aStream
 	"Append the ASCII representation of the receiver to aStream.
@@ -897,6 +908,7 @@ highWord!bit manipulation!public! !
 integerPart!accessing!public! !
 isBitSet:!bit manipulation!public!testing! !
 isInt32!public!testing! !
+isInt64!public!testing! !
 isInteger!public!testing! !
 isNull!public!testing! !
 isPowerOfTwo!public!testing! !
@@ -918,6 +930,7 @@ noMask:!bit manipulation!public! !
 normalize!converting!private! !
 notNull!public!testing! !
 numberOfDigitsInBase:!enquiries!private! !
+odd!public!testing! !
 printOn:!printing!public! !
 printOn:base:!printing!public! !
 printOn:base:nDigits:!printing!public! !

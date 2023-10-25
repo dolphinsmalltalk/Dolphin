@@ -399,11 +399,10 @@ intPtrAtOffset: anInteger put: anObject
 	"Store anObject as a signed machine-word sized integer at anInteger offset in the receiver. anObject must be representable in a machine word."
 
 	<primitive: 183>
-	| value |
-	value := anObject asInteger.
-	value byteSize > VMConstants.IntPtrSize ifFalse: [^self errorCantHold: anObject].
-	1 to: VMConstants.IntPtrSize do: [:index | self at: anInteger + index put: (value digitAt: index)].
-	^anObject!
+	^self
+		retryIntPtrAtOffset: anInteger
+		put: anObject
+		failureCode: _failureCode!
 
 isLiteral
 	"Answer whether or not the receiver has a literal representation (probably its
@@ -518,6 +517,19 @@ retryInt32AtOffset: anInteger put: anObject failureCode: failureCode
 			"Not a suitable value. Attempt to coerce to Integer and retry. Will error if anObject does understand #asInteger."
 			intVal := anObject asInteger.
 			intVal isInt32 ifTrue: [^self uint32AtOffset: anInteger put: intVal]].
+	^self updatePrimitiveFailed: failureCode atOffset: anInteger!
+
+retryIntPtrAtOffset: anInteger put: anObject failureCode: failureCode
+	"Private - Fallback code for storing unsigned 32-bit integer into the receiver when a
+	primitive fails. Either raises an appropriate error, or converts the argument to an Integer
+	and retries."
+
+	failureCode == _PrimitiveFailureCode.InvalidParameter2
+		ifTrue: 
+			[| intVal |
+			"Not a suitable value. Attempt to coerce to Integer and retry. Will error if anObject does understand #asInteger."
+			intVal := anObject asInteger.
+			intVal isInt64 ifTrue: [^self uintPtrAtOffset: anInteger put: intVal]].
 	^self updatePrimitiveFailed: failureCode atOffset: anInteger!
 
 retryUInt16AtOffset: anInteger put: anObject failureCode: failureCode
@@ -755,6 +767,7 @@ replaceBytesOf:from:to:startingAt:!double dispatch!private! !
 replaceFrom:to:with:startingAt:!public!replacing! !
 retryInt16AtOffset:put:failureCode:!accessing!private! !
 retryInt32AtOffset:put:failureCode:!accessing!private! !
+retryIntPtrAtOffset:put:failureCode:!accessing!private! !
 retryUInt16AtOffset:put:failureCode:!accessing!private! !
 retryUInt32AtOffset:put:failureCode:!accessing!private! !
 retryUIntPtrAtOffset:put:failureCode:!accessing!helpers!private! !
