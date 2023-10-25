@@ -30,7 +30,7 @@ package setMethodNames: #(
 
 package setPrerequisites: #(
 	'..\Base\Dolphin'
-	'..\System\Filer\Dolphin Literal Filer'
+	'..\System\Filer\Dolphin STL Class Collector'
 ).
 
 package!

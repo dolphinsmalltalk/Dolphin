@@ -71,7 +71,12 @@ stbConvertFrom: anSTBClassFormat
 	"Convert from version 0 proxy - the sort algorithm is lost."
 
 	anSTBClassFormat version == 0
-		ifTrue: [^[:data | (self stbConvertFromVersion0: data) becomeA: self]].
+		ifTrue: 
+			[^
+			[:data |
+			data
+				at: 3 put: (SortedCollection defaultSortAlgorithmClass newSortBlock: (data at: 3));
+				becomeA: self]].
 	^super stbConvertFrom: anSTBClassFormat!
 
 stbConvertFromVersion0: anArray

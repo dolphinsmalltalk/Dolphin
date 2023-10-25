@@ -634,6 +634,20 @@ size
 
 	^items size!
 
+stbSaveOn: anSTBOutFiler
+	"Save out a binary representation of the receiver to anSTBOutFiler.
+	Only sub-instances of the receiver that are capable of persistency, i.e.
+	they hold enough information to re-create themselves, can be filed out."
+
+	| savedHandle savedId |
+	savedId := id.
+	id := nil.
+	savedHandle := handle.
+	handle := nil.
+	[super stbSaveOn: anSTBOutFiler] ensure: 
+			[handle := savedHandle.
+			id := savedId]!
+
 styleFlags
 	"Private - Answer the MENUITEMINFO style flags of the receiver (see
 	Win32 SDK docs for fType field)."
@@ -747,6 +761,7 @@ setDefault:!accessing!public! !
 setItem:info:!accessing!private! !
 showIn:position:!drawing!public! !
 size!accessing!public! !
+stbSaveOn:!binary filing!public! !
 styleFlags!private!realizing/unrealizing! !
 text!accessing!public! !
 text:!accessing!public! !

@@ -9,6 +9,7 @@ Kernel.STxProxy
 	classConstants: {}!
 Kernel.STBStaticVariableProxy guid: (Core.GUID fromString: '{b2c4348c-fb81-4102-bc55-4d4e668749ec}')!
 Kernel.STBStaticVariableProxy comment: ''!
+!Kernel.STBStaticVariableProxy categoriesForClass!System-Binary storage! !
 !Kernel.STBStaticVariableProxy methodsFor!
 
 reference: aBindingReference

@@ -102,6 +102,7 @@ package setPrerequisites: #(
 	'..\..\Graphics\Dolphin GDI Graphics'
 	'..\..\Models\List\Dolphin List Models'
 	'..\List\Dolphin List Presenter'
+	'..\..\..\System\Filer\Dolphin Literal Filer'
 	'..\..\Base\Dolphin MVP Base'
 	'..\..\Models\Tree\Dolphin Tree Models'
 	'..\Tree\Dolphin Tree Presenter'

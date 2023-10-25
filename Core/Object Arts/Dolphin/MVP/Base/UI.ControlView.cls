@@ -126,6 +126,14 @@ errorOutOfMemory
 
 	^OutOfMemoryError signal!
 
+filerProxyIn: anSTxOutFiler
+	"Private - Answer a filer proxy that represents the receiver for use with the <STxOutFiler> argument."
+
+	| proxy |
+	proxy := super filerProxyIn: anSTxOutFiler.
+	proxy instVars at: ##(self indexOfInstVar: 'oldWndProc') put: nil.
+	^proxy!
+
 forecolor
 	"Answers the foreground colour of the receiver"
 
@@ -443,6 +451,7 @@ defaultWindowProcessing:wParam:lParam:!dispatching!private! !
 defaultWindowStyle!constants!private! !
 errorInCommonControlCall!exceptions!public! !
 errorOutOfMemory!exceptions!public! !
+filerProxyIn:!binary filing!private! !
 forecolor!accessing!public! !
 forecolor:!accessing!public! !
 getFont!accessing!font!private! !

@@ -88,6 +88,85 @@ testBlockReadWrite
 		by: -1
 		do: [:ver | self verifyBlockReadWriteAtVersion: ver]!
 
+testClassAndMetaclass3
+	| predefinedClassOffset |
+	predefinedClassOffset := 4.
+	self assert: (STLOutFiler3 new
+				nextPut: Association;
+				nextPut: Association class;
+				nextPut: { Association. Association class };
+				contents)
+		equals: {
+				#'!!STL'.
+				3.
+				STxFiler.PrefixLiteralMask.
+				Association.
+				STxFiler.PrefixDataMask | STxFiler.PrefixProxyMask
+					| ((STLInFiler3 predefinedClasses indexOf: STBMetaclassProxy) + predefinedClassOffset
+							<< STxFiler.PrefixRefShift).
+				STxFiler.PrefixLiteralMask.
+				'Dolphin'.
+				STxFiler.PrefixLiteralMask.
+				'Association'.
+				STxFiler.PrefixDataMask
+					| ((STLInFiler3 predefinedClasses indexOf: Array) + predefinedClassOffset << STxFiler.PrefixRefShift).
+				2.
+				STxFiler.LastPredefinedClassRef + 1 << STxFiler.PrefixRefShift.
+				STxFiler.LastPredefinedClassRef + 2 << STxFiler.PrefixRefShift
+			}!
+
+testClassAndMetaclass4
+	self assert: (STLOutFiler4 new
+				nextPut: Association;
+				nextPut: Association class;
+				nextPut: { Association. Association class };
+				contents)
+		equals: {
+				#'!!STL'.
+				4.
+				Association.
+				STxFiler.PrefixDataMask | STxFiler.PrefixProxyMask
+					| ((STLInFiler4 predefinedClasses indexOf: STBMetaclassProxy) << STxFiler.PrefixRefShift).
+				STxFiler.PrefixLiteralMask.
+				'Dolphin'.
+				STxFiler.PrefixLiteralMask.
+				'Association'.
+				STxFiler.PrefixDataMask
+					| ((STLInFiler4 predefinedClasses indexOf: Array) << STxFiler.PrefixRefShift).
+				2.
+				Association.
+				STxFiler.LastPredefinedClassRef + 1 << STxFiler.PrefixRefShift
+			}!
+
+testClassAndMetaclass5and6
+	5 to: 6
+		do: 
+			[:ver |
+			self assert: ((STLOutFiler version: ver)
+						nextPut: Association;
+						nextPut: Association class;
+						nextPut: { Association. Association class };
+						contents)
+				equals: {
+						#'!!STL'.
+						ver.
+						Association.
+						Association class.
+						STxFiler.PrefixLiteralMask.
+						{ Association. Association class }
+					}]!
+
+testClassBeforeClassInstanceRequiringConversion
+	"Regression test for bug described in STLInFiler3>>#registerPredefinedClasses, although note that the fix is potentially incomplete and more cases may be identified that need pre-registration."
+
+	#(#(#'!!STL' 4 34 4 ##(Smalltalk.Icon) 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 65027 1 418 nil true 464 65031 1 416) #(#'!!STL' 3 98 4 8 ##(Smalltalk.Icon) 418 0 16 1572870 ##(Smalltalk.ImageRelativeFileLocator) 65027 1 418 0 16 464 65031 1 416))
+		do: 
+			[:stl |
+			| deserialised |
+			deserialised := (STLInFiler on: stl readStream) contents.
+			self assert: deserialised single
+				equals: { Graphics.Icon. Graphics.Icon error. Graphics.Icon warning. Graphics.Icon }]!
+
 testClassReadWrite
 	self outfilerClass version to: self minimumFilerVersion
 		by: -1
@@ -95,6 +174,41 @@ testClassReadWrite
 
 testEmptyStream
 	self should: [STLInFiler on: #() readStream] raise: STBError!
+
+testExternalStructure
+	5 to: STLOutFiler version
+		do: 
+			[:ver |
+			| struct stl |
+			struct := (123 @ 456) asParameter.
+			stl := self literalStoreArrayOf: struct version: ver.
+			self assert: stl
+				equals: {
+						#'!!STL'.
+						ver.
+						STxFiler.PrefixClassMask bitOr: (POINTL instSize bitShift: STxFiler.PrefixInstSizeShift).
+						POINTL.
+						STxFiler.PrefixLiteralMask.
+						#[123 0 0 0 200 1 0 0]
+					}]!
+
+testExternalStructure3to4
+	3 to: 4
+		do: 
+			[:ver |
+			| struct stl |
+			struct := (123 @ 456) asParameter.
+			stl := self literalStoreArrayOf: struct version: ver.
+			self assert: stl
+				equals: {
+						#'!!STL'.
+						ver.
+						STxFiler.PrefixClassMask | (POINTL instSize bitShift: STxFiler.PrefixInstSizeShift)
+							| (#POINT size bitShift: STxFiler.PrefixLocatorLenShift).
+						POINTL.
+						STxFiler.PrefixLiteralMask.
+						#[123 0 0 0 200 1 0 0]
+					}]!
 
 testGlobalProxyingVersion3
 	| stl3 deserialised filer object serialised |
@@ -108,8 +222,7 @@ testGlobalProxyingVersion3
 000008 [STBGlobalObjectProxy]
 000009     30: #Bar
 000011     [<0: nil>]
-End of 30 objects
-'.
+End of 5 objects'.
 	"Note that proxying of global nils was actually broken in D6 due to an optimisation added for writing nils, so this content was created with a patch in D6."
 	filer := self newOutFilerVersion: 3.
 	object := 'Bar' copy.
@@ -142,8 +255,7 @@ testGlobalProxyingVersion4
 000007 [STBGlobalObjectProxy]
 000008     #Bar
 000009     nil
-End of 28 objects
-'.
+End of 6 objects'.
 	"Note that proxying of global nils was actually broken in D7 due to an optimisation added for writing nils, so this content was created with a patch in D7."
 	filer := self newOutFilerVersion: 4.
 	object := 'Bar' copy.
@@ -188,13 +300,13 @@ testInvalidClassReference
 	"Now corrupt the stream by replacing the final class reference (to Association in the read map) with the ref index of an non-class object, and indices that are out of range"
 	#(6 -1 0 1234) do: 
 			[:i |
-			stl at: 11 put: (i bitShift: STxVersionPolicy.PrefixRefShift) | STxVersionPolicy.PrefixDataMask.
+			stl at: 11 put: (i bitShift: STxFiler.PrefixRefShift) | STxFiler.PrefixDataMask.
 			self
 				should: [Object fromLiteralStoreArray: stl]
 				raise: Error
 				matching: 
 					[:ex |
-					ex description = ('STBFiler - STL input stream contains an invalid class reference (<1d>)' << i)]]!
+					ex description = ('STBFiler - STL input stream contains an invalid class reference: <1d>' << i)]]!
 
 testInvalidObjectReference
 	| stl rehydrated |
@@ -205,7 +317,7 @@ testInvalidObjectReference
 	"Now corrupt the stream by replacing the final class reference (to Association in the read map) with the ref index of an non-class object, and indices that are out of range"
 	#(6 -1 0 1234) do: 
 			[:i |
-			stl at: 8 put: (i bitShift: STxVersionPolicy.PrefixRefShift).
+			stl at: 8 put: (i bitShift: STxFiler.PrefixRefShift).
 			self
 				should: [Object fromLiteralStoreArray: stl]
 				raise: Error
@@ -221,13 +333,39 @@ testInvalidPredefinedClass
 		raise: Error
 		matching: 
 			[:ex |
-			ex description = 'STBFiler - STL input stream contains an invalid class (Kernel.STBClassProxy)']!
+			ex description = 'STBFiler - Input stream contains an invalid class (Kernel.STBClassProxy)']!
 
 testInvalidStream
 	self should: [STLInFiler on: #('Test') readStream] raise: STBError.
 	self should: [STLInFiler on: #('!!STL' 9999) readStream] raise: STBError.
 	self should: [STLInFiler on: #('') readStream] raise: STBError.
 	self should: [STLInFiler on: #(#[]) readStream] raise: STBError!
+
+testProcessor
+	"Special case global variable"
+
+	super testProcessor.
+	self assert: (self serialize: Processor version: 3)
+		equals: '(Object fromLiteralStoreArray: #(#''!!STL'' 3 64 ))'.
+	self assert: (self serialize: Processor version: 4)
+		equals: '(Object fromLiteralStoreArray: #(#''!!STL'' 4 ##(Smalltalk.Processor) ))'.
+	5 to: self outfilerClass version
+		do: 
+			[:ver |
+			self assert: (self serialize: Processor version: ver)
+				equals: '(Object fromLiteralStoreArray: #(#''!!STL'' <1d> #{Core.Processor}))' << ver]!
+
+testSmalltalk
+	super testSmalltalk.
+	self assert: (self serialize: Smalltalk version: 3)
+		equals: '(Object fromLiteralStoreArray: #(#''!!STL'' 3 48 ))'.
+	self assert: (self serialize: Smalltalk version: 4)
+		equals: '(Object fromLiteralStoreArray: #(#''!!STL'' 4 ##(Smalltalk) ))'.
+	5 to: self outfilerClass version
+		do: 
+			[:ver |
+			self assert: (self serialize: Smalltalk version: ver)
+				equals: '(Object fromLiteralStoreArray: #(#''!!STL'' <1d> #{Smalltalk}))' << ver]!
 
 testStl3ExtendedChar
 	"STL v3 format from Dolphin 6, which did not have proper Unicode support. Characters with code points > 255 could not be represented. Literal strings were ansi byte-strings, so any extended characters would not be read correctly in D6 either."
@@ -251,9 +389,8 @@ testStl3Literals
 	"STL v3 format from Dolphin 6. Only Integers (small and large), Strings, Symbols and ByteArrays actually get emitted as literals, not Characters, nil, true and false. Classes were emitted as ##() expression, as were PoolConstantDictionary objects since these were known globals, although in practice very unlikely to be encountered. Processor and Smalltalk globals were pre-registered."
 
 	| stl3 rehydrated literals |
-	literals := #(1 9223372036854775808 'a†b' #foo 1.0 true false nil #(123) #[123] $A ##(Smalltalk) ##(Object) ##(Processor) ##(Win32Constants)).
-	"(Object fromLiteralStoreArray: #(#'!!STL' 3 98 15 3 8 9223372036854775808 8 'a†b' 8 #foo 327734 ##(Smalltalk.Float)  8 0 0 0 0 0 0 240 63 16 32 0 98 1 247 8 #[123] 1044 48 8 ##(Smalltalk.Object)  64 8 ##(Smalltalk.Win32Constants) ))"
-	stl3 := #(#'!!STL' 3 98 15 3 8 9223372036854775808 8 'a†b' 8 #foo 327734 ##(Smalltalk.Float) 8 0 0 0 0 0 0 240 63 16 32 0 98 1 247 8 #[123] 1044 48 8 ##(Smalltalk.Object) 64 8 ##(Smalltalk.Win32Constants)).
+	literals := #(1 9223372036854775808 'a†b' #foo 1.0 true false nil #(123) #[123] $A $€ ##(Smalltalk) ##(Object) ##(Processor) ##(Win32Constants)).
+	stl3 := #(#'!!STL' 3 98 16 3 8 9223372036854775808 8 'a†b' 8 #foo 327734 ##(Smalltalk.Float) 8 0 0 0 0 0 0 240 63 16 32 0 98 1 247 8 #[123] 1044 2052 48 8 ##(Smalltalk.Object) 64 8 ##(Smalltalk.Win32Constants)).
 	rehydrated := Object fromLiteralStoreArray: stl3.
 	self assert: rehydrated equals: literals.
 	self assert: (self literalStoreArrayOf: rehydrated version: 3) equals: stl3!
@@ -324,7 +461,7 @@ testStl6Literals
 	"STL v6 format from Dolphin 8. 
 	A notable difference from the earlier Dolphin 8 representation, STL5, is that there are no pre-registered classes, so the class ref for the top level Array is included."
 
-	| literals storeArray |
+	| literals storeArray actual |
 	literals := {
 				1.
 				SmallInteger minimum - 1.
@@ -351,49 +488,54 @@ testStl6Literals
 		equals: {
 				#'!!STL'.
 				6.
-				STxVersionPolicy.PrefixVariableMask | STxVersionPolicy.PrefixClassMask.
+				STxFiler.PrefixVariableMask | STxFiler.PrefixClassMask.
 				Array.
 				literals size.
 				1 << 1 | 1.
-				STLVersionPolicy.PrefixLiteralMask.
+				STxFiler.PrefixLiteralMask.
 				SmallInteger minimum - 1.
-				STLVersionPolicy.PrefixLiteralMask.
+				STxFiler.PrefixLiteralMask.
 				'abc'.
 				#foo.
-				STLVersionPolicy.PrefixLiteralMask.
+				STxFiler.PrefixLiteralMask.
 				1.125.
 				#{Float.Infinity}.
 				#{Float.NegativeInfinity}.
 				#{Float.NaN}.
-				STLVersionPolicy.PrefixLiteralMask.
+				STxFiler.PrefixLiteralMask.
 				1.25s.
 				true.
 				false.
 				nil.
-				STLVersionPolicy.PrefixLiteralMask.
+				STxFiler.PrefixLiteralMask.
 				#(123).
-				STLVersionPolicy.PrefixLiteralMask.
+				STxFiler.PrefixLiteralMask.
 				#[123].
 				$a.
 				8.
 				$🐬.
 				Object.
-				STLVersionPolicy.PrefixLiteralMask.
+				STxFiler.PrefixLiteralMask.
 				#{Core.Object}
 			}.
-	"Float.NaN doesn't compare equal to anything, even itself"
-	self assert: ((Object fromLiteralStoreArray: storeArray) reject: [:each | each == Float.NaN]) equals: (literals reject: [:each | each == Float.NaN]).
-!
+	actual := Object fromLiteralStoreArray: storeArray.
+	"Float.NaN doesn't compare equal to anything, even itself, but is a unique value so is identical to itself"
+	self assert: (actual symmetricDifference: literals) asIdentitySet single identicalTo: Float.NaN!
 
 testStringsVersion4
-	| dessicated utf8WithNull |
+	| dessicated utf8WithNull utf16WithNull rehydrated |
 	self
 		verifyStrings: #('abc £12' 'árvízturo tükörfúrógép' 'кракозябры' '文字化け' 'ａｂｃ')
 		atVersion: 4.
 	"STL v4 didn't serialize Strings with nulls correctly - they just got trimmed"
 	utf8WithNull := Utf8String fromByteArray: #[97 0 98].
-	dessicated := self serialize: { utf8WithNull. utf8WithNull asUtf16String } version: 4.
-	self assert: (self deserialize: dessicated) equals: #('a' 'a')!
+	utf16WithNull := utf8WithNull asUtf16String.
+	dessicated := self serialize: { utf8WithNull. utf16WithNull. utf8WithNull. utf16WithNull }
+				version: 4.
+	rehydrated := self deserialize: dessicated.
+	self assert: rehydrated equals: #('a' 'a' 'a' 'a').
+	self assert: rehydrated third identicalTo: rehydrated first.
+	self assert: rehydrated fourth identicalTo: rehydrated second.!
 
 testSymbolReadWrite
 	self outfilerClass version to: self minimumFilerVersion
@@ -505,6 +647,15 @@ verifyRoundTripSingleton: anObject version: anInteger
 	super verifyRoundTripSingleton: anObject version: anInteger.
 	self assert: (Object fromLiteralStoreArray: anObject literalStoreArray) identicalTo: anObject!
 
+verifyStringsAtPreUnicodeVersion: anInteger
+	super verifyStringsAtPreUnicodeVersion: anInteger.
+	self
+		should: [self verifyString: '🐬' atVersion: anInteger]
+		raise: STBError
+		matching: 
+			[:ex |
+			ex description = 'STBFiler - String contains extended character that cannot be represented in STL 3: ''🐬''']!
+
 verifySymbolReadWriteAtVersion: anInteger
 	| contents testSymbol deserialized data |
 	testSymbol := 'testSymbol' asSymbol.
@@ -538,8 +689,14 @@ testArrayOfAtomics!public!unit tests! !
 testArraysWithSharedLiterals!public!unit tests! !
 testBindingReferenceStoreArray!public!unit tests! !
 testBlockReadWrite!public!unit tests! !
+testClassAndMetaclass3!public!unit tests! !
+testClassAndMetaclass4!public!unit tests! !
+testClassAndMetaclass5and6!public!unit tests! !
+testClassBeforeClassInstanceRequiringConversion!public!unit tests! !
 testClassReadWrite!public!unit tests! !
 testEmptyStream!public!unit tests! !
+testExternalStructure!public! !
+testExternalStructure3to4!public! !
 testGlobalProxyingVersion3!public!unit tests! !
 testGlobalProxyingVersion4!public!unit tests! !
 testIntegerBytesStl4!public!unit tests! !
@@ -548,6 +705,8 @@ testInvalidClassReference!public!unit tests! !
 testInvalidObjectReference!public!unit tests! !
 testInvalidPredefinedClass!public!unit tests! !
 testInvalidStream!public!unit tests! !
+testProcessor!public!unit tests! !
+testSmalltalk!public! !
 testStl3ExtendedChar!public!unit tests! !
 testStl3Literals!public!unit tests! !
 testStl4Literals!public!unit tests! !
@@ -563,6 +722,7 @@ verifyClassReadWriteAtVersion:!helpers!private! !
 verifyIntegerReadWriteAtVersion:!helpers!private! !
 verifyRehydrateNonExistantClass:!helpers!private! !
 verifyRoundTripSingleton:version:!helpers!private! !
+verifyStringsAtPreUnicodeVersion:!helpers!private! !
 verifySymbolReadWriteAtVersion:!helpers!private! !
 !
 

@@ -212,6 +212,9 @@ undeclare
 	super undeclare.
 	self setBinding: nil!
 
+unqualifiedPathLiteralPrefix
+	^'Root.'!
+
 valueOrNil
 	"Answer the value of the variable named by the receiver, or nil if not defined."
 	
@@ -249,6 +252,7 @@ setPath:!initializing!private! !
 setPathString:!initializing!private! !
 setScope:!initializing!private! !
 undeclare!operations!public! !
+unqualifiedPathLiteralPrefix!constants!private! !
 valueOrNil!accessing!public! !
 !
 

@@ -51,9 +51,9 @@ streamIn: aStream
 	self setDocumentData: (Object binaryReadFrom: aStream)!
 
 streamOut: aStream
-	"Private - Stream the receiver's model out to aStream"
+	"Private - Stream the receiver's model out to aStream. Use the STB4 format for backwards compatibility."
 
-	self getDocumentData binaryStoreOn: aStream! !
+	self getDocumentData binaryStoreUsing: (STBOutFiler4 on: aStream)! !
 !ScribbleDocument categoriesForMethods!
 createComponents!initializing!public! !
 fileNew!commands!public! !

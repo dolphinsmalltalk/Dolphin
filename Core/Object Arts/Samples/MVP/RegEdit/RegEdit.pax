@@ -5,30 +5,29 @@ package paxVersion: 2.1;
 	basicComment: 'Dolphin Smalltalk RegEdit Sample.
 Copyright (c) Object Arts Ltd, 1998-2002.
 
-RegEdit is a reduced functionality clone of the well known Windows applet, Regedit.exe. It demonstrates a number of aspects of MVP such as the use of a TreeView in conjunction with a TreePresenter, how to write a custom VirtualTreeModel (RegTreeModel), the use of an enhanced ListView in conjunction with a ListPresenter, and in-place label editing in a ListView. It also shows how to use Dolphin''s powerful registry access classes which model the Windows registry as a set of nested dictionaries.
-
-RegEdit is supplied with a session manager, which Dolphin Pro users can use to deploy RegEdit as a .EXE. 
+RegEdit is a reduced functionality clone of the well known Windows applet, Regedit.exe. It demonstrates a number of aspects of MVP such as the use of a TreeView in conjunction with a TreePresenter, how to write a custom VirtualTreeModel (RegTreeModel), the use of an enhanced ListView in conjunction with a ListPresenter, and in-place label editing in a list and tree views. It also shows how to use Dolphin''s powerful registry access classes which model the Windows registry as a set of nested dictionaries.
 
 Try me out with:
 ```
-	RegEdit show
+	UI.Examples.RegEdit show
 ```
 
-Be warned: It is possible to corrupt your registry with this tool (if you run it elevated), so please use with care!!
+Be warned: It is possible to corrupt your registry with this tool (especially if you run it elevated), so please use with care!!
 
 ## Deployment:
 
 All code removal options can be enabled.
-The sample does not have a RuntimeSessionManager, so we need to open an instance. This method of deployment is not recommended for real applications. You should always implement a RuntimeSessionManager that opens your main application window. This ensures that everything is initialized properly through normal code paths, rather than relying on restoring correctly from an instance saved int the application.
+The sample does not have a RuntimeSessionManager, so we need to open an instance. This method of deployment is not recommended for real applications. You should always implement a RuntimeSessionManager that opens your main application window. This ensures that everything is initialized properly through normal code paths, rather than relying on restoring correctly from an instance saved into the application.
 
 ```
 Smalltalk developmentSystem saveImage.	"Save the image if you don''t want to lose changes"
-RegEdit show.
+UI.Examples.RegEdit show.
 (ImageStripper new)
-	rootPackage: RegEdit owningPackage;
+	rootPackage: UI.Examples.RegEdit owningPackage;
 	executableName: ''DRegEdit.exe'';
 	preserveAspectSetters: false;
 	stripDeprecatedMethods: true;
+	logReferencesToClasses: true;
 	deploy
 ```
 
@@ -37,7 +36,7 @@ And to examine the content:
 ```
 Smalltalk developmentSystem browseDeploymentLog: ''DRegEdit.xml''.
 "Or view the log"
-XmlPad openOn: ''DRegEdit.xml''
+UI.Examples.XmlPad openOn: ''DRegEdit.xml''
 ```'.
 
 package basicPackageVersion: '2011.6.5.16'.
@@ -57,6 +56,7 @@ package setPrerequisites: #(
 	'..\..\..\Dolphin\MVP\Graphics\Dolphin GDI Graphics'
 	'..\..\..\Dolphin\MVP\Models\List\Dolphin List Models'
 	'..\..\..\Dolphin\MVP\Presenters\List\Dolphin List Presenter'
+	'..\..\..\Dolphin\System\Filer\Dolphin Literal Filer'
 	'..\..\..\Dolphin\System\Win32\MessageBox\Dolphin Message Box'
 	'..\..\..\Dolphin\MVP\Base\Dolphin MVP Base'
 	'..\..\..\Dolphin\Registry\Dolphin Registry Access'

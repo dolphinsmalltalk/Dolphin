@@ -52,6 +52,11 @@ fileIn
 
 	^self subclassResponsibility!
 
+fileOutBasicDefinitionOfClass: aClass 
+	"Print a definition of the <Class>, aClass, to the source stream."
+
+	self subclassResponsibility!
+
 flush
 	"Flush the source stream."
 
@@ -112,6 +117,7 @@ emitGUIDOfClass:!private!source filing! !
 evaluationContext!accessing!public! !
 evaluationContext:!accessing!public! !
 fileIn!public!source filing! !
+fileOutBasicDefinitionOfClass:!public!source filing! !
 flush!operations!public! !
 getSourceFromDescriptor:!public!source filing! !
 isSourceOnly!accessing!public! !

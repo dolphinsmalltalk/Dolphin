@@ -2214,13 +2214,13 @@ extraDescent: extraDescentInteger
 		wParam: extraDescentInteger
 		lParam: 0!
 
-filerProxy
-	| proxy vars |
-	proxy := super filerProxy.
-	vars := proxy instVars.
-	vars at: ##(self indexOfInstVar: 'this') put: nil.
-	vars at: ##(self indexOfInstVar: 'library') put: NullScintillaLibrary default.
-	vars at: ##(self indexOfInstVar: 'styleIdMap') put: nil.
+filerProxyIn: anSTxOutFiler
+	| proxy |
+	proxy := super filerProxyIn: anSTxOutFiler.
+	proxy instVars
+		at: ##(self indexOfInstVar: 'this') put: nil;
+		at: ##(self indexOfInstVar: 'library') put: NullScintillaLibrary default;
+		at: ##(self indexOfInstVar: 'styleIdMap') put: nil.
 	^proxy!
 
 find: aFindDetails range: anInterval 
@@ -10170,7 +10170,7 @@ extraAscent!**auto generated**!public!scintilla interface!white space! !
 extraAscent:!**auto generated**!public!scintilla interface!white space! !
 extraDescent!**auto generated**!public!scintilla interface!white space! !
 extraDescent:!**auto generated**!public!scintilla interface!white space! !
-filerProxy!binary filing!private! !
+filerProxyIn:!binary filing!private! !
 find:range:!private!searching & replacing! !
 find:range:flags:!public!searching & replacing! !
 findAutoCompletionEntry:!**auto generated**!autocompletion!public!scintilla interface! !

@@ -470,17 +470,15 @@ beTopMost
 
 	^self zOrderAfter: HWND_TOPMOST!
 
-binaryStoreOn: aStream
-	"Stores the receiver in a binary form on aStream that can be reconstituted using Object class>>binaryReadFrom:.
-	We must arrange to snip this view from any parent hierarchy before the save"
+binaryStoreUsing: anSTXOutFiler
+	"Stores the receiver in a serialized form using the <STxOutFiler> argument such that it can be reconstituted to an equivalent view. For Views we need to store a proxy that captures any external state not represented directly in the Smalltalk object."
 
-	| filer viewProxy |
+	| viewProxy |
 	viewProxy := self whileInvisibleDo: 
-					[self filerProxy
+					[(self filerProxyIn: anSTXOutFiler)
 						beTopView;
 						yourself].
-	filer := STBOutFiler on: aStream.
-	filer
+	anSTXOutFiler
 		override: self with: viewProxy;
 		nextPut: self!
 
@@ -1144,7 +1142,7 @@ enterIdle
 eraseParentBackground: aCanvas
 	| lResult parent org |
 	parent := self parentView.
-	org := self mapPoint: 0 @ 0 to: parent.
+	org := self mapPoint: Point.Zero to: parent.
 	org := aCanvas offsetWindowOrigin: org.
 	lResult := parent
 				sendMessage: WM_ERASEBKGND
@@ -1238,6 +1236,11 @@ filerProxy
 	filerProxy := STBViewProxy forView: self.
 	self isTopView ifTrue: [filerProxy beTopView].
 	^filerProxy!
+
+filerProxyIn: anSTxOutFiler
+	"Private - Answer a filer proxy that represents the receiver for use with the <STxOutFiler> argument."
+
+	^self filerProxy!
 
 findItem: anInteger ifAbsent: exceptionHandler
 	"Private - Answer a <View> representing the child window within the receiver with the specified <integer> id, or if no such immediate child, then the first child of a child with encountered with that id, and so on. i.e. this is a recursive version of #getItem:ifAbsent:. If there is no such child in the receiver, or its children, etc, then answer the result of evaluating the <niladicValuable>, exceptionHandler."
@@ -2090,23 +2093,6 @@ layoutManager
 
 	^nil!
 
-literalStoreOn: aStream
-	"Stores the receiver in a literal form on aStream that can be reconstituted using Object class>>literalReadFrom:.
-	We must arrange to snip this view from any parent hierarchy before the save"
-
-	self literalStoreOn: aStream policy: STLOutFiler policyClass!
-
-literalStoreOn: aStream policy: anSTLVersionPolicyClass
-	| viewProxy filer |
-	viewProxy := self whileInvisibleDo: 
-					[self filerProxy
-						beTopView;
-						yourself].
-	filer := STLOutFiler on: aStream policy: anSTLVersionPolicyClass.
-	filer
-		override: self with: viewProxy;
-		nextPut: self!
-
 managedSubViews
 	"Answer a <sequencedReadableCollection> of the sub views of the receiver that are managed.
 	Managed sub views can be edited by the ViewComposer and are arranged by the layout manager (if any)"
@@ -2839,9 +2825,13 @@ preTranslateMessage: aMSG
 	There are separate pre-translation handlers for mouse and keyboard
 	input, which can be overridden as necessary (e.g. see shells)."
 
-	^aMSG isKeyboardInput
+	| msg |
+	msg := aMSG message.
+	^(msg >= WM_KEYFIRST and: [msg <= WM_KEYLAST])
 		ifTrue: [self interactor preTranslateKeyboardInput: aMSG]
-		ifFalse: [aMSG isMouseInput and: [self interactor preTranslateMouseInput: aMSG]]!
+		ifFalse: 
+			[(msg >= WM_MOUSEFIRST and: [msg <= WM_MOUSELAST])
+				and: [self interactor preTranslateMouseInput: aMSG]]!
 
 preTranslateMouseInput: aMSG
 	"Answer whether the receiver would like to consume the argument aMSG.
@@ -2969,7 +2959,7 @@ rectangle: aRectangle
 				y: aRectangle top
 				cx: aRectangle width
 				cy: aRectangle height
-				uFlags: ##(SWP_NOZORDER | SWP_NOACTIVATE)]!
+				uFlags: ##(SWP_NOZORDER bitOr: SWP_NOACTIVATE)]!
 
 refreshContents
 	"The receiver's display needs to be refreshed. The default is to invalidate the
@@ -3402,14 +3392,14 @@ state
 			answer add: (MessageSend
 						receiver: self
 						selector: #createAt:extent:
-						arguments: {self position. self extent}).
+						arguments: { self position. self extent }).
 			self isPersistentlyDisabled
 				ifTrue: 
 					[answer add: (MessageSend
 								receiver: self
 								selector: #isEnabled:
 								argument: false)].
-			(txt := self text) notEmpty
+			(txt := self stateText) notEmpty
 				ifTrue: 
 					["views have no text by default"
 					answer add: (MessageSend
@@ -3423,6 +3413,9 @@ state: aMessageSequence
 
 	aMessageSequence value!
 
+stateText
+	^self text!
+
 stbSaveOn: anSTxOutFiler
 	"Output the receiver to anSTxOutFiler.
 	Implementation Note: No need to override events collection with nil, as filed out as a proxy
@@ -3431,7 +3424,7 @@ stbSaveOn: anSTxOutFiler
 	are added not only must the STBViewProxy conversion block be updated, but it may also
 	be necessary to re-initialize STBViewProxy so the class variables are updated."
 
-	anSTxOutFiler saveObject: self as: self filerProxy!
+	anSTxOutFiler saveObject: self as: (self filerProxyIn: anSTxOutFiler)!
 
 styles
 	"Answer a two element Array containing the creation style bits for the receiver.
@@ -4617,7 +4610,7 @@ beNotThemed!modes!public!wine fix! !
 beNotTopMost!operations!public! !
 bePopupFor:!operations!public! !
 beTopMost!operations!public! !
-binaryStoreOn:!binary filing!public! !
+binaryStoreUsing:!binary filing!public! !
 bmSetStyle:wParam:lParam:!event handling-win32!private! !
 calcClientRectangleFromRectangle:!geometry!private! !
 calcExtentFromClientExtent:!geometry!private! !
@@ -4704,6 +4697,7 @@ extendedStyle:!accessing-styles!private! !
 extent!geometry!public! !
 extent:!geometry!public! !
 filerProxy!binary filing!private! !
+filerProxyIn:!binary filing!private! !
 findItem:ifAbsent:!hierarchy!private! !
 findItemHandle:ifAbsent:!hierarchy!private! !
 findMatch:inRange:!private!searching & replacing! !
@@ -4827,8 +4821,6 @@ layout!geometry!public! !
 layout:!geometry!private! !
 layoutExtent:!geometry!public! !
 layoutManager!geometry!public! !
-literalStoreOn:!literal filing!public! !
-literalStoreOn:policy:!literal filing!public! !
 managedSubViews!hierarchy!public!sub views! !
 managedSubViewsDo:!hierarchy!public!sub views! !
 mapPoint:to:!geometry!public! !
@@ -4992,6 +4984,7 @@ showShell!operations!private! !
 showWithStyle:!operations!private! !
 state!accessing!private! !
 state:!accessing!private! !
+stateText!accessing!private! !
 stbSaveOn:!binary filing!public! !
 styles!accessing-styles!public! !
 styles:!accessing-styles!private! !

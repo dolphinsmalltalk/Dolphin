@@ -22,6 +22,7 @@ Smalltalk developmentSystem saveImage.	"Save the image if you don''t want to los
 	executableName: ''DNotepad.exe'';
 	preserveAspectSetters: false;
 	stripDeprecatedMethods: true;
+	preStripScript: ''{Point. External.POINT} do: [:pc | pc removeSelector: #@]'';
 	deploy
 ```
 
@@ -48,6 +49,7 @@ package setPrerequisites: #(
 	'..\..\..\Dolphin\MVP\Dialogs\Common\Dolphin Common Dialogs'
 	'..\..\..\Dolphin\MVP\Graphics\Dolphin GDI Graphics'
 	'..\..\..\Dolphin\MVP\Presenters\Prompters\Dolphin Integer Prompter'
+	'..\..\..\Dolphin\System\Filer\Dolphin Literal Filer'
 	'..\..\..\Dolphin\System\Win32\MessageBox\Dolphin Message Box'
 	'..\..\..\Dolphin\MVP\Base\Dolphin MVP Base'
 	'..\..\..\Dolphin\MVP\Views\SpinButton\Dolphin SpinButton Control'

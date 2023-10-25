@@ -14,13 +14,7 @@ Kernel.RestrictedClassLocator comment: ''!
 classes: aCollection
 	self initialize.
 	classMap := LookupTable new.
-	aCollection do: 
-			[:each |
-			| ref |
-			ref := each asQualifiedReference.
-			classMap
-				at: ref shortName put: ref;
-				at: ref fullName put: ref]!
+	self includeClasses: aCollection!
 
 classMap: aLookupTable
 	classMap := aLookupTable!
@@ -42,7 +36,7 @@ findResidentClass: aBindingReference
 	"Answer the class referred to by the receiver if it is fully resident in the image and is within the allowed set."
 
 	^(classMap lookup: aBindingReference pathString)
-		ifNil: [STBValidatingInFiler errorInvalidClass: aBindingReference]
+		ifNil: [STxInFiler errorInvalidClass: aBindingReference]
 		ifNotNil: [:name | name valueOrNil]!
 
 includeClass: aClass
@@ -51,6 +45,15 @@ includeClass: aClass
 	classMap
 		at: ref shortName put: ref;
 		at: ref fullName put: ref!
+
+includeClasses: aCollection
+	aCollection do: 
+			[:each |
+			| ref |
+			ref := each asQualifiedReference.
+			classMap
+				at: ref shortName put: ref;
+				at: ref fullName put: ref]!
 
 includesClass: aClass
 	"Answer whether the <Class> argument is within the allowed set."
@@ -63,6 +66,7 @@ copyWithCodeBase!copying!private! !
 excludeClass:!initializing!public! !
 findResidentClass:!operations!public! !
 includeClass:!initializing!public! !
+includeClasses:!initializing!public! !
 includesClass:!public!testing! !
 !
 

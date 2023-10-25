@@ -65,32 +65,33 @@ testBindingReferences
 testByteArrays
 	"#1483"
 
-	#(#[] #[255] #[1 2] #[1 2 3 4 5]) do: 
-			[:each |
-			| a dessicated rehydrated s |
-			s := 'abc'.
-			a := { each. s. each. s. 'def' }.
-			dessicated := self serialize: a.
-			rehydrated := self deserialize: dessicated.
-			self assert: rehydrated equals: a.
-			self assert: (rehydrated at: 1) identicalTo: (rehydrated at: 3).
-			self assert: (rehydrated at: 2) identicalTo: (rehydrated at: 4).
-			self deny: (rehydrated at: 1) identicalTo: each]!
+	self outfilerClass version to: self minimumFilerVersion
+		by: -1
+		do: [:ver | self verifyByteArraysAtVersion: ver]!
 
 testCharacters
-	{$a.
-		Character value: 128.
-		Character value: 163.
-		Character value: 255.
-		$€.
-		$\xCE0.
-		$\x16F0.
-		Character dolphin} do: 
-				[:each |
-				| dessicated rehydrated |
-				dessicated := self serialize: each.
-				rehydrated := self deserialize: dessicated.
-				self assert: rehydrated equals: each]!
+	| characters |
+	characters := {
+				$a.
+				Character value: 128.
+				Character value: 163.
+				Character value: 255.
+				$€.
+				$\xCE0.
+				$\x16F0.
+				Character dolphin
+			}.
+	characters do: 
+			[:each |
+			| dessicated rehydrated |
+			dessicated := self serialize: each.
+			rehydrated := self deserialize: dessicated.
+			self assert: rehydrated equals: each].
+	self assert: (self deserialize: (self serialize: characters)) equals: characters!
+
+testDictionary
+	self minimumFilerVersion to: self outfilerClass version
+		do: [:ver | self verifyDictionariesAtVersion: ver]!
 
 testEmptyStream
 	self subclassResponsibility!
@@ -171,10 +172,30 @@ testProcessor
 testSaveStaticVariableReference
 	"Requires BindingReferences, not available before v5"
 
+	self minimumFilerVersion to: 4
+		do: 
+			[:ver |
+			self
+				should: [(self newOutFilerVersion: ver) saveStatic: #{TestVar}]
+				raise: STBError
+				matching: 
+					[:ex |
+					ex description = ('STBFiler - Static variable references are not supported in <2d> version <1d>'
+								<< { ver. self outfilerClass stxFormatName })]].
 	5 to: self outfilerClass version do: [:ver | self verifySaveStaticVariableReferenceAtVersion: ver]!
 
 testScaledDecimals
 	self minimumFilerVersion to: self outfilerClass version do: [:ver | self verifyScaledDecimalsAtVersion: ver]!
+
+testSets
+	self minimumFilerVersion to: self outfilerClass version
+		do: [:ver | self verifySetsAtVersion: ver]!
+
+testSmalltalk
+	"Special case global variable"
+
+	self minimumFilerVersion to: self outfilerClass version
+		do: [:ver | self verifyRoundTripSingleton: Smalltalk version: ver]!
 
 testSortedCollections
 	| subject rehydrated dessicated sOriginal |
@@ -199,13 +220,13 @@ testStringsVersion3
 
 testStringsVersion4
 	self verifyStringsAtVersion: 4.
-	"As of STL 5, Strings with embedded nulls can be round tripped"
-	self verifyString: #[97 0 98] asString atVersion: 4!
+	"Strings with embedded nulls can be round tripped in STB 4"
+	self verifyString: #[97 0 98] asUtf8String atVersion: 4!
 
 testStringsVersion5
 	self verifyStringsAtVersion: 5.
-	"As of STL 5, Strings with embedded nulls can be round tripped"
-	self verifyString: #[97 0 98] asString atVersion: 5!
+	"Strings with embedded nulls can be round tripped"
+	self verifyString: #[97 0 98] asUtf8String atVersion: 5!
 
 testStringWithNulls
 	| string |
@@ -253,6 +274,31 @@ verifyBindingReferencesAtVersion: anInteger
 	self assert: rehydrated key class identicalTo: FullBindingReference.
 	self assert: rehydrated key equals: ref.
 	self assert: rehydrated value identicalTo: Object!
+
+verifyByteArraysAtVersion: anInteger
+	#(#[] #[255] #[1 2] #[1 2 3 4 5]) do: 
+			[:each |
+			| a dessicated rehydrated s |
+			s := 'abc'.
+			a := { each. s. each. s. 'def' }.
+			dessicated := self serialize: a version: anInteger.
+			rehydrated := self deserialize: dessicated.
+			self assert: rehydrated equals: a.
+			self assert: (rehydrated at: 1) identicalTo: (rehydrated at: 3).
+			self assert: (rehydrated at: 2) identicalTo: (rehydrated at: 4).
+			self deny: (rehydrated at: 1) identicalTo: each]!
+
+verifyDictionariesAtVersion: anInteger
+	^{
+		Dictionary new.
+		Dictionary with: 'origin' -> (10 @ 20).
+		Dictionary with: 'origin' -> (10 @ 20) with: 2 -> (100 @ 200)
+	} do: 
+				[:each |
+				| rehydrated dessicated |
+				dessicated := self serialize: each version: anInteger.
+				rehydrated := self deserialize: dessicated.
+				self assert: rehydrated equals: each]!
 
 verifyFloatsAtVersion: anInteger
 	| dessicated array rehydrated float |
@@ -350,6 +396,21 @@ verifyScaledDecimalsAtVersion: anInteger
 	self assert: rehydrated third identicalTo: rehydrated first.
 	self assert: rehydrated fourth identicalTo: rehydrated second!
 
+verifySetsAtVersion: anInteger
+	^{
+		Set new.
+		Set with: 'foo'.
+		Set with: 'foo' with: 'bar'.
+		IdentitySet new.
+		IdentitySet with: #foo.
+		IdentitySet with: #foo with: #bar
+	} do: 
+				[:each |
+				| rehydrated dessicated |
+				dessicated := self serialize: each version: anInteger.
+				rehydrated := self deserialize: dessicated.
+				self assert: rehydrated equals: each]!
+
 verifyString: aString atVersion: anInteger
 	| s dessicated rehydrated a |
 	s := aString asUtf16String.
@@ -361,7 +422,8 @@ verifyString: aString atVersion: anInteger
 	self assert: rehydrated second equals: s.
 	self deny: rehydrated second identicalTo: rehydrated first.
 	self assert: rehydrated third identicalTo: rehydrated first.
-	self assert: rehydrated fourth identicalTo: rehydrated second!
+	self assert: rehydrated fourth identicalTo: rehydrated second.
+	^rehydrated!
 
 verifyStrings: anArray atVersion: anInteger
 	anArray do: [:each | self verifyString: each atVersion: anInteger]!
@@ -407,6 +469,7 @@ testAddresses!public!unit tests! !
 testBindingReferences!public!unit tests! !
 testByteArrays!public!unit tests! !
 testCharacters!public!unit tests! !
+testDictionary!public!unit tests! !
 testEmptyStream!public!unit tests! !
 testExistentClass!public!unit tests! !
 testExternalResourceLibrary!public!unit tests! !
@@ -421,6 +484,8 @@ testOrderedCollections!public!unit tests! !
 testProcessor!public!unit tests! !
 testSaveStaticVariableReference!public!unit tests! !
 testScaledDecimals!public!unit tests! !
+testSets!public!unit tests! !
+testSmalltalk!public!unit tests! !
 testSortedCollections!public!unit tests! !
 testStrings!public!unit tests! !
 testStringsVersion3!public!unit tests! !
@@ -431,6 +496,8 @@ testSymbols!public!unit tests! !
 testSystemDictionary!public!unit tests! !
 testTranscript!public!unit tests! !
 verifyBindingReferencesAtVersion:!helpers!private! !
+verifyByteArraysAtVersion:!helpers!private! !
+verifyDictionariesAtVersion:!helpers!private! !
 verifyFloatsAtVersion:!helpers!private! !
 verifyLookupTablesAtVersion:!helpers!private! !
 verifyOrderedCollectionsAtVersion:!helpers!private! !
@@ -439,6 +506,7 @@ verifyResourceLibraryAtVersion:!helpers!private! !
 verifyRoundTripSingleton:version:!helpers!private! !
 verifySaveStaticVariableReferenceAtVersion:!helpers!private! !
 verifyScaledDecimalsAtVersion:!helpers!private! !
+verifySetsAtVersion:!helpers!private! !
 verifyString:atVersion:!helpers!private! !
 verifyStrings:atVersion:!helpers!private! !
 verifyStringsAtPreUnicodeVersion:!helpers!private! !

@@ -26,13 +26,11 @@ package setMethodNames: #(
 	#(#{Kernel.AbstractChunkSourceFiler} #emitMethod:)
 	#(#{Kernel.AbstractChunkSourceFiler} #emitSpecialBehaviorAttributesOfClass:)
 	#(#{Kernel.AbstractChunkSourceFiler} #fileOutAttributesOfClass:)
-	#(#{Kernel.AbstractChunkSourceFiler} #fileOutBasicDefinitionOfClass:)
 	#(#{Kernel.AbstractChunkSourceFiler} #fileOutMessages:ofBehavior:)
 	#(#{Kernel.AbstractChunkSourceFiler} #fileOutProtocols:ofBehavior:)
 	#(#{Kernel.AbstractChunkSourceFiler} #logEvaluation:)
-	#(#{Kernel.AbstractChunkSourceFiler} #printBasicDefinitionOfClass:)
-	#(#{Kernel.AbstractChunkSourceFiler} #printBasicDefinitionOfClass:on:)
-	#(#{Kernel.AbstractChunkSourceFiler} #printVariables:string:on:)
+	#(#{Kernel.AbstractChunkSourceFiler} #logRemoveSelector:of:)
+	#(#{Kernel.AbstractChunkSourceFiler} #logRemoveSelectors:of:)
 	#(#{Kernel.AbstractChunkSourceFiler} #specialBehaviorAttributes)
 	#(#{Kernel.AbstractChunkSourceFiler} #storeCommentString:forClass:)
 	#(#{Kernel.AbstractChunkSourceFiler} #storeCommentString:forPackage:)
@@ -49,7 +47,6 @@ package setMethodNames: #(
 	#(#{Kernel.SourceFiler} #emitMethod:)
 	#(#{Kernel.SourceFiler} #fileOutAllMethodsOfBehavior:)
 	#(#{Kernel.SourceFiler} #fileOutAttributesOfClass:)
-	#(#{Kernel.SourceFiler} #fileOutBasicDefinitionOfClass:)
 	#(#{Kernel.SourceFiler} #fileOutClass:)
 	#(#{Kernel.SourceFiler} #fileOutDefinitionOfClass:)
 	#(#{Kernel.SourceFiler} #fileOutExpression:)
@@ -57,6 +54,8 @@ package setMethodNames: #(
 	#(#{Kernel.SourceFiler} #fileOutMethods:)
 	#(#{Kernel.SourceFiler} #fileOutProtocols:ofBehavior:)
 	#(#{Kernel.SourceFiler} #fileOutResource:)
+	#(#{Kernel.SourceFiler} #logRemoveSelector:of:)
+	#(#{Kernel.SourceFiler} #logRemoveSelectors:of:)
 	#(#{Kernel.SourceFiler} #storeCommentString:forClass:)
 	#(#{Kernel.SourceManager} #basicCompressSources:)
 	#(#{Kernel.SourceManager} #compressChangedMethodsOf:onto:)
@@ -295,12 +294,6 @@ fileOutAttributesOfClass: aClass
 				cr;
 				emitCategoriesOfClass: aClass]!
 
-fileOutBasicDefinitionOfClass: aClass
-	"Print a definition of the <Class>, aClass, onto the receiver's stream."
-
-	self printBasicDefinitionOfClass: aClass.
-	stream nextPut: $!!!
-
 fileOutMessages: aCollection ofBehavior: aClass
 	"Append the definitions of the methods of the <ClassDescription>, aClassDescription,
 	whose names match the selectors in the <collection> of <Symbol>, aCollection, to the source 
@@ -342,61 +335,23 @@ logEvaluation: aString
 	stream nextPutAll: '"Evaluate"'; cr.
 	self fileOutExpression: aString!
 
-printBasicDefinitionOfClass: aClass
-	self printBasicDefinitionOfClass: aClass on: stream!
+logRemoveSelector: aSymbol of: aClassDescription
+	self emitClassName: aClassDescription on: stream.
+	stream
+		nextPutAll: ' removeSelector: ';
+		print: aSymbol;
+		nextPutAll: ' ifAbsent: []'.
+	self endChunk!
 
-printBasicDefinitionOfClass: aClass on: aPuttableStream
-	| classConstants |
-	aClass superclass
-		ifNil: [aPuttableStream nextPutAll: 'nil']
-		ifNotNil: [:base | self emitClassName: base on: aPuttableStream].
-	aPuttableStream
+logRemoveSelectors: aCollection of: aClassDescription
+	self emitClassName: aClassDescription on: stream.
+	stream
 		space;
-		nextPutAll: aClass kindOfSubclass;
-		space;
-		print: (aClass isInBaseEnvironment
-					ifTrue: [aClass unqualifiedName]
-					ifFalse: [aClass fullName asSymbol]);
-		crtab.
-	self
-		printVariables: aClass instanceVariableNames
-		string: 'instanceVariableNames:'
-		on: aPuttableStream.
-	aPuttableStream crtab.
-	self
-		printVariables: aClass classVariableNames asSortedArray
-		string: 'classVariableNames:'
-		on: aPuttableStream.
-	aPuttableStream
-		crtab;
-		nextPutAll: 'imports: ';
-		print: aClass imports;
-		crtab.
-	self
-		printVariables: aClass classInstanceVariableNames
-		string: 'classInstanceVariableNames:'
-		on: aPuttableStream.
-	aPuttableStream
-		crtab;
-		nextPutAll: 'classConstants: {'.
-	classConstants := aClass classConstants.
-	classConstants isEmpty
-		ifFalse: 
-			[classConstants asSortedArray do: 
-					[:each |
-					aPuttableStream
-						crtab: 2;
-						print: each]
-				separatedBy: [aPuttableStream nextPut: $.].
-			aPuttableStream crtab].
-	aPuttableStream nextPut: $}!
-
-printVariables: aCollection string: aString on: aPuttableStream
-	aPuttableStream
-		nextPutAll: aString;
-		nextPutAll: ' '''.
-	aCollection do: [:each | aPuttableStream nextPutAll: each] separatedBy: [aPuttableStream space].
-	aPuttableStream nextPut: $'!
+		display: #removeSelectors:;
+		nextPutAll: ' #('.
+	aCollection do: [:each | stream print: each] separatedBy: [stream space].
+	stream nextPut: $).
+	self endChunk!
 
 specialBehaviorAttributes
 	^#(#(#isIndirection) #(#isNullTerminated) #(#isNonInstantiable) #(isMourner))!
@@ -447,13 +402,11 @@ emitFileOutHeader!private!source filing! !
 emitMethod:!private!source filing-file out! !
 emitSpecialBehaviorAttributesOfClass:!public!source filing! !
 fileOutAttributesOfClass:!public!source filing! !
-fileOutBasicDefinitionOfClass:!public!source filing-file out! !
 fileOutMessages:ofBehavior:!public!source filing! !
 fileOutProtocols:ofBehavior:!public!source filing-file out! !
 logEvaluation:!private!source filing-file out! !
-printBasicDefinitionOfClass:!public!source filing-file out! !
-printBasicDefinitionOfClass:on:!private!source filing-file out! !
-printVariables:string:on:!private!source filing-file out! !
+logRemoveSelector:of:!development!helpers!public! !
+logRemoveSelectors:of:!development!helpers!public! !
 specialBehaviorAttributes!constants!public!source filing! !
 storeCommentString:forClass:!public!source filing-file out! !
 storeCommentString:forPackage:!public!source filing-file out! !
@@ -595,11 +548,6 @@ fileOutAttributesOfClass: aClass
 
 	self subclassResponsibility!
 
-fileOutBasicDefinitionOfClass: aClass 
-	"Print a definition of the <Class>, aClass, to the source stream."
-
-	self subclassResponsibility!
-
 fileOutClass: aClass
 	"File out a full definition of the <ClassDescription>, aClass, to the source stream
 	including all methods, categories and protocols. This includes all methods of the
@@ -656,6 +604,12 @@ fileOutResource: aResourceIdentifier
 
 	^self subclassResponsibility!
 
+logRemoveSelector: aSymbol of: aClassDescription
+	self subclassResponsibility!
+
+logRemoveSelectors: aCollection of: aClassDescription
+	self subclassResponsibility!
+
 storeCommentString: aString forClass: aClass
 	"Save the <readableString>, aString, as the comment text for the 
 	<Class>, aClass, to the receiver's source stream encoding the position and 
@@ -672,7 +626,6 @@ emitMessages:ofBehavior:!private!source filing! !
 emitMethod:!private!source filing! !
 fileOutAllMethodsOfBehavior:!public!source filing! !
 fileOutAttributesOfClass:!public!source filing! !
-fileOutBasicDefinitionOfClass:!public!source filing! !
 fileOutClass:!public!source filing! !
 fileOutDefinitionOfClass:!public! !
 fileOutExpression:!public! !
@@ -680,6 +633,8 @@ fileOutMessages:ofBehavior:!public! !
 fileOutMethods:!public! !
 fileOutProtocols:ofBehavior:!public! !
 fileOutResource:!public! !
+logRemoveSelector:of:!development!helpers!public! !
+logRemoveSelectors:of:!development!helpers!public! !
 storeCommentString:forClass:!public!source filing! !
 !
 
@@ -885,15 +840,10 @@ logChanged: aSourceObject
 					logger flush]]!
 
 logComment: aString
-	"Record aString to the change log as a comment. All comments
-	logged are prefixed with a timestamp.
+	"Record aString to the change log as a comment. All comments logged are prefixed with a timestamp.
 	N.B. Logging requests should be directed through the SessionManager."
 
-	self changesFiler
-		ifNotNil: 
-			[:logger |
-			logger setToEnd.
-			self logComment: aString to: logger]!
+	self changesFiler ifNotNil: [:logger | self logComment: aString to: logger]!
 
 logComment: aString to: aSourceFiler
 	"Private - Record aString to the specified source file as a comment. All comments	logged are prefixed with a timestamp, and then a full width colon character."
@@ -906,6 +856,7 @@ logComment: aString to: aSourceFiler
 				grabContents.
 	mutex critical: 
 			[aSourceFiler
+				setToEnd;
 				emitComment: stampedComment;
 				cr]!
 

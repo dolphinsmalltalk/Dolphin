@@ -89,7 +89,7 @@ package setMethodNames: #(
 
 package setPrerequisites: #(
 	'Dolphin'
-	'..\System\Filer\Dolphin Literal Filer'
+	'..\System\Filer\Dolphin Literal Out Filer'
 	'..\System\Win32\MessageBox\Dolphin Message Box'
 	'Dolphin Source Fileout'
 	'..\System\STON\Dolphin STON-Core'

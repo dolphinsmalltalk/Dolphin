@@ -1,0 +1,50 @@
+﻿| package |
+package := Package name: 'Dolphin Validating Binary Filer'.
+package paxVersion: 2.1;
+	basicComment: 'Dolphin 🐬 Smalltalk Validating STB Filer.
+Copyright ©️ Object Arts Ltd. 1997-2023. Portions Copyright ©️ CGI Group (Europe) Ltd. 1997.
+
+Secure STB deserializer that will only read a pre-defined set of classes.
+'.
+
+
+package setClassNames: #(
+	#{Kernel.RestrictedClassLocator}
+	#{Kernel.STBValidatingInFiler}
+	#{Kernel.ValidatingClassLocator}
+).
+
+package setPrerequisites: #(
+	'..\..\Base\Dolphin'
+	'Dolphin Binary Filer'
+	'Dolphin STx Filer Core'
+).
+
+package!
+
+"Class Definitions"!
+
+Kernel.ClassLocator
+	subclass: #'Kernel.RestrictedClassLocator'
+	instanceVariableNames: 'classMap'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.ClassLocator
+	subclass: #'Kernel.ValidatingClassLocator'
+	instanceVariableNames: 'validationBlock'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.STxInFilerWrapper
+	subclass: #'Kernel.STBValidatingInFiler'
+	instanceVariableNames: 'version classLocator context'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+"End of package definition"!
+

@@ -213,6 +213,15 @@ reposition: aView to: aPoint
 	prevView basicInvalidateLayout.
 	nextView basicInvalidateLayout!
 
+stbSaveOn: anSTxOutFiler
+	(anSTxOutFiler isStable and: [proportions notEmpty])
+		ifTrue: 
+			["Proxy the proportions lookup so we can sort it by something more stable than the View printString, in this case the positions"
+			anSTxOutFiler override: proportions
+				with: (STBCollectionProxy class: proportions class
+						array: (proportions associations asSortedArray: [:a :b | a key position <=> b key position <= 0]))].
+	^super stbSaveOn: anSTxOutFiler!
+
 totalProportionsOf: viewCollection
 	"Private - Answer the sum of all the views proportions."
 
@@ -232,6 +241,7 @@ nearestResizableViewFrom:inViews:by:!helpers!private! !
 proportions!accessing!private! !
 removeSubView:!public!removing! !
 reposition:to:!operations!private! !
+stbSaveOn:!binary filing!public! !
 totalProportionsOf:!helpers!private! !
 !
 

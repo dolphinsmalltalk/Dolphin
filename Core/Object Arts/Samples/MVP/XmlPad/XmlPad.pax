@@ -10,7 +10,7 @@ XmlPad is a simple XML text editor. It is intended to demonstrate the DocumentSh
 Try me out with:
 
 ```
-XmlPad show
+UI.Examples.XmlPad show
 ```
 
 ## Deployment:
@@ -57,6 +57,7 @@ package setPrerequisites: #(
 	'..\..\..\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars'
 	'..\..\..\Dolphin\MVP\Dialogs\Find\Dolphin Find Dialog'
 	'..\..\..\Dolphin\MVP\Graphics\Dolphin GDI Graphics'
+	'..\..\..\Dolphin\System\Filer\Dolphin Literal Filer'
 	'..\..\..\Dolphin\System\Win32\MessageBox\Dolphin Message Box'
 	'..\..\..\Dolphin\MVP\Base\Dolphin MVP Base'
 	'..\..\..\Dolphin\Registry\Dolphin Registry Access'

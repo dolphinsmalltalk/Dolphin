@@ -33,11 +33,14 @@ testPackageClosure
 		- defineTemplate- sent from ExternalStructure>>ensureDefined, which is replaced with a no-op stub in deployed apps. Should not be in the UnimplementedMessages section of the actual deployment log for GUI apps.
 		- evaluate: Compiler deliberately removed from the scope of the test to reduce noise. Should not be in the UnimplementedMessages section of the actual deployment log for GUI apps."
 
-	| missing aBrowserEnvironment |
+	| missing aBrowserEnvironment expected |
 	aBrowserEnvironment := BrowserEnvironment new
-				forPackagesDeployment: {EditableListViewDemo owningPackage}.
+				forPackagesDeployment: { EditableListViewDemo owningPackage }.
 	missing := Smalltalk developmentSystem unimplementedSelectorsIn: aBrowserEnvironment.	"Use symmetric  difference, as we also want to fix up the test if some missing message is fixed."
-	self assert: (missing symmetricDifference: #(#defineTemplate)) asArray sort equals: #()
+	expected := #(#defineTemplate).
+	#todo. "Temporary STB dependencies caused by Clipboard binary object format, which is to be made opt-in only since it is insecure"
+	expected := expected, #(#binaryStoreBytes #fromBinaryStoreBytes:).
+	self assert: (missing symmetricDifference: expected) asArray sort equals: #()
 	"To debug this, open an env browser on the deployment scope as follows:
 		EnvironmentBrowserShell onEnvironment: aBrowserEnvironment.
 	The call graph to unimplemented messages can then be investigated starting with the Method/Browse other/All unimplemented command"!

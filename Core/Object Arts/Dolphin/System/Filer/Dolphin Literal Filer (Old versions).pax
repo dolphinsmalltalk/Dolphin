@@ -1,0 +1,57 @@
+﻿| package |
+package := Package name: 'Dolphin Literal Filer (Old versions)'.
+package paxVersion: 2.1;
+	basicComment: 'Dolphin 🐬 Smalltalk STL Literal object graph deserialiser, old versions.
+Copyright ©️ Object Arts Ltd. 1997-2023.
+
+Old versions of the STL deserializer (STLInFiler) for reading STL serialized object graphs (in particular view resources) serialized by older Dolphin versions.'.
+
+
+package setClassNames: #(
+	#{Kernel.STLInFiler3}
+	#{Kernel.STLInFiler4}
+	#{Kernel.STLInFiler5}
+	#{Kernel.STLLegacyInFiler}
+).
+
+package setPrerequisites: #(
+	'..\..\Base\Dolphin'
+	'Dolphin Literal Filer'
+	'Dolphin STx Filer Core'
+).
+
+package!
+
+"Class Definitions"!
+
+Kernel.STLInFiler
+	subclass: #'Kernel.STLLegacyInFiler'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.STLLegacyInFiler
+	subclass: #'Kernel.STLInFiler3'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.STLLegacyInFiler
+	subclass: #'Kernel.STLInFiler4'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.STLLegacyInFiler
+	subclass: #'Kernel.STLInFiler5'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+"End of package definition"!
+

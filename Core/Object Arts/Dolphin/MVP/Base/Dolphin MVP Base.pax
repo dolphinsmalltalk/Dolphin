@@ -312,7 +312,6 @@ package setPrerequisites: #(
 	'..\..\System\Win32\CommCtrl\Common Controls Library'
 	'..\..\Base\Dolphin'
 	'Dolphin Basic Geometry'
-	'..\..\System\Filer\Dolphin Binary Filer'
 	'..\..\Base\Dolphin Command-line Parser'
 	'..\Graphics\Dolphin GDI Graphics'
 	'..\..\System\Filer\Dolphin Literal Filer'
@@ -2189,6 +2188,7 @@ Kernel.STxProxy
 			'CreationParentIndex' -> 16r2.
 			'CreationStyleIndex' -> 16r3.
 			'EventsIndex' -> 16rB.
+			'FlagsIndex' -> 16r8.
 			'HandleIndex' -> 16r1
 		}!
 UI.View

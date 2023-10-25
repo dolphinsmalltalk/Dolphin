@@ -1,0 +1,110 @@
+﻿| package |
+package := Package name: 'Dolphin STx Filer Core (Old versions)'.
+package paxVersion: 2.1;
+	basicComment: 'Dolphin 🐬 Smalltalk STx Filer Common Core (Old versions)
+Copyright ©️ Object Arts Ltd. 1997-2023. Portions Copyright ©️ CGI Group (Europe) Ltd. 1997.
+
+Contains common abstract and support classes, and extensions to the base Dolphin package, for reading older STB/STL formats from earlier versions of Dolphin.'.
+
+
+package setClassNames: #(
+	#{Kernel.STBExternalResourceLibraryProxy}
+	#{Smalltalk.STBGlobalObjectProxy}
+	#{Smalltalk.STBSymbolProxy}
+).
+
+package setMethodNames: #(
+	#(#{Kernel.STxInFiler} #readObjectOfClass:format:)
+	#(#{Kernel.STxOutFiler} #errorBindingReferencesNotSupported:)
+	#(#{Kernel.STxOutFiler} #errorExtendedCharacterNotSupported:)
+	#(#{Kernel.STxOutFiler} #errorStaticVarRefsNotSupported)
+	#(#{Kernel.STxOutFiler} #writePreambleFor:)
+	#(#{Kernel.STxOutFiler} #writeProxyPreambleFor:class:)
+).
+
+package setPrerequisites: #(
+	'..\..\Base\Dolphin'
+	'Dolphin STx Filer Core'
+	'Dolphin STx Out Filer Core'
+).
+
+package!
+
+"Class Definitions"!
+
+Kernel.STxProxy
+	subclass: #'Kernel.STBExternalResourceLibraryProxy'
+	instanceVariableNames: 'fileName _reserved1'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.STxProxy
+	subclass: #STBGlobalObjectProxy
+	instanceVariableNames: 'symbol object'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.STxProxy
+	subclass: #STBSymbolProxy
+	instanceVariableNames: 'string'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+"Loose Methods"!
+
+!Kernel.STxInFiler methodsFor!
+
+readObjectOfClass: aClass format: anSTBClassConversion
+	#deprecated.
+	^self
+		readObjectOfClass: aClass
+		format: anSTBClassConversion
+		size: (self readSizeOf: aClass)! !
+!Kernel.STxInFiler categoriesForMethods!
+readObjectOfClass:format:!operations!public! !
+!
+
+!Kernel.STxOutFiler methodsFor!
+
+errorBindingReferencesNotSupported: aBindingReference
+	STBError signal: 'BindingReferences are not supported in <1d> version <2d>'
+				<< { self stxFormatName. self version. aBindingReference }!
+
+errorExtendedCharacterNotSupported: aCharacter
+	STBError signal: 'Character code point cannot be represented in <1s> <2d>: <3s> (<4d>)'
+				<< { self stxFormatName. self version. aCharacter codePointString. aCharacter }!
+
+errorStaticVarRefsNotSupported
+	STBError signal: 'Static variable references are not supported in <1d> version <2d>'
+				<< { self stxFormatName. self version }!
+
+writePreambleFor: anObject
+	"Write the normal STB pre-amble for anObject to the output stream. The object is registered in the write map so that any subsequent refs are shared. This method is intended for use from custom implementations of the class side #stbSaveOn: message."
+
+	self writePreambleFor: anObject class: anObject basicClass!
+
+writeProxyPreambleFor: anObject class: aClass
+	(self refForObject: aClass)
+		ifNotNil: 
+			[:refIndex |
+			"class has already been output so we can encode a short reference to the class within the prefix."
+			self writeClassReference: refIndex prefix: ##(PrefixDataMask|PrefixProxyMask)]
+		ifNil: 
+			["hitherto unencountered class so we need to save full class details in the object header."
+			self writeClass: aClass prefix: ##(PrefixClassMask|PrefixProxyMask).
+			self register: aClass].
+	self register: anObject! !
+!Kernel.STxOutFiler categoriesForMethods!
+errorBindingReferencesNotSupported:!exceptions!private! !
+errorExtendedCharacterNotSupported:!exceptions!private! !
+errorStaticVarRefsNotSupported!exceptions!private! !
+writePreambleFor:!binary filing!public! !
+writeProxyPreambleFor:class:!helpers!private! !
+!
+
+"End of package definition"!
+

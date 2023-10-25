@@ -110,7 +110,7 @@ testEggsBeforeChickenVersion0
 				self
 					should: [self deserialize: each]
 					raise: STBError
-					matching: [:ex | ex description = 'STBFiler - STB input stream contains an invalid class reference (6)']].
+					matching: [:ex | ex description = 'STBFiler - STB input stream contains an invalid class reference: 6']].
 !
 
 testEggsBeforeChickenVersion1
@@ -143,8 +143,7 @@ testGlobalProxyingVersion0
 000093     [STBSymbolProxy]
 000101         [String] 14: ''Bar''
 000112     [<0: nil>]
-End of 14 objects
-'.
+End of 7 objects'.
 	"Verify that we can write it in exactly the same form as the original (from Dolphin 2.0)"
 	filer := self newOutFilerVersion: 0.
 	object := 'Bar' copy.
@@ -172,15 +171,14 @@ testGlobalProxyingVersion1
 		equals: 'STB version 1:
 000007 [STBGlobalObjectProxy;]
 000035     [STBSymbolProxy]
-000043         [AnsiString] 28: ''Foo''
-000054     [AnsiString] 29: ''Bar''
+000043         [String] 28: ''Foo''
+000054     [String] 29: ''Bar''
 
 000065 [STBGlobalObjectProxy]
 000073     [STBSymbolProxy]
-000081         [AnsiString] 32: ''Bar''
+000081         [String] 32: ''Bar''
 000092     [<0: nil>]
-End of 32 objects
-'.
+End of 7 objects'.
 	"Verify that we can write it in exactly the same form as the original (from Dolphin 2.0)"
 	filer := self newOutFilerVersion: 1.
 	object := 'Bar' copy.
@@ -208,13 +206,12 @@ testGlobalProxyingVersion3
 		equals: 'STB version 3:
 000007 [STBGlobalObjectProxy;]
 000031     [Symbol] 27: #Foo
-000042     [AnsiString] 28: ''Bar''
+000042     [String] 28: ''Bar''
 
 000053 [STBGlobalObjectProxy]
 000057     [Symbol] 30: #Bar
 000068     [<0: nil>]
-End of 30 objects
-'.
+End of 5 objects'.
 	"Note that proxying of global nils was actually broken in D6 due to an optimisation added for writing nils, so this content was created with a patch in D6."
 	filer := self newOutFilerVersion: 3.
 	object := 'Bar' copy.
@@ -247,8 +244,7 @@ testGlobalProxyingVersion4
 000053 [STBGlobalObjectProxy]
 000057     [Symbol] 30: #Bar
 000068     [<0: nil>]
-End of 30 objects
-'.
+End of 5 objects'.
 	"Note that proxying of global nils was actually broken in D7 due to an optimisation added for writing nils, so this content was created with a patch in D7.1"
 	filer := self newOutFilerVersion: 4.
 	object := 'Bar' copy asAnsiString.
@@ -283,6 +279,19 @@ End of 30 objects
 testInvalidStream
 	self should: [self deserialize: #[0 0 0 0 0]] raise: STBError!
 
+testLargeIntegers0
+	| expectedBytes actualBytes rehydrated array |
+	expectedBytes := #[33 83 84 66 32 48 32 38 0 5 0 65 114 114 97 121 2 0 0 0 54 0 12 0 76 97 114 103 101 73 110 116 101 103 101 114 12 0 0 0 0 0 0 0 0 0 0 128 0 0 0 0 114 0 0 0 8 0 0 0 0 0 0 0 0 0 0 128].
+	self dumpToTranscriptIfDebug: expectedBytes.
+	array := #(9223372036854775808 -9223372036854775808).
+	actualBytes := self serialize: array version: 0.
+	self assert: actualBytes equals: expectedBytes.
+	rehydrated := self deserialize: expectedBytes.
+	self assert: rehydrated equals: array!
+
+testLargeIntegers1to4
+	1 to: 4 do: [:ver | self verifyLargeIntegersAtVersion: ver]!
+
 testMetaclassProxy0
 	"As testClassProxy0, early STBMetaclassProxy without package name. Obviously STB version 0 too. This is just `Array class binaryStoreBytes` from a very early Dolphin beta version"
 
@@ -307,6 +316,7 @@ testSmallInteger
 
 testStringsVersion0
 	| expectedBytes actualBytes ansi unicode rehydrated array |
+
 	expectedBytes := #[33 83 84 66 32 48 32 38 0 5 0 65 114 114 97 121 4 0 0 0 54 0 6 0 83 116 114 105 110 103 3 0 0 0 97 134 98 54 0 13 0 85 110 105 99 111 100 101 83 116 114 105 110 103 4 0 0 0 61 216 44 220 128 0 0 0 160 0 0 0].
 	self dumpToTranscriptIfDebug: expectedBytes.
 	"We use $† (U+2020) because it is an extended character but is common to Windows code pages as code unit 134. This should prevent sensitivity to the OS code page, but just in case we skip if it does not convert as expected."
@@ -463,7 +473,23 @@ verifyEggsBeforeChicken: ver
 	subject nextPut: String.
 	bytes := stream contents.
 	self dumpToTranscriptIfDebug: bytes.
-	^self assert: (self deserialize: bytes) equals: { STBClassProxy. String }! !
+	^self assert: (self deserialize: bytes) equals: { STBClassProxy. String }!
+
+verifyLargeIntegersAtVersion: anInteger
+	| actualBytes array rehydrated expectedBytes |
+	expectedBytes := #[33 83 84 66 32 49 32 98 0 0 0 2 0 0 0 130 0 0 0 12 0 0 0 0 0 0 0 0 0 0 128 0 0 0 0 130 0 0 0 8 0 0 0 0 0 0 0 0 0 0 128]
+				copy.
+	expectedBytes at: 6 put: $0 codeUnit + anInteger.
+	self dumpToTranscriptIfDebug: expectedBytes.
+	array := #(9223372036854775808 -9223372036854775808).
+	actualBytes := self serialize: array version: anInteger.
+	self assert: actualBytes equals: expectedBytes.
+	rehydrated := self deserialize: expectedBytes.
+	^self assert: rehydrated equals: array!
+
+verifyStringsAtPreUnicodeVersion: anInteger
+	super verifyStringsAtPreUnicodeVersion: anInteger.
+	self verifyString: '🐬' atVersion: anInteger! !
 !Kernel.Tests.STBTest categoriesForMethods!
 deserialize:!helpers!private! !
 infilerClass!constants!public! !
@@ -486,6 +512,8 @@ testGlobalProxyingVersion1!public!unit tests! !
 testGlobalProxyingVersion3!public!unit tests! !
 testGlobalProxyingVersion4!public!unit tests! !
 testInvalidStream!public!unit tests! !
+testLargeIntegers0!public!unit tests! !
+testLargeIntegers1to4!public!unit tests! !
 testMetaclassProxy0!public!unit tests! !
 testSmallInteger!public!unit tests! !
 testStringsVersion0!public!unit tests! !
@@ -500,5 +528,7 @@ testTruncatedHeader!public!unit tests! !
 testUnicodeStringUpgrade!public!unit tests! !
 testUnicodeStringVersion0!public!unit tests! !
 verifyEggsBeforeChicken:!helpers!private! !
+verifyLargeIntegersAtVersion:!helpers!private! !
+verifyStringsAtPreUnicodeVersion:!helpers!private! !
 !
 

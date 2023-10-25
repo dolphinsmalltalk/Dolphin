@@ -109,7 +109,16 @@ resolutionScaledBy: aPoint
 	has changed since the point at which the view was saved. Scale any internal pixels by <Point>
 	scale."
 
-	framings do: [:each | each resolutionScaledBy: aPoint]! !
+	framings do: [:each | each resolutionScaledBy: aPoint]!
+
+stbSaveOn: anSTxOutFiler
+	anSTxOutFiler isStable
+		ifTrue: 
+			["Proxy the framings lookup so we can sort it by something more stable than the View printString, in this case the position"
+			anSTxOutFiler override: framings
+				with: (STBIdentityDictionaryProxy class: framings class
+						associations: (framings associations asSortedArray: [:a :b | a key position <=> b key position <= 0]))].
+	^super stbSaveOn: anSTxOutFiler! !
 !UI.FramingLayout categoriesForMethods!
 arrangementOf:!accessing!public! !
 arrangementOf:put:!accessing!public! !
@@ -120,5 +129,6 @@ removeSubView:!public!removing! !
 reposition:to:!geometry!private! !
 resize:to:!geometry!public! !
 resolutionScaledBy:!geometry!private! !
+stbSaveOn:!binary filing!public! !
 !
 

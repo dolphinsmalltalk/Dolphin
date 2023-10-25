@@ -106,6 +106,7 @@ package setPrerequisites: #(
 	'..\GroupBox\Dolphin GroupBox'
 	'..\..\Models\List\Dolphin List Models'
 	'..\..\Presenters\List\Dolphin List Presenter'
+	'..\..\..\System\Filer\Dolphin Literal Filer'
 	'..\..\Base\Dolphin MVP Base'
 	'..\..\Presenters\Number\Dolphin Number Presenter'
 	'..\Buttons\Dolphin Push Buttons'

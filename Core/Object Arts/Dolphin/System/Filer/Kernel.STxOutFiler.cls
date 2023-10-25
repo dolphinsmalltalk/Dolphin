@@ -6,22 +6,54 @@ Kernel.STxFiler
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'StableMask' -> 16r1 }!
 Kernel.STxOutFiler guid: (Core.GUID fromString: '{1a85a928-daab-4ce8-a1d9-cd785d6a90df}')!
 Kernel.STxOutFiler isNonInstantiable: true!
-Kernel.STxOutFiler comment: ''!
+Kernel.STxOutFiler comment: '`STxOutFiler` is the abstract class of object serializers for writing in STB and STL formats. There are concrete classes for writing of each version from the original STB v0 up to the current version.
+
+Note that whilst the writing of the historic formats is supported, the format of the classes themselves in the image may have changed, so forwards compatibility is limited. The corresponding STxInFiler class for each concrete STxOutFiler will be able to deserialize the object stream written, but it may not actually be readable in the down-level Dolphin version that natively supported the STx version, because the instance variable layout may have changed, and in some cases the classes may not be present or not be locatable.
+
+## Instance Variables:
+  `writeMap`		`IdentityDictionary`. Map of `Object`s to their `SmallInteger` reference index in the binary output stream.
+  `proxyOverrides`	`IdentityDictionary`. Map of `Object`s to the `STBProxy`s (or special values) output in their place.
+  `refOffset`		`<integer>`. Offset of object references to allow for pre-registered objects and classes'!
 !Kernel.STxOutFiler categoriesForClass!System-Binary storage! !
 !Kernel.STxOutFiler methodsFor!
 
-initializeObjectMap
-	refOffset := 1.
-	writeMap := IdentityDictionary new: 128.
-	policy registerPredefined: self!
+beStable
+	flags := flags bitOr: StableMask!
+
+contents
+	"Answer the contents of the serialized object stream."
+
+	^stream contents!
+
+inFilerClass
+	^self subclassResponsibility!
+
+isStable
+	"Answer whether the receiver is attempting to serialize objects to the stream in an invariant order. This is useful, for example, if the result is emitted to source checked in to a source code control system, as it can avoid the source representation churning when there has been no real change. Note that stability is not guaranteed, as it requires on the nature and co-operation of the serialised objects. In some cases this can be difficult or impossible to achieve because there is no stable ordering available or where some of the data is volatile. However, even if the result is not completely stable, it can still be useful to see a reduced level of change that reflects the actual differences."
+
+	^flags allMask: StableMask!
 
 nextPut: anObject
-	"Write anObject to the stream in STB/STL format."
+	"Write anObject to the stream in STB/STL 5+ format."
 
-	^policy nextPut: anObject!
+	| objectToSave |
+	(self refForObject: anObject)
+		ifNotNil: 
+			[:refIndex |
+			self writeReference: refIndex.
+			^anObject].
+	"If anObject is the subject of an #override:with: message then we output the 'with' proxy object instead."
+	objectToSave := self overrideFor: anObject.
+	objectToSave == Collection.AbsentCookie
+		ifTrue: [anObject stbSaveOn: self]
+		ifFalse: 
+			["In general we no longer need the proxy override because the proxied object will now be in the write map, so any future references will be replaced by the reference index. Removing the proxy entry stops the proxy map getting too large. This does not apply to substituting nil's, however, as in that case the substitute cannot be added to the write map, so we will need to retain the proxy override to continue substituting nils for any future references too."
+			objectToSave ifNotNil: [self removeOverrideFor: anObject].
+			self saveObject: anObject as: objectToSave].
+	^anObject!
 
 override: anObject with: anObjectToSave
 	"This is an opportunity circumvent the running of anObject's #stbSaveOn: method by
@@ -40,11 +72,11 @@ override: anObject with: anObjectToSave
 overrideFor: anObject
 	^proxyOverrides at: anObject ifAbsent: Collection.AbsentCookie!
 
-policy: anObject
-	policy := anObject!
+predefinedClasses
+	"Answer a <sequencedReadableCollection> of the classes that are pre-registered in every STB v6 file. 
+	The collection proxies are no longer used. Objects streams should no longer contain AnsiStrings - Strings are always written with UTF-8 encoding so that they deserialise with the original code points, regardless of the system code page on the target system."
 
-policy1
-	^policy!
+	^self inFilerClass predefinedClasses!
 
 refForObject: anObject
 	"Private - Answer the map index of anObject or nil if it is not present.
@@ -58,6 +90,20 @@ register: anObject
 
 	writeMap at: anObject put: writeMap size + refOffset!
 
+register: anObject asGlobal: aSymbol
+	"Add anObject to the globals dictionary.
+	When this object is output it will be wrapped in an STBGlobalObjectProxy.
+	When the proxy is subsequently loaded it be added to Smalltalk with the
+	name aSymbol. If the same object is registered as several global symbols
+	then it must be #nextPut: a corresponding number of times."
+
+	STBError signal: 'Not supported by this version of <1s> (<2p>)' << { self stxFormatName. self version }!
+
+registerPredefinedClasses
+	predefinedClassOffset := writeMap size.
+	self predefinedClasses do: [:each | self register: each].
+	refOffset := self lastPredefined - writeMap size + 1!
+
 removeOverrideFor: anObject
 	anObject ifNotNil: [proxyOverrides removeKey: anObject ifAbsent: nil]!
 
@@ -66,153 +112,268 @@ reset
 	Write the fixed-format header to stream. This enables the reader to identify
 	the version of the written data."
 
+	writeMap := IdentityDictionary new: 128.
 	proxyOverrides := IdentityDictionary new.
-	policy writeSignatureAndVersion.
-	self initializeObjectMap!
+	refOffset := 1.
+	self
+		writeSignatureAndVersion;
+		registerPredefined!
 
 saveArray: anArray
 	"Save an <Array> to the object stream"
 
-	policy saveArray: anArray!
+	self subclassResponsibility!
 
 saveBindingReference: aBindingReference
 	"Save a <BindingReference> to the object stream"
 
-	policy saveBindingReference: aBindingReference!
+	self subclassResponsibility!
+
+saveBoolean: aBoolean
+	"Serialize a <Boolean> value to the object stream."
+
+	self subclassResponsibility!
 
 saveByteArray: aByteArray
 	"Save a <ByteArray> to the object stream"
 
-	policy saveByteArray: aByteArray!
+	self subclassResponsibility!
 
 saveByteObject: aByteObject
 	"Save an <Object> of an indexable byte class to the object stream"
 
-	^policy saveByteObject: aByteObject!
+	self
+		writePreambleFor: aByteObject class: aByteObject basicClass;
+		writeByteObject: aByteObject!
 
 saveCharacter: aCharacter
-	policy saveCharacter: aCharacter!
+	"Serialize a <Character> to the object stream."
+
+	self subclassResponsibility!
 
 saveClass: aClass
-	policy saveClass: aClass!
+	"Serialize a <Class> to the object stream. Note that only a reference is saved. The class must be present in the image where the stream is deserialised."
+
+	self subclassResponsibility!
 
 saveCollection: aCollection
-	policy saveCollection: aCollection!
+	self subclassResponsibility!
 
 saveFloat: aFloat
-	policy saveFloat: aFloat!
+	"Serialize a <Float> to the object stream."
+
+	self subclassResponsibility!
 
 saveLargeInteger: aLargeInteger
-	"Save a <LargeInteger> to the object stream"
+	"Serialize a <LargeInteger> to the object stream"
 
-	policy saveLargeInteger: aLargeInteger!
+	self subclassResponsibility!
 
 saveLookupTable: aLookupTable
-	policy saveLookupTable: aLookupTable!
+	"Serialize a <LookupTable> to the object stream."
 
-saveMetaclass: aClass
-	policy saveMetaclass: aClass!
+	self subclassResponsibility!
+
+saveMetaclass: aMetaclass
+	"Save a metaclass instance to the object stream."
+
+	self subclassResponsibility!
 
 saveNil
-	policy saveNil!
+	"Serialize nil to the object stream"
 
-saveObject: aNonImmediateObject
-	"Write anObject to the stream in STB format as normal.
-	Note that the argument must NOT be a SmallInteger or other immediate object,
-	neither should it be another 'special' object such as nil.
-	This is a low-level method, and is not intended for normal binary object streaming - 
-	use #nextPut: instead."
+	self subclassResponsibility!
 
-	policy saveObject: aNonImmediateObject!
+saveObject: aNonLiteralObject
+	"Write anObject to the stream in the full STx format, i.e. the argument is not expected to be any of the (mainly literal) objects with a special representation."
+
+	self
+		writePreambleFor: aNonLiteralObject class: aNonLiteralObject basicClass;
+		writeInstanceVariables: aNonLiteralObject!
 
 saveObject: anObject as: anObjectToSave
-	policy saveObject: anObject as: anObjectToSave!
+	"If anObjectToSave is zero then output anObject as normal (ie. without any proxy)."
+
+	anObjectToSave == 0 ifTrue: [^self saveObject: anObject].
+
+	"A proxy of nil means output nil instead of anObject."
+	anObjectToSave ifNil: [^self saveNil].
+
+	"Output anObjectToSave (usually a proxy) instead of anObject"
+	self
+		writePreambleFor: anObject class: anObjectToSave basicClass;
+		writeInstanceVariables: anObjectToSave!
 
 saveResourceLibrary: aResourceLibrary
-	policy saveResourceLibrary: aResourceLibrary!
+	self writePreambleFor: aResourceLibrary class: aResourceLibrary basicClass.
+	self nextPut: aResourceLibrary fileName!
 
 saveScaledDecimal: aScaledDecimal
-	"Store a <ScaledDecimal> to the object stream."
+	"Serialize a <ScaledDecimal> to the object stream."
 
-	policy saveScaledDecimal: aScaledDecimal!
+	self subclassResponsibility!
 
 saveSet: aSet elements: aCollection
-	policy saveSet: aSet elements: aCollection!
+	"Save a <Set> with elements in the 2nd argument to the object stream. In the case of a <Set> the first and second arguments are typically identical. In the case of a Dictionary, the 2nd argument should be the associations."
 
-saveSmallInteger: aSmallInteger
-	policy saveSmallInteger: aSmallInteger!
+	self subclassResponsibility!
 
-saveStatic: aBindingReference
-	"Store a static variable reference into the stream. On deserialisation this will be resolved to the value of the static variable in the loading image. If the variable is not defined in the loading image, an error will be thrown . This is suitable for 'global' static variables such as Processor, etc, but defining globals is a poor practice so new uses may be a smell."
-
-	policy saveStatic: aBindingReference!
-
-saveString: aString
-	policy saveString: aString!
-
-saveSymbol: aSymbol
-	policy saveSymbol: aSymbol!
-
-setRefOffset: anInteger
-	refOffset := anInteger - writeMap size + 1!
-
-stream: aStream policyClass: anSTxVersionPolicyClass
-	stream := aStream.
-	policy := anSTxVersionPolicyClass filer: self.
-	self initialize!
-
-writePreambleFor: anObject
+saveSingleton: anObject
 	"Write the normal STB pre-amble for anObject to the output stream. The object is registered in the write map so that any subsequent refs are shared. This method is intended for use from custom implementations of the class side #stbSaveOn: message."
 
-	policy writePreambleFor: anObject class: anObject basicClass!
+	self writePreambleFor: anObject class: anObject basicClass!
+
+saveSingleton: anObject class: aClass name: nameObject
+	self writePreambleFor: anObject class: aClass.
+	self nextPut: nameObject!
+
+saveSmallInteger: aSmallInteger
+	"Serialize a <SmallInteger> to the object stream."
+
+	self subclassResponsibility!
+
+saveStatic: aBindingReference
+	"Serialize a static variable reference into the stream. On deserialisation this will be resolved to the value of the static variable in the loading image. If the variable is not defined in the loading image, an error will be thrown . This is suitable for 'global' static variables such as Processor, etc, but defining globals is a poor practice so new uses may be a smell."
+
+	self subclassResponsibility!
+
+saveString: aString
+	"Serialize a <String> into the object stream."
+
+	self subclassResponsibility!
+
+saveSymbol: aSymbol
+	"Serialize a <Symbol> into the object stream."
+
+	self subclassResponsibility!
+
+sortCollectionElements: aCollection
+	"Private - We want the elements printed in a stable order, e.g. so that if in source code we don't get gratuitous diffs occurring."
+
+	^[aCollection asSortedArray] on: Error
+		do: 
+			[:ex |
+			| strm |
+			"Fall back on sorting by printString representation"
+			strm := String smalltalkWriteStream.
+			aCollection asSortedArray:  
+					[:a :b |
+					| ap bp |
+					strm reset.
+					a printOn: strm.
+					ap := strm contents.
+					strm reset.
+					b printOn: strm.
+					bp := strm contents.
+					ap <==> bp <= 0]]!
+
+stream: aStream
+	stream := aStream.
+	self initialize!
+
+writeByteObject: aByteObject
+	self subclassResponsibility!
+
+writeClass: aClass prefix: anObject
+	self subclassResponsibility!
+
+writeClassReference: anInteger prefix: prefixInteger
+	self subclassResponsibility!
+
+writeInstanceVariables: anObject
+	self subclassResponsibility!
+
+writeLookupTableElements: aLookupTable
+	self isStable
+		ifTrue: 
+			[(self sortCollectionElements: aLookupTable associations) do: 
+					[:each |
+					self nextPut: each key.
+					self nextPut: each value]]
+		ifFalse: 
+			[aLookupTable keysAndValuesDo: 
+					[:eachKey :eachValue |
+					self
+						nextPut: eachKey;
+						nextPut: eachValue]]!
 
 writePreambleFor: anObject class: aClass
-	"Write the normal STB pre-amble for anObject to the output stream, with the prefix identifying the class specified by the 2nd argument. The object is registered in the write map so that any subsequent refs are shared. This method is intended for use from custom implementations of the class side #stbSaveOn: message."
+	(self refForObject: aClass)
+		ifNotNil: 
+			[:refIndex |
+			"class has already been output so we can encode a short reference to the class within the prefix."
+			self writeClassReference: refIndex prefix: PrefixDataMask]
+		ifNil: 
+			["hitherto unencountered class so we need to save full class details in the object header."
+			self writeClass: aClass prefix: PrefixClassMask.
+			self register: aClass].
+	self register: anObject!
 
-	"class has already been output so we can encode a short reference to the class within the prefix."
+writeReference: anInteger
+	self subclassResponsibility!
 
-	"hitherto unencountered class so we need to save full class details in the object header."
+writeSetElements: aCollection
+	(self isStable ifTrue: [self sortCollectionElements: aCollection] ifFalse: [aCollection])
+		do: [:each | self nextPut: each]!
 
-	policy writePreambleFor: anObject class: aClass! !
+writeSignatureAndVersion
+	self subclassResponsibility! !
 !Kernel.STxOutFiler categoriesForMethods!
-initializeObjectMap!initializing!private! !
+beStable!accessing!public! !
+contents!accessing!public! !
+inFilerClass!constants!private! !
+isStable!public!testing! !
 nextPut:!accessing!public! !
 override:with:!proxies!public! !
 overrideFor:!accessing!private! !
-policy:!accessing!private! !
-policy1!accessing!private! !
+predefinedClasses!constants!public! !
 refForObject:!private!searching! !
 register:!accessing!private! !
+register:asGlobal:!globals!public! !
+registerPredefinedClasses!initializing!private! !
 removeOverrideFor:!proxies!public! !
 reset!initializing!private! !
-saveArray:!binary filing!public! !
-saveBindingReference:!binary filing!public! !
-saveByteArray:!binary filing!public! !
-saveByteObject:!binary filing!public! !
-saveCharacter:!binary filing!public! !
-saveClass:!binary filing!public! !
-saveCollection:!binary filing!public! !
-saveFloat:!binary filing!public! !
-saveLargeInteger:!binary filing!public! !
-saveLookupTable:!binary filing!public! !
-saveMetaclass:!binary filing!public! !
-saveNil!binary filing!public! !
-saveObject:!binary filing!public! !
-saveObject:as:!binary filing!public! !
-saveResourceLibrary:!binary filing!public! !
-saveScaledDecimal:!binary filing!public! !
-saveSet:elements:!binary filing!public! !
-saveSmallInteger:!binary filing!public! !
-saveStatic:!binary filing!public! !
-saveString:!binary filing!public! !
-saveSymbol:!binary filing!public! !
-setRefOffset:!accessing!private! !
-stream:policyClass:!initializing!private! !
-writePreambleFor:!binary filing!public! !
-writePreambleFor:class:!binary filing!public! !
+saveArray:!public!serializing! !
+saveBindingReference:!public!serializing! !
+saveBoolean:!public!serializing! !
+saveByteArray:!public!serializing! !
+saveByteObject:!public!serializing! !
+saveCharacter:!public!serializing! !
+saveClass:!public!serializing! !
+saveCollection:!public!serializing! !
+saveFloat:!public!serializing! !
+saveLargeInteger:!public!serializing! !
+saveLookupTable:!public!serializing! !
+saveMetaclass:!public!serializing! !
+saveNil!public!serializing! !
+saveObject:!public!serializing! !
+saveObject:as:!public!serializing! !
+saveResourceLibrary:!public!serializing! !
+saveScaledDecimal:!public!serializing! !
+saveSet:elements:!public!serializing! !
+saveSingleton:!binary filing!public! !
+saveSingleton:class:name:!binary filing!public! !
+saveSmallInteger:!public!serializing! !
+saveStatic:!public!serializing! !
+saveString:!public!serializing! !
+saveSymbol:!public!serializing! !
+sortCollectionElements:!printing!private! !
+stream:!initializing!public! !
+writeByteObject:!helpers!private! !
+writeClass:prefix:!helpers!private! !
+writeClassReference:prefix:!helpers!private! !
+writeInstanceVariables:!helpers!private! !
+writeLookupTableElements:!operations!private! !
+writePreambleFor:class:!binary filing!private! !
+writeReference:!helpers!private! !
+writeSetElements:!private!serializing! !
+writeSignatureAndVersion!helpers!private! !
 !
 
 !Kernel.STxOutFiler class methodsFor!
+
+new
+	^self on: self newStream!
 
 newStream
 	^self subclassResponsibility!
@@ -220,41 +381,20 @@ newStream
 on: aStream
 	"Answer a new instance attached to the binary stream aStream."
 
-	^self on: aStream policy: self policyClass!
-
-on: aStream policy: anSTxVersionPolicyClass
-	"Answer a new instance for serialising object graphs to the <puttableStream> first argument, using the version policy specified as the 2nd argument."
-
-	^self new stream: aStream policyClass: anSTxVersionPolicyClass!
+	^self basicNew stream: aStream!
 
 on: aStream version: anInteger
 	"Answer a new instance attached to the binary stream aStream."
 
-	^self on: aStream policy: (self policyClass classForVersion: anInteger)!
-
-policy: anSTxVersionPolicyClass
-	^self on: self newStream policy: anSTxVersionPolicyClass!
-
-version
-	"Private - Answer the version number of the format produced by the receiver.
-		1 - Preregisters certain commonly occurring classes
-		2 - Delegates save/load to class, format changed for certain pre-registered classes.
-		3 - Only writes basicSize for objects of variable classes.
-		4 - Literal filer stores true, false, Smalltalk, etc as literals rather than special predefined object indices, and stores the full set of atomic objects, and arrays of atomic objects, as literals, not just Strings, Symbols, Integers, ByteArrays, classes and pool dictionaries.
-		5 - Fully-qualified class names written. Literal filer stores classes as fully-qualified BindingReferences.
-		6 - Proxyless collections and resource libraries. STL has no pre-registered classes, so all referenced classes are immediately visible in the literal array"
-
-	^self policyClass version!
+	^(self classForVersion: anInteger) on: aStream!
 
 version: anInteger 
 	^self on: self newStream version: anInteger! !
 !Kernel.STxOutFiler class categoriesForMethods!
+new!instance creation!public! !
 newStream!helpers!private! !
 on:!instance creation!public! !
-on:policy:!instance creation!public! !
 on:version:!instance creation!public! !
-policy:!instance creation!public! !
-version!constants!private! !
 version:!instance creation!public! !
 !
 

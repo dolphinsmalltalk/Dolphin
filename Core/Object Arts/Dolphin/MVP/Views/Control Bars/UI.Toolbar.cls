@@ -305,11 +305,13 @@ defaultWindowStyle
 	^super defaultWindowStyle 
 		bitOr: ##(TBSTYLE_TOOLTIPS | TBSTYLE_WRAPABLE)!
 
-filerProxy
-	| saved |
-	saved := bitmapsStart.
-	bitmapsStart := nil.
-	^[super filerProxy] ensure: [bitmapsStart := saved]!
+filerProxyIn: anSTxOutFiler
+	| proxy |
+	proxy := super filerProxyIn: anSTxOutFiler.
+	proxy instVars 
+		at: ##(self indexOfInstVar: 'bitmapsStart') put: nil;
+		at: ##(self indexOfInstVar: 'idMap') put: nil.
+	^proxy!
 
 getItemRect: anInteger
 	"Private - Answer the bounding <RECTL> for the button at the specified zero-based <Integer> index."
@@ -1009,7 +1011,7 @@ defaultExtent!constants!private! !
 defaultGradientBackcolor!colors!constants!private! !
 defaultGradientForecolor!colors!constants!private! !
 defaultWindowStyle!constants!private! !
-filerProxy!binary filing!private! !
+filerProxyIn:!binary filing!private! !
 getItemRect:!geometry!private! !
 hasFlatAppearance!accessing-styles!public! !
 hasFlatAppearance:!accessing-styles!public! !

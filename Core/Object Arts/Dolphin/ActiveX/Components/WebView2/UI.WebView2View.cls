@@ -209,24 +209,17 @@ documentTitle
 environmentOptions
 	^environmentOptions!
 
-filerProxy
-	| saved |
-	saved := {
-				webviewEnvironment.
-				webviewController.
-				webview.
-				unavailableLink.
-				eventHandlers.
-				environmentEventHandlers
-			}.
-	environmentEventHandlers := webviewEnvironment := webviewController := webview := unavailableLink := eventHandlers := nil.
-	^[super filerProxy] ensure: 
-			[webviewEnvironment := saved at: 1.
-			webviewController := saved at: 2.
-			webview := saved at: 3.
-			unavailableLink := saved at: 4.
-			eventHandlers := saved at: 5.
-			environmentEventHandlers := saved at: 6]!
+filerProxyIn: anSTxOutFiler
+	| proxy |
+	proxy := super filerProxyIn: anSTxOutFiler.
+	proxy instVars
+		at: ##(self indexOfInstVar: 'environmentEventHandlers') put: nil;
+		at: ##(self indexOfInstVar: 'webviewEnvironment') put: nil;
+		at: ##(self indexOfInstVar: 'webviewController') put: nil;
+		at: ##(self indexOfInstVar: 'webview') put: nil;
+		at: ##(self indexOfInstVar: 'unavailableLink') put: nil;
+		at: ##(self indexOfInstVar: 'eventHandlers') put: nil.
+	^proxy!
 
 goBack
 	webview goBack!
@@ -674,7 +667,7 @@ displayValue!private!updating! !
 displayValue:!private!updating! !
 documentTitle!accessing!public! !
 environmentOptions!accessing!public! !
-filerProxy!binary filing!private! !
+filerProxyIn:!binary filing!private! !
 goBack!commands!public! !
 goForward!commands!public! !
 initialize!initializing!private! !

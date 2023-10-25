@@ -292,14 +292,14 @@ exit
 	^self close
 !
 
-filerProxy
-	| savedFocus savedAccels |
-	savedFocus := lastFocus.
-	savedAccels := combinedAcceleratorTable.
-	lastFocus := combinedAcceleratorTable := nil.
-	^[super filerProxy] ensure: 
-			[lastFocus := savedFocus.
-			combinedAcceleratorTable := savedAccels]!
+filerProxyIn: anSTxOutFiler
+	| proxy |
+	proxy := super filerProxyIn: anSTxOutFiler.
+	proxy instVars
+		at: ##(self indexOfInstVar: 'lastFocus') put: nil;
+		at: ##(self indexOfInstVar: 'combinedAcceleratorTable') put: nil;
+		at: ##(self indexOfInstVar: 'defaultButton') put: 0.
+	^proxy!
 
 flash: anInteger
 	"Flash the receiver in a manner so as to attract the user's attention, anInteger times."
@@ -1240,7 +1240,7 @@ dmSetDefId:wParam:lParam:!default button!event handling-win32!private! !
 drawMenuBar!menus!public! !
 ensureSubViewVisible:!public!sub views! !
 exit!commands!public! !
-filerProxy!binary filing!private! !
+filerProxyIn:!binary filing!private! !
 flash:!operations!public! !
 flash:flags:!operations!public! !
 getDefId!default button!private! !

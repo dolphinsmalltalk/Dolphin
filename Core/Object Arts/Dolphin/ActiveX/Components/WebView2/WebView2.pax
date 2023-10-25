@@ -252,6 +252,7 @@ package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
 	'..\..\..\MVP\Base\Dolphin Basic Geometry'
 	'..\..\..\MVP\Graphics\Dolphin GDI Graphics'
+	'..\..\..\System\Filer\Dolphin Literal Filer'
 	'..\..\..\System\Win32\Dolphin Memory-Mapped Files'
 	'..\..\..\MVP\Base\Dolphin MVP Base'
 	'..\..\..\Registry\Dolphin Registry Access'

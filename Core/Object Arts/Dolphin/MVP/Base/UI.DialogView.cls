@@ -174,6 +174,14 @@ endDialog: result
 
 	User32 endDialog: handle nResult: result asUIntPtr!
 
+filerProxyIn: anSTxOutFiler
+	"Private - Answer a filer proxy that represents the receiver for use with the <STxOutFiler> argument."
+
+	| proxy |
+	proxy := super filerProxyIn: anSTxOutFiler.
+	proxy instVars at: ##(self indexOfInstVar: 'oldWndProc') put: nil.
+	^proxy!
+
 getItemText: anInteger
 	"Private - Get the text of the receiver's control with the specified id.
 	We do not use the GetDlgItemText() function, since this does not provide us with a way of
@@ -429,6 +437,7 @@ dmGetDefId:wParam:lParam:!default button!event handling-win32!private! !
 dmSetDefId:wParam:lParam:!default button!event handling-win32!private! !
 enableItem:state:!accessing!private! !
 endDialog:!operations!public! !
+filerProxyIn:!binary filing!private! !
 getItemText:!accessing!private! !
 has3dLook!accessing!public! !
 has3dLook:!accessing!public! !

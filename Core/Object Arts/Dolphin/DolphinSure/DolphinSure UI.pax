@@ -31,6 +31,7 @@ package setPrerequisites: #(
 	'..\MVP\Views\Buttons\Dolphin Check Buttons'
 	'..\MVP\Graphics\Dolphin GDI Graphics'
 	'..\MVP\Presenters\Image\Dolphin Image Presenter'
+	'..\System\Filer\Dolphin Literal Filer'
 	'..\MVP\Base\Dolphin MVP Base'
 	'..\MVP\Views\Buttons\Dolphin Push Buttons'
 	'..\MVP\Presenters\Text\Dolphin Text Presenter'

@@ -22,6 +22,7 @@ package setPrerequisites: #(
 	'..\..\Graphics\Dolphin GDI Graphics'
 	'..\..\Models\List\Dolphin List Models'
 	'..\List\Dolphin List Presenter'
+	'..\..\..\System\Filer\Dolphin Literal Filer'
 	'..\..\Base\Dolphin MVP Base'
 	'Dolphin Prompter'
 	'..\..\Views\Buttons\Dolphin Push Buttons'

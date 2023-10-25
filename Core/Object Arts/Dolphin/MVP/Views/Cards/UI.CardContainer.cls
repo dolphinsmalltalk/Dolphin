@@ -72,6 +72,19 @@ ensureTabsAtBack
 				height: 0
 				flags: ##(SWP_NOSIZE | SWP_NOMOVE)]!
 
+filerProxyIn: anSTxOutFiler
+	"Private - Answer a filer proxy that represents the receiver for use with the <STxOutFiler> argument."
+
+	| proxy |
+	proxy := super filerProxyIn: anSTxOutFiler.
+	anSTxOutFiler isStable
+		ifTrue: 
+			[| namedCards |
+			"Ensure the managed sub-views are in the tab order"
+			namedCards := LookupTable withAll: layoutManager names.
+			proxy subViews: ((self tabs model asArray collect: [:each | namedCards at: each]) , proxy subViews) distinct].
+	^proxy!
+
 getImageBlock
 	"Answer the block to use to find out the image index of an object that will
 	be placed displayed in the TabView associated with the receiver."
@@ -361,6 +374,7 @@ createTabs!helpers!private! !
 defaultBackcolor!public! !
 defaultViewClass!constants!public! !
 ensureTabsAtBack!operations!private! !
+filerProxyIn:!binary filing!private! !
 getImageBlock!adapters!public! !
 getImageBlock:!adapters!public! !
 getTextBlock!adapters!public! !

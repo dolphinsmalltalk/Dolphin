@@ -28,6 +28,19 @@ value!converting!public! !
 
 !Kernel.STBIdentityDictionaryProxy class methodsFor!
 
+class: aClass associations: anArray
+	"Answer a new instance containing the class and elements of
+	the collection that it represents."
+
+	| stream |
+	stream := Array writeStream: anArray size * 2.
+	anArray do: 
+			[:each |
+			stream
+				nextPut: each key;
+				nextPut: each value].
+	^self class: aClass array: stream grabContents!
+
 forCollection: aLookupTable
 	"Answer a new instance of the receiver which contains the key-value object pairs of the <LookupTable> argument as an Array."
 
@@ -40,6 +53,7 @@ forCollection: aLookupTable
 				nextPut: value].
 	^self class: aLookupTable class array: tempStream grabContents! !
 !Kernel.STBIdentityDictionaryProxy class categoriesForMethods!
+class:associations:!instance creation!public! !
 forCollection:!instance creation!public! !
 !
 

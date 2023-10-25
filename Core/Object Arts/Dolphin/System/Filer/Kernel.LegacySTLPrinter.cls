@@ -22,11 +22,22 @@ getShortName: aProgramObject
 nameForClass: aClass
 	^(Smalltalk oldNames lookup: aClass) ifNil: [self getShortName: aClass]!
 
-print: aLiteralObject
-	"In STL4 strings with embedded nulls were just trimmed so they would not serialize correctly. Not great, but that is what it did."
+printBindingReference: aBindingReference
+	"BindingReferences are not supported prior to Dolphin 8."
 
-	(aLiteralObject isString ifTrue: [aLiteralObject trimNulls] ifFalse: [aLiteralObject])
-		printOn: stream!
+	self shouldNotImplement!
+
+printCharacter: aCharacter
+	"In STL4, only printable byte characters were unescaped"
+
+	| code |
+	code := aCharacter code.
+	(code > 32 and: [code < 127 or: [code <= 255 and: [aCharacter isGraph]]])
+		ifTrue: 
+			[stream
+				nextPut: $$;
+				nextPut: aCharacter]
+		ifFalse: [aCharacter printEscapedOn: stream]!
 
 printClass: aClass
 	stream nextPutAll: '##(Smalltalk'.
@@ -37,6 +48,14 @@ printClass: aClass
 				nextPutAll: (self nameForClass: aClass)].
 	stream nextPut: $)!
 
+printLiteralStoreArray: anArray
+	stream nextPutAll: '#('.
+	anArray do: 
+			[:each |
+			each literalPrintOn: self.
+			stream space].
+	stream nextPut: $)!
+
 printMetaclass: aMetaclass
 	stream
 		nextPutAll: '##(Smalltalk.';
@@ -44,13 +63,21 @@ printMetaclass: aMetaclass
 		nextPutAll: ' class)'!
 
 printProcessor: aProcessor
-	stream nextPutAll: '##(Smalltalk.Processor)'! !
+	stream nextPutAll: '##(Smalltalk.Processor)'!
+
+printString: aString
+	"In STL4 strings with embedded nulls were just trimmed so they would not serialize correctly. Not great, but that is what it did."
+
+	aString trimNulls printOn: stream! !
 !Kernel.LegacySTLPrinter categoriesForMethods!
 getShortName:!helpers!private! !
 nameForClass:!helpers!printing!private! !
-print:!printing!public! !
+printBindingReference:!printing!public! !
+printCharacter:!printing!public! !
 printClass:!printing!public! !
+printLiteralStoreArray:!public! !
 printMetaclass:!printing!public! !
 printProcessor:!printing!public! !
+printString:!printing!public! !
 !
 

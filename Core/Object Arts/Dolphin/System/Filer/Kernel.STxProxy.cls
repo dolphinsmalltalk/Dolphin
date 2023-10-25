@@ -10,7 +10,7 @@ Core.Object
 Kernel.STxProxy guid: (Core.GUID fromString: '{87b4c4c3-026e-11d3-9fd7-00a0cc3e4a32}')!
 Kernel.STxProxy isNonInstantiable: true!
 Kernel.STxProxy comment: ''!
-!Kernel.STxProxy categoriesForClass!System-Binary storage!System-Binary storage! !
+!Kernel.STxProxy categoriesForClass!System-Binary storage! !
 !Kernel.STxProxy methodsFor!
 
 stbFixup: inFiler at: anInteger

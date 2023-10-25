@@ -134,7 +134,10 @@ setScope: anObject
 	"Private - Sent by Compiler."
 
 	<mutable>
-	scope := anObject! !
+	scope := anObject!
+
+unqualifiedPathLiteralPrefix
+	^RelativePathStringPrefix! !
 !Kernel.RelativeBindingReference categoriesForMethods!
 =!comparing!public! !
 asFullyQualifiedReference!converting!public! !
@@ -150,6 +153,7 @@ isRelative!public!testing! !
 private!converting!public! !
 scope!accessing!private! !
 setScope:!initializing!private! !
+unqualifiedPathLiteralPrefix!constants!private! !
 !
 
 !Kernel.RelativeBindingReference class methodsFor!

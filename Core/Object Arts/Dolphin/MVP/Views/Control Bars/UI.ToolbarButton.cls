@@ -199,6 +199,13 @@ stateMask: stateMask
 
 	self toolbar tbSetState: self commandId state: stateMask!
 
+stbSaveOn: anSTxOutFiler
+	| saved |
+	"We don't want to save down the command id because it is unstable and needs to be reallocated when the toolbar is realized anyway"
+	saved := commandId.
+	commandId := nil.
+	[super stbSaveOn: anSTxOutFiler] ensure: [commandId := saved]!
+
 style
 	"Private - Answer the style of the receiver."
 
@@ -281,6 +288,7 @@ printOn:!development!printing!public! !
 rectangle!accessing!public! !
 screenRectangle!accessing!public! !
 stateMask:!public!state! !
+stbSaveOn:!binary filing!public! !
 style!private!style! !
 style:!private!style! !
 text!accessing!public! !

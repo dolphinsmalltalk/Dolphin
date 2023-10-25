@@ -21,6 +21,7 @@ package setPrerequisites: #(
 	'..\Base\Dolphin Basic Geometry'
 	'..\Graphics\Dolphin GDI Graphics'
 	'..\Presenters\Image\Dolphin Image Presenter'
+	'..\..\System\Filer\Dolphin Literal Filer'
 	'..\Base\Dolphin MVP Base'
 	'..\Type Converters\Dolphin Type Converters'
 	'..\Models\Value\Dolphin Value Models'

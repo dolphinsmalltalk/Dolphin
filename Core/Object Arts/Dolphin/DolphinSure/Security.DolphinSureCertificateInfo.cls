@@ -128,8 +128,8 @@ validityString!accessing!public! !
 binaryReadFrom: aStream context: anObject
 	"Answers an object read from its binary STB representation on aStream. Because STB is inherently an insecure format (loading objects can cause arbitrary code to be run) we must use a special STBInFiler (an STBValidatingInFiler) that will only load a restricted set of classes that we know to be passive."
 
-	^(STBValidatingInFiler on: aStream)
-		validClasses: #(#{Core.Date} #{Core.AnsiString} #{Core.Utf8String} #{Core.LargeInteger} #{Core.SmallInteger} #{Security.DolphinSureCertificateInfo});
+	^(STBValidatingInFiler on: aStream
+		validClasses: #(#{Core.Date} #{Core.AnsiString} #{Core.Utf8String} #{Core.LargeInteger} #{Core.SmallInteger} #{Security.DolphinSureCertificateInfo}))
 		context: anObject;
 		next!
 

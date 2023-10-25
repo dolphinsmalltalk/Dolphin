@@ -699,13 +699,13 @@ expandSelectedBecause: aSymbol
 
 	self expandList: self selections because: aSymbol.!
 
-filerProxy
+filerProxyIn: anSTxOutFiler
 	| saved |
 
 	saved := hiddenExpanded.
 	self discardHiddenExpanded.	"don't set it to nil or the resurrected version will never use hiddenExpanded"
 
-	^ [super filerProxy]
+	^ [super filerProxyIn: anSTxOutFiler]
 		ensure: [hiddenExpanded := saved]!
 
 getChildrenBlock
@@ -1978,7 +1978,7 @@ expandList:because:!do copy!private!user initiated actions! !
 expandOrCollapse:because:!do copy!private!user initiated actions! !
 expandOrSelectFirstChildBecause:!do copy!private!user initiated actions! !
 expandSelectedBecause:!do copy!private!user initiated actions! !
-filerProxy!binary filing!private! !
+filerProxyIn:!binary filing!private! !
 getChildrenBlock!accessing!do copy!public! !
 getChildrenBlock:!accessing!do copy!public! !
 getParentBlock!accessing!do copy!public! !

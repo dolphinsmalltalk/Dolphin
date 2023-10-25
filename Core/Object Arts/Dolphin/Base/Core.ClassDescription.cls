@@ -649,23 +649,7 @@ localScope
 !
 
 logDefinition
-	self sourceManager logEvaluate: self definition!
-
-logRemoveSelector: aSymbol 
-	self sourceManager 
-		logEvaluate: self name , ' removeSelector: ' , aSymbol fullPrintString , ' ifAbsent: []'!
-
-logRemoveSelectors: aCollection
-	| stream |
-	stream := String smalltalkWriteStream: 128.
-	stream
-		print: self;
-		space;
-		display: #removeSelectors:;
-		nextPutAll: ' #('.
-	aCollection do: [:each | stream print: each] separatedBy: [stream space].
-	stream nextPut: $).
-	self sourceManager logEvaluate: stream contents!
+	self sourceManager logDefinitionOfClass: self!
 
 metaclass
 	"Answer the <Metaclass> of the Class/Metaclass pair."
@@ -877,7 +861,7 @@ removeSelector: aSymbol ifAbsent: aBlock
 
 	| method |
 	method := super removeSelector: aSymbol ifAbsent: [^aBlock value].
-	self logRemoveSelector: aSymbol.
+	self sourceManager logRemoveSelector: aSymbol of: self.
 	(self canUnderstand: aSymbol)
 		ifFalse: [self removeUnsupportedProtocols: IdentitySet new selector: aSymbol].
 	self removeMethodFromNonVirtualCategories: method.
@@ -890,7 +874,7 @@ removeSelectors: aCollection
 
 	| methods |
 	methods := super removeSelectors: aCollection.
-	self logRemoveSelectors: aCollection.
+	self sourceManager logRemoveSelectors: aCollection of: self.
 	aCollection do: 
 			[:each |
 			(self canUnderstand: each)
@@ -1149,8 +1133,6 @@ localBindingFor:!binding!public! !
 localEnvironment!accessing!private! !
 localScope!accessing!public! !
 logDefinition!class hierarchy-mutating!instance variables!private! !
-logRemoveSelector:!development!helpers!private! !
-logRemoveSelectors:!development!helpers!private! !
 metaclass!accessing!public! !
 methodCategories!categories-accessing!public! !
 methodChanged:!helpers!private! !

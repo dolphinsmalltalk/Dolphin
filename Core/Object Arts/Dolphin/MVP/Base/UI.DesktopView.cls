@@ -134,7 +134,7 @@ ensureVisible
 
 	!
 
-filerProxy
+filerProxyIn: anSTxOutFiler
 	"Private - Answer a filer proxy that represents the receiver."
 
 	^STBSingletonProxy forClass: self class!
@@ -348,7 +348,7 @@ displayOn:!displaying!public! !
 ensureSubView:rectangleVisible:!private!updating! !
 ensureSubViewVisible:!public!sub views! !
 ensureVisible!accessing!public! !
-filerProxy!binary filing!private! !
+filerProxyIn:!binary filing!private! !
 helpId!accessing!public! !
 iconTitleFont!geometry!public! !
 invalidateLayout!geometry!public! !

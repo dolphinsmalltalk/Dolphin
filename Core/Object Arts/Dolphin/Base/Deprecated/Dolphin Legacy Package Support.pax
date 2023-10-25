@@ -52,8 +52,9 @@ package setMethodNames: #(
 package setPrerequisites: #(
 	'..\Dolphin'
 	'..\..\System\Filer\Dolphin Binary Filer'
+	'..\..\System\Filer\Dolphin Binary Filer (Old versions)'
+	'..\..\System\Filer\Dolphin Literal Out Filer (Old versions)'
 	'..\Dolphin Source Fileout'
-	'..\..\System\Filer\Dolphin STx Filer (Old versions)'
 	'..\..\System\Filer\Dolphin STx Filer Core'
 ).
 

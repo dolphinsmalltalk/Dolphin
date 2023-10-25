@@ -10,10 +10,11 @@ Kernel.STxProxy
 			'CreationParentIndex' -> 16r2.
 			'CreationStyleIndex' -> 16r3.
 			'EventsIndex' -> 16rB.
+			'FlagsIndex' -> 16r8.
 			'HandleIndex' -> 16r1
 		}!
 UI.STBViewProxy guid: (Core.GUID fromString: '{87b4c6f4-026e-11d3-9fd7-00a0cc3e4a32}')!
-UI.STBViewProxy comment: 'STBViewProxy is the class of <STBProxy> objects used to represent <View> instances in STB files.'!
+UI.STBViewProxy comment: '`STBViewProxy` is the class of `STXProxy` objects used to represent `View` instances in STB/STL object streams.'!
 !UI.STBViewProxy categoriesForClass!System-Binary storage! !
 !UI.STBViewProxy methodsFor!
 
@@ -154,6 +155,10 @@ setView: aView
 			subViews := aView subViews.
 			instVars at: HandleIndex put: nil].
 
+	"Clear transient flags"
+	instVars at: FlagsIndex
+		put: ((instVars at: FlagsIndex) bitAnd: ##((View.UIValidMask bitOr: View.LayoutValidMask) bitInvert)).
+
 	"We must not save the events."
 	instVars at: EventsIndex put: nil.
 
@@ -191,6 +196,9 @@ stbFixup: inFiler at: anInteger
 
 subViews
 	^subViews!
+
+subViews: aSequenceableCollection
+	subViews := aSequenceableCollection!
 
 version
 	"Answer an <integer> which is the STB version of the class of the view for which 
@@ -238,6 +246,7 @@ state!accessing!public! !
 state:!accessing!public! !
 stbFixup:at:!converting!public! !
 subViews!accessing!public! !
+subViews:!accessing!public! !
 version!accessing!public! !
 version:!accessing!public! !
 viewClass!accessing!public! !
@@ -267,7 +276,8 @@ initialize
 		addClassConstant: 'HandleIndex' value: (allInstVarNames indexOf: 'handle');
 		addClassConstant: 'CreationParentIndex' value: (allInstVarNames indexOf: 'creationParent');
 		addClassConstant: 'CreationStyleIndex' value: (allInstVarNames indexOf: 'creationStyle');
-		addClassConstant: 'EventsIndex' value: (allInstVarNames indexOf: 'events')!
+		addClassConstant: 'EventsIndex' value: (allInstVarNames indexOf: 'events');
+		addClassConstant: 'FlagsIndex' value: (allInstVarNames indexOf: 'flags')!
 
 stbConvertFrom: anSTBClassFormat
 	"Convert from earlier version view proxies.

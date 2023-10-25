@@ -323,10 +323,9 @@ receiveMessagesOn: aStream
 
 	
 	[| filer |
-	"The messages are a pair of strings in an Assocation. We don't allow any other objects to be deserialised."
-	filer := (Kernel.STBValidatingInFiler on: aStream)
-				validClasses: #(#{Core.Association} #{Core.AnsiString} #{Core.Utf8String} #{Core.Utf16String});
-				yourself.
+	"The messages are a pair of strings in an Association. We don't allow any other objects to be deserialised."
+	filer := Kernel.STBValidatingInFiler on: aStream
+				validClasses: #(#{Core.Association} #{Core.AnsiString} #{Core.Utf8String} #{Core.Utf16String}).
 	
 	[| message |
 	message := filer next.
@@ -358,7 +357,7 @@ senderMain
 	
 	[| filer |
 	"For interop with D7 Chat client"
-	filer := Kernel.STBOutFiler on: socket writeStream version: 4.
+	filer := Kernel.STBOutFiler4 on: socket writeStream.
 	
 	[| msg |
 	msg := sendQueue next.

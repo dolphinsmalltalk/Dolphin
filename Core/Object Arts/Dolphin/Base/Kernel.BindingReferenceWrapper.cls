@@ -140,7 +140,10 @@ scope: anObject
 	^self class instance: (reference scope: anObject)!
 
 setScope: anObject
-	^reference setScope: anObject! !
+	^reference setScope: anObject!
+
+unqualifiedPathLiteralPrefix
+	^reference unqualifiedPathLiteralPrefix! !
 !Kernel.BindingReferenceWrapper categoriesForMethods!
 =!comparing!public! !
 asFullyQualifiedReference!converting!public! !
@@ -168,6 +171,7 @@ reference:!initializing!private! !
 scope!constants!private! !
 scope:!converting!public! !
 setScope:!initializing!private! !
+unqualifiedPathLiteralPrefix!constants!private! !
 !
 
 !Kernel.BindingReferenceWrapper class methodsFor!

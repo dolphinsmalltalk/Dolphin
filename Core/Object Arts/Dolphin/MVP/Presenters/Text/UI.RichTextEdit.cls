@@ -9,8 +9,7 @@ UI.MultilineTextEdit
 	classConstants: {
 			'AutoUrlDetectionMask' -> 16r1000000.
 			'ParagraphAlignmentMap'
-				-> (IdentityDictionary withAll: { #center -> 16r3. #left -> 16r1. #right -> 16r2 }).
-			'StreamInIndex' -> 16r15
+				-> (IdentityDictionary withAll: { #center -> 16r3. #left -> 16r1. #right -> 16r2 })
 		}!
 UI.RichTextEdit guid: (Core.GUID fromString: '{87b4c744-026e-11d3-9fd7-00a0cc3e4a32}')!
 UI.RichTextEdit comment: 'RichTextEdit is a <valueView> class that implements the Windows "RichEdit" control for the displaying and editing of multi-line rich text. The <valueModel> associated with a RichTextEdit  must always yield a <richString> value when mapped through the installed type converter. A RichTextEdit will normally be used in conjunction with a <RichTextPresenter>. 
@@ -233,12 +232,14 @@ eventMask: anInteger
 eventMask: anInteger set: aBoolean 
 	self eventMask: (self eventMask mask: anInteger set: aBoolean)!
 
-filerProxy
+filerProxyIn: anSTxOutFiler
 	"Private - Answer a filer proxy that represents the receiver."
 
 	| answer |
-	answer := super filerProxy.
-	answer instVars at: StreamInIndex put: nil.
+	answer := super filerProxyIn: anSTxOutFiler.
+	answer instVars
+		at: ##(self indexOfInstVar: 'streamIn') put: nil;
+		at: ##(self indexOfInstVar: 'winStruct') put: EDITSTREAM newBuffer.
 	^answer!
 
 find: aFindDetails range: anInterval 
@@ -920,7 +921,7 @@ enSelChange:!event handling-win32!private! !
 eventMask!accessing!private! !
 eventMask:!accessing!private! !
 eventMask:set:!accessing!private! !
-filerProxy!binary filing!private! !
+filerProxyIn:!binary filing!private! !
 find:range:!private!searching and replacing! !
 find:range:flags:!public!searching and replacing! !
 forecolor:!accessing!public! !
@@ -999,7 +1000,6 @@ initialize
 	"
 
 	self registerClass.
-	self addClassConstant: 'StreamInIndex' value: (self indexOfInstVar: 'streamIn').
 
 	"Descriptor for stream out callback"
 	StreamingDescriptor := External.FunctionDescriptor argumentTypes: 'uint32 lpvoid int32 UInt32*'.
