@@ -100,7 +100,6 @@ package setClassNames: #(
 	#{External.Tests.FLOATArrayTest}
 	#{External.Tests.FunctionDescriptorTest}
 	#{External.Tests.GenericExternalArrayTest}
-	#{External.Tests.GUIDTest}
 	#{External.Tests.Int16ArrayTest}
 	#{External.Tests.Int32ArrayTest}
 	#{External.Tests.Int8ArrayTest}
@@ -524,13 +523,6 @@ Core.Tests.DolphinTest
 	classConstants: {}!
 Core.Tests.DolphinTest
 	subclass: #'Core.Tests.GUIDTest'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Core.Tests.DolphinTest
-	subclass: #'External.Tests.GUIDTest'
 	instanceVariableNames: ''
 	classVariableNames: 'Default'
 	imports: #()

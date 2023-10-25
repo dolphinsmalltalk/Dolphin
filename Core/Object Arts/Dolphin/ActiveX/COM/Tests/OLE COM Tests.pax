@@ -36,14 +36,14 @@ Core.Tests.DolphinTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.Tests.GUIDTest
+Core.Tests.GUIDTest
 	subclass: #'OS.COM.Tests.CLSIDTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.Tests.GUIDTest
+Core.Tests.GUIDTest
 	subclass: #'OS.COM.Tests.IIDTest'
 	instanceVariableNames: ''
 	classVariableNames: ''

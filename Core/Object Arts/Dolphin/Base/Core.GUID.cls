@@ -60,7 +60,7 @@ asByteArray
 asInteger
 	"Answer the 128-bit integer value of the receiver."
 
-	^LargeInteger fromBytes: self asByteArray!
+	^LargeInteger fromBytes: self!
 
 asObject
 	"Answer the <Object> value represented by the receiver."
@@ -121,10 +121,12 @@ idlString
 	^answer!
 
 isNull
-	"Answer whether the receiver is a null external data item
-	(that is, a null pointer, or a nilled out structure)."
+	"Answer whether the receiver is a null GUID."
 
-	^self = self class null!
+	^(OS.Ucrt
+		memcmp: self
+		buf2: #[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+		count: 16) == 0!
 
 isSelfEvaluating
 	"Answer whether or not the receiver has a printString representation that evaluates back to an equivalent object."
