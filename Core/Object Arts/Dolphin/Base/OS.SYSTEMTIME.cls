@@ -25,7 +25,7 @@ OS.SYSTEMTIME comment: ''!
 asDateAndTime
 	"Answer a <DateAndTime> corresponding to the receiver."
 
-	^DateAndTime fromSYSTEMTIME: self!
+	^DateAndTime fromSYSTEMTIME: self offset: Locale timeZoneInformation offset!
 
 asFILETIME
 	"Answer a FILETIME corresponding to the receiver."
@@ -218,7 +218,7 @@ getFieldNames
 	^#(#wYear #wMonth #wDayOfWeek #wDay #wHour #wMinute #wSecond #wMilliseconds)!
 
 now
-	"Private - Answer the current Windows local time"
+	"Answer the current Windows local time."
 
 	| answer |
 	answer := self new.
@@ -238,7 +238,7 @@ day:month:year:!instance creation!private! !
 defineFields!public!template definition! !
 fromFILETIME:!instance creation!public! !
 getFieldNames!**compiled accessors**!constants!private! !
-now!instance creation!private! !
+now!instance creation!public! !
 nowUTC!instance creation!public! !
 !
 

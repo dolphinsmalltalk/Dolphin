@@ -85,14 +85,11 @@ asVariant!converting!public! !
 
 !Core.TimeStamp class methodsFor!
 
-fromDATE: date
-	"Private - Answer a new instance of the receiver instantiated from the <Float> argument, date, which
+fromDATE: aDATE
+	"Private - Answer a new instance of the receiver instantiated from the <Float> argument, aDATE, which
 	is assumed to be an AX Automation format Date."
 
-	| systime |
-	systime := OS.SYSTEMTIME new.
-	OS.COM.OLEAutLibrary default variantTimeToSystemTime: date lpSystemTime: systime.
-	^self fromSYSTEMTIME: systime! !
+	^self fromSYSTEMTIME: (OS.SYSTEMTIME fromDATE: aDATE)! !
 !Core.TimeStamp class categoriesForMethods!
 fromDATE:!instance creation!private! !
 !

@@ -246,8 +246,7 @@ fromString: aString
 	^self date: date time: time!
 
 fromSYSTEMTIME: aSYSTEMTIME
-	"Answer a new instance of the receiver representing the current
-	date and time"
+	"Answer a new instance of the receiver representing the current date and time"
 
 	^self date: (Date fromSYSTEMTIME: aSYSTEMTIME) time: (Time fromSYSTEMTIME: aSYSTEMTIME)!
 

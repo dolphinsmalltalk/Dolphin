@@ -18,10 +18,9 @@ asDateAndTime
 	^self value!
 
 value
-	"Answer a <TimeStamp> converted from the receiver's Active-X
-	Automation date (an 8-byte floating point day number and fraction of a day)."
+	"Answer a <DateAndTime> equivalent to the the receiver's Active-X Automation date (an 8-byte floating point day number and fraction of a day)."
 
-	^DateAndTime fromSYSTEMTIME: (SYSTEMTIME fromDATE: super value)! !
+	^DateAndTime fromSYSTEMTIME: (SYSTEMTIME fromDATE: (bytes doubleAtOffset: _OffsetOf_value))! !
 !OS.COM.DATE categoriesForMethods!
 asDateAndTime!accessing!public! !
 value!accessing!public! !

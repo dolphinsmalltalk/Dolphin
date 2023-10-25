@@ -80,20 +80,21 @@ asSeconds
 asSYSTEMTIME
 	"Answer a <SYSTEMTIME> representing the same point in time as the receiver. This is a lossy conversion:
 		- Not all <DateAndTime>s can be represented as <SYSTEMTIME>; the earliest SYSTEMTIME is 1/1/1601 can represent only a limited range of possible <DateAndTime>s. If the DateAndTime is outside the SYSTEMTIME range, the structure returned may not be valid for passing to a Windows API.
-		- The receiver's offset is ignored; <SYSTEMTIME> has no timezone offset, so may be a local time or a UTC time. Convert to the desired timezone first.
+		- <SYSTEMTIME> has no timezone offset, so may be a local time or a UTC time. Dolphin follows a convention of assuming that SYSTEMTIMEs are local times where the offset is not otherwise specified.
 		- The may be loss of precision: <SYSTEMTIME> has millisecond precision, whereas <DateAndTime>s have essentially infinite precision, although in practice the precision is likely to be 100nS ticks."
 
-	| secs |
-	secs := self second.
-	^self dayMonthYearDo: 
+	| local secs |
+	local := self asLocal.
+	secs := local second.
+	^local dayMonthYearDo: 
 			[:d :m :y |
 			OS.SYSTEMTIME new
 				wYear: y;
 				wMonth: m;
 				wDay: d;
-				wDayOfWeek: self dayOfWeek - 1;
-				wHour: self hour24;
-				wMinute: self minute;
+				wDayOfWeek: local dayOfWeek - 1;
+				wHour: local hour24;
+				wMinute: local minute;
 				wSecond: secs truncated;
 				wMilliseconds: (secs fractionPart * 1000) truncated;
 				yourself]!
@@ -540,7 +541,7 @@ fromFILETIME: aFILETIME
 		(DateAndTime year: 1601 day: 1 offset: 0 seconds) asSeconds = -9467020800
 	"
 
-	^self utcSeconds: (aFILETIME asInteger - OS.FILETIME.SmalltalkEpoch) / 1e7 offset: 0!
+	^self utcSeconds: aFILETIME asSeconds offset: aFILETIME offsetSeconds!
 
 fromString: aString 
 	"Answer a new <DateAndTime> constructed from aString <String> in the Reg. Ex. format:
@@ -550,9 +551,11 @@ fromString: aString
 	^self readFrom: aString readStream!
 
 fromSYSTEMTIME: aSYSTEMTIME
+	"Answer a new <DateAndTime> equivalent to the <SYSTEMTIME> argument, assumed to be in local time."
+
 	^self fromSYSTEMTIME: aSYSTEMTIME offset: Locale timeZoneInformation offset!
 
-fromSYSTEMTIME: aSYSTEMTIME offset: offset 
+fromSYSTEMTIME: aSYSTEMTIME offset: aDuration 
 	"Answer a <DateAndTime> from SYSTEMTIME in local time."
 
 	"2001/07/18 Harmon, R. Added for <DateAndTimeExtra factory>."
@@ -563,7 +566,7 @@ fromSYSTEMTIME: aSYSTEMTIME offset: offset
 		hour: aSYSTEMTIME wHour
 		minute: aSYSTEMTIME wMinute
 		second: aSYSTEMTIME wSecond + (aSYSTEMTIME wMilliseconds / 1000)
-		offset: offset!
+		offset: aDuration!
 
 fromUnixTime: time_t_Integer
 	"Answer a <DateAndTime> which is the specified number of seconds past the Unix epoch, assumed to be in UTC."
@@ -844,25 +847,25 @@ year: year month: month day: dayOfMonth hour: hour minute: minute second: second
 		second: second
 		offsetSeconds: Locale timeZoneInformation offsetSeconds!
 
-year: year month: month day: dayOfMonth hour: hour minute: minute second: second offset: offset
-	"Answer a <DateAndTime> which is the <number> second, of the <integer> minute, of the <integer> hour, of the <integer> day, dayOfMonth, of the <integer> month, of the <integer> year, of the astronomical Gregorian calendar offset from UTC by the <Duration> offset, where:
-		0 <= second < 60, 
-		0 <= minute <= 59, 
-		0 <= hour <= 23, 
-		1 <= day <= DaysInMonthOfYear(month, year)
-		1 <= month <= 12,
-		year can be any <integer>, and
-		-12 hours <= aDuration <= 14 hours.
+year: yearInteger month: monthInteger day: dayOfMonthInteger hour: hourInteger minute: minuteInteger second: secondNumber offset: offsetDuration
+	"Answer a <DateAndTime> which is the <number> secondNumber, of the <integer> minuteInteger, of the <integer> hourInteger, of the <integer> day, dayOfMonthInteger, of the <integer> monthInteger, of the <integer> yearInteger, of the astronomical Gregorian calendar offset from UTC by the <Duration> offsetDuration, where:
+		0 <= secondInteger < 60, 
+		0 <= minuteInteger <= 59, 
+		0 <= hourInteger <= 23, 
+		1 <= dayInteger <= DaysInMonthOfYear(monthInteger, yearInteger)
+		1 <= monthInteger <= 12,
+		yearInteger can be any <integer>, and
+		-12 hours <= offsetDuration <= 14 hours.
 	If the specified time does not exist in the local time defined by the implementation the result is the least <DateAndTime> that conforms to the given parameters."
 
 	^self
-		year: year
-		month: month
-		day: dayOfMonth
-		hour: hour
-		minute: minute
-		second: second
-		offsetSeconds: offset asSeconds!
+		year: yearInteger
+		month: monthInteger
+		day: dayOfMonthInteger
+		hour: hourInteger
+		minute: minuteInteger
+		second: secondNumber
+		offsetSeconds: offsetDuration asSeconds!
 
 year: year month: month day: dayOfMonth hour: hour minute: minute second: second offsetSeconds: offset
 	| daysInMonth |

@@ -131,18 +131,29 @@ testAsSeconds
 		equals: 2177452800!
 
 testAsSYSTEMTIME
-	| subject actual |
+	| subject actual local |
 	subject := self canonicalInstance.
 	actual := subject asSYSTEMTIME.
+	local := subject asLocal.
 	self assert: actual wYear equals: 2000.
-	self assert: actual wMonth equals: 2.
-	self assert: actual wDay equals: 29.
-	self assert: actual wDayOfWeek equals: 3-1.
-	self assert: actual wHour equals: 12.
-	self assert: actual wMinute equals: 59.
-	self assert: actual wSecond equals: 59.
+	self assert: actual wMonth equals: local month.
+	self assert: actual wDay equals: local dayOfMonth.
+	self assert: actual wDayOfWeek equals: local dayOfWeek - 1.
+	self assert: actual wHour equals: local hour.
+	self assert: actual wMinute equals: local minute.
+	self assert: actual wSecond equals: local second truncated.
 	"Milliseconds are truncated to avoid rounding to 1000 and creating an invalid SYSTEMTIME"
-	self assert: actual wMilliseconds equals: 666!
+	self assert: actual wMilliseconds equals: 666.
+	"Check round-trips (approximately)"
+	self assert: (DateAndTime fromSYSTEMTIME: actual)
+		equals: (DateAndTime
+				year: 2000
+				month: 2
+				day: 29
+				hour: 12
+				minute: 59
+				second: 59 + (666 / 1000)
+				offset: -12.5 hours)!
 
 testAsSYSTEMTIMEInvalidMilliseconds
 	"#1045 - wMillisecond must never be 1000, even if that is what the millisecond value we have would round to"
@@ -208,16 +219,31 @@ testDayOfYear
 	self assert: self canonicalInstance dayOfYear equals: 31 + 29!
 
 testFromFILETIME
-	| ts ft |
+	| subject ft |
 	"2021-10-03T17:15:44.3946219Z"
 	ft := OS.FILETIME fromInteger: 132777549443946219.
-	ts := DateAndTime fromFILETIME: ft.
-	self assert: ts dayOfMonth equals: 3.
-	self assert: ts month equals: 10.
-	self assert: ts year equals: 2021.
-	self assert: ts hour equals: 17.
-	self assert: ts minute equals: 15.
-	self assert: ts second equals: 443946219 / 1e7!
+	subject := DateAndTime fromFILETIME: ft.
+	self assert: subject dayOfMonth equals: 3.
+	self assert: subject month equals: 10.
+	self assert: subject year equals: 2021.
+	self assert: subject hour equals: 17.
+	self assert: subject minute equals: 15.
+	self assert: subject second equals: 443946219 / 1e7.
+	self assert: subject offset equals: 0 seconds!
+
+testFromLocalFILETIME
+	| subject ft sysTime |
+	ft := OS.LocalFILETIME now.
+	subject := DateAndTime fromFILETIME: ft.
+	self assert: subject offset equals: Locale timeZoneInformation offset.
+	sysTime := ft asSYSTEMTIME.
+	self assert: subject dayOfMonth equals: sysTime wDay.
+	self assert: subject month equals: sysTime wMonth.
+	self assert: subject year equals: sysTime wYear.
+	self assert: subject hour equals: sysTime wHour.
+	self assert: subject minute equals: sysTime wMinute.
+	self assert: subject second truncated equals: sysTime wSecond.
+	self assert: (subject second fractionPart * 1000) truncated equals: sysTime wMilliseconds!
 
 testFromString
 	| fromString fromStringNoOffset |
@@ -257,16 +283,25 @@ testFromString
 				offset: -12 hours)!
 
 testFromSYSTEMTIME
-	| ts sysTime |
+	| subject sysTime localSysTime |
 	sysTime := OS.SYSTEMTIME now.
-	ts := DateAndTime fromSYSTEMTIME: sysTime.
-	self assert: ts dayOfMonth equals: sysTime wDay.
-	self assert: ts month equals: sysTime wMonth.
-	self assert: ts year equals: sysTime wYear.
-	self assert: ts hour equals: sysTime wHour.
-	self assert: ts minute equals: sysTime wMinute.
-	self assert: ts second truncated equals: sysTime wSecond.
-	self assert: ts second fractionPart * 1000 equals: sysTime wMilliseconds!
+	subject := DateAndTime fromSYSTEMTIME: sysTime.
+	self assert: subject dayOfMonth equals: sysTime wDay.
+	self assert: subject month equals: sysTime wMonth.
+	self assert: subject year equals: sysTime wYear.
+	self assert: subject hour equals: sysTime wHour.
+	self assert: subject minute equals: sysTime wMinute.
+	self assert: subject second truncated equals: sysTime wSecond.
+	self assert: subject second fractionPart * 1000 equals: sysTime wMilliseconds.
+	self assert: subject offset equals: Locale timeZoneInformation offset.
+	localSysTime := subject asSYSTEMTIME.
+	self assert: localSysTime equals: sysTime.
+	sysTime := OS.SYSTEMTIME nowUTC.
+	subject := DateAndTime fromSYSTEMTIME: sysTime offset: 0 seconds.
+	self assert: subject offset equals: 0 seconds.
+	"DateAndTime>>#asSYSTEMTIME always yields a local time"
+	localSysTime := subject asSYSTEMTIME.
+	self assert: (DateAndTime fromSYSTEMTIME: localSysTime) equals: subject!
 
 testFromUnixTime
 	"see https://en.wikipedia.org/wiki/Lilian_date."
@@ -784,6 +819,7 @@ testDayOfWeekAbbreviation!public!unit tests! !
 testDayOfWeekName!public!unit tests! !
 testDayOfYear!public!unit tests! !
 testFromFILETIME!public! !
+testFromLocalFILETIME!public! !
 testFromString!public!unit tests! !
 testFromSYSTEMTIME!public! !
 testFromUnixTime!public!unit tests! !

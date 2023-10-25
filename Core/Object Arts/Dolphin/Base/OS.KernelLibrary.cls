@@ -568,7 +568,7 @@ formatMessage: messageId source: aHandleOrString flags: dwFlag withArguments: ar
 							[a isString ifTrue: [(wideStrings nextPut: a asUtf16String) yourAddress] ifFalse: [a yourAddress]])].
 	len := self
 				setLastError: 0;
-				formatMessage: (dwFlag bitOr: ##(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_ARGUMENT_ARRAY))
+				formatMessage: (dwFlag bitOr: ##(FORMAT_MESSAGE_ALLOCATE_BUFFER bitOr: FORMAT_MESSAGE_ARGUMENT_ARRAY))
 					lpSource: aHandleOrString asUtf16String
 					dwMessageId: messageId
 					dwLanguageId: 0

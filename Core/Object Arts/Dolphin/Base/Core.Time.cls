@@ -245,8 +245,7 @@ fromString: aString
 !
 
 fromSYSTEMTIME: aSYSTEMTIME
-	"Private - Answer a new instance of the receiver instantiated from the argument,
-	aWinSYSTEMTIME."
+	"Private - Answer a new instance of the receiver instantiated from the argument, aSYSTEMTIME."
 
 	^self fromSeconds: (aSYSTEMTIME wHour * 60 + aSYSTEMTIME wMinute) * 60 + aSYSTEMTIME wSecond
 				+ (aSYSTEMTIME wMilliseconds / 1000)!

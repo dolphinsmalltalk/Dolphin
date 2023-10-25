@@ -23,7 +23,14 @@ FILETIMEs are typically used to mark file creation/modification/access times wit
 !OS.FILETIME methodsFor!
 
 asDateAndTime
-	^DateAndTime fromFILETIME: self asUTC!
+	"A Windows FILETIME expresses the number of 100nS intervals that have elapsed since 1601-01-01T00:00:00+00:00
+
+		(DateAndTime year: 1601 day: 1 offset: 0 seconds) asSeconds = -9467020800
+	"
+
+	| offset |
+	offset := self offsetSeconds.
+	^DateAndTime utcSeconds: self localSeconds - offset offset: offset!
 
 asFILETIME
 	"Answer the receiver as a FILETIME (which it is already)."
@@ -45,6 +52,12 @@ asLocalTime
 	answer := LocalFILETIME new.
 	(Kernel32 fileTimeToLocalTime: self lpLocalFileTime: answer) ifFalse: [Kernel32 systemError].
 	^answer!
+
+asSeconds
+	"Answer a <rational> that is the number of seconds (including fractional part) that the receiver is past the traditional Smalltalk Epoch (i.e. 1901-01-01T00:00:00+00:00).
+	Note that this is a UTC value, and is likely to be a <LargeInteger>, or a <Fraction> with <LargeInteger> numerator (and possibly denominator)."
+
+	^self localSeconds - self offsetSeconds!
 
 asSYSTEMTIME
 	"Answer the receiver converted to a SYSTEMTIME (first of
@@ -74,23 +87,37 @@ basicAsSYSTEMTIME
 displayOn: aPuttableStream
 	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see. This will be in local time."
 
-	self asSYSTEMTIME displayOn: aPuttableStream!
+	self asDateAndTime displayOn: aPuttableStream!
 
 integerValue: anInteger 
 	"Set the number of 100-nanosecond intervals the receiver represents since the
 	FILETIME epoch."
 
-	bytes uint64AtOffset: 0 put: anInteger! !
+	bytes uint64AtOffset: 0 put: anInteger!
+
+localSeconds
+	"Answer a <rational> that is the number of seconds (including fractional part) that the receiver is past the traditional Smalltalk Epoch (i.e. 1901-01-01T00:00:00+00:00) in local time.
+	Note that is likely to be a <LargeInteger>, or a <Fraction> with <LargeInteger> numerator (and possibly denominator)."
+
+	^(self asInteger - SmalltalkEpoch) / 1e7!
+
+offsetSeconds
+	"Answer the <number> of seconds this <FILETIME> is offset from UTC."
+
+	^0! !
 !OS.FILETIME categoriesForMethods!
 asDateAndTime!converting!public! !
 asFILETIME!converting!public! !
 asInteger!converting!public! !
 asLocalTime!converting!public! !
+asSeconds!converting!public! !
 asSYSTEMTIME!converting!public! !
 asUTC!converting!public! !
 basicAsSYSTEMTIME!converting!public! !
 displayOn:!printing!public! !
 integerValue:!accessing!public! !
+localSeconds!converting!public! !
+offsetSeconds!converting!public! !
 !
 
 !OS.FILETIME class methodsFor!
@@ -134,10 +161,14 @@ fromLocalTime: aLocalFILETIME
 	^answer!
 
 fromSYSTEMTIME: aSYSTEMTIME
-	"Answer a file time from the specified SYSTEMTIME (assumed to be in
-	local time)."
+	"Answer a file time from the specified SYSTEMTIME (assumed to be in local time)."
 
-	^(LocalFILETIME fromSYSTEMTIME: aSYSTEMTIME) asUTC!
+	| answer localTime |
+	localTime := ByteArray newFixed: _FILETIME_Size.
+	(Kernel32 systemTimeToFileTime: aSYSTEMTIME lpFileTime: localTime) ifFalse: [^Kernel32 systemError].
+	answer := self newBuffer.
+	(Kernel32 localFileTimeToFileTime: localTime lpFileTime: answer) ifFalse: [^Kernel32 systemError].
+	^answer!
 
 fromUnixTime: time_t 
 	"Answer a file time from the specified time_t, where the argument is the number
