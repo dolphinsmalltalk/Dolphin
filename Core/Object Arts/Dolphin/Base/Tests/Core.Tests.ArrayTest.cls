@@ -32,12 +32,30 @@ testIsLiteral
 
 testIsSelfEvaluating
 	| subject |
-	subject := {1 to: 5. 123. 'abc'. #(1 2). 123. #a -> 'A'. Object}.
+	subject := { 1 to: 5. 123. 'abc'. #(1 2). 123. #a -> 'A'. Object }.
 	self assert: subject isSelfEvaluating.
+	self assert: subject printString
+		equals: '{(1 to: 5). 123. ''abc''. #(1 2). 123. #a -> ''A''. Object}'.
 	subject at: 1 put: self.
 	self deny: subject isSelfEvaluating.
 	subject at: 1 put: subject.
-	self deny: subject isSelfEvaluating!
+	self deny: subject isSelfEvaluating.
+	subject at: 1 put: #a -> #a.
+	self assert: subject isSelfEvaluating.
+	self assert: subject printString
+		equals: '{#a -> #a. 123. ''abc''. #(1 2). 123. #a -> ''A''. Object}'.
+	subject at: 3 put: (subject at: 1).
+	self deny: subject isSelfEvaluating.
+	subject at: 3 put: subject last.
+	self assert: subject isSelfEvaluating.
+	subject at: 3 put: { 'foo' -> LookupTable new }.
+	self assert: subject isSelfEvaluating.
+	self assert: subject printString
+		equals: '{#a -> #a. 123. {''foo'' -> LookupTable new}. #(1 2). 123. #a -> ''A''. Object}'.
+	(subject at: 6) value: (subject at: 3) first value.
+	self deny: subject isSelfEvaluating.
+	self assert: subject printString
+		equals: 'an Array(#a -> #a 123 {''foo'' -> LookupTable new} #(1 2) 123 #a -> LookupTable new Object)'!
 
 testMixedConcatenation
 	"Test concatenating other types of sequenceable collection onto an array"

@@ -171,7 +171,7 @@ newSubKey: aString sam: anInteger
 		ifFalse: 
 			[| path splits |
 			path := self pathFromRoot.
-			splits := self splitPath: (path isEmpty ifTrue: [aString] ifFalse: [path , PathSeparator , aString]).
+			splits := self splitRegPath: (path isEmpty ifTrue: [aString] ifFalse: [path , PathSeparator , aString]).
 			self class
 				tally: nil
 				name: (splits at: 2)

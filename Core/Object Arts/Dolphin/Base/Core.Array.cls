@@ -84,7 +84,9 @@ printOn: aStream do: aMonadicValuable
 			self do: aMonadicValuable separatedBy: [aStream space].
 			aStream nextPut: $)]
 		ifFalse: 
-			[((visited includes: self) not and: [self allSatisfy: [:element | element isSelfEvaluating]])
+			[((visited includes: self) not and: 
+					[visited := IdentitySet new.
+					self allSatisfy: [:element | element isSelfEvaluating: visited]])
 				ifTrue: 
 					["Can use brace array form"
 					aStream nextPut: ${.

@@ -54,6 +54,12 @@ initialize
 	self setSearchPolicy: self class defaultSearchPolicy
 !
 
+isSelfEvaluating: visitedSet
+	"Private - Answer whether the receiver can be represented as a literal (i.e. it has a printed
+	representation which can be directly understood by the compiler)."
+
+	^searchPolicy isSelfEvaluating and: [super isSelfEvaluating: visitedSet]!
+
 newSelection
 	"Private - Answer a new empty collection like the receiver to 
 	contain a selection of the receiver's elements."
@@ -89,6 +95,7 @@ copyingClass!copying!private! !
 findKeyOrNil:!private!searching! !
 hash:max:!private!searching! !
 initialize!initializing!private! !
+isSelfEvaluating:!public!testing! !
 newSelection!enumerating!private! !
 preResize:!adding!public! !
 searchPolicy!accessing!public! !

@@ -204,6 +204,7 @@ package setMethodNames: #(
 	#(#{Core.Dictionary} #bestSlotFor:boundedBy:)
 	#(#{Core.Dictionary} #debugPrintOn:)
 	#(#{Core.Dictionary} #newBatchAccessor)
+	#(#{Core.Dictionary} #printSelfEvaluatingOn:)
 	#(#{Core.Dictionary} #publishedAspects)
 	#(#{Core.Dictionary class} #newInstanceAspect:class:)
 	#(#{Core.Duration} #debugPrintOn:)
@@ -257,6 +258,9 @@ package setMethodNames: #(
 	#(#{Core.Set} #bestSlotFor:boundedBy:)
 	#(#{Core.Set} #collisions)
 	#(#{Core.Set} #newBatchAccessor)
+	#(#{Core.Set} #printOn:)
+	#(#{Core.Set} #printSelfEvaluatingOn:)
+	#(#{Core.Set} #sortSelfEvaluatingElements:locale:)
 	#(#{Core.Set} #stats)
 	#(#{Core.Set class} #newInstanceAspect:class:)
 	#(#{Core.Stream} #debugPrint:)
@@ -2471,6 +2475,32 @@ newBatchAccessor
 		startingAt: 1
 		batchSize: self publishedKeyedAspectsBatchSize!
 
+printSelfEvaluatingOn: aStream
+	tally == 0
+		ifTrue: 
+			[aStream
+				print: self class;
+				space;
+				nextPutAll: #new.
+			^self].
+	aStream
+		nextPut: $(;
+		print: self class;
+		space.
+	tally == 1
+		ifTrue: 
+			[aStream
+				nextPutAll: #with:;
+				space;
+				print: self associations single;
+				nextPut: $)]
+		ifFalse: 
+			[aStream
+				nextPutAll: #withAll:;
+				space;
+				print: (self sortSelfEvaluatingElements: self associations locale: aStream locale);
+				nextPut: $)]!
+
 publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by the receiver."
 
@@ -2485,6 +2515,7 @@ alternateInspectorClass!constants!public! !
 bestSlotFor:boundedBy:!development!private!statistics! !
 debugPrintOn:!printing!public! !
 newBatchAccessor!public! !
+printSelfEvaluatingOn:!printing!private! !
 publishedAspects!constants!public! !
 !
 
@@ -3068,6 +3099,61 @@ collisions
 newBatchAccessor
 	^SetBatchAspectAccessor subject: self batchSize: self publishedKeyedAspectsBatchSize!
 
+printOn: aPuttableStream
+	"Print a string representation of self on aStream. This method suffices for most collections, and is able to handle cyclic references."
+
+	self isSelfEvaluating
+		ifTrue: [self printSelfEvaluatingOn: aPuttableStream]
+		ifFalse: [super printOn: aPuttableStream]!
+
+printSelfEvaluatingOn: aStream
+	tally == 0
+		ifTrue: 
+			[aStream
+				print: self class;
+				space;
+				nextPutAll: #new.
+			^self].
+	aStream
+		nextPut: $(;
+		print: self class;
+		space.
+	tally == 1
+		ifTrue: 
+			[aStream
+				nextPutAll: #with:;
+				space;
+				print: self anyOne;
+				nextPut: $)]
+		ifFalse: 
+			[aStream
+				nextPutAll: #withAll:;
+				space;
+				print: (self sortSelfEvaluatingElements: self asArray locale: aStream locale);
+				nextPut: $)]!
+
+sortSelfEvaluatingElements: anArray locale: aLocale
+	"Private - We want the elements printed in a stable order, e.g. so that if in source code we don't get gratuitous diffs occurring. We use the natural sort order of the elements if possible (generally this is true for self-evaluating forms in source), but if not we sort by the printed order of the source representation. As we want the order to be stable, we use case-sensitive comparison."
+
+	^[anArray sort: [:a :b | a <==> b <= 0]] on: Error
+		do: 
+			[:ex |
+			| stream |
+			"Very unlikely we'll get here, but if the elements are heterogenous or don't respond to #<==>, sort them according to their printString representation"
+			stream := String writeStream
+						locale: aLocale;
+						yourself.
+			anArray sort: 
+					[:a :b |
+					| ap bp |
+					stream reset.
+					a printOn: stream.
+					ap := stream contents.
+					stream reset.
+					b printOn: stream.
+					bp := stream contents.
+					ap <==> bp <= 0]]!
+
 stats
 	^{self size. self basicSize. self averageProbesPerElement. self collisions}! !
 !Core.Set categoriesForMethods!
@@ -3075,6 +3161,9 @@ averageProbesPerElement!development!public!statistics! !
 bestSlotFor:boundedBy:!development!private!statistics! !
 collisions!development!public!statistics! !
 newBatchAccessor!private! !
+printOn:!printing!public! !
+printSelfEvaluatingOn:!printing!private! !
+sortSelfEvaluatingElements:locale:!printing!private! !
 stats!development!public!statistics! !
 !
 

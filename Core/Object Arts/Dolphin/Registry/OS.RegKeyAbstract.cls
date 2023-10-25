@@ -54,6 +54,13 @@ add: anAssociation
 	self at: anAssociation key put: anAssociation value.
 	^anAssociation!
 
+allKeysAndValuesSatisfy: aDyadicValuable
+	"Answer whether the <dyadicValuable> argument evaluates to true for all of the receiver's key and value pairs."
+
+	self
+		keysAndValuesDo: [:eachKey :eachValue | (aDyadicValuable value: eachKey value: eachValue) ifFalse: [^false]].
+	^true!
+
 asParameter
 	"Answer the receiver in a form suitable for passing to an external function primitive method (see ExternalLibrary and subclasses)."
 
@@ -193,6 +200,9 @@ isRoot
 
 	^parentPath isNil!
 
+isSelfEvaluating: visitedSet
+	^false!
+
 isWriteable
 	"Answer whether this key can be written to (i.e. create, update and delete operations on sub-keys and values are possible)."
 
@@ -298,7 +308,7 @@ parentKey
 	| splits |
 	self isRoot ifTrue: [^nil].
 	parentPath isEmpty ifTrue: [^rootKey].
-	splits := self splitPath: parentPath.
+	splits := self splitRegPath: parentPath.
 	^RegKey
 		tally: nil
 		name: (splits at: 2)
@@ -495,12 +505,12 @@ size
 
 	^self subclassResponsibility!
 
-splitPath: aString
+splitRegPath: aString
 	| lastSlash |
 	lastSlash := aString lastIndexOf: $\.
 	^lastSlash == 0
-		ifFalse: [{aString copyFrom: 1 to: lastSlash - 1. aString copyFrom: lastSlash + 1 to: aString size}]
-		ifTrue: [{Utf16String empty. aString}]!
+		ifFalse: [{ aString copyFrom: 1 to: lastSlash - 1. aString copyFrom: lastSlash + 1 to: aString size }]
+		ifTrue: [{ Utf16String empty. aString }]!
 
 stringArrayAt: aString put: anArray
 	"Write a REG_MULTISZ value to the receiver's registry key with the <readableString> name, keyString, and a null-separated list of string values encoded from the <Array>, anArray."
@@ -750,6 +760,7 @@ writeCollection: aCollection at: aString
 !OS.RegKeyAbstract categoriesForMethods!
 =!comparing!public! !
 add:!adding!public! !
+allKeysAndValuesSatisfy:!enumerating!public! !
 asParameter!converting!public! !
 associationAt:ifAbsent:!accessing!public! !
 associationsDo:!enumerating!public! !
@@ -772,6 +783,7 @@ handle:!accessing!private! !
 hash!comparing!public! !
 includesKey:!public!searching! !
 isRoot!public!testing! !
+isSelfEvaluating:!private!testing! !
 isWriteable!public!testing! !
 key!accessing!public! !
 key:!accessing!public! !
@@ -809,7 +821,7 @@ sam:!accessing!public! !
 setSam:!initializing!private! !
 shrink!mutating!public! !
 size!initializing!public! !
-splitPath:!helpers!private! !
+splitRegPath:!helpers!private! !
 stringArrayAt:put:!accessing!public! !
 stringAt:put:!accessing!public! !
 subKeyNamesDo:!enumerating!private! !

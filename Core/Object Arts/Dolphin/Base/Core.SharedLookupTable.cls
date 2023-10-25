@@ -90,28 +90,18 @@ Certain methods are not overridden for the following reasons:
 !Core.SharedLookupTable categoriesForClass!Collections-Unordered! !
 !Core.SharedLookupTable methodsFor!
 
-allKeysSatisfy: aMonadicValuable
-	"Answer whether the <monadicValuable> argument evaluates to true for every key of the receiver."
+allKeysAndValuesSatisfy: aDyadicValuable
+	"Answer whether the <dyadicValuable> argument evaluates to true for all of the receiver's key and value pairs."
 
-	self keysDo: [:e | (aMonadicValuable value: e) ifFalse: [^false]].
+	self
+		keysAndValuesDo: [:eachKey :eachValue | (aDyadicValuable value: eachKey value: eachValue) ifFalse: [^false]].
 	^true!
 
-allSatisfy: aMonadicValuable
-	"Answer whether the <monadicValuable> argument evaluates to true for every element of the receiver."
+anyKeysAndValuesSatisfy: aDyadicValuable
+	"Answer whether the <dyadicValuable> argument evaluates to true for all of the receiver's key and value pairs."
 
-	self do: [:each | (aMonadicValuable value: each) ifFalse: [^false]].
-	^true!
-
-anyKeysSatisfy: aMonadicValuable
-	"Answer whether the <monadicValuable> argument evaluates to true for any key of the receiver."
-
-	self keysDo: [:e | (aMonadicValuable value: e) ifTrue: [^true]].
-	^false!
-
-anySatisfy: aMonadicValuable
-	"Answer whether the <monadicValuable> argument evaluates to true for any element of the receiver."
-
-	self do: [:each | (aMonadicValuable value: each) ifTrue: [^true]].
+	self
+		keysAndValuesDo: [:eachKey :eachValue | (aDyadicValuable value: eachKey value: eachValue) ifTrue: [^true]].
 	^false!
 
 asArray
@@ -309,10 +299,8 @@ shrink
 
 	mutex critical: [super shrink]! !
 !Core.SharedLookupTable categoriesForMethods!
-allKeysSatisfy:!enumerating!public! !
-allSatisfy:!enumerating!public! !
-anyKeysSatisfy:!enumerating!public! !
-anySatisfy:!enumerating!public! !
+allKeysAndValuesSatisfy:!enumerating!public! !
+anyKeysAndValuesSatisfy:!enumerating!public! !
 asArray!converting!public! !
 asByteArray!converting!public! !
 at:ifAbsent:!accessing!public! !

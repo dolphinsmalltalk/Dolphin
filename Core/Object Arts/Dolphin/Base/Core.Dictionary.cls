@@ -63,17 +63,39 @@ addNewElement: anAssociation
 			element value: anAssociation value.
 			false]!
 
+allKeysAndValuesSatisfy: aDyadicValuable
+	"Answer whether the <dyadicValuable> argument evaluates to true for all of the receiver's key and value pairs."
+
+	self
+		keysAndValuesDo: [:eachKey :eachValue | (aDyadicValuable value: eachKey value: eachValue) ifFalse: [^false]].
+	^true!
+
 allKeysSatisfy: aMonadicValuable
 	"Answer whether the <monadicValuable> argument evaluates to true for every key of the receiver."
 
-	self keysDo: [:each | (aMonadicValuable value: each) ifFalse: [^false]].
-	^true!
+	^self allKeysAndValuesSatisfy: [:eachKey :eachValue | aMonadicValuable value: eachKey]!
+
+allSatisfy: aMonadicValuable
+	"Answer whether the <monadicValuable> argument evaluates to true for every element of the receiver."
+
+	^self allKeysAndValuesSatisfy: [:eachKey :eachValue | aMonadicValuable value: eachValue]!
+
+anyKeysAndValuesSatisfy: aDyadicValuable
+	"Answer whether the <dyadicValuable> argument evaluates to true for all of the receiver's key and value pairs."
+
+	self
+		keysAndValuesDo: [:eachKey :eachValue | (aDyadicValuable value: eachKey value: eachValue) ifTrue: [^true]].
+	^false!
 
 anyKeysSatisfy: aMonadicValuable
 	"Answer whether the <monadicValuable> argument evaluates to true for any of the receiver's keys."
 
-	self keysDo: [:each | (aMonadicValuable value: each) ifTrue: [^true]].
-	^false!
+	^self anyKeysAndValuesSatisfy: [:eachKey :eachValue | aMonadicValuable value: eachKey]!
+
+anySatisfy: aMonadicValuable
+	"Answer whether the <monadicValuable> argument evaluates to true for any element of the receiver."
+
+	^self anyKeysAndValuesSatisfy: [:eachKey :eachValue | aMonadicValuable value: eachValue]!
 
 asSet
 	"Answer a Set whose elements are the values stored in the receiver (any 
@@ -194,12 +216,10 @@ at: key ifPresent: operation
 	^value == AbsentCookie ifFalse: [operation value: value]!
 
 at: keyObject put: valueObject
-	"Store the <Object> argument valueObject at the <Object> keyObject, in the receiver. Answer
-	valueObject."
+	"Store the <Object> argument valueObject at the <Object> keyObject, in the receiver. Answer valueObject."
 
 	| index |
-	keyObject ifNil: [^self error: 'key cannot be nil'].
-	(self basicAt: (index := self findKeyOrNil: keyObject))
+	(self basicAt: (index := self findKeyOrNil: (keyObject ifNil: [^self error: 'key cannot be nil'])))
 		ifNil: [self privateAt: index put: (self newAssociation: keyObject value: valueObject)]
 		ifNotNil: [:assoc | assoc value: valueObject].
 	^valueObject!
@@ -422,47 +442,14 @@ postCopy
 	1 to: self basicSize
 		do: [:i | (self basicAt: i) ifNotNil: [:assoc | self basicAt: i put: assoc copy]]!
 
-printOn: aStream
-	"Print a string representation of self on aStream. 
-	We must override because we'd like to print out the associations as this
-	is more useful, otherwise this is the same as the superclass implementation."
-
-	self isSelfEvaluating
-		ifTrue: [self printSelfEvaluatingOn: aStream]
-		ifFalse: 
-			[aStream visit: self
-				do: 
-					[aStream
-						basicPrint: self;
-						nextPut: $(.
-					self associationsDo: [:each | each printOn: aStream] separatedBy: [aStream space].
-					aStream nextPut: $)]]!
-
-printSelfEvaluatingOn: aStream
-	tally == 0
-		ifTrue: 
+printOn: aStream do: aMonadicValuable
+	aStream visit: self
+		do: 
 			[aStream
-				print: self class;
-				space;
-				nextPutAll: #new.
-			^self].
-	aStream
-		nextPut: $(;
-		print: self class;
-		space.
-	tally == 1
-		ifTrue: 
-			[aStream
-				nextPutAll: #with:;
-				space;
-				print: self associations single;
-				nextPut: $)]
-		ifFalse: 
-			[aStream
-				nextPutAll: #withAll:;
-				space;
-				print: (self sortSelfEvaluatingElements: self associations locale: aStream locale);
-				nextPut: $)]!
+				basicPrint: self;
+				nextPut: $(.
+			self associationsDo: aMonadicValuable separatedBy: [aStream space].
+			aStream nextPut: $)]!
 
 remove: anObject ifAbsent: aBlock
 	"Elements of Dictionaries must be removed by key."
@@ -578,8 +565,12 @@ _deepCopyElementsInto:trail:!copying!private! !
 =!comparing!public! !
 add:!adding!public! !
 addNewElement:!adding!public! !
+allKeysAndValuesSatisfy:!enumerating!public! !
 allKeysSatisfy:!enumerating!public! !
+allSatisfy:!enumerating!public! !
+anyKeysAndValuesSatisfy:!enumerating!public! !
 anyKeysSatisfy:!enumerating!public! !
+anySatisfy:!enumerating!public! !
 asSet!converting!public! !
 associationAt:!accessing!public! !
 associationAt:ifAbsent:!accessing!public! !
@@ -620,8 +611,7 @@ lookup:!accessing!public! !
 newAssociation:value:!helpers!private! !
 occurrencesOf:!public!searching! !
 postCopy!copying!public! !
-printOn:!printing!public! !
-printSelfEvaluatingOn:!printing!private! !
+printOn:do:!printing!private! !
 remove:ifAbsent:!public!removing! !
 removeAllKeys:!public!removing! !
 removeAllKeys:ifAbsent:!public!removing! !

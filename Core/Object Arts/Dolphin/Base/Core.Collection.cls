@@ -415,21 +415,19 @@ occurrencesOf: target
 	self do: [:each | target = each ifTrue: [count := count + 1]].
 	^count!
 
-printNonSelfEvaluatingOn: aStream
+printOn: aPuttableStream
+	"Print a string representation of self on aStream. This method suffices for most collections, and is able to handle cyclic references."
+
+	self printOn: aPuttableStream do: [:each | each printOn: aPuttableStream]!
+
+printOn: aStream do: aMonadicValuable
 	aStream visit: self
 		do: 
 			[aStream
 				basicPrint: self;
 				nextPut: $(.
-			self do: [:each | each printOn: aStream] separatedBy: [aStream space].
+			self do: aMonadicValuable separatedBy: [aStream space].
 			aStream nextPut: $)]!
-
-printOn: aPuttableStream
-	"Print a string representation of self on aStream. This method suffices for most collections, and is able to handle cyclic references."
-
-	self isSelfEvaluating
-		ifTrue: [self printSelfEvaluatingOn: aPuttableStream]
-		ifFalse: [self printNonSelfEvaluatingOn: aPuttableStream]!
 
 rehash
 	"Rehash the receiver to re-establish hash invariants, if any.
@@ -617,8 +615,8 @@ newSelection!enumerating!private! !
 noDifference:!public!set operations! !
 notEmpty!public!testing! !
 occurrencesOf:!public!searching! !
-printNonSelfEvaluatingOn:!printing!private! !
 printOn:!printing!public! !
+printOn:do:!printing!private! !
 rehash!operations!public! !
 reject:!enumerating!public! !
 remove:!public!removing! !

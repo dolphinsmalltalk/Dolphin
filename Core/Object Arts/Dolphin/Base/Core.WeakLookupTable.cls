@@ -243,7 +243,7 @@ newWithWeakKeys: anInteger
 	a message."
 
 	^(super new: anInteger)
-		haveWeakKeys;
+		beWeak;
 		haveStrongValues;
 		yourself
 !

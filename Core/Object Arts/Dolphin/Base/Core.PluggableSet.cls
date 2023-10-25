@@ -53,10 +53,11 @@ initialize
 	searchPolicy := self class defaultSearchPolicy
 !
 
-isSelfEvaluating
-	"Answer whether or not the receiver has a printString representation that evaluates back to an equivalent object."
+isSelfEvaluating: visitedSet
+	"Private - Answer whether the receiver can be represented as a literal (i.e. it has a printed
+	representation which can be directly understood by the compiler)."
 
-	^searchPolicy isSelfEvaluating and: [super isSelfEvaluating]!
+	^searchPolicy isSelfEvaluating and: [super isSelfEvaluating: visitedSet]!
 
 newSelection
 	"Private - Answer a new empty collection like the receiver to 
@@ -93,7 +94,7 @@ copyingClass!copying!private! !
 findElementOrNil:!private!searching! !
 hash:max:!private!searching! !
 initialize!initializing!private! !
-isSelfEvaluating!public!testing! !
+isSelfEvaluating:!public!testing! !
 newSelection!enumerating!private! !
 preResize:!adding!public! !
 searchPolicy!accessing!public! !

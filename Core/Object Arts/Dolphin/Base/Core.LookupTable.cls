@@ -28,44 +28,26 @@ add: anAssociation
 	^anAssociation
 !
 
-allKeysSatisfy: aMonadicValuable
-	"Answer whether the <monadicValuable> argument evaluates to true for any of the receiver's keys."
-
-	"Implementation note: Override to avoid superclass full-block implementation."
+allKeysAndValuesSatisfy: aDyadicValuable
+	"Answer whether the <dyadicValuable> argument evaluates to true for all of the receiver's key and value pairs."
 
 	tally == 0 ifTrue: [^true].
 	1 to: self basicSize
-		do: [:i | (self basicAt: i) ifNotNil: [:key | (aMonadicValuable value: key) ifFalse: [^false]]].
+		do: 
+			[:i |
+			(self basicAt: i)
+				ifNotNil: [:key | (aDyadicValuable value: key value: (values at: i)) ifFalse: [^false]]].
 	^true!
 
-allSatisfy: aMonadicValuable
-	"Answer whether the <monadicValuable> argument evaluates to true for every element of the receiver."
-
-	"Implementation note: Override to avoid superclass full-block implementation."
-
-	tally == 0 ifTrue: [^true].
-	1 to: self basicSize
-		do: [:i | ((self basicAt: i) isNil or: [aMonadicValuable value: (values at: i)]) ifFalse: [^false]].
-	^true!
-
-anyKeysSatisfy: aMonadicValuable
-	"Answer whether the <monadicValuable> argument evaluates to true for any of the receiver's keys."
-
-	"Implementation note: Override to avoid superclass full-block implementation."
+anyKeysAndValuesSatisfy: aDyadicValuable
+	"Answer whether the <dyadicValuable> argument evaluates to true for any of the receiver's key and value pairs."
 
 	tally == 0 ifTrue: [^false].
 	1 to: self basicSize
-		do: [:i | (self basicAt: i) ifNotNil: [:key | (aMonadicValuable value: key) ifTrue: [^true]]].
-	^false!
-
-anySatisfy: aMonadicValuable
-	"Answer whether the <monadicValuable> argument evaluates to true for any element of the receiver."
-
-	"Implementation note: Override to avoid superclass full-block implementation."
-
-	tally == 0 ifTrue: [^false].
-	1 to: self basicSize
-		do: [:i | ((self basicAt: i) notNil and: [aMonadicValuable value: (values at: i)]) ifTrue: [^true]].
+		do: 
+			[:i |
+			(self basicAt: i)
+				ifNotNil: [:key | (aDyadicValuable value: key value: (values at: i)) ifTrue: [^true]]].
 	^false!
 
 associationAt: anObject ifAbsent: aNiladicValuable
@@ -105,8 +87,7 @@ at: keyObject ifAbsentPutClean: aNiladicValuable
 	Note that unlike #at:ifAbsentPut:, this method assumes that the valuable does not modify the receiver, and therefore it only looks up the key position once. Thus it is more efficient but less general purpose."
 
 	| index |
-	keyObject ifNil: [^self error: 'key cannot be nil'].
-	^(self basicAt: (index := self findKeyOrNil: keyObject))
+	^(self basicAt: (index := self findKeyOrNil: (keyObject ifNil: [^self error: 'key cannot be nil'])))
 		ifNil: 
 			[| value |
 			values at: index put: (value := aNiladicValuable value).
@@ -114,16 +95,14 @@ at: keyObject ifAbsentPutClean: aNiladicValuable
 			value]
 		ifNotNil: [values at: index]!
 
-at: key put: newElement
-	"Store the argument newElement with the external key, key,
-	in the receiver. Answer newElement."
+at: keyObject put: valueObject
+	"Store the <Object> argument valueObject at the <Object> keyObject, in the receiver. Answer valueObject."
 
 	| index |
-	key ifNil: [^self error: 'key cannot be nil'].
 	"We must store the value first, as a resize may occur during privateAt:put:"
-	values at: (index := self findKeyOrNil: key) put: newElement.
-	(self basicAt: index) ifNil: [self privateAt: index put: key].
-	^newElement!
+	values at: (index := self findKeyOrNil: (keyObject ifNil: [^self error: 'key cannot be nil'])) put: valueObject.
+	(self basicAt: index) ifNil: [self privateAt: index put: keyObject].
+	^valueObject!
 
 basicValues
 	"Private - Answer the <ArrayedCollection> of values in the receiver."
@@ -197,6 +176,14 @@ initialize
 isImmutable: aBoolean 
 	values isImmutable: aBoolean.
 	^super isImmutable: aBoolean!
+
+isSelfEvaluating: visitedSet
+	"Private - Answer whether the receiver can be represented as a literal (i.e. it has a printed representation which can be directly understood by the compiler)."
+
+	^(visitedSet addNewElement: self) and: 
+			[self allKeysAndValuesSatisfy: 
+					[:eachKey :eachValue |
+					(eachKey isSelfEvaluating: visitedSet) and: [eachValue isSelfEvaluating: visitedSet]]]!
 
 keyAtEqualValue: value ifAbsent: exceptionHandler
 	"Answer the name of the argument, value. If there is no such value, answer
@@ -342,10 +329,8 @@ valuesClass
 	^Array! !
 !Core.LookupTable categoriesForMethods!
 add:!adding!public! !
-allKeysSatisfy:!enumerating!public! !
-allSatisfy:!enumerating!public! !
-anyKeysSatisfy:!enumerating!public! !
-anySatisfy:!enumerating!public! !
+allKeysAndValuesSatisfy:!enumerating!public! !
+anyKeysAndValuesSatisfy:!enumerating!public! !
 associationAt:ifAbsent:!accessing!public! !
 associationsDo:!enumerating!public! !
 at:ifAbsent:!accessing!public! !
@@ -360,6 +345,7 @@ identityIncludes:!public!searching! !
 includesAssociation:!public!searching! !
 initialize!initializing!private! !
 isImmutable:!initializing!public! !
+isSelfEvaluating:!private!testing! !
 keyAtEqualValue:ifAbsent:!accessing!public! !
 keyAtValue:ifAbsent:!accessing!public! !
 keysAndValuesDo:!enumerating!public! !

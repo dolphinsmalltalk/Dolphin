@@ -65,7 +65,7 @@ new: anInteger
 	are weakly referenced. By default WeakIdentityDictionaries have both weak key and weak value references."
 
 	^(super new: anInteger)
-		haveWeakKeys;
+		beWeak;
 		yourself! !
 !Core.WeakIdentityDictionary class categoriesForMethods!
 new:!instance creation!public! !

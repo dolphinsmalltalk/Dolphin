@@ -58,17 +58,68 @@ testAdd
 	self assert: (subject add: assoc2) identicalTo: assoc2.
 	self assert: (subject associationAt: #key) equals: assoc2!
 
-testAllKeysSatisfy
-	| dictionary |
+testAllKeysAndValuesSatisfy
+	| dictionary visited |
 	dictionary := self newDictionary.
-	self assert: (dictionary allKeysSatisfy: [:each | each isSymbol]).
-	self deny: (dictionary allKeysSatisfy: [:each | each isInteger])!
+	dictionary at: #key2 put: (self assimilate: 2).
+	visited := OrderedCollection new.
+	self
+		assert: (dictionary allKeysAndValuesSatisfy: 
+					[:eachKey :eachValue |
+					visited add: eachKey -> eachValue value.
+					true]).
+	self assert: visited asSortedArray equals: { #key -> 1. #key2 -> 2 }.
+	visited := OrderedCollection new.
+	self
+		deny: (dictionary allKeysAndValuesSatisfy: 
+					[:eachKey :eachValue |
+					visited add: eachKey -> eachValue.
+					false]).
+	self assert: (dictionary associations includes: visited single).
+	dictionary removeAll.
+	self assert: (dictionary allKeysAndValuesSatisfy: [:each | self assert: false])!
+
+testAllKeysSatisfy
+	| dictionary keys |
+	dictionary := self newDictionary.
+	dictionary at: #key2 put: (self assimilate: 2).
+	keys := OrderedCollection new.
+	self assert: (dictionary allKeysSatisfy: 
+					[:each |
+					keys add: each.
+					true]).
+	self assert: keys asSortedArray equals: #(#key #key2).
+	keys := OrderedCollection new.
+	self deny: (dictionary allKeysSatisfy: 
+					[:each |
+					keys add: each.
+					false]).
+	self assert: (dictionary keys includes: keys single).
+	dictionary removeAll.
+	self assert: (dictionary allKeysSatisfy: [:each | self assert: false])!
+
+testAnyKeysAndValuesSatisfy
+	| dictionary visited |
+	dictionary := self newDictionary.
+	dictionary at: #key2 put: (self assimilate: 2).
+	dictionary at: #key3 put: (self assimilate: 3).
+	visited := OrderedCollection new.
+	self
+		assert: (dictionary anyKeysAndValuesSatisfy: 
+					[:eachKey :eachValue |
+					visited add: eachKey -> eachValue value.
+					visited size = 2]).
+	self assert: visited asArray equals: (dictionary associations copyFrom: 1 to: 2).
+	dictionary removeAll.
+	self deny: (dictionary anyKeysAndValuesSatisfy: [:each | self assert: false])!
 
 testAnyKeysSatisfy
 	| dictionary |
 	dictionary := self newDictionary.
 	self assert: (dictionary anyKeysSatisfy: [:each | each isSymbol]).
-	self deny: (dictionary anyKeysSatisfy: [:each | each isInteger])!
+	self deny: (dictionary anyKeysSatisfy: [:each | each isInteger]).
+	dictionary removeAll.
+	self deny: (dictionary anyKeysSatisfy: [:each | self assert: false])!
 
 testAssociations
 	| subject actual expected |
@@ -355,7 +406,9 @@ newCollection:!helpers!private! !
 newDictionary!private!unit tests! !
 newEmpty!helpers!public! !
 testAdd!public!unit tests! !
+testAllKeysAndValuesSatisfy!public!unit tests! !
 testAllKeysSatisfy!public!unit tests! !
+testAnyKeysAndValuesSatisfy!public!unit tests! !
 testAnyKeysSatisfy!public!unit tests! !
 testAssociations!public!unit tests! !
 testAssociationsDo!public!unit tests! !

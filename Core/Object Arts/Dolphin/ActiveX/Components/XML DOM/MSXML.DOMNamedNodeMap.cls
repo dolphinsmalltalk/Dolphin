@@ -120,6 +120,12 @@ interface
 
 	^interface!
 
+isSelfEvaluating: visitedSet
+	"Private - Answer whether the receiver can be represented as a literal (i.e. it has a printed
+	representation which can be directly understood by the compiler)."
+
+	^false!
+
 item: index
 	"Answer the <IXMLDOMNode> at the specified zero-based <integer> 
 	index in the collection of nodes."
@@ -231,6 +237,7 @@ getNamedItem:!accessing!public! !
 hash:max:!private!searching! !
 includesKey:!public!searching! !
 interface!accessing!private! !
+isSelfEvaluating:!private!testing! !
 item:!properties!public! !
 keysAndValuesDo:!enumerating!public! !
 length!properties!public! !
