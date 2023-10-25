@@ -208,6 +208,9 @@ testIntegerDivide
 			self should: [each // 0.0] raise: ZeroDivide].
 	self should: [0 // 0] raise: ZeroDivide!
 
+testIsInt64
+	{ 0. 1. -1. 2. SmallInteger maximum. SmallInteger minimum } do: [:each | self assert: each isInt64]!
+
 testLargeSmallComparisons
 	self assert: SmallInteger maximum < (SmallInteger maximum + 1).
 	self assert: SmallInteger maximum <= (SmallInteger maximum + 1).
@@ -377,6 +380,12 @@ testNumberOfDigitsInBase
 	self assert: (16r3FFFFFFF numberOfDigitsInBase: 16) equals: 8.
 	self assert: (16r3FFFFFFF numberOfDigitsInBase: 3) equals: 19!
 
+testOdd
+	#(1 5 -1 -5) do: [:each | self assert: each odd].
+	#(0 2 6 -2 -6) do: [:each | self deny: each odd].
+	self assert: SmallInteger maximum odd.
+	self deny: SmallInteger minimum odd!
+
 testOverflow
 	"Test overflow of SmallInteger arithmetic prims"
 
@@ -510,6 +519,7 @@ testGreaterOrEqualToFloat!public! !
 testGreaterThanFloat!public! !
 testHighBit!public!unit tests! !
 testIntegerDivide!public!unit tests! !
+testIsInt64!public!unit tests! !
 testLargeSmallComparisons!public!unit tests! !
 testLcm!public!unit tests! !
 testLessOrEqualToFloat!public!unit tests! !
@@ -524,6 +534,7 @@ testModulo!public!unit tests! !
 testNew!public!unit tests! !
 testNoMask!public!unit tests! !
 testNumberOfDigitsInBase!public!unit tests! !
+testOdd!public! !
 testOverflow!public!unit tests! !
 testPrimesUpTo!public!unit tests! !
 testPrintString!public!unit tests! !

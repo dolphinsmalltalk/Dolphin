@@ -318,12 +318,7 @@ intPtrAtOffset: anInteger put: anObject
 	"Private - Store anObject as a signed machine-word sized integer at anInteger offset in the receiver. anInteger must be representable in a machine word. Uses the intPtrAtOffset:put: primitive. This is intended only as a way to initialize a new LargeInteger with a SmallInteger value."
 
 	<primitive: 183>
-	| value |
-	value := anObject asInteger.
-	value byteSize > VMConstants.IntPtrSize ifFalse: [^self errorCantHold: anObject].
-	1 to: VMConstants.IntPtrSize
-		do: [:index | self basicAt: anInteger + index put: (value digitAt: index)].
-	^anObject!
+	^self primitiveFailed: _failureCode!
 
 isZero
 	"Answer whether the receiver is zero.

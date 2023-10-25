@@ -1065,6 +1065,12 @@ testImmutable
 						self assert: tmp isImmutable.
 						self assert: int bitInvert isImmutable]]!
 
+testIsInt64
+	{ SmallInteger maximum + 1. SmallInteger minimum - 1. 16r7FFFFFFFFFFFFFFF. -16r8000000000000000 }
+		do: [:each | self assert: each isInt64].
+	#(16r8000000000000000 -16r8000000000000001 16r7FFFFFFFFFFFFFFFFFFFFFFF -16r800000000000000000000000)
+		do: [:each | self deny: each isInt64]!
+
 testLessOrEqual
 	self largePositive do: 
 			[:each |
@@ -1301,6 +1307,12 @@ testNegate
 	self assert: res equals: -16r800000000000000000000000.
 	res := res negated.
 	self assert: res equals: a!
+
+testOdd
+	self deny: (2 ** 63) odd.
+	self assert: (2 ** 63 + 1) odd.
+	self deny: (-2 ** 64) odd.
+	self assert: (-2 ** 64 + 1) odd!
 
 testPrintLargeBase2
 	"#1664."
@@ -1573,6 +1585,7 @@ testGreaterThan!public!unit tests! !
 testGreaterThanFloat!public! !
 testHighBit!public!unit tests! !
 testImmutable!public!unit tests! !
+testIsInt64!public!unit tests! !
 testLessOrEqual!public!unit tests! !
 testLessOrEqualToFloat!public!unit tests! !
 testLessThan!public!unit tests! !
@@ -1582,6 +1595,7 @@ testMod!public!unit tests! !
 testModulo!public!unit tests! !
 testMulSmall!public!unit tests! !
 testNegate!public!unit tests! !
+testOdd!public! !
 testPrintLargeBase2!public!unit tests! !
 testPrintStringBase!public!unit tests! !
 testPrintUnnormalized!public!unit tests! !

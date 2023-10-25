@@ -369,6 +369,11 @@ isInt32
 
 	^VMConstants.IsWin64 not or: [super isInt32]!
 
+isInt64
+	"Answer whether the receiver can be represented as a 64-bit two's complement signed integer."
+
+	^true!
+
 isZero
 	"Answer whether the receiver is zero. SmallIntegers can be zero, and there is a
 	very fast check."
@@ -581,6 +586,7 @@ instVarAt:put:!accessing!private! !
 isAtomic!public!testing! !
 isImmediate!public!testing! !
 isInt32!public!testing! !
+isInt64!public!testing! !
 isZero!public!testing! !
 lowBit!bit manipulation!public! !
 multiplyByInteger:!double dispatch!private! !
