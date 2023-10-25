@@ -47,6 +47,7 @@ package setMethodNames: #(
 	#(#{Core.Object} #writeToRegistry:name:)
 	#(#{Core.Object class} #fromRegKey:)
 	#(#{Core.SequenceableCollection class} #readFromRegistry:params:)
+	#(#{Core.SortAlgorithm class} #readFromRegistry:params:)
 	#(#{Core.SortedCollection} #writeToRegistry:name:)
 	#(#{Core.SortedCollection class} #readFromRegistry:params:)
 	#(#{Core.Symbol} #writeToRegistry:name:)
@@ -63,8 +64,8 @@ package setMethodNames: #(
 	#(#{Graphics.Color} #writeToRegistry:name:)
 	#(#{Graphics.Color class} #readFromRegistry:params:)
 	#(#{Graphics.VirtualColor} #writeToRegistry:name:)
-	#(#{Kernel.DefaultSortAlgorithm class} #readFromRegistry:params:)
 	#(#{Kernel.MethodAnnotations class} #readFromRegistry:params:)
+	#(#{Kernel.PluggableSortAlgorithm class} #readFromRegistry:params:)
 	#(#{OS.RegKeyAbstract} #classAt:put:with:)
 	#(#{OS.RegKeyAbstract} #objectAt:)
 	#(#{OS.RegKeyAbstract} #objectAt:ifAbsent:)
@@ -412,6 +413,16 @@ readFromRegistry: aRegistryDeserializer params: anArray
 readFromRegistry:params:!public! !
 !
 
+!Core.SortAlgorithm class methodsFor!
+
+readFromRegistry: aRegistryDeserializer params: anArray
+	"Read an instance of the receiver previously serialised to the registry."
+
+	^self default! !
+!Core.SortAlgorithm class categoriesForMethods!
+readFromRegistry:params:!public! !
+!
+
 !Core.SortedCollection methodsFor!
 
 writeToRegistry: aRegistryWriter name: aString
@@ -610,16 +621,6 @@ writeToRegistry: aRegistryWriter name: aString
 writeToRegistry:name:!public! !
 !
 
-!Kernel.DefaultSortAlgorithm class methodsFor!
-
-readFromRegistry: aRegistryDeserializer params: anArray
-	"Read an instance of the receiver previously serialised to the registry."
-
-	^self current! !
-!Kernel.DefaultSortAlgorithm class categoriesForMethods!
-readFromRegistry:params:!public! !
-!
-
 !Kernel.MethodAnnotations class methodsFor!
 
 readFromRegistry: aRegistryDeserializer params: anArray
@@ -629,6 +630,18 @@ readFromRegistry: aRegistryDeserializer params: anArray
 
 	^aRegistryDeserializer readObjectOfClass: self params: anArray! !
 !Kernel.MethodAnnotations class categoriesForMethods!
+readFromRegistry:params:!public! !
+!
+
+!Kernel.PluggableSortAlgorithm class methodsFor!
+
+readFromRegistry: aRegistryDeserializer params: anArray
+	"Read an instance of the receiver previously serialised to the registry."
+
+	"We have to override back to the default implementation"
+
+	^aRegistryDeserializer readObjectOfClass: self params: anArray! !
+!Kernel.PluggableSortAlgorithm class categoriesForMethods!
 readFromRegistry:params:!public! !
 !
 

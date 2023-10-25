@@ -2930,7 +2930,7 @@ Core.Object
 Core.Object
 	subclass: #'Core.SortAlgorithm'
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: 'Default'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -4589,13 +4589,6 @@ Core.NotificationSignal
 	subclass: #'Core.WarningSignal'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Core.SortAlgorithm
-	subclass: #'Kernel.DefaultSortAlgorithm'
-	instanceVariableNames: ''
-	classVariableNames: 'Current'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!

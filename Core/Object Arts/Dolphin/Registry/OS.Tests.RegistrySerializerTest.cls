@@ -356,7 +356,7 @@ testSortedCollection
 	rehydrated := deserializer readObject.
 	key free.
 	self assert: rehydrated equals: numbers.
-	self assert: rehydrated algorithm isKindOf: DefaultSortAlgorithm pluggableEquivalentClass.
+	self assert: rehydrated algorithm isKindOf: SortAlgorithm pluggableEquivalentClass.
 	numbers add: 7.
 	rehydrated add: 7.
 	self assert: rehydrated equals: numbers!
@@ -371,7 +371,7 @@ testSortedCollectionDefaultAlgorithm
 	rehydrated := deserializer readObject.
 	key free.
 	self assert: rehydrated equals: numbers.
-	self assert: rehydrated algorithm identicalTo: DefaultSortAlgorithm current.
+	self assert: rehydrated algorithm identicalTo: SortAlgorithm default.
 	numbers add: 5.
 	rehydrated add: 5.
 	self assert: rehydrated equals: numbers!

@@ -59,7 +59,8 @@ defaultSafeClassReferences
 				'ColorAlpha' -> #{Graphics.ColorAlpha}.
 				'Font' -> #{Graphics.Font}.
 				'Point' -> #{Graphics.Point}.
-				'DefaultSortAlgorithm' -> #{Kernel.DefaultSortAlgorithm}.
+				'DefaultSortAlgorithm' -> #{Kernel.SortAlgorithm}.
+				'SortAlgorithm' -> #{Kernel.SortAlgorithm}.
 				'VariableBinding' -> #{Kernel.VariableBinding}.
 				'CLSID' -> #{OS.COM.CLSID}.
 				'IID' -> #{OS.COM.IID}.

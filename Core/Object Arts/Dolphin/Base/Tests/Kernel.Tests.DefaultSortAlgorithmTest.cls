@@ -30,10 +30,10 @@ add: aCollection sortBlock: block
 	self assertSorted: sorted by: block!
 
 algorithmToTest
-	^DefaultSortAlgorithm!
+	^SortAlgorithm!
 
 newTestSubject
-	^DefaultSortAlgorithm current!
+	^SortAlgorithm default!
 
 sort: aCollection sortBlock: aDyadicValuable
 	| duration sorted |

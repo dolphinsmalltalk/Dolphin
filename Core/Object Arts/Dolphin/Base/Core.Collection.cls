@@ -642,11 +642,15 @@ Core.Collection methodProtocol: #extensibleCollection attributes: #(#ansi #readO
 
 !Core.Collection class methodsFor!
 
-defaultSortAlgorithmClass
-	"Answer the class of <PluggableSortAlgorithm> to be used by default in conjunction with a
-	user-defined sort block."
+defaultSortAlgorithm
+	"Answer an instance of the default <SortAlgorithm>."
 
-	^DefaultSortAlgorithm!
+	^SortAlgorithm default!
+
+defaultSortAlgorithmClass
+	"Answer the class of <SortAlgorithm> to be used by default in conjunction with a user-defined sort block."
+
+	^SortAlgorithm!
 
 initialize
 	"Private - Initialize the receiver's class variables."
@@ -711,6 +715,7 @@ withAll: newElements
 		addAll: newElements;
 		yourself! !
 !Core.Collection class categoriesForMethods!
+defaultSortAlgorithm!instance creation!public! !
 defaultSortAlgorithmClass!instance creation!public! !
 initialize!development!initializing!private! !
 with:!instance creation!public! !

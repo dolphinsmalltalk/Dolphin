@@ -9,6 +9,7 @@ The names are deprecated, but will be referenced by many pre-8.x packages.
 
 
 package setVariableNames: #(
+	#{Smalltalk.DefaultSortAlgorithm}
 	#{Smalltalk.ExternalAddress}
 	#{Smalltalk.ExternalCallback}
 	#{Smalltalk.ExternalDescriptor}
@@ -26,6 +27,7 @@ package setVariableNames: #(
 ).
 
 package setAliasVariableNames: #(
+	#{Smalltalk.DefaultSortAlgorithm}
 	#{Smalltalk.ExternalAddress}
 	#{Smalltalk.ExternalCallback}
 	#{Smalltalk.ExternalDescriptor}
@@ -49,6 +51,8 @@ package setPrerequisites: #(
 package!
 
 "Variable Aliases"!
+
+Smalltalk.DefaultSortAlgorithm := Core.SortAlgorithm!
 
 Smalltalk.ExternalAddress := External.Address!
 

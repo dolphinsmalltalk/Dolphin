@@ -15,7 +15,7 @@ Refactory.Browser.Tests.RenameMethodRefactoringTest comment: ''!
 setUp
 	super setUp.
 	model := RBModel onEnvironment: (BrowserEnvironment new
-						forClasses: {Object. SmallInteger. OrderedCollection. DefaultSortAlgorithm})!
+						forClasses: {Object. SmallInteger. OrderedCollection. SortAlgorithm})!
 
 testExistingSelector
 	self shouldFail: (RenameMethodRefactoring

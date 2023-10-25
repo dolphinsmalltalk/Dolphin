@@ -919,7 +919,7 @@ testIncrementPushTempOptimisation
 testIncrementTempOptimisation
 	| disasm method map debugMethod debugMap i expected |
 	method := self getTestMethod: #testIncrementTempOptimisation.
-	self assert: method literals equals: #(#> #whileFalse: #+).
+	self assert: method literals asSet equals: #(#> #whileFalse: #+) asSet.
 	disasm := method disassembly.
 	expected := 'Normal, 0 args, 1 stack temps, <1d> literals
 
@@ -1783,11 +1783,14 @@ testToByDo
 	| result method src |
 	#(0 1 2 3) do: 
 			[:i |
+			| literals |
 			result := self
 						compileExpression: ('| a | a := OrderedCollection new. <1d> to: 2 by: 1 do: [:i | a add: i]. a'
 								expandMacrosWith: i).
 			method := result method.
-			self assert: method literals last equals: #to:by:do:.
+			literals := method literals.
+			self assert: (literals copyFrom: 1 to: 2) equals: {OrderedCollection binding. #add:}.
+			self assert: (literals copyFrom: 3) asSet equals: #(new #to:by:do:) asSet.
 			self denyIsNil: method.
 			self deny: method needsContext.
 			self assert: (method value: nil withArguments: #()) equals: (i to: 2) asOrderedCollection.

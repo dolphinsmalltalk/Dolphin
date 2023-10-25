@@ -19,21 +19,20 @@ testMethodCategoryEnvironment
 	self assert: (env includesClass: SortAlgorithm).
 	self deny: (env definesClass: SortAlgorithm).
 	self assert: (env includesSelector: #compare:with: in: SortAlgorithm).
-	self assert: (env includesSelector: #sort:from:to: in: SortAlgorithm).
-	self assert: (env includesClass: DefaultSortAlgorithm).
-	self deny: (env definesClass: DefaultSortAlgorithm).
-	self deny: (env includesSelector: #sort:from:to: in: DefaultSortAlgorithm).
+	self deny: (env includesSelector: #sort:from:to: in: SortAlgorithm).
+	self assert: (env includesClass: PluggableSortAlgorithm).
+	self deny: (env definesClass: PluggableSortAlgorithm).
+	self assert: (env includesSelector: #sort:from:to: in: PluggableSortAlgorithm).
 	selectors := SortedCollection new.
 	env selectorsForClass: SortAlgorithm do: [:each | selectors add: each].
-	self assert: selectors asArray
-		equals: #(#compare:with: #insertionSort:from:to: #sift:from:between:and: #sort:from:to: #sortBlock).
-	self assert: (env includesClass: SortAlgorithm class).
-	self deny: (env definesClass: SortAlgorithm class).
+	self assert: selectors single equals: #compare:with:.
+	self deny: (env includesClass: SortAlgorithm class).
+	self deny: (env includesSelector: #icon in: SortAlgorithm class).
 	selectors := SortedCollection new.
 	env selectorsForClass: SortAlgorithm class do: [:each | selectors add: each].
-	self assert: selectors size equals: 1.
-	self assert: (env includesSelector: #newSortBlock: in: SortAlgorithm class).
-	self deny: (env includesSelector: #icon in: SortAlgorithm class)! !
+	self assert: selectors isEmpty.
+	env selectorsForClass: PluggableSortAlgorithm do: [:each | selectors add: each].
+	self assert: selectors asArray equals: #(#compare:with: #sort:from:to:)! !
 !Tools.Tests.MethodCategoryEnvironmentTest categoriesForMethods!
 testMethodCategoryEnvironment!public! !
 !

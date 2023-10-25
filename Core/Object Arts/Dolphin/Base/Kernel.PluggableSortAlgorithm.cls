@@ -64,6 +64,13 @@ sift: anObject from: anInteger between: startInteger and: stopInteger
 	anObject basicAt: j put: max]
 			repeat!
 
+sort: aCollection from: startInteger to: stopInteger
+	"Sort elements in the range of indexable instance variables of the <Object> argument from
+	startInteger through stopInteger to be non-descending according to the <DyadicValuable> sort
+	block."
+
+	^self subclassResponsibility!
+
 sortBlock
 	"Answer a <dyadicVariable> that implements the sort-order comparison in use by the receiver."
 
@@ -73,6 +80,7 @@ compare:with:!comparing!public! !
 insertionSort:from:to:!operations!private! !
 setSortBlock:!initializing!private! !
 sift:from:between:and:!helpers!private! !
+sort:from:to:!operations!public! !
 sortBlock!accessing!public! !
 !
 
