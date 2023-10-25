@@ -41,17 +41,6 @@ addressAtOffset: anInteger
 
 	^(self uintPtrAtOffset: anInteger) asExternalAddress!
 
-asAnsiString
-	"Answer an ANSI-encoded String the characters of have the same encoding as the byte elements of the receiver."
-
-	| size |
-	size := self basicSize.
-	^self
-		replaceBytesOf: (AnsiString new: size)
-		from: 1
-		to: size
-		startingAt: 1!
-
 asByteArray
 	"Answer a <ByteArray> containing the same elements as the receiver.
 	In this case no conversion is required."
@@ -61,26 +50,26 @@ asByteArray
 asHexString
 	"Answer a hexadecimal representation of the receiver"
 
-	| string j |
-	string := AnsiString new: self size * 2.
-	j := 0.
-	1 to: self size
-		do: 
-			[:i |
-			| each |
-			each := self at: i.
-			string
-				at: (j := j + 1) put: ('0123456789abcdef' at: (each bitShift: -4) + 1);
-				at: (j := j + 1) put: ('0123456789abcdef' at: (each bitAnd: 16rF) + 1)].
+	| hexStream string |
+	string := String new: self size * 2.
+	hexStream := string writeStream.
+	self printHexOn: hexStream.
 	^string!
 
-asString
-	"Assuming that the receiver contains the bytes of an ANSI string, return that string."
+asUtf16String
+	"Answer a <Utf16String> from the assumed UTF-16 encoded code points in the receiver. Note that if the receiver doesn't really contain UTF-16 encoded data, then the result may be an invalid string."
 
-	^self asAnsiString!
+	| size |
+	size := self basicSize.
+	size even ifFalse: [self error: 'UTF-16 encoded data cannot consist of an odd number of bytes'].
+	^self
+		replaceBytesOf: (Utf16String new: (size bitShift: -1))
+		from: 1
+		to: size
+		startingAt: 1!
 
 asUtf8String
-	"Answer an Utf8String from the assumed UTF-8 encoded characters in the receiver. Note that if the receiver doesn't really contain UTF-8 encoded characters, then the result may be an invalid string."
+	"Answer a <Utf8String> from the assumed UTF-8 encoded code points in the receiver. Note that if the receiver doesn't really contain UTF-8 encoded data, then the result may be an invalid string."
 
 	| size |
 	size := self basicSize.
@@ -442,19 +431,19 @@ printHexOn: aStream
 			each := self at: i.
 			aStream
 				nextPut: ('0123456789abcdef' at: (each bitShift: -4) + 1);
-				nextPut: ('0123456789abcdef' at: (each bitAnd: 15) + 1)]!
+				nextPut: ('0123456789abcdef' at: (each bitAnd: 16rF) + 1)]!
 
 printHexString
 	"Answer a hex string representation of the receiver. N.B. For reasons of backwards
 	compatibility the result includes quotes, if this is not what you want then use
-	#printHexOn:."
+	#asHexString/#printHexOn:."
 
 	| stream |
 	stream := String writeStream: self size * 2 + 2.
 	stream nextPut: $'.
 	self printHexOn: stream.
 	stream nextPut: $'.
-	^stream contents!
+	^stream grabContents!
 
 printOn: aStream
 	aStream nextPutAll: '#['.
@@ -723,10 +712,9 @@ validOffset: anInteger failureCode: failureCode
 _sameAsString:!comparing!private! !
 =!comparing!public! !
 addressAtOffset:!accessing!public! !
-asAnsiString!public! !
 asByteArray!converting!public! !
 asHexString!converting!public! !
-asString!converting!public! !
+asUtf16String!public! !
 asUtf8String!public! !
 basicUInt32AtOffset:!accessing!public! !
 basicUInt32AtOffset:put:!accessing!private! !
@@ -812,15 +800,15 @@ fromAddress: anAddress length: anInteger
 !
 
 fromGlobalHandle: anExternalHandle
-	"Answer a new <ByteArray> instantiated from the contents of the global heap block with the
-	specified handle."
+	"Answer a new <ByteArray> instantiated from the contents of the global heap block with the specified handle."
 
-	| bytes len |
-	bytes := OS.Kernel32 globalLock: anExternalHandle.
-	len := External.Memory GetSize: bytes.
-	bytes := self fromAddress: bytes length: len.
-	OS.Kernel32 globalUnlock: anExternalHandle.
-	^bytes!
+	| ptr |
+	ptr := OS.Kernel32 globalLock: anExternalHandle.
+	^
+	[| size |
+	size := External.Memory GetSize: ptr.
+	self fromAddress: ptr length: size]
+			ensure: [OS.Kernel32 globalUnlock: anExternalHandle]!
 
 fromHexString: aString
 	"Answer a new instance of the receiver instantiated from the contents of the hexadecimal <String> argument."

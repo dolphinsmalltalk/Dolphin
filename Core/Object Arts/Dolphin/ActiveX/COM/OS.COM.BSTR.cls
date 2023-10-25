@@ -24,11 +24,6 @@ BSTRs use finalization to safely manage the sys. alloc''d string, but they may b
 !OS.COM.BSTR categoriesForClass!External-Data-Unstructured! !
 !OS.COM.BSTR methodsFor!
 
-asAnsiString
-	"Answer an ANSI-encoded string representation of the receiver. If any of the elements of the receiver cannot be represented as ANSI code points, then these will be translated to the default replacement character ($?)."
-
-	^self asUtf16String asAnsiString!
-
 asBSTR
 	"Answer the receiver converted to an AX Automation string."
 
@@ -158,7 +153,6 @@ value: newValue
 			bstr == newValue ifTrue: [bstr := bstr copy]].
 	super value: (bstr beUnfinalizable; yourself)! !
 !OS.COM.BSTR categoriesForMethods!
-asAnsiString!converting!public! !
 asBSTR!converting!public! !
 asString!converting!public! !
 asUtf16String!converting!public! !

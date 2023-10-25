@@ -27,6 +27,7 @@ package setMethodNames: #(
 	#(#{Core.Class} #variableSubclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:)
 	#(#{Core.ClassDescription} #sharedVariableString)
 	#(#{Core.FileStream} #beBinary)
+	#(#{Core.FileStream} #beText)
 	#(#{Core.UndefinedObject} #subclass:instanceVariableNames:classVariableNames:poolDictionaries:)
 	#(#{Core.UndefinedObject} #subclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:)
 	#(#{Kernel.Package} #aboutBlockBytes:)
@@ -188,9 +189,21 @@ beBinary
 	#deprecated.	"Only works correctly for switching from AnsiString"
 	(collection isKindOf: UtfEncodedString)
 		ifTrue: [self error: 'Unable to switch from UTF encoded content to binary'].
-	collection := collection asByteArray! !
+	collection := collection asByteArray!
+
+beText
+	"Treat the elements of the stream as Characters."
+
+	#deprecated.	"This method is too generic: These days it is somewhat unlikely that the bytes are ANSI code-page encoded - more likely UTF-8 or UTF-16, but we can't know for sure. We also can't maintain backwards compatibility with the previous assumption of ANSI encoding, code page unspecified. Toggling FileStreams between text and binary is not recommended."
+	self isBinary ifFalse: [^self].
+	collection := collection
+				replaceBytesOf: (AnsiString new: PageSize)
+				from: 1
+				to: PageSize
+				startingAt: 1! !
 !Core.FileStream categoriesForMethods!
 beBinary!modes!public! !
+beText!modes!public! !
 !
 
 !Core.UndefinedObject methodsFor!

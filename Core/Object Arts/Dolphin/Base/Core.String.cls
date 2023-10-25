@@ -55,19 +55,6 @@ N.B. Dolphin Strings are, unlike Smalltalk-80 strings, null-terminated. Space fo
 				nextPutAll: aSequencedReadableCollection;
 				contents]!
 
-_indexOfAnyInString: aString startingAt: anInteger
-	| span |
-	#todo.	"Doesn't work for mixed encodings, only both ANSI or both UTF-8"
-	span := aString strcspn: self start: anInteger.
-	^span + anInteger > aString size
-		ifTrue: [0]
-		ifFalse: 
-			["CRT function will stop if it hits a null embedded in the string, so we must fall back
-			on slower superclass implementation in that case."
-			^(aString basicAt: span + anInteger) == 0
-				ifTrue: [super _indexOfAnyInString: aString startingAt: anInteger]
-				ifFalse: [span + anInteger]]!
-
 _sameAsString: aString
 	"Private - Answer whether the receiver collates the same as argument, aString."
 
@@ -127,7 +114,7 @@ _sameAsString: aString
 	"The primitive works with any supported string encoding (ANSI, UTF-8 and UTF-16) and invokes the OS StringCompare function"
 	^(OS.Kernel32
 		compareString: LOCALE_USER_DEFAULT
-		dwCmpFlags: ##(NORM_IGNORECASE | NORM_LINGUISTIC_CASING)
+		dwCmpFlags: ##(NORM_IGNORECASE bitOr: NORM_LINGUISTIC_CASING)
 		string1: self
 		string2: aString) - 2!
 
@@ -734,14 +721,6 @@ hashOrdinalsIgnoringCase
 	<primitive: 227>
 	^(self asUtf8String collect: [:each | each caseFolded]) hash!
 
-indexOfAnyOf: aCollectionOfCharacters startingAt: anInteger 
-	"Answer the one-based integer index of the first encountered element of the receiver which
-	is equal to one of the characters in the argument, aCollectionOfCharacters, starting from
-	the one-based <integer> index, start, in the receiver. If no occurrences are found, then
-	answer 0."
-
-	^aCollectionOfCharacters _indexOfAnyInString: self startingAt: anInteger!
-
 indexOfSubCollection: aSequencedReadableCollection startingAt: startInteger
 	"Answer the <integer> index of the next occurrence within the receiver of the <sequencedReadableCollection> sub-sequence, starting at the specified <integer> index. If there are no such occurrences (or the search sequence is empty), answer 0."
 
@@ -1122,9 +1101,6 @@ storeOn: aStream
 
 	self printOn: aStream!
 
-strcspn: aString start: anInteger
-	^OS.Ucrt strcspn: self yourAddress + anInteger - 1 strCharSet: aString!
-
 strlen
 	"Answer the length of the receiver (in code units) up to the first null terminator. This may be less than its size if it contains embedded nulls. It can never be greater than the receiver's size."
 
@@ -1230,7 +1206,6 @@ withNormalizedLineDelimiters
 	^target contents! !
 !Core.String categoriesForMethods!
 ,!copying!public! !
-_indexOfAnyInString:startingAt:!double dispatch!private!searching! !
 _sameAsString:!comparing!private! !
 <!comparing!public! !
 <<!printing!public! !
@@ -1303,7 +1278,6 @@ formatWith:with:with:with:!printing!public! !
 formatWithArguments:!printing!public! !
 hash!comparing!public! !
 hashOrdinalsIgnoringCase!comparing!public! !
-indexOfAnyOf:startingAt:!public!searching! !
 indexOfSubCollection:startingAt:!public!searching! !
 isString!public!testing! !
 join:!printing!public! !
@@ -1335,7 +1309,6 @@ split:!public!tokenizing! !
 sprintfWith:!printing!public! !
 sprintfWith:with:!printing!public! !
 storeOn:!printing!public! !
-strcspn:start:!private!searching! !
 strlen!accessing!private! !
 subStrings!public!tokenizing! !
 subStrings:!public!tokenizing! !
@@ -1354,11 +1327,6 @@ Core.String methodProtocol: #readableString attributes: #(#ansi #readOnly) selec
 Core.String methodProtocol: #String attributes: #(#ansi #readOnly) selectors: #(#, #< #<= #> #>= #after: #allSatisfy: #anySatisfy: #asArray #asBag #asByteArray #asLowercase #asOrderedCollection #asSet #asSortedCollection #asSortedCollection: #asString #asSymbol #asUppercase #at: #at:ifAbsent: #at:put: #atAll:put: #atAllPut: #before: #between:and: #collect: #copyFrom:to: #copyReplaceAll:with: #copyReplaceFrom:to:with: #copyReplaceFrom:to:withObject: #copyReplacing:withObject: #copyWith: #copyWithout: #detect: #detect:ifNone: #do: #do:separatedBy: #findFirst: #findLast: #first #from:to:do: #from:to:keysAndValuesDo: #includes: #indexOf: #indexOf:ifAbsent: #indexOfSubCollection:startingAt: #indexOfSubCollection:startingAt:ifAbsent: #inject:into: #isEmpty #keysAndValuesDo: #last #max: #min: #notEmpty #occurrencesOf: #rehash #reject: #replaceFrom:to:with: #replaceFrom:to:with:startingAt: #replaceFrom:to:withObject: #reverse #reverseDo: #sameAs: #select: #size #subStrings: #with:do:)!
 
 !Core.String class methodsFor!
-
-ansiClass
-	"Answer the class of String to use for ANSI-encoded strings."
-
-	^AnsiString!
 
 basicEncoding
 	^self extraInstanceSpec!
@@ -1517,9 +1485,14 @@ fromByteArray: aByteArray startingAt: indexInteger
 fromGlobalHandle: anExternalHandle
 	"Answer a new String instantiated from the contents of the global heap block with the specified handle."
 
-	| p |
-	p := OS.Kernel32 globalLock: anExternalHandle.
-	^[self fromAddress: p] ensure: [OS.Kernel32 globalUnlock: anExternalHandle]!
+	| ptr |
+	ptr := OS.Kernel32 globalLock: anExternalHandle.
+	^
+	[| size |
+	size := External.Memory GetSize: ptr.
+	"Byte size will include the null terminator"
+	self fromAddress: ptr length: size // self elementSize - 1]
+			ensure: [OS.Kernel32 globalUnlock: anExternalHandle]!
 
 fromResourceId: anInteger
 	"Answer a new String loaded from resources."
@@ -1559,7 +1532,7 @@ installedCodePages
 	^self systemCodePages: CP_INSTALLED!
 
 lf
-	^AnsiString with: $\n!
+	^String with: $\n!
 
 lineDelimiter
 	"Answer an immutable instance of the receiver containing the host system 
@@ -1672,7 +1645,7 @@ with: aCharacter
 	"Answer a new instance of the receiver containing the <Character> argument as its single code point element. Note that this does not mean the String will have a code-unit size of 1 - it may have to be larger, depending on the number of code units of the string encoding that are required to represent the code point."
 
 	^aCharacter isAscii
-		ifTrue: [AnsiString with: aCharacter]
+		ifTrue: [super with: aCharacter]
 		ifFalse: 
 			[^(WriteStream on: (self new: 2))
 				nextPut: aCharacter;
@@ -1726,7 +1699,6 @@ withAll: aCollectionOfCharacters
 	aCollectionOfCharacters do: [:each | stream nextPut: each].
 	^stream grabContents! !
 !Core.String class categoriesForMethods!
-ansiClass!constants!public! !
 basicEncoding!accessing!public! !
 characterForCodeUnit:!enquiries!public! !
 codePage!constants!public! !

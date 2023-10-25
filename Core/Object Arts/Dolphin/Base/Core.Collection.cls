@@ -16,10 +16,6 @@ Core.Collection comment: ''!
 _beginsString: aString
 	^aString basicBeginsWith: self!
 
-_indexOfAnyInString: aString startingAt: anInteger 
-	aString from: anInteger keysAndValuesDo: [:i :elem | (self includes: elem) ifTrue: [^i]].
-	^0!
-
 add: newElement
 	"Include the <Object> argument, newElement, as one of the receiver's 
 	elements. Answer newElement."
@@ -573,7 +569,6 @@ union: comperand
 		yourself! !
 !Core.Collection categoriesForMethods!
 _beginsString:!comparing!double dispatch!private! !
-_indexOfAnyInString:startingAt:!double dispatch!private!searching! !
 add:!adding!public! !
 addAll:!adding!public! !
 allSatisfy:!enumerating!public! !

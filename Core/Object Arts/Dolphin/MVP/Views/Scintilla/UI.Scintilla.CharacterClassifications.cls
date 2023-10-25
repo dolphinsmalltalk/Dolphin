@@ -3,7 +3,7 @@
 Core.Object
 	subclass: #'UI.Scintilla.CharacterClassifications'
 	instanceVariableNames: 'classifications'
-	classVariableNames: 'DefaultWhitespaces'
+	classVariableNames: 'AllPossibleWordChars DefaultWhitespaces'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
@@ -53,8 +53,7 @@ applyToView: aScintillaView
 				ifTrue: [whitespaces basicNextPut: i - 1]
 				ifFalse: [charClass == Punctuation ifTrue: [punctuation basicNextPut: i - 1]]].
 	aScintillaView
-		sciSetWordChars: ##((Character byteCharacterSet reverse difference: String lineDelimiter)
-					copyWithout: $\0);
+		sciSetWordChars: AllPossibleWordChars;
 		sciSetPunctuationChars: punctuation grabContents;
 		sciSetWhitespaceChars: whitespaces grabContents!
 
@@ -76,7 +75,7 @@ at: aCharacter put: aSymbol
 
 charsWithClassification: anInteger
 	| chars |
-	chars := AnsiString writeStream: 63.
+	chars := String writeStream: 63.
 	"See [SCI_GETWORDCHARS](https://www.scintilla.org/ScintillaDoc.html#SCI_GETWORDCHARS) for why we limit this to ascii"
 	128 to: 1
 		by: -1
@@ -214,7 +213,10 @@ icon
 
 initialize
 	self addClassConstant: 'DefaultWhitespaces'
-		value: (AnsiString withAll: #($\x7F $\x20 $\x1F $\x1E $\x1D $\x1C $\x1B $\x1A $\x19 $\x18 $\x17 $\x16 $\x15 $\x14 $\x13 $\x12 $\x11 $\x10 $\xF $\xE $\f $\v $\t $\b $\a $\x6 $\x5 $\x4 $\x3 $\x2 $\x1 $\0))!
+		value: (AnsiString
+				withAll: #($\x7F $\x20 $\x1F $\x1E $\x1D $\x1C $\x1B $\x1A $\x19 $\x18 $\x17 $\x16 $\x15 $\x14 $\x13 $\x12 $\x11 $\x10 $\xF $\xE $\f $\v $\t $\b $\a $\x6 $\x5 $\x4 $\x3 $\x2 $\x1 $\0)).
+	self addClassConstant: 'AllPossibleWordChars'
+		value: ((Character byteCharacterSet reverse difference: String lineDelimiter) copyWithout: $\0)!
 
 new
 	^self basicNew classifications: DefaultClassifications shallowCopy!

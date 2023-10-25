@@ -17,6 +17,7 @@ package setMethodNames: #(
 	#(#{Core.TimeStamp} #asFloat)
 	#(#{Core.TimeStamp} #asVariant)
 	#(#{Core.TimeStamp class} #fromDATE:)
+	#(#{OS.COM.BSTR} #asAnsiString)
 	#(#{OS.COM.BSTR} #asUnicodeString)
 	#(#{OS.COM.DATE} #asDate)
 	#(#{OS.COM.DATE} #asTimeStamp)
@@ -98,10 +99,17 @@ fromDATE:!instance creation!private! !
 
 !OS.COM.BSTR methodsFor!
 
+asAnsiString
+	"Answer an ANSI-encoded string representation of the receiver. If any of the elements of the receiver cannot be represented as ANSI code points, then these will be translated to the default replacement character ($?)."
+
+	Notification deprecated. "Avoid using AnsiString"
+	^self asUtf16String asAnsiString!
+
 asUnicodeString
 	Notification deprecated.
 	^self asUtf16String! !
 !OS.COM.BSTR categoriesForMethods!
+asAnsiString!converting!public! !
 asUnicodeString!converting!public! !
 !
 

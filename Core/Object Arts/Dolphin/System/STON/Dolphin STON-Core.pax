@@ -321,11 +321,7 @@ stonOn:!public!ston! !
 hex
 	"Answer a hexadecimal representation of the receiver"
 
-	| hexStream string |
-	string := AnsiString new: self size * 2.
-	hexStream := string writeStream.
-	self printHexOn: hexStream.
-	^string!
+	^self asHexString!
 
 stonContainSubObjects 
 	^ false!

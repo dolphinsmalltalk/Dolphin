@@ -573,6 +573,42 @@ testFromByteArray
 	self assert: (stumpOfTreeWithBom asArray collect: [:each | each codePoint])
 		equals: #(16rFEFF 16r233B4)!
 
+testIncludesAnyOfMixedEncoding
+	self assert: ('a€b' asUtf8String includesAnyOf: '€c' asAnsiString).
+	self deny: ('Â' asUtf8String includesAnyOf: '£' asAnsiString).
+	self assert: ('a€b' asUtf8String includesAnyOf: '€c' asUtf16String).
+	self deny: ('Â' asUtf8String includesAnyOf: '£' asUtf16String).
+	"Encoding of £ in UTF-8 is 194, 163, but this should not match 194 in an ANSI string"
+	self deny: ('Â' asUtf8String includesAnyOf: '£' asUtf8String).
+	self assert: ('a€b' asUtf8String includesAnyOf: '€c' asUtf8String).
+
+	self deny: ('¤' asUtf8String includesAnyOf: '£' asUtf8String)!
+
+testIndexOfAnyOfStartingAt2
+	| subject |
+	subject := self assimilateString: 'iñtërnâtiônàlizætiøn🐬'.
+	"
+s := subject readStream.
+chars := OrderedCollection new.
+[s atEnd] whileFalse: [
+	chars add: (s position + 1) -> s next].
+chars"
+	self assert: (subject indexOfAnyOf: 'i' startingAt: 1) equals: 1.
+	self assert: (subject indexOfAnyOf: 'i' startingAt: 2) equals: 12.
+	"Note that the index is a code-unit index, not a code-point index"
+	self assert: (subject indexOfAnyOf: 't' startingAt: 1) equals: 4.
+	self assert: (subject indexOfAnyOf: 't' startingAt: 2) equals: 4.
+	self assert: (subject indexOfAnyOf: 't' startingAt: 3) equals: 4.
+	self assert: (subject indexOfAnyOf: 't' startingAt: 4) equals: 4.
+	self assert: (subject indexOfAnyOf: 't' startingAt: 5) equals: 11.
+	self assert: (subject indexOfAnyOf: 't' startingAt: 6) equals: 11.
+
+	self assert: (subject indexOfAnyOf: '🐬' startingAt: 1) equals: 28.
+
+	self assert: (subject indexOfAnyOf: 'â' startingAt: 1) equals: 9.
+
+	self assert: (subject indexOfAnyOf: '¬' startingAt: 1) equals: 0!
+
 testKeys
 	| subject |
 	subject := self assimilateString: 'a£文🐬1🍺'.
@@ -792,6 +828,8 @@ testDecodeNextFrom5and6Byte!public!unit tests! !
 testDecodeNextFromOverlong!public!unit tests! !
 testEncodedSizeOf!public!unit tests! !
 testFromByteArray!public!unit tests! !
+testIncludesAnyOfMixedEncoding!public! !
+testIndexOfAnyOfStartingAt2!public! !
 testKeys!public!unit tests! !
 testLastCodeUnit!public!unit tests! !
 testUnicodeBestPracticeDecodingExamplesIllFormedSurrogates!public! !

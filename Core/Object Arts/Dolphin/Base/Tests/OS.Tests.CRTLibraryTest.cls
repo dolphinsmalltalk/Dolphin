@@ -41,13 +41,6 @@ testStrCatInvalidCall
 		raise: CRTError
 		matching: [:ex | ex errno = CRTConstants.ERANGE]!
 
-testStrCmp
-	| upper |
-	upper := 'A🐬£'.
-	self assert: (Ucrt strcmp: upper string2: upper asLowercase) equals: -1.
-	"Shouldn't be converting Utf8Strings to AnsiStrings as this is lossy"
-	self deny: (Ucrt strcmp: upper string2: upper asAnsiString) equals: 0!
-
 testStrCpyInvalidArg
 	| buf |
 	buf := String new: 1.
@@ -69,20 +62,11 @@ testStrCpyTruncation
 				bufferSize: 1
 				strSource: 'abc'
 				count: OS.CRTConstants._TRUNCATE)
-		equals: OS.CRTConstants.STRUNCATE!
-
-testWcsICmp
-	| upper |
-	upper := 'A🐬£'.
-	self assert: (Ucrt _wcsicmp: upper string2: upper) equals: 0.
-	self assert: (Ucrt _wcsicmp: upper string2: upper asLowercase) equals: 0.
-	self deny: (Ucrt _wcsicmp: upper string2: upper asAnsiString) equals: 0! !
+		equals: OS.CRTConstants.STRUNCATE! !
 !OS.Tests.CRTLibraryTest categoriesForMethods!
 testSplitPathInvalidCall!public! !
 testStrCatInvalidCall!public! !
-testStrCmp!public! !
 testStrCpyInvalidArg!public! !
 testStrCpyTruncation!public! !
-testWcsICmp!public! !
 !
 

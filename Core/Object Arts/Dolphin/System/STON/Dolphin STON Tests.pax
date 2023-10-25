@@ -131,7 +131,7 @@ doWithIndex:!public! !
 !Core.String class methodsFor!
 
 crlf
-	^##(AnsiString with: $\r with: $\n)! !
+	^##(String with: $\r with: $\n)! !
 !Core.String class categoriesForMethods!
 crlf!public! !
 !

@@ -67,6 +67,8 @@ bom
 	^Bom!
 
 countElements
+	"Answer the number of Unicode code points in the receiver."
+
 	| i count last |
 	count := 0.
 	i := 1.
@@ -79,7 +81,7 @@ countElements
 decodeAt: anInteger
 	"Private - Read the <Character> with code point in the receiver's encoding starting with the code unit at the specified index. If the index does not identify the start of a character, or the encoding is invalid or incomplete, return the replacement character."
 
-	"The decoding algorithm is essentially the same as #decodeNextFrom:, where it is explained in more detail."
+	"The decoding algorithm is essentially the same as #decodeNextFrom:, where it is explained in more detail. The primitive uses the ICU macro U8_NEXT_OR_FFFD, and is purely for speed of what is a low-level but surprisingly  complex operation."
 
 	<primitive: 225>
 	| len c c2 |

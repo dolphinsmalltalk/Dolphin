@@ -163,6 +163,15 @@ testFindUtfStringStartingAt
 		equals: 0.
 	self assert: ('a??b' findString: (Utf8String fromByteArray: #[16rC0 16rAF]) startingAt: 1) equals: 0!
 
+testIncludesAnyOfMixedEncoding
+	self assert: ('a€b' asAnsiString includesAnyOf: '€c' asAnsiString).
+	self deny: ('Â' asAnsiString includesAnyOf: '£' asAnsiString).
+	self assert: ('a€b' asAnsiString includesAnyOf: '€c' asUtf16String).
+	self deny: ('Â' asAnsiString includesAnyOf: '£' asUtf16String).
+	"Encoding of £ in UTF-8 is 194, 163, but this should not match 194 in an ANSI string"
+	self deny: ('Â' asAnsiString includesAnyOf: '£' asUtf8String).
+	self assert: ('a€b' asAnsiString includesAnyOf: '€c' asUtf8String)!
+
 testIndexOfSubCollectionStartingAtGPF
 	| strings search current |
 	#'1553'.
@@ -185,6 +194,7 @@ testConcatenateInvalidUtf8!public!unit tests! !
 testConcatenation!public!unit tests! !
 testCopyReplaceAllWith!public!unit tests! !
 testFindUtfStringStartingAt!public!unit tests! !
+testIncludesAnyOfMixedEncoding!public! !
 testIndexOfSubCollectionStartingAtGPF!public!unit tests! !
 !
 

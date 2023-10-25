@@ -70,6 +70,30 @@ testCopyWithAtIndex
 	self assert: (string copyWith: Character dolphin atIndex: 5) equals: 'a£🍺🐬文1'.
 	self should: [string copyWith: Character dolphin atIndex: 4] raise: Error!
 
+testIncludesAnyOf2
+	| subject |
+	subject := self newCollection: #($a $🐬 $\0 $翿 $€).
+	self assert: (subject includesAnyOf: '🐬').
+	"Shouldn't match just because lead surrogate is the same (fails if implementation uses wcscspn, which does not handle surrogate pairs correctly)"
+	self deny: (subject includesAnyOf: '🐭').
+	self assert: (subject includesAnyOf: '€').
+	self assert: (subject includesAnyOf: (String with: $\0 with: $1))!
+
+testIndexOfAnyOfStartingAt2
+	| subject |
+	subject := self assimilateString: 'iñtërn🐬âtiônàlizætiøn'.
+	self assert: (subject indexOfAnyOf: 'i' startingAt: 1) equals: 1.
+	self assert: (subject indexOfAnyOf: 'i' startingAt: 8) equals: 11.
+	"Note that the index is a code-unit index, not a code-point index"
+	self assert: (subject indexOfAnyOf: 't' startingAt: 1) equals: 3.
+	self assert: (subject indexOfAnyOf: 't' startingAt: 6) equals: 10.
+	self assert: (subject indexOfAnyOf: 't' startingAt: 7) equals: 10.
+	self assert: (subject indexOfAnyOf: 't' startingAt: 8) equals: 10.
+	self assert: (subject indexOfAnyOf: '🐬' startingAt: 1) equals: 7.
+	self assert: (subject indexOfAnyOf: '🐬' startingAt: 7) equals: 7.
+	"If we start in the middle of a surrogate-pair we shouldn't get a match. Note that the wcscspn() function in the CRT does not work correctly in this case"
+	self assert: (subject indexOfAnyOf: '🐬' startingAt: 8) equals: 0!
+
 testIndexOfStartingAtSurrogates
 	| subject full trail lead |
 	subject := 'a£a文a🍺a👨🏻‍🍳a' asUtf16String.
@@ -168,6 +192,8 @@ testAssociations!public!unit tests! !
 testConcatenateInvalidUtf16!public!unit tests! !
 testConcatenateInvalidUtf8!public!unit tests! !
 testCopyWithAtIndex!public!unit tests! !
+testIncludesAnyOf2!public! !
+testIndexOfAnyOfStartingAt2!public! !
 testIndexOfStartingAtSurrogates!public!unit tests! !
 testKeys!public!unit tests! !
 testLastCodeUnit!public!unit tests! !

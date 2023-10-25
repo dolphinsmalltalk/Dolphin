@@ -121,14 +121,6 @@ _wcserror_s: buffer sizeInWords: sizeInWords errnum: errnum
 	<cdecl: errno _wcserror_s lpwstr uintptr int32>
 	^_failureCode!
 
-_wcsicmp: string1 string2: string2
-	"Answer the result of a case insensitive string comparison between string1 and string2,
-	answer <0, 0, or >0 according to whether string1 is lexicographically less than, 
-	equal to, or greater than string2."
-
-	<cdecl: int32 _wcsicmp lpwstr lpwstr>
-	^self invalidCall: _failureCode!
-
 _wfsopen: nameString mode: modeString shflag: shflagInteger
 	<cdecl: handle _wfsopen lpwstr lpwstr int32>
 	^self invalidCall: _failureCode!
@@ -248,25 +240,8 @@ setlocale: category locale: localeString
 	<cdecl: lpstr setlocale int32 lpstr>
 	^self invalidCall: _failureCode!
 
-strcmp: string1 string2: string2
-	"Answer the order between the <String> arguments, string1 and string2.
-
-		int strcmp( const char *string1, const char *string2);
-	"
-
-	<cdecl: int32 strcmp lpstr lpstr>
-	^self invalidCall: _failureCode!
-
-strcspn: string strCharSet: strCharSet
-	<cdecl: uint32 strcspn lpvoid char*>
-	^self invalidCall: _failureCode!
-
 strlen: aString
 	<cdecl: int32 strlen lpvoid>
-	^self invalidCall: _failureCode!
-
-strncpy_s: desString bufferSize: anInteger strSource: sourceString count: countInteger
-	<cdecl: errno strncpy_s lpvoid uintptr lpstr uintptr>
 	^self invalidCall: _failureCode!
 
 synchronizeLocale
@@ -284,10 +259,6 @@ ungetwc: c stream: stream
 	"Pushes the UTF-16 code unit, c, back onto the FILE*, stream."
 
 	<cdecl: int32 ungetwc int32 handle>
-	^self invalidCall: _failureCode!
-
-wcscspn: aWideString strCharSet: strCharSet
-	<cdecl: uint32 wcscspn lpvoid lpwstr>
 	^self invalidCall: _failureCode!
 
 wcslen: aString
@@ -318,7 +289,6 @@ _setmode:mode:!CRT functions-file handling!public! !
 _splitpath_s:drive:driveLen:dir:dirLen:fname:fnameLen:ext:extLen:!CRT functions-file handling!public! !
 _statusfp!CRT functions-floating point support!public! !
 _wcserror_s:sizeInWords:errnum:!CRT functions-string manipulation!public! !
-_wcsicmp:string2:!CRT functions-string manipulation!public! !
 _wfsopen:mode:shflag:!CRT functions-stream I/O!public! !
 atoi:!CRT functions-data conversion!public! !
 close!public!realizing/unrealizing! !
@@ -332,7 +302,7 @@ fgetwc:!CRT functions-stream I/O!public! !
 fgetws:n:stream:!CRT functions-stream I/O!public! !
 fputc:stream:!CRT functions-stream I/O!public! !
 fputs:stream:!CRT functions-stream I/O!public! !
-fputwc:stream:!public! !
+fputwc:stream:!CRT functions-stream I/O!public! !
 fputws:stream:!CRT functions-stream I/O!public! !
 fread_s:bufferSize:elementSize:count:stream:!CRT functions-stream I/O!public! !
 free:!CRT functions-memory allocation!public! !
@@ -341,16 +311,12 @@ initialize!initializing!private! !
 invalidCall:!exceptions!private! !
 isNonBlocking!public!testing! !
 memcmp:buf2:count:!CRT functions-buffer manipulation!public! !
-memcpy_s:destSize:src:count:!public! !
+memcpy_s:destSize:src:count:!CRT functions-buffer manipulation!public! !
 setlocale:locale:!CRT functions-localization!public! !
-strcmp:string2:!CRT functions-string manipulation!public! !
-strcspn:strCharSet:!CRT functions-string manipulation!public! !
 strlen:!CRT functions-string manipulation!public! !
-strncpy_s:bufferSize:strSource:count:!CRT functions-string manipulation!public! !
 synchronizeLocale!CRT functions-localization!private! !
 ungetc:stream:!CRT functions-stream I/O!public! !
 ungetwc:stream:!CRT functions-stream I/O!public! !
-wcscspn:strCharSet:!CRT functions-string manipulation!public! !
 wcslen:!CRT functions-string manipulation!public! !
 wcsncpy_s:bufferSize:strSource:count:!CRT functions-string manipulation!public! !
 !

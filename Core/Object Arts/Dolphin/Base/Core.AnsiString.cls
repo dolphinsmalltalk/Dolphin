@@ -96,25 +96,25 @@ urlDecoded
 	| unescaped escaped ch |
 	unescaped := Utf8String writeStream: self size.
 	escaped := self readStream.
-	[(ch := escaped basicNextAvailable) isNil] whileFalse: 
-			[ch == ##($+ asciiValue)
+	[(ch := escaped nextAvailable) isNil] whileFalse: 
+			[ch == $+
 				ifTrue: [unescaped nextPut: $\x20]
 				ifFalse: 
-					[ch == ##($% asciiValue)
+					[ch == $%
 						ifTrue: 
 							[| digit1 digit2 |
 							"If not followed by two hex digits, then assume it is not really an escaped string and exit"
 							digit1 := escaped nextAvailable ifNil: [-1] ifNotNil: [:ch1 | ch1 asUppercase digitValue].
-							digit1 < 0 | (digit1 > 15) ifTrue: [^self].
+							(digit1 < 0 or: [digit1 > 15]) ifTrue: [^self].
 							digit2 := escaped nextAvailable ifNil: [-1] ifNotNil: [:ch2 | ch2 asUppercase digitValue].
-							digit2 < 0 | (digit2 > 15) ifTrue: [^self].
+							(digit2 < 0 or: [digit2 > 15]) ifTrue: [^self].
 							unescaped basicNextPut: digit1 * 16 + digit2]
 						ifFalse: 
-							[ch > 16r7F
+							[ch > $\x7F
 								ifTrue: 
 									["Non-ascii character encountered "
 									^self].
-							unescaped basicNextPut: ch]]].
+							unescaped nextPut: ch]]].
 	^unescaped contents! !
 !Core.AnsiString categoriesForMethods!
 _beginsString:!comparing!double dispatch!private! !

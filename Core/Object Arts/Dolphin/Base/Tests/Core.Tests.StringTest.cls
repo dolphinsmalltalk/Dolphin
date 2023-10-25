@@ -169,7 +169,7 @@ testBeginsWithMixedEncodings
 	b := self newCollection: #($b).
 	abc := self newCollection: #($a $£ $c).
 	ad := self newCollection: #($a $d).
-	{$a asAnsiString. $a asUtf8String. $a asUtf16String} do: 
+	{'a' asAnsiString. $a asUtf8String. $a asUtf16String} do: 
 			[:each |
 			self deny: (empty beginsWith: each).
 			self assert: (a beginsWith: a).

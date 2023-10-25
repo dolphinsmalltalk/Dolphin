@@ -32,9 +32,12 @@ package methodNames
 	add: #Behavior -> #instVarNames;
 	add: #Behavior -> #makeIndirect;
 	add: #Behavior -> #makeNullTerminated;
+	add: #ByteArray -> #asAnsiString;
+	add: #ByteArray -> #asString;
 	add: #ByteArray -> #byteAtOffset:;
 	add: #ByteArray -> #byteAtOffset:put:;
 	add: #ByteCodeDispatcher -> #byteCodeSegments;
+	add: #Character -> #asAnsiString;
 	add: #Class -> #addSharedPool:;
 	add: #Class -> #allSharedPoolNames;
 	add: #Class -> #variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:category:;
@@ -107,6 +110,7 @@ package methodNames
 	add: 'NTLibrary class' -> #isWine;
 	add: 'SortAlgorithm class' -> #sortBlock:;
 	add: 'SortedCollection class' -> #value:value:;
+	add: 'String class' -> #ansiClass;
 	add: 'String class' -> #fromId:;
 	add: 'String class' -> #fromId:in:;
 	add: 'String class' -> #fromUnicodeString:;
@@ -258,6 +262,24 @@ makeNullTerminated!instance specification-accessing!private! !
 
 !ByteArray methodsFor!
 
+asAnsiString
+	"Answer an ANSI-encoded String the characters of have the same encoding as the byte elements of the receiver."
+
+	| size |
+	Notification deprecated. "Avoid using AnsiStrings - they cannot represent many code points, and cannot be reliably interchanged with other systems that may be using a different code page."
+	size := self basicSize.
+	^self
+		replaceBytesOf: (AnsiString new: size)
+		from: 1
+		to: size
+		startingAt: 1!
+
+asString
+	"Assuming that the receiver contains the bytes of an ANSI string, return that string."
+
+	Notification deprecated. "This method is too generic: These days it is somewhat unlikely that the bytes are ANSI code-page encoded - more likely UTF-8 or UTF-16, but we can't know for sure. We also can't maintain backwards compatibility with the previous assumption of ANSI encoding, code page unspecified. You should use #asUtf8String for UTF-8, or #asUtf16String for UTF-16."
+	^self asAnsiString!
+
 byteAtOffset: anInteger
 	"Soft deprecated. Retain in applications that still refer to the old FFI class names, e.g. BYTE."
 
@@ -268,6 +290,8 @@ byteAtOffset: anInteger put: aByte
 
 	^self uint8AtOffset: anInteger put: aByte! !
 !ByteArray categoriesForMethods!
+asAnsiString!public! !
+asString!converting!public! !
 byteAtOffset:!accessing!public! !
 byteAtOffset:put:!accessing!public! !
 !
@@ -289,6 +313,18 @@ categoryIcon
 	^self icon! !
 !Category class categoriesForMethods!
 categoryIcon!constants!public! !
+!
+
+!Character methodsFor!
+
+asAnsiString
+	"Answer a new ANSI-encoded <String> whose sole element is the receiver. It is an error if
+	the receiver's code point cannot be represented in ANSI encoding."
+
+	Notification deprecated. "Avoid using AnsiStrings - they cannot represent many code points at all, and cannot be reliably interchanged with other systems that may be using a different code page."
+	^AnsiString with: self! !
+!Character categoriesForMethods!
+asAnsiString!converting!public! !
 !
 
 !Character class methodsFor!
@@ -779,6 +815,10 @@ equals:!comparing!public! !
 
 !String class methodsFor!
 
+ansiClass
+	#deprecated.	"Not used"
+	^AnsiString!
+
 fromId: anInteger
 	Notification deprecated.
 	^self fromResourceId: anInteger!
@@ -795,6 +835,7 @@ unicodeClass
 	#deprecated.
 	^self utf16Class! !
 !String class categoriesForMethods!
+ansiClass!constants!public! !
 fromId:!instance creation!public! !
 fromId:in:!instance creation!public! !
 fromUnicodeString:!instance creation!public! !

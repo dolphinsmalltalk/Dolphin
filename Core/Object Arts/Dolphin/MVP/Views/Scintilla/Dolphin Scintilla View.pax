@@ -85,6 +85,8 @@ package setClassNames: #(
 ).
 
 package setMethodNames: #(
+	#(#{OS.CRTLibrary} #_wcsicmp:string2:)
+	#(#{OS.CRTLibrary} #strcmp:string2:)
 	#(#{OS.UserLibrary} #getCaretBlinkTime)
 	#(#{UI.TextPresenter class} #resource_Scintilla_view)
 ).
@@ -1382,7 +1384,7 @@ Core.Object
 Core.Object
 	subclass: #'UI.Scintilla.CharacterClassifications'
 	instanceVariableNames: 'classifications'
-	classVariableNames: 'DefaultWhitespaces'
+	classVariableNames: 'AllPossibleWordChars DefaultWhitespaces'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
@@ -1997,6 +1999,35 @@ UI.MultilineTextEdit
 		}!
 
 "Loose Methods"!
+
+!OS.CRTLibrary methodsFor!
+
+_wcsicmp: string1 string2: string2
+	"Answer the result of a case insensitive string comparison between string1 and string2,
+	answer <0, 0, or >0 according to whether string1 is lexicographically less than, 
+	equal to, or greater than string2."
+
+	"Note that generally the CRT string functions are not especially useful because they may not handle Unicode correctly, and usually they don't support strings with embedded nulls either.
+	This method is included only for use with Scintilla to ensure that the completion list sorting is the same as that done by the Scintilla control."
+
+	<cdecl: int32 _wcsicmp lpwstr lpwstr>
+	^self invalidCall: _failureCode!
+
+strcmp: string1 string2: string2
+	"Answer the order between the <String> arguments, string1 and string2.
+
+		int strcmp( const char *string1, const char *string2);
+	"
+
+	"Note that generally the CRT string functions are not especially useful because they may not handle Unicode correctly, and usually they don't support strings with embedded nulls either.
+	This method is included only for use with Scintilla to ensure that the completion list sorting is the same as that done by the Scintilla control."
+
+	<cdecl: int32 strcmp lpstr lpstr>
+	^self invalidCall: _failureCode! !
+!OS.CRTLibrary categoriesForMethods!
+_wcsicmp:string2:!CRT functions-string manipulation!public! !
+strcmp:string2:!CRT functions-string manipulation!public! !
+!
 
 !OS.UserLibrary methodsFor!
 

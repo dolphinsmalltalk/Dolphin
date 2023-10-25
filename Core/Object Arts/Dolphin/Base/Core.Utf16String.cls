@@ -90,6 +90,8 @@ byteSize
 	^self basicSize + 1 bitShift: 1!
 
 countElements
+	"Answer the number of Unicode code points in the receiver."
+
 	^OS.ICU u_countChar32: self length: self size!
 
 decodeAt: anInteger
@@ -282,9 +284,6 @@ skipEncodingMarkerFrom: aGettableStream
 
 	^Error notYetImplemented!
 
-strcspn: aString start: anInteger
-	^OS.Ucrt wcscspn: self yourAddress + ((anInteger - 1) * 2) strCharSet: aString asUtf16String!
-
 strlen
 	"Answer the length of the receiver (in code units) up to the first null terminator. This may be less than its size if it contains embedded nulls. It can never be greater than the receiver's size."
 
@@ -343,7 +342,6 @@ replaceFrom:to:with:startingAt:!public!replacing! !
 resize:!mutating!public! !
 reversedFrom:to:!copying!public! !
 skipEncodingMarkerFrom:!encode/decode!private! !
-strcspn:start:!private!searching! !
 strlen!accessing!private! !
 uint16AtOffset:!accessing!primitives!private! !
 uint16AtOffset:put:!accessing!primitives!private! !

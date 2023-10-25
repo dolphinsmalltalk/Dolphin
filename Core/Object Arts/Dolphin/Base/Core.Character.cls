@@ -113,12 +113,6 @@ ansiValue
 
 	^code <= 16rFF ifTrue: [code] ifFalse: [self error: 'Non-ansi code point']!
 
-asAnsiString
-	"Answer a new ANSI-encoded <String> whose sole element is the receiver. It is an error if
-	the receiver's code point cannot be represented in ANSI encoding."
-
-	^AnsiString with: self!
-
 asciiValue
 	"Answers the ascii character value of the receiver."
 
@@ -324,11 +318,13 @@ isLetter
 
 	"Implementation Note: The ANSI NCITS 319-1998 specifies that this at least includes the letters of the English alphabet (upper and lowercase), but that implementations may consider other Characters to be letters. In Dolphin 8 it is intended that this answer true for all Characters with Unicode codepoints in one of the letter (L) general categories. To escape the inadequacies of the underlying Windows API (which cannot handle any letters defined outside the Unicode BMP, and which seems to have some incorrect classifications even with in the BMP, e.g. it classifies the Thai Maitaikhu non-spacing mark as a letter, but does not classify U+A7F9, MODIFIER LETTER SMALL LIGATURE OE, as one), we now use ICU."
 
-	#todo.	"Decide between alternates."
-	^false
-		ifTrue: 
-			[OS.ICU u_hasBinaryProperty: self which: UCHAR_ALPHABETIC	"u_isUAlphabetic is directly equivalent"]
-		ifFalse: [OS.ICU u_isalpha: self]!
+	"There are a number of ways to perform this test with ICU:
+		- u_isalpha
+		- u_hasBinaryProperty(UCHAR_ALPHABETIC)
+		- u_isUAlphabetic (equivalent to previous)
+	u_isalpha seems the best fit."
+
+	^OS.ICU u_isalpha: self!
 
 isLinefeed
 	"Answer whether the receiver is the line-feed character."
@@ -408,7 +404,8 @@ isUtf16Lead
 isUtf16Surrogate
 	"Answer whether the receiver is a UTF-16 surrogate (partial character)."
 
-	^(code bitAnd: ##(EncodingMask | 16rF800)) == ##(Utf16Mask | Utf16String.LeadSurrogateMask)!
+	^(code bitAnd: ##(EncodingMask bitOr: 16rF800))
+		== ##(Utf16Mask bitOr: Utf16String.LeadSurrogateMask)!
 
 isUtf16Trail
 	"Answer whether the receiver is a UTF-16 trail surrogate (trailing code-unit of two-part code point)."
@@ -429,8 +426,8 @@ isUtf8Lead
 isUtf8Surrogate
 	"Answer whether the receiver represents a UTF-8 surrogate (partial character)."
 
-	^(code bitAnd: ##(EncodingMask | Utf8String.TrailByteMask))
-		== ##(Utf8Mask | Utf8String.TrailByteMask)!
+	^(code bitAnd: ##(EncodingMask bitOr: Utf8String.TrailByteMask))
+		== ##(Utf8Mask bitOr: Utf8String.TrailByteMask)!
 
 isUtf8Trail
 	"Answer whether the receiver represents a UTF-8 trailing byte."
@@ -590,7 +587,6 @@ _separateSubStringsIn:!private!tokenizing! !
 =!comparing!public! !
 >!comparing!public! !
 ansiValue!accessing!public! !
-asAnsiString!converting!public! !
 asciiValue!accessing!public! !
 asInteger!converting!public! !
 asLowercase!converting!public! !

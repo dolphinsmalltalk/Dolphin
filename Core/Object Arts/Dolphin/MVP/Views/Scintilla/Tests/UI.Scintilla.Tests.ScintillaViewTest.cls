@@ -262,6 +262,20 @@ testSetGetEndOfLineAnnotations
 	actual := presenter endOfLineAnnotations.
 	self assert: actual equals: expected!
 
+testStrCmp
+	| upper |
+	upper := 'A🐬£'.
+	self assert: (Ucrt strcmp: upper string2: upper asLowercase) equals: -1.
+	"Shouldn't be converting Utf8Strings to AnsiStrings as this is lossy"
+	self deny: (Ucrt strcmp: upper string2: upper asAnsiString) equals: 0!
+
+testWcsICmp
+	| upper |
+	upper := 'A🐬£'.
+	self assert: (Ucrt _wcsicmp: upper string2: upper) equals: 0.
+	self assert: (Ucrt _wcsicmp: upper string2: upper asLowercase) equals: 0.
+	self deny: (Ucrt _wcsicmp: upper string2: upper asAnsiString) equals: 0!
+
 undoOnlyModification
 	super undoOnlyModification.
 	self deny: presenter isTextModified.
@@ -372,6 +386,8 @@ testLexerIndicatorStateRestoral!public!unit tests! !
 testOverrideDefaultKeyBindings!public!unit tests! !
 testSetGetAnnotations!public!unit tests! !
 testSetGetEndOfLineAnnotations!public!unit tests! !
+testStrCmp!public! !
+testWcsICmp!public! !
 undoOnlyModification!helpers!private! !
 verifyUpgradedView:identifier:!helpers!private! !
 verifyUpgradedViewFrom16:!helpers!private! !

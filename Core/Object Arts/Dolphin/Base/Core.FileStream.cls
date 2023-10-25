@@ -200,11 +200,6 @@ basicUpTo: anObject
 			answer := answer , (collection copyFrom: startIndex to: endIndex)].
 	^answer!
 
-beText
-	"Treat the elements of the stream as Characters."
-
-	collection := collection asString!
-
 bufferClassFor: aFile mode: modeSymbol type: encSymbol
 	| bufClass encoding |
 	encoding := encSymbol == #text
@@ -557,7 +552,6 @@ basicNext:into:startingAt:!accessing!public! !
 basicNext:putAll:startingAt:!accessing!private! !
 basicNextPut:!accessing!private! !
 basicUpTo:!accessing!private! !
-beText!modes!public! !
 bufferClassFor:mode:type:!instance creation!private! !
 close!operations!public! !
 contents!accessing!public! !
