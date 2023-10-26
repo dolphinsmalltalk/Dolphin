@@ -32,6 +32,7 @@ package methodNames
 	add: #Behavior -> #instVarNames;
 	add: #Behavior -> #makeIndirect;
 	add: #Behavior -> #makeNullTerminated;
+	add: #BoundsError -> #receiver:;
 	add: #ByteArray -> #asAnsiString;
 	add: #ByteArray -> #asString;
 	add: #ByteArray -> #byteAtOffset:;
@@ -59,9 +60,12 @@ package methodNames
 	add: #Integer -> #printStringRadix:showRadix:;
 	add: #KernelLibrary -> #getTimeFormat:dwFlags:lpTime:lpFormat:lpTimeStr:cchBuf:;
 	add: #Locale -> #isMonthBeforeDay;
+	add: #MessageNotUnderstood -> #receiver:;
 	add: #Metaclass -> #instVarNames:;
+	add: #NotFoundError -> #receiver:;
 	add: #NUMBERFMTW -> #thousandSeparator;
 	add: #NUMBERFMTW -> #thousandSeparator:;
+	add: #Object -> #errorCantHold:;
 	add: #Package -> #addGlobalNamed:;
 	add: #Package -> #includesGlobalNamed:;
 	add: #Package -> #isBaseImagePackage;
@@ -258,6 +262,15 @@ allInstVarNames!instance variables!public! !
 instVarNames!instance variables!public! !
 makeIndirect!instance specification-accessing!private! !
 makeNullTerminated!instance specification-accessing!private! !
+!
+
+!BoundsError methodsFor!
+
+receiver: anObject
+	#deprecated.	"Should only be set on instantiation with other identity variables - use receiver:index:"
+	receiver := anObject! !
+!BoundsError categoriesForMethods!
+receiver:!accessing!public! !
 !
 
 !ByteArray methodsFor!
@@ -689,6 +702,15 @@ isMonthBeforeDay
 isMonthBeforeDay!helpers!public! !
 !
 
+!MessageNotUnderstood methodsFor!
+
+receiver: anObject
+	#deprecated.	"Should only be set on instantiation with other identity variables - use receiver:message:"
+	receiver := anObject! !
+!MessageNotUnderstood categoriesForMethods!
+receiver:!accessing!public! !
+!
+
 !Metaclass methodsFor!
 
 instVarNames: aString
@@ -696,6 +718,15 @@ instVarNames: aString
 	self instanceVariableNames: aString! !
 !Metaclass categoriesForMethods!
 instVarNames:!class hierarchy-mutating!instance variables!public! !
+!
+
+!NotFoundError methodsFor!
+
+receiver: anObject
+	#deprecated.	"Should only be set on instantiation with other identity variables - use receiver:object:"
+	receiver := anObject! !
+!NotFoundError categoriesForMethods!
+receiver:!accessing!public! !
 !
 
 !NTLibrary class methodsFor!
@@ -721,6 +752,15 @@ thousandSeparator: aString
 !NUMBERFMTW categoriesForMethods!
 thousandSeparator!accessing!public! !
 thousandSeparator:!accessing!public! !
+!
+
+!Object methodsFor!
+
+errorCantHold: anObject
+	#deprecated.
+	^self error: ('Can''t hold <1p>' expandMacrosWith: anObject)! !
+!Object categoriesForMethods!
+errorCantHold:!exceptions!public! !
 !
 
 !Package methodsFor!

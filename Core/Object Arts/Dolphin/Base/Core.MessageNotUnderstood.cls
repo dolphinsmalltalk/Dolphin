@@ -42,10 +42,9 @@ receiver
 	
 	^receiver!
 
-receiver: anObject
-	"Set the object which did not understand the message to be anObject"
-	
-	receiver := anObject!
+receiver: anObject message: aSymbol
+	receiver := anObject.
+	tag := aSymbol!
 
 selector
 	"Answer the selector that was not understood from the receiver's
@@ -58,7 +57,7 @@ _descriptionFormat!displaying!public! !
 isResumable!public!testing! !
 message!accessing!public! !
 receiver!accessing!public! !
-receiver:!accessing!public! !
+receiver:message:!accessing!private! !
 selector!accessing!public! !
 !
 
@@ -71,8 +70,7 @@ receiver: anObject message: aMessage
 	the <failedMessage>, aMessage."
 
 	^super new
-		receiver: anObject;
-		tag: aMessage;
+		receiver: anObject message: aMessage;
 		signal! !
 !Core.MessageNotUnderstood class categoriesForMethods!
 receiver:message:!instance creation!public! !

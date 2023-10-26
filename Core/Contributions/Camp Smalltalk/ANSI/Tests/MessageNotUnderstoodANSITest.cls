@@ -11,9 +11,8 @@ MessageNotUnderstoodANSITest comment: ''!
 !MessageNotUnderstoodANSITest methodsFor!
 
 canonicalObject
-	^MessageNotUnderstood new 
-		receiver: nil;
-		tag: (Message selector: #foo: argument: 'bar');
+	^MessageNotUnderstood new
+		receiver: nil message: (Message selector: #foo: argument: 'bar');
 		yourself!
 
 protocol

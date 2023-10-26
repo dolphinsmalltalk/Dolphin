@@ -22,13 +22,24 @@ receiver
 	
 	^receiver!
 
-receiver: anObject
-	"Set the object which generated the bounds error to be anObject"
-	
-	receiver := anObject! !
+receiver: anObject index: anInteger
+	receiver := anObject.
+	tag := anInteger! !
 !Core.BoundsError categoriesForMethods!
 _descriptionFormat!displaying!public! !
 receiver!accessing!public! !
-receiver:!accessing!public! !
+receiver:index:!accessing!initializing!private! !
+!
+
+!Core.BoundsError class methodsFor!
+
+receiver: anObject index: anInteger
+	"Raise a new instance of the receiver reporting that out-of-bounds indexed access was attempted to the indexed element, anInteger, of the <object>, anObject."
+
+	^self basicNew
+		receiver: anObject index: anInteger;
+		signal! !
+!Core.BoundsError class categoriesForMethods!
+receiver:index:!instance creation!public! !
 !
 

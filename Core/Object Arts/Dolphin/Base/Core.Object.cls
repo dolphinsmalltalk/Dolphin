@@ -599,25 +599,16 @@ error: signalerText
 
 	^Error signal: signalerText!
 
-errorCantHold: anObject
-	"Raise an error that the receiver cannot hold anObject (as it is of the wrong type)"
-
-	^self error: ('Can''t hold <1p>' expandMacrosWith: anObject)!
-
 errorNotFound: anObject
 	"Raise a NotFoundError indicating that anObject was not found 
 	in the receiver"
 
-	^NotFoundError new
-		receiver: self;
-		signalWith: anObject!
+	^NotFoundError receiver: self object: anObject!
 
 errorSubscriptBounds: anInteger
 	"Raise a BoundsError because anInteger is outside the subscript bounds of the receiver."
 
-	^BoundsError new
-		receiver: self;
-		signalWith: anInteger!
+	^BoundsError receiver: self index: anInteger!
 
 events
 	"Answer a Collection of the receiver's events"
@@ -1554,7 +1545,6 @@ displayString:!displaying!public! !
 displayStringLimitedTo:locale:!public! !
 doesNotUnderstand:!exceptions!public!vm entry points! !
 error:!exceptions!public! !
-errorCantHold:!exceptions!public! !
 errorNotFound:!exceptions!public! !
 errorSubscriptBounds:!exceptions!public! !
 events!debugger-step over!events!public! !

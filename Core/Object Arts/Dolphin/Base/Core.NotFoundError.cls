@@ -22,13 +22,22 @@ receiver
 	
 	^receiver!
 
-receiver: anObject
-	"Set the object which generated the error to be anObject"
-	
-	receiver := anObject! !
+receiver: receiverObject object: notFoundObject
+	receiver := receiverObject.
+	tag := notFoundObject! !
 !Core.NotFoundError categoriesForMethods!
 _descriptionFormat!displaying!public! !
 receiver!accessing!public! !
-receiver:!accessing!public! !
+receiver:object:!initializing!private! !
+!
+
+!Core.NotFoundError class methodsFor!
+
+receiver: receiverObject object: notFoundObject
+	^self basicNew
+		receiver: receiverObject object: notFoundObject;
+		signal! !
+!Core.NotFoundError class categoriesForMethods!
+receiver:object:!instance creation!public! !
 !
 

@@ -125,10 +125,7 @@ instVarAt: index
 
 	<primitive: 73>
 	_failureCode == _PrimitiveFailureCode.OutOfBounds
-		ifTrue: 
-			[^BoundsError new
-				receiver: self;
-				signalWith: index].
+		ifTrue: [^BoundsError receiver: self index: index].
 	_failureCode == _PrimitiveFailureCode.InvalidParameter1 ifTrue: [^Error nonIntegerIndex: index].
 	^self primitiveFailed: _failureCode!
 
