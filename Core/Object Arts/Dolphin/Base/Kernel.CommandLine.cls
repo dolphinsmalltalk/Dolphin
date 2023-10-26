@@ -2,7 +2,7 @@
 
 Core.Object
 	subclass: #'Kernel.CommandLine'
-	instanceVariableNames: 'arguments argv optArg optIndex optOpt optionPrefixChars options parsingArg parsingArgStream parsingErrors parsingOptionStream parsingRules'
+	instanceVariableNames: 'arguments argv optArg optIndex optOpt optionPrefixChars options parsingArgStream parsingErrors parsingRules'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -117,6 +117,32 @@ initialize: anArray
 	optionPrefixChars := '-/'.
 	parsingRules := OrderedCollection new!
 
+matchLongOption: aString
+	^parsingRules detect: [:each | each name = aString]
+		ifNone: 
+			[| rules |
+			rules := parsingRules select: [:each | each isLongOption and: [each name beginsWith: aString]].
+			rules size == 1
+				ifTrue: [rules first]
+				ifFalse: 
+					[parsingErrors
+						nextPutAll: (rules isEmpty ifTrue: ['Unrecognized'] ifFalse: ['Ambiguous']);
+						nextPutAll: ' option ';
+						print: aString;
+						cr.
+					nil]]!
+
+matchOption: aCharacter
+	^parsingRules detect: [:each | each name = aCharacter]
+		ifNone: 
+			["Unrecognized option"
+			options add: nil -> aCharacter.
+			parsingErrors
+				nextPutAll: 'Unrecognized option: ';
+				nextPut: aCharacter;
+				cr.
+			nil]!
+
 optArg
 
 	^optArg!
@@ -157,116 +183,105 @@ parse
 	arguments := arguments asArray!
 
 parseLongOption: aString
-
-	| argument key rule |
-	(aString includes: $=) ifFalse: [	"option does not have argument with it"
-		key := aString.
-	] ifTrue: [		"option=value format"
-		| pieces |
-		pieces := $= split: aString.
-		key := pieces at: 1.
-		argument := pieces at: 2.
-	].
-	rule := parsingRules 
-		detect: [:each | each name = key]
-		ifNone: [
-			| rules |
-			rules := parsingRules select: [:each | each isLongOption and: [each name beginsWith: key]].
-			rules size == 1 ifTrue: [
-				rules first.
-			] ifFalse: [
-				rules isEmpty ifTrue: [
-					parsingErrors nextPutAll: 'Unrecognized option ' , key printString; cr.
-				] ifFalse: [
-					parsingErrors nextPutAll: 'Ambiguous option ' , key printString; cr.
-				].
-				^self
-			].
-		].
-	rule isArgumentAllowed ifFalse: [
-		argument ifNil: [
-			options add: rule -> nil.
-		] ifNotNil: [
-			parsingErrors nextPutAll: 'Option ' , rule name printString , ' has unexpected argument of ' , argument printString; cr.
-		].
-		^self
-	].
-	argument ifNil: [
-		argument := parsingArgStream atEnd 
-			ifTrue: [nil] 
-			ifFalse: [
-				| peek |
-				peek := parsingArgStream peek.
-				(optionPrefixChars includes: peek first) 
-					ifTrue: [nil]
-					ifFalse: [parsingArgStream next].
-			].
-		
-	].
-	(rule isArgumentRequired and: [argument isNil]) ifTrue: [
-		options add: nil -> key.
-		parsingErrors nextPutAll: 'Missing required argument for option ' , key printString; cr.
-	] ifFalse: [
-		options add: rule -> argument.
-	].
-!
+	| argument key rule i |
+	i := aString indexOf: $=.
+	i == 0
+		ifTrue: 
+			["option does not have argument with it"
+			key := aString]
+		ifFalse: 
+			["option=value format"
+			key := aString copyFrom: 1 to: i - 1.
+			argument := aString copyFrom: i + 1 to: aString size].
+	rule := self matchLongOption: key.
+	rule ifNil: [^self].
+	rule isArgumentAllowed
+		ifFalse: 
+			[argument
+				ifNil: [options add: rule -> nil]
+				ifNotNil: 
+					[parsingErrors
+						nextPutAll: 'Option ';
+						print: rule name;
+						nextPutAll: ' has unexpected argument of ';
+						print: argument;
+						cr].
+			^self].
+	argument
+		ifNil: 
+			[argument := parsingArgStream atEnd
+						ifTrue: [nil]
+						ifFalse: 
+							[| peek |
+							peek := parsingArgStream peek.
+							(optionPrefixChars includes: peek first) ifTrue: [nil] ifFalse: [parsingArgStream next]]].
+	(rule isArgumentRequired and: [argument isNil])
+		ifTrue: 
+			[options add: nil -> key.
+			parsingErrors
+				nextPutAll: 'Missing required argument for option ';
+				print: key;
+				cr]
+		ifFalse: [options add: rule -> argument]!
 
 parseNextArg
+	| parsingArg parsingOptionStream len prefix |
 	parsingArg := parsingArgStream next.
-	(parsingArg size == 2 and: [(parsingArg at: 1) == (parsingArg at: 2)])
-		ifTrue: 
-			["-- by itself is a signal to treat everything following as arguments, not options"
-			arguments addAll: parsingArgStream upToEnd.
-			^self].
-	(1 < parsingArg size and: [optionPrefixChars includes: parsingArg first])
+	len := parsingArg size.
+	(1 < len and: [prefix := parsingArg first. (optionPrefixChars includes: prefix)])
 		ifFalse: 
 			["no prefix means treat as an argument rather than as an option"
 			arguments add: parsingArg.
 			^self].
-	(2 < parsingArg size and: [(parsingArg at: 1) == (parsingArg at: 2)])
+	(len == 2 and: [parsingArg second = prefix])
+		ifTrue: 
+			["-- by itself is a signal to treat everything following as arguments, not options"
+			arguments addAll: parsingArgStream upToEnd.
+			^self].
+	(2 < len and: [parsingArg second = prefix])
 		ifTrue: 
 			["-- is lead-in to long argument"
-			self parseLongOption: (parsingArg copyFrom: 3 to: parsingArg size).
+			self parseLongOption: (parsingArg copyFrom: 3 to: len).
 			^self].
 	parsingOptionStream := (ReadStream on: parsingArg)
 				next;
 				yourself.	"Prefix character ($/ or $-)"
 	[parsingOptionStream atEnd] whileFalse: 
 			["one argv can have multiple options (-ab is equivalent to -a -b)"
-			self parseNextOption]!
+			self parseNextOption: parsingOptionStream]!
 
-parseNextOption
-
+parseNextOption: aReadStream
 	| char optionArg rule |
-	char := parsingOptionStream next.
-	rule := parsingRules 
-		detect: [:each | each name == char] 
-		ifNone: [	"Unrecognized option"
-			options add: nil -> char.
-			parsingErrors nextPutAll: 'Unrecognized option: ' , char printString; cr.
-			^self
-		].
-	rule isArgumentAllowed ifFalse: [	"simple option without an argument"
-		options add: rule -> nil.
-		^self
-	].
+	char := aReadStream next.
+	rule := self matchOption: char.
+	rule ifNil: [^self].
+	rule isArgumentAllowed
+		ifFalse: 
+			["simple option without an argument"
+			options add: rule -> nil.
+			^self].
 	"option has an optional or required argument"
-	optionArg := parsingOptionStream upToEnd.	"option argument can follow immediately (-xabc)"
+	optionArg := aReadStream upToEnd.	"option argument can follow immediately (-xabc)"
 	optionArg isEmpty ifTrue: [optionArg := nil].
-	(optionArg isNil and: [parsingArgStream atEnd not]) ifTrue: [	"look for option argument in next argv"
-		optionArg := parsingArgStream peek.
-		(optionPrefixChars includes: optionArg first) ifTrue: [	"next argument begins with prefix character, so another option"
-			optionArg := nil.		"option does not have an argument"
-		] ifFalse: [
-			parsingArgStream next.	"argument associated with option"
-		].
-	].
-	(rule isArgumentRequired and: [optionArg isNil]) ifTrue: [	"error if required argument is not present"
-		parsingErrors nextPutAll: 'Missing required argument for option ' , char printString; cr.
-		optionArg := char. 
-		rule := nil.
-	].
-	options add: rule -> optionArg.	"save option and argument"!
+	(optionArg isNil and: [parsingArgStream atEnd not])
+		ifTrue: 
+			["look for option argument in next argv"
+			optionArg := parsingArgStream peek.
+			(optionPrefixChars includes: optionArg first)
+				ifTrue: 
+					["next argument begins with prefix character, so another option"
+					optionArg := nil	"option does not have an argument"]
+				ifFalse: [parsingArgStream next	"argument associated with option"]].
+	(rule isArgumentRequired and: [optionArg isNil])
+		ifTrue: 
+			["error if required argument is not present"
+			parsingErrors
+				nextPutAll: 'Missing required argument for option ';
+				nextPut: char;
+				cr.
+			optionArg := char.
+			rule := nil].
+	options add: rule -> optionArg	"save option and argument"!
 
 processOptions
 	options ifNil: [self parse].
@@ -283,6 +298,8 @@ arguments!accessing!public! !
 checkForErrors!private! !
 getOpt:!getopt protocol!public! !
 initialize:!initializing!private! !
+matchLongOption:!private! !
+matchOption:!private! !
 optArg!getopt protocol!public! !
 options!accessing!public! !
 options:!public! !
@@ -290,16 +307,14 @@ optOpt!getopt protocol!public! !
 parse!private! !
 parseLongOption:!private! !
 parseNextArg!private! !
-parseNextOption!private! !
+parseNextOption:!private! !
 processOptions!public! !
 !
 
 !Kernel.CommandLine class methodsFor!
 
 argv: anArray
-	"Constructor called directly only in testing"
-
-	^super new
+	^self basicNew
 		initialize: anArray;
 		yourself!
 
