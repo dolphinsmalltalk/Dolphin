@@ -106,13 +106,10 @@ argv
 	^argv!
 
 argvLegacyOptionsRemoved
-	"Private - Answer the argv arguments vertor with the old style legacy options removed"
+	"Private - Answer the argv arguments vector with the old style legacy options removed"
 
-	^self argv reject: 
-			[:each | 
-			| opt |
-			opt := each allButFirst asLowercase.
-			opt = 'nosplash' or: [opt = 'embedding']]!
+	^self argv
+		reject: [:each | ##(#('-nosplash' '/nosplash' '-embedding' '/embedding') asSet) includes: each asLowercase]!
 
 backupOnImageSave
 	"Answer whether the image should be backed up (i.e. the old .img file is renamed to .bak when the new .img
