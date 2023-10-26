@@ -800,6 +800,15 @@ uninitialize
 
 	VM registryAt: self name put: nil!
 
+unregister
+	"Unregister the receiver's as COM interface classes with	the appropriate GUIDs."
+
+	| guid |
+	super unregister.
+	"IDispatch may be registered more than once for different dispinterfaces."
+	[(guid := InterfaceClasses keyAtValue: self ifAbsent: nil) notNil]
+		whileTrue: [InterfaceClasses removeKey: guid]!
+
 vt
 	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
 	type when represented in a <VARIANT>."
@@ -808,6 +817,7 @@ vt
 !OS.COM.IDispatch class categoriesForMethods!
 defineFunctions!initializing!public!template definition! !
 uninitialize!class hierarchy-removing!private! !
+unregister!public!removing! !
 vt!constants!public! !
 !
 
