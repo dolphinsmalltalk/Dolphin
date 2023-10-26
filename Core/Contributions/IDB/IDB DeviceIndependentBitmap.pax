@@ -8,10 +8,14 @@ For Version 6 of Dolphin Smalltalk
 (C) 2005 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware
+
+** This package is obsolete and contains only an alias and some loose methods for backwards compatibility. DeviceIndependentBitmap has long been incorporated into the base image as DIBSection. 
 '.
 
 package basicPackageVersion: '6a'.
 
+package basicScriptAt: #postinstall put: '(Smalltalk bindingFor: #DeviceIndependentBitmap) isDeprecated: true.
+Smalltalk resetOldNames.'.
 
 package methodNames
 	add: #Clipboard -> #getDeviceIndependentBitmap;
@@ -20,7 +24,7 @@ package methodNames
 	add: #Clipboard -> #setDeviceIndependentBitmap:;
 	add: #Clipboard -> #setDeviceIndependentBitmap:format:;
 	add: #Clipboard -> #setDeviceIndependentBitmap:formatId:;
-	add: #DeviceIndependentBitmap -> #bitmapInfoStruct;
+	add: #DIBSection -> #bitmapInfoStruct;
 	add: 'DIBSection class' -> #colorTableDepth1;
 	add: 'DIBSection class' -> #colorTableDepth4;
 	add: 'DIBSection class' -> #colorTableDepth8;
@@ -101,7 +105,7 @@ setDeviceIndependentBitmap:format:!accessing!idb goodies!public! !
 setDeviceIndependentBitmap:formatId:!accessing!idb goodies!public! !
 !
 
-!DeviceIndependentBitmap methodsFor!
+!DIBSection methodsFor!
 
 bitmapInfoStruct
 	| bitmapInfoStruct dibSectionStruct bitmapInfoHeaderStruct |
@@ -112,7 +116,7 @@ bitmapInfoStruct
 	bitmapInfoHeaderStruct biBitCount <= 8
 		ifTrue: [bitmapInfoStruct bmiColors: self getColorTable bytes].
 	^bitmapInfoStruct! !
-!DeviceIndependentBitmap categoriesForMethods!
+!DIBSection categoriesForMethods!
 bitmapInfoStruct!accessing!public! !
 !
 

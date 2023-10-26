@@ -109,6 +109,9 @@ removeClass: aClass
 	aClass removeFromSuper.	"At this point it would be a good idea to make the class become: a special error reporting class"
 	self classRemoved: aClass!
 
+resetOldNames
+	oldNames := nil!
+
 setEvents: anEventsCollectionOrNil
 	"Private - Set the EventsCollection of the receiver to be anEventsCollectionOrNil.
 	Answer the receiver."
@@ -146,6 +149,7 @@ developmentSystem!accessing!public! !
 getEvents!events!private! !
 oldNames!accessing!public! !
 removeClass:!operations!public! !
+resetOldNames!private! !
 setEvents:!events!private! !
 shortNameFor:!enquiries!private! !
 shortNameFor:in:!helpers!private! !
