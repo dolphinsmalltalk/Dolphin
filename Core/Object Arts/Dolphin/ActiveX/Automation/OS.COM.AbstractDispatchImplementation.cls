@@ -8,6 +8,7 @@ OS.COM.InterfaceImplementation
 	classInstanceVariableNames: ''
 	classConstants: {}!
 OS.COM.AbstractDispatchImplementation guid: (Core.GUID fromString: '{10dee4fb-246c-4582-9a3b-2ca93e0636c2}')!
+OS.COM.AbstractDispatchImplementation isNonInstantiable: true!
 OS.COM.AbstractDispatchImplementation comment: ''!
 !OS.COM.AbstractDispatchImplementation methodsFor!
 
