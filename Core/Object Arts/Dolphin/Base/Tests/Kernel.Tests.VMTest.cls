@@ -3481,8 +3481,8 @@ verifyExtCallFpFault: aBoolean
 		do: [:ex | exceptions add: ex].
 	self assert: exceptions size equals: 1.
 	fpFault := exceptions first.
-	self assert: fpFault tag causeName identicalTo: #InvalidOperation.
-	self assert: fpFault tag operationName identicalTo: #SquareRoot.
+	self assert: fpFault tag causeName equals: 'InvalidOperation'.
+	self assert: fpFault tag operationName equals: '_FpCodeSquareRoot'.
 	self assert: fpFault tag operand1 value equals: -1.0!
 
 verifyExtCallGpf: aBoolean

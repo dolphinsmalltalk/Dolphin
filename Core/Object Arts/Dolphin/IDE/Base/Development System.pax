@@ -6585,23 +6585,23 @@ printFieldsOn: aStream
 	aStream
 		display: #roundingMode;
 		nextPut: $=;
-		print: self roundingModeName;
+		display: self roundingModeName;
 		space;
 		display: #precision;
 		nextPut: $=;
-		print: self precisionName;
+		display: self precisionName;
 		space;
 		display: #operation;
 		nextPut: $=;
-		print: self operationName;
+		display: self operationName;
 		space.
-	#(#cause #enable #status) do: 
+	#(#cause #enabled #status) do: 
 			[:each |
 			aStream
 				space;
 				display: each;
 				nextPut: $=.
-			self class printFlags: (self getField: each) on: aStream].
+			self printFlags: (self getField: each) on: aStream].
 	#(#operand1 #operand2) do: 
 			[:each |
 			| value |
@@ -6629,7 +6629,7 @@ printFieldsOn: aStream
 			[aStream
 				display: #format;
 				nextPut: $=;
-				print: self formatName
+				display: self formatName
 			"Don't attempt to display the value as often this may result in overflow/underflow exceptions"]
 		ifFalse: [aStream nextPutAll: '<invalid>']! !
 !OS._FPIEEE_VALUE categoriesForMethods!

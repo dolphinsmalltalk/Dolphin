@@ -8,6 +8,21 @@ External.Structure
 	classInstanceVariableNames: ''
 	classConstants: {
 			'__FPIEEE_VALUE_Size' -> 16r18.
+			'_FpFormatBcd80' -> 16rA.
+			'_FpFormatCompare' -> 16rB.
+			'_FpFormatFp128' -> 16r3.
+			'_FpFormatFp32' -> 16r0.
+			'_FpFormatFp64' -> 16r1.
+			'_FpFormatFp80' -> 16r2.
+			'_FpFormatI16' -> 16r4.
+			'_FpFormatI32' -> 16r5.
+			'_FpFormatI64' -> 16r6.
+			'_FpFormatString' -> 16rC.
+			'_FpFormatU16' -> 16r7.
+			'_FpFormatU32' -> 16r8.
+			'_FpFormatU64' -> 16r9.
+			'_FPIEEE_FORMAT'
+				-> #('_FpFormatFp32' '_FpFormatFp64' '_FpFormatFp80' '_FpFormatFp128' '_FpFormatI16' '_FpFormatI32' '_FpFormatI64' '_FpFormatU16' '_FpFormatU32' '_FpFormatU64' '_FpFormatBcd80' '_FpFormatCompare' '_FpFormatString').
 			'_OffsetOf_filler' -> 16r14.
 			'_OffsetOf_flags' -> 16r10.
 			'_OffsetOf_value' -> 16r0
@@ -31,7 +46,7 @@ formatName
 	"Answer the symbolic name of the operation being attemped when the exception
 	occurred. See fpieee.h in the MS Win32 SDK for further information."
 
-	^self class formatCodes at: self format + 1 ifAbsent: #Unknown!
+	^_FPIEEE_FORMAT at: self format + 1 ifAbsent: 'Unknown'!
 
 isValid
 	^(self flags allMask: 1)!
@@ -43,9 +58,9 @@ value
 	^self isValid ifTrue: [
 	    bytes 
 		perform: (#(
-			floatAtOffset: 
-			doubleAtOffset:
-			longDoubleAtOffset:	"80-bit float"
+			#floatAtOffset: 
+			#doubleAtOffset:
+			#longDoubleAtOffset:	"80-bit float"
 			#uint32AtOffset:		"128-bit float - not supported on Intel h/w"
 			#int16AtOffset:
 			#int32AtOffset:
@@ -82,15 +97,11 @@ defineFields
 		defineField: #flags type: UInt32Field readOnly;
 		defineField: #filler type: UInt32Field filler!
 
-formatCodes
-	^#(#Fp32 #Fp64 #Fp80 #Fp128 #I16 #I32 #I64 #U16 #U32 #U64 #Bcd80 #Compare #String #Fp82)!
-
 getFieldNames
 	^#(#flags)! !
 !OS._FPIEEE_VALUE class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
-formatCodes!constants!public! !
 getFieldNames!**compiled accessors**!constants!private! !
 !
 
