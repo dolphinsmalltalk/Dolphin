@@ -88,7 +88,7 @@ styleNext: anInteger mask: anInteger2
 	| range |
 	range := lastStyled + 1 to: lastStyled + anInteger.
 	range isEmpty ifTrue: [^self].
-	range stop > text size ifTrue: [^BoundsError signal: range stop].
+	range stop > text size ifTrue: [^BoundsError signalWith: range stop].
 	(tokens notEmpty and: [(tokens last at: 2) == anInteger2])
 		ifTrue: [(tokens last at: 1) stop: range stop]
 		ifFalse: [tokens addLast: {range. anInteger2}].

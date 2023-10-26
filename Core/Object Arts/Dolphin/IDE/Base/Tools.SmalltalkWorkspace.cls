@@ -1478,7 +1478,10 @@ selectedWord
 	| selected |
 	selected := self selection.
 	^selected isEmpty
-		ifTrue: [view styleRunTextAt: view caretPosition]
+		ifTrue: 
+			[| caret |
+			caret := view caretPosition.
+			caret > view textLength ifTrue: [''] ifFalse: [view styleRunTextAt: caret]]
 		ifFalse: [selected trimBlanks subStrings first]!
 
 selectEvaluationRange

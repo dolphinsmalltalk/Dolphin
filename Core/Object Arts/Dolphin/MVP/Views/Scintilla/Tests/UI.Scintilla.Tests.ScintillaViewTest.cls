@@ -269,6 +269,20 @@ testStrCmp
 	"Shouldn't be converting Utf8Strings to AnsiStrings as this is lossy"
 	self deny: (Ucrt strcmp: upper string2: upper asAnsiString) equals: 0!
 
+testStyleRunTextAt
+	| subject cr line1 |
+	subject := presenter view.
+	subject lexer: #markdown.
+	subject restyleAll.
+	cr := self text indexOf: $\r.
+	line1 := self text copyFrom: 1 to: cr - 1.
+	self assert: (subject styleRunTextAt: 1) equals: line1.
+	self assert: (subject styleRunTextAt: cr - 1) equals: line1.
+	self assert: (subject styleRunTextAt: cr) equals: String lineDelimiter , String lineDelimiter.
+	self assert: (subject styleRunTextAt: self text size) equals: String lineDelimiter.
+	self should: [subject styleRunTextAt: 0] raise: BoundsError.
+	self should: [subject styleRunTextAt: self text size + 1] raise: BoundsError!
+
 testWcsICmp
 	| upper |
 	upper := 'A🐬£'.
@@ -387,6 +401,7 @@ testOverrideDefaultKeyBindings!public!unit tests! !
 testSetGetAnnotations!public!unit tests! !
 testSetGetEndOfLineAnnotations!public!unit tests! !
 testStrCmp!public! !
+testStyleRunTextAt!public!unit tests! !
 testWcsICmp!public! !
 undoOnlyModification!helpers!private! !
 verifyUpgradedView:identifier:!helpers!private! !
