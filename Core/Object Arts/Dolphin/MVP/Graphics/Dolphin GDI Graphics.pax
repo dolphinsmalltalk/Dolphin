@@ -31,6 +31,7 @@ package setClassNames: #(
 	#{Graphics.GraphicsTool}
 	#{Graphics.HatchBrush}
 	#{Graphics.Icon}
+	#{Graphics.IconFromBitmapInitializer}
 	#{Graphics.IconFromSystemInitializer}
 	#{Graphics.IconImageManager}
 	#{Graphics.Image}
@@ -113,9 +114,9 @@ package setMethodNames: #(
 	#(#{OS.CommCtrlLibrary} #imageList_ReplaceIcon:i:hicon:)
 	#(#{OS.CommCtrlLibrary} #imageList_SetBkColor:clrBk:)
 	#(#{OS.CommCtrlLibrary} #imageList_SetDragCursorImage:iDrag:dxHotspot:dyHotspot:)
-	#(#{OS.CommCtrlLibrary} #imageList_SetIconSize:cx:cy:)
 	#(#{OS.CommCtrlLibrary} #loadIconWithScaleDown:pszName:cx:cy:phico:)
 	#(#{OS.UserLibrary} #copyImage:uType:cxDesired:cyDesired:fuFlags:)
+	#(#{OS.UserLibrary} #createIconIndirect:)
 	#(#{OS.UserLibrary} #destroyCursor:)
 	#(#{OS.UserLibrary} #destroyIcon:)
 	#(#{OS.UserLibrary} #drawEdge:qrc:edge:grfFlags:)
@@ -165,7 +166,10 @@ Core.Object
 	classVariableNames: 'DesktopResolution'
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'DrawTextAlignments'
+				-> (IdentityDictionary withAll: { #center -> 16r1. #left -> 16r0. #right -> 16r2 })
+		}!
 Core.Object
 	subclass: #'Graphics.Color'
 	instanceVariableNames: ''
@@ -554,6 +558,13 @@ Graphics.ImageInitializer
 Graphics.ImageInitializer
 	subclass: #'Graphics.DisplayCompatibleBitmapInitializer'
 	instanceVariableNames: 'extent'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.ImageInitializer
+	subclass: #'Graphics.IconFromBitmapInitializer'
+	instanceVariableNames: 'bitmap transparentColor'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -1283,7 +1294,7 @@ imageList_GetIconSize: himl cx: cx cy: cy
 			int* cx,
 			int* cy);"
 
-	<stdcall: bool ImageList_GetIconSize handle int32 int32>
+	<stdcall: bool ImageList_GetIconSize handle int32* int32*>
 	^self invalidCall: _failureCode!
 
 imageList_GetImageCount: himl
@@ -1348,18 +1359,6 @@ imageList_SetDragCursorImage: himlDrag iDrag: iDrag dxHotspot: dxHotspot dyHotsp
 	<stdcall: bool ImageList_SetDragCursorImage handle int32 int32 int32>
 	^self invalidCall: _failureCode!
 
-imageList_SetIconSize: himl cx: cx cy: cy
-	"Invoke the ImageList_SetIconSize() function of the module wrapped by the receiver.
-	Helpstring: Sets the dimensions of images in an image list
-
-		BOOL __stdcall ImageList_SetIconSize(
-			HIMAGELIST himl,
-			int cx,
-			int cy);"
-
-	<stdcall: bool ImageList_SetIconSize handle int32 int32>
-	^self invalidCall: _failureCode!
-
 loadIconWithScaleDown: hInst pszName: pszName cx: cx cy: cy phico: phico
 	"Invoke the LoadIconWithScaleDown() function of the module wrapped by the receiver.
 	Helpstring: Loads an icon. If the icon is not a standard size, this function scales down a larger image instead of scaling up a smaller image.
@@ -1394,7 +1393,6 @@ imageList_LoadImage:lpbmp:cx:cGrow:crMask:uType:uFlags:!**auto generated**!publi
 imageList_ReplaceIcon:i:hicon:!**auto generated**!public!win32 functions-image list! !
 imageList_SetBkColor:clrBk:!**auto generated**!public!win32 functions-image list! !
 imageList_SetDragCursorImage:iDrag:dxHotspot:dyHotspot:!**auto generated**!public!win32 functions-image list! !
-imageList_SetIconSize:cx:cy:!**auto generated**!public!win32 functions-image list! !
 loadIconWithScaleDown:pszName:cx:cy:phico:!**auto generated**!public! !
 !
 
@@ -1414,6 +1412,16 @@ copyImage: hImage uType: uType cxDesired: cxDesired cyDesired: cyDesired fuFlags
 		);"
 
 	<stdcall: handle CopyImage handle uint32 int32 int32 uint32>
+	^self invalidCall: _failureCode!
+
+createIconIndirect: piconinfo
+	"Invoke the CreateIconIndirect() function of the module wrapped by the receiver.
+	Helpstring: Creates an icon that has size, colors, and bit patterns specified in a structure variable
+
+		HICON __stdcall CreateIconIndirect(
+			ICONINFO* piconinfo);"
+
+	<stdcall: handle CreateIconIndirect ICONINFO*>
 	^self invalidCall: _failureCode!
 
 destroyCursor: hCursor
@@ -1656,6 +1664,7 @@ showCursor: aBoolean
 	^self invalidCall: _failureCode! !
 !OS.UserLibrary categoriesForMethods!
 copyImage:uType:cxDesired:cyDesired:fuFlags:!public!win32 functions-resources! !
+createIconIndirect:!**auto generated**!public! !
 destroyCursor:!public!win32 functions-icon! !
 destroyIcon:!public!win32 functions-icon! !
 drawEdge:qrc:edge:grfFlags:!**auto generated**!public!win32 functions-painting and drawing! !

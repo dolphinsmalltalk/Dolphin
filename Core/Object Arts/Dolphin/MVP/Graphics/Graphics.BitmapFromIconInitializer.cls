@@ -11,6 +11,12 @@ Graphics.BitmapFromIconInitializer guid: (Core.GUID fromString: '{cbd63799-b451-
 Graphics.BitmapFromIconInitializer comment: ''!
 !Graphics.BitmapFromIconInitializer methodsFor!
 
+= anObject
+	"Answer whether the receiver and anObject are equivalent. Two Images loaded by identifier are equal if they are of the same species, and have the same id and are from the same resource modules."
+
+	^self == anObject
+		or: [self species == anObject species and: [icon = anObject icon and: [extent = anObject extent]]]!
+
 createImage: aBitmap extent: aPoint
 	"Answer the handle of a 32-bpp RGBA bitmap (i.e. with Alpha channel) of the same native type as that expected by<Bitmap> argument, which represents the best rendering of the receiver's <icon> at the extent specified by the <Point>, aPoint."
 
@@ -33,6 +39,11 @@ extent: aPoint icon: anIcon
 	extent := aPoint.
 	^self!
 
+hash
+	"Answer the <integer> hash value for the receiver."
+
+	^icon hash!
+
 icon
 	^icon!
 
@@ -51,9 +62,11 @@ printImage: aBitmap on: aWriteStream
 		nextPutAll: ' asAlphaBitmap: ';
 		print: extent! !
 !Graphics.BitmapFromIconInitializer categoriesForMethods!
+=!comparing!public! !
 createImage:extent:!private!realizing/unrealizing! !
 extent!accessing!public! !
 extent:icon:!initializing!private! !
+hash!comparing!public! !
 icon!accessing!public! !
 isPersistent!public!testing! !
 printImage:on:!printing!private! !

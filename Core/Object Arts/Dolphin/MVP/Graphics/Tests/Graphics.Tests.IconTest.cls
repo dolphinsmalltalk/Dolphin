@@ -79,6 +79,12 @@ testImageIndexDoesntRealize
 	icon imageIndex.
 	self assertIsNil: icon basicHandle!
 
+testNullIcon
+	| null |
+	null := Icon null.
+	self assert: Icon null identicalTo: null.
+	self assert: null handle equals: 0!
+
 testStbConvertFromVersion1_resource
 	| bytes icon |
 	bytes := #[33 83 84 66 32 48 32 6 4 4 0 73 99 111 110 0 0 0 0 0 0 0 0 16 0 0 0 54 0 6 0 83 116 114 105 110 103 10 0 0 0 79 98 106 101 99 116 46 105 99 111 14 2 31 0 83 84 66 69 120 116 101 114 110 97 108 82 101 115 111 117 114 99 101 76 105 98 114 97 114 121 80 114 111 120 121 0 0 0 0 114 0 0 0 13 0 0 0 68 111 108 112 104 105 110 68 101 118 82 101 115 0 0 0 0].
@@ -188,6 +194,7 @@ testFromResource!public! !
 testFromShellStock!public! !
 testFromSystemId!public! !
 testImageIndexDoesntRealize!public! !
+testNullIcon!public! !
 testStbConvertFromVersion1_resource!public!unit tests! !
 testStbConvertFromVersion1_system!public!unit tests! !
 testStbConvertFromVersion3_resource!public!unit tests! !

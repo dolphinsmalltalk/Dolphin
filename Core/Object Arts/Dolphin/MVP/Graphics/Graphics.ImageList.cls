@@ -68,7 +68,7 @@ addBitmap: aBitmap mask: aColorOrNil
 	bitmap if masking is enabled."
 
 	| bmp hImgList |
-	hImgList := self asParameter.
+	hImgList := self handle.
 	bmp := self hasMask ifTrue: [aBitmap copy] ifFalse: [aBitmap].
 	"#305 - We must make sure the bitmap is not selected into a DC, or the result will be a blank image in the list
 	 	this won't damage the Bitmap in any way, because the canvas can be lazily recreated."
@@ -84,7 +84,7 @@ addIcon: anIcon
 	only a cosmetic problem)."
 
 	^ComCtl32
-		imageList_ReplaceIcon: self asParameter
+		imageList_ReplaceIcon: self handle
 		i: -1
 		hicon: anIcon asParameter!
 
@@ -106,7 +106,7 @@ backcolor
 	If the answer is nil then there is no background color set."
 
 	| colorref |
-	colorref := ComCtl32 imageList_GetBkColor: handle.
+	colorref := ComCtl32 imageList_GetBkColor: self handle.
 	^colorref = CLR_NONE ifFalse: [Color fromCOLORREF: colorref]!
 
 backcolor: aColor
@@ -114,7 +114,7 @@ backcolor: aColor
 	Answers the previous background <Color>, or nil if there was none."
 
 	| colorref |
-	colorref := ComCtl32 imageList_SetBkColor: self asParameter
+	colorref := ComCtl32 imageList_SetBkColor: self handle
 				clrBk: (aColor isNil ifTrue: [CLR_NONE] ifFalse: [aColor asCOLORREF]).
 	^colorref = CLR_NONE ifFalse: [Color fromCOLORREF: colorref]!
 
@@ -127,7 +127,7 @@ beginDragImage: anInteger hotSpotX: x hotSpotY: y
 	"Start a drag process using the image at the offset anInteger in the receiver."
 
 	^ComCtl32
-		imageList_BeginDrag: handle
+		imageList_BeginDrag: self handle
 		iTrack: anInteger
 		dxHotspot: x
 		dyHotspot: y!
@@ -198,7 +198,7 @@ draw: imageIndexInteger on: aCanvas at: aPoint backcolor: backColor forecolor: f
 	<Color>s foreColor and backColor respectively, with <integer> style flags, flagsInteger."
 
 	^ComCtl32
-		imageList_DrawEx: self asParameter
+		imageList_DrawEx: self handle
 		i: imageIndexInteger - 1
 		hdcDst: aCanvas asParameter
 		x: aPoint x
@@ -214,7 +214,7 @@ draw: imageIndexInteger on: aCanvas at: aPoint flags: flagsInteger
 	target, at the <Point>, position, with <integer> style mask, flags."
 
 	^ComCtl32
-		imageList_Draw: self asParameter
+		imageList_Draw: self handle
 		i: imageIndexInteger - 1
 		hdcDst: aCanvas asParameter
 		x: aPoint x
@@ -232,27 +232,26 @@ extent
 
 	^extent
 		ifNil: 
-			[| cx cy |
-			cx := Int32 new.
-			cy := Int32 new.
+			[| buffer |
+			buffer := ByteArray newFixed: 8.
 			ComCtl32
 				imageList_GetIconSize: self handle
-				cx: cx
-				cy: cy.
-			extent := cx asInteger @ cy asInteger]!
+				cx: buffer
+				cy: buffer yourAddress + 4.
+			extent := (buffer int32AtOffset: 0) @ (buffer int32AtOffset: 4)]!
 
 getIcon: anIntegerIndex style: anIntegerStyle
 	"Answer an instance of Icon generated from the image at anIntegerIndex."
 
 	^Icon fromOwnedHandle: (ComCtl32
-				imageList_GetIcon: handle
+				imageList_GetIcon: self handle
 				i: anIntegerIndex - 1
 				flags: anIntegerStyle)!
 
 getImageCount
 	"Answer the number of images held by the receiver."
 
-	^ComCtl32 imageList_GetImageCount: handle!
+	^ComCtl32 imageList_GetImageCount: self handle!
 
 hasMask
 	^createFlags allMask: ILC_MASK!
@@ -279,7 +278,7 @@ setDragCursorImage: anInteger hotSpotX: x hotSpotY: y
 	"Start a drag process using the image at the offset anInteger in the receiver."
 
 	^ComCtl32
-		imageList_SetDragCursorImage: handle
+		imageList_SetDragCursorImage: self handle
 		iDrag: anInteger
 		dxHotspot: x
 		dyHotspot: y!

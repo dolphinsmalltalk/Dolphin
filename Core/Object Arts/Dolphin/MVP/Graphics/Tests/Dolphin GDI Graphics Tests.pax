@@ -17,11 +17,13 @@ package setClassNames: #(
 	#{Graphics.Tests.IconTest}
 	#{Graphics.Tests.ImageTest}
 	#{Graphics.Tests.MetafileTest}
+	#{Graphics.Tests.PALETTENTRYTest}
 	#{Graphics.Tests.PenTest}
 	#{Graphics.Tests.PluggableColorTest}
 	#{Graphics.Tests.StockFontTest}
 	#{Graphics.Tests.ThemeColorTest}
 	#{Graphics.Tests.VirtualColorTest}
+	#{OS.Tests.RGBQUADTest}
 ).
 
 package setPrerequisites: #(
@@ -80,7 +82,21 @@ Core.Tests.DolphinTest
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Tests.DolphinTest
+	subclass: #'Graphics.Tests.PALETTENTRYTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.DolphinTest
 	subclass: #'Graphics.Tests.PenTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.DolphinTest
+	subclass: #'OS.Tests.RGBQUADTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

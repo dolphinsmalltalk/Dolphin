@@ -28,7 +28,7 @@ extent: aPoint
 	extent := aPoint!
 
 flags
-	^##(LR_COLOR | LR_SHARED)!
+	^##(LR_COLOR bitOr: LR_SHARED)!
 
 hash
 	"Answer the <integer> hash value for the receiver."

@@ -26,9 +26,8 @@ alpha: anAlphaInteger
 		ifTrue: [self]
 		ifFalse: 
 			[ARGB
-				fromArgbCode: ((((code bitShift: -16) bitAnd: 16rFF)
-						bitOr: ((code bitAnd: 16r00FF00) bitOr: ((code bitAnd: 16rFF) bitShift: 16)))
-							bitOr: (alpha bitShift: 24))]!
+				fromArgbCode: ((alpha bitShift: 24) bitOr: (((code bitShift: -16) bitAnd: 16rFF)
+								bitOr: ((code bitAnd: 16r00FF00) bitOr: ((code bitAnd: 16rFF) bitShift: 16))))]!
 
 asRGB
 	"Answer the <RGB> colour equivalent to the receiver."
@@ -36,7 +35,7 @@ asRGB
 	^self!
 
 rgbCode
-	"Answer the receiver's color value in 24-bit RGB encoding with 8-bits per component in (blue, green, red) order."
+	"Answer the receiver's color value in 24-bit RGB encoding with 8-bits per component with red in the low-order byte, green in the 2nd, and blue the third."
 
 	^code!
 
@@ -61,7 +60,7 @@ fromInteger: anInteger
 		yourself!
 
 fromRgbCode: anInteger
-	"Answer an instance whose three component colour values are embedded in anInteger. The Integer is expected to be an integer encoding the red, green and blue components of the colour in BGR order, with each component represented by 8-bits."
+	"Answer an instance whose three component colour values are embedded in anInteger. The Integer is expected to be an integer encoding the red, green and blue components of the colour in 0x00bbggrr order, with each component represented by 8-bits, but because the representation is little endian the format in memory is effectively RGB i.e. the red component is the low-order byte, with green in the 2nd byte, and blue in the third. The high-order byte must be zero."
 
 	^self basicNew
 		setCode: anInteger;

@@ -11,9 +11,6 @@ Graphics.Tests.DIBSectionTest guid: (Core.GUID fromString: '{068ce8da-6f60-49fc-
 Graphics.Tests.DIBSectionTest comment: ''!
 !Graphics.Tests.DIBSectionTest methodsFor!
 
-beachBallColorDepth
-	^24!
-
 stlVersion3_file
 	^#(#'!!STL' 3 657990 3 ##(Smalltalk.DIBSection)  0 16 1572870 ##(Smalltalk.ImageRelativeFileLocator)  8 'resources\Beach Ball.bmp' 0 0 1 0 0 0)
 !
@@ -23,6 +20,26 @@ stlVersion3_resource
 
 subjectClass
 	^DIBSection!
+
+testCreatePalette
+	"DIBSection>>createPalette was broken in Dolphin 6. Probably doesn't matter any more as palettes are basically obsolete, but until it is removed it ought to work correctly."
+
+	| subject paletteEntries hPalette colorTable |
+	subject := self subjectClass fromFile: 'Resources\Tests\Millenium Sunset.bmp'
+				usingLocator: FileLocator installRelative.
+	self assert: subject depth equals: 8.
+	colorTable := subject getColorTable.
+	hPalette := subject createPalette.
+	subject free.
+	paletteEntries := StructureArray length: 256 elementClass: PALETTEENTRY.
+	Gdi32
+		getPaletteEntries: hPalette
+		iStartIndex: 0
+		nEntries: 256
+		lppe: paletteEntries.
+	self assert: (Gdi32 deleteObject: hPalette).
+	self assert: (colorTable collect: [:each | each color])
+		equals: (paletteEntries collect: [:each | each color])!
 
 testStbConvertFromVersion1
 	| bytes dib |
@@ -37,10 +54,10 @@ testStbConvertFromVersion1
 	self assert: dib initializer identifier equals: 'DolphinSplash.bmp'.
 	self deny: dib initializer isLoadMap3dColors! !
 !Graphics.Tests.DIBSectionTest categoriesForMethods!
-beachBallColorDepth!constants!private! !
 stlVersion3_file!constants!private! !
 stlVersion3_resource!constants!private! !
 subjectClass!constants!private! !
+testCreatePalette!public!unit tests! !
 testStbConvertFromVersion1!public!unit tests! !
 !
 

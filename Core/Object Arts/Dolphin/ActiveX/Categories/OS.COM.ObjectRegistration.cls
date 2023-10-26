@@ -36,8 +36,8 @@ clsid: aCLSID
 
 	clsid := aCLSID!
 
-defaultToolboxBitmap
-	^Graphics.Bitmap new!
+defaultToolboxImage
+	^IUnknown icon!
 
 description
 	"Answer the full type name of the COM component."
@@ -93,37 +93,38 @@ printOn: target
 		nextPut: $)!
 
 toolboxImage
-	"Answer the 16x16 <Bitmap> intended for use in toolboxes as the icon for the control described by the receiver."
+	"Answer the <Icon> intended for use in toolboxes as the icon for the control described by the receiver."
 
-	toolboxImage isNil
-		ifTrue: 
-			[| toolboxBitmap32 myKey |
-			myKey := ((RegKey classesRoot: #read) at: 'CLSID') at: self clsid asString.
-			toolboxBitmap32 := myKey at: 'ToolboxBitmap32' ifPresent: [:k | k value].
-			toolboxBitmap32 isNil
-				ifTrue: [toolboxImage := self defaultToolboxBitmap]
-				ifFalse: 
-					[| id path pathAndId |
-					"Should be able to use PathParseIconLocation here, but it can't cope with spaces between the path and the icon id."
-					pathAndId := $, split: toolboxBitmap32.
-					id := Integer readFrom: (pathAndId last readStream
-										skipSeparators;
-										yourself).
-					"Some icon ids come back as negative. Why?"
-					id < 0
-						ifTrue: [toolboxImage := self defaultToolboxBitmap]
-						ifFalse: 
-							[| resLib |
-							path := Kernel32 expandEnvironmentStrings: pathAndId first.
-							resLib := ResourceLibrary open: path.
-							toolboxImage := Graphics.Bitmap fromId: id in: resLib.
-							toolboxImage setMap3DColors: true]]].
+	toolboxImage
+		ifNil: 
+			[(AdvApi32
+				regGetString: WinRegConstants.HKEY_CLASSES_ROOT
+				key: 'CLSID\{<1s>}\ToolboxBitmap32' << self clsid idlString
+				value: nil)
+					ifNotNil: 
+						[:toolboxBitmap32 |
+						| id path pathAndId |
+						"Should be able to use PathParseIconLocation here, but it can't cope with spaces between the path and the icon id."
+						pathAndId := $, split: toolboxBitmap32.
+						id := Integer readFrom: (pathAndId last readStream
+											skipSeparators;
+											yourself).
+						"Some icon ids come back as negative. Why?"
+						id >= 0
+							ifTrue: 
+								[| resLib bmp |
+								path := Kernel32 expandEnvironmentStrings: pathAndId first.
+								resLib := ResourceLibrary open: path.
+								bmp := Graphics.DIBSection fromId: id in: resLib.
+								"bmp setMap3DColors: true."
+								bmp handle isNull ifFalse: [^toolboxImage := bmp asIcon]]].
+			toolboxImage := self defaultToolboxImage].
 	^toolboxImage! !
 !OS.COM.ObjectRegistration categoriesForMethods!
 =!comparing!public! !
 clsid!accessing!public! !
 clsid:!accessing!public! !
-defaultToolboxBitmap!accessing!public! !
+defaultToolboxImage!accessing!public! !
 description!accessing!public! !
 displayOn:!displaying!public! !
 getUserType:!accessing!private! !

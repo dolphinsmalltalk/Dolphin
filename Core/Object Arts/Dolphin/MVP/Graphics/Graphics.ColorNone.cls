@@ -62,8 +62,9 @@ pen
 	^self penClass none!
 
 rgbCode
-	"Answer the receiver's colour value in 32-bit RGB encoding with 8-bits per component in alpha, red, green, blue order.
-	Alpha transparency is lost."
+	"Answer the receiver's <integer> color value in 24-bit RGB encoding with 8-bits per component in COLORREF order (red as low-order byte, green 2nd byte, and blue 3rd byte)."
+
+	"Translate to solid white - alpha transparency is lost."
 
 	^16rFFFFFF!
 

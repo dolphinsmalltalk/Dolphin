@@ -297,7 +297,7 @@ onSettingChanged: anArray
 	| code |
 	(##(#('Policy' 'intl' 'Environment' 'ImmersiveColorSet') asSet) includes: anArray first)
 		ifTrue: [^self].
-	menuImageExtent := menuCheckExtent := dragHysteresis := scrollThumbExtent := sizingFrameExtent := dialogFrameExtent := borderExtent := edgeExtent := nil.
+	defaultColorDepth := menuImageExtent := menuCheckExtent := dragHysteresis := scrollThumbExtent := sizingFrameExtent := dialogFrameExtent := borderExtent := edgeExtent := nil.
 	code := anArray second.
 	code == SPI_SETICONTITLELOGFONT
 		ifTrue: 

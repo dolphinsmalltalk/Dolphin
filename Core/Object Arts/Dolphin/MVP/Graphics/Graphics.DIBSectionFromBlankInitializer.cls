@@ -28,7 +28,7 @@ createImage: anImage extent: aPoint
 				pbmi: info
 				iUsage: DIB_RGB_COLORS
 				ppvBits: nil
-				hSection: 0
+				hSection: nil
 				dwOffset: 0]
 		ifFalse: 
 			[| palBitmap hdc bits dibSection |
@@ -47,7 +47,7 @@ createImage: anImage extent: aPoint
 						pbmi: info
 						iUsage: DIB_PAL_COLORS
 						ppvBits: nil
-						hSection: 0
+						hSection: nil
 						dwOffset: 0.
 			Gdi32
 				deleteDC: hdc;

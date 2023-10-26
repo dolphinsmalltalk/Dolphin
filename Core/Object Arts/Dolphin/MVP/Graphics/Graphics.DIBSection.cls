@@ -12,6 +12,9 @@ Graphics.DIBSection comment: ''!
 !Graphics.DIBSection categoriesForClass!Graphics-Tools! !
 !Graphics.DIBSection methodsFor!
 
+bitmapInfoStructClass
+	^DIBSECTION!
+
 cacheInfo
 	"Private - Cache info about the receiver garnered from the bitmap itself.
 	Since we also grab a pointer to the image bits, it is now possible to scribble all over a DIB loaded from resources/a file."
@@ -75,7 +78,7 @@ getColorTable
 	| bits canvas size quads |
 	bits := self depth.
 	bits > 8 ifTrue: [^nil].
-	size := 2 raisedToInteger: bits.
+	size := 1 bitShift: bits.
 	quads := StructureArray length: size elementClass: RGBQUAD.
 	canvas := self canvas.
 	size := Gdi32
@@ -120,11 +123,9 @@ setColorTable: anRGBQUADArray
 				uStartIndex: 0
 				cEntries: size
 				pColors: anRGBQUADArray.
-	size == newSize ifFalse: [^Win32Error signal]!
-
-structClass
-	^DIBSECTION! !
+	size == newSize ifFalse: [^Win32Error signal]! !
 !Graphics.DIBSection categoriesForMethods!
+bitmapInfoStructClass!constants!private! !
 cacheInfo!helpers!private! !
 clearCached!initializing!private! !
 copyToGlobalHeap!accessing!private! !
@@ -135,7 +136,6 @@ hasAlpha!public!testing! !
 imageBits!accessing!public! !
 imageBytes!copying!public! !
 setColorTable:!accessing!public! !
-structClass!constants!private! !
 !
 
 !Graphics.DIBSection class methodsFor!
@@ -144,7 +144,7 @@ blankInitializerClass
 	^DIBSectionFromBlankInitializer!
 
 defaultLoadFlags
-	^##(LR_COLOR | LR_CREATEDIBSECTION)!
+	^##(LR_COLOR bitOr: LR_CREATEDIBSECTION)!
 
 displayCompatibleWithExtent: aPoint
 	"Answer a new instance of the receiver with suitable dimensions and a colour depth compatible with the display (almost always 32-bpp these days though)."
@@ -157,8 +157,10 @@ fromGlobalHandle: anExternalHandle
 	with the specified handle. The memory block is assumed to contain a BITMAPINFO structure
 	followed by the image bits."
 
-	| pBitmap header offset dibSection |
+	| pBitmap |
 	pBitmap := Kernel32 globalLock: anExternalHandle.
+	^
+	[| header offset dibSection |
 	header := BITMAPINFOHEADER fromAddress: pBitmap.
 	dibSection := self
 				width: header biWidth
@@ -170,7 +172,7 @@ fromGlobalHandle: anExternalHandle
 			[| colorTable |
 			colorTable := StructureArray
 						fromAddress: (pBitmap yourAddress + header byteSize) asExternalAddress
-						length: (2 raisedToInteger: header biBitCount)
+						length: (2 bitShift: header biBitCount - 1)
 						elementClass: RGBQUAD.
 			colorTable beUnfinalizable.
 			dibSection setColorTable: colorTable.
@@ -180,8 +182,8 @@ fromGlobalHandle: anExternalHandle
 		to: header biSizeImage
 		with: pBitmap
 		startingAt: offset.
-	Kernel32 globalUnlock: anExternalHandle.
-	^dibSection!
+	dibSection]
+			ensure: [Kernel32 globalUnlock: anExternalHandle]!
 
 width: widthInteger height: heightInteger
 	"Answers a true-colour DIBSection bitmap of dimensions width*height*24 bits/pixel."

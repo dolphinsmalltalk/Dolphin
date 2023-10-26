@@ -11,9 +11,6 @@ Graphics.Tests.BitmapTest guid: (Core.GUID fromString: '{e775dfbb-e3db-47cd-aec2
 Graphics.Tests.BitmapTest comment: ''!
 !Graphics.Tests.BitmapTest methodsFor!
 
-beachBallColorDepth
-	^SystemMetrics current defaultColorDepth!
-
 stlVersion3_file
 	^#(#'!!STL' 3 395334 3 ##(Smalltalk.Bitmap) 0 16 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'resources\Beach Ball.bmp' 0 0 1 0)!
 
@@ -66,7 +63,6 @@ testStlConvertFromVersion3_file
 	self deny: rehydrated handle equals: comparand handle.
 	self assert: rehydrated extent equals: comparand extent! !
 !Graphics.Tests.BitmapTest categoriesForMethods!
-beachBallColorDepth!constants!private! !
 stlVersion3_file!constants!private! !
 stlVersion3_resource!constants!private! !
 subjectClass!constants!private! !

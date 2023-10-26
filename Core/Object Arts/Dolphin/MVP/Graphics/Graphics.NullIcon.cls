@@ -26,8 +26,7 @@ isSelfEvaluating
 printOn: aStream
 	aStream
 		print: Icon;
-		space;
-		nextPutAll: #null! !
+		nextPutAll: ' null'! !
 !Graphics.NullIcon categoriesForMethods!
 imageIndex!accessing!public! !
 isSelfEvaluating!printing!public! !
@@ -45,7 +44,7 @@ icon
 	^self blank!
 
 initialize
-	Current := self new! !
+	Current := self fromHandle: 0! !
 !Graphics.NullIcon class categoriesForMethods!
 current!instance creation!public! !
 icon!constants!public! !

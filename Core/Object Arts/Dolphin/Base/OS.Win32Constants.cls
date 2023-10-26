@@ -629,6 +629,8 @@ Kernel.SharedPool
 			'QS_SENDMESSAGE' -> 16r40.
 			'QS_TIMER' -> 16r10.
 			'QS_TOUCH' -> 16r800.
+			'RASTERCAPS' -> 16r26.
+			'RC_PALETTE' -> 16r100.
 			'RDW_ALLCHILDREN' -> 16r80.
 			'RDW_ERASE' -> 16r4.
 			'RDW_ERASENOW' -> 16r200.

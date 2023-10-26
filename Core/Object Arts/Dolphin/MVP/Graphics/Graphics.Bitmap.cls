@@ -111,6 +111,9 @@ asByteArray
 	(ret isZero or: [ret ~= height]) ifTrue: [Win32Error signal].
 	^bits!
 
+asIcon
+	^Icon fromBitmap: self!
+
 asSharedCopy
 	"Looks to see if an identical copy of the receiver has already be stored in the SharedBitmaps
 	cache. If so this shared copy is answered"
@@ -124,6 +127,9 @@ basicFree
 	self freeDC.
 	super basicFree.
 !
+
+bitmapInfoStructClass
+	^BITMAP!
 
 cacheInfo
 	"Private - Cache info about the receiver garnered from the bitmap itself."
@@ -180,24 +186,26 @@ createPalette
 	"Private - Attempt the create an answer an HPALETTE for the receiver's palette.
 	Answers nil if the receiver has no palette."
 
-	^self getColorTable
-		ifNotNil: 
-			[:colors |
-			| lp palEntries len |
-			lp := LOGPALETTE new.
-			lp palVersion: 16r300.
-			palEntries := lp palPalEntry.
-			self assert: [colors byteSize <= palEntries byteSize].
-			"Just assign it over directly"
-			len := palEntries size min: colors size.
-			palEntries
-				replaceFrom: 1
-				to: len
-				with: colors
-				startingAt: 1.
-			palEntries length: len.
-			lp palNumEntries: len.
-			Gdi32 createPalette: lp]!
+	| colors target lp |
+	colors := self getColorTable.
+	colors ifNil: [^nil].
+	lp := LOGPALETTE newBuffer
+				palVersion: 16r300;
+				palNumEntries: colors size.
+	"We have to convert from BGRs in the color table to RGBs for the palette"
+	colors := colors bytes.
+	target := lp bytes.
+	1 to: colors size
+		by: 4
+		do: 
+			[:i |
+			target
+				at: i + ##(LOGPALETTE._OffsetOf_palPalEntry + PALETTEENTRY._OffsetOf_peRed)
+					put: (colors at: i + RGBQUAD._OffsetOf_rgbRed);
+				at: i + ##(LOGPALETTE._OffsetOf_palPalEntry + PALETTEENTRY._OffsetOf_peGreen)
+					put: (colors at: i + RGBQUAD._OffsetOf_rgbGreen);
+				at: i + ##(LOGPALETTE._OffsetOf_palPalEntry + PALETTEENTRY._OffsetOf_peBlue) put: (colors at: i)].
+	^Gdi32 createPalette: lp!
 
 createWatermarkAlphaPercent: anInteger backcolor: aColor
 	^self class initializer: (WatermarkBitmapInitializer
@@ -329,7 +337,7 @@ getInfo
 	"Answers a bitmap information structure class containing details about the receiver."
 
 	| bitmapInfo |
-	bitmapInfo := self structClass newBuffer.
+	bitmapInfo := self bitmapInfoStructClass newBuffer.
 	self getData: bitmapInfo.
 	^bitmapInfo!
 
@@ -337,21 +345,6 @@ getMap3DColors
 	"Answer whether the receiver's colours will be mapped to suitable 3D ones when loaded in."
 
 	^initializer isLoadMap3dColors!
-
-getPaletteEntries
-	"Answer a <StructureArray> of <PALETTEENTRY>s describing the receiver's colour palette."
-
-	| len colors palEntries |
-	colors := self getColorTable ?? #().
-	len := colors size.
-	palEntries := StructureArray length: len elementClass: PALETTEENTRY.
-	palEntries beUnfinalizable.
-	palEntries
-		replaceFrom: 1
-		to: len
-		with: colors
-		startingAt: 1.
-	^palEntries!
 
 hasAlpha
 	"Answer whether the receiver has an alpha channel."
@@ -418,10 +411,7 @@ stbFixup: anSTBInFiler at: newObjectIndex
 		ifTrue: 
 			[answer := self asSharedCopy.
 			anSTBInFiler fixup: newObjectIndex to: answer].
-	^answer!
-
-structClass
-	^BITMAP! !
+	^answer! !
 !Graphics.Bitmap categoriesForMethods!
 addToImageList:mask:!double dispatch!private! !
 alphaBlendOn:at:!drawing-bitmaps!public! !
@@ -431,8 +421,10 @@ alphaBlendOn:at:extent:from:extent:!drawing-bitmaps!public! !
 alphaBlendOn:at:extent:from:extent:blend:!drawing-bitmaps!public! !
 asBitmap!public! !
 asByteArray!converting!public! !
+asIcon!public! !
 asSharedCopy!converting!public! !
 basicFree!private!realizing/unrealizing! !
+bitmapInfoStructClass!constants!private! !
 cacheInfo!helpers!private! !
 canvas!accessing!public! !
 clearCached!initializing!private! !
@@ -455,7 +447,6 @@ freeDC!private!realizing/unrealizing! !
 getColorTable!accessing!public! !
 getInfo!accessing!public! !
 getMap3DColors!accessing!public! !
-getPaletteEntries!accessing!public! !
 hasAlpha!public!testing! !
 hdc!accessing!public! !
 initialize!initializing!private! !
@@ -464,7 +455,6 @@ isShared:!accessing!private! !
 pixelData!accessing!public! !
 setMap3DColors:!accessing!public! !
 stbFixup:at:!binary filing!public! !
-structClass!constants!private! !
 !
 
 !Graphics.Bitmap class methodsFor!
@@ -567,6 +557,9 @@ initialize
 
 	SharedBitmaps := WeakLookupTable new!
 
+new
+	^self extent: 0 @ 0 depth: 1!
+
 sharedCopyOf: aBitmap
 	"Answers a cached copy of aBitmap if one has already been loaded from the same
 	identifier. This can help save memory if the bitmap is not intended to be modified, 
@@ -638,6 +631,7 @@ fromView:!instance creation!public! !
 fromView:background:!instance creation!public! !
 imageType!constants!private! !
 initialize!development!initializing!private! !
+new!instance creation!public! !
 sharedCopyOf:!instance creation!public! !
 stbConvertFromVersion0:!binary filing!private! !
 stbConvertFromVersion1:!binary filing!private! !

@@ -167,7 +167,7 @@ loadFromFile: aString extent: aPoint flags: anInteger
 		cxDesired: aPoint x
 		cyDesired: aPoint y
 		fuLoad: ((aPoint = Point.Zero
-				ifTrue: [##(LR_DEFAULTSIZE | LR_LOADFROMFILE)]
+				ifTrue: [##(LR_DEFAULTSIZE bitOr: LR_LOADFROMFILE)]
 				ifFalse: [LR_LOADFROMFILE]) bitOr: anInteger)!
 
 loadResource: identifierObject fromModule: moduleObject extent: aPoint flags: anInteger
@@ -283,6 +283,16 @@ fromId: anIntegerOrStringId in: anInstanceHandle
 	"Answer a new instance with a resourceID of anIntegerOrStringId from the application instance anInstanceHandle"
 
 	^self initializer: (self newResourceInitializer: anIntegerOrStringId module: anInstanceHandle)!
+
+fromId: anIntegerOrStringId in: anInstanceHandle extent: aPoint
+	"Answer a new instance with a resourceID of anIntegerOrStringId from the application instance anInstanceHandle, to be loaded at the extent, aPoint."
+
+	| instance |
+	instance := self
+				fromId: anIntegerOrStringId
+				in: anInstanceHandle.
+	instance initializer extent: aPoint.
+	^instance!
 
 fromOwnedHandle: aHandle
 	^self initializer: (ImageFromHandleInitializer handle: aHandle)!
@@ -403,6 +413,7 @@ fromFile:usingLocator:!instance creation!public! !
 fromHandle:!instance creation!public! !
 fromId:!instance creation!public! !
 fromId:in:!public! !
+fromId:in:extent:!public! !
 fromOwnedHandle:!instance creation!public! !
 fromSystemId:!instance creation!public! !
 icon!constants!public! !

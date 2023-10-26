@@ -60,7 +60,7 @@ regGetString: hiveInteger key: keyString value: valueString
 				pdwType: nil
 				pvData: nil
 				pcbData: sizeBuf.
-	status = ERROR_SUCCESS ifFalse: [^nil].
+	status == ERROR_SUCCESS ifFalse: [^nil].
 	"Note that the size returned seems to be one larger than needed, but we can't assume that is always the case"
 	buf := Utf16String newFixed: ((sizeBuf uint32AtOffset: 0) bitShift: -1) - 1.
 	status := AdvApi32

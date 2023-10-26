@@ -72,6 +72,8 @@ red
 	^(code bitShift: -16) bitAnd: 16rFF!
 
 rgbCode
+	"Answer the receiver's <integer> color value in 24-bit RGB encoding with 8-bits per component in COLORREF order (red as low-order byte, green 2nd byte, and blue 3rd byte)."
+
 	^((code bitShift: -16) bitAnd: 16rFF)
 		bitOr: ((code bitAnd: 16r00FF00) bitOr: ((code bitAnd: 16rFF) bitShift: 16))! !
 !Graphics.ARGB categoriesForMethods!

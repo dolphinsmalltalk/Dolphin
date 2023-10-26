@@ -2307,8 +2307,7 @@ _combineGpRegion:mode:!double dispatch!private! !
 !Graphics.Bitmap methodsFor!
 
 asColorKeyedBitmap
-	^self asColorKeyedBitmap: (self canvas pixelAt: 0 @ 0).
-!
+	^self asColorKeyedBitmap: (self canvas pixelAt: Point.Zero)!
 
 asColorKeyedBitmap: aKeyColor
 	| image imageAttributes bitmap keyedBitmap ext |

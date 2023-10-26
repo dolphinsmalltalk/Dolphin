@@ -37,7 +37,21 @@ struct tagPALETTEENTRY {
 asColor
 	"Answer a new Colour based on the receiver's data"
 
+	^self color!
+
+blue
+	^self peBlue!
+
+color
 	^Graphics.Color fromRgbCode: self rgbCode!
+
+color: aColor
+	"Set the <Color> value of the receiver."
+
+	bytes uint32AtOffset: 0 put: aColor rgbCode!
+
+green
+	^self peGreen!
 
 peBlue
 	"Answer the <Integer> value of the receiver's 'peBlue' field."
@@ -79,10 +93,19 @@ peRed: anInteger
 
 	bytes uint8AtOffset: _OffsetOf_peRed put: anInteger!
 
+red
+	^self peRed!
+
 rgbCode
+	"Answer the receiver's <integer> color value in 24-bit RGB encoding with 8-bits per component in COLORREF order (red as low-order byte, green 2nd byte, and blue 3rd byte)."
+
 	^(bytes uint32AtOffset: 0) bitAnd: 16rFFFFFF! !
 !OS.PALETTEENTRY categoriesForMethods!
 asColor!converting!public! !
+blue!accessing!public! !
+color!accessing!public! !
+color:!accessing!public! !
+green!accessing!public! !
 peBlue!**compiled accessors**!public! !
 peBlue:!**compiled accessors**!public! !
 peFlags!**compiled accessors**!public! !
@@ -91,6 +114,7 @@ peGreen!**compiled accessors**!public! !
 peGreen:!**compiled accessors**!public! !
 peRed!**compiled accessors**!public! !
 peRed:!**compiled accessors**!public! !
+red!accessing!public! !
 rgbCode!accessing!public! !
 !
 
@@ -128,6 +152,13 @@ defineFields
 			offset: 3.
 	self byteSize: 4!
 
+fromColor: aColor
+	"Answer a new instance of the receiver equivalent to the <Color> argument."
+
+	^self newBuffer
+		color: aColor;
+		yourself!
+
 getFieldNames
 	^#(#peRed #peGreen #peBlue #peFlags)!
 
@@ -149,6 +180,7 @@ threeThreeTwo
 !OS.PALETTEENTRY class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
+fromColor:!instance creation!public! !
 getFieldNames!**compiled accessors**!constants!private! !
 threeThreeTwo!instance creation!public! !
 !

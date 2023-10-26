@@ -59,7 +59,7 @@ pen
 	^self errorNotARealColor!
 
 rgbCode
-	"Answer the receiver's color value in 24-bit RGB encoding with 8-bits per component in (blue, green, red) order."
+	"Answer the receiver's <integer> color value in 24-bit RGB encoding with 8-bits per component in COLORREF order (red as low-order byte, green 2nd byte, and blue 3rd byte)."
 
 	^self errorNotARealColor!
 

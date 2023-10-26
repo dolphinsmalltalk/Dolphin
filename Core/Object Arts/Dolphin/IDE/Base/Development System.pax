@@ -584,7 +584,9 @@ package setMethodNames: #(
 	#(#{OS.LOGPEN} #printFieldsOn:)
 	#(#{OS.LVITEMW} #printableFields)
 	#(#{OS.MSG} #printOn:)
+	#(#{OS.PALETTEENTRY} #printFields:on:)
 	#(#{OS.RegKeyAbstract} #debugPrintOn:)
+	#(#{OS.RGBQUAD} #printFields:on:)
 	#(#{OS.SYSTEMTIME} #printOn:)
 	#(#{OS.VersionInfo class} #publishedAspectsOfInstances)
 	#(#{OS.VS_FIXEDFILEINFO class} #publishedAspectsOfInstances)
@@ -6742,12 +6744,28 @@ printOn: aStream
 printOn:!printing!public! !
 !
 
+!OS.PALETTEENTRY methodsFor!
+
+printFields: aCollection on: aStream
+	aStream print: self color! !
+!OS.PALETTEENTRY categoriesForMethods!
+printFields:on:!printing!private! !
+!
+
 !OS.RegKeyAbstract methodsFor!
 
 debugPrintOn: aStream
 	self printOn: aStream! !
 !OS.RegKeyAbstract categoriesForMethods!
 debugPrintOn:!printing!public! !
+!
+
+!OS.RGBQUAD methodsFor!
+
+printFields: aCollection on: aStream
+	aStream print: self color! !
+!OS.RGBQUAD categoriesForMethods!
+printFields:on:!printing!private! !
 !
 
 !OS.SYSTEMTIME methodsFor!

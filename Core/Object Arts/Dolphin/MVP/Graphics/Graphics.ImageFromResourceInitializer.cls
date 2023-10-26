@@ -51,7 +51,7 @@ flags: anInteger
 hash
 	"Answer the <integer> hash value for the receiver."
 
-	^identifier hash!
+	^(identifier hash + module hash) hashMultiply!
 
 identifier
 	^identifier!

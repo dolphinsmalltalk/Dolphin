@@ -11,6 +11,20 @@ Graphics.WatermarkBitmapInitializer guid: (Core.GUID fromString: '{58853b8d-ed91
 Graphics.WatermarkBitmapInitializer comment: ''!
 !Graphics.WatermarkBitmapInitializer methodsFor!
 
+= anObject
+	"Answer whether the receiver and anObject are equivalent. Two Images loaded by identifier are equal if they are of the same species, and have the same id and are from the same resource modules."
+
+	^self == anObject or: 
+			[self species == anObject species and: 
+					[image = anObject image
+						and: [backcolor = anObject backcolor and: [alphaPercent = anObject alphaPercent]]]]!
+
+alphaPercent
+	^alphaPercent!
+
+backcolor
+	^backcolor!
+
 createImage: aBitmap extent: aPoint
 	| extent combined mask rect watermark hasAlpha watermarkDc maskDc |
 	extent := image extent.
@@ -74,6 +88,11 @@ createImage: aBitmap extent: aPoint
 	watermark free.
 	^combined detachHandle!
 
+hash
+	"Answer the <integer> hash value for the receiver."
+
+	^image hash!
+
 image: anImage alphaPercent: anInteger backcolor: aColor
 	image := anImage.
 	alphaPercent := anInteger.
@@ -97,7 +116,11 @@ printImage: aBitmap on: aWriteStream
 		nextPutAll: ' backcolor: ';
 		print: backcolor! !
 !Graphics.WatermarkBitmapInitializer categoriesForMethods!
+=!comparing!public! !
+alphaPercent!accessing!public! !
+backcolor!accessing!public! !
 createImage:extent:!private!realizing/unrealizing! !
+hash!comparing!public! !
 image:alphaPercent:backcolor:!initializing!private! !
 isPersistent!public!testing! !
 printImage:on:!printing!private! !

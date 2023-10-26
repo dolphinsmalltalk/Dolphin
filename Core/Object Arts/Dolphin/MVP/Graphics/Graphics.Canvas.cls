@@ -6,7 +6,10 @@ Core.Object
 	classVariableNames: 'DesktopResolution'
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'DrawTextAlignments'
+				-> (IdentityDictionary withAll: { #center -> 16r1. #left -> 16r0. #right -> 16r2 })
+		}!
 Graphics.Canvas guid: (Core.GUID fromString: '{87b4c45e-026e-11d3-9fd7-00a0cc3e4a32}')!
 Graphics.Canvas comment: 'Canvas is the class that represents device contexts for drawing graphical output such as lines, shapes, bitmaps and text. As a context, Canvas instances maintain not only the current drawing position, but also the current pen, brush, font, foreground and background colors, text drawing mode, etc.
 
@@ -35,7 +38,7 @@ alphaBlend: aCanvas rectangle: aRectangle to: dstOrigin extent: dstExtent blend:
 	Answer true if the operation succeeds"
 
 	^Gdi32
-		gdiAlphaBlend: self asParameter
+		gdiAlphaBlend: handle
 		xoriginDest: dstOrigin x
 		yoriginDest: dstOrigin y
 		wDest: dstExtent x
@@ -51,11 +54,13 @@ alphaBlendBitmap: aBitmap at: dstOrigin extent: dstExtent from: srcOrigin extent
 	"Private - Alpha blend the specified rectangle of aBitmap to the specified destination rectangle with the specified blendFunction. The receiver is stretched to fit the destination rectangle. Handles any palette changes required by the bitmap. Answers false if the operation fails"
 
 	| hPalette oldPalette answer |
-	"Create and apply the receiver's palette (if any)"
-	hPalette := aBitmap createPalette.
-	hPalette ifNotNil: [oldPalette := self palette: hPalette].
+	self isPaletteDevice
+		ifTrue: 
+			["Create and apply the bitmap's palette (if any)"
+			hPalette := aBitmap createPalette.
+			hPalette ifNotNil: [oldPalette := self palette: hPalette]].
 	answer := Gdi32
-				gdiAlphaBlend: self asParameter
+				gdiAlphaBlend: handle
 				xoriginDest: dstOrigin x
 				yoriginDest: dstOrigin y
 				wDest: dstExtent x
@@ -81,21 +86,21 @@ asParameter
 backcolor
 	"Get the receiver's current background color."
 
-	^Color fromCOLORREF: (Gdi32 getBkColor: self asParameter)!
+	^Color fromCOLORREF: (Gdi32 getBkColor: handle)!
 
 backcolor: aColor
 	"Set the receiver's background color to the <Color>, aColor.
 	Answers the previous background <Color>."
 
-	^Color fromCOLORREF: (Gdi32 setBkColor: self asParameter crColor: aColor asCOLORREF)!
+	^Color fromCOLORREF: (Gdi32 setBkColor: handle crColor: aColor asCOLORREF)!
 
 backgroundMode
-	^Gdi32 getBkMode: self asParameter!
+	^Gdi32 getBkMode: handle!
 
 backgroundMode: anInteger
 	"Set the receiver's background drawing mode to mode."
 
-	^Gdi32 setBkMode: self asParameter iBkMode: anInteger!
+	^Gdi32 setBkMode: handle iBkMode: anInteger!
 
 basicFree
 	"Private - Free external resources held by the receiver.
@@ -103,14 +108,14 @@ basicFree
 	If we know the handle used for the original GetDC() then we do a ReleaseDC(),
 	otherwise we do a DeleteDC()."
 
-	owned ifTrue: [source releaseDC: self asParameter]!
+	owned ifTrue: [source releaseDC: handle]!
 
 bitBlt: aCanvasOrHandle rectangle: aRectangle to: dstOrigin rop: rop
 	"Blits a rectangular region from aCanvasOrHandle to the receiver
 	Answer true if the operation succeeds"
 
 	^Gdi32
-		bitBlt: self asParameter
+		bitBlt: handle
 		nXDest: dstOrigin x
 		nYDest: dstOrigin y
 		nWidth: aRectangle width
@@ -123,9 +128,7 @@ bitBlt: aCanvasOrHandle rectangle: aRectangle to: dstOrigin rop: rop
 brush
 	"Answer the current brush."
 
-	brush isNil
-		ifTrue: [brush := Brush fromHandle: (Gdi32 getCurrentObject: self asParameter uObjectType: OBJ_BRUSH)].
-	^brush!
+	^brush ifNil: [brush := Brush fromHandle: (Gdi32 getCurrentObject: handle uObjectType: OBJ_BRUSH)]!
 
 brush: aBrush
 	"Select aBrush into this canvas."
@@ -140,7 +143,7 @@ brushColor
 	"Get the colour of the brush currently selected into the DC. N.B. Only works on XP and
 	later, and undefined if the brush is not solid."
 
-	^Color fromCOLORREF: (Gdi32 getDCBrushColor: self asParameter)!
+	^Color fromCOLORREF: (Gdi32 getDCBrushColor: handle)!
 
 brushOrigin: aPoint
 	"Sets the origin offset for brush drawing within the receiver to
@@ -149,7 +152,7 @@ brushOrigin: aPoint
 	| previous |
 	previous := POINTL newBuffer.
 	Gdi32
-		setBrushOrgEx: self asParameter
+		setBrushOrgEx: handle
 		nXOrg: aPoint x
 		nYOrg: aPoint y
 		lppt: previous asParameter.
@@ -163,7 +166,7 @@ clipBox
 colorDepth
 	"Answers the colour bit depth supported by the receiver"
 
-	^(self getDeviceCaps: BITSPIXEL) * (self getDeviceCaps: PLANES)!
+	^(Gdi32 getDeviceCaps: handle nIndex: BITSPIXEL) * (Gdi32 getDeviceCaps: handle nIndex: PLANES)!
 
 colors
 	"Answers the number of colours supported by the receiver"
@@ -173,22 +176,23 @@ colors
 drawBitmap: aBitmap at: dstOrigin extent: dstExtent from: srcOrigin extent: srcExtent rop: dwRasterOp
 	"Private - Blit the specified rectangle of aBitmap to the specified destination
 	rectangle with the specified raster op. The receiver is stretched to
-	fit the destination rectangle. Handles and palette changes required
+	fit the destination rectangle. Handles any palette changes required
 	by the bitmap. Answers zero if the operation fails"
 
-	"Create and apply the receiver's palette (if any)"
-
 	| hPalette oldPalette answer |
-	hPalette := aBitmap createPalette.
-	hPalette notNil ifTrue: [oldPalette := self palette: hPalette].
+	self isPaletteDevice
+		ifTrue: 
+			["Create and apply the bitmap's palette (if any)"
+			hPalette := aBitmap createPalette.
+			hPalette ifNotNil: [oldPalette := self palette: hPalette]].
 	answer := self
 				stretchBlt: aBitmap canvas
 				rectangle: (Rectangle origin: srcOrigin extent: srcExtent)
 				to: dstOrigin
 				extent: dstExtent
 				rop: dwRasterOp.
-	hPalette notNil
-		ifTrue: 
+	hPalette
+		ifNotNil: 
 			["Tidy up palette manipulation"
 			self selectPalette: oldPalette.
 			Gdi32 deleteObject: hPalette].
@@ -198,7 +202,7 @@ drawEdge: aRectangle edge: edgeInteger grfFlags: bdrInteger
 	"The DrawEdge function draws one or more edges of rectangle."
 
 	^User32
-		drawEdge: self asParameter
+		drawEdge: handle
 		qrc: aRectangle asParameter
 		edge: edgeInteger
 		grfFlags: bdrInteger!
@@ -207,7 +211,7 @@ ellipse: aRectangle
 	"Draw an ellipse on the receiver with the bounds of aRectangle."
 
 	^Gdi32
-		ellipse: self asParameter
+		ellipse: handle
 		nLeftRect: aRectangle left
 		nTopRect: aRectangle top
 		nRightRect: aRectangle right
@@ -223,7 +227,7 @@ excludeClipRectangle: aRectangle
 	attempt to draw in that rectangle will be ignored."
 
 	^Gdi32
-		excludeClipRect: self asParameter
+		excludeClipRect: handle
 		nLeftRect: aRectangle left
 		nTopRect: aRectangle top
 		nRightRect: aRectangle right
@@ -238,7 +242,7 @@ fillRectangle: aRectangle
 	"Draw a filled rectangle of size aRectangle using the current brush."
 
 	^User32
-		fillRect: self asParameter
+		fillRect: handle
 		lprc: aRectangle asParameter
 		hbr: self brush asParameter!
 
@@ -246,7 +250,7 @@ fillRectangle: aRectangle brush: aBrush
 	"Draw a filled rectangle of size aRectangle using aBrush."
 
 	^User32
-		fillRect: self asParameter
+		fillRect: handle
 		lprc: aRectangle asParameter
 		hbr: aBrush asParameter!
 
@@ -266,12 +270,10 @@ fillRectangle: aRectangle startColor: startColor endColor: endColor verticalGrad
 	(vertices at: 2)
 		color: endColor;
 		position: aRectangle corner.
-	gRect := GRADIENT_RECT new.
-	gRect
-		upperLeft: 0;
-		lowerRight: 1.
+	"GRADIENT_RECT with Upper left 0, lowerRight 1"
+	gRect := #[0 0 0 0 1 0 0 0].
 	^Gdi32
-		gdiGradientFill: self asParameter
+		gdiGradientFill: handle
 		pVertex: vertices
 		nVertex: 2
 		pMesh: gRect
@@ -282,7 +284,7 @@ fillRegion: aRegion brush: aBrush
 	"Draw a filled region, aRegion, using aBrush."
 
 	^Gdi32
-		fillRgn: self asParameter
+		fillRgn: handle
 		hRgn: aRegion asParameter
 		hBr: aBrush asParameter!
 
@@ -320,8 +322,8 @@ fontFamilies: aString do: aValuable
 	callback := aValuable argumentCount == 1
 				ifTrue: 
 					[Callback block: [:lplf :lpntm :dwType :lpData | aValuable value: lplf]
-						descriptor: (FunctionDescriptor returnType: 'int32'
-								argumentTypes: ##('<1p>* lpvoid uint32 uintptr' << ENUMLOGFONTW))]
+						descriptor: ##(FunctionDescriptor returnType: 'int32'
+								argumentTypes: '<1p>* lpvoid uint32 uintptr' << ENUMLOGFONTW)]
 				ifFalse: 
 					[Callback block: 
 							[:lplf :lpntm :dwType :lpData |
@@ -329,10 +331,10 @@ fontFamilies: aString do: aValuable
 								cull: lplf
 								cull: lpntm
 								cull: dwType]
-						descriptor: (FunctionDescriptor returnType: 'int32'
-								argumentTypes: ##('<1p>* <2p>* uint32 uintptr' << {ENUMLOGFONTW. NEWTEXTMETRICW}))].
+						descriptor: ##(FunctionDescriptor returnType: 'int32'
+								argumentTypes: '<1p>* <2p>* uint32 uintptr' << { ENUMLOGFONTW. NEWTEXTMETRICW })].
 	answer := Gdi32
-				enumFontFamilies: self asParameter
+				enumFontFamilies: handle
 				lpszFamily: aString
 				lpEnumFontFamProc: callback asParameter
 				lParam: 0.
@@ -340,7 +342,7 @@ fontFamilies: aString do: aValuable
 	^answer!
 
 fontHandle
-	^Gdi32 getCurrentObject: self asParameter uObjectType: OBJ_FONT!
+	^Gdi32 getCurrentObject: handle uObjectType: OBJ_FONT!
 
 fontNames
 	"Answer a <collection> containing the face names of all the Fonts supported by the receiver."
@@ -357,18 +359,18 @@ fontNames
 forecolor
 	"Get the receiver's colour for drawing text."
 
-	^Color fromCOLORREF: (Gdi32 getTextColor: self asParameter)!
+	^Color fromCOLORREF: (Gdi32 getTextColor: handle)!
 
 forecolor: colour
 	"Set the receiver's colour for drawing text."
 
-	^Gdi32 setTextColor: self asParameter crColor: colour asCOLORREF!
+	^Gdi32 setTextColor: handle crColor: colour asCOLORREF!
 
 formatText: text in: rect
 	"Formats the <readableString> text within the <Rectangle> rect with wordbreak and 
 	basic left alignment. Answers the height of the formatted text in pixels."
 
-	^self formatText: text in: rect flags: ##(DT_WORDBREAK | DT_LEFT)
+	^self formatText: text in: rect flags: ##(DT_WORDBREAK bitOr: DT_LEFT)
 !
 
 formatText: aString in: aRectangle flags: anInteger
@@ -379,7 +381,7 @@ formatText: aString in: aRectangle flags: anInteger
 	"We need to do an explicit conversion to UTF-16 here, because we want to pass the correct number of code units."
 	text := aString asUtf16String.
 	^User32
-		drawTextEx: self asParameter
+		drawTextEx: handle
 		lpchText: text
 		cchText: text size
 		lprc: aRectangle asParameter
@@ -390,7 +392,7 @@ frameRectangle: aRectangle brush: aBrush
 	"Frame aRectangle on the receiver using aBrush."
 
 	^User32
-		frameRect: self asParameter
+		frameRect: handle
 		lprc: aRectangle asParameter
 		hbr: aBrush asParameter!
 
@@ -408,13 +410,8 @@ free
 getClipBox
 	| answer |
 	answer := RECTL newBuffer.
-	Gdi32 getClipBox: self asParameter lprc: answer.
+	Gdi32 getClipBox: handle lprc: answer.
 	^answer!
-
-getDeviceCaps: anInteger
-	"Private - Answer the specified device capability."
-
-	^Gdi32 getDeviceCaps: self asParameter nIndex: anInteger!
 
 getFont
 	^Font fromHandle: self fontHandle!
@@ -423,17 +420,17 @@ getPixel: aPoint
 	"Private - Get the colour of the pixel at x@y. Note that the indices are zero-based!!"
 
 	^Gdi32
-		getPixel: self asParameter
+		getPixel: handle
 		xPos: aPoint x
 		yPos: aPoint y!
 
 handle
 	"Answer the receiver's handle."
 
-	^self asParameter!
+	^handle!
 
 height
-	^self getDeviceCaps: VERTRES!
+	^Gdi32 getDeviceCaps: handle nIndex: VERTRES!
 
 hiMetricToPels: himetric
 	"Answer a <Point> which represents the same coordinate/dimension as the himetric
@@ -449,11 +446,10 @@ hiMetricToPels: himetric
 !
 
 intersectClipRectangle: aRectangle
-	"Create a new clipping region for the receiver from the intersection of the
-	current clipping region and aRectangle."
+	"Create a new clipping region for the receiver from the intersection of the current clipping region and aRectangle."
 
 	^Gdi32
-		intersectClipRect: self asParameter
+		intersectClipRect: handle
 		nLeftRect: aRectangle left
 		nTopRect: aRectangle top
 		nRightRect: aRectangle right
@@ -462,18 +458,21 @@ intersectClipRectangle: aRectangle
 invertRectangle: aRectangle
 	"Invert the pixels within aRectangle"
 
-	^User32 invertRect: self asParameter lprc: aRectangle asParameter!
+	^User32 invertRect: handle lprc: aRectangle asParameter!
 
 invertRegion: aRegion
 	"Invert the pixels within aRegion"
 
-	^Gdi32 invertRgn: self asParameter hRgn: aRegion asParameter!
+	^Gdi32 invertRgn: handle hRgn: aRegion asParameter!
+
+isPaletteDevice
+	^((Gdi32 getDeviceCaps: handle nIndex: RASTERCAPS) anyMask: RC_PALETTE) and: [self colorDepth == 8]!
 
 isRectangleVisible: aRectangle
 	"Answer whether any part of aRectangle is within the receiver's device
 	context cliiping region."
 
-	^Gdi32 rectVisible: self asParameter lprc: aRectangle asParameter!
+	^Gdi32 rectVisible: handle lprc: aRectangle asParameter!
 
 lineFrom: startPoint to: endPoint
 	"Draws a line from the <Point>, startPoint, up to BUT NOT INCLUDING, 
@@ -481,11 +480,11 @@ lineFrom: startPoint to: endPoint
 	Implementation Note: For speed inline the raw calls."
 
 	Gdi32
-		moveToEx: self asParameter
+		moveToEx: handle
 			x: startPoint x
 			y: startPoint y
 			lpPoint: nil;
-		lineTo: self asParameter
+		lineTo: handle
 			nXEnd: endPoint x
 			nYEnd: endPoint y!
 
@@ -493,25 +492,25 @@ lineTo: aPoint
 	"Draws a line from the current position up to, BUT NOT INCLUDING, aPoint."
 
 	^Gdi32
-		lineTo: self asParameter
+		lineTo: handle
 		nXEnd: aPoint x
 		nYEnd: aPoint y!
 
 mapMode
 	"Answer the receiver's map mode, e.g. MM_TEXT."
 
-	^Gdi32 getMapMode: self asParameter!
+	^Gdi32 getMapMode: handle!
 
 mapMode: anInteger
 	"Sets the mapping mode of the receiver"
 
-	^Gdi32 setMapMode: self asParameter fnMapMode: anInteger!
+	^Gdi32 setMapMode: handle fnMapMode: anInteger!
 
 moveTo: aPoint
 	"Moves the current position to the <Point> argument."
 
 	^Gdi32
-		moveToEx: self asParameter
+		moveToEx: handle
 		x: aPoint x
 		y: aPoint y
 		lpPoint: nil!
@@ -526,13 +525,12 @@ nonOwnedDC: hDC
 !
 
 offsetWindowOrigin: aPoint
-	"Offset the origin of the receiver's window mapping. 
-	Answers the old window origin"
+	"Offset the origin of the receiver's window mapping. Answer the old window origin."
 
 	| previous |
 	previous := POINTL newBuffer.
 	(Gdi32
-		offsetWindowOrgEx: self asParameter
+		offsetWindowOrgEx: handle
 		nXOrg: aPoint x
 		nYOrg: aPoint y
 		lppt: previous) ifFalse: [^Gdi32 systemError].
@@ -552,14 +550,14 @@ outlineTextMetrics
 
 	| answer size |
 	size := Gdi32
-				getOutlineTextMetrics: self asParameter
+				getOutlineTextMetrics: handle
 				cbData: 0
 				lpotm: nil.
 	"Only true-type fonts have OTM info, so if the current font is not a TT font return nil."
 	size == 0 ifTrue: [^nil].
 	answer := OUTLINETEXTMETRICW new: size.
 	(Gdi32
-		getOutlineTextMetrics: self asParameter
+		getOutlineTextMetrics: handle
 		cbData: size
 		lpotm: answer) == 0
 		ifTrue: [Gdi32 systemError].
@@ -577,7 +575,7 @@ ownedDC: hDC
 paintRegion: aRegion
 	"Draw a filled region, aRegion, using the current brush"
 
-	^Gdi32 paintRgn: self asParameter hRgn: aRegion asParameter!
+	^Gdi32 paintRgn: handle hRgn: aRegion asParameter!
 
 palette: hPalette
 	"Selects and realizes the palette in hPalette into the receiver. 
@@ -594,7 +592,7 @@ patBlt: aRectangle rop: rop
 	Answer true if the operation succeeds"
 
 	^Gdi32
-		patBlt: self asParameter
+		patBlt: handle
 		nXLeft: aRectangle left
 		nYLeft: aRectangle top
 		nWidth: aRectangle width
@@ -617,7 +615,7 @@ pelsToHiMetric: pels
 pen
 	"Answer the current pen."
 
-	^pen ifNil: [Pen fromHandle: (Gdi32 getCurrentObject: self asParameter uObjectType: OBJ_PEN)]!
+	^pen ifNil: [Pen fromHandle: (Gdi32 getCurrentObject: handle uObjectType: OBJ_PEN)]!
 
 pen: aPen
 	"Select aPen into the receiver, and answer the old pen."
@@ -631,7 +629,7 @@ pen: aPen
 penColor
 	"Get the colour of the pen currently selected into the DC. N.B. Only works on XP and later."
 
-	^Color fromCOLORREF: (Gdi32 getDCBrushColor: self asParameter)!
+	^Color fromCOLORREF: (Gdi32 getDCBrushColor: handle)!
 
 pixelAt: aPoint 
 	"Answer the <Color> the pixel at the <Point> argument. Note that the co-ordinates are zero-based!!"
@@ -639,11 +637,10 @@ pixelAt: aPoint
 	^Color fromCOLORREF: (self getPixel: aPoint)!
 
 pixelAt: aPoint put: pixelColor
-	"Set the colour of the pixel at aPoint to pixelColor.
-	Answer whether it succeeded."
+	"Set the colour of the pixel at aPoint to pixelColor.	Answer whether it succeeded."
 
 	^Gdi32
-		setPixelV: self asParameter
+		setPixelV: handle
 		x: aPoint x
 		y: aPoint y
 		crColor: pixelColor asCOLORREF!
@@ -659,7 +656,7 @@ plgBlt: aCanvas rectangle: aRectangle topLeft: topLeftPoint topRight: topRightPo
 		int32AtOffset: 16 put: bottomLeftPoint x;
 		int32AtOffset: 20 put: bottomLeftPoint y.
 	^Gdi32
-		plgBlt: self asParameter
+		plgBlt: handle
 		lpPoint: points
 		hdcSrc: aCanvas asParameter
 		nXSrc: aRectangle left
@@ -674,7 +671,7 @@ polygon: collectionOfPoints
 	"Draw a filled polygon from the collection of points."
 
 	^Gdi32
-		polygon: self asParameter
+		polygon: handle
 		lpPoints: ((StructureArray
 				withAll: collectionOfPoints
 				elementClass: POINTL
@@ -686,13 +683,13 @@ polygon: collectionOfPoints
 realizePalette
 	"Realizes the current logical palette of the receiver into the system palette"
 
-	^Gdi32 realizePalette: self asParameter!
+	^Gdi32 realizePalette: handle!
 
 rectangle: aRectangle
 	"Draw aRectangle on the receiver."
 
 	^Gdi32
-		rectangle: self asParameter
+		rectangle: handle
 		nLeftRect: aRectangle left
 		nTopRect: aRectangle top
 		nRightRect: aRectangle right
@@ -702,7 +699,7 @@ rectangle: aRectangle round: aPoint
 	"Draw a round rectangle on the receiver."
 
 	^Gdi32
-		roundRect: self asParameter
+		roundRect: handle
 		nLeftRect: aRectangle left
 		nTopRect: aRectangle top
 		nRightRect: aRectangle right
@@ -713,8 +710,7 @@ rectangle: aRectangle round: aPoint
 resolution
 	"Answers a Point containing the logical pixels per inch for the receiver"
 
-	^(self getDeviceCaps: LOGPIXELSX) @ (self getDeviceCaps: LOGPIXELSY)
-!
+	^(Gdi32 getDeviceCaps: handle nIndex: LOGPIXELSX) @ (Gdi32 getDeviceCaps: handle nIndex: LOGPIXELSY)!
 
 restore
 	"Restore the last saved state of the receiver."
@@ -725,7 +721,7 @@ restore: saveIndex
 	"Restore the receiver's state to that saved at saveIndex using #save."
 
 	| restoredId restoredObjects |
-	Gdi32 restoreDC: self asParameter nSavedDC: saveIndex.
+	Gdi32 restoreDC: handle nSavedDC: saveIndex.
 	saveIndex == -1
 		ifTrue: 
 			["Effectivaly a 'pop' to previous context"
@@ -739,21 +735,19 @@ restore: saveIndex
 	font := restoredObjects at: 3!
 
 rop2
-	^Gdi32 getROP2: self asParameter!
+	^Gdi32 getROP2: handle!
 
 rop2: anInteger
-	^Gdi32 setROP2: self asParameter fnDrawMode: anInteger!
+	^Gdi32 setROP2: handle fnDrawMode: anInteger!
 
 save
-	"Save the state of the receiver and answer its id. This can then later
-	be restored using #restore:.
-	Implementation Note: We must also save the current pen, brush, and
-	font in order to prevent them from being GC'd, and so that we can
-	restore them correctly later."
+	"Save the state of the receiver and answer its id. This can then later be restored using #restore:."
+
+	"Implementation Note: We must also save the current pen, brush, and font in order to prevent them from being GC'd, and so that we can restore them correctly later."
 
 	| id |
-	id := Gdi32 saveDC: self asParameter.
-	self saved at: id put: {pen. brush. font}.
+	id := Gdi32 saveDC: handle.
+	self saved at: id put: { pen. brush. font }.
 	^self saveIds addLast: id!
 
 saved
@@ -772,13 +766,13 @@ selectClipRegion: aRegion
 	"Select aRegion as the clipping region of the receiver or deselect
 	current clipping region if aRegion is nil."
 
-	^Gdi32 selectClipRgn: self asParameter hrgn: aRegion asParameter!
+	^Gdi32 selectClipRgn: handle hrgn: aRegion asParameter!
 
 selectObject: aGraphicsToolOrHandle
 	"Private - Select aGraphicsToolOrHandle into the receiver, answering the handle of the previous
 	object of that type."
 
-	^Gdi32 selectObject: self asParameter hgdiobj: aGraphicsToolOrHandle asParameter!
+	^Gdi32 selectObject: handle hgdiobj: aGraphicsToolOrHandle asParameter!
 
 selectPalette: hPalette
 	"Selects the palette in hPalette into the receiver. Follow this with
@@ -786,7 +780,7 @@ selectPalette: hPalette
 	of the previous palette"
 
 	^Gdi32
-		selectPalette: self asParameter
+		selectPalette: handle
 		hPal: hPalette
 		bForceBackground: false!
 
@@ -801,7 +795,7 @@ setDefaultAttributes
 setTextAlign: alignment
 	"Set the receiver's alignment for drawing text."
 
-	^Gdi32 setTextAlign: self asParameter fMode: alignment!
+	^Gdi32 setTextAlign: handle fMode: alignment!
 
 source: aDCSource
 	"Private - Set the receiver's DC source to the argument
@@ -815,7 +809,7 @@ stretchBlt: aCanvas rectangle: aRectangle to: dstOrigin extent: dstExtent rop: r
 	Answer true if the operation succeeds"
 
 	^Gdi32
-		stretchBlt: self asParameter
+		stretchBlt: handle
 		nXOriginDest: dstOrigin x
 		nYOriginDest: dstOrigin y
 		nWidthDest: dstExtent x
@@ -834,7 +828,7 @@ text: aString at: aPoint
 	"We need to do an explicit conversion to UTF16 here, because we have to pass the correct number of code units."
 	text := aString asUtf16String.
 	^Gdi32
-		textOut: self asParameter
+		textOut: handle
 		nXStart: aPoint x
 		nYStart: aPoint y
 		lpString: text
@@ -848,7 +842,7 @@ textExtent: aString
 	"We need to do an explicit conversion to UTF16 here, because we have to pass the correct number of code units."
 	text := aString asUtf16String.
 	(Gdi32
-		getTextExtentPoint32: self asParameter
+		getTextExtentPoint32: handle
 		lpString: text
 		c: text size
 		lpSize: extent) ifFalse: [^Gdi32 systemError].
@@ -860,17 +854,12 @@ textExtent: aString width: anIntegerWidth alignment: anAlignSymbol
 	#left, #center, #right. Uses the receiver's currently selected font."
 
 	| rect height align |
-	align := ##(IdentityDictionary new
-				at: #left put: DT_LEFT;
-				at: #center put: DT_CENTER;
-				at: #right put: DT_RIGHT;
-				shrink;
-				yourself) at: anAlignSymbol ifAbsent: DT_LEFT.
+	align := DrawTextAlignments at: anAlignSymbol ifAbsent: DT_LEFT.
 	rect := RECTL width: anIntegerWidth.
 	height := self
 				formatText: aString
 				in: rect
-				flags: ##(DT_CALCRECT | DT_WORDBREAK) | align.
+				flags: (##(DT_CALCRECT bitOr: DT_WORDBREAK) bitOr: align).
 	^anIntegerWidth @ height!
 
 textExtent: aString width: widthInteger flags: flagsInteger
@@ -892,7 +881,7 @@ textMetrics
 
 	| answer |
 	answer := TEXTMETRICW newBuffer.
-	(Gdi32 getTextMetrics: self asParameter lptm: answer) ifFalse: [Gdi32 systemError].
+	(Gdi32 getTextMetrics: handle lptm: answer) ifFalse: [Gdi32 systemError].
 	^answer!
 
 viewportExtent
@@ -900,7 +889,7 @@ viewportExtent
 
 	| extent |
 	extent := SIZEL newBuffer.
-	(Gdi32 getViewportExtEx: self asParameter lpSize: extent) ifFalse: [^Gdi32 systemError].
+	(Gdi32 getViewportExtEx: handle lpSize: extent) ifFalse: [^Gdi32 systemError].
 	^extent asPoint!
 
 viewportExtent: aPoint
@@ -910,18 +899,18 @@ viewportExtent: aPoint
 	| previous |
 	previous := SIZEL newBuffer.
 	(Gdi32
-		setViewportExtEx: self asParameter
+		setViewportExtEx: handle
 		nXExtent: aPoint x
 		nYExtent: aPoint y
 		lpSize: previous) ifFalse: [^Gdi32 systemError].
 	^previous asPoint!
 
 viewportOrigin
-	"Answers the origin of the receiver's viewport mapping."
+	"Answers a <Point> that is the cartesian origin of the receiver's viewport mapping."
 
 	| origin |
 	origin := POINTL newBuffer.
-	(Gdi32 getViewportOrgEx: self asParameter lppt: origin) ifFalse: [^Gdi32 systemError].
+	(Gdi32 getViewportOrgEx: handle lppt: origin) ifFalse: [^Gdi32 systemError].
 	^origin asPoint!
 
 viewportOrigin: aPoint
@@ -931,7 +920,7 @@ viewportOrigin: aPoint
 	| previous |
 	previous := POINTL newBuffer.
 	(Gdi32
-		setViewportOrgEx: self asParameter
+		setViewportOrgEx: handle
 		nXOrg: aPoint x
 		nYOrg: aPoint y
 		lppt: previous) ifFalse: [^Gdi32 systemError].
@@ -947,14 +936,14 @@ viewportRectangle: aRectangle
 	^Rectangle origin: oldOrigin extent: oldExtent!
 
 width
-	^self getDeviceCaps: HORZRES!
+	^Gdi32 getDeviceCaps: handle nIndex: HORZRES!
 
 windowExtent
 	"Answers the extent of the receiver's window mapping."
 
 	| extent |
 	extent := SIZEL newBuffer.
-	(Gdi32 getWindowExtEx: self asParameter lpSize: extent) ifFalse: [^Gdi32 systemError].
+	(Gdi32 getWindowExtEx: handle lpSize: extent) ifFalse: [^Gdi32 systemError].
 	^extent asPoint!
 
 windowExtent: aPoint
@@ -964,7 +953,7 @@ windowExtent: aPoint
 	| previous |
 	previous := SIZEL newBuffer.
 	(Gdi32
-		setWindowExtEx: self asParameter
+		setWindowExtEx: handle
 		nXExtent: aPoint x
 		nYExtent: aPoint y
 		lpSize: previous) ifFalse: [^Gdi32 systemError].
@@ -975,17 +964,16 @@ windowOrigin
 
 	| origin |
 	origin := POINTL newBuffer.
-	(Gdi32 getWindowOrgEx: self asParameter lppt: origin) ifFalse: [^Gdi32 systemError].
+	(Gdi32 getWindowOrgEx: handle lppt: origin) ifFalse: [^Gdi32 systemError].
 	^origin asPoint!
 
 windowOrigin: aPoint
-	"Sets the origin of the receiver's window mapping. 
-	Answers the old window origin"
+	"Sets the origin of the receiver's window mapping. Answer the old window origin."
 
 	| previous |
 	previous := POINTL newBuffer.
 	(Gdi32
-		setWindowOrgEx: self asParameter
+		setWindowOrgEx: handle
 		nXOrg: aPoint x
 		nYOrg: aPoint y
 		lppt: previous) ifFalse: [^Gdi32 systemError].
@@ -1044,7 +1032,6 @@ formatText:in:flags:!drawing!public! !
 frameRectangle:brush:!drawing!public! !
 free!public!realizing/unrealizing! !
 getClipBox!enquiries!private! !
-getDeviceCaps:!accessing!private! !
 getFont!accessing!public!tools! !
 getPixel:!drawing!private! !
 handle!accessing!public! !
@@ -1053,6 +1040,7 @@ hiMetricToPels:!converting!public! !
 intersectClipRectangle:!drawing!public! !
 invertRectangle:!drawing!public! !
 invertRegion:!drawing!public! !
+isPaletteDevice!accessing!public! !
 isRectangleVisible:!drawing!public!testing! !
 lineFrom:to:!drawing!public! !
 lineTo:!drawing!public! !
@@ -1157,6 +1145,10 @@ icon
 
 	^##(self) defaultIcon!
 
+initialize
+	self addClassConstant: 'DrawTextAlignments'
+		value: (IdentityDictionary withAll: { #left -> DT_LEFT. #center -> DT_CENTER. #right -> DT_RIGHT })!
+
 new
 	"Private - Use #withNonOwnedDC:, #withOwnedDC:, #withDC:ownedBy: or one of their derivatives."
 
@@ -1228,6 +1220,7 @@ forNonClientView:!instance creation!public! !
 forView:!instance creation!public! !
 getDC!accessing!public! !
 icon!constants!public! !
+initialize!class initialization!public! !
 new!instance creation!private! !
 on:!instance creation!public! !
 onExit!event handling!public! !

@@ -400,6 +400,9 @@ filesType
 freeHandle: anExternalHandle
 	User32 destroyIcon: anExternalHandle!
 
+fromBitmap: aBitmap 
+	^self initializer: (IconFromBitmapInitializer bitmap: aBitmap)!
+
 fromSystemId: anIntegerId
 	"Answer a new instance of the Windows pre-defined icon specified by anIntegerID."
 
@@ -537,6 +540,7 @@ exclamation!instance creation!public! !
 extraLargeExtent!constants!public! !
 filesType!constants!private! !
 freeHandle:!private!realizing/unrealizing! !
+fromBitmap:!instance creation!public! !
 fromSystemId:!instance creation!public! !
 fromSystemId:extent:!instance creation!public! !
 hand!instance creation!public! !
