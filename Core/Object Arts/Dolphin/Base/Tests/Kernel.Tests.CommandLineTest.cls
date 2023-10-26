@@ -18,6 +18,18 @@ dolphinLauncherExe
 dproImageName
 	^File splitFilenameFrom: SessionManager current imageFileName!
 
+expectError: aString parsing: commandLine
+	| filter |
+	filter := [:ex | ex description beginsWith: aString].
+	self
+		should: [commandLine options]
+			raise: CommandLineError
+			matching: filter;
+		should: [commandLine arguments]
+			raise: CommandLineError
+			matching: filter;
+		yourself!
+
 test_getOpt_01
 	"http://www.gnu.org/software/libc/manual/html_node/Example-of-Getopt.html"
 
@@ -147,7 +159,7 @@ test_getOpt_11
 		assert: commandLine optOpt equals: $x;
 		assertIsNil: commandLine optArg;
 		assertIsNil: (commandLine getOpt: 'abc:');
-		should: [commandLine arguments] raise: CommandLineError;
+		should: [commandLine arguments] raise: CommandLineError matching: [:ex | ex description beginsWith: 'Unrecognized option: x'];
 		yourself!
 
 test_getOpt_12
@@ -161,7 +173,7 @@ test_getOpt_12
 		assert: commandLine optOpt equals: $c;
 		assertIsNil: commandLine optArg;
 		assertIsNil: (commandLine getOpt: 'abc:');
-		should: [commandLine arguments] raise: CommandLineError;
+		should: [commandLine arguments] raise: CommandLineError matching: [:ex | ex description beginsWith: 'Missing required argument for option c'];
 		yourself!
 
 test_getOpt_13
@@ -184,10 +196,10 @@ test_getOpt_14
 
 	| commandLine |
 	commandLine := CommandLine
-				argv: {self dolphinLauncherExe. self dproImageName. '--'. '-a'. '-b'. '-c'}.
+				argv: {self dolphinLauncherExe. 'aa'. '--'. '-a'. '-b'. '-c'}.
 	self
 		assertIsNil: (commandLine getOpt: 'abc:');
-		assert: commandLine arguments equals: {self dproImageName. '-a'. '-b'. '-c'};
+		assert: commandLine arguments equals: {'aa'. '-a'. '-b'. '-c'};
 		yourself!
 
 testAccessors
@@ -240,16 +252,18 @@ testBlockRequiredArgumentPresent
 		processOptions.
 	self assert: fooValue equals: 'bar'!
 
+testEmptyArguments
+	| commandLine |
+	commandLine := CommandLine argv: { self dolphinLauncherExe. self dproImageName. ''. '-a'. 'bb'. '' }.
+	self assert: commandLine arguments equals: { self dproImageName. ''. 'bb'. '' }!
+
 testLongAmbiguousOption
 	| commandLine |
 	commandLine := (CommandLine argv: {self dolphinLauncherExe. self dproImageName. '--a'})
 				addOption: 'aa';
 				addOption: 'ab';
 				yourself.
-	self
-		should: [commandLine options] raise: CommandLineError;
-		should: [commandLine arguments] raise: CommandLineError;
-		yourself!
+	self expectError: 'Ambiguous option ''a''' parsing: commandLine!
 
 testLongEquals
 	| commandLine options arguments |
@@ -267,13 +281,10 @@ testLongEquals
 
 testLongMissingRequiredArgument
 	| commandLine |
-	commandLine := (CommandLine argv: {self dolphinLauncherExe. self dproImageName. '--foo'})
+	commandLine := (CommandLine argv: { self dolphinLauncherExe. self dproImageName. '--foo' })
 				addOptionRequiringArgument: 'foo';
 				yourself.
-	self
-		should: [commandLine options] raise: CommandLineError;
-		should: [commandLine arguments] raise: CommandLineError;
-		yourself!
+	self expectError: 'Missing required argument for option ''foo''' parsing: commandLine!
 
 testLongNoArgument
 	| commandLine options arguments |
@@ -347,33 +358,24 @@ testLongRequiredArgumentPresent
 
 testLongUnexpectedArgument
 	| commandLine |
-	commandLine := (CommandLine argv: {self dolphinLauncherExe. self dproImageName. '--foo=bar'})
+	commandLine := (CommandLine argv: { self dolphinLauncherExe. self dproImageName. '--foo=bar' })
 				addOption: 'foo';
 				yourself.
-	self
-		should: [commandLine options] raise: CommandLineError;
-		should: [commandLine arguments] raise: CommandLineError;
-		yourself!
+	self expectError: 'Option ''foo'' has unexpected argument of ''bar''' parsing: commandLine!
 
 testLongUnexpectedOption
 	| commandLine |
 	commandLine := (CommandLine argv: {self dolphinLauncherExe. self dproImageName. '--bar'})
 				addOptionRequiringArgument: 'foo';
 				yourself.
-	self
-		should: [commandLine options] raise: CommandLineError;
-		should: [commandLine arguments] raise: CommandLineError;
-		yourself!
+	self expectError: 'Unrecognized option ''bar''' parsing: commandLine!
 
 testMissingRequiredArgument
 	| commandLine |
-	commandLine := (CommandLine argv: {self dolphinLauncherExe. self dproImageName. '-c'})
+	commandLine := (CommandLine argv: { self dolphinLauncherExe. self dproImageName. '-c' })
 				options: 'abc:';
 				yourself.
-	self
-		should: [commandLine options] raise: CommandLineError;
-		should: [commandLine arguments] raise: CommandLineError;
-		yourself!
+	self expectError: 'Missing required argument for option c' parsing: commandLine!
 
 testPartialLong
 	| commandLine options arguments |
@@ -468,13 +470,11 @@ testUnrecognizedOption
 	commandLine := (CommandLine argv: {self dolphinLauncherExe. self dproImageName. '-d'})
 				options: 'abc:';
 				yourself.
-	self
-		should: [commandLine options] raise: CommandLineError;
-		should: [commandLine arguments] raise: CommandLineError;
-		yourself! !
+	self expectError: 'Unrecognized option: d' parsing: commandLine! !
 !Kernel.Tests.CommandLineTest categoriesForMethods!
 dolphinLauncherExe!private! !
 dproImageName!private! !
+expectError:parsing:!helpers!private! !
 test_getOpt_01!getopt protocol!public! !
 test_getOpt_02!getopt protocol!public! !
 test_getOpt_03!getopt protocol!public! !
@@ -494,6 +494,7 @@ testBlockNoArgument!block!public! !
 testBlockOptionalArgumentAbsent!block!public! !
 testBlockOptionalArgumentPresent!block!public! !
 testBlockRequiredArgumentPresent!block!public! !
+testEmptyArguments!errors!public! !
 testLongAmbiguousOption!errors!public! !
 testLongEquals!long tests!public! !
 testLongMissingRequiredArgument!errors!public! !

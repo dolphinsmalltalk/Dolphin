@@ -21,7 +21,7 @@ package!
 
 Core.Object
 	subclass: #'Kernel.CommandLine'
-	instanceVariableNames: 'arguments argv optArg optIndex optOpt optionPrefixChars options parsingArg parsingArgStream parsingErrors parsingOptionStream parsingRules'
+	instanceVariableNames: 'arguments argv optArg optIndex optOpt optionPrefixChars options parsingArgStream parsingErrors parsingRules'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
