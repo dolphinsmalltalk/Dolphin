@@ -3,7 +3,7 @@
 External.DynamicLinkLibrary
 	subclass: #'OS.COM.OLELibrary'
 	instanceVariableNames: 'comOnly'
-	classVariableNames: 'DefaultIMalloc'
+	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -128,6 +128,11 @@ coGetObject: aUtf16String pBindOptions: aBIND_OPTS riid: anIID ppv: aCOMInterfac
 	<stdcall: hresult CoGetObject lpwstr void* guid* void**>
 	^self invalidCall: _failureCode!
 
+coInitialize
+	self comOnly
+		ifTrue: [self coInitialize: nil]
+		ifFalse: [self oleInitialize: nil]!
+
 coInitialize: pvReserved
 	"Invoke the CoInitialize() function of the module wrapped by the receiver.
 
@@ -220,28 +225,9 @@ coUninitialize
 	^self invalidCall: _failureCode!
 
 initialize
-	"Private - Initialize the receiver using the specified default task
-	allocator (usually nil). This initialization will be automatically
-	run if you make any references to `Ole32` or `OLELibrary default`, and therefore
-	you must either set up the DefaultIMalloc BEFORE any calls to OLELibrary,
-	OR set the default library using #default:, OR perform a subsequent
-	initialize passing the IMalloc you want to use."
-
 	#{IMalloc} ifDefined: [:imalloc | imalloc clear].
 	comOnly := false.
-	self initialize: DefaultIMalloc!
-
-initialize: anIMallocOrNil
-	"Private - Initialize the receiver using the specified default task
-	allocator (usually nil). This initialization will be automatically
-	run if you make any references to `Ole32` or `OLELibrary default`, and therefore
-	you must either set up the DefaultIMalloc BEFORE any calls to OLELibrary,
-	OR set the default library using #default:, OR perform a subsequent
-	initialize passing the IMalloc you want to use."
-
-	self comOnly
-		ifTrue: [self coInitialize: anIMallocOrNil asParameter]
-		ifFalse: [self oleInitialize: anIMallocOrNil asParameter]!
+	self coInitialize!
 
 now
 	"Answer the current <FILETIME> in UTC."
@@ -283,12 +269,6 @@ progIDFromCLSID: clsid lplpszProgID: lplpszProgID
 	<stdcall: hresult ProgIDFromCLSID guid* lpwstr*>
 	^self invalidCall: _failureCode!
 
-supportsDCOM
-	"Answer whether the host OS supports DCOM (i.e. remote servers).
-	This is the officially recognised test!!"
-
-	^(Kernel32 getProcAddress: self asParameter lpProcName: 'CoInitializeEx') notNull!
-
 uninitialize
 	"Private - Reverse the initialize"
 
@@ -305,6 +285,7 @@ coFileTimeNow:!OLE Functions-COM!public! !
 coGetClassObject:dwClsContext:pServerInfo:riid:ppv:!**auto generated**!OLE Functions-COM!public! !
 coGetMalloc:ppMalloc:!**auto generated**!OLE Functions-COM!public! !
 coGetObject:pBindOptions:riid:ppv:!OLE Functions-COM!public! !
+coInitialize!initializing!private! !
 coInitialize:!**auto generated**!OLE Functions-COM!public! !
 coInitializeEx:dwCoInit:!**auto generated**!OLE Functions-COM!public! !
 comOnly!accessing!public! !
@@ -316,13 +297,11 @@ coTaskMemFree:!**auto generated**!OLE Functions-COM!public! !
 coTaskMemRealloc:cb:!**auto generated**!OLE Functions-COM!public! !
 coUninitialize!**auto generated**!OLE Functions-COM!public! !
 initialize!initializing!private! !
-initialize:!initializing!private! !
 now!enquiries!public! !
 oleInitialize:!**auto generated**!OLE Functions-OLE!public! !
 oleLockRunning:fLock:fLastUnlockCloses:!OLE Functions-Persistent Objects!primitives!public! !
 oleUninitialize!**auto generated**!OLE Functions-OLE!public! !
 progIDFromCLSID:lplpszProgID:!**auto generated**!OLE Functions-GUID!public! !
-supportsDCOM!public!testing! !
 uninitialize!private!realizing/unrealizing! !
 !
 

@@ -31,6 +31,12 @@ CreateInstanceLic: punkOuter pUnkReserved: pUnkReserved riid: riid bstrKey: bstr
 	<virtual stdcall: hresult 8 IUnknown* IUnknown* guid* bstr IUnknown**>
 	^self invalidCall: _failureCode!
 
+getLicenseInfo
+	| licinfo |
+	licinfo := OS.COM.LICINFO newBuffer.
+	self GetLicInfo: licinfo.
+	^licinfo!
+
 GetLicInfo: pLicInfo
 	"Invoke the GetLicInfo() method of the object wrapped by the receiver.
 	
@@ -63,6 +69,7 @@ RequestLicKey: dwReserved pBstrKey: pBstrKey
 	^self invalidCall: _failureCode! !
 !OS.COM.IClassFactory2 categoriesForMethods!
 CreateInstanceLic:pUnkReserved:riid:bstrKey:ppvObject:!**auto generated**!COM Interfaces-OCIDL.IClassFactory2!public! !
+getLicenseInfo!accessing!public! !
 GetLicInfo:!COM Interfaces-OCIDL.IClassFactory2!private! !
 requestLicenseKey!accessing!enquiries!public! !
 RequestLicKey:pBstrKey:!**auto generated**!COM Interfaces-OCIDL.IClassFactory2!private! !

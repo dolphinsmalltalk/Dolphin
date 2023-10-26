@@ -949,19 +949,17 @@ onCLSID: aCLSID outerIUnknown: pUnkOuter hostName: hostNameString licenseKey: li
 				ppvObject: pUnk.
 	hr < 0
 		ifTrue: 
-			[| license |
-			"Failed for some reason, perhaps it needs a license"
+			["Failed for some reason, perhaps it needs a license"
 			hr = CLASS_E_NOTLICENSED ifFalse: [^HRESULTError signalWith: hr].
+			"Requires a runtime license. Must be a licensable object that is running on a machine without a valid machine-wide license, in which case a runtime license would have to be allocated on a machine that has such a license and then the license string passed in"
 			pFactory := pFactory queryInterface: IClassFactory2.
-			pFactory isNil ifTrue: [^HRESULTError signalWith: hr].
-
-			"If a license key was not supplied, then try and get a runtime license"
-			license := licenseString ifNil: [pFactory requestLicenseKey].
+			(pFactory isNil or: [licenseString isNil or: [licenseString isEmpty]])
+				ifTrue: [^HRESULTError signalWith: hr].
 			pFactory
 				CreateInstanceLic: pUnkOuter
 				pUnkReserved: nil
 				riid: pUnk iid
-				bstrKey: license
+				bstrKey: licenseString
 				ppvObject: pUnk].
 	^pUnk!
 

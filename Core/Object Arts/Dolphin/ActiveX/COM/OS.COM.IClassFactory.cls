@@ -70,12 +70,9 @@ ctxAll
 	^self ctxServer | CLSCTX_INPROC_HANDLER!
 
 ctxServer
-	"Answer the flags to be used to specify instance creation from any type of server.
-	N.B. This varies depending on whether the operating system supports remote
-	servers, and so is not strictly a constant (thanks guys)."
+	"Answer the flags to be used to specify instance creation from any type of server."
 
-	^##(CLSCTX_INPROC_SERVER | CLSCTX_LOCAL_SERVER)
-		| (Ole32 supportsDCOM ifTrue: [CLSCTX_REMOTE_SERVER] ifFalse: [0])!
+	^##(CLSCTX_INPROC_SERVER | CLSCTX_LOCAL_SERVER | CLSCTX_REMOTE_SERVER)!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'UNKNWN.IClassFactory'
