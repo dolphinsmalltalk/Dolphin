@@ -52,6 +52,7 @@ package methodNames
 	add: #CompilerNotification -> #extra;
 	add: #CRTLibrary -> #_spawnvp:cmdname:argv:;
 	add: #Dictionary -> #at:ifAbsentPutValue:;
+	add: #EventMessageSend -> #receiver:;
 	add: #ExternalLibrary -> #invalidCall;
 	add: #ExternalStructure -> #do:;
 	add: #ExternalStructure -> #do:separatedBy:;
@@ -61,6 +62,7 @@ package methodNames
 	add: #KernelLibrary -> #getTimeFormat:dwFlags:lpTime:lpFormat:lpTimeStr:cchBuf:;
 	add: #Locale -> #isMonthBeforeDay;
 	add: #MessageNotUnderstood -> #receiver:;
+	add: #MessageSend -> #receiver:;
 	add: #Metaclass -> #instVarNames:;
 	add: #NotFoundError -> #receiver:;
 	add: #NUMBERFMTW -> #thousandSeparator;
@@ -605,6 +607,15 @@ invalidCall
 invalidCall!exceptions!public! !
 !
 
+!EventMessageSend methodsFor!
+
+receiver: anObject
+	#deprecated.	"Should only be set on instantiation with other identity variables - use receiver:selector:arguments:"
+	self basicAt: 1 put: anObject! !
+!EventMessageSend categoriesForMethods!
+receiver:!accessing!public! !
+!
+
 !File methodsFor!
 
 readCharacter
@@ -708,6 +719,16 @@ receiver: anObject
 	#deprecated.	"Should only be set on instantiation with other identity variables - use receiver:message:"
 	receiver := anObject! !
 !MessageNotUnderstood categoriesForMethods!
+receiver:!accessing!public! !
+!
+
+!MessageSend methodsFor!
+
+receiver: anObject
+	#deprecated.	"Should only be set on instantiation with other identity variables - use receiver:selector:arguments:"
+	receiver := anObject.
+! !
+!MessageSend categoriesForMethods!
 receiver:!accessing!public! !
 !
 

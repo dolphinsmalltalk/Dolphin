@@ -52,8 +52,13 @@ postCopy
 receiver
 	^self basicAt: 1!
 
-receiver: anObject
-	self basicAt: 1 put: anObject!
+receiver: anObject selector: aSymbol arguments: argArray
+	"Private - Initialize the receiver's instance variables."
+
+	self basicAt: 1 put: anObject.
+	selector := aSymbol.
+	expectedArgCount := aSymbol argumentCount.
+	args := argArray!
 
 selector: aSelector
 	"Sets the selector for the receiver to aSelector. Also
@@ -63,13 +68,6 @@ selector: aSelector
 	super selector: aSelector.
 	expectedArgCount := aSelector argumentCount.
 	args := #()!
-
-setSelector: aSymbol arguments: argArray
-	"Private - Initialize the receiver's instance variables."
-
-	selector := aSymbol.
-	expectedArgCount := aSymbol argumentCount.
-	args := argArray!
 
 value
 	"Evaluates the receiver send the message identified by the 
@@ -87,9 +85,8 @@ forwardTo:withArguments:!evaluating!private! !
 mergeArguments:!evaluating!private! !
 postCopy!copying!public! !
 receiver!accessing!debugger-step over!public! !
-receiver:!accessing!public! !
+receiver:selector:arguments:!initializing!private! !
 selector:!accessing!public! !
-setSelector:arguments:!initializing!private! !
 value!evaluating!public! !
 !
 

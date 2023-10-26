@@ -72,15 +72,18 @@ printOn: aPuttableStream
 receiver
 	^receiver!
 
-receiver: anObject
+receiver: anObject selector: aSymbol arguments: anArray
+	"Private - Initialize the receiver's instance variables."
+
 	receiver := anObject.
-! !
+	selector := aSymbol.
+	args := anArray! !
 !Core.MessageSend categoriesForMethods!
 forwardTo:withArguments:!evaluating!private! !
 isSelfEvaluating!private!testing! !
 printOn:!printing!public! !
 receiver!accessing!public! !
-receiver:!accessing!public! !
+receiver:selector:arguments:!initializing!private! !
 !
 
 Core.MessageSend methodProtocol: #messageSend attributes: #() selectors: #()!

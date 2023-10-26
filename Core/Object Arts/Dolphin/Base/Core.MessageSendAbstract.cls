@@ -97,10 +97,16 @@ receiver
 
 	^self subclassResponsibility!
 
-receiver: anObject
-	"Set the receiver"
+receiver: anObject selector: aSymbol arguments: argArray
+	"Private - Initialize the receiver's instance variables."
 
-	^self subclassResponsibility!
+	self subclassResponsibility!
+
+selector: aSymbol arguments: argArray
+	"Private - Initialize the receiver's instance variables."
+
+	selector := aSymbol.
+	args := argArray!
 
 value
 	"Evaluates the receiver send the message identified by the 
@@ -157,7 +163,8 @@ forwardTo:!operations!public! !
 hash!comparing!public! !
 printOn:!printing!public! !
 receiver!accessing!public! !
-receiver:!accessing!public! !
+receiver:selector:arguments:!initializing!private! !
+selector:arguments:!initializing!private! !
 value!evaluating!public! !
 value:!evaluating!public! !
 value:value:!evaluating!public! !
@@ -193,8 +200,7 @@ receiver: anObject selector: aSymbol arguments: anArray
 	aSymbol, and arguments, anArray"
 
 	^(self new)
-		receiver: anObject;
-		setSelector: aSymbol arguments: anArray;
+		receiver: anObject selector: aSymbol arguments: anArray;
 		yourself!
 
 selector: aSymbol arguments: anArray 

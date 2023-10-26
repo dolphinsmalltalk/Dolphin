@@ -134,7 +134,7 @@ selector: aSymbol
 
 	selector := aSymbol.!
 
-setSelector: aSymbol arguments: argArray
+selector: aSymbol arguments: argArray
 	"Private - Initialize the receiver's instance variables."
 
 	selector := aSymbol.
@@ -180,7 +180,7 @@ numArgs!accessing!public! !
 printOn:!printing!public! !
 selector!accessing!public! !
 selector:!accessing!public! !
-setSelector:arguments:!accessing!private! !
+selector:arguments:!initializing!private! !
 value:!evaluating!public! !
 value:value:!evaluating!public! !
 valueWithArguments:!evaluating!public! !
@@ -210,7 +210,7 @@ selector: aSymbol arguments: anArray
 	"Answer a new instance of the receiver with selector, aSymbol, and arguments, anArray"
 
 	<primitive: 157>
-	^self new setSelector: aSymbol arguments: anArray! !
+	^self new selector: aSymbol arguments: anArray! !
 !Core.Message class categoriesForMethods!
 selector:!instance creation!public! !
 selector:argument:!instance creation!public! !
