@@ -39,6 +39,11 @@ canSave
 
 	^self isModified!
 
+canSaveAs
+	"Answer whether the document is in a valid state and can be saved to a new file. Subclasses to override as appropriate."
+
+	^true!
+
 canSaveState
 	"Private - Answer true if the receiver can successfully have its state saved by #saveStateOn:. Some
 	tools may not be able to save their state and therefore will not be able to be exported as
@@ -114,7 +119,7 @@ fileSaveAs
 	"Associated the receiver with a file and saves it. Answers whether the file was actually
 	saved."
 
-	self canSave ifFalse: [^false].
+	<commandQuery: #canSaveAs>
 	^self saveDocumentAs!
 
 getDocumentData
@@ -320,11 +325,12 @@ updateCaption
 !UI.AbstractDocumentShell categoriesForMethods!
 addToRecentList:!public! !
 basicCaption!accessing!private! !
-canSave!public!testing! !
+canSave!commands-queries!public! !
+canSaveAs!commands-queries!public! !
 canSaveState!private!saved state! !
 createSchematicWiring!initializing!public! !
 fileClearRecentList!commands-actions!public! !
-fileLoad!commands-actions!public! !
+fileLoad!operations!public! !
 filename!accessing!public! !
 filename:!accessing!public! !
 fileOpen!commands-actions!public! !
