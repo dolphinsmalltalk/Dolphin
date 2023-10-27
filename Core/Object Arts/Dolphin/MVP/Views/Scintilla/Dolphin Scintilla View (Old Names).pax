@@ -11,7 +11,6 @@ package setVariableNames: #(
 	#{Smalltalk.ScintillaAttribute}
 	#{Smalltalk.ScintillaConstants}
 	#{Smalltalk.ScintillaIndicator}
-	#{Smalltalk.ScintillaIndicatorDefinition}
 	#{Smalltalk.ScintillaIndicatorStyle}
 	#{Smalltalk.ScintillaKeyBinding}
 	#{Smalltalk.ScintillaLibrary}
@@ -26,7 +25,6 @@ package setAliasVariableNames: #(
 	#{Smalltalk.ScintillaAttribute}
 	#{Smalltalk.ScintillaConstants}
 	#{Smalltalk.ScintillaIndicator}
-	#{Smalltalk.ScintillaIndicatorDefinition}
 	#{Smalltalk.ScintillaIndicatorStyle}
 	#{Smalltalk.ScintillaKeyBinding}
 	#{Smalltalk.ScintillaLibrary}
@@ -51,8 +49,6 @@ Smalltalk.ScintillaAttribute := UI.Scintilla.Attribute!
 Smalltalk.ScintillaConstants := UI.Scintilla!
 
 Smalltalk.ScintillaIndicator := UI.Scintilla.Indicator!
-
-Smalltalk.ScintillaIndicatorDefinition := UI.Scintilla.IndicatorDefinition!
 
 Smalltalk.ScintillaIndicatorStyle := UI.Scintilla.IndicatorDefinition!
 

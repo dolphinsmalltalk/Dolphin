@@ -5,6 +5,8 @@ package paxVersion: 2.1;
 
 This package includes legacy classes and methods from Dolphin''s Scintilla View package that have been deprecated.'.
 
+package basicScriptAt: #postinstall put: 'self variableNames do: [:each | each binding isDeprecated: true].
+Smalltalk resetOldNames'.
 
 package setMethodNames: #(
 	#(#{UI.Scintilla.Indicator} #styleName)
@@ -39,10 +41,12 @@ package setMethodNames: #(
 ).
 
 package setVariableNames: #(
+	#{Smalltalk.ScintillaIndicatorDefinition}
 	#{UI.Scintilla.IndicatorStyle}
 ).
 
 package setAliasVariableNames: #(
+	#{Smalltalk.ScintillaIndicatorDefinition}
 	#{UI.Scintilla.IndicatorStyle}
 ).
 
@@ -54,6 +58,8 @@ package setPrerequisites: #(
 package!
 
 "Variable Aliases"!
+
+Smalltalk.ScintillaIndicatorDefinition := UI.Scintilla.IndicatorDefinition!
 
 UI.Scintilla.IndicatorStyle := UI.Scintilla.IndicatorDefinition!
 
