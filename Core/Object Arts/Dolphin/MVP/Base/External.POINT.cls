@@ -703,9 +703,9 @@ getFieldNames
 	^#(#x #y)!
 
 marshal: aPoint
-	"Answer a new instance of the receiver representing aPoint."
+	"Answer the <point> argument marshalled as an instance of the receiver."
 
-	aPoint class == self class ifTrue: [^aPoint].
+	self == aPoint class ifTrue: [^aPoint].
 	^self x: aPoint x y: aPoint y!
 
 x: x y: y

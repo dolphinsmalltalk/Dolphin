@@ -20,6 +20,12 @@ testAsObject
 	self assert: point x equals: 101.
 	self assert: point y equals: 202!
 
+testMarshal
+	| subject |
+	subject := self subjectClass marshal: 101 @ 202.
+	self assert: subject isKindOf: self subjectClass.
+	self assert: (self subjectClass marshal: subject) identicalTo: subject!
+
 testPrintString
 	self assert: self subjectClass new printString equals: ('a ', self subjectClass name, '(0@0)').
 	self assert: (self subjectClass fromPoint: (123@456)) printString equals: ('a ', self subjectClass name, '(123@456)')!
@@ -33,6 +39,7 @@ testValue
 	self assert: point y equals: 202! !
 !External.Tests.POINTTest categoriesForMethods!
 testAsObject!public!unit tests! !
+testMarshal!public!unit tests! !
 testPrintString!public! !
 testValue!public!unit tests! !
 !
