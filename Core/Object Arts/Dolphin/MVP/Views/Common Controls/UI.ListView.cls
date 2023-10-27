@@ -578,6 +578,7 @@ errorInCommonControlCall: index
 extraLargeIconMode
 	"Place the receiver in extra large icons mode"
 
+	<commandQuery: #queryExtraLargeIconMode:>
 	self viewMode: #extraLargeIcons!
 
 findItem: aString startingAt: anInteger wrap: aBoolean
@@ -1083,6 +1084,7 @@ largeIconExtent: aPointOrNil
 largeIconMode
 	"Place the receiver in large icons mode"
 
+	<commandQuery: #queryLargeIconMode:>
 	self viewMode: #largeIcons!
 
 lastSelIndices
@@ -1091,6 +1093,7 @@ lastSelIndices
 listMode
 	"Place the receiver in list mode"
 
+	<commandQuery: #queryListMode:>
 	self viewMode: #list!
 
 listViewStyleMask: mask set: aBoolean
@@ -1991,28 +1994,40 @@ primaryColumn
 
 	^columns first!
 
-queryCommand: aCommandQuery
-	"Update aCommandQuery to indicate how a command would be processed.
-	if sent to the receiver. Answers whether the receiver recognised the command
-	as one of its own (this may be ignored by the command router)."
+queryExtraLargeIconMode: aCommandQuery
+	aCommandQuery
+		isEnabled: true;
+		isChecked: self viewMode == #extraLargeIcons!
 
-	| cmd |
-	cmd := aCommandQuery commandSymbol.
-	
-	#extraLargeIconMode == cmd ifTrue: [
-		aCommandQuery isChecked: (self viewMode==#extraLargeIcons)].
-	#tileIconMode == cmd ifTrue: [
-		aCommandQuery isChecked: (self viewMode==#tileIcons)].
-	#largeIconMode == cmd ifTrue: [
-		aCommandQuery isChecked: (self viewMode==#largeIcons)].
-	#listMode == cmd ifTrue: [
-		aCommandQuery isChecked: (self viewMode==#list)].
-	#reportMode == cmd ifTrue: [
-		aCommandQuery isChecked: (self viewMode==#report)].
-	#thumbnailsMode == cmd ifTrue: [
-		aCommandQuery isChecked: (self viewMode==#thumbnails)].
+queryLargeIconMode: aCommandQuery
+	aCommandQuery
+		isEnabled: true;
+		isChecked: self viewMode == #largeIcons!
 
-	^super queryCommand: aCommandQuery!
+queryListMode: aCommandQuery
+	aCommandQuery
+		isEnabled: true;
+		isChecked: self viewMode == #list!
+
+queryReportMode: aCommandQuery
+	aCommandQuery
+		isEnabled: true;
+		isChecked: self viewMode == #report!
+
+querySmallIconMode: aCommandQuery
+	aCommandQuery
+		isEnabled: true;
+		isChecked: self viewMode == #smallIcons!
+
+queryThumbnailsMode: aCommandQuery
+	aCommandQuery
+		isEnabled: true;
+		isChecked: self viewMode == #thumbnails!
+
+queryTileIconMode: aCommandQuery
+	aCommandQuery
+		isEnabled: true;
+		isChecked: self viewMode == #tileIcons!
 
 refreshContents
 	"Refresh the receiver's contents from the model"
@@ -2229,6 +2244,7 @@ showsSelAlways: aBoolean
 smallIconMode
 	"Place the receiver in small icons mode"
 
+	<commandQuery: #querySmallIconMode:>
 	self viewMode: #smallIcons!
 
 sortOnColumn: aListViewColumn
@@ -2326,11 +2342,13 @@ thumbnailsImageManager
 thumbnailsMode
 	"Place the receiver in thumbnails mode"
 
+	<commandQuery: #queryThumbnailsMode:>
 	self viewMode: #thumbnails!
 
 tileIconMode
 	"Place the receiver in tile icons mode"
 
+	<commandQuery: #queryTileIconMode:>
 	self viewMode: #tileIcons!
 
 updateAllNonVirtual
@@ -2473,7 +2491,7 @@ ensureItemsVisible:!helpers!private! !
 ensureSelectionVisible!public!selection! !
 ensureVisible:!operations!public! !
 errorInCommonControlCall:!exceptions!private! !
-extraLargeIconMode!commands!public! !
+extraLargeIconMode!commands-actions!public! !
 findItem:startingAt:wrap:!private!searching! !
 forecolor:!accessing!public! !
 forgetLastClickedColumn!helpers!private! !
@@ -2535,9 +2553,9 @@ itemRect:textOnly:!enquiries!public! !
 itemsPerPage!geometry!public! !
 itemStructure!constants!private! !
 largeIconExtent:!constants!public! !
-largeIconMode!commands!public! !
+largeIconMode!commands-actions!public! !
 lastSelIndices!accessing!private! !
-listMode!commands!public! !
+listMode!commands-actions!public! !
 listViewStyleMask:set:!accessing-styles!private! !
 lvFlags!accessing!private! !
 lvmApproximateViewRect:cx:cy:!geometry!private! !
@@ -2628,12 +2646,18 @@ onSelRemoved!public!selection! !
 onStateRestored!binary filing!private! !
 onViewCreated!event handling!public! !
 primaryColumn!columns!private! !
-queryCommand:!commands!public! !
+queryExtraLargeIconMode:!commands-queries!private! !
+queryLargeIconMode:!commands-queries!private! !
+queryListMode:!commands-queries!private! !
+queryReportMode:!commands-queries!private! !
+querySmallIconMode:!commands-queries!private! !
+queryThumbnailsMode:!commands-queries!private! !
+queryTileIconMode:!commands-queries!private! !
 refreshContents!public!updating! !
 refreshNonVirtual!private!updating! !
 removeColumn:!columns!public!removing! !
 removeColumnAtIndex:!columns!public!removing! !
-reportMode!commands!public! !
+reportMode!commands-actions!public! !
 resetSelection!public!selection! !
 resolutionScaledBy:!geometry!private! !
 selectAll!public!selection! !
@@ -2656,7 +2680,7 @@ setWidthOfColumn:to:!columns!public! !
 showDropHighlight:!drag & drop!private! !
 showsSelAlways!accessing-styles!public! !
 showsSelAlways:!accessing-styles!public! !
-smallIconMode!commands!public! !
+smallIconMode!commands-actions!public! !
 sortOnColumn:!columns!public!sorting! !
 state!accessing!private! !
 stateImageFromRow:!helpers!private! !
@@ -2666,8 +2690,8 @@ textFromRow:!adapters!private! !
 thumbnailExtent!accessing!public! !
 thumbnailExtent:!accessing!public! !
 thumbnailsImageManager!image management!private! !
-thumbnailsMode!commands!public! !
-tileIconMode!commands!public! !
+thumbnailsMode!commands-actions!public! !
+tileIconMode!commands-actions!public! !
 updateAllNonVirtual!private!updating! !
 updateAllVirtual!private!updating! !
 updateColumn:!columns!private!updating! !
@@ -2675,7 +2699,7 @@ updateItem:atIndex:!event handling!public! !
 updateSelectionCache!helpers!private!selection! !
 viewMode!accessing!public! !
 viewModeChanged!helpers!private! !
-viewModeSelect!commands!public! !
+viewModeSelect!commands-actions!public! !
 wantCustomDrawItemNotifications:!helpers!private! !
 !
 
