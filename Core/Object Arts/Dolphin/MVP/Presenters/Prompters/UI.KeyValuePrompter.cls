@@ -46,16 +46,9 @@ prompt: aString
 	promptPresenter value: aString
 !
 
-queryCommand: aCommandQuery 
-	"Private - Enters details about a potential command for the receiver into 
-	the <CommandQuery>."
-
-	aCommandQuery commandSymbol == #ok 
-		ifTrue: 
-			[aCommandQuery 
-				isEnabled: (self validationBlock value: keyPresenter value value: valuePresenter value) == true.
-			^true].
-	^super queryCommand: aCommandQuery!
+queryOk: aCommandQuery
+	aCommandQuery
+		isEnabled: (self validationBlock value: keyPresenter value value: valuePresenter value) == true!
 
 validationBlock
 	^validationBlock!
@@ -67,7 +60,7 @@ createComponents!initializing!public! !
 initialize!initializing!private! !
 model:!accessing!public! !
 prompt:!accessing!public! !
-queryCommand:!commands!private! !
+queryOk:!commands!private! !
 validationBlock!accessing!public! !
 validationBlock:!accessing!public! !
 !
