@@ -21,13 +21,13 @@ addPoint: aPoint
 
 	^data add: aPoint!
 
-drawOn: aCanvas 
+drawOn: aCanvas
 	"Draw the receiver on aCanvas"
 
 	aCanvas
 		moveTo: data first;
-		pen: (Pen 
-					withStyle: Win32Constants.PS_SOLID
+		pen: (Pen
+					style: Win32Constants.PS_SOLID
 					width: self inkWidth
 					color: Color black).
 	data do: [:each | aCanvas lineTo: each]!
