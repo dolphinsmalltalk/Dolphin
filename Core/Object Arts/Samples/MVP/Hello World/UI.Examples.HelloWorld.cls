@@ -41,7 +41,7 @@ onPaintRequired: aPaintEvent
 	Within #onPaintRequired: you MUST ask for a Canvas from aPaintEvent 
 	(not the receiver window) to paint the contents on."
 
-	| canvas rect textFont textExtent textToShow |
+	| canvas rect textFont textToShow |
 	canvas := aPaintEvent canvas.
 
 	"We're going to draw an ellipse inside a rectangle that is inset
@@ -53,7 +53,6 @@ onPaintRequired: aPaintEvent
 	textFont := Font name: 'Arial' pointSize: 32.
 	canvas font: textFont.
 	textToShow := self helloWorldText.
-	textExtent := canvas textExtent: textToShow.
 
 	"Draw the ellipse with a grey background and red border"
 	canvas
@@ -66,7 +65,7 @@ onPaintRequired: aPaintEvent
 	canvas
 		forecolor: Color white;
 		backgroundMode: TRANSPARENT;
-		text: textToShow at: rect center - (textExtent // 2)!
+		formatText: textToShow in: rect flags: ##(DT_CENTER | DT_VCENTER | DT_SINGLELINE)!
 
 onPositionChanged: aPositionEvent
 	"Handle a window position change event (move or resize).
