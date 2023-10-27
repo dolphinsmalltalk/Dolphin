@@ -697,22 +697,11 @@ positionForKeyboardContextMenu
 		ifTrue: [super positionForKeyboardContextMenu]
 		ifFalse: [self mapPointToScreen: (self itemRect: selections first textOnly: true) bottomLeft]!
 
-queryCommand: aCommandQuery
-	"Update aCommandQuery to indicate how a command would be processed,
-	if sent to the receiver. Answers whether the receiver recognised the command
-	as one of its own (this may be ignored by the command router). This need not
-	be supersent if the #isEnabled: is sent to the <CommandQuery> to explicitly
-	enable or disable a particular command."
-
-	| cmd |
-	cmd := aCommandQuery commandSymbol.
-	#renameIt == cmd 
-		ifTrue: 
-			[aCommandQuery isEnabled: (self canEditLabels and: [self hasSelection]).
-			^true].
-	^super queryCommand: aCommandQuery!
+queryRenameIt: aCommandQuery
+	aCommandQuery isEnabled: (self canEditLabels and: [self hasSelection])!
 
 renameIt
+	<commandQuery: #queryRenameIt:>
 	self canEditLabels ifTrue: [self editSelectionLabel]!
 
 setViewMode: aSymbol 
@@ -863,8 +852,8 @@ onLeftButtonDoubleClicked:!event handling!public! !
 onSelRemoved!public!selection! !
 onViewCreated!event handling!public! !
 positionForKeyboardContextMenu!enquiries!public! !
-queryCommand:!commands!public! !
-renameIt!commands!public! !
+queryRenameIt:!commands-queries!private! !
+renameIt!commands-actions!public! !
 setViewMode:!accessing!private! !
 showDragDrop:highlight:!drag & drop!event handling!public! !
 showDropHighlight:!drag & drop!private! !
