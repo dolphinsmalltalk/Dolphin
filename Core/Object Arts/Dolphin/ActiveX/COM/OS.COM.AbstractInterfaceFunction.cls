@@ -83,9 +83,9 @@ printOn: aStream
 		basicPrint: self;
 		nextPut: $(;
 		print: self selector;
-		space;
-		print: self descriptor description;
-		nextPut: $)!
+		nextPutAll: ' '''.
+	self descriptor printDescriptionOn: aStream.
+	aStream nextPutAll: ''')'!
 
 returnType
 	"Private - Answer the return type name of the receiver."

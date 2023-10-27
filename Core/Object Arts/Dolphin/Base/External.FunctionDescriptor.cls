@@ -217,10 +217,13 @@ convention
 
 	^descriptor first!
 
-descriptor: aCollectionOfBytes
+descriptor
+	^descriptor!
+
+descriptor: aByteArray
 	"Private - Set the descriptor byte array for the external function described by the receiver."
 
-	descriptor := aCollectionOfBytes asByteArray!
+	descriptor := aByteArray!
 
 literals: args
 	"Set the literal argument parameters to those in the SequenceableCollection argument, args.
@@ -293,6 +296,7 @@ argumentTypes!accessing!private! !
 calleeCleans!public!testing! !
 callingConvention!accessing!private! !
 convention!accessing!private! !
+descriptor!accessing!private! !
 descriptor:!accessing!private! !
 literals:!accessing!public! !
 name!accessing!public! !

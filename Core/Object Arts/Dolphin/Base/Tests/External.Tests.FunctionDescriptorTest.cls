@@ -30,6 +30,9 @@ parseStructArg: structClass valueType: typeCodeOrName refType: ptrCodeOrName
 						ifFalse: [self subjectClass typeFromName: typeCodeOrName].
 			self assert: eachType identicalTo: type.
 			self assert: eachClass identicalTo: structClass].
+	self
+		assert: (self subjectClass fromString: desc printDescription environment: Smalltalk) printString
+		equals: desc printString.
 	"Now pass-by-ref"
 	source := source , '*'.
 	desc := self subjectClass fromString: source environment: Smalltalk.
@@ -42,7 +45,10 @@ parseStructArg: structClass valueType: typeCodeOrName refType: ptrCodeOrName
 						ifTrue: [ptrCodeOrName]
 						ifFalse: [self subjectClass typeFromName: ptrCodeOrName].
 			self assert: eachType identicalTo: type.
-			self assert: eachClass identicalTo: structClass]!
+			self assert: eachClass identicalTo: structClass].
+	self
+		assert: (self subjectClass fromString: desc printDescription environment: Smalltalk) printString
+		equals: desc printString!
 
 subjectClass
 	^FunctionDescriptor!
@@ -119,8 +125,9 @@ testSmokeTest
 
 	(ExternalMethod allSubinstances reject: [:each | each isUnbound]) do: 
 			[:each |
-			| desc text |
-			text := each descriptor printDescription.
+			| desc text subject |
+			subject := each descriptor.
+			text := subject printDescription.
 			desc := self subjectClass fromString: (text copyWithout: $,)
 						environment: each methodClass environment.
 			self assert: text equals: desc printDescription]!

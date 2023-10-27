@@ -95,7 +95,7 @@ isExternalCall
 	^true!
 
 isVirtualFunction
-	^self primitiveIndex = 80!
+	^self primitiveIndex == 80!
 
 printOn: aStream
 	"Append a textual description of the receiver to aStream."
@@ -110,11 +110,10 @@ procAddress
 	and use the appropriate KernelLibrary function."
 
 	| address |
-	address := self descriptorLiteral addressAtOffset: 0.
+	address := (self descriptorLiteral uintPtrAtOffset: 0) asExternalAddress.
 	^address isNull
 		ifTrue: [self methodClass default getProcAddress: self functionName]
-		ifFalse: [address]
-!
+		ifFalse: [address]!
 
 returnType
 	"Private - Answer the return type for the receiver."
