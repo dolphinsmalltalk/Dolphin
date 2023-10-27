@@ -46,6 +46,9 @@ realReference
 referenceInModel: aRBModel
 	^model == aRBModel ifTrue: [self] ifFalse: [self class model: aRBModel reference: reference]!
 
+species
+	^reference species!
+
 valueOfBinding: aVariableBinding
 	^reference isMeta ifTrue: [aVariableBinding value metaclass] ifFalse: [aVariableBinding value]! !
 !Refactory.Browser.RBBindingReference categoriesForMethods!
@@ -56,6 +59,7 @@ model:!initializing!private! !
 newWrapping:!converting!private! !
 realReference!accessing!public! !
 referenceInModel:!converting!public! !
+species!comparing!public! !
 valueOfBinding:!accessing!private! !
 !
 

@@ -35,12 +35,14 @@ testBadInterval
 			withMessage: 'Cannot assign temp from multiple statements'!
 
 testBadName
+	| badName |
+	badName := 'a sdf'.
 	self shouldFail: (ExtractToTemporaryRefactoring
 				extract: (self convertInterval: (14 to: 23) for: (RefactoryTestDataApp sourceCodeAt: #testMethod))
-				to: 'a sdf'
+				to: badName
 				from: #testMethod
 				in: RefactoryTestDataApp)
-		withMessage: '''a sdf'' is not a valid instance variable name'!
+		withMessage: ClassBuilder.ErrorInvalidInstVarName << badName!
 
 testExtractToTemporaryForLastStatementInBlock
 	| refactoring |

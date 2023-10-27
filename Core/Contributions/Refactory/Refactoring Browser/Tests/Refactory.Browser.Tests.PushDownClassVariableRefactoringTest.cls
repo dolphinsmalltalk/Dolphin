@@ -19,7 +19,7 @@ testModelNonExistantName
 				model: model
 				variable: #Foo
 				class: (model classNamed: #SomeClass))
-		withMessage: 'SomeClass does not define class variable #Foo'!
+		withMessage: 'SomeClass does not define class variable/constant #Foo'!
 
 testModelPushDownToMultipleSubclassesFailure
 	model
@@ -103,7 +103,7 @@ testModelRemoveUnusedVariable
 
 testNonExistantName
 	self shouldFail: (PushDownClassVariableRefactoring variable: #Foo class: BasicLintRuleTestData)
-		withMessage: '<1p> does not define class variable #Foo' << BasicLintRuleTestData!
+		withMessage: '<1p> does not define class variable/constant #Foo' << BasicLintRuleTestData!
 
 testPushDownClassVariable
 	| refactoring refDataApp sourceClass targetClass |

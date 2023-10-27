@@ -2444,6 +2444,8 @@ Core.Object
 				-> 'A byte subclass may not derive from a class containing indexed instance variables'.
 			'ErrorChangeMetaclassSuperclass'
 				-> 'It is invalid to directly change the superclass of a metaclass.'.
+			'ErrorClassVarAlreadyDefined'
+				-> 'Proposed class variable <1s>.<2s> is multiply defined.'.
 			'ErrorFixedInitialLayout' -> 'New inst vars must come after those already in <1p>'.
 			'ErrorFixedLayout' -> 'You must not change the instance variable layout of <1p>'.
 			'ErrorFixedSubclassOfVariable'
@@ -2494,7 +2496,7 @@ Core.Object
 			'IgnoreInstsMask' -> 16r2.
 			'QuietMask' -> 16r4.
 			'RecompileMask' -> 16r1.
-			'Unsubclassable' -> (IdentitySet withAll: { Character. SmallInteger })
+			'Unsubclassable' -> (Set withAll: #(#{Core.Character} #{Core.SmallInteger}))
 		}!
 Core.Object
 	subclass: #'Core.Collection'

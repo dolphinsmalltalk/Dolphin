@@ -216,7 +216,7 @@ buildSelectorString: aSelector
 			stream
 				nextPutAll: (keywords at: i);
 				nextPutAll: ' ``@arg';
-				nextPutAll: i printString;
+				print: i;
 				nextPut: $\x20].
 	^stream contents!
 

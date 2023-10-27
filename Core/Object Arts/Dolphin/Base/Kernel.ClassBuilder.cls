@@ -16,6 +16,8 @@ Core.Object
 				-> 'A byte subclass may not derive from a class containing indexed instance variables'.
 			'ErrorChangeMetaclassSuperclass'
 				-> 'It is invalid to directly change the superclass of a metaclass.'.
+			'ErrorClassVarAlreadyDefined'
+				-> 'Proposed class variable <1s>.<2s> is multiply defined.'.
 			'ErrorFixedInitialLayout' -> 'New inst vars must come after those already in <1p>'.
 			'ErrorFixedLayout' -> 'You must not change the instance variable layout of <1p>'.
 			'ErrorFixedSubclassOfVariable'
@@ -66,7 +68,7 @@ Core.Object
 			'IgnoreInstsMask' -> 16r2.
 			'QuietMask' -> 16r4.
 			'RecompileMask' -> 16r1.
-			'Unsubclassable' -> (IdentitySet withAll: { Character. SmallInteger })
+			'Unsubclassable' -> (Set withAll: #(#{Core.Character} #{Core.SmallInteger}))
 		}!
 Kernel.ClassBuilder guid: (Core.GUID fromString: '{87b4c461-026e-11d3-9fd7-00a0cc3e4a32}')!
 Kernel.ClassBuilder comment: ''!
@@ -923,17 +925,15 @@ validateClass: classNameString varName: varNameString inherited: aCollection
 	(self class isValidIdentifier: varNameString)
 		ifFalse: 
 			[self error: 'Proposed class variable <2s> of <1s> is invalid as a local identifier.'
-						<< {classNameString. varNameString}].
+						<< { classNameString. varNameString }].
 	(aCollection includes: varNameString)
-		ifTrue: 
-			[self
-				error: 'Proposed class variable <1s>.<2s> is multiply defined.' << {classNameString. varNameString}].
+		ifTrue: [self error: ErrorClassVarAlreadyDefined << { classNameString. varNameString }].
 	first := varNameString first.
 	(first isUppercase or: [first == $_]) ifTrue: [^self].
 	Warning new
 		isSuppressible: true;
 		signal: 'Proposed class variable <2p> of <1s> should start with an uppercase letter.'
-					<< {classNameString. varNameString}!
+					<< { classNameString. varNameString }!
 
 validateClassForRename
 	"Private - Ensure that we are permitted to rename the class."
@@ -1267,7 +1267,7 @@ validateSuperclassIsSubclassable
 
 	superclass notNil
 		ifTrue: 
-			[(superclass class isMeta not or: [Unsubclassable includes: superclass])
+			[(superclass class isMeta not or: [Unsubclassable includes: superclass fullyQualifiedReference])
 				ifTrue: [self error: ErrorUnsubclassable << superclass]]! !
 !Kernel.ClassBuilder categoriesForMethods!
 allInstVarNamesOf:!helpers!private! !

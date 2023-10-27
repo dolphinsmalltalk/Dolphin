@@ -63,8 +63,8 @@ parseTree
 	^self method parseTreeWithSourceIntervals ifNil: [self refactoringError: 'Could not parse method']!
 
 preconditions
-	^(RBCondition definesSelector: selector in: class) 
-		& (RBCondition isValidInstanceVariableName: newVariableName for: class) 
+	^(RBCondition definesSelector: selector in: class)
+		& (RBCondition isValidInstanceVariableName: newVariableName)
 			& (RBCondition withBlock: 
 						[self verifySelectedInterval.
 						self checkVariableName.

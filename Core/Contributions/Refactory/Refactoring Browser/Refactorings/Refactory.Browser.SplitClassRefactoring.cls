@@ -71,7 +71,7 @@ createReference
 preconditions
 	^(RBCondition isValidClassName: newClassName)
 		& (RBCondition isStatic: newClassName in: self model) not
-			& (RBCondition isValidInstanceVariableName: referenceVariableName for: class)
+			& (RBCondition isValidInstanceVariableName: referenceVariableName)
 			& (RBCondition hierarchyOf: class definesVariable: referenceVariableName) not
 			& (RBCondition isStatic: referenceVariableName in: self model) not
 			& (RBCondition definesTemporaryVariable: referenceVariableName in: class) not!

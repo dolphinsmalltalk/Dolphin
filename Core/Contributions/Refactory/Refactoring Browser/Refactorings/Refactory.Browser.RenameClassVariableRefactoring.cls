@@ -13,9 +13,8 @@ Refactory.Browser.RenameClassVariableRefactoring comment: ''!
 !Refactory.Browser.RenameClassVariableRefactoring methodsFor!
 
 preconditions
-	^(RBCondition isMetaclass: class) not
-		& (RBCondition isValidClassVarName: newName asString for: class)
-			& (RBCondition definesClassVariable: variableName asString in: class)
+	^(RBCondition isMetaclass: class) not & (RBCondition isValidClassVarName: newName asString)
+		& (RBCondition definesClassVariable: variableName asString in: class)
 			& (RBCondition hierarchyOf: class definesVariable: newName asString) not
 			& (RBCondition isStatic: newName asString in: self model) not!
 

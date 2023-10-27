@@ -88,10 +88,21 @@ testIsGlobalIn
 	self assert: subject check description: subject errorString.
 	"UI.Bitmap is bindable, but as an import so there is no actual UI.Bitmap 'global'"
 	subject := RBCondition isStatic: 'UI.Bitmap' in: model.
-	self deny: subject check description: (subject errorStringFor: true)! !
+	self deny: subject check description: (subject errorStringFor: true)!
+
+testIsSubclassable
+	| subject result |
+	subject := RBCondition isSubclassable: Character.
+	result := subject validate.
+	self deny: result value.
+	self assert: result hint messageText equals: ClassBuilder.ErrorUnsubclassable << Character.
+	subject := RBCondition isSubclassable: Object.
+	self assert: subject check.
+	self assert: (subject errorStringFor: true) equals: 'Object is subclassable.'! !
 !Refactory.Browser.Tests.RBConditionTest categoriesForMethods!
 testConditions!public!tests! !
 testIsEmptyClass!public!tests! !
 testIsGlobalIn!public!tests! !
+testIsSubclassable!public!tests! !
 !
 

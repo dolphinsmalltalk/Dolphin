@@ -20,7 +20,10 @@ className: aString
 	self classReference: (BindingReference fullPathString: aString)!
 
 classReference: aBindingReference
-	className := aBindingReference referenceInModel: self model!
+	"Accessing the model may lazily create it, which involves setting its name to the displayString of this refactoring. Since the displayString may involve the className, we have a chicken-before-egg problem. To workround this we set the className twice - once to the original binding reference, and then again to the reference in the model."
+
+	className := aBindingReference.
+	className := className referenceInModel: self model!
 
 environment
 	^className environment!

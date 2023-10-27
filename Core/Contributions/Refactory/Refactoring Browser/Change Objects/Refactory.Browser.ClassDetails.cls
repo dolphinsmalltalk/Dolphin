@@ -27,6 +27,9 @@ category: anObject
 categoryNames
 	^categoryNames!
 
+classBindingNames
+	^self classVariableNames , (self classConstants collect: [:each | each key])!
+
 classCategories
 	^categoryNames ifNotNil: [categoryNames collect: [:each | ClassCategory name: each]]!
 
@@ -51,6 +54,15 @@ className
 
 className: anObject
 	classReference := anObject asQualifiedReference!
+
+className: anObject superclass: aClass categories: aCollection
+	self className: anObject.
+	aClass
+		ifNil: [instanceSpec := 0]
+		ifNotNil: 
+			[superclassReference := aClass fullyQualifiedReference.
+			instanceSpec := aClass instanceSpec].
+	self categories: aCollection!
 
 classReference
 	^classReference!
@@ -135,6 +147,18 @@ instanceVariableString
 instanceVariableString: aString
 	instanceVariableNames := $\x20 split: aString!
 
+instSize
+	"Answer the number of fixed fields (named instance variables) in instances of the receiver."
+
+	"If the instance variables have been changed, the instSize there may be out of date, so calculate it."
+
+	^superclassReference value instSize + self instanceVariableNames size!
+
+instSize: anInteger
+	(anInteger between: 0 and: (self isBytes ifTrue: [0] ifFalse: [Behavior._SizeMask]))
+		ifFalse: [self error: 'Invalid number of fixed fields'].
+	instanceSpec := (self instanceSpec maskClear: Behavior._SizeMask) maskSet: anInteger!
+
 isBytes
 	"Answer whether the class described by the receiver has indexable instance variables that are bytes, as opposed to pointers."
 
@@ -215,10 +239,10 @@ kindOfSubclass
 
 kindOfSubclass: aString
 	aString = 'subclass:'
-		ifTrue: [self instanceSpec: Behavior._IsPointersMask]
+		ifTrue: [self instanceSpec: Behavior._PointersMask]
 		ifFalse: 
 			[aString = 'variableSubclass:'
-				ifTrue: [self instanceSpec: Behavior._IsPointersMask | Behavior._VariableMask]
+				ifTrue: [self instanceSpec: Behavior._PointersMask | Behavior._VariableMask]
 				ifFalse: [self instanceSpec: Behavior._VariableMask]]!
 
 name
@@ -348,6 +372,7 @@ categories!accessing!public! !
 categories:!accessing!public! !
 category:!accessing!public! !
 categoryNames!accessing!public! !
+classBindingNames!accessing!public! !
 classCategories!accessing!public! !
 classConstants!accessing!public! !
 classConstants:!accessing!public! !
@@ -356,6 +381,7 @@ classInstanceVariableNames:!accessing!public! !
 classInstanceVariableString:!accessing!public! !
 className!accessing!public! !
 className:!accessing!public! !
+className:superclass:categories:!accessing!initializing!private! !
 classReference!accessing!public! !
 classVariableNames!accessing!public! !
 classVariableNames:!accessing!public! !
@@ -378,6 +404,8 @@ instanceVariableNames!accessing!public! !
 instanceVariableNames:!accessing!public! !
 instanceVariableString!accessing!public! !
 instanceVariableString:!accessing!public! !
+instSize!instance specification-accessing!public! !
+instSize:!accessing!public! !
 isBytes!instance specification-testing!public! !
 isBytes:!instance specification-accessing!public! !
 isInBaseEnvironment!public!testing! !
@@ -418,9 +446,9 @@ unqualifiedName!accessing!public! !
 
 className: aString superclass: aClass categories: aCollection
 	^self new
-		className: aString;
-		superclass: aClass;
-		categories: aCollection;
+		className: aString
+			superclass: aClass
+			categories: aCollection;
 		yourself!
 
 fromClass: aClassDescription

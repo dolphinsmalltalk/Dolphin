@@ -28,6 +28,11 @@ displayOn: aPuttableStream
 		space;
 		nextPutAll: #class!
 
+hash
+	"Answer the <integer> hash value for the receiver."
+
+	^reference hash bitXor: 1!
+
 instance
 	"Answer a `BindingReference` that resolves to the value of the binding with the receiver's path."
 
@@ -58,6 +63,7 @@ valueOfBinding: aVariableBinding
 !Kernel.MetaBindingReference categoriesForMethods!
 asString!converting!public! !
 displayOn:!displaying!public! !
+hash!comparing!public! !
 instance!accessing!public! !
 isMeta!public!testing! !
 meta!converting!public! !

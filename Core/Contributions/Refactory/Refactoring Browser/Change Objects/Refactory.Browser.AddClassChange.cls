@@ -42,7 +42,7 @@ definingSuperclass
 	^self class!
 
 definition
-	^definition ifNil: [definition := details printString]!
+	^definition ifNil: [definition := details fullPrintString]!
 
 definition: aString 
 	definition := aString.

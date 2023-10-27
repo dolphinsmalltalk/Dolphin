@@ -24,8 +24,9 @@ testEqualityOfMetaAndInstance
 	"Meta and instance references should never be equal, whether or not the path is the same."
 
 	self deny: #{Core.Object class} equals: #{Core.Object}.
-	self deny: #{_.Object class} equals: #{_.Object}
-!
+	self deny: #{Core.Object} equals: #{Core.Object class}.
+	self deny: #{Core.Object} hash equals: #{Core.Object class} hash.
+	self deny: #{_.Object class} equals: #{_.Object}!
 
 testInstance
 	| inst subject |

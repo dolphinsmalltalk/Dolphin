@@ -104,7 +104,7 @@ getAllClassesForGlobalOrClassVariable
 getArgumentNameForSelf
 	self needsToReplaceSelfReferences ifFalse: [^self].
 	selfVariableName := self requestSelfArgumentName.
-	(self checkInstanceVariableName: selfVariableName in: class)
+	(self checkInstanceVariableName: selfVariableName)
 		ifTrue: 
 			[self verifyTemporaryVariableDoesNotOverride
 				ifFalse: 

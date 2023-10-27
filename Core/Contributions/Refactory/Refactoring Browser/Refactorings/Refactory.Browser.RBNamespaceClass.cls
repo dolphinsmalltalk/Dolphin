@@ -26,7 +26,7 @@ baseEnvironment
 	^model rootNamespace!
 
 defaultInstanceSpec
-	^##(Behavior._IsPointersMask | Behavior._NonInstantiableMask)!
+	^##(Behavior._PointersMask | Behavior._NonInstantiableMask)!
 
 fullName: aString
 	name = aString ifTrue: [^self].

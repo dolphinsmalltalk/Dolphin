@@ -18,12 +18,12 @@ setRemoveReferencedVariableOption: refactoring toAnswer: aBoolean
 testAttemptToRemoveClass
 	self
 		shouldFail: (RemoveClassVariableRefactoring variable: self class name class: self class environment)
-		withMessage: '<1d> does not define class variable #<2s>' << {self class environment. self class name}!
+		withMessage: '<1d> does not define class variable/constant #<2s>' << {self class environment. self class name}!
 
 testNonExistantName
 	self shouldFail: (RemoveClassVariableRefactoring variable: #RecursiveSelfRule1
 				class: TransformationRuleTestData)
-		withMessage: '<1p> does not define class variable #RecursiveSelfRule1' << TransformationRuleTestData!
+		withMessage: '<1p> does not define class variable/constant #RecursiveSelfRule1' << TransformationRuleTestData!
 
 testReferencedVariable
 	| refactoring class |

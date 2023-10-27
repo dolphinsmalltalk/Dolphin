@@ -18,6 +18,9 @@ className
 definitionMessage
 	^details printString!
 
+details
+	^details!
+
 details: aClassDetails subclasses: aCollection
 	details := aClassDetails.
 	details className: (aClassDetails classReference referenceInModel: self model).
@@ -26,21 +29,43 @@ details: aClassDetails subclasses: aCollection
 	subclasses := aCollection collect: [:each | self classObjectFor: each]!
 
 preconditions
-	| cond superNotMeta superclass |
-	#rbFix.	"Bodge to allow for nil superclass"
-	superclass := details superclass.
-	superNotMeta := superclass isNil
-				ifTrue: [RBCondition empty]
-				ifFalse: 
-					[((RBCondition isMetaclass: superclass) errorMacro: 'Superclass must <1?not :>be a metaclass') not].
-	cond := subclasses inject: superNotMeta
+	| cond superclass |
+	superclass := self superclass.
+	cond := subclasses inject: self superclassPreconditions
 				into: 
 					[:sub :each |
 					sub & ((RBCondition isMetaclass: each) errorMacro: 'Subclass must <1?not :>be a metaclass') not
 						& (RBCondition isImmediateSubclass: each of: superclass)].
-	#rbFix.	"Dolphin's class categories are named by Strings, not Symbols, and any class can be in multiple categories"
 	^cond & (RBCondition isValidClassName: self className)
-		& (RBCondition isStatic: self className in: self model) not!
+		& (RBCondition isStatic: self className in: self model) not
+			& ((RBCondition withBlock: [details isPointers or: [details instanceVariableNames isEmpty]])
+					errorMacro: ClassBuilder.ErrorBytesAndNamedInstVars;
+					yourself)
+			& ((RBCondition withBlock: 
+						[details instanceVariableNames asBag
+							removeAll: details instanceVariableNames asSet;
+							isEmpty])
+					errorMacro: 
+							[ClassBuilder.ErrorInstVarAlreadyDefined << (details instanceVariableNames asOrderedCollection
+										removeAll: details instanceVariableNames asSet;
+										first)];
+					yourself)
+			& ((RBCondition withBlock: 
+						[| varNames |
+						varNames := details classBindingNames.
+						varNames asBag
+							removeAll: varNames asSet;
+							isEmpty])
+					errorMacro: 
+							[| varNames |
+							varNames := details classBindingNames.
+							ClassBuilder.ErrorClassVarAlreadyDefined << {
+										self className.
+										varNames asSortedCollection
+											removeAll: varNames asSet;
+											first
+									}];
+					yourself)!
 
 storeOn: aStream
 	aStream
@@ -52,6 +77,46 @@ storeOn: aStream
 		store: details;
 		nextPut: $)!
 
+superclass
+	^details superclass!
+
+superclassPreconditions
+	| superclass cond |
+	superclass := self superclass.
+	superclass ifNil: [^RBCondition empty].
+	cond := (RBCondition isSubclassable: superclass)
+				& ((RBCondition isMetaclass: superclass) errorMacro: 'Superclass must <1?not :>be a metaclass') not.
+	details isBytes
+		ifTrue: 
+			[cond := cond & ((RBCondition withBlock: [superclass isBytes or: [superclass isVariable not]])
+								errorMacro: [ClassBuilder.ErrorByteSubclassOfVariable << superclass];
+								yourself)
+						& ((RBCondition withBlock: [superclass instSize == 0])
+								errorMacro: [ClassBuilder.ErrorByteSubclassOfFixed << superclass];
+								yourself)]
+		ifFalse: 
+			[cond := cond & ((RBCondition withBlock: [superclass isPointers])
+								errorMacro: [ClassBuilder.ErrorPointerSubclassOfBytes << superclass];
+								yourself)
+						& ((RBCondition withBlock: 
+									["If the superclass is variable, then the subclass must be too"
+									superclass isVariable not or: [details isVariable]])
+								errorMacro: [ClassBuilder.ErrorFixedSubclassOfVariable << superclass];
+								yourself)].
+	details instanceVariableNames do: 
+			[:each |
+			cond := cond & (RBCondition isValidInstanceVariableName: each)
+						& (RBCondition definesInstanceVariable: each in: superclass) not].
+	details classBindingNames do: 
+			[:each |
+			cond := cond & (RBCondition isValidClassVarName: each)
+						& (RBCondition definesClassVariable: each in: superclass) not].
+	details classInstanceVariableNames do: 
+			[:each |
+			cond := cond & (RBCondition isValidInstanceVariableName: each)
+						& (RBCondition definesInstanceVariable: each in: superclass metaclass) not].
+	^cond!
+
 transform
 	#rbFix.	"Factor out #definitionMessage in order to permit override in subclass"
 	self model
@@ -60,9 +125,12 @@ transform
 !Refactory.Browser.AddClassRefactoring categoriesForMethods!
 className!accessing!public! !
 definitionMessage!public!transforming! !
+details!accessing!private! !
 details:subclasses:!initializing!private! !
-preconditions!public! !
+preconditions!preconditions!public! !
 storeOn:!printing!public! !
+superclass!accessing!private! !
+superclassPreconditions!preconditions!private! !
 transform!public!transforming! !
 !
 

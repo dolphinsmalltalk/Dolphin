@@ -62,7 +62,7 @@ testAddRootClass
 	refactoring := AddClassRefactoring
 				addClass: 'Refactory.Browser.Tests.FooTest'
 				superclass: nil
-				subclasses: {ProtoObject}
+				subclasses: { ProtoObject }
 				categories: #('Refactory-Testing').
 	self executeRefactoring: refactoring.
 	newClass := refactoring model classNamed: 'Refactory.Browser.Tests.FooTest'.
@@ -76,7 +76,8 @@ testAddRootClass
 	self assert: classTest superclass equals: newClass.
 	self assert: (newClass subclasses includes: classTest).
 	self assert: classTest metaclass superclass equals: newClass metaclass.
-	self assert: (newClass metaclass subclasses includes: classTest metaclass)!
+	self assert: (newClass metaclass subclasses includes: classTest metaclass).
+	self assert: newClass kindOfSubclass equals: 'subclass:'!
 
 testAddVariableByteClass
 	| refactoring newClass superClass |
@@ -116,6 +117,126 @@ testAddVariableClass
 	self assert: newClass kindOfSubclass equals: 'variableSubclass:'.
 	self deny: newClass isNonInstantiable!
 
+testAddVariableSubClass
+	| refactoring newClass superClass |
+	refactoring := AddClassRefactoring
+				addClass: #FooTest
+				superclass: ByteArray
+				subclasses: #()
+				categories: #('Refactory-Testing').
+	self executeRefactoring: refactoring.
+	newClass := refactoring model classNamed: #FooTest.
+	superClass := refactoring model classFor: ByteArray.
+	self assert: newClass superclass equals: superClass.
+	self assert: (superClass subclasses includes: newClass).
+	self assert: newClass metaclass superclass equals: superClass metaclass.
+	self assert: (superClass metaclass subclasses includes: newClass metaclass).
+	self assert: newClass subclasses isEmpty.
+	self assert: newClass metaclass subclasses isEmpty.
+	self assert: newClass kindOfSubclass equals: 'variableByteSubclass:'.
+	self deny: newClass isNonInstantiable!
+
+testAlreadyExistingClassConstant
+	| details |
+	details := ClassDetails
+				className: 'Core.Foo2'
+				superclass: FooLintRuleTestData
+				categories: #().
+	details classConstants: { 'Foo1' -> 123 }.
+	self shouldFail: (AddClassRefactoring details: details subclasses: #())
+		withMessage: 'Refactory.Browser.TestData.FooLintRuleTestData defines class variable/constant ''Foo1'''!
+
+testAlreadyExistingClassVar
+	| details |
+	details := ClassDetails
+				className: 'Core.Foo2'
+				superclass: FooLintRuleTestData
+				categories: #().
+	details classVariableNames: #('Foo1').
+	self shouldFail: (AddClassRefactoring details: details subclasses: #())
+		withMessage: 'Refactory.Browser.TestData.FooLintRuleTestData defines class variable/constant ''Foo1'''!
+
+testAlreadyExistingInstanceVar
+	| details |
+	details := ClassDetails
+				className: #Foo
+				superclass: Core.Association
+				categories: #().
+	details instanceVariableNames: #('key').
+	self shouldFail: (AddClassRefactoring details: details subclasses: #())
+		withMessage: 'Association or a superclass defines an instance variable ''key'''!
+
+testBadClassConstName
+	| details |
+	details := ClassDetails
+				className: 'Core.Foo'
+				superclass: self class
+				categories: #().
+	details classConstants: { 'foo' -> 123 }.
+	self shouldFail: (AddClassRefactoring details: details subclasses: #())
+		withMessage: '''foo'' is not a valid class variable name'!
+
+testBadClassVarName
+	| details |
+	details := ClassDetails
+				className: 'Core.Foo'
+				superclass: self class
+				categories: #().
+	details classVariableNames: #('Foo' 'bar').
+	self shouldFail: (AddClassRefactoring details: details subclasses: #())
+		withMessage: '''bar'' is not a valid class variable name'!
+
+testBadInstVarName
+	| details |
+	details := ClassDetails
+				className: #Foo
+				superclass: self class
+				categories: #().
+	details instanceVariableNames: #('fo-o' 'bar').
+	self shouldFail: (AddClassRefactoring details: details subclasses: #())
+		withMessage: ClassBuilder.ErrorInvalidInstVarName << 'fo-o'!
+
+testBadName
+	| badName |
+	badName := 'Core.Obj@ect'.
+	self shouldFail: (AddClassRefactoring
+				addClass: badName
+				superclass: self class
+				subclasses: #()
+				categories: #('Refactory-Testing'))
+		withMessage: ClassBuilder.ErrorInvalidClassName << badName!
+
+testBytesWithNamedInstVars
+	| details |
+	details := ClassDetails
+				className: #Foo
+				superclass: Core.ByteArray
+				categories: #().
+	details instanceVariableNames: #('foo' 'bar').
+	self shouldFail: (AddClassRefactoring details: details subclasses: #())
+		withMessage: ClassBuilder.ErrorBytesAndNamedInstVars!
+
+testDuplicateClassVarName
+	| details |
+	details := ClassDetails
+				className: #Foo
+				superclass: self class
+				categories: #().
+	details classVariableNames: #('Foo' 'Bar').
+	details classConstants: { 'Bar' -> 123 }.
+	self shouldFail: (AddClassRefactoring details: details subclasses: #())
+		withMessage: ClassBuilder.ErrorClassVarAlreadyDefined << #('Foo' 'Bar')!
+
+testDuplicateInstVarName
+	| details |
+	details := ClassDetails
+				className: #Foo
+				superclass: self class
+				categories: #().
+	details instanceVariableNames: #('foo' 'bar' 'foo' 'baz' 'bar').
+	self shouldFail: (AddClassRefactoring details: details subclasses: #())
+		withMessage: ClassBuilder.ErrorInstVarAlreadyDefined << 'foo'!
+
 testExistingClassName
 	self shouldFail: (AddClassRefactoring
 				addClass: #'Core.Object'
@@ -139,6 +260,100 @@ testExistingVariableName
 				subclasses: #()
 				categories: #('Refactory-Testing'))
 		existingVariable: 'Kernel.SourceFiles'!
+
+testIncompatibleByteSubclassOfFixed
+	| details |
+	details := ClassDetails
+				className: #Foo
+				superclass: Core.Association
+				categories: #().
+	details isBytes: true.
+	self shouldFail: (AddClassRefactoring details: details subclasses: #())
+		withMessage: ClassBuilder.ErrorByteSubclassOfFixed!
+
+testIncompatibleByteSubclassOfVariable
+	| details |
+	details := ClassDetails
+				className: #Foo
+				superclass: Core.Array
+				categories: #().
+	details isBytes: true.
+	self shouldFail: (AddClassRefactoring details: details subclasses: #())
+		withMessage: ClassBuilder.ErrorByteSubclassOfVariable!
+
+testIncompatibleFixedPointerSubclassOfBytes
+	| details |
+	details := ClassDetails
+				className: #Foo
+				superclass: Core.ByteArray
+				categories: #().
+	details isPointers: true; isVariable: false.
+	self shouldFail: (AddClassRefactoring details: details subclasses: #())
+		withMessage: ClassBuilder.ErrorPointerSubclassOfBytes.
+!
+
+testIncompatibleFixedSubclassOfVariable
+	| details |
+	details := ClassDetails
+				className: #Foo
+				superclass: Core.Array
+				categories: #().
+	details isVariable: false.
+	self shouldFail: (AddClassRefactoring details: details subclasses: #())
+		withMessage: ClassBuilder.ErrorFixedSubclassOfVariable!
+
+testIncompatibleVariablePointerSubclassOfBytes
+	| details |
+	details := ClassDetails
+				className: #Foo
+				superclass: Core.ByteArray
+				categories: #().
+	details isPointers: true; isVariable: true.
+	self shouldFail: (AddClassRefactoring details: details subclasses: #())
+		withMessage: ClassBuilder.ErrorPointerSubclassOfBytes.
+!
+
+testModelAddByteClass
+	| refactoring newClass superClass subclass details |
+	superClass := model classNamed: #ArrayedCollection.
+	subclass := model classFor: ByteArray.
+	details := subclass details.
+	details
+		superclass: superClass;
+		className: 'Refactory.Browser.Tests.FooTest' asQualifiedReference.
+	refactoring := AddClassRefactoring
+				model: model
+				details: details
+				subclasses: { subclass }.
+	self executeRefactoring: refactoring.
+	newClass := model classNamed: details fullName.
+	self assert: newClass superclass equals: superClass.
+	self assert: (superClass subclasses includes: newClass).
+	self assert: newClass metaclass superclass equals: superClass metaclass.
+	self assert: (superClass metaclass subclasses includes: newClass metaclass).
+	self assert: subclass superclass equals: newClass.
+	self assert: (newClass subclasses includes: subclass).
+	self assert: subclass metaclass superclass equals: newClass metaclass.
+	self assert: (newClass metaclass subclasses includes: subclass metaclass).
+	self assert: newClass isBytes.
+	self deny: newClass isPointers.
+	self assert: newClass isVariable.
+	self deny: newClass isNullTerminated.
+	self assert: newClass definition equals: 'Core.ArrayedCollection
+	variableByteSubclass: #''Refactory.Browser.Tests.FooTest''
+	instanceVariableNames: ''''
+	classVariableNames: ''''
+	imports: #()
+	classInstanceVariableNames: ''''
+	classConstants: {}'.
+	self assert: subclass definition
+		equals: 'Refactory.Browser.Tests.FooTest
+	variableByteSubclass: #''Core.ByteArray''
+	instanceVariableNames: ''''
+	classVariableNames: ''''
+	imports: #()
+	classInstanceVariableNames: ''''
+	classConstants: {}'!
 
 testModelAddClass
 	| refactoring newClass superClass subclass |
@@ -204,7 +419,15 @@ testSuperclassIsMetaclass
 				superclass: self class class
 				subclasses: #()
 				categories: #('Refactory-Testing'))
-		withMessage: 'Superclass must not be a metaclass'! !
+		withMessage: 'Superclass must not be a metaclass'!
+
+testUnsubclassable
+	self shouldFail: (AddClassRefactoring
+				addClass: #Foo
+				superclass: SmallInteger
+				subclasses: #()
+				categories: #('Refactory-Testing'))
+		withMessage: ClassBuilder.ErrorUnsubclassable << SmallInteger! !
 !Refactory.Browser.Tests.AddClassRefactoringTest categoriesForMethods!
 setUp!public!set up! !
 testAddClass!public!tests! !
@@ -212,14 +435,32 @@ testAddNamespaceClass!public!tests! !
 testAddRootClass!public!tests! !
 testAddVariableByteClass!public!tests! !
 testAddVariableClass!public!tests! !
+testAddVariableSubClass!public!tests! !
+testAlreadyExistingClassConstant!failure tests!public! !
+testAlreadyExistingClassVar!failure tests!public! !
+testAlreadyExistingInstanceVar!failure tests!public! !
+testBadClassConstName!public!tests! !
+testBadClassVarName!public!tests! !
+testBadInstVarName!public!tests! !
+testBadName!failure tests!public! !
+testBytesWithNamedInstVars!public!tests! !
+testDuplicateClassVarName!public!tests! !
+testDuplicateInstVarName!public!tests! !
 testExistingClassName!failure tests!public! !
 testExistingName!failure tests!public! !
 testExistingVariableName!failure tests!public! !
+testIncompatibleByteSubclassOfFixed!public!tests! !
+testIncompatibleByteSubclassOfVariable!public!tests! !
+testIncompatibleFixedPointerSubclassOfBytes!public!tests! !
+testIncompatibleFixedSubclassOfVariable!public!tests! !
+testIncompatibleVariablePointerSubclassOfBytes!public!tests! !
+testModelAddByteClass!public!tests! !
 testModelAddClass!public!tests! !
 testModelExistingClassName!failure tests!public! !
 testModelNonImmediateSubclass!failure tests!public! !
 testNonImmediateSubclass!failure tests!public! !
 testSubclassIsMetaclass!failure tests!public! !
 testSuperclassIsMetaclass!failure tests!public! !
+testUnsubclassable!failure tests!public! !
 !
 

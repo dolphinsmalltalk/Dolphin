@@ -5,6 +5,7 @@ package paxVersion: 2.1;
 
 
 package setClassNames: #(
+	#{Refactory.Browser.Tests.CopyClassRefactoringTest}
 	#{Refactory.Browser.Tests.RenameMethodReferencesTransformationTest}
 	#{Refactory.Browser.Tests.RewriteTestCase}
 	#{Tools.Tests.DisassemblerTest}
@@ -17,6 +18,7 @@ package setPrerequisites: #(
 	'..\..\..\Base\Tests\Dolphin Base Tests'
 	'..\Dolphin Professional Tools'
 	'..\Dolphin Refactoring Browser'
+	'..\..\..\..\..\Contributions\Refactory\Refactoring Browser\Change Objects\RBChangeObjects'
 	'..\..\..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments'
 	'..\..\..\..\..\Contributions\Refactory\Refactoring Browser\Refactorings\RBRefactorings'
 	'..\..\..\..\..\Contributions\Refactory\Refactoring Browser\SmallLint\RBSmallLint'
@@ -38,6 +40,13 @@ XProgramming.SUnit.TestCase
 	classConstants: {}!
 Core.Tests.DolphinTest
 	subclass: #'Tools.Tests.DisassemblerTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Refactory.Browser.Tests.RefactoringTest
+	subclass: #'Refactory.Browser.Tests.CopyClassRefactoringTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

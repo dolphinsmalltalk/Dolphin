@@ -183,6 +183,7 @@ createOrUpdateModelClass: anAddClassChange
 	newClass superclass: (self instanceClassNamed: details superclassName).
 	newClass superclass ifNil: [self rootClasses add: newClass].
 	newClass
+		instanceSpec: details instanceSpec;
 		instanceVariableNames: details instanceVariableNames;
 		classVariableNames: details classVariableNames;
 		classConstants: details classConstants;

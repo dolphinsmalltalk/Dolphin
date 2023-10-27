@@ -53,8 +53,8 @@ checkClass: aRBClass selector: aSelector using: aMatcher
 	parseTree notNil ifTrue: [aMatcher executeTree: parseTree].
 	^aMatcher answer!
 
-checkInstanceVariableName: aName in: aClass 
-	^RBCondition checkInstanceVariableName: aName in: aClass!
+checkInstanceVariableName: aName
+	^RBCondition checkInstanceVariableName: aName!
 
 checkMethodName: aName
 	^RBCondition checkMethodName: aName!
@@ -505,7 +505,7 @@ buildVariableReferenceRewriter!private!transforming! !
 canReferenceVariable:in:!public!testing! !
 changes!accessing!public! !
 checkClass:selector:using:!public!support! !
-checkInstanceVariableName:in:!public!utilities! !
+checkInstanceVariableName:!public!utilities! !
 checkMethodName:!public!utilities! !
 checkPreconditions!preconditions!public! !
 checkPreconditions:!preconditions!public! !

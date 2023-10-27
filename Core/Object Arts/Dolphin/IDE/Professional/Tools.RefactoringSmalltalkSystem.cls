@@ -550,16 +550,17 @@ extractToTemporary: anInterval from: aSelector in: aClass
 				in: aClass)!
 
 handleRefactoringException: aRefactoringException
-	| text mb |
+	| text mb defaultCaption |
 	text := aRefactoringException messageText.
 	mb := MessageBox new
 				text: text;
 				iconStyle: aRefactoringException iconStyle;
 				yourself.
+	defaultCaption := 'Refactoring Error'.
 	aRefactoringException isResumable
 		ifTrue: 
 			[mb
-				caption: '<1d>…' << aRefactoringException refactoring;
+				caption: '<1d>…' << (aRefactoringException refactoring ?? defaultCaption);
 				isCancellable.
 			text last == $?
 				ifTrue: [mb customButtons: #(#(#yes '&Yes') #(#no 'Cancel'))]
@@ -567,12 +568,12 @@ handleRefactoringException: aRefactoringException
 			mb confirm ifTrue: [aRefactoringException resume]]
 		ifFalse: 
 			[mb
-				caption: 'Refactoring Error';
-				headline: 'Unable to <1d>' << aRefactoringException refactoring.
+				caption: defaultCaption;
+				headline: 'Unable to <1d>' << (aRefactoringException refactoring ?? 'perform refactoring').
 			aRefactoringException hasTag
 				ifTrue: [mb confirm ifTrue: [aRefactoringException tag value]]
 				ifFalse: [mb warning].
-			self abortSignal signal: '<1d> aborted' << aRefactoringException refactoring].
+			self abortSignal signal: '<1d> aborted' << (aRefactoringException refactoring ?? 'Refactoring')].
 	^aRefactoringException return!
 
 inlineAllSelfSendsOf: aCollectionOfMethods within: aBrowserEnvironment
@@ -1460,6 +1461,9 @@ selectTargetVariableOf: aClass parseTree: aStMethodNode
 showChangesText
 	^'Show proposed changes?'!
 
+validateCreateSubclass: aClassDetails
+	^(AddClassRefactoring details: aClassDetails subclasses: #()) preconditions validate!
+
 validateNewClassVarName: aString for: aClass
 	^(AddClassVariableRefactoring variable: aString class: aClass) preconditions validate
 		caption: 'Invalid new class variable name <1p>' << aString;
@@ -1608,6 +1612,7 @@ renameTemporary:to:in:selector:!public!refactoring! !
 renameVariable:to:isClassVariable:of:within:!private!refactoring! !
 selectTargetVariableOf:parseTree:!helpers!private!refactoring! !
 showChangesText!constants!private! !
+validateCreateSubclass:!helpers!private!refactoring! !
 validateNewClassVarName:for:!helpers!private!refactoring! !
 validateNewInstanceVariableName:for:!enquiries!helpers!private!refactoring! !
 validateRenameClass:to:!helpers!private! !

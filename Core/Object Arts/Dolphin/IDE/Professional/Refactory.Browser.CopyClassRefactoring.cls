@@ -2,7 +2,7 @@
 
 Refactory.Browser.ClassRefactoring
 	subclass: #'Refactory.Browser.CopyClassRefactoring'
-	instanceVariableNames: 'newName class superclass'
+	instanceVariableNames: 'newName addClass commonSuperclass superclass'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -12,58 +12,68 @@ Refactory.Browser.CopyClassRefactoring comment: ''!
 !Refactory.Browser.CopyClassRefactoring categoriesForClass!Refactory-Refactorings! !
 !Refactory.Browser.CopyClassRefactoring methodsFor!
 
-className: aName newName: aNewName superclass: aClass
-	self className: aName.
-	"If the new name is unqualified, preserve the original namespace of the class."
+buildClassDetails: superClass
+	| details progenitor classVarNames instVarNames classConstants classInstVarNames |
+	details := (ClassDetails fromClass: self progenitor)
+				superclass: superClass;
+				className: newName;
+				yourself.
+	instVarNames := Array writeStream.
+	classVarNames := Array writeStream.
+	classInstVarNames := Array writeStream.
+	classConstants := Array writeStream.
+	progenitor := self progenitor.
+	"Copy over any superclass variables that might be referenced"
+	(progenitor allSuperclasses upTo: self commonSuperclass) reverseDo: 
+			[:each |
+			instVarNames
+				nextPutAll: (each instanceVariableNames select: [:iv | progenitor refersToInstanceVariable: iv]).
+			classVarNames nextPutAll: (each classVariableNames
+						select: [:cv | (progenitor refersToClassVariable: cv) or: [progenitor metaclass refersToClassVariable: cv]]).
+			classConstants
+				nextPutAll: (each classConstants select: [:cc | progenitor refersToClassVariable: cc key]).
+			classInstVarNames nextPutAll: (each metaclass instanceVariableNames
+						select: [:iv | progenitor metaclass refersToInstanceVariable: iv])].
+	"Copy over the directly defined variables, whether referenced or not"
+	instVarNames nextPutAll: progenitor instanceVariableNames.
+	classVarNames nextPutAll: progenitor classVariableNames.
+	classConstants nextPutAll: progenitor classConstants.
+	classInstVarNames nextPutAll: progenitor metaclass instanceVariableNames.
+	details
+		instanceVariableNames: instVarNames grabContents;
+		classVariableNames: classVarNames grabContents;
+		classConstants: classConstants grabContents;
+		classInstanceVariableNames: classInstVarNames grabContents.
+	^details!
+
+className: progenitorName newName: aNewName superclass: aClass
+	| details classRef |
+	"We need to set the superclass name and new name before doing anything that might lazily instantiate the model, as these are part of the displayString used to generate a model name"
+	classRef := BindingReference fullPathString: progenitorName.
 	newName := ((BindingReference isQualifiedName: aNewName)
 				ifTrue: [aNewName]
 				ifFalse: 
 					[| parts |
-					parts := className path copy.
+					parts := classRef path copy.
 					parts at: parts size put: aNewName.
 					BindingReference.PathSeparator join: parts])
 					asSymbol.
-	class := self model classNamed: aName.
+	self classReference: classRef.
 	superclass := self classObjectFor: aClass.
-	^self!
-
-copyClass
-	| details |
-	details := ClassDetails fromClass: class.
-	details
-		superclass: superclass;
-		className: newName.
-	self performComponentRefactoring: (AddClassRefactoring
+	details := self buildClassDetails: superclass.
+	addClass := AddClassRefactoring
 				model: self model
 				details: details
-				subclasses: #()).
-	^self model classNamed: newName!
+				subclasses: #().
+	^self!
 
-copyClassVarsTo: clone
-	(class allClassVariableNames difference: superclass allClassVariableNames) do: 
-			[:each |
-			self performComponentRefactoring: (AddClassVariableRefactoring
-						model: self model
-						variable: each
-						class: clone)]!
+cloneClass
+	self performComponentRefactoring: addClass.
+	^self model classNamed: self newName!
 
-copyImportsTo: clone
-	class allImports do: 
-			[:each |
-			(clone importsNamespace: each)
-				ifFalse: 
-					[self performComponentRefactoring: (AddImportRefactoring
-								model: self model
-								addImport: each
-								to: clone)]]!
-
-copyInstVarsTo: clone
-	(class allInstanceVariableNames difference: superclass allInstanceVariableNames) do: 
-			[:each |
-			self performComponentRefactoring: (AddInstanceVariableRefactoring
-						model: self model
-						variable: each
-						class: clone)]!
+commonSuperclass
+	^superclass
+		ifNotNil: [:targetSuper | (targetSuper withAllSuperclasses intersection: self progenitor allSuperclasses) lookup: 1]!
 
 copyMethodsFrom: aRBAbstractClass to: cloneClass
 	aRBAbstractClass selectors do: 
@@ -80,54 +90,46 @@ displayOn: aPuttableStream
 		nextPutAll: 'Clone class ';
 		display: className;
 		nextPutAll: ' as ';
-		display: newName!
+		display: self newName!
+
+newName
+	^newName!
 
 preconditions
-	^(RBCondition withBlock: [class notNil and: [class isMeta not]]
-		errorString: [self className , ' is <1?:not >a valid class name']) & (superclass isNil
-					ifTrue: [RBCondition empty]
-					ifFalse: 
-						[((RBCondition isMetaclass: superclass) errorMacro: 'Superclass must <1?:not >be a metaclass') not])
-		& (RBCondition isValidClassName: newName) & (RBCondition isStatic: newName in: self model) not!
+	^addClass preconditions!
 
-storeOn: aStream 
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream nextPutAll: ' clone: '.
-	class storeOn: aStream.
+progenitor
+	^className value!
+
+storeOn: aStream
 	aStream
-		nextPutAll: ' as: #';
-		nextPutAll: newName;
-		nextPutAll: ' superclass: '.
-	superclass storeOn: aStream.
-	aStream nextPut: $)!
-
-superclass
-	^superclass!
-
-superclass: aClass
-	superclass := self classObjectFor: aClass.!
+		nextPut: $(;
+		store: self class;
+		nextPutAll: ' clone: ';
+		store: self progenitor;
+		nextPutAll: ' as: ';
+		store: self newName;
+		nextPutAll: ' superclass: ';
+		store: superclass;
+		nextPut: $)!
 
 transform
-	| clone |
-	clone := self copyClass.
-	self copyInstVarsTo: clone.
-	self copyClassVarsTo: clone.
-	self copyImportsTo: clone.
-	self copyMethodsFrom: class to: clone.
-	self copyMethodsFrom: class metaclass to: clone metaclass! !
+	| clone source |
+	clone := self cloneClass.
+	source := self progenitor.
+	self copyMethodsFrom: source to: clone.
+	self copyMethodsFrom: source metaclass to: clone metaclass! !
 !Refactory.Browser.CopyClassRefactoring categoriesForMethods!
+buildClassDetails:!initializing!private! !
 className:newName:superclass:!initializing!private! !
-copyClass!private!transforming! !
-copyClassVarsTo:!private!transforming! !
-copyImportsTo:!private!transforming! !
-copyInstVarsTo:!private!transforming! !
+cloneClass!private!transforming! !
+commonSuperclass!accessing!private! !
 copyMethodsFrom:to:!private!transforming! !
 displayOn:!displaying!public! !
+newName!public!transforming! !
 preconditions!preconditions!public! !
+progenitor!accessing!private! !
 storeOn:!printing!public! !
-superclass!accessing!private! !
-superclass:!accessing!private! !
 transform!public!transforming! !
 !
 
