@@ -2126,7 +2126,7 @@ saveNewMethod: aString
 					[| cat class categories package |
 					cat := self category.
 					categories := (cat notNil and: [cat acceptsAdditions])
-								ifTrue: [{cat}]
+								ifTrue: [{ cat }]
 								ifFalse: [self model defaultMethodCategories].
 					class := self classForNewMethod.
 					class isNil ifTrue: [^self].
@@ -2138,12 +2138,22 @@ saveNewMethod: aString
 						categories: categories
 						package: package]
 				ifFalse: 
-					[| package |
+					[| package methodClass namespace |
+					methodClass := method methodClass.
+					(self packageManager packageOfMethod: method)
+						ifNotNil: 
+							[:p |
+							"Existing loose method "
+							package := p.
+							namespace := (package ?? method) environment]
+						ifNil: 
+							[package := methodClass owningPackage.
+							namespace := methodClass environment].
 					package := method owningPackage.
 					newMethod := methodBrowserPresenter
 								saveMethod: aString
-								in: method methodClass
-								environment: (package ?? method) environment
+								in: methodClass
+								environment: namespace
 								categories: method realCategories
 								package: package].
 	"When a method is saved it may no longer match the filter. If this is the case we reselect method
