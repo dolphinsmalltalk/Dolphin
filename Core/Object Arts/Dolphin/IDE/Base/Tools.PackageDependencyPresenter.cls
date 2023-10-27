@@ -212,43 +212,46 @@ queryCommand: aCommandQuery
 queryMoveObjects: aCollection toPackage: aPackage
 	"Private - Move the array of packageable objects, anArray, to the specified package."
 
-	| stream max sorted |
-	stream := String writeStream.
-	stream nextPutAll: 'Are you sure you would like to move '.
+	| mb |
+	mb := MessageBox new.
 	aCollection size = 1
-		ifTrue: [stream nextPutAll: 'the following object']
-		ifFalse: 
-			[stream
-				nextPutAll: 'these ';
-				display: aCollection size;
-				nextPutAll: ' objects'].
-	stream
-		nextPutAll: ' to the package ';
-		print: aPackage name;
-		nextPut: $?;
-		cr.
-	sorted := aCollection asSortedArray: [:a :b | a displayString <= b displayString].
-	max := 30.
-	sorted
-		from: 1
-		to: (aCollection size min: max)
-		do: 
-			[:each |
-			stream
-				crtab;
-				display: each].
-	aCollection size > max
 		ifTrue: 
-			[stream
-				crtab;
-				nextPutAll: '… and ';
-				print: aCollection size - max;
-				nextPutAll: ' other items …'].
-	stream
-		cr;
-		cr;
-		nextPutAll: 'Press Yes to repackage the object(s), or No to abort the operation'.
-	(MessageBox confirm: stream contents) ifFalse: [^self].
+			[| object |
+			object := aCollection single.
+			mb
+				headline: 'Repackage <1d>?' << object;
+				text: 'Ownership will be moved from the package <2p> to <3p>.' << { object. object owningPackage name. aPackage name}]
+		ifFalse: 
+			[| stream max sorted |
+			mb headline: 'Repackage <1d> source objects?'.
+			stream := String writeStream.
+			stream
+				nextPutAll: 'The following source objects will be moved to the package ';
+				print: aPackage name;
+				nextPut: $:;
+				cr.
+			sorted := aCollection asSortedArray: [:a :b | a displayString <= b displayString].
+			max := 30.
+			sorted
+				from: 1
+				to: (aCollection size min: max)
+				do: 
+					[:each |
+					stream
+						crtab;
+						display: each].
+			aCollection size > max
+				ifTrue: 
+					[stream
+						crtab;
+						nextPutAll: '… and ';
+						print: aCollection size - max;
+						nextPutAll: ' other items …'].
+			stream cr].
+	mb
+		customButtons: #(#(#yes '&Repackage') #(#no 'Cancel'));
+		isCancellable: true.
+	mb confirm ifFalse: [^self].
 	aCollection do: [:each | each owningPackage: aPackage]!
 
 selectedPair
