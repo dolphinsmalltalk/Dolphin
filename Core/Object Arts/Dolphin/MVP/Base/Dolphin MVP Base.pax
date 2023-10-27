@@ -141,7 +141,9 @@ package setClassNames: #(
 ).
 
 package setMethodNames: #(
+	#(#{Core.Error class} #icon)
 	#(#{Core.MessageSend} #queryCommand:)
+	#(#{Core.Notification class} #icon)
 	#(#{Core.Object} #icon)
 	#(#{Core.Object} #iconImageIndex)
 	#(#{Core.Object class} #icon)
@@ -149,6 +151,7 @@ package setMethodNames: #(
 	#(#{Core.String} #setTextInto:)
 	#(#{Core.Symbol} #copyToClipboard)
 	#(#{Core.UndefinedObject} #asResourceId)
+	#(#{Core.Warning class} #icon)
 	#(#{Graphics.Bitmap} #copyToClipboard)
 	#(#{OS.CommCtrlLibrary class} #sharedVariableName)
 	#(#{OS.KernelLibrary} #getConsoleWindow)
@@ -2211,6 +2214,16 @@ UI.ShellView
 
 "Loose Methods"!
 
+!Core.Error class methodsFor!
+
+icon
+	"Answer the default icon for the receiver and its instances."
+	
+	^Graphics.Icon error! !
+!Core.Error class categoriesForMethods!
+icon!constants!public! !
+!
+
 !Core.MessageSend methodsFor!
 
 queryCommand: query
@@ -2223,6 +2236,16 @@ queryCommand: query
 	^true! !
 !Core.MessageSend categoriesForMethods!
 queryCommand:!commands!private! !
+!
+
+!Core.Notification class methodsFor!
+
+icon
+	"Answer the default icon for the receiver and its instances."
+
+	^Graphics.Icon information! !
+!Core.Notification class categoriesForMethods!
+icon!constants!public! !
 !
 
 !Core.Object methodsFor!
@@ -2288,6 +2311,16 @@ asResourceId
 	^self! !
 !Core.UndefinedObject categoriesForMethods!
 asResourceId!converting!public! !
+!
+
+!Core.Warning class methodsFor!
+
+icon
+	"Answer the default icon for the receiver and its instances."
+
+	^Graphics.Icon warning! !
+!Core.Warning class categoriesForMethods!
+icon!constants!public! !
 !
 
 !Graphics.Bitmap methodsFor!

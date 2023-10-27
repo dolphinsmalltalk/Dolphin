@@ -26,7 +26,6 @@ package setMethodNames: #(
 	#(#{Core.Delay class} #icon)
 	#(#{Core.Dictionary class} #icon)
 	#(#{Core.Duration class} #icon)
-	#(#{Core.Error class} #icon)
 	#(#{Core.Exception class} #icon)
 	#(#{Core.False class} #icon)
 	#(#{Core.File class} #icon)
@@ -46,7 +45,6 @@ package setMethodNames: #(
 	#(#{Core.Metaclass class} #icon)
 	#(#{Core.Model class} #icon)
 	#(#{Core.Mutex class} #icon)
-	#(#{Core.Notification class} #icon)
 	#(#{Core.NotificationSignal class} #icon)
 	#(#{Core.Number class} #icon)
 	#(#{Core.OperationAborted class} #icon)
@@ -65,7 +63,6 @@ package setMethodNames: #(
 	#(#{Core.True class} #icon)
 	#(#{Core.UndefinedObject class} #icon)
 	#(#{Core.UtfEncodedString class} #icon)
-	#(#{Core.Warning class} #icon)
 	#(#{Core.WarningSignal class} #icon)
 	#(#{Core.WeakArray class} #icon)
 	#(#{External class} #icon)
@@ -340,16 +337,6 @@ icon
 icon!constants!public! !
 !
 
-!Core.Error class methodsFor!
-
-icon
-	"Answer the default icon for the receiver and its instances."
-	
-	^Graphics.Icon error! !
-!Core.Error class categoriesForMethods!
-icon!constants!public! !
-!
-
 !Core.Exception class methodsFor!
 
 icon
@@ -573,16 +560,6 @@ icon
 icon!constants!public! !
 !
 
-!Core.Notification class methodsFor!
-
-icon
-	"Answer the default icon for the receiver and its instances."
-
-	^Graphics.Icon information! !
-!Core.Notification class categoriesForMethods!
-icon!constants!public! !
-!
-
 !Core.NotificationSignal class methodsFor!
 
 icon
@@ -800,16 +777,6 @@ icon
 		textcolor: Color darkBlue;
 		yourself)! !
 !Core.UtfEncodedString class categoriesForMethods!
-icon!constants!public! !
-!
-
-!Core.Warning class methodsFor!
-
-icon
-	"Answer the default icon for the receiver and its instances."
-
-	^Graphics.Icon warning! !
-!Core.Warning class categoriesForMethods!
 icon!constants!public! !
 !
 
