@@ -135,6 +135,7 @@ package globalNames
 	add: #MultipleChoicePresenter;
 	add: #StaticViewAbstract;
 	add: #Status;
+	add: #StatusItem;
 	add: #StatusOwnerDraw;
 	yourself.
 
@@ -147,6 +148,7 @@ package globalAliases: (Set new
 	add: #MultipleChoicePresenter;
 	add: #StaticViewAbstract;
 	add: #Status;
+	add: #StatusItem;
 	add: #StatusOwnerDraw;
 	yourself).
 
@@ -215,6 +217,8 @@ MultipleChoicePresenter := ChoicePresenter!
 StaticViewAbstract := StaticView!
 
 Status := StatusBar!
+
+StatusItem := StatusBarItem!
 
 StatusOwnerDraw := StatusBarNullItem!
 
