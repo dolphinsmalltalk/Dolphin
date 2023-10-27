@@ -114,16 +114,9 @@ prompt: aString
 	promptPresenter value: aString
 !
 
-queryCommand: aCommandQuery
-	"Private - Enters details about a potential command for the receiver into the <CommandQuery>."
-
-	aCommandQuery commandSymbol == #ok
-		ifTrue: 
-			["Ensure the reply has been flushed from the view to the model - the standard views have update-per-char set on the text edit views so will already have done this, but a custom view might not."
-			replyPresenter value.
-			aCommandQuery validationResult: self validateModel.
-			^true].
-	^super queryCommand: aCommandQuery!
+queryOk: aCommandQuery
+	replyPresenter value.
+	aCommandQuery validationResult: self validateModel!
 
 shouldShowValidationHint: aValidationResult
 	^aValidationResult hint notNil
@@ -203,7 +196,7 @@ onPositionChanged:!event handling!private! !
 onReplyChanged!event handling!private! !
 preTranslateKeyboardInput:!dispatching!public! !
 prompt:!accessing!public! !
-queryCommand:!commands!private! !
+queryOk:!commands-queries!private! !
 shouldShowValidationHint:!private!testing! !
 showHintBubble!accessing!public! !
 showHintBubble:!accessing!public! !
