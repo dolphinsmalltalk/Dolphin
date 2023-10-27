@@ -49,9 +49,6 @@ Try:
 !OS.COM.Examples.WebBrowserShell categoriesForClass!Samples! !
 !OS.COM.Examples.WebBrowserShell methodsFor!
 
-areImagesBlocked
-	^false!
-
 browserView
 	^browser view!
 
@@ -168,8 +165,8 @@ createSchematicWiring
 		send: #onSystemSettingChanged:
 		to: self!
 
-displayError: ex
-	statusModel value: ex.
+displayError: anException
+	statusModel value: anException.
 	^Sound errorBeep!
 
 hasWebview
@@ -387,6 +384,7 @@ preferredColorScheme: anInteger
 	"Switch the browser colour scheme to that identified by the <integer> argument, from the COREWEBVIEW2_PREFERRED_COLOR_SCHEME enumeration.
 	The choices are 'auto', to track the OS setting, 'light', and 'dark'. The dark mode has detail issues, especially with the toolbar, because Windows does not provide public APIs for dark-mode theming of Win32 controls. We do the best we can with the standard theming, but but it would be worth exploring the undocumented APIs to see if some of the fit and finish issues can be eliminated."
 
+	<commandQuery: #queryPreferredColorScheme:>
 	self browserView profile preferredColorScheme: anInteger.
 	self updateColorScheme!
 
@@ -394,6 +392,7 @@ print
 	self webview2 showBrowserPrintDialog!
 
 printToPdf
+	<commandQuery: #queryPrintToPdf:>
 	| filename |
 	filename := FileSaveDialog new
 				caption: 'Print to PDF...';
@@ -410,75 +409,123 @@ printToPdf
 				ifTrue: [Shell32 shellOpen: filename]
 				ifFalse: [MessageBox errorMsg: 'Failed to print as PDF (<1p>)' << (HRESULT fromInteger: hr)]]!
 
-queryCommand: aCommandQuery
-	"Private - Enters details about a potential command for the receiver into aCommandQuery"
+queryPreferredColorScheme: aCommandQuery
+	aCommandQuery
+		isEnabled: true;
+		isChecked: self preferredColorScheme = aCommandQuery command argument!
 
-	| commandSymbol |
-	commandSymbol := aCommandQuery command.
-	commandSymbol == #printToPdf:
-		ifTrue: 
-			[| webview |
-			webview := self webview2.
-			aCommandQuery isEnabled: (webview notNil and: [webview canPrintToPdf]).
-			^true].
-	^(self querySettingsCommands: aCommandQuery) or: [super queryCommand: aCommandQuery]!
+queryPrintToPdf: aCommandQuery
+	aCommandQuery isEnabled: (self hasWebview and: [self webview2 canPrintToPdf])!
 
-querySettingsCommands: aCommandQuery
-	"Private - Enters details about a potential settings command for the receiver into aCommandQuery"
+querySwipeNavigation: aCommandQuery
+	aCommandQuery
+		isEnabled: true;
+		isChecked: browser view isSwipeNavigationEnabled!
 
-	| commandSymbol webview |
-	commandSymbol := aCommandQuery commandSymbol.
-	webview := self webview2.
-	commandSymbol == #settingsMenu
-		ifTrue: 
-			[aCommandQuery isEnabled: webview notNil.
-			^true].
-	commandSymbol == #toggleBlockImages
-		ifTrue: 
-			[aCommandQuery
-				isEnabled: webview notNil;
-				isChecked: self isBlockingImages.
-			^true].
-	commandSymbol == #toggleEventLogging
-		ifTrue: 
-			[aCommandQuery
-				isEnabled: true;
-				isChecked: self isLoggingEvents.
-			^true].
-	commandSymbol == #toggleInPrivateMode
-		ifTrue: 
-			[aCommandQuery
-				isEnabled: true;
-				isChecked: self isInPrivateModeEnabled.
-			^true].
-	commandSymbol == #trackingPreventionLevel:
-		ifTrue: 
-			[aCommandQuery
-				isEnabled: true;
-				isChecked: self browserView trackingPreventionLevel = aCommandQuery command argument.
-			^true].
-	commandSymbol == #preferredColorScheme:
-		ifTrue: 
-			[aCommandQuery
-				isEnabled: true;
-				isChecked: self preferredColorScheme = aCommandQuery command argument.
-			^true].
-	^#(#(#toggleAllowContextMenu #allowContextMenu) #(#toggleAllowExternalDrop #allowExternalDrop) #(#toggleBrowserAcceleratorKeysEnabled #areBrowserAcceleratorKeysEnabled) #(#toggleBuiltinErrorPageEnabled #isBuiltInErrorPageEnabled) #(#toggleDefaultScriptDialogsEnabled #areDefaultScriptDialogsEnabled) #(#toggleDevToolsEnabled #areDevToolsEnabled) #(#toggleGeneralAutofill #isGeneralAutofillEnabled) #(#toggleJavaScript #isScriptEnabled) #(#togglePasswordAutosave #isPasswordAutosaveEnabled) #(#togglePinchZoomEnabled #isPinchZoomEnabled) #(#toggleStatusBar #isStatusBarEnabled) #(#toggleSwipeNavigation #isSwipeNavigationEnabled) #(#toggleWebMessaging #isWebMessageEnabled) #(#toggleZoomControl #isZoomControlEnabled) #(#toggleSmartScreen #isSmartScreenEnabled))
-		anySatisfy: 
-			[:each |
-			commandSymbol == each first and: 
-					[aCommandQuery
-						isEnabled: webview notNil;
-						isChecked: (browser view perform: each second).
-					true]]!
+queryToggleAllowContextMenu: aCommandQuery
+	aCommandQuery
+		isEnabled: true;
+		isChecked: browser view allowContextMenu!
+
+queryToggleAllowExternalDrop: aCommandQuery
+	aCommandQuery
+		isEnabled: true;
+		isChecked: browser view allowExternalDrop!
+
+queryToggleBlockImages: aCommandQuery
+	aCommandQuery
+		isEnabled: self hasWebview;
+		isChecked: self isBlockingImages!
+
+queryToggleBrowserAcceleratorKeysEnabled: aCommandQuery
+	aCommandQuery
+		isEnabled: true;
+		isChecked: browser view areBrowserAcceleratorKeysEnabled!
+
+queryToggleBuiltinErrorPageEnabled: aCommandQuery
+	aCommandQuery
+		isEnabled: true;
+		isChecked: browser view isBuiltInErrorPageEnabled!
+
+queryToggleDefaultScriptDialogsEnabled: aCommandQuery
+	aCommandQuery
+		isEnabled: true;
+		isChecked: browser view areDefaultScriptDialogsEnabled!
+
+queryToggleDevToolsEnabled: aCommandQuery
+	aCommandQuery
+		isEnabled: true;
+		isChecked: browser view areDevToolsEnabled!
+
+queryToggleEventLogging: aCommandQuery
+	aCommandQuery
+		isEnabled: true;
+		isChecked: self isLoggingEvents!
+
+queryToggleGeneralAutofill: aCommandQuery
+	aCommandQuery
+		isEnabled: true;
+		isChecked: browser view isGeneralAutofillEnabled!
+
+queryToggleInPrivateMode: aCommandQuery
+	aCommandQuery
+		isEnabled: true;
+		isChecked: self isInPrivateModeEnabled!
+
+queryToggleJavaScript: aCommandQuery
+	aCommandQuery
+		isEnabled: true;
+		isChecked: browser view isScriptEnabled!
+
+queryTogglePasswordAutosave: aCommandQuery
+	aCommandQuery
+		isEnabled: true;
+		isChecked: browser view isPasswordAutosaveEnabled!
+
+queryTogglePinchZoomEnabled: aCommandQuery
+	aCommandQuery
+		isEnabled: true;
+		isChecked: browser view isPinchZoomEnabled!
+
+queryToggleSmartScreen: aCommandQuery
+	aCommandQuery
+		isEnabled: true;
+		isChecked: browser view isSmartScreenEnabled!
+
+queryToggleStatusBar: aCommandQuery
+	aCommandQuery
+		isEnabled: true;
+		isChecked: browser view isStatusBarEnabled!
+
+queryToggleSwipeNavigation: aCommandQuery
+	aCommandQuery
+		isEnabled: true;
+		isChecked: browser view isSwipeNavigationEnabled!
+
+queryToggleWebMessaging: aCommandQuery
+	aCommandQuery
+		isEnabled: true;
+		isChecked: browser view isWebMessageEnabled!
+
+queryToggleZoomControl: aCommandQuery
+	aCommandQuery
+		isEnabled: true;
+		isChecked: browser view isZoomControlEnabled!
+
+queryTrackingPreventionLevel: aCommandQuery
+	aCommandQuery
+		isEnabled: true;
+		isChecked: self browserView trackingPreventionLevel = aCommandQuery command argument!
 
 refresh
 	self webview2 reload!
 
 settingsMenu
+	<commandQuery: #hasWebview>
 	^self!
 
 toggleAllowContextMenu
+	<commandQuery: #queryToggleAllowContextMenu:>
 	| webview |
 	webview := browser view.
 	webview allowContextMenu: webview allowContextMenu not.
@@ -486,6 +533,7 @@ toggleAllowContextMenu
 	self refresh!
 
 toggleAllowExternalDrop
+	<commandQuery: #queryToggleAllowExternalDrop:>
 	| webview |
 	webview := browser view.
 	webview allowExternalDrop: webview allowExternalDrop not.
@@ -493,10 +541,12 @@ toggleAllowExternalDrop
 	self refresh!
 
 toggleBlockImages
+	<commandQuery: #queryToggleBlockImages:>
 	self isBlockingImages: self isBlockingImages not.
 	self refresh!
 
 toggleBrowserAcceleratorKeysEnabled
+	<commandQuery: #queryToggleBrowserAcceleratorKeysEnabled:>
 	| webview |
 	webview := browser view.
 	webview areBrowserAcceleratorKeysEnabled: webview areBrowserAcceleratorKeysEnabled not.
@@ -504,6 +554,7 @@ toggleBrowserAcceleratorKeysEnabled
 	self refresh!
 
 toggleBuiltinErrorPageEnabled
+	<commandQuery: #queryToggleBuiltinErrorPageEnabled:>
 	| webview |
 	webview := browser view.
 	webview isBuiltInErrorPageEnabled: webview isBuiltInErrorPageEnabled not.
@@ -511,6 +562,7 @@ toggleBuiltinErrorPageEnabled
 	self refresh!
 
 toggleDefaultScriptDialogsEnabled
+	<commandQuery: #queryToggleDefaultScriptDialogsEnabled:>
 	| webview |
 	webview := browser view.
 	webview areDefaultScriptDialogsEnabled: webview areDefaultScriptDialogsEnabled not.
@@ -518,6 +570,7 @@ toggleDefaultScriptDialogsEnabled
 	self refresh!
 
 toggleDevToolsEnabled
+	<commandQuery: #queryToggleDevToolsEnabled:>
 	| webview |
 	webview := browser view.
 	webview areDevToolsEnabled: webview areDevToolsEnabled not.
@@ -525,9 +578,11 @@ toggleDevToolsEnabled
 	self refresh!
 
 toggleEventLogging
+	<commandQuery: #queryToggleEventLogging:>
 	self isLoggingEvents: self isLoggingEvents not!
 
 toggleGeneralAutofill
+	<commandQuery: #queryToggleGeneralAutofill:>
 	| webview |
 	webview := browser view.
 	webview isGeneralAutofillEnabled: webview isGeneralAutofillEnabled not.
@@ -535,9 +590,11 @@ toggleGeneralAutofill
 	self refresh!
 
 toggleInPrivateMode
+	<commandQuery: #queryToggleInPrivateMode:>
 	browser view isInPrivateModeEnabled: self isInPrivateModeEnabled not!
 
 toggleJavaScript
+	<commandQuery: #queryToggleJavaScript:>
 	| webview |
 	webview := browser view.
 	webview isScriptEnabled: webview isScriptEnabled not.
@@ -545,13 +602,19 @@ toggleJavaScript
 	self refresh!
 
 togglePasswordAutosave
+	<commandQuery: #queryTogglePasswordAutosave:>
 	| webview |
 	webview := browser view.
 	webview isPasswordAutosaveEnabled: webview isPasswordAutosaveEnabled not.
 	"Most settings do not take effect until after navigation, so refresh"
 	self refresh!
 
+togglePinchZoomEnabled
+	<commandQuery: #queryTogglePinchZoomEnabled:>
+	browser view isPinchZoomEnabled: browser view isPinchZoomEnabled not!
+
 toggleSmartScreen
+	<commandQuery: #queryToggleSmartScreen:>
 	| webview |
 	webview := browser view.
 	webview isSmartScreenEnabled: webview isSmartScreenEnabled not.
@@ -559,13 +622,21 @@ toggleSmartScreen
 	self refresh!
 
 toggleStatusBar
+	<commandQuery: #queryToggleStatusBar:>
 	| webview |
 	webview := browser view.
 	webview isStatusBarEnabled: webview isStatusBarEnabled not.
 	"Most settings do not take effect until after navigation, so refresh"
 	self refresh!
 
+toggleSwipeNavigation
+	<commandQuery: #queryToggleSwipeNavigation:>
+	| webview |
+	webview := browser view.
+	webview isSwipeNavigationEnabled: webview isSwipeNavigationEnabled not!
+
 toggleWebMessaging
+	<commandQuery: #queryToggleWebMessaging:>
 	| webview |
 	webview := browser view.
 	webview isWebMessageEnabled: webview isWebMessageEnabled not.
@@ -573,6 +644,7 @@ toggleWebMessaging
 	self refresh!
 
 toggleZoomControl
+	<commandQuery: #queryToggleZoomControl:>
 	| webview |
 	webview := browser view.
 	webview isZoomControlEnabled: webview isZoomControlEnabled not.
@@ -580,6 +652,7 @@ toggleZoomControl
 	self refresh!
 
 trackingPreventionLevel: anInteger
+	<commandQuery: #queryTrackingPreventionLevel:>
 	self browserView trackingPreventionLevel: anInteger!
 
 updateColorScheme
@@ -597,24 +670,23 @@ zoomReset
 	<acceleratorKey: 'Ctrl+0'>
 	browser view zoomFactor: 1! !
 !OS.COM.Examples.WebBrowserShell categoriesForMethods!
-areImagesBlocked!public!testing! !
 browserView!accessing!public! !
-buildPopupForCommand:!commands!private! !
-buildSettingsPopup!commands!private! !
+buildPopupForCommand:!commands-actions!private! !
+buildSettingsPopup!commands-actions!private! !
 createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !
 displayError:!operations!private! !
 hasWebview!private!testing! !
-help!commands!public! !
-home!commands!public! !
+help!commands-actions!public! !
+home!commands-actions!public! !
 homePage!constants!private! !
 initialize!initializing!private! !
 isBlockingImages!public!testing! !
-isBlockingImages:!operations!public! !
+isBlockingImages:!accessing!public! !
 isInPrivateModeEnabled!accessing!public! !
 isLoggingEvents!public!testing! !
-isLoggingEvents:!commands!public! !
-navigate!commands!public! !
+isLoggingEvents:!commands-actions!public! !
+navigate!commands-actions!public! !
 navigateTo:!operations!private! !
 onColorSchemeChanged!private!updating! !
 onDocumentTitleChanged!event handling!private! !
@@ -628,37 +700,59 @@ onWebResourceRequested:!event handling!private! !
 onWebView2Event:name:!event handling!private! !
 onWebViewAvailable!event handling!private! !
 onZoomFactorChanged!event handling!private! !
-openTaskManagerWindow!commands!public! !
+openTaskManagerWindow!commands-actions!public! !
 openUrl:!operations!public! !
 preferredColorScheme!accessing!public! !
-preferredColorScheme:!operations!public! !
-print!commands!public! !
-printToPdf!commands!public! !
-queryCommand:!commands!private! !
-querySettingsCommands:!commands!private! !
-refresh!commands!public! !
-settingsMenu!commands!public! !
-toggleAllowContextMenu!commands!public! !
-toggleAllowExternalDrop!commands!public! !
-toggleBlockImages!commands!public! !
-toggleBrowserAcceleratorKeysEnabled!commands!public! !
-toggleBuiltinErrorPageEnabled!commands!public! !
-toggleDefaultScriptDialogsEnabled!commands!public! !
-toggleDevToolsEnabled!commands!public! !
-toggleEventLogging!commands!public! !
-toggleGeneralAutofill!commands!public! !
-toggleInPrivateMode!commands!public! !
-toggleJavaScript!commands!public! !
-togglePasswordAutosave!commands!public! !
-toggleSmartScreen!commands!public! !
-toggleStatusBar!commands!public! !
-toggleWebMessaging!commands!public! !
-toggleZoomControl!commands!public! !
-trackingPreventionLevel:!operations!public! !
+preferredColorScheme:!commands-actions!public! !
+print!commands-actions!public! !
+printToPdf!commands-actions!public! !
+queryPreferredColorScheme:!commands-queries!private! !
+queryPrintToPdf:!commands-queries!private! !
+querySwipeNavigation:!commands-queries!private! !
+queryToggleAllowContextMenu:!commands-queries!private! !
+queryToggleAllowExternalDrop:!commands-queries!private! !
+queryToggleBlockImages:!commands-queries!private! !
+queryToggleBrowserAcceleratorKeysEnabled:!commands-queries!private! !
+queryToggleBuiltinErrorPageEnabled:!commands-queries!private! !
+queryToggleDefaultScriptDialogsEnabled:!commands-queries!private! !
+queryToggleDevToolsEnabled:!commands-queries!private! !
+queryToggleEventLogging:!commands-queries!private! !
+queryToggleGeneralAutofill:!commands-queries!private! !
+queryToggleInPrivateMode:!commands-queries!private! !
+queryToggleJavaScript:!commands-queries!private! !
+queryTogglePasswordAutosave:!commands-queries!private! !
+queryTogglePinchZoomEnabled:!commands-queries!private! !
+queryToggleSmartScreen:!commands-queries!private! !
+queryToggleStatusBar:!commands-queries!private! !
+queryToggleSwipeNavigation:!commands-queries!private! !
+queryToggleWebMessaging:!commands-queries!private! !
+queryToggleZoomControl:!commands-queries!private! !
+queryTrackingPreventionLevel:!commands-queries!private! !
+refresh!commands-actions!public! !
+settingsMenu!commands-actions!public! !
+toggleAllowContextMenu!commands-actions!public! !
+toggleAllowExternalDrop!commands-actions!public! !
+toggleBlockImages!commands-actions!public! !
+toggleBrowserAcceleratorKeysEnabled!commands-actions!public! !
+toggleBuiltinErrorPageEnabled!commands-actions!public! !
+toggleDefaultScriptDialogsEnabled!commands-actions!public! !
+toggleDevToolsEnabled!commands-actions!public! !
+toggleEventLogging!commands-actions!public! !
+toggleGeneralAutofill!commands-actions!public! !
+toggleInPrivateMode!commands-actions!public! !
+toggleJavaScript!commands-actions!public! !
+togglePasswordAutosave!commands-actions!public! !
+togglePinchZoomEnabled!commands-actions!public! !
+toggleSmartScreen!commands-actions!public! !
+toggleStatusBar!commands-actions!public! !
+toggleSwipeNavigation!commands-actions!public! !
+toggleWebMessaging!commands-actions!public! !
+toggleZoomControl!commands-actions!public! !
+trackingPreventionLevel:!commands-actions!public! !
 updateColorScheme!private!updating! !
 webview2!accessing!private! !
 webviewSettings!accessing!private! !
-zoomReset!commands!public! !
+zoomReset!commands-actions!public! !
 !
 
 !OS.COM.Examples.WebBrowserShell class methodsFor!
