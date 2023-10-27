@@ -119,7 +119,7 @@ aliasFor: libraryNameString
 defaultLoadFlags
 	"Private - Answer the default LoadLibraryEx() flags to be used when loading	instances of the receiver."
 
-	^##(LOAD_LIBRARY_AS_IMAGE_RESOURCE|LOAD_LIBRARY_AS_DATAFILE)!
+	^##(LOAD_LIBRARY_AS_IMAGE_RESOURCE bitOr: LOAD_LIBRARY_AS_DATAFILE)!
 
 initialize
 	"Private - Initialize the receiver's class variables, &c.

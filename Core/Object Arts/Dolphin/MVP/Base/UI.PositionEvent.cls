@@ -60,7 +60,7 @@ isActivate
 isClientAreaChanged
 	"Answer whether the receiver is describing a change in the client area."
 
-	^(self flags bitAnd: ##(SWP_NOSIZE | SWP_FRAMECHANGED)) ~= SWP_NOSIZE!
+	^(self flags bitAnd: ##(SWP_NOSIZE bitOr: SWP_FRAMECHANGED)) ~= SWP_NOSIZE!
 
 isHideWindow
 	"Answer whether the receiver is describing a hide event."
@@ -75,7 +75,7 @@ isMove
 isRectangleChanged
 	"Answer whether the receiver is describing a position change event which has really affected the layout of the window, i.e. either or both of the position and size have been changed."
 
-	^(self flags allMask: ##(SWP_NOMOVE | SWP_NOSIZE)) not!
+	^(self flags allMask: ##(SWP_NOMOVE bitOr: SWP_NOSIZE)) not!
 
 isResize
 	"Answer whether the receiver is describing a resize event."

@@ -281,8 +281,8 @@ okToContinue
 
 	^(self showMessage: self description
 		style: (self isUserResumable
-				ifTrue: [##(MB_OKCANCEL | MB_ICONWARNING)]
-				ifFalse: [##(MB_OK | MB_ICONERROR)]))
+				ifTrue: [##(MB_OKCANCEL bitOr: MB_ICONWARNING)]
+				ifFalse: [##(MB_OK bitOr: MB_ICONERROR)]))
 			== #ok and: [self isUserResumable]!
 
 outer
@@ -432,7 +432,7 @@ showMessage: aString style: anInteger
 				text: aString
 				caption: SessionManager current applicationName
 				style: (Processor isActiveMain
-						ifTrue: [anInteger maskSet: ##(MB_TASKMODAL | MB_SETFOREGROUND)]
+						ifTrue: [anInteger maskSet: ##(MB_TASKMODAL bitOr: MB_SETFOREGROUND)]
 						ifFalse: [anInteger])
 				icon: nil
 				instance: nil)
