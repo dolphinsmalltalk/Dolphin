@@ -104,14 +104,13 @@ basicSelectionRange
 	is the first unselected character. Note further that this characteristic
 	means that the range should NEVER be empty."
 
-	| dwStart dwEnd |
-	dwStart := UInt32 new.
-	dwEnd := UInt32 new.
+	| buffer |
+	buffer := ByteArray newFixed: 8.
 	self
 		sendMessage: EM_GETSEL
-		wParam: dwStart yourAddress
-		lpParam: dwEnd.
-	^dwStart asInteger to: dwEnd asInteger!
+		wParam: buffer yourAddress
+		lParam: buffer yourAddress + 4.
+	^(buffer uint32AtOffset: 0) to: (buffer uint32AtOffset: 4)!
 
 basicSelectionStart: start end: end
 	"Private - Sets the selected range of text to the range defined by start and end 
@@ -340,6 +339,12 @@ dragOver: session
 	pt := session dragPointInView: self view.
 	session suggestedTarget: (self view charNearestPosition: pt).
 	super dragOver: session!
+
+editDelete
+	"Delete the current selection from the receiver. This command typically appears on the menu bar edit menu and typically applies only to text editors, unlike the context-sensitive clearSelection command, which deletes from whichever view has focus."
+
+	<commandQuery: #canCut>
+	self clearSelection!
 
 editFind
 	"Launch the common Find dialog."
@@ -1344,6 +1349,7 @@ displayValue!private!updating! !
 displayValue:!private!updating! !
 dlgCode!constants!private! !
 dragOver:!drag & drop!public! !
+editDelete!clipboard operations!commands-actions!public! !
 editFind!commands-actions!public!searching & replacing! !
 emptyUndoBuffer!commands-actions!public!undo & redo! !
 enChange!event handling-win32!private! !
