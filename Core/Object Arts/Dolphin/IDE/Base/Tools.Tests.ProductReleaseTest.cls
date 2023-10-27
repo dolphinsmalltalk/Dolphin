@@ -31,6 +31,12 @@ testClassState
 			[builder validateForModify] on: Warning do: [:warning | warning resume].
 			each imports do: [:import | self assert: import isKindOf: NamespaceImport]]!
 
+testClassVariableEnvironments
+	"Verify that environment of class variable bindings is the correct class."
+
+	Smalltalk allClasses
+		do: [:each | each classPool associationsDo: [:var | self assert: var environment identicalTo: each]]!
+
 testCompilationFailures
 	| failed |
 	failed := '*-compilation failures' asMethodCategory methods.
@@ -38,6 +44,15 @@ testCompilationFailures
 	"
 	(Refactory.Browser.BrowserEnvironment new forMethods: failed) browse
 	"!
+
+testPackagePaths
+	"Verify that the paths of the packages in the image match those defined in the DolphinProduct hierarchy"
+
+	DolphinProduct current contents do: 
+			[:each |
+			self assert: (File removeExtension: each first)
+				equals: (File
+						removeExtension: (Package manager packageNamed: (File splitStemFrom: each first)) packagePathname)]!
 
 testSubclassResponsibilityNotDefined
 	<namespace: Refactory.Browser>
@@ -58,15 +73,31 @@ testSubclassResponsibilityNotDefined
 	rule viewResults.
 	"!
 
+testUnlistedPrerequisites
+	"Verify that all packages in the image are listed in the DolphinProduct description. This will fail if user code is loaded."
+
+	self assert: DolphinProduct current unlistedPrerequisites asArray equals: #()!
+
+testUnpackagedClasses
+	"Verify that there are no unpackaged classes in the image"
+
+	self assert: Package manager unpackagedClasses equals: IdentitySet new!
+
 testUnpackagedVariables
+	"Verify that there are no unpackaged static/namespace variables in the image"
+
 	self assert: Package manager unpackagedVariables equals: Set new! !
 !Tools.Tests.ProductReleaseTest categoriesForMethods!
 checkNoClass:!public!unit tests! !
 isReleased!private!unit tests! !
 specialAssert:!private!unit tests! !
 testClassState!public!unit tests! !
+testClassVariableEnvironments!public!unit tests! !
 testCompilationFailures!public!unit tests! !
+testPackagePaths!public!unit tests! !
 testSubclassResponsibilityNotDefined!public!unit tests! !
+testUnlistedPrerequisites!public!unit tests! !
+testUnpackagedClasses!public!unit tests! !
 testUnpackagedVariables!public!unit tests! !
 !
 

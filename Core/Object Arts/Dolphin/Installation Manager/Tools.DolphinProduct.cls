@@ -51,7 +51,8 @@ beCurrent
 boot
 	self loadShrinkAndCompress.
 	self installSystemFolderOptions.
-	self installSplash
+	self installSplash.
+	self beCurrent
 
 !
 
