@@ -6,7 +6,7 @@ UI.CapturingInteractor
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: { 'TrackingMask' -> 16r400 }!
+	classConstants: { 'HorizontalOnly' -> 16r1. 'TrackingMask' -> 16r400. 'VerticalOnly' -> 16r2 }!
 UI.MouseTracker guid: (Core.GUID fromString: '{87b4c711-026e-11d3-9fd7-00a0cc3e4a32}')!
 UI.MouseTracker comment: '`MouseTracker` is an `<Interactor`> that is used to manage the visual dragging of objects using the mouse. An instance should be created as the result of a mouse down event and once started using `#startTracking:` it captures the mouse and relays the drag messages that are part of the `<mouseTrackerTarget>` protocol to the target that is assigned to it. Once the drag has completed, and the originating button has been released, the mouse capture is also dropped. Tracking will also be cancelled if the user Alt+Tab''s to another application, or presses the ESC (escape) key (assuming the originating view still has focus).
 
@@ -32,12 +32,12 @@ UI.MouseTracker comment: '`MouseTracker` is an `<Interactor`> that is used to ma
 beHorizontalOnly
 	"Set the receiver for horizontal dragging only"
 
-	constrain := #horizontal.!
+	constrain := HorizontalOnly!
 
 beVerticalOnly
 	"Set the receiver for vertical dragging only"
 
-	constrain := #vertical.!
+	constrain := VerticalOnly!
 
 cancelTracking
 	self isTracking: false.
@@ -101,7 +101,7 @@ hysteresis: anInteger
 isHorizontalOnly
 	"Private - Answer true if the receiver is constrained for horizontal dragging only"
 
-	^constrain == #horizontal!
+	^constrain == HorizontalOnly!
 
 isTracking
 	"Private - Answer true if the receiver is currently tracking for the target. This implies
@@ -116,7 +116,7 @@ isTracking: aBoolean
 isVerticalOnly
 	"Private - Answer true if the receiver is constrained for vertical dragging only"
 
-	^constrain == #vertical!
+	^constrain == VerticalOnly!
 
 onKeyPressed: aKeyEvent 
 	aKeyEvent code = VK_ESCAPE ifTrue: [self releaseCapture].
@@ -130,7 +130,7 @@ onKeyReleased: aKeyEvent
 onKeyTransition: aKeyEvent 
 	| key |
 	key := aKeyEvent code.
-	(key = VK_CONTROL or: [key = VK_SHIFT]) ifTrue: [self simulateMouseMouse: aKeyEvent]!
+	(key = VK_CONTROL or: [key = VK_SHIFT]) ifTrue: [self simulateMouseMove: aKeyEvent]!
 
 onLeftButtonReleased: aMouseEvent
 	"The left mouse button has been released so if this is the drag button then end the tracking operation."
@@ -184,7 +184,7 @@ onSysKeyReleased: aKeyEvent
 onSysKeyTransition: aKeyEvent
 	| key |
 	key := aKeyEvent code.
-	key = VK_MENU ifTrue: [self simulateMouseMouse: aKeyEvent]!
+	key = VK_MENU ifTrue: [self simulateMouseMove: aKeyEvent]!
 
 origin
 	"Answer the coordinates of the target's origin to aPoint. This is effectively the point
@@ -207,18 +207,19 @@ setPresenter: aPresenter
 	stateFlags := 0.
 	dragButton := #left!
 
-simulateMouseMouse: aKeyEvent
+simulateMouseMove: aKeyEvent
 	| pos event wParam |
 	pos := Cursor position.
 	wParam := 0.
-	##({VK_LBUTTON -> MK_LBUTTON.
+	##({
+		VK_LBUTTON -> MK_LBUTTON.
 		VK_MBUTTON -> MK_MBUTTON.
 		VK_RBUTTON -> MK_RBUTTON.
 		VK_CONTROL -> MK_CONTROL.
 		VK_SHIFT -> MK_SHIFT.
 		VK_XBUTTON1 -> MK_XBUTTON1.
-		VK_XBUTTON2 -> MK_XBUTTON2})
-			do: [:each | (Keyboard default isKeyDown: each key) ifTrue: [wParam := wParam bitOr: each value]].
+		VK_XBUTTON2 -> MK_XBUTTON2
+	}) do: [:each | (Keyboard default isKeyDown: each key) ifTrue: [wParam := wParam bitOr: each value]].
 	event := MouseEvent
 				window: self view
 				message: WM_MOUSEMOVE
@@ -303,7 +304,7 @@ onSysKeyTransition:!helpers!private! !
 origin!accessing!public! !
 origin:!accessing!public! !
 setPresenter:!accessing!private! !
-simulateMouseMouse:!helpers!private! !
+simulateMouseMove:!helpers!private! !
 startPoint!accessing!private! !
 startPoint:!accessing!private! !
 startPointLocal!accessing!private! !

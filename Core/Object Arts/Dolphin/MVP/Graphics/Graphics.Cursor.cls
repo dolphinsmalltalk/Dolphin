@@ -263,20 +263,22 @@ splitVertical
 	^SplitVertical ifNil: [SplitVertical := self fromId: 'VSPLIT' in: VM]!
 
 systemNames
-	^##(LookupTable withAll: {IDC_APPSTARTING -> #appStarting.
-				IDC_ARROW -> #arrow.
-				IDC_CROSS -> #cross.
-				IDC_HAND -> #hand.
-				IDC_HELP -> #help.
-				IDC_IBEAM -> #iBeam.
-				IDC_NO -> #no.
-				IDC_SIZEALL -> #sizeAll.
-				IDC_SIZENESW -> #sizeNESW.
-				IDC_SIZENS -> #sizeNS.
-				IDC_SIZENWSE -> #sizeNWSE.
-				IDC_SIZEWE -> #sizeWE.
-				IDC_UPARROW -> #upArrow.
-				IDC_WAIT -> #wait})!
+	^##(LookupTable withAll: {
+				IDC_APPSTARTING -> 'appStarting'.
+				IDC_ARROW -> 'arrow'.
+				IDC_CROSS -> 'cross'.
+				IDC_HAND -> 'hand'.
+				IDC_HELP -> 'help'.
+				IDC_IBEAM -> 'iBeam'.
+				IDC_NO -> 'no'.
+				IDC_SIZEALL -> 'sizeAll'.
+				IDC_SIZENESW -> 'sizeNESW'.
+				IDC_SIZENS -> 'sizeNS'.
+				IDC_SIZENWSE -> 'sizeNWSE'.
+				IDC_SIZEWE -> 'sizeWE'.
+				IDC_UPARROW -> 'upArrow'.
+				IDC_WAIT -> 'wait'
+			})!
 
 uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."

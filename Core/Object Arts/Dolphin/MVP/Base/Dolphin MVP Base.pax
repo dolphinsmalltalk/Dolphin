@@ -1653,7 +1653,7 @@ UI.CapturingInteractor
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: { 'TrackingMask' -> 16r400 }!
+	classConstants: { 'HorizontalOnly' -> 16r1. 'TrackingMask' -> 16r400. 'VerticalOnly' -> 16r2 }!
 UI.MouseTracker
 	subclass: #'UI.DraggableViewInteractor'
 	instanceVariableNames: ''
