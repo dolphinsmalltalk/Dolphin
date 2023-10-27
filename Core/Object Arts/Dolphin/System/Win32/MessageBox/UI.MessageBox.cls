@@ -471,7 +471,7 @@ headline: aString
 icon
 	"Answer the receiver's custom icon, if any. Note that the message box may still display an icon, depending on the #iconStyle."
 
-	^icon ifNil: [#{Graphics.Icon} valueOrNil ifNotNil: [:iconClass | iconClass null]]!
+	^icon ifNil: [#{Graphics.NullIcon} valueOrNil ifNotNil: [:iconClass | iconClass current]]!
 
 icon: anIcon
 	"Set the receiver's icon to be the argument, anIcon."
