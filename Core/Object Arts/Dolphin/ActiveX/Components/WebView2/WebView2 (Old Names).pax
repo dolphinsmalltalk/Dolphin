@@ -1,0 +1,27 @@
+﻿| package |
+package := Package name: 'WebView2 (Old Names)'.
+package paxVersion: 2.1;
+	basicComment: ''.
+
+
+package setVariableNames: #(
+	#{Smalltalk.WebView2EnvironmentOptions}
+).
+
+package setAliasVariableNames: #(
+	#{Smalltalk.WebView2EnvironmentOptions}
+).
+
+package setPrerequisites: #(
+	'WebView2'
+).
+
+package!
+
+"Variable Aliases"!
+
+Smalltalk.WebView2EnvironmentOptions := WebView2.WebView2EnvironmentOptions!
+
+
+"End of package definition"!
+
