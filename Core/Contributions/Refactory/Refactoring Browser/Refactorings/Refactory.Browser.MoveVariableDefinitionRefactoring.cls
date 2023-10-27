@@ -51,20 +51,16 @@ class: aClass selector: aSelector interval: anInterval
 !
 
 preconditions
-	^(RBCondition definesSelector: selector in: class) 
+	^(RBCondition definesSelector: selector in: class)
 		& (RBCondition withBlock: 
 					[| methodSource |
-					interval first <= interval last 
-						ifFalse: [self refactoringError: 'Invalid variable name'].
+					interval first <= interval last ifFalse: [self refactoringError: 'Invalid variable name'].
 					methodSource := class sourceCodeFor: selector.
-					methodSource size >= interval last 
-						ifFalse: [self refactoringError: 'Invalid range for variable'].
-					#rbFix. "Allow trailing blanks in the selection"
+					methodSource size >= interval last ifFalse: [self refactoringError: 'Invalid range for variable'].
+					#rbFix.	"Allow trailing blanks in the selection"
 					name := (methodSource copyFrom: interval first to: interval last) trimBlanks.
-					(self checkInstanceVariableName: name in: class) 
-						ifFalse: 
-							[self 
-								refactoringError: name , ' does not seem to be a valid variable name.'].
+					(self checkInstanceVariableName: name)
+						ifFalse: [self refactoringError: name , ' does not seem to be a valid variable name.'].
 					method := class methodFor: selector.
 					parseTree := method parseTreeWithSourceIntervals.
 					self checkParseTree.

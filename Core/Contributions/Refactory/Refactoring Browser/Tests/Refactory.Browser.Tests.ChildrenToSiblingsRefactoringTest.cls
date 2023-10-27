@@ -13,11 +13,13 @@ Refactory.Browser.Tests.ChildrenToSiblingsRefactoringTest comment: ''!
 !Refactory.Browser.Tests.ChildrenToSiblingsRefactoringTest methodsFor!
 
 testBadName
+	| badName |
+	badName := #'Obje ct'.
 	self shouldFail: (ChildrenToSiblingsRefactoring
-				name: #'Obje ct'
+				name: badName
 				class: LintRuleTestData
 				subclasses: {BasicLintRuleTestData. CompositeLintRuleTestData})
-		withMessage: '#''Obje ct'' is not a valid class name'!
+		withMessage: ClassBuilder.ErrorInvalidClassName << badName!
 
 testChildToSibling
 	| refactoring class subclass superclass |

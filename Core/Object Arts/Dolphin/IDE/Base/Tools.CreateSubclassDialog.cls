@@ -301,8 +301,8 @@ updatePackage
 			packagesPresenter selection: package]!
 
 validateModel
-	^self validateSuperclass
-		ifNil: [self validatePackage ifNil: [self validateName ifNil: [ValidationResult new]]]!
+	^self validateName
+		ifNil: [self validateSuperclass ifNil: [self validatePackage ifNil: [ValidationResult new]]]!
 
 validateName
 	| result unqualifiedName namespace |
@@ -342,45 +342,18 @@ validatePackage
 				yourself]!
 
 validateSuperclass
-	| superclass aValidationResult |
-	superclass := self superclass.
+	^self validateSuperclass: self classDetails!
+
+validateSuperclass: aClassDetails
+	| result superclass |
+	superclass := aClassDetails superclass.
 	superclass ifNil: [^nil].
-	aValidationResult := ValidationResult new
-				presenter: superclassPresenter;
-				caption: 'Incompatible superclass';
-				yourself.
-	(ClassBuilder.Unsubclassable includes: superclass)
-		ifTrue: 
-			[^aValidationResult
-				errorMessage: ClassBuilder.ErrorUnsubclassable << superclass;
-				yourself].
-	self isBytes
-		ifTrue: 
-			[superclass isPointers
-				ifTrue: 
-					[superclass instSize > 0
-						ifTrue: 
-							[^aValidationResult
-								errorMessage: ClassBuilder.ErrorByteSubclassOfFixed << superclass;
-								yourself].
-					superclass isVariable
-						ifTrue: 
-							[^aValidationResult
-								errorMessage: ClassBuilder.ErrorByteSubclassOfVariable << superclass;
-								yourself]].
-			^nil].
-	"Validate pointer class"
-	superclass isBytes
-		ifTrue: 
-			[^aValidationResult
-				errorMessage: ClassBuilder.ErrorPointerSubclassOfBytes << superclass;
-				yourself].
-	(superclass isVariable and: [self isVariable not])
-		ifTrue: 
-			[^aValidationResult
-				errorMessage: ClassBuilder.ErrorFixedSubclassOfVariable << superclass;
-				yourself].
-	^nil! !
+	result := self systemModel validateCreateSubclass: aClassDetails.
+	result value ifTrue: [^nil].
+	^result
+		presenter: superclassPresenter;
+		caption: 'Incompatible superclass';
+		yourself! !
 !Tools.CreateSubclassDialog categoriesForMethods!
 canApply!private!testing! !
 canChangeAttributes!public!testing! !
@@ -429,7 +402,8 @@ updatePackage!private!updating! !
 validateModel!private!validation! !
 validateName!private!validation! !
 validatePackage!private!validation! !
-validateSuperclass!private!testing! !
+validateSuperclass!private!validation! !
+validateSuperclass:!private!testing! !
 !
 
 !Tools.CreateSubclassDialog class methodsFor!

@@ -84,6 +84,39 @@ testClassSubclasses
 	class := model classFor: Class.
 	self assert: class subclasses asArray equals: {objectClass metaclass. model classFor: ProtoObject class}!
 
+testDefineByteClass
+	| definition |
+	definition := 'Core.Object
+	variableByteSubclass: #Bytes
+	instanceVariableNames: ''''
+	classVariableNames: ''ClassVariable1''
+	imports: #(#{Kernel.OpcodePool})
+	classInstanceVariableNames: ''''
+	classConstants: { ''ClassConstant1'' -> 1.23 }'.
+	model defineClass: definition.
+	newClass := model classNamed: #Bytes.
+	self assert: newClass isVariable.
+	self deny: newClass isPointers.
+	self assert: newClass isBytes.
+	self assert: newClass definition equals: definition.
+	self assert: newClass instanceSpec equals: Behavior._VariableMask!
+
+testDefineIndexableClass
+	| definition |
+	definition := 'Core.Object
+	variableSubclass: #VariableClass
+	instanceVariableNames: ''instanceVariable1 instanceVariable2''
+	classVariableNames: ''ClassVariable1''
+	imports: #(#{Kernel.OpcodePool})
+	classInstanceVariableNames: ''''
+	classConstants: { ''ClassConstant1'' -> 1.23 }'.
+	model defineClass: definition.
+	newClass := model classNamed: #VariableClass.
+	self assert: newClass isVariable.
+	self assert: newClass isPointers.
+	self deny: newClass isBytes.
+	self assert: newClass definition equals: definition!
+
 testDefinesClassVariable
 	self deny: (objectClass definesClassVariable: #ClassVariable1).
 	self assert: (objectClass definesClassVariable: self objectClassVariable).
@@ -173,6 +206,17 @@ testHierarchy
 	meta := objectClass metaclass.
 	self assert: (objectClass withAllSubclasses includes: meta).
 	self assert: (meta withAllSuperclasses includes: objectClass)!
+
+testInstanceSpec
+	self assert: objectClass instanceSpec equals: Object instanceSpec.
+	self assert: objectClass isPointers.
+	self deny: objectClass isBytes.
+	self deny: objectClass isVariable.
+	self assert: newClass instanceSpec equals: Object instanceSpec.
+	self assert: newClass isPointers.
+	self deny: newClass isBytes.
+	self deny: newClass isVariable.
+	self assert: (model classFor: ByteArray) instanceSpec equals: ByteArray instanceSpec!
 
 testLegacyDefinitionString
 	"We don't use the legacy definition string format for RBClasses"
@@ -393,6 +437,8 @@ testAllImports!public!unit tests! !
 testBindings!public!unit tests! !
 testCategories!public!unit tests! !
 testClassSubclasses!public!unit tests! !
+testDefineByteClass!public!unit tests! !
+testDefineIndexableClass!public!unit tests! !
 testDefinesClassVariable!public!unit tests! !
 testDefinesInstanceVariable!public!unit tests! !
 testDefinesMethod!public!unit tests! !
@@ -401,6 +447,7 @@ testDefinitionString!public!unit tests! !
 testEnvironment!public!unit tests! !
 testFullName!public!unit tests! !
 testHierarchy!public!unit tests! !
+testInstanceSpec!public!unit tests! !
 testLegacyDefinitionString!public!unit tests! !
 testLocalBindingFor!public!unit tests! !
 testMethodsReferencingExternals1!public! !

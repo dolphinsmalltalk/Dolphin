@@ -152,7 +152,7 @@ comment: aString
 	model comment: (comment := aString) in: self!
 
 defaultInstanceSpec
-	^Behavior._IsPointersMask!
+	^Behavior._PointersMask!
 
 definition
 	| definitionStream |
@@ -233,6 +233,9 @@ instanceSpec
 		ifNil: 
 			[self nearestRealClass ifNil: [self defaultInstanceSpec] ifNotNil: [:class | class instanceSpec]]!
 
+instanceSpec: anInteger 
+	instanceSpec := anInteger!
+
 isDefined
 	^realClass notNil!
 
@@ -249,6 +252,22 @@ isNonInstantiable: aBoolean
 	"Set whether the class described by the receiver should not be instantiated, e.g. it is abstract."
 
 	instanceSpec := self instanceSpec mask: Behavior._NonInstantiableMask set: aBoolean!
+
+isNullTerminated
+	"Answer true if the instances of the receiver are Null Terminated (that is they include 
+	an extra byte with the value zero at their end, which is not included in the reported size). 
+	Only meaningful for variable byte classes (e.g. String)."
+
+	^self instanceSpec allMask: Behavior._NullTermMask!
+
+isPointers
+	"Answer whether the variables of instances of the receiver contain object pointers (as
+	opposed to uninterpreted bytes)."
+
+	^self instanceSpec anyMask: Behavior._PointersMask!
+
+isVariable
+	^self instanceSpec anyMask: Behavior._VariableMask!
 
 kindOfSubclass
 	"Private - Answer a string describing the kind of subclassing method used to create the receiver 
@@ -280,6 +299,7 @@ model: aRBModel existing: aClass
 	(metaclass := RBMetaclass basicNew) instanceClass: self.
 	superclass := LookupSuperclass.
 	comment := LookupComment.
+	instanceSpec := aClass instanceSpec.
 	^self!
 
 model: aRBModel named: aSymbol
@@ -561,11 +581,15 @@ includesEnvironment:!namespaces!public!testing! !
 includesNamespace:!public!testing! !
 instanceClass!accessing!public! !
 instanceSpec!accessing!public! !
+instanceSpec:!public! !
 isDefined!public!testing! !
 isInBaseEnvironment!public!testing! !
 isMeta!public!testing! !
 isNonInstantiable!public!testing! !
 isNonInstantiable:!instance specification-accessing!public! !
+isNullTerminated!instance specification-testing!public! !
+isPointers!public!testing! !
+isVariable!public!testing! !
 kindOfSubclass!class hierarchy-testing!private! !
 localScope!accessing!public! !
 metaclass!accessing!public! !

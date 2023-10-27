@@ -54,17 +54,19 @@ testNewInstanceVariableAccessors
 		equals: (self parseMethod: 'foo1: anObject foo1 := anObject')!
 
 testNonExistantName
+	| errorFormat |
+	errorFormat := '<1p> does not define class variable/constant <2p>'.
 	self
 		shouldFail: (CreateAccessorsForVariableRefactoring
 					variable: #Foo
 					class: BasicLintRuleTestData
 					classVariable: true)
-			withMessage: ('<1p> does not define class variable #Foo' << BasicLintRuleTestData);
+			withMessage: errorFormat << { BasicLintRuleTestData. #Foo };
 		shouldFail: (CreateAccessorsForVariableRefactoring
 					variable: 'foo'
 					class: BasicLintRuleTestData
 					classVariable: true)
-			withMessage: ('<1p> does not define class variable ''foo''' << BasicLintRuleTestData)! !
+			withMessage: errorFormat << { BasicLintRuleTestData. 'foo' }! !
 !Refactory.Browser.Tests.CreateAccessorsForVariableRefactoringTest categoriesForMethods!
 testExistingInstanceVariableAccessors!public!tests! !
 testNewClassVariableAccessors!public!tests! !

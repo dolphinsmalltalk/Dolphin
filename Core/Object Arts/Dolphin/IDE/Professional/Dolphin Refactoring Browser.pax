@@ -467,7 +467,7 @@ Refactory.Browser.RBMethodName
 	classConstants: {}!
 Refactory.Browser.ClassRefactoring
 	subclass: #'Refactory.Browser.CopyClassRefactoring'
-	instanceVariableNames: 'newName class superclass'
+	instanceVariableNames: 'newName addClass commonSuperclass superclass'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

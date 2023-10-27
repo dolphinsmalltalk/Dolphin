@@ -25,7 +25,7 @@ testBadName
 		shouldFail: (RenameClassRefactoring rename: LintRuleTestData to: existing)
 			existingVariable: existing;
 		shouldFail: (RenameClassRefactoring rename: LintRuleTestData to: #'Ob ject')
-			withMessage: '''Smalltalk.Ob ject'' is not a valid class name'!
+			withMessage: ClassBuilder.ErrorInvalidClassName << 'Smalltalk.Ob ject'!
 
 testExistingClassVariableName
 	| refactoring subclass |

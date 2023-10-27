@@ -72,9 +72,16 @@ addProtocol: protocol
 	protocols add: protName.
 	self allSubclassesDo: [:q | q removeProtocol: protName ifAbsent: nil]!
 
+allClassVariableNames
+	"Answer a <Set> of the <readableString> names of the receiver's and the receiver's superclasses' class variables (excluding constants)."
+
+	| answer |
+	answer := Set new.
+	self withAllSuperclassesDo: [:c | answer addAll: c classVariableNames].
+	^answer!
+
 allClassVarNames
-	"Answer a <Set> of the <readableString> names of the receiver's and the 
-	receiver's superclasses' class variables."
+	"Answer a <Set> of the <readableString> names of the receiver's and the receiver's superclasses' static variables."
 
 	| answer |
 	answer := Set new.
@@ -1063,6 +1070,7 @@ withAllSubclassesDo: aMonadicValuable
 absoluteReference!accessing!namespaces!public! !
 addInstVarName:!class hierarchy-mutating!instance variables!public! !
 addProtocol:!private!protocols! !
+allClassVariableNames!class variables!public! !
 allClassVarNames!class variables!public! !
 allGettersDo:!accessing!private! !
 allInstances!instances!public! !

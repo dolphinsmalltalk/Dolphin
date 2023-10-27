@@ -57,7 +57,7 @@ canUnderstand: aSelector in: aClass
 		block: [aClass definesMethod: aSelector]
 		errorString: aClass unqualifiedName , ' <1?:does not >understand<1?s:> ' , aSelector printString!
 
-checkClassVarName: aName in: aClass 
+checkClassVarName: aName
 	| string |
 	aName isString ifFalse: [^false].
 	string := aName asString.
@@ -66,7 +66,7 @@ checkClassVarName: aName in: aClass
 	(string first isUppercase or: [string first == $_]) ifFalse: [^false].
 	^Scanner isVariable: string!
 
-checkInstanceVariableName: aName in: aClass 
+checkInstanceVariableName: aName
 	| string |
 	aName isString ifFalse: [^false].
 	string := aName asString.
@@ -82,7 +82,7 @@ definesClassVariable: aString in: aClass
 	^self new
 		type: {#definesClassVar. aClass. aString}
 		block: [aClass definesClassVariable: aString]
-		errorString: [aClass name , ' <1?:does not >define<1?s:> class variable '
+		errorString: [aClass name , ' <1?:does not >define<1?s:> class variable/constant '
 				, aString printString]!
 
 definesInstanceVariable: aString in: aClass
@@ -301,6 +301,12 @@ isString: aString
 		block: [aString isString]
 		errorString: [aString printString , ' is <1?:not >a string']!
 
+isSubclassable: aClass
+	^self new
+		type: { #isSubclassable. aClass }
+		block: [aClass isNil or: [(ClassBuilder.Unsubclassable includes: aClass fullyQualifiedReference) not]]
+		errorString: aClass unqualifiedName , ' is <1?:not >subclassable.'!
+
 isSymbol: aString
 	^self new
 		type: {#isSymbol. aString}
@@ -309,21 +315,21 @@ isSymbol: aString
 
 isValidClassName: aString
 	^self new
-		type: {#validClassName. aString}
+		type: { #validClassName. aString }
 		block: [self validClassName: aString]
-		errorString: [aString printString , ' is <1?:not >a valid class name']!
+		errorString: [ClassBuilder.ErrorInvalidClassName << aString]!
 
-isValidClassVarName: aString for: aClass
+isValidClassVarName: aString
 	^self new
-		type: {#validClassVarName. aString. aClass}
-		block: [self checkClassVarName: aString in: aClass]
+		type: { #validClassVarName. aString }
+		block: [self checkClassVarName: aString]
 		errorString: [aString printString , ' is <1?:not >a valid class variable name']!
 
-isValidInstanceVariableName: aString for: aClass
+isValidInstanceVariableName: aString
 	^self new
-		type: {#validInstVarName. aString. aClass}
-		block: [self checkInstanceVariableName: aString in: aClass]
-		errorString: [aString printString , ' is <1?:not >a valid instance variable name']!
+		type: { #validInstVarName. aString }
+		block: [self checkInstanceVariableName: aString]
+		errorString: [ClassBuilder.ErrorInvalidInstVarName << aString]!
 
 isValidMethodName: aString
 	^self new
@@ -334,8 +340,8 @@ isValidMethodName: aString
 isValidTemporaryVariableName: aString for: aClass
 	#rbFix.	"Added"
 	^self new
-		type: {#validTempVarName. aString. aClass}
-		block: [self checkInstanceVariableName: aString in: aClass]
+		type: { #validTempVarName. aString. aClass }
+		block: [self checkInstanceVariableName: aString]
 		errorString: [aString printString , ' is <1?:not >a valid temporary variable name']!
 
 methodDefiningTemporary: aString in: aClass ignore: aBlock
@@ -379,10 +385,10 @@ subclassesOf: aClass referToSelector: aSelector
 		errorString: 
 			['<1?:no:a> subclass of ' , aClass unqualifiedName , ' refers to ' , aSelector printString]!
 
-validClassName: aString 
+validClassName: aString
 	"Class names and class variable names have the same restrictions"
 
-	^self checkClassVarName: aString in: self!
+	^self checkClassVarName: aString!
 
 withBlock: aBlock
 	^self new withBlock: aBlock!
@@ -393,8 +399,8 @@ withBlock: aBlock errorString: aStringOrValuable
 		errorString: aStringOrValuable! !
 !Refactory.Browser.RBCondition class categoriesForMethods!
 canUnderstand:in:!instance creation!public! !
-checkClassVarName:in:!private!utilities! !
-checkInstanceVariableName:in:!public!utilities! !
+checkClassVarName:!private!utilities! !
+checkInstanceVariableName:!public!utilities! !
 checkMethodName:!public!utilities! !
 definesClassVariable:in:!instance creation!public! !
 definesInstanceVariable:in:!instance creation!public! !
@@ -422,10 +428,11 @@ isMetaclass:!instance creation!public! !
 isNamespace:!instance creation!public! !
 isStatic:in:!instance creation!public! !
 isString:!instance creation!public! !
+isSubclassable:!instance creation!public! !
 isSymbol:!instance creation!public! !
 isValidClassName:!instance creation!public! !
-isValidClassVarName:for:!instance creation!public! !
-isValidInstanceVariableName:for:!instance creation!public! !
+isValidClassVarName:!instance creation!public! !
+isValidInstanceVariableName:!instance creation!public! !
 isValidMethodName:!instance creation!public! !
 isValidTemporaryVariableName:for:!instance creation!public! !
 methodDefiningTemporary:in:ignore:!private!utilities! !

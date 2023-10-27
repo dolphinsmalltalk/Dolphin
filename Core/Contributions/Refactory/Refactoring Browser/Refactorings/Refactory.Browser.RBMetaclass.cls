@@ -57,6 +57,17 @@ isDefined
 isMeta
 	^true!
 
+isNonInstantiable
+	"Answer whether the receiver should not be instantiated, e.g. it is abstract."
+
+	^false!
+
+isPointers
+	^true!
+
+isVariable
+	^false!
+
 localScope
 	^instanceClass!
 
@@ -112,6 +123,9 @@ instanceClass!accessing!public! !
 instanceClass:!accessing!initializing!private! !
 isDefined!public!testing! !
 isMeta!public!testing! !
+isNonInstantiable!instance specification-testing!public! !
+isPointers!public!testing! !
+isVariable!public!testing! !
 localScope!accessing!public! !
 metaclass!accessing!public! !
 model!accessing!public! !

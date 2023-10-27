@@ -4171,6 +4171,43 @@ upgradeAllResourcesReferencingClassNamed: aSymbol
 userPreferencesIcon
 	^Icon fromId: 'SMALLTALKOPTIONSFOLDER.ICO'!
 
+validateCreateSubclass: aClassDetails
+	| result superclass |
+	result := ValidationResult new.
+	superclass := aClassDetails superclass.
+	(ClassBuilder.Unsubclassable includes: superclass fullyQualifiedReference)
+		ifTrue: 
+			[^result
+				errorMessage: ClassBuilder.ErrorUnsubclassable << superclass;
+				yourself].
+	aClassDetails isBytes
+		ifTrue: 
+			[superclass isPointers
+				ifTrue: 
+					[superclass instSize > 0
+						ifTrue: 
+							[^result
+								errorMessage: ClassBuilder.ErrorByteSubclassOfFixed << superclass;
+								yourself].
+					superclass isVariable
+						ifTrue: 
+							[^result
+								errorMessage: ClassBuilder.ErrorByteSubclassOfVariable << superclass;
+								yourself]].
+			^result].
+	"Validate pointer class"
+	superclass isBytes
+		ifTrue: 
+			[^result
+				errorMessage: ClassBuilder.ErrorPointerSubclassOfBytes << superclass;
+				yourself].
+	(superclass isVariable and: [aClassDetails isVariable not])
+		ifTrue: 
+			[^result
+				errorMessage: ClassBuilder.ErrorFixedSubclassOfVariable << superclass;
+				yourself].
+	^result!
+
 validateNewClassVarName: aString for: aClass
 	^ValidationResult
 		value: ((ClassBuilder isValidClassName: aString) and: 
@@ -4756,6 +4793,7 @@ uninitialize!class hierarchy-removing!private! !
 unregisterTool:!accessing!public! !
 upgradeAllResourcesReferencingClassNamed:!helpers!public! !
 userPreferencesIcon!initializing!private! !
+validateCreateSubclass:!helpers!private!refactoring! !
 validateNewClassVarName:for:!helpers!private!refactoring! !
 validateNewInstanceVariableName:for:!enquiries!helpers!private! !
 validateRenameInstVar:to:in:!helpers!private! !

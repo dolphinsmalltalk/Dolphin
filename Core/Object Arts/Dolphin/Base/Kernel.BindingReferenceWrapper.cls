@@ -70,7 +70,7 @@ environmentName
 hash
 	"Answer the <integer> hash value for the receiver."
 
-	^reference hash bitXor: 1!
+	^reference hash!
 
 home
 	"Answer the 'namespace context' for this binding reference."

@@ -13,7 +13,7 @@ Refactory.Browser.RenameInstanceVariableRefactoring comment: ''!
 !Refactory.Browser.RenameInstanceVariableRefactoring methodsFor!
 
 preconditions
-	^(RBCondition isValidInstanceVariableName: newName for: class)
+	^(RBCondition isValidInstanceVariableName: newName)
 		& (RBCondition definesInstanceVariable: variableName in: class)
 			& (RBCondition hierarchyOf: class definesVariable: newName) not
 			& (RBCondition isStatic: newName in: self model) not!

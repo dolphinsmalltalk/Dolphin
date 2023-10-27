@@ -489,6 +489,9 @@ instanceVariableNames
 instanceVariableNames: aCollectionOfStrings
 	instanceVariableNames := aCollectionOfStrings!
 
+instSize
+	^self allInstanceVariableNames size!
+
 isAbstract
 	self realClass ifNotNil: [:real | real isNonInstantiable ifTrue: [^true]].
 	(self whichMethodsReferToSymbol: #subclassResponsibility) notEmpty ifTrue: [^true].
@@ -519,13 +522,16 @@ isExternalReference: literalObject in: aCompiledMethod
 isMeta
 	self subclassResponsibility!
 
+isNonInstantiable
+	"Answer whether the receiver should not be instantiated, e.g. it is abstract."
+
+	^self subclassResponsibility!
+
 isPointers
-	#rbFix. "Added"
-	^self nearestRealClass ifNil: [true] ifNotNil: [:class | class isPointers]!
+	^self subclassResponsibility!
 
 isVariable
-	#rbFix. "Added"
-	^self nearestRealClass ifNil: [true] ifNotNil: [:class | class isVariable]!
+	^self subclassResponsibility!
 
 localBindingFor: aString
 	"Answer a variable binding for the named variable directly in the scope of this class, i.e. one of its own class variables. If there is no such class variable, then answer nil."
@@ -631,6 +637,12 @@ protocolsFor: aSelector
 
 realClass
 	^self subclassResponsibility!
+
+refersToClassVariable: aString
+	^(self whichSelectorsReferToClassVariable: aString) notEmpty!
+
+refersToInstanceVariable: aString
+	^(self whichSelectorsReferToInstanceVariable: aString) notEmpty!
 
 removedSelectors
 	^removedSelectors ?? ##(IdentitySet new
@@ -914,11 +926,13 @@ inheritsPoolDictionaries!public!testing! !
 instanceClass!accessing!public! !
 instanceVariableNames!accessing!public! !
 instanceVariableNames:!accessing!public! !
+instSize!public! !
 isAbstract!public!testing! !
 isBytes!instance specification-testing!public! !
 isDefined!public!testing! !
 isExternalReference:in:!methods-testing!private! !
 isMeta!public!testing! !
+isNonInstantiable!instance specification-testing!public! !
 isPointers!public!testing! !
 isVariable!public!testing! !
 localBindingFor:!bindings!public! !
@@ -940,6 +954,8 @@ primaryInstance!accessing!public! !
 printOn:!printing!public! !
 protocolsFor:!accessing!public! !
 realClass!accessing!public! !
+refersToClassVariable:!public!testing! !
+refersToInstanceVariable:!public!testing! !
 removedSelectors!accessing!public! !
 removeInstanceVariable:!public!variable accessing! !
 removeSelector:!methods-removing!public! !
