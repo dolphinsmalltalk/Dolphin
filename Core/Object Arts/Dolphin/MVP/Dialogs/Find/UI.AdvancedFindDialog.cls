@@ -42,6 +42,7 @@ createComponents
 	wrapPresenter := self add: BooleanPresenter new name: 'wrap'!
 
 findNext
+	<commandQuery: #isValid>
 	(self model aspectValue: #action) value: #findNext.
 	ownerView onFind: self model value!
 
@@ -111,15 +112,8 @@ onViewOpened
 prompt: aString 
 	(self view viewNamed: 'prompt') text: aString!
 
-queryCommand: aCommandQuery 
-	"Private - Enters details about a potential command for the receiver into the
-	<CommandQuery>."
-
-	(#(#ok #findNext) includes: aCommandQuery commandSymbol) 
-		ifTrue: 
-			[aCommandQuery isEnabled: self isValid.
-			^true].
-	^super queryCommand: aCommandQuery!
+queryOk: aCommandQuery
+	aCommandQuery isEnabled: self isValid!
 
 searchMode
 	^modePresenter value!
@@ -162,7 +156,7 @@ validationBlock: aBlock
 	validationBlock := aBlock! !
 !UI.AdvancedFindDialog categoriesForMethods!
 createComponents!initializing!public! !
-findNext!commands!public! !
+findNext!commands-actions!public! !
 initialize!initializing!public! !
 isRegExpEnabled!public!testing! !
 isRegExpEnabled:!accessing!public! !
@@ -174,7 +168,7 @@ isWildCardEnabled:!accessing!public! !
 model:!accessing!public! !
 onViewOpened!event handling!public! !
 prompt:!accessing!public! !
-queryCommand:!commands!private! !
+queryOk:!commands-actions!private! !
 searchMode!accessing!public! !
 show!operations!public! !
 showModal!public!realizing/unrealizing! !
@@ -200,7 +194,7 @@ defaultModel
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^FindDetails icon!
+	^AdvancedFindDetails icon!
 
 resource_Default_view
 	"Answer the literal data from which the 'Default view' resource can be reconstituted.
