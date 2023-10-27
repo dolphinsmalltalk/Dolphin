@@ -111,24 +111,19 @@ onFileRemoved: aString
 onFileRenamedFrom: aString to: aString2
 	self addChange: {'Renamed'. DateAndTime now. aString -> aString2}!
 
-queryCommand: aCommandQuery 
-	| cmd |
-	cmd := aCommandQuery commandSymbol.
-	cmd == #toggleMonitoring 
-		ifTrue: 
-			[aCommandQuery
-				isEnabled: (directoryName value ifNil: [false] ifNotNil: [:text | text notEmpty]);
-				isChecked: self model isMonitoring.
-			^true].
-	^super queryCommand: aCommandQuery!
+queryToggleMonitoring: aCommandQuery
+	aCommandQuery
+		isEnabled: (directoryName value ifNil: [false] ifNotNil: [:text | text notEmpty]);
+		isChecked: self model isMonitoring!
 
 toggleMonitoring
+	<commandQuery: #queryToggleMonitoring:>
 	self model isMonitoring: self model isMonitoring not! !
 !OS.Examples.FileSystemMonitor categoriesForMethods!
 about!enquiries!private! !
 addChange:!helpers!private! !
-chooseDirectory!commands!public! !
-clear!commands!public! !
+chooseDirectory!commands-actions!public! !
+clear!commands-actions!public! !
 createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !
 model:!accessing!public! !
@@ -136,8 +131,8 @@ onFileAdded:!event handling!private! !
 onFileModified:!event handling!private! !
 onFileRemoved:!event handling!private! !
 onFileRenamedFrom:to:!event handling!private! !
-queryCommand:!public! !
-toggleMonitoring!public! !
+queryToggleMonitoring:!commands-queries!private! !
+toggleMonitoring!commands-actions!public! !
 !
 
 !OS.Examples.FileSystemMonitor class methodsFor!

@@ -400,7 +400,7 @@ initialize
 	);"
 
 	FileIOCompletionRoutineDescriptor := External.FunctionDescriptor
-				argumentTypes: 'uint32 uint32 OVERLAPPED*'!
+				argumentTypes: 'uint32 uint32 <1p>*' << OVERLAPPED!
 
 monitorDirectory: aString 
 	^(self directory: aString)
