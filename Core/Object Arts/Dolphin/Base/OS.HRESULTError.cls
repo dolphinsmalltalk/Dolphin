@@ -38,7 +38,9 @@ errorInfo: err
 
 hasMessageText
 	messageText isNil
-		ifTrue: [errorInfo notNull ifTrue: [messageText := errorInfo description trimBlanks]].
+		ifTrue: 
+			[errorInfo notNull
+				ifTrue: [messageText := errorInfo description ifNil: [''] ifNotNil: [:desc | desc trimBlanks]]].
 	^(messageText isNil or: [messageText isEmpty]) not!
 
 hresult

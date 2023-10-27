@@ -29,7 +29,7 @@ displayOn: aPuttableStream
 
 	| buf len flags hModule code lcid |
 	buf := Utf16String newFixed: 255.
-	flags := ##(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS).
+	flags := ##(FORMAT_MESSAGE_FROM_SYSTEM bitOr: FORMAT_MESSAGE_IGNORE_INSERTS).
 	code := self asInteger.
 	hModule := (code allMask: FACILITY_NT_BIT)
 				ifTrue: 
