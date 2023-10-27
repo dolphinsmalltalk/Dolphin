@@ -66,12 +66,23 @@ expandAll: anObject
 
 	self expand: anObject!
 
+hasDrilledDown
+	^treeItem notNil!
+
+hasFutureHistory
+	^history hasFuture!
+
+hasPastHistory
+	^history hasPast!
+
 historyBack
+	<commandQuery: #hasPastHistory>
 	self expand: (history goBack: 1)!
 
 historyForward
 	"Navigate forward one position in the history list."
 
+	<commandQuery: #hasFutureHistory>
 	self expand: (history goForward: 1)
 !
 
@@ -195,30 +206,10 @@ openBlock: aDyadicValuable
 
 	openBlock := aDyadicValuable!
 
-queryCommand: query
-	"Private - Enter details about a potential command for the receiver 
-	into the <CommandQuery>, query."
-
-	| cmd |
-	cmd := query commandSymbol.
-
-	cmd == #up ifTrue: [
-		query isEnabled: treeItem notNil.
-		^true].
-
-	cmd == #historyBack ifTrue: [
-		query isEnabled: history hasPast.
-		^true].
-
-	cmd == #historyForward ifTrue: [
-		query isEnabled: history hasFuture.
-		^true].
-
-	^super queryCommand: query!
-
 up
 	"Display the contents of the immediate parent of the current tree item"
 
+	<commandQuery: #hasDrilledDown>
 	treeItem notNil 
 		ifTrue: 
 			[| parent |
@@ -237,8 +228,11 @@ collapse:!operations!public! !
 contents!accessing!public! !
 expand:!operations!public! !
 expandAll:!operations!public! !
-historyBack!commands!public! !
-historyForward!commands!public! !
+hasDrilledDown!public!testing! !
+hasFutureHistory!public!testing! !
+hasPastHistory!public!testing! !
+historyBack!commands-actions!public! !
+historyForward!commands-actions!public! !
 initialize!initializing!private! !
 isAutoNavigate!accessing!public! !
 isAutoNavigate:!accessing!public! !
@@ -254,8 +248,7 @@ onKeyTyped:!event handling!public! !
 onTreeChanged:!event handling!private! !
 openBlock!accessing!public! !
 openBlock:!accessing!public! !
-queryCommand:!commands!private! !
-up!commands!public! !
+up!commands-actions!public! !
 viewModel!accessing!private! !
 !
 
