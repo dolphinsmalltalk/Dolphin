@@ -15,16 +15,19 @@ UI.RichTextPresenter comment: 'RichTextPresenter is a <valuePresenter> that disp
 alignParagraphCenter
 	"Align the receiver's paragraph selection to centre"
 
+	<commandQuery: #queryAlignParagraphCenter:>
 	self view paragraphAlignment: #center!
 
 alignParagraphLeft
 	"Align the receiver's selection paragraph to the left"
 
+	<commandQuery: #queryAlignParagraphLeft:>
 	self view paragraphAlignment: #left!
 
 alignParagraphRight
 	"Align the receiver's paragraph selection to the right"
 
+	<commandQuery: #queryAlignParagraphRight:>
 	self view paragraphAlignment: #right!
 
 bePlain
@@ -52,64 +55,72 @@ chooseSelectionFont
 	dialog showModal.
 	dialog isConfirmed ifTrue: [self view selectionCharFormat: (CHARFORMAT2W fromChooseFont: struct)]!
 
-queryCommand: query
-	"Private - Enters details about a potential command for the receiver into 
-	the <CommandQuery>, query"
+queryAlignParagraphCenter: aCommandQuery
+	aCommandQuery
+		isEnabled: true;
+		isChecked: self view paragraphAlignment == #center!
 
-	| cmd answer |
-	answer := super queryCommand: query.		"Supersend to get enablement of understood selectors"
-	cmd := query commandSymbol.
+queryAlignParagraphLeft: aCommandQuery
+	aCommandQuery
+		isEnabled: true;
+		isChecked: self view paragraphAlignment == #left!
 
-	cmd == #toggleBold ifTrue: [
-		query isChecked: self view isBold.
-		^true].
-	cmd == #toggleItalic ifTrue: [
-		query isChecked: self view isItalic.
-		^true].
-	cmd == #toggleUnderlined ifTrue: [
-		query isChecked: self view isUnderlined.
-		^true].
+queryAlignParagraphRight: aCommandQuery
+	aCommandQuery
+		isEnabled: true;
+		isChecked: self view paragraphAlignment == #right!
 
-	cmd == #alignParagraphLeft ifTrue: [
-		query isChecked: self view paragraphAlignment == #left.
-		^true].
-	cmd == #alignParagraphCenter ifTrue: [
-		query isChecked: self view paragraphAlignment == #center.
-		^true].
-	cmd == #alignParagraphRight ifTrue: [
-		query isChecked: self view paragraphAlignment == #right.
-		^true].
+queryToggleBold: aCommandQuery
+	aCommandQuery
+		isEnabled: true;
+		isChecked: self view isBold!
 
-	^answer!
+queryToggleItalic: aCommandQuery
+	aCommandQuery
+		isEnabled: true;
+		isChecked: self view isItalic!
+
+queryToggleUnderlined: aCommandQuery
+	aCommandQuery
+		isEnabled: true;
+		isChecked: self view isUnderlined!
 
 toggleBold
 	"Toggle bold mode for the selection in the receiver"
 
+	<commandQuery: #queryToggleBold:>
 	<acceleratorKey: 'Ctrl+B'>
 	self view isBold: self view isBold not!
 
 toggleItalic
 	"Toggle italic mode for the selection in the receiver"
 
+	<commandQuery: #queryToggleItalic:>
 	<acceleratorKey: 'Ctrl+I'>
 	self view isItalic: self view isItalic not!
 
 toggleUnderlined
 	"Toggle underline mode for the selection in the receiver"
 
+	<commandQuery: #queryToggleUnderlined:>
 	<acceleratorKey: 'Ctrl+U'>
 	self view isUnderlined: self view isUnderlined not! !
 !UI.RichTextPresenter categoriesForMethods!
-alignParagraphCenter!commands!public! !
-alignParagraphLeft!commands!public! !
-alignParagraphRight!commands!public! !
-bePlain!commands!public! !
-chooseSelectionColor!commands!public! !
-chooseSelectionFont!commands!public! !
-queryCommand:!commands!private! !
-toggleBold!commands!public! !
-toggleItalic!commands!public! !
-toggleUnderlined!commands!public! !
+alignParagraphCenter!commands-actions!public! !
+alignParagraphLeft!commands-actions!public! !
+alignParagraphRight!commands-actions!public! !
+bePlain!modes!public! !
+chooseSelectionColor!commands-actions!public! !
+chooseSelectionFont!commands-actions!public! !
+queryAlignParagraphCenter:!commands-queries!private! !
+queryAlignParagraphLeft:!commands-queries!private! !
+queryAlignParagraphRight:!commands-queries!private! !
+queryToggleBold:!commands-queries!private! !
+queryToggleItalic:!commands-queries!private! !
+queryToggleUnderlined:!commands-queries!private! !
+toggleBold!commands-actions!public! !
+toggleItalic!commands-actions!public! !
+toggleUnderlined!commands-actions!public! !
 !
 
 !UI.RichTextPresenter class methodsFor!

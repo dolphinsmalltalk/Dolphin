@@ -693,7 +693,7 @@ selectionRtf
 	| s |
 	s := AnsiString writeStream: 512.
 	self streamOutOn: s
-		format: Character.AnsiCodePage << 16 | ##(SF_USECODEPAGE | SFF_SELECTION) | SF_RTF.
+		format: Character.AnsiCodePage << 16 | ##(SF_USECODEPAGE | SFF_SELECTION | SF_RTF).
 	^s contents!
 
 selectionUrtf
