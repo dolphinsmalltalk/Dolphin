@@ -46,6 +46,7 @@ chooseFont
 copyKeyName
 	"Private - Copy the full path name of the currently selected key to the clipboard."
 
+	<commandQuery: #hasKeySelected>
 	self selectedKey fullPath copyToClipboard!
 
 createComponents
@@ -74,13 +75,20 @@ createSchematicWiring
 delete
 	"Private - Delete the selected item (if confirmed)."
 
-	keyPresenter view hasFocus ifTrue: [^self deleteSelectedKey].
-	valuesPresenter view hasFocus ifTrue: [^self deleteSelectedValue].
-	Sound warningBeep!
+	<commandQuery: #queryDeleteCommand:>
+	self perform: self deleteCommand!
+
+deleteCommand
+	"Private - Answer the context-sensitive Delete command, or nil if inactive."
+
+	keyPresenter view hasFocus ifTrue: [^#deleteSelectedKey].
+	valuesPresenter view hasFocus ifTrue: [^#deleteSelectedValue].
+	^nil!
 
 deleteSelectedKey
 	"Private - Delete the selected registry key."
 
+	<commandQuery: #hasWriteableNonRootKeySelected>
 	| key mb |
 	key := self selectedKey.
 	key isRoot ifTrue: [^nil].	"Can't delete root key."
@@ -89,37 +97,39 @@ deleteSelectedKey
 	mb caption: 'Confirm Key Delete'.
 	mb icon: Warning icon.
 	mb buttonStyle: #yesNo.
-	mb open == #yes 
+	mb open == #yes
 		ifTrue: 
 			[| parentKey |
 			parentKey := key parentKey.
 			
 			[parentKey removeKey: key name ifAbsent: [^self].
-			keyPresenter model remove: key] 
+			keyPresenter model remove: key]
 					on: HRESULTError
 					do: [:e | e okCancel]]!
 
 deleteSelectedValue
 	"Private - Delete the selected registry value."
 
+	<commandQuery: #hasValueOfWriteableKeySelected>
 	| idx mb |
 	idx := valuesPresenter selectionByIndex.
 	idx == 0 ifTrue: [^self].
 	mb := MessageBox new.
-	mb text: 'Deleting certain registry values could cause system instability. Are you sure you want to permanently delete these values?'.
+	mb
+		text: 'Deleting certain registry values could cause system instability. Are you sure you want to permanently delete these values?'.
 	mb caption: 'Confirm Value Delete'.
 	mb icon: Warning icon.
 	mb buttonStyle: #yesNo.
-	mb open == #yes 
+	mb open == #yes
 		ifTrue: 
 			[
 			[| value |
 			value := valuesPresenter model at: idx.
 			self selectedKey subValues removeKey: value key ifAbsent: [^self].
 			value value: nil.
-			value key isEmpty 
+			value key isEmpty
 				ifTrue: [valuesPresenter model refreshAtIndex: idx]
-				ifFalse: [valuesPresenter model removeAtIndex: idx]] 
+				ifFalse: [valuesPresenter model removeAtIndex: idx]]
 					on: HRESULTError
 					do: [:e | e okCancel]]!
 
@@ -139,12 +149,13 @@ exportKey: key toFile: path
 exportRegistryFile
 	"Private - Write a .reg file describing the selected key and its subkeys."
 
+	<commandQuery: #hasKeySelected>
 	| openFilename |
-	openFilename := (FileSaveDialog new)
+	openFilename := FileSaveDialog new
 				fileTypes: self fileTypes;
 				caption: 'Export Registry File';
 				showModal.
-	openFilename notNil 
+	openFilename notNil
 		ifTrue: [Cursor wait showWhile: [self exportKey: self selectedKey toFile: openFilename]].
 	#todo	"Implement - custom file save dialog template"!
 
@@ -154,6 +165,26 @@ fileTypes
 	| strings |
 	strings := #('Registration Files (*.reg)' '*.reg' 'Registry Hive Files (*.*)' '*.*' 'All Files' '*.*').
 	^(1 to: strings size by: 2) collect: [:i | {strings at: i. strings at: i + 1}]!
+
+hasKeySelected
+	^self selectedKey notNil!
+
+hasRenameableValueSelected
+	| selVal |
+	selVal := self selectedValue.
+	^selVal notNil and: [selVal key notEmpty and: [self hasWriteableKeySelected]]!
+
+hasValueOfWriteableKeySelected
+	^self hasWriteableKeySelected and: [self hasValueSelected]!
+
+hasValueSelected
+	^self selectedValue notNil!
+
+hasWriteableKeySelected
+	^self hasKeySelected and: [self selectedKey isWriteable]!
+
+hasWriteableNonRootKeySelected
+	^self hasWriteableKeySelected and: [self selectedKey isRoot not]!
 
 importRegistryFile
 	"Private - Import a .reg file selected by the user into the registry."
@@ -178,35 +209,41 @@ initialize
 newBinaryValue
 	"Add a new, empty, string value under the currently selected key."
 
+	<commandQuery: #hasWriteableKeySelected>
 	self newValue: ByteArray new!
 
 newDWORDValue
 	"Add a new, empty, string value under the currently selected key."
 
+	<commandQuery: #hasWriteableKeySelected>
 	self newValue: 0!
 
 newKey
 	"Add a new, empty, sub-key under the currently selected key, 
 	and leave the receiver in key renaming mode."
 
+	<commandQuery: #hasWriteableKeySelected>
 	| i sel newKey |
 	i := 1.
 	sel := self selectedKey.
 	"Generate a unique key name"
-	[newKey := 'New Key #', i displayString. sel includesKey: newKey] whileTrue: [i := i + 1].
+	
+	[newKey := 'New Key #' , i displayString.
+	sel includesKey: newKey] whileTrue: [i := i + 1].
 	newKey := sel createKey: newKey.
 	keyPresenter model add: newKey asChildOf: sel.
-	keyPresenter
+	(keyPresenter
 		selection: newKey;
-		view editSelectionLabel!
+		view) editSelectionLabel!
 
 newStringValue
 	"Add a new, empty, string value under the currently selected key."
 
+	<commandQuery: #hasWriteableKeySelected>
 	self newValue: ''!
 
 newValue: anObject
-	"Add a new, empty, value under the currently selected key
+	"Private - Add a new, empty, value under the currently selected key
 	initialized with the specified value."
 
 	| sel newValue |
@@ -248,7 +285,8 @@ onKey: key renamedTo: text accept: booleanValue
 	in the tree. Attempt to rename the key, and if successful, then set booleanValue 
 	accordingly to indicate acceptance or otherwise."
 
-	Warning signal: 'Key renaming is not yet implemented'.
+	Warning signal: 'Key renaming is not yet implemented, but if it were <1p> would be renamed to <2p>'
+				<< { key name. text }.
 	booleanValue value: key isRoot not!
 
 onKeySelected
@@ -292,52 +330,20 @@ onViewOpened
 	statusModel := ValueHolder new.
 	statusItem model: statusModel!
 
-queryCommand: query
-	"Private - Enters details about a potential command for the receiver into the 
-	<CommandQuery>,  query."
+queryDeleteCommand: aCommandQuery
+	"Private - Query the context-sensitive Delete command."
 
-	| command selKey selVal |
-	command := query command.
-	#toggleStatusBar == command
-		ifTrue: 
-			[query
-				isEnabled: true;
-				isChecked: self statusBar isWindowVisible.
-			^true].
-	selKey := self selectedKey.
-	(#(#newKey #newStringValue #newDWORDValue #newBinaryValue) includes: command)
-		ifTrue: 
-			[query isEnabled: (selKey notNil and: [selKey isWriteable]).
-			^true].
-	(#(#exportRegistryFile #copyKeyName) includes: command)
-		ifTrue: 
-			[query isEnabled: selKey notNil.
-			^true].
-	"Modification of the root keys is not permitted."
-	(#(#deleteSelectedKey #renameSelectedKey) includes: command)
-		ifTrue: 
-			[query isEnabled: (selKey notNil and: [selKey isWriteable and: [selKey isRoot not]]).
-			^true].
-	selVal := self selectedValue.
-	#renameSelectedValue == command
-		ifTrue: 
-			[query isEnabled: (selVal notNil and: [selVal key notEmpty and: [selKey isWriteable]]).
-			^true].
-	#deleteSelectedValue == command
-		ifTrue: 
-			[query isEnabled: selVal notNil.
-			^true].
-	(#(#delete #rename) includes: query command)
-		ifTrue: 
-			[keyPresenter view hasFocus
-				ifTrue: 
-					[query isEnabled: (selKey notNil and: [selKey isWriteable and: [selKey isRoot not]]).
-					^true].
-			valuesPresenter view hasFocus
-				ifTrue: 
-					[query isEnabled: (selVal notNil and: [selVal key notEmpty and: [selKey isWriteable]]).
-					^true]].
-	^super queryCommand: query!
+	self deleteCommand ifNotNil: [:selector | self queryContextCommand: aCommandQuery as: selector]!
+
+queryRenameCommand: aCommandQuery
+	"Private - Query the context-sensitive Rename command."
+
+	self renameCommand ifNotNil: [:selector | self queryContextCommand: aCommandQuery as: selector]!
+
+queryToggleStatusBar: aCommandQuery
+	aCommandQuery
+		isEnabled: true;
+		isChecked: self statusBar isWindowVisible!
 
 refresh
 	| selection |
@@ -349,18 +355,26 @@ rename
 	"Private - Initiate in-place label edit of the selected item."
 
 	<acceleratorKey: 'F2'>
-	keyPresenter view hasFocus ifTrue: [^self renameSelectedKey].
-	valuesPresenter view hasFocus ifTrue: [^self renameSelectedValue].
-	Sound warningBeep!
+	<commandQuery: #queryRenameCommand:>
+	self perform: self renameCommand!
+
+renameCommand
+	"Private - Answer the context-sensitive Rename command, or nil if inactive."
+
+	keyPresenter view hasFocus ifTrue: [^#renameSelectedKey].
+	valuesPresenter view hasFocus ifTrue: [^#renameSelectedValue].
+	^nil!
 
 renameSelectedKey
 	"Private - Initiate in-place label edit of the selected key."
 
+	<commandQuery: #hasWriteableNonRootKeySelected>
 	keyPresenter view editSelectionLabel!
 
 renameSelectedValue
 	"Private - Initiate in-place label edit of the selected key."
 
+	<commandQuery: #hasRenameableValueSelected>
 	valuesPresenter view editSelectionLabel!
 
 resourceLib
@@ -382,45 +396,57 @@ statusBar
 	^self view viewNamed: 'status'!
 
 toggleStatusBar
+	<commandQuery: #queryToggleStatusBar:>
 	| statusBar |
 	statusBar := self statusBar.
-	statusBar isWindowVisible ifTrue: [statusBar hide] ifFalse: [statusBar show]! !
+	statusBar isWindowVisible ifTrue: [statusBar hide] ifFalse: [statusBar show].
+	self view invalidateLayout! !
 !UI.Examples.RegEdit categoriesForMethods!
-aboutRegistryEditor!commands!private! !
-chooseFont!commands!private! !
-copyKeyName!commands!private! !
+aboutRegistryEditor!commands-actions!private! !
+chooseFont!commands-actions!private! !
+copyKeyName!commands-actions!private! !
 createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !
-delete!commands!private! !
-deleteSelectedKey!commands!private! !
-deleteSelectedValue!commands!private! !
+delete!commands-actions!private! !
+deleteCommand!commands-mappings!private! !
+deleteSelectedKey!commands-actions!private! !
+deleteSelectedValue!commands-actions!private! !
 exportKey:toFile:!filing!private! !
-exportRegistryFile!commands!private! !
+exportRegistryFile!commands-actions!private! !
 fileTypes!constants!private! !
-importRegistryFile!commands!private! !
+hasKeySelected!commands-queries!private!testing! !
+hasRenameableValueSelected!commands-queries!private! !
+hasValueOfWriteableKeySelected!commands-queries!private! !
+hasValueSelected!commands-queries!private! !
+hasWriteableKeySelected!commands-queries!private! !
+hasWriteableNonRootKeySelected!commands-queries!private! !
+importRegistryFile!commands-actions!private! !
 initialize!initializing!private! !
-newBinaryValue!commands!public! !
-newDWORDValue!commands!public! !
-newKey!commands!public! !
-newStringValue!commands!public! !
-newValue:!commands!public! !
-newValueName!commands!private! !
+newBinaryValue!commands-actions!public! !
+newDWORDValue!commands-actions!public! !
+newKey!commands-actions!public! !
+newStringValue!commands-actions!public! !
+newValue:!helpers!private! !
+newValueName!helpers!private! !
 onAboutToRenameKey:accept:!event handling!public! !
 onAboutToRenameValue:accept:!event handling!public! !
 onKey:renamedTo:accept:!event handling!public! !
 onKeySelected!event handling!private! !
 onValue:renamedTo:accept:!event handling!public! !
 onViewOpened!event handling!public! !
-queryCommand:!commands!private! !
-refresh!commands!private! !
-rename!commands!private! !
-renameSelectedKey!commands!private! !
-renameSelectedValue!commands!private! !
+queryDeleteCommand:!commands-queries!private! !
+queryRenameCommand:!commands-queries!private! !
+queryToggleStatusBar:!commands-queries!private! !
+refresh!commands-actions!private! !
+rename!commands-actions!private! !
+renameCommand!commands-mappings!private! !
+renameSelectedKey!commands-actions!private! !
+renameSelectedValue!commands-actions!private! !
 resourceLib!constants!public! !
 selectedKey!accessing!public! !
 selectedValue!accessing!public! !
-statusBar!commands!private! !
-toggleStatusBar!commands!private! !
+statusBar!accessing!private! !
+toggleStatusBar!commands-actions!private! !
 !
 
 !UI.Examples.RegEdit class methodsFor!
@@ -432,7 +458,7 @@ about
 		caption: 'About Dolphin Registry Editor';
 		icon: self icon;
 		headline: 'Simple Registry Editor Sample.';
-		text: 'Copyright © Object Arts Ltd, 1998-2011.<n><1s>' << VM fullVersion;
+		text: 'Copyright © Object Arts Ltd, 1998-2023.<n><1s>' << VM fullVersion;
 		detailsText: 'This is a reduced functionality implementation of the standard system utility REGEDIT.EXE, intended to demonstrate various features of Dolphin''s application framework such as virtual tree models, and in-place label editing.<n><n>DISCLAIMER: This software is freely provided purely as an educational sample and as such it is provided "as is", WITHOUT ANY WARRANTY; without even the implied warranty of  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. Furthermore, as with the real registry editor extreme care and expert knowledge are required to avoid damaging the installation of the operating system or other software on your machine if any modifications to the registry are attempted. Please take care - we accept no responsibility for any damage to your computer''s configuration which may be caused by the use of this sample.'
 					expandMacros;
 		open!
