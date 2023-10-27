@@ -141,53 +141,39 @@ parseWordsFrom: aString
 			word notEmpty ifTrue: [answer add: word]].
 	^answer asArray!
 
-queryCommand: aCommandQuery 
-	"Private - Enters details about a potential command for the receiver into the 
-	<CommandQuery>."
+queryToggleIndentGuides: aCommandQuery
+	aCommandQuery
+		isEnabled: true;
+		isChecked: beforePresenter view hasIndentationGuides!
 
-	| command |
-	command := aCommandQuery commandSymbol.
-	command == #toggleSyntaxColoring
-		ifTrue: 
-			[aCommandQuery
+queryToggleLineNumberMargins: aCommandQuery
+	beforePresenter view lineNumberMargin
+		ifNil: [aCommandQuery isEnabled: false]
+		ifNotNil: 
+			[:margin |
+			aCommandQuery
 				isEnabled: true;
-				isChecked: beforePresenter view isStylingEnabled.
-			^true].
-	command == #toggleLineNumberMargins
-		ifTrue: 
-			[beforePresenter view lineNumberMargin 
-				ifNil: [aCommandQuery isEnabled: false]
-				ifNotNil: 
-					[:margin | 
-					aCommandQuery
-						isEnabled: true;
-						isChecked: margin width ~= 0].
-			^true].
-	command == #toggleVisibleLineEndings 
-		ifTrue: 
-			[aCommandQuery
-				isEnabled: true;
-				isChecked: beforePresenter view hasVisibleLineEndings.
-			^true].
-	command == #toggleIndentGuides 
-		ifTrue: 
-			[aCommandQuery
-				isEnabled: true;
-				isChecked: beforePresenter view hasIndentationGuides.
-			^true].
-	command == #toggleVisibleWhitespace 
-		ifTrue: 
-			[aCommandQuery
-				isEnabled: true;
-				isChecked: beforePresenter view whitespaceVisibility ~~ #invisible.
-			^true].
-	command == #toggleWrapping
-		ifTrue: 
-			[aCommandQuery
-				isEnabled: true;
-				isChecked: beforePresenter view wordWrap.
-			^true].
-	^super queryCommand: aCommandQuery!
+				isChecked: margin width ~= 0]!
+
+queryToggleSyntaxColoring: aCommandQuery
+	aCommandQuery
+		isEnabled: true;
+		isChecked: beforePresenter view isStylingEnabled!
+
+queryToggleVisibleLineEndings: aCommandQuery
+	aCommandQuery
+		isEnabled: true;
+		isChecked: beforePresenter view hasVisibleLineEndings!
+
+queryToggleVisibleWhitespace: aCommandQuery
+	aCommandQuery
+		isEnabled: true;
+		isChecked: beforePresenter view whitespaceVisibility ~~ #invisible!
+
+queryToggleWrapping: aCommandQuery
+	aCommandQuery
+		isEnabled: true;
+		isChecked: beforePresenter view wordWrap!
 
 reduce: anArray 
 	| ranges stream |
@@ -228,32 +214,38 @@ textStyles: aCollectionOfScintillaTextStyles
 toggleIndentGuides
 	"Show or hide the indentation guides."
 
+	<commandQuery: #queryToggleIndentGuides:>
 	beforePresenter view toggleIndentationGuides.
 	afterPresenter view toggleIndentationGuides!
 
 toggleLineNumberMargins
 	"Show or hide the first line number margin, inverting the current state."
 
+	<commandQuery: #queryToggleLineNumberMargins:>
 	beforePresenter view toggleLineNumbers.
 	afterPresenter view toggleLineNumbers!
 
 toggleSyntaxColoring
+	<commandQuery: #queryToggleSyntaxColoring:>
 	beforePresenter view toggleStyling.
 	afterPresenter view toggleStyling!
 
 toggleVisibleLineEndings
 	"Show or hide the end-of-line characters."
 
+	<commandQuery: #queryToggleVisibleLineEndings:>
 	beforePresenter view toggleLineEndings.
 	afterPresenter view toggleLineEndings!
 
 toggleVisibleWhitespace
 	"Show or hide the whitespace markers in the view."
 
+	<commandQuery: #queryToggleVisibleWhitespace:>
 	beforePresenter view toggleWhitespace.
 	afterPresenter view toggleWhitespace!
 
 toggleWrapping
+	<commandQuery: #queryToggleWrapping:>
 	beforePresenter view toggleWordWrap.
 	afterPresenter view toggleWordWrap!
 
@@ -279,19 +271,24 @@ initialize!initializing!private! !
 itemsFrom:!helpers!private! !
 parse:!helpers!private! !
 parseWordsFrom:!helpers!private! !
-queryCommand:!commands!private! !
+queryToggleIndentGuides:!commands-queries!private! !
+queryToggleLineNumberMargins:!commands-queries!private! !
+queryToggleSyntaxColoring:!commands-queries!private! !
+queryToggleVisibleLineEndings:!commands-queries!private! !
+queryToggleVisibleWhitespace:!commands-queries!private! !
+queryToggleWrapping:!commands-queries!private! !
 reduce:!helpers!private! !
 refresh!public!updating! !
 styler!accessing!public! !
 styler:!accessing!public! !
 textFont:!accessing!public! !
 textStyles:!accessing!public! !
-toggleIndentGuides!commands!public! !
-toggleLineNumberMargins!commands!public! !
-toggleSyntaxColoring!commands!public! !
-toggleVisibleLineEndings!commands!public! !
-toggleVisibleWhitespace!commands!public! !
-toggleWrapping!commands!public! !
+toggleIndentGuides!commands-actions!public! !
+toggleLineNumberMargins!commands-actions!public! !
+toggleSyntaxColoring!commands-actions!public! !
+toggleVisibleLineEndings!commands-actions!public! !
+toggleVisibleWhitespace!commands-actions!public! !
+toggleWrapping!commands-actions!public! !
 wordSeparators!accessing!public! !
 wordSeparators:!accessing!public! !
 !
