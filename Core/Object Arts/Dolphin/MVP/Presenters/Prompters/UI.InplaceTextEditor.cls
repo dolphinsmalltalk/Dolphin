@@ -154,9 +154,9 @@ model: aValueModel
 ok
 	"Close the receiver and apply the changes cached in the receiver back to the model"
 
+	<commandQuery: #queryOk:>
 	self apply.
-	self view close.
-!
+	self view close!
 
 onFocusLost
 	"Private - If the user clicks outside the in-place edit box, then treat as a committed edit
@@ -227,14 +227,8 @@ performAction
 		ifFalse: 
 			[self showValidationResult: query validationResult]!
 
-queryCommand: aCommandQuery
-	"Private - Enters details about a potential command for the receiver into the <CommandQuery>."
-
-	aCommandQuery commandSymbol == #ok
-		ifTrue: 
-			[aCommandQuery validationResult: self model validate.
-			^true].
-	^super queryCommand: aCommandQuery!
+queryOk: aCommandQuery
+	aCommandQuery validationResult: self model validate!
 
 requiredExtent: aString
 	| min preferred borders |
@@ -329,10 +323,10 @@ value: anObject
 	self model value: anObject.! !
 !UI.InplaceTextEditor categoriesForMethods!
 answer!accessing!public! !
-apply!commands!public! !
+apply!commands-actions!public! !
 bufferClass!accessing!private! !
 bufferedModelFor:!accessing!private! !
-cancel!commands!public! !
+cancel!commands-actions!public! !
 closeBubble!helpers!private! !
 createSchematicWiring!initializing!public! !
 createView:!operations!private! !
@@ -348,7 +342,7 @@ isConfirmed!public!testing! !
 isInputValid!private!testing! !
 maxCharWidth!accessing!private! !
 model:!accessing!public! !
-ok!commands!public! !
+ok!commands-actions!public! !
 onFocusLost!event handling!private! !
 onGetCursor:!event handling!public! !
 onKeyTyped:!event handling!private! !
@@ -357,9 +351,9 @@ onValueChanged!event handling!public! !
 onViewOpened!event handling!private! !
 ownerView!accessing!public! !
 ownerView:!accessing!public! !
-pasteClipboard!commands!public! !
+pasteClipboard!commands-actions!public! !
 performAction!operations!public! !
-queryCommand:!commands!private! !
+queryOk:!commands-queries!private! !
 requiredExtent:!helpers!private! !
 resizeToFit!helpers!private! !
 runModalInProcessLoop!helpers!private! !
