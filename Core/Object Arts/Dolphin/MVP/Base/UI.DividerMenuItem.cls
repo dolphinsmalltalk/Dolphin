@@ -8,7 +8,7 @@ UI.MenuItem
 	classInstanceVariableNames: ''
 	classConstants: {
 			'DividerLookup'
-				-> (LookupTable withAll: { 16r20 -> #barBreak. 16r40 -> #break. 16r800 -> #separator })
+				-> (IdentityDictionary withAll: { 16r20 -> #barBreak. 16r40 -> #break. 16r800 -> #separator })
 		}!
 UI.DividerMenuItem guid: (Core.GUID fromString: '{87b4c661-026e-11d3-9fd7-00a0cc3e4a32}')!
 UI.DividerMenuItem comment: 'DividerMenuItem represents a divider that can be placed between other items in a <Menu>. Separate singleton instances for the various styles are held in class variables and answered by the #separator, #break and #barBreak [instance creation] methods.
@@ -49,8 +49,9 @@ displayOn: aPuttableStream
 	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
 	aPuttableStream
-		nextPutAll: (##(IdentityDictionary withAll: { 16r20 -> '||'. 16r40 -> '|'. 16r800 -> '-' })
-				at: self styleFlags)!
+		nextPutAll: (##(IdentityDictionary
+				withAll: { MFT_MENUBARBREAK -> '||'. MFT_MENUBREAK -> '|'. MFT_SEPARATOR -> '-' })
+					at: self styleFlags)!
 
 id
 	"Answers the menu item identifier for the receiver"
@@ -136,6 +137,11 @@ break
 
 	^Break ifNil: [Break := self dividers at: '|']!
 
+initialize
+	self addClassConstant: 'DividerLookup'
+		value: (IdentityDictionary
+				withAll: { MFT_MENUBARBREAK -> #barBreak. MFT_MENUBREAK -> #break. MFT_SEPARATOR -> #separator })!
+
 new
 	"Answers an instance of the receiver"
 
@@ -175,6 +181,7 @@ uninitialize
 !UI.DividerMenuItem class categoriesForMethods!
 barBreak!instance creation!public! !
 break!instance creation!public! !
+initialize!class initialization!private! !
 new!instance creation!public! !
 onPreStripImage!class hierarchy-removing!private! !
 separator!instance creation!public! !
