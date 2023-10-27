@@ -200,7 +200,7 @@ browseContainingText
 	"Prompt for a string and open a method browser displaying the
 	methods containing that string."
 
-	self model browseContainingTextIn: self searchEnvironment!
+	self developmentSystem browseContainingTextIn: self searchEnvironment!
 
 browseDefinitionsMatching: aMethodSearch in: aBrowserEnvironment
 	self developmentSystem browseMethodsInEnvironments: {
