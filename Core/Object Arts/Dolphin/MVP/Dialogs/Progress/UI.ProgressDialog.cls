@@ -59,6 +59,7 @@ answer
 cancel
 	"Cancel the operation and close the receiver."
 
+	<commandQuery: #queryCancel:>
 	process terminate.
 	process := nil.
 	super cancel!
@@ -155,21 +156,10 @@ progress
 
 	^progressPresenter value!
 
-queryCommand: query
-	"Private - Enters details about a potential command for the receiver into the 
-	<CommandQuery>,  query."
-
-	| cmd |
-	cmd := query commandSymbol.
-
-	cmd == #cancel ifTrue: [
-		"Note that we need to force ourselves as the command target to disable cancel"
-		query isEnabled: self allowCancel; receiver: self.
-		^true].
-
-	^super queryCommand: query
-
-!
+queryCancel: aCommandQuery
+	aCommandQuery isEnabled: self allowCancel.
+	"Note that we need to force ourselves as the command target to disable cancel"
+	aCommandQuery receiver: self!
 
 show
 	"Start the operation, and show the receiver modelessly.
@@ -214,7 +204,7 @@ value: progressValue
 allowCancel!accessing!public! !
 allowCancel:!accessing!public! !
 answer!accessing!public! !
-cancel!commands!public! !
+cancel!commands-actions!public! !
 createComponents!initializing!public! !
 defaultOperation!operations!private! !
 deferredClose!operations!private! !
@@ -227,7 +217,7 @@ operation:!accessing!public! !
 priority!accessing!public! !
 priority:!accessing!public! !
 progress!accessing!public! !
-queryCommand:!commands!private! !
+queryCancel:!commands-queries!private! !
 show!operations!public! !
 showModal!operations!public! !
 startMarquee!operations!public! !
