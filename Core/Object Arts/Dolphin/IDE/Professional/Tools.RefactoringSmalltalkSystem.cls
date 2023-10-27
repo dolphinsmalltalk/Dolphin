@@ -877,14 +877,12 @@ promptForInitializationExpression: anAddParameterRefactoring
 		showModal!
 
 promptToRemoveMethods: aCollectionOfMethods inEnvironment: aBrowserEnvironment
-	| mb |
+	| mb multiple |
 	mb := MessageBox new.
-	aCollectionOfMethods size > 1
+	multiple := aCollectionOfMethods size > 1.
+	multiple
 		ifTrue: 
 			[| details |
-			mb
-				headline: 'Remove methods if unused/redundant?';
-				checkboxText: self showChangesText.
 			details := String smalltalkWriteStream.
 			details
 				nextPutAll: 'The following methods are the candidates for removal:';
@@ -898,19 +896,19 @@ promptToRemoveMethods: aCollectionOfMethods inEnvironment: aBrowserEnvironment
 			mb
 				detailsText: details contents;
 				text: 'The methods will be removed if they have no references in <1p> or are equivalent to the superclass implementations.'
-							<< {aBrowserEnvironment}]
+							<< { aBrowserEnvironment }]
 		ifFalse: 
 			[mb
-				uniqueId: [self] method displayString;
-				isSuppressible: true;
-				headline: 'Remove method if unused/redundant?';
 				text: '<1p> will be removed if it has no references in <2p> or is equivalent to the superclass implementation.'
-							<< {aCollectionOfMethods first. aBrowserEnvironment}].
+						<< { aCollectionOfMethods first. aBrowserEnvironment }].
 	mb
+		headline: 'Remove method<1?s:> if unused/redundant?' << multiple;
+		uniqueId: [self] method displayString , (multiple ifTrue: ['-multiple'] ifFalse: ['-single']);
+		isSuppressible: true;
 		isCancellable: true;
 		customButtons: #(#(#yes '&Remove') #(#no 'Cancel'));
 		confirm.
-	^mb!
+	^mb isConfirmed!
 
 protectInstanceVariable: aString in: aClass
 	"Implement the 'Protect/Concrete instance variable' class refactoring: 'Converts all variable 
@@ -1211,25 +1209,24 @@ removeInstanceVariables: aCollectionOfAssociations within: aBrowserEnvironment
 		within: aBrowserEnvironment!
 
 removeMethods: aCollectionOfMethods
-	| classes env messageBox count |
+	| classes env count |
 	count := aCollectionOfMethods size.
 	count = 0 ifTrue: [^self].
 	env := self browserEnvironment.
-	messageBox := self promptToRemoveMethods: aCollectionOfMethods inEnvironment: env.
-	messageBox isConfirmed ifFalse: [^self].
+	(self promptToRemoveMethods: aCollectionOfMethods inEnvironment: env) ifFalse: [^self].
 	classes := (aCollectionOfMethods collect: [:each | each methodClass]) asSet.
 	classes size > 1
 		ifTrue: 
 			[self
 				basicRemoveMethodsIn: (env forMethods: aCollectionOfMethods)
 				within: env
-				showChanges: messageBox isChecked]
+				showChanges: false]
 		ifFalse: 
 			[self
 				basicRemoveSelectors: (aCollectionOfMethods collect: [:each | each selector])
 				from: classes single
 				within: env
-				showChanges: (count > 1 and: [messageBox isChecked])]!
+				showChanges: false]!
 
 removeMethodsDuplicatedInSuperclassOf: aClass
 	"Private - Identify all methods of the <Behavior>, aClass, that have an equivalent definition in a superclass,
