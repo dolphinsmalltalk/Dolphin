@@ -39,7 +39,7 @@ basicLoad
 			packageManager packageNamed: name
 				ifNone: 
 					[[packageManager install: each] on: packageManager prerequisiteNotFoundSignal
-						do: [:ex | ex resume: (File splitPathFrom: each)]]].
+						do: [:ex | ex resume: ex messageText]]].
 	Smalltalk developmentSystem beNotChanged!
 
 beCurrent
