@@ -80,15 +80,27 @@ fileOut: sourceObjects
 	"Private - Save (file out) all the selected source objects which are saveable.
 	Answer a <collection> of all those which could not be saved."
 
-	| saved |
+	| progress |
+	sourceObjects size < 100 ifTrue: [^self fileOut: sourceObjects progressModel: [:v | ]].
+	progress := ProgressDialog create.
+	progress text: 'Filing out <1p> source objects' << sourceObjects size.
+	progress operation: [:p | self fileOut: sourceObjects progressModel: p].
+	^progress showModal!
+
+fileOut: sourceObjects progressModel: aMonadicValuable
+	| saved count |
+	count := sourceObjects size.
 	saved := Set new.
 	
-	[sourceObjects do: 
-			[:each |
+	[sourceObjects inject: 1
+		into: 
+			[:i :each |
+			aMonadicValuable value: i * 100 / count.
 			each canFileOut
 				ifTrue: 
 					[each fileOut.
-					saved add: each]]]
+					saved add: each].
+			i + 1]]
 			on: OperationAborted
 			do: [:ex | ].
 	^sourceObjects difference: saved!
@@ -329,6 +341,7 @@ browseSourceObject!commands!public! !
 createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !
 fileOut:!commands!private! !
+fileOut:progressModel:!commands!private! !
 fileSave!commands!public! !
 fileSaveAll!commands!public! !
 onClassRemoved:!event handling!private! !
