@@ -43,6 +43,49 @@ Core.Locale
 								$\x1F -> $␟.
 								$\x20 -> $␣.
 								$\x7F -> $␡
+							}).
+			'DayIndices'
+				-> (LookupTable withAll: {
+								'fri' -> 16r6.
+								'friday' -> 16r6.
+								'mon' -> 16r2.
+								'monday' -> 16r2.
+								'sat' -> 16r7.
+								'saturday' -> 16r7.
+								'sun' -> 16r1.
+								'sunday' -> 16r1.
+								'thu' -> 16r5.
+								'thursday' -> 16r5.
+								'tue' -> 16r3.
+								'tuesday' -> 16r3.
+								'wed' -> 16r4.
+								'wednesday' -> 16r4
+							}).
+			'MonthIndices'
+				-> (LookupTable withAll: {
+								'apr' -> 16r4.
+								'april' -> 16r4.
+								'aug' -> 16r8.
+								'august' -> 16r8.
+								'dec' -> 16rC.
+								'december' -> 16rC.
+								'feb' -> 16r2.
+								'february' -> 16r2.
+								'jan' -> 16r1.
+								'january' -> 16r1.
+								'jul' -> 16r7.
+								'july' -> 16r7.
+								'jun' -> 16r6.
+								'june' -> 16r6.
+								'mar' -> 16r3.
+								'march' -> 16r3.
+								'may' -> 16r5.
+								'nov' -> 16rB.
+								'november' -> 16rB.
+								'oct' -> 16rA.
+								'october' -> 16rA.
+								'sep' -> 16r9.
+								'september' -> 16r9
 							})
 		}!
 Kernel.SmalltalkLocale guid: (Core.GUID fromString: '{06088e6e-01bc-4518-a4a5-73088615fdd8}')!
@@ -70,20 +113,7 @@ code
 dayNames
 	"Answer a <LookupTable> keyed by lower-cased <readableString> locale-specific day names (and abbreviated day names), with the corresponding day number as values. The names are in lowercase. The day numbering convention is that Sunday is 1, Saturday is 7."
 
-	^##(LookupTable withAll: {'monday' -> 2.
-				'mon' -> 2.
-				'tue' -> 3.
-				'tuesday' -> 3.
-				'wed' -> 4.
-				'wednesday' -> 4.
-				'thu' -> 5.
-				'thursday' -> 5.
-				'fri' -> 6.
-				'friday' -> 6.
-				'saturday' -> 7.
-				'sat' -> 7.
-				'sunday' -> 1.
-				'sun' -> 1})!
+	^DayIndices!
 
 dayOfWeekAbbreviation: anInteger
 	"Answer a <String> that is the localised abbreviated name for the day of the week whose index is the <integer> argument, where Sunday is 1 and Saturday is 7."
@@ -246,34 +276,6 @@ hasLeadingZero
 
 	^true!
 
-indexOfMonth: aString
-	"Answer the 1-based <integer> index in a year (i.e. 1..12) of the month named by the <String> argument, asString, which is expected to be the full locale specific name of a month, or its abbreviated form, in upper or lower case."
-
-	^##(LookupTable withAll: {'january' -> 1.
-				'jan' -> 1.
-				'february' -> 2.
-				'feb' -> 2.
-				'mar' -> 3.
-				'march' -> 3.
-				'apr' -> 4.
-				'april' -> 4.
-				'may' -> 5.
-				'june' -> 6.
-				'jun' -> 6.
-				'jul' -> 7.
-				'july' -> 7.
-				'aug' -> 8.
-				'august' -> 8.
-				'september' -> 9.
-				'sep' -> 9.
-				'oct' -> 10.
-				'october' -> 10.
-				'november' -> 11.
-				'nov' -> 11.
-				'december' -> 12.
-				'dec' -> 12})
-		at: aString asLowercase!
-
 infinity
 	"Answer the <String> representation for positive infinity in this locale (e.g the '∞' symbol)"
 
@@ -341,29 +343,7 @@ monthName: anInteger
 monthNames
 	"Answer a <LookupTable> keyed by lower-cased <readableString> locale-specific month names (and abbreviated month names), with the corresponding month number as values. The names are in lowercase."
 
-	^##(LookupTable withAll: {'january' -> 1.
-				'jan' -> 1.
-				'february' -> 2.
-				'feb' -> 2.
-				'mar' -> 3.
-				'march' -> 3.
-				'apr' -> 4.
-				'april' -> 4.
-				'may' -> 5.
-				'june' -> 6.
-				'jun' -> 6.
-				'jul' -> 7.
-				'july' -> 7.
-				'aug' -> 8.
-				'august' -> 8.
-				'september' -> 9.
-				'sep' -> 9.
-				'oct' -> 10.
-				'october' -> 10.
-				'november' -> 11.
-				'nov' -> 11.
-				'december' -> 12.
-				'dec' -> 12})!
+	^MonthIndices!
 
 name
 	"Answer the <String> unique name of the Locale."
@@ -505,7 +485,6 @@ englishDisplayName!constants!public! !
 englishLanguageName!constants!public! !
 firstDayOfWeek!constants!public! !
 hasLeadingZero!constants!public! !
-indexOfMonth:!enquiries!public! !
 infinity!constants!public! !
 integerBase!accessing!public! !
 integerBase:!accessing!public! !
@@ -565,7 +544,50 @@ initialize
 		do: [:ch | controlPictures at: ch put: (Character codePoint: 16r2400 + ch codePoint)].
 	controlPictures at: $\x20 put: $\x2423.
 	controlPictures at: $\x7F put: $\x2421.
-	self addClassConstant: 'ControlCodePictures' value: controlPictures!
+	self addClassConstant: 'ControlCodePictures' value: controlPictures.
+	self addClassConstant: 'MonthIndices'
+		value: (LookupTable withAll: {
+						'january' -> 1.
+						'jan' -> 1.
+						'february' -> 2.
+						'feb' -> 2.
+						'mar' -> 3.
+						'march' -> 3.
+						'apr' -> 4.
+						'april' -> 4.
+						'may' -> 5.
+						'june' -> 6.
+						'jun' -> 6.
+						'jul' -> 7.
+						'july' -> 7.
+						'aug' -> 8.
+						'august' -> 8.
+						'september' -> 9.
+						'sep' -> 9.
+						'oct' -> 10.
+						'october' -> 10.
+						'november' -> 11.
+						'nov' -> 11.
+						'december' -> 12.
+						'dec' -> 12
+					}).
+	self addClassConstant: 'DayIndices'
+		value: (LookupTable withAll: {
+						'monday' -> 2.
+						'mon' -> 2.
+						'tue' -> 3.
+						'tuesday' -> 3.
+						'wed' -> 4.
+						'wednesday' -> 4.
+						'thu' -> 5.
+						'thursday' -> 5.
+						'fri' -> 6.
+						'friday' -> 6.
+						'saturday' -> 7.
+						'sat' -> 7.
+						'sunday' -> 1.
+						'sun' -> 1
+					})!
 
 reset
 	Current ifNotNil: [:current | current numberFormat: nil]! !

@@ -4336,6 +4336,49 @@ Core.Locale
 								$\x1F -> $␟.
 								$\x20 -> $␣.
 								$\x7F -> $␡
+							}).
+			'DayIndices'
+				-> (LookupTable withAll: {
+								'fri' -> 16r6.
+								'friday' -> 16r6.
+								'mon' -> 16r2.
+								'monday' -> 16r2.
+								'sat' -> 16r7.
+								'saturday' -> 16r7.
+								'sun' -> 16r1.
+								'sunday' -> 16r1.
+								'thu' -> 16r5.
+								'thursday' -> 16r5.
+								'tue' -> 16r3.
+								'tuesday' -> 16r3.
+								'wed' -> 16r4.
+								'wednesday' -> 16r4
+							}).
+			'MonthIndices'
+				-> (LookupTable withAll: {
+								'apr' -> 16r4.
+								'april' -> 16r4.
+								'aug' -> 16r8.
+								'august' -> 16r8.
+								'dec' -> 16rC.
+								'december' -> 16rC.
+								'feb' -> 16r2.
+								'february' -> 16r2.
+								'jan' -> 16r1.
+								'january' -> 16r1.
+								'jul' -> 16r7.
+								'july' -> 16r7.
+								'jun' -> 16r6.
+								'june' -> 16r6.
+								'mar' -> 16r3.
+								'march' -> 16r3.
+								'may' -> 16r5.
+								'nov' -> 16rB.
+								'november' -> 16rB.
+								'oct' -> 16rA.
+								'october' -> 16rA.
+								'sep' -> 16r9.
+								'september' -> 16r9
 							})
 		}!
 OS.AbstractWindowsLocale
