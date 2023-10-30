@@ -40,13 +40,12 @@ chooseFont
 !
 
 editGoto
+	<commandQuery: #queryEditGoto:>
 	(IntegerPrompter create
-				caption: 'Go To Line';
-				prompt: 'Line number:';
-				interval: (1 to: documentPresenter view lineCount);
-				showModal)
-	ifNotNil: [ :lineNo |
-		documentPresenter view gotoLine: lineNo]!
+		caption: 'Go To Line';
+		prompt: 'Line number:';
+		interval: (1 to: documentPresenter view lineCount);
+		showModal) ifNotNil: [:lineNo | documentPresenter view gotoLine: lineNo]!
 
 editTimeStamp
 	| stream now locale |
@@ -59,29 +58,20 @@ editTimeStamp
 hasWordWrap
 	^documentPresenter view wordWrap!
 
-queryCommand: query
-	"Private - Enters details about a potential command for the receiver into 
-	the <CommandQuery>, query"
-
-	| cmd |
-	cmd := query commandSymbol.
-	cmd == #editGoto
-		ifTrue: 
-			[query isEnabled: self hasWordWrap  not.
-			^true].
-	^super queryCommand: query!
+queryEditGoto: query
+	query isEnabled: self hasWordWrap not!
 
 saveChangesPrompt
 	| docName |
 	docName := self hasFilename ifTrue: [self filename] ifFalse: ['Untitled'].
 	^'Do you want to save changes to <1s>?' expandMacrosWith: docName! !
 !UI.Examples.Notepad categoriesForMethods!
-aboutNotepad!commands!public! !
-chooseFont!commands!public! !
+aboutNotepad!commands-actions!public! !
+chooseFont!commands-actions!public! !
 editGoto!public! !
-editTimeStamp!commands!public! !
+editTimeStamp!commands-actions!public! !
 hasWordWrap!public!testing! !
-queryCommand:!commands!private! !
+queryEditGoto:!commands-queries!private! !
 saveChangesPrompt!private! !
 !
 
@@ -95,7 +85,7 @@ about
 		icon: self icon;
 		headline: 'Simple Notepad Sample';
 		text: VM fullVersion;
-		detailsText: 'This is a slightly reduced functionality implementation of the standard system utility NOTEPAD.EXE, intended to demonstrate the DocumentShell hierarchy of Dolphin''s application framework.
+		detailsText: 'This is a reduced functionality implementation of the standard system utility NOTEPAD.EXE, intended to demonstrate the DocumentShell hierarchy of Dolphin''s application framework.
 
 DISCLAIMER: This software is freely provided purely as an educational sample and as such it is provided "as is", WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.';
 		open!
