@@ -81,6 +81,11 @@ disableWindowGhosting
 inputStateClass
 	^GuiInputState!
 
+isForegroundProcess
+	"Answer whether this Dolphin process owns the foreground window"
+
+	^User32 isForegroundProcess: Kernel32 getCurrentProcessId!
+
 isUnattended
 	"Answer whether the session was started with a unattended flag"
 
@@ -205,6 +210,7 @@ clearWindowState!operations-saving!private! !
 commandLineParser!helpers!private! !
 disableWindowGhosting!helpers!public! !
 inputStateClass!constants!private! !
+isForegroundProcess!public!testing! !
 isUnattended!public!testing! !
 onInputLanguageChanged:!event handling!private! !
 onSettingChanged:!event handling!private! !

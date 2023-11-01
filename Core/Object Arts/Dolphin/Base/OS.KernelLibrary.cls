@@ -738,6 +738,10 @@ getCurrentProcess
 	<stdcall: handle GetCurrentProcess>
 	^self invalidCall: _failureCode!
 
+getCurrentProcessId
+	<stdcall: uint32 GetCurrentProcessId>
+	^self invalidCall: _failureCode!
+
 getCurrentThread
 	"Answer the handle of the current thread
 
@@ -2154,6 +2158,7 @@ getCPInfoExW:dwFlags:lpCPInfoEx:!**auto generated**!public!win32 functions-natio
 getCurrentDirectory!public!win32 functions-directory management! !
 getCurrentDirectory:lpBuffer:!public!win32 functions-directory management! !
 getCurrentProcess!public!win32 functions-process and thread! !
+getCurrentProcessId!public!win32 functions-process and thread! !
 getCurrentThread!public!win32 functions-process and thread! !
 getCurrentThreadId!public!win32 functions-process and thread! !
 getDiskFreeSpace:lpSectorsPerCluster:lpBytesPerSector:lpNumberOfFreeClusters:lpTotalNumberOfClusters:!public!win32 functions-file management! !

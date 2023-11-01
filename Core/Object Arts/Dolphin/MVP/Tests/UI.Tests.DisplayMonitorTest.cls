@@ -12,6 +12,7 @@ UI.Tests.DisplayMonitorTest comment: ''!
 !UI.Tests.DisplayMonitorTest methodsFor!
 
 testActive
+	<skipUnless: #isInForeground>
 	| shell primary user32 |
 	primary := DisplayMonitor primary.
 	shell := ShellView show.
