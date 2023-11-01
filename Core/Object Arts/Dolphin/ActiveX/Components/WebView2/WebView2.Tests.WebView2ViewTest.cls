@@ -87,6 +87,7 @@ tearDown
 testContextMenu
 	<knownSlowTest>
 	<skipIf: #isCiBuild> "Too unreliable"
+	<skipUnless: #isInForeground>
 	| contextMenuHandler menuEvent newCmd iconStream cmdEventSink cmdFired |
 	iconStream := IStream read: (FileLocator installRelative: 'Resources\Dolphin.ico') asString.
 	newCmd := presenter view webviewEnvironment

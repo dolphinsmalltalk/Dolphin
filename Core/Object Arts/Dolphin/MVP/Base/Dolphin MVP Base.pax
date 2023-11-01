@@ -234,6 +234,7 @@ package setMethodNames: #(
 	#(#{OS.UserLibrary} #isChild:hWnd:)
 	#(#{OS.UserLibrary} #isClipboardFormatAvailable:)
 	#(#{OS.UserLibrary} #isDialogMessage:lpMsg:)
+	#(#{OS.UserLibrary} #isForegroundProcess:)
 	#(#{OS.UserLibrary} #isIconic:)
 	#(#{OS.UserLibrary} #isWindowUnicode:)
 	#(#{OS.UserLibrary} #isZoomed:)
@@ -3218,6 +3219,15 @@ isDialogMessage: aHandle lpMsg: aMSG
 	<stdcall: bool IsDialogMessageW handle MSG*>
 	^self invalidCall: _failureCode!
 
+isForegroundProcess: anInteger
+	| hWnd |
+	hWnd := self getForegroundWindow.
+	^hWnd notNil and: 
+			[| foregroundPid |
+			foregroundPid := UInt32Bytes new.
+			(self getWindowThreadProcessId: hWnd lpdwProcessId: foregroundPid) ~~ 0
+				and: [foregroundPid = anInteger]]!
+
 isIconic: aWindowHandle
 	"Answer whether the specified window is iconic (minimized). 
 		BOOL IsIconic(
@@ -3891,6 +3901,7 @@ invalidateRgn:hRgn:bErase:!public!win32 functions-painting and drawing! !
 isChild:hWnd:!public!win32 functions-window! !
 isClipboardFormatAvailable:!public!win32 functions-clipboard! !
 isDialogMessage:lpMsg:!public!win32 functions-dialog box! !
+isForegroundProcess:!enquiries!public! !
 isIconic:!public!win32 functions-icon! !
 isWindowUnicode:!public!win32 functions-window!win32 functions-window procedure! !
 isZoomed:!public!win32 functions-window! !

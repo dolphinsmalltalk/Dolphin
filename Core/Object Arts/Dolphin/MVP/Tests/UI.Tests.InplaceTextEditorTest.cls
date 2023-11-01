@@ -27,6 +27,7 @@ tearDown
 	clipboard setText: savedText!
 
 testPaste
+	<skipUnless: #isInForeground>
 	| result expected toPaste |
 	toPaste := 'Pasted 🍺 should not be truncated'.
 	clipboard setText: toPaste.
