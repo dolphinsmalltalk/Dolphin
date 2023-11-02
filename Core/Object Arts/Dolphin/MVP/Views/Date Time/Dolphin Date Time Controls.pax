@@ -189,7 +189,7 @@ resource_Month_calendar_view
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Month_calendar_view)
 	"
 
-	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.MonthCalendarView} 38 #{Core.Array} 15 nil nil 50 2 8 1409351680 1 32 1094 2 #{UI.ValueHolder} nil false 6 #{Kernel.EqualitySearchPolicy} 262 #{Core.Date} 74655 6 #{Graphics.Color} #default 518 #{Graphics.Point} 395 307 5 nil nil nil 32 nil 8 1853941728 518 #{UI.NullConverter} nil nil 262 #{Core.MessageSequence} 50 3 774 #{Core.MessageSend} #createAt:extent: 50 2 242 6143 21 242 395 307 32 370 #range: 50 1 8 #(nil nil) 32 370 #mcmSetFirstDayOfWeek: 8 #(0) 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 196 12 0 0 163 0 0 0] 8 #() 242 193 193 nil 27)!
+	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.MonthCalendarView} 38 #{Core.Array} 15 nil nil 50 2 8 1409351680 1 32 1094 2 #{UI.ValueHolder} nil false 6 #{Kernel.EqualitySearchPolicy} 262 #{Core.Date} 74655 6 #{Graphics.Color} #default 518 #{Graphics.Point} 395 307 5 nil nil nil 32 nil nil 518 #{UI.NullConverter} nil nil 262 #{Core.MessageSequence} 50 3 774 #{Core.MessageSend} #createAt:extent: 50 2 242 6143 21 242 395 307 32 354 #range: 50 1 8 #(nil nil) 32 354 #mcmSetFirstDayOfWeek: 8 #(0) 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 196 12 0 0 163 0 0 0] 8 #() 242 193 193 nil 27)!
 
 resource_Picker_view
 	"Answer the literal data from which the 'Picker view' resource can be reconstituted.
@@ -199,7 +199,7 @@ resource_Picker_view
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Picker_view)
 	"
 
-	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.DateTimePicker} 38 #{Core.Array} 16 nil nil 50 2 8 1140916230 1 32 1094 2 #{UI.ValueHolder} nil nil 518 #{Kernel.PluggableSearchPolicy} 518 #{Core.Message} #= 8 #() 178 #hash 8 #() 262 #{Core.Date} 70769 6 #{Graphics.Color} #default nil 7 nil nil nil 32 nil 8 1853911008 518 #{UI.NullConverter} nil nil nil 262 #{Core.MessageSequence} 50 3 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 6143 21 466 521 51 32 418 #text: 50 1 8 '17 November 1997' 32 418 #range: 50 1 8 #(nil nil) 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 3 13 0 0 35 0 0 0] 8 #() 466 193 193 nil 27)! !
+	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.DateTimePicker} 38 #{Core.Array} 16 nil nil 50 2 8 1140916230 1 32 1094 2 #{UI.ValueHolder} nil nil 518 #{Kernel.PluggableSearchPolicy} 518 #{Core.Message} #= 8 #() 178 #hash 8 #() 262 #{Core.Date} 70769 6 #{Graphics.Color} #default nil 5 nil nil nil 32 nil nil 518 #{UI.NullConverter} nil nil nil 262 #{Core.MessageSequence} 50 2 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 6143 21 450 521 51 32 402 #range: 50 1 8 #(nil nil) 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 3 13 0 0 35 0 0 0] 8 #() 450 193 193 nil 27)! !
 !UI.DatePresenter class categoriesForMethods!
 resource_Month_calendar_view!public!resources-views! !
 resource_Picker_view!public!resources-views! !
@@ -215,7 +215,7 @@ resource_Picker_view
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Picker_view)
 	"
 
-	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.DateTimePicker} 38 #{Core.Array} 16 nil nil 50 2 8 1140916235 1 32 1094 2 #{UI.ValueHolder} nil false 6 #{Kernel.EqualitySearchPolicy} nil 6 #{Graphics.Color} #default nil 7 nil nil nil 32 nil 8 1853911008 518 #{UI.NullConverter} nil nil nil 262 #{Core.MessageSequence} 50 3 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 6143 21 354 251 51 32 306 #text: 50 1 8 '10:05:22' 32 306 #range: 50 1 8 #(nil nil) 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 124 12 0 0 35 0 0 0] 8 #() 354 193 193 nil 27)! !
+	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.DateTimePicker} 38 #{Core.Array} 16 nil nil 50 2 8 1140916235 1 32 1094 2 #{UI.ValueHolder} nil false 6 #{Kernel.EqualitySearchPolicy} nil 6 #{Graphics.Color} #default nil 5 nil nil nil 32 nil nil 518 #{UI.NullConverter} nil nil nil 262 #{Core.MessageSequence} 50 2 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 6143 21 338 251 51 32 290 #range: 50 1 8 #(nil nil) 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 124 12 0 0 35 0 0 0] 8 #() 338 193 193 nil 27)! !
 !UI.TimePresenter class categoriesForMethods!
 resource_Picker_view!public!resources-views! !
 !

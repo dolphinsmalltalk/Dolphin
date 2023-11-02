@@ -79,7 +79,6 @@ package setMethodNames: #(
 
 package setPrerequisites: #(
 	'..\..\ActiveX\Automation\ActiveX Automation'
-	'..\..\ActiveX\Connection Points\ActiveX Connection Points'
 	'..\..\ActiveX\OCX\ActiveX Control Hosting'
 	'..\Base\Development System'
 	'..\..\Base\Dolphin'
@@ -104,6 +103,7 @@ package setPrerequisites: #(
 	'..\..\MVP\Views\Scintilla\Dolphin Scintilla View'
 	'..\..\MVP\Views\Sliding Tray\Dolphin Slidey-Inney-Outey Thing'
 	'..\..\MVP\Views\Splitter\Dolphin Splitter Control'
+	'..\..\System\Filer\Dolphin STx Filer Core'
 	'..\..\MVP\Views\Styled Views\Dolphin Styled Views'
 	'..\..\MVP\Views\SysLink\Dolphin SysLink Control'
 	'..\..\MVP\Presenters\Text\Dolphin Text Presenter'
@@ -626,7 +626,7 @@ resource_Idea_space_card_tools
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Idea_space_card_tools)
 	"
 
-	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.Toolbar} 38 #{Core.Array} 28 nil nil 50 2 8 1409289036 131137 32 nil nil nil 517 nil nil nil 32 6 #{Graphics.Color} #default 8 1853287488 550 #{Core.IdentityDictionary} 0 nil nil nil 162 5 52135 1094 1 #{UI.ToolbarIconButton} 32 1 1350 4 #{UI.CommandDescription} #cardHistoryBack 8 'Back' 1 1 838 4 #{Graphics.Icon} nil true 1030 #{Graphics.ImageFromStringResourceInitializer} 8 'HistoryBack.ico' 838 1 #{External.ResourceLibrary} 8 'dolphindr8.dll' 65541 nil 52135 52137 210 32 1 242 #cardHistoryForward 8 'Forward' 1 1 290 nil true 322 8 'HistoryForward.ico' 384 65541 nil 52137 52139 210 32 1 242 #moveCardLeft 8 'Move Card Left' 1 1 2374 2 #{Graphics.TextTileIcon} 8 $◀ 8 'Cambria' nil 114 #menuHilight nil nil 1 nil nil 52139 52141 210 32 1 242 #moveCardRight 8 'Move Card Right' 1 1 562 8 $▶ 8 'Cambria' nil 624 nil nil 1 nil nil 52141 52143 210 32 1 242 #closeCard 8 'Close This Card' 1 1 562 8 $✖ nil nil nil nil nil 1 nil nil 52143 50 7 582 1 #{UI.ToolbarSeparator} 32 1 224 416 834 32 1 512 640 736 nil nil 1 nil nil nil nil nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 6143 21 978 263 51 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 130 12 0 0 35 0 0 0] 8 #() 978 193 193 nil 29)! !
+	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.Toolbar} 38 #{Core.Array} 28 nil nil 50 2 8 1409289036 131137 32 nil nil nil 517 nil nil nil 32 6 #{Graphics.Color} #default nil 518 #{Kernel.STBIdentityDictionaryProxy} #{Core.IdentityDictionary} 8 #() nil nil nil nil 50 7 582 1 #{UI.ToolbarSeparator} 32 1 1094 1 #{UI.ToolbarIconButton} 32 1 1350 4 #{UI.CommandDescription} #cardHistoryBack 8 'Back' 1 1 838 4 #{Graphics.Icon} nil true 1030 #{Graphics.ImageFromStringResourceInitializer} 8 'HistoryBack.ico' 838 1 #{External.ResourceLibrary} 8 'dolphindr8.dll' 65541 nil nil 242 32 1 274 #cardHistoryForward 8 'Forward' 1 1 322 nil true 354 8 'HistoryForward.ico' 416 65541 nil nil 210 32 1 242 32 1 274 #moveCardLeft 8 'Move Card Left' 1 1 2374 2 #{Graphics.TextTileIcon} 8 $◀ 8 'Cambria' nil 114 #menuHilight nil nil 1 nil nil nil 242 32 1 274 #moveCardRight 8 'Move Card Right' 1 1 610 8 $▶ 8 'Cambria' nil 672 nil nil 1 nil nil nil 242 32 1 274 #closeCard 8 'Close This Card' 1 1 610 8 $✖ nil nil nil nil nil 1 nil nil nil nil nil 1 nil nil nil nil nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 6143 21 962 263 51 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 130 12 0 0 35 0 0 0] 8 #() 962 193 193 nil 29)! !
 !UI.Toolbar class categoriesForMethods!
 resource_Idea_space_card_tools!public!resources-views! !
 !

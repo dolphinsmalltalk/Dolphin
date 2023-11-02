@@ -42,6 +42,7 @@ package setPrerequisites: #(
 	'..\..\..\Dolphin\MVP\Presenters\Number\Dolphin Number Presenter'
 	'..\..\..\Dolphin\MVP\Views\Buttons\Dolphin Push Buttons'
 	'..\..\..\Dolphin\MVP\Views\Slider\Dolphin Slider Control'
+	'..\..\..\Dolphin\System\Filer\Dolphin STx Filer Core'
 	'..\..\..\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter'
 	'..\..\..\Dolphin\MVP\Icons\Dolphin Text Tile Icons'
 	'..\..\..\Dolphin\MVP\Type Converters\Dolphin Type Converters'

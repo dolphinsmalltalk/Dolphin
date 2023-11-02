@@ -34,6 +34,7 @@ package setPrerequisites: #(
 	'..\System\Filer\Dolphin Literal Filer'
 	'..\MVP\Base\Dolphin MVP Base'
 	'..\MVP\Views\Buttons\Dolphin Push Buttons'
+	'..\System\Filer\Dolphin STx Filer Core'
 	'..\MVP\Presenters\Text\Dolphin Text Presenter'
 	'..\MVP\Type Converters\Dolphin Type Converters'
 	'..\MVP\Models\Value\Dolphin Value Models'

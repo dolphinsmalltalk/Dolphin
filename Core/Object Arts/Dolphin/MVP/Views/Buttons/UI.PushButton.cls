@@ -339,7 +339,7 @@ resource_Cancel_button
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Cancel_button)
 	"
 
-	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.PushButton} 38 #{Core.Array} 20 nil nil 50 2 8 1140924416 1 32 nil nil nil 7 nil nil nil 32 nil 8 1853182784 1350 4 #{UI.CommandDescription} #cancel 8 '&Cancel' 1 1 nil nil false nil nil nil 262 #{Core.MessageSequence} 50 3 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 6143 21 274 141 51 32 226 #isEnabled: 8 #(false) 32 226 #text: 50 1 8 '&Cancel' 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 69 12 0 0 35 0 0 0] 8 #() 274 193 193 nil 29)!
+	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.PushButton} 38 #{Core.Array} 20 nil nil 50 2 8 1140924416 1 32 nil nil nil 5 nil nil nil 32 nil nil 1350 4 #{UI.CommandDescription} #cancel 8 '&Cancel' 1 1 nil nil false nil nil nil 262 #{Core.MessageSequence} 50 3 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 6143 21 258 141 51 32 210 #isEnabled: 8 #(false) 32 210 #text: 50 1 8 '&Cancel' 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 69 12 0 0 35 0 0 0] 8 #() 258 193 193 nil 29)!
 
 resource_No_button
 	"Answer the literal data from which the 'No button' resource can be reconstituted.
@@ -349,7 +349,7 @@ resource_No_button
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_No_button)
 	"
 
-	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.PushButton} 38 #{Core.Array} 20 nil nil 50 2 8 1140924416 1 32 nil nil nil 7 nil nil nil 32 nil 8 1853182784 1350 4 #{UI.CommandDescription} #no 8 '&No' 1 1 nil nil false nil nil nil 262 #{Core.MessageSequence} 50 3 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 6143 21 274 141 51 32 226 #isEnabled: 8 #(false) 32 226 #text: 50 1 8 '&No' 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 69 12 0 0 35 0 0 0] 8 #() 274 193 193 nil 29)!
+	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.PushButton} 38 #{Core.Array} 20 nil nil 50 2 8 1140924416 1 32 nil nil nil 5 nil nil nil 32 nil nil 1350 4 #{UI.CommandDescription} #no 8 '&No' 1 1 nil nil false nil nil nil 262 #{Core.MessageSequence} 50 3 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 6143 21 258 141 51 32 210 #isEnabled: 8 #(false) 32 210 #text: 50 1 8 '&No' 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 69 12 0 0 35 0 0 0] 8 #() 258 193 193 nil 29)!
 
 resource_OK_button
 	"Answer the literal data from which the 'OK button' resource can be reconstituted.
@@ -359,7 +359,7 @@ resource_OK_button
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_OK_button)
 	"
 
-	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.PushButton} 38 #{Core.Array} 20 nil nil 50 2 8 1140924416 1 32 nil nil nil 7 nil nil nil 32 nil 8 1853182784 1350 4 #{UI.CommandDescription} #ok 8 '&OK' 1 1 nil nil true nil nil nil 262 #{Core.MessageSequence} 50 3 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 6143 21 274 141 51 32 226 #isEnabled: 8 #(false) 32 226 #text: 50 1 8 '&OK' 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 69 12 0 0 35 0 0 0] 8 #() 274 193 193 nil 29)!
+	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.PushButton} 38 #{Core.Array} 20 nil nil 50 2 8 1140924416 1 32 nil nil nil 5 nil nil nil 32 nil nil 1350 4 #{UI.CommandDescription} #ok 8 '&OK' 1 1 nil nil true nil nil nil 262 #{Core.MessageSequence} 50 3 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 6143 21 258 141 51 32 210 #isEnabled: 8 #(false) 32 210 #text: 50 1 8 '&OK' 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 69 12 0 0 35 0 0 0] 8 #() 258 193 193 nil 29)!
 
 resource_Push_button
 	"Answer the literal data from which the 'Push button' resource can be reconstituted.
@@ -369,7 +369,7 @@ resource_Push_button
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Push_button)
 	"
 
-	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.PushButton} 38 #{Core.Array} 20 nil nil 50 2 8 1140924416 1 32 nil nil nil 7 nil nil nil 32 nil 8 1853182784 1350 4 #{UI.CommandDescription} nil nil 1 1 nil nil false nil nil nil 262 #{Core.MessageSequence} 50 2 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 6143 21 258 141 51 32 210 #isEnabled: 8 #(false) 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 69 12 0 0 35 0 0 0] 8 #() 258 193 193 nil 29)!
+	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.PushButton} 38 #{Core.Array} 20 nil nil 50 2 8 1140924416 1 32 nil nil nil 5 nil nil nil 32 nil nil 1350 4 #{UI.CommandDescription} nil nil 1 1 nil nil false nil nil nil 262 #{Core.MessageSequence} 50 2 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 6143 21 242 141 51 32 194 #isEnabled: 8 #(false) 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 69 12 0 0 35 0 0 0] 8 #() 242 193 193 nil 29)!
 
 resource_Yes_button
 	"Answer the literal data from which the 'Yes button' resource can be reconstituted.
@@ -379,7 +379,7 @@ resource_Yes_button
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Yes_button)
 	"
 
-	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.PushButton} 38 #{Core.Array} 20 nil nil 50 2 8 1140924416 1 32 nil nil nil 7 nil nil nil 32 nil 8 1853182784 1350 4 #{UI.CommandDescription} #yes 8 '&Yes' 1 1 nil nil false nil nil nil 262 #{Core.MessageSequence} 50 3 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 6143 21 274 141 51 32 226 #isEnabled: 8 #(false) 32 226 #text: 50 1 8 '&Yes' 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 69 12 0 0 35 0 0 0] 8 #() 274 193 193 nil 29)!
+	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.PushButton} 38 #{Core.Array} 20 nil nil 50 2 8 1140924416 1 32 nil nil nil 5 nil nil nil 32 nil nil 1350 4 #{UI.CommandDescription} #yes 8 '&Yes' 1 1 nil nil false nil nil nil 262 #{Core.MessageSequence} 50 3 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 6143 21 258 141 51 32 210 #isEnabled: 8 #(false) 32 210 #text: 50 1 8 '&Yes' 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 69 12 0 0 35 0 0 0] 8 #() 258 193 193 nil 29)!
 
 stbConvertFromVersion1: anArray
 	"Private - Perform an STB conversion from a version 1 (or earlier) <View> to version 2.
