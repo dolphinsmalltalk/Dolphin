@@ -30,6 +30,7 @@ package setPrerequisites: #(
 	'..\..\..\Object Arts\Dolphin\System\Filer\Dolphin Literal Filer'
 	'..\..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base'
 	'..\..\..\Object Arts\Dolphin\MVP\Views\Buttons\Dolphin Push Buttons'
+	'..\..\..\Object Arts\Dolphin\System\Filer\Dolphin STx Filer Core'
 	'..\..\..\Object Arts\Dolphin\MVP\Icons\Dolphin Text Tile Icons'
 	'..\..\..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters'
 	'OA SUnit Extensions'

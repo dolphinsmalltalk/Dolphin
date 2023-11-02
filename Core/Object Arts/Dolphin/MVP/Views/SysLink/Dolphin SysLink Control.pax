@@ -128,7 +128,7 @@ resource_Link_text
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Link_text)
 	"
 
-	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.SysLinkView} 38 #{Core.Array} 16 nil nil 50 2 8 1409286400 1 32 1094 2 #{UI.ValueHolder} nil false 6 #{Kernel.EqualitySearchPolicy} nil nil nil 5 nil nil nil 32 nil 8 1853021440 518 #{UI.NullConverter} nil nil nil 262 #{Core.MessageSequence} 50 2 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 6143 21 322 181 31 32 274 #text: 50 1 8 '<A HREF="http://www.object-arts.com">Object Arts Home</A>' 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 89 12 0 0 25 0 0 0] 8 #() 322 193 193 nil 27)! !
+	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.SysLinkView} 38 #{Core.Array} 16 nil nil 50 2 8 1409286400 1 32 1094 2 #{UI.ValueHolder} nil false 6 #{Kernel.EqualitySearchPolicy} nil nil nil 5 nil nil nil 32 nil nil 518 #{UI.NullConverter} nil nil nil 262 #{Core.MessageSequence} 50 2 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 6143 21 306 181 31 32 258 #text: 50 1 8 '<A HREF="http://www.object-arts.com">Object Arts Home</A>' 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 89 12 0 0 25 0 0 0] 8 #() 306 193 193 nil 27)! !
 !UI.TextPresenter class categoriesForMethods!
 resource_Link_text!public!resources-views! !
 !

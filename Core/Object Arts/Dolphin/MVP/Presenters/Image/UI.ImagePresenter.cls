@@ -35,7 +35,7 @@ resource_Basic_image
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Basic_image)
 	"
 
-	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.ImageView} 38 #{Core.Array} 21 nil nil 50 2 8 1140850944 1 32 1094 2 #{UI.ValueHolder} nil nil 518 #{Kernel.PluggableSearchPolicy} 518 #{Core.Message} #= 8 #() 178 #hash 8 #() nil 6 #{Graphics.Color} #default nil 7 nil nil nil 32 nil 8 4294903431 518 #{UI.NullConverter} nil nil nil nil #scaleToFit 1 nil nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 6143 21 434 225 201 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 111 12 0 0 110 0 0 0] 8 #() 434 193 193 nil 27)!
+	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.ImageView} 38 #{Core.Array} 21 nil nil 50 2 8 1140850944 1 32 1094 2 #{UI.ValueHolder} nil nil 518 #{Kernel.PluggableSearchPolicy} 518 #{Core.Message} #= 8 #() 178 #hash 8 #() nil 6 #{Graphics.Color} #default nil 5 nil nil nil 32 nil nil 518 #{UI.NullConverter} nil nil nil nil #scaleToFit 1 nil nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 6143 21 418 225 201 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 111 12 0 0 110 0 0 0] 8 #() 418 193 193 nil 27)!
 
 resource_Default_view
 	"Answer the literal data from which the 'Default view' resource can be reconstituted.
@@ -45,7 +45,7 @@ resource_Default_view
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.StaticBitmap} 38 #{Core.Array} 17 nil nil 50 2 8 1149239566 1 32 1094 2 #{UI.ValueHolder} nil nil 518 #{Kernel.PluggableSearchPolicy} 518 #{Core.Message} #== 8 #() 178 #hash 8 #() nil nil nil 7 nil nil nil 32 nil 8 1853387904 518 #{UI.NullConverter} nil nil false nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 6143 21 402 441 331 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 219 12 0 0 175 0 0 0] 8 #() 402 193 193 nil 27)!
+	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.StaticBitmap} 38 #{Core.Array} 17 nil nil 50 2 8 1149239566 1 32 1094 2 #{UI.ValueHolder} nil nil 518 #{Kernel.PluggableSearchPolicy} 518 #{Core.Message} #== 8 #() 178 #hash 8 #() nil nil nil 5 nil nil nil 32 nil nil 518 #{UI.NullConverter} nil nil false nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 6143 21 386 441 331 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 219 12 0 0 175 0 0 0] 8 #() 386 193 193 nil 27)!
 
 resource_Static_icon
 	"Answer the literal data from which the 'Static icon' resource can be reconstituted.
@@ -55,7 +55,7 @@ resource_Static_icon
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Static_icon)
 	"
 
-	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.StaticIcon} 38 #{Core.Array} 17 nil nil 50 2 8 1149239555 1 32 1094 2 #{UI.ValueHolder} nil nil 518 #{Kernel.PluggableSearchPolicy} 518 #{Core.Message} #== 8 #() 178 #hash 8 #() nil nil nil 7 nil nil nil 32 nil 8 1853387904 518 #{UI.NullConverter} nil nil false nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 6143 21 402 241 221 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 119 12 0 0 120 0 0 0] 8 #() 402 193 193 nil 27)! !
+	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.StaticIcon} 38 #{Core.Array} 17 nil nil 50 2 8 1149239555 1 32 1094 2 #{UI.ValueHolder} nil nil 518 #{Kernel.PluggableSearchPolicy} 518 #{Core.Message} #== 8 #() 178 #hash 8 #() nil nil nil 5 nil nil nil 32 nil nil 518 #{UI.NullConverter} nil nil false nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 6143 21 386 241 221 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 119 12 0 0 120 0 0 0] 8 #() 386 193 193 nil 27)! !
 !UI.ImagePresenter class categoriesForMethods!
 icon!constants!public! !
 resource_Animated_view!public!resources-views! !

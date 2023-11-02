@@ -571,6 +571,7 @@ package setPrerequisites: #(
 	'..\..\MVP\Views\Buttons\Dolphin Push Buttons'
 	'..\..\Registry\Dolphin Registry Access'
 	'..\..\Base\Dolphin SizeIs Fields'
+	'..\..\System\Filer\Dolphin STx Filer Core'
 	'..\..\MVP\Presenters\Text\Dolphin Text Presenter'
 	'..\..\MVP\Icons\Dolphin Text Tile Icons'
 	'..\..\MVP\Type Converters\Dolphin Type Converters'

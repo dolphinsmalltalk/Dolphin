@@ -397,6 +397,10 @@ eventSinkClass
 
 	^EventSink!
 
+filerProxyIn: anSTxOutFiler
+	sink ifNotNil: [anSTxOutFiler override: sink with: nil].
+	^super filerProxyIn: anSTxOutFiler!
+
 finalRelease
 	"The last reference to the receiver (as a COM object) has been released.
 	This is an opportunity to actively clean up, rather than passively waiting 
@@ -925,6 +929,7 @@ doPrimaryVerb!public! !
 doVerb:!public! !
 editControlProperties!operations!public! !
 eventSinkClass!constants!public! !
+filerProxyIn:!binary filing!private! !
 finalRelease!public!realizing/unrealizing! !
 firesControlEvents!public!testing! !
 firesControlEvents:!accessing!public! !
@@ -1219,9 +1224,9 @@ resource_Default_view
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.AXControlSite} 38 #{Core.Array} 25 nil nil 50 2 8 1140916224 1 32 nil 6 #{Graphics.Color} #default nil 7 nil nil nil 32 nil 537218643 8 'mshtml:
+	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.AXControlSite} 38 #{Core.Array} 25 nil nil 50 2 8 1140916224 1 32 nil 6 #{Graphics.Color} #default nil 5 nil nil nil 32 nil nil 8 'mshtml:
 <h2>Active-X Control Site</h2>
-<h4>Copyright © Object Arts Ltd</h4>' 1030 #{OS.COM.IDispatch} nil nil 2374 1 #{OS.COM.TKindDispatchAnalyzer} 1094 1 #{OS.COM.ITypeInfo2} nil nil 774 #{OS.COM.TYPEATTR} nil 208 240 nil nil nil 2630 3 #{OS.COM.TypeLibraryAnalyzer} 518 #{OS.COM.ITypeLib2} nil nil 2053 nil 262 #{OS.COM.TLIBATTR} 8 #[197 241 80 48 181 152 207 17 187 130 0 170 0 189 206 11 0 0 0 0 1 0 0 0 4 0 0 0 8 0 0 0] 1606 2 #{Kernel.RelativeBindingReference} 8 'MSHTML' 50 1 432 false nil nil #{UI.AXControlSite class} nil nil nil 550 #{Core.LookupTable} 0 nil nil 1329 nil nil nil nil 518 #{UI.IDolphinAxHost} nil nil 1542 #{OS.COM.EventSink} 466 38 8 -2147418108 #onbeforeupdate 8 -2147418107 #onafterupdate 8 -2147418106 #onrowexit 8 -2147418105 #onrowenter 8 -2147418104 #onmouseover 8 -2147418103 #onmouseout 8 -2147418102 #onhelp 8 -2147418101 #ondragstart 8 -2147418100 #onselectstart 8 -2147418099 #onerrorupdate 8 -2147418098 #ondatasetchanged 8 -2147418097 #ondataavailable 8 -2147418096 #ondatasetcomplete 8 -2147418093 #onpropertychange 8 -2147418080 #onrowsdelete 8 -2147418079 #onrowsinserted 8 -2147418078 #oncellchange -1217 #onreadystatechange -1213 #onmouseup -1211 #onmousemove -1209 #onmousedown -1207 #onkeyup -1205 #onkeypress -1203 #onkeydown -1201 #ondblclick -1199 #onclick 2047 #oncontextmenu 2053 #onstop 2055 #onbeforeeditfocus 2067 #onmousewheel 2069 #onbeforedeactivate 2073 #oncontrolselect 2075 #onselectionchange 2089 #onactivate 2091 #ondeactivate 2095 #onbeforeactivate 2097 #onfocusin 2099 #onfocusout 32 518 #{OS.COM.IConnectionPoint} nil nil 33592097 194 226 nil nil 258 nil 880 896 nil nil nil 290 322 nil nil 2053 nil 354 8 #[197 241 80 48 181 152 207 17 187 130 0 170 0 189 206 11 0 0 0 0 1 0 0 0 4 0 0 0 8 0 0 0] 8 #{MSHTML} nil nil nil 466 0 nil 54 #{Core.GUID} 16 96 242 80 48 181 152 207 17 187 130 0 170 0 189 206 11 1279 1030 #{OS.COM.TypeLibDocumentation} 8 'HTMLDocumentEvents' 8 '' 1 8 '' nil nil 1 2761 466 0 1030 #{UI.IAxWinAmbientDispatchEx} nil nil nil nil 518 #{OS.COM.IUnknown} nil nil nil nil nil 262 #{Core.MessageSequence} 50 3 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 6143 21 1314 531 221 32 1266 #restoreAmbientProperties 8 #() 32 1266 #controlBinaryStoreBytes: 50 1 8 #[116 0 105 0 118 0 101 0 45 0 88 0 32 0 67 0 111 0 110 0 116 0 114 0 111 0 108 0 32 0 83 0 105 0 116 0 101 0 60 0 47 0 104 0 50 0 62 0 13 0 10 0 60 0 104 0 52 0 62 0 67 0 111 0 112 0 121 0 114 0 105 0 103 0 104 0 116 0 32 0 169 0 32 0 79 0 98 0 106 0 101 0 99 0 116 0 32 0 65 0 114 0 116 0 115 0 32 0 76 0 116 0 100 0 60 0 47 0 104 0 52 0 62 0] 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 8 13 0 0 120 0 0 0] 8 #() 1314 193 193 nil 27)!
+<h4>Copyright © Object Arts Ltd</h4>' 1030 #{OS.COM.IDispatch} nil nil 2374 1 #{OS.COM.TKindDispatchAnalyzer} 1094 1 #{OS.COM.ITypeInfo2} nil nil 774 #{OS.COM.TYPEATTR} nil 208 240 nil nil nil 2630 3 #{OS.COM.TypeLibraryAnalyzer} 518 #{OS.COM.ITypeLib2} nil nil 2053 nil 262 #{OS.COM.TLIBATTR} 8 #[197 241 80 48 181 152 207 17 187 130 0 170 0 189 206 11 0 0 0 0 1 0 0 0 4 0 0 0 8 0 110 0] 8 #{Root.MSHTML} nil nil nil 550 #{Core.LookupTable} 0 nil nil 1329 1030 #{OS.COM.TypeLibDocumentation} 8 'DispHTMLDocument' 8 '' 1 8 '' nil nil nil 518 #{UI.IDolphinAxHost} nil nil nil 2761 418 0 1030 #{UI.IAxWinAmbientDispatchEx} nil nil nil nil 518 #{OS.COM.IUnknown} nil nil nil nil nil 262 #{Core.MessageSequence} 50 3 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 6143 21 738 531 221 32 690 #restoreAmbientProperties 8 #() 32 690 #controlBinaryStoreBytes: 50 1 8 #[116 0 105 0 118 0 101 0 45 0 88 0 32 0 67 0 111 0 110 0 116 0 114 0 111 0 108 0 32 0 83 0 105 0 116 0 101 0 60 0 47 0 104 0 50 0 62 0 13 0 10 0 60 0 104 0 52 0 62 0 67 0 111 0 112 0 121 0 114 0 105 0 103 0 104 0 116 0 32 0 169 0 32 0 79 0 98 0 106 0 101 0 99 0 116 0 32 0 65 0 114 0 116 0 115 0 32 0 76 0 116 0 100 0 60 0 47 0 104 0 52 0 62 0] 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 8 13 0 0 120 0 0 0] 8 #() 738 193 193 nil 27)!
 
 stbConvertProxy: aSTBViewProxy
 	"There was a bug in AXControlSite>>state in DPro 4.0 such that the recorded state

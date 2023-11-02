@@ -21,6 +21,7 @@ package setPrerequisites: #(
 	'..\..\..\System\Filer\Dolphin Literal Filer'
 	'..\..\Base\Dolphin MVP Base'
 	'..\..\Views\Buttons\Dolphin Push Buttons'
+	'..\..\..\System\Filer\Dolphin STx Filer Core'
 	'..\Text\Dolphin Text Presenter'
 	'..\..\Views\Tooltips\Dolphin Tooltips'
 	'..\..\Type Converters\Dolphin Type Converters'

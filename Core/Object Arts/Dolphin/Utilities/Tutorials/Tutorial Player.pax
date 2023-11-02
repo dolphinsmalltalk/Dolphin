@@ -19,6 +19,7 @@ package setPrerequisites: #(
 	'..\..\System\Filer\Dolphin Literal Filer'
 	'..\..\MVP\Base\Dolphin MVP Base'
 	'..\..\MVP\Views\Scintilla\Dolphin Scintilla View'
+	'..\..\System\Filer\Dolphin STx Filer Core'
 	'..\..\MVP\Views\SysLink\Dolphin SysLink Control'
 	'..\..\MVP\Presenters\Text\Dolphin Text Presenter'
 	'..\..\MVP\Icons\Dolphin Text Tile Icons'

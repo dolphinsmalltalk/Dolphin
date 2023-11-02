@@ -22,6 +22,7 @@ package setPrerequisites: #(
 	'..\Number\Dolphin Number Presenter'
 	'Dolphin Prompter'
 	'..\..\Views\Buttons\Dolphin Push Buttons'
+	'..\..\..\System\Filer\Dolphin STx Filer Core'
 	'..\Text\Dolphin Text Presenter'
 	'..\..\Type Converters\Dolphin Type Converters'
 	'..\..\Models\Value\Dolphin Value Models'
