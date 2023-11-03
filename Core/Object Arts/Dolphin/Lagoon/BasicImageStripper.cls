@@ -278,11 +278,11 @@ _messagesSentByClasses: aCollectionOfClasses
 			[:eachMethod |
 			| selector |
 			selector := eachMethod selector.
-			eachMethod allSymbolLiteralsDo: 
-					[:eachSymbol |
+			eachMethod literalReferencesDo: 
+					[:each |
 					"Note that self references are now excluded to prevent this particular form of
 					 circular reference preventing a method from being stripped"
-					eachSymbol == selector ifFalse: [sent add: eachSymbol]]].
+					(each ~~ selector and: [each basicClass == Symbol]) ifTrue: [sent add: each]]].
 
 	"Add all messages that can be triggered by events"
 	_EventsRegister do: [:each | each do: [:mseq | mseq messages do: [:ms | sent add: ms selector]]].
@@ -383,11 +383,7 @@ _removeClassMetaInfo
 			classPool := each classPool.
 			newPool := classPool class new.
 			classPool
-				associationsDo: [:var | var isClassVariable ifTrue: [
-					Notification signal: 'niling environment of ', var fullName.
-					var environment: nil] ifFalse: [
-					Notification signal: 'Retained non-class variable binding ', var fullName.
-					newPool add: var]].
+				associationsDo: [:var | var isClassVariable ifTrue: [var environment: nil] ifFalse: [newPool add: var]].
 			each basicClassPool: newPool.
 
 			"We can't nil out the imports in general, as these are required to resolve BindingReferences that are not fully qualified."
@@ -539,7 +535,7 @@ _removePackageManagement
 	self _systemPackageManager class reset.
 	"Note that we must leave the #owningPackage definition in ClassDescription for potential runtime STB use"
 	methods := Set new.
-	#(#{PoolDictionary} #{ResourceIdentifier} #{CompiledMethod})
+	#(#{Kernel.PoolDictionary} #{UI.ResourceIdentifier} #{Kernel.CompiledMethod})
 		do: [:each | each ifDefined: [:class | methods add: (class compiledMethodAt: #owningPackage ifAbsent: nil)]].
 	self
 		_removeMethods: methods
@@ -709,7 +705,10 @@ _speciallySentMessages
 	^VMLibrary.Registry select: [:each | each ~~ #namespace: and: [each class == Symbol]]!
 
 _startElement: aString attributes: aCollectionOfAttributes
-	self _deploymentContext _startElement: aString attributes: aCollectionOfAttributes!
+	self _startElement: aString attributes: aCollectionOfAttributes close: false!
+
+_startElement: aString attributes: aCollectionOfAttributes close: aBoolean
+	self _deploymentContext _startElement: aString attributes: aCollectionOfAttributes close: aBoolean!
 
 _systemPackageManager
 	"Private - Answer the package manager to be used by the receiver.
@@ -909,6 +908,7 @@ _shrinkEventsOf:!operations!private! !
 _shrinkEventsRegister!helpers!private! !
 _speciallySentMessages!configuration!private! !
 _startElement:attributes:!logging!private! !
+_startElement:attributes:close:!logging!private! !
 _systemPackageManager!accessing!private! !
 _uncheckedDeleteClass:!helpers!private! !
 _verifyRequiredPackages!accessing!private! !

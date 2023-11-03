@@ -142,6 +142,7 @@ Kernel.SharedPool
 			'DebugMethod' -> 16r40.
 			'Interactive' -> 16r200.
 			'NoOptimize' -> 16r8.
+			'NoRefOnlyLiterals' -> 16r800.
 			'NotLogged' -> 16r1.
 			'SendYourself' -> 16r400.
 			'SyntaxCheckOnly' -> 16r2.
@@ -2513,7 +2514,18 @@ Core.Object
 	classVariableNames: 'InfoCacheKeys InfoCacheValues'
 	imports: #(#{Kernel.OpcodePool})
 	classInstanceVariableNames: ''
-	classConstants: { 'PrivateMask' -> 16r1 }!
+	classConstants: {
+			'Normal' -> 16r0.
+			'PrivateMask' -> 16r1.
+			'ReturnFalse' -> 16r3.
+			'ReturnInstanceVariable' -> 16r6.
+			'ReturnLiteralConstant0' -> 16r5.
+			'ReturnLiteralStatic0' -> 16r8.
+			'ReturnNil' -> 16r4.
+			'ReturnSelf' -> 16r1.
+			'ReturnTrue' -> 16r2.
+			'SetInstanceVariable' -> 16r7
+		}!
 Core.Object
 	subclass: #'Kernel.Compiler'
 	instanceVariableNames: ''

@@ -34,9 +34,9 @@ testHasAnnotation
 testIsQuick
 	| method |
 	method := self class compiledMethodAt: #returnTrue.
-	self assert: method extraIndex equals: 2.
+	self assert: method extraIndex equals: CompiledCode.ReturnTrue.
 	method := self class compiledMethodAt: #returnPlusOne:.
-	self deny: method extraIndex equals: 5!
+	self deny: method extraIndex equals: CompiledCode.ReturnLiteralConstant0!
 
 testIsSimpleSelfSend
 	"CompiledCode>>isSimpleSelfSend: is used for finding methods of two basic forms: `^self message`, and `self message`. ClassDescription>>comment is an example of the former, and ClassDescription>>comment: the latter."

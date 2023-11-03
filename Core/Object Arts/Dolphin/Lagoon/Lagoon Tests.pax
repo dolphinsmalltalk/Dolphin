@@ -31,6 +31,7 @@ package setPrerequisites: #(
 	'..\..\..\Contributions\Refactory\RBNamespaces'
 	'..\..\Samples\MVP\RegEdit\RegEdit'
 	'..\..\Samples\ActiveX\Web Browser\Simple Web Browser'
+	'..\..\Samples\MVP\XmlPad\XmlPad'
 ).
 
 package!

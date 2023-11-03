@@ -16,10 +16,8 @@ be thrown away eventually, or perhaps compiled into a separate DLL.
 
 ///////////////////////////////////
 
-POTE __stdcall Compiler::NewCompiledMethod(POTE classPointer, size_t numBytes, const STMethodHeader & hdr)
+POTE __stdcall Compiler::NewCompiledMethod(POTE classPointer, size_t numBytes, const STMethodHeader & hdr, size_t literalCount)
 {
-	size_t literalCount = LiteralCount + (m_annotations.size() > 0);
-
 	POTE methodPointer = m_piVM->NewObjectWithPointers(classPointer,
 		((sizeof(STCompiledMethod)
 			 -sizeof(Oop)	// Deduct dummy literal frame entry (arrays cannot be zero sized in IDL)

@@ -19,6 +19,7 @@ package setClassNames: #(
 	#{Smalltalk.DeploymentContext}
 	#{Smalltalk.ImageStripper}
 	#{Smalltalk.ImageStripperProgress}
+	#{Smalltalk.LiteralReferenceCollector}
 ).
 
 package setMethodNames: #(
@@ -46,7 +47,7 @@ Core.Object
 	classConstants: {}!
 Core.Object
 	subclass: #DeploymentContext
-	instanceVariableNames: 'logStream elementStack aspectSetters aspectGetters developmentClasses preservedMessages rootClasses supersentMethods notifier runFlags logFilename'
+	instanceVariableNames: 'logStream elementStack aspectSetters aspectGetters developmentClasses preservedMessages rootClasses supersentMethods notifier runFlags logFilename resourceIdentifiers resourceReferences'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -92,6 +93,7 @@ BasicImageStripper
 			'NoXPManifestMask' -> 16r200000.
 			'PreserveAspectsMask' -> 16r4.
 			'PurgeStubbornClassesMask' -> 16r4000000.
+			'ReferenceViewRefereeIdInstVarIndex' -> 16rD.
 			'RemoveAbstractUnreachable' -> 16r2.
 			'RetainDevSysMask' -> 16r10000000.
 			'RetainInstVarNamesMask' -> 16r8.
@@ -104,10 +106,18 @@ BasicImageStripper
 			'StripPackagesMask' -> 16r20000.
 			'StripResourcesMask' -> 16r80.
 			'StripShouldNotImplMask' -> 16r8000.
+			'StripUnreferencedLiteralsMask' -> 16r20000000.
 			'ToGoMask' -> 16r100000.
 			'UnattendedMask' -> 16r1000000.
 			'WriteLogMask' -> 16r400
 		}!
+Kernel.InstructionInterpreter
+	subclass: #LiteralReferenceCollector
+	instanceVariableNames: 'referenceCounts lastReferenced'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 OS.Win32Structure
 	subclass: #'OS.VS_VERSION_INFO_HEADER'
 	instanceVariableNames: 'key valueOffset'

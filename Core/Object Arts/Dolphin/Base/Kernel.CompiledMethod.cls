@@ -105,7 +105,7 @@ isExternalCall
 isGetter
 	"Answer true if the receiver is an instance variable getter method."
 
-	^self extraIndex == 6!
+	^self extraIndex == ReturnInstanceVariable!
 
 isLoose
 	"Answer whether the receiver is owned by a package different from that of its class."

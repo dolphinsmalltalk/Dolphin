@@ -61,10 +61,11 @@ defaultCategories: method
 	methodClass isMeta ifTrue: [answer add: 'instance creation'] ifFalse: [answer add: 'operations'].
 	^answer collect: [:each | each asMethodCategory]!
 
-isReturnConstant: aCompiledMethod 
+isReturnConstant: aCompiledMethod
 	"Private - Answer whether the <CompiledMethod> argument returns a constant value."
 
-	^aCompiledMethod extraIndex between: 2 and: 5!
+	^aCompiledMethod extraIndex between: CompiledCode.ReturnTrue
+		and: CompiledCode.ReturnLiteralConstant0!
 
 prefixCategories
 	^#(

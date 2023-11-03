@@ -386,6 +386,6 @@ directFunction:msg:wParam:lpParam:!operations!private! !
 directFunction:msg:wpParam:lParam:!operations!private! !
 directFunction:msg:wpParam:lpParam:!operations!private! !
 open:!private!realizing/unrealizing! !
-returnValues!**auto generated**!development!private!scintilla interface! !
+returnValues!**auto generated**!private!scintilla interface! !
 !
 

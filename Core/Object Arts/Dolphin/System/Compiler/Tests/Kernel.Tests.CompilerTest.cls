@@ -1163,7 +1163,7 @@ testMutableAnnotation
 	self assert: mutator isAnnotated.
 	self assert: mutator annotations asArray equals: {Message selector: #mutable}.
 	inst := class new.
-	self assert: mutator extraIndex equals: 49.
+	self assert: mutator primitiveIndex equals: 49.
 	inst perform: mutator selector with: 123.
 	self assert: (inst perform: #iv1) equals: 123!
 
@@ -1404,7 +1404,7 @@ testReturnImmediate
 	#(-128 -2 3 127) do: 
 			[:each |
 			method := (self compileExpression: (each printStringRadix: 2)) method.
-			self assert: method extraIndex equals: 5.
+			self assert: method extraIndex equals: CompiledCode.ReturnLiteralConstant0.
 			self assert: method byteCodes
 				equals: (ByteArray
 						with: Nop
@@ -1891,7 +1891,7 @@ testWriteAccessor
 			| accessor selector |
 			selector := (each , ':') asSymbol.
 			accessor := class compiledMethodAt: selector.
-			self assert: accessor extraIndex equals: 7.
+			self assert: accessor extraIndex equals: CompiledCode.SetInstanceVariable.
 			inst perform: selector with: each.
 			self assert: (inst perform: each asSymbol) equals: each]!
 

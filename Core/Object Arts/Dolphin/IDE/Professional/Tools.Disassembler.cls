@@ -312,11 +312,6 @@ printSendPrefix
 
 	stream nextPutAll: 'Send'!
 
-printSendSuffix: extensionByte
-	"Private - Append the suffix for a double byte send instruction."
-
-	self printSendSuffix: (extensionByte bitAnd: 31) args: (extensionByte bitShift: -5)!
-
 printSendSuffix: selectorIndex args: argCount 
 	"Private - Append the suffix for a double byte send instruction."
 
@@ -597,7 +592,6 @@ printPopPrefix!printing!private! !
 printPseudoSuffix:!printing!private! !
 printPushPrefix!printing!private! !
 printSendPrefix!printing!private! !
-printSendSuffix:!printing!private! !
 printSendSuffix:args:!printing!private! !
 printShortJumpOffset:!printing!private! !
 printShortPrefix!printing!private! !

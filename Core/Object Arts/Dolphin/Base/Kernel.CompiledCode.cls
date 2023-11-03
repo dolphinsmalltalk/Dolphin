@@ -6,7 +6,18 @@ Core.Object
 	classVariableNames: 'InfoCacheKeys InfoCacheValues'
 	imports: #(#{Kernel.OpcodePool})
 	classInstanceVariableNames: ''
-	classConstants: { 'PrivateMask' -> 16r1 }!
+	classConstants: {
+			'Normal' -> 16r0.
+			'PrivateMask' -> 16r1.
+			'ReturnFalse' -> 16r3.
+			'ReturnInstanceVariable' -> 16r6.
+			'ReturnLiteralConstant0' -> 16r5.
+			'ReturnLiteralStatic0' -> 16r8.
+			'ReturnNil' -> 16r4.
+			'ReturnSelf' -> 16r1.
+			'ReturnTrue' -> 16r2.
+			'SetInstanceVariable' -> 16r7
+		}!
 Kernel.CompiledCode guid: (Core.GUID fromString: '{87b4c46f-026e-11d3-9fd7-00a0cc3e4a32}')!
 Kernel.CompiledCode isNonInstantiable: true!
 Kernel.CompiledCode comment: 'CompiledCode is the class of executable objects containing an array of instructions (bytecodes) and an array of literals (the literal frame).
@@ -46,10 +57,10 @@ Note: These are implementation details, and should not be relied upon as they ma
 	| count |
 	self == aMethod ifTrue: [^true].
 	(self class == aMethod class and: 
-			[self methodClass == aMethod methodClass
-				and: [self selector = aMethod selector and: [self byteCodes = aMethod byteCodes]]])
+			[methodClass == aMethod methodClass
+				and: [selector = aMethod selector and: [byteCodes = aMethod basicByteCodes]]])
 		ifFalse: [^false].
-	aMethod literalCount == (count := self literalCount) ifFalse: [^false].
+	aMethod size == (count := self size) ifFalse: [^false].
 	"We need to special case static blocks in the literal frame to avoid infinite recursion"
 	1 to: count
 		do: 
@@ -69,11 +80,15 @@ accessesInstVar: instVarName
 
 	^self accessesInstVar: instVarName at: (self methodClass indexOfInstVar: instVarName)!
 
-accessesInstVar: aString at: anInteger 
+accessesInstVar: aString at: anInteger
 	"Answer whether the receiver accesses the instance variable named, aString, which
 	is the instance variable of its method class with the specified <integer> index."
 
-	^(self extraIndex between: 1 and: 5) not 
+	| extra |
+	extra := self extraIndex.
+	^(extra == Normal or: 
+			[extra == ReturnInstanceVariable
+				or: [extra == SetInstanceVariable or: [extra > ReturnLiteralStatic0]]])
 		and: [self byteCodeDispatcher accessesInstVarAt: anInteger]!
 
 allLiteralsDo: operation 
@@ -82,7 +97,7 @@ allLiteralsDo: operation
 	"Implementation Note: As Dolphin does not have separate methods for blocks (to save space), this is the
 	same as #literalsDo:, but we inline it for speed"
 
-	1 to: self literalCount do: [:i | operation value: (self basicAt: i)]!
+	1 to: self size do: [:i | operation value: (self basicAt: i)]!
 
 allSymbolLiterals
 	"Answer a  <collection> of all the symbols referred to from the literal
@@ -121,10 +136,10 @@ argumentCount
 
 	^(header bitShift: -15) bitAnd: 255!
 
-argumentCount: anInteger 
+argumentCount: anInteger
 	"Private - Set the number of arguments expected by the receiver."
 
-	header := (header bitAnd: ##((255 << 15) bitInvert)) 
+	header := (header bitAnd: ##((255 bitShift: 15) bitInvert))
 				bitOr: ((anInteger bitAnd: 255) bitShift: 15)!
 
 basicByteCodes
@@ -375,7 +390,7 @@ literalReferencesDo: operation
 	intermediate literal arrays."
 
 	| literal |
-	1 to: self literalCount
+	1 to: self size
 		do: 
 			[:i |
 			literal := self basicAt: i.
@@ -413,7 +428,7 @@ literalsDetect: discriminator ifNone: exceptionHandler
 	is answered."
 
 	| literal elem |
-	1 to: self literalCount
+	1 to: self size
 		do: 
 			[:i |
 			literal := self at: i.
@@ -449,7 +464,7 @@ literalsDo: operation
 	"Private - Evaluate the monadic valuable, operation, for each of the receivers
 	literals."
 
-	1 to: self literalCount do: [:i | operation value: (self basicAt: i)]!
+	1 to: self size do: [:i | operation value: (self basicAt: i)]!
 
 localCount
 	"Private - Answer the total number of stack temporaries (including arguments) used by the receiver."
@@ -471,7 +486,7 @@ localScope
 messages
 	"Answer a <collection> of the messages sent by the receiver."
 
-	(self extraIndex between: 1 and: 7) ifTrue: [^##(IdentitySet new)].
+	(self extraIndex between: ReturnSelf and: ReturnLiteralStatic0) ifTrue: [^##(IdentitySet new)].
 	^(MessageSendCollector dispatcher: self byteCodeDispatcher) messages!
 
 messagesDo: aBlock
@@ -479,7 +494,7 @@ messagesDo: aBlock
 	actually sent by the receiver, including any special selectors."
 
 	| idx |
-	((idx := self extraIndex) == 0 or: [idx > 8])
+	((idx := self extraIndex) == Normal or: [idx > ReturnLiteralStatic0])
 		ifTrue: [(MessageSendEnumerator dispatcher: self byteCodeDispatcher) messagesDo: aBlock]!
 
 methodClass
@@ -517,7 +532,7 @@ primitiveIndex
 	"Private - Answer the primitive index of the method, or zero if none"
 
 	| idx |
-	^(idx := self extraIndex) > 8
+	^(idx := self extraIndex) > ReturnLiteralStatic0
 		ifTrue: [idx]
 		ifFalse: [0]!
 
@@ -527,13 +542,13 @@ readsInstVar: instVarName
 	^self readsInstVar: instVarName
 		at: (self methodClass indexOfInstVar: instVarName)!
 
-readsInstVar: aString at: anInteger 
+readsInstVar: aString at: anInteger
 	"Answer whether the receiver accesses the instance variable named, aString, which
 	is the instance variable of its method class with the specified <integer> index."
 
 	| extra |
 	extra := self extraIndex.
-	^((extra between: 1 and: 5) or: [extra == 7]) not 
+	^(extra == Normal or: [extra == ReturnInstanceVariable or: [extra > ReturnLiteralStatic0]])
 		and: [self byteCodeDispatcher readsInstVarAt: anInteger]!
 
 realMethod
@@ -692,11 +707,13 @@ writesInstVar: instVarName
 	^self writesInstVar: instVarName
 		at: (self methodClass indexOfInstVar: instVarName)!
 
-writesInstVar: aString at: anInteger 
+writesInstVar: aString at: anInteger
 	"Answer whether the receiver accesses the instance variable named, aString, which
 	is the instance variable of its method class with the specified <integer> index."
 
-	^(self extraIndex between: 1 and: 6) not 
+	| extra |
+	extra := self extraIndex.
+	^(extra == Normal or: [extra == SetInstanceVariable or: [extra > ReturnLiteralStatic0]])
 		and: [self byteCodeDispatcher writesInstVarAt: anInteger]! !
 !Kernel.CompiledCode categoriesForMethods!
 =!comparing!public! !

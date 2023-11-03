@@ -884,7 +884,7 @@ size_t Compiler::AddToFrameUnconditional(Oop object, const TEXTRANGE& errRange)
 	//
 	_ASSERTE(object);
 	_ASSERTE(!IsIntegerObject(object) || IntegerValueOf(object) < INT16_MIN || IntegerValueOf(object) > INT16_MAX || errRange.Span <= 0);
-	_ASSERTE(!m_literals.contains(object) || m_literals[object] == -1);
+	_ASSERTE(!m_literals.contains(object) || static_cast<int>(m_literals[object]) < 0);
 	size_t index = m_literalFrame.size();
 	if (index < m_literalLimit)
 	{
@@ -910,9 +910,9 @@ size_t Compiler::AddToFrame(Oop object, const TEXTRANGE& errRange, LiteralType t
 	if (it != m_literals.end())
 	{
 		index = (*it).second;
-		if (type == LiteralType::Normal && index == static_cast<size_t>(-1))
+		if (type == LiteralType::Normal && static_cast<int>(index) < 0)
 		{
-			// Need to insert previously reference only literal into the frame
+			// Need to promote former reference only literal into the frame
 			index = AddToFrameUnconditional(object, errRange);
 			(*it).second = index;
 		}
@@ -927,7 +927,7 @@ size_t Compiler::AddToFrame(Oop object, const TEXTRANGE& errRange, LiteralType t
 		}
 		else
 		{
-			index = static_cast<size_t>(-1);
+			index = static_cast<size_t>(-static_cast<int>(type));
 		}
 
 		m_piVM->AddReference(object);
@@ -1059,7 +1059,7 @@ void Compiler::GenStatic(const POTE oteStatic, const TEXTRANGE& range)
 	if (m_ok)
 	{
 		// Index should be >=0 if no error detected
-		_ASSERT(index != -1);
+		_ASSERT(static_cast<int>(index) >= 0);
 
 		// Generate the push
 		if (index < NumShortPushStatics)	// In range of short instructions ?
@@ -3560,9 +3560,9 @@ Oop Compiler::ParseConstExpression()
 			STCompiledMethod& exprMethod = *(STCompiledMethod*)GetObj(oteMethod);
 
 			// Add all the literals in the expression to the end of the literal frame of this method as this
-			// allows normal references search to work in IDE. Note that LiteralCount does not include MethodAnnotations, 
+			// allows normal references search to work in IDE. Note that LiveLiteralCount does not include MethodAnnotations, 
 			// so these will not be copied over from the expression.
-			const size_t loopEnd = pCompiler->LiteralCount;
+			const size_t loopEnd = pCompiler->LiveLiteralCount;
 			for (size_t i=0; i < loopEnd;i++)
 			{
 				Oop oopLiteral = exprMethod.aLiterals[i];
@@ -3574,7 +3574,7 @@ Oop Compiler::ParseConstExpression()
 							m_piVM->IsKindOf(oopLiteral, GetVMPointers().ClassArray)))
 
 				{
-					AddToFrame(oopLiteral, LastTokenRange, LiteralType::ReferenceOnly);
+					AddToFrame(oopLiteral, LastTokenRange, LiteralType::ConstExprReference);
 				}
 			}
 

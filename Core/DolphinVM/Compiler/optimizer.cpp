@@ -2225,7 +2225,8 @@ POTE Compiler::NewMethod()
 	hdr.argumentCount = static_cast<uint8_t>(ArgumentCount);
 	
 	// Allocate CompiledMethod and install the header
-	POTE method = NewCompiledMethod(m_compiledMethodClass, CodeSize, hdr);
+	const size_t literalCount = LiveLiteralCount + (m_annotations.size() > 0);
+	POTE method = NewCompiledMethod(m_compiledMethodClass, CodeSize, hdr, literalCount);
 
 	// Allocate bytecode array for the CompiledMethod and install its header
 	STCompiledMethod& cmpldMethod = *(STCompiledMethod*)GetObj(method);
@@ -2274,7 +2275,6 @@ POTE Compiler::NewMethod()
 	// Install literals 
 	// First those referenced from bytecodes
 	const size_t loopEnd = m_literalFrame.size();
-	const size_t literalCount = LiteralCount + (m_annotations.size() > 0);
 	size_t i = 0;
 	for (; i<loopEnd; i++)
 	{
@@ -2283,10 +2283,14 @@ POTE Compiler::NewMethod()
 		_ASSERTE(oopLiteral != NULL);
 		m_piVM->StorePointerWithValue(&cmpldMethod.aLiterals[i], oopLiteral);
 	}
-	// Then the literals for references not present in the bytecode
+	// Then the literals for references not present in the bytecode. These are useful in the development
+	// environment for reference searches, but for runtime purposes just inflate the literal frame and potentially
+	// the closure of referenced objects in the application, so these can be excluded using the NoRefOnlyLiterals
+	// compiler flag. Any referenced literals in const expressions are preserved
 	for (LiteralMap::const_iterator it = m_literals.cbegin(); it != m_literals.cend(); it++)
 	{
-		if ((*it).second == -1)
+		auto index = static_cast<int>((*it).second);
+		if (index == -static_cast<int>(LiteralType::ConstExprReference) || (index == -static_cast<int>(LiteralType::ReferenceOnly) && WantReferenceOnlyLiterals))
 		{
 			_ASSERTE(i < literalCount);
 			Oop oopLiteral = (*it).first;
@@ -2328,6 +2332,27 @@ POTE Compiler::NewMethod()
 	// to contain the source pointer, etc
 	//m_piVM->MakeImmutable(reinterpret_cast<Oop>(method), TRUE);
 	return method;
+}
+
+size_t Compiler::get_LiveLiteralCount() const
+{
+	size_t refOnlyLiterals = 0;
+	if (!WantReferenceOnlyLiterals)
+	{
+		// Some literals are not referenced by the bytecodes, e.g. because they are special sends, or are immediate numbers or static constants.
+		// Retaining these literals if useful in the development environment for reference searches, but for runtime purposes just inflate the 
+		// literal frame and potentially the closure of referenced objects in the application, so these can be excluded using the NoRefOnlyLiterals
+		// compiler flag. Any referenced literals in const expressions are preserved. 
+
+		for (LiteralMap::const_iterator it = m_literals.cbegin(); it != m_literals.cend(); it++)
+		{
+			if ((*it).second == static_cast<size_t>(-static_cast<int>(LiteralType::ReferenceOnly)))
+			{
+				refOnlyLiterals++;
+			}
+		}
+	}
+	return LiteralCount - refOnlyLiterals;
 }
 
 void Compiler::IncrementIPs()

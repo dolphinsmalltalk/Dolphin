@@ -138,7 +138,8 @@ testStbConvertFromVersion0_SharedPool
 	self assert: subject isKindOf: VariableBinding.
 	self assert: subject key identicalTo: #CompilerFlags.
 	self assert: subject value isKindOf: Smalltalk.PoolConstantsDictionary.
-	subject value associations sort with: CompilerFlags associations sort
+	subject value associations sort
+		with: (CompilerFlags associations select: [:each | each value <= 1024]) sort
 		do: 
 			[:v1 :v2 |
 			self assert: v1 key equals: v2 key.

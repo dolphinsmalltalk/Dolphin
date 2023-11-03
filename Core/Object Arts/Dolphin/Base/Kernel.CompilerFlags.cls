@@ -10,6 +10,7 @@ Kernel.SharedPool
 			'DebugMethod' -> 16r40.
 			'Interactive' -> 16r200.
 			'NoOptimize' -> 16r8.
+			'NoRefOnlyLiterals' -> 16r800.
 			'NotLogged' -> 16r1.
 			'SendYourself' -> 16r400.
 			'SyntaxCheckOnly' -> 16r2.
