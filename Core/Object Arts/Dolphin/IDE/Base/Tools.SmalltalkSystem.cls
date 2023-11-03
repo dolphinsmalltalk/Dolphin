@@ -2045,12 +2045,6 @@ instVarReaderFilter: aString in: startClass
 	(each methodClass includesBehavior: startClass)
 		and: [[each readsInstVar: aString] on: NotFoundError do: [:e | false]]]!
 
-instVarWriterFilter: aString in: startClass
-	^
-	[:each |
-	(each methodClass includesBehavior: startClass)
-		and: [[each writesInstVar: aString] on: NotFoundError do: [:e | false]]]!
-
 interruptHotKey
 	"Answer the <integer> HOTKEYF_XXX|VK_XXX code used by the VM as the break/interrupt key,
 	e.g. VK_CANCEL (Ctrl+Break)"
@@ -3146,6 +3140,35 @@ promptForClassVarName: nameString in: aClass prompt: promptString caption: capti
 promptForDefinitionsOf: aString in: aBrowserEnvironment
 	^self promptForSelector: aString caption: 'Definitions of message in <1p>…' << aBrowserEnvironment!
 
+promptForExpression: promptString caption: captionString
+	| result text |
+	result := nil.
+	text := '' asValue.
+	
+	[| expression |
+	expression := Prompter
+				on: text
+				prompt: promptString
+				caption: captionString.
+	expression notNil and: 
+			[| error |
+			
+			[result := Compiler evaluate: expression.
+			error := nil] on: Compiler errorClass , Error
+					do: 
+						[:ex |
+						error := ex.
+						ex return: nil].
+			error notNil and: 
+					[(MessageBox new
+						buttonStyle: #yesNo;
+						iconStyle: #error;
+						caption: 'Error evaluating expression…';
+						headline: error displayString;
+						errorMsg: 'Try again?') == #yes]]]
+			whileTrue.
+	^result!
+
 promptForInstVarName: nameString in: aClass prompt: promptString caption: captionString
 	| newName |
 	newName := (Prompter
@@ -3156,6 +3179,37 @@ promptForInstVarName: nameString in: aClass prompt: promptString caption: captio
 				showHintWhenEmpty: false;
 				showModal.
 	^newName!
+
+promptForKeyValuePair: promptString caption: captionString
+	| pair result |
+	pair := Association new.
+	
+	[(KeyValuePrompter
+		createOn: pair
+		prompt: promptString
+		caption: captionString) showModal
+		notNil and: 
+				[| error |
+				error := nil.
+				result := 
+						[| key value |
+						key := Compiler evaluate: pair key.
+						value := Compiler evaluate: pair value.
+						self value newAssociation: key value: value]
+								on: Compiler errorClass , Error
+								do: 
+									[:ex |
+									error := ex.
+									ex return: nil].
+				error notNil and: 
+						[(MessageBox new
+							buttonStyle: #yesNo;
+							iconStyle: #error;
+							caption: 'Error evaluating expression…';
+							headline: error displayString;
+							errorMsg: 'Try again?') == #yes]]]
+			whileTrue.
+	^result!
 
 promptForReferencesTo: aString in: aBrowserEnvironment
 	^self promptForSelector: aString caption: 'References to message in <1p>…' << aBrowserEnvironment!
@@ -4506,7 +4560,6 @@ inspectVisualObject!commands!public! !
 installPackage:!commands!private! !
 instVarAccessFilter:in:!helpers!private! !
 instVarReaderFilter:in:!helpers!private! !
-instVarWriterFilter:in:!helpers!private! !
 interruptHotKey!options!public! !
 interruptHotKey:!options!public! !
 isOAD!accessing!private!product! !
@@ -4602,12 +4655,14 @@ printSignatureForKeywordsAndArgs:on:!autocompletion!helpers!private! !
 privateMethodIcon!constants!private! !
 privatePrefix!constants!private! !
 privatizeMethod:!operations!private! !
-promptForClass!enquiries!public! !
-promptForClassIn:!enquiries!public! !
+promptForClass!commands!public! !
+promptForClassIn:!commands!public! !
 promptForClassName:!helpers!private! !
 promptForClassVarName:in:prompt:caption:!helpers!private!refactoring! !
 promptForDefinitionsOf:in:!browsing!commands!private! !
+promptForExpression:caption:!commands!public! !
 promptForInstVarName:in:prompt:caption:!helpers!private! !
+promptForKeyValuePair:caption:!commands!public! !
 promptForReferencesTo:in:!commands!private! !
 promptForReferencesToGlobal:in:!browsing!private! !
 promptForSearchString:caption:!browsing!commands!private! !

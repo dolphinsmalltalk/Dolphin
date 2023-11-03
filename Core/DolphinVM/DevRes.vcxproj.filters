@@ -1048,6 +1048,15 @@
     <Image Include="Res\MethodDelete.ico">
       <Filter>Icons</Filter>
     </Image>
+    <Image Include="Res\MoveDown.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\MoveFirst.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\MoveLast.ico">
+      <Filter>Icons</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="Res\hsplit.cur">

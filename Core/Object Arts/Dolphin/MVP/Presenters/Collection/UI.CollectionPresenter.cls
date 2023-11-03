@@ -19,12 +19,9 @@ Instance Variables:
 addItem
 	"Uses the receiver's addItemBlock to answer a new item to add to the collection"
 
-	<commandQuery: #canAddOrRemoveItems>
-	self canAddOrRemoveItems
-		ifTrue: 
-			[| item |
-			item := addItemBlock notNil ifTrue: [addItemBlock value] ifFalse: [self defaultAddItem].
-			item notNil ifTrue: [self addItem: item]]
+	<commandQuery: #canAddItem>
+	self canAddItem
+		ifTrue: [addItemBlock value ifNotNil: [:item | self addItem: item]]
 		ifFalse: [Sound errorBeep]!
 
 addItem: anObject
@@ -32,6 +29,11 @@ addItem: anObject
 
 	self listModel add: anObject
 	!
+
+canAddItem
+	"Private - Answer true if it is valid to add elements to the receiver's collection"
+
+	^addItemBlock notNil and: [self canAddOrRemoveItems]!
 
 canAddOrRemoveItems
 	"Private - Answer true if it is valid to add and remove elements of the receiver's collection"
@@ -69,11 +71,6 @@ createSchematicWiring
 		when: #selectionChanged
 		send: #onSelectionChanged
 		to: self!
-
-defaultAddItem
-	"Private - Prompts to add an item to the receiver. Used if no addItemBlock has been specified"
-
-	^self promptForExpression: 'Evaluate:' caption: 'Add Item'!
 
 initialize
 	changing := false.
@@ -125,35 +122,6 @@ onValueChanged
 	listPresenter list: self value asOrderedCollection] 
 			ensure: [changing := false]!
 
-promptForExpression: promptString caption: captionString
-	| result text |
-	result := nil.
-	text := '' asValue.
-	
-	[| expression |
-	expression := Prompter
-				on: text
-				prompt: promptString
-				caption: captionString.
-	expression notNil and: 
-			[| error |
-			
-			[result := Compiler evaluate: expression.
-			error := nil] on: Compiler errorClass , Error
-					do: 
-						[:ex |
-						error := ex.
-						ex return: nil].
-			error notNil and: 
-					[(MessageBox new
-						buttonStyle: #yesNo;
-						iconStyle: #error;
-						caption: 'Error evaluating expression…';
-						headline: error displayString;
-						errorMsg: 'Try again?') == #yes]]]
-			whileTrue.
-	^result!
-
 removeItem
 	"Removes the current selection from the receiver's list"
 
@@ -182,11 +150,11 @@ setAddItemBlock: aNiladicValuable
 !UI.CollectionPresenter categoriesForMethods!
 addItem!commands-actions!public! !
 addItem:!operations!public! !
-canAddOrRemoveItems!private!testing! !
-canRemoveItem!private!testing! !
+canAddItem!commands-queries!private!testing! !
+canAddOrRemoveItems!commands-queries!private!testing! !
+canRemoveItem!commands-queries!private!testing! !
 createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !
-defaultAddItem!helpers!private! !
 initialize!initializing!public! !
 isReadOnly!public!testing! !
 isReadOnly:!modes!public! !
@@ -196,7 +164,6 @@ model:!accessing!public! !
 onListChanged!event handling!private! !
 onSelectionChanged!public! !
 onValueChanged!event handling!private! !
-promptForExpression:caption:!helpers!private! !
 removeItem!commands-actions!operations!public! !
 selectionOrNil!public!selection! !
 selectionOrNil:!public!selection! !

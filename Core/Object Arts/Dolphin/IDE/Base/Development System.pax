@@ -853,6 +853,7 @@ package setPrerequisites: #(
 	'..\..\MVP\Views\GroupBox\Dolphin GroupBox'
 	'..\..\MVP\Presenters\Image\Dolphin Image Presenter'
 	'..\..\MVP\Presenters\Prompters\Dolphin Integer Prompter'
+	'..\..\MVP\Presenters\Prompters\Dolphin Key-Value Prompter'
 	'..\..\Base\Dolphin Legacy Date & Time'
 	'..\..\MVP\Models\List\Dolphin List Models'
 	'..\..\MVP\Presenters\List\Dolphin List Presenter'

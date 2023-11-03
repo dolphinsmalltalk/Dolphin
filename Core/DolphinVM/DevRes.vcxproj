@@ -308,6 +308,9 @@
     <Image Include="Res\MethodHistory.ico" />
     <Image Include="Res\MethodHistoryErase.ico" />
     <Image Include="Res\MethodSource.ico" />
+    <Image Include="Res\MoveDown.ico" />
+    <Image Include="Res\MoveFirst.ico" />
+    <Image Include="Res\MoveLast.ico" />
     <Image Include="Res\MoveUp.ico" />
     <Image Include="Res\Namespace.ico" />
     <Image Include="Res\NewIdeaSpaceShell.ico" />

@@ -347,6 +347,11 @@ MOENTREEVIEW.ICO        ICON                    "Res\\MoenTreeView.ico"
 
 MOUSETRACKER.ICO        ICON                    "Res\\MouseTracker.ico"
 
+MOVEDOWN.ICO			ICON                    "Res\\MoveDown.ico"
+MOVEFIRST.ICO			ICON                    "Res\\MoveFirst.ico"
+MOVELAST.ICO			ICON                    "Res\\MoveLast.ico"
+MOVEUP.ICO				ICON                    "Res\\MoveUp.ico"
+
 MUTEX.ICO               ICON                    "Res\\Mutex.ico"
 
 NAMESPACE.ICO           ICON                    "Res\\Namespace.ico"

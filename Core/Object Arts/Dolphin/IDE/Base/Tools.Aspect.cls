@@ -532,7 +532,11 @@ collection: aCollectionAspectSymbol addFrom: anArray
 collection: aSymbol presenterClass: aClass
 	^(self
 		name: aSymbol
-		presenterBlock: [:p :m | aClass createIn: p on: m]
+		presenterBlock: 
+			[:p :m |
+			(aClass createIn: p on: m)
+				setAddItemBlock: [Smalltalk developmentSystem promptForExpression: 'Evaluate:' caption: 'Add Item'];
+				yourself]
 		editBlock: self defaultCollectionEditBlock)
 		type: Collection;
 		yourself!
@@ -601,7 +605,16 @@ dictionary: aSymbol
 	"Answer an instance of the receiver for the <Dictionary> aspect named by the <Symbol> 
 	argument . The aspect is displayed using a DictionaryPresenter"
 
-	^(self collection: aSymbol presenterClass: DictionaryPresenter)
+	^(self
+		name: aSymbol
+		presenterBlock: 
+			[:p :m |
+			(DictionaryPresenter createIn: p on: m)
+				setAddItemBlock: 
+						[Smalltalk developmentSystem promptForKeyValuePair: 'Enter key and value expressions:'
+							caption: 'Add to Dictionary…'];
+				yourself]
+		editBlock: self defaultCollectionEditBlock)
 		type: Dictionary;
 		yourself!
 
