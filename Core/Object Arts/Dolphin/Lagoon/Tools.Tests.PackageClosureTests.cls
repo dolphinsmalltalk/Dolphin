@@ -38,10 +38,14 @@ testEtchASketch
 	"Etch-a-sketch uses an InternalIcon, and STB."
 
 	| env |
-	env := BrowserEnvironment new forPackagesDeployment: {UI.Examples.EtchASketch owningPackage}.
+	env := BrowserEnvironment new forPackagesDeployment: { UI.Examples.EtchASketch owningPackage }.
 	self verifyPackageClosure: env missing: #(#ttmRelayEvent: #defineTemplate).
-	"This isn't necessarily sufficient for InternalIcon, etc, to survive into the deployed app, but is necessary for that to be so."
+	"This isn't necessarily sufficient for InternalIcon, etc, to survive into the deployed app, but is necessary for that to be so.
+		EnvironmentBrowserShell onEnvironment: envEnvironment Browser.
+	"
 	self assert: (env includesClass: InternalIcon).
+	"Etch-a-sketch (actually the Scribble app on which it is based) uses STB to serialize data"
+	self assert: (env includesClass: STBOutFiler).
 	self assert: (env includesSelector: #owningPackage in: ClassDescription).
 	self deny: (env includesSelector: #owningPackage in: Class).
 	#todo. "Caused by Clipboard. To be removed."
@@ -56,10 +60,10 @@ testHelloWorld
 		missing: self simpleGuiAppUnimplementedMessages!
 
 testNotepad
-	"Notepad has an Integer Prompter, and Prompter now depens on Tooltips, so ttmRelayEvent: will be present in the deployed app."
+	"Notepad has an Integer Prompter, and Prompter now depends on Tooltips, so ttmRelayEvent: will be present in the deployed app."
 
 	self verifyPackageClosure: (BrowserEnvironment new
-				forPackagesDeployment: {UI.Examples.Notepad owningPackage})
+				forPackagesDeployment: { UI.Examples.Notepad owningPackage })
 		missing: (self simpleGuiAppUnimplementedMessages copyWithout: #ttmRelayEvent:)!
 
 testRegEdit
@@ -84,6 +88,18 @@ testSystemPackage
 	"There should be no undefined messages in the base package"
 	self verifyPackageClosure: (BrowserEnvironment new forPackagesClosure: {aPackage}) missing: #()!
 
+testXmlPad
+	"XmlPad is an example GUI application making quite extensive use of COM (uses MS XML DOM) and Scintilla. It uses many common controls directly (toolbar and statusbar), or indirectly via the rich Scintilla text styles dialog, although it does not currently contain a TreeView.
+	- Contains the Tooltip package (pre-req of Prompter package that is a Scintilla pre-req for styles editor) so not missing #ttmRelayEvent:
+	- COM compiled function tables evaluated only for initialization send #defineFunction:*, but these will be removed in an actual deployed app"
+
+	self verifyPackageClosure: (BrowserEnvironment new
+				forPackagesDeployment: { UI.Examples.XmlPad owningPackage })
+		missing: (self simpleGuiAppUnimplementedMessages asSet
+				remove: #ttmRelayEvent:;
+				addAll: #(#defineFunction: #defineFunction:argumentTypes:);
+				yourself)!
+
 verifyPackageClosure: aBrowserEnvironment missing: aCollectionOfSymbols
 	| missing |
 	missing := aBrowserEnvironment unimplementedSelectors.
@@ -103,6 +119,7 @@ testNotepad!public!unit tests! !
 testRegEdit!public!unit tests! !
 testSimpleWebBrowser!public!unit tests! !
 testSystemPackage!public!unit tests! !
+testXmlPad!public!unit tests! !
 verifyPackageClosure:missing:!helpers!private! !
 !
 

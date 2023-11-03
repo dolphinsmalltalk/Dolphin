@@ -62,6 +62,7 @@ package setMethodNames: #(
 	#(#{Smalltalk.ImageStripper} #stripRedundantResources:)
 	#(#{Smalltalk.ImageStripper} #stripShouldNotImplement:)
 	#(#{Smalltalk.ImageStripper} #stripSubclassResponsibility:)
+	#(#{Smalltalk.ImageStripper} #stripUnreferencedLiterals:)
 	#(#{Smalltalk.ImageStripper} #stubFilePath:)
 	#(#{Smalltalk.ImageStripper} #versionResource:)
 	#(#{Smalltalk.ImageStripper} #writeLogFile:)
@@ -469,6 +470,11 @@ stripSubclassResponsibility: aBoolean
 
 	flags := flags mask: RetainSubclassRespMask set: aBoolean not!
 
+stripUnreferencedLiterals: aBoolean
+	"Set/reset the option to remove method literals that are not actually referenced from the bytecodes. Such literals are added by the compiler to support reference searches in the development environment, and are not typically required in a deployed application so this option is on by default."
+
+	flags := flags mask: StripUnreferencedLiteralsMask set: aBoolean!
+
 stubFilePath: aString
 	"Set the path of a custom stub file."
 
@@ -518,6 +524,7 @@ stripRedundantPackages:!accessing!public! !
 stripRedundantResources:!accessing!public! !
 stripShouldNotImplement:!accessing!public! !
 stripSubclassResponsibility:!accessing!public! !
+stripUnreferencedLiterals:!accessing!public! !
 stubFilePath:!accessing!public! !
 versionResource:!accessing!public! !
 writeLogFile:!accessing!public! !
@@ -535,7 +542,7 @@ publishedAspectsOfInstances
 
 	| aspects |
 	aspects := super publishedAspectsOfInstances.
-	#(#stripClassGuids #stripDuplicateStrings #preserveAspectSetters #retainInstVarNames #stripRedundantClasses #stripClassInfo #stripClassBuilder #stripRedundantMethods #stripDeprecatedMethods #stripShouldNotImplement #stripSubclassResponsibility #stripRedundantResources #stripRedundantPackages #compileExternalStructures #writeLogFile #stripDuplicateBytecodes #logReferencesToClasses #isToGo #includeManifestResource #isUnattended)
+	#(#stripClassGuids #stripDuplicateStrings #preserveAspectSetters #retainInstVarNames #stripRedundantClasses #stripClassInfo #stripClassBuilder #stripRedundantMethods #stripDeprecatedMethods #stripShouldNotImplement #stripSubclassResponsibility #stripRedundantResources #stripRedundantPackages #compileExternalStructures #writeLogFile #stripDuplicateBytecodes #logReferencesToClasses #isToGo #includeManifestResource #isUnattended #stripUnreferencedLiterals)
 		do: [:each | aspects add: (Aspect boolean: each)].
 	aspects
 		add: ((Aspect

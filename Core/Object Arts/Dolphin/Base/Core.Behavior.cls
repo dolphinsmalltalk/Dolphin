@@ -683,13 +683,20 @@ recompile: aSymbol
 		ifNotNil: [:method | self recompileMethod: method environment: method customEnvironment]!
 
 recompileMethod: aCompiledMethod environment: aNamespace
-	| stubMethodResult result |
+	^self
+		recompileMethod: aCompiledMethod
+		environment: aNamespace
+		flags: self defaultCompilationFlags!
+
+recompileMethod: aCompiledMethod environment: aNamespace flags: anInteger
+	| result stubMethodResult |
+	stubMethodResult := nil.
 	result := 
 			[self compilerClass
 				compile: aCompiledMethod getSource
 				in: self
 				environment: aNamespace
-				flags: self defaultCompilationFlags]
+				flags: anInteger]
 					on: self compilerClass errorClass
 					do: 
 						[:ex |
@@ -1061,6 +1068,7 @@ primAllInstances!instances!private! !
 primAllSubinstances!instances!private! !
 recompile:!compiling!development!public! !
 recompileMethod:environment:!compiling!development!private! !
+recompileMethod:environment:flags:!compiling!development!private! !
 recompileReferencesToLiteral:!development!private! !
 referenceFilterFor:!development!methods-testing!private! !
 removeFromSuper!operations!private! !

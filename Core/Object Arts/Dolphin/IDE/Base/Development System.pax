@@ -4898,7 +4898,7 @@ decodeHeaderOn: aStream
 				print: self envTempCount;
 				nextPutAll: ' env temps, '].
 	aStream
-		print: self literalCount;
+		print: self size;
 		nextPutAll: ' literals'.
 	self needsContext ifTrue: [aStream nextPutAll: ', needs context'].
 	self isDebugMethod ifTrue: [aStream nextPutAll: ', debug']!
@@ -4927,10 +4927,10 @@ isDeprecated
 
 isSimpleSelfSend: aSymbol
 	"Private - Answer whether the receiver is a method that just sends the specified selector (which must be zero-argument) to self. Note that this does not work for special selectors such as #class, #new, etc, that have specific bytecode encodings."
-	
-	^(byteCodes == ##(self packByteCodes: {ShortSendSelfZeroArgs. ReturnFromMessage} asByteArray)
-		or: [byteCodes == ##(self packByteCodes: {ShortSendSelfZeroArgs. PopReturnSelf} asByteArray)])
-			and: [(self basicAt: 1) == aSymbol and: [self extraIndex == 0]]!
+
+	^(byteCodes == ##(self packByteCodes: { ShortSendSelfZeroArgs. ReturnFromMessage } asByteArray)
+		or: [byteCodes == ##(self packByteCodes: { ShortSendSelfZeroArgs. PopReturnSelf } asByteArray)])
+			and: [(self basicAt: 1) == aSymbol and: [self extraIndex == Normal]]!
 
 mapIp: anInteger toDebug: debugCompiledMethod
 	| i interp first map debugMap debugDispatcher debugFirst |

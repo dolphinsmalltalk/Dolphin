@@ -128,8 +128,8 @@ argumentCount
 
 	^(info bitShift: -7) bitAnd: 16rFF!
 
-argumentCount: anInteger 
-	info := (info bitAnd: ##((16rFF << 7) bitInvert)) 
+argumentCount: anInteger
+	info := (info bitAnd: ##((16rFF bitShift: 7) bitInvert))
 				bitOr: ((anInteger bitAnd: 16rFF) bitShift: 7)!
 
 atPriority: anInteger
@@ -257,7 +257,7 @@ envTempCount
 	^(info bitShift: -23) bitAnd: 16rFF!
 
 envTempCount: anInteger
-	info := (info bitAnd: ##((16rFF << 23) bitInvert)) 
+	info := (info bitAnd: ##((16rFF bitShift: 23) bitInvert)) 
 				bitOr: ((anInteger bitAnd: 16rFF) bitShift: 23)!
 
 fork
@@ -574,7 +574,7 @@ stackTempCount
 	^(info bitShift: -15) bitAnd: 16rFF!
 
 stackTempCount: anInteger 
-	info := (info bitAnd: ##((16rFF << 15) bitInvert)) 
+	info := (info bitAnd: ##((16rFF bitShift: 15) bitInvert)) 
 				bitOr: ((anInteger bitAnd: 16rFF) bitShift: 15)!
 
 tempCount

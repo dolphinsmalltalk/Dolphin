@@ -1501,7 +1501,7 @@ generateNullLibraryDefaults
 		compile: stream contents
 		selector: selector
 		in: NullScintillaLibrary
-		categories: self autoGenMethodCategories , { 'private'. 'development' }!
+		categories: self autoGenMethodCategories , { 'private' }!
 
 getAndResetCommentQueue
 	| answer |

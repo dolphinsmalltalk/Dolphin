@@ -85,7 +85,7 @@ public:
 
 	POTE NewMethod();
 	void IncrementIPs();
-	POTE __stdcall NewCompiledMethod(POTE classPointer, size_t numBytes, const STMethodHeader& hdr);
+	POTE __stdcall NewCompiledMethod(POTE classPointer, size_t numBytes, const STMethodHeader& hdr, size_t literalCount);
 	POTE MakeMethodAnnotations();
 
 	__declspec(property(get = get_Selector)) const u8string& Selector;
@@ -110,6 +110,10 @@ public:
 	__declspec(property(get = get_LiteralCount)) size_t LiteralCount;
 	size_t get_LiteralCount() const { return m_literals.size(); }
 
+	// The number of referenced literals in the method, excluding the MethodAnnotations (if any)
+	__declspec(property(get = get_LiveLiteralCount)) size_t LiveLiteralCount;
+	size_t get_LiveLiteralCount() const;
+
 	__declspec(property(get = get_IsInteractive)) bool IsInteractive;
 	bool get_IsInteractive() const { return (!!(m_flags & CompilerFlags::Interactive)) && !WantSyntaxCheckOnly; }
 
@@ -125,6 +129,8 @@ private:
 	bool get_WantDebugMethod() const { return !!(m_flags & CompilerFlags::DebugMethod); }
 	__declspec(property(get= get_WantSyntaxCheckOnly)) bool WantSyntaxCheckOnly;
 	bool get_WantSyntaxCheckOnly() const { return !!(m_flags & CompilerFlags::SyntaxCheckOnly); }
+	__declspec(property(get = get_WantReferenceOnlyLiterals)) bool WantReferenceOnlyLiterals;
+	bool get_WantReferenceOnlyLiterals() const { return !(m_flags & CompilerFlags::NoRefOnlyLiterals); }
 
 	__declspec(property(get = get_CodeSize)) size_t CodeSize;
 	size_t get_CodeSize() const
@@ -176,11 +182,11 @@ private:
 	void WarnIfRestrictedSelector(textpos_t start);
 
 	// Code generation
-	enum class LiteralType { ReferenceOnly, Normal };
+	enum class LiteralType { Normal, ReferenceOnly, ConstExprReference };
 	size_t AddToFrameUnconditional(Oop object, const TEXTRANGE&);
 	size_t AddToFrame(Oop object, const TEXTRANGE&, LiteralType type);
 	size_t AddStringToFrame(const u8string& str, const TEXTRANGE&);
-	POTE AddSymbolToFrame(const u8string&, const TEXTRANGE&, LiteralType refOnly);
+	POTE AddSymbolToFrame(const u8string&, const TEXTRANGE&, LiteralType type);
 	void AddAnnotation(POTE tag, Oop arg);
 	void InsertByte(ip_t pos, uint8_t value, BYTECODE::Flags flags, LexicalScope* pScope);
 	void RemoveByte(ip_t pos);
