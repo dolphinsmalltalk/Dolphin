@@ -26,15 +26,11 @@ package setPrerequisites: #(
 	'..\..\Views\Common Controls\Dolphin Common Controls'
 	'..\..\Views\Control Bars\Dolphin Control Bars'
 	'..\..\Graphics\Dolphin GDI Graphics'
-	'..\Prompters\Dolphin Key-Value Prompter'
 	'..\..\Models\List\Dolphin List Models'
 	'..\List\Dolphin List Presenter'
 	'..\..\..\System\Filer\Dolphin Literal Filer'
-	'..\..\..\System\Win32\MessageBox\Dolphin Message Box'
 	'..\..\Base\Dolphin MVP Base'
-	'..\Prompters\Dolphin Prompter'
 	'..\..\..\System\Filer\Dolphin STx Filer Core'
-	'..\..\Icons\Dolphin Text Tile Icons'
 ).
 
 package!
@@ -82,7 +78,7 @@ resource_List_tools
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_List_tools)
 	"
 
-	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.Toolbar} 38 #{Core.Array} 28 nil nil 50 2 8 1409289036 131137 32 nil 6 #{Graphics.Color} #face3d nil 517 nil nil nil 32 114 #default nil 518 #{Kernel.STBIdentityDictionaryProxy} #{Core.IdentityDictionary} 8 #() nil nil nil nil 50 8 1094 1 #{UI.ToolbarIconButton} 32 1 1350 4 #{UI.CommandDescription} #addItem 8 'New Item' 1 1 838 4 #{Graphics.Icon} nil true 1030 #{Graphics.ImageFromStringResourceInitializer} 8 'NewThing.ico' 838 1 #{External.ResourceLibrary} 8 'dolphindr8.dll' 65541 nil nil 226 32 1 258 #removeItem 8 'Delete Item' 1 1 306 nil true 338 8 'EditClear.ico' 400 65541 nil nil 582 1 #{UI.ToolbarSeparator} 32 1 226 32 1 258 #moveFirst 8 'Move First' 1 1 2374 2 #{Graphics.TextTileIcon} 8 $⏮ 8 'Georgia' nil 114 #highlight nil nil 3 nil nil nil 226 32 1 258 #moveUp 8 'Move Up' 1 1 610 8 $▲ 8 'Segoe UI' nil 672 nil nil 1 nil nil nil 226 32 1 258 #moveDown 8 'Move Down' 1 1 610 8 $▼ nil nil 672 nil nil 1 nil nil nil 226 32 1 258 #moveLast 8 'Move Last' 1 1 610 8 $⏭ 8 'Georgia' nil 672 nil nil 3 nil nil nil 530 32 1 nil nil 1 nil nil nil nil nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 6143 21 1074 321 51 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 159 12 0 0 35 0 0 0] 8 #() 1074 193 193 nil 29)! !
+	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.Toolbar} 38 #{Core.Array} 28 nil nil 50 2 8 1409289036 131137 32 nil 6 #{Graphics.Color} #face3d nil 517 nil nil nil 32 114 #default nil 518 #{Kernel.STBIdentityDictionaryProxy} #{Core.IdentityDictionary} 8 #() nil nil nil nil 50 8 1094 1 #{UI.ToolbarIconButton} 32 1 1350 4 #{UI.CommandDescription} #addItem 8 'New Item' 1 1 838 4 #{Graphics.Icon} nil true 1030 #{Graphics.ImageFromStringResourceInitializer} 8 'NewThing.ico' 838 1 #{External.ResourceLibrary} 8 'dolphindr8.dll' 65541 nil nil 226 32 1 258 #removeItem 8 'Delete Item' 1 1 306 nil true 338 8 'EditClear.ico' 400 65541 nil nil 582 1 #{UI.ToolbarSeparator} 32 1 226 32 1 258 #moveFirst 8 'Move First' 1 1 306 nil true 338 8 'MoveFirst.ico' 400 65541 nil nil 226 32 1 258 #moveUp 8 'Move Up' 1 1 306 nil true 338 8 'MoveUp.ico' 400 65541 nil nil 226 32 1 258 #moveDown 8 'Move Down' 1 1 306 nil true 338 8 'MoveDown.ico' 400 65541 nil nil 226 32 1 258 #moveLast 8 'Move Last' 1 1 306 nil true 338 8 'MoveLast.ico' 400 65541 nil nil 530 32 1 nil nil 1 nil nil nil nil nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 6143 21 1058 321 51 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 159 12 0 0 35 0 0 0] 8 #() 1058 193 193 nil 29)! !
 !UI.Toolbar class categoriesForMethods!
 resource_List_tools!public!resources-views! !
 !

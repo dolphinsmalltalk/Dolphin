@@ -53,6 +53,7 @@ removeElement: anObject
 removeItem
 	"Removes the current selection from the receiver's list"
 
+	<commandQuery: #canRemoveItem>
 	| item |
 	item := listPresenter selection.
 	self removeElement: item.
@@ -60,7 +61,7 @@ removeItem
 !UI.HashedCollectionPresenter categoriesForMethods!
 addElement:!adding!private! !
 addItem:!operations!public! !
-canAddOrRemoveItems!private!testing! !
+canAddOrRemoveItems!commands-queries!private!testing! !
 elements!accessing!public! !
 onListChanged!event handling!public! !
 onValueChanged!event handling!public! !

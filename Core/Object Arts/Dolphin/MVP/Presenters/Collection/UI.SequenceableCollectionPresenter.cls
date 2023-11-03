@@ -96,9 +96,9 @@ onValueChanged
 
 	listPresenter list: self value! !
 !UI.SequenceableCollectionPresenter categoriesForMethods!
-canMoveDown!private!testing! !
-canMoveUp!private!testing! !
-canReorder!private!testing! !
+canMoveDown!commands-queries!private!testing! !
+canMoveUp!commands-queries!private!testing! !
+canReorder!commands-queries!private!testing! !
 moveDown!commands-actions!operations!public! !
 moveFirst!commands-actions!operations!public! !
 moveLast!commands-actions!operations!public! !
