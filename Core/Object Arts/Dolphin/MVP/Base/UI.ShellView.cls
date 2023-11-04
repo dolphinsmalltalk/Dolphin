@@ -224,11 +224,10 @@ defaultWindowStyle
 	^##(WS_THICKFRAME | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_MAXIMIZEBOX)!
 
 dialogMessageMap
-	^##(IdentityDictionary new
-		at: DM_GETDEFID - WM_USER put: #dmGetDefId:wParam:lParam:;
-		at: DM_SETDEFID - WM_USER put: #dmSetDefId:wParam:lParam:;
-		shrink;
-		yourself)!
+	^##(IdentityDictionary withAll: {
+				DM_GETDEFID - WM_USER -> #dmGetDefId:wParam:lParam:.
+				DM_SETDEFID - WM_USER -> #dmSetDefId:wParam:lParam: 
+			})!
 
 dispatchUser: userId wParam: wParam lParam: lParam
 	"Private - Dispatch the WM_USER+userId message which was sent to the receiver.

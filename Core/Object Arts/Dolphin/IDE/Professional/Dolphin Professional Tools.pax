@@ -87,6 +87,7 @@ package setPrerequisites: #(
 	'..\..\MVP\Presenters\Boolean\Dolphin Boolean Presenter'
 	'..\..\MVP\Views\Cards\Dolphin Card Containers'
 	'..\..\MVP\Views\Buttons\Dolphin Check Buttons'
+	'..\..\MVP\Base\Dolphin Command History'
 	'..\..\MVP\Views\Common Controls\Dolphin Common Controls'
 	'..\..\MVP\Dialogs\Common\Dolphin Common Dialogs'
 	'..\Community Edition\Dolphin Community Edition Tools'

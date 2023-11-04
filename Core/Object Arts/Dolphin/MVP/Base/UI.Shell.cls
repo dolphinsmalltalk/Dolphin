@@ -56,7 +56,7 @@ caption: aString
 clearCommandHistory
 	"Clear the receiver's command history list if one is available"
 
-	commandHistory notNil ifTrue: [commandHistory := HistoryList new]!
+	commandHistory ifNotNil: [commandHistory clear]!
 
 close
 	"Attempt to close the receiver's view."
@@ -102,12 +102,6 @@ hasCommandHistory
 	"Answer true if the receiver can undo/redo commands"
 
 	^commandHistory notNil!
-
-hasCommandHistory: aBoolean
-	"Set the receiver to allow it to keep a command history list
-	to allow commands to be undone"
-
-	commandHistory := aBoolean ifTrue: [HistoryList new]!
 
 onAboutToDisplaySystemMenu: hMenu
 	"The system menu with <integer> handle, hMenu, is about to be displayed.
@@ -189,57 +183,6 @@ performCommand: aCommand
 
 	^self view performCommand: aCommand!
 
-queryRedo: aCommandQuery
-	| description |
-	description := ''.
-	aCommandQuery beDisabled.
-	self hasCommandHistory
-		ifTrue: 
-			[commandHistory hasFuture
-				ifTrue: 
-					[| command |
-					command := self commandHistory next.
-					command canRedo
-						ifTrue: 
-							[description := self commandHistory next description.
-							aCommandQuery beEnabled]].
-			aCommandQuery text: (aCommandQuery commandDescription menuText expandMacrosWith: description)].
-	^true!
-
-queryUndo: aCommandQuery
-	| description |
-	description := ''.
-	aCommandQuery beDisabled.
-	self hasCommandHistory
-		ifTrue: 
-			[commandHistory pastSize >= 0
-				ifTrue: 
-					[| command |
-					command := self commandHistory current.
-					description := command description.
-					aCommandQuery beEnabled].
-			aCommandQuery text: (aCommandQuery commandDescription menuText expandMacrosWith: description)].
-	^true!
-
-redo
-	"Redo the last command that is forward in the command history list. During the redo operation
-	we place the receiver in a state where it will not accept any further command histories."
-
-	<commandQuery: #queryRedo:>
-	| history |
-	self hasCommandHistory ifFalse: [^self].
-	"Save the original history list"
-	history := commandHistory.
-	commandHistory := nil.
-	[(history goForward: 1) redo] ensure: 
-			["Restore the original history list"
-			commandHistory := history].
-
-	"Mark the current command (#redo) as benign so that it will
-		not require the command history to be cleared even though it has no
-		explicit undo action"
-	Command current beBenign!
-
 setInitialFocus
 	"Received when the receiver's view is first opened.
 	Set the initial keyboard focus to the first view in the tab sequence.
@@ -250,32 +193,6 @@ setInitialFocus
 
 shortCaption
 	^self caption!
-
-undo
-	"Undo the current command in the command history list. During the undo operation
-	we place the receiver in a state where it will not accept any further command histories."
-
-	<commandQuery: #queryUndo:>
-	| history command |
-	self hasCommandHistory ifFalse: [^self].
-	"Save the original history list"
-	history := commandHistory.
-	commandHistory := nil.
-
-	"Perform the undo"
-	
-	[command := history current.
-	command undo] ensure: 
-				["Restore the original history list. If the command executed can be redone
-			then backup by one command. Otherwise we clear the redo portion of the list."
-				commandHistory := history].
-	commandHistory goBack: 1.
-	command canRedo ifFalse: [commandHistory clearFuture].
-
-	"Mark the current command (#undo) as benign so that it will
-		not require the command history to be cleared even though it has no
-		explicit undo action"
-	Command current beBenign!
 
 updateCaption
 	"The receiver has changed in such a way that the caption may need to be refreshed.
@@ -310,7 +227,6 @@ commandPolicyWithSource:!commands-routing!public! !
 createView:!operations!private! !
 exit!commands-actions!public! !
 hasCommandHistory!accessing!public! !
-hasCommandHistory:!accessing!public! !
 onAboutToDisplaySystemMenu:!event handling!public! !
 onIdleEntered!event handling!public! !
 onSettingChanged:!event handling-win32!public! !
@@ -324,12 +240,8 @@ onViewNcDeactivated:!event handling!public! !
 onViewOpened!event handling!public! !
 onViewRestored:!event handling!public! !
 performCommand:!commands-routing!public! !
-queryRedo:!commands-queries!private! !
-queryUndo:!commands-queries!private! !
-redo!commands-actions!public! !
 setInitialFocus!operations!public! !
 shortCaption!accessing!public! !
-undo!commands-actions!public! !
 updateCaption!public!updating! !
 updateIcon!private!updating! !
 view:!accessing!public! !

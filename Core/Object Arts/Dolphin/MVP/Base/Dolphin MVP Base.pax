@@ -102,7 +102,6 @@ package setClassNames: #(
 	#{UI.GridLayout}
 	#{UI.GuiInputState}
 	#{UI.GUISessionManager}
-	#{UI.HistoryList}
 	#{UI.ImageViewAbstract}
 	#{UI.Interactor}
 	#{UI.InternalDragDropObject}
@@ -1372,13 +1371,6 @@ Core.Object
 Core.Object
 	subclass: #'Graphics.Grid'
 	instanceVariableNames: 'resolution'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Core.Object
-	subclass: #'UI.HistoryList'
-	instanceVariableNames: 'history position maxAge searchPolicy'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

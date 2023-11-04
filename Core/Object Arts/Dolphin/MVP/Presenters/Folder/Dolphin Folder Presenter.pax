@@ -15,6 +15,7 @@ package setClassNames: #(
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
 	'..\..\Base\Dolphin Basic Geometry'
+	'..\..\Base\Dolphin Command History'
 	'..\..\Views\Common Controls\Dolphin Common Controls'
 	'..\..\Graphics\Dolphin GDI Graphics'
 	'..\..\Models\List\Dolphin List Models'

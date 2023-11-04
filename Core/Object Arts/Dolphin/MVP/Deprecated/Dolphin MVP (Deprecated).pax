@@ -71,6 +71,7 @@ package methodNames
 	add: #RGB -> #asIndexedColorUsingPalette:;
 	add: #ScrollingDecorator -> #continuousTracking;
 	add: #ScrollingDecorator -> #continuousTracking:;
+	add: #Shell -> #hasCommandHistory:;
 	add: #ShellView -> #hasThickFrame;
 	add: #ShellView -> #hasThickFrame:;
 	add: #Slider -> #hasTicksBoth;
@@ -153,6 +154,7 @@ package setPrerequisites: #(
 	'..\..\Base\Dolphin'
 	'..\Base\Dolphin Basic Geometry'
 	'..\Presenters\Choice\Dolphin Choice Presenter'
+	'..\Base\Dolphin Command History'
 	'..\Views\Common Controls\Dolphin Common Controls'
 	'..\Views\Control Bars\Dolphin Control Bars'
 	'..\Presenters\Prompters\Dolphin In-place Text Editor'
@@ -798,6 +800,17 @@ continuousTracking: aBoolean
 !ScrollingDecorator categoriesForMethods!
 continuousTracking!modes!public! !
 continuousTracking:!modes!public! !
+!
+
+!Shell methodsFor!
+
+hasCommandHistory: aBoolean
+	"Directly assign a HistoryList to the commandHistory instance variable to add basic undo/redo capability to a Shell. This will create a dependency on the Command History package so that HistoryList and commands are included on application deployment."
+
+	Notification deprecated.
+	commandHistory := aBoolean ifTrue: [HistoryList new]! !
+!Shell categoriesForMethods!
+hasCommandHistory:!accessing!public! !
 !
 
 !ShellView methodsFor!

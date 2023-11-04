@@ -845,6 +845,7 @@ package setPrerequisites: #(
 	'..\..\MVP\Presenters\Prompters\Dolphin Choice Prompter'
 	'..\..\MVP\Presenters\Collection\Dolphin Collection Presenters'
 	'..\..\MVP\Presenters\Color\Dolphin Color Presenter'
+	'..\..\MVP\Base\Dolphin Command History'
 	'..\..\MVP\Views\Common Controls\Dolphin Common Controls'
 	'..\..\MVP\Dialogs\Common\Dolphin Common Dialogs'
 	'..\..\MVP\Views\Control Bars\Dolphin Control Bars'
