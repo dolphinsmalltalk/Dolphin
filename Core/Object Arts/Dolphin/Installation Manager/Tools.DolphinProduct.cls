@@ -114,6 +114,7 @@ contents
 		add: #('Core\Object Arts\Dolphin\MVP\Base\Dolphin Basic Geometry.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Graphics\Dolphin GDI Graphics.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\MVP\Base\Dolphin Command History.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Base\Dolphin Base Dialogs.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Dialogs\Common\Dolphin Common Dialogs.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Dialogs\Common\Dolphin Common Print Dialog.pax' #plain #imageBased);

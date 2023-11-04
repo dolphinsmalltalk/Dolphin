@@ -45,7 +45,8 @@ addLast: anObject
 clear
 	"Clear any past and future history."
 
-	self initialize: maxAge!
+	history := OrderedCollection new.
+	position := 0!
 
 clearFuture
 	"Clear the future sequence in the receiver forward of the current position."
@@ -118,8 +119,7 @@ hasPast
 initialize: anInteger
 	"Private - Initialize the receiver's instance variables."
 
-	history := OrderedCollection new.
-	position := 0.
+	self clear.
 	maxAge := anInteger.
 	self searchPolicy: SearchPolicy equality!
 

@@ -1,0 +1,123 @@
+﻿| package |
+package := Package name: 'Dolphin Command History'.
+package paxVersion: 2.1;
+	basicComment: 'Dolphin 🐬 Smalltalk MVP framework Command History support.
+Copyright © Object Arts Ltd. 1997-2023. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.
+
+Defines the `HistoryList` class, which provides a general purpose history list, and basic undo/redo commands.
+'.
+
+
+package setClassNames: #(
+	#{UI.HistoryList}
+).
+
+package setMethodNames: #(
+	#(#{UI.Shell} #queryRedo:)
+	#(#{UI.Shell} #queryUndo:)
+	#(#{UI.Shell} #redo)
+	#(#{UI.Shell} #undo)
+).
+
+package setPrerequisites: #(
+	'..\..\Base\Dolphin'
+	'Dolphin MVP Base'
+).
+
+package!
+
+"Class Definitions"!
+
+Core.Object
+	subclass: #'UI.HistoryList'
+	instanceVariableNames: 'history position maxAge searchPolicy'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+"Loose Methods"!
+
+!UI.Shell methodsFor!
+
+queryRedo: aCommandQuery
+	aCommandQuery beDisabled.
+	self hasCommandHistory
+		ifTrue: 
+			[| description |
+			description := ''.
+			commandHistory hasFuture
+				ifTrue: 
+					[| command |
+					command := commandHistory next.
+					command canRedo
+						ifTrue: 
+							[description := command description.
+							aCommandQuery beEnabled]].
+			aCommandQuery text: (aCommandQuery commandDescription menuText expandMacrosWith: description)]!
+
+queryUndo: aCommandQuery
+	aCommandQuery beDisabled.
+	self hasCommandHistory
+		ifTrue: 
+			[| description |
+			description := commandHistory pastSize >= 0
+						ifTrue: 
+							[aCommandQuery beEnabled.
+							commandHistory current description]
+						ifFalse: [''].
+			aCommandQuery text: (aCommandQuery commandDescription menuText expandMacrosWith: description)]!
+
+redo
+	"Redo the last command that is forward in the command history list. During the redo operation
+	we place the receiver in a state where it will not accept any further command histories."
+
+	<commandQuery: #queryRedo:>
+	| history |
+	self hasCommandHistory ifFalse: [^self].
+	"Save the original history list"
+	history := commandHistory.
+	commandHistory := nil.
+	[(history goForward: 1) redo] ensure: 
+			["Restore the original history list"
+			commandHistory := history].
+
+	"Mark the current command (#redo) as benign so that it will
+		not require the command history to be cleared even though it has no
+		explicit undo action"
+	Command current beBenign!
+
+undo
+	"Undo the current command in the command history list. During the undo operation
+	we place the receiver in a state where it will not accept any further command histories."
+
+	<commandQuery: #queryUndo:>
+	| history command |
+	self hasCommandHistory ifFalse: [^self].
+	"Save the original history list"
+	history := commandHistory.
+	commandHistory := nil.
+
+	"Perform the undo"
+	
+	[command := history current.
+	command undo] ensure: 
+				["Restore the original history list. If the command executed can be redone
+			then backup by one command. Otherwise we clear the redo portion of the list."
+				commandHistory := history].
+	commandHistory goBack: 1.
+	command canRedo ifFalse: [commandHistory clearFuture].
+
+	"Mark the current command (#undo) as benign so that it will
+		not require the command history to be cleared even though it has no
+		explicit undo action"
+	Command current beBenign! !
+!UI.Shell categoriesForMethods!
+queryRedo:!commands-queries!private! !
+queryUndo:!commands-queries!private! !
+redo!commands-actions!public! !
+undo!commands-actions!public! !
+!
+
+"End of package definition"!
+
