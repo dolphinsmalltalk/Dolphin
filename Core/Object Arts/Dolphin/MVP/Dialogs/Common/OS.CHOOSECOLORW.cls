@@ -8,10 +8,8 @@ OS.CommonDialogStructure
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_CHOOSECOLORW_Size' -> 16r24.
-			'_OffsetOf_dwSize' -> 16r0.
 			'_OffsetOf_flags' -> 16r14.
 			'_OffsetOf_hInstance' -> 16r8.
-			'_OffsetOf_hwndOwner' -> 16r4.
 			'_OffsetOf_lCustData' -> 16r18.
 			'_OffsetOf_lpCustColors' -> 16r10.
 			'_OffsetOf_lpfnHook' -> 16r1C.
@@ -49,11 +47,6 @@ color
 
 	^Graphics.Color fromCOLORREF: self rgbResult!
 
-dwSize: anInteger
-	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
-
-	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
-
 flags
 	"Answer the <Integer> value of the receiver's 'flags' field."
 
@@ -64,40 +57,28 @@ flags: anInteger
 
 	bytes uint32AtOffset: _OffsetOf_flags put: anInteger!
 
-hInstance: anExternalHandle
-	"Set the receiver's 'hInstance' field to the value of the argument, anExternalHandle"
+hInstance: aHandle
+	"Set the receiver's 'hInstance' field to the value of the argument, aHandle"
 
-	bytes uintPtrAtOffset: _OffsetOf_hInstance put: anExternalHandle!
+	bytes uintPtrAtOffset: _OffsetOf_hInstance put: aHandle!
 
 hookFlag
 	^CC_ENABLEHOOK!
-
-hwndOwner: anExternalHandle
-	"Set the receiver's 'hwndOwner' field to the value of the argument, anExternalHandle"
-
-	bytes uintPtrAtOffset: _OffsetOf_hwndOwner put: anExternalHandle!
 
 lpCustColors
 	"Answer the <UInt32Array> value of the receiver's 'lpCustColors' field."
 
 	^UInt32Array fromAddress: (bytes intPtrAtOffset: _OffsetOf_lpCustColors) length: 16!
 
-lpCustColors: aUInt32Array
-	"Set the receiver's 'lpCustColors' field to the value of the argument, aUInt32Array"
+lpCustColors: anUInt32Array
+	"Set the receiver's 'lpCustColors' field to the value of the argument, anUInt32Array"
 
-	bytes uintPtrAtOffset: _OffsetOf_lpCustColors put: aUInt32Array yourAddress!
+	bytes uintPtrAtOffset: _OffsetOf_lpCustColors put: anUInt32Array yourAddress!
 
-lpfnHook: anExternalAddress
-	"Set the receiver's 'lpfnHook' field to the value of the argument, anExternalAddress"
+lpfnHook: anAddress
+	"Set the receiver's 'lpfnHook' field to the value of the argument, anAddress"
 
-	bytes uintPtrAtOffset: _OffsetOf_lpfnHook put: anExternalAddress!
-
-ownerView: aView
-	"Set the parent window for the dialog to aView."
-
-	| hWnd |
-	hWnd := aView asParameter.
-	hWnd isNull ifFalse: [self hwndOwner: hWnd].!
+	bytes uintPtrAtOffset: _OffsetOf_lpfnHook put: anAddress!
 
 rgbResult
 	"Answer the <Integer> value of the receiver's 'rgbResult' field."
@@ -110,16 +91,13 @@ rgbResult: anInteger
 	bytes uint32AtOffset: _OffsetOf_rgbResult put: anInteger! !
 !OS.CHOOSECOLORW categoriesForMethods!
 color!accessing!public! !
-dwSize:!**compiled accessors**!public! !
 flags!**compiled accessors**!public! !
 flags:!**compiled accessors**!public! !
 hInstance:!**compiled accessors**!public! !
 hookFlag!constants!public! !
-hwndOwner:!**compiled accessors**!public! !
 lpCustColors!**compiled accessors**!public! !
 lpCustColors:!**compiled accessors**!public! !
 lpfnHook:!**compiled accessors**!public! !
-ownerView:!accessing!public! !
 rgbResult!**compiled accessors**!public! !
 rgbResult:!**compiled accessors**!public! !
 !
@@ -148,13 +126,8 @@ defineFields
 		} CHOOSECOLOR;
 "
 
+	super defineFields.
 	self
-		defineField: #dwSize
-			type: UInt32Field new beWriteOnly
-			offset: 0;
-		defineField: #hwndOwner
-			type: HANDLEField new beWriteOnly
-			offset: 4;
 		defineField: #hInstance
 			type: HANDLEField new beWriteOnly
 			offset: 8;
@@ -182,7 +155,7 @@ getFieldNames
 	^#(#dwSize #hwndOwner #hInstance #rgbResult #lpCustColors #flags #lpfnHook)! !
 !OS.CHOOSECOLORW class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
-defineFields!**auto generated**!public!template definition! !
+defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !
 

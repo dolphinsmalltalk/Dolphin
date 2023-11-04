@@ -17,7 +17,6 @@ OS.COM.MemberDesc
 			'_OffsetOf_invkind' -> 16r10.
 			'_OffsetOf_lprgelemdescParam' -> 16r8.
 			'_OffsetOf_lprgscode' -> 16r4.
-			'_OffsetOf_memid' -> 16r0.
 			'_OffsetOf_oVft' -> 16r1C.
 			'_OffsetOf_wFuncFlags' -> 16r30
 		}!
@@ -268,11 +267,6 @@ lprgscode
 		length: self cScodes
 		elementClass: HRESULT!
 
-memid
-	"Answer the <Integer> value of the receiver's 'memid' field."
-
-	^bytes int32AtOffset: _OffsetOf_memid!
-
 name
 	"Answer the name of the function described by the receiver."
 
@@ -413,7 +407,6 @@ isRestricted!public!testing! !
 isVirtual!public!testing! !
 lprgelemdescParam!**compiled accessors**!public! !
 lprgscode!**compiled accessors**!public! !
-memid!**compiled accessors**!public! !
 name!accessing!public! !
 names!accessing!private! !
 optionalInputs!accessing!private! !
@@ -453,8 +446,8 @@ defineFields
 		};
 	"
 
+	super defineFields.
 	self
-		defineField: #memid type: Int32Field readOnly;
 		defineField: #lprgscode
 			type: (StructureArrayPointerField type: HRESULT
 					arrayLength: (ConformantArrayFieldLength lengthField: #cScodes)) beReadOnly;

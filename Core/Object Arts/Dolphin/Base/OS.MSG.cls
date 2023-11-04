@@ -1,10 +1,10 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure
+External.Structure
 	subclass: #'OS.MSG'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.Win32Constants private})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_MSG_Size' -> 16r1C.
@@ -65,10 +65,9 @@ message
 	^bytes uint32AtOffset: _OffsetOf_message!
 
 swParam
-	"Answer the <integer> value of the receiver's wParam field, treating
-	it as a signed integer."
+	"Answer the <integer> value of the receiver's wParam field, treating it as a signed integer."
 
-	^bytes intPtrAtOffset: 8!
+	^bytes intPtrAtOffset: _OffsetOf_wParam!
 
 time
 	"Answer the <Integer> value of the receiver's 'time' field."

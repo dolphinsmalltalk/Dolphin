@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.OLEStructure
+External.Structure
 	subclass: #'OS.ITEMIDLIST'
 	instanceVariableNames: 'back'
 	classVariableNames: ''
@@ -131,7 +131,7 @@ isValid
 	^bytes notNil!
 
 onStartup
-	"Instead of doing this, should we be freeing the Shell memory on shut down?"
+	"Private - ITEMIDLISTs are not themselves finalizable, but may hold a finalizable memory block."
 
 	bytes beUnfinalizable.
 	bytes := nil! !

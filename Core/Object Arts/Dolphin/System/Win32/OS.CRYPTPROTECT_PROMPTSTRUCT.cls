@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure
+OS.SizedStructure
 	subclass: #'OS.CRYPTPROTECT_PROMPTSTRUCT'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -9,7 +9,6 @@ OS.Win32Structure
 	classConstants: {
 			'_CRYPTPROTECT_PROMPTSTRUCT_Size' -> 16r10.
 			'_OffsetOf_dwPromptFlags' -> 16r4.
-			'_OffsetOf_dwSize' -> 16r0.
 			'_OffsetOf_hwndApp' -> 16r8.
 			'_OffsetOf_szPrompt' -> 16rC
 		}!
@@ -39,20 +38,15 @@ dwPromptFlags: anInteger
 
 	bytes uint32AtOffset: _OffsetOf_dwPromptFlags put: anInteger!
 
-dwSize: anInteger
-	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
-
-	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
-
 hwndApp
-	"Answer the <ExternalHandle> value of the receiver's 'hwndApp' field."
+	"Answer the <Handle> value of the receiver's 'hwndApp' field."
 
 	^(bytes uintPtrAtOffset: _OffsetOf_hwndApp) asExternalHandle!
 
-hwndApp: anExternalHandle
-	"Set the receiver's 'hwndApp' field to the value of the argument, anExternalHandle"
+hwndApp: aHandle
+	"Set the receiver's 'hwndApp' field to the value of the argument, aHandle"
 
-	bytes uintPtrAtOffset: _OffsetOf_hwndApp put: anExternalHandle!
+	bytes uintPtrAtOffset: _OffsetOf_hwndApp put: aHandle!
 
 szPrompt
 	"Answer the <Utf16String> value of the receiver's 'szPrompt' field."
@@ -66,7 +60,6 @@ szPrompt: anUtf16String
 !OS.CRYPTPROTECT_PROMPTSTRUCT categoriesForMethods!
 dwPromptFlags!**compiled accessors**!public! !
 dwPromptFlags:!**compiled accessors**!public! !
-dwSize:!**compiled accessors**!public! !
 hwndApp!**compiled accessors**!public! !
 hwndApp:!**compiled accessors**!public! !
 szPrompt!**compiled accessors**!public! !
@@ -92,10 +85,8 @@ defineFields
 		} CRYPTPROTECT_PROMPTSTRUCT;
 "
 
+	super defineFields.
 	self
-		defineField: #dwSize
-			type: UInt32Field new beWriteOnly
-			offset: 0;
 		defineField: #dwPromptFlags
 			type: UInt32Field new
 			offset: 4;
@@ -111,7 +102,7 @@ getFieldNames
 	^#(#dwSize #dwPromptFlags #hwndApp #szPrompt)! !
 !OS.CRYPTPROTECT_PROMPTSTRUCT class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
-defineFields!**auto generated**!public!template definition! !
+defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !
 

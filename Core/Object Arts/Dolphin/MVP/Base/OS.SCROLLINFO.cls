@@ -1,13 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure
+OS.SizedStructure
 	subclass: #'OS.SCROLLINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-			'_OffsetOf_dwSize' -> 16r0.
 			'_OffsetOf_fMask' -> 16r4.
 			'_OffsetOf_nMax' -> 16rC.
 			'_OffsetOf_nMin' -> 16r8.
@@ -20,11 +19,6 @@ OS.SCROLLINFO guid: (Core.GUID fromString: '{87b4c60f-026e-11d3-9fd7-00a0cc3e4a3
 OS.SCROLLINFO comment: ''!
 !OS.SCROLLINFO categoriesForClass!External-Data-Structured-Win32! !
 !OS.SCROLLINFO methodsFor!
-
-dwSize: anInteger
-	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
-
-	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
 
 fMask
 	"Answer the <Integer> value of the receiver's 'fMask' field."
@@ -124,7 +118,6 @@ range: anInterval
 		nMax: anInterval stop;
 		maskIn: SIF_RANGE! !
 !OS.SCROLLINFO categoriesForMethods!
-dwSize:!**compiled accessors**!public! !
 fMask!**compiled accessors**!public! !
 fMask:!**compiled accessors**!public! !
 maskIn:!accessing!public! !
@@ -166,8 +159,8 @@ defineFields
 		SCROLLINFO; 
 	typedef SCROLLINFO FAR *LPSCROLLINFO;"
 
+	super defineFields.
 	self
-		defineField: #dwSize type: UInt32Field writeOnly beOverride;
 		defineField: #fMask type: UInt32Field new;
 		defineField: #nMin type: Int32Field new;
 		defineField: #nMax type: Int32Field new;

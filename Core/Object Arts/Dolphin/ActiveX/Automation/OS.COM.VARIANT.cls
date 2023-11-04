@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.FinalizableStructure
+External.FinalizableStructure
 	subclass: #'OS.COM.VARIANT'
 	instanceVariableNames: 'data'
 	classVariableNames: 'Unspecified'
@@ -141,9 +141,13 @@ arrayRef: newValue
 asString
 	"Answer the receiver coerced to a String (if possible)."
 
-	^self vt == VT_BSTR 
-		ifTrue: [self bstr]
-		ifFalse: [(self changeType: VT_BSTR) bstr]!
+	| varBstr string |
+	self vt == VT_BSTR ifTrue: [^self value].
+	varBstr := self changeType: VT_BSTR.
+	string := varBstr value.
+	"Avoid generating finalizable garbage"
+	varBstr free.
+	^string!
 
 asVariant
 	"Answer the <VARIANT> representation of the receiver."
@@ -192,15 +196,7 @@ bstr: aString
 changeType: anInteger
 	"Answer a <VARIANT> containing the receiver's value coerced to a new type as specified by the argument, an <integer> member of the VARTYPE enumeration. If the coercion is not possible, then raise an HRESULTError."
 
-	| answer |
-	anInteger == self vt ifTrue: [^self].	"Already requested type"
-	answer := self class new.
-	OleAut32
-		variantChangeType: answer
-		pvarSrc: self
-		wFlags: 0
-		vt: anInteger.
-	^answer!
+	^self changeType: anInteger locale: Locale.UserDefault!
 
 changeType: anInteger locale: aLocale
 	"Answer a <VARIANT> containing the receiver's value coerced to a new type as specified by the <integer> first argument, a member of the VARTYPE enumeration. The conversion is that appropriate for the specified target <Locale>. If the coercion is not possible, then raise an HRESULTError."
@@ -212,7 +208,9 @@ changeType: anInteger locale: aLocale
 		variantChangeTypeEx: answer
 		pvarSrc: self
 		lcid: aLocale lcid
-		wFlags: VARIANT_LOCALBOOL
+		wFlags: (aLocale noUserOverrides
+				ifTrue: [##(VARIANT_NOUSEROVERRIDE | VARIANT_LOCALBOOL)]
+				ifFalse: [VARIANT_LOCALBOOL])
 		vt: anInteger.
 	^answer!
 
@@ -234,11 +232,11 @@ cmp: anObject
 				pvarRight: varRight
 				lcid: NlsConstants.LOCALE_USER_DEFAULT
 				dwFlags: 0.
-	^(cmp == 3 and: [self vt == varRight vt])
+	^(cmp == VARCMP_NULL and: [self vt == varRight vt])
 		ifTrue: 
 			["Both null, therefore equal"
 			0]
-		ifFalse: [cmp - 1]	"VARCMP_NULL"!
+		ifFalse: [cmp - 1]!
 
 copy
 	"Answer a <VARIANT> which has the same vartype and value as the receiver."
@@ -289,10 +287,10 @@ decimal
 		ifTrue: [^DECIMAL fromAddress: self refAddress]
 		ifFalse: 
 			[| sign scale hi32 lo64 |
-			scale := bytes uint8AtOffset: 2.
-			sign := (bytes uint8AtOffset: 3) == 0 ifTrue: [1] ifFalse: [-1].
-			hi32 := bytes uint32AtOffset: 4.
-			lo64 := bytes uint64AtOffset: 8.
+			scale := bytes uint8AtOffset: DECIMAL._OffsetOf_scale.
+			sign := (bytes uint8AtOffset: DECIMAL._OffsetOf_sign) == 0 ifTrue: [1] ifFalse: [-1].
+			hi32 := bytes uint32AtOffset: DECIMAL._OffsetOf_hi32.
+			lo64 := bytes uint64AtOffset: DECIMAL._OffsetOf_lo64.
 			ScaledDecimal newFromNumber: ((hi32 bitShift: 64) + lo64) * sign / scale exp10 scale: scale]!
 
 decimal: aScaledDecimalOrInteger
@@ -300,16 +298,16 @@ decimal: aScaledDecimalOrInteger
 
 	| scale intVal |
 	scale := aScaledDecimalOrInteger scale.
-	bytes uint8AtOffset: 2 put: scale.
+	bytes uint8AtOffset: DECIMAL._OffsetOf_scale put: scale.
 	intVal := aScaledDecimalOrInteger * scale exp10.
 	aScaledDecimalOrInteger positive
-		ifTrue: [bytes uint8AtOffset: 3 put: 0]
+		ifTrue: [bytes uint8AtOffset: DECIMAL._OffsetOf_sign put: 0]
 		ifFalse: 
-			[bytes uint8AtOffset: 3 put: 128.
+			[bytes uint8AtOffset: DECIMAL._OffsetOf_sign put: 128.
 			intVal := intVal negated].
 	intVal := intVal asInteger.
-	bytes uint32AtOffset: 4 put: (intVal bitShift: -64).
-	bytes uint64AtOffset: 8 put: (intVal bitAnd: 16rFFFFFFFFFFFFFFFF).
+	bytes uint32AtOffset: DECIMAL._OffsetOf_hi32 put: (intVal bitShift: -64).
+	bytes uint64AtOffset: DECIMAL._OffsetOf_lo64 put: (intVal bitAnd: 16rFFFFFFFFFFFFFFFF).
 	bytes uint16AtOffset: _OffsetOf_vt put: VT_DECIMAL!
 
 detach
@@ -438,7 +436,7 @@ int32: newValue
 	"Set the signed 32-bit integer value from the receiver."
 
 	bytes
-		int32AtOffset: 8 put: newValue asInteger;
+		int32AtOffset: _OffsetOf_lVal put: newValue asInteger;
 		uint16AtOffset: _OffsetOf_vt put: VT_I4!
 
 int64
@@ -541,7 +539,7 @@ recordInfo
 	"Private - Answer the <IRecordInfo> stored in the receiver.
 	Assumes the receiver is of type VT_RECORD."
 
-	^IRecordInfo fromAddress: (bytes uintPtrAtOffset: 12)!
+	^IRecordInfo fromAddress: (bytes uintPtrAtOffset: _OffsetOf_pRecInfo)!
 
 refAddress
 	"Private - Answer the reference address from the receiver (assumes receiver is a VT_BYREF)."
@@ -575,7 +573,7 @@ struct: newValue
 	| piRecInfo |
 	piRecInfo := newValue recordInfo.
 	piRecInfo addRef.
-	bytes uint32AtOffset: 12 put: piRecInfo yourAddress.
+	bytes uint32AtOffset: _OffsetOf_pRecInfo put: piRecInfo yourAddress.
 	self reference: newValue.
 	bytes uint16AtOffset: _OffsetOf_vt put: ##(VT_RECORD | VT_BYREF)!
 

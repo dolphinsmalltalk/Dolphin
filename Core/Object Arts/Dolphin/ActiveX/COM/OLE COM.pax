@@ -75,7 +75,6 @@ package setClassNames: #(
 	#{OS.COM.Enumerable}
 	#{OS.COM.Enumerator}
 	#{OS.COM.EXCEPINFO}
-	#{OS.COM.FinalizableStructure}
 	#{OS.COM.IClassFactory}
 	#{OS.COM.IClassFactory2}
 	#{OS.COM.IEnumString}
@@ -98,7 +97,6 @@ package setClassNames: #(
 	#{OS.COM.OLEAutLibrary}
 	#{OS.COM.OLEConstants}
 	#{OS.COM.OLELibrary}
-	#{OS.COM.OLEStructure}
 	#{OS.COM.QueryInterfaceFunction}
 	#{OS.COM.ReleaseFunction}
 	#{OS.COM.SingletonClassFactory}
@@ -241,7 +239,7 @@ External.DynamicLinkLibrary
 External.DynamicLinkLibrary
 	subclass: #'OS.COM.OLELibrary'
 	instanceVariableNames: 'comOnly'
-	classVariableNames: 'DefaultIMalloc'
+	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -288,6 +286,51 @@ OS.COM.Enumerator
 	classInstanceVariableNames: ''
 	classConstants: {}!
 External.Structure
+	subclass: #'OS.COM.COAUTHIDENTITY'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_COAUTHIDENTITY_Size' -> 16r1C.
+			'_OffsetOf_Domain' -> 16r8.
+			'_OffsetOf_DomainLength' -> 16rC.
+			'_OffsetOf_Flags' -> 16r18.
+			'_OffsetOf_Password' -> 16r10.
+			'_OffsetOf_PasswordLength' -> 16r14.
+			'_OffsetOf_User' -> 16r0.
+			'_OffsetOf_UserLength' -> 16r4
+		}!
+External.Structure
+	subclass: #'OS.COM.COAUTHINFO'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_COAUTHINFO_Size' -> 16r1C.
+			'_OffsetOf_dwAuthnLevel' -> 16rC.
+			'_OffsetOf_dwAuthnSvc' -> 16r0.
+			'_OffsetOf_dwAuthzSvc' -> 16r4.
+			'_OffsetOf_dwCapabilities' -> 16r18.
+			'_OffsetOf_dwImpersonationLevel' -> 16r10.
+			'_OffsetOf_pAuthIdentityData' -> 16r14.
+			'_OffsetOf_pwszServerPrincName' -> 16r8
+		}!
+External.Structure
+	subclass: #'OS.COM.COSERVERINFO'
+	instanceVariableNames: 'hostName'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_COSERVERINFO_Size' -> 16r10.
+			'_OffsetOf_dwReserved1' -> 16r0.
+			'_OffsetOf_dwReserved2' -> 16rC.
+			'_OffsetOf_pAuthInfo' -> 16r8.
+			'_OffsetOf_pwszName' -> 16r4
+		}!
+External.Structure
 	subclass: #'OS.COM.Interface'
 	instanceVariableNames: 'implementor'
 	classVariableNames: 'InterfaceClasses'
@@ -300,13 +343,6 @@ External.Structure
 			'_OffsetOf_objectCookie' -> 16r8.
 			'_OffsetOf_vtbl' -> 16r0
 		}!
-External.Structure
-	subclass: #'OS.COM.OLEStructure'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #(#{OS.COM.OLEConstants})
-	classInstanceVariableNames: ''
-	classConstants: {}!
 External.ExternalArray
 	subclass: #'OS.COM.CountedArray'
 	instanceVariableNames: 'elements'
@@ -332,6 +368,36 @@ OS.COM.CountedArray
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_CALPOLESTR_Size' -> 16r8 }!
+External.FinalizableStructure
+	subclass: #'OS.COM.EXCEPINFO'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #(#{OS.Win32Errors})
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_EXCEPINFO_Size' -> 16r20.
+			'_OffsetOf_dwHelpContext' -> 16r10.
+			'_OffsetOf_pfnDeferredFillIn' -> 16r18.
+			'_OffsetOf_pvReserved' -> 16r14.
+			'_OffsetOf_pwszDescription' -> 16r8.
+			'_OffsetOf_pwszHelpFile' -> 16rC.
+			'_OffsetOf_pwszSource' -> 16r4.
+			'_OffsetOf_scode' -> 16r1C.
+			'_OffsetOf_wCode' -> 16r0.
+			'_OffsetOf_wReserved' -> 16r2
+		}!
+External.FinalizableStructure
+	subclass: #'OS.COM.MULTI_QI'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_MULTI_QI_Size' -> 16rC.
+			'_OffsetOf_hr' -> 16r8.
+			'_OffsetOf_pIID' -> 16r0.
+			'_OffsetOf_pItf' -> 16r4
+		}!
 OS.COM.Interface
 	subclass: #'OS.COM.IUnknown'
 	instanceVariableNames: ''
@@ -409,59 +475,7 @@ OS.COM.IEnumXXXX
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.OLEStructure
-	subclass: #'OS.COM.COAUTHIDENTITY'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-			'_COAUTHIDENTITY_Size' -> 16r1C.
-			'_OffsetOf_Domain' -> 16r8.
-			'_OffsetOf_DomainLength' -> 16rC.
-			'_OffsetOf_Flags' -> 16r18.
-			'_OffsetOf_Password' -> 16r10.
-			'_OffsetOf_PasswordLength' -> 16r14.
-			'_OffsetOf_User' -> 16r0.
-			'_OffsetOf_UserLength' -> 16r4
-		}!
-OS.COM.OLEStructure
-	subclass: #'OS.COM.COAUTHINFO'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-			'_COAUTHINFO_Size' -> 16r1C.
-			'_OffsetOf_dwAuthnLevel' -> 16rC.
-			'_OffsetOf_dwAuthnSvc' -> 16r0.
-			'_OffsetOf_dwAuthzSvc' -> 16r4.
-			'_OffsetOf_dwCapabilities' -> 16r18.
-			'_OffsetOf_dwImpersonationLevel' -> 16r10.
-			'_OffsetOf_pAuthIdentityData' -> 16r14.
-			'_OffsetOf_pwszServerPrincName' -> 16r8
-		}!
-OS.COM.OLEStructure
-	subclass: #'OS.COM.COSERVERINFO'
-	instanceVariableNames: 'hostName'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-			'_COSERVERINFO_Size' -> 16r10.
-			'_OffsetOf_dwReserved1' -> 16r0.
-			'_OffsetOf_dwReserved2' -> 16rC.
-			'_OffsetOf_pAuthInfo' -> 16r8.
-			'_OffsetOf_pwszName' -> 16r4
-		}!
-OS.COM.OLEStructure
-	subclass: #'OS.COM.FinalizableStructure'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-OS.COM.OLEStructure
+OS.SizedStructure
 	subclass: #'OS.COM.LICINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -469,39 +483,8 @@ OS.COM.OLEStructure
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_LICINFO_Size' -> 16rC.
-			'_OffsetOf_dwSize' -> 16r0.
 			'_OffsetOf_fLicVerified' -> 16r8.
 			'_OffsetOf_fRuntimeKeyAvail' -> 16r4
-		}!
-OS.COM.FinalizableStructure
-	subclass: #'OS.COM.EXCEPINFO'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #(#{OS.Win32Errors})
-	classInstanceVariableNames: ''
-	classConstants: {
-			'_EXCEPINFO_Size' -> 16r20.
-			'_OffsetOf_dwHelpContext' -> 16r10.
-			'_OffsetOf_pfnDeferredFillIn' -> 16r18.
-			'_OffsetOf_pvReserved' -> 16r14.
-			'_OffsetOf_pwszDescription' -> 16r8.
-			'_OffsetOf_pwszHelpFile' -> 16rC.
-			'_OffsetOf_pwszSource' -> 16r4.
-			'_OffsetOf_scode' -> 16r1C.
-			'_OffsetOf_wCode' -> 16r0.
-			'_OffsetOf_wReserved' -> 16r2
-		}!
-OS.COM.FinalizableStructure
-	subclass: #'OS.COM.MULTI_QI'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-			'_MULTI_QI_Size' -> 16rC.
-			'_OffsetOf_hr' -> 16r8.
-			'_OffsetOf_pIID' -> 16r0.
-			'_OffsetOf_pItf' -> 16r4
 		}!
 
 "Loose Methods"!

@@ -8,11 +8,9 @@ OS.CommonDialogStructure
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_CHOOSEFONTW_Size' -> 16r3C.
-			'_OffsetOf_dwSize' -> 16r0.
 			'_OffsetOf_flags' -> 16r14.
 			'_OffsetOf_hDC' -> 16r8.
 			'_OffsetOf_hInstance' -> 16r28.
-			'_OffsetOf_hwndOwner' -> 16r4.
 			'_OffsetOf_iPointSize' -> 16r10.
 			'_OffsetOf_lCustData' -> 16r1C.
 			'_OffsetOf_lpfnHook' -> 16r20.
@@ -38,11 +36,6 @@ color
 color: aColor 
 	self rgbColors: aColor asCOLORREF!
 
-dwSize: anInteger
-	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
-
-	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
-
 flags
 	"Answer the <Integer> value of the receiver's 'flags' field."
 
@@ -53,18 +46,13 @@ flags: anInteger
 
 	bytes uint32AtOffset: _OffsetOf_flags put: anInteger!
 
-hDC: anExternalHandle
-	"Set the receiver's 'hDC' field to the value of the argument, anExternalHandle"
+hDC: aHandle
+	"Set the receiver's 'hDC' field to the value of the argument, aHandle"
 
-	bytes uintPtrAtOffset: _OffsetOf_hDC put: anExternalHandle!
+	bytes uintPtrAtOffset: _OffsetOf_hDC put: aHandle!
 
 hookFlag
 	^CF_ENABLEHOOK!
-
-hwndOwner: anExternalHandle
-	"Set the receiver's 'hwndOwner' field to the value of the argument, anExternalHandle"
-
-	bytes uintPtrAtOffset: _OffsetOf_hwndOwner put: anExternalHandle!
 
 iPointSize
 	"Answer the <Integer> value of the receiver's 'iPointSize' field."
@@ -78,10 +66,10 @@ logFont: aLOGFONT
 	logFont := aLOGFONT.
 	self lpLogFont: aLOGFONT!
 
-lpfnHook: anExternalAddress
-	"Set the receiver's 'lpfnHook' field to the value of the argument, anExternalAddress"
+lpfnHook: anAddress
+	"Set the receiver's 'lpfnHook' field to the value of the argument, anAddress"
 
-	bytes uintPtrAtOffset: _OffsetOf_lpfnHook put: anExternalAddress!
+	bytes uintPtrAtOffset: _OffsetOf_lpfnHook put: anAddress!
 
 lpLogFont
 	"Answer the <LOGFONTW> value of the receiver's 'lpLogFont' field."
@@ -92,13 +80,6 @@ lpLogFont: aLOGFONTW
 	"Set the receiver's 'lpLogFont' field to the value of the argument, aLOGFONTW"
 
 	bytes uintPtrAtOffset: _OffsetOf_lpLogFont put: aLOGFONTW yourAddress!
-
-ownerView: aView
-	"Set the parent window for the dialog to aView."
-
-	| hWnd |
-	hWnd := aView asParameter.
-	hWnd isNull ifFalse: [self hwndOwner: hWnd].!
 
 rgbColors
 	"Answer the <Integer> value of the receiver's 'rgbColors' field."
@@ -112,19 +93,16 @@ rgbColors: anInteger
 !OS.CHOOSEFONTW categoriesForMethods!
 color!public! !
 color:!public! !
-dwSize:!**compiled accessors**!public! !
 flags!**compiled accessors**!public! !
 flags:!**compiled accessors**!public! !
 hDC:!**compiled accessors**!public! !
 hookFlag!accessing!public! !
-hwndOwner:!**compiled accessors**!public! !
 iPointSize!**compiled accessors**!public! !
 logFont!private! !
 logFont:!private! !
 lpfnHook:!**compiled accessors**!public! !
 lpLogFont!**compiled accessors**!public! !
 lpLogFont:!**compiled accessors**!public! !
-ownerView:!accessing!public! !
 rgbColors!**compiled accessors**!public! !
 rgbColors:!**compiled accessors**!public! !
 !
@@ -157,9 +135,8 @@ defineFields
 		INT			nSizeMax;
 	} CHOOSEFONT;"
 
+	super defineFields.
 	self
-		defineField: #dwSize type: UInt32Field writeOnly beOverride;
-		defineField: #hwndOwner type: HANDLEField writeOnly;
 		defineField: #hDC type: HANDLEField writeOnly;
 		defineField: #lpLogFont type: (PointerField type: LOGFONTW);
 		defineField: #iPointSize type: UInt32Field readOnly;

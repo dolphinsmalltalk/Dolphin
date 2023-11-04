@@ -349,6 +349,20 @@ External.Structure
 			'_OffsetOf_fd_count' -> 16r0
 		}!
 External.Structure
+	subclass: #'OS.HOSTENT'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #(#{OS.WinSocketConstants})
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_HOSTENT_Size' -> 16r10.
+			'_OffsetOf_h_addr_list' -> 16rC.
+			'_OffsetOf_h_addrtype' -> 16r8.
+			'_OffsetOf_h_aliases' -> 16r4.
+			'_OffsetOf_h_length' -> 16rA.
+			'_OffsetOf_h_name' -> 16r0
+		}!
+External.Structure
 	subclass: #'OS.NET_ADDRESS_INFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -362,6 +376,31 @@ External.Structure
 			'_OffsetOf_Ipv6Address' -> 16r4.
 			'_OffsetOf_NamedAddress_Address' -> 16r4.
 			'_OffsetOf_NamedAddress_Port' -> 16r204
+		}!
+External.Structure
+	subclass: #'OS.PROTOENT'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_OffsetOf_p_aliases' -> 16r4.
+			'_OffsetOf_p_name' -> 16r0.
+			'_OffsetOf_p_proto' -> 16r8.
+			'_PROTOENT_Size' -> 16rC
+		}!
+External.Structure
+	subclass: #'OS.SERVENT'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_OffsetOf_s_aliases' -> 16r4.
+			'_OffsetOf_s_name' -> 16r0.
+			'_OffsetOf_s_port' -> 16r8.
+			'_OffsetOf_s_proto' -> 16rC.
+			'_SERVENT_Size' -> 16r10
 		}!
 External.Structure
 	subclass: #'OS.SOCKADDR'
@@ -381,6 +420,22 @@ External.Structure
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_OffsetOf_tv_sec' -> 16r0. '_OffsetOf_tv_usec' -> 16r4. '_TIMEVAL_Size' -> 16r8 }!
+External.Structure
+	subclass: #'OS.WSADATA'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_OffsetOf_iMaxSockets' -> 16r186.
+			'_OffsetOf_iMaxUdpDg' -> 16r188.
+			'_OffsetOf_lpVendorInfo' -> 16r18C.
+			'_OffsetOf_szDescription' -> 16r4.
+			'_OffsetOf_szSystemStatus' -> 16r105.
+			'_OffsetOf_wHighVersion' -> 16r2.
+			'_OffsetOf_wVersion' -> 16r0.
+			'_WSADATA_Size' -> 16r190
+		}!
 OS.AbstractIN_ADDR
 	subclass: #'OS.IN_ADDR'
 	instanceVariableNames: ''
@@ -444,61 +499,6 @@ OS.SOCKADDR
 			'_OffsetOf___ss_pad2' -> 16r10.
 			'_OffsetOf_ss_family' -> 16r0.
 			'_SOCKADDR_STORAGE_Size' -> 16r80
-		}!
-OS.Win32Structure
-	subclass: #'OS.HOSTENT'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #(#{OS.WinSocketConstants})
-	classInstanceVariableNames: ''
-	classConstants: {
-			'_HOSTENT_Size' -> 16r10.
-			'_OffsetOf_h_addr_list' -> 16rC.
-			'_OffsetOf_h_addrtype' -> 16r8.
-			'_OffsetOf_h_aliases' -> 16r4.
-			'_OffsetOf_h_length' -> 16rA.
-			'_OffsetOf_h_name' -> 16r0
-		}!
-OS.Win32Structure
-	subclass: #'OS.PROTOENT'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-			'_OffsetOf_p_aliases' -> 16r4.
-			'_OffsetOf_p_name' -> 16r0.
-			'_OffsetOf_p_proto' -> 16r8.
-			'_PROTOENT_Size' -> 16rC
-		}!
-OS.Win32Structure
-	subclass: #'OS.SERVENT'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-			'_OffsetOf_s_aliases' -> 16r4.
-			'_OffsetOf_s_name' -> 16r0.
-			'_OffsetOf_s_port' -> 16r8.
-			'_OffsetOf_s_proto' -> 16rC.
-			'_SERVENT_Size' -> 16r10
-		}!
-OS.Win32Structure
-	subclass: #'OS.WSADATA'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-			'_OffsetOf_iMaxSockets' -> 16r186.
-			'_OffsetOf_iMaxUdpDg' -> 16r188.
-			'_OffsetOf_lpVendorInfo' -> 16r18C.
-			'_OffsetOf_szDescription' -> 16r4.
-			'_OffsetOf_szSystemStatus' -> 16r105.
-			'_OffsetOf_wHighVersion' -> 16r2.
-			'_OffsetOf_wVersion' -> 16r0.
-			'_WSADATA_Size' -> 16r190
 		}!
 
 "End of package definition"!

@@ -28,12 +28,7 @@ characterSet
 createHandle
 	"Private - Answer an external handle to a new font as described by the logfont structure."
 
-	^self logFont createFont!
-
-desktopResolution
-	"Private - Answer the resolution of the active desktop."
-
-	^Canvas desktopResolution!
+	^Gdi32 createFontIndirectW: self logFont!
 
 displayOn: aPuttableStream
 	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
@@ -44,6 +39,9 @@ displayOn: aPuttableStream
 		display: self pointSize;
 		nextPutAll: 'pt'!
 
+getLogFont
+	^self subclassResponsibility!
+
 hash
 	"Answer the SmallInteger hash value for the receiver."
 
@@ -53,7 +51,7 @@ initialize
 	"Initialise the receiver."
 
 	super initialize.
-	resolution := self desktopResolution!
+	resolution := Canvas desktopResolution!
 
 isBold
 	"Answer whether the receiver is bold."
@@ -83,7 +81,7 @@ isUnderlined
 logFont
 	"Answer the receiver's logical attributes."
 
-	^logfont!
+	^logfont ifNil: [self getLogFont]!
 
 name
 	"Answer the face name of the font."
@@ -126,17 +124,6 @@ postCopy
 	logfont := logfont copy.
 	^self!
 
-printOn: aStream
-	"Append, to aStream, a String whose characters are a description of the receiver as a developer
-	would want to see it."
-
-	aStream
-		nextPut: $(;
-		display: Font;
-		nextPutAll: ' name: '; print: self name;
-		nextPutAll: ' pointSize: '; print: self pointSize;
-		nextPut: $)!
-
 resolution
 	"Answer the logical pixels per inch of the receiver"
 
@@ -177,8 +164,8 @@ weight
 actualFont!public! !
 characterSet!accessing!public! !
 createHandle!private!realizing/unrealizing! !
-desktopResolution!initializing!private! !
 displayOn:!displaying!public! !
+getLogFont!initializing!private! !
 hash!comparing!public! !
 initialize!initializing!public! !
 isBold!public!testing! !
@@ -194,7 +181,6 @@ pointFromPixels:!mapping!private! !
 pointSize!accessing!public! !
 pointSize:!accessing!public! !
 postCopy!copying!public! !
-printOn:!development!printing!public! !
 resolution!accessing!public! !
 resolution:!accessing!public! !
 species!public! !

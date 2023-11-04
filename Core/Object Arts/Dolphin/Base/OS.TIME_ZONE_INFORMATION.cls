@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure
+External.Structure
 	subclass: #'OS.TIME_ZONE_INFORMATION'
 	instanceVariableNames: 'zoneId offset'
 	classVariableNames: ''

@@ -72,7 +72,7 @@ Kernel.SharedPool
 			'LWS_TRANSPARENT' -> 16r1.
 			'MAX_LINKID_TEXT' -> 16r30
 		}!
-OS.Win32Structure
+External.Structure
 	subclass: #'OS.LITEM'
 	instanceVariableNames: ''
 	classVariableNames: ''

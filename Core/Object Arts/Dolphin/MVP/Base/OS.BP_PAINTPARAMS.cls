@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure
+OS.SizedStructure
 	subclass: #'OS.BP_PAINTPARAMS'
 	instanceVariableNames: 'blendFunction'
 	classVariableNames: ''
@@ -9,7 +9,6 @@ OS.Win32Structure
 	classConstants: {
 			'_BP_PAINTPARAMS_Size' -> 16r10.
 			'_OffsetOf_dwFlags' -> 16r4.
-			'_OffsetOf_dwSize' -> 16r0.
 			'_OffsetOf_pBlendFunction' -> 16rC.
 			'_OffsetOf_prcExclude' -> 16r8
 		}!
@@ -35,15 +34,10 @@ dwFlags: anInteger
 
 	bytes uint32AtOffset: _OffsetOf_dwFlags put: anInteger!
 
-dwSize: anInteger
-	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
-
-	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
-
 pBlendFunction
 	"Answer the <BLENDFUNCTION> value of the receiver's 'pBlendFunction' field."
 
-	^OS.BLENDFUNCTION fromAddress: (bytes intPtrAtOffset: _OffsetOf_pBlendFunction)!
+	^BLENDFUNCTION fromAddress: (bytes intPtrAtOffset: _OffsetOf_pBlendFunction)!
 
 pBlendFunction: aBLENDFUNCTION
 	"Set the receiver's 'pBlendFunction' field to the value of the argument, aBLENDFUNCTION"
@@ -53,7 +47,7 @@ pBlendFunction: aBLENDFUNCTION
 prcExclude
 	"Answer the <RECTL> value of the receiver's 'prcExclude' field."
 
-	^OS.RECTL fromAddress: (bytes intPtrAtOffset: _OffsetOf_prcExclude)!
+	^RECTL fromAddress: (bytes intPtrAtOffset: _OffsetOf_prcExclude)!
 
 prcExclude: aRECTL
 	"Set the receiver's 'prcExclude' field to the value of the argument, aRECTL"
@@ -64,7 +58,6 @@ blendFunction!accessing!public! !
 blendFunction:!accessing!public! !
 dwFlags!**compiled accessors**!public! !
 dwFlags:!**compiled accessors**!public! !
-dwSize:!**compiled accessors**!public! !
 pBlendFunction!**compiled accessors**!public! !
 pBlendFunction:!**compiled accessors**!public! !
 prcExclude!**compiled accessors**!public! !
@@ -90,8 +83,8 @@ defineFields
 		} BP_PAINTPARAMS;
 "
 
+	super defineFields.
 	self
-		defineField: #dwSize type: UInt32Field writeOnly;
 		defineField: #dwFlags type: UInt32Field new;
 		defineField: #prcExclude type: (PointerField type: RECTL);
 		defineField: #pBlendFunction type: (PointerField type: BLENDFUNCTION)!

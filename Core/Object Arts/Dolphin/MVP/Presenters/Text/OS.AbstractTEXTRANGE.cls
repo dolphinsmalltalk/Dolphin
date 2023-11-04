@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure
+External.Structure
 	subclass: #'OS.AbstractTEXTRANGE'
 	instanceVariableNames: 'text'
 	classVariableNames: ''
@@ -15,25 +15,21 @@ OS.AbstractTEXTRANGE comment: ''!
 cpMax
 	"Answer the receiver's cpMax field as a Smalltalk object."
 
-	^(bytes int32AtOffset: 4)!
+	^self subclassResponsibility!
 
-cpMax: anObject
-	"Set the receiver's cpMax field to the value of anObject."
-
-	bytes int32AtOffset: 4 put: anObject!
+cpMax: anInteger
+	self subclassResponsibility!
 
 cpMin
 	"Answer the receiver's cpMin field as a Smalltalk object."
 
-	^(bytes int32AtOffset: 0)!
+	^self subclassResponsibility!
 
-cpMin: anObject
-	"Set the receiver's cpMin field to the value of anObject."
+cpMin: anInteger
+	self subclassResponsibility!
 
-	bytes int32AtOffset: 0 put: anObject!
-
-lpstrText: aString
-	"Set the receiver's 'lpstrText' field to the value of the argument, aString"
+lpstrText: anUtf8String
+	"Set the receiver's 'lpstrText' field to the value of the argument, anUtf8String"
 
 	self subclassResponsibility!
 

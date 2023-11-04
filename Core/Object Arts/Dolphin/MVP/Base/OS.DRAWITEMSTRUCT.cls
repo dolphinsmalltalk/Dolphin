@@ -36,12 +36,12 @@ hwndItem
 isGrayed
 	"Answer whether the drawn menu item should be grayed. Only applicable when drawing menus."
 
-	^self itemState allMask: ODS_GRAYED!
+	^self itemState allMask: OS.Win32Constants.ODS_GRAYED!
 
 isSelected
 	"Answer whether the drawn menu item is selected. Only applicable when drawing menus."
 
-	^self itemState allMask: ODS_SELECTED!
+	^self itemState allMask: OS.Win32Constants.ODS_SELECTED!
 
 itemAction
 	"Answer the <Integer> value of the receiver's 'itemAction' field."

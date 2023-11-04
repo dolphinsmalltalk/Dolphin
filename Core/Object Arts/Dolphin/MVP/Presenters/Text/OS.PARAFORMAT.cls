@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure
+OS.SizedStructure
 	subclass: #'OS.PARAFORMAT'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -9,7 +9,6 @@ OS.Win32Structure
 	classConstants: {
 			'_OffsetOf_cTabCount' -> 16r1A.
 			'_OffsetOf_dwMask' -> 16r4.
-			'_OffsetOf_dwSize' -> 16r0.
 			'_OffsetOf_dxOffset' -> 16r14.
 			'_OffsetOf_dxRightIndent' -> 16r10.
 			'_OffsetOf_dxStartIndent' -> 16rC.
@@ -54,11 +53,6 @@ dwMask: anInteger
 	"Set the receiver's 'dwMask' field to the value of the argument, anInteger"
 
 	bytes uint32AtOffset: _OffsetOf_dwMask put: anInteger!
-
-dwSize: anInteger
-	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
-
-	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
 
 dxOffset
 	"Answer the <Integer> value of the receiver's 'dxOffset' field."
@@ -112,12 +106,12 @@ rgxTabs
 
 	^UInt32Array fromAddress: bytes yourAddress + _OffsetOf_rgxTabs length: 32!
 
-rgxTabs: aUInt32Array
-	"Set the receiver's 'rgxTabs' field to the value of the argument, aUInt32Array"
+rgxTabs: anUInt32Array
+	"Set the receiver's 'rgxTabs' field to the value of the argument, anUInt32Array"
 
 	| size |
-	size := aUInt32Array byteSize min: ##(32 * UInt32Array elementSize).
-	aUInt32Array
+	size := anUInt32Array byteSize min: ##(32 * UInt32Array elementSize).
+	anUInt32Array
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_rgxTabs + 1)
 		to: _OffsetOf_rgxTabs + size
@@ -170,7 +164,6 @@ cTabCount!**compiled accessors**!public! !
 cTabCount:!**compiled accessors**!public! !
 dwMask!**compiled accessors**!public! !
 dwMask:!**compiled accessors**!public! !
-dwSize:!**compiled accessors**!public! !
 dxOffset!**compiled accessors**!public! !
 dxOffset:!**compiled accessors**!public! !
 dxRightIndent!**compiled accessors**!public! !
@@ -204,8 +197,8 @@ defineFields
 		PARAFORMAT compileDefinition
 	"
 
+	super defineFields.
 	self
-		defineField: #dwSize type: UInt32Field writeOnly beOverride;
 		defineField: #dwMask type: UInt32Field new;
 		defineField: #wNumbering type: UInt16Field new;
 		defineField: #wEffects type: UInt16Field new;

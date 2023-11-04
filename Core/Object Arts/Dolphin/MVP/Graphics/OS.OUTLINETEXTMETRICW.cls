@@ -1,13 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure
+OS.SizedStructure
 	subclass: #'OS.OUTLINETEXTMETRICW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-			'_OffsetOf_dwSize' -> 16r0.
 			'_OffsetOf_otmAscent' -> 16r64.
 			'_OffsetOf_otmDescent' -> 16r68.
 			'_OffsetOf_otmEMSquare' -> 16r60.
@@ -45,11 +44,6 @@ OS.OUTLINETEXTMETRICW guid: (Core.GUID fromString: '{52831a87-901f-4a84-894b-ab5
 OS.OUTLINETEXTMETRICW comment: '<OUTLINETEXTMETRIC> is an <ExternalStructure> class to wrap the struct ''Win.OUTLINETEXTMETRIC'' from type information in the ''Windows API (ANSI)'' library.'!
 !OS.OUTLINETEXTMETRICW categoriesForClass!Win-Structs! !
 !OS.OUTLINETEXTMETRICW methodsFor!
-
-dwSize: anInteger
-	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
-
-	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
 
 faceName
 	"Answer the receiver's <readableString> font face name."
@@ -223,7 +217,6 @@ styleName
 
 	^Utf16String fromAddress: bytes yourAddress + self otmpStyleName! !
 !OS.OUTLINETEXTMETRICW categoriesForMethods!
-dwSize:!**compiled accessors**!public! !
 faceName!accessing!public! !
 familyName!accessing!public! !
 fullName!accessing!public! !
@@ -306,8 +299,8 @@ defineFields
 		} OUTLINETEXTMETRICW;
 "
 
+	super defineFields.
 	self
-		defineField: #dwSize type: UInt32Field writeOnly beOverride;
 		defineField: #otmTextMetrics type: (StructureField type: TEXTMETRICW) beReadOnly;
 		defineField: #otmFiller type: UInt8Field filler;
 		defineField: #otmPanoseNumber type: (StructureField type: PANOSE) beReadOnly;

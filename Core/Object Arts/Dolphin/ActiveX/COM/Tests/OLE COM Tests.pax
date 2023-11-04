@@ -7,6 +7,7 @@ package paxVersion: 2.1;
 package setClassNames: #(
 	#{OS.COM.Tests}
 	#{OS.COM.Tests.CLSIDTest}
+	#{OS.COM.Tests.EXCEPINFOTest}
 	#{OS.COM.Tests.IIDTest}
 	#{OS.COM.Tests.InterfaceTest}
 ).
@@ -24,6 +25,13 @@ package!
 
 OS.COM
 	subclass: #'OS.COM.Tests'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.DolphinTest
+	subclass: #'OS.COM.Tests.EXCEPINFOTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

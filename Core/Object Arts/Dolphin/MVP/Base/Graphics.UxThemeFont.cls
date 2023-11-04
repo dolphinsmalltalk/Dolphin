@@ -21,11 +21,8 @@ Graphics.UxThemeFont guid: (Core.GUID fromString: '{d0d280e2-2bf1-4921-b969-8efb
 Graphics.UxThemeFont comment: ''!
 !Graphics.UxThemeFont methodsFor!
 
-logFont
-	"Answer the receiver's logical attributes."
-
-	^logfont
-		ifNil: [logfont := UxTheme getThemeSysFont: (themedObject ifNotNil: [themedObject theme]) iFontId: id]!
+getLogFont
+	^logfont := UxTheme getThemeSysFont: (themedObject ifNotNil: [themedObject theme]) iFontId: id!
 
 printOn: aStream
 	"Append, to aStream, a String whose characters are a description of the receiver as a developer
@@ -60,7 +57,7 @@ setId: anInteger themedObject: anObjectWithTheme
 	id := anInteger.
 	themedObject := anObjectWithTheme! !
 !Graphics.UxThemeFont categoriesForMethods!
-logFont!accessing!public! !
+getLogFont!initializing!private! !
 printOn:!development!printing!public! !
 setId:themedObject:!initializing!private! !
 !

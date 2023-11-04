@@ -1,13 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure
+OS.SizedStructure
 	subclass: #'OS.WINDOWPLACEMENT'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-			'_OffsetOf_dwSize' -> 16r0.
 			'_OffsetOf_flags' -> 16r4.
 			'_OffsetOf_ptMaxPosition' -> 16r14.
 			'_OffsetOf_ptMinPosition' -> 16rC.
@@ -19,11 +18,6 @@ OS.WINDOWPLACEMENT guid: (Core.GUID fromString: '{87b4c61b-026e-11d3-9fd7-00a0cc
 OS.WINDOWPLACEMENT comment: ''!
 !OS.WINDOWPLACEMENT categoriesForClass!External-Data-Structured-Win32! !
 !OS.WINDOWPLACEMENT methodsFor!
-
-dwSize: anInteger
-	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
-
-	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
 
 rcNormalPosition
 	"Answer the <RECTL> value of the receiver's 'rcNormalPosition' field."
@@ -49,7 +43,6 @@ showCmd: anInteger
 
 	bytes uint32AtOffset: _OffsetOf_showCmd put: anInteger! !
 !OS.WINDOWPLACEMENT categoriesForMethods!
-dwSize:!**compiled accessors**!public! !
 rcNormalPosition!**compiled accessors**!public! !
 rcNormalPosition:!**compiled accessors**!public! !
 showCmd!**compiled accessors**!public! !
@@ -77,8 +70,8 @@ defineFields
 			RECTL  rcNormalPosition;
 		} WINDOWPLACEMENT;"
 
+	super defineFields.
 	self
-		defineField: #dwSize type: UInt32Field writeOnly beOverride;
 		defineField: #flags type: UInt32Field filler;
 		defineField: #showCmd type: UInt32Field new;
 		defineField: #ptMinPosition type: (StructureField type: POINTL) beFiller;

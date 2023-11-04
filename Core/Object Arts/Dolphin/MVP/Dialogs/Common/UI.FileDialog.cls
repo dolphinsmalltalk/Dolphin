@@ -53,21 +53,13 @@ cdnHelp: anExternalAddress
 	^0!
 
 cdnIncludeItem: anExternalAddress
-	"Private - Determines whether an item should be displayed. When the user opens a new folder
-	or directory, the dialog sends this notification for each item in the folder or directory,
-	but only if the OFN_ENABLEINCLUDENOTIFY flag was set."
+	"Private - Determines whether an item should be displayed. The argument is a pointer to an OFNOTIFYEX structure. When the user opens a new folder or directory, the dialog sends this notification for each item in the folder or directory, but only if the OFN_ENABLEINCLUDENOTIFY flag was set. "
 
-	| ofnex |
-	ofnex := OFNOTIFYEXW fromAddress: anExternalAddress.
-	ofnex.
 	^1!
 
 cdnInitDone: anExternalAddress
 	"Private - Initialisation of the dialog box is complete."
 
-	| ofn |
-	ofn := OFNOTIFYW fromAddress: anExternalAddress.
-	ofn.
 	^0!
 
 cdnSelChange: anExternalAddress 
@@ -171,19 +163,18 @@ fileTypesStringFromSpecs: stringPairs
 		'Text Files@*.txt;*.rtf@All Files@*.*@@'
 	where @ is a NULL terminator."
 
-	| stream null |
+	| stream |
 	stringPairs isNil ifTrue: [^nil].
 	stream := Utf16String writeStream: 40.
-	null := Character null.
 	stringPairs do: 
 			[:x |
 			stream
 				nextPutAll: x first;
-				nextPut: null;
+				nextPut: $\0;
 				nextPutAll: x last;
-				nextPut: null].
+				nextPut: $\0].
 	^stream
-		nextPut: null;
+		nextPut: $\0;
 		contents!
 
 filterIndex

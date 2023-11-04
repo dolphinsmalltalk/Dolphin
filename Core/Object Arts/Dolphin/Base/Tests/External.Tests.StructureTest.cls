@@ -100,7 +100,7 @@ testDynamicSelectors
 	self assert: _FPIEEE_RECORD dynamicSelectors single equals: #status.
 	self assert: _FPIEEE_VALUE dynamicSelectors size equals: 0.
 	subject := Structure newAnonymousSubclass.
-	subject ensureDefined.
+	subject initializeTemplate.
 	self assert: subject dynamicSelectors isEmpty.
 	subject
 		beUncompiled;
@@ -190,7 +190,7 @@ testIsNull
 
 testUnderstoodSelectors
 	self assert: MSGBOXPARAMSW understoodSelectors asSortedArray
-		equals: #(#caption: #dwLanguageId: #dwSize: #dwStyle: #hInstance: #hwndOwner: #lpszCaption: #lpszIcon: #lpszText: #text:).
+		equals: #(#caption: #dwLanguageId: #dwStyle: #hInstance: #hwndOwner: #lpszCaption: #lpszIcon: #lpszText: #text:).
 	self assert: _FPIEEE_RECORD understoodSelectors asSortedArray
 		equals: #(#cause #causeCode #causeDescription #causeName #causeNames #enable #flags #isDivide #isOverflow #isUnderflow #isZeroDivide #operand1 #operand2 #operation #operationName #precision #precisionName #printFieldsOn: #roundingMode #roundingModeName #status).
 	self assert: _FPIEEE_VALUE understoodSelectors equals: _FPIEEE_VALUE selectors! !

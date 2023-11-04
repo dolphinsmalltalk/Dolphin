@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure
+OS.SizedStructure
 	subclass: #'OS.MENUITEMINFOW'
 	instanceVariableNames: 'text bitmap'
 	classVariableNames: ''
@@ -10,7 +10,6 @@ OS.Win32Structure
 			'_MENUITEMINFOW_Size' -> 16r30.
 			'_OffsetOf_cch' -> 16r28.
 			'_OffsetOf_dwItemData' -> 16r20.
-			'_OffsetOf_dwSize' -> 16r0.
 			'_OffsetOf_dwTypeData' -> 16r24.
 			'_OffsetOf_fMask' -> 16r4.
 			'_OffsetOf_fState' -> 16rC.
@@ -36,15 +35,6 @@ basicText: aString
 	"It has never been necessary to set the text size - the documentation is explicit about this, stating 'cch is ignored when the content of a menu item is set by calling SetMenuItemInfo.'"
 	"self cch: text size"!
 
-bitmap: anImage
-	"Populate the receiver with a command image. We no longer use the HBMMENU_CALLBACK method with the menu images drawn on demand by Menu>>drawItemImage:on:at:disabled:, because that approach causes themed menus to be disabled. It seems a retrograde step to have to generate a 32-bit pre-multiplied alpha bitmap specifically for each image and to add that individually to the
-	menu, but that is what we must do. It's not clear why Microsoft didn't use image lists for this instead of individual bitmaps. The IconImageManager does maintain a cache of menu bitmaps, so at least we don't have multiple copies."
-
-	"Note that the menu doesn't take ownership of the bitmap. We are responsible for making sure it stays around long enough, and is freed when no longer needed. The menu bitmaps are cached in the IconImageManager."
-
-	bitmap := anImage asMenuBitmap.
-	bytes uintPtrAtOffset: _OffsetOf_hbmpItem put: bitmap handle!
-
 cch: anInteger
 	"Set the receiver's 'cch' field to the value of the argument, anInteger"
 
@@ -56,7 +46,7 @@ commandMenuItem: aCommandMenuItem
 				ifNil: [##(MIIM_STRING | MIIM_ID)]
 				ifNotNil: 
 					[:img |
-					self bitmap: img.
+					self image: img.
 					##(MIIM_STRING | MIIM_ID | MIIM_BITMAP)].
 	fType := aCommandMenuItem styleFlags.
 	fType == 0
@@ -72,11 +62,6 @@ dwItemData: anInteger
 	"Set the receiver's 'dwItemData' field to the value of the argument, anInteger"
 
 	bytes uintPtrAtOffset: _OffsetOf_dwItemData put: anInteger!
-
-dwSize: anInteger
-	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
-
-	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
 
 dwTypeData
 	"Answer the <Utf16String> value of the receiver's 'dwTypeData' field."
@@ -118,25 +103,34 @@ fType: anInteger
 
 	bytes uint32AtOffset: _OffsetOf_fType put: anInteger!
 
-hbmpChecked: anExternalHandle
-	"Set the receiver's 'hbmpChecked' field to the value of the argument, anExternalHandle"
+hbmpChecked: aHandle
+	"Set the receiver's 'hbmpChecked' field to the value of the argument, aHandle"
 
-	bytes uintPtrAtOffset: _OffsetOf_hbmpChecked put: anExternalHandle!
+	bytes uintPtrAtOffset: _OffsetOf_hbmpChecked put: aHandle!
 
-hbmpItem: anExternalHandle
-	"Set the receiver's 'hbmpItem' field to the value of the argument, anExternalHandle"
+hbmpItem: aHandle
+	"Set the receiver's 'hbmpItem' field to the value of the argument, aHandle"
 
-	bytes uintPtrAtOffset: _OffsetOf_hbmpItem put: anExternalHandle!
+	bytes uintPtrAtOffset: _OffsetOf_hbmpItem put: aHandle!
 
-hbmpUnchecked: anExternalHandle
-	"Set the receiver's 'hbmpUnchecked' field to the value of the argument, anExternalHandle"
+hbmpUnchecked: aHandle
+	"Set the receiver's 'hbmpUnchecked' field to the value of the argument, aHandle"
 
-	bytes uintPtrAtOffset: _OffsetOf_hbmpUnchecked put: anExternalHandle!
+	bytes uintPtrAtOffset: _OffsetOf_hbmpUnchecked put: aHandle!
 
-hSubMenu: anExternalHandle
-	"Set the receiver's 'hSubMenu' field to the value of the argument, anExternalHandle"
+hSubMenu: aHandle
+	"Set the receiver's 'hSubMenu' field to the value of the argument, aHandle"
 
-	bytes uintPtrAtOffset: _OffsetOf_hSubMenu put: anExternalHandle!
+	bytes uintPtrAtOffset: _OffsetOf_hSubMenu put: aHandle!
+
+image: anImage
+	"Populate the receiver with a command image. We no longer use the HBMMENU_CALLBACK method with the menu images drawn on demand by Menu>>drawItemImage:on:at:disabled:, because that approach causes themed menus to be disabled. It seems a retrograde step to have to generate a 32-bit pre-multiplied alpha bitmap specifically for each image and to add that individually to the
+	menu, but that is what we must do. It's not clear why Microsoft didn't use image lists for this instead of individual bitmaps. The IconImageManager does maintain a cache of menu bitmaps, so at least we don't have multiple copies."
+
+	"Note that the menu doesn't take ownership of the bitmap. We are responsible for making sure it stays around long enough, and is freed when no longer needed. The menu bitmaps are cached in the IconImageManager."
+
+	bitmap := anImage asMenuBitmap.
+	bytes uintPtrAtOffset: _OffsetOf_hbmpItem put: bitmap handle!
 
 menuItem: aMenuItem text: aStringOrNil state: stateInteger
 	"Private - Update the details for a normal menu item (i.e. the text, type flags, and state).
@@ -151,7 +145,7 @@ menuItem: aMenuItem text: aStringOrNil state: stateInteger
 	aMenuItem image
 		ifNotNil: 
 			[:image |
-			self bitmap: image.
+			self image: image.
 			mask := mask bitOr: MIIM_BITMAP].
 	bytes
 		uint32AtOffset: _OffsetOf_fMask put: mask;
@@ -176,11 +170,9 @@ wID: anInteger
 	bytes uint32AtOffset: _OffsetOf_wID put: anInteger! !
 !OS.MENUITEMINFOW categoriesForMethods!
 basicText:!accessing!private! !
-bitmap:!helpers!public! !
 cch:!**compiled accessors**!public! !
 commandMenuItem:!initializing!private! !
 dwItemData:!**compiled accessors**!public! !
-dwSize:!**compiled accessors**!public! !
 dwTypeData!**compiled accessors**!public! !
 dwTypeData:!**compiled accessors**!public! !
 fMask!**compiled accessors**!public! !
@@ -193,6 +185,7 @@ hbmpChecked:!**compiled accessors**!public! !
 hbmpItem:!**compiled accessors**!public! !
 hbmpUnchecked:!**compiled accessors**!public! !
 hSubMenu:!**compiled accessors**!public! !
+image:!helpers!public! !
 menuItem:text:state:!accessing!private! !
 type:!accessing!private! !
 wID!**compiled accessors**!public! !
@@ -223,8 +216,8 @@ defineFields
 		} MENUITEMINFOW;
 	"
 
+	super defineFields.
 	self
-		defineField: #dwSize type: UInt32Field writeOnly;
 		defineField: #fMask type: UInt32Field new;
 		defineField: #fType type: UInt32Field new;
 		defineField: #fState type: UInt32Field new;

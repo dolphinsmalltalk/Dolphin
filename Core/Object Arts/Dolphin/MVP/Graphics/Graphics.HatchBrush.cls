@@ -27,7 +27,7 @@ createHandle
 name
 	"Answer the symbolic name of this hatched brush."
 
-	^#(#horizontal #vertical #reverseDiagonal #diagonal #cross #diamond) at: id + 1!
+	^#('horizontal' 'vertical' 'reverseDiagonal' 'diagonal' 'cross' 'diamond') at: id + 1!
 
 printOn: aPuttableStream
 	"Append, to the <puttableStream> argument a string whose characters are a the same as those which would result from sending a #printString message to the receiver."

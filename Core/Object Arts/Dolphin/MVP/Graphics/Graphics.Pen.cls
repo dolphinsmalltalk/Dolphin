@@ -51,11 +51,11 @@ printOn: aPuttableStream
 	aPuttableStream
 		nextPut: $(;
 		print: self class.
-	styleName == #solid
+	styleName = 'solid'
 		ifFalse: 
 			[aPuttableStream
-				nextPutAll: ' styleName: ';
-				print: styleName].
+				nextPutAll: ' styleName: #';
+				display: styleName].
 	width = 1
 		ifFalse: 
 			[aPuttableStream

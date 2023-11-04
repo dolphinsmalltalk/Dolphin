@@ -8,11 +8,9 @@ OS.CommonDialogStructure
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_OffsetOf_dwReserved' -> 16r50.
-			'_OffsetOf_dwSize' -> 16r0.
 			'_OffsetOf_flags' -> 16r34.
 			'_OffsetOf_flagsEx' -> 16r54.
 			'_OffsetOf_hInstance' -> 16r8.
-			'_OffsetOf_hwndOwner' -> 16r4.
 			'_OffsetOf_lCustData' -> 16r40.
 			'_OffsetOf_lpfnHook' -> 16r44.
 			'_OffsetOf_lpstrCustomFilter' -> 16r10.
@@ -59,11 +57,6 @@ defaultExtension: aString
 	defExt := aString asUtf16String.
 	self lpstrDefExt: defExt!
 
-dwSize: anInteger
-	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
-
-	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
-
 fileName
 	"Answer the file name buffer."
 
@@ -106,11 +99,6 @@ flagsEx: anInteger
 hookFlag
 	^OFN_ENABLEHOOK!
 
-hwndOwner: anExternalHandle
-	"Set the receiver's 'hwndOwner' field to the value of the argument, anExternalHandle"
-
-	bytes uintPtrAtOffset: _OffsetOf_hwndOwner put: anExternalHandle!
-
 initialDirectory: aString
 	"Set the initial directory path name to be opened/saved.
 	We store down the String in an instance variable to prevent it being GC'd."
@@ -118,10 +106,10 @@ initialDirectory: aString
 	initialDir := aString asUtf16String.
 	self lpstrInitialDir: initialDir!
 
-lpfnHook: anExternalAddress
-	"Set the receiver's 'lpfnHook' field to the value of the argument, anExternalAddress"
+lpfnHook: anAddress
+	"Set the receiver's 'lpfnHook' field to the value of the argument, anAddress"
 
-	bytes uintPtrAtOffset: _OffsetOf_lpfnHook put: anExternalAddress!
+	bytes uintPtrAtOffset: _OffsetOf_lpfnHook put: anAddress!
 
 lpstrDefExt: anUtf16String
 	"Set the receiver's 'lpstrDefExt' field to the value of the argument, anUtf16String"
@@ -183,15 +171,6 @@ nMaxFileTitle: anInteger
 
 	bytes uint32AtOffset: _OffsetOf_nMaxFileTitle put: anInteger!
 
-ownerView: aView
-	"Set the parent window for the dialog to aView."
-
-	| hWnd |
-	hWnd := aView asParameter.
-	hWnd isNull
-		ifTrue: [self hwndOwner: 0]
-		ifFalse: [self hwndOwner: hWnd].!
-
 title: aString
 	"Set the title to be used for the common file dialog caption.
 	We store down the String in an instance variable to prevent it being GC'd."
@@ -201,7 +180,6 @@ title: aString
 !OS.OPENFILENAMEW categoriesForMethods!
 defaultExtension!accessing!public! !
 defaultExtension:!accessing!public! !
-dwSize:!**compiled accessors**!public! !
 fileName!accessing!public! !
 fileName:!accessing!public! !
 fileTypes:!accessing!public! !
@@ -210,7 +188,6 @@ flags:!**compiled accessors**!public! !
 flagsEx!**compiled accessors**!public! !
 flagsEx:!**compiled accessors**!public! !
 hookFlag!accessing!public! !
-hwndOwner:!**compiled accessors**!public! !
 initialDirectory:!accessing!public! !
 lpfnHook:!**compiled accessors**!public! !
 lpstrDefExt:!**compiled accessors**!public! !
@@ -225,7 +202,6 @@ nFilterIndex!**compiled accessors**!public! !
 nFilterIndex:!**compiled accessors**!public! !
 nMaxFile:!**compiled accessors**!public! !
 nMaxFileTitle:!**compiled accessors**!public! !
-ownerView:!accessing!public! !
 title:!accessing!public! !
 !
 
@@ -267,9 +243,8 @@ defineFields
 		} OPENFILENAMEW;
 "
 
+	super defineFields.
 	self
-		defineField: #dwSize type: UInt32Field writeOnly beOverride;
-		defineField: #hwndOwner type: HANDLEField writeOnly;
 		defineField: #hInstance type: HANDLEField filler;
 		defineField: #lpstrFilter type: (PointerField type: Utf16String) beWriteOnly;
 		defineField: #lpstrCustomFilter type: (PointerField type: Utf16String) beFiller;

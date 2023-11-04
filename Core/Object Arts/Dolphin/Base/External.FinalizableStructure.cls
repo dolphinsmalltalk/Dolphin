@@ -1,17 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.OLEStructure
-	subclass: #'OS.COM.FinalizableStructure'
+External.Structure
+	subclass: #'External.FinalizableStructure'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.FinalizableStructure guid: (Core.GUID fromString: '{87b4c5b9-026e-11d3-9fd7-00a0cc3e4a32}')!
-OS.COM.FinalizableStructure isNonInstantiable: true!
-OS.COM.FinalizableStructure comment: ''!
-!OS.COM.FinalizableStructure categoriesForClass!External-Data-Structured-COM! !
-!OS.COM.FinalizableStructure methodsFor!
+External.FinalizableStructure guid: (Core.GUID fromString: '{87b4c5b9-026e-11d3-9fd7-00a0cc3e4a32}')!
+External.FinalizableStructure isNonInstantiable: true!
+External.FinalizableStructure comment: ''!
+!External.FinalizableStructure categoriesForClass!External-Data-Structured-COM! !
+!External.FinalizableStructure methodsFor!
 
 initialize
 	"Private - Initialize the receiver which is an internal [value] buffer.
@@ -37,13 +37,13 @@ onStartup
 	self beUnfinalizable.
 	self isPointer ifTrue: [
 		bytes := nil]! !
-!OS.COM.FinalizableStructure categoriesForMethods!
+!External.FinalizableStructure categoriesForMethods!
 initialize!initializing!private! !
 needsFree!private!realizing/unrealizing! !
 onStartup!event handling!private! !
 !
 
-!OS.COM.FinalizableStructure class methodsFor!
+!External.FinalizableStructure class methodsFor!
 
 clear: addressOrBytes
 	"Free external resources referenced by the structure
@@ -69,7 +69,7 @@ onStartup
 
 uninitialize
 	SessionManager current removeEventsTriggeredFor: self! !
-!OS.COM.FinalizableStructure class categoriesForMethods!
+!External.FinalizableStructure class categoriesForMethods!
 clear:!public!realizing/unrealizing! !
 initialize!development!initializing!private! !
 onStartup!event handling!private! !

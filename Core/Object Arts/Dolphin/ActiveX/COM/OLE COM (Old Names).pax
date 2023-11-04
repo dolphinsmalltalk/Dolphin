@@ -47,6 +47,8 @@ package setAliasVariableNames: #(
 ).
 
 package setPrerequisites: #(
+	'..\..\Base\Dolphin'
+	'..\..\Base\Deprecated\Dolphin Base (Deprecated)'
 	'OLE COM'
 ).
 
@@ -84,11 +86,11 @@ Smalltalk.IMalloc := OS.COM.IMalloc!
 
 Smalltalk.IUnknown := OS.COM.IUnknown!
 
-Smalltalk.OLEFinalizableStructure := OS.COM.FinalizableStructure!
+Smalltalk.OLEFinalizableStructure := External.FinalizableStructure!
 
 Smalltalk.OLELibrary := OS.COM.OLELibrary!
 
-Smalltalk.OLEStructure := OS.COM.OLEStructure!
+Smalltalk.OLEStructure := Smalltalk.Win32Structure!
 
 
 "End of package definition"!

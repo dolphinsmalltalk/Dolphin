@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure
+External.FinalizableStructure
 	subclass: #'OS.ICONINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -23,92 +23,108 @@ extent
 	"Answer the extent of the icon described by the receiver in pels."
 
 	"Implementation Note: This is determined from the extent of the foreground bitmap. See [ICONINFO](https://docs.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-iconinfo) for details.
-	In order to avoid a dependency on bitmap (Icons are always used in Dolphin applications, but bitmaps might not be) we open code access to the bitmap's extent."
+	In order to avoid a dependency on Bitmap/BITMAP (Icons are always used in Dolphin applications, but bitmaps might not be) we open code access to the bitmap's extent."
 
 	| bitmapInfo |
-	bitmapInfo := BITMAP newBuffer.
+	bitmapInfo := ByteArray newFixed: BITMAP._BITMAP_Size.
 	^self hbmColor
 		ifNotNil: 
 			[:hbmColor |
 			Gdi32
-				getObject: hbmColor
-				cbBuffer: bitmapInfo byteSize
+				getObjectW: hbmColor
+				cbBuffer: BITMAP._BITMAP_Size
 				lpvObject: bitmapInfo.
-			bitmapInfo extent]
+			(bitmapInfo int32AtOffset: BITMAP._OffsetOf_bmWidth)
+				@ (bitmapInfo int32AtOffset: BITMAP._OffsetOf_bmHeight)]
 		ifNil: 
 			[Gdi32
-				getObject: self hbmMask
+				getObjectW: self hbmMask
 				cbBuffer: bitmapInfo byteSize
 				lpvObject: bitmapInfo.
-			bitmapInfo bmWidth @ (bitmapInfo bmHeight bitShift: -1)]!
+			(bitmapInfo int32AtOffset: BITMAP._OffsetOf_bmWidth)
+				@ ((bitmapInfo int32AtOffset: BITMAP._OffsetOf_bmHeight) bitShift: -1)]!
 
-free
-	"Free any external resources owner by the receiver."
+fIcon
+	"Answer the <Boolean> value of the receiver's 'fIcon' field."
 
-	| hbm |
-	self beUnfinalizable.
-	hbm := self hbmColor.
-	hbm isNull
-		ifFalse: 
-			[Gdi32 deleteObject: hbm.
-			self hbmColor: 0].
-	hbm := self hbmMask.
-	hbm isNull ifTrue: [^self].
-	Gdi32 deleteObject: hbm.
-	self hbmMask: 0!
+	^(bytes uint32AtOffset: _OffsetOf_fIcon) asBoolean!
+
+fIcon: aBoolean
+	"Set the receiver's 'fIcon' field to the value of the argument, aBoolean"
+
+	bytes uint32AtOffset: _OffsetOf_fIcon put: aBoolean asParameter!
 
 hbmColor
-	"Answer the <ExternalHandle> value of the receiver's 'hbmColor' field."
+	"Answer the <Handle> value of the receiver's 'hbmColor' field."
 
 	^(bytes uintPtrAtOffset: _OffsetOf_hbmColor) asExternalHandle!
 
-hbmColor: anExternalHandle
-	"Set the receiver's 'hbmColor' field to the value of the argument, anExternalHandle"
+hbmColor: aHandle
+	"Set the receiver's 'hbmColor' field to the value of the argument, aHandle"
 
-	bytes uintPtrAtOffset: _OffsetOf_hbmColor put: anExternalHandle!
+	bytes uintPtrAtOffset: _OffsetOf_hbmColor put: aHandle!
 
 hbmMask
-	"Answer the <ExternalHandle> value of the receiver's 'hbmMask' field."
+	"Answer the <Handle> value of the receiver's 'hbmMask' field."
 
 	^(bytes uintPtrAtOffset: _OffsetOf_hbmMask) asExternalHandle!
 
-hbmMask: anExternalHandle
-	"Set the receiver's 'hbmMask' field to the value of the argument, anExternalHandle"
+hbmMask: aHandle
+	"Set the receiver's 'hbmMask' field to the value of the argument, aHandle"
 
-	bytes uintPtrAtOffset: _OffsetOf_hbmMask put: anExternalHandle!
+	bytes uintPtrAtOffset: _OffsetOf_hbmMask put: aHandle!
 
-initialize
-	"Private - Initialize the receiver.
-	Mark as finalizable because the GetIconInfo() function creates bitmaps in order to return
-	the handles!!"
-
-	self beFinalizable!
+hotspot
+	^Graphics.Point x: (bytes uint32AtOffset: _OffsetOf_xHotspot)
+		y: (bytes uint32AtOffset: _OffsetOf_yHotspot)!
 
 xHotspot
 	"Answer the <Integer> value of the receiver's 'xHotspot' field."
 
 	^bytes uint32AtOffset: _OffsetOf_xHotspot!
 
+xHotspot: anInteger
+	"Set the receiver's 'xHotspot' field to the value of the argument, anInteger"
+
+	bytes uint32AtOffset: _OffsetOf_xHotspot put: anInteger!
+
 yHotspot
 	"Answer the <Integer> value of the receiver's 'yHotspot' field."
 
-	^bytes uint32AtOffset: _OffsetOf_yHotspot! !
+	^bytes uint32AtOffset: _OffsetOf_yHotspot!
+
+yHotspot: anInteger
+	"Set the receiver's 'yHotspot' field to the value of the argument, anInteger"
+
+	bytes uint32AtOffset: _OffsetOf_yHotspot put: anInteger! !
 !OS.ICONINFO categoriesForMethods!
 extent!accessing!public! !
-free!public!realizing/unrealizing! !
+fIcon!**compiled accessors**!public! !
+fIcon:!**compiled accessors**!public! !
 hbmColor!**compiled accessors**!public! !
 hbmColor:!**compiled accessors**!public! !
 hbmMask!**compiled accessors**!public! !
 hbmMask:!**compiled accessors**!public! !
-initialize!initializing!private! !
+hotspot!accessing!public! !
 xHotspot!**compiled accessors**!public! !
+xHotspot:!**compiled accessors**!public! !
 yHotspot!**compiled accessors**!public! !
+yHotspot:!**compiled accessors**!public! !
 !
 
 !OS.ICONINFO class methodsFor!
 
 byteSize
 	^_ICONINFO_Size!
+
+clear: bytesOrAddress
+	"Free external resources referenced by the structure of the receiver's element type at the specified address."
+
+	##({ _OffsetOf_hbmColor. _OffsetOf_hbmMask }) do: 
+			[:offset |
+			| hbitmap |
+			hbitmap := bytesOrAddress uintPtrAtOffset: offset.
+			hbitmap == 0 ifFalse: [Gdi32 deleteObject: hbitmap]]!
 
 defineFields
 	"Define the fields of the Win32 ICONINFO structure.
@@ -124,9 +140,9 @@ defineFields
 		} ICONINFO;"
 
 	self
-		defineField: #fIcon type: BOOLField readOnly beUncompiled;
-		defineField: #xHotspot type: UInt32Field readOnly;
-		defineField: #yHotspot type: UInt32Field readOnly;
+		defineField: #fIcon type: BOOLField new;
+		defineField: #xHotspot type: UInt32Field new;
+		defineField: #yHotspot type: UInt32Field new;
 		defineField: #hbmMask type: HANDLEField new;
 		defineField: #hbmColor type: HANDLEField new!
 
@@ -134,6 +150,7 @@ getFieldNames
 	^#(#fIcon #xHotspot #yHotspot #hbmMask #hbmColor)! !
 !OS.ICONINFO class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
+clear:!public!realizing/unrealizing! !
 defineFields!development!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure
+OS.SizedStructure
 	subclass: #'OS.TRACKMOUSEEVENT'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -9,7 +9,6 @@ OS.Win32Structure
 	classConstants: {
 			'_OffsetOf_dwFlags' -> 16r4.
 			'_OffsetOf_dwHoverTime' -> 16rC.
-			'_OffsetOf_dwSize' -> 16r0.
 			'_OffsetOf_hwndTrack' -> 16r8.
 			'_TRACKMOUSEEVENT_Size' -> 16r10
 		}!
@@ -52,26 +51,20 @@ dwHoverTime: anInteger
 
 	bytes uint32AtOffset: _OffsetOf_dwHoverTime put: anInteger!
 
-dwSize: anInteger
-	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
-
-	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
-
 hwndTrack
-	"Answer the <ExternalHandle> value of the receiver's 'hwndTrack' field."
+	"Answer the <Handle> value of the receiver's 'hwndTrack' field."
 
 	^(bytes uintPtrAtOffset: _OffsetOf_hwndTrack) asExternalHandle!
 
-hwndTrack: anExternalHandle
-	"Set the receiver's 'hwndTrack' field to the value of the argument, anExternalHandle"
+hwndTrack: aHandle
+	"Set the receiver's 'hwndTrack' field to the value of the argument, aHandle"
 
-	bytes uintPtrAtOffset: _OffsetOf_hwndTrack put: anExternalHandle! !
+	bytes uintPtrAtOffset: _OffsetOf_hwndTrack put: aHandle! !
 !OS.TRACKMOUSEEVENT categoriesForMethods!
 dwFlags!**compiled accessors**!public! !
 dwFlags:!**compiled accessors**!public! !
 dwHoverTime!**compiled accessors**!public! !
 dwHoverTime:!**compiled accessors**!public! !
-dwSize:!**compiled accessors**!public! !
 hwndTrack!**compiled accessors**!public! !
 hwndTrack:!**compiled accessors**!public! !
 !
@@ -94,8 +87,8 @@ defineFields
 		} TRACKMOUSEEVENT;
 "
 
+	super defineFields.
 	self
-		defineField: #dwSize type: UInt32Field writeOnly beOverride;
 		defineField: #dwFlags type: UInt32Field new;
 		defineField: #hwndTrack type: HANDLEField new;
 		defineField: #dwHoverTime type: UInt32Field new!

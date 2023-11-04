@@ -1,13 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure
+OS.SizedStructure
 	subclass: #'OS.SHSTOCKICONINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-			'_OffsetOf_dwSize' -> 16r0.
 			'_OffsetOf_hIcon' -> 16r4.
 			'_OffsetOf_iIcon' -> 16rC.
 			'_OffsetOf_iSysImageIndex' -> 16r8.
@@ -41,11 +40,6 @@ struct tagSHSTOCKICONINFO {
 !OS.SHSTOCKICONINFO categoriesForClass!Win32-Structs! !
 !OS.SHSTOCKICONINFO methodsFor!
 
-dwSize: anInteger
-	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
-
-	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
-
 hIcon
 	"Answer the <Handle> value of the receiver's 'hIcon' field."
 
@@ -66,7 +60,6 @@ szPath
 
 	^Utf16String fromAddress: bytes yourAddress + _OffsetOf_szPath! !
 !OS.SHSTOCKICONINFO categoriesForMethods!
-dwSize:!**compiled accessors**!public! !
 hIcon!**compiled accessors**!public! !
 iIcon!**compiled accessors**!public! !
 iSysImageIndex!**compiled accessors**!public! !
@@ -93,8 +86,8 @@ defineFields
 		} SHSTOCKICONINFO;
 "
 
+	super defineFields.
 	self
-		defineField: #dwSize type: UInt32Field new beWriteOnly offset: 0;
 		defineField: #hIcon type: HANDLEField new beReadOnly offset: 4;
 		defineField: #iSysImageIndex type: Int32Field new beReadOnly offset: 8;
 		defineField: #iIcon type: Int32Field new beReadOnly offset: 12;
@@ -105,7 +98,7 @@ getFieldNames
 	^#(#dwSize #hIcon #iSysImageIndex #iIcon #szPath)! !
 !OS.SHSTOCKICONINFO class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
-defineFields!**auto generated**!private!template definition! !
+defineFields!private!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !
 

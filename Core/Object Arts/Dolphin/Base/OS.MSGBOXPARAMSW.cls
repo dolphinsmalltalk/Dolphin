@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure
+OS.SizedStructure
 	subclass: #'OS.MSGBOXPARAMSW'
 	instanceVariableNames: 'text caption'
 	classVariableNames: ''
@@ -10,7 +10,6 @@ OS.Win32Structure
 			'_MSGBOXPARAMSW_Size' -> 16r28.
 			'_OffsetOf_dwContextHelpId' -> 16r1C.
 			'_OffsetOf_dwLanguageId' -> 16r24.
-			'_OffsetOf_dwSize' -> 16r0.
 			'_OffsetOf_dwStyle' -> 16r14.
 			'_OffsetOf_hInstance' -> 16r8.
 			'_OffsetOf_hwndOwner' -> 16r4.
@@ -40,11 +39,6 @@ caption: aString
 
 	caption := aString asUtf16String.  
 	self lpszCaption: caption!
-
-dwSize: anInteger
-	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
-
-	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
 
 dwStyle: anInteger
 	"Set the receiver's 'dwStyle' field to the value of the argument, anInteger"
@@ -86,7 +80,6 @@ text: aString
 	self lpszText: text! !
 !OS.MSGBOXPARAMSW categoriesForMethods!
 caption:!accessing!public! !
-dwSize:!**compiled accessors**!public! !
 dwStyle:!**compiled accessors**!public! !
 hInstance:!**compiled accessors**!public! !
 hwndOwner:!**compiled accessors**!public! !
@@ -120,8 +113,8 @@ defineFields
 		} MSGBOXPARAMSW; 
 	"
 
+	super defineFields.
 	self
-		defineField: #dwSize type: UInt32Field writeOnly beOverride;
 		defineField: #hwndOwner type: UInt32Field writeOnly;
 		defineField: #hInstance type: UInt32Field writeOnly;
 		defineField: #lpszText type: (PointerField type: Utf16String) beWriteOnly;

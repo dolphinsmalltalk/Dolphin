@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure
+OS.SizedStructure
 	subclass: #'OS.DISPLAY_DEVICEW'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -12,7 +12,6 @@ OS.Win32Structure
 			'_OffsetOf_DeviceKey' -> 16r248.
 			'_OffsetOf_DeviceName' -> 16r4.
 			'_OffsetOf_DeviceString' -> 16r44.
-			'_OffsetOf_dwSize' -> 16r0.
 			'_OffsetOf_StateFlags' -> 16r144.
 			'DISPLAY_DEVICE_ATTACHED_TO_DESKTOP' -> 16r1.
 			'DISPLAY_DEVICE_MIRRORING_DRIVER' -> 16r8.
@@ -58,11 +57,6 @@ DeviceString
 
 	^Utf16String fromAddress: bytes yourAddress + _OffsetOf_DeviceString!
 
-dwSize: anInteger
-	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
-
-	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
-
 isAttachedToDesktop
 	^self StateFlags allMask: DISPLAY_DEVICE_ATTACHED_TO_DESKTOP!
 
@@ -79,7 +73,6 @@ StateFlags
 DeviceID!**compiled accessors**!public! !
 DeviceName!**compiled accessors**!public! !
 DeviceString!**compiled accessors**!public! !
-dwSize:!**compiled accessors**!public! !
 isAttachedToDesktop!public!testing! !
 isPrimaryAdaptor!public!testing! !
 StateFlags!**compiled accessors**!public! !
@@ -106,8 +99,8 @@ defineFields
 		} DISPLAY_DEVICEW;
 "
 
+	super defineFields.
 	self
-		defineField: #dwSize type: UInt32Field new beWriteOnly offset: 0;
 		defineField: #DeviceName type: (StringField type: Utf16String length: 32) beReadOnly offset: 4;
 		defineField: #DeviceString type: (StringField type: Utf16String length: 128) beReadOnly offset: 68;
 		defineField: #StateFlags type: UInt32Field new beReadOnly offset: 324;
@@ -119,7 +112,7 @@ getFieldNames
 	^#(#dwSize #DeviceName #DeviceString #StateFlags #DeviceID)! !
 !OS.DISPLAY_DEVICEW class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
-defineFields!**auto generated**!public!template definition! !
+defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !
 

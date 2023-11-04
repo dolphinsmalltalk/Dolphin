@@ -82,7 +82,7 @@ Kernel.SharedPool
 			'UDS_SETBUDDYINT' -> 16r2.
 			'UDS_WRAP' -> 16r1
 		}!
-OS.Win32Structure
+External.Structure
 	subclass: #'OS.UDACCEL'
 	instanceVariableNames: ''
 	classVariableNames: ''

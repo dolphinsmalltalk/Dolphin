@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.OLEStructure
+OS.SizedStructure
 	subclass: #'OS.COM.BINDINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -10,7 +10,6 @@ OS.COM.OLEStructure
 			'_BINDINFO_Size' -> 16r24.
 			'_OffsetOf_cbstgmedData' -> 16r20.
 			'_OffsetOf_dwBindVerb' -> 16r18.
-			'_OffsetOf_dwSize' -> 16r0.
 			'_OffsetOf_grfBindInfoF' -> 16r14.
 			'_OffsetOf_stgmedData' -> 16r8.
 			'_OffsetOf_szCustomVerb' -> 16r1C.
@@ -42,11 +41,6 @@ dwBindVerb: anInteger
 
 	bytes uint32AtOffset: _OffsetOf_dwBindVerb put: anInteger!
 
-dwSize: anInteger
-	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
-
-	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
-
 grfBindInfoF
 	"Answer the <Integer> value of the receiver's 'grfBindInfoF' field."
 
@@ -68,7 +62,7 @@ stgmedData: aSTGMEDIUM
 	aSTGMEDIUM
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_stgmedData + 1)
-		to: ##(_OffsetOf_stgmedData + STGMEDIUM basicByteSize)
+		to: ##(_OffsetOf_stgmedData + STGMEDIUM._STGMEDIUM_Size)
 		startingAt: 1!
 
 szCustomVerb
@@ -95,7 +89,6 @@ cbstgmedData!**compiled accessors**!public! !
 cbstgmedData:!**compiled accessors**!public! !
 dwBindVerb!**compiled accessors**!public! !
 dwBindVerb:!**compiled accessors**!public! !
-dwSize:!**compiled accessors**!public! !
 grfBindInfoF!**compiled accessors**!public! !
 grfBindInfoF:!**compiled accessors**!public! !
 stgmedData!**compiled accessors**!public! !
@@ -107,6 +100,9 @@ szExtraInfo:!**compiled accessors**!public! !
 !
 
 !OS.COM.BINDINFO class methodsFor!
+
+byteSize
+	^_BINDINFO_Size!
 
 defineFields
 	"Define the fields of the BINDINFO structure.
@@ -124,8 +120,8 @@ defineFields
 
 	"
 
+	super defineFields.
 	self
-		defineField: #dwSize type: UInt32Field writeOnly;
 		defineField: #szExtraInfo type: (PointerField type: Utf16String);
 		defineField: #stgmedData type: (StructureField type: STGMEDIUM);
 		defineField: #grfBindInfoF type: UInt32Field new;
@@ -136,6 +132,7 @@ defineFields
 getFieldNames
 	^#(#dwSize #szExtraInfo #stgmedData #grfBindInfoF #dwBindVerb #szCustomVerb #cbstgmedData)! !
 !OS.COM.BINDINFO class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

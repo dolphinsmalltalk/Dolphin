@@ -57,6 +57,20 @@ UI.CommonDialog
 	imports: #(#{OS.ShellConstants})
 	classInstanceVariableNames: ''
 	classConstants: { 'InitializedMask' -> 16r1 }!
+External.Structure
+	subclass: #'OS.ITEMIDLIST'
+	instanceVariableNames: 'back'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: { '_ITEMIDLIST_Size' -> 16r4 }!
+External.Structure
+	subclass: #'OS.SHITEMID'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: { '_OffsetOf_abID' -> 16r2. '_OffsetOf_cb' -> 16r0. '_SHITEMID_Size' -> 16r4 }!
 OS.COM.IUnknown
 	subclass: #'OS.IShellFolder'
 	instanceVariableNames: ''
@@ -64,20 +78,6 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.OLEStructure
-	subclass: #'OS.ITEMIDLIST'
-	instanceVariableNames: 'back'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: { '_ITEMIDLIST_Size' -> 16r4 }!
-OS.Win32Structure
-	subclass: #'OS.SHITEMID'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: { '_OffsetOf_abID' -> 16r2. '_OffsetOf_cb' -> 16r0. '_SHITEMID_Size' -> 16r4 }!
 OS.CommonDialogStructure
 	subclass: #'OS.BROWSEINFOW'
 	instanceVariableNames: 'title displayName'

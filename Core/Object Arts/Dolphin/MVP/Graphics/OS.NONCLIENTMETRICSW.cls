@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure
+OS.SizedStructure
 	subclass: #'OS.NONCLIENTMETRICSW'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -8,7 +8,6 @@ OS.Win32Structure
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_NONCLIENTMETRICSW_Size' -> 16r1F8.
-			'_OffsetOf_dwSize' -> 16r0.
 			'_OffsetOf_iBorderWidth' -> 16r4.
 			'_OffsetOf_iCaptionHeight' -> 16r14.
 			'_OffsetOf_iCaptionWidth' -> 16r10.
@@ -31,11 +30,6 @@ OS.NONCLIENTMETRICSW comment: '<NONCLIENTMETRICSW> is an <ExternalStructure> cla
 From MSDN: "The NONCLIENTMETRICS structure contains the scalable metrics associated with the nonclient area of a nonminimized window. This structure is used by the SPI_GETNONCLIENTMETRICS and SPI_SETNONCLIENTMETRICS actions of SystemParametersInfo."'!
 !OS.NONCLIENTMETRICSW categoriesForClass!External-Data-Structured-Win32! !
 !OS.NONCLIENTMETRICSW methodsFor!
-
-dwSize: anInteger
-	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
-
-	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
 
 iCaptionHeight
 	"Answer the <Integer> value of the receiver's 'iCaptionHeight' field."
@@ -72,7 +66,6 @@ lfMenuFont
 
 	^LOGFONTW fromAddress: bytes yourAddress + _OffsetOf_lfMenuFont! !
 !OS.NONCLIENTMETRICSW categoriesForMethods!
-dwSize:!**compiled accessors**!public! !
 iCaptionHeight!**compiled accessors**!public! !
 iMenuHeight!**compiled accessors**!public! !
 iMenuWidth!**compiled accessors**!public! !
@@ -111,8 +104,8 @@ defineFields
 		int		iPaddedBorderWidth;
 	 NONCLIENTMETRICSW, FAR* LPNONCLIENTMETRICS; "
 
+	super defineFields.
 	self
-		defineField: #dwSize type: UInt32Field writeOnly beOverride;
 		defineField: #iBorderWidth type: Int32Field uncompiled;
 		defineField: #iScrollWidth type: Int32Field readOnly;
 		defineField: #iScrollHeight type: Int32Field readOnly;

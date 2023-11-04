@@ -185,11 +185,11 @@ getIconInfo
 hotspot
 	"Answer a Point specifying the receiver's hot spot (only really relevant for cursors)."
 
-	| info |
+	| info answer |
 	info := self getIconInfo.
-	^info
-		free; 	"Free up the bitmaps which we don't need"
-		xHotspot @ info yHotspot!
+	answer := info hotspot.
+	info free.
+	^answer!
 
 icon
 	^self!

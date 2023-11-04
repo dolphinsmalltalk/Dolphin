@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure
+External.Structure
 	subclass: #'OS.TVINSERTSTRUCTW'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -19,10 +19,10 @@ OS.TVINSERTSTRUCTW comment: ''!
 
 allCallbacks
 	bytes
-		int32AtOffset: ##(_OffsetOf_item + TVITEMW._OffsetOf_iImage) put: I_IMAGECALLBACK;
+		int32AtOffset: ##(_OffsetOf_item + TVITEMW._OffsetOf_iImage) put: OS.Win32Constants.I_IMAGECALLBACK;
 		int32AtOffset: ##(_OffsetOf_item + TVITEMW._OffsetOf_cChildren)
 			put: OS.TreeViewConstants.I_CHILDRENCALLBACK;
-		uint32AtOffset: ##(_OffsetOf_item + TVITEMW._OffsetOf_pszText) put: LPSTR_TEXTCALLBACK;
+		uint32AtOffset: ##(_OffsetOf_item + TVITEMW._OffsetOf_pszText) put: OS.Win32Constants.LPSTR_TEXTCALLBACK;
 		uint32AtOffset: ##(_OffsetOf_item + TVITEMW._OffsetOf_mask)
 			put: ((bytes uint32AtOffset: ##(_OffsetOf_item + TVITEMW._OffsetOf_mask)) bitOr: ##(TVIF_TEXT | TVIF_CHILDREN | TVIF_IMAGE))!
 

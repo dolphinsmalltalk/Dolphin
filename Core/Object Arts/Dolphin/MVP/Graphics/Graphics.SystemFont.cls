@@ -46,11 +46,6 @@ id
 
 	^id!
 
-logFont
-	"Answer the receiver's logical attributes."
-
-	^self subclassResponsibility!
-
 shallowCopy
 	^Font fromLogFont: self logFont!
 
@@ -66,7 +61,6 @@ clearCached!private!realizing/unrealizing! !
 copy!copying!public! !
 hash!comparing!public! !
 id!accessing!private! !
-logFont!accessing!public! !
 shallowCopy!copying!public! !
 stbSaveOn:!binary filing!public! !
 !

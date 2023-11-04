@@ -42,7 +42,7 @@ printFields: aCollection on: aStream
 	sep := [sep := [aStream space]].
 	template := self template.
 	aStream nextPutAll: 'Present='.
-	(bytes uint32AtOffset: 0) printOn: aStream base: 2.
+	(bytes uint32AtOffset: _OffsetOf_Present) printOn: aStream base: 2.
 	aStream nextPutAll: ': '.
 	getField := self Present ifTrue: [[:field | self getField: field]] ifFalse: [[:field | ]].
 	aCollection do: 

@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.OLEStructure
+OS.SizedStructure
 	subclass: #'OS.COM.FONTDESC'
 	instanceVariableNames: 'name'
 	classVariableNames: ''
@@ -9,7 +9,6 @@ OS.COM.OLEStructure
 	classConstants: {
 			'_FONTDESC_Size' -> 16r20.
 			'_OffsetOf_cySize' -> 16r8.
-			'_OffsetOf_dwSize' -> 16r0.
 			'_OffsetOf_fItalic' -> 16r14.
 			'_OffsetOf_fStrikethrough' -> 16r1C.
 			'_OffsetOf_fUnderline' -> 16r18.
@@ -33,11 +32,6 @@ cySize: anInteger
 	"Set the receiver's 'cySize' field to the value of the argument, anInteger"
 
 	bytes int64AtOffset: _OffsetOf_cySize put: anInteger!
-
-dwSize: anInteger
-	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
-
-	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
 
 faceName
 	"Answer the font name."
@@ -122,7 +116,6 @@ sWeight: anInteger
 !OS.COM.FONTDESC categoriesForMethods!
 cySize!**compiled accessors**!public! !
 cySize:!**compiled accessors**!public! !
-dwSize:!**compiled accessors**!public! !
 faceName!accessing!public! !
 faceName:!accessing!public! !
 fItalic!**compiled accessors**!public! !
@@ -164,8 +157,8 @@ defineFields
 		} FONTDESC, FAR* LPFONTDESC;
 	"
 
+	super defineFields.
 	self
-		defineField: #dwSize type: UInt32Field writeOnly;	"Renamed from cbSizeOfStruct"
 		defineField: #lpstrName type: (PointerField type: Utf16String);
 		defineField: #cySize type:  Int64Field new;
 		defineField: #sWeight type: Int16Field new;

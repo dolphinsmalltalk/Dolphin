@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure
+External.Structure
 	subclass: #'OS.WINDOWPOS'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -55,7 +55,7 @@ hwndInsertAfter
 	^bytes uint32AtOffset: _OffsetOf_hwndInsertAfter!
 
 isRectangleChanged
-	^(self flags allMask: ##(SWP_NOMOVE | SWP_NOSIZE)) not!
+	^(self flags allMask: ##(Win32Constants.SWP_NOMOVE bitOr: Win32Constants.SWP_NOSIZE)) not!
 
 position
 	^self x @ self y!

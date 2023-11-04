@@ -12,27 +12,24 @@ OS.COM.BIND_OPTS3 comment: 'BIND_OPTS3 is an <ExternalStructure> class to repres
 !OS.COM.BIND_OPTS3 categoriesForClass!External-Data-Structured-COM! !
 !OS.COM.BIND_OPTS3 methodsFor!
 
-dwSize: anInteger
-	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
-
-	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
-
 hwnd
-	"Answer the <ExternalHandle> value of the receiver's 'hwnd' field."
+	"Answer the <Handle> value of the receiver's 'hwnd' field."
 
 	^(bytes uintPtrAtOffset: _OffsetOf_hwnd) asExternalHandle!
 
-hwnd: anExternalHandle
-	"Set the receiver's 'hwnd' field to the value of the argument, anExternalHandle"
+hwnd: aHandle
+	"Set the receiver's 'hwnd' field to the value of the argument, aHandle"
 
-	bytes uintPtrAtOffset: _OffsetOf_hwnd put: anExternalHandle! !
+	bytes uintPtrAtOffset: _OffsetOf_hwnd put: aHandle! !
 !OS.COM.BIND_OPTS3 categoriesForMethods!
-dwSize:!**compiled accessors**!public! !
 hwnd!**compiled accessors**!public! !
 hwnd:!**compiled accessors**!public! !
 !
 
 !OS.COM.BIND_OPTS3 class methodsFor!
+
+byteSize
+	^_BIND_OPTS3_Size!
 
 defineFields
 	"Define the fields of the BIND_OPTS2 structure.
@@ -58,6 +55,7 @@ defineFields
 getFieldNames
 	^#(#dwSize #grfFlags #grfMode #dwTickCountDeadline #dwTrackFlags #dwClassContext #locale #pServerInfo #hwnd)! !
 !OS.COM.BIND_OPTS3 class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

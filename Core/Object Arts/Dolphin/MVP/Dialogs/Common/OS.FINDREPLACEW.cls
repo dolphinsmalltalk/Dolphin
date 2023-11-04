@@ -8,10 +8,8 @@ OS.CommonDialogStructure
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_FINDREPLACEW_Size' -> 16r28.
-			'_OffsetOf_dwSize' -> 16r0.
 			'_OffsetOf_flags' -> 16rC.
 			'_OffsetOf_hInstance' -> 16r8.
-			'_OffsetOf_hwndOwner' -> 16r4.
 			'_OffsetOf_lCustData' -> 16r1C.
 			'_OffsetOf_lpfnHook' -> 16r20.
 			'_OffsetOf_lpstrFindWhat' -> 16r10.
@@ -25,11 +23,6 @@ OS.FINDREPLACEW comment: 'FINDREPLACE is a <Win32lStructure> which represents th
 '!
 !OS.FINDREPLACEW categoriesForClass!External-Data-Structured!External-Data-Structured-Win32! !
 !OS.FINDREPLACEW methodsFor!
-
-dwSize: anInteger
-	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
-
-	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
 
 findDetails
 	^UI.FindDetails new
@@ -61,11 +54,6 @@ flags: anInteger
 hookFlag
 	^FR_ENABLEHOOK!
 
-hwndOwner: anExternalHandle
-	"Set the receiver's 'hwndOwner' field to the value of the argument, anExternalHandle"
-
-	bytes uintPtrAtOffset: _OffsetOf_hwndOwner put: anExternalHandle!
-
 isCaseSensitive
 	"Answer true if this is a case sensitive match operation"
 
@@ -96,10 +84,10 @@ isWholeWord
 
 	^self flags anyMask: FR_WHOLEWORD!
 
-lpfnHook: anExternalAddress
-	"Set the receiver's 'lpfnHook' field to the value of the argument, anExternalAddress"
+lpfnHook: anAddress
+	"Set the receiver's 'lpfnHook' field to the value of the argument, anAddress"
 
-	bytes uintPtrAtOffset: _OffsetOf_lpfnHook put: anExternalAddress!
+	bytes uintPtrAtOffset: _OffsetOf_lpfnHook put: anAddress!
 
 lpstrFindWhat
 	"Answer the <Utf16String> value of the receiver's 'lpstrFindWhat' field."
@@ -121,15 +109,6 @@ lpstrReplaceWith: anUtf16String
 
 	bytes uintPtrAtOffset: _OffsetOf_lpstrReplaceWith put: anUtf16String yourAddress!
 
-ownerView: aView
-	"Set the parent window for the dialog to aView."
-
-	| hWnd |
-	hWnd := aView asParameter.
-	hWnd isNull
-		ifTrue: [self hwndOwner: 0]
-		ifFalse: [self hwndOwner: hWnd].!
-
 replaceWith
 	"Answer the replacement String."
 
@@ -145,13 +124,11 @@ wReplaceWithLen: anInteger
 
 	bytes uint16AtOffset: _OffsetOf_wReplaceWithLen put: anInteger! !
 !OS.FINDREPLACEW categoriesForMethods!
-dwSize:!**compiled accessors**!public! !
 findDetails!event handling!public! !
 findWhat!accessing!public! !
 flags!**compiled accessors**!public! !
 flags:!**compiled accessors**!public! !
 hookFlag!accessing!public! !
-hwndOwner:!**compiled accessors**!public! !
 isCaseSensitive!public!testing! !
 isClosing!public!testing! !
 isForwards!public!testing! !
@@ -163,7 +140,6 @@ lpstrFindWhat!**compiled accessors**!public! !
 lpstrFindWhat:!**compiled accessors**!public! !
 lpstrReplaceWith!**compiled accessors**!public! !
 lpstrReplaceWith:!**compiled accessors**!public! !
-ownerView:!accessing!public! !
 replaceWith!accessing!public! !
 wFindWhatLen:!**compiled accessors**!public! !
 wReplaceWithLen:!**compiled accessors**!public! !
@@ -193,9 +169,8 @@ defineFields
 			LPCWSTR		lpTemplateName;
 		} FINDREPLACE;"
 
+	super defineFields.
 	self
-		defineField: #dwSize type: UInt32Field writeOnly beOverride;
-		defineField: #hwndOwner type: HANDLEField writeOnly;
 		defineField: #hInstance type: HANDLEField filler;
 		defineField: #flags type: UInt32Field new beOverride;
 		defineField: #lpstrFindWhat type: (PointerField type: Utf16String);

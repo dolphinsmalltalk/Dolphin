@@ -30,11 +30,6 @@ dwClassContext: anInteger
 
 	bytes uint32AtOffset: _OffsetOf_dwClassContext put: anInteger!
 
-dwSize: anInteger
-	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
-
-	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
-
 dwTrackFlags
 	"Answer the <Integer> value of the receiver's 'dwTrackFlags' field."
 
@@ -67,7 +62,6 @@ pServerInfo: aCOSERVERINFO
 !OS.COM.BIND_OPTS2 categoriesForMethods!
 dwClassContext!**compiled accessors**!public! !
 dwClassContext:!**compiled accessors**!public! !
-dwSize:!**compiled accessors**!public! !
 dwTrackFlags!**compiled accessors**!public! !
 dwTrackFlags:!**compiled accessors**!public! !
 locale!**compiled accessors**!public! !
@@ -77,6 +71,9 @@ pServerInfo:!**compiled accessors**!public! !
 !
 
 !OS.COM.BIND_OPTS2 class methodsFor!
+
+byteSize
+	^_BIND_OPTS2_Size!
 
 defineFields
 	"Define the additional fields of the BIND_OPTS2 structure.
@@ -106,6 +103,7 @@ defineFields
 getFieldNames
 	^#(#dwSize #grfFlags #grfMode #dwTickCountDeadline #dwTrackFlags #dwClassContext #locale #pServerInfo)! !
 !OS.COM.BIND_OPTS2 class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

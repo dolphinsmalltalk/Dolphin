@@ -1,13 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure
+OS.SizedStructure
 	subclass: #'OS.TOOLINFOW'
 	instanceVariableNames: 'text'
 	classVariableNames: ''
 	imports: #(#{OS.TooltipConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
-			'_OffsetOf_dwSize' -> 16r0.
 			'_OffsetOf_hinst' -> 16r20.
 			'_OffsetOf_hwnd' -> 16r8.
 			'_OffsetOf_lParam' -> 16r28.
@@ -29,11 +28,6 @@ Instance Variables:
 '!
 !OS.TOOLINFOW categoriesForClass!External-Data-Structured!External-Data-Structured-Win32! !
 !OS.TOOLINFOW methodsFor!
-
-dwSize: anInteger
-	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
-
-	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
 
 hinst
 	"Answer the <Handle> value of the receiver's 'hinst' field."
@@ -134,7 +128,6 @@ uId: anInteger
 
 	bytes uintPtrAtOffset: _OffsetOf_uId put: anInteger! !
 !OS.TOOLINFOW categoriesForMethods!
-dwSize:!**compiled accessors**!public! !
 hinst!**compiled accessors**!public! !
 hwnd!**compiled accessors**!public! !
 hwnd:!**compiled accessors**!public! !
@@ -173,8 +166,8 @@ defineFields
 		} TOOLINFOW;
 "
 
+	super defineFields.
 	self
-		defineField: #dwSize type: UInt32Field writeOnly beOverride;
 		defineField: #uFlags type: UInt32Field new;
 		defineField: #hwnd type: HANDLEField new;
 		defineField: #uId type: UIntPtrField new;

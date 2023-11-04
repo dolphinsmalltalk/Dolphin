@@ -13,11 +13,13 @@ package setClassNames: #(
 	#{Graphics.Tests.ColorTest}
 	#{Graphics.Tests.CursorTest}
 	#{Graphics.Tests.DIBSectionTest}
+	#{Graphics.Tests.FontTest}
 	#{Graphics.Tests.IconTest}
 	#{Graphics.Tests.ImageTest}
 	#{Graphics.Tests.MetafileTest}
 	#{Graphics.Tests.PenTest}
 	#{Graphics.Tests.PluggableColorTest}
+	#{Graphics.Tests.StockFontTest}
 	#{Graphics.Tests.ThemeColorTest}
 	#{Graphics.Tests.VirtualColorTest}
 ).
@@ -64,6 +66,13 @@ Core.Tests.DolphinTest
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Tests.DolphinTest
+	subclass: #'Graphics.Tests.FontTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.DolphinTest
 	subclass: #'Graphics.Tests.ImageTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -72,6 +81,13 @@ Core.Tests.DolphinTest
 	classConstants: {}!
 Core.Tests.DolphinTest
 	subclass: #'Graphics.Tests.PenTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.DolphinTest
+	subclass: #'Graphics.Tests.StockFontTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

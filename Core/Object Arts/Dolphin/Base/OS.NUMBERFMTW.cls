@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure
+External.Structure
 	subclass: #'OS.NUMBERFMTW'
 	instanceVariableNames: 'decimalSeparator numberGrouping groupSeparator'
 	classVariableNames: ''
@@ -8,11 +8,11 @@ OS.Win32Structure
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_NUMBERFMTW_Size' -> 16r18.
-			'_OffsetOf_Grouping' -> 16r8.
+			'_OffsetOf_grouping' -> 16r8.
 			'_OffsetOf_LeadingZero' -> 16r4.
 			'_OffsetOf_lpDecimalSep' -> 16rC.
 			'_OffsetOf_lpThousandSep' -> 16r10.
-			'_OffsetOf_NegativeOrder' -> 16r14.
+			'_OffsetOf_negativeOrder' -> 16r14.
 			'_OffsetOf_NumDigits' -> 16r0
 		}!
 OS.NUMBERFMTW guid: (Core.GUID fromString: '{0a4bf3f8-997a-4704-98b0-05a904564613}')!
@@ -36,28 +36,25 @@ struct tagNUMBERFMTW {
 !OS.NUMBERFMTW methodsFor!
 
 decimalPlaces
-	^self NumDigits!
+	^bytes uint32AtOffset: _OffsetOf_NumDigits!
 
-decimalPlaces: anInteger 
-	(anInteger between: 0 and: 9) ifFalse: [self error: 'Number of decimal places must be between 0 and 9 inclusive'].
-	self NumDigits: anInteger!
+decimalPlaces: anInteger
+	(anInteger between: 0 and: 9)
+		ifFalse: [self error: 'Number of decimal places must be between 0 and 9 inclusive'].
+	bytes uint32AtOffset: _OffsetOf_NumDigits put: anInteger!
 
 decimalSeparator
-	^decimalSeparator ifNil: [decimalSeparator := self lpDecimalSep]!
+	^decimalSeparator
+		ifNil: [decimalSeparator := Utf16String fromAddress: (bytes intPtrAtOffset: _OffsetOf_lpDecimalSep)]!
 
 decimalSeparator: aString
 	decimalSeparator := aString asUtf16String.
-	self lpDecimalSep: decimalSeparator!
+	bytes uintPtrAtOffset: _OffsetOf_lpDecimalSep put: decimalSeparator yourAddress!
 
 grouping
-	"Answer the <Integer> value of the receiver's grouping format - see #grouping: and #numberGrouping."
+	"Answer the <Integer> value of the receiver's 'grouping' field."
 
-	^self Grouping!
-
-Grouping
-	"Private - Answer the <Integer> value of the receiver's 'Grouping' field."
-
-	^bytes uint32AtOffset: _OffsetOf_Grouping!
+	^bytes uint32AtOffset: _OffsetOf_grouping!
 
 grouping: anInteger
 	"Set the number of digits in each group of numbers to the left of the decimal separator.
@@ -68,80 +65,38 @@ grouping: anInteger
 
 	(anInteger between: 0 and: 9999)
 		ifFalse: [self error: 'Invalid grouping specification ' , anInteger printString].
-	self Grouping: anInteger!
-
-Grouping: anInteger
-	"Private - Set the receiver's 'Grouping' field to the value of the argument, anInteger"
-
-	bytes uint32AtOffset: _OffsetOf_Grouping put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_grouping put: anInteger!
 
 groupSeparator
-	^groupSeparator ifNil: [groupSeparator := self lpThousandSep]!
+	^groupSeparator
+		ifNil: [groupSeparator := Utf16String fromAddress: (bytes intPtrAtOffset: _OffsetOf_lpThousandSep)]!
 
 groupSeparator: aString
 	groupSeparator := aString asUtf16String.
-	self lpThousandSep: groupSeparator!
+	bytes uintPtrAtOffset: _OffsetOf_lpThousandSep put: groupSeparator yourAddress!
 
 hasLeadingZero
-	^self LeadingZero ~~ 0!
+	^(bytes uint32AtOffset: _OffsetOf_LeadingZero) ~~ 0!
 
 hasLeadingZero: aBoolean
-	self LeadingZero: aBoolean asParameter!
+	bytes uint32AtOffset: _OffsetOf_LeadingZero put: aBoolean asParameter!
 
-LeadingZero
-	"Private - Answer the <Integer> value of the receiver's 'LeadingZero' field."
+negativeOrder
+	"Answer the <Integer> value of the receiver's 'negativeOrder' field."
 
-	^bytes uint32AtOffset: _OffsetOf_LeadingZero!
+	^bytes uint32AtOffset: _OffsetOf_negativeOrder!
 
-LeadingZero: anInteger
-	"Private - Set the receiver's 'LeadingZero' field to the value of the argument, anInteger"
-
-	bytes uint32AtOffset: _OffsetOf_LeadingZero put: anInteger!
-
-lpDecimalSep
-	"Private - Answer the <Utf16String> value of the receiver's 'lpDecimalSep' field."
-
-	^Utf16String fromAddress: (bytes intPtrAtOffset: _OffsetOf_lpDecimalSep)!
-
-lpDecimalSep: anUtf16String
-	"Private - Set the receiver's 'lpDecimalSep' field to the value of the argument, anUtf16String"
-
-	bytes uintPtrAtOffset: _OffsetOf_lpDecimalSep put: anUtf16String yourAddress!
-
-lpThousandSep
-	"Private - Answer the <Utf16String> value of the receiver's 'lpThousandSep' field."
-
-	^Utf16String fromAddress: (bytes intPtrAtOffset: _OffsetOf_lpThousandSep)!
-
-lpThousandSep: anUtf16String
-	"Private - Set the receiver's 'lpThousandSep' field to the value of the argument, anUtf16String"
-
-	bytes uintPtrAtOffset: _OffsetOf_lpThousandSep put: anUtf16String yourAddress!
-
-negativeNumberMode 
-	^self NegativeOrder!
-
-negativeNumberMode: anInteger
+negativeOrder: anInteger
 	(anInteger between: 0 and: 4)
 		ifFalse: [self error: 'Invalid negative number mode ' , anInteger printString].
-	self NegativeOrder: anInteger!
-
-NegativeOrder
-	"Private - Answer the <Integer> value of the receiver's 'NegativeOrder' field."
-
-	^bytes uint32AtOffset: _OffsetOf_NegativeOrder!
-
-NegativeOrder: anInteger
-	"Private - Set the receiver's 'NegativeOrder' field to the value of the argument, anInteger"
-
-	bytes uint32AtOffset: _OffsetOf_NegativeOrder put: anInteger!
+	bytes uint32AtOffset: _OffsetOf_negativeOrder put: anInteger!
 
 numberGrouping
 	^numberGrouping
 		ifNil: 
 			[| stream digits |
 			stream := String writeStream.
-			digits := self Grouping printString.
+			digits := self grouping printString.
 			digits do: [:each | stream nextPut: each] separatedBy: [stream nextPut: $;].
 			(digits size > 1 and: [digits last = $0]) ifTrue: [stream nextPutAll: ';0'].
 			numberGrouping := stream contents]!
@@ -156,44 +111,22 @@ numberGrouping: aString
 					[:grouping :each |
 					| group |
 					group := Ucrt atoi: each.
-					grouping * 10 + group])!
-
-NumDigits
-	"Private - Answer the <Integer> value of the receiver's 'NumDigits' field."
-
-	^bytes uint32AtOffset: _OffsetOf_NumDigits!
-
-NumDigits: anInteger
-	"Private - Set the receiver's 'NumDigits' field to the value of the argument, anInteger"
-
-	bytes uint32AtOffset: _OffsetOf_NumDigits put: anInteger! !
+					grouping * 10 + group])! !
 !OS.NUMBERFMTW categoriesForMethods!
 decimalPlaces!accessing!public! !
 decimalPlaces:!accessing!public! !
 decimalSeparator!accessing!public! !
 decimalSeparator:!accessing!public! !
-grouping!accessing!public! !
-Grouping!**compiled accessors**!private! !
+grouping!**compiled accessors**!public! !
 grouping:!accessing!public! !
-Grouping:!**compiled accessors**!private! !
 groupSeparator!accessing!public! !
 groupSeparator:!accessing!public! !
 hasLeadingZero!accessing!public! !
 hasLeadingZero:!accessing!public! !
-LeadingZero!**compiled accessors**!private! !
-LeadingZero:!**compiled accessors**!private! !
-lpDecimalSep!**compiled accessors**!private! !
-lpDecimalSep:!**compiled accessors**!private! !
-lpThousandSep!**compiled accessors**!private! !
-lpThousandSep:!**compiled accessors**!private! !
-negativeNumberMode!accessing!public! !
-negativeNumberMode:!accessing!public! !
-NegativeOrder!**compiled accessors**!private! !
-NegativeOrder:!**compiled accessors**!private! !
+negativeOrder!**compiled accessors**!public! !
+negativeOrder:!accessing!public! !
 numberGrouping!accessing!public! !
 numberGrouping:!accessing!public! !
-NumDigits!**compiled accessors**!private! !
-NumDigits:!**compiled accessors**!private! !
 !
 
 !OS.NUMBERFMTW class methodsFor!
@@ -204,7 +137,7 @@ byteSize
 defineFields
 	"Define the fields of the NUMBERFMTW structure.
 
-	Win32NUMBERFMTW compileDefinition
+	NUMBERFMTW compileDefinition
 
 		typedef [uuid(0a4bf3f8-997a-4704-98b0-05a904564613)]
 		struct tagNUMBERFMTW {
@@ -218,19 +151,19 @@ defineFields
 "
 
 	self
-		defineField: #NumDigits type: UInt32Field new offset: 0;
-		defineField: #LeadingZero type: UInt32Field new offset: 4;
-		defineField: #Grouping type: UInt32Field new offset: 8;
-		defineField: #lpDecimalSep type: (PointerField type: Utf16String) offset: 12;
-		defineField: #lpThousandSep type: (PointerField type: Utf16String) offset: 16;
-		defineField: #NegativeOrder type: UInt32Field new offset: 20.
+		defineField: #NumDigits type: UInt32Field filler offset: 0;
+		defineField: #LeadingZero type: UInt32Field filler offset: 4;
+		defineField: #grouping type: UInt32Field new offset: 8;
+		defineField: #lpDecimalSep type: (PointerField type: Utf16String) beFiller offset: 12;
+		defineField: #lpThousandSep type: (PointerField type: Utf16String) beFiller offset: 16;
+		defineField: #negativeOrder type: UInt32Field new offset: 20.
 	self byteSize: 24!
 
 getFieldNames
-	^#(#NumDigits #LeadingZero #Grouping #lpDecimalSep #lpThousandSep #NegativeOrder)! !
+	^#(#grouping #negativeOrder)! !
 !OS.NUMBERFMTW class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
-defineFields!**auto generated**!public!template definition! !
+defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !
 

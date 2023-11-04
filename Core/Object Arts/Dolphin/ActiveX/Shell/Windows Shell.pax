@@ -263,14 +263,13 @@ Graphics.IconFromSystemInitializer
 	imports: #(#{OS.ShellConstants private} #{OS.SHSTOCKICONINFO private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.Win32Structure
+OS.SizedStructure
 	subclass: #'OS.SHSTOCKICONINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-			'_OffsetOf_dwSize' -> 16r0.
 			'_OffsetOf_hIcon' -> 16r4.
 			'_OffsetOf_iIcon' -> 16rC.
 			'_OffsetOf_iSysImageIndex' -> 16r8.

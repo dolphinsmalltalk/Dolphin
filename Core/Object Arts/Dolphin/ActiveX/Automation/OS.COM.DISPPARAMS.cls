@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.OLEStructure
+External.Structure
 	subclass: #'OS.COM.DISPPARAMS'
 	instanceVariableNames: 'args vargs dispids'
 	classVariableNames: 'ZeroArgs'
@@ -164,7 +164,7 @@ rgvarg: aStructureArray
 singleArg
 	"Answer the single VARIANT parameter - assumes cArgs == 1"
 
-	^VARIANT fromAddress: (bytes intPtrAtOffset: 0)! !
+	^VARIANT fromAddress: (bytes intPtrAtOffset: _OffsetOf_rgvarg)! !
 !OS.COM.DISPPARAMS categoriesForMethods!
 arg:!accessing!public! !
 args:!accessing!public! !

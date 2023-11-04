@@ -224,107 +224,6 @@ UI.FindDialog
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.Win32Structure
-	subclass: #'OS.CommonDialogStructure'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #(#{OS.CommonDialogConstants})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-OS.CommonDialogStructure
-	subclass: #'OS.CHOOSECOLORW'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-			'_CHOOSECOLORW_Size' -> 16r24.
-			'_OffsetOf_dwSize' -> 16r0.
-			'_OffsetOf_flags' -> 16r14.
-			'_OffsetOf_hInstance' -> 16r8.
-			'_OffsetOf_hwndOwner' -> 16r4.
-			'_OffsetOf_lCustData' -> 16r18.
-			'_OffsetOf_lpCustColors' -> 16r10.
-			'_OffsetOf_lpfnHook' -> 16r1C.
-			'_OffsetOf_lpTemplateName' -> 16r20.
-			'_OffsetOf_rgbResult' -> 16rC
-		}!
-OS.CommonDialogStructure
-	subclass: #'OS.CHOOSEFONTW'
-	instanceVariableNames: 'logFont'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-			'_CHOOSEFONTW_Size' -> 16r3C.
-			'_OffsetOf_dwSize' -> 16r0.
-			'_OffsetOf_flags' -> 16r14.
-			'_OffsetOf_hDC' -> 16r8.
-			'_OffsetOf_hInstance' -> 16r28.
-			'_OffsetOf_hwndOwner' -> 16r4.
-			'_OffsetOf_iPointSize' -> 16r10.
-			'_OffsetOf_lCustData' -> 16r1C.
-			'_OffsetOf_lpfnHook' -> 16r20.
-			'_OffsetOf_lpLogFont' -> 16rC.
-			'_OffsetOf_lpszStyle' -> 16r2C.
-			'_OffsetOf_lpTemplateName' -> 16r24.
-			'_OffsetOf_nFontType' -> 16r30.
-			'_OffsetOf_nSizeMax' -> 16r38.
-			'_OffsetOf_nSizeMin' -> 16r34.
-			'_OffsetOf_rgbColors' -> 16r18
-		}!
-OS.CommonDialogStructure
-	subclass: #'OS.FINDREPLACEW'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-			'_FINDREPLACEW_Size' -> 16r28.
-			'_OffsetOf_dwSize' -> 16r0.
-			'_OffsetOf_flags' -> 16rC.
-			'_OffsetOf_hInstance' -> 16r8.
-			'_OffsetOf_hwndOwner' -> 16r4.
-			'_OffsetOf_lCustData' -> 16r1C.
-			'_OffsetOf_lpfnHook' -> 16r20.
-			'_OffsetOf_lpstrFindWhat' -> 16r10.
-			'_OffsetOf_lpstrReplaceWith' -> 16r14.
-			'_OffsetOf_lpTemplateName' -> 16r24.
-			'_OffsetOf_wFindWhatLen' -> 16r18.
-			'_OffsetOf_wReplaceWithLen' -> 16r1A
-		}!
-OS.CommonDialogStructure
-	subclass: #'OS.OPENFILENAMEW'
-	instanceVariableNames: 'fileName title filter defExt initialDir'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-			'_OffsetOf_dwReserved' -> 16r50.
-			'_OffsetOf_dwSize' -> 16r0.
-			'_OffsetOf_flags' -> 16r34.
-			'_OffsetOf_flagsEx' -> 16r54.
-			'_OffsetOf_hInstance' -> 16r8.
-			'_OffsetOf_hwndOwner' -> 16r4.
-			'_OffsetOf_lCustData' -> 16r40.
-			'_OffsetOf_lpfnHook' -> 16r44.
-			'_OffsetOf_lpstrCustomFilter' -> 16r10.
-			'_OffsetOf_lpstrDefExt' -> 16r3C.
-			'_OffsetOf_lpstrFile' -> 16r1C.
-			'_OffsetOf_lpstrFileTitle' -> 16r24.
-			'_OffsetOf_lpstrFilter' -> 16rC.
-			'_OffsetOf_lpstrInitialDir' -> 16r2C.
-			'_OffsetOf_lpstrTitle' -> 16r30.
-			'_OffsetOf_lpTemplateName' -> 16r48.
-			'_OffsetOf_nFileExtension' -> 16r3A.
-			'_OffsetOf_nFileOffset' -> 16r38.
-			'_OffsetOf_nFilterIndex' -> 16r18.
-			'_OffsetOf_nMaxCustFilter' -> 16r14.
-			'_OffsetOf_nMaxFile' -> 16r20.
-			'_OffsetOf_nMaxFileTitle' -> 16r28.
-			'_OffsetOf_pvReserved' -> 16r4C.
-			'_OPENFILENAMEW_Size' -> 16r58
-		}!
 OS.NMHDR
 	subclass: #'OS.OFNOTIFYEXW'
 	instanceVariableNames: ''
@@ -347,6 +246,99 @@ OS.NMHDR
 			'_OffsetOf_lpOFN' -> 16rC.
 			'_OffsetOf_pszFile' -> 16r10.
 			'_OFNOTIFYW_Size' -> 16r14
+		}!
+OS.SizedStructure
+	subclass: #'OS.CommonDialogStructure'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #(#{OS.CommonDialogConstants})
+	classInstanceVariableNames: ''
+	classConstants: { '_CommonDialogStructure_Size' -> 16r8. '_OffsetOf_hwndOwner' -> 16r4 }!
+OS.CommonDialogStructure
+	subclass: #'OS.CHOOSECOLORW'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_CHOOSECOLORW_Size' -> 16r24.
+			'_OffsetOf_flags' -> 16r14.
+			'_OffsetOf_hInstance' -> 16r8.
+			'_OffsetOf_lCustData' -> 16r18.
+			'_OffsetOf_lpCustColors' -> 16r10.
+			'_OffsetOf_lpfnHook' -> 16r1C.
+			'_OffsetOf_lpTemplateName' -> 16r20.
+			'_OffsetOf_rgbResult' -> 16rC
+		}!
+OS.CommonDialogStructure
+	subclass: #'OS.CHOOSEFONTW'
+	instanceVariableNames: 'logFont'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_CHOOSEFONTW_Size' -> 16r3C.
+			'_OffsetOf_flags' -> 16r14.
+			'_OffsetOf_hDC' -> 16r8.
+			'_OffsetOf_hInstance' -> 16r28.
+			'_OffsetOf_iPointSize' -> 16r10.
+			'_OffsetOf_lCustData' -> 16r1C.
+			'_OffsetOf_lpfnHook' -> 16r20.
+			'_OffsetOf_lpLogFont' -> 16rC.
+			'_OffsetOf_lpszStyle' -> 16r2C.
+			'_OffsetOf_lpTemplateName' -> 16r24.
+			'_OffsetOf_nFontType' -> 16r30.
+			'_OffsetOf_nSizeMax' -> 16r38.
+			'_OffsetOf_nSizeMin' -> 16r34.
+			'_OffsetOf_rgbColors' -> 16r18
+		}!
+OS.CommonDialogStructure
+	subclass: #'OS.FINDREPLACEW'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_FINDREPLACEW_Size' -> 16r28.
+			'_OffsetOf_flags' -> 16rC.
+			'_OffsetOf_hInstance' -> 16r8.
+			'_OffsetOf_lCustData' -> 16r1C.
+			'_OffsetOf_lpfnHook' -> 16r20.
+			'_OffsetOf_lpstrFindWhat' -> 16r10.
+			'_OffsetOf_lpstrReplaceWith' -> 16r14.
+			'_OffsetOf_lpTemplateName' -> 16r24.
+			'_OffsetOf_wFindWhatLen' -> 16r18.
+			'_OffsetOf_wReplaceWithLen' -> 16r1A
+		}!
+OS.CommonDialogStructure
+	subclass: #'OS.OPENFILENAMEW'
+	instanceVariableNames: 'fileName title filter defExt initialDir'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_OffsetOf_dwReserved' -> 16r50.
+			'_OffsetOf_flags' -> 16r34.
+			'_OffsetOf_flagsEx' -> 16r54.
+			'_OffsetOf_hInstance' -> 16r8.
+			'_OffsetOf_lCustData' -> 16r40.
+			'_OffsetOf_lpfnHook' -> 16r44.
+			'_OffsetOf_lpstrCustomFilter' -> 16r10.
+			'_OffsetOf_lpstrDefExt' -> 16r3C.
+			'_OffsetOf_lpstrFile' -> 16r1C.
+			'_OffsetOf_lpstrFileTitle' -> 16r24.
+			'_OffsetOf_lpstrFilter' -> 16rC.
+			'_OffsetOf_lpstrInitialDir' -> 16r2C.
+			'_OffsetOf_lpstrTitle' -> 16r30.
+			'_OffsetOf_lpTemplateName' -> 16r48.
+			'_OffsetOf_nFileExtension' -> 16r3A.
+			'_OffsetOf_nFileOffset' -> 16r38.
+			'_OffsetOf_nFilterIndex' -> 16r18.
+			'_OffsetOf_nMaxCustFilter' -> 16r14.
+			'_OffsetOf_nMaxFile' -> 16r20.
+			'_OffsetOf_nMaxFileTitle' -> 16r28.
+			'_OffsetOf_pvReserved' -> 16r4C.
+			'_OPENFILENAMEW_Size' -> 16r58
 		}!
 
 "Loose Methods"!

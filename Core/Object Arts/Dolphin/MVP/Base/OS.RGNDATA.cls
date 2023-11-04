@@ -1,13 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure
+OS.SizedStructure
 	subclass: #'OS.RGNDATA'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-			'_OffsetOf_dwSize' -> 16r0.
 			'_OffsetOf_iType' -> 16r4.
 			'_OffsetOf_nCount' -> 16r8.
 			'_OffsetOf_nRgnSize' -> 16rC.
@@ -18,11 +17,6 @@ OS.RGNDATA guid: (Core.GUID fromString: '{87b4c60e-026e-11d3-9fd7-00a0cc3e4a32}'
 OS.RGNDATA comment: ''!
 !OS.RGNDATA categoriesForClass!External-Data-Structured-Win32! !
 !OS.RGNDATA methodsFor!
-
-dwSize: anInteger
-	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
-
-	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
 
 iType
 	"Answer the <Integer> value of the receiver's 'iType' field."
@@ -68,7 +62,6 @@ rcBound: aRECTL
 		to: ##(_OffsetOf_rcBound + RECTL._RECTL_Size)
 		startingAt: 1! !
 !OS.RGNDATA categoriesForMethods!
-dwSize:!**compiled accessors**!public! !
 iType!**compiled accessors**!public! !
 iType:!**compiled accessors**!public! !
 nCount!**compiled accessors**!public! !
@@ -107,8 +100,8 @@ defineFields
 		};
 	"
 
+	super defineFields.
 	self
-		defineField: #dwSize type: UInt32Field writeOnly beOverride;
 		defineField: #iType type: UInt32Field new;
 		defineField: #nCount type: UInt32Field new;
 		defineField: #nRgnSize type: UInt32Field new;

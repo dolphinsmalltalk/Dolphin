@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure
+OS.SizedStructure
 	subclass: #'OS.TASKDIALOGCONFIG'
 	instanceVariableNames: 'windowTitle mainInstruction content footer verificationText expandedInformation collapsedControlText expandedControlText buttons buttonLabels radioButtons radioButtonLabels'
 	classVariableNames: ''
@@ -12,7 +12,6 @@ OS.Win32Structure
 			'_OffsetOf_cxWidth' -> 16r5C.
 			'_OffsetOf_dwCommonButtons' -> 16r10.
 			'_OffsetOf_dwFlags' -> 16rC.
-			'_OffsetOf_dwSize' -> 16r0.
 			'_OffsetOf_hFooterIcon' -> 16r4C.
 			'_OffsetOf_hInstance' -> 16r8.
 			'_OffsetOf_hMainIcon' -> 16r18.
@@ -155,11 +154,6 @@ dwFlags: anInteger
 	"Set the receiver's 'dwFlags' field to the value of the argument, anInteger"
 
 	bytes int32AtOffset: _OffsetOf_dwFlags put: anInteger!
-
-dwSize: anInteger
-	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
-
-	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
 
 expandedControlText: aString
 	self pszExpandedControlText: (expandedControlText := aString ifNotNil: [aString asUtf16String])!
@@ -383,7 +377,6 @@ dwCommonButtons!**compiled accessors**!public! !
 dwCommonButtons:!**compiled accessors**!public! !
 dwFlags!**compiled accessors**!public! !
 dwFlags:!**compiled accessors**!public! !
-dwSize:!**compiled accessors**!public! !
 expandedControlText:!accessing!public! !
 expandedInformation:!accessing!public! !
 footer:!accessing!public! !
@@ -471,10 +464,8 @@ defineFields
 		} TASKDIALOGCONFIG;
 "
 
+	super defineFields.
 	self
-		defineField: #dwSize
-			type: UInt32Field new beWriteOnly
-			offset: 0;
 		defineField: #hwndParent
 			type: HANDLEField new
 			offset: 4;
@@ -556,7 +547,7 @@ getFieldNames
 	^#(#dwSize #hwndParent #hInstance #dwFlags #dwCommonButtons #pszWindowTitle #hMainIcon #pszMainInstruction #pszContent #cButtons #pButtons #nDefaultButton #cRadioButtons #pRadioButtons #nDefaultRadioButton #pszVerificationText #pszExpandedInformation #pszExpandedControlText #pszCollapsedControlText #hFooterIcon #pszFooter #pfCallback #cxWidth)! !
 !OS.TASKDIALOGCONFIG class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
-defineFields!**auto generated**!public!template definition! !
+defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !
 

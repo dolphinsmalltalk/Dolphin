@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure
+OS.SizedStructure
 	subclass: #'OS.TBBUTTONINFOW'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -10,7 +10,6 @@ OS.Win32Structure
 			'_OffsetOf_cchText' -> 16r1C.
 			'_OffsetOf_cx' -> 16r12.
 			'_OffsetOf_dwMask' -> 16r4.
-			'_OffsetOf_dwSize' -> 16r0.
 			'_OffsetOf_fsState' -> 16r10.
 			'_OffsetOf_fsStyle' -> 16r11.
 			'_OffsetOf_idCommand' -> 16r8.
@@ -43,11 +42,6 @@ dwMask: anInteger
 	"Set the receiver's 'dwMask' field to the value of the argument, anInteger"
 
 	bytes uint32AtOffset: _OffsetOf_dwMask put: anInteger!
-
-dwSize: anInteger
-	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
-
-	bytes int32AtOffset: _OffsetOf_dwSize put: anInteger!
 
 fsState
 	"Answer the <Integer> value of the receiver's 'fsState' field."
@@ -93,7 +87,6 @@ cx!**compiled accessors**!public! !
 cx:!**compiled accessors**!public! !
 dwMask!**compiled accessors**!public! !
 dwMask:!**compiled accessors**!public! !
-dwSize:!**compiled accessors**!public! !
 fsState!**compiled accessors**!public! !
 fsState:!**compiled accessors**!public! !
 fsStyle!**compiled accessors**!public! !
@@ -126,8 +119,8 @@ defineFields
 			LPWSTR pszText;
 			int cchText; } TBBUTTONINFOW, *LPTBBUTTONINFOW;"
 
+	super defineFields.
 	self
-		defineField: #dwSize type: Int32Field writeOnly beOverride;
 		defineField: #dwMask type: UInt32Field new;
 		defineField: #idCommand type: Int32Field new;
 		defineField: #iImage type: Int32Field new;

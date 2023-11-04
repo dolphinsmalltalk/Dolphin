@@ -24,7 +24,7 @@ backcolor
 
 	| clrTextBk |
 	clrTextBk := self clrTextBk.
-	^clrTextBk = CLR_DEFAULT ifTrue: [Graphics.Color window] ifFalse: [Graphics.Color fromCOLORREF: clrTextBk]!
+	^clrTextBk = OS.Win32Constants.CLR_DEFAULT ifTrue: [Graphics.Color window] ifFalse: [Graphics.Color fromCOLORREF: clrTextBk]!
 
 backcolor: aColor
 	"Sets the background <Color>."
@@ -56,7 +56,7 @@ forecolor
 
 	| clrText |
 	clrText := self clrText.
-	^clrText = CLR_DEFAULT ifTrue: [Graphics.Color windowText] ifFalse: [Graphics.Color fromCOLORREF: clrText]!
+	^clrText = OS.Win32Constants.CLR_DEFAULT ifTrue: [Graphics.Color windowText] ifFalse: [Graphics.Color fromCOLORREF: clrText]!
 
 forecolor: aColor
 	"Sets the text foreground <Color>."

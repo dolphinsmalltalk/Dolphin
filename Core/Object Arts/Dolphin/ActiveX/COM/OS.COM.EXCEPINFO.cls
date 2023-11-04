@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.FinalizableStructure
+External.FinalizableStructure
 	subclass: #'OS.COM.EXCEPINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -65,21 +65,20 @@ bstrSource: anObject
 	self pwszSource: anObject yourAddress!
 
 copy
-	"Answer an <EXCEPINFO> which is a copy of the receiver. The embedded BSTRs
-	must be copied (the accessor copies because BSTR>>fromAddress: copies)."
+	"Answer an <EXCEPINFO> which is a copy of the receiver. "
 
 	| copy |
 	copy := super copy.
-	copy bstrSource: self bstrSource detach.
-	copy bstrDescription: self bstrDescription detach.
-	copy bstrHelpFile: self bstrHelpFile detach.
+	"The embedded BSTRs must be copied (the accessor copies because BSTR>>fromAddress: copies)."
+	self class bstrFieldOffsets
+		do: [:each | bytes uintPtrAtOffset: each put: (BSTR fromAddress: (bytes uintPtrAtOffset: each)) detach].
 	^copy!
 
 description
 	"Answer the receiver's bstrDescription field as a <readableString> Smalltalk object.
 	This is the error string set by the object which reported the error."
 
-	^self wstrDescription asString!
+	^self wstrDescription!
 
 description: errorDescription
 	"Set the receiver's bstrDescription field to a <BSTR> copy of the <readableString>
@@ -246,6 +245,9 @@ wstrSource!accessing!public! !
 
 !OS.COM.EXCEPINFO class methodsFor!
 
+bstrFieldOffsets
+	^##({ _OffsetOf_pwszSource. _OffsetOf_pwszDescription. _OffsetOf_pwszHelpFile })!
+
 byteSize
 	^_EXCEPINFO_Size!
 
@@ -253,9 +255,7 @@ clear: addressOrBytes
 	"Free external resources referenced by the structure
 	of the receiver's element type at the specified address."
 
-	4 to: 12
-		by: 4
-		do: [:offset | OleAut32 sysFreeString: (addressOrBytes int32AtOffset: offset)]!
+	self bstrFieldOffsets do: [:each | OleAut32 sysFreeString: (addressOrBytes uint32AtOffset: each)]!
 
 defineFields
 	"Define the fields of the EXCEPINFO structure.
@@ -290,6 +290,7 @@ defineFields
 getFieldNames
 	^#(#wCode #pwszSource #pwszDescription #pwszHelpFile #dwHelpContext #pfnDeferredFillIn #scode)! !
 !OS.COM.EXCEPINFO class categoriesForMethods!
+bstrFieldOffsets!constants!private! !
 byteSize!**compiled accessors**!constants!public! !
 clear:!public!realizing/unrealizing! !
 defineFields!public!template definition! !

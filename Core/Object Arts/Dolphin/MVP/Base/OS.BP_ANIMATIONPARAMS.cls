@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure
+OS.SizedStructure
 	subclass: #'OS.BP_ANIMATIONPARAMS'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -10,7 +10,6 @@ OS.Win32Structure
 			'_BP_ANIMATIONPARAMS_Size' -> 16r10.
 			'_OffsetOf_dwDuration' -> 16rC.
 			'_OffsetOf_dwFlags' -> 16r4.
-			'_OffsetOf_dwSize' -> 16r0.
 			'_OffsetOf_style' -> 16r8
 		}!
 OS.BP_ANIMATIONPARAMS guid: (Core.GUID fromString: '{74d57e87-6087-4e82-ac07-680d0a3db4e6}')!
@@ -53,11 +52,6 @@ dwFlags: anInteger
 
 	bytes uint32AtOffset: _OffsetOf_dwFlags put: anInteger!
 
-dwSize: anInteger
-	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
-
-	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
-
 style
 	"Answer the <Integer> value of the receiver's 'style' field."
 
@@ -72,7 +66,6 @@ dwDuration!**compiled accessors**!public! !
 dwDuration:!**compiled accessors**!public! !
 dwFlags!**compiled accessors**!public! !
 dwFlags:!**compiled accessors**!public! !
-dwSize:!**compiled accessors**!public! !
 style!**compiled accessors**!public! !
 style:!**compiled accessors**!public! !
 !
@@ -96,8 +89,8 @@ defineFields
 		} BP_ANIMATIONPARAMS;
 "
 
+	super defineFields.
 	self
-		defineField: #dwSize type: UInt32Field writeOnly beOverride;
 		defineField: #dwFlags type: UInt32Field new;
 		defineField: #style type: Int32Field new;
 		defineField: #dwDuration type: UInt32Field new!
@@ -106,7 +99,7 @@ getFieldNames
 	^#(#dwSize #dwFlags #style #dwDuration)! !
 !OS.BP_ANIMATIONPARAMS class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
-defineFields!**auto generated**!public!template definition! !
+defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !
 

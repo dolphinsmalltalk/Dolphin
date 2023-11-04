@@ -79,7 +79,7 @@ null
 	^StockPen fromId: NULL_PEN!
 
 styleNames
-	^#(#solid #dashed #dotted #dashDot #dashDotDot #null #insideFrame)!
+	^#('solid' 'dashed' 'dotted' 'dashDot' 'dashDotDot' 'null' 'insideFrame')!
 
 white
 	"Answer the stock white pen."

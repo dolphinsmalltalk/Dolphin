@@ -6,7 +6,7 @@ OS.COM.TypeInfoStructure
 	classVariableNames: ''
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { '_MemberDesc_Size' -> 16r4. '_OffsetOf_memid' -> 16r0 }!
 OS.COM.MemberDesc guid: (Core.GUID fromString: '{ac5eb94d-60c1-4c16-ae6d-31acf5123eb6}')!
 OS.COM.MemberDesc isNonInstantiable: true!
 OS.COM.MemberDesc comment: ''!
@@ -198,9 +198,9 @@ isValueProperty
 	^self memid == DISPID_VALUE!
 
 memid
-	"Answer the receiver's memid field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'memid' field."
 
-	^bytes int32AtOffset: 0!
+	^bytes int32AtOffset: _OffsetOf_memid!
 
 name
 	"Answer the name of the variable described by the receiver."
@@ -248,9 +248,25 @@ isRestricted!public!testing! !
 isSource!public!testing! !
 isUIDefault!public!testing! !
 isValueProperty!public!testing! !
-memid!accessing!public! !
+memid!**compiled accessors**!public! !
 name!accessing!public! !
 setAnalyzer:index:!accessing!initializing!private! !
 tdesc!accessing!private! !
+!
+
+!OS.COM.MemberDesc class methodsFor!
+
+byteSize
+	^_MemberDesc_Size!
+
+defineFields
+	"
+		self compileDefinition.
+	"
+
+	self defineField: #memid type: Int32Field readOnly! !
+!OS.COM.MemberDesc class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
+defineFields!public!template definition! !
 !
 

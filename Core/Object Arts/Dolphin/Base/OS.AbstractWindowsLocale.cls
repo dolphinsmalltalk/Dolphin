@@ -202,7 +202,7 @@ getLocaleInfoString: anIntegerLcType
 
 	| id |
 	id := self basicLcid.
-	^(Kernel32 getLocaleInfo: (id bitAnd: ##(NLS_VALID_LOCALE_MASK | (16rF << 20)	"sort version"))
+	^(Kernel32 getLocaleInfo: (id bitAnd: ##(NLS_VALID_LOCALE_MASK bitOr: (16rF bitShift: 20)	"sort version"))
 		string: (anIntegerLcType bitOr: ((id bitAnd: NoUserOverrideMask) bitShift: 7))) asUtf8String!
 
 getStringInfo: anIntegerLcType
@@ -336,7 +336,7 @@ negativeNumberMode: anInteger
 	"Set the way negative numbers should be displayed in this locale (see #negativeNumberMode)."
 
 	self numberFormat isImmutable ifTrue: [numberFormat := numberFormat copy].
-	numberFormat negativeNumberMode: anInteger!
+	numberFormat negativeOrder: anInteger!
 
 negativeSign
 	^self getStringInfo: LOCALE_SNEGATIVESIGN!
