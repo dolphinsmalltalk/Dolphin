@@ -17,6 +17,8 @@ classToTest
 testItemFromPoint
 	| ext |
 	presenter displayValue: '<A HREF="http://www.foo.com">Foo</A> <A HREF="http://www.bar.com">Bar</A>'.
+	"Disable visual style so the ambient font is used"
+	presenter useVisualStyle: false.
 	self waitForInputIdle.
 	self assert: (presenter itemFromPoint: 0 @ 0) equals: 1.
 	ext := presenter canvas textExtent: 'Foo '.

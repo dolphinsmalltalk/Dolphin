@@ -604,6 +604,7 @@ publishedAspectsOfInstances
 
 	^super publishedAspectsOfInstances
 		add: (Aspect multilineString: #text);
+		add: (Aspect boolean: #useVisualStyle);
 		yourself!
 
 publishedEventsOfInstances

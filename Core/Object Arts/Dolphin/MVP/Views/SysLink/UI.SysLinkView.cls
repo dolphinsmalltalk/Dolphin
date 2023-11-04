@@ -8,9 +8,9 @@ UI.StaticView
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.SysLinkView guid: (Core.GUID fromString: '{e19a1369-3c1d-4216-b5b6-c6649e51dc4b}')!
-UI.SysLinkView comment: 'SysLinkView is a <valueView> wrapper class for the Windows SysLink control. The SysLink control is similar to a normal <StaticText> control, but may contain embedded links, and triggers #linkClicked: notification events when the links are clicked. The <valueModel> associated with a SysLinkView must always yield a <readableString> value when mapped through the installed type converter. A SysLinkView will normally be used in conjunction with a <TextPresenter>.
+UI.SysLinkView comment: '`SysLinkView` is a `<valueView>` wrapper class for the Windows SysLink control. The SysLink control is similar to a normal `StaticText` control, but may contain embedded links, and triggers `#linkClicked:` notification events when the links are clicked. The `<valueModel>` associated with a `SysLinkView` must always yield a `<readableString>` value when mapped through the installed type converter. It is expected that links are expressed in the string as HTML `A` tags, e.g. ''Here is a <A HREF="https://www.microsoft.com">link</A> to Microsoft''.
 
-Please Note: The underlying Windows control is not supported on Windows 2000 and earlier.'!
+`SysLinkView` will normally be used in conjunction with a `TextPresenter`.'!
 !UI.SysLinkView categoriesForClass!MVP-Views! !
 !UI.SysLinkView methodsFor!
 
@@ -29,6 +29,11 @@ calculateExtent: aLayoutContext
 	"Now adjust required client extent to window extent"
 	^self calcExtentFromClientExtent: extent!
 
+defaultWindowStyle
+	"Private - Answer a default style to use when creating a SysLinkControl. Unlike most static controls, it makes sense for links to be on the tab navigation path"
+
+	^##(WS_CLIPSIBLINGS | WS_TABSTOP | LWS_USEVISUALSTYLE)!
+
 displayValue
 	"Private - Answer the displayed contents, the text, of the receiver"
 
@@ -44,6 +49,11 @@ displayValue: anObject
 		ifFalse: 
 			["If the text has changed then set the new text for anObject"
 			self text: newText]!
+
+invalidateOnResize
+	"Private - The Windows static controls do not normally expect to be resized so they do not redraw correctly. We therefore force them to redraw on resize."
+
+	^false!
 
 itemFromPoint: aPoint
 	"Private - Answer the 1-based <integer> index of the link in the receiver under the <Point> argument
@@ -134,11 +144,23 @@ preferredHeight
 	"Private - Answer the <integer> number of pels that the control thinks would be its 
 	ideal height, given its current width."
 
-	^self sendMessage: LM_GETIDEALHEIGHT! !
+	^self sendMessage: LM_GETIDEALHEIGHT!
+
+useVisualStyle
+	"Answer whether the link is displayed in the current visual style, or whether the default and ambient (visually inherited) visuals are used, e.g. for the font."
+
+	^self baseStyleAllMask: LWS_USEVISUALSTYLE!
+
+useVisualStyle: aBoolean
+	"Set whether the link is displayed in the current visual style, or uses the default and ambient (visually inherited) visuals, e.g. for the font."
+
+	self baseStyleMask: LWS_USEVISUALSTYLE set: aBoolean recreateIfChanged: false! !
 !UI.SysLinkView categoriesForMethods!
 calculateExtent:!geometry!private! !
+defaultWindowStyle!constants!private! !
 displayValue!private!updating! !
 displayValue:!private!updating! !
+invalidateOnResize!private!testing! !
 itemFromPoint:!enquiries!private! !
 linkAt:!accessing!public! !
 linkAt:ifAbsent:!accessing!public! !
@@ -150,6 +172,8 @@ nmClick:!event handling-win32!private! !
 nmReturn:!event handling-win32!private! !
 onLinkClicked:!event handling!private! !
 preferredHeight!enquiries!private! !
+useVisualStyle!accessing-styles!public! !
+useVisualStyle:!accessing-styles!public! !
 !
 
 !UI.SysLinkView class methodsFor!
