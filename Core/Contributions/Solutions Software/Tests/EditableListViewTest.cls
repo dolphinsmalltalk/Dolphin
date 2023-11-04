@@ -38,8 +38,6 @@ testPackageClosure
 				forPackagesDeployment: { EditableListViewDemo owningPackage }.
 	missing := Smalltalk developmentSystem unimplementedSelectorsIn: aBrowserEnvironment.	"Use symmetric  difference, as we also want to fix up the test if some missing message is fixed."
 	expected := #(#defineTemplate).
-	#todo. "Temporary STB dependencies caused by Clipboard binary object format, which is to be made opt-in only since it is insecure"
-	expected := expected, #(#binaryStoreBytes #fromBinaryStoreBytes:).
 	self assert: (missing symmetricDifference: expected) asArray sort equals: #()
 	"To debug this, open an env browser on the deployment scope as follows:
 		EnvironmentBrowserShell onEnvironment: aBrowserEnvironment.
