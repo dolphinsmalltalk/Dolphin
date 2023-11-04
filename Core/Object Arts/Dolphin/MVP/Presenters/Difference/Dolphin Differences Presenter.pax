@@ -22,6 +22,7 @@ package setPrerequisites: #(
 	'..\..\Base\Dolphin MVP Base'
 	'..\..\Views\Scintilla\Dolphin Scintilla View'
 	'..\..\Views\Splitter\Dolphin Splitter Control'
+	'..\..\Views\Static\Text\Dolphin StaticText Control'
 	'..\..\..\System\Filer\Dolphin STx Filer Core'
 	'..\Text\Dolphin Text Presenter'
 	'..\..\Type Converters\Dolphin Type Converters'

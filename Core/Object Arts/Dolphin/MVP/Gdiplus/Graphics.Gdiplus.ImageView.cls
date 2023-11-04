@@ -8,7 +8,7 @@ UI.ImageViewAbstract
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Graphics.Gdiplus.ImageView guid: (Core.GUID fromString: '{eede5c5a-f1e0-4e07-b766-9ea7d3169055}')!
-Graphics.Gdiplus.ImageView comment: 'GdiplusImageView is a <valueView> for displaying static <image>s based on Object-Art''''s ImageView
+Graphics.Gdiplus.ImageView comment: '`Gdiplus.ImageView` is a `<valueView>` for displaying static `<image>`s based on Object-Art''''s ImageView, but using Gdiplus to draw the images.
 
 It can display either GDI or Gdiplus based images.
 
@@ -17,14 +17,14 @@ It can display either GDI or Gdiplus based images.
  - The imageBorder can be any of  #(#none #raised #sunken #etched #bump). 
  - The imagePadding is used to provide space for the border to be drawn. For the edge imageBorder''''s 0 or 2 works well.
 
-Instance Variables:
-	interpolationMode		<Symbol>
-	imageBorder		<Symbol>
-	imagePadding		<Number> or <Rectangle> or <Point>
-	imageAttributes		<GdiplusImageAttributes> or nil
-	swun4			<UndefinedObject>
-	swun5			<UndefinedObject>
-	swun6			<UndefinedObject>
+##Instance Variables:
+  interpolationMode	`Symbol`
+  swun2				`UndefinedObject`. Reserved for future use.
+  swun2				`UndefinedObject`. Reserved for future use.
+  imageAttributes		`GdiplusImageAttributes` or nil
+  swun4				`UndefinedObject`. Reserved for future use.
+  swun5				`UndefinedObject`. Reserved for future use.
+  swun6				`UndefinedObject`. Reserved for future use.
 
 
 '!

@@ -5428,9 +5428,6 @@ onStartup
 			[:c |
 			c resetTheme.
 			(c class includesSelector: #onStartup) ifTrue: [c onStartup]].
-
-	"Load the Common Control Library."
-	CommCtrlLibrary openDefault.
 	NextId := 0.
 
 	"Register a hot key so that Ctrl+Break does not cancel dialogs (closes user interrupt walkback)"

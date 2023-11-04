@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.StaticView
+UI.StaticControlView
 	subclass: #'UI.ColorView'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -16,6 +16,7 @@ basicActualBackcolor
 	| color alpha argb dest |
 	color := super basicActualBackcolor.
 	color isDefault ifTrue: [^ColorRef defaultColorRepresentation].
+	color isNone ifTrue: [^color].
 	"Show the colour blended with the window colour"
 	dest := Color window asRGB.
 	argb := color asARGB.
@@ -37,7 +38,7 @@ displayValue: aColor
 !
 
 paintTransparentBackgroundOn: aCanvas
-	"The purpose of a ColorView is to present a visual representation of a Color, so we need to choose a suitable way to show the completely transparent Color none. Although strictly it will be 'invisible', leaving the client area unpainted so that the previously painted content (whatever that is) shows through, would not be helpful."
+	"The purpose of a ColorView is to present a visual representation of a Color, so we need to choose a suitable way to show the completely transparent Color none. Although strictly it will be 'invisible', leaving the client area unpainted so that the previously painted content (whatever that is) shows through, would not be helpful. So we display a faint cross hatching instead."
 
 	aCanvas
 		brush: (HatchBrush diamond: Color whiteSmoke);

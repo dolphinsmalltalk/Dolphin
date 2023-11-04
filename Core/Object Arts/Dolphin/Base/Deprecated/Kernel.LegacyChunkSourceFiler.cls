@@ -273,18 +273,20 @@ equivalentLegacyPrerequisites
 	"Private - Some packages have been split into multiple packages in Dolphin 8. If a legacy package is dependent on one of those new packages that is part of the original package, we want to file out a pre-requisite that is the original package. This will maintain the correct pre-reqs when roundtripping back to D7 so that the package remains loadable (unless it has been modified to add dependencies only in Dolphin 8). The pre-reqs should generally be at least sufficient for Dolphin 8 too, since typically the original package has the new package that contains part of it as one of its own pre-requisites."
 
 	^##(LookupTable withAll: {
+				'Dolphin Base (Deprecated)' -> 'Dolphin'.
+				'Dolphin MVP (Deprecated)' -> 'Dolphin MVP Base'.
 				'Dolphin GDI Graphics' -> 'Dolphin MVP Base'.
 				'Common Controls Library' -> 'Dolphin MVP Base'.
 				'Dolphin Check Buttons' -> 'Dolphin MVP Base'.
 				'Dolphin Push Buttons' -> 'Dolphin MVP Base'.
 				'Dolphin Splitter Control' -> 'Dolphin MVP Base'.
+				'Dolphin StaticText Control' -> 'Dolphin MVP Base'.
+				'Dolphin ControlViews Base' -> 'Dolphin MVP Base'.
 				'Dolphin STB Filer' -> 'Dolphin'.
 				'Dolphin Binary Filer' -> 'Dolphin'.
 				'Dolphin STx Filer Core' -> 'Dolphin'.
 				'Dolphin STx Filer Core (Old versions)' -> 'Dolphin'.
 				'Dolphin Literal Filer (Old versions)' -> 'Dolphin'.
-				'Dolphin MVP (Deprecated)' -> 'Dolphin MVP Base'.
-				'Dolphin Base (Deprecated)' -> 'Dolphin'.
 			})!
 
 fileOutAttributesOfClass: aClass
@@ -440,7 +442,8 @@ legacyPackagePaths
 	"Private - Some packages have been moved to new folders in Dolphin 8."
 
 	^##(LookupTable
-		withAll: {'Dolphin Message Box' -> 'Core\Object Arts\Dolphin\Base\Dolphin Message Box'})!
+		withAll: {'Dolphin Message Box' -> 'Core\Object Arts\Dolphin\Base\Dolphin Message Box'.
+			'Dolphin Base Dialogs' -> 'Core\Object Arts\Dolphin\MVP\Base\Dolphin Base Dialogs'})!
 
 makePoolConstsFromSharedPool: aSharedPoolClass
 	| name constsPool |

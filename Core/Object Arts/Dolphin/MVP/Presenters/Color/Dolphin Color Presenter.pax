@@ -16,6 +16,7 @@ package setClassNames: #(
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
 	'..\..\Base\Dolphin Basic Geometry'
+	'..\..\Base\Dolphin ControlViews Base'
 	'..\..\Graphics\Dolphin GDI Graphics'
 	'..\..\..\System\Filer\Dolphin Literal Filer'
 	'..\..\Base\Dolphin MVP Base'
@@ -34,7 +35,7 @@ UI.ValuePresenter
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.StaticView
+UI.StaticControlView
 	subclass: #'UI.ColorView'
 	instanceVariableNames: ''
 	classVariableNames: ''

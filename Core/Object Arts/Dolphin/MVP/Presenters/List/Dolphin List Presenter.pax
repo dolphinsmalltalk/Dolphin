@@ -31,6 +31,7 @@ package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
 	'..\..\..\Base\Dolphin Additional Sort Algorithms'
 	'..\..\Base\Dolphin Basic Geometry'
+	'..\..\Base\Dolphin ControlViews Base'
 	'..\..\Graphics\Dolphin GDI Graphics'
 	'..\..\Models\List\Dolphin List Models'
 	'..\..\..\System\Filer\Dolphin Literal Filer'

@@ -15,7 +15,7 @@ package setClassNames: #(
 
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
-	'..\..\Base\Dolphin Base Dialogs'
+	'..\..\Dialogs\Dolphin Base Dialogs'
 	'..\..\Base\Dolphin Basic Geometry'
 	'..\Choice\Dolphin Choice Presenter'
 	'..\..\Views\Common Controls\Dolphin Common Controls'

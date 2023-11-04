@@ -1,0 +1,57 @@
+﻿| package |
+package := Package name: 'Dolphin ControlViews Base'.
+package paxVersion: 2.1;
+	basicComment: 'Dolphin 🐬 Smalltalk MVP Base Control Views
+Copyright © Object Arts Ltd. 1997-2023.  Portions Copyright (c) CGI Group (Europe) Ltd. 1997.'.
+
+
+package setClassNames: #(
+	#{UI.ControlView}
+	#{UI.StaticControlView}
+	#{UI.StaticView}
+	#{UI.ValueConvertingControlView}
+).
+
+package setPrerequisites: #(
+	'..\..\System\Win32\CommCtrl\Common Controls Library'
+	'..\..\Base\Dolphin'
+	'..\Graphics\Dolphin GDI Graphics'
+	'Dolphin MVP Base'
+	'..\Type Converters\Dolphin Type Converters'
+).
+
+package!
+
+"Class Definitions"!
+
+UI.View
+	subclass: #'UI.ControlView'
+	instanceVariableNames: 'forecolor oldWndProc'
+	classVariableNames: 'CommonControlCallError'
+	imports: #(#{OS.CommCtrlConstants})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.ControlView
+	subclass: #'UI.ValueConvertingControlView'
+	instanceVariableNames: 'typeconverter'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.ValueConvertingControlView
+	subclass: #'UI.StaticView'
+	instanceVariableNames: 'unused'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.StaticView
+	subclass: #'UI.StaticControlView'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+"End of package definition"!
+

@@ -1,0 +1,36 @@
+﻿| package |
+package := Package name: 'Dolphin GroupBox'.
+package paxVersion: 2.1;
+	basicComment: 'Dolphin 🐬 GroupBox Control
+Copyright ©️ Object Arts Ltd. 1997-2023. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.
+
+`GroupBox` is the `<controlView>` implementing the standard Windows group box control.'.
+
+
+package setClassNames: #(
+	#{UI.GroupBox}
+).
+
+package setPrerequisites: #(
+	'..\..\..\..\Base\Dolphin'
+	'..\..\..\Base\Dolphin Basic Geometry'
+	'..\..\..\Base\Dolphin ControlViews Base'
+	'..\..\..\Graphics\Dolphin GDI Graphics'
+	'..\..\..\..\System\Filer\Dolphin Literal Filer'
+	'..\..\..\Base\Dolphin MVP Base'
+).
+
+package!
+
+"Class Definitions"!
+
+UI.ControlView
+	subclass: #'UI.GroupBox'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #(#{OS.ButtonConstants})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+"End of package definition"!
+

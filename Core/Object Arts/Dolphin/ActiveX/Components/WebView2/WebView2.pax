@@ -251,6 +251,7 @@ package setPrerequisites: #(
 	'..\..\Automation\ActiveX Automation'
 	'..\..\..\Base\Dolphin'
 	'..\..\..\MVP\Base\Dolphin Basic Geometry'
+	'..\..\..\MVP\Base\Dolphin ControlViews Base'
 	'..\..\..\MVP\Graphics\Dolphin GDI Graphics'
 	'..\..\..\System\Filer\Dolphin Literal Filer'
 	'..\..\..\System\Win32\Dolphin Memory-Mapped Files'

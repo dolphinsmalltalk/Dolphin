@@ -1,0 +1,35 @@
+﻿| package |
+package := Package name: 'Dolphin StaticText Control'.
+package paxVersion: 2.1;
+	basicComment: 'Dolphin 🐬 Smalltalk Static Text Control
+Copyright ©️ Object Arts Ltd. 1997-2023. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.
+
+`StaticText` is a `<valueView>` class for a Window STATIC control for displaying text in one of a number of text styles.'.
+
+
+package setClassNames: #(
+	#{UI.StaticText}
+).
+
+package setPrerequisites: #(
+	'..\..\..\..\Base\Dolphin'
+	'..\..\..\Base\Dolphin ControlViews Base'
+).
+
+package!
+
+"Class Definitions"!
+
+UI.StaticControlView
+	subclass: #'UI.StaticText'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'AlignmentMap' -> (IdentityDictionary
+						withAll: { #center -> 16r1. #left -> 16r0. #leftNoWrap -> 16rC. #right -> 16r2. #simple -> 16rB })
+		}!
+
+"End of package definition"!
+

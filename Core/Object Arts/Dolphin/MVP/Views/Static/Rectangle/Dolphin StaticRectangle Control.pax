@@ -1,0 +1,49 @@
+﻿| package |
+package := Package name: 'Dolphin StaticRectangle Control'.
+package paxVersion: 2.1;
+	basicComment: 'Dolphin 🐬 Smalltalk Static Rectangle Control
+Copyright ©️ Object Arts Ltd. 1997-2023. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.
+
+`StaticRectangle` is a simple `ControlView` class which wraps the Windows STATIC control for simple rectangles and frames.'.
+
+
+package setClassNames: #(
+	#{UI.StaticRectangle}
+).
+
+package setPrerequisites: #(
+	'..\..\..\..\Base\Dolphin'
+	'..\..\..\Base\Dolphin Basic Geometry'
+	'..\..\..\Base\Dolphin ControlViews Base'
+	'..\..\..\Graphics\Dolphin GDI Graphics'
+	'..\..\..\..\System\Filer\Dolphin Literal Filer'
+	'..\..\..\Base\Dolphin MVP Base'
+).
+
+package!
+
+"Class Definitions"!
+
+UI.ControlView
+	subclass: #'UI.StaticRectangle'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'StyleMap'
+				-> (IdentityDictionary withAll: {
+								#blackFrame -> 16r7.
+								#blackRectangle -> 16r4.
+								#etchedFrame -> 16r12.
+								#etchedHorizontal -> 16r10.
+								#etchedVertical -> 16r11.
+								#grayFrame -> 16r8.
+								#grayRectangle -> 16r5.
+								#whiteFrame -> 16r9.
+								#whiteRectangle -> 16r6
+							})
+		}!
+
+"End of package definition"!
+

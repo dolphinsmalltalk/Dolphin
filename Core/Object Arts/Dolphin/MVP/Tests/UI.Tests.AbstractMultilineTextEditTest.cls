@@ -43,7 +43,7 @@ _WeakMask <Integer> bit mask to use to set/reset the weak mark of instances. Inc
 
 Note: All class variables beginning with $_ are private to the implementation. This convention is adopted to avoid potential name clashes with user defined classes, and is a requirement for ANSI compliance.
 
-Object implements the ANSI protocol <Object> (browse the protocols-Object category).
+Object implements the ANSI protocol `<Object>` (browse the protocols-Object category).
 
 The following messages defined in Object have optimized implementations inlined by the Compiler and cannot be overridden:
 #==

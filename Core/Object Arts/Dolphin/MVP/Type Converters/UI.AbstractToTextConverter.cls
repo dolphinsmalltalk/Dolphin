@@ -8,6 +8,7 @@ UI.TypeConverter
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.AbstractToTextConverter guid: (Core.GUID fromString: '{87b4c703-026e-11d3-9fd7-00a0cc3e4a32}')!
+UI.AbstractToTextConverter isNonInstantiable: true!
 UI.AbstractToTextConverter comment: 'AbstractToTextConverter is the abstract superclass of all <typeConverter>s dedicated to transformations to and from text. Hence it also conforms to the <textTypeConverter> protocol. It has subclasses specialized for common types of objects such as <Number>s and <Boolean>s. 
 
 '!

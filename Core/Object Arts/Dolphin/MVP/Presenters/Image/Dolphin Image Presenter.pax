@@ -12,6 +12,7 @@ package setClassNames: #(
 	#{UI.AnimatedImageView}
 	#{UI.ImagePresenter}
 	#{UI.ImageView}
+	#{UI.ImageViewAbstract}
 	#{UI.StaticBitmap}
 	#{UI.StaticIcon}
 	#{UI.StaticImage}
@@ -20,6 +21,7 @@ package setClassNames: #(
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
 	'..\..\Base\Dolphin Basic Geometry'
+	'..\..\Base\Dolphin ControlViews Base'
 	'..\..\Graphics\Dolphin GDI Graphics'
 	'..\..\..\System\Filer\Dolphin Literal Filer'
 	'..\..\Base\Dolphin MVP Base'
@@ -39,15 +41,27 @@ UI.ValuePresenter
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.StaticView
-	subclass: #'UI.StaticImage'
-	instanceVariableNames: 'image'
+	subclass: #'UI.ImageViewAbstract'
+	instanceVariableNames: 'image viewMode ivFlags insets imageBorder'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'DoubleBufferMask' -> 16r2.
+			'EdgeStyles' -> (IdentityDictionary
+						withAll: { #bump -> 16r9. #etched -> 16r6. #none -> 16r0. #raised -> 16r5. #sunken -> 16rA }).
+			'EraseWholeMask' -> 16r1
+		}!
+UI.ImageViewAbstract
+	subclass: #'UI.ImageView'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.ImageViewAbstract
-	subclass: #'UI.ImageView'
-	instanceVariableNames: ''
+UI.StaticControlView
+	subclass: #'UI.StaticImage'
+	instanceVariableNames: 'image'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

@@ -14,14 +14,14 @@ UI.StaticView
 		}!
 UI.ImageViewAbstract guid: (Core.GUID fromString: '{49987909-4a1f-4e2e-8b1f-2cc2f3ca2c3c}')!
 UI.ImageViewAbstract isNonInstantiable: true!
-UI.ImageViewAbstract comment: 'ImageViewAbstract is an abstract class of <valueView>s for displaying static <image>s. The <valueModel> associated with an image view must always yield an <image> value when mapped through the installed type converter. An ImageViewAbstract will normally be used in conjunction with a <ImagePresenter>. The mode in which the image is displayed can be controlled using the #viewMode aspect which can be set to one of the following: (#normal, #centered, #scale, #scaleToFit, or #scaleBestFit). 
+UI.ImageViewAbstract comment: '`ImageViewAbstract` is an abstract class of `<valueView>`s for displaying static `<image>`s. The `<valueModel>` associated with an image view must always yield an `<image>` value when mapped through the installed type converter. An `ImageViewAbstract` will normally be used in conjunction with a `<ImagePresenter>`. The position and size in which the image is displayed can be controlled using the `#viewMode` aspect which can be set to one of the following: `#normal`, `#centered`, `#scale`, `#scaleToFit`, or `#scaleBestFit`. 
 
-Instance Variables:
-	image		<image> which is a cache for the image being displayed.
-	viewMode	<Symbol> identifying the mode of display.
-	ivFlags		<integer> flags controlling styles/modes, etc.
-	insets 		<Rectangle> specifying insets of the image from its border on each edge.
-	imageBorder	<Symbol> identifying style of the border (if any) drawn around the image'!
+##Instance Variables:
+  image		`<image>` which is a cache for the image being displayed.
+  viewMode	`Symbol` identifying the mode of display.
+  ivFlags		`<integer>` flags controlling styles/modes, etc.
+  insets 		`Rectangle` specifying insets of the image from its border on each edge.
+  imageBorder	`Symbol` identifying style of the border (if any) drawn around the image'!
 !UI.ImageViewAbstract categoriesForClass!MVP-Views! !
 !UI.ImageViewAbstract methodsFor!
 
@@ -55,7 +55,7 @@ default: imageExtent in: displayRect
 defaultWindowProcessing: message wParam: wParam lParam: lParam
 	"Private - Pass an event to the 'default' window procedure of the receiver."
 
-	"Implementation Note: The receiver is not really a Static control."
+	"Implementation Note: The receiver is not really a control, and is using a normal Dolphin window."
 
 	^User32
 		defWindowProc: handle
@@ -146,6 +146,11 @@ insets: aRectangle
 	self
 		invalidateLayout;
 		invalidate!
+
+invalidateOnResize
+	"Private - If the size of position of the image is relative to the view size, we must invalidate the whole area."
+
+	^self viewMode ~~ #normal!
 
 invalidateRect: aRectangle erase: aBoolean
 	"Invalidates the specified client rectangle (a RECTL, Rectangle, or nil for the whole client window).
@@ -318,6 +323,7 @@ imageBorder:!modes!public! !
 initialize!initializing!private! !
 insets!accessing!public! !
 insets:!accessing!public! !
+invalidateOnResize!private!testing! !
 invalidateRect:erase:!drawing!public! !
 isDoubleBuffered!public!testing! !
 isDoubleBuffered:!accessing!public! !

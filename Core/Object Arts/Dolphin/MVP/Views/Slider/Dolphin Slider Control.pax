@@ -27,6 +27,7 @@ package setPrerequisites: #(
 	'..\..\..\System\Win32\CommCtrl\Common Controls Library'
 	'..\..\..\Base\Dolphin'
 	'..\..\Base\Dolphin Basic Geometry'
+	'..\..\Base\Dolphin ControlViews Base'
 	'..\..\..\System\Filer\Dolphin Literal Filer'
 	'..\..\Base\Dolphin MVP Base'
 	'..\..\Presenters\Number\Dolphin Number Presenter'
