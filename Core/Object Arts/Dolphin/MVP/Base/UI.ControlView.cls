@@ -527,6 +527,13 @@ messageMappings
 	^(self controlColorMessages collect: [:each | each -> #wmCtlColor:wParam:lParam:])
 		, {WM_DRAWITEM -> #wmDrawItem:wParam:lParam:. WM_MEASUREITEM -> #wmMeasureItem:wParam:lParam:}!
 
+onStartup
+	"Perform post startup processing to initialize the View system"
+
+	"Load the Common Control Library."
+
+	CommCtrlLibrary openDefault!
+
 uninitialize
 	| deadMessages |
 	CommCtrlLibrary removeInitFlag: ICC_STANDARD_CLASSES.
@@ -544,6 +551,7 @@ controlColorMessages!constants!private! !
 initialize!development!initializing!private! !
 maxTextLimit!constants!public! !
 messageMappings!initializing!must not strip!private! !
+onStartup!event handling!public! !
 uninitialize!class hierarchy-removing!private! !
 winClassName!constants!private! !
 !

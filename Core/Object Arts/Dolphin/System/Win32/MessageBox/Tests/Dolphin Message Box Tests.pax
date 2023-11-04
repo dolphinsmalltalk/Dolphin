@@ -16,7 +16,7 @@ package setMethodNames: #(
 
 package setPrerequisites: #(
 	'..\..\..\..\Base\Dolphin'
-	'..\..\..\..\MVP\Base\Dolphin Base Dialogs'
+	'..\..\..\..\MVP\Dialogs\Dolphin Base Dialogs'
 	'..\..\..\..\Base\Tests\Dolphin Base Tests'
 	'..\Dolphin Message Box'
 	'..\..\..\..\MVP\Base\Dolphin MVP Base'

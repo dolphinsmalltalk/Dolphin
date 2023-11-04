@@ -104,9 +104,9 @@ model: aSubjectModel
 ok
 	"Close the receiver and apply the changes cached in the receiver back to the model"
 
+	<commandQuery: #queryOk:>
 	self apply.
-	self view close.
-!
+	self view close!
 
 onTimerTick: anInteger
 	anInteger == ValidationTimerId ifTrue: [self validate]!
@@ -122,6 +122,11 @@ ownerView: aView
 
 	ownerView := aView.
 !
+
+queryOk: aCommandQuery
+	"Private - Subclasses should override to perform any necessary validation and selectively enable the Ok button as required."
+
+	aCommandQuery isEnabled: true!
 
 revert
 	"Revert the changes cached in the receiver and go back to the data in the original subject."
@@ -170,21 +175,22 @@ validateModel
 	^self model validate! !
 !UI.Dialog categoriesForMethods!
 answer!accessing!public! !
-apply!commands!public! !
+apply!commands-actions!public! !
 bufferedModelFor:!accessing!private! !
-cancel!commands!public! !
+cancel!commands-actions!public! !
 createSchematicWiring!initializing!public! !
-flushChanges!commands!private! !
+flushChanges!commands-actions!private! !
 hintDwell!constants!private! !
 hintFont!constants!public! !
 initialize!initializing!private! !
 isConfirmed!public!testing! !
 model:!accessing!public! !
-ok!commands!public! !
+ok!commands-actions!public! !
 onTimerTick:!event handling!private! !
 ownerView!accessing!public! !
 ownerView:!accessing!not an aspect!private! !
-revert!commands!public! !
+queryOk:!commands-queries!private! !
+revert!commands-actions!public! !
 show!operations!public! !
 showModal!public!realizing/unrealizing! !
 showModalView!private!realizing/unrealizing! !

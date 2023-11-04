@@ -8,9 +8,11 @@ UI.ControlView
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.GroupBox guid: (Core.GUID fromString: '{87b4c727-026e-11d3-9fd7-00a0cc3e4a32}')!
-UI.GroupBox comment: 'GroupBox is the <view> implementing the standard Windows group box control. The actual windows class used is BUTTON, but why Microsoft chose this to implement a group box remains a mystery to this day.
+UI.GroupBox comment: '`GroupBox` is the `<controlView>` implementing the standard Windows group box control.
 
-GroupBox is named after the Windows control, but it only "groups" the controls it appears to surround visually; i.e. it is not a container view, just a visual decorator.
+`GroupBox` is named after the Windows control, but it only "groups" the controls it appears to surround visually; i.e. it is not a container view, just a visual decorator.
+
+The actual windows class used is BUTTON, but why Microsoft chose this to implement a group box remains a mystery to this day as the control itself is static (ouput only)
 '!
 !UI.GroupBox categoriesForClass!MVP-Resources-Group Box!MVP-Views! !
 !UI.GroupBox methodsFor!

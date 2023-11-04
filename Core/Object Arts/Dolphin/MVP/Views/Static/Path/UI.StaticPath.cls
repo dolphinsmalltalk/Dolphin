@@ -8,7 +8,7 @@ UI.StaticText
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.StaticPath guid: (Core.GUID fromString: '{c79f6206-3e83-4124-b572-d8d54cd25cb1}')!
-UI.StaticPath comment: 'StaticPath is a <valueView> class for a Window STATIC control specifically intended for displaying file paths, which are truncated to fit by replacing path components with ellipses as necessary. Note that the path is expected to be dsiplayed on a single line, and will not wrap to multiple lines unless the last remaining component would be truncated. See <StaticText> for further details.
+UI.StaticPath comment: '`StaticPath` is a `<valueView>` class for a Window STATIC control specifically intended for displaying file paths, which are truncated to fit by replacing path components with ellipses as necessary. Note that the path is expected to be dsiplayed on a single line, and will not wrap to multiple lines unless the last remaining component would be truncated. See `StaticText` for further details.
 '!
 !UI.StaticPath methodsFor!
 

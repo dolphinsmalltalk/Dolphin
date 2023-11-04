@@ -33,11 +33,13 @@ package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
 	'..\..\Base\Dolphin Basic Geometry'
 	'..\..\Dialogs\Common\Dolphin Common Dialogs'
+	'..\..\Base\Dolphin ControlViews Base'
 	'..\Shell\Dolphin Document Presenter'
 	'..\..\Graphics\Dolphin GDI Graphics'
 	'..\..\..\System\Filer\Dolphin Literal Filer'
 	'..\..\..\System\Win32\MessageBox\Dolphin Message Box'
 	'..\..\Base\Dolphin MVP Base'
+	'..\..\Views\Static\Text\Dolphin StaticText Control'
 	'..\..\Type Converters\Dolphin Type Converters'
 	'..\..\Models\Value\Dolphin Value Models'
 ).

@@ -47,7 +47,7 @@ package setBinaryVariableNames: #(
 
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
-	'..\..\Base\Dolphin Base Dialogs'
+	'..\Dolphin Base Dialogs'
 	'..\..\Graphics\Dolphin GDI Graphics'
 	'..\..\Base\Dolphin MVP Base'
 ).

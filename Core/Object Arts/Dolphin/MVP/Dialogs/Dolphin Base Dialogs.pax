@@ -20,10 +20,10 @@ package setMethodNames: #(
 
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
-	'Dolphin Basic Geometry'
+	'..\Base\Dolphin Basic Geometry'
 	'..\Graphics\Dolphin GDI Graphics'
 	'..\..\System\Filer\Dolphin Literal Filer'
-	'Dolphin MVP Base'
+	'..\Base\Dolphin MVP Base'
 	'..\Views\Buttons\Dolphin Push Buttons'
 	'..\Models\Value\Dolphin Value Models'
 ).

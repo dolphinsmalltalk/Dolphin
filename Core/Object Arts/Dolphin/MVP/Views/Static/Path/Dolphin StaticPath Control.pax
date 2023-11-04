@@ -1,9 +1,10 @@
 ﻿| package |
 package := Package name: 'Dolphin StaticPath Control'.
 package paxVersion: 2.1;
-	basicComment: 'Dolphin Smalltalk Static Path control
-Copyright (c) Object Arts Ltd. 1997-2018. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.
-'.
+	basicComment: 'Dolphin 🐬 Smalltalk Static Path Control
+Copyright ©️ Object Arts Ltd. 1997-2023. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.
+
+`StaticPath` is a `<valueView>` class for a Window STATIC control specifically intended for displaying file paths, which are truncated to fit by replacing path components with ellipses as necessary.'.
 
 
 package setClassNames: #(
@@ -16,12 +17,13 @@ package setMethodNames: #(
 ).
 
 package setPrerequisites: #(
-	'..\..\..\Base\Dolphin'
-	'..\..\Base\Dolphin Basic Geometry'
-	'..\..\..\System\Filer\Dolphin Literal Filer'
-	'..\..\Base\Dolphin MVP Base'
-	'..\..\Presenters\Text\Dolphin Text Presenter'
-	'..\..\Type Converters\Dolphin Type Converters'
+	'..\..\..\..\Base\Dolphin'
+	'..\..\..\Base\Dolphin Basic Geometry'
+	'..\..\..\..\System\Filer\Dolphin Literal Filer'
+	'..\..\..\Base\Dolphin MVP Base'
+	'..\Text\Dolphin StaticText Control'
+	'..\..\..\Presenters\Text\Dolphin Text Presenter'
+	'..\..\..\Type Converters\Dolphin Type Converters'
 ).
 
 package!

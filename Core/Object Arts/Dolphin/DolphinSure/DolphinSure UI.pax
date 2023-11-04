@@ -25,7 +25,7 @@ package setMethodNames: #(
 
 package setPrerequisites: #(
 	'..\Base\Dolphin'
-	'..\MVP\Base\Dolphin Base Dialogs'
+	'..\MVP\Dialogs\Dolphin Base Dialogs'
 	'..\MVP\Base\Dolphin Basic Geometry'
 	'..\MVP\Presenters\Boolean\Dolphin Boolean Presenter'
 	'..\MVP\Views\Buttons\Dolphin Check Buttons'
@@ -34,6 +34,7 @@ package setPrerequisites: #(
 	'..\System\Filer\Dolphin Literal Filer'
 	'..\MVP\Base\Dolphin MVP Base'
 	'..\MVP\Views\Buttons\Dolphin Push Buttons'
+	'..\MVP\Views\Static\Text\Dolphin StaticText Control'
 	'..\System\Filer\Dolphin STx Filer Core'
 	'..\MVP\Presenters\Text\Dolphin Text Presenter'
 	'..\MVP\Type Converters\Dolphin Type Converters'

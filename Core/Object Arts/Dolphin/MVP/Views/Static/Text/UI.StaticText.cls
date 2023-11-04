@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.StaticView
+UI.StaticControlView
 	subclass: #'UI.StaticText'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -11,11 +11,10 @@ UI.StaticView
 						withAll: { #center -> 16r1. #left -> 16r0. #leftNoWrap -> 16rC. #right -> 16r2. #simple -> 16rB })
 		}!
 UI.StaticText guid: (Core.GUID fromString: '{87b4c740-026e-11d3-9fd7-00a0cc3e4a32}')!
-UI.StaticText comment: 'StaticText is a <valueView> class for a Window STATIC control for displaying text in one of a number of text styles. The <valueModel> associated with a StaticText must always yield a <readableString> value when mapped through the installed type converter. A StaticText will normally be used in conjunction with a <TextPresenter>. The alignment of the text (and therefore the style of the underlying Windows control) can be specified using the alignment aspect which can assume of of the following values: (#left, #center, #right, #leftNoWrap, #simple).
+UI.StaticText comment: '`StaticText` is a `<valueView>` class for a Window STATIC control for displaying text in one of a number of text styles. The `<valueModel>` associated with a `StaticText` must always yield a `<readableString>` value when mapped through the installed type converter. A `StaticText` will normally be used in conjunction with a `TextPresenter`. The alignment of the text (and therefore the style of the underlying Windows control) can be specified using the alignment aspect which can assume of of the following values: (`#left`, `#center`, `#right`, `#leftNoWrap`, `#simple`).
 
-Class Variables:
-	AlignmentMap	<LookupTable> of <Symbol> alignment specifiers to Windows styles.
-
+## Class Constants:
+  AlignmentMap	`LookupTable` of `Symbol` alignment specifiers to Windows styles.
 '!
 !UI.StaticText categoriesForClass!MVP-Views! !
 !UI.StaticText methodsFor!

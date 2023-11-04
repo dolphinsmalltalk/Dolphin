@@ -26,7 +26,7 @@ package setClassNames: #(
 
 package setPrerequisites: #(
 	'..\..\..\Dolphin\Base\Dolphin'
-	'..\..\..\Dolphin\MVP\Base\Dolphin Base Dialogs'
+	'..\..\..\Dolphin\MVP\Dialogs\Dolphin Base Dialogs'
 	'..\..\..\Dolphin\MVP\Base\Dolphin Basic Geometry'
 	'..\..\..\Dolphin\MVP\Presenters\Choice\Dolphin Choice Presenter'
 	'..\..\..\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls'
@@ -42,6 +42,7 @@ package setPrerequisites: #(
 	'..\..\..\Dolphin\MVP\Presenters\Number\Dolphin Number Presenter'
 	'..\..\..\Dolphin\MVP\Views\Buttons\Dolphin Push Buttons'
 	'..\..\..\Dolphin\MVP\Views\Slider\Dolphin Slider Control'
+	'..\..\..\Dolphin\MVP\Views\Static\Text\Dolphin StaticText Control'
 	'..\..\..\Dolphin\System\Filer\Dolphin STx Filer Core'
 	'..\..\..\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter'
 	'..\..\..\Dolphin\MVP\Icons\Dolphin Text Tile Icons'

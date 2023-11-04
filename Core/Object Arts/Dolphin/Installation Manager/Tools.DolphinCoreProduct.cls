@@ -22,7 +22,7 @@ contents
 	contents
 		add: #('Core\Object Arts\Dolphin\MVP\Base\Dolphin Binary Object Clipboard Format.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Rich Text Presenter.pax' #plain #imageBased);
-		add: #('Core\Object Arts\Dolphin\MVP\Views\Path\Dolphin StaticPath Control.pax' #encrypted #imageBased);
+		add: #('Core\Object Arts\Dolphin\MVP\Views\Static\Path\Dolphin StaticPath Control.pax' #encrypted #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Views\SysLink\Dolphin SysLink Control.pax' #encrypted #imageBased);
 		add: #('Core\Contributions\Refactory\Refactoring Browser\Formatters\RBFormatters.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\System\Announcements\Dolphin Announcements.pax' #plain #imageBased);
@@ -121,7 +121,7 @@ contents
 	"Burning River"
 	contents
 		add:  #('Core\Contributions\Burning River\KernelLibraryExtensions\KernelLibraryExtensions.pax' #plain #imageBased);
-		add:  #('Core\Contributions\Burning River\InheritableFile/InheritableFile.pax' #plain #imageBased);
+		add:  #('Core\Contributions\Burning River\InheritableFile\InheritableFile.pax' #plain #imageBased);
 		add:  #('Core\Contributions\Burning River\ExternalProcess\ExternalProcess.pax' #plain #imageBased).
 
 	"Udo Schneider"

@@ -29,6 +29,7 @@ package setPrerequisites: #(
 	'..\..\..\System\Win32\CommCtrl\Common Controls Library'
 	'..\..\..\Base\Dolphin'
 	'..\..\Base\Dolphin Basic Geometry'
+	'..\..\Base\Dolphin ControlViews Base'
 	'..\..\Presenters\Date Time\Dolphin Date Time Presenters'
 	'..\..\Graphics\Dolphin GDI Graphics'
 	'..\..\..\Base\Dolphin Legacy Date & Time'

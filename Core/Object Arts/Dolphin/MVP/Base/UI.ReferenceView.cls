@@ -53,11 +53,14 @@ loadReferee
 	referee := resourceIdentifier loadWithContext: self.
 	referee isNil
 		ifTrue: 
-			["Referee resource not found so substitute a dummy static text."
-			referee := StaticText new.
+			["Referee resource not found so substitute a dummy view."
+			referee := View new.
+			referee
+				text: resourceIdentifier displayString;
+				backcolor: Color red.
 			Notification
 				signal: ('<1p> can''t load ''<2d>''' expandMacrosWith: self class with: resourceIdentifier).
-			(self addSubView: referee) text: resourceIdentifier displayString].
+			self addSubView: referee].
 	self configureReferee.
 	referee show.
 	^referee!

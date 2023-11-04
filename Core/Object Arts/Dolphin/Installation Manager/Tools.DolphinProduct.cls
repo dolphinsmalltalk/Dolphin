@@ -76,7 +76,7 @@ contents
 		add: #('Core\Object Arts\Dolphin\System\Win32\CommCtrl\Common Controls Library.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\System\Win32\MessageBox\Dolphin Message Box.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\Base\Dolphin Source Fileout.pax' #plain #imageBased).
-		
+
 	answer
 		add: #('Core\Object Arts\Dolphin\System\Filer\Dolphin STx Filer Core.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\System\Filer\Dolphin STx Filer Core (Old versions).pax' #plain #imageBased);
@@ -114,8 +114,12 @@ contents
 		add: #('Core\Object Arts\Dolphin\MVP\Base\Dolphin Basic Geometry.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Graphics\Dolphin GDI Graphics.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\MVP\Base\Dolphin ControlViews Base.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\MVP\Base\Dolphin Binary Object Clipboard Format' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Base\Dolphin Command History.pax' #plain #imageBased);
-		add: #('Core\Object Arts\Dolphin\MVP\Base\Dolphin Base Dialogs.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\MVP\Views\Static\Text\Dolphin StaticText Control.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\MVP\Views\Static\Rectangle\Dolphin StaticRectangle Control.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\MVP\Dialogs\Dolphin Base Dialogs.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Dialogs\Common\Dolphin Common Dialogs.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Dialogs\Common\Dolphin Common Print Dialog.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter.pax' #plain #imageBased);
@@ -154,7 +158,7 @@ contents
 		add: #('Core\Object Arts\Dolphin\MVP\Views\Buttons\Dolphin Check Buttons.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Views\Buttons\Dolphin Push Buttons.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Views\Date Time\Dolphin Date Time Controls.pax' #plain #imageBased);
-		add: #('Core\Object Arts\Dolphin\MVP\Views\GroupBox\Dolphin GroupBox.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\MVP\Views\Static\GroupBox\Dolphin GroupBox.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Views\Slider\Dolphin Slider Control.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Views\SpinButton\Dolphin SpinButton Control.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Views\Splitter\Dolphin Splitter Control.pax' #plain #imageBased);
@@ -172,7 +176,7 @@ contents
 		yourself.
 
 	answer
-		add: #('Core\Object Arts\Internal\Installation Manager\Dolphin Products.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\Installation Manager\Dolphin Products.pax' #plain #imageBased);
 		yourself.
 	^answer!
 

@@ -21,6 +21,7 @@ package setPrerequisites: #(
 	'..\..\Views\Buttons\Dolphin Check Buttons'
 	'..\..\..\System\Filer\Dolphin Literal Filer'
 	'..\..\Base\Dolphin MVP Base'
+	'..\..\Views\Static\Text\Dolphin StaticText Control'
 	'..\..\Type Converters\Dolphin Type Converters'
 	'..\..\Models\Value\Dolphin Value Models'
 ).

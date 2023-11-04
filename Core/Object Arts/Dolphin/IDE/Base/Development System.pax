@@ -761,11 +761,11 @@ package setMethodNames: #(
 	#(#{UI.SpinButton class} #publishedEventsOfInstances)
 	#(#{UI.Splitter class} #publishedAspectsOfInstances)
 	#(#{UI.StaticBitmap class} #publishedAspectsOfInstances)
+	#(#{UI.StaticControlView class} #publishedAspectsOfInstances)
 	#(#{UI.StaticIcon class} #publishedAspectsOfInstances)
 	#(#{UI.StaticRectangle class} #publishedAspectsOfInstances)
 	#(#{UI.StaticText class} #applicableTypeConverterCategories)
 	#(#{UI.StaticText class} #publishedAspectsOfInstances)
-	#(#{UI.StaticView class} #publishedAspectsOfInstances)
 	#(#{UI.StatusBar class} #publishedAspectsOfInstances)
 	#(#{UI.StatusBarItem class} #publishedAspectsOfInstances)
 	#(#{UI.StatusBarItemAbstract class} #publishedAspectsOfInstances)
@@ -833,7 +833,7 @@ package setPrerequisites: #(
 	'..\..\System\Trace\Debug Trace Stream'
 	'..\..\Base\Dolphin'
 	'..\..\MVP\Presenters\Accelerator\Dolphin Accelerator Presenter'
-	'..\..\MVP\Base\Dolphin Base Dialogs'
+	'..\..\MVP\Dialogs\Dolphin Base Dialogs'
 	'..\..\MVP\Base\Dolphin Basic Geometry'
 	'..\..\System\Filer\Dolphin Binary Filer'
 	'..\..\MVP\Base\Dolphin Binary Object Clipboard Format'
@@ -849,6 +849,7 @@ package setPrerequisites: #(
 	'..\..\MVP\Views\Common Controls\Dolphin Common Controls'
 	'..\..\MVP\Dialogs\Common\Dolphin Common Dialogs'
 	'..\..\MVP\Views\Control Bars\Dolphin Control Bars'
+	'..\..\MVP\Base\Dolphin ControlViews Base'
 	'..\..\MVP\Views\Date Time\Dolphin Date Time Controls'
 	'..\..\MVP\Presenters\Date Time\Dolphin Date Time Presenters'
 	'..\..\MVP\Presenters\Shell\Dolphin Document Presenter'
@@ -858,7 +859,7 @@ package setPrerequisites: #(
 	'..\..\MVP\Models\Tree\Dolphin Folder Tree Model'
 	'..\..\MVP\Presenters\Font\Dolphin Font Presenter'
 	'..\..\MVP\Graphics\Dolphin GDI Graphics'
-	'..\..\MVP\Views\GroupBox\Dolphin GroupBox'
+	'..\..\MVP\Views\Static\GroupBox\Dolphin GroupBox'
 	'..\..\MVP\Presenters\Image\Dolphin Image Presenter'
 	'..\..\MVP\Presenters\Prompters\Dolphin Integer Prompter'
 	'..\..\MVP\Presenters\Prompters\Dolphin Key-Value Prompter'
@@ -888,6 +889,8 @@ package setPrerequisites: #(
 	'..\..\Base\Dolphin Source Fileout'
 	'..\..\MVP\Views\SpinButton\Dolphin SpinButton Control'
 	'..\..\MVP\Views\Splitter\Dolphin Splitter Control'
+	'..\..\MVP\Views\Static\Rectangle\Dolphin StaticRectangle Control'
+	'..\..\MVP\Views\Static\Text\Dolphin StaticText Control'
 	'..\..\System\Filer\Dolphin STx Filer Core'
 	'..\..\MVP\Views\Styled Views\Dolphin Styled Views'
 	'..\..\MVP\Presenters\Text\Dolphin Text Presenter'
@@ -9162,6 +9165,18 @@ publishedAspectsOfInstances
 publishedAspectsOfInstances!constants!public! !
 !
 
+!UI.StaticControlView class methodsFor!
+
+publishedAspectsOfInstances
+	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
+
+	^super publishedAspectsOfInstances
+		add: (Aspect boolean: #isSunken);
+		yourself! !
+!UI.StaticControlView class categoriesForMethods!
+publishedAspectsOfInstances!constants!public! !
+!
+
 !UI.StaticIcon class methodsFor!
 
 publishedAspectsOfInstances
@@ -9206,18 +9221,6 @@ publishedAspectsOfInstances
 		yourself! !
 !UI.StaticText class categoriesForMethods!
 applicableTypeConverterCategories!constants!public! !
-publishedAspectsOfInstances!constants!public! !
-!
-
-!UI.StaticView class methodsFor!
-
-publishedAspectsOfInstances
-	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
-
-	^super publishedAspectsOfInstances
-		add: (Aspect boolean: #isSunken);
-		yourself! !
-!UI.StaticView class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
 

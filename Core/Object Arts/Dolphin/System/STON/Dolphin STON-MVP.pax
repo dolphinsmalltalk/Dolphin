@@ -36,6 +36,7 @@ package setPrerequisites: #(
 	'..\..\MVP\Base\Dolphin Basic Geometry'
 	'..\..\MVP\Views\Cards\Dolphin Card Containers'
 	'..\..\MVP\Views\Control Bars\Dolphin Control Bars'
+	'..\..\MVP\Base\Dolphin ControlViews Base'
 	'..\..\MVP\Graphics\Dolphin GDI Graphics'
 	'..\..\MVP\Base\Dolphin MVP Base'
 	'..\..\MVP\Views\Scintilla\Dolphin Scintilla View'

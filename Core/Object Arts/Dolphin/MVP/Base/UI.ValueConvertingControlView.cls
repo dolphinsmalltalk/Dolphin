@@ -9,10 +9,10 @@ UI.ControlView
 	classConstants: {}!
 UI.ValueConvertingControlView guid: (Core.GUID fromString: '{87b4c72a-026e-11d3-9fd7-00a0cc3e4a32}')!
 UI.ValueConvertingControlView isNonInstantiable: true!
-UI.ValueConvertingControlView comment: 'ValueConvertingControlView is the abstract superclass of <view>s that implement Windows controls obeying the <valueValue> protocol. Such views may be associated with any <valueModel>. One important aspect of a ValueConvertingControlView is that it supports a #typeConverter aspect. By supplying a <typeConverter> in this way, it is possible to attachthe view to a wide range of <valueModel>s containing different types of object. The <typeConverter> is responsible for mapping the model''s value to a suitable form in order for the view to display and, for the reverse process, taking a modified view''s content and setting it back as  the appropriate type of object in the model.
+UI.ValueConvertingControlView comment: '`ValueConvertingControlView` is the abstract superclass of `<view>`s that implement Windows controls obeying the `<valueModel>` protocol. Such views may be associated with any `<valueModel>`. One important aspect of a `ValueConvertingControlView` is that it supports a `#typeConverter` aspect. By supplying a `<typeConverter>` in this way, it is possible to attachthe view to a wide range of `<valueModel>`s containing different types of object. The `<typeConverter>` is responsible for mapping the model''s value to a suitable form in order for the view to display and, for the reverse process, taking a modified view''s content and setting it back as  the appropriate type of object in the model.
 
-Instance Variables:
-	typeconverter	<typeConverter> used to convert between model values and display values.
+##Instance Variables:
+  typeconverter	`<typeConverter>` used to convert between model values and display values.
 
 '!
 !UI.ValueConvertingControlView categoriesForClass!MVP-Views! !
