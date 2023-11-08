@@ -1202,19 +1202,39 @@ generateDefaultSelector: aRBMethodName
 	aRBMethodName selector: mname asSymbol!
 
 getOptionAlreadyDefined: aClass selector: aSymbol
-	| response |
-	response := MessageBox new
+	| response messageBox stream |
+	messageBox := MessageBox new
 				caption: self displayString;
 				headline: 'Extract to existing selector?';
-				text: '<1p> is already defined in the <2p> hierarchy.' << {aSymbol. aClass};
+				text: '<1p> is already defined in the <2p> hierarchy.' << { aSymbol. aClass };
 				customButtons: #(#(#yes '&Continue') #(#no 'Choose &Another') #(#cancel 'Cancel'));
 				defaultButton: 2;
-				detailsText: 'Extracting to an existing selector may change the behavior of the class hierarchy, for example by overriding an inherited method. You should only continue if you do not require a true behavior-preserving refactoring. Otherwise choose another selector.'
-							<< aSymbol;
-				expandLabel: 'Show help';
-				collapseLabel: 'Hide help';
 				iconStyle: #warning;
-				confirmOrCancel.
+				yourself.
+	stream := String writeStream.
+	stream
+		nextPutAll: 'Extracting to an existing selector may change the behavior of the class hierarchy, for example by overriding an inherited method. ';
+		print: aSymbol;
+		nextPutAll: ' is already implemented by the following classes in the hierarchy of ';
+		print: aClass;
+		nextPut: $:;
+		cr.
+	(aClass allSuperclasses , aClass withAllSubclasses
+		intersection: (self model allImplementorsOf: aSymbol)) do: 
+				[:each |
+				stream
+					cr;
+					nextPutAll: '    ';
+					print: each].
+	stream
+		cr;
+		cr;
+		nextPutAll: 'You should continue only if you do not require a true behavior-preserving refactoring. Otherwise choose another selector.'.
+	messageBox
+		detailsText: stream contents;
+		expandLabel: 'Show help';
+		collapseLabel: 'Hide help'.
+	response := messageBox confirmOrCancel.
 	response == #cancel ifTrue: [self refactoringAborted].
 	^response == #yes!
 
