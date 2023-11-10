@@ -229,6 +229,15 @@ testAtIfAbsentPutValue
 	self assert: (dictionary at: #value ifAbsentPutValue: 3) value identicalTo: x value.
 	self assert: dictionary size identicalTo: initialSize + 1!
 
+testCopyWith
+	#(#() #($a) #($a $c) #($a $b) #($a $b $d)) do: 
+			[:array |
+			| subject actual expected |
+			subject := self newCollection: array.
+			actual := subject copyWith: (self makeKey: $c) -> (self assimilate: $c).
+			expected := self newCollection: array , #($c).
+			self assert: actual equals: expected]!
+
 testCyclicRefPrinting
 	| dictionary |
 	dictionary := self newDictionary.
@@ -417,6 +426,7 @@ testAtIfAbsentPut!public!unit tests! !
 testAtIfAbsentPutClean!public!unit tests! !
 testAtIfAbsentPutModifyingCollection!public!unit tests! !
 testAtIfAbsentPutValue!public!unit tests! !
+testCopyWith!public!unit tests! !
 testCyclicRefPrinting!public! !
 testDeepCopy!public!unit tests! !
 testEquals!public!unit tests! !

@@ -232,6 +232,18 @@ copySize
 
 	^self size!
 
+copyWith: anObject
+	"Answer a <collection> which is a copy of the receiver that additionally contains the <Object> argument."
+
+	^self copy
+		add: anObject;
+		yourself!
+
+copyWithout: anObject
+	"Answer a <collection> which is a copy of the receiver, but without any elements equal to the argument."
+
+	^self select: [:each | each ~= anObject]!
+
 copyWithoutDuplicates
 	"Answers a copy of the receiver that contains no duplicate objects. 
 	Uses equality for comparison."
@@ -592,6 +604,8 @@ copyEmpty:!copying!private! !
 copyingClass!copying!private! !
 copyLike!copying!private! !
 copySize!copying!private! !
+copyWith:!copying!public! !
+copyWithout:!copying!public! !
 copyWithoutDuplicates!copying!public! !
 count:!enumerating!public! !
 countElements!accessing!private! !

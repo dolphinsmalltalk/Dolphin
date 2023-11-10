@@ -140,6 +140,24 @@ testAsOrderedCollection
 			self assert: ordered size equals: i.
 			self assert: ordered equals: expected]!
 
+testCopyWith
+	#(#() #($a) #($a $a) #($a $b) #($a $b $a)) do: 
+			[:array |
+			| subject actual expected |
+			subject := self newCollection: array.
+			actual := subject copyWith: (self assimilate: $a).
+			expected := self newCollection: array , #($a).
+			self assert: actual equals: expected]!
+
+testCopyWithout
+	#(#() #($a) #($a $a) #($a $b) #($a $b $a) #($a $b $c $a $e)) do: 
+			[:array |
+			| subject actual expected |
+			subject := self newCollection: array.
+			actual := subject copyWithout: (self assimilate: $a) value.
+			expected := self newCollection: (array reject: [:each | each = $a]).
+			self assert: actual equals: expected]!
+
 testCount
 	| none all odd |
 	all := [:each | true].
@@ -265,6 +283,8 @@ testAnyone!public!unit tests! !
 testAnySatisfy!public!unit tests! !
 testAsArray!public!unit tests! !
 testAsOrderedCollection!public!unit tests! !
+testCopyWith!public!unit tests! !
+testCopyWithout!public!unit tests! !
 testCount!public!unit tests! !
 testDetectIfNone!public!unit tests! !
 testDifference!public!unit tests! !
