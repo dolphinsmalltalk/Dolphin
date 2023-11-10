@@ -374,18 +374,21 @@ openUrl: aString
 	browser model value: aString!
 
 preferredColorScheme
-	| profile preferred |
-	profile := self browserView profile.
-	preferred := profile preferredColorScheme.
-	profile free.
-	^preferred!
+	^self profile
+		ifNil: [WebView2.COREWEBVIEW2_PREFERRED_COLOR_SCHEME_AUTO]
+		ifNotNil: 
+			[:profile |
+			| preferred |
+			preferred := profile preferredColorScheme.
+			profile free.
+			preferred]!
 
 preferredColorScheme: anInteger
 	"Switch the browser colour scheme to that identified by the <integer> argument, from the COREWEBVIEW2_PREFERRED_COLOR_SCHEME enumeration.
 	The choices are 'auto', to track the OS setting, 'light', and 'dark'. The dark mode has detail issues, especially with the toolbar, because Windows does not provide public APIs for dark-mode theming of Win32 controls. We do the best we can with the standard theming, but but it would be worth exploring the undocumented APIs to see if some of the fit and finish issues can be eliminated."
 
 	<commandQuery: #queryPreferredColorScheme:>
-	self browserView profile preferredColorScheme: anInteger.
+	self profile ifNotNil: [:profile | profile preferredColorScheme: anInteger].
 	self updateColorScheme!
 
 print
@@ -409,9 +412,12 @@ printToPdf
 				ifTrue: [Shell32 shellOpen: filename]
 				ifFalse: [MessageBox errorMsg: 'Failed to print as PDF (<1p>)' << (HRESULT fromInteger: hr)]]!
 
+profile
+	^self browserView profile!
+
 queryPreferredColorScheme: aCommandQuery
 	aCommandQuery
-		isEnabled: true;
+		isEnabled: self profile notNil;
 		isChecked: self preferredColorScheme = aCommandQuery command argument!
 
 queryPrintToPdf: aCommandQuery
@@ -706,6 +712,7 @@ preferredColorScheme!accessing!public! !
 preferredColorScheme:!commands-actions!public! !
 print!commands-actions!public! !
 printToPdf!commands-actions!public! !
+profile!accessing!public! !
 queryPreferredColorScheme:!commands-queries!private! !
 queryPrintToPdf:!commands-queries!private! !
 querySwipeNavigation:!commands-queries!private! !
