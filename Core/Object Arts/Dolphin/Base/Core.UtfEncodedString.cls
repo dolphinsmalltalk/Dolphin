@@ -424,10 +424,13 @@ select: aMonadicValuable
 	"Evaluate the <monadicValuable> argument, discriminator, for each of the receiver's <Character> elements.
 	Answer a new <String> containing only those <Character>s for which the discriminator evaluates to true."
 
-	| stream |
-	stream := self copyingClass writeStream: self size.
-	self codePointsDo: [:each | (aMonadicValuable value: each) ifTrue: [stream nextPut: each]].
-	^stream grabContents!
+	"Implementation Note: Overridden for performance reasons only. It's typically faster to use a ReadStream when enumerating over a UTF encoded string because of the cost of the decoding, which is implemented very efficiently in the stream reading primitive."
+
+	| read ch write |
+	write := WriteStream on: (self copyingClass new: self size).
+	read := ReadStream on: self.
+	[read atEnd] whileFalse: [(aMonadicValuable value: (ch := read next)) ifTrue: [write nextPut: ch]].
+	^write grabContents!
 
 single
 	"Answer the <Character> which is the only element of the receiver. 

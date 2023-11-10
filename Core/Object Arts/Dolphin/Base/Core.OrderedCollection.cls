@@ -170,15 +170,6 @@ copyWith: newElement
 		add: newElement;
 		yourself!
 
-copyWithout: oldElement
-	"Answer a <sequencedReadableCollection> which is a copy of the receiver, but in
-	which all occurrences of the <Object> oldElement have been removed."
-
-	| answer |
-	answer := self copyEmpty.
-	self do: [:element | element = oldElement ifFalse: [answer add: element]].
-	^answer!
-
 copyWithoutIndex: anInteger
 	"Answer a <SequenceableCollection> which is a copy of the receiver but without the element with the specified index.
 	Implementation Note: This implementation is more efficient for OrderedCollection, and necessary for SortedCollection."
@@ -556,7 +547,6 @@ basicAddAll:!adding!private! !
 basicNextIdentityIndexOf:from:to:!private!searching! !
 basicReplaceElementsOf:from:to:startingAt:!private!replacing! !
 copyWith:!copying!public! !
-copyWithout:!copying!public! !
 copyWithoutIndex:!copying!public! !
 detect:ifNone:!public!searching! !
 do:!enumerating!public! !

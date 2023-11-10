@@ -507,16 +507,6 @@ copyWith: anObject atIndex: anInteger
 			startingAt: anInteger;
 		yourself!
 
-copyWithout: oldElement
-	"Answer a <sequencedReadableCollection> which is a copy of the receiver, but in
-	which all occurrences of the <Object> oldElement have been removed."
-
-	| aStream |
-	aStream := (self copyLikeOfSize: self copySize) writeStream.
-	self 
-		do: [:element | element = oldElement ifFalse: [aStream nextPut: element]].
-	^aStream contents!
-
 copyWithoutAll: oldElements
 	"Answer a <sequencedReadableCollection> which is a copy of the receiver, but in
 	which all occurrences of the elements of the <Collection> oldElements have been removed."
@@ -1318,7 +1308,6 @@ copyReplaceFrom:to:withObject:!copying!public! !
 copyReplacing:withObject:!copying!public! !
 copyWith:!copying!public! !
 copyWith:atIndex:!copying!public! !
-copyWithout:!copying!public! !
 copyWithoutAll:!copying!public! !
 copyWithoutIndex:!copying!public! !
 decodeAt:!encode/decode!private! !
