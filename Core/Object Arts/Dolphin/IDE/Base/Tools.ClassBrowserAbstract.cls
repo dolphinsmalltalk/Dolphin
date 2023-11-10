@@ -218,7 +218,7 @@ browseInstanceVariableReferences
 	"Browse methods that reference any of the selected instance variables of the selected class."
 
 	<commandQuery: #hasInstanceVariablesSelected>
-	self model
+	self developmentSystem
 		browseReferencesToInstVars: (self variables collect: [:each | each value])
 		inHierarchyOf: self actualClass
 		within: self searchEnvironment!
@@ -255,7 +255,7 @@ browseMethodCategory
 	"Private - Browse all the methods which are in the currently selected category."
 
 	<commandQuery: #hasMethodCategoriesSelected>
-	self model browseMethodCategories: self categories in: self searchEnvironment!
+	self developmentSystem browseMethodCategories: self categories in: self searchEnvironment!
 
 browseOverriddenMethod
 	"Reposition the browser to the method which the currently selected method is overridding."
