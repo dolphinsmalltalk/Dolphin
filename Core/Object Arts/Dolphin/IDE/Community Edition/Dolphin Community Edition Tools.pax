@@ -140,7 +140,7 @@ browseMethodProtocol
 	<commandQuery: #hasProtocolSelected>
 	| protocol |
 	protocol := self protocols first.
-	self model browseProtocols
+	self developmentSystem browseProtocols
 		protocol: protocol;
 		actualClass: (self actualClass whichClassImplementsProtocol: protocol)! !
 !Tools.ClassBrowserAbstract categoriesForMethods!
