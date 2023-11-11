@@ -57,6 +57,7 @@ package setPrerequisites: #(
 	'..\..\..\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars'
 	'..\..\..\Dolphin\MVP\Dialogs\Find\Dolphin Find Dialog'
 	'..\..\..\Dolphin\MVP\Graphics\Dolphin GDI Graphics'
+	'..\..\..\Dolphin\MVP\Presenters\Prompters\Dolphin Integer Prompter'
 	'..\..\..\Dolphin\System\Filer\Dolphin Literal Filer'
 	'..\..\..\Dolphin\System\Win32\MessageBox\Dolphin Message Box'
 	'..\..\..\Dolphin\MVP\Base\Dolphin MVP Base'
