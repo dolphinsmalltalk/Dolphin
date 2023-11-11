@@ -8,6 +8,7 @@ OS.COM.ITypeLib
 	classInstanceVariableNames: ''
 	classConstants: {}!
 OS.COM.ITypeLib2 guid: (OS.COM.IID fromString: '{00020411-0000-0000-c000-000000000046}')!
+OS.COM.ITypeLib2 isEgressOnly: true!
 OS.COM.ITypeLib2 comment: '<ITypeLib2> is a wrapper class for the COM interface ''OAIDL.ITypeLib2'' generated from type information in the ''Ole Automation Type Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface.

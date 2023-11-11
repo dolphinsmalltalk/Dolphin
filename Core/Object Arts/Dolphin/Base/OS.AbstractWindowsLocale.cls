@@ -484,7 +484,7 @@ nan!constants!public! !
 nativeDigits!constants!public! !
 negativeInfinity!constants!public! !
 negativeNumberMode!constants!public! !
-negativeNumberMode:!constants!public! !
+negativeNumberMode:!initializing!public! !
 negativeSign!constants!public! !
 numberGrouping!constants!public! !
 parentName!constants!public! !

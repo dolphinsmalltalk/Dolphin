@@ -6,7 +6,13 @@ Core.Object
 	classVariableNames: 'RecordClasses'
 	imports: #()
 	classInstanceVariableNames: 'template flags alignment'
-	classConstants: { 'CompileNewFieldsMask' -> 16r1. 'UncompiledFieldsMask' -> 16r2 }!
+	classConstants: {
+			'CompileNewFieldsMask' -> 16r1.
+			'DefaultFlags' -> 16r1.
+			'StructFlagsMask' -> 16rFFFF.
+			'TemplateFlagsMask' -> 16r3.
+			'UncompiledFieldsMask' -> 16r2
+		}!
 External.Structure guid: (Core.GUID fromString: '{87b4c489-026e-11d3-9fd7-00a0cc3e4a32}')!
 External.Structure isNonInstantiable: true!
 External.Structure comment: ''!
@@ -658,7 +664,7 @@ fieldOffsetConstantPrefix
 	^'_OffsetOf_'!
 
 flags
-	^flags!
+	^flags ?? DefaultFlags!
 
 fromAddress: anAddress
 	"Answer a new instance that points to the ExternalAddress 
@@ -697,7 +703,7 @@ hasUncompiledFields: aBoolean
 inheritTemplate
 	| ancestor |
 	ancestor := self superclass.
-	flags := ancestor flags.
+	flags := (ancestor flags bitAnd: StructFlagsMask) bitOr: (flags ?? 0 maskClear: TemplateFlagsMask).
 	template := ancestor template.
 	self byteSize: ancestor byteSize.
 	alignment := ancestor alignment!
@@ -921,7 +927,7 @@ removeRedundantOffsetConstants
 
 resetTemplate
 	self byteSize: 0.
-	flags := CompileNewFieldsMask.
+	flags := (self flags maskClear: UncompiledFieldsMask) bitOr: CompileNewFieldsMask.
 	alignment := template := nil!
 
 setGuid: aGUID
@@ -1010,7 +1016,7 @@ fromAddress:!instance creation!public! !
 fromBytes:!instance creation!public! !
 getFieldNames!accessing!private! !
 hasUncompiledFields!private!testing! !
-hasUncompiledFields:!private!testing! !
+hasUncompiledFields:!private!template definition! !
 inheritTemplate!private!template definition! !
 init:!initializing!public! !
 initializeAfterLoad!development!initializing!private! !

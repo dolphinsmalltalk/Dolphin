@@ -2,7 +2,7 @@
 
 Core.Object
 	subclass: #DeploymentContext
-	instanceVariableNames: 'logStream elementStack aspectSetters aspectGetters developmentClasses preservedMessages rootClasses supersentMethods notifier runFlags logFilename resourceIdentifiers resourceReferences'
+	instanceVariableNames: 'logStream elementStack aspectSetters aspectGetters developmentClasses preservedMessages rootClasses supersentMethods notifier runFlags logFilename resourceIdentifiers resourceReferences comInterfaceSelectors'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -50,6 +50,12 @@ _closeLog
 				close].
 	logStream := logFilename := nil!
 
+_comInterfaceSelectors
+	^comInterfaceSelectors!
+
+_comInterfaceSelectors: anIdentityDictionary
+	comInterfaceSelectors := anIdentityDictionary!
+
 _deleteClass: aClass
 	(rootClasses includes: aClass)
 		ifTrue: 
@@ -58,6 +64,7 @@ _deleteClass: aClass
 			^false].
 	(resourceReferences removeKey: aClass ifAbsent: nil)
 		ifNotNil: [resourceIdentifiers := resourceIdentifiers reject: [:each | each owningClass == aClass]].
+	comInterfaceSelectors removeKey: aClass ifAbsent: nil.
 	^true!
 
 _deleteResource: aResourceIdentifier
@@ -90,7 +97,7 @@ _finishedStrippingResources
 	resourceIdentifiers := resourceIdentifiers asSortedArray!
 
 _finishedWithStripping
-	resourceReferences := rootClasses := aspectGetters := aspectSetters := preservedMessages := supersentMethods := nil!
+	comInterfaceSelectors := resourceReferences := rootClasses := aspectGetters := aspectSetters := preservedMessages := supersentMethods := nil!
 
 _hiddenClassReferencesInResourceMethod: aCompiledMethod
 	^((resourceReferences at: aCompiledMethod methodClass instanceClass) at: aCompiledMethod selector)
@@ -205,6 +212,10 @@ _supersentMethods
 _supersentMethods: anObject
 	supersentMethods := anObject!
 
+_trimComInterfaces
+	comInterfaceSelectors
+		removeAllKeys: (comInterfaceSelectors keys select: [:each | each bindingOrNil isNil])!
+
 _trimResourceReferences
 	| remainingRefs |
 	remainingRefs := IdentityDictionary new.
@@ -229,6 +240,7 @@ initialize
 	elementStack := OrderedCollection new.
 	aspectGetters := rootClasses := Set new.
 	logStream := notifier := DeafObject current.
+	comInterfaceSelectors := IdentityDictionary new.
 	runFlags := 0! !
 !DeploymentContext categoriesForMethods!
 _aspectGetters!accessing!private! !
@@ -238,6 +250,8 @@ _aspectSetters:!accessing!private! !
 _basicDeleteMethod:!private!removing! !
 _basicDevelopmentClasses!accessing!private! !
 _closeLog!operations!private! !
+_comInterfaceSelectors!operations!private! !
+_comInterfaceSelectors:!operations!private! !
 _deleteClass:!helpers!private! !
 _deleteResource:!operations!private! !
 _destroyNotifier!operations!private! !
@@ -268,9 +282,10 @@ _setRunFlag:!accessing!private! !
 _startElement:attributes:close:!logging!private! !
 _supersentMethods!accessing!private! !
 _supersentMethods:!accessing!private! !
+_trimComInterfaces!operations!private! !
 _trimResourceReferences!operations!private! !
 developmentClasses!accessing!private! !
-developmentClasses:!accessing!private! !
+developmentClasses:!initializing!private! !
 initialize!initializing!private! !
 !
 

@@ -936,6 +936,10 @@ sourceFilerClass
 		ifNil: [environment == Smalltalk ifTrue: [self legacySourceFilerClass] ifFalse: [ChunkSourceFiler]]
 		ifNotNil: [:package | package sourceFilerClass]!
 
+specialBehaviorAttributes
+	^#(#isIndirection #isNullTerminated #isNonInstantiable #isMourner)
+		select: [:each | self perform: each]!
+
 stbModifyExportProxy: anSTBImportedClassProxy
 	"Private - This is an opportunity to modifiy the classes' binary export proxy just before it is
 	output (to an STC file). The default is to do nothing - the standard STBImportedClassProxy is
@@ -1103,7 +1107,7 @@ addClassConstant:!class variables!development!public! !
 addClassConstant:value:!class variables!development!public! !
 addClassVariable:value:!class hierarchy-mutating!class variables!public! !
 addClassVarNamed:!class hierarchy-mutating!class variables!public! !
-addImport:!namespaces!public! !
+addImport:!class hierarchy-mutating!namespaces!public! !
 addSubclass:!class hierarchy-adding!private! !
 addToSuper!class hierarchy-adding!private! !
 allBindingsDo:!enumerating!public! !
@@ -1194,7 +1198,7 @@ removeFromSystem!class hierarchy-removing!private! !
 removeImport:!class hierarchy-mutating!namespaces!public! !
 removeSubclass:!helpers!private! !
 rename:!class hierarchy-mutating!private! !
-replaceImport:with:!applying!private! !
+replaceImport:with:!applying!class hierarchy-mutating!private! !
 requiresInstallation!public!testing! !
 resolveBindingPath:!bindings!private! !
 resolveBindingPath:environment:!bindings!private! !
@@ -1215,6 +1219,7 @@ simpleName!accessing!public! !
 sourceDescriptor!accessing!public!source filing! !
 sourceDescriptor:!accessing!private!source filing! !
 sourceFilerClass!development!private!source filing-class definition! !
+specialBehaviorAttributes!constants!public!source filing! !
 stbModifyExportProxy:!binary filing!private! !
 storeGUID!private!source filing-class definition! !
 subclass:instanceVariableNames:classVariableNames:imports:!class hierarchy-adding!public! !

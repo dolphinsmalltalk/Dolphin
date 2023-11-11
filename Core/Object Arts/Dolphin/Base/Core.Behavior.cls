@@ -373,9 +373,6 @@ hasMethods
 
 	^methodDictionary notNil and: [methodDictionary size > 0]!
 
-hasSpecialBehavior
-	^instanceSpec anyMask: ##(_IndirectMask | _NullTermMask | _NonInstantiableMask | _MournerMask)!
-
 hierarchyBindingFor: aString 
 	"Answer a variable binding for the named variable in the scope of this class. If there is no such variable, then answer nil."
 
@@ -1026,7 +1023,6 @@ extraInstanceSpec:!instance specification-accessing!private! !
 flushMethodCache!methods-removing!private! !
 hasImmediateInstances!public!testing! !
 hasMethods!methods-testing!public! !
-hasSpecialBehavior!instance specification-testing!public! !
 hierarchyBindingFor:!bindings!public! !
 includesBehavior:!class hierarchy-testing!public! !
 includesSelector:!methods-testing!public! !

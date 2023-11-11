@@ -298,11 +298,7 @@ fileOutAttributesOfClass: aClass
 			[self
 				cr;
 				emitGUIDOfClass: aClass].
-	aClass hasSpecialBehavior
-		ifTrue: 
-			[self
-				cr;
-				emitSpecialBehaviorAttributesOfClass: aClass].
+	self emitSpecialBehaviorAttributesOfClass: aClass.
 	self emitClassPoolOfClass: aClass.
 	aClass comment
 		ifNotNil: 
@@ -499,8 +495,8 @@ sharedPoolNames: aClass
 shortNameForClass: aClass
 	^(Smalltalk oldNames lookup: aClass) ifNil: [self getShortName: aClass]!
 
-specialBehaviorAttributes
-	^#(#(#isIndirection) #(#isNullTerminated) #(#isNonInstantiable #isAbstract) #(#isMourner))! !
+specialBehaviorAttributesOfClass: aClass
+	^aClass specialBehaviorAttributes copyReplacing: #isNonInstantiable withObject: #isAbstract! !
 !Kernel.LegacyChunkSourceFiler categoriesForMethods!
 collateClass:against:!private!source filing! !
 emitBinaryVariableDefinition:!public!source filing-file out! !
@@ -538,7 +534,7 @@ packageClassesInFileoutOrder:!helpers!private! !
 printBasicDefinitionOfClass:on:!private!source filing-file out! !
 sharedPoolNames:!public!source filing-file out! !
 shortNameForClass:!public!source filing-file out! !
-specialBehaviorAttributes!constants!public! !
+specialBehaviorAttributesOfClass:!constants!public! !
 !
 
 !Kernel.LegacyChunkSourceFiler class methodsFor!

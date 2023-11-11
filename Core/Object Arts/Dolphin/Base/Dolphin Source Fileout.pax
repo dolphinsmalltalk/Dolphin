@@ -31,7 +31,6 @@ package setMethodNames: #(
 	#(#{Kernel.AbstractChunkSourceFiler} #logEvaluation:)
 	#(#{Kernel.AbstractChunkSourceFiler} #logRemoveSelector:of:)
 	#(#{Kernel.AbstractChunkSourceFiler} #logRemoveSelectors:of:)
-	#(#{Kernel.AbstractChunkSourceFiler} #specialBehaviorAttributes)
 	#(#{Kernel.AbstractChunkSourceFiler} #storeCommentString:forClass:)
 	#(#{Kernel.AbstractChunkSourceFiler} #storeCommentString:forPackage:)
 	#(#{Kernel.AbstractChunkSourceFiler} #storeSource:for:)
@@ -255,19 +254,14 @@ emitMethod: aCompiledMethod
 	self storeSource: aCompiledMethod getSource for: aCompiledMethod!
 
 emitSpecialBehaviorAttributesOfClass: aClass
-	| count |
-	count := 0.
-	self specialBehaviorAttributes do: 
+	(self specialBehaviorAttributesOfClass: aClass) do: 
 			[:each |
-			(aClass perform: each first)
-				ifTrue: 
-					[(count := count + 1) > 1 ifTrue: [stream cr].
-					self emitClassName: aClass on: stream.
-					stream
-						space;
-						nextPutAll: each last;
-						nextPutAll: ': true!!']].
-	^count!
+			stream cr.
+			self emitClassName: aClass on: stream.
+			stream
+				space;
+				nextPutAll: each;
+				nextPutAll: ': true!!']!
 
 fileOutAttributesOfClass: aClass
 	"File-out any attributes of the aClass (e.g. the comment, GUID, etc) not included in the basic
@@ -278,11 +272,7 @@ fileOutAttributesOfClass: aClass
 			[self
 				cr;
 				emitGUIDOfClass: aClass].
-	aClass hasSpecialBehavior
-		ifTrue: 
-			[self
-				cr;
-				emitSpecialBehaviorAttributesOfClass: aClass].
+	self emitSpecialBehaviorAttributesOfClass: aClass.
 	aClass comment
 		ifNotNil: 
 			[self
@@ -353,9 +343,6 @@ logRemoveSelectors: aCollection of: aClassDescription
 	stream nextPut: $).
 	self endChunk!
 
-specialBehaviorAttributes
-	^#(#(#isIndirection) #(#isNullTerminated) #(#isNonInstantiable) #(isMourner))!
-
 storeCommentString: aString forClass: aClass
 	"Save the <readableString>, aString, as the comment text for the 
 	<Class>, aClass, to the receiver's source stream encoding the position and 
@@ -407,7 +394,6 @@ fileOutProtocols:ofBehavior:!public!source filing-file out! !
 logEvaluation:!private!source filing-file out! !
 logRemoveSelector:of:!development!helpers!public! !
 logRemoveSelectors:of:!development!helpers!public! !
-specialBehaviorAttributes!constants!public!source filing! !
 storeCommentString:forClass:!public!source filing-file out! !
 storeCommentString:forPackage:!public!source filing-file out! !
 storeSource:for:!private!source filing-file out! !

@@ -251,6 +251,9 @@ sourceDescriptorForIndex: indexInteger position: positionInteger
 
 	^(indexInteger bitAnd: 16rF) bitOr: (positionInteger bitShift: 4)!
 
+specialBehaviorAttributesOfClass: aClass
+	^aClass specialBehaviorAttributes!
+
 storeSourceString: aString forMethod: aCompiledMethod 
 	"Private - Save the <readableString>, aString, as the source text for the 
 	<CompiledMethod>, aCompiledMethod, to the receiver's source stream
@@ -287,6 +290,7 @@ printBasicDefinitionOfClass:!public!source filing-file out! !
 printBasicDefinitionOfClass:on:!private!source filing-file out! !
 printVariables:string:on:!private!source filing-file out! !
 sourceDescriptorForIndex:position:!private!source filing-file in! !
+specialBehaviorAttributesOfClass:!constants!public!source filing! !
 storeSourceString:forMethod:!private!source filing-file out! !
 !
 

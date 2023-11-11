@@ -48,7 +48,7 @@ shortNameFor: aString
 bindingFor:!bindings!public! !
 environment!public! !
 fullNameFor:!helpers!private! !
-imports:!pool variables!public! !
+imports:!class hierarchy-mutating!pool variables!public! !
 nestedClasses!accessing!public! !
 shortName!accessing!public! !
 shortNameFor:!enquiries!private! !

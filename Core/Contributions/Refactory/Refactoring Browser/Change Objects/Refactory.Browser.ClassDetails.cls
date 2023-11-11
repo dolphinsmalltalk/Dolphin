@@ -118,11 +118,6 @@ guid
 guid: anObject
 	guid := anObject!
 
-hasSpecialBehavior
-	^self instanceSpec
-		anyMask: ##(Behavior._IndirectMask | Behavior._NullTermMask | Behavior._NonInstantiableMask
-				| Behavior._MournerMask)!
-
 imports
 	^imports ?? #()!
 
@@ -279,6 +274,10 @@ sourceFilerClass
 		ifNil: [self isInBaseEnvironment ifTrue: [Class legacySourceFilerClass]]
 		ifNotNil: [:pkg | pkg sourceFilerClass]) ifNil: [Class sourceFilerClass]!
 
+specialBehaviorAttributes
+	^#(#isIndirection #isNullTerminated #isNonInstantiable #isMourner)
+		select: [:each | self perform: each]!
+
 storeDetail: aSymbol value: anObject on: aStream
 	anObject
 		ifNotNil: 
@@ -395,7 +394,6 @@ fromClass:!initializing!private! !
 fullName!accessing!public! !
 guid!accessing!public! !
 guid:!accessing!public! !
-hasSpecialBehavior!instance specification-testing!public! !
 imports!accessing!public! !
 imports:!accessing!public! !
 instanceSpec!accessing!public! !
@@ -432,6 +430,7 @@ printOn:!printing!public! !
 sharedPoolNames!accessing!public! !
 shortName!accessing!public! !
 sourceFilerClass!constants!private! !
+specialBehaviorAttributes!constants!public!source filing! !
 storeDetail:value:on:!public!storing! !
 storeOn:!public!storing! !
 superclass!accessing!public! !

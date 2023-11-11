@@ -102,6 +102,11 @@ getAllFuncCustData: index
 	^self nullCustData
 !
 
+getAllParamCustData: indexFunc indexParam: indexParam
+	"Answer the <CUSTDATA> result of invoking the COM Object's GetAllParamCustData() method."
+
+	^self nullCustData!
+
 getAllVarCustData: anInteger
 	"Answer a <CUSTDATA> for the variable of the type described by the receiver with the specified zero-based index."
 
@@ -576,6 +581,7 @@ basicFree!private!realizing/unrealizing! !
 CreateInstance:riid:ppvObj:!COM Interfaces-OAIDL.ITypeInfo!private! !
 getAllCustData!accessing!public! !
 getAllFuncCustData:!**auto generated**!public! !
+getAllParamCustData:indexParam:!**auto generated**!public! !
 getAllVarCustData:!accessing!public! !
 GetContainingTypeLib:pIndex:!COM Interfaces-OAIDL.ITypeInfo!private! !
 GetDllEntry:invkind:pBstrDllName:pBstrName:pwOrdinal:!COM Interfaces-OAIDL.ITypeInfo!private! !

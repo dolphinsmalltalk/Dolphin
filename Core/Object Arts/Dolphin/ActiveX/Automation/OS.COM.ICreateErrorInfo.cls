@@ -8,6 +8,7 @@ OS.COM.IUnknown
 	classInstanceVariableNames: ''
 	classConstants: {}!
 OS.COM.ICreateErrorInfo guid: (OS.COM.IID fromString: '{22f03340-547d-101b-8e65-08002b2bd119}')!
+OS.COM.ICreateErrorInfo isEgressOnly: true!
 OS.COM.ICreateErrorInfo comment: '`OS.COM.ICreateErrorInfo` is a wrapper class for the custom interface ''OAIDL.ICreateErrorInfo'' from type information in the ''Ole Automation Type Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface.
