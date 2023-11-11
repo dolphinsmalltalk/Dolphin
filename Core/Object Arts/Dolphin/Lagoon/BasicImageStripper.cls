@@ -298,39 +298,17 @@ _prepareExternalStructures
 	"Private - Fully compile all ExternalStructure subclasses if required. They must already
 	have fully defined templates."
 
-	| structs methods |
+	| structs |
+	"Having defined all the templates, we can now remove the methods used to define them"
 	structs := self _externalStructureClasses.
 	self _defineExternalStructures: structs.
 	self _startElement: 'PrepareExternalStructures' attributes: #().
 	self compileExternalStructures ifTrue: [self _compileExternalStructuresNow: structs].
-	"Having defined all the templates, we can now remove the methods used to define them"
-	"Remove the structure template definition and compiling mechanisms"
-	#(#{External.Structure class} #{OS.COM.Interface class}) do: 
-			[:ref |
-			ref ifDefined: 
-					[:structClass |
-					#('compiling' 'template definition') do: 
-							[:each |
-							self
-								_removeMethods: (each asMethodCategory methodsInBehavior: structClass)
-								reason: 'structure definition: ' , each
-								force: true]]].
-	"Remove all Structure defineFields methods"
-	methods := IdentitySet new.
-	structs do: [:each | methods add: (each class compiledMethodAt: #defineFields ifAbsent: nil)].
-	self
-		_removeMethods: methods
-		reason: 'structure definition: defineFields'
-		force: true.
-	methods := IdentitySet new.
-	structs do: [:each | methods add: (each class compiledMethodAt: #defineFunctions ifAbsent: nil)].
-	self
-		_removeMethods: methods
-		reason: 'structure definition: defineFunctions'
-		force: true.
+	self _removeStructureDefinitions: structs.
+	self _removeVtblDefinitions: structs.
 	self _endElement: true.
 	self
-		_finishedWithAll: #(#compileExternalStructures #_compileExternalStructuresNow: #_defineExternalStructures: #_prepareExternalStructures #_externalStructureClasses)!
+		_finishedWithAll: #(#compileExternalStructures #_compileExternalStructuresNow: #_defineExternalStructures: #_prepareExternalStructures #_externalStructureClasses #_removeTemplateDefinition: #_removeStructureDefinitions: #_removeVtblDefinitions: #_removeDefinitionMethods:from:)!
 
 _preStripTidy
 	"Private - Remove any methods of ImageStripper that are no longer required to ensure these don't impact the calculated package pre-reqs when they are determined"
@@ -410,6 +388,15 @@ _removeClassUninstallation: aCollection
 	self
 		_finishedWithAll: #(#_addClassesReferencedByClass:to: #_addClassesReferencedByMethod:to: #_allReferencedClasses #_basicDeleteClass: #_classesReferencedByMethod: #_classReferencesToIgnore #emptyMethodDictionariesOfStubbornClasses #notRequiredClasses #_purgeStubbornClass: #_deleteClass: #_deleteClasses:reason: #_removeSelectors:of: #_rootClasses #_removeClassUninstallation: #stripRedundantClasses #_uncheckedDeleteClass: #_hiddenClassReferencesInResourceMethod:).
 	self _collectGarbage: 3!
+
+_removeDefinitionMethods: aSymbol from: structs
+	| methods |
+	methods := IdentitySet new.
+	structs do: [:each | methods add: (each class compiledMethodAt: aSymbol ifAbsent: nil)].
+	self
+		_removeMethods: methods
+		reason: 'structure definition: ' , aSymbol
+		force: true!
 
 _removeDevelopmentInfo
 	"Private - Remove development structures, etc."
@@ -682,6 +669,26 @@ _removeSelectors: aCollectionOfSelectors of: aBehavior
 		reason: 'explicit'
 		force: true!
 
+_removeStructureDefinitions: structureClasses
+	"Remove all Structure defineFields methods"
+
+	#{External.Structure class} ifDefined: [:structClass | self _removeTemplateDefinition: structClass].
+	self _removeDefinitionMethods: #defineFields from: structureClasses!
+
+_removeTemplateDefinition: structClass
+	"Remove the structure template definition and compiling mechanisms"
+
+	^#('compiling' 'template definition') do: 
+			[:each |
+			self
+				_removeMethods: (each asMethodCategory methodsInBehavior: structClass)
+				reason: 'structure definition: ' , each
+				force: true]!
+
+_removeVtblDefinitions: structureClasses
+	#{OS.COM.Interface class} ifDefined: [:structClass | self _removeTemplateDefinition: structClass].
+	self _removeDefinitionMethods: #defineFunctions from: structureClasses!
+
 _rootClasses
 	^#()!
 
@@ -885,6 +892,7 @@ _removeCategoryManagement!operations!private! !
 _removeClassBuilder:!operations!private! !
 _removeClassMetaInfo!operations!private! !
 _removeClassUninstallation:!operations!private! !
+_removeDefinitionMethods:from:!operations!private! !
 _removeDevelopmentInfo!operations!private! !
 _removeDevelopmentResources!operations!private! !
 _removeDevelopmentSystemResidue!operations!private! !
@@ -901,6 +909,9 @@ _removeRedundantObjects:id:!operations!private! !
 _removeRedundantPackages!operations!private! !
 _removeRedundantResources:!operations!private! !
 _removeSelectors:of:!operations!private! !
+_removeStructureDefinitions:!operations!private! !
+_removeTemplateDefinition:!operations!private! !
+_removeVtblDefinitions:!operations!private! !
 _rootClasses!accessing!private! !
 _shouldPreserveMethod:!private!removing! !
 _shouldRemoveResources!private!testing! !

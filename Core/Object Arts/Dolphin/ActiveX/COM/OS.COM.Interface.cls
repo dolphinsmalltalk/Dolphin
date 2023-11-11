@@ -11,7 +11,8 @@ External.Structure
 			'_OffsetOf_argSizes' -> 16r4.
 			'_OffsetOf_interfaceCookie' -> 16rC.
 			'_OffsetOf_objectCookie' -> 16r8.
-			'_OffsetOf_vtbl' -> 16r0
+			'_OffsetOf_vtbl' -> 16r0.
+			'EgressOnlyMask' -> 16r10000
 		}!
 OS.COM.Interface guid: (OS.COM.IID fromString: '{87b4c591-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.COM.Interface isNonInstantiable: true!
@@ -78,7 +79,7 @@ callback: stub vfn: vfnIndex withArgumentsAt: pArgs
 	class' callback table, instantiating any arguments from the machine
 	stack starting at <integer> address, pArgs."
 
-	^(self class functions basicAt: vfnIndex)
+	^(self class virtualFunctions basicAt: vfnIndex)
 		callback: stub interface: self withArgumentsAt: pArgs!
 
 copy
@@ -456,6 +457,10 @@ clear: addressOrBytes
 
 	(IUnknown attach: (addressOrBytes uint32AtOffset: 0)) free!
 
+clearVTable
+	functions := #().
+	argSizes := nil!
+
 clsid
 	"Answer the component id for the receiver's COM class."
 
@@ -471,7 +476,7 @@ compileFunction: anInteger
 	"Private - Generate a suitable compiled method for the specified COM function."
 
 	| aStream fn |
-	fn := self functions at: anInteger.
+	fn := self virtualFunctions at: anInteger.
 	aStream := WriteStream on: (Utf8String new: 512).
 	aStream
 		nextPutAll: fn messageSelectorAndArgumentNames;
@@ -522,7 +527,7 @@ compileFunctions
 
 	self removeCompiledFunctions.
 	self defineVTable.
-	superclass functions size + 1 to: functions size do: [:i | self compileFunction: i].
+	superclass virtualFunctions size + 1 to: functions size do: [:i | self compileFunction: i].
 	self subclassesDo: [:s | s compileFunctions]!
 
 compileFunctionsIntoImplementor: aClass
@@ -554,7 +559,7 @@ Are you sure you want to proceed?'
 		ifTrue: [^self].
 	aStream := (Utf8String new: 256) writeStream.
 	functions
-		from: superclass functions size + 1
+		from: superclass virtualFunctions size + 1
 		to: functions size
 		do: 
 			[:fn |
@@ -693,14 +698,12 @@ defineVTable
 	Send this to the subclasses of the receiver to define the VTable when
 	implementing COM interfaces (CALL IN)."
 
-	self == ##(self) 
-		ifTrue: 
-			[functions := #().
-			argSizes := nil]
+	self == ##(self)
+		ifTrue: [self clearVTable]
 		ifFalse: 
 			[| inherited |
 			functions := OrderedCollection new.
-			inherited := self superclass functions.
+			inherited := self superclass virtualFunctions.
 			functions addAll: inherited.
 			(self class includesSelector: #defineFunctions) ifTrue: [self defineFunctions].
 			functions := functions asArray.
@@ -712,10 +715,12 @@ elementSize
 
 	^VMConstants.IntPtrSize!
 
-functions
-	"Private - Answer the array of functions definitions."
-
-	^functions!
+findMostDerived
+	| count |
+	count := subclasses size.
+	count == 0 ifTrue: [^self].
+	count == 1 ifTrue: [^(subclasses at: 1) findMostDerived].
+	^self shouldNotImplement!
 
 generatedFunctionCategories
 	"Answer the categories into which COMInterface functions are compiled
@@ -802,14 +807,22 @@ interfaceClasses
 
 	^InterfaceClasses!
 
+isEgressOnly
+	"Answer whether this COM Interface is only ever used for call-out (i.e. never implemented in Dolphin)."
+
+	^self flags allMask: EgressOnlyMask!
+
+isEgressOnly: aBoolean
+	"Set whether this COM Interface is only ever used for outbound calls (i.e. never implemented in Dolphin)."
+
+	self isEgressOnly = aBoolean ifTrue: [^self].
+	flags := self flags mask: EgressOnlyMask set: aBoolean.
+	self isChanged: true!
+
 latestDerivation
 	"Answer the latest derivation of this interface. This should be the latest version if the common practice of deriving later versions as a subclass of the previous version is employed. It is an error if there is more than one subclass."
 
-	| count |
-	count := subclasses size.
-	count == 0 ifTrue: [^self].
-	count == 1 ifTrue: [^(subclasses at: 1) latestDerivation].
-	^self shouldNotImplement!
+	^self findMostDerived!
 
 new
 	"Answer a new instance of the receiver and associated component instance
@@ -1040,6 +1053,12 @@ setGuid: id
 
 	super setGuid: (id becomeAn: IID)!
 
+specialBehaviorAttributes
+	| attributes |
+	attributes := super specialBehaviorAttributes.
+	self isEgressOnly ifTrue: [attributes := attributes copyWith: #isEgressOnly].
+	^attributes!
+
 stdMethodCallType
 	"Private - Answer the standard calling convention for a COM function."
 	
@@ -1053,7 +1072,6 @@ stdMethodReturnType
 supportsInterface: anInterfaceClass 
 	"Answer whether instances of the receiver support the requested interface class."
 
-	#defineFunctions.
 	^self == anInterfaceClass or: [self inheritsFrom: anInterfaceClass]!
 
 uninitialize
@@ -1078,7 +1096,12 @@ unregister
 	significance."
 
 	(_guid notNil and: [InterfaceClasses notNil])
-		ifTrue: [InterfaceClasses removeKey: self iid ifAbsent: nil]! !
+		ifTrue: [InterfaceClasses removeKey: self iid ifAbsent: nil]!
+
+virtualFunctions
+	"Private - Answer the array of functions definitions."
+
+	^functions! !
 !OS.COM.Interface class categoriesForMethods!
 addFunction:selector:descriptor:!automatic generation!public! !
 argSizes!initializing!private! !
@@ -1090,6 +1113,7 @@ calcArgSizes!initializing!private! !
 classForIID:!enquiries!public! !
 classForIID:ifNone:!enquiries!public! !
 clear:!public!realizing/unrealizing! !
+clearVTable!automatic generation!public!template definition! !
 clsid!accessing!public! !
 comObjectClass!constants!public! !
 compileFunction:!automatic generation!development!private! !
@@ -1109,7 +1133,7 @@ defineSizeConstant:!private!template definition! !
 defineTemplate!public!template definition! !
 defineVTable!automatic generation!public!template definition! !
 elementSize!accessing!public! !
-functions!debugger-step over!initializing!private! !
+findMostDerived!enquiries!private! !
 generatedFunctionCategories!constants!public! !
 getFieldNames!constants!private! !
 getObject:!instance creation!public! !
@@ -1121,6 +1145,8 @@ initializeInterface!class initialization!private! !
 initializeRegister!initializing!private! !
 initializeTypeLib!initializing!private! !
 interfaceClasses!accessing!private! !
+isEgressOnly!public!testing! !
+isEgressOnly:!public!template definition! !
 latestDerivation!enquiries!public! !
 new!instance creation!public! !
 newBuffer!instance creation!public! !
@@ -1142,11 +1168,13 @@ registerClass:forIID:!adding!public! !
 registerSubclasses!initializing!public! !
 removeCompiledFunctions!automatic generation!development!public! !
 setGuid:!accessing!private! !
+specialBehaviorAttributes!constants!public!source filing! !
 stdMethodCallType!constants!private! !
 stdMethodReturnType!constants!private! !
 supportsInterface:!public!testing! !
 uninitialize!class hierarchy-removing!private! !
 uninitializeBeforeRemove!class hierarchy-removing!public! !
 unregister!public!removing! !
+virtualFunctions!debugger-step over!initializing!private! !
 !
 

@@ -341,7 +341,8 @@ External.Structure
 			'_OffsetOf_argSizes' -> 16r4.
 			'_OffsetOf_interfaceCookie' -> 16rC.
 			'_OffsetOf_objectCookie' -> 16r8.
-			'_OffsetOf_vtbl' -> 16r0
+			'_OffsetOf_vtbl' -> 16r0.
+			'EgressOnlyMask' -> 16r10000
 		}!
 External.ExternalArray
 	subclass: #'OS.COM.CountedArray'

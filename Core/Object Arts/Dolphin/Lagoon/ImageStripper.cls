@@ -189,6 +189,20 @@ _buildApplication
 			do: [:ex | self _onError: ex].
 	SessionManager inputState queueDeferredAction: self _saveBlock!
 
+_buildComInterfaceSelectorMap
+	| comInterfaceSelectors |
+	comInterfaceSelectors := IdentityDictionary new.
+	#{OS.COM.Interface} ifDefined: 
+			[:interfaceClass |
+			interfaceClass allSubclasses do: 
+					[:each |
+					(each isNonInstantiable or: [each isEgressOnly])
+						ifTrue: 
+							["We don't need the vtbl for interfaces that are uninstantiable or only used for call-in"
+							each clearVTable]
+						ifFalse: [comInterfaceSelectors at: each put: (each virtualFunctions collect: [:f | f selector])]]].
+	^comInterfaceSelectors!
+
 _buildManifest: assemblyNameString description: assemblyDescriptionString version: aVersionResource
 	"GUI apps need common controls, console apps do not."
 
@@ -873,9 +887,13 @@ _messageSendsFromClasses: aCollection
 	^messageMap!
 
 _messagesSentByClasses: aCollectionOfClasses
-	^(super _messagesSentByClasses: aCollectionOfClasses)
-		addAll: deploymentContext _preservedMessages;
-		yourself!
+	| sent |
+	sent := super _messagesSentByClasses: aCollectionOfClasses.
+	sent addAll: deploymentContext _preservedMessages.
+	"Add all COM interface functions on the assumption that the interface may be implemented in Dolphin (i.e. as a callback)."
+	aCollectionOfClasses
+		do: [:each | (deploymentContext _comInterfaceSelectors lookup: each) ifNotNil: [:selectors | sent addAll: selectors]].
+	^sent!
 
 _notifyClassesOfCompletedStrip
 	"Private - Inform all classes that the imagehas been stripped, by sending them an
@@ -1053,7 +1071,7 @@ _preStripTidy
 	"We have have done the resource updating."
 	versionResource := nil.
 	self
-		_finishedWithAll: #(#_appendManifestContent: #_buildManifest:description:version: #_buildMessageMap #_buildSupersentMessageMap #_classBuildingMethods #_classRemovingMethods #_closeAllDevelopmentTools #_closeChangeLog #_copyAndUpdateStub:to: #_defaultStubFilePath #_findPotentialAspectAccessors: #_findPotentialAspectAccessorsIn:excluding: #_getExecutablePath #_hiddenReferencesInResources #_logConfiguration: #_logDevelopmentCategories #_logRequiredMethodCategories #_manifestResourceId #_notifyClassesOfImminentStrip #_openLogFile #_preStripCheck #_preStripTidy #_messageSendsFromClasses: #_removeNotRequiredMethods _removeUnreferencedMethodLiterals #_snapshotDevelopmentClasses #_updateIconResource: #_updateStringTableResource: #_updateStubResources: #_updateVersionResource: #_updateXPManifestResource: #_viewsToClose #behaviorsWithIgnoredAspectSetters #binaryStoreOn: #classCategoriesToIgnoreAspectSetters #developmentMethodCategoryNames #developmentMethods #executableName #executablePath #exeFileExtension #ignoreViewReferences: #includeManifestResource #isResourceUpdatingRequired #isToGo #isUnattended #keepImageFile #logFileExtension #logFileName #logLiveClasses #logPackagePrerequisites #logReferencesToClasses: #nonAspectSetterCategories #prepareToStrip #preserveAspectSetters #preStripScript #preStripScript: #retainInstVarNames: #rootPackage: #runPreStripScript #snapshotType #stripAndSave #stripAndSaveWithProgress #stripClassInitializers #stripDeprecatedMethods #stripShouldNotImplement #stripSubclassResponsibility #stubFile #stubFilePath #versionResource #versionResource: #writeLogFile)!
+		_finishedWithAll: #(#_appendManifestContent: #_buildComInterfaceSelectorMap #_buildManifest:description:version: #_buildMessageMap #_buildSupersentMessageMap #_classBuildingMethods #_classRemovingMethods #_closeAllDevelopmentTools #_closeChangeLog #_copyAndUpdateStub:to: #_defaultStubFilePath #_findPotentialAspectAccessors: #_findPotentialAspectAccessorsIn:excluding: #_getExecutablePath #_hiddenReferencesInResources #_logConfiguration: #_logDevelopmentCategories #_logRequiredMethodCategories #_manifestResourceId #_notifyClassesOfImminentStrip #_openLogFile #_preStripCheck #_preStripTidy #_messageSendsFromClasses: #_removeNotRequiredMethods #_removeUnreferencedMethodLiterals #_snapshotDevelopmentClasses #_updateIconResource: #_updateStringTableResource: #_updateStubResources: #_updateVersionResource: #_updateXPManifestResource: #_viewsToClose #behaviorsWithIgnoredAspectSetters #binaryStoreOn: #classCategoriesToIgnoreAspectSetters #developmentMethodCategoryNames #developmentMethods #executableName #executablePath #exeFileExtension #ignoreViewReferences: #includeManifestResource #isResourceUpdatingRequired #isToGo #isUnattended #keepImageFile #logFileExtension #logFileName #logLiveClasses #logPackagePrerequisites #logReferencesToClasses: #nonAspectSetterCategories #prepareToStrip #preserveAspectSetters #preStripScript #preStripScript: #retainInstVarNames: #rootPackage: #runPreStripScript #snapshotType #stripAndSave #stripAndSaveWithProgress #stripClassInitializers #stripDeprecatedMethods #stripShouldNotImplement #stripSubclassResponsibility #stubFile #stubFilePath #versionResource #versionResource: #writeLogFile)!
 
 _purgeIcons
 	"Private - If there are no open windows, then we can safely purge the icon image manager."
@@ -1248,7 +1266,9 @@ _removeRedundantPackages
 	"Filter down the hidden resource reference data captured up front (to avoid a direct dependency on the STL filer and class collector) by filtering it down to only the remaining resources."
 	required := super _removeRedundantPackages.
 	#{Tools.SmalltalkSystem} isDefined ifTrue: [flags := flags bitOr: RetainDevSysMask].
-	deploymentContext _trimResourceReferences.
+	deploymentContext
+		_trimResourceReferences;
+		_trimComInterfaces.
 	^required!
 
 _removeRedundantResources: referencedClasses
@@ -1263,6 +1283,14 @@ _removeRedundantResources: referencedClasses
 	deadResources := deploymentContext _resourceIdentifiers
 				reject: [:each | liveResources includes: each].
 	^self _deleteResources: deadResources reason: 'unreferenced'!
+
+_removeTemplateDefinition: structClass
+	^#('compiling' 'template definition') do: 
+			[:each |
+			self
+				_removeMethods: (each asMethodCategory methodsInBehavior: structClass)
+				reason: 'structure definition: ' , each
+				force: true]!
 
 _removeUnreferencedMethodLiterals
 	"Private - Build a dictionary that maps code objects in the collection of classes, aCollection, to the symbols and classes that they references. This is used to construct an initial picture of true (or probably true) message sends in the image so that later we can compare this against the symbolic references remaining and therefore distinguish between actual (or probable) message sends, and ordinary symbol literals."
@@ -1288,6 +1316,10 @@ _removeUnreferencedMethodLiterals
 					on: CompilerErrorNotification
 					do: [:ex | Error signal: 'Error compiling <1p>: <2p>' << { each. ex }]].
 	Package manager resetPrerequisites!
+
+_removeVtblDefinitions: structureClasses
+	deploymentContext _comInterfaceSelectors: self _buildComInterfaceSelectorMap.
+	super _removeVtblDefinitions: structureClasses!
 
 _resourcesForClasses: classes
 	"Private - Answer a <collection> of the <ResourceIdentifiers> for all resources that are potentially 
@@ -1737,7 +1769,7 @@ nonAspectSetterCategories
 	Collection implements the 'converting' methods #asSortedCollection: and #asSortedCollection,
 	but of course asSortedCollection is a conversion operation, not an aspect"
 
-	^#('not an aspect' 'adding' 'comparing' 'converting' 'copying' 'dependency' 'enumerating' 'evaluating' 'exceptions' 'initializing' 'instance creation' 'operations' 'geometry' 'event handling' 'realizing/unrealizing' 'updating' 'transformations')!
+	^#('not an aspect' 'adding' 'comparing' 'converting' 'copying' 'dependency' 'enumerating' 'evaluating' 'exceptions' 'initializing' 'instance creation' 'operations' 'geometry' 'event handling' 'realizing/unrealizing' 'updating' 'transformations' 'sorting')!
 
 notRequiredMethodCategories
 	"Answer an IdentitySet of MethodCategorys whose methods are known to be not required
@@ -2022,6 +2054,7 @@ _allResourcesStripped!operations!private! !
 _appendManifestContent:!helpers!private! !
 _basicDeleteMethod:!private!removing! !
 _buildApplication!must not strip!operations!private! !
+_buildComInterfaceSelectorMap!helpers!private! !
 _buildManifest:description:version:!helpers!private! !
 _buildMessageMap!helpers!private! !
 _buildPreservedMessages!helpers!private! !
@@ -2101,7 +2134,9 @@ _removeRedundantMethods!operations!private! !
 _removeRedundantMethodsOnceFrom:!operations!private! !
 _removeRedundantPackages!operations!private! !
 _removeRedundantResources:!operations!private! !
+_removeTemplateDefinition:!operations!private! !
 _removeUnreferencedMethodLiterals!helpers!private! !
+_removeVtblDefinitions:!operations!private! !
 _resourcesForClasses:!helpers!private! !
 _rootClasses!accessing!private! !
 _saveBlock!accessing!private! !

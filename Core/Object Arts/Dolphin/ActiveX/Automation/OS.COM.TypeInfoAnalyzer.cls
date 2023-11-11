@@ -526,7 +526,7 @@ typekind!constants!public! !
 typeLib!accessing!public! !
 typeName!constants!public! !
 varDescAt:!accessing!private! !
-variableName:!accessing!private! !
+variableName:!initializing!private! !
 variables!accessing!public! !
 vt!constants!public! !
 !

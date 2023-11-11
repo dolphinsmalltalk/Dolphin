@@ -47,7 +47,7 @@ Core.Object
 	classConstants: {}!
 Core.Object
 	subclass: #DeploymentContext
-	instanceVariableNames: 'logStream elementStack aspectSetters aspectGetters developmentClasses preservedMessages rootClasses supersentMethods notifier runFlags logFilename resourceIdentifiers resourceReferences'
+	instanceVariableNames: 'logStream elementStack aspectSetters aspectGetters developmentClasses preservedMessages rootClasses supersentMethods notifier runFlags logFilename resourceIdentifiers resourceReferences comInterfaceSelectors'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

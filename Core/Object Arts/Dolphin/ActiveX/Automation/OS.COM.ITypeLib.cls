@@ -8,6 +8,7 @@ OS.COM.IUnknown
 	classInstanceVariableNames: ''
 	classConstants: {}!
 OS.COM.ITypeLib guid: (OS.COM.IID fromString: '{00020402-0000-0000-c000-000000000046}')!
+OS.COM.ITypeLib isEgressOnly: true!
 OS.COM.ITypeLib comment: 'ITypeLib is a <COMInterface> class which wraps an COM Automation ITypeLib interface pointer.
 
 The purpose of ITypeLib is to serve as the top-level entry point to a COM type library, which is a repository of meta-information about COM objects and interfaces. An ITypeLib is typically acquired either by loading a type library explicitly from the resources of a COM server or a .TLB file, or directly from a COM object via an interface such as IProvideClassInfo.

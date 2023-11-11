@@ -15,6 +15,7 @@ OS.COM.IUnknown
 			'PICTYPE_UNINITIALIZED' -> -16r1
 		}!
 OS.COM.IPicture guid: (OS.COM.IID fromString: '{7bf80980-bf32-101a-8bbb-00aa00300cab}')!
+OS.COM.IPicture isEgressOnly: true!
 OS.COM.IPicture comment: '`IPicture` is a wrapper class for the COM interface ''stdole.IPicture'' generated from type information in the ''OLE Automation'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface

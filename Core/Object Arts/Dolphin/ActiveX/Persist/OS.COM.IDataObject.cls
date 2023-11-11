@@ -63,7 +63,7 @@ interface IDataObject : IUnknown
 !OS.COM.IDataObject methodsFor!
 
 dAdvise: pformatetc advf: advf pAdvSink: pAdvSink
-	"Answer the <UInt32> result of invoking the DAdvise() method of the COM object."
+	"Answer the <uint32> result of invoking the DAdvise() method of the COM object."
 
 	| answer |
 	answer := UInt32 new.
@@ -99,9 +99,9 @@ enumDAdvise
 	"Answer the <IEnumSTATDATA> result of invoking the EnumDAdvise() method of the COM object."
 
 	| answer |
-	answer := IEnumStruct elementClass: STATDATA.
+	answer := IEnumSTATDATA newPointer.
 	self EnumDAdvise: answer.
-	^answer!
+	^answer asObject!
 
 EnumDAdvise: ppenumAdvise
 	"Private - Invoke the EnumDAdvise() method of the COM object.
@@ -109,14 +109,14 @@ EnumDAdvise: ppenumAdvise
 		HRESULT __stdcall EnumDAdvise(
 			[out]IEnumSTATDATA** ppenumAdvise);"
 
-	<virtual stdcall: hresult 12 Smalltalk.IUnknown**>
+	<virtual stdcall: hresult 12 IEnumSTATDATA**>
 	^self invalidCall: _failureCode!
 
 enumFormatEtc: dwDirection
 	"Answer the <IEnumFORMATETC> result of invoking the EnumFormatEtc() method of the COM object."
 
 	| answer |
-	answer := IEnumStruct elementClass: FORMATETC.
+	answer := IEnumFORMATETC newPointer.
 	self EnumFormatEtc: dwDirection ppenumFormatEtc: answer.
 	^answer asObject!
 
@@ -127,7 +127,7 @@ EnumFormatEtc: dwDirection ppenumFormatEtc: ppenumFormatEtc
 			[in]unsigned long dwDirection,
 			[out]IEnumFORMATETC** ppenumFormatEtc);"
 
-	<virtual stdcall: hresult 9 uint32 Smalltalk.IUnknown**>
+	<virtual stdcall: hresult 9 uint32 IEnumFORMATETC**>
 	^self invalidCall: _failureCode!
 
 getCanonicalFormatEtc: pformatectIn
@@ -153,34 +153,25 @@ getData: pformatetcIn
 
 	| answer |
 	answer := STGMEDIUM new.
-	self GetData: pformatetcIn pmedium: answer.
-	^answer!
+	self GetData: pformatetcIn pMedium: answer.
+	^answer asObject!
 
-GetData: pformatetcIn pmedium: pRemoteMedium
+GetData: pformatetcIn pMedium: pMedium
 	"Private - Invoke the GetData() method of the COM object.
 
 		HRESULT __stdcall GetData(
 			[in]FORMATETC* pformatetcIn,
-			[out]STGMEDIUM* pmedium);"
+			[out]STGMEDIUM* pMedium);"
 
 	<virtual stdcall: hresult 4 FORMATETC* STGMEDIUM*>
 	^self invalidCall: _failureCode!
 
-getDataHere: pFormatetc pmedium: pMedium 
-	"Answer the <STGMEDIUM> result of invoking the COM Object's GetDataHere() method."
-
-	self
-		GetDataHere: pFormatetc
-		pmedium: pMedium.
-	^pMedium
-!
-
-GetDataHere: pformatetc pmedium: pRemoteMedium
+GetDataHere: pformatetc pMedium: pRemoteMedium
 	"Private - Invoke the GetDataHere() method of the COM object.
 
 		HRESULT __stdcall GetDataHere(
 			[in]FORMATETC* pformatetc,
-			[in, out]STGMEDIUM* pmedium);"
+			[in, out]STGMEDIUM* pMedium);"
 
 	<virtual stdcall: hresult 5 FORMATETC* STGMEDIUM*>
 	^self invalidCall: _failureCode!
@@ -214,16 +205,15 @@ SetData: pformatetc pmedium: pmedium fRelease: fRelease
 dAdvise:advf:pAdvSink:!**auto generated**!methods!public! !
 DAdvise:advf:pAdvSink:pdwConnection:!**auto generated**!COM Interfaces-IDataObject!private! !
 DUnadvise:!**auto generated**!COM Interfaces-IDataObject!public! !
-enumDAdvise!methods!public! !
+enumDAdvise!**auto generated**!methods!public! !
 EnumDAdvise:!**auto generated**!COM Interfaces-IDataObject!private! !
-enumFormatEtc:!methods!public! !
+enumFormatEtc:!**auto generated**!methods!public! !
 EnumFormatEtc:ppenumFormatEtc:!**auto generated**!COM Interfaces-IDataObject!private! !
 getCanonicalFormatEtc:!**auto generated**!methods!public! !
 GetCanonicalFormatEtc:pformatetcOut:!**auto generated**!COM Interfaces-IDataObject!private! !
 getData:!methods!public! !
-GetData:pmedium:!**auto generated**!COM Interfaces-IDataObject!private! !
-getDataHere:pmedium:!methods!public! !
-GetDataHere:pmedium:!**auto generated**!COM Interfaces-IDataObject!private! !
+GetData:pMedium:!**auto generated**!COM Interfaces-IDataObject!private! !
+GetDataHere:pMedium:!**auto generated**!COM Interfaces-IDataObject!private! !
 queryGetData:!methods!public! !
 QueryGetData:!**auto generated**!COM Interfaces-IDataObject!public! !
 SetData:pmedium:fRelease:!**auto generated**!COM Interfaces-IDataObject!public! !
@@ -236,16 +226,25 @@ defineFunctions
 		IDataObject defineTemplate"
 
 	self
-		defineFunction: #GetData:pmedium: argumentTypes: 'FORMATETC* STGMEDIUM*';
-		defineFunction: #GetDataHere:pmedium: argumentTypes: 'FORMATETC* STGMEDIUM*';
-		defineFunction: #QueryGetData: argumentTypes: 'FORMATETC*';
-		defineFunction: #GetCanonicalFormatEtc:pformatetcOut: argumentTypes: 'FORMATETC* FORMATETC*';
-		defineFunction: #SetData:pmedium:fRelease: argumentTypes: 'FORMATETC* STGMEDIUM* int32';
-		defineFunction: #EnumFormatEtc:ppenumFormatEtc: argumentTypes: 'uint32 IUnknown**';
+		defineFunction: #GetData:pMedium:
+			argumentTypes: 'FORMATETC* STGMEDIUM*';
+		defineFunction: #GetDataHere:pMedium:
+			argumentTypes: 'FORMATETC* STGMEDIUM*';
+		defineFunction: #QueryGetData:
+			argumentTypes: 'FORMATETC*';
+		defineFunction: #GetCanonicalFormatEtc:pformatetcOut:
+			argumentTypes: 'FORMATETC* FORMATETC*';
+		defineFunction: #SetData:pmedium:fRelease:
+			argumentTypes: 'FORMATETC* STGMEDIUM* int32';
+		defineFunction: #EnumFormatEtc:ppenumFormatEtc:
+			argumentTypes: 'uint32 IEnumFORMATETC**';
 		defineFunction: #DAdvise:advf:pAdvSink:pdwConnection:
 			argumentTypes: 'FORMATETC* uint32 IAdviseSink* uint32*';
-		defineFunction: #DUnadvise: argumentTypes: 'uint32';
-		defineFunction: #EnumDAdvise: argumentTypes: 'IUnknown**'! !
+		defineFunction: #DUnadvise:
+			argumentTypes: 'uint32';
+		defineFunction: #EnumDAdvise:
+			argumentTypes: 'IEnumSTATDATA**'
+! !
 !OS.COM.IDataObject class categoriesForMethods!
 defineFunctions!initializing!public!template definition! !
 !

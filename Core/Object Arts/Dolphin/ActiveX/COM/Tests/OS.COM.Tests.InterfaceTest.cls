@@ -49,7 +49,7 @@ testGetObject
 	font name!
 
 testLatestDerivation
-	self should: [IUnknown latestDerivation] raise: Error matching: [:ex | ex description = 'IUnknown class should not implement #latestDerivation'].
+	self should: [IUnknown latestDerivation] raise: Error matching: [:ex | ex description = 'IUnknown class should not implement #findMostDerived'].
 	self assert: IErrorInfo latestDerivation identicalTo: IErrorInfo.
 	self assert: IClassFactory latestDerivation identicalTo: IClassFactory2! !
 !OS.COM.Tests.InterfaceTest categoriesForMethods!
