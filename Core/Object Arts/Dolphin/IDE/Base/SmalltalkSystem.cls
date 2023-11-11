@@ -1764,11 +1764,19 @@ displayOn: aStream
 
 	aStream nextPutAll: 'Development System'!
 
+dolphinHomePage
+	self openUrl: self dolphinSmalltalkUrl!
+
 dolphinNewsgroup
 	self openUrl: self dolphinNewsgroupUrl!
 
 dolphinNewsgroupUrl
 	^'http://groups.google.com/group/comp.lang.smalltalk.dolphin'!
+
+dolphinSmalltalkUrl
+	"Private - Answer the URL of the Object Arts home page"
+
+	^'https://github.com/dolphinsmalltalk'!
 
 dolphinWikiUrl
 	^'https://github.com/dolphinsmalltalk/Dolphin/wiki'!
@@ -2306,9 +2314,6 @@ minimizeAll
 	View topLevelViews 
 		do: [:each | (each class canUnderstandProtocol: #topView) ifTrue: [each minimize]]!
 
-myDolphinAccount
-	self openUrl: self sessionManager myDolphinUrl!
-
 nameForArgument: anObject 
 	| type answer |
 	answer := String writeStream.
@@ -2369,14 +2374,6 @@ nonDefaultSystemOptionsLiteralsMap
 
 nukeChangeHistory
 	self changeManager class nuke!
-
-objectArtsHomePage
-	self openUrl: self objectArtsUrl!
-
-objectArtsUrl
-	"Private - Answer the URL of the Object Arts home page"
-
-	^'http://www.object-arts.com'!
 
 okToInstallPatchLevel: anInteger
 	"Private - Check to see if an attempt to upgrade to a patch level of anInteger is valid. 
@@ -3328,10 +3325,6 @@ queryCommand: aCommandQuery
 
 	| cmd |
 	cmd := aCommandQuery commandSymbol.
-	cmd == #myDolphinAccount 
-		ifTrue: 
-			[aCommandQuery isEnabled: self sessionManager registeredSerialNumber notNil.
-			^true].
 	cmd == #toolsMenu 
 		ifTrue: 
 			[aCommandQuery isEnabled: true.
@@ -4413,8 +4406,10 @@ disassemblyStylerClass!constants!public! !
 displayItLocale!options!public! !
 displayItLocale:!options!public! !
 displayOn:!displaying!public! !
+dolphinHomePage!commands!public! !
 dolphinNewsgroup!commands!public! !
 dolphinNewsgroupUrl!public! !
+dolphinSmalltalkUrl!constants!private! !
 dolphinWikiUrl!public! !
 dolphinWikiWeb!commands!public! !
 dropClassFile:!commands!private! !
@@ -4486,7 +4481,6 @@ methodsWithNewBytecodes!browsing!private! !
 methodsWithNewBytecodesIn:!browsing!private! !
 methodWorkspaceClass!options!public! !
 minimizeAll!commands!public! !
-myDolphinAccount!accessing!public! !
 nameForArgument:!helpers!private! !
 nameForBlockOfArity:!helpers!private! !
 newCodeRefactoringToolFor:!helpers!public!refactoring! !
@@ -4495,8 +4489,6 @@ newWorkspace!commands!public! !
 nonDefaultPublishedAspectsLiteralsMapOf:!private!theming! !
 nonDefaultSystemOptionsLiteralsMap!private!theming! !
 nukeChangeHistory!private!refactoring! !
-objectArtsHomePage!commands!public! !
-objectArtsUrl!constants!private! !
 okToInstallPatchLevel:!patching!private! !
 onAboutToDisplayMenu:!event handling!public! !
 onClassAdded:!event handling!public! !

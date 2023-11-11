@@ -10,20 +10,20 @@ WebBrowserSessionManager comment: ''!
 !WebBrowserSessionManager categoriesForClass!Unclassified! !
 !WebBrowserSessionManager methodsFor!
 
+dolphinSmalltalkUrl
+	"Private - Answer the URL of the Dolphin Smalltalk home page"
+
+	^'https://github.com/dolphinsmalltalk'!
+
 main
 	"Start the WebBrowser application."
 
 	| pad |
 	pad := self mainShellClass show.
-	self argc > 1 ifTrue: [pad openUrl: (self argv at: 2)]!
-
-objectArtsUrl
-	"Private - Answer the URL of the Object Arts home page"
-
-	^'http://www.object-arts.com'.! !
+	self argc > 1 ifTrue: [pad openUrl: (self argv at: 2)]! !
 !WebBrowserSessionManager categoriesForMethods!
+dolphinSmalltalkUrl!constants!private! !
 main!operations!public! !
-objectArtsUrl!constants!private! !
 !
 
 !WebBrowserSessionManager class methodsFor!
