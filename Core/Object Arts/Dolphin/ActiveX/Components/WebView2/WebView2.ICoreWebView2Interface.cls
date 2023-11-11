@@ -37,8 +37,8 @@ printPropertiesOn: aStream
 		separatedBy: [aStream nextPutAll: ', ']! !
 !WebView2.ICoreWebView2Interface categoriesForMethods!
 printableProperties!printing!private! !
-printOn:!development!printing!public! !
-printPropertiesOn:!development!printing!private! !
+printOn:!printing!public! !
+printPropertiesOn:!printing!private! !
 !
 
 !WebView2.ICoreWebView2Interface class methodsFor!

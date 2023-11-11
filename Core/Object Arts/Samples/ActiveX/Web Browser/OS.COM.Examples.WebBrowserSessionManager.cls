@@ -16,9 +16,15 @@ main
 
 	| pad |
 	pad := self mainShellClass show.
-	self argc > 1 ifTrue: [pad openUrl: (self argv at: 2)]! !
+	self argc > 1 ifTrue: [pad openUrl: (self argv at: 2)]!
+
+traceStream
+	"Answer a <puttableStream> onto the session's trace output device."
+
+	^self stdout! !
 !OS.COM.Examples.WebBrowserSessionManager categoriesForMethods!
 main!operations!public! !
+traceStream!accessing!operations-logging!public! !
 !
 
 !OS.COM.Examples.WebBrowserSessionManager class methodsFor!
