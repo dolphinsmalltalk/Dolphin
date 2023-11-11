@@ -80,3 +80,5 @@ fileInFrom: aSourceFiler
 	[aSourceFiler atEnd or: [(chunk := aSourceFiler nextChunk) isEmpty]]
 		whileFalse: [chunkBlock cull: chunk cull: aSourceFiler].
 	^endAction value! !
+
+#(#initialize #fromString:) do: [:each | ExternalDescriptor class removeSelector: each]!
