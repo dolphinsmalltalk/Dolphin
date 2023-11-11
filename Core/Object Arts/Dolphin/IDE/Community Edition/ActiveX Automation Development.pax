@@ -5165,8 +5165,8 @@ methodCommentDescription
 
 mungeSelectorKeywords: aSequencedReadableCollection forMember: aFUNCDESC
 	"#1332: Override in order to generate Dolphin Smalltalk format external library call selectors (as
-	documented in the 'External Method Selector' pattern, see
-	http://www.object-arts.com/Lib/EducationCentre4/htm/externalmethodselector.htm"
+	documented in the 'External Method Selector' pattern in the Dolphin Pattern Book section of the
+	Education Centre."
 
 	^self
 		reinventBadSelector: (aSequencedReadableCollection collect: [:each | self identifierFrom: each])

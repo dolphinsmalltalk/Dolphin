@@ -280,11 +280,6 @@ mainShellClass
 
 	^#{SmalltalkSystemShell} valueOrNil ?? TranscriptShell!
 
-myDolphinUrl
-	^'http://www.object-arts.com/content/mydolphin/mydolphin?serialNumberOnly=<1d>'
-		expandMacrosWithArguments: {self registeredSerialNumber}
-		locale: Locale invariant!
-
 onExit
 	"Perform pre-termination actions."
 
@@ -776,7 +771,6 @@ lastSerialNumberRegistryKeyPre61!accessing!private!product! !
 logComment:!operations-logging!public! !
 logError:!operations-logging!public! !
 mainShellClass!constants!public! !
-myDolphinUrl!private! !
 onExit!event handling!public! !
 onQueryEndSession:!event handling!public! !
 onQueryWindowsShutdown!event handling!public! !
