@@ -78,7 +78,7 @@ response
 !WebView2.ICoreWebView2WebResourceResponseReceivedEventArgs categoriesForMethods!
 get_Request:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceResponseReceivedEventArgs!private! !
 get_Response:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceResponseReceivedEventArgs!private! !
-printPropertiesOn:!development!printing!private! !
+printPropertiesOn:!printing!private! !
 request!**auto generated**!properties!public! !
 response!**auto generated**!properties!public! !
 !

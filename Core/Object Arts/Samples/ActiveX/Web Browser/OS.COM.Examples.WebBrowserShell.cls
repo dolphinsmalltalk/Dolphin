@@ -343,11 +343,7 @@ onWebView2Event: anICoreWebView2EventArgs name: aSymbol
 	trace := aSymbol lastCodeUnit == $:
 				ifTrue: ['<1s> <2p>' << { aSymbol. anICoreWebView2EventArgs }]
 				ifFalse: [aSymbol].
-	self isLoggingEvents
-		ifTrue: 
-			[Transcript
-				nextPutAll: trace;
-				cr].
+	self isLoggingEvents ifTrue: [SessionManager current traceLine: trace].
 	statusModel value: trace!
 
 onWebViewAvailable

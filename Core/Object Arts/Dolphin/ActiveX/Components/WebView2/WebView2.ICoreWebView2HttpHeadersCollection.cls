@@ -215,7 +215,7 @@ keyAtValue:ifAbsent:!accessing!public! !
 keys!accessing!public! !
 keysAndValuesDo:!enumerating!public! !
 keysDo:!enumerating!public! !
-printPropertiesOn:!development!printing!private! !
+printPropertiesOn:!printing!private! !
 removeAllKeys:!public!removing! !
 removeAllKeys:ifAbsent:!public!removing! !
 RemoveHeader:!COM Interfaces-ICoreWebView2HttpRequestHeaders!private! !

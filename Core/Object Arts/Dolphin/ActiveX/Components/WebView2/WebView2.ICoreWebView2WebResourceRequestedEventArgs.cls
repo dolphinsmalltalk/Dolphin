@@ -129,7 +129,7 @@ get_Request:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceRequested
 get_ResourceContext:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceRequestedEventArgs!private! !
 get_Response:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceRequestedEventArgs!private! !
 GetDeferral:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceRequestedEventArgs!private! !
-printPropertiesOn:!development!printing!private! !
+printPropertiesOn:!printing!private! !
 put_Response:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceRequestedEventArgs!private! !
 request!**auto generated**!properties!public! !
 resourceContext!**auto generated**!properties!public! !

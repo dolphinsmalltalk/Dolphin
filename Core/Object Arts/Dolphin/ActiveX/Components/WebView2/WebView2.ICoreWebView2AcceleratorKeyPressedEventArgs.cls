@@ -172,7 +172,7 @@ keyEventKind!**auto generated**!properties!public! !
 keyEventLParam!**auto generated**!properties!public! !
 keyName!accessing!public! !
 physicalKeyStatus!**auto generated**!properties!public! !
-printPropertiesOn:!development!printing!private! !
+printPropertiesOn:!printing!private! !
 put_Handled:!**auto generated**!COM Interfaces-ICoreWebView2AcceleratorKeyPressedEventArgs!private! !
 virtualKey!**auto generated**!properties!public! !
 windowsKeyEvent!printing!public! !
