@@ -8,6 +8,7 @@ WebView2.ICoreWebView2Sequence
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WebView2.ICoreWebView2ClientCertificateCollection guid: (OS.COM.IID fromString: '{ef5674d2-bcc3-11eb-8529-0242ac130003}')!
+WebView2.ICoreWebView2ClientCertificateCollection isEgressOnly: true!
 WebView2.ICoreWebView2ClientCertificateCollection comment: '`ICoreWebView2ClientCertificateCollection` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ClientCertificateCollection'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

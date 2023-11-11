@@ -8,6 +8,7 @@ WebView2.ICoreWebView2Settings7
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WebView2.ICoreWebView2Settings8 guid: (OS.COM.IID fromString: '{9e6b0e8f-86ad-4e81-8147-a9b5edb68650}')!
+WebView2.ICoreWebView2Settings8 isEgressOnly: true!
 WebView2.ICoreWebView2Settings8 comment: '`ICoreWebView2Settings8` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Settings8'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

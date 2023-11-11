@@ -72,6 +72,8 @@ get_EnableTrackingPrevention:!**auto generated**!COM Interfaces-ICoreWebView2Env
 put_EnableTrackingPrevention:!**auto generated**!COM Interfaces-ICoreWebView2EnvironmentOptions5!private! !
 !
 
+WebView2.ICoreWebView2EnvironmentOptions5 methodProtocol: #ICoreWebView2EnvironmentOptions5 attributes: #(#readOnly) selectors: #(#get_EnableTrackingPrevention: #put_EnableTrackingPrevention:)!
+
 !WebView2.ICoreWebView2EnvironmentOptions5 class methodsFor!
 
 defineFunctions

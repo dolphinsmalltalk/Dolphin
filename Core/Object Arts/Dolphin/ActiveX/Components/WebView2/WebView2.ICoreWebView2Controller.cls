@@ -8,6 +8,7 @@ WebView2.ICoreWebView2Interface
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WebView2.ICoreWebView2Controller guid: (OS.COM.IID fromString: '{4d00c0d1-9434-4eb6-8078-8697a560334f}')!
+WebView2.ICoreWebView2Controller isEgressOnly: true!
 WebView2.ICoreWebView2Controller comment: '`ICoreWebView2Controller` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Controller'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -693,8 +694,12 @@ defineFunctions
 		defineFunction: #Close;
 		defineFunction: #get_CoreWebView2:
 			argumentTypes: 'ICoreWebView2**'
-! !
+!
+
+latestDerivation
+	^##(super latestDerivation)! !
 !WebView2.ICoreWebView2Controller class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
+latestDerivation!enquiries!public! !
 !
 

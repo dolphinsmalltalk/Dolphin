@@ -8,6 +8,7 @@ WebView2.ICoreWebView2Environment2
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WebView2.ICoreWebView2Environment3 guid: (OS.COM.IID fromString: '{80a22ae3-be7c-4ce2-afe1-5a50056cdeeb}')!
+WebView2.ICoreWebView2Environment3 isEgressOnly: true!
 WebView2.ICoreWebView2Environment3 comment: '`ICoreWebView2Environment3` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Environment3'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

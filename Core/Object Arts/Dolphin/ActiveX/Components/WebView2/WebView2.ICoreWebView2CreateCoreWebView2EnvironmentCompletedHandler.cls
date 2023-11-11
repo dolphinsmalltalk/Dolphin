@@ -30,11 +30,24 @@ interface ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler : IUnknown
 ```
 '!
 !WebView2.ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler methodsFor!
+
+Invoke: invoke arg: arg
+	"Callout for the ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler::Invoke() interface function.
+	N.B. This method has been automatically generated from 
+	the vtable defined in ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler>>defineFunctions. DO NOT MODIFY!!"
+
+	<virtual stdcall: hresult 4 hresult WebView2.ICoreWebView2Environment*>
+	^self invalidCall: _failureCode! !
+!WebView2.ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler categoriesForMethods!
+Invoke:arg:!COM Interfaces-ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler!public! !
+!
+
 !WebView2.ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler'
-		ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler defineTemplate
+		ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler compileFunctions
 	"
 
 	self defineFunction: #Invoke:arg: argumentTypes: 'hresult ICoreWebView2Environment*'! !

@@ -36,10 +36,21 @@ basicRegister: tokenBuffer
 	source Add_WebMessageReceived: self token: tokenBuffer!
 
 basicUnregister
-	source Remove_WebMessageReceived: token! !
+	source Remove_WebMessageReceived: token!
+
+Invoke: sender args: args
+	"Invoke the Invoke() method of the COM object.
+
+		HRESULT __stdcall Invoke(
+			[in]ICoreWebView2Frame* sender,
+			[in]ICoreWebView2WebMessageReceivedEventArgs* args);"
+
+	<virtual stdcall: hresult 4 ICoreWebView2Frame* ICoreWebView2WebMessageReceivedEventArgs*>
+	^self invalidCall: _failureCode! !
 !WebView2.ICoreWebView2FrameWebMessageReceivedEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
+Invoke:args:!**auto generated**!COM Interfaces-ICoreWebView2FrameWebMessageReceivedEventHandler!public! !
 !
 
 !WebView2.ICoreWebView2FrameWebMessageReceivedEventHandler class methodsFor!

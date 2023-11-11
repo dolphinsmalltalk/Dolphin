@@ -8,6 +8,7 @@ WebView2.ICoreWebView2Interface
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WebView2.ICoreWebView2File guid: (OS.COM.IID fromString: '{f2c19559-6bc1-4583-a757-90021be9afec}')!
+WebView2.ICoreWebView2File isEgressOnly: true!
 WebView2.ICoreWebView2File comment: '`ICoreWebView2File` is a wrapper class for the COM interface ''WebView2.ICoreWebView2File'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

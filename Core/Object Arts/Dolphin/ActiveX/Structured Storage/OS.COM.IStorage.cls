@@ -8,6 +8,7 @@ OS.COM.IUnknown
 	classInstanceVariableNames: ''
 	classConstants: {}!
 OS.COM.IStorage guid: (OS.COM.IID fromString: '{0000000b-0000-0000-c000-000000000046}')!
+OS.COM.IStorage isEgressOnly: true!
 OS.COM.IStorage comment: 'IStorage is a COMInterface class to wrap the standard COM interface of the same name.
 
 IStorage is an abstraction to represent a structured storage mechanism somewhat similar to a file system which contains both streams (files), represented by IStream interfaces, and sub-storages (sub-directories), represented by further IStorage interfaces. The standard system implementation of IStorage provides a file system within a file (or in fact, and byte device which implements ILockBytes). These are commonly called "compound files".

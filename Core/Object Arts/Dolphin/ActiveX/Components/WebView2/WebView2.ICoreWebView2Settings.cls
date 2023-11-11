@@ -8,6 +8,7 @@ WebView2.ICoreWebView2Interface
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WebView2.ICoreWebView2Settings guid: (OS.COM.IID fromString: '{e562e4f0-d7fa-43ac-8d71-c05150499f00}')!
+WebView2.ICoreWebView2Settings isEgressOnly: true!
 WebView2.ICoreWebView2Settings comment: '`ICoreWebView2Settings` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Settings'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -740,9 +741,13 @@ defineFunctions
 			argumentTypes: 'sdword*';
 		defineFunction: #put_IsBuiltInErrorPageEnabled:
 			argumentTypes: 'sdword'
-! !
+!
+
+latestDerivation
+	^##(super latestDerivation)! !
 !WebView2.ICoreWebView2Settings class categoriesForMethods!
 defaultUserAgent!COM Interfaces-ICoreWebView2Settings2!private! !
 defineFunctions!**auto generated**!initializing!public!template definition! !
+latestDerivation!enquiries!public! !
 !
 

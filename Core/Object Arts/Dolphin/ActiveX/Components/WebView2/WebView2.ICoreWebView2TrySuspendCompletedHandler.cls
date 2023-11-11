@@ -30,11 +30,24 @@ interface ICoreWebView2TrySuspendCompletedHandler : IUnknown
 ```
 '!
 !WebView2.ICoreWebView2TrySuspendCompletedHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2TrySuspendCompletedHandler methodsFor!
+
+Invoke: invoke arg: arg
+	"Callout for the ICoreWebView2TrySuspendCompletedHandler::Invoke() interface function.
+	N.B. This method has been automatically generated from 
+	the vtable defined in ICoreWebView2TrySuspendCompletedHandler>>defineFunctions. DO NOT MODIFY!!"
+
+	<virtual stdcall: hresult 4 hresult int32>
+	^self invalidCall: _failureCode! !
+!WebView2.ICoreWebView2TrySuspendCompletedHandler categoriesForMethods!
+Invoke:arg:!COM Interfaces-ICoreWebView2TrySuspendCompletedHandler!public! !
+!
+
 !WebView2.ICoreWebView2TrySuspendCompletedHandler class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2TrySuspendCompletedHandler'
-		ICoreWebView2TrySuspendCompletedHandler defineTemplate
+		ICoreWebView2TrySuspendCompletedHandler compileFunctions
 	"
 
 	self defineFunction: #Invoke:arg: argumentTypes: 'hresult sdword'! !

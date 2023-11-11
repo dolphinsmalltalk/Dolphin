@@ -8,6 +8,7 @@ WebView2.ICoreWebView2NavigationStartingEventArgs2
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WebView2.ICoreWebView2NavigationStartingEventArgs3 guid: (OS.COM.IID fromString: '{ddffe494-4942-4bd2-ab73-35b8ff40e19f}')!
+WebView2.ICoreWebView2NavigationStartingEventArgs3 isEgressOnly: true!
 WebView2.ICoreWebView2NavigationStartingEventArgs3 comment: '`ICoreWebView2NavigationStartingEventArgs3` is a wrapper class for the COM interface ''WebView2.ICoreWebView2NavigationStartingEventArgs3'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

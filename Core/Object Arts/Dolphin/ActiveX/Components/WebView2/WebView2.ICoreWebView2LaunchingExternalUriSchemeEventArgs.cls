@@ -8,6 +8,7 @@ WebView2.ICoreWebView2EventArgs
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WebView2.ICoreWebView2LaunchingExternalUriSchemeEventArgs guid: (OS.COM.IID fromString: '{07d1a6c3-7175-4ba1-9306-e593ca07e46c}')!
+WebView2.ICoreWebView2LaunchingExternalUriSchemeEventArgs isEgressOnly: true!
 WebView2.ICoreWebView2LaunchingExternalUriSchemeEventArgs comment: '`ICoreWebView2LaunchingExternalUriSchemeEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2LaunchingExternalUriSchemeEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

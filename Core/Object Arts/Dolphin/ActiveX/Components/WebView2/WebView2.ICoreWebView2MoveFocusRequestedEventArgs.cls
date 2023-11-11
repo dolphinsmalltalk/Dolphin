@@ -8,6 +8,7 @@ WebView2.ICoreWebView2EventArgs
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WebView2.ICoreWebView2MoveFocusRequestedEventArgs guid: (OS.COM.IID fromString: '{2d6aa13b-3839-4a15-92fc-d88b3c0d9c9d}')!
+WebView2.ICoreWebView2MoveFocusRequestedEventArgs isEgressOnly: true!
 WebView2.ICoreWebView2MoveFocusRequestedEventArgs comment: '`ICoreWebView2MoveFocusRequestedEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2MoveFocusRequestedEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

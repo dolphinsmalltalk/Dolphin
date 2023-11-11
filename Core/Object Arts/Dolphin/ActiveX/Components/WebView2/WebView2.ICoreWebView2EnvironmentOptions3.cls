@@ -72,6 +72,8 @@ isCustomCrashReportingEnabled:!properties!public! !
 put_IsCustomCrashReportingEnabled:!**auto generated**!COM Interfaces-ICoreWebView2EnvironmentOptions3!private! !
 !
 
+WebView2.ICoreWebView2EnvironmentOptions3 methodProtocol: #ICoreWebView2EnvironmentOptions3 attributes: #(#readOnly) selectors: #(#get_IsCustomCrashReportingEnabled: #put_IsCustomCrashReportingEnabled:)!
+
 !WebView2.ICoreWebView2EnvironmentOptions3 class methodsFor!
 
 defineFunctions

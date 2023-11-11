@@ -8,6 +8,7 @@ WebView2.ICoreWebView2EventArgs
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WebView2.ICoreWebView2NavigationStartingEventArgs guid: (OS.COM.IID fromString: '{5b495469-e119-438a-9b18-7604f25f2e49}')!
+WebView2.ICoreWebView2NavigationStartingEventArgs isEgressOnly: true!
 WebView2.ICoreWebView2NavigationStartingEventArgs comment: '`ICoreWebView2NavigationStartingEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2NavigationStartingEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -259,8 +260,12 @@ defineFunctions
 			argumentTypes: 'sdword';
 		defineFunction: #get_NavigationId:
 			argumentTypes: 'qword*'
-! !
+!
+
+latestDerivation
+	^##(super latestDerivation)! !
 !WebView2.ICoreWebView2NavigationStartingEventArgs class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
+latestDerivation!enquiries!public! !
 !
 

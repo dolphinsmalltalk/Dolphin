@@ -8,6 +8,7 @@ WebView2.ICoreWebView2EventArgs
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WebView2.ICoreWebView2ContextMenuRequestedEventArgs guid: (OS.COM.IID fromString: '{a1d309ee-c03f-11eb-8529-0242ac130003}')!
+WebView2.ICoreWebView2ContextMenuRequestedEventArgs isEgressOnly: true!
 WebView2.ICoreWebView2ContextMenuRequestedEventArgs comment: '`ICoreWebView2ContextMenuRequestedEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ContextMenuRequestedEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

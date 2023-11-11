@@ -8,6 +8,7 @@ OS.COM.IUnknown
 	classInstanceVariableNames: ''
 	classConstants: {}!
 OS.COM.IRootStorage guid: (OS.COM.IID fromString: '{00000012-0000-0000-c000-000000000046}')!
+OS.COM.IRootStorage isEgressOnly: true!
 OS.COM.IRootStorage comment: 'IRootStorage is a COMInterface class to wrap the standard COM interface of the same name.
 
 IRootStorage is for saving a users data in low-memory situations. Its single method is used to switch a storage object to a different underlying file and to save the storage object to that file, which it guarantees to do, even in low-memory conditions.'!

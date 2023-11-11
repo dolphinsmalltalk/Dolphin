@@ -8,6 +8,7 @@ WebView2.ICoreWebView2Settings3
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WebView2.ICoreWebView2Settings4 guid: (OS.COM.IID fromString: '{cb56846c-4168-4d53-b04f-03b6d6796ff2}')!
+WebView2.ICoreWebView2Settings4 isEgressOnly: true!
 WebView2.ICoreWebView2Settings4 comment: '`ICoreWebView2Settings4` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Settings4'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

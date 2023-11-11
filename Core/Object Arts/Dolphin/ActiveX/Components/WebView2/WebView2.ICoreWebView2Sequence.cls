@@ -9,6 +9,7 @@ WebView2.ICoreWebView2Collection
 	classConstants: {}!
 WebView2.ICoreWebView2Sequence guid: (OS.COM.IID fromString: '{9033689d-5414-4ef0-8f8c-b74e4f485261}')!
 WebView2.ICoreWebView2Sequence isNonInstantiable: true!
+WebView2.ICoreWebView2Sequence isEgressOnly: true!
 WebView2.ICoreWebView2Sequence comment: '`ICoreWebView2Sequence` is not defined in the WebView2 IDL, but is defined here for economy of mechanism, providing a common implementation of most of the Smalltalk `<sequencedReadableCollection>` protocol for the WebView2 collections that support random access by integer index.
 
 Subclasses must provide at least `elementClass` and `GetValueAtIndex:value:` to complete the implementation.'!

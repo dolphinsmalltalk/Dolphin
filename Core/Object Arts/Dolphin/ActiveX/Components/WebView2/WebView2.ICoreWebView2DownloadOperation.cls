@@ -8,6 +8,7 @@ WebView2.ICoreWebView2Interface
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WebView2.ICoreWebView2DownloadOperation guid: (OS.COM.IID fromString: '{3d6b6cf2-afe1-44c7-a995-c65117714336}')!
+WebView2.ICoreWebView2DownloadOperation isEgressOnly: true!
 WebView2.ICoreWebView2DownloadOperation comment: '`ICoreWebView2DownloadOperation` is a wrapper class for the COM interface ''WebView2.ICoreWebView2DownloadOperation'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

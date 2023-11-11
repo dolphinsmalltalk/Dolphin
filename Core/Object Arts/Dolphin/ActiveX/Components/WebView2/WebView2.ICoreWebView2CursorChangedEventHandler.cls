@@ -36,10 +36,21 @@ basicRegister: tokenBuffer
 	source Add_CursorChanged: self token: tokenBuffer!
 
 basicUnregister
-	source Remove_CursorChanged: token! !
+	source Remove_CursorChanged: token!
+
+Invoke: sender args: args
+	"Invoke the Invoke() method of the COM object.
+
+		HRESULT __stdcall Invoke(
+			[in]ICoreWebView2CompositionController* sender,
+			[in]IUnknown* args);"
+
+	<virtual stdcall: hresult 4 ICoreWebView2CompositionController* IUnknown*>
+	^self invalidCall: _failureCode! !
 !WebView2.ICoreWebView2CursorChangedEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
+Invoke:args:!**auto generated**!COM Interfaces-ICoreWebView2CursorChangedEventHandler!public! !
 !
 
 !WebView2.ICoreWebView2CursorChangedEventHandler class methodsFor!

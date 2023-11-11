@@ -8,6 +8,7 @@ WebView2.ICoreWebView2EventArgs
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WebView2.ICoreWebView2ServerCertificateErrorDetectedEventArgs guid: (OS.COM.IID fromString: '{012193ed-7c13-48ff-969d-a84c1f432a14}')!
+WebView2.ICoreWebView2ServerCertificateErrorDetectedEventArgs isEgressOnly: true!
 WebView2.ICoreWebView2ServerCertificateErrorDetectedEventArgs comment: '`ICoreWebView2ServerCertificateErrorDetectedEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ServerCertificateErrorDetectedEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

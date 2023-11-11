@@ -8,6 +8,7 @@ WebView2.ICoreWebView2EventArgs
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WebView2.ICoreWebView2ScriptDialogOpeningEventArgs guid: (OS.COM.IID fromString: '{7390bb70-abe0-4843-9529-f143b31b03d6}')!
+WebView2.ICoreWebView2ScriptDialogOpeningEventArgs isEgressOnly: true!
 WebView2.ICoreWebView2ScriptDialogOpeningEventArgs comment: '`ICoreWebView2ScriptDialogOpeningEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ScriptDialogOpeningEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

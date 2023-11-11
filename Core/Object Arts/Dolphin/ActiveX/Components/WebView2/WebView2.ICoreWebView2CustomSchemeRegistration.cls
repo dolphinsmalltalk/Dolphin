@@ -8,6 +8,7 @@ WebView2.ICoreWebView2Interface
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WebView2.ICoreWebView2CustomSchemeRegistration guid: (OS.COM.IID fromString: '{d60ac92c-37a6-4b26-a39e-95cfe59047bb}')!
+WebView2.ICoreWebView2CustomSchemeRegistration isEgressOnly: true!
 WebView2.ICoreWebView2CustomSchemeRegistration comment: '`ICoreWebView2CustomSchemeRegistration` is a wrapper class for the COM interface ''WebView2.ICoreWebView2CustomSchemeRegistration'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

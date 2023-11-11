@@ -8,6 +8,7 @@ WebView2.ICoreWebView2Interface
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WebView2.ICoreWebView2WindowFeatures guid: (OS.COM.IID fromString: '{5eaf559f-b46e-4397-8860-e422f287ff1e}')!
+WebView2.ICoreWebView2WindowFeatures isEgressOnly: true!
 WebView2.ICoreWebView2WindowFeatures comment: '`ICoreWebView2WindowFeatures` is a wrapper class for the COM interface ''WebView2.ICoreWebView2WindowFeatures'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

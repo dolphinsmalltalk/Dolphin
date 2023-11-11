@@ -8,6 +8,7 @@ WebView2.ICoreWebView2Environment10
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WebView2.ICoreWebView2Environment11 guid: (OS.COM.IID fromString: '{f0913dc6-a0ec-42ef-9805-91dff3a2966a}')!
+WebView2.ICoreWebView2Environment11 isEgressOnly: true!
 WebView2.ICoreWebView2Environment11 comment: '`ICoreWebView2Environment11` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Environment11'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

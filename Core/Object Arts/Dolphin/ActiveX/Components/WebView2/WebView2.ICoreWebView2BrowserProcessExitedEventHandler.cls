@@ -36,10 +36,21 @@ basicRegister: tokenBuffer
 	source Add_BrowserProcessExited: self token: tokenBuffer!
 
 basicUnregister
-	source Remove_BrowserProcessExited: token! !
+	source Remove_BrowserProcessExited: token!
+
+Invoke: sender args: args
+	"Invoke the Invoke() method of the COM object.
+
+		HRESULT __stdcall Invoke(
+			[in]ICoreWebView2Environment* sender,
+			[in]ICoreWebView2BrowserProcessExitedEventArgs* args);"
+
+	<virtual stdcall: hresult 4 ICoreWebView2Environment* ICoreWebView2BrowserProcessExitedEventArgs*>
+	^self invalidCall: _failureCode! !
 !WebView2.ICoreWebView2BrowserProcessExitedEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
+Invoke:args:!**auto generated**!COM Interfaces-ICoreWebView2BrowserProcessExitedEventHandler!public! !
 !
 
 !WebView2.ICoreWebView2BrowserProcessExitedEventHandler class methodsFor!

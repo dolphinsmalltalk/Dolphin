@@ -36,10 +36,21 @@ basicRegister: tokenBuffer
 	source Add_BasicAuthenticationRequested: self token: tokenBuffer!
 
 basicUnregister
-	source Remove_BasicAuthenticationRequested: token! !
+	source Remove_BasicAuthenticationRequested: token!
+
+Invoke: sender args: args
+	"Invoke the Invoke() method of the COM object.
+
+		HRESULT __stdcall Invoke(
+			[in]ICoreWebView2* sender,
+			[in]ICoreWebView2BasicAuthenticationRequestedEventArgs* args);"
+
+	<virtual stdcall: hresult 4 ICoreWebView2* ICoreWebView2BasicAuthenticationRequestedEventArgs*>
+	^self invalidCall: _failureCode! !
 !WebView2.ICoreWebView2BasicAuthenticationRequestedEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
+Invoke:args:!**auto generated**!COM Interfaces-ICoreWebView2BasicAuthenticationRequestedEventHandler!public! !
 !
 
 !WebView2.ICoreWebView2BasicAuthenticationRequestedEventHandler class methodsFor!

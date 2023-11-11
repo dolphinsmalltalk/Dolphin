@@ -25,7 +25,7 @@ Advise: pAdvSink pdwConnection: pdwConnection
 			[out] unsigned long* pdwConnection);
 	"
 
-	<virtual stdcall: hresult 20 IUnknown* uint32*>
+	<virtual stdcall: hresult 20 IAdviseSink* uint32*>
 	^self invalidCall: _failureCode!
 
 appName
@@ -128,7 +128,7 @@ GetClipboardData: dwReserved ppDataObject: ppDataObject
 			[out] IDataObject** ppDataObject);
 	"
 
-	<virtual stdcall: hresult 11 uint32 IUnknown**>
+	<virtual stdcall: hresult 11 uint32 IDataObject**>
 	^self invalidCall: _failureCode!
 
 getExtent: dwDrawAspect
@@ -181,7 +181,7 @@ GetMoniker: dwAssign dwWhichMoniker: dwWhichMoniker ppmk: ppmk
 			[out] IMoniker** ppmk);
 	"
 
-	<virtual stdcall: hresult 9 uint32 uint32 IUnknown**>
+	<virtual stdcall: hresult 9 uint32 uint32 IMoniker**>
 	^self invalidCall: _failureCode!
 
 getUserClassID
@@ -325,7 +325,7 @@ SetMoniker: dwWhichMoniker pmk: pmk
 			[in] IMoniker* pmk);
 	"
 
-	<virtual stdcall: hresult 8 uint32 IUnknown*>
+	<virtual stdcall: hresult 8 uint32 IMoniker*>
 	^self invalidCall: _failureCode!
 
 shortName
@@ -368,7 +368,7 @@ verbs
 			"If we get OLEOBJ_E_NOVERBS then just return an empty collection"
 			ex hresult asUnsignedInteger = 16r80040180 ifTrue: [ex return: #()] ifFalse: [ex pass]]! !
 !OS.COM.IOleObject categoriesForMethods!
-Advise:pdwConnection:!COM Interfaces-IOleObject!private! !
+Advise:pdwConnection:!**auto generated**!COM Interfaces-IOleObject!private! !
 appName!accessing!public! !
 close:!methods!public! !
 Close:!COM Interfaces-IOleObject!private! !
@@ -379,12 +379,12 @@ enumVerbs!accessing!public! !
 EnumVerbs:!COM Interfaces-IOleObject!private! !
 fullName!accessing!public! !
 GetClientSite:!**auto generated**!COM Interfaces-IOleObject!private! !
-GetClipboardData:ppDataObject:!COM Interfaces-IOleObject!private! !
+GetClipboardData:ppDataObject:!**auto generated**!COM Interfaces-IOleObject!private! !
 getExtent:!**auto generated**!methods!public! !
 GetExtent:psizel:!**auto generated**!COM Interfaces-IOleObject!private! !
 getMiscStatus:!**auto generated**!methods!public! !
 GetMiscStatus:pdwStatus:!**auto generated**!COM Interfaces-IOleObject!private! !
-GetMoniker:dwWhichMoniker:ppmk:!COM Interfaces-IOleObject!private! !
+GetMoniker:dwWhichMoniker:ppmk:!**auto generated**!COM Interfaces-IOleObject!private! !
 getUserClassID!**auto generated**!methods!public! !
 GetUserClassID:!**auto generated**!COM Interfaces-IOleObject!private! !
 getUserType:!methods!public! !
@@ -430,17 +430,13 @@ defineFunctions
 			returnType: 'int32'
 			argumentTypes: 'uint32';
 		defineFunction: #SetMoniker:pmk:
-"			argumentTypes: 'uint32 IMoniker*';"
-			argumentTypes: 'uint32 IUnknown*';
+			argumentTypes: 'uint32 IMoniker*';
 		defineFunction: #GetMoniker:dwWhichMoniker:ppmk:
-"			argumentTypes: 'uint32 uint32 IMoniker**';"
-			argumentTypes: 'uint32 uint32 IUnknown**';
+			argumentTypes: 'uint32 uint32 IMoniker**';
 		defineFunction: #InitFromData:fCreation:dwReserved:
-"			argumentTypes: 'IDataObject* int32 uint32';"
-			argumentTypes: 'IUnknown* int32 uint32';
+			argumentTypes: 'IDataObject* int32 uint32';
 		defineFunction: #GetClipboardData:ppDataObject:
-"			argumentTypes: 'uint32 IDataObject**';"
-			argumentTypes: 'uint32 IUnknown**';
+			argumentTypes: 'uint32 IDataObject**';
 		defineFunction: #DoVerb:lpmsg:pActiveSite:lindex:hwndParent:lprcPosRect:
 			argumentTypes: 'int32 MSG* IOleClientSite* int32 handle RECTL*';
 		defineFunction: #EnumVerbs:
@@ -458,8 +454,7 @@ defineFunctions
 		defineFunction: #GetExtent:psizel:
 			argumentTypes: 'uint32 SIZE*';
 		defineFunction: #Advise:pdwConnection:
-"			argumentTypes: 'IAdviseSink* uint32*';"
-			argumentTypes: 'IUnknown* uint32*';
+			argumentTypes: 'IAdviseSink* uint32*';
 		defineFunction: #Unadvise:
 			returnType: 'int32'				"Typically don't care about errors on Unadvise"
 			argumentTypes: 'uint32';

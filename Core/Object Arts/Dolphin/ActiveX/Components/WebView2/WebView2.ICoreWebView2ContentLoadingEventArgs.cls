@@ -8,6 +8,7 @@ WebView2.ICoreWebView2EventArgs
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WebView2.ICoreWebView2ContentLoadingEventArgs guid: (OS.COM.IID fromString: '{0c8a1275-9b6b-4901-87ad-70df25bafa6e}')!
+WebView2.ICoreWebView2ContentLoadingEventArgs isEgressOnly: true!
 WebView2.ICoreWebView2ContentLoadingEventArgs comment: '`ICoreWebView2ContentLoadingEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ContentLoadingEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

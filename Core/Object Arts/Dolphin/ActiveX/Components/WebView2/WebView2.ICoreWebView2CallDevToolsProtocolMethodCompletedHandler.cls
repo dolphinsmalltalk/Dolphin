@@ -30,11 +30,24 @@ interface ICoreWebView2CallDevToolsProtocolMethodCompletedHandler : IUnknown
 ```
 '!
 !WebView2.ICoreWebView2CallDevToolsProtocolMethodCompletedHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2CallDevToolsProtocolMethodCompletedHandler methodsFor!
+
+Invoke: invoke arg: arg
+	"Callout for the ICoreWebView2CallDevToolsProtocolMethodCompletedHandler::Invoke() interface function.
+	N.B. This method has been automatically generated from 
+	the vtable defined in ICoreWebView2CallDevToolsProtocolMethodCompletedHandler>>defineFunctions. DO NOT MODIFY!!"
+
+	<virtual stdcall: hresult 4 hresult lpwstr>
+	^self invalidCall: _failureCode! !
+!WebView2.ICoreWebView2CallDevToolsProtocolMethodCompletedHandler categoriesForMethods!
+Invoke:arg:!COM Interfaces-ICoreWebView2CallDevToolsProtocolMethodCompletedHandler!public! !
+!
+
 !WebView2.ICoreWebView2CallDevToolsProtocolMethodCompletedHandler class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2CallDevToolsProtocolMethodCompletedHandler'
-		ICoreWebView2CallDevToolsProtocolMethodCompletedHandler defineTemplate
+		ICoreWebView2CallDevToolsProtocolMethodCompletedHandler compileFunctions
 	"
 
 	self defineFunction: #Invoke:arg: argumentTypes: 'hresult lpwstr'! !

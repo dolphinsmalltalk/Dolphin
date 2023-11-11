@@ -9,6 +9,7 @@ WebView2.ICoreWebView2Collection
 	classConstants: {}!
 WebView2.ICoreWebView2IterableCollection guid: (OS.COM.IID fromString: '{0d1a3c69-2d9b-461b-98a3-5d7f04e3383d}')!
 WebView2.ICoreWebView2IterableCollection isNonInstantiable: true!
+WebView2.ICoreWebView2IterableCollection isEgressOnly: true!
 WebView2.ICoreWebView2IterableCollection comment: '`ICoreWebView2IterableCollection` is not defined in the WebView2 IDL, but is defined here for economy of mechanism, providing some functionality common to all the the WebView2 collections that have iterators (as opposed to being randomly indexable).
 
 Subclasses must provide at least `GetIterator:` and `iteratorClass` to complete the implementation.'!

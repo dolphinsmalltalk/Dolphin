@@ -8,6 +8,7 @@ WebView2.ICoreWebView2EventArgs
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WebView2.ICoreWebView2AcceleratorKeyPressedEventArgs guid: (OS.COM.IID fromString: '{9f760f8a-fb79-42be-9990-7b56900fa9c7}')!
+WebView2.ICoreWebView2AcceleratorKeyPressedEventArgs isEgressOnly: true!
 WebView2.ICoreWebView2AcceleratorKeyPressedEventArgs comment: '`ICoreWebView2AcceleratorKeyPressedEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2AcceleratorKeyPressedEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

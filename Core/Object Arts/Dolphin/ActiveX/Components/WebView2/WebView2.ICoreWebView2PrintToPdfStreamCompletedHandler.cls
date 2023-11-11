@@ -30,11 +30,25 @@ interface ICoreWebView2PrintToPdfStreamCompletedHandler : IUnknown
 ```
 '!
 !WebView2.ICoreWebView2PrintToPdfStreamCompletedHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2PrintToPdfStreamCompletedHandler methodsFor!
+
+Invoke: invoke arg: arg
+	"Callout for the ICoreWebView2PrintToPdfStreamCompletedHandler::Invoke() interface function.
+	N.B. This method has been automatically generated from 
+	the vtable defined in ICoreWebView2PrintToPdfStreamCompletedHandler>>defineFunctions. DO NOT MODIFY!!"
+
+	<virtual stdcall: hresult 4 hresult OS.COM.IStream*>
+	^self invalidCall: _failureCode! !
+!WebView2.ICoreWebView2PrintToPdfStreamCompletedHandler categoriesForMethods!
+Invoke:arg:!COM Interfaces-ICoreWebView2PrintToPdfStreamCompletedHandler!public! !
+!
+
 !WebView2.ICoreWebView2PrintToPdfStreamCompletedHandler class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2PrintToPdfStreamCompletedHandler'
-		ICoreWebView2PrintToPdfStreamCompletedHandler defineTemplate"
+		ICoreWebView2PrintToPdfStreamCompletedHandler compileFunctions
+	"
 
 	self
 		defineFunction: #Invoke:arg:

@@ -86,6 +86,8 @@ setCustomSchemeRegistrations:!COM Interfaces-ICoreWebView2EnvironmentOptions4!pu
 SetCustomSchemeRegistrations:schemeRegistrations:!**auto generated**!COM Interfaces-ICoreWebView2EnvironmentOptions4!private! !
 !
 
+WebView2.ICoreWebView2EnvironmentOptions4 methodProtocol: #ICoreWebView2EnvironmentOptions4 attributes: #(#readOnly) selectors: #(#GetCustomSchemeRegistrations:schemeRegistrations: #SetCustomSchemeRegistrations:schemeRegistrations:)!
+
 !WebView2.ICoreWebView2EnvironmentOptions4 class methodsFor!
 
 defineFunctions

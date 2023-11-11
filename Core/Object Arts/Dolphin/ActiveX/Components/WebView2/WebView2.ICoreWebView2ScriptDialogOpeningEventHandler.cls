@@ -36,10 +36,21 @@ basicRegister: tokenBuffer
 	source Add_ScriptDialogOpening: self token: tokenBuffer!
 
 basicUnregister
-	source Remove_ScriptDialogOpening: token! !
+	source Remove_ScriptDialogOpening: token!
+
+Invoke: sender args: args
+	"Invoke the Invoke() method of the COM object.
+
+		HRESULT __stdcall Invoke(
+			[in]ICoreWebView2* sender,
+			[in]ICoreWebView2ScriptDialogOpeningEventArgs* args);"
+
+	<virtual stdcall: hresult 4 ICoreWebView2* ICoreWebView2ScriptDialogOpeningEventArgs*>
+	^self invalidCall: _failureCode! !
 !WebView2.ICoreWebView2ScriptDialogOpeningEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
+Invoke:args:!**auto generated**!COM Interfaces-ICoreWebView2ScriptDialogOpeningEventHandler!public! !
 !
 
 !WebView2.ICoreWebView2ScriptDialogOpeningEventHandler class methodsFor!

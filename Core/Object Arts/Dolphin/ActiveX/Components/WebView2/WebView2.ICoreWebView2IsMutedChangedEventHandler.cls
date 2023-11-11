@@ -36,10 +36,21 @@ basicRegister: tokenBuffer
 	source Add_IsMutedChanged: self token: tokenBuffer!
 
 basicUnregister
-	source Remove_IsMutedChanged: token! !
+	source Remove_IsMutedChanged: token!
+
+Invoke: sender args: args
+	"Invoke the Invoke() method of the COM object.
+
+		HRESULT __stdcall Invoke(
+			[in]ICoreWebView2* sender,
+			[in]IUnknown* args);"
+
+	<virtual stdcall: hresult 4 ICoreWebView2* IUnknown*>
+	^self invalidCall: _failureCode! !
 !WebView2.ICoreWebView2IsMutedChangedEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
+Invoke:args:!**auto generated**!COM Interfaces-ICoreWebView2IsMutedChangedEventHandler!public! !
 !
 
 !WebView2.ICoreWebView2IsMutedChangedEventHandler class methodsFor!

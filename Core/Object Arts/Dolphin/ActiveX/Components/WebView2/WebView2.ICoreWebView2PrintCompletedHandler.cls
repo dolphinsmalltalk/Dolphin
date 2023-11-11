@@ -30,11 +30,25 @@ interface ICoreWebView2PrintCompletedHandler : IUnknown
 ```
 '!
 !WebView2.ICoreWebView2PrintCompletedHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2PrintCompletedHandler methodsFor!
+
+Invoke: invoke arg: arg
+	"Callout for the ICoreWebView2PrintCompletedHandler::Invoke() interface function.
+	N.B. This method has been automatically generated from 
+	the vtable defined in ICoreWebView2PrintCompletedHandler>>defineFunctions. DO NOT MODIFY!!"
+
+	<virtual stdcall: hresult 4 hresult int32>
+	^self invalidCall: _failureCode! !
+!WebView2.ICoreWebView2PrintCompletedHandler categoriesForMethods!
+Invoke:arg:!COM Interfaces-ICoreWebView2PrintCompletedHandler!public! !
+!
+
 !WebView2.ICoreWebView2PrintCompletedHandler class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2PrintCompletedHandler'
-		ICoreWebView2PrintCompletedHandler defineTemplate"
+		ICoreWebView2PrintCompletedHandler compileFunctions
+	"
 
 	self
 		defineFunction: #Invoke:arg:

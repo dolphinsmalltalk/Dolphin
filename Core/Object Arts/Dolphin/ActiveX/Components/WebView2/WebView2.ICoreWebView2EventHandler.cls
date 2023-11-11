@@ -21,6 +21,9 @@ basicRegister: tokenBuffer
 basicUnregister
 	self subclassResponsibility!
 
+Invoke: sender args: args
+	^self subclassResponsibility!
+
 register
 	token ifNotNil: [^self].
 	token := ByteArray new: 8.
@@ -37,10 +40,13 @@ unregister
 !WebView2.ICoreWebView2EventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
+Invoke:args:!**auto generated**!COM Interfaces-ICoreWebView2AcceleratorKeyPressedEventHandler!public! !
 register!public!realizing/unrealizing! !
 source:!initializing!private! !
 unregister!public!realizing/unrealizing! !
 !
+
+WebView2.ICoreWebView2EventHandler methodProtocol: #ICoreWebView2EventHandler attributes: #(#readOnly) selectors: #(#Invoke:args:)!
 
 !WebView2.ICoreWebView2EventHandler class methodsFor!
 

@@ -8,6 +8,7 @@ WebView2.ICoreWebView2Certificate
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WebView2.ICoreWebView2ClientCertificate guid: (OS.COM.IID fromString: '{e7188076-bcc3-11eb-8529-0242ac130003}')!
+WebView2.ICoreWebView2ClientCertificate isEgressOnly: true!
 WebView2.ICoreWebView2ClientCertificate comment: '`ICoreWebView2ClientCertificate` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ClientCertificate'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

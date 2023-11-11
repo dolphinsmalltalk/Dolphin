@@ -36,10 +36,21 @@ basicRegister: tokenBuffer
 	source Add_FrameCreated: self token: tokenBuffer!
 
 basicUnregister
-	source Remove_FrameCreated: token! !
+	source Remove_FrameCreated: token!
+
+Invoke: sender args: args
+	"Invoke the Invoke() method of the COM object.
+
+		HRESULT __stdcall Invoke(
+			[in]ICoreWebView2* sender,
+			[in]ICoreWebView2FrameCreatedEventArgs* args);"
+
+	<virtual stdcall: hresult 4 ICoreWebView2* ICoreWebView2FrameCreatedEventArgs*>
+	^self invalidCall: _failureCode! !
 !WebView2.ICoreWebView2FrameCreatedEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
+Invoke:args:!**auto generated**!COM Interfaces-ICoreWebView2FrameCreatedEventHandler!public! !
 !
 
 !WebView2.ICoreWebView2FrameCreatedEventHandler class methodsFor!

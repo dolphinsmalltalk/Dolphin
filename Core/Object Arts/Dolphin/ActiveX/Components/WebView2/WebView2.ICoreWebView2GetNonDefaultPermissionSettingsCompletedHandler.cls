@@ -30,11 +30,25 @@ interface ICoreWebView2GetNonDefaultPermissionSettingsCompletedHandler : IUnknow
 ```
 '!
 !WebView2.ICoreWebView2GetNonDefaultPermissionSettingsCompletedHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2GetNonDefaultPermissionSettingsCompletedHandler methodsFor!
+
+Invoke: invoke arg: arg
+	"Callout for the ICoreWebView2GetNonDefaultPermissionSettingsCompletedHandler::Invoke() interface function.
+	N.B. This method has been automatically generated from 
+	the vtable defined in ICoreWebView2GetNonDefaultPermissionSettingsCompletedHandler>>defineFunctions. DO NOT MODIFY!!"
+
+	<virtual stdcall: hresult 4 hresult WebView2.ICoreWebView2PermissionSettingCollectionView*>
+	^self invalidCall: _failureCode! !
+!WebView2.ICoreWebView2GetNonDefaultPermissionSettingsCompletedHandler categoriesForMethods!
+Invoke:arg:!COM Interfaces-ICoreWebView2GetNonDefaultPermissionSettingsCompletedHandler!public! !
+!
+
 !WebView2.ICoreWebView2GetNonDefaultPermissionSettingsCompletedHandler class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2GetNonDefaultPermissionSettingsCompletedHandler'
-		ICoreWebView2GetNonDefaultPermissionSettingsCompletedHandler defineTemplate"
+		ICoreWebView2GetNonDefaultPermissionSettingsCompletedHandler compileFunctions
+	"
 
 	self
 		defineFunction: #Invoke:arg:

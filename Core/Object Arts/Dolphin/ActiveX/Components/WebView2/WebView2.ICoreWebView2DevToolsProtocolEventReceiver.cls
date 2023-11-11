@@ -8,6 +8,7 @@ WebView2.ICoreWebView2Interface
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WebView2.ICoreWebView2DevToolsProtocolEventReceiver guid: (OS.COM.IID fromString: '{b32ca51a-8371-45e9-9317-af021d080367}')!
+WebView2.ICoreWebView2DevToolsProtocolEventReceiver isEgressOnly: true!
 WebView2.ICoreWebView2DevToolsProtocolEventReceiver comment: '`ICoreWebView2DevToolsProtocolEventReceiver` is a wrapper class for the COM interface ''WebView2.ICoreWebView2DevToolsProtocolEventReceiver'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

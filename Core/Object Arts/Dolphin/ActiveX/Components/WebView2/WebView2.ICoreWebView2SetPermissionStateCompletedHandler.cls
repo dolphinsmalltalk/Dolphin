@@ -29,6 +29,20 @@ interface ICoreWebView2SetPermissionStateCompletedHandler : IUnknown
 ```
 '!
 !WebView2.ICoreWebView2SetPermissionStateCompletedHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2SetPermissionStateCompletedHandler methodsFor!
+
+Invoke: errorCode
+	"Invoke the Invoke() method of the COM object.
+
+		HRESULT __stdcall Invoke(
+			[in]HRESULT errorCode);"
+
+	<virtual stdcall: hresult 4 hresult>
+	^self invalidCall: _failureCode! !
+!WebView2.ICoreWebView2SetPermissionStateCompletedHandler categoriesForMethods!
+Invoke:!**auto generated**!COM Interfaces-ICoreWebView2SetPermissionStateCompletedHandler!public! !
+!
+
 !WebView2.ICoreWebView2SetPermissionStateCompletedHandler class methodsFor!
 
 defineFunctions

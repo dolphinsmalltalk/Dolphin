@@ -8,6 +8,7 @@ WebView2.ICoreWebView2Frame
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WebView2.ICoreWebView2Frame2 guid: (OS.COM.IID fromString: '{7a6a5834-d185-4dbf-b63f-4a9bc43107d4}')!
+WebView2.ICoreWebView2Frame2 isEgressOnly: true!
 WebView2.ICoreWebView2Frame2 comment: '`ICoreWebView2Frame2` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Frame2'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

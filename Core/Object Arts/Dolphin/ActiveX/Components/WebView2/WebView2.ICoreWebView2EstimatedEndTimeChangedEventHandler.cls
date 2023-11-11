@@ -36,10 +36,21 @@ basicRegister: tokenBuffer
 	source Add_EstimatedEndTimeChanged: self token: tokenBuffer!
 
 basicUnregister
-	source Remove_EstimatedEndTimeChanged: token! !
+	source Remove_EstimatedEndTimeChanged: token!
+
+Invoke: sender args: args
+	"Invoke the Invoke() method of the COM object.
+
+		HRESULT __stdcall Invoke(
+			[in]ICoreWebView2DownloadOperation* sender,
+			[in]IUnknown* args);"
+
+	<virtual stdcall: hresult 4 ICoreWebView2DownloadOperation* IUnknown*>
+	^self invalidCall: _failureCode! !
 !WebView2.ICoreWebView2EstimatedEndTimeChangedEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
+Invoke:args:!**auto generated**!COM Interfaces-ICoreWebView2EstimatedEndTimeChangedEventHandler!public! !
 !
 
 !WebView2.ICoreWebView2EstimatedEndTimeChangedEventHandler class methodsFor!

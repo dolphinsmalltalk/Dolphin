@@ -8,6 +8,7 @@ WebView2.ICoreWebView2EventArgs
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WebView2.ICoreWebView2WebResourceResponseReceivedEventArgs guid: (OS.COM.IID fromString: '{d1db483d-6796-4b8b-80fc-13712bb716f4}')!
+WebView2.ICoreWebView2WebResourceResponseReceivedEventArgs isEgressOnly: true!
 WebView2.ICoreWebView2WebResourceResponseReceivedEventArgs comment: '`ICoreWebView2WebResourceResponseReceivedEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2WebResourceResponseReceivedEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

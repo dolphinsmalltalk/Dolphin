@@ -8,6 +8,7 @@ WebView2.ICoreWebView2Interface
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WebView2.ICoreWebView2ControllerOptions guid: (OS.COM.IID fromString: '{12aae616-8ccb-44ec-bcb3-eb1831881635}')!
+WebView2.ICoreWebView2ControllerOptions isEgressOnly: true!
 WebView2.ICoreWebView2ControllerOptions comment: '`ICoreWebView2ControllerOptions` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ControllerOptions'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -175,8 +176,12 @@ defineFunctions
 			argumentTypes: 'bool*';
 		defineFunction: #put_IsInPrivateModeEnabled:
 			argumentTypes: 'bool'
-! !
+!
+
+latestDerivation
+	^##(super latestDerivation)! !
 !WebView2.ICoreWebView2ControllerOptions class categoriesForMethods!
 defineFunctions!initializing!public!template definition! !
+latestDerivation!enquiries!public! !
 !
 

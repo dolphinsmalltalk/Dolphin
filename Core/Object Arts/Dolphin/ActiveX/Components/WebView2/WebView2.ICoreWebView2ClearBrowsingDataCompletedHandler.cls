@@ -29,6 +29,20 @@ interface ICoreWebView2ClearBrowsingDataCompletedHandler : IUnknown
 ```
 '!
 !WebView2.ICoreWebView2ClearBrowsingDataCompletedHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2ClearBrowsingDataCompletedHandler methodsFor!
+
+Invoke: errorCode
+	"Invoke the Invoke() method of the COM object.
+
+		HRESULT __stdcall Invoke(
+			[in]HRESULT errorCode);"
+
+	<virtual stdcall: hresult 4 hresult>
+	^self invalidCall: _failureCode! !
+!WebView2.ICoreWebView2ClearBrowsingDataCompletedHandler categoriesForMethods!
+Invoke:!**auto generated**!COM Interfaces-ICoreWebView2ClearBrowsingDataCompletedHandler!public! !
+!
+
 !WebView2.ICoreWebView2ClearBrowsingDataCompletedHandler class methodsFor!
 
 defineFunctions

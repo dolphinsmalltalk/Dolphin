@@ -8,6 +8,7 @@ WebView2.ICoreWebView2Sequence
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WebView2.ICoreWebView2ProcessInfoCollection guid: (OS.COM.IID fromString: '{402b99cd-a0cc-4fa5-b7a5-51d86a1d2339}')!
+WebView2.ICoreWebView2ProcessInfoCollection isEgressOnly: true!
 WebView2.ICoreWebView2ProcessInfoCollection comment: '`ICoreWebView2ProcessInfoCollection` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ProcessInfoCollection'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

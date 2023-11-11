@@ -1762,7 +1762,7 @@ printFunctionPrototype: aFUNCDESC on: target indent: tabs
 						printIDLAttributes: type idlAttributes
 						on: target
 						indent: -1.
-					name := params at: i.
+					name := (params lookup: i) ?? ''.
 					name isEmpty ifTrue: [name := 'arg' , i printString].
 					self
 						printIDLDecl: name

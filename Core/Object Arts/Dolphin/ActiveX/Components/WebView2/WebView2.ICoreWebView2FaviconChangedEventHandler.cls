@@ -36,10 +36,21 @@ basicRegister: tokenBuffer
 	source Add_FaviconChanged: self token: tokenBuffer!
 
 basicUnregister
-	source Remove_FaviconChanged: token! !
+	source Remove_FaviconChanged: token!
+
+Invoke: sender args: args
+	"Invoke the Invoke() method of the COM object.
+
+		HRESULT __stdcall Invoke(
+			[in]ICoreWebView2* sender,
+			[in]IUnknown* args);"
+
+	<virtual stdcall: hresult 4 ICoreWebView2* IUnknown*>
+	^self invalidCall: _failureCode! !
 !WebView2.ICoreWebView2FaviconChangedEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
+Invoke:args:!**auto generated**!COM Interfaces-ICoreWebView2FaviconChangedEventHandler!public! !
 !
 
 !WebView2.ICoreWebView2FaviconChangedEventHandler class methodsFor!
@@ -50,7 +61,7 @@ defineFunctions
 
 	self
 		defineFunction: #Invoke:args:
-			argumentTypes: 'WebView2.ICoreWebView2* IUnknown*'
+			argumentTypes: 'ICoreWebView2* IUnknown*'
 !
 
 eventName

@@ -8,6 +8,7 @@ WebView2.ICoreWebView2Profile3
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WebView2.ICoreWebView2Profile4 guid: (OS.COM.IID fromString: '{8f4ae680-192e-4ec8-833a-21cfadaef628}')!
+WebView2.ICoreWebView2Profile4 isEgressOnly: true!
 WebView2.ICoreWebView2Profile4 comment: '`ICoreWebView2Profile4` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Profile4'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

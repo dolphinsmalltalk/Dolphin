@@ -8,6 +8,7 @@ WebView2.ICoreWebView2Sequence
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WebView2.ICoreWebView2ObjectCollectionView guid: (OS.COM.IID fromString: '{0f36fd87-4f69-4415-98da-888f89fb9a33}')!
+WebView2.ICoreWebView2ObjectCollectionView isEgressOnly: true!
 WebView2.ICoreWebView2ObjectCollectionView comment: '`ICoreWebView2ObjectCollectionView` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ObjectCollectionView'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
