@@ -83,6 +83,15 @@ get_NewWindow: newWindow
 	<virtual stdcall: hresult 6 ICoreWebView2**>
 	^self invalidCall: _failureCode!
 
+get_OriginalSourceFrameInfo: frameInfo
+	"Private - Get the value of the 'OriginalSourceFrameInfo' property of the receiver.
+
+		HRESULT __stdcall OriginalSourceFrameInfo(
+			[out, retval]ICoreWebView2FrameInfo** frameInfo);"
+
+	frameInfo value: 0.
+	^E_NOTIMPL!
+
 get_uri: uri
 	"Private - Get the value of the 'uri' property of the receiver.
 
@@ -154,8 +163,16 @@ newWindow: newWindow
 
 	self put_NewWindow: newWindow!
 
+originalSourceFrameInfo
+	"Answer the <ICoreWebView2FrameInfo> value of the 'OriginalSourceFrameInfo' property of the receiver."
+
+	| answer |
+	answer := ICoreWebView2FrameInfo newPointer.
+	self get_OriginalSourceFrameInfo: answer.
+	^answer asObject!
+
 printableProperties
-	^#(#name #uri #isUserInitiated #windowFeatures)!
+	^#(#name #uri #isUserInitiated #windowFeatures #originalSourceFrameInfo)!
 
 put_Handled: handled
 	"Private - Set the value of the 'Handled' property of the object wrapped by the 
@@ -197,8 +214,9 @@ windowFeatures
 !WebView2.ICoreWebView2NewWindowRequestedEventArgs categoriesForMethods!
 get_Handled:!**auto generated**!COM Interfaces-ICoreWebView2NewWindowRequestedEventArgs!private! !
 get_IsUserInitiated:!**auto generated**!COM Interfaces-ICoreWebView2NewWindowRequestedEventArgs!private! !
-get_name:!**auto generated**!COM Interfaces-ICoreWebView2NewWindowRequestedEventArgs2!private! !
+get_name:!COM Interfaces-ICoreWebView2NewWindowRequestedEventArgs2!private! !
 get_NewWindow:!**auto generated**!COM Interfaces-ICoreWebView2NewWindowRequestedEventArgs!private! !
+get_OriginalSourceFrameInfo:!COM Interfaces-ICoreWebView2NewWindowRequestedEventArgs3!private! !
 get_uri:!**auto generated**!COM Interfaces-ICoreWebView2NewWindowRequestedEventArgs!private! !
 get_WindowFeatures:!**auto generated**!COM Interfaces-ICoreWebView2NewWindowRequestedEventArgs!private! !
 GetDeferral:!**auto generated**!COM Interfaces-ICoreWebView2NewWindowRequestedEventArgs!private! !
@@ -208,6 +226,7 @@ isUserInitiated!properties!public! !
 name!properties!public! !
 newWindow!**auto generated**!properties!public! !
 newWindow:!**auto generated**!properties!public! !
+originalSourceFrameInfo!properties!public! !
 printableProperties!printing!private! !
 put_Handled:!**auto generated**!COM Interfaces-ICoreWebView2NewWindowRequestedEventArgs!private! !
 put_NewWindow:!**auto generated**!COM Interfaces-ICoreWebView2NewWindowRequestedEventArgs!private! !

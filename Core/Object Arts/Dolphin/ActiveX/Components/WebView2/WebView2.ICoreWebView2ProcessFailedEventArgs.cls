@@ -119,11 +119,11 @@ reason
 !WebView2.ICoreWebView2ProcessFailedEventArgs categoriesForMethods!
 exitCode!properties!public! !
 frameInfosForFailedProcess!properties!public! !
-get_ExitCode:!**auto generated**!COM Interfaces-ICoreWebView2ProcessFailedEventArgs2!private! !
-get_FrameInfosForFailedProcess:!**auto generated**!COM Interfaces-ICoreWebView2ProcessFailedEventArgs2!private! !
-get_ProcessDescription:!**auto generated**!COM Interfaces-ICoreWebView2ProcessFailedEventArgs2!private! !
+get_ExitCode:!COM Interfaces-ICoreWebView2ProcessFailedEventArgs2!private! !
+get_FrameInfosForFailedProcess:!COM Interfaces-ICoreWebView2ProcessFailedEventArgs2!private! !
+get_ProcessDescription:!COM Interfaces-ICoreWebView2ProcessFailedEventArgs2!private! !
 get_ProcessFailedKind:!**auto generated**!COM Interfaces-ICoreWebView2ProcessFailedEventArgs!private! !
-get_reason:!**auto generated**!COM Interfaces-ICoreWebView2ProcessFailedEventArgs2!private! !
+get_reason:!COM Interfaces-ICoreWebView2ProcessFailedEventArgs2!private! !
 handled!accessing!public! !
 handled:!accessing!public! !
 isBrowserProcessExit!public!testing! !

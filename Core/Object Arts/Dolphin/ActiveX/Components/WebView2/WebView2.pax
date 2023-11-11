@@ -179,6 +179,7 @@ package setClassNames: #(
 	#{WebView2.ICoreWebView2NewBrowserVersionAvailableEventHandler}
 	#{WebView2.ICoreWebView2NewWindowRequestedEventArgs}
 	#{WebView2.ICoreWebView2NewWindowRequestedEventArgs2}
+	#{WebView2.ICoreWebView2NewWindowRequestedEventArgs3}
 	#{WebView2.ICoreWebView2NewWindowRequestedEventHandler}
 	#{WebView2.ICoreWebView2ObjectCollectionView}
 	#{WebView2.ICoreWebView2PermissionRequestedEventArgs}
@@ -296,6 +297,7 @@ Kernel.Namespace
 			'COREWEBVIEW2_BROWSING_DATA_KINDS_INDEXED_DB' -> 16r2.
 			'COREWEBVIEW2_BROWSING_DATA_KINDS_LOCAL_STORAGE' -> 16r4.
 			'COREWEBVIEW2_BROWSING_DATA_KINDS_PASSWORD_AUTOSAVE' -> 16r800.
+			'COREWEBVIEW2_BROWSING_DATA_KINDS_SERVICE_WORKERS' -> 16r8000.
 			'COREWEBVIEW2_BROWSING_DATA_KINDS_SETTINGS' -> 16r2000.
 			'COREWEBVIEW2_BROWSING_DATA_KINDS_WEB_SQL' -> 16r8.
 			'COREWEBVIEW2_CAPTURE_PREVIEW_IMAGE_FORMAT_JPEG' -> 16r1.
@@ -373,6 +375,8 @@ Kernel.Namespace
 			'COREWEBVIEW2_MOUSE_EVENT_KIND_MIDDLE_BUTTON_DOWN' -> 16r207.
 			'COREWEBVIEW2_MOUSE_EVENT_KIND_MIDDLE_BUTTON_UP' -> 16r208.
 			'COREWEBVIEW2_MOUSE_EVENT_KIND_MOVE' -> 16r200.
+			'COREWEBVIEW2_MOUSE_EVENT_KIND_NON_CLIENT_RIGHT_BUTTON_DOWN' -> 16rA4.
+			'COREWEBVIEW2_MOUSE_EVENT_KIND_NON_CLIENT_RIGHT_BUTTON_UP' -> 16rA5.
 			'COREWEBVIEW2_MOUSE_EVENT_KIND_RIGHT_BUTTON_DOUBLE_CLICK' -> 16r206.
 			'COREWEBVIEW2_MOUSE_EVENT_KIND_RIGHT_BUTTON_DOWN' -> 16r204.
 			'COREWEBVIEW2_MOUSE_EVENT_KIND_RIGHT_BUTTON_UP' -> 16r205.
@@ -1533,6 +1537,13 @@ WebView2.ICoreWebView2NavigationStartingEventArgs2
 	classConstants: {}!
 WebView2.ICoreWebView2NewWindowRequestedEventArgs
 	subclass: #'WebView2.ICoreWebView2NewWindowRequestedEventArgs2'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+WebView2.ICoreWebView2NewWindowRequestedEventArgs2
+	subclass: #'WebView2.ICoreWebView2NewWindowRequestedEventArgs3'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
