@@ -124,7 +124,7 @@ host: aStringHostName
 	"Answer a new instance of the receiver containing the address of host with
 	aStringHostName.
 
-		InternetAddress host: 'moll.object-arts.com'
+		InternetAddress host: 'www.microsoft.com'
 	"
 
 	^(self new)

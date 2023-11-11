@@ -246,7 +246,7 @@ defaultProgId
 		1) A prog id, e.g. 'MSCAL.Calendar'
 		2) A CLSID string, e.g. '{8E27C92B-1264-101C-8A2F-040224009C02}'
 		3) Some HTML text, e.g. 'mshtml:<html><body>Powered by Dolphin Smalltalk</body></html'
-		4) A URL, e.g. 'http://www.object-arts.com'
+		4) A URL, e.g. 'https://github.com/dolphinsmalltalk'
 		
 	"
 
