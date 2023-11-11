@@ -8,6 +8,7 @@ OS.COM.IDispatch
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MSXML.IMXReaderControl guid: (OS.COM.IID fromString: '{808f4e35-8d5a-4fbe-8466-33a41279ed30}')!
+MSXML.IMXReaderControl isEgressOnly: true!
 MSXML.IMXReaderControl comment: '`IMXReaderControl` is a wrapper class for the COM interface ''MSXML2.IMXReaderControl'' generated from type information in the ''Microsoft XML, v6.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
@@ -35,7 +36,7 @@ interface IMXReaderControl : IDispatch
 };
 ```
 '!
-!MSXML.IMXReaderControl categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+!MSXML.IMXReaderControl categoriesForClass!Deprecated! !
 !MSXML.IMXReaderControl methodsFor!
 
 Abort

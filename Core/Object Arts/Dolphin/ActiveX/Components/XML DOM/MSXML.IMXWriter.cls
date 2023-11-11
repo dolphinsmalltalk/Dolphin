@@ -8,6 +8,7 @@ OS.COM.IDispatch
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MSXML.IMXWriter guid: (OS.COM.IID fromString: '{4d7ff4ba-1565-4ea8-94e1-6e724a46f98d}')!
+MSXML.IMXWriter isEgressOnly: true!
 MSXML.IMXWriter comment: '<IMXWriter> is a wrapper class for the COM interface ''MSXML2.IMXWriter'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface

@@ -8,6 +8,7 @@ MSXML.ISchemaItem
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MSXML.ISchemaAttribute guid: (OS.COM.IID fromString: '{50ea08b6-dd1b-4664-9a50-c2f40f4bd79a}')!
+MSXML.ISchemaAttribute isEgressOnly: true!
 MSXML.ISchemaAttribute comment: '<ISchemaAttribute> is a wrapper class for the COM interface ''MSXML2.ISchemaAttribute'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface

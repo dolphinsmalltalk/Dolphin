@@ -8,6 +8,7 @@ MSXML.ISchemaParticle
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MSXML.ISchemaAny guid: (OS.COM.IID fromString: '{50ea08bc-dd1b-4664-9a50-c2f40f4bd79a}')!
+MSXML.ISchemaAny isEgressOnly: true!
 MSXML.ISchemaAny comment: '<ISchemaAny> is a wrapper class for the COM interface ''MSXML2.ISchemaAny'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface

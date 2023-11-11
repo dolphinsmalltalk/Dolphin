@@ -8,6 +8,7 @@ MSXML.ISchemaItem
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MSXML.ISchemaIdentityConstraint guid: (OS.COM.IID fromString: '{50ea08bd-dd1b-4664-9a50-c2f40f4bd79a}')!
+MSXML.ISchemaIdentityConstraint isEgressOnly: true!
 MSXML.ISchemaIdentityConstraint comment: '<ISchemaIdentityConstraint> is a wrapper class for the COM interface ''MSXML2.ISchemaIdentityConstraint'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface

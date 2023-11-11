@@ -8,6 +8,7 @@ MSXML.IXMLDOMNode
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MSXML.IXMLDOMElement guid: (OS.COM.IID fromString: '{2933bf86-7b36-11d2-b20e-00c04f983e60}')!
+MSXML.IXMLDOMElement isEgressOnly: true!
 MSXML.IXMLDOMElement comment: '<IXMLDOMElement> is a wrapper class for the COM interface ''MSXML.IXMLDOMElement'' generated from type information in the ''Microsoft XML, version 2.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 This is a specialized DOM node to represent elements (i.e. structures).'!

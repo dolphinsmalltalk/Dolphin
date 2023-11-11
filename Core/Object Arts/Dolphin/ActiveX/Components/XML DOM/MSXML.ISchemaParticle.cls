@@ -8,6 +8,7 @@ MSXML.ISchemaItem
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MSXML.ISchemaParticle guid: (OS.COM.IID fromString: '{50ea08b5-dd1b-4664-9a50-c2f40f4bd79a}')!
+MSXML.ISchemaParticle isEgressOnly: true!
 MSXML.ISchemaParticle comment: '<ISchemaParticle> is a wrapper class for the COM interface ''MSXML2.ISchemaParticle'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface

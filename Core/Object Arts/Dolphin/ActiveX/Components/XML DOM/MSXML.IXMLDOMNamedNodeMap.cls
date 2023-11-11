@@ -8,6 +8,7 @@ OS.COM.IDispatch
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MSXML.IXMLDOMNamedNodeMap guid: (OS.COM.IID fromString: '{2933bf83-7b36-11d2-b20e-00c04f983e60}')!
+MSXML.IXMLDOMNamedNodeMap isEgressOnly: true!
 MSXML.IXMLDOMNamedNodeMap comment: '<IXMLDOMNamedNodeMap> is a wrapper class for the COM interface ''MSXML.IXMLDOMNamedNodeMap'' generated from type information in the ''Microsoft XML, version 2.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

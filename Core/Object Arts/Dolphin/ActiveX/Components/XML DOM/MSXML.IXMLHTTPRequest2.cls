@@ -8,6 +8,7 @@ OS.COM.IUnknown
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MSXML.IXMLHTTPRequest2 guid: (OS.COM.IID fromString: '{e5d37dc0-552a-4d52-9cc0-a14d546fbd04}')!
+MSXML.IXMLHTTPRequest2 isEgressOnly: true!
 MSXML.IXMLHTTPRequest2 comment: '`IXMLHTTPRequest2` is a wrapper class for the COM interface ''MSXML2.IXMLHTTPRequest2'' generated from type information in the ''Microsoft XML, v6.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface

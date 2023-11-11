@@ -8,6 +8,7 @@ MSXML.IXMLDOMDocument
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MSXML.IXMLDOMDocument2 guid: (OS.COM.IID fromString: '{2933bf95-7b36-11d2-b20e-00c04f983e60}')!
+MSXML.IXMLDOMDocument2 isEgressOnly: true!
 MSXML.IXMLDOMDocument2 comment: '<IXMLDOMDocument2> is a wrapper class for the COM interface ''MSXML2.IXMLDOMDocument2'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 IDL definition follows:
