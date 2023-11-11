@@ -30,11 +30,24 @@ interface ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler :
 ```
 '!
 !WebView2.ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler methodsFor!
+
+Invoke: invoke arg: arg
+	"Callout for the ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler::Invoke() interface function.
+	N.B. This method has been automatically generated from 
+	the vtable defined in ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler>>defineFunctions. DO NOT MODIFY!!"
+
+	<virtual stdcall: hresult 4 hresult WebView2.ICoreWebView2CompositionController*>
+	^self invalidCall: _failureCode! !
+!WebView2.ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler categoriesForMethods!
+Invoke:arg:!COM Interfaces-ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler!public! !
+!
+
 !WebView2.ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler'
-		ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler defineTemplate
+		ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler compileFunctions
 	"
 
 	self defineFunction: #Invoke:arg: argumentTypes: 'hresult ICoreWebView2CompositionController*'! !

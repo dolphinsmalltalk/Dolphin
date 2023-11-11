@@ -8,6 +8,7 @@ WebView2.ICoreWebView2EventArgs
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WebView2.ICoreWebView2BasicAuthenticationRequestedEventArgs guid: (OS.COM.IID fromString: '{ef05516f-d897-4f9e-b672-d8e2307a3fb0}')!
+WebView2.ICoreWebView2BasicAuthenticationRequestedEventArgs isEgressOnly: true!
 WebView2.ICoreWebView2BasicAuthenticationRequestedEventArgs comment: '`ICoreWebView2BasicAuthenticationRequestedEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2BasicAuthenticationRequestedEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

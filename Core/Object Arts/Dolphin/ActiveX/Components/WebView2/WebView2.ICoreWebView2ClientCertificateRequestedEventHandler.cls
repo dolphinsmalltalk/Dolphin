@@ -36,10 +36,21 @@ basicRegister: tokenBuffer
 	source Add_ClientCertificateRequested: self token: tokenBuffer!
 
 basicUnregister
-	source Remove_ClientCertificateRequested: token! !
+	source Remove_ClientCertificateRequested: token!
+
+Invoke: sender args: args
+	"Invoke the Invoke() method of the COM object.
+
+		HRESULT __stdcall Invoke(
+			[in]ICoreWebView2* sender,
+			[in]ICoreWebView2ClientCertificateRequestedEventArgs* args);"
+
+	<virtual stdcall: hresult 4 ICoreWebView2* ICoreWebView2ClientCertificateRequestedEventArgs*>
+	^self invalidCall: _failureCode! !
 !WebView2.ICoreWebView2ClientCertificateRequestedEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
+Invoke:args:!**auto generated**!COM Interfaces-ICoreWebView2ClientCertificateRequestedEventHandler!public! !
 !
 
 !WebView2.ICoreWebView2ClientCertificateRequestedEventHandler class methodsFor!

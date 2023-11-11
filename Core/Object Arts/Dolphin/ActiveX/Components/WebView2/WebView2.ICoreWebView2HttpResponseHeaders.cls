@@ -8,6 +8,7 @@ WebView2.ICoreWebView2HttpHeadersCollection
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WebView2.ICoreWebView2HttpResponseHeaders guid: (OS.COM.IID fromString: '{03c5ff5a-9b45-4a88-881c-89a9f328619c}')!
+WebView2.ICoreWebView2HttpResponseHeaders isEgressOnly: true!
 WebView2.ICoreWebView2HttpResponseHeaders comment: '`ICoreWebView2HttpResponseHeaders` is a wrapper class for the COM interface ''WebView2.ICoreWebView2HttpResponseHeaders'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

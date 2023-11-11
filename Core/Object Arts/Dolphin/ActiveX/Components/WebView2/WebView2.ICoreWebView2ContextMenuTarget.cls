@@ -8,6 +8,7 @@ WebView2.ICoreWebView2Interface
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WebView2.ICoreWebView2ContextMenuTarget guid: (OS.COM.IID fromString: '{b8611d99-eed6-4f3f-902c-a198502ad472}')!
+WebView2.ICoreWebView2ContextMenuTarget isEgressOnly: true!
 WebView2.ICoreWebView2ContextMenuTarget comment: '`ICoreWebView2ContextMenuTarget` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ContextMenuTarget'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

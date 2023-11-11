@@ -29,14 +29,30 @@ interface ICoreWebView2CapturePreviewCompletedHandler : IUnknown
 ```
 '!
 !WebView2.ICoreWebView2CapturePreviewCompletedHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2CapturePreviewCompletedHandler methodsFor!
+
+Invoke: errorCode
+	"Invoke the Invoke() method of the COM object.
+
+		HRESULT __stdcall Invoke(
+			[in]HRESULT errorCode);"
+
+	<virtual stdcall: hresult 4 hresult>
+	^self invalidCall: _failureCode! !
+!WebView2.ICoreWebView2CapturePreviewCompletedHandler categoriesForMethods!
+Invoke:!**auto generated**!COM Interfaces-ICoreWebView2CapturePreviewCompletedHandler!public! !
+!
+
 !WebView2.ICoreWebView2CapturePreviewCompletedHandler class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2CapturePreviewCompletedHandler'
-		ICoreWebView2CapturePreviewCompletedHandler defineTemplate
-	"
+		ICoreWebView2CapturePreviewCompletedHandler defineTemplate"
 
-	self defineFunction: #Invoke: argumentTypes: 'hresult'! !
+	self
+		defineFunction: #Invoke:
+			argumentTypes: 'hresult'
+! !
 !WebView2.ICoreWebView2CapturePreviewCompletedHandler class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

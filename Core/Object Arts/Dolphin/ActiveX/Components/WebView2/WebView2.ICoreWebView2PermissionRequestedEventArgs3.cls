@@ -8,6 +8,7 @@ WebView2.ICoreWebView2PermissionRequestedEventArgs2
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WebView2.ICoreWebView2PermissionRequestedEventArgs3 guid: (OS.COM.IID fromString: '{e61670bc-3dce-4177-86d2-c629ae3cb6ac}')!
+WebView2.ICoreWebView2PermissionRequestedEventArgs3 isEgressOnly: true!
 WebView2.ICoreWebView2PermissionRequestedEventArgs3 comment: '`ICoreWebView2PermissionRequestedEventArgs3` is a wrapper class for the COM interface ''WebView2.ICoreWebView2PermissionRequestedEventArgs3'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

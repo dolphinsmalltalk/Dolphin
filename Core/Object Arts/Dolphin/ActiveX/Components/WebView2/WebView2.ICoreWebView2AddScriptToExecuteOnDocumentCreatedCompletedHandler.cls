@@ -30,11 +30,24 @@ interface ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler : IUn
 ```
 '!
 !WebView2.ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler methodsFor!
+
+Invoke: invoke arg: arg
+	"Callout for the ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler::Invoke() interface function.
+	N.B. This method has been automatically generated from 
+	the vtable defined in ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler>>defineFunctions. DO NOT MODIFY!!"
+
+	<virtual stdcall: hresult 4 hresult lpwstr>
+	^self invalidCall: _failureCode! !
+!WebView2.ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler categoriesForMethods!
+Invoke:arg:!COM Interfaces-ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler!public! !
+!
+
 !WebView2.ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler'
-		ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler defineTemplate
+		ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler compileFunctions
 	"
 
 	self defineFunction: #Invoke:arg: argumentTypes: 'hresult lpwstr'! !

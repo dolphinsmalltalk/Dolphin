@@ -36,10 +36,21 @@ basicRegister: tokenBuffer
 	source Add_RasterizationScaleChanged: self token: tokenBuffer!
 
 basicUnregister
-	source Remove_RasterizationScaleChanged: token! !
+	source Remove_RasterizationScaleChanged: token!
+
+Invoke: sender args: args
+	"Invoke the Invoke() method of the COM object.
+
+		HRESULT __stdcall Invoke(
+			[in]ICoreWebView2Controller* sender,
+			[in]IUnknown* args);"
+
+	<virtual stdcall: hresult 4 ICoreWebView2Controller* IUnknown*>
+	^self invalidCall: _failureCode! !
 !WebView2.ICoreWebView2RasterizationScaleChangedEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
+Invoke:args:!**auto generated**!COM Interfaces-ICoreWebView2RasterizationScaleChangedEventHandler!public! !
 !
 
 !WebView2.ICoreWebView2RasterizationScaleChangedEventHandler class methodsFor!

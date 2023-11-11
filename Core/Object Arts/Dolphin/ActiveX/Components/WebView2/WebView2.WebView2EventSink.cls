@@ -92,6 +92,8 @@ supportedInterfaces!constants!public! !
 unregister!public!realizing/unrealizing! !
 !
 
+WebView2.WebView2EventSink methodProtocol: #ICoreWebView2EventHandler attributes: #(#readOnly) selectors: #(#Invoke:args:)!
+
 !WebView2.WebView2EventSink class methodsFor!
 
 icon

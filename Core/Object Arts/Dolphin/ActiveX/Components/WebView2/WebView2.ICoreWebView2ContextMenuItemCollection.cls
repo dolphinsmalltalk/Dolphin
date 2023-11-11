@@ -8,6 +8,7 @@ WebView2.ICoreWebView2Sequence
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WebView2.ICoreWebView2ContextMenuItemCollection guid: (OS.COM.IID fromString: '{f562a2f5-c415-45cf-b909-d4b7c1e276d3}')!
+WebView2.ICoreWebView2ContextMenuItemCollection isEgressOnly: true!
 WebView2.ICoreWebView2ContextMenuItemCollection comment: '`ICoreWebView2ContextMenuItemCollection` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ContextMenuItemCollection'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

@@ -29,14 +29,30 @@ interface ICoreWebView2ClearServerCertificateErrorActionsCompletedHandler : IUnk
 ```
 '!
 !WebView2.ICoreWebView2ClearServerCertificateErrorActionsCompletedHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2ClearServerCertificateErrorActionsCompletedHandler methodsFor!
+
+Invoke: errorCode
+	"Invoke the Invoke() method of the COM object.
+
+		HRESULT __stdcall Invoke(
+			[in]HRESULT errorCode);"
+
+	<virtual stdcall: hresult 4 hresult>
+	^self invalidCall: _failureCode! !
+!WebView2.ICoreWebView2ClearServerCertificateErrorActionsCompletedHandler categoriesForMethods!
+Invoke:!**auto generated**!COM Interfaces-ICoreWebView2ClearServerCertificateErrorActionsCompletedHandler!public! !
+!
+
 !WebView2.ICoreWebView2ClearServerCertificateErrorActionsCompletedHandler class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2ClearServerCertificateErrorActionsCompletedHandler'
-		ICoreWebView2ClearServerCertificateErrorActionsCompletedHandler defineTemplate
-	"
+		ICoreWebView2ClearServerCertificateErrorActionsCompletedHandler defineTemplate"
 
-	self defineFunction: #Invoke: argumentTypes: 'hresult'! !
+	self
+		defineFunction: #Invoke:
+			argumentTypes: 'hresult'
+! !
 !WebView2.ICoreWebView2ClearServerCertificateErrorActionsCompletedHandler class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
 !

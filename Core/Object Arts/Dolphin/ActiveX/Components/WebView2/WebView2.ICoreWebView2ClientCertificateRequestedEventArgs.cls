@@ -8,6 +8,7 @@ WebView2.ICoreWebView2EventArgs
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WebView2.ICoreWebView2ClientCertificateRequestedEventArgs guid: (OS.COM.IID fromString: '{bc59db28-bcc3-11eb-8529-0242ac130003}')!
+WebView2.ICoreWebView2ClientCertificateRequestedEventArgs isEgressOnly: true!
 WebView2.ICoreWebView2ClientCertificateRequestedEventArgs comment: '`ICoreWebView2ClientCertificateRequestedEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ClientCertificateRequestedEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

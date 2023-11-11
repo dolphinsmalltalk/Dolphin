@@ -30,11 +30,24 @@ interface ICoreWebView2ExecuteScriptCompletedHandler : IUnknown
 ```
 '!
 !WebView2.ICoreWebView2ExecuteScriptCompletedHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2ExecuteScriptCompletedHandler methodsFor!
+
+Invoke: invoke arg: arg
+	"Callout for the ICoreWebView2ExecuteScriptCompletedHandler::Invoke() interface function.
+	N.B. This method has been automatically generated from 
+	the vtable defined in ICoreWebView2ExecuteScriptCompletedHandler>>defineFunctions. DO NOT MODIFY!!"
+
+	<virtual stdcall: hresult 4 hresult lpwstr>
+	^self invalidCall: _failureCode! !
+!WebView2.ICoreWebView2ExecuteScriptCompletedHandler categoriesForMethods!
+Invoke:arg:!COM Interfaces-ICoreWebView2ExecuteScriptCompletedHandler!public! !
+!
+
 !WebView2.ICoreWebView2ExecuteScriptCompletedHandler class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2ExecuteScriptCompletedHandler'
-		ICoreWebView2ExecuteScriptCompletedHandler defineTemplate
+		ICoreWebView2ExecuteScriptCompletedHandler compileFunctions
 	"
 
 	self defineFunction: #Invoke:arg: argumentTypes: 'hresult lpwstr'! !

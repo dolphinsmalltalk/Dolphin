@@ -8,6 +8,7 @@ WebView2.ICoreWebView2Interface
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WebView2.ICoreWebView2WebResourceResponseView guid: (OS.COM.IID fromString: '{79701053-7759-4162-8f7d-f1b3f084928d}')!
+WebView2.ICoreWebView2WebResourceResponseView isEgressOnly: true!
 WebView2.ICoreWebView2WebResourceResponseView comment: '`ICoreWebView2WebResourceResponseView` is a wrapper class for the COM interface ''WebView2.ICoreWebView2WebResourceResponseView'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

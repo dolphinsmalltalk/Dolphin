@@ -36,10 +36,21 @@ basicRegister: tokenBuffer
 	source Add_MoveFocusRequested: self token: tokenBuffer!
 
 basicUnregister
-	source Remove_MoveFocusRequested: token! !
+	source Remove_MoveFocusRequested: token!
+
+Invoke: sender args: args
+	"Invoke the Invoke() method of the COM object.
+
+		HRESULT __stdcall Invoke(
+			[in]ICoreWebView2Controller* sender,
+			[in]ICoreWebView2MoveFocusRequestedEventArgs* args);"
+
+	<virtual stdcall: hresult 4 ICoreWebView2Controller* ICoreWebView2MoveFocusRequestedEventArgs*>
+	^self invalidCall: _failureCode! !
 !WebView2.ICoreWebView2MoveFocusRequestedEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
+Invoke:args:!**auto generated**!COM Interfaces-ICoreWebView2MoveFocusRequestedEventHandler!public! !
 !
 
 !WebView2.ICoreWebView2MoveFocusRequestedEventHandler class methodsFor!

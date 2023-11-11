@@ -36,10 +36,21 @@ basicRegister: tokenBuffer
 	source Add_ContentLoading: self token: tokenBuffer!
 
 basicUnregister
-	source Remove_ContentLoading: token! !
+	source Remove_ContentLoading: token!
+
+Invoke: sender args: args
+	"Invoke the Invoke() method of the COM object.
+
+		HRESULT __stdcall Invoke(
+			[in]ICoreWebView2Frame* sender,
+			[in]ICoreWebView2ContentLoadingEventArgs* args);"
+
+	<virtual stdcall: hresult 4 ICoreWebView2Frame* ICoreWebView2ContentLoadingEventArgs*>
+	^self invalidCall: _failureCode! !
 !WebView2.ICoreWebView2FrameContentLoadingEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
+Invoke:args:!**auto generated**!COM Interfaces-ICoreWebView2FrameContentLoadingEventHandler!public! !
 !
 
 !WebView2.ICoreWebView2FrameContentLoadingEventHandler class methodsFor!

@@ -36,10 +36,21 @@ basicRegister: tokenBuffer
 	source Add_NewBrowserVersionAvailable: self token: tokenBuffer!
 
 basicUnregister
-	source Remove_NewBrowserVersionAvailable: token! !
+	source Remove_NewBrowserVersionAvailable: token!
+
+Invoke: sender args: args
+	"Invoke the Invoke() method of the COM object.
+
+		HRESULT __stdcall Invoke(
+			[in]ICoreWebView2Environment* sender,
+			[in]IUnknown* args);"
+
+	<virtual stdcall: hresult 4 ICoreWebView2Environment* IUnknown*>
+	^self invalidCall: _failureCode! !
 !WebView2.ICoreWebView2NewBrowserVersionAvailableEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
+Invoke:args:!**auto generated**!COM Interfaces-ICoreWebView2NewBrowserVersionAvailableEventHandler!public! !
 !
 
 !WebView2.ICoreWebView2NewBrowserVersionAvailableEventHandler class methodsFor!

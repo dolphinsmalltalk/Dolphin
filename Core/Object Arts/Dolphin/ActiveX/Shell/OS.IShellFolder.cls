@@ -8,6 +8,7 @@ OS.COM.IUnknown
 	classInstanceVariableNames: ''
 	classConstants: {}!
 OS.IShellFolder guid: (OS.COM.IID fromString: '{000214e6-0000-0000-c000-000000000046}')!
+OS.IShellFolder isEgressOnly: true!
 OS.IShellFolder comment: ''!
 !OS.IShellFolder categoriesForClass!COM-Interfaces! !
 !OS.IShellFolder methodsFor!

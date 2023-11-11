@@ -36,10 +36,21 @@ basicRegister: tokenBuffer
 	source Add_PermissionRequested: self token: tokenBuffer!
 
 basicUnregister
-	source Remove_PermissionRequested: token! !
+	source Remove_PermissionRequested: token!
+
+Invoke: sender args: args
+	"Invoke the Invoke() method of the COM object.
+
+		HRESULT __stdcall Invoke(
+			[in]ICoreWebView2* sender,
+			[in]ICoreWebView2PermissionRequestedEventArgs* args);"
+
+	<virtual stdcall: hresult 4 ICoreWebView2* ICoreWebView2PermissionRequestedEventArgs*>
+	^self invalidCall: _failureCode! !
 !WebView2.ICoreWebView2PermissionRequestedEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
+Invoke:args:!**auto generated**!COM Interfaces-ICoreWebView2PermissionRequestedEventHandler!public! !
 !
 
 !WebView2.ICoreWebView2PermissionRequestedEventHandler class methodsFor!

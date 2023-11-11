@@ -8,6 +8,7 @@ WebView2.ICoreWebView2Interface
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WebView2.ICoreWebView2 guid: (OS.COM.IID fromString: '{76eceacb-0462-4d94-ac83-423a6793775e}')!
+WebView2.ICoreWebView2 isEgressOnly: true!
 WebView2.ICoreWebView2 comment: '`ICoreWebView2` is a wrapper class for the COM interface ''WebView2.ICoreWebView2'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -1937,8 +1938,14 @@ defineFunctions
 			argumentTypes: 'ICoreWebView2WindowCloseRequestedEventHandler* sqword*';
 		defineFunction: #Remove_WindowCloseRequested:
 			argumentTypes: 'sqword'
-! !
+!
+
+latestDerivation
+	"We want to ensure the most derived interface class is retained on application deployment, but it is not otherwise referenced, so we need to lock in a reference here."
+
+	^##(super latestDerivation)! !
 !WebView2.ICoreWebView2 class categoriesForMethods!
 defineFunctions!initializing!public!template definition! !
+latestDerivation!enquiries!public! !
 !
 

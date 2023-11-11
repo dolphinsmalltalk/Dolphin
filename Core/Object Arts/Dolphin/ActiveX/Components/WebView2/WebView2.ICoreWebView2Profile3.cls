@@ -8,6 +8,7 @@ WebView2.ICoreWebView2Profile2
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WebView2.ICoreWebView2Profile3 guid: (OS.COM.IID fromString: '{b188e659-5685-4e05-bdba-fc640e0f1992}')!
+WebView2.ICoreWebView2Profile3 isEgressOnly: true!
 WebView2.ICoreWebView2Profile3 comment: '`ICoreWebView2Profile3` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Profile3'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

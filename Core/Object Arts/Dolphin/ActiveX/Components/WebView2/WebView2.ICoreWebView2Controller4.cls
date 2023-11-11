@@ -8,6 +8,7 @@ WebView2.ICoreWebView2Controller3
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WebView2.ICoreWebView2Controller4 guid: (OS.COM.IID fromString: '{97d418d5-a426-4e49-a151-e1a10f327d9e}')!
+WebView2.ICoreWebView2Controller4 isEgressOnly: true!
 WebView2.ICoreWebView2Controller4 comment: '`ICoreWebView2Controller4` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Controller4'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

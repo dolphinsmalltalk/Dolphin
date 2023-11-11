@@ -36,10 +36,21 @@ basicRegister: tokenBuffer
 	source Add_CustomItemSelected: self token: tokenBuffer!
 
 basicUnregister
-	source Remove_CustomItemSelected: token! !
+	source Remove_CustomItemSelected: token!
+
+Invoke: sender args: args
+	"Invoke the Invoke() method of the COM object.
+
+		HRESULT __stdcall Invoke(
+			[in]ICoreWebView2ContextMenuItem* sender,
+			[in]IUnknown* args);"
+
+	<virtual stdcall: hresult 4 ICoreWebView2ContextMenuItem* IUnknown*>
+	^self invalidCall: _failureCode! !
 !WebView2.ICoreWebView2CustomItemSelectedEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
+Invoke:args:!**auto generated**!COM Interfaces-ICoreWebView2CustomItemSelectedEventHandler!public! !
 !
 
 !WebView2.ICoreWebView2CustomItemSelectedEventHandler class methodsFor!

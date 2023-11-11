@@ -8,6 +8,7 @@ WebView2.ICoreWebView2EventArgs
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WebView2.ICoreWebView2DownloadStartingEventArgs guid: (OS.COM.IID fromString: '{e99bbe21-43e9-4544-a732-282764eafa60}')!
+WebView2.ICoreWebView2DownloadStartingEventArgs isEgressOnly: true!
 WebView2.ICoreWebView2DownloadStartingEventArgs comment: '`ICoreWebView2DownloadStartingEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2DownloadStartingEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

@@ -8,6 +8,7 @@ WebView2.ICoreWebView2Sequence
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WebView2.ICoreWebView2CookieList guid: (OS.COM.IID fromString: '{f7f6f714-5d2a-43c6-9503-346ece02d186}')!
+WebView2.ICoreWebView2CookieList isEgressOnly: true!
 WebView2.ICoreWebView2CookieList comment: '`ICoreWebView2CookieList` is a wrapper class for the COM interface ''WebView2.ICoreWebView2CookieList'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

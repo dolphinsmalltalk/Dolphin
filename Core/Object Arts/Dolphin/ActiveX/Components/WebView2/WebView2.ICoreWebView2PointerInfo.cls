@@ -8,6 +8,7 @@ WebView2.ICoreWebView2Interface
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WebView2.ICoreWebView2PointerInfo guid: (OS.COM.IID fromString: '{e6995887-d10d-4f5d-9359-4ce46e4f96b9}')!
+WebView2.ICoreWebView2PointerInfo isEgressOnly: true!
 WebView2.ICoreWebView2PointerInfo comment: '`ICoreWebView2PointerInfo` is a wrapper class for the COM interface ''WebView2.ICoreWebView2PointerInfo'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

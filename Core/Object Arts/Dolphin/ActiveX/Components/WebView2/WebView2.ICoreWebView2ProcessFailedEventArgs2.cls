@@ -8,6 +8,7 @@ WebView2.ICoreWebView2ProcessFailedEventArgs
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WebView2.ICoreWebView2ProcessFailedEventArgs2 guid: (OS.COM.IID fromString: '{4dab9422-46fa-4c3e-a5d2-41d2071d3680}')!
+WebView2.ICoreWebView2ProcessFailedEventArgs2 isEgressOnly: true!
 WebView2.ICoreWebView2ProcessFailedEventArgs2 comment: '`ICoreWebView2ProcessFailedEventArgs2` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ProcessFailedEventArgs2'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

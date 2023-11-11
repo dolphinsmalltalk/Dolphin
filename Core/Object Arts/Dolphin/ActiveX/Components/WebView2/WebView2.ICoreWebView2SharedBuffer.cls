@@ -8,6 +8,7 @@ WebView2.ICoreWebView2Interface
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WebView2.ICoreWebView2SharedBuffer guid: (OS.COM.IID fromString: '{b747a495-0c6f-449e-97b8-2f81e9d6ab43}')!
+WebView2.ICoreWebView2SharedBuffer isEgressOnly: true!
 WebView2.ICoreWebView2SharedBuffer comment: '`ICoreWebView2SharedBuffer` is a wrapper class for the COM interface ''WebView2.ICoreWebView2SharedBuffer'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

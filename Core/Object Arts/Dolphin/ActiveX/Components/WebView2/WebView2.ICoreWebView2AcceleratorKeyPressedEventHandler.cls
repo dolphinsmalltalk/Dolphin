@@ -36,10 +36,21 @@ basicRegister: tokenBuffer
 	source Add_AcceleratorKeyPressed: self token: tokenBuffer!
 
 basicUnregister
-	source Remove_AcceleratorKeyPressed: token! !
+	source Remove_AcceleratorKeyPressed: token!
+
+Invoke: sender args: args
+	"Invoke the Invoke() method of the COM object.
+
+		HRESULT __stdcall Invoke(
+			[in]ICoreWebView2Controller* sender,
+			[in]ICoreWebView2AcceleratorKeyPressedEventArgs* args);"
+
+	<virtual stdcall: hresult 4 ICoreWebView2Controller* ICoreWebView2AcceleratorKeyPressedEventArgs*>
+	^self invalidCall: _failureCode! !
 !WebView2.ICoreWebView2AcceleratorKeyPressedEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
+Invoke:args:!**auto generated**!COM Interfaces-ICoreWebView2AcceleratorKeyPressedEventHandler!public! !
 !
 
 !WebView2.ICoreWebView2AcceleratorKeyPressedEventHandler class methodsFor!

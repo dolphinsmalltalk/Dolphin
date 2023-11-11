@@ -8,6 +8,7 @@ WebView2.ICoreWebView2Interface
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WebView2.ICoreWebView2PrintSettings guid: (OS.COM.IID fromString: '{377f3721-c74e-48ca-8db1-df68e51d60e2}')!
+WebView2.ICoreWebView2PrintSettings isEgressOnly: true!
 WebView2.ICoreWebView2PrintSettings comment: '`ICoreWebView2PrintSettings` is a wrapper class for the COM interface ''WebView2.ICoreWebView2PrintSettings'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -651,8 +652,12 @@ defineFunctions
 			argumentTypes: 'lpwstr*';
 		defineFunction: #put_FooterUri:
 			argumentTypes: 'lpwstr'
-! !
+!
+
+latestDerivation
+	^##(super latestDerivation)! !
 !WebView2.ICoreWebView2PrintSettings class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
+latestDerivation!enquiries!public! !
 !
 

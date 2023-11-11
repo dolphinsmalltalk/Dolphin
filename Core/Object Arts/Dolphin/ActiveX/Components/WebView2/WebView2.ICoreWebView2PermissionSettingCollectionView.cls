@@ -8,6 +8,7 @@ WebView2.ICoreWebView2Sequence
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WebView2.ICoreWebView2PermissionSettingCollectionView guid: (OS.COM.IID fromString: '{f5596f62-3de5-47b1-91e8-a4104b596b96}')!
+WebView2.ICoreWebView2PermissionSettingCollectionView isEgressOnly: true!
 WebView2.ICoreWebView2PermissionSettingCollectionView comment: '`ICoreWebView2PermissionSettingCollectionView` is a wrapper class for the COM interface ''WebView2.ICoreWebView2PermissionSettingCollectionView'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

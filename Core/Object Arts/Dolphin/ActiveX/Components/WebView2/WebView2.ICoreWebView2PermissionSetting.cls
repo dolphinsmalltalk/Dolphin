@@ -11,6 +11,7 @@ WebView2.ICoreWebView2Interface
 				-> #('Microphone' 'Camera' 'Geolocation' 'Notifications' 'OtherSensors' 'ClipboardRead' 'MultipleAutomaticDownloads' 'FileReadWrite' 'Autoplay' 'LocalFonts' 'MidiSystemExclusiveMessages' 'WindowManagement')
 		}!
 WebView2.ICoreWebView2PermissionSetting guid: (OS.COM.IID fromString: '{792b6eca-5576-421c-9119-74ebb3a4ffb3}')!
+WebView2.ICoreWebView2PermissionSetting isEgressOnly: true!
 WebView2.ICoreWebView2PermissionSetting comment: '`ICoreWebView2PermissionSetting` is a wrapper class for the COM interface ''WebView2.ICoreWebView2PermissionSetting'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

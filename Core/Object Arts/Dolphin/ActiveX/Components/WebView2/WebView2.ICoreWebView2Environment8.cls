@@ -8,6 +8,7 @@ WebView2.ICoreWebView2Environment7
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WebView2.ICoreWebView2Environment8 guid: (OS.COM.IID fromString: '{d6eb91dd-c3d2-45e5-bd29-6dc2bc4de9cf}')!
+WebView2.ICoreWebView2Environment8 isEgressOnly: true!
 WebView2.ICoreWebView2Environment8 comment: '`ICoreWebView2Environment8` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Environment8'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

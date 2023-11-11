@@ -36,10 +36,21 @@ basicRegister: tokenBuffer
 	source Add_NewWindowRequested: self token: tokenBuffer!
 
 basicUnregister
-	source Remove_NewWindowRequested: token! !
+	source Remove_NewWindowRequested: token!
+
+Invoke: sender args: args
+	"Invoke the Invoke() method of the COM object.
+
+		HRESULT __stdcall Invoke(
+			[in]ICoreWebView2* sender,
+			[in]ICoreWebView2NewWindowRequestedEventArgs* args);"
+
+	<virtual stdcall: hresult 4 ICoreWebView2* ICoreWebView2NewWindowRequestedEventArgs*>
+	^self invalidCall: _failureCode! !
 !WebView2.ICoreWebView2NewWindowRequestedEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
+Invoke:args:!**auto generated**!COM Interfaces-ICoreWebView2NewWindowRequestedEventHandler!public! !
 !
 
 !WebView2.ICoreWebView2NewWindowRequestedEventHandler class methodsFor!

@@ -8,6 +8,7 @@ WebView2.ICoreWebView2Interface
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WebView2.ICoreWebView2BasicAuthenticationResponse guid: (OS.COM.IID fromString: '{07023f7d-2d77-4d67-9040-6e7d428c6a40}')!
+WebView2.ICoreWebView2BasicAuthenticationResponse isEgressOnly: true!
 WebView2.ICoreWebView2BasicAuthenticationResponse comment: '`ICoreWebView2BasicAuthenticationResponse` is a wrapper class for the COM interface ''WebView2.ICoreWebView2BasicAuthenticationResponse'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

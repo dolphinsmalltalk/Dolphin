@@ -30,11 +30,24 @@ interface ICoreWebView2WebResourceResponseViewGetContentCompletedHandler : IUnkn
 ```
 '!
 !WebView2.ICoreWebView2WebResourceResponseViewGetContentCompletedHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2WebResourceResponseViewGetContentCompletedHandler methodsFor!
+
+Invoke: invoke arg: arg
+	"Callout for the ICoreWebView2WebResourceResponseViewGetContentCompletedHandler::Invoke() interface function.
+	N.B. This method has been automatically generated from 
+	the vtable defined in ICoreWebView2WebResourceResponseViewGetContentCompletedHandler>>defineFunctions. DO NOT MODIFY!!"
+
+	<virtual stdcall: hresult 4 hresult OS.COM.IStream*>
+	^self invalidCall: _failureCode! !
+!WebView2.ICoreWebView2WebResourceResponseViewGetContentCompletedHandler categoriesForMethods!
+Invoke:arg:!COM Interfaces-ICoreWebView2WebResourceResponseViewGetContentCompletedHandler!public! !
+!
+
 !WebView2.ICoreWebView2WebResourceResponseViewGetContentCompletedHandler class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2WebResourceResponseViewGetContentCompletedHandler'
-		ICoreWebView2WebResourceResponseViewGetContentCompletedHandler defineTemplate
+		ICoreWebView2WebResourceResponseViewGetContentCompletedHandler compileFunctions
 	"
 
 	self defineFunction: #Invoke:arg: argumentTypes: 'hresult IStream*'! !

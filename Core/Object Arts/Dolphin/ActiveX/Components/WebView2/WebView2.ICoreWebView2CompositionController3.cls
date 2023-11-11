@@ -8,6 +8,7 @@ WebView2.ICoreWebView2CompositionController2
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WebView2.ICoreWebView2CompositionController3 guid: (OS.COM.IID fromString: '{9570570e-4d76-4361-9ee1-f04d0dbdfb1e}')!
+WebView2.ICoreWebView2CompositionController3 isEgressOnly: true!
 WebView2.ICoreWebView2CompositionController3 comment: '`ICoreWebView2CompositionController3` is a wrapper class for the COM interface ''WebView2.ICoreWebView2CompositionController3'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

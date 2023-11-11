@@ -8,6 +8,7 @@ WebView2.ICoreWebView2EventArgs
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WebView2.ICoreWebView2NavigationCompletedEventArgs guid: (OS.COM.IID fromString: '{30d68b7d-20d9-4752-a9ca-ec8448fbb5c1}')!
+WebView2.ICoreWebView2NavigationCompletedEventArgs isEgressOnly: true!
 WebView2.ICoreWebView2NavigationCompletedEventArgs comment: '`ICoreWebView2NavigationCompletedEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2NavigationCompletedEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -126,8 +127,12 @@ defineFunctions
 			argumentTypes: 'sdword*';
 		defineFunction: #get_NavigationId:
 			argumentTypes: 'qword*'
-! !
+!
+
+latestDerivation
+	^##(super latestDerivation)! !
 !WebView2.ICoreWebView2NavigationCompletedEventArgs class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
+latestDerivation!enquiries!public! !
 !
 

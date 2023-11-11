@@ -36,10 +36,21 @@ basicRegister: tokenBuffer
 	source Add_WindowCloseRequested: self token: tokenBuffer!
 
 basicUnregister
-	source Remove_WindowCloseRequested: token! !
+	source Remove_WindowCloseRequested: token!
+
+Invoke: sender args: args
+	"Invoke the Invoke() method of the COM object.
+
+		HRESULT __stdcall Invoke(
+			[in]ICoreWebView2* sender,
+			[in]IUnknown* args);"
+
+	<virtual stdcall: hresult 4 ICoreWebView2* IUnknown*>
+	^self invalidCall: _failureCode! !
 !WebView2.ICoreWebView2WindowCloseRequestedEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
+Invoke:args:!**auto generated**!COM Interfaces-ICoreWebView2WindowCloseRequestedEventHandler!public! !
 !
 
 !WebView2.ICoreWebView2WindowCloseRequestedEventHandler class methodsFor!

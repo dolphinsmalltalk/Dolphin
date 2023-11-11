@@ -30,11 +30,24 @@ interface ICoreWebView2GetCookiesCompletedHandler : IUnknown
 ```
 '!
 !WebView2.ICoreWebView2GetCookiesCompletedHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2GetCookiesCompletedHandler methodsFor!
+
+Invoke: invoke arg: arg
+	"Callout for the ICoreWebView2GetCookiesCompletedHandler::Invoke() interface function.
+	N.B. This method has been automatically generated from 
+	the vtable defined in ICoreWebView2GetCookiesCompletedHandler>>defineFunctions. DO NOT MODIFY!!"
+
+	<virtual stdcall: hresult 4 hresult WebView2.ICoreWebView2CookieList*>
+	^self invalidCall: _failureCode! !
+!WebView2.ICoreWebView2GetCookiesCompletedHandler categoriesForMethods!
+Invoke:arg:!COM Interfaces-ICoreWebView2GetCookiesCompletedHandler!public! !
+!
+
 !WebView2.ICoreWebView2GetCookiesCompletedHandler class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2GetCookiesCompletedHandler'
-		ICoreWebView2GetCookiesCompletedHandler defineTemplate
+		ICoreWebView2GetCookiesCompletedHandler compileFunctions
 	"
 
 	self defineFunction: #Invoke:arg: argumentTypes: 'hresult ICoreWebView2CookieList*'! !

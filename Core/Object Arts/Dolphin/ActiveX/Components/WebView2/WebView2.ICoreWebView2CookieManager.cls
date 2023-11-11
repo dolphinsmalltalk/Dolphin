@@ -8,6 +8,7 @@ WebView2.ICoreWebView2Interface
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WebView2.ICoreWebView2CookieManager guid: (OS.COM.IID fromString: '{177cd9e7-b6f5-451a-94a0-5d7a3a4c4141}')!
+WebView2.ICoreWebView2CookieManager isEgressOnly: true!
 WebView2.ICoreWebView2CookieManager comment: '`ICoreWebView2CookieManager` is a wrapper class for the COM interface ''WebView2.ICoreWebView2CookieManager'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

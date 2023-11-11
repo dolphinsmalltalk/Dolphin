@@ -8,6 +8,7 @@ WebView2.ICoreWebView2IterableCollection
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WebView2.ICoreWebView2FrameInfoCollection guid: (OS.COM.IID fromString: '{8f834154-d38e-4d90-affb-6800a7272839}')!
+WebView2.ICoreWebView2FrameInfoCollection isEgressOnly: true!
 WebView2.ICoreWebView2FrameInfoCollection comment: '`ICoreWebView2FrameInfoCollection` is a wrapper class for the COM interface ''WebView2.ICoreWebView2FrameInfoCollection'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

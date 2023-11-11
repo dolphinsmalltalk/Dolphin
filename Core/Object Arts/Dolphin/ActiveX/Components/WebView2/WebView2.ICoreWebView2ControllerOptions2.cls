@@ -8,6 +8,7 @@ WebView2.ICoreWebView2ControllerOptions
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WebView2.ICoreWebView2ControllerOptions2 guid: (OS.COM.IID fromString: '{06c991d8-9e7e-11ed-a8fc-0242ac120002}')!
+WebView2.ICoreWebView2ControllerOptions2 isEgressOnly: true!
 WebView2.ICoreWebView2ControllerOptions2 comment: '`ICoreWebView2ControllerOptions2` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ControllerOptions2'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

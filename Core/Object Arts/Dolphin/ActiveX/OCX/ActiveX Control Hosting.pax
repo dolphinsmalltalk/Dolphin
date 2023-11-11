@@ -93,6 +93,7 @@ package setPrerequisites: #(
 	'..\..\MVP\Models\Value\Dolphin Value Models'
 	'..\COM\OLE COM'
 	'..\Components\Font\OLE Font'
+	'..\Persist\OLE Persistence and Data Transfer'
 	'..\Persist\OLE Persistence Base'
 	'..\Structured Storage\OLE Streams'
 ).
