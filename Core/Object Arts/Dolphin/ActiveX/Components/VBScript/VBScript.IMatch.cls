@@ -8,6 +8,7 @@ OS.COM.IDispatch
 	classInstanceVariableNames: ''
 	classConstants: {}!
 VBScript.IMatch guid: (OS.COM.IID fromString: '{3f4daca1-160d-11d2-a8e9-00104b365c9f}')!
+VBScript.IMatch isEgressOnly: true!
 VBScript.IMatch comment: '`IMatch` is a wrapper class for the COM interface ''VBScript_RegExp_55.IMatch'' generated from type information in the ''Microsoft VBScript Regular Expressions 5.5'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

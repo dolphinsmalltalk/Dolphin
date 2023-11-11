@@ -8,6 +8,7 @@ MSXML.IXMLDOMDocument2
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MSXML.IXMLDOMDocument3 guid: (OS.COM.IID fromString: '{2933bf96-7b36-11d2-b20e-00c04f983e60}')!
+MSXML.IXMLDOMDocument3 isEgressOnly: true!
 MSXML.IXMLDOMDocument3 comment: '<IXMLDOMDocument3> is a wrapper class for the COM interface ''MSXML2.IXMLDOMDocument3'' generated from type information in the ''Microsoft XML, v6.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

@@ -9,6 +9,7 @@ OS.COM.IDispatch
 	classConstants: {}!
 VBScript.IRegExpAbstract guid: (OS.COM.IID fromString: '{427e61d6-dda9-489b-9102-c745ec40641b}')!
 VBScript.IRegExpAbstract isNonInstantiable: true!
+VBScript.IRegExpAbstract isEgressOnly: true!
 VBScript.IRegExpAbstract comment: '`IRegExpAbstract` is an abstract class implementing methods common between the Microsoft Scripting IRegExp COM interfaces.'!
 !VBScript.IRegExpAbstract categoriesForClass!COM-Interfaces! !
 !VBScript.IRegExpAbstract methodsFor!

@@ -8,6 +8,7 @@ MSXML.IServerXMLHTTPRequest
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MSXML.IServerXMLHTTPRequest2 guid: (OS.COM.IID fromString: '{2e01311b-c322-4b0a-bd77-b90cfdc8dce7}')!
+MSXML.IServerXMLHTTPRequest2 isEgressOnly: true!
 MSXML.IServerXMLHTTPRequest2 comment: '<IServerXMLHTTPRequest2> is a wrapper class for the COM interface ''MSXML2.IServerXMLHTTPRequest2'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface

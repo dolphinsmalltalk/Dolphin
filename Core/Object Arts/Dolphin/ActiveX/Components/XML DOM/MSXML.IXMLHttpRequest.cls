@@ -8,6 +8,7 @@ OS.COM.IDispatch
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MSXML.IXMLHttpRequest guid: (OS.COM.IID fromString: '{ed8c108d-4349-11d2-91a4-00c04f7969e8}')!
+MSXML.IXMLHttpRequest isEgressOnly: true!
 MSXML.IXMLHttpRequest comment: '<IXMLHttpRequest> is a wrapper class for the COM interface ''MSXML.IXMLHttpRequest'' generated from type information in the ''Microsoft XML, version 2.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following (typically unhelpful) helpstring for this interface
