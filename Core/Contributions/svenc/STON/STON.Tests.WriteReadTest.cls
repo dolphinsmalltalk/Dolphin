@@ -259,7 +259,7 @@ testSpecialCharacters
 						'élèves français'.
 						'Düsseldorf Königsallee'.
 						#dolphin.
-						#(1 10 20 30 127 140 150 160 200 255) asByteArray asString}.	"Modified non-standard collect and conversion."
+						#($\x1 $\n $\x14 $\x1E $\x7F $\x8C $\x96 $\xA0 $È $ÿ) asString}.	"Modified non-standard collect and conversion."
 	self serializeAndMaterialize: primitives!
 
 testStrings
