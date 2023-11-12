@@ -2927,12 +2927,12 @@ testPrimitiveStringNextIndexOfFromTo
 				#('abc' $d 1 3 0).
 				#('abac' nil 1 4 0).
 				{'abcd'. Character dolphin. 1. 4. 0}.
-				{Character dolphin asUtf8String asByteArray asAnsiString.
+				{AnsiString fromByteArray: Character dolphin asUtf8String.
 					Character dolphin asUtf8String at: 2.
 					1.
 					4.
 					0}.
-				{Character dolphin asUtf16String asByteArray asAnsiString.
+				{AnsiString fromByteArray: Character dolphin asUtf16String asByteArray.
 					Character dolphin asUtf16String at: 2.
 					1.
 					4.

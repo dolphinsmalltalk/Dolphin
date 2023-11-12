@@ -1463,12 +1463,12 @@ decodeStyledText: aByteArray
 					[lastStyle == style
 						ifFalse: 
 							[lastStyle := style.
-							pair value: buffer contents asString.
+							pair value: (stringClass fromByteArray: buffer contents).
 							buffer reset.
 							pair := (self styleWithId: lastStyle) name -> nil.
 							tokens addLast: pair].
 					buffer nextPut: char]].
-	pair value: buffer contents asString.
+	pair value: (stringClass fromByteArray: buffer contents).
 	^tokens!
 
 defaultCurrentLineBackcolor

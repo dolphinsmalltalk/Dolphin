@@ -675,13 +675,19 @@ testShortPath
 
 testSniffEncodingAnsi
 	tempFile := File temporary.
-	{ Utf16String.Bom , 'odd' asByteArray. $£. ' informações'. 'süß«'. $€ } do: 
-			[:each |
-			tempFile
-				size: 0;
-				write: each asAnsiString asByteArray.
-			self assert: tempFile sniffEncoding equals: String.EncodingAnsi.
-			self assert: tempFile position equals: 0]!
+	{
+		AnsiString fromByteArray: Utf16String.Bom , 'odd' asByteArray.
+		'£' asAnsiString.
+		' informações'.
+		'süß«'.
+		'€' asAnsiString
+	} do: 
+				[:each |
+				tempFile
+					size: 0;
+					write: each asAnsiString asByteArray.
+				self assert: tempFile sniffEncoding equals: String.EncodingAnsi.
+				self assert: tempFile position equals: 0]!
 
 testSniffEncodingUtf16
 	tempFile := File temporary.
@@ -706,7 +712,7 @@ testSniffEncodingUtf8
 	tempFile := File temporary.
 	{
 		Utf8String.Bom.
-		Utf8String.Bom , $£ asAnsiString asByteArray.
+		Utf8String.Bom , '£' asAnsiString asByteArray.
 		'a b c ' asByteArray.
 		$£ asUtf8String asByteArray.
 		'a 🐬' asUtf8String asByteArray
