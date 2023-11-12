@@ -834,6 +834,9 @@ hasErrors
 
 	^compilationErrors anySatisfy: [:each | each severityClass == Error]!
 
+hasFindDetails
+	^self findDetails notNil!
+
 hasSelection
 	"Answers whether any text is selected in the receiver's view."
 	
@@ -2030,6 +2033,7 @@ findDetails:!accessing!public! !
 firstError!helpers!private! !
 getCompletionSignatureFor:at:!autocompletion!helpers!private! !
 hasErrors!public!testing! !
+hasFindDetails!public!testing! !
 hasSelection!public!testing! !
 hasSmalltalkStyler!commands-actions!private! !
 highlightCompilationErrors:!helpers!private! !
@@ -2160,7 +2164,7 @@ workspacePool:!accessing!public! !
 wrapLinesInRange:indent:!helpers!private! !
 !
 
-Tools.SmalltalkWorkspace methodProtocol: #textPresenter attributes: #() selectors: #(#clear #findDetails #findDetails: #hasSelection #isModified #isModified: #replaceSelection: #selectionRange #selectionRange:)!
+Tools.SmalltalkWorkspace methodProtocol: #textPresenter attributes: #(#readOnly) selectors: #(#clear #findDetails #findDetails: #hasFindDetails #hasSelection #isModified #isModified: #replaceSelection: #selectionRange #selectionRange:)!
 Tools.SmalltalkWorkspace methodProtocol: #variableMetadataProvider attributes: #() selectors: #(#classForVariable: #iconForVariable: #tipForVariable:)!
 
 !Tools.SmalltalkWorkspace class methodsFor!

@@ -108,12 +108,6 @@ browseInstanceVariables
 	<commandQuery: #hasClassWithInstanceVariables>
 	self developmentSystem browseInstanceVariables: self actualClass!
 
-browseIt
-	"Browse the selected item in the pane with focus."
-
-	<commandQuery: #queryBrowseIt:>
-	self perform: self browseItCommand!
-
 browseItCommand
 	"Private - Answer the command that the context-sensitive 'Browse-It' command would be linked
 	to if sent to the receiver at this moment."
@@ -291,12 +285,6 @@ classPackage
 				validationBlock: [:package | package notNil and: [class fullyQualifiedReference isDefined]].
 	(newPkg isNil or: [newPkg = oldPkg]) ifFalse: [self confirmMoveClass: class toPackage: newPkg]!
 
-clearSelection
-	"Private - Remove the selected object from the system"
-
-	<commandQuery: #queryDeleteIt:>
-	self perform: self deleteItCommand!
-
 confirmMoveClass: aClass toPackage: aPackage
 	"Private - Move aClass from its existing package to the receiver's current package if
 	the user agrees."
@@ -396,7 +384,7 @@ createVariableAccessors: aBoolean
 
 deleteItCommand
 	classesPresenter hasFocus ifTrue: [^#removeClass].
-	^nil!
+	^super deleteItCommand!
 
 developmentSystem
 	^SmalltalkSystem current!
@@ -848,20 +836,6 @@ queryBrowseHierarchy: aCommandQuery
 		text: (aCommandQuery commandDescription menuText expandMacrosWithArguments: { name ?? '' }
 				locale: Locale smalltalk)!
 
-queryBrowseIt: aCommandQuery
-	self browseItCommand
-		ifNil: 
-			["Not handled at this level, but continue searching the chain"
-			aCommandQuery text: aCommandQuery menuText << $…]
-		ifNotNil: [:selector | self queryContextCommand: aCommandQuery as: selector]!
-
-queryDeleteIt: aCommandQuery
-	self deleteItCommand
-		ifNil: 
-			["Not handled at this level, but continue searching the chain"
-			aCommandQuery text: aCommandQuery menuText << $…]
-		ifNotNil: [:selector | self queryContextCommand: aCommandQuery as: selector]!
-
 queryShowFullNames: aCommandQuery
 	aCommandQuery
 		isEnabled: true;
@@ -971,7 +945,6 @@ browseClassReferences!commands-actions!public! !
 browseClassVariables!commands-actions!public! !
 browseHierarchy!commands-actions!public! !
 browseInstanceVariables!commands-actions!public! !
-browseIt!commands-actions!public! !
 browseItCommand!helpers!private! !
 browseMenu!commands-menus!private! !
 browsePackages!commands-actions!public! !
@@ -990,7 +963,6 @@ chooseVariables:caption:!helpers!private! !
 classHierarchyPresenter!accessing!private! !
 classNamesSelector:!accessing!private! !
 classPackage!commands-actions!public! !
-clearSelection!commands-actions!private! !
 confirmMoveClass:toPackage:!operations!private! !
 copyClass!commands-actions!private! !
 createInstanceVariableAccessors!commands-actions!public!refactoring! !
@@ -1040,8 +1012,6 @@ populateVarMenu:class:command:variables:format:abortable:!menus!private! !
 queryBrowseClassPackage:!commands-queries!private! !
 queryBrowseClassReferences:!commands-queries!private! !
 queryBrowseHierarchy:!commands-queries!private! !
-queryBrowseIt:!commands-queries!private! !
-queryDeleteIt:!commands-queries!private! !
 queryShowFullNames:!commands-queries!private! !
 queryViewsShowMenu:!commands-queries!private! !
 removeClass!commands-actions!public! !

@@ -130,11 +130,6 @@ checkCanUninstall: package
 				errorMsg: err description.
 			^self operationAbortedSignal signalWith: package]!
 
-clearSelection
-	"Private - Remove the selected object from the system"
-
-	self perform: self deleteItCommand!
-
 commonFolder: aCollectionOfPackages
 	| commonPrefix |
 	aCollectionOfPackages isEmpty ifTrue: [^nil].
@@ -270,7 +265,7 @@ deleteItCommand
 
 	filterPresenter hasFocus ifTrue: [^nil].
 	packagesPresenter hasFocus ifTrue: [^#removePackage].
-	^nil!
+	^super deleteItCommand!
 
 developmentSystem
 	^SmalltalkSystem current!
@@ -1005,7 +1000,6 @@ browsePackages!commands!public! !
 browseUnimplemented!public! !
 canRefactor!commands!private!refactoring! !
 checkCanUninstall:!helpers!private! !
-clearSelection!commands!private! !
 commonFolder:!operations!private! !
 confirmUninstall:!helpers!private! !
 createComponents!initializing!private! !

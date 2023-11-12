@@ -752,6 +752,9 @@ package setMethodNames: #(
 	#(#{UI.ScrollBar class} #publishedAspectsOfInstances)
 	#(#{UI.ScrollingDecorator class} #publishedAspectsOfInstances)
 	#(#{UI.ScrollingDecoratorLayout class} #publishedAspectsOfInstances)
+	#(#{UI.SelectableItemsPresenter} #browseIt)
+	#(#{UI.SelectableItemsPresenter} #browseItCommand)
+	#(#{UI.SelectableItemsPresenter} #queryBrowseIt:)
 	#(#{UI.Shell class} #registerAsToolWith:)
 	#(#{UI.Shell class} #unregisterAsToolWith:)
 	#(#{UI.ShellView class} #publishedAspectsOfInstances)
@@ -9017,6 +9020,32 @@ publishedAspectsOfInstances
 		yourself! !
 !UI.ScrollingDecoratorLayout class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
+!
+
+!UI.SelectableItemsPresenter methodsFor!
+
+browseIt
+	"Browse the selected item in the pane with focus."
+
+	<commandQuery: #queryBrowseIt:>
+	self perform: self browseItCommand!
+
+browseItCommand
+	"Private - Answer the command that the context-sensitive 'Browse-It' command would be linked
+	to if sent to the receiver at this moment."
+
+	^nil!
+
+queryBrowseIt: aCommandQuery
+	self browseItCommand
+		ifNil: 
+			["Not handled at this level, but continue searching the chain"
+			aCommandQuery text: aCommandQuery menuText << $…]
+		ifNotNil: [:selector | self queryContextCommand: aCommandQuery as: selector]! !
+!UI.SelectableItemsPresenter categoriesForMethods!
+browseIt!commands-actions!public! !
+browseItCommand!helpers!private! !
+queryBrowseIt:!commands-queries!private! !
 !
 
 !UI.Shell class methodsFor!

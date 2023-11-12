@@ -32,6 +32,9 @@ Class Variables:
 !Tools.MethodBrowser categoriesForClass!MVP-Presenters!MVP-Resources-IDE Tools! !
 !Tools.MethodBrowser methodsFor!
 
+addCategoryMenu
+	<commandQuery: #hasEditableMethodsSelected>!
+
 addMethods: aCollectionOfMethods toCategory: aMethodCategory 
 	aMethodCategory addMethods: aCollectionOfMethods.
 	aCollectionOfMethods do: [:each | each storeCategories]!
@@ -80,6 +83,7 @@ browseContainingText
 browseDefinitions
 	"Browse method definitions with the same selector as the currently selected method."
 
+	<commandQuery: #queryBrowseMethod:>
 	self browseDefinitionsMatching: (MethodSearch newSelector: self selectedMethod selector)
 		in: self searchEnvironment!
 
@@ -109,12 +113,8 @@ browseDefinitionsOfSelector: aSymbol in: aBrowserEnvironment
 browseHierarchy
 	"Open a class hierarchy browser on the current method"
 
+	<commandQuery: #queryBrowseMethod:>
 	self developmentSystem browseClassHierarchyOfMethod: self selection!
-
-browseIt
-	"Open a default browser on the current method(s)"
-
-	^self perform: self browseItCommand!
 
 browseItCommand
 	"Private - Open a class browser on the selected method(s) class(es)."
@@ -182,6 +182,7 @@ browseMethodClasses
 
 	"Implementation Note: If a single method is selected, then a default class browser is opened with that method selected, otherwise if methods of a single class are selected then a default class browser is opened on that class, otherwise an Environment Browser is opened on the methods' classes."
 
+	<commandQuery: #queryBrowseMethodClasses:>
 	| selections |
 	selections := self selections.
 	^(selections size = 1
@@ -196,12 +197,14 @@ browseMethodInheritanceChain
 	"Open a method browser displaying the definitions of the 
 	current selector in the superclass chain."
 
+	<commandQuery: #hasOverrideSelected>
 	self developmentSystem browseMethodHierarchyFrom: self selection in: self searchEnvironment!
 
 browseMethodPackages
 	"Open a package browser on the current methods' owning packages."
 
-	self developmentSystem browsePackages: (self selections collect: [:each | each owningPackage]) asSet.!
+	<commandQuery: #queryBrowseMethodPackages:>
+	self developmentSystem browsePackages: (self selections collect: [:each | each owningPackage]) asSet!
 
 browseMethodsIn: aBrowserEnvironment 
 	parentPresenter browseMethodsIn: aBrowserEnvironment!
@@ -209,17 +212,21 @@ browseMethodsIn: aBrowserEnvironment
 browseMethodsMatching: aMethodSearch in: aBrowserEnvironment
 	self browseMethodsIn: (aMethodSearch referencesIn: aBrowserEnvironment)!
 
+browseOther
+	"Browse Other menu - always enabled"!
+
 browsePackages
 	"Implement the context-sensitive browse packages command by browsing the package
 	of the selected method."
 
+	<commandQuery: #hasMethodsSelected>
 	self browseMethodPackages.!
 
 browseReferences
 	"Context-sensitive 'Browse References' command. In this case browse refs. to the 
 	current selector."
 
-	<commandQuery: #queryBrowseReferences:>
+	<commandQuery: #queryBrowseMethod:>
 	<acceleratorKey: 'Shift+F12'>
 	self browseReferencesMatching: (MethodSearch newSelector: self selection selector)
 		in: self searchEnvironment!
@@ -264,6 +271,7 @@ browserEnvironment
 browseSystem
 	"Open a system browser on the current method"
 
+	<commandQuery: #hasMethodSelected>
 	self developmentSystem browseSystemOnMethod: self selection!
 
 browseVariableReferences: aVariableBinding in: aBrowserEnvironment
@@ -332,6 +340,7 @@ canSaveMethod
 categorizeMethods
 	"Invokes a dialog to categorize the currently selected methods."
 
+	<commandQuery: #hasEditableMethodsSelected>
 	| methods originalCategory chosenCategory categories captionPostscript |
 	methods := self selections.
 	methods size == 1
@@ -353,11 +362,6 @@ categorizeMethods
 
 clearErrors
 	^sourcePresenter clearErrors!
-
-clearSelection
-	"Removes the selected method from the system"
-
-	self perform: self deleteItCommand!
 
 commandPolicy
 	^methodsPresenter commandPolicy!
@@ -430,9 +434,12 @@ customDrawSelector: anNMLVCUSTOMDRAW
 	method isDeprecated ifTrue: [anNMLVCUSTOMDRAW font isStruckThrough: true].
 	method isAbstract ifTrue: [anNMLVCUSTOMDRAW font isItalic: true]!
 
+definitionsMenu
+	"No commandQuery needed - always enabled, even if no methods selected, as the Messages... command is still available to prompt for a selector"!
+
 deleteItCommand
 	methodsPresenter hasFocus ifTrue: [^#removeMethod].
-	^nil!
+	^super deleteItCommand!
 
 developmentSystem
 	^SmalltalkSystem current!
@@ -478,6 +485,12 @@ filter: aOneArgBlock
 findDetails: aFindDetails 
 	sourcePresenter findDetails: aFindDetails!
 
+findNext
+	"Hilight the next occurrence of the current search string in the selected method."
+
+	<commandQuery: #queryFindNext:>
+	sourcePresenter view findNext!
+
 findNextMatch
 	"Hilight the next occurrence of the sourcePresenter's findString in its
 	current source."
@@ -498,6 +511,9 @@ hasEditableMethodSelected
 hasEditableMethodsSelected
 	^parentPresenter hasEditableMethodsSelected!
 
+hasFindDetails
+	^sourcePresenter hasFindDetails!
+
 hasMethods
 	^self model notEmpty!
 
@@ -513,6 +529,11 @@ hasMethodsSelected
 
 	^self hasSelection!
 
+hasOverrideSelected
+	"Answer true if the receiver currently has a method selected in the methodsPresenter that is overriding a superclass method."
+
+	^self selectedMethod ifNil: [false] ifNotNil: [:method | method isOverride]!
+
 initialize
 	"Private - Initialize the receiver"
 
@@ -525,6 +546,7 @@ initialize
 inspectIt
 	"Open an inspector on the currently selected method."
 
+	<commandQuery: #hasMethodsSelected>
 	| methods |
 	methods := self selections.
 	(methods size = 1 ifTrue: [methods first] ifFalse: [methods]) inspect!
@@ -568,6 +590,7 @@ methodCategorizationPolicy
 methodPackage
 	"Prompt for the user to repackage the selected method(s)."
 
+	<commandQuery: #hasEditableMethodsSelected>
 	| methods oldPkg newPkg captionPostscript default |
 	methods := self selections.
 	methods size = 1
@@ -839,8 +862,8 @@ promptToSaveChanges
 				oldSelection: method;
 				yourself)!
 
-queryBrowseReferences: aCommandQuery
-	"Context-sensitive 'Browse References' command. In this case browse refs. to the current selector."
+queryBrowseMethod: aCommandQuery
+	"Private - Context-sensitive 'Browse References' command. In this case browse refs. to the current selector."
 
 	| method |
 	method := self selectedMethod.
@@ -850,109 +873,55 @@ queryBrowseReferences: aCommandQuery
 					expandMacrosWithArguments: { method ifNil: ['…'] ifNotNil: [method selector] }
 					locale: Locale smalltalk)!
 
-queryCommand: aCommandQuery
-	"Private - Enters details about a potential command for the receiver into the 
-	<CommandQuery> argument."
+queryBrowseMethodClasses: aCommandQuery
+	| methodClasses |
+	methodClasses := (self selections collect: [:each | each methodClass]) asSet.
+	aCommandQuery text: (methodClasses size ~~ 1
+				ifTrue: 
+					[aCommandQuery isEnabled: self selections notEmpty.
+					'Method Classes']
+				ifFalse: 
+					[aCommandQuery isEnabled: true.
+					'Class <1p>' expandMacrosWithArguments: { methodClasses anyOne } locale: Locale smalltalk])!
 
-	| selector method methods |
-	selector := aCommandQuery commandSymbol.
-	#browseIt == selector ifTrue: [selector := self browseItCommand].
-	#browseOther == selector
-		ifTrue: 
-			[aCommandQuery isEnabled: true.
-			^true].
-	#clearSelection == selector
-		ifTrue: 
-			[selector := self deleteItCommand.
-			selector isNil
+queryBrowseMethodPackages: aCommandQuery
+	| packages |
+	packages := (self selections collect: [:each | each owningPackage]) asSet.
+	aCommandQuery isEnabled: packages notEmpty.
+	aCommandQuery text: (packages size = 1
 				ifTrue: 
-					[aCommandQuery isEnabled: false.
-					^true]].
-	#newMethod == selector
+					[aCommandQuery commandDescription menuText
+						expandMacrosWithArguments: { packages anyOne name printString }
+						locale: Locale smalltalk]
+				ifFalse: ['Packages'])!
+
+queryFindNext: aCommandQuery
+	aCommandQuery isEnabled: (self hasMethodSelected and: [self hasFindDetails])!
+
+queryTogglePrivate: aCommandQuery
+	self hasEditableMethodsSelected
 		ifTrue: 
-			[aCommandQuery isEnabled: false.
-			^false].	"Can't add new methods as don't know class"
-	(#(#definitionsMenu #referencesMenu) identityIncludes: selector)
-		ifTrue: 
-			[aCommandQuery isEnabled: true.
-			^true].
-	methods := self selections.
-	method := methods size = 1 ifTrue: [methods first].
-	#browseMethodInheritanceChain == selector
-		ifTrue: 
-			[aCommandQuery isEnabled: (method notNil and: [method isOverride]).
-			^true].
-	(#(#inspectIt #browsePackages) identityIncludes: selector)
-		ifTrue: 
-			[aCommandQuery isEnabled: methods notEmpty.
-			^true].
-	(#(#browseMessages #browseDefinitions #browseReferences #browseHierarchy #browsePackages)
-		identityIncludes: selector)
-			ifTrue: 
-				[aCommandQuery
-					isEnabled: method notNil;
-					text: (aCommandQuery menuText
-								expandMacrosWithArguments: { method ifNil: ['…'] ifNotNil: [method selector] }
-								locale: Locale smalltalk).
-				^true].
-	#browseSystem == selector
-		ifTrue: 
-			[aCommandQuery isEnabled: method notNil.
-			^true].
-	(#(#addCategoryMenu #removeCategoryMenu #categorizeMethods #methodPackage #removeMethod)
-		identityIncludes: selector)
-			ifTrue: 
-				[aCommandQuery isEnabled: (methods notEmpty
-							and: [methods allSatisfy: [:each | parentPresenter isEditableMethod: each]]).
-				^true].
-	#browseMethodClasses == selector
-		ifTrue: 
-			[| methodClasses |
-			methodClasses := (methods collect: [:each | each methodClass]) asSet.
-			aCommandQuery text: (methodClasses size ~~ 1
-						ifTrue: 
-							[aCommandQuery isEnabled: methods notEmpty.
-							'Method Classes']
-						ifFalse: 
-							[aCommandQuery isEnabled: true.
-							'Class <1p>' expandMacrosWithArguments: { methodClasses anyOne } locale: Locale smalltalk]).
-			^true].
-	#browseMethodPackages == selector
-		ifTrue: 
-			[| packages |
-			packages := (methods collect: [:each | each owningPackage]) asSet.
-			aCommandQuery isEnabled: packages notEmpty.
-			aCommandQuery text: (packages size = 1
-						ifTrue: 
-							[aCommandQuery commandDescription menuText
-								expandMacrosWithArguments: { packages anyOne name printString }
-								locale: Locale smalltalk]
-						ifFalse: ['Packages']).
-			^true].
-	"We want find next to work, even when the source pane does not have focus"
-	#findNext == selector
-		ifTrue: 
-			[(method notNil and: [sourcePresenter findDetails notNil])
-				ifTrue: 
-					[aCommandQuery
-						isEnabled: true;
-						receiver: sourcePresenter view.
-					^true]].
-	#togglePrivate == selector
-		ifTrue: 
-			[aCommandQuery
-				isEnabled: (methods notEmpty
-							and: [methods allSatisfy: [:each | parentPresenter isEditableMethod: each]]);
-				isChecked: (methods notEmpty and: [methods allSatisfy: [:each | each isPrivate]]).
-			^true].
-	^super queryCommand: aCommandQuery!
+			[| methods private allSame |
+			methods := self selections.
+			private := methods first isPrivate.
+			allSame := methods allSatisfy: [:each | each isPrivate = private].
+			aCommandQuery
+				isEnabled: allSame;
+				isChecked: allSame & private]!
 
 refactoringTool
 	^refactoringTool!
 
+referencesMenu
+	"No commandQuery needed - always enabled, even if no methods selected, as the Messages... command is still available to prompt for a selector"!
+
+removeCategoryMenu
+	<commandQuery: #hasEditableMethodsSelected>!
+
 removeMethod
 	"Removes the selected method(s) from the system"
 
+	<commandQuery: #hasEditableMethodsSelected>
 	self promptToSaveChanges ifFalse: [^self].
 	self developmentSystem removeMethods: self selections!
 
@@ -1081,8 +1050,9 @@ sourceSelection
 	^sourcePresenter view selection!
 
 togglePrivate
-	"Private - Toggle the selected method between public and private status."
+	"Toggle the selected method between public and private status."
 
+	<commandQuery: #queryTogglePrivate:>
 	| methods |
 	methods := self selections.
 	methods do: 
@@ -1094,52 +1064,53 @@ togglePrivate
 updateMethodNamespace
 	namespaceModel value: (self parseContext ifNotNil: [:context | context environment])! !
 !Tools.MethodBrowser categoriesForMethods!
-addMethods:toCategory:!commands!private! !
-addToCommandRoute:!commands!public! !
+addCategoryMenu!commands-menus!public! !
+addMethods:toCategory:!operations!private! !
+addToCommandRoute:!commands-routing!public! !
 applyOptions!operations!options!public! !
-browseCompilationFailures!browsing!commands!public! !
-browseCompilationIssues!browsing!commands!public! !
-browseContainingText!browsing!commands!public! !
-browseDefinitions!browsing!commands!public! !
+browseCompilationFailures!browsing!commands-actions!public! !
+browseCompilationIssues!browsing!commands-actions!public! !
+browseContainingText!browsing!commands-actions!public! !
+browseDefinitions!browsing!commands-actions!public! !
 browseDefinitionsMatching:in:!browsing!private! !
 browseDefinitionsOfSelector:in:!browsing!private! !
-browseHierarchy!browsing!commands!public! !
-browseIt!browsing!commands!public! !
-browseItCommand!browsing!helpers!private! !
-browseMessage!commands!public! !
-browseMessageDefinitions!commands!public! !
-browseMessageDefinitionsIn:!browsing!commands!private! !
-browseMessageReferences!commands!public! !
+browseHierarchy!browsing!commands-actions!public! !
+browseItCommand!browsing!commands-mappings!helpers!private! !
+browseMessage!commands-actions!public! !
+browseMessageDefinitions!commands-actions!public! !
+browseMessageDefinitionsIn:!browsing!commands-actions!private! !
+browseMessageReferences!commands-actions!public! !
 browseMessageReferences:in:!browsing!private! !
 browseMessagesIn:!browsing!private! !
 browseMessagesMatching:in:!browsing!private! !
-browseMethodClasses!browsing!commands!public! !
-browseMethodInheritanceChain!browsing!commands!public! !
-browseMethodPackages!browsing!commands!public! !
+browseMethodClasses!browsing!commands-actions!public! !
+browseMethodInheritanceChain!browsing!commands-actions!public! !
+browseMethodPackages!browsing!commands-actions!public! !
 browseMethodsIn:!browsing!private! !
 browseMethodsMatching:in:!browsing!private! !
-browsePackages!browsing!commands!public! !
+browseOther!commands-menus!public! !
+browsePackages!browsing!commands-actions!public! !
 browseReferences!browsing!commands-actions!public! !
 browseReferencesMatching:in:!browsing!private! !
-browseReferencesToGlobal!browsing!commands!public! !
+browseReferencesToGlobal!browsing!commands-actions!public! !
 browseReferencesToLiteral:in:!browsing!private! !
 browserEnvironment!accessing!public! !
-browseSystem!browsing!commands!public! !
+browseSystem!browsing!commands-actions!public! !
 browseVariableReferences:in:!browsing!private! !
 buildAddCategoryMenu:!menus!private! !
 buildParseTree!helpers!private! !
 buildRemoveCategoryMenu:!menus!private! !
 canSaveMethod!helpers!private!testing! !
-categorizeMethods!commands!public! !
+categorizeMethods!commands-actions!public! !
 clearErrors!operations!public! !
-clearSelection!commands!public! !
 commandPolicy!accessing!public! !
 createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !
 customDrawMethodClass:!helpers!private! !
 customDrawSelector:!helpers!private! !
+definitionsMenu!commands-menus!public! !
 deleteItCommand!helpers!private! !
-developmentSystem!commands!private! !
+developmentSystem!accessing!private! !
 enableSource:!modes!private! !
 ensureSourceVisible!operations!public! !
 errorModel!accessing!public! !
@@ -1148,15 +1119,18 @@ evaluationContext!accessing!private! !
 filter!accessing!public! !
 filter:!accessing!public! !
 findDetails:!accessing!public! !
-findNextMatch!commands!public!searching! !
+findNext!commands-actions!public!searching & replacing! !
+findNextMatch!commands-actions!public!searching! !
 findSelector:!public!searching! !
-hasEditableMethodSelected!public!testing! !
-hasEditableMethodsSelected!public!testing! !
+hasEditableMethodSelected!commands-queries!public!testing! !
+hasEditableMethodsSelected!commands-queries!public!testing! !
+hasFindDetails!public!testing! !
 hasMethods!public!testing! !
-hasMethodSelected!public!testing! !
-hasMethodsSelected!public!testing! !
+hasMethodSelected!commands-queries!public!testing! !
+hasMethodsSelected!commands-queries!public!testing! !
+hasOverrideSelected!commands-queries!public!testing! !
 initialize!initializing!private! !
-inspectIt!commands!public! !
+inspectIt!commands-actions!public! !
 isEditableMethod:!public!testing! !
 isModified!public!testing! !
 isSourceReadOnly!private!testing! !
@@ -1164,14 +1138,14 @@ list:!accessing!public! !
 method!accessing!public! !
 method:!accessing!public! !
 methodCategorizationPolicy!constants!private! !
-methodPackage!commands!public! !
+methodPackage!commands-actions!public! !
 methods:!accessing!public! !
 methodsPresenter!accessing!private! !
 model:!accessing!public! !
 modifiedModel!accessing!public! !
 modifiedModel:!accessing!public! !
 namespaceModel!accessing!public! !
-newMethod!commands!public! !
+newMethod!commands-actions!public! !
 noMethodsView!accessing!private! !
 onAboutToDisplayMenu:!event handling!menus!public! !
 onCloseRequested:!event handling!public! !
@@ -1195,10 +1169,15 @@ parseContext!accessing!public! !
 parseTree!helpers!private! !
 promptToCopyChanges!event handling!public! !
 promptToSaveChanges!helpers!private! !
-queryBrowseReferences:!browsing!commands!commands-queries!public! !
-queryCommand:!commands!private! !
+queryBrowseMethod:!browsing!commands-queries!private! !
+queryBrowseMethodClasses:!commands-queries!private! !
+queryBrowseMethodPackages:!commands-queries!private! !
+queryFindNext:!commands-queries!private! !
+queryTogglePrivate:!commands-queries!private! !
 refactoringTool!accessing!public! !
-removeMethod!commands!public! !
+referencesMenu!commands-menus!public! !
+removeCategoryMenu!commands-menus!public! !
+removeMethod!commands-actions!public! !
 saveMethod:in:environment:categories:package:!operations!private! !
 saveNewMethod:!helpers!public! !
 searchEnvironment!accessing!public! !
@@ -1218,7 +1197,7 @@ source!accessing!public! !
 sourcePresenter!accessing!private! !
 sourcePresenter:!accessing!private! !
 sourceSelection!accessing!public! !
-togglePrivate!commands!private! !
+togglePrivate!commands-actions!public! !
 updateMethodNamespace!event handling!private! !
 !
 
