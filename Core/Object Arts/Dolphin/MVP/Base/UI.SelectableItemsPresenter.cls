@@ -13,6 +13,17 @@ UI.SelectableItemsPresenter comment: 'SelectableItemsPresenter ia an abstract cl
 !UI.SelectableItemsPresenter categoriesForClass!MVP-Presenters!MVP-Resources-Lists! !
 !UI.SelectableItemsPresenter methodsFor!
 
+clearSelection
+	"Removes the selected method from the system"
+
+	<commandQuery: #queryDeleteIt:>
+	self perform: self deleteItCommand!
+
+deleteItCommand
+	"To be overridden by subclasses to return the selector of the generic context-sensitive delete command, when appropriate."
+
+	^nil!
+
 ensureSelectionVisible
 	"Ensure the selected item is visible, scrolling it into view if necessary.
 	Raise an error if there is no selection."
@@ -39,6 +50,13 @@ onSelectionChanging: aSelectionChangingEvent
 	To prevent the proposed change under certain circumstances a handler can set the value of the <SelectionChangingEvent> to false."
 
 	self view onSelectionChanging: aSelectionChangingEvent!
+
+queryDeleteIt: aCommandQuery
+	self deleteItCommand
+		ifNil: 
+			["Not handled at this level, but continue searching the chain"
+			aCommandQuery text: aCommandQuery menuText << $…]
+		ifNotNil: [:selector | self queryContextCommand: aCommandQuery as: selector]!
 
 resetForItem: anObject
 	"Private - Try to ensure that the receiver is set to display anObject if possible"
@@ -132,11 +150,14 @@ selections: aCollection ifAbsent: exceptionHandler
 			[self resetForItems: aCollection.
 			self selectableItems selections: aCollection ifAbsent: exceptionHandler]! !
 !UI.SelectableItemsPresenter categoriesForMethods!
+clearSelection!commands-actions!public! !
+deleteItCommand!helpers!private! !
 ensureSelectionVisible!public!selection! !
 hasSelection!public!selection! !
 hasSingleSelection!public!selection! !
 onSelectionChanged!event handling!public! !
 onSelectionChanging:!event handling!public! !
+queryDeleteIt:!commands-queries!private! !
 resetForItem:!event handling!private! !
 resetForItems:!event handling!private! !
 resetSelection!public!selection! !

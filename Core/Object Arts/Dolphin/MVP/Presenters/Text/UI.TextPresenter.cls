@@ -60,6 +60,9 @@ findDetails: aFindDetails
 
 	findDetails := aFindDetails!
 
+hasFindDetails
+	^self findDetails notNil!
+
 hasSelection
 	"Answer true if the receiver has a current selection"
 
@@ -102,6 +105,7 @@ dragOver:!drag & drop!public! !
 drop:!drag & drop!public! !
 findDetails!accessing!public! !
 findDetails:!public!searching! !
+hasFindDetails!public!testing! !
 hasSelection!public!selection! !
 isModified!public!testing! !
 isModified:!modes!public! !
@@ -112,7 +116,7 @@ selectionRange!public!selection! !
 selectionRange:!public!selection! !
 !
 
-UI.TextPresenter methodProtocol: #textPresenter attributes: #() selectors: #(#clear #findDetails #findDetails: #hasSelection #isModified #isModified: #replaceSelection: #selectionRange #selectionRange:)!
+UI.TextPresenter methodProtocol: #textPresenter attributes: #(#readOnly) selectors: #(#clear #findDetails #findDetails: #hasFindDetails #hasSelection #isModified #isModified: #replaceSelection: #selectionRange #selectionRange:)!
 
 !UI.TextPresenter class methodsFor!
 

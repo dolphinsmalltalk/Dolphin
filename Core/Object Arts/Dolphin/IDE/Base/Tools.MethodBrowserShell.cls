@@ -65,7 +65,9 @@ hasEditableMethodSelected
 	^self selectedMethod ifNil: [false] ifNotNil: [:method | self isEditableMethod: method]!
 
 hasEditableMethodsSelected
-	^self selectedMethods allSatisfy: [:each | self isEditableMethod: each]!
+	| methods |
+	methods := self selectedMethods.
+	^methods notEmpty and: [methods allSatisfy: [:each | self isEditableMethod: each]]!
 
 hasMethods
 	"Answer whether there are any methods in the browser model."

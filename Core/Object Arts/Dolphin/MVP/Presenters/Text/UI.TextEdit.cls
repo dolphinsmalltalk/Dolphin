@@ -439,9 +439,7 @@ findNext
 	"Hilight the next occurrence which satisfies the find operation held in findDetails."
 
 	<commandQuery: #hasFindDetails>
-	self findDetails isNil
-		ifTrue: [self find]
-		ifFalse: [self basicFindNext ifFalse: [Sound defaultBeep]]!
+	self hasFindDetails ifFalse: [self find] ifTrue: [self basicFindNext ifFalse: [Sound defaultBeep]]!
 
 findNext: aFindDetails
 	| match |
