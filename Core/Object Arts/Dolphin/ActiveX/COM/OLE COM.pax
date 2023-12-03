@@ -88,6 +88,7 @@ package setClassNames: #(
 	#{OS.COM.InterfaceEnumerator}
 	#{OS.COM.InterfaceFunction}
 	#{OS.COM.InterfaceImplementation}
+	#{OS.COM.IObjectWithSite}
 	#{OS.COM.IServiceProvider}
 	#{OS.COM.ISupportErrorInfo}
 	#{OS.COM.IUnknown}
@@ -431,6 +432,13 @@ OS.COM.IUnknown
 	subclass: #'OS.COM.IMalloc'
 	instanceVariableNames: ''
 	classVariableNames: 'Task'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.IUnknown
+	subclass: #'OS.COM.IObjectWithSite'
+	instanceVariableNames: ''
+	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
