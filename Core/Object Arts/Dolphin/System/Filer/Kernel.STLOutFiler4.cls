@@ -63,6 +63,9 @@ saveString: aString
 saveSymbol: aSymbol
 	stream nextPut: aSymbol!
 
+variableBindingClass
+	^VariableBinding!
+
 writeReference: anInteger
 	stream nextPut: (anInteger == 0 ifFalse: [anInteger bitShift: PrefixRefShift])! !
 !Kernel.STLOutFiler4 categoriesForMethods!
@@ -73,6 +76,7 @@ saveCharacter:!operations!public! !
 saveClass:!operations!public! !
 saveString:!public!serializing! !
 saveSymbol:!public!serializing! !
+variableBindingClass!constants!private! !
 writeReference:!operations!private! !
 !
 

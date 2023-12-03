@@ -106,6 +106,9 @@ readNil
 readObjectOfClass: aClass format: anSTBClassConversion size: anInteger
 	^decorated readObjectOfClass: aClass format: anSTBClassConversion size: anInteger!
 
+readObjectOfClass: aClass size: anInteger
+	^decorated readObjectOfClass: aClass size: anInteger!
+
 readSizeOf: aClass
 	"Read the indexable size of an object of the specified <Class> from the object stream."
 
@@ -165,6 +168,7 @@ readExtensibleCollection:format:size:!operations!public! !
 readLookupTable:format:size:!operations!public! !
 readNil!deserializing!public! !
 readObjectOfClass:format:size:!public! !
+readObjectOfClass:size:!deserializing!public! !
 readSizeOf:!deserializing!public! !
 readString:format:!deserializing!public! !
 readSymbol:!deserializing!public! !

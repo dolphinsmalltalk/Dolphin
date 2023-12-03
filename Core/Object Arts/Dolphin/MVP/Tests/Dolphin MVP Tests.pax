@@ -135,7 +135,9 @@ package setMethodNames: #(
 	#(#{Kernel.Tests.STLFilerTest} #testMinimalResourceReadWrite)
 	#(#{Kernel.Tests.STLFilerTest} #testMinimalResourceWrite4)
 	#(#{Kernel.Tests.STLFilerTest} #testRectangleReadWrite)
-	#(#{Kernel.Tests.STLFilerTest} #testResourceReadWrite)
+	#(#{Kernel.Tests.STLFilerTest} #testResourceReadWrite4)
+	#(#{Kernel.Tests.STLFilerTest} #testResourceReadWrite5)
+	#(#{Kernel.Tests.STLFilerTest} #testResourceReadWrite6)
 	#(#{Kernel.Tests.STLFilerTest} #testShellReadWrite)
 	#(#{Kernel.Tests.STLFilerTest} #verifyRectangleReadWriteAtVersion:)
 	#(#{Kernel.Tests.STLFilerTest} #verifyResourceReadWrite:version:)
@@ -1130,11 +1132,24 @@ testRectangleReadWrite
 		by: -1
 		do: [:ver | self verifyRectangleReadWriteAtVersion: ver]!
 
-testResourceReadWrite
-	"Tests loading and resaving one of the larger IDE resources (class hierarchy browser). The resource contains extended characters, so cannot be round-tripped in STL 3"
+testResourceReadWrite4
+	"Tests loading and resaving one of the larger IDE resources (class hierarchy browser) in STL 4 format. The resource contains extended characters, so cannot be round-tripped in STL 3"
 
-	<knownSlowTest>
-	self outfilerClass version to: 4
+	self
+		verifyResourceReadWrite: (UI.ResourceIdentifier class: Tools.ClassBrowserShell name: 'Default view')
+		version: 4!
+
+testResourceReadWrite5
+	"Tests loading and resaving one of the larger IDE resources (class hierarchy browser) in STL 5 format."
+
+	self
+		verifyResourceReadWrite: (UI.ResourceIdentifier class: Tools.ClassBrowserShell name: 'Default view')
+		version: 5!
+
+testResourceReadWrite6
+	"Tests loading and resaving one of the larger IDE resources (class hierarchy browser) in the latest STL format (at least 6)."
+
+	self outfilerClass version to: 6
 		by: -1
 		do: 
 			[:ver |
@@ -1195,7 +1210,9 @@ verifyResourceReadWrite: aResourceIdentifier version: anInteger
 testMinimalResourceReadWrite!public!unit tests! !
 testMinimalResourceWrite4!public!unit tests! !
 testRectangleReadWrite!public!unit tests! !
-testResourceReadWrite!public!unit tests! !
+testResourceReadWrite4!public!unit tests! !
+testResourceReadWrite5!public!unit tests! !
+testResourceReadWrite6!public!unit tests! !
 testShellReadWrite!public!unit tests! !
 verifyRectangleReadWriteAtVersion:!helpers!private! !
 verifyResourceReadWrite:version:!helpers!private! !

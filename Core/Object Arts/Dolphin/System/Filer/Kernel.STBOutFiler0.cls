@@ -166,6 +166,23 @@ saveSymbol: aSymbol
 
 	self saveObject: aSymbol as: (Smalltalk.STBSymbolProxy for: aSymbol)!
 
+saveVariableBinding: aVariableBinding
+	"Pre-namespace format"
+
+	self
+		writePreambleFor: aVariableBinding
+		class: self variableBindingClass
+		version: 0
+		instSize: 2.
+	"Indexed size - always written until STB 3"
+	stream nextInt32Put: 0.
+	self
+		nextPut: aVariableBinding key;
+		nextPut: aVariableBinding value!
+
+variableBindingClass
+	^Association!
+
 writeInstanceVariables: anObject
 	| instanceSpec basicSize |
 	instanceSpec := anObject basicClass instanceSpec.
@@ -194,6 +211,8 @@ saveObject:as:!operations!public! !
 saveStatic:!public!serializing! !
 saveString:!public!serializing! !
 saveSymbol:!public!serializing! !
+saveVariableBinding:!public!serializing! !
+variableBindingClass!constants!private! !
 writeInstanceVariables:!operations!private! !
 !
 

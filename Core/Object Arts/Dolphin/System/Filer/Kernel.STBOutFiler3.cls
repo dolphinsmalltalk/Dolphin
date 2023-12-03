@@ -28,6 +28,17 @@ register: anObject asGlobal: aSymbol
 		ifTrue: [globalNils]
 		ifFalse: [globals at: anObject ifAbsentPut: [OrderedCollection new]]) add: aSymbol!
 
+saveVariableBinding: aVariableBinding
+	"Pre-namespace format"
+
+	self
+		writePreambleFor: aVariableBinding
+			class: self variableBindingClass
+			version: 0
+			instSize: 2;
+		nextPut: aVariableBinding key;
+		nextPut: aVariableBinding value!
+
 writeInstanceVariables: anObject
 	| instanceSpec |
 	instanceSpec := anObject basicClass instanceSpec.
@@ -51,6 +62,7 @@ writeInstanceVariables: anObject
 !Kernel.STBOutFiler3 categoriesForMethods!
 inFilerClass!constants!private! !
 register:asGlobal:!globals!public! !
+saveVariableBinding:!public!serializing! !
 writeInstanceVariables:!operations!private! !
 !
 

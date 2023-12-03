@@ -50,13 +50,17 @@ saveSymbol: aSymbol
 	self writeClassReference: (self refForObject: Symbol) prefix: PrefixDataMask.
 	self register: aSymbol.
 	stream nextInt32Put: (size := aSymbol size).
-	1 to: size do: [:i | stream nextPut: (aSymbol basicAt: i)]! !
+	1 to: size do: [:i | stream nextPut: (aSymbol basicAt: i)]!
+
+variableBindingClass
+	^VariableBinding! !
 !Kernel.STBOutFiler4 categoriesForMethods!
 inFilerClass!constants!private! !
 locatorKeyFor:!helpers!public! !
 saveCharacter:!operations!public! !
 saveString:!public!serializing! !
 saveSymbol:!public!serializing! !
+variableBindingClass!constants!private! !
 !
 
 !Kernel.STBOutFiler4 class methodsFor!

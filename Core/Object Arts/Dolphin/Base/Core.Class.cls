@@ -148,8 +148,7 @@ addClassVarNamed: aString
 			[:existingClass |
 			^self error: ('<1p> is already used as a variable name in class <2p>' expandMacrosWith: aString
 						with: existingClass)].
-	newVar := VariableBinding key: aString value: nil.
-	newVar isClassVariable: true.
+	newVar := VariableBinding key: aString value: nil environment: self flags: VariableBinding.ClassMask.
 	self addBinding: newVar.
 	^newVar!
 
@@ -874,10 +873,11 @@ setClassVarNames: anArray
 			[removed do: [:each | classVars removeKey: each].
 			added do: 
 					[:each |
-					classVars add: ((VariableBinding key: each value: nil)
-								environment: self;
-								isClassVariable: true;
-								yourself)].
+					classVars add: (VariableBinding
+								key: each
+								value: nil
+								environment: self
+								flags: VariableBinding.ClassMask)].
 			classPool := classVars notEmpty ifTrue: [classVars].
 			true]!
 

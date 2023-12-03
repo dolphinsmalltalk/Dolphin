@@ -21,7 +21,8 @@ checkSimpleReadWriteOf: anObject version: anInteger
 	self assert: in next equals: anObject.
 	^stl!
 
-deserialize: aString
+deserialize: aString version: anInteger
+	self assert: (aString beginsWith: '(Object fromLiteralStoreArray: #(#''!!STL'' <d>' << anInteger).
 	^Compiler evaluate: aString!
 
 infilerClass
@@ -53,6 +54,9 @@ serialize: anObject version: anInteger
 	STLPrinter printLiteralStoreArray: stl on: stream.
 	stream nextPut: $).
 	^stream contents!
+
+simpleBlock
+	^[1 + 2]!
 
 simpleReadWriteOf: anObject context: ctxtObject version: anInteger
 	| stl in |
@@ -281,7 +285,7 @@ testIntegerBytesStl4
 
 	| dessicated rehydrated |
 	dessicated := '(Object fromLiteralStoreArray: #(#''!!STL'' 4 655414 ##(Smalltalk.DWORDBytes) 4 239 190 173 222))'.
-	rehydrated := self deserialize: dessicated.
+	rehydrated := self deserialize: dessicated version: 4.
 	self assert: rehydrated equals: (External.UInt32Bytes fromInteger: 16rDEADBEEF)!
 
 testIntegerReadWrite
@@ -532,15 +536,27 @@ testStringsVersion4
 	utf16WithNull := utf8WithNull asUtf16String.
 	dessicated := self serialize: { utf8WithNull. utf16WithNull. utf8WithNull. utf16WithNull }
 				version: 4.
-	rehydrated := self deserialize: dessicated.
+	rehydrated := self deserialize: dessicated version: 4.
 	self assert: rehydrated equals: #('a' 'a' 'a' 'a').
 	self assert: rehydrated third identicalTo: rehydrated first.
-	self assert: rehydrated fourth identicalTo: rehydrated second.!
+	self assert: rehydrated fourth identicalTo: rehydrated second!
 
 testSymbolReadWrite
 	self outfilerClass version to: self minimumFilerVersion
 		by: -1
 		do: [:ver | self verifySymbolReadWriteAtVersion: ver]!
+
+testVariableBindingsVersion4
+	self
+		verifyVariableBindings: '(Object fromLiteralStoreArray: #(#''!!STL'' 4 34 3 983558 ##(Smalltalk.VariableBinding) #Object ##(Smalltalk.Object) 418 8 ''PageSize'' 16385 418 #Processor ##(Smalltalk.Processor) ))'
+		version: 4!
+
+testVariableBindingsVersion5
+	"STL is from earlier Dolphin 8, and has STB v2 VariableBindings with environment and flags."
+
+	self
+		verifyVariableBindings: '(Object fromLiteralStoreArray: #(#''!!STL'' 5 34 3 1094 2 #{Kernel.VariableBinding} #Object #{Core.Object} #{Core} 1 418 8 ''PageSize'' 16385 #{Core.FileStream} 5 418 #Processor #{Core.Processor} #{Core} 1))'
+		version: 5!
 
 verifyArrayOfAtomicsAtVersion: anInteger
 	| array1 array2 storeArray rehydrated |
@@ -603,7 +619,7 @@ verifyBindingReferenceStoreArrayAtVersion: anInteger
 
 verifyBlockReadWriteAtVersion: anInteger
 	| block3 block2 block1 contents1 in contents2 |
-	block1 := [1 + 2].
+	block1 := self simpleBlock.
 	contents1 := self literalStoreArrayOf: block1 version: anInteger.
 	in := STLInFiler on: contents1 readStream.
 	block2 := in next.
@@ -641,7 +657,7 @@ verifyIntegerReadWriteAtVersion: anInteger
 	self assert: (contents includes: int)!
 
 verifyRehydrateNonExistantClass: dessicated
-	self should: [self deserialize: dessicated] raise: NotFoundError!
+	self should: [self deserialize: dessicated version: self outfilerClass version] raise: NotFoundError!
 
 verifyRoundTripSingleton: anObject version: anInteger
 	super verifyRoundTripSingleton: anObject version: anInteger.
@@ -676,13 +692,14 @@ verifySymbolReadWriteAtVersion: anInteger
 !Kernel.Tests.STLFilerTest categoriesForMethods!
 checkSimpleReadWriteOf:!helpers!private! !
 checkSimpleReadWriteOf:version:!helpers!private! !
-deserialize:!helpers!private! !
+deserialize:version:!helpers!private! !
 infilerClass!public! !
 literalStoreArrayOf:version:!helpers!private! !
 minimumFilerVersion!constants!private! !
 outfilerClass!constants!public! !
 preUnicodeTestStrings!helpers!private! !
 serialize:version:!helpers!private! !
+simpleBlock!helpers!private! !
 simpleReadWriteOf:context:version:!helpers!private! !
 stxDebuggerClass!constants!private! !
 testArrayOfAtomics!public!unit tests! !
@@ -714,6 +731,8 @@ testStl5Literals!public!unit tests! !
 testStl6Literals!public!unit tests! !
 testStringsVersion4!public!unit tests! !
 testSymbolReadWrite!public!unit tests! !
+testVariableBindingsVersion4!public!unit tests! !
+testVariableBindingsVersion5!public!unit tests! !
 verifyArrayOfAtomicsAtVersion:!helpers!private! !
 verifyArraysWithSharedLiteralsAtVersion:!helpers!private! !
 verifyBindingReferenceStoreArrayAtVersion:!helpers!private! !

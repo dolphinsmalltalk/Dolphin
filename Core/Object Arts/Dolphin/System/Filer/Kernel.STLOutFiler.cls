@@ -196,20 +196,20 @@ writeByteObject: aByteObject
 		nextPut: size;
 		nextPut: bytes!
 
-writeClass: aClass prefix: anInteger
+writeClass: aClass prefix: anInteger version: verInteger instSize: sizeInteger
 	| code |
 	"STL doesn't write the locator string, so its length does not need to be encoded in the prefix"
-	code := STxFiler.PrefixClassMask bitOr: (aClass instSize bitShift: STxFiler.PrefixInstSizeShift).
+	code := STxFiler.PrefixClassMask bitOr: (sizeInteger bitShift: STxFiler.PrefixInstSizeShift).
 	aClass isVariable
 		ifTrue: 
 			[code := code
 						bitOr: (aClass isBytes ifTrue: [STxFiler.PrefixBytesMask] ifFalse: [STxFiler.PrefixVariableMask])].
-	aClass stbVersion == 0
+	verInteger == 0
 		ifTrue: [stream nextPut: code]
 		ifFalse: 
 			[stream
 				nextPut: (code bitOr: STxFiler.PrefixNonZeroVersionMask);
-				nextPut: aClass stbVersion].
+				nextPut: verInteger].
 	stream nextPut: aClass!
 
 writeClassReference: anInteger prefix: prefixInteger
@@ -271,7 +271,7 @@ saveStatic:!public!serializing! !
 saveString:!public!serializing! !
 saveSymbol:!public!serializing! !
 writeByteObject:!operations!private! !
-writeClass:prefix:!operations!private! !
+writeClass:prefix:version:instSize:!operations!private! !
 writeClassReference:prefix:!operations!private! !
 writeInstanceVariables:!operations!private! !
 writeLiteral:!operations!private! !
