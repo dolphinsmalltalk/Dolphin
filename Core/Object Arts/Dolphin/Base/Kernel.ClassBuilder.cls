@@ -275,18 +275,21 @@ declareClassVariablesOf: aClass
 			[pool := Dictionary new.
 			classVariables do: 
 					[:each |
-					pool add: ((VariableBinding key: each value: nil)
-								environment: aClass;
-								isClassVariable: true;
-								yourself)].
+					pool add: (VariableBinding
+								key: each
+								value: nil
+								environment: aClass
+								flags: VariableBinding.ClassMask)].
 			consts do: 
 					[:each |
 					| value |
 					value := each value.
 					value beImmutableObject.
-					pool add: ((VariableBinding key: each key value: value)
-								environment: aClass;
-								isClassVariable: true;
+					pool add: ((VariableBinding
+								key: each key
+								value: value
+								environment: aClass
+								flags: VariableBinding.ClassMask)
 								isConstant: true;
 								yourself)]].
 	aClass basicClassPool: pool!

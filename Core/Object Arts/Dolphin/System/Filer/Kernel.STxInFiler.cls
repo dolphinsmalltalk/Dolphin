@@ -74,16 +74,9 @@ convertObjectOfClass: aClass size: anInteger format: anSTBClassConversion
 	"Private - Read on old format object from the stream: Create an Array or ByteArray into which the stored instance variables are deserialized. This is passed to the converter block which answers an instance of the real class initialised from the array."
 
 	| newObject |
-	aClass isPointers
-		ifTrue: 
-			[newObject := Array new: anSTBClassConversion instSize + anInteger.
-			decorator register: newObject.
-			1 to: newObject size do: [:i | newObject at: i put: self basicNext]]
-		ifFalse: 
-			[newObject := ByteArray new: anInteger.
-			decorator register: newObject.
-			1 to: anInteger do: [:i | newObject at: i put: stream next]].
-	"Initialise a new instance from the old format object data and become it."
+	newObject := self readObjectOfClass: (aClass isPointers ifTrue: [Array] ifFalse: [ByteArray])
+				size: anSTBClassConversion instSize + anInteger.
+	"Initialise a new instance from the old format object data using the converter block, and become it to replace in the object graph."
 	newObject become: (anSTBClassConversion converterBlock value: newObject).
 	^newObject!
 
@@ -242,7 +235,7 @@ readObjectOfClass: aClass format: anSTBClassConversion size: anInteger
 				format: anSTBClassConversion]!
 
 readObjectOfClass: aClass size: anInteger
-	"Private - Read an object of the specified class and variable size, that is of the current format"
+	"Read an object of the specified class and variable size, that is of the current format"
 
 	| newObject instSpec |
 	"Register the new object before reading its instance variables, in case of circular references"
@@ -351,7 +344,7 @@ readLookupTable:format:size:!operations!public! !
 readMap!accessing!private! !
 readNil!deserializing!public! !
 readObjectOfClass:format:size:!operations!public! !
-readObjectOfClass:size:!operations!private! !
+readObjectOfClass:size:!deserializing!public! !
 readSizeOf:!deserializing!public! !
 readString:format:!deserializing!public! !
 readSymbol:!deserializing!public! !

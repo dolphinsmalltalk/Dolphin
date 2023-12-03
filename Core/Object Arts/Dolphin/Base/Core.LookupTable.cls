@@ -50,6 +50,13 @@ anyKeysAndValuesSatisfy: aDyadicValuable
 				ifNotNil: [:key | (aDyadicValuable value: key value: (values at: i)) ifTrue: [^true]]].
 	^false!
 
+anySatisfy: aMonadicValuable
+	"Answer whether the <monadicValuable> argument evaluates to true for any element of the receiver."
+
+	tally == 0 ifTrue: [^false].
+	1 to: self basicSize do: [:i | (self basicAt: i) ifNotNil: [(aMonadicValuable value: (values at: i)) ifTrue: [^true]]].
+	^false!
+
 associationAt: anObject ifAbsent: aNiladicValuable
 	"Answer a new <Association> between the key and value of the receiver at the first argument.
 	If the key is not found, answer the result of evaluating the <niladicValuable> exception
@@ -231,9 +238,7 @@ keysDo: operation
 	1 to: self basicSize do: [:i | (self basicAt: i) ifNotNil: [:key | operation value: key]]!
 
 lookup: keyObject
-	"Answer the value named by the <Object> argument, keyObject, or nil if there is no such key in the receiver.
-	Override for a small efficiency improvement that will only have any significant impact on performance in
-	algorithms that rely heavily on dictionary lookup (which is fairly common)."
+	"Answer the value named by the <Object> argument, keyObject, or nil if there is no such key in the receiver."
 
 	| index |
 	^(self basicAt: (index := self findKeyOrNil: keyObject)) ifNotNil: [values at: index]!
@@ -331,6 +336,7 @@ valuesClass
 add:!adding!public! !
 allKeysAndValuesSatisfy:!enumerating!public! !
 anyKeysAndValuesSatisfy:!enumerating!public! !
+anySatisfy:!enumerating!public! !
 associationAt:ifAbsent:!accessing!public! !
 associationsDo:!enumerating!public! !
 at:ifAbsent:!accessing!public! !

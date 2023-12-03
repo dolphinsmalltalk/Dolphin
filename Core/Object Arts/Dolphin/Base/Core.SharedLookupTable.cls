@@ -104,6 +104,12 @@ anyKeysAndValuesSatisfy: aDyadicValuable
 		keysAndValuesDo: [:eachKey :eachValue | (aDyadicValuable value: eachKey value: eachValue) ifTrue: [^true]].
 	^false!
 
+anySatisfy: aMonadicValuable
+	"Answer whether the <monadicValuable> argument evaluates to true for any element of the receiver."
+
+	self do: [:eachValue | (aMonadicValuable value: eachValue) ifTrue: [^true]].
+	^false!
+
 asArray
 	"Answer an Array whose elements are those of the receiver (ordering is possibly arbitrary).
 	Must implement as critical section as otherwise Array size might be wrong."
@@ -301,6 +307,7 @@ shrink
 !Core.SharedLookupTable categoriesForMethods!
 allKeysAndValuesSatisfy:!enumerating!public! !
 anyKeysAndValuesSatisfy:!enumerating!public! !
+anySatisfy:!enumerating!public! !
 asArray!converting!public! !
 asByteArray!converting!public! !
 at:ifAbsent:!accessing!public! !

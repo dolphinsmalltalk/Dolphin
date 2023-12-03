@@ -186,6 +186,20 @@ saveString: aString
 saveSymbol: aSymbol
 	self writeLiteral: aSymbol!
 
+saveVariableBinding: aVariableBinding
+	"Pre-namespace format"
+
+	self
+		writePreambleFor: aVariableBinding
+			class: self variableBindingClass
+			version: 0
+			instSize: 2;
+		nextPut: aVariableBinding key;
+		nextPut: aVariableBinding value!
+
+variableBindingClass
+	^Association!
+
 writeByteObject: aByteObject
 	"Private - Bytes of byte objects other than ByteArrays were written individually"
 
@@ -194,19 +208,19 @@ writeByteObject: aByteObject
 	stream nextPut: size.
 	1 to: size do: [:i | stream nextPut: (aByteObject basicAt: i)]!
 
-writeClass: aClass prefix: anInteger
+writeClass: aClass prefix: anInteger version: verInteger instSize: sizeInteger
 	| code locatorString |
 	locatorString := self locatorKeyFor: aClass.
 	code := anInteger bitOr: ((locatorString size bitShift: PrefixLocatorLenShift)
-						bitOr: (aClass instSize bitShift: PrefixInstSizeShift)).
+						bitOr: (sizeInteger bitShift: PrefixInstSizeShift)).
 	aClass isVariable
 		ifTrue: [code := code bitOr: (aClass isBytes ifTrue: [PrefixBytesMask] ifFalse: [PrefixVariableMask])].
-	aClass stbVersion == 0
+	verInteger == 0
 		ifTrue: [stream nextPut: code]
 		ifFalse: 
 			[stream
 				nextPut: (code bitOr: PrefixNonZeroVersionMask);
-				nextPut: aClass stbVersion].
+				nextPut: verInteger].
 	stream nextPut: aClass!
 
 writeReference: anInteger
@@ -233,8 +247,10 @@ saveScaledDecimal:!public!serializing! !
 saveStatic:!public!serializing! !
 saveString:!public!serializing! !
 saveSymbol:!public!serializing! !
+saveVariableBinding:!public!serializing! !
+variableBindingClass!constants!private! !
 writeByteObject:!operations!private! !
-writeClass:prefix:!operations!private! !
+writeClass:prefix:version:instSize:!operations!private! !
 writeReference:!operations!private! !
 !
 

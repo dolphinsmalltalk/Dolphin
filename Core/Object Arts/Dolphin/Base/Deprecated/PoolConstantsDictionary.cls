@@ -30,6 +30,11 @@ canFileOut
 classesReferencing
 	^Smalltalk allClasses select: [:c | c allSharedPools includes: self]!
 
+environment
+	"Answer the receiver's <Namespace> scope."
+
+	^Smalltalk!
+
 fileOut
 	"File out the receiver to <name>.st"
 
@@ -47,6 +52,27 @@ fileOutName
 
 fileOutOn: aSourceFiler
 	aSourceFiler fileOutPoolDictionary: self!
+
+fullName
+	"Answer the <String> fully qualified name of the receiver, which is a dot-separated path that binds to the receiver from the global namespace, Root."
+
+	^self environment fullNameFor: self unqualifiedName!
+
+fullNameFor: aString
+	"Private - Answer the full name  of a variable with the specified local identifier, assumed to be in this namespace. This will be a (potentially) dot-separated path string that is bindable from any top-level namespace, including Smalltalk."
+
+	| stream |
+	stream := String writeStream: 32.
+	self environment printFullNameOn: stream.
+	stream
+		nextPut: $.;
+		nextPutAll: self unqualifiedName;
+		nextPut: $.;
+		nextPutAll: aString.
+	^stream contents!
+
+fullPath
+	^$. split: self fullName!
 
 isChanged
 	"Answer true if the receiver or any of it's contents have been changed since
@@ -117,9 +143,13 @@ sourceFilerClass
 add:!adding!public! !
 canFileOut!public!source filing! !
 classesReferencing!development!private! !
+environment!accessing!public! !
 fileOut!public!source filing! !
 fileOutName!public!source filing! !
 fileOutOn:!public!source filing! !
+fullName!accessing!public! !
+fullNameFor:!helpers!private! !
+fullPath!accessing!namespaces!private! !
 isChanged!public!source filing! !
 isChanged:!public!source filing! !
 isValidKey:!adding!development!private! !

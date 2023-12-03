@@ -247,6 +247,9 @@ saveSymbol: aSymbol
 
 	self subclassResponsibility!
 
+saveVariableBinding: aVariableBinding
+	self saveObject: aVariableBinding!
+
 sortCollectionElements: aCollection
 	"Private - We want the elements printed in a stable order, e.g. so that if in source code we don't get gratuitous diffs occurring."
 
@@ -274,7 +277,7 @@ stream: aStream
 writeByteObject: aByteObject
 	self subclassResponsibility!
 
-writeClass: aClass prefix: anObject
+writeClass: aClass prefix: anObject version: verInteger instSize: sizeInteger
 	self subclassResponsibility!
 
 writeClassReference: anInteger prefix: prefixInteger
@@ -298,6 +301,13 @@ writeLookupTableElements: aLookupTable
 						nextPut: eachValue]]!
 
 writePreambleFor: anObject class: aClass
+	self
+		writePreambleFor: anObject
+		class: aClass
+		version: aClass stbVersion
+		instSize: aClass instSize!
+
+writePreambleFor: anObject class: aClass version: verInteger instSize: sizeInteger
 	(self refForObject: aClass)
 		ifNotNil: 
 			[:refIndex |
@@ -305,7 +315,11 @@ writePreambleFor: anObject class: aClass
 			self writeClassReference: refIndex prefix: PrefixDataMask]
 		ifNil: 
 			["hitherto unencountered class so we need to save full class details in the object header."
-			self writeClass: aClass prefix: PrefixClassMask.
+			self
+				writeClass: aClass
+				prefix: PrefixClassMask
+				version: verInteger
+				instSize: sizeInteger.
 			self register: aClass].
 	self register: anObject!
 
@@ -357,14 +371,16 @@ saveSmallInteger:!public!serializing! !
 saveStatic:!public!serializing! !
 saveString:!public!serializing! !
 saveSymbol:!public!serializing! !
+saveVariableBinding:!public!serializing! !
 sortCollectionElements:!printing!private! !
 stream:!initializing!public! !
 writeByteObject:!helpers!private! !
-writeClass:prefix:!helpers!private! !
+writeClass:prefix:version:instSize:!helpers!private! !
 writeClassReference:prefix:!helpers!private! !
 writeInstanceVariables:!helpers!private! !
 writeLookupTableElements:!operations!private! !
 writePreambleFor:class:!binary filing!private! !
+writePreambleFor:class:version:instSize:!binary filing!private! !
 writeReference:!helpers!private! !
 writeSetElements:!private!serializing! !
 writeSignatureAndVersion!helpers!private! !

@@ -148,21 +148,21 @@ writeByteObject: aByteObject
 			putAll: aByteObject
 			startingAt: 1!
 
-writeClass: aClass prefix: anInteger
+writeClass: aClass prefix: anInteger version: verInteger instSize: sizeInteger
 	| locatorString prefixCode |
 	locatorString := self locatorKeyFor: aClass.
 	prefixCode := anInteger bitOr: (locatorString size bitShift: PrefixLocatorLenShift).
 	aClass isBytes
 		ifTrue: [prefixCode := prefixCode bitOr: PrefixBytesMask]
 		ifFalse: 
-			[prefixCode := prefixCode bitOr: (aClass instSize bitShift: PrefixInstSizeShift).
+			[prefixCode := prefixCode bitOr: (sizeInteger bitShift: PrefixInstSizeShift).
 			aClass isVariable ifTrue: [prefixCode := prefixCode bitOr: PrefixVariableMask]].
-	aClass stbVersion == 0
+	verInteger == 0
 		ifTrue: [stream nextInt32Put: prefixCode]
 		ifFalse: 
 			[stream
 				nextInt32Put: (prefixCode bitOr: PrefixNonZeroVersionMask);
-				nextInt32Put: aClass stbVersion].
+				nextInt32Put: verInteger].
 	stream nextPutAll: locatorString asByteArray!
 
 writeClassReference: anInteger prefix: prefixInteger
@@ -218,7 +218,7 @@ saveStatic:!public!serializing! !
 saveString:!public!serializing! !
 saveSymbol:!public!serializing! !
 writeByteObject:!operations!private! !
-writeClass:prefix:!operations!private! !
+writeClass:prefix:version:instSize:!operations!private! !
 writeClassReference:prefix:!operations!private! !
 writeInstanceVariables:!operations!private! !
 writeReference:!operations!private! !

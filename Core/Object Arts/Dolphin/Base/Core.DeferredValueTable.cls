@@ -46,7 +46,7 @@ do: operation
 	receiver. Answers the receiver."
 
 	#todo "Provide more efficient implementation".
-	super keysAndValuesDo: [:k :v | operation value: v value]!
+	super do: [:each | operation value: each value]!
 
 initialize
 	"Private - Initialize the state of the receiver."

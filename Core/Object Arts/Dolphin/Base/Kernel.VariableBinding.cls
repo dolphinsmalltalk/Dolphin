@@ -126,6 +126,12 @@ key: aKey value: aValue
 	flags := 0.
 	^self!
 
+key: aString value: anObject environment: aNamespace flags: anInteger
+	key := aString.
+	value := anObject.
+	environment := aNamespace.
+	flags := anInteger!
+
 owningPackage
 	"Answer the receiver's owning <Package>."
 
@@ -175,6 +181,7 @@ isDeprecated:!public! !
 isPrivate!public! !
 isPrivate:!public! !
 key:value:!initializing!private! !
+key:value:environment:flags:!initializing!private! !
 owningPackage!accessing!development!public! !
 owningPackage:!accessing!development!public! !
 refersTo:asLiteralOf:!private!testing! !
@@ -186,44 +193,14 @@ unqualifiedName!accessing!public! !
 
 !Kernel.VariableBinding class methodsFor!
 
-stbConvertFromVersion0: data
-	"Private - Convert from version 0 resource. Need to deduce the environment as best we can and flags accordingly."
-
-	| key value namespace flags |
-	key := data at: 1.
-	value := data at: 2.
-	flags := 0.
-	"In most cases a VariableBinding will be in STB/STL because it is referenced from the literal frame of a method. We have to try and deduce the environment:
-		- If the variable has the same name as a variable in Smalltalk that references the exact same value, we patch the environment to Smalltalk; or
-		- If the variable refers to a class and has the same unqualified name as the class, we patch it to the environment of that class; otherwise
-		- we leave the envionment as we are unable to determine the correct class"
-	((Smalltalk at: key ifAbsent: Collection.AbsentCookie) == value or: 
-			[value class == #{Smalltalk.PoolConstantsDictionary} valueOrNil
-				or: [##(#(#Processor #Transcript #Trace #SourceFiles) asSet) includes: key]])
-		ifTrue: [namespace := Smalltalk]
-		ifFalse: 
-			[(value class isMeta and: [key == value name])
-				ifTrue: [namespace := value environment]
-				ifFalse: 
-					["Mark it as a class variable which will exclude it from treatment as a class binding"
-					flags := ClassMask]].
-	^{ key. value. namespace. flags }!
-
-stbConvertFromVersion1: data
-	"Private - Convert from version 1 resource. V2 just adds flags."
-
-	| key value namespace flags |
-	key := data at: 1.
-	value := data at: 2.
-	namespace := data at: 3.
-	flags := (value class isMetaclass not or: [value name ~~ key or: [value environment ~~ namespace]])
-				ifTrue: 
-					["Not a class binding, so just mark as a class variable"
-					ClassMask]
-				ifFalse: [0].
-	^{ key. value. namespace. flags }! !
+key: aString value: anObject environment: aNamespace flags: anInteger
+	<primitive: 157>
+	^self new
+		key: aString
+		value: anObject
+		environment: aNamespace
+		flags: anInteger! !
 !Kernel.VariableBinding class categoriesForMethods!
-stbConvertFromVersion0:!binary filing!private! !
-stbConvertFromVersion1:!binary filing!private! !
+key:value:environment:flags:!instance creation!private! !
 !
 

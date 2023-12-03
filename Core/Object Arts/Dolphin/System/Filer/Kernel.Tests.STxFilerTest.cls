@@ -12,7 +12,7 @@ Kernel.Tests.STxFilerTest isNonInstantiable: true!
 Kernel.Tests.STxFilerTest comment: ''!
 !Kernel.Tests.STxFilerTest methodsFor!
 
-deserialize: aString
+deserialize: aString version: anInteger
 	^self subclassResponsibility!
 
 dumpToTranscript: aByteArray
@@ -54,7 +54,7 @@ testAddresses
 	| object dessicated rehydrated |
 	object := Address fromInteger: 16rDEADBEEF.
 	dessicated := self serialize: object.
-	rehydrated := self deserialize: dessicated.
+	rehydrated := self deserialize: dessicated version: self outfilerClass version.
 	self assertIsNil: rehydrated!
 
 testBindingReferences
@@ -85,13 +85,14 @@ testCharacters
 			[:each |
 			| dessicated rehydrated |
 			dessicated := self serialize: each.
-			rehydrated := self deserialize: dessicated.
+			rehydrated := self deserialize: dessicated version: self outfilerClass version.
 			self assert: rehydrated equals: each].
-	self assert: (self deserialize: (self serialize: characters)) equals: characters!
+	self assert: (self deserialize: (self serialize: characters) version: self outfilerClass version)
+		equals: characters!
 
 testDictionary
 	self minimumFilerVersion to: self outfilerClass version
-		do: [:ver | self verifyDictionariesAtVersion: ver]!
+		do: [:ver | self verifyDictionaries: Dictionary atVersion: ver]!
 
 testEmptyStream
 	self subclassResponsibility!
@@ -99,7 +100,7 @@ testEmptyStream
 testExistentClass
 	| rehydrated dessicated |
 	dessicated := self serialize: self class.
-	rehydrated := self deserialize: dessicated.
+	rehydrated := self deserialize: dessicated version: self outfilerClass version.
 	self assert: rehydrated identicalTo: self class!
 
 testExternalResourceLibrary
@@ -116,7 +117,7 @@ testHandles
 	| object dessicated rehydrated |
 	object := Handle fromInteger: 16rDEADBEEF.
 	dessicated := self serialize: object.
-	rehydrated := self deserialize: dessicated.
+	rehydrated := self deserialize: dessicated version: self outfilerClass version.
 	self assertIsNil: rehydrated!
 
 testIntegerBytes
@@ -125,7 +126,7 @@ testIntegerBytes
 	| object dessicated rehydrated |
 	object := UInt32Bytes fromInteger: 16rDEADBEEF.
 	dessicated := self serialize: object.
-	rehydrated := self deserialize: dessicated.
+	rehydrated := self deserialize: dessicated version: self outfilerClass version.
 	self assert: rehydrated equals: object!
 
 testInvalidStream
@@ -137,8 +138,8 @@ testLookupTable
 
 testMetaclass
 	| rehydrated dessicated |
-	dessicated :=self serialize: self class class.
-	rehydrated := self deserialize: dessicated.
+	dessicated := self serialize: self class class.
+	rehydrated := self deserialize: dessicated version: self outfilerClass version.
 	self assert: rehydrated identicalTo: self class class!
 
 testNonExistentClass
@@ -156,12 +157,17 @@ testNonExistentClass
 	testClass removeFromSystem.
 	testClass := nil.
 	self verifyRehydrateNonExistantClass: dessicated.
-	self should: [self deserialize: dessicatedInstance] raise: NotFoundError]
+	self should: [self deserialize: dessicatedInstance version: self outfilerClass version]
+		raise: NotFoundError]
 			ensure: [#{STBTest_TestClass} ifDefined: [:c | c removeFromSystem]]!
 
 testOrderedCollections
 	self minimumFilerVersion to: self outfilerClass version
 		do: [:ver | self verifyOrderedCollectionsAtVersion: ver]!
+
+testPoolDictionary
+	self outfilerClass version to: self minimumFilerVersion by: -1
+		do: [:ver | self verifyDictionaries: PoolDictionary atVersion: ver]!
 
 testProcessor
 	"Special case global variable"
@@ -206,7 +212,7 @@ testSortedCollections
 	"Mergesort is stable, so resorting should not affect the order at all."
 	subject reSort.
 	self assert: subject asArray equals: sOriginal.
-	rehydrated := self deserialize: dessicated.
+	rehydrated := self deserialize: dessicated version: self outfilerClass version.
 	self assert: rehydrated asArray equals: sOriginal.
 	"If we didn't preserve a stable sort, then the order or sort-equal elements may not be preserved."
 	rehydrated reSort.
@@ -231,11 +237,11 @@ testStringsVersion5
 testStringWithNulls
 	| string |
 	string := #($a $\0 $b) asString.
-	{string asAnsiString. string asUtf8String. string asUtf16String} do: 
+	{ string asAnsiString. string asUtf8String. string asUtf16String } do: 
 			[:each |
 			| dessicated rehydrated |
 			dessicated := self serialize: each.
-			rehydrated := self deserialize: dessicated.
+			rehydrated := self deserialize: dessicated version: self outfilerClass version.
 			self assert: rehydrated equals: each.
 			self assert: rehydrated second identicalTo: $\0.
 			self deny: rehydrated isImmutable]!
@@ -255,22 +261,33 @@ testTranscript
 		by: -1
 		do: [:ver | self verifyRoundTripSingleton: Transcript version: ver]!
 
+testVariableBinding
+	self outfilerClass version to: self minimumFilerVersion
+		by: -1
+		do: [:ver | self verifyVariableBindingsAtVersion: ver]!
+
+testVariableBindingsVersion4
+	self subclassResponsibility!
+
+testVariableBindingsVersion5
+	self subclassResponsibility!
+
 verifyBindingReferencesAtVersion: anInteger
 	| array assoc ref dessicated rehydrated |
 	ref := #{Core.Object}.
 	dessicated := self serialize: ref version: anInteger.
-	rehydrated := self deserialize: dessicated.
+	rehydrated := self deserialize: dessicated version: anInteger.
 	self assert: rehydrated class identicalTo: FullBindingReference.
 	self assert: rehydrated equals: ref.
 	array := { ref. 2. ref }.
 	dessicated := self serialize: array version: anInteger.
-	rehydrated := self deserialize: dessicated.
+	rehydrated := self deserialize: dessicated version: anInteger.
 	self assert: rehydrated first class identicalTo: FullBindingReference.
 	self assert: rehydrated last identicalTo: rehydrated first.
 	self assert: rehydrated equals: array.
 	assoc := ref -> Object.
 	dessicated := self serialize: assoc version: anInteger.
-	rehydrated := self deserialize: dessicated.
+	rehydrated := self deserialize: dessicated version: anInteger.
 	self assert: rehydrated key class identicalTo: FullBindingReference.
 	self assert: rehydrated key equals: ref.
 	self assert: rehydrated value identicalTo: Object!
@@ -282,30 +299,47 @@ verifyByteArraysAtVersion: anInteger
 			s := 'abc'.
 			a := { each. s. each. s. 'def' }.
 			dessicated := self serialize: a version: anInteger.
-			rehydrated := self deserialize: dessicated.
+			rehydrated := self deserialize: dessicated version: anInteger.
 			self assert: rehydrated equals: a.
 			self assert: (rehydrated at: 1) identicalTo: (rehydrated at: 3).
 			self assert: (rehydrated at: 2) identicalTo: (rehydrated at: 4).
 			self deny: (rehydrated at: 1) identicalTo: each]!
 
-verifyDictionariesAtVersion: anInteger
-	^{
-		Dictionary new.
-		Dictionary with: 'origin' -> (10 @ 20).
-		Dictionary with: 'origin' -> (10 @ 20) with: 2 -> (100 @ 200)
+verifyDictionaries: aClass atVersion: anInteger
+	| array dessicated rehydrated dict |
+	{
+		aClass new.
+		aClass new
+			at: 'origin' put: 10 @ 20;
+			yourself.
+		aClass new
+			at: 'origin' put: 10 @ 20;
+			at: 2 put: 100 @ 200;
+			yourself
 	} do: 
 				[:each |
-				| rehydrated dessicated |
 				dessicated := self serialize: each version: anInteger.
-				rehydrated := self deserialize: dessicated.
-				self assert: rehydrated equals: each]!
+				rehydrated := self deserialize: dessicated version: anInteger.
+				self assert: rehydrated equals: each].
+	"The identity of the associations should be preserved"
+	dict := aClass new.
+	dict at: 'a' put: 1.
+	dict at: 'b' put: 2.
+	array := { dict associationAt: 'a'. dict. dict associationAt: 'b' }.
+	dessicated := self serialize: array version: anInteger.
+	rehydrated := self deserialize: dessicated version: anInteger.
+	self assert: array first identicalTo: (array second associationAt: 'a').
+	self assert: array last identicalTo: (array second associationAt: 'b').
+	dict := rehydrated at: 2.
+	self assert: dict size equals: 2.
+	self assert: dict isHealthy!
 
 verifyFloatsAtVersion: anInteger
 	| dessicated array rehydrated float |
 	float := 1.25.
 	array := { float. Float infinity. float. Float nan }.
 	dessicated := self serialize: array version: anInteger.
-	rehydrated := self deserialize: dessicated.
+	rehydrated := self deserialize: dessicated version: anInteger.
 	self assert: rehydrated size equals: 4.
 	self assert: (rehydrated allSatisfy: [:each | each class == Float]).
 	self assert: rehydrated first equals: float.
@@ -322,7 +356,7 @@ verifyLookupTablesAtVersion: anInteger
 				[:each |
 				| rehydrated dessicated |
 				dessicated := self serialize: each version: anInteger.
-				rehydrated := self deserialize: dessicated.
+				rehydrated := self deserialize: dessicated version: anInteger.
 				self assert: rehydrated equals: each]!
 
 verifyOrderedCollectionsAtVersion: anInteger
@@ -331,16 +365,16 @@ verifyOrderedCollectionsAtVersion: anInteger
 			| subject rehydrated dessicated |
 			subject := OrderedCollection withAll: each.
 			dessicated := self serialize: subject version: anInteger.
-			rehydrated := self deserialize: dessicated.
+			rehydrated := self deserialize: dessicated version: anInteger.
 			self assert: rehydrated equals: subject.
 			subject removeFirst.
 			dessicated := self serialize: subject version: anInteger.
-			rehydrated := self deserialize: dessicated.
+			rehydrated := self deserialize: dessicated version: anInteger.
 			self assert: rehydrated equals: subject]!
 
 verifyRehydrateNonExistantClass: dessicated
 	| rehydrated |
-	rehydrated := self deserialize: dessicated.
+	rehydrated := self deserialize: dessicated version: self outfilerClass version.
 	#{ClassStub}
 		ifDefined: [:classStub | self assert: rehydrated classLocator key equals: 'STBTest_TestClass']
 		ifNotDefined: 
@@ -356,18 +390,18 @@ verifyResourceLibraryAtVersion: anInteger
 	lib2 := ResourceLibrary open: 'dolphindr006.dll'.
 	libs := { lib1. lib2. lib1. lib2 }.
 	dessicated := self serialize: libs version: anInteger.
-	rehydrated := self deserialize: dessicated.
+	rehydrated := self deserialize: dessicated version: anInteger.
 	self assert: rehydrated size equals: 4.
 	self assert: rehydrated asIdentitySet single identicalTo: lib2!
 
 verifyRoundTripSingleton: anObject version: anInteger
 	| dessicated array rehydrated |
 	dessicated := self serialize: anObject version: anInteger.
-	rehydrated := self deserialize: dessicated.
+	rehydrated := self deserialize: dessicated version: anInteger.
 	self assert: rehydrated identicalTo: anObject.
 	array := { anObject. anObject }.
 	dessicated := self serialize: array version: anInteger.
-	rehydrated := self deserialize: dessicated.
+	rehydrated := self deserialize: dessicated version: anInteger.
 	self assert: rehydrated equals: array.
 	self assert: rehydrated first identicalTo: anObject.
 	self assert: rehydrated second identicalTo: anObject!
@@ -388,7 +422,7 @@ verifyScaledDecimalsAtVersion: anInteger
 	nonLiteral := 2 / 3 asScaledDecimal: 2.
 	array := { literal. nonLiteral. literal. nonLiteral }.
 	dessicated := self serialize: array version: anInteger.
-	rehydrated := self deserialize: dessicated.
+	rehydrated := self deserialize: dessicated version: anInteger.
 	self assert: rehydrated size equals: 4.
 	self assert: (rehydrated allSatisfy: [:each | each class == ScaledDecimal]).
 	self assert: rehydrated first equals: literal.
@@ -408,7 +442,7 @@ verifySetsAtVersion: anInteger
 				[:each |
 				| rehydrated dessicated |
 				dessicated := self serialize: each version: anInteger.
-				rehydrated := self deserialize: dessicated.
+				rehydrated := self deserialize: dessicated version: anInteger.
 				self assert: rehydrated equals: each]!
 
 verifyString: aString atVersion: anInteger
@@ -416,7 +450,7 @@ verifyString: aString atVersion: anInteger
 	s := aString asUtf16String.
 	a := { aString. s. aString. s }.
 	dessicated := self serialize: a version: anInteger.
-	rehydrated := self deserialize: dessicated.
+	rehydrated := self deserialize: dessicated version: anInteger.
 	self assert: rehydrated equals: a.
 	self assert: rehydrated first equals: aString.
 	self assert: rehydrated second equals: s.
@@ -446,14 +480,47 @@ verifySymbolsAtVersion: anInteger
 	s := 'a' , (anInteger < 4 ifTrue: [$†] ifFalse: [$🐬]) asUtf8String , 'Symbol'.
 	a := { sym. s. sym. s. sym asString asSymbol. s asSymbol }.
 	dessicated := self serialize: a version: anInteger.
-	rehydrated := self deserialize: dessicated.
+	rehydrated := self deserialize: dessicated version: anInteger.
 	self assert: rehydrated equals: a.
 	self assert: rehydrated first identicalTo: sym.
 	self assert: (rehydrated at: 5) identicalTo: sym.
 	self assert: (rehydrated at: 2) identicalTo: (rehydrated at: 4).
-	^self assert: (rehydrated at: 6) identicalTo: s asSymbol! !
+	^self assert: (rehydrated at: 6) identicalTo: s asSymbol!
+
+verifyVariableBindings: expected version: anInteger
+	| actual rehydrated array var |
+	array := { Object binding. #{_.FileStream.PageSize} binding. #{Processor} binding }.
+	actual := self serialize: array version: anInteger.
+	self assert: actual equals: expected.
+	rehydrated := self deserialize: expected version: anInteger.
+	self assert: rehydrated first identicalTo: array first.
+	self assert: rehydrated last identicalTo: array last.
+	anInteger > 4
+		ifTrue: [self assert: rehydrated second identicalTo: array second]
+		ifFalse: 
+			["The owning class of the class variable is lost"
+			var := rehydrated second.
+			self assertIsNil: var environment.
+			self assert: var isClassVariable.
+			self assert: var key equals: 'PageSize'.
+			self assert: var value equals: FileStream.PageSize]!
+
+verifyVariableBindingsAtVersion: ver
+	ver < 4
+		ifTrue: 
+			[| dessicated rehydrated |
+			dessicated := self serialize: Object binding version: ver.
+			rehydrated := self deserialize: dessicated version: ver.
+			self assert: rehydrated equals: #Object -> Object]
+		ifFalse: 
+			[self verifyRoundTripSingleton: Object binding version: ver.
+			self verifyRoundTripSingleton: #{Processor} binding version: ver].
+	ver >= 5
+		ifTrue: 
+			[self verifyRoundTripSingleton: #{Core.String.LineDelimiter} binding
+				version: ver]! !
 !Kernel.Tests.STxFilerTest categoriesForMethods!
-deserialize:!helpers!private! !
+deserialize:version:!helpers!private! !
 dumpToTranscript:!helpers!private! !
 dumpToTranscriptIfDebug:!helpers!private! !
 infilerClass!constants!public! !
@@ -481,6 +548,7 @@ testLookupTable!public!unit tests! !
 testMetaclass!public!unit tests! !
 testNonExistentClass!public!unit tests! !
 testOrderedCollections!public!unit tests! !
+testPoolDictionary!public!unit tests! !
 testProcessor!public!unit tests! !
 testSaveStaticVariableReference!public!unit tests! !
 testScaledDecimals!public!unit tests! !
@@ -495,9 +563,12 @@ testStringWithNulls!public!unit tests! !
 testSymbols!public!unit tests! !
 testSystemDictionary!public!unit tests! !
 testTranscript!public!unit tests! !
+testVariableBinding!public!unit tests! !
+testVariableBindingsVersion4!public!unit tests! !
+testVariableBindingsVersion5!public!unit tests! !
 verifyBindingReferencesAtVersion:!helpers!private! !
 verifyByteArraysAtVersion:!helpers!private! !
-verifyDictionariesAtVersion:!helpers!private! !
+verifyDictionaries:atVersion:!helpers!private! !
 verifyFloatsAtVersion:!helpers!private! !
 verifyLookupTablesAtVersion:!helpers!private! !
 verifyOrderedCollectionsAtVersion:!helpers!private! !
@@ -512,5 +583,7 @@ verifyStrings:atVersion:!helpers!private! !
 verifyStringsAtPreUnicodeVersion:!helpers!private! !
 verifyStringsAtVersion:!helpers!private! !
 verifySymbolsAtVersion:!helpers!private! !
+verifyVariableBindings:version:!helpers!private! !
+verifyVariableBindingsAtVersion:!helpers!private! !
 !
 

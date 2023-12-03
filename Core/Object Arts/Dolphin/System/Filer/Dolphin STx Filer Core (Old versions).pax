@@ -20,6 +20,7 @@ package setMethodNames: #(
 	#(#{Kernel.STxOutFiler} #errorStaticVarRefsNotSupported)
 	#(#{Kernel.STxOutFiler} #writePreambleFor:)
 	#(#{Kernel.STxOutFiler} #writeProxyPreambleFor:class:)
+	#(#{Kernel.STxOutFiler} #writeProxyPreambleFor:class:version:instSize:)
 ).
 
 package setPrerequisites: #(
@@ -88,14 +89,25 @@ writePreambleFor: anObject
 	self writePreambleFor: anObject class: anObject basicClass!
 
 writeProxyPreambleFor: anObject class: aClass
+	self
+		writeProxyPreambleFor: anObject
+		class: aClass
+		version: aClass stbVersion
+		instSize: aClass instSize!
+
+writeProxyPreambleFor: anObject class: aClass version: verInteger instSize: sizeInteger
 	(self refForObject: aClass)
 		ifNotNil: 
 			[:refIndex |
 			"class has already been output so we can encode a short reference to the class within the prefix."
-			self writeClassReference: refIndex prefix: ##(PrefixDataMask|PrefixProxyMask)]
+			self writeClassReference: refIndex prefix: ##(PrefixDataMask | PrefixProxyMask)]
 		ifNil: 
 			["hitherto unencountered class so we need to save full class details in the object header."
-			self writeClass: aClass prefix: ##(PrefixClassMask|PrefixProxyMask).
+			self
+				writeClass: aClass
+				prefix: ##(PrefixClassMask | PrefixProxyMask)
+				version: verInteger
+				instSize: sizeInteger.
 			self register: aClass].
 	self register: anObject! !
 !Kernel.STxOutFiler categoriesForMethods!
@@ -104,6 +116,7 @@ errorExtendedCharacterNotSupported:!exceptions!private! !
 errorStaticVarRefsNotSupported!exceptions!private! !
 writePreambleFor:!binary filing!public! !
 writeProxyPreambleFor:class:!helpers!private! !
+writeProxyPreambleFor:class:version:instSize:!helpers!private! !
 !
 
 "End of package definition"!

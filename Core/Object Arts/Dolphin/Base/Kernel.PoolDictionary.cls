@@ -50,28 +50,33 @@ displayOn: aPuttableStream
 environment
 	"Answer the receiver's <Namespace> scope."
 
-	^Smalltalk!
+	^nil!
+
+fullBindingFor: aString
+	"Answer a variable binding for the named variable in the scope of this class, and failing that in the receiver's environment. If there is no such variable, then answer nil."
+
+	^self bindingFor: aString!
 
 fullName
 	"Answer the <String> fully qualified name of the receiver, which is a dot-separated path that binds to the receiver from the global namespace, Root."
 
-	^self environment fullNameFor: self unqualifiedName!
+	^nil!
 
 fullNameFor: aString
 	"Private - Answer the full name  of a variable with the specified local identifier, assumed to be in this namespace. This will be a (potentially) dot-separated path string that is bindable from any top-level namespace, including Smalltalk."
 
-	| stream |
-	stream := String writeStream: 32.
-	self environment printFullNameOn: stream.
-	stream
-		nextPut: $.;
-		nextPutAll: self unqualifiedName;
-		nextPut: $.;
-		nextPutAll: aString.
-	^stream contents!
+	^nil!
+
+fullPath
+	^nil!
 
 includesEnvironment: anImportableNamespace
 	^self == anImportableNamespace!
+
+localScope
+	"Answer the nearest name scope."
+
+	^self!
 
 name
 	"Answer the receiver's name."
@@ -112,9 +117,12 @@ associationClass!constants!private! !
 convertToSharedPool!development!private! !
 displayOn:!displaying!public! !
 environment!accessing!public! !
+fullBindingFor:!binding!public! !
 fullName!accessing!public! !
 fullNameFor:!helpers!private! !
+fullPath!accessing!namespaces!private! !
 includesEnvironment:!public!testing! !
+localScope!accessing!public! !
 name!accessing!public! !
 name:!accessing!private! !
 newAssociation:value:!helpers!private! !
@@ -124,6 +132,7 @@ shortNameFor:!enquiries!private! !
 unqualifiedName!accessing!private! !
 !
 
+Kernel.PoolDictionary methodProtocol: #bindingScope attributes: #(#readOnly) selectors: #(#environment #fullBindingFor: #localScope)!
 Kernel.PoolDictionary methodProtocol: #importableNamespace attributes: #(#readOnly) selectors: #(#asQualifiedReference #fullName #includesEnvironment: #resolveLocalBindingPath: #resolvePublicBinding:)!
 
 !Kernel.PoolDictionary class methodsFor!

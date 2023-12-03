@@ -193,15 +193,34 @@ testTranscript
 		includeClass: UI.TranscriptShell.
 	^super testTranscript!
 
-testUnicodeStringUpgrade
+testUnicodeStringUpgrade0
 	self initializeLocator: 0.
 	locator includeClass: 'UnicodeString'.
-	^super testUnicodeStringUpgrade!
+	^super testUnicodeStringUpgrade0!
+
+testUnicodeStringUpgrade3
+	self initializeLocator: 3.
+	locator includeClass: 'UnicodeString'.
+	^super testUnicodeStringUpgrade3!
 
 testUnicodeStringVersion0
 	self initializeLocator: 0.
 	locator includeClass: #{Smalltalk.UnicodeString}.
 	super testUnicodeStringVersion0!
+
+testVariableBindingsVersion1
+	self newLocator: 1.
+	locator includeClasses: #(#{Core.Association} #{Kernel.STBClassProxy} #{Core.Object}).
+	super testVariableBindingsVersion1!
+
+testVariableBindingsVersion4
+	self newLocator: 4.
+	locator includeClasses: #(#{Kernel.VariableBinding} #{Core.Object} #{Kernel.STBClassProxy}).
+	super testVariableBindingsVersion4!
+
+testVariableBindingsVersion5
+	self initializeLocator: 5.
+	locator includeClass: VariableBinding!
 
 verifyBindingReferencesAtVersion: anInteger
 	self newLocator: anInteger.
@@ -216,19 +235,23 @@ verifyByteArraysAtVersion: anInteger
 	super verifyByteArraysAtVersion: anInteger
 !
 
-verifyDictionariesAtVersion: anInteger
+verifyDictionaries: aClass atVersion: anInteger
 	self newLocator: anInteger.
 	locator
 		includeClass: Graphics.Point;
-		includeClass: Association.
+		includeClass: aClass new associationClass.
+	anInteger < 4 ifTrue: [locator includeClass: Association].
 	anInteger < 5 ifTrue: [locator includeClass: STBClassProxy].
 	anInteger < 6
 		ifTrue: 
 			[locator
 				includeClass: STBClassProxy;
 				includeClass: STBCollectionProxy]
-		ifFalse: [locator excludeClass: STBCollectionProxy].
-	super verifyDictionariesAtVersion: anInteger!
+		ifFalse: 
+			[locator
+				includeClass: aClass;
+				excludeClass: STBCollectionProxy].
+	super verifyDictionaries: aClass atVersion: anInteger!
 
 verifyEggsBeforeChicken: anInteger
 	self newLocator: anInteger.
@@ -318,7 +341,21 @@ verifyStrings: anArray atVersion: anInteger
 verifySymbolsAtVersion: anInteger
 	self newLocator: anInteger.
 	anInteger > 1 ifTrue: [locator includeClass: Symbol].
-	super verifySymbolsAtVersion: anInteger! !
+	super verifySymbolsAtVersion: anInteger!
+
+verifyVariableBindingsAtVersion: anInteger
+	self newLocator: anInteger.
+	locator includeClass: STBClassProxy.
+	anInteger < 4
+		ifTrue: [locator includeClass: Association]
+		ifFalse: 
+			[locator
+				includeClass: Core;
+				includeClass: Core.String].
+	locator
+		includeClass: Object;
+		includeClass: Symbol.
+	super verifyVariableBindingsAtVersion: anInteger! !
 !Kernel.Tests.STBValidatingInFilerTest categoriesForMethods!
 infilerClass!helpers!private! !
 initializeLocator:!private!running! !
@@ -341,11 +378,15 @@ testStringsVersion0!public!unit tests! !
 testStringsVersion1!public!unit tests! !
 testSymbolUpgrade!public!unit tests! !
 testTranscript!public!unit tests! !
-testUnicodeStringUpgrade!public!unit tests! !
+testUnicodeStringUpgrade0!public! !
+testUnicodeStringUpgrade3!public! !
 testUnicodeStringVersion0!public!unit tests! !
+testVariableBindingsVersion1!public! !
+testVariableBindingsVersion4!public! !
+testVariableBindingsVersion5!public! !
 verifyBindingReferencesAtVersion:!helpers!private! !
 verifyByteArraysAtVersion:!helpers!private! !
-verifyDictionariesAtVersion:!helpers!private! !
+verifyDictionaries:atVersion:!helpers!private! !
 verifyEggsBeforeChicken:!helpers!private! !
 verifyFloatsAtVersion:!helpers!private! !
 verifyLargeIntegersAtVersion:!helpers!private! !
@@ -358,5 +399,6 @@ verifyScaledDecimalsAtVersion:!helpers!private! !
 verifySetsAtVersion:!helpers!private! !
 verifyStrings:atVersion:!helpers!private! !
 verifySymbolsAtVersion:!helpers!private! !
+verifyVariableBindingsAtVersion:!helpers!private! !
 !
 

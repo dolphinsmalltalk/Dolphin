@@ -12,6 +12,9 @@ Kernel.STBCollectionProxy comment: ''!
 !Kernel.STBCollectionProxy categoriesForClass!System-Binary storage! !
 !Kernel.STBCollectionProxy methodsFor!
 
+array
+	^array!
+
 array: anArray
 	"Private - Set the array inst var to anArray, the elements of the collection represented by the receiver.
 	The use of the empty array literal enables the STBOutFiler to issue a shorter object reference for
@@ -31,8 +34,9 @@ class: aClass
 value
 	"Answer a new collection of class class and elements array."
 
-	^class withAll: array! !
+	^class fromStbProxy: self! !
 !Kernel.STBCollectionProxy categoriesForMethods!
+array!accessing!public! !
 array:!accessing!private! !
 class:!accessing!private! !
 value!converting!public! !

@@ -24,10 +24,12 @@ package setClassNames: #(
 ).
 
 package setMethodNames: #(
+	#(#{Core.Association} #addToPoolDictionary:)
 	#(#{Core.Class} #stbConvertFrom:)
 	#(#{Core.Class} #stbVersion)
 	#(#{Core.ClassDescription} #stbReadFrom:format:)
 	#(#{Core.ClassDescription} #stbReadFrom:format:size:)
+	#(#{Core.Collection class} #fromStbProxy:)
 	#(#{Core.DateAndTime class} #stbConvertFrom:)
 	#(#{Core.DateAndTime class} #stbVersion)
 	#(#{Core.Locale class} #stbConvertFrom:)
@@ -59,9 +61,15 @@ package setMethodNames: #(
 	#(#{Kernel.ImageRelativeFileLocator class} #stbReadFrom:format:size:)
 	#(#{Kernel.InstallRelativeFileLocator class} #stbReadFrom:format:size:)
 	#(#{Kernel.MetaBindingReference class} #stbConvertFrom:)
+	#(#{Kernel.PoolDictionary class} #fromStbProxy:)
 	#(#{Kernel.SingletonSearchPolicy class} #stbReadFrom:format:size:)
 	#(#{Kernel.SmalltalkLocale class} #stbReadFrom:format:size:)
+	#(#{Kernel.VariableBinding} #addToPoolDictionary:)
+	#(#{Kernel.VariableBinding} #stbFixup:at:)
+	#(#{Kernel.VariableBinding} #stbSaveOn:)
 	#(#{Kernel.VariableBinding class} #stbConvertFrom:)
+	#(#{Kernel.VariableBinding class} #stbConvertFromVersion0:)
+	#(#{Kernel.VariableBinding class} #stbConvertFromVersion1:)
 	#(#{Kernel.VariableBinding class} #stbVersion)
 	#(#{OS.InvariantLocale class} #stbReadFrom:format:size:)
 	#(#{OS.WindowsLocale class} #stbReadFrom:format:size:)
@@ -189,6 +197,17 @@ Kernel.STBCollectionProxy
 
 "Loose Methods"!
 
+!Core.Association methodsFor!
+
+addToPoolDictionary: aPoolDictionary
+	| var |
+	var := aPoolDictionary newAssociation: key value: value.
+	aPoolDictionary uncheckedAdd: var.
+	^var! !
+!Core.Association categoriesForMethods!
+addToPoolDictionary:!private! !
+!
+
 !Core.Class methodsFor!
 
 stbConvertFrom: anSTBClassFormat
@@ -239,6 +258,14 @@ stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
 !Core.ClassDescription categoriesForMethods!
 stbReadFrom:format:!binary filing!public! !
 stbReadFrom:format:size:!binary filing!public! !
+!
+
+!Core.Collection class methodsFor!
+
+fromStbProxy: anSTBCollectionProxy
+	^self withAll: anSTBCollectionProxy array! !
+!Core.Collection class categoriesForMethods!
+fromStbProxy:!binary filing!instance creation!public! !
 !
 
 !Core.DateAndTime class methodsFor!
@@ -599,6 +626,21 @@ stbConvertFrom: anSTBClassFormat
 stbConvertFrom:!binary filing!public! !
 !
 
+!Kernel.PoolDictionary class methodsFor!
+
+fromStbProxy: anSTBCollectionProxy
+	| associations instance |
+	associations := anSTBCollectionProxy array.
+	instance := self new: associations size.
+	associations do: 
+			[:each |
+			"The environment of the bindings must be set to the proxy, because later the proxy will switch itself with the collection it proxied using #become:"
+			(each addToPoolDictionary: instance) environment: anSTBCollectionProxy].
+	^instance! !
+!Kernel.PoolDictionary class categoriesForMethods!
+fromStbProxy:!binary filing!instance creation!public! !
+!
+
 !Kernel.SingletonSearchPolicy class methodsFor!
 
 stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
@@ -627,25 +669,113 @@ stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
 stbReadFrom:format:size:!binary filing!public! !
 !
 
+!Kernel.VariableBinding methodsFor!
+
+addToPoolDictionary: aPoolDictionary
+	aPoolDictionary uncheckedAdd: self.
+	^self!
+
+stbFixup: anSTBInFiler at: newObjectIndex
+	"Answer the true object that must be used to represent the receiver when read from anSTBInFiler.
+	Typically this is overridden by subclasses of STBProxy to answer the proxied object. Other classes
+	may also override this method to effectively 'one way become' the receiver to some other object"
+
+	environment class isMeta
+		ifTrue: 
+			["Class/Namespace variable. Attempt to replace it with the actual variable"
+			(environment fullBindingFor: key)
+				ifNotNil: 
+					[:live |
+					anSTBInFiler fixup: newObjectIndex to: live.
+					^live]].
+	^self!
+
+stbSaveOn: anSTxOutFiler
+	anSTxOutFiler saveVariableBinding: self! !
+!Kernel.VariableBinding categoriesForMethods!
+addToPoolDictionary:!private! !
+stbFixup:at:!binary filing!public! !
+stbSaveOn:!public! !
+!
+
 !Kernel.VariableBinding class methodsFor!
 
 stbConvertFrom: anSTBClassFormat
 	"Convert from previous version resource. 
 	Version Changes:
-		1) Adds 'environment' (early D8)
+		1) Adds 'environment' (early D8 - this holds the namespace)
 		2) Adds 'flags'
 	"
 
 	| ver |
 	ver := anSTBClassFormat version.
-	ver == 1 ifTrue: [^[:data | (self stbConvertFromVersion1: data) becomeA: self]].
-	ver == 0 ifTrue: [^[:data | (self stbConvertFromVersion0: data) becomeA: self]].
+	ver == 1 ifTrue: [^[:data | self stbConvertFromVersion1: data]].
+	ver == 0 ifTrue: [^[:data | self stbConvertFromVersion0: data]].
 	^super stbConvertFrom: anSTBClassFormat!
+
+stbConvertFromVersion0: data
+	"Private - Convert from version 0 resource. Need to deduce the environment as best we can and flags accordingly."
+
+	| key value namespace flags |
+	key := data at: 1.
+	value := data at: 2.
+	"In most cases a VariableBinding will be in STB/STL because it is referenced from the literal frame of a method. In most cases it will be a class binding, and otherwise may be a class variable or pool constant.
+	We have to try and deduce the environment:
+		- If the key is a Symbol, assume it is a global and try to resolve via Smalltalk
+		- If the variable has the same name as a variable in Smalltalk that references the exact same value, we patch the environment to Smalltalk; or
+		- If the variable refers to a class and has the same unqualified name as the class, we patch it to the environment of that class; otherwise
+		- we leave the envionment as we are unable to determine the correct class"
+	key isSymbol
+		ifTrue: 
+			["key is a Symbol, assume it is a global (since the keys of class and pool variables were/are plain strings) and try to resolve via Smalltalk"
+			(Smalltalk fullBindingFor: key)
+				ifNotNil: 
+					[:global |
+					"Note we can't answer the actual variable here, because the object's answered by converter blocks are become'd with the temporary array used to read the data. The variable will be fixed up later though"
+					^self
+						key: key
+						value: value
+						environment: global environment
+						flags: 0]].
+	flags := 0.
+	(value class == #{Smalltalk.PoolConstantsDictionary} valueOrNil or: [#Trace == key])
+		ifTrue: [namespace := Smalltalk]
+		ifFalse: 
+			[(value class isMeta and: [key == value name])
+				ifTrue: [namespace := value environment]
+				ifFalse: 
+					["Mark it as a class variable which will exclude it from treatment as a class binding"
+					flags := ClassMask]].
+	^self
+		key: key
+		value: value
+		environment: namespace
+		flags: flags!
+
+stbConvertFromVersion1: data
+	"Private - Convert from version 1 resource. V2 just adds flags."
+
+	| key value namespace flags |
+	key := data at: 1.
+	value := data at: 2.
+	namespace := data at: 3.
+	flags := (value class isMetaclass not or: [value name ~~ key or: [value environment ~~ namespace]])
+				ifTrue: 
+					["Not a class binding, so just mark as a class variable"
+					ClassMask]
+				ifFalse: [0].
+	^self
+		key: key
+		value: value
+		environment: namespace
+		flags: flags!
 
 stbVersion
 	^2! !
 !Kernel.VariableBinding class categoriesForMethods!
 stbConvertFrom:!binary filing!public! !
+stbConvertFromVersion0:!binary filing!private! !
+stbConvertFromVersion1:!binary filing!private! !
 stbVersion!binary filing!public! !
 !
 
