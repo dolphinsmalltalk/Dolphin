@@ -86,6 +86,9 @@ prepareStruct
 
 	!
 
+saveViewCaption
+	caption ifNil: [caption := self view topView caption]!
+
 setViewIcon: anIcon
 	"Set the icon of a view opened on the receiver.
 	We don't want to foist our icon onto the common dialogs, so override to do nothing."!
@@ -143,7 +146,7 @@ wmInitDialog: message wParam: wParam lParam: lParam
 	"Private - A WM_INITDIALOG message was sent to the hook procedure. This is sent after the common
 	dialog itself has handled the message."
 
-	self caption ifNotNil: [:text | self view caption: text].
+	self caption ifNotNil: [:text | self setViewCaption: text].
 	^1! !
 !UI.CommonDialog categoriesForMethods!
 attachHandle:!private!realizing/unrealizing! !
@@ -154,6 +157,7 @@ extractResult:!helpers!private! !
 initialize!accessing!initializing!private! !
 ownerView:!accessing!private! !
 prepareStruct!helpers!private! !
+saveViewCaption!public! !
 setViewIcon:!operations!public! !
 showModal!public!realizing/unrealizing! !
 updateIcon!private!updating! !

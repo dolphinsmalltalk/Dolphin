@@ -6,7 +6,7 @@ OS.COM.TypeInfoStructure
 	classVariableNames: ''
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
-	classConstants: { '_MemberDesc_Size' -> 16r4. '_OffsetOf_memid' -> 16r0 }!
+	classConstants: { '_OffsetOf_memid' -> 16r0 }!
 OS.COM.MemberDesc guid: (Core.GUID fromString: '{ac5eb94d-60c1-4c16-ae6d-31acf5123eb6}')!
 OS.COM.MemberDesc isNonInstantiable: true!
 OS.COM.MemberDesc comment: ''!
@@ -256,9 +256,6 @@ tdesc!accessing!private! !
 
 !OS.COM.MemberDesc class methodsFor!
 
-byteSize
-	^_MemberDesc_Size!
-
 defineFields
 	"
 		self compileDefinition.
@@ -266,7 +263,6 @@ defineFields
 
 	self defineField: #memid type: Int32Field readOnly! !
 !OS.COM.MemberDesc class categoriesForMethods!
-byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 !
 

@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.CommonDialogStructure
+OS.ComDlgStructure
 	subclass: #'OS.FINDREPLACEW'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -128,7 +128,7 @@ findDetails!event handling!public! !
 findWhat!accessing!public! !
 flags!**compiled accessors**!public! !
 flags:!**compiled accessors**!public! !
-hookFlag!accessing!public! !
+hookFlag!accessing!private! !
 isCaseSensitive!public!testing! !
 isClosing!public!testing! !
 isForwards!public!testing! !

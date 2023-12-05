@@ -123,7 +123,6 @@ ownerView: aView findWhat: findString
 	argument findString."
 
 	^self new
-		initialize;
 		ownerView: aView;
 		findWhat: findString;
 		showModal;

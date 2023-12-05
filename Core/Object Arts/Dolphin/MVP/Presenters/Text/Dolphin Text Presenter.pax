@@ -32,7 +32,7 @@ package setMethodNames: #(
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
 	'..\..\Base\Dolphin Basic Geometry'
-	'..\..\Dialogs\Common\Dolphin Common Dialogs'
+	'..\..\Dialogs\Common\Dolphin Common Find Replace Dialogs'
 	'..\..\Base\Dolphin ControlViews Base'
 	'..\Shell\Dolphin Document Presenter'
 	'..\..\Graphics\Dolphin GDI Graphics'
@@ -156,7 +156,7 @@ External.Structure
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: { '_CHARRANGE_Size' -> 16r8 }!
+	classConstants: {}!
 External.Structure
 	subclass: #'OS.AbstractFORMATRANGE'
 	instanceVariableNames: ''
@@ -164,8 +164,6 @@ External.Structure
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-			'_AbstractFORMATRANGE_Size' -> 16r28.
-			'_FORMATRANGE_Size' -> 16r30.
 			'_OffsetOf_hdc' -> 16r0.
 			'_OffsetOf_hdcTarget' -> 16r4.
 			'_OffsetOf_rc' -> 16r8.

@@ -49,7 +49,7 @@ package setPrerequisites: #(
 	'..\..\MVP\Base\Dolphin Basic Geometry'
 	'..\..\System\Filer\Dolphin Binary Filer'
 	'..\..\MVP\Dialogs\Common\Dolphin Common Dialogs'
-	'..\..\MVP\Dialogs\Common\Dolphin Common Print Dialog'
+	'..\..\MVP\Dialogs\Common\Dolphin Common Font Dialog'
 	'..\Community Edition\Dolphin Community Edition Tools'
 	'..\..\MVP\Graphics\Dolphin GDI Graphics'
 	'..\..\System\Filer\Dolphin Literal Filer (Old versions)'

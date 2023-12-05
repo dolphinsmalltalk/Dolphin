@@ -6,7 +6,7 @@ External.Structure
 	classVariableNames: ''
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
-	classConstants: { '_AbstractELEMDESC_Size' -> 16r8. '_OffsetOf_tdescElem' -> 16r0 }!
+	classConstants: { '_OffsetOf_tdescElem' -> 16r0 }!
 OS.COM.AbstractELEMDESC guid: (Core.GUID fromString: '{24cbeadb-8708-4bb1-a28d-207ebd2a8c8e}')!
 OS.COM.AbstractELEMDESC isNonInstantiable: true!
 OS.COM.AbstractELEMDESC comment: ''!
@@ -88,9 +88,6 @@ typeName!accessing!public! !
 
 !OS.COM.AbstractELEMDESC class methodsFor!
 
-byteSize
-	^_AbstractELEMDESC_Size!
-
 defineFields
 	"Define the shared fields of the ELEMDESC and ARRAYDESC structures.
 		self compileDefinition.
@@ -98,7 +95,6 @@ defineFields
 
 	self defineField: #tdescElem type: (StructureField type: TYPEDESC) beReadOnly beNonBrowsable! !
 !OS.COM.AbstractELEMDESC class categoriesForMethods!
-byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 !
 

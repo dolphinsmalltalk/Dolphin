@@ -91,8 +91,7 @@ name
 pixelFromPoints: size
 	"Private - Answers a pixel size from a given point size."
 
-	^(size * resolution y / 72) rounded.
-!
+	^(size * resolution y / 72.0) rounded!
 
 pixelSize
 	"Answers the receiver's pixel size."

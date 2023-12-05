@@ -7,8 +7,6 @@ External.Structure
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-			'_AbstractFORMATRANGE_Size' -> 16r28.
-			'_FORMATRANGE_Size' -> 16r30.
 			'_OffsetOf_hdc' -> 16r0.
 			'_OffsetOf_hdcTarget' -> 16r4.
 			'_OffsetOf_rc' -> 16r8.
@@ -75,9 +73,6 @@ rcPage:!**compiled accessors**!public! !
 
 !OS.AbstractFORMATRANGE class methodsFor!
 
-byteSize
-	^_AbstractFORMATRANGE_Size!
-
 defineFields
 	"Define the common fields of the FORMATRANGE and similar structures.
 
@@ -90,7 +85,6 @@ defineFields
 		defineField: #rc type: (StructureField type: RECTL);
 		defineField: #rcPage type: (StructureField type: RECTL)! !
 !OS.AbstractFORMATRANGE class categoriesForMethods!
-byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 !
 

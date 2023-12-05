@@ -119,8 +119,10 @@ clear: anExternalAddress
 	self free: anExternalAddress!
 
 copyBytesToGlobalHeap: aByteObject
-	| len pMem hMem |
-	len := aByteObject byteSize.
+	^self copyBytesToGlobalHeap: aByteObject size: aByteObject byteSize!
+
+copyBytesToGlobalHeap: aByteObject size: len
+	| pMem hMem |
 	hMem := Kernel32 globalAlloc: ##(GHND | GMEM_DDESHARE) dwBytes: len.
 	pMem := Kernel32 globalLock: hMem.
 	Kernel32
@@ -233,6 +235,7 @@ Alloc:!operations!private! !
 allocator!accessing!private! !
 clear:!public!realizing/unrealizing! !
 copyBytesToGlobalHeap:!operations!public! !
+copyBytesToGlobalHeap:size:!operations!public! !
 DidAlloc:!COM Interfaces-OBJIDL.IMalloc!private! !
 free:!operations!public! !
 Free:!COM Interfaces-OBJIDL.IMalloc!private! !

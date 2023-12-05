@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.CommonDialogStructure
+OS.ComDlgStructure
 	subclass: #'OS.CHOOSECOLORW'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -94,7 +94,7 @@ color!accessing!public! !
 flags!**compiled accessors**!public! !
 flags:!**compiled accessors**!public! !
 hInstance:!**compiled accessors**!public! !
-hookFlag!constants!public! !
+hookFlag!constants!private! !
 lpCustColors!**compiled accessors**!public! !
 lpCustColors:!**compiled accessors**!public! !
 lpfnHook:!**compiled accessors**!public! !

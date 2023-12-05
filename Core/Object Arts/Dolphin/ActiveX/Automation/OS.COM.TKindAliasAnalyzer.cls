@@ -76,6 +76,8 @@ initialize
 	self basicTypes do: [:each | BaseTypes at: each name put: each].
 	BaseTypes
 		at: 'guid' put: GUID;
+		at: 'UINT_PTR' put: UIntPtr;
+		at: 'INTPTR' put: IntPtr;
 		at: 'ULONG_PTR' put: UIntPtr;
 		at: 'LONG_PTR' put: IntPtr.
 	self wireHandleNames do: [:each | BaseTypes at: 'wire' , each put: Handle].

@@ -124,6 +124,9 @@ contents
 		add: #('Core\Object Arts\Dolphin\MVP\Dialogs\Dolphin Base Dialogs.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Dialogs\Common\Dolphin Common Dialogs.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Dialogs\Common\Dolphin Common Print Dialog.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\MVP\Dialogs\Common\Dolphin Common Color Dialog.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\MVP\Dialogs\Common\Dolphin Common Font Dialog.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\MVP\Dialogs\Common\Dolphin Common Find Replace Dialogs.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\Base\Dolphin Additional Sort Algorithms.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Presenters\List\Dolphin List Presenter.pax' #plain #imageBased);

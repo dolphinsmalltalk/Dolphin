@@ -6,7 +6,7 @@ External.Structure
 	classVariableNames: ''
 	imports: #(#{OS.CommCtrlConstants})
 	classInstanceVariableNames: ''
-	classConstants: { '_CCITEM_Size' -> 16r4. '_OffsetOf_mask' -> 16r0 }!
+	classConstants: { '_OffsetOf_mask' -> 16r0 }!
 OS.CCITEM guid: (Core.GUID fromString: '{87b4c5ce-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.CCITEM isNonInstantiable: true!
 OS.CCITEM comment: 'CCITEM is an <ExternalStructure> class which implements shared behaviour and state for the common controls item structures, LVITEM, TCITEM and TVITEM. There is no actual Win32 common control structure of this name.'!
@@ -239,9 +239,6 @@ textValidMask!constants!private! !
 
 !OS.CCITEM class methodsFor!
 
-byteSize
-	^_CCITEM_Size!
-
 defineFields
 	"
 		CCITEM compileDefinition
@@ -252,7 +249,6 @@ defineFields
 		type: UInt32Field new
 		offset: 0! !
 !OS.CCITEM class categoriesForMethods!
-byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 !
 

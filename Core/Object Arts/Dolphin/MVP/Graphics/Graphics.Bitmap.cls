@@ -318,7 +318,7 @@ extent
 	^extent!
 
 freeDC
-	"Private - Free the receiver's cached memory DC.
+	"Free the receiver's cached memory DC.
 	Implementation Note: The hdc is lazily created by #canvas so needs to be tested first."
 
 	hdc ifNil: [^self].
@@ -443,7 +443,7 @@ drawOn:at:from:extent:!drawing-bitmaps!public! !
 drawOn:at:from:extent:rop:!drawing-bitmaps!public! !
 erase!drawing!public! !
 extent!accessing!public! !
-freeDC!private!realizing/unrealizing! !
+freeDC!public!realizing/unrealizing! !
 getColorTable!accessing!public! !
 getInfo!accessing!public! !
 getMap3DColors!accessing!public! !

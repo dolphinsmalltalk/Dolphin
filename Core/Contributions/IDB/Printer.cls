@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Object subclass: #Printer
-	instanceVariableNames: 'hDevNames hDevMode rtMargin margins selectionRange pageRange pageRangeLimits titleBlock printerCanvas'
+	instanceVariableNames: 'devNames devMode rtMargin margins selectionRange pageRanges pageRangeLimits titleBlock printerCanvas'
 	classVariableNames: ''
 	poolDictionaries: 'PrintingConstants Win32Constants'
 	classInstanceVariableNames: ''!
-Printer guid: (GUID fromString: '{38D2291D-3137-45FF-9573-B92AE401F1A8}')!
+Printer guid: (GUID fromString: '{38d2291d-3137-45ff-9573-b92ae401f1a8}')!
 Printer comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2006 Ian Bartholomew
@@ -14,24 +14,28 @@ Public Domain Freeware'!
 !Printer categoriesForClass!IDB Goodies! !
 !Printer methodsFor!
 
+cacheDeviceInfo: aDeviceStructure
+	devMode := aDeviceStructure devMode.
+	devNames := aDeviceStructure devNames!
+
 defaultTitleBlock
 	^nil!
 
 initialize
 	super initialize.
-	hDevMode := hDevNames := printerCanvas := 0.
 	titleBlock := self defaultTitleBlock.
+	pageRanges := #().
 	self showPageSetupDialog: false.
 	self showPrintDialog: false selectionRange: (1 to: 0)!
 
 margins
 	^margins!
 
-pageRange
-	^pageRange!
-
 pageRangeLimits: anObject
 	pageRangeLimits := anObject!
+
+pageRanges
+	^pageRanges!
 
 pageSize
 	^(printerCanvas getDeviceCaps: PHYSICALWIDTH) @ (printerCanvas getDeviceCaps: PHYSICALHEIGHT)!
@@ -41,7 +45,7 @@ print: aView
 
 print: aView selectionRange: anInterval
 	(self showPrintDialog: true selectionRange: anInterval)
-		ifNotNil:
+		ifTrue:
 			[self setPrinterCanvas.
 			aView printDocumentTo: self]!
 
@@ -61,102 +65,62 @@ selectionRange
 	^selectionRange!
 
 setPrinterCanvas
-	| devModeAddr devNamesAddr devMode devNames hDC |
-	devModeAddr := KernelLibrary default globalLock: hDevMode.
-	devMode := DEVMODE new initializeAtAddress: devModeAddr.
-	devNamesAddr := KernelLibrary default globalLock: hDevNames.
-	devNames := DEVNAMES new initializeAtAddress: devNamesAddr.
+	| hDC |
 	hDC := GDILibrary default
-		createDC: (String fromAddress: devNamesAddr yourAddress + devNames wDriverOffset)
-		lpszDevice: (String fromAddress: devNamesAddr yourAddress + devNames wDeviceOffset)
-		lpszOutput: (String fromAddress: devNamesAddr yourAddress + devNames wOutputOffset)
-		lpInitData: devMode.
-	KernelLibrary default globalUnlock: hDevNames.
-	KernelLibrary default globalUnlock: hDevMode.
+				createDC: devNames driverName
+				lpszDevice: devNames deviceName
+				lpszOutput: devNames outputName
+				lpInitData: devMode.
 	self assert: [hDC notNil].
 	printerCanvas := PrinterCanvas withOwnedDC: hDC asInteger!
 
 showPageSetupDialog: aBoolean
-	"aBoolean is false if we don't want the dialog to be displayed, just set the defaults"
+	"aBoolean is false if we don't want the dialog to be displayed, just return the defaults"
 
-	| pageSetupDlg active apiResult |
-	active := View active.
-	pageSetupDlg := PAGESETUPDLG new.
-	pageSetupDlg
-		ownerView: active;
-		hDevMode: hDevMode;
-		hDevNames: hDevNames.
-	rtMargin
-		ifNotNil:
-			[pageSetupDlg
-				rtMargin: rtMargin;
-				flags: pageSetupDlg flags | PSD_MARGINS].
+	| pageSetupDlg |
+	pageSetupDlg := PageSetupDialog new.
+	pageSetupDlg ownerView: View active.
+	rtMargin ifNotNil: [pageSetupDlg margins: rtMargin].
 	aBoolean
-		ifFalse:
-			[pageSetupDlg
-				flags: pageSetupDlg flags | PSD_RETURNDEFAULT;
-				hDevMode: 0;
-				hDevNames: 0].
-	apiResult := [SessionManager inputState startIdleTimer: active.
-	ComDlgLibrary default pageSetupDlg: pageSetupDlg asParameter]
-		ensure: [SessionManager inputState stopIdleTimer: active].
-	apiResult
-		ifTrue:
-			[rtMargin := pageSetupDlg rtMargin copy.
+		ifTrue: 
+			[devMode ifNotNil: [pageSetupDlg devMode: devMode].
+			devNames ifNotNil: [pageSetupDlg devNames: devNames]]
+		ifFalse: [pageSetupDlg returnDefaults].
+	pageSetupDlg showModal
+		ifNil: [^nil]
+		ifNotNil: 
+			["convert mm margin to inches"
+			rtMargin := pageSetupDlg margins.
 			margins := (pageSetupDlg flags anyMask: PSD_INHUNDREDTHSOFMILLIMETERS)
-				ifTrue:
-					["convert mm margin to inches"
-					(rtMargin topLeft / 2.54 corner: rtMargin bottomRight / 2.54) truncated]
-				ifFalse: [rtMargin asRectangle].
-			hDevMode := pageSetupDlg hDevMode copy.
-			hDevNames := pageSetupDlg hDevNames copy]
-		ifFalse:
-			[| error |
-			(error := ComDlgLibrary default commDlgExtendedError) = 0
-				ifFalse: [self error: 'PageSetupDialog error: ' , error printString].
-			^nil]!
+						ifTrue: [(rtMargin topLeft / 2.54 corner: rtMargin bottomRight / 2.54) truncated]
+						ifFalse: [rtMargin].
+			self cacheDeviceInfo: pageSetupDlg]!
 
 showPrintDialog: showBoolean selectionRange: anInterval
 	"aBoolean is false if we don't want the dialog to be displayed, just set the defaults"
 
-	| printDlg active apiResult |
-	printDlg := PRINTDLG new.
-	active := View active.
+	| printDlg mode |
+	printDlg := PrintDialog new.
 	printDlg
-		ownerView: active;
-		flags: ##(PD_USEDEVMODECOPIES | PD_ALLPAGES);
-		nFromPage: 1;
-		nToPage: 1;
-		nMinPage: 1;
-		nMaxPage: (pageRangeLimits ifNil: [16rFFFF] ifNotNil: [pageRangeLimits stop]);
-		nCopies: 1;
-		hDC: 0;
-		hDevMode: hDevMode;
-		hDevNames: hDevNames.
-	anInterval isEmpty ifTrue: [printDlg flags: printDlg flags | PD_NOSELECTION].
+		caption: '<s>: Print' << SessionManager current applicationName;
+		ownerView: View active;
+		pageRanges: pageRanges;
+		printableRange: (1 to: (pageRangeLimits ifNil: [16rFFFF] ifNotNil: [pageRangeLimits stop])).
+	anInterval isEmpty ifTrue: [printDlg disablePrintSelectionOnly].
 	showBoolean
-		ifFalse:
+		ifTrue: 
 			[printDlg
-				flags: printDlg flags | PD_RETURNDEFAULT;
-				hDevMode: 0;
-				hDevNames: 0].
-	apiResult := [SessionManager inputState startIdleTimer: active.
-	ComDlgLibrary default printDlg: printDlg asParameter]
-		ensure: [SessionManager inputState stopIdleTimer: active].
-	apiResult
-		ifTrue:
-			[selectionRange := (printDlg flags anyMask: PD_SELECTION) ifTrue: [anInterval].
-			pageRange := (printDlg flags anyMask: PD_PAGENUMS)
-				ifTrue: [printDlg nFromPage to: printDlg nToPage].
-			hDevMode := printDlg hDevMode copy.
-			hDevNames := printDlg hDevNames copy]
-		ifFalse:
-			[| error |
-			(error := ComDlgLibrary default commDlgExtendedError) = 0
-				ifFalse:
-					[printerCanvas := nil.
-					self error: 'PrintSetupDialog error: ' , error printString].
-			^nil]!
+				devMode: devMode;
+				devNames: devNames]
+		ifFalse: [printDlg returnDefaults].
+	printDlg showModal ifNotNil: [:canvas | canvas free].
+	printDlg result ~~ #cancel
+		ifTrue: 
+			[mode := printDlg rangeMode.
+			selectionRange := mode == #selectionOnly ifTrue: [anInterval].
+			pageRanges := printDlg pageRanges.
+			self cacheDeviceInfo: printDlg].
+	^printDlg result == #print!
 
 titleBlock
 	^titleBlock!
@@ -167,23 +131,26 @@ titleBlock: anObject
 		]"
 
 	titleBlock := anObject! !
-!Printer categoriesFor: #defaultTitleBlock!accessing!defaults!public! !
-!Printer categoriesFor: #initialize!initializing!public! !
-!Printer categoriesFor: #margins!accessing!public! !
-!Printer categoriesFor: #pageRange!accessing!public! !
-!Printer categoriesFor: #pageRangeLimits:!accessing!public! !
-!Printer categoriesFor: #pageSize!accessing!public! !
-!Printer categoriesFor: #print:!operations!printing!public! !
-!Printer categoriesFor: #print:selectionRange:!operations!printing!public! !
-!Printer categoriesFor: #printerCanvas!accessing!public! !
-!Printer categoriesFor: #printPreview:!operations!public! !
-!Printer categoriesFor: #printPreview:for:!operations!public! !
-!Printer categoriesFor: #selectionRange!accessing!public! !
-!Printer categoriesFor: #setPrinterCanvas!operations!printing!public! !
-!Printer categoriesFor: #showPageSetupDialog:!operations!public! !
-!Printer categoriesFor: #showPrintDialog:selectionRange:!operations!public! !
-!Printer categoriesFor: #titleBlock!accessing!public! !
-!Printer categoriesFor: #titleBlock:!accessing!public! !
+!Printer categoriesForMethods!
+cacheDeviceInfo:!operations!private! !
+defaultTitleBlock!accessing!defaults!public! !
+initialize!initializing!public! !
+margins!accessing!public! !
+pageRangeLimits:!accessing!public! !
+pageRanges!accessing!public! !
+pageSize!accessing!public! !
+print:!operations!printing!public! !
+print:selectionRange:!operations!printing!public! !
+printerCanvas!accessing!public! !
+printPreview:!operations!public! !
+printPreview:for:!operations!public! !
+selectionRange!accessing!public! !
+setPrinterCanvas!operations!printing!public! !
+showPageSetupDialog:!operations!public! !
+showPrintDialog:selectionRange:!operations!public! !
+titleBlock!accessing!public! !
+titleBlock:!accessing!public! !
+!
 
 !Printer class methodsFor!
 
@@ -212,7 +179,9 @@ selectPrinterNameWithPrompt: promptString default: defaultString
 				remove: defaultString;
 				addFirst: defaultString].
 	^ChoicePrompter choices: list caption: promptString! !
-!Printer class categoriesFor: #new!object creation!public! !
-!Printer class categoriesFor: #printerNames!accessing!public! !
-!Printer class categoriesFor: #selectPrinterNameWithPrompt:default:!helpers!public! !
+!Printer class categoriesForMethods!
+new!object creation!public! !
+printerNames!accessing!public! !
+selectPrinterNameWithPrompt:default:!helpers!public! !
+!
 

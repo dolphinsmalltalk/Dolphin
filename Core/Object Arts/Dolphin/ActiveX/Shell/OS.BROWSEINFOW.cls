@@ -29,9 +29,6 @@ displayName
 
 	^displayName trimNulls!
 
-dwSize: anInteger
-	"BROWSEINFOW is unusual among common dialog structures in not having a structure size field."!
-
 flags
 	"Answer the <Integer> value of the receiver's 'flags' field."
 
@@ -42,17 +39,15 @@ flags: anInteger
 
 	bytes uint32AtOffset: _OffsetOf_flags put: anInteger!
 
-hwndOwner: anInteger
-	"Set the receiver's 'hwndOwner' field to the value of the argument, anInteger"
-
-	bytes uint32AtOffset: _OffsetOf_hwndOwner put: anInteger!
+hwndOwnerOffset
+	^_OffsetOf_hwndOwner!
 
 initialize: anInteger
 	"Private - Initialize the state of the receiver."
 
 	super initialize: anInteger.
 	#todo.	"Support long filenames? Not sure we can as seems to be an API limitation."
-	displayName := Utf16String newFixed: MAX_PATH.
+	displayName := Utf16String newFixed: Win32Constants.MAX_PATH.
 	self pszDisplayName: displayName!
 
 lpfnHook: anAddress
@@ -87,10 +82,9 @@ title: text
 	self lpszTitle: (title := text asUtf16String)! !
 !OS.BROWSEINFOW categoriesForMethods!
 displayName!accessing!public! !
-dwSize:!initializing!public! !
 flags!**compiled accessors**!public! !
 flags:!**compiled accessors**!public! !
-hwndOwner:!**compiled accessors**!public! !
+hwndOwnerOffset!constants!private! !
 initialize:!initializing!private! !
 lpfnHook:!**compiled accessors**!public! !
 lpszTitle:!**compiled accessors**!public! !
@@ -122,7 +116,7 @@ defineFields
 		} BROWSEINFOW;"
 
 	self
-		defineField: #hwndOwner type: UInt32Field writeOnly beOverride;
+		defineField: #hwndOwner type: HANDLEField new beUncompiled;
 		defineField: #pidlRoot type: UInt32Field new;
 		defineField: #pszDisplayName type: (PointerField type: Utf16String) beWriteOnly;
 		defineField: #lpszTitle type: (PointerField type: Utf16String) beWriteOnly;

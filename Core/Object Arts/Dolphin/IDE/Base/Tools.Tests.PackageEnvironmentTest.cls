@@ -32,7 +32,7 @@ classNamesFor: aPackageEnvironment
 testPackageEnvironment
 	| env selectors |
 	env := universalEnvironment
-				forPackages: {OS.PrintDialogConstants owningPackage. OS.ComDlgLibrary owningPackage}.
+				forPackages: {UI.FontDialog owningPackage. OS.ComDlgLibrary owningPackage}.
 	self universalTestFor: env.
 	self assert: (env includesClass: Font).
 	self deny: (env definesClass: Font).

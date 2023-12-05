@@ -1,0 +1,83 @@
+﻿| package |
+package := Package name: 'Dolphin Common Find Replace Dialogs'.
+package paxVersion: 2.1;
+	basicComment: 'Dolphin Smalltalk Windows Common Find & Replace Dialogs.
+Copyright (c) Object Arts Ltd. 1997-2023. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.
+
+This package contains Dialog presenter wrappers for the Windows common dialogs for find (FindDialog) and replace (FindReplaceDialog). These dialogs support modeless operation.'.
+
+
+package setClassNames: #(
+	#{OS.FINDREPLACEW}
+	#{UI.FindDialog}
+	#{UI.FindReplaceDialog}
+).
+
+package setMethodNames: #(
+	#(#{OS.ComDlgLibrary} #replaceText:)
+).
+
+package setPrerequisites: #(
+	'..\..\..\Base\Dolphin'
+	'Dolphin Common Dialogs'
+	'..\..\Base\Dolphin MVP Base'
+).
+
+package!
+
+"Class Definitions"!
+
+UI.CommonDialog
+	subclass: #'UI.FindDialog'
+	instanceVariableNames: 'findWhatBuf findDetails'
+	classVariableNames: 'HookHandlers'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.FindDialog
+	subclass: #'UI.FindReplaceDialog'
+	instanceVariableNames: 'replaceWith'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.ComDlgStructure
+	subclass: #'OS.FINDREPLACEW'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_FINDREPLACEW_Size' -> 16r28.
+			'_OffsetOf_flags' -> 16rC.
+			'_OffsetOf_hInstance' -> 16r8.
+			'_OffsetOf_lCustData' -> 16r1C.
+			'_OffsetOf_lpfnHook' -> 16r20.
+			'_OffsetOf_lpstrFindWhat' -> 16r10.
+			'_OffsetOf_lpstrReplaceWith' -> 16r14.
+			'_OffsetOf_lpTemplateName' -> 16r24.
+			'_OffsetOf_wFindWhatLen' -> 16r18.
+			'_OffsetOf_wReplaceWithLen' -> 16r1A
+		}!
+
+"Loose Methods"!
+
+!OS.ComDlgLibrary methodsFor!
+
+replaceText: aWinFINDREPLACE
+	"Create a system-defined modeless dialog box that lets the user specify
+	a string to search for and a replacement string, as well as options to 
+	control the find and replace operations.
+
+		HWND ReplaceText(
+			LPFINDREPLACE  lpfr 	// address of structure with initialization data
+		);"
+
+	<stdcall: handle ReplaceTextW FINDREPLACEW*>
+	^self invalidCall: _failureCode! !
+!OS.ComDlgLibrary categoriesForMethods!
+replaceText:!primitives!private!win32 functions-common dialog box! !
+!
+
+"End of package definition"!
+

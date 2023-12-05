@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.CommonDialogStructure
+OS.ComDlgStructure
 	subclass: #'OS.OPENFILENAMEW'
 	instanceVariableNames: 'fileName title filter defExt initialDir'
 	classVariableNames: ''
@@ -187,7 +187,7 @@ flags!**compiled accessors**!public! !
 flags:!**compiled accessors**!public! !
 flagsEx!**compiled accessors**!public! !
 flagsEx:!**compiled accessors**!public! !
-hookFlag!accessing!public! !
+hookFlag!accessing!private! !
 initialDirectory:!accessing!public! !
 lpfnHook:!**compiled accessors**!public! !
 lpstrDefExt:!**compiled accessors**!public! !

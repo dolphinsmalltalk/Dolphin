@@ -37,7 +37,9 @@ package setMethodNames: #(
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
 	'..\..\Base\Dolphin Basic Geometry'
+	'..\..\Dialogs\Common\Dolphin Common Color Dialog'
 	'..\..\Dialogs\Common\Dolphin Common Dialogs'
+	'..\..\Dialogs\Common\Dolphin Common Font Dialog'
 	'..\..\Graphics\Dolphin GDI Graphics'
 	'..\..\..\System\Filer\Dolphin Literal Filer'
 	'..\..\Base\Dolphin MVP Base'

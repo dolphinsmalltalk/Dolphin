@@ -413,6 +413,11 @@ getClipBox
 	Gdi32 getClipBox: handle lprc: answer.
 	^answer!
 
+getDeviceCaps: anInteger 
+	"Answer the specified device capability."
+
+	^GDILibrary default getDeviceCaps: self asParameter nIndex: anInteger!
+
 getFont
 	^Font fromHandle: self fontHandle!
 
@@ -1032,6 +1037,7 @@ formatText:in:flags:!drawing!public! !
 frameRectangle:brush:!drawing!public! !
 free!public!realizing/unrealizing! !
 getClipBox!enquiries!private! !
+getDeviceCaps:!enquiries!public! !
 getFont!accessing!public!tools! !
 getPixel:!drawing!private! !
 handle!accessing!public! !

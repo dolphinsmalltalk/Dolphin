@@ -166,6 +166,7 @@ package setPrerequisites: #(
 	'..\Views\Buttons\Dolphin Check Buttons'
 	'..\Presenters\Choice\Dolphin Choice Presenter'
 	'..\Presenters\Color\Dolphin Color Presenter'
+	'..\Dialogs\Common\Dolphin Common Color Dialog'
 	'..\Views\Common Controls\Dolphin Common Controls'
 	'..\Dialogs\Common\Dolphin Common Dialogs'
 	'..\Views\Control Bars\Dolphin Control Bars'

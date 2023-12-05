@@ -7,7 +7,6 @@ WinHttpServer.HttpServerStructure
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-			'_HTTP_HEADERS_Size' -> 16r10.
 			'_OffsetOf_pTrailers' -> 16rC.
 			'_OffsetOf_pUnknownHeaders' -> 16r4.
 			'_OffsetOf_TrailerCount' -> 16r8.
@@ -108,9 +107,6 @@ UnknownHeaderCount:!**compiled accessors**!private! !
 
 !WinHttpServer.HTTP_HEADERS class methodsFor!
 
-byteSize
-	^_HTTP_HEADERS_Size!
-
 defineFields
 	"Define the fields of the HTTP_HEADERS structure.
 
@@ -154,7 +150,6 @@ knownHeaderIndex: headerName
 knownHeaderName: anInteger
 	^self indexToHeaderMap at: anInteger! !
 !WinHttpServer.HTTP_HEADERS class categoriesForMethods!
-byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !
 headerToIndexMap!public! !
 indexToHeaderMap!public! !

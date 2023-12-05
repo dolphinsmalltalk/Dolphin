@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.CommonDialogStructure
+OS.ComDlgStructure
 	subclass: #'OS.CHOOSEFONTW'
 	instanceVariableNames: 'logFont'
 	classVariableNames: ''
@@ -96,7 +96,7 @@ color:!public! !
 flags!**compiled accessors**!public! !
 flags:!**compiled accessors**!public! !
 hDC:!**compiled accessors**!public! !
-hookFlag!accessing!public! !
+hookFlag!accessing!private! !
 iPointSize!**compiled accessors**!public! !
 logFont!private! !
 logFont:!private! !

@@ -1,8 +1,8 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.CommonDialogStructure
+OS.PrintDialogStructure
 	subclass: #'OS.PRINTDLGEXW'
-	instanceVariableNames: ''
+	instanceVariableNames: 'printRanges callback'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -12,8 +12,6 @@ OS.CommonDialogStructure
 			'_OffsetOf_flags' -> 16r14.
 			'_OffsetOf_Flags2' -> 16r18.
 			'_OffsetOf_hDC' -> 16r10.
-			'_OffsetOf_hDevMode' -> 16r8.
-			'_OffsetOf_hDevNames' -> 16rC.
 			'_OffsetOf_hInstance' -> 16r38.
 			'_OffsetOf_lpCallback' -> 16r40.
 			'_OffsetOf_lphPropertyPages' -> 16r48.
@@ -65,15 +63,20 @@ struct tagPRINTDLGEX {
 !OS.PRINTDLGEXW categoriesForClass!Win32-Structs! !
 !OS.PRINTDLGEXW methodsFor!
 
+basicFree
+	callback free.
+	callback := nil.
+	^super basicFree!
+
+disablePrintSelectionOnly
+	"Disable the 'Selection' radio button, used to choose to print the selected text in the souce, e.g. because there was no selection."
+
+	self maskIn: PD_NOSELECTION!
+
 dwResultAction
 	"Answer the <Integer> value of the receiver's 'dwResultAction' field."
 
 	^bytes uint32AtOffset: _OffsetOf_dwResultAction!
-
-dwResultAction: anInteger
-	"Set the receiver's 'dwResultAction' field to the value of the argument, anInteger"
-
-	bytes uint32AtOffset: _OffsetOf_dwResultAction put: anInteger!
 
 ExclusionFlags
 	"Answer the <Integer> value of the receiver's 'ExclusionFlags' field."
@@ -115,73 +118,38 @@ hDC: aHandle
 
 	bytes uintPtrAtOffset: _OffsetOf_hDC put: aHandle!
 
-hDevMode
-	"Answer the <Handle> value of the receiver's 'hDevMode' field."
-
-	^(bytes uintPtrAtOffset: _OffsetOf_hDevMode) asExternalHandle!
-
-hDevMode: aHandle
-	"Set the receiver's 'hDevMode' field to the value of the argument, aHandle"
-
-	bytes uintPtrAtOffset: _OffsetOf_hDevMode put: aHandle!
-
-hDevNames
-	"Answer the <Handle> value of the receiver's 'hDevNames' field."
-
-	^(bytes uintPtrAtOffset: _OffsetOf_hDevNames) asExternalHandle!
-
-hDevNames: aHandle
-	"Set the receiver's 'hDevNames' field to the value of the argument, aHandle"
-
-	bytes uintPtrAtOffset: _OffsetOf_hDevNames put: aHandle!
-
-hInstance
-	"Answer the <Handle> value of the receiver's 'hInstance' field."
-
-	^(bytes uintPtrAtOffset: _OffsetOf_hInstance) asExternalHandle!
-
 hInstance: aHandle
 	"Set the receiver's 'hInstance' field to the value of the argument, aHandle"
 
 	bytes uintPtrAtOffset: _OffsetOf_hInstance put: aHandle!
 
-lpCallback
-	"Answer the <OS.COM.IUnknown> value of the receiver's 'lpCallback' field."
+initialize
+	super initialize.
+	self
+		initializePrintRanges: 32;
+		nStartPage: START_PAGE_GENERAL;
+		nCopies: 1!
 
-	^OS.COM.IUnknown fromAddress: (bytes intPtrAtOffset: _OffsetOf_lpCallback)!
+initializePrintRanges: anInteger
+	printRanges := StructureArray length: anInteger elementClass: PRINTPAGERANGE.
+	self
+		lpPageRanges: printRanges yourAddress;
+		nMaxPageRanges: printRanges size;
+		nPageRanges: 0!
 
 lpCallback: anIUnknown
 	"Set the receiver's 'lpCallback' field to the value of the argument, anIUnknown"
 
 	bytes uintPtrAtOffset: _OffsetOf_lpCallback put: anIUnknown yourAddress!
 
-lpfnHook: anExternalAddress 
-	#todo "Need to implement the IUnknown based callback hook"!
-
-lphPropertyPages
-	"Answer the <Handle> value of the receiver's 'lphPropertyPages' field."
-
-	^Handle fromAddress: (bytes intPtrAtOffset: _OffsetOf_lphPropertyPages)!
-
-lphPropertyPages: aHandle
-	"Set the receiver's 'lphPropertyPages' field to the value of the argument, aHandle"
-
-	bytes uintPtrAtOffset: _OffsetOf_lphPropertyPages put: aHandle yourAddress!
-
-lpPageRanges
-	"Answer the <PRINTPAGERANGE> value of the receiver's 'lpPageRanges' field."
-
-	^PRINTPAGERANGE fromAddress: (bytes intPtrAtOffset: _OffsetOf_lpPageRanges)!
+lpfnHook: anIUnknown
+	self lpCallback: anIUnknown.
+	callback := anIUnknown!
 
 lpPageRanges: aPRINTPAGERANGE
 	"Set the receiver's 'lpPageRanges' field to the value of the argument, aPRINTPAGERANGE"
 
 	bytes uintPtrAtOffset: _OffsetOf_lpPageRanges put: aPRINTPAGERANGE yourAddress!
-
-lpPrintTemplateName
-	"Answer the <Utf16String> value of the receiver's 'lpPrintTemplateName' field."
-
-	^Utf16String fromAddress: (bytes intPtrAtOffset: _OffsetOf_lpPrintTemplateName)!
 
 lpPrintTemplateName: anUtf16String
 	"Set the receiver's 'lpPrintTemplateName' field to the value of the argument, anUtf16String"
@@ -238,28 +206,66 @@ nPageRanges: anInteger
 
 	bytes uint32AtOffset: _OffsetOf_nPageRanges put: anInteger!
 
-nPropertyPages
-	"Answer the <Integer> value of the receiver's 'nPropertyPages' field."
-
-	^bytes uint32AtOffset: _OffsetOf_nPropertyPages!
-
-nPropertyPages: anInteger
-	"Set the receiver's 'nPropertyPages' field to the value of the argument, anInteger"
-
-	bytes uint32AtOffset: _OffsetOf_nPropertyPages put: anInteger!
-
-nStartPage
-	"Answer the <Integer> value of the receiver's 'nStartPage' field."
-
-	^bytes uint32AtOffset: _OffsetOf_nStartPage!
-
 nStartPage: anInteger
 	"Set the receiver's 'nStartPage' field to the value of the argument, anInteger"
 
-	bytes uint32AtOffset: _OffsetOf_nStartPage put: anInteger! !
+	bytes uint32AtOffset: _OffsetOf_nStartPage put: anInteger!
+
+pageRange
+	^self pageRanges single!
+
+pageRange: anInterval
+	self pageRanges: (anInterval isEmpty ifTrue: [#()] ifFalse: [{ anInterval }])!
+
+pageRanges
+	(self flags allMask: PD_PAGENUMS) ifFalse: [^#()].
+	^(1 to: self nPageRanges) collect: 
+			[:i |
+			| range |
+			range := printRanges at: i.
+			range nFromPage to: range nToPage]!
+
+pageRanges: aSequenceOfIntervals
+	| ranges count |
+	 ranges := aSequenceOfIntervals ?? #().
+	count := ranges size.
+	count > self nMaxPageRanges ifTrue: [self initializePrintRanges: count].
+	ranges keysAndValuesDo: 
+			[:i :each |
+			(printRanges at: i)
+				nFromPage: each start;
+				nToPage: each stop].
+	self nPageRanges: count.
+	count == 0 ifFalse: [self maskIn: PD_PAGENUMS]!
+
+printableRange
+	^self nMinPage to: self nMaxPage!
+
+printableRange: anInterval
+	self
+		nMinPage: anInterval first;
+		nMaxPage: anInterval last!
+
+rangeMode
+	| flags |
+	flags :=self flags.
+	(flags allMask: PD_SELECTION) ifTrue: [^#selectionOnly].
+	(flags allMask: PD_PAGENUMS) ifTrue: [^#pageRanges].
+	(flags allMask: PD_CURRENTPAGE) ifTrue: [^#currentPage].
+	^#allPages!
+
+result
+	^#(#cancel #print #apply) at: self dwResultAction + 1!
+
+returnDefaultFlag
+	^PD_RETURNDEFAULT!
+
+shouldPrintSelectionOnly
+	^self flags allMask: PD_SELECTION! !
 !OS.PRINTDLGEXW categoriesForMethods!
+basicFree!private!realizing/unrealizing! !
+disablePrintSelectionOnly!modes!public! !
 dwResultAction!**compiled accessors**!public! !
-dwResultAction:!**compiled accessors**!public! !
 ExclusionFlags!**compiled accessors**!public! !
 ExclusionFlags:!**compiled accessors**!public! !
 flags!**compiled accessors**!public! !
@@ -268,20 +274,12 @@ Flags2!**compiled accessors**!public! !
 Flags2:!**compiled accessors**!public! !
 hDC!**compiled accessors**!public! !
 hDC:!**compiled accessors**!public! !
-hDevMode!**compiled accessors**!public! !
-hDevMode:!**compiled accessors**!public! !
-hDevNames!**compiled accessors**!public! !
-hDevNames:!**compiled accessors**!public! !
-hInstance!**compiled accessors**!public! !
 hInstance:!**compiled accessors**!public! !
-lpCallback!**compiled accessors**!public! !
+initialize!initializing!public! !
+initializePrintRanges:!initializing!private! !
 lpCallback:!**compiled accessors**!public! !
-lpfnHook:!public! !
-lphPropertyPages!**compiled accessors**!public! !
-lphPropertyPages:!**compiled accessors**!public! !
-lpPageRanges!**compiled accessors**!public! !
+lpfnHook:!initializing!private! !
 lpPageRanges:!**compiled accessors**!public! !
-lpPrintTemplateName!**compiled accessors**!public! !
 lpPrintTemplateName:!**compiled accessors**!public! !
 nCopies!**compiled accessors**!public! !
 nCopies:!**compiled accessors**!public! !
@@ -293,10 +291,17 @@ nMinPage!**compiled accessors**!public! !
 nMinPage:!**compiled accessors**!public! !
 nPageRanges!**compiled accessors**!public! !
 nPageRanges:!**compiled accessors**!public! !
-nPropertyPages!**compiled accessors**!public! !
-nPropertyPages:!**compiled accessors**!public! !
-nStartPage!**compiled accessors**!public! !
 nStartPage:!**compiled accessors**!public! !
+pageRange!accessing!public! !
+pageRange:!accessing!public! !
+pageRanges!accessing!public! !
+pageRanges:!accessing!public! !
+printableRange!accessing!public! !
+printableRange:!accessing!public! !
+rangeMode!modes!public! !
+result!accessing!public! !
+returnDefaultFlag!accessing!constants!private! !
+shouldPrintSelectionOnly!modes!public! !
 !
 
 !OS.PRINTDLGEXW class methodsFor!
@@ -337,28 +342,26 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #hDevMode type: HANDLEField new;
-		defineField: #hDevNames type: HANDLEField new;
 		defineField: #hDC type: HANDLEField new;
 		defineField: #flags type: UInt32Field new;
 		defineField: #Flags2 type: UInt32Field new;
 		defineField: #ExclusionFlags type: UInt32Field new;
 		defineField: #nPageRanges type: UInt32Field new;
 		defineField: #nMaxPageRanges type: UInt32Field new;
-		defineField: #lpPageRanges type: (PointerField type: PRINTPAGERANGE);
+		defineField: #lpPageRanges type: (PointerField type: PRINTPAGERANGE) beWriteOnly;
 		defineField: #nMinPage type: UInt32Field new;
 		defineField: #nMaxPage type: UInt32Field new;
 		defineField: #nCopies type: UInt32Field new;
-		defineField: #hInstance type: HANDLEField new;
-		defineField: #lpPrintTemplateName type: (PointerField type: Utf16String);
-		defineField: #lpCallback type: (PointerField type: COM.IUnknown);
-		defineField: #nPropertyPages type: UInt32Field new;
-		defineField: #lphPropertyPages type: (PointerField type: Handle);
-		defineField: #nStartPage type: UInt32Field new;
-		defineField: #dwResultAction type: UInt32Field new!
+		defineField: #hInstance type: HANDLEField writeOnly;
+		defineField: #lpPrintTemplateName type: (PointerField type: Utf16String) beWriteOnly;
+		defineField: #lpCallback type: (PointerField type: COM.IUnknown) beWriteOnly;
+		defineField: #nPropertyPages type: UInt32Field filler;
+		defineField: #lphPropertyPages type: (PointerField type: Handle) beFiller;
+		defineField: #nStartPage type: UInt32Field writeOnly;
+		defineField: #dwResultAction type: UInt32Field readOnly!
 
 getFieldNames
-	^#(#dwSize #hwndOwner #hDevMode #hDevNames #hDC #flags #Flags2 #ExclusionFlags #nPageRanges #nMaxPageRanges #lpPageRanges #nMinPage #nMaxPage #nCopies #hInstance #lpPrintTemplateName #lpCallback #nPropertyPages #lphPropertyPages #nStartPage #dwResultAction)! !
+	^#(#dwSize #hwndOwner #hDevMode #hDevNames #hDC #flags #Flags2 #ExclusionFlags #nPageRanges #nMaxPageRanges #lpPageRanges #nMinPage #nMaxPage #nCopies #hInstance #lpPrintTemplateName #lpCallback #nStartPage #dwResultAction)! !
 !OS.PRINTDLGEXW class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !

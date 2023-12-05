@@ -6,7 +6,7 @@ WinHttpServer.HttpServerStructure
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: { '_HTTP_PROPERTY_FLAGS_Size' -> 16r4. '_OffsetOf_Present' -> 16r0 }!
+	classConstants: { '_OffsetOf_Present' -> 16r0 }!
 WinHttpServer.HTTP_PROPERTY_FLAGS guid: (Core.GUID fromString: '{6ba76c16-b60f-4235-9179-145a93b3f5cb}')!
 WinHttpServer.HTTP_PROPERTY_FLAGS isNonInstantiable: true!
 WinHttpServer.HTTP_PROPERTY_FLAGS comment: '`HTTP_PROPERTY_FLAGS` is an `External.Structure` class to wrap the struct ''WinHttpServer.HTTP_PROPERTY_FLAGS'' from type information in the ''Windows Http Server API'' library.
@@ -68,9 +68,6 @@ propertyId!constants!public! !
 
 !WinHttpServer.HTTP_PROPERTY_FLAGS class methodsFor!
 
-byteSize
-	^_HTTP_PROPERTY_FLAGS_Size!
-
 defineFields
 	"Define the fields of the HTTP_PROPERTY_FLAGS structure.
 
@@ -89,7 +86,6 @@ defineFields
 propertyId
 	^self subclassResponsibility! !
 !WinHttpServer.HTTP_PROPERTY_FLAGS class categoriesForMethods!
-byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !
 propertyId!constants!public! !
 !

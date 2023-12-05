@@ -6,7 +6,7 @@ External.Structure
 	classVariableNames: ''
 	imports: #(#{OS.CommCtrlConstants})
 	classInstanceVariableNames: ''
-	classConstants: { '_CCHITTESTINFO_Size' -> 16r8. '_OffsetOf_pt' -> 16r0 }!
+	classConstants: { '_OffsetOf_pt' -> 16r0 }!
 OS.CCHITTESTINFO guid: (Core.GUID fromString: '{87b4c5cd-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.CCHITTESTINFO isNonInstantiable: true!
 OS.CCHITTESTINFO comment: 'CCHITTESTINFO is an ExternalStructure class which implements shared behaviour and state for the common controls hit-test structures, LVHITTESTINFO, TCHITTESTINFO, and TVHITTESTINFO. There is no actual Win32 common control structure of this name.'!
@@ -51,9 +51,6 @@ pt:!**compiled accessors**!public! !
 
 !OS.CCHITTESTINFO class methodsFor!
 
-byteSize
-	^_CCHITTESTINFO_Size!
-
 defineFields
 	"Define the common fields of the common control hit test structures.
 
@@ -68,7 +65,6 @@ position: aPoint
 				int32AtOffset: ##(_OffsetOf_pt + POINTL._OffsetOf_y) put: aPoint y;
 				yourself)! !
 !OS.CCHITTESTINFO class categoriesForMethods!
-byteSize!**compiled accessors**!constants!public! !
 defineFields!development!public!template definition! !
 position:!accessing!instance creation!public! !
 !

@@ -1,0 +1,29 @@
+﻿| package |
+package := Package name: 'Dolphin Common Print Dialog (Old Names)'.
+package paxVersion: 2.1;
+	basicComment: 'Dolphin Smalltalk Windows Common Print Dialog (Pre-namespace Names).
+
+This package includes legacy aliases for print dialog classes that have been renamed in Dolphin 8 following the addition of namespaces.'.
+
+
+package setVariableNames: #(
+	#{Smalltalk.PrintingConstants}
+).
+
+package setAliasVariableNames: #(
+	#{Smalltalk.PrintingConstants}
+).
+
+package setPrerequisites: #(
+	'Dolphin Common Print Dialog'
+).
+
+package!
+
+"Variable Aliases"!
+
+Smalltalk.PrintingConstants := OS.PrintDialogConstants!
+
+
+"End of package definition"!
+
