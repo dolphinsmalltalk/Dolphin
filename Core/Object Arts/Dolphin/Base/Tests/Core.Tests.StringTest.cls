@@ -392,23 +392,27 @@ testEquals
 
 testExpandMacrosWith
 
-	self assert: ((self assimilateString: 'test <1d> displayString') expandMacrosWith: 1.23s2) equals: 'test 1.23 displayString'.
+	self assert: ((self assimilateString: '<d> displayString<1d><1d>') expandMacrosWith: 1.23s2) equals: '1.23 displayString1.231.23'.
 	self assert: ((self assimilateString: 'test <1p> printString') expandMacrosWith: 1.23s2) equals: 'test 1.23s printString'.
 	self assert: ((self assimilateString: 'test <1s> asString') expandMacrosWith: $Z) equals: 'test Z asString'.
 	self assert: ((self assimilateString: 'test <1?yes:no> conditional True') expandMacrosWith: true) equals: 'test yes conditional True'.
-	self assert: ((self assimilateString: 'test <1?yes:no> conditional False') expandMacrosWith: false) equals: 'test no conditional False'!
+	self assert: ((self assimilateString: 'test <1?yes:no> conditional False') expandMacrosWith: false) equals: 'test no conditional False'.
+	self assert: ((self assimilateString: 'test <p:substitute> for nil') expandMacrosWith: nil) equals: 'test substitute for nil'.
+	self assert: ((self assimilateString: 'test <p:substitue> not nil') expandMacrosWith: #foo) equals: 'test #foo not nil'.
+
+!
 
 testExpandMacrosWithArguments
 
 	| pattern expectedResult |
 
-	pattern := 'test displayString <1d> printString <2p> asString <3s> newline<N>tab<T>conditionals <4?yes:no> <5?yes:no> end test'.
+	pattern := 'test displayString <1d> printString <p> asString <3s> newline<N>tab<T>conditionals <4?yes:no> <5?yes:no> nil substitution <6d:foo> <7d:foo> end test'.
 	pattern := self assimilateString: pattern.
 
-	expectedResult := 'test displayString 1.23 printString 4.56s asString Z newline', String lineDelimiter, 'tab	conditionals yes no end test'.
+	expectedResult := 'test displayString 1.23 printString 4.56s asString Z newline', String lineDelimiter, 'tab	conditionals yes no nil substitution foo bar end test'.
 	expectedResult := self assimilateString: expectedResult.
 
-	self assert: (pattern expandMacrosWithArguments: #(1.23 4.56s2 $Z true false)) equals: expectedResult!
+	self assert: (pattern expandMacrosWithArguments: #(1.23 4.56s2 $Z true false nil 'bar')) equals: expectedResult!
 
 testFindStringStartingAt
 	| searchee abc a empty ba ab bb bba abba |
