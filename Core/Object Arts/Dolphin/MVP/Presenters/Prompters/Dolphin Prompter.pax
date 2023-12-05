@@ -24,8 +24,8 @@ package setPrerequisites: #(
 	'..\..\Views\Static\Text\Dolphin StaticText Control'
 	'..\..\..\System\Filer\Dolphin STx Filer Core'
 	'..\Text\Dolphin Text Presenter'
-	'..\..\Views\Tooltips\Dolphin Tooltips'
 	'..\..\Type Converters\Dolphin Type Converters'
+	'..\Validation\Dolphin Validation Hint Presenter'
 	'..\..\Models\Value\Dolphin Value Models'
 ).
 
@@ -35,7 +35,7 @@ package!
 
 UI.ValueDialog
 	subclass: #'UI.Prompter'
-	instanceVariableNames: 'promptPresenter replyPresenter validationDwell hintDwell flags hintFont hintBubble'
+	instanceVariableNames: 'promptPresenter replyPresenter validationDwell flags'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

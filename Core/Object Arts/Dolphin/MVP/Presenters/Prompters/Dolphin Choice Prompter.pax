@@ -27,7 +27,6 @@ package setPrerequisites: #(
 	'Dolphin Prompter'
 	'..\..\Views\Buttons\Dolphin Push Buttons'
 	'..\..\..\System\Filer\Dolphin STx Filer Core'
-	'..\..\Models\Value\Dolphin Value Models'
 ).
 
 package!

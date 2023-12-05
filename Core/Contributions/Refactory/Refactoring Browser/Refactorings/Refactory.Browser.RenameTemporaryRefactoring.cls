@@ -27,10 +27,10 @@ oldName: aString
 	self model name: self displayString!
 
 preconditions
-	^(RBCondition definesSelector: selector in: class) 
-		& (RBCondition isValidTemporaryVariableName: newName for: class) 
-			& (RBCondition definesInstanceVariable: newName in: class) not 
-			& (RBCondition definesStaticVariable: newName in: class) not 
+	^(RBCondition definesSelector: selector in: class)
+		& (RBCondition isValidTemporaryVariableName: newName)
+			& (RBCondition definesInstanceVariable: newName in: class) not
+			& (RBCondition definesStaticVariable: newName in: class) not
 			& (RBCondition withBlock: 
 						[| methodSource |
 						interval first > interval last ifTrue: [self refactoringError: 'Invalid variable name'].

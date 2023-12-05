@@ -25,6 +25,7 @@ package setPrerequisites: #(
 	'..\..\System\Filer\Dolphin Literal Filer'
 	'..\Base\Dolphin MVP Base'
 	'..\Views\Buttons\Dolphin Push Buttons'
+	'..\Presenters\Validation\Dolphin Validation Result Presenter'
 	'..\Models\Value\Dolphin Value Models'
 ).
 
@@ -34,7 +35,7 @@ package!
 
 UI.Shell
 	subclass: #'UI.Dialog'
-	instanceVariableNames: 'confirmed ownerView'
+	instanceVariableNames: 'confirmed ownerView validationResultPresenter'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

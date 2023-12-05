@@ -611,8 +611,9 @@ dictionary: aSymbol
 			[:p :m |
 			(DictionaryPresenter createIn: p on: m)
 				setAddItemBlock: 
-						[Smalltalk developmentSystem promptForKeyValuePair: 'Enter key and value expressions:'
-							caption: 'Add to Dictionary…'];
+						[(Smalltalk developmentSystem promptForKeyValuePair: 'Enter key and value expressions:'
+							caption: 'Add to Dictionary…')
+								ifNotNil: [:pair | m value newAssociation: pair key value: pair value]];
 				yourself]
 		editBlock: self defaultCollectionEditBlock)
 		type: Dictionary;

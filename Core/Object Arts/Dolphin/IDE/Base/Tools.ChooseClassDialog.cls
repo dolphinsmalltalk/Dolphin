@@ -2,7 +2,7 @@
 
 UI.ValueDialog
 	subclass: #'Tools.ChooseClassDialog'
-	instanceVariableNames: 'classesPresenter allowNil nilButtonCaption validater'
+	instanceVariableNames: 'classesPresenter allowNil nilButtonCaption'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -38,6 +38,7 @@ createComponents
 	"Create the presenters contained by the receiver"
 
 	super createComponents.
+	validationResultPresenter positionBlock: [self hintPosition].
 	self createClassesPresenter!
 
 createSchematicWiring
@@ -48,7 +49,27 @@ createSchematicWiring
 	classesPresenter 
 		when: #selectionChanged
 		send: #onClassSelected
-		to: self!
+		to: self.
+	classesPresenter selectableItems
+		when: #mouseWheeled:
+			send: #onClassListScrolled:
+			to: self;
+		when: #verticalScroll:
+			send: #onClassListScrolled:
+			to: self!
+
+getHintCaption: aValidationResult
+	^aValidationResult caption
+		ifNil: [aValidationResult hint iconStyle == #error ifTrue: ['Invalid choice']]!
+
+hintPosition
+	"Private - Answer a <Point> representing the screen co-ordinate at which the hint bubble's arrow should point."
+
+	| treeView itemRect sel |
+	treeView := classesPresenter selectableItems selectableItems view.
+	sel := treeView selectionByIndex.
+	itemRect := sel = 0 ifTrue: [treeView rectangle] ifFalse: [treeView itemRect: sel textOnly: true].
+	^treeView mapPointToScreen: itemRect centerRight!
 
 initialize
 	super initialize.
@@ -63,18 +84,23 @@ nilButtonCaption: aString
 	(self view viewNamed: 'none') text: aString!
 
 none
+	<commandQuery: #allowNil>
 	self value: nil.
 	self ok!
 
+onClassListScrolled: aWindowsEvent
+	self clearValidationResult!
+
 onClassSelected
-	self value: classesPresenter selectionOrNil!
+	self value: classesPresenter selectionOrNil.
+	self validate!
 
 onViewOpened
 	"Received when the receiver's view has been connected."
 
 	super onViewOpened.
 	"Unfortunately the selection is not represented as a value model, so we must sync. it manually"
-	classesPresenter selectionOrNil: self value.
+	[classesPresenter selectionOrNil: self value] postToInputQueue.
 	(self view viewNamed: 'none' ifNone: [])
 		ifNotNil: 
 			[:noneButton |
@@ -87,32 +113,17 @@ packages: aCollection
 
 	!
 
-queryCommand: query
-	"Private - Enters details about a potential command for the receiver into 
-	the <CommandQuery>, query"
+validateModel
+	(allowNil or: [self value notNil])
+		ifFalse: 
+			[^(ValidationResult errorMessage: 'Please select a class')
+				caption: 'Incomplete Input';
+				presenter: classesPresenter;
+				yourself].
+	^ValidationResult new!
 
-	| cmd |
-	cmd := query commandSymbol.
-	cmd == #ok
-		ifTrue: 
-			[query isEnabled: (allowNil or: [self value notNil]).
-			^true].
-	cmd == #none
-		ifTrue: 
-			[query isEnabled: allowNil.
-			^true].
-	^super queryCommand: query!
-
-validate
-	^self validater value: self value!
-
-validater
-	^self model validater!
-
-validater: aMonadicValuable
-	"Set the <monadicValuable> used to validate the user's reply. The valuable is passed the current reply text as its argument first argument, and is expected to answer a <ValuationResult>, the value of which indicates whether the text is considered valid in context. The OK button is not enabled until the ValidationResult's value is true. The validator can also pass out a hint details to be displayed in a message bubble if desired (see ValidationResult for the options available). The hint is primarily intended as a means to explain to the user why the OK button is disabled, as this can otherwise be difficult to understand."
-
-	self model validater: aMonadicValuable! !
+validationResultPresenterClass
+	^ValidationHintPresenter! !
 !Tools.ChooseClassDialog categoriesForMethods!
 allowNil!accessing!public! !
 allowNil:!accessing!public! !
@@ -121,17 +132,18 @@ classesPresenterClass!constants!private! !
 createClassesPresenter!initializing!private! !
 createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !
+getHintCaption:!helpers!private! !
+hintPosition!accessing!private! !
 initialize!initializing!private! !
 nilButtonCaption!accessing!public! !
 nilButtonCaption:!accessing!public! !
 none!commands!public! !
+onClassListScrolled:!event handling!private! !
 onClassSelected!event handling!public! !
 onViewOpened!event handling!public! !
 packages:!public!selection! !
-queryCommand:!commands!private! !
-validate!operations!public! !
-validater!accessing!public! !
-validater:!initializing!public! !
+validateModel!helpers!private! !
+validationResultPresenterClass!constants!public! !
 !
 
 !Tools.ChooseClassDialog class methodsFor!

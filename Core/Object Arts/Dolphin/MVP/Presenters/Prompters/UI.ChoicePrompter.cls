@@ -166,10 +166,7 @@ validater
 	^validater!
 
 validater: aMonadicValuable
-	validater := aMonadicValuable!
-
-validationBlock: aMonadicValuable
-	self validater: [:response | ValidationResult value: (aMonadicValuable value: response)]! !
+	validater := aMonadicValuable! !
 !UI.ChoicePrompter categoriesForMethods!
 choices:!accessing!private! !
 createComponents!initializing!public! !
@@ -191,7 +188,6 @@ nilChoice:!accessing!public! !
 promptForNewNamed:!helpers!private! !
 validater!accessing!public! !
 validater:!accessing!public! !
-validationBlock:!accessing!public! !
 !
 
 !UI.ChoicePrompter class methodsFor!

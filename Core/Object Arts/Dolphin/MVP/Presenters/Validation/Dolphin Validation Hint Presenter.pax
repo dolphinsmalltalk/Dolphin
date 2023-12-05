@@ -1,0 +1,30 @@
+﻿| package |
+package := Package name: 'Dolphin Validation Hint Presenter'.
+package paxVersion: 2.1;
+	basicComment: ''.
+
+
+package setClassNames: #(
+	#{UI.ValidationHintPresenter}
+).
+
+package setPrerequisites: #(
+	'..\..\..\Base\Dolphin'
+	'..\..\Views\Tooltips\Dolphin Tooltips'
+	'Dolphin Validation Result Presenter'
+).
+
+package!
+
+"Class Definitions"!
+
+UI.ValidationResultPresenter
+	subclass: #'UI.ValidationHintPresenter'
+	instanceVariableNames: 'bubble hintFont dwell filterBlock positionBlock'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+"End of package definition"!
+

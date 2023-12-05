@@ -2,7 +2,7 @@
 
 Tools.ChooseNamespaceDialog
 	subclass: #'Tools.ChooseImportDialog'
-	instanceVariableNames: 'private hintBubble namespacesOnly'
+	instanceVariableNames: 'private namespacesOnly'
 	classVariableNames: ''
 	imports: #(#{Refactory.Browser private})
 	classInstanceVariableNames: ''
@@ -11,30 +11,6 @@ Tools.ChooseImportDialog guid: (Core.GUID fromString: '{0cd7d4a9-4b98-4d2d-9f04-
 Tools.ChooseImportDialog comment: ''!
 !Tools.ChooseImportDialog categoriesForClass!MVP-Presenters! !
 !Tools.ChooseImportDialog methodsFor!
-
-bufferedModelFor: aSubjectValueModel
-	^(super bufferedModelFor: aSubjectValueModel) validater: 
-			[:bindingRef |
-			bindingRef
-				ifNil: [ValidationResult errorMessage: 'Choose a class/namespace to import']
-				ifNotNil: 
-					[((RBCondition isClassBinding: bindingRef)
-						& (RBCondition withBlock: 
-									[| ns |
-									ns := bindingRef value.
-									ns ~~ Root and: 
-											[(ns class conformsToProtocol: #importableNamespace)
-												and: [ns isVisiblyAbstract not or: [(ns includesBehavior: Namespace) not]]]]
-								errorString: bindingRef displayString , ' is <1?:not >an importable namespace'))
-							validate
-						caption: 'Invalid selection';
-						yourself]]!
-
-closeBubble
-	hintBubble
-		ifNotNil: 
-			[hintBubble close.
-			hintBubble := nil]!
 
 createComponents
 	"Create the presenters contained by the receiver"
@@ -57,29 +33,11 @@ createSchematicWiring
 	namespacesOnly
 		when: #valueChanged
 		send: #onToggleClasses
-		to: self.
-	classesPresenter selectableItems
-		when: #mouseWheeled:
-			send: #onClassListScrolled:
-			to: self;
-		when: #verticalScroll:
-			send: #onClassListScrolled:
-			to: self!
+		to: self!
 
-getHintCaption: aValidationResult
-	^aValidationResult caption
-		ifNil: [aValidationResult hint iconStyle == #error ifTrue: ['Invalid Input']]!
-
-hintPosition
-	"Private - Answer a <Point> representing the screen co-ordinate at which the hint bubble's arrow should point."
-
-	| treeView itemRect |
-	treeView := classesPresenter selectableItems view.
-	itemRect := treeView itemRect: treeView selectionByIndex textOnly: true.
-	^treeView mapPointToScreen: itemRect centerRight !
-
-onClassListScrolled: aWindowsEvent
-	self closeBubble!
+model: aValueModel
+	super model: aValueModel.
+	self validater: [:value | self validateSelection: value]!
 
 onClassSelected
 	| bindingRef |
@@ -97,66 +55,42 @@ onPrivateChanged
 
 onToggleClasses
 	| class |
-	self closeBubble.
+	self clearValidationResult.
 	class := classesPresenter selectionOrNil.
 	namespacesOnly value
 		ifTrue: 
 			[self
 				classes: self class namespacesClassHierarchy;
 				caption: 'Choose Namespace to Import...']
-		ifFalse:
+		ifFalse: 
 			[self
 				classes: NamespaceHierarchyModel new;
 				caption: 'Choose Namespace/Class to Import...'].
 	classesPresenter selection: class ifAbsent: []!
 
-preTranslateKeyboardInput: aMSG
-	"Answer whether the receiver would like to consume the argument aMSG, which is a keyboard message."
-
-	(aMSG isKeyPress: VK_RETURN)
-		ifTrue: 
-			[| button |
-			"If the default button is disabled, it may be helpful to show validation errors"
-			button := self view defaultButton.
-			(button notNil and: [button isEnabled not]) ifTrue: [self validate]].
-	^super preTranslateKeyboardInput: aMSG!
-
-queryCommand: aCommandQuery
-	"Private - Enters details about a potential command for the receiver into 
-	the <CommandQuery>."
-
-	aCommandQuery commandSymbol == #ok
-		ifTrue: 
-			[aCommandQuery isEnabled: self isInputValid.
-			^true].
-	^super queryCommand: aCommandQuery!
-
-showValidationResult: aValidationResult
-	self closeBubble.
-	(aValidationResult hint isNil or: [self value isNil]) ifTrue: [^self].
-	hintBubble := MessageBubble new.
-	hintBubble
-		caption: (self getHintCaption: aValidationResult);
-		font: self hintFont;
-		timeout: self hintDwell;
-		position: self hintPosition;
-		exceptionDescription: aValidationResult hint;
-		isSilent: true;
-		open! !
+validateSelection: aBindingReference
+	^aBindingReference
+		ifNil: [ValidationResult errorMessage: 'Choose a <?namespace:class> to import' << namespacesOnly value]
+		ifNotNil: 
+			[((RBCondition isClassBinding: aBindingReference)
+				& (RBCondition withBlock: 
+							[| ns |
+							ns := aBindingReference value.
+							ns ~~ Root and: 
+									[(ns class conformsToProtocol: #importableNamespace)
+										and: [ns isVisiblyAbstract not or: [(ns includesBehavior: Namespace) not]]]]
+						errorString: aBindingReference displayString , ' is <?:not >an importable namespace'))
+					validate
+				caption: 'Invalid selection';
+				yourself]! !
 !Tools.ChooseImportDialog categoriesForMethods!
-bufferedModelFor:!helpers!private! !
-closeBubble!helpers!private! !
 createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !
-getHintCaption:!helpers!private! !
-hintPosition!accessing!private! !
-onClassListScrolled:!event handling!private! !
+model:!accessing!public! !
 onClassSelected!commands!event handling!private! !
 onPrivateChanged!event handling!private! !
 onToggleClasses!event handling!private! !
-preTranslateKeyboardInput:!dispatching!public! !
-queryCommand:!commands!private! !
-showValidationResult:!helpers!private! !
+validateSelection:!helpers!private! !
 !
 
 !Tools.ChooseImportDialog class methodsFor!

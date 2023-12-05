@@ -60,9 +60,7 @@ isRegExpEnabled: aBoolean
 	self invalidateUserInterface!
 
 isValid
-	| mode |
-	mode := modePresenter radioButtonNamed: self searchMode.
-	^mode notNil and: [mode isEnabled and: [validationBlock value: self model value]]!
+	^self validateModel value!
 
 isValidRegularExpression: aFindDetails
 	^
@@ -112,9 +110,6 @@ onViewOpened
 prompt: aString 
 	(self view viewNamed: 'prompt') text: aString!
 
-queryOk: aCommandQuery
-	aCommandQuery isEnabled: self isValid!
-
 searchMode
 	^modePresenter value!
 
@@ -133,6 +128,12 @@ showModal
 	actionButton command: #ok.
 	closeButton text: 'Cancel'.
 	^super showModal!
+
+validateModel
+	| mode |
+	mode := modePresenter radioButtonNamed: self searchMode.
+	(mode notNil and: [mode isEnabled]) ifFalse: [^ValidationResult errorMessage: 'Invalid mode'].
+	^ValidationResult value: (validationBlock value: self model value)!
 
 validateUserInterface
 	"Set the state of the receiver accordingly. This method is sent at judicious times
@@ -168,10 +169,10 @@ isWildCardEnabled:!accessing!public! !
 model:!accessing!public! !
 onViewOpened!event handling!public! !
 prompt:!accessing!public! !
-queryOk:!commands-actions!private! !
 searchMode!accessing!public! !
 show!operations!public! !
 showModal!public!realizing/unrealizing! !
+validateModel!helpers!private! !
 validateUserInterface!operations!public! !
 validationBlock!accessing!public! !
 validationBlock:!accessing!public! !

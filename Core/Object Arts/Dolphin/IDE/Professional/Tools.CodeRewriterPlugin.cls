@@ -87,13 +87,27 @@ model: anObject
 	searchTextPresenter errorModel: self model statusModel.!
 
 renameMethodArgument
-	| pair |
+	| pair prompter |
 	pair := 'anObject' -> ''.
-	(KeyValuePrompter 
-		createOn: pair
-		prompt: 'Enter the old and new arugment names:'
-		caption: 'Rename Method Argument…') showModal 
-		isNil ifTrue: [^self].
+	prompter := KeyValuePrompter
+				createOn: pair
+				prompt: 'Enter the old and new argument names:'
+				caption: 'Rename Method Argument…'.
+	prompter
+		keyLabel: 'Old:';
+		valueLabel: 'New:'.
+	prompter validater: 
+			[:a |
+			| result |
+			{ prompter keyPresenter. prompter valuePresenter } allSatisfy: 
+					[:each |
+					result := (RBCondition isValidTemporaryVariableName: each value) validate.
+					result presenter: each.
+					result value].
+			(result value and: [a key = a value]) ifTrue: [
+				result errorMessage: 'New argument name must differ from old'; presenter: prompter valuePresenter].
+			result].
+	prompter showModal ifNil: [^self].
 	self runTransformation: (TransformationRule renameArgument: pair key to: pair value)!
 
 replace
