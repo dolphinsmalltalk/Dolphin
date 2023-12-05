@@ -52,6 +52,7 @@ createComponents
 	"Create the presenters contained by the receiver"
 
 	super createComponents.
+	validationResultPresenter positionBlock: [self hintPosition].
 	treePresenter := self add: TreePresenter new name: 'tree'.
 
 !
@@ -63,6 +64,15 @@ createSchematicWiring
 	treePresenter when: #selectionChanged send: #onCategorySelectionChanged to: self.
 	treePresenter when: #actionPerformed send: #onChoose to: self.!
 
+hintPosition
+	"Private - Answer a <Point> representing the screen co-ordinate at which the hint bubble's arrow should point."
+
+	| treeView itemRect sel |
+	treeView := treePresenter selectableItems view.
+	sel := treeView selectionByIndex.
+	itemRect := sel = 0 ifTrue: [treeView rectangle] ifFalse: [treeView itemRect: sel textOnly: true].
+	^treeView mapPointToScreen: itemRect centerRight!
+
 initialize
 	"Private - Initialize the receiver"
 
@@ -70,6 +80,11 @@ initialize
 	categoryClass := MethodCategory.
 	flags := 0.
 	treePresenter model: CategoryTreeModel new!
+
+invalidChoice: aString
+	^(ValidationResult errorMessage: aString)
+		caption: 'Invalid choice';
+		yourself!
 
 list: categories
 	"Set the list of categories displayed in the receiver to the <collection>, categories."
@@ -108,21 +123,24 @@ onChoose
 
 	self view onCommand: (CommandDescription command: #ok)!
 
-queryCommand: query
-	"Private - Enter details about a potential command for the receiver 
-	into the <CommandQuery>, query."
+validateModel
+	| cat |
+	cat := self value.
+	cat
+		ifNil: 
+			[^(ValidationResult errorMessage: 'Please select a category')
+				caption: 'Incomplete Input';
+				yourself].
+	cat isIntermediate
+		ifTrue: 
+			[self allowIntermediates ifFalse: [^self invalidChoice: 'Intermediate categories are not valid']]
+		ifFalse: 
+			[(self allowReadOnly or: [cat acceptsAdditions])
+				ifFalse: [^self invalidChoice: '''<d>'' is read-only' << cat]].
+	^ValidationResult new!
 
-	query commandSymbol == #ok ifTrue: [ | cat |
-		cat := self value.
-		query isEnabled: 
-			(cat notNil and: [
-				cat isIntermediate 
-					ifTrue: [self allowIntermediates]
-					ifFalse: [self allowReadOnly or: [cat acceptsAdditions]]]).
-		^true].
-
-	^super queryCommand: query.
-! !
+validationResultPresenterClass
+	^ValidationHintPresenter! !
 !Tools.CategoryPrompter categoriesForMethods!
 allowIntermediates!accessing!public! !
 allowIntermediates:!accessing!public! !
@@ -131,13 +149,16 @@ allowReadOnly:!accessing!public! !
 categoryClass:!accessing!public! !
 createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !
+hintPosition!accessing!private! !
 initialize!initializing!private! !
+invalidChoice:!helpers!private! !
 list:!accessing!public! !
 newCategory!commands!public! !
 newChoice!commands!public! !
 onCategorySelectionChanged!event handling!private! !
 onChoose!event handling!private! !
-queryCommand:!commands!private! !
+validateModel!helpers!private! !
+validationResultPresenterClass!constants!public! !
 !
 
 !Tools.CategoryPrompter class methodsFor!

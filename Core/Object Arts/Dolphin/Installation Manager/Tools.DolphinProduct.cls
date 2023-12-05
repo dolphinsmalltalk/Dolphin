@@ -120,6 +120,7 @@ contents
 		add: #('Core\Object Arts\Dolphin\MVP\Base\Dolphin Command History.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Views\Static\Text\Dolphin StaticText Control.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Views\Static\Rectangle\Dolphin StaticRectangle Control.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\MVP\Presenters\Validation\Dolphin Validation Result Presenter.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Dialogs\Dolphin Base Dialogs.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Dialogs\Common\Dolphin Common Dialogs.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Dialogs\Common\Dolphin Common Print Dialog.pax' #plain #imageBased);

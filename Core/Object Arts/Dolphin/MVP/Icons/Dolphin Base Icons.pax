@@ -138,6 +138,7 @@ package setMethodNames: #(
 	#(#{UI.RadioButtonSetPresenter class} #icon)
 	#(#{UI.ResourceIdentifier class} #icon)
 	#(#{UI.ScrollingDecoratorLayout class} #icon)
+	#(#{UI.ValidationResult class} #icon)
 ).
 
 package setPrerequisites: #(
@@ -159,6 +160,7 @@ package setPrerequisites: #(
 	'..\..\System\Filer\Dolphin STx Filer Core'
 	'Dolphin Text Tile Icons'
 	'..\..\System\Filer\Dolphin Validating Binary Filer'
+	'..\Models\Value\Dolphin Value Models'
 ).
 
 package!
@@ -1605,6 +1607,16 @@ icon
 
 	^##(TextTileIcon text: $\x2BB9 fontName: 'Arial')! !
 !UI.ScrollingDecoratorLayout class categoriesForMethods!
+icon!constants!public! !
+!
+
+!UI.ValidationResult class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class."
+
+	^Notification icon! !
+!UI.ValidationResult class categoriesForMethods!
 icon!constants!public! !
 !
 

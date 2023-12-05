@@ -2,7 +2,7 @@
 
 UI.Dialog
 	subclass: #'Tools.CreateSubclassDialog'
-	instanceVariableNames: 'packagesPresenter subclassesPresenter namePresenter namespacePresenter usePackagePresenter package superclassPresenter hintBubble isNonInstantiablePresenter isVariablePresenter isBytesPresenter attributesPresenter'
+	instanceVariableNames: 'packagesPresenter subclassesPresenter namePresenter namespacePresenter usePackagePresenter package superclassPresenter isNonInstantiablePresenter isVariablePresenter isBytesPresenter attributesPresenter'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -21,9 +21,6 @@ Instance Variables:
 '!
 !Tools.CreateSubclassDialog categoriesForClass!MVP-Presenters! !
 !Tools.CreateSubclassDialog methodsFor!
-
-canApply
-	^self validateModel value!
 
 canChangeAttributes
 	^attributesPresenter view isEnabled!
@@ -51,14 +48,11 @@ classDetails
 		
 		!
 
-closeBubble
-	hintBubble
-		ifNotNil: 
-			[hintBubble close.
-			hintBubble := nil]!
-
 createComponents
 	super createComponents.
+	validationResultPresenter
+		filterBlock: [:result | result presenter ~~ namePresenter or: [self subclassName notEmpty]];
+		hintFont: SmalltalkSystem current defaultFont.
 	namePresenter := self add: TextPresenter new name: 'className'.
 	namespacePresenter := self add: TextPresenter new name: 'namespace'.
 	superclassPresenter := self add: TextPresenter new name: 'superclass'.
@@ -105,18 +99,10 @@ defaultNamespaceForSubclassOf: aClass
 	^##(LookupTable withAll: {Namespace -> Root. SharedPool -> OS}) at: aClass
 		ifAbsent: [aClass localEnvironment]!
 
-deferredValidate
-	self closeBubble.
-	self view setTimer: ValidationTimerId interval: self validationDwell!
-
 disableAttributeChanges
 	attributesPresenter view
 		isEnabled: false;
 		subViewsDo: [:each | each isEnabled: false]!
-
-getHintCaption: aValidationResult
-	^aValidationResult caption
-		ifNil: [aValidationResult hint iconStyle == #error ifTrue: ['Invalid Input']]!
 
 isBytes
 	^isBytesPresenter model value!
@@ -205,40 +191,12 @@ package: aPackage
 	package := aPackage == Package uncommitted ifFalse: [aPackage].
 	self isOpen ifTrue: [self updatePackage]!
 
-queryCommand: aCommandQuery
-	"Private - Enters details about a potential command for the receiver into 
-	the <CommandQuery>."
-
-	aCommandQuery commandSymbol == #ok 
-		ifTrue: 
-			[aCommandQuery isEnabled: self canApply.
-			^true].
-	^super queryCommand: aCommandQuery!
-
 setNameFont
 	| font nameView |
 	nameView := namePresenter view.
 	font := nameView actualFont copy.
 	font isItalic: self isNonInstantiable.
 	nameView font: font!
-
-shouldShowValidationHint: aValidationResult
-	^aValidationResult hint notNil
-		and: [aValidationResult presenter ~~ namePresenter or: [self subclassName notEmpty]]!
-
-showValidationResult: aValidationResult
-	self closeBubble.
-	(self shouldShowValidationHint: aValidationResult)
-		ifTrue: 
-			[hintBubble := MessageBubble new.
-			hintBubble
-				caption: (self getHintCaption: aValidationResult);
-				font: self hintFont;
-				timeout: self hintDwell;
-				position: aValidationResult presenter view screenRectangle centerRight;
-				exceptionDescription: aValidationResult hint;
-				isSilent: true;
-				open]!
 
 subclasses
 	^subclassesPresenter model value ?? #()!
@@ -353,20 +311,19 @@ validateSuperclass: aClassDetails
 	^result
 		presenter: superclassPresenter;
 		caption: 'Incompatible superclass';
-		yourself! !
+		yourself!
+
+validationResultPresenterClass
+	^ValidationHintPresenter! !
 !Tools.CreateSubclassDialog categoriesForMethods!
-canApply!private!testing! !
 canChangeAttributes!public!testing! !
 chooseNamespace!commands!private! !
 chooseSuperclass!commands!public! !
 classDetails!accessing!public! !
-closeBubble!helpers!private! !
 createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !
 defaultNamespaceForSubclassOf:!helpers!private! !
-deferredValidate!event handling!private! !
 disableAttributeChanges!modes!public! !
-getHintCaption:!helpers!private! !
 isBytes!private!testing! !
 isBytes:!accessing!private! !
 isNonInstantiable!private!testing! !
@@ -384,10 +341,7 @@ onSuperclassChanged!event handling!private! !
 onViewOpened!event handling!public! !
 package!accessing!public! !
 package:!accessing!public! !
-queryCommand:!commands!private! !
 setNameFont!private!updating! !
-shouldShowValidationHint:!private!testing! !
-showValidationResult:!helpers!private! !
 subclasses!accessing!public! !
 subclassFullName!accessing!public! !
 subclassFullName:!accessing!public! !
@@ -404,6 +358,7 @@ validateName!private!validation! !
 validatePackage!private!validation! !
 validateSuperclass!private!validation! !
 validateSuperclass:!private!testing! !
+validationResultPresenterClass!constants!public! !
 !
 
 !Tools.CreateSubclassDialog class methodsFor!

@@ -99,20 +99,6 @@ openTypeLib
 			[self value: typelib.
 			super ok]!
 
-queryCommand: query
-	"Private - Enter details about a potential command for the receiver 
-	into the <CommandQuery>, query."
-
-	| cmd |
-	cmd := query commandSymbol.
-	
-	cmd == #ok ifTrue: [
-		query isEnabled: (guidPresenter value isKindOf: GUID).
-		^true].
-
-	^super queryCommand: query.
-!
-
 refresh
 	"Private - Refresh the list of current AXTypeLibraryAnalyzers in the image"
 
@@ -121,7 +107,10 @@ refresh
 	registrations := TypeLibraryAnalyzer typeLibRegistrations.
 	registrations := registrations difference: currentTypeLibs.
 	typeLibs list: registrations asSortedCollection.
-	self onTypeLibrarySelected! !
+	self onTypeLibrarySelected!
+
+validateModel
+	^ValidationResult value: (guidPresenter value isKindOf: GUID)! !
 !Tools.AXTypeLibraryPrompter categoriesForMethods!
 createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !
@@ -130,8 +119,8 @@ onTypeLibraryChosen!event handling!private! !
 onTypeLibrarySelected!event handling!private! !
 onViewOpened!event handling!private! !
 openTypeLib!commands!public! !
-queryCommand:!commands!private! !
 refresh!commands!private! !
+validateModel!helpers!private! !
 !
 
 !Tools.AXTypeLibraryPrompter class methodsFor!

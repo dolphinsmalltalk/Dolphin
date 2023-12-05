@@ -18,11 +18,16 @@ caption
 	^caption!
 
 caption: aString
-	"Set the caption to be used in any hint shown for this validation result. This is normally only relevant when the hint it set."
+	"Set the caption to be used in any hint shown for this validation result. This is normally only relevant when the hint is set."
 
 	caption ifNil: [caption := aString]!
 
+displayOn: aPuttableStream
+	hint displayOn: aPuttableStream!
+
 errorMessage: aString
+	"Set this <ValidationResult> to be a failure with the argument as the error message hint."
+
 	self value: false.
 	self hint: (Error messageText: aString).
 	^false!
@@ -59,10 +64,14 @@ value: aBoolean
 	^value!
 
 warningMessage: aString
+	"Set this <ValidationResult> to be successful, but with the argument as the warning message hint."
+
+	self value: true.
 	self hint: (Warning messageText: aString)! !
 !UI.ValidationResult categoriesForMethods!
 caption!accessing!public! !
 caption:!accessing!public! !
+displayOn:!accessing!public! !
 errorMessage:!accessing!public! !
 hint!accessing!public! !
 hint:!accessing!public! !

@@ -2,7 +2,7 @@
 
 UI.Presenter
 	subclass: #'UI.InplaceTextEditor'
-	instanceVariableNames: 'textRectangle minExtent maxCharWidth confirmed ownerView hintBubble'
+	instanceVariableNames: 'textRectangle minExtent maxCharWidth confirmed ownerView validationResultPresenter'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -59,11 +59,12 @@ cancel
 	self view isTextModified: false.
 	self view close!
 
-closeBubble
-	hintBubble
-		ifNotNil: 
-			[hintBubble close.
-			hintBubble := nil]!
+closeHint
+	validationResultPresenter value: nil!
+
+createComponents
+	super createComponents.
+	validationResultPresenter := self add: ValidationHintPresenter new name: 'validationResult'!
 
 createSchematicWiring
 	self 
@@ -162,7 +163,7 @@ onFocusLost
 	"Private - If the user clicks outside the in-place edit box, then treat as a committed edit
 	if the value has changed and is valid, otherwise treat as cancel."
 
-	self closeBubble.
+	self closeHint.
 	"If focus is lost because the window is closing then don't do anything"
 	self view isWindowVisible ifTrue: [self isInputValid ifTrue: [self ok] ifFalse: [self cancel]]!
 
@@ -173,7 +174,7 @@ onGetCursor: aSymbol
 	^Cursor iBeam!
 
 onKeyTyped: aKeyEvent
-	self closeBubble.
+	self closeHint.
 	aKeyEvent code == VK_ESCAPE
 		ifTrue: 
 			[self commandPolicy route: (CommandDescription command: #cancel).
@@ -275,18 +276,9 @@ showModalView
 	self runModalInProcessLoop] ensure: [self view basicDestroy]!
 
 showValidationResult: aValidationResult
-	self closeBubble.
-	aValidationResult hint
-		ifNotNil: 
-			[:hint |
-			hintBubble := MessageBubble new.
-			hintBubble
-				caption: (self getHintCaption: aValidationResult);
-				font: self hintFont;
-				timeout: self hintDwell;
-				position: self hintPosition;
-				exceptionDescription: hint;
-				open]!
+	validationResultPresenter
+		hintFont: self hintFont;
+		value: aValidationResult!
 
 textRectangle: aRectangle 
 	"Set the rectangle of the text being edited in-place. N.B. The Rectangle is expected to be
@@ -327,7 +319,8 @@ apply!commands-actions!public! !
 bufferClass!accessing!private! !
 bufferedModelFor:!accessing!private! !
 cancel!commands-actions!public! !
-closeBubble!helpers!private! !
+closeHint!helpers!private! !
+createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !
 createView:!operations!private! !
 findDetails!public!searching & replacing! !

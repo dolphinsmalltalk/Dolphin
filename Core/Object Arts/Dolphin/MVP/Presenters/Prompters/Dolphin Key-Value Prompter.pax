@@ -24,6 +24,7 @@ package setPrerequisites: #(
 	'..\..\..\System\Filer\Dolphin STx Filer Core'
 	'..\Text\Dolphin Text Presenter'
 	'..\..\Type Converters\Dolphin Type Converters'
+	'..\Validation\Dolphin Validation Hint Presenter'
 	'..\..\Models\Value\Dolphin Value Models'
 ).
 
@@ -33,7 +34,7 @@ package!
 
 UI.Dialog
 	subclass: #'UI.KeyValuePrompter'
-	instanceVariableNames: 'promptPresenter keyPresenter valuePresenter validationBlock'
+	instanceVariableNames: 'promptPresenter keyPresenter valuePresenter keyLabelPresenter valueLabelPresenter'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

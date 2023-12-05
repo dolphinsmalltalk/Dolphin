@@ -2,7 +2,7 @@
 
 UI.Dialog
 	subclass: #'Tools.MethodNameDialog'
-	instanceVariableNames: 'selectorPresenter parametersPresenter parameterNamesPresenter hintBubble showChangesPresenter'
+	instanceVariableNames: 'selectorPresenter parametersPresenter parameterNamesPresenter showChangesPresenter'
 	classVariableNames: ''
 	imports: #(#{Refactory.Browser private})
 	classInstanceVariableNames: ''
@@ -27,12 +27,6 @@ allowParameterRename: aBoolean
 allowParameterReordering: aBoolean
 	parameterNamesPresenter view isEnabled: aBoolean!
 
-closeBubble
-	hintBubble
-		ifNotNil: 
-			[hintBubble close.
-			hintBubble := nil]!
-
 conditionsFor: aRBMethodName
 	^aRBMethodName conditions!
 
@@ -40,6 +34,10 @@ createComponents
 	"Create the presenters contained by the receiver"
 
 	super createComponents.
+	"We don't want to show an error bubble if the user hasn't entered any text yet."
+	validationResultPresenter
+		filterBlock: [:result | self model selector notEmpty];
+		hintFont: SmalltalkSystem current defaultFont.
 	selectorPresenter := self add: TextPresenter new name: 'selector'.
 	parametersPresenter := self add: SequenceableCollectionPresenter new name: 'parameters'.
 	parameterNamesPresenter := parametersPresenter presenterNamed: 'list'.
@@ -63,30 +61,13 @@ createSchematicWiring
 		send: #onSignatureChanged
 		to: self!
 
-getHintCaption: aValidationResult
-	^aValidationResult caption
-		ifNil: [aValidationResult hint iconStyle == #error ifTrue: ['Invalid Signature']]!
-
-hintFont
-	"Private - Answer the `Font` to be used for the main text of any hint bubble. This does not affect the headline text, the font of which is not configurable."
-
-	^SmalltalkSystem current defaultFont!
-
-hintPosition
-	"Private - Answer a <Point> representing the screen co-ordinate at which the hint bubble's arrow should point."
-
-	^selectorPresenter view screenRectangle centerRight!
-
-isInputValid
-	^self model isValid!
-
 model: anObject
 	"Set the model associated with the receiver."
 
 	| aspectBuffer |
 	super model: anObject.
 	aspectBuffer := self model.
-	aspectBuffer validater: [:methodName | (self conditionsFor: methodName) validate].
+	self validater: [:methodName | (self conditionsFor: methodName) validate].
 	selectorPresenter model: (aspectBuffer aspectValue: #selector).
 	parametersPresenter model: (aspectBuffer aspectValue: #arguments)!
 
@@ -100,80 +81,37 @@ onParameter: aString renamedTo: aString2 accept: aValueHolder
 			(self model aspectValue: #arguments) value: args.
 			aValueHolder value: true]!
 
-onPositionChanged: aPositionEvent
-	self closeBubble.
-	^super onPositionChanged: aPositionEvent!
-
 onSignatureChanged
 	"Private - The method signature has been edited. Initiate delayed validation."
 
-	self closeBubble.
-	self view setTimer: ValidationTimerId interval: self validationDwell!
-
-preTranslateKeyboardInput: aMSG
-	"Answer whether the receiver would like to consume the argument aMSG, which is a keyboard message."
-
-	(aMSG isKeyPress: VK_RETURN)
-		ifTrue: 
-			[| button |
-			"If the default button is disabled, it may be helpful to show validation errors"
-			button := self view defaultButton.
-			(button notNil and: [button isEnabled not]) ifTrue: [self validate]].
-	^super preTranslateKeyboardInput: aMSG!
-
-queryCommand: aCommandQuery
-	"Private - Enters details about a potential command for the receiver into 
-	the <CommandQuery>."
-
-	aCommandQuery commandSymbol == #ok
-		ifTrue: 
-			[aCommandQuery isEnabled: self isInputValid.
-			^true].
-	^super queryCommand: aCommandQuery!
+	self deferredValidate!
 
 showChanges
 	^showChangesPresenter value!
 
-showValidationResult: aValidationResult
-	self closeBubble.
-	(aValidationResult hint isNil or: [self model selector isEmpty]) ifTrue: [^self].
-	hintBubble := MessageBubble new.
-	hintBubble
-		caption: (self getHintCaption: aValidationResult);
-		font: self hintFont;
-		timeout: self hintDwell;
-		position: self hintPosition;
-		exceptionDescription: aValidationResult hint;
-		isSilent: true;
-		open!
-
-validater
-	^self model validater!
-
 validater: aMonadicValuable
-	self model validater: aMonadicValuable! !
+	self model validater: 
+			[:methodName |
+			(aMonadicValuable value: methodName)
+				caption: 'Invalid Signature';
+				presenter: selectorPresenter;
+				yourself]!
+
+validationResultPresenterClass
+	^ValidationHintPresenter! !
 !Tools.MethodNameDialog categoriesForMethods!
 allowExistingSelector!public!testing! !
 allowParameterRename:!accessing!public! !
 allowParameterReordering:!accessing!public! !
-closeBubble!helpers!private! !
 conditionsFor:!helpers!private! !
 createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !
-getHintCaption:!helpers!private! !
-hintFont!constants!private! !
-hintPosition!accessing!private! !
-isInputValid!private!testing! !
 model:!accessing!public! !
 onParameter:renamedTo:accept:!event handling!public! !
-onPositionChanged:!event handling!private! !
 onSignatureChanged!event handling!private! !
-preTranslateKeyboardInput:!dispatching!public! !
-queryCommand:!commands!private! !
 showChanges!public! !
-showValidationResult:!helpers!private! !
-validater!accessing!public! !
 validater:!accessing!public! !
+validationResultPresenterClass!constants!public! !
 !
 
 !Tools.MethodNameDialog class methodsFor!

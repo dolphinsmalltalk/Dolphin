@@ -312,7 +312,6 @@ package setMethodNames: #(
 	#(#{Tools.PackageSelector} #moveAllTempsToInnerScope)
 	#(#{Tools.PackageSelector} #removeDuplicateMethods)
 	#(#{Tools.SmalltalkToolShell} #chooseMethodForRefactoring:)
-	#(#{UI.Dialog} #validationDwell)
 	#(#{UI.Presenter class} #resource_Refactoring_OK_Cancel_button_block)
 ).
 
@@ -353,10 +352,11 @@ package setPrerequisites: #(
 	'..\..\System\Filer\Dolphin STx Filer Core'
 	'..\..\MVP\Presenters\Text\Dolphin Text Presenter'
 	'..\..\MVP\Icons\Dolphin Text Tile Icons'
-	'..\..\MVP\Views\Tooltips\Dolphin Tooltips'
 	'..\..\MVP\Models\Tree\Dolphin Tree Models'
 	'..\..\MVP\Presenters\Tree\Dolphin Tree Presenter'
 	'..\..\MVP\Type Converters\Dolphin Type Converters'
+	'..\..\MVP\Presenters\Validation\Dolphin Validation Hint Presenter'
+	'..\..\MVP\Presenters\Validation\Dolphin Validation Result Presenter'
 	'..\..\MVP\Models\Value\Dolphin Value Models'
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Change Objects\RBChangeObjects'
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments'
@@ -411,14 +411,14 @@ Tools.SmalllintPlugin
 	classConstants: {}!
 UI.Dialog
 	subclass: #'Tools.ConvertToSiblingDialog'
-	instanceVariableNames: 'classNamePresenter namespacePresenter subclassesPresenter statusModel'
+	instanceVariableNames: 'subclassesPresenter namespacePresenter classNamePresenter'
 	classVariableNames: ''
 	imports: #(#{Refactory.Browser private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.Dialog
 	subclass: #'Tools.MethodNameDialog'
-	instanceVariableNames: 'selectorPresenter parametersPresenter parameterNamesPresenter hintBubble showChangesPresenter'
+	instanceVariableNames: 'selectorPresenter parametersPresenter parameterNamesPresenter showChangesPresenter'
 	classVariableNames: ''
 	imports: #(#{Refactory.Browser private})
 	classInstanceVariableNames: ''
@@ -439,7 +439,7 @@ UI.ValueDialog
 	classConstants: {}!
 Tools.ChooseNamespaceDialog
 	subclass: #'Tools.ChooseImportDialog'
-	instanceVariableNames: 'private hintBubble namespacesOnly'
+	instanceVariableNames: 'private namespacesOnly'
 	classVariableNames: ''
 	imports: #(#{Refactory.Browser private})
 	classInstanceVariableNames: ''
@@ -3647,16 +3647,6 @@ chooseMethodForRefactoring: aString
 	^self developmentSystem chooseMethodFromEnvironment: self selectionEnvironment caption: aString! !
 !Tools.SmalltalkToolShell categoriesForMethods!
 chooseMethodForRefactoring:!private!refactoring! !
-!
-
-!UI.Dialog methodsFor!
-
-validationDwell
-	"The <Duration> to wait after the user has stopped typing before re-validating and possibly showing a hint bubble."
-
-	^1 seconds! !
-!UI.Dialog categoriesForMethods!
-validationDwell!constants!public! !
 !
 
 !UI.Presenter class methodsFor!

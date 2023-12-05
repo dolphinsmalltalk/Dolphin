@@ -906,6 +906,7 @@ package setPrerequisites: #(
 	'..\..\MVP\Models\Tree\Dolphin Tree Models'
 	'..\..\MVP\Presenters\Tree\Dolphin Tree Presenter'
 	'..\..\MVP\Type Converters\Dolphin Type Converters'
+	'..\..\MVP\Presenters\Validation\Dolphin Validation Hint Presenter'
 	'..\..\MVP\Models\Value\Dolphin Value Models'
 	'..\..\MVP\Gdiplus\Gdiplus'
 	'..\..\MVP\Gdiplus\Gdiplus ImageView'
@@ -1563,7 +1564,7 @@ UI.Dialog
 	classConstants: {}!
 UI.Dialog
 	subclass: #'Tools.CreateSubclassDialog'
-	instanceVariableNames: 'packagesPresenter subclassesPresenter namePresenter namespacePresenter usePackagePresenter package superclassPresenter hintBubble isNonInstantiablePresenter isVariablePresenter isBytesPresenter attributesPresenter'
+	instanceVariableNames: 'packagesPresenter subclassesPresenter namePresenter namespacePresenter usePackagePresenter package superclassPresenter isNonInstantiablePresenter isVariablePresenter isBytesPresenter attributesPresenter'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -1605,7 +1606,7 @@ UI.ValueDialog
 	classConstants: { 'AllowIntermediatesMask' -> 16r1. 'AllowReadOnlyMask' -> 16r2 }!
 UI.ValueDialog
 	subclass: #'Tools.ChooseClassDialog'
-	instanceVariableNames: 'classesPresenter allowNil nilButtonCaption validater'
+	instanceVariableNames: 'classesPresenter allowNil nilButtonCaption'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -1619,7 +1620,7 @@ UI.ValueDialog
 	classConstants: {}!
 UI.ValueDialog
 	subclass: #'Tools.PackagePrompter'
-	instanceVariableNames: 'packagesPresenter notPackagedPresenter defaultPackage validationBlock'
+	instanceVariableNames: 'packagesPresenter notPackagedPresenter defaultPackage'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

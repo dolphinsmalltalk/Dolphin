@@ -337,10 +337,10 @@ isValidMethodName: aString
 		block: [self checkMethodName: aString]
 		errorString: [aString printString , ' is <1?:not >a valid method name']!
 
-isValidTemporaryVariableName: aString for: aClass
+isValidTemporaryVariableName: aString
 	#rbFix.	"Added"
 	^self new
-		type: { #validTempVarName. aString. aClass }
+		type: { #validTempVarName. aString }
 		block: [self checkInstanceVariableName: aString]
 		errorString: [aString printString , ' is <1?:not >a valid temporary variable name']!
 
@@ -434,7 +434,7 @@ isValidClassName:!instance creation!public! !
 isValidClassVarName:!instance creation!public! !
 isValidInstanceVariableName:!instance creation!public! !
 isValidMethodName:!instance creation!public! !
-isValidTemporaryVariableName:for:!instance creation!public! !
+isValidTemporaryVariableName:!instance creation!public! !
 methodDefiningTemporary:in:ignore:!private!utilities! !
 referencesInstanceVariable:in:!instance creation!public! !
 reservedNames!public!utilities! !

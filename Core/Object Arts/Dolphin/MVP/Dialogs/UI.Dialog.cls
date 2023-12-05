@@ -2,7 +2,7 @@
 
 UI.Shell
 	subclass: #'UI.Dialog'
-	instanceVariableNames: 'confirmed ownerView'
+	instanceVariableNames: 'confirmed ownerView validationResultPresenter'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -54,6 +54,14 @@ cancel
 	self view close.
 !
 
+clearValidationResult
+	validationResultPresenter value: nil!
+
+createComponents
+	super createComponents.
+	validationResultPresenter := self add: self validationResultPresenterClass new
+				name: 'validationResult'!
+
 createSchematicWiring
 	"Create the trigger wiring for the receiver"
 
@@ -63,6 +71,10 @@ createSchematicWiring
 		send: #onTimerTick:
 		to: self!
 
+deferredValidate
+	self clearValidationResult.
+	self view setTimer: ValidationTimerId interval: self validationDwell!
+
 flushChanges
 	"Private - First ensure that any changes cached in the view with focus (if any) are flushed"
 
@@ -71,14 +83,17 @@ flushChanges
 	focus isNil ifFalse: [focus updateModel]!
 
 hintDwell
-	"Private - Answer the <Duration> for which a hint bubble should be shown before fading away."
+	"Answer the <Duration> for which a hint bubble should be shown before fading away."
 
-	^10 seconds!
+	^validationResultPresenter dwell!
+
+hintDwell: aDuration
+	validationResultPresenter dwell: aDuration!
 
 hintFont
 	"Answer the `Font` to be used for the main text of any hint bubble. This does not affect the headline text, the font of which is not configurable."
 
-	^Font name: 'Segoe UI' pointSize: 10!
+	^validationResultPresenter hintFont!
 
 initialize
 	"Private - Initialize the receiver"
@@ -123,10 +138,21 @@ ownerView: aView
 	ownerView := aView.
 !
 
+preTranslateKeyboardInput: aMSG
+	"Answer whether the receiver would like to consume the argument aMSG, which is a keyboard message."
+
+	(aMSG isKeyPress: VK_RETURN)
+		ifTrue: 
+			[| button |
+			"If the default button is disabled, it may be helpful to show validation errors"
+			button := self view defaultButton.
+			(button notNil and: [button isEnabled not]) ifTrue: [self validate]].
+	^super preTranslateKeyboardInput: aMSG!
+
 queryOk: aCommandQuery
 	"Private - Subclasses should override to perform any necessary validation and selectively enable the Ok button as required."
 
-	aCommandQuery isEnabled: true!
+	aCommandQuery validationResult: self validateModel!
 
 revert
 	"Revert the changes cached in the receiver and go back to the data in the original subject."
@@ -154,11 +180,6 @@ showShell
 
 	self show!
 
-showValidationResult: aValidationResult
-	"Do nothing by default. Should be overridden by subclasses that want to show the validation result in their UI."
-
-	!
-
 subject
 	"Answer the original model onto which the receiver was created"
 	
@@ -168,19 +189,50 @@ validate
 	| result |
 	self view killTimer: ValidationTimerId.
 	result := self validateModel.
-	self showValidationResult: result.
+	self validationResult: result.
 	^result!
 
 validateModel
-	^self model validate! !
+	^self model validate!
+
+validater
+	^self model validater!
+
+validater: aMonadicValuable
+	"Set the <monadicValuable> used to validate the model. The valuable is passed the current (buffered) model value as its first argument, and is expected to answer a <ValuationResult>, the value of which indicates whether the model should be considered valid in context. The OK button is not enabled until the ValidationResult's value is true. The validator can also pass out a hint details to be displayed in the receiver's <ValidationResultPresenter> if desired (see ValidationResult for the options available). The hint is useful, for example, to explain to the user why the OK button is disabled, as this can otherwise be difficult to understand."
+
+	self model validater: aMonadicValuable!
+
+validationBlock: aBlock
+	"Set the <monadicValuable> used to validate the user's reply. The valuable is passed the current reply text as its argument first argument and should answer true/false indicating whether the text is valid or not.
+	This method is present mainly for backwards compatibility."
+
+	"Although not deprecated because the old-style true/false result is adequate for many purposes, the alternative of providing a block that returns a full <ValidationResult> (see #validater:) is preferred."
+
+	self validater: [:response | ValidationResult value: (aBlock value: response)]!
+
+validationDwell
+	"The <Duration> to wait after the user has stopped typing before re-validating and possibly showing a validation hint."
+
+	^1 seconds!
+
+validationResult: aValidationResult
+	validationResultPresenter value: aValidationResult!
+
+validationResultPresenterClass
+	^ValidationStatusPresenter! !
 !UI.Dialog categoriesForMethods!
 answer!accessing!public! !
 apply!commands-actions!public! !
 bufferedModelFor:!accessing!private! !
 cancel!commands-actions!public! !
+clearValidationResult!operations!public! !
+createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !
+deferredValidate!operations!public! !
 flushChanges!commands-actions!private! !
-hintDwell!constants!private! !
+hintDwell!constants!public! !
+hintDwell:!accessing!public! !
 hintFont!constants!public! !
 initialize!initializing!private! !
 isConfirmed!public!testing! !
@@ -189,16 +241,22 @@ ok!commands-actions!public! !
 onTimerTick:!event handling!private! !
 ownerView!accessing!public! !
 ownerView:!accessing!not an aspect!private! !
+preTranslateKeyboardInput:!dispatching!public! !
 queryOk:!commands-queries!private! !
 revert!commands-actions!public! !
 show!operations!public! !
 showModal!public!realizing/unrealizing! !
 showModalView!private!realizing/unrealizing! !
 showShell!operations!public! !
-showValidationResult:!helpers!public! !
 subject!accessing!public! !
-validate!operations!private! !
+validate!operations!public! !
 validateModel!helpers!private! !
+validater!accessing!public! !
+validater:!initializing!public! !
+validationBlock:!initializing!public! !
+validationDwell!constants!public! !
+validationResult:!accessing!public! !
+validationResultPresenterClass!constants!public! !
 !
 
 UI.Dialog methodProtocol: #dialogPresenter attributes: #(#readOnly) selectors: #(#apply #cancel #caption #caption: #clearCommandHistory #ensureVisible #hasCommandHistory #ok #onAboutToDisplayMenu: #onAboutToDisplaySystemMenu: #onActionPerformed #onCloseRequested #onIdleEntered #onInputMaskRequired: #onKeyPressed: #onKeyReleased: #onKeyTyped: #onKillFocus #onLeftButtonDoubleClicked: #onLeftButtonPressed: #onLeftButtonReleased: #onMouseMoved: #onPositionChanged: #onPositionChanging: #onRightButtonDoubleClicked: #onRightButtonPressed: #onRightButtonReleased: #onSetFocus #onTipTextRequired: #onViewClosed #onViewMinimized: #onViewOpened #onViewRestored: #parentPresenter #performAction #revert #setFocus #show #topShell #updateCaption #view)!

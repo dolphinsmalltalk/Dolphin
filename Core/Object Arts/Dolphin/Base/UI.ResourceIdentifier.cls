@@ -202,6 +202,10 @@ forMethod: aCompiledMethod
 	thisName isNil ifTrue: [^nil].
 	^self class: aCompiledMethod methodClass instanceClass name: thisName!
 
+isValidResourceName: aString
+	^aString notEmpty
+		and: [aString allSatisfy: [:each | each == $\x20 or: [each isEnglishLetter or: [each isDigit]]]]!
+
 nameFromSelector: aSymbol
 	| resname prefixSize nameSize |
 	aSymbol isNil ifTrue: [^nil].
@@ -242,7 +246,7 @@ selectorFromName: aString
 			[:each |
 			each == $\x20
 				ifTrue: [selector nextPut: $_]
-				ifFalse: [('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789' includes: each) ifTrue: [selector nextPut: each]]].
+				ifFalse: [(each isEnglishLetter or: [each isDigit]) ifTrue: [selector nextPut: each]]].
 	^selector contents asSymbol!
 
 value: a value: b
@@ -263,6 +267,7 @@ class:name:!instance creation!public! !
 class:selector:!instance creation!public! !
 exportFileExtension!constants!public! !
 forMethod:!instance creation!public! !
+isValidResourceName:!operations!public! !
 nameFromSelector:!helpers!public! !
 newClass:selector:!instance creation!private! !
 onPreStripImage!class hierarchy-removing!private! !
