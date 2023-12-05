@@ -200,27 +200,27 @@ parseXml: aString validate: aBoolean
 
 queryToggleChangeHistory: aCommandQuery
 	aCommandQuery
-		isEnabled: true;
+		beEnabled;
 		isChecked: self hasChangeHistoryMarkers!
 
 queryToggleRememberPlacement: aCommandQuery
 	aCommandQuery
-		isEnabled: true;
+		beEnabled;
 		isChecked: self isRememberingPlacement!
 
 queryToggleStatusBar: aCommandQuery
 	aCommandQuery
-		isEnabled: true;
+		beEnabled;
 		isChecked: self statusBar isWindowVisible!
 
 queryToggleToolbar: aCommandQuery
 	aCommandQuery
-		isEnabled: true;
+		beEnabled;
 		isChecked: self toolbar isWindowVisible!
 
 queryToggleXmlStyling: aCommandQuery
 	aCommandQuery
-		isEnabled: true;
+		beEnabled;
 		isChecked: self isStylingEnabled!
 
 reformatXml
@@ -373,7 +373,7 @@ isStylingEnabled!public!styling! !
 isStylingEnabled:!public!styling! !
 loadLegacySettings!options!public! !
 loadSettings!options!public! !
-optionsTabWidth!commands-queries!public! !
+optionsTabWidth!commands-actions!commands-queries!public! !
 parseXml!helpers!private! !
 parseXml:validate:!helpers!private! !
 queryToggleChangeHistory:!commands-queries!private! !

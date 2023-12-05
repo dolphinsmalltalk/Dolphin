@@ -48,7 +48,7 @@ learnSmalltalk
 
 	ProfStef show! !
 !Tools.SmalltalkSystem categoriesForMethods!
-learnSmalltalk!commands!operations!public! !
+learnSmalltalk!commands-actions!operations!public! !
 !
 
 "End of package definition"!

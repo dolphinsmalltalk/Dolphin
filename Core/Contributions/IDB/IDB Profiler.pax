@@ -59,7 +59,6 @@ package setPrerequisites: #(
 	'..\..\Object Arts\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars'
 	'..\..\Object Arts\Dolphin\MVP\Models\List\Dolphin List Models'
 	'..\..\Object Arts\Dolphin\MVP\Presenters\List\Dolphin List Presenter'
-	'..\..\Object Arts\Dolphin\Base\Dolphin Message Box'
 	'..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base'
 	'..\..\Object Arts\Dolphin\MVP\Presenters\Number\Dolphin Number Presenter'
 	'..\..\Object Arts\Dolphin\MVP\Dialogs\Progress\Dolphin Progress Dialog'
@@ -70,8 +69,10 @@ package setPrerequisites: #(
 	'..\..\Object Arts\Dolphin\MVP\Models\Tree\Dolphin Tree Models'
 	'..\..\Object Arts\Dolphin\MVP\Presenters\Tree\Dolphin Tree Presenter'
 	'..\..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters'
+	'..\..\Object Arts\Dolphin\MVP\Presenters\Validation\Dolphin Validation Hint Presenter'
 	'..\..\Object Arts\Dolphin\MVP\Models\Value\Dolphin Value Models'
-	'IDB Common').
+	'IDB Common'
+	'..\..\Object Arts\Dolphin\System\Compiler\Smalltalk Parser').
 
 package!
 
@@ -148,7 +149,7 @@ ProfilerTreesPresenter subclass: #ProfilerTimeTreePresenter
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Dialog subclass: #ProfilerSetupDialog
-	instanceVariableNames: ''
+	instanceVariableNames: 'sourcePresenter setPresenter intervalPresenter'
 	classVariableNames: 'IsCollect IsOn ProfiledBlock ProfiledText ProfilingInterval SampleSetName SamplingInterval'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

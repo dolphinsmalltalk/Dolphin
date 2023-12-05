@@ -43,8 +43,17 @@ Version 6b
 © 2005 Ian Bartholomew
 http://www.idb.me.uk'!
 
-canPrint
-	^[super canPrint] on: MessageNotUnderstood do: [:e | false]!
+canMoveToFirst
+	^selection ~= 1!
+
+canMoveToLast
+	^selection ~= history size!
+
+canMoveToNext
+	^history size ~= 1 and: [selection < history size]!
+
+canMoveToPrevious
+	^history size ~= 1 and: [selection > 1]!
 
 createComponents
 	super createComponents.
@@ -69,6 +78,7 @@ createSchematicWiring
 			to: self!
 
 diff
+	<commandQuery: #hasUnloadedVersionSelected>
 	(DiffBrowser show: 'Vertical view')
 		textFont: MethodWorkspace actualFont;
 		styler: SmalltalkMethodStyler new;
@@ -78,6 +88,11 @@ diff
 			id: 'Version #' , selection printString
 			and: self selectedMethodVersion loadedMethod getSource
 			id: 'Current image'!
+
+hasUnloadedVersionSelected
+	| methodVersion |
+	methodVersion := self selectedMethodVersion.
+	^methodVersion notNil and: [methodVersion isLoaded not]!
 
 history
 	^history!
@@ -94,21 +109,25 @@ moveTo: anInteger
 	self updateSelection!
 
 moveToFirst
+	<commandQuery: #canMoveToFirst>
 	self moveTo: 1!
 
 moveToLast
+	<commandQuery: #canMoveToLast>
 	self moveTo: history size!
 
 moveToLoaded
-
+	<commandQuery: #hasUnloadedVersionSelected>
 	self loadedMethodVersion
 		ifNil: [self moveToLast]
-		ifNotNil: [ :loaded | self moveTo: (history indexOf: loaded)]!
+		ifNotNil: [:loaded | self moveTo: (history indexOf: loaded)]!
 
 moveToNext
+	<commandQuery: #canMoveToNext>
 	self moveTo: selection + 1!
 
 moveToPrevious
+	<commandQuery: #canMoveToPrevious>
 	self moveTo: selection - 1!
 
 onImageChanged: aCompiledMethod
@@ -161,44 +180,13 @@ parseContext
 printableView
 	^source view!
 
-queryCommand: aCommandQuery 
-
-	| command |
-
-	command := aCommandQuery command.
-
-	(#(#print #printPreview) identityIncludes: command) 
-		ifTrue: 
-			[aCommandQuery isEnabled: self canPrint.
-			^true].
-	command == #moveToFirst 
-		ifTrue: 
-			[aCommandQuery isEnabled: selection ~= 1.
-			^true].
-	command == #moveToLast
-		ifTrue: 
-			[aCommandQuery isEnabled: selection ~= history size.
-			^true].
-	(#(#restoreMethod #diff #moveToLoaded) includes: command)
-		ifTrue: 
-			[aCommandQuery isEnabled: (self selectedMethodVersion ifNil: [false] ifNotNil: [ :mv | mv isLoaded not]).
-			^true].
-	command == #moveToPrevious 
-		ifTrue: 
-			[aCommandQuery isEnabled: history size ~= 1 & (selection > 1).
-			^true].
-	command == #moveToNext 
-		ifTrue: 
-			[aCommandQuery isEnabled: history size ~= 1 & (selection < history size).
-			^true].
-	^super queryCommand: aCommandQuery!
-
 restoreMethod
 	"Restore the selected method. Check for a compilation failure - although it 
 	should be obvious, the displayed  method will be in red , we don't want to 
 	let this go without a warning. The history browser will be updated by the 
 	normal event mechanism"
 
+	<commandQuery: #hasUnloadedVersionSelected>
 	self selectedMethodVersion load ifNil: [^MessageBox warning: 'Restore failed'].
 	debugger ifNotNil: [debugger restartMethod]!
 
@@ -275,20 +263,24 @@ updateSelection
 		setCaption;
 		setLoadedMarker! !
 !MethodHistoryBrowser categoriesForMethods!
-about!commands!public! !
-canPrint!printing!public!testing! !
+about!commands-actions!public! !
+canMoveToFirst!commands-queries!private! !
+canMoveToLast!commands-queries!private! !
+canMoveToNext!commands-queries!private! !
+canMoveToPrevious!commands-queries!private! !
 createComponents!initializing!operations!public! !
 createSchematicWiring!initializing!operations!public! !
-diff!commands!public! !
+diff!commands-actions!public! !
+hasUnloadedVersionSelected!commands-queries!private! !
 history!accessing!public! !
 loadedMethodVersion!accessing!public! !
 methodClass!accessing!public! !
 moveTo:!operations!public! !
-moveToFirst!commands!public! !
-moveToLast!commands!public! !
-moveToLoaded!commands!public! !
-moveToNext!commands!public! !
-moveToPrevious!commands!public! !
+moveToFirst!commands-actions!public! !
+moveToLast!commands-actions!public! !
+moveToLoaded!commands-actions!public! !
+moveToNext!commands-actions!public! !
+moveToPrevious!commands-actions!public! !
 onImageChanged:!event handling!public! !
 onMethodAdded:!event handling!public! !
 onMethodRemoved:!event handling!public! !
@@ -299,15 +291,14 @@ onViewClosed!event handling!public! !
 onViewOpened!event handling!public! !
 parseContext!public! !
 printableView!accessing!printing!public! !
-queryCommand:!commands!public! !
-restoreMethod!commands!public! !
+restoreMethod!commands-actions!public! !
 selectedMethod!public! !
 selectedMethodVersion!accessing!public! !
 selectedMethodVersion:!accessing!public! !
 setCaption!operations!public! !
 setClass:selector:debugger:!accessing!public! !
 setLoadedMarker!operations!private! !
-source!commands!public! !
+source!commands-actions!public! !
 updateHistory!operations!public! !
 updateSelection!event handling!public! !
 !

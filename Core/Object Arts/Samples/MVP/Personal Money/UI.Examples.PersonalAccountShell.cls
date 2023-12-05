@@ -49,14 +49,13 @@ createSchematicWiring
 editTransaction
 	"Edit the selected transaction"
 
+	<commandQuery: #hasSelectedTransaction>
 	| transaction |
-	transaction := self selectedTransactionOrNil.
-	transaction notNil
-		ifTrue: 
-			[self model removeTransaction: transaction.
-			PersonalAccountTransactionDialog showModalOn: transaction.
-			self model addTransaction: transaction.
-			self selectedTransactionOrNil: transaction]!
+	transaction := self selectedTransaction.
+	self model removeTransaction: transaction.
+	PersonalAccountTransactionDialog showModalOn: transaction.
+	self model addTransaction: transaction.
+	self selectedTransaction: transaction!
 
 hasSelectedTransaction
 	"Answer true it there is a currently selected transaction in the receiver"
@@ -92,31 +91,20 @@ newTransaction
 	(newTransaction := PersonalAccountTransactionDialog showModal) notNil
 		ifTrue: 
 			[self model addTransaction: newTransaction.
-			self selectedTransactionOrNil: newTransaction]!
-
-queryCommand: aCommandQuery
-	"Enters details about a potential command for the receiver into aCommandQuery"
-
-	super queryCommand: aCommandQuery.
-	(#(editTransaction removeTransaction) includes: aCommandQuery command) ifTrue: [
-		aCommandQuery isEnabled: self hasSelectedTransaction ]
-!
+			self selectedTransaction: newTransaction]!
 
 removeTransaction
 	"Removes the current transaction from the receiver's model"
 
-	| transaction |
-	transaction := self selectedTransactionOrNil.
-	transaction notNil ifTrue: [
-		self model removeTransaction: transaction ]
-	!
+	<commandQuery: #hasSelectedTransaction>
+	self model removeTransaction: self selectedTransaction!
 
-selectedTransactionOrNil
+selectedTransaction
 	"Answer the currently selected transaction or nil if there is none"
 
-	^transactionsPresenter selectionOrNil!
+	^transactionsPresenter selection!
 
-selectedTransactionOrNil: aPersonalAccountTransactionOrNil
+selectedTransaction: aPersonalAccountTransactionOrNil
 	"Sets the currently selected transaction to aPersonalAccountTransactionOrNil.
 	If nil if there will be no selection"
 
@@ -128,10 +116,9 @@ editTransaction!commands!public! !
 hasSelectedTransaction!public!testing! !
 model:!accessing!public! !
 newTransaction!commands!public! !
-queryCommand:!commands!public! !
 removeTransaction!commands!public! !
-selectedTransactionOrNil!accessing!public! !
-selectedTransactionOrNil:!accessing!public! !
+selectedTransaction!public! !
+selectedTransaction:!public! !
 !
 
 !UI.Examples.PersonalAccountShell class methodsFor!

@@ -56,8 +56,8 @@ editRecording
 erase
 	"Removes a programme recording from the current tape"
 
-	recordingsPresenter model remove: self recording.
-	!
+	<commandQuery: #hasSelectedRecording>
+	recordingsPresenter model remove: self recording!
 
 hasSelectedRecording
 	"Answer true if there is a recording selected in the receiver"
@@ -93,19 +93,10 @@ onViewOpened
 	self onTapeSelected.
 !
 
-queryCommand: aCommandQuery
-	"Private - Enters details about a potential command for the receiver into aCommandQuery"
-
-	super queryCommand: aCommandQuery.
-	(#(removeTape record) includes: aCommandQuery command) ifTrue: [
-		aCommandQuery isEnabled: self hasSelectedTape ].
-	(#(erase) includes: aCommandQuery command) ifTrue: [
-		aCommandQuery isEnabled: self hasSelectedRecording ]
-!
-
 record
 	"Adds a programme recording to the current tape"
 
+	<commandQuery: #hasSelectedTape>
 	| recording |
 	recording := VideoRecordingDialog showModalOn: VideoRecording new.
 	recording notNil
@@ -126,6 +117,7 @@ recording: aVideoRecordingOrNil
 removeTape
 	"Removes the current tape from the receiver's library"
 
+	<commandQuery: #hasSelectedTape>
 	(MessageBox confirm: ('Are you sure you wish to remove the tape:
 <1d> from this library?' 
 				expandMacrosWith: self tape)
@@ -141,21 +133,20 @@ tape: aVideoTapeOrNil
 
 	^tapesPresenter selectionOrNil: aVideoTapeOrNil! !
 !UI.Examples.VideoLibraryShell categoriesForMethods!
-addTape!commands!public! !
+addTape!commands-actions!public! !
 createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !
-editRecording!commands!public! !
-erase!commands!public! !
+editRecording!commands-actions!public! !
+erase!commands-actions!public! !
 hasSelectedRecording!accessing!public! !
 hasSelectedTape!accessing!public! !
 model:!accessing!public! !
 onTapeSelected!event handling!private! !
 onViewOpened!event handling!public! !
-queryCommand:!commands!private! !
-record!commands!public! !
+record!commands-actions!public! !
 recording!accessing!public! !
 recording:!accessing!public! !
-removeTape!commands!public! !
+removeTape!commands-actions!public! !
 tape!accessing!public! !
 tape:!accessing!public! !
 !

@@ -15,6 +15,7 @@ PlimboleShell show'!
 !UI.Examples.PlimboleShell methodsFor!
 
 addPartner
+	<commandQuery: #queryAddPartner:>
 	self class show!
 
 addToCommandRoute: route 
@@ -58,16 +59,8 @@ onViewOpened
 			to: self.
 	self chooseRandomPalette!
 
-queryCommand: aCommandQuery
-	"Fills in details about the current state of the receiver into aCommandQuery"
-
-	| cmd |
-	cmd := aCommandQuery commandSymbol.
-	cmd == #addPartner
-		ifTrue: 
-			[aCommandQuery isEnabled: Plimbole registry size < self class maxPlimboles.
-			^true].
-	^super queryCommand: aCommandQuery! !
+queryAddPartner: aCommandQuery
+	aCommandQuery isEnabled: Plimbole registry size < self class maxPlimboles! !
 !UI.Examples.PlimboleShell categoriesForMethods!
 addPartner!commands!public! !
 addToCommandRoute:!private! !
@@ -77,7 +70,7 @@ model:!event handling!private! !
 onPlayStarted!private! !
 onPlayStopped!private! !
 onViewOpened!private! !
-queryCommand:!private! !
+queryAddPartner:!private! !
 !
 
 !UI.Examples.PlimboleShell class methodsFor!

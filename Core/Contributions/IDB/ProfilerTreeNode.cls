@@ -71,7 +71,12 @@ allSelectors
 	^selectors!
 
 browse
-	self object compiledCode browse!
+	self browseableObject browse!
+
+browseableObject
+	^self firstChild 
+		ifNil: [self object compiledCode]
+		ifNotNil: [:child | child object browseableObject]!
 
 children
 	"Answers an SortedColletion of the child nodes of the receiver
@@ -154,7 +159,8 @@ addFrame:elapsedTime:!profiling!public! !
 allClasses!operations!public! !
 allParentFrames!operations!public! !
 allSelectors!operations!public! !
-browse!commands!public! !
+browse!commands-actions!public! !
+browseableObject!accessing!public! !
 children!accessing!public! !
 clearCache!operations!public! !
 firstChild!accessing!public! !

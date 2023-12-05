@@ -14,16 +14,14 @@ Public Domain Freeware'!
 !ProfileBrowser categoriesForClass!IDB Goodies! !
 !ProfileBrowser methodsFor!
 
-browseIt
-	"Evaluate currently selected text (or the current line if there is no selection) in the
-	receiver and browse the result."
+browseClass
+	<commandQuery: #queryBrowseClass:>
+	self currentCard presenterConnectionPoint presenter selectionOrNil browse!
 
-	<acceleratorKey: 'Ctrl+B'>
-	| card |
-	card := self currentCard.
-	card name = 'sampleSets'
-		ifFalse: [card presenterConnectionPoint presenter selectionOrNil browse]
-		ifTrue: [Sound warningBeep]!
+browseItCommand
+	"Answer the <Symbol> of the contextual command to browse something, depending on the subview with focus and/or selection."
+
+	^self isShowingSampleSets ifFalse: [#browseClass]!
 
 cardsPresenter	
 	^self presenterNamed: 'cards'!
@@ -93,11 +91,13 @@ currentCard
 deleteAllSampleSets
 	"Delete all the sample sets"
 
+	<commandQuery: #queryDeleteAllSampleSets:>
 	ProfilerSampleSetManager default removeAll!
 
 deleteSampleSet
 	"Delete the currently selected sample set"
 
+	<commandQuery: #isSampleSetSelected>
 	ProfilerSampleSetManager default removeSampleSetNamed: self sampleSetsPresenter selection name!
 
 filterDolphinXXX
@@ -105,24 +105,27 @@ filterDolphinXXX
 
 	"Temporarily removed until I decide what to do with it"
 
+	<commandQuery: #queryFilterDolphin:>
 	filterDolphin := filterDolphin not.
-	#('classes' 'selectors' 'tally' 'time') 
+	#('classes' 'selectors' 'tally' 'time')
 		do: [:each | (self presenterNamed: each) filterDolphin: filterDolphin]!
 
-filterPercentage: aFloat symbol: aSymbol 
+filterPercentage: aFloat symbol: aSymbol
 	"Tell the tree presenters the mimimum percentage value for items to be displayed
 	and remember the current command (aSymbol)"
 
-	filterPercentSymbol == aSymbol 
+	<commandQuery: #queryFilterPercentage:>
+	filterPercentSymbol == aSymbol
 		ifFalse: 
 			[filterPercentSymbol := aSymbol.
-			#('classes' 'selectors' 'tally' 'time') 
+			#('classes' 'selectors' 'tally' 'time')
 				do: [:each | (self presenterNamed: each) filterPercentage: aFloat]]!
 
 filterSelector
 	"Tell the tabs to filter out samples or tree branches that do not include the currently 
 	selected method (if there is one)"
 
+	<commandQuery: #queryFilterSelector:>
 	filterSelector := filterSelector not.
 	self onSelectorSelectionChanged!
 
@@ -144,6 +147,9 @@ isSampleSetSelected
 
 	^self sampleSetsPresenter selectionOrNil notNil!
 
+isShowingSampleSets
+	^self currentCard name = 'sampleSets'!
+
 onSampleSetSelectionChanged
 	"The sample set selection has been changed so refresh all the other cards"
 
@@ -158,10 +164,11 @@ onSampleSetSelectionChanged
 		send: #onUpdateIndicator:of:
 		to: self.
 	Cursor wait showWhile: 
-			[| progressBar |
+			[| progressBar range |
 			progressBar := self progressBar.
 			progressBar value: 0.
-			progressBar view range: (1 to: ((sampleSet samplesSize max: 1) min: self updateIndicatorLimit)).
+			range := 1 to: ((sampleSet samplesSize max: 1) min: self updateIndicatorLimit).
+			range size > 1 ifTrue: [progressBar view range: range].
 			self refreshTabsFor: sampleSet.
 			
 			[200 milliseconds wait.
@@ -211,32 +218,32 @@ onViewOpened
 progressBar
 	^self presenterNamed: 'progressBar'!
 
-queryCommand: aCommandQuery 
-	"Enters details about a potential command for the receiver into aCommandQuery"
+queryBrowseClass: aCommandQuery
+	| selection |
+	selection := self currentCard presenterConnectionPoint presenter selectionOrNil.
+	selection ifNil: [^self].
+	aCommandQuery
+		beEnabled;
+		expandMenuTextWith: selection browseableObject!
 
-	#filterPercentage:symbol: == aCommandQuery commandSymbol 
-		ifTrue: 
-			[aCommandQuery
-				beEnabled;
-				isChecked: filterPercentSymbol == aCommandQuery command arguments last.
-			^true].
-	"#filterDolphin == aCommandQuery commandSymbol 
-		ifTrue: 
-			[aCommandQuery
-				beEnabled;
-				isChecked: filterDolphin.
-			^true]."
-	#filterSelector == aCommandQuery commandSymbol 
-		ifTrue: 
-			[aCommandQuery
-				beEnabled;
-				isChecked: filterSelector.
-			^true].
-	(#(#deleteSampleSet #report) includes: aCommandQuery commandSymbol) 
-		ifTrue: 
-			[aCommandQuery isEnabled: self isSampleSetSelected.
-			^true].
-	^super queryCommand: aCommandQuery!
+queryDeleteAllSampleSets: aCommandQuery
+	aCommandQuery isEnabled: ProfilerSampleSetManager default sampleSets notEmpty!
+
+queryFilterDolphin: aCommandQuery
+	"Temporarily disabled until I decide what to do with it"
+	aCommandQuery
+		"beEnabled;"
+		isChecked: filterDolphin!
+
+queryFilterPercentage: aCommandQuery
+	aCommandQuery
+		beEnabled;
+		isChecked: filterPercentSymbol == aCommandQuery command arguments last!
+
+queryFilterSelector: aCommandQuery
+	aCommandQuery
+		beEnabled;
+		isChecked: filterSelector!
 
 refreshSampleSets
 	"Refresh the sample sets list. This can be useful if you want to set all the
@@ -254,6 +261,7 @@ refreshTabsFor: aSampleSet
 report
 	"Generate a text report for the selected sample set and open a SmalltalkWorkspaceDocument on it"
 
+	<commandQuery: #isSampleSetSelected>
 	| stream document |
 	stream := String writeStream.
 	self sampleSetsPresenter selection reportTo: stream.
@@ -299,35 +307,41 @@ updateIndicatorLimit
 
 	^65000! !
 !ProfileBrowser categoriesForMethods!
-browseIt!commands!public! !
+browseClass!commands-actions!public! !
+browseItCommand!commands-mappings!private! !
 cardsPresenter!accessing!private! !
 classesPresenter!accessing!private! !
 clearSampleSetSelection!helpers!private! !
 createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !
 currentCard!accessing!private! !
-deleteAllSampleSets!commands!public! !
-deleteSampleSet!commands!public! !
-filterDolphinXXX!commands!public! !
+deleteAllSampleSets!commands!commands-actions!public! !
+deleteSampleSet!commands!commands-actions!public! !
+filterDolphinXXX!commands!commands-actions!public! !
 filterPercentage:symbol:!helpers!private! !
-filterSelector!commands!public! !
-idbAbout!commands!public! !
+filterSelector!commands!commands-actions!public! !
+idbAbout!commands!commands-actions!public! !
 isSampleSetSelected!public!testing! !
+isShowingSampleSets!commands-actions!commands-queries!private! !
 onSampleSetSelectionChanged!event handling!public! !
 onSampleSetUpdated:atIndex:!event handling!public! !
 onSelectorSelectionChanged!event handling!public! !
 onUpdateIndicator:of:!event handling!public! !
 onViewOpened!event handling!public! !
 progressBar!accessing!private! !
-queryCommand:!commands!public! !
-refreshSampleSets!commands!public! !
+queryBrowseClass:!commands!commands-actions!commands-queries!private! !
+queryDeleteAllSampleSets:!commands-queries!private! !
+queryFilterDolphin:!commands!commands-actions!commands-queries!private! !
+queryFilterPercentage:!commands!commands-queries!private! !
+queryFilterSelector:!commands!commands-queries!private! !
+refreshSampleSets!commands!commands-actions!public! !
 refreshTabsFor:!helpers!private! !
-report!commands!public! !
+report!commands!commands-actions!public! !
 resetSelectorFilter!helpers!private! !
 sampleSetsPresenter!accessing!private! !
 samplesPresenter!accessing!private! !
 selectorsPresenter!accessing!private! !
-startProfiler!commands!public! !
+startProfiler!commands!commands-actions!public! !
 updateIndicatorLimit!constants!public! !
 !
 

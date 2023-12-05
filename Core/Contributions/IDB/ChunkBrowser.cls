@@ -15,6 +15,7 @@ Public Domain Freeware'!
 !ChunkBrowser methodsFor!
 
 browseChunk
+	<commandQuery: #canBrowse>
 	chunkList selection browse!
 
 canBrowse
@@ -49,14 +50,15 @@ clearStatusReport
 	(self presenterNamed: 'statusReport') value: String new!
 
 clipboardOpen
-	Cursor wait
-		showWhile:
+	<commandQuery: #hasClipboardTextAvailable>
+	Cursor wait showWhile: 
 			[model loadFromText: Clipboard current getText.
 			chunkList selectionOrNil: nil.
 			self updateChunkList].
 	self caption: 'ChunkBrowser - Clipboard'!
 
 copyText
+	<commandQuery: #hasChunkSelected>
 	Clipboard current
 		setText: (chunkText hasSelection ifTrue: [chunkText view selection] ifFalse: [chunkText view text])!
 
@@ -106,6 +108,21 @@ fileOpenPatch
 			self updateChunkList].
 	self caption: ('ChunkBrowser - <1s>' expandMacrosWith: (File splitFilenameFrom: pathname))!
 
+hasAnyChunksPicked
+	^model hasAnyChunksPicked!
+
+hasChunks
+	^model hasChunks!
+
+hasChunkSelected
+	^chunkList hasSingleSelection!
+
+hasChunksSelected
+	^chunkList hasSelection!
+
+hasClipboardTextAvailable
+	^Clipboard current isTextAvailable!
+
 helpFileStem
 	^'idbchunkbrowser'!
 
@@ -118,7 +135,11 @@ idbAbout
 				expandMacros!
 
 idbHelp
+	<commandQuery: #queryIdbHelp:>
 	self idbHelp: self helpFileStem!
+
+isFilteringChunks
+	^filter isRestrictingRange!
 
 onActionPerformed
 	chunkList selections do: [:each | each picked: each picked not].
@@ -151,92 +172,44 @@ onViewOpened
 				to: self]!
 
 pickSelection
+	<commandQuery: #hasChunksSelected>
 	chunkList selections do: [:each | each picked: true].
 	self onRefreshNeeded!
 
 printableView
 	^chunkText view!
 
-queryCommand: aCommandQuery
-	aCommandQuery commandSymbol == #toggleChunkType:
-		ifTrue: 
-			[| argument |
-			aCommandQuery isEnabled: true.
-			argument := aCommandQuery commandDescription command arguments first.
-			aCommandQuery isChecked: (filter isChunkTypeSelected: argument).
-			^true].
-	aCommandQuery commandSymbol == #toggleComparisonType:
-		ifTrue: 
-			[| argument |
-			aCommandQuery isEnabled: true.
-			argument := aCommandQuery commandDescription command arguments first.
-			aCommandQuery isChecked: (filter isComparisonTypeSelected: argument).
-			^true].
-	aCommandQuery commandSymbol == #restrictionRange
-		ifTrue: 
-			[aCommandQuery isEnabled: chunkList hasSelection.
-			^true].
-	aCommandQuery commandSymbol == #restrictionSave
-		ifTrue: 
-			[aCommandQuery isEnabled: model hasChunks.
-			^true].
-	aCommandQuery commandSymbol == #restrictionClear
-		ifTrue: 
-			[aCommandQuery isEnabled: filter isRestrictingRange.
-			^true].
-	aCommandQuery commandSymbol == #restrictionClass
-		ifTrue: 
-			[aCommandQuery isEnabled: filter isRestrictingClass
-						| (chunkList selections size = 1 and: [chunkList selection chunkClass notNil]).
-			aCommandQuery isChecked: filter isRestrictingClass.
-			^true].
-	aCommandQuery commandSymbol == #toggleRestrictingMostRecent
-		ifTrue: 
-			[aCommandQuery isEnabled: true.
-			aCommandQuery isChecked: filter isRestrictingMostRecent.
-			^true].
-	aCommandQuery commandSymbol == #toggleRestrictingPicked
-		ifTrue: 
-			[aCommandQuery isEnabled: true.
-			aCommandQuery isChecked: filter isRestrictingPicked.
-			^true].
-	aCommandQuery commandSymbol == #showDifferences
-		ifTrue: 
-			[aCommandQuery isEnabled: self canShowDifferences.
-			^true].
-	aCommandQuery commandSymbol == #copyText
-		ifTrue: 
-			[aCommandQuery isEnabled: chunkList selections size = 1.
-			^true].
-	aCommandQuery commandSymbol == #browseChunk
-		ifTrue: 
-			[aCommandQuery isEnabled: self canBrowse.
-			^true].
-	(#(#print #printPreview) identityIncludes: aCommandQuery command)
-		ifTrue: 
-			[aCommandQuery isEnabled: self canPrint.
-			^true].
-	(#(#pickSelection #unpickSelection #restoreSelection) identityIncludes: aCommandQuery command)
-		ifTrue: 
-			[aCommandQuery isEnabled: chunkList hasSelection.
-			^true].
-	aCommandQuery commandSymbol == #restorePicked
-		ifTrue: 
-			[aCommandQuery isEnabled: model hasAnyChunksPicked.
-			^true].
-	aCommandQuery commandSymbol == #clipboardOpen
-		ifTrue: 
-			[aCommandQuery isEnabled: Clipboard current isTextAvailable.
-			^true].
-	#idbHelp == aCommandQuery command
-		ifTrue: 
-			[aCommandQuery
-				isEnabled: (File exists: (File
-								composePath: SessionManager current idbDocumentationFolder
-								stem: self helpFileStem
-								extension: 'html')).
-			^true].
-	^super queryCommand: aCommandQuery!
+queryIdbHelp: aCommandQuery
+	aCommandQuery
+		isEnabled: (File exists: (File
+						composePath: SessionManager current idbDocumentationFolder
+						stem: self helpFileStem
+						extension: 'html'))!
+
+queryRestrictionClass: aCommandQuery
+	aCommandQuery isEnabled: filter isRestrictingClass
+				| (chunkList selections size = 1 and: [chunkList selection chunkClass notNil]).
+	aCommandQuery isChecked: filter isRestrictingClass!
+
+queryToggleChunkType: aCommandQuery
+	| argument |
+	aCommandQuery beEnabled.
+	argument := aCommandQuery commandDescription command arguments first.
+	aCommandQuery isChecked: (filter isChunkTypeSelected: argument)!
+
+queryToggleComparisonType: aCommandQuery
+	| argument |
+	aCommandQuery beEnabled.
+	argument := aCommandQuery commandDescription command arguments first.
+	aCommandQuery isChecked: (filter isComparisonTypeSelected: argument)!
+
+queryToggleRestrictingMostRecent: aCommandQuery
+	aCommandQuery beEnabled.
+	aCommandQuery isChecked: filter isRestrictingMostRecent!
+
+queryToggleRestrictingPicked: aCommandQuery
+	aCommandQuery beEnabled.
+	aCommandQuery isChecked: filter isRestrictingPicked!
 
 restore: aCollection
 	| failures stream |
@@ -250,41 +223,47 @@ restore: aCollection
 	(failures copyFrom: 1 to: (10 min: failures size))
 		do: [:each | '<1p> <2p><n>' expandMacrosWithArguments: {each key. each value} on: stream].
 	failures size > 10
-		ifTrue: ['... and <1d> more' expandMacrosWithArguments: {failures size - 10} on: stream].
+		ifTrue: ['... and <d> more' expandMacrosWithArguments: {failures size - 10} on: stream].
 	MessageBox notify: stream contents caption: 'Restore may have failed'!
 
 restorePicked
+	<commandQuery: #hasAnyChunksPicked>
 	self restore: model pickedChunks!
 
 restoreSelection
+	<commandQuery: #hasChunksSelected>
 	self restore: chunkList selections!
 
 restrictionClass
+	<commandQuery: #queryRestrictionClass:>
 	filter isRestrictingClass
 		ifTrue: [filter restrictionClass: nil]
-		ifFalse:
+		ifFalse: 
 			[chunkList selections size = 1 ifTrue: [filter restrictionClass: chunkList selection chunkClass]].
 	self updateChunkList!
 
 restrictionClear
+	<commandQuery: #isFilteringChunks>
 	filter restrictionRange: nil.
 	self updateChunkList!
 
 restrictionRange
+	<commandQuery: #hasChunksSelected>
 	| first last |
 	chunkList hasSelection ifFalse: [^self].
 	first := chunkList selections inject: 99999999 into: [:min :each | min min: each index].
 	last := chunkList selections inject: 0 into: [:max :each | max max: each index].
-	filter
-		restrictionRange:
-			(first to: (chunkList selections size = 1 ifTrue: [model chunkCount] ifFalse: [last])).
+	filter restrictionRange: (first
+				to: (chunkList selections size = 1 ifTrue: [model chunkCount] ifFalse: [last])).
 	self updateChunkList!
 
 restrictionSave
+	<commandQuery: #hasChunks>
 	filter restrictionRange: (model indexOfLastImageSave to: model chunkCount).
 	self updateChunkList!
 
 showDifferences
+	<commandQuery: #canShowDifferences>
 	| differencesPresenter |
 	differencesPresenter := DifferencesPresenter show.
 	chunkList selections size = 1
@@ -309,18 +288,22 @@ showDifferences
 				refresh]!
 
 toggleChunkType: aSymbol
+	<commandQuery: #queryToggleChunkType:>
 	filter toggleChunkType: aSymbol.
 	self updateChunkList!
 
 toggleComparisonType: aSymbol
+	<commandQuery: #queryToggleComparisonType:>
 	filter toggleComparisonType: aSymbol.
 	self updateChunkList!
 
 toggleRestrictingMostRecent
+	<commandQuery: #queryToggleRestrictingMostRecent:>
 	filter toggleRestrictingMostRecent.
 	self updateChunkList!
 
 toggleRestrictingPicked
+	<commandQuery: #queryToggleRestrictingPicked:>
 	filter toggleRestrictingPicked.
 	self updateChunkList!
 
@@ -329,6 +312,7 @@ unpickAll
 	self onRefreshNeeded!
 
 unpickSelection
+	<commandQuery: #hasChunksSelected>
 	chunkList selections do: [:each | each picked: false].
 	self onRefreshNeeded!
 
@@ -355,45 +339,56 @@ updateStatus
 				with: (filter isRestrictingPicked ifTrue: [' Pi'] ifFalse: [String new])).
 	self clearStatusReport! !
 !ChunkBrowser categoriesForMethods!
-browseChunk!commands!public!testing! !
+browseChunk!commands!commands-actions!public!testing! !
 canBrowse!public!testing! !
 canPrint!printing!public!testing! !
 canShowDifferences!public!testing! !
-chunkSelectAll!commands!public! !
-chunkSelectDefault!commands!public! !
-chunkSelectNone!commands!public! !
+chunkSelectAll!commands!commands-actions!public! !
+chunkSelectDefault!commands!commands-actions!public! !
+chunkSelectNone!commands!commands-actions!public! !
 clearStatusReport!helpers!public! !
-clipboardOpen!commands!public! !
-copyText!commands!public! !
+clipboardOpen!commands!commands-actions!public! !
+copyText!commands!commands-actions!public! !
 createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !
-fileOpen!commands!public! !
-fileOpenPatch!commands!public! !
+fileOpen!commands!commands-actions!public! !
+fileOpenPatch!commands!commands-actions!public! !
+hasAnyChunksPicked!commands!commands-actions!commands-queries!public! !
+hasChunks!commands!commands-actions!commands-queries!public! !
+hasChunkSelected!commands-queries!public! !
+hasChunksSelected!commands-queries!public! !
+hasClipboardTextAvailable!commands-queries!public! !
 helpFileStem!constants!private! !
-idbAbout!commands!enquiries!public! !
-idbHelp!commands!enquiries!public! !
+idbAbout!commands!commands-actions!enquiries!public! !
+idbHelp!commands!commands-actions!enquiries!public! !
+isFilteringChunks!commands!commands-actions!commands-queries!public! !
 onActionPerformed!event handling!public! !
 onRefreshNeeded!event handling!public! !
 onSelectionChanged!event handling!public! !
 onViewClosed!event handling!public! !
 onViewOpened!event handling!public! !
-pickSelection!commands!public! !
+pickSelection!commands!commands-actions!public! !
 printableView!accessing!printing!public! !
-queryCommand:!commands!public! !
-restore:!commands!public! !
-restorePicked!commands!public! !
-restoreSelection!commands!public! !
-restrictionClass!commands!public! !
-restrictionClear!commands!public! !
-restrictionRange!commands!public! !
-restrictionSave!commands!public! !
-showDifferences!commands!public! !
-toggleChunkType:!commands!public! !
-toggleComparisonType:!commands!public! !
-toggleRestrictingMostRecent!commands!public! !
-toggleRestrictingPicked!commands!public! !
-unpickAll!commands!public! !
-unpickSelection!commands!public! !
+queryIdbHelp:!commands!commands-queries!public! !
+queryRestrictionClass:!commands!commands-queries!public! !
+queryToggleChunkType:!commands!commands-queries!public! !
+queryToggleComparisonType:!commands!commands-queries!public! !
+queryToggleRestrictingMostRecent:!commands!commands-queries!public! !
+queryToggleRestrictingPicked:!commands!commands-queries!public! !
+restore:!commands!commands-actions!public! !
+restorePicked!commands!commands-actions!public! !
+restoreSelection!commands!commands-actions!public! !
+restrictionClass!commands!commands-actions!public! !
+restrictionClear!commands!commands-actions!public! !
+restrictionRange!commands!commands-actions!public! !
+restrictionSave!commands!commands-actions!public! !
+showDifferences!commands!commands-actions!public! !
+toggleChunkType:!commands!commands-actions!public! !
+toggleComparisonType:!commands!commands-actions!public! !
+toggleRestrictingMostRecent!commands!commands-actions!public! !
+toggleRestrictingPicked!commands!commands-actions!public! !
+unpickAll!commands!commands-actions!public! !
+unpickSelection!commands!commands-actions!public! !
 updateChunkList!operations!public! !
 updateStatus!helpers!public! !
 !

@@ -72,7 +72,7 @@ mode: aSymbol
 
 queryDiffMode: aCommandQuery
 	aCommandQuery
-		isEnabled: true;
+		beEnabled;
 		isChecked: diffsPresenter comparisonMode == aCommandQuery command!
 
 readTextFrom: filename 

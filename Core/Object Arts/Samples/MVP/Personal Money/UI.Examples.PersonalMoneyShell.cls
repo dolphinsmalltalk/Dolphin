@@ -40,6 +40,7 @@ createSchematicWiring
 editAccount
 	"Edit the selected account"
 
+	<commandQuery: #hasSelectedAccount>
 	self hasSelectedAccount
 		ifTrue: 
 			[| account shell |
@@ -73,19 +74,11 @@ newAccount
 	self selectedAccountOrNil: newAccount.
 	self editAccount!
 
-queryCommand: aCommandQuery
-	"Private - Enters details about a potential command for the receiver into aCommandQuery"
-
-	super queryCommand: aCommandQuery.
-	(#(editAccount removeAccount) includes: aCommandQuery command) ifTrue: [
-		aCommandQuery isEnabled: self hasSelectedAccount ]!
-
 removeAccount
 	"Removes the current account from the receiver's model"
 
-	self hasSelectedAccount ifTrue: [
-		self model removeAccount: self selectedAccountOrNil ]
-	!
+	<commandQuery: #hasSelectedAccount>
+	self model removeAccount: self selectedAccountOrNil!
 
 selectedAccountOrNil
 	"Answer the currently selected account or nil if there is none"
@@ -119,7 +112,6 @@ editAccount!commands!public! !
 hasSelectedAccount!public!testing! !
 model:!accessing!public! !
 newAccount!commands!public! !
-queryCommand:!commands!private! !
 removeAccount!commands!public! !
 selectedAccountOrNil!accessing!public! !
 selectedAccountOrNil:!accessing!public! !

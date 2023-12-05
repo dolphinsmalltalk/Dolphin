@@ -105,6 +105,7 @@ connect
 	"Attempt to connect to another chat window using the current calleeAddress. This call blocks
 	until some response is received from the connection request."
 
+	<commandQuery: #canConnect>
 	| sock |
 	sock := Net.Socket port: self outgoingPort address: self calleeAddress.
 	self status: #connecting.
@@ -142,6 +143,7 @@ defaultPort
 disconnect
 	"Disconnect from any other chat window and wait for new calls"
 
+	<commandQuery: #isConnected>
 	self closeConnection!
 
 dontAcceptCalls
@@ -300,22 +302,6 @@ outgoingPort: anInteger
 peerAddress
 	^socket peerAddress displayString!
 
-queryCommand: query 
-	"Private - Enters details about a potential command for the receiver into the 
-	<CommandQuery>,  query."
-
-	| cmd |
-	cmd := query commandSymbol.
-	cmd == #connect 
-		ifTrue: 
-			[query isEnabled: self canConnect.
-			^true].
-	(#(#disconnect #send) includes: cmd) 
-		ifTrue: 
-			[query isEnabled: self isConnected.
-			^true].
-	^super queryCommand: query!
-
 receiveMessagesOn: aStream
 	"Receive messages from the specified <gettableStream>, which is presumably connected to a Socket,
 	until the stream is exhausted. The messages are read as objects using STB, but we are careful to use
@@ -340,6 +326,7 @@ receiveMessagesOn: aStream
 send
 	"Send the current outgoing message to the remote socket"
 
+	<commandQuery: #canConnect>
 	| msg |
 	msg := self userName -> outgoingMessage value.
 	self appendMessage: msg.
@@ -426,14 +413,14 @@ validateUserInterface
 acceptCalls!operations!private! !
 appendMessage:!operations!private! !
 calleeAddress!accessing!public! !
-canConnect!public!testing! !
+canConnect!commands-queries!public!testing! !
 closeConnection!operations!private! !
-connect!commands!public! !
+connect!commands-actions!public! !
 connectFailed:!helpers!private! !
 createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !
 defaultPort!accessing!constants!public! !
-disconnect!commands!public! !
+disconnect!commands-actions!public! !
 dontAcceptCalls!operations!private! !
 enqueueConnected:!operations!private! !
 enqueueDisconnect!helpers!private! !
@@ -447,7 +434,7 @@ forkSender!helpers!private! !
 incomingPort!accessing!public! !
 incomingPort:!accessing!public! !
 isBusy!event handling!public! !
-isConnected!public!testing! !
+isConnected!commands-queries!public!testing! !
 isIdle!public!testing! !
 messageReceived:!operations!private! !
 onGetCursor:!event handling!public! !
@@ -457,9 +444,8 @@ onViewOpened!event handling!private! !
 outgoingPort!accessing!public! !
 outgoingPort:!accessing!public! !
 peerAddress!private! !
-queryCommand:!commands!private! !
 receiveMessagesOn:!private! !
-send!commands!public! !
+send!commands-actions!public! !
 senderMain!operations!private! !
 setAcceptStatus!operations!private! !
 socketConnected:!helpers!private! !

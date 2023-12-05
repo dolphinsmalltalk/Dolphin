@@ -421,17 +421,17 @@ queryPrintToPdf: aCommandQuery
 
 querySwipeNavigation: aCommandQuery
 	aCommandQuery
-		isEnabled: true;
+		beEnabled;
 		isChecked: browser view isSwipeNavigationEnabled!
 
 queryToggleAllowContextMenu: aCommandQuery
 	aCommandQuery
-		isEnabled: true;
+		beEnabled;
 		isChecked: browser view allowContextMenu!
 
 queryToggleAllowExternalDrop: aCommandQuery
 	aCommandQuery
-		isEnabled: true;
+		beEnabled;
 		isChecked: browser view allowExternalDrop!
 
 queryToggleBlockImages: aCommandQuery
@@ -441,82 +441,82 @@ queryToggleBlockImages: aCommandQuery
 
 queryToggleBrowserAcceleratorKeysEnabled: aCommandQuery
 	aCommandQuery
-		isEnabled: true;
+		beEnabled;
 		isChecked: browser view areBrowserAcceleratorKeysEnabled!
 
 queryToggleBuiltinErrorPageEnabled: aCommandQuery
 	aCommandQuery
-		isEnabled: true;
+		beEnabled;
 		isChecked: browser view isBuiltInErrorPageEnabled!
 
 queryToggleDefaultScriptDialogsEnabled: aCommandQuery
 	aCommandQuery
-		isEnabled: true;
+		beEnabled;
 		isChecked: browser view areDefaultScriptDialogsEnabled!
 
 queryToggleDevToolsEnabled: aCommandQuery
 	aCommandQuery
-		isEnabled: true;
+		beEnabled;
 		isChecked: browser view areDevToolsEnabled!
 
 queryToggleEventLogging: aCommandQuery
 	aCommandQuery
-		isEnabled: true;
+		beEnabled;
 		isChecked: self isLoggingEvents!
 
 queryToggleGeneralAutofill: aCommandQuery
 	aCommandQuery
-		isEnabled: true;
+		beEnabled;
 		isChecked: browser view isGeneralAutofillEnabled!
 
 queryToggleInPrivateMode: aCommandQuery
 	aCommandQuery
-		isEnabled: true;
+		beEnabled;
 		isChecked: self isInPrivateModeEnabled!
 
 queryToggleJavaScript: aCommandQuery
 	aCommandQuery
-		isEnabled: true;
+		beEnabled;
 		isChecked: browser view isScriptEnabled!
 
 queryTogglePasswordAutosave: aCommandQuery
 	aCommandQuery
-		isEnabled: true;
+		beEnabled;
 		isChecked: browser view isPasswordAutosaveEnabled!
 
 queryTogglePinchZoomEnabled: aCommandQuery
 	aCommandQuery
-		isEnabled: true;
+		beEnabled;
 		isChecked: browser view isPinchZoomEnabled!
 
 queryToggleSmartScreen: aCommandQuery
 	aCommandQuery
-		isEnabled: true;
+		beEnabled;
 		isChecked: browser view isSmartScreenEnabled!
 
 queryToggleStatusBar: aCommandQuery
 	aCommandQuery
-		isEnabled: true;
+		beEnabled;
 		isChecked: browser view isStatusBarEnabled!
 
 queryToggleSwipeNavigation: aCommandQuery
 	aCommandQuery
-		isEnabled: true;
+		beEnabled;
 		isChecked: browser view isSwipeNavigationEnabled!
 
 queryToggleWebMessaging: aCommandQuery
 	aCommandQuery
-		isEnabled: true;
+		beEnabled;
 		isChecked: browser view isWebMessageEnabled!
 
 queryToggleZoomControl: aCommandQuery
 	aCommandQuery
-		isEnabled: true;
+		beEnabled;
 		isChecked: browser view isZoomControlEnabled!
 
 queryTrackingPreventionLevel: aCommandQuery
 	aCommandQuery
-		isEnabled: true;
+		beEnabled;
 		isChecked: self browserView trackingPreventionLevel = aCommandQuery command argument!
 
 refresh
