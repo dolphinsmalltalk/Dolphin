@@ -28,18 +28,21 @@ availableGridExtents
 beChromaticScale
 	"Set the receiver's model to be playing using a chromatic scale"
 
+	<commandQuery: #queryBeChromaticScale:>
 	self plimbole scaleName: #chromaticScale.
 	self showHintBubble: 'Playing in Chromatic Scale'!
 
 beHangScale
 	"Set the receiver's model to be playing using a hangdrum style scale"
 
+	<commandQuery: #queryBeHangScale:>
 	self plimbole scaleName: #hangScale.
 	self showHintBubble: 'Playing in Hang Drum Scale'!
 
 bePentatonicScale
 	"Set the receiver's model to be playing using a pentatonic scale"
 
+	<commandQuery: #queryBePentatonicScale:>
 	self plimbole scaleName: #pentatonicScale.
 	self showHintBubble: 'Playing in Pentatonic Scale'!
 
@@ -175,6 +178,7 @@ pasteClipboard
 			do: [:ex | self showHintBubble: 'The Clipboard doesn''t have a piece to Paste.']!
 
 play
+	<commandQuery: #queryPlay:>
 	self plimbole play!
 
 plimbole
@@ -200,36 +204,25 @@ previousTenorVoice
 	self plimbole tenorVoice: (voices at: n).
 	self showHintBubble: 'Tenor voice is ' , self plimbole tenorVoice!
 
-queryCommand: aCommandQuery 
-	"Fills in details about the current state of the receiver into aCommandQuery"
+queryBeChromaticScale: aCommandQuery
+	aCommandQuery
+		isChecked: self plimbole scaleName = #chromaticScale;
+		beEnabled!
 
-	| cmd |
-	cmd := aCommandQuery commandSymbol.
-	cmd == #play 
-		ifTrue: 
-			[aCommandQuery
-				isChecked: self isPlaying;
-				isEnabled: true.
-			^true].
-	cmd == #bePentatonicScale 
-		ifTrue: 
-			[aCommandQuery
-				isChecked: self plimbole scaleName = #pentatonicScale;
-				isEnabled: true.
-			^true].
-	cmd == #beChromaticScale 
-		ifTrue: 
-			[aCommandQuery
-				isChecked: self plimbole scaleName = #chromaticScale;
-				isEnabled: true.
-			^true].
-	cmd == #beHangScale 
-		ifTrue: 
-			[aCommandQuery
-				isChecked: self plimbole scaleName = #hangScale;
-				isEnabled: true.
-			^true].
-	^super queryCommand: aCommandQuery!
+queryBeHangScale: aCommandQuery
+	aCommandQuery
+		isChecked: self plimbole scaleName = #hangScale;
+		beEnabled!
+
+queryBePentatonicScale: aCommandQuery
+	aCommandQuery
+		isChecked: self plimbole scaleName = #pentatonicScale;
+		beEnabled!
+
+queryPlay: aCommandQuery
+	aCommandQuery
+		isChecked: self isPlaying;
+		beEnabled!
 
 randomFavourite
 	| random |
@@ -283,7 +276,10 @@ play!public! !
 plimbole!public! !
 previousAltoVoice!commands!public! !
 previousTenorVoice!commands!public! !
-queryCommand:!private! !
+queryBeChromaticScale:!private! !
+queryBeHangScale:!private! !
+queryBePentatonicScale:!private! !
+queryPlay:!private! !
 randomFavourite!commands!public! !
 showHintBubble:!private! !
 slowerTempo!commands!public! !

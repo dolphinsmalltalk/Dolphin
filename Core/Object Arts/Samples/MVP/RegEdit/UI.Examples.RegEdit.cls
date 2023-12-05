@@ -342,7 +342,7 @@ queryRenameCommand: aCommandQuery
 
 queryToggleStatusBar: aCommandQuery
 	aCommandQuery
-		isEnabled: true;
+		beEnabled;
 		isChecked: self statusBar isWindowVisible!
 
 refresh

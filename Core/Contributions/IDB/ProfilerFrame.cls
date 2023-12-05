@@ -17,6 +17,9 @@ Public Domain Freeware'!
 browse
 	self compiledCode browse!
 
+browseableObject
+	^self compiledCode!
+
 coloredSource
 	"Answer a RichText containing the colored source for the receiver's compiledCode"
 
@@ -168,7 +171,8 @@ setFrame: aStackFrame
 	isBlock := aStackFrame isBlockFrame.
 	^self! !
 !ProfilerFrame categoriesForMethods!
-browse!commands!public! !
+browse!commands-actions!public! !
+browseableObject!accessing!public! !
 coloredSource!displaying!public! !
 compiledCode!accessing!public! !
 disassemblySelectionLine!displaying!public! !

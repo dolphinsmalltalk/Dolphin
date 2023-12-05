@@ -17,6 +17,9 @@ Public Domain Freeware'!
 browse
 	self object browse!
 
+browseableObject
+	^self object!
+
 convertTally: tallyInteger time: timeInteger 
 	"Now we know the final totals for each of the fields we can convert then to a percentage"
 
@@ -115,7 +118,8 @@ timeAll
 
 	^timeAll! !
 !ProfilerListItem categoriesForMethods!
-browse!commands!public! !
+browse!commands-actions!public! !
+browseableObject!accessing!public! !
 convertTally:time:!converting!public! !
 incrementTallyActive!operations!public! !
 incrementTallyAll!operations!public! !
