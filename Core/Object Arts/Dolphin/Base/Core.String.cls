@@ -562,7 +562,7 @@ expandMacrosWithArguments: anArray locale: aLocale
 	stream := String writeStream: self size.
 	stream locale: aLocale.
 	self expandMacrosWithArguments: anArray on: stream.
-	^stream contents!
+	^stream grabContents!
 
 expandMacrosWithArguments: anArray on: aPuttableStream
 	"Expand the receiver with replaceable arguments from the <Array> argument onto the <puttableStream> argument.
@@ -572,50 +572,76 @@ expandMacrosWithArguments: anArray on: aPuttableStream
 
 	<nD> expands the nth parameter using it's #displayOn:
 	<nP> expands the nth parameter using it's #printOn:
-	<nS> expands the nth parameter treating it as a <String>
+	<nS> expands the nth parameter treating it as a <String> (or empty string if nil)
 	<N> expands as a newline combination
 	<T> expands as a TAB
 	<n?xxxx:yyyy> if the nth parameter is true expands to 'xxxx' else 'expands to yyyy'
 
-	If n is omitted the default of 1 is used.	
+	If `n` is omitted the next parameter after the last emitted is used. If there is no n-th parameter, then the expansion proceeds as if the parameter were nil.
+
+	The D/P/S expansions can qualified with a colon-delimited suffix that is inserted if the parameter is nil (or missing), e.g
+		'Foo <s:bar>' expandMacros
+
+	Any character not inside an expansion can be quoted with `%` to emit it unprocessed. As this applies to `<`,  `%<` will emit `<` and not process as an expansion.
 	"
 
 	| readStream index char |
+	"As an optimisation for the fairly common case of expanding a string that contains no insertions, we can avoid enumerating the string if there are definitely none."
+	(self includes: $<)
+		ifFalse: 
+			[aPuttableStream nextPutAll: self.
+			^self].
 	readStream := ReadStream on: self.
 	index := 1.
 	[(char := readStream nextAvailable) isNil] whileFalse: 
 			[char == $<
 				ifTrue: 
-					[| nextChar |
-					nextChar := readStream next asLowercase.
-					nextChar == $n ifTrue: [aPuttableStream cr].
-					nextChar == $t ifTrue: [aPuttableStream tab].
-					nextChar isDigit
+					[char := readStream next asLowercase.
+					char == $n
 						ifTrue: 
-							[index := nextChar digitValue.
-							[readStream atEnd or: [(nextChar := readStream next asLowercase) isDigit not]]
-								whileFalse: [index := index * 10 + nextChar digitValue]].
-					nextChar == $?
-						ifTrue: 
-							[| trueString falseString |
-							trueString := readStream upTo: $:.
-							falseString := readStream upTo: $>.
-							readStream position: readStream position - 1.
-							aPuttableStream nextPutAll: ((anArray at: index) ifTrue: [trueString] ifFalse: [falseString]).
-							index := index + 1].
-					nextChar == $p
-						ifTrue: 
-							[(anArray at: index) printOn: aPuttableStream.
-							index := index + 1].
-					nextChar == $d
-						ifTrue: 
-							[(anArray at: index) displayOn: aPuttableStream.
-							index := index + 1].
-					nextChar == $s
-						ifTrue: 
-							[aPuttableStream nextPutAll: (anArray at: index).
-							index := index + 1].
-					readStream skipTo: $>]
+							[aPuttableStream cr.
+							readStream skipTo: $>]
+						ifFalse: 
+							[char == $t
+								ifTrue: 
+									[aPuttableStream tab.
+									readStream skipTo: $>]
+								ifFalse: 
+									[char isDigit
+										ifTrue: 
+											[index := char digitValue.
+											[readStream atEnd or: [(char := readStream next asLowercase) isDigit not]]
+												whileFalse: [index := index * 10 + char digitValue]].
+									char == $?
+										ifTrue: 
+											[| trueString falseString |
+											trueString := readStream upTo: $:.
+											falseString := readStream upTo: $>.
+											aPuttableStream nextPutAll: ((anArray lookup: index) ?? false ifTrue: [trueString] ifFalse: [falseString]).
+											index := index + 1]
+										ifFalse: 
+											[| insertion |
+											insertion := anArray lookup: index.
+											(insertion isNil and: [readStream peekFor: $:])
+												ifTrue: 
+													[aPuttableStream nextPutAll: (readStream upTo: $>).
+													index := index + 1]
+												ifFalse: 
+													[char == $d
+														ifTrue: 
+															[insertion displayOn: aPuttableStream.
+															index := index + 1]
+														ifFalse: 
+															[char == $p
+																ifTrue: 
+																	[insertion printOn: aPuttableStream.
+																	index := index + 1]
+																ifFalse: 
+																	[char == $s
+																		ifTrue: 
+																			[aPuttableStream nextPutAll: insertion ?? ''.
+																			index := index + 1]]].
+													readStream skipTo: $>]]]]]
 				ifFalse: [aPuttableStream nextPut: (char == $% ifTrue: [readStream next] ifFalse: [char])]]!
 
 findString: aString 
