@@ -30,6 +30,7 @@ package setMethodNames: #(
 	#(#{UI.Scintilla.ScintillaView} #isKeyboardInputUnicode:)
 	#(#{UI.Scintilla.ScintillaView} #marginCount)
 	#(#{UI.Scintilla.ScintillaView} #marginCount:)
+	#(#{UI.Scintilla.ScintillaView} #sciFormatRange:fr:)
 	#(#{UI.Scintilla.ScintillaView} #sciSetEdgeColumn:)
 	#(#{UI.Scintilla.ScintillaView} #secondarySelectionAlpha:)
 	#(#{UI.Scintilla.ScintillaView} #selectionAlpha:)
@@ -216,6 +217,16 @@ marginCount: anInteger
 	#deprecated.
 	^self sciSetMargins: anInteger!
 
+sciFormatRange: drawBoolean fr: frFORMATRANGE
+	"Private - On Windows, will draw the document into a display context such as a printer."
+
+	#deprecated.
+	^(library
+		directFunction: this
+		msg: SCI_FORMATRANGE
+		wParam: drawBoolean asParameter
+		lpParam: frFORMATRANGE) + 1!
+
 sciSetEdgeColumn: columnInteger
 	#deprecated. "For reading old view resources"
 	self edgeColumn: columnInteger + 1!
@@ -265,6 +276,7 @@ isKeyboardInputUnicode!**auto generated**!other settings!public!scintilla interf
 isKeyboardInputUnicode:!**auto generated**!other settings!public!scintilla interface! !
 marginCount!margins!public!scintilla interface! !
 marginCount:!margins!public!scintilla interface! !
+sciFormatRange:fr:!private!scintilla interface! !
 sciSetEdgeColumn:!long lines!private!scintilla interface! !
 secondarySelectionAlpha:!caret, selection, and hotspot styles!public! !
 selectionAlpha:!caret, selection, and hotspot styles!public! !

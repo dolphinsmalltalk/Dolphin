@@ -52,6 +52,7 @@ package setPrerequisites: #(
 	'..\..\..\Dolphin\MVP\Base\Dolphin Basic Geometry'
 	'..\..\..\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls'
 	'..\..\..\Dolphin\MVP\Dialogs\Common\Dolphin Common Dialogs'
+	'..\..\..\Dolphin\MVP\Dialogs\Common\Dolphin Common Font Dialog'
 	'..\..\..\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars'
 	'..\..\..\Dolphin\MVP\Graphics\Dolphin GDI Graphics'
 	'..\..\..\Dolphin\MVP\Models\List\Dolphin List Models'

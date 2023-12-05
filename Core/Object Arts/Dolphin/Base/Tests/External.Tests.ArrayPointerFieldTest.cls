@@ -23,7 +23,7 @@ testGenerateAccessorsForSizedString
 			type: <3d> new
 			offset: 4'
 				<< { ArrayPointerField. String. UInt32Field }.
-	structClass recompileDefinition.
+	structClass compileDefinition.
 	actual := (structClass compiledMethodAt: #Test:) parseTree.
 	expected := Parser
 				parseMethod: 'Test: aString bytes uintPtrAtOffset: _OffsetOf_Test put: aString yourAddress. self Size: aString size'.
@@ -55,7 +55,7 @@ testGenerateAccessorsForSizeIsExpression
 			type: <4d> new
 			offset: 0'
 				<< { ArrayPointerField. SizeIsArrayFieldLength. Utf16String. UInt32Field }.
-	structClass recompileDefinition.
+	structClass compileDefinition.
 	actual := (structClass compiledMethodAt: #Test:) parseTree.
 	expected := Parser
 				parseMethod: 'Test: anUtf16String bytes uintPtrAtOffset: _OffsetOf_Test put: anUtf16String yourAddress. self Size: anUtf16String size << 1'.

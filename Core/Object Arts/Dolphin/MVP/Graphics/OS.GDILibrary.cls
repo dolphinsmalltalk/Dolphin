@@ -185,9 +185,9 @@ createIC: lpszDriver lpszDevice: lpszDevice lpszOutput: lpszOutput lpdvminit: lp
 			LPCWSTR lpszDriver,
 			LPCWSTR lpszDevice,
 			LPCWSTR lpszOutput,
-			DEVMODE* lpdvminit);"
+			DEVMODEW* lpdvminit);"
 
-	<stdcall: handle CreateICW lpwstr lpwstr lpwstr DEVMODE*>
+	<stdcall: handle CreateICW lpwstr lpwstr lpwstr DEVMODEW*>
 	^self invalidCall: _failureCode!
 
 createPalette: lplgpl

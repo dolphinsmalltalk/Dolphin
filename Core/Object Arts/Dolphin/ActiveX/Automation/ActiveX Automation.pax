@@ -645,7 +645,7 @@ External.Structure
 	classVariableNames: ''
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
-	classConstants: { '_AbstractELEMDESC_Size' -> 16r8. '_OffsetOf_tdescElem' -> 16r0 }!
+	classConstants: { '_OffsetOf_tdescElem' -> 16r0 }!
 External.Structure
 	subclass: #'OS.COM.CURRENCY'
 	instanceVariableNames: ''
@@ -907,7 +907,7 @@ OS.COM.TypeInfoStructure
 	classVariableNames: ''
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
-	classConstants: { '_MemberDesc_Size' -> 16r4. '_OffsetOf_memid' -> 16r0 }!
+	classConstants: { '_OffsetOf_memid' -> 16r0 }!
 OS.COM.TypeInfoStructure
 	subclass: #'OS.COM.TYPEATTR'
 	instanceVariableNames: 'piTypeInfo'

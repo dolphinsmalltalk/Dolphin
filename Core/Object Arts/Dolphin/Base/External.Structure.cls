@@ -186,6 +186,9 @@ copyStringFrom: start to: stop
 		from: start
 		to: stop!
 
+copyToGlobalHeap
+	^Memory copyBytesToGlobalHeap: bytes size: self byteSize!
+
 detach
 	"Detach the receiver from the object at which it is pointing, answering the address
 	of that object. This is useful where one wishes to take-over ownership of an object
@@ -436,6 +439,7 @@ copy:from:to:!copying!private! !
 copyBytes:!accessing!private! !
 copyFrom:to:!copying!public! !
 copyStringFrom:to:!copying!public! !
+copyToGlobalHeap!public! !
 detach!public!realizing/unrealizing! !
 doesNotUnderstand:!exceptions!public! !
 fieldsDo:!enumerating!public! !
@@ -519,8 +523,8 @@ byteSize
 byteSize: anInteger
 	"Private - Set the size (in bytes) of the structure the receiver represents"
 
-	(anInteger between: 0 and: 2 ** 15 - 1)
-		ifFalse: [self error: ('Invalid structure size <1p>' expandMacrosWith: anInteger)].
+	(anInteger between: 0 and: ##(2 ** 15 - 1))
+		ifFalse: [self error: ('Invalid structure size <p>' expandMacrosWith: anInteger)].
 	self extraInstanceSpec: anInteger!
 
 canUnderstand: aSymbol
@@ -588,7 +592,7 @@ defineFields
 !
 
 defineSizeConstant: newByteSize
-	(self definesNewFields and: [newByteSize ~~ 0])
+	(newByteSize ~~ 0 and: [self requiresSizeConstant])
 		ifTrue: [self addClassConstant: self sizeConstantName value: newByteSize]
 		ifFalse: [self removeClassVarName: self sizeConstantName]!
 
@@ -698,7 +702,7 @@ hasUncompiledFields
 	^flags allMask: UncompiledFieldsMask!
 
 hasUncompiledFields: aBoolean
-	flags := flags mask: UncompiledFieldsMask set: aBoolean!
+	flags := self flags mask: UncompiledFieldsMask set: aBoolean!
 
 inheritTemplate
 	| ancestor |
@@ -925,6 +929,9 @@ removeRedundantOffsetConstants
 				ifTrue: [redundant add: varName]].
 	redundant do: [:each | self removeClassVarName: each]!
 
+requiresSizeConstant
+	^self isNonInstantiable not and: [self definesNewFields]!
+
 resetTemplate
 	self byteSize: 0.
 	flags := (self flags maskClear: UncompiledFieldsMask) bitOr: CompileNewFieldsMask.
@@ -1041,6 +1048,7 @@ recompileReferences!private!template definition! !
 register!adding!public! !
 registerClass:forGUID:!adding!public! !
 removeRedundantOffsetConstants!private!template definition! !
+requiresSizeConstant!private!template definition! !
 resetTemplate!public!template definition! !
 setGuid:!accessing!private! !
 shouldCompileNewFields!private!testing! !

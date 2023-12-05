@@ -6,7 +6,7 @@ External.Structure
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: { '_CHARRANGE_Size' -> 16r8 }!
+	classConstants: {}!
 OS.AbstractCHARRANGE guid: (Core.GUID fromString: '{3595c0ec-31e8-4237-9857-8bc522529953}')!
 OS.AbstractCHARRANGE isNonInstantiable: true!
 OS.AbstractCHARRANGE comment: ''!
@@ -28,8 +28,8 @@ cpMin
 	^self subclassResponsibility! !
 !OS.AbstractCHARRANGE categoriesForMethods!
 asObject!accessing!public! !
-cpMax!**compiled accessors**!public! !
-cpMin!**compiled accessors**!public! !
+cpMax!accessing!public! !
+cpMin!accessing!public! !
 !
 
 !OS.AbstractCHARRANGE class methodsFor!

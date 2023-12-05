@@ -35,7 +35,7 @@ package setClassNames: #(
 
 package setPrerequisites: #(
 	'..\..\..\Dolphin\Base\Dolphin'
-	'..\..\..\Dolphin\MVP\Dialogs\Common\Dolphin Common Dialogs'
+	'..\..\..\Dolphin\MVP\Dialogs\Common\Dolphin Common Color Dialog'
 	'..\..\..\Dolphin\MVP\Graphics\Dolphin GDI Graphics'
 	'..\..\..\Dolphin\MVP\Base\Dolphin MVP Base'
 	'..\..\..\Dolphin\MVP\Icons\Dolphin Text Tile Icons'

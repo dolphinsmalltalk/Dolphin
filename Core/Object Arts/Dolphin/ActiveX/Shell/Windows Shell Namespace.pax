@@ -71,13 +71,6 @@ External.Structure
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { '_OffsetOf_abID' -> 16r2. '_OffsetOf_cb' -> 16r0. '_SHITEMID_Size' -> 16r4 }!
-OS.COM.IUnknown
-	subclass: #'OS.IShellFolder'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
 OS.CommonDialogStructure
 	subclass: #'OS.BROWSEINFOW'
 	instanceVariableNames: 'title displayName'
@@ -95,6 +88,13 @@ OS.CommonDialogStructure
 			'_OffsetOf_pidlRoot' -> 16r4.
 			'_OffsetOf_pszDisplayName' -> 16r8
 		}!
+OS.COM.IUnknown
+	subclass: #'OS.IShellFolder'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 

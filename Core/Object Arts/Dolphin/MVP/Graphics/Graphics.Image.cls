@@ -96,7 +96,7 @@ fileLocator
 	^initializer fileLocator!
 
 freeDC
-	"Private - Free the receiver's cached memory DC, if any."
+	"Free the receiver's cached memory DC, if any."
 
 	!
 
@@ -200,7 +200,7 @@ drawOn:at:!drawing-bitmaps!public! !
 drawOn:at:extent:!drawing-bitmaps!public! !
 extent!accessing!public! !
 fileLocator!accessing!public! !
-freeDC!private!realizing/unrealizing! !
+freeDC!public!realizing/unrealizing! !
 hash!comparing!public! !
 hotspot!accessing!public! !
 identifier!accessing!public! !

@@ -24,6 +24,12 @@ Example:
 !UI.ImageView categoriesForClass!MVP-Views! !
 !UI.ImageView methodsFor!
 
+image: anImage
+	(image := anImage)
+		ifNotNil: 
+			["The image may have a cached DC that is not display compatible"
+			image freeDC]!
+
 paintImageOn: aCanvas 
 	| imageRect displayRect |
 	(image isNil or: [
@@ -41,6 +47,7 @@ paintImageOn: aCanvas
 		imageRect: imageRect
 		displayRect: displayRect! !
 !UI.ImageView categoriesForMethods!
+image:!private!updating! !
 paintImageOn:!drawing!event handling!private! !
 !
 

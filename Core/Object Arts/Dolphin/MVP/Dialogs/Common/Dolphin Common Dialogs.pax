@@ -3,38 +3,30 @@ package := Package name: 'Dolphin Common Dialogs'.
 package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Windows Common Dialogs.
-Copyright (c) Object Arts Ltd. 1997-2018. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.
+Copyright (c) Object Arts Ltd. 1997-2023. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.
 
-This package contains Dialog presenter wrappers for the Windows common dialogs for choosing colours (ColorDialog) and fonts (FontDialog), opening (FileOpenDialog) and saving (FileSaveDialog) files, find (FindDialog) and replace (FindReplaceDialog), and printing (PrintDialog). With the exception of the find and replace dialogs, these are all modal dialogs that are opened with #showModal. For further details see the comments for the specific classes.'.
+This package contains Dialog presenter wrappers for the core Windows common dialogs for opening (FileOpenDialog) and saving (FileSaveDialog) files. These are modal dialogs that are opened with #showModal.'.
 
 package basicPackageVersion: '6.2'.
 
 
 package setClassNames: #(
-	#{OS.CHOOSECOLORW}
-	#{OS.CHOOSEFONTW}
 	#{OS.ComDlgLibrary}
+	#{OS.ComDlgStructure}
 	#{OS.CommonDialogConstants}
 	#{OS.CommonDialogStructure}
-	#{OS.FINDREPLACEW}
 	#{OS.OFNOTIFYEXW}
 	#{OS.OFNOTIFYW}
 	#{OS.OPENFILENAMEW}
-	#{UI.ColorDialog}
 	#{UI.CommonDialog}
 	#{UI.FileDialog}
 	#{UI.FileOpenDialog}
 	#{UI.FileSaveDialog}
-	#{UI.FindDialog}
-	#{UI.FindReplaceDialog}
-	#{UI.FontDialog}
 ).
 
 package setMethodNames: #(
 	#(#{Core.File} #title)
 	#(#{Core.File class} #titleOf:)
-	#(#{Graphics.Color class} #choose)
-	#(#{Graphics.Font class} #choose)
 ).
 
 package setVariableNames: #(
@@ -48,7 +40,6 @@ package setBinaryVariableNames: #(
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
 	'..\Dolphin Base Dialogs'
-	'..\..\Graphics\Dolphin GDI Graphics'
 	'..\..\Base\Dolphin MVP Base'
 ).
 
@@ -176,29 +167,8 @@ UI.ValueDialog
 	classInstanceVariableNames: 'hookHandlers'
 	classConstants: {}!
 UI.CommonDialog
-	subclass: #'UI.ColorDialog'
-	instanceVariableNames: 'validationBlock'
-	classVariableNames: 'CustomColors WM_COLOROK'
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-UI.CommonDialog
 	subclass: #'UI.FileDialog'
 	instanceVariableNames: 'style fileTypes validationBlock'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-UI.CommonDialog
-	subclass: #'UI.FindDialog'
-	instanceVariableNames: 'findWhatBuf findDetails'
-	classVariableNames: 'HookHandlers'
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-UI.CommonDialog
-	subclass: #'UI.FontDialog'
-	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -217,100 +187,21 @@ UI.FileDialog
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.FindDialog
-	subclass: #'UI.FindReplaceDialog'
-	instanceVariableNames: 'replaceWith'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-OS.NMHDR
-	subclass: #'OS.OFNOTIFYEXW'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-			'_OffsetOf_lpOFN' -> 16rC.
-			'_OffsetOf_pidl' -> 16r14.
-			'_OffsetOf_psf' -> 16r10.
-			'_OFNOTIFYEXW_Size' -> 16r18
-		}!
-OS.NMHDR
-	subclass: #'OS.OFNOTIFYW'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-			'_OffsetOf_lpOFN' -> 16rC.
-			'_OffsetOf_pszFile' -> 16r10.
-			'_OFNOTIFYW_Size' -> 16r14
-		}!
-OS.SizedStructure
+External.Structure
 	subclass: #'OS.CommonDialogStructure'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.CommonDialogConstants})
 	classInstanceVariableNames: ''
-	classConstants: { '_CommonDialogStructure_Size' -> 16r8. '_OffsetOf_hwndOwner' -> 16r4 }!
+	classConstants: {}!
 OS.CommonDialogStructure
-	subclass: #'OS.CHOOSECOLORW'
+	subclass: #'OS.ComDlgStructure'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-			'_CHOOSECOLORW_Size' -> 16r24.
-			'_OffsetOf_flags' -> 16r14.
-			'_OffsetOf_hInstance' -> 16r8.
-			'_OffsetOf_lCustData' -> 16r18.
-			'_OffsetOf_lpCustColors' -> 16r10.
-			'_OffsetOf_lpfnHook' -> 16r1C.
-			'_OffsetOf_lpTemplateName' -> 16r20.
-			'_OffsetOf_rgbResult' -> 16rC
-		}!
-OS.CommonDialogStructure
-	subclass: #'OS.CHOOSEFONTW'
-	instanceVariableNames: 'logFont'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-			'_CHOOSEFONTW_Size' -> 16r3C.
-			'_OffsetOf_flags' -> 16r14.
-			'_OffsetOf_hDC' -> 16r8.
-			'_OffsetOf_hInstance' -> 16r28.
-			'_OffsetOf_iPointSize' -> 16r10.
-			'_OffsetOf_lCustData' -> 16r1C.
-			'_OffsetOf_lpfnHook' -> 16r20.
-			'_OffsetOf_lpLogFont' -> 16rC.
-			'_OffsetOf_lpszStyle' -> 16r2C.
-			'_OffsetOf_lpTemplateName' -> 16r24.
-			'_OffsetOf_nFontType' -> 16r30.
-			'_OffsetOf_nSizeMax' -> 16r38.
-			'_OffsetOf_nSizeMin' -> 16r34.
-			'_OffsetOf_rgbColors' -> 16r18
-		}!
-OS.CommonDialogStructure
-	subclass: #'OS.FINDREPLACEW'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-			'_FINDREPLACEW_Size' -> 16r28.
-			'_OffsetOf_flags' -> 16rC.
-			'_OffsetOf_hInstance' -> 16r8.
-			'_OffsetOf_lCustData' -> 16r1C.
-			'_OffsetOf_lpfnHook' -> 16r20.
-			'_OffsetOf_lpstrFindWhat' -> 16r10.
-			'_OffsetOf_lpstrReplaceWith' -> 16r14.
-			'_OffsetOf_lpTemplateName' -> 16r24.
-			'_OffsetOf_wFindWhatLen' -> 16r18.
-			'_OffsetOf_wReplaceWithLen' -> 16r1A
-		}!
-OS.CommonDialogStructure
+	classConstants: { '_OffsetOf_dwSize' -> 16r0. '_OffsetOf_hwndOwner' -> 16r4 }!
+OS.ComDlgStructure
 	subclass: #'OS.OPENFILENAMEW'
 	instanceVariableNames: 'fileName title filter defExt initialDir'
 	classVariableNames: ''
@@ -339,6 +230,29 @@ OS.CommonDialogStructure
 			'_OffsetOf_nMaxFileTitle' -> 16r28.
 			'_OffsetOf_pvReserved' -> 16r4C.
 			'_OPENFILENAMEW_Size' -> 16r58
+		}!
+OS.NMHDR
+	subclass: #'OS.OFNOTIFYEXW'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_OffsetOf_lpOFN' -> 16rC.
+			'_OffsetOf_pidl' -> 16r14.
+			'_OffsetOf_psf' -> 16r10.
+			'_OFNOTIFYEXW_Size' -> 16r18
+		}!
+OS.NMHDR
+	subclass: #'OS.OFNOTIFYW'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_OffsetOf_lpOFN' -> 16rC.
+			'_OffsetOf_pszFile' -> 16r10.
+			'_OFNOTIFYW_Size' -> 16r14
 		}!
 
 "Loose Methods"!
@@ -375,27 +289,6 @@ titleOf: aString
 	^buf! !
 !Core.File class categoriesForMethods!
 titleOf:!filename manipulation!public! !
-!
-
-!Graphics.Color class methodsFor!
-
-choose
-	"Answer a new instance of the receiver chosen from the common color dialog."
-
-	^UI.ColorDialog showModal! !
-!Graphics.Color class categoriesForMethods!
-choose!instance creation!public! !
-!
-
-!Graphics.Font class methodsFor!
-
-choose
-	"Answer an instance of the receiver chosen by the user from the common
-	font dialog."
-
-	^UI.FontDialog showModal! !
-!Graphics.Font class categoriesForMethods!
-choose!instance creation!public! !
 !
 
 "End of package definition"!

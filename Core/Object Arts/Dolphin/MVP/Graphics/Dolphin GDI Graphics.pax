@@ -63,7 +63,8 @@ package setClassNames: #(
 	#{OS.BITMAPINFO}
 	#{OS.BITMAPINFOHEADER}
 	#{OS.BLENDFUNCTION}
-	#{OS.DEVMODE}
+	#{OS.DEVMODEW}
+	#{OS.DEVNAMESW}
 	#{OS.DIBSECTION}
 	#{OS.DOCINFOW}
 	#{OS.ENUMLOGFONTW}
@@ -694,45 +695,86 @@ External.Structure
 			'_OffsetOf_SourceConstantAlpha' -> 16r2
 		}!
 External.Structure
-	subclass: #'OS.DEVMODE'
+	subclass: #'OS.DEVMODEW'
+	instanceVariableNames: ''
+	classVariableNames: 'DM_DISPLAYFIXEDOUTPUT'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_DEVMODEW_Size' -> 16rBC.
+			'_OffsetOf_dmBitsPerPel' -> 16rA8.
+			'_OffsetOf_dmCollate' -> 16r64.
+			'_OffsetOf_dmColor' -> 16r5C.
+			'_OffsetOf_dmCopies' -> 16r56.
+			'_OffsetOf_dmDefaultSource' -> 16r58.
+			'_OffsetOf_dmDeviceName' -> 16r0.
+			'_OffsetOf_dmDisplayFixedOutput' -> 16r58.
+			'_OffsetOf_dmDisplayFlags' -> 16rB4.
+			'_OffsetOf_dmDisplayFrequency' -> 16rB8.
+			'_OffsetOf_dmDisplayOrientation' -> 16r54.
+			'_OffsetOf_dmDriverExtra' -> 16r46.
+			'_OffsetOf_dmDriverVersion' -> 16r42.
+			'_OffsetOf_dmDuplex' -> 16r5E.
+			'_OffsetOf_dmFields' -> 16r48.
+			'_OffsetOf_dmFormName' -> 16r66.
+			'_OffsetOf_dmLogPixels' -> 16rA6.
+			'_OffsetOf_dmNup' -> 16rB4.
+			'_OffsetOf_dmOrientation' -> 16r4C.
+			'_OffsetOf_dmPaperLength' -> 16r50.
+			'_OffsetOf_dmPaperSize' -> 16r4E.
+			'_OffsetOf_dmPaperWidth' -> 16r52.
+			'_OffsetOf_dmPelsHeight' -> 16rB0.
+			'_OffsetOf_dmPelsWidth' -> 16rAC.
+			'_OffsetOf_dmPosition' -> 16r4C.
+			'_OffsetOf_dmPrintQuality' -> 16r5A.
+			'_OffsetOf_dmScale' -> 16r54.
+			'_OffsetOf_dmSize' -> 16r44.
+			'_OffsetOf_dmSpecVersion' -> 16r40.
+			'_OffsetOf_dmTTOption' -> 16r62.
+			'_OffsetOf_dmYResolution' -> 16r60.
+			'DM_BITSPERPEL' -> 16r40000.
+			'DM_COLLATE' -> 16r8000.
+			'DM_COLOR' -> 16r800.
+			'DM_COPIES' -> 16r100.
+			'DM_DEFAULTSOURCE' -> 16r200.
+			'DM_DISPLAYFLAGS' -> 16r200000.
+			'DM_DISPLAYFREQUENCY' -> 16r400000.
+			'DM_DISPLAYORIENTATION' -> 16r80.
+			'DM_DITHERTYPE' -> 16r4000000.
+			'DM_DUPLEX' -> 16r1000.
+			'DM_FORMNAME' -> 16r10000.
+			'DM_ICMINTENT' -> 16r1000000.
+			'DM_ICMMETHOD' -> 16r800000.
+			'DM_LOGPIXELS' -> 16r20000.
+			'DM_MEDIATYPE' -> 16r2000000.
+			'DM_NUP' -> 16r40.
+			'DM_ORIENTATION' -> 16r1.
+			'DM_PANNINGHEIGHT' -> 16r10000000.
+			'DM_PANNINGWIDTH' -> 16r8000000.
+			'DM_PAPERLENGTH' -> 16r4.
+			'DM_PAPERSIZE' -> 16r2.
+			'DM_PAPERWIDTH' -> 16r8.
+			'DM_PELSHEIGHT' -> 16r100000.
+			'DM_PELSWIDTH' -> 16r80000.
+			'DM_POSITION' -> 16r20.
+			'DM_PRINTQUALITY' -> 16r400.
+			'DM_SCALE' -> 16r10.
+			'DM_TTOPTION' -> 16r4000.
+			'DM_YRESOLUTION' -> 16r2000
+		}!
+External.Structure
+	subclass: #'OS.DEVNAMESW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-			'_DEVMODE_Size' -> 16r94.
-			'_OffsetOf_dmBitsPerPel' -> 16r68.
-			'_OffsetOf_dmCollate' -> 16r44.
-			'_OffsetOf_dmColor' -> 16r3C.
-			'_OffsetOf_dmCopies' -> 16r36.
-			'_OffsetOf_dmDefaultSource' -> 16r38.
-			'_OffsetOf_dmDeviceName' -> 16r0.
-			'_OffsetOf_dmDisplayFlags' -> 16r74.
-			'_OffsetOf_dmDisplayFrequency' -> 16r78.
-			'_OffsetOf_dmDitherType' -> 16r88.
-			'_OffsetOf_dmDriverExtra' -> 16r26.
-			'_OffsetOf_dmDriverVersion' -> 16r22.
-			'_OffsetOf_dmDuplex' -> 16r3E.
-			'_OffsetOf_dmFields' -> 16r28.
-			'_OffsetOf_dmFormName' -> 16r46.
-			'_OffsetOf_dmICMIntent' -> 16r80.
-			'_OffsetOf_dmICMMethod' -> 16r7C.
-			'_OffsetOf_dmLogPixels' -> 16r66.
-			'_OffsetOf_dmMediaType' -> 16r84.
-			'_OffsetOf_dmOrientation' -> 16r2C.
-			'_OffsetOf_dmPaperLength' -> 16r30.
-			'_OffsetOf_dmPaperSize' -> 16r2E.
-			'_OffsetOf_dmPaperWidth' -> 16r32.
-			'_OffsetOf_dmPelsHeight' -> 16r70.
-			'_OffsetOf_dmPelsWidth' -> 16r6C.
-			'_OffsetOf_dmPrintQuality' -> 16r3A.
-			'_OffsetOf_dmReserved1' -> 16r8C.
-			'_OffsetOf_dmReserved2' -> 16r90.
-			'_OffsetOf_dmScale' -> 16r34.
-			'_OffsetOf_dmSize' -> 16r24.
-			'_OffsetOf_dmSpecVersion' -> 16r20.
-			'_OffsetOf_dmTTOption' -> 16r42.
-			'_OffsetOf_dmYResolution' -> 16r40
+			'_DEVNAMESW_Size' -> 16r8.
+			'_OffsetOf_wDefault' -> 16r6.
+			'_OffsetOf_wDeviceOffset' -> 16r2.
+			'_OffsetOf_wDriverOffset' -> 16r0.
+			'_OffsetOf_wOutputOffset' -> 16r4.
+			'DN_DEFAULTPRN' -> 16r1
 		}!
 External.Structure
 	subclass: #'OS.GRADIENT_RECT'

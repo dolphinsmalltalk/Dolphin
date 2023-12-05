@@ -42,10 +42,10 @@ AddRef
 
 	^self subclassResponsibility!
 
-argSizes: anExternalAddress
-	"Set the receiver's 'argSizes' field to the value of the argument, anExternalAddress"
+argSizes: anAddress
+	"Set the receiver's 'argSizes' field to the value of the argument, anAddress"
 
-	bytes uintPtrAtOffset: _OffsetOf_argSizes put: anExternalAddress!
+	bytes uintPtrAtOffset: _OffsetOf_argSizes put: anAddress!
 
 asParameter
 	"Answer the receiver in a form suitable for passing
@@ -328,10 +328,10 @@ supportsInterface: anInterfaceClass
 
 	^self class == anInterfaceClass "isKindOf: anInterfaceClass"!
 
-vtbl: anExternalAddress
-	"Set the receiver's 'vtbl' field to the value of the argument, anExternalAddress"
+vtbl: anAddress
+	"Set the receiver's 'vtbl' field to the value of the argument, anAddress"
 
-	bytes uintPtrAtOffset: _OffsetOf_vtbl put: anExternalAddress! !
+	bytes uintPtrAtOffset: _OffsetOf_vtbl put: anAddress! !
 !OS.COM.Interface categoriesForMethods!
 _addRef!methods!private! !
 =!comparing!public! !
@@ -682,9 +682,6 @@ defineFunctions
 	You must override this to declare an interface class."
 
 	^self subclassResponsibility!
-
-defineSizeConstant: newByteSize
-	"Do nothing - we don't want a size constant defined for subclasses"!
 
 defineTemplate
 	"Initialize the receiver class' structure template and VTable."
@@ -1047,6 +1044,9 @@ removeCompiledFunctions
 
 	[self removeCategory: self generatedFunctionCategories first] on: NotFoundError do: [:e | e notify]!
 
+requiresSizeConstant
+	^self definesNewFields!
+
 setGuid: id
 	"Private - Set the value of the receiver's 'guid' instance variable to the 
 	<GUID>, id."
@@ -1129,7 +1129,6 @@ defineFunction:returnType:!automatic generation!public!template definition! !
 defineFunction:returnType:argumentTypes:!automatic generation!public!template definition! !
 defineFunction:type:returnType:argumentTypes:!automatic generation!public!template definition! !
 defineFunctions!initializing!public!template definition! !
-defineSizeConstant:!private!template definition! !
 defineTemplate!public!template definition! !
 defineVTable!automatic generation!public!template definition! !
 elementSize!accessing!public! !
@@ -1167,6 +1166,7 @@ register!adding!public! !
 registerClass:forIID:!adding!public! !
 registerSubclasses!initializing!public! !
 removeCompiledFunctions!automatic generation!development!public! !
+requiresSizeConstant!private!template definition! !
 setGuid:!accessing!private! !
 specialBehaviorAttributes!constants!public!source filing! !
 stdMethodCallType!constants!private! !

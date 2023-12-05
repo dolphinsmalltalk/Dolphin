@@ -6,11 +6,7 @@ External.ExternalArray
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-			'_CountedArray_Size' -> 16r8.
-			'_OffsetOf_cElems' -> 16r0.
-			'_OffsetOf_pElems' -> 16r4
-		}!
+	classConstants: { '_OffsetOf_cElems' -> 16r0. '_OffsetOf_pElems' -> 16r4 }!
 OS.COM.CountedArray guid: (Core.GUID fromString: '{44a86404-b2fe-11d3-b376-080046056106}')!
 OS.COM.CountedArray isNonInstantiable: true!
 OS.COM.CountedArray comment: 'OLECountedArray is an abstract base class for counted array structures used by various OLE/COM interfaces to input/output variable length arrays, where the array storage is allocated from COM task memory.'!
@@ -80,14 +76,14 @@ onStartup
 		bytes := nil]!
 
 pElems
-	"Answer the <ExternalAddress> value of the receiver's 'pElems' field."
+	"Answer the <Address> value of the receiver's 'pElems' field."
 
 	^(bytes uintPtrAtOffset: _OffsetOf_pElems) asExternalAddress!
 
-pElems: anExternalAddress
-	"Set the receiver's 'pElems' field to the value of the argument, anExternalAddress"
+pElems: anAddress
+	"Set the receiver's 'pElems' field to the value of the argument, anAddress"
 
-	bytes uintPtrAtOffset: _OffsetOf_pElems put: anExternalAddress!
+	bytes uintPtrAtOffset: _OffsetOf_pElems put: anAddress!
 
 uncheckedAt: anInteger 
 	"Private - Answer the value at the specified index in the receiver."
@@ -118,9 +114,6 @@ uncheckedAt:put:!accessing!private! !
 !
 
 !OS.COM.CountedArray class methodsFor!
-
-byteSize
-	^_CountedArray_Size!
 
 clear: addressOrBytes
 	"Free an instance of the structure which instances of the receiver wrap
@@ -166,7 +159,6 @@ onStartup
 uninitialize
 	SessionManager current removeEventsTriggeredFor: self! !
 !OS.COM.CountedArray class categoriesForMethods!
-byteSize!**compiled accessors**!constants!public! !
 clear:!public!realizing/unrealizing! !
 defineFields!public!template definition! !
 initialize!development!initializing!private! !

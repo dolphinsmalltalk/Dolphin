@@ -512,14 +512,14 @@ External.Structure
 	classVariableNames: ''
 	imports: #(#{OS.CommCtrlConstants})
 	classInstanceVariableNames: ''
-	classConstants: { '_CCHITTESTINFO_Size' -> 16r8. '_OffsetOf_pt' -> 16r0 }!
+	classConstants: { '_OffsetOf_pt' -> 16r0 }!
 External.Structure
 	subclass: #'OS.CCITEM'
 	instanceVariableNames: 'text'
 	classVariableNames: ''
 	imports: #(#{OS.CommCtrlConstants})
 	classInstanceVariableNames: ''
-	classConstants: { '_CCITEM_Size' -> 16r4. '_OffsetOf_mask' -> 16r0 }!
+	classConstants: { '_OffsetOf_mask' -> 16r0 }!
 External.Structure
 	subclass: #'OS.LVBKIMAGEW'
 	instanceVariableNames: 'buf'

@@ -15,17 +15,29 @@ UI.Scintilla.RangeToFormatFull guid: (Core.GUID fromString: '{a15c1878-0be0-46bf
 UI.Scintilla.RangeToFormatFull comment: ''!
 !UI.Scintilla.RangeToFormatFull methodsFor!
 
+cpMax
+	"Answer the <Integer> value of the receiver's 'cpMax' field."
+
+	^bytes intPtrAtOffset: _OffsetOf_cpMax!
+
 cpMax: anInteger
 	"Set the receiver's 'cpMax' field to the value of the argument, anInteger"
 
 	bytes intPtrAtOffset: _OffsetOf_cpMax put: anInteger!
+
+cpMin
+	"Answer the <Integer> value of the receiver's 'cpMin' field."
+
+	^bytes intPtrAtOffset: _OffsetOf_cpMin!
 
 cpMin: anInteger
 	"Set the receiver's 'cpMin' field to the value of the argument, anInteger"
 
 	bytes intPtrAtOffset: _OffsetOf_cpMin put: anInteger! !
 !UI.Scintilla.RangeToFormatFull categoriesForMethods!
+cpMax!**compiled accessors**!public! !
 cpMax:!**compiled accessors**!public! !
+cpMin!**compiled accessors**!public! !
 cpMin:!**compiled accessors**!public! !
 !
 
@@ -43,8 +55,8 @@ defineFields
 	super defineFields.
 	"Expand CharacterRangeFull inline"
 	self
-		defineField: #cpMin type: IntPtrField writeOnly;
-		defineField: #cpMax type: IntPtrField writeOnly!
+		defineField: #cpMin type: IntPtrField new;
+		defineField: #cpMax type: IntPtrField new!
 
 getFieldNames
 	^#(#hdc #hdcTarget #rc #rcPage #cpMin #cpMax)! !

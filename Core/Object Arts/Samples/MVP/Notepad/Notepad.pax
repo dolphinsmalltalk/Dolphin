@@ -46,7 +46,7 @@ package setClassNames: #(
 package setPrerequisites: #(
 	'..\..\..\Dolphin\Base\Dolphin'
 	'..\..\..\Dolphin\MVP\Base\Dolphin Basic Geometry'
-	'..\..\..\Dolphin\MVP\Dialogs\Common\Dolphin Common Dialogs'
+	'..\..\..\Dolphin\MVP\Dialogs\Common\Dolphin Common Font Dialog'
 	'..\..\..\Dolphin\MVP\Graphics\Dolphin GDI Graphics'
 	'..\..\..\Dolphin\MVP\Presenters\Prompters\Dolphin Integer Prompter'
 	'..\..\..\Dolphin\System\Filer\Dolphin Literal Filer'

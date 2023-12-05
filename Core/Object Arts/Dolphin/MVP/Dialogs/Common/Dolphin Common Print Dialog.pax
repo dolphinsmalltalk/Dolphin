@@ -3,31 +3,38 @@ package := Package name: 'Dolphin Common Print Dialog'.
 package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Windows Common Print Dialog.
-Copyright (c) Object Arts Ltd. 1997-2005. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.
+Copyright © Object Arts Ltd. 1997-2023. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.
 
-This package contains Dialog presenter wrappers for the Windows common printer PrintDialog.'.
+This package contains Dialog presenter wrappers for the Windows common print dialogs.'.
 
 package basicPackageVersion: '6.1'.
 
 
 package setClassNames: #(
+	#{OS.COM.IPrintDialogCallback}
+	#{OS.COM.IPrintDialogServices}
+	#{OS.PAGESETUPDLGW}
 	#{OS.PrintDialogConstants}
+	#{OS.PrintDialogStructure}
 	#{OS.PRINTDLGEXW}
-	#{OS.PRINTDLGW}
 	#{OS.PRINTPAGERANGE}
+	#{UI.PageSetupDialog}
 	#{UI.PrintDialog}
+	#{UI.PrintingDialog}
 ).
 
 package setMethodNames: #(
 	#(#{Graphics.PrinterCanvas class} #choose)
-	#(#{OS.ComDlgLibrary} #printDlg:)
+	#(#{OS.ComDlgLibrary} #pageSetupDlg:)
 	#(#{OS.ComDlgLibrary} #printDlgEx:)
 ).
 
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
+	'..\..\Base\Dolphin Basic Geometry'
 	'Dolphin Common Dialogs'
 	'..\..\Graphics\Dolphin GDI Graphics'
+	'..\..\..\Registry\Dolphin Registry Access'
 	'..\..\..\ActiveX\COM\OLE COM'
 ).
 
@@ -42,8 +49,11 @@ Kernel.SharedPool
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+			'DMORIENT_LANDSCAPE' -> 16r2.
+			'DMORIENT_PORTRAIT' -> 16r1.
 			'PD_ALLPAGES' -> 16r0.
 			'PD_COLLATE' -> 16r10.
+			'PD_CURRENTPAGE' -> 16r400000.
 			'PD_DISABLEPRINTTOFILE' -> 16r80000.
 			'PD_ENABLEPRINTHOOK' -> 16r1000.
 			'PD_ENABLEPRINTTEMPLATE' -> 16r4000.
@@ -52,6 +62,7 @@ Kernel.SharedPool
 			'PD_ENABLESETUPTEMPLATE' -> 16r8000.
 			'PD_ENABLESETUPTEMPLATEHANDLE' -> 16r20000.
 			'PD_HIDEPRINTTOFILE' -> 16r100000.
+			'PD_NOCURRENTPAGE' -> 16r800000.
 			'PD_NONETWORKBUTTON' -> 16r200000.
 			'PD_NOPAGENUMS' -> 16r8.
 			'PD_NOSELECTION' -> 16r4.
@@ -59,21 +70,59 @@ Kernel.SharedPool
 			'PD_PAGENUMS' -> 16r2.
 			'PD_PRINTSETUP' -> 16r40.
 			'PD_PRINTTOFILE' -> 16r20.
+			'PD_RESULT_APPLY' -> 16r2.
+			'PD_RESULT_CANCEL' -> 16r0.
+			'PD_RESULT_PRINT' -> 16r1.
 			'PD_RETURNDC' -> 16r100.
 			'PD_RETURNDEFAULT' -> 16r400.
 			'PD_RETURNIC' -> 16r200.
 			'PD_SELECTION' -> 16r1.
 			'PD_SHOWHELP' -> 16r800.
 			'PD_USEDEVMODECOPIES' -> 16r40000.
-			'PD_USEDEVMODECOPIESANDCOLLATE' -> 16r40000
+			'PD_USEDEVMODECOPIESANDCOLLATE' -> 16r40000.
+			'PSD_DEFAULTMINMARGINS' -> 16r0.
+			'PSD_DISABLEMARGINS' -> 16r10.
+			'PSD_DISABLEORIENTATION' -> 16r100.
+			'PSD_DISABLEPAGEPAINTING' -> 16r80000.
+			'PSD_DISABLEPAPER' -> 16r200.
+			'PSD_DISABLEPRINTER' -> 16r20.
+			'PSD_ENABLEPAGEPAINTHOOK' -> 16r40000.
+			'PSD_ENABLEPAGESETUPHOOK' -> 16r2000.
+			'PSD_ENABLEPAGESETUPTEMPLATE' -> 16r8000.
+			'PSD_ENABLEPAGESETUPTEMPLATEHANDLE' -> 16r20000.
+			'PSD_INHUNDREDTHSOFMILLIMETERS' -> 16r8.
+			'PSD_INTHOUSANDTHSOFINCHES' -> 16r4.
+			'PSD_INWININIINTLMEASURE' -> 16r0.
+			'PSD_MARGINS' -> 16r2.
+			'PSD_MINMARGINS' -> 16r1.
+			'PSD_NOWARNING' -> 16r80.
+			'PSD_RETURNDEFAULT' -> 16r400.
+			'PSD_SHOWHELP' -> 16r800.
+			'S_FAIL' -> 16r1.
+			'S_OK' -> 16r0.
+			'START_PAGE_GENERAL' -> -16r1
 		}!
 UI.CommonDialog
-	subclass: #'UI.PrintDialog'
+	subclass: #'UI.PrintingDialog'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.PrintDialogConstants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+UI.PrintingDialog
+	subclass: #'UI.PageSetupDialog'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.PrintingDialog
+	subclass: #'UI.PrintDialog'
+	instanceVariableNames: 'dialogServices flags savedPreferLegacyPrintDialog'
+	classVariableNames: ''
+	imports: #(#{OS.PrintDialogConstants} #{OS.Win32Errors private})
+	classInstanceVariableNames: ''
+	classConstants: { 'UnifiedPrintDialogMask' -> 16r1 }!
 External.Structure
 	subclass: #'OS.PRINTPAGERANGE'
 	instanceVariableNames: ''
@@ -85,9 +134,35 @@ External.Structure
 			'_OffsetOf_nToPage' -> 16r4.
 			'_PRINTPAGERANGE_Size' -> 16r8
 		}!
-OS.CommonDialogStructure
-	subclass: #'OS.PRINTDLGEXW'
+OS.ComDlgStructure
+	subclass: #'OS.PrintDialogStructure'
+	instanceVariableNames: 'cachedHDevMode devMode cachedHDevNames devNames'
+	classVariableNames: ''
+	imports: #(#{OS.PrintDialogConstants})
+	classInstanceVariableNames: ''
+	classConstants: { '_OffsetOf_hDevMode' -> 16r8. '_OffsetOf_hDevNames' -> 16rC }!
+OS.PrintDialogStructure
+	subclass: #'OS.PAGESETUPDLGW'
 	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #(#{OS.PrintDialogConstants})
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_OffsetOf_flags' -> 16r10.
+			'_OffsetOf_hInstance' -> 16r3C.
+			'_OffsetOf_hPageSetupTemplate' -> 16r50.
+			'_OffsetOf_lCustData' -> 16r40.
+			'_OffsetOf_lpfnHook' -> 16r44.
+			'_OffsetOf_lpfnPagePaintHook' -> 16r48.
+			'_OffsetOf_lpPageSetupTemplateName' -> 16r4C.
+			'_OffsetOf_ptPaperSize' -> 16r14.
+			'_OffsetOf_rtMargin' -> 16r2C.
+			'_OffsetOf_rtMinMargin' -> 16r1C.
+			'_PAGESETUPDLGW_Size' -> 16r54
+		}!
+OS.PrintDialogStructure
+	subclass: #'OS.PRINTDLGEXW'
+	instanceVariableNames: 'printRanges callback'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -97,8 +172,6 @@ OS.CommonDialogStructure
 			'_OffsetOf_flags' -> 16r14.
 			'_OffsetOf_Flags2' -> 16r18.
 			'_OffsetOf_hDC' -> 16r10.
-			'_OffsetOf_hDevMode' -> 16r8.
-			'_OffsetOf_hDevNames' -> 16rC.
 			'_OffsetOf_hInstance' -> 16r38.
 			'_OffsetOf_lpCallback' -> 16r40.
 			'_OffsetOf_lphPropertyPages' -> 16r48.
@@ -113,32 +186,20 @@ OS.CommonDialogStructure
 			'_OffsetOf_nStartPage' -> 16r4C.
 			'_PRINTDLGEXW_Size' -> 16r54
 		}!
-OS.CommonDialogStructure
-	subclass: #'OS.PRINTDLGW'
+OS.COM.IUnknown
+	subclass: #'OS.COM.IPrintDialogCallback'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.PrintDialogConstants})
+	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-			'_OffsetOf_flags' -> 16r14.
-			'_OffsetOf_hDC' -> 16r10.
-			'_OffsetOf_hDevMode' -> 16r8.
-			'_OffsetOf_hDevNames' -> 16rC.
-			'_OffsetOf_hInstance' -> 16r22.
-			'_OffsetOf_hPrintTemplate' -> 16r3A.
-			'_OffsetOf_hSetupTemplate' -> 16r3E.
-			'_OffsetOf_lCustData' -> 16r26.
-			'_OffsetOf_lpfnHook' -> 16r2A.
-			'_OffsetOf_lpfnSetupHook' -> 16r2E.
-			'_OffsetOf_lpPrintTemplateName' -> 16r32.
-			'_OffsetOf_lpSetupTemplateName' -> 16r36.
-			'_OffsetOf_nCopies' -> 16r20.
-			'_OffsetOf_nFromPage' -> 16r18.
-			'_OffsetOf_nMaxPage' -> 16r1E.
-			'_OffsetOf_nMinPage' -> 16r1C.
-			'_OffsetOf_nToPage' -> 16r1A.
-			'_PRINTDLGW_Size' -> 16r42
-		}!
+	classConstants: {}!
+OS.COM.IUnknown
+	subclass: #'OS.COM.IPrintDialogServices'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 "Loose Methods"!
 
@@ -157,15 +218,14 @@ choose!instance creation!public! !
 
 !OS.ComDlgLibrary methodsFor!
 
-printDlg: aWinPRINTDLG
-	"Displays a Print dialog box or a Print Setup dialog box. The Print dialog box enables the user to 
-	specify the properties of a particular print job.
+pageSetupDlg: lppsd
+	"Invoke the PageSetupDlg() function of the module wrapped by the receiver.
+	Helpstring: Creates a Page Setup dialog box that enables the user to specify the attributes of a printed page
 
-		BOOL PrintDlg(
-			LPPRINTDLG  lppd 	// address of structure with initialization data
-		);"
+		BOOL __stdcall PageSetupDlg(
+			PAGESETUPDLGW* lppsd);"
 
-	<stdcall: bool PrintDlgW PRINTDLGW*>
+	<stdcall: bool PageSetupDlgW PAGESETUPDLGW*>
 	^self invalidCall: _failureCode!
 
 printDlgEx: lppd
@@ -178,7 +238,7 @@ printDlgEx: lppd
 	<stdcall: hresult PrintDlgExW PRINTDLGEXW*>
 	^self invalidCall: _failureCode! !
 !OS.ComDlgLibrary categoriesForMethods!
-printDlg:!primitives!private!win32 functions-common dialog box! !
+pageSetupDlg:!**auto generated**!public! !
 printDlgEx:!**auto generated**!public! !
 !
 

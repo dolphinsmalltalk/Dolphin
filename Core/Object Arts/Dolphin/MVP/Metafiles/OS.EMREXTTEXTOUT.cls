@@ -7,7 +7,6 @@ OS.ENHMETARECORD
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-			'_EMREXTTEXTOUT_Size' -> 16r4C.
 			'_OffsetOf_EMRTEXT' -> 16r24.
 			'_OffsetOf_exScale' -> 16r1C.
 			'_OffsetOf_eyScale' -> 16r20.
@@ -92,9 +91,6 @@ rclBounds:!**compiled accessors**!public! !
 
 !OS.EMREXTTEXTOUT class methodsFor!
 
-byteSize
-	^_EMREXTTEXTOUT_Size!
-
 defineFields
 	"Define the fields of the EMREXTTEXTOUT structure.
 
@@ -135,7 +131,6 @@ iTypes
 
 	^#()! !
 !OS.EMREXTTEXTOUT class categoriesForMethods!
-byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 iTypes!constants!public! !
 !

@@ -1,0 +1,91 @@
+﻿| package |
+package := Package name: 'Dolphin Common Font Dialog'.
+package paxVersion: 2.1;
+	basicComment: 'Dolphin Smalltalk Windows Common Font Dialog.
+Copyright © Object Arts Ltd. 1997-2023. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.
+
+This package contains a Dialog presenter wrapper for the Windows Font choice dialog.'.
+
+
+package setClassNames: #(
+	#{OS.CHOOSEFONTW}
+	#{UI.FontDialog}
+).
+
+package setMethodNames: #(
+	#(#{Graphics.Font class} #choose)
+	#(#{OS.ComDlgLibrary} #chooseFont:)
+).
+
+package setPrerequisites: #(
+	'..\..\..\Base\Dolphin'
+	'Dolphin Common Dialogs'
+	'..\..\Graphics\Dolphin GDI Graphics'
+).
+
+package!
+
+"Class Definitions"!
+
+UI.CommonDialog
+	subclass: #'UI.FontDialog'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.ComDlgStructure
+	subclass: #'OS.CHOOSEFONTW'
+	instanceVariableNames: 'logFont'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_CHOOSEFONTW_Size' -> 16r3C.
+			'_OffsetOf_flags' -> 16r14.
+			'_OffsetOf_hDC' -> 16r8.
+			'_OffsetOf_hInstance' -> 16r28.
+			'_OffsetOf_iPointSize' -> 16r10.
+			'_OffsetOf_lCustData' -> 16r1C.
+			'_OffsetOf_lpfnHook' -> 16r20.
+			'_OffsetOf_lpLogFont' -> 16rC.
+			'_OffsetOf_lpszStyle' -> 16r2C.
+			'_OffsetOf_lpTemplateName' -> 16r24.
+			'_OffsetOf_nFontType' -> 16r30.
+			'_OffsetOf_nSizeMax' -> 16r38.
+			'_OffsetOf_nSizeMin' -> 16r34.
+			'_OffsetOf_rgbColors' -> 16r18
+		}!
+
+"Loose Methods"!
+
+!Graphics.Font class methodsFor!
+
+choose
+	"Answer an instance of the receiver chosen by the user from the common
+	font dialog."
+
+	^UI.FontDialog showModal! !
+!Graphics.Font class categoriesForMethods!
+choose!instance creation!public! !
+!
+
+!OS.ComDlgLibrary methodsFor!
+
+chooseFont: aWinCHOOSEFONT
+	"Create a Font common dialog box that enables the user to choose attributes for a logical font.
+	These attributes include a typeface name, style (bold, italic, or regular), point size, character set, and 
+	effects (underline, strikeout, and text color). 
+	
+	BOOL ChooseFont(
+		LPCHOOSEFONT  lpcf 	// address of structure with initialization data
+	);"
+
+	<stdcall: bool ChooseFontW lpvoid>
+	^self invalidCall: _failureCode! !
+!OS.ComDlgLibrary categoriesForMethods!
+chooseFont:!primitives!private!win32 functions-common dialog box! !
+!
+
+"End of package definition"!
+

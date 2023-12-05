@@ -5048,7 +5048,7 @@ External.Structure
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants private})
 	classInstanceVariableNames: ''
-	classConstants: { '_OffsetOf_dwSize' -> 16r0. '_Win32SizedStructure_Size' -> 16r4 }!
+	classConstants: { '_OffsetOf_dwSize' -> 16r0 }!
 External.Structure
 	subclass: #'External.StructurePointer'
 	instanceVariableNames: 'elementClass'

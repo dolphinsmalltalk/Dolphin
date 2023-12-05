@@ -1,0 +1,82 @@
+﻿| package |
+package := Package name: 'Dolphin Common Color Dialog'.
+package paxVersion: 2.1;
+	basicComment: 'Dolphin Smalltalk Windows Common Color Dialog.
+Copyright © Object Arts Ltd. 1997-2023. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.
+
+This package contains a Dialog presenter wrapper for the Windows Color choice dialog.'.
+
+
+package setClassNames: #(
+	#{OS.CHOOSECOLORW}
+	#{UI.ColorDialog}
+).
+
+package setMethodNames: #(
+	#(#{Graphics.Color class} #choose)
+	#(#{OS.ComDlgLibrary} #chooseColor:)
+).
+
+package setPrerequisites: #(
+	'..\..\..\Base\Dolphin'
+	'Dolphin Common Dialogs'
+	'..\..\Graphics\Dolphin GDI Graphics'
+).
+
+package!
+
+"Class Definitions"!
+
+UI.CommonDialog
+	subclass: #'UI.ColorDialog'
+	instanceVariableNames: 'validationBlock'
+	classVariableNames: 'CustomColors WM_COLOROK'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.ComDlgStructure
+	subclass: #'OS.CHOOSECOLORW'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_CHOOSECOLORW_Size' -> 16r24.
+			'_OffsetOf_flags' -> 16r14.
+			'_OffsetOf_hInstance' -> 16r8.
+			'_OffsetOf_lCustData' -> 16r18.
+			'_OffsetOf_lpCustColors' -> 16r10.
+			'_OffsetOf_lpfnHook' -> 16r1C.
+			'_OffsetOf_lpTemplateName' -> 16r20.
+			'_OffsetOf_rgbResult' -> 16rC
+		}!
+
+"Loose Methods"!
+
+!Graphics.Color class methodsFor!
+
+choose
+	"Answer a new instance of the receiver chosen from the common color dialog."
+
+	^UI.ColorDialog showModal! !
+!Graphics.Color class categoriesForMethods!
+choose!instance creation!public! !
+!
+
+!OS.ComDlgLibrary methodsFor!
+
+chooseColor: aWinCHOOSECOLOR
+	"Create a Color common dialog box that enables the user to select a color.
+
+		BOOL ChooseColor(
+			LPCHOOSECOLOR  lpcc 	// address of structure with initialization data
+		);"
+
+	<stdcall: bool ChooseColorW CHOOSECOLORW*>
+	^self invalidCall: _failureCode! !
+!OS.ComDlgLibrary categoriesForMethods!
+chooseColor:!primitives!private!win32 functions-common dialog box! !
+!
+
+"End of package definition"!
+

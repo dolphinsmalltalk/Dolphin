@@ -17,17 +17,29 @@ OS.FORMATRANGE comment: 'FORMATRANGE is an <ExternalStructure> class to represen
 FORMATRANGE is used in conjunction with the Rich Edit control''s EM_FORMATRANGE message. See the Win32 SDK documentation for further information.'!
 !OS.FORMATRANGE methodsFor!
 
+cpMax
+	"Answer the <Integer> value of the receiver's 'cpMax' field."
+
+	^bytes int32AtOffset: _OffsetOf_cpMax!
+
 cpMax: anInteger
 	"Set the receiver's 'cpMax' field to the value of the argument, anInteger"
 
 	bytes int32AtOffset: _OffsetOf_cpMax put: anInteger!
+
+cpMin
+	"Answer the <Integer> value of the receiver's 'cpMin' field."
+
+	^bytes int32AtOffset: _OffsetOf_cpMin!
 
 cpMin: anInteger
 	"Set the receiver's 'cpMin' field to the value of the argument, anInteger"
 
 	bytes int32AtOffset: _OffsetOf_cpMin put: anInteger! !
 !OS.FORMATRANGE categoriesForMethods!
+cpMax!**compiled accessors**!public! !
 cpMax:!**compiled accessors**!public! !
+cpMin!**compiled accessors**!public! !
 cpMin:!**compiled accessors**!public! !
 !
 
@@ -45,8 +57,8 @@ defineFields
 	super defineFields.
 	"Expand CHARRANGE inline"
 	self
-		defineField: #cpMin type: Int32Field writeOnly;
-		defineField: #cpMax type: Int32Field writeOnly!
+		defineField: #cpMin type: Int32Field new;
+		defineField: #cpMax type: Int32Field new!
 
 getFieldNames
 	^#(#hdc #hdcTarget #rc #rcPage #cpMin #cpMax)! !

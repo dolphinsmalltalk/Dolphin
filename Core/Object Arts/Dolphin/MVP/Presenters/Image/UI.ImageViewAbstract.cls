@@ -74,7 +74,7 @@ displayValue
 displayValue: anImage
 	"Private - Set the displayable contents of the receiver to anImage"
 
-	image := anImage.
+	self image: anImage.
 	self
 		invalidate;
 		invalidateLayout!
@@ -109,6 +109,9 @@ eraseBackground: aCanvas around: aRectangle
 	bkColor isNone ifTrue: [^self].
 	aRectangle isNil ifFalse: [aCanvas excludeClipRectangle: aRectangle].
 	aCanvas fillRectangle: self clientRectangle color: bkColor!
+
+image: anImage
+	image := anImage!
 
 imageBorder
 	^imageBorder ?? #none!
@@ -318,6 +321,7 @@ displayValue!private!updating! !
 displayValue:!private!updating! !
 drawBorderOn:imageRect:displayRect:!drawing!private! !
 eraseBackground:around:!event handling!private! !
+image:!accessing!private! !
 imageBorder!modes!public! !
 imageBorder:!modes!public! !
 initialize!initializing!private! !

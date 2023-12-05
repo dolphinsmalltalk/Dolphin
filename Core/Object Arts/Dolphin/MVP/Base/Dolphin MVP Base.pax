@@ -1877,8 +1877,7 @@ External.Structure
 	classConstants: {
 			'_OffsetOf_CtlID' -> 16r4.
 			'_OffsetOf_CtlType' -> 16r0.
-			'_OffsetOf_itemID' -> 16r8.
-			'_OwnerDrawStruct_Size' -> 16rC
+			'_OffsetOf_itemID' -> 16r8
 		}!
 External.Structure
 	subclass: #'OS.PAINTSTRUCT'

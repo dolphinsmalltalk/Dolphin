@@ -351,11 +351,7 @@ External.ExternalArray
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-			'_CountedArray_Size' -> 16r8.
-			'_OffsetOf_cElems' -> 16r0.
-			'_OffsetOf_pElems' -> 16r4
-		}!
+	classConstants: { '_OffsetOf_cElems' -> 16r0. '_OffsetOf_pElems' -> 16r4 }!
 OS.COM.CountedArray
 	subclass: #'OS.COM.CADWORD'
 	instanceVariableNames: ''

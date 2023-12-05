@@ -14,28 +14,6 @@ This DLL implements Windows'' standard "common" dialogs, such as the File Open/S
 !OS.ComDlgLibrary categoriesForClass!External-Libraries-Win32! !
 !OS.ComDlgLibrary methodsFor!
 
-chooseColor: aWinCHOOSECOLOR
-	"Create a Color common dialog box that enables the user to select a color.
-
-		BOOL ChooseColor(
-			LPCHOOSECOLOR  lpcc 	// address of structure with initialization data
-		);"
-
-	<stdcall: bool ChooseColorW CHOOSECOLORW*>
-	^self invalidCall: _failureCode!
-
-chooseFont: aWinCHOOSEFONT
-	"Create a Font common dialog box that enables the user to choose attributes for a logical font.
-	These attributes include a typeface name, style (bold, italic, or regular), point size, character set, and 
-	effects (underline, strikeout, and text color). 
-	
-	BOOL ChooseFont(
-		LPCHOOSEFONT  lpcf 	// address of structure with initialization data
-	);"
-
-	<stdcall: bool ChooseFontW lpvoid>
-	^self invalidCall: _failureCode!
-
 commDlgExtendedError
 	"The CommDlgExtendedError function returns a common dialog box error code.
 	This code indicates the most recent error to occur during the execution of one of 
@@ -88,31 +66,16 @@ getSaveFileName: aWinOPENFILENAME
 	<stdcall: bool GetSaveFileNameW lpvoid>
 	^self invalidCall: _failureCode!
 
-replaceText: aWinFINDREPLACE
-	"Create a system-defined modeless dialog box that lets the user specify
-	a string to search for and a replacement string, as well as options to 
-	control the find and replace operations.
-
-		HWND ReplaceText(
-			LPFINDREPLACE  lpfr 	// address of structure with initialization data
-		);"
-
-	<stdcall: handle ReplaceTextW FINDREPLACEW*>
-	^self invalidCall: _failureCode!
-
 systemError
 	"Generate an error based on the last recorded host system error."
 
 	^self systemError: self commDlgExtendedError! !
 !OS.ComDlgLibrary categoriesForMethods!
-chooseColor:!primitives!private!win32 functions-common dialog box! !
-chooseFont:!primitives!private!win32 functions-common dialog box! !
 commDlgExtendedError!primitives!private!win32 functions-common dialog box! !
 findText:!primitives!private!win32 functions-common dialog box! !
 getFileTitle:lpszTitle:cbBuf:!primitives!private!win32 functions-file! !
 getOpenFileName:!primitives!private!win32 functions-common dialog box! !
 getSaveFileName:!primitives!private!win32 functions-common dialog box! !
-replaceText:!primitives!private!win32 functions-common dialog box! !
 systemError!exceptions!public! !
 !
 
