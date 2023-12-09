@@ -489,7 +489,7 @@ waitAtMost: aDuration while: aNiladicValuable
 	^aNiladicValuable value not!
 
 waitForNavigationCompleted
-	^self waitAtMost: 60 seconds while: [navigationCompleted isNil]! !
+	^self waitAtMost: 20 seconds while: [navigationCompleted isNil]! !
 !WebView2.Tests.WebView2ViewTest categoriesForMethods!
 classToTest!constants!private! !
 initializePresenter!public!Running! !
