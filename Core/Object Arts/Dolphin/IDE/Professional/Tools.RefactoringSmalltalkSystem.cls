@@ -449,6 +449,27 @@ duplicateSuperclassMethodsOf: aClass
 					answer add: (self duplicateOf: eachMethod in: nearest)]].
 	^answer!
 
+emitKeywordSignatureFor: aSymbol withArgs: anArray in: aClass on: aPuttableStream
+	| argNames instVars |
+	argNames := OrderedCollection new.
+	instVars := aClass allInstanceVariableNames.
+	argNames addAll: instVars.
+	aSymbol keywords with: anArray
+		do: 
+			[:keyword :arg |
+			| x argName |
+			aPuttableStream
+				nextPutAll: keyword;
+				space.
+			argName := arg.
+			x := 1.
+			[argNames includes: argName] whileTrue: [argName := arg , (x := x + 1) printString].
+			argNames add: argName.
+			aPuttableStream
+				nextPutAll: argName;
+				space].
+	^argNames copyFrom: instVars size + 1!
+
 executeRefactoring: aBlock
 	"Private - Evaluate the refactoring <niladicValuable>, aBlock, trapping any refactoring
 	errors it raises and reporting to the user appropriately. If any unhandled error occurs, or
@@ -537,8 +558,8 @@ extractToTemporary: anInterval from: aSelector in: aClass
 				validater: 
 						[:tempName |
 						((RBCondition withBlock: [(existing includes: tempName) not]
-							errorString: ['<1p> is already in use as a local variable' << tempName])
-								& (RBCondition isValidTemporaryVariableName: tempName for: aClass)
+							errorString: ['<p> is already in use as a local variable' << tempName])
+								& (RBCondition isValidTemporaryVariableName: tempName)
 								& (RBCondition definesInstanceVariable: tempName in: aClass) not) validate];
 				showHintWhenEmpty: false;
 				showModal.
@@ -548,6 +569,18 @@ extractToTemporary: anInterval from: aSelector in: aClass
 				to: newName
 				from: aSelector
 				in: aClass)!
+
+generateStubFor: aSymbol inClass: aClass withArgs: aSequenceableCollection
+	^(self
+		compile: (self
+				stubTextFor: aSymbol
+				arguments: aSequenceableCollection
+				inClass: aClass)
+		in: aClass
+		environment: nil
+		categories: #()
+		package: nil
+		extraFlags: 0) method!
 
 handleRefactoringException: aRefactoringException
 	| text mb defaultCaption |
@@ -795,9 +828,6 @@ moveToComponent: aSelector in: aClass variable: aString
 				selector: aSelector
 				class: aClass
 				variable: aString)!
-
-newCodeRefactoringToolFor: aMethodWorkspace
-	^CodeRefactoringTool forPresenter: aMethodWorkspace!
 
 newMethodNamePrompter: aRBMethodName caption: aString allowExisting: aBoolean
 	^(RenameMethodDialog createOn: aRBMethodName)
@@ -1065,18 +1095,6 @@ pushUpMethods: aCollectionOfMethods
 	already define the method).'"
 
 	^self pushMethods: aCollectionOfMethods up: true!
-
-queryCommand: aCommandQuery 
-	"Private - Enter details about a potential command for the receiver into the <CommandQuery>
-	argument."
-
-	| cmd |
-	cmd := aCommandQuery commandSymbol.
-	#refactoringsMenu == cmd 
-		ifTrue: 
-			[aCommandQuery isEnabled: true.
-			^true].
-	^super queryCommand: aCommandQuery!
 
 refactoringError
 	"Private - Answer an <exceptionSelector> which can be used to trap exceptions raised during
@@ -1386,7 +1404,7 @@ renameTemporary: aStVariableNode to: aString in: aClass selector: aSelector
 			[| newName |
 			newName := (Prompter
 						createOn: oldName
-						prompt: ('Please enter the new name for <1p>:' expandMacrosWith: oldName)
+						prompt: ('Please enter the new name for <p>:' expandMacrosWith: oldName)
 						caption: 'Rename Temporary…')
 						validater: 
 								[:name |
@@ -1405,6 +1423,7 @@ renameTemporary: aStVariableNode to: aString in: aClass selector: aSelector
 												value: false;
 												hint: ex.
 											ex return: false]];
+						showHintWhenEmpty: false;
 						showModal.
 			newName])
 			ifNotNil: 
@@ -1460,6 +1479,47 @@ selectTargetVariableOf: aClass parseTree: aStMethodNode
 
 showChangesText
 	^'Show proposed changes?'!
+
+stubTextFor: aSymbol arguments: anArray inClass: aClass
+	| source body argc |
+	source := String smalltalkWriteStream: 128.
+	body := '^Error notYetImplemented'.
+	argc := anArray size.
+	argc == 0
+		ifTrue: 
+			[source nextPutAll: aSymbol.
+			(aClass allInstanceVariableNames includes: aSymbol asString)
+				ifTrue: [body := '^<1s>' expandMacrosWith: aSymbol]]
+		ifFalse: 
+			[argc == 1
+				ifTrue: 
+					[aSymbol isInfix
+						ifTrue: 
+							[source
+								nextPutAll: aSymbol;
+								space;
+								nextPutAll: anArray single name]
+						ifFalse: 
+							[| name |
+							self
+								emitKeywordSignatureFor: aSymbol
+								withArgs: anArray
+								in: aClass
+								on: source.
+							"If the selector without final colon matches an instance variable name, assume the method is an mutator for that inst var."
+							name := aSymbol allButLast.
+							(aClass allInstanceVariableNames includes: name)
+								ifTrue: [body := '<1s> := <2s>' expandMacrosWith: name with: anArray first]]]
+				ifFalse: 
+					[self
+						emitKeywordSignatureFor: aSymbol
+						withArgs: anArray
+						in: aClass
+						on: source]].
+	source
+		crtab;
+		nextPutAll: body.
+	^source contents!
 
 validateCreateSubclass: aClassDetails
 	^(AddClassRefactoring details: aClassDetails subclasses: #()) preconditions validate!
@@ -1546,12 +1606,14 @@ createNewClass:inPackage:!public!refactoring! !
 createVariableAccessors:classVariables:within:!public!refactoring! !
 duplicateOf:in:!helpers!private! !
 duplicateSuperclassMethodsOf:!enquiries!private! !
+emitKeywordSignatureFor:withArgs:in:on:!private! !
 executeRefactoring:!private!refactoring! !
 executeVariableRefactoring:variables:within:!helpers!private!refactoring! !
 extendMethodBrowserMenus:!browsing!private! !
 extractMethod:from:in:!public!refactoring! !
 extractToComponent:from:in:!public!refactoring! !
 extractToTemporary:from:in:!public!refactoring! !
+generateStubFor:inClass:withArgs:!private! !
 handleRefactoringException:!private!refactoring! !
 inlineAllSelfSendsOf:within:!public!refactoring! !
 inlineMessage:inMethod:of:!public!refactoring! !
@@ -1565,7 +1627,6 @@ moveAllTempsToInnerScopeIn:selector:!private!refactoring! !
 moveClasses:toNamespace:showChanges:!commands!private!refactoring! !
 moveTempToInnerScope:in:selector:!public!refactoring! !
 moveToComponent:in:variable:!public!refactoring! !
-newCodeRefactoringToolFor:!helpers!private!refactoring! !
 newMethodNamePrompter:caption:allowExisting:!helpers!private!refactoring! !
 newMethodRefactoringToolFor:!helpers!private!refactoring! !
 nukeChangeHistory!private!refactoring! !
@@ -1588,7 +1649,6 @@ pushDownInstanceVariables:!public!refactoring! !
 pushDownMethods:!public!refactoring! !
 pushMethods:up:!private!refactoring! !
 pushUpMethods:!public!refactoring! !
-queryCommand:!commands!private! !
 refactoringError!constants!private! !
 refactoringToRenameVariable:to:isClassVariable:of:within:!private!refactoring! !
 removeClasses:!public!refactoring! !
@@ -1612,6 +1672,7 @@ renameTemporary:to:in:selector:!public!refactoring! !
 renameVariable:to:isClassVariable:of:within:!private!refactoring! !
 selectTargetVariableOf:parseTree:!helpers!private!refactoring! !
 showChangesText!constants!private! !
+stubTextFor:arguments:inClass:!private! !
 validateCreateSubclass:!helpers!private!refactoring! !
 validateNewClassVarName:for:!helpers!private!refactoring! !
 validateNewInstanceVariableName:for:!enquiries!helpers!private!refactoring! !

@@ -213,17 +213,21 @@ icon: anIconOrNil
 installMenuCommands
 	"Private - Installs the menu commands required by the receiver into the associated browser menus"
 
-	| contextMenus menuBarMenus |
+	| classContextMenus classMenuBarMenus methodContextMenus methodMenuBarMenus contextMenus menuBarMenus |
 	contextMenus := self allContextMenus.
-	(contextMenus select: [:each | each name == #classMenu])
-		do: [:each | self installTestCommandsInClassMenu: each withAccelerator: false].
+	classContextMenus := contextMenus
+				select: [:each | each items anySatisfy: [:item | item command == #newClass]].
+	classContextMenus do: [:each | self installTestCommandsInClassMenu: each withAccelerator: false].
 	menuBarMenus := self allMenuBarMenus.
-	(menuBarMenus select: [:each | each name == #classMenu])
-		do: [:each | self installTestCommandsInClassMenu: each withAccelerator: true].
-	(contextMenus select: [:each | each name == #methodMenu])
-		do: [:each | self installTestCommandsInMethodMenu: each].
-	(menuBarMenus select: [:each | each name == #methodMenu])
-		do: [:each | self installTestCommandsInMethodMenu: each]!
+	classMenuBarMenus := menuBarMenus
+				select: [:each | each items anySatisfy: [:item | item command == #newClass]].
+	classMenuBarMenus do: [:each | self installTestCommandsInClassMenu: each withAccelerator: true].
+	methodContextMenus := contextMenus
+				select: [:each | each items anySatisfy: [:item | item command == #newMethod]].
+	methodContextMenus do: [:each | self installTestCommandsInMethodMenu: each].
+	methodMenuBarMenus := menuBarMenus
+				select: [:each | each items anySatisfy: [:item | item command == #newMethod]].
+	methodMenuBarMenus do: [:each | self installTestCommandsInMethodMenu: each]!
 
 installTestCommandsInClassMenu: aMenu withAccelerator: needsAccel
 	"Private - Installs the test commands required by the receiver into aMenu. If an accelerator is required (i.e. in the case of
@@ -233,10 +237,8 @@ installTestCommandsInClassMenu: aMenu withAccelerator: needsAccel
 	runTestsCommandDescription := CommandDescription command: #runTests description: 'R&un Tests'.
 	needsAccel ifTrue: [runTestsCommandDescription acceleratorKeyString: 'Ctrl+Alt+R'].
 	runTestsCommandDescription image: self class icon.
-	toggleToTestClassCommandDescription := (CommandDescription command: #toggleToTests
-				description: '&Go to <d:Tests')
-				hasTextSubstitutions: true;
-				yourself.
+	toggleToTestClassCommandDescription := CommandDescription command: #toggleToTests
+				description: '&Go to <1d>'.
 	toggleToTestClassCommandDescription image: [self toggleToTestsClass ifNotNil: [:class | class icon]].
 	needsAccel ifTrue: [toggleToTestClassCommandDescription acceleratorKeyString: 'Ctrl+Alt+T'].
 	aMenu
@@ -305,12 +307,9 @@ profileTests
 		ifFalse: [self displayReset]!
 
 queryToggleToTests: query
-	self hasTestClass ifFalse: [^self].
-	query
-		beEnabled;
-		text: (query commandDescription menuText
-					expandMacrosWithArguments: { self toggleToTestsClassDescription }
-					locale: Locale smalltalk)!
+	^query
+		isEnabled: self hasTestClass;
+		expandMenuTextWith: self toggleToTestsClassDescription!
 
 refreshIcon
 	self view arrangement: self!
@@ -393,7 +392,7 @@ toggleToTestsClass
 	^testClass = self browser selectedClass ifTrue: [self classUnderTest] ifFalse: [testClass]!
 
 toggleToTestsClassDescription
-	^self toggleToTestsClass shortName!
+	^(self toggleToTestsClass ?? TestCase) shortName!
 
 update: anObject
 	(anObject isKindOf: TestCase)

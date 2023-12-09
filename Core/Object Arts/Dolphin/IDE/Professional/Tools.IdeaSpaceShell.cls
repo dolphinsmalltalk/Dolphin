@@ -78,14 +78,26 @@ breakoutCard: cardToBreakout
 breakoutCurrentCard
 	"Break the current card out onto the desktop"
 
+	<commandQuery: #hasCurrentCard>
 	self removeCardMenubarAndAccelerators.
 	self breakoutCard: self currentCard!
 
+canMoveCardLeft
+	^self hasCurrentCard and: [self cards first ~= self currentCard]!
+
+canMoveCardRight
+	^self hasCurrentCard and: [self cards last ~= self currentCard]!
+
+canMoveToIdeaSpace
+	^false!
+
 cardHistoryBack
+	<commandQuery: #hasPastCards>
 	self historyBack!
 
 cardHistoryForward
-	^self historyForward!
+	<commandQuery: #hasFutureCards>
+	self historyForward!
 
 cards
 	"Answer the cards held by the receiver"
@@ -102,6 +114,7 @@ closeCard
 	"Close the current card after first giving it an opportunity to refuse the close. 
 	Answer true if the close is allowed."
 
+	<commandQuery: #hasCurrentCard>
 	<acceleratorKey: 'Ctrl+F4'>
 	^self closeCard: self currentCard!
 
@@ -197,6 +210,12 @@ hasFilename
 	^filename notNil
 !
 
+hasFutureCards
+	^cardHistory hasFuture!
+
+hasPastCards
+	^cardHistory hasPast!
+
 historySkip: anInteger 
 	cardHistory skip: anInteger.
 	cardHistory current ensureVisible!
@@ -251,6 +270,7 @@ original template. Missing Packages, Classes or Methods may give rise to errors.
 			stream close]!
 
 moveCardLeft
+	<commandQuery: #canMoveCardLeft>
 	| cardView nextSibling |
 	cardView := self currentCard view.
 	nextSibling := cardView previousSiblingView.
@@ -258,6 +278,7 @@ moveCardLeft
 	nextSibling notNil ifTrue: [cardView zOrderAfter: nextSibling] ifFalse: [cardView zOrderTop]!
 
 moveCardRight
+	<commandQuery: #canMoveCardRight>
 	| cardView nextSibling |
 	cardView := self currentCard view.
 	nextSibling := cardView nextSiblingView.
@@ -328,39 +349,6 @@ openOn: openFilename
 		filename: openFilename;
 		loadIdeaSpace!
 
-queryCommand: aCommandQuery 
-	| selector |
-	selector := aCommandQuery commandSymbol.
-	#moveCardLeft == selector 
-		ifTrue: 
-			[aCommandQuery isEnabled: self isCurrentCardFirst not.
-			^true].
-	#moveCardRight == selector 
-		ifTrue: 
-			[aCommandQuery isEnabled: self isCurrentCardLast not.
-			^true].
-	#cardHistoryBack == selector 
-		ifTrue: 
-			[aCommandQuery isEnabled: cardHistory hasPast.
-			^true].
-	#cardHistoryForward == selector 
-		ifTrue: 
-			[aCommandQuery isEnabled: cardHistory hasFuture.
-			^true].
-	#breakoutCurrentCard == selector 
-		ifTrue: 
-			[aCommandQuery isEnabled: self hasCurrentCard.
-			^true].
-	(#(#dragToolToIdeaSpace #addToNewIdeaSpace) includes: selector) 
-		ifTrue: 
-			[aCommandQuery isEnabled: false.
-			^true].
-	#revertIdeaSpace == selector 
-		ifTrue: 
-			[aCommandQuery isEnabled: self hasFilename.
-			^true].
-	^super queryCommand: aCommandQuery!
-
 registerForCardEvents
 	cardsPresenter view 
 		when: #currentCardChangedFrom:to:
@@ -422,6 +410,7 @@ restorePreviousCard: last
 					cardHistory clearFuture]]!
 
 revertIdeaSpace
+	<commandQuery: #hasFilename>
 	self exit ifFalse: [^self].
 	self class openOn: self filename!
 
@@ -530,13 +519,16 @@ addShellDecorations:!helpers!private! !
 allAdditionalKeyBindings!constants!private! !
 basicCaption!constants!public! !
 breakoutCard:!private! !
-breakoutCurrentCard!public! !
-cardHistoryBack!commands!private! !
-cardHistoryForward!commands!private! !
+breakoutCurrentCard!commands-actions!public! !
+canMoveCardLeft!commands-queries!private! !
+canMoveCardRight!commands-queries!private! !
+canMoveToIdeaSpace!private!testing! !
+cardHistoryBack!commands-actions!public! !
+cardHistoryForward!commands-actions!public! !
 cards!accessing!public! !
 cardsPresenter!public! !
-closeCard!commands!public! !
-closeCard:!commands!public! !
+closeCard!commands-actions!public! !
+closeCard:!operations!public! !
 configureCardForIdeaSpace:!private! !
 createComponents!initializing!private! !
 createSchematicWiring!initializing!private! !
@@ -544,23 +536,25 @@ currentCard!accessing!public! !
 currentCardIndex!public! !
 currentCardIndex:!public! !
 defaultHelpId!constants!public! !
-destroyCard:!commands!public! !
+destroyCard:!operations!public! !
 filename!accessing!public! !
 filename:!accessing!public! !
 hasContents!public! !
 hasCurrentCard!public!testing! !
 hasFilename!public!testing! !
+hasFutureCards!commands-queries!private! !
+hasPastCards!commands-queries!private! !
 historySkip:!helpers!public! !
-ideaCardToolbarId!Constants!private! !
+ideaCardToolbarId!constants!private! !
 initialize!initializing!private! !
 installCardMenubarAndAccelerators:!helpers!private! !
 isCurrentCardFirst!public!testing! !
 isCurrentCardLast!public!testing! !
 isIdeaSpaceCard!public!testing! !
 loadErrorDescriptionFrom:!private! !
-loadIdeaSpace!commands!private! !
-moveCardLeft!commands!public! !
-moveCardRight!commands!public! !
+loadIdeaSpace!initializing!private! !
+moveCardLeft!commands-actions!public! !
+moveCardRight!commands-actions!public! !
 newEmbeddedCardOfClass:!helpers!private! !
 onCardCaptionChanged!event handling!private! !
 onCardChangedFrom:to:!event handling!private! !
@@ -570,18 +564,17 @@ onTabsMiddleButtonClicked:!event handling!private! !
 onViewOpened!event handling!private! !
 openIdeaSpace!public! !
 openOn:!private! !
-queryCommand:!commands!private! !
 registerForCardEvents!helpers!private! !
-removeCard:!commands!private! !
+removeCard:!operations!private! !
 removeCardMenubarAndAccelerators!helpers!private! !
-removeHistoryForCard:!commands!private! !
+removeHistoryForCard:!operations!private! !
 removeIdeaCardTools:!helpers!private! !
 removeShellDecorations:!helpers!private! !
 removeSizeGrip:!helpers!private! !
-restorePreviousCard:!commands!private! !
-revertIdeaSpace!public! !
-saveIdeaSpace!commands!operations!public! !
-saveIdeaSpaceAs!commands!operations!public! !
+restorePreviousCard:!operations!private! !
+revertIdeaSpace!commands-actions!public! !
+saveIdeaSpace!commands-actions!operations!public! !
+saveIdeaSpaceAs!commands-actions!operations!public! !
 saveStateOn:!private!saved state! !
 setWatermark!operations!private! !
 tabs!accessing!private! !

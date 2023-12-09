@@ -17,11 +17,44 @@ There are a number of browser (or browser like tools) that display lists of meth
 addParameter
 	"Command to invoke the Add Parameter to Method refactoring."
 
-	presenter 
+	<commandQuery: #queryRefactorSelectedMethod:>
+	presenter
 		performMethodRenameRefactoring: [:method | self developmentSystem addParameterToMethod: method]!
 
 allMethodTemps
 	^self parseTree ifNil: [#()] ifNotNil: [:ast | ast allTemporaryVariableNodes]!
+
+buildConvertTempToInstVarMenu: aMenu
+	self
+		buildTempsMenu: aMenu
+		command: #convertTempToInstVar:
+		identifiers: self allMethodTemps!
+
+buildInlineParameterMenu: aMenu
+	self
+		buildTempsMenu: aMenu
+		command: #inlineParameter:
+		identifiers: self methodArguments!
+
+buildRemoveParameterMenu: aMenu
+	self
+		buildTempsMenu: aMenu
+		command: #removeParameter:
+		identifiers: self methodArguments.
+	"By default remove the last param"
+	aMenu notEmpty ifTrue: [(aMenu itemAt: aMenu size) isDefault: true]!
+
+buildRenameParameterMenu: aMenu
+	self
+		buildTempsMenu: aMenu
+		command: #renameTemporary:
+		identifiers: self methodArguments!
+
+buildRenameTempMenu: aMenu
+	self
+		buildTempsMenu: aMenu
+		command: #renameTemporary:
+		identifiers: self methodTemps!
 
 buildTempsMenu: aMenu command: aSymbol identifiers: aCollection 
 	aMenu clear.
@@ -35,6 +68,9 @@ buildTempsMenu: aMenu command: aSymbol identifiers: aCollection
 	"If there is only a single item, make it the default."
 	aMenu size = 1 ifTrue: [(aMenu itemAt: 1) isDefault: true]!
 
+canMoveMethods
+	^presenter canMoveMethods!
+
 canPushDownMethods
 	^presenter hasEditableMethodsSelected 
 		and: [presenter selectedMethods allSatisfy: [:each | each methodClass subclasses notEmpty]]!
@@ -43,17 +79,34 @@ canPushUpMethods
 	^presenter hasEditableMethodsSelected 
 		and: [presenter selectedMethods allSatisfy: [:each | each methodClass superclass notNil]]!
 
+convertTempToInstVarMenu
+	<commandQuery: #queryConvertTempToInstVarMenu:>
+	<menuPopulator: #buildConvertTempToInstVarMenu:>
+	!
+
+hasEditableMethodsSelected
+	^presenter hasEditableMethodsSelected!
+
 inlineAllSelfSends
-	"Private - Invoke the 'Inline all Self Sends' method refactoring to in-line all
+	"Invoke the 'Inline all Self Sends' method refactoring to in-line all
 	self sends of the currently selected method."
 
+	<commandQuery: #hasEditableMethodsSelected>
 	presenter performMethodsRefactoring: 
-			[:methods | 
+			[:methods |
 			self developmentSystem inlineAllSelfSendsOf: methods within: presenter searchEnvironment]
 		name: 'Inline Self Sends'!
 
+inlineParameterMenu
+	<commandQuery: #queryRefactorParameter:>
+	<menuPopulator: #buildInlineParameterMenu:>
+	!
+
 methodArguments
 	^self parseTree ifNil: [#()] ifNotNil: [:ast | ast arguments]!
+
+methodRefactoringsMenu
+	"Always enabled"!
 
 methodTemps
 	^self parseTree 
@@ -61,9 +114,10 @@ methodTemps
 		ifNotNil: [:ast | ast allDefinedVariableNodes difference: ast arguments]!
 
 moveMethod
-	"Private - Invoke the 'Move to Component' method refactoring to move the selected method to
+	"Invoke the 'Move to Component' method refactoring to move the selected method to
 	the class of some variable in that method's scope."
 
+	<commandQuery: #canMoveMethods>
 	| variable |
 	variable := self developmentSystem selectTargetVariableOf: presenter selectedMethod methodClass
 				parseTree: self parseTree.
@@ -75,56 +129,11 @@ moveMethod
 				in: method methodClass
 				variable: variable]!
 
-onAboutToDisplayMenu: aMenu 
-	"The pop-up <Menu>, popup, is about to be displayed.
-	This is our opportunity to update it, e.g. to add/remove items."
-
-	| name |
-	name := aMenu name.
-	name == #removeParameterMenu 
-		ifTrue: 
-			[self 
-				buildTempsMenu: aMenu
-				command: #removeParameter:
-				identifiers: self methodArguments.
-			"By default remove the last param"
-			aMenu notEmpty ifTrue: [(aMenu itemAt: aMenu size) isDefault: true].
-			^true].
-	name == #inlineParameterMenu 
-		ifTrue: 
-			[self 
-				buildTempsMenu: aMenu
-				command: #inlineParameter:
-				identifiers: self methodArguments.
-			^true].
-	name == #renameTempMenu 
-		ifTrue: 
-			[self 
-				buildTempsMenu: aMenu
-				command: #renameTemporary:
-				identifiers: self methodTemps.
-			^true].
-	name == #renameParameterMenu 
-		ifTrue: 
-			[self 
-				buildTempsMenu: aMenu
-				command: #renameTemporary:
-				identifiers: self methodArguments.
-			^true].
-	name == #convertTempToInstVarMenu 
-		ifTrue: 
-			[self 
-				buildTempsMenu: aMenu
-				command: #convertTempToInstVar:
-				identifiers: self allMethodTemps.
-			^true].
-	"Not a refactoring menu"
-	^false!
-
 pushDownMethods
-	"Private - Pushes down the selected method into all subclasses that don't implement the
+	"Pushes down the selected method into all subclasses that don't implement the
 	method, but only if the method's class is abstract."
 
+	<commandQuery: #queryPushDownMethods:>
 	^self pushMethods: false!
 
 pushMethods: aBoolean
@@ -139,52 +148,38 @@ pushUpMethods
 	and already defines the method, then the superclass' method will be copied down into the
 	other subclasses that don't already define the method."
 
+	<commandQuery: #queryPushUpMethods:>
 	^self pushMethods: true!
 
-queryCommand: aCommandQuery command: aCommand
-	| method selector |
-	selector := aCommand asSymbol.
-	#methodRefactoringsMenu == selector
-		ifTrue: 
-			[aCommandQuery isEnabled: true.
-			^true].
-	(#(#inlineAllSelfSends) identityIncludes: selector)
-		ifTrue: 
-			[aCommandQuery isEnabled: presenter hasEditableMethodsSelected.
-			^true].
-	#moveMethod == selector
-		ifTrue: 
-			[aCommandQuery isEnabled: presenter canMoveMethods.
-			^true].
-	(#(#renameMethod #renameMethodReferences #addParameter) identityIncludes: selector)
-		ifTrue: 
-			[aCommandQuery isEnabled: presenter hasRefactorableMethodSelected.
-			^true].
-	#pushUpMethods == selector
-		ifTrue: 
-			[aCommandQuery isEnabled: (Keyboard default isShiftDown not and: [self canPushUpMethods]).
-			^true].
-	#pushDownMethods == selector
-		ifTrue: 
-			[aCommandQuery isEnabled: (Keyboard default isShiftDown not and: [self canPushDownMethods]).
-			^true].
+queryConvertTempToInstVarMenu: aCommandQuery
+	aCommandQuery
+		isEnabled: (presenter hasRefactorableMethodSelected and: [self allMethodTemps notEmpty])!
+
+queryPushDownMethods: aCommandQuery
+	aCommandQuery isEnabled: (Keyboard default isShiftDown not and: [self canPushDownMethods])!
+
+queryPushUpMethods: aCommandQuery
+	aCommandQuery isEnabled: (Keyboard default isShiftDown not and: [self canPushUpMethods])!
+
+queryRefactorParameter: aCommandQuery
+	| method |
 	method := presenter selectedMethod.
-	(#(#removeParameterMenu #inlineParameterMenu #renameParameterMenu) identityIncludes: selector)
-		ifTrue: 
-			[aCommandQuery isEnabled: (presenter hasRefactorableMethodSelected
-						and: [method isNil or: [method argumentCount > 0]]).
-			^true].
-	(#(#convertTempToInstVarMenu #renameTempMenu) identityIncludes: selector)
-		ifTrue: 
-			[aCommandQuery
-				isEnabled: (presenter hasRefactorableMethodSelected and: [method isNil or: [method tempCount > 0]]).
-			^true].
-	#overrideMethods == selector
-		ifTrue: 
-			[aCommandQuery
-				isEnabled: false;
-				text: aCommandQuery commandDescription menuText << $…].
-	^false!
+	aCommandQuery isEnabled: (presenter hasRefactorableMethodSelected
+				and: [method isNil or: [method argumentCount > 0]])!
+
+queryRefactorSelectedMethod: aCommandQuery
+	presenter hasRefactorableMethodSelected ifFalse: [^self].
+	aCommandQuery
+		beEnabled;
+		expandMenuTextWith: presenter selectedMethod!
+
+queryRefactorTemp: aCommandQuery
+	aCommandQuery isEnabled: (presenter hasRefactorableMethodSelected and: [self methodTemps notEmpty])!
+
+removeParameterMenu
+	<commandQuery: #queryRefactorParameter:>
+	<menuPopulator: #buildRemoveParameterMenu:>
+	!
 
 renameItCommand
 	"Private - Answer the appropriate rename command for the context sensitive 'Rename It' command, given
@@ -196,6 +191,7 @@ renameMethod
 	"Initiate a 'Rename' method refactoring against the selected method to rename
 	all implementors and senders."
 
+	<commandQuery: #queryRefactorSelectedMethod:>
 	self renameMethod: presenter selectedMethod!
 
 renameMethod: aCompiledMethod 
@@ -207,26 +203,54 @@ renameMethodReferences
 	all senders. Note that this may not preserve behaviour, but is occassionally useful when (for example)
 	removing a duplicate method."
 
-	presenter 
-		performMethodRenameRefactoring: [:method | self developmentSystem renameMethodReferences: method]! !
+	<commandQuery: #queryRefactorSelectedMethod:>
+	presenter
+		performMethodRenameRefactoring: [:method | self developmentSystem renameMethodReferences: method]!
+
+renameParameterMenu
+	<commandQuery: #queryRefactorParameter:>
+	<menuPopulator: #buildRenameParameterMenu:>
+	!
+
+renameTempMenu
+	<commandQuery: #queryRefactorTemp:>
+	<menuPopulator: #buildRenameTempMenu:>
+	! !
 !Tools.MethodRefactoringTool categoriesForMethods!
-addParameter!commands!public!refactoring! !
+addParameter!commands-actions!public!refactoring! !
 allMethodTemps!event handling!menus!public! !
+buildConvertTempToInstVarMenu:!commands-menus!private! !
+buildInlineParameterMenu:!commands-menus!private! !
+buildRemoveParameterMenu:!commands-menus!private! !
+buildRenameParameterMenu:!commands-menus!private! !
+buildRenameTempMenu:!commands-menus!private! !
 buildTempsMenu:command:identifiers:!helpers!menus!private! !
-canPushDownMethods!public!refactoring!testing! !
-canPushUpMethods!public!refactoring!testing! !
-inlineAllSelfSends!commands!private!refactoring! !
+canMoveMethods!commands-queries!private! !
+canPushDownMethods!commands-queries!public! !
+canPushUpMethods!commands-queries!public! !
+convertTempToInstVarMenu!commands-menus!public! !
+hasEditableMethodsSelected!commands-queries!private! !
+inlineAllSelfSends!commands-actions!public!refactoring! !
+inlineParameterMenu!commands-menus!public! !
 methodArguments!event handling!menus!public! !
+methodRefactoringsMenu!commands-menus!public! !
 methodTemps!event handling!menus!public! !
-moveMethod!commands!private!refactoring! !
-onAboutToDisplayMenu:!event handling!menus!public! !
-pushDownMethods!commands!private!refactoring! !
+moveMethod!commands-actions!public!refactoring! !
+pushDownMethods!commands-actions!public! !
 pushMethods:!public!refactoring! !
-pushUpMethods!commands!public!refactoring! !
-queryCommand:command:!commands!private! !
-renameItCommand!constants!private!refactoring! !
+pushUpMethods!commands-actions!public! !
+queryConvertTempToInstVarMenu:!commands-queries!private! !
+queryPushDownMethods:!commands-queries!private! !
+queryPushUpMethods:!commands-queries!private! !
+queryRefactorParameter:!commands-queries!private! !
+queryRefactorSelectedMethod:!commands-queries!private! !
+queryRefactorTemp:!commands-queries!private! !
+removeParameterMenu!commands-menus!public! !
+renameItCommand!commands-mappings!constants!private!refactoring! !
 renameMethod!public!refactoring! !
-renameMethod:!commands!public!refactoring! !
-renameMethodReferences!commands!public!refactoring! !
+renameMethod:!commands-actions!public! !
+renameMethodReferences!commands-actions!public!refactoring! !
+renameParameterMenu!commands-menus!public! !
+renameTempMenu!commands-menus!public! !
 !
 

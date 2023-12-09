@@ -82,7 +82,7 @@ continueTrackingAt:from:!private!tracking! !
 defaultFoundCursor!constants!public! !
 defaultNotFoundCursor!constants!public! !
 endTrackingAt:!private!tracking! !
-findObject!commands!public! !
+findObject!commands-actions!public! !
 foundCursor:!accessing!public! !
 initialize!private! !
 notFoundCursor:!accessing!public! !

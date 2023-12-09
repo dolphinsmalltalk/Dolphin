@@ -261,6 +261,19 @@ openWorkspace
 	openFilename isNil ifTrue: [^nil].
 	^self openOn: openFilename!
 
+populateToolsMenu: toolsMenu
+	"Private - Populate the Tools menu with the same hierarchy of items as the system folder.
+	The menu is arranged in alphabetical order, with dynamically generated keyboard
+	shortcuts using the earliest character not used as the shortcut for a previous item
+	in the menu. All items will always be enabled. There is no default."
+
+	self developmentSystem populateToolsMenu: toolsMenu!
+
+populateWindowMenu: windowMenu
+	"Private - Populate the open windows menu"
+
+	self developmentSystem populateWindowMenu: windowMenu!
+
 rememberThisSize
 	"Record the size of the receiver as the default extent for its tool class."
 
@@ -338,6 +351,14 @@ smalltalkExit
 systemModel
 	^self developmentSystem!
 
+toolsMenu
+	<menuPopulator: #populateToolsMenu:>
+	!
+
+windowMenu
+	<menuPopulator: #populateWindowMenu:>
+	!
+
 workspace
 	"Answers the SmalltalkWorkspace held by the receiver."
 
@@ -383,6 +404,8 @@ onViewAvailable!event handling!public! !
 onViewOpened!event handling!private! !
 openViewComposer!commands-actions!public! !
 openWorkspace!public! !
+populateToolsMenu:!private! !
+populateWindowMenu:!private! !
 rememberThisSize!commands-actions!public! !
 saveStateOn:!private!saved state! !
 searchForClass:!private! !
@@ -398,6 +421,8 @@ setLexer!helpers!private! !
 show!operations!public! !
 smalltalkExit!commands-actions!public! !
 systemModel!accessing!private! !
+toolsMenu!public! !
+windowMenu!public! !
 workspace!accessing!public! !
 !
 

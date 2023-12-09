@@ -15,20 +15,47 @@ Tools.NamespacesShell comment: ''!
 addVariable
 	"Prompt for a variable to add to the selected Namespace."
 
-	| entry namespace |
+	<commandQuery: #hasSelection>
+	| entry namespace prompter |
 	namespace := self selectionOrNil.
-	entry := (KeyValuePrompter
-				createOn: VariableBinding new
+	prompter := KeyValuePrompter
+				createOn: (VariableBinding key: '' value: nil)
 				prompt: 'Enter key string and value expression:'
-				caption: 'Add Variable to <1p>...' << namespace) showModal.
+				caption: 'Add Variable to <p>...' << namespace.
+	prompter validater: 
+			[:var |
+			| name result |
+			name := var key.
+			result := ValidationResult new.
+			result
+				caption: 'Invalid Name';
+				presenter: prompter keyPresenter.
+			(Scanner isStaticVariable: name)
+				ifFalse: [result errorMessage: '<p> is not a valid static variable name' << name]
+				ifTrue: 
+					[(namespace hierarchyDefinesVariable: name)
+						ifTrue: 
+							[result errorMessage: '<d> or one of its subclasses already defines variable <p>'
+										<< { namespace unqualifiedName. name }]
+						ifFalse: 
+							["Proposed name is valid, now check the expression"
+							[(Parser parseExpression: var value in: namespace) analyze] on: CompilerErrorNotification
+								do: 
+									[:err |
+									result
+										errorMessage: err errorMessage;
+										caption: 'Parse Error';
+										presenter: prompter valuePresenter]]].
+			result].
+	entry := prompter showModal.
 	entry ifNil: [^self].
-	entry key: entry key asString.
-	entry value: (entry ifNotNil: [:value | Compiler evaluate: value]).
+	entry value: (entry value ifNotNil: [:value | Compiler evaluate: value]).
 	entry isClassVariable: true.
 	namespace add: entry.
 	dictionariesPresenter inspectorPresenter refresh!
 
 browseEntryReferences
+	<commandQuery: #hasSelectedItemAccessor>
 	self developmentSystem browseMethodsIn: (self selectedBinding
 				ifNil: [self searchEnvironment forMethods: #()]
 				ifNotNil: [:var | self searchEnvironment referencesToVariable: var])!
@@ -38,6 +65,11 @@ createComponents
 
 	super createComponents.
 	dictionariesPresenter := self add: TwinLevelInspector new name: 'dictionaries'!
+
+hasDefinedSelection
+	| namespace |
+	namespace := self selectionOrNil.
+	^namespace notNil and: [namespace fullyQualifiedReference isDefined]!
 
 hasSelectedItemAccessor
 	^self selectedItemAccessorOrNil notNil!
@@ -52,14 +84,14 @@ model: aListModelOfObjects
 namespacePackage
 	"Prompt for the user to repackage the selected pool."
 
+	<commandQuery: #hasDefinedSelection>
 	| namespace newPkg oldPkg |
 	namespace := self selectionOrNil.
 	oldPkg := namespace owningPackage.
 	newPkg := PackagePrompter
 				showModalOn: oldPkg asValue
 				caption: 'Package of <1p>…' << namespace
-				default: nil
-				validationBlock: [:package | package notNil and: [namespace environment includesKey: namespace name]].
+				default: nil.
 	(newPkg isNil or: [newPkg = oldPkg]) ifTrue: [^self].
 	Package manager addVariableNamed: namespace fullyQualifiedReference to: newPkg!
 
@@ -70,43 +102,24 @@ newClass
 		inPackage: (selection ifNotNil: [selection owningPackage]))
 			ifNotNil: [:newClass | self selectionOrNil: newClass]!
 
-queryCommand: aCommandQuery
-	"Private - Enters details about a potential command for the receiver into aCommandQuery"
-
-	| symbol selection |
-	super queryCommand: aCommandQuery.
-	symbol := aCommandQuery command.
-	selection := self selectionOrNil.
-	(#(#removeNamespace #namespacePackage #addVariable) identityIncludes: symbol)
-		ifTrue: 
-			[aCommandQuery isEnabled: selection notNil.
-			^true].
-	(#(#removeVariable #browseEntryReferences) identityIncludes: symbol)
-		ifTrue: 
-			[aCommandQuery isEnabled: self hasSelectedItemAccessor.
-			^true].
-	#toggleConstant == symbol
-		ifTrue: 
-			[self selectedBinding
-				ifNil: 
-					[aCommandQuery
-						isEnabled: false;
-						isChecked: false]
-				ifNotNil: 
-					[:var |
-					aCommandQuery
-						isEnabled: var isClassBinding not;
-						isChecked: var isImmutable].
-			^true].
-	^false!
+queryToggleConstant: aCommandQuery
+	self selectedBinding
+		ifNil: 
+			[aCommandQuery
+				beDisabled;
+				isChecked: false]
+		ifNotNil: 
+			[:var |
+			aCommandQuery
+				isEnabled: var isClassBinding not;
+				isChecked: var isImmutable]!
 
 removeNamespace
-	| pool |
-	pool := self selectionOrNil.
-	pool ifNil: [^self].
-	self developmentSystem removeClasses: {pool}!
+	<commandQuery: #hasSelection>
+	self developmentSystem removeClasses: { self selectionOrNil }!
 
 removeVariable
+	<commandQuery: #hasSelectedItemAccessor>
 	| var |
 	var := self selectedBinding.
 	var ifNil: [^self].
@@ -137,6 +150,7 @@ selectionOrNil: aPoolConstantsDictionary
 	dictionariesPresenter selectionOrNil: aPoolConstantsDictionary!
 
 toggleConstant
+	<commandQuery: #queryToggleConstant:>
 	self selectedBinding
 		ifNotNil: 
 			[:var |
@@ -145,17 +159,18 @@ toggleConstant
 				ifFalse: [var environment addClassConstant: var key value: var value]]! !
 !Tools.NamespacesShell categoriesForMethods!
 addVariable!public! !
-browseEntryReferences!commands!public! !
+browseEntryReferences!commands-actions!public! !
 createComponents!private! !
+hasDefinedSelection!public!selection! !
 hasSelectedItemAccessor!public!selection! !
 hasSelection!public!selection! !
 model:!public! !
-namespacePackage!commands!public! !
-newClass!commands!public! !
-queryCommand:!commands!private! !
-removeNamespace!commands!public! !
+namespacePackage!commands-actions!public! !
+newClass!commands-actions!public! !
+queryToggleConstant:!commands-queries!private! !
+removeNamespace!commands-actions!public! !
 removeVariable!public! !
-searchEnvironment!commands!private! !
+searchEnvironment!accessing!private! !
 selectedBinding!private!selection! !
 selectedItemAccessorOrNil!private!selection! !
 selectedItemKey!private!selection! !

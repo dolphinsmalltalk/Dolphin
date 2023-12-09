@@ -57,8 +57,8 @@ addGrabbers
 addSelectionFor: aView
 	"Private - Adds a new selection"
 
-	self selections remove: aView ifAbsent: nil.
-	self selections addFirst: aView.
+	selections remove: aView ifAbsent: nil.
+	selections addFirst: aView.
 	self updatePrimarySelection.
 	self updateAdornment.
 	self
@@ -125,37 +125,43 @@ alignBottoms
 	"Aligns the bottom edges of all the selections to match that of the
 	primary selection"
 
-	self matchGeometryAspect: #bottomAlign.!
+	<commandQuery: #hasMultipleSelections>
+	self matchGeometryAspect: #bottomAlign!
 
 alignCenters
 	"Aligns the vertical centres of all the selections to match that of the
 	primary selection"
 
-	self matchGeometryAspect: #centerX.!
+	<commandQuery: #hasMultipleSelections>
+	self matchGeometryAspect: #centerX!
 
 alignLefts
 	"Aligns the left edges of all the selections to match that of the
 	primary selection"
 
-	self matchGeometryAspect: #leftAlign.!
+	<commandQuery: #hasMultipleSelections>
+	self matchGeometryAspect: #leftAlign!
 
 alignMiddles
 	"Aligns the horizontal centres of all the selections to match that of the
 	primary selection"
 
-	self matchGeometryAspect: #centerY.!
+	<commandQuery: #hasMultipleSelections>
+	self matchGeometryAspect: #centerY!
 
 alignRights
 	"Aligns the right edges of all the selections to match that of the
 	primary selection"
 
-	self matchGeometryAspect: #rightAlign.!
+	<commandQuery: #hasMultipleSelections>
+	self matchGeometryAspect: #rightAlign!
 
 alignTops
 	"Aligns the top edges of all the selections to match that of the
 	primary selection"
 
-	self matchGeometryAspect: #topAlign.!
+	<commandQuery: #hasMultipleSelections>
+	self matchGeometryAspect: #topAlign!
 
 allResourceIdentifiers
 	^self systemModel allResourceIdentifiers!
@@ -235,7 +241,7 @@ arenaLeftButtonPressed: aMouseEvent
 	self isMouseClick: true.
 	aMouseEvent isCtrlDown 
 		ifTrue: 
-			[(self selections includes: viewHit) ifTrue: [mouseTracker := nil].
+			[(selections includes: viewHit) ifTrue: [mouseTracker := nil].
 			self toggleSelectionFor: viewHit]
 		ifFalse: 
 			[aMouseEvent isShiftDown 
@@ -316,7 +322,8 @@ borderRegionFor: aView
 
 browseIt
 	"Open a new class browser on the hierarchy at the same point as the receiver."
-	
+
+	<commandQuery: #hasComposingView>
 	self composingView browse!
 
 calculatePositionOf: aView offsetBy: pointOffset 
@@ -339,7 +346,7 @@ cancelSelectionFor: aView
 
 	(self isSelected: aView) ifTrue: [
 		self invalidateAdornmentFor: aView.
-		self selections remove: aView.
+		selections remove: aView.
 		self updateAdornment.
 		self updatePrimarySelection ]
 !
@@ -388,66 +395,71 @@ canSize: aView
 
 !
 
+canWidenSelection
+	| selected |
+	selected := self primarySelection.
+	^selected notNil and: [selected ~~ self composingView]!
+
 centerHorizontally
-	"Private - Move the selections so that the primary selection is centred horizontally in its parent,
+	"Move the selections so that the primary selection is centred horizontally in its parent,
 	but maintaining the relative positions of the other selections."
 
+	<commandQuery: #hasMoveableSelection>
 	| primaryRectangle center delta |
 	primaryRectangle := self primarySelection rectangle.
 	center := self primarySelection parentView clientRectangle centerX.
 	delta := primaryRectangle centerX - center.
 	self eraseAdornment.
-	self selections 
+	selections
 		do: [:each | self repositionView: each to: (each position x - delta rounded) @ each position y]!
 
 centerVertically
-	"Private - Move the selections so that the primary selection is centred vertically in its parent, but
+	"Move the selections so that the primary selection is centred vertically in its parent, but
 	maintaining the relative positions of the other selections."
 
+	<commandQuery: #hasMoveableSelection>
 	| primaryRectangle center delta |
 	primaryRectangle := self primarySelection rectangle.
 	center := self primarySelection parentView clientRectangle centerY.
 	delta := primaryRectangle centerY - center.
 	self eraseAdornment.
-	self selections 
+	selections
 		do: [:each | self repositionView: each to: each position x @ (each position y - delta rounded)]!
 
 chooseBackgroundColor
 	"Set the background color of all selected objects to the users choice from a ColorDialog."
 
+	<commandQuery: #hasSelection>
 	| color |
 	color := Color choose.
-	color notNil ifTrue:
-		[self selections do: [:v | v backcolor: color]].
-!
+	color notNil ifTrue: [selections do: [:v | v backcolor: color]]!
 
 chooseFont
 	"Set the font of all selected objects to the users choice from a FontDialog."
 
+	<commandQuery: #hasSelection>
 	| font |
 	font := Font choose.
-	font notNil ifTrue:
-		[self selections do: [:v | v font: font]].
-!
+	font notNil ifTrue: [selections do: [:v | v font: font]]!
 
 chooseForegroundColor
 	"Set the foreground color of all selected objects to the users choice from a ColorDialog."
 
+	<commandQuery: #hasSelection>
 	| color |
 	color := Color choose.
-	color notNil ifTrue:
-		[self selections do: [:v | v forecolor: color]].
-!
+	color notNil ifTrue: [selections do: [:v | v forecolor: color]]!
 
 clearSelection
 	"Removes the current selections from the receiver"
 
+	<commandQuery: #hasSelection>
 	| prompt selCount |
-	selCount := self selections size.
+	selCount := selections size.
 	prompt := selCount > 1
-				ifTrue: ['Are you sure you wish to remove the <1p> selected views?' expandMacrosWith: selCount]
+				ifTrue: ['Are you sure you wish to remove the <p> selected views?' expandMacrosWith: selCount]
 				ifFalse: 
-					['Are you sure you wish to remove the selected <1p>?' expandMacrosWith: self selections first class].
+					['Are you sure you wish to remove the selected <p>?' expandMacrosWith: selections first class].
 	(MessageBox confirm: prompt) ifTrue: [self deleteSelections]!
 
 clearUndoState
@@ -538,9 +550,8 @@ copySelection
 	"Copies the selections to the View Composer clipboard. Note that we do not currently
 	integrate with the real Windows clipboard"
 
-	#todo "Use the Clipboard class".
-	self class copyAllToClipboard: self selections.
-!
+	<commandQuery: #hasSelection>
+	self class copyAllToClipboard: selections!
 
 createComponents
 	"Private - Create the presenters contained by the receiver"
@@ -665,25 +676,31 @@ cursorAt: position
 cutSelection
 	"Cuts the current selections to the clipboard"
 
-	self copySelection.
-	self deleteSelections!
+	<commandQuery: #hasSelection>
+	self
+		copySelection;
+		deleteSelections!
 
 decreaseHeight
+	<commandQuery: #hasSelection>
 	self resizeBy: 0 @ -1!
 
 decreaseHorizontalGaps
 	"Decrease the gap between the selected views in the horizontal plane. The views move toward
 	from the centre line of the parent."
 
+	<commandQuery: #hasSiblingSelections>
 	self nudgeHorizontalGaps: -1!
 
 decreaseVerticalGaps
 	"Deccrease the gap between the selected views in the vertical plane. The views move toward
 	from the middle line of the parent."
 
+	<commandQuery: #hasSiblingSelections>
 	self nudgeVerticalGaps: -1!
 
 decreaseWidth
+	<commandQuery: #hasSelection>
 	self resizeBy: -1 @ 0!
 
 defaultComposingPosition
@@ -707,14 +724,15 @@ defaultSelectionWidth
 !
 
 deleteSelections
-	self selections copy do: [:each | self removeView: each].
+	selections copy do: [:each | self removeView: each].
 	self setModified.
 	self arena invalidate.
 	self hasComposingView ifTrue: [self composingView validateLayout] ifFalse: [self isModified: false]!
 
 dereference
-	"Private - Dereference the primary selection which is an instance of ReferenceView."
+	"Dereference the primary selection which is an instance of ReferenceView."
 
+	<commandQuery: #isPrimaryReference>
 	| referenceView dereferencedView |
 	referenceView := self primarySelection.
 	(MessageBox new
@@ -734,8 +752,9 @@ distributeHorizontally
 	relative positions of the selections are maintained (i.e. the leftmost control remains so
 	after distribution, etc)."
 
+	<commandQuery: #hasSiblingSelections>
 	| distributees gap space totalWidth start clientWidth |
-	clientWidth := self selections first parentView clientWidth.
+	clientWidth := selections first parentView clientWidth.
 	distributees := self selectionsByHorizontalPosition.
 	totalWidth := distributees inject: 0 into: [:sum :each | sum + each extent x].
 	space := clientWidth - totalWidth.
@@ -756,12 +775,13 @@ distributeHorizontally
 distributeVertically
 	"Distribute the selected controls vertically so that they are evenly spaced."
 
+	<commandQuery: #hasSiblingSelections>
 	| distributees totalHeight clientHeight gap start space |
 	distributees := self selectionsByVerticalPosition.
 	totalHeight := distributees inject: 0 into: [:sum :each | sum + each height].
 	clientHeight := distributees first parentView clientHeight.
 	space := clientHeight - totalHeight.
-	start := space < 0 
+	start := space < 0
 				ifTrue: 
 					[gap := space / (distributees size - 1).
 					0]
@@ -771,7 +791,7 @@ distributeVertically
 	self eraseAdornment.
 	distributees inject: start
 		into: 
-			[:y :each | 
+			[:y :each |
 			self repositionView: each to: each x @ y rounded.
 			y + each height + gap]!
 
@@ -874,6 +894,7 @@ dropViewResource: aResourceArray onto: aTargetView at: aPoint named: aNameString
 editContextMenu
 	"Invoke the MenuComposer on the context menu of the primarySelection."
 
+	<commandQuery: #hasPrimarySelection>
 	| menuValue editor edited |
 	edited := self primarySelection.
 	menuValue := edited aspectValue: #contextMenu.
@@ -888,6 +909,7 @@ editContextMenu
 editMenuBar
 	"Invoke the MenuComposer on the menu bar of the composingView."
 
+	<commandQuery: #isComposingTopView>
 	| menuValue editor edited |
 	edited := self composingView.
 	menuValue := edited aspectValue: #menuBar.
@@ -900,8 +922,9 @@ editMenuBar
 	editor isConfirmed ifTrue: [inspector aspectChanged: #menuBar of: edited]!
 
 editReference
-	"Private - Edit the primary selection which is an instance of ReferenceView."
+	"Edit the primary selection which is an instance of ReferenceView."
 
+	<commandQuery: #isPrimaryReference>
 	self primarySelection resourceIdentifier edit!
 
 endComposition
@@ -955,6 +978,7 @@ fileOpen
 fileSave
 	"Save the view as a resource."
 
+	<commandQuery: #hasComposingView>
 	self viewSave!
 
 forceLayoutFor: aContainerView
@@ -967,7 +991,7 @@ forceLayoutFor: aContainerView
 getAdornmentRegion
 	"Private - Answers a Region occupied by all the selection adornments"
 
-	^self selections inject: Region empty into: [:region :each | 
+	^selections inject: Region empty into: [:region :each | 
 		region union: (self adornmentRegionFor: each) ].
 
 
@@ -1017,6 +1041,11 @@ hasMoveableSelection
 
 	^self moveableSelections notEmpty!
 
+hasMultipleSelections
+	"Private - Answer true if more than one item is selected."
+
+	^selections size > 1!
+
 hasOwnedComposingView: aView 
 	^self composingView == aView and: [self ownsComposingView]!
 
@@ -1024,6 +1053,9 @@ hasPreferredExtent
 	"Answers true if the primary selection is set to use a preferred extent"
 
 	^self primarySelection preferredExtent notNil!
+
+hasPrimarySelection
+	^self primarySelection notNil!
 
 hasResource
 	"Private - Answer true if the receiver has a full resource identifier"
@@ -1033,9 +1065,13 @@ hasResource
 hasSelection
 	"Private - Answer true if there are any selections"
 
-	^self selections notEmpty
+	^selections notEmpty
 
 !
+
+hasSiblingSelections
+	^self hasMultipleSelections
+		and: [(selections collect: [:each | each parentView]) asSet size = 1]!
 
 hidingOffset
 	"Answers the <Point> location where our composing view should be positioned so that so that
@@ -1052,21 +1088,25 @@ hidingOffset
 	^(OS.SystemMetrics current virtualScreenRectangle right - 1) @ 10!
 
 increaseHeight
+	<commandQuery: #hasSelection>
 	self resizeBy: 0 @ 1!
 
 increaseHorizontalGaps
 	"Increase the gap between the selected views in the horizontal plane. The views move away
 	from the centre line of the parent."
 
+	<commandQuery: #hasSiblingSelections>
 	self nudgeHorizontalGaps: 1!
 
 increaseVerticalGaps
 	"Increase the gap between the selected views in the vertical plane. The views move away
 	from the middle line of the parent."
 
+	<commandQuery: #hasSiblingSelections>
 	self nudgeVerticalGaps: 1!
 
 increaseWidth
+	<commandQuery: #hasSelection>
 	self resizeBy: 1 @ 0!
 
 incrementAddPositionOffset
@@ -1102,7 +1142,7 @@ inspectSelection
 	"Removes the current selections from the receiver"
 
 	| sel |
-	sel := self selections.
+	sel := selections.
 	sel size = 1
 		ifTrue: [sel first inspect]
 		ifFalse: [sel asArray inspect]!
@@ -1127,6 +1167,12 @@ isAdornmentModified: aBoolean
 
 	vcFlags := vcFlags mask: AdornmentModifiedFlag set: aBoolean
 !
+
+isComposingTopView
+	^self composingView class conformsToProtocol: #topView!
+
+isEditingExistingResource
+	^self hasComposingView and: [self hasResource]!
 
 isImageDirty
 	^vcFlags anyMask: RefreshFlag!
@@ -1170,10 +1216,13 @@ isMouseTarget
 	^true
 !
 
+isPrimaryReference
+	^self primarySelection isKindOf: ReferenceView!
+
 isSelected: aView
 	"Private - Answer true if the aView is selected"
 
-	^self selections includes: aView
+	^selections includes: aView
 !
 
 isUndoRedoInProgress
@@ -1200,32 +1249,29 @@ mapRectangle: aRectangle toViewFromArena: aView
 matchBackgroundColors
 	"Matches the background colors of all the selections to that of the primary selection."
 
+	<commandQuery: #hasMultipleSelections>
 	| color |
 	color := self primarySelection backcolor.
-	(self selections reject: [:v | v == self primarySelection]) do:
-		[:v | v backcolor: color].
-	self setModified
-!
+	(selections reject: [:v | v == self primarySelection]) do: [:v | v backcolor: color].
+	self setModified!
 
 matchFonts
 	"Matches the fonts of all the selections to that of the primary selection."
 
+	<commandQuery: #hasMultipleSelections>
 	| font |
 	font := self primarySelection font.
-	(self selections reject: [:v | v == self primarySelection]) do:
-		[:v | v font: font].
-	self setModified
-!
+	(selections reject: [:v | v == self primarySelection]) do: [:v | v font: font].
+	self setModified!
 
 matchForegroundColors
 	"Matches the foreground colors of all the selections to that of the primary selection."
 
+	<commandQuery: #hasMultipleSelections>
 	| color |
 	color := self primarySelection forecolor.
-	(self selections reject: [:v | v == self primarySelection]) do:
-		[:v | v forecolor: color].
-	self setModified
-!
+	(selections reject: [:v | v == self primarySelection]) do: [:v | v forecolor: color].
+	self setModified!
 
 matchGeometryAspect: anAspectSymbol 
 	"Private - Matches the geometry aspect in anAspectSymbol (#x, #y, #width, #height etc) of the 
@@ -1237,7 +1283,7 @@ matchGeometryAspect: anAspectSymbol
 			primaryRectangle := self primarySelection parentView 
 						mapRectangle: self primarySelection rectangle
 						to: self primarySelection topView.
-			self selections do: 
+			selections do: 
 					[:each | 
 					| rectangle selectionRectangle |
 					rectangle := each topView mapRectangle: primaryRectangle to: each parentView.
@@ -1248,17 +1294,22 @@ matchGeometryAspect: anAspectSymbol
 matchHeights
 	"Matches the heights of all the selections to that of the primary selection"
 
-	self matchGeometryAspect: #height.!
+	<commandQuery: #hasMultipleSelections>
+	self matchGeometryAspect: #height!
 
 matchSizes
 	"Matches the sizes of all the selections to that of the primary selection"
 
-	self matchHeights; matchWidths!
+	<commandQuery: #hasMultipleSelections>
+	self
+		matchHeights;
+		matchWidths!
 
 matchWidths
 	"Matches the widths of all the selections to that of the primary selection"
 
-	self matchGeometryAspect: #width.!
+	<commandQuery: #hasMultipleSelections>
+	self matchGeometryAspect: #width!
 
 maxUndoStates
 	^40!
@@ -1269,7 +1320,7 @@ moveableSelections
 	are having their parents moved"
 	
 	| moveableSelections |
-	moveableSelections := self selections select: [ :each | self canMove: each ].
+	moveableSelections := selections select: [ :each | self canMove: each ].
 	^moveableSelections select: [ :each | 
 		(each allParents intersection: moveableSelections) isEmpty ]
 !
@@ -1277,6 +1328,7 @@ moveableSelections
 mutate
 	"Mutate the primary selection to a user's choice of view"
 
+	<commandQuery: #hasSelection>
 	| viewClasses excluded |
 	excluded := Set new.
 	#(#{DesktopView} #{Smalltalk.WinAsyncSocket})
@@ -1331,6 +1383,7 @@ nudgeBy: aPoint
 	self moveableSelections do: [:each | self repositionView: each to: each position + aPoint]!
 
 nudgeDown
+	<commandQuery: #hasMoveableSelection>
 	self nudgeBy: 0 @ 1!
 
 nudgeHorizontalGaps: delta 
@@ -1347,12 +1400,15 @@ nudgeHorizontalGaps: delta
 			offset + delta]!
 
 nudgeLeft
+	<commandQuery: #hasMoveableSelection>
 	self nudgeBy: -1 @ 0!
 
 nudgeRight
+	<commandQuery: #hasMoveableSelection>
 	self nudgeBy: 1 @ 0!
 
 nudgeUp
+	<commandQuery: #hasMoveableSelection>
 	self nudgeBy: 0 @ -1!
 
 nudgeVerticalGaps: delta 
@@ -1708,17 +1764,18 @@ ownsComposingView
 pasteClipboard
 	"Pastes the DragDropObject(s) held on the clipboard into the primary selection."
 
+	<commandQuery: #canPaste>
 	| pasteContext |
 	pasteContext := self pasteContext.
 	self clipboard do: 
-			[:each | 
+			[:each |
 			| data |
-			data := (each isFormatAvailable: #STLViewResource) 
+			data := (each isFormatAvailable: #STLViewResource)
 						ifTrue: [each format: #STLViewResource]
 						ifFalse: [(each isFormatAvailable: #STBViewResource) ifTrue: [each format: #STBViewResource]].
-			data notNil 
+			data notNil
 				ifTrue: 
-					[self 
+					[self
 						pasteResource: data
 						context: pasteContext
 						position: self incrementAddPositionOffset]]!
@@ -1821,105 +1878,35 @@ printShortCaptionOn: aWriteStream
 				ifFalse: [aWriteStream display: resourceIdentifier]]
 		ifFalse: [aWriteStream nextPutAll: self basicCaption]!
 
-queryCommand: aCommandQuery
-	"Private - Enter details about a potential command for the receiver into the 
-	<CommandQuery> argument."
+queryRedo: aCommandQuery
+	aCommandQuery isEnabled: undoList hasFuture!
 
-	| command |
-	command := aCommandQuery commandSymbol.
-	(#(#copySelection #mutate #toggleGroupStop #toggleTabStop #decreaseHeight #decreaseWidth #increaseWidth #increaseHeight)
-		identityIncludes: command)
-			ifTrue: 
-				[aCommandQuery isEnabled: self hasSelection.
-				^true].
-	(#(#cutSelection #clearSelection) identityIncludes: command)
+queryToggleGroupStop: aCommandQuery
+	self hasSelection
 		ifTrue: 
-			[aCommandQuery isEnabled: self hasSelection.
-			^true].
-	(#(#nudgeLeft #nudgeRight #nudgeUp #nudgeDown #centerHorizontally #centerVertically)
-		identityIncludes: command)
-			ifTrue: 
-				[aCommandQuery isEnabled: self hasMoveableSelection.
-				^true].
-	(#(#fileSave #viewSave) identityIncludes: command)
+			[aCommandQuery
+				beEnabled;
+				isChecked: (selections allSatisfy: [:v | v isGroupStop])]!
+
+queryToggleTabStop: aCommandQuery
+	self hasSelection
 		ifTrue: 
-			[aCommandQuery isEnabled: (self hasComposingView and: [self hasResource]).
-			^true].
-	#viewRevert == command
-		ifTrue: 
-			[aCommandQuery isEnabled: (self hasComposingView and: [self hasResource]).
-			^true].
-	(#(#referenceViewMenu #dereference #editReference) identityIncludes: command)
-		ifTrue: 
-			[aCommandQuery isEnabled: (self primarySelection isKindOf: ReferenceView).
-			^true].
-	(#(#viewExport #viewSaveAs #viewClose #viewTest) includes: command)
-		ifTrue: 
-			[aCommandQuery isEnabled: self hasComposingView.
-			^true].
-	(#(#zFront #zForward #zBackward #zBack) identityIncludes: command)
-		ifTrue: 
-			[aCommandQuery isEnabled: self primarySelection notNil.
-			^true].
-	#widenSelection == command
-		ifTrue: 
-			[| selected |
-			selected := self primarySelection.
-			aCommandQuery isEnabled: (selected notNil and: [selected ~~ self composingView]).
-			^true].
-	(#(#matchWidths #matchHeights #matchSizes #matchFonts #matchForegroundColors #matchBackgroundColors #alignLefts #alignMiddles #alignRights #alignTops #alignCenters #alignBottoms)
-		identityIncludes: command)
-			ifTrue: 
-				[aCommandQuery isEnabled: self selections size > 1.
-				^true].
-	(#(#distributeHorizontally #distributeVertically #removeHorizontalGaps #removeVerticalGaps #increaseHorizontalGaps #decreaseHorizontalGaps #increaseVerticalGaps #decreaseVerticalGaps)
-		includes: command)
-			ifTrue: 
-				[aCommandQuery isEnabled: (self selections size > 1
-							and: [(self selections collect: [:each | each parentView]) asSet size = 1]).
-				^true].
-	command == #editMenuBar
-		ifTrue: 
-			[aCommandQuery isEnabled: (self composingView class conformsToProtocol: #topView).
-			^true].
-	command == #editContextMenu
-		ifTrue: 
-			[aCommandQuery isEnabled: self primarySelection notNil.
-			^true].
-	command == #viewUndo
-		ifTrue: 
-			[aCommandQuery isEnabled: undoList hasPast.
-			^true].
-	command == #viewRedo
-		ifTrue: 
-			[aCommandQuery isEnabled: undoList hasFuture.
-			^true].
-	command == #toggleTabStop
-		ifTrue: 
-			[self hasSelection
-				ifTrue: 
-					[aCommandQuery
-						isEnabled: true;
-						isChecked: (self selections detect: [:v | v isTabStop not] ifNone: nil) isNil].
-			^true].
-	command == #toggleGroupStop
-		ifTrue: 
-			[self hasSelection
-				ifTrue: 
-					[aCommandQuery
-						isEnabled: true;
-						isChecked: self primarySelection isGroupStop].
-			^true].
-	command == #pasteClipboard
-		ifTrue: 
-			[aCommandQuery isEnabled: self canPaste.
-			^true].
-	^super queryCommand: aCommandQuery!
+			[aCommandQuery
+				beEnabled;
+				isChecked: (selections allSatisfy: [:v | v isTabStop])]!
+
+queryUndo: aCommandQuery
+	aCommandQuery isEnabled: undoList hasPast!
+
+referenceViewMenu
+	<commandQuery: #isPrimaryReference>
+!
 
 refreshImage
 	" Re-render the composing view and display it in the arenaPresenter."
 
-	self isImageDirty: true!
+	self isImageDirty: true.
+	inspector view invalidate!
 
 refreshPublishedAspects
 	inspector refresh!
@@ -1935,24 +1922,26 @@ removeGrabbers
 removeHorizontalGaps
 	"Remove any vertical spacing between the selected controls."
 
+	<commandQuery: #hasSiblingSelections>
 	| distributees first |
 	distributees := self selectionsByHorizontalPosition.
 	first := true.
 	distributees inject: 0
 		into: 
-			[:x :each | 
+			[:x :each |
 			first ifTrue: [first := false] ifFalse: [self repositionView: each to: x @ each y].
 			each rectangle right]!
 
 removeVerticalGaps
 	"Remove any vertical spacing between the selected controls."
 
+	<commandQuery: #hasSiblingSelections>
 	| distributees first |
 	distributees := self selectionsByVerticalPosition.
 	first := true.
 	distributees inject: 0
 		into: 
-			[:y :each | 
+			[:y :each |
 			first ifTrue: [first := false] ifFalse: [self repositionView: each to: each x @ y].
 			each rectangle bottom]!
 
@@ -1960,7 +1949,7 @@ removeView: aView
 	"Private - Removes aView from the receiver."
 
 	aView == self composingView ifTrue: [^self endComposition].
-	(self selections includes: aView) 
+	(selections includes: aView) 
 		ifTrue: 
 			[self cancelSelectionFor: aView.
 			self primarySelection isNil 
@@ -1992,7 +1981,7 @@ resetAddPositionOffset
 !
 
 resizeBy: aPoint 
-	self selections do: [:each | self resizeView: each to: each extent + aPoint]!
+	selections do: [:each | self resizeView: each to: each extent + aPoint]!
 
 resizeView: aView to: aPoint 
 	| parent |
@@ -2080,7 +2069,7 @@ secondarySelections
 	"Private - Answer a collection of selected views that doesn't contain
 	the primary selection"
 
-	^self selections reject: [:each | each==self primarySelection]
+	^selections reject: [:each | each==self primarySelection]
 	!
 
 selectAll
@@ -2090,7 +2079,7 @@ selection: aView
 	"Private - Sets the primary (and only selection) to be aView"
 
 	"If this view is already the primary and only selection then do nothing."
-	(self primarySelection == aView and: [ self selections size = 1 ]) ifTrue: [
+	(self primarySelection == aView and: [ selections size = 1 ]) ifTrue: [
 		^self ].
 	self cancelSelections.
 	self addSelectionFor: aView !
@@ -2102,13 +2091,13 @@ selections
 
 !
 
-selections: anOrderedCollection 
+selections: anOrderedCollection
 	"Private - Sets the current selections from an OrderedCollection of views
 	within the receiver's jurisdiction"
 
 	| wasClick |
 	self cancelSelections.
-	anOrderedCollection do: [:each | self selections addLast: each].
+	selections addAll: anOrderedCollection.
 	"The mouse click flag is used to suppress some of the response to selection in the view
 	hierarchy tree, which we must do as otherwise selection of the first element in the
 	collection in the tree will result in all other selections being discarded."
@@ -2118,10 +2107,10 @@ selections: anOrderedCollection
 	self updatePrimarySelection] ensure: [self isMouseClick: wasClick]!
 
 selectionsByHorizontalPosition
-	^self selections asSortedArray: [:a :b | a x < b x]!
+	^selections asSortedArray: [:a :b | a x < b x]!
 
 selectionsByVerticalPosition
-	^self selections asSortedArray: [:a :b | a y < b y]!
+	^selections asSortedArray: [:a :b | a y < b y]!
 
 setModified
 	"Private - Sets the modification flag for the receiver"
@@ -2166,29 +2155,31 @@ status
 !
 
 toggleGroupStop
-	"Toggles the WS_GROUP style of the selected items."
+	"Toggle the primary selection's WS_GROUP style, and set that of any other selected items to match."
 
+	<commandQuery: #queryToggleGroupStop:>
 	| gs |
 	gs := self primarySelection isGroupStop not.
-	self selections do: [ :v | v isGroupStop: gs ].
-!
+	selections do: [:v | v isGroupStop: gs].
+	self setModified!
 
 toggleSelectionFor: aView
 	"Private - Toggles the selection state for aView"
 
-	(self selections includes: aView) 
+	(selections includes: aView) 
 		ifTrue: [ self cancelSelectionFor: aView ]
 		ifFalse: [ self addSelectionFor: aView ]
 
 !
 
 toggleTabStop
-	"Toggles the WS_TABSTOP style of the selected items."
+	"Toggle the primary selection's WS_TABSTOP style, and set that of any other selected items to match."
 
+	<commandQuery: #queryToggleTabStop:>
 	| ts |
 	ts := self primarySelection isTabStop not.
-	self selections do: [ :v | v isTabStop: ts ].
-!
+	selections do: [:v | v isTabStop: ts].
+	self setModified!
 
 trackGrabber: aGrabber from: aScreenPoint
 	"Private - Track aGrabber which has been hit with the mouse at aScreenPoint."
@@ -2233,7 +2224,7 @@ updatePrimarySelection
 	"Private - The primary selection may have changed. Update it if necessary."
 
 	| actualPrimarySelection |
-	actualPrimarySelection := self selections notEmpty ifTrue: [self selections first ].
+	actualPrimarySelection := selections notEmpty ifTrue: [selections first ].
 	self primarySelection: actualPrimarySelection!
 
 validateAdornment
@@ -2281,6 +2272,7 @@ viewClose
 
 	"Are there outstanding changes?"
 
+	<commandQuery: #hasComposingView>
 	(self onPromptToSaveChanges: true asValue) ifFalse: [^false].
 	self viewCloseNoPrompt.
 	^true!
@@ -2295,9 +2287,10 @@ viewCloseNoPrompt
 viewExport
 	"Saves the view being composed to a file selected by the user."
 
+	<commandQuery: #hasComposingView>
 	| filename path |
 	path := self hasResource ifTrue: [resourceIdentifier exportedFileName].
-	filename := (FileSaveDialog new)
+	filename := FileSaveDialog new
 				fileTypes: #(#('View Files (*.vu)' '*.vu'));
 				value: path;
 				defaultExtension: '*.vu';
@@ -2361,12 +2354,14 @@ viewOpen
 			(rid := ChoicePrompter choices: viewResources caption: 'Open') notNil ifTrue: [self openOn: rid]]!
 
 viewRedo
+	<commandQuery: #queryRedo:>
 	self performUndoRedo: [self restoreUndoState: (undoList goForward: 1)]!
 
 viewRevert
 	"Revert the contents of the receiver's document to those in the
 	associated file"
 
+	<commandQuery: #isEditingExistingResource>
 	| rid |
 	rid := resourceIdentifier.
 	(MessageBox new
@@ -2380,6 +2375,7 @@ viewRevert
 viewSave
 	"Save the view as a resource."
 
+	<commandQuery: #hasComposingView>
 	| rid |
 	self hasResource ifFalse: [^self viewSaveAs].
 	rid := self resourceIdentifier.
@@ -2403,6 +2399,7 @@ viewSave
 viewSaveAs
 	"Save the composed view as a resource."
 
+	<commandQuery: #hasComposingView>
 	| rid |
 	resourceIdentifier isNil
 		ifTrue: [rid := ResourceIdentifier class: Presenter name: Presenter defaultView]
@@ -2414,7 +2411,7 @@ viewSaveAs
 		ifTrue: 
 			[(MessageBox new
 				headline: 'Overwrite existing resource?';
-				confirm: '''<1d>'' is an existing resource. Do you wish to replace it?' << rid) ifFalse: [^false]].
+				confirm: '''<d>'' is an existing resource. Do you wish to replace it?' << rid) ifFalse: [^false]].
 	self resourceIdentifier: rid.
 	self
 		updateCaption;
@@ -2423,74 +2420,72 @@ viewSaveAs
 viewTest
 	"Load the resource (being edited by the ViewComposer) in a test mode."
 
+	<commandQuery: #hasComposingView>
 	| testView parentView |
-	parentView := (self composingView isKindOf: ShellView) 
+	parentView := (self composingView isKindOf: ShellView)
 				ifTrue: [View desktop]
 				ifFalse: 
-					[(ShellView show)
+					[ShellView show
 						layoutManager: GridLayout new;
 						yourself].
-	testView := Object fromLiteralStoreArray: (self composingView literalStoreArray) context: parentView.
+	testView := Object fromLiteralStoreArray: self composingView literalStoreArray context: parentView.
 	self view repositionShell: testView topView.
 	testView show!
 
 viewUndo
+	<commandQuery: #queryUndo:>
 	self performUndoRedo: [self restoreUndoState: (undoList goBack: 1)]!
 
 widenSelection
 	"Widen the selection to encompass the parent of the current primary selection."
 
-	self primarySelection == self composingView ifTrue: [^self].
-	self selection: self primarySelection parentView!
+	<commandQuery: #canWidenSelection>
+	self canWidenSelection ifTrue: [self selection: self primarySelection parentView]!
 
 zBack
 	"Send the primary selection to the back of the Z-order."
 
+	<commandQuery: #hasPrimarySelection>
 	| editee |
 	editee := self primarySelection.
 	editee zOrderBottom.
-	self zOrderChangedFor:  editee.
-!
+	self zOrderChangedFor: editee!
 
 zBackward
 	"Move the primary selection down one place in the Z-order."
 
+	<commandQuery: #hasPrimarySelection>
 	| nextSibling editee |
 	editee := self primarySelection.
 	nextSibling := editee nextSiblingView.
-	nextSibling notNil ifTrue:
-		[editee zOrderAfter: nextSibling].
-	self zOrderChangedFor:  editee.
-!
+	nextSibling notNil ifTrue: [editee zOrderAfter: nextSibling].
+	self zOrderChangedFor: editee!
 
 zForward
 	"Move the primary selection up one place in the Z-order."
 
+	<commandQuery: #hasPrimarySelection>
 	| sibling editee |
-
 	"We can only Zposition a view AFTER a specified sibling.
 	So, locate the sibling two places in front and Zposition
 	the receiver after it."
 	editee := self primarySelection.
 	sibling := editee previousSiblingView.
-	sibling notNil ifTrue:
-		[sibling := sibling previousSiblingView.
-		sibling notNil ifTrue:
-			[editee zOrderAfter: sibling]].
-
-	sibling isNil ifTrue:
-		[editee zOrderTop].
-
-	self zOrderChangedFor:  editee!
+	sibling notNil
+		ifTrue: 
+			[sibling := sibling previousSiblingView.
+			sibling notNil ifTrue: [editee zOrderAfter: sibling]].
+	sibling isNil ifTrue: [editee zOrderTop].
+	self zOrderChangedFor: editee!
 
 zFront
 	"Bring the primary selection to the front of the Z-order."
 
+	<commandQuery: #hasPrimarySelection>
 	| editee |
 	editee := self primarySelection.
 	editee zOrderTop.
-	self zOrderChangedFor:  editee.
-!
+	self zOrderChangedFor: editee!
 
 zOrderChangedFor: aView 
 	"Private - The ZOrder position of aView has been changed. Inform the 
@@ -2506,12 +2501,12 @@ adornmentRectanglesFor:!adornments!private! !
 adornmentRectanglesFor:do:!adornments!private! !
 adornmentRegion!adornments!private! !
 adornmentRegionFor:!adornments!private! !
-alignBottoms!commands!public! !
-alignCenters!commands!public! !
-alignLefts!commands!public! !
-alignMiddles!commands!public! !
-alignRights!commands!public! !
-alignTops!commands!public! !
+alignBottoms!commands-actions!public! !
+alignCenters!commands-actions!public! !
+alignLefts!commands-actions!public! !
+alignMiddles!commands-actions!public! !
+alignRights!commands-actions!public! !
+alignTops!commands-actions!public! !
 allResourceIdentifiers!public! !
 areDragObjects:acceptableFor:inView:!drag & drop!private! !
 arena!accessing!private! !
@@ -2525,7 +2520,7 @@ basicPasteResource:context:!operations!private! !
 basicPasteResourceLink:context:!private! !
 borderRectanglesFor:!adornments!private! !
 borderRegionFor:!adornments!private! !
-browseIt!commands!public! !
+browseIt!commands-actions!public! !
 calculatePositionOf:offsetBy:!adornments!private! !
 cancelSelectionFor:!adornments!private! !
 cancelSelections!adornments!private! !
@@ -2534,12 +2529,13 @@ canMove:!private!testing! !
 canPaste!private!testing! !
 canSaveState!private!saved state! !
 canSize:!private!testing! !
-centerHorizontally!commands!private! !
-centerVertically!commands!private! !
-chooseBackgroundColor!commands!public! !
-chooseFont!commands!public! !
-chooseForegroundColor!commands!public! !
-clearSelection!commands!public! !
+canWidenSelection!commands-queries!private! !
+centerHorizontally!commands-actions!public! !
+centerVertically!commands-actions!public! !
+chooseBackgroundColor!commands-actions!public! !
+chooseFont!commands-actions!public! !
+chooseForegroundColor!commands-actions!public! !
+clearSelection!commands-actions!public! !
 clearUndoState!operations!private! !
 clipboard!accessing!public! !
 closeComposingView!helpers!private! !
@@ -2549,26 +2545,26 @@ constrainPoint:!geometry!private! !
 constrainRectangle:!geometry!private! !
 continueTrackingAt:from:!private!tracking! !
 copyAspectsFrom:to:!operations!private! !
-copySelection!commands!public! !
+copySelection!commands-actions!public! !
 createComponents!initializing!private! !
 createGrabberFor:of:!adornments!private! !
 createSchematicWiring!initializing!private! !
 createViewHierarchyModel!helpers!initializing!private! !
 cursor!accessing!public! !
 cursorAt:!helpers!private! !
-cutSelection!commands!public! !
-decreaseHeight!commands!public! !
-decreaseHorizontalGaps!commands!public! !
-decreaseVerticalGaps!commands!public! !
-decreaseWidth!commands!public! !
+cutSelection!commands-actions!public! !
+decreaseHeight!commands-actions!public! !
+decreaseHorizontalGaps!commands-actions!public! !
+decreaseVerticalGaps!commands-actions!public! !
+decreaseWidth!commands-actions!public! !
 defaultComposingPosition!constants!private! !
 defaultGridResolution!constants!private! !
 defaultHelpId!public! !
 defaultSelectionWidth!constants!private! !
-deleteSelections!commands!public! !
-dereference!commands!private! !
-distributeHorizontally!commands!public! !
-distributeVertically!commands!public! !
+deleteSelections!operations!public! !
+dereference!commands-actions!public! !
+distributeHorizontally!commands-actions!public! !
+distributeVertically!commands-actions!public! !
 drawAdornment!adornments!private! !
 drawSelectionFor:on:!adornments!private! !
 drawTrackingAt:!adornments!private! !
@@ -2577,43 +2573,48 @@ dropTargetFromSession:!drag & drop!private! !
 dropUndoState!operations!private! !
 dropView:onto:at:!drag & drop!private! !
 dropViewResource:onto:at:named:!drag & drop!private! !
-editContextMenu!commands!public! !
-editMenuBar!commands!public! !
-editReference!commands!private! !
-endComposition!commands!public! !
+editContextMenu!commands-actions!public! !
+editMenuBar!commands-actions!public! !
+editReference!commands-actions!public! !
+endComposition!operations!public! !
 endTrackingAt:!private!tracking! !
 eraseAdornment!adornments!private! !
 eraseTrackingAt:!adornments!private! !
-fileNew!commands!public! !
-fileOpen!commands!public! !
-fileSave!commands!public! !
+fileNew!commands-actions!public! !
+fileOpen!commands-actions!public! !
+fileSave!commands-actions!public! !
 forceLayoutFor:!geometry!private! !
 getAdornmentRegion!adornments!private! !
 grabberHitBy:!adornments!private! !
 grabbers!adornments!private! !
 grid!accessing!private! !
 grid:!accessing!private! !
-gridSetting!commands!private! !
+gridSetting!commands-actions!public! !
 hasClipboard!private!testing! !
 hasComposingView!private!testing! !
 hasMoveableSelection!private!testing! !
+hasMultipleSelections!private!testing! !
 hasOwnedComposingView:!public! !
 hasPreferredExtent!public!testing! !
+hasPrimarySelection!private!testing! !
 hasResource!private!testing! !
 hasSelection!private!testing! !
+hasSiblingSelections!commands-queries!private! !
 hidingOffset!constants!private! !
-increaseHeight!commands!public! !
-increaseHorizontalGaps!commands!public! !
-increaseVerticalGaps!commands!public! !
-increaseWidth!commands!public! !
+increaseHeight!commands-actions!public! !
+increaseHorizontalGaps!commands-actions!public! !
+increaseVerticalGaps!commands-actions!public! !
+increaseWidth!commands-actions!public! !
 incrementAddPositionOffset!operations!private! !
 initialComposingPosition!constants!private! !
 initialize!initializing!private! !
 inspector!accessing!private! !
-inspectSelection!commands!public! !
+inspectSelection!commands-actions!public! !
 invalidateAdornmentFor:!adornments!private! !
 isAdornmentModified!operations!private! !
 isAdornmentModified:!operations!private! !
+isComposingTopView!commands-queries!private! !
+isEditingExistingResource!commands-queries!private! !
 isImageDirty!private! !
 isImageDirty:!private! !
 isModified!public!testing! !
@@ -2621,33 +2622,34 @@ isModified:!accessing!private! !
 isMouseClick!private!testing! !
 isMouseClick:!accessing!private! !
 isMouseTarget!private!testing! !
+isPrimaryReference!commands-queries!private! !
 isSelected:!private!testing! !
 isUndoRedoInProgress!private! !
 mapPoint:toArenaFromView:!helpers!private! !
 mapPoint:toViewFromArena:!private! !
 mapRectangle:toArenaFromView:!private! !
 mapRectangle:toViewFromArena:!private! !
-matchBackgroundColors!commands!public! !
-matchFonts!commands!public! !
-matchForegroundColors!commands!public! !
+matchBackgroundColors!commands-actions!public! !
+matchFonts!commands-actions!public! !
+matchForegroundColors!commands-actions!public! !
 matchGeometryAspect:!geometry!private! !
-matchHeights!commands!public! !
-matchSizes!commands!public! !
-matchWidths!commands!public! !
+matchHeights!commands-actions!public! !
+matchSizes!commands-actions!public! !
+matchWidths!commands-actions!public! !
 maxUndoStates!public! !
 moveableSelections!adornments!private! !
-mutate!commands!public! !
+mutate!commands-actions!public! !
 mutate:to:!operations!public! !
 mutateTo:!operations!public! !
-newDialogView!commands!public! !
-newShellView!commands!public! !
+newDialogView!commands-actions!public! !
+newShellView!commands-actions!public! !
 nudgeBy:!operations!private! !
-nudgeDown!commands!public! !
-nudgeHorizontalGaps:!commands!public! !
-nudgeLeft!commands!public! !
-nudgeRight!commands!public! !
-nudgeUp!commands!public! !
-nudgeVerticalGaps:!commands!public! !
+nudgeDown!commands-actions!public! !
+nudgeHorizontalGaps:!operations!private! !
+nudgeLeft!commands-actions!public! !
+nudgeRight!commands-actions!public! !
+nudgeUp!commands-actions!public! !
+nudgeVerticalGaps:!operations!private! !
 onCloseRequested:!event handling!private! !
 onDragCutHierarchy:!event handling!private! !
 onDragEnterArena:!event handling!private! !
@@ -2672,22 +2674,26 @@ onViewOpened!event handling!private! !
 openOn:!operations!private! !
 openOnCopyOf:!operations!private! !
 ownsComposingView!public! !
-pasteClipboard!commands!public! !
+pasteClipboard!commands-actions!public! !
 pasteContext!operations!private! !
 pastedView:context:!operations!private! !
 pasteResource:context:position:!operations!public! !
 pasteResourceLink:context:position:!operations!public! !
-performCommand:!commands!public! !
+performCommand:!commands-actions!public! !
 performUndoRedo:!helpers!private! !
 primarySelection!adornments!private! !
 primarySelection:!adornments!private! !
 printShortCaptionOn:!private!updating! !
-queryCommand:!commands!private! !
+queryRedo:!commands-queries!private! !
+queryToggleGroupStop:!commands-queries!private! !
+queryToggleTabStop:!commands-queries!private! !
+queryUndo:!commands-queries!private! !
+referenceViewMenu!commands-menus!public! !
 refreshImage!private! !
-refreshPublishedAspects!commands!private! !
+refreshPublishedAspects!commands-actions!public! !
 removeGrabbers!adornments!private! !
-removeHorizontalGaps!commands!public! !
-removeVerticalGaps!commands!public! !
+removeHorizontalGaps!commands-actions!public! !
+removeVerticalGaps!commands-actions!public! !
 removeView:!operations!private! !
 repositionView:to:!private!tracking! !
 resetAddPositionOffset!operations!private! !
@@ -2715,9 +2721,9 @@ slideyPinNames!accessing!private! !
 snapPoint:context:!geometry!private! !
 startTrackingAt:!private!tracking! !
 status!accessing!private! !
-toggleGroupStop!commands!public!tabbing! !
+toggleGroupStop!commands-actions!public!tabbing! !
 toggleSelectionFor:!adornments!private! !
-toggleTabStop!commands!public!tabbing! !
+toggleTabStop!commands-actions!public!tabbing! !
 trackGrabber:from:!adornments!private! !
 undoState!public! !
 updateAdornment!operations!private! !
@@ -2727,26 +2733,26 @@ validateAdornment!operations!private! !
 validateImage!private! !
 validateLayout!geometry!private! !
 validateUserInterface!operations!private! !
-viewClose!commands!public! !
-viewCloseNoPrompt!commands!public! !
-viewExport!commands!public! !
+viewClose!commands-actions!public! !
+viewCloseNoPrompt!operations!public! !
+viewExport!commands-actions!public! !
 viewExportTo:!helpers!private! !
 viewHierarchyPresenter!accessing!private! !
 viewHitBy:!accessing!private! !
-viewImport!commands!public! !
+viewImport!commands-actions!public! !
 viewImportFrom:!helpers!private! !
-viewOpen!commands!public! !
+viewOpen!commands-actions!public! !
 viewRedo!public! !
-viewRevert!commands!public! !
-viewSave!commands!public! !
-viewSaveAs!commands!public! !
-viewTest!commands!public! !
+viewRevert!commands-actions!public! !
+viewSave!commands-actions!public! !
+viewSaveAs!commands-actions!public! !
+viewTest!commands-actions!public! !
 viewUndo!public! !
-widenSelection!commands!public! !
-zBack!commands!public! !
-zBackward!commands!public! !
-zForward!commands!public! !
-zFront!commands!public! !
+widenSelection!commands-actions!public! !
+zBack!commands-actions!public! !
+zBackward!commands-actions!public! !
+zForward!commands-actions!public! !
+zFront!commands-actions!public! !
 zOrderChangedFor:!private!updating! !
 !
 
@@ -2861,7 +2867,7 @@ resource_Vertical_view
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Vertical_view)
 	"
 
-	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.ShellView} 38 #{Core.Array} 27 nil nil 8 #(13565952 65536) 32 nil 518 #{Graphics.ThemeColor} #toolBackground nil 517 nil nil nil 32 1798 #{UI.BorderLayout} 1 1 18 #{UI.Toolbar} 50 28 nil 32 50 2 8 1140853580 131073 160 nil nil nil 517 nil nil nil 160 6 #{Graphics.Color} #default nil 518 #{Kernel.STBIdentityDictionaryProxy} #{Core.IdentityDictionary} 50 8 18 #{UI.ReferenceView} 50 14 nil 160 50 2 8 1140850688 131073 304 nil nil nil 5 nil nil nil 304 582 1 #{UI.ResourceIdentifier} #{UI.Toolbar} #resource_File_tools nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 1051 1 498 155 51 304 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 13 2 0 0 0 0 0 0 90 2 0 0 25 0 0 0] 8 #() 498 193 193 nil 27 8 'fileTools' 18 #{UI.ReferenceView} 50 14 nil 160 50 2 8 1140850688 131073 640 nil nil nil 5 nil nil nil 640 370 #{UI.Toolbar} #resource_Image_tools nil 402 50 1 450 #createAt:extent: 50 2 498 1 1 498 63 51 640 546 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 31 0 0 0 25 0 0 0] 592 608 nil 27 8 'imageTools' 18 #{UI.ReferenceView} 50 14 nil 160 50 2 8 1140850688 131073 864 nil nil nil 5 nil nil nil 864 370 #{UI.Toolbar} #resource_Search_tools nil 402 50 1 450 #createAt:extent: 50 2 498 615 1 498 437 51 864 546 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 51 1 0 0 0 0 0 0 13 2 0 0 25 0 0 0] 592 608 nil 27 8 'searchTools' 18 #{UI.ReferenceView} 50 14 nil 160 50 2 8 1140850688 131073 1088 nil nil nil 5 nil nil nil 1088 370 #{UI.Toolbar} #resource_Smalltalk_tools nil 402 50 1 450 #createAt:extent: 50 2 498 63 1 498 553 51 1088 546 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 31 0 0 0 0 0 0 0 51 1 0 0 25 0 0 0] 592 608 nil 27 8 'smalltalkTools' nil nil nil nil 8 #() nil nil 1 nil 498 33 33 nil nil 838 1 #{UI.FlowLayout} 1 1 1 402 50 1 450 #createAt:extent: 50 2 498 1 1 498 2079 51 160 546 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 15 4 0 0 25 0 0 0] 50 4 640 1088 864 304 608 nil 29 18 #{UI.StatusBar} 50 21 nil 32 50 2 8 1140853004 1 1520 nil nil nil 5 nil nil nil 1520 nil nil 258 #{Core.IdentityDictionary} 50 6 1862 1 #{UI.StatusBarItem} 8193 301 1520 nil 1382 3 #{Kernel.BlockClosure} 0 nil 1318 #{Kernel.CompiledExpression} 4 1 #{Core.UndefinedObject} 8 'doIt' 8 '[:r | r notNil ifTrue: [r extent displayString] ifFalse: ['''']]' 8 #[32 105 17 222 4 17 158 159 106 31 106] #extent #displayString 8 '' 1664 7 257 nil 450 #extentImage 8 #() #{Tools.ViewComposer} nil 8 'extentStatus' 1618 8193 37 1520 nil nil 1650 0 nil 1682 6 1 1648 8 'doIt' 8 '[:modified | modified ifTrue: [Tools.SmalltalkSystem current changedIcon imageIndex]]' 8 #[33 105 17 122 45 159 160 161 106 60 106] 1094 2 #{Kernel.VariableBinding} #SmalltalkSystem #{Tools.SmalltalkSystem} #{Tools} 1 #current #changedIcon #imageIndex 1840 #ifTrue: 7 257 nil nil 8 'modificationStatus' 1618 8193 301 1520 nil 1650 0 nil 1682 4 1 #{Core.UndefinedObject} 8 'doIt' 8 '[:r | r notNil ifTrue: [r position displayString] ifFalse: ['''']]' 8 #[32 105 17 222 4 17 158 159 106 31 106] #position #displayString 1760 1984 7 257 nil 450 #positionImage 1792 #{Tools.ViewComposer} nil 8 'positionStatus' nil nil nil 50 3 1968 1632 1824 1094 1 #{UI.StatusBarNullItem} 8705 1 1520 nil nil 402 50 1 450 #createAt:extent: 50 2 498 1 1379 498 2079 45 1520 546 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 177 2 0 0 15 4 0 0 199 2 0 0] 8 #() 608 nil 29 nil nil 18 #{UI.ContainerView} 50 15 nil 32 50 2 8 1140850688 131073 2288 nil nil nil 5 nil nil nil 2288 518 #{UI.ProportionalLayout} 550 #{Core.LookupTable} 0 true 258 #{Core.IdentityDictionary} 50 2 18 #{UI.ContainerView} 50 15 nil 2288 50 2 8 1140850688 131073 2448 nil nil nil 5 nil nil nil 2448 2354 518 #{Kernel.STBCollectionProxy} #{Core.Dictionary} 50 2 518 #{Core.Association} 18 #{UI.SlideyInneyOuteyThing} 50 23 nil 2448 50 2 8 1140850688 131073 2608 nil nil nil 517 nil nil nil 2608 1350 1 #{UI.CardLayout} 550 #{Core.OrderedCollection} 1 2578 838 1 #{UI.CardLabel} 8 'View Toolbox' 1650 0 nil 1682 7 1 #{Core.AnsiString} 8 'doIt' 8 '(CardLabel text: ''View Toolbox'' iconBlock: [Icon fromId: ''View.ico''])' 8 #[29 30 35 113 31 32 180 106 195 105] 2752 2784 #{Graphics.Icon} 8 'View.ico' #fromId: #text:iconBlock: 2800 11 1 nil nil 18 #{UI.ReferenceView} 50 14 nil 18 #{UI.SlidingCardTray} 50 22 nil 2608 50 2 8 1140850688 131073 2928 nil nil nil 5 nil nil nil 2928 2688 258 #{Core.IdentityDictionary} 50 2 2896 8 'toolbox' nil 18 #{UI.TabViewXP} 50 28 nil 2608 50 2 8 1140916864 1 3040 838 2 #{UI.ListModel} 2706 1 2768 nil 6 #{Kernel.IdentitySearchPolicy} nil nil 1 nil nil nil 3040 nil nil 518 #{Core.Message} #displayString 8 #() 3186 #iconImageIndex 3216 1350 1 #{Graphics.IconImageManager} nil nil nil nil nil #smallIcons nil nil nil nil nil 402 50 3 450 #createAt:extent: 50 2 498 1 1 498 941 1329 3040 450 #setSingleSelection: 8 #(1) 3040 450 #tcmSetExtendedStyle:dwExStyle: 8 #(-1 0) 3040 546 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 214 1 0 0 152 2 0 0] 8 #() 608 nil 27 nil 2608 498 33 33 1606 1 #{UI.ButtonInteractor} 2928 nil 1 518 #{Graphics.Rectangle} 498 841 3 498 873 35 nil 1350 4 #{UI.CommandDescription} #togglePin 8 'Pin or Unpin the tray' 1 1 nil nil nil 402 50 1 450 #createAt:extent: 50 2 498 57 9 498 877 1313 2928 546 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 28 0 0 0 4 0 0 0 210 1 0 0 148 2 0 0] 50 1 2896 608 nil 27 50 2 8 1140850688 131073 2896 nil nil nil 1029 nil nil nil 2896 370 #{Tools.ResourceToolboxPresenter} #resource_Default_view nil 402 50 1 450 #createAt:extent: 50 2 498 1 37 498 877 1277 2896 546 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 18 0 0 0 182 1 0 0 144 2 0 0] 592 608 nil 27 2896 nil nil nil 550 #{Core.IdentityDictionary} 0 nil 3040 2928 498 745 959 401 1 524319 nil nil 402 50 1 450 #createAt:extent: 50 2 498 1 1 498 941 1329 2608 546 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 214 1 0 0 152 2 0 0] 50 2 2928 3040 608 nil 27 8 0.8181818181818181 2578 18 #{UI.ContainerView} 50 15 nil 2448 50 2 8 1140850688 131073 4192 nil nil nil 5 2886 4 #{UI.Menu} nil true 50 18 1094 2 #{UI.CommandMenuItem} 1 3602 #cutSelection 8 'Cu&t' 1 1 838 4 #{Graphics.Icon} nil true 1030 #{Graphics.ImageFromStringResourceInitializer} 8 'EditCut.ico' 838 1 #{External.ResourceLibrary} 8 'dolphindr8.dll' 65541 nil nil nil 4306 1 3602 #copySelection 8 '&Copy' 1 1 4370 nil true 4402 8 'EditCopy.ico' 4464 65541 nil nil nil 4306 1 3602 #pasteClipboard 8 '&Paste' 1 1 4370 nil true 4402 8 'EditPaste.ico' 4464 65541 nil nil nil 4306 1 3602 #clearSelection 8 '&Delete' 1 1 4370 nil true 4402 8 'EditClear.ico' 4464 65541 nil nil nil 326 1 #{UI.DividerMenuItem} 4097 4306 1 3602 #inspectSelection 8 '&Inspect' 1 1 4370 nil true 4402 8 'InspectIt.ico' 4464 65541 nil nil nil 4786 4097 4306 1 3602 #editContextMenu 8 'Set Conte&xt Menu…' 1 1 nil nil nil 4786 4097 4306 1 3602 #toggleTabStop 8 'Make Tab &Stop' 1 1 nil nil nil 4306 1 3602 #toggleGroupStop 8 'Make &Group Stop' 1 1 nil nil nil 4786 4097 4258 nil true 50 7 4306 1 3602 #alignLefts 8 '&Lefts' 1 1 nil nil nil 4306 1 3602 #alignCenters 8 '&Centres' 1 1 nil nil nil 4306 1 3602 #alignRights 8 '&Rights' 1 1 nil nil nil 4786 4097 4306 1 3602 #alignTops 8 '&Tops' 1 1 nil nil nil 4306 1 3602 #alignMiddles 8 '&Middles' 1 1 nil nil nil 4306 1 3602 #alignBottoms 8 '&Bottoms' 1 1 nil nil nil 8 'View Alig&n' nil 134217729 nil nil nil nil nil 4258 nil true 50 5 4306 1 3602 #matchWidths 8 '&Widths' 1 1 nil nil nil 4306 1 3602 #matchHeights 8 '&Heights' 1 1 nil nil nil 4306 1 3602 #matchFonts 8 '&Fonts' 1 1 nil nil nil 4306 1 3602 #matchForegroundColors 8 'Foreground &Colors' 1 1 nil nil nil 4306 1 3602 #matchBackgroundColors 8 '&Background Colors' 1 1 nil nil nil 8 'View Matc&h' nil 134217729 nil nil nil nil nil 4258 nil true 50 4 4306 1 3602 #zFront 8 'Bring to &Front' 1 1 nil nil nil 4306 1 3602 #zForward 8 'Bring F&orward' 1 1 nil nil nil 4306 1 3602 #zBackward 8 'Send B&ackward' 1 1 nil nil nil 4306 1 3602 #zBack 8 'Send to Bac&k' 1 1 nil nil nil 8 'View &Arrange' nil 134217729 nil nil nil nil nil 4786 4097 4306 1 3602 #mutate 8 'M&utate View…' 1 1 nil nil nil 4258 nil true 50 2 4306 1 3602 #dereference 8 'De&reference to Copy' 1 1 nil nil nil 4306 1 3602 #editReference 8 '&Edit' 1 1 nil nil nil 8 '&Reference View' #referenceViewMenu 134217729 nil nil nil nil nil 8 '' nil 134217729 nil nil nil nil nil nil nil 4192 2354 2530 2384 50 2 2578 18 #{UI.ContainerView} 50 15 nil 4192 50 2 8 1140850688 131073 6272 nil nil nil 5 nil nil nil 6272 130 1 1 nil 18 #{UI.SlideyInneyOuteyThing} 50 23 nil 6272 50 2 8 1140850688 131073 6352 nil nil nil 517 nil nil nil 6352 2674 2706 5 2578 8 'Arrange' 18 #{UI.ReferenceView} 50 14 nil 18 #{UI.SlidingCardTray} 50 22 nil 6352 50 2 8 1140850688 131073 6512 nil nil nil 5 nil nil nil 6512 6416 258 3968 50 10 18 #{UI.Toolbar} 50 28 nil 6512 50 2 8 1140853580 131137 6608 nil nil nil 517 nil 1030 #{Graphics.Font} nil true 262 #{OS.LOGFONTW} 8 #[243 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 0 65 0 114 0 105 0 97 0 108 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 498 193 193 nil 6608 240 nil 258 3968 50 4 18 #{UI.ReferenceView} 50 14 nil 6608 50 2 8 1140850688 131073 6800 nil nil nil 5 nil nil nil 6800 370 #{UI.Toolbar} #resource_View_composer_alignment_tools nil 402 50 1 450 #createAt:extent: 50 2 498 1 1 498 339 51 6800 546 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 169 0 0 0 25 0 0 0] 592 608 nil 27 8 'alignmentTools' 18 #{UI.ReferenceView} 50 14 nil 6608 50 2 8 1140850688 131073 7024 nil nil nil 5 nil nil nil 7024 370 #{UI.Toolbar} #resource_View_composer_match_size_tools nil 402 50 1 450 #createAt:extent: 50 2 498 339 1 498 201 51 7024 546 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 169 0 0 0 0 0 0 0 13 1 0 0 25 0 0 0] 592 608 nil 27 8 'matchSizeTools' nil nil nil nil 2706 0 nil nil 1 nil 498 33 33 498 45 45 nil 1346 1 1 1 402 50 1 450 #createAt:extent: 50 2 498 1 37 498 731 57 6608 546 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 18 0 0 0 109 1 0 0 46 0 0 0] 50 2 6800 7024 608 nil 29 8 'alignTools' 6480 8 'arrangementTools' 18 #{UI.ReferenceView} 50 14 nil 6512 50 2 8 1140850688 131073 7488 nil nil nil 5 nil nil nil 7488 370 #{UI.Toolbar} #resource_Edit_tools nil 402 50 1 450 #createAt:extent: 50 2 498 1 37 498 731 57 7488 546 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 18 0 0 0 109 1 0 0 46 0 0 0] 592 608 nil 27 8 'editTools' 18 #{UI.ReferenceView} 50 14 nil 6512 50 2 8 1140850688 131073 7712 nil nil nil 5 nil nil nil 7712 370 #{UI.Toolbar} #resource_View_composer_spacing_tools nil 402 50 1 450 #createAt:extent: 50 2 498 1 37 498 731 57 7712 546 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 18 0 0 0 109 1 0 0 46 0 0 0] 592 608 nil 27 8 'layoutTools' 18 #{UI.ReferenceView} 50 14 nil 6512 50 2 8 1140850688 131073 7936 nil nil nil 5 nil nil nil 7936 370 #{UI.Toolbar} #resource_View_composer_nudge_tools nil 402 50 1 450 #createAt:extent: 50 2 498 1 37 498 731 57 7936 546 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 18 0 0 0 109 1 0 0 46 0 0 0] 592 608 nil 27 8 'nudgeTools' nil 18 #{UI.TabViewXP} 50 28 nil 6352 50 2 8 1140916738 1 8160 3106 2706 5 8 'Edit' 6464 8 'Nudge' 8 'Align' 8 'Layout' nil 3168 nil nil 1 nil nil nil 8160 nil nil 3200 3232 3264 nil nil nil nil nil #noIcons nil nil nil nil nil 402 50 3 450 #createAt:extent: 50 2 498 1 1 498 747 153 8160 450 #setSingleSelection: 8 #(4) 8160 450 #tcmSetExtendedStyle:dwExStyle: 8 #(-1 0) 8160 546 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 117 1 0 0 76 0 0 0] 8 #() 608 nil 27 nil 6352 498 33 33 3506 6512 nil 1 3538 498 695 3 498 727 35 nil 3602 #togglePin 8 'Pin or Unpin the tray' 1 1 nil nil nil 402 50 1 450 #createAt:extent: 50 2 498 9 9 498 731 93 6512 546 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 4 0 0 0 4 0 0 0 113 1 0 0 50 0 0 0] 50 5 7488 6480 7936 6608 7712 608 nil 27 50 2 8 1140850688 131073 6480 nil nil nil 5 nil nil nil 6480 370 #{UI.Toolbar} #resource_View_composer_tools nil 402 50 1 450 #createAt:extent: 50 2 498 1 37 498 731 57 6480 546 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 18 0 0 0 109 1 0 0 46 0 0 0] 592 608 nil 27 2578 8272 7936 2578 8288 6608 2578 8304 7712 2578 8256 7488 6608 nil nil nil 3970 0 nil 8160 6512 498 201 201 401 1 524319 nil nil 402 50 1 450 #createAt:extent: 50 2 498 1 1177 498 747 153 6352 546 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 76 2 0 0 117 1 0 0 152 2 0 0] 50 2 6512 8160 608 nil 27 nil nil 18 #{UI.ScrollingDecorator} 50 18 nil 6272 50 2 8 1143996416 131073 9200 nil nil nil 5 nil nil nil 9200 326 1 #{UI.ScrollingDecoratorLayout} true 258 3968 50 2 18 #{Tools.ViewComposerArena} 50 22 nil 9200 50 2 8 1140850944 1 9328 1094 2 #{UI.ValueHolder} nil false 6 #{Kernel.EqualitySearchPolicy} nil 226 #cornsilk nil 533 nil nil nil 9328 nil nil 518 #{UI.NullConverter} nil nil nil nil #normal nil 3538 498 21 21 498 21 21 nil nil 402 50 1 450 #createAt:extent: 50 2 498 1 1 498 1577 1397 9328 546 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 20 3 0 0 186 2 0 0] 8 #() 608 nil 27 8 'arena' nil 498 1 1 true 498 17 17 402 50 1 450 #createAt:extent: 50 2 498 1 1 498 747 1177 9200 546 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 117 1 0 0 76 2 0 0] 50 1 9328 608 nil 27 258 3968 50 2 6352 8 'toolbarsSlidey' nil 402 50 1 450 #createAt:extent: 50 2 498 1 1 498 747 1329 6272 546 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 117 1 0 0 152 2 0 0] 50 2 9200 6352 608 nil 27 518 #{Core.Fraction} 521 323 2578 18 #{UI.SlideyInneyOuteyThing} 50 23 nil 4192 50 2 8 1140850688 131073 10128 nil nil nil 517 nil nil nil 10128 2674 2706 1 2578 2754 8 'Property Inspector' 1650 0 nil 1682 3 1 4368 8 'doIt' 8 '[Tools.PublishedAspectInspector icon]' 8 #[31 105 45 159 106] 1922 #PublishedAspectInspector #{Tools.PublishedAspectInspector} #{Tools} 1 #icon 10272 7 1 nil 21659 18 #{UI.ContainerView} 50 15 nil 18 #{UI.SlidingCardTray} 50 22 nil 10128 50 2 8 1140850688 131073 10400 nil nil nil 5 nil nil nil 10400 10192 3970 0 nil 18 #{UI.TabViewXP} 50 28 nil 10128 50 2 8 1140916866 1 10480 3106 2706 1 10240 nil 3168 nil nil 1 nil nil nil 10480 nil nil 3200 3232 3264 nil nil nil nil nil #smallIcons nil nil nil nil nil 402 50 3 450 #createAt:extent: 50 2 498 1 1 498 373 1329 10480 450 #setSingleSelection: 8 #(1) 10480 450 #tcmSetExtendedStyle:dwExStyle: 8 #(-1 0) 10480 546 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 186 0 0 0 152 2 0 0] 8 #() 608 nil 27 nil 10128 498 33 33 3506 10400 nil 1 3538 498 5 3 498 37 35 nil 3602 #togglePin 8 'Pin or Unpin the tray' 1 1 nil nil nil 402 50 1 450 #createAt:extent: 50 2 498 9 9 498 309 1313 10400 546 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 4 0 0 0 4 0 0 0 158 0 0 0 148 2 0 0] 50 1 10368 608 nil 27 50 2 8 1140850688 131073 10368 nil nil nil 5 nil nil nil 10368 2354 2530 #{Core.Dictionary} 50 3 2578 18 #{UI.TreeView} 50 27 nil 10368 50 2 8 1140918819 1 11136 1094 3 #{UI.TreeModel} nil 3168 774 #{UI.TreeNode} nil nil nil 3970 0 240 nil 29 nil nil nil 11136 nil nil 3200 3232 3264 nil 1650 0 nil 1682 2 1 1648 8 'doIt' 8 '[:x | x printString]' 8 #[30 105 226 0 106] #printString 11280 7 257 nil nil nil nil 2386 0 nil #smallIcons 1 3970 0 402 50 1 450 #createAt:extent: 50 2 498 1 1 498 309 379 11136 546 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 154 0 0 0 189 0 0 0] 8 #() 608 nil 27 8 0.3 2578 18 #{UI.Splitter} 50 12 nil 10368 50 2 8 1140850688 1 11568 nil nil nil 517 nil nil nil 3142 1 #{UI.DraggableViewInteractor} 11568 nil 1 #left nil nil nil 498 1 1 498 9 9 nil 11664 nil 402 50 1 450 #createAt:extent: 50 2 498 1 379 498 309 11 11568 546 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 189 0 0 0 154 0 0 0 194 0 0 0] 8 #() 608 nil 27 1 2578 18 #{UI.ReferenceView} 50 14 nil 10368 50 2 8 1140850688 131073 11856 nil nil nil 5 nil nil nil 11856 370 #{Tools.PropertyInspector} #resource_Default_view nil 402 50 1 450 #createAt:extent: 50 2 498 1 389 498 309 889 11856 546 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 194 0 0 0 154 0 0 0 126 2 0 0] 592 608 nil 27 8 0.7 true 258 3968 50 4 11856 8 'inspector' 11136 8 'viewHierarchy' nil 402 50 1 450 #createAt:extent: 50 2 498 1 37 498 309 1277 10368 546 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 18 0 0 0 154 0 0 0 144 2 0 0] 50 3 11136 11568 11856 608 nil 27 10368 nil nil nil 3970 0 nil 10480 10400 498 201 201 401 1 524319 nil nil 402 50 1 450 #createAt:extent: 50 2 498 757 1 498 373 1329 10128 546 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 122 1 0 0 0 0 0 0 52 2 0 0 152 2 0 0] 50 2 10400 10480 608 nil 27 8 0.8 false 258 3968 50 2 10128 8 'inspectorSlidey' nil 402 50 1 450 #createAt:extent: 50 2 498 951 1 498 1129 1329 4192 546 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 219 1 0 0 0 0 0 0 15 4 0 0 152 2 0 0] 50 3 6272 18 #{UI.Splitter} 50 12 nil 4192 50 2 8 1140850688 1 12672 nil nil nil 517 nil nil nil 11634 12672 nil 1 #left nil nil nil 11664 11680 nil 11664 nil 402 50 1 450 #createAt:extent: 50 2 498 747 1 498 11 1329 12672 546 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 117 1 0 0 0 0 0 0 122 1 0 0 152 2 0 0] 8 #() 608 nil 27 10128 608 nil 27 8 0.9818181818181817 false 258 3968 50 2 2608 8 'toolsSlidey' nil 402 50 1 450 #createAt:extent: 50 2 498 1 1 498 2079 1329 2448 546 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 15 4 0 0 152 2 0 0] 50 3 2608 18 #{UI.Splitter} 50 12 nil 2448 50 2 8 1140850688 1 13104 nil nil nil 517 nil nil nil 11634 13104 nil 1 #left nil nil nil 11664 11680 nil 11664 nil 402 50 1 450 #createAt:extent: 50 2 498 941 1 498 11 1329 13104 546 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 214 1 0 0 0 0 0 0 219 1 0 0 152 2 0 0] 8 #() 608 nil 27 4192 608 nil 27 8 'main' nil 402 50 1 450 #createAt:extent: 50 2 498 1 51 498 2079 1329 2288 546 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 25 0 0 0 15 4 0 0 177 2 0 0] 50 1 2448 608 nil 27 258 3968 50 4 1520 8 'statusbar' 160 8 'toolbar' nil 2886 4 #{UI.MenuBar} nil true 50 7 4258 nil true 50 16 4306 1 3602 #newShellView 8 '&New Shell View' 9373 1 4370 nil true 4402 8 'ShellView.ico' 4464 65541 nil nil nil 4306 1 3602 #newDialogView 8 'New &Dialog View' 1 1 4370 nil true 4402 8 'DialogView.ico' 4464 65541 nil nil nil 4786 4097 4306 1 3602 #viewOpen 8 '&Open…' 9375 1 nil nil nil 4306 1 3602 #viewClose 8 '&Close' 1 1 nil nil nil 4306 1 3602 #viewRevert 8 '&Revert' 1 1 2374 2 #{Graphics.TextTileIcon} 8 $🔁 nil nil 226 #commonGreen nil nil 1 nil nil nil nil 4786 4097 4306 1 3602 #viewImport 8 '&Import View…' 1 1 nil nil nil 4306 1 3602 #viewExport 8 '&Export View…' 1 1 nil nil nil 4786 4097 4306 1 3602 #viewSave 8 '&Save' 1 1 4370 nil true 4402 8 'FileSave.ico' 4464 65541 nil nil nil 4306 1 3602 #viewSaveAs 8 'Save &As…' 1 1 nil nil nil 4786 4097 4306 1 3602 #viewTest 8 '&Test' 9385 1 4370 nil true 4402 8 'TestView.ico' 4464 65541 nil nil nil 4786 4097 4306 1 3602 #exit 8 'E&xit' 17639 1 13986 8 $✖ nil nil nil nil nil 1 nil nil nil nil 8 '&File' nil 134217729 nil nil nil nil nil 4258 nil true 50 12 4306 1 3602 #viewUndo 8 '&Undo' 9397 1 4370 nil true 4402 8 'EditUndo.ico' 4464 65541 nil nil nil 4306 1 3602 #viewRedo 8 '&Redo' 9395 1 4370 nil true 4402 8 'EditRedo.ico' 4464 65541 nil nil nil 4786 4097 4306 1 3602 #cutSelection 8 'Cu&t' 9393 1 4370 nil true 4402 8 'EditCut.ico' 4464 65541 nil nil nil 4306 1 3602 #copySelection 8 '&Copy' 9351 1 4370 nil true 4402 8 'EditCopy.ico' 4464 65541 nil nil nil 4306 1 3602 #pasteClipboard 8 '&Paste' 9389 1 4370 nil true 4402 8 'EditPaste.ico' 4464 65541 nil nil nil 4306 1 3602 #clearSelection 8 '&Delete' 1 1 4370 nil true 4402 8 'EditClear.ico' 4464 65541 nil nil nil 4786 4097 4306 1 3602 #widenSelection 8 '&Widen Selection' 9387 1 nil nil nil 4306 1 3602 #selectAll 8 'Select &All' 9347 1 nil nil nil 4786 4097 4306 1 3602 #refreshPublishedAspects 8 'Refresh Inspector' 1257 1 4370 nil true 4402 8 'Refresh.ico' 4464 65541 nil nil nil 8 '&Edit' nil 134217729 nil nil nil nil nil 4258 nil true 50 17 4306 1 3602 #editMenuBar 8 '&Menu Bar…' 1 1 nil nil nil 4306 1 3602 #editContextMenu 8 '&Context Menu…' 1 1 nil nil nil 4786 4097 4306 1 3602 #toggleTabStop 8 'Make &Tab Stop' 1 1 nil nil nil 4306 1 3602 #toggleGroupStop 8 'Make &Group Stop' 1 1 nil nil nil 4786 4097 4258 nil true 50 7 4306 1 3602 #alignLefts 8 '&Lefts' 1 1 nil nil nil 4306 1 3602 #alignCenters 8 '&Centres' 1 1 nil nil nil 4306 1 3602 #alignRights 8 '&Rights' 1 1 nil nil nil 4786 4097 4306 1 3602 #alignTops 8 '&Tops' 1 1 nil nil nil 4306 1 3602 #alignMiddles 8 '&Middles' 1 1 nil nil nil 4306 1 3602 #alignBottoms 8 '&Bottoms' 1 1 nil nil nil 8 '&Align' nil 134217729 nil nil nil nil nil 4258 nil true 50 5 4306 1 3602 #matchWidths 8 '&Widths' 1 1 nil nil nil 4306 1 3602 #matchHeights 8 '&Heights' 1 1 nil nil nil 4306 1 3602 #matchFonts 8 '&Fonts' 1 1 nil nil nil 4306 1 3602 #matchForegroundColors 8 'Foreground &Colors' 1 1 nil nil nil 4306 1 3602 #matchBackgroundColors 8 '&Background Colors' 1 1 nil nil nil 8 'Matc&h' nil 134217729 nil nil nil nil nil 4258 nil true 50 4 4306 1 3602 #zFront 8 'Bring to &Front' 9357 1 nil nil nil 4306 1 3602 #zForward 8 'Bring F&orward' 13453 1 nil nil nil 4306 1 3602 #zBackward 8 'Send B&ackward' 13463 1 nil nil nil 4306 1 3602 #zBack 8 'Send to Bac&k' 9367 1 nil nil nil 8 'A&rrange' nil 134217729 nil nil nil nil nil 4258 nil true 50 4 4306 1 3602 #nudgeLeft 8 '&Left' 9803 1 nil nil nil 4306 1 3602 #nudgeRight 8 '&Right' 9807 1 nil nil nil 4306 1 3602 #nudgeUp 8 '&Up' 9805 1 nil nil nil 4306 1 3602 #nudgeDown 8 '&Down' 9809 1 nil nil nil 8 '&Nudge' nil 134217729 nil nil nil nil nil 4258 nil true 50 4 4306 1 3602 #increaseHeight 8 '&Taller' 13905 1 nil nil nil 4306 1 3602 #increaseWidth 8 '&Fatter' 13903 1 nil nil nil 4306 1 3602 #decreateHeight 8 '&Shorter' 13901 1 nil nil nil 4306 1 3602 #decreaseWidth 8 'Th&inner' 13899 1 nil nil nil 8 'Gro&w' nil 134217729 nil nil nil nil nil 4786 4097 4258 nil true 50 3 4306 1 3602 #distributeHorizontally 8 'Distri&bute Evenly' 1 1 nil nil nil 4306 1 3602 #increaseHorizontalGaps 8 '&Increase' 1 1 nil nil nil 4306 1 3602 #decreaseHorizontalGaps 8 '&Decrease' 1 1 nil nil nil 8 'Hori&zontal Spacing' nil 134217729 nil nil nil nil nil 4258 nil true 50 3 4306 1 3602 #distributeVertically 8 'Distri&bute Evenly' 1 1 nil nil nil 4306 1 3602 #increaseVerticalGaps 8 '&Increase' 1 1 nil nil nil 4306 1 3602 #decreaseVerticalGaps 8 '&Decrease' 1 1 nil nil nil 8 '&Vertical Spacing' nil 134217729 nil nil nil nil nil 4786 4097 4306 1 3602 #mutate 8 'M&utate View…' 1 1 nil nil nil 4306 1 3602 #dereference 8 '&Dereference to Copy' 1 1 nil nil nil 8 '&Modify' nil 134217729 nil nil nil nil nil 4258 nil true 50 14 4306 1 3602 #browseIt 8 '&Browse It' 9349 1 4370 nil true 4402 8 'ClassBrowserShell.ico' 4464 65541 nil nil nil 4306 1 3602 #displayIt 8 '&Display It' 9353 1 4370 nil true 4402 8 'DisplayIt.ico' 4464 65541 nil nil nil 4306 1 3602 #printIt 8 '&Print It' 9377 1 4370 nil true 4402 8 'PrintIt.ico' 4464 65541 nil nil nil 4306 1 3602 #evaluateIt 8 '&Evaluate It' 9355 1 4370 nil true 4402 8 'EvaluateIt.ico' 4464 65541 nil nil nil 4306 1 3602 #inspectIt 8 '&Inspect It' 9363 1 4370 nil true 4402 8 'BasicInspector.ico' 4464 65541 nil nil nil 4306 1 3602 #debugIt 8 'Deb&ug It' 1269 1 4370 nil true 4402 8 'Debugger.ico' 4464 65541 nil nil nil 4306 1 3602 #fileItIn 8 '&File it In' 1 1 nil nil nil 4786 4097 4306 1 3602 #browseDefinitions 8 'Defi&nitions…' 1271 1 nil nil nil 4306 1 3602 #browseReferences 8 '&References…' 5367 1 nil nil nil 4786 4097 4306 1 3602 #accept 8 '&Accept' 9383 1 nil nil nil 4786 4097 4258 nil true 50 9 4306 1 3602 #toggleAutoCompletion 8 '&Auto-complete' 1 1 nil nil nil 4306 1 3602 #toggleIndentationGuides 8 'Indentation &Guides' 1 1 nil nil nil 4306 1 3602 #toggleLineEndings 8 'Line &Endings' 1 1 13986 $¶ 8 'Arial' nil nil nil nil 1 nil nil nil nil 4306 1 3602 #toggleLineNumbers 8 'Line N&umbers' 1 1 nil nil nil 4306 1 3602 #toggleStyling 8 '&Syntax Coloring' 1 1 nil nil nil 4306 1 3602 #toggleWhitespace 8 'W&hitespace' 1 1 nil nil nil 4306 1 3602 #toggleWordWrap 8 '&Word Wrap' 1 1 nil nil nil 4786 4097 4258 nil true 50 2 4306 1 3602 3186 #language: 8 #(#container) 8 '&Smalltalk' 1 1 nil nil nil 4306 1 3602 3186 #language: 8 #(#xml) 8 '&Xml' 1 1 nil nil nil 8 '&Language' nil 134217729 nil nil nil nil nil 8 '&Options' nil 134217729 4370 nil true 4402 8 'Preferences.ico' 4464 65541 nil nil nil nil nil 8 '&Workspace' nil 134217729 nil nil nil nil nil 4258 nil true 8 #() 8 '&Tools' #toolsMenu 134217729 nil nil nil nil nil 4258 nil true 8 #() 8 'Wi&ndow' #windowMenu 134217729 nil nil nil nil nil 4258 nil true 50 15 4306 1 3602 #helpContents 8 '&Contents' 1025 1 4370 nil true 4402 8 'Help.ico' 4464 65541 nil nil nil 4306 1 3602 #help 8 'On this &Tool' 1249 1 nil nil nil 4306 1 3602 #helpWhatsThis 8 'What''s This?' 5345 1 nil nil nil 4786 4097 4306 1 3602 #learnSmalltalk 8 'Learn Smalltalk' 1 1 13986 8 $🎓 nil 226 #orchid 226 #white nil nil 1 nil nil nil nil 4786 4097 4306 1 3602 #helpWhatsNew 8 'What''s &New' 1 1 nil nil nil 4306 1 3602 #helpGuidedTour 8 '&Guided Tour' 1 1 nil nil nil 4306 1 3602 #helpTutorials 8 'Tutorials' 1 1 nil nil nil 4786 4097 4306 1 3602 #dolphinHomePage 8 'Dolphin Homepage' 1 1 4370 nil true 4402 8 '!!APPLICATION' 4464 65541 nil nil nil 4306 1 3602 #dolphinNewsgroup 8 'Dolphin Newsgroup/Forum' 1 1 nil nil nil 4306 1 3602 #dolphinWikiWeb 8 'Dolphin WikiWeb' 1 1 nil nil nil 4786 4097 4306 1 3602 #aboutDolphin 8 '&About Dolphin Smalltalk' 1 1 13986 8 $🐬 nil nil 226 #darkSlateBlue nil nil 1 nil nil nil nil 8 '&Help' #help 134217729 nil nil nil nil nil 8 '' nil 134217729 nil nil nil nil nil nil nil nil 1 nil nil nil nil 1 nil nil 402 50 2 450 #createAt:extent: 50 2 498 6143 21 498 2111 1541 32 450 #text: 50 1 8 'View Composer' 32 546 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 30 16 0 0 12 3 0 0] 50 3 160 2288 1520 608 nil 27)!
+	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.ShellView} 38 #{Core.Array} 27 nil nil 8 #(13565952 65536) 32 nil 518 #{Graphics.ThemeColor} #toolBackground nil 517 nil nil nil 32 1798 #{UI.BorderLayout} 1 1 18 #{UI.Toolbar} 50 28 nil 32 50 2 8 1140853580 131073 160 nil nil nil 517 nil nil nil 160 6 #{Graphics.Color} #default nil 518 #{Kernel.STBIdentityDictionaryProxy} #{Core.IdentityDictionary} 50 8 18 #{UI.ReferenceView} 50 14 nil 160 50 2 8 1140850688 131073 304 nil nil nil 5 nil nil nil 304 582 1 #{UI.ResourceIdentifier} #{UI.Toolbar} #resource_File_tools nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 1051 1 498 155 51 304 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 13 2 0 0 0 0 0 0 90 2 0 0 25 0 0 0] 8 #() 498 193 193 nil 27 8 'fileTools' 18 #{UI.ReferenceView} 50 14 nil 160 50 2 8 1140850688 131073 640 nil nil nil 5 nil nil nil 640 370 #{UI.Toolbar} #resource_Image_tools nil 402 50 1 450 #createAt:extent: 50 2 498 1 1 498 63 51 640 546 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 31 0 0 0 25 0 0 0] 592 608 nil 27 8 'imageTools' 18 #{UI.ReferenceView} 50 14 nil 160 50 2 8 1140850688 131073 864 nil nil nil 5 nil nil nil 864 370 #{UI.Toolbar} #resource_Search_tools nil 402 50 1 450 #createAt:extent: 50 2 498 615 1 498 437 51 864 546 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 51 1 0 0 0 0 0 0 13 2 0 0 25 0 0 0] 592 608 nil 27 8 'searchTools' 18 #{UI.ReferenceView} 50 14 nil 160 50 2 8 1140850688 131073 1088 nil nil nil 5 nil nil nil 1088 370 #{UI.Toolbar} #resource_Smalltalk_tools nil 402 50 1 450 #createAt:extent: 50 2 498 63 1 498 553 51 1088 546 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 31 0 0 0 0 0 0 0 51 1 0 0 25 0 0 0] 592 608 nil 27 8 'smalltalkTools' nil nil nil nil 8 #() nil nil 1 nil 498 33 33 nil nil 838 1 #{UI.FlowLayout} 1 1 1 402 50 1 450 #createAt:extent: 50 2 498 1 1 498 2079 51 160 546 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 15 4 0 0 25 0 0 0] 50 4 640 1088 864 304 608 nil 29 18 #{UI.StatusBar} 50 21 nil 32 50 2 8 1140853004 1 1520 nil nil nil 5 nil nil nil 1520 nil nil 258 #{Core.IdentityDictionary} 50 6 1862 1 #{UI.StatusBarItem} 8193 301 1520 nil 1382 3 #{Kernel.BlockClosure} 0 nil 1318 #{Kernel.CompiledExpression} 4 1 #{Core.UndefinedObject} 8 'doIt' 8 '[:r | r notNil ifTrue: [r extent displayString] ifFalse: ['''']]' 8 #[32 105 17 222 4 17 158 159 106 31 106] #extent #displayString 8 '' 1664 7 257 nil 450 #extentImage 8 #() #{Tools.ViewComposer} nil 8 'extentStatus' 1618 8193 37 1520 nil nil 1650 0 nil 1682 6 1 1648 8 'doIt' 8 '[:modified | modified ifTrue: [Tools.SmalltalkSystem current changedIcon imageIndex]]' 8 #[33 105 17 122 45 159 160 161 106 60 106] 1094 2 #{Kernel.VariableBinding} #SmalltalkSystem #{Tools.SmalltalkSystem} #{Tools} 1 #current #changedIcon #imageIndex 1840 #ifTrue: 7 257 nil nil 8 'modificationStatus' 1618 8193 301 1520 nil 1650 0 nil 1682 4 1 #{Core.UndefinedObject} 8 'doIt' 8 '[:r | r notNil ifTrue: [r position displayString] ifFalse: ['''']]' 8 #[32 105 17 222 4 17 158 159 106 31 106] #position #displayString 1760 1984 7 257 nil 450 #positionImage 1792 #{Tools.ViewComposer} nil 8 'positionStatus' nil nil nil 50 3 1968 1632 1824 1094 1 #{UI.StatusBarNullItem} 8705 1 1520 nil nil 402 50 1 450 #createAt:extent: 50 2 498 1 1379 498 2079 45 1520 546 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 177 2 0 0 15 4 0 0 199 2 0 0] 8 #() 608 nil 29 nil nil 18 #{UI.ContainerView} 50 15 nil 32 50 2 8 1140850688 131073 2288 nil nil nil 5 nil nil nil 2288 518 #{UI.ProportionalLayout} 550 #{Core.LookupTable} 0 true 258 #{Core.IdentityDictionary} 50 2 18 #{UI.ContainerView} 50 15 nil 2288 50 2 8 1140850688 131073 2448 nil nil nil 5 nil nil nil 2448 2354 518 #{Kernel.STBCollectionProxy} #{Core.Dictionary} 50 2 518 #{Core.Association} 18 #{UI.SlideyInneyOuteyThing} 50 23 nil 2448 50 2 8 1140850688 131073 2608 nil nil nil 517 nil nil nil 2608 1350 1 #{UI.CardLayout} 550 #{Core.OrderedCollection} 1 2578 838 1 #{UI.CardLabel} 8 'View Toolbox' 1650 0 nil 1682 7 1 #{Core.AnsiString} 8 'doIt' 8 '(CardLabel text: ''View Toolbox'' iconBlock: [Icon fromId: ''View.ico''])' 8 #[29 30 35 113 31 32 180 106 195 105] 2752 2784 #{Graphics.Icon} 8 'View.ico' #fromId: #text:iconBlock: 2800 11 1 nil nil 18 #{UI.ReferenceView} 50 14 nil 18 #{UI.SlidingCardTray} 50 22 nil 2608 50 2 8 1140850688 131073 2928 nil nil nil 5 nil nil nil 2928 2688 258 #{Core.IdentityDictionary} 50 2 2896 8 'toolbox' nil 18 #{UI.TabViewXP} 50 28 nil 2608 50 2 8 1140916864 1 3040 838 2 #{UI.ListModel} 2706 1 2768 nil 6 #{Kernel.IdentitySearchPolicy} nil nil 1 nil nil nil 3040 nil nil 518 #{Core.Message} #displayString 8 #() 3186 #iconImageIndex 3216 1350 1 #{Graphics.IconImageManager} nil nil nil nil nil #smallIcons nil nil nil nil nil 402 50 3 450 #createAt:extent: 50 2 498 1 1 498 941 1329 3040 450 #setSingleSelection: 8 #(1) 3040 450 #tcmSetExtendedStyle:dwExStyle: 8 #(-1 0) 3040 546 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 214 1 0 0 152 2 0 0] 8 #() 608 nil 27 nil 2608 498 33 33 1606 1 #{UI.ButtonInteractor} 2928 nil 1 518 #{Graphics.Rectangle} 498 841 3 498 873 35 nil 1350 4 #{UI.CommandDescription} #togglePin 8 'Pin or Unpin the tray' 1 1 nil nil nil 402 50 1 450 #createAt:extent: 50 2 498 57 9 498 877 1313 2928 546 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 28 0 0 0 4 0 0 0 210 1 0 0 148 2 0 0] 50 1 2896 608 nil 27 50 2 8 1140850688 131073 2896 nil nil nil 1029 nil nil nil 2896 370 #{Tools.ResourceToolboxPresenter} #resource_Default_view nil 402 50 1 450 #createAt:extent: 50 2 498 1 37 498 877 1277 2896 546 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 18 0 0 0 182 1 0 0 144 2 0 0] 592 608 nil 27 2896 nil nil nil 550 #{Core.IdentityDictionary} 0 nil 3040 2928 498 745 959 401 1 524319 nil nil 402 50 1 450 #createAt:extent: 50 2 498 1 1 498 941 1329 2608 546 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 214 1 0 0 152 2 0 0] 50 2 2928 3040 608 nil 27 8 0.8181818181818181 2578 18 #{UI.ContainerView} 50 15 nil 2448 50 2 8 1140850688 131073 4192 nil nil nil 5 2886 4 #{UI.Menu} nil true 50 18 1094 2 #{UI.CommandMenuItem} 1 3602 #cutSelection 8 'Cu&t' 1 1 838 4 #{Graphics.Icon} nil true 1030 #{Graphics.ImageFromStringResourceInitializer} 8 'EditCut.ico' 838 1 #{External.ResourceLibrary} 8 'dolphindr8.dll' 65541 nil nil nil 4306 1 3602 #copySelection 8 '&Copy' 1 1 4370 nil true 4402 8 'EditCopy.ico' 4464 65541 nil nil nil 4306 1 3602 #pasteClipboard 8 '&Paste' 1 1 4370 nil true 4402 8 'EditPaste.ico' 4464 65541 nil nil nil 4306 1 3602 #clearSelection 8 '&Delete' 1 1 4370 nil true 4402 8 'EditClear.ico' 4464 65541 nil nil nil 326 1 #{UI.DividerMenuItem} 4097 4306 1 3602 #inspectSelection 8 '&Inspect' 1 1 4370 nil true 4402 8 'InspectIt.ico' 4464 65541 nil nil nil 4786 4097 4306 1 3602 #editContextMenu 8 'Set Conte&xt Menu…' 1 1 nil nil nil 4786 4097 4306 1 3602 #toggleTabStop 8 'Make Tab &Stop' 1 1 nil nil nil 4306 1 3602 #toggleGroupStop 8 'Make &Group Stop' 1 1 nil nil nil 4786 4097 4258 nil true 50 7 4306 1 3602 #alignLefts 8 '&Lefts' 1 1 nil nil nil 4306 1 3602 #alignCenters 8 '&Centres' 1 1 nil nil nil 4306 1 3602 #alignRights 8 '&Rights' 1 1 nil nil nil 4786 4097 4306 1 3602 #alignTops 8 '&Tops' 1 1 nil nil nil 4306 1 3602 #alignMiddles 8 '&Middles' 1 1 nil nil nil 4306 1 3602 #alignBottoms 8 '&Bottoms' 1 1 nil nil nil 8 'View Alig&n' nil 134217729 nil nil nil nil nil 4258 nil true 50 5 4306 1 3602 #matchWidths 8 '&Widths' 1 1 nil nil nil 4306 1 3602 #matchHeights 8 '&Heights' 1 1 nil nil nil 4306 1 3602 #matchFonts 8 '&Fonts' 1 1 nil nil nil 4306 1 3602 #matchForegroundColors 8 'Foreground &Colors' 1 1 nil nil nil 4306 1 3602 #matchBackgroundColors 8 '&Background Colors' 1 1 nil nil nil 8 'View Matc&h' nil 134217729 nil nil nil nil nil 4258 nil true 50 4 4306 1 3602 #zFront 8 'Bring to &Front' 1 1 nil nil nil 4306 1 3602 #zForward 8 'Bring F&orward' 1 1 nil nil nil 4306 1 3602 #zBackward 8 'Send B&ackward' 1 1 nil nil nil 4306 1 3602 #zBack 8 'Send to Bac&k' 1 1 nil nil nil 8 'View &Arrange' nil 134217729 nil nil nil nil nil 4786 4097 4306 1 3602 #mutate 8 'M&utate View…' 1 1 nil nil nil 4258 nil true 50 2 4306 1 3602 #dereference 8 'De&reference to Copy' 1 1 nil nil nil 4306 1 3602 #editReference 8 '&Edit' 1 1 nil nil nil 8 '&Reference View' #referenceViewMenu 134217729 nil nil nil nil nil 8 '' nil 134217729 nil nil nil nil nil nil nil 4192 2354 2530 2384 50 2 2578 18 #{UI.ContainerView} 50 15 nil 4192 50 2 8 1140850688 131073 6272 nil nil nil 5 nil nil nil 6272 130 1 1 nil 18 #{UI.SlideyInneyOuteyThing} 50 23 nil 6272 50 2 8 1140850688 131073 6352 nil nil nil 517 nil nil nil 6352 2674 2706 5 2578 8 'Arrange' 18 #{UI.ReferenceView} 50 14 nil 18 #{UI.SlidingCardTray} 50 22 nil 6352 50 2 8 1140850688 131073 6512 nil nil nil 5 nil nil nil 6512 6416 258 3968 50 10 18 #{UI.Toolbar} 50 28 nil 6512 50 2 8 1140853580 131073 6608 nil nil nil 517 nil 1030 #{Graphics.Font} nil true 262 #{OS.LOGFONTW} 8 #[243 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 0 65 0 114 0 105 0 97 0 108 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 498 193 193 nil 6608 240 nil 258 3968 50 4 18 #{UI.ReferenceView} 50 14 nil 6608 50 2 8 1140850688 131073 6800 nil nil nil 5 nil nil nil 6800 370 #{UI.Toolbar} #resource_View_composer_alignment_tools nil 402 50 1 450 #createAt:extent: 50 2 498 1 1 498 339 51 6800 546 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 169 0 0 0 25 0 0 0] 592 608 nil 27 8 'alignmentTools' 18 #{UI.ReferenceView} 50 14 nil 6608 50 2 8 1140850688 131073 7024 nil nil nil 5 nil nil nil 7024 370 #{UI.Toolbar} #resource_View_composer_match_size_tools nil 402 50 1 450 #createAt:extent: 50 2 498 339 1 498 201 51 7024 546 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 169 0 0 0 0 0 0 0 13 1 0 0 25 0 0 0] 592 608 nil 27 8 'matchSizeTools' nil nil nil nil 2706 0 nil nil 1 nil 498 33 33 498 45 45 nil 1346 1 1 1 402 50 1 450 #createAt:extent: 50 2 498 1 37 498 731 57 6608 546 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 18 0 0 0 109 1 0 0 46 0 0 0] 50 2 6800 7024 608 nil 29 8 'alignTools' 6480 8 'arrangementTools' 18 #{UI.ReferenceView} 50 14 nil 6512 50 2 8 1140850688 131073 7488 nil nil nil 5 nil nil nil 7488 370 #{UI.Toolbar} #resource_Edit_tools nil 402 50 1 450 #createAt:extent: 50 2 498 1 37 498 731 57 7488 546 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 18 0 0 0 109 1 0 0 46 0 0 0] 592 608 nil 27 8 'editTools' 18 #{UI.ReferenceView} 50 14 nil 6512 50 2 8 1140850688 131073 7712 nil nil nil 5 nil nil nil 7712 370 #{UI.Toolbar} #resource_View_composer_spacing_tools nil 402 50 1 450 #createAt:extent: 50 2 498 1 37 498 731 57 7712 546 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 18 0 0 0 109 1 0 0 46 0 0 0] 592 608 nil 27 8 'layoutTools' 18 #{UI.ReferenceView} 50 14 nil 6512 50 2 8 1140850688 131073 7936 nil nil nil 5 nil nil nil 7936 370 #{UI.Toolbar} #resource_View_composer_nudge_tools nil 402 50 1 450 #createAt:extent: 50 2 498 1 37 498 731 57 7936 546 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 18 0 0 0 109 1 0 0 46 0 0 0] 592 608 nil 27 8 'nudgeTools' nil 18 #{UI.TabViewXP} 50 28 nil 6352 50 2 8 1140916738 1 8160 3106 2706 5 8 'Edit' 6464 8 'Nudge' 8 'Align' 8 'Layout' nil 3168 nil nil 1 nil nil nil 8160 nil nil 3200 3232 3264 nil nil nil nil nil #noIcons nil nil nil nil nil 402 50 3 450 #createAt:extent: 50 2 498 1 1 498 747 153 8160 450 #setSingleSelection: 8 #(4) 8160 450 #tcmSetExtendedStyle:dwExStyle: 8 #(-1 0) 8160 546 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 117 1 0 0 76 0 0 0] 8 #() 608 nil 27 nil 6352 498 33 33 3506 6512 nil 1 3538 498 695 3 498 727 35 nil 3602 #togglePin 8 'Pin or Unpin the tray' 1 1 nil nil nil 402 50 1 450 #createAt:extent: 50 2 498 9 9 498 731 93 6512 546 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 4 0 0 0 4 0 0 0 113 1 0 0 50 0 0 0] 50 5 7488 6480 7936 6608 7712 608 nil 27 50 2 8 1140850688 131073 6480 nil nil nil 5 nil nil nil 6480 370 #{UI.Toolbar} #resource_View_composer_tools nil 402 50 1 450 #createAt:extent: 50 2 498 1 37 498 731 57 6480 546 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 18 0 0 0 109 1 0 0 46 0 0 0] 592 608 nil 27 2578 8272 7936 2578 8288 6608 2578 8304 7712 2578 8256 7488 6608 nil nil nil 3970 0 nil 8160 6512 498 201 201 401 1 524319 nil nil 402 50 1 450 #createAt:extent: 50 2 498 1 1177 498 747 153 6352 546 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 76 2 0 0 117 1 0 0 152 2 0 0] 50 2 6512 8160 608 nil 27 nil nil 18 #{UI.ScrollingDecorator} 50 18 nil 6272 50 2 8 1143996416 131073 9200 nil nil nil 5 nil nil nil 9200 326 1 #{UI.ScrollingDecoratorLayout} true 258 3968 50 2 18 #{Tools.ViewComposerArena} 50 22 nil 9200 50 2 8 1140850944 1 9328 1094 2 #{UI.ValueHolder} nil false 6 #{Kernel.EqualitySearchPolicy} nil 226 #cornsilk nil 533 nil nil nil 9328 nil nil 518 #{UI.NullConverter} nil nil nil nil #normal nil 3538 498 21 21 498 21 21 nil nil 402 50 1 450 #createAt:extent: 50 2 498 1 1 498 1577 1397 9328 546 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 20 3 0 0 186 2 0 0] 8 #() 608 nil 27 8 'arena' nil 498 1 1 true 498 17 17 402 50 1 450 #createAt:extent: 50 2 498 1 1 498 747 1177 9200 546 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 117 1 0 0 76 2 0 0] 50 1 9328 608 nil 27 258 3968 50 2 6352 8 'toolbarsSlidey' nil 402 50 1 450 #createAt:extent: 50 2 498 1 1 498 747 1329 6272 546 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 117 1 0 0 152 2 0 0] 50 2 9200 6352 608 nil 27 518 #{Core.Fraction} 521 323 2578 18 #{UI.SlideyInneyOuteyThing} 50 23 nil 4192 50 2 8 1140850688 131073 10128 nil nil nil 517 nil nil nil 10128 2674 2706 1 2578 2754 8 'Property Inspector' 1650 0 nil 1682 3 1 4368 8 'doIt' 8 '[Tools.PublishedAspectInspector icon]' 8 #[31 105 45 159 106] 1922 #PublishedAspectInspector #{Tools.PublishedAspectInspector} #{Tools} 1 #icon 10272 7 1 nil 21659 18 #{UI.ContainerView} 50 15 nil 18 #{UI.SlidingCardTray} 50 22 nil 10128 50 2 8 1140850688 131073 10400 nil nil nil 5 nil nil nil 10400 10192 3970 0 nil 18 #{UI.TabViewXP} 50 28 nil 10128 50 2 8 1140916866 1 10480 3106 2706 1 10240 nil 3168 nil nil 1 nil nil nil 10480 nil nil 3200 3232 3264 nil nil nil nil nil #smallIcons nil nil nil nil nil 402 50 3 450 #createAt:extent: 50 2 498 1 1 498 373 1329 10480 450 #setSingleSelection: 8 #(1) 10480 450 #tcmSetExtendedStyle:dwExStyle: 8 #(-1 0) 10480 546 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 186 0 0 0 152 2 0 0] 8 #() 608 nil 27 nil 10128 498 33 33 3506 10400 nil 1 3538 498 5 3 498 37 35 nil 3602 #togglePin 8 'Pin or Unpin the tray' 1 1 nil nil nil 402 50 1 450 #createAt:extent: 50 2 498 9 9 498 309 1313 10400 546 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 4 0 0 0 4 0 0 0 158 0 0 0 148 2 0 0] 50 1 10368 608 nil 27 50 2 8 1140850688 131073 10368 nil nil nil 5 nil nil nil 10368 2354 2530 #{Core.Dictionary} 50 3 2578 18 #{UI.TreeView} 50 27 nil 10368 50 2 8 1140918819 1 11136 1094 3 #{UI.TreeModel} nil 3168 774 #{UI.TreeNode} nil nil nil 3970 0 240 nil 29 nil nil nil 11136 nil nil 3200 3232 3264 nil 1650 0 nil 1682 2 1 1648 8 'doIt' 8 '[:x | x printString]' 8 #[30 105 226 0 106] #printString 11280 7 257 nil nil nil nil 2386 0 nil #smallIcons 1 3970 0 402 50 1 450 #createAt:extent: 50 2 498 1 1 498 309 379 11136 546 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 154 0 0 0 189 0 0 0] 8 #() 608 nil 27 8 0.3 2578 18 #{UI.Splitter} 50 12 nil 10368 50 2 8 1140850688 1 11568 nil nil nil 517 nil nil nil 3142 1 #{UI.DraggableViewInteractor} 11568 nil 1 #left nil nil nil 498 1 1 498 9 9 nil 11664 nil 402 50 1 450 #createAt:extent: 50 2 498 1 379 498 309 11 11568 546 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 189 0 0 0 154 0 0 0 194 0 0 0] 8 #() 608 nil 27 1 2578 18 #{UI.ReferenceView} 50 14 nil 10368 50 2 8 1140850688 131073 11856 nil nil nil 5 nil nil nil 11856 370 #{Tools.PropertyInspector} #resource_Default_view nil 402 50 1 450 #createAt:extent: 50 2 498 1 389 498 309 889 11856 546 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 194 0 0 0 154 0 0 0 126 2 0 0] 592 608 nil 27 8 0.7 true 258 3968 50 4 11856 8 'inspector' 11136 8 'viewHierarchy' nil 402 50 1 450 #createAt:extent: 50 2 498 1 37 498 309 1277 10368 546 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 18 0 0 0 154 0 0 0 144 2 0 0] 50 3 11136 11568 11856 608 nil 27 10368 nil nil nil 3970 0 nil 10480 10400 498 201 201 401 1 524319 nil nil 402 50 1 450 #createAt:extent: 50 2 498 757 1 498 373 1329 10128 546 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 122 1 0 0 0 0 0 0 52 2 0 0 152 2 0 0] 50 2 10400 10480 608 nil 27 8 0.8 false 258 3968 50 2 10128 8 'inspectorSlidey' nil 402 50 1 450 #createAt:extent: 50 2 498 951 1 498 1129 1329 4192 546 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 219 1 0 0 0 0 0 0 15 4 0 0 152 2 0 0] 50 3 6272 18 #{UI.Splitter} 50 12 nil 4192 50 2 8 1140850688 1 12672 nil nil nil 517 nil nil nil 11634 12672 nil 1 #left nil nil nil 11664 11680 nil 11664 nil 402 50 1 450 #createAt:extent: 50 2 498 747 1 498 11 1329 12672 546 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 117 1 0 0 0 0 0 0 122 1 0 0 152 2 0 0] 8 #() 608 nil 27 10128 608 nil 27 8 0.9818181818181817 false 258 3968 50 2 2608 8 'toolsSlidey' nil 402 50 1 450 #createAt:extent: 50 2 498 1 1 498 2079 1329 2448 546 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 15 4 0 0 152 2 0 0] 50 3 2608 18 #{UI.Splitter} 50 12 nil 2448 50 2 8 1140850688 1 13104 nil nil nil 517 nil nil nil 11634 13104 nil 1 #left nil nil nil 11664 11680 nil 11664 nil 402 50 1 450 #createAt:extent: 50 2 498 941 1 498 11 1329 13104 546 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 214 1 0 0 0 0 0 0 219 1 0 0 152 2 0 0] 8 #() 608 nil 27 4192 608 nil 27 8 'main' nil 402 50 1 450 #createAt:extent: 50 2 498 1 51 498 2079 1329 2288 546 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 25 0 0 0 15 4 0 0 177 2 0 0] 50 1 2448 608 nil 27 258 3968 50 4 1520 8 'statusbar' 160 8 'toolbar' nil 2886 4 #{UI.MenuBar} nil true 50 7 4258 nil true 50 16 4306 1 3602 #newShellView 8 '&New Shell View' 9373 1 4370 nil true 4402 8 'ShellView.ico' 4464 65541 nil nil nil 4306 1 3602 #newDialogView 8 'New &Dialog View' 1 1 4370 nil true 4402 8 'DialogView.ico' 4464 65541 nil nil nil 4786 4097 4306 1 3602 #viewOpen 8 '&Open…' 9375 1 nil nil nil 4306 1 3602 #viewClose 8 '&Close' 1 1 nil nil nil 4306 1 3602 #viewRevert 8 '&Revert' 1 1 2374 2 #{Graphics.TextTileIcon} 8 $🔁 nil nil 226 #commonGreen nil nil 1 nil nil nil nil 4786 4097 4306 1 3602 #viewImport 8 '&Import View…' 1 1 nil nil nil 4306 1 3602 #viewExport 8 '&Export View…' 1 1 nil nil nil 4786 4097 4306 1 3602 #viewSave 8 '&Save' 1 1 4370 nil true 4402 8 'FileSave.ico' 4464 65541 nil nil nil 4306 1 3602 #viewSaveAs 8 'Save &As…' 1 1 nil nil nil 4786 4097 4306 1 3602 #viewTest 8 '&Test' 9385 1 4370 nil true 4402 8 'TestView.ico' 4464 65541 nil nil nil 4786 4097 4306 1 3602 #exit 8 'E&xit' 17639 1 13986 8 $✖ nil nil nil nil nil 1 nil nil nil nil 8 '&File' nil 134217729 nil nil nil nil nil 4258 nil true 50 12 4306 1 3602 #viewUndo 8 '&Undo' 9397 1 4370 nil true 4402 8 'EditUndo.ico' 4464 65541 nil nil nil 4306 1 3602 #viewRedo 8 '&Redo' 9395 1 4370 nil true 4402 8 'EditRedo.ico' 4464 65541 nil nil nil 4786 4097 4306 1 3602 #cutSelection 8 'Cu&t' 9393 1 4370 nil true 4402 8 'EditCut.ico' 4464 65541 nil nil nil 4306 1 3602 #copySelection 8 '&Copy' 9351 1 4370 nil true 4402 8 'EditCopy.ico' 4464 65541 nil nil nil 4306 1 3602 #pasteClipboard 8 '&Paste' 9389 1 4370 nil true 4402 8 'EditPaste.ico' 4464 65541 nil nil nil 4306 1 3602 #clearSelection 8 '&Delete' 1 1 4370 nil true 4402 8 'EditClear.ico' 4464 65541 nil nil nil 4786 4097 4306 1 3602 #widenSelection 8 '&Widen Selection' 9387 1 nil nil nil 4306 1 3602 #selectAll 8 'Select &All' 9347 1 nil nil nil 4786 4097 4306 1 3602 #refreshPublishedAspects 8 'Refresh Inspector' 1257 1 4370 nil true 4402 8 'Refresh.ico' 4464 65541 nil nil nil 8 '&Edit' nil 134217729 nil nil nil nil nil 4258 nil true 50 17 4306 1 3602 #editMenuBar 8 '&Menu Bar…' 1 1 nil nil nil 4306 1 3602 #editContextMenu 8 '&Context Menu…' 1 1 nil nil nil 4786 4097 4306 1 3602 #toggleTabStop 8 'Make &Tab Stop' 1 1 nil nil nil 4306 1 3602 #toggleGroupStop 8 'Make &Group Stop' 1 1 nil nil nil 4786 4097 4258 nil true 50 7 4306 1 3602 #alignLefts 8 '&Lefts' 1 1 nil nil nil 4306 1 3602 #alignCenters 8 '&Centres' 1 1 nil nil nil 4306 1 3602 #alignRights 8 '&Rights' 1 1 nil nil nil 4786 4097 4306 1 3602 #alignTops 8 '&Tops' 1 1 nil nil nil 4306 1 3602 #alignMiddles 8 '&Middles' 1 1 nil nil nil 4306 1 3602 #alignBottoms 8 '&Bottoms' 1 1 nil nil nil 8 '&Align' nil 134217729 nil nil nil nil nil 4258 nil true 50 5 4306 1 3602 #matchWidths 8 '&Widths' 1 1 nil nil nil 4306 1 3602 #matchHeights 8 '&Heights' 1 1 nil nil nil 4306 1 3602 #matchFonts 8 '&Fonts' 1 1 nil nil nil 4306 1 3602 #matchForegroundColors 8 'Foreground &Colors' 1 1 nil nil nil 4306 1 3602 #matchBackgroundColors 8 '&Background Colors' 1 1 nil nil nil 8 'Matc&h' nil 134217729 nil nil nil nil nil 4258 nil true 50 4 4306 1 3602 #zFront 8 'Bring to &Front' 9357 1 nil nil nil 4306 1 3602 #zForward 8 'Bring F&orward' 13453 1 nil nil nil 4306 1 3602 #zBackward 8 'Send B&ackward' 13463 1 nil nil nil 4306 1 3602 #zBack 8 'Send to Bac&k' 9367 1 nil nil nil 8 'A&rrange' nil 134217729 nil nil nil nil nil 4258 nil true 50 4 4306 1 3602 #nudgeLeft 8 '&Left' 9803 1 nil nil nil 4306 1 3602 #nudgeRight 8 '&Right' 9807 1 nil nil nil 4306 1 3602 #nudgeUp 8 '&Up' 9805 1 nil nil nil 4306 1 3602 #nudgeDown 8 '&Down' 9809 1 nil nil nil 8 '&Nudge' nil 134217729 nil nil nil nil nil 4258 nil true 50 4 4306 1 3602 #increaseHeight 8 '&Taller' 13905 1 nil nil nil 4306 1 3602 #increaseWidth 8 '&Fatter' 13903 1 nil nil nil 4306 1 3602 #decreateHeight 8 '&Shorter' 13901 1 nil nil nil 4306 1 3602 #decreaseWidth 8 'Th&inner' 13899 1 nil nil nil 8 'Gro&w' nil 134217729 nil nil nil nil nil 4786 4097 4258 nil true 50 3 4306 1 3602 #distributeHorizontally 8 'Distri&bute Evenly' 1 1 nil nil nil 4306 1 3602 #increaseHorizontalGaps 8 '&Increase' 1 1 nil nil nil 4306 1 3602 #decreaseHorizontalGaps 8 '&Decrease' 1 1 nil nil nil 8 'Hori&zontal Spacing' nil 134217729 nil nil nil nil nil 4258 nil true 50 3 4306 1 3602 #distributeVertically 8 'Distri&bute Evenly' 1 1 nil nil nil 4306 1 3602 #increaseVerticalGaps 8 '&Increase' 1 1 nil nil nil 4306 1 3602 #decreaseVerticalGaps 8 '&Decrease' 1 1 nil nil nil 8 '&Vertical Spacing' nil 134217729 nil nil nil nil nil 4786 4097 4306 1 3602 #mutate 8 'M&utate View…' 1 1 nil nil nil 4306 1 3602 #dereference 8 '&Dereference to Copy' 1 1 nil nil nil 8 '&Modify' nil 134217729 nil nil nil nil nil 4258 nil true 50 14 4306 1 3602 #browseIt 8 '&Browse It' 9349 1 4370 nil true 4402 8 'ClassBrowserShell.ico' 4464 65541 nil nil nil 4306 1 3602 #displayIt 8 '&Display It' 9353 1 4370 nil true 4402 8 'DisplayIt.ico' 4464 65541 nil nil nil 4306 1 3602 #printIt 8 '&Print It' 9377 1 4370 nil true 4402 8 'PrintIt.ico' 4464 65541 nil nil nil 4306 1 3602 #evaluateIt 8 '&Evaluate It' 9355 1 4370 nil true 4402 8 'EvaluateIt.ico' 4464 65541 nil nil nil 4306 1 3602 #inspectIt 8 '&Inspect It' 9363 1 4370 nil true 4402 8 'BasicInspector.ico' 4464 65541 nil nil nil 4306 1 3602 #debugIt 8 'Deb&ug It' 1269 1 4370 nil true 4402 8 'Debugger.ico' 4464 65541 nil nil nil 4306 1 3602 #fileItIn 8 '&File it In' 1 1 nil nil nil 4786 4097 4306 1 3602 #browseDefinitions 8 'Defi&nitions…' 1271 1 nil nil nil 4306 1 3602 #browseReferences 8 '&References…' 5367 1 nil nil nil 4786 4097 4306 1 3602 #accept 8 '&Accept' 9383 1 nil nil nil 4786 4097 4258 nil true 50 9 4306 1 3602 #toggleAutoCompletion 8 '&Auto-complete' 1 1 nil nil nil 4306 1 3602 #toggleIndentationGuides 8 'Indentation &Guides' 1 1 nil nil nil 4306 1 3602 #toggleLineEndings 8 'Line &Endings' 1 1 13986 $¶ 8 'Arial' nil nil nil nil 1 nil nil nil nil 4306 1 3602 #toggleLineNumbers 8 'Line N&umbers' 1 1 nil nil nil 4306 1 3602 #toggleStyling 8 '&Syntax Coloring' 1 1 nil nil nil 4306 1 3602 #toggleWhitespace 8 'W&hitespace' 1 1 nil nil nil 4306 1 3602 #toggleWordWrap 8 '&Word Wrap' 1 1 nil nil nil 4786 4097 4258 nil true 50 2 4306 1 3602 3186 #language: 8 #(#container) 8 '&Smalltalk' 1 1 nil nil nil 4306 1 3602 3186 #language: 8 #(#xml) 8 '&Xml' 1 1 nil nil nil 8 '&Language' nil 134217729 nil nil nil nil nil 8 '&Options' nil 134217729 4370 nil true 4402 8 'Preferences.ico' 4464 65541 nil nil nil nil nil 8 '&Workspace' nil 134217729 nil nil nil nil nil 4258 nil true 8 #() 8 '&Tools' #toolsMenu 134217729 nil nil nil nil nil 4258 nil true 8 #() 8 'Wi&ndow' #windowMenu 134217729 nil nil nil nil nil 4258 nil true 50 15 4306 1 3602 #helpContents 8 '&Contents' 1025 1 4370 nil true 4402 8 'Help.ico' 4464 65541 nil nil nil 4306 1 3602 #help 8 'On this &Tool' 1249 1 nil nil nil 4306 1 3602 #helpWhatsThis 8 'What''s This?' 5345 1 nil nil nil 4786 4097 4306 1 3602 #learnSmalltalk 8 'Learn Smalltalk' 1 1 13986 8 $🎓 nil 226 #orchid 226 #white nil nil 1 nil nil nil nil 4786 4097 4306 1 3602 #helpWhatsNew 8 'What''s &New' 1 1 nil nil nil 4306 1 3602 #helpGuidedTour 8 '&Guided Tour' 1 1 nil nil nil 4306 1 3602 #helpTutorials 8 'Tutorials' 1 1 nil nil nil 4786 4097 4306 1 3602 #dolphinHomePage 8 'Dolphin Homepage' 1 1 4370 nil true 4402 8 '!!APPLICATION' 4464 65541 nil nil nil 4306 1 3602 #dolphinNewsgroup 8 'Dolphin Newsgroup/Forum' 1 1 nil nil nil 4306 1 3602 #dolphinWikiWeb 8 'Dolphin WikiWeb' 1 1 nil nil nil 4786 4097 4306 1 3602 #aboutDolphin 8 '&About Dolphin Smalltalk' 1 1 13986 8 $🐬 nil nil 226 #darkSlateBlue nil nil 1 nil nil nil nil 8 '&Help' #help 134217729 nil nil nil nil nil 8 '' nil 134217729 nil nil nil nil nil nil nil nil 1 nil nil nil nil 1 nil nil 402 50 2 450 #createAt:extent: 50 2 498 6143 21 498 2111 1541 32 450 #text: 50 1 8 'View Composer' 32 546 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 30 16 0 0 12 3 0 0] 50 3 160 2288 1520 608 nil 27)!
 
 toolsFolderHelpId
 	^10593! !

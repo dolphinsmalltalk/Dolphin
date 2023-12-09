@@ -26,38 +26,38 @@ accept
 	"Saves the current source as the value of the selected variable of the
 	receivers object."
 
-	variableNamesPresenter hasSelection 
-		ifTrue: 
-			["If there is no selection then the entire workspace is selected for consistency
-		with saving method source. This also works rather better with word wrap too."
+	<commandQuery: #canSetVariable>
+	| newObject oldObject |
+	"If there is no source selection then the entire workspace is selected for consistency with saving method source. This also works rather better with word wrap too."
+	sourcePresenter view hasSelection ifFalse: [sourcePresenter view selectAll].
 
-			| newObject oldObject |
-			sourcePresenter view hasSelection ifFalse: [sourcePresenter view selectAll].
-
-			"Evaluate the new value and keep a copy of the old value for undo purposes"
-			newObject := sourcePresenter evaluateItIfFail: [^self].
-			oldObject := self getField: self currentField.
-			self setField: self currentField to: newObject.
-			Command current undoWith: 
-					[self
-						setField: self currentField to: oldObject;
-						onVariableNameSelected].
-			self onVariableNameSelected.
-			self trigger: #inspecteeChanged]!
+	"Evaluate the new value and keep a copy of the old value for undo purposes"
+	newObject := sourcePresenter evaluateItIfFail: [^self].
+	oldObject := self getField: self currentField.
+	self setField: self currentField to: newObject.
+	Command current undoWith: 
+			[self
+				setField: self currentField to: oldObject;
+				onVariableNameSelected].
+	self onVariableNameSelected.
+	self trigger: #inspecteeChanged!
 
 browseClass
 	"Private - Open a new default class browser on the class of the object being inspected."
 
+	<commandQuery: #queryBrowseClass:>
 	SmalltalkSystem current browseClass: self browseObject class!
 
 browseHierarchy
 	"Private - Open a new class browser on the class of the object being inspected."
 
+	<commandQuery: #queryBrowseClass:>
 	SmalltalkSystem current browseHierarchy: self browseObject class!
 
 browseIt
 	"Open a default browser on the current object"
 
+	<commandQuery: #hasSelection>
 	self browseObject browse!
 
 browseObject
@@ -65,10 +65,8 @@ browseObject
 
 	^variableNamesPresenter hasSelection ifTrue: [self variable] ifFalse: [self object]!
 
-browseSystem
-	"Open a new system browser on the class of the object being inspected."
-	
-	self model browseSystem: self browseObject class!
+canSetVariable
+	^self hasSelection and: [self variableIndex > self headerSize]!
 
 createComponents
 	"Create the presenters contained by the receiver"
@@ -154,6 +152,9 @@ getFieldList
 
 	^self selfField basicClass allInstanceVariableNames , (1 to: self selfField basicSize)!
 
+hasSelection
+	^variableNamesPresenter hasSelection!
+
 headerList
 	"Private - Answer an ordered collection of Associations. The key is the String variable
 	entry in the variablesList model. The value is the symbol which is perform'ed
@@ -186,23 +187,21 @@ infoTipForVariable: variableName
 inspectIt
 	"Open a new Inspector on the variable selected in variablesModel."
 
-	variableNamesPresenter hasSelection
-		ifTrue: [self variable inspect]
-!
+	<commandQuery: #hasSelection>
+	self variable inspect!
 
 inspectReferences
 	"Open a new Inspector on all the objects which references the variable
 	selected in variablesModel."
 
-	variableNamesPresenter hasSelection
+	<commandQuery: #hasSelection>
+	| refs |
+	refs := self variable allReferences copyWithout: self.
+	refs isEmpty
 		ifTrue: 
-			[| refs |
-			refs := self variable allReferences copyWithout: self.
-			refs isEmpty
-				ifTrue: 
-					[MessageBox
-						notify: ('There are no additional references to:<n><t><1p>' expandMacrosWith: self variable)]
-				ifFalse: [refs inspect]]!
+			[MessageBox
+				notify: ('There are no additional references to:<n><t><1p>' expandMacrosWith: self variable)]
+		ifFalse: [refs inspect]!
 
 model: aValueModel
 	"Set the model of the receiver to be aValueModel. We intercept a change
@@ -215,10 +214,14 @@ model: aValueModel
 nilVariable
 	"Private - Nil the currently selected variable."
 
+	<commandQuery: #canSetVariable>
 	| oldObject |
 	oldObject := self getField: self currentField.
 	self setField: self currentField to: nil.
-	Command current undoWith: [self setField: self currentField to: oldObject; onVariableNameSelected].
+	Command current undoWith: 
+			[self
+				setField: self currentField to: oldObject;
+				onVariableNameSelected].
 	self onVariableNameSelected.
 	self trigger: #inspecteeChanged!
 
@@ -274,49 +277,14 @@ onViewOpened
 		getInfoTipBlock: [:v | self infoTipForVariable: v];
 		selectionByIndex: 1!
 
-queryCommand: query
-	"Private - Enter details about a potential command for the receiver into the 
-	<CommandQuery>, query."
-
-	| cmd hasSel |
-	super queryCommand: query.
-	cmd := query commandSymbol.
-	hasSel := variableNamesPresenter hasSelection.
-	(#(#inspectReferences #basicInspectIt) includes: cmd)
-		ifTrue: 
-			[query isEnabled: hasSel.
-			^true].
-	#inspectIt == cmd
-		ifTrue: 
+queryBrowseClass: query
+	| class |
+	class := [self hasSelection ifTrue: [self browseObject class]] on: Error do: [:e | nil].
+	class isNil
+		ifFalse: 
 			[query
-				isEnabled: hasSel;
-				isDefault: hasSel.
-			^true].
-	(#(#accept #nilVariable) includes: cmd)
-		ifTrue: 
-			[query isEnabled: (hasSel and: [self variableIndex > self headerSize]).
-			^true].
-	(#(#browseHierarchy #browseSystem #browseClass) identityIncludes: query command)
-		ifTrue: 
-			[| class |
-			[hasSel ifTrue: [class := self browseObject class]] on: Error do: [:e | ].
-			class isNil
-				ifFalse: 
-					[query
-						isEnabled: (self respondsTo: #browseSystem);
-						text: 'Browse ' , class name.
-					^true]
-				ifTrue: 
-					[query
-						isEnabled: false;
-						text: query commandDescription menuText]].
-	cmd == #undo
-		ifTrue: 
-			[query
-				beDisabled;
-				text: (query commandDescription menuText expandMacrosWithArguments: {''} locale: Locale smalltalk).
-			^true].
-	^false!
+				beEnabled;
+				expandMenuTextWith: class name]!
 
 refresh
 	"Private - The fields of the receiver's object have been modified so update
@@ -392,12 +360,12 @@ variableNamesList
 
 	^variableNamesPresenter list! !
 !Tools.BasicInspector categoriesForMethods!
-accept!commands!public! !
-browseClass!commands!private! !
-browseHierarchy!commands!private! !
-browseIt!commands!public! !
+accept!commands-actions!public! !
+browseClass!commands-actions!private! !
+browseHierarchy!commands-actions!private! !
+browseIt!commands-actions!public! !
 browseObject!accessing!private! !
-browseSystem!commands!public! !
+canSetVariable!commands-queries!private! !
 createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !
 currentField!accessing!private! !
@@ -408,20 +376,21 @@ fields!accessing!private! !
 getField:!accessing!private! !
 getFieldExtra:!accessing!private! !
 getFieldList!accessing!private! !
+hasSelection!commands-queries!private! !
 headerList!accessing!private! !
 headerSize!accessing!private! !
 infoTipForVariable:!accessing!public! !
-inspectIt!commands!public! !
-inspectReferences!commands!public! !
+inspectIt!commands-actions!public! !
+inspectReferences!commands-actions!public! !
 model:!accessing!public! !
-nilVariable!commands!private! !
+nilVariable!commands-actions!private! !
 object!accessing!public! !
 object:!accessing!public! !
 onValueChanged!accessing!public! !
 onVariableNameSelected!event handling!private! !
 onViewOpened!event handling!public! !
-queryCommand:!commands!private! !
-refresh!commands!private! !
+queryBrowseClass:!commands-queries!private! !
+refresh!commands-actions!private! !
 selfField!accessing!private! !
 setField:to:!accessing!private! !
 source!accessing!public! !

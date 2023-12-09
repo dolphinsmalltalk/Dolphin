@@ -19,15 +19,15 @@ Instance Variables:
 !Tools.PackageSelector methodsFor!
 
 aboutPackage
-	"Show an About box for the currently selected package"
-
-	self selections first about!
+	<commandQuery: #queryAboutPackage:>
+	self singlePackage about!
 
 addClass
 	"Request an available class (or classes) to add to the receiver's current package from the
 	user. Only classes which are not currently owned by any other package are shown in the
 	choice prompter."
 
+	<commandQuery: #hasSinglePackage>
 	| classes pacman package |
 	pacman := self packageManager.
 	classes := pacman unpackagedClasses asSortedCollection.
@@ -42,9 +42,13 @@ addClass
 		caption: 'Add Classes to package ''<1d>''…' << package)
 			ifNotNil: [:chosen | chosen do: [:each | pacman addClass: each to: package]]!
 
-addSharedVariable
-    "Request an available shared variable to add the receiver's current package. Only variables which are not currently owned by any other package are shown."
+addMenu
+	<commandQuery: #hasSinglePackage>!
 
+addSharedVariable
+	"Request an available shared variable to add the receiver's current package. Only variables which are not currently owned by any other package are shown."
+
+	<commandQuery: #hasSinglePackage>
 	| variableNames package pacman |
 	pacman := self packageManager.
 	variableNames := pacman unpackagedVariables.
@@ -98,6 +102,7 @@ browseItCommand
 	^nil!
 
 browsePackages
+	<commandQuery: #hasPackages>
 	self developmentSystem browsePackages: self packages!
 
 browseUnimplemented
@@ -105,6 +110,7 @@ browseUnimplemented
 	message which is not apparently implemented in any of those packages or their
 	prerequisites."
 
+	<commandQuery: #hasPackages>
 	| sendingEnvironment implementingEnvironment unimplemented |
 	sendingEnvironment := self selectionEnvironment.
 	implementingEnvironment := self applicationEnvironment.
@@ -116,6 +122,11 @@ browseUnimplemented
 
 canRefactor
 	^self developmentSystem canRefactor and: [self hasPackages]!
+
+changedPackages
+	"Private - Answer those of the selected packages that are also changed."
+
+	^self packages select: [:each | each isChanged]!
 
 checkCanUninstall: package
 	"Private - Uninstallation of the <Package>, package, has been initiated. Verify that it can be uninstalled
@@ -305,13 +316,22 @@ folderClass
 hasChangedPackages
 	"Private - Answer whether any changed packages are currently selected."
 
-	^self packages anySatisfy: [:each | each isChanged].
-!
+	^self changedPackages notEmpty!
 
 hasPackages
 	"Private - Answer whether one or more packages are currently selected."
 
 	^self packages notEmpty!
+
+hasSaveableChangedPackages
+	| changed |
+	changed := self changedPackages.
+	^changed notEmpty and: [changed allSatisfy: [:each | self isSaveablePackage: each]]!
+
+hasSaveablePackages
+	| packages |
+	packages := self packages.
+	^packages notEmpty and: [packages allSatisfy: [:each | self isSaveablePackage: each]]!
 
 hasSinglePackage
 	"Private - Answer whether a single package is currently selected."
@@ -327,13 +347,15 @@ initialize
 inspectIt
 	"Open an inspector on the currently selected class."
 
+	<commandQuery: #hasPackages>
 	| packages |
 	packages := self packages.
-	(packages size = 1 ifTrue: [packages first] ifFalse: [packages]) inspect!
+	(packages size = 1 ifTrue: [packages single] ifFalse: [packages]) inspect!
 
 inspectPackage
 	"Open an AccessorInspector on the currently selected package(s)."
 
+	<commandQuery: #hasPackages>
 	| caption pkgs |
 	pkgs := ListModel on: self packages.
 	caption := pkgs size = 1 ifTrue: [pkgs first name , ' package'] ifFalse: ['Multiple Packages'].
@@ -525,14 +547,6 @@ onSelectionChanged
 onSelectionChanging: aSelectionChangingEvent 
 	self trigger: #selectionChanging: with: aSelectionChangingEvent!
 
-onTipTextRequired: tool
-	"Private - Tool tip text is required for the <ToolbarItem>, tool."
-
-	| cmd |
-	cmd := tool command asSymbol.
-	cmd == #clearSelection ifTrue: [^'Uninstall <1p>' expandMacrosWith: self singlePackage name].
-	^super onTipTextRequired: tool!
-
 onViewOpened
 	"Received when the receiver's view is been connected. "
 
@@ -613,142 +627,71 @@ promptToSavePackageChanges: package
 			self operationAbortedSignal signalWith: package].
 	^true!
 
-queryCommand: aCommandQuery
-	"Private - Enters details about a potential command for the receiver into 
-	the <CommandQuery>, query"
+queryAboutPackage: aCommandQuery
+	self singlePackage ifNotNil: [:package | aCommandQuery isEnabled: package canShowAbout]!
 
-	| selector |
-	selector := aCommandQuery commandSymbol.
-	#browseIt == selector
-		ifTrue: 
-			[selector := self browseItCommand.
-			selector isNil
-				ifTrue: 
-					[aCommandQuery isEnabled: false.
-					^true]].
-	#clearSelection == selector
-		ifTrue: 
-			[selector := self deleteItCommand.
-			selector isNil
-				ifTrue: 
-					[aCommandQuery isEnabled: false.
-					^true]].
-	#aboutPackage == selector
-		ifTrue: 
-			[aCommandQuery
-				isEnabled: (self singlePackage ifNil: [false] ifNotNil: [:package | package canShowAbout]).
-			^true].
-	(#(#inspectPackage #browsePackages #browseSources #browsePackageSources #browseUnimplemented)
-		identityIncludes: selector)
-			ifTrue: 
-				[aCommandQuery isEnabled: self hasPackages.
-				^true].
-	(#(#checkOut #checkIn) identityIncludes: selector)
-		ifTrue: 
-			[aCommandQuery isEnabled: ((self respondsTo: selector) and: [self hasPackages]).
-			^true].
-	#deploy == selector
-		ifTrue: 
-			[aCommandQuery isEnabled: (self hasSinglePackage and: [self respondsTo: selector]).
-			^true].
-	#browseDeployed == selector
-		ifTrue: 
-			[aCommandQuery
-				isEnabled: ((self respondsTo: selector) and: 
-							[self singlePackage
-								ifNil: [false]
-								ifNotNil: [:package | package hasImageStripper and: [File exists: package imageStripper logFileName]]]).
-			^true].
-	#setAsDefaultPackage == selector
-		ifTrue: 
-			[self singlePackage
-				ifNil: [aCommandQuery isEnabled: false]
-				ifNotNil: 
-					[:package |
-					aCommandQuery
-						isEnabled: true;
-						isChecked: package isDefaultPackage].
-			^true].
-	(#(#addClass #addSharedVariable #savePackageAs #addMenu) identityIncludes: selector)
-		ifTrue: 
-			[aCommandQuery isEnabled: self hasSinglePackage.
-			^true].
-	selector == #saveBinaryPackage
-		ifTrue: 
-			[aCommandQuery isEnabled: ((self respondsTo: #saveBinaryPackage) and: [self hasSinglePackage]).
-			^true].
-	(#(#removePackage #sourceControlMenu #inspectIt) identityIncludes: selector)
-		ifTrue: 
-			[aCommandQuery isEnabled: self hasPackages.
-			^true].
-	selector == #savePackages
-		ifTrue: 
-			[aCommandQuery
-				isEnabled: (self hasPackages and: [self packages allSatisfy: [:each | self isSaveablePackage: each]]).
-			^true].
-	selector == #savePackageChanges
-		ifTrue: 
-			[aCommandQuery isEnabled: (self hasChangedPackages
-						and: [self packages allSatisfy: [:each | self isSaveablePackage: each]]).
-			^true].
-	selector == #resetChangeFlags
-		ifTrue: 
-			[aCommandQuery isEnabled: self hasChangedPackages.
-			^true].
-	(#(#checkOutChanges) identityIncludes: selector)
-		ifTrue: 
-			[aCommandQuery isEnabled: (self hasChangedPackages and: [self respondsTo: selector]).
-			^true].
-	(#(#browseFolder) identityIncludes: selector)
-		ifTrue: 
-			[aCommandQuery
-				isEnabled: (self selectedFolder ifNil: [false] ifNotNil: [:folder | File isDirectory: folder]).
-			^true].
-	#synchronizeFilter == selector
-		ifTrue: 
-			[| packages |
-			packages := self packages.
-			aCommandQuery isEnabled: (packages notEmpty and: [(self commonFolder: packages) ~= self filter]).
-			^true].
-	selector == #toggleUsingPAX
-		ifTrue: 
-			[| syspkg first enable usingPax |
-			syspkg := self packageManager systemPackage.
-			enable := false.
-			first := true.
-			usingPax := false.
-			self packages do: 
-					[:each |
-					each == syspkg ifTrue: [enable := false].
-					first
-						ifTrue: 
-							[enable := true.
-							usingPax := each isUsingPAX.
-							first := false]
-						ifFalse: [each isUsingPAX ~~ usingPax ifTrue: [enable := false]]].
+queryBrowseFolder: aCommandQuery
+	self selectedFolder ifNotNil: [:folder | aCommandQuery isEnabled: (File isDirectory: folder)]!
+
+queryRemovePackage: aCommandQuery
+	| selected |
+	selected := self packages.
+	selected isEmpty ifTrue: [^self].
+	aCommandQuery
+		beEnabled;
+		expandMenuTextWith: (selected size == 1
+					ifTrue: [selected single]
+					ifFalse: ['<d> Packages' << selected size])!
+
+querySetDefaultPackage: aCommandQuery
+	self singlePackage
+		ifNotNil: 
+			[:package |
 			aCommandQuery
-				isEnabled: enable;
-				isChecked: usingPax.
-			^true].
-	selector == #toggleLegacySourceFormat
-		ifTrue: 
-			[| first enable legacyFormat |
-			enable := false.
-			first := true.
-			legacyFormat := false.
-			self packages do: 
-					[:each |
-					first
-						ifTrue: 
-							[enable := true.
-							legacyFormat := each isLegacySourceFormat.
-							first := false]
-						ifFalse: [each isLegacySourceFormat ~~ legacyFormat ifTrue: [enable := false]]].
-			aCommandQuery
-				isEnabled: enable;
-				isChecked: legacyFormat.
-			^true].
-	^super queryCommand: aCommandQuery!
+				beEnabled;
+				isChecked: package isDefaultPackage]!
+
+querySynchronizeFilter: aCommandQuery
+	| packages |
+	packages := self packages.
+	aCommandQuery
+		isEnabled: (packages notEmpty and: [(self commonFolder: packages) pathname ~= self filter])!
+
+queryToggleLegacySourceFormat: aCommandQuery
+	| legacyFormat first enable |
+	enable := false.
+	first := true.
+	legacyFormat := false.
+	self packages do: 
+			[:each |
+			first
+				ifTrue: 
+					[enable := true.
+					legacyFormat := each isLegacySourceFormat.
+					first := false]
+				ifFalse: [each isLegacySourceFormat ~~ legacyFormat ifTrue: [enable := false]]].
+	aCommandQuery
+		isEnabled: enable;
+		isChecked: legacyFormat!
+
+queryToggleUsingPAX: aCommandQuery
+	| syspkg usingPax first enable |
+	syspkg := self packageManager systemPackage.
+	enable := false.
+	first := true.
+	usingPax := false.
+	self packages do: 
+			[:each |
+			each == syspkg ifTrue: [enable := false].
+			first
+				ifTrue: 
+					[enable := true.
+					usingPax := each isUsingPAX.
+					first := false]
+				ifFalse: [each isUsingPAX ~~ usingPax ifTrue: [enable := false]]].
+	aCommandQuery
+		isEnabled: enable;
+		isChecked: usingPax!
 
 refresh
 	"Private - Refresh the contents of the receiver."
@@ -768,6 +711,7 @@ refresh
 removePackage
 	"Prompt for confirmation and, if given, uninstall the selected packages."
 
+	<commandQuery: #queryRemovePackage:>
 	| before |
 	before := Package manager packages keys.
 	[self packages do: [:each | self uninstall: each]] on: self operationAbortedSignal
@@ -790,6 +734,7 @@ removePackage
 resetChangeFlags
 	"Reset the change flags for the selected packages"
 
+	<commandQuery: #hasChangedPackages>
 	self packages do: [:each | each resetChangeFlags]!
 
 resetForItem: aPackage 
@@ -813,6 +758,7 @@ saveFileDialogTypes
 savePackageAs
 	"Save the selected package to a user set pathname."
 
+	<commandQuery: #hasSinglePackage>
 	| pathname package |
 	package := self singlePackage.
 	(self okToSavePackage: package) ifFalse: [^self].
@@ -825,11 +771,12 @@ savePackageAs
 	pathname notNil
 		ifTrue: 
 			[package saveAs: pathname.
-			self packages: {package}]!
+			self packages: { package }]!
 
 savePackageChanges
 	"Save out the selected package (if changed) and its changed owned objects."
 
+	<commandQuery: #hasSaveableChangedPackages>
 	self savePackageChanges: self packages!
 
 savePackageChanges: aPackageCollection 
@@ -849,6 +796,7 @@ savePackageChanges: aPackageCollection
 savePackages
 	"Save out the selected packages"
 
+	<commandQuery: #hasSaveablePackages>
 	self savePackages: self packages!
 
 savePackages: aPackageCollection 
@@ -917,6 +865,7 @@ selectRootFolder
 	filterPresenter selection: self rootFolder!
 
 setAsDefaultPackage
+	<commandQuery: #querySetDefaultPackage:>
 	| package oldDefault pkgList |
 	oldDefault := self packageManager defaultPackage.
 	package := self singlePackage.
@@ -932,7 +881,11 @@ singlePackage
 	packages := self packages.
 	^packages size == 1 ifTrue: [packages first]!
 
+sourceControlMenu
+	<commandQuery: #hasPackages>!
+
 synchronizeFilter
+	<commandQuery: #querySynchronizeFilter:>
 	| packages |
 	packages := self selections.
 	self resetForItems: packages.
@@ -947,13 +900,15 @@ testBrowserClass
 	^self developmentSystem testBrowserClass!
 
 toggleLegacySourceFormat
-	"Private - Toggles the use of legacy source format; either pre-namespaces (legacy), or with namespaces (current)."
+	"Toggles the use of legacy source format; either pre-namespaces (legacy), or with namespaces (current)."
 
+	<commandQuery: #queryToggleLegacySourceFormat:>
 	^self packages do: [:each | each toggleLegacySourceFormat]!
 
 toggleUsingPAX
 	"Toggles the use of PAX mode."
 
+	<commandQuery: #queryToggleUsingPAX:>
 	^self packages do: [:each | each toggleUsingPAX]!
 
 uninstall: package
@@ -987,25 +942,27 @@ uninstall: package
 	[currentFolder notNil and: [(self filterPresenter selection: currentFolder ifAbsent: []) isNil]]
 		whileTrue: [currentFolder := currentFolder parent]! !
 !Tools.PackageSelector categoriesForMethods!
-aboutPackage!commands!public! !
-addClass!commands!public! !
-addSharedVariable!commands!public! !
+aboutPackage!commands-actions!public! !
+addClass!commands-actions!public! !
+addMenu!commands-menus!public! !
+addSharedVariable!commands-actions!public! !
 applicationEnvironment!public! !
 autoSelect!accessing!public! !
 autoSelect:!accessing!public! !
-browseFolder!commands!public! !
-browseIt!commands!public! !
+browseFolder!commands-actions!public! !
+browseIt!commands-actions!public! !
 browseItCommand!helpers!private! !
-browsePackages!commands!public! !
+browsePackages!commands-actions!public! !
 browseUnimplemented!public! !
-canRefactor!commands!private!refactoring! !
+canRefactor!commands-actions!private!refactoring! !
+changedPackages!private!testing! !
 checkCanUninstall:!helpers!private! !
 commonFolder:!operations!private! !
 confirmUninstall:!helpers!private! !
 createComponents!initializing!private! !
 createSchematicWiring!initializing!private! !
-deleteItCommand!helpers!private! !
-developmentSystem!commands!private! !
+deleteItCommand!commands-mappings!private! !
+developmentSystem!accessing!private! !
 filter!accessing!public! !
 filteredPackages!helpers!private! !
 filterPresenter!accessing!private! !
@@ -1013,14 +970,16 @@ folder!accessing!public! !
 folderClass!constants!private! !
 hasChangedPackages!private!testing! !
 hasPackages!private!testing! !
+hasSaveableChangedPackages!commands-queries!private!testing! !
+hasSaveablePackages!commands-queries!private!testing! !
 hasSinglePackage!private!testing! !
 initialize!initializing!private! !
-inspectIt!commands!public! !
-inspectPackage!commands!public! !
+inspectIt!commands-actions!public! !
+inspectPackage!commands-actions!public! !
 isEnabled:!accessing!public! !
 isSaveablePackage:!private!testing! !
 model:!public! !
-newPackage!commands!public! !
+newPackage!commands-actions!public! !
 okToSavePackage:!helpers!private! !
 onDragOverFolder:!drag & drop!event handling!private! !
 onDragOverPackage:!drag & drop!event handling!private! !
@@ -1033,44 +992,50 @@ onPackageChosen!event handling!private! !
 onPackagesChanged!event handling!private! !
 onSelectionChanged!event handling!private! !
 onSelectionChanging:!private! !
-onTipTextRequired:!event handling!private! !
 onViewOpened!event handling!public! !
-openPackage!commands!public! !
-openPackageFile:!commands!private! !
+openPackage!commands-actions!public! !
+openPackageFile:!commands-actions!private! !
 operationAbortedSignal!constants!private! !
 packageManager!constants!private! !
 packages!accessing!private! !
 packages:!accessing!private! !
 packagesPresenter!accessing!private! !
 promptToSavePackageChanges:!helpers!private! !
-queryCommand:!commands!private! !
+queryAboutPackage:!commands-queries!private! !
+queryBrowseFolder:!commands-queries!private! !
+queryRemovePackage:!commands-queries!private! !
+querySetDefaultPackage:!commands-queries!private! !
+querySynchronizeFilter:!commands-queries!private! !
+queryToggleLegacySourceFormat:!commands-queries!private! !
+queryToggleUsingPAX:!commands-queries!private! !
 refresh!private!updating! !
-removePackage!commands!public! !
-resetChangeFlags!commands!public! !
+removePackage!commands-actions!public! !
+resetChangeFlags!commands-actions!public! !
 resetForItem:!event handling!private! !
 resetForItems:!operations!private! !
 rootFolder!accessing!private! !
 saveFileDialogTypes!constants!private! !
-savePackageAs!commands!public! !
-savePackageChanges!commands!public! !
-savePackageChanges:!commands!public! !
-savePackages!commands!public! !
-savePackages:!commands!public! !
+savePackageAs!commands-actions!public! !
+savePackageChanges!commands-actions!public! !
+savePackageChanges:!operations!public! !
+savePackages!commands-actions!public! !
+savePackages:!operations!public! !
 savePackages:toFolder:!helpers!private! !
 selectableItems!accessing!private! !
-selectedFolder!commands!public! !
+selectedFolder!commands-actions!public! !
 selectedSourceObjects!accessing!private! !
 selectionEnvironment!accessing!private! !
 selectNoFolder!public! !
 selectRootFolder!public! !
-setAsDefaultPackage!commands!private! !
+setAsDefaultPackage!commands-actions!public! !
 singlePackage!accessing!private! !
-synchronizeFilter!commands!private! !
+sourceControlMenu!commands-menus!public! !
+synchronizeFilter!commands-actions!public! !
 systemModel!accessing!private! !
 testBrowserClass!constants!private! !
-toggleLegacySourceFormat!commands!private! !
-toggleUsingPAX!commands!public! !
-uninstall:!commands!private! !
+toggleLegacySourceFormat!commands-actions!public! !
+toggleUsingPAX!commands-actions!public! !
+uninstall:!commands-actions!private! !
 !
 
 !Tools.PackageSelector class methodsFor!
@@ -1089,11 +1054,11 @@ resource_Choice_view
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Choice_view)
 	"
 
-	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.ContainerView} 38 #{Core.Array} 15 nil nil 50 2 8 1409286144 131073 32 nil nil nil 5 nil nil nil 32 518 #{UI.ProportionalLayout} 518 #{Kernel.STBCollectionProxy} #{Core.LookupTable} 50 2 518 #{Core.Association} 18 #{UI.TreeView} 50 27 nil 32 50 2 8 1140916771 1025 224 1094 3 #{UI.TreeModel} nil 6 #{Kernel.IdentitySearchPolicy} 774 #{UI.TreeNode} nil nil nil 550 #{Core.IdentityDictionary} 0 6 #{Graphics.Color} #default nil 5 2886 4 #{UI.Menu} nil true 50 1 1094 2 #{UI.CommandMenuItem} 1 1350 4 #{UI.CommandDescription} #newPackage 8 '&New Package…' 1 1 nil nil nil 8 '' nil 1 nil nil nil nil nil nil nil 224 nil nil 518 #{Core.Message} #displayString 8 #() 594 #iconImageIndex 624 1350 1 #{Graphics.IconImageManager} nil nil nil nil nil 550 #{Core.LookupTable} 0 nil #smallIcons 1 386 0 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 1 1 834 737 227 224 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 112 1 0 0 113 0 0 0] 8 #() 834 193 193 nil 27 3 194 18 #{UI.ListView} 50 45 nil 32 50 2 8 1140920397 1025 976 838 2 #{UI.ListModel} 550 #{Core.OrderedCollection} 0 nil 336 432 nil 21 450 nil true 50 9 498 1 530 #synchronizeFilter 8 '&Goto Folder' 1 1 nil nil nil 326 1 #{UI.DividerMenuItem} 4097 498 1 530 #newPackage 8 '&New Package…' 1 1 nil nil nil 498 1 530 #savePackages 8 '&Save' 1 1 838 4 #{Graphics.Icon} nil true 1030 #{Graphics.ImageFromStringResourceInitializer} 8 'FileSave.ico' 838 1 #{External.ResourceLibrary} 8 'dolphindr8.dll' 65541 nil nil nil 498 1 530 #savePackageAs 8 'Save &As…' 1 1 nil nil nil 450 nil true 50 10 498 1 530 #toggleUsingPAX 8 'Use PA&X Source Format' 1 1 nil nil nil 498 1 530 #browsePackageSources 8 'Bro&wse PAX Sources' 1 1 nil nil nil 1186 4097 498 1 530 #checkOut 8 'Check Out &All' 1 1 nil nil nil 498 1 530 #checkOutChanges 8 'Check &Out Changes' 1 1 nil nil nil 498 1 530 #checkIn 8 'Check &In' 1 1 nil nil nil 1186 4097 498 2097153 530 #savePackageChanges 8 'Save &Changes' 1 1 nil nil nil 1186 4097 498 1 530 #resetChangeFlags 8 'Clear Change &Markers' 1 1 nil nil nil 8 'Sou&rce Control' #sourceControlMenu 1 nil nil nil nil nil 1186 4097 498 1 530 #inspectPackage 8 '&Properties' 1 1 1314 nil true 1346 8 'SMALLTALKOPTIONSFOLDER.ICO' 1408 65541 nil nil nil 498 1 530 #aboutPackage 8 'Abou&t this Package…' 1 1 nil nil nil 8 '&Package' nil 134217729 nil nil nil nil nil nil nil 976 nil nil 594 #name 8 #() 640 672 nil nil 1382 3 #{Kernel.BlockClosure} 0 nil 1318 #{Kernel.CompiledExpression} 5 1 #{Core.UndefinedObject} 8 'doIt' 8 '[:ctx | 
+	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.ContainerView} 38 #{Core.Array} 15 nil nil 50 2 8 1409286144 131073 32 nil nil nil 5 nil nil nil 32 518 #{UI.ProportionalLayout} 518 #{Kernel.STBCollectionProxy} #{Core.LookupTable} 50 2 518 #{Core.Association} 18 #{UI.TreeView} 50 27 nil 32 50 2 8 1140916771 1025 224 1094 3 #{UI.TreeModel} nil 6 #{Kernel.IdentitySearchPolicy} 774 #{UI.TreeNode} nil nil nil 550 #{Core.IdentityDictionary} 0 6 #{Graphics.Color} #default nil 5 2886 4 #{UI.Menu} nil true 50 1 1094 2 #{UI.CommandMenuItem} 1 1350 4 #{UI.CommandDescription} #newPackage 8 '&New Package…' 1 1 838 4 #{Graphics.Icon} nil true 1030 #{Graphics.ImageFromStringResourceInitializer} 8 'NewPackage.ico' 838 1 #{External.ResourceLibrary} 8 'dolphindr8.dll' 65541 nil nil nil 8 '' nil 1 nil nil nil nil nil nil nil 224 nil nil 518 #{Core.Message} #displayString 8 #() 722 #iconImageIndex 752 1350 1 #{Graphics.IconImageManager} nil nil nil nil nil 550 #{Core.LookupTable} 0 nil #smallIcons 1 386 0 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 1 1 962 737 227 224 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 112 1 0 0 113 0 0 0] 8 #() 962 193 193 nil 27 3 194 18 #{UI.ListView} 50 45 nil 32 50 2 8 1140920397 1025 1104 838 2 #{UI.ListModel} 550 #{Core.OrderedCollection} 0 nil 336 432 nil 21 450 nil true 50 9 498 1 530 #synchronizeFilter 8 '&Goto Folder' 1 1 578 nil true 610 8 'GotoFolder.ico' 672 65541 nil nil nil 326 1 #{UI.DividerMenuItem} 4097 498 1 530 #newPackage 8 '&New Package…' 1 1 578 nil true 610 8 'NewPackage.ico' 672 65541 nil nil nil 498 1 530 #savePackages 8 '&Save' 1 1 578 nil true 610 8 'FileSave.ico' 672 65541 nil nil nil 498 1 530 #savePackageAs 8 'Save &As…' 1 1 nil nil nil 450 nil true 50 10 498 1 530 #toggleUsingPAX 8 'Use PA&X Source Format' 1 1 nil nil nil 498 1 530 #browsePackageSources 8 'Bro&wse PAX Sources' 1 1 578 nil true 610 8 'SourceBrowser.ico' 672 65541 nil nil nil 1362 4097 498 1 530 #checkOut 8 'Check Out &All' 1 1 nil nil nil 498 1 530 #checkOutChanges 8 'Check &Out Changes' 1 1 nil nil nil 498 1 530 #checkIn 8 'Check &In' 1 1 nil nil nil 1362 4097 498 2097153 530 #savePackageChanges 8 'Save &Changes' 1 1 nil nil nil 1362 4097 498 1 530 #resetChangeFlags 8 'Clear Change &Markers' 1 1 nil nil nil 8 'Sou&rce Control' #sourceControlMenu 1 nil nil nil nil nil 1362 4097 498 1 530 #inspectPackage 8 '&Properties' 1 1 578 nil true 610 8 'SMALLTALKOPTIONSFOLDER.ICO' 672 65541 nil nil nil 498 1 530 #aboutPackage 8 'Abou&t this Package…' 1 1 nil nil nil 8 '&Package' nil 134217729 nil nil nil nil nil nil nil 1104 nil nil 722 #name 8 #() 768 800 nil nil 1382 3 #{Kernel.BlockClosure} 0 nil 1318 #{Kernel.CompiledExpression} 5 1 #{Core.UndefinedObject} 8 'doIt' 8 '[:ctx | 
 ctx item isDefaultPackage ifTrue: [
-	ctx font beBold]]' 8 #[33 105 17 158 159 121 17 160 161 106 60 106] #item #isDefaultPackage #font #beBold 2144 7 257 nil nil nil nil 1074 2 3142 5 #{UI.ListViewColumn} 8 '' 41 #left nil 2130 0 nil 2162 3 1 #{Core.UndefinedObject} 8 'doIt' 8 '[:x : y | x & y not ]' 8 #[31 105 233 1 158 177 106] #not #& 2304 7 513 nil 594 #isChanged 8 #() nil 976 2130 0 nil 2162 5 1 2128 8 'doIt' 8 '[:x | x ifTrue: [Package changedIcon imageIndex]] ' 8 #[32 105 17 121 45 159 160 106 60 106] 1094 2 #{Kernel.VariableBinding} #Package #{Kernel.Package} #{Kernel} 1 #changedIcon #imageIndex 2416 #ifTrue: 7 257 nil 1 nil nil 2258 8 'Packages' 689 #left 608 2130 0 nil 2162 2 1 #{Core.UndefinedObject} 8 'doIt' 8 '[:a :b | a name < b name]' 8 #[30 105 17 158 18 158 128 106] #name 2560 7 513 nil nil nil 976 640 3 nil 2130 0 nil 2162 5 1 #{Core.UndefinedObject} 8 'doIt' 8 '[:ctx | 
+	ctx font beBold]]' 8 #[33 105 17 158 159 121 17 160 161 106 60 106] #item #isDefaultPackage #font #beBold 2336 7 257 nil nil nil nil 1202 2 3142 5 #{UI.ListViewColumn} 8 '' 41 #left nil 2322 0 nil 2354 3 1 #{Core.UndefinedObject} 8 'doIt' 8 '[:x : y | x & y not ]' 8 #[31 105 233 1 158 177 106] #not #& 2496 7 513 nil 722 #isChanged 8 #() nil 1104 2322 0 nil 2354 5 1 2320 8 'doIt' 8 '[:x | x ifTrue: [Package changedIcon imageIndex]] ' 8 #[32 105 17 121 45 159 160 106 60 106] 1094 2 #{Kernel.VariableBinding} #Package #{Kernel.Package} #{Kernel} 1 #changedIcon #imageIndex 2608 #ifTrue: 7 257 nil 1 nil nil 2450 8 'Packages' 689 #left 736 2322 0 nil 2354 2 1 #{Core.UndefinedObject} 8 'doIt' 8 '[:a :b | a name < b name]' 8 #[30 105 17 158 18 158 128 106] #name 2752 7 513 nil nil nil 1104 768 3 nil 2322 0 nil 2354 5 1 #{Core.UndefinedObject} 8 'doIt' 8 '[:ctx | 
 ctx item isDefaultPackage ifTrue: [
-	ctx font beBold]]' 8 #[33 105 17 158 159 121 17 160 161 106 60 106] #item #isDefaultPackage #font #beBold 2640 7 257 nil #report 8 #() nil 133221 nil 1 nil nil nil nil 1 nil nil nil nil nil nil nil nil nil nil 738 50 1 786 #createAt:extent: 50 2 834 1 237 834 737 229 976 882 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 118 0 0 0 112 1 0 0 232 0 0 0] 8 #() 944 nil 35 3 true 518 #{Kernel.STBIdentityDictionaryProxy} 384 50 4 224 8 'filter' 976 8 'packages' nil 738 50 1 786 #createAt:extent: 50 2 834 6143 21 834 737 465 32 882 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 111 13 0 0 242 0 0 0] 50 3 224 18 #{UI.Splitter} 50 12 nil 32 50 2 8 1140850688 1 3104 nil nil nil 517 nil nil nil 3142 1 #{UI.DraggableViewInteractor} 3104 nil 1 #left nil nil nil 834 1 1 834 9 9 nil 3200 nil 738 50 1 786 #createAt:extent: 50 2 834 1 227 834 737 11 3104 882 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 113 0 0 0 112 1 0 0 118 0 0 0] 8 #() 944 nil 27 976 944 nil 27)!
+	ctx font beBold]]' 8 #[33 105 17 158 159 121 17 160 161 106 60 106] #item #isDefaultPackage #font #beBold 2832 7 257 nil #report 8 #() nil 133221 nil 1 nil nil nil nil 1 nil nil nil nil nil nil nil nil nil nil 866 50 1 914 #createAt:extent: 50 2 962 1 237 962 737 229 1104 1010 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 118 0 0 0 112 1 0 0 232 0 0 0] 8 #() 1072 nil 35 3 true 518 #{Kernel.STBIdentityDictionaryProxy} 384 50 4 224 8 'filter' 1104 8 'packages' nil 866 50 1 914 #createAt:extent: 50 2 962 6143 21 962 737 465 32 1010 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 111 13 0 0 242 0 0 0] 50 3 224 18 #{UI.Splitter} 50 12 nil 32 50 2 8 1140850688 1 3296 nil nil nil 517 nil nil nil 3142 1 #{UI.DraggableViewInteractor} 3296 nil 1 #left nil nil nil 962 1 1 962 9 9 nil 3392 nil 866 50 1 914 #createAt:extent: 50 2 962 1 227 962 737 11 3296 1010 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 113 0 0 0 112 1 0 0 118 0 0 0] 8 #() 1072 nil 27 1104 1072 nil 27)!
 
 resource_Default_view
 	"Answer the literal data from which the 'Default view' resource can be reconstituted.
@@ -1103,11 +1068,11 @@ resource_Default_view
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.ContainerView} 38 #{Core.Array} 15 nil nil 50 2 8 1409286144 131073 32 nil nil nil 21 nil nil nil 32 518 #{UI.ProportionalLayout} 518 #{Kernel.STBCollectionProxy} #{Core.LookupTable} 50 2 518 #{Core.Association} 18 #{UI.TreeView} 50 27 nil 32 50 2 8 1140916771 1025 224 1094 3 #{UI.TreeModel} nil 6 #{Kernel.IdentitySearchPolicy} 774 #{UI.TreeNode} nil nil nil 550 #{Core.IdentityDictionary} 0 6 #{Graphics.Color} #default nil 29 2886 4 #{UI.Menu} nil true 50 2 1094 2 #{UI.CommandMenuItem} 1 1350 4 #{UI.CommandDescription} #browseFolder 8 '&Browse Folder' 1 1 nil nil nil 498 1 530 #newPackage 8 '&New Package…' 1 1 838 4 #{Graphics.Icon} nil true 1030 #{Graphics.ImageFromStringResourceInitializer} 8 'NewPackage.ico' 838 1 #{External.ResourceLibrary} 8 'dolphindr8.dll' 65541 nil nil nil 8 '' nil 134217729 nil nil nil nil nil nil nil 224 nil nil 518 #{Core.Message} #displayString 8 #() 770 #iconImageIndex 800 1350 1 #{Graphics.IconImageManager} nil nil nil nil nil 550 #{Core.LookupTable} 0 nil #smallIcons 1 386 0 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 1 1 1010 701 211 224 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 94 1 0 0 105 0 0 0] 8 #() 1010 193 193 nil 27 7 194 18 #{UI.ListView} 50 45 nil 32 50 2 8 1140920393 1025 1152 838 2 #{UI.ListModel} 550 #{Core.OrderedCollection} 0 nil 336 432 nil 29 450 nil true 50 19 498 1 530 #newPackage 8 '&New Package…' 1 1 626 nil true 658 8 'NewPackage.ico' 720 65541 nil nil nil 498 1 530 #openPackage 8 '&Install Package…' 1 1 626 nil true 658 8 'FileOpen.ico' 720 65541 nil nil nil 498 1 530 #removePackage 8 '&Uninstall Package' 1 1 nil nil nil 326 1 #{UI.DividerMenuItem} 4097 450 nil true 50 2 498 2097153 530 #addClass 8 '&Class…' 1 1 626 nil true 658 8 'Behavior.ico' 720 65541 nil nil nil 498 1 530 #addSharedVariable 8 '&Global…' 1 1 nil nil nil 8 'Add Unco&mmitted' #addMenu 134217729 nil nil nil nil nil 498 1 530 #setAsDefaultPackage 8 'Set as De&fault Package' 1 1 nil nil nil 498 1 530 #synchronizeFilter 8 '&Goto Folder' 1 1 nil nil nil 1554 4097 498 1 530 #savePackages 8 '&Save Package' 1 1 626 nil true 658 8 'FileSave.ico' 720 65541 nil nil nil 498 1 530 #savePackageChanges 8 'Save Package C&hanges' 1 1 nil nil nil 498 1 530 #savePackageAs 8 'Save Package &As…' 1 1 nil nil nil 1554 4097 498 1 530 #toggleUsingPAX 8 'Use PA&X Source Format' 1 1 nil nil nil 498 1 530 #toggleLegacySourceFormat 8 '&Pre-Namespace Source Format' 1 1 nil nil nil 498 1 530 #browsePackageSources 8 'Bro&wse PAX Sources' 1 1 nil nil nil 1554 4097 450 nil true 50 4 498 2097153 530 #deploy 8 '&Deploy Executable…' 13445 1 nil nil nil 498 1 530 #browseDeployed 8 'Bro&wse Executable Manifest' 1 1 nil nil nil 1554 4097 498 1 530 #saveBinaryPackage 8 'Deploy &Binary Package…' 1 1 nil nil nil 8 '&Deployment' nil 134217729 626 nil true 658 8 'ApplicationDeploymentWizard.ico' 720 65541 nil nil nil nil nil 1554 4097 498 1 530 #inspectPackage 8 'P&roperties' 1 1 626 nil true 658 8 'BasicInspector.ico' 720 65541 nil nil nil 8 '&Package' nil 134217729 nil nil nil nil nil nil nil 1152 nil nil 784 816 848 nil nil 1382 3 #{Kernel.BlockClosure} 0 nil 1318 #{Kernel.CompiledExpression} 5 1 #{Core.UndefinedObject} 8 'doIt' 8 '[:ctx | 
+	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.ContainerView} 38 #{Core.Array} 15 nil nil 50 2 8 1409286144 131073 32 nil nil nil 21 nil nil nil 32 518 #{UI.ProportionalLayout} 518 #{Kernel.STBCollectionProxy} #{Core.LookupTable} 50 2 518 #{Core.Association} 18 #{UI.TreeView} 50 27 nil 32 50 2 8 1140916771 1025 224 1094 3 #{UI.TreeModel} nil 6 #{Kernel.IdentitySearchPolicy} 774 #{UI.TreeNode} nil nil nil 550 #{Core.IdentityDictionary} 0 6 #{Graphics.Color} #default nil 29 2886 4 #{UI.Menu} nil true 50 2 1094 2 #{UI.CommandMenuItem} 1 1350 4 #{UI.CommandDescription} #browseFolder 8 '&Browse Folder' 1 1 nil nil nil 498 1 530 #newPackage 8 '&New Package…' 1 1 838 4 #{Graphics.Icon} nil true 1030 #{Graphics.ImageFromStringResourceInitializer} 8 'NewPackage.ico' 838 1 #{External.ResourceLibrary} 8 'dolphindr8.dll' 65541 nil nil nil 8 '' nil 134217729 nil nil nil nil nil nil nil 224 nil nil 518 #{Core.Message} #displayString 8 #() 770 #iconImageIndex 800 1350 1 #{Graphics.IconImageManager} nil nil nil nil nil 550 #{Core.LookupTable} 0 nil #smallIcons 1 386 0 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 1 1 1010 701 211 224 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 94 1 0 0 105 0 0 0] 8 #() 1010 193 193 nil 27 7 194 18 #{UI.ListView} 50 45 nil 32 50 2 8 1140920393 1025 1152 838 2 #{UI.ListModel} 550 #{Core.OrderedCollection} 0 nil 336 432 nil 29 450 nil true 50 19 498 1 530 #newPackage 8 '&New Package…' 1 1 626 nil true 658 8 'NewPackage.ico' 720 65541 nil nil nil 498 1 530 #openPackage 8 '&Install Package…' 1 1 626 nil true 658 8 'FileOpen.ico' 720 65541 nil nil nil 498 1 530 #removePackage 8 '&Uninstall Package' 1 1 nil nil nil 326 1 #{UI.DividerMenuItem} 4097 450 nil true 50 2 498 2097153 530 #addClass 8 '&Class…' 1 1 626 nil true 658 8 'Behavior.ico' 720 65541 nil nil nil 498 1 530 #addSharedVariable 8 '&Static Variable…' 1 1 nil nil nil 8 'Add Unco&mmitted' #addMenu 134217729 nil nil nil nil nil 498 1 530 #setAsDefaultPackage 8 'Set as De&fault Package' 1 1 nil nil nil 498 1 530 #synchronizeFilter 8 '&Goto Folder' 1 1 626 nil true 658 8 'GotoFolder.ico' 720 65541 nil nil nil 1554 4097 498 1 530 #savePackages 8 '&Save Package' 1 1 626 nil true 658 8 'FileSave.ico' 720 65541 nil nil nil 498 1 530 #savePackageChanges 8 'Save Package C&hanges' 1 1 nil nil nil 498 1 530 #savePackageAs 8 'Save Package &As…' 1 1 nil nil nil 1554 4097 498 1 530 #toggleUsingPAX 8 'Use PA&X Source Format' 1 1 nil nil nil 498 1 530 #toggleLegacySourceFormat 8 '&Pre-Namespace Source Format' 1 1 nil nil nil 498 1 530 #browsePackageSources 8 'Bro&wse PAX Sources' 1 1 626 nil true 658 8 'SourceBrowser.ico' 720 65541 nil nil nil 1554 4097 450 nil true 50 4 498 2097153 530 #deploy 8 '&Deploy Executable…' 13445 1 nil nil nil 498 1 530 #browseDeployed 8 'Bro&wse Executable Manifest' 1 1 626 nil true 658 8 'EnvironmentBrowserShell.ico' 720 65541 nil nil nil 1554 4097 498 1 530 #saveBinaryPackage 8 'Deploy &Binary Package…' 1 1 nil nil nil 8 '&Deployment' #deploymentMenu 134217729 626 nil true 658 8 'ApplicationDeploymentWizard.ico' 720 65541 nil nil nil nil nil 1554 4097 498 1 530 #inspectPackage 8 'P&roperties' 1 1 626 nil true 658 8 'BasicInspector.ico' 720 65541 nil nil nil 8 '&Package' nil 134217729 nil nil nil nil nil nil nil 1152 nil nil 784 816 848 nil nil 1382 3 #{Kernel.BlockClosure} 0 nil 1318 #{Kernel.CompiledExpression} 5 1 #{Core.UndefinedObject} 8 'doIt' 8 '[:ctx | 
 ctx item isDefaultPackage ifTrue: [
-	ctx font beBold]]' 8 #[33 105 17 158 159 121 17 160 161 106 60 106] #item #isDefaultPackage #font #beBold 2656 7 257 nil 1010 65 65 nil nil 1250 2 3142 5 #{UI.ListViewColumn} 8 'Packages' 669 #left 784 2642 0 nil 2674 2 1 #{Core.UndefinedObject} 8 'doIt' 8 '[:a :b | a name < b name]' 8 #[30 105 17 158 18 158 128 106] #name 2832 7 513 nil nil nil 1152 816 3 nil 2642 0 nil 2674 5 1 #{Core.UndefinedObject} 8 'doIt' 8 '[:ctx | 
+	ctx font beBold]]' 8 #[33 105 17 158 159 121 17 160 161 106 60 106] #item #isDefaultPackage #font #beBold 2800 7 257 nil 1010 65 65 nil nil 1250 2 3142 5 #{UI.ListViewColumn} 8 'Packages' 669 #left 784 2786 0 nil 2818 2 1 #{Core.UndefinedObject} 8 'doIt' 8 '[:a :b | a name < b name]' 8 #[30 105 17 158 18 158 128 106] #name 2976 7 513 nil nil nil 1152 816 3 nil 2786 0 nil 2818 5 1 #{Core.UndefinedObject} 8 'doIt' 8 '[:ctx | 
 ctx item isDefaultPackage ifTrue: [
-	ctx font beBold]]' 8 #[33 105 17 158 159 121 17 160 161 106 60 106] #item #isDefaultPackage #font #beBold 2912 7 257 nil 2786 8 '' 33 #left 2642 0 nil 2674 3 1 #{Core.UndefinedObject} 8 'doIt' 8 '[:x | x ifTrue: [''Changed''] ifFalse: ['''']]' 8 #[31 105 17 119 29 106 30 106] 8 'Changed' 8 '' 3024 7 257 nil 2642 0 nil 2674 3 1 #{Core.UndefinedObject} 8 'doIt' 8 '[:x : y | x & y not]' 8 #[31 105 233 1 158 177 106] #not #& 3136 7 513 nil 770 #isChanged 8 #() nil 1152 2642 0 nil 2674 7 1 2640 8 'doIt' 8 '[:x | (x ifTrue: [Package changedIcon] ifFalse: [Graphics.Icon blank]) imageIndex] ' 8 #[34 105 17 120 45 159 111 47 161 162 106] 1094 2 #{Kernel.VariableBinding} #Package #{Kernel.Package} #{Kernel} 1 #changedIcon 3330 #Icon 624 #{Graphics} 1 #blank #imageIndex 3248 #ifTrue:ifFalse: 7 257 nil 1 nil nil #report 8 #() nil 133221 nil 1 nil nil nil nil 1 nil nil nil nil nil nil nil nil nil nil 914 50 3 962 #createAt:extent: 50 2 1010 1 221 1010 701 281 1152 962 #text: 50 1 8 'Packages' 1152 962 #columnOrder: 50 1 8 #(2 1) 1152 1058 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 110 0 0 0 94 1 0 0 250 0 0 0] 8 #() 1120 nil 35 9 true 518 #{Kernel.STBIdentityDictionaryProxy} 384 50 4 224 8 'filter' 1152 8 'packages' nil 914 50 1 962 #createAt:extent: 50 2 1010 6143 21 1010 701 501 32 1058 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 93 13 0 0 4 1 0 0] 50 3 224 18 #{UI.Splitter} 50 12 nil 32 50 2 8 1140850688 1 3856 nil nil nil 517 nil nil nil 3142 1 #{UI.DraggableViewInteractor} 3856 nil 1 #left nil nil nil 1010 1 1 1010 9 9 nil 3952 nil 914 50 1 962 #createAt:extent: 50 2 1010 1 211 1010 701 11 3856 1058 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 105 0 0 0 94 1 0 0 110 0 0 0] 8 #() 1120 nil 27 1152 1120 nil 27)!
+	ctx font beBold]]' 8 #[33 105 17 158 159 121 17 160 161 106 60 106] #item #isDefaultPackage #font #beBold 3056 7 257 nil 2930 8 '' 33 #left 2786 0 nil 2818 3 1 #{Core.UndefinedObject} 8 'doIt' 8 '[:x | x ifTrue: [''Changed''] ifFalse: ['''']]' 8 #[31 105 17 119 29 106 30 106] 8 'Changed' 8 '' 3168 7 257 nil 2786 0 nil 2818 3 1 #{Core.UndefinedObject} 8 'doIt' 8 '[:x : y | x & y not]' 8 #[31 105 233 1 158 177 106] #not #& 3280 7 513 nil 770 #isChanged 8 #() nil 1152 2786 0 nil 2818 7 1 2784 8 'doIt' 8 '[:x | (x ifTrue: [Package changedIcon] ifFalse: [Graphics.Icon blank]) imageIndex] ' 8 #[34 105 17 120 45 159 111 47 161 162 106] 1094 2 #{Kernel.VariableBinding} #Package #{Kernel.Package} #{Kernel} 1 #changedIcon 3474 #Icon 624 #{Graphics} 1 #blank #imageIndex 3392 #ifTrue:ifFalse: 7 257 nil 1 nil nil #report 8 #() nil 133221 nil 1 nil nil nil nil 1 nil nil nil nil nil nil nil nil nil nil 914 50 3 962 #createAt:extent: 50 2 1010 1 221 1010 701 281 1152 962 #text: 50 1 8 'Packages' 1152 962 #columnOrder: 50 1 8 #(2 1) 1152 1058 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 110 0 0 0 94 1 0 0 250 0 0 0] 8 #() 1120 nil 35 9 true 518 #{Kernel.STBIdentityDictionaryProxy} 384 50 4 224 8 'filter' 1152 8 'packages' nil 914 50 1 962 #createAt:extent: 50 2 1010 6143 21 1010 701 501 32 1058 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 93 13 0 0 4 1 0 0] 50 3 224 18 #{UI.Splitter} 50 12 nil 32 50 2 8 1140850688 1 4000 nil nil nil 517 nil nil nil 3142 1 #{UI.DraggableViewInteractor} 4000 nil 1 #left nil nil nil 1010 1 1 1010 9 9 nil 4096 nil 914 50 1 962 #createAt:extent: 50 2 1010 1 211 1010 701 11 4000 1058 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 105 0 0 0 94 1 0 0 110 0 0 0] 8 #() 1120 nil 27 1152 1120 nil 27)!
 
 resource_Single_package_selector
 	"Answer the literal data from which the 'Single package selector' resource can be reconstituted.
@@ -1117,7 +1082,7 @@ resource_Single_package_selector
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Single_package_selector)
 	"
 
-	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.ContainerView} 38 #{Core.Array} 15 nil nil 50 2 8 1409286144 131073 32 nil nil nil 21 nil nil nil 32 518 #{UI.ProportionalLayout} 518 #{Kernel.STBCollectionProxy} #{Core.LookupTable} 50 2 518 #{Core.Association} 18 #{UI.TreeView} 50 27 nil 32 50 2 8 1140916771 1025 224 1094 3 #{UI.TreeModel} nil 6 #{Kernel.IdentitySearchPolicy} 774 #{UI.TreeNode} nil nil nil 550 #{Core.IdentityDictionary} 0 6 #{Graphics.Color} #default nil 5 2886 4 #{UI.Menu} nil true 50 1 1094 2 #{UI.CommandMenuItem} 1 1350 4 #{UI.CommandDescription} #newPackage 8 '&New Package…' 1 1 nil nil nil 8 '' nil 1 nil nil nil nil nil nil nil 224 nil nil 518 #{Core.Message} #displayString 8 #() 594 #iconImageIndex 624 1350 1 #{Graphics.IconImageManager} nil nil nil nil nil 550 #{Core.LookupTable} 0 nil #smallIcons 1 386 0 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 1 1 834 701 211 224 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 94 1 0 0 105 0 0 0] 8 #() 834 193 193 nil 27 7 194 18 #{UI.ListView} 50 45 nil 32 50 2 8 1140920397 1025 976 838 2 #{UI.ListModel} 550 #{Core.OrderedCollection} 0 nil 336 432 nil 21 450 nil true 50 19 498 1 530 #synchronizeFilter 8 '&Goto Folder' 1 1 nil nil nil 326 1 #{UI.DividerMenuItem} 4097 498 1 530 #setAsDefaultPackage 8 'Set as De&fault Package' 1 1 nil nil nil 450 nil true 50 2 498 2097153 530 #addClass 8 '&Class…' 1 1 838 4 #{Graphics.Icon} nil true 1030 #{Graphics.ImageFromStringResourceInitializer} 8 'Class.ico' 838 1 #{External.ResourceLibrary} 8 'dolphindr8.dll' 65541 nil nil nil 498 1 530 #addSharedVariable 8 '&Global…' 1 1 nil nil nil 8 'Add Unco&mmitted' #addMenu 134217729 nil nil nil nil nil 1186 4097 498 1 530 #newPackage 8 '&New Package…' 1 1 nil nil nil 498 1 530 #openPackage 8 '&Install Package…' 1 1 nil nil nil 498 1 530 #removePackage 8 '&Uninstall' 1 1 nil nil nil 1186 4097 498 1 530 #savePackages 8 '&Save' 1 1 1346 nil true 1378 8 'FileSave.ico' 1440 65541 nil nil nil 498 1 530 #savePackageAs 8 'Save &As…' 1 1 nil nil nil 1186 4097 450 nil true 50 10 498 1 530 #toggleUsingPAX 8 'Use PA&X Source Format' 1 1 nil nil nil 498 2097153 530 #browsePackageSources 8 'Bro&wse PAX Sources' 1 1 nil nil nil 1186 4097 498 1 530 #checkOut 8 'Check Out &All' 1 1 nil nil nil 498 1 530 #checkOutChanges 8 'Check &Out Changes' 1 1 nil nil nil 498 1 530 #checkIn 8 'Check &In' 1 1 nil nil nil 1186 4097 498 1 530 #savePackageChanges 8 'Save &Changes' 1 1 nil nil nil 1186 4097 498 1 530 #resetChangeFlags 8 'Clear Change &Markers' 1 1 nil nil nil 8 'Sou&rce Control' #sourceControlMenu 1 nil nil nil nil nil 1186 4097 498 1 530 #deploy 8 '&Deploy Executable…' 1 1 nil nil nil 498 1 530 #saveBinaryPackage 8 'Deploy &Binary Package…' 1 1 nil nil nil 1186 4097 498 1 530 #inspectPackage 8 '&Properties' 1 1 1346 nil true 1378 8 'SMALLTALKOPTIONSFOLDER.ICO' 1440 65541 nil nil nil 498 1 530 #aboutPackage 8 'Abou&t this Package…' 1 1 nil nil nil 8 '&Package' nil 134217729 nil nil nil nil nil nil nil 976 nil nil 594 #name 8 #() 640 672 nil nil 1382 3 #{Kernel.BlockClosure} 0 nil 1318 #{Kernel.CompiledExpression} 5 1 #{Core.UndefinedObject} 8 'doIt' 8 '[:ctx | ctx item isDefaultPackage ifTrue: [ctx font beBold]]' 8 #[33 105 17 158 159 121 17 160 161 106 60 106] #item #isDefaultPackage #font #beBold 2640 7 257 nil nil nil nil 1074 2 3142 5 #{UI.ListViewColumn} 8 '' 41 #left nil 2626 0 nil 2658 3 1 #{Core.UndefinedObject} 8 'doIt' 8 '[:x : y | x & y not ]' 8 #[31 105 233 1 158 177 106] #not #& 2800 7 513 nil 594 #isChanged 8 #() nil 976 2626 0 nil 2658 5 1 2624 8 'doIt' 8 '[:x | x ifTrue: [Package changedIcon imageIndex]] ' 8 #[32 105 17 121 45 159 160 106 60 106] 1094 2 #{Kernel.VariableBinding} #Package #{Kernel.Package} #{Kernel} 1 #changedIcon #imageIndex 2912 #ifTrue: 7 257 nil 1 nil nil 2754 8 'Packages' 653 #left 608 2626 0 nil 2658 2 1 #{Core.UndefinedObject} 8 'doIt' 8 '[:a :b | a name < b name]' 8 #[30 105 17 158 18 158 128 106] #name 3056 7 513 nil nil nil 976 640 3 nil 2626 0 nil 2658 5 1 #{Core.UndefinedObject} 8 'doIt' 8 '[:ctx | ctx item isDefaultPackage ifTrue: [ctx font beBold]]' 8 #[33 105 17 158 159 121 17 160 161 106 60 106] #item #isDefaultPackage #font #beBold 3136 7 257 nil #report 8 #() nil 133221 nil 1 nil nil nil nil 1 nil nil nil nil nil nil nil nil nil nil 738 50 1 786 #createAt:extent: 50 2 834 1 221 834 701 281 976 882 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 110 0 0 0 94 1 0 0 250 0 0 0] 8 #() 944 nil 35 9 true 518 #{Kernel.STBIdentityDictionaryProxy} 384 50 4 224 8 'filter' 976 8 'packages' nil 738 50 1 786 #createAt:extent: 50 2 834 6143 21 834 701 501 32 882 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 93 13 0 0 4 1 0 0] 50 3 224 18 #{UI.Splitter} 50 12 nil 32 50 2 8 1140850688 1 3600 nil nil nil 517 nil nil nil 3142 1 #{UI.DraggableViewInteractor} 3600 nil 1 #left nil nil nil 834 1 1 834 9 9 nil 3696 nil 738 50 1 786 #createAt:extent: 50 2 834 1 211 834 701 11 3600 882 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 105 0 0 0 94 1 0 0 110 0 0 0] 8 #() 944 nil 27 976 944 nil 27)! !
+	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.ContainerView} 38 #{Core.Array} 15 nil nil 50 2 8 1409286144 131073 32 nil nil nil 21 nil nil nil 32 518 #{UI.ProportionalLayout} 518 #{Kernel.STBCollectionProxy} #{Core.LookupTable} 50 2 518 #{Core.Association} 18 #{UI.TreeView} 50 27 nil 32 50 2 8 1140916771 1025 224 1094 3 #{UI.TreeModel} nil 6 #{Kernel.IdentitySearchPolicy} 774 #{UI.TreeNode} nil nil nil 550 #{Core.IdentityDictionary} 0 6 #{Graphics.Color} #default nil 5 2886 4 #{UI.Menu} nil true 50 1 1094 2 #{UI.CommandMenuItem} 1 1350 4 #{UI.CommandDescription} #newPackage 8 '&New Package…' 1 1 838 4 #{Graphics.Icon} nil true 1030 #{Graphics.ImageFromStringResourceInitializer} 8 'NewPackage.ico' 838 1 #{External.ResourceLibrary} 8 'dolphindr8.dll' 65541 nil nil nil 8 '' nil 1 nil nil nil nil nil nil nil 224 nil nil 518 #{Core.Message} #displayString 8 #() 722 #iconImageIndex 752 1350 1 #{Graphics.IconImageManager} nil nil nil nil nil 550 #{Core.LookupTable} 0 nil #smallIcons 1 386 0 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 1 1 962 701 211 224 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 94 1 0 0 105 0 0 0] 8 #() 962 193 193 nil 27 7 194 18 #{UI.ListView} 50 45 nil 32 50 2 8 1140920397 1025 1104 838 2 #{UI.ListModel} 550 #{Core.OrderedCollection} 0 nil 336 432 nil 21 450 nil true 50 19 498 1 530 #synchronizeFilter 8 '&Goto Folder' 1 1 578 nil true 610 8 'GotoFolder.ico' 672 65541 nil nil nil 326 1 #{UI.DividerMenuItem} 4097 498 1 530 #setAsDefaultPackage 8 'Set as De&fault Package' 1 1 nil nil nil 450 nil true 50 2 498 2097153 530 #addClass 8 '&Class…' 1 1 578 nil true 610 8 'Behavior.ico' 672 65541 nil nil nil 498 1 530 #addSharedVariable 8 '&Shared Variable…' 1 1 nil nil nil 8 'Add Unco&mmitted' #addMenu 134217729 nil nil nil nil nil 1362 4097 498 1 530 #newPackage 8 '&New Package…' 1 1 578 nil true 610 8 'NewPackage.ico' 672 65541 nil nil nil 498 1 530 #openPackage 8 '&Install Package…' 1 1 578 nil true 610 8 'FileOpen.ico' 672 65541 nil nil nil 498 1 530 #removePackage 8 '&Uninstall' 1 1 nil nil nil 1362 4097 498 1 530 #savePackages 8 '&Save' 1 1 578 nil true 610 8 'FileSave.ico' 672 65541 nil nil nil 498 1 530 #savePackageAs 8 'Save &As…' 1 1 nil nil nil 1362 4097 450 nil true 50 10 498 1 530 #toggleUsingPAX 8 'Use PA&X Source Format' 1 1 nil nil nil 498 2097153 530 #browsePackageSources 8 'Bro&wse PAX Sources' 1 1 nil nil nil 1362 4097 498 1 530 #checkOut 8 'Check Out &All' 1 1 nil nil nil 498 1 530 #checkOutChanges 8 'Check &Out Changes' 1 1 nil nil nil 498 1 530 #checkIn 8 'Check &In' 1 1 nil nil nil 1362 4097 498 1 530 #savePackageChanges 8 'Save &Changes' 1 1 nil nil nil 1362 4097 498 1 530 #resetChangeFlags 8 'Clear Change &Markers' 1 1 nil nil nil 8 'Sou&rce Control' #sourceControlMenu 1 nil nil nil nil nil 1362 4097 498 1 530 #deploy 8 '&Deploy Executable…' 1 1 nil nil nil 498 1 530 #saveBinaryPackage 8 'Deploy &Binary Package…' 1 1 nil nil nil 1362 4097 498 1 530 #inspectPackage 8 '&Properties' 1 1 578 nil true 610 8 'SMALLTALKOPTIONSFOLDER.ICO' 672 65541 nil nil nil 498 1 530 #aboutPackage 8 'Abou&t this Package…' 1 1 nil nil nil 8 '&Package' nil 134217729 nil nil nil nil nil nil nil 1104 nil nil 722 #name 8 #() 768 800 nil nil 1382 3 #{Kernel.BlockClosure} 0 nil 1318 #{Kernel.CompiledExpression} 5 1 #{Core.UndefinedObject} 8 'doIt' 8 '[:ctx | ctx item isDefaultPackage ifTrue: [ctx font beBold]]' 8 #[33 105 17 158 159 121 17 160 161 106 60 106] #item #isDefaultPackage #font #beBold 2832 7 257 nil nil nil nil 1202 2 3142 5 #{UI.ListViewColumn} 8 '' 41 #left nil 2818 0 nil 2850 3 1 #{Core.UndefinedObject} 8 'doIt' 8 '[:x : y | x & y not ]' 8 #[31 105 233 1 158 177 106] #not #& 2992 7 513 nil 722 #isChanged 8 #() nil 1104 2818 0 nil 2850 5 1 2816 8 'doIt' 8 '[:x | x ifTrue: [Package changedIcon imageIndex]] ' 8 #[32 105 17 121 45 159 160 106 60 106] 1094 2 #{Kernel.VariableBinding} #Package #{Kernel.Package} #{Kernel} 1 #changedIcon #imageIndex 3104 #ifTrue: 7 257 nil 1 nil nil 2946 8 'Packages' 653 #left 736 2818 0 nil 2850 2 1 #{Core.UndefinedObject} 8 'doIt' 8 '[:a :b | a name < b name]' 8 #[30 105 17 158 18 158 128 106] #name 3248 7 513 nil nil nil 1104 768 3 nil 2818 0 nil 2850 5 1 #{Core.UndefinedObject} 8 'doIt' 8 '[:ctx | ctx item isDefaultPackage ifTrue: [ctx font beBold]]' 8 #[33 105 17 158 159 121 17 160 161 106 60 106] #item #isDefaultPackage #font #beBold 3328 7 257 nil #report 8 #() nil 133221 nil 1 nil nil nil nil 1 nil nil nil nil nil nil nil nil nil nil 866 50 1 914 #createAt:extent: 50 2 962 1 221 962 701 281 1104 1010 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 110 0 0 0 94 1 0 0 250 0 0 0] 8 #() 1072 nil 35 9 true 518 #{Kernel.STBIdentityDictionaryProxy} 384 50 4 224 8 'filter' 1104 8 'packages' nil 866 50 1 914 #createAt:extent: 50 2 962 6143 21 962 701 501 32 1010 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 93 13 0 0 4 1 0 0] 50 3 224 18 #{UI.Splitter} 50 12 nil 32 50 2 8 1140850688 1 3792 nil nil nil 517 nil nil nil 3142 1 #{UI.DraggableViewInteractor} 3792 nil 1 #left nil nil nil 962 1 1 962 9 9 nil 3888 nil 866 50 1 914 #createAt:extent: 50 2 962 1 211 962 701 11 3792 1010 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 105 0 0 0 94 1 0 0 110 0 0 0] 8 #() 1072 nil 27 1104 1072 nil 27)! !
 !Tools.PackageSelector class categoriesForMethods!
 defaultModel!models!public! !
 resource_Choice_view!public!resources-views! !

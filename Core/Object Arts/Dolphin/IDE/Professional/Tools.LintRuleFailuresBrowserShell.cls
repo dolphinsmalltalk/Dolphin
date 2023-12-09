@@ -25,9 +25,13 @@ extendMenus
 									description: '&Ignore this rule failure'))
 					before: #removeMethod]!
 
+hasFailureSelected
+	^self browser hasSelection!
+
 ignoreFailure
 	"Filter the selected method so that it is not checked by the current rule in future"
 
+	<commandQuery: #hasFailureSelected>
 	| index methods |
 	methods := self browser selections.
 	methods do: [:each | self developmentSystem addFilteredMethod: each forLintRule: self lintRule].
@@ -56,27 +60,15 @@ onViewOpened
 	Transfer the caption across to the view"
 
 	super onViewOpened.
-	self extendMenus!
-
-queryCommand: aCommandQuery
-	"Private - Enter details about a potential command for the receiver 
-	into the <CommandQuery> argument."
-
-	| selector |
-	selector := aCommandQuery commandSymbol.
-	#ignoreFailure == selector
-		ifTrue: 
-			[aCommandQuery isEnabled: self browser hasSelection.
-			^true].
-	^super queryCommand: aCommandQuery! !
+	self extendMenus! !
 !Tools.LintRuleFailuresBrowserShell categoriesForMethods!
 addToCommandRoute:!commands!public! !
 extendMenus!browsing!private! !
+hasFailureSelected!commands!private! !
 ignoreFailure!commands!public! !
 lintRule!accessing!public! !
 lintRule:!accessing!public! !
 onViewOpened!event handling!public! !
-queryCommand:!commands!private! !
 !
 
 !Tools.LintRuleFailuresBrowserShell class methodsFor!

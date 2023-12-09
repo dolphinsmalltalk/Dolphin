@@ -33,6 +33,7 @@ categoriesPresenter
 categorizeResource
 	"Invokes a dialog to categorize the current resource identifier"
 
+	<commandQuery: #hasSingleSelection>
 	| chosenCategories originalCategories categories resourceIdentifier |
 	resourceIdentifier := self selection.
 	originalCategories := self localResourceCategoriesOf: resourceIdentifier owningClass.
@@ -161,18 +162,6 @@ onViewOpened
 	self refresh.
 !
 
-queryCommand: aCommandQuery 
-	"Private - Enter details about a potential command for the receiver 
-	into the <CommandQuery> argument."
-
-	| selector |
-	selector := aCommandQuery commandSymbol.
-	#categorizeResource == selector 
-		ifTrue: 
-			[aCommandQuery isEnabled: self selections size = 1.
-			^true].
-	^super queryCommand: aCommandQuery!
-
 refresh
 	self resetIconMap.
 	categoriesPresenter list: self resourceCategories.
@@ -252,11 +241,11 @@ add:toCategory:!operations!private! !
 addResourceIdentifierFor:!helpers!private! !
 caption!accessing!public! !
 categoriesPresenter!accessing!private! !
-categorizeResource!commands!public! !
+categorizeResource!commands-actions!public! !
 configureColumns!helpers!private! !
 createComponents!initializing!private! !
 createSchematicWiring!initializing!private! !
-developmentSystem!commands!private! !
+developmentSystem!accessing!private! !
 imageForCategory:!helpers!private! !
 initialize!initializing!private! !
 localResourceCategoriesOf:!helpers!private! !
@@ -267,7 +256,6 @@ onDropOverCategory:!private! !
 onMethodAdded:!private! !
 onMethodRemoved:!private! !
 onViewOpened!private! !
-queryCommand:!commands!private! !
 refresh!private!updating! !
 refreshResourceList!private!updating! !
 remove:fromCategory:!operations!private! !

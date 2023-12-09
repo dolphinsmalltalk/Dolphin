@@ -193,7 +193,7 @@ applyOptions
 	self isFilteringObjectMethods: self class defaultFilterObjectMethods!
 
 browseClassHierarchy
-	<commandQuery: #hasClassSelected>
+	<commandQuery: #queryBrowseClass:>
 	self developmentSystem browseHierarchy: self actualClass!
 
 browseContainingText
@@ -208,11 +208,6 @@ browseDefinitionsMatching: aMethodSearch in: aBrowserEnvironment
 				aMethodSearch
 					definitionsIn: (aBrowserEnvironment forClassHierarchyOf: self actualClass)
 			}!
-
-browseHierarchyCommand
-	"Answer the <Symbol> of the contextual command to browse the class hierarchy of something, depending on the subview with focus and/or selection."
-
-	^#browseClassHierarchy!
 
 browseInstanceVariableReferences
 	"Browse methods that reference any of the selected instance variables of the selected class."
@@ -298,6 +293,7 @@ browseSelectorsInProtocol
 browseSystem
 	"Open a new system browser on at the same point as the receiver."
 
+	<commandQuery: #queryBrowseClass:>
 	self developmentSystem browseSystem: self actualClass!
 
 buildHistoryFutureMenu
@@ -345,12 +341,6 @@ buildPopupForCommand: aSymbol
 	aSymbol == #historyBack ifTrue: [^self buildHistoryPastMenu].
 	aSymbol == #historyForward ifTrue: [^self buildHistoryFutureMenu].
 	^super buildPopupForCommand: aSymbol!
-
-canRemoveMethodProtocols
-	| prots |
-	prots := self protocols.
-	"Can only remove selected protocols if this is the first implementor in the superclass chain"
-	^prots notEmpty and: [(prots difference: self actualClass protocols) isEmpty]!
 
 canRemoveMethodsInCategory
 	| cat |
@@ -424,12 +414,6 @@ classMethodFilter
 	method should be displayed in the receiver by warrant of the class that is selected."
 
 	^[:m | (self isMethodVisible: m)]!
-
-clearSelection
-	"Private - Remove the selected object from the system"
-
-	<commandQuery: #queryDeleteIt:>
-	self perform: self deleteItCommand!
 
 createAccessors
 	"Private - Generate get and set accessors for the currently selected instance variables.
@@ -883,8 +867,7 @@ isDisplayingVariables
 isEditableMethod: aCompiledMethod
 	"Answer true if aCompiledMethod should be judged as being editable"
 
-	^(self  isInheritedMethod: aCompiledMethod) not
-!
+	^(aCompiledMethod isUnbound or: [self isInheritedMethod: aCompiledMethod]) not!
 
 isFilteringObjectMethods: aBoolean
 	flags := flags mask: FilterObjectMethodsMask set: aBoolean!
@@ -1026,8 +1009,8 @@ namespaceForNewMethodOf: aClass
 newMethod
 	"Sets the receiver up for creating a new method"
 
-	<commandQuery: #hasClassSelected>
-	methodBrowserPresenter newMethod!
+	<commandQuery: #queryNewMethod:>
+	methodBrowserPresenter resetForNewMethod!
 
 onBrowserCardChangedFrom: previousView to: currentView
 	| currentCardName |
@@ -1618,44 +1601,6 @@ onTimerTick: anInteger
 	self killVisitTimer.
 	self recordMethodVisit!
 
-onTipTextRequired: tool
-	"Tool tip text is required for the <ToolbarItem>, tool."
-
-	| cmd |
-	cmd := tool command asSymbol.
-	cmd == #clearSelection ifTrue: [cmd := self deleteItCommand].
-	cmd == #removeMethodCategory
-		ifTrue: [^'Remove category <2p> from <1p>' expandMacrosWith: self actualClass with: self category name].
-	cmd == #removeInstanceVariables ifTrue: [^'Delete instance variables'].
-	cmd == #removeMethodProtocol ifTrue: [^'Remove method protocol'].
-	cmd == #browseHierarchy
-		ifTrue: [^'Open Hierarchy Browser on <1p>' expandMacrosWith: self actualClass].
-	cmd == #browseSystem ifTrue: [^'Open System Browser on <1p>' expandMacrosWith: self actualClass].
-	#find == cmd ifTrue: [^'Find class'].
-	cmd == #newClass ifTrue: [^'New subclass of <1p>' expandMacrosWith: self selectedClass].
-	cmd == #newMethod
-		ifTrue: 
-			[| cat |
-			cat := self category.
-			^cat == self allCategory
-				ifTrue: ['New unclassified method']
-				ifFalse: ['New method in <1p>' expandMacrosWith: cat name]].
-	(cmd == #historyBack and: [history hasPast])
-		ifTrue: [^'Back to <1p>' expandMacrosWith: history previous].
-	(cmd == #historyForward and: [history hasFuture])
-		ifTrue: [^'Forward to <1p>' expandMacrosWith: history next].
-	cmd == #toggleShowInheritedMethods
-		ifTrue: 
-			[^self isShowInheritedMethods
-				ifTrue: ['Don''t show inherited methods']
-				ifFalse: ['Show inherited methods']].
-	cmd == #toggleLocalHierarchy
-		ifTrue: 
-			[^self isLocalHierarchyMode
-				ifTrue: ['Browse entire hierarchy']
-				ifFalse: ['Browse local hierarchy of ' , self selectedClass name]].
-	^super onTipTextRequired: tool!
-
 onVariableSelected
 	"Private - A new instance variable has been selected."
 
@@ -1850,6 +1795,12 @@ protocolsMethodFilter
 	(self isMethodVisible: m) 
 		and: [self protocols anySatisfy: [:each | each includesSelector: m selector]]]!
 
+queryBrowseClass: aCommandQuery
+	self hasClassSelected ifFalse: [^self].
+	aCommandQuery
+		beEnabled;
+		expandMenuTextWith: self actualClass!
+
 queryFilterObjectMethods: aCommandQuery
 	aCommandQuery
 		isChecked: self isFilterObjectMethods;
@@ -1859,29 +1810,51 @@ queryHistoryBack: aCommandQuery
 	self hasPast
 		ifTrue: 
 			[aCommandQuery
-				isEnabled: true;
-				text: (aCommandQuery commandDescription menuText expandMacrosWithArguments: { history previous }
-							locale: Locale smalltalk)]
-		ifFalse: [aCommandQuery text: 'Back']!
+				beEnabled;
+				expandMenuTextWith: history previous]!
 
 queryHistoryForward: aCommandQuery
 	self hasFuture
 		ifTrue: 
 			[aCommandQuery
-				isEnabled: true;
-				text: (aCommandQuery commandDescription menuText expandMacrosWithArguments: { history next }
-							locale: Locale smalltalk)]
-		ifFalse: [aCommandQuery text: 'Forward']!
+				beEnabled;
+				expandMenuTextWith: history next]!
+
+queryNewMethod: aCommandQuery
+	| cat |
+	cat := self category.
+	aCommandQuery
+		beEnabled;
+		expandMenuTextWith: ((cat isNil
+					or: [cat == self allCategory or: [cat isIntermediate or: [cat isPseud]]])
+						ifTrue: ['unclassified method']
+						ifFalse: ['method in <d>' << cat])!
+
+queryRemoveMethodCategory: aCommandQuery
+	<commandQuery: #hasNonVirtualCategorySelected>
+	self hasNonVirtualCategorySelected ifFalse: [^self].
+	aCommandQuery
+		beEnabled;
+		expandMenuTextWith: ('category <2p> from <1p>' expandMacrosWith: self actualClass
+					with: self category name)!
+
+queryRemoveMethodProtocols: aCommandQuery
+	| prots |
+	prots := self protocols.
+	"Can only remove selected protocols if this is the first implementor in the superclass chain"
+	(prots isEmpty or: [(prots difference: self actualClass protocols) notEmpty]) ifTrue: [^self].
+	aCommandQuery
+		beEnabled;
+		expandMenuTextWith: (prots size = 1 ifTrue: [prots single] ifFalse: ['Method Protocols'])!
 
 queryRenameItCommand: aCommandQuery
-	aCommandQuery text: aCommandQuery menuText << $….
 	self renameItCommand ifNotNil: [:selector | self queryContextCommand: aCommandQuery as: selector]!
 
 queryToggleLocalHierarchy: aCommandQuery
 	self isLocalHierarchyMode
 		ifTrue: 
 			[aCommandQuery
-				isEnabled: true;
+				beEnabled;
 				isChecked: true]
 		ifFalse: 
 			[aCommandQuery
@@ -1901,9 +1874,12 @@ queryToggleProtocolReadOnly: aCommandQuery
 				isEnabled: prot isANSI not]!
 
 queryToggleShowInheritedMethods: aCommandQuery
+	| showing |
+	showing := self isShowInheritedMethods.
 	aCommandQuery
-		isChecked: self isShowInheritedMethods;
-		isEnabled: (self hasClassSelected and: [self actualClass superclass notNil])!
+		isChecked: showing;
+		isEnabled: (self hasClassSelected and: [self actualClass superclass notNil]);
+		expandMenuTextWith: self isShowInheritedMethods!
 
 recordMethodVisit
 	"Add to the visit history - note that the current item is at the top of the history list"
@@ -1940,10 +1916,9 @@ removeMethod: aCompiledMethod fromCategory: aMethodCategory
 	aCompiledMethod storeCategories!
 
 removeMethodCategory
-	"Private - Remove the currently selected category without deleting any
-	of the methods."
+	"Private - Remove the currently selected category without deleting any	of the methods."
 
-	<commandQuery: #hasNonVirtualCategorySelected>
+	<commandQuery: #queryRemoveMethodCategory:>
 	| actualClass catModel args |
 	actualClass := self actualClass.
 	args := { actualClass. self category }.
@@ -1961,7 +1936,7 @@ removeMethodCategory
 removeMethodProtocol
 	"Private - Remove the currently selected protocols from the class."
 
-	<commandQuery: #canRemoveMethodProtocols>
+	<commandQuery: #queryRemoveMethodProtocols:>
 	self protocols do: [:p | self model removeClass: self actualClass fromProtocol: p]!
 
 removeMethodsInCategory
@@ -2018,7 +1993,7 @@ removePlugin: aClassBrowserPlugin
 renameInstanceVariable
 	"Private - Initiate a rename of the  first selected instance variable."
 
-	<commandQuery: #hasInstanceVariableSelected>
+	<commandQuery: #queryRemoveInstanceVariables:>
 	variablesPresenter view editSelectionLabel!
 
 renameIt
@@ -2541,7 +2516,6 @@ applyOptions!operations!options!private! !
 browseClassHierarchy!commands-actions!public! !
 browseContainingText!commands-actions!public! !
 browseDefinitionsMatching:in:!helpers!private! !
-browseHierarchyCommand!commands-mappings!private! !
 browseInstanceVariableReferences!commands-actions!public! !
 browseItCommand!commands-mappings!private! !
 browseMessageDefinitionsIn:!commands-actions!private! !
@@ -2557,8 +2531,7 @@ buildHistoryFutureMenu!helpers!menus!private! !
 buildHistoryMenu:command:!helpers!menus!private! !
 buildHistoryPastMenu!helpers!menus!private! !
 buildPopupForCommand:!event handling!private! !
-canRemoveMethodProtocols!private!testing! !
-canRemoveMethodsInCategory!private!testing! !
+canRemoveMethodsInCategory!commands-queries!private! !
 canSaveMethod!private!testing! !
 canSaveState!private!saved state! !
 canShowLocalHierarchy!private!testing! !
@@ -2572,7 +2545,6 @@ classDefinition!accessing!private! !
 classForNewMethod!operations!private! !
 classMenu!commands-menus!private! !
 classMethodFilter!accessing!private! !
-clearSelection!commands-actions!private! !
 createAccessors!commands-actions!private!refactoring! !
 createComponents!initializing!private! !
 createPlugins!initializing!public! !
@@ -2583,7 +2555,7 @@ customDrawProtocols:!helpers!private! !
 customDrawSelector:!helpers!private! !
 definitionCardName!constants!private! !
 definitionOfClass:!event handling!private! !
-deleteItCommand!commands-actions!private! !
+deleteItCommand!commands-mappings!private! !
 displayLocalHierarchyOf:!private!updating! !
 dropMethods:onto:!helpers!private! !
 emphasiseCategoryItem:isRelevant:!helpers!private! !
@@ -2687,7 +2659,6 @@ onRenameMethodProtocol:to:accept:!event handling!private! !
 onRepackaged:!event handling!private! !
 onStatusDoubleClicked:!event handling!private! !
 onTimerTick:!event handling!private! !
-onTipTextRequired:!event handling!private! !
 onVariableSelected!event handling!private! !
 onViewOpened!event handling!private! !
 packageForNewMethod!operations!private! !
@@ -2706,9 +2677,13 @@ promptToSaveChanges!commands-actions!private! !
 protocols!accessing!public! !
 protocols:!accessing!public! !
 protocolsMethodFilter!accessing!private! !
+queryBrowseClass:!commands-queries!private! !
 queryFilterObjectMethods:!commands-queries!private! !
 queryHistoryBack:!commands-queries!private! !
 queryHistoryForward:!commands-queries!private! !
+queryNewMethod:!commands-queries!private! !
+queryRemoveMethodCategory:!commands-queries!private! !
+queryRemoveMethodProtocols:!commands-queries!private! !
 queryRenameItCommand:!commands-queries!private! !
 queryToggleLocalHierarchy:!commands-queries!private! !
 queryToggleProtocolReadOnly:!commands-queries!private! !

@@ -34,60 +34,81 @@ actualClass: aClass
 addClass
 	"Adds the selected class to the currently selected protocol"
 
+	<commandQuery: #hasProtocol>
 	| chosenClass |
-	(chosenClass := ChoicePrompter 
-		choices: Class allBehaviors asSortedCollection
-		caption: 'Choose a Class to add to', self protocol displayString) notNil ifTrue: [
-		self model addClass: chosenClass toProtocol: self protocol ]
-
-!
+	(chosenClass := ChoicePrompter choices: Class allBehaviors asSortedCollection
+				caption: 'Choose a Class to add to' , self protocol displayString) notNil
+		ifTrue: [self model addClass: chosenClass toProtocol: self protocol]!
 
 addProtocol
 	"Prompts for a new protocol to be added to the system"
 
-	| name |
-	(name := Prompter prompt: 'Protocol name:') notNil
-		ifTrue: 
-			[| newProtocol |
-			newProtocol := MethodProtocol name: name.
-			self
-				refreshProtocols;
-				protocol: newProtocol]!
+	((Prompter
+		createOn: '' asValue
+		prompt: 'Protocol name:'
+		caption: 'Add New Protocol…')
+		validater: 
+				[:name |
+				(MethodProtocol isValidProtocolName: name)
+					ifTrue: [ValidationResult new]
+					ifFalse: [ValidationResult errorMessage: '<p> is not a valid protocol name' << name]];
+		showHintWhenEmpty: false;
+		showModal)
+			ifNotNil: 
+				[:name |
+				| newProtocol |
+				newProtocol := MethodProtocol name: name.
+				self
+					refreshProtocols;
+					protocol: newProtocol]!
 
 addSelector
 	"Prompts for a new selector to be added to the currently selected protocol"
 
-	| chosenSelector |
-	(chosenSelector := Prompter prompt: 'Add Selector:') notNil
-		ifTrue: 
-			[chosenSelector := chosenSelector asSymbol.
-			(Compiler isValidSelector: chosenSelector)
-				ifFalse: 
-					[MessageBox new
-						headline: 'Invalid selector';
-						errorMsg: 'Sorry, but <1p> is not a valid selector' << chosenSelector.
-					^self].
-			self model addSelectors: {chosenSelector asSymbol} toProtocol: self protocol]!
+	<commandQuery: #canAddSelectors>
+	| protocol |
+	protocol := self protocol.
+	((Prompter
+		createOn: '' asValue
+		prompt: 'Add Selector:'
+		caption: 'Extend <d>…' << protocol)
+		validater: 
+				[:proposed |
+				(Compiler isValidSelector: proposed)
+					ifTrue: [ValidationResult new]
+					ifFalse: [ValidationResult errorMessage: '<p> is not a valid message selector' << proposed]];
+		showHintWhenEmpty: false;
+		showModal) ifNotNil: [:new | self model addSelectors: { new asSymbol } toProtocol: protocol]!
 
 addSelectors
 	"Prompts for a collection of selector to be added to the currently selected protocol."
 
+	<commandQuery: #canAddSelectors>
 	| protocol newSelectors oldSelectors |
 	protocol := self protocol.
 	oldSelectors := protocol selectors.
-	(newSelectors := self model chooseSelectorsInProtocol: protocol forClass: self actualClass) 
-		notNil 
-			ifTrue: 
-				[| added removed |
-				added := newSelectors difference: oldSelectors.
-				self model addSelectors: added toProtocol: protocol.
-				removed := oldSelectors difference: newSelectors.
-				self model removeSelectors: removed fromProtocol: protocol]!
+	(newSelectors := self model chooseSelectorsInProtocol: protocol forClass: self actualClass) notNil
+		ifTrue: 
+			[| added removed |
+			added := newSelectors difference: oldSelectors.
+			self model addSelectors: added toProtocol: protocol.
+			removed := oldSelectors difference: newSelectors.
+			self model removeSelectors: removed fromProtocol: protocol]!
 
 browseMethods
 	"Browse all the methods which are in the currently selected protocols."
 
-	self model browseMethodProtocols: {self protocol}!
+	<commandQuery: #hasProtocol>
+	self model browseMethodProtocols: { self protocol }!
+
+canAddSelectors
+	^self hasProtocol and: [self protocol isReadOnly not]!
+
+canDeleteProtocol
+	^self hasProtocol and: [self protocol baseBehaviors isEmpty]!
+
+canRemoveSelectors
+	^self hasSelectors and: [self hasProtocol and: [self protocol isReadOnly not]]!
 
 createComponents
 	"Create the presenters contained by the receiver"
@@ -212,7 +233,7 @@ onSelectorSelected
 	classesPresenter model: conformingClasses.
 	(view viewNamed: 'classesCaption') text: header!
 
-onTipTextRequired: tool
+onTipTextRequired: tool query: aCommandQuery
 	"Tool tip text is required for the <ToolbarItem>, tool."
 
 	| cmd prot |
@@ -225,7 +246,7 @@ onTipTextRequired: tool
 	cmd == #toggleReadOnly
 		ifTrue: 
 			[^'<1s> <2d>' expandMacrosWith: (prot isReadOnly ifTrue: ['Unlock'] ifFalse: ['Lock']) with: prot].
-	^super onTipTextRequired: tool!
+	^super onTipTextRequired: tool query: aCommandQuery!
 
 onViewOpened
 	"Received when the receiver's view is been connected. "
@@ -251,59 +272,27 @@ purgeUnused
 	MethodProtocol purgeUnused.
 	self refreshProtocols!
 
-queryCommand: query 
-	"Private - Enters details about a potential command for the receiver into 
-	the <CommandQuery>, query"
+queryToggleAnsi: query
+	self hasProtocol
+		ifTrue: 
+			[query
+				isChecked: self protocol isANSI;
+				beEnabled]
+		ifFalse: 
+			[query
+				isChecked: false;
+				beDisabled]!
 
-	| cmd |
-	cmd := query command.
-	#toggleANSI == cmd 
+queryToggleReadOnly: aCommandQuery
+	self hasProtocol
 		ifTrue: 
-			[self hasProtocol 
-				ifTrue: 
-					[query
-						isChecked: self protocol isANSI;
-						isEnabled: true]
-				ifFalse: 
-					[query
-						isChecked: false;
-						isEnabled: false].
-			^true].
-	#toggleReadOnly == cmd 
-		ifTrue: 
-			[self hasProtocol 
-				ifTrue: 
-					[query
-						isChecked: self protocol isReadOnly;
-						isEnabled: true]
-				ifFalse: 
-					[query
-						isChecked: false;
-						isEnabled: false].
-			^true].
-	#deleteProtocol == cmd 
-		ifTrue: 
-			[query 
-				isEnabled: (self hasProtocol and: [self protocol baseBehaviors isEmpty]).
-			^true].
-	(#(#addClass #browseMethods) identityIncludes: cmd) 
-		ifTrue: 
-			[query isEnabled: self hasProtocol.
-			^true].
-	(#(#addSelector #addSelectors) identityIncludes: cmd) 
-		ifTrue: 
-			[query isEnabled: (self hasProtocol and: [self protocol isReadOnly not]).
-			^true].
-	(#(#removeSelectors) identityIncludes: cmd) 
-		ifTrue: 
-			[query isEnabled: (self hasSelectors 
-						and: [self hasProtocol and: [self protocol isReadOnly not]]).
-			^true].
-	(#(#removeClassFromProtocol) identityIncludes: cmd) 
-		ifTrue: 
-			[query isEnabled: self hasActualClass.
-			^true].
-	^super queryCommand: query!
+			[aCommandQuery
+				isChecked: self protocol isReadOnly;
+				beEnabled]
+		ifFalse: 
+			[aCommandQuery
+				isChecked: false;
+				beDisabled]!
 
 refreshProtocols
 	"Private - Fill the protocols list with the available MethodProtocols."
@@ -314,20 +303,20 @@ refreshProtocols
 removeClassFromProtocol
 	"Removes the current class from the selected protocol"
 
+	<commandQuery: #hasActualClass>
 	self model removeClass: self actualClass fromProtocol: self protocol!
 
 removeProtocol
 	"Removes the currently selected protocol from the system."
 
-	MethodProtocol removeProtocol: self protocol
-!
+	<commandQuery: #canDeleteProtocol>
+	MethodProtocol removeProtocol: self protocol!
 
 removeSelectors
 	"Removes the current selectors from the selected protocol"
 
-	self model removeSelectors: self selectors fromProtocol: self protocol
-
-!
+	<commandQuery: #canRemoveSelectors>
+	self model removeSelectors: self selectors fromProtocol: self protocol!
 
 selector
 	"Answer the currently selected selector <Symbol> in the receiver or
@@ -349,6 +338,7 @@ shortCaption
 toggleANSI
 	"Private - Toggle the selected protocol between ANSI and non-ANSI modes."
 
+	<commandQuery: #queryToggleAnsi:>
 	| prot |
 	prot := self protocol.
 	prot isANSI: prot isANSI not!
@@ -356,6 +346,7 @@ toggleANSI
 toggleReadOnly
 	"Private - Toggle the selected protocol between Read Only and Read/Write modes."
 
+	<commandQuery: #queryToggleReadOnly:>
 	| prot |
 	prot := self protocol.
 	prot isReadOnly: prot isReadOnly not!
@@ -371,11 +362,14 @@ updateCaption
 !Tools.ProtocolBrowserShell categoriesForMethods!
 actualClass!accessing!public! !
 actualClass:!accessing!public! !
-addClass!commands!public! !
-addProtocol!commands!public! !
-addSelector!commands!public! !
-addSelectors!commands!public! !
-browseMethods!commands!public! !
+addClass!commands-actions!public! !
+addProtocol!commands-actions!public! !
+addSelector!commands-actions!public! !
+addSelectors!commands-actions!public! !
+browseMethods!commands-actions!public! !
+canAddSelectors!commands-queries!private! !
+canDeleteProtocol!commands-queries!private! !
+canRemoveSelectors!commands-queries!private! !
 createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !
 defaultHelpId!public! !
@@ -387,22 +381,23 @@ onProtocolRemoved:!event handling!private! !
 onProtocolSelected!event handling!private! !
 onProtocolUpdated:!event handling!private! !
 onSelectorSelected!event handling!private! !
-onTipTextRequired:!event handling!public! !
+onTipTextRequired:query:!event handling!public! !
 onViewOpened!event handling!public! !
 protocol!accessing!public! !
 protocol:!accessing!public! !
-purgeUnused!commands!public! !
-queryCommand:!commands!private! !
+purgeUnused!commands-actions!public! !
+queryToggleAnsi:!commands-queries!private! !
+queryToggleReadOnly:!commands-queries!private! !
 refreshProtocols!event handling!private! !
-removeClassFromProtocol!commands!public! !
-removeProtocol!commands!public! !
-removeSelectors!commands!public! !
+removeClassFromProtocol!commands-actions!public! !
+removeProtocol!commands-actions!public! !
+removeSelectors!commands-actions!public! !
 selector!accessing!public! !
 selectors!accessing!public! !
 setInitialFocus!operations!public! !
 shortCaption!accessing!public! !
-toggleANSI!commands!private! !
-toggleReadOnly!commands!private! !
+toggleANSI!commands-actions!private! !
+toggleReadOnly!commands-actions!private! !
 updateCaption!public!updating! !
 !
 

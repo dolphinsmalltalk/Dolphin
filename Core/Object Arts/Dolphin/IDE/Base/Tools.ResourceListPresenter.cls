@@ -24,26 +24,31 @@ Instance Variables:
 browseClass
 	"Open a new class browser, of the users preferred type, on the owning class of the selected
 	resource."
-	
+
+	<commandQuery: #queryBrowseOwningClass:>
 	self developmentSystem browseClass: self resourceIdentifier owningClass!
 
 browseHierarchy
 	"Open a new class browser on the hierarchy at the same point as the receiver."
 
+	<commandQuery: #queryBrowseOwningClass:>
 	self developmentSystem browseHierarchy: self resourceIdentifier owningClass!
 
 browseIt
 	"Open a new browser (i.e. a view composer) on the selected resource."
 
+	<commandQuery: #hasSingleSelection>
 	self resourceIdentifier browse!
 
 browseReferences
+	<commandQuery: #hasSingleSelection>
 	<acceleratorKey: 'Shift+F12'>
 	self developmentSystem browseResourcesReferencingView: self resourceIdentifier!
 
 browseSystem
 	"Open a new system browser on the hierarchy at the same point as the receiver."
-	
+
+	<commandQuery: #queryBrowseOwningClass:>
 	self developmentSystem browseSystem: self resourceIdentifier owningClass!
 
 caption
@@ -59,7 +64,20 @@ clear
 clearSelection
 	"Remove the selected resource from the ResourceManager."
 
+	<commandQuery: #hasSelection>
 	self deleteResource!
+
+confirmMoveResource: aResourceIdentifier toPackage: aPackage
+	"Private - Move aResourceIdentifier from its existing package to the specified
+	<Package> if the user confirms."
+
+	| resourcePackage |
+	resourcePackage := aResourceIdentifier owningPackage.
+	(MessageBox new
+		headline: 'Move resource to new package?';
+		confirm: 'The resource ''<1p>'' is currently owned by the <2p> package<n><n>Are you sure you would like to move it to <3p>?'
+					<< { aResourceIdentifier. resourcePackage name. aPackage name })
+			ifTrue: [aPackage addResourceIdentifier: aResourceIdentifier]!
 
 createComponents
 	super createComponents.
@@ -106,6 +124,7 @@ defaultSortBlock
 deleteResource
 	"Remove the selected resources from the system."
 
+	<commandQuery: #hasSelection>
 	self selections do: [:each | self developmentSystem deleteResource: each]!
 
 developmentSystem
@@ -113,6 +132,8 @@ developmentSystem
 
 editResource
 	"Invoke an appropriate editor on the selected resource."
+
+	<commandQuery: #hasSingleSelection>
 	self developmentSystem openViewComposerOn: self resourceIdentifier!
 
 filterBlock: monadicValuable 
@@ -192,49 +213,18 @@ onResourceSelected
 passesFilter: aResourceIdentifier
 	^filterBlock isNil or: [filterBlock value: aResourceIdentifier]!
 
-queryCommand: aCommandQuery
-	"Private - Enter details about a potential command for the receiver 
-	into the <CommandQuery> argument."
+queryBrowseOwningClass: aCommandQuery
+	| rid |
+	rid := self resourceIdentifier.
+	rid isNil ifTrue: [^self].
+	aCommandQuery
+		beEnabled;
+		expandMenuTextWith: rid owningClass!
 
-	| selector |
-	selector := aCommandQuery commandSymbol.
-	(#(#clearSelection #deleteResource) identityIncludes: selector)
-		ifTrue: 
-			[aCommandQuery isEnabled: self selections notEmpty.
-			^true].
-	#showResource == selector
-		ifTrue: 
-			[| rid |
-			rid := self resourceIdentifier.
-			aCommandQuery isEnabled: (rid notNil and: [rid canShow]).
-			^true].
-	(#(#properties #resourcePackage #browseIt #editResource #browseReferences)
-		identityIncludes: selector)
-			ifTrue: 
-				[aCommandQuery isEnabled: self resourceIdentifier notNil.
-				^true].
-	(#(#browseHierarchy #browseSystem #browseClass) identityIncludes: selector)
-		ifTrue: 
-			[| name rid |
-			rid := self resourceIdentifier.
-			name := rid isNil ifTrue: ['Classes'] ifFalse: [rid owningClass name].
-			aCommandQuery
-				isEnabled: self resourceIdentifier notNil;
-				text: (aCommandQuery commandDescription menuText expandMacrosWith: name).
-			^true].
-	^super queryCommand: aCommandQuery!
-
-queryMoveResource: aResourceIdentifier toPackage: aPackage
-	"Private - Move aResourceIdentifier from its existing package to the specified
-	<Package> if the user confirms."
-
-	| resourcePackage |
-	resourcePackage := aResourceIdentifier owningPackage.
-	(MessageBox new
-		headline: 'Move resource to new package?';
-		confirm: 'The resource ''<1p>'' is currently owned by the <2p> package<n><n>Are you sure you would like to move it to <3p>?'
-					<< {aResourceIdentifier. resourcePackage name. aPackage name})
-			ifTrue: [aPackage addResourceIdentifier: aResourceIdentifier]!
+queryShowResource: aCommandQuery
+	| rid |
+	rid := self resourceIdentifier.
+	aCommandQuery isEnabled: (rid notNil and: [rid canShow])!
 
 refresh
 	"Private - Re-display the receiver's contents"
@@ -247,21 +237,20 @@ refresh
 resourceIdentifier
 	"Answer the selected <ResourceIdentifier> iff there is exactly one selection."
 
-	| rids |
-	rids := self selections.
-	^rids size = 1 ifTrue: [rids first]!
+	^self selectionOrNil!
 
 resourcePackage
 	"Prompt for the user to repackage the selected resource."
 
+	<commandQuery: #hasSingleSelection>
 	| pkg newPkg rid |
 	rid := self resourceIdentifier.
 	pkg := rid owningPackage.
 	newPkg := PackagePrompter
 				showModalOn: pkg asValue
-				caption: 'Package of <1d>…' << rid
+				caption: 'Package of <d>…' << rid
 				default: rid owningClass owningPackage.
-	(newPkg notNil and: [newPkg ~= pkg]) ifTrue: [self queryMoveResource: rid toPackage: newPkg]!
+	(newPkg notNil and: [newPkg ~= pkg]) ifTrue: [self confirmMoveResource: rid toPackage: newPkg]!
 
 selectableItems
 	"Private - Answer the name of the <selectableItems> component that actually handles the selectable items in the receiver"
@@ -278,6 +267,7 @@ showAllResources
 showResource
 	"Display the selected resource in whatever manner is appropriate for it."
 
+	<commandQuery: #queryShowResource:>
 	self resourceIdentifier show!
 
 showResourcesOwnedByPackages: aPackageCollection
@@ -297,20 +287,21 @@ showResourcesReferencingView: aResourceIdentifier
 					(each isKindOf: STBViewProxy) 
 						and: [each viewClass == ReferenceView and: [(each instVars at: idIndex) = aResourceIdentifier]]]]! !
 !Tools.ResourceListPresenter categoriesForMethods!
-browseClass!commands!public! !
-browseHierarchy!commands!public! !
-browseIt!commands!public! !
-browseReferences!commands!public! !
-browseSystem!commands!public! !
+browseClass!commands-actions!public! !
+browseHierarchy!commands-actions!public! !
+browseIt!commands-actions!public! !
+browseReferences!commands-actions!public! !
+browseSystem!commands-actions!public! !
 caption!accessing!public! !
-clear!commands!public! !
-clearSelection!commands!public! !
+clear!commands-actions!public! !
+clearSelection!commands-actions!public! !
+confirmMoveResource:toPackage:!accessing!private! !
 createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !
 defaultSortBlock!constants!private!sorting! !
-deleteResource!commands!public! !
-developmentSystem!commands!private! !
-editResource!commands!public! !
+deleteResource!commands-actions!public! !
+developmentSystem!accessing!private! !
+editResource!commands-actions!public! !
 filterBlock:!accessing!public! !
 imageFromResource:!helpers!private! !
 initialize!initializing!private! !
@@ -321,14 +312,14 @@ onMethodRemoved:!event handling!private! !
 onResourceRepackaged:from:to:!event handling!private! !
 onResourceSelected!event handling!private! !
 passesFilter:!event handling!private! !
-queryCommand:!commands!private! !
-queryMoveResource:toPackage:!accessing!private! !
+queryBrowseOwningClass:!commands-queries!private! !
+queryShowResource:!commands-queries!private! !
 refresh!operations!public! !
 resourceIdentifier!accessing!public! !
-resourcePackage!commands!public! !
+resourcePackage!commands-actions!public! !
 selectableItems!accessing!private! !
 showAllResources!filtering!public! !
-showResource!commands!public! !
+showResource!commands-actions!public! !
 showResourcesOwnedByPackages:!filtering!public! !
 showResourcesReferencingView:!helpers!private! !
 !

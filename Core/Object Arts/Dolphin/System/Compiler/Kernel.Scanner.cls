@@ -858,6 +858,12 @@ isSelector: aSymbol
 	token value isEmpty ifTrue: [^false].
 	^scanner atEnd!
 
+isStaticVariable: aString
+	^(self isVariable: aString) and: 
+			[| first |
+			first := aString first.
+			first == $_ or: [first isUpperCase]]!
+
 isVariable: aString
 	| scanner token |
 	aString isString ifFalse: [^false].
@@ -888,6 +894,7 @@ classify:!public!scanning! !
 initialize!development!initializing!public! !
 initializeClassificationTable!initializing!private! !
 isSelector:!public!testing! !
+isStaticVariable:!public!testing! !
 isVariable:!public!testing! !
 on:!instance creation!public! !
 on:errorHandler:!instance creation!public! !

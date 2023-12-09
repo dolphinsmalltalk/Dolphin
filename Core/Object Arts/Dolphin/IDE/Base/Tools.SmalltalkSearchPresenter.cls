@@ -104,11 +104,15 @@ findDetails
 	^nil!
 
 goSearch
+	<commandQuery: #hasSearchText>
 	| searchForObject |
 	searchForObject := self searchObject.
 	searchForObject notNil
 		ifTrue: [self performSmalltalkSearchFor: searchForObject]
 		ifFalse: [^Sound errorBeep]!
+
+hasSearchText
+	^self view plainText notEmpty!
 
 initialize
 	super initialize.
@@ -174,20 +178,6 @@ performSmalltalkSearchFor: anObject
 	self searchText: ''.
 	self commandPolicy
 		route: (CommandDescription command: (Message selector: #searchSmalltalkFor: argument: anObject))!
-
-queryCommand: aCommandQuery 
-	"Enters details about a potential command for the receiver into the <CommandQuery>
-	arugment."
-
-	| cmd |
-	cmd := aCommandQuery commandSymbol.
-
-	"Handle Undo/Redo commands"
-	cmd == #goSearch 
-		ifTrue: 
-			[aCommandQuery isEnabled: self view plainText notEmpty.
-			^true].
-	^super queryCommand: aCommandQuery!
 
 rangeToCompleteAt: anInteger 
 	^(self isWhitespaceAt: anInteger) 
@@ -314,7 +304,8 @@ completionListSortBlock!autocompletion!constants!private! !
 createSchematicWiring!initializing!private! !
 filterForClassNamesMatching:!autocompletion!helpers!private! !
 findDetails!accessing!private! !
-goSearch!commands!public! !
+goSearch!commands-actions!public! !
+hasSearchText!commands-queries!private!testing! !
 initialize!initializing!private! !
 insertCompletion:at:!autocompletion!helpers!private! !
 isAutoCompletionTruncating!private!testing! !
@@ -328,10 +319,9 @@ onTimerTick:!event handling!private! !
 onViewAvailable!event handling!public! !
 onViewStateRestored!event handling!public! !
 performSmalltalkSearchFor:!operations!private! !
-queryCommand:!commands!private! !
 rangeToCompleteAt:!autocompletion!helpers!private! !
 searchItemsStartingWith:maxItems:!autocompletion!helpers!private! !
-searchObject!commands!public! !
+searchObject!helpers!public! !
 searchText!accessing!public! !
 searchText:!accessing!public! !
 selectorsStartingWith:maxItems:!autocompletion!helpers!private! !
