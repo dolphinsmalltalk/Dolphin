@@ -20,7 +20,8 @@ verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	view := self view.
 	self assert: (view items allSatisfy: [:each | each isKindOf: ToolbarItem]).
 	self assert: view interactor identicalTo: view.
-	self assert: view buttonSize y equals: 22.
+	self assert: view actualBitmapSize equals: view defaultBitmapSize.
+	self assert: view buttonSize y equals: view defaultButtonSize y.
 	self assert: view indent equals: 0.
 	"12->13 conversion"
 	self assert: view backcolor identicalTo: Color default.
