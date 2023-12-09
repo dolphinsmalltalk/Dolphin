@@ -1036,6 +1036,7 @@ browseSystemPackages: aCollection
 browseTests
 	"Open a new SUnit browser on all test."
 
+	<commandQuery: #hasTestBrowser>
 	^self testBrowserClass show!
 
 browseVariableReferences: aVariableBinding in: aBrowserEnvironment
@@ -1272,14 +1273,6 @@ classHierarchy
 	receiver."
 
 	^ClassHierarchyModel withAllClasses!
-
-clearChangeHistory
-	"Discard system change history (i.e. undo/redo list)."
-
-	(MessageBox new
-		headline: 'Clear change history?';
-		confirm: 'Are you sure you want to clear the change history (undo/redo for past changes will be lost)?')
-			ifTrue: [self nukeChangeHistory]!
 
 clearSystemFolder
 	"Private - Clear the system folder. Only intended to be called when image stripping"
@@ -1836,11 +1829,8 @@ hardResetGUI
 	CompiledCode initializeInfoCache.
 	self sessionManager mainShellClass reset!
 
-hasRedoableOperations
-	^self changeManager hasRedoableOperations!
-
-hasUndoableOperations
-	^self changeManager hasUndoableOperations!
+hasTestBrowser
+	^self testBrowserClass notNil!
 
 helpContents
 	"Open the contents page in the Education Centre"
@@ -2303,15 +2293,11 @@ okToInstallPatchLevel: anInteger
 	patchFiles do: [:filename | self sourceManager fileIn: filename].
 	^true!
 
-onAboutToDisplayMenu: popup
-	"The system is about to display the <Menu>, popup, this is our chance
-	to fiddle with it."
+onAboutToDisplayMenu: aMenu
+	"The pop-up <Menu> is about to be displayed. This is our opportunity to update it, e.g. to add/remove items.
+	Note: Adding an item persists as the menu is not destroyed until the view is closed."
 
-	popup name == #toolsMenu ifTrue: [
-		self populateToolsMenu: popup. ^self].
-	popup name == #windowMenu ifTrue: [
-		self populateWindowMenu: popup. ^self].
-!
+	self class commandAnnotations onAboutToDisplayMenu: aMenu for: self!
 
 onClassAdded: aClass
 	"The class aClass has been added to the system.
@@ -2479,14 +2465,14 @@ onSessionStopped
 
 !
 
-onTipTextRequired: tool
+onTipTextRequired: aToolbarItem query: aCommandQuery
 	"Tool tip text is required for the <ToolbarItem>, tool."
 
 	| cmd |
-	cmd := tool command asSymbol.
+	cmd := aToolbarItem command asSymbol.
 	cmd == #saveImage
 		ifTrue: [^'Save image to <1p>' expandMacrosWith: self sessionManager imageFileName].
-	^tool toolTipText!
+	^aCommandQuery text ifNil: [aToolbarItem toolTipText]!
 
 onVariableRemoved: aVariableBinding
 	self packageManager onVariableRemoved: aVariableBinding.
@@ -2711,7 +2697,7 @@ poolDictionariesFolder
 
 	^self systemFolder asOrderedCollection detect: [:each | each description='Pool Dictionaries'].!
 
-populateMenu: popup tree: folderModel items: folderItems
+populateFolderMenu: aMenu tree: folderModel items: folderItems
 	"Private - Populate the menu, popup, with items from the system folder, folder."
 
 	| accels aMonadicValuable |
@@ -2721,7 +2707,7 @@ populateMenu: popup tree: folderModel items: folderItems
 			[:each |
 			| i |
 			(i := each text indexOf: $&) ~= 0 ifTrue: [accels add: (each text at: i + 1)]].
-	popup itemsDo: aMonadicValuable.
+	aMenu itemsDo: aMonadicValuable.
 	(folderItems asSortedArray: [:a :b | a description < b description]) do: 
 			[:each |
 			| text i |
@@ -2739,45 +2725,17 @@ populateMenu: popup tree: folderModel items: folderItems
 					children notEmpty
 						ifTrue: 
 							[| subMenu |
-							subMenu := popup addSubmenu: text.
-							subMenu image: each icon.
+
+							subMenu := aMenu addSubmenu: text image: each icon.
 							self
-								populateMenu: subMenu
+								populateFolderMenu: subMenu
 								tree: folderModel
 								items: children]]
 				ifFalse: 
-					[popup
+					[aMenu
 						addCommand: (Message selector: #openTool: argument: each)
 						description: text
 						image: each icon]]!
-
-populateMessagesMenus: aMenu fromMethods: aCollection environment: aBrowserEnvironment
-	"Private - The pop-up <Menu>, popup, is about to be displayed. If it is one of the standard
-	message menus, then populate it with messages from the <Collection> of <CompiledMethod>s,
-	aCollection."
-
-	| menuName |
-	menuName := aMenu name.
-	menuName == #definitionsMenu
-		ifTrue: 
-			[self
-				buildMessageMenu: aMenu
-				forMethods: aCollection
-				browseSelector: #browseDefinitionsOfSelector:in:
-				extraArgs: {aBrowserEnvironment}
-				browseOtherSelector: #browseMessageDefinitionsIn:.
-			^true].
-	menuName == #referencesMenu
-		ifTrue: 
-			[self
-				buildMessageMenu: aMenu
-				forMethods: aCollection
-				browseSelector: #browseReferencesToLiteral:in:
-				extraArgs: {aBrowserEnvironment}
-				browseOtherSelector: #browseMessageReferencesIn:.
-			^true].
-	"Not a message menu"
-	^false!
 
 populateToolsMenu: toolsMenu
 	"Private - Populate the Tools menu with the same hierarchy of items as the system folder.
@@ -2796,7 +2754,7 @@ populateToolsMenu: toolsMenu
 	((toolsMenu itemAt: 1) itemAt: 1) isDefault: true.
 	folder := self systemFolder.
 	self
-		populateMenu: toolsMenu
+		populateFolderMenu: toolsMenu
 		tree: folder
 		items: folder roots!
 
@@ -3116,41 +3074,53 @@ promptForClassName: aString
 		createOn: (self suggestedWord: aString)
 		prompt: 'Enter a Class name (may be wildcarded): '
 		caption: 'Find a Class')
-		validationBlock: 
+		validater: 
 				[:name |
-				| trimmed |
+				| trimmed result |
+				result := ValidationResult new.
 				trimmed := name trimBlanks.
-				trimmed notEmpty and: [(Scanner isVariable: trimmed) or: [trimmed includesAnyOf: '#*']]];
+				(trimmed notEmpty and: [(Scanner isVariable: trimmed) or: [trimmed includesAnyOf: '#*']])
+					ifFalse: [result errorMessage: 'Invalid class name'].
+				result];
+		showHintWhenEmpty: false;
 		showModal) ifNotNil: [:name | name trimBlanks]!
 
 promptForClassVarName: nameString in: aClass prompt: promptString caption: captionString
-	| newName |
-	newName := (Prompter
-				createOn: nameString
-				prompt: promptString
-				caption: captionString)
-				validater: [:name | self validateNewClassVarName: name for: aClass];
-				showHintWhenEmpty: false;
-				showModal.
-	^newName!
+	^(Prompter
+		createOn: nameString
+		prompt: promptString
+		caption: captionString)
+		validater: [:name | self validateNewClassVarName: name for: aClass];
+		showHintWhenEmpty: false;
+		showModal!
 
 promptForDefinitionsOf: aString in: aBrowserEnvironment
 	^self promptForSelector: aString caption: 'Definitions of message in <1p>…' << aBrowserEnvironment!
 
 promptForExpression: promptString caption: captionString
-	| result text |
-	result := nil.
+	| value text |
+	value := nil.
 	text := '' asValue.
 	
 	[| expression |
-	expression := Prompter
-				on: text
+	expression := (Prompter
+				createOn: text
 				prompt: promptString
-				caption: captionString.
+				caption: captionString)
+				validater: 
+						[:expr |
+						| result |
+						result := ValidationResult new.
+						result caption: 'Parse Error'.
+						[(Parser parseExpression: expr) analyze] on: CompilerErrorNotification
+							do: [:err | result errorMessage: err errorMessage].
+						result];
+				showHintWhenEmpty: false;
+				showModal.
 	expression notNil and: 
 			[| error |
 			
-			[result := Compiler evaluate: expression.
+			[value := Compiler evaluate: expression.
 			error := nil] on: Compiler errorClass , Error
 					do: 
 						[:ex |
@@ -3164,49 +3134,59 @@ promptForExpression: promptString caption: captionString
 						headline: error displayString;
 						errorMsg: 'Try again?') == #yes]]]
 			whileTrue.
-	^result!
+	^value!
 
 promptForInstVarName: nameString in: aClass prompt: promptString caption: captionString
-	| newName |
-	newName := (Prompter
-				createOn: nameString
-				prompt: promptString
-				caption: captionString)
-				validater: [:name | self validateNewInstanceVariableName: name for: aClass];
-				showHintWhenEmpty: false;
-				showModal.
-	^newName!
+	^(Prompter
+		createOn: nameString
+		prompt: promptString
+		caption: captionString)
+		validater: [:name | self validateNewInstanceVariableName: name for: aClass];
+		showHintWhenEmpty: false;
+		showModal!
 
 promptForKeyValuePair: promptString caption: captionString
-	| pair result |
-	pair := Association new.
+	| expressions pair |
+	expressions := Association new.
 	
-	[(KeyValuePrompter
-		createOn: pair
-		prompt: promptString
-		caption: captionString) showModal
-		notNil and: 
-				[| error |
-				error := nil.
-				result := 
-						[| key value |
-						key := Compiler evaluate: pair key.
-						value := Compiler evaluate: pair value.
-						self value newAssociation: key value: value]
-								on: Compiler errorClass , Error
-								do: 
-									[:ex |
-									error := ex.
-									ex return: nil].
-				error notNil and: 
-						[(MessageBox new
-							buttonStyle: #yesNo;
-							iconStyle: #error;
-							caption: 'Error evaluating expression…';
-							headline: error displayString;
-							errorMsg: 'Try again?') == #yes]]]
+	[| prompter |
+	prompter := KeyValuePrompter
+				createOn: expressions
+				prompt: promptString
+				caption: captionString.
+	prompter validater: 
+			[:assoc |
+			| result |
+			result := ValidationResult new.
+			result caption: 'Parse Error'.
+			{ prompter keyPresenter. prompter valuePresenter } allSatisfy: 
+					[:each |
+					[(Parser parseExpression: each value) analyze] on: CompilerErrorNotification
+						do: 
+							[:err |
+							result
+								errorMessage: err errorMessage;
+								presenter: each].
+					result value].
+			result].
+	prompter showModal notNil and: 
+			[| error |
+			error := nil.
+			pair := [(Compiler evaluate: expressions key) -> (Compiler evaluate: expressions value)]
+						on: Compiler errorClass , Error
+						do: 
+							[:ex |
+							error := ex.
+							ex return: nil].
+			error notNil and: 
+					[(MessageBox new
+						buttonStyle: #yesNo;
+						iconStyle: #error;
+						caption: 'Error evaluating expression…';
+						headline: error displayString;
+						errorMsg: 'Try again?') == #yes]]]
 			whileTrue.
-	^result!
+	^pair!
 
 promptForReferencesTo: aString in: aBrowserEnvironment
 	^self promptForSelector: aString caption: 'References to message in <1p>…' << aBrowserEnvironment!
@@ -3315,68 +3295,11 @@ publicMethodIcon
 		yourself!
 
 queryCommand: aCommandQuery
-	"Private - Enter details about a potential command for the receiver into the <CommandQuery>."
+	"Enter details about a potential command for the receiver  into the <CommandQuery> argument."
 
-	| cmd |
-	cmd := aCommandQuery commandSymbol.
-	cmd == #toolsMenu
-		ifTrue: 
-			[aCommandQuery isEnabled: true.
-			^true].
-	cmd == #windowMenu
-		ifTrue: 
-			[aCommandQuery isEnabled: true.
-			^true].
-	cmd == #undoChange
-		ifTrue: 
-			[| description |
-			self hasUndoableOperations
-				ifTrue: 
-					[description := self changeManager undoChange.
-					aCommandQuery isEnabled: true]
-				ifFalse: 
-					[description := 'Change'.
-					aCommandQuery isEnabled: false].
-			aCommandQuery
-				text: (aCommandQuery commandDescription menuText expandMacrosWithArguments: {description}
-						locale: Locale smalltalk).
-			^true].
-	cmd == #redoChange
-		ifTrue: 
-			[| description |
-			self hasRedoableOperations
-				ifTrue: 
-					[description := self changeManager redoChange.
-					aCommandQuery isEnabled: true]
-				ifFalse: 
-					[description := 'Change'.
-					aCommandQuery isEnabled: false].
-			aCommandQuery
-				text: (aCommandQuery commandDescription menuText expandMacrosWithArguments: {description}
-						locale: Locale smalltalk).
-			^true].
-	cmd == #clearChangeHistory
-		ifTrue: 
-			[aCommandQuery isEnabled: (self hasUndoableOperations or: [self hasRedoableOperations]).
-			^true].
-	#browseHierarchy == cmd
-		ifTrue: 
-			[aCommandQuery
-				isEnabled: true;
-				text: (aCommandQuery commandDescription menuText expandMacrosWithArguments: {'Classes'}
-							locale: Locale smalltalk).
-			^true].
-	#browseTests == cmd
-		ifTrue: 
-			[aCommandQuery isEnabled: self testBrowserClass notNil.
-			^true].
-	(aCommandQuery canPerformAgainst: self) ifTrue: [aCommandQuery isEnabled: true].
-	^false!
-
-redoChange
-	"Redo the last change in the undo history list."
-
-	self changeManager redoOperation!
+	(self class commandAnnotations queryCommand: aCommandQuery ofTarget: self) ifTrue: [^true].
+	(aCommandQuery canPerformAgainst: self) ifTrue: [aCommandQuery beEnabled].
+	^false	"There was no specific enablement of the command at this level"!
 
 referencesTo: anObject 
 	"Answer a <BrowserEnvironment> that includes all methods in the entire system that reference
@@ -4133,11 +4056,6 @@ toolbarBitmapSize: aPointOrNil
 typeForArgumentClass: anObject 
 	^self argumentClasses detect: [:each | anObject includesBehavior: each] ifNone: [anObject]!
 
-undoChange
-	"Undo the last change in the undo history list."
-
-	self changeManager undoOperation!
-
 unimplementedSelectorsIn: aBrowserEnvironment
 	"Answer a <Set> of all the <Symbol>s which are selectors which are referenced from methods in the <BrowserEnvironment> argument but which have no corresponding implementation in that browser environment. N.B. This may not include any messages sent dynamically with #perform: and friends, and so should not be considered a guarantee that no send will ever result in a DNU (which, of course, cannot be guaranteed anyway because there is no way of knowing that the object to which the message is sent actually implements that message)."
 
@@ -4354,7 +4272,7 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 !Tools.SmalltalkSystem categoriesForMethods!
 aboutBoxClass!constants!private! !
 aboutBoxClass:!constants!private! !
-aboutDolphin!commands!public! !
+aboutDolphin!commands-actions!public! !
 actualFont!accessing!options!public! !
 add:toProtocolWarning:!operations!private!protocols! !
 addAdditionalToolsFolderIcon:!operations!public! !
@@ -4393,11 +4311,11 @@ basicRemoveMethodsIn:within:showChanges:!helpers!private! !
 beginDrag:methods:!event handling!helpers!private! !
 beNotChanged!operations!private! !
 binaryClassFilesType!constants!private! !
-browseAllChangedMethods!browsing!commands!public! !
-browseAllUnimplementedSelectors!browsing!commands!public! !
+browseAllChangedMethods!browsing!commands-actions!public! !
+browseAllUnimplementedSelectors!browsing!commands-actions!public! !
 browseChangedMethodsOf:!browsing!public! !
 browseChangedMethodsOfClasses:!browsing!public! !
-browseClass!browsing!commands!public! !
+browseClass!browsing!commands-actions!public! !
 browseClass:!browsing!public! !
 browseClass:with:!browsing!public! !
 browseClassHierarchyOfMethod:!browsing!public! !
@@ -4408,25 +4326,25 @@ browseCompilationFailures!browsing!public! !
 browseCompilationFailuresIn:!browsing!public! !
 browseCompilationIssues!public! !
 browseCompilationIssuesIn:!public! !
-browseContainingText!browsing!commands!public! !
-browseContainingText:!browsing!commands!public! !
+browseContainingText!browsing!commands-actions!public! !
+browseContainingText:!operations!public! !
 browseContainingText:in:prompt:!browsing!private! !
-browseContainingTextIn:!browsing!commands!public! !
+browseContainingTextIn:!operations!public! !
 browseDefinitionsMatching:in:!browsing!private! !
 browseDefinitionsMatching:inHierarchyOf:within:!browsing!private! !
 browseDefinitionsOf:!browsing!public! !
 browseDefinitionsOfSelector:in:!browsing!public! !
 browseEnvironment:!browsing!public! !
 browseFolder:!browsing!public! !
-browseHierarchy!browsing!commands!public! !
-browseHierarchy:!browsing!commands!public! !
+browseHierarchy!browsing!commands-actions!public! !
+browseHierarchy:!operations!public! !
 browseInstanceVariables:!browsing!public! !
 browseInstanceVariables:action:in:!browsing!private! !
-browseMessageDefinitions:in:!commands!private! !
-browseMessageDefinitionsIn:!commands!private! !
-browseMessageReferences:in:!commands!private! !
-browseMessageReferencesIn:!commands!private! !
-browseMessageReferencesInHierarchyOf:within:!commands!private! !
+browseMessageDefinitions:in:!operations!private! !
+browseMessageDefinitionsIn:!operations!private! !
+browseMessageReferences:in:!operations!private! !
+browseMessageReferencesIn:!operations!private! !
+browseMessageReferencesInHierarchyOf:within:!operations!private! !
 browseMessagesMatching:in:!browsing!private! !
 browseMessagesSentBy:in:!browsing!operations!private! !
 browseMethod:!browsing!public! !
@@ -4443,9 +4361,9 @@ browseMethodsInEnvironments:!browsing!public! !
 browseMethodsWithCompilationIssuesIn:!browsing!public! !
 browseMethodsWithFullBlocks!public!utilities! !
 browseMethodsWithNewBytecodes!browsing!public! !
-browsePackages!browsing!commands!public! !
-browsePackages:!browsing!commands!public! !
-browseProtocols!browsing!commands!protocols!public! !
+browsePackages!browsing!commands-actions!public! !
+browsePackages:!operations!public! !
+browseProtocols!browsing!commands-actions!protocols!public! !
 browseReferencesMatching:in:!browsing!private! !
 browseReferencesTo:!browsing!public! !
 browseReferencesToClassVar:of:within:!browsing!private! !
@@ -4459,16 +4377,16 @@ browseReferencesToVariable:!browsing!public! !
 browserEnvFromDom:!helpers!private! !
 browserEnvironment!accessing!public! !
 browserEnvironmentForClasses:!browsing!public! !
-browseResourceIdentifier:!browsing!commands!public! !
-browseResources!browsing!commands!public! !
+browseResourceIdentifier:!operations!public! !
+browseResources!browsing!commands-actions!public! !
 browseResourcesReferencingView:!browsing!public! !
 browseSelectors:caption:environment:!browsing!private! !
 browseSharedVariableReferences:in:!browsing!public! !
-browseSystem!browsing!commands!public! !
+browseSystem!browsing!commands-actions!public! !
 browseSystem:!browsing!public! !
 browseSystemOnMethod:!browsing!public! !
 browseSystemPackages:!browsing!public! !
-browseTests!browsing!commands!public! !
+browseTests!browsing!commands-actions!public! !
 browseVariableReferences:in:!browsing!public! !
 browseViewHierarchy:!browsing!public! !
 buildAllSelectors!helpers!private! !
@@ -4488,9 +4406,9 @@ changeHistorySize:!accessing!public! !
 changeManager!accessing!public! !
 chooseClass!helpers!public! !
 chooseClass:caption:allowNil:!operations!public! !
-chooseDefaultPackage!commands!public! !
+chooseDefaultPackage!commands-actions!public! !
 chooseSelectorsInProtocol:forClass:!operations!private!protocols! !
-chooseViewOf:!commands!public! !
+chooseViewOf:!operations!public! !
 classBrowserClasses!accessing!public! !
 classChanged:!accessing!private! !
 classChooserClass!options!public! !
@@ -4499,16 +4417,15 @@ classFileIn:!public!source filing! !
 classFileOut:!public!source filing! !
 classFilesType!constants!private! !
 classHierarchy!accessing!public! !
-clearChangeHistory!public!refactoring! !
 clearSystemFolder!initializing!private! !
 cloneClass:as:under:in:!private!refactoring! !
-closeAll!commands!public! !
+closeAll!commands-actions!public! !
 compilationFailuresCategory!constants!private! !
 compilationWarningClass!constants!private! !
 compile:in:environment:categories:package:extraFlags:!operations!public! !
 compilerNotification:!exceptions!private! !
-compressChanges!commands!public! !
-compressSources!commands!public! !
+compressChanges!commands-actions!public! !
+compressSources!commands-actions!public! !
 confirmRenameClass:to:!event handling!private! !
 copyAllMethodsOf:to:changes:!private!refactoring! !
 copyClass:!public!refactoring! !
@@ -4534,49 +4451,48 @@ defaultParseContext!accessing!public! !
 defaultPublishedAspectsLiteralsMapOf:!accessing!private!theming! !
 definitionsMatching:inHierarchyOf:within:!enquiries!private! !
 definitionsOf:!enquiries!private! !
-deleteResource:!commands!public! !
+deleteResource:!commands-actions!public! !
 deprecatedIcon!constants!private! !
 disassembleMethod:!public! !
 disassemblyStylerClass!constants!public! !
 displayItLocale!options!public! !
 displayItLocale:!options!public! !
 displayOn:!displaying!public! !
-dolphinHomePage!commands!public! !
-dolphinNewsgroup!commands!public! !
+dolphinHomePage!commands-actions!public! !
+dolphinNewsgroup!commands-actions!public! !
 dolphinNewsgroupUrl!public! !
 dolphinSmalltalkUrl!constants!private! !
 dolphinWikiUrl!public! !
-dolphinWikiWeb!commands!public! !
-dropClassFile:!commands!private! !
-dropFile:!commands!private! !
-dropPackageFile:!commands!private! !
-dropScriptFile:!commands!private! !
-dropTextFile:!commands!private! !
-dropXmlFile:!commands!private! !
-educationCenter!commands!public! !
+dolphinWikiWeb!commands-actions!public! !
+dropClassFile:!operations!private! !
+dropFile:!operations!private! !
+dropPackageFile:!operations!private! !
+dropScriptFile:!operations!private! !
+dropTextFile:!operations!private! !
+dropXmlFile:!operations!private! !
+educationCenter!commands-actions!public! !
 environment!constants!public! !
 expressionStylerClass!constants!public! !
-fileFileIn!commands!public! !
-fileNew!commands!public! !
-fileOpen!commands!public! !
+fileFileIn!commands-actions!public! !
+fileNew!commands-actions!public! !
+fileOpen!commands-actions!public! !
 findDetails!accessing!private! !
 findMatchingClass:in:!helpers!private! !
 findSelectorValidationBlock!accessing!private! !
 formatterClass!accessing!public! !
 formatterClass:!accessing!public! !
-hardResetGUI!commands!public! !
-hasRedoableOperations!public!testing! !
-hasUndoableOperations!public!testing! !
-helpContents!commands!operations!public! !
+hardResetGUI!commands-actions!public! !
+hasTestBrowser!browsing!commands-actions!private! !
+helpContents!commands-actions!operations!public! !
 helpContentsTopic!constants!public! !
-helpGuidedTour!commands!operations!public! !
+helpGuidedTour!commands-actions!operations!public! !
 helpGuidedTourTopic!public! !
 helpRootUrl!constants!public! !
-helpTutorials!commands!operations!public! !
+helpTutorials!commands-actions!operations!public! !
 helpTutorialsTopic!constants!public! !
-helpWhatsNew!commands!operations!public! !
+helpWhatsNew!commands-actions!operations!public! !
 helpWhatsNewTopic!constants!public! !
-helpWhatsThis!commands!public! !
+helpWhatsThis!commands-actions!public! !
 hierarchyBrowserClass!options!public! !
 hierarchyBrowserClass:!options!public! !
 iconForMethod:!helpers!public! !
@@ -4588,8 +4504,8 @@ initializeArgumentClasses!initializing!private! !
 initializeFrom:!public! !
 initializeSystemFolder!initializing!private! !
 inspect:!operations!public! !
-inspectVisualObject!commands!public! !
-installPackage:!commands!private! !
+inspectVisualObject!commands-actions!public! !
+installPackage:!operations!private! !
 instVarAccessFilter:in:!helpers!private! !
 instVarReaderFilter:in:!helpers!private! !
 interruptHotKey!options!public! !
@@ -4610,7 +4526,7 @@ methodsWithCompilationIssuesIn:!private!searching! !
 methodsWithNewBytecodes!enquiries!private! !
 methodsWithNewBytecodesIn:!enquiries!private! !
 methodWorkspaceClass!options!public! !
-minimizeAll!commands!public! !
+minimizeAll!commands-actions!public! !
 modelClassFor:!accessing/classes!public! !
 modelMethodFor:!accessing/classes!public! !
 nameForArgument:!helpers!private! !
@@ -4618,7 +4534,7 @@ nameForBlockOfArity:!helpers!private! !
 namespaceHierarchy!accessing!public! !
 newCodeRefactoringToolFor:!helpers!public!refactoring! !
 newMethodRefactoringToolFor:!helpers!public!refactoring! !
-newWorkspace!commands!public! !
+newWorkspace!commands-actions!public! !
 nonDefaultPublishedAspectsLiteralsMapOf:!private!theming! !
 nonDefaultSystemOptionsLiteralsMap!private!theming! !
 nukeChangeHistory!private!refactoring! !
@@ -4640,40 +4556,39 @@ onMethodUpdated:!event handling!public! !
 onProtocolRemoved:!event handling!operations!protocols!public! !
 onProtocolUpdated:!event handling!operations!protocols!public! !
 onSessionStopped!event handling!public! !
-onTipTextRequired:!event handling!public! !
+onTipTextRequired:query:!event handling!public! !
 onVariableRemoved:!event handling!private! !
 onVariableRenamed:from:!events!public! !
 openHelpTopic:!operations!public! !
 openHelpTopicForTool:!operations!public! !
 openHelpUrl:!operations!public! !
 openLocalHelpUrl:style:!operations!public! !
-openTool:!commands!private! !
+openTool:!operations!private! !
 openUrl:!operations!public! !
-openViewComposer!commands!public! !
-openViewComposerEmpty!commands!public! !
+openViewComposer!commands-actions!public! !
+openViewComposerEmpty!commands-actions!public! !
 openViewComposerOn:!browsing!public! !
-openViewComposerOnNewViewFor:!commands!public! !
-openViewComposerOnViewOf:!commands!public! !
-openWorkspace!commands!public! !
+openViewComposerOnNewViewFor:!commands-actions!public! !
+openViewComposerOnViewOf:!commands-actions!public! !
+openWorkspace!commands-actions!public! !
 openWorkspace:!operations-startup!private! !
-openXmlFile:!commands!private! !
+openXmlFile:!operations!private! !
 overlappingObjectsError:!exceptions!private! !
 pacFileDialogType!constants!private! !
 packageBrowserClass!options!public! !
 packageBrowserClass:!options!public! !
 packagedResourceIdentifierDialogClass!options!public! !
 packageFilesType!constants!private! !
-packageInstallWarning:!commands!private! !
+packageInstallWarning:!operations!private! !
 packageManager!accessing!public! !
 packageOpenFileDialogTypes!constants!private! !
-panic!commands!public! !
+panic!commands-actions!public! !
 patchLevel!patching!public! !
 patchLevel:!patching!private! !
 paxFileDialogType!constants!private! !
-playSaveImageSound!commands!private! !
+playSaveImageSound!commands-actions!private! !
 poolDictionariesFolder!accessing!private! !
-populateMenu:tree:items:!operations!private! !
-populateMessagesMenus:fromMethods:environment:!event handling!menus!private! !
+populateFolderMenu:tree:items:!private! !
 populateToolsMenu:!operations!private! !
 populateWindowMenu:!operations!private! !
 populateWindowMenu:withShells:ofClasses:!operations!private! !
@@ -4684,25 +4599,24 @@ printSignatureForKeywordsAndArgs:on:!autocompletion!helpers!private! !
 privateMethodIcon!constants!private! !
 privatePrefix!constants!private! !
 privatizeMethod:!operations!private! !
-promptForClass!commands!public! !
-promptForClassIn:!commands!public! !
+promptForClass!public! !
+promptForClassIn:!public! !
 promptForClassName:!helpers!private! !
 promptForClassVarName:in:prompt:caption:!helpers!private!refactoring! !
-promptForDefinitionsOf:in:!browsing!commands!private! !
-promptForExpression:caption:!commands!public! !
+promptForDefinitionsOf:in:!browsing!private! !
+promptForExpression:caption:!public! !
 promptForInstVarName:in:prompt:caption:!helpers!private! !
-promptForKeyValuePair:caption:!commands!public! !
-promptForReferencesTo:in:!commands!private! !
+promptForKeyValuePair:caption:!public! !
+promptForReferencesTo:in:!private! !
 promptForReferencesToGlobal:in:!browsing!private! !
-promptForSearchString:caption:!browsing!commands!private! !
+promptForSearchString:caption:!browsing!private! !
 promptForSelector:caption:!helpers!private! !
 promptForSharedVariableName:!browsing!private! !
 protocolBrowserClass!options!public! !
 protocolBrowserClass:!options!public! !
 publicizeMethod:!operations!private! !
 publicMethodIcon!constants!private! !
-queryCommand:!commands!private! !
-redoChange!commands!public! !
+queryCommand:!commands-queries!public! !
 referencesTo:!enquiries!public! !
 referencesTo:in:!enquiries!public! !
 referencesToClass:in:!browsing!public! !
@@ -4710,15 +4624,15 @@ referencesToClassVar:of:within:!enquiries!private! !
 referencesToInstVar:inHierarchyOf:within:!enquiries!public! !
 referencesToLiteral:in:!enquiries!public! !
 referencesToVariable:in:!enquiries!public! !
-reformatAllMethodsIn:!commands!private! !
-reformatSource:in:!commands!private! !
+reformatAllMethodsIn:!operations!private! !
+reformatSource:in:!operations!private! !
 registerSystemEvents!initializing!private! !
 registerTool:!accessing!public! !
 removeClass:fromProtocol:!operations!private!protocols! !
 removeClasses:!operations!public! !
 removeMethod:!operations!public! !
 removeMethod:changes:!operations!private! !
-removeMethods:!commands!public! !
+removeMethods:!operations!public! !
 removeSelector:fromProtocol:!operations!protocols!public! !
 removeSelectors:fromProtocol:!operations!protocols!public! !
 removeSystemFolderIcon:!operations!public! !
@@ -4751,18 +4665,18 @@ samplesFolder!accessing!private! !
 samplesFolderIcon!initializing!private! !
 sanitizeWindowTextForMenu:!helpers!private! !
 saveDefaultPublishedAspectsOf:!operations!private!theming! !
-saveImage!commands!public! !
-saveImageAs!commands!public! !
+saveImage!commands-actions!public! !
+saveImageAs!commands-actions!public! !
 selectMethods:in:withProgress:!private!searching! !
 sessionManager!accessing!private! !
 setCustomDrawAttributes:forClass:!helpers!private! !
 showPrerequisitesForPackage:!helpers!public! !
-showShellWithHandle:!commands!private! !
-showTranscript!commands!public! !
+showShellWithHandle:!private! !
+showTranscript!commands-actions!public! !
 signatureOfMethod:!autocompletion!helpers!private! !
-smalltalkExit!commands!public! !
+smalltalkExit!commands-actions!public! !
 smalltalkFilesType!constants!private! !
-sourceManager!commands!public! !
+sourceManager!accessing!public! !
 splashShowAtStartup!accessing!public! !
 splashShowAtStartup:!accessing!public! !
 stbSaveOn:!binary filing!public! !
@@ -4772,14 +4686,13 @@ systemFolder!accessing!public! !
 systemFolderClass!constants!public! !
 systemFolderClass:!constants!public! !
 systemFolderNamed:!accessing!private! !
-systemOptions!commands!public! !
+systemOptions!accessing!public! !
 testBrowserClass!options!public! !
 toolBackgroundColor!accessing!public! !
 toolBackgroundColor:!accessing!public! !
 toolbarBitmapSize!accessing!public! !
 toolbarBitmapSize:!accessing!public! !
 typeForArgumentClass:!helpers!private! !
-undoChange!commands!public! !
 unimplementedSelectorsIn:!enquiries!public! !
 uninitialize!class hierarchy-removing!private! !
 unregisterTool:!accessing!public! !
@@ -4810,6 +4723,9 @@ changedIcon
 	"Private - Answer the icon to mark source objects that have been changed: ✨"
 
 	^ChangedIcon!
+
+commandAnnotations
+	^CommandAnnotationsRegister.Current annotationsFor: self!
 
 current
 	"Answer the singleton instance of the receiver.
@@ -4949,6 +4865,7 @@ unregisterTool: aToolClass
 	self registeredTools remove: aToolClass ifAbsent: nil! !
 !Tools.SmalltalkSystem class categoriesForMethods!
 changedIcon!constants!private! !
+commandAnnotations!accessing!public! !
 current!instance creation!public! !
 help:!operations!public! !
 icon!constants!public! !

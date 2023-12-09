@@ -43,11 +43,14 @@ beSmallIcons
 canSetAspect
 	"Private - Answer true if the currently selected aspect can be set"
 
-	^self aspectAccessor ifNil: [false] ifNotNil: [:accessor | accessor canSet]!
+	| accessor |
+	accessor := self aspectAccessor.
+	^accessor notNil and: [accessor canSet]!
 
 copyAspect
 	"Copy the value of the currently selected aspect to the clipboard as an object."
 
+	<commandQuery: #hasSelection>
 	| value text |
 	value := self copyOfAccessorValue: self aspectAccessor.
 	text := value isString 
@@ -110,6 +113,11 @@ expandBatchAccessor: batchAccessor
 			aspectTreePresenter selection: newAccessors first.
 			variableNamesTree remove: batchAccessor]!
 
+hasSelection
+	"Private - Answer whether any aspect is selected."
+
+	^aspectTreePresenter hasSelection!
+
 inspecteeSelection
 	"Private - Answer the value associated with the currently selected object"
 
@@ -119,6 +127,7 @@ inspectReferences
 	"Open a new Inspector on all the objects which references the variable
 	selected in variablesModel."
 
+	<commandQuery: #hasSelection>
 	| refs |
 	refs := self aspectValue allReferences copyWithout: self.
 	refs isEmpty
@@ -166,42 +175,31 @@ onViewOpened
 pasteAspect
 	"Paste a copy of the currently clipboard object to the current aspect"
 
+	<commandQuery: #queryPasteAspect:>
 	| objectCopy |
 	objectCopy := Clipboard current getObject.
 	self setAspectValue: objectCopy!
 
-queryCommand: query
-	"Private - Enters details about a potential command for the receiver into the 
-	<CommandQuery>,  query."
-
-	| command accessor |
-	command := query commandSymbol.
+queryPasteAspect: aCommandQuery
+	| class accessor |
 	accessor := self aspectAccessor.
-	(#(#copyAspect #inspectAspect #inspectIt #browseIt #inspectReferences) identityIncludes: command)
+	(accessor notNil and: 
+			[accessor canSet and: 
+					[Clipboard current isObjectAvailable
+						and: [(class := Clipboard current getObjectClassIfNone: nil) notNil]]])
 		ifTrue: 
-			[query isEnabled: accessor notNil.
-			^true].
-	#resetAspect == command
+			[aCommandQuery
+				beEnabled;
+				expandMenuTextWith: class printString]!
+
+queryResetAspect: aCommandQuery
+	| accessor |
+	accessor := self aspectAccessor.
+	(accessor notNil and: [accessor canReset])
 		ifTrue: 
-			[query
-				isEnabled: (accessor notNil and: [accessor canReset]);
-				text: (query commandDescription menuText
-							expandMacrosWithArguments: { accessor isNil or: [accessor aspectDescriptor hasDefault not] }
-							locale: Locale smalltalk).
-			^true].
-	#pasteAspect == command
-		ifTrue: 
-			[| text class |
-			text := 'nil'.
-			(Clipboard current isObjectAvailable
-				and: [(class := Clipboard current getObjectClassIfNone: nil) notNil])
-				ifTrue: 
-					[text := class printString.
-					query isEnabled: accessor notNil].
-			query text: (query commandDescription description expandMacrosWithArguments: { text }
-						locale: Locale smalltalk).
-			^true].
-	^super queryCommand: query!
+			[aCommandQuery
+				beEnabled;
+				expandMenuTextWith: accessor aspectDescriptor hasDefault not]!
 
 refresh
 	^self subclassResponsibility!
@@ -209,17 +207,18 @@ refresh
 resetAspect
 	"Clears the currently selected aspect to nil or its default value"
 
+	<commandQuery: #queryResetAspect:>
 	| aspect default prompt format |
 	aspect := self aspectAccessor aspectDescriptor.
 	default := aspect defaultValue.
 	prompt := MessageBox new.
-	format := 'Are you sure you wish to reset this item to <1d>?'.
+	format := 'Are you sure you wish to reset this item to <d>?'.
 	default isNil
 		ifTrue: [prompt headline: format << 'nil']
 		ifFalse: 
 			[prompt
 				headline: format << 'it''s default';
-				detailsText: 'The aspect will be reset to it''s default value, <1d>' << default].
+				detailsText: 'The aspect will be reset to it''s default value, <d>' << default].
 	prompt confirm ifTrue: [self setAspectValue: default value]!
 
 setAspectValue: anObject
@@ -234,23 +233,25 @@ aspectTreePresenter!public! !
 aspectValue!accessing!private! !
 beLargeIcons!operations!public! !
 beSmallIcons!operations!public! !
-canSetAspect!operations!private! !
-copyAspect!commands!public! !
+canSetAspect!commands-queries!private!testing! !
+copyAspect!commands-actions!public! !
 copyOfAccessorValue:!accessing!private! !
 createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !
 expandBatchAccessor:!event handling!private! !
+hasSelection!commands-queries!private!testing! !
 inspecteeSelection!accessing!private! !
-inspectReferences!commands!public! !
+inspectReferences!commands-actions!public! !
 model:!accessing!public! !
 onAspectSelected!event handling!private! !
 onDragObjectRef:!event handling!private! !
 onViewAvailable!event handling!public! !
 onViewOpened!event handling!public! !
-pasteAspect!commands!public! !
-queryCommand:!commands!private! !
-refresh!commands!public! !
-resetAspect!commands!public! !
+pasteAspect!commands-actions!public! !
+queryPasteAspect:!commands-queries!private! !
+queryResetAspect:!commands-queries!private! !
+refresh!commands-actions!public! !
+resetAspect!commands-actions!public! !
 setAspectValue:!accessing!private! !
 !
 

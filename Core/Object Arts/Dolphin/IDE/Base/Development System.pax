@@ -437,6 +437,7 @@ package setMethodNames: #(
 	#(#{Kernel.MethodAnnotations} #aspectDisplayOn:)
 	#(#{Kernel.MethodProtocol} #icon)
 	#(#{Kernel.MethodProtocol class} #ansiIcon)
+	#(#{Kernel.MethodProtocol class} #isValidProtocolName:)
 	#(#{Kernel.MethodProtocol class} #publishedEventsOfInstances)
 	#(#{Kernel.MethodProtocol class} #readOnlyIcon)
 	#(#{Kernel.Namespace class} #isAbstract)
@@ -495,7 +496,7 @@ package setMethodNames: #(
 	#(#{Kernel.StInstanceVariable} #classification)
 	#(#{Kernel.StInstanceVariable} #icon)
 	#(#{Kernel.StInstanceVariable} #iconInFrame:)
-	#(#{Kernel.StInstanceVariable} #printInfoTipOn:)
+	#(#{Kernel.StInstanceVariable} #printDescriptionOn:)
 	#(#{Kernel.StInstanceVariable} #printInfoTipOn:frame:)
 	#(#{Kernel.StInstanceVariable} #valueClass:)
 	#(#{Kernel.StInstanceVariable} #valueInFrame:)
@@ -508,7 +509,7 @@ package setMethodNames: #(
 	#(#{Kernel.StLocalVariable} #category)
 	#(#{Kernel.StLocalVariable} #classification)
 	#(#{Kernel.StLocalVariable} #debugInfoInFrame:)
-	#(#{Kernel.StLocalVariable} #printInfoTipOn:)
+	#(#{Kernel.StLocalVariable} #printDescriptionOn:)
 	#(#{Kernel.StLocalVariable} #printInfoTipOn:frame:)
 	#(#{Kernel.StLocalVariable} #valueClass:)
 	#(#{Kernel.StMessageNode} #displayOn:)
@@ -524,7 +525,7 @@ package setMethodNames: #(
 	#(#{Kernel.StProgramNode} #preComments)
 	#(#{Kernel.StProgramNode} #publishedAspects)
 	#(#{Kernel.StReturnNode} #displayOn:)
-	#(#{Kernel.StSelfVariable} #printInfoTipOn:)
+	#(#{Kernel.StSelfVariable} #printDescriptionOn:)
 	#(#{Kernel.StSelfVariable} #printInfoTipOn:frame:)
 	#(#{Kernel.StSelfVariable} #valueClass)
 	#(#{Kernel.StSelfVariable} #valueClass:)
@@ -538,11 +539,12 @@ package setMethodNames: #(
 	#(#{Kernel.StSpecialVariableNode} #valueClassIn:)
 	#(#{Kernel.StStaticVariable} #classification)
 	#(#{Kernel.StStaticVariable} #displayOn:)
+	#(#{Kernel.StStaticVariable} #printDescriptionOn:)
 	#(#{Kernel.StStaticVariable} #printInfoTipOn:)
 	#(#{Kernel.StStaticVariable} #staticValueClass)
 	#(#{Kernel.StStaticVariable} #valueClass)
 	#(#{Kernel.StStaticVariable class} #icon)
-	#(#{Kernel.StSuperVariable} #printInfoTipOn:)
+	#(#{Kernel.StSuperVariable} #printDescriptionOn:)
 	#(#{Kernel.StSuperVariable} #valueClass)
 	#(#{Kernel.StSuperVariable} #valueClass:)
 	#(#{Kernel.StSuperVariable class} #icon)
@@ -559,10 +561,12 @@ package setMethodNames: #(
 	#(#{Kernel.StToken} #postComments)
 	#(#{Kernel.StToken} #preComments)
 	#(#{Kernel.StVariable} #classification)
+	#(#{Kernel.StVariable} #description)
 	#(#{Kernel.StVariable} #displayOn:)
 	#(#{Kernel.StVariable} #iconInFrame:)
 	#(#{Kernel.StVariable} #infoTip)
 	#(#{Kernel.StVariable} #infoTip:)
+	#(#{Kernel.StVariable} #printDescriptionOn:)
 	#(#{Kernel.StVariable} #printInfoTipOn:)
 	#(#{Kernel.StVariable} #printInfoTipOn:frame:)
 	#(#{Kernel.StVariable} #staticValueClass)
@@ -573,7 +577,7 @@ package setMethodNames: #(
 	#(#{Kernel.StVariableNode} #shortName)
 	#(#{Kernel.StVariableNode class} #icon)
 	#(#{Kernel.StWorkspaceVariable} #classification)
-	#(#{Kernel.StWorkspaceVariable} #printInfoTipOn:)
+	#(#{Kernel.StWorkspaceVariable} #printDescriptionOn:)
 	#(#{Kernel.StWorkspaceVariable} #staticValueClass)
 	#(#{Kernel.StWorkspaceVariable class} #icon)
 	#(#{OS._FPIEEE_RECORD} #printFieldsOn:)
@@ -585,6 +589,8 @@ package setMethodNames: #(
 	#(#{OS.LVITEMW} #printableFields)
 	#(#{OS.MSG} #printOn:)
 	#(#{OS.PALETTEENTRY} #printFields:on:)
+	#(#{OS.PrintDialogStructure} #printableFields)
+	#(#{OS.PRINTDLGEXW} #printableFields)
 	#(#{OS.RegKeyAbstract} #debugPrintOn:)
 	#(#{OS.RGBQUAD} #printFields:on:)
 	#(#{OS.SYSTEMTIME} #printOn:)
@@ -855,6 +861,7 @@ package setPrerequisites: #(
 	'..\..\MVP\Views\Common Controls\Dolphin Common Controls'
 	'..\..\MVP\Dialogs\Common\Dolphin Common Dialogs'
 	'..\..\MVP\Dialogs\Common\Dolphin Common Font Dialog'
+	'..\..\MVP\Dialogs\Common\Dolphin Common Print Dialog'
 	'..\..\MVP\Views\Control Bars\Dolphin Control Bars'
 	'..\..\MVP\Base\Dolphin ControlViews Base'
 	'..\..\MVP\Views\Date Time\Dolphin Date Time Controls'
@@ -1733,7 +1740,7 @@ Tools.MethodBrowserShell
 	classConstants: {}!
 Tools.SmalltalkWorkspace
 	subclass: #'Tools.MethodWorkspace'
-	instanceVariableNames: 'parseTree refactoringTool'
+	instanceVariableNames: 'parseTree'
 	classVariableNames: 'AutoParseDwell'
 	imports: #()
 	classInstanceVariableNames: ''
@@ -4334,7 +4341,8 @@ decompileDefinition
 	"Remove generated accessor methods from the receiver. The template will be lazily rebuilt."
 
 	{self. self class}
-		do: [:each | [each removeCategory: self autoGenCategory] on: NotFoundError do: [:e | e notify]]!
+		do: [:each | [each removeCategory: self autoGenCategory] on: NotFoundError do: [:e | e notify]].
+	self hasUncompiledFields: true!
 
 formatAndCompile: aString categories: categories
 	| source |
@@ -5245,6 +5253,13 @@ ansiIcon
 
 	^Icon fromId: 'METHODPROTOCOL_ANSI.ICO'!
 
+isValidProtocolName: aString
+	^aString notEmpty and: 
+			[aString first ~~ $\x20 and: 
+					[aString last ~~ $\x20 and: 
+							[aString
+								allSatisfy: [:each | each == $\x20 or: [each == $_ or: [each isEnglishLetter or: [each isDigit]]]]]]]!
+
 publishedEventsOfInstances
     	"Answer a <Set> of <Symbol>s that describe the published events triggered
     	by instances of the receiver."
@@ -5260,6 +5275,7 @@ readOnlyIcon
 	^Icon fromId: 'METHODPROTOCOL_READONLY.ICO'! !
 !Kernel.MethodProtocol class categoriesForMethods!
 ansiIcon!constants!private! !
+isValidProtocolName:!public! !
 publishedEventsOfInstances!events!public! !
 readOnlyIcon!constants!private! !
 !
@@ -5833,7 +5849,7 @@ icon
 iconInFrame: aStackFrame
 	^aStackFrame receiver ifNotNil: [:receiver | (receiver instVarAt: index) icon] ifNil: [self icon]!
 
-printInfoTipOn: aStream
+printDescriptionOn: aStream
 	aStream
 		nextPutAll: 'Instance variable ''';
 		print: (scope methodClass whichClassDefinesInstVar: name);
@@ -5859,7 +5875,7 @@ valueInFrame: aStackFrame
 classification!accessing!public! !
 icon!constants!public! !
 iconInFrame:!public! !
-printInfoTipOn:!accessing!public! !
+printDescriptionOn:!accessing!public! !
 printInfoTipOn:frame:!accessing!public! !
 valueClass:!public! !
 valueInFrame:!accessing!public! !
@@ -5934,7 +5950,7 @@ classification
 debugInfoInFrame: aStackFrame
 	^aStackFrame temps detect: [:each | each first = self name] ifNone: nil!
 
-printInfoTipOn: aStream
+printDescriptionOn: aStream
 	scope
 		ifNotNil: 
 			[aStream
@@ -5965,7 +5981,7 @@ valueClass: aStackFrame
 category!accessing!public! !
 classification!accessing!public! !
 debugInfoInFrame:!accessing!public! !
-printInfoTipOn:!accessing!public! !
+printDescriptionOn:!accessing!public! !
 printInfoTipOn:frame:!accessing!public! !
 valueClass:!enquiries!public! !
 !
@@ -6126,9 +6142,7 @@ displayOn:!printing!public! !
 
 !Kernel.StSelfVariable methodsFor!
 
-printInfoTipOn: aStream
-	"Answer an informative tip for this variable that might be displayed, for example, when the user is hovering over it in a browser workspace."
-
+printDescriptionOn: aStream
 	aStream
 		nextPutAll: 'receiver: a subinstance of ';
 		print: scope methodClass!
@@ -6150,7 +6164,7 @@ valueClass
 valueClass: aStackFrame
 	^aStackFrame receiver basicClass! !
 !Kernel.StSelfVariable categoriesForMethods!
-printInfoTipOn:!accessing!public! !
+printDescriptionOn:!accessing!public! !
 printInfoTipOn:frame:!accessing!public! !
 valueClass!accessing!public! !
 valueClass:!enquiries!public! !
@@ -6237,30 +6251,40 @@ displayOn: aStream
 
 	binding ifNil: [super displayOn: aStream] ifNotNil: [binding displayOn: aStream]!
 
+printDescriptionOn: aStream
+	"Print an informative description of this variable on the <puttableStream> argument."
+
+	binding isNil
+		ifTrue: 
+			[aStream nextPutAll: 'Undeclared'.
+			^false].
+	binding isClassVariable
+		ifTrue: 
+			[aStream
+				nextPutAll: 'Class ';
+				nextPutAll: (binding isImmutable ifTrue: ['constant '] ifFalse: ['variable ']);
+				nextPutAll: binding fullName]
+		ifFalse: 
+			[binding isClassBinding
+				ifTrue: 
+					[aStream
+						nextPutAll: 'Class ';
+						nextPutAll: binding fullName.
+					^false]
+				ifFalse: 
+					[aStream
+						nextPutAll: 'Shared variable ';
+						nextPutAll: binding fullName]].
+	^true!
+
 printInfoTipOn: aStream
 	"Print an informative tip on the <puttableStream> argument for this variable that might be displayed, for example, when the user is hovering over it in a browser workspace."
 
 	"Here we try to provide some useful information, such as the fully qualified name of a class referenced only by a short name, whether the variable is a class or shared variable, or a class constant."
 
-	| prefix value |
-	binding isNil
-		ifTrue: 
-			[aStream nextPutAll: 'Undeclared'.
-			^self].
-	prefix := binding isClassVariable
-				ifTrue: [binding isImmutable ifTrue: ['Class constant '] ifFalse: ['Class variable ']]
-				ifFalse: 
-					[binding isClassBinding
-						ifTrue: 
-							[aStream
-								nextPutAll: 'Class ';
-								nextPutAll: binding fullName.
-							^self]
-						ifFalse: ['Shared variable ']].
-	aStream
-		nextPutAll: prefix;
-		nextPutAll: binding fullName;
-		nextPutAll: ': '.
+	| value |
+	(self printDescriptionOn: aStream) ifFalse: [^self].
+	aStream nextPutAll: ': '.
 	value := binding value.
 	value debugPrintOn: aStream.
 	value isInteger ifFalse: [^self].
@@ -6283,6 +6307,7 @@ valueClass
 !Kernel.StStaticVariable categoriesForMethods!
 classification!accessing!public! !
 displayOn:!accessing!public! !
+printDescriptionOn:!accessing!public! !
 printInfoTipOn:!accessing!public! !
 staticValueClass!accessing!public! !
 valueClass!accessing!public! !
@@ -6300,9 +6325,7 @@ icon!constants!public! !
 
 !Kernel.StSuperVariable methodsFor!
 
-printInfoTipOn: aStream
-	"Answer an informative tip for this variable that might be displayed, for example, when the user is hovering over it in a browser workspace."
-
+printDescriptionOn: aStream
 	aStream
 		nextPutAll: 'Supersend to ';
 		print: scope methodClass superclass!
@@ -6315,7 +6338,7 @@ valueClass
 valueClass: aStackFrame
 	^aStackFrame method methodClass superclass! !
 !Kernel.StSuperVariable categoriesForMethods!
-printInfoTipOn:!accessing!public! !
+printDescriptionOn:!accessing!public! !
 valueClass!accessing!public! !
 valueClass:!enquiries!public! !
 !
@@ -6448,6 +6471,19 @@ preComments!accessing!public! !
 classification
 	^self subclassResponsibility!
 
+description
+	"Answer an informative description for this variable that might be displayed, for example, in a context menu."
+
+	| stream |
+	stream := LimitedWriteStream
+				over: ((WriteStream on: (String new: 32))
+						locale: SmalltalkLocale.Hex;
+						yourself)
+				limit: 120
+				limitBlock: [:s | ^s contents , ' … etc …'].
+	self printDescriptionOn: stream.
+	^stream contents!
+
 displayOn: aStream
 	"Write a informative tip for this variable to the <puttableStream> argument, that might be displayed, for example, when the user is hovering over it in a browser workspace."
 
@@ -6482,10 +6518,13 @@ infoTip: aStackFrame
 	self printInfoTipOn: stream frame: aStackFrame.
 	^stream contents!
 
+printDescriptionOn: aStream
+	self displayOn: aStream!
+
 printInfoTipOn: aStream
 	"Write a informative tip for this variable to the <puttableStream> argument, that might be displayed, for example, when the user is hovering over it in a browser workspace."
 
-	self displayOn: aStream!
+	self printDescriptionOn: aStream!
 
 printInfoTipOn: aStream frame: aStackFrame
 	"Write a informative tip for this variable to the <puttableStream> argument, that might be displayed, for example, when the user is hovering over it in a debugger workspace."
@@ -6508,10 +6547,12 @@ valueClass: aStackFrame
 	^self valueClass! !
 !Kernel.StVariable categoriesForMethods!
 classification!accessing!public! !
+description!accessing!public! !
 displayOn:!accessing!public! !
 iconInFrame:!public! !
 infoTip!accessing!public! !
 infoTip:!accessing!public! !
+printDescriptionOn:!accessing!public! !
 printInfoTipOn:!accessing!public! !
 printInfoTipOn:frame:!accessing!public! !
 staticValueClass!accessing!public! !
@@ -6558,15 +6599,11 @@ icon!constants!public! !
 classification
 	^#workspace!
 
-printInfoTipOn: aStream
-	"Print an informative tip on the <puttableStream> argument for this variable that might be displayed, for example, when the user is hovering over it in a browser workspace."
-
+printDescriptionOn: aStream
 	aStream
 		nextPutAll: 'Workspace variable ';
-		nextPutAll: binding fullName;
-		nextPutAll: ': ';
-		debugPrint: binding value;
-		contents!
+		nextPutAll: binding fullName.
+	^true!
 
 staticValueClass
 	"Answer the class that the variable should be assumed to hold for the purposes of deducing what messages it may understand, or nil if not known with any certainty."
@@ -6574,7 +6611,7 @@ staticValueClass
 	^binding value basicClass! !
 !Kernel.StWorkspaceVariable categoriesForMethods!
 classification!accessing!public! !
-printInfoTipOn:!accessing!public! !
+printDescriptionOn:!accessing!public! !
 staticValueClass!accessing!public! !
 !
 
@@ -6763,6 +6800,22 @@ printFields: aCollection on: aStream
 	aStream print: self color! !
 !OS.PALETTEENTRY categoriesForMethods!
 printFields:on:!printing!private! !
+!
+
+!OS.PrintDialogStructure methodsFor!
+
+printableFields
+	^#(#ownerView #devMode #devNames) , (super printableFields copyFrom: 5)! !
+!OS.PrintDialogStructure categoriesForMethods!
+printableFields!printing!private! !
+!
+
+!OS.PRINTDLGEXW methodsFor!
+
+printableFields
+	^#(#ownerView #devMode #flags #Flags2 #ExclusionFlags #pageRanges #printableRange #nCopies #nStartPage #dwResultAction)! !
+!OS.PRINTDLGEXW categoriesForMethods!
+printableFields!printing!private! !
 !
 
 !OS.RegKeyAbstract methodsFor!
@@ -7574,6 +7627,7 @@ publishedAspectsOfInstances
 		add: (Aspect string: #description);
 		add: (Aspect hotkey: #acceleratorKey);
 		add: (Aspect boolean: #isModalCommand);
+		add: (Aspect boolean: #hasTextSubstitutions);
 		add: (Aspect icon: #image);
 		yourself! !
 !UI.CommandDescription class categoriesForMethods!
@@ -8356,11 +8410,17 @@ defaultAcceleratorKeyBindings
 editNewDefaultView
 	"Open the View Composer to create a new view for the receiver."
 
-	| resourceIdentifier vc resName |
-	resName := Prompter
-				on: self defaultView
+	| resourceIdentifier vc resName prompter |
+	prompter := Prompter
+				createOn: self defaultView
 				prompt: 'Resource name:'
 				caption: 'Create a view for class ' , self name.
+	prompter validater: 
+			[:proposedName |
+			(ResourceIdentifier isValidResourceName: proposedName)
+				ifTrue: [ValidationResult new]
+				ifFalse: [ValidationResult errorMessage: '<p> is not a valid resource name' << proposedName]].
+	resName := prompter showModal.
 	resName isNil ifTrue: [^self].
 	resourceIdentifier := ResourceIdentifier class: self name: resName.
 	(resourceIdentifier exists not or: 
@@ -8525,9 +8585,10 @@ hiddenObjects
 prompt
 	"Prompt for and answer a new ResourceIdentifier using the receiver to give the default settings."
 
-	^(((self owningClass == Presenter or: [self owningClass owningPackage isNil])
-		ifTrue: [SmalltalkSystem current resourceIdentifierDialogClass]
-		ifFalse: [SmalltalkSystem current packagedResourceIdentifierDialogClass]) createOn: self)
+	^(((self owningClass == Presenter
+		or: [self owningClass isNil or: [self owningClass owningPackage isNil]])
+			ifTrue: [SmalltalkSystem current resourceIdentifierDialogClass]
+			ifFalse: [SmalltalkSystem current packagedResourceIdentifierDialogClass]) createOn: self)
 		showModal!
 
 publishedAspects
@@ -8569,7 +8630,7 @@ sourceFilerClass!development!private! !
 prompt
 	"Prompt for and answer a new ResourceIdentifier."
 
-	^self new prompt!
+	^(self class: nil name: 'Default view') prompt!
 
 publishedAspectsOfInstances
 	^super publishedAspectsOfInstances
@@ -9040,11 +9101,7 @@ browseItCommand
 	^nil!
 
 queryBrowseIt: aCommandQuery
-	self browseItCommand
-		ifNil: 
-			["Not handled at this level, but continue searching the chain"
-			aCommandQuery text: aCommandQuery menuText << $…]
-		ifNotNil: [:selector | self queryContextCommand: aCommandQuery as: selector]! !
+	self browseItCommand ifNotNil: [:selector | self queryContextCommand: aCommandQuery as: selector]! !
 !UI.SelectableItemsPresenter categoriesForMethods!
 browseIt!commands-actions!public! !
 browseItCommand!helpers!private! !
@@ -9440,7 +9497,7 @@ resource_Class_browser_tools
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Class_browser_tools)
 	"
 
-	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.Toolbar} 38 #{Core.Array} 28 nil nil 50 2 8 1409289036 131137 32 nil nil nil 517 nil nil nil 32 6 #{Graphics.Color} #default nil 518 #{Kernel.STBIdentityDictionaryProxy} #{Core.IdentityDictionary} 8 #() nil nil nil nil 50 7 1094 1 #{UI.ToolbarIconButton} 32 17 1350 4 #{UI.CommandDescription} #historyBack 8 'Back' 1 1 838 4 #{Graphics.Icon} nil true 1030 #{Graphics.ImageFromStringResourceInitializer} 8 'HistoryBack.ico' 838 1 #{External.ResourceLibrary} 8 'dolphindr8.dll' 65541 nil nil 210 32 17 242 #historyForward 8 'Forward' 1 1 290 nil true 322 8 'HistoryForward.ico' 384 65541 nil nil 582 1 #{UI.ToolbarSeparator} 32 1 210 32 5 242 #toggleShowFullNames 8 'Show Full Class Names' 1 1 290 nil true 322 8 'Namespace.ico' 384 65541 nil nil 210 32 1 242 #newMethod 8 'New Method' 1 1 290 nil true 322 8 'NewMethod.ico' 384 65541 nil nil 210 32 1 242 #newClass 8 'New Class' 1 1 290 nil true 322 8 'NewClass.ico' 384 65541 nil nil 210 32 1 242 #toggleShowInheritedMethods 8 'Show Inherited Methods' 1 1 290 nil true 322 8 'ToggleLocalHierarchy.ico' 384 65541 nil nil nil nil 1 nil nil nil nil nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 6143 21 1026 361 51 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 179 12 0 0 35 0 0 0] 8 #() 1026 193 193 nil 29)!
+	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.Toolbar} 38 #{Core.Array} 28 nil nil 50 2 8 1409289036 131137 32 nil nil nil 517 nil nil nil 32 6 #{Graphics.Color} #default nil 518 #{Kernel.STBIdentityDictionaryProxy} #{Core.IdentityDictionary} 8 #() nil nil nil nil 50 7 1094 1 #{UI.ToolbarIconButton} 32 17 1350 4 #{UI.CommandDescription} #historyBack 8 'Back to <d:…>' 1 17 838 4 #{Graphics.Icon} nil true 1030 #{Graphics.ImageFromStringResourceInitializer} 8 'HistoryBack.ico' 838 1 #{External.ResourceLibrary} 8 'dolphindr8.dll' 65541 nil nil 210 32 17 242 #historyForward 8 'Forward to <d:…>' 1 17 290 nil true 322 8 'HistoryForward.ico' 384 65541 nil nil 582 1 #{UI.ToolbarSeparator} 32 1 210 32 5 242 #toggleShowFullNames 8 '<?Hide:Show> Full Class Names' 1 17 290 nil true 322 8 'Namespace.ico' 384 65541 nil nil 210 32 1 242 #newMethod 8 'New <s:Method>' 1 17 290 nil true 322 8 'NewMethod.ico' 384 65541 nil nil 210 32 1 242 #newClass 8 'New subclass of <p>' 1 17 290 nil true 322 8 'NewClass.ico' 384 65541 nil nil 210 32 1 242 #toggleShowInheritedMethods 8 '<?Hide:Show> Inherited Methods' 1 17 290 nil true 322 8 'ToggleLocalHierarchy.ico' 384 65541 nil nil nil nil 1 nil nil nil nil nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 6143 21 1026 361 51 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 179 12 0 0 35 0 0 0] 8 #() 1026 193 193 nil 29)!
 
 resource_Debugger_tools
 	"Answer the literal data from which the 'Debugger tools' resource can be reconstituted.
@@ -9490,7 +9547,7 @@ resource_Smalltalk_tools
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Smalltalk_tools)
 	"
 
-	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.Toolbar} 38 #{Core.Array} 28 nil nil 50 2 8 1409289036 131137 32 nil nil nil 517 nil nil nil 32 6 #{Graphics.Color} #default nil 518 #{Kernel.STBIdentityDictionaryProxy} #{Core.IdentityDictionary} 8 #() nil nil nil nil 50 12 1094 1 #{UI.ToolbarIconButton} 32 1 1350 4 #{UI.CommandDescription} #newWorkspace 8 'New Workspace' 1 1 838 4 #{Graphics.Icon} nil true 1030 #{Graphics.ImageFromStringResourceInitializer} 8 'NewWorkspace.ico' 838 1 #{External.ResourceLibrary} 8 'dolphindr8.dll' 65541 nil nil 210 32 1 242 #openWorkspace 8 'Open Workspace' 1 1 290 nil true 322 8 'OpenWorkspace.ico' 384 65541 nil nil 210 32 1 242 #browseSystem 8 'Open System Browser' 1 1 290 nil true 322 8 'SystemBrowserShell.ico' 384 65541 nil nil 210 32 1 242 #browseHierarchy 8 'Open Class Hierarchy Browser' 1 1 290 nil true 322 8 'ClassBrowserShell.ico' 384 65541 nil nil 210 32 1 242 #browsePackages 8 'Open Package Browser' 1 1 290 nil true 322 8 'PackageBrowserShell.ico' 384 65541 nil nil 210 32 1 242 #browseTests 8 'Open Test Browser' 1 1 290 nil true 322 8 'UnitTestPlugin.ico' 384 65541 nil nil 210 32 1 242 #browseResources 8 'Open View Browser' 1 1 290 nil true 322 8 'ResourceBrowser.ico' 384 65541 nil nil 210 32 1 242 #openViewComposer 8 'Open View Composer' 1 1 290 nil true 322 8 'ViewComposer.ico' 384 65541 nil nil 210 32 1 242 #showTranscript 8 'Show Transcript' 1 1 290 nil true 322 8 'TranscriptShell.ico' 384 65541 nil nil 210 32 1 242 #inspectVisualObject 8 'Visual Object Finder' 1 1 290 nil true 322 8 'VisualObjectFinder.ico' 384 65541 nil nil 210 32 17 242 #newIdeaSpace 8 'New Idea Space' 1 1 290 nil true 322 8 'IdeaSpaceShell.ico' 384 65541 nil nil 582 1 #{UI.ToolbarSeparator} 32 1 nil nil 1 nil nil nil nil 838 1 #{UI.FlowLayout} 1 1 1 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 6143 21 1538 553 51 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 19 13 0 0 35 0 0 0] 8 #() 1538 193 193 nil 29)!
+	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.Toolbar} 38 #{Core.Array} 28 nil nil 50 2 8 1409289036 131137 32 nil nil nil 517 nil nil nil 32 6 #{Graphics.Color} #default nil 518 #{Kernel.STBIdentityDictionaryProxy} #{Core.IdentityDictionary} 8 #() nil nil nil nil 50 12 1094 1 #{UI.ToolbarIconButton} 32 1 1350 4 #{UI.CommandDescription} #newWorkspace 8 'New Workspace' 1 1 838 4 #{Graphics.Icon} nil true 1030 #{Graphics.ImageFromStringResourceInitializer} 8 'NewWorkspace.ico' 838 1 #{External.ResourceLibrary} 8 'dolphindr8.dll' 65541 nil nil 210 32 1 242 #openWorkspace 8 'Open Workspace' 1 1 290 nil true 322 8 'OpenWorkspace.ico' 384 65541 nil nil 210 32 1 242 #browseSystem 8 'Open System Browser on <d:Object>' 1 17 290 nil true 322 8 'SystemBrowserShell.ico' 384 65541 nil nil 210 32 1 242 #browseHierarchy 8 'Open Class Hierarchy Browser on <d:Object>' 1 17 290 nil true 322 8 'ClassBrowserShell.ico' 384 65541 nil nil 210 32 1 242 #browsePackages 8 'Open Package Browser' 1 1 290 nil true 322 8 'PackageBrowserShell.ico' 384 65541 nil nil 210 32 1 242 #browseTests 8 'Open Test Browser' 1 1 290 nil true 322 8 'UnitTestPlugin.ico' 384 65541 nil nil 210 32 1 242 #browseResources 8 'Open View Browser' 1 1 290 nil true 322 8 'ResourceBrowser.ico' 384 65541 nil nil 210 32 1 242 #openViewComposer 8 'Open View Composer' 1 1 290 nil true 322 8 'ViewComposer.ico' 384 65541 nil nil 210 32 1 242 #showTranscript 8 'Show Transcript' 1 1 290 nil true 322 8 'TranscriptShell.ico' 384 65541 nil nil 210 32 1 242 #inspectVisualObject 8 'Visual Object Finder' 1 1 290 nil true 322 8 'VisualObjectFinder.ico' 384 65541 nil nil 210 32 17 242 #newIdeaSpace 8 'New Idea Space' 1 1 290 nil true 322 8 'IdeaSpaceShell.ico' 384 65541 nil nil 582 1 #{UI.ToolbarSeparator} 32 1 nil nil 1 nil nil nil nil 838 1 #{UI.FlowLayout} 1 1 1 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 6143 21 1538 553 51 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 19 13 0 0 35 0 0 0] 8 #() 1538 193 193 nil 29)!
 
 resource_View_composer_alignment_tools
 	"Answer the literal data from which the 'View composer alignment tools' resource can be reconstituted.

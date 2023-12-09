@@ -512,7 +512,7 @@ queryFilterOutRule: aCommandQuery
 	| text failedRule |
 	failedRule := self failedRule.
 	text := (failedRule notNil and: [failedRule problemCount > 1])
-				ifTrue: ['Ignore these <1p> rule failures' expandMacrosWith: failedRule problemCount]
+				ifTrue: ['Ignore these <d> rule failures' << failedRule problemCount]
 				ifFalse: ['Ignore this rule failure'].
 	aCommandQuery
 		isEnabled: (failedRule notNil and: [failedRule notEmpty]);

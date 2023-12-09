@@ -92,12 +92,12 @@ onShownInBrowser
 
 queryToggleShowInheritedResources: aCommandQuery
 	aCommandQuery
-		isEnabled: true;
+		beEnabled;
 		isChecked: self isShowingInheritedResources!
 
 queryToggleShowSubclassResources: aCommandQuery
 	aCommandQuery
-		isEnabled: true;
+		beEnabled;
 		isChecked: self isShowingSubclassResources!
 
 showClassResources

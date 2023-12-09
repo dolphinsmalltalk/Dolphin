@@ -99,20 +99,6 @@ publishedAspects
 					yourself);
 		yourself!
 
-queryCommand: aCommandQuery
-	"Private - Enter details about a potential command for the receiver into the <CommandQuery>."
-
-	| cmd |
-	cmd := aCommandQuery commandSymbol.
-	#browseSystem == cmd
-		ifTrue: 
-			[aCommandQuery
-				isEnabled: true;
-				text: (aCommandQuery commandDescription menuText expandMacrosWithArguments: {'System'}
-							locale: Locale smalltalk).
-			^true].
-	^super queryCommand: aCommandQuery!
-
 recompileDiffs: aCompiledMethod
 	(#{Smalltalk.DiffBrowser} value show: 'Vertical view')
 		caption: aCompiledMethod printString;
@@ -158,7 +144,6 @@ openDeploymentLog:!helpers!private! !
 packagedResourceIdentifierDialogClass!options!public! !
 packagedResourceIdentifierDialogClass:!accessing!public! !
 publishedAspects!constants!public! !
-queryCommand:!commands!private! !
 recompileDiffs:!public! !
 systemBrowserClass!accessing!public! !
 systemBrowserClass:!accessing!public! !

@@ -20,14 +20,16 @@ Instance Variables:
 !Tools.PackageDependencyPresenter categoriesForClass!MVP-Presenters!MVP-Resources-IDE Tools! !
 !Tools.PackageDependencyPresenter methodsFor!
 
-browsePackages
+browsePackage
 	"Browse the currently selected prerequisite package."
 
+	<commandQuery: #hasPackageSelection>
 	self selectedPair ifNotNil: [:selected | selected key browse]!
 
 browseTrace
 	"Browse the currently selected trace object."
 
+	<commandQuery: #hasTraceSelection>
 	| trace |
 	trace := tracesPresenter selections.
 	trace notEmpty ifTrue: [
@@ -45,6 +47,7 @@ childrenFor: aTreeNode
 choosePackage
 	"Prompt for the user to repackage the selected objects."
 
+	<commandQuery: #hasTraceSelections>
 	| pkg newPkg dependees |
 	dependees := IdentitySet new.
 	tracesPresenter selections do: [:t | dependees add: t first].
@@ -55,12 +58,58 @@ choosePackage
 				showModalOn: pkg asValue
 				caption: 'Re-package dependencies…'
 				default: nil.
-	newPkg isNil ifFalse: [self queryMoveObjects: dependees toPackage: newPkg]!
+	newPkg isNil ifFalse: [self confirmMoveObjects: dependees toPackage: newPkg]!
 
 clear
 	"Clear down the receiver"
 
 	self packages: #()!
+
+confirmMoveObjects: aCollection toPackage: aPackage
+	"Private - Move the array of packageable objects, anArray, to the specified package."
+
+	| mb |
+	mb := MessageBox new.
+	aCollection size = 1
+		ifTrue: 
+			[| object |
+			object := aCollection single.
+			mb
+				headline: 'Repackage <1d>?' << object;
+				text: 'Ownership will be moved from the package <2p> to <3p>.'
+							<< { object. object owningPackage name. aPackage name }]
+		ifFalse: 
+			[| stream max sorted |
+			mb headline: 'Repackage <1d> source objects?'.
+			stream := String writeStream.
+			stream
+				nextPutAll: 'The following source objects will be moved to the package ';
+				print: aPackage name;
+				nextPut: $:;
+				cr.
+			sorted := aCollection asSortedArray: [:a :b | a displayString <= b displayString].
+			max := 30.
+			sorted
+				from: 1
+				to: (aCollection size min: max)
+				do: 
+					[:each |
+					stream
+						crtab;
+						display: each].
+			aCollection size > max
+				ifTrue: 
+					[stream
+						crtab;
+						nextPutAll: '… and ';
+						print: aCollection size - max;
+						nextPutAll: ' other items …'].
+			stream cr].
+	mb
+		customButtons: #(#(#yes '&Repackage') #(#no 'Cancel'));
+		isCancellable: true.
+	mb confirm ifFalse: [^self].
+	aCollection do: [:each | each owningPackage: aPackage]!
 
 createComponents
 	"Create the presenters contained by the receiver"
@@ -78,7 +127,7 @@ createSchematicWiring
 			send: #onPackageSelected
 			to: self;
 		when: #actionPerformed
-			send: #browsePackages
+			send: #browsePackage
 			to: self.
 	tracesPresenter
 		when: #actionPerformed
@@ -100,6 +149,18 @@ dependencyModelWithRoots: anOrderedCollection
 
 dependentPackage
 	^self subclassResponsibility!
+
+hasPackageSelection
+	^treePresenter hasSelection!
+
+hasStatusIcons
+	^treePresenter view viewMode == #smallIcons!
+
+hasTraceSelection
+	^tracesPresenter selectionOrNil size = 1!
+
+hasTraceSelections
+	^tracesPresenter hasSelection!
 
 initialize
 	super initialize.
@@ -183,76 +244,13 @@ prerequisiteTraceFor: aPackage
 
 	^traces at: aPackage ifAbsentPut: [Cursor wait showWhile: [aPackage tracePrerequisites]]!
 
-queryCommand: aCommandQuery 
-	"Private - Enter details about a potential command for the receiver 
-	into the <CommandQuery> argument."
-
-	| selector |
-	selector := aCommandQuery commandSymbol.
-	#toggleStatusIcons == selector 
-		ifTrue: 
-			[aCommandQuery
-				isEnabled: true;
-				isChecked: treePresenter view viewMode == #smallIcons.
-			^true].
-	#browseTrace == selector 
-		ifTrue: 
-			[aCommandQuery isEnabled: tracesPresenter selectionOrNil size = 1.
-			^true].
-	#browsePackages == selector 
-		ifTrue: 
-			[aCommandQuery isEnabled: treePresenter hasSelection.
-			^true].
-	#choosePackage == selector 
-		ifTrue: 
-			[aCommandQuery isEnabled: tracesPresenter hasSelection.
-			^true].
-	^super queryCommand: aCommandQuery!
-
-queryMoveObjects: aCollection toPackage: aPackage
-	"Private - Move the array of packageable objects, anArray, to the specified package."
-
-	| mb |
-	mb := MessageBox new.
-	aCollection size = 1
-		ifTrue: 
-			[| object |
-			object := aCollection single.
-			mb
-				headline: 'Repackage <1d>?' << object;
-				text: 'Ownership will be moved from the package <2p> to <3p>.' << { object. object owningPackage name. aPackage name}]
-		ifFalse: 
-			[| stream max sorted |
-			mb headline: 'Repackage <1d> source objects?'.
-			stream := String writeStream.
-			stream
-				nextPutAll: 'The following source objects will be moved to the package ';
-				print: aPackage name;
-				nextPut: $:;
-				cr.
-			sorted := aCollection asSortedArray: [:a :b | a displayString <= b displayString].
-			max := 30.
-			sorted
-				from: 1
-				to: (aCollection size min: max)
-				do: 
-					[:each |
-					stream
-						crtab;
-						display: each].
-			aCollection size > max
-				ifTrue: 
-					[stream
-						crtab;
-						nextPutAll: '… and ';
-						print: aCollection size - max;
-						nextPutAll: ' other items …'].
-			stream cr].
-	mb
-		customButtons: #(#(#yes '&Repackage') #(#no 'Cancel'));
-		isCancellable: true.
-	mb confirm ifFalse: [^self].
-	aCollection do: [:each | each owningPackage: aPackage]!
+queryToggleStatusIcons: aCommandQuery
+	| hasIcons |
+	hasIcons := self hasStatusIcons.
+	aCommandQuery
+		beEnabled;
+		isChecked: hasIcons;
+		expandMenuTextWith: hasIcons!
 
 selectedPair
 	"Answer the currently selected depedendency node."
@@ -267,19 +265,24 @@ selectedPair: anAssociation
 		ifFalse: [treePresenter resetSelection]!
 
 toggleStatusIcons
-	treePresenter view 
-		viewMode: (treePresenter view viewMode == #noIcons ifTrue: [#smallIcons] ifFalse: [#noIcons])! !
+	<commandQuery: #queryToggleStatusIcons:>
+	treePresenter view viewMode: (self hasStatusIcons ifTrue: [#noIcons] ifFalse: [#smallIcons])! !
 !Tools.PackageDependencyPresenter categoriesForMethods!
-browsePackages!commands!public! !
-browseTrace!commands!public! !
+browsePackage!commands-actions!public! !
+browseTrace!commands-actions!public! !
 buildChildNodes:for:!helpers!private! !
 childrenFor:!helpers!private! !
-choosePackage!helpers!private! !
-clear!commands!public! !
+choosePackage!commands-actions!public! !
+clear!commands-actions!public! !
+confirmMoveObjects:toPackage:!helpers!private! !
 createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !
 dependencyModelWithRoots:!helpers!private! !
 dependentPackage!accessing!private! !
+hasPackageSelection!commands-queries!private! !
+hasStatusIcons!private!testing! !
+hasTraceSelection!commands-queries!private!testing! !
+hasTraceSelections!commands-queries!private!testing! !
 initialize!initializing!private! !
 onPackageSelected!event handling!private! !
 onPrerequisitesReset!event handling!private! !
@@ -291,11 +294,10 @@ packages!accessing!public! !
 packages:!accessing!public! !
 prerequisitePackage!accessing!private! !
 prerequisiteTraceFor:!event handling!private! !
-queryCommand:!commands!private! !
-queryMoveObjects:toPackage:!helpers!private! !
+queryToggleStatusIcons:!commands-queries!private! !
 selectedPair!accessing!public! !
 selectedPair:!accessing!public! !
-toggleStatusIcons!commands!public! !
+toggleStatusIcons!commands-actions!public! !
 !
 
 !Tools.PackageDependencyPresenter class methodsFor!
@@ -313,7 +315,7 @@ resource_Default_view
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.ContainerView} 38 #{Core.Array} 15 nil nil 50 2 8 1409482752 131073 32 nil 6 #{Graphics.Color} #default nil 517 nil nil nil 32 518 #{UI.ProportionalLayout} 518 #{Kernel.STBCollectionProxy} #{Core.Dictionary} 50 3 518 #{Core.Association} 18 #{UI.TreeView} 50 27 nil 32 50 2 8 1140916775 1 256 1094 3 #{UI.TreeModel} nil 6 #{Kernel.IdentitySearchPolicy} 774 #{UI.TreeNode} nil nil nil 550 #{Core.IdentityDictionary} 0 128 nil 5 2886 4 #{UI.Menu} nil true 50 2 1094 2 #{UI.CommandMenuItem} 1 1350 4 #{UI.CommandDescription} #browsePackages 8 'Browse' 1 1 nil nil nil 498 1 530 #toggleStatusIcons 8 'Show Status Icons' 1 1 nil nil nil 8 '' nil 1 nil nil nil nil nil nil nil 256 nil nil 1382 3 #{Kernel.BlockClosure} 0 nil 1318 #{Kernel.CompiledExpression} 3 1 #{Core.UndefinedObject} 8 'doIt' 8 '[:a | a key name]' 8 #[31 105 17 158 159 106] #key #name 656 7 257 nil 642 0 nil 674 7 1 640 8 'doIt' 8 '[:each |  (each key hasCyclicPrerequisites or: [each key hasUncommittedPrerequisites]) not icon 
+	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.ContainerView} 38 #{Core.Array} 15 nil nil 50 2 8 1409482752 131073 32 nil 6 #{Graphics.Color} #default nil 517 nil nil nil 32 518 #{UI.ProportionalLayout} 518 #{Kernel.STBCollectionProxy} #{Core.Dictionary} 50 3 518 #{Core.Association} 18 #{UI.TreeView} 50 27 nil 32 50 2 8 1140916775 1 256 1094 3 #{UI.TreeModel} nil 6 #{Kernel.IdentitySearchPolicy} 774 #{UI.TreeNode} nil nil nil 550 #{Core.IdentityDictionary} 0 128 nil 5 2886 4 #{UI.Menu} nil true 50 2 1094 2 #{UI.CommandMenuItem} 1 1350 4 #{UI.CommandDescription} #browsePackage 8 'Browse' 1 1 nil nil nil 498 1 530 #toggleStatusIcons 8 'Show Status Icons' 1 1 nil nil nil 8 '' nil 1 nil nil nil nil nil nil nil 256 nil nil 1382 3 #{Kernel.BlockClosure} 0 nil 1318 #{Kernel.CompiledExpression} 3 1 #{Core.UndefinedObject} 8 'doIt' 8 '[:a | a key name]' 8 #[31 105 17 158 159 106] #key #name 656 7 257 nil 642 0 nil 674 7 1 640 8 'doIt' 8 '[:each |  (each key hasCyclicPrerequisites or: [each key hasUncommittedPrerequisites]) not icon 
 	imageIndex]' 8 #[35 105 226 0 159 119 58 112 226 0 160 161 162 163 106] #key #hasCyclicPrerequisites #hasUncommittedPrerequisites #not #icon #imageIndex 752 7 257 nil 1350 1 #{Graphics.IconImageManager} nil nil nil nil nil 550 #{Core.LookupTable} 0 nil #smallIcons 11 418 0 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 1 1 1010 1201 165 256 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 88 2 0 0 82 0 0 0] 8 #() 1010 193 193 nil 27 518 #{Core.Fraction} 693 519 226 18 #{UI.Splitter} 50 12 nil 32 50 2 8 1140850688 1 1184 nil 128 nil 517 nil nil nil 3142 1 #{UI.DraggableViewInteractor} 1184 nil 1 #left nil nil nil 1010 1 1 1010 9 9 nil 1280 nil 914 50 1 962 #createAt:extent: 50 2 1010 1 165 1010 1201 11 1184 1058 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 82 0 0 0 88 2 0 0 87 0 0 0] 8 #() 1120 nil 27 1 226 18 #{UI.ListView} 50 45 nil 32 50 2 8 1140920393 1 1472 838 2 #{UI.ListModel} 550 #{Core.OrderedCollection} 0 nil 368 128 nil 5 450 nil true 50 2 498 1 530 #browseTrace 8 'Browse' 1 1 nil nil nil 498 1 530 #choosePackage 8 'Package…' 1 1 nil nil nil 8 '' nil 1 nil nil nil nil nil nil nil 1472 nil nil 518 #{Core.Message} #displayString 8 #() nil 848 nil nil nil 1010 65 65 nil nil 1570 4 3142 5 #{UI.ListViewColumn} 8 'Owned' 219 #left 1760 642 0 nil 674 2 1 #{Core.UndefinedObject} 8 'doIt' 8 '[:a :b | a displayString < b displayString]' 8 #[30 105 17 158 18 158 128 106] #displayString 1872 7 513 nil 1746 #first 8 #() nil 1472 1746 #iconImageIndex 8 #() 3 nil nil 1826 8 'Dependency' 337 #left 1760 1746 #<= 8 #() 1746 #third 8 #() nil 1472 nil 1 nil nil 1826 8 'Prerequisite Object' 339 #left 1760 642 0 nil 674 2 1 #{Core.UndefinedObject} 8 'doIt' 8 '[:a :b | a displayString < b displayString]' 8 #[30 105 17 158 18 158 128 106] #displayString 2144 7 513 nil 1746 #second 2096 nil 1472 1746 #iconImageIndex 1776 1 nil nil 1826 8 'Prerequisite Package' 301 #left 1746 #displayString 8 #() 1746 #<= 2304 1746 #fourth 2304 nil 1472 nil 1 nil nil #report 8 #() nil 131173 nil 1 nil nil nil nil 1 nil nil nil nil nil nil nil nil nil nil 914 50 2 962 #createAt:extent: 50 2 1010 1 175 1010 1201 297 1472 962 #text: 50 1 8 'Owned' 1472 1058 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 87 0 0 0 88 2 0 0 235 0 0 0] 8 #() 1120 nil 35 1138 24567 10361 true 518 #{Kernel.STBIdentityDictionaryProxy} 416 50 4 1472 8 'traces' 256 8 'tree' 518 #{Graphics.Rectangle} 1010 1 1 1010 1 1 914 50 1 962 #createAt:extent: 50 2 1010 6143 21 1010 1201 471 32 1058 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 87 14 0 0 245 0 0 0] 50 3 256 1184 1472 1120 nil 27)! !
 !Tools.PackageDependencyPresenter class categoriesForMethods!
 icon!constants!public! !

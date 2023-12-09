@@ -14,18 +14,21 @@ Tools.InspectorAbstract comment: ''!
 !Tools.InspectorAbstract methodsFor!
 
 browseClass
-	"Private - Open a new default class browser on the class of the object being inspected."
+	"Open a new default class browser on the class of the object being inspected."
 
+	<commandQuery: #hasSelection>
 	self developmentSystem browseClass: self browseObject class!
 
 browseHierarchy
-	"Private - Open a new class browser on the class of the object being inspected."
+	"Open a new class browser on the class of the object being inspected."
 
+	<commandQuery: #hasSelection>
 	self developmentSystem browseHierarchy: self browseObject class!
 
 browseIt
 	"Open a default browser on the current object."
 
+	<commandQuery: #hasSelection>
 	self browseObject browse!
 
 browseObject
@@ -35,11 +38,17 @@ browseObject
 
 browseSystem
 	"Open a new system browser on the class of the object being inspected."
-	
+
+	<commandQuery: #hasSelection>
 	self developmentSystem browseSystem: self browseObject class!
 
 developmentSystem
 	^SmalltalkSystem current!
+
+hasSelection
+	"Private - Answer whether any object/attribute is selected in the inspector."
+
+	^self inspecteeSelection notNil!
 
 inspecteeSelection
 	"Private - Answer the value associated with the currently selected object"
@@ -49,6 +58,7 @@ inspecteeSelection
 inspectIt
 	"Open a new Inspector on the variable selected in variablesModel."
 
+	<commandQuery: #hasSelection>
 	self inspecteeSelection inspect!
 
 object: anObject
@@ -60,14 +70,15 @@ object: anObject
 systemModel
 	^self developmentSystem! !
 !Tools.InspectorAbstract categoriesForMethods!
-browseClass!commands!private! !
-browseHierarchy!commands!private! !
-browseIt!commands!public! !
+browseClass!commands-actions!public! !
+browseHierarchy!commands-actions!public! !
+browseIt!commands-actions!public! !
 browseObject!accessing!private! !
-browseSystem!commands!public! !
+browseSystem!commands-actions!public! !
 developmentSystem!accessing!private! !
+hasSelection!commands-queries!private!testing! !
 inspecteeSelection!accessing!private! !
-inspectIt!commands!public! !
+inspectIt!commands-actions!public! !
 object:!accessing!public! !
 systemModel!accessing!private! !
 !

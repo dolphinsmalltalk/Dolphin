@@ -98,8 +98,10 @@ chooseNamespace
 	| choice namespaces |
 	namespaces := ClassHierarchyModel withRoots: (Namespace subclasses copyWithout: SharedPool).
 	choice := ValueConverter subject: namespaceName model
-				typeConverter: (PluggableTypeConverter leftToRight: [:bindingRef | bindingRef valueOrNil]
-						rightToLeft: [:class | class fullyQualifiedReference]).
+				typeConverter: ((PluggableTypeConverter leftToRight: [:bindingRef | bindingRef valueOrNil]
+						rightToLeft: [:class | class fullyQualifiedReference])
+						leftNullValue: namespaceName model value;
+						yourself).
 	(ChooseClassDialog
 		on: choice
 		choices: namespaces
@@ -372,7 +374,7 @@ parametersNextCard
 
 queryToggleStandardTypes: aCommandQuery
 	aCommandQuery
-		isEnabled: true;
+		beEnabled;
 		isChecked: showStandard!
 
 refresh

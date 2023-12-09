@@ -68,29 +68,15 @@ hasKeySelection
 	^variableNamesPresenter hasSelection and: [self variableIndex > self headerSize]!
 
 inspectKey
-	"Private - Open a new Inspector on the selected key."
+	"Open a new Inspector on the selected key."
 
-	variableNamesPresenter hasSelection
-		ifTrue: [self variableName inspect]
-!
-
-queryCommand: query
-	"Private - Enters details about a potential command for the receiver into the 
-	<CommandQuery>,  query."
-
-	| cmd |
-	cmd := query commandSymbol.
-
-	#removeField == cmd ifTrue: [
-		query isEnabled: self hasKeySelection.
-		^true].
-
-	^super queryCommand: query.
-!
+	<commandQuery: #hasKeySelection>
+	self variableName inspect!
 
 removeField
 	"Remove the selected key in the variablesModel from the receiver's object."
 
+	<commandQuery: #hasKeySelection>
 	| selected value command |
 	command := Command current.
 	selected := self variableName.
@@ -118,14 +104,13 @@ setField: anInteger to: anObject
 		at: (self variableNamesList at: anInteger + self headerSize)
 		put: anObject! !
 !Tools.DictionaryInspector categoriesForMethods!
-addField!commands!public! !
+addField!commands-actions!public! !
 addKey:put:!operations!private! !
 getField:!accessing!private! !
 getFieldList!accessing!public! !
-hasKeySelection!private!testing! !
-inspectKey!commands!private! !
-queryCommand:!commands!private! !
-removeField!commands!public! !
+hasKeySelection!commands-queries!private!testing! !
+inspectKey!commands-actions!public! !
+removeField!commands-actions!public! !
 removeKey:!operations!private! !
 setField:to:!accessing!private! !
 !

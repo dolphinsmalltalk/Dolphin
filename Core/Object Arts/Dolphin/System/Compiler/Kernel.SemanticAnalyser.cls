@@ -194,8 +194,8 @@ visitVariableNode:!public!visitor/double dispatching! !
 
 !Kernel.SemanticAnalyser class methodsFor!
 
-analyseParseTree: aStMethodNode
-	^self analyseParseTree: aStMethodNode pools: #()!
+analyseParseTree: aStProgramNode
+	^self analyseParseTree: aStProgramNode pools: #()!
 
 analyseParseTree: aParseTree pools: anArray
 	^self new

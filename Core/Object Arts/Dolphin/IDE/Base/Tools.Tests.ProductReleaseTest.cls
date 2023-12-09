@@ -29,7 +29,8 @@ testClassState
 			| builder |
 			builder := ClassBuilder forModifying: each.
 			[builder validateForModify] on: Warning do: [:warning | warning resume].
-			each imports do: [:import | self assert: import isKindOf: NamespaceImport]]!
+			each imports do: [:import | self assert: import isKindOf: NamespaceImport].
+			each classPool associationsDo: [:binding | self assert: binding environment identicalTo: each]]!
 
 testClassVariableEnvironments
 	"Verify that environment of class variable bindings is the correct class."

@@ -46,12 +46,14 @@ package setMethodNames: #(
 	#(#{Core.Process} #priorityName)
 	#(#{Kernel.ProcessorScheduler} #nameOfPriority:)
 	#(#{Smalltalk.StyledContainer class} #publishedAspectsOfInstances)
+	#(#{Tools.BasicInspector} #browseSystem)
 	#(#{Tools.ClassBrowserAbstract} #toggleLocalHierarchy)
 	#(#{Tools.Debugger} #queryToggleDisassembly:)
 	#(#{Tools.Debugger} #toggleDisassembly)
 	#(#{Tools.PackageSelector} #browseDeployed)
 	#(#{Tools.PackageSelector} #browsePackageSources)
 	#(#{Tools.PackageSelector} #browseSources)
+	#(#{Tools.PackageSelector} #queryBrowseDeployed:)
 	#(#{Tools.SmalltalkSystem} #openIdeaSpace)
 	#(#{Tools.SmalltalkSystem} #updateHelpMenus)
 	#(#{Tools.SmalltalkToolShell} #addToNewIdeaSpace)
@@ -325,6 +327,17 @@ publishedAspectsOfInstances
 publishedAspectsOfInstances!constants!public! !
 !
 
+!Tools.BasicInspector methodsFor!
+
+browseSystem
+	"Open a new system browser on the class of the object being inspected."
+
+	<commandQuery: #queryBrowseClass:>
+	self model browseSystem: self browseObject class! !
+!Tools.BasicInspector categoriesForMethods!
+browseSystem!commands-actions!public! !
+!
+
 !Tools.ClassBrowserAbstract methodsFor!
 
 toggleLocalHierarchy
@@ -356,7 +369,7 @@ toggleLocalHierarchy!commands-actions!public! !
 
 queryToggleDisassembly: aCommandQuery
 	aCommandQuery
-		isEnabled: true;
+		beEnabled;
 		isChecked: self isDisassembled!
 
 toggleDisassembly
@@ -378,6 +391,7 @@ toggleDisassembly!commands-actions!private! !
 browseDeployed
 	"Open a new <EnvironmentBrowserShell> on the deployed application content as read from the stripper log."
 
+	<commandQuery: #queryBrowseDeployed:>
 	[self developmentSystem browseDeployedPackage: self singlePackage] on: Error
 		do: 
 			[:ex |
@@ -389,6 +403,7 @@ browseDeployed
 browsePackageSources
 	"Private - Open a browser on the sources for the currently selected package."
 
+	<commandQuery: #hasPackages>
 	| packages |
 	packages := self packages select: [:each | each isUsingPAX].
 	packages size ~= self packages size
@@ -401,11 +416,20 @@ These will be omitted from the Source Browser display.'].
 browseSources
 	"Private - Open a browser on the sources for the currently selected package."
 
-	self browsePackageSources! !
+	<commandQuery: #hasPackages>
+	self browsePackageSources!
+
+queryBrowseDeployed: aCommandQuery
+	self singlePackage
+		ifNotNil: 
+			[:package |
+			aCommandQuery
+				isEnabled: (package hasImageStripper and: [File exists: package imageStripper logFileName])]! !
 !Tools.PackageSelector categoriesForMethods!
-browseDeployed!commands!public! !
-browsePackageSources!commands!private! !
-browseSources!commands!private! !
+browseDeployed!commands-actions!public! !
+browsePackageSources!commands-actions!private! !
+browseSources!commands-actions!private! !
+queryBrowseDeployed:!commands-queries!private! !
 !
 
 !Tools.SmalltalkSystem methodsFor!
@@ -442,7 +466,7 @@ updateHelpMenus
 						ifNotNil: [:oldHelpMenu | menuBar replaceItem: oldHelpMenu with: (Object fromBinaryStoreBytes: helpmenu)]].
 			true]! !
 !Tools.SmalltalkSystem categoriesForMethods!
-openIdeaSpace!commands!public! !
+openIdeaSpace!commands-actions!public! !
 updateHelpMenus!private!utilities! !
 !
 

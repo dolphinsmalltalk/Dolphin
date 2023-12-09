@@ -113,6 +113,12 @@ defaultHelpId
 folderView
 	^systemFolderPresenter view!
 
+hasSelection
+	^systemFolderPresenter hasSelection!
+
+hasToolSelected
+	^systemFolderPresenter hasSelection and: [systemFolderPresenter selection tool notNil]!
+
 initialize
 	"Private - Initialize the receiver. 
 	Ensure the Transcript is available"
@@ -190,24 +196,8 @@ onViewStateRestored
 	self registerHotKey!
 
 properties
+	<commandQuery: #hasToolSelected>
 	^systemFolderPresenter selection tool inspect!
-
-queryCommand: aCommandQuery 
-	"Private - Enter details about a potential command for the receiver 
-	into the <CommandQuery> argument."
-
-	| selector |
-	selector := aCommandQuery commandSymbol.
-	selector == #properties 
-		ifTrue: 
-			[aCommandQuery 
-				isEnabled: (systemFolderPresenter hasSelection and: [systemFolderPresenter selection tool notNil]).
-			^true].
-	selector == #whatsThis 
-		ifTrue: 
-			[aCommandQuery isEnabled: systemFolderPresenter hasSelection.
-			^true].
-	^super queryCommand: aCommandQuery!
 
 registerHotKey
 	| codes flags modifiers |
@@ -264,7 +254,8 @@ updateCaption
 	self caption: title contents!
 
 whatsThis
-	systemFolderPresenter selection whatsThis ! !
+	<commandQuery: #hasSelection>
+	systemFolderPresenter selection whatsThis! !
 !Tools.SmalltalkSystemShell categoriesForMethods!
 addToCommandRoute:!commands!public! !
 applyOptions!operations!options!private! !
@@ -280,6 +271,8 @@ createComponents!**auto generated**!initializing!public! !
 createSchematicWiring!initializing!public! !
 defaultHelpId!constants!public! !
 folderView!accessing!private! !
+hasSelection!commands!private! !
+hasToolSelected!commands!private! !
 initialize!initializing!private! !
 inspectSystemOptions!commands!public! !
 model:!accessing!public! !
@@ -291,7 +284,6 @@ onViewModeChanged!event handling!private! !
 onViewOpened!event handling!private! !
 onViewStateRestored!event handling!private! !
 properties!commands!public! !
-queryCommand:!commands!private! !
 registerHotKey!helpers!private! !
 resetSelection!event handling!private! !
 resetWhenInvisible!options!public! !

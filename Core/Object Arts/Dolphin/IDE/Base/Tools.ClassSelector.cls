@@ -171,7 +171,17 @@ browseSystem
 
 browseVariablesMenu
 	<commandQuery: #hasSingleSelection>
+	<menuPopulator: #buildAllVariablesMenu:>
 	!
+
+buildAbstractInstanceVariablesMenu: aMenu
+	^self buildInstVarMenu: aMenu selectors: #(#abstractInstanceVariable:in: #abstractInstanceVariables)!
+
+buildAbstractVariablesMenu: aMenu
+	^self
+		buildVariablesMenu: aMenu
+		instVarSelectors: #(#abstractInstanceVariable:in:within: #abstractInstanceVariables)
+		classVarSelectors: #(#abstractClassVariable:in:within: #abstractClassVariables)!
 
 buildAllVariablesMenu: aMenu
 	"Private - Build a dynamic pull-out menu which lists all of a class' existing 
@@ -209,6 +219,37 @@ buildAllVariablesMenu: aMenu
 				variables: classVars
 				format: '<1s>.<2s>'
 				abortable: false]!
+
+buildCreateInstanceVariableAccessorsMenu: aMenu
+	^self buildInstVarMenu: aMenu
+		selectors: #(#createInstanceVariableAccessors:in: #createInstanceVariableAccessors)!
+
+buildCreateVariableAccessorsMenu: aMenu
+	^self
+		buildVariablesMenu: aMenu
+		instVarSelectors: #(#createInstanceVariableAccessors:in:within: #createInstanceVariableAccessors)
+		classVarSelectors: #(#createClassVariableAccessors:in:within: #createClassVariableAccessors)!
+
+buildProtectInstanceVariablesMenu: aMenu
+	^self buildInstVarMenu: aMenu selectors: #(#protectInstanceVariable:in: #protectInstanceVariables)!
+
+buildPushDownVariablesMenu: aMenu
+	^self
+		buildVariablesMenu: aMenu
+		instVarSelectors: #(#pushDownInstanceVariable:in:within: #pushDownInstanceVariables)
+		classVarSelectors: #(#pushDownClassVariable:in:within: #pushDownClassVariables)!
+
+buildRemoveVariablesMenu: aMenu
+	^self
+		buildVariablesMenu: aMenu
+		instVarSelectors: #(#removeInstanceVariable:from:within: #removeInstanceVariables)
+		classVarSelectors: #(#removeClassVariable:from:within: #removeClassVariables)!
+
+buildRenameVariablesMenu: aMenu
+	^self
+		buildVariablesMenu: aMenu
+		instVarSelectors: #(#renameInstanceVariable:in:within: #renameInstanceVariable)
+		classVarSelectors: #(#renameClassVariable:in:within: #renameClassVariable)!
 
 buildViewsMenu: aMenu command: selector
 	"Private - Build a dynamic pull-out menu with all views of the current selection
@@ -274,15 +315,14 @@ classNamesSelector: aSymbol
 classPackage
 	"Prompt for the user to repackage the selected class."
 
-	<commandQuery: #hasSingleSelection>
+	<commandQuery: #hasDefinedClassSelected>
 	| class newPkg oldPkg |
 	class := self selection.
 	oldPkg := class owningPackage.
 	newPkg := PackagePrompter
 				showModalOn: oldPkg asValue
 				caption: 'Package of <1p>…' << class
-				default: nil
-				validationBlock: [:package | package notNil and: [class fullyQualifiedReference isDefined]].
+				default: nil.
 	(newPkg isNil or: [newPkg = oldPkg]) ifFalse: [self confirmMoveClass: class toPackage: newPkg]!
 
 confirmMoveClass: aClass toPackage: aPackage
@@ -336,6 +376,7 @@ createInstanceVariableAccessors
 	instance variables of the current class that are not currently endowed with both."
 
 	<commandQuery: #hasClassWithInstanceVariables>
+	<menuPopulator: #buildCreateInstanceVariableAccessorsMenu:>
 	self createVariableAccessors: false!
 
 createSchematicWiring
@@ -491,6 +532,13 @@ hasClassWithVariablesSelected
 	^class notNil
 		and: [class instanceVariableNames notEmpty or: [class instanceClass classBindingNames notEmpty]]!
 
+hasDefinedClassSelected
+	"Answer true if the receiver has exactly one selection"
+
+	| class |
+	class := self selectableItems selectionOrNil.
+	^class notNil and: [class fullyQualifiedReference isDefined]!
+
 hasViews
 	| class |
 	class := self selectionOrNil.
@@ -558,18 +606,6 @@ newView
 
 	<commandQuery: #hasClassSupportingViews>
 	self developmentSystem openViewComposerOnNewViewFor: self selection!
-
-onAboutToDisplayMenu: aMenu 
-	"The pop-up <Menu>, popup, is about to be displayed.
-	This is our opportunity to update it, e.g. to add/remove items."
-
-	| menuName |
-	super onAboutToDisplayMenu: aMenu.
-	menuName := aMenu name.
-	menuName == #viewsEditMenu ifTrue: [^self buildViewsMenu: aMenu command: #editView:].
-	menuName == #viewsShowMenu ifTrue: [^self buildViewsMenu: aMenu command: #showPresenter:].
-	menuName == #browseVariablesMenu ifTrue: [^self buildAllVariablesMenu: aMenu].
-	self canRefactor ifTrue: [^self populateRefactoringMenu: aMenu]!
 
 onAboutToRenameClass: aLabelEditingEvent
 	| class env |
@@ -739,16 +775,6 @@ onSelectionChanging: aSelectionChangingEvent
 
 	self trigger: #selectionChanging: with: aSelectionChangingEvent!
 
-onTipTextRequired: tool
-	"Private - Tool tip text is required for the <ToolbarItem>, tool."
-
-	| cmd |
-	cmd := tool command asSymbol.
-	cmd == #clearSelection ifTrue: [^'Delete class ' , self selection name].
-	cmd == #browseHierarchy ifTrue: [^'Open Hierarchy Browser on ' , self actualClass name].
-	cmd == #browseSystem ifTrue: [^'Open System Browser on ' , self actualClass name].
-	^super onTipTextRequired: tool!
-
 packages: aPackageCollection
 	"Set the selected packages, if a package selection is maintained."
 
@@ -786,6 +812,9 @@ permitSelectionChange
 	self onSelectionChanging: proceed.
 	^proceed value!
 
+populatePushDownInstanceVariableMenu: aMenu
+	^self buildInstVarMenu: aMenu selectors: #(#pushDownInstanceVariable:in: #pushDownInstanceVariables)!
+
 populateVarMenu: aMenu class: class command: cmdSelector variables: aCollection format: aString abortable: aBoolean
 	"Private - Populate a dynamic menu with commands which send
 	the selector, cmdSelector, to the development system model with
@@ -805,41 +834,60 @@ populateVarMenu: aMenu class: class command: cmdSelector variables: aCollection 
 				isModalCommand: true;
 				isAbortable: aBoolean]!
 
+populateViewsEditMenu: aMenu
+	^self buildViewsMenu: aMenu command: #editView:!
+
+populateViewsShowMenu: aMenu
+	^self buildViewsMenu: aMenu command: #showPresenter:!
+
 queryBrowseClassPackage: aCommandQuery
-	| pkg |
-	pkg := self selectionOrNil ifNotNil: [:class | class owningPackage name printString].
-	aCommandQuery
-		isEnabled: pkg notNil;
-		text: (aCommandQuery commandDescription menuText expandMacrosWithArguments: { pkg ?? '' }
-					locale: Locale smalltalk)!
+	(self selectionOrNil ifNotNil: [:class | class owningPackage name printString])
+		ifNotNil: 
+			[:pkg |
+			aCommandQuery
+				beEnabled;
+				expandMenuTextWith: pkg]!
 
 queryBrowseClassReferences: aCommandQuery
 	| classes count |
 	classes := self selections.
 	count := classes size.
+	count == 0 ifTrue: [^self].
 	aCommandQuery
-		isEnabled: count ~~ 0;
-		text: (aCommandQuery commandDescription menuText
-					expandMacrosWithArguments: { count = 1 ifTrue: [classes single] ifFalse: ['Classes'] }
-					locale: Locale smalltalk)!
+		beEnabled;
+		expandMenuTextWith: (count = 1 ifTrue: [classes single] ifFalse: ['Classes'])!
 
 queryBrowseHierarchy: aCommandQuery
-	| name |
-	name := self selectionOrNil
-				ifNotNil: 
-					[:class |
-					aCommandQuery
-						isDefault: true;
-						isEnabled: true.
-					class name].
+	| class |
+	class := self selectionOrNil.
+	class isNil ifTrue: [^self].
 	aCommandQuery
-		text: (aCommandQuery commandDescription menuText expandMacrosWithArguments: { name ?? '' }
-				locale: Locale smalltalk)!
+		isDefault: true;
+		beEnabled;
+		expandMenuTextWith: class!
+
+queryNewClass: aCommandQuery
+	aCommandQuery
+		beEnabled;
+		expandMenuTextWith: self selectionOrNil!
+
+queryRemoveClass: aCommandQuery
+	| classes |
+	classes := self selections.
+	classes isEmpty ifTrue: [^self].
+	aCommandQuery
+		beEnabled;
+		expandMenuTextWith: (classes size = 1
+					ifTrue: [classes single]
+					ifFalse: ['<d> classes' << classes size])!
 
 queryShowFullNames: aCommandQuery
+	| fullNames |
+	fullNames := self isShowingFullNames.
 	aCommandQuery
-		isEnabled: true;
-		isChecked: self isShowingFullNames!
+		beEnabled;
+		isChecked: fullNames;
+		expandMenuTextWith: fullNames!
 
 queryViewsShowMenu: aCommandQuery
 	aCommandQuery
@@ -849,7 +897,7 @@ queryViewsShowMenu: aCommandQuery
 removeClass
 	"Removes the selected class(es) from the system. If refactoring is available, then the 'Remove Class' refactoring is employed."
 
-	<commandQuery: #hasSelection>
+	<commandQuery: #queryRemoveClass:>
 	self permitSelectionChange ifTrue: [self developmentSystem removeClasses: self selections]!
 
 renameClass
@@ -882,6 +930,7 @@ renameInstanceVariable
 
 renameVariables
 	<commandQuery: #hasClassWithVariablesSelected>
+	<menuPopulator: #buildRenameVariablesMenu:>
 	Sound warningBeep!
 
 searchEnvironment
@@ -924,6 +973,7 @@ toggleShowFullNames
 
 viewsEditMenu
 	<commandQuery: #hasViews>
+	<menuPopulator: #populateViewsEditMenu:>
 	!
 
 viewsMenu
@@ -932,6 +982,7 @@ viewsMenu
 
 viewsShowMenu
 	<commandQuery: #queryViewsShowMenu:>
+	<menuPopulator: #populateViewsShowMenu:>
 	! !
 !Tools.ClassSelector categoriesForMethods!
 actualClass!accessing!public! !
@@ -954,7 +1005,15 @@ browseReferences!commands-actions!public! !
 browserEnvironment!public! !
 browseSystem!commands-actions!public! !
 browseVariablesMenu!commands-menus!private! !
+buildAbstractInstanceVariablesMenu:!public!refactoring! !
+buildAbstractVariablesMenu:!public!refactoring! !
 buildAllVariablesMenu:!menus!private! !
+buildCreateInstanceVariableAccessorsMenu:!public!refactoring! !
+buildCreateVariableAccessorsMenu:!public!refactoring! !
+buildProtectInstanceVariablesMenu:!public!refactoring! !
+buildPushDownVariablesMenu:!public!refactoring! !
+buildRemoveVariablesMenu:!public!refactoring! !
+buildRenameVariablesMenu:!public!refactoring! !
 buildViewsMenu:command:!menus!private! !
 canRefactor!public!refactoring!testing! !
 canRenameClass!private!testing! !
@@ -968,7 +1027,7 @@ copyClass!commands-actions!private! !
 createInstanceVariableAccessors!commands-actions!public!refactoring! !
 createSchematicWiring!initializing!public! !
 createVariableAccessors:!commands-actions!public!refactoring! !
-deleteItCommand!helpers!private! !
+deleteItCommand!commands-mappings!private! !
 developmentSystem!commands-actions!private! !
 dropClass:onto:changes:!operations!private! !
 dropMethod:onto:isMove:changes:!helpers!private! !
@@ -984,6 +1043,7 @@ hasClassWithPublishedAspects!private!testing! !
 hasClassWithPublishedEvents!private!testing! !
 hasClassWithStaticVariables!private!testing! !
 hasClassWithVariablesSelected!private!testing! !
+hasDefinedClassSelected!public!selection! !
 hasViews!private!testing! !
 initialize!initializing!private! !
 initiateRename!helpers!private! !
@@ -995,7 +1055,6 @@ isShowingFullNames:!modes!public! !
 maximumVariableMenuEntries!menus!private! !
 model:!accessing!public! !
 newView!commands-actions!public! !
-onAboutToDisplayMenu:!event handling!menus!public! !
 onAboutToRenameClass:!event handling!private! !
 onClass:renameTo:accept:!event handling!public! !
 onDrag:!event handling!private! !
@@ -1004,14 +1063,18 @@ onDropOver:!event handling!private! !
 onRenameClass:to:showChanges:!event handling!public! !
 onSelectionChanged!event handling!public! !
 onSelectionChanging:!event handling!public! !
-onTipTextRequired:!event handling!private! !
 packages:!accessing!public! !
 performDropChanges:target:!helpers!private! !
 permitSelectionChange!helpers!private! !
+populatePushDownInstanceVariableMenu:!public!refactoring! !
 populateVarMenu:class:command:variables:format:abortable:!menus!private! !
+populateViewsEditMenu:!public! !
+populateViewsShowMenu:!public! !
 queryBrowseClassPackage:!commands-queries!private! !
 queryBrowseClassReferences:!commands-queries!private! !
 queryBrowseHierarchy:!commands-queries!private! !
+queryNewClass:!commands-queries!private! !
+queryRemoveClass:!commands-queries!private! !
 queryShowFullNames:!commands-queries!private! !
 queryViewsShowMenu:!commands-queries!private! !
 removeClass!commands-actions!public! !

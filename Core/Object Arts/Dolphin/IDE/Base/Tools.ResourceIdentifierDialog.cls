@@ -73,19 +73,18 @@ onViewOpened
 		to: self!
 
 validateModel
-	| selector |
+	| proposedName |
 	classesPresenter hasSelection
 		ifFalse: 
 			[^(ValidationResult errorMessage: 'Please select a class')
 				presenter: classesPresenter;
 				yourself].
-	selector := ResourceIdentifier selectorFromName: resourceNamePresenter value.
-	(selector notNil
-		and: [selector ~= ResourceIdentifier.SelectorPrefix and: [Scanner isSelector: selector]])
-			ifFalse: 
-				[^(ValidationResult errorMessage: 'Please enter a name for the resource')
-					presenter: resourceNamePresenter;
-					yourself].
+	proposedName := resourceNamePresenter value.
+	(ResourceIdentifier isValidResourceName: proposedName)
+		ifFalse: 
+			[^(ValidationResult errorMessage: '<p> is not a valid resource name' << proposedName)
+				presenter: resourceNamePresenter;
+				yourself].
 	^ValidationResult new!
 
 validationResultPresenterClass

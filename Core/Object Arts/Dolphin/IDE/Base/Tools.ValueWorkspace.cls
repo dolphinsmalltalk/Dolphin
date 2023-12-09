@@ -23,12 +23,13 @@ accept
 	"Accept changes to the receiver by evaluating it, and setting the result into the associated
 	model. If there is no selection, then the entire contents of the workspace are accepted."
 
+	<commandQuery: #canAccept>
 	| evaluation |
-	self displayValue isEmpty 
+	self displayValue isEmpty
 		ifTrue: 
 			["If we have no contents justr leave well alone"
 			^true].
-	self view hasSelection 
+	self view hasSelection
 		ifFalse: 
 			["We assume that the whole text is to be evaluated. In this case, if the
 			 text has not been changed we can ignore the accept and answer true. This
@@ -39,10 +40,10 @@ accept
 	evaluation := 
 			[self evaluateItIfFail: 
 					[self showCompileErrorBubble: errorModel value.
-					^false]] 
+					^false]]
 					on: Error
 					do: 
-						[:x | 
+						[:x |
 						self showEvaluationErrorBubble: x.
 						^false].
 	self value: evaluation.
@@ -56,6 +57,9 @@ beSingleLineMode
 		wordWrap: false; 
 		canHScroll: false;
 		selectAll!
+
+canAccept
+	^self model canSet!
 
 displayValue
 	| value |
@@ -111,18 +115,6 @@ onValueChanged
 
 	textModel value: self displayValue!
 
-queryCommand: aCommandQuery 
-	"Private - Enters details about a potential command for the receiver into the <CommandQuery>
-	argument."
-
-	| cmd |
-	cmd := aCommandQuery commandSymbol.
-	cmd == #accept 
-		ifTrue: 
-			[aCommandQuery isEnabled: self model canSet.
-			^true].
-	^super queryCommand: aCommandQuery!
-
 showCompileErrorBubble: anError 
 	self showErrorBubble: anError displayString caption: 'Syntax error'!
 
@@ -162,8 +154,9 @@ viewModel
 
 	^textModel! !
 !Tools.ValueWorkspace categoriesForMethods!
-accept!commands!public! !
+accept!commands-actions!public! !
 beSingleLineMode!public! !
+canAccept!commands-queries!private!testing! !
 displayValue!accessing!private! !
 errorBubbleTimeout!constants!private! !
 errorLocation!private! !
@@ -172,7 +165,6 @@ initialize!initializing!private! !
 isSingleLineMode!public! !
 model:!accessing!public! !
 onValueChanged!event handling!private! !
-queryCommand:!commands!private! !
 showCompileErrorBubble:!private! !
 showErrorBubble:caption:!private! !
 showEvaluationErrorBubble:!private! !

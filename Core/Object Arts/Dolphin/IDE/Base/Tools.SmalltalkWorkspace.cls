@@ -618,6 +618,9 @@ defaultCompilerFlags
 defaultStylerClass
 	^SmalltalkExpressionStyler!
 
+descriptionOfVariable: aStVariable
+	^aStVariable description!
+
 developmentSystem
 	^SmalltalkSystem current!
 
@@ -1149,14 +1152,6 @@ onTimerTick: anInteger
 	self killAutocompleteTimer.
 	view isAutoCompletionActive ifFalse: [self maybeShowCompletionList]!
 
-onTipTextRequired: tool
-	"Private - Tool tip text is required for the <ToolbarItem>, tool."
-
-	| cmd |
-	cmd := tool command asSymbol.
-	#clearSelection == cmd ifTrue: [^'Delete selected text'].
-	^super onTipTextRequired: tool!
-
 onViewAvailable
 	super onViewAvailable.
 	self applyOptions.!
@@ -1217,24 +1212,21 @@ prompt: aString toSaveChanges: aSelectionChangingEvent
 promptForVariableName: anObjectRef
 	"Prompt for a variable name to represent anObjectRef in the receiver's workspace pool"
 
-	| nameValue |
-	nameValue := anObjectRef key asValue.
-	
-	[| name |
-	name := Prompter
-				on: nameValue
-				prompt: 'Enter a variable name:'
-				caption: ('Drop of <1s> onto workspace' expandMacrosWith: anObjectRef value basicPrintString).
-	name isNil ifTrue: [^nil].
-	(Scanner isVariable: name)
-		ifTrue: [true]
-		ifFalse: 
-			[MessageBox new
-				headline: '<1p> is not a valid variable name.' << name;
-				errorMsg.
-			false]]
-			whileFalse: [].
-	^nameValue value!
+	^(Prompter
+		createOn: anObjectRef key asValue
+		prompt: 'Enter a variable name:'
+		caption: ('Drop of <s> onto workspace' expandMacrosWith: anObjectRef value basicPrintString))
+		validater: 
+				[:var |
+				| result |
+				result := (RBCondition isValidTemporaryVariableName: var) validate.
+				result value
+					ifTrue: 
+						[(self workspacePool includesKey: var)
+							ifTrue: [result errorMessage: '<p> is already defined in the workspace' << var]].
+				result];
+		showHintWhenEmpty: false;
+		showModal!
 
 publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by the receiver."
@@ -1281,14 +1273,14 @@ queryBrowseClassOfLiteral: aCommandQuery
 	self selectedLiteralValue
 		ifNotNil: 
 			[:literal |
-			aCommandQuery isEnabled: true.
-			(aCommandQuery menuText includes: $<) ifTrue: [aCommandQuery text: 'Class <1p>' << literal class]]!
+			aCommandQuery
+				beEnabled;
+				text: 'Class <p>' << literal class]!
 
 queryBrowseDefinitions: aCommandQuery
 	"Browse Definitions (F12) is a context-sensitive command. We open a browser appropriate to the selected node, or let some other presenter handle if if the selected node is not browsable.
 	As the command's menu text typically has an insertion to specify what will be browsed, we ensure it is reset, otherwise it might end up displaying whatever was last browsable."
 
-	aCommandQuery text: aCommandQuery menuText << $….
 	self browseDefinitionsCommand
 		ifNotNil: [:selector | self queryContextCommand: aCommandQuery as: selector]!
 
@@ -1297,16 +1289,13 @@ queryBrowseLiteralReferences: aCommandQuery
 		ifNotNil: 
 			[:literal |
 			aCommandQuery
-				isEnabled: true;
-				text: (aCommandQuery menuText
-							expandMacrosWithArguments: { literal species name , ' ' , (literal printStringLimitedTo: 30) }
-							locale: Locale smalltalk)]!
+				beEnabled;
+				expandMenuTextWith: literal species name , ' ' , (literal printStringLimitedTo: 30)]!
 
 queryBrowseReferences: aCommandQuery
 	"Browse References (Shift+F12) is a context-sensitive command. We open a browser appropriate to the selected node, or let some other presenter handle if if the selected node is not browsable for references.
 	As the command's menu text typically has an insertion to specify what will be browsed, we ensure it is reset, otherwise it might end up displaying whatever was last browsable."
 
-	aCommandQuery text: aCommandQuery menuText << $….
 	self browseReferencesCommand
 		ifNotNil: [:selector | self queryContextCommand: aCommandQuery as: selector]!
 
@@ -1315,58 +1304,55 @@ queryBrowseSelectorDefinitions: aCommandQuery
 		ifNotNil: 
 			[:selector |
 			aCommandQuery
-				isEnabled: true;
-				text: (aCommandQuery menuText expandMacrosWithArguments: { 'selector <1p>' << selector }
-							locale: Locale smalltalk)]!
+				beEnabled;
+				expandMenuTextWith: 'selector <p>' << selector]!
 
 queryBrowseVariableDefinition: aCommandQuery
-	| pos |
+	| pos var |
 	pos := self selectedTokenPosition.
-	(pos ~~ 0 and: [(view styleAt: pos) name == #identifier])
-		ifTrue: 
-			[| var varClass |
-			var := self variableForIdentifierStyle: #identifier range: (view styleRunRangeAt: pos).
-			varClass := self suggestClassForVariable: var.
-			aCommandQuery isEnabled: true.
-			(aCommandQuery menuText includes: $<)
-				ifTrue: 
-					[aCommandQuery
-						text: ('Class <1p>' expandMacrosWithArguments: { varClass instanceClass } locale: Locale smalltalk)]]!
+	(pos == 0 or: [(view styleAt: pos) name ~~ #identifier]) ifTrue: [^self].
+	var := self variableForIdentifierStyle: #identifier range: (view styleRunRangeAt: pos).
+	(self suggestClassForVariable: var)
+		ifNotNil: 
+			[:varClass |
+			aCommandQuery
+				beEnabled;
+				text: 'Class <p>' << varClass instanceClass]!
 
 queryBrowseVariableReferences: aCommandQuery
 	| pos |
 	pos := self selectedTokenPosition.
 	(pos ~~ 0 and: [(view styleAt: pos) name == #identifier])
 		ifTrue: 
-			[| var varClass |
+			[| var |
 			var := self variableForIdentifierStyle: #identifier range: (view styleRunRangeAt: pos).
-			varClass := self suggestClassForVariable: var.
-			aCommandQuery
-				isEnabled: varClass notNil;
-				text: (aCommandQuery menuText
-							expandMacrosWithArguments: { varClass ifNil: ['…'] ifNotNil: [varClass instanceClass shortName] }
-							locale: Locale smalltalk)]!
+			(self suggestClassForVariable: var)
+				ifNotNil: 
+					[:varClass |
+					aCommandQuery
+						beEnabled;
+						expandMenuTextWith: varClass instanceClass shortName]]!
 
 queryToggleAutoCompletion: aCommandQuery
 	(self isReadOnly not and: [self hasSmalltalkStyler and: [self isSyntaxColoringEnabled]])
 		ifTrue: 
 			[aCommandQuery
 				isChecked: self isAutoCompletionEnabled;
-				isEnabled: true]
+				beEnabled]
 		ifFalse: 
 			[aCommandQuery
 				isChecked: false;
-				isEnabled: false]!
+				beDisabled]!
 
 queryToggleStyling: aCommandQuery
 	self hasSmalltalkStyler
 		ifTrue: 
 			[aCommandQuery
-				isEnabled: true;
+				beEnabled;
 				isChecked: self isSyntaxColoringEnabled]
 		ifFalse: 
 			[aCommandQuery
-				isEnabled: false;
+				beDisabled;
 				isChecked: false].
 	"Ensure the command is not handled by the view"
 	aCommandQuery receiver: self!
@@ -2012,6 +1998,7 @@ debugIt!commands-actions!public! !
 debugItIfFail:!helpers!private! !
 defaultCompilerFlags!constants!private! !
 defaultStylerClass!constants!private! !
+descriptionOfVariable:!public! !
 developmentSystem!constants!private! !
 displayIt!commands-actions!public! !
 dragOver:!drag & drop!public! !
@@ -2077,7 +2064,6 @@ onHoverEnd:!event handling!private! !
 onHoverStart:!event handling!private! !
 onRightButtonReleased:!event handling!public! !
 onTimerTick:!event handling!private! !
-onTipTextRequired:!event handling!private! !
 onViewAvailable!event handling!public! !
 onViewStateRestored!event handling!public! !
 parseContext!commands-actions!public! !
@@ -2165,7 +2151,7 @@ wrapLinesInRange:indent:!helpers!private! !
 !
 
 Tools.SmalltalkWorkspace methodProtocol: #textPresenter attributes: #(#readOnly) selectors: #(#clear #findDetails #findDetails: #hasFindDetails #hasSelection #isModified #isModified: #replaceSelection: #selectionRange #selectionRange:)!
-Tools.SmalltalkWorkspace methodProtocol: #variableMetadataProvider attributes: #() selectors: #(#classForVariable: #iconForVariable: #tipForVariable:)!
+Tools.SmalltalkWorkspace methodProtocol: #variableMetadataProvider attributes: #(#readOnly) selectors: #(#classForVariable: #descriptionOfVariable: #iconForVariable: #tipForVariable:)!
 
 !Tools.SmalltalkWorkspace class methodsFor!
 
@@ -2796,7 +2782,7 @@ resource_Default_view
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.Scintilla.ScintillaView} 38 #{Core.Array} 56 nil nil 50 2 8 1411453252 1 32 1094 2 #{UI.ValueHolder} nil false 6 #{Kernel.EqualitySearchPolicy} nil 518 #{Graphics.ThemeColor} #smalltalkWorkspace nil 21 2886 4 #{UI.Menu} nil true 50 13 1094 2 #{UI.CommandMenuItem} 1 1350 4 #{UI.CommandDescription} #accept 8 '&Accept' 1 1 nil nil nil 326 1 #{UI.DividerMenuItem} 4097 210 nil true 50 10 258 1 290 #undo 8 '&Undo' 1 1 838 4 #{Graphics.Icon} nil true 1030 #{Graphics.ImageFromStringResourceInitializer} 8 'EditUndo.ico' 838 1 #{External.ResourceLibrary} 8 'dolphindr8.dll' 65541 nil nil nil 338 4097 258 1 290 #cutSelection 8 'Cu&t' 1 1 450 nil true 482 8 'EditCut.ico' 544 65541 nil nil nil 258 1 290 #copySelection 8 '&Copy' 1 1 450 nil true 482 8 'EditCopy.ico' 544 65541 nil nil nil 258 1 290 #pasteClipboard 8 '&Paste' 1 1 450 nil true 482 8 'EditPaste.ico' 544 65541 nil nil nil 258 1 290 #clearSelection 8 'De&lete' 1 1 450 nil true 482 8 'EditClear.ico' 544 65541 nil nil nil 338 4097 258 1 290 #reformatSource 8 'Re&format' 1 1 nil nil nil 338 4097 258 1 290 #selectAll 8 '&Select All' 1 1 nil nil nil 8 '&Edit' nil 134217729 nil nil nil nil nil 210 nil true 50 10 258 1 290 #inspectWorkspacePool 8 '&Variables' 1 1 nil nil nil 258 1 290 #cloneNew 8 'Clo&ne' 1 1 450 nil true 482 8 'SmalltalkWorkspace.ico' 544 65541 nil nil nil 338 4097 258 1 290 #toggleAutoCompletion 8 'Auto-complete' 1 1 nil nil nil 258 1 290 #toggleIndentationGuides 8 'Indentation &Guides' 1 1 nil nil nil 258 1 290 #toggleLineEndings 8 'Line &Endings' 1 1 2374 2 #{Graphics.TextTileIcon} $¶ 8 'Arial' nil nil nil nil 1 nil nil nil nil 258 1 290 #toggleLineNumbers 8 'Line N&umbers' 1 1 nil nil nil 258 1 290 #toggleStyling 8 '&Syntax Coloring' 1 1 nil nil nil 258 1 290 #toggleWhitespace 8 'W&hitespace' 1 1 nil nil nil 258 1 290 #toggleWordWrap 8 '&Word Wrap' 1 1 nil nil nil 8 'Wor&kspace' nil 134217729 nil nil nil nil nil 338 4097 258 1 290 #browseIt 8 'Bro&wse It' 1 1 450 nil true 482 8 'ClassBrowserShell.ico' 544 65541 nil nil nil 258 1 290 #displayIt 8 '&Display It' 1 1 450 nil true 482 8 'DisplayIt.ico' 544 65541 nil nil nil 258 1 290 #printIt 8 '&Print It' 1 1 450 nil true 482 8 'PrintIt.ico' 544 65541 nil nil nil 258 1 290 #evaluateIt 8 'E&valuate It' 1 1 450 nil true 482 8 'EvaluateIt.ico' 544 65541 nil nil nil 258 1 290 #inspectIt 8 '&Inspect It' 1 1 450 nil true 482 8 'InspectIt.ico' 544 65541 nil nil nil 258 1 290 #debugIt 8 'Deb&ug It' 1 1 450 nil true 482 8 'DebugIt.ico' 544 65541 nil nil nil 338 4097 210 nil true 50 2 258 2097153 290 #browseDefinitions 8 'Defi&nitions of <1d>' 1 1 nil nil nil 258 1 290 #browseReferences 8 '&References to <1d>' 1 1 nil nil nil 8 '&Browse' nil 1 nil nil nil nil nil 8 '&Workspace' nil 134217729 nil nil nil nil nil nil nil 32 nil nil 518 #{UI.NullConverter} nil nil 9 #explicit nil nil nil nil 550 #{Core.IdentityDictionary} 2 #callTip 3142 1 #{UI.Scintilla.TextStyle} 77 6 #{Graphics.Color} #gray 2578 #white 1 nil nil nil nil #callTip nil nil nil #normal 2546 1 nil nil 1 nil nil nil nil #normal nil nil nil nil 1286 #{Tools.SmalltalkExpressionStyler} 1 nil nil false 550 #{Core.OrderedCollection} 0 2514 1 #default 3142 2 #{UI.Scintilla.MarkerDefinition} 1 nil nil nil 32 #circle nil nil nil nil nil nil 294 #{Core.IdentitySet} 0 nil 550 #{Core.LookupTable} 0 nil nil nil 2786 2 23 178 #workspaceSelection 81 2578 #windowText nil 50 1 1030 #{UI.Scintilla.CharacterRepresentation} 8 $\x2028 nil 33 2848 262 #{UI.Scintilla.NullScintillaLibrary} nil 65 nil nil 2514 3 #literalArray 8 '()' #literalBytes 8 '[]' #specialCharacter 8 '()[]<>' nil 3 2514 1 #container 2528 nil nil nil nil #{Core.Utf8String} nil 2514 0 nil nil 2514 3 #Error 2546 1031 2578 #firebrick 2578 #floralWhite 1 nil nil nil nil #Error nil nil nil #Notification 2546 1029 nil 2578 #gainsboro 1 nil nil nil nil #Notification nil nil nil #Warning 2546 1027 2578 #darkGoldenrod 2578 #ivory 1 nil nil nil nil #Warning nil nil nil nil nil nil 262 #{Core.MessageSequence} 50 8 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 6143 21 3298 461 311 32 3250 #sciSetMouseDwellTime: 8 #(500) 32 3250 #wordWrap: 8 #(true) 32 3250 #margins: 50 1 50 3 2118 3 #{UI.Scintilla.Margin} 1 32 nil 3 nil nil nil nil 3458 3 32 nil nil nil 67108863 nil nil 3458 5 32 nil nil nil nil nil nil 32 3250 #tabWidth: 8 #(4) 32 3250 #maxCompletionListHeight: 8 #(9) 32 3250 #hasAdditionalSelectionTyping: 8 #(true) 32 3250 #sciSetSelectionLayer: 8 #(1) 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 229 12 0 0 165 0 0 0] 8 #() 3298 193 193 nil 45)!
+	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.Scintilla.ScintillaView} 38 #{Core.Array} 56 nil nil 50 2 8 1411453252 1 32 1094 2 #{UI.ValueHolder} nil false 6 #{Kernel.EqualitySearchPolicy} nil 518 #{Graphics.ThemeColor} #smalltalkWorkspace nil 21 2886 4 #{UI.Menu} nil true 50 13 1094 2 #{UI.CommandMenuItem} 1 1350 4 #{UI.CommandDescription} #accept 8 '&Accept' 1 1 nil nil nil 326 1 #{UI.DividerMenuItem} 4097 210 nil true 50 10 258 1 290 #undo 8 '&Undo' 1 1 838 4 #{Graphics.Icon} nil true 1030 #{Graphics.ImageFromStringResourceInitializer} 8 'EditUndo.ico' 838 1 #{External.ResourceLibrary} 8 'dolphindr8.dll' 65541 nil nil nil 338 4097 258 1 290 #cutSelection 8 'Cu&t' 1 1 450 nil true 482 8 'EditCut.ico' 544 65541 nil nil nil 258 1 290 #copySelection 8 '&Copy' 1 1 450 nil true 482 8 'EditCopy.ico' 544 65541 nil nil nil 258 1 290 #pasteClipboard 8 '&Paste' 1 1 450 nil true 482 8 'EditPaste.ico' 544 65541 nil nil nil 258 1 290 #clearSelection 8 'De&lete' 1 1 450 nil true 482 8 'EditClear.ico' 544 65541 nil nil nil 338 4097 258 1 290 #reformatSource 8 'Re&format' 1 1 nil nil nil 338 4097 258 1 290 #selectAll 8 '&Select All' 1 1 nil nil nil 8 '&Edit' nil 134217729 nil nil nil nil nil 210 nil true 50 10 258 1 290 #inspectWorkspacePool 8 '&Variables' 1 1 nil nil nil 258 1 290 #cloneNew 8 'Clo&ne' 1 1 450 nil true 482 8 'SmalltalkWorkspace.ico' 544 65541 nil nil nil 338 4097 258 1 290 #toggleAutoCompletion 8 'Auto-complete' 1 1 nil nil nil 258 1 290 #toggleIndentationGuides 8 'Indentation &Guides' 1 1 nil nil nil 258 1 290 #toggleLineEndings 8 'Line &Endings' 1 1 2374 2 #{Graphics.TextTileIcon} $¶ 8 'Arial' nil nil nil nil 1 nil nil nil nil 258 1 290 #toggleLineNumbers 8 'Line N&umbers' 1 1 nil nil nil 258 1 290 #toggleStyling 8 '&Syntax Coloring' 1 1 nil nil nil 258 1 290 #toggleWhitespace 8 'W&hitespace' 1 1 nil nil nil 258 1 290 #toggleWordWrap 8 '&Word Wrap' 1 1 nil nil nil 8 'Wor&kspace' nil 134217729 nil nil nil nil nil 338 4097 258 1 290 #browseIt 8 'Bro&wse It' 1 1 450 nil true 482 8 'ClassBrowserShell.ico' 544 65541 nil nil nil 258 1 290 #displayIt 8 '&Display It' 1 1 450 nil true 482 8 'DisplayIt.ico' 544 65541 nil nil nil 258 1 290 #printIt 8 '&Print It' 1 1 450 nil true 482 8 'PrintIt.ico' 544 65541 nil nil nil 258 1 290 #evaluateIt 8 'E&valuate It' 1 1 450 nil true 482 8 'EvaluateIt.ico' 544 65541 nil nil nil 258 1 290 #inspectIt 8 '&Inspect It' 1 1 450 nil true 482 8 'InspectIt.ico' 544 65541 nil nil nil 258 1 290 #debugIt 8 'Deb&ug It' 1 1 450 nil true 482 8 'DebugIt.ico' 544 65541 nil nil nil 338 4097 210 nil true 50 2 258 2097153 290 #browseDefinitions 8 'Defi&nitions of <d:…>' 1 17 nil nil nil 258 1 290 #browseReferences 8 '&References to <d:…>' 1 17 nil nil nil 8 '&Browse' nil 1 nil nil nil nil nil 8 '&Workspace' nil 134217729 nil nil nil nil nil nil nil 32 nil nil 518 #{UI.NullConverter} nil nil 9 #explicit nil nil nil nil 550 #{Core.IdentityDictionary} 2 #callTip 3142 1 #{UI.Scintilla.TextStyle} 77 6 #{Graphics.Color} #gray 2578 #white 1 nil nil nil nil #callTip nil nil nil #normal 2546 1 nil nil 1 nil nil nil nil #normal nil nil nil nil 1286 #{Tools.SmalltalkExpressionStyler} 1 nil nil false 550 #{Core.OrderedCollection} 0 2514 1 #default 3142 2 #{UI.Scintilla.MarkerDefinition} 1 nil nil nil 32 #circle nil nil nil nil nil nil 294 #{Core.IdentitySet} 0 nil 550 #{Core.LookupTable} 0 nil nil nil 2786 2 23 178 #workspaceSelection 81 2578 #windowText nil 50 1 1030 #{UI.Scintilla.CharacterRepresentation} 8 $\x2028 nil 33 2848 262 #{UI.Scintilla.NullScintillaLibrary} nil 65 nil nil 2514 3 #literalArray 8 '()' #literalBytes 8 '[]' #specialCharacter 8 '()[]<>' nil 3 2514 1 #container 2528 nil nil nil nil #{Core.Utf8String} nil 2514 0 nil nil 2514 3 #Error 2546 1031 2578 #firebrick 2578 #floralWhite 1 nil nil nil nil #Error nil nil nil #Notification 2546 1029 nil 2578 #gainsboro 1 nil nil nil nil #Notification nil nil nil #Warning 2546 1027 2578 #darkGoldenrod 2578 #ivory 1 nil nil nil nil #Warning nil nil nil nil nil nil 262 #{Core.MessageSequence} 50 8 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 6143 21 3298 461 311 32 3250 #sciSetMouseDwellTime: 8 #(500) 32 3250 #wordWrap: 8 #(true) 32 3250 #margins: 50 1 50 3 2118 3 #{UI.Scintilla.Margin} 1 32 nil 3 nil nil nil nil 3458 3 32 nil nil nil 67108863 nil nil 3458 5 32 nil nil nil nil nil nil 32 3250 #tabWidth: 8 #(4) 32 3250 #maxCompletionListHeight: 8 #(9) 32 3250 #hasAdditionalSelectionTyping: 8 #(true) 32 3250 #sciSetSelectionLayer: 8 #(1) 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 229 12 0 0 165 0 0 0] 8 #() 3298 193 193 nil 45)!
 
 setAdditionalKeyBindings: anArray
 	additionalKeyBindings = anArray ifTrue: [^self].

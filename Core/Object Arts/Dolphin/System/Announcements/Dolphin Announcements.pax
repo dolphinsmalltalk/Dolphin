@@ -105,7 +105,7 @@ asWeakMessageSend
 		selector: selector
 		arguments: args copy! !
 !Core.MessageSend categoriesForMethods!
-asWeakMessageSend!commands!public! !
+asWeakMessageSend!converting!public! !
 !
 
 !Core.MessageSendAbstract methodsFor!
@@ -145,7 +145,7 @@ asWeakMessageSend
 	^self! !
 !Kernel.BlockClosure categoriesForMethods!
 announcementSubscriber!public! !
-asWeakMessageSend!public! !
+asWeakMessageSend!converting!public! !
 !
 
 "End of package definition"!

@@ -53,6 +53,11 @@ addToCommandRoute: aCommandPolicy
 applyOptions
 	SmalltalkSystem current applyOptionsToTool: self!
 
+browseClassHierarchy
+	"Open a new hierarchy browser at the root of the standard class hierarchy."
+
+	^self developmentSystem browseHierarchy: Object!
+
 browseDefinitions
 	"Context-sensitive browse definitions command (F12)."
 
@@ -66,15 +71,14 @@ browseDefinitionsCommand
 	^nil!
 
 browseHierarchy
-	"Open a class hierarchy browser navigated appropriately based on initiating context."
+	"Open a new hierarchy browser at the root of the standard class hierarchy."
 
-	<commandQuery: #queryBrowseHierarchy:>
-	self perform: self browseHierarchyCommand!
+	^self developmentSystem browseHierarchy: Object!
 
 browseHierarchyCommand
 	"Answer the <Symbol> of the contextual command to browse the class hierarchy of something, depending on the subview with focus and/or selection."
 
-	^nil!
+	^#browseClassHierarchy!
 
 browseIt
 	"Open a browser on the selected item in the window with focus."
@@ -112,6 +116,11 @@ browseReferencesCommand
 browserEnvironment
 	^self systemModel browserEnvironment!
 
+browseTests
+	"Open a new SUnit browser on all test."
+
+	^self developmentSystem testBrowserClass show!
+
 buildPopupForCommand: aSymbol 
 	aSymbol == #newIdeaSpace ifTrue: [^self class buildIdeaSpacePopup].
 	^nil!
@@ -128,6 +137,24 @@ canSaveState
 	part of a IdeaSpace save operation"
 
 	^false!
+
+changeManager
+	^self developmentSystem changeManager!
+
+clearChangeHistory
+	"Discard system change history (i.e. undo/redo list)."
+
+	<commandQuery: #queryClearChangeHistory:>
+	(MessageBox new
+		headline: 'Clear change history?';
+		confirm: 'Are you sure you want to clear the change history (undo/redo for past changes will be lost)?')
+			ifTrue: [self developmentSystem nukeChangeHistory]!
+
+clearSelection
+	"Private - Remove the selected object from the system"
+
+	<commandQuery: #queryDeleteIt:>
+	self perform: self deleteItCommand!
 
 configureFromSavedStateString: aSavedStateString
 	"Configures the receiver using the monadic block source in aSavedStateString"
@@ -212,8 +239,14 @@ hasPast
 
 	^self pastSize > 0!
 
+hasRedoableOperations
+	^self changeManager hasRedoableOperations!
+
 hasRememberedSize
 	^self class defaultExtent notNil!
+
+hasUndoableOperations
+	^self changeManager hasUndoableOperations!
 
 help
 	"Bring up a help page for this tool."
@@ -340,49 +373,51 @@ performCommand: aCommand
 			self statusModel value: ex.
 			nil]!
 
+populateToolsMenu: toolsMenu
+	"Private - Populate the Tools menu with the same hierarchy of items as the system folder.
+	The menu is arranged in alphabetical order, with dynamically generated keyboard
+	shortcuts using the earliest character not used as the shortcut for a previous item
+	in the menu. All items will always be enabled. There is no default."
+
+	self developmentSystem populateToolsMenu: toolsMenu!
+
+populateWindowMenu: windowMenu
+	"Private - Populate the open windows menu"
+
+	self developmentSystem populateWindowMenu: windowMenu!
+
 queryAcceptIt: aCommandQuery
-	self acceptItCommand
-		ifNil: 
-			["Not handled at this level, but continue searching the chain"
-			aCommandQuery text: aCommandQuery menuText << $…]
-		ifNotNil: [:selector | self queryContextCommand: aCommandQuery as: selector]!
+	self acceptItCommand ifNotNil: [:selector | self queryContextCommand: aCommandQuery as: selector]!
 
 queryBrowseDefinitions: aCommandQuery
 	"Browse Definitions (F12) is a context-sensitive command. We open a browser appropriate to the selected node, or let some other presenter handle if if the selected node is not browsable.
 	As the command's menu text typically has an insertion to specify what will be browsed, we ensure it is reset, otherwise it might end up displaying whatever was last browsable."
 
-	aCommandQuery text: aCommandQuery menuText << $….
 	self browseDefinitionsCommand
 		ifNotNil: [:selector | self queryContextCommand: aCommandQuery as: selector]!
 
 queryBrowseHierarchy: aCommandQuery
 	self browseHierarchyCommand
-		ifNil: 
-			["Not handled at this level, but continue searching the chain"
-			aCommandQuery text: aCommandQuery menuText << $…]
 		ifNotNil: [:selector | self queryContextCommand: aCommandQuery as: selector]!
 
 queryBrowseIt: aCommandQuery
-	self browseItCommand
-		ifNil: 
-			["Not handled at this level, but continue searching the chain"
-			aCommandQuery text: aCommandQuery menuText << $…]
-		ifNotNil: [:selector | self queryContextCommand: aCommandQuery as: selector]!
+	self browseItCommand ifNotNil: [:selector | self queryContextCommand: aCommandQuery as: selector]!
 
 queryBrowseReferences: aCommandQuery
 	"Browse References (Shift+F12) is a context-sensitive command. We open a browser appropriate to the selected node, or let some other presenter handle if if the selected node is not browsable for references.
 	As the command's menu text typically has an insertion to specify what will be browsed, we ensure it is reset, otherwise it might end up displaying whatever was last browsable."
 
-	aCommandQuery text: aCommandQuery menuText << $….
 	self browseReferencesCommand
 		ifNotNil: [:selector | self queryContextCommand: aCommandQuery as: selector]!
 
+queryBrowseTests: aCommandQuery
+	aCommandQuery isEnabled: self developmentSystem testBrowserClass notNil!
+
+queryClearChangeHistory: aCommandQuery
+	aCommandQuery isEnabled: (self hasUndoableOperations or: [self hasRedoableOperations])!
+
 queryDeleteIt: aCommandQuery
-	self deleteItCommand
-		ifNil: 
-			["Not handled at this level, but continue searching the chain"
-			aCommandQuery text: aCommandQuery menuText << $…]
-		ifNotNil: [:selector | self queryContextCommand: aCommandQuery as: selector]!
+	self deleteItCommand ifNotNil: [:selector | self queryContextCommand: aCommandQuery as: selector]!
 
 queryHistoryBack: aCommandQuery
 	aCommandQuery isEnabled: self hasPast!
@@ -397,11 +432,38 @@ queryHistoryRewind: aCommandQuery
 	aCommandQuery isEnabled: self pastSize >= aCommandQuery command arguments first!
 
 queryInspectIt: aCommandQuery
-	self inspectItCommand
-		ifNil: 
-			["Not handled at this level, but continue searching the chain"
-			aCommandQuery text: aCommandQuery menuText << $…]
-		ifNotNil: [:selector | self queryContextCommand: aCommandQuery as: selector]!
+	self inspectItCommand ifNotNil: [:selector | self queryContextCommand: aCommandQuery as: selector]!
+
+queryRedoChange: aCommandQuery
+	| description |
+	self hasRedoableOperations
+		ifTrue: 
+			[description := self changeManager redoChange.
+			aCommandQuery beEnabled]
+		ifFalse: 
+			[description := 'Change'.
+			aCommandQuery beDisabled].
+	aCommandQuery expandMenuTextWith: description!
+
+queryUndoChange: aCommandQuery
+	| description |
+	self hasUndoableOperations
+		ifTrue: 
+			[description := self changeManager undoChange.
+			aCommandQuery beEnabled]
+		ifFalse: 
+			[description := 'Change'.
+			aCommandQuery beDisabled].
+	aCommandQuery expandMenuTextWith: description!
+
+redoChange
+	"Redo the last change in the undo history list."
+
+	<commandQuery: #queryRedoChange:>
+	self changeManager redoOperation!
+
+refactoringsMenu
+	"Enable the Refactorings menu when the Refactoring Browser support is loaded"!
 
 rememberThisSize
 	"Record the size of the receiver as the default extent for its tool class."
@@ -521,6 +583,20 @@ statusModel
 systemModel
 	^self developmentSystem!
 
+toolsMenu
+	<menuPopulator: #populateToolsMenu:>
+	!
+
+undoChange
+	"Undo the last change in the undo history list."
+
+	<commandQuery: #queryUndoChange:>
+	self changeManager undoOperation!
+
+windowMenu
+	<menuPopulator: #populateWindowMenu:>
+	!
+
 workspaceClass
 	^SmalltalkSystem current workspaceClass! !
 !Tools.SmalltalkToolShell categoriesForMethods!
@@ -528,6 +604,7 @@ accept!commands-actions!public! !
 acceptItCommand!commands-mappings!private! !
 addToCommandRoute:!commands-routing!public! !
 applyOptions!private! !
+browseClassHierarchy!public! !
 browseDefinitions!commands-actions!public! !
 browseDefinitionsCommand!commands-mappings!private! !
 browseHierarchy!commands-actions!public! !
@@ -539,9 +616,13 @@ browseMethodsInEnvironments:!browsing!public! !
 browseReferences!commands-actions!public! !
 browseReferencesCommand!commands-mappings!private! !
 browserEnvironment!accessing!public! !
+browseTests!public! !
 buildPopupForCommand:!private! !
 canRefactor!private!testing! !
 canSaveState!private!saved state! !
+changeManager!commands!public! !
+clearChangeHistory!public!refactoring! !
+clearSelection!commands-actions!private! !
 configureFromSavedStateString:!public! !
 createComponents!initializing!private! !
 createSchematicWiring!initializing!private! !
@@ -555,7 +636,9 @@ futureSize!accessing!public! !
 getPinStateFor:!accessing!private! !
 hasFuture!public!testing! !
 hasPast!public!testing! !
+hasRedoableOperations!public!testing! !
 hasRememberedSize!private!testing! !
+hasUndoableOperations!public!testing! !
 help!commands-actions!public! !
 historyBack!commands-actions!private! !
 historyBack:!commands-actions!private! !
@@ -575,17 +658,25 @@ onViewStateRestored!event handling!public! !
 packageManager!constants!private! !
 pastSize!accessing!public! !
 performCommand:!commands-routing!public! !
+populateToolsMenu:!private! !
+populateWindowMenu:!private! !
 queryAcceptIt:!commands-queries!private! !
 queryBrowseDefinitions:!commands-queries!private! !
 queryBrowseHierarchy:!commands-queries!private! !
 queryBrowseIt:!commands-queries!private! !
 queryBrowseReferences:!commands-queries!private! !
+queryBrowseTests:!private! !
+queryClearChangeHistory:!commands!private! !
 queryDeleteIt:!commands-queries!private! !
 queryHistoryBack:!commands-queries!private! !
 queryHistoryFastForward:!commands-queries!private! !
 queryHistoryForward:!commands-queries!private! !
 queryHistoryRewind:!commands-queries!private! !
 queryInspectIt:!commands-queries!private! !
+queryRedoChange:!commands!private! !
+queryUndoChange:!commands!private! !
+redoChange!commands!public! !
+refactoringsMenu!public! !
 rememberThisSize!commands-actions!public! !
 saveStateAspects:for:on:!helpers!private!saved state! !
 saveStateOn:!private!saved state! !
@@ -605,6 +696,9 @@ slideyPinMap:!accessing!public! !
 slideyPinNames!accessing!private! !
 statusModel!accessing!private! !
 systemModel!accessing!private! !
+toolsMenu!public! !
+undoChange!commands!public! !
+windowMenu!public! !
 workspaceClass!constants!private! !
 !
 

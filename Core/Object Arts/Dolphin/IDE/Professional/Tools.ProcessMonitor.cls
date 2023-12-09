@@ -31,6 +31,18 @@ Class Variables:
 !Tools.ProcessMonitor categoriesForClass!MVP-Presenters! !
 !Tools.ProcessMonitor methodsFor!
 
+canDebug
+	| proc |
+	proc := self process.
+	^proc notNil and: 
+			[proc ~~ Delay timingProcess
+				and: [proc ~~ SessionManager inputState idler and: [(#(#dead #debug) includes: proc state) not]]]!
+
+canTerminate
+	| proc |
+	proc := self process.
+	^proc notNil and: [SessionManager current isOAD or: [(#(#dead #debug) includes: proc state) not]]!
+
 createComponents
 	"Create the presenters contained by the receiver"
 
@@ -59,14 +71,24 @@ createSchematicWiring
 debugIt
 	"Open a debugger on the currently selected process."
 
+	<commandQuery: #canDebug>
 	self process debug!
 
 defaultHelpId
 	^10894!
 
+hasLiveUserProcessSelected
+	| proc |
+	proc := self process.
+	^proc notNil and: [proc isAlive and: [(self isSystemProcess: proc) not]]!
+
+hasSelection
+	^listPresenter hasSelection!
+
 inspectIt
 	"Open an inspector on the currently selected process."
 
+	<commandQuery: #hasSelection>
 	self process inspect!
 
 isSystemProcess: aProcess
@@ -122,6 +144,9 @@ onViewOpened
 pause
 	self view killTimer: 1!
 
+priorityMenu
+	<commandQuery: #hasLiveUserProcessSelected>!
+
 process
 	"Private - Answer the currently selected process, or nil if none."
 
@@ -132,59 +157,29 @@ process: aProcess
 
 	listPresenter selection: aProcess!
 
-queryCommand: query 
-	"Private - Enter details about a potential command for the receiver into the 
-	<CommandQuery>, query."
-
-	| command proc |
-	command := query commandSymbol.
-	#refresh == command 
-		ifTrue: 
-			[query isEnabled: true.
-			^true].
-	#setSpeed: == command 
-		ifTrue: 
-			[query
-				isEnabled: true;
-				isChecked: self updateInterval = (UpdateIntervals at: query command arguments first).
-			^true].
+queryLowerPriority: aCommandQuery
+	| proc |
 	proc := self process.
-	#inspectIt == command 
-		ifTrue: 
-			[query isEnabled: proc notNil.
-			^true].
-	#debugIt == command 
-		ifTrue: 
-			[query 
-				isEnabled: (proc notNil and: 
-							[proc ~~ Delay timingProcess 
-								and: [proc ~~ SessionManager inputState idler and: [(#(#dead #debug) includes: proc state) not]]]).
-			^true].
-	#terminateProcess == command 
-		ifTrue: 
-			[query isEnabled: (proc notNil 
-						and: [SessionManager current isOAD or: [(#(#dead #debug) includes: proc state) not]]).
-			^true].
-	(#(#priorityMenu #renameIt) identityIncludes: command) 
-		ifTrue: 
-			[query isEnabled: (proc notNil and: [(self isSystemProcess: proc) not]).
-			^true].
-	#setLowerPriority: == command 
-		ifTrue: 
-			[query
-				isEnabled: (proc notNil and: [(self isSystemProcess: proc) not and: [proc isMain not]]);
-				isChecked: (proc notNil and: [proc priorityName == query command arguments first]).
-			^true].
-	#setPriority: == command 
-		ifTrue: 
-			[query
-				isEnabled: (proc notNil and: [(self isSystemProcess: proc) not]);
-				isChecked: (proc notNil and: [proc priorityName == query command arguments first]).
-			^true].
-	^super queryCommand: query!
+	proc isNil ifTrue: [^self].
+	aCommandQuery
+		isEnabled: (proc isAlive and: [(self isSystemProcess: proc) not and: [proc isMain not]]);
+		isChecked: proc priorityName == aCommandQuery command arguments single!
+
+querySetPriority: aCommandQuery
+	| proc |
+	proc := self process.
+	proc isNil ifTrue: [^self].
+	aCommandQuery
+		isEnabled: (proc isAlive and: [(self isSystemProcess: proc) not]);
+		isChecked: proc priorityName == aCommandQuery command arguments single!
+
+querySetSpeed: aCommandQuery
+	aCommandQuery
+		beEnabled;
+		isChecked: self updateInterval = (UpdateIntervals at: aCommandQuery command arguments single)!
 
 refresh
-	"Private - Refresh the process list display."
+	"Refresh the process list display."
 
 	| proc |
 	proc := self process.
@@ -195,22 +190,26 @@ refresh
 	proc notNil ifTrue: [self process: proc]!
 
 renameIt
+	<commandQuery: #hasLiveUserProcessSelected>
 	self pause.
 	listPresenter view editSelectionLabel!
 
 setLowerPriority: priorityName
 	"Lower the priority of the selected process."
 
+	<commandQuery: #queryLowerPriority:>
 	self setPriority: priorityName!
 
 setPriority: priorityName
 	"Set the priority of the selected process."
 
+	<commandQuery: #querySetPriority:>
 	self process priority: (Processor perform: priorityName)!
 
 setSpeed: intervalName
 	"Set the update speed."
 
+	<commandQuery: #querySetSpeed:>
 	self updateInterval: (UpdateIntervals at: intervalName)!
 
 setTimer
@@ -223,11 +222,12 @@ terminateProcess
 	"Prompt the user for confirmation to terminate the currently selected process,
 	and if given the go ahead, make it so."
 
+	<commandQuery: #canTerminate>
 	| proc |
 	proc := self process.
 	(MessageBox new
-		headline: 'Terminate process <1d>?' << proc id;
-		text: 'The <1p> process will be terminated.' << proc name;
+		headline: 'Terminate process <d>?' << proc id;
+		text: 'The <p> process will be terminated.' << proc name;
 		customButtons: #(#(#yes '&Terminate') #(#no 'Cancel'));
 		isCancellable: true;
 		confirm) ifTrue: [proc terminate]!
@@ -241,11 +241,15 @@ updateInterval: aDuration
 	updateInterval := aDuration.
 	self setTimer! !
 !Tools.ProcessMonitor categoriesForMethods!
+canDebug!commands-queries!private! !
+canTerminate!commands-queries!private! !
 createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !
-debugIt!commands!public! !
+debugIt!commands-actions!public! !
 defaultHelpId!constants!public! !
-inspectIt!commands!public! !
+hasLiveUserProcessSelected!commands-queries!private! !
+hasSelection!accessing!private! !
+inspectIt!commands-actions!public! !
 isSystemProcess:!enquiries!public! !
 onProcess:renameTo:accept:!event handling!private! !
 onStartup!event handling!private! !
@@ -253,16 +257,19 @@ onTimerTick:!event handling!public! !
 onViewDestroyed!event handling!public! !
 onViewOpened!event handling!public! !
 pause!helpers!private! !
+priorityMenu!commands-menus!public! !
 process!accessing!private! !
 process:!accessing!private! !
-queryCommand:!commands!private! !
-refresh!commands!private! !
-renameIt!commands!public! !
-setLowerPriority:!commands!public! !
-setPriority:!commands!public! !
-setSpeed:!commands!public! !
+queryLowerPriority:!commands-queries!private! !
+querySetPriority:!commands-queries!private! !
+querySetSpeed:!commands-queries!private! !
+refresh!commands-actions!public! !
+renameIt!commands-actions!public! !
+setLowerPriority:!commands-actions!public! !
+setPriority:!commands-actions!public! !
+setSpeed:!commands-actions!public! !
 setTimer!helpers!private! !
-terminateProcess!commands!public! !
+terminateProcess!commands-actions!public! !
 updateInterval!accessing!private! !
 updateInterval:!accessing!private! !
 !

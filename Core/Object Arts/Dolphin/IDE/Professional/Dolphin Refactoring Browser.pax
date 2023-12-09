@@ -30,7 +30,6 @@ package setClassNames: #(
 	#{Refactory.Browser.RenameMethodReferencesTransformation}
 	#{Tools.ChooseImportDialog}
 	#{Tools.CodeMentorPlugin}
-	#{Tools.CodeRefactoringTool}
 	#{Tools.CodeRewriterPlugin}
 	#{Tools.ConvertToSiblingDialog}
 	#{Tools.LintRuleFailuresBrowserShell}
@@ -220,6 +219,7 @@ package setMethodNames: #(
 	#(#{Tools.ClassBrowserAbstract} #pushMethods:)
 	#(#{Tools.ClassBrowserAbstract} #pushUpMethods)
 	#(#{Tools.ClassBrowserAbstract} #queryOverrideMethods:)
+	#(#{Tools.ClassBrowserAbstract} #queryRemoveInstanceVariables:)
 	#(#{Tools.ClassBrowserAbstract} #removeInstanceVariables)
 	#(#{Tools.ClassBrowserAbstract} #renameMethod)
 	#(#{Tools.ClassBrowserAbstract} #selectedOverridableMethods)
@@ -249,7 +249,6 @@ package setMethodNames: #(
 	#(#{Tools.ClassSelector} #populateClassVarMenu:selectors:)
 	#(#{Tools.ClassSelector} #populateInstVarMenu:selectors:)
 	#(#{Tools.ClassSelector} #populatePullUpVariableMenu:forClass:command:classVariables:ifTooMany:)
-	#(#{Tools.ClassSelector} #populateRefactoringMenu:)
 	#(#{Tools.ClassSelector} #protectInstanceVariables)
 	#(#{Tools.ClassSelector} #protectVariables)
 	#(#{Tools.ClassSelector} #pullUpClassVariables)
@@ -270,19 +269,85 @@ package setMethodNames: #(
 	#(#{Tools.Debugger} #hasRefactorableMethodSelected)
 	#(#{Tools.Debugger} #performMethodRefactoring:)
 	#(#{Tools.Debugger} #performMethodRenameRefactoring:)
+	#(#{Tools.Debugger} #performMethodsRefactoring:name:)
 	#(#{Tools.MethodBrowser} #canMoveMethods)
 	#(#{Tools.MethodBrowser} #hasRefactorableMethodSelected)
 	#(#{Tools.MethodBrowser} #performMethodRefactoring:)
 	#(#{Tools.MethodBrowser} #performMethodRenameRefactoring:)
 	#(#{Tools.MethodBrowser} #performMethodsRefactoring:name:)
+	#(#{Tools.MethodWorkspace} #addClassVariable:to:)
+	#(#{Tools.MethodWorkspace} #addInstanceVariable:to:)
+	#(#{Tools.MethodWorkspace} #addParameterCommand:)
+	#(#{Tools.MethodWorkspace} #addParameterToMessage)
+	#(#{Tools.MethodWorkspace} #addSharedVariable:to:)
+	#(#{Tools.MethodWorkspace} #autoCorrectMenu)
+	#(#{Tools.MethodWorkspace} #canExtractCode)
+	#(#{Tools.MethodWorkspace} #canPerformCodeRefactoring)
 	#(#{Tools.MethodWorkspace} #canRefactor)
+	#(#{Tools.MethodWorkspace} #canRenameNode)
+	#(#{Tools.MethodWorkspace} #changeSignatureCommandFor:in:operation:title:)
+	#(#{Tools.MethodWorkspace} #codeRefactoringsMenu)
+	#(#{Tools.MethodWorkspace} #convertTempToInstVar)
+	#(#{Tools.MethodWorkspace} #createClassForVariable:)
+	#(#{Tools.MethodWorkspace} #declareAllUndeclaredVariablesAsTemps)
 	#(#{Tools.MethodWorkspace} #executeRefactoring:)
 	#(#{Tools.MethodWorkspace} #executeRefactoring:with:)
+	#(#{Tools.MethodWorkspace} #extractionRange)
+	#(#{Tools.MethodWorkspace} #extractMethod)
+	#(#{Tools.MethodWorkspace} #extractToComponent)
+	#(#{Tools.MethodWorkspace} #extractToTemporary)
+	#(#{Tools.MethodWorkspace} #findAssignmentsToTemp:)
 	#(#{Tools.MethodWorkspace} #fontOfStyle:)
+	#(#{Tools.MethodWorkspace} #implementMessage:)
+	#(#{Tools.MethodWorkspace} #implementMessage:inClass:)
+	#(#{Tools.MethodWorkspace} #implementMessageMenu)
+	#(#{Tools.MethodWorkspace} #inlineMessage)
+	#(#{Tools.MethodWorkspace} #inlineParameter)
+	#(#{Tools.MethodWorkspace} #inlineTemporary)
+	#(#{Tools.MethodWorkspace} #inlineTemporary:in:)
+	#(#{Tools.MethodWorkspace} #moveTempToInnerScope)
 	#(#{Tools.MethodWorkspace} #performCodeRefactoring:)
 	#(#{Tools.MethodWorkspace} #performMethodRefactoring:)
 	#(#{Tools.MethodWorkspace} #performMethodRenameRefactoring:)
+	#(#{Tools.MethodWorkspace} #populateAutoCorrectMenu:)
+	#(#{Tools.MethodWorkspace} #populateAutoCorrectMenu:forMessage:)
+	#(#{Tools.MethodWorkspace} #populateAutoCorrectMenu:forUndefinedVar:)
+	#(#{Tools.MethodWorkspace} #populateAutoCorrectMenu:forVariable:)
+	#(#{Tools.MethodWorkspace} #populateImplementMenu:)
+	#(#{Tools.MethodWorkspace} #populateImplementMenu:forMessage:)
+	#(#{Tools.MethodWorkspace} #queryAddParameterToMessage:)
+	#(#{Tools.MethodWorkspace} #queryChangeSignature:)
+	#(#{Tools.MethodWorkspace} #queryConvertTempToInstVar:)
+	#(#{Tools.MethodWorkspace} #queryInlineMessage:)
+	#(#{Tools.MethodWorkspace} #queryInlineTemporary:)
+	#(#{Tools.MethodWorkspace} #queryMoveTempToInnerScope:)
+	#(#{Tools.MethodWorkspace} #queryParameterRefactoring:)
+	#(#{Tools.MethodWorkspace} #queryRenameClass:)
+	#(#{Tools.MethodWorkspace} #queryRenameClassVariable:)
+	#(#{Tools.MethodWorkspace} #queryRenameInstanceVariable:)
+	#(#{Tools.MethodWorkspace} #queryRenameItCommand:)
+	#(#{Tools.MethodWorkspace} #queryRenameMessage:)
+	#(#{Tools.MethodWorkspace} #queryRenameTemporary:)
+	#(#{Tools.MethodWorkspace} #queryRenameVariable:)
+	#(#{Tools.MethodWorkspace} #queryRenameVariable:classification:)
+	#(#{Tools.MethodWorkspace} #removeParameter)
+	#(#{Tools.MethodWorkspace} #removeParameter:)
+	#(#{Tools.MethodWorkspace} #removeTempDecl:)
+	#(#{Tools.MethodWorkspace} #renameClass)
+	#(#{Tools.MethodWorkspace} #renameClass:)
+	#(#{Tools.MethodWorkspace} #renameClassVariable)
+	#(#{Tools.MethodWorkspace} #renameClassVariable:)
+	#(#{Tools.MethodWorkspace} #renameInstanceVariable)
+	#(#{Tools.MethodWorkspace} #renameInstanceVariable:)
+	#(#{Tools.MethodWorkspace} #renameIt)
+	#(#{Tools.MethodWorkspace} #renameItCommand)
+	#(#{Tools.MethodWorkspace} #renameMessage)
+	#(#{Tools.MethodWorkspace} #renameMessageCommand:)
+	#(#{Tools.MethodWorkspace} #renameTemporary)
+	#(#{Tools.MethodWorkspace} #renameTemporary:)
+	#(#{Tools.MethodWorkspace} #renameVariable)
 	#(#{Tools.MethodWorkspace} #renameVariable:operation:validationBlock:)
+	#(#{Tools.MethodWorkspace} #renameVariableCommand:)
 	#(#{Tools.PackageBrowserShell} #addImport)
 	#(#{Tools.PackageBrowserShell} #addParameter)
 	#(#{Tools.PackageBrowserShell} #addParameterTo:)
@@ -477,13 +542,6 @@ Refactory.Browser.RenameMethodRefactoring
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Tools.RefactoringTool
-	subclass: #'Tools.CodeRefactoringTool'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #(#{Kernel.ParseErrorCodes})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Tools.RefactoringTool
@@ -1353,14 +1411,14 @@ getOptionSelfArgumentName
 				validater: 
 						[:name |
 						(existing includes: name)
-							ifTrue: [ValidationResult errorMessage: '<1d> is already in use as a local variable' << name]
+							ifTrue: [ValidationResult errorMessage: '<d> is already in use as a local variable' << name]
 							ifFalse: 
 								[| result |
 								result := ValidationResult new.
 								moveToClasses allSatisfy: 
 										[:each |
 										| condition |
-										condition := (Refactory.Browser.RBCondition isValidTemporaryVariableName: name for: each)
+										condition := (Refactory.Browser.RBCondition isValidTemporaryVariableName: name)
 													& (Refactory.Browser.RBCondition definesInstanceVariable: name in: each) not.
 										condition validate: result].
 								result]];
@@ -1384,7 +1442,13 @@ getOptionVariableTypes: choicesCollection selected: suggestionsCollection
 				[:aClass |
 				| result |
 				result := ValidationResult new.
-				(self model classFor: aClass) ifNil: [result errorMessage: '<1s> is not a visible class' << aClass].
+				aClass
+					ifNil: 
+						[result
+							caption: 'Selection Required';
+							errorMessage: 'Please select a target class for the method']
+					ifNotNil: 
+						[(self model classFor: aClass) ifNil: [result errorMessage: '<p> is not a visible class' << aClass]].
 				result];
 		newBlock: [:aClass | self model classFor: aClass];
 		showModal!
@@ -2635,21 +2699,28 @@ pushUpMethods
 
 queryOverrideMethods: aCommandQuery
 	| class methods |
-	methods := self selectedOverridableMethods.
 	class := self actualClass.
+	class superclass ifNil: [^self].
+	methods := self selectedOverridableMethods.
+	methods isEmpty ifTrue: [^self].
 	aCommandQuery
-		isEnabled: class superclass notNil;
-		text: (aCommandQuery commandDescription menuText expandMacrosWithArguments: {
-							methods isEmpty
-								ifTrue: [$…]
-								ifFalse: [methods size == 1 ifTrue: [methods first] ifFalse: ['Methods']]
-						}
-					locale: Locale smalltalk)!
+		beEnabled;
+		expandMenuTextWith: (methods size == 1 ifTrue: [methods single] ifFalse: ['Methods'])!
+
+queryRemoveInstanceVariables: aCommandQuery
+	| instVars |
+	instVars := self variables.
+	instVars isEmpty ifTrue: [^self].
+	aCommandQuery
+		beEnabled;
+		expandMenuTextWith: (instVars size = 1
+					ifTrue: ['instance variable <p>' << instVars single value]
+					ifFalse: ['instance variables'])!
 
 removeInstanceVariables
 	"Invoke the 'Remove Instance Variable' refactoring on the currently selected variables."
 
-	<commandQuery: #hasInstanceVariablesSelected>
+	<commandQuery: #queryRemoveInstanceVariables:>
 	self model removeInstanceVariables: self variables within: self searchEnvironment!
 
 renameMethod
@@ -2674,6 +2745,7 @@ pushDownMethods!commands-actions!public!refactoring! !
 pushMethods:!commands-actions!private!refactoring! !
 pushUpMethods!commands-actions!public!refactoring! !
 queryOverrideMethods:!commands-queries!private!refactoring! !
+queryRemoveInstanceVariables:!commands-queries!private! !
 removeInstanceVariables!public!refactoring! !
 renameMethod!accessing!private! !
 selectedOverridableMethods!accessing!private! !
@@ -2706,11 +2778,13 @@ abstractInstanceVariables
 	choose only one instance variable at a time."
 
 	<commandQuery: #hasClassWithInstanceVariables>
+	<menuPopulator: #buildAbstractInstanceVariablesMenu:>
 	(self chooseVariables: false caption: 'Abstract Instance Variables…')
 		ifNotNil: [:varNames | self developmentSystem abstractInstanceVariables: varNames within: BrowserEnvironment new]!
 
 abstractVariables
 	<commandQuery: #hasClassWithVariablesSelected>
+	<menuPopulator: #buildAbstractVariablesMenu:>
 	Sound warningBeep!
 
 addClassVariable
@@ -2848,6 +2922,7 @@ createClassVariableAccessors
 
 createVariableAccessors
 	<commandQuery: #hasClassWithVariablesSelected>
+	<menuPopulator: #buildCreateVariableAccessorsMenu:>
 	Sound warningBeep!
 
 hasImports
@@ -2909,58 +2984,6 @@ populatePullUpVariableMenu: aMenu forClass: aClass command: commandSymbol classV
 									arguments: {varName. aClass}.
 						aMenu addCommand: msg description: each key name , '.' , varName]]!
 
-populateRefactoringMenu: aMenu 
-	"Private - If the <Menu> argument is dynamic refactoring menu, then populate it with appropriate
-	choices based on the currently selected class."
-
-	| menuName |
-	menuName := aMenu name.
-	menuName == #pushDownInstanceVariables 
-		ifTrue: 
-			[^self buildInstVarMenu: aMenu selectors: #(#pushDownInstanceVariable:in: #pushDownInstanceVariables)].
-	menuName == #createInstanceVariableAccessors 
-		ifTrue: 
-			[^self buildInstVarMenu: aMenu
-				selectors: #(#createInstanceVariableAccessors:in: #createInstanceVariableAccessors)].
-	menuName == #abstractInstanceVariables 
-		ifTrue: 
-			[^self buildInstVarMenu: aMenu selectors: #(#abstractInstanceVariable:in: #abstractInstanceVariables)].
-	(menuName == #protectInstanceVariables or: [menuName == #protectVariables]) 
-		ifTrue: 
-			[^self buildInstVarMenu: aMenu selectors: #(#protectInstanceVariable:in: #protectInstanceVariables)].
-	"Generic menus that contain both class and inst vars"
-	menuName == #removeVariables 
-		ifTrue: 
-			[^self 
-				buildVariablesMenu: aMenu
-				instVarSelectors: #(#removeInstanceVariable:from:within: #removeInstanceVariables)
-				classVarSelectors: #(#removeClassVariable:from:within: #removeClassVariables)].
-	menuName == #renameVariables 
-		ifTrue: 
-			[^self 
-				buildVariablesMenu: aMenu
-				instVarSelectors: #(#renameInstanceVariable:in:within: #renameInstanceVariable)
-				classVarSelectors: #(#renameClassVariable:in:within: #renameClassVariable)].
-	menuName == #pushDownVariables 
-		ifTrue: 
-			[^self 
-				buildVariablesMenu: aMenu
-				instVarSelectors: #(#pushDownInstanceVariable:in:within: #pushDownInstanceVariables)
-				classVarSelectors: #(#pushDownClassVariable:in:within: #pushDownClassVariables)].
-	menuName == #pullUpVariables ifTrue: [^self buildPullUpVariablesMenu: aMenu].
-	menuName == #createVariableAccessors 
-		ifTrue: 
-			[^self 
-				buildVariablesMenu: aMenu
-				instVarSelectors: #(#createInstanceVariableAccessors:in:within: #createInstanceVariableAccessors)
-				classVarSelectors: #(#createClassVariableAccessors:in:within: #createClassVariableAccessors)].
-	menuName == #abstractVariables 
-		ifTrue: 
-			[^self 
-				buildVariablesMenu: aMenu
-				instVarSelectors: #(#abstractInstanceVariable:in:within: #abstractInstanceVariables)
-				classVarSelectors: #(#abstractClassVariable:in:within: #abstractClassVariables)]!
-
 protectInstanceVariables
 	"Invoke the 'Protect/Concrete Instance Variable' refactoring on the users choice of instance variables.
 	Note that the view may also implement this command with a dynamic pull-out menu (of the
@@ -2968,11 +2991,13 @@ protectInstanceVariables
 	choose only one instance variable at a time."
 
 	<commandQuery: #hasClassWithInstanceVariables>
+	<menuPopulator: #buildProtectInstanceVariablesMenu:>
 	(self chooseVariables: false caption: 'Protect Instance Variables…')
 		ifNotNil: [:varNames | self developmentSystem protectInstanceVariables: varNames]!
 
 protectVariables
 	<commandQuery: #hasClassWithVariablesSelected>
+	<menuPopulator: #buildProtectInstanceVariablesMenu:>
 	Sound warningBeep!
 
 pullUpClassVariables
@@ -3042,7 +3067,8 @@ pullUpVariableNamePairs: aBoolean for: class maximum: anInteger
 
 pullUpVariables
 	<commandQuery: #canPullUpVariables>
-	Sound warningBeep!
+	<menuPopulator: #buildPullUpVariablesMenu:>
+	!
 
 pushDownClassVariables
 	"Invoke the 'Push Down Class Variable' refactoring on the users choice of class variables.
@@ -3061,21 +3087,23 @@ pushDownInstanceVariables
 	choose only one instance variable at a time."
 
 	<commandQuery: #canPushDownInstanceVariables>
+	<menuPopulator: #populatePushDownInstanceVariableMenu:>
 	(self chooseVariables: false caption: 'Push Down Instance Variables…')
 		ifNotNil: [:varNames | self developmentSystem pushDownInstanceVariables: varNames]!
 
 pushDownVariables
 	<commandQuery: #canPushDownVariables>
-	Sound warningBeep!
+	<menuPopulator: #buildPushDownVariablesMenu:>
+	!
 
 queryAddInstanceVariable: aCommandQuery
 	| class prefix |
 	class := self actualClass.
-	prefix := (class notNil and: [class isMeta]) ifTrue: ['Class '] ifFalse: [''].
+	(class notNil and: [class isPointers]) ifFalse: [^self].
+	prefix := class isMeta ifTrue: ['Class '] ifFalse: [''].
 	aCommandQuery
-		text: (aCommandQuery commandDescription menuText expandMacrosWithArguments: { prefix }
-					locale: Locale smalltalk);
-		isEnabled: (class notNil and: [class isPointers])!
+		beEnabled;
+		expandMenuTextWith: prefix!
 
 removeClassVariables
 	"Invoke the 'Remove Class Variable' refactoring on the users choice of class variables.
@@ -3116,6 +3144,7 @@ removeInstanceVariables
 
 removeVariables
 	<commandQuery: #hasClassWithVariablesSelected>
+	<menuPopulator: #buildRemoveVariablesMenu:>
 	Sound warningBeep! !
 !Tools.ClassSelector categoriesForMethods!
 abstractClassVariables!commands-actions!public!refactoring! !
@@ -3143,7 +3172,6 @@ hasImports!private!refactoring!testing! !
 populateClassVarMenu:selectors:!menus!private!refactoring! !
 populateInstVarMenu:selectors:!menus!private!refactoring! !
 populatePullUpVariableMenu:forClass:command:classVariables:ifTooMany:!menus!private!refactoring! !
-populateRefactoringMenu:!menus!private!refactoring! !
 protectInstanceVariables!commands-actions!public!refactoring! !
 protectVariables!commands-actions!private! !
 pullUpClassVariables!commands-actions!public!refactoring! !
@@ -3204,12 +3232,17 @@ performMethodRenameRefactoring: aMonadicValuable
 	home := self findHomeFrame: self frame.
 	home isNil ifTrue: [^self].
 	sender := home sender.
-	(sender notNil and: [sender isRestartable]) ifTrue: [self restartMethodFrame: sender]! !
+	(sender notNil and: [sender isRestartable]) ifTrue: [self restartMethodFrame: sender]!
+
+performMethodsRefactoring: aMonadicValuable name: aString 
+	self promptToSaveChanges ifFalse: [^self].
+	^sourcePresenter executeRefactoring: aMonadicValuable with: self selectedMethods! !
 !Tools.Debugger categoriesForMethods!
 canMoveMethods!private!testing! !
 hasRefactorableMethodSelected!public!refactoring!testing! !
 performMethodRefactoring:!helpers!public!refactoring! !
 performMethodRenameRefactoring:!helpers!private!refactoring! !
+performMethodsRefactoring:name:!private!refactoring! !
 !
 
 !Tools.MethodBrowser methodsFor!
@@ -3251,11 +3284,103 @@ performMethodsRefactoring:name:!helpers!private!refactoring! !
 
 !Tools.MethodWorkspace methodsFor!
 
+addClassVariable: aStVariableNode to: aClass 
+	self developmentSystem addClassVariable: aStVariableNode name to: aClass.
+	self clearParseTree!
+
+addInstanceVariable: aStVariableNode to: aClass
+	self developmentSystem addInstanceVariable: aStVariableNode name to: aClass.
+	self clearParseTree!
+
+addParameterCommand: aStProgramNode
+	(aStProgramNode isNil or: [aStProgramNode isMessage not]) ifTrue: [^nil].
+	^(self targetOfMessage: aStProgramNode)
+		ifNotNil: 
+			[:target |
+			self
+				changeSignatureCommandFor: aStProgramNode
+				in: target
+				operation: [:method | self developmentSystem addParameterToMethod: method]
+				title: 'Add Parameter']!
+
+addParameterToMessage
+	<commandQuery: #queryAddParameterToMessage:>
+	(self addParameterCommand: self selectedNode) value: self!
+
+addSharedVariable: aStVariableNode to: aNamespace
+	self developmentSystem addSharedVariable: aStVariableNode name to: aNamespace.
+	self clearParseTree!
+
+autoCorrectMenu
+	<menuPopulator: #populateAutoCorrectMenu:>
+	<commandQuery: #hasCompilationErrors>
+	!
+
+canExtractCode
+	^self canPerformCodeRefactoring and: [self hasSelection]!
+
+canPerformCodeRefactoring
+	^self canRefactor and: [self isModified not]!
+
 canRefactor
 	^self isEditable and: 
 			[self isModified not and: 
 					[self developmentSystem canRefactor 
 						and: [parentPresenter notNil and: [parentPresenter hasRefactorableMethodSelected]]]]!
+
+canRenameNode
+	^self canRefactor and: [self isModified not and: [self selectedNode notNil]]!
+
+changeSignatureCommandFor: aStMessageNode in: aClass operation: aMonadicValuable title: aString
+	"Private - Determines the receiver of a message under the caret, and if possible works out
+	its class. Answers an appropriate <Message> which when sent to the receiver will initiate a
+	method signature changing refactoring (e.g. a selector rename) of the appropriate method, by
+	evaluating the <MonadicValuable> argument passing it that method. If the class of the
+	receiver cannot be determined quickly (e.g. it is an instance variable reference in a method
+	browser), then answer nil. Note that when hosted by the Debugger we can normally do a
+	complete job because all initialised variables have a type we can use to lookup the method."
+
+	^Message selector: #changeSignature:in:operation:title:
+		arguments: {aStMessageNode selector. aClass. aMonadicValuable. aString}!
+
+codeRefactoringsMenu
+	<commandQuery: #canPerformCodeRefactoring>
+	!
+
+convertTempToInstVar
+	"Convert the selected temporary variable (or that under the cursor) to an instance variable,
+	i.e. perform a 'Convert to Instance Variable' refactoring."
+
+	<commandQuery: #queryConvertTempToInstVar:>
+	| node |
+	node := self selectedNode.
+	self performMethodRefactoring: 
+			[:method |
+			self developmentSystem
+				convertTemporaryToInstanceVariable: node name
+				in: method methodClass
+				selector: method selector]!
+
+createClassForVariable: aStVariableNode
+	(self developmentSystem createNewClass: aStVariableNode name
+		inPackage: self parseContext owningPackage) ifNotNil: [self clearParseTree]!
+
+declareAllUndeclaredVariablesAsTemps
+	| ast undeclared |
+	ast := self parseTree.
+	undeclared := LookupTable new.
+	self compilationErrors do: 
+			[:each |
+			each errorCode = ParseErrorCodes.CErrUndeclared
+				ifTrue: 
+					[| identifier |
+					identifier := self plainTextRange: each range.
+					undeclared at: identifier ifAbsentPut: each]].
+	undeclared do: 
+			[:each |
+			| var |
+			var := ast whichNodeIsContainedBy: each range.
+			(var notNil and: [var isVariable]) ifTrue: [self declareTemporary: var]]!
 
 executeRefactoring: aMonadicValuable
 	^aMonadicValuable on: Notification
@@ -3277,11 +3402,183 @@ executeRefactoring: aMonadicValuable with: anObject
 			self errorModel ifNotNil: [:status | status value: ex].
 			ex resume]!
 
+extractionRange
+	| interval |
+	#todo.	"Can do a bit better here. The selected node interval can be used to simplify
+		selection of the selection range (it doesn't have to be exact), but one then has to
+		handle the case of multiple statements being selected. Where that is so the
+		'selectedNode' will be the whole method."
+	interval := self view selectionRange.
+	interval isEmpty ifTrue: [interval := self selectedNode sourceInterval].
+	^interval!
+
+extractMethod
+	"Create a new method from the selected text of the current method, i.e. perform an 'Extract
+	Method' refactoring."
+
+	<commandQuery: #canExtractCode>
+	self performMethodRefactoring: 
+			[:method |
+			| interval |
+			interval := self extractionRange.
+			(self developmentSystem
+				extractMethod: interval
+				from: method selector
+				in: method methodClass) isNil
+				ifFalse: [self caretPosition: interval start]]!
+
+extractToComponent
+	"Extract the selected source text to form a new method in the class of some variable in the
+	selected method's scope, i.e. perform an 'Extract to Component' refactoring."
+
+	<commandQuery: #canExtractCode>
+	self performMethodRefactoring: 
+			[:method |
+			self developmentSystem
+				extractToComponent: self extractionRange
+				from: method selector
+				in: method methodClass]!
+
+extractToTemporary
+	"Extract the selected text of the current method into an assignment to a temporary
+	(i.e. perform an 'Extract to Temporary' refactoring)."
+
+	<commandQuery: #canExtractCode>
+	self performCodeRefactoring: 
+			[:method :node |
+			| line interval result |
+			interval := node sourceInterval.
+			line := self lineFromPosition: interval start.
+			result := self developmentSystem
+						extractToTemporary: interval
+						from: method selector
+						in: method methodClass.
+			result notNil
+				ifTrue: 
+					["Try and keep the caret on the same line, accounting for the new lines that will be inserted"
+					self repositionAtSourceLine: line
+								+ (node statementNode parent allTemporaryVariableNodes isEmpty ifTrue: [2] ifFalse: [1])].
+			result]!
+
+findAssignmentsToTemp: aStVariableNode 
+	"Private - Find and answer the collection of nodes which represent assignments to the
+	temporary variable represented by the argument in the same or an enclosing scope."
+
+	| searcher |
+	searcher := ParseTreeSearcher new.
+	searcher matches: aStVariableNode name , ' := ``@expr'
+		do: 
+			[:aNode :answer | 
+			answer
+				add: aNode;
+				yourself].
+	^searcher executeTree: self parseTree initialAnswer: OrderedCollection new!
+
 fontOfStyle: style 
 	| font |
 	font := style fontName ifNil: [view actualFont copy] ifNotNil: [:face | Font name: face].
 	style restyleFont: font.
 	^font!
+
+implementMessage: aStMessageNode
+	| dialog |
+	dialog := self developmentSystem classChooserClass create.
+	dialog
+		caption: 'Choose Target Class…';
+		allowNil: false.
+	self parseContext owningPackage ifNotNil: [:package | dialog packages: {package}].
+	dialog showModal ifNotNil: [:class | self implementMessage: aStMessageNode inClass: class]!
+
+implementMessage: aStMessageNode inClass: aClass
+	| method |
+	method := self developmentSystem
+				generateStubFor: aStMessageNode selector
+				inClass: aClass
+				withArgs: (aStMessageNode arguments collect: [:each | self nameForArgumentNode: each]).
+	self clearParseTree.
+	method
+		ifNotNil: 
+			[(self developmentSystem methodCategorizationPolicy bestSuggestionFor: method) addMethod: method]!
+
+implementMessageMenu
+	<commandQuery: #hasSelectedMessage>
+	<menuPopulator: #populateImplementMenu:>
+	!
+
+inlineMessage
+	"Invoke the 'Inline Message' refactoring to inline the selected
+	message send."
+
+	<commandQuery: #queryInlineMessage:>
+	self performCodeRefactoring: 
+			[:method :node |
+			| line result |
+			line := self lineFromPosition: node sourceInterval start.
+			result := self developmentSystem
+						inlineMessage: node
+						inMethod: method selector
+						of: method methodClass.
+			self repositionAtSourceLine: line.
+			result]!
+
+inlineParameter
+	"Inline the parameter which is under the cursor (or selected), i.e. perform an 'Inline
+	Parameter' refactoring."
+
+	<commandQuery: #queryParameterRefactoring:>
+	self performMethodRenameRefactoring: 
+			[:method |
+			self developmentSystem
+				inlineParameter: self selectedNode name
+				from: method selector
+				in: method methodClass]!
+
+inlineTemporary
+	"Invoke the 'Inline Temporary' refactoring to inline the temporary which is currently
+	selected in the workspace. Note that we support the selection of the assignment expression
+	to be inlined or at a minimum it is sufficient to just have the caret over either the
+	declaration of the temporary to inline, or a reference to it."
+
+	<commandQuery: #queryInlineTemporary:>
+	self performCodeRefactoring: [:method :node | self inlineTemporary: method in: node]!
+
+inlineTemporary: aCompiledMethod in: aStProgramNode
+	| assignment line result |
+	assignment := aStProgramNode isAssignment
+				ifTrue: [aStProgramNode]
+				ifFalse: 
+					[| assignments |
+					assignments := self findAssignmentsToTemp: aStProgramNode.
+					assignments isEmpty ifFalse: [assignments first]].
+	assignment isNil
+		ifTrue: 
+			[Sound warningBeep.
+			Notification
+				signal: ('There are no assignments to <1p> to inline' expandMacrosWith: aStProgramNode name).
+			^nil].
+	line := self lineFromPosition: aStProgramNode sourceInterval start.
+	result := self developmentSystem
+				inlineTemporary: assignment sourceInterval
+				from: aCompiledMethod selector
+				in: aCompiledMethod methodClass.
+	self repositionAtSourceLine: line.
+	^result!
+
+moveTempToInnerScope
+	"Move the temporary with focus (i.e. that selected or under the cursor) to the innermost
+	scope in which it is first referenced, i.e. perform a 'Move to Inner Scope' refactoring."
+
+	<commandQuery: #queryMoveTempToInnerScope:>
+	self performCodeRefactoring: 
+			[:method :node |
+			| interval anchor |
+			interval := node sourceInterval.
+			anchor := interval start.
+			(self developmentSystem
+				moveTempToInnerScope: interval
+				in: method methodClass
+				selector: method selector) isNil
+				ifFalse: [self caretPosition: anchor]]!
 
 performCodeRefactoring: refactoringOperation 
 	self 
@@ -3292,6 +3589,351 @@ performMethodRefactoring: aMonadicValuable
 
 performMethodRenameRefactoring: aBlockClosure 
 	^parentPresenter performMethodRenameRefactoring: aBlockClosure!
+
+populateAutoCorrectMenu: aMenu
+	| node range |
+	aMenu clear.
+	#todo.	"Find the errors & warnings that either enclose the caret position, or are near it (separated only by whitespace or special character tokens from)"
+	range := self selectedErrorRange.
+	node := self nodeForRange: range.
+	node isNil ifTrue: [^self].
+	node isMessage ifTrue: [self populateAutoCorrectMenu: aMenu forMessage: node].
+	node isVariable ifTrue: [self populateAutoCorrectMenu: aMenu forVariable: node].
+	self hasUndeclaredVariables ifFalse: [^self].
+	aMenu isEmpty ifFalse: [aMenu addSeparator].
+	aMenu addCommand: (MessageSend receiver: self selector: #declareAllUndeclaredVariablesAsTemps)
+		description: 'Declare &All Undeclared Temps'!
+
+populateAutoCorrectMenu: aMenu forMessage: aStMessageNode
+	| implementMenu |
+	implementMenu := aMenu addSubmenu: ('&Implement <1p> In' expandMacrosWith: aStMessageNode selector).
+	self populateImplementMenu: implementMenu forMessage: aStMessageNode!
+
+populateAutoCorrectMenu: aMenu forUndefinedVar: aStVariableNode
+	| parseContext |
+	parseContext := self parseContext.
+	^aStVariableNode name first isUppercase
+		ifTrue: 
+			[| subMenu |
+			subMenu := aMenu addSubmenu: ('Add C&lass Variable <1p> to' expandMacrosWith: aStVariableNode name).
+			parseContext methodClass instanceClass withAllSuperclassesDo: 
+					[:eachClass |
+					subMenu addCommand: (MessageSend
+								receiver: self
+								selector: #addClassVariable:to:
+								arguments: {aStVariableNode. eachClass})
+						description: eachClass name].
+			aMenu addCommand: (MessageSend
+						receiver: self
+						selector: #createClassForVariable:
+						arguments: {aStVariableNode})
+				description: ('Create &Class <1p>' expandMacrosWith: aStVariableNode name).
+			aMenu addCommand: (MessageSend
+						receiver: self
+						selector: #addSharedVariable:to:
+						arguments: {aStVariableNode. parseContext environment})
+				description: ('Declare &Shared Variable <1p>.<2s>' expandMacrosWith: parseContext environment with: aStVariableNode name)]
+		ifFalse: 
+			[| subMenu |
+			aMenu addCommand: (MessageSend
+						receiver: self
+						selector: #declareTemporary:
+						arguments: {aStVariableNode})
+				description: ('Declare &Temp <1p>' expandMacrosWith: aStVariableNode name).
+			subMenu := Menu
+						description: ('Add &Instance Variable <1p> to' expandMacrosWith: aStVariableNode name).
+			parseContext methodClass withAllSuperclassesDo: 
+					[:eachClass |
+					(ClassBuilder isFixedLayout: eachClass)
+						ifFalse: 
+							[subMenu addCommand: (MessageSend
+										receiver: self
+										selector: #addInstanceVariable:to:
+										arguments: {aStVariableNode. eachClass})
+								description: eachClass name]].
+			subMenu isEmpty ifFalse: [aMenu addItem: subMenu]]!
+
+populateAutoCorrectMenu: aMenu forVariable: aStVariableNode
+	| range |
+	range := aStVariableNode sourceInterval.
+	(self compilationErrors select: [:each | each range = range]) do: 
+			[:each |
+			| code |
+			code := each errorCode.
+			code = ParseErrorCodes.CErrUndeclared
+				ifTrue: [self populateAutoCorrectMenu: aMenu forUndefinedVar: aStVariableNode].
+			code = ParseErrorCodes.CWarnUnreferencedTemp
+				ifTrue: 
+					[aMenu addCommand: (MessageSend
+								receiver: self
+								selector: #removeTempDecl:
+								arguments: { aStVariableNode })
+						description: 'Remove Declaration ']]!
+
+populateImplementMenu: aMenu 
+	"Private - Build the menu which lists the classes into which a stub can be generated for
+	the message under the cursor."
+
+	self populateImplementMenu: aMenu forMessage: self selectedMessageNode!
+
+populateImplementMenu: aMenu forMessage: aStMessageNode
+	aMenu clear.
+	(self targetOfMessage: aStMessageNode)
+		ifNotNil: 
+			[:target |
+			| class |
+			class := target.
+			[class notNil and: [(class includesSelector: aStMessageNode selector) not]] whileTrue: 
+					[aMenu addCommand: (MessageSend
+								receiver: self
+								selector: #implementMessage:inClass:
+								arguments: { aStMessageNode. class })
+						description: class name.
+					class := class superclass]].
+	aMenu notEmpty ifTrue: [aMenu addSeparator].
+	aMenu addCommand: (MessageSend
+				receiver: self
+				selector: #implementMessage:
+				argument: aStMessageNode)
+		description: '&Class…'.
+	aMenu setDefault: 1!
+
+queryAddParameterToMessage: aCommandQuery
+	(self addParameterCommand: self selectedNode)
+		ifNotNil: [:selector | self queryContextCommand: aCommandQuery as: selector]!
+
+queryChangeSignature: aCommandQuery
+	| cmd |
+	cmd := aCommandQuery command.
+	(cmd arguments second lookupMethod: cmd arguments first)
+		ifNotNil: 
+			[:method |
+			aCommandQuery
+				beEnabled;
+				expandMenuTextWith: method]!
+
+queryConvertTempToInstVar: aCommandQuery
+	aCommandQuery
+		isEnabled: (self canPerformCodeRefactoring and: 
+					[| node |
+					node := self selectedNode.
+					node notNil and: 
+							[(self isLocalVariable: node) and: 
+									[#todo.	"Check here that the proposed instance variable is not already defined?"
+									true]]])!
+
+queryInlineMessage: aCommandQuery
+	| node |
+	self canPerformCodeRefactoring ifFalse: [^self].
+	node := self selectedNode.
+	(node notNil and: [node isMessage])
+		ifTrue: 
+			[aCommandQuery
+				beEnabled;
+				expandMenuTextWith: node selector]!
+
+queryInlineTemporary: aCommandQuery
+	aCommandQuery
+		isEnabled: (self canPerformCodeRefactoring and: 
+					[| node |
+					node := self selectedNode.
+					node notNil and: [node isAssignment or: [self isLocalVariable: node]]])!
+
+queryMoveTempToInnerScope: aCommandQuery
+	aCommandQuery
+		isEnabled: (self canPerformCodeRefactoring and: 
+					[| node |
+					node := self selectedNode.
+					node notNil and: [self isLocalVariable: node]])!
+
+queryParameterRefactoring: aCommandQuery
+	| node |
+	self canPerformCodeRefactoring ifFalse: [^self].
+	node := self selectedNode.
+	(node notNil and: [self parseTree methodNode arguments includes: node])
+		ifTrue: 
+			[aCommandQuery
+				beEnabled;
+				expandMenuTextWith: node name]!
+
+queryRenameClass: aCommandQuery
+	self queryRenameVariable: aCommandQuery classification: #classGlobal!
+
+queryRenameClassVariable: aCommandQuery
+	self queryRenameVariable: aCommandQuery classification: #class!
+
+queryRenameInstanceVariable: aCommandQuery
+	self queryRenameVariable: aCommandQuery classification: #instance!
+
+queryRenameItCommand: aCommandQuery
+	self renameItCommand ifNotNil: [:message | self queryContextCommand: aCommandQuery as: message]!
+
+queryRenameMessage: aCommandQuery
+	(self renameMessageCommand: self selectedNode)
+		ifNotNil: [:selector | self queryContextCommand: aCommandQuery as: selector]!
+
+queryRenameTemporary: aCommandQuery
+	^self queryRenameVariable: aCommandQuery classification: #temporary!
+
+queryRenameVariable: aCommandQuery
+	(self renameVariableCommand: self selectedNode)
+		ifNotNil: [:selector | self queryContextCommand: aCommandQuery as: selector]!
+
+queryRenameVariable: aCommandQuery classification: aSymbol
+	| node description |
+	self canRefactor ifFalse: [^self].
+	node := self selectedNode.
+	(self variableClassification: node) == aSymbol ifFalse: [^false].
+	description := self descriptionForVariableNode: node.
+	aCommandQuery
+		beEnabled;
+		expandMenuTextWith: (description copyFrom: 1 to: 1) asLowercase , description allButFirst!
+
+removeParameter
+	<commandQuery: #queryParameterRefactoring:>
+	self removeParameter: self selectedNode!
+
+removeParameter: aStVariableNode
+	"Private - Command to invoke the 'Remove Method Parameter' refactoring on the specified
+	argument name."
+
+	self performMethodRenameRefactoring: 
+			[:method |
+			self developmentSystem
+				removeParameter: aStVariableNode name
+				from: method selector
+				in: method methodClass
+				within: self searchEnvironment]!
+
+removeTempDecl: aStVariableNode 
+	| range scintilla |
+	range := aStVariableNode sourceInterval.
+	scintilla := self view.
+	((scintilla characterAt: range start - 1) isWhitespace 
+		and: [(scintilla characterAt: range stop + 1) isWhitespace]) ifTrue: [range stop: range stop + 1].
+	scintilla clearRange: range!
+
+renameClass
+	<commandQuery: #queryRenameClass:>
+	self renameClass: self selectedNode!
+
+renameClass: aStVariableNode
+	| class devsys method |
+	devsys := self developmentSystem.
+	method := self selectedMethod.
+	class := (method fullBindingFor: aStVariableNode name) value.
+	self
+		renameVariable: aStVariableNode
+		operation: [:newName | devsys renameClass: class to: newName]
+		validationBlock: [:name | devsys validateRenameClass: class to: name]!
+
+renameClassVariable
+	<commandQuery: #queryRenameClassVariable:>
+	self renameClassVariable: self selectedNode!
+
+renameClassVariable: aStVariableNode
+	| definingBehavior oldName |
+	oldName := aStVariableNode name.
+	definingBehavior := aStVariableNode binding environment.
+	self
+		renameVariable: aStVariableNode
+		operation: 
+			[:newName |
+			self developmentSystem
+				renameClassVariable: oldName
+				to: newName
+				in: definingBehavior]
+		validationBlock: 
+			[:name |
+			self developmentSystem
+				validateRenameClassVar: oldName
+				to: name
+				in: definingBehavior]!
+
+renameInstanceVariable
+	<commandQuery: #queryRenameInstanceVariable:>
+	self renameInstanceVariable: self selectedNode!
+
+renameInstanceVariable: aStVariableNode
+	| definingBehavior methodClass oldName |
+	methodClass := self selectedMethod methodClass.
+	oldName := aStVariableNode name.
+	definingBehavior := methodClass whichClassDefinesInstVar: oldName.
+	self
+		renameVariable: aStVariableNode
+		operation: 
+			[:newName |
+			self developmentSystem
+				renameInstanceVariable: oldName
+				to: newName
+				in: definingBehavior]
+		validationBlock: 
+			[:candidateName |
+			self developmentSystem
+				validateRenameInstVar: oldName
+				to: candidateName
+				in: definingBehavior]!
+
+renameIt
+	<commandQuery: #queryRenameItCommand:>
+	<acceleratorKey: 'F2'>
+	| message |
+	message := self renameItCommand.
+	"We have to defer the command, because it will typically need to pop up an in-place editor"
+	[message value: self] postToMessageQueue!
+
+renameItCommand
+	^self selectedNode
+		ifNotNil: [:node | (self renameMessageCommand: node) ifNil: [self renameVariableCommand: node]]!
+
+renameMessage
+	<commandQuery: #queryRenameMessage:>
+	(self renameMessageCommand: self selectedNode) value: self!
+
+renameMessageCommand: aStProgramNode
+	"Private - Answer an appropriate <Message> that when sent to the receiver will initiate a rename of the method that is the target of the current message send, or nil if the current node is not a message suitable for renaming."
+
+	(aStProgramNode isNil or: [aStProgramNode isMessage not]) ifTrue: [^nil].
+	^(self targetOfMessage: aStProgramNode)
+		ifNotNil: 
+			[:target |
+			self
+				changeSignatureCommandFor: aStProgramNode
+				in: target
+				operation: [:method | self developmentSystem renameMethod: method]
+				title: 'Rename']!
+
+renameTemporary
+	<commandQuery: #queryRenameTemporary:>
+	self renameTemporary: self selectedNode!
+
+renameTemporary: aStVariableNode
+	| method |
+	method := self selectedMethod.
+	self
+		renameVariable: aStVariableNode
+		operation: 
+			[:newName |
+			self developmentSystem
+				renameTemporary: aStVariableNode
+				to: newName
+				in: method methodClass
+				selector: method selector]
+		validationBlock: 
+			[:candidate |
+			self developmentSystem
+				validateRenameTemp: aStVariableNode
+				to: candidate
+				in: method methodClass]!
+
+renameVariable
+	"Invoke the 'Rename Variable'  refactoring to rename the selected variable, 
+	or that under the cursor if no selection. The name is looked up in scope rule order."
+
+	<commandQuery: #queryRenameVariable:>
+	| command |
+	command := self renameVariableCommand: self selectedNode.
+	[command value: self] postToMessageQueue!
 
 renameVariable: aStVariableNode operation: operationBlock validationBlock: validationBlock
 	| name range style editor font zoom newName |
@@ -3324,16 +3966,91 @@ renameVariable: aStVariableNode operation: operationBlock validationBlock: valid
 	newName := view hideCaretWhile: [editor showModal].
 	self errorModel value: nil.
 	(newName isNil or: [newName = name])
-		ifFalse: [self performMethodRefactoring: [:method | operationBlock value: newName]]! !
+		ifFalse: [self performMethodRefactoring: [:method | operationBlock value: newName]]!
+
+renameVariableCommand: aStVariableNode
+	^(##(IdentityDictionary withAll: {
+				#temporary -> #renameTemporary.
+				#instance -> #renameInstanceVariable.
+				#class -> #renameClassVariable.
+				#classGlobal -> #renameClass
+			})
+		lookup: (self variableClassification: aStVariableNode))
+			ifNotNil: [:selector | Message selector: selector]! !
 !Tools.MethodWorkspace categoriesForMethods!
+addClassVariable:to:!private!refactoring! !
+addInstanceVariable:to:!private!refactoring! !
+addParameterCommand:!commands-mappings!private!refactoring! !
+addParameterToMessage!commands-actions!public!refactoring! !
+addSharedVariable:to:!private!refactoring! !
+autoCorrectMenu!commands-menus!public! !
+canExtractCode!commands-queries!private!refactoring! !
+canPerformCodeRefactoring!public!refactoring! !
 canRefactor!public!refactoring!testing! !
+canRenameNode!public!refactoring! !
+changeSignatureCommandFor:in:operation:title:!private!refactoring! !
+codeRefactoringsMenu!commands-menus!public!refactoring! !
+convertTempToInstVar!public!refactoring! !
+createClassForVariable:!private! !
+declareAllUndeclaredVariablesAsTemps!private! !
 executeRefactoring:!helpers!private!refactoring! !
 executeRefactoring:with:!helpers!private!refactoring! !
-fontOfStyle:!operations!private!refactoring! !
+extractionRange!public!refactoring! !
+extractMethod!commands-actions!public!refactoring! !
+extractToComponent!commands-actions!public!refactoring! !
+extractToTemporary!commands-actions!public!refactoring! !
+findAssignmentsToTemp:!helpers!private!refactoring! !
+fontOfStyle:!operations!private! !
+implementMessage:!public!refactoring! !
+implementMessage:inClass:!public!refactoring! !
+implementMessageMenu!commands-menus!public!refactoring! !
+inlineMessage!public!refactoring! !
+inlineParameter!public!refactoring! !
+inlineTemporary!public!refactoring! !
+inlineTemporary:in:!public!refactoring! !
+moveTempToInnerScope!public!refactoring! !
 performCodeRefactoring:!helpers!private!refactoring! !
 performMethodRefactoring:!helpers!private!refactoring! !
 performMethodRenameRefactoring:!helpers!private!refactoring! !
-renameVariable:operation:validationBlock:!operations!private!refactoring! !
+populateAutoCorrectMenu:!commands-menus!private! !
+populateAutoCorrectMenu:forMessage:!commands-menus!private! !
+populateAutoCorrectMenu:forUndefinedVar:!commands-menus!private! !
+populateAutoCorrectMenu:forVariable:!commands-menus!private! !
+populateImplementMenu:!commands-menus!private! !
+populateImplementMenu:forMessage:!commands-menus!private! !
+queryAddParameterToMessage:!commands-queries!public!refactoring! !
+queryChangeSignature:!public!refactoring! !
+queryConvertTempToInstVar:!public!refactoring! !
+queryInlineMessage:!public!refactoring! !
+queryInlineTemporary:!public!refactoring! !
+queryMoveTempToInnerScope:!public!refactoring! !
+queryParameterRefactoring:!public!refactoring! !
+queryRenameClass:!commands-queries!private!refactoring! !
+queryRenameClassVariable:!commands-queries!private!refactoring! !
+queryRenameInstanceVariable:!commands-queries!private!refactoring! !
+queryRenameItCommand:!commands-queries!private!refactoring! !
+queryRenameMessage:!commands-queries!public!refactoring! !
+queryRenameTemporary:!commands-queries!private!refactoring! !
+queryRenameVariable:!commands-queries!public!refactoring! !
+queryRenameVariable:classification:!commands-queries!private!refactoring! !
+removeParameter!commands-actions!public!refactoring! !
+removeParameter:!public!refactoring! !
+removeTempDecl:!private! !
+renameClass!commands-actions!public!refactoring! !
+renameClass:!private! !
+renameClassVariable!commands-actions!public!refactoring! !
+renameClassVariable:!private!refactoring! !
+renameInstanceVariable!commands-actions!public!refactoring! !
+renameInstanceVariable:!private!refactoring! !
+renameIt!commands-actions!public!refactoring! !
+renameItCommand!commands-mappings!public!refactoring! !
+renameMessage!commands-actions!public!refactoring! !
+renameMessageCommand:!commands-mappings!private!refactoring! !
+renameTemporary!commands-actions!public!refactoring! !
+renameTemporary:!private!refactoring! !
+renameVariable!commands-actions!public!refactoring! !
+renameVariable:operation:validationBlock:!private!refactoring! !
+renameVariableCommand:!commands-mappings!private!refactoring! !
 !
 
 !Tools.PackageBrowserShell methodsFor!
@@ -3637,7 +4354,7 @@ removeDuplicateMethods
 		caption: 'Remove Methods Duplicating Superclass'' from Package(s)…';
 		showModal! !
 !Tools.PackageSelector categoriesForMethods!
-moveAllTempsToInnerScope!commands!private!refactoring! !
+moveAllTempsToInnerScope!commands-actions!private!refactoring! !
 removeDuplicateMethods!development!private! !
 !
 

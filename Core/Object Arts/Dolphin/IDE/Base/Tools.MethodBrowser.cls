@@ -33,7 +33,9 @@ Class Variables:
 !Tools.MethodBrowser methodsFor!
 
 addCategoryMenu
-	<commandQuery: #hasEditableMethodsSelected>!
+	<commandQuery: #hasEditableMethodsSelected>
+	<menuPopulator: #buildAddCategoryMenu:>
+	!
 
 addMethods: aCollectionOfMethods toCategory: aMethodCategory 
 	aMethodCategory addMethods: aCollectionOfMethods.
@@ -83,7 +85,7 @@ browseContainingText
 browseDefinitions
 	"Browse method definitions with the same selector as the currently selected method."
 
-	<commandQuery: #queryBrowseMethod:>
+	<commandQuery: #queryBrowseMethodSelector:>
 	self browseDefinitionsMatching: (MethodSearch newSelector: self selectedMethod selector)
 		in: self searchEnvironment!
 
@@ -113,7 +115,7 @@ browseDefinitionsOfSelector: aSymbol in: aBrowserEnvironment
 browseHierarchy
 	"Open a class hierarchy browser on the current method"
 
-	<commandQuery: #queryBrowseMethod:>
+	<commandQuery: #queryBrowseClass:>
 	self developmentSystem browseClassHierarchyOfMethod: self selection!
 
 browseItCommand
@@ -226,7 +228,7 @@ browseReferences
 	"Context-sensitive 'Browse References' command. In this case browse refs. to the 
 	current selector."
 
-	<commandQuery: #queryBrowseMethod:>
+	<commandQuery: #queryBrowseMethodSelector:>
 	<acceleratorKey: 'Shift+F12'>
 	self browseReferencesMatching: (MethodSearch newSelector: self selection selector)
 		in: self searchEnvironment!
@@ -271,7 +273,7 @@ browserEnvironment
 browseSystem
 	"Open a system browser on the current method"
 
-	<commandQuery: #hasMethodSelected>
+	<commandQuery: #queryBrowseClass:>
 	self developmentSystem browseSystemOnMethod: self selection!
 
 browseVariableReferences: aVariableBinding in: aBrowserEnvironment
@@ -313,8 +315,24 @@ buildAddCategoryMenu: aMenu
 	aMenu addCommand: #categorizeMethods description: 'Other…'.
 	aMenu setDefault: aMenu items size!
 
+buildDefinitionsMenu: aMenu
+	self developmentSystem
+		buildMessageMenu: aMenu
+		forMethods: self selections
+		browseSelector: #browseDefinitionsOfSelector:in:
+		extraArgs: { self searchEnvironment }
+		browseOtherSelector: #browseMessageDefinitionsIn:!
+
 buildParseTree
 	^self selectionOrNil ifNotNil: [:method | Parser parseExistingMethodNoError: method]!
+
+buildReferencesMenu: aMenu
+	self developmentSystem
+		buildMessageMenu: aMenu
+		forMethods: self selections
+		browseSelector: #browseReferencesToLiteral:in:
+		extraArgs: { self searchEnvironment }
+		browseOtherSelector: #browseMessageReferencesIn:!
 
 buildRemoveCategoryMenu: aMenu
 	| methods categories filterCats |
@@ -435,7 +453,10 @@ customDrawSelector: anNMLVCUSTOMDRAW
 	method isAbstract ifTrue: [anNMLVCUSTOMDRAW font isItalic: true]!
 
 definitionsMenu
-	"No commandQuery needed - always enabled, even if no methods selected, as the Messages... command is still available to prompt for a selector"!
+	"No commandQuery needed - always enabled, even if no methods selected, as the Messages... command is still available to prompt for a selector"
+
+	<menuPopulator: #buildDefinitionsMenu:>
+	!
 
 deleteItCommand
 	methodsPresenter hasFocus ifTrue: [^#removeMethod].
@@ -481,6 +502,9 @@ filter: aOneArgBlock
 
 	filter := aOneArgBlock.
 !
+
+findDetails
+	^sourcePresenter findDetails!
 
 findDetails: aFindDetails 
 	sourcePresenter findDetails: aFindDetails!
@@ -608,8 +632,7 @@ methodPackage
 	newPkg := PackagePrompter
 				showModalOn: oldPkg asValue
 				caption: 'Package of <1d>…' << captionPostscript
-				default: default
-				validationBlock: [:package | package notNil and: [methods allSatisfy: [:each | each isUnbound not]]].
+				default: default.
 	"We allow OK even if no change from existing package, so must check for that here"
 	(newPkg notNil and: [newPkg ~= oldPkg]) ifFalse: [^self].
 	methods do: [:each | Package manager addMethod: each to: newPkg].
@@ -642,37 +665,8 @@ modifiedModel: aValueHolder
 namespaceModel
 	^namespaceModel!
 
-newMethod
-	"Sets the receiver up for creating a new method"
-
-	"Are there outstanding changes?"
-
-	self promptToSaveChanges ifFalse: [^self].
-	self selectMethod: nil.
-	"#833: If there was previously no method selection (i.e. no selection change event occurred when the selection
-	was reset), then we will need to clear down the source presenter, so do that regardless"
-	sourcePresenter
-		text: String new;
-		setFocus!
-
 noMethodsView
 	^view viewNamed: 'noMethodsText' ifNone: [methodsPresenter view]!
-
-onAboutToDisplayMenu: aMenu
-	"The pop-up <Menu>, popup, is about to be displayed.
-	This is our opportunity to update it, e.g. to add/remove items."
-
-	| menuName |
-	super onAboutToDisplayMenu: aMenu.
-	menuName := aMenu name.
-	menuName == #addCategoryMenu ifTrue: [^self buildAddCategoryMenu: aMenu].
-	menuName == #removeCategoryMenu ifTrue: [^self buildRemoveCategoryMenu: aMenu].
-
-	"Otherwise pass on to the dev. system to populate message menus"
-	self developmentSystem
-		populateMessagesMenus: aMenu
-		fromMethods: self selections
-		environment: self searchEnvironment!
 
 onCloseRequested: boolValueHolder
 	"A request to close the view onto the receiver as occurred.
@@ -809,22 +803,6 @@ onPromptToSaveChanges: aSelectionChangingEvent
 
 	^sourcePresenter prompt: 'source' toSaveChanges: aSelectionChangingEvent!
 
-onTipTextRequired: tool
-	"Private - Tool tip text is required for the <ToolbarItem>, tool."
-
-	| cmd |
-	cmd := tool command.
-	cmd == #browseHierarchy
-		ifTrue: [^'Open Hierarchy Browser on <1p>' expandMacrosWith: self selection].
-	cmd == #browseSystem ifTrue: [^'Open System Browser on <1p>' expandMacrosWith: self selection].
-	#clearSelection == cmd
-		ifTrue: 
-			[| methods |
-			methods := self selectedMethods.
-			^'Delete <1d>'
-				expandMacrosWith: (methods size = 1 ifTrue: [methods first] ifFalse: ['Selected Methods'])].
-	^super onTipTextRequired: tool!
-
 onViewAvailable
 	super onViewAvailable.
 	self applyOptions!
@@ -862,68 +840,102 @@ promptToSaveChanges
 				oldSelection: method;
 				yourself)!
 
-queryBrowseMethod: aCommandQuery
-	"Private - Context-sensitive 'Browse References' command. In this case browse refs. to the current selector."
-
-	| method |
-	method := self selectedMethod.
-	aCommandQuery
-		isEnabled: method notNil;
-		text: (aCommandQuery menuText
-					expandMacrosWithArguments: { method ifNil: ['…'] ifNotNil: [method selector] }
-					locale: Locale smalltalk)!
+queryBrowseClass: aCommandQuery
+	self selectedMethod
+		ifNotNil: 
+			[:method |
+			aCommandQuery
+				beEnabled;
+				expandMenuTextWith: method]!
 
 queryBrowseMethodClasses: aCommandQuery
-	| methodClasses |
+	| methodClasses count class |
 	methodClasses := (self selections collect: [:each | each methodClass]) asSet.
-	aCommandQuery text: (methodClasses size ~~ 1
-				ifTrue: 
-					[aCommandQuery isEnabled: self selections notEmpty.
-					'Method Classes']
-				ifFalse: 
-					[aCommandQuery isEnabled: true.
-					'Class <1p>' expandMacrosWithArguments: { methodClasses anyOne } locale: Locale smalltalk])!
+	count := methodClasses size.
+	count == 0 ifTrue: [^self].
+	aCommandQuery beEnabled.
+	count == 1 ifFalse: [^self].
+	class := methodClasses anyOne.
+	aCommandQuery
+		text: 'Class <p>' << class;
+		image: class icon!
 
 queryBrowseMethodPackages: aCommandQuery
-	| packages |
+	| packages count |
 	packages := (self selections collect: [:each | each owningPackage]) asSet.
-	aCommandQuery isEnabled: packages notEmpty.
-	aCommandQuery text: (packages size = 1
-				ifTrue: 
-					[aCommandQuery commandDescription menuText
-						expandMacrosWithArguments: { packages anyOne name printString }
-						locale: Locale smalltalk]
-				ifFalse: ['Packages'])!
+	count := packages size.
+	count == 0 ifTrue: [^self].
+	aCommandQuery
+		beEnabled;
+		expandMenuTextWith: (count == 1 ifTrue: [packages single name printString] ifFalse: ['Packages'])!
+
+queryBrowseMethodSelector: aCommandQuery
+	self selectedMethod
+		ifNotNil: 
+			[:method |
+			aCommandQuery
+				beEnabled;
+				expandMenuTextWith: method selector]!
 
 queryFindNext: aCommandQuery
-	aCommandQuery isEnabled: (self hasMethodSelected and: [self hasFindDetails])!
+	(self hasMethodSelected and: [self hasFindDetails]) ifFalse: [^self].
+	aCommandQuery
+		beEnabled;
+		expandMenuTextWith: self findDetails pattern!
+
+queryRemoveMethods: aCommandQuery
+	| methods count |
+	self hasEditableMethodsSelected ifFalse: [^self].
+	methods := self selectedMethods.
+	count := methods size.
+	aCommandQuery
+		beEnabled;
+		expandMenuTextWith: (count = 1 ifTrue: [methods single] ifFalse: ['<d> Methods' << count])!
 
 queryTogglePrivate: aCommandQuery
-	self hasEditableMethodsSelected
-		ifTrue: 
-			[| methods private allSame |
-			methods := self selections.
-			private := methods first isPrivate.
-			allSame := methods allSatisfy: [:each | each isPrivate = private].
-			aCommandQuery
-				isEnabled: allSame;
-				isChecked: allSame & private]!
+	| methods private allSame |
+	self hasEditableMethodsSelected ifFalse: [^self].
+	methods := self selections.
+	private := methods first isPrivate.
+	allSame := methods allSatisfy: [:each | each isPrivate = private].
+	allSame ifFalse: [^self].
+	aCommandQuery
+		beEnabled;
+		isChecked: private!
 
 refactoringTool
 	^refactoringTool!
 
 referencesMenu
-	"No commandQuery needed - always enabled, even if no methods selected, as the Messages... command is still available to prompt for a selector"!
+	"No commandQuery needed - always enabled, even if no methods selected, as the Messages... command is still available to prompt for a selector"
+
+	<menuPopulator: #buildReferencesMenu:>
+	!
 
 removeCategoryMenu
-	<commandQuery: #hasEditableMethodsSelected>!
+	<commandQuery: #hasEditableMethodsSelected>
+	<menuPopulator: #buildRemoveCategoryMenu:>
+	!
 
 removeMethod
 	"Removes the selected method(s) from the system"
 
-	<commandQuery: #hasEditableMethodsSelected>
+	<commandQuery: #queryRemoveMethods:>
 	self promptToSaveChanges ifFalse: [^self].
 	self developmentSystem removeMethods: self selections!
+
+resetForNewMethod
+	"Sets the receiver up for creating a new method"
+
+	"Are there outstanding changes?"
+
+	self promptToSaveChanges ifFalse: [^self].
+	self selectMethod: nil.
+	"#833: If there was previously no method selection (i.e. no selection change event occurred when the selection
+	was reset), then we will need to clear down the source presenter, so do that regardless"
+	sourcePresenter
+		text: String new;
+		setFocus!
 
 saveMethod: aString in: aClass environment: aNamespace categories: aCollection package: aPackageOrNil
 	| modified originalSelection change newMethod |
@@ -1097,9 +1109,11 @@ browseReferencesToLiteral:in:!browsing!private! !
 browserEnvironment!accessing!public! !
 browseSystem!browsing!commands-actions!public! !
 browseVariableReferences:in:!browsing!private! !
-buildAddCategoryMenu:!menus!private! !
+buildAddCategoryMenu:!commands-menus!private! !
+buildDefinitionsMenu:!private! !
 buildParseTree!helpers!private! !
-buildRemoveCategoryMenu:!menus!private! !
+buildReferencesMenu:!private! !
+buildRemoveCategoryMenu:!commands-menus!private! !
 canSaveMethod!helpers!private!testing! !
 categorizeMethods!commands-actions!public! !
 clearErrors!operations!public! !
@@ -1109,7 +1123,7 @@ createSchematicWiring!initializing!public! !
 customDrawMethodClass:!helpers!private! !
 customDrawSelector:!helpers!private! !
 definitionsMenu!commands-menus!public! !
-deleteItCommand!helpers!private! !
+deleteItCommand!commands-mappings!private! !
 developmentSystem!accessing!private! !
 enableSource:!modes!private! !
 ensureSourceVisible!operations!public! !
@@ -1118,6 +1132,7 @@ errorModel:!accessing!public! !
 evaluationContext!accessing!private! !
 filter!accessing!public! !
 filter:!accessing!public! !
+findDetails!accessing!public! !
 findDetails:!accessing!public! !
 findNext!commands-actions!public!searching & replacing! !
 findNextMatch!commands-actions!public!searching! !
@@ -1145,9 +1160,7 @@ model:!accessing!public! !
 modifiedModel!accessing!public! !
 modifiedModel:!accessing!public! !
 namespaceModel!accessing!public! !
-newMethod!commands-actions!public! !
 noMethodsView!accessing!private! !
-onAboutToDisplayMenu:!event handling!menus!public! !
 onCloseRequested:!event handling!public! !
 onDrag:!event handling!public! !
 onDragCut:!event handling!private! !
@@ -1161,7 +1174,6 @@ onMethodSelected!event handling!private! !
 onMethodSelectionChanging:!event handling!private! !
 onMethodUpdated:!event handling!private! !
 onPromptToSaveChanges:!private!testing! !
-onTipTextRequired:!event handling!private! !
 onViewAvailable!event handling!public! !
 onViewClosed!event handling!public! !
 onViewStateRestored!event handling!public! !
@@ -1169,15 +1181,18 @@ parseContext!accessing!public! !
 parseTree!helpers!private! !
 promptToCopyChanges!event handling!public! !
 promptToSaveChanges!helpers!private! !
-queryBrowseMethod:!browsing!commands-queries!private! !
+queryBrowseClass:!browsing!commands-queries!private! !
 queryBrowseMethodClasses:!commands-queries!private! !
 queryBrowseMethodPackages:!commands-queries!private! !
+queryBrowseMethodSelector:!browsing!commands-queries!private! !
 queryFindNext:!commands-queries!private! !
+queryRemoveMethods:!browsing!commands-queries!private! !
 queryTogglePrivate:!commands-queries!private! !
 refactoringTool!accessing!public! !
 referencesMenu!commands-menus!public! !
 removeCategoryMenu!commands-menus!public! !
 removeMethod!commands-actions!public! !
+resetForNewMethod!commands-actions!public! !
 saveMethod:in:environment:categories:package:!operations!private! !
 saveNewMethod:!helpers!public! !
 searchEnvironment!accessing!public! !
@@ -1263,7 +1278,7 @@ resource_Class_browser_method_list
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Class_browser_method_list)
 	"
 
-	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.ListView} 38 #{Core.Array} 45 nil nil 50 2 8 1409355849 1 32 838 2 #{UI.ListModel} 550 #{Core.OrderedCollection} 0 nil 6 #{Kernel.IdentitySearchPolicy} 6 #{Graphics.Color} #default nil 29 2886 4 #{UI.Menu} nil true 50 15 242 nil true 8 #() 8 '&Definitions of' #definitionsMenu 1 nil nil nil nil nil 242 nil true 8 #() 8 'Re&ferences to' #referencesMenu 1 nil nil nil nil nil 242 nil true 50 13 1094 2 #{UI.CommandMenuItem} 1 1350 4 #{UI.CommandDescription} #browseReferencesToGlobal 8 'References to Global…' 1 1 nil nil nil 418 1 450 #browseContainingText 8 'C&ontaining Text…' 1 1 838 4 #{Graphics.Icon} nil true 1030 #{Graphics.ImageFromStringResourceInitializer} 8 'SearchText.ico' 838 1 #{External.ResourceLibrary} 8 'dolphindr8.dll' 65541 nil nil nil 418 1 450 #browseMethodCategory 8 'Cate&gory…' 1 1 546 nil true 578 8 'Category.ico' 640 65541 nil nil nil 418 1 450 #browseCompilationFailures 8 'Compilation &Failures' 1 1 nil nil nil 326 1 #{UI.DividerMenuItem} 4097 418 1 450 #browseMethodPackages 8 'Package <s>' 1 1 546 nil true 578 8 'Package.ico' 640 65541 nil nil nil 418 1 450 #browseMethodClasses 8 'Class <s>' 1 1 nil nil nil 818 4097 418 1 450 #browseMethodHistory 8 '&Change History' 1 1 546 nil true 578 8 'MethodHistory.ico' 640 65541 nil nil nil 418 1 450 #browseAllChangedMethods 8 '&All Changed Methods' 1 1 nil nil nil 818 4097 418 1 450 #browseMethodInheritanceChain 8 '&Inheritance Chain' 1 1 nil nil nil 418 1 450 #browseOverriddenMethod 8 'Goto &Superclass Definition' 1 1 nil nil nil 8 '&Browse other' nil 134217729 nil nil nil nil nil 818 4097 418 1 450 #newMethod 8 '&New' 1 1 546 nil true 578 8 'NewMethod.ico' 640 65541 nil nil nil 418 1 450 #removeMethod 8 'Re&move' 1 1 546 nil true 578 8 'MethodDelete.ico' 640 65541 nil nil nil 242 nil true 50 16 418 1 450 #renameMethod 8 'Re&name' 1 1 546 nil true 578 8 'Rename.ico' 640 65541 nil nil nil 418 1 450 #renameMethodReferences 8 'Rename Re&ferences…' 1 1 nil nil nil 818 4097 418 1 450 #addParameter 8 'Add &Parameter…' 1 1 nil nil nil 242 nil true 8 #() 8 'Remo&ve Parameter' #removeParameterMenu 134217729 nil nil nil nil nil 242 nil true 8 #() 8 'Rena&me Parameter' #renameParameterMenu 134217729 nil nil nil nil nil 242 nil true 8 #() 8 '&Inline Parameter' #inlineParameterMenu 134217729 nil nil nil nil nil 818 4097 242 nil true 8 #() 8 'Rename &Temporary' #renameTempMenu 134217729 nil nil nil nil nil 242 nil true 8 #() 8 'Convert Temp to Inst. Var.' #convertTempToInstVarMenu 134217729 nil nil nil nil nil 818 4097 418 1 450 #inlineAllSelfSends 8 'Inline &Self Sends' 1 1 nil nil nil 418 1 450 #pushUpMethods 8 'Push &Up' 9325 1 nil nil nil 418 1 450 #pushDownMethods 8 'Push &Down' 9327 1 nil nil nil 418 1 450 #overrideMethods 8 'Ove&rride <1d>' 1 1 nil nil nil 418 1 450 #moveMethod 8 'Move to &Component…' 1 1 nil nil nil 8 '&Refactorings' #methodRefactoringsMenu 134217729 546 nil true 578 8 'Refactoring.ico' 640 65541 nil nil nil nil nil 818 4097 418 1 450 #methodPackage 8 '&Package…' 1 1 546 nil true 578 8 'Package.ico' 640 65541 nil nil nil 242 nil true 8 #() 8 'Add to &Category' #addCategoryMenu 134217729 nil nil nil nil nil 242 nil true 8 #() 8 'Remo&ve from Category' #removeCategoryMenu 134217729 nil nil nil nil nil 418 1 450 #togglePrivate 8 'Priva&te' 1 1 nil nil nil 818 4097 418 1 450 #toggleFilterObjectMethods 8 'Filter &Object Methods' 1 1 nil nil nil 418 1 450 #toggleShowInheritedMethods 8 'Show &Inherited Methods' 1 1 nil nil nil 8 '&Method' #methodMenu 134217729 nil nil nil nil nil nil nil 32 nil nil 518 #{Core.Message} #selector 8 #() 2690 #iconImageIndex 8 #() 1350 1 #{Graphics.IconImageManager} nil 2690 #infoTip 8 #() 1382 3 #{Kernel.BlockClosure} 0 nil 1318 #{Kernel.CompiledExpression} 4 1 2832 8 'doIt' 8 '[:ctx | ctx view parentPresenter parentPresenter customDrawSelector: ctx]' 8 #[32 105 226 0 159 159 17 178 106] #view #parentPresenter #customDrawSelector: 2848 7 257 nil nil nil nil 146 3 3142 5 #{UI.ListViewColumn} 8 'Methods' 431 #left 2690 #displayString 2752 2690 #<= 8 #() 2690 #selector 8 #() nil 32 nil 3 nil 2848 2962 8 '' 33 #center 774 #{Core.MessageSend} #empty 8 #() #{Core.Utf16String} 2834 0 nil 2866 3 1 #{Core.UndefinedObject} 8 'doIt' 8 '[:m1 :m2 | 
+	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.ListView} 38 #{Core.Array} 45 nil nil 50 2 8 1409355849 1 32 838 2 #{UI.ListModel} 550 #{Core.OrderedCollection} 0 nil 6 #{Kernel.IdentitySearchPolicy} 6 #{Graphics.Color} #default nil 29 2886 4 #{UI.Menu} nil true 50 15 242 nil true 8 #() 8 '&Definitions of' #definitionsMenu 1 nil nil nil nil nil 242 nil true 8 #() 8 'Re&ferences to' #referencesMenu 1 nil nil nil nil nil 242 nil true 50 13 1094 2 #{UI.CommandMenuItem} 1 1350 4 #{UI.CommandDescription} #browseReferencesToGlobal 8 'References to Global…' 1 1 nil nil nil 418 1 450 #browseContainingText 8 'C&ontaining Text…' 1 1 838 4 #{Graphics.Icon} nil true 1030 #{Graphics.ImageFromStringResourceInitializer} 8 'SearchText.ico' 838 1 #{External.ResourceLibrary} 8 'dolphindr8.dll' 65541 nil nil nil 418 1 450 #browseMethodCategory 8 'Cate&gory…' 1 1 546 nil true 578 8 'Category.ico' 640 65541 nil nil nil 418 1 450 #browseCompilationFailures 8 'Compilation &Failures' 1 1 nil nil nil 326 1 #{UI.DividerMenuItem} 4097 418 1 450 #browseMethodPackages 8 'Package <s>' 1 1 546 nil true 578 8 'Package.ico' 640 65541 nil nil nil 418 1 450 #browseMethodClasses 8 'Method Classes' 1 1 nil nil nil 818 4097 418 1 450 #browseMethodHistory 8 '&Change History' 1 1 546 nil true 578 8 'MethodHistory.ico' 640 65541 nil nil nil 418 1 450 #browseAllChangedMethods 8 '&All Changed Methods' 1 1 nil nil nil 818 4097 418 1 450 #browseMethodInheritanceChain 8 '&Inheritance Chain' 1 1 nil nil nil 418 1 450 #browseOverriddenMethod 8 'Goto &Superclass Definition' 1 1 nil nil nil 8 '&Browse other' nil 134217729 nil nil nil nil nil 818 4097 418 1 450 #newMethod 8 '&New <s:Method>' 1 17 546 nil true 578 8 'NewMethod.ico' 640 65541 nil nil nil 418 1 450 #removeMethod 8 'Re&move' 1 1 546 nil true 578 8 'MethodDelete.ico' 640 65541 nil nil nil 242 nil true 50 16 418 1 450 #renameMethod 8 'Re&name' 1 1 546 nil true 578 8 'Rename.ico' 640 65541 nil nil nil 418 1 450 #renameMethodReferences 8 'Rename Re&ferences…' 1 1 nil nil nil 818 4097 418 1 450 #addParameter 8 'Add &Parameter…' 1 1 nil nil nil 242 nil true 8 #() 8 'Remo&ve Parameter' #removeParameterMenu 134217729 nil nil nil nil nil 242 nil true 8 #() 8 'Rena&me Parameter' #renameParameterMenu 134217729 nil nil nil nil nil 242 nil true 8 #() 8 '&Inline Parameter' #inlineParameterMenu 134217729 nil nil nil nil nil 818 4097 242 nil true 8 #() 8 'Rename &Temporary' #renameTempMenu 134217729 nil nil nil nil nil 242 nil true 8 #() 8 'Convert Temp to Inst. Var.' #convertTempToInstVarMenu 134217729 nil nil nil nil nil 818 4097 418 1 450 #inlineAllSelfSends 8 'Inline &Self Sends' 1 1 nil nil nil 418 1 450 #pushUpMethods 8 'Push &Up' 9325 1 nil nil nil 418 1 450 #pushDownMethods 8 'Push &Down' 9327 1 nil nil nil 418 1 450 #overrideMethods 8 'Ove&rride <d:Methods>' 1 17 nil nil nil 418 1 450 #moveMethod 8 'Move to &Component…' 1 1 nil nil nil 8 '&Refactorings' #methodRefactoringsMenu 134217729 546 nil true 578 8 'Refactoring.ico' 640 65541 nil nil nil nil nil 818 4097 418 1 450 #methodPackage 8 '&Package…' 1 1 546 nil true 578 8 'Package.ico' 640 65541 nil nil nil 242 nil true 8 #() 8 'Add to &Category' #addCategoryMenu 134217729 nil nil nil nil nil 242 nil true 8 #() 8 'Remo&ve from Category' #removeCategoryMenu 134217729 nil nil nil nil nil 418 1 450 #togglePrivate 8 'Priva&te' 1 1 nil nil nil 818 4097 418 1 450 #toggleFilterObjectMethods 8 'Filter &Object Methods' 1 1 nil nil nil 418 1 450 #toggleShowInheritedMethods 8 'Show &Inherited Methods' 1 1 nil nil nil 8 '&Method' #methodMenu 134217729 nil nil nil nil nil nil nil 32 nil nil 518 #{Core.Message} #selector 8 #() 2690 #iconImageIndex 8 #() 1350 1 #{Graphics.IconImageManager} nil 2690 #infoTip 8 #() 1382 3 #{Kernel.BlockClosure} 0 nil 1318 #{Kernel.CompiledExpression} 4 1 2832 8 'doIt' 8 '[:ctx | ctx view parentPresenter parentPresenter customDrawSelector: ctx]' 8 #[32 105 226 0 159 159 17 178 106] #view #parentPresenter #customDrawSelector: 2848 7 257 nil nil nil nil 146 3 3142 5 #{UI.ListViewColumn} 8 'Methods' 431 #left 2690 #displayString 2752 2690 #<= 8 #() 2690 #selector 8 #() nil 32 nil 3 nil 2848 2962 8 '' 33 #center 774 #{Core.MessageSend} #empty 8 #() #{Core.Utf16String} 2834 0 nil 2866 3 1 #{Core.UndefinedObject} 8 'doIt' 8 '[:m1 :m2 | 
 m1 isOverride = m2 isOverride 
 	ifTrue: [m1 selector <= m2 selector]
 	ifFalse: [m1 isOverride]]' 8 #[31 105 17 158 18 158 132 123 17 159 18 159 130 106 17 158 106] #isOverride #selector 3168 7 513 nil nil nil 32 2834 0 nil 2866 8 1 2832 8 'doIt' 8 '[:each | 
@@ -1288,7 +1303,7 @@ resource_Method_browser_method_list
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Method_browser_method_list)
 	"
 
-	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.WizardCardContainer} 38 #{Core.Array} 15 nil nil 50 2 8 1409286144 131073 32 nil nil nil 5 2886 4 #{UI.Menu} nil true 50 11 114 nil true 8 #() 8 '&Definitions of' #definitionsMenu 1 nil nil nil nil nil 114 nil true 8 #() 8 'Re&ferences to' #referencesMenu 1 nil nil nil nil nil 114 nil true 50 10 1094 2 #{UI.CommandMenuItem} 1 1350 4 #{UI.CommandDescription} #browseReferencesToGlobal 8 'R&eferences to Global…' 1 1 nil nil nil 290 1 322 #browseContainingText 8 'C&ontaining Text…' 1 1 838 4 #{Graphics.Icon} nil true 1030 #{Graphics.ImageFromStringResourceInitializer} 8 'SearchText.ico' 838 1 #{External.ResourceLibrary} 8 'dolphindr8.dll' 65541 nil nil nil 290 1 322 #browseMethodCategory 8 'Cate&gory…' 1 1 nil nil nil 290 1 322 #browseCompilationFailures 8 'Compilation &Failures' 1 1 nil nil nil 326 1 #{UI.DividerMenuItem} 4097 290 1 322 #browseMethodPackages 8 '&Package <s>' 1 1 418 nil true 450 8 'PackageBrowserShell.ico' 512 65541 nil nil nil 290 1 322 #browseMethodClasses 8 '&Class <s>' 1 1 418 nil true 450 8 'ClassBrowserShell.ico' 512 65541 nil nil nil 642 4097 290 1 322 #browseMethodHistory 8 'Change &History' 1 1 418 nil true 450 8 'MethodHistory.ico' 512 65541 nil nil nil 290 1 322 #browseAllChangedMethods 8 '&All Changed Methods' 1 1 nil nil nil 8 '&Browse other' #browseOther 134217729 nil nil nil nil nil 642 4097 290 1 322 #removeMethod 8 'Re&move' 1 1 418 nil true 450 8 'MethodDelete.ico' 512 65541 nil nil nil 114 nil true 50 16 290 1 322 #renameMethod 8 'Re&name' 1 1 nil nil nil 290 1 322 #renameMethodReferences 8 'Rename Re&ferences…' 1 1 nil nil nil 642 4097 290 1 322 #addParameter 8 'Add &Parameter…' 1 1 nil nil nil 114 nil true 8 #() 8 'Remo&ve Parameter' #removeParameterMenu 134217729 nil nil nil nil nil 114 nil true 8 #() 8 'Rena&me Parameter' #renameParameterMenu 134217729 nil nil nil nil nil 114 nil true 8 #() 8 '&Inline Parameter' #inlineParameterMenu 134217729 nil nil nil nil nil 642 4097 114 nil true 8 #() 8 'Rename &Temporary' #renameTempMenu 134217729 nil nil nil nil nil 114 nil true 8 #() 8 'Conv&ert Temp to Inst. Var.' #convertTempToInstVarMenu 134217729 nil nil nil nil nil 642 4097 290 1 322 #inlineAllSelfSends 8 'Inline &Self Sends' 1 1 nil nil nil 290 1 322 #pushUpMethods 8 'Push &Up' 9325 1 nil nil nil 290 1 322 #pushDownMethods 8 'Push &Down' 9327 1 nil nil nil 290 1 322 #overrideMethods 8 'Ove&rride <1d>' 1 1 nil nil nil 290 1 322 #moveMethod 8 'Move to &Component…' 1 1 nil nil nil 8 '&Refactorings' #methodRefactoringsMenu 134217729 418 nil true 450 8 'Refactoring.ico' 512 65541 nil nil nil nil nil 642 4097 290 1 322 #methodPackage 8 '&Package…' 1 1 418 nil true 450 8 'Package.ico' 512 65541 nil nil nil 114 nil true 8 #() 8 'Add to &Category' #addCategoryMenu 134217729 nil nil nil nil nil 114 nil true 8 #() 8 'Remo&ve from Category' #removeCategoryMenu 134217729 nil nil nil nil nil 290 1 322 #togglePrivate 8 'Priva&te' 1 1 nil nil nil 8 '&Method' #methodMenu 134217729 nil nil nil nil nil nil nil 32 1350 1 #{UI.CardLayout} 550 #{Core.OrderedCollection} 2 518 #{Core.Association} 3 18 #{UI.ListView} 50 45 nil 32 50 2 8 1140920393 1 2288 838 2 #{UI.ListModel} 2226 0 nil 6 #{Kernel.IdentitySearchPolicy} 6 #{Graphics.Color} #default nil 13 nil nil nil 2288 nil nil 518 #{Core.Message} #displayString 8 #() 2466 #iconImageIndex 8 #() 1350 1 #{Graphics.IconImageManager} nil nil nil nil nil nil 2226 5 3142 5 #{UI.ListViewColumn} 8 'Selector' 335 #left 2466 #selector 8 #() 1382 3 #{Kernel.BlockClosure} 0 nil 1318 #{Kernel.CompiledExpression} 2 1 #{Core.UndefinedObject} 8 'doIt' 8 '[:a :b | a selector <= b selector]' 8 #[30 105 226 0 226 32 130 106] #selector 2688 7 513 nil nil nil 2288 nil 1 2466 #infoTip 8 #() 2674 0 nil 2706 4 1 2672 8 'doIt' 8 '[:ctx | ctx view parentPresenter customDrawSelector: ctx]' 8 #[32 105 226 0 159 17 178 106] #view #parentPresenter #customDrawSelector: 2816 7 257 nil 2594 8 'Class' 333 #left 2466 #name 8 #() 2466 #<= 8 #() 2466 #methodClass 8 #() nil 2288 2512 1 nil 2674 0 nil 2706 4 1 2672 8 'doIt' 8 '[:ctx | ctx view parentPresenter customDrawMethodClass: ctx]' 8 #[32 105 226 0 159 17 178 106] #view #parentPresenter #customDrawMethodClass: 3024 7 257 nil 2594 8 'Namespace' 301 #left 2466 #fullName 8 #() 2674 0 nil 2706 2 1 2672 8 'doIt' 8 '[:a :b | a fullName <= b fullName ]' 8 #[30 105 226 0 226 32 130 106] #fullName 3168 7 513 nil 2466 #environment 8 #() nil 2288 nil 1 nil nil 2594 8 'Package' 65 #left 2466 #name 8 #() 2674 0 nil 2706 2 1 #{Core.UndefinedObject} 8 'doIt' 8 '[:a :b | a name <= b name]' 8 #[30 105 226 0 226 32 130 106] #name 3344 7 513 nil 2466 #owningPackage 8 #() nil 2288 2512 3 nil nil 2594 8 '' 33 #center nil 2674 0 nil 2706 3 1 #{Core.UndefinedObject} 8 'doIt' 8 '[:m1 :m2 | m1 isPublic = m2 isPublic ifTrue: [m1 selector <= m2 selector] ifFalse: [m1 isPublic]]' 8 #[31 105 17 158 18 158 132 123 17 159 18 159 130 106 17 158 106] #isPublic #selector 3488 7 513 nil nil nil 2288 2512 1 nil nil #report 8 #() nil 133221 nil 1 nil nil nil nil 1 nil nil nil nil nil nil nil nil nil nil 262 #{Core.MessageSequence} 50 3 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 1 1 3682 971 421 2288 3634 #text: 50 1 8 'Selector' 2288 3634 #columnOrder: 50 1 8 #(5 1 2 3 4) 2288 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 229 1 0 0 210 0 0 0] 8 #() 3682 193 193 nil 35 2258 5 18 #{UI.StaticText} 50 16 nil 32 50 2 8 1140850945 1 3920 nil 2434 #window nil 5 nil nil nil 3920 nil nil 518 #{UI.NullConverter} nil nil nil 3586 50 3 3634 #createAt:extent: 50 2 3682 1 1 3682 971 421 3920 3634 #isEnabled: 8 #(false) 3920 3634 #text: 50 1 8 '
+	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.WizardCardContainer} 38 #{Core.Array} 15 nil nil 50 2 8 1409286144 131073 32 nil nil nil 5 2886 4 #{UI.Menu} nil true 50 11 114 nil true 8 #() 8 '&Definitions of' #definitionsMenu 1 nil nil nil nil nil 114 nil true 8 #() 8 'Re&ferences to' #referencesMenu 1 nil nil nil nil nil 114 nil true 50 10 1094 2 #{UI.CommandMenuItem} 1 1350 4 #{UI.CommandDescription} #browseReferencesToGlobal 8 'R&eferences to Global…' 1 1 nil nil nil 290 1 322 #browseContainingText 8 'C&ontaining Text…' 1 1 838 4 #{Graphics.Icon} nil true 1030 #{Graphics.ImageFromStringResourceInitializer} 8 'SearchText.ico' 838 1 #{External.ResourceLibrary} 8 'dolphindr8.dll' 65541 nil nil nil 290 1 322 #browseMethodCategory 8 'Cate&gory…' 1 1 nil nil nil 290 1 322 #browseCompilationFailures 8 'Compilation &Failures' 1 1 nil nil nil 326 1 #{UI.DividerMenuItem} 4097 290 1 322 #browseMethodPackages 8 '&Package <s>' 1 17 418 nil true 450 8 'PackageBrowserShell.ico' 512 65541 nil nil nil 290 1 322 #browseMethodClasses 8 'Method Classes' 1 1 418 nil true 450 8 'ClassBrowserShell.ico' 512 65541 nil nil nil 642 4097 290 1 322 #browseMethodHistory 8 'Change &History' 1 1 418 nil true 450 8 'MethodHistory.ico' 512 65541 nil nil nil 290 1 322 #browseAllChangedMethods 8 '&All Changed Methods' 1 1 nil nil nil 8 '&Browse other' #browseOther 134217729 nil nil nil nil nil 642 4097 290 1 322 #removeMethod 8 'Re&move' 1 1 418 nil true 450 8 'MethodDelete.ico' 512 65541 nil nil nil 114 nil true 50 16 290 1 322 #renameMethod 8 'Re&name' 1 1 nil nil nil 290 1 322 #renameMethodReferences 8 'Rename Re&ferences…' 1 1 nil nil nil 642 4097 290 1 322 #addParameter 8 'Add &Parameter…' 1 1 nil nil nil 114 nil true 8 #() 8 'Remo&ve Parameter' #removeParameterMenu 134217729 nil nil nil nil nil 114 nil true 8 #() 8 'Rena&me Parameter' #renameParameterMenu 134217729 nil nil nil nil nil 114 nil true 8 #() 8 '&Inline Parameter' #inlineParameterMenu 134217729 nil nil nil nil nil 642 4097 114 nil true 8 #() 8 'Rename &Temporary' #renameTempMenu 134217729 nil nil nil nil nil 114 nil true 8 #() 8 'Conv&ert Temp to Inst. Var.' #convertTempToInstVarMenu 134217729 nil nil nil nil nil 642 4097 290 1 322 #inlineAllSelfSends 8 'Inline &Self Sends' 1 1 nil nil nil 290 1 322 #pushUpMethods 8 'Push &Up' 9325 1 nil nil nil 290 1 322 #pushDownMethods 8 'Push &Down' 9327 1 nil nil nil 290 1 322 #overrideMethods 8 'Ove&rride <d:Methods>' 1 17 nil nil nil 290 1 322 #moveMethod 8 'Move to &Component…' 1 1 nil nil nil 8 '&Refactorings' #methodRefactoringsMenu 134217729 418 nil true 450 8 'Refactoring.ico' 512 65541 nil nil nil nil nil 642 4097 290 1 322 #methodPackage 8 '&Package…' 1 1 418 nil true 450 8 'Package.ico' 512 65541 nil nil nil 114 nil true 8 #() 8 'Add to &Category' #addCategoryMenu 134217729 nil nil nil nil nil 114 nil true 8 #() 8 'Remo&ve from Category' #removeCategoryMenu 134217729 nil nil nil nil nil 290 1 322 #togglePrivate 8 'Priva&te' 1 1 nil nil nil 8 '&Method' nil 134217729 nil nil nil nil nil nil nil 32 1350 1 #{UI.CardLayout} 550 #{Core.OrderedCollection} 2 518 #{Core.Association} 3 18 #{UI.ListView} 50 45 nil 32 50 2 8 1140920393 1 2288 838 2 #{UI.ListModel} 2226 0 nil 6 #{Kernel.IdentitySearchPolicy} 6 #{Graphics.Color} #default nil 13 nil nil nil 2288 nil nil 518 #{Core.Message} #displayString 8 #() 2466 #iconImageIndex 8 #() 1350 1 #{Graphics.IconImageManager} nil nil nil nil nil nil 2226 5 3142 5 #{UI.ListViewColumn} 8 'Selector' 335 #left 2466 #selector 8 #() 1382 3 #{Kernel.BlockClosure} 0 nil 1318 #{Kernel.CompiledExpression} 2 1 #{Core.UndefinedObject} 8 'doIt' 8 '[:a :b | a selector <= b selector]' 8 #[30 105 226 0 226 32 130 106] #selector 2688 7 513 nil nil nil 2288 nil 1 2466 #infoTip 8 #() 2674 0 nil 2706 4 1 2672 8 'doIt' 8 '[:ctx | ctx view parentPresenter customDrawSelector: ctx]' 8 #[32 105 226 0 159 17 178 106] #view #parentPresenter #customDrawSelector: 2816 7 257 nil 2594 8 'Class' 333 #left 2466 #name 8 #() 2466 #<= 8 #() 2466 #methodClass 8 #() nil 2288 2512 1 nil 2674 0 nil 2706 4 1 2672 8 'doIt' 8 '[:ctx | ctx view parentPresenter customDrawMethodClass: ctx]' 8 #[32 105 226 0 159 17 178 106] #view #parentPresenter #customDrawMethodClass: 3024 7 257 nil 2594 8 'Namespace' 301 #left 2466 #fullName 8 #() 2674 0 nil 2706 2 1 2672 8 'doIt' 8 '[:a :b | a fullName <= b fullName ]' 8 #[30 105 226 0 226 32 130 106] #fullName 3168 7 513 nil 2466 #environment 8 #() nil 2288 nil 1 nil nil 2594 8 'Package' 65 #left 2466 #name 8 #() 2674 0 nil 2706 2 1 #{Core.UndefinedObject} 8 'doIt' 8 '[:a :b | a name <= b name]' 8 #[30 105 226 0 226 32 130 106] #name 3344 7 513 nil 2466 #owningPackage 8 #() nil 2288 2512 3 nil nil 2594 8 '' 33 #center nil 2674 0 nil 2706 3 1 #{Core.UndefinedObject} 8 'doIt' 8 '[:m1 :m2 | m1 isPublic = m2 isPublic ifTrue: [m1 selector <= m2 selector] ifFalse: [m1 isPublic]]' 8 #[31 105 17 158 18 158 132 123 17 159 18 159 130 106 17 158 106] #isPublic #selector 3488 7 513 nil nil nil 2288 2512 1 nil nil #report 8 #() nil 133221 nil 1 nil nil nil nil 1 nil nil nil nil nil nil nil nil nil nil 262 #{Core.MessageSequence} 50 3 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 1 1 3682 971 421 2288 3634 #text: 50 1 8 'Selector' 2288 3634 #columnOrder: 50 1 8 #(5 1 2 3 4) 2288 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 229 1 0 0 210 0 0 0] 8 #() 3682 193 193 nil 35 2258 5 18 #{UI.StaticText} 50 16 nil 32 50 2 8 1140850945 1 3920 nil 2434 #window nil 5 nil nil nil 3920 nil nil 518 #{UI.NullConverter} nil nil nil 3586 50 3 3634 #createAt:extent: 50 2 3682 1 1 3682 971 421 3920 3634 #isEnabled: 8 #(false) 3920 3634 #text: 50 1 8 '
 There are no methods to browse' 3920 3826 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 229 1 0 0 210 0 0 0] 8 #() 3888 nil 27 2288 nil nil nil 518 #{Kernel.STBIdentityDictionaryProxy} #{Core.IdentityDictionary} 50 4 2288 8 'methods' 3920 8 'noMethodsText' nil 3586 50 1 3634 #createAt:extent: 50 2 3682 6143 21 3682 971 421 32 3826 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 228 13 0 0 220 0 0 0] 50 2 2288 3920 3888 nil 27)!
 
 setAdditionalKeyBindings: anArray

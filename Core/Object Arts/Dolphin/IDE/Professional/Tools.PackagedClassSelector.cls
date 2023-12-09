@@ -85,6 +85,7 @@ hasPackages
 newClass
 	"Create a new subclass of the selected class (or a subclass of Object if no class is actually selected)."
 
+	<commandQuery: #queryNewClass:>
 	| aClass package |
 	aClass := self selectionOrNil.
 	package := self packagesPresenter singlePackage

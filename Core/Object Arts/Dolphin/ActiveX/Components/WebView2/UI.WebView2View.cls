@@ -222,9 +222,11 @@ filerProxyIn: anSTxOutFiler
 	^proxy!
 
 goBack
+	<commandQuery: #canGoBack>
 	webview goBack!
 
 goForward
+	<commandQuery: #canGoForward>
 	webview goForward!
 
 initialize
@@ -500,22 +502,6 @@ profileName: aString
 	profileName := aString.
 	webviewController notNull ifTrue: [self recreate]!
 
-queryCommand: query
-	"Enters details about a potential command for the receiver into the 
-	<CommandQuery>,  query."
-
-	| cmd |
-	cmd := query commandSymbol.
-	cmd == #goBack
-		ifTrue: 
-			[query isEnabled: self canGoBack.
-			^true].
-	cmd == #goForward
-		ifTrue: 
-			[query isEnabled: self canGoForward.
-			^true].
-	^super queryCommand: query!
-
 queryControllerInterface: anIUnknown
 	| interfaceClass |
 	interfaceClass := ICoreWebView2Controller4.
@@ -714,7 +700,6 @@ onViewCreated!event handling!public! !
 profile!commands!public! !
 profileName!accessing!public! !
 profileName:!accessing!public! !
-queryCommand:!commands!public! !
 queryControllerInterface:!helpers!private! !
 registerEnvironmentEventSink:!helpers!public! !
 registerEventSink:!helpers!public! !

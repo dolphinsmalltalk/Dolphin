@@ -197,6 +197,12 @@ testIsSelector
 		do: [:each | self deny: (Scanner isSelector: each)].
 	self deny: (Scanner isSelector: String lineDelimiter)!
 
+testIsStaticVariable
+	#('_a' '_' '_A' 'A' 'Abc' 'A1' '_1' 'A_b')
+		do: [:each | self assert: (Scanner isStaticVariable: each)].
+	#(' ' 'a' 'a_' 'abc' '123' ':' '::' '' ' ' '$' '.' '#' '(' ')' '£' '🐬' '`' '"' '''' '1' 'a:b' 'a::' ';' '{' '[' '}' ']' 'ınteresting' 'camión')
+		do: [:each | self deny: (Scanner isStaticVariable: each)]!
+
 testScanningScaledDecimals
 	"Test Number>>readFrom: with ScaledDecimals"
 
@@ -355,6 +361,7 @@ testFloatScanning!public!unit tests! !
 testIntegerScanning!public!unit tests! !
 testIntegerScanningBoundaries!public!unit tests! !
 testIsSelector!public!unit tests! !
+testIsStaticVariable!public!unit tests! !
 testScanningScaledDecimals!public!unit tests! !
 testScanQualifiedNames!public!unit tests! !
 testSpecialLiterals!public!unit tests! !

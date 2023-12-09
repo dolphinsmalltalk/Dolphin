@@ -701,12 +701,12 @@ visitVariableNode:!public!visitor/double dispatching! !
 
 !Kernel.StSemanticAnalyser class methodsFor!
 
-analyseParseTree: aParseTree pools: anArray
-	^self analyseParseTree: aParseTree pools: anArray onError: nil!
+analyseParseTree: aStProgramNode pools: anArray
+	^self analyseParseTree: aStProgramNode pools: anArray onError: nil!
 
-analyseParseTree: aParseTree pools: anArray onError: aMonadicValuableOrNil
+analyseParseTree: aStProgramNode pools: anArray onError: aMonadicValuableOrNil
 	^self new
-		analyseParseTree: aParseTree methodNode
+		analyseParseTree: aStProgramNode methodNode
 			pools: anArray
 			onError: aMonadicValuableOrNil;
 		yourself!
