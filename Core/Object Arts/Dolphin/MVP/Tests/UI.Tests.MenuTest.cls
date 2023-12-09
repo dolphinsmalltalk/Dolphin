@@ -15,8 +15,19 @@ assertEqualToExampleMenu: menu
 	self assert: menu toStrings printString caseFolded
 		equals: self exampleStrings printString caseFolded!
 
+exampleMenu
+	^MenuBar fromStrings: self exampleStrings!
+
 exampleStrings
-	^ #(#('&File' '&New/CTRL+N/fileNew' '|' '&Open.../CTRL+O/fileOpen' '-' 'E&xit//fileExit') '||' 'F&ire!!//fire' '|' #('&Tools' '&Workspace.../CTRL+N/fileNew' '-' #('&Options' 'Default Font...//chooseDefaultFont')))!
+	^#(#('&File' '&New/CTRL+N/fileNew' '|' '&Open.../CTRL+O/fileOpen' '-' 'E&xit//fileExit') '||' 'F&ire!!//fire' '|' #('&Tools' '&Workspace.../CTRL+N/fileNew' '-' #('&Options' 'Default Font...//chooseDefaultFont' #('&Theme' '&Dark//darkTheme' '&Light//lightTheme'))))!
+
+testAllItems
+	self assert: (self exampleMenu allItems collect: [:each | each printString])
+		equals: #('a MenuBar' 'a Menu(&File)' 'a CommandMenuItem(&New)' 'DividerMenuItem break' 'a CommandMenuItem(&Open...)' 'DividerMenuItem separator' 'a CommandMenuItem(E&xit)' 'DividerMenuItem barBreak' 'a CommandMenuItem(F&ire!!)' 'DividerMenuItem break' 'a Menu(&Tools)' 'a CommandMenuItem(&Workspace...)' 'DividerMenuItem separator' 'a Menu(&Options)' 'a CommandMenuItem(Default Font...)' 'a Menu(&Theme)' 'a CommandMenuItem(&Dark)' 'a CommandMenuItem(&Light)')!
+
+testAllMenus
+	self assert: (self exampleMenu allMenus collect: [:each | each text])
+		equals: #('' '&File' '&Tools' '&Options' '&Theme')!
 
 testFindCommand
 	| subject item |
@@ -33,9 +44,7 @@ testFindCommand
 	self assert: item command selector equals: #quit!
 
 testFromStrings
-	| menu |
-	menu := MenuBar fromStrings: self exampleStrings.
-	self assertEqualToExampleMenu: menu!
+	self assertEqualToExampleMenu: self exampleMenu!
 
 testStbConvertFromVersion0
 	| bytes menu |
@@ -43,10 +52,14 @@ testStbConvertFromVersion0
 	"Tools.STBDebugger dumpToTranscript: bytes readStream"
 	menu := Object fromBinaryStoreBytes: bytes.
 	self assert: menu isKindOf: MenuBar.
-	self assertEqualToExampleMenu: menu! !
+	self assert: menu toStrings printString caseFolded
+		equals: '#(#(''&file'' ''&new/ctrl+n/filenew'' ''|'' ''&open.../ctrl+o/fileopen'' ''-'' ''e&xit//fileexit'') ''||'' ''f&ire!!//fire'' ''|'' #(''&tools'' ''&workspace.../ctrl+n/filenew'' ''-'' #(''&options'' ''default font...//choosedefaultfont'')))'! !
 !UI.Tests.MenuTest categoriesForMethods!
 assertEqualToExampleMenu:!helpers!private! !
+exampleMenu!helpers!private! !
 exampleStrings!constants!private! !
+testAllItems!constants!private! !
+testAllMenus!constants!private! !
 testFindCommand!public!unit tests! !
 testFromStrings!public!unit tests! !
 testStbConvertFromVersion0!public!unit tests! !

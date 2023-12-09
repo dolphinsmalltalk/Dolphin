@@ -36,6 +36,12 @@ acceleratorKey: anInteger
 allItems
 	^{self}!
 
+allItemsDo: aMonadicValuable 
+	aMonadicValuable value: self!
+
+allMenusDo: aMonadicValuable 
+!
+
 command
 	"Answer the command to action when this menu item is selected."
 
@@ -172,17 +178,13 @@ text
 	^self subclassResponsibility!
 
 toStrings
-	^String writeStream
-		nextPutAll: self description;
-		nextPut: $/;
-		nextPutAll: self commandDescription acceleratorKeyDisplayString;
-		nextPut: $/;
-		nextPutAll: self command;
-		contents! !
+	^self subclassResponsibility! !
 !UI.MenuItem categoriesForMethods!
 acceleratorKey!accessing!public! !
 acceleratorKey:!accessing!private! !
 allItems!accessing!public! !
+allItemsDo:!enumerating!public! !
+allMenusDo:!enumerating!public! !
 command!commands!public! !
 commandDescription!accessing!private! !
 detach!private!realizing/unrealizing! !
@@ -200,7 +202,7 @@ items!accessing!public! !
 itemsDo:!accessing!private! !
 itemWithId:!accessing!public! !
 menuFromHandle:!accessing!public! !
-name!public! !
+name!accessing!public! !
 populateItemInfo:!private!realizing/unrealizing! !
 printOn:!printing!public! !
 queryAlong:!operations!public! !
@@ -208,7 +210,7 @@ registerAcceleratorKeyIn:!menus!public! !
 styleFlags!accessing!private! !
 styleFlags:!accessing!not an aspect!private! !
 text!accessing!public! !
-toStrings!public! !
+toStrings!converting!public! !
 !
 
 UI.MenuItem methodProtocol: #menuItem attributes: #(#readOnly) selectors: #(#acceleratorKey #command #hasSubmenu #id #image #insertIntoMenu:at:info: #items #menuFromHandle: #queryAlong: #registerAcceleratorKeyIn: #text)!

@@ -71,15 +71,28 @@ addSubmenu: aString
 	^self addItem: (Menu description: aString)!
 
 allItems
+	"Answer all the menus and items, recursively, in the receiver in depth-first order starting with the receiver itself."
+
 	| allItems |
-	allItems := OrderedCollection with: self.
-	self itemsDo: [:each | allItems addAll: each allItems].
-	^allItems!
+	allItems := (Array new: 8) writeStream.
+	self allItemsDo: [:each | allItems nextPut: each].
+	^allItems contents!
+
+allItemsDo: aMonadicValuable
+	aMonadicValuable value: self.
+	items do: [:each | each allItemsDo: aMonadicValuable]!
 
 allMenus
-	^(OrderedCollection with: self)
-		addAll: (self items select: [:each | each hasSubmenu]);
-		yourself!
+	"Answer all the menus, recursively, in the receiver in depth-first order starting with the receiver itself."
+
+	| menus |
+	menus := Array writeStream.
+	self allMenusDo: [:each | menus nextPut: each].
+	^menus contents!
+
+allMenusDo: aMonadicValuable
+	aMonadicValuable value: self.
+	items do: [:each | each allMenusDo: aMonadicValuable]!
 
 applyFlags
 	| struct |
@@ -301,7 +314,7 @@ imageManager
 	^imageManager ifNil: [Icon imageManager]!
 
 includesCommand: command
-	^(self indexOfCommand: command ifAbsent: []) notNil!
+	^(self indexOfCommand: command ifAbsent: nil) notNil!
 
 indexOfCommand: target
 	"Private - Answer the index of the first <MenuItem> in the receiver
@@ -665,7 +678,7 @@ text: textString
 	text := textString	!
 
 toStrings
-	^{ text } , (items collect: [:each | each toStrings])!
+	^{ text asUtf8String } , (items collect: [:each | each toStrings])!
 
 typeFlags
 	"Private - Answer the MENUITEMINFO style flags of the receiver (see
@@ -691,8 +704,10 @@ addCommandDescription:!adding!public! !
 addItem:!adding!public! !
 addSeparator!adding!public! !
 addSubmenu:!adding!public! !
-allItems!public! !
-allMenus!public! !
+allItems!accessing!public! !
+allItemsDo:!enumerating!public! !
+allMenus!accessing!public! !
+allMenusDo:!enumerating!public! !
 applyFlags!private!realizing/unrealizing! !
 basicFree!private!realizing/unrealizing! !
 basicRealize!public!realizing/unrealizing! !
@@ -736,7 +751,7 @@ isEmpty!public!testing! !
 isMenuBar!public!testing! !
 isModeless!public!testing! !
 isModeless:!accessing!public! !
-isRadioButtonStyle!public! !
+isRadioButtonStyle!public!testing! !
 itemAt:!accessing!public! !
 itemAt:put:!accessing!public! !
 items!accessing!public! !
@@ -765,7 +780,7 @@ stbSaveOn:!binary filing!public! !
 styleFlags!private!realizing/unrealizing! !
 text!accessing!public! !
 text:!accessing!public! !
-toStrings!converting!private! !
+toStrings!converting!public! !
 typeFlags!private!realizing/unrealizing! !
 updateItem:id:text:!accessing!private! !
 !

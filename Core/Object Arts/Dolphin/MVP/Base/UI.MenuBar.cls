@@ -61,6 +61,6 @@ isMenuBar!public!testing! !
 printOn:!printing!public! !
 queryAlong:!operations!public! !
 showIn:position:!drawing!private! !
-toStrings!converting!private! !
+toStrings!converting!public! !
 !
 

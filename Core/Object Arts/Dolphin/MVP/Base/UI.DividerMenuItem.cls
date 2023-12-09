@@ -48,10 +48,12 @@ commandDescription
 displayOn: aPuttableStream
 	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
-	aPuttableStream
-		nextPutAll: (##(IdentityDictionary
-				withAll: { MFT_MENUBARBREAK -> '||'. MFT_MENUBREAK -> '|'. MFT_SEPARATOR -> '-' })
-					at: self styleFlags)!
+	aPuttableStream nextPutAll: self displayString!
+
+displayString
+	^##(IdentityDictionary
+		withAll: { MFT_MENUBARBREAK -> '||'. MFT_MENUBREAK -> '|'. MFT_SEPARATOR -> '-' })
+			at: self styleFlags!
 
 id
 	"Answers the menu item identifier for the receiver"
@@ -111,6 +113,7 @@ acceleratorKey:!accessing!private! !
 command!accessing!private! !
 commandDescription!accessing!private! !
 displayOn:!displaying!public! !
+displayString!displaying!public! !
 id!accessing!public! !
 isDivider!public!testing! !
 isSelfEvaluating!public!testing! !

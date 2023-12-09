@@ -213,21 +213,17 @@ icon: anIconOrNil
 installMenuCommands
 	"Private - Installs the menu commands required by the receiver into the associated browser menus"
 
-	| classContextMenus classMenuBarMenus methodContextMenus methodMenuBarMenus contextMenus menuBarMenus |
+	| contextMenus menuBarMenus |
 	contextMenus := self allContextMenus.
-	classContextMenus := contextMenus
-				select: [:each | each items anySatisfy: [:item | item command == #newClass]].
-	classContextMenus do: [:each | self installTestCommandsInClassMenu: each withAccelerator: false].
+	(contextMenus select: [:each | each includesCommand: #newClass])
+		do: [:each | self installTestCommandsInClassMenu: each withAccelerator: false].
 	menuBarMenus := self allMenuBarMenus.
-	classMenuBarMenus := menuBarMenus
-				select: [:each | each items anySatisfy: [:item | item command == #newClass]].
-	classMenuBarMenus do: [:each | self installTestCommandsInClassMenu: each withAccelerator: true].
-	methodContextMenus := contextMenus
-				select: [:each | each items anySatisfy: [:item | item command == #newMethod]].
-	methodContextMenus do: [:each | self installTestCommandsInMethodMenu: each].
-	methodMenuBarMenus := menuBarMenus
-				select: [:each | each items anySatisfy: [:item | item command == #newMethod]].
-	methodMenuBarMenus do: [:each | self installTestCommandsInMethodMenu: each]!
+	(menuBarMenus select: [:each | each includesCommand: #newClass])
+		do: [:each | self installTestCommandsInClassMenu: each withAccelerator: true].
+	(contextMenus select: [:each | each includesCommand: #newMethod])
+		do: [:each | self installTestCommandsInMethodMenu: each].
+	(menuBarMenus select: [:each | each includesCommand: #newMethod])
+		do: [:each | self installTestCommandsInMethodMenu: each]!
 
 installTestCommandsInClassMenu: aMenu withAccelerator: needsAccel
 	"Private - Installs the test commands required by the receiver into aMenu. If an accelerator is required (i.e. in the case of

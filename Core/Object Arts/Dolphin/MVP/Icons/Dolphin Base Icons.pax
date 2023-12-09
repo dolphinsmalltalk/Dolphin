@@ -62,6 +62,8 @@ package setMethodNames: #(
 	#(#{Core.Time class} #icon)
 	#(#{Core.True class} #icon)
 	#(#{Core.UndefinedObject class} #icon)
+	#(#{Core.Utf16String class} #icon)
+	#(#{Core.Utf8String class} #icon)
 	#(#{Core.UtfEncodedString class} #icon)
 	#(#{Core.WarningSignal class} #icon)
 	#(#{Core.WeakArray class} #icon)
@@ -764,6 +766,32 @@ icon
 		textcolor: Color navy;
 		yourself)! !
 !Core.UndefinedObject class categoriesForMethods!
+icon!constants!public! !
+!
+
+!Core.Utf16String class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class."
+
+	<namespace: Graphics>
+	^##((TextTileIcon text: '‘U²’' fontName: 'Arial Narrow')
+		textcolor: Color darkBlue;
+		yourself)! !
+!Core.Utf16String class categoriesForMethods!
+icon!constants!public! !
+!
+
+!Core.Utf8String class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class."
+
+	<namespace: Graphics>
+	^##((TextTileIcon text: '‘U¹’' fontName: 'Arial Narrow')
+		textcolor: Color darkBlue;
+		yourself)! !
+!Core.Utf8String class categoriesForMethods!
 icon!constants!public! !
 !
 

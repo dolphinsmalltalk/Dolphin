@@ -177,7 +177,16 @@ stbSaveOn: anSTBOutFiler
 text
 	"Answer the menu text (i.e. the text that appears in the menu) for the receiver."
 
-	^self commandDescription menuText! !
+	^self commandDescription menuText!
+
+toStrings
+	^String writeStream
+		nextPutAll: self description;
+		nextPut: $/;
+		nextPutAll: self commandDescription acceleratorKeyDisplayString;
+		nextPut: $/;
+		nextPutAll: self commandDescription commandSymbol;
+		contents! !
 !UI.CommandMenuItem categoriesForMethods!
 acceleratorKey!accessing!public! !
 acceleratorKey:!accessing!public! !
@@ -208,6 +217,7 @@ queryAlong:!operations!public! !
 registerAcceleratorKeyIn:!menus!public! !
 stbSaveOn:!binary filing!public! !
 text!accessing!public! !
+toStrings!public! !
 !
 
 UI.CommandMenuItem methodProtocol: #commandSource attributes: #(#readOnly) selectors: #(#commandDescription)!
