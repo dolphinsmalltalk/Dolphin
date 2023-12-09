@@ -91,18 +91,17 @@ getMetric: anInteger1 pair: anInteger2
 getSysParam: anInteger type: anExternalStructureClass ifError: aNiladicValuable
 	| struct |
 	struct := anExternalStructureClass new.
-	(User32
+	^(User32
 		systemParametersInfo: anInteger
 		uiParam: 0
 		pvParam: struct
-		fWinIni: 0) ifFalse: [^aNiladicValuable value].
-	^struct!
+		fWinIni: 0) ifTrue: [struct] ifFalse: [aNiladicValuable value]!
 
 getSysParamBool: anInteger
 	^(self
 		getSysParam: anInteger
 		type: BOOL
-		ifError: [^false]) value!
+		ifError: false) value!
 
 getSysParamInt32: anInteger
 	^(self getSysParamStruct: anInteger type: UInt32Bytes) asSignedInteger!
@@ -277,7 +276,7 @@ mouseHoverTime
 	^(self
 		getSysParam: SPI_GETMOUSEHOVERTIME
 		type: UInt32Bytes
-		ifError: [^400]) value!
+		ifError: 400) value!
 
 nonClientMetrics
 	"
