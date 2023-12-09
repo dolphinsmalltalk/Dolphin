@@ -60,6 +60,10 @@ testStreamInAnsiText
 	presenter ansiText: ansi.
 	actual := presenter ansiText.
 	self assert: actual equals: ansi.
+	rtf := presenter rtfText.
+	presenter text: ''.
+	presenter rtfText: rtf.
+	self assert: presenter rtfText equals: rtf.
 
 	"Check selection"
 	rtf := presenter rtfText.
@@ -72,7 +76,7 @@ testStreamInAnsiText
 	rtf := '{\rtf1\ansi\ansicpg<1d>\deff0{\fonttbl{\f0\fnil\fcharset0 Segoe UI;}}
 \uc1\pard\lang<2d>\f0\fs20 over the lazy dog}
 '
-				expandMacrosWithArguments: {Character.AnsiCodePage. Locale systemDefault lcid}
+				expandMacrosWithArguments: { Character.AnsiCodePage. Locale systemDefault lcid }
 				locale: Locale invariant.
 	self assert: actual equals: rtf.
 

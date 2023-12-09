@@ -584,8 +584,9 @@ rtfText: aString
 	Part of the RichText double dispatching protocol"
 
 	"Note that the control deduces the encoding from the header, it is not part of the format mask"
+
 	self
-		streamInFrom: ((aString leftString: 6) = '{\rtf1'
+		streamInFrom: ((aString beginsWith: '{\rtf1')
 				ifTrue: [aString asAnsiString]
 				ifFalse: [aString asUtf8String]) readStream
 		format: SF_RTF!
