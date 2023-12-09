@@ -215,14 +215,14 @@ installMenuCommands
 
 	| contextMenus menuBarMenus |
 	contextMenus := self allContextMenus.
-	(contextMenus select: [:each | each includesCommand: #newClass])
+	(contextMenus select: [:each | each name == #classMenu])
 		do: [:each | self installTestCommandsInClassMenu: each withAccelerator: false].
 	menuBarMenus := self allMenuBarMenus.
-	(menuBarMenus select: [:each | each includesCommand: #newClass])
+	(menuBarMenus select: [:each | each name == #classMenu])
 		do: [:each | self installTestCommandsInClassMenu: each withAccelerator: true].
-	(contextMenus select: [:each | each includesCommand: #newMethod])
+	(contextMenus select: [:each | each name == #methodMenu])
 		do: [:each | self installTestCommandsInMethodMenu: each].
-	(menuBarMenus select: [:each | each includesCommand: #newMethod])
+	(menuBarMenus select: [:each | each name == #methodMenu])
 		do: [:each | self installTestCommandsInMethodMenu: each]!
 
 installTestCommandsInClassMenu: aMenu withAccelerator: needsAccel
@@ -233,8 +233,10 @@ installTestCommandsInClassMenu: aMenu withAccelerator: needsAccel
 	runTestsCommandDescription := CommandDescription command: #runTests description: 'R&un Tests'.
 	needsAccel ifTrue: [runTestsCommandDescription acceleratorKeyString: 'Ctrl+Alt+R'].
 	runTestsCommandDescription image: self class icon.
-	toggleToTestClassCommandDescription := CommandDescription command: #toggleToTests
-				description: '&Go to <1d>'.
+	toggleToTestClassCommandDescription := (CommandDescription command: #toggleToTests
+				description: '&Go to <d:Tests')
+				hasTextSubstitutions: true;
+				yourself.
 	toggleToTestClassCommandDescription image: [self toggleToTestsClass ifNotNil: [:class | class icon]].
 	needsAccel ifTrue: [toggleToTestClassCommandDescription acceleratorKeyString: 'Ctrl+Alt+T'].
 	aMenu
@@ -303,8 +305,9 @@ profileTests
 		ifFalse: [self displayReset]!
 
 queryToggleToTests: query
-	^query
-		isEnabled: self hasTestClass;
+	self hasTestClass ifFalse: [^self].
+	query
+		beEnabled;
 		text: (query commandDescription menuText
 					expandMacrosWithArguments: { self toggleToTestsClassDescription }
 					locale: Locale smalltalk)!
@@ -390,7 +393,7 @@ toggleToTestsClass
 	^testClass = self browser selectedClass ifTrue: [self classUnderTest] ifFalse: [testClass]!
 
 toggleToTestsClassDescription
-	^(self toggleToTestsClass ?? TestCase) shortName!
+	^self toggleToTestsClass shortName!
 
 update: anObject
 	(anObject isKindOf: TestCase)

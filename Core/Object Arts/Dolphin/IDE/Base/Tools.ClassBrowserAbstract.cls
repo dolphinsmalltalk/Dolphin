@@ -416,6 +416,9 @@ classForNewMethod
 				caption: 'Choose Class of New Method…'
 				allowNil: false]!
 
+classMenu
+	"Private - The Class menu should always be enabled"!
+
 classMethodFilter
 	"Private - Answer a <monadicValuable> that, when passed a <CompiledMethod>, answers true if the
 	method should be displayed in the receiver by warrant of the class that is selected."
@@ -996,6 +999,9 @@ methodCategories: aCollection
 	(methodCategories noDifference: aCollection) ifTrue: [^self].
 	methodCategories := aCollection.
 	categoriesPresenter view invalidate!
+
+methodMenu
+	"Private - The Method menu should always be enabled"!
 
 methodProtocols
 	"Answer the <MethodProtocol>s that the currently selected method contributes towards
@@ -2564,6 +2570,7 @@ categoriesMethodFilter!accessing!private! !
 category!accessing!public! !
 classDefinition!accessing!private! !
 classForNewMethod!operations!private! !
+classMenu!commands-menus!private! !
 classMethodFilter!accessing!private! !
 clearSelection!commands-actions!private! !
 createAccessors!commands-actions!private!refactoring! !
@@ -2630,6 +2637,7 @@ method!accessing!public! !
 method:!accessing!public! !
 method:ifAbsent:!accessing!public! !
 methodCategories:!accessing!private! !
+methodMenu!commands-menus!private! !
 methodProtocols!accessing!private! !
 methodProtocols:!accessing!public! !
 methodsMatching:!helpers!private! !
