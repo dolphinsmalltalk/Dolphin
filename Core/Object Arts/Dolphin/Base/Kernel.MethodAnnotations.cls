@@ -94,10 +94,10 @@ first
 includesSelector: aSymbol
 	"Answer whether any of the annotations in the receiver have the selector named by the <Symbol> argument."
 
-	^(self
+	^((self
 		basicIdentityIndexOf: aSymbol
 		from: 1
-		to: self basicSize) odd!
+		to: self basicSize) bitAnd: 1) ~~ 0!
 
 printOn: aStream
 	aStream
@@ -163,10 +163,10 @@ withSelector: aSymbol do: aMonadicValuable
 	stop := self basicSize.
 	i := 0.
 	
-	[(i := self
+	[((i := self
 				basicIdentityIndexOf: aSymbol
 				from: i + 1
-				to: stop) even
+				to: stop) bitAnd: 1) == 0
 		ifFalse: [aMonadicValuable value: (self basicAt: i + 1)].
 	i == 0]
 			whileFalse! !

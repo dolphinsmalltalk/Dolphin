@@ -5,7 +5,7 @@ Core.Object
 	instanceVariableNames: 'model view parentPresenter events subPresenters names helpId'
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})
-	classInstanceVariableNames: 'acceleratorKeyAnnotations commandQueries queryCommandHandlers'
+	classInstanceVariableNames: 'legacyQueryCommandHandlers'
 	classConstants: {}!
 UI.Presenter guid: (Core.GUID fromString: '{87b4c4a9-026e-11d3-9fd7-00a0cc3e4a32}')!
 UI.Presenter comment: 'Presenter is an abstract class whose subclasses conform to <presenter> and represent components in the Model-View-Presenter framework. A presenter is the equivalent of a "user interface component" in the Dolphin MVP framework. It achieves flexibility over other component based architectures by allowing its data (its model) and its screen representation (its view) to be pluggable. Thus, one can change the way a user sees and manipulates a component by changing its view and one can change the data that the component is representing  by changing the model. Substituting a presenter''s model also allows several  presenter and view pairs to share and interact with the same data.  
@@ -377,13 +377,12 @@ on: aSubjectModel
 	self initialize.
 	aSubjectModel notNil ifTrue: [ self model: aSubjectModel ]!
 
-onAboutToDisplayMenu: popup
-	"The pop-up <Menu>, popup, is about to be displayed.
-	This is our opportunity to update it, e.g. to add/remove items.
-	Note: Adding an item persists as the menu is not destroyed
-	until the view is closed."
+onAboutToDisplayMenu: aMenu
+	"The pop-up <Menu> is about to be displayed. This is our opportunity to update it, e.g. to add/remove items.
+	Note: Adding an item persists as the menu is not destroyed until the view is closed."
 
-	^self view onAboutToDisplayMenu: popup!
+	self class commandAnnotations onAboutToDisplayMenu: aMenu for: self.
+	^self view onAboutToDisplayMenu: aMenu!
 
 onActionPerformed
 	"Handler for an action in the receiver's view"
@@ -549,10 +548,16 @@ onTipDetailsRequired: aNMTTDISPINFOA
 	^self view onTipDetailsRequired: aNMTTDISPINFOA 
 !
 
-onTipTextRequired: tool
-	"Tool tip text is required for the <ToolbarItem>, tool."
+onTipTextRequired: aToolbarItem
+	"Tool tip text is required for the <ToolbarItem> argument."
 
-	^tool toolTipText!
+	^nil!
+
+onTipTextRequired: aToolbarItem query: aCommandQuery
+	"Tool tip text is required for the <ToolbarItem> first argument, for the command with query details in the <CommandQuery> second argument."
+
+	^(self onTipTextRequired: aToolbarItem)
+		ifNil: [aCommandQuery text ifNil: [aToolbarItem toolTipText]]!
 
 onViewAvailable
 	"A new view is available, but has not yet been connected to the receiver, i.e. the view will not yet be aware of this presenter, or its model. This is an appropriate point for subclasses to apply any dynamic view configuration that the application may require (e.g. setting a user configured font previously saved in the Registry). Since the view is not yet connected, any events fired by changing its settings will not reach this presenter or the model. This event was added in Dolphin 3.0."
@@ -661,42 +666,39 @@ preTranslateMouseInput: aMSG
 
 !
 
-queryCommand: aCommandQuery 
-	"Private - Enter details about a potential command for the receiver 
-	into the <CommandQuery>, query."
+queryCommand: aCommandQuery
+	"Enter details about a potential command for the receiver  into the <CommandQuery> argument."
 
-	(self queryCommandHandlers: aCommandQuery) ifTrue: [^true].
+	"First invoke any command query registered with a #commandQuery: annotation (new mechanism for D8). If there is any such handler registered, then the query is considered handled, even if the handler doesn't enable the command."
+
+	(self queryRegisteredCommands: aCommandQuery) ifTrue: [^true].
+	"Second invoke any command handlers registered with the legacy extension mechanism. These were invoked at the top of the old Presenter>>#queryCommand: implementation, but in practice #queryCommand: was intended to be reached only when supersent after any local query processing in an override of #queryCommand:, so the local #queryCommand: processing would have taken precedence. There may still be some difference in evaluation order, however, e.g. in the case where there are multiple levels of legacy extension handler in the hierarchy, but this is unlikely. There are no such extension handlers in the base dpro image anymore as they are completely replaced by the new mechanism."
+	(self queryLegacyCommandHandlers: aCommandQuery) ifTrue: [^true].
+	"Lastly, enable if there is no registered handler of any sort that accepts the command, but the command is performable against the receiver. One result of this is that the presence of a method that implements the command symbol in the receiver's class hierarchy will cause the command to be enabled. This is appropriate for commands that should always be enabled."
 	(aCommandQuery canPerformAgainst: self) ifTrue: [aCommandQuery beEnabled].
 	^false	"There was no specific enablement of the command at this level"!
 
-queryCommandHandlers: aCommandQuery
-	| class command |
+queryContextCommand: aCommandQuery as: aCommandMessage
+	| originalCommand |
+	originalCommand := aCommandQuery commandDescription.
+	aCommandQuery commandDescription: (originalCommand copy
+				command: aCommandMessage;
+				yourself).
+	^[self queryCommand: aCommandQuery] ensure: [aCommandQuery commandDescription: originalCommand]!
+
+queryLegacyCommandHandlers: aCommandQuery
+	"Private - Run a <CommandQuery> through the legacy command query handlers extension mechanism. This obeys the historic precedence that even the superclass handlers get to accept a command before the locally defined command queries (that used to be in the #queryCommand: method, but which are not associated with commands by #commandQuery: annotations in the command handling methods. This extension mechanism is now redundant, and so is  deprecated and will be removed in some future release."
+
+	| class |
 	class := self class.
-	command := aCommandQuery commandSymbol.
 	
-	[(class commandQueries lookup: command)
-		ifNotNil: 
-			[:handler |
-			"Unless the handler specifically returns false, assume the command query was handled and terminate the search"
-			(handler value: self value: aCommandQuery) == false ifFalse: [^true]].
-	"Try the legacy extension handlers - this mechanism is deprecated as of Dolphin 8.1"
-	class queryCommandHandlers do: [:each | (self perform: each with: aCommandQuery) ifTrue: [^true]].
+	[class legacyCommandQueryHandlers do: [:each | (self perform: each with: aCommandQuery) ifTrue: [^true]].
 	class == ##(self)]
 			whileFalse: [class := class superclass].
 	^false!
 
-queryContextCommand: aCommandQuery as: aSymbol
-	| originalCommand |
-	originalCommand := aCommandQuery commandDescription.
-	aCommandQuery commandDescription: (originalCommand copy
-				command: aSymbol;
-				yourself).
-	^
-	[(self queryCommandHandlers: aCommandQuery)
-		or: [(aCommandQuery canPerformAgainst: self) and: 
-					[aCommandQuery beEnabled.
-					true]]]
-			ensure: [aCommandQuery commandDescription: originalCommand]!
+queryRegisteredCommands: aCommandQuery
+	^self class commandAnnotations queryCommand: aCommandQuery ofTarget: self!
 
 remove: aPresenter
 	"Removes aPresenter from the receiver's collection of sub-presenters.
@@ -831,7 +833,7 @@ asParameter!converting!public! !
 attachSubPresenterViews:!accessing!private! !
 basicOnViewOpened!event handling!public! !
 commandPolicy!commands!public! !
-commandSource!accessing!public! !
+commandSource!accessing!commands!public! !
 connectView!operations!private! !
 createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !
@@ -855,7 +857,7 @@ helpId!accessing!public! !
 helpId:!accessing!public! !
 hide!operations!public! !
 initialize!initializing!private! !
-invalidateUserInterface!accessing!public! !
+invalidateUserInterface!accessing!commands!public! !
 isOpen!public!testing! !
 isReadOnly!public!testing! !
 isReadOnly:!accessing!public! !
@@ -898,6 +900,7 @@ onSysKeyReleased:!event handling!public! !
 onSysKeyTyped:!event handling!public! !
 onTipDetailsRequired:!event handling!public! !
 onTipTextRequired:!event handling!public! !
+onTipTextRequired:query:!event handling!public! !
 onViewAvailable!event handling!public! !
 onViewClosed!event handling!public! !
 onViewCreated!event handling!public! !
@@ -915,9 +918,10 @@ presenterNamed:!public!subpresenters! !
 presenterNamed:ifNone:!public!subpresenters! !
 preTranslateKeyboardInput:!dispatching!public! !
 preTranslateMouseInput:!dispatching!public! !
-queryCommand:!commands!private! !
-queryCommandHandlers:!commands!private! !
-queryContextCommand:as:!public! !
+queryCommand:!commands!public! !
+queryContextCommand:as:!private! !
+queryLegacyCommandHandlers:!commands!private! !
+queryRegisteredCommands:!commands!private! !
 remove:!public!subpresenters! !
 requestDragImages:!drag & drop!public! !
 requestDragObjects:!drag & drop!public! !
@@ -948,14 +952,6 @@ UI.Presenter methodProtocol: #whatsThisHelp attributes: #(#readOnly) selectors: 
 
 !UI.Presenter class methodsFor!
 
-acceleratorKeyAnnotations
-	"Private - Answer the {commandSymbol. acceleratorKeyString} pairs defined by annotationed command methods in the receiver or superclasses."
-
-	^acceleratorKeyAnnotations
-		ifNil: 
-			["All the commands are expected to be implemented on the instance side, so that is where we should find the annotated command methods (if any)"
-			acceleratorKeyAnnotations := self findAcceleratorKeyAnnotations]!
-
 acceleratorKeyBindings
 	"Answer a <Dictionary> mapping accelerator key sequences to commands, being the additional accelerator 
 	definitions for commands not on the menu bars (if any) of the receiver's view(s)."
@@ -977,7 +973,7 @@ additionalAccelerators
 
 	"By default this is built by collection from methods with #acceleratorKey: annotations, and also any hard-coded in the class' implementation of #defaultAdditionAccelerators. The 2nd source is partly for backwards compatibility, since this existed before the annotation mechanism, and partly because it allows a Presenter class to define accelerator keys for commands that are implemented elsewhere. This allows keys to be bound to any of the commands that might be available on the command route initiated from the presenter. Typically this is used to specify accelerators for commands that are implemented in View classes."
 
-	^self acceleratorKeyAnnotations , self defaultAdditionalAccelerators!
+	^self commandAnnotations acceleratorKeys , self defaultAdditionalAccelerators!
 
 additionalKeyBindings
 	^self getAdditionalKeyBindings
@@ -988,21 +984,8 @@ additionalKeyBindings
 						acceleratorKeyString: each second;
 						yourself]]!
 
-annotatedMethodRemoved: aCompiledMethod
-	"Private - An annotated method of the receiver has been removed. This is an opportunity to update any metadata that might be based on method annotations."
-
-	(aCompiledMethod hasAnnotation: #acceleratorKey:) ifTrue: [self updateAdditionalAccelerators].
-	(aCompiledMethod hasAnnotation: #commandQuery:) ifTrue: [self resetCommandQueries]!
-
-annotationsUpdated: aCompilationResult
-	"Private - Annotations may have been added or removed in the receiver's methods. This is an opportunity to update any metadata that might be based on method annotations."
-
-	(aCompilationResult affectsAnnotation: #acceleratorKey:)
-		ifTrue: [self updateAdditionalAccelerators].
-	(CommandQuery validateQueriesIn: aCompilationResult) ifTrue: [self resetCommandQueries]!
-
-commandQueries
-	^commandQueries ifNil: [commandQueries := CommandQuery findQueryHandlersIn: self]!
+commandAnnotations
+	^CommandAnnotationsRegister.Current annotationsFor: self!
 
 create
 	"Answers an instance of the receiver with a default view"
@@ -1091,25 +1074,6 @@ defaultView
 
 	^View defaultView!
 
-findAcceleratorKeyAnnotations
-	| stream |
-	self == ##(self)
-		ifTrue: [stream := WriteStream on: {}]
-		ifFalse: 
-			[| inherited |
-			inherited := superclass acceleratorKeyAnnotations.
-			stream := WriteStream on: (Array new: inherited size).
-			stream nextPutAll: inherited].
-	"All the commands are expected to be implemented on the instance side, so that is where we should find the annotated command methods (if any)"
-	self methodsDo: 
-			[:each |
-			each annotations
-				ifNotNil: 
-					[:annotations |
-					annotations withSelector: #acceleratorKey:
-						do: [:args | stream nextPut: {each selector. AcceleratorTable canonicalizeKeyString: (args at: 1)}]]].
-	^stream contents!
-
 getAdditionalKeyBindings
 	^nil!
 
@@ -1117,6 +1081,9 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon!
+
+legacyCommandQueryHandlers
+	^legacyQueryCommandHandlers ?? #()!
 
 loadViewResource: aString inContext: aParentView
 	"Private - Load a view resource called aString owned by this class."
@@ -1136,15 +1103,6 @@ on: aModel
 	but connected to aModel."
 
 	^(super new) on: aModel; yourself!
-
-queryCommandHandlers
-	^queryCommandHandlers ?? #()!
-
-resetCommandQueries
-	commandQueries := nil!
-
-resetDefaultAdditionalAccelerators
-	acceleratorKeyAnnotations := nil!
 
 resource_Container_view
 	"Answer the literal data from which the 'Container view' resource can be reconstituted.
@@ -1207,19 +1165,13 @@ showOn: aModel
 	and connected to aModel"
 
 	^(self createOn: aModel) showShell.
-	!
-
-updateAdditionalAccelerators
-	self withAllSubclassesDo: [:each | each resetDefaultAdditionalAccelerators]! !
+	! !
 !UI.Presenter class categoriesForMethods!
-acceleratorKeyAnnotations!constants!private! !
 acceleratorKeyBindings!constants!public! !
 acceleratorKeyBindings:!constants!public! !
 additionalAccelerators!accessing!public! !
 additionalKeyBindings!accessing!private! !
-annotatedMethodRemoved:!private! !
-annotationsUpdated:!private! !
-commandQueries!accessing!private! !
+commandAnnotations!accessing!public! !
 create!instance creation!public! !
 create:!instance creation!public! !
 create:in:!instance creation!public! !
@@ -1232,15 +1184,12 @@ defaultAdditionalAccelerators!constants!private! !
 defaultModel!models!public! !
 defaultResourceIdentifier!constants!public! !
 defaultView!constants!public! !
-findAcceleratorKeyAnnotations!constants!private! !
 getAdditionalKeyBindings!accessing!private! !
 icon!constants!public! !
+legacyCommandQueryHandlers!accessing!commands-queries!private! !
 loadViewResource:inContext:!operations!private! !
 new!instance creation!public! !
 on:!instance creation!public! !
-queryCommandHandlers!accessing!private! !
-resetCommandQueries!initializing!private! !
-resetDefaultAdditionalAccelerators!public! !
 resource_Container_view!public!resources-views! !
 resource_Default_view!public!resources-views! !
 setAdditionalAccelerators:!accessing!private! !
@@ -1249,7 +1198,6 @@ show!instance creation!public! !
 show:!instance creation!public! !
 show:on:!instance creation!public! !
 showOn:!instance creation!public! !
-updateAdditionalAccelerators!event handling!private! !
 !
 
 UI.Presenter class methodProtocol: #imageSource attributes: #(#readOnly) selectors: #(#addToImageList:mask: #asImageKey)!

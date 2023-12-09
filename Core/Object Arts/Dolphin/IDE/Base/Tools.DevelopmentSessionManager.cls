@@ -739,7 +739,10 @@ versionInfo
 versionString
 	"Answers a String containing the current version of the system"
 
-	^'<1s> <2d>' expandMacrosWith: self applicationShortName with: self productVersion majorMinorPatch! !
+	^'<1s> <2d>' expandMacrosWith: self applicationShortName with: self productVersion majorMinorPatch!
+
+warning: aString
+	UI.MessageBox warning: aString! !
 !Tools.DevelopmentSessionManager categoriesForMethods!
 advanceImageVersionMinor!operations-saving!public! !
 allowDuplicate!operations-startup!public! !
@@ -820,6 +823,7 @@ traceStream!accessing!private! !
 unhandledException:!exceptions!private! !
 versionInfo!accessing-version!public! !
 versionString!accessing!public! !
+warning:!public! !
 !
 
 !Tools.DevelopmentSessionManager class methodsFor!

@@ -156,28 +156,40 @@ keyStringFromCode: anInteger
 keyStringFromCode: anInteger keyboard: aKeyboard
 	"Answer a localised accelerator string corresponding to the accelerator key code, anInteger, as described by the specified Keyboard layout."
 
-	| modifiers keyString keys |
-	keyString := WriteStream on: (Utf8String new: 12).
+	| stream |
+	stream := WriteStream on: (Utf8String new: 12).
+	self
+		printKeyboard: aKeyboard
+		code: anInteger
+		on: stream.
+	^stream contents!
+
+printKeyboard: aKeyboard code: anInteger on: aPuttableStream
+	| keys modifiers |
 	keys := aKeyboard keyNames.
 	modifiers := anInteger bitShift: -9.
 	(modifiers allMask: FCONTROL)
 		ifTrue: 
-			[keyString
+			[aPuttableStream
 				nextPutAll: (keys at: VK_CONTROL);
 				nextPut: KeySeparator].
 	(modifiers allMask: FSHIFT)
 		ifTrue: 
-			[keyString
+			[aPuttableStream
 				nextPutAll: (keys at: VK_SHIFT);
 				nextPut: KeySeparator].
 	(modifiers allMask: FALT)
 		ifTrue: 
-			[keyString
+			[aPuttableStream
 				nextPutAll: (keys at: VK_MENU);
 				nextPut: KeySeparator].
-	^keyString
-		nextPutAll: (keys at: (anInteger bitAnd: 16r1FF) ifAbsent: '');
-		contents!
+	(keys lookup: (anInteger bitAnd: 16r1FF)) ifNotNil: [:keyName | aPuttableStream nextPutAll: keyName]!
+
+printKeyCode: anInteger on: aPuttableStream
+	self
+		printKeyboard: Keyboard default
+		code: anInteger
+		on: aPuttableStream!
 
 splitKeyCode: anInteger
 	"Answer a 2-element <Array> containing a virtual key code <integer> and accelerator table modifier flags <integer> from the <integer> accelerator key code argument."
@@ -213,6 +225,8 @@ keyCodeFromString:!enquiries!public! !
 keyCodeFromString:keyboard:!enquiries!public! !
 keyStringFromCode:!enquiries!public! !
 keyStringFromCode:keyboard:!enquiries!public! !
+printKeyboard:code:on:!enquiries!public! !
+printKeyCode:on:!enquiries!public! !
 splitKeyCode:!helpers!public! !
 splitKeyString:!helpers!public! !
 stbConvertFrom:!binary filing!private! !

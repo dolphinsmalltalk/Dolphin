@@ -225,7 +225,7 @@ lineLength: anIntegerLineNumber
 
 queryToggleWordWrap: aCommandQuery
 	aCommandQuery
-		isEnabled: true;
+		beEnabled;
 		isChecked: self wordWrap!
 
 resetCharFormat

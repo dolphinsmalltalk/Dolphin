@@ -85,9 +85,7 @@ printOn: aStream
 		display: self styleName!
 
 queryAlong: aCommandPolicy
-	"Answer an enabled <CommandQuery> as dividers must always be enabled."
-
-	^CommandQuery new beEnabled!
+	^nil!
 
 styleName
 	"Answer a Symbol description of the style of the receiver"
@@ -125,6 +123,8 @@ styleName:!accessing!private! !
 text!accessing!private! !
 toStrings!public! !
 !
+
+UI.DividerMenuItem methodProtocol: #menuItem attributes: #(#readOnly) selectors: #(#acceleratorKey #command #hasSubmenu #id #image #insertIntoMenu:at:info: #items #menuFromHandle: #queryAlong: #registerAcceleratorKeyIn: #text)!
 
 !UI.DividerMenuItem class methodsFor!
 

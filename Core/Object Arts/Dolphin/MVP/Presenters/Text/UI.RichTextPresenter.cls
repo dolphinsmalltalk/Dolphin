@@ -57,32 +57,32 @@ chooseSelectionFont
 
 queryAlignParagraphCenter: aCommandQuery
 	aCommandQuery
-		isEnabled: true;
+		beEnabled;
 		isChecked: self view paragraphAlignment == #center!
 
 queryAlignParagraphLeft: aCommandQuery
 	aCommandQuery
-		isEnabled: true;
+		beEnabled;
 		isChecked: self view paragraphAlignment == #left!
 
 queryAlignParagraphRight: aCommandQuery
 	aCommandQuery
-		isEnabled: true;
+		beEnabled;
 		isChecked: self view paragraphAlignment == #right!
 
 queryToggleBold: aCommandQuery
 	aCommandQuery
-		isEnabled: true;
+		beEnabled;
 		isChecked: self view isBold!
 
 queryToggleItalic: aCommandQuery
 	aCommandQuery
-		isEnabled: true;
+		beEnabled;
 		isChecked: self view isItalic!
 
 queryToggleUnderlined: aCommandQuery
 	aCommandQuery
-		isEnabled: true;
+		beEnabled;
 		isChecked: self view isUnderlined!
 
 toggleBold

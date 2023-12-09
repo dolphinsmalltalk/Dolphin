@@ -2,9 +2,9 @@
 
 Graphics.GraphicsTool
 	subclass: #'UI.Menu'
-	instanceVariableNames: 'items text name flags image imageManager id _reserved1 _reserved2'
+	instanceVariableNames: 'items text name flags image imageManager id lastQuery _reserved2'
 	classVariableNames: 'DrawStateCallbackDescriptor'
-	imports: #()
+	imports: #(#{OS.MENUITEMINFOW private} #{OS.MENUINFO private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.Menu guid: (Core.GUID fromString: '{87b4c636-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -69,6 +69,11 @@ addSubmenu: aString
 	"Append a sub-<Menu> to the receiver with the specified title, and answer it."
 
 	^self addItem: (Menu description: aString)!
+
+addSubmenu: aString image: anImage
+	"Append a sub-<Menu> to the receiver with the specified title, and answer it."
+
+	^self addItem: (Menu description: aString image: anImage)!
 
 allItems
 	"Answer all the menus and items, recursively, in the receiver in depth-first order starting with the receiver itself."
@@ -479,6 +484,16 @@ itemWithId: anInteger
 	1 to: items size do: [:i | ((items at: i) itemWithId: anInteger) ifNotNil: [:found | ^found]].
 	^nil!
 
+lastQuery
+	^lastQuery
+		ifNil: 
+			[lastQuery := UI.CommandQuery new
+						beEnabled;
+						yourself]!
+
+lastQuery: aCommandQuery
+	lastQuery := aCommandQuery!
+
 menuFromHandle: menuHandle 
 	"Find and return the sub-menu associated with the specified handle."
 
@@ -548,25 +563,31 @@ queryAllAlong: aCommandPolicy recursive: aBoolean
 	items on the menu has been determined are those items themselves routed around to determine
 	their status, and to allow the text to be updated."
 
-	| query itemInfo |
-	query := self queryAlong: aCommandPolicy.
-	query isEnabled ifTrue: [query receiver onAboutToDisplayMenu: self].
+	| menuQuery itemInfo hMenu |
+	menuQuery := self queryAlong: aCommandPolicy.
+	menuQuery isEnabled ifTrue: [menuQuery receiver onAboutToDisplayMenu: self].
 	itemInfo := MENUITEMINFOW newBuffer.
+	hMenu := self handle.
 	items keysAndValuesDo: 
 			[:i :menuItem |
 			(aBoolean and: [menuItem hasSubmenu])
 				ifTrue: [menuItem queryAllAlong: aCommandPolicy recursive: true]
 				ifFalse: 
-					[| itemQuery |
-					itemQuery := menuItem queryAlong: aCommandPolicy.
-					"Set the checked and enabled states, update the text (if desired), etc"
-					itemInfo
-						menuItem: menuItem
-						text: itemQuery text
-						state: (itemQuery isChecked ifTrue: [MFS_CHECKED] ifFalse: [MFS_UNCHECKED])
-								| (itemQuery isEnabled ifTrue: [MFS_ENABLED] ifFalse: [MFS_DISABLED])
-									| (itemQuery isDefault ifTrue: [MFS_DEFAULT] ifFalse: [0]).
-					self setItem: i info: itemInfo]]!
+					["Set the checked and enabled states, update the text (if desired), etc"
+					(menuItem queryAlong: aCommandPolicy)
+						ifNotNil: 
+							[:query |
+							| updated |
+
+							updated := itemInfo updateQuery: menuItem lastQuery to: query.
+							menuItem lastQuery: query.
+							updated
+								ifTrue: 
+									[User32
+										setMenuItemInfo: hMenu
+										uItem: i - 1
+										fByPosition: true
+										lpmii: itemInfo]]]]!
 
 queryAllFromView: aView
 	"Private - Query each menu item along a route from the <View>, aView."
@@ -617,18 +638,6 @@ setDefault: index
 		setMenuDefaultItem: self handle
 		uItem: index - 1
 		fByPos: TRUE!
-
-setItem: anInteger info: aMENUITEMINFO
-	"Private - Set state and type information for the item of the receiver with specified
-	<integer> index. This can control features such as whether the item is enabled or disabled,
-	checked or unchecked (and if checked whether check-box or radio button style), command
-	string, bitmap, etc. Answer whether the call succeeded."
-
-	^User32
-		setMenuItemInfo: self handle
-		uItem: anInteger - 1
-		fByPosition: true
-		lpmii: aMENUITEMINFO!
 
 showIn: aView position: aPos
 	"Show top level of context menu on screen at position aPos."
@@ -684,18 +693,7 @@ typeFlags
 	"Private - Answer the MENUITEMINFO style flags of the receiver (see
 	Win32 SDK docs for fType field)."
 
-	^0!
-
-updateItem: indexInteger id: idInteger text: newText
-	"Private - Update the text of the menu item with the 1-based <integer> position, indexInteger, 
-	within the receiver to the <readableString>, newText."
-
-	User32
-		modifyMenu: self handle
-		uPosition: indexInteger - 1
-		uFlags: ##(MF_BYPOSITION | MFT_STRING)
-		uIDNewItem: idInteger
-		lpNewItem: newText! !
+	^0! !
 !UI.Menu categoriesForMethods!
 acceleratorKey!accessing!public! !
 addCommand:description:!adding!public! !
@@ -704,6 +702,7 @@ addCommandDescription:!adding!public! !
 addItem:!adding!public! !
 addSeparator!adding!public! !
 addSubmenu:!adding!public! !
+addSubmenu:image:!adding!public! !
 allItems!accessing!public! !
 allItemsDo:!enumerating!public! !
 allMenus!accessing!public! !
@@ -758,6 +757,8 @@ items!accessing!public! !
 items:!accessing!public! !
 itemsDo:!enumerating!public! !
 itemWithId:!accessing!public! !
+lastQuery!accessing!private! !
+lastQuery:!accessing!private! !
 menuFromHandle:!accessing!public! !
 name!accessing!public! !
 name:!accessing!public! !
@@ -773,7 +774,6 @@ removeItem:!public!removing! !
 removeItemAt:!public!removing! !
 replaceItem:with:!public!replacing! !
 setDefault:!accessing!public! !
-setItem:info:!accessing!private! !
 showIn:position:!drawing!public! !
 size!accessing!public! !
 stbSaveOn:!binary filing!public! !
@@ -782,7 +782,6 @@ text!accessing!public! !
 text:!accessing!public! !
 toStrings!converting!public! !
 typeFlags!private!realizing/unrealizing! !
-updateItem:id:text:!accessing!private! !
 !
 
 UI.Menu methodProtocol: #commandSource attributes: #(#readOnly) selectors: #(#commandDescription)!
@@ -790,11 +789,19 @@ UI.Menu methodProtocol: #menuItem attributes: #(#readOnly) selectors: #(#acceler
 
 !UI.Menu class methodsFor!
 
-description: text
+description: aString
 	"Answer a new instance of the receiver with the specified menu text."
 
 	^self new
-		text: text;
+		text: aString;
+		yourself!
+
+description: aString image: anImage
+	"Answer a new instance of the receiver with the specified menu text and image."
+
+	^self new
+		text: aString;
+		image: anImage;
 		yourself!
 
 fromStrings: strings
@@ -895,6 +902,7 @@ uninitialize
 	View unregisterMessageMappings: menuMessages! !
 !UI.Menu class categoriesForMethods!
 description:!instance creation!public! !
+description:image:!instance creation!public! !
 fromStrings:!instance creation!public! !
 icon!constants!public! !
 initialize!class initialization!development!public! !

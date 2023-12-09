@@ -50,7 +50,7 @@ caption: aString
 
 	aString = caption ifTrue: [^self].
 	caption := aString.
-	self view notNil ifTrue: [self view caption: aString].
+	self hasView ifTrue: [self setViewCaption: aString].
 	self trigger: #captionChanged!
 
 clearCommandHistory
@@ -164,7 +164,7 @@ onViewOpened
 	"Received when the receiver's view has been connected."
 
 	super onViewOpened.
-	caption := self view caption.
+	self saveViewCaption.
 	self
 		updateIcon;
 		invalidateUserInterface;
@@ -183,6 +183,9 @@ performCommand: aCommand
 
 	^self view performCommand: aCommand!
 
+saveViewCaption
+	caption := self view caption!
+
 setInitialFocus
 	"Received when the receiver's view is first opened.
 	Set the initial keyboard focus to the first view in the tab sequence.
@@ -190,6 +193,9 @@ setInitialFocus
 	unacceptable"
 
 	self view setInitialFocus!
+
+setViewCaption: aString
+	self view caption: aString!
 
 shortCaption
 	^self caption!
@@ -240,7 +246,9 @@ onViewNcDeactivated:!event handling!public! !
 onViewOpened!event handling!public! !
 onViewRestored:!event handling!public! !
 performCommand:!commands-routing!public! !
+saveViewCaption!event handling!private! !
 setInitialFocus!operations!public! !
+setViewCaption:!accessing!private! !
 shortCaption!accessing!public! !
 updateCaption!public!updating! !
 updateIcon!private!updating! !

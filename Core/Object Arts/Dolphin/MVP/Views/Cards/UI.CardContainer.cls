@@ -273,12 +273,12 @@ preTranslateKeyboardInput: aMSG
 
 queryTabOrientation: aCommandQuery
 	aCommandQuery
-		isEnabled: true;
+		beEnabled;
 		isChecked: self tabOrientation == aCommandQuery command arguments first!
 
 queryViewMode: aCommandQuery
 	aCommandQuery
-		isEnabled: true;
+		beEnabled;
 		isChecked: self viewMode == aCommandQuery command arguments first!
 
 refreshTabs

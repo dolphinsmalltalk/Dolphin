@@ -18,7 +18,44 @@ OS.SizedStructure
 			'_OffsetOf_hbmpItem' -> 16r2C.
 			'_OffsetOf_hbmpUnchecked' -> 16r1C.
 			'_OffsetOf_hSubMenu' -> 16r14.
-			'_OffsetOf_wID' -> 16r10
+			'_OffsetOf_wID' -> 16r10.
+			'MF_APPEND' -> 16r100.
+			'MF_BYCOMMAND' -> 16r0.
+			'MF_BYPOSITION' -> 16r400.
+			'MF_CHANGE' -> 16r80.
+			'MF_DELETE' -> 16r200.
+			'MF_HELP' -> 16r4000.
+			'MF_INSERT' -> 16r0.
+			'MF_MOUSESELECT' -> 16r8000.
+			'MF_POPUP' -> 16r10.
+			'MF_REMOVE' -> 16r1000.
+			'MF_SYSMENU' -> 16r2000.
+			'MF_USECHECKBITMAPS' -> 16r200.
+			'MFS_CHECKED' -> 16r8.
+			'MFS_DEFAULT' -> 16r1000.
+			'MFS_DISABLED' -> 16r3.
+			'MFS_ENABLED' -> 16r0.
+			'MFS_HILITE' -> 16r80.
+			'MFS_UNCHECKED' -> 16r0.
+			'MFS_UNHILITE' -> 16r0.
+			'MFT_BITMAP' -> 16r4.
+			'MFT_MENUBARBREAK' -> 16r20.
+			'MFT_MENUBREAK' -> 16r40.
+			'MFT_OWNERDRAW' -> 16r100.
+			'MFT_RADIOCHECK' -> 16r200.
+			'MFT_RIGHTJUSTIFY' -> 16r4000.
+			'MFT_RIGHTORDER' -> 16r2000.
+			'MFT_SEPARATOR' -> 16r800.
+			'MFT_STRING' -> 16r0.
+			'MIIM_BITMAP' -> 16r80.
+			'MIIM_CHECKMARKS' -> 16r8.
+			'MIIM_DATA' -> 16r20.
+			'MIIM_FTYPE' -> 16r100.
+			'MIIM_ID' -> 16r2.
+			'MIIM_STATE' -> 16r1.
+			'MIIM_STRING' -> 16r40.
+			'MIIM_SUBMENU' -> 16r4.
+			'MIIM_TYPE' -> 16r10
 		}!
 OS.MENUITEMINFOW guid: (Core.GUID fromString: '{d9f31567-d705-4885-9ed7-f92ae9fefbf2}')!
 OS.MENUITEMINFOW comment: '<MENUITEMINFOA> is an <ExternalStructure> class to wrap the Win32 structure of the same name.
@@ -124,33 +161,19 @@ hSubMenu: aHandle
 	bytes uintPtrAtOffset: _OffsetOf_hSubMenu put: aHandle!
 
 image: anImage
-	"Populate the receiver with a command image. We no longer use the HBMMENU_CALLBACK method with the menu images drawn on demand by Menu>>drawItemImage:on:at:disabled:, because that approach causes themed menus to be disabled. It seems a retrograde step to have to generate a 32-bit pre-multiplied alpha bitmap specifically for each image and to add that individually to the
-	menu, but that is what we must do. It's not clear why Microsoft didn't use image lists for this instead of individual bitmaps. The IconImageManager does maintain a cache of menu bitmaps, so at least we don't have multiple copies."
+	"Populate the receiver with a command image. We no longer use the HBMMENU_CALLBACK method with the menu images drawn on demand by Menu>>drawItemImage:on:at:disabled:, because that approach causes themed menus to be disabled. It seems a retrograde step to have to generate a 32-bit pre-multiplied alpha bitmap specifically for each image and to add that individually to the menu, but that is what we must do. It's not clear why Microsoft didn't use image lists for this instead of individual bitmaps. The IconImageManager does maintain a cache of menu bitmaps, so at least we don't have multiple copies."
 
-	"Note that the menu doesn't take ownership of the bitmap. We are responsible for making sure it stays around long enough, and is freed when no longer needed. The menu bitmaps are cached in the IconImageManager."
-
-	bitmap := anImage asMenuBitmap.
-	bytes uintPtrAtOffset: _OffsetOf_hbmpItem put: bitmap handle!
-
-menuItem: aMenuItem text: aStringOrNil state: stateInteger
-	"Private - Update the details for a normal menu item (i.e. the text, type flags, and state).
-	This message is used when dynamically updating menu items."
-
-	| mask |
-	mask := aStringOrNil
-				ifNil: [##(MIIM_FTYPE | MIIM_STATE)]
-				ifNotNil: 
-					[self basicText: aStringOrNil.
-					##(MIIM_FTYPE | MIIM_STATE | MIIM_STRING)].
-	aMenuItem image
+	anImage
+		ifNil: 
+			[bitmap := nil.
+			bytes uintPtrAtOffset: _OffsetOf_hbmpItem put: 0]
 		ifNotNil: 
-			[:image |
-			self image: image.
-			mask := mask bitOr: MIIM_BITMAP].
-	bytes
-		uint32AtOffset: _OffsetOf_fMask put: mask;
-		uint32AtOffset: _OffsetOf_fType put: aMenuItem styleFlags;
-		uint32AtOffset: _OffsetOf_fState put: stateInteger!
+			["Note that the menu doesn't take ownership of the bitmap. We are responsible for making sure it stays around long enough, and is freed when no longer needed. The menu bitmaps are cached in the IconImageManager."
+			bitmap := anImage asMenuBitmap.
+			bytes uintPtrAtOffset: _OffsetOf_hbmpItem put: bitmap handle]!
+
+text: aString
+	self basicText: aString!
 
 type: anInteger
 	"Private - Set the fType field only. Used when creating menu items."
@@ -158,6 +181,27 @@ type: anInteger
 	bytes
 		uint32AtOffset: _OffsetOf_fType put: anInteger;
 		uint32AtOffset: _OffsetOf_fMask put: MIIM_FTYPE!
+
+updateQuery: priorCommandQuery to: newCommandQuery
+	| mask |
+	mask := 0.
+	newCommandQuery text = priorCommandQuery text
+		ifFalse: 
+			["Text changed"
+			mask := mask bitOr: MIIM_STRING.
+			self basicText: newCommandQuery newMenuText].
+	newCommandQuery image = priorCommandQuery image
+		ifFalse: 
+			["Image changed"
+			mask := mask bitOr: MIIM_BITMAP.
+			self image: newCommandQuery newMenuImage].
+	newCommandQuery menuStateFlags = priorCommandQuery menuStateFlags
+		ifFalse: 
+			["State changed"
+			mask := mask bitOr: MIIM_STATE.
+			self fState: newCommandQuery menuStateFlags].
+	self fMask: mask.
+	^mask ~~ 0!
 
 wID
 	"Answer the <Integer> value of the receiver's 'wID' field."
@@ -186,8 +230,9 @@ hbmpItem:!**compiled accessors**!public! !
 hbmpUnchecked:!**compiled accessors**!public! !
 hSubMenu:!**compiled accessors**!public! !
 image:!helpers!public! !
-menuItem:text:state:!accessing!private! !
+text:!accessing!public! !
 type:!accessing!private! !
+updateQuery:to:!operations!private! !
 wID!**compiled accessors**!public! !
 wID:!**compiled accessors**!public! !
 !

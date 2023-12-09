@@ -164,10 +164,9 @@ onTipTextRequired
 
 	| query |
 	query := self parent queryCommandRouteFor: self commandDescription.
-	^(query canPerform and: [query receiver respondsTo: #onTipTextRequired:]) 
-		ifTrue: [query receiver onTipTextRequired: self]
-		ifFalse: [self toolTipText]
-		!
+	^(query canPerform and: [query receiver respondsTo: #onTipTextRequired:query:])
+		ifTrue: [query receiver onTipTextRequired: self query: query]
+		ifFalse: [self toolTipText]!
 
 pressed
 	#deprecated.

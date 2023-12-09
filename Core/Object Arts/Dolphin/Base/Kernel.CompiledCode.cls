@@ -118,16 +118,14 @@ allSymbolLiteralsDo: operation
 	self literalReferencesDo: [:each | each basicClass == Symbol ifTrue: [operation value: each]]!
 
 annotations
-	"Answer the receiver's <MethodAnnotations> or nil if none."
+	"Answer the receiver's <MethodAnnotations>, or nil if none."
 
 	"Implementation Note: If the receiver has any annotations, then these will be stored in a MethodAnnotations object as the last literal."
 
 	| size last |
-	size := self size.
-	^(size > 0 and: 
-			[last := self at: size.
-			last basicClass == MethodAnnotations])
-		ifTrue: [last]!
+	(size := self basicSize) == 0 ifTrue: [^nil].
+	last := self basicAt: size.
+	^last basicClass == MethodAnnotations ifTrue: [last]!
 
 argumentCount
 	"Answer the number of arguments expected by the receiver.
@@ -273,9 +271,11 @@ getSource
 hasAnnotation: aSymbol
 	"Answer whether the receiver has one or more annotations with the specified selector."
 
-	| annotations |
-	annotations := self annotations.
-	^annotations notNil and: [annotations includesSelector: aSymbol]!
+	| size annotations |
+	size := self basicSize.
+	size == 0 ifTrue: [^false].
+	annotations := self basicAt: size.
+	^annotations basicClass == MethodAnnotations and: [annotations includesSelector: aSymbol]!
 
 hash
 	"Answer the <SmallInteger> hash value for the receiver."

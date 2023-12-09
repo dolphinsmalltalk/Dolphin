@@ -4,9 +4,9 @@ Core.Object
 	subclass: #'UI.CommandQuery'
 	instanceVariableNames: 'commandDescription receiver source text flags image validationResult'
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.MENUITEMINFOW private})
 	classInstanceVariableNames: ''
-	classConstants: { 'CheckedMask' -> 16r2. 'DefaultMask' -> 16r4. 'EnabledMask' -> 16r1 }!
+	classConstants: {}!
 UI.CommandQuery guid: (Core.GUID fromString: '{87b4c46b-026e-11d3-9fd7-00a0cc3e4a32}')!
 UI.CommandQuery comment: 'A CommandQuery is used to determine whether, and how, a particular command can be performed. A command is queried in two situations. The first is to determine whether a command source should be enabled and/or checked. When a menu is pulled down it needs to determine the enable, default, and check state of each of its items. Similarly, a PushButton or ToolbarButton will need to determine its state; usually at idle time during #validateUserInterface processing. The second situation arises when a command is to be dispatched and executed. Again a CommandQuery is used to determine the target object that will actually perform it (i.e. the eventual receiver).
 
@@ -30,22 +30,22 @@ applicationShell
 beChecked
 	"Set the receiver into the checked state"
 
-	self isChecked: true!
+	flags := flags bitOr: MFS_CHECKED!
 
 beDisabled
 	"Set the receiver into the disabled state"
 
-	self isEnabled: false!
+	flags := flags bitOr: MFS_DISABLED!
 
 beEnabled
 	"Set the receiver into the enabled state"
 
-	self isEnabled: true!
+	flags := flags bitAnd: ##(MFS_DISABLED bitInvert)!
 
 beUnchecked
 	"Set the receiver into the not checked state"
 
-	self isChecked: false!
+	flags := flags bitAnd: ##(MFS_CHECKED bitInvert)!
 
 canPerform
 	"Answers true if the command described by the receiver can be performed.
@@ -90,6 +90,11 @@ description
 	^self commandDescription description
 !
 
+expandMenuTextWith: anObject
+	"Set the dynamic menu text associated with this to the result of expanding the macros of the <commandDescription>s menu text with the argument."
+
+	self text: (commandDescription expandedMenuText: { anObject })!
+
 image
 	^image!
 
@@ -101,20 +106,20 @@ initialize
 	unchecked state."
 
 	super initialize.
-	flags := 0
+	flags := MFS_DISABLED 
 !
 
 isChecked
 	"Answer true if the receiver is in the checked state"
 
-	^flags allMask: CheckedMask!
+	^flags allMask: MFS_CHECKED!
 
 isChecked: aBoolean
 	"Set the whether or not the command associated with the receiver is 'checked'
 	(toggled on). This will cause associated menu items to be displayed with a 
 	tick mark (or a blob if using radio button style)."
 
-	flags := flags mask: CheckedMask set: aBoolean
+	flags := flags mask: MFS_CHECKED set: aBoolean
 !
 
 isDefault
@@ -123,27 +128,40 @@ isDefault
 	claims default status only one will triumph. Under the current implementation this will
 	be the last occurring default item, but this behaviour should not be relied upon."
 
-	^flags anyMask: DefaultMask!
+	^flags anyMask: MFS_DEFAULT!
 
 isDefault: aBoolean
 	"Set whether the receiver is expected to be the default command for the host menu."
 
-	flags := flags mask: DefaultMask set: aBoolean!
+	flags := flags mask: MFS_DEFAULT set: aBoolean!
 
 isEnabled
 	"Answer true if the receiver is in the enabled state"
 
-	^flags allMask: EnabledMask!
+	^(flags bitAnd: MFS_DISABLED) == 0!
 
 isEnabled: aBoolean
 	"Set the enable state of the receiver to aBoolean"
 
-	flags := flags mask: EnabledMask set: aBoolean!
+	flags := flags mask: MFS_DISABLED set: aBoolean not!
+
+menuStateFlags
+	^flags bitAnd: ##(MFS_DISABLED | MFS_CHECKED | MFS_DEFAULT)!
 
 menuText
-	"Answer the menu text associated with the receiver's <CommandDescription>."
+	"Answer the full menu text (including accelerator key string, if any) associated with the receiver's <CommandDescription>."
 
 	^commandDescription menuText!
+
+newMenuImage
+	"Private - Answer the full menu text to be used for the command associated with this query ."
+
+	^self image ifNil: [commandDescription image]!
+
+newMenuText
+	"Private - Answer the full menu text to be used for the command associated with this query ."
+
+	^self text ifNil: [commandDescription defaultMenuText]!
 
 perform
 	"Perform the command on the receiver and answer the result."
@@ -203,7 +221,7 @@ text: aString
 	text := aString!
 
 validationResult
-	"Answer the <ValidationResult> set by a command query."
+	"Answer the <ValidationResult> set by a command query, if any."
 
 	^validationResult ifNil: [ValidationResult value: self isEnabled]!
 
@@ -224,16 +242,20 @@ commandDescription:!accessing!public! !
 commandDescription:source:!initializing!private! !
 commandSymbol!accessing!public! !
 description!accessing!public! !
+expandMenuTextWith:!accessing!public! !
 image!accessing!public! !
 image:!accessing!public! !
 initialize!initializing!private! !
 isChecked!public!testing! !
 isChecked:!accessing!public! !
-isDefault!accessing!public! !
+isDefault!public!testing! !
 isDefault:!accessing!public! !
 isEnabled!public!testing! !
 isEnabled:!accessing!public! !
+menuStateFlags!accessing!private! !
 menuText!accessing!public! !
+newMenuImage!accessing!private! !
+newMenuText!accessing!private! !
 perform!operations!public! !
 printOn:!development!printing!public! !
 receiver!accessing!public! !
@@ -255,87 +277,12 @@ commandDescription: item source: aView
 	^(super new initialize) 
 		commandDescription: item source: aView!
 
-findQueryHandlersIn: aClass
-	"Find all the command query annotations in the <Class> argument, and use them to build a map between command symbols (the selectors of the annotated methods), and selectors to perform to run the command query. The command query selectors can be unary, in which case the expectation is that the performed method is a testing method that will answer a <boolean> enablement status for the command, or can be a one-argument selector. Command queries that expect an argument are passed a <CommandQuery> object, and can update the enablement, checked status, and even change the text that will be displayed on a menu (where relevant)."
-
-	| queries |
-	queries := IdentityDictionary new.
-	aClass methodsDo: 
-			[:eachMethod |
-			eachMethod annotations
-				ifNotNil: 
-					[:annotations |
-					annotations withSelector: #commandQuery:
-						do: 
-							[:annotationArgs |
-							| querySelector argc |
-							querySelector := annotationArgs single.
-							argc := querySelector argumentCount.
-							argc == 1
-								ifTrue: 
-									[queries at: eachMethod selector
-										put: (Message selector: querySelector arguments: #('placeholder for aCommandQuery'))]
-								ifFalse: 
-									[argc == 0
-										ifTrue: 
-											[queries at: eachMethod selector put: [:rcvr :query | query isEnabled: (rcvr perform: querySelector)]]
-										ifFalse: [Notification signal: 'Ignoring invalid command query selector #' , querySelector]]]]].
-	^queries!
-
 new
 	"Answers an instance of the receiver on a nil message"
 
-	^self commandDescription: CommandDescription new source: nil!
-
-validateQueriesIn: aCompilationResult
-	"Private - Validate the commandQuery: annotations in the <CompilationResult>, and return whether the command queries collection should be (lazily) rebuilt because of a valid change."
-
-	| method affectsQueries annotations isInteractive |
-	method := aCompilationResult oldMethod.
-	"If the method previously had commandQuery: annotations, we assume there is a change"
-	affectsQueries := method notNil and: [method hasAnnotation: #commandQuery:].
-	method := aCompilationResult method.
-	isInteractive := aCompilationResult isInteractive.
-	(method notNil and: 
-			[(annotations := method annotations) notNil
-				and: [affectsQueries := annotations includesSelector: #commandQuery:]])
-		ifTrue: 
-			[| class |
-			class := method methodClass.
-			annotations withSelector: #commandQuery:
-				do: 
-					[:each |
-					| selector |
-					selector := each first.
-					(self
-						validateQuerySelector: selector
-						in: class
-						interactive: isInteractive)
-							ifFalse: 
-								["As there are validation issues, we want the change to be ignored, rather than used to build an invalid set of command queries"
-								^false]]].
-	^affectsQueries!
-
-validateQuerySelector: aSymbol in: aClass interactive: aBoolean
-	| argc |
-	argc := aSymbol argumentCount.
-	argc > 1
-		ifTrue: 
-			[Warning signal: 'Command query selectors must have at most 1 argument, not the <2d> of <1p>'
-						<< { aSymbol. argc }.
-			^false].
-	(aBoolean not or: [aClass canUnderstand: aSymbol])
-		ifFalse: 
-			["If you get this warning, you have defined a commandQuery: annotation with a selector that is not understood by the class.
-			If you proceed (Ignore the warning), the individual commandQuery: will be skipped to avoid it generating an invalid query handler that will cause errors when checking command status. If you cancel at the warning, the rebuild of the command query handlers is aborted entirely. Either action will leave the handlers in a state which is not up-to-date with respect to the code. This will be corrected once you fix the offending commandQuery: annotation(s) and resave the command method. In general it is a good idea to define the handler, at least minimally, before adding a commandQuery: annotation that references it. If you don't you will get the warning and even if ignored you will still need to go back and re-save the command method after adding the command query in order to trigger a rebuild of the handlers. This validation is not performed during a non-interactive compile, e.g. when loading code, to avoid generating misleading warnings that only occur because of load-order."
-			Warning signal: '<1p> does not understand the command query selector <2p>' << { aClass. aSymbol }.
-			^false].
-	^true! !
+	^self commandDescription: CommandDescription new source: nil! !
 !UI.CommandQuery class categoriesForMethods!
 commandDescription:source:!instance creation!public! !
-findQueryHandlersIn:!public! !
 new!instance creation!public! !
-validateQueriesIn:!private! !
-validateQuerySelector:in:interactive:!private! !
 !
 

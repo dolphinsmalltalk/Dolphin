@@ -230,11 +230,8 @@ clearSelection
 	N.B. If there is no selection, deletes the character immediately after the
 	caret (i.e. behaves like Del key)."
 
-	<commandQuery: #canCut>
-	| range |
-	range := self selectionRange.
-	range isEmpty ifTrue: [self selectionStart: range start end: range start].
-	self basicClearSelection!
+	<commandQuery: #queryEditDelete:>
+	self editDelete!
 
 command: anInteger id: id
 	"Private - Handler for a redirected WM_COMMAND notification message."
@@ -343,13 +340,16 @@ dragOver: session
 editDelete
 	"Delete the current selection from the receiver. This command typically appears on the menu bar edit menu and typically applies only to text editors, unlike the context-sensitive clearSelection command, which deletes from whichever view has focus."
 
-	<commandQuery: #canCut>
-	self clearSelection!
+	<commandQuery: #queryEditDelete:>
+	| range |
+	range := self selectionRange.
+	range isEmpty ifTrue: [self selectionStart: range start end: range start].
+	self basicClearSelection!
 
 editFind
 	"Launch the common Find dialog."
 
-	<commandQuery: #canFind>
+	<commandQuery: #queryFind:>
 	self findPrompt: self suggestedFindText!
 
 emptyUndoBuffer
@@ -410,7 +410,7 @@ extentForText: aString
 find
 	"Launch the FindText dialog in response to a generic toolbar find command."
 
-	<commandQuery: #canFind>
+	<commandQuery: #queryFind:>
 	self editFind!
 
 find: aFindDetails range: anInterval 
@@ -438,7 +438,7 @@ findDialogClass
 findNext
 	"Hilight the next occurrence which satisfies the find operation held in findDetails."
 
-	<commandQuery: #hasFindDetails>
+	<commandQuery: #queryFindNext:>
 	self hasFindDetails ifFalse: [self find] ifTrue: [self basicFindNext ifFalse: [Sound defaultBeep]]!
 
 findNext: aFindDetails
@@ -829,16 +829,6 @@ onTextOverflow
 	self presenter trigger: #textOverflow.
 	^nil!
 
-onTipTextRequired: tool 
-	"Tool tip text is required for the <ToolbarItem>, tool."
-
-	| cmd |
-	cmd := tool command asSymbol.
-	#find == cmd ifTrue: [^'Find text'].
-	#findNext == cmd ifTrue: [^'Find next  ' , self findDetails pattern printString].
-	#clearSelection == cmd ifTrue: [^'Delete selected text'].
-	^super onTipTextRequired: tool!
-
 onViewCreated
 	"The receiver window has been created"
 
@@ -924,6 +914,22 @@ preTranslateKeyboardInput: aMSG
 			"Absorb any Ctrl+Tab messages"
 			^true].
 	^false!
+
+queryEditDelete: aCommandQuery
+	self canCut ifFalse: [^self].
+	aCommandQuery
+		beEnabled;
+		expandMenuTextWith: 'selected text'!
+
+queryFind: aCommandQuery
+	self canFind ifFalse: [^self].
+	aCommandQuery
+		beEnabled;
+		expandMenuTextWith: 'text'!
+
+queryFindNext: aCommandQuery
+	self hasFindDetails ifFalse: [^self].
+	aCommandQuery beEnabled; expandMenuTextWith: self findDetails pattern!
 
 redo
 	"Redo the last undone edit action."
@@ -1333,7 +1339,7 @@ caretPosition:!accessing!caret!public! !
 charNearestPosition:!accessing!public! !
 clear!commands-actions!public! !
 clearAll!commands-actions!public! !
-clearSelection!clipboard operations!commands-actions!public! !
+clearSelection!commands-actions!public! !
 command:id:!commands-routing!private! !
 copySelection!clipboard operations!commands-actions!public! !
 cueBanner!accessing!public! !
@@ -1408,7 +1414,6 @@ onInputMaskRequired:!event handling!private! !
 onKeyTyped:!event handling!public! !
 onTextChanged!event handling-win32!private! !
 onTextOverflow!event handling!private! !
-onTipTextRequired:!event handling!public! !
 onViewCreated!event handling!operations!public! !
 passwordCharacter!accessing!public! !
 passwordCharacter:!accessing!public! !
@@ -1419,6 +1424,9 @@ positionAtLine:!accessing!public! !
 positionForKeyboardContextMenu!enquiries!public! !
 positionOfChar:!accessing!public! !
 preTranslateKeyboardInput:!dispatching!public! !
+queryEditDelete:!commands-queries!private! !
+queryFind:!commands-queries!private! !
+queryFindNext:!commands-queries!private! !
 redo!commands-actions!public! !
 refreshContents!operations!public! !
 replace:!private!searching & replacing! !

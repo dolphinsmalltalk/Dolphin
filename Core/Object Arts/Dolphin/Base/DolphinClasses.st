@@ -1028,6 +1028,7 @@ Kernel.SharedPool
 			'BS_PATTERN8X8' -> 16r7.
 			'BS_SOLID' -> 16r0.
 			'CBM_INIT' -> 16r4.
+			'CCHDEVICENAME' -> 16r20.
 			'CF_BITMAP' -> 16r2.
 			'CF_DIB' -> 16r8.
 			'CF_DIBV5' -> 16r11.
@@ -1463,34 +1464,6 @@ Kernel.SharedPool
 			'MEM_RESERVE' -> 16r2000.
 			'MEM_TOP_DOWN' -> 16r100000.
 			'MERGECOPY' -> 16rC000CA.
-			'MF_BYCOMMAND' -> 16r0.
-			'MF_BYPOSITION' -> 16r400.
-			'MF_POPUP' -> 16r10.
-			'MFS_CHECKED' -> 16r8.
-			'MFS_DEFAULT' -> 16r1000.
-			'MFS_DISABLED' -> 16r1.
-			'MFS_ENABLED' -> 16r0.
-			'MFS_UNCHECKED' -> 16r0.
-			'MFT_MENUBARBREAK' -> 16r20.
-			'MFT_MENUBREAK' -> 16r40.
-			'MFT_RADIOCHECK' -> 16r200.
-			'MFT_SEPARATOR' -> 16r800.
-			'MFT_STRING' -> 16r0.
-			'MIIM_BITMAP' -> 16r80.
-			'MIIM_CHECKMARKS' -> 16r8.
-			'MIIM_DATA' -> 16r20.
-			'MIIM_FTYPE' -> 16r100.
-			'MIIM_ID' -> 16r2.
-			'MIIM_STATE' -> 16r1.
-			'MIIM_STRING' -> 16r40.
-			'MIIM_SUBMENU' -> 16r4.
-			'MIIM_TYPE' -> 16r10.
-			'MIM_APPLYTOSUBMENUS' -> 16r80000000.
-			'MIM_BACKGROUND' -> 16r2.
-			'MIM_HELPID' -> 16r4.
-			'MIM_MAXHEIGHT' -> 16r1.
-			'MIM_MENUDATA' -> 16r8.
-			'MIM_STYLE' -> 16r10.
 			'MK_CONTROL' -> 16r8.
 			'MK_LBUTTON' -> 16r1.
 			'MK_MBUTTON' -> 16r10.
@@ -1506,12 +1479,6 @@ Kernel.SharedPool
 			'MM_LOMETRIC' -> 16r2.
 			'MM_TEXT' -> 16r1.
 			'MM_TWIPS' -> 16r6.
-			'MNS_AUTODISMISS' -> 16r10000000.
-			'MNS_CHECKORBMP' -> 16r4000000.
-			'MNS_DRAGDROP' -> 16r20000000.
-			'MNS_MODELESS' -> 16r40000000.
-			'MNS_NOCHECK' -> 16r80000000.
-			'MNS_NOTIFYBYPOS' -> 16r8000000.
 			'MOD_ALT' -> 16r1.
 			'MOD_CONTROL' -> 16r2.
 			'MOD_SHIFT' -> 16r4.
