@@ -586,7 +586,7 @@ query: aString
 	"Execute the SQL in aString.
 	Answer an <_Recordset> representing the resultant result set."
 
-	^(self execute: aString options: adCmdText) second!
+	^(self execute: aString options: AdCmdText) second!
 
 RollbackTrans
 	"Invoke the RollbackTrans() method of the COM object.

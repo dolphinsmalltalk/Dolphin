@@ -175,6 +175,11 @@ class: aClass
 	currentClass := aClass.
 	instanceSpec := aClass instanceSpec!
 
+classBindingNames
+	"Private - Answer an Array of proposed class variable and constant names."
+
+	^self classVariables , (self classConstants collect: [:each | each key])!
+
 classCategoryClass
 	^(superclass ifNil: [superclass class]) classCategoryClass!
 
@@ -182,6 +187,10 @@ classConstants
 	^classConstants ?? #()!
 
 classConstants: anArrayOfAssociations
+	anArrayOfAssociations do: 
+			[:each |
+			(each isKindOf: Association)
+				ifFalse: [self error: 'Invalid class constant binding: ' , each printString]].
 	classConstants := anArrayOfAssociations!
 
 className: aString
@@ -870,6 +879,7 @@ superclassIsBeingChanged
 
 toModify: aClass
 	currentClass := aClass.
+	className := aClass unqualifiedName.
 	instanceSpec := aClass instanceSpec.
 	self superclass: aClass superclass.
 	instanceVariables := aClass instanceVariableNames.
@@ -927,16 +937,14 @@ validateClass: classNameString varName: varNameString inherited: aCollection
 	| first |
 	(self class isValidIdentifier: varNameString)
 		ifFalse: 
-			[self error: 'Proposed class variable <2s> of <1s> is invalid as a local identifier.'
+			[self error: 'Proposed class variable <2p> of <1s> is invalid as a local identifier.'
 						<< { classNameString. varNameString }].
 	(aCollection includes: varNameString)
 		ifTrue: [self error: ErrorClassVarAlreadyDefined << { classNameString. varNameString }].
 	first := varNameString first.
 	(first isUppercase or: [first == $_]) ifTrue: [^self].
-	Warning new
-		isSuppressible: true;
-		signal: 'Proposed class variable <2p> of <1s> should start with an uppercase letter.'
-					<< { classNameString. varNameString }!
+	self error: 'Proposed class variable <2p> of <1s> should start with an uppercase letter.'
+				<< { classNameString. varNameString }!
 
 validateClassForRename
 	"Private - Ensure that we are permitted to rename the class."
@@ -995,7 +1003,7 @@ validateClassVarsForModify
 	itself or anywhere in the proposed superclass or subclass chain."
 
 	| classVarSet |
-	classVarSet := self validateClassVars: self classVariables againstSuperclass: superclass.
+	classVarSet := self validateClassVars: self classBindingNames againstSuperclass: superclass.
 	currentClass allSubclassesDo: 
 			[:each |
 			| fullName |
@@ -1288,6 +1296,7 @@ categoryNames:!accessing!public! !
 checkNoInstances!private!validation! !
 checkNoSubclasses!private!validation! !
 class:!accessing!private! !
+classBindingNames!class variables!private! !
 classCategoryClass!accessing!private! !
 classConstants!accessing!public! !
 classConstants:!accessing!public! !
@@ -1470,6 +1479,7 @@ isValidIdentifier: aString
 	"Would be nice to use the Scanner here, but for boot order dependency reasons we cannot rely on the parser package being available to the ClassBuilder."
 
 	| count ch |
+	aString isString ifFalse: [^false].
 	count := aString size.
 	(count > 0 and: [(ch := aString at: 1) == $_ or: [ch isEnglishLetter]]) ifFalse: [^false].
 	2 to: count

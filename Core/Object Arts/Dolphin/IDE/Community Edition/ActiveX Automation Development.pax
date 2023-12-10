@@ -631,7 +631,7 @@ UI.ValueDialog
 	classConstants: {}!
 Tools.SmalltalkToolShell
 	subclass: #'Tools.AXComponentWizard'
-	instanceVariableNames: 'typeLibs types description guid namespaceName packageName forcePackage cards libraryName libraryPath buffer generateTypelib typelibVariableName constantsPoolName highLevelWrappers classComments tracing defineProtocols defineFunctionTables lowercaseIdentifiers verboseTracing showStandard'
+	instanceVariableNames: 'typeLibs types description guid namespaceName packageName forcePackage cards libraryName libraryPath buffer generateTypelib typelibVariableName constantsPoolName highLevelWrappers classComments tracing defineProtocols defineFunctionTables lowercaseIdentifiers verboseTracing showStandard includeHidden'
 	classVariableNames: 'StandardEnums StandardInterfaces StandardStructs'
 	imports: #(#{OS.COM private})
 	classInstanceVariableNames: ''
@@ -5592,7 +5592,8 @@ generateConstantsIntoPool: aNamespace
 						expandMacrosWith: self idlKeyword
 						with: self name
 						with: aNamespace fullName)].
-	self constants do: [:each | aNamespace addClassConstant: each name value: each lpvarValue value]!
+	self constants
+		do: [:each | aNamespace addClassConstant: each name capitalized value: each lpvarValue value]!
 
 generateInstanceSide: aClass
 	"By default, do nothing. To be overridden by subclasses where necessary."!

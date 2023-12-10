@@ -449,6 +449,28 @@ testReshapeSubClass
 	self assert: testMeta identicalTo: self classBuilderTestSubclass1 class.
 	dirtiedClasses := true!
 
+testValidateClassConstants
+	| subject |
+	subject := self newTestSubjectToModify: self class.
+	self
+		should: [subject classConstants: { 'A' -> 1. 2 }]
+		raise: Error
+		matching: [:ex | ex description = 'Invalid class constant binding: 2'].
+	subject classConstants: { 1 -> 2 }.
+	self
+		should: [subject validateClassVarsForModify]
+		raise: Error
+		matching: 
+			[:ex |
+			ex description = 'Proposed class variable 1 of ClassBuilderTest is invalid as a local identifier.'].
+	subject classConstants: { 'Abc' -> 1. 'abc' -> 2 }.
+	self
+		should: [subject validateClassVarsForModify]
+		raise: Error
+		matching: 
+			[:ex |
+			ex description = 'Proposed class variable ''abc'' of ClassBuilderTest should start with an uppercase letter.']!
+
 testValidateImports
 	| subject |
 	subject := self newTestSubjectToModify: self class.
@@ -483,6 +505,7 @@ testReparentSubClassWithSameAllInstVars!public!unit tests! !
 testReshapeClass!public!unit tests! !
 testReshapeClassWithJugglingInstVars!public!unit tests! !
 testReshapeSubClass!public!unit tests! !
+testValidateClassConstants!public!unit tests! !
 testValidateImports!public!unit tests! !
 !
 

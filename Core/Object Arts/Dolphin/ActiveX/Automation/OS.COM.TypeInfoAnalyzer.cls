@@ -255,7 +255,7 @@ hasConstantsGeneratedAs: aNamespace
 	^self constants allSatisfy: 
 			[:each |
 			| var |
-			var := aNamespace localBindingFor: each name.
+			var := aNamespace localBindingFor: each name capitalized.
 			var notNil and: [var value = each value]]!
 
 hasFunctions

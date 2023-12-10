@@ -7,7 +7,7 @@ Kernel.SharedPool
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-			'cchTextLimitDefault' -> 16r7FFF.
+			'CchTextLimitDefault' -> 16r7FFF.
 			'CFE_AUTOCOLOR' -> 16r40000000.
 			'CFE_BOLD' -> 16r1.
 			'CFE_ITALIC' -> 16r2.
@@ -193,7 +193,7 @@ Kernel.SharedPool
 			'IMF_IMECANCELCOMPLETE' -> 16r4.
 			'IMF_MULTIPLEEDIT' -> 16r400.
 			'IMF_VERTICAL' -> 16r20.
-			'lDefaultTab' -> 16r2D0.
+			'LDefaultTab' -> 16r2D0.
 			'MAX_TAB_STOPS' -> 16r20.
 			'OLEOP_DOVERB' -> 16r1.
 			'PC_DELIMITER' -> 16r4.
@@ -276,7 +276,7 @@ Kernel.SharedPool
 			'WBF_WORDBREAK' -> 16r20.
 			'WBF_WORDWRAP' -> 16r10.
 			'WCH_EMBEDDING' -> 16rFFFC.
-			'yHeightCharPtsMost' -> 16r666
+			'YHeightCharPtsMost' -> 16r666
 		}!
 OS.RichEditConstants guid: (Core.GUID fromString: '{ab3403bd-a9f3-46e7-97ea-92bc8d64ac52}')!
 OS.RichEditConstants isNonInstantiable: true!
