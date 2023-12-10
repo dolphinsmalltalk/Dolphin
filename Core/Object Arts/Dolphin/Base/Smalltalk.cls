@@ -39,6 +39,12 @@ allRoots
 	allRoots isNil ifTrue: [allRoots := Class allRoots].
 	^allRoots!
 
+basicAddBinding: aVariableBinding
+	"Private - For historical reasons the names of variables in the system namespace are always Symbols. This isn't strictly necessary in most cases as in Dolphin Symbols and Strings for the same character sequence are equivalent, but they are not identical and so some code may be broken if we don't stick with Symbols."
+
+	aVariableBinding setKey: aVariableBinding key asSymbol.
+	^super basicAddBinding: aVariableBinding!
+
 classAdded: class
 	"Private - The new <Class>, class, has been added to the receiver.
 	Clear down the all class cache and inform observers."
@@ -71,11 +77,6 @@ clearCachedClasses
 	"Private - Clear down the class caches."
 
 	oldNames := allRoots := allClasses := classesByGuid := nil!
-
-declareVariable: aString
-	"For historical reasons the names of variables in the system namespace are always Symbols. This isn't strictly necessary in most cases as in Dolphin Symbols and Strings for the same character sequence are equivalent, but they are not identical and so some code may be broken if we don't stick with Symbols."
-
-	^super declareVariable: aString asSymbol!
 
 developmentSystem
 	"Answer the current instance of <SmalltalkSystem> if installed, otherwise a <DeafObject>."
@@ -139,12 +140,12 @@ staticVariableRemoved: aVariableBinding
 allClasses!accessing!public! !
 allClassesDo:!binding!public! !
 allRoots!accessing!public! !
+basicAddBinding:!class variables!private! !
 classAdded:!event handling!private! !
 classesByGuid!private! !
 classRemoved:!private!removing! !
 classUpdated:!event handling!private! !
 clearCachedClasses!initializing!private! !
-declareVariable:!public! !
 developmentSystem!accessing!public! !
 getEvents!events!private! !
 oldNames!accessing!public! !

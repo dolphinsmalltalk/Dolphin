@@ -55,6 +55,9 @@ testPackagePaths
 				equals: (File
 						removeExtension: (Package manager packageNamed: (File splitStemFrom: each first)) packagePathname)]!
 
+testSmalltalkKeysAreSymbols
+	self assert: (Smalltalk keys reject: [:each | each isSymbol]) asArray equals: #()!
+
 testSubclassResponsibilityNotDefined
 	<namespace: Refactory.Browser>
 	| checker rule failures |
@@ -96,6 +99,7 @@ testClassState!public!unit tests! !
 testClassVariableEnvironments!public!unit tests! !
 testCompilationFailures!public!unit tests! !
 testPackagePaths!public!unit tests! !
+testSmalltalkKeysAreSymbols!public!unit tests! !
 testSubclassResponsibilityNotDefined!public!unit tests! !
 testUnlistedPrerequisites!public!unit tests! !
 testUnpackagedClasses!public!unit tests! !
