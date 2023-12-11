@@ -71,7 +71,7 @@ testColor
 	"This test is sensitive to the precision of the representation. As Color's in Dolphin have only 255 distinct values for each of the primary colours, rounding error gives a different result."
 	self 
 		assert: (self serialize: Color red lighter lighter) 
-		equals: 'Color{#red:1.0,#green:0.063,#blue:0.063,#alpha:1.0}' "'Color{#red:1.0,#green:0.061,#blue:0.061,#alpha:1.0}'."
+		equals: 'Color{#red:1.0,#green:0.063,#blue:0.063,#alpha:1.0}' "'Color{#red:1.0,#green:0.06060606060606061,#blue:0.06060606060606061,#alpha:1.0}'."
 !
 
 testCustomNewline
@@ -158,7 +158,10 @@ testFloat
 	self assert: ((self serialize: (1 / 3) asFloat) beginsWith: '0.333').
 	self assert: (self serialize: (10 raisedTo: 100) asFloat) equals: '1.0e100'.
 	self assert: (self serialize: (10 raisedTo: -50) asFloat) equals: '1.0e-50'.
-	self assert: (self serialize: (10 raisedTo: -50) asFloat negated) equals: '-1.0e-50'!
+	self assert: (self serialize: (10 raisedTo: -50) asFloat negated) equals: '-1.0e-50'.
+	self assert: (self serialize: Float nan) equals: 'Float[#nan]'.
+	self assert: (self serialize: Float infinity) equals: 'Float[#infinity]'.
+	self assert: (self serialize: Float negativeInfinity) equals: 'Float[#negativeInfinity]'.!
 
 testFraction
 	self assert: (self serialize: 1/3) equals: '1/3'.

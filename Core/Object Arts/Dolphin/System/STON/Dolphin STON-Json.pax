@@ -100,20 +100,44 @@ jsonPrettyPrinter
 	^JsonPrettyPrinter new!
 
 jsonWriter
+	"Shortcut to create a new STONWriter instance configured to output JSON"
+
 	^JsonWriter new!
 
 put: object asJsonOnStream: stream
+	"Write the JSON serialization of object to the character writeStream.
+	Note that the object graph can only contain lists (Array) and maps (Dictionary)"
+
+	"String streamContents: [ :out | 
+		STON put: { { #foo->1 } asDictionary. { #bar->2 } asDictionary } asJsonOnStream: out ]"
+
 	(self jsonWriter on: stream) nextPut: object!
 
 put: object asJsonOnStreamPretty: stream
+	"Write the pretty printed JSON serialization of object to the character writeStream.
+	Note that the object graph can only contain lists (Array) and maps (Dictionary)"
+
+	"String streamContents: [ :out | 
+		STON put: { { #foo->1 } asDictionary. { #bar->2 } asDictionary } asJsonOnStreamPretty: out ]"
+
 	(self jsonPrettyPrinter on: stream)
 		nextPut: object!
 
 toJsonString: object
+	"Return a String with the JSON serialization of object.
+	Note that the object graph can only contain lists (Array) and maps (Dictionary)"
+
+	"(STON toJsonString: { { #foo->1 } asDictionary. { #bar->2 } asDictionary }) >>> '[{""foo"":1},{""bar"":2}]'"
+
 	^ String streamContents: [ :stream |
 		self put: object asJsonOnStream: stream ]!
 
 toJsonStringPretty: object
+	"Return a String with the pretty printed JSON serialization of object.
+	Note that the object graph can only contain lists (Array) and maps (Dictionary)"
+
+	"STON toJsonStringPretty: { { #foo->1 } asDictionary. { #bar->2 } asDictionary }"
+
 	^ String streamContents: [ :stream |
 		self put: object asJsonOnStreamPretty: stream ]! !
 !STON class categoriesForMethods!

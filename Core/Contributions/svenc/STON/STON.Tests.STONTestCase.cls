@@ -13,6 +13,9 @@ STON.Tests.STONTestCase comment: ''!
 !STON.Tests.STONTestCase categoriesForClass!SUnit! !
 !STON.Tests.STONTestCase methodsFor!
 
+environment
+	^Smalltalk!
+
 materialize: string
 	^STON reader
 		on: string readStream;
@@ -25,6 +28,7 @@ serialize: anObject
 				on: stream;
 				nextPut: anObject]! !
 !STON.Tests.STONTestCase categoriesForMethods!
+environment!public! !
 materialize:!private! !
 serialize:!private! !
 !

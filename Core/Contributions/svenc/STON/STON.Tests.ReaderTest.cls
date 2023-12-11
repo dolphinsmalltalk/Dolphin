@@ -65,6 +65,12 @@ testColor
 		assert: (self materialize: 'Color{#red:1.0,#green:0.061,#blue:0.061,#alpha:1.0}')
 		equals: Color red lighter lighter.!
 
+testColorBackwardsCompatibility
+	"ensure the older Color representation still works"
+
+	self assert: (self materialize: 'Color{#rgb:1072693248}') equals: Color red.
+	self assert: (self materialize: 'Color{#rgb:1072693248}') equals: (self materialize: 'Color[#red]')!
+
 testConvertingNewLines
 	| input result output |
 	input := '''line ending with CR' , String cr , 'line ending with LF' , String lf
@@ -186,11 +192,15 @@ testFloat
 	self assert: ((self materialize: '1.5') closeTo: 1.5).
 	self assert: ((self materialize: '-1.5') closeTo: -1.5).
 	self assert: (self materialize: '0.0') isZero.
-	self assert: (Float pi closeTo: (self materialize: '3.14149')).
+	self assert: (Float pi closeTo: (self materialize: '3.14159') precision: 0.00001).
 	self assert: (1 / 3 closeTo: (self materialize: '0.333333')).
-	self assert: ((self materialize: '1.0e100') closeTo: (10 raisedTo: 100)).
-	self assert: ((self materialize: '1.0e-100') closeTo: (10 raisedTo: -100)).
-	self assert: ((self materialize: '-1.0e-100') closeTo: (10 raisedTo: -100) negated)!
+	self assert: (self materialize: '1.0e100') equals: 1.0e100.
+	self assert: (self materialize: '1.0e-100') equals: 1.0e-100.
+	self assert: (self materialize: '-1.0e-100') equals: -1.0e-100.
+	self assert: (self materialize: 'Float[#nan]') isNaN.
+	self assert: (self materialize: 'Float[#infinity]') equals: Float infinity.
+	self assert: (self materialize: 'Float[#negativeInfinity]') equals: Float negativeInfinity.
+	self assert: (Float pi closeTo: (self materialize: 'Float[3.14159]') precision: 0.00001)!
 
 testFraction
 	self assert: (self materialize: '1/3') equals: 1/3.
@@ -448,6 +458,7 @@ testCharacter!public!tests! !
 testClass!public!tests! !
 testClassWithUnderscore!public!tests! !
 testColor!public!tests! !
+testColorBackwardsCompatibility!public!tests! !
 testConvertingNewLines!public!tests! !
 testDate!public!tests! !
 testDateAndTime!public!tests! !

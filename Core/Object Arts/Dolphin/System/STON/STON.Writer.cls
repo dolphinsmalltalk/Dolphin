@@ -117,7 +117,7 @@ error: aString
 	^WriterError signal: aString!
 
 escape: char with: anObject
-	"Instruct me to escape char with object, either a replacement string or #pass"
+	"Private - Instruct me to escape char with object, either a replacement string or #pass"
 	
 	"self escape: $/ with: '\/'."
 	
@@ -251,7 +251,17 @@ writeBoolean: boolean
 	writeStream print: boolean!
 
 writeFloat: float
-	writeStream print: float!
+	float isFinite
+		ifTrue: [writeStream print: float]
+		ifFalse: 
+			[| argument |
+			argument := float isNaN
+						ifTrue: [#nan]
+						ifFalse: [float negative ifTrue: [#negativeInfinity] ifFalse: [#infinity]].
+			self
+				writeObject: float
+				named: #Float
+				listSingleton: argument]!
 
 writeFraction: fraction
 	writeStream
@@ -389,8 +399,8 @@ writeSymbol: symbol
 		ifTrue: [writeStream nextPutAll: symbol]
 		ifFalse: [self encodeString: symbol]! !
 !STON.Writer categoriesForMethods!
-asciiOnly:!initialize/release!public! !
-close!initialize/release!public! !
+asciiOnly:!initialization!public! !
+close!initialization!public! !
 emitQuote!helpers!private! !
 encodeCharacter:!helpers!private! !
 encodeKey:value:!helpers!private! !
@@ -399,25 +409,25 @@ encodeMap:!public!writing! !
 encodeString:!helpers!private! !
 encodeStringKeepingNewLines:!helpers!private! !
 error:!error handling!public! !
-escape:with:!initialize/release!public! !
-escapeUnicode:!initialize/release!public! !
+escape:with:!helpers!private! !
+escapeUnicode:!initialization!public! !
 escapeUnicode4:!helpers!private! !
 indentedDo:!helpers!private! !
-initialize!initialize/release!private! !
+initialize!initialization!private! !
 instVarMapFor:!public!writing! !
 isSimpleSymbol:!helpers!private! !
 jsonMode!public!testing! !
-keepNewLines:!initialize/release!public! !
+keepNewLines:!initialization!public! !
 listElementSeparator!helpers!private! !
 mapElementSeparator!helpers!private! !
-newLine:!initialize/release!public! !
+newLine:!initialization!public! !
 newlineIndent!helpers!private! !
 nextPut:!public!writing! !
-on:!initialize/release!public! !
-optimizeForLargeStructures!initialize/release!public! !
+on:!initialization!public! !
+optimizeForLargeStructures!initialization!public! !
 prettyPrintSpace!helpers!private! !
-referencePolicy:!initialize/release!public! !
-reset!initialize/release!public! !
+referencePolicy:!initialization!public! !
+reset!initialization!public! !
 shortListElementSeparator!helpers!private! !
 with:do:!helpers!private! !
 writeableStonCharacters!private!writing! !

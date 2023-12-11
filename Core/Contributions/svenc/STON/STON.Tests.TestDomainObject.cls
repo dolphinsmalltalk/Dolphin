@@ -131,7 +131,7 @@ description:!accessing!public! !
 float!accessing!public! !
 float:!accessing!public! !
 hash!comparing!public! !
-initialize!initialize/release!public! !
+initialize!initialization!public! !
 integer!accessing!public! !
 integer:!accessing!public! !
 modified!accessing!public! !

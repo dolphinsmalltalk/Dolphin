@@ -58,7 +58,7 @@ username: anObject
 enabled!accessing!public! !
 enabled:!accessing!public! !
 hash!comparing!public! !
-initialize!initialize/release!public! !
+initialize!initialization!public! !
 password!accessing!public! !
 password:!accessing!public! !
 username!accessing!public! !

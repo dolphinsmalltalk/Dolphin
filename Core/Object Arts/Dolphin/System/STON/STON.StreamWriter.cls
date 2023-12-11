@@ -20,8 +20,8 @@ initialize
 on: stonWriter
 	writer := stonWriter! !
 !STON.StreamWriter categoriesForMethods!
-initialize!initialize/release!public! !
-on:!initialize/release!public! !
+initialize!initialization!public! !
+on:!initialization!public! !
 !
 
 !STON.StreamWriter class methodsFor!
