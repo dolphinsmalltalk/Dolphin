@@ -59,7 +59,7 @@ writeSymbol: symbol
 !STON.JsonWriter categoriesForMethods!
 emitQuote!helpers!private! !
 encodeKey:value:!helpers!private! !
-initialize!initialize/release!public! !
+initialize!initialization!public! !
 jsonMode!public!testing! !
 writeAssociation:!public!writing! !
 writeFraction:!public!writing! !

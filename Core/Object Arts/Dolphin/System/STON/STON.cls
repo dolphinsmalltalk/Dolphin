@@ -172,50 +172,112 @@ S y n t a x
 !STON class methodsFor!
 
 associationClass
+	"Return the class of STON associations, Association, a system wide constant"
+
+	"(STON fromString: '#foo : 100') class >>> STON associationClass"
+
 	^ Association!
 
 classNameKey
+	"Return the key that will be used to add a property with the class name 
+	when an unknown class is read and the option STONReader>>#acceptUnknownClasses: is true,
+	by default #className. Such unknown classes are returned as generic maps."
+
+	"((STON reader acceptUnknownClasses: true; on: 'FooBarBaz { #foo : 100 }' readStream; next) at: STON classNameKey) >>> #FooBarBaz"
+
 	^ #className!
 
 fromStream: readStream
+	"Parse and materialize the STON representation in the character readStream"
+
+	"(STON fromStream: 'Point[1,2]' readStream) >>> (1@2)"
+
+	"FileLocator temp / ('{1}.ston' format: { Time millisecondClockValue }) in: [ :file | 
+		file writeStreamDo: [ :out | STON put: 1@2 onStream: out ].
+		file readStreamDo: [ :in | STON fromStream: in ] ]"
+
 	^ (self reader on: readStream) next!
 
 fromStreamWithComments: readStream
+	"Parse and materialize the STON representation in the character readStream,
+	skipping C-style comments"
+
+	"(STON fromStreamWithComments: 'Point[1,/*comment*/2]' readStream) >>> (1@2)"
+
 	^ (self reader on: (CStyleCommentsSkipStream on: readStream)) next!
 
 fromString: string
+	"Parse and materialize the STON representation in string"
+
+	"(STON fromString: 'Point[1,2]') >>> (1@2)"
+
 	^ self fromStream: string readStream!
 
 fromStringWithComments: string
+	"Parse and materialize the STON representation in string,
+	skipping C-style comments"
+
+	"(STON fromStringWithComments: 'Point[1,/*comment*/2]') >>> (1@2)"
+
 	^ self fromStreamWithComments: string readStream!
 
 listClass
+	"Return the class of STON lists, Array, a system wide constant"
+
+	"(STON fromString: '[1 , 2 , 3]') class >>> STON listClass"
+
 	^ Array!
 
 mapClass
+	"Return the class of STON maps, Dictionary, a system wide constant"
+
+	"(STON fromString: '{ #foo : 1 , #bar : 2 }') class >>> STON mapClass"
+
 	^ Dictionary!
 
 prettyPrinter
 	^PrettyPrinter new!
 
 put: object onStream: stream
+	"Write the STON serialization of object to the character writeStream"
+
+	"(String streamContents: [ :out | STON put: 1@2 onStream: out ]) >>> 'Point[1,2]'"
+
+	"FileLocator temp / ('{1}.ston' format: { Time millisecondClockValue }) in: [ :file | 
+		file writeStreamDo: [ :out | STON put: 1@2 onStream: out ].
+		file readStreamDo: [ :in | STON fromStream: in ] ]"
+
 	(self writer on: stream) nextPut: object!
 
 put: object onStreamPretty: stream
+	"Write the pretty printed STON serialization of object to the character writeStream"
+
+	"String streamContents: [ :out | STON put: (0@0 extent: 20@30) onStreamPretty: out ]"
+
 	(self prettyPrinter on: stream)
 		nextPut: object!
 
 reader
+	"Shortcut to create a new STONReader instance"
+
 	^ Reader new!
 
 readFrom: aReadStream
 	^self fromStream: aReadStream!
 
 toString: object
+	"Return a String with the STON serialization of object"
+
+	"(STON toString: 1@2) >>> 'Point[1,2]'"
+
 	^ String streamContents: [ :stream |
 		self put: object onStream: stream ]!
 
 toStringPretty: object
+	"Return a String with the pretty printed STON serialization of object"
+
+	"STON toStringPretty: (0@0 extent: 20@30)"
+
 	^ String streamContents: [ :stream |
 		self put: object onStreamPretty: stream ]!
 

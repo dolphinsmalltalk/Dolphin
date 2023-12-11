@@ -12,6 +12,17 @@ STON.Tests.STONTest comment: ''!
 !STON.Tests.STONTest categoriesForClass!STON-Tests-Facade! !
 !STON.Tests.STONTest methodsFor!
 
+testAssociationClass
+	self assert: (STON fromString: '#foo : 100') class equals: STON associationClass!
+
+testClassNameKey
+	self
+		assert: ((STON reader
+				acceptUnknownClasses: true;
+				on: 'FooBarBaz { #foo : 100 }' readStream;
+				next) at: STON classNameKey)
+		equals: #FooBarBaz!
+
 testFromString
 	| object |
 	object := STON listClass withAll: {1. 0. -1. true. false. nil}.
@@ -23,6 +34,12 @@ testFromStringWithComments
 	self assert: (STON
 				fromStringWithComments: '// comment\[1, /* comment */ 0, -1, true, false, nil] // comment' withCRs)
 		equals: object!
+
+testListClass
+	self assert: (STON fromString: '[1 , 2 , 3]') class equals: STON listClass!
+
+testMapClass
+	self assert: (STON fromString: '{ #foo : 1 , #bar : 2 }') class equals: STON mapClass!
 
 testPrettyPrinting
 	| object |
@@ -65,10 +82,14 @@ testToString
 	object := STON listClass withAll: {1. 0. -1. true. false. nil}.
 	self assert: (STON toString: object) equals: '[1,0,-1,true,false,nil]'! !
 !STON.Tests.STONTest categoriesForMethods!
-testFromString!public! !
-testFromStringWithComments!public! !
-testPrettyPrinting!public! !
-testRoomExitCycles!public! !
-testToString!public! !
+testAssociationClass!public!tests! !
+testClassNameKey!public!tests! !
+testFromString!public!tests! !
+testFromStringWithComments!public!tests! !
+testListClass!public!tests! !
+testMapClass!public!tests! !
+testPrettyPrinting!public!tests! !
+testRoomExitCycles!public!tests! !
+testToString!public!tests! !
 !
 

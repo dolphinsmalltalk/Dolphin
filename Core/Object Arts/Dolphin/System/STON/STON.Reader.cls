@@ -283,8 +283,6 @@ parseListDo: block
 	self error: 'end of list expected'!
 
 parseListSingleton
-	"Overriden to reduce overhead."
-
 	| value |
 	self expectChar: $[.
 	value := self parseValue.
@@ -312,6 +310,35 @@ parseMapDo: block
 			self expectChar: $,].
 	self error: 'end of map expected'!
 
+parseMapOrListRepresentation
+	"Parse either a map or list to be used as a representation, not considering it as a referenceable object"
+
+	self atEnd
+		ifFalse: 
+			[currentCharacter == ${
+				ifTrue: 
+					[| map |
+					map := STON mapClass new.
+					self parseMapDo: [:key :value | map at: key put: value].
+					^map].
+			currentCharacter == $[
+				ifTrue: [^STON listClass streamContents: [:stream | self parseListDo: [:each | stream nextPut: each]]]].
+	self error: 'invalid input'!
+
+parseMapOrListSingleton
+	"Parse either a map or single item list to be used as a representation, not considering it as a referenceable object"
+
+	self atEnd
+		ifFalse: 
+			[currentCharacter == ${
+				ifTrue: 
+					[| map |
+					map := STON mapClass new.
+					self parseMapDo: [:key :value | map at: key put: value].
+					^map].
+			^self parseListSingleton].
+	self error: 'invalid input'!
+
 parseNamedInstVarsFor: anObject
 	| instVars |
 	instVars := self instVarMapFor: anObject class.
@@ -333,11 +360,17 @@ parseNumber
 			(self peekFor: $s)
 				ifTrue: [number := ScaledDecimal newFromNumber: number scale: self parseNumberInteger]]
 		ifFalse: 
-			[(self peekFor: $.) ifTrue: [number := number + self parseNumberFraction].
+			[| isFloat |
+			isFloat := false.
+			(self peekFor: $.)
+				ifTrue: 
+					[number := number + self parseNumberFraction.
+					isFloat := true].
 			(currentCharacter == $e or: [currentCharacter == $E])
 				ifTrue: 
 					[currentCharacter := readStream nextAvailable.
-					number := number * self parseNumberExponent]].
+					number := number * self parseNumberExponent].
+			isFloat ifTrue: [number := number asFloat]].
 	negated ifTrue: [number := number negated].
 	self consumeWhitespace.
 	^number!
@@ -359,7 +392,7 @@ parseNumberFraction
 			[number := 10 * number + digit.
 			power := power * 10.
 			currentCharacter := readStream nextAvailable].
-	^number / power asFloat!
+	^number / power!
 
 parseNumberInteger
 	| number digit |
@@ -443,8 +476,7 @@ parseSymbol
 	stringStream reset.
 	[self isSimpleSymbolChar: currentCharacter ?? $\0] whileTrue: 
 			[stringStream nextPut: currentCharacter.
-			currentCharacter := readStream nextAvailable.
-			self].
+			currentCharacter := readStream nextAvailable].
 	string := stringStream contents.
 	string isEmpty
 		ifFalse: 
@@ -502,14 +534,14 @@ storeReference: object
 	objects addLast: object.
 	^objects size! !
 !STON.Reader categoriesForMethods!
-acceptUnknownClasses:!initialize/release!private! !
+acceptUnknownClasses:!initialization!private! !
 atEnd!private!testing! !
-close!initialize/release!private! !
+close!initialization!private! !
 consumeWhitespace!helpers!private! !
-convertNewLines:!initialize/release!private! !
+convertNewLines:!initialization!private! !
 error:!error handling!private! !
 expectChar:!helpers!private! !
-initialize!initialize/release!private! !
+initialize!initialization!private! !
 instVarMapFor:!private! !
 isClassChar:!helpers!private! !
 isClassStartChar:!helpers!private! !
@@ -518,12 +550,12 @@ isSimpleSymbolChar:!helpers!private! !
 lookupClass:!helpers!private! !
 match:do:!helpers!private! !
 matchChar:!helpers!private! !
-newLine:!initialize/release!private! !
+newLine:!initialization!private! !
 newReference!helpers!private! !
 next!public! !
 objectProperties!private! !
-on:!initialize/release!private! !
-optimizeForLargeStructures!initialize/release!private! !
+on:!initialization!private! !
+optimizeForLargeStructures!initialization!private! !
 parseCharacterConvertingNewLinesOn:!parsing!private! !
 parseCharacterHex!helpers!private! !
 parseCharacterHex4Value!helpers!private! !
@@ -537,10 +569,12 @@ parseListDo:!parsing!private! !
 parseListSingleton!parsing!private! !
 parseMap!parsing!private! !
 parseMapDo:!parsing!private! !
+parseMapOrListRepresentation!parsing!private! !
+parseMapOrListSingleton!parsing!private! !
 parseNamedInstVarsFor:!parsing!private! !
-parseNumber!parsing!private! !
+parseNumber!parsing-internal!private! !
 parseNumberExponent!parsing!private! !
-parseNumberFraction!parsing!private! !
+parseNumberFraction!parsing-internal!private! !
 parseNumberInteger!parsing!private! !
 parseObject!parsing!private! !
 parseReference!public! !
@@ -553,7 +587,7 @@ parseValue!parsing!private! !
 peekFor:!operations!private! !
 registerNewObject:!parsing!private! !
 renamedClasses!helpers!private! !
-reset!initialize/release!private! !
+reset!initialization!private! !
 setReference:to:!helpers!private! !
 storeReference:!helpers!private! !
 !

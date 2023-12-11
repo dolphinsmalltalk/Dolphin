@@ -12,9 +12,6 @@ STON.Tests.WriteReadTest comment: 'STONWriteReadTests test serialization followe
 !STON.Tests.WriteReadTest categoriesForClass!STON-Tests-Writer! !
 !STON.Tests.WriteReadTest methodsFor!
 
-environment
-	^Smalltalk globals!
-
 serializeAndMaterialize: object
 	| serialization materialization |
 	serialization := self serialize: object.
@@ -36,6 +33,19 @@ serializeJson: anObject
 			STON jsonWriter
 				on: stream;
 				nextPut: anObject]!
+
+testAlternativeRepresentation
+	| testObject resultObject |
+	testObject := AlternativeRepresentationTestObject example.
+	"See the class comment of STONAlternativeRepresentationTestObject
+	for a description of how the internal and external representation differ.
+	See also STONAlternativeRepresentationTestObject>>#stonOn:
+	and STONAlternativeRepresentationTestObject>>#fromSton:"
+	resultObject := self materialize: (self serialize: testObject).
+	self assert: resultObject id equals: testObject id.
+	self assert: resultObject time equals: testObject time.
+	self assert: (resultObject gridReference x closeTo: testObject gridReference x).
+	self assert: (resultObject gridReference y closeTo: testObject gridReference y).!
 
 testAssociations
 	| associations |
@@ -122,18 +132,33 @@ testEmpty
 	self serializeAndMaterialize: empty!
 
 testFloats
-	| floats serialization materialization |
-	floats := STON listClass withAll: ((-10 to: 10) collect: [:each | each * Float pi]).
-	serialization := self serialize: floats.
-	materialization := self materialize: serialization.
-	self assert: floats size equals: materialization size.
-	1 to: floats size
-		do: 
-			[:index |
-			| float |
-			float := floats at: index.
-			"Use #closeTo: instead of #= to increase portability"
-			self assert: (float closeTo: (materialization at: index))]!
+	| check |
+	check := 
+			[:numbers |
+			| floats serialization materialization |
+			floats := STON listClass withAll: numbers.
+			serialization := self serialize: floats.
+			materialization := self materialize: serialization.
+			self assert: floats size equals: materialization size.
+			floats with: materialization
+				do: [:float :materializedFloat | self assert: float equals: materializedFloat]].
+	check value: ((-10 to: 10) collect: [:each | each * Float pi]).
+	check value: {
+				0.022999999999999854.
+				4.999999999999996.
+				-4.999999999999996.
+				0.333333333333.
+				Float zero.
+				Float negativeZero.
+				Float fmin.
+				Float fmax.
+				Float pi.
+				Float e.
+				0.00001.
+				Float infinity.
+				Float negativeInfinity
+			}.
+	self assert: (STON fromString: (STON toString: Float nan)) isNaN!
 
 testFractions
 	| fractions |
@@ -173,10 +198,11 @@ testOrderedDictionary
 	It might also not exist in some dialects, where this test could be skipped."
 
 	| dictionaries orderedDictionaryClass orderedIdentityDictionaryClass |
-	orderedDictionaryClass := #{OrderedDictionary} valueOrNil ?? Dictionary.
-	orderedIdentityDictionaryClass := #{OrderedIdentityDictionary} valueOrNil ?? IdentityDictionary.
-	dictionaries := STON listClass
-				withAll: {orderedDictionaryClass new
+	orderedDictionaryClass := self environment at: #OrderedDictionary ifAbsent: [Dictionary].
+	orderedIdentityDictionaryClass := self environment at: #OrderedIdentityDictionary
+				ifAbsent: [IdentityDictionary].
+	dictionaries := STON listClass withAll: {
+						orderedDictionaryClass new
 							at: 1 put: 1;
 							at: 2 put: 2;
 							yourself.
@@ -195,7 +221,8 @@ testOrderedDictionary
 							at: #b put: -2;
 							at: #c put: 0;
 							yourself.
-						orderedIdentityDictionaryClass new}.
+						orderedIdentityDictionaryClass new
+					}.
 	self serializeAndMaterialize: dictionaries!
 
 testPrimitives
@@ -208,9 +235,9 @@ testSmallDictionary
 	It might also not exist in some dialects, where this test could be skipped."
 
 	| dictionaries smallDictionaryClass |
-	smallDictionaryClass := #{SmallDictionary} valueOrNil ?? Dictionary.
-	dictionaries := STON listClass
-				withAll: {smallDictionaryClass new
+	smallDictionaryClass := self environment at: #SmallDictionary ifAbsent: [Dictionary].
+	dictionaries := STON listClass withAll: {
+						smallDictionaryClass new
 							at: 1 put: 1;
 							at: 2 put: 2;
 							yourself.
@@ -218,7 +245,8 @@ testSmallDictionary
 							at: 1 put: 1;
 							at: 2 put: 2;
 							yourself.
-						smallDictionaryClass new}.
+						smallDictionaryClass new
+					}.
 	self serializeAndMaterialize: dictionaries!
 
 testSmallIntegers
@@ -276,9 +304,16 @@ testStrings
 
 testSymbols
 	| symbols |
-	self serializeAndMaterialize: #(#bytes #'').
-	symbols := Collection allSubclasses collect: [:each | each name].
-	self serializeAndMaterialize: symbols!
+	symbols := #( #bytes #'' #Bytes123 ).
+	self serializeAndMaterialize: symbols.
+	symbols := Collection allSubclasses collect: [ :each | each name ].
+	self serializeAndMaterialize: symbols.
+	"simple symbols"
+	symbols := #( #foo123 #'123foo' #'punctuation-_./' #'_Foo' #'/root' #'---' #'.st' ).
+	self serializeAndMaterialize: symbols.
+	"non-simple symbols"
+	symbols := #( #'les-élèves-français' #'euro-€' #'ångström' ).
+	self serializeAndMaterialize: symbols.!
 
 testUser
 	| user users |
@@ -313,10 +348,10 @@ testUUIDs
 	uuids := STON listClass withAll: {UUID new. UUID new. UUID nilUUID}.
 	self serializeAndMaterialize: uuids! !
 !STON.Tests.WriteReadTest categoriesForMethods!
-environment!private! !
 serializeAndMaterialize:!private! !
 serializeAndMaterializeJsonMode:!private! !
 serializeJson:!private! !
+testAlternativeRepresentation!public!tests! !
 testAssociations!public!tests! !
 testCharacters!public!tests! !
 testClasses!public!tests! !

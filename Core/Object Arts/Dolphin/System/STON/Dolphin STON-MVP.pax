@@ -73,19 +73,27 @@ stonOn:!public!ston! !
 !Graphics.Color class methodsFor!
 
 fromSton: stonReader
-	"We have to replace the STON-Core implementation because Dolphin's Color representation is different to Pharo's."
-
-	^stonReader isList
-		ifTrue: [self named: stonReader parseListSingleton]
+	| representation |
+	representation := stonReader parseMapOrListSingleton.
+	^representation isSymbol
+		ifTrue: [self named: representation ]
 		ifFalse: 
-			[| values |
-			values := LookupTable new: 4.
-			stonReader parseMapDo: [:key :value | values at: key put: value].
-			self
-				alpha: (values at: #alpha) * 255
-				red: (values at: #red) * 255
-				green: (values at: #green) * 255
-				blue: (values at: #blue) * 255]!
+			["We have to replace the STON-Core implementation because Dolphin's Color representation is different to Pharo's."
+			(representation includesKey: #rgb)
+				ifTrue: 
+					[| pharoRgb |
+					"backwards compatibility"
+					pharoRgb := representation at: #rgb.
+					self
+						red: ((pharoRgb bitShift: -20) bitAnd: 1023) / 1023.0 * 255
+						green: ((pharoRgb bitShift: -10) bitAnd: 1023) / 1023.0 * 255
+						blue: (pharoRgb bitAnd: 1023) / 1023.0 * 255]
+				ifFalse: 
+					[self
+						alpha: (representation at: #alpha) * 255
+						red: (representation at: #red) * 255
+						green: (representation at: #green) * 255
+						blue: (representation at: #blue) * 255]]!
 
 stonName
 	^#Color! !

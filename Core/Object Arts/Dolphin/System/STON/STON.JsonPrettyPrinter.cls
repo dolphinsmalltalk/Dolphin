@@ -75,7 +75,7 @@ prettyPrintSpace
 encodeList:!public!writing! !
 encodeMap:!public!writing! !
 indentedDo:!helpers!private! !
-initialize!initialize/release!private! !
+initialize!initialization!private! !
 listElementSeparator!helpers!private! !
 mapElementSeparator!helpers!private! !
 newlineIndent!helpers!private! !

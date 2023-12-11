@@ -237,7 +237,7 @@ wrappedStream
 	^ stream! !
 !STON.CStyleCommentsSkipStream categoriesForMethods!
 atEnd!public!testing! !
-close!initialize/release!public! !
+close!initialization!public! !
 collectionSpecies!accessing!public! !
 consumeComment!private! !
 consumeToCommentEnd!private! !
@@ -254,7 +254,7 @@ next:into:startingAt:!accessing!public! !
 nextAvailable!public! !
 nextLine!accessing!public! !
 nextNonCommentChar!private! !
-on:!initialize/release!public! !
+on:!initialization!public! !
 peek!accessing!public! !
 peekFor:!accessing!public! !
 position!accessing!public! !
