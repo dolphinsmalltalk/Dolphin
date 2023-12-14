@@ -127,6 +127,8 @@ package setMethodNames: #(
 	#(#{Refactory.Browser.PushUpMethodRefactoring} #getOptionPushUpRemoveDuplicates:in:)
 	#(#{Refactory.Browser.RBAbstractClass} #allSubclassesDo:)
 	#(#{Refactory.Browser.RBAbstractClass} #allSubclassesPreOrderDo:)
+	#(#{Refactory.Browser.RBAbstractClass} #isDeprecated)
+	#(#{Refactory.Browser.RBAbstractClass} #isVisiblyAbstract)
 	#(#{Refactory.Browser.RBAbstractClass class} #icon)
 	#(#{Refactory.Browser.RBAbstractClass class} #instancesAreClasses)
 	#(#{Refactory.Browser.RBAbstractCondition} #validate)
@@ -476,7 +478,7 @@ Tools.SmalllintPlugin
 	classConstants: {}!
 UI.Dialog
 	subclass: #'Tools.ConvertToSiblingDialog'
-	instanceVariableNames: 'subclassesPresenter namespacePresenter classNamePresenter'
+	instanceVariableNames: 'subclassesPresenter namespacePresenter classNamePresenter showChangesPresenter'
 	classVariableNames: ''
 	imports: #(#{Refactory.Browser private})
 	classInstanceVariableNames: ''
@@ -1625,10 +1627,18 @@ allSubclassesPreOrderDo: aMonadicValuable
 	self subclasses do: 
 			[:each |
 			aMonadicValuable value: each.
-			each allSubclassesPreOrderDo: aMonadicValuable]! !
+			each allSubclassesPreOrderDo: aMonadicValuable]!
+
+isDeprecated
+	^self realClass ifNil: [false] ifNotNil: [:real | real isDeprecated]!
+
+isVisiblyAbstract
+	^self realClass ifNil: [false] ifNotNil: [:real | real isVisiblyAbstract]! !
 !Refactory.Browser.RBAbstractClass categoriesForMethods!
 allSubclassesDo:!class hierarchy-accessing!enumerating!public! !
 allSubclassesPreOrderDo:!class hierarchy-accessing!private! !
+isDeprecated!public!testing! !
+isVisiblyAbstract!public!testing! !
 !
 
 !Refactory.Browser.RBAbstractClass class methodsFor!

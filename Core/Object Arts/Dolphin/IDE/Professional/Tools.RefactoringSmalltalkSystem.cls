@@ -360,12 +360,7 @@ convertToSibling: aClass
 				name: (aClass environment fullNameFor: 'Abstract' , aClass name)
 				class: aClass
 				subclasses: aClass subclasses))
-		ifNotNil: 
-			[:refactoring |
-			self performRefactoringAction: 
-					[refactoring execute.
-					refactoring className asQualifiedReference
-						ifDefined: [:newSuperclass | newSuperclass owningPackage: aClass owningPackage]]]!
+		ifNotNil: [:refactoring | self performRefactoring: refactoring]!
 
 createInstanceVariableAccessors: aString in: aClass within: aBrowserEnvironment
 	"Invoke the 'Create Variable Accessors' refactoring on an instance variable."

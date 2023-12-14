@@ -28,12 +28,19 @@ showChanges!initializing!public! !
 !Tools.ChooseNamespaceDialog class methodsFor!
 
 create: viewString on: aValueModel
+	^self
+		create: viewString
+		on: aValueModel
+		choices: (ClassHierarchyModel withRoots: (Namespace subclasses copyWithout: SharedPool) sort)!
+
+create: viewString on: aValueModel choices: aClassHierarchyModel
 	^(self on: aValueModel)
-		classes: (ClassHierarchyModel withRoots: (Namespace subclasses copyWithout: SharedPool) sort);
+		classes: aClassHierarchyModel;
 		createView: viewString;
 		caption: 'Choose Namespace…';
 		yourself! !
 !Tools.ChooseNamespaceDialog class categoriesForMethods!
 create:on:!instance creation!public! !
+create:on:choices:!instance creation!public! !
 !
 
