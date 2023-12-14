@@ -22,6 +22,7 @@ addSuperclass
 						className: self className
 						superclass: parent superclass
 						categories: parent classCategories)
+						package: parent owningPackage;
 						isNonInstantiable: true;
 						yourself)
 				subclasses: {parent})!

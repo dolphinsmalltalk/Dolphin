@@ -59,6 +59,34 @@ testAsUndoModify
 	self assert: undo afterText equals: ClassToRename definition.
 	self assert: undo details imports equals: #()!
 
+testAsUndoModifyModelClass
+	| model subject undo definition modelClass before |
+	model := RBModel new.
+	modelClass := ClassToRename classInModel: model.
+	before := ClassToRename definition.
+	self assert: modelClass definition equals: before.
+	definition := ClassDetails fromClass: modelClass.
+	self assert: definition printString equals: before.
+	definition imports: #(#{Refactory.Browser.TestData}).
+	definition classInstanceVariableNames: #().
+	definition classConstants: { 'ClassConst1' -> 16r2. 'ClassConst3' -> '3' }.
+	subject := self subjectClass details: definition.
+	self assert: subject beforeText equals: before.
+	self assert: subject afterText
+		equals: 'Core.Model
+	subclass: #''Refactory.Browser.Tests.ClassToRename''
+	instanceVariableNames: ''rewriteRule builder class''
+	classVariableNames: ''ClassVar1''
+	imports: #(#{Refactory.Browser.TestData})
+	classInstanceVariableNames: ''''
+	classConstants: { ''ClassConst1'' -> 16r2. ''ClassConst3'' -> ''3'' }'.
+	undo := subject asUndoOperation.
+	self assert: undo isKindOf: self undoClass.
+	#todo.	"Shouldn't the undo changeClass be the model class?"
+	self assert: undo changeClass identicalTo: ClassToRename.
+	self assert: undo afterText equals: before.
+	self assert: undo details imports equals: #()!
+
 testDetails
 	| subject details |
 	subject := self canonicalSubject.
@@ -151,6 +179,7 @@ definitionWithEverything!helpers!private! !
 subjectClass!constants!private! !
 testAsUndoCreate!public!unit tests! !
 testAsUndoModify!public!unit tests! !
+testAsUndoModifyModelClass!public!unit tests! !
 testDetails!public!unit tests! !
 testPrinting!public!unit tests! !
 testPrintingLegacyClass!public!unit tests! !
