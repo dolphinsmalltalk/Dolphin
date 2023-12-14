@@ -20,10 +20,10 @@ areSubclassCreationMessageArgumentsValid: aMessageNode
 	^aMessageNode arguments allSatisfy: [:each | each isLiteralNode or: [each isDynamicArray]]!
 
 asUndoOperation
-	| class |
-	class := self classReference valueOrNil.
-	^class isBehavior
-		ifTrue: [self class details: (ClassDetails fromClass: class)]
+	| binding |
+	binding := self classReference realReference bindingOrNil.
+	^(binding notNil and: [binding isClassBinding])
+		ifTrue: [self class details: (ClassDetails fromClass: binding value)]
 		ifFalse: [RemoveClassChange removeClassName: self changeClassName]!
 
 changeClassName
