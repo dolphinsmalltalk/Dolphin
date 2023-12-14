@@ -11,6 +11,11 @@ package setClassNames: #(
 	#{Tools.Tests.DisassemblerTest}
 ).
 
+package setMethodNames: #(
+	#(#{Refactory.Browser.Tests.RBClassTest} #testIsDeprecated)
+	#(#{Refactory.Browser.Tests.RBClassTest} #testIsVisiblyAbstract)
+).
+
 package setPrerequisites: #(
 	'..\..\..\..\Samples\MVP\Animal Game\Animals'
 	'..\..\Base\Development System Tests'
@@ -59,6 +64,34 @@ Refactory.Browser.Tests.RefactoringTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
+"Loose Methods"!
+
+!Refactory.Browser.Tests.RBClassTest methodsFor!
+
+testIsDeprecated
+	| comparisonPolicy |
+	self deny: objectClass isDeprecated.
+	self deny: objectClass metaclass isDeprecated.
+	comparisonPolicy := model classNamed: 'Smalltalk.ComparisonPolicy'.
+	self assert: comparisonPolicy isDeprecated.
+	self assert: comparisonPolicy metaclass isDeprecated.
+	self deny: newClass isDeprecated.
+	self deny: newClass metaclass isDeprecated!
+
+testIsVisiblyAbstract
+	| boolean |
+	self deny: objectClass isVisiblyAbstract.
+	self deny: objectClass metaclass isVisiblyAbstract.
+	boolean := model classFor: Boolean.
+	self assert: boolean isVisiblyAbstract.
+	self assert: boolean metaclass isVisiblyAbstract.
+	self deny: newClass isVisiblyAbstract.
+	self deny: newClass metaclass isVisiblyAbstract! !
+!Refactory.Browser.Tests.RBClassTest categoriesForMethods!
+testIsDeprecated!public!unit tests! !
+testIsVisiblyAbstract!public!unit tests! !
+!
 
 "End of package definition"!
 
