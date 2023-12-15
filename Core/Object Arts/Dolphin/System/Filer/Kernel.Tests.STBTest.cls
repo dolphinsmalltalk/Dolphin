@@ -304,6 +304,21 @@ testMetaclassProxy0
 	self dumpToTranscriptIfDebug: bytes0.
 	self assert: (self deserialize: bytes0 version: 0) identicalTo: Array class!
 
+testProcessor0
+	"(Array with: Processor with: Processor) binaryStoreBytes"
+	self verifyRoundTripSingleton: Processor version: 0
+		expected: #[33 83 84 66 32 48 32 38 0 5 0 65 114 114 97 121 2 0 0 0 64 0 0 0 64 0 0 0]!
+
+testProcessor1
+	"(Array with: Processor with: Processor) binaryStoreBytes"
+	self verifyRoundTripSingleton: Processor version: 1
+		expected:#[33 83 84 66 32 49 32 98 0 0 0 2 0 0 0 64 0 0 0 64 0 0 0]!
+
+testProcessor3
+	"(Array with: Processor with: Processor) binaryStoreBytes"
+	self verifyRoundTripSingleton: Processor version: 3
+		expected: #[33 83 84 66 32 51 32 98 0 0 0 2 0 0 0 64 0 0 0 64 0 0 0]!
+
 testSmallInteger
 	0 to: STBOutFiler version
 		do: 
@@ -411,6 +426,21 @@ testSymbolsVersion1
 	self assert: rehydrated last identicalTo: #foo.
 	self assert: rehydrated second identicalTo: #bar!
 
+testSymbolsVersion3
+	"Symbols not proxied"
+
+	| rehydrated expectedBytes actualBytes |
+	"#(#foo #bar #foo) binaryStoreBytes"
+	expectedBytes := #[33 83 84 66 32 51 32 98 0 0 0 3 0 0 0 178 0 0 0 3 0 0 0 102 111 111 178 0 0 0 3 0 0 0 98 97 114 160 1 0 0].
+	self dumpToTranscriptIfDebug: expectedBytes.
+	actualBytes := self serialize: #(#foo #bar #foo) version: 3.
+	self assert: actualBytes equals: expectedBytes.
+	rehydrated := self deserialize: actualBytes version: 3.
+	self assert: rehydrated equals: #(#foo #bar #foo).
+	self assert: rehydrated first identicalTo: #foo.
+	self assert: rehydrated last identicalTo: #foo.
+	self assert: rehydrated second identicalTo: #bar!
+
 testSymbolUpgrade
 	| rehydrated dessicated |
 	"Try deserializing an old format stream"
@@ -433,6 +463,30 @@ testSymbolUpgrade
 	self assert: rehydrated identicalTo: #'a†b'.
 	rehydrated := self deserialize: #[33 83 84 66 32 49 32 186 0 0 0 0 0 0 0 82 0 0 0 3 0 0 0 97 134 98] version: 1.
 	self assert: rehydrated identicalTo: #'a†b'.!
+
+testTranscript0
+	"Dolphin 4.x and earlier did not actually serialize Transcript specially, just as any other Presenter instance. They will be able to deserialize this correctly into `(Array with: Transcript with: Transcript)` though."
+
+	self
+		verifyRoundTripSingleton: Transcript
+		version: 0
+		expected: #[33 83 84 66 32 48 32 38 0 5 0 65 114 114 97 121 2 0 0 0 14 2 17 0 83 84 66 83 105 110 103 108 101 116 111 110 80 114 111 120 121 0 0 0 0 78 2 13 0 1 0 0 0 83 84 66 67 108 97 115 115 80 114 111 120 121 0 0 0 0 54 0 6 0 83 116 114 105 110 103 18 0 0 0 68 111 108 112 104 105 110 32 84 114 97 110 115 99 114 105 112 116 178 0 0 0 15 0 0 0 84 114 97 110 115 99 114 105 112 116 83 104 101 108 108 14 1 14 0 83 84 66 83 121 109 98 111 108 80 114 111 120 121 0 0 0 0 178 0 0 0 7 0 0 0 99 117 114 114 101 110 116 128 0 0 0]!
+
+testTranscript1
+	"Dolphin 5.x did not actually serialize Transcript specially, just as any other Presenter instance. They will be able to deserialize this correctly into `(Array with: Transcript with: Transcript)` though."
+
+	self
+		verifyRoundTripSingleton: Transcript
+		version: 1
+		expected: #[33 83 84 66 32 49 32 98 0 0 0 2 0 0 0 14 2 17 0 83 84 66 83 105 110 103 108 101 116 111 110 80 114 111 120 121 0 0 0 0 154 0 0 0 0 0 0 0 82 0 0 0 18 0 0 0 68 111 108 112 104 105 110 32 84 114 97 110 115 99 114 105 112 116 82 0 0 0 15 0 0 0 84 114 97 110 115 99 114 105 112 116 83 104 101 108 108 186 0 0 0 0 0 0 0 82 0 0 0 7 0 0 0 99 117 114 114 101 110 116 176 1 0 0]!
+
+testTranscript3
+	"Dolphin 6.x did serialize Transcript specially using an STBSingletonProxy."
+
+	self
+		verifyRoundTripSingleton: Transcript
+		version: 3
+		expected: #[33 83 84 66 32 51 32 98 0 0 0 2 0 0 0 14 2 17 0 83 84 66 83 105 110 103 108 101 116 111 110 80 114 111 120 121 154 0 0 0 82 0 0 0 18 0 0 0 68 111 108 112 104 105 110 32 84 114 97 110 115 99 114 105 112 116 82 0 0 0 15 0 0 0 84 114 97 110 115 99 114 105 112 116 83 104 101 108 108 178 0 0 0 7 0 0 0 99 117 114 114 101 110 116 176 1 0 0]!
 
 testTruncatedHeader
 	#(#[] #[33] #[33 83 84] #[33 83 84 66] #[33 83 84 66 48] #[33 83 84 66 32] #[33 83 84 66 32 32] #[33 83 84 66 32 48])
@@ -548,6 +602,9 @@ testInvalidStream!public!unit tests! !
 testLargeIntegers0!public!unit tests! !
 testLargeIntegers1to4!public!unit tests! !
 testMetaclassProxy0!public!unit tests! !
+testProcessor0!public!unit tests! !
+testProcessor1!public!unit tests! !
+testProcessor3!public!unit tests! !
 testSmallInteger!public!unit tests! !
 testStringsVersion0!public!unit tests! !
 testStringsVersion1!public!unit tests! !
@@ -556,7 +613,11 @@ testStringsVersion3!public!unit tests! !
 testStringsVersion4!public!unit tests! !
 testSymbolsVersion0!public!unit tests! !
 testSymbolsVersion1!public!unit tests! !
+testSymbolsVersion3!public!unit tests! !
 testSymbolUpgrade!public!unit tests! !
+testTranscript0!public!unit tests! !
+testTranscript1!public!unit tests! !
+testTranscript3!public!unit tests! !
 testTruncatedHeader!public!unit tests! !
 testUnicodeStringUpgrade0!public!unit tests! !
 testUnicodeStringUpgrade3!public!unit tests! !

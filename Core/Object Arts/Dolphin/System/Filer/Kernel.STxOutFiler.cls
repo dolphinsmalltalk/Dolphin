@@ -237,6 +237,11 @@ saveStatic: aBindingReference
 
 	self subclassResponsibility!
 
+saveStatic: aBindingReference for: anObject
+	"Serialize a static variable reference into the stream."
+
+	self saveStatic: aBindingReference!
+
 saveString: aString
 	"Serialize a <String> into the object stream."
 
@@ -369,6 +374,7 @@ saveSingleton:!binary filing!public! !
 saveSingleton:class:name:!binary filing!public! !
 saveSmallInteger:!public!serializing! !
 saveStatic:!public!serializing! !
+saveStatic:for:!public!serializing! !
 saveString:!public!serializing! !
 saveSymbol:!public!serializing! !
 saveVariableBinding:!public!serializing! !

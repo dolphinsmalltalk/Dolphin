@@ -278,7 +278,7 @@ space
 stbSaveOn: anSTxOutFiler
 	"Output the singleton receiver to anSTxOutFiler."
 
-	anSTxOutFiler saveObject: self as: (STBSingletonProxy forClass: self class)!
+	anSTxOutFiler saveStatic: #{Core.Transcript} for: self!
 
 tab
 	"Store a tab character as the next element of the receiver."

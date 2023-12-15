@@ -120,8 +120,6 @@ saveObject: anObject as: anObjectToSave
 saveStatic: aBindingReference
 	"Serialize a static variable reference into the stream."
 
-	"Requires <BindingReference>s, which did not exist at the time of STB 0"
-
 	self errorStaticVarRefsNotSupported!
 
 saveString: aString

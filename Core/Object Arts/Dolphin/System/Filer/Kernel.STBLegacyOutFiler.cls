@@ -37,11 +37,21 @@ saveSet: aSet elements: aCollection
 
 	"In STB prior to 6, Sets were proxied."
 
-	self saveObject: aSet as: (STBCollectionProxy class: aSet class array: aCollection asArray)! !
+	self saveObject: aSet as: (STBCollectionProxy class: aSet class array: aCollection asArray)!
+
+saveStatic: aBindingReference for: anObject
+	"Serialize a static variable reference into the stream."
+
+	"Requires <BindingReference>s, which did not exist at the time of STB 0"
+
+	anObject == #{Transcript} value
+		ifTrue: [self saveObject: anObject as: (STBSingletonProxy forClass: #{UI.TranscriptShell} value)]
+		ifFalse: [self errorStaticVarRefsNotSupported]! !
 !Kernel.STBLegacyOutFiler categoriesForMethods!
 saveCollection:!operations!public! !
 saveLookupTable:!operations!public! !
 saveResourceLibrary:!operations!public! !
 saveSet:elements:!public!serializing! !
+saveStatic:for:!public!serializing! !
 !
 

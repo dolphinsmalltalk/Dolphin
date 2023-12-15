@@ -313,52 +313,50 @@ expectedDump6
 000045     #{Core.Object}
 000046     #{Core.Object class}
 000047     #{Core.Processor}
-000048     [STBSingletonProxy]
-000050         #{UI.TranscriptShell}
-000051         #current
-000052     #{Smalltalk}
-000053     19: #[]
-000055     20: #[255]
-000057     21: #[1 2 3 4 5]
-000059     [OrderedCollection]
-000062         [%<4: ''a␀b''>]
-000063         #testVersion0
-000064         $d
-000065     [STBSortedCollectionProxy]
-000068         #{Core.SortedCollection}
-000069         [Array]
-000071             27: ''a''
-000073             28: ''B''
-000075             29: ''b''
-000077             30: ''B''
-000079         [MergesortAlgorithm]
-000081             [BlockClosure]
-000085                 nil
-000086                 [CompiledMethod]
-000089                     0
-000090                     #{Kernel.PluggableSortAlgorithm class}
-000091                     #new
-000092                     <1p>
-000093                     37: #[171 100 31 177 97 105 233 1 130 106]
-000095                     #basicNew
-000096                     #setSortBlock:
-000097                     [%<34: [] in nil>]
-000098                     #%<=
-000099                     #yourself
-000100                 7
-000101                 256
-000102                 nil
-000103     [LookupTable]
-000106         2
-000107         [Point]
-000109             100
-000110             200
-000111         42: ''origin''
-000113         [Point]
-000114             10
-000115             20
-000116     44: #{Core.Object}
-End of 77 objects'  << (PluggableSortAlgorithm class >> #new) sourceDescriptor!
+000048     #{Core.Transcript}
+000049     #{Smalltalk}
+000050     17: #[]
+000052     18: #[255]
+000054     19: #[1 2 3 4 5]
+000056     [OrderedCollection]
+000059         [%<4: ''a␀b''>]
+000060         #testVersion0
+000061         $d
+000062     [STBSortedCollectionProxy]
+000065         #{Core.SortedCollection}
+000066         [Array]
+000068             25: ''a''
+000070             26: ''B''
+000072             27: ''b''
+000074             28: ''B''
+000076         [MergesortAlgorithm]
+000078             [BlockClosure]
+000082                 nil
+000083                 [CompiledMethod]
+000086                     0
+000087                     #{Kernel.PluggableSortAlgorithm class}
+000088                     #new
+000089                     <1p>
+000090                     35: #[171 100 31 177 97 105 233 1 130 106]
+000092                     #basicNew
+000093                     #setSortBlock:
+000094                     [%<32: [] in nil>]
+000095                     #%<=
+000096                     #yourself
+000097                 7
+000098                 256
+000099                 nil
+000100     [LookupTable]
+000103         2
+000104         [Point]
+000106             100
+000107             200
+000108         40: ''origin''
+000110         [Point]
+000111             10
+000112             20
+000113     42: #{Core.Object}
+End of 75 objects'  << (PluggableSortAlgorithm class >> #new) sourceDescriptor!
 
 minimumFilerVersion
 	^3!
