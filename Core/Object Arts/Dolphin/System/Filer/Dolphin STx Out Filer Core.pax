@@ -419,7 +419,7 @@ stbSaveOn:!binary filing!public! !
 stbSaveOn: anSTxOutFiler
 	"Save out a serialised representation of the receiver to anSTxOutFiler. The receiver is a singleton global, so save as a static reference."
 
-	anSTxOutFiler saveStatic: #{Core.Processor}! !
+	anSTxOutFiler saveStatic: #{Core.Processor} for: self! !
 !Kernel.ProcessorScheduler categoriesForMethods!
 stbSaveOn:!binary filing!public! !
 !

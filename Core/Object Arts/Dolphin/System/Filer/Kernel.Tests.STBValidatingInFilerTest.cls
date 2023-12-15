@@ -21,7 +21,10 @@ initializeLocator: anInteger
 		ifNil: 
 			[locator := RestrictedClassLocator forClasses: (anInteger < 4
 								ifTrue: 
-									[#(#{Core.ByteArray} #{Core.String} #{Core.AnsiString}#{Smalltalk.STBSymbolProxy} #{Core.Array})]
+									[anInteger < 2
+										ifTrue: 
+											[#(#{Core.ByteArray} #{Core.String} #{Core.AnsiString} #{Smalltalk.STBSymbolProxy} #{Core.Array})]
+										ifFalse: [#(#{Core.ByteArray} #{Core.String} #{Core.AnsiString} #{Core.Symbol} #{Core.Array})]]
 								ifFalse: [#(#{Core.ByteArray} #{Core.Utf8String} #{Core.Array} #{Core.Symbol} #{Core.AnsiString})])]!
 
 newInFilerOn: aByteArray
@@ -298,14 +301,27 @@ verifyResourceLibraryAtVersion: anInteger
 	super verifyResourceLibraryAtVersion: anInteger!
 
 verifyRoundTripSingleton: anObject version: anInteger
+	self
+		verifyRoundTripSingleton: anObject
+		version: anInteger
+		expected: (self serialize: { anObject. anObject } version: anInteger)!
+
+verifyRoundTripSingleton: anObject version: anInteger expected: aByteArray
 	self initializeLocator: anInteger.
 	locator includeClass: anObject class.
-	anInteger < 2
+	anInteger >= 6
 		ifTrue: 
 			[locator
-				includeClass: String;
-				includeClass: Smalltalk.STBSymbolProxy].
-	super verifyRoundTripSingleton: anObject version: anInteger!
+				includeClass: STBStaticVariableProxy;
+				includeClass: Kernel.FullBindingReference]
+		ifFalse: 
+			[locator
+				includeClass: STBSingletonProxy;
+				includeClass: STBClassProxy].
+	super
+		verifyRoundTripSingleton: anObject
+		version: anInteger
+		expected: aByteArray!
 
 verifySaveStaticVariableReferenceAtVersion: anInteger
 	self initializeLocator: anInteger.
@@ -342,6 +358,10 @@ verifySymbolsAtVersion: anInteger
 	self newLocator: anInteger.
 	anInteger > 1 ifTrue: [locator includeClass: Symbol].
 	super verifySymbolsAtVersion: anInteger!
+
+verifyTranscriptRoundTripAtVersion: anInteger 
+	self newLocator: anInteger.
+	^super verifyTranscriptRoundTripAtVersion: anInteger!
 
 verifyVariableBindingsAtVersion: anInteger
 	self newLocator: anInteger.
@@ -394,11 +414,13 @@ verifyLookupTablesAtVersion:!helpers!private! !
 verifyOrderedCollectionsAtVersion:!helpers!private! !
 verifyResourceLibraryAtVersion:!helpers!private! !
 verifyRoundTripSingleton:version:!helpers!private! !
+verifyRoundTripSingleton:version:expected:!helpers!private! !
 verifySaveStaticVariableReferenceAtVersion:!helpers!private! !
 verifyScaledDecimalsAtVersion:!helpers!private! !
 verifySetsAtVersion:!helpers!private! !
 verifyStrings:atVersion:!helpers!private! !
 verifySymbolsAtVersion:!helpers!private! !
+verifyTranscriptRoundTripAtVersion:!public! !
 verifyVariableBindingsAtVersion:!helpers!private! !
 !
 

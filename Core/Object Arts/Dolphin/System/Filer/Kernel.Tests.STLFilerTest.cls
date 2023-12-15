@@ -345,14 +345,25 @@ testInvalidStream
 	self should: [STLInFiler on: #('') readStream] raise: STBError.
 	self should: [STLInFiler on: #(#[]) readStream] raise: STBError!
 
-testProcessor
+testProcessor3
+	"(Array with: Processor with: Processor) literalStoreArray"
+
+	self
+		verifyRoundTripSingleton: Processor
+		version: 3
+		expected: '(Object fromLiteralStoreArray: #(#''!!STL'' 3 98 2 64 64 ))'!
+
+testProcessor4
+	"(Array with: Processor with: Processor) literalStoreArray"
+
+	self
+		verifyRoundTripSingleton: Processor
+		version: 4
+		expected: '(Object fromLiteralStoreArray: #(#''!!STL'' 4 8 #(##(Smalltalk.Processor) ##(Smalltalk.Processor)) ))'!
+
+testProcessor5plus
 	"Special case global variable"
 
-	super testProcessor.
-	self assert: (self serialize: Processor version: 3)
-		equals: '(Object fromLiteralStoreArray: #(#''!!STL'' 3 64 ))'.
-	self assert: (self serialize: Processor version: 4)
-		equals: '(Object fromLiteralStoreArray: #(#''!!STL'' 4 ##(Smalltalk.Processor) ))'.
 	5 to: self outfilerClass version
 		do: 
 			[:ver |
@@ -546,6 +557,18 @@ testSymbolReadWrite
 		by: -1
 		do: [:ver | self verifySymbolReadWriteAtVersion: ver]!
 
+testTranscript3
+	self
+		verifyRoundTripSingleton: Transcript
+		version: 3
+		expected: '(Object fromLiteralStoreArray: #(#''!!STL'' 3 98 2 1114638 ##(Smalltalk.STBSingletonProxy) 8 ##(Smalltalk.TranscriptShell) 8 #current 432 ))'!
+
+testTranscript4
+	self
+		verifyRoundTripSingleton: Transcript
+		version: 4
+		expected: '(Object fromLiteralStoreArray: #(#''!!STL'' 4 34 2 1114638 ##(Smalltalk.STBSingletonProxy) ##(Smalltalk.TranscriptShell) #current 432 ))'!
+
 testVariableBindingsVersion4
 	self
 		verifyVariableBindings: '(Object fromLiteralStoreArray: #(#''!!STL'' 4 34 3 983558 ##(Smalltalk.VariableBinding) #Object ##(Smalltalk.Object) 418 8 ''PageSize'' 16385 418 #Processor ##(Smalltalk.Processor) ))'
@@ -659,8 +682,8 @@ verifyIntegerReadWriteAtVersion: anInteger
 verifyRehydrateNonExistantClass: dessicated
 	self should: [self deserialize: dessicated version: self outfilerClass version] raise: NotFoundError!
 
-verifyRoundTripSingleton: anObject version: anInteger
-	super verifyRoundTripSingleton: anObject version: anInteger.
+verifyRoundTripSingleton: anObject version: anInteger expected: aString
+	super verifyRoundTripSingleton: anObject version: anInteger expected: aString.
 	self assert: (Object fromLiteralStoreArray: anObject literalStoreArray) identicalTo: anObject!
 
 verifyStringsAtPreUnicodeVersion: anInteger
@@ -722,7 +745,9 @@ testInvalidClassReference!public!unit tests! !
 testInvalidObjectReference!public!unit tests! !
 testInvalidPredefinedClass!public!unit tests! !
 testInvalidStream!public!unit tests! !
-testProcessor!public!unit tests! !
+testProcessor3!public!unit tests! !
+testProcessor4!public!unit tests! !
+testProcessor5plus!public!unit tests! !
 testSmalltalk!public! !
 testStl3ExtendedChar!public!unit tests! !
 testStl3Literals!public!unit tests! !
@@ -731,6 +756,8 @@ testStl5Literals!public!unit tests! !
 testStl6Literals!public!unit tests! !
 testStringsVersion4!public!unit tests! !
 testSymbolReadWrite!public!unit tests! !
+testTranscript3!public!unit tests! !
+testTranscript4!public!unit tests! !
 testVariableBindingsVersion4!public!unit tests! !
 testVariableBindingsVersion5!public!unit tests! !
 verifyArrayOfAtomicsAtVersion:!helpers!private! !
@@ -740,7 +767,7 @@ verifyBlockReadWriteAtVersion:!helpers!private! !
 verifyClassReadWriteAtVersion:!helpers!private! !
 verifyIntegerReadWriteAtVersion:!helpers!private! !
 verifyRehydrateNonExistantClass:!helpers!private! !
-verifyRoundTripSingleton:version:!helpers!private! !
+verifyRoundTripSingleton:version:expected:!helpers!private! !
 verifyStringsAtPreUnicodeVersion:!helpers!private! !
 verifySymbolReadWriteAtVersion:!helpers!private! !
 !

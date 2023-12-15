@@ -166,11 +166,9 @@ saveScaledDecimal: aScaledDecimal
 saveStatic: aBindingReference
 	"Serialize a static variable reference into the stream."
 
-	"Requires <BindingReference>s, which did not exist at the time of STB 3, but Processor is a special case we need to support."
+	"Requires <BindingReference>s, which did not exist at the time of STL 3/4."
 
-	aBindingReference = #{Core.Processor}
-		ifTrue: [stream nextPut: aBindingReference value]
-		ifFalse: [self errorStaticVarRefsNotSupported]!
+	self errorStaticVarRefsNotSupported!
 
 saveString: aString
 	"Serialize a <String> into the object stream."

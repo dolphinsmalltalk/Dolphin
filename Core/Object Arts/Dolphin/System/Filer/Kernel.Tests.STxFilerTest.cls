@@ -170,7 +170,7 @@ testPoolDictionary
 		do: [:ver | self verifyDictionaries: PoolDictionary atVersion: ver]!
 
 testProcessor
-	"Special case global variable"
+	"Special case global variable that has a pre-allocated reference index in STB (and STL prior to v6)."
 
 	self minimumFilerVersion to: self outfilerClass version
 		do: [:ver | self verifyRoundTripSingleton: Processor version: ver]!
@@ -259,7 +259,7 @@ testSystemDictionary
 testTranscript
 	self outfilerClass version to: self minimumFilerVersion
 		by: -1
-		do: [:ver | self verifyRoundTripSingleton: Transcript version: ver]!
+		do: [:ver | self verifyTranscriptRoundTripAtVersion: ver]!
 
 testVariableBinding
 	self outfilerClass version to: self minimumFilerVersion
@@ -395,16 +395,20 @@ verifyResourceLibraryAtVersion: anInteger
 	self assert: rehydrated asIdentitySet single identicalTo: lib2!
 
 verifyRoundTripSingleton: anObject version: anInteger
+	self
+		verifyRoundTripSingleton: anObject
+		version: anInteger
+		expected: (self serialize: { anObject. anObject } version: anInteger)!
+
+verifyRoundTripSingleton: anObject version: anInteger expected: aByteArray
 	| dessicated array rehydrated |
-	dessicated := self serialize: anObject version: anInteger.
-	rehydrated := self deserialize: dessicated version: anInteger.
-	self assert: rehydrated identicalTo: anObject.
+	rehydrated := self deserialize: aByteArray version: anInteger.
 	array := { anObject. anObject }.
-	dessicated := self serialize: array version: anInteger.
-	rehydrated := self deserialize: dessicated version: anInteger.
 	self assert: rehydrated equals: array.
 	self assert: rehydrated first identicalTo: anObject.
-	self assert: rehydrated second identicalTo: anObject!
+	self assert: rehydrated second identicalTo: anObject.
+	dessicated := self serialize: array version: anInteger.
+	self assert: dessicated equals: aByteArray!
 
 verifySaveStaticVariableReferenceAtVersion: ver
 	| serialised filer |
@@ -486,6 +490,9 @@ verifySymbolsAtVersion: anInteger
 	self assert: (rehydrated at: 5) identicalTo: sym.
 	self assert: (rehydrated at: 2) identicalTo: (rehydrated at: 4).
 	^self assert: (rehydrated at: 6) identicalTo: s asSymbol!
+
+verifyTranscriptRoundTripAtVersion: anInteger
+	^self verifyRoundTripSingleton: Transcript version: anInteger!
 
 verifyVariableBindings: expected version: anInteger
 	| actual rehydrated array var |
@@ -575,6 +582,7 @@ verifyOrderedCollectionsAtVersion:!helpers!private! !
 verifyRehydrateNonExistantClass:!helpers!private! !
 verifyResourceLibraryAtVersion:!helpers!private! !
 verifyRoundTripSingleton:version:!helpers!private! !
+verifyRoundTripSingleton:version:expected:!helpers!private! !
 verifySaveStaticVariableReferenceAtVersion:!helpers!private! !
 verifyScaledDecimalsAtVersion:!helpers!private! !
 verifySetsAtVersion:!helpers!private! !
@@ -583,6 +591,7 @@ verifyStrings:atVersion:!helpers!private! !
 verifyStringsAtPreUnicodeVersion:!helpers!private! !
 verifyStringsAtVersion:!helpers!private! !
 verifySymbolsAtVersion:!helpers!private! !
+verifyTranscriptRoundTripAtVersion:!public!unit tests! !
 verifyVariableBindings:version:!helpers!private! !
 verifyVariableBindingsAtVersion:!helpers!private! !
 !

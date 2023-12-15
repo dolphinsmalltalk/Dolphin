@@ -120,7 +120,12 @@ saveSmallInteger: aSmallInteger
 saveStatic: aBindingReference
 	"Serialize a static variable reference into the stream. "
 
-	self saveObject: aBindingReference
+	self saveObject: (STBStaticVariableProxy reference: aBindingReference asFullyQualifiedReference)!
+
+saveStatic: aBindingReference for: anObject
+	"Serialize a static variable reference into the stream in place of anObject. "
+
+	self saveObject: anObject
 		as: (STBStaticVariableProxy reference: aBindingReference asFullyQualifiedReference)!
 
 saveString: aString
@@ -215,6 +220,7 @@ saveScaledDecimal:!public!serializing! !
 saveSet:elements:!public!serializing! !
 saveSmallInteger:!public!serializing! !
 saveStatic:!public!serializing! !
+saveStatic:for:!public!serializing! !
 saveString:!public!serializing! !
 saveSymbol:!public!serializing! !
 writeByteObject:!operations!private! !

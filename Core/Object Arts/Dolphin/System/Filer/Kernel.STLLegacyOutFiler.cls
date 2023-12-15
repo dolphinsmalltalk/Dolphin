@@ -40,12 +40,25 @@ saveSet: aSet elements: aCollection
 
 	"In STL 3/4, Sets were proxied. The elements were not sorted, so the resulting source representation could be unstable."
 
-	self saveObject: aSet as: (STBCollectionProxy class: aSet basicClass array: aCollection asArray)! !
+	self saveObject: aSet as: (STBCollectionProxy class: aSet basicClass array: aCollection asArray)!
+
+saveStatic: aBindingReference for: anObject
+	"Serialize a static variable reference into the stream."
+
+	"Requires <BindingReference>s, which did not exist at the time of STB 3, but Processor and Transcript are special cases we need to support."
+
+	anObject == Processor
+		ifTrue: [stream nextPut: aBindingReference value]
+		ifFalse: 
+			[anObject == #{Transcript} value
+				ifTrue: [self saveObject: anObject as: (STBSingletonProxy forClass: #{UI.TranscriptShell} value)]
+				ifFalse: [self errorStaticVarRefsNotSupported]]! !
 !Kernel.STLLegacyOutFiler categoriesForMethods!
 lastPredefined!constants!private! !
 saveCollection:!operations!public! !
 saveLookupTable:!operations!public! !
 saveResourceLibrary:!binary filing!public! !
 saveSet:elements:!public!serializing! !
+saveStatic:for:!public!serializing! !
 !
 
