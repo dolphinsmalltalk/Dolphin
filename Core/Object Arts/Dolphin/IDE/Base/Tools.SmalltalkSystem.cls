@@ -4053,6 +4053,10 @@ toolbarBitmapSize
 toolbarBitmapSize: aPointOrNil
 	toolbarBitmapSize := aPointOrNil!
 
+toolsMenu
+	<menuPopulator: #populateToolsMenu:>
+	!
+
 typeForArgumentClass: anObject 
 	^self argumentClasses detect: [:each | anObject includesBehavior: each] ifNone: [anObject]!
 
@@ -4193,6 +4197,10 @@ warnOfUndefinedSelectorsSentBy: aCompiledMethod
 						line: 1
 						range: range
 						extras: {each}) signal]]!
+
+windowMenu
+	<menuPopulator: #populateWindowMenu:>
+	!
 
 workspaceClass
 	"Answer the class of presenter to be used for non-method source workspaces in the various
@@ -4588,10 +4596,10 @@ patchLevel:!patching!private! !
 paxFileDialogType!constants!private! !
 playSaveImageSound!commands-actions!private! !
 poolDictionariesFolder!accessing!private! !
-populateFolderMenu:tree:items:!private! !
-populateToolsMenu:!operations!private! !
-populateWindowMenu:!operations!private! !
-populateWindowMenu:withShells:ofClasses:!operations!private! !
+populateFolderMenu:tree:items:!commands-menus!private! !
+populateToolsMenu:!commands-menus!private! !
+populateWindowMenu:!commands-menus!private! !
+populateWindowMenu:withShells:ofClasses:!commands-menus!private! !
 preferAlternateInspectors!accessing!public! !
 preferAlternateInspectors:!accessing!public! !
 printBlockStatsOn:!public!utilities! !
@@ -4692,6 +4700,7 @@ toolBackgroundColor!accessing!public! !
 toolBackgroundColor:!accessing!public! !
 toolbarBitmapSize!accessing!public! !
 toolbarBitmapSize:!accessing!public! !
+toolsMenu!commands-menus!public! !
 typeForArgumentClass:!helpers!private! !
 unimplementedSelectorsIn:!enquiries!public! !
 uninitialize!class hierarchy-removing!private! !
@@ -4706,6 +4715,7 @@ viewComposerClass!constants!public! !
 viewComposerClass:!options!public! !
 viewResourcesMatching:do:!private!utilities! !
 warnOfUndefinedSelectorsSentBy:!helpers!private! !
+windowMenu!commands-menus!public! !
 workspaceClass!options!public! !
 workspaceClass:!options!public! !
 workspaceShellClass!options!public! !

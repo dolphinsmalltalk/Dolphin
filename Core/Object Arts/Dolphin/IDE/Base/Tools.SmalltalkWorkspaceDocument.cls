@@ -38,22 +38,12 @@ Class Variables:
 !Tools.SmalltalkWorkspaceDocument categoriesForClass!MVP-Presenters!MVP-Resources-IDE Tools! !
 !Tools.SmalltalkWorkspaceDocument methodsFor!
 
-aboutDolphin
-	"Show the About box."
-
-	self model aboutDolphin!
-
 applyOptions
 	self developmentSystem applyOptionsToTool: self.
 	self areVariableTipsEnabled: self class variableTips!
 
 areVariableTipsEnabled: aBoolean
 	workspacePresenter areVariableTipsEnabled: aBoolean!
-
-browsePackages
-	"Open a new package browser."
-	
-	self model browsePackages!
 
 buildPopupForCommand: aSymbol
 	aSymbol == #newIdeaSpace ifTrue: [^SmalltalkToolShell buildIdeaSpacePopup].
@@ -115,17 +105,6 @@ dropTextFile: aString
 dropXmlFile: aString 
 	self dropTextFile: aString!
 
-educationCenter
-	"Open the local Education Centre page"
-
-	self model educationCenter!
-
-fileFileIn
-	"The user has selected the standard File/File In command. File in the 
-	current contents of the receiver."
-
-	self model fileFileIn!
-
 fileLoad
 	| caret |
 	caret := self workspace view caretPosition.
@@ -135,15 +114,10 @@ fileLoad
 		caretPosition: caret;
 		ensureCaretVisible!
 
-fileNew
-	"The user has selected the standard File/New command. Use this
-	to create a new workspace"
-
-	^self model newWorkspace!
-
 fileOpen
-	"Create a new workspace window on a file"
+	"Open a file in this workspace if empty, or a new workspace if not."
 
+	<commandQuery: #queryOpenWorkspace:>
 	self openWorkspace!
 
 forgetSize
@@ -156,11 +130,6 @@ getDocumentData
 	"Private - Answer the data for the receiver's document"
 
 	^self workspace text!
-
-guidedTour
-	"Open the guided tour page"
-
-	self model guidedTour!
 
 hasContents
 	^self hasFilename or: [self getDocumentData notEmpty]!
@@ -183,9 +152,9 @@ ideaSpace
 inspectSystemOptions
 	"Open an <AccessorInspector> on the system options."
 
-	| inspector |
-	inspector := PublishedAspectInspector shellOn: self class.
-	inspector topShell caption: self class name , ' Options'!
+	^self model inspectSystemOptions
+		selectionOrNil: self class;
+		yourself!
 
 isIdeaSpaceCard
 	^self ideaSpace notNil!
@@ -246,33 +215,19 @@ onViewOpened
 		to: self.
 	self fileLoad!
 
-openViewComposer
-	"Open a new view composer"
-	
-	self model openViewComposer!
-
 openWorkspace
-	"Prompt for a workspace filename and open the contents inside the receiver if it is empty. Otherwise
-	create a new SmalltalkWorkspaceDocument to hold the contents of the file."
+	"Prompt for a workspace filename and open the contents inside the receiver."
 
+	<commandQuery: #queryOpenWorkspace:>
 	| openFilename |
-	self hasContents ifTrue: [^self model openWorkspace].
 	openFilename := self class getFilename.
 	openFilename isNil ifTrue: [^nil].
 	^self openOn: openFilename!
 
-populateToolsMenu: toolsMenu
-	"Private - Populate the Tools menu with the same hierarchy of items as the system folder.
-	The menu is arranged in alphabetical order, with dynamically generated keyboard
-	shortcuts using the earliest character not used as the shortcut for a previous item
-	in the menu. All items will always be enabled. There is no default."
+queryOpenWorkspace: aCommandQuery
+	"We only want to open the content locally if empty and not associated with a file."
 
-	self developmentSystem populateToolsMenu: toolsMenu!
-
-populateWindowMenu: windowMenu
-	"Private - Populate the open windows menu"
-
-	self developmentSystem populateWindowMenu: windowMenu!
+	aCommandQuery isEnabled: self hasContents not!
 
 rememberThisSize
 	"Record the size of the receiver as the default extent for its tool class."
@@ -343,36 +298,21 @@ show
 	self class defaultExtent ifNotNil: [:ext | self view extent: ext].
 	^super show!
 
-smalltalkExit
-	"Request system shutdown - may be cancelled by user."
-
-	self model smalltalkExit!
-
 systemModel
 	^self developmentSystem!
-
-toolsMenu
-	<menuPopulator: #populateToolsMenu:>
-	!
-
-windowMenu
-	<menuPopulator: #populateWindowMenu:>
-	!
 
 workspace
 	"Answers the SmalltalkWorkspace held by the receiver."
 
 	^workspacePresenter! !
 !Tools.SmalltalkWorkspaceDocument categoriesForMethods!
-aboutDolphin!commands-actions!public! !
-applyOptions!public! !
-areVariableTipsEnabled:!public! !
-browsePackages!commands-actions!public! !
-buildPopupForCommand:!private! !
-canSaveState!private!saved state! !
+applyOptions!options!private! !
+areVariableTipsEnabled:!accessing!options!public! !
+buildPopupForCommand:!commands-menus!private! !
+canSaveState!private!saved state!testing! !
 createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !
-defaultHelpId!public! !
+defaultHelpId!constants!public! !
 developmentSystem!accessing!private! !
 displayOn:!displaying!public! !
 dropClassFile:!operations!private! !
@@ -380,49 +320,40 @@ dropPackageFile:!operations!private! !
 dropScriptFile:!operations!private! !
 dropTextFile:!operations!private! !
 dropXmlFile:!operations!private! !
-educationCenter!commands-actions!public! !
-fileFileIn!commands-actions!public! !
-fileLoad!commands-actions!public! !
-fileNew!commands-actions!public! !
+fileLoad!operations!public! !
 fileOpen!commands-actions!public! !
 forgetSize!commands-actions!public! !
 getDocumentData!accessing!private! !
-guidedTour!commands-actions!public! !
-hasContents!public! !
+hasContents!public!testing! !
 hasNonDefaultExtent!private!testing! !
 hasRememberedSize!private!testing! !
 help!commands-actions!public! !
 ideaSpace!public! !
 inspectSystemOptions!commands-actions!public! !
-isIdeaSpaceCard!public! !
+isIdeaSpaceCard!public!testing! !
 isModified!public!testing! !
 isModified:!modes!public! !
 isText!public!testing! !
-language:!public! !
-onDropDown:!private! !
+language:!options!public! !
+onDropDown:!event handling!private! !
 onViewAvailable!event handling!public! !
 onViewOpened!event handling!private! !
-openViewComposer!commands-actions!public! !
-openWorkspace!public! !
-populateToolsMenu:!private! !
-populateWindowMenu:!private! !
+openWorkspace!commands-actions!public! !
+queryOpenWorkspace:!commands-queries!private! !
 rememberThisSize!commands-actions!public! !
 saveStateOn:!private!saved state! !
-searchForClass:!private! !
-searchForMethod:!private! !
-searchForObject:!public! !
-searchForPackage:!public! !
-searchForSymbol:!private! !
+searchForClass:!modes!private! !
+searchForMethod:!operations!private! !
+searchForObject:!operations!public! !
+searchForPackage:!modes!public! !
+searchForSymbol:!modes!private! !
 searchSmalltalk!commands-actions!public! !
 searchSmalltalkFor:!operations!public! !
 setDocumentData:!accessing!private! !
 setInitialFocus!operations!public! !
 setLexer!helpers!private! !
 show!operations!public! !
-smalltalkExit!commands-actions!public! !
 systemModel!accessing!private! !
-toolsMenu!public! !
-windowMenu!public! !
 workspace!accessing!public! !
 !
 

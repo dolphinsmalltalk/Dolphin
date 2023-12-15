@@ -692,7 +692,8 @@ queryLegacyCommandHandlers: aCommandQuery
 	| class |
 	class := self class.
 	
-	[class legacyCommandQueryHandlers do: [:each | (self perform: each with: aCommandQuery) ifTrue: [^true]].
+	[(class legacyCommandQueryHandlers anySatisfy: [:each | self perform: each with: aCommandQuery])
+		ifTrue: [^true].
 	class == ##(self)]
 			whileFalse: [class := class superclass].
 	^false!
@@ -826,14 +827,14 @@ add:name:!public!subpresenters! !
 add:name:helpId:!public!subpresenters! !
 additionalAccelerators!constants!public! !
 additionalKeyBindings!constants!private! !
-addToCommandRoute:!commands!public! !
+addToCommandRoute:!commands-routing!public! !
 addToImageList:mask:!double dispatch!public! !
 allSubPresentersDo:!enumerating!public! !
 asParameter!converting!public! !
 attachSubPresenterViews:!accessing!private! !
 basicOnViewOpened!event handling!public! !
-commandPolicy!commands!public! !
-commandSource!accessing!commands!public! !
+commandPolicy!commands-routing!public! !
+commandSource!commands-routing!public! !
 connectView!operations!private! !
 createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !
@@ -857,7 +858,7 @@ helpId!accessing!public! !
 helpId:!accessing!public! !
 hide!operations!public! !
 initialize!initializing!private! !
-invalidateUserInterface!accessing!commands!public! !
+invalidateUserInterface!commands-queries!public! !
 isOpen!public!testing! !
 isReadOnly!public!testing! !
 isReadOnly:!accessing!public! !
@@ -918,15 +919,15 @@ presenterNamed:!public!subpresenters! !
 presenterNamed:ifNone:!public!subpresenters! !
 preTranslateKeyboardInput:!dispatching!public! !
 preTranslateMouseInput:!dispatching!public! !
-queryCommand:!commands!public! !
-queryContextCommand:as:!private! !
-queryLegacyCommandHandlers:!commands!private! !
-queryRegisteredCommands:!commands!private! !
+queryCommand:!commands-queries!public! !
+queryContextCommand:as:!commands-mappings!commands-queries!private! !
+queryLegacyCommandHandlers:!commands-queries!private! !
+queryRegisteredCommands:!commands-queries!private! !
 remove:!public!subpresenters! !
 requestDragImages:!drag & drop!public! !
 requestDragObjects:!drag & drop!public! !
 requestDropOperations:!drag & drop!public! !
-routeCommand:!commands!public! !
+routeCommand:!commands-routing!public! !
 setEvents:!events!private! !
 setFocus!operations!public! !
 setView:!initializing!public! !

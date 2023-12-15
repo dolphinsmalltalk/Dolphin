@@ -70,11 +70,6 @@ browseDefinitionsCommand
 
 	^nil!
 
-browseHierarchy
-	"Open a new hierarchy browser at the root of the standard class hierarchy."
-
-	^self developmentSystem browseHierarchy: Object!
-
 browseHierarchyCommand
 	"Answer the <Symbol> of the contextual command to browse the class hierarchy of something, depending on the subview with focus and/or selection."
 
@@ -373,19 +368,6 @@ performCommand: aCommand
 			self statusModel value: ex.
 			nil]!
 
-populateToolsMenu: toolsMenu
-	"Private - Populate the Tools menu with the same hierarchy of items as the system folder.
-	The menu is arranged in alphabetical order, with dynamically generated keyboard
-	shortcuts using the earliest character not used as the shortcut for a previous item
-	in the menu. All items will always be enabled. There is no default."
-
-	self developmentSystem populateToolsMenu: toolsMenu!
-
-populateWindowMenu: windowMenu
-	"Private - Populate the open windows menu"
-
-	self developmentSystem populateWindowMenu: windowMenu!
-
 queryAcceptIt: aCommandQuery
 	self acceptItCommand ifNotNil: [:selector | self queryContextCommand: aCommandQuery as: selector]!
 
@@ -583,19 +565,11 @@ statusModel
 systemModel
 	^self developmentSystem!
 
-toolsMenu
-	<menuPopulator: #populateToolsMenu:>
-	!
-
 undoChange
 	"Undo the last change in the undo history list."
 
 	<commandQuery: #queryUndoChange:>
 	self changeManager undoOperation!
-
-windowMenu
-	<menuPopulator: #populateWindowMenu:>
-	!
 
 workspaceClass
 	^SmalltalkSystem current workspaceClass! !
@@ -607,7 +581,6 @@ applyOptions!private! !
 browseClassHierarchy!public! !
 browseDefinitions!commands-actions!public! !
 browseDefinitionsCommand!commands-mappings!private! !
-browseHierarchy!commands-actions!public! !
 browseHierarchyCommand!commands-mappings!private! !
 browseIt!commands-actions!public! !
 browseItCommand!commands-mappings!private! !
@@ -620,7 +593,7 @@ browseTests!public! !
 buildPopupForCommand:!private! !
 canRefactor!private!testing! !
 canSaveState!private!saved state! !
-changeManager!commands!public! !
+changeManager!accessing!public! !
 clearChangeHistory!public!refactoring! !
 clearSelection!commands-actions!private! !
 configureFromSavedStateString:!public! !
@@ -658,24 +631,22 @@ onViewStateRestored!event handling!public! !
 packageManager!constants!private! !
 pastSize!accessing!public! !
 performCommand:!commands-routing!public! !
-populateToolsMenu:!private! !
-populateWindowMenu:!private! !
 queryAcceptIt:!commands-queries!private! !
 queryBrowseDefinitions:!commands-queries!private! !
 queryBrowseHierarchy:!commands-queries!private! !
 queryBrowseIt:!commands-queries!private! !
 queryBrowseReferences:!commands-queries!private! !
 queryBrowseTests:!private! !
-queryClearChangeHistory:!commands!private! !
+queryClearChangeHistory:!commands-queries!private! !
 queryDeleteIt:!commands-queries!private! !
 queryHistoryBack:!commands-queries!private! !
 queryHistoryFastForward:!commands-queries!private! !
 queryHistoryForward:!commands-queries!private! !
 queryHistoryRewind:!commands-queries!private! !
 queryInspectIt:!commands-queries!private! !
-queryRedoChange:!commands!private! !
-queryUndoChange:!commands!private! !
-redoChange!commands!public! !
+queryRedoChange:!commands-queries!private! !
+queryUndoChange:!commands-queries!private! !
+redoChange!commands-actions!public! !
 refactoringsMenu!public! !
 rememberThisSize!commands-actions!public! !
 saveStateAspects:for:on:!helpers!private!saved state! !
@@ -696,9 +667,7 @@ slideyPinMap:!accessing!public! !
 slideyPinNames!accessing!private! !
 statusModel!accessing!private! !
 systemModel!accessing!private! !
-toolsMenu!public! !
-undoChange!commands!public! !
-windowMenu!public! !
+undoChange!commands-actions!public! !
 workspaceClass!constants!private! !
 !
 

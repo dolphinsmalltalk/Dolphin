@@ -49,12 +49,6 @@ applyOptions
 		forecolor: self class textcolor;
 		viewMode: self class viewMode!
 
-browseCompilationFailures
-	"Open a method browser on all methods in the system which have failed compilation (i.e.
-	which are instances of CompileFailedMethod)."
-
-	self developmentSystem browseCompilationFailuresIn: self searchEnvironment!
-
 browseCompilationIssues
 	"Open a method browser on all methods in the system which have failed compilation (i.e.
 	which are instances of CompileFailedMethod)."
@@ -257,24 +251,23 @@ whatsThis
 	<commandQuery: #hasSelection>
 	systemFolderPresenter selection whatsThis! !
 !Tools.SmalltalkSystemShell categoriesForMethods!
-addToCommandRoute:!commands!public! !
+addToCommandRoute:!commands-routing!public! !
 applyOptions!operations!options!private! !
-browseCompilationFailures!browsing!commands!public! !
-browseCompilationIssues!commands!public! !
-browseDeprecatedMethods!browsing!commands!public! !
-browseMessageDefinitions!browsing!commands!public! !
-browseMessageReferences!browsing!commands!public! !
+browseCompilationIssues!commands-actions!public! !
+browseDeprecatedMethods!browsing!commands-actions!public! !
+browseMessageDefinitions!browsing!commands-actions!public! !
+browseMessageReferences!browsing!commands-actions!public! !
 browseMethodCategory:!browsing!private! !
-browseNotYetImplemented!browsing!commands!public! !
-browseUnclassifiedMethods!browsing!commands!public! !
+browseNotYetImplemented!browsing!commands-actions!public! !
+browseUnclassifiedMethods!browsing!commands-actions!public! !
 createComponents!**auto generated**!initializing!public! !
 createSchematicWiring!initializing!public! !
 defaultHelpId!constants!public! !
 folderView!accessing!private! !
-hasSelection!commands!private! !
-hasToolSelected!commands!private! !
+hasSelection!private!testing! !
+hasToolSelected!commands-queries!private! !
 initialize!initializing!private! !
-inspectSystemOptions!commands!public! !
+inspectSystemOptions!commands-actions!public! !
 model:!accessing!public! !
 onCloseRequested:!event handling!private! !
 onHotKey:!event handling!private! !
@@ -283,15 +276,15 @@ onViewDestroyed!event handling!private! !
 onViewModeChanged!event handling!private! !
 onViewOpened!event handling!private! !
 onViewStateRestored!event handling!private! !
-properties!commands!public! !
+properties!commands-actions!public! !
 registerHotKey!helpers!private! !
 resetSelection!event handling!private! !
 resetWhenInvisible!options!public! !
-searchEnvironment!commands!public! !
+searchEnvironment!commands-actions!public! !
 systemFolderPresenter!accessing!private! !
 unregisterHotKey!helpers!private! !
 updateCaption!public!updating! !
-whatsThis!commands!public! !
+whatsThis!commands-actions!public! !
 !
 
 !Tools.SmalltalkSystemShell class methodsFor!

@@ -21,6 +21,7 @@ package setClassNames: #(
 package setMethodNames: #(
 	#(#{Tools.ClassCommentPlugin} #emitClassLayoutDescription)
 	#(#{Tools.SmalltalkToolShell} #browseKeyBindings)
+	#(#{Tools.SmalltalkWorkspaceDocument} #browseKeyBindings)
 ).
 
 package setPrerequisites: #(
@@ -70,7 +71,15 @@ emitClassLayoutDescription!commands-actions!public! !
 browseKeyBindings
 	OAIDEExtensions current browseKeyBindingsOfShell: self view! !
 !Tools.SmalltalkToolShell categoriesForMethods!
-browseKeyBindings!operations!private! !
+browseKeyBindings!commands-actions!private! !
+!
+
+!Tools.SmalltalkWorkspaceDocument methodsFor!
+
+browseKeyBindings
+	OAIDEExtensions current browseKeyBindingsOfShell: self view! !
+!Tools.SmalltalkWorkspaceDocument categoriesForMethods!
+browseKeyBindings!commands-actions!private! !
 !
 
 "End of package definition"!

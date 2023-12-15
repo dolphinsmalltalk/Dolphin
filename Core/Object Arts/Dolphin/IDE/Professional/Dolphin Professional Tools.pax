@@ -57,7 +57,6 @@ package setMethodNames: #(
 	#(#{Tools.SmalltalkSystem} #openIdeaSpace)
 	#(#{Tools.SmalltalkSystem} #updateHelpMenus)
 	#(#{Tools.SmalltalkToolShell} #addToNewIdeaSpace)
-	#(#{Tools.SmalltalkToolShell} #browseSystem)
 	#(#{Tools.SmalltalkToolShell} #canMoveToIdeaSpace)
 	#(#{Tools.SmalltalkToolShell} #destroy)
 	#(#{Tools.SmalltalkToolShell} #dragToolToIdeaSpace)
@@ -65,7 +64,6 @@ package setMethodNames: #(
 	#(#{Tools.SmalltalkToolShell class} #addToNewIdeaSpace:)
 	#(#{Tools.SmalltalkToolShell class} #dragToolToIdeaSpace:)
 	#(#{Tools.SmalltalkWorkspaceDocument} #addToNewIdeaSpace)
-	#(#{Tools.SmalltalkWorkspaceDocument} #browseSources)
 	#(#{Tools.SmalltalkWorkspaceDocument} #canMoveToIdeaSpace)
 	#(#{Tools.SmalltalkWorkspaceDocument} #destroy)
 	#(#{Tools.SmalltalkWorkspaceDocument} #dragToolToIdeaSpace)
@@ -476,11 +474,6 @@ addToNewIdeaSpace
 	<commandQuery: #canMoveToIdeaSpace>
 	^self class addToNewIdeaSpace: self!
 
-browseSystem
-	"Open a new system browser on Object."
-
-	^self developmentSystem browseSystem!
-
 canMoveToIdeaSpace
 	^self isIdeaSpaceCard not and: [self class canUseIdeaSpace]!
 
@@ -501,9 +494,8 @@ exit
 	^super exit! !
 !Tools.SmalltalkToolShell categoriesForMethods!
 addToNewIdeaSpace!public! !
-browseSystem!commands-actions!public! !
-canMoveToIdeaSpace!private!testing! !
-destroy!commands-actions!public! !
+canMoveToIdeaSpace!commands-queries!private!testing! !
+destroy!operations!public! !
 dragToolToIdeaSpace!public! !
 exit!commands-actions!public! !
 !
@@ -534,11 +526,6 @@ addToNewIdeaSpace
 	<commandQuery: #canMoveToIdeaSpace>
 	^IdeaSpaceShell addToNewIdeaSpace: self!
 
-browseSources
-	"Open a new source browser on the entire system sources"
-	
-	self model browseSources!
-
 canMoveToIdeaSpace
 	^self isIdeaSpaceCard not!
 
@@ -558,11 +545,10 @@ exit
 	self isIdeaSpaceCard ifTrue: [^self ideaSpace closeCard: self].
 	^super exit! !
 !Tools.SmalltalkWorkspaceDocument categoriesForMethods!
-addToNewIdeaSpace!public! !
-browseSources!commands-actions!public! !
-canMoveToIdeaSpace!private!testing! !
-destroy!commands-actions!public! !
-dragToolToIdeaSpace!public! !
+addToNewIdeaSpace!commands-actions!public! !
+canMoveToIdeaSpace!commands-queries!private!testing! !
+destroy!operations!public! !
+dragToolToIdeaSpace!commands-actions!public! !
 exit!commands-actions!public! !
 !
 

@@ -124,19 +124,6 @@ display: anObject
 encodedSizeOf: aCharacter 
 	^aCharacter utf8Length!
 
-fileFileIn
-	"The user has selected the standard File/File In command. Prompt for a file
-	(containing chunks) and file it in."
-
-	| filename |
-	filename := FileOpenDialog new
-				caption: 'File in…';
-				fileTypes: {self smalltalkFilesType. FileDialog allFilesType};
-				defaultExtension: '';
-				showModal.
-	filename notNil
-		ifTrue: [Cursor wait showWhile: [self class sourceManager fileIn: filename normalizeLineEndings: true]]!
-
 flush
 	"Flush the buffered output to the display."
 
@@ -328,7 +315,6 @@ crtab:!adding!public! !
 defaultHelpId!public! !
 display:!printing!public! !
 encodedSizeOf:!public! !
-fileFileIn!commands-actions!public! !
 flush!buffer!public! !
 forgetSize!commands-actions!public! !
 hasOutput!commands-queries!private! !

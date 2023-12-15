@@ -522,7 +522,7 @@ breakoutCard:!private! !
 breakoutCurrentCard!commands-actions!public! !
 canMoveCardLeft!commands-queries!private! !
 canMoveCardRight!commands-queries!private! !
-canMoveToIdeaSpace!private!testing! !
+canMoveToIdeaSpace!commands-queries!private!testing! !
 cardHistoryBack!commands-actions!public! !
 cardHistoryForward!commands-actions!public! !
 cards!accessing!public! !

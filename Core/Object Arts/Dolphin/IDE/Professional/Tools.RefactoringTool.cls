@@ -115,7 +115,7 @@ inlineParameter:!private!refactoring! !
 onAboutToDisplayMenu:!event handling!public! !
 parseTree!accessing!private! !
 queryCommand:!commands-queries!public! !
-queryContextCommand:as:!private! !
+queryContextCommand:as:!commands-mappings!commands-queries!private! !
 queryRenameItCommand:!commands-queries!private! !
 removeParameter:!operations!private!refactoring! !
 removeParameter:from:!operations!private!refactoring! !

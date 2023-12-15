@@ -14,7 +14,6 @@ package setClassNames: #(
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
 	'..\..\MVP\Base\Dolphin Basic Geometry'
-	'..\..\MVP\Dialogs\Common\Dolphin Common Dialogs'
 	'..\..\MVP\Graphics\Dolphin GDI Graphics'
 	'..\..\System\Filer\Dolphin Literal Filer'
 	'..\..\MVP\Base\Dolphin MVP Base'
