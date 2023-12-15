@@ -6,7 +6,7 @@
 
 This repository contains:
 * A VS2022 solution to build the Virtual Machine (VM) elements of Dolphin Smalltalk.
-* The necessary Smalltalk packages to build the [Dolphin Smalltalk](https://object-arts.com) Core Images from a pre-built boot image.
+* The necessary Smalltalk packages to build the Dolphin Smalltalk Core Images from a pre-built boot image.
 
 ## Building the Virtual Machine
 
@@ -40,7 +40,7 @@ Follow these instructions to create the product image and launch Dolphin Smallta
 
 * To launch the image you can right click on `DPRO.img8` and choose _Open With_, selecting `Dolphin8.exe` as the executable to be permanently associated with this file type.
 
-You should see Dolphin Professional 8 launch successfully. You can now continue with the Dolphin [Getting Started](http://object-arts.com/gettingstarted.html) introduction if you wish.
+You should see Dolphin Professional 8 launch successfully.
 
 ![Dolphin System Folder](https://user-images.githubusercontent.com/15128107/44483893-33180800-a644-11e8-843b-ce731367e4cb.png)
 
