@@ -200,11 +200,10 @@ implementorsOf: aSelector
 includesCategory: aCategory
 	^true!
 
-includesClass: aClass 
+includesClass: aClass
 	"Answer whether this environment includes any part of the class, even a single method."
 
-	#rbFix.	"By default an environment should include only those classes that it defines."
-	^self definesClass: aClass!
+	^true!
 
 includesClassOrMetaclass: aClass
 	"Answer whether this environment includes any part of the class, even a single method."
@@ -264,9 +263,10 @@ label: aString
 	label := aString!
 
 labelFormats
-	^##(IdentityDictionary withAll: {#definitions -> 'All definitions of <1p>'.
+	^##(IdentityDictionary withAll: {
+				#definitions -> 'All definitions of <1p>'.
 				#bindingReferences -> 'All references to <1p>'.
-				#classReferences -> 'All references to class <1p> or its variables'.
+				#classReferences -> 'All references to <1p>, or its static variables'.
 				#classVarReferences -> 'All methods that reference <1p>.<2s>'.
 				#instVarReferences -> 'All methods that reference <1p>.<2s>'.
 				#instVarReaders -> 'All methods that read <1p>.<2s>'.
@@ -276,12 +276,17 @@ labelFormats
 				#methodCategory -> 'All methods in category <1d>'.
 				#methodCategories -> 'All methods in categories <1d>'.
 				#references -> 'All references to <1p>'.
-				#variableReferences -> 'All references to <1p>'.
+				#variableReferences -> 'All references to <1d>'.
 				#localHierarchy -> 'Local hierarchy of <1p>'.
 				#subclassHierarchy -> 'Subclass hierarchy of <1p>'.
 				#superclassHierarchy -> 'Superclass hierarchy of <1p>'.
 				#someMethods -> 'Some methods'.
-				#someMethodsOf -> 'Some methods of <1p>'})!
+				#someMethodsOf -> 'Some methods of <1p>'.
+				#annotated -> 'All methods with <1d> annotations'.
+				#containing-> 'All methods containing <3s>: <1p>'.
+				#bytecode -> 'All methods with bytecode <1p>'.
+				#thisContext -> 'All methods referencing thisContext'.
+			})!
 
 matches: aString
 	^SelectorEnvironment matches: aString in: self!
@@ -339,7 +344,7 @@ referencesToClass: aClass
 
 referencesToVariable: aVariableBinding
 	^(self filterMethods: [:method | method refersToLiteral: aVariableBinding])
-		label: (self subEnvironmentLabel: #variableReferences for: aVariableBinding fullName);
+		label: (self subEnvironmentLabel: #variableReferences for: aVariableBinding);
 		addSearchString: aVariableBinding key;
 		yourself
 	"addSearchString: aVariableBinding fullName;"!

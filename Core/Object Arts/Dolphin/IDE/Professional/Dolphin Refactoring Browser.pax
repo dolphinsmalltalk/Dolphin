@@ -55,6 +55,7 @@ package setMethodNames: #(
 	#(#{Core.ClassDescription} #directlyDefinesInstanceVariable:)
 	#(#{Core.ClassDescription} #directlyDefinesVariable:)
 	#(#{Core.ClassDescription} #hierarchyDefinesVariable:)
+	#(#{Kernel.CompiledMethod} #methodInModel:)
 	#(#{Refactory.Browser.AbstractClassVariableRefactoring class} #displayPrefix)
 	#(#{Refactory.Browser.AbstractInstanceVariableRefactoring class} #displayPrefix)
 	#(#{Refactory.Browser.AbstractVariablesRefactoring} #displayOn:)
@@ -139,12 +140,14 @@ package setMethodNames: #(
 	#(#{Refactory.Browser.RBMethod} #hasCompilationFailures)
 	#(#{Refactory.Browser.RBMethod} #hasCompilationIssues)
 	#(#{Refactory.Browser.RBMethod} #owningPackage)
+	#(#{Refactory.Browser.RBMethod} #owningPackageIfLoose)
 	#(#{Refactory.Browser.RBMethod class} #icon)
 	#(#{Refactory.Browser.RBModel} #allResourceIdentifiers)
 	#(#{Refactory.Browser.RBModel} #browseChanges)
 	#(#{Refactory.Browser.RBModel} #methodsThatFailedToCompileIn:)
 	#(#{Refactory.Browser.RBModel} #methodsWithCompilationIssuesIn:)
 	#(#{Refactory.Browser.RBModel} #modelClassFor:)
+	#(#{Refactory.Browser.RBModel} #modelMethodFor:)
 	#(#{Refactory.Browser.RBModel class} #icon)
 	#(#{Refactory.Browser.RBNamespaceClass class} #icon)
 	#(#{Refactory.Browser.RBRootNamespace class} #icon)
@@ -543,6 +546,14 @@ directlyDefinesClassVariable:!public!testing! !
 directlyDefinesInstanceVariable:!public!testing! !
 directlyDefinesVariable:!public!testing! !
 hierarchyDefinesVariable:!public!testing! !
+!
+
+!Kernel.CompiledMethod methodsFor!
+
+methodInModel: aRBModel
+	^(methodClass classInModel: aRBModel) methodFor: selector! !
+!Kernel.CompiledMethod categoriesForMethods!
+methodInModel:!converting!public! !
 !
 
 !Refactory.Browser.AbstractClassVariableRefactoring class methodsFor!
@@ -1583,11 +1594,15 @@ hasCompilationIssues
 owningPackage
 	^compiledMethod isNil 
 		ifTrue: [class owningPackage]
-		ifFalse: [compiledMethod owningPackage]! !
+		ifFalse: [compiledMethod owningPackage]!
+
+owningPackageIfLoose
+	^compiledMethod isNil ifFalse: [compiledMethod owningPackageIfLoose]! !
 !Refactory.Browser.RBMethod categoriesForMethods!
 hasCompilationFailures!public!testing! !
 hasCompilationIssues!public!testing! !
 owningPackage!accessing!public! !
+owningPackageIfLoose!accessing!public! !
 !
 
 !Refactory.Browser.RBMethod class methodsFor!
@@ -1641,13 +1656,17 @@ methodsWithCompilationIssuesIn: aBrowserEnvironment
 	^env!
 
 modelClassFor: aBehavior
-	^aBehavior classInModel: self! !
+	^aBehavior classInModel: self!
+
+modelMethodFor: aCompiledMethod
+	^aCompiledMethod methodInModel: self! !
 !Refactory.Browser.RBModel categoriesForMethods!
 allResourceIdentifiers!public! !
 browseChanges!helpers!public! !
 methodsThatFailedToCompileIn:!browsing!public! !
 methodsWithCompilationIssuesIn:!public!searching! !
 modelClassFor:!accessing/classes!public! !
+modelMethodFor:!accessing/classes!public! !
 !
 
 !Refactory.Browser.RBModel class methodsFor!

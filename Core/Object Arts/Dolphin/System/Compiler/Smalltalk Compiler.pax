@@ -268,7 +268,7 @@ resolveBinding!accessing!public! !
 !Kernel.StRealVariableNode methodsFor!
 
 lookupInScope: aStSemanticScope
-	^aStSemanticScope resolveVariable: self! !
+	^aStSemanticScope resolveIdentifier: self name! !
 !Kernel.StRealVariableNode categoriesForMethods!
 lookupInScope:!operations!public! !
 !

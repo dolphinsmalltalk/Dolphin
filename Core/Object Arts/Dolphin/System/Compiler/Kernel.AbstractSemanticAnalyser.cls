@@ -192,14 +192,14 @@ visitOptimizedNode: anOptimizedNode
 			scopes := outerScopes]!
 
 visitParameterNode: aStParameterNode
-	currentScope declareArgument: aStParameterNode!
+	aStParameterNode variable: (currentScope declareArgument: aStParameterNode)!
 
 visitPrimitiveNode: aStPrimitiveNode
 	currentScope declareLocalVariable: (StGeneratedTempVariable
 				node: (aStPrimitiveNode errorTemp ifNil: [StTempDeclNode named: '_failureCode']))!
 
 visitTempDeclNode: aStTempDeclNode
-	currentScope declareTemp: aStTempDeclNode!
+	aStTempDeclNode variable: (currentScope declareTemp: aStTempDeclNode)!
 
 visitVariableNode: aVariableNode
 	^self subclassResponsibility! !

@@ -169,6 +169,9 @@ shallowCopy
 
 	^self!
 
+species
+	^Boolean!
+
 xor: operand
 	"Answer whether either the receiver or the <boolean> argument, operand,
 	is true, but not both.
@@ -198,6 +201,7 @@ isLiteral!public!testing! !
 not!logical operations!public! !
 or:!control flow!public! !
 shallowCopy!copying!public! !
+species!comparing!public! !
 xor:!logical operations!public! !
 !
 

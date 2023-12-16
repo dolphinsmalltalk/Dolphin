@@ -140,6 +140,11 @@ isEnabled: aBoolean
 
 	flags := flags mask: EnabledMask set: aBoolean!
 
+menuText
+	"Answer the menu text associated with the receiver's <CommandDescription>."
+
+	^commandDescription menuText!
+
 perform
 	"Perform the command on the receiver and answer the result."
 
@@ -228,6 +233,7 @@ isDefault!accessing!public! !
 isDefault:!accessing!public! !
 isEnabled!public!testing! !
 isEnabled:!accessing!public! !
+menuText!accessing!public! !
 perform!operations!public! !
 printOn:!development!printing!public! !
 receiver!accessing!public! !
@@ -250,7 +256,7 @@ commandDescription: item source: aView
 		commandDescription: item source: aView!
 
 findQueryHandlersIn: aClass
-	"Find all the command query annotations in the <Class> argument, and use them to build a map between command symbols (the selectors of the annotated methods), and selectors to perform to run the command query. The command query selectors can be unary, in which case the expectation is that the performed method is a testing method that will answer a <boolean> enablement status for the command, or can be a one-argument selector. Command queries that expect an argument are passed a <CommandQuery> object, and can update the enablement, checked status, and even change the command description text that will be displayed on a menu (where relevant)."
+	"Find all the command query annotations in the <Class> argument, and use them to build a map between command symbols (the selectors of the annotated methods), and selectors to perform to run the command query. The command query selectors can be unary, in which case the expectation is that the performed method is a testing method that will answer a <boolean> enablement status for the command, or can be a one-argument selector. Command queries that expect an argument are passed a <CommandQuery> object, and can update the enablement, checked status, and even change the text that will be displayed on a menu (where relevant)."
 
 	| queries |
 	queries := IdentityDictionary new.
@@ -259,20 +265,21 @@ findQueryHandlersIn: aClass
 			eachMethod annotations
 				ifNotNil: 
 					[:annotations |
-					annotations selectorsAndArgumentsDo: 
-							[:annotationSelector :annotationArgs |
-							annotationSelector == #commandQuery:
+					annotations withSelector: #commandQuery:
+						do: 
+							[:annotationArgs |
+							| querySelector argc |
+							querySelector := annotationArgs single.
+							argc := querySelector argumentCount.
+							argc == 1
 								ifTrue: 
-									[| querySelector argc |
-									querySelector := annotationArgs single.
-									argc := querySelector argumentCount.
-									argc == 1
-										ifTrue: [queries at: eachMethod selector put: (Message selector: querySelector arguments: #('placeholder for aCommandQuery'))]
-										ifFalse: 
-											[argc == 0
-												ifTrue: 
-													[queries at: eachMethod selector put: [:rcvr :query | query isEnabled: (rcvr perform: querySelector)]]
-												ifFalse: [Notification signal: 'Ignoring invalid command query selector #' , querySelector]]]]]].
+									[queries at: eachMethod selector
+										put: (Message selector: querySelector arguments: #('placeholder for aCommandQuery'))]
+								ifFalse: 
+									[argc == 0
+										ifTrue: 
+											[queries at: eachMethod selector put: [:rcvr :query | query isEnabled: (rcvr perform: querySelector)]]
+										ifFalse: [Notification signal: 'Ignoring invalid command query selector #' , querySelector]]]]].
 	^queries!
 
 new
@@ -281,11 +288,16 @@ new
 	^self commandDescription: CommandDescription new source: nil!
 
 validateQueriesIn: aCompilationResult
+	"Private - Validate the commandQuery: annotations in the <CompilationResult>, and return whether the command queries collection should be (lazily) rebuilt because of a valid change."
+
 	| method affectsQueries annotations |
 	method := aCompilationResult oldMethod.
+	"If the method previously had commandQuery: annotations, we assume there is a change"
 	affectsQueries := method notNil and: [method hasAnnotation: #commandQuery:].
 	method := aCompilationResult method.
-	(method notNil and: [(annotations := method annotations) notNil])
+	(method notNil and: 
+			[(annotations := method annotations) notNil
+				and: [affectsQueries := annotations includesSelector: #commandQuery:]])
 		ifTrue: 
 			[| class |
 			class := method methodClass.

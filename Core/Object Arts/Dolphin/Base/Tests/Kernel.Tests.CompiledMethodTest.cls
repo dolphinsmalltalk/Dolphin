@@ -12,11 +12,19 @@ Kernel.Tests.CompiledMethodTest comment: ''!
 !Kernel.Tests.CompiledMethodTest categoriesForClass!Tests-Kernel-Methods! !
 !Kernel.Tests.CompiledMethodTest methodsFor!
 
+annotationReferenceTwo
+	<rename: #foo two: #bar>
+	^#(#dolphin) single basicClass!
+
 returnPlusOne: anInteger
 	^anInteger + 1.!
 
 returnTrue
 	^true!
+
+testAllSymbolLiterals
+	self assert: (self class >> #annotationReferenceTwo) allSymbolLiterals asSortedArray
+		equals: #(#bar #basicClass #dolphin #foo #rename:two: #single)!
 
 testHasAnnotation
 	self assert: (SortedCollection>>#algorithm hasAnnotation: #nonBrowsable).
@@ -144,8 +152,10 @@ testValueWithReceiverArguments
 	value := method value: self withArguments: #(1).
 	self assert: value equals: 2! !
 !Kernel.Tests.CompiledMethodTest categoriesForMethods!
+annotationReferenceTwo!examples!private! !
 returnPlusOne:!examples!private! !
 returnTrue!examples!private! !
+testAllSymbolLiterals!public!unit tests! !
 testHasAnnotation!public!unit tests! !
 testIsQuick!public!unit tests! !
 testIsSimpleSelfSend!public!unit tests! !

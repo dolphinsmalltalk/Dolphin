@@ -48,7 +48,7 @@ testRemoveReferenced
 	subject setOption: #removeReferencedSelector
 		toUse: 
 			[:ref :symbol :references |
-			self assert: references single printString equals: SmalllintChecker fullName , '>>#run'.
+			self assert: references single printString equals: SmalllintChecker shortName , '>>#run'.
 			self assert: symbol equals: #checkClass:.
 			false].
 	self shouldAbort: subject!

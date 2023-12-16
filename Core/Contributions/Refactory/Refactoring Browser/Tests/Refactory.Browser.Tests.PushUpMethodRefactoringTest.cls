@@ -50,7 +50,7 @@ testPushUpClassMethod
 				model: model
 				pushUp: #(#foo)
 				from: class metaclass)
-		withMessage: '#foo refers to Foo which is defined in Core.Object class'!
+		withMessage: '#foo refers to Foo which is defined in Object class'!
 
 testPushUpMethodWithCopyOverriddenMethodsDown
 	| refactoring |
@@ -103,7 +103,7 @@ testPushUpWithMethodThatCannotBePushedDown
 				model: model
 				pushUp: #(#yourself)
 				from: (model classNamed: #SomeClass))
-		withMessage: 'Non-abstract class Core.Object or one of its superclasses already define #yourself'!
+		withMessage: 'Non-abstract class Object or one of its superclasses already define #yourself'!
 
 testPushUpWithSuperSendThatCannotBeCopiedDown
 	| class |

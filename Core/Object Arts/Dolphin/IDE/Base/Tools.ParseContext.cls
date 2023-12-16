@@ -2,7 +2,7 @@
 
 Core.Object
 	subclass: #'Tools.ParseContext'
-	instanceVariableNames: 'methodClass environment'
+	instanceVariableNames: 'classScope'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -13,42 +13,48 @@ Tools.ParseContext comment: ''!
 !Tools.ParseContext methodsFor!
 
 environment
-	^environment!
+	^classScope environment!
 
 methodClass
-	^methodClass!
+	^classScope methodClass!
 
 methodClass: aClass environment: aNamespace
-	methodClass := aClass.
-	environment := aNamespace.
+	classScope := StClassScope methodClass: aClass environment: aNamespace.
 	^self!
 
 owningPackage
-	^methodClass owningPackage!
+	^self methodClass owningPackage!
 
 printOn: aStream
 	aStream
 		print: self class;
 		nextPutAll: ' methodClass: ';
-		print: methodClass;
+		print: self methodClass;
 		nextPutAll: ' environment: ';
-		print: environment! !
+		print: self environment!
+
+scope
+	^classScope! !
 !Tools.ParseContext categoriesForMethods!
 environment!accessing!public! !
 methodClass!accessing!public! !
 methodClass:environment:!initializing!private! !
 owningPackage!accessing!public! !
 printOn:!printing!public! !
+scope!accessing!public! !
 !
 
 Tools.ParseContext methodProtocol: #parseContext attributes: #(#readOnly) selectors: #(#environment #methodClass #owningPackage)!
 
 !Tools.ParseContext class methodsFor!
 
+methodClass: aClass
+	^self methodClass: aClass environment: aClass environment!
+
 methodClass: aClass environment: aNamespace
-	<primitive: 157>
 	^self new methodClass: aClass environment: aNamespace! !
 !Tools.ParseContext class categoriesForMethods!
+methodClass:!instance creation!public! !
 methodClass:environment:!instance creation!public! !
 !
 

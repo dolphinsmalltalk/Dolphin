@@ -266,10 +266,7 @@ queryHistoryForward: aCommandQuery
 				isEnabled: true;
 				text: (aCommandQuery commandDescription menuText expandMacrosWithArguments: { historyList next }
 							locale: Locale smalltalk)]
-		ifFalse: 
-			[aCommandQuery
-				isEnabled: false;
-				text: 'Forward']!
+		ifFalse: [aCommandQuery text: 'Forward']!
 
 recordMethodVisit
 	"Private - Add to the visit history - note that the current item is at the top of the history list"

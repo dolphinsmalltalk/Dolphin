@@ -302,8 +302,8 @@ testName
 	self assert: newClass metaclass name equals: 'SomeClassName class'.!
 
 testPrintString
-	self assert: objectClass printString equals: 'Core.Object'.
-	self assert: objectClass metaclass printString equals: 'Core.Object class'!
+	self assert: objectClass printString equals: 'Object'.
+	self assert: objectClass metaclass printString equals: 'Object class'!
 
 testRealClass
 	| myClass subclasses |

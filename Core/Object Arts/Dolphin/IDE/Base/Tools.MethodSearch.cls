@@ -21,6 +21,12 @@ Class Variables:
 !Tools.MethodSearch categoriesForClass!Kernel-Objects! !
 !Tools.MethodSearch methodsFor!
 
+definitionsIn: aBrowserEnvironment
+	^(aBrowserEnvironment filterMethods: self methodDefinitionFilter)
+		label: (aBrowserEnvironment subEnvironmentLabel: #definitions for: self pattern);
+		search: self;
+		yourself!
+
 findDetails
 	"Answer an <AdvancedFindDetails> configured to find the selectors against which the receiver matches."
 
@@ -45,12 +51,15 @@ literalDefinitionFilter
 	selector := self literal.
 	^[:method | method selector == selector]!
 
-literalSymbolsFilter: matchBlock 
+literalSymbolsFilter: matchBlock
 	^
-	[:eachMethod | 
-	(eachMethod 
+	[:eachMethod |
+	(eachMethod
 		literalsDetect: [:eachLiteral | (eachLiteral isKindOf: Symbol) and: [matchBlock value: eachLiteral]]
-		ifNone: []) notNil]!
+		ifNone: nil) notNil]!
+
+matchesIn: aBrowserEnvironment
+	^{ self definitionsIn: aBrowserEnvironment. self referencesIn: aBrowserEnvironment }!
 
 methodDefinitionFilter
 	"Private - Answer a <monadicValuable> which can be used to discriminate between <CompiledMethod>s that
@@ -87,6 +96,16 @@ pattern
 pattern: aString 
 	findDetails pattern: aString!
 
+referencesIn: aBrowserEnvironment
+	^(aBrowserEnvironment filterMethods: self methodReferenceFilter)
+		label: (aBrowserEnvironment labelFormats at: self referencesLabelTag)
+					<< { self pattern. aBrowserEnvironment. self searchMode asPhrase };
+		search: self;
+		yourself!
+
+referencesLabelTag
+	^#references!
+
 regexpDefinitionFilter
 	"Private - Answer a <monadicValuable> that can be evaluated to identify <CompiledMethod>s whos'
 	selectors match the receiver's regular expression."
@@ -119,12 +138,7 @@ regexpReferenceFilter
 regularExpression
 	"Private - Answer a <IRegExp> configured with the receiver's current search details."
 
-	regexp isNull
-		ifTrue: 
-			[regexp := VBScript.IRegExp2 new.
-			regexp
-				pattern: findDetails pattern;
-				ignoreCase: findDetails isCaseSensitive not].
+	regexp isNull ifTrue: [regexp := findDetails regularExpression].
 	^regexp!
 
 searchMode
@@ -174,6 +188,7 @@ wildcardReferenceFilter
 	ignoreCase := findDetails isCaseSensitive not.
 	^self literalSymbolsFilter: [:each | match match: each ignoreCase: ignoreCase]! !
 !Tools.MethodSearch categoriesForMethods!
+definitionsIn:!enquiries!public! !
 findDetails!accessing!public! !
 findDetails:!accessing!public! !
 initialize!initializing!public! !
@@ -181,10 +196,13 @@ literal!public! !
 literal:!accessing!public! !
 literalDefinitionFilter!helpers!private! !
 literalSymbolsFilter:!helpers!private! !
+matchesIn:!enquiries!public! !
 methodDefinitionFilter!helpers!private! !
 methodReferenceFilter!helpers!private! !
 pattern!accessing!public! !
 pattern:!accessing!public! !
+referencesIn:!enquiries!public! !
+referencesLabelTag!constants!public! !
 regexpDefinitionFilter!helpers!private! !
 regexpReferenceFilter!helpers!private! !
 regularExpression!accessing!private! !

@@ -115,17 +115,7 @@ parseContext
 		ifNil: 
 			[ParseContext methodClass: (model modelClassFor: UndefinedObject)
 				environment: (model modelClassFor: Smalltalk)]
-		ifNotNil: 
-			[:method |
-			| class package |
-			package := method owningPackageIfLoose.
-			class := model modelClassFor: method methodClass.
-			(method customEnvironment notNil or: [package isNil and: [class owningPackage isNil]])
-				ifTrue: [class methodFor: method selector]
-				ifFalse: 
-					[| env |
-					env := package ifNil: [class environment] ifNotNil: [package environment ifNil: [class environment]].
-					ParseContext methodClass: class environment: (model modelClassFor: env)]]!
+		ifNotNil: [:method | (model modelMethodFor: method) parseContext]!
 
 recompileDiffs
 	<commandQuery: #hasMethodSelected>

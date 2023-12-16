@@ -71,53 +71,181 @@ autoParse
 	self errorModel isNil ifTrue: [^self].
 	self errorModel value: self firstError!
 
+browseAnnotatedMethods
+	"Open a method browser showing methods in the search environment with the current annotation."
+
+	<commandQuery: #queryBrowseAnnotatedMethods:>
+	self browseReferencesMatching: (AnnotatedMethodSearch newLiteral: self selectedNode selector)!
+
+browseBindingReferenceTarget
+	<commandQuery: #queryBrowseBindingReferenceTarget:>
+	| binding |
+	binding := self selectedNode value bindingOrNil.
+	self browseClassDefinition: (binding isClassVariable
+				ifTrue: [binding environment]
+				ifFalse: [binding isClassBinding ifTrue: [binding value] ifFalse: [binding value class instanceClass]])!
+
+browseClass
+	<commandQuery: #queryBrowseClass:>
+	self browseClassDefinition: self selectedVariable binding value!
+
+browseClassOfLiteral
+	<commandQuery: #queryBrowseClassOfLiteral:>
+	self browseClassDefinition: self selectedNode value class!
+
+browseClassReferences
+	<commandQuery: #queryBrowseClassReferences:>
+	^self browseClassReferences: self selectedNode variable binding value!
+
+browseClassVariableDefinition
+	<commandQuery: #queryBrowseClassVariableDefinition:>
+	self browseClassDefinition: self selectedVariable binding environment!
+
+browseClassVariableReferences
+	<commandQuery: #queryBrowseClassVariableReferences:>
+	self browseEnvironments: (self developmentSystem
+				referencesToVariable: self selectedNode variable binding realBinding
+				in: self searchEnvironment)!
+
 browseDefinitionsCommand
-	"Private - Browse definitions of the object identified by the node under the cursor, or
-	failing that prompt for a selector and open a method browser displaying the implementors of
-	that selector."
+	"Private - Browse definitions of the object identified by the node under the cursor."
 
-	self selectedNode
-		ifNotNil: 
-			[:node |
-			(self selectorFromNode: node)
-				ifNil: 
-					[node isVariable
-						ifTrue: 
-							[(self variableClassification: node) == #classGlobal
-								ifTrue: 
-									[^Message selector: #browseClass:
-										argument: (self parseContext environment fullBindingFor: node name) value]]]
-				ifNotNil: 
-					[:selector |
-					^Message selector: #browseDefinitionsOfSelector:in: arguments: {selector. self searchEnvironment}]].
-	^super browseDefinitionsCommand!
+	| node |
+	node := self selectedNode.
+	node isNil ifTrue: [^nil].
+	node isMessage ifTrue: [^#browseMessageDefinitions].
+	node isLiteralNode
+		ifTrue: 
+			[| literalType |
+			literalType := node valueClass.
+			literalType == Symbol ifTrue: [^#browseSelectorDefinitions].
+			literalType == BindingReference ifTrue: [^#browseBindingReferenceTarget].
+			^#browseClassOfLiteral].
+	node isVariable
+		ifTrue: 
+			[^##(IdentityDictionary withAll: {
+						#instance -> #browseInstanceVariableDefinition.
+						#class -> #browseClassVariableDefinition.
+						#classGlobal -> #browseClass.
+						#temporary -> #browseTemporaryVariableDefinition.
+						#special -> #browseSpecialVariableDefinition.
+						#global -> #browseSharedVariableDefinition
+					})
+				lookup: (self variableClassification: node)].
+	^nil!
 
-browseMessage
+browseEnvironments: aSequenceOfBrowserEnvironment
+	"Private - Open a method browser on the methods in the specified sequence of <BrowserEnvironment>s"
+
+	"Route a command message to avoid requiring that the parent presenter implement #browseMethodsInEnvironments:. Ultimately this can be handled by the development system model, but is also intercepted by <MethodExplorer> in order to add to its search history tree."
+
+	self routeCommand: (CommandDescription
+				command: (Message selector: #browseMethodsInEnvironments: argument: aSequenceOfBrowserEnvironment))!
+
+browseInstanceVariableDefinition
+	<commandQuery: #queryBrowseInstanceVariableDefinition:>
+	self browseClassDefinition: (self parseContext methodClass
+				whichClassDefinesInstVar: self selectedNode name)!
+
+browseInstanceVariableReferences
+	<commandQuery: #queryBrowseInstanceVariableReferences:>
+	self
+		routeCommand: (CommandDescription command: (Message selector: #browseMethodsInEnvironments:
+						argument: (self developmentSystem
+								referencesToInstVar: self selectedNode name
+								inHierarchyOf: self parseContext methodClass realClass
+								within: self searchEnvironment)))!
+
+browseLiteralReferences
+	"Open a method browser showing references to the value of the current literal node. Note this can be any literal value, not just symbols. For example you can search for all occurrences of String 'abc' in the system, or $🐬"
+
+	<commandQuery: #queryBrowseLiteralReferences:>
+	self browseReferencesMatching: (MethodSearch newLiteral: self selectedNode value)!
+
+browseMessageDefinitions
+	"Browse definitions of the object identified by the node under the cursor."
+
 	<commandQuery: #queryBrowseMessage:>
+	self browseDefinitionsMatching: (MethodSearch newLiteral: self selectedNode selector)!
+
+browseMessageReferences
+	"Open a method browser showing references to the current message or literal symbol node."
+
+	<commandQuery: #queryBrowseMessage:>
+	self browseReferencesMatching: (MethodSearch newLiteral: self selectedNode selector)!
+
+browseMessageTarget
+	"Open a class browser on the method to which the current message node maps. It is possible to identify a specific method from sends where the receiver is of a known type, i.e. sends to literals, static variables, and self/super sends. When the receiver is hosted in a debugger, there is also runtime context to resolve the types of variables."
+
+	<commandQuery: #queryBrowseMessageTarget:>
 	| node |
 	node := self selectedMessageNode.
-	self developmentSystem browseMethod: ((self targetOfMessage: node) lookupMethod: node selector)!
+	self
+		routeCommand: (CommandDescription command: (Message selector: #browseMethod:
+						arguments: { ((self targetOfMessage: node) lookupMethod: node selector) realMethod }))!
 
 browseReferencesCommand
 	"Private - Answer the context-sensitive 'Browse References' command for the selected node."
 
-	self selectedNode
-		ifNotNil: 
-			[:node |
-			(self selectorFromNode: node)
-				ifNil: 
-					[node isVariable
-						ifTrue: 
-							[| varClass |
-							varClass := self variableClassification: node.
-							(varClass == #classGlobal or: [varClass == #global])
-								ifTrue: 
-									[^Message selector: #browseVariableReferences:in:
-										arguments: {self parseContext environment fullBindingFor: node name. self searchEnvironment}]]]
-				ifNotNil: 
-					[:literal |
-					^Message selector: #browseReferencesToLiteral:in: arguments: {literal. self searchEnvironment}]].
-	^super browseReferencesCommand!
+	| node |
+	node := self selectedNode.
+	node isNil ifTrue: [^nil].
+	node isMessage ifTrue: [^#browseMessageReferences].
+	node isLiteralNode
+		ifTrue: 
+			[| literalType |
+			literalType := node valueClass.
+			literalType == BindingReference ifTrue: [^#browseReferencesToBindingReference].
+			^literalType ~~ UndefinedObject ifTrue: [#browseLiteralReferences]].
+	node isVariable
+		ifTrue: 
+			[^##(IdentityDictionary withAll: {
+						#instance -> #browseInstanceVariableReferences.
+						#class -> #browseClassVariableReferences.
+						#classGlobal -> #browseClassReferences.
+						#temporary -> #browseTemporaryVariableReferences.
+						#special -> #browseSpecialVariableReferences.
+						#global -> #browseSharedVariableReferences
+					})
+				lookup: (self variableClassification: node)].
+	node isTag ifTrue: [^#browseAnnotatedMethods].
+	^nil!
+
+browseReferencesToBindingReference
+	"Open a method browser showing references to the value of the current literal node. Note this can be any literal value, not just symbols. For example you can search for all occurrences of String 'abc' in the system, or $🐬"
+
+	<commandQuery: #queryBrowseReferencesToBindingReference:>
+	self browseReferencesMatching: (MethodSearch newLiteral: self selectedNode value)!
+
+browseSharedVariableDefinition
+	<commandQuery: #queryBrowseSharedVariableDefinition:>
+	self browseClassDefinition: self selectedVariable binding value class instanceClass!
+
+browseSharedVariableReferences
+	<commandQuery: #queryBrowseSharedVariableReferences:>
+	self
+		browseEnvironments: (self developmentSystem referencesToVariable: self selectedNode variable binding realBinding
+				in: self searchEnvironment)!
+
+browseSpecialVariableDefinition
+	<commandQuery: #queryBrowseSpecialVariableDefinition:>
+	^self browseClassDefinition: (self selectedNode valueClassIn: self parseContext methodClass)!
+
+browseSpecialVariableReferences
+	<commandQuery: #queryBrowseSpecialVariableReferences:>
+	| node |
+	node := self selectedNode.
+	node isThisContext
+		ifTrue: [self browseReferencesMatching: ThisContextSearch new]
+		ifFalse: [self browseClassReferences: (node valueClassIn: self parseContext methodClass)]!
+
+browseTemporaryVariableDefinition
+	<commandQuery: #queryBrowseTemporaryVariableDefinition:>
+	self browseClassDefinition: (self suggestClassForVariable: self selectedVariable)!
+
+browseTemporaryVariableReferences
+	<commandQuery: #queryBrowseTemporaryVariableReferences:>
+	self browseClassReferences: (self suggestClassForVariable: self selectedVariable)!
 
 buildParseTree
 	| parseContext |
@@ -240,15 +368,6 @@ nameBindingContext
 			class := context basicClass.
 			ParseContext methodClass: class environment: class environment]!
 
-nodeForRange: anInterval 
-	^self parseTree 
-		ifNotNil: 
-			[:tree | 
-			| node |
-			node := tree whichNodeIsContainedBy: anInterval.
-			node isNil ifTrue: [node := tree bestNodeFor: anInterval].
-			node]!
-
 onAboutToDisplayMenu: aMenu 
 	"The system is about to display the <Menu> argument this is our chance to fiddle with it."
 
@@ -287,42 +406,184 @@ parseTree
 promptToSaveChanges
 	^parentPresenter promptToSaveChanges!
 
-queryBrowseDefsOrRefs: aCommandQuery
-	| message |
-	message := self selectedMessage.
-	aCommandQuery
-		isEnabled: true;
-		text: (aCommandQuery commandDescription menuText expandMacrosWithArguments: { message ?? '…' }
-					locale: Locale smalltalk)!
+queryBrowseAnnotatedMethods: aCommandQuery
+	| node |
+	node := self selectedNode.
+	aCommandQuery isEnabled: node isTag.
+	(aCommandQuery menuText includes: $<)
+		ifTrue: 
+			[aCommandQuery text: ('Methods with annotation <1d>'
+						expandMacrosWithArguments: { node isTag ifTrue: [node value selector] ifFalse: [$…] }
+						locale: Locale smalltalk)]!
+
+queryBrowseBindingReferenceTarget: aCommandQuery
+	| node |
+	node := self selectedNode.
+	((node isLiteralNode and: [node valueClass == BindingReference]) ifTrue: [node value bindingOrNil])
+		ifNotNil: 
+			[:binding |
+			aCommandQuery isEnabled: true.
+			(aCommandQuery menuText includes: $<)
+				ifTrue: 
+					[aCommandQuery
+						text: 'Class <1p>' << (binding isClassVariable
+										ifTrue: [binding environment]
+										ifFalse: [binding value class instanceClass])]]!
+
+queryBrowseClass: aCommandQuery
+	^self queryBrowseVariableDefinition: aCommandQuery classification: #classGlobal!
+
+queryBrowseClassOfLiteral: aCommandQuery
+	| node |
+	node := self selectedNode.
+	node isLiteralNode
+		ifTrue: 
+			[aCommandQuery isEnabled: true.
+			(aCommandQuery menuText includes: $<)
+				ifTrue: [aCommandQuery text: 'Class <1p>' << node value class]]!
+
+queryBrowseClassReferences: aCommandQuery
+	^self queryBrowseVariableReferences: aCommandQuery classification: #classGlobal!
+
+queryBrowseClassVariableDefinition: aCommandQuery
+	| var |
+	var := self selectedVariable.
+	(var notNil and: [var classification == #class])
+		ifTrue: 
+			[aCommandQuery isEnabled: true.
+			(aCommandQuery menuText includes: $<)
+				ifTrue: 
+					[aCommandQuery
+						text: ('Class <1p>' expandMacrosWithArguments: { var binding environment } locale: Locale smalltalk)]]!
+
+queryBrowseClassVariableReferences: aCommandQuery
+	| var |
+	var := self selectedVariable.
+	(var notNil and: [var classification == #class])
+		ifTrue: 
+			[aCommandQuery
+				isEnabled: true;
+				text: (aCommandQuery menuText expandMacrosWithArguments: { var binding shortName }
+							locale: Locale smalltalk)]!
+
+queryBrowseInstanceVariableDefinition: aCommandQuery
+	| var |
+	var := self selectedVariable.
+	var classification == #instance
+		ifTrue: 
+			[aCommandQuery isEnabled: true.
+			(aCommandQuery menuText includes: $<)
+				ifTrue: 
+					[aCommandQuery text: ('Class <1p>'
+								expandMacrosWithArguments: { self parseContext methodClass whichClassDefinesInstVar: var name }
+								locale: Locale smalltalk)]]!
+
+queryBrowseInstanceVariableReferences: aCommandQuery
+	| var |
+	var := self selectedVariable.
+	var classification == #instance
+		ifTrue: 
+			[aCommandQuery
+				isEnabled: true;
+				text: (aCommandQuery menuText expandMacrosWithArguments: {
+									'<1p>.<2s>'
+										<< { self parseContext methodClass whichClassDefinesInstVar: var name. var name }
+								}
+							locale: Locale smalltalk)]!
+
+queryBrowseLiteralReferences: aCommandQuery
+	| node |
+	node := self selectedNode.
+	node isLiteralNode
+		ifTrue: 
+			[| literal |
+			literal := node value.
+			aCommandQuery
+				isEnabled: true;
+				text: (aCommandQuery menuText
+							expandMacrosWithArguments: { literal species name , ' ' , literal printString }
+							locale: Locale smalltalk)]!
 
 queryBrowseMessage: aCommandQuery
-	| text node |
-self halt.
+	| node message |
+	node := self selectedNode.
+	message := node isMessage ifTrue: [node selector].
+	aCommandQuery
+		isEnabled: message notNil;
+		text: (aCommandQuery menuText expandMacrosWithArguments: { message ?? '…' }
+					locale: Locale smalltalk)!
+
+queryBrowseMessageTarget: aCommandQuery
+	| node method |
 	node := self selectedMessageNode.
-	text := nil.
-	(node isNil or: 
-			[| target |
-			target := self targetOfMessage: node.
-			target isNil or: [(text := target lookupMethod: node selector) isNil]])
-		ifTrue: 
-			[aCommandQuery isEnabled: false.
-			text := 'Message']
-		ifFalse: [aCommandQuery isEnabled: true].
-	aCommandQuery text: (aCommandQuery commandDescription menuText expandMacrosWithArguments: { text }
-				locale: Locale smalltalk).
-	^true!
+	method := node notNil
+				ifTrue: [(self targetOfMessage: node) ifNotNil: [:target | target lookupMethod: node selector]].
+	aCommandQuery
+		isEnabled: method notNil;
+		text: (aCommandQuery menuText expandMacrosWithArguments: { method ?? 'Target of Message…' }
+					locale: Locale smalltalk)!
 
-queryCommand: aCommandQuery
-	"Private - Enter details about a potential command for the receiver into the
-	<CommandQuery>."
-
-	| selector |
-	selector := aCommandQuery commandSymbol.
-	(#(#browseDefinitions #browseReferences) identityIncludes: selector)
+queryBrowseReferencesToBindingReference: aCommandQuery
+	| node |
+	node := self selectedNode.
+	(node isLiteralNode and: [node valueClass == BindingReference])
 		ifTrue: 
-			[self queryBrowseDefsOrRefs: aCommandQuery.
-			^true].
-	^super queryCommand: aCommandQuery!
+			[aCommandQuery
+				isEnabled: true;
+				text: (aCommandQuery menuText expandMacrosWithArguments: { node value printString }
+							locale: Locale smalltalk)]!
+
+queryBrowseSelectorDefinitions: aCommandQuery
+	| node |
+	node := self selectedNode.
+	((node isLiteralNode and: [node valueClass == Symbol]) ifTrue: [node value])
+		ifNotNil: 
+			[:selector |
+			aCommandQuery
+				isEnabled: true;
+				text: (aCommandQuery menuText expandMacrosWithArguments: { 'selector <1p>' << selector }
+							locale: Locale smalltalk)]!
+
+queryBrowseSharedVariableDefinition: aCommandQuery
+	^self queryBrowseVariableDefinition: aCommandQuery classification: #global!
+
+queryBrowseSharedVariableReferences: aCommandQuery
+	^self queryBrowseVariableReferences: aCommandQuery classification: #global!
+
+queryBrowseSpecialVariableDefinition: aCommandQuery
+	^self queryBrowseVariableDefinition: aCommandQuery classification: #special!
+
+queryBrowseSpecialVariableReferences: aCommandQuery
+	^self queryBrowseVariableReferences: aCommandQuery classification: #special!
+
+queryBrowseTemporaryVariableDefinition: aCommandQuery
+	^self queryBrowseVariableDefinition: aCommandQuery classification: #temporary!
+
+queryBrowseTemporaryVariableReferences: aCommandQuery
+	^self queryBrowseVariableReferences: aCommandQuery classification: #temporary!
+
+queryBrowseVariableDefinition: aCommandQuery classification: aSymbol
+	| var |
+	var := self selectedVariable.
+	((var notNil and: [var classification == aSymbol]) ifTrue: [self suggestClassForVariable: var])
+		ifNotNil: 
+			[:valueClass |
+			aCommandQuery isEnabled: true.
+			(aCommandQuery menuText includes: $<)
+				ifTrue: 
+					[aCommandQuery
+						text: ('Class <1p>' expandMacrosWithArguments: { valueClass instanceClass } locale: Locale smalltalk)]]!
+
+queryBrowseVariableReferences: aCommandQuery classification: aSymbol
+	| var |
+	var := self selectedVariable.
+	((var notNil and: [var classification == aSymbol]) ifTrue: [self suggestClassForVariable: var])
+		ifNotNil: 
+			[:valueClass |
+			aCommandQuery
+				isEnabled: true;
+				text: (aCommandQuery menuText expandMacrosWithArguments: { valueClass instanceClass shortName }
+							locale: Locale smalltalk)]!
 
 reformatAccept
 	<commandQuery: #canSaveMethod>
@@ -367,32 +628,38 @@ resetParseTimer
 		killParseTimer;
 		setParseTimer!
 
-resolveIdentifier: aString ifDefined: aMonadicValuable
-	| context methodClass |
-	context := self parseContext.
-	context ifNil: [^nil].
-	methodClass := context methodClass.
-	"In the debugger will have an evaluation context which is the receiver."
-	(self evaluationContext isKindOf: methodClass)
-		ifTrue: 
-			[aString = 'self' ifTrue: [^aMonadicValuable value: self evaluationContext].
-			(self contextBindingFor: aString) ifNotNil: [:var | ^aMonadicValuable value: var value].
-			(methodClass indexOfInstVar: aString ifAbsent: nil)
-				ifNotNil: [:i | ^aMonadicValuable value: (self evaluationContext instVarAt: i)]].
-	(methodClass fullBindingFor: aString environment: context environment)
-		ifNotNil: [:binding | binding value ifNotNil: [:value | ^aMonadicValuable value: value]].
-	^nil!
-
-resolveVariable: aStIdentifierToken
+resolveVariableOfNode: aStVariableNode
 	"Private - Attempt to resolve the correct variable for the specified identifier using the parse tree.  If the parseTree has not been built, then just rely on the simpler analysis done in the superclass. This will still be able to resolve non-local variables."
 
-	parseTree ~~ DeafObject.Current
+	| identifier |
+	(aStVariableNode notNil and: [aStVariableNode isVariable]) ifFalse: [^nil].
+	"The semantic analyzer may have run and bound the variable node already"
+	aStVariableNode variable ifNotNil: [:var | ^var].
+	identifier := aStVariableNode name.
+	(self resolveIdentifier: identifier) ifNotNil: [:var | ^var].
+
+	"If all else fails, synthesize a variable
+		- Any known instance variables in scope would have been resolved (doesn't require a parse tree).
+		- Any known static variables in scope would have been resolved (doesn't require a parse tree).
+		- For the method/block parameters and temp declarations we know the right variable type (determined by the styling lexer).
+		- For other cases we make an educated guess:
+			- Static variables start with uppercase letters by convention, so for such identifiers assume an undeclared static variable
+			- Assume other cases are temps"
+	aStVariableNode isParameter
 		ifTrue: 
-			[| node |
-			node := self nodeForRange: aStIdentifierToken sourceInterval.
-			(node notNil and: [node isVariable and: [node scope notNil]])
-				ifTrue: [^node lookupInScope: node scope]].
-	^super resolveVariable: aStIdentifierToken!
+			["Method/block parameter "
+			^StArgumentVariable node: aStVariableNode].
+	aStVariableNode isTempDeclaration
+		ifTrue: 
+			["Method or block temporary declaration - we don't know which without a parse tree, but doesn't really matter for most purposes"
+			^StTempVariable node: aStVariableNode].
+	"Other identifiers"
+	identifier first isUpperCase
+		ifTrue: 
+			["Undeclared static"
+			^StStaticVariable scope: self parseContext scope binding: nil].
+	"Assume a temp"
+	^StTempVariable node: aStVariableNode!
 
 selectedErrorRange
 	^self selectedNode sourceInterval!
@@ -421,6 +688,12 @@ selectedNode
 	range isEmpty ifTrue: [range := range start to: range start].
 	^(self nodeForRange: range) ifNil: [self parseTree]!
 
+selectedSymbol
+	^self selectedNode value!
+
+selectedVariable
+	^self resolveVariableOfNode: self selectedNode!
+
 selectionChanged
 	"The receiver highlights all text matching <view selection>"
 
@@ -431,7 +704,7 @@ selectorFromNode: aStProgramNode
 	^aStProgramNode isMessage
 		ifTrue: [aStProgramNode selector]
 		ifFalse: 
-			[(aStProgramNode isLiteralNode and: [aStProgramNode value isKindOf: Symbol])
+			[(aStProgramNode isLiteralNode and: [aStProgramNode valueClass == Symbol])
 				ifTrue: [aStProgramNode value]]!
 
 selfClass
@@ -456,22 +729,13 @@ targetOfMessage: aStMessageNode
 	receiver isVariable
 		ifTrue: 
 			[receiver isSpecialVariable ifTrue: [^receiver valueClassIn: self parseContext methodClass].
-			^self resolveIdentifier: receiver name ifDefined: [:value | value basicClass]]
+			(receiver variable ifNil: [self resolveIdentifier: receiver name])
+				ifNotNil: [:var | ^self suggestClassForVariable: var]]
 		ifFalse: [receiver isLiteralNode ifTrue: [^aStMessageNode receiver value basicClass]].
 	^nil!
 
 variableClassification: aStVariableNode
-	| context methodClass |
-	(aStVariableNode notNil and: [aStVariableNode isVariable]) ifFalse: [^nil].
-	(self isTempVariable: aStVariableNode) ifTrue: [^#temporary].
-	context := self parseContext.
-	methodClass := context methodClass.
-	(methodClass allInstanceVariableNames includes: aStVariableNode name) ifTrue: [^#instance].
-	(methodClass hierarchyBindingFor: aStVariableNode name) ifNotNil: [^#class].
-	((context environment ?? Smalltalk) fullBindingFor: aStVariableNode name)
-		ifNotNil: [:var | ^var isClassBinding ifTrue: [#classGlobal] ifFalse: [#global]].
-	"Variable name not found in this context"
-	^nil!
+	^(self resolveVariableOfNode: aStVariableNode) ifNotNil: [:var | var classification]!
 
 widenSourceSelection
 	"Expand the selection to encompass the next greater syntactic element."
@@ -493,9 +757,29 @@ addToCommandRoute:!commands-routing!public! !
 allDefinedVariablesDo:!autocompletion!enumerating!private! !
 applyOptions!operations!options!private! !
 autoParse!helpers!private! !
+browseAnnotatedMethods!commands-actions!public! !
+browseBindingReferenceTarget!commands-actions!public! !
+browseClass!commands-actions!public! !
+browseClassOfLiteral!commands-actions!public! !
+browseClassReferences!commands-actions!public! !
+browseClassVariableDefinition!commands-actions!public! !
+browseClassVariableReferences!commands-actions!public! !
 browseDefinitionsCommand!commands-mappings!private! !
-browseMessage!commands-actions!public! !
+browseEnvironments:!browsing!private! !
+browseInstanceVariableDefinition!commands-actions!public! !
+browseInstanceVariableReferences!commands-actions!public! !
+browseLiteralReferences!commands-actions!public! !
+browseMessageDefinitions!commands-actions!public! !
+browseMessageReferences!commands-actions!public! !
+browseMessageTarget!commands-actions!public! !
 browseReferencesCommand!commands-mappings!private! !
+browseReferencesToBindingReference!commands-actions!public! !
+browseSharedVariableDefinition!commands-actions!public! !
+browseSharedVariableReferences!commands-actions!public! !
+browseSpecialVariableDefinition!commands-actions!public! !
+browseSpecialVariableReferences!commands-actions!public! !
+browseTemporaryVariableDefinition!commands-actions!public! !
+browseTemporaryVariableReferences!commands-actions!public! !
 buildParseTree!helpers!private! !
 canSaveMethod!commands-queries!private! !
 clear!operations!public! !
@@ -518,7 +802,6 @@ killParseTimer!helpers!private! !
 lineFromPosition:!enquiries!public! !
 method!accessing!private! !
 nameBindingContext!accessing!autocompletion!private! !
-nodeForRange:!helpers!private! !
 onAboutToDisplayMenu:!event handling!public! !
 onTextChanged!event handling!public! !
 onTimerTick:!event handling!public! !
@@ -527,22 +810,42 @@ parseContext!accessing!private! !
 parseSourceIn:!helpers!private! !
 parseTree!accessing!private! !
 promptToSaveChanges!helpers!public! !
-queryBrowseDefsOrRefs:!commands-queries!private! !
+queryBrowseAnnotatedMethods:!commands-queries!private! !
+queryBrowseBindingReferenceTarget:!commands-queries!private! !
+queryBrowseClass:!commands-queries!private! !
+queryBrowseClassOfLiteral:!commands-queries!private! !
+queryBrowseClassReferences:!commands-queries!private! !
+queryBrowseClassVariableDefinition:!commands-queries!private! !
+queryBrowseClassVariableReferences:!commands-queries!private! !
+queryBrowseInstanceVariableDefinition:!commands-queries!private! !
+queryBrowseInstanceVariableReferences:!commands-queries!private! !
+queryBrowseLiteralReferences:!commands-queries!private! !
 queryBrowseMessage:!commands-queries!private! !
-queryCommand:!commands-queries!private! !
+queryBrowseMessageTarget:!commands-queries!private! !
+queryBrowseReferencesToBindingReference:!commands-queries!private! !
+queryBrowseSelectorDefinitions:!commands-queries!private! !
+queryBrowseSharedVariableDefinition:!commands-queries!private! !
+queryBrowseSharedVariableReferences:!commands-queries!private! !
+queryBrowseSpecialVariableDefinition:!commands-queries!private! !
+queryBrowseSpecialVariableReferences:!commands-queries!private! !
+queryBrowseTemporaryVariableDefinition:!commands-queries!private! !
+queryBrowseTemporaryVariableReferences:!commands-queries!private! !
+queryBrowseVariableDefinition:classification:!commands-queries!private! !
+queryBrowseVariableReferences:classification:!commands-queries!private! !
 reformatAccept!commands-actions!public! !
 reformatMenu!commands-menus!public! !
 reformatSource!commands-actions!public! !
 reformattedSource!helpers!private! !
 repositionAtSourceLine:!operations!public! !
 resetParseTimer!helpers!private! !
-resolveIdentifier:ifDefined:!helpers!private! !
-resolveVariable:!autocompletion!helpers!private! !
+resolveVariableOfNode:!autocompletion!helpers!private! !
 selectedErrorRange!accessing!private!refactoring! !
 selectedMessage!accessing!private! !
 selectedMessageNode!accessing!private!refactoring! !
 selectedMethod!accessing!public! !
 selectedNode!accessing!public! !
+selectedSymbol!commands-actions!public! !
+selectedVariable!helpers!private! !
 selectionChanged!event handling!public! !
 selectorFromNode:!helpers!private! !
 selfClass!autocompletion!private! !
@@ -621,7 +924,7 @@ resource_Debugger_source
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Debugger_source)
 	"
 
-	^#(#'!!STL' 5 985166 10 #{UI.STBViewProxy} #{UI.Scintilla.ScintillaView} 34 52 nil nil 34 2 8 1445007684 262145 416 nil 1245702 #{Graphics.ThemeColor} #smalltalkWorkspace nil 21 461638 4 #{UI.Menu} nil true 34 22 1180742 2 #{UI.CommandMenuItem} 1 1377606 4 #{UI.CommandDescription} #accept 8 '&Accept' 1 1 nil nil nil 562 1 594 #reformatAccept 8 'Ref&ormat/Accept' 1 1 nil nil nil 562 1 594 #acceptNoRestart 8 'Accept &No Restart' 1 1 nil nil nil 1179974 1 #{UI.DividerMenuItem} 4097 562 1 594 #runToCursor 8 'Run to &Cursor' 1 1 852806 4 #{Graphics.Icon} nil true 2819078 #{Graphics.ImageFromStringResourceInitializer} 8 'RunToCursor.ico' 2490894 #{Kernel.STBExternalResourceLibraryProxy} 8 'dolphindr8.dll' nil 65541 nil nil nil 562 1 594 #toggleBreakpoint 8 'To&ggle Breakpoint' 1 1 nil nil nil 562 1 594 #toggleDisassembly 8 'Disasse&mbly' 1 1 nil nil nil 738 4097 514 nil true 8 #() 8 'Au&to-correct' #autoCorrectMenu 134217729 nil nil nil nil nil 514 nil true 34 16 562 1 594 #renameNode 8 'Re&name <1d>…' 1 1 nil nil nil 738 4097 562 1 594 #extractToTemporary 8 'Extract to &Temporary…' 1 1 nil nil nil 562 1 594 #extractMethod 8 'E&xtract Method…' 1 1 nil nil nil 562 1 594 #extractToComponent 8 'Extract to &Component…' 1 5 nil nil nil 738 4097 562 1 594 #inlineMessage 8 'Inline &Message' 1 1 nil nil nil 514 nil true 8 #() 8 'Impl&ement Message In' #implementMessageMenu 134217729 nil nil nil nil nil 738 4097 562 1 594 #inlineTemporary 8 '&Inline Temporary' 1 1 nil nil nil 562 1 594 #moveTempToInnerScope 8 'Move to Inner &Scope' 1 1 nil nil nil 562 1 594 #convertTempToInstVar 8 'Con&vert to Instance Variable' 1 1 nil nil nil 738 4097 562 1 594 #addParameterToMessage 8 '&Add Parameter to <1d>…' 1 1 nil nil nil 562 1 594 #inlineParameter 8 'In&line Parameter' 1 1 nil nil nil 562 1 594 #removeParameter 8 'Remove &Parameter' 1 1 nil nil nil 8 '&Refactorings' #codeRefactoringsMenu 1 818 nil true 850 8 'Refactoring.ico' 912 65541 nil nil nil nil nil 738 4097 514 nil true 34 10 562 1 594 #undo 8 '&Undo' 1 1 818 nil true 850 8 'EditUndo.ico' 912 65541 nil nil nil 738 4097 562 1 594 #cutSelection 8 'Cu&t' 1 1 818 nil true 850 8 'EditCut.ico' 912 65541 nil nil nil 562 1 594 #copySelection 8 '&Copy' 1 1 818 nil true 850 8 'EditCopy.ico' 912 65541 nil nil nil 562 1 594 #pasteClipboard 8 '&Paste' 1 1 818 nil true 850 8 'EditPaste.ico' 912 65541 nil nil nil 562 1 594 #clearSelection 8 'De&lete' 1 1 818 nil true 850 8 'EditClear.ico' 912 65541 nil nil nil 738 4097 562 1 594 #reformatSource 8 'Re&format' 1 1 nil nil nil 738 4097 562 1 594 #selectAll 8 '&Select All' 1 1 nil nil nil 8 '&Edit' nil 134217729 nil nil nil nil nil 514 nil true 34 10 562 1 594 #inspectWorkspacePool 8 '&Variables' 1 1 nil nil nil 562 1 594 #cloneNew 8 '&Clone' 1 1 818 nil true 850 8 'SmalltalkWorkspace.ico' 912 65541 nil nil nil 738 4097 562 1 594 #toggleAutoCompletion 8 '&Auto-complete' 1 1 nil nil nil 562 1 594 #toggleIndentationGuides 8 'Indentation &Guides' 1 1 nil nil nil 562 1 594 #toggleLineNumbers 8 'Line N&umbers' 1 1 nil nil nil 562 1 594 #toggleLineEndings 8 'Line &Endings' 1 1 1378630 2 #{Graphics.TextTileIcon} $¶ 8 'Arial' nil nil nil nil 1 nil nil nil nil 562 1 594 #toggleStyling 8 '&Syntax Coloring' 1 1 nil nil nil 562 1 594 #toggleWhitespace 8 'W&hitespace' 1 1 nil nil nil 562 1 594 #toggleWordWrap 8 '&Word Wrap' 1 1 nil nil nil 8 'Wor&kspace' nil 134217729 nil nil nil nil nil 738 4097 562 1 594 #browseIt 8 'Bro&wse It' 1 1 818 nil true 850 8 'ClassBrowserShell.ico' 912 65541 nil nil nil 562 1 594 #displayIt 8 '&Display It' 1 1 818 nil true 850 8 'DisplayIt.ico' 912 65541 nil nil nil 562 1 594 #printIt 8 '&Print It' 1 1 818 nil true 850 8 'PrintIt.ico' 912 65541 nil nil nil 562 1 594 #evaluateIt 8 'E&valuate It' 1 1 818 nil true 850 8 'EvaluateIt.ico' 912 65541 nil nil nil 562 1 594 #inspectIt 8 '&Inspect It' 1 1 818 nil true 850 8 'InspectIt.ico' 912 65541 nil nil nil 562 1 594 #debugIt 8 'Deb&ug It' 1 1 818 nil true 850 8 'Debugger.ico' 912 65541 nil nil nil 738 4097 514 nil true 34 4 562 2097153 594 #browseDefinitions 8 '&Definitions of <1d>' 1 1 nil nil nil 562 1 594 #browseReferences 8 '&References to <1d>' 1 1 nil nil nil 738 4097 562 1 594 #browseMessage 8 '<1d>' 1 1 nil nil nil 8 '&Browse' nil 1 nil nil nil nil nil 8 '&Workspace' nil 134217729 nil nil nil nil nil nil nil 416 nil 8 1395533126 1049094 #{UI.NullConverter} nil nil 9 nil 170 192 34 4 #normal 1444934 1 #{UI.Scintilla.TextStyle} 1 nil nil 1 nil nil nil nil #normal nil nil nil #callTip 4034 77 917510 #{Graphics.Color} #silver 4082 #white 1 nil nil nil nil #callTip nil nil nil nil 1770758 #{Tools.SmalltalkMethodStyler} 1 nil nil false 138 144 8 #() 170 192 34 2 #default 1903686 2 #{UI.Scintilla.MarkerDefinition} 1 nil nil nil 416 #circle nil nil nil nil nil nil 138 #{Core.IdentitySet} 4176 nil 170 176 4176 9215 nil nil 170 176 34 4 81 4082 #windowText 23 482 #workspaceSelection nil 34 1 2360326 #{UI.Scintilla.CharacterRepresentation} $\x2028 nil 33 4320 2162950 #{UI.Scintilla.NullScintillaLibrary} nil 65 nil nil 170 192 34 6 #literalArray 8 '()' #specialCharacter 8 '()[]<>' #literalBytes 8 '[]' 8 '' 3 170 192 34 2 #container 4000 nil nil nil nil 208 nil 170 192 4176 nil nil 170 192 34 6 #Notification 4034 1029 nil 4082 #gainsboro 1 nil nil nil nil #Notification nil nil nil #Error 4034 1031 4082 #firebrick 4082 #floralWhite 1 nil nil nil nil #Error nil nil nil #Warning 4034 1027 4082 #darkGoldenrod 4082 #ivory 1 nil nil nil nil #Warning nil nil nil nil nil nil 1310982 #{Core.MessageSequence} 34 9 1049350 #{Core.MessageSend} #createAt:extent: 34 2 918022 #{Graphics.Point} 12287 21 4834 641 441 416 4786 #contextMenu: 34 1 528 416 4786 #sciSetMouseDwellTime: 8 #(500) 416 4786 #wordWrap: 8 #(true) 416 4786 #margins: 34 1 34 3 1247302 3 #{UI.Scintilla.Margin} 1 416 1 3 nil nil nil nil 5026 3 416 1 nil nil 67108863 nil nil 5026 5 416 1 nil nil nil nil nil 416 4786 #tabWidth: 8 #(4) 416 4786 #maxCompletionListHeight: 8 #(9) 416 4786 #hasAdditionalSelectionTyping: 8 #(true) 416 4786 #sciSetSelectionLayer: 8 #(1) 416 1179910 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 23 0 0 10 0 0 0 63 25 0 0 230 0 0 0] 8 #() 4834 193 193 nil 35)!
+	^#(#'!!STL' 5 985166 10 #{UI.STBViewProxy} #{UI.Scintilla.ScintillaView} 34 52 nil nil 34 2 8 1445007684 262145 416 nil 1245702 #{Graphics.ThemeColor} #smalltalkWorkspace nil 21 461638 4 #{UI.Menu} nil true 34 22 1180742 2 #{UI.CommandMenuItem} 1 1377606 4 #{UI.CommandDescription} #accept 8 '&Accept' 1 1 nil nil nil 562 1 594 #reformatAccept 8 'Ref&ormat/Accept' 1 1 nil nil nil 562 1 594 #acceptNoRestart 8 'Accept &No Restart' 1 1 nil nil nil 1179974 1 #{UI.DividerMenuItem} 4097 562 1 594 #runToCursor 8 'Run to &Cursor' 1 1 852806 4 #{Graphics.Icon} nil true 2819078 #{Graphics.ImageFromStringResourceInitializer} 8 'RunToCursor.ico' 2490894 #{Kernel.STBExternalResourceLibraryProxy} 8 'dolphindr8.dll' nil 65541 nil nil nil 562 1 594 #toggleBreakpoint 8 'To&ggle Breakpoint' 1 1 nil nil nil 562 1 594 #toggleDisassembly 8 'Disasse&mbly' 1 1 nil nil nil 738 4097 514 nil true 8 #() 8 'Au&to-correct' #autoCorrectMenu 134217729 nil nil nil nil nil 514 nil true 34 16 562 1 594 #renameNode 8 'Re&name <1d>…' 1 1 nil nil nil 738 4097 562 1 594 #extractToTemporary 8 'Extract to &Temporary…' 1 1 nil nil nil 562 1 594 #extractMethod 8 'E&xtract Method…' 1 1 nil nil nil 562 1 594 #extractToComponent 8 'Extract to &Component…' 1 5 nil nil nil 738 4097 562 1 594 #inlineMessage 8 'Inline &Message' 1 1 nil nil nil 514 nil true 8 #() 8 'Impl&ement Message In' #implementMessageMenu 134217729 nil nil nil nil nil 738 4097 562 1 594 #inlineTemporary 8 '&Inline Temporary' 1 1 nil nil nil 562 1 594 #moveTempToInnerScope 8 'Move to Inner &Scope' 1 1 nil nil nil 562 1 594 #convertTempToInstVar 8 'Con&vert to Instance Variable' 1 1 nil nil nil 738 4097 562 1 594 #addParameterToMessage 8 '&Add Parameter to <1d>…' 1 1 nil nil nil 562 1 594 #inlineParameter 8 'In&line Parameter' 1 1 nil nil nil 562 1 594 #removeParameter 8 'Remove &Parameter' 1 1 nil nil nil 8 '&Refactorings' #codeRefactoringsMenu 1 818 nil true 850 8 'Refactoring.ico' 912 65541 nil nil nil nil nil 738 4097 514 nil true 34 10 562 1 594 #undo 8 '&Undo' 1 1 818 nil true 850 8 'EditUndo.ico' 912 65541 nil nil nil 738 4097 562 1 594 #cutSelection 8 'Cu&t' 1 1 818 nil true 850 8 'EditCut.ico' 912 65541 nil nil nil 562 1 594 #copySelection 8 '&Copy' 1 1 818 nil true 850 8 'EditCopy.ico' 912 65541 nil nil nil 562 1 594 #pasteClipboard 8 '&Paste' 1 1 818 nil true 850 8 'EditPaste.ico' 912 65541 nil nil nil 562 1 594 #clearSelection 8 'De&lete' 1 1 818 nil true 850 8 'EditClear.ico' 912 65541 nil nil nil 738 4097 562 1 594 #reformatSource 8 'Re&format' 1 1 nil nil nil 738 4097 562 1 594 #selectAll 8 '&Select All' 1 1 nil nil nil 8 '&Edit' nil 134217729 nil nil nil nil nil 514 nil true 34 10 562 1 594 #inspectWorkspacePool 8 '&Variables' 1 1 nil nil nil 562 1 594 #cloneNew 8 '&Clone' 1 1 818 nil true 850 8 'SmalltalkWorkspace.ico' 912 65541 nil nil nil 738 4097 562 1 594 #toggleAutoCompletion 8 '&Auto-complete' 1 1 nil nil nil 562 1 594 #toggleIndentationGuides 8 'Indentation &Guides' 1 1 nil nil nil 562 1 594 #toggleLineNumbers 8 'Line N&umbers' 1 1 nil nil nil 562 1 594 #toggleLineEndings 8 'Line &Endings' 1 1 1378630 2 #{Graphics.TextTileIcon} $¶ 8 'Arial' nil nil nil nil 1 nil nil nil nil 562 1 594 #toggleStyling 8 '&Syntax Coloring' 1 1 nil nil nil 562 1 594 #toggleWhitespace 8 'W&hitespace' 1 1 nil nil nil 562 1 594 #toggleWordWrap 8 '&Word Wrap' 1 1 nil nil nil 8 'Wor&kspace' nil 134217729 nil nil nil nil nil 738 4097 562 1 594 #browseIt 8 'Bro&wse It' 1 1 818 nil true 850 8 'ClassBrowserShell.ico' 912 65541 nil nil nil 562 1 594 #displayIt 8 '&Display It' 1 1 818 nil true 850 8 'DisplayIt.ico' 912 65541 nil nil nil 562 1 594 #printIt 8 '&Print It' 1 1 818 nil true 850 8 'PrintIt.ico' 912 65541 nil nil nil 562 1 594 #evaluateIt 8 'E&valuate It' 1 1 818 nil true 850 8 'EvaluateIt.ico' 912 65541 nil nil nil 562 1 594 #inspectIt 8 '&Inspect It' 1 1 818 nil true 850 8 'InspectIt.ico' 912 65541 nil nil nil 562 1 594 #debugIt 8 'Deb&ug It' 1 1 818 nil true 850 8 'Debugger.ico' 912 65541 nil nil nil 738 4097 514 nil true 34 4 562 2097153 594 #browseDefinitions 8 '&Definitions of <1d>' 1 1 nil nil nil 562 1 594 #browseReferences 8 '&References to <1d>' 1 1 nil nil nil 738 4097 562 1 594 #browseMessageTarget 8 '<1d>' 1 1 nil nil nil 8 '&Browse' nil 1 nil nil nil nil nil 8 '&Workspace' nil 134217729 nil nil nil nil nil nil nil 416 nil 8 1395533126 1049094 #{UI.NullConverter} nil nil 9 nil 170 192 34 4 #normal 1444934 1 #{UI.Scintilla.TextStyle} 1 nil nil 1 nil nil nil nil #normal nil nil nil #callTip 4034 77 917510 #{Graphics.Color} #silver 4082 #white 1 nil nil nil nil #callTip nil nil nil nil 1770758 #{Tools.SmalltalkMethodStyler} 1 nil nil false 138 144 8 #() 170 192 34 2 #default 1903686 2 #{UI.Scintilla.MarkerDefinition} 1 nil nil nil 416 #circle nil nil nil nil nil nil 138 #{Core.IdentitySet} 4176 nil 170 176 4176 9215 nil nil 170 176 34 4 81 4082 #windowText 23 482 #workspaceSelection nil 34 1 2360326 #{UI.Scintilla.CharacterRepresentation} $\x2028 nil 33 4320 2162950 #{UI.Scintilla.NullScintillaLibrary} nil 65 nil nil 170 192 34 6 #literalArray 8 '()' #specialCharacter 8 '()[]<>' #literalBytes 8 '[]' 8 '' 3 170 192 34 2 #container 4000 nil nil nil nil 208 nil 170 192 4176 nil nil 170 192 34 6 #Notification 4034 1029 nil 4082 #gainsboro 1 nil nil nil nil #Notification nil nil nil #Error 4034 1031 4082 #firebrick 4082 #floralWhite 1 nil nil nil nil #Error nil nil nil #Warning 4034 1027 4082 #darkGoldenrod 4082 #ivory 1 nil nil nil nil #Warning nil nil nil nil nil nil 1310982 #{Core.MessageSequence} 34 9 1049350 #{Core.MessageSend} #createAt:extent: 34 2 918022 #{Graphics.Point} 12287 21 4834 641 441 416 4786 #contextMenu: 34 1 528 416 4786 #sciSetMouseDwellTime: 8 #(500) 416 4786 #wordWrap: 8 #(true) 416 4786 #margins: 34 1 34 3 1247302 3 #{UI.Scintilla.Margin} 1 416 1 3 nil nil nil nil 5026 3 416 1 nil nil 67108863 nil nil 5026 5 416 1 nil nil nil nil nil 416 4786 #tabWidth: 8 #(4) 416 4786 #maxCompletionListHeight: 8 #(9) 416 4786 #hasAdditionalSelectionTyping: 8 #(true) 416 4786 #sciSetSelectionLayer: 8 #(1) 416 1179910 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 23 0 0 10 0 0 0 63 25 0 0 230 0 0 0] 8 #() 4834 193 193 nil 35)!
 
 resource_Default_view
 	"Answer the literal data from which the 'Default view' resource can be reconstituted.
@@ -631,7 +934,7 @@ resource_Default_view
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 5 985166 10 #{UI.STBViewProxy} #{UI.Scintilla.ScintillaView} 34 52 nil nil 34 2 8 1445007684 1 416 nil 1245702 #{Graphics.ThemeColor} #smalltalkWorkspace nil 21 461638 4 #{UI.Menu} nil true 34 18 1180742 2 #{UI.CommandMenuItem} 1 1377606 4 #{UI.CommandDescription} #accept 8 '&Accept' 1 1 nil nil nil 562 1 594 #reformatAccept 8 'Ref&ormat/Accept' 1 1 nil nil nil 1179974 1 #{UI.DividerMenuItem} 4097 514 nil true 8 #() 8 'Auto-&correct' #autoCorrectMenu 134217729 nil nil nil nil nil 514 nil true 34 16 562 1 594 #renameNode 8 'Re&name <1d>…' 1 1 nil nil nil 690 4097 562 1 594 #extractToTemporary 8 'Extract to &Temporary…' 1 1 nil nil nil 562 1 594 #extractMethod 8 'E&xtract Method…' 1 1 nil nil nil 562 1 594 #extractToComponent 8 'Extract to &Component…' 1 5 nil nil nil 690 4097 562 1 594 #inlineMessage 8 'Inline &Message' 1 1 nil nil nil 514 nil true 8 #() 8 'Impl&ement Message In' #implementMessageMenu 134217729 nil nil nil nil nil 690 4097 562 1 594 #inlineTemporary 8 '&Inline Temporary' 1 1 nil nil nil 562 1 594 #moveTempToInnerScope 8 'Move to Inner &Scope' 1 1 nil nil nil 562 1 594 #convertTempToInstVar 8 'Con&vert to Instance Variable' 1 1 nil nil nil 690 4097 562 1 594 #addParameterToMessage 8 '&Add Parameter to <1d>…' 1 1 nil nil nil 562 1 594 #inlineParameter 8 'In&line Parameter' 1 1 nil nil nil 562 1 594 #removeParameter 8 'Remove &Parameter' 1 1 nil nil nil 8 '&Refactorings' #codeRefactoringsMenu 1 852806 4 #{Graphics.Icon} nil true 2819078 #{Graphics.ImageFromStringResourceInitializer} 8 'Refactoring.ico' 2490894 #{Kernel.STBExternalResourceLibraryProxy} 8 'dolphindr8.dll' nil 65541 nil nil nil nil nil 514 nil true 34 2 562 1 594 #reformatSource 8 '&Source' 1 1 nil nil nil 562 1 594 #reformatComment 8 '&Comment' 1 1 nil nil nil 8 'Re&format' #reformatMenu 1 nil nil nil nil nil 690 4097 514 nil true 34 9 562 1 594 #undo 8 '&Undo' 1 1 1458 nil true 1490 8 'EditUndo.ico' 1552 65541 nil nil nil 690 4097 562 1 594 #cutSelection 8 'Cu&t' 1 1 1458 nil true 1490 8 'EditCut.ico' 1552 65541 nil nil nil 562 1 594 #copySelection 8 '&Copy' 1 1 1458 nil true 1490 8 'EditCopy.ico' 1552 65541 nil nil nil 562 1 594 #pasteClipboard 8 '&Paste' 1 1 1458 nil true 1490 8 'EditPaste.ico' 1552 65541 nil nil nil 562 1 594 #clearSelection 8 'De&lete' 1 1 1458 nil true 1490 8 'EditClear.ico' 1552 65541 nil nil nil 690 4097 562 1 594 #selectAll 8 '&Select All' 1 1 nil nil nil 562 1 594 #widenSourceSelection 8 '&Widen Selection' 1 1 nil nil nil 8 '&Edit' nil 134217729 nil nil nil nil nil 514 nil true 34 10 562 1 594 #inspectWorkspacePool 8 '&Variables' 1 1 nil nil nil 562 1 594 #cloneNew 8 '&Clone' 1 1 1458 nil true 1490 8 'SmalltalkWorkspace.ico' 1552 65541 nil nil nil 690 4097 562 1 594 #toggleAutoCompletion 8 '&Auto-complete' 1 1 nil nil nil 562 1 594 #toggleIndentationGuides 8 'Indentation &Guides' 1 1 nil nil nil 562 1 594 #toggleLineNumbers 8 'Line N&umbers' 1 1 nil nil nil 562 1 594 #toggleLineEndings 8 'Line &Endings' 1 1 1378630 2 #{Graphics.TextTileIcon} $¶ 8 'Arial' nil nil nil nil 1 nil nil nil nil 562 1 594 #toggleStyling 8 '&Syntax Coloring' 1 1 nil nil nil 562 1 594 #toggleWhitespace 8 'W&hitespace' 1 1 nil nil nil 562 1 594 #toggleWordWrap 8 '&Word Wrap' 1 1 nil nil nil 8 'Wor&kspace' nil 134217729 nil nil nil nil nil 690 4097 562 1 594 #browseIt 8 'Bro&wse It' 1 1 1458 nil true 1490 8 'ClassBrowserShell.ico' 1552 65541 nil nil nil 562 1 594 #displayIt 8 '&Display It' 1 1 1458 nil true 1490 8 'DisplayIt.ico' 1552 65541 nil nil nil 562 1 594 #printIt 8 '&Print It' 1 1 1458 nil true 1490 8 'PrintIt.ico' 1552 65541 nil nil nil 562 1 594 #evaluateIt 8 'E&valuate It' 1 1 1458 nil true 1490 8 'EvaluateIt.ico' 1552 65541 nil nil nil 562 1 594 #inspectIt 8 '&Inspect It' 1 1 1458 nil true 1490 8 'InspectIt.ico' 1552 65541 nil nil nil 562 1 594 #debugIt 8 'Deb&ug It' 1 1 1458 nil true 1490 8 'Debugger.ico' 1552 65541 nil nil nil 690 4097 514 nil true 34 4 562 2097153 594 #browseDefinitions 8 'Defi&nitions of <1d>' 1 1 nil nil nil 562 1 594 #browseReferences 8 '&References to <1d>' 1 1 nil nil nil 690 4097 562 1 594 #browseMessage 8 '<1d>' 1 1 nil nil nil 8 '&Browse' nil 1 nil nil nil nil nil 8 '&Workspace' nil 134217729 nil nil nil nil nil nil nil 416 nil 8 1395533126 1049094 #{UI.NullConverter} nil nil 9 nil 170 192 34 4 #normal 1444934 1 #{UI.Scintilla.TextStyle} 1 nil nil 1 nil nil nil nil #normal nil nil nil #callTip 3906 77 917510 #{Graphics.Color} #gray 3954 #white 1 nil nil nil nil #callTip nil nil nil nil 1770758 #{Tools.SmalltalkMethodStyler} 1 nil nil false 138 144 8 #() 170 192 34 2 #default 1903686 2 #{UI.Scintilla.MarkerDefinition} 1 nil nil nil 416 #circle nil nil nil nil nil nil 138 #{Core.IdentitySet} 4048 nil 170 176 4048 nil nil nil 170 176 34 4 81 3954 #windowText 23 482 #workspaceSelection nil 34 1 2360326 #{UI.Scintilla.CharacterRepresentation} $\x2028 nil 33 4192 2162950 #{UI.Scintilla.NullScintillaLibrary} nil 65 nil nil 170 192 34 6 #literalArray 8 '()' #specialCharacter 8 '()[]<>' #literalBytes 8 '[]' 8 '' 3 170 192 34 2 #container 3872 nil nil nil nil 208 nil 170 192 4048 nil nil 170 192 34 6 #Notification 3906 1029 nil 3954 #gainsboro 1 nil nil nil nil #Notification nil nil nil #Error 3906 1031 3954 #firebrick 3954 #floralWhite 1 nil nil nil nil #Error nil nil nil #Warning 3906 1027 3954 #darkGoldenrod 3954 #ivory 1 nil nil nil nil #Warning nil nil nil nil nil nil 1310982 #{Core.MessageSequence} 34 9 1049350 #{Core.MessageSend} #createAt:extent: 34 2 918022 #{Graphics.Point} 12287 21 4706 641 441 416 4658 #contextMenu: 34 1 528 416 4658 #sciSetMouseDwellTime: 8 #(500) 416 4658 #wordWrap: 8 #(true) 416 4658 #margins: 34 1 34 3 1247302 3 #{UI.Scintilla.Margin} 1 416 1 3 nil nil nil nil 4898 3 416 1 nil nil 67108863 nil nil 4898 5 416 1 nil nil nil nil nil 416 4658 #backspaceUnindents: 8 #(true) 416 4658 #maxCompletionListHeight: 8 #(9) 416 4658 #hasAdditionalSelectionTyping: 8 #(true) 416 4658 #sciSetSelectionLayer: 8 #(1) 416 1179910 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 23 0 0 10 0 0 0 63 25 0 0 230 0 0 0] 8 #() 4706 193 193 nil 35)! !
+	^#(#'!!STL' 5 985166 10 #{UI.STBViewProxy} #{UI.Scintilla.ScintillaView} 34 52 nil nil 34 2 8 1445007684 1 416 nil 1245702 #{Graphics.ThemeColor} #smalltalkWorkspace nil 21 461638 4 #{UI.Menu} nil true 34 18 1180742 2 #{UI.CommandMenuItem} 1 1377606 4 #{UI.CommandDescription} #accept 8 '&Accept' 1 1 nil nil nil 562 1 594 #reformatAccept 8 'Ref&ormat/Accept' 1 1 nil nil nil 1179974 1 #{UI.DividerMenuItem} 4097 514 nil true 8 #() 8 'Auto-&correct' #autoCorrectMenu 134217729 nil nil nil nil nil 514 nil true 34 16 562 1 594 #renameNode 8 'Re&name <1d>…' 1 1 nil nil nil 690 4097 562 1 594 #extractToTemporary 8 'Extract to &Temporary…' 1 1 nil nil nil 562 1 594 #extractMethod 8 'E&xtract Method…' 1 1 nil nil nil 562 1 594 #extractToComponent 8 'Extract to &Component…' 1 5 nil nil nil 690 4097 562 1 594 #inlineMessage 8 'Inline &Message' 1 1 nil nil nil 514 nil true 8 #() 8 'Impl&ement Message In' #implementMessageMenu 134217729 nil nil nil nil nil 690 4097 562 1 594 #inlineTemporary 8 '&Inline Temporary' 1 1 nil nil nil 562 1 594 #moveTempToInnerScope 8 'Move to Inner &Scope' 1 1 nil nil nil 562 1 594 #convertTempToInstVar 8 'Con&vert to Instance Variable' 1 1 nil nil nil 690 4097 562 1 594 #addParameterToMessage 8 '&Add Parameter to <1d>…' 1 1 nil nil nil 562 1 594 #inlineParameter 8 'In&line Parameter' 1 1 nil nil nil 562 1 594 #removeParameter 8 'Remove &Parameter' 1 1 nil nil nil 8 '&Refactorings' #codeRefactoringsMenu 1 852806 4 #{Graphics.Icon} nil true 2819078 #{Graphics.ImageFromStringResourceInitializer} 8 'Refactoring.ico' 2490894 #{Kernel.STBExternalResourceLibraryProxy} 8 'dolphindr8.dll' nil 65541 nil nil nil nil nil 514 nil true 34 2 562 1 594 #reformatSource 8 '&Source' 1 1 nil nil nil 562 1 594 #reformatComment 8 '&Comment' 1 1 nil nil nil 8 'Re&format' #reformatMenu 1 nil nil nil nil nil 690 4097 514 nil true 34 9 562 1 594 #undo 8 '&Undo' 1 1 1458 nil true 1490 8 'EditUndo.ico' 1552 65541 nil nil nil 690 4097 562 1 594 #cutSelection 8 'Cu&t' 1 1 1458 nil true 1490 8 'EditCut.ico' 1552 65541 nil nil nil 562 1 594 #copySelection 8 '&Copy' 1 1 1458 nil true 1490 8 'EditCopy.ico' 1552 65541 nil nil nil 562 1 594 #pasteClipboard 8 '&Paste' 1 1 1458 nil true 1490 8 'EditPaste.ico' 1552 65541 nil nil nil 562 1 594 #clearSelection 8 'De&lete' 1 1 1458 nil true 1490 8 'EditClear.ico' 1552 65541 nil nil nil 690 4097 562 1 594 #selectAll 8 '&Select All' 1 1 nil nil nil 562 1 594 #widenSourceSelection 8 '&Widen Selection' 1 1 nil nil nil 8 '&Edit' nil 134217729 nil nil nil nil nil 514 nil true 34 10 562 1 594 #inspectWorkspacePool 8 '&Variables' 1 1 nil nil nil 562 1 594 #cloneNew 8 '&Clone' 1 1 1458 nil true 1490 8 'SmalltalkWorkspace.ico' 1552 65541 nil nil nil 690 4097 562 1 594 #toggleAutoCompletion 8 '&Auto-complete' 1 1 nil nil nil 562 1 594 #toggleIndentationGuides 8 'Indentation &Guides' 1 1 nil nil nil 562 1 594 #toggleLineNumbers 8 'Line N&umbers' 1 1 nil nil nil 562 1 594 #toggleLineEndings 8 'Line &Endings' 1 1 1378630 2 #{Graphics.TextTileIcon} $¶ 8 'Arial' nil nil nil nil 1 nil nil nil nil 562 1 594 #toggleStyling 8 '&Syntax Coloring' 1 1 nil nil nil 562 1 594 #toggleWhitespace 8 'W&hitespace' 1 1 nil nil nil 562 1 594 #toggleWordWrap 8 '&Word Wrap' 1 1 nil nil nil 8 'Wor&kspace' nil 134217729 nil nil nil nil nil 690 4097 562 1 594 #browseIt 8 'Bro&wse It' 1 1 1458 nil true 1490 8 'ClassBrowserShell.ico' 1552 65541 nil nil nil 562 1 594 #displayIt 8 '&Display It' 1 1 1458 nil true 1490 8 'DisplayIt.ico' 1552 65541 nil nil nil 562 1 594 #printIt 8 '&Print It' 1 1 1458 nil true 1490 8 'PrintIt.ico' 1552 65541 nil nil nil 562 1 594 #evaluateIt 8 'E&valuate It' 1 1 1458 nil true 1490 8 'EvaluateIt.ico' 1552 65541 nil nil nil 562 1 594 #inspectIt 8 '&Inspect It' 1 1 1458 nil true 1490 8 'InspectIt.ico' 1552 65541 nil nil nil 562 1 594 #debugIt 8 'Deb&ug It' 1 1 1458 nil true 1490 8 'Debugger.ico' 1552 65541 nil nil nil 690 4097 514 nil true 34 4 562 2097153 594 #browseDefinitions 8 'Defi&nitions of <1d>' 1 1 nil nil nil 562 1 594 #browseReferences 8 '&References to <1d>' 1 1 nil nil nil 690 4097 562 1 594 #browseMessageTarget 8 '<1d>' 1 1 nil nil nil 8 '&Browse' nil 1 nil nil nil nil nil 8 '&Workspace' nil 134217729 nil nil nil nil nil nil nil 416 nil 8 1395533126 1049094 #{UI.NullConverter} nil nil 9 nil 170 192 34 4 #normal 1444934 1 #{UI.Scintilla.TextStyle} 1 nil nil 1 nil nil nil nil #normal nil nil nil #callTip 3906 77 917510 #{Graphics.Color} #gray 3954 #white 1 nil nil nil nil #callTip nil nil nil nil 1770758 #{Tools.SmalltalkMethodStyler} 1 nil nil false 138 144 8 #() 170 192 34 2 #default 1903686 2 #{UI.Scintilla.MarkerDefinition} 1 nil nil nil 416 #circle nil nil nil nil nil nil 138 #{Core.IdentitySet} 4048 nil 170 176 4048 nil nil nil 170 176 34 4 81 3954 #windowText 23 482 #workspaceSelection nil 34 1 2360326 #{UI.Scintilla.CharacterRepresentation} $\x2028 nil 33 4192 2162950 #{UI.Scintilla.NullScintillaLibrary} nil 65 nil nil 170 192 34 6 #literalArray 8 '()' #specialCharacter 8 '()[]<>' #literalBytes 8 '[]' 8 '' 3 170 192 34 2 #container 3872 nil nil nil nil 208 nil 170 192 4048 nil nil 170 192 34 6 #Notification 3906 1029 nil 3954 #gainsboro 1 nil nil nil nil #Notification nil nil nil #Error 3906 1031 3954 #firebrick 3954 #floralWhite 1 nil nil nil nil #Error nil nil nil #Warning 3906 1027 3954 #darkGoldenrod 3954 #ivory 1 nil nil nil nil #Warning nil nil nil nil nil nil 1310982 #{Core.MessageSequence} 34 9 1049350 #{Core.MessageSend} #createAt:extent: 34 2 918022 #{Graphics.Point} 12287 21 4706 641 441 416 4658 #contextMenu: 34 1 528 416 4658 #sciSetMouseDwellTime: 8 #(500) 416 4658 #wordWrap: 8 #(true) 416 4658 #margins: 34 1 34 3 1247302 3 #{UI.Scintilla.Margin} 1 416 1 3 nil nil nil nil 4898 3 416 1 nil nil 67108863 nil nil 4898 5 416 1 nil nil nil nil nil 416 4658 #backspaceUnindents: 8 #(true) 416 4658 #maxCompletionListHeight: 8 #(9) 416 4658 #hasAdditionalSelectionTyping: 8 #(true) 416 4658 #sciSetSelectionLayer: 8 #(1) 416 1179910 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 23 0 0 10 0 0 0 63 25 0 0 230 0 0 0] 8 #() 4706 193 193 nil 35)! !
 !Tools.MethodWorkspace class categoriesForMethods!
 autoParseDwell!accessing!public! !
 autoParseDwell:!accessing!public! !

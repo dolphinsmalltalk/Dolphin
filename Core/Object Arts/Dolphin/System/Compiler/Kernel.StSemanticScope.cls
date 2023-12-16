@@ -33,11 +33,6 @@ resolveIdentifier: aString
 
 	^self subclassResponsibility!
 
-resolveVariable: aStVariableNode
-	"Private - Lookup and return an <StVariable> describing the variable definition in this scope matching the variable reference specified by the <StVariableNode> argument. The argument is assumed to be a real variable, as opposed to one of the special variables self, super, or thisContext."
-
-	^self resolveIdentifier: aStVariableNode name!
-
 selfVariable
 	^self outer selfVariable!
 
@@ -53,7 +48,6 @@ isInlined!accessing!public! !
 methodScope!accessing!public! !
 outer!accessing!public! !
 resolveIdentifier:!operations!private! !
-resolveVariable:!operations!private! !
 selfVariable!accessing!public! !
 superVariable!accessing!public! !
 thisContextVariable!accessing!public! !

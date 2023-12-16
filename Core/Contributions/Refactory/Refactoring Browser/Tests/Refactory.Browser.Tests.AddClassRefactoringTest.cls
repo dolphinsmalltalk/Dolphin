@@ -180,7 +180,7 @@ testModelNonImmediateSubclass
 				superclass: Object
 				subclasses: {model classNamed: #Bar}
 				categories: #('Refactory-Testing').
-	self shouldFail: refactoring withMessage: 'Bar is not an immediate subclass of Core.Object'!
+	self shouldFail: refactoring withMessage: 'Bar is not an immediate subclass of Object'!
 
 testNonImmediateSubclass
 	self shouldFail: (AddClassRefactoring

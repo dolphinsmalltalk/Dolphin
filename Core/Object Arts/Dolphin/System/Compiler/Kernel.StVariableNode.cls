@@ -40,9 +40,15 @@ isConstantNode
 isImmediateNode
 	^true!
 
+isParameter
+	^false!
+
 isStaticVariable
 	"Answer whether the receiver is a reference to a static variable - this is only valid after binding variables in a parse tree using a semantic analyser."
 
+	^false!
+
+isTempDeclaration
 	^false!
 
 isVariable
@@ -77,7 +83,9 @@ hash!comparing!public! !
 hasQualifiedName!public!testing! !
 isConstantNode!public!testing! !
 isImmediateNode!public!testing! !
+isParameter!public!testing! !
 isStaticVariable!public!testing! !
+isTempDeclaration!public!testing! !
 isVariable!public!testing! !
 name!constants!public! !
 needsParenthesis!public!testing! !

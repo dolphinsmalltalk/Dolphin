@@ -148,26 +148,27 @@ queryCommand: query
 	chain-of-command."
 
 	"First ask the commandDescription itself in case it is configured for a static target"
-	self queryCommand: query ofTarget: query commandDescription.
-	query receiver isNil ifTrue: [
-		"Dynamically target command, query at each potential target."
-		self commandPath do: [:each |
-			self queryCommand: query ofTarget: each.
-			"Early out if a receiver was found irrespective of whether the command is actually enabled."
-			query receiver notNil ifTrue: [^query]]].
 
+	self queryCommand: query ofTarget: query commandDescription.
+	query receiver
+		ifNil: 
+			["Dynamically target command, query at each potential target."
+			self commandPath do: 
+					[:each |
+					self queryCommand: query ofTarget: each.
+					"Early out if a receiver was found irrespective of whether the command is actually enabled."
+					query receiver ifNotNil: [^query]]].
 	^query!
 
-queryCommand: aCommandQuery ofTarget: aCommandTarget 
+queryCommand: aCommandQuery ofTarget: aCommandTarget
 	"Private - Ask the <commandTarget> argument if it is prepared to accept the command
 	described in the <CommandQuery> argument."
 
 	aCommandTarget queryCommand: aCommandQuery.
-	aCommandQuery isEnabled 
+	aCommandQuery isEnabled
 		ifTrue: 
 			["If the accepting target has not specified the receiver, then default to it."
-
-			aCommandQuery receiver isNil ifTrue: [aCommandQuery receiver: aCommandTarget]]!
+			aCommandQuery receiver ifNil: [aCommandQuery receiver: aCommandTarget]]!
 
 route: aCommandDescription
 	"Routes the <CommandDescription>, action, along the receiver's route from

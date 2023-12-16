@@ -215,12 +215,12 @@ browseDefinitionsCommand
 
 browseDefinitionsMatching: aMethodSearch in: aBrowserEnvironment
 	| definitions |
-	definitions := OrderedCollection with: (aBrowserEnvironment definitionsMatching: aMethodSearch).
+	definitions := OrderedCollection with: (aMethodSearch definitionsIn: aBrowserEnvironment).
 	self selectedMethod
 		ifNotNil: 
 			[:method |
-			definitions add: ((aBrowserEnvironment forClassHierarchyOf: method methodClass)
-						definitionsMatching: aMethodSearch)].
+			definitions
+				add: (aMethodSearch definitionsIn: (aBrowserEnvironment forClassHierarchyOf: method methodClass))].
 	self developmentSystem browseMethodsInEnvironments: definitions!
 
 browseDefinitionsOfSelector: aSymbol in: aBrowserEnvironment
@@ -250,8 +250,16 @@ browseMessageDefinitions
 	"Private - Open a new method browser on the definitions of the of the currently selected
 	stack frame's selector."
 
-	<commandQuery: #hasBrowsableMethod>
+	<commandQuery: #queryBrowseMessage:>
 	self browseDefinitionsMatching: (MethodSearch newSelector: self selectedMethod selector)
+		in: self searchEnvironment!
+
+browseMessageReferences
+	"Private - Context-sensitive 'Browse References' command. In this case browse refs. to the 
+	current selector."
+
+	<commandQuery: #queryBrowseMessage:>
+	self browseReferencesMatching: (MethodSearch newSelector: self selectedMethod selector)
 		in: self searchEnvironment!
 
 browseMessages
@@ -266,22 +274,19 @@ browseMethodInheritanceChain
 	<commandQuery: #hasOverrideSelected>
 	self model browseMethodHierarchyFrom: self selectedMethod!
 
-browseReferences
-	"Context-sensitive 'Browse References' command. In this case browse refs. to the 
-	current selector."
+browseReferencesCommand
+	"Private - Open a new method browser on the references to the currently selected stack frame's selector."
 
-	<acceleratorKey: 'Shift+F12'>
-	self browseReferencesMatching: (MethodSearch newSelector: self selectedMethod selector)
-		in: self searchEnvironment!
+	^#browseMessageReferences!
 
 browseReferencesMatching: aMethodSearch in: aBrowserEnvironment
 	| references |
-	references := OrderedCollection with: (aBrowserEnvironment referencesMatching: aMethodSearch).
+	references := OrderedCollection with: (aMethodSearch referencesIn: aBrowserEnvironment).
 	self selectedMethod
 		ifNotNil: 
 			[:method |
 			references
-				add: ((aBrowserEnvironment forClassHierarchyOf: method methodClass) referencesMatching: aMethodSearch)].
+				add: (aMethodSearch referencesIn: (aBrowserEnvironment forClassHierarchyOf: method methodClass))].
 	self browseMethodsInEnvironments: references!
 
 browseReferencesToLiteral: anObject in: aBrowserEnvironment
@@ -1130,6 +1135,14 @@ promptToSaveChanges
 
 	^self onPromptToSaveChanges: (SelectionChangingEvent forSource: self)!
 
+queryBrowseMessage: aCommandQuery
+	^(self isPaused and: [self hasMethodSelected])
+		ifTrue: 
+			[aCommandQuery
+				isEnabled: true;
+				text: (aCommandQuery menuText expandMacrosWithArguments: { self selectedMethod selector }
+							locale: Locale smalltalk)]!
+
 queryImplementMenu: aCommandQuery
 	"Note that the implement menu is not just for DNUs any more, but any message which is not directly implemented by its receiver."
 
@@ -1908,9 +1921,10 @@ browseDefinitionsOfSelector:in:!private! !
 browseHierarchy!commands-actions!private! !
 browseIt!commands-actions!public! !
 browseMessageDefinitions!commands-actions!private! !
+browseMessageReferences!browsing!commands-actions!private! !
 browseMessages!commands-actions!private! !
 browseMethodInheritanceChain!commands-actions!private! !
-browseReferences!browsing!commands-actions!public! !
+browseReferencesCommand!commands-mappings!private! !
 browseReferencesMatching:in:!private! !
 browseReferencesToLiteral:in:!browsing!private! !
 browseSystem!commands-actions!public! !
@@ -2002,6 +2016,7 @@ populateImplementMenu:!helpers!private! !
 populateStackModel!private!updating! !
 process:topFrame:!accessing!initializing!private! !
 promptToSaveChanges!commands-actions!private! !
+queryBrowseMessage:!commands-queries!private! !
 queryImplementMenu:!commands-queries!private! !
 queryMessagesMenu:!commands-queries!private! !
 queryToggleAnimation:!commands-queries!private! !
@@ -2048,7 +2063,7 @@ suspend!operations!private! !
 suspendProcess!operations!private! !
 terminateOnClose!private!testing! !
 terminateProcess!commands-actions!private! !
-tipForVariable:!enquiries!public! !
+tipForVariable:!public! !
 toggleAnimation!commands-actions!private! !
 updateForBreakAt:!operations!private! !
 updateTemporaries!private!updating! !

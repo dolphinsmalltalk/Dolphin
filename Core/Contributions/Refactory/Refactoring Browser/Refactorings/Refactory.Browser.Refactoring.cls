@@ -326,10 +326,12 @@ options: aDictionary
 	options := aDictionary!
 
 performComponentRefactoring: aRefactoring
-	^aRefactoring
+	aRefactoring
 		copyOptionsFrom: options;
-		primitiveExecute;
-		yourself!
+		primitiveExecute.
+	"The user may have been prompted by the component refactoring, and requested to see changes. If so copy over the option value so it persists"
+	aRefactoring shouldShowChanges ifTrue: [self shouldShowChanges: true].
+	^aRefactoring!
 
 preconditions
 	self subclassResponsibility!

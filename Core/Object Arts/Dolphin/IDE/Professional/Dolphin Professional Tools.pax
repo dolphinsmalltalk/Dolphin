@@ -111,6 +111,7 @@ package setPrerequisites: #(
 	'..\..\MVP\Type Converters\Dolphin Type Converters'
 	'..\..\MVP\Models\Value\Dolphin Value Models'
 	'..\..\ActiveX\COM\OLE COM'
+	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Refactorings\RBRefactorings'
 	'..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
 	'..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnitPreload'
 	'..\..\ActiveX\Shell\Windows Shell'

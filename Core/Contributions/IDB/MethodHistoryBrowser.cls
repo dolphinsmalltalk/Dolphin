@@ -156,8 +156,9 @@ onViewOpened
 parseContext
 	| methodClass |
 	methodClass := self methodClass.
-	^(methodClass compiledMethodAt: selector ifAbsent: [])
-		ifNil: [ParseContext methodClass: methodClass environment: methodClass environment]!
+	^(methodClass compiledMethodAt: selector ifAbsent: nil)
+		ifNil: [ParseContext methodClass: methodClass environment: methodClass environment]
+		ifNotNil: [:method | ParseContext method: method]!
 
 printableView
 	^source view!

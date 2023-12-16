@@ -78,7 +78,7 @@ browseClassPackage
 browseClassReferences
 	"Browse all the methods which refer to the class selected in the receiver."
 
-	<commandQuery: #hasSelection>
+	<commandQuery: #queryBrowseClassReferences:>
 	| env references |
 	env := self searchEnvironment.
 	references := Array writeStream: 2.
@@ -160,7 +160,7 @@ browsePublishedEvents
 browseReferences
 	"Context-sensitive browse references command (Shift+F12)."
 
-	<commandQuery: #hasSelection>
+	<commandQuery: #queryBrowseClassReferences:>
 	<acceleratorKey: 'Shift+F12'>
 	self browseClassReferences!
 
@@ -818,45 +818,48 @@ populateVarMenu: aMenu class: class command: cmdSelector variables: aCollection 
 				isAbortable: aBoolean]!
 
 queryBrowseClassPackage: aCommandQuery
-	| pkg class name |
-	class := self selectionOrNil.
-	name := (class isNil or: [(pkg := class owningPackage) isNil])
-				ifTrue: 
-					[aCommandQuery isEnabled: false.
-					'']
-				ifFalse: 
-					[aCommandQuery isEnabled: true.
-					pkg name printString].
-	aCommandQuery text: (aCommandQuery commandDescription menuText expandMacrosWithArguments: { name }
-				locale: Locale smalltalk)!
+	| pkg |
+	pkg := self selectionOrNil ifNotNil: [:class | class owningPackage name printString].
+	aCommandQuery
+		isEnabled: pkg notNil;
+		text: (aCommandQuery commandDescription menuText expandMacrosWithArguments: { pkg ?? '' }
+					locale: Locale smalltalk)!
+
+queryBrowseClassReferences: aCommandQuery
+	| classes count |
+	classes := self selections.
+	count := classes size.
+	aCommandQuery
+		isEnabled: count ~~ 0;
+		text: (aCommandQuery commandDescription menuText
+					expandMacrosWithArguments: { count = 1 ifTrue: [classes single] ifFalse: ['Classes'] }
+					locale: Locale smalltalk)!
 
 queryBrowseHierarchy: aCommandQuery
 	| name |
 	name := self selectionOrNil
-				ifNil: 
-					[aCommandQuery isEnabled: false.
-					'Class']
 				ifNotNil: 
 					[:class |
 					aCommandQuery
 						isDefault: true;
 						isEnabled: true.
 					class name].
-	aCommandQuery text: (aCommandQuery commandDescription menuText expandMacrosWithArguments: { name }
+	aCommandQuery
+		text: (aCommandQuery commandDescription menuText expandMacrosWithArguments: { name ?? '' }
 				locale: Locale smalltalk)!
 
 queryBrowseIt: aCommandQuery
 	self browseItCommand
 		ifNil: 
 			["Not handled at this level, but continue searching the chain"
-			aCommandQuery isEnabled: false]
+			aCommandQuery text: aCommandQuery menuText << $…]
 		ifNotNil: [:selector | self queryContextCommand: aCommandQuery as: selector]!
 
 queryDeleteIt: aCommandQuery
 	self deleteItCommand
 		ifNil: 
 			["Not handled at this level, but continue searching the chain"
-			aCommandQuery isEnabled: false]
+			aCommandQuery text: aCommandQuery menuText << $…]
 		ifNotNil: [:selector | self queryContextCommand: aCommandQuery as: selector]!
 
 queryShowFullNames: aCommandQuery
@@ -1035,6 +1038,7 @@ performDropChanges:target:!helpers!private! !
 permitSelectionChange!helpers!private! !
 populateVarMenu:class:command:variables:format:abortable:!menus!private! !
 queryBrowseClassPackage:!commands-queries!private! !
+queryBrowseClassReferences:!commands-queries!private! !
 queryBrowseHierarchy:!commands-queries!private! !
 queryBrowseIt:!commands-queries!private! !
 queryDeleteIt:!commands-queries!private! !

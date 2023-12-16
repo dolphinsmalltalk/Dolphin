@@ -46,6 +46,12 @@ buildParseTree
 categories
 	^class protocolsFor: selector!
 
+customEnvironment
+	"Private - Answer the <Namespace> in whose scope this method was compiled, or nil if that namespace is the same as the method's owning class."
+
+	^compiledMethod
+		ifNotNil: [compiledMethod customEnvironment ifNotNil: [:env | env classInModel: self model]]!
+
 environment
 	^self boundParseTree environment!
 
@@ -71,6 +77,9 @@ method
 
 methodClass
 	^class!
+
+methodInModel: aRBModel
+	^self!
 
 model
 	^class model!
@@ -117,16 +126,11 @@ printOn: aStream
 		nextPutAll: '>>';
 		print: self selector!
 
+realMethod
+	^compiledMethod!
+
 refersToBinding: aVariableBinding
 	^self boundParseTree refersToBinding: aVariableBinding!
-
-refersToBinding1: aVariableBinding
-	| matchBlock |
-	matchBlock := [:node :answer | answer or: [node refersToBinding: aVariableBinding]].
-	^ParseTreeSearcher new
-		matches: '`identifier' do: matchBlock;
-		matches: '`#literal' do: matchBlock;
-		executeTree: self boundParseTree initialAnswer: false!
 
 refersToClass: aRBClass
 	| matchBlock |
@@ -179,11 +183,13 @@ source: aString
 boundParseTree!accessing!public! !
 buildParseTree!accessing!private! !
 categories!public! !
+customEnvironment!accessing!annotations!private! !
 environment!accessing!public! !
 existingPackageAndEnvironment!public! !
 hash!comparing!public! !
 method!accessing!public! !
 methodClass!accessing!public! !
+methodInModel:!converting!public! !
 model!accessing!public! !
 modelClass!accessing!public! !
 modelClass:method:!accessing!initializing!private! !
@@ -193,8 +199,8 @@ parseTree!accessing!public! !
 parseTree:!public! !
 parseTreeWithSourceIntervals!accessing!public! !
 printOn:!printing!public! !
+realMethod!accessing!public! !
 refersToBinding:!public!testing! !
-refersToBinding1:!public!testing! !
 refersToClass:!public!testing! !
 refersToSymbol:!public!testing! !
 refersToVariable:!public!testing! !

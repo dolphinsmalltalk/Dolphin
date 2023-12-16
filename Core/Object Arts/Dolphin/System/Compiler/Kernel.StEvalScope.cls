@@ -21,14 +21,14 @@ outer: aStSemanticScope
 pools: anArray
 	pools := anArray!
 
-resolveIdentifier: identifier
+resolveIdentifier: aString
 	"Private - Lookup and return an <StVariable> describing the variable definition in this scope matching the variable reference specified by the (non-special) <StVariableNode> argument."
 
 	pools do: 
 			[:each |
-			(each bindingFor: identifier)
+			(each bindingFor: aString)
 				ifNotNil: [:binding | ^StWorkspaceVariable scope: self binding: binding]].
-	^outer resolveIdentifier: identifier! !
+	^outer resolveIdentifier: aString! !
 !Kernel.StEvalScope categoriesForMethods!
 outer!accessing!public! !
 outer:!initializing!private! !

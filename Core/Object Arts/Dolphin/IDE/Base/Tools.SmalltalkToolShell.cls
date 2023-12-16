@@ -340,42 +340,44 @@ queryAcceptIt: aCommandQuery
 	self acceptItCommand
 		ifNil: 
 			["Not handled at this level, but continue searching the chain"
-			aCommandQuery isEnabled: false]
+			aCommandQuery text: aCommandQuery menuText << $…]
 		ifNotNil: [:selector | self queryContextCommand: aCommandQuery as: selector]!
 
 queryBrowseDefinitions: aCommandQuery
+	"Browse Definitions (F12) is a context-sensitive command. We open a browser appropriate to the selected node, or let some other presenter handle if if the selected node is not browsable.
+	As the command's menu text typically has an insertion to specify what will be browsed, we ensure it is reset, otherwise it might end up displaying whatever was last browsable."
+
+	aCommandQuery text: aCommandQuery menuText << $….
 	self browseDefinitionsCommand
-		ifNil: 
-			["Not handled at this level, but continue searching the chain"
-			aCommandQuery isEnabled: false]
 		ifNotNil: [:selector | self queryContextCommand: aCommandQuery as: selector]!
 
 queryBrowseHierarchy: aCommandQuery
 	self browseHierarchyCommand
 		ifNil: 
 			["Not handled at this level, but continue searching the chain"
-			aCommandQuery isEnabled: false]
+			aCommandQuery text: aCommandQuery menuText << $…]
 		ifNotNil: [:selector | self queryContextCommand: aCommandQuery as: selector]!
 
 queryBrowseIt: aCommandQuery
 	self browseItCommand
 		ifNil: 
 			["Not handled at this level, but continue searching the chain"
-			aCommandQuery isEnabled: false]
+			aCommandQuery text: aCommandQuery menuText << $…]
 		ifNotNil: [:selector | self queryContextCommand: aCommandQuery as: selector]!
 
 queryBrowseReferences: aCommandQuery
+	"Browse References (Shift+F12) is a context-sensitive command. We open a browser appropriate to the selected node, or let some other presenter handle if if the selected node is not browsable for references.
+	As the command's menu text typically has an insertion to specify what will be browsed, we ensure it is reset, otherwise it might end up displaying whatever was last browsable."
+
+	aCommandQuery text: aCommandQuery menuText << $….
 	self browseReferencesCommand
-		ifNil: 
-			["Not handled at this level, but continue searching the chain"
-			aCommandQuery isEnabled: false]
 		ifNotNil: [:selector | self queryContextCommand: aCommandQuery as: selector]!
 
 queryDeleteIt: aCommandQuery
 	self deleteItCommand
 		ifNil: 
 			["Not handled at this level, but continue searching the chain"
-			aCommandQuery isEnabled: false]
+			aCommandQuery text: aCommandQuery menuText << $…]
 		ifNotNil: [:selector | self queryContextCommand: aCommandQuery as: selector]!
 
 queryHistoryBack: aCommandQuery
@@ -394,7 +396,7 @@ queryInspectIt: aCommandQuery
 	self inspectItCommand
 		ifNil: 
 			["Not handled at this level, but continue searching the chain"
-			aCommandQuery isEnabled: false]
+			aCommandQuery text: aCommandQuery menuText << $…]
 		ifNotNil: [:selector | self queryContextCommand: aCommandQuery as: selector]!
 
 rememberThisSize
@@ -455,7 +457,7 @@ searchForPackage: aPackage
 searchForSymbol: aSymbol
 	self
 		routeCommand: (CommandDescription command: (Message selector: #browseMethodsInEnvironments:
-						argument: (self browserEnvironment messagesMatching: (MethodSearch newSelector: aSymbol))))!
+						argument: ((MethodSearch newSelector: aSymbol) matchesIn: self browserEnvironment)))!
 
 searchSmalltalk
 	<acceleratorKey: 'Ctrl+Shift+F'>

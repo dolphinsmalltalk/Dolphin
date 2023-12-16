@@ -292,7 +292,7 @@ searchForPackage: aPackage
 searchForSymbol: aSymbol
 	self
 		routeCommand: (CommandDescription command: (Message selector: #browseMethodsInEnvironments:
-						argument: (self systemModel browserEnvironment messagesMatching: (MethodSearch newSelector: aSymbol))))!
+						argument: ((MethodSearch newSelector: aSymbol) matchesIn: self systemModel browserEnvironment)))!
 
 searchSmalltalk
 	<acceleratorKey: 'Ctrl+Shift+F'>

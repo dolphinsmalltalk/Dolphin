@@ -16,6 +16,7 @@ package setClassNames: #(
 	#{Tools.AbstractClassHierarchyModel}
 	#{Tools.AbstractPublishedAspectInspector}
 	#{Tools.AllMethodsCategory}
+	#{Tools.AnnotatedMethodSearch}
 	#{Tools.AnonymousKeyedAspect}
 	#{Tools.AnonymousKeyedAspectBatchAccessor}
 	#{Tools.Aspect}
@@ -78,6 +79,7 @@ package setClassNames: #(
 	#{Tools.MethodCategorizationPolicy}
 	#{Tools.MethodCategoryEnvironment}
 	#{Tools.MethodExplorerShell}
+	#{Tools.MethodParseContext}
 	#{Tools.MethodPrivacyCategory}
 	#{Tools.MethodSearch}
 	#{Tools.MethodSourceSearch}
@@ -126,6 +128,7 @@ package setClassNames: #(
 	#{Tools.StackFrameSlot}
 	#{Tools.STBDebugger}
 	#{Tools.StructureInspector}
+	#{Tools.ThisContextSearch}
 	#{Tools.TwinLevelInspector}
 	#{Tools.UnclassifiedMethodsCategory}
 	#{Tools.ValueWorkspace}
@@ -468,6 +471,7 @@ package setMethodNames: #(
 	#(#{Kernel.StackFrame class} #publishedAspectsOfInstances)
 	#(#{Kernel.StArgumentVariable} #category)
 	#(#{Kernel.StAssignmentNode} #displayOn:)
+	#(#{Kernel.StBasicVariableNode} #shortName)
 	#(#{Kernel.StBlockNode} #displayOn:)
 	#(#{Kernel.StBlockScope} #category)
 	#(#{Kernel.StCascadeNode} #displayOn:)
@@ -475,6 +479,7 @@ package setMethodNames: #(
 	#(#{Kernel.StClassScope} #isVisibleSelector:)
 	#(#{Kernel.StEvalScope} #category)
 	#(#{Kernel.StGeneratedTempVariable} #category)
+	#(#{Kernel.StInstanceVariable} #classification)
 	#(#{Kernel.StInstanceVariable} #printInfoTipOn:)
 	#(#{Kernel.StInstanceVariable} #printInfoTipOn:frame:)
 	#(#{Kernel.StInstanceVariable} #valueInFrame:)
@@ -484,6 +489,7 @@ package setMethodNames: #(
 	#(#{Kernel.StLiteralToken} #textStyle)
 	#(#{Kernel.StLiteralValueNode} #displayOn:)
 	#(#{Kernel.StLocalVariable} #category)
+	#(#{Kernel.StLocalVariable} #classification)
 	#(#{Kernel.StLocalVariable} #debugInfoInFrame:)
 	#(#{Kernel.StLocalVariable} #printInfoTipOn:)
 	#(#{Kernel.StLocalVariable} #printInfoTipOn:frame:)
@@ -500,14 +506,18 @@ package setMethodNames: #(
 	#(#{Kernel.StProgramNode} #preComments)
 	#(#{Kernel.StProgramNode} #publishedAspects)
 	#(#{Kernel.StReturnNode} #displayOn:)
+	#(#{Kernel.StSelfVariable} #printInfoTipOn:)
 	#(#{Kernel.StSelfVariable} #printInfoTipOn:frame:)
 	#(#{Kernel.StSelfVariable} #valueClass)
 	#(#{Kernel.StSelfVariable} #valueClass:)
 	#(#{Kernel.StSelfVariableNode} #valueClassIn:)
 	#(#{Kernel.StSemanticScope} #category)
 	#(#{Kernel.StSequenceNode} #displayOn:)
+	#(#{Kernel.StSpecialVariable} #classification)
 	#(#{Kernel.StSpecialVariableNode} #displayOn:)
 	#(#{Kernel.StSpecialVariableNode} #valueClassIn:)
+	#(#{Kernel.StStaticVariable} #classification)
+	#(#{Kernel.StStaticVariable} #displayOn:)
 	#(#{Kernel.StStaticVariable} #printInfoTipOn:)
 	#(#{Kernel.StStaticVariable} #staticValueClass)
 	#(#{Kernel.StStaticVariable} #valueClass)
@@ -521,6 +531,8 @@ package setMethodNames: #(
 	#(#{Kernel.StThisContextVariableNode} #valueClassIn:)
 	#(#{Kernel.StToken} #postComments)
 	#(#{Kernel.StToken} #preComments)
+	#(#{Kernel.StVariable} #classification)
+	#(#{Kernel.StVariable} #displayOn:)
 	#(#{Kernel.StVariable} #infoTip)
 	#(#{Kernel.StVariable} #infoTip:)
 	#(#{Kernel.StVariable} #printInfoTipOn:)
@@ -529,6 +541,8 @@ package setMethodNames: #(
 	#(#{Kernel.StVariable} #valueClass)
 	#(#{Kernel.StVariable} #valueClass:)
 	#(#{Kernel.StVariableNode} #displayOn:)
+	#(#{Kernel.StVariableNode} #shortName)
+	#(#{Kernel.StWorkspaceVariable} #classification)
 	#(#{Kernel.StWorkspaceVariable} #printInfoTipOn:)
 	#(#{Kernel.StWorkspaceVariable} #staticValueClass)
 	#(#{OS._FPIEEE_RECORD} #printFieldsOn:)
@@ -549,9 +563,7 @@ package setMethodNames: #(
 	#(#{Refactory.Browser.BrowserEnvironment} #allSelectorsImplemented)
 	#(#{Refactory.Browser.BrowserEnvironment} #allSelectorsSent)
 	#(#{Refactory.Browser.BrowserEnvironment} #browse)
-	#(#{Refactory.Browser.BrowserEnvironment} #definitionsMatching:)
 	#(#{Refactory.Browser.BrowserEnvironment} #definitionsOf:)
-	#(#{Refactory.Browser.BrowserEnvironment} #dynamicReferencesTo:)
 	#(#{Refactory.Browser.BrowserEnvironment} #forClassHierarchyFrom:)
 	#(#{Refactory.Browser.BrowserEnvironment} #forClassHierarchyTo:)
 	#(#{Refactory.Browser.BrowserEnvironment} #forMethodCategories:)
@@ -559,9 +571,7 @@ package setMethodNames: #(
 	#(#{Refactory.Browser.BrowserEnvironment} #includesMethod:)
 	#(#{Refactory.Browser.BrowserEnvironment} #includesMethodUncached:)
 	#(#{Refactory.Browser.BrowserEnvironment} #liveReferencesTo:)
-	#(#{Refactory.Browser.BrowserEnvironment} #messagesMatching:)
 	#(#{Refactory.Browser.BrowserEnvironment} #openEditor)
-	#(#{Refactory.Browser.BrowserEnvironment} #referencesMatching:)
 	#(#{Refactory.Browser.BrowserEnvironment} #referencesToBinding:)
 	#(#{Refactory.Browser.BrowserEnvironment} #referencesToLiteral:)
 	#(#{Refactory.Browser.BrowserEnvironment} #search)
@@ -574,6 +584,7 @@ package setMethodNames: #(
 	#(#{Refactory.Browser.ClassEnvironment} #includesResource:)
 	#(#{Refactory.Browser.RBConfigurableFormatter class} #publishedAspects)
 	#(#{Refactory.Browser.RBFormatter class} #publishedAspects)
+	#(#{Refactory.Browser.RBMethod} #parseContext)
 	#(#{Refactory.Browser.RBMethod class} #publishedAspectsOfInstances)
 	#(#{Refactory.Browser.RBSourceFormatter class} #publishedAspects)
 	#(#{Refactory.Browser.RefactoryChange} #displayOn:)
@@ -854,7 +865,6 @@ package setPrerequisites: #(
 	'..\..\System\Compiler\Smalltalk Compiler'
 	'..\..\System\Compiler\Smalltalk Parser'
 	'..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnitPreload'
-	'..\..\ActiveX\Components\VBScript\VBScript Regular Expressions'
 	'..\..\ActiveX\Components\WebView2\WebView2'
 	'..\..\ActiveX\Shell\Windows Shell'
 ).
@@ -919,7 +929,7 @@ Core.Object
 	classConstants: { 'IgnoreCaseMask' -> 16r1 }!
 Core.Object
 	subclass: #'Tools.ParseContext'
-	instanceVariableNames: 'methodClass environment'
+	instanceVariableNames: 'classScope'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -1171,7 +1181,21 @@ Tools.MenuPainter
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Tools.MethodSearch
+	subclass: #'Tools.AnnotatedMethodSearch'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Tools.MethodSearch
 	subclass: #'Tools.MethodSourceSearch'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Tools.MethodSearch
+	subclass: #'Tools.ThisContextSearch'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1276,6 +1300,13 @@ Tools.KeyedAspectBatchAccessor
 Tools.KeyedAspectBatchAccessor
 	subclass: #'Tools.Scintilla.CharacterClassificationBatchAccessor'
 	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Tools.ParseContext
+	subclass: #'Tools.MethodParseContext'
+	instanceVariableNames: 'method'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -4795,11 +4826,8 @@ asDebugMethod
 
 parseContext
 	^self customEnvironment
-		ifNotNil: [self]
-		ifNil: 
-			[| class |
-			class := self methodClass.
-			ParseContext methodClass: class environment: class environment]!
+		ifNotNil: [ParseContext method: self]
+		ifNil: [ParseContext methodClass: self methodClass]!
 
 stylerClass
 	^SmalltalkSystem current expressionStylerClass! !
@@ -4858,7 +4886,7 @@ parseContext
 	package := self owningPackageIfLoose.
 	class := self methodClass.
 	^(self customEnvironment notNil or: [package isNil and: [class owningPackage isNil]])
-		ifTrue: [self]
+		ifTrue: [ParseContext method: self]
 		ifFalse: [ParseContext methodClass: class environment: (package ?? class) environment]!
 
 searchForInTool: aSmalltalkToolShell 
@@ -5490,6 +5518,14 @@ displayOn: aPuttableStream
 displayOn:!printing!public! !
 !
 
+!Kernel.StBasicVariableNode methodsFor!
+
+shortName
+	^self isStaticVariable ifTrue: [self binding shortName] ifFalse: [super shortName]! !
+!Kernel.StBasicVariableNode categoriesForMethods!
+shortName!constants!public! !
+!
+
 !Kernel.StBlockNode methodsFor!
 
 displayOn: aPuttableStream
@@ -5556,6 +5592,9 @@ category!accessing!public! !
 
 !Kernel.StInstanceVariable methodsFor!
 
+classification
+	^#instance!
+
 printInfoTipOn: aStream
 	aStream
 		nextPutAll: 'Instance variable ''';
@@ -5575,6 +5614,7 @@ printInfoTipOn: aStream frame: aStackFrame
 valueInFrame: aStackFrame
 	^aStackFrame receiver instVarAt: index! !
 !Kernel.StInstanceVariable categoriesForMethods!
+classification!accessing!public! !
 printInfoTipOn:!accessing!public! !
 printInfoTipOn:frame:!accessing!public! !
 valueInFrame:!accessing!public! !
@@ -5633,13 +5673,19 @@ category
 
 	^self subclassResponsibility!
 
+classification
+	^#temporary!
+
 debugInfoInFrame: aStackFrame
 	^aStackFrame temps detect: [:each | each first = self name] ifNone: nil!
 
 printInfoTipOn: aStream
+	scope
+		ifNotNil: 
+			[aStream
+				nextPutAll: scope category;
+				space].
 	aStream
-		nextPutAll: scope category;
-		space;
 		nextPutAll: self category;
 		nextPutAll: ' ''';
 		nextPutAll: self name;
@@ -5662,6 +5708,7 @@ valueClass: aStackFrame
 		ifNotNil: [:entry | (aStackFrame temp: (entry at: 2) at: (entry at: 3)) basicClass]! !
 !Kernel.StLocalVariable categoriesForMethods!
 category!accessing!public! !
+classification!accessing!public! !
 debugInfoInFrame:!accessing!public! !
 printInfoTipOn:!accessing!public! !
 printInfoTipOn:frame:!accessing!public! !
@@ -5813,6 +5860,13 @@ displayOn:!printing!public! !
 
 !Kernel.StSelfVariable methodsFor!
 
+printInfoTipOn: aStream
+	"Answer an informative tip for this variable that might be displayed, for example, when the user is hovering over it in a browser workspace."
+
+	aStream
+		nextPutAll: 'receiver: a subinstance of ';
+		print: scope methodClass!
+
 printInfoTipOn: aStream frame: aStackFrame
 	"Answer an informative tip for this variable that might be displayed, for example, when the user is hovering over it in a Debugger workspace showing the specified <StackFrame>."
 
@@ -5830,6 +5884,7 @@ valueClass
 valueClass: aStackFrame
 	^aStackFrame receiver basicClass! !
 !Kernel.StSelfVariable categoriesForMethods!
+printInfoTipOn:!accessing!public! !
 printInfoTipOn:frame:!accessing!public! !
 valueClass!accessing!public! !
 valueClass:!enquiries!public! !
@@ -5863,6 +5918,14 @@ displayOn: aPuttableStream
 displayOn:!printing!public! !
 !
 
+!Kernel.StSpecialVariable methodsFor!
+
+classification
+	^#special! !
+!Kernel.StSpecialVariable categoriesForMethods!
+classification!accessing!public! !
+!
+
 !Kernel.StSpecialVariableNode methodsFor!
 
 displayOn: aPuttableStream
@@ -5879,12 +5942,26 @@ valueClassIn:!public! !
 
 !Kernel.StStaticVariable methodsFor!
 
+classification
+	binding isClassVariable ifTrue: [^#class].
+	binding isClassBinding ifTrue: [^#classGlobal].
+	^#global!
+
+displayOn: aStream
+	"Write a informative tip for this variable to the <puttableStream> argument, that might be displayed, for example, when the user is hovering over it in a browser workspace."
+
+	binding ifNil: [super displayOn: aStream] ifNotNil: [binding displayOn: aStream]!
+
 printInfoTipOn: aStream
 	"Print an informative tip on the <puttableStream> argument for this variable that might be displayed, for example, when the user is hovering over it in a browser workspace."
 
 	"Here we try to provide some useful information, such as the fully qualified name of a class referenced only by a short name, whether the variable is a class or shared variable, or a class constant."
 
 	| prefix |
+	binding isNil
+		ifTrue: 
+			[aStream nextPutAll: 'Undeclared'.
+			^self].
 	prefix := binding isClassVariable
 				ifTrue: [binding isImmutable ifTrue: ['Class constant '] ifFalse: ['Class variable ']]
 				ifFalse: 
@@ -5899,8 +5976,7 @@ printInfoTipOn: aStream
 		nextPutAll: prefix;
 		nextPutAll: binding fullName;
 		nextPutAll: ': ';
-		debugPrint: binding value;
-		contents!
+		debugPrint: binding value!
 
 staticValueClass
 	"Answer the class that the variable should be assumed to hold for the purposes of deducing what messages it may understand, or nil if not known with any certainty."
@@ -5912,8 +5988,10 @@ staticValueClass
 valueClass
 	"Answer the class of the variables value, if this is known, or nil if unknown."
 
-	^binding realBinding value basicClass! !
+	^binding ifNotNil: [binding realBinding value basicClass]! !
 !Kernel.StStaticVariable categoriesForMethods!
+classification!accessing!public! !
+displayOn:!accessing!public! !
 printInfoTipOn:!accessing!public! !
 staticValueClass!accessing!public! !
 valueClass!accessing!public! !
@@ -6014,6 +6092,14 @@ preComments!accessing!public! !
 
 !Kernel.StVariable methodsFor!
 
+classification
+	^self subclassResponsibility!
+
+displayOn: aStream
+	"Write a informative tip for this variable to the <puttableStream> argument, that might be displayed, for example, when the user is hovering over it in a browser workspace."
+
+	aStream nextPutAll: self name!
+
 infoTip
 	"Answer an informative tip for this variable that might be displayed, for example, when the user is hovering over it in a browser workspace."
 
@@ -6043,7 +6129,7 @@ infoTip: aStackFrame
 printInfoTipOn: aStream
 	"Write a informative tip for this variable to the <puttableStream> argument, that might be displayed, for example, when the user is hovering over it in a browser workspace."
 
-	aStream nextPutAll: self name!
+	self displayOn: aStream!
 
 printInfoTipOn: aStream frame: aStackFrame
 	"Write a informative tip for this variable to the <puttableStream> argument, that might be displayed, for example, when the user is hovering over it in a debugger workspace."
@@ -6065,6 +6151,8 @@ valueClass
 valueClass: aStackFrame 
 	^self valueClass! !
 !Kernel.StVariable categoriesForMethods!
+classification!accessing!public! !
+displayOn:!accessing!public! !
 infoTip!accessing!public! !
 infoTip:!accessing!public! !
 printInfoTipOn:!accessing!public! !
@@ -6081,12 +6169,19 @@ displayOn: aPuttableStream
 
 	aPuttableStream
 		nextPutAll: 'Var ';
-		print: self name! !
+		print: self name!
+
+shortName
+	^self name! !
 !Kernel.StVariableNode categoriesForMethods!
 displayOn:!printing!public! !
+shortName!constants!public! !
 !
 
 !Kernel.StWorkspaceVariable methodsFor!
+
+classification
+	^#workspace!
 
 printInfoTipOn: aStream
 	"Print an informative tip on the <puttableStream> argument for this variable that might be displayed, for example, when the user is hovering over it in a browser workspace."
@@ -6103,6 +6198,7 @@ staticValueClass
 
 	^binding value basicClass! !
 !Kernel.StWorkspaceVariable categoriesForMethods!
+classification!accessing!public! !
 printInfoTipOn:!accessing!public! !
 staticValueClass!accessing!public! !
 !
@@ -6408,12 +6504,6 @@ allSelectorsSent
 browse
 	^self openEditor!
 
-definitionsMatching: aMethodSearch
-	^(self filterMethods: aMethodSearch methodDefinitionFilter)
-		label: (self subEnvironmentLabel: #definitions for: aMethodSearch pattern);
-		search: aMethodSearch;
-		yourself!
-
 definitionsOf: aString 
 	"Answer a <BrowserEnvironment> that includes all methods with selectors matching
 	the <readableString> selector pattern argument in this environment. The selector 
@@ -6422,9 +6512,6 @@ definitionsOf: aString
 	^(aString includesAnyOf: '*?#') 
 		ifTrue: [self implementorsMatching: (aString copyReplacing: $? withObject: $#)]
 		ifFalse: [self implementorsOf: aString asSymbol]!
-
-dynamicReferencesTo: aLiteral
-	^MethodCategoryEnvironment referencesTo: aLiteral in: self!
 
 forClassHierarchyFrom: aClass
 	"Answers a <BrowserEnvironment> that includes only aClass and its subclasses, and the corresponding metaclasses. See also #forClassHierarchyOf:."
@@ -6477,19 +6564,10 @@ liveReferencesTo: anObject
 		addSearchString: aMethodSearch pattern;
 		yourself!
 
-messagesMatching: aMethodSearch
-	^{self definitionsMatching: aMethodSearch. self referencesMatching: aMethodSearch}!
-
 openEditor
 	"Open an appropriate Dolphin browser on this environment."
 
 	SmalltalkSystem current browseClass!
-
-referencesMatching: aMethodSearch
-	^(self filterMethods: aMethodSearch methodReferenceFilter)
-		label: (self subEnvironmentLabel: #references for: aMethodSearch pattern);
-		search: aMethodSearch;
-		yourself!
 
 referencesToBinding: aBindingReference
 	^(self filterMethods: [:method | method refersToLiteral: aBindingReference])
@@ -6525,9 +6603,7 @@ allResourcesDo:!enumerating!public! !
 allSelectorsImplemented!enquiries!public! !
 allSelectorsSent!enquiries!public! !
 browse!commands!public! !
-definitionsMatching:!browsing!public! !
 definitionsOf:!enquiries!public! !
-dynamicReferencesTo:!environments!public! !
 forClassHierarchyFrom:!environments!public! !
 forClassHierarchyTo:!environments!public! !
 forMethodCategories:!environments!public! !
@@ -6535,9 +6611,7 @@ forPackagesClosure:!helpers!public! !
 includesMethod:!public!testing! !
 includesMethodUncached:!public!testing! !
 liveReferencesTo:!enquiries!public! !
-messagesMatching:!enquiries!public! !
 openEditor!browsing!public! !
-referencesMatching:!enquiries!public! !
 referencesToBinding:!enquiries!public! !
 referencesToLiteral:!browsing!public! !
 search!accessing!public! !
@@ -6644,6 +6718,28 @@ publishedAspects
 		yourself! !
 !Refactory.Browser.RBFormatter class categoriesForMethods!
 publishedAspects!constants!public! !
+!
+
+!Refactory.Browser.RBMethod methodsFor!
+
+parseContext
+	| package |
+	package := self owningPackageIfLoose.
+	^(self customEnvironment notNil or: [package isNil and: [class owningPackage isNil]])
+		ifTrue: [Tools.ParseContext method: self]
+		ifFalse: 
+			[Tools.ParseContext methodClass: class
+				environment: (package
+						ifNil: [class environment]
+						ifNotNil: 
+							[package
+								ifNil: [class environment]
+								ifNotNil: 
+									[package environment
+										ifNil: [class environment]
+										ifNotNil: [:packageNs | packageNs classInModel: self model]]])]! !
+!Refactory.Browser.RBMethod categoriesForMethods!
+parseContext!public! !
 !
 
 !Refactory.Browser.RBMethod class methodsFor!
@@ -7887,6 +7983,7 @@ publishedAspectsOfInstances
 	^super publishedAspectsOfInstances
 		add: (Aspect name: #range);
 		add: (Aspect boolean: #isSmooth);
+		add: (Aspect boolean: #isMarquee);
 		yourself! !
 !UI.ProgressBar class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !

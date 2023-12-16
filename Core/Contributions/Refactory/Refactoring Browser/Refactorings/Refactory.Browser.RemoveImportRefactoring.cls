@@ -14,8 +14,8 @@ Refactory.Browser.RemoveImportRefactoring comment: ''!
 
 importsPrecondition
 	^RBCondition withBlock: [class directlyImportsNamespace: import]
-		errorString: class displayString , ' <1?directly imports:does not directly import> '
-				, import printString!
+		errorString: 
+			[class displayString , ' <1?directly imports:does not directly import> ' , import printString]!
 
 modifyClassImports
 	class removeImport: import!

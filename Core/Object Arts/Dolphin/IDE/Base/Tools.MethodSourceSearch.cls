@@ -21,9 +21,12 @@ methodReferenceFilter
 
 	^self methodFilter: super methodReferenceFilter!
 
+referencesLabelTag
+	^#containing!
+
 regexpReferenceFilter
 	| re |
-	re := findDetails regularExpression.
+	re := self regularExpression.
 	^[:each | re test: each]!
 
 simpleReferenceFilter
@@ -56,6 +59,7 @@ wildcardReferenceFilter
 !Tools.MethodSourceSearch categoriesForMethods!
 methodFilter:!helpers!private! !
 methodReferenceFilter!helpers!private! !
+referencesLabelTag!constants!public! !
 regexpReferenceFilter!helpers!private! !
 simpleReferenceFilter!helpers!private! !
 wildcardReferenceFilter!helpers!private! !

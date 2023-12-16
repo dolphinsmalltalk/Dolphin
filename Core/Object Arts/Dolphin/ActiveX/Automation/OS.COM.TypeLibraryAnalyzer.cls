@@ -498,6 +498,7 @@ suggestBindingForType: userType
 	ns ifNotNil: [(ns localBindingFor: suggestedName) ifNotNil: [:var | ^var]].
 
 	"Not currently defined, or defined but _may_ not be correct object, so suggest name"
+	#todo. "This isn't right. If the NS hasn't already been generated, i.e. ns is nil, we'll end up generating types into Smalltalk"
 	^(VariableBinding key: suggestedName value: nil)
 		environment: ns ?? Smalltalk;
 		yourself!

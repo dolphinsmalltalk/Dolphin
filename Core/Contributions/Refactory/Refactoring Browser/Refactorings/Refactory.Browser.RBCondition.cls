@@ -32,10 +32,10 @@ errorBlockFor: aBoolean
 printOn: aStream 
 	type printOn: aStream!
 
-type: aSymbol block: aBlock errorString: aString 
+type: aSymbol block: aBlock errorString: aStringOrValuable 
 	type := aSymbol.
 	block := aBlock.
-	self errorMacro: aString!
+	self errorMacro: aStringOrValuable!
 
 withBlock: aBlock 
 	block := aBlock.
@@ -82,34 +82,35 @@ definesClassVariable: aString in: aClass
 	^self new
 		type: {#definesClassVar. aClass. aString}
 		block: [aClass definesClassVariable: aString]
-		errorString: aClass name , ' <1?:does not >define<1?s:> class variable '
-				, aString printString!
+		errorString: [aClass name , ' <1?:does not >define<1?s:> class variable '
+				, aString printString]!
 
 definesInstanceVariable: aString in: aClass
 	^self new
-		type: {#definesInstVar. aClass. aString}
+		type: { #definesInstVar. aClass. aString }
 		block: [aClass definesInstanceVariable: aString]
-		errorString: aClass unqualifiedName
-				, ' <1?or a superclass :does not >define<1?s:> an instance variable ' , aString printString!
+		errorString: 
+			[aClass unqualifiedName , ' <1?or a superclass :does not >define<1?s:> an instance variable '
+				, aString printString]!
 
 definesSelector: aSelector in: aClass
 	^self new
 		type: {#definesSelector. aClass. aSelector}
 		block: [aClass directlyDefinesMethod: aSelector]
-		errorString: aClass unqualifiedName , ' <1?:does not >define<1?s:> ' , aSelector printString!
+		errorString: [aClass unqualifiedName , ' <1?:does not >define<1?s:> ' , aSelector printString]!
 
 definesStaticVariable: aString in: aClass
 	^self new
 		type: {#definesStaticVar. aClass. aString}
 		block: [aClass definesStaticVariable: aString]
-		errorString: aClass instanceClass name , ' <1?:does not >define<1?s:> static variable '
-				, aString printString!
+		errorString: [aClass instanceClass name , ' <1?:does not >define<1?s:> static variable '
+				, aString printString]!
 
 definesTemporaryVariable: aString in: aClass
 	| condition |
 	condition := self new.
 	condition
-		type: {#definesTempVar. aClass. aString}
+		type: { #definesTempVar. aClass. aString }
 		block: 
 			[| method |
 			method := self
@@ -119,15 +120,15 @@ definesTemporaryVariable: aString in: aClass
 			method notNil
 				ifTrue: [condition errorMacro: ('<1p> defines variable <2p>' expandMacrosWith: method with: aString)].
 			method notNil]
-		errorString: aClass unqualifiedName , ' <1?:does not >define<1?s:> temporary variable '
-				, aString printString.
+		errorString: 
+			[aClass unqualifiedName , ' <1?:does not >define<1?s:> temporary variable ' , aString printString].
 	^condition!
 
 definesTempVar: aString in: aClass ignoreClass: subclass
 	| condition |
 	condition := self new.
 	condition
-		type: {#definesTempVarIgnoring. aClass. aString. subclass}
+		type: { #definesTempVarIgnoring. aClass. aString. subclass }
 		block: 
 			[| method |
 			method := self
@@ -137,23 +138,25 @@ definesTempVar: aString in: aClass ignoreClass: subclass
 			method notNil
 				ifTrue: [condition errorMacro: ('<1p> defines variable <2p>' expandMacrosWith: method with: aString)].
 			method notNil]
-		errorString: aClass unqualifiedName , ' <1?:does not >define<1?s:> temporary variable '
-				, aString printString.
+		errorString: 
+			[aClass unqualifiedName , ' <1?:does not >define<1?s:> temporary variable ' , aString printString].
 	^condition!
 
 directlyDefinesClassVariable: aString in: aClass
 	^self new
-		type: {#directlyDefinesClassVar. aClass. aString}
+		type: { #directlyDefinesClassVar. aClass. aString }
 		block: [aClass directlyDefinesClassVariable: aString]
-		errorString: aClass unqualifiedName , ' <1?:does not >directly define<1?s:> class variable '
-				, aString printString!
+		errorString: 
+			[aClass unqualifiedName , ' <1?:does not >directly define<1?s:> class variable '
+				, aString printString]!
 
 directlyDefinesInstanceVariable: aString in: aClass
 	^self new
-		type: {#directlyDefinesInstanceVariable. aClass. aString}
+		type: { #directlyDefinesInstanceVariable. aClass. aString }
 		block: [aClass directlyDefinesInstanceVariable: aString]
-		errorString: aClass unqualifiedName , ' <1?:does not >directly define<1?s:> instance variable '
-				, aString printString!
+		errorString: 
+			[aClass unqualifiedName , ' <1?:does not >directly define<1?s:> instance variable '
+				, aString printString]!
 
 empty
 	"Returns an empty condition"
@@ -182,24 +185,24 @@ hierarchyOf: aClass canUnderstand: aSelector
 	^self new
 		type: {#hierarchyUnderstandsSelector. aClass. aSelector}
 		block: [aClass hierarchyDefinesMethod: aSelector]
-		errorString: aClass unqualifiedName , ' <1?or a subclass:and all subclasses do not> understand<1?s:> '
-				, aSelector printString!
+		errorString: [aClass unqualifiedName , ' <1?or a subclass:and all subclasses do not> understand<1?s:> '
+				, aSelector printString]!
 
 hierarchyOf: aClass definesVariable: aString
 	^self new
 		type: {#hierarchyDefinesInstVar. aClass. aString}
 		block: [aClass hierarchyDefinesVariable: aString]
-		errorString: aClass unqualifiedName
-				, ' or one of its subclasses <1?:does not >define<1?s:> variable ' , aString printString!
+		errorString: [aClass unqualifiedName
+				, ' or one of its subclasses <1?:does not >define<1?s:> variable ' , aString printString]!
 
 hierarchyOf: aClass referencesInstanceVariable: aString
 	^self new
-		type: {#hierarchyReferencesInstVar. aClass. aString}
+		type: { #hierarchyReferencesInstVar. aClass. aString }
 		block: 
 			[aClass withAllSubclasses
 				anySatisfy: [:each | (each whichSelectorsReferToInstanceVariable: aString) notEmpty]]
-		errorString: aClass unqualifiedName , ' or subclass <1?:does not >reference<1?s:> instance variable '
-				, aString!
+		errorString: 
+			[aClass unqualifiedName , ' or subclass <1?:does not >reference<1?s:> instance variable ' , aString]!
 
 isAbstractClass: aClass
 	^self new
@@ -211,7 +214,7 @@ isClass: anObject
 	^self new
 		type: {#IsClass. anObject}
 		block: [anObject isBehavior]
-		errorString: anObject printString , ' is <1?:not >a behavior'!
+		errorString: [anObject printString , ' is <1?:not >a behavior']!
 
 isClassBinding: aBindingReference
 	^self new
@@ -220,13 +223,13 @@ isClassBinding: aBindingReference
 			[| binding |
 			binding := aBindingReference bindingOrNil.
 			binding notNil and: [binding isClassBinding]]
-		errorString: aBindingReference printString , ' <1?refers:does not refer> to a defined class binding'!
+		errorString: [aBindingReference printString , ' <1?refers:does not refer> to a defined class binding']!
 
 isDefinedBinding: aBindingReference
 	^self new
 		type: {#isDefined. aBindingReference}
 		block: [aBindingReference isDefined]
-		errorString: aBindingReference printString , ' is <1?already:not> defined'!
+		errorString: [aBindingReference printString , ' is <1?already:not> defined']!
 
 isEmptyClass: anObject
 	^self new
@@ -263,7 +266,7 @@ isImmediateSubclass: subclass of: superClass
 	^self new
 		type: {#immediateSubclass. superClass. subclass}
 		block: [subclass superclass = superClass]
-		errorString: subclass printString , ' is <1?:not >an immediate subclass of ' , superClass printString!
+		errorString: [subclass printString , ' is <1?:not >an immediate subclass of ' , superClass printString]!
 
 isMetaclass: anObject
 	^self new
@@ -290,7 +293,7 @@ isString: aString
 	^self new
 		type: {#isString. aString}
 		block: [aString isString]
-		errorString: aString printString , ' is <1?:not >a string'!
+		errorString: [aString printString , ' is <1?:not >a string']!
 
 isSymbol: aString
 	^self new
@@ -302,32 +305,32 @@ isValidClassName: aString
 	^self new
 		type: {#validClassName. aString}
 		block: [self validClassName: aString]
-		errorString: aString printString , ' is <1?:not >a valid class name'!
+		errorString: [aString printString , ' is <1?:not >a valid class name']!
 
 isValidClassVarName: aString for: aClass
 	^self new
 		type: {#validClassVarName. aString. aClass}
 		block: [self checkClassVarName: aString in: aClass]
-		errorString: aString printString , ' is <1?:not >a valid class variable name'!
+		errorString: [aString printString , ' is <1?:not >a valid class variable name']!
 
 isValidInstanceVariableName: aString for: aClass
 	^self new
 		type: {#validInstVarName. aString. aClass}
 		block: [self checkInstanceVariableName: aString in: aClass]
-		errorString: aString printString , ' is <1?:not >a valid instance variable name'!
+		errorString: [aString printString , ' is <1?:not >a valid instance variable name']!
 
 isValidMethodName: aString
 	^self new
 		type: {#validMethodName. aString}
 		block: [self checkMethodName: aString]
-		errorString: aString printString , ' is <1?:not >a valid method name'!
+		errorString: [aString printString , ' is <1?:not >a valid method name']!
 
 isValidTemporaryVariableName: aString for: aClass
 	#rbFix.	"Added"
 	^self new
 		type: {#validTempVarName. aString. aClass}
 		block: [self checkInstanceVariableName: aString in: aClass]
-		errorString: aString printString , ' is <1?:not >a valid temporary variable name'!
+		errorString: [aString printString , ' is <1?:not >a valid temporary variable name']!
 
 methodDefiningTemporary: aString in: aClass ignore: aBlock
 	| searcher method |
@@ -348,17 +351,17 @@ methodDefiningTemporary: aString in: aClass ignore: aBlock
 
 referencesInstanceVariable: aString in: aClass
 	^self new
-		type: {#referencesInstVar. aClass. aString}
+		type: { #referencesInstVar. aClass. aString }
 		block: [(aClass whichSelectorsReferToInstanceVariable: aString) notEmpty]
-		errorString: aClass unqualifiedName , ' <1?:does not >reference<1?s:> instance variable '
-				, aString printString!
+		errorString: 
+			[aClass unqualifiedName , ' <1?:does not >reference<1?s:> instance variable ' , aString printString]!
 
 reservedNames
 	^#('self' 'true' 'false' 'nil' 'thisContext' 'super')!
 
 subclassesOf: aClass referToSelector: aSelector
 	^self new
-		type: {#subclassReferences. aClass. aSelector}
+		type: { #subclassReferences. aClass. aSelector }
 		block: 
 			[aClass subclasses anySatisfy: 
 					[:each |
@@ -367,8 +370,8 @@ subclassesOf: aClass referToSelector: aSelector
 							| tree |
 							tree := each parseTreeFor: sel.
 							tree notNil and: [tree superMessages includes: aSelector]]]]
-		errorString: '<1?:no:a> subclass of ' , aClass unqualifiedName , ' refers to '
-				, aSelector printString!
+		errorString: 
+			['<1?:no:a> subclass of ' , aClass unqualifiedName , ' refers to ' , aSelector printString]!
 
 validClassName: aString 
 	"Class names and class variable names have the same restrictions"
@@ -378,10 +381,10 @@ validClassName: aString
 withBlock: aBlock
 	^self new withBlock: aBlock!
 
-withBlock: aBlock errorString: aString 
+withBlock: aBlock errorString: aStringOrValuable 
 	^self new type: #unknown
 		block: aBlock
-		errorString: aString! !
+		errorString: aStringOrValuable! !
 !Refactory.Browser.RBCondition class categoriesForMethods!
 canUnderstand:in:!instance creation!public! !
 checkClassVarName:in:!private!utilities! !

@@ -21,10 +21,8 @@ implementorsCanBePrimitives
 	^self hasPermutedArguments not!
 
 myConditions
-	^RBCondition 
-		withBlock: [oldSelector argumentCount = newSelector argumentCount]
-		errorString: newSelector printString 
-				, ' doesn''t have the correct number of arguments.'!
+	^RBCondition withBlock: [oldSelector argumentCount = newSelector argumentCount]
+		errorString: [newSelector printString , ' doesn''t have the correct number of arguments.']!
 
 parseTreeRewriter
 	| rewriteRule oldString newString replaceSends replace search |

@@ -35,7 +35,7 @@ preconditions
 						[| ns |
 						ns := import value.
 						ns ~~ self model rootNamespace and: [ns metaclass conformsToProtocol: #importableNamespace]]
-					errorString: import displayString , ' is <1?:not >an importable namespace')
+					errorString: [import displayString , ' is <1?:not >an importable namespace'])
 			& self importsPrecondition!
 
 transform
