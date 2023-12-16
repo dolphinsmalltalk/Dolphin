@@ -186,6 +186,9 @@ profile: aBlock inSetNamed: aString collect: collectBoolean on: onBoolean
 		collect: collectBoolean
 		on: onBoolean!
 
+profileTestCase: aTestCase
+	^self profile: [aTestCase runCase] inSetNamed: aTestCase printString!
+
 removeAllSampleSets
 	"Remove all the sample sets"
 
@@ -226,6 +229,7 @@ profile:!operations!public! !
 profile:inSetNamed:!operations!public! !
 profile:inSetNamed:collect:!operations!public! !
 profile:inSetNamed:collect:on:!operations!public! !
+profileTestCase:!operations!public! !
 removeAllSampleSets!operations!public! !
 removeSampleSetNamed:!operations!public! !
 reset!operations!public! !
