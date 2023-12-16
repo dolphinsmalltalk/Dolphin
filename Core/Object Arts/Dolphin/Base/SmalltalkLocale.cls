@@ -15,6 +15,13 @@ amDesignator
 
 	^'am'!
 
+basicLcid
+	"Private - Answer the <integer> id (LCID) of the receiver, including any flags encoded in the high order bits outside the 24-bit range of LCIDs."
+
+	"The receiver is not a Windows locale, but it is basically the same as LOCALE_INVARIANT."
+
+	^##(LOCALE_INVARIANT bitOr: NoUserOverrideMask)!
+
 code
 	"Answer the RFC4646 locale code (aka tag) for this locale."
 
@@ -342,6 +349,7 @@ yearMonthFormat
 	^'MMMM yyyy'! !
 !SmalltalkLocale categoriesForMethods!
 amDesignator!constants!public! !
+basicLcid!accessing!private! !
 code!constants!public! !
 dayOfWeek:!mapping!public! !
 dayOfWeekAbbreviation:!constants!public! !

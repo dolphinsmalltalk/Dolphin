@@ -713,6 +713,7 @@ Win32Constants at: 'NIF_TIP' put: 16r4!
 Win32Constants at: 'NIM_ADD' put: 16r0!
 Win32Constants at: 'NIM_DELETE' put: 16r2!
 Win32Constants at: 'NIM_MODIFY' put: 16r1!
+Win32Constants at: 'NLS_VALID_LOCALE_MASK' put: 16rFFFFF!
 Win32Constants at: 'NORM_IGNORECASE' put: 16r1!
 Win32Constants at: 'NORM_IGNOREKANATYPE' put: 16r10000!
 Win32Constants at: 'NORM_IGNORENONCASE' put: 16r2!

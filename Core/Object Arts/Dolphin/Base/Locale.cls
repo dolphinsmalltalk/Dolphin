@@ -16,6 +16,11 @@ amDesignator
 
 	^self subclassResponsibility!
 
+basicLcid
+	"Private - Answer the <integer> id (LCID) of the receiver, including any flags encoded in the high order bits outside the 24-bit range of LCIDs."
+
+	^self subclassResponsibility!
+
 dateAndTimeFormatters
 	^##(| formatters yyyyFormater |
 	formatters := LookupTable new.
@@ -347,9 +352,9 @@ lastTwoDigitYear
 	^self subclassResponsibility!
 
 lcid
-	"Answer the <integer> Windows Locale Id."
+	"Answer the <integer> Windows locale id (LCID) of the receiver."
 
-	^self subclassResponsibility!
+	^self basicLcid bitAnd: ##(NLS_VALID_LOCALE_MASK bitOr: (16rF bitShift: 20)	"sort version")!
 
 listSeparator
 	"Answer the String used in the receiver locale to separate items in lists, typically a comma."
@@ -403,6 +408,9 @@ negativeSign
 	"Answer a <String> which is the symbol used to denote negative numbers in this locale."
 
 	^self subclassResponsibility!
+
+noUserOverrides
+	^self basicLcid allMask: NoUserOverrideMask!
 
 numberFormat
 	^numberFormat
@@ -668,6 +676,7 @@ yearMonthFormat
 	^self subclassResponsibility! !
 !Locale categoriesForMethods!
 amDesignator!constants!public! !
+basicLcid!accessing!private! !
 dateAndTimeFormatters!printing!private! !
 dateFormat!constants!public! !
 dayOfWeek:!mapping!public! !
@@ -704,6 +713,7 @@ nativeDigits!constants!public! !
 negativeInfinity!constants!public! !
 negativeNumberMode!constants!public! !
 negativeSign!constants!public! !
+noUserOverrides!public!testing! !
 numberFormat!constants!public! !
 numberFormat:!accessing!private! !
 numberGrouping!constants!public! !
@@ -836,6 +846,11 @@ smalltalk
 
 	^SmalltalkLocale.Current!
 
+standard: aString
+	"Answer an instance of the receiver to represent the locale with the specified name, e.g. 'en-US', ignoring any user customisation of the settings."
+
+	^self named: aString withOverrides: false!
+
 supportedSystemLocales
 	"Private - Answer the supported Win32 system locales.
 		Locale supportedSystemLocales
@@ -877,6 +892,7 @@ onSettingChanged:!event handling!private! !
 onStartup!event handling!private! !
 reset!initializing!private! !
 smalltalk!instance creation!public! !
+standard:!instance creation!public! !
 supportedSystemLocales!enquiries!private! !
 systemDefault!instance creation!public! !
 timeZoneInformation!enquiries!public! !
