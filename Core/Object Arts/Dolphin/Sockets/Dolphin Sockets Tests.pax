@@ -22,6 +22,7 @@ package setClassNames: #(
 package setPrerequisites: #(
 	'..\Base\Dolphin'
 	'..\Base\Tests\Dolphin Base Tests'
+	'..\System\Filer\Dolphin Binary Filer'
 	'Dolphin Sockets'
 	'Dolphin Sockets (Old Names)'
 	'..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
