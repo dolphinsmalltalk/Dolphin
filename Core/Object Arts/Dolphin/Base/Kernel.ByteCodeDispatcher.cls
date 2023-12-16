@@ -293,11 +293,14 @@ readsStatic: anAssociation
 	static variable argument."
 
 	| offset |
-	offset := (method literals identityIndexOf: anAssociation) - 1.
+	offset := (method
+				basicIdentityIndexOf: anAssociation
+				from: 1
+				to: method size) - 1.
 	^offset >= 0 and: 
 			[self containsInstruction: 
-					[:selector :args | 
-					((#(#shortPushStatic: #pushStatic:) identityIncludes: selector) and: [args first == offset]) 
+					[:selector :args |
+					((#(#shortPushStatic: #pushStatic:) identityIncludes: selector) and: [args first == offset])
 						or: [selector == #longPushStatic:with: and: [offset == (args first + (args last * 256))]]]]!
 
 reset
@@ -371,18 +374,20 @@ writesInstVarAt: anInteger
 		whileFalse: [(self indexOfInstVarWrite: self fetch) == offset ifTrue: [^true]].
 	^false!
 
-writesStatic: anAssociation 
+writesStatic: anAssociation
 	"Answer whether the method interpreted by the receiver writes to the specified 
 	static variable."
 
 	| offset |
-	offset := (method literals identityIndexOf: anAssociation) - 1.
+	offset := (method
+				basicIdentityIndexOf: anAssociation
+				from: 1
+				to: method size) - 1.
 	^offset >= 0 and: 
 			[self containsInstruction: 
-					[:selector :args | 
-					((#(#popStatic: #storeStatic:) identityIncludes: selector) and: [args first == offset]) 
-						or: 
-							[(#(#longPopStoreStatic:with: #longStoreStatic:with:) identityIncludes: selector) 
+					[:selector :args |
+					((#(#popStatic: #storeStatic:) identityIncludes: selector) and: [args first == offset]) or: 
+							[(#(#longPopStoreStatic:with: #longStoreStatic:with:) identityIncludes: selector)
 								and: [offset == (args first + (args last * 256))]]]]! !
 !Kernel.ByteCodeDispatcher categoriesForMethods!
 accessesInstVarAt:!public!testing! !

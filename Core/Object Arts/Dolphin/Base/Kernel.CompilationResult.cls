@@ -43,7 +43,8 @@ buildTextMap
 fireSystemUpdateEvent
 	"Before firing the event, let the class know if annotations may have been changed. This could be done by hooking the update event, but we want to ensure it is done as a priority before any UI response that might be triggered by the event."
 
-	method annotations ~= (oldMethod ifNotNil: [oldMethod annotations]) ifTrue: [method methodClass annotationsUpdated: self].
+	method annotations ~= (oldMethod ifNotNil: [oldMethod annotations])
+		ifTrue: [method methodClass annotationsUpdated: self].
 	Smalltalk trigger: (self isNew ifTrue: [#methodAdded:] ifFalse: [#methodUpdated:]) with: self!
 
 isNew

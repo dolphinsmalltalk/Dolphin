@@ -509,8 +509,7 @@ browseClassReferences: aClass in: aBrowserEnvironment
 	"Opens a new MethodBrowser on all the methods defined in the specified <BrowserEnvironment>
 	which refer to the <Class>, aClass."
 
-	self browseMethodsInEnvironments: {aBrowserEnvironment referencesToVariable: aClass binding.
-				aBrowserEnvironment referencesToClass: aClass}!
+	self browseMethodsInEnvironments: (self referencesToClass: aClass in: aBrowserEnvironment)!
 
 browseClassVariables: aClass
 	"Opens a selection dialog to choose one of the class variables of browseClass to browse.
@@ -594,7 +593,7 @@ browseDefinitionsMatching: aMethodSearch in: aBrowserEnvironment
 	argument in the specified <readableString> pattern in the scope of the specified
 	<BrowserEnvironment>."
 
-	self browseMethodsIn: (aBrowserEnvironment definitionsMatching: aMethodSearch)!
+	self browseMethodsIn: (aMethodSearch definitionsIn: aBrowserEnvironment)!
 
 browseDefinitionsMatching: aMethodSearch inHierarchyOf: aBehavior within: aBrowserEnvironment 
 	"Private - Open a MethodBrowser on all the methods whos' selectors match the <MethodSearch>
@@ -703,7 +702,7 @@ browseMessagesMatching: aMethodSearch in: aBrowserEnvironment
 	argument in the specified <readableString> pattern in the scope of the specified
 	<BrowserEnvironment>."
 
-	self browseMethodsIn: (aBrowserEnvironment messagesMatching: aMethodSearch)!
+	self browseMethodsIn: (aMethodSearch matchesIn: aBrowserEnvironment)!
 
 browseMessagesSentBy: aCompiledMethod in: aBrowserEnvironment
 	"Private - Prompt the user with a list of messages sent from the specified <CompiledMethod>,
@@ -857,7 +856,7 @@ browseReferencesMatching: aMethodSearch in: aBrowserEnvironment
 	(aString is normally a symbolic selector), within the scope of the specified
 	<BrowserEnvironment>."
 
-	self browseMethodsIn: (aBrowserEnvironment referencesMatching: aMethodSearch)!
+	self browseMethodsIn: (aMethodSearch referencesIn: aBrowserEnvironment)!
 
 browseReferencesTo: anObject 
 	"Open a Method Browser on all the methods that refer to anObject from their literal frames."
@@ -1630,7 +1629,7 @@ definitionsMatching: aMethodSearch inHierarchyOf: aBehavior within: aBrowserEnvi
 		yourself!
 
 definitionsOf: aSymbol
-	^self browserEnvironment definitionsMatching: (MethodSearch newSelector: aSymbol)!
+	^(MethodSearch newSelector: aSymbol) definitionsIn: self browserEnvironment!
 
 deleteResource: aResourceIdentifier
 	(MessageBox confirm: 'Are you sure you wish to delete ' , aResourceIdentifier displayString)
@@ -1755,8 +1754,8 @@ findDetails
 findMatchingClass: aString in: aBrowserEnvironment
 	| classes className pattern global |
 	self assert: [aString notEmpty].
-	global := aBrowserEnvironment lookup: aString asSymbol.
-	(global notNil and: [global class isMeta]) ifTrue: [^global].
+	global := aBrowserEnvironment bindingFor: aString asSymbol.
+	(global notNil and: [global isClassBinding]) ifTrue: [^global value].
 	pattern := ('#*' includes: aString last) ifTrue: [aString] ifFalse: [aString copyWith: $*].
 	classes := (aBrowserEnvironment classNames select: [:aSymbol | pattern match: aSymbol asString])
 				asSortedCollection.
@@ -1771,9 +1770,9 @@ findMatchingClass: aString in: aBrowserEnvironment
 				ifTrue: [classes first]
 				ifFalse: 
 					[(ChoicePrompter choices: classes caption: 'Matching classes') ifNil: [OperationAborted signal]].
-	global := aBrowserEnvironment at: className asSymbol.
-	self assert: [global class isMeta].
-	^global!
+	global := aBrowserEnvironment bindingFor: className asSymbol.
+	self assert: [global isClassBinding].
+	^global value!
 
 findSelectorValidationBlock
 	^
@@ -2115,11 +2114,8 @@ methodsContainingText: aString in: aBrowserEnvironment prompt: aBoolean
 			ifNotNil: 
 				[:env |
 				env
-					label: ('Methods containing <1s>: <2p> in <3p>'
-								expandMacrosWith: search searchMode asPhrase asLowercase
-								with: search pattern
-								with: aBrowserEnvironment);
-					yourself]!
+					label: ((aBrowserEnvironment labelFormats at: #containing)
+							<< { search pattern. aBrowserEnvironment. search searchMode asPhrase asLowercase }) yourself]!
 
 methodsThatFailedToCompileIn: aBrowserEnvironment
 	| failed |
@@ -2136,13 +2132,15 @@ methodsWithBytecode: anInteger in: aBrowserEnvironment
 	Smalltalk developmentSystem methodsWithBytecode: OpcodePool.PushActiveFrame in: BrowserEnvironment new
 	"
 
+	| label |
+	label := aBrowserEnvironment subEnvironmentLabel: #bytecode for: anInteger.
 	^(self
 		selectMethods: 
 			[:each |
 			each byteCodeSegments anySatisfy: [:eachInstruction | eachInstruction first = anInteger]]
 		in: aBrowserEnvironment
-		withProgress: 'Finding methods with bytecode <1p>…' << anInteger)
-		label: 'Methods with bytecode <1p>' << anInteger;
+		withProgress: 'Finding <1s>…' << label)
+		label: label;
 		yourself!
 
 methodsWithCompilationIssuesIn: aBrowserEnvironment
@@ -2194,6 +2192,9 @@ minimizeAll
 
 modelClassFor: aBehavior
 	^aBehavior ifNotNil: [aBehavior realClass]!
+
+modelMethodFor: aCompiledMethod
+	^aCompiledMethod!
 
 myDolphinAccount
 	self openUrl: self sessionManager myDolphinUrl!
@@ -3324,33 +3325,16 @@ referencesTo: anObject in: aBrowserEnvironment
 
 	^aBrowserEnvironment liveReferencesTo: anObject!
 
+referencesToClass: aClass in: aBrowserEnvironment
+	^{
+		aBrowserEnvironment referencesToVariable: aClass binding.
+		aBrowserEnvironment referencesToClass: aClass
+	}!
+
 referencesToClassVar: aString of: aClass within: aBrowserEnvironment
 	"Private - Open a MethodBrowser on all the methods that reference the class variable named, aString, in the hierarchy of the <Behavior>, aClass."
 
-	| binding matched |
-	binding := aClass hierarchyBindingFor: aString.
-	matched := aBrowserEnvironment filterMethods: [:method | method refersToLiteral: binding].
-	matched
-		label: ('All methods that reference <1p>.<2s> in <3p>'
-					expandMacrosWith: binding environment
-					with: binding key
-					with: aBrowserEnvironment);
-		addSearchString: binding key.
-	^binding isImmutable
-		ifTrue: [{ matched }]
-		ifFalse: 
-			[| writers readers |
-			writers := matched filterMethods: [:method | method byteCodeDispatcher writesStatic: binding].
-			writers label: ('All methods that assign to <1p>.<2s> in <3p>'
-						expandMacrosWith: binding environment
-						with: aString
-						with: aBrowserEnvironment).
-			readers := matched filterMethods: [:method | method byteCodeDispatcher readsStatic: binding].
-			readers label: ('All methods that read <1p>.<2s> in <3p>'
-						expandMacrosWith: binding environment
-						with: aString
-						with: aBrowserEnvironment).
-			{ matched. readers. writers }]!
+	^self referencesToVariable: (aClass hierarchyBindingFor: aString) in: aBrowserEnvironment!
 
 referencesToInstVar: aString inHierarchyOf: aBehavior within: aBrowserEnvironment
 	| definingBehavior env |
@@ -3365,6 +3349,40 @@ referencesToInstVar: aString inHierarchyOf: aBehavior within: aBrowserEnvironmen
 
 referencesToLiteral: anObject in: aBrowserEnvironment
 	^aBrowserEnvironment referencesToLiteral: anObject!
+
+referencesToVariable: binding in: aBrowserEnvironment
+	| matched |
+	matched := aBrowserEnvironment filterMethods: [:method | method refersToLiteral: binding].
+	matched
+		label: ('All methods that reference <1p>.<2s> in <3p>'
+					expandMacrosWith: binding environment
+					with: binding key
+					with: aBrowserEnvironment);
+		addSearchString: binding key.
+	^binding isImmutable
+		ifTrue: 
+			[matched label: ('All methods that read constant <1p>.<2s> in <3p>'
+						expandMacrosWith: binding environment
+						with: binding key
+						with: aBrowserEnvironment).
+			{ matched }]
+		ifFalse: 
+			[| writers readers |
+			matched label: ('All methods that reference <1p>.<2s> in <3p>'
+						expandMacrosWith: binding environment
+						with: binding key
+						with: aBrowserEnvironment).
+			writers := matched filterMethods: [:method | method byteCodeDispatcher writesStatic: binding].
+			writers label: ('All methods that assign to <1p>.<2s> in <3p>'
+						expandMacrosWith: binding environment
+						with: binding key
+						with: aBrowserEnvironment).
+			readers := matched filterMethods: [:method | method byteCodeDispatcher readsStatic: binding].
+			readers label: ('All methods that read <1p>.<2s> in <3p>'
+						expandMacrosWith: binding environment
+						with: binding key
+						with: aBrowserEnvironment).
+			{ matched. readers. writers }]!
 
 reformatAllMethodsIn: aBrowserEnvironment
 	| changes |
@@ -3916,7 +3934,9 @@ saveImageAs
 selectMethods: aMonadicValuable in: aBrowserEnvironment withProgress: aString
 	| progress |
 	progress := ProgressDialog create.
-	progress text: aString.
+	progress
+		text: aString;
+		startMarquee.
 	progress operation: 
 			[:p |
 			| matching |
@@ -4352,7 +4372,7 @@ canRenameClass:!enquiries!public! !
 changedIcon!constants!private! !
 changedMethodCategory!constants!private! !
 changedMethodsIn:!public!searching! !
-changedMethodsOfClasses:!browsing!public! !
+changedMethodsOfClasses:!enquiries!public! !
 changedResources!public!searching! !
 changeHistorySize!accessing!public! !
 changeHistorySize:!accessing!public! !
@@ -4402,9 +4422,9 @@ defaultMethodCategories!accessing!public! !
 defaultPackage!accessing!public! !
 defaultPackage:!accessing!public! !
 defaultPublishedAspectsLiteralsMapOf:!accessing!private!theming! !
-definitionsMatching:inHierarchyOf:within:!browsing!private! !
-definitionsOf:!browsing!private! !
-deleteResource:!browsing!commands!public! !
+definitionsMatching:inHierarchyOf:within:!enquiries!private! !
+definitionsOf:!enquiries!private! !
+deleteResource:!commands!public! !
 deprecatedIcon!constants!private! !
 disassembleMethod:!public! !
 disassemblyStylerClass!constants!public! !
@@ -4472,15 +4492,16 @@ methodCategorizationPolicy!constants!private! !
 methodExplorerClass!options!public! !
 methodExplorerClass:!options!public! !
 methodsContainingText:in:prompt:!private!searching! !
-methodsThatFailedToCompileIn:!browsing!public! !
+methodsThatFailedToCompileIn:!enquiries!public! !
 methodStylerClass!constants!public! !
-methodsWithBytecode:in:!browsing!private! !
+methodsWithBytecode:in:!enquiries!private! !
 methodsWithCompilationIssuesIn:!private!searching! !
-methodsWithNewBytecodes!browsing!private! !
-methodsWithNewBytecodesIn:!browsing!private! !
+methodsWithNewBytecodes!enquiries!private! !
+methodsWithNewBytecodesIn:!enquiries!private! !
 methodWorkspaceClass!options!public! !
 minimizeAll!commands!public! !
 modelClassFor:!accessing/classes!public! !
+modelMethodFor:!accessing/classes!public! !
 myDolphinAccount!accessing!public! !
 nameForArgument:!helpers!private! !
 nameForBlockOfArity:!helpers!private! !
@@ -4574,9 +4595,11 @@ queryCommand:!commands!private! !
 redoChange!commands!public! !
 referencesTo:!enquiries!public! !
 referencesTo:in:!enquiries!public! !
-referencesToClassVar:of:within:!browsing!private! !
-referencesToInstVar:inHierarchyOf:within:!browsing!public! !
-referencesToLiteral:in:!browsing!public! !
+referencesToClass:in:!browsing!public! !
+referencesToClassVar:of:within:!enquiries!private! !
+referencesToInstVar:inHierarchyOf:within:!enquiries!public! !
+referencesToLiteral:in:!enquiries!public! !
+referencesToVariable:in:!enquiries!public! !
 reformatAllMethodsIn:!commands!private! !
 reformatSource:in:!commands!private! !
 registerSystemEvents!initializing!private! !
@@ -4604,7 +4627,7 @@ renameInstanceVariable:to:in:!private!refactoring! !
 renameInstanceVariable:to:in:within:!private!refactoring! !
 renameVariable:to:!operations!public! !
 requestPackageFileName:!operations!private! !
-requiresDolphinPro:!browsing!public! !
+requiresDolphinPro:!helpers!public! !
 resaveViewResourcesMatching:do:!public! !
 resetPublishedAspectsToDefaultsFor:!operations!private!theming! !
 resetSystemOptionsToDefaults!operations!private!theming! !
@@ -4649,7 +4672,7 @@ undoChange!commands!public! !
 unimplementedSelectorsIn:!enquiries!public! !
 uninitialize!class hierarchy-removing!private! !
 unregisterTool:!accessing!public! !
-upgradeAllResourcesReferencingClassNamed:!browsing!commands!public! !
+upgradeAllResourcesReferencingClassNamed:!helpers!public! !
 userPreferencesIcon!initializing!private! !
 validateNewClassVarName:for:!helpers!private!refactoring! !
 validateNewInstanceVariableName:for:!enquiries!helpers!private! !

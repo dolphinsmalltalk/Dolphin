@@ -14,8 +14,12 @@ Kernel.StTempDeclNode comment: 'StTempDeclNode is a parse tree node that represe
 !Kernel.StTempDeclNode methodsFor!
 
 acceptVisitor: aProgramNodeVisitor
-	^aProgramNodeVisitor visitTempDeclNode: self! !
+	^aProgramNodeVisitor visitTempDeclNode: self!
+
+isTempDeclaration
+	^true! !
 !Kernel.StTempDeclNode categoriesForMethods!
 acceptVisitor:!public!visitor! !
+isTempDeclaration!public!testing! !
 !
 

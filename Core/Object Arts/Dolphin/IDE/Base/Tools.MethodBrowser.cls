@@ -85,7 +85,7 @@ browseDefinitions
 
 browseDefinitionsMatching: aMethodSearch in: aBrowserEnvironment
 	| definitions |
-	definitions := OrderedCollection with: (aBrowserEnvironment definitionsMatching: aMethodSearch).
+	definitions := OrderedCollection with: (aMethodSearch definitionsIn: aBrowserEnvironment).
 	parentPresenter parseContext
 		ifNotNil: 
 			[:context |
@@ -93,11 +93,10 @@ browseDefinitionsMatching: aMethodSearch in: aBrowserEnvironment
 			class := context methodClass.
 			(aBrowserEnvironment label beginsWith: 'Local hierarchy of <1p>' << class)
 				ifFalse: 
-					[definitions
-						addLast: ((aBrowserEnvironment forClassHierarchyOf: class) definitionsMatching: aMethodSearch)]].
+					[definitions addLast: (aMethodSearch definitionsIn: (aBrowserEnvironment forClassHierarchyOf: class))]].
 	aBrowserEnvironment isSystem
 		ifFalse: 
-			[definitions addLast: (self developmentSystem browserEnvironment definitionsMatching: aMethodSearch)].
+			[definitions addLast: (aMethodSearch definitionsIn: self developmentSystem browserEnvironment)].
 	self routeCommand: (CommandDescription
 				command: (Message selector: #browseMethodsInEnvironments: argument: definitions))!
 
@@ -165,7 +164,7 @@ browseMessagesIn: aBrowserEnvironment
 
 browseMessagesMatching: aMethodSearch in: aBrowserEnvironment
 	| searches |
-	searches := aBrowserEnvironment messagesMatching: aMethodSearch.
+	searches := aMethodSearch matchesIn: aBrowserEnvironment.
 	parentPresenter parseContext
 		ifNotNil: 
 			[:context |
@@ -174,7 +173,7 @@ browseMessagesMatching: aMethodSearch in: aBrowserEnvironment
 			(aBrowserEnvironment label beginsWith: 'Local hierarchy of <1p>' << class)
 				ifFalse: 
 					[hierarchy := aBrowserEnvironment forClassHierarchyOf: class.
-					searches := searches , (hierarchy messagesMatching: aMethodSearch)]].
+					searches := searches , (aMethodSearch matchesIn: hierarchy)]].
 	self routeCommand: (CommandDescription
 				command: (Message selector: #browseMethodsInEnvironments: argument: searches))!
 
@@ -208,7 +207,7 @@ browseMethodsIn: aBrowserEnvironment
 	parentPresenter browseMethodsIn: aBrowserEnvironment!
 
 browseMethodsMatching: aMethodSearch in: aBrowserEnvironment
-	self browseMethodsIn: (aBrowserEnvironment referencesMatching: aMethodSearch)!
+	self browseMethodsIn: (aMethodSearch referencesIn: aBrowserEnvironment)!
 
 browsePackages
 	"Implement the context-sensitive browse packages command by browsing the package
@@ -220,13 +219,14 @@ browseReferences
 	"Context-sensitive 'Browse References' command. In this case browse refs. to the 
 	current selector."
 
+	<commandQuery: #queryBrowseReferences:>
 	<acceleratorKey: 'Shift+F12'>
 	self browseReferencesMatching: (MethodSearch newSelector: self selection selector)
 		in: self searchEnvironment!
 
 browseReferencesMatching: aMethodSearch in: aBrowserEnvironment
 	| references |
-	references := OrderedCollection with: (aBrowserEnvironment referencesMatching: aMethodSearch).
+	references := OrderedCollection with: (aMethodSearch referencesIn: aBrowserEnvironment).
 	parentPresenter parseContext
 		ifNotNil: 
 			[:context |
@@ -234,11 +234,9 @@ browseReferencesMatching: aMethodSearch in: aBrowserEnvironment
 			class := context methodClass.
 			(aBrowserEnvironment label beginsWith: 'Local hierarchy of <1p>' << class)
 				ifFalse: 
-					[references
-						addLast: ((aBrowserEnvironment forClassHierarchyOf: class) referencesMatching: aMethodSearch)]].
+					[references addLast: (aMethodSearch referencesIn: (aBrowserEnvironment forClassHierarchyOf: class))]].
 	aBrowserEnvironment isSystem
-		ifFalse: 
-			[references addLast: (self developmentSystem browserEnvironment referencesMatching: aMethodSearch)].
+		ifFalse: [references addLast: (aMethodSearch referencesIn: self developmentSystem browserEnvironment)].
 	self routeCommand: (CommandDescription
 				command: (Message selector: #browseMethodsInEnvironments: argument: references))!
 
@@ -836,6 +834,17 @@ promptToSaveChanges
 				oldSelection: method;
 				yourself)!
 
+queryBrowseReferences: aCommandQuery
+	"Context-sensitive 'Browse References' command. In this case browse refs. to the current selector."
+
+	| method |
+	method := self selectedMethod.
+	aCommandQuery
+		isEnabled: method notNil;
+		text: (aCommandQuery menuText
+					expandMacrosWithArguments: { method ifNil: ['…'] ifNotNil: [method selector] }
+					locale: Locale smalltalk)!
+
 queryCommand: aCommandQuery
 	"Private - Enters details about a potential command for the receiver into the 
 	<CommandQuery> argument."
@@ -875,7 +884,11 @@ queryCommand: aCommandQuery
 	(#(#browseMessages #browseDefinitions #browseReferences #browseHierarchy #browsePackages)
 		identityIncludes: selector)
 			ifTrue: 
-				[aCommandQuery isEnabled: method notNil.
+				[aCommandQuery
+					isEnabled: method notNil;
+					text: (aCommandQuery menuText
+								expandMacrosWithArguments: { method ifNil: ['…'] ifNotNil: [method selector] }
+								locale: Locale smalltalk).
 				^true].
 	#browseSystem == selector
 		ifTrue: 
@@ -897,7 +910,7 @@ queryCommand: aCommandQuery
 							'Method Classes']
 						ifFalse: 
 							[aCommandQuery isEnabled: true.
-							'Class <1p>' expandMacrosWithArguments: {methodClasses anyOne} locale: Locale smalltalk]).
+							'Class <1p>' expandMacrosWithArguments: { methodClasses anyOne } locale: Locale smalltalk]).
 			^true].
 	#browseMethodPackages == selector
 		ifTrue: 
@@ -907,7 +920,7 @@ queryCommand: aCommandQuery
 			aCommandQuery text: (packages size = 1
 						ifTrue: 
 							[aCommandQuery commandDescription menuText
-								expandMacrosWithArguments: {packages anyOne name printString}
+								expandMacrosWithArguments: { packages anyOne name printString }
 								locale: Locale smalltalk]
 						ifFalse: ['Packages']).
 			^true].
@@ -1101,7 +1114,7 @@ browseMethodPackages!browsing!commands!public! !
 browseMethodsIn:!browsing!private! !
 browseMethodsMatching:in:!browsing!private! !
 browsePackages!browsing!commands!public! !
-browseReferences!browsing!commands!public! !
+browseReferences!browsing!commands-actions!public! !
 browseReferencesMatching:in:!browsing!private! !
 browseReferencesToGlobal!browsing!commands!public! !
 browseReferencesToLiteral:in:!browsing!private! !
@@ -1176,6 +1189,7 @@ parseContext!accessing!public! !
 parseTree!helpers!private! !
 promptToCopyChanges!event handling!public! !
 promptToSaveChanges!helpers!private! !
+queryBrowseReferences:!browsing!commands!commands-queries!public! !
 queryCommand:!commands!private! !
 refactoringTool!accessing!public! !
 removeMethod!commands!public! !

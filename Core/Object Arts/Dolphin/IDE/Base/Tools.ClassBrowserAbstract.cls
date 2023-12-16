@@ -204,17 +204,18 @@ browseContainingText
 	self model browseContainingTextIn: self searchEnvironment!
 
 browseDefinitionsMatching: aMethodSearch in: aBrowserEnvironment
-	self developmentSystem
-		browseMethodsInEnvironments: {aBrowserEnvironment definitionsMatching: aMethodSearch.
-				(aBrowserEnvironment forClassHierarchyOf: self actualClass)
-					definitionsMatching: aMethodSearch}!
+	self developmentSystem browseMethodsInEnvironments: {
+				aMethodSearch definitionsIn: aBrowserEnvironment.
+				aMethodSearch
+					definitionsIn: (aBrowserEnvironment forClassHierarchyOf: self actualClass)
+			}!
 
 browseHierarchyCommand
 	"Answer the <Symbol> of the contextual command to browse the class hierarchy of something, depending on the subview with focus and/or selection."
 
 	^#browseClassHierarchy!
 
-browseInstVarReferences
+browseInstanceVariableReferences
 	"Browse methods that reference any of the selected instance variables of the selected class."
 
 	<commandQuery: #hasInstanceVariablesSelected>
@@ -232,7 +233,7 @@ browseItCommand
 		ifFalse: 
 			[focus == protocolsPresenter view
 				ifTrue: [^#browseMethodProtocol]
-				ifFalse: [focus == variablesPresenter view ifTrue: [^#browseInstVarReferences]]].
+				ifFalse: [focus == variablesPresenter view ifTrue: [^#browseInstanceVariableReferences]]].
 	^nil!
 
 browseMessageDefinitionsIn: aBrowserEnvironment
@@ -266,13 +267,15 @@ browseOverriddenMethod
 	self method: (method methodClass superclass lookupMethod: method selector)!
 
 browseReferencesCommand
-	View focus == variablesPresenter view ifTrue: [^#browseInstVarReferences].
+	View focus == variablesPresenter view ifTrue: [^#browseInstanceVariableReferences].
 	^nil!
 
 browseReferencesMatching: aMethodSearch in: aBrowserEnvironment
-	self browseMethodsInEnvironments: {aBrowserEnvironment referencesMatching: aMethodSearch.
-				(aBrowserEnvironment forClassHierarchyOf: self actualClass)
-					referencesMatching: aMethodSearch}!
+	self browseMethodsInEnvironments: {
+				aMethodSearch referencesIn: aBrowserEnvironment.
+				aMethodSearch
+					referencesIn: (aBrowserEnvironment forClassHierarchyOf: self actualClass)
+			}!
 
 browserEnvironment
 	^classesPresenter browserEnvironment!
@@ -355,10 +358,10 @@ canRemoveMethodsInCategory
 	^(cat := self category) notNil and: [(cat methodsInBehavior: self actualClass) notEmpty]!
 
 canSaveMethod
-	"In order to be able to save a method in the browser there must be either a single editable
-	method selected, or no selection."
+	"In order to be able to save a method in the browser there must be either a single editable method selected, or a class selected with no method selection."
 
-	^self hasEditableMethodSelected or: [methodBrowserPresenter hasMethodsSelected not]!
+	^self hasEditableMethodSelected
+		or: [self hasClassSelected and: [methodBrowserPresenter hasMethodsSelected not]]!
 
 canSaveState
 	"Private - Answer true if the receiver can successfully have it's state saved by #saveStateOn:. Some
@@ -843,7 +846,7 @@ inspectItCommand
 				ifFalse: 
 					[focus == protocolsPresenter view
 						ifTrue: [^#inspectMethodProtocols]
-						ifFalse: [focus == variablesPresenter view ifTrue: [^#browseInstVarReferences]]]].
+						ifFalse: [focus == variablesPresenter view ifTrue: [^#browseInstanceVariableReferences]]]].
 	^nil!
 
 inspectMethodCategories
@@ -1731,7 +1734,7 @@ packages: aCollection
 	classesPresenter packages: aCollection asArray!
 
 parseContext
-	"Answer the {Class. Namespace} pair in who's context methods should be compiled."
+	"Answer the {Class. Namespace} scope in who's context methods should be compiled."
 
 	^self method
 		ifNil: 
@@ -1849,10 +1852,7 @@ queryHistoryBack: aCommandQuery
 				isEnabled: true;
 				text: (aCommandQuery commandDescription menuText expandMacrosWithArguments: { history previous }
 							locale: Locale smalltalk)]
-		ifFalse: 
-			[aCommandQuery
-				isEnabled: false;
-				text: 'Back']!
+		ifFalse: [aCommandQuery text: 'Back']!
 
 queryHistoryForward: aCommandQuery
 	self hasFuture
@@ -1861,16 +1861,11 @@ queryHistoryForward: aCommandQuery
 				isEnabled: true;
 				text: (aCommandQuery commandDescription menuText expandMacrosWithArguments: { history next }
 							locale: Locale smalltalk)]
-		ifFalse: 
-			[aCommandQuery
-				isEnabled: false;
-				text: 'Forward']!
+		ifFalse: [aCommandQuery text: 'Forward']!
 
 queryRenameItCommand: aCommandQuery
-	| selector |
-	selector := self renameItCommand.
-	selector ifNil: [^false].
-	aCommandQuery isEnabled: true!
+	aCommandQuery text: aCommandQuery menuText << $….
+	self renameItCommand ifNotNil: [:selector | self queryContextCommand: aCommandQuery as: selector]!
 
 queryToggleLocalHierarchy: aCommandQuery
 	self isLocalHierarchyMode
@@ -1893,8 +1888,7 @@ queryToggleProtocolReadOnly: aCommandQuery
 			prot := prots first.
 			aCommandQuery
 				isChecked: prot isReadOnly;
-				isEnabled: prot isANSI not]
-		ifFalse: [aCommandQuery isEnabled: false]!
+				isEnabled: prot isANSI not]!
 
 queryToggleShowInheritedMethods: aCommandQuery
 	aCommandQuery
@@ -2528,7 +2522,7 @@ browseClassHierarchy!commands-actions!public! !
 browseContainingText!commands-actions!public! !
 browseDefinitionsMatching:in:!helpers!private! !
 browseHierarchyCommand!commands-mappings!private! !
-browseInstVarReferences!commands-actions!public! !
+browseInstanceVariableReferences!commands-actions!public! !
 browseItCommand!commands-mappings!private! !
 browseMessageDefinitionsIn:!commands-actions!private! !
 browseMessageReferencesIn:!commands-actions!private! !
@@ -2706,7 +2700,7 @@ removeMethodsInProtocol!commands-actions!private! !
 removePlugin:!accessing!public! !
 renameInstanceVariable!commands-actions!private!refactoring! !
 renameIt!commands-actions!public! !
-renameItCommand!constants!private! !
+renameItCommand!commands-mappings!private! !
 renameMethodCategory!commands-actions!private! !
 renameMethodCategory:to:!commands-actions!public! !
 renameMethodCategoryInPlace!commands-actions!private! !

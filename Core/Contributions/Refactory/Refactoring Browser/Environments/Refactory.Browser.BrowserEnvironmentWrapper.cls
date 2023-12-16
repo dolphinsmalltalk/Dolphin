@@ -97,9 +97,10 @@ isSystem
 	^false!
 
 labelFormats
-	^##(IdentityDictionary withAll: {#definitions -> 'Definitions of <1p> in <2p>'.
+	^##(IdentityDictionary withAll: {
+				#definitions -> 'Definitions of <1p> in <2p>'.
 				#bindingReferences -> 'References to <1p> in <2p>'.
-				#classReferences -> 'References to class <1p>, or its variables, in <2p>'.
+				#classReferences -> 'References to <1p>, or its static variables, in <2p>'.
 				#classVarReferences -> 'Methods that reference <1p>.<2s> in <3p>'.
 				#instVarReferences -> 'Methods that reference <1p>.<2s> in <3p>'.
 				#instVarReaders -> 'Methods that read <1p>.<2s> in <3p>'.
@@ -109,12 +110,17 @@ labelFormats
 				#methodCategory -> 'Methods of <2p> in category <1d>'.
 				#methodCategories -> 'Methods of <2p> in categories <1d>'.
 				#references -> 'References to <1p> in <2p>'.
-				#variableReferences -> 'References to <1p> in <2p>'.
+				#variableReferences -> 'References to <1d> in <2p>'.
 				#localHierarchy -> 'Local hierarchy of <1p> in <2p>'.
 				#subclassHierarchy -> 'Subclass hierarchy of <1p> in <2p>'.
 				#superclassHierarchy -> 'Superclass hierarchy of <1p> in <2p>'.
 				#someMethods -> 'Some methods in <2p>'.
-				#someMethodsOf -> 'Some methods of <1p> in <2p>'})!
+				#someMethodsOf -> 'Some methods of <1p> in <2p>'.
+				#annotated -> 'Methods annotated with <1d> in <2p>'.
+				#containing -> 'Methods containing <3s>: <1p> in <2p>'.
+				#bytecode -> 'Methods with bytecode <1p> in <2p>'.
+				#thisContext -> 'Methods referencing thisContext in <2p>'
+			})!
 
 numberSelectors
 	| total |
@@ -144,7 +150,7 @@ allClassesDo:!enumerating!private! !
 classesDo:!accessing/classes!public! !
 classNames!accessing/classes!public! !
 definesClass:!public!testing! !
-environment!accessing!private! !
+environment!accessing!public! !
 includesCategory:!public!testing! !
 includesClass:!public!testing! !
 includesProtocol:in:!public!testing! !

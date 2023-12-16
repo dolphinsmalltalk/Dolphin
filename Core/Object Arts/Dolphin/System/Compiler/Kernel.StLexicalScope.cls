@@ -16,17 +16,17 @@ Kernel.StLexicalScope comment: ''!
 argumentCount
 	^node argumentCount!
 
-declareArgument: aString
-	self declareLocalVariable: (StArgumentVariable node: aString)!
+declareArgument: aStParameterNode
+	^self declareLocalVariable: (StArgumentVariable node: aStParameterNode)!
 
 declareLocalVariable: aStLocalVariable
-	locals at: aStLocalVariable name
+	^locals at: aStLocalVariable name
 		put: (aStLocalVariable
 				scope: self;
 				yourself)!
 
 declareTemp: aString
-	self declareLocalVariable: (StTempVariable node: aString)!
+	^self declareLocalVariable: (StTempVariable node: aString)!
 
 envTempCount
 	"Answer the number of environment temporaries that will be required for this scope."

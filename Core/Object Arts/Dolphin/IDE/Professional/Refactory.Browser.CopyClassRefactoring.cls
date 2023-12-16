@@ -84,7 +84,7 @@ displayOn: aPuttableStream
 
 preconditions
 	^(RBCondition withBlock: [class notNil and: [class isMeta not]]
-		errorString: self className , ' is <1?:not >a valid class name') & (superclass isNil
+		errorString: [self className , ' is <1?:not >a valid class name']) & (superclass isNil
 					ifTrue: [RBCondition empty]
 					ifFalse: 
 						[((RBCondition isMetaclass: superclass) errorMacro: 'Superclass must <1?:not >be a metaclass') not])

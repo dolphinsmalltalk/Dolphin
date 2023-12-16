@@ -17,7 +17,7 @@ import: aNamespace into: aClass
 
 importsPrecondition
 	^RBCondition withBlock: [(class importsNamespace: import) not]
-		errorString: class displayString , ' <1?does not import:already imports> ' , import printString!
+		errorString: [class displayString , ' <1?does not import:already imports> ' , import printString]!
 
 modifyClassImports
 	class addImport: import!

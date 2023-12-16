@@ -100,7 +100,7 @@ allSymbolLiteralsDo: operation
 	"Private - Evaluate the <monadicValuable>, operation, for each of the literal symbols 
 	in the receiver's literal frame, including those embedded in arrays."
 
-	self literalReferencesDo: [:each | each class == Symbol ifTrue: [operation value: each]]!
+	self literalReferencesDo: [:each | each basicClass == Symbol ifTrue: [operation value: each]]!
 
 annotations
 	"Answer the receiver's <MethodAnnotations> or nil if none."
@@ -111,7 +111,8 @@ annotations
 	size := self size.
 	^(size > 0 and: 
 			[last := self at: size.
-			last isKindOf: MethodAnnotations]) ifTrue: [last]!
+			last basicClass == MethodAnnotations])
+		ifTrue: [last]!
 
 argumentCount
 	"Answer the number of arguments expected by the receiver.
@@ -277,7 +278,7 @@ isAnnotated
 
 	| count |
 	count := self size.
-	^count > 0 and: [(self basicAt: count) isKindOf: MethodAnnotations]!
+	^count > 0 and: [(self basicAt: count) basicClass == MethodAnnotations]!
 
 isCompilationFailure
 	^false!
@@ -346,7 +347,7 @@ literalArray: literalArray do: operation
 			[:i |
 			| literal |
 			operation value: (literal := literalArray at: i).
-			(literal class == Array and: [literal isImmutable])
+			(literal basicClass == Array and: [literal isImmutable])
 				ifTrue: [self literalArray: literal do: operation]]!
 
 literalAt: anInteger 
@@ -372,13 +373,24 @@ literalReferencesDo: operation
 	receiver, and each of the elements of any Array literals recursing down through any
 	intermediate literal arrays."
 
+	| literal |
 	1 to: self literalCount
 		do: 
 			[:i |
-			| each |
-			each := self basicAt: i.
-			operation value: each.
-			(each class == Array and: [each isImmutable]) ifTrue: [self literalArray: each do: operation]]!
+			literal := self basicAt: i.
+			operation value: literal.
+			(literal basicClass == Array and: [literal isImmutable])
+				ifTrue: [self literalArray: literal do: operation]].
+	"The last literal may hold the annotations. An annotation consists of a literal symbol selector, and then an array of arguments"
+	literal basicClass == MethodAnnotations ifFalse: [^self].
+	1 to: literal basicSize
+		by: 2
+		do: 
+			[:i |
+			"First the annotation selector, definitely a Symbol"
+			operation value: (literal basicAt: i).
+			"Then the annotation args, definitely an Array"
+			self literalArray: (literal basicAt: i + 1) do: operation]!
 
 literals
 	"Private - Answer an array of the literals in the receiver."
@@ -399,20 +411,37 @@ literalsDetect: discriminator ifNone: exceptionHandler
 	element is found, then the result of evaluating the <niladicValuable>, exceptionHandler,
 	is answered."
 
+	| literal elem |
 	1 to: self literalCount
 		do: 
 			[:i |
-			| literal |
 			literal := self at: i.
 			(discriminator value: literal) ifTrue: [^literal].
-			literal class == Array
+			literal basicClass == Array
 				ifTrue: 
 					[1 to: literal size
 						do: 
 							[:j |
-							| elem |
 							elem := literal at: j.
 							(discriminator value: elem) ifTrue: [^elem]]]].
+	"The last literal may hold the annotations. An annotation consists of a literal symbol selector, and then an array of arguments"
+	literal basicClass == MethodAnnotations
+		ifTrue: 
+			[1 to: literal basicSize
+				by: 2
+				do: 
+					[:i |
+					"First the annotation selector"
+					elem := literal basicAt: i.
+					(discriminator value: elem) ifTrue: [^elem].
+					"Then the annotation args"
+					elem := literal basicAt: i + 1.
+					1 to: elem size
+						do: 
+							[:j |
+							| arg |
+							arg := elem at: j.
+							(discriminator value: arg) ifTrue: [^arg]]]].
 	^exceptionHandler value!
 
 literalsDo: operation 
@@ -441,7 +470,7 @@ localScope
 messages
 	"Answer a <collection> of the messages sent by the receiver."
 
-	(self extraIndex between: 1 and: 7) ifTrue: [^#()].
+	(self extraIndex between: 1 and: 7) ifTrue: [^##(IdentitySet new)].
 	^(MessageSendCollector dispatcher: self byteCodeDispatcher) messages!
 
 messagesDo: aBlock
@@ -505,6 +534,9 @@ readsInstVar: aString at: anInteger
 	extra := self extraIndex.
 	^((extra between: 1 and: 5) or: [extra == 7]) not 
 		and: [self byteCodeDispatcher readsInstVarAt: anInteger]!
+
+realMethod
+	^self!
 
 refersToAnyOf: anArray
 	"Private - Answer whether the receiver refers directly from its literal frame (or indirectly as an element of an array in the literal frame) to any of the literal objects in <Array> argument."
@@ -620,6 +652,9 @@ superMessages
 		superMessagesDo: [:each | answer add: each].
 	^answer!
 
+suppressionId
+	^self subclassResponsibility!
+
 tempCount
 	"Private - Answer the number of temporaries (local variables and arguments) of the receiver.
 	This is the total number of temps, regardless of where allocated."
@@ -680,7 +715,7 @@ writesInstVar: aString at: anInteger
 accessesInstVar:!development!public!testing! !
 accessesInstVar:at:!development!public!testing! !
 allLiteralsDo:!enumerating!private! !
-allSymbolLiterals!enumerating!private! !
+allSymbolLiterals!enumerating!public! !
 allSymbolLiteralsDo:!enumerating!private! !
 annotations!accessing!annotations!public! !
 argumentCount!method header!public! !
@@ -740,6 +775,7 @@ owningPackage!accessing!public! !
 primitiveIndex!method header!private! !
 readsInstVar:!development!public!testing! !
 readsInstVar:at:!development!public!testing! !
+realMethod!converting!public! !
 refersToAnyOf:!private!testing! !
 refersToLiteral:!private!testing! !
 replaceElementsOf:from:to:startingAt:!private!replacing! !
@@ -755,6 +791,7 @@ stackTempCount!method header!private! !
 storeCategories!categories!private!source filing-methods! !
 storeSourceString:!private!source filing-methods! !
 superMessages!accessing!development!public! !
+suppressionId!accessing!private! !
 tempCount!method header!private! !
 tempsMap!accessing!development!private! !
 textMap!accessing!development!private! !

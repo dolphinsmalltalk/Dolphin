@@ -695,9 +695,15 @@ queryCommandHandlers: aCommandQuery
 queryContextCommand: aCommandQuery as: aSymbol
 	| originalCommand |
 	originalCommand := aCommandQuery commandDescription.
-	aCommandQuery commandDescription: (CommandDescription command: aSymbol).
-	^[self queryCommandHandlers: aCommandQuery]
-		ensure: [aCommandQuery commandDescription: originalCommand]!
+	aCommandQuery commandDescription: (originalCommand copy
+				command: aSymbol;
+				yourself).
+	^
+	[(self queryCommandHandlers: aCommandQuery)
+		or: [(aCommandQuery canPerformAgainst: self) and: 
+					[aCommandQuery beEnabled.
+					true]]]
+			ensure: [aCommandQuery commandDescription: originalCommand]!
 
 remove: aPresenter
 	"Removes aPresenter from the receiver's collection of sub-presenters.

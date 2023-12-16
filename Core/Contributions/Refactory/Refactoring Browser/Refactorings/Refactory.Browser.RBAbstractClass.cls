@@ -38,9 +38,9 @@ Class Variables:
 !Refactory.Browser.RBAbstractClass categoriesForClass!Refactory-Model! !
 !Refactory.Browser.RBAbstractClass methodsFor!
 
-= aRBClass 
-	^self class == aRBClass class 
-		and: [self name = aRBClass name and: [self model = aRBClass model]]!
+= aRBClass
+	^self == aRBClass
+		or: [self class == aRBClass class and: [self name = aRBClass name and: [self model = aRBClass model]]]!
 
 >> aSymbol
 	^self methodFor: aSymbol!
@@ -180,6 +180,9 @@ bindingsDo: aMonadicValuable
 	"Evaluate the <monadicValuable> argument for each of the receiver's localled defined <VariableBinding>s."
 
 	self classPool associationsDo: aMonadicValuable!
+
+canUnderstand: aSymbol 
+	^(self lookupMethod: aSymbol) notNil!
 
 classBindingNames
 	^self definedBindings collect: [:each | each key]!
@@ -443,6 +446,16 @@ importsNamespace: aBindingReference
 	sprClass := self superclass.
 	^sprClass notNil and: [sprClass importsNamespace: ref]!
 
+includesBehavior: aBehavior
+	"Answer whether the receiver includes the behavior, aBehavior (i.e. is aBehavior the receiver or a superclass of the receiver)."
+
+	| current |
+	current := self.
+	
+	[current = aBehavior ifTrue: [^true].
+	current isNil] whileFalse: [current := current superclass].
+	^false!
+
 includesClass: aRBClass 
 	| currentClass |
 	currentClass := self.
@@ -458,7 +471,7 @@ inheritsFrom: aBehavior
 	| current |
 	current := self superclass.
 	
-	[aBehavior == current ifTrue: [^true].
+	[aBehavior = current ifTrue: [^true].
 	current isNil] whileFalse: [current := current superclass].
 	^false!
 
@@ -525,6 +538,13 @@ localBindingFor: aString
 
 localScope
 	^self subclassResponsibility!
+
+lookupMethod: aSymbol
+	"Answer the method of the receiver, or inherited by the receiver, corresponding to the selector, aSymbol."
+
+	^(self directlyDefinesMethod: aSymbol)
+		ifTrue: [self methodFor: aSymbol]
+		ifFalse: [self superclass ifNotNil: [:superclass | superclass lookupMethod: aSymbol]]!
 
 metaclass
 	^self subclassResponsibility!
@@ -602,7 +622,7 @@ primaryInstance
 	^self instanceClass!
 
 printOn: aStream 
-	aStream nextPutAll: self name!
+	aStream nextPutAll: self shortName!
 
 protocolsFor: aSelector
 	#rbFix.	"Added to support Dolphin's multiple method categories"
@@ -656,6 +676,9 @@ selectors
 				ifFalse: [realClass selectorsDo: [:each | (removed includes: each) ifFalse: [selectors add: each]]]].
 	^selectors!
 
+selectorsDo: aMonadicValuable 
+	^self selectors do: aMonadicValuable!
+
 shortName
 	"Answer the shorted <String> name of the receiver that is bindable from Smalltalk. i.e. for classes defined directly in Smalltalk, or in any of its imports, this will be an unqualified name. Otherwise it is the fully qualified name relative to Smalltalk."
 
@@ -692,6 +715,9 @@ unqualifiedName
 	"Answer the unqualified name of the class."
 
 	^self subclassResponsibility!
+
+whichClassDefinesInstVar: aString 
+	^self whoDefinesInstanceVariable: aString!
 
 whichClassIncludesSelector: selector
 	"Answer the first class on the receiver's superclass chain (including the receiver) where 
@@ -825,7 +851,7 @@ allBindingsDo:!enumerating!public! !
 allClassVariableNames!accessing!public! !
 allImports!namespaces!public! !
 allInstanceVariableNames!accessing!public! !
-allSelectors!method accessing!public! !
+allSelectors!methods-accessing!public! !
 allSubclasses!accessing!public! !
 allSubclassesBreadthFirstDo:!class hierarchy-accessing!enumerating!public! !
 allSuperclasses!accessing!public! !
@@ -839,6 +865,7 @@ bindingFor:!bindings!public! !
 bindingOrNil!bindings!public! !
 bindings!accessing!public! !
 bindingsDo:!enumerating!public! !
+canUnderstand:!methods-testing!public! !
 classBindingNames!accessing!bindings!public! !
 classConstants!accessing!public! !
 classInModel:!converting!public! !
@@ -849,7 +876,7 @@ compile:!compiling!public! !
 compile:categories:!compiling!public! !
 compile:classified:!compiling!public! !
 compile:environment:categories:package:!compiling!public! !
-compiledMethodAt:ifAbsent:!method accessing!public! !
+compiledMethodAt:ifAbsent:!methods-accessing!public! !
 compileTree:environment:categories:package:!compiling!public! !
 conformsToProtocol:!protocols!public! !
 definedBindings!accessing!public! !
@@ -866,10 +893,10 @@ directlyDefinesVariable:!public!testing! !
 directlyImportsNamespace:!public!testing! !
 environment!accessing!public! !
 environmentName!accessing!public! !
-existingMethodAt:!method accessing!public! !
-existingMethodPackageAndEnvironment:!method accessing!public! !
-existingMethodsReferencingExternals!method accessing!private! !
-existingMethodsThatReferTo:!method accessing!private! !
+existingMethodAt:!methods-accessing!public! !
+existingMethodPackageAndEnvironment:!methods-accessing!public! !
+existingMethodsReferencingExternals!methods-accessing!private! !
+existingMethodsThatReferTo:!methods-testing!private! !
 fullBindingFor:!bindings!public! !
 fullBindingFor:environment:!bindings!public! !
 fullName!accessing!public! !
@@ -884,6 +911,7 @@ hierarchyDefinesVariable:!public!testing! !
 hierarchyImportsNamespace:!public!testing! !
 imports!accessing!public! !
 importsNamespace:!public!testing! !
+includesBehavior:!class hierarchy-testing!public! !
 includesClass:!public!testing! !
 inheritsFrom:!class hierarchy-testing!public! !
 inheritsPoolDictionaries!public!testing! !
@@ -893,53 +921,56 @@ instanceVariableNames:!accessing!public! !
 isAbstract!public!testing! !
 isBytes!instance specification-testing!public! !
 isDefined!public!testing! !
-isExternalReference:in:!method accessing!private! !
+isExternalReference:in:!methods-testing!private! !
 isMeta!public!testing! !
 isPointers!public!testing! !
 isVariable!public!testing! !
 localBindingFor:!bindings!public! !
 localScope!accessing!public! !
+lookupMethod:!methods-accessing!public! !
 metaclass!accessing!public! !
-methodFor:!method accessing!public! !
-methodsDo:!method accessing!public! !
-methodsReferencingExternals!method accessing!public! !
+methodFor:!methods-accessing!public! !
+methodsDo:!methods-enumerating!public! !
+methodsReferencingExternals!methods-accessing!public! !
 model!accessing!public! !
 modelSuperclass!accessing!public! !
 name!accessing!public! !
 nearestRealClass!accessing!private! !
-newMethodFor:!method accessing!private! !
+newMethodFor:!methods-accessing!private! !
 newMethods!accessing!public! !
 owningPackage!accessing!public! !
-parseTreeFor:!method accessing!public! !
+parseTreeFor:!methods-accessing!public! !
 primaryInstance!accessing!public! !
 printOn:!printing!public! !
 protocolsFor:!accessing!public! !
 realClass!accessing!public! !
 removedSelectors!accessing!public! !
 removeInstanceVariable:!public!variable accessing! !
-removeSelector:!method accessing!public! !
+removeSelector:!methods-removing!public! !
 renameInstanceVariable:to:around:!public!variable accessing! !
 scope!accessing!public! !
-selectors!method accessing!public! !
+selectors!methods-accessing!public! !
+selectorsDo:!enumerating!public! !
 shortName!accessing!public! !
 soleInstance!accessing!public! !
-sourceCodeFor:!method accessing!public! !
+sourceCodeFor:!methods-accessing!public! !
 storeOn:!printing!public! !
 subclasses!accessing!public! !
 subclassRedefines:!public!testing! !
 superclass!accessing!public! !
 typeOfClassVariable:!public!variable accessing! !
 unqualifiedName!accessing!public! !
-whichClassIncludesSelector:!methods-testing!public! !
-whichMethodsReferToBinding:!method accessing!public! !
-whichMethodsReferToClass:!method accessing!public! !
-whichMethodsReferToSymbol:!method accessing!public! !
-whichMethodsReferToVariable:!method accessing!public! !
-whichSelectorsReferToClassVariable:!method accessing!public! !
-whichSelectorsReferToInstanceVariable:!method accessing!public! !
+whichClassDefinesInstVar:!public!variable accessing! !
+whichClassIncludesSelector:!public!testing! !
+whichMethodsReferToBinding:!methods-testing!public! !
+whichMethodsReferToClass:!methods-testing!public! !
+whichMethodsReferToSymbol:!methods-testing!public! !
+whichMethodsReferToVariable:!methods-testing!public! !
+whichSelectorsReferToClassVariable:!methods-testing!public! !
+whichSelectorsReferToInstanceVariable:!methods-testing!public! !
 whoDefinesClassVariable:!public!variable accessing! !
 whoDefinesInstanceVariable:!public!variable accessing! !
-whoDefinesMethod:!method accessing!public! !
+whoDefinesMethod:!methods-testing!public! !
 withAllSubclasses!accessing!public! !
 withAllSubclassesDo:!enumerating!public! !
 withAllSuperclasses!accessing!public! !

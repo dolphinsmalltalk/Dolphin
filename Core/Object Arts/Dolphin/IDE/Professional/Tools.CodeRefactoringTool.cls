@@ -683,7 +683,7 @@ renameMessage
 
 renameMessageCommand
 	"Private - Answer an appropriate <Message> which when sent to the receiver will initiate a
-	rename of the appropriate method, or nil if the not a suitable candidate for renaming."
+	rename of the appropriate method, or nil if not a suitable candidate for renaming."
 
 	^presenter selectedMessageNode 
 		ifNotNil: 

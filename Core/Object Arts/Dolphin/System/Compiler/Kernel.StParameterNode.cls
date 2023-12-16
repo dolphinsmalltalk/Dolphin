@@ -19,9 +19,13 @@ acceptVisitor: aProgramNodeVisitor
 isConstantNode
 	"Answer whether the receiver describes a constant that cannot be assigned to."
 
+	^true!
+
+isParameter
 	^true! !
 !Kernel.StParameterNode categoriesForMethods!
 acceptVisitor:!public!visitor! !
 isConstantNode!public!testing! !
+isParameter!public!testing! !
 !
 

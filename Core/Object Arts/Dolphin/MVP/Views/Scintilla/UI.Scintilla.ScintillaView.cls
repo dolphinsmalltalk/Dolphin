@@ -4622,7 +4622,6 @@ queryToggleLineEndings: aCommandQuery
 
 queryToggleLineNumbers: aCommandQuery
 	self lineNumberMargin
-		ifNil: [aCommandQuery isEnabled: false]
 		ifNotNil: 
 			[:margin |
 			aCommandQuery
@@ -9543,6 +9542,11 @@ tokenTextAt: anInteger
 
 	^self plainTextFrom: (self tokenStartAt: anInteger) to: (self tokenEndAt: anInteger)!
 
+tokenUnderCaret
+	"Answer a <String> for the token under the caret, a token being defined by the range of text that has the same text style."
+
+	^self tokenTextAt: self caretPosition!
+
 twiddleLines
 	"Switch the current line with the previous."
 
@@ -10972,6 +10976,7 @@ tokenRangeAt:!enquiries!public! !
 tokensFrom:to:!public!text retrieval & modification! !
 tokenStartAt:!enquiries!public! !
 tokenTextAt:!enquiries!public! !
+tokenUnderCaret!enquiries!public!styling! !
 twiddleLines!**auto generated**!commands-actions!public!scintilla interface! !
 undo!commands-actions!public!scintilla interface!undo & redo! !
 unfoldAll!commands-actions!folding!public! !

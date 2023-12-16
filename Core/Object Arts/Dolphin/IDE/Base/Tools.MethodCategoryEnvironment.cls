@@ -111,20 +111,8 @@ storeOn:!printing!public! !
 onEnvironment: anEnvironment categories: aCollection
 	^(self onEnvironment: anEnvironment)
 		categoryNames: aCollection;
-		yourself!
-
-referencesTo: aLiteral in: anEnvironment
-	| literalName label refs |
-	literalName := (aLiteral isVariableBinding ifTrue: [aLiteral key] ifFalse: [aLiteral])
-				displayString: Locale smalltalk.
-	label := 'References to: ' , literalName.
-	refs := ReferencesCategory newNamed: label literal: aLiteral.
-	^(self onEnvironment: anEnvironment categories: {refs})
-		label: label;
-		searchStrings: {literalName};
 		yourself! !
 !Tools.MethodCategoryEnvironment class categoriesForMethods!
 onEnvironment:categories:!instance creation!public! !
-referencesTo:in:!instance creation!public! !
 !
 

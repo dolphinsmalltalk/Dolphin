@@ -152,16 +152,39 @@ basicInspectIt
 
 	(self evaluateItIfFail: [^self]) basicInspect!
 
-browseDefinitions
-	"Prompt for a selector and open a method browser displaying the implementors of that
-	selector."
+browseClassDefinition: aClass
+	self commandPolicy
+		route: (CommandDescription command: (Message selector: #browseClass: argument: aClass realClass))!
 
-	self routeCommand: (CommandDescription command: self browseDefinitionsCommand
-				description: 'Browse Definitions')!
+browseClassReferences: aClass
+	"Open a method browser on the methods referencing the specified <Class> in the receiver's search environment."
+
+	self browseEnvironments: (self developmentSystem referencesToClass: aClass realClass
+				in: self searchEnvironment)!
+
+browseDefinitions
+	"Context-sensitive browse references command (F12)."
+
+	<commandQuery: #queryBrowseDefinitions:>
+	<acceleratorKey: 'F12'>
+	self perform: self browseDefinitionsCommand!
 
 browseDefinitionsCommand
-	^Message selector: #browseMessageDefinitions:in:
-		arguments: {self selectedWord. self searchEnvironment}!
+	| tokenStyle |
+	self hasSelection ifTrue: [^#browseMessageDefinitions].
+	tokenStyle := view styleUnderCaret name.
+	tokenStyle == #literalSymbol ifTrue: [^#browseSelectorDefinitions].
+	tokenStyle == #identifier ifTrue: [^#browseVariableDefinition].
+	^#browseMessageDefinitions!
+
+browseDefinitionsMatching: aMethodSearch
+	"Private - Open a method browser on the methods in the receiver's search environment that have match the <MethodSearch> argument."
+
+	"Route a command message to avoid requiring that the parent presenter implement #browseDefinitionsMatching:in:. Ultimately this can be handled by the development system model, but is also intercepted by <MethodExplorer> in order to add to its search history tree."
+
+	self
+		routeCommand: (CommandDescription command: (Message selector: #browseDefinitionsMatching:in:
+						arguments: { aMethodSearch. self searchEnvironment }))!
 
 browseIt
 	"Evaluate currently selected text (or the current line if there is no selection) in the
@@ -170,17 +193,79 @@ browseIt
 	<acceleratorKey: 'Ctrl+B'>
 	(self evaluateItIfFail: [^self]) browse!
 
-browseReferences
-	"Prompt for a selector and open a method browser displaying the references to that
-	selector."
+browseLiteralReferences
+	"Open a method browser showing references to the value of the current literal node. Note this can be any literal value, not just symbols. For example you can search for all occurrences of String 'abc' in the system, or $🐬"
 
+	<commandQuery: #queryBrowseLiteralReferences:>
+	self
+		browseReferencesMatching: (MethodSearch newLiteral: (view tokenUnderCaret copyFrom: 2) asSymbol)!
+
+browseMessageDefinitions
+	self browseMessageDefinitions: self selectedWord in: self searchEnvironment!
+
+browseMessageDefinitions: aString in: aBrowserEnvironment
+	self developmentSystem browseMessageDefinitions: aString in: aBrowserEnvironment!
+
+browseMessageReferences
+	self browseMessageReferences: self selectedWord in: self searchEnvironment!
+
+browseMessageReferences: aString in: aBrowserEnvironment
+	"Private - Prompt for a selector and open a method explorer displaying the references to that
+	selector, using the <readableString> argument as the initial suggestion (or if that is empty
+	the first word of the clipboard text)."
+
+	self developmentSystem browseMessageReferences: aString in: aBrowserEnvironment!
+
+browseMethodsIn: aBrowserEnvironment 
+	parentPresenter browseMethodsIn: aBrowserEnvironment!
+
+browseReferences
+	"Context-sensitive browse references command (Shift+F12)."
+
+	<commandQuery: #queryBrowseReferences:>
 	<acceleratorKey: 'Shift+F12'>
-	self commandPolicy
-		route: (CommandDescription command: self browseReferencesCommand description: 'Browse References')!
+	self perform: self browseReferencesCommand!
 
 browseReferencesCommand
-	^Message selector: #browseMessageReferences:in:
-		arguments: {self selectedWord. self searchEnvironment}!
+	| tokenStyle |
+	self hasSelection ifTrue: [^#browseMessageReferences].
+	tokenStyle := view styleUnderCaret name.
+	tokenStyle == #literalSymbol ifTrue: [^#browseLiteralReferences].
+	tokenStyle == #identifier ifTrue: [^#browseVariableReferences].
+	^#browseMessageReferences!
+
+browseReferencesMatching: aMethodSearch
+	"Private - Open a method browser on the methods in the receiver's search environment that have a reference matching the <MethodSearch> argument."
+
+	"Route a command message to avoid requiring that the parent presenter implement #browseReferencesMatching:in:. Ultimately this can be handled by the development system model, but is also intercepted by <MethodExplorer> in order to add to its search history tree."
+
+	self
+		routeCommand: (CommandDescription command: (Message selector: #browseReferencesMatching:in:
+						arguments: { aMethodSearch. self searchEnvironment }))!
+
+browseSelectorDefinitions
+	"Open a method browser showing references to the value of the current literal node. Note this can be any literal value, not just symbols. For example you can search for all occurrences of String 'abc' in the system, or $🐬"
+
+	<commandQuery: #queryBrowseSelectorDefinitions:>
+	self browseDefinitionsMatching: (MethodSearch newLiteral: self selectedSymbol)!
+
+browseVariableDefinition
+	"Open a method browser showing references to the value of the current literal node. Note this can be any literal value, not just symbols. For example you can search for all occurrences of String 'abc' in the system, or $🐬"
+
+	<commandQuery: #queryBrowseVariableDefinition:>
+	| var range |
+	range := view tokenRangeAt: self selectedTokenPosition.
+	var := self variableForIdentifierStyle: #identifier range: range.
+	self browseClassDefinition: (self suggestClassForVariable: var)!
+
+browseVariableReferences
+	"Open a method browser showing references to the class of the current variable."
+
+	<commandQuery: #queryBrowseVariableReferences:>
+	| var range |
+	range := view tokenRangeAt: self selectedTokenPosition.
+	var := self variableForIdentifierStyle: #identifier range: range.
+	self browseClassReferences: (self suggestClassForVariable: var)!
 
 cancelAutoCompletion
 	self view cancelAutoCompletion!
@@ -208,8 +293,8 @@ chooseNamespaces
 chunkFilerClass
 	^ChunkSourceFiler!
 
-classForIdentifier: aStIdentifierToken
-	^(self resolveVariable: aStIdentifierToken)
+classForRange: anInterval
+	^(self variableForIdentifierStyle: #identifier range: anInterval)
 		ifNotNil: [:variable | self suggestClassForVariable: variable]!
 
 classForToken: anAssociation
@@ -218,23 +303,20 @@ classForToken: anAssociation
 	| style tokenRange |
 	anAssociation isNil ifTrue: [^nil].
 	style := anAssociation value.
-	(##(IdentityDictionary withAll: {#literalString -> String.
+	(##(IdentityDictionary withAll: {
+				#literalString -> String.
 				#literalSymbol -> Symbol.
 				#literalCharacter -> Character.
 				#literalArray -> Array.
 				#literalBytes -> ByteArray.
-				#literalBindingReference -> BindingReference})
+				#literalBindingReference -> BindingReference
+			})
 		lookup: style) ifNotNil: [:literalClass | ^literalClass].
 	tokenRange := anAssociation key.
-	style == #identifier
-		ifTrue: 
-			[^self classForIdentifier: (StIdentifierToken
-						start: tokenRange start
-						comments: nil
-						value: (view plainTextRange: tokenRange))].
+	style == #identifier ifTrue: [^self classForRange: tokenRange].
 	style == #literalPseudo
 		ifTrue: 
-			[^##(LookupTable withAll: {'nil' -> nil class. 'false' -> false class. 'true' -> true class})
+			[^##(LookupTable withAll: { 'nil' -> nil class. 'false' -> false class. 'true' -> true class })
 				lookup: (view plainTextRange: tokenRange)].
 	style == #literalNumber
 		ifTrue: [^(SmalltalkStylingScanner on: (view plainTextRange: tokenRange) readStream) next valueClass].
@@ -492,7 +574,7 @@ defaultCompilerFlags
 	^Interactive!
 
 defaultParseContext
-	^##(ParseContext methodClass: ProtoObject environment: Smalltalk)!
+	^ParseContext methodClass: ProtoObject environment: Smalltalk!
 
 defaultStylerClass
 	^SmalltalkExpressionStyler!
@@ -691,13 +773,10 @@ getCompletionSignatureFor: aString at: anInteger
 			[receiverStyle := prev value.
 			receiverStyle == #identifier
 				ifTrue: 
-					[| range ident |
+					[| range c |
 					range := prev key.
-					ident := view plainTextRange: range.
-					(self classForIdentifier: (StIdentifierToken
-								start: range start
-								comments: nil
-								value: ident))
+					c := self classForRange: range.
+					c
 						ifNotNil: 
 							[:methodClass |
 							(methodClass lookupMethod: selector)
@@ -996,6 +1075,15 @@ namespaces: aCollectionOfNamespaces
 newVariablePool
 	workspacePool := PoolDictionary new!
 
+nodeForRange: anInterval 
+	^self parseTree 
+		ifNotNil: 
+			[:tree | 
+			| node |
+			node := tree whichNodeIsContainedBy: anInterval.
+			node isNil ifTrue: [node := tree bestNodeFor: anInterval].
+			node]!
+
 onAutoComplete: aString startingAt: anInteger accept: aValueHolder
 	"Private - "
 
@@ -1039,11 +1127,7 @@ onHoverStart: aPoint
 			[self showTipForByteArrayAt: index.
 			^self].
 	(#(#identifier #tempDecl #argDecl #blockArgDecl) identityIncludes: style)
-		ifTrue: 
-			[self showTipForIdentifier: (StIdentifierToken
-						start: range start
-						comments: nil
-						value: (view plainTextRange: range))]!
+		ifTrue: [self showTipForIdentifierStyle: style range: range]!
 
 onRightButtonReleased: aMouseEvent 
 	"If the right button is clicked outside the selection range, then change the caret position
@@ -1082,11 +1166,10 @@ onViewOpened
 parseContext
 	^self evaluationContext
 		ifNil: [ParseContext methodClass: UndefinedObject environment: Smalltalk]
-		ifNotNil: 
-			[:receiverObj |
-			| class |
-			class := receiverObj basicClass.
-			ParseContext methodClass: class environment: class environment]!
+		ifNotNil: [:receiverObj | ParseContext methodClass: receiverObj basicClass]!
+
+parseTree
+	^nil!
 
 plainText
 	"Answer the receiver's unformatted source text as a String."
@@ -1158,6 +1241,68 @@ publishedAspects
 		add: self class textStylesAspect;
 		add: self class indicatorStylesAspect;
 		yourself!
+
+queryBrowseDefinitions: aCommandQuery
+	"Browse Definitions (F12) is a context-sensitive command. We open a browser appropriate to the selected node, or let some other presenter handle if if the selected node is not browsable.
+	As the command's menu text typically has an insertion to specify what will be browsed, we ensure it is reset, otherwise it might end up displaying whatever was last browsable."
+
+	aCommandQuery text: aCommandQuery menuText << $….
+	self browseDefinitionsCommand
+		ifNotNil: [:selector | self queryContextCommand: aCommandQuery as: selector]!
+
+queryBrowseLiteralReferences: aCommandQuery
+	| pos |
+	pos := self selectedTokenPosition.
+	(pos ~~ 0 and: [(view styleAt: pos) name == #literalSymbol])
+		ifTrue: 
+			[aCommandQuery
+				isEnabled: true;
+				text: (aCommandQuery menuText expandMacrosWithArguments: { 'Symbol <1d>' << view tokenUnderCaret }
+							locale: Locale smalltalk)]!
+
+queryBrowseReferences: aCommandQuery
+	"Browse References (Shift+F12) is a context-sensitive command. We open a browser appropriate to the selected node, or let some other presenter handle if if the selected node is not browsable for references.
+	As the command's menu text typically has an insertion to specify what will be browsed, we ensure it is reset, otherwise it might end up displaying whatever was last browsable."
+
+	aCommandQuery text: aCommandQuery menuText << $….
+	self browseReferencesCommand
+		ifNotNil: [:selector | self queryContextCommand: aCommandQuery as: selector]!
+
+queryBrowseSelectorDefinitions: aCommandQuery
+	self selectedSymbol
+		ifNotNil: 
+			[:selector |
+			aCommandQuery
+				isEnabled: true;
+				text: (aCommandQuery menuText expandMacrosWithArguments: { 'selector <1d>' << selector }
+							locale: Locale smalltalk)]!
+
+queryBrowseVariableDefinition: aCommandQuery
+	| pos |
+	pos := self selectedTokenPosition.
+	(pos ~~ 0 and: [(view styleAt: pos) name == #identifier])
+		ifTrue: 
+			[| var varClass |
+			var := self variableForIdentifierStyle: #identifier range: (view tokenRangeAt: pos).
+			varClass := self suggestClassForVariable: var.
+			aCommandQuery isEnabled: true.
+			(aCommandQuery menuText includes: $<)
+				ifTrue: 
+					[aCommandQuery
+						text: ('Class <1p>' expandMacrosWithArguments: { varClass instanceClass } locale: Locale smalltalk)]]!
+
+queryBrowseVariableReferences: aCommandQuery
+	| pos |
+	pos := self selectedTokenPosition.
+	(pos ~~ 0 and: [(view styleAt: pos) name == #identifier])
+		ifTrue: 
+			[| var varClass |
+			var := self variableForIdentifierStyle: #identifier range: (view tokenRangeAt: pos).
+			varClass := self suggestClassForVariable: var.
+			aCommandQuery
+				isEnabled: true;
+				text: (aCommandQuery menuText expandMacrosWithArguments: { varClass instanceClass shortName }
+							locale: Locale smalltalk)]!
 
 queryToggleAutoCompletion: aCommandQuery
 	(self isReadOnly not and: [self hasSmalltalkStyler and: [self isSyntaxColoringEnabled]])
@@ -1234,33 +1379,14 @@ replaceSelection: aString
 	
 	^self view replaceSelection: aString!
 
-resolveIdentifier: aString ifDefined: aMonadicValuable
-	^(self resolveVariable: aString) ifNotNil: [:variable | aMonadicValuable value: variable]!
-
-resolveVariable: aStIdentifierToken
-	| nameContext classScope name |
-	nameContext := self nameBindingContext.
-	classScope := StClassScope methodClass: nameContext methodClass environment: nameContext environment.
-	name := aStIdentifierToken value.
-	name = 'self' ifTrue: [^classScope selfVariable].
-	name = 'super' ifTrue: [^classScope superVariable].
-	name = 'thisContext' ifTrue: [^classScope thisContextVariable].
-	^(nameContext methodClass indexOfInstVar: name ifAbsent: nil)
-		ifNotNil: 
-			[:i |
-			StInstanceVariable
-				scope: classScope
-				index: i
-				name: name]
+resolveIdentifier: aString
+	^(self nameBindingContext resolveIdentifier: aString)
 		ifNil: 
-			[(nameContext methodClass fullBindingFor: name environment: nameContext environment)
-				ifNotNil: [:var | StStaticVariable scope: classScope binding: var]
-				ifNil: 
-					["Workspace pool is lowest priority"
-					(self workspacePool bindingFor: name)
-						ifNotNil: 
-							[:var |
-							^StWorkspaceVariable scope: (StEvalScope pools: {self workspacePool} outer: nil) binding: var]]]!
+			["Workspace pool is lowest priority, although only because the debugger uses this to create pseudo variables to represent the stack variables and we don't want to find these before the actual temps in the parse tree."
+			(self workspacePool bindingFor: aString)
+				ifNotNil: 
+					[:var |
+					^StWorkspaceVariable scope: (StEvalScope pools: { self workspacePool } outer: nil) binding: var]]!
 
 searchEnvironment
 	^searchEnvironment ifNil: [self systemModel browserEnvironment]!
@@ -1268,14 +1394,38 @@ searchEnvironment
 searchEnvironment: aBrowserEnvironment 
 	searchEnvironment := aBrowserEnvironment!
 
+selectedIdentifier
+	| pos |
+	pos := self selectedTokenPosition.
+	^(pos ~~ 0 and: [(view styleAt: pos) name == #identifier]) ifTrue: [view tokenTextAt: pos]!
+
+selectedSymbol
+	| pos |
+	pos := self selectedTokenPosition.
+	^(pos ~~ 0 and: [(view styleAt: pos) name == #literalSymbol])
+		ifTrue: 
+			[| tokenRange |
+			tokenRange := view tokenRangeAt: pos.
+			(view plainTextFrom: tokenRange start + 1 to: tokenRange stop) asSymbol]!
+
+selectedTokenPosition
+	^self hasSelection
+		ifTrue: 
+			[| start |
+			start := view selectionStart.
+			(view tokenRangeAt: start) = view selectionRange ifTrue: [start] ifFalse: [0]]
+		ifFalse: [view caretPosition]!
+
 selectedWord
 	"Private - Answers a selection that may be of interest given by the current state of the
 	receiver. This is used by #browseImplementors, #browseSenders, etc, as a suitable starting
 	point for the search"
 
 	| selected |
-	selected := self selection trimBlanks.
-	^selected isEmpty ifTrue: [selected] ifFalse: [selected subStrings first]!
+	selected := self selection.
+	^selected isEmpty
+		ifTrue: [view tokenTextAt: view caretPosition]
+		ifFalse: [selected trimBlanks subStrings first]!
 
 selectEvaluationRange
 	"Private - Answer the current evaluation range, selecting the current line and answering its
@@ -1459,25 +1609,25 @@ showIdentifierCompletionListAt: posInteger maxItems: maxInteger start: start
 	lastDot isZero
 		ifTrue: [choices := self identifiersStartingWith: prefix maxItems: maxInteger]
 		ifFalse: 
-			[| qualifier pool nameContext |
+			[| qualifier nameContext |
 			"Qualified name, find the binding"
 			qualifier := prefix copyFrom: 1 to: lastDot - 1.
 			prefix := prefix copyFrom: lastDot + 1 to: prefix size.
 			choices := #().
 			nameContext := self nameBindingContext.
-			(nameContext methodClass fullBindingFor: qualifier environment: nameContext environment)
+			(nameContext resolveIdentifier: qualifier)
 				ifNotNil: 
 					[:var |
-					pool := var value.
-					pool isBehavior ifTrue: [pool := pool classPool].
-					(pool isKindOf: Dictionary)
+					| binding |
+					binding := var binding.
+					binding isClassBinding
 						ifTrue: 
 							[choices := prefix isEmpty
-										ifTrue: [pool associations]
+										ifTrue: [binding value classPool keys]
 										ifFalse: 
 											[| ignoreCase |
 											ignoreCase := self isAutoCompletionCaseInsensitive.
-											pool associations select: [:each | each key beginsWith: prefix ignoreCase: ignoreCase]].
+											binding value classPool keys select: [:each | each beginsWith: prefix ignoreCase: ignoreCase]].
 							choices size > maxInteger ifTrue: [choices := #()]]]].
 	self showCompletionList: choices prefixLength: prefix size!
 
@@ -1553,23 +1703,15 @@ showTipForCharacterAt: anInteger
 	tip nextPutAll: (charName isEmpty ifTrue: ['<unnamed>'] ifFalse: [charName]).
 	self view showCallTip: tip contents at: anInteger!
 
-showTipForIdentifier: aStIdentifierToken
-	(self resolveVariable: aStIdentifierToken)
+showTipForIdentifierStyle: aSymbol range: anInterval
+	(self variableForIdentifierStyle: aSymbol range: anInterval)
 		ifNotNil: 
-			[:variable |
-			| tip identifier |
-			identifier := aStIdentifierToken value.
-			tip := [variableMetadataProvider tipForVariable: variable] on: Error
-						do: 
-							[:ex |
-							String writeStream
-								nextPutAll: ([variable infoTip] on: Error do: [:ex2 | identifier]);
-								nextPutAll: ': <';
-								print: ex;
-								nextPut: $>;
-								contents].
+			[:var |
+			| tip |
+			tip := variableMetadataProvider tipForVariable: var.
 			"Don't display the tip if it contains no useful information"
-			tip = identifier ifFalse: [self view showCallTip: tip at: aStIdentifierToken stop]]!
+			(tip isNil or: [tip = (view plainTextRange: anInterval)])
+				ifFalse: [self view showCallTip: tip at: anInterval stop]]!
 
 showTipForIndicators: aCollectionOfScintillaIndicators
 	| tip last |
@@ -1674,6 +1816,39 @@ validateUserInterface
 	super validateUserInterface.
 	self modifiedModel value: self isModified!
 
+variableForIdentifierStyle: aSymbol range: anInterval
+	| node name |
+	node := self nodeForRange: anInterval.
+	node notNil
+		ifTrue: 
+			[node isVariable ifFalse: [^nil].
+			node variable ifNotNil: [:var | ^var]].
+	"Parse tree may not have undergone semantic analysis yet"
+	name := view plainTextRange: anInterval.
+	(self resolveIdentifier: name) ifNotNil: [:var | ^var].
+	"Synthesize a likely variable:
+		- Any known instance variables in scope would have been resolved (doesn't require a parse tree).
+		- Any known static variables in scope would have been resolved (doesn't require a parse tree).
+		- For the method/block parameters and temp declarations we know the right variable type (determined by the styling lexer).
+		- For other cases we make an educated guess:
+			- Static variables start with uppercase letters by convention, so for such identifiers assume an undeclared static variable
+			- Assume other cases are temps"
+	(aSymbol == #argDecl or: [aSymbol == #blockArgDecl])
+		ifTrue: 
+			["Method/block parameter "
+			^StArgumentVariable node: (StParameterNode named: name start: anInterval start)].
+	aSymbol == #tempDecl
+		ifTrue: 
+			["Method or block temporary declaration - we don't know which without a parse tree, but doesn't really matter for most purposes"
+			^StTempVariable node: (StTempDeclNode named: name start: anInterval start)].
+	"Other identifiers"
+	name first isUpperCase
+		ifTrue: 
+			["Undeclared static"
+			^StStaticVariable scope: self parseContext scope binding: nil].
+	"Assume a temp"
+	^StTempVariable node: (node ifNil: [StBasicVariableNode named: name start: anInterval start])!
+
 variableMetadataProvider: aVariableResolver
 	variableMetadataProvider := aVariableResolver!
 
@@ -1705,18 +1880,31 @@ areVariableTipsEnabled:!public!testing! !
 autoComplete:at:maxItems:!autocompletion!helpers!private! !
 basicFindNext!commands-actions!public! !
 basicInspectIt!commands-actions!public! !
+browseClassDefinition:!browsing!private! !
+browseClassReferences:!browsing!private! !
 browseDefinitions!commands-actions!public! !
-browseDefinitionsCommand!commands-actions!private! !
+browseDefinitionsCommand!commands-mappings!private! !
+browseDefinitionsMatching:!browsing!private! !
 browseIt!commands-actions!public! !
+browseLiteralReferences!commands-actions!public! !
+browseMessageDefinitions!commands-actions!private! !
+browseMessageDefinitions:in:!browsing!private! !
+browseMessageReferences!commands-actions!private! !
+browseMessageReferences:in:!browsing!private! !
+browseMethodsIn:!operations!public! !
 browseReferences!commands-actions!public! !
-browseReferencesCommand!commands-actions!private! !
+browseReferencesCommand!commands-mappings!private! !
+browseReferencesMatching:!browsing!private! !
+browseSelectorDefinitions!commands-actions!public! !
+browseVariableDefinition!commands-actions!public! !
+browseVariableReferences!commands-actions!public! !
 cancelAutoCompletion!helpers!private! !
 canReformatComment!commands-queries!private! !
 canReformatSource!commands-queries!private! !
 caretPosition:!accessing!caret!public! !
 chooseNamespaces!commands-actions!public! !
 chunkFilerClass!constants!public! !
-classForIdentifier:!autocompletion!helpers!private! !
+classForRange:!autocompletion!helpers!private! !
 classForToken:!autocompletion!helpers!private! !
 classForVariable:!public! !
 clear!operations!public! !
@@ -1799,6 +1987,7 @@ nameBindingContext!accessing!autocompletion!private! !
 namespaces!accessing!public! !
 namespaces:!accessing!public! !
 newVariablePool!operations!private! !
+nodeForRange:!helpers!private! !
 onAutoComplete:startingAt:accept:!autocompletion!event handling!private! !
 onCharAdded:!autocompletion!event handling!private! !
 onHoverEnd:!event handling!private! !
@@ -1808,22 +1997,31 @@ onTimerTick:!event handling!private! !
 onTipTextRequired:!event handling!private! !
 onViewOpened!event handling!private! !
 parseContext!commands-actions!public! !
+parseTree!accessing!private! !
 plainText!accessing!public! !
 plainTextRange:!accessing!public! !
 printIt!commands-actions!public! !
 prompt:toSaveChanges:!helpers!private! !
 promptForVariableName:!helpers!private! !
 publishedAspects!public! !
+queryBrowseDefinitions:!commands-queries!private! !
+queryBrowseLiteralReferences:!commands-queries!private! !
+queryBrowseReferences:!commands-queries!private! !
+queryBrowseSelectorDefinitions:!commands-queries!private! !
+queryBrowseVariableDefinition:!commands-queries!private! !
+queryBrowseVariableReferences:!commands-queries!private! !
 queryToggleAutoCompletion:!commands-actions!commands-queries!private! !
 queryToggleStyling:!commands-actions!commands-queries!private! !
 rangeToCompleteAt:!autocompletion!helpers!private! !
 reformatComment!commands-actions!public! !
 reformatSource!commands-actions!public! !
 replaceSelection:!operations!public! !
-resolveIdentifier:ifDefined:!autocompletion!helpers!private! !
-resolveVariable:!autocompletion!helpers!private! !
+resolveIdentifier:!autocompletion!helpers!private! !
 searchEnvironment!commands-actions!public! !
 searchEnvironment:!accessing!public! !
+selectedIdentifier!helpers!private! !
+selectedSymbol!helpers!private! !
+selectedTokenPosition!helpers!private! !
 selectedWord!helpers!private! !
 selectEvaluationRange!helpers!private! !
 selection!accessing!public! !
@@ -1850,7 +2048,7 @@ showSelectorCompletionListAt:maxItems:!autocompletion!helpers!private! !
 showSymbolCompletionListAt:maxItems:!autocompletion!helpers!private! !
 showTipForByteArrayAt:!helpers!private! !
 showTipForCharacterAt:!helpers!private! !
-showTipForIdentifier:!helpers!private! !
+showTipForIdentifierStyle:range:!event handling!private! !
 showTipForIndicators:!helpers!private! !
 showTipForNumberAt:!helpers!private! !
 startAutocompleteTimer!autocompletion!helpers!private! !
@@ -1870,6 +2068,7 @@ tokenRangeAt:!accessing!autocompletion!private! !
 tokenStartAt:!accessing!autocompletion!private! !
 updateErrorStatus!operations!public! !
 validateUserInterface!operations!public! !
+variableForIdentifierStyle:range:!event handling!private! !
 variableMetadataProvider:!accessing!public! !
 workspacePool!accessing!public! !
 workspacePool:!accessing!public! !
@@ -2512,7 +2711,7 @@ resource_Default_view
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 5 985166 10 #{UI.STBViewProxy} #{UI.Scintilla.ScintillaView} 34 52 nil nil 34 2 8 1411453252 1 416 918598 2 #{UI.ValueHolder} nil false 1769478 #{Kernel.EqualitySearchPolicy} nil 1245702 #{Graphics.ThemeColor} #smalltalkWorkspace nil 21 461638 4 #{UI.Menu} nil true 34 13 1180742 2 #{UI.CommandMenuItem} 1 1377606 4 #{UI.CommandDescription} #accept 8 '&Accept' 1 1 nil nil nil 1179974 1 #{UI.DividerMenuItem} 4097 578 nil true 34 10 626 1 658 #undo 8 '&Undo' 1 1 852806 4 #{Graphics.Icon} nil true 2819078 #{Graphics.ImageFromStringResourceInitializer} 8 'EditUndo.ico' 2490894 #{Kernel.STBExternalResourceLibraryProxy} 8 'dolphindr8.dll' nil 65541 nil nil nil 706 4097 626 1 658 #cutSelection 8 'Cu&t' 1 1 818 nil true 850 8 'EditCut.ico' 912 65541 nil nil nil 626 1 658 #copySelection 8 '&Copy' 1 1 818 nil true 850 8 'EditCopy.ico' 912 65541 nil nil nil 626 1 658 #pasteClipboard 8 '&Paste' 1 1 818 nil true 850 8 'EditPaste.ico' 912 65541 nil nil nil 626 1 658 #clearSelection 8 'De&lete' 1 1 818 nil true 850 8 'EditClear.ico' 912 65541 nil nil nil 706 4097 626 1 658 #reformatSource 8 'Re&format' 1 1 nil nil nil 706 4097 626 1 658 #selectAll 8 '&Select All' 1 1 nil nil nil 8 '&Edit' nil 134217729 nil nil nil nil nil 578 nil true 34 10 626 1 658 #inspectWorkspacePool 8 '&Variables' 1 1 nil nil nil 626 1 658 #cloneNew 8 'Clo&ne' 1 1 818 nil true 850 8 'SmalltalkWorkspace.ico' 912 65541 nil nil nil 706 4097 626 1 658 #toggleAutoCompletion 8 'Auto-complete' 1 1 nil nil nil 626 1 658 #toggleIndentationGuides 8 'Indentation &Guides' 1 1 nil nil nil 626 1 658 #toggleLineEndings 8 'Line &Endings' 1 1 1378630 2 #{Graphics.TextTileIcon} $¶ 8 'Arial' nil nil nil nil 1 nil nil nil nil 626 1 658 #toggleLineNumbers 8 'Line N&umbers' 1 1 nil nil nil 626 1 658 #toggleStyling 8 '&Syntax Coloring' 1 1 nil nil nil 626 1 658 #toggleWhitespace 8 'W&hitespace' 1 1 nil nil nil 626 1 658 #toggleWordWrap 8 '&Word Wrap' 1 1 nil nil nil 8 'Wor&kspace' nil 134217729 nil nil nil nil nil 706 4097 626 1 658 #browseIt 8 'Bro&wse It' 1 1 818 nil true 850 8 'ClassBrowserShell.ico' 912 65541 nil nil nil 626 1 658 #displayIt 8 '&Display It' 1 1 818 nil true 850 8 'DisplayIt.ico' 912 65541 nil nil nil 626 1 658 #printIt 8 '&Print It' 1 1 818 nil true 850 8 'PrintIt.ico' 912 65541 nil nil nil 626 1 658 #evaluateIt 8 'E&valuate It' 1 1 818 nil true 850 8 'EvaluateIt.ico' 912 65541 nil nil nil 626 1 658 #inspectIt 8 '&Inspect It' 1 1 818 nil true 850 8 'InspectIt.ico' 912 65541 nil nil nil 626 1 658 #debugIt 8 'Deb&ug It' 1 1 818 nil true 850 8 'DebugIt.ico' 912 65541 nil nil nil 706 4097 578 nil true 34 2 626 2097153 658 #browseDefinitions 8 'Defi&nitions…' 1 1 nil nil nil 626 1 658 #browseReferences 8 '&References…' 1 1 nil nil nil 8 '&Browse' nil 1 nil nil nil nil nil 8 '&Workspace' nil 134217729 nil nil nil nil nil nil nil 416 nil 8 1395533126 1049094 #{UI.NullConverter} nil nil 9 nil 170 192 34 4 #normal 1444934 1 #{UI.Scintilla.TextStyle} 1 nil nil 1 nil nil nil nil #normal nil nil nil #callTip 2930 77 917510 #{Graphics.Color} #gray 2978 #white 1 nil nil nil nil #callTip nil nil nil nil 2032902 #{Tools.SmalltalkExpressionStyler} 1 nil nil false 138 144 8 #() 170 192 34 2 #default 1903686 2 #{UI.Scintilla.MarkerDefinition} 1 nil nil nil 416 #circle nil nil nil nil nil nil 138 #{Core.IdentitySet} 3072 nil 170 176 3072 nil nil nil 170 176 34 4 81 2978 #windowText 23 546 #workspaceSelection nil 34 1 2360326 #{UI.Scintilla.CharacterRepresentation} $\x2028 nil 33 3216 2162950 #{UI.Scintilla.NullScintillaLibrary} nil 65 nil nil 170 192 34 6 #literalArray 8 '()' #specialCharacter 8 '()[]<>' #literalBytes 8 '[]' 8 '' 3 170 192 34 2 #container 2896 nil nil nil nil 208 nil 170 192 3072 nil nil 170 192 34 6 #Notification 2930 1029 nil 2978 #gainsboro 1 nil nil nil nil #Notification nil nil nil #Warning 2930 1027 2978 #darkGoldenrod 2978 #ivory 1 nil nil nil nil #Warning nil nil nil #Error 2930 1031 2978 #firebrick 2978 #floralWhite 1 nil nil nil nil #Error nil nil nil nil nil nil 1310982 #{Core.MessageSequence} 34 9 1049350 #{Core.MessageSend} #createAt:extent: 34 2 918022 #{Graphics.Point} 12287 21 3730 461 311 416 3682 #contextMenu: 34 1 592 416 3682 #sciSetMouseDwellTime: 8 #(500) 416 3682 #wordWrap: 8 #(true) 416 3682 #margins: 34 1 34 3 1247302 3 #{UI.Scintilla.Margin} 1 416 1 3 nil nil nil nil 3922 3 416 1 nil nil 67108863 nil nil 3922 5 416 1 nil nil nil nil nil 416 3682 #tabWidth: 8 #(4) 416 3682 #maxCompletionListHeight: 8 #(9) 416 3682 #hasAdditionalSelectionTyping: 8 #(true) 416 3682 #sciSetSelectionLayer: 8 #(1) 416 1179910 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 23 0 0 10 0 0 0 229 24 0 0 165 0 0 0] 8 #() 3730 193 193 nil 35)!
+	^#(#'!!STL' 5 985166 10 #{UI.STBViewProxy} #{UI.Scintilla.ScintillaView} 34 52 nil nil 34 2 8 1411453252 1 416 918598 2 #{UI.ValueHolder} nil false 1769478 #{Kernel.EqualitySearchPolicy} nil 1245702 #{Graphics.ThemeColor} #smalltalkWorkspace nil 21 461638 4 #{UI.Menu} nil true 34 13 1180742 2 #{UI.CommandMenuItem} 1 1377606 4 #{UI.CommandDescription} #accept 8 '&Accept' 1 1 nil nil nil 1179974 1 #{UI.DividerMenuItem} 4097 578 nil true 34 10 626 1 658 #undo 8 '&Undo' 1 1 852806 4 #{Graphics.Icon} nil true 2819078 #{Graphics.ImageFromStringResourceInitializer} 8 'EditUndo.ico' 2490894 #{Kernel.STBExternalResourceLibraryProxy} 8 'dolphindr8.dll' nil 65541 nil nil nil 706 4097 626 1 658 #cutSelection 8 'Cu&t' 1 1 818 nil true 850 8 'EditCut.ico' 912 65541 nil nil nil 626 1 658 #copySelection 8 '&Copy' 1 1 818 nil true 850 8 'EditCopy.ico' 912 65541 nil nil nil 626 1 658 #pasteClipboard 8 '&Paste' 1 1 818 nil true 850 8 'EditPaste.ico' 912 65541 nil nil nil 626 1 658 #clearSelection 8 'De&lete' 1 1 818 nil true 850 8 'EditClear.ico' 912 65541 nil nil nil 706 4097 626 1 658 #reformatSource 8 'Re&format' 1 1 nil nil nil 706 4097 626 1 658 #selectAll 8 '&Select All' 1 1 nil nil nil 8 '&Edit' nil 134217729 nil nil nil nil nil 578 nil true 34 10 626 1 658 #inspectWorkspacePool 8 '&Variables' 1 1 nil nil nil 626 1 658 #cloneNew 8 'Clo&ne' 1 1 818 nil true 850 8 'SmalltalkWorkspace.ico' 912 65541 nil nil nil 706 4097 626 1 658 #toggleAutoCompletion 8 'Auto-complete' 1 1 nil nil nil 626 1 658 #toggleIndentationGuides 8 'Indentation &Guides' 1 1 nil nil nil 626 1 658 #toggleLineEndings 8 'Line &Endings' 1 1 1378630 2 #{Graphics.TextTileIcon} $¶ 8 'Arial' nil nil nil nil 1 nil nil nil nil 626 1 658 #toggleLineNumbers 8 'Line N&umbers' 1 1 nil nil nil 626 1 658 #toggleStyling 8 '&Syntax Coloring' 1 1 nil nil nil 626 1 658 #toggleWhitespace 8 'W&hitespace' 1 1 nil nil nil 626 1 658 #toggleWordWrap 8 '&Word Wrap' 1 1 nil nil nil 8 'Wor&kspace' nil 134217729 nil nil nil nil nil 706 4097 626 1 658 #browseIt 8 'Bro&wse It' 1 1 818 nil true 850 8 'ClassBrowserShell.ico' 912 65541 nil nil nil 626 1 658 #displayIt 8 '&Display It' 1 1 818 nil true 850 8 'DisplayIt.ico' 912 65541 nil nil nil 626 1 658 #printIt 8 '&Print It' 1 1 818 nil true 850 8 'PrintIt.ico' 912 65541 nil nil nil 626 1 658 #evaluateIt 8 'E&valuate It' 1 1 818 nil true 850 8 'EvaluateIt.ico' 912 65541 nil nil nil 626 1 658 #inspectIt 8 '&Inspect It' 1 1 818 nil true 850 8 'InspectIt.ico' 912 65541 nil nil nil 626 1 658 #debugIt 8 'Deb&ug It' 1 1 818 nil true 850 8 'DebugIt.ico' 912 65541 nil nil nil 706 4097 578 nil true 34 2 626 2097153 658 #browseDefinitions 8 'Defi&nitions of <1d>' 1 1 nil nil nil 626 1 658 #browseReferences 8 '&References to <1d>' 1 1 nil nil nil 8 '&Browse' nil 1 nil nil nil nil nil 8 '&Workspace' nil 134217729 nil nil nil nil nil nil nil 416 nil 8 1879218592 1049094 #{UI.NullConverter} nil nil 9 nil 170 192 34 4 #callTip 1444934 1 #{UI.Scintilla.TextStyle} 77 917510 #{Graphics.Color} #gray 2962 #white 1 nil nil nil nil #callTip nil nil nil #normal 2930 1 nil nil 1 nil nil nil nil #normal nil nil nil nil 2032902 #{Tools.SmalltalkExpressionStyler} 1 nil nil false 138 144 8 #() 170 192 34 2 #default 1903686 2 #{UI.Scintilla.MarkerDefinition} 1 nil nil nil 416 #circle nil nil nil nil nil nil 138 #{Core.IdentitySet} 3072 nil 170 176 3072 nil nil nil 170 176 34 4 81 2962 #windowText 23 546 #workspaceSelection nil 34 1 2360326 #{UI.Scintilla.CharacterRepresentation} $\x2028 nil 33 3216 2162950 #{UI.Scintilla.NullScintillaLibrary} nil 65 nil nil 170 192 34 6 #literalArray 8 '()' #literalBytes 8 '[]' #specialCharacter 8 '()[]<>' nil 3 170 192 34 2 #container 2896 nil nil nil nil 208 nil 170 192 3072 nil nil 170 192 34 6 #Notification 2930 1029 nil 2962 #gainsboro 1 nil nil nil nil #Notification nil nil nil #Warning 2930 1027 2962 #darkGoldenrod 2962 #ivory 1 nil nil nil nil #Warning nil nil nil #Error 2930 1031 2962 #firebrick 2962 #floralWhite 1 nil nil nil nil #Error nil nil nil nil nil nil 1310982 #{Core.MessageSequence} 34 8 1049350 #{Core.MessageSend} #createAt:extent: 34 2 918022 #{Graphics.Point} 6143 21 3714 461 311 416 3666 #sciSetMouseDwellTime: 8 #(500) 416 3666 #wordWrap: 8 #(true) 416 3666 #margins: 34 1 34 3 1247302 3 #{UI.Scintilla.Margin} 1 416 1 3 nil nil nil nil 3874 3 416 1 nil nil 67108863 nil nil 3874 5 416 1 nil nil nil nil nil 416 3666 #tabWidth: 8 #(4) 416 3666 #maxCompletionListHeight: 8 #(9) 416 3666 #hasAdditionalSelectionTyping: 8 #(true) 416 3666 #sciSetSelectionLayer: 8 #(1) 416 1179910 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 229 12 0 0 165 0 0 0] 8 #() 3714 193 193 nil 37)!
 
 setAdditionalKeyBindings: anArray
 	additionalKeyBindings = anArray ifTrue: [^self].

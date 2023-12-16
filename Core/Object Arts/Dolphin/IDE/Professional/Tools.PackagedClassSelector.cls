@@ -33,6 +33,7 @@ browseItCommand
 	^super browseItCommand!
 
 browsePackages
+	<commandQuery: #hasPackages>
 	packagesPresenter browsePackages!
 
 classesPresenter
@@ -72,10 +73,14 @@ flags: anInteger
 gotoDefinition
 	"Sets the receiver to be displaying the currently selected class with it's own package selected"
 
+	<commandQuery: #hasSelection>
 	| gotoClass |
 	gotoClass := self selection.
 	self resetForItem: gotoClass.
 	self selection: gotoClass!
+
+hasPackages
+	^packagesPresenter hasPackages!
 
 newClass
 	"Create a new subclass of the selected class (or a subclass of Object if no class is actually selected)."
@@ -116,29 +121,6 @@ packages: aPackageCollection
 packagesPresenter
 	^packagesPresenter!
 
-queryCommand: query 
-	"Private - Enter details about a potential command for the receiver 
-	into the <CommandQuery>, query."
-
-	| selector |
-	selector := query commandSymbol.
-	#browseIt == selector 
-		ifTrue: 
-			[selector := self browseItCommand.
-			selector isNil 
-				ifTrue: 
-					[query isEnabled: false.
-					^true]].
-	#browsePackages == selector 
-		ifTrue: 
-			[query isEnabled: packagesPresenter hasPackages.
-			^true].
-	#gotoDefinition == selector 
-		ifTrue: 
-			[query isEnabled: self hasSelection.
-			^true].
-	^super queryCommand: query!
-
 resetForItem: aClass
 	"Private - Try to ensure that the receiver is set to display aClass if possible"
 
@@ -166,7 +148,7 @@ updateClasses
 autoSelectPackages!accessing!private!selection! !
 autoSelectPackages:!accessing!private!selection! !
 browseItCommand!helpers!private! !
-browsePackages!commands!public! !
+browsePackages!commands-actions!public! !
 classesPresenter!accessing!public! !
 classHierarchyPresenter!accessing!private! !
 classNamesSelector:!accessing!private! !
@@ -174,14 +156,14 @@ createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !
 flags!accessing!private! !
 flags:!accessing!private! !
-gotoDefinition!commands!public! !
-newClass!commands!public! !
+gotoDefinition!commands-actions!public! !
+hasPackages!private!testing! !
+newClass!commands-actions!public! !
 onPackageChosen!event handling!public! !
 onPackageSelected!event handling!private!selection! !
 packages!accessing!public!selection! !
 packages:!accessing!public!selection! !
 packagesPresenter!accessing!private! !
-queryCommand:!commands!private! !
 resetForItem:!event handling!private! !
 selectPackageRoot!public!selection! !
 setInitialFocus!operations!public! !

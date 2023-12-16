@@ -172,7 +172,7 @@ browseMessageDefinitionsIn: aBrowserEnvironment
 		ifTrue: [self model browseMessageDefinitionsIn: aBrowserEnvironment]
 		ifFalse: 
 			[self browseMethodsInEnvironments: (methods
-						collect: [:each | aBrowserEnvironment definitionsMatching: (MethodSearch newSelector: each selector)])]!
+						collect: [:each | (MethodSearch newSelector: each selector) definitionsIn: aBrowserEnvironment])]!
 
 browseMessageReferences
 	"Open a method browser displaying all references to the current selector in the entire system."
@@ -939,16 +939,14 @@ querySaveComment: aCommandQuery
 		ifTrue: 
 			[aCommandQuery
 				isEnabled: true;
-				isDefault: true]
-		ifFalse: [aCommandQuery isEnabled: false]!
+				isDefault: true]!
 
 querySaveScript: aCommandQuery
 	(packagesPresenter hasSinglePackage and: [scriptTextPresenter isModified])
 		ifTrue: 
 			[aCommandQuery
 				isEnabled: true;
-				isDefault: true]
-		ifFalse: [aCommandQuery isEnabled: false]!
+				isDefault: true]!
 
 refreshCard: aSymbol
 	currentCard == aSymbol 

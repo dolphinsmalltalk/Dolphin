@@ -39,6 +39,9 @@ hash
 isAnnotation
 	^true!
 
+isAnnotationNode
+	^true!
+
 keywords
 	^selector keywords!
 
@@ -63,6 +66,7 @@ arguments:!accessing!public! !
 childrenDo:!accessing!public! !
 hash!comparing!public! !
 isAnnotation!public!testing! !
+isAnnotationNode!public!testing! !
 keywords!accessing!public! !
 postCopy!copying!public! !
 selector!accessing!public! !

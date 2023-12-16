@@ -68,7 +68,7 @@ testInvalidSubclass
 				name: #Foo
 				class: LintRuleTestData
 				subclasses: {BasicLintRule. CompositeLintRule})
-		withMessage: 'Refactory.Browser.BasicLintRule is not an immediate subclass of Refactory.Browser.TestData.LintRuleTestData'!
+		withMessage: 'BasicLintRule is not an immediate subclass of Refactory.Browser.TestData.LintRuleTestData'!
 
 testMetaClassFailure
 	self shouldFail: (ChildrenToSiblingsRefactoring
