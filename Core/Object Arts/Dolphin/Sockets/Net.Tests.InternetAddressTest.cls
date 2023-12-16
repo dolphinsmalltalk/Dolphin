@@ -16,7 +16,7 @@ testAllForHost
 	| addresses |
 
 	"dns.google has two fixed and well-known IP addresses"
-	addresses := InternetAddress allForHost: 'dns.google'.
+	addresses := InternetAddress allForHost: 'dns.google.com'.
 	self assert: addresses size equals: 2.
 	self assert: (addresses collect: [:each | each ipAddress]) asSet
 		equals: #(#[8 8 4 4] #[8 8 8 8]) asSet.
@@ -28,7 +28,7 @@ testAllForHost
 testHost
 	<skipUnless: #isOnline>
 	| name ip |
-	name := InternetAddress host: 'dns.google'.
+	name := InternetAddress host: 'dns.google.com'.
 	ip := InternetAddress ipAddress: name ipAddress.
 	self assert: ip host equals: name host!
 
