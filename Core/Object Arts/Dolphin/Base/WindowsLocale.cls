@@ -21,6 +21,11 @@ asParameter
 
 	^lcid!
 
+basicLcid
+	"Private - Answer the <integer> id (LCID) of the receiver, including any flags encoded in the high order bits outside the 24-bit range of LCIDs."
+
+	^lcid!
+
 buildDayNamesMap
 	| map |
 	map := LookupTable new: 14.
@@ -175,14 +180,17 @@ getDateFormats: aBoolean
 getIntegerInfo: anIntegerLcType
 	"Private - Get the specified <integer> locale information from Windows, caching for subsequent use."
 
-	^info at: anIntegerLcType ifAbsentPut: [self getLocaleInfoInteger: anIntegerLcType]!
+	^(info lookup: anIntegerLcType)
+		ifNil: [info at: anIntegerLcType put: (self getLocaleInfoInteger: anIntegerLcType)]!
 
 getLocaleInfoInteger: anIntegerLcType
 	| buf |
 	buf := DWORDBytes new.
 	(self nlsLib
-		getLocaleInfo: lcid
-		lCType: (anIntegerLcType bitOr: LOCALE_RETURN_NUMBER)
+		getLocaleInfo: self lcid
+		lCType: ((self noUserOverrides
+				ifTrue: [anIntegerLcType bitOr: LOCALE_NOUSEROVERRIDE]
+				ifFalse: [anIntegerLcType]) bitOr: LOCALE_RETURN_NUMBER)
 		lpLCData: buf
 		cchData: 4) == 0
 		ifTrue: [self nlsLib systemError].
@@ -191,19 +199,23 @@ getLocaleInfoInteger: anIntegerLcType
 getLocaleInfoString: anIntegerLcType
 	"Private - Get the specified <Utf8String> locale information from Windows."
 
-	| buf lib size |
+	| buf lib size id type |
+	id := self lcid.
+	type := self noUserOverrides
+				ifTrue: [anIntegerLcType bitOr: LOCALE_NOUSEROVERRIDE]
+				ifFalse: [anIntegerLcType].
 	lib := self nlsLib.
 	size := lib
-				getLocaleInfo: lcid
-				lCType: anIntegerLcType
+				getLocaleInfo: id
+				lCType: type
 				lpLCData: nil
 				cchData: 0.
 	size == 0 ifTrue: [^lib systemError].
 	"Strings allocate extra space for null automatically"
 	buf := Utf16String newFixed: size - 1.
 	lib
-		getLocaleInfo: lcid
-		lCType: anIntegerLcType
+		getLocaleInfo: id
+		lCType: type
 		lpLCData: buf
 		cchData: size.
 	^buf asUtf8String!
@@ -249,11 +261,6 @@ lastTwoDigitYear
 	For example if this is 2049, then 49 is interpreter as 2049, and 50 as 1950."
 
 	^self getCalendarInfoInteger: CAL_ITWODIGITYEARMAX!
-
-lcid
-	"Answer the <integer> Windows Locale Id."
-
-	^lcid!
 
 lcid: anLCID
 	"Private - Set the receiver's Win32 LCID which identifies the locale the
@@ -319,7 +326,13 @@ negativeInfinity
 	^self getStringInfo: LOCALE_SNEGINFINITY!
 
 negativeNumberMode
-	"Answer a <String> which is the symbol used to denote negative numbers in this locale."
+	"Answer an <Integer> describing the way in which negative numbers should be displayed in this locale.
+		0	Left parenthesis, number, right parenthesis; for example, (1.1)
+		1	Negative sign, number; for example, -1.1
+		2	Negative sign, space, number; for example, - 1.1
+		3	Number, negative sign; for example, 1.1-
+		4	Number, space, negative sign; for example, 1.1 -
+	"
 
 	^self getIntegerInfo: LOCALE_INEGNUMBER!
 
@@ -425,6 +438,7 @@ yearMonthFormat
 !WindowsLocale categoriesForMethods!
 amDesignator!constants!public! !
 asParameter!converting!public! !
+basicLcid!accessing!public! !
 buildDayNamesMap!helpers!private! !
 buildMonthNamesMap!helpers!private! !
 calendarId!constants!public! !
@@ -454,7 +468,6 @@ hasLeadingZero!constants!public! !
 indexOfMonth:!enquiries!public! !
 infinity!constants!public! !
 lastTwoDigitYear!constants!public! !
-lcid!accessing!public! !
 lcid:!initializing!private! !
 listSeparator!constants!public! !
 longDateFormat!constants!public! !

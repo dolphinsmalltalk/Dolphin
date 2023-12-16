@@ -14,18 +14,20 @@ defaultSubject
 	^Locale lcid: 2057!
 
 testDisplayFloatOnNegativeModes
-	| info subject format |
+	| subject format |
 	"Different negative number mode (2)"
-	subject := Locale lcid: 1050.
-	self assert: (subject printFloat: -0.0) equals: '0,00'.
-	self assert: (subject printFloat: -1.25) equals: '- 1,25'.
-	self assert: (subject printFloat: -0.0001) equals: '0,00'.
-	self assert: (subject printFloat: -123456789.123456789) equals: '- 123.456.789,12'.
+	subject := Locale standard: 'km-KH'.
+	self assert: subject negativeNumberMode equals: 2.
+	self assert: (subject printFloat: -0.0) equals: '0.00'.
+	self assert: (subject printFloat: -1.25) equals: '- 1.25'.
+	self assert: (subject printFloat: -0.0001) equals: '0.00'.
+	self assert: (subject printFloat: -123456789.123456789) equals: '- 123,456,789.12'.
 	"Negative infinity does not seem to be represented consistently with respect to the normal negative sign conventions in this locale. The value is direct from Windows"
 	self assert: (subject printFloat: Float negativeInfinity) equals: '-∞'.
 
 	"Different negative number mode (3)"
-	subject := Locale lcid: 1065.
+	subject := Locale standard: 'fa-IR'.
+	self assert: subject negativeNumberMode equals: 3.
 	self assert: (subject printFloat: -0.0) equals: '0/00'.
 	self assert: (subject printFloat: -1.25) equals: '1/25-'.
 	self assert: (subject printFloat: -0.0001) equals: '0/00'.
@@ -34,9 +36,9 @@ testDisplayFloatOnNegativeModes
 	self assert: (subject printFloat: Float negativeInfinity) equals: '-∞'.
 
 	"Fake up the other modes - zero is bracketed"
-	subject := Locale lcid: 1033.
+	subject := Locale standard: 'en-US'.
 	format := subject numberFormat copy.
-	format negativeNumberMode: 0.
+	format negativeNumberMode:  0.
 	self assert: (subject printFloat: -0.0 format: format) equals: '0.00'.
 	self assert: (subject printFloat: -1.25 format: format) equals: '(1.25)'.
 	self assert: (subject printFloat: -0.0001 format: format) equals: '0.00'.
