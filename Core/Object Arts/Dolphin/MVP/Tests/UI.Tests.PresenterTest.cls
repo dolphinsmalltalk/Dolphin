@@ -83,6 +83,7 @@ sendKeyPress: vkInteger extended: aBoolean
 			dwExtraInfo: 0!
 
 setUp
+	super setUp.
 	self shouldSetupPresenter ifTrue: [self initializePresenter]!
 
 shouldSetupPresenter

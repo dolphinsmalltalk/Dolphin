@@ -1248,7 +1248,7 @@ testLoopsInterruptible
 	The loops must not contain any true mesage sends, only bytecodes"
 
 	"Timing sensitive - too unreliable for CI build"
-	self skipIfCiBuild.
+	<skipIf: #isCiBuild>
 	"#timesRepeat:"
 	self assertLoopInterruptible: [3000000 timesRepeat: [1 + 2]].
 	"#whileFalse"
@@ -3102,8 +3102,8 @@ testQuiesceWhenUIBlocked
 	"#969: Dolphin burns 100% CPU when main UI process blocked on Semaphore"
 
 	<knownSlowTest>
+	<skipIf: #isCiBuild>
 	| totalCPUBefore cpuWhileSleeping sleepTime wait |
-	self skipIfCiBuild.
 	totalCPUBefore := self getCPUTime.
 	"This test needs to measure over a minimum of 2 seconds in order to determine whether Dolphin has quiesced properly"
 	wait := 3000 milliseconds.

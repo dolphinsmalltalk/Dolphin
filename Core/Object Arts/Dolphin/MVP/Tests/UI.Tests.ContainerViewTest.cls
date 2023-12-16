@@ -19,9 +19,9 @@ oldDolphinVersionsForStbUpgrade
 
 test1PixBorderPaint
 	"Tests the validity of WM_PAINT of a 1 pixel border"
+	<skipIf: #isCiBuild>	"Fails on AppVeyor only"
 
 	| containerView paintBitmap |
-	self skipIfCiBuild.	"Fails on AppVeyor only"
 	containerView := self view.
 	containerView hasBorder: false.
 	self waitForScreenUpdate.
@@ -79,11 +79,12 @@ testBordersPrintAndPaintIdentical
 	display) are the same. This uses the rather slow Bitmap>>pixelData method so best keep the
 	actual view size fairly small."
 
-	"Test not bordered"
+	"Fails on AppVeyor only"
 
+	<skipIf: #isCiBuild>
 	| containerView paintPixels printPixels paintPixelsBordered printPixelsBordered |
 	containerView := self view.
-	self skipIfCiBuild.	"Fails on AppVeyor only"
+	"Test not bordered"
 	containerView hasBorder: false.
 	self waitForScreenUpdate.
 	paintPixels := (self bitmapOfPaintView: containerView) pixelData.

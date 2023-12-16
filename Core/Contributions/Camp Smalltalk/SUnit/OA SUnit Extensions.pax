@@ -41,8 +41,6 @@ package setMethodNames: #(
 	#(#{XProgramming.SUnit.TestCase} #should:triggerAllOf:matching:butNoneOf:against:)
 	#(#{XProgramming.SUnit.TestCase} #shouldnt:trigger:against:)
 	#(#{XProgramming.SUnit.TestCase} #shouldnt:triggerAnyOf:against:)
-	#(#{XProgramming.SUnit.TestCase} #skipIfCiBuild)
-	#(#{XProgramming.SUnit.TestCase} #skipIfWin32)
 	#(#{XProgramming.SUnit.TestCase} #skipUnless:)
 	#(#{XProgramming.SUnit.TestCase} #thisTestMethod)
 	#(#{XProgramming.SUnit.TestCase class} #buildSuiteFromConcreteMethods:)
@@ -312,14 +310,6 @@ shouldnt: aNiladicValuable triggerAnyOf: aCollectionOfSymbols against: anObject
 		butNoneOf: aCollectionOfSymbols
 		against: anObject!
 
-skipIfCiBuild
-	self skipUnless: [self isCiBuild not]!
-
-skipIfWin32
-	"Skip if running on 32-bit Windows"
-
-	self skipUnless: [OS.Kernel32 isWow64]!
-
 skipUnless: aNiladicValuable
 	" If the assumption in the <niladicValuable> argument evaluates to false, abandon the running test and mark it as skipped."
 	
@@ -354,8 +344,6 @@ should:triggerAllOf:matching:against:!asserting!public! !
 should:triggerAllOf:matching:butNoneOf:against:!asserting!public! !
 shouldnt:trigger:against:!asserting!public! !
 shouldnt:triggerAnyOf:against:!asserting!public! !
-skipIfCiBuild!helpers!public! !
-skipIfWin32!helpers!public! !
 skipUnless:!asserting!public! !
 thisTestMethod!accessing!public! !
 !

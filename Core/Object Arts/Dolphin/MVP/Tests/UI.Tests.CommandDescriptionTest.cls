@@ -20,6 +20,9 @@ setCurrentKeyboardLayout: aString
 					[savedKeyboardLayout ifNil: [savedKeyboardLayout := current].
 					true]]!
 
+setUsKeyboard
+	^self setCurrentKeyboardLayout: '00000409'!
+
 tearDown
 	savedKeyboardLayout ifNotNil: [Keyboard layoutName: savedKeyboardLayout].
 	super tearDown!
@@ -28,9 +31,8 @@ testAcceleratorKeyString
 	"Regression test for https://github.com/dolphinsmalltalk/Dolphin/issues/929"
 
 	"Use the US keyboard layout so that this test at least will run on the CI build"
-
+	<skipUnless: #setUsKeyboard>
 	| subject |
-	self skipUnless: [self setCurrentKeyboardLayout: '00000409'].
 	subject := CommandDescription command: #dummy.
 	subject acceleratorKeyString: 'NUMMULT'.
 	self assert: subject acceleratorKey equals: 618.
@@ -46,6 +48,7 @@ testRegistry
 	self deny: CommandDescription.CommandDescriptionRegistry hasWeakValues! !
 !UI.Tests.CommandDescriptionTest categoriesForMethods!
 setCurrentKeyboardLayout:!helpers!private! !
+setUsKeyboard!initializing!private! !
 tearDown!private!running! !
 testAcceleratorKeyString!public!unit tests! !
 testRegistry!public!unit tests! !

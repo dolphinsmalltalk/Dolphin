@@ -611,9 +611,10 @@ testSetReadOnly
 			ensure: [File deleteDirectory: tempDir]!
 
 testShortPath
-	| sysdir tmpDir tmpFile |
 	"This test will only work if short filenames are enabled for the volume on which temp files are stored, and we cannot guarantee this is the case on build machines, nor is there an API that provides a definite answer as to whether short filenames are enabled on a particular volume."
-	self skipIfCiBuild.
+
+	<skipIf: #isCiBuild>
+	| sysdir tmpDir tmpFile |
 	sysdir := SessionManager current systemDirectory.
 	self assert: (File shortPathOf: sysdir) asAnsiString equals: sysdir.
 	tmpDir := File tempPath , GUID newUnique asString , Character dolphin asUtf8String.
