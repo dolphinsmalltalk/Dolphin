@@ -20,10 +20,18 @@ setCurrentKeyboardLayout: aString
 					[savedLayout ifNil: [savedLayout := current].
 					true]]!
 
+setUkKeyboard
+	^self setCurrentKeyboardLayout: '00000809'!
+
+setUsKeyboard
+	^self setCurrentKeyboardLayout: '00000409'!
+
 tearDown
 	savedLayout ifNotNil: [Keyboard layoutName: savedLayout]! !
 !UI.Tests.AbstractKeyboardTest categoriesForMethods!
 setCurrentKeyboardLayout:!helpers!private! !
+setUkKeyboard!initializing!private! !
+setUsKeyboard!initializing!private! !
 tearDown!private!Running! !
 !
 

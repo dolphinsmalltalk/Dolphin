@@ -12,8 +12,8 @@ UI.Tests.KeyboardTest comment: ''!
 !UI.Tests.KeyboardTest methodsFor!
 
 testInvariantMap
+	<skipUnless: #setUkKeyboard>
 	| invariant delete |
-	self skipUnless: [self setCurrentKeyboardLayout: '00000809'].
 	invariant := Keyboard invariant.
 	delete := ##(VK_DELETE | KF_EXTENDED).
 	(invariant virtualKeys associations reject: [:each | each value = delete]) do: 

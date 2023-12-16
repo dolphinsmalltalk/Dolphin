@@ -25,6 +25,9 @@ finiteSignificand: aNormalFloat
 	^(aNormalFloat timesTwoPower: Float.Precision - 1 - (aNormalFloat exponent max: Float.EMin))
 		truncated abs!
 
+hasDenormalizedFloats
+	^Float denormalized!
+
 infinities
 	^{Float infinity. Float negativeInfinity}!
 
@@ -368,8 +371,8 @@ testCos
 testDenormalsAsTrueFraction
 	"check if gradual underflow is correctly handled"
 
+	<skipUnless: #hasDenormalizedFloats>
 	| fminDenorm |
-	self skipUnless: [Float denormalized].
 	self assert: 1.0e-316 asTrueFraction asFloat equals: 1.0e-316.
 	fminDenorm := Float fminDenormalized asTrueFraction.
 	self assert: fminDenorm equals: 1 / (1 << 1074).
@@ -1502,6 +1505,7 @@ assertFloat:equals:!helpers!private! !
 assertNegativeZero:!helpers!private! !
 continuationValues!constants!private! !
 finiteSignificand:!helpers!private! !
+hasDenormalizedFloats!public!unit tests! !
 infinities!constants!private! !
 normals!constants!private! !
 predecessor:!helpers!private! !

@@ -11,6 +11,9 @@ UI.Tests.ClipboardTest guid: (Core.GUID fromString: '{ea86f353-088f-4e28-b4db-bd
 UI.Tests.ClipboardTest comment: ''!
 !UI.Tests.ClipboardTest methodsFor!
 
+isUnattendedSession
+	^SessionManager current isUnattended!
+
 sampleAnsiString
 	^Character byteCharacterSet copyFrom: 2!
 
@@ -27,7 +30,7 @@ sampleUnicodeString
 	^'aƒ1Библиотека🐬£€文字化け'!
 
 setUp
-	self skipUnless: [SessionManager current isUnattended not].
+	self skipUnless: [self isUnattendedSession not].
 	Clipboard current empty!
 
 tearDown
@@ -115,6 +118,7 @@ testUtf8String
 	actual := Clipboard current getText.
 	self assert: actual equals: utf8! !
 !UI.Tests.ClipboardTest categoriesForMethods!
+isUnattendedSession!private!testing! !
 sampleAnsiString!constants!private! !
 sampleBitmap!constants!private! !
 sampleDIBSection!constants!private! !

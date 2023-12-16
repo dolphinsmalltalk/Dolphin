@@ -1515,7 +1515,7 @@ testTextMapsExhaustive
 
 	<knownSlowTest>
 	"Take 20+ seconds to run, which add another 30% to the test runtime"
-	self skipIfCiBuild.
+	<skipIf: #isCiBuild>
 	self knownTextMapIssues not methodsDo: [:each | self verifyTextMapsOf: each]!
 
 testTextMapsOfCleanBlocks

@@ -12,8 +12,8 @@ Net.Tests.InternetAddressTest comment: ''!
 !Net.Tests.InternetAddressTest methodsFor!
 
 testAllForHost
+	<skipUnless: #isOnline>
 	| addresses |
-	self skipUnless: [self isOnline].
 
 	"dns.google has two fixed and well-known IP addresses"
 	addresses := InternetAddress allForHost: 'dns.google'.
@@ -26,8 +26,8 @@ testAllForHost
 	self assert: (addresses anySatisfy: [:each | each host endsWith: '1e100.net'])!
 
 testHost
+	<skipUnless: #isOnline>
 	| name ip |
-	self skipUnless: [self isOnline].
 	name := InternetAddress host: 'dns.google'.
 	ip := InternetAddress ipAddress: name ipAddress.
 	self assert: ip host equals: name host!
@@ -48,8 +48,8 @@ testIsIPString
 !
 
 testLocalHost
+	<skipIf: #isCiBuild>
 	| local computerName |
-	self skipIfCiBuild.
 	computerName := SessionManager current computerName asLowercase.
 	local := InternetAddress localHost.
 	self assert: local host asLowercase equals: computerName.

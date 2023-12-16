@@ -286,6 +286,9 @@ forkWaiterOn: s sharing: anIdentityDictionary
 	anIdentityDictionary at: #state put: (anIdentityDictionary at: #state) + 1] 
 			forkAt: Processor userInterruptPriority!
 
+is32BitOS
+	^OS.Kernel32 isWow64!
+
 isMemTopDown
 	"It is possible to configure Windows so that memory for 32-bit processes is allocated top-down. This is really a debugging mode to help detect issues in 32-bit apps when run large address aware.
 	If this mode is enabled, then we don't need to try and push process allocations over the 2Gb boundary, as actually we may end up doing the reverse."
@@ -432,8 +435,8 @@ testForkedBlockHomeFrame
 	Processor sleep: 10 milliseconds!
 
 testLargeAddress
+	<skipIf: #is32BitOS>
 	| blocks sem1 sem2 result proc value copy1 copy2 frame expected isTopDown |
-	self skipIfWin32.
 	isTopDown := self isMemTopDown.
 	isTopDown
 		ifTrue: [self assert: Processor activeProcess yourAddress > SmallInteger maximum]
@@ -617,6 +620,7 @@ assertStack:copiedCorrectlyFrom:!helpers!private! !
 assertStackFrame:isCopyOf:visited:!helpers!private! !
 forkNested:!helpers!private! !
 forkWaiterOn:sharing:!helpers!private! !
+is32BitOS!helpers!public! !
 isMemTopDown!helpers!private! !
 testAsStackPointer!public!unit tests! !
 testCopy!public!unit tests! !

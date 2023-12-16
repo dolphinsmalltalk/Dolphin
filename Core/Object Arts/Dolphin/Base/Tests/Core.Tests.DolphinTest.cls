@@ -55,6 +55,9 @@ createTestPackage
 isAtLeastVmVersion: anArray
 	^VM versionInfo fileVersion >= (self versionFromParts: anArray)!
 
+isInForeground
+	^SessionManager current isForegroundProcess!
+
 isLogging
 	^true!
 
@@ -128,6 +131,7 @@ compare:to:epsilon:!comparing!public! !
 createPackage:!helpers!public! !
 createTestPackage!helpers!public! !
 isAtLeastVmVersion:!private!testing! !
+isInForeground!helpers!public! !
 isLogging!Accessing!public! !
 isOnline!public!unit tests! !
 methodContextClass!constants!private! !

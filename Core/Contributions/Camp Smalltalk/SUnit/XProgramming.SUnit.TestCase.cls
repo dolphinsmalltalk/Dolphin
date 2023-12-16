@@ -159,7 +159,14 @@ selector
 setTestSelector: aSymbol
 	testSelector := aSymbol!
 
-setUp!
+setUp
+	| annotations |
+	annotations := self thisTestMethod annotations.
+	annotations ifNil: [^self].
+	annotations withSelector: #skipIf:
+		do: [:each | (self perform: each single) ifTrue: [TestSkip signal: '<1p> skipIf: <2p>']].
+	annotations withSelector: #skipUnless:
+		do: [:each | (self perform: each single) ifFalse: [TestSkip signal: '<1p> skipUnless: <2p>']]!
 
 should: aNiladicValuable
 	self assert: aNiladicValuable value!

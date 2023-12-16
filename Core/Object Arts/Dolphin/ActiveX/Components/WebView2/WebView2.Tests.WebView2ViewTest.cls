@@ -76,8 +76,8 @@ tearDown
 
 testContextMenu
 	<knownSlowTest>
+	<skipIf: #isCiBuild> "Too unreliable"
 	| contextMenuHandler menuEvent newCmd iconStream cmdEventSink cmdFired |
-	self skipIfCiBuild.	"Too unreliable"
 	iconStream := IStream read: (FileLocator installRelative: 'Resources\Dolphin.ico') asString.
 	newCmd := presenter view webviewEnvironment
 				createContextMenuItem: '&Blah'
@@ -157,8 +157,9 @@ testWebBrowserCrashRecovery
 	"Test browser recovery after a crash of the browser process that causes it to exit"
 
 	<knownSlowTest>
+	<skipIf: #isCiBuild>	"Too unreliable to run in CI"
+
 	| webview |
-	self skipIfCiBuild.
 	webview := presenter view.
 	webview canNavigateToStrings: true.
 	processFailed := navigationCompleted := domContentLoaded := nil.

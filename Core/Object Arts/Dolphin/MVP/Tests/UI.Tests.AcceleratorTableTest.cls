@@ -15,7 +15,7 @@ numMultCode
 	^(FVIRTKEY | FALT) << 9 | VK_MULTIPLY!
 
 testKeycodeFromString
-	self skipUnless: [self setCurrentKeyboardLayout: '00000809'].
+	<skipUnless: #setUkKeyboard>
 
 	"Other keys where the VK code is not the Ascii codepoint"
 	{',' -> VK_OEM_COMMA. '-' -> VK_OEM_MINUS. '.' -> VK_OEM_PERIOD}
@@ -54,8 +54,7 @@ testKeycodeFromStringAlphaNumerics
 	"for alphanumerics, the keycode corresponds with the ascii code point"
 
 	"Use the US keyboard layout so that this test at least will run on the CI build"
-
-	self skipUnless: [self setCurrentKeyboardLayout: '00000409'].
+	<skipUnless: #setUsKeyboard>
 	($A codePoint to: $Z codePoint) , ($0 codePoint to: $9 codePoint) do: 
 			[:each |
 			| code keyString |
@@ -79,9 +78,9 @@ testRoundTrippingInvariantKeyNames
 testRoundTrippingKeyNames
 	"https://github.com/dolphinsmalltalk/Dolphin/issues/159."
 
-	| localised |
 	"Fails with US keyboard in the presence of the bug"
-	self skipUnless: [self setCurrentKeyboardLayout: '00000409'].
+	<skipUnless: #setUsKeyboard>
+	| localised |
 	localised := AcceleratorTable keyStringFromCode: self numMultCode.
 	self assert: localised equals: 'Alt+Num *'.
 	self assert: (AcceleratorTable keyCodeFromString: localised) equals: self numMultCode! !

@@ -37,10 +37,25 @@ setRun
 	hasRun := true!
 
 setUp
+	super setUp.
 	hasSetup := true!
+
+skipIfNil
+	<skipIf: #isNil>!
+
+skipIfNotNil
+	<skipIf: #notNil>
+	self fail!
 
 skipped
 	self skip: 'Don''t care'!
+
+skipUnlessNil
+	<skipUnless: #isNil>
+	self fail!
+
+skipUnlessNotNil
+	<skipUnless: #notNil>!
 
 testAssert
 	self assert: true.
@@ -181,6 +196,18 @@ testSkip
 		errors: 0
 		skipped: 1!
 
+testSkipAnnotations
+	| suite result |
+	suite := TestSuite new.
+	#(#skipIfNil #skipIfNotNil #skipUnlessNil #skipUnlessNotNil)
+		do: [:each | suite addTest: (self class selector: each)].
+	result := suite run.
+	self assert: result runCount equals: 4.
+	self assert: (result passed collect: [:each | each selector]) asSortedArray
+		equals: #(#skipIfNil #skipUnlessNotNil).
+	self assert: (result skipped collect: [:each | each selector]) asSortedArray
+		equals: #(#skipIfNotNil #skipUnlessNil)!
+
 testSuite
 	| suite result |
 	suite := TestSuite new.
@@ -196,15 +223,19 @@ testSuite
 		errors: 1
 		skipped: 0! !
 !XProgramming.SUnit.SUnitTest categoriesForMethods!
-assertForTestResult:runCount:passed:failed:errors:skipped:!helpers!public! !
-error!helpers!private! !
-fail!helpers!private! !
+assertForTestResult:runCount:passed:failed:errors:skipped:!helpers!private! !
+error!private!test methods! !
+fail!private!test methods! !
 hasRun!Accessing!public! !
 hasSetup!Accessing!public! !
-noop!helpers!private! !
-setRun!helpers!private! !
+noop!private!test methods! !
+setRun!private!test methods! !
 setUp!public!Running! !
-skipped!helpers!private! !
+skipIfNil!private!test methods! !
+skipIfNotNil!private!test methods! !
+skipped!private!test methods! !
+skipUnlessNil!private!test methods! !
+skipUnlessNotNil!private!test methods! !
 testAssert!public!Testing! !
 testDefects!public!Testing! !
 testDialectLocalizedException!public!Testing! !
@@ -219,6 +250,7 @@ testRunning!public!Testing! !
 testShould!public!Testing! !
 testShouldRaise!public!Testing! !
 testSkip!public!Testing! !
+testSkipAnnotations!public!Testing! !
 testSuite!public!Testing! !
 !
 
