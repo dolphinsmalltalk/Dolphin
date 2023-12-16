@@ -131,16 +131,18 @@ testDisplayFloatOn
 testDisplayFloatOnNegativeModes
 	| subject format |
 	"Different negative number mode (2)"
-	subject := Locale standard: 'hr-HR'.
-	self assert: (subject printFloat: -0.0) equals: '0,00'.
-	self assert: (subject printFloat: -1.25) equals: '- 1,25'.
-	self assert: (subject printFloat: -0.0001) equals: '0,00'.
-	self assert: (subject printFloat: -123456789.123456789) equals: '- 123.456.789,12'.
+	subject := Locale standard: 'km-KH'.
+	self assert: subject negativeNumberMode equals: 2.
+	self assert: (subject printFloat: -0.0) equals: '0.00'.
+	self assert: (subject printFloat: -1.25) equals: '- 1.25'.
+	self assert: (subject printFloat: -0.0001) equals: '0.00'.
+	self assert: (subject printFloat: -123456789.123456789) equals: '- 123,456,789.12'.
 	"Negative infinity does not seem to be represented consistently with respect to the normal negative sign conventions in this locale. The value is direct from Windows"
 	self assert: (subject printFloat: Float negativeInfinity) equals: '-∞'.
 
 	"Different negative number mode (3)"
 	subject := Locale standard: 'fa-IR'.
+	self assert: subject negativeNumberMode equals: 3.
 	self assert: (subject printFloat: -0.0) equals: '0/00'.
 	self assert: (subject printFloat: -1.25) equals: '1/25-'.
 	self assert: (subject printFloat: -0.0001) equals: '0/00'.
@@ -181,14 +183,23 @@ testDisplayScaledDecimainOn
 	self assert: (self displayScaledDecimal: large in: subject)
 		equals: '-1,234,567,891,234,567,891,234,567,890.012345679'.
 
-	"Different negative number mode (2)"
+	"European format"
 	subject := Locale standard: 'hr-HR'.
-	self assert: subject negativeNumberMode equals: 2.
+	self assert: subject negativeNumberMode equals: 1.
 	self assert: (self displayScaledDecimal: 0.0s2 in: subject) equals: '0,00'.
-	self assert: (self displayScaledDecimal: -1.25s in: subject) equals: '- 1,25'.
-	self assert: (self displayScaledDecimal: -0.0001s in: subject) equals: '- 0,0001'.
+	self assert: (self displayScaledDecimal: -1.25s in: subject) equals: '-1,25'.
+	self assert: (self displayScaledDecimal: -0.0001s in: subject) equals: '-0,0001'.
 	self assert: (self displayScaledDecimal: large in: subject)
-		equals: '- 1.234.567.891.234.567.891.234.567.890,012345679'.
+		equals: '-1.234.567.891.234.567.891.234.567.890,012345679'.
+
+	"Different negative number mode (2)"
+	subject := Locale standard: 'km-KH'.
+	self assert: subject negativeNumberMode equals: 2.
+	self assert: (self displayScaledDecimal: 0.0s2 in: subject) equals: '0.00'.
+	self assert: (self displayScaledDecimal: -1.25s in: subject) equals: '- 1.25'.
+	self assert: (self displayScaledDecimal: -0.0001s in: subject) equals: '- 0.0001'.
+	self assert: (self displayScaledDecimal: large in: subject)
+		equals: '- 1,234,567,891,234,567,891,234,567,890.012345679'.
 
 	"Different negative number mode (3)"
 	subject := Locale standard: 'fa-IR'.
