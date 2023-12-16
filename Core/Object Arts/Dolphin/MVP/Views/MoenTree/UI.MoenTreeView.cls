@@ -552,6 +552,9 @@ hasSelection
 
 	^self selectedNode notNil!
 
+hasSingleSelection
+	^self hasSelection!
+
 hasWordWrap
 	"Private - Answer whether the receiver will wrap the text of nodes which is too large to fit within
 	the maximum permissible text width (see also #maxTextExtent)."
@@ -1853,6 +1856,7 @@ hasButtons:!accessing-styles!public! !
 hasChildren:!private!searching! !
 hasIcons!geometry!private! !
 hasSelection!public!testing! !
+hasSingleSelection!public!testing! !
 hasWordWrap!private!testing! !
 hasWordWrap:!private!testing! !
 hideDropHighlight!drag & drop!private! !
@@ -1940,8 +1944,8 @@ selectionIfNone:!public!selection! !
 selectionOrNil!public!selection! !
 selectionOrNil:!public!selection! !
 selections!public!selection! !
-selections:!public! !
-selections:ifAbsent:!public! !
+selections:!public!selection! !
+selections:ifAbsent:!public!selection! !
 setDefaultCanvasColors:!helpers!private! !
 showDropHighlight:!drag & drop!private! !
 toggleExpanded:cause:!operations!private! !
@@ -1956,15 +1960,15 @@ updateNode:!helpers!private! !
 updateSelection!private!selection! !
 updateTree:imagesOnly:!painting!public! !
 value:!evaluating!private! !
-viewMode!public! !
-viewMode:!public! !
+viewMode!accessing!public! !
+viewMode:!accessing!public! !
 wmKillFocus:wParam:lParam:!event handling-win32!private! !
 wmNcCalcSize:wParam:lParam:!event handling-win32!private! !
 wmSetFocus:wParam:lParam:!event handling-win32!private! !
 zip:!private!tree layout! !
 !
 
-UI.MoenTreeView methodProtocol: #selectableItems attributes: #(#readOnly) selectors: #(#hasSelection #onSelectionChanged #onSelectionChanging: #resetSelection #selection #selection: #selection:ifAbsent: #selectionIfNone: #selectionOrNil #selectionOrNil: #selections #selections: #selections:ifAbsent:)!
+UI.MoenTreeView methodProtocol: #selectableItems attributes: #(#readOnly) selectors: #(#hasSelection #hasSingleSelection #onSelectionChanged #onSelectionChanging: #resetSelection #selection #selection: #selection:ifAbsent: #selectionIfNone: #selectionOrNil #selectionOrNil: #selections #selections: #selections:ifAbsent:)!
 UI.MoenTreeView methodProtocol: #treeView attributes: #(#readOnly) selectors: #(#collapse: #expand: #expandAll: #includesItem: #onItem:addedInParent: #onItem:movedToParent: #onItem:removedFromParent: #onItemUpdated: #onTreeChanged: #updateItem: #viewMode #viewMode:)!
 
 !UI.MoenTreeView class methodsFor!

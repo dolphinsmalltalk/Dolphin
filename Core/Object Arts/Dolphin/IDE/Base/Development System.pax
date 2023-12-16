@@ -386,6 +386,7 @@ package setMethodNames: #(
 	#(#{Graphics.Point3D class} #publishedAspectsOfInstances)
 	#(#{Graphics.Rectangle class} #publishedAspectsOfInstances)
 	#(#{Graphics.TextTileIcon class} #newInstanceAspect:class:)
+	#(#{Kernel.BindingReference} #browse)
 	#(#{Kernel.BlockClosure} #cpuCyclesToRun)
 	#(#{Kernel.BlockClosure class} #publishedAspectsOfInstances)
 	#(#{Kernel.BlockFrame} #debugIpFor:)
@@ -459,8 +460,10 @@ package setMethodNames: #(
 	#(#{Kernel.SourceFiler} #emitResourceMethod:literals:)
 	#(#{Kernel.SourceFiler} #emitResourceMethodHeader:)
 	#(#{Kernel.StAbstractVariableNode} #displayOn:)
+	#(#{Kernel.StackFrame} #canReturn)
 	#(#{Kernel.StackFrame} #debugIpFor:)
 	#(#{Kernel.StackFrame} #debugPrintOn:)
+	#(#{Kernel.StackFrame} #isRestartable)
 	#(#{Kernel.StackFrame} #makeDebug)
 	#(#{Kernel.StackFrame} #stackWorkspace)
 	#(#{Kernel.StackFrame class} #publishedAspectsOfInstances)
@@ -1177,10 +1180,22 @@ Tools.MethodSearch
 Core.Model
 	subclass: #'Tools.SmalltalkSystem'
 	instanceVariableNames: 'systemFolderClass workspaceClass defaultInspectorClass defaultBrowserClass systemFolder packageBrowserClass debuggerClass viewComposerClass protocolBrowserClass workspaceShellClass resourceBrowserClass changedIcon hierarchyBrowserClass preferAlternateInspectors formatterClass classChooserClass resourceIdentifierDialogClass findDetails methodWorkspaceClass allSelectors argumentClasses methodExplorerClass aboutBoxClass testBrowserClass toolbarBitmapSize displayItLocale'
-	classVariableNames: 'ChangedIcon Current FileDrops RegisteredTools'
+	classVariableNames: 'ChangedIcon Current RegisteredTools'
 	imports: #(#{Kernel.CompilerFlags} #{Refactory.Browser} #{Kernel.ParseErrorCodes} #{XProgramming.SUnit private})
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'FileDrops'
+				-> (LookupTable withAll: {
+								'chg' -> #dropScriptFile:.
+								'cls' -> #dropClassFile:.
+								'pac' -> #dropPackageFile:.
+								'pax' -> #dropPackageFile:.
+								'sml' -> #dropScriptFile:.
+								'st' -> #dropScriptFile:.
+								'txt' -> #dropTextFile:.
+								'xml' -> #dropXmlFile:
+							})
+		}!
 UI.TreeModel
 	subclass: #'Tools.CategoryTreeModel'
 	instanceVariableNames: 'title'
@@ -1305,7 +1320,7 @@ UI.Presenter
 	instanceVariableNames: 'evaluationContext errorModel findDetails workspacePool namespaces compilationErrors textStyles searchEnvironment modifiedModel flags indicatorStyles variableMetadataProvider'
 	classVariableNames: 'Abbreviations AnnotationMode AutoCompleteDwell DefaultCaretColor DefaultFont DefaultTabWidth FontQuality IndicatorStyles KeyBindings KeywordCompletions MaxAutoCompletionListHeight MaxAutoCompletionListSize MaxAutoCompletionListWidth OptionFlags StandardUnaryReturnTypes TextStyles WrapIndentMode'
 	imports: #(#{Kernel.CompilerFlags} #{UI.Scintilla private} #{Refactory.Browser private})
-	classInstanceVariableNames: 'additionalKeyBindings commandQueryHandlers'
+	classInstanceVariableNames: 'additionalKeyBindings'
 	classConstants: {
 			'AutoCompleteMask' -> 16r8.
 			'AutoCompletionCaseInsensitiveMask' -> 16r80.
@@ -1364,14 +1379,14 @@ UI.SelectableItemsPresenter
 	instanceVariableNames: 'classesPresenter searchEnvironment'
 	classVariableNames: ''
 	imports: #(#{Refactory.Browser private} #{XProgramming.SUnit private})
-	classInstanceVariableNames: 'commandQueryHandlers'
+	classInstanceVariableNames: ''
 	classConstants: { 'ClassModeMask' -> 16r1. 'ShowFullNamesMask' -> 16r2 }!
 UI.SelectableItemsPresenter
 	subclass: #'Tools.PackageSelector'
 	instanceVariableNames: 'filterPresenter packagesPresenter autoSelect'
 	classVariableNames: ''
 	imports: #(#{XProgramming.SUnit private} #{Refactory.Browser private})
-	classInstanceVariableNames: 'commandQueryHandlers'
+	classInstanceVariableNames: ''
 	classConstants: {}!
 Tools.ClassSelector
 	subclass: #'Tools.ClassHierarchySelector'
@@ -1392,7 +1407,7 @@ UI.ListPresenter
 	instanceVariableNames: 'methodsPresenter sourcePresenter filter searchEnvironment refactoringTool namespaceModel'
 	classVariableNames: 'AdditionalAccelerators AutoFormat InfoTips WordWrap'
 	imports: #(#{Kernel.CompilerFlags} #{Refactory.Browser private})
-	classInstanceVariableNames: 'commandQueryHandlers'
+	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.ListPresenter
 	subclass: #'Tools.ResourceListPresenter'
@@ -1413,7 +1428,7 @@ UI.Shell
 	instanceVariableNames: 'searchPresenter fontSizePresenter'
 	classVariableNames: 'HistoryDwellTime SearchFieldFlashes'
 	imports: #(#{Refactory.Browser private})
-	classInstanceVariableNames: 'optionFlags defaultView defaultExtent defaultSlideyPinsMap additionalKeyBindings commandQueryHandlers'
+	classInstanceVariableNames: 'optionFlags defaultView defaultExtent defaultSlideyPinsMap additionalKeyBindings'
 	classConstants: {
 			'CanUseIdeaSpaceMask' -> 16r2.
 			'LoadingMask' -> 16r1.
@@ -2228,7 +2243,7 @@ renameInstVar: oldString to: newString
 	self logDefinition.
 	Smalltalk classUpdated: self! !
 !Core.ClassDescription categoriesForMethods!
-browse!development!public! !
+browse!commands!development!public! !
 categoriesFor:are:!public!source filing-methods! !
 commentStamp:prior:!public!source filing-methods!squeak! !
 copy:from:!methods-copying!public! !
@@ -2608,7 +2623,7 @@ searchForInTool: aSmalltalkToolShell
 alternateInspectorClass!constants!public! !
 aspectDisplayOn:!private! !
 basicInspect!public! !
-browse!public! !
+browse!commands!public! !
 currentPublishedAspectsAsLiteralsMap!constants!public! !
 debugPrintOn:!printing!public! !
 debugPrintString!printing!public! !
@@ -4527,6 +4542,18 @@ newInstanceAspect: aSymbol class: aspectClass
 newInstanceAspect:class:!adapters!private! !
 !
 
+!Kernel.BindingReference methodsFor!
+
+browse
+	"Open a suitable browser onto the receiver."
+
+	SmalltalkSystem current browseClass: (self bindingOrNil
+				ifNil: [self class]
+				ifNotNil: [:var | var isClassBinding ifTrue: [var value] ifFalse: [var environment]])! !
+!Kernel.BindingReference categoriesForMethods!
+browse!commands!public! !
+!
+
 !Kernel.BlockClosure methodsFor!
 
 cpuCyclesToRun
@@ -4841,7 +4868,7 @@ stylerClass
 	^SmalltalkSystem current methodStylerClass! !
 !Kernel.CompiledMethod categoriesForMethods!
 asDebugMethod!private! !
-browse!public! !
+browse!commands!public! !
 icon!constants!public! !
 infoTip!accessing!development!private! !
 parseContext!accessing!public! !
@@ -5344,6 +5371,11 @@ displayOn:!printing!public! !
 
 !Kernel.StackFrame methodsFor!
 
+canReturn
+	"Answer whether this frame can be returned from."
+
+	^(self isDead or: [self sender isNil]) not!
+
 debugIpFor: debugMethod 
 	| interp debugPrev method prev i offset map debugMap ip |
 	ip := self ip.
@@ -5389,6 +5421,16 @@ debugIpFor: debugMethod
 debugPrintOn: aStream
 	self basicPrintOn: aStream!
 
+isRestartable
+	"Answer whether this frame is restartable. Some methods, such as
+	callback entry points, cannot be restarted at all, others not reliably."
+
+	^self isDead not and: 
+			[self sender notNil and: 
+					[| method |
+					method := self basicMethod.
+					method isExpression or: [('not restartable' asMethodCategory includesMethod: method) not]]]!
+
 makeDebug
 	"Private - Convert the receiver to a debug frame. This is for the use of the debugger."
 
@@ -5411,8 +5453,10 @@ stackWorkspace
 
 	^self sender isNil ifTrue: [0] ifFalse: [self sp - index - self frameSize + 1]! !
 !Kernel.StackFrame categoriesForMethods!
+canReturn!public!testing! !
 debugIpFor:!private! !
 debugPrintOn:!public! !
+isRestartable!public!testing! !
 makeDebug!private! !
 stackWorkspace!accessing!private! !
 !
@@ -6480,7 +6524,7 @@ allMethods!public! !
 allResourcesDo:!enumerating!public! !
 allSelectorsImplemented!enquiries!public! !
 allSelectorsSent!enquiries!public! !
-browse!public! !
+browse!commands!public! !
 definitionsMatching:!browsing!public! !
 definitionsOf:!enquiries!public! !
 dynamicReferencesTo:!environments!public! !
@@ -7794,7 +7838,7 @@ publishedAspectsOfInstances!constants!public! !
 !UI.Presenter methodsFor!
 
 systemModel
-	^self parentPresenter systemModel! !
+	^self parentPresenter ifNil: [SmalltalkSystem current] ifNotNil: [:parent | parent systemModel]! !
 !UI.Presenter categoriesForMethods!
 systemModel!accessing!public! !
 !
@@ -7985,7 +8029,7 @@ reassign
 !UI.ResourceIdentifier categoriesForMethods!
 assign:!accessing!public! !
 assignLiteralResourceData:!development!private! !
-browse!public! !
+browse!commands!public! !
 edit!operations!public! !
 editViewUsing:!operations!public! !
 prompt!operations!public! !

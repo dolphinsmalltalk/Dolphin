@@ -50,6 +50,7 @@ about: aString
 		text: aString!
 
 character
+	<commandQuerySelector: #queryDiffMode:>
 	self mode: #character!
 
 compare: upperString id: upperIdString and: lowerString id: lowerIdString
@@ -63,19 +64,16 @@ createComponents
 	diffsPresenter := self add: DifferencesPresenter new name: 'diffs'!
 
 line
+	<commandQuerySelector: #queryDiffMode:>
 	self mode: #line!
 
 mode: aSymbol 
 	diffsPresenter comparisonMode: aSymbol!
 
-queryCommand: aCommandQuery 
-	(#(#character #word #line) identityIncludes: aCommandQuery command) 
-		ifTrue: 
-			[aCommandQuery
-				isEnabled: true;
-				isChecked: diffsPresenter comparisonMode == aCommandQuery command.
-			^true].
-	^super queryCommand: aCommandQuery!
+queryDiffMode: aCommandQuery
+	aCommandQuery
+		isEnabled: true;
+		isChecked: diffsPresenter comparisonMode == aCommandQuery command!
 
 readTextFrom: filename 
 	| stream |
@@ -108,23 +106,24 @@ textStyles: anCollectionOfScintillaTextStyle
 	diffsPresenter textStyles: anCollectionOfScintillaTextStyle!
 
 word
+	<commandQuerySelector: #queryDiffMode:>
 	self mode: #word! !
 !DiffBrowser categoriesForMethods!
-about!commands!public! !
-about:!commands!public! !
-character!commands!public! !
+about!commands-actions!public! !
+about:!operations!public! !
+character!commands-actions!public! !
 compare:id:and:id:!operations!public! !
 createComponents!initializing!public! !
-line!commands!public! !
-mode:!commands!public! !
-queryCommand:!commands!public! !
+line!commands-actions!public! !
+mode:!operations!public! !
+queryDiffMode:!commands-queries!private! !
 readTextFrom:!helpers!public! !
-selectLower!commands!public! !
-selectUpper!commands!public! !
+selectLower!commands-actions!public! !
+selectUpper!commands-actions!public! !
 styler:!accessing!public! !
 textFont:!accessing!public! !
 textStyles:!accessing!public! !
-word!commands!public! !
+word!commands-actions!public! !
 !
 
 !DiffBrowser class methodsFor!

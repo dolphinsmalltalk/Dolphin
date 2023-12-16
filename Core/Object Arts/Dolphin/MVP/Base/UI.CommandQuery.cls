@@ -70,6 +70,9 @@ commandDescription
 
 	^commandDescription!
 
+commandDescription: aCommandDescription
+	commandDescription := aCommandDescription!
+
 commandDescription: action source: aView
 	"Private - Initialize the receiver's instance variables."
 
@@ -212,6 +215,7 @@ canPerform!public!testing! !
 canPerformAgainst:!accessing!public! !
 command!accessing!public! !
 commandDescription!accessing!public! !
+commandDescription:!accessing!public! !
 commandDescription:source:!initializing!private! !
 commandSymbol!accessing!public! !
 description!accessing!public! !

@@ -152,5 +152,5 @@ selections:!public!selection! !
 selections:ifAbsent:!public!selection! !
 !
 
-UI.SelectableItemsPresenter methodProtocol: #selectableItems attributes: #(#readOnly) selectors: #(#hasSelection #onSelectionChanged #onSelectionChanging: #resetSelection #selection #selection: #selection:ifAbsent: #selectionIfNone: #selectionOrNil #selectionOrNil: #selections #selections: #selections:ifAbsent:)!
+UI.SelectableItemsPresenter methodProtocol: #selectableItems attributes: #(#readOnly) selectors: #(#hasSelection #hasSingleSelection #onSelectionChanged #onSelectionChanging: #resetSelection #selection #selection: #selection:ifAbsent: #selectionIfNone: #selectionOrNil #selectionOrNil: #selections #selections: #selections:ifAbsent:)!
 

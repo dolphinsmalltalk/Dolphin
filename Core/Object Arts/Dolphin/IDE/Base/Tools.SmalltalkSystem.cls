@@ -3,10 +3,22 @@
 Core.Model
 	subclass: #'Tools.SmalltalkSystem'
 	instanceVariableNames: 'systemFolderClass workspaceClass defaultInspectorClass defaultBrowserClass systemFolder packageBrowserClass debuggerClass viewComposerClass protocolBrowserClass workspaceShellClass resourceBrowserClass changedIcon hierarchyBrowserClass preferAlternateInspectors formatterClass classChooserClass resourceIdentifierDialogClass findDetails methodWorkspaceClass allSelectors argumentClasses methodExplorerClass aboutBoxClass testBrowserClass toolbarBitmapSize displayItLocale'
-	classVariableNames: 'ChangedIcon Current FileDrops RegisteredTools'
+	classVariableNames: 'ChangedIcon Current RegisteredTools'
 	imports: #(#{Kernel.CompilerFlags} #{Refactory.Browser} #{Kernel.ParseErrorCodes} #{XProgramming.SUnit private})
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'FileDrops'
+				-> (LookupTable withAll: {
+								'chg' -> #dropScriptFile:.
+								'cls' -> #dropClassFile:.
+								'pac' -> #dropPackageFile:.
+								'pax' -> #dropPackageFile:.
+								'sml' -> #dropScriptFile:.
+								'st' -> #dropScriptFile:.
+								'txt' -> #dropTextFile:.
+								'xml' -> #dropXmlFile:
+							})
+		}!
 Tools.SmalltalkSystem guid: (Core.GUID fromString: '{87b4c66c-026e-11d3-9fd7-00a0cc3e4a32}')!
 Tools.SmalltalkSystem comment: 'SmalltalkSystem is a Facade onto the Dolphin Smalltalk development environment. Most of the development tools hold the Singleton instance of SmalltalkSystem as their model and use it to act as a go-between between programmer, user interface, and the development image.
 
@@ -513,7 +525,7 @@ browseClassVariables: aClass
 	aVariable notNil
 		ifTrue: 
 			[self
-				browseReferencesToClassVar: aVariable
+				browseReferencesToClassVars: { aVariable }
 				of: aClass
 				within: self browserEnvironment]!
 
@@ -631,7 +643,7 @@ browseInstanceVariables: browseClass
 
 	self 
 		browseInstanceVariables: browseClass
-		action: #browseReferencesToInstVar:inHierarchyOf:within:
+		action: #browseReferencesToInstVars:inHierarchyOf:within:
 		in: self browserEnvironment!
 
 browseInstanceVariables: browseClass action: selector in: aBrowserEnvironment
@@ -646,7 +658,7 @@ browseInstanceVariables: browseClass action: selector in: aBrowserEnvironment
 		ifTrue: 
 			[self
 				perform: selector
-				with: varName
+				with: { varName }
 				with: browseClass
 				with: aBrowserEnvironment]!
 
@@ -852,34 +864,18 @@ browseReferencesTo: anObject
 
 	^self browseReferencesToLiteral: anObject in: self browserEnvironment!
 
-browseReferencesToClassVar: aString of: aClass within: aBrowserEnvironment
-	"Private - Open a MethodBrowser on all the methods that reference the class variable named, aString, in the hierarchy of the <Behavior>, aClass."
+browseReferencesToClassVars: aCollection of: aClass within: aBrowserEnvironment
+	"Private - Open a MethodBrowser on all the methods that reference the class variables in aCollection, in the hierarchy of the <Behavior>, aClass."
 
-	| binding refs matched |
-	binding := aClass hierarchyBindingFor: aString.
-	matched := aBrowserEnvironment filterMethods: [:method1 | method1 refersToLiteral: binding].
-	matched
-		label: ('All methods that reference <1p>.<2s> in <3p>'
-					expandMacrosWith: binding environment
-					with: binding key
-					with: aBrowserEnvironment);
-		addSearchString: binding key.
-	refs := matched.
-	binding isImmutable
-		ifTrue: [self browseMethodsIn: refs]
-		ifFalse: 
-			[| writers readers |
-			writers := refs filterMethods: [:method | method byteCodeDispatcher writesStatic: binding].
-			writers label: ('All methods that assign to <1p>.<2s> in <3p>'
-						expandMacrosWith: binding environment
-						with: aString
-						with: aBrowserEnvironment).
-			readers := refs filterMethods: [:method | method byteCodeDispatcher readsStatic: binding].
-			readers label: ('All methods that read <1p>.<2s> in <3p>'
-						expandMacrosWith: binding environment
-						with: aString
-						with: aBrowserEnvironment).
-			self browseMethodsInEnvironments: {refs. readers. writers}]!
+	| environments |
+	environments := Array writeStream.
+	aCollection do: 
+			[:each |
+			environments nextPutAll: (self
+						referencesToClassVar: each
+						of: aClass
+						within: aBrowserEnvironment)].
+	self browseMethodsInEnvironments: environments contents!
 
 browseReferencesToGlobal: aString 
 	self browseReferencesToGlobal: aString in: self browserEnvironment!
@@ -888,14 +884,18 @@ browseReferencesToGlobal: aString in: aBrowserEnvironment
 	(self promptForReferencesToGlobal: aString in: aBrowserEnvironment) 
 		ifNotNil: [:env | self browseMethodsIn: env]!
 
-browseReferencesToInstVar: aString inHierarchyOf: aBehavior within: aBrowserEnvironment
-	"Private - Open a method browser on all the methods that refer to the instance variable
-	named by the <readableString> argument, in the hierarchy of the <Behavior> argument."
+browseReferencesToInstVars: aCollection inHierarchyOf: aBehavior within: aBrowserEnvironment
+	"Private - Open a method browser on all the methods that refer to the instance variables named by the <collection> of <readableString> argument, in the hierarchy of the <Behavior> argument."
 
-	self browseMethodsInEnvironments: (self
-				referencesToInstVar: aString
-				inHierarchyOf: aBehavior
-				within: aBrowserEnvironment)!
+	| environments |
+	environments := Array writeStream.
+	aCollection do: 
+			[:each |
+			environments nextPutAll: (self
+						referencesToInstVar: each
+						inHierarchyOf: aBehavior
+						within: aBrowserEnvironment)].
+	self browseMethodsInEnvironments: environments contents!
 
 browseReferencesToLiteral: anObject in: aBrowserEnvironment 
 	"Opens a MethodBrowser on all the methods that refer to aString from their literal frames
@@ -1936,7 +1936,8 @@ initializeArgumentClasses
 		add: Integer;
 		add: Boolean;
 		add: Class;
-		add: String.
+		add: String;
+		add: Symbol.
 	argumentClasses shrink!
 
 initializeFrom: aSmalltalkSystem 
@@ -3323,6 +3324,34 @@ referencesTo: anObject in: aBrowserEnvironment
 
 	^aBrowserEnvironment liveReferencesTo: anObject!
 
+referencesToClassVar: aString of: aClass within: aBrowserEnvironment
+	"Private - Open a MethodBrowser on all the methods that reference the class variable named, aString, in the hierarchy of the <Behavior>, aClass."
+
+	| binding matched |
+	binding := aClass hierarchyBindingFor: aString.
+	matched := aBrowserEnvironment filterMethods: [:method | method refersToLiteral: binding].
+	matched
+		label: ('All methods that reference <1p>.<2s> in <3p>'
+					expandMacrosWith: binding environment
+					with: binding key
+					with: aBrowserEnvironment);
+		addSearchString: binding key.
+	^binding isImmutable
+		ifTrue: [{ matched }]
+		ifFalse: 
+			[| writers readers |
+			writers := matched filterMethods: [:method | method byteCodeDispatcher writesStatic: binding].
+			writers label: ('All methods that assign to <1p>.<2s> in <3p>'
+						expandMacrosWith: binding environment
+						with: aString
+						with: aBrowserEnvironment).
+			readers := matched filterMethods: [:method | method byteCodeDispatcher readsStatic: binding].
+			readers label: ('All methods that read <1p>.<2s> in <3p>'
+						expandMacrosWith: binding environment
+						with: aString
+						with: aBrowserEnvironment).
+			{ matched. readers. writers }]!
+
 referencesToInstVar: aString inHierarchyOf: aBehavior within: aBrowserEnvironment
 	| definingBehavior env |
 	definingBehavior := aBehavior whichClassDefinesInstVar: aString.
@@ -3696,7 +3725,7 @@ renameClassVariable: oldName to: newName in: definingBehavior
 renameClassVariable: aString to: newName in: aClass within: aBrowserEnvironment
 	aClass renameClassVar: aString to: newName.
 	self
-		browseReferencesToClassVar: newName
+		browseReferencesToClassVars: { newName }
 		of: aClass
 		within: aBrowserEnvironment!
 
@@ -3730,12 +3759,12 @@ renameInstanceVariable: oldName to: newName in: definingBehavior
 		in: definingBehavior
 		within: self browserEnvironment!
 
-renameInstanceVariable: aString to: newName in: aClass within: aBrowserEnvironment 
+renameInstanceVariable: aString to: newName in: aClass within: aBrowserEnvironment
 	aClass renameInstVar: aString to: newName.
-	self 
-		browseReferencesToInstVar: newName
+	self
+		browseReferencesToInstVars: { newName }
 		inHierarchyOf: aClass
-		within: aBrowserEnvironment .
+		within: aBrowserEnvironment.
 	^newName!
 
 renameVariable: oldSymbol to: newSymbol
@@ -4292,10 +4321,10 @@ browsePackages:!browsing!commands!public! !
 browseProtocols!browsing!commands!protocols!public! !
 browseReferencesMatching:in:!browsing!private! !
 browseReferencesTo:!browsing!public! !
-browseReferencesToClassVar:of:within:!browsing!private! !
+browseReferencesToClassVars:of:within:!browsing!private! !
 browseReferencesToGlobal:!browsing!public! !
 browseReferencesToGlobal:in:!browsing!public! !
-browseReferencesToInstVar:inHierarchyOf:within:!browsing!private! !
+browseReferencesToInstVars:inHierarchyOf:within:!browsing!private! !
 browseReferencesToLiteral:in:!browsing!public! !
 browseReferencesToVariable:!browsing!public! !
 browserEnvFromDom:!helpers!private! !
@@ -4545,6 +4574,7 @@ queryCommand:!commands!private! !
 redoChange!commands!public! !
 referencesTo:!enquiries!public! !
 referencesTo:in:!enquiries!public! !
+referencesToClassVar:of:within:!browsing!private! !
 referencesToInstVar:inHierarchyOf:within:!browsing!public! !
 referencesToLiteral:in:!browsing!public! !
 reformatAllMethodsIn:!commands!private! !

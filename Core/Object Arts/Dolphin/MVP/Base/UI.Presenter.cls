@@ -5,7 +5,7 @@ Core.Object
 	instanceVariableNames: 'model view parentPresenter events subPresenters names helpId'
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})
-	classInstanceVariableNames: 'acceleratorKeyAnnotations'
+	classInstanceVariableNames: 'acceleratorKeyAnnotations commandQuerySelectors commandQueryHandlers'
 	classConstants: {}!
 UI.Presenter guid: (Core.GUID fromString: '{87b4c4a9-026e-11d3-9fd7-00a0cc3e4a32}')!
 UI.Presenter comment: 'Presenter is an abstract class whose subclasses conform to <presenter> and represent components in the Model-View-Presenter framework. A presenter is the equivalent of a "user interface component" in the Dolphin MVP framework. It achieves flexibility over other component based architectures by allowing its data (its model) and its screen representation (its view) to be pluggable. Thus, one can change the way a user sees and manipulates a component by changing its view and one can change the data that the component is representing  by changing the model. Substituting a presenter''s model also allows several  presenter and view pairs to share and interact with the same data.  
@@ -676,14 +676,29 @@ queryCommand: aCommandQuery
 	(aCommandQuery canPerformAgainst: self) ifTrue: [aCommandQuery beEnabled].
 	^false	"There was no specific enablement of the command at this level"!
 
-queryCommandHandlers: aCommandQuery 
-	| class |
+queryCommandHandlers: aCommandQuery
+	| class command |
 	class := self class.
+	command := aCommandQuery commandSymbol.
 	
-	[class commandQueryHandlers do: [:each | (self perform: each with: aCommandQuery) ifTrue: [^true]].
-	class == ##(self)] 
+	[(class commandQuerySelectors lookup: command)
+		ifNotNil: 
+			[:selector |
+			"Unless the handler specifically returns false, assume the command query was handled and terminate the search"
+			(self perform: selector with: aCommandQuery) == false ifFalse: [^true]].
+	"Try the legacy extension handlers - this mechanism is deprecated as of Dolphin 8.1"
+	class commandQueryHandlers
+		do: [:each | (self perform: each with: aCommandQuery) ifTrue: [^true]].
+	class == ##(self)]
 			whileFalse: [class := class superclass].
 	^false!
+
+queryContextCommand: aCommandQuery as: aSymbol
+	| originalCommand |
+	originalCommand := aCommandQuery commandDescription.
+	aCommandQuery commandDescription: (CommandDescription command: aSymbol).
+	^[self queryCommandHandlers: aCommandQuery]
+		ensure: [aCommandQuery commandDescription: originalCommand]!
 
 remove: aPresenter
 	"Removes aPresenter from the receiver's collection of sub-presenters.
@@ -903,6 +918,7 @@ preTranslateKeyboardInput:!dispatching!public! !
 preTranslateMouseInput:!dispatching!public! !
 queryCommand:!commands!private! !
 queryCommandHandlers:!commands!private! !
+queryContextCommand:as:!public! !
 remove:!public!subpresenters! !
 requestDragImages:!drag & drop!public! !
 requestDragObjects:!drag & drop!public! !
@@ -957,15 +973,6 @@ acceleratorKeyBindings: aDictionary
 
 	self setAdditionalAccelerators: (aDictionary associations collect: [:each | {each value. each key}])!
 
-addCommandQueryHandler: aSymbol 
-	"Register an additional CommandQuery handler to be invoked by the #queryCommand: processing
-	of instances of the receiver. This allows for additional commands to be added without
-	needing to modify the '#queryCommand: method. The handler is passed an instance of
-	<CommandQuery>, and should answer true if it handles the command, false if not. Handled
-	commands should be enabled/disabled in the normal way."
-
-	self setCommandQueryHandlers: (self commandQueryHandlers copyWith: aSymbol)!
-
 additionalAccelerators
 	"Answer a collection of additional accelerator definitions for commands not on the menu bar of the receiver's view(s). Each element of the collection should be a two element <Array>, the first element of which is the command symbol and the second the accelerator key string."
 
@@ -982,14 +989,25 @@ additionalKeyBindings
 						acceleratorKeyString: each second;
 						yourself]]!
 
+annotatedMethodRemoved: aCompiledMethod
+	"Private - An annotated method of the receiver has been removed. This is an opportunity to update any metadata that might be based on method annotations."
+
+	(aCompiledMethod hasAnnotation: #acceleratorKey:) ifTrue: [self updateAdditionalAccelerators].
+	(aCompiledMethod hasAnnotation: #commandQuerySelector:) ifTrue: [commandQuerySelectors := nil]!
+
 annotationsUpdated: aCompilationResult
-	"Annotations may have been added or removed in the receiver's methods. This is an opportunity to update any metadata that might be based on method annotations."
+	"Private - Annotations may have been added or removed in the receiver's methods. This is an opportunity to update any metadata that might be based on method annotations."
 
 	(aCompilationResult affectsAnnotation: #acceleratorKey:)
-		ifTrue: [self updateAdditionalAccelerators: aCompilationResult]!
+		ifTrue: [self updateAdditionalAccelerators].
+	(aCompilationResult affectsAnnotation: #commandQuerySelector:)
+		ifTrue: [commandQuerySelectors := nil]!
 
 commandQueryHandlers
-	^self getCommandQueryHandlers ?? #()!
+	^commandQueryHandlers ?? #()!
+
+commandQuerySelectors
+	^commandQuerySelectors ifNil: [commandQuerySelectors := self findCommandQuerySelectors]!
 
 create
 	"Answers an instance of the receiver with a default view"
@@ -1097,10 +1115,21 @@ findAcceleratorKeyAnnotations
 						do: [:args | stream nextPut: {each selector. AcceleratorTable canonicalizeKeyString: (args at: 1)}]]].
 	^stream contents!
 
-getAdditionalKeyBindings
-	^nil!
+findCommandQuerySelectors
+	| selectors |
+	selectors := IdentityDictionary new.
+	self methodsDo: 
+			[:eachMethod |
+			eachMethod annotations
+				ifNotNil: 
+					[:annotations |
+					annotations selectorsAndArgumentsDo: 
+							[:annotationSelector :annotationArgs |
+							annotationSelector == #commandQuerySelector:
+								ifTrue: [selectors at: eachMethod selector put: annotationArgs single]]]].
+	^selectors!
 
-getCommandQueryHandlers
+getAdditionalKeyBindings
 	^nil!
 
 icon
@@ -1115,9 +1144,6 @@ loadViewResource: aString inContext: aParentView
 	resourceIdentifier := ResourceIdentifier class: self name: aString.
 	^resourceIdentifier loadWithContext: aParentView!
 
-methodRemoved: aCompiledMethod
-	(aCompiledMethod hasAnnotation: #acceleratorKey:) ifTrue: [self updateAdditionalAccelerators: nil]!
-
 new
 	"Answer an instance of the receiver not yet connected to any view
 	but connected to a default model"
@@ -1129,13 +1155,6 @@ on: aModel
 	but connected to aModel."
 
 	^(super new) on: aModel; yourself!
-
-removeCommandQueryHandler: aSymbol 
-	"Unregister an additional CommandQuery handler to reverse out a previous
-	addCommandQueryHandler: call. This should be called by IDE extension packages that are
-	uninstalling command handlers."
-
-	self setCommandQueryHandlers: (self commandQueryHandlers copyWithout: aSymbol)!
 
 resetDefaultAdditionalAccelerators
 	acceleratorKeyAnnotations := nil!
@@ -1177,9 +1196,6 @@ setAdditionalKeyBindings: anArray
 
 	!
 
-setCommandQueryHandlers: anArray 
-	self error: 'configuring command query handlers is not supported'!
-
 show
 	"Answers an instance of the receiver shown in a default view"
 
@@ -1206,17 +1222,18 @@ showOn: aModel
 	^(self createOn: aModel) showShell.
 	!
 
-updateAdditionalAccelerators: aCompilationResult
+updateAdditionalAccelerators
 	self withAllSubclassesDo: [:each | each resetDefaultAdditionalAccelerators]! !
 !UI.Presenter class categoriesForMethods!
 acceleratorKeyAnnotations!constants!private! !
 acceleratorKeyBindings!constants!public! !
 acceleratorKeyBindings:!constants!public! !
-addCommandQueryHandler:!accessing!public! !
 additionalAccelerators!accessing!public! !
 additionalKeyBindings!accessing!private! !
-annotationsUpdated:!public! !
+annotatedMethodRemoved:!private! !
+annotationsUpdated:!private! !
 commandQueryHandlers!accessing!private! !
+commandQuerySelectors!accessing!private! !
 create!instance creation!public! !
 create:!instance creation!public! !
 create:in:!instance creation!public! !
@@ -1230,25 +1247,22 @@ defaultModel!models!public! !
 defaultResourceIdentifier!constants!public! !
 defaultView!constants!public! !
 findAcceleratorKeyAnnotations!constants!private! !
+findCommandQuerySelectors!accessing!private! !
 getAdditionalKeyBindings!accessing!private! !
-getCommandQueryHandlers!accessing!private! !
 icon!constants!public! !
 loadViewResource:inContext:!operations!private! !
-methodRemoved:!public! !
 new!instance creation!public! !
 on:!instance creation!public! !
-removeCommandQueryHandler:!accessing!public! !
 resetDefaultAdditionalAccelerators!public! !
 resource_Container_view!public!resources-views! !
 resource_Default_view!public!resources-views! !
 setAdditionalAccelerators:!accessing!private! !
 setAdditionalKeyBindings:!accessing!private! !
-setCommandQueryHandlers:!accessing!private! !
 show!instance creation!public! !
 show:!instance creation!public! !
 show:on:!instance creation!public! !
 showOn:!instance creation!public! !
-updateAdditionalAccelerators:!event handling!private! !
+updateAdditionalAccelerators!event handling!private! !
 !
 
 UI.Presenter class methodProtocol: #imageSource attributes: #(#readOnly) selectors: #(#addToImageList:mask: #asImageKey)!

@@ -124,6 +124,13 @@ selectors
 		do: [:i | selectors add: (self basicAt: i)].
 	^selectors!
 
+selectorsAndArgumentsDo: aDyadicValuable
+	"Evaluate the <dyadicValuable> argument for each of the annotations in the receiver, passing the <Symbol> selector as the first block argument, and the <Array> of literal arguments as the second block argument."
+
+	1 to: self basicSize
+		by: 2
+		do: [:i | aDyadicValuable value: (self basicAt: i) value: (self basicAt: i + 1)]!
+
 size
 	^self basicSize bitShift: -1!
 
@@ -177,6 +184,7 @@ includesSelector:!public!searching! !
 printOn:!printing!public! !
 refersTo:asLiteralOf:!private!testing! !
 selectors!accessing!public! !
+selectorsAndArgumentsDo:!enumerating!public! !
 size!accessing!public! !
 uncheckedFrom:to:keysAndValuesDo:!enumerating!private! !
 withSelector:!enumerating!public! !

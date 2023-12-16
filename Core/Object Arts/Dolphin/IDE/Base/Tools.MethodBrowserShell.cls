@@ -65,13 +65,10 @@ hasEditableMethodSelected
 	^self selectedMethod ifNil: [false] ifNotNil: [:method | self isEditableMethod: method]!
 
 hasEditableMethodsSelected
-	^self browser hasMethodsSelected!
+	^self selectedMethods allSatisfy: [:each | self isEditableMethod: each]!
 
 hasMethods
 	^self browser hasMethods!
-
-hasMethodSelected
-	^self browser hasMethodSelected!
 
 isEditableMethod: aCompiledMethod 
 	^true!
@@ -123,7 +120,11 @@ parseContext
 					env := package ifNil: [class environment] ifNotNil: [package environment ifNil: [class environment]].
 					ParseContext methodClass: class environment: (model modelClassFor: env)]]!
 
+queryHasMethodSelected: aCommandQuery
+	aCommandQuery isEnabled: browserPresenter hasMethodSelected!
+
 recompileDiffs
+	<commandQuerySelector: #queryHasMethodSelected:>
 	self developmentSystem recompileDiffs: self selectedMethod!
 
 saveNewMethod: aString
@@ -145,6 +146,11 @@ selectedMethod
 
 	^self browser selectedMethod!
 
+selectedMethods
+	"Answer the currently selected methods, or an empty collection if there are no selections."
+
+	^self browser selectedMethods!
+
 setInitialFocus
 	browserPresenter hasMethodSelected 
 		ifTrue: [browserPresenter setInitialFocus]
@@ -160,7 +166,7 @@ systemModel
 	^self model! !
 !Tools.MethodBrowserShell categoriesForMethods!
 browser!accessing!public! !
-canSaveMethod!commands!private! !
+canSaveMethod!private!testing! !
 createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !
 filter!accessing!public! !
@@ -169,7 +175,6 @@ findSelector:!public!searching! !
 hasEditableMethodSelected!public!testing! !
 hasEditableMethodsSelected!public!testing! !
 hasMethods!browsing!public! !
-hasMethodSelected!idb goodies!public!testing! !
 isEditableMethod:!enquiries!public! !
 method!accessing!public! !
 methods!accessing!public! !
@@ -177,10 +182,12 @@ methods:!accessing!public! !
 onMethodSelected!event handling!private! !
 onViewOpened!event handling!public! !
 parseContext!accessing!public! !
+queryHasMethodSelected:!commands-queries!private! !
 recompileDiffs!public! !
 saveNewMethod:!helpers!private! !
 searchEnvironment:!public! !
 selectedMethod!accessing!public! !
+selectedMethods!accessing!public! !
 setInitialFocus!operations!public! !
 statusModel!event handling!public! !
 statusText:!accessing!private! !

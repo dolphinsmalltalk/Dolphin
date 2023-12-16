@@ -5,7 +5,7 @@ UI.Shell
 	instanceVariableNames: 'searchPresenter fontSizePresenter'
 	classVariableNames: 'HistoryDwellTime SearchFieldFlashes'
 	imports: #(#{Refactory.Browser private})
-	classInstanceVariableNames: 'optionFlags defaultView defaultExtent defaultSlideyPinsMap additionalKeyBindings commandQueryHandlers'
+	classInstanceVariableNames: 'optionFlags defaultView defaultExtent defaultSlideyPinsMap additionalKeyBindings'
 	classConstants: {
 			'CanUseIdeaSpaceMask' -> 16r2.
 			'LoadingMask' -> 16r1.
@@ -30,6 +30,17 @@ Class Instance Variables:
 !Tools.SmalltalkToolShell categoriesForClass!MVP-Presenters!MVP-Resources-IDE Tools! !
 !Tools.SmalltalkToolShell methodsFor!
 
+accept
+	"Save the source on the currently displayed source card."
+
+	<commandQuerySelector: #queryAcceptIt:>
+	self perform: self acceptItCommand!
+
+acceptItCommand
+	"Private - Answer the <Symbol> of the contextual command to save changes to something, depending on the subview with focus and/or selection."
+
+	^nil!
+
 addToCommandRoute: aCommandPolicy
 	"Update the command routing path of the <CommandPolicy> argument with the receiver's contribution to the command path. "
 
@@ -42,18 +53,61 @@ addToCommandRoute: aCommandPolicy
 applyOptions
 	SmalltalkSystem current applyOptionsToTool: self!
 
-browseIt
-	"Open a new default browser at the same point as the receiver.
-	This is the workspace Browse-It command which is subtly different to the Browse Classes
-	command, but for many cases the appropriate action is to open a class browser so we
-	wire up to the #browseClasses command by default."
+browseDefinitions
+	"Context-sensitive browse definitions command (F12)."
 
-	Object browse!
+	<commandQuerySelector: #queryBrowseDefinitions:>
+	<acceleratorKey: 'F12'>
+	self perform: self browseDefinitionsCommand!
+
+browseDefinitionsCommand
+	"Answer the <Symbol> of the contextual command to browse definitions of something, depending on the subview with focus and/or selection."
+
+	^nil!
+
+browseHierarchy
+	"Open a class hierarchy browser navigated appropriately based on initiating context."
+
+	<commandQuerySelector: #queryBrowseHierarchy:>
+	self perform: self browseHierarchyCommand!
+
+browseHierarchyCommand
+	"Answer the <Symbol> of the contextual command to browse the class hierarchy of something, depending on the subview with focus and/or selection."
+
+	^nil!
+
+browseIt
+	"Open a browser on the selected item in the window with focus."
+
+	<commandQuerySelector: #queryBrowseIt:>
+	self perform: self browseItCommand!
+
+browseItCommand
+	"Answer the <Symbol> of the contextual command to browse something, depending on the subview with focus and/or selection."
+
+	^#browseClass!
 
 browseMethodsIn: aBrowserEnvironment
 	^(self developmentSystem browseMethodsIn: aBrowserEnvironment)
 		model: self model;
 		yourself!
+
+browseMethodsInEnvironments: aCollectionOfBrowserEnvironment
+	^(self developmentSystem browseMethodsInEnvironments: aCollectionOfBrowserEnvironment)
+		model: self model;
+		yourself!
+
+browseReferences
+	"Context-sensitive browse references command (Shift+F12)."
+
+	<commandQuerySelector: #queryBrowseReferences:>
+	<acceleratorKey: 'Shift+F12'>
+	self perform: self browseReferencesCommand!
+
+browseReferencesCommand
+	"Answer the <Symbol> of the contextual command to browse references to something, depending on the subview with focus and/or selection."
+
+	^nil!
 
 browserEnvironment
 	^self systemModel browserEnvironment!
@@ -107,6 +161,11 @@ createSchematicWiring
 		to: self developmentSystem
 		withArguments: {nil. self}!
 
+deleteItCommand
+	"Answer the <Symbol> of the contextual command to delete something, depending on the subview with focus and/or selection."
+
+	^nil!
+
 developmentSystem
 	^SmalltalkSystem current!
 
@@ -126,9 +185,16 @@ fontSize: anInteger
 forgetSize
 	"Forget the default size for new instances of this tool."
 
+	<commandQuerySelector: #queryForgetSize:>
 	(self class)
 		defaultSlideyPinsMap: nil;
 		defaultExtent: nil!
+
+futureSize
+	"Answer the number of visits in the history which were made after the
+	current one."
+
+	^0!
 
 getPinStateFor: aSlideyInneyOuteyThingName 
 	"Private - Attempts to find a named SlideyInneyOuteyThing within the view hierarchy of the receiver.
@@ -139,12 +205,12 @@ getPinStateFor: aSlideyInneyOuteyThingName
 hasFuture
 	"Answer whether there is any future history to visit."
 
-	^false!
+	^self futureSize > 0!
 
 hasPast
 	"Answer whether there is any past history to visit."
 
-	^false!
+	^self pastSize > 0!
 
 help
 	"Bring up a help page for this tool."
@@ -155,24 +221,28 @@ help
 historyBack
 	"Private - Return to the previously visited method."
 
+	<commandQuerySelector: #queryHistoryBack:>
 	self historyBack: 1!
 
 historyBack: delta
 	"Private - Return to a previously visited method <integer>, delta, visits
 	in the past.."
 
+	<commandQuerySelector: #queryHistoryRewind:>
 	self historySkip: delta negated!
 
 historyForward
 	"Private - Return to the previously visited class which has been
 	moved back over by a jump back in time."
 
+	<commandQuerySelector: #queryHistoryForward:>
 	self historyForward: 1!
 
 historyForward: delta
 	"Private - Return to the previously visited class which has been
 	moved back over by a jump back in time."
 
+	<commandQuerySelector: #queryHistoryFastForward:>
 	self historySkip: delta!
 
 historySkip: anInteger
@@ -183,6 +253,22 @@ historySkip: anInteger
 ideaSpace
 	^#{IdeaSpaceShell} valueOrNil
 		ifNotNil: [:ideaSpaceShellClass | (self topShell isKindOf: ideaSpaceShellClass) ifTrue: [self topShell]]!
+
+inspectIt
+	"Open a browser on the selected category/protocol/variables.
+	Note that we only receive this command it one of the filter panes is selected
+	as class hierarchy, method browser, and workspace presenters all handle
+	it themselves."
+
+	<acceleratorKey: 'Ctrl+I'>
+	<acceleratorKey: 'Ctrl+Q'>		"VW compatibility"
+	<commandQuerySelector: #queryInspectIt:>
+	self perform: self inspectItCommand!
+
+inspectItCommand
+	"Answer the <Symbol> of the contextual command to inspect something, depending on the subview with focus and/or selection."
+
+	^nil!
 
 inspectSystemOptions
 	"Open a <PropertyInspector> on the system options."
@@ -232,6 +318,11 @@ packageManager
 
 	^self developmentSystem packageManager!
 
+pastSize
+	"Answer the number of visits in the history which were made before the current one."
+
+	^0!
+
 performCommand: aCommand
 	aCommand commandDescription isAbortable ifFalse: [^super performCommand: aCommand].
 	^[super performCommand: aCommand] on: OperationAborted
@@ -240,29 +331,69 @@ performCommand: aCommand
 			self statusModel value: ex.
 			nil]!
 
-queryCommand: aCommandQuery 
-	"Private - Enter details about a potential command for the receiver into the 
-	<CommandQuery>."
+queryAcceptIt: aCommandQuery
+	self acceptItCommand
+		ifNil: 
+			["Not handled at this level, but continue searching the chain"
+			aCommandQuery isEnabled: false]
+		ifNotNil: [:selector | self queryContextCommand: aCommandQuery as: selector]!
 
-	| command |
-	command := aCommandQuery commandSymbol.
-	#forgetSize == command 
-		ifTrue: 
-			[aCommandQuery isEnabled: self class defaultExtent notNil.
-			^true].
-	command == #historyBack 
-		ifTrue: 
-			[aCommandQuery isEnabled: self hasPast.
-			^true].
-	command == #historyForward 
-		ifTrue: 
-			[aCommandQuery isEnabled: self hasFuture.
-			^true].
-	(#(#dragToolToIdeaSpace #addToNewIdeaSpace) includes: command) 
-		ifTrue: 
-			[aCommandQuery isEnabled: (self isIdeaSpaceCard not and: [self class canUseIdeaSpace]).
-			^true].
-	^super queryCommand: aCommandQuery!
+queryBrowseDefinitions: aCommandQuery
+	self browseDefinitionsCommand
+		ifNil: 
+			["Not handled at this level, but continue searching the chain"
+			aCommandQuery isEnabled: false]
+		ifNotNil: [:selector | self queryContextCommand: aCommandQuery as: selector]!
+
+queryBrowseHierarchy: aCommandQuery
+	self browseHierarchyCommand
+		ifNil: 
+			["Not handled at this level, but continue searching the chain"
+			aCommandQuery isEnabled: false]
+		ifNotNil: [:selector | self queryContextCommand: aCommandQuery as: selector]!
+
+queryBrowseIt: aCommandQuery
+	self browseItCommand
+		ifNil: 
+			["Not handled at this level, but continue searching the chain"
+			aCommandQuery isEnabled: false]
+		ifNotNil: [:selector | self queryContextCommand: aCommandQuery as: selector]!
+
+queryBrowseReferences: aCommandQuery
+	self browseReferencesCommand
+		ifNil: 
+			["Not handled at this level, but continue searching the chain"
+			aCommandQuery isEnabled: false]
+		ifNotNil: [:selector | self queryContextCommand: aCommandQuery as: selector]!
+
+queryDeleteIt: aCommandQuery
+	self deleteItCommand
+		ifNil: 
+			["Not handled at this level, but continue searching the chain"
+			aCommandQuery isEnabled: false]
+		ifNotNil: [:selector | self queryContextCommand: aCommandQuery as: selector]!
+
+queryForgetSize: aCommandQuery
+	aCommandQuery isEnabled: self class defaultExtent notNil!
+
+queryHistoryBack: aCommandQuery
+	aCommandQuery isEnabled: self hasPast!
+
+queryHistoryFastForward: aCommandQuery
+	aCommandQuery isEnabled: self futureSize >= aCommandQuery command arguments first!
+
+queryHistoryForward: aCommandQuery
+	aCommandQuery isEnabled: self hasFuture!
+
+queryHistoryRewind: aCommandQuery
+	aCommandQuery isEnabled: self pastSize >= aCommandQuery command arguments first!
+
+queryInspectIt: aCommandQuery
+	self inspectItCommand
+		ifNil: 
+			["Not handled at this level, but continue searching the chain"
+			aCommandQuery isEnabled: false]
+		ifNotNil: [:selector | self queryContextCommand: aCommandQuery as: selector]!
 
 rememberThisSize
 	"Record the size of the receiver as the default extent for its tool class."
@@ -385,10 +516,20 @@ systemModel
 workspaceClass
 	^SmalltalkSystem current workspaceClass! !
 !Tools.SmalltalkToolShell categoriesForMethods!
-addToCommandRoute:!commands!public! !
+accept!commands-actions!public! !
+acceptItCommand!commands-mappings!private! !
+addToCommandRoute:!commands-routing!public! !
 applyOptions!private! !
-browseIt!commands!public! !
+browseDefinitions!commands-actions!public! !
+browseDefinitionsCommand!commands-mappings!private! !
+browseHierarchy!commands-actions!public! !
+browseHierarchyCommand!commands-mappings!private! !
+browseIt!commands-actions!public! !
+browseItCommand!commands-mappings!private! !
 browseMethodsIn:!operations!public! !
+browseMethodsInEnvironments:!browsing!public! !
+browseReferences!commands-actions!public! !
+browseReferencesCommand!commands-mappings!private! !
 browserEnvironment!accessing!public! !
 buildPopupForCommand:!private! !
 canRefactor!private!testing! !
@@ -396,31 +537,47 @@ canSaveState!private!saved state! !
 configureFromSavedStateString:!public! !
 createComponents!initializing!private! !
 createSchematicWiring!initializing!private! !
+deleteItCommand!commands-mappings!private! !
 developmentSystem!public! !
 displayOn:!displaying!public! !
 fontSize!public! !
 fontSize:!public! !
-forgetSize!commands!public! !
+forgetSize!commands-actions!public! !
+futureSize!accessing!public! !
 getPinStateFor:!accessing!private! !
 hasFuture!public!testing! !
 hasPast!public!testing! !
-help!commands!public! !
-historyBack!commands!private! !
-historyBack:!commands!private! !
-historyForward!commands!private! !
-historyForward:!commands!private! !
-historySkip:!commands!private! !
+help!commands-actions!public! !
+historyBack!commands-actions!private! !
+historyBack:!commands-actions!private! !
+historyForward!commands-actions!private! !
+historyForward:!commands-actions!private! !
+historySkip:!commands-actions!private! !
 ideaSpace!public! !
-inspectSystemOptions!commands!public! !
+inspectIt!commands-actions!public! !
+inspectItCommand!commands-mappings!private! !
+inspectSystemOptions!commands-actions!public! !
 isIdeaSpaceCard!public! !
 methodBrowserClass!constants!private! !
 onDropDown:!private! !
 onViewCreated!event handling!public! !
 onViewOpened!private! !
 packageManager!constants!private! !
-performCommand:!commands!public! !
-queryCommand:!commands!private! !
-rememberThisSize!commands!public! !
+pastSize!accessing!public! !
+performCommand:!commands-routing!public! !
+queryAcceptIt:!commands-queries!private! !
+queryBrowseDefinitions:!commands-queries!private! !
+queryBrowseHierarchy:!commands-queries!private! !
+queryBrowseIt:!commands-queries!private! !
+queryBrowseReferences:!commands-queries!private! !
+queryDeleteIt:!commands-queries!private! !
+queryForgetSize:!commands-queries!private! !
+queryHistoryBack:!commands-queries!private! !
+queryHistoryFastForward:!commands-queries!private! !
+queryHistoryForward:!commands-queries!private! !
+queryHistoryRewind:!commands-queries!private! !
+queryInspectIt:!commands-queries!private! !
+rememberThisSize!commands-actions!public! !
 saveStateAspects:for:on:!helpers!private!saved state! !
 saveStateOn:!private!saved state! !
 saveStateString!private!saved state! !
@@ -429,8 +586,8 @@ searchForMethod:!private! !
 searchForObject:!public! !
 searchForPackage:!public! !
 searchForSymbol:!private! !
-searchSmalltalk!commands!public! !
-searchSmalltalkFor:!commands!public! !
+searchSmalltalk!commands-actions!public! !
+searchSmalltalkFor:!commands-actions!public! !
 selectionEnvironment!public! !
 setPinStateFor:to:!accessing!private! !
 show!operations!public! !
@@ -580,9 +737,6 @@ finishedLoadingOptions
 getAdditionalKeyBindings
 	self ensureOptionsLoaded.
 	^additionalKeyBindings!
-
-getCommandQueryHandlers
-	^commandQueryHandlers!
 
 historyDwellTime
 	"Answer the period of time, expressed in milliseconds, for which it is necessary to 'visit'
@@ -766,9 +920,6 @@ setAdditionalKeyBindings: anArray
 	additionalKeyBindings := anArray.
 	self persistOptions!
 
-setCommandQueryHandlers: anArray 
-	commandQueryHandlers := anArray!
-
 setOptionFlag: anInteger value: aBoolean
 	"Private - Set the receiver to reuse an already open instance of the receiver instead of
 	creating an additional one according to aBoolean."
@@ -875,7 +1026,6 @@ defaultView:!options!public! !
 ensureOptionsLoaded!options!private! !
 finishedLoadingOptions!options!private! !
 getAdditionalKeyBindings!options!private! !
-getCommandQueryHandlers!options!private! !
 historyDwellTime!options!public! !
 historyDwellTime:!options!public! !
 icon!constants!public! !
@@ -896,7 +1046,6 @@ reuseIfOpen:!options!public! !
 searchFieldFlashes!options!public! !
 searchFieldFlashes:!options!public! !
 setAdditionalKeyBindings:!options!private! !
-setCommandQueryHandlers:!options!private! !
 setOptionFlag:value:!options!private! !
 show!instance creation!public! !
 show:inIdeaSpace:!private! !

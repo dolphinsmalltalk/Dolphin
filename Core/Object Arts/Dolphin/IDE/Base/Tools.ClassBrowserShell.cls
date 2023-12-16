@@ -19,6 +19,9 @@ Class Variables:
 !Tools.ClassBrowserShell categoriesForClass!MVP-Presenters! !
 !Tools.ClassBrowserShell methodsFor!
 
+canShowLocalHierarchy
+	^true!
+
 createComponents
 	"Create the presenters contained by the receiver"
 
@@ -31,15 +34,6 @@ createComponents
 defaultHelpId
 	^10734!
 
-displayLocalHierarchyOf: class
-	"Private - Update the receiver to display only the local hierarchy of the <ClassDescription>,
-	class."
-
-	| instClass |
-	instClass := class instanceClass.
-	classesPresenter model: (ClassHierarchyModel withAllClasses
-				filter: [:x | (instClass allSuperclasses includes: x) or: [instClass withAllSubclasses includes: x]])!
-
 isLocalHierarchyMode
 	"Private - Answer whether the receiver is in 'local hierarchy' mode displaying a subset of the entire
 	class hierarchy."
@@ -49,74 +43,19 @@ isLocalHierarchyMode
 isLocalHierarchyMode: aBoolean 
 	flags := flags mask: LocalHierarchyMask set: aBoolean!
 
-onTipTextRequired: tool
-	"Private - Tool tip text is required for the <ToolbarItem>, tool."
-
-	| cmd |
-	cmd := tool command asSymbol.
-	cmd == #toggleLocalHierarchy ifTrue: [
-		^(self isLocalHierarchyMode 
-				ifTrue: ['Browse entire hierarchy']
-				ifFalse: ['Browse local hierarchy of ', self selectedClass name])].
-	^super onTipTextRequired: tool!
-
-queryCommand: aCommandQuery 
-	"Private - Enter details about a potential command for the receiver 
-	into the <CommandQuery>."
-
-	| cmd |
-	cmd := aCommandQuery commandSymbol.
-	#toggleLocalHierarchy == cmd 
-		ifTrue: 
-			[self isLocalHierarchyMode 
-				ifTrue: 
-					[aCommandQuery
-						isEnabled: true;
-						isChecked: true]
-				ifFalse: 
-					[aCommandQuery
-						isEnabled: (self hasClassSelected and: [self actualClass superclass notNil]);
-						isChecked: false].
-			^true].
-	^super queryCommand: aCommandQuery!
-
 resetFor: aClass 
 	"Reset the receiver to place it into a state required to display aClass"
 
 	(self isLocalHierarchyMode 
 		and: [(classesPresenter model filter value: aClass instanceClass) not]) 
-			ifTrue: [self displayLocalHierarchyOf: aClass]!
-
-toggleLocalHierarchy
-	"Toggle between the entire hierarchy and showing only the current class and its subclasses."
-
-	| instClass actualClass |
-	self promptToSaveChanges ifFalse: [^self].
-
-	"Use the selected class rather than the actual class, so always follows instance hierarchy"
-	instClass := self selectedClass.
-	actualClass := self actualClass.
-	self isLocalHierarchyMode: self isLocalHierarchyMode not.
-	self isLocalHierarchyMode 
-		ifTrue: 
-			["Toggled into local hierarchy mode"
-			self displayLocalHierarchyOf: instClass.
-			self actualClass: actualClass]
-		ifFalse: 
-			["Toggled out of local hierarchy mode..."
-			classesPresenter model: self model classHierarchy.
-			actualClass notNil ifTrue: [self actualClass: actualClass]].
-	self validateUserInterface! !
+			ifTrue: [self displayLocalHierarchyOf: aClass]! !
 !Tools.ClassBrowserShell categoriesForMethods!
+canShowLocalHierarchy!private!testing! !
 createComponents!initializing!public! !
 defaultHelpId!public! !
-displayLocalHierarchyOf:!private!updating! !
 isLocalHierarchyMode!private!testing! !
 isLocalHierarchyMode:!accessing!private! !
-onTipTextRequired:!event handling!private! !
-queryCommand:!commands!private! !
-resetFor:!commands!public! !
-toggleLocalHierarchy!commands!public! !
+resetFor:!operations!public! !
 !
 
 !Tools.ClassBrowserShell class methodsFor!

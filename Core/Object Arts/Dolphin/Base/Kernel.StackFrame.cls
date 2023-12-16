@@ -313,20 +313,10 @@ isBlockFrame
 	^false!
 
 isDead
-	"Private - Answer whether this is a dead stack frame (i.e. one which has returned).
+	"Answer whether this is a dead stack frame (i.e. one which has returned).
 	Note that this is only an indication."
 
 	^self method isNil!
-
-isRestartable
-	"Private - Answer whether this frame is restartable. Some methods, such as
-	callback entry points, cannot be restarted at all, others not reliably."
-
-	^self isDead not and: 
-			[self sender notNil and: 
-					[| method |
-					method := self basicMethod.
-					method isExpression or: [('not restartable' asMethodCategory includesMethod: method) not]]]!
 
 localAt: anInteger
 	"Private - Answer the argument indexed, anInteger, from the receiver's stack frame."
@@ -497,8 +487,7 @@ ip!accessing!private! !
 ip:!accessing!private! !
 ipBias!constants!private! !
 isBlockFrame!private!testing! !
-isDead!private!testing! !
-isRestartable!development!private!testing! !
+isDead!public!testing! !
 localAt:!accessing!private! !
 localCount!accessing!private! !
 method!accessing!private! !

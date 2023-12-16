@@ -43,13 +43,8 @@ Class Instance Variables:
 !Tools.ClassBrowserAbstract categoriesForClass!MVP-Presenters! !
 !Tools.ClassBrowserAbstract methodsFor!
 
-accept
-	"Save the source on the currently displayed source card."
-
-	self perform: self acceptItCommand!
-
 acceptItCommand
-	"Private - Answer which of the various accept commands applies at this time."
+	"Private - Answer which of the various accept commands should apply at this time."
 
 	self isDefinitionCardVisible ifTrue: [^#saveDefinition].
 	^nil!
@@ -96,6 +91,7 @@ actualClassChainCategories
 
 	| chain categories |
 	chain := self actualClassChain.
+	chain isEmpty ifTrue: [^#()].
 	categories := chain first methodCategories.
 	2 to: chain size do: [:i | (chain at: i) methodsCatalogue keysDo: [:each | categories add: each]].
 	^categories!
@@ -136,6 +132,7 @@ addMethod: method toCategory: target
 addMethodCategory
 	"Private - Add a new method category to the receiver's category pane."
 
+	<commandQuerySelector: #queryHasClassSelected:>
 	| actualClass newCategory |
 	actualClass := self actualClass.
 	newCategory := (CategoryPrompter choices: MethodCategory allMethodCategories
@@ -147,6 +144,7 @@ addMethodCategory
 addMethodProtocol
 	"Private - Add a new <MethodProtocol> to the selected class in the receiver."
 
+	<commandQuerySelector: #queryHasClassSelected:>
 	| actualClass newProtocol protocols |
 	actualClass := self actualClass.
 	protocols := MethodProtocol allMethodProtocols asSortedCollection: [:a :b | a name < b name].
@@ -194,6 +192,10 @@ applyOptions
 	self isFilteringObjectMethods: self class defaultFilterObjectMethods.
 	self createPlugins!
 
+browseClassHierarchy
+	<commandQuerySelector: #queryHasClassSelected:>
+	self developmentSystem browseHierarchy: self actualClass!
+
 browseContainingText
 	"Prompt for a string and open a method browser displaying the
 	methods containing that string."
@@ -206,24 +208,19 @@ browseDefinitionsMatching: aMethodSearch in: aBrowserEnvironment
 				(aBrowserEnvironment forClassHierarchyOf: self actualClass)
 					definitionsMatching: aMethodSearch}!
 
-browseHierarchy
-	self developmentSystem browseHierarchy: self actualClass!
+browseHierarchyCommand
+	"Answer the <Symbol> of the contextual command to browse the class hierarchy of something, depending on the subview with focus and/or selection."
+
+	^#browseClassHierarchy!
 
 browseInstVarReferences
-	"Browse methods that reference all of the selected instance variables of the selected class."
+	"Browse methods that reference any of the selected instance variables of the selected class."
 
-	self model 
-		browseReferencesToInstVar: self variables first value
+	<commandQuerySelector: #queryHasInstanceVariablesSelected:>
+	self model
+		browseReferencesToInstVars: (self variables collect: [:each | each value])
 		inHierarchyOf: self actualClass
 		within: self searchEnvironment!
-
-browseIt
-	"Open a browser on the selected category/protocol/variables.
-	Note that we only receive this command it one of the filter panes is selected
-	as class hierarchy, method browser, and workspace presenters all handle
-	it themselves."
-
-	self perform: self browseItCommand!
 
 browseItCommand
 	| focus |
@@ -241,6 +238,7 @@ browseMessageDefinitionsIn: aBrowserEnvironment
 	"Private - Prompt for a selector and open a method browser displaying all definitions of
 	that selector in the specified <BrowserEnvironment>."
 
+	<commandQuerySelector: #queryHasClassSelected:>
 	(self developmentSystem promptForDefinitionsOf: '' in: aBrowserEnvironment)
 		ifNotNil: [:search | self browseDefinitionsMatching: search in: aBrowserEnvironment]!
 
@@ -248,29 +246,27 @@ browseMessageReferencesIn: aBrowserEnvironment
 	"Private - Prompt for a selector and open a method browser displaying the references to that
 	selector from methods defined in the specified <BrowserEnvironment>."
 
+	<commandQuerySelector: #queryHasClassSelected:>
 	(self developmentSystem promptForReferencesTo: '' in: aBrowserEnvironment)
 		ifNotNil: [:search | self browseReferencesMatching: search in: aBrowserEnvironment]!
 
 browseMethodCategory
 	"Private - Browse all the methods which are in the currently selected category."
 
+	<commandQuerySelector: #queryHasMethodCategoriesSelected:>
 	self model browseMethodCategories: self categories in: self searchEnvironment!
 
 browseOverriddenMethod
 	"Reposition the browser to the method which the currently selected method is overridding."
 
+	<commandQuerySelector: #queryBrowseOverriddenMethod:>
 	| method |
 	method := self method.
 	self method: (method methodClass superclass lookupMethod: method selector)!
 
-browseReferences
-	"Context-sensitive browse references command (Shift+F12).
-	Should only get here for browsing references to instance variables - browsing references to
-	class and methods is handled by the <ClassHierarchyPresenter> and <MethodBrowser>
-	sub-presenters, respectively."
-
-	<acceleratorKey: 'Shift+F12'>
-	self browseInstVarReferences!
+browseReferencesCommand
+	View focus == variablesPresenter view ifTrue: [^#browseInstVarReferences].
+	^nil!
 
 browseReferencesMatching: aMethodSearch in: aBrowserEnvironment
 	self browseMethodsInEnvironments: {aBrowserEnvironment referencesMatching: aMethodSearch.
@@ -285,10 +281,11 @@ browseSelectorsInProtocol
 	implemented in the receiver and its superclasses, with all those which are
 	part of the protocol selected."
 
+	<commandQuerySelector: #queryHasMutableProtocolSelected:>
 	| protocol newSelectors oldSelectors added removed |
 	protocol := self protocols first.
 	oldSelectors := protocol selectors.
-	(newSelectors := self model chooseSelectorsInProtocol: protocol forClass: self actualClass) notNil 
+	(newSelectors := self model chooseSelectorsInProtocol: protocol forClass: self actualClass) notNil
 		ifFalse: [^self].
 	added := newSelectors difference: oldSelectors.
 	self model addSelectors: added toProtocol: protocol.
@@ -359,6 +356,9 @@ canSaveState
 
 	^true!
 
+canShowLocalHierarchy
+	^false!
+
 cardsPresenter
 	^cardsPresenter!
 
@@ -412,6 +412,7 @@ classMethodFilter
 clearSelection
 	"Private - Remove the selected object from the system"
 
+	<commandQuerySelector: #queryDeleteIt:>
 	self perform: self deleteItCommand!
 
 createAccessors
@@ -420,6 +421,7 @@ createAccessors
 	Accessors' refactoring (which is undoable), otherwise it uses the base Dolphin
 	implementation (which is not undoable)."
 
+	<commandQuerySelector: #queryHasInstanceVariablesSelected:>
 	self model 
 		createVariableAccessors: self variables
 		classVariables: false
@@ -663,6 +665,15 @@ deleteItCommand
 	(self canRefactor and: [focus == variablesPresenter view]) ifTrue: [^#removeInstanceVariables].
 	^nil!
 
+displayLocalHierarchyOf: class
+	"Private - Update the receiver to display only the local hierarchy of the <ClassDescription>,
+	class."
+
+	| instClass |
+	instClass := class instanceClass.
+	classesPresenter model: (ClassHierarchyModel withAllClasses
+				filter: [:x | (instClass allSuperclasses includes: x) or: [instClass withAllSubclasses includes: x]])!
+
 dropMethods: aDragDropSession onto: aClass
 	| changes isMove count |
 	changes := CompositeRefactoryChange new.
@@ -707,6 +718,12 @@ ensureDefinitionVisible
 ensureSourceVisible
 	self view topView isActive ifTrue: [methodBrowserPresenter ensureSourceVisible]!
 
+futureSize
+	"Answer the number of visits in the history which were made after the
+	current one."
+
+	^history futureSize!
+
 hasClassSelected
 	"Answer true if the receiver currently has a class selected
 	in the classesPresenter"
@@ -727,21 +744,16 @@ hasEditableMethodsSelected
 	methods := self selectedMethods.
 	^methods notEmpty and: [methods allSatisfy: [:each | self isEditableMethod: each]]!
 
-hasFuture
-	^history hasFuture!
-
 hasMethodSelected
 	"Answer true if the receiver currently has a method selected in the methodsPresenter"
 
 	^methodBrowserPresenter hasMethodSelected!
 
-hasPast
-	^history hasPast!
-
 hierarchyOfCategory: aMethodCategory 
 	^(categoriesPresenter model withAllChildren: aMethodCategory) reject: [:each | each isIntermediate]!
 
 historyClear
+	<commandQuerySelector: #queryHistoryClear:>
 	history clear!
 
 historySkip: anInteger
@@ -775,18 +787,10 @@ inspectCollection: aCollection
 	(aCollection size = 1 ifTrue: [aCollection first] ifFalse: [aCollection]) inspect!
 
 inspectInstanceVariables
+	<commandQuerySelector: #queryHasInstanceVariablesSelected:>
 	| vars |
 	vars := self variables.
-	self 
-		inspectCollection: (vars isEmpty ifTrue: [variablesPresenter list asArray] ifFalse: [vars])!
-
-inspectIt
-	"Open a browser on the selected category/protocol/variables.
-	Note that we only receive this command it one of the filter panes is selected
-	as class hierarchy, method browser, and workspace presenters all handle
-	it themselves."
-
-	self perform: self inspectItCommand!
+	self inspectCollection: (vars isEmpty ifTrue: [variablesPresenter list asArray] ifFalse: [vars])!
 
 inspectItCommand
 	filterPresenter notNil
@@ -802,6 +806,7 @@ inspectItCommand
 	^nil!
 
 inspectMethodCategories
+	<commandQuerySelector: #queryHasMethodCategoriesSelected:>
 	self inspectCollection: self categories!
 
 inspectMethodProtocols
@@ -859,6 +864,15 @@ isInstanceMode: aBoolean
 	on the selected class."
 
 	modePresenter value: (aBoolean ifTrue: [#instanceMode] ifFalse: [#classMode])!
+
+isLocalHierarchyMode
+	"Private - Answer whether the receiver is in 'local hierarchy' mode displaying a subset of the entire
+	class hierarchy."
+
+	^false!
+
+isLocalHierarchyMode: aBoolean
+	aBoolean ifTrue: [self error: 'Not supported']!
 
 isMethodFiltrate: aCompiledMethod
 	"Private - Answer whether the <CompiledMethod> argument passes through the current method filter.
@@ -958,6 +972,7 @@ modifiedModel: aValueHolder
 newMethod
 	"Sets the receiver up for creating a new method"
 
+	<commandQuerySelector: #queryHasClassSelected:>
 	methodBrowserPresenter newMethod!
 
 onBrowserCardChangedFrom: previousView to: currentView
@@ -1575,12 +1590,16 @@ onTipTextRequired: tool
 		ifTrue: [^'Back to <1p>' expandMacrosWith: history previous].
 	(cmd == #historyForward and: [history hasFuture])
 		ifTrue: [^'Forward to <1p>' expandMacrosWith: history next].
-	cmd := tool command asSymbol.
 	cmd == #toggleShowInheritedMethods
 		ifTrue: 
 			[^self isShowInheritedMethods
 				ifTrue: ['Don''t show inherited methods']
 				ifFalse: ['Show inherited methods']].
+	cmd == #toggleLocalHierarchy
+		ifTrue: 
+			[^self isLocalHierarchyMode
+				ifTrue: ['Browse entire hierarchy']
+				ifFalse: ['Browse local hierarchy of ' , self selectedClass name]].
 	^super onTipTextRequired: tool!
 
 onVariableSelected
@@ -1688,6 +1707,11 @@ parseContext
 parseTree
 	^methodBrowserPresenter parseTree!
 
+pastSize
+	"Answer the number of visits in the history which were made before the current one."
+
+	^history pastSize!
+
 printBasicCaptionOn: aPuttableStream
 	aPuttableStream display: self class!
 
@@ -1772,176 +1796,117 @@ protocolsMethodFilter
 	(self isMethodVisible: m) 
 		and: [self protocols anySatisfy: [:each | each includesSelector: m selector]]]!
 
-queryCommand: aCommandQuery
-	"Private - Enter details about a potential command for the receiver 
-	into the <CommandQuery>."
+queryBrowseOverriddenMethod: aCommandQuery
+	aCommandQuery isEnabled: (self hasMethodSelected and: [self method isOverride])!
 
-	| selector |
-	selector := aCommandQuery commandSymbol.
-	#accept == selector
-		ifTrue: 
-			[selector := self acceptItCommand.
-			selector isNil
-				ifTrue: 
-					[aCommandQuery isEnabled: false.
-					^true]].
-	#renameIt == selector
-		ifTrue: 
-			[selector := self renameItCommand.
-			selector isNil
-				ifTrue: 
-					[aCommandQuery isEnabled: false.
-					^true]].
-	#browseIt == selector
-		ifTrue: 
-			[selector := self browseItCommand.
-			selector isNil
-				ifTrue: 
-					[aCommandQuery isEnabled: false.
-					^true]].
-	#inspectIt == selector
-		ifTrue: 
-			[selector := self inspectItCommand.
-			selector isNil
-				ifTrue: 
-					[aCommandQuery isEnabled: false.
-					^true]].
-	#clearSelection == selector
-		ifTrue: 
-			[selector := self deleteItCommand.
-			selector isNil
-				ifTrue: 
-					[aCommandQuery isEnabled: false.
-					^true]].
-	(#(#saveDefinition #browseMessageDefinitionsIn: #browseMessageReferencesIn:)
-		identityIncludes: selector)
-			ifTrue: 
-				[aCommandQuery isEnabled: self hasClassSelected.
-				^true].
-	#toggleShowInheritedMethods == selector
-		ifTrue: [aCommandQuery isChecked: self isShowInheritedMethods].
-	#toggleFilterObjectMethods == selector
+queryFilterObjectMethods: aCommandQuery
+	aCommandQuery
+		isChecked: self isFilterObjectMethods;
+		isEnabled: self isShowInheritedMethods!
+
+queryHasClassSelected: aCommandQuery
+	aCommandQuery isEnabled: self hasClassSelected!
+
+queryHasInstanceVariableSelected: aCommandQuery
+	aCommandQuery isEnabled: self variables size = 1!
+
+queryHasInstanceVariablesSelected: aCommandQuery
+	aCommandQuery isEnabled: self variables notEmpty!
+
+queryHasMethodCategoriesSelected: aCommandQuery
+	aCommandQuery isEnabled: self categories notEmpty!
+
+queryHasMethodSelected: aCommandQuery
+	aCommandQuery isEnabled: self hasMethodSelected!
+
+queryHasMutableProtocolSelected: aCommandQuery
+	aCommandQuery isEnabled: (self protocols size == 1 and: [self protocols first isReadOnly not])!
+
+queryHasNonVirtualCategorySelected: aCommandQuery
+	| cat |
+	cat := self category.
+	"Virtual categories are permanent/calculated and cannot be removed"
+	aCommandQuery isEnabled: (cat notNil and: [cat isVirtual not])!
+
+queryHasProtocolSelected: aCommandQuery
+	aCommandQuery isEnabled: self protocols size = 1!
+
+queryHasProtocolsSelected: aCommandQuery
+	aCommandQuery isEnabled: self protocols notEmpty!
+
+queryHistoryBack: aCommandQuery
+	self hasPast
 		ifTrue: 
 			[aCommandQuery
-				isChecked: self isFilterObjectMethods;
-				isEnabled: self isShowInheritedMethods.
-			^true].
-	#toggleProtocolReadOnly == selector
+				isEnabled: true;
+				text: (aCommandQuery commandDescription menuText expandMacrosWithArguments: { history previous }
+							locale: Locale smalltalk)]
+		ifFalse: 
+			[aCommandQuery
+				isEnabled: false;
+				text: 'Back']!
+
+queryHistoryClear: aCommandQuery
+	aCommandQuery isEnabled: (self hasPast or: [self hasFuture])!
+
+queryHistoryForward: aCommandQuery
+	self hasFuture
 		ifTrue: 
-			[| prots |
-			prots := self protocols.
-			prots size == 1
-				ifTrue: 
-					[| prot |
-					prot := prots first.
-					aCommandQuery
-						isChecked: prot isReadOnly;
-						isEnabled: prot isANSI not]
-				ifFalse: [aCommandQuery isEnabled: false].
-			^true].
-	(#(#browseSelectorsInProtocol #renameMethodProtocol) identityIncludes: selector)
+			[aCommandQuery
+				isEnabled: true;
+				text: (aCommandQuery commandDescription menuText expandMacrosWithArguments: { history next }
+							locale: Locale smalltalk)]
+		ifFalse: 
+			[aCommandQuery
+				isEnabled: false;
+				text: 'Forward']!
+
+queryRemoveMethodProtocols: aCommandQuery
+	| prots |
+	prots := self protocols.
+	"Can only remove selected protocols if this is the first implementor in the superclass chain"
+	aCommandQuery
+		isEnabled: (prots notEmpty and: [(prots difference: self actualClass protocols) isEmpty])!
+
+queryRemoveMethodsInCategory: aCommandQuery
+	| cat |
+	aCommandQuery
+		isEnabled: ((cat := self category) notNil and: [(cat methodsInBehavior: self actualClass) notEmpty])!
+
+queryRenameItCommand: aCommandQuery
+	| selector |
+	selector := self renameItCommand.
+	selector ifNil: [^false].
+	aCommandQuery isEnabled: true!
+
+queryToggleLocalHierarchy: aCommandQuery
+	self isLocalHierarchyMode
 		ifTrue: 
-			[aCommandQuery isEnabled: (self protocols size == 1 and: [self protocols first isReadOnly not]).
-			^true].
-	(#(#removeMethodProtocol #removeMethodsInProtocol) identityIncludes: selector)
+			[aCommandQuery
+				isEnabled: true;
+				isChecked: true]
+		ifFalse: 
+			[aCommandQuery
+				isEnabled: (self canShowLocalHierarchy
+							and: [self hasClassSelected and: [self actualClass superclass notNil]]);
+				isChecked: false]!
+
+queryToggleProtocolReadOnly: aCommandQuery
+	| prots |
+	prots := self protocols.
+	prots size == 1
 		ifTrue: 
-			[| prots |
-			prots := self protocols.
-			"Can only remove selected protocols if this is the first implementor in the superclass chain"
+			[| prot |
+			prot := prots first.
 			aCommandQuery
-				isEnabled: (prots notEmpty and: 
-							[selector == #removeMethodsInProtocol or: [(prots difference: self actualClass protocols) isEmpty]]).
-			^true].
-	(#(#browseInstVarReferences #browseReferences) identityIncludes: selector)
-		ifTrue: 
-			[| vars |
-			vars := self variables.
-			aCommandQuery isEnabled: (vars notNil and: [vars size = 1]).
-			^true].
-	#browseOverriddenMethod == selector
-		ifTrue: 
-			[aCommandQuery isEnabled: (self hasMethodSelected and: [self method isOverride]).
-			^true].
-	#browseMethodProtocol == selector
-		ifTrue: 
-			[aCommandQuery isEnabled: self protocols notEmpty.
-			^true].
-	(#(#newMethod #browseHierarchy #addMethodProtocol #addMethodCategory #reformatAll)
-		identityIncludes: selector)
-			ifTrue: 
-				[aCommandQuery isEnabled: self hasClassSelected.
-				^true].
-	#historyBack: == selector
-		ifTrue: 
-			[| dist |
-			dist := aCommandQuery command arguments first.
-			aCommandQuery isEnabled: history pastSize >= dist.
-			^true].
-	#historyForward: == selector
-		ifTrue: 
-			[| dist |
-			dist := aCommandQuery command arguments first.
-			aCommandQuery isEnabled: history futureSize >= dist.
-			^true].
-	selector == #historyForward
-		ifTrue: 
-			[self hasFuture
-				ifTrue: 
-					[aCommandQuery
-						isEnabled: true;
-						text: (aCommandQuery commandDescription menuText expandMacrosWithArguments: {history next}
-									locale: Locale smalltalk)]
-				ifFalse: 
-					[aCommandQuery
-						isEnabled: false;
-						text: 'Forward'].
-			^true].
-	selector == #historyBack
-		ifTrue: 
-			[self hasPast
-				ifTrue: 
-					[aCommandQuery
-						isEnabled: true;
-						text: (aCommandQuery commandDescription menuText expandMacrosWithArguments: {history previous}
-									locale: Locale smalltalk)]
-				ifFalse: 
-					[aCommandQuery
-						isEnabled: false;
-						text: 'Back'].
-			^true].
-	selector == #historyClear
-		ifTrue: 
-			[aCommandQuery isEnabled: self hasPast | self hasFuture.
-			^true].
-	#browseMethodCategory == selector
-		ifTrue: 
-			[| cat |
-			cat := self category.
-			aCommandQuery isEnabled: cat notNil.
-			^true].
-	(#(#removeMethodCategory #renameMethodCategory #renameMethodCategoryInPlace)
-		identityIncludes: selector)
-			ifTrue: 
-				[| cat |
-				cat := self category.
-				"Virtual categories are permanent/calculated and cannot be removed"
-				aCommandQuery isEnabled: (cat notNil and: [cat isVirtual not]).
-				^true].
-	#removeMethodsInCategory == selector
-		ifTrue: 
-			[| cat |
-			aCommandQuery
-				isEnabled: ((cat := self category) notNil and: [(cat methodsInBehavior: self actualClass) notEmpty]).
-			^true].
-	#createAccessors == selector
-		ifTrue: 
-			[aCommandQuery isEnabled: self variables notEmpty.
-			^true].
-	#renameInstanceVariable == selector
-		ifTrue: 
-			[aCommandQuery isEnabled: self variables size = 1.
-			^true].
-	^super queryCommand: aCommandQuery!
+				isChecked: prot isReadOnly;
+				isEnabled: prot isANSI not]
+		ifFalse: [aCommandQuery isEnabled: false]!
+
+queryToggleShowInheritedMethods: aCommandQuery
+	aCommandQuery
+		isChecked: self isShowInheritedMethods;
+		isEnabled: (self hasClassSelected and: [self actualClass superclass notNil])!
 
 recordMethodVisit
 	"Add to the visit history - note that the current item is at the top of the history list"
@@ -1959,6 +1924,7 @@ recordMethodVisit
 		ifFalse: [history current: method]!
 
 reformatAll
+	<commandQuerySelector: #queryHasClassSelected:>
 	| env |
 	env := classesPresenter selectionEnvironment.
 	(MessageBox new
@@ -1980,9 +1946,10 @@ removeMethodCategory
 	"Private - Remove the currently selected category without deleting any
 	of the methods."
 
+	<commandQuerySelector: #queryHasNonVirtualCategorySelected:>
 	| actualClass catModel args |
 	actualClass := self actualClass.
-	args := {actualClass. self category}.
+	args := { actualClass. self category }.
 	(MessageBox new
 		owner: self view;
 		headline: 'Remove ''<2d>'' from <1p>?' << args;
@@ -1997,6 +1964,7 @@ removeMethodCategory
 removeMethodProtocol
 	"Private - Remove the currently selected protocols from the class."
 
+	<commandQuerySelector: #queryRemoveMethodProtocols:>
 	self protocols do: [:p |
 		self model removeClass: self actualClass fromProtocol: p ].
 !
@@ -2005,9 +1973,10 @@ removeMethodsInCategory
 	"Private - Remove all of the methods in the currently selected category. As this is rather
 	drastic the user will be prompted."
 
+	<commandQuerySelector: #queryRemoveMethodsInCategory:>
 	| classEnvironment categoryEnvironment searchEnvironment mb |
 	searchEnvironment := self searchEnvironment.
-	classEnvironment := searchEnvironment forClasses: {self actualClass}.
+	classEnvironment := searchEnvironment forClasses: { self actualClass }.
 	categoryEnvironment := classEnvironment forMethodCategories: self categories.
 	categoryEnvironment label: ('methods of <1p> in the ''<2d>'' category and its subcategories'
 				expandMacrosWith: classEnvironment
@@ -2031,6 +2000,7 @@ removeMethodsInProtocol
 	"Private - Remove all of the methods in the currently selected protocol.
 	As this is pretty drastic we give the user a second chance."
 
+	<commandQuerySelector: #queryHasProtocolsSelected:>
 	| actualClass |
 	actualClass := self actualClass.
 	self protocols do: 
@@ -2053,9 +2023,11 @@ removePlugin: aClassBrowserPlugin
 renameInstanceVariable
 	"Private - Initiate a rename of the  first selected instance variable."
 
+	<commandQuerySelector: #queryHasInstanceVariableSelected:>
 	variablesPresenter view editSelectionLabel!
 
 renameIt
+	<commandQuerySelector: #queryRenameItCommand:>
 	<acceleratorKey: 'F2'>
 	self perform: self renameItCommand!
 
@@ -2073,6 +2045,7 @@ renameItCommand
 renameMethodCategory
 	"Private - Prompter for a new name for the current category, and rename it."
 
+	<commandQuerySelector: #queryHasNonVirtualCategorySelected:>
 	| originalCategory newName actualClass |
 	originalCategory := self category.
 	actualClass := self actualClass.
@@ -2115,6 +2088,7 @@ renameMethodCategory: aMethodCategory to: aString
 renameMethodCategoryInPlace
 	"Private - Initiate an in-place rename of the currently selected category node."
 
+	<commandQuerySelector: #queryHasNonVirtualCategorySelected:>
 	categoriesPresenter selectableItems view editSelectionLabel!
 
 renameMethodProtocol
@@ -2136,7 +2110,7 @@ resetForFoundClass: class
 saveDefinition
 	"Private - Save the class definition currently in the definition window"
 
-	"Compile the class definition"
+	<commandQuerySelector: #queryHasClassSelected:>
 
 	| wasModified |
 	wasModified := definitionPresenter isModified.
@@ -2308,12 +2282,14 @@ systemModel
 toggleFilterObjectMethods
 	"Toggle between showing <Object> methods or not"
 
+	<commandQuerySelector: #queryFilterObjectMethods:>
 	self isFilteringObjectMethods: self isFilterObjectMethods not.
 	self onClassSelected!
 
 toggleProtocolReadOnly
 	"Toggle the currenty method protocol between read-only and updatable status."
 
+	<commandQuerySelector: #queryToggleProtocolReadOnly:>
 	| prot |
 	prot := self protocols first.
 	prot isReadOnly: prot isReadOnly not!
@@ -2321,6 +2297,7 @@ toggleProtocolReadOnly
 toggleShowInheritedMethods
 	"Toggle between showing inherited methods or not"
 
+	<commandQuerySelector: #queryToggleShowInheritedMethods:>
 	self isShowingInheritedMethods: self isShowInheritedMethods not.
 	self onClassSelected!
 
@@ -2540,7 +2517,6 @@ variablesMethodFilter
 	indices := self variablesIndices.
 	^[:m | (self isMethodVisible: m) and: [m byteCodeDispatcher accessesInstVarAtAnyOf: indices]]! !
 !Tools.ClassBrowserAbstract categoriesForMethods!
-accept!commands!public! !
 acceptItCommand!helpers!private! !
 actualClass!accessing!public! !
 actualClass:!accessing!public! !
@@ -2551,44 +2527,45 @@ actualClassChainMethods!helpers!private! !
 actualClasses!accessing!public! !
 addCategoriesOfMethod:!helpers!private! !
 addMethod:toCategory:!operations!private! !
-addMethodCategory!commands!private! !
-addMethodProtocol!commands!private! !
-addToCommandRoute:!commands!public! !
+addMethodCategory!commands-actions!private! !
+addMethodProtocol!commands-actions!private! !
+addToCommandRoute:!commands-routing!public! !
 allCategoriesOfMethod:!helpers!private! !
 allCategory!private!updating! !
 applyOptions!operations!options!private! !
-browseContainingText!commands!public! !
+browseClassHierarchy!commands-actions!public! !
+browseContainingText!commands-actions!public! !
 browseDefinitionsMatching:in:!helpers!private! !
-browseHierarchy!commands!public! !
-browseInstVarReferences!commands!public! !
-browseIt!commands!public! !
-browseItCommand!helpers!private! !
-browseMessageDefinitionsIn:!commands!private! !
-browseMessageReferencesIn:!commands!private! !
-browseMethodCategory!commands!private! !
-browseOverriddenMethod!commands!public! !
-browseReferences!commands!public! !
+browseHierarchyCommand!commands-mappings!private! !
+browseInstVarReferences!commands-actions!public! !
+browseItCommand!commands-mappings!private! !
+browseMessageDefinitionsIn:!commands-actions!private! !
+browseMessageReferencesIn:!commands-actions!private! !
+browseMethodCategory!commands-actions!private! !
+browseOverriddenMethod!commands-actions!public! !
+browseReferencesCommand!helpers!private! !
 browseReferencesMatching:in:!helpers!private! !
 browserEnvironment!accessing!public! !
-browseSelectorsInProtocol!commands!private! !
-browseSystem!commands!public! !
+browseSelectorsInProtocol!commands-actions!private! !
+browseSystem!commands-actions!public! !
 buildHistoryFutureMenu!helpers!menus!private! !
 buildHistoryMenu:command:!helpers!menus!private! !
 buildHistoryPastMenu!helpers!menus!private! !
 buildPopupForCommand:!event handling!private! !
-canSaveMethod!commands!private! !
+canSaveMethod!commands-actions!private! !
 canSaveState!private!saved state! !
+canShowLocalHierarchy!private!testing! !
 cardsPresenter!accessing!private! !
 categories!accessing!private! !
-categoriesEnvironment!commands!private! !
+categoriesEnvironment!commands-actions!private! !
 categoriesFilter!accessing!private! !
 categoriesMethodFilter!accessing!private! !
 category!accessing!public! !
 classDefinition!accessing!private! !
 classForNewMethod!operations!private! !
 classMethodFilter!accessing!private! !
-clearSelection!commands!private! !
-createAccessors!commands!private!refactoring! !
+clearSelection!commands-actions!private! !
+createAccessors!commands-actions!private!refactoring! !
 createComponents!initializing!private! !
 createPlugins!initializing!public! !
 createSchematicWiring!initializing!public! !
@@ -2598,42 +2575,43 @@ customDrawProtocols:!helpers!private! !
 customDrawSelector:!helpers!private! !
 definitionCardName!constants!private! !
 definitionOfClass:!event handling!private! !
-deleteItCommand!helpers!private! !
+deleteItCommand!commands-actions!private! !
+displayLocalHierarchyOf:!private!updating! !
 dropMethods:onto:!helpers!private! !
 emphasiseCategoryItem:isRelevant:!helpers!private! !
 emphasiseProtocolItem:isRelevant:!helpers!private! !
 ensureDefinitionVisible!operations!private! !
 ensureSourceVisible!operations!private! !
+futureSize!accessing!public! !
 hasClassSelected!public!refactoring!testing! !
 hasEditableMethodSelected!public!testing! !
 hasEditableMethodsSelected!public!testing! !
-hasFuture!public!testing! !
 hasMethodSelected!public!refactoring!testing! !
-hasPast!public!testing! !
 hierarchyOfCategory:!helpers!private! !
-historyClear!commands!public! !
-historySkip:!commands!private! !
+historyClear!commands-actions!public! !
+historySkip:!commands-actions!private! !
 initialize!initializing!private! !
 inspectCollection:!helpers!private! !
-inspectInstanceVariables!commands!private! !
-inspectIt!commands!public! !
-inspectItCommand!helpers!private! !
-inspectMethodCategories!commands!private! !
-inspectMethodProtocols!commands!private! !
+inspectInstanceVariables!commands-actions!private! !
+inspectItCommand!commands-actions!private! !
+inspectMethodCategories!commands-actions!private! !
+inspectMethodProtocols!commands-actions!private! !
 isDefinitionCardVisible!private!testing! !
-isDisplayingCategories!commands!private! !
-isDisplayingProtocols!commands!private! !
-isDisplayingVariables!commands!private! !
+isDisplayingCategories!commands-actions!private! !
+isDisplayingProtocols!commands-actions!private! !
+isDisplayingVariables!commands-actions!private! !
 isEditableMethod:!modes!public! !
-isFilteringObjectMethods:!commands!public! !
+isFilteringObjectMethods:!commands-actions!public! !
 isFilterObjectMethods!public!refactoring!testing! !
 isInheritedMethod:!modes!public! !
 isInstanceMode!modes!private! !
 isInstanceMode:!modes!private! !
+isLocalHierarchyMode!private!testing! !
+isLocalHierarchyMode:!accessing!private! !
 isMethodFiltrate:!private!testing! !
 isMethodVisible:!private!testing! !
 isModified!public!testing! !
-isShowingInheritedMethods:!commands!public! !
+isShowingInheritedMethods:!commands-actions!public! !
 isShowInheritedMethods!public!refactoring!testing! !
 isSourceCardVisible!private!testing! !
 killVisitTimer!helpers!private! !
@@ -2646,7 +2624,7 @@ methodProtocols!accessing!private! !
 methodProtocols:!accessing!public! !
 methodsMatching:!helpers!private! !
 modifiedModel:!accessing!public! !
-newMethod!commands!public! !
+newMethod!commands-actions!public! !
 onBrowserCardChangedFrom:to:!event handling!private! !
 onCategory:renameTo:accept:!event handling!private! !
 onCategorySelected!event handling!private! !
@@ -2698,38 +2676,58 @@ packageNames:!accessing!public! !
 packages:!accessing!public! !
 parseContext!accessing!public! !
 parseTree!accessing!private! !
+pastSize!accessing!public! !
 printBasicCaptionOn:!private!updating! !
 printCaptionForClass:on:!helpers!private! !
 printCaptionForMethod:on:!private!updating! !
 printClassTitle:on:!private!updating! !
 printShortCaptionForClass:on:!helpers!private! !
-promptToCopyChanges!commands!private! !
-promptToSaveChanges!commands!private! !
+promptToCopyChanges!commands-actions!private! !
+promptToSaveChanges!commands-actions!private! !
 protocols!accessing!public! !
 protocols:!accessing!public! !
 protocolsMethodFilter!accessing!private! !
-queryCommand:!commands!private! !
+queryBrowseOverriddenMethod:!commands-queries!private! !
+queryFilterObjectMethods:!commands-queries!private! !
+queryHasClassSelected:!commands-queries!private! !
+queryHasInstanceVariableSelected:!commands-queries!private! !
+queryHasInstanceVariablesSelected:!commands-queries!private!refactoring! !
+queryHasMethodCategoriesSelected:!commands-queries!private! !
+queryHasMethodSelected:!commands-queries!private! !
+queryHasMutableProtocolSelected:!commands-queries!private! !
+queryHasNonVirtualCategorySelected:!commands-queries!private! !
+queryHasProtocolSelected:!commands-queries!private! !
+queryHasProtocolsSelected:!commands-queries!private! !
+queryHistoryBack:!commands-queries!private! !
+queryHistoryClear:!commands-queries!private! !
+queryHistoryForward:!commands-queries!private! !
+queryRemoveMethodProtocols:!commands-queries!private! !
+queryRemoveMethodsInCategory:!commands-queries!private! !
+queryRenameItCommand:!commands-queries!private! !
+queryToggleLocalHierarchy:!commands-queries!private! !
+queryToggleProtocolReadOnly:!commands-queries!private! !
+queryToggleShowInheritedMethods:!commands-queries!private! !
 recordMethodVisit!helpers!private! !
-reformatAll!commands!public! !
+reformatAll!commands-actions!public! !
 removeMethod:fromCategory:!helpers!private! !
-removeMethodCategory!commands!private! !
-removeMethodProtocol!commands!private! !
-removeMethodsInCategory!commands!private! !
-removeMethodsInProtocol!commands!private! !
+removeMethodCategory!commands-actions!private! !
+removeMethodProtocol!commands-actions!private! !
+removeMethodsInCategory!commands-actions!private! !
+removeMethodsInProtocol!commands-actions!private! !
 removePlugin:!accessing!public! !
-renameInstanceVariable!commands!private!refactoring! !
-renameIt!commands!public! !
+renameInstanceVariable!commands-actions!private!refactoring! !
+renameIt!commands-actions!public! !
 renameItCommand!constants!private! !
-renameMethodCategory!commands!private! !
-renameMethodCategory:to:!commands!public! !
-renameMethodCategoryInPlace!commands!private! !
-renameMethodProtocol!commands!private! !
-resetFor:!commands!private! !
-resetForFoundClass:!commands!private! !
-saveDefinition!operations!private! !
+renameMethodCategory!commands-actions!private! !
+renameMethodCategory:to:!commands-actions!public! !
+renameMethodCategoryInPlace!commands-actions!private! !
+renameMethodProtocol!commands-actions!private! !
+resetFor:!commands-actions!private! !
+resetForFoundClass:!commands-actions!private! !
+saveDefinition!commands-actions!private! !
 saveNewMethod:!operations!private! !
 saveStateOn:!private!saved state! !
-searchEnvironment!commands!public! !
+searchEnvironment!commands-actions!public! !
 searchForClass:!helpers!private! !
 searchForMethod:!helpers!private! !
 selectedClass!accessing!private! !
@@ -2738,7 +2736,7 @@ selectedMethod!public! !
 selectedMethods!accessing!public! !
 selectedMethods:!accessing!public! !
 selectionEnvironment!accessing!private! !
-selectMethod:!browsing!private! !
+selectMethod:!operations!private! !
 setInitialFocus!operations!public! !
 setMethodsFilter:!private!updating! !
 setVisitTimer!helpers!private! !
@@ -2748,9 +2746,9 @@ sourceCardName!constants!private! !
 statusModel!accessing!public! !
 statusText:!accessing!private! !
 systemModel!accessing!private! !
-toggleFilterObjectMethods!commands!public! !
-toggleProtocolReadOnly!commands!public! !
-toggleShowInheritedMethods!commands!public! !
+toggleFilterObjectMethods!commands-actions!public! !
+toggleProtocolReadOnly!commands-actions!public! !
+toggleShowInheritedMethods!commands-actions!public! !
 updateCaption!public!updating! !
 updateCategories!private!updating! !
 updateClass:presenter:source:!helpers!private! !

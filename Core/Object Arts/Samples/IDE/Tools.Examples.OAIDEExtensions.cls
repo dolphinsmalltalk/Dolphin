@@ -101,11 +101,8 @@ extendClassCommentMenu: aClassBrowserAbstract
 	commentWorkspaceMenu := (plugin presenterNamed: 'text') view contextMenu.
 	commentWorkspaceMenu
 		addSeparator;
-		addCommandDescription: (ClosedCommandDescription
-					command: #emitClassLayoutDescription
-					description: 'Emit Class Layout Description'
-					queryBlock: [:query | query isEnabled: plugin browser hasClassSelected]
-					receiver: plugin)!
+		addCommandDescription: (CommandDescription command: #emitClassLayoutDescription
+					description: 'Emit Class Layout Description')!
 
 extendHelpMenu: aSmalltalkToolShell
 	| shellView |
@@ -116,11 +113,8 @@ extendHelpMenu: aSmalltalkToolShell
 			(menuBar findCommand: #help)
 				ifNotNil: 
 					[:helpMenu |
-					helpMenu
-						insertItem: ((CommandMenuItem commandDescription: (ClosedCommandDescription
-										command: (Message selector: #browseKeyBindingsOfShell: argument: shellView)
-										description: '&Key Bindings'
-										receiver: self))
+					helpMenu insertItem: ((CommandMenuItem
+								commandDescription: (CommandDescription command: #browseKeyBindings description: '&Key Bindings'))
 								image: Keyboard icon;
 								yourself)
 						at: (4 min: helpMenu size)]]!
@@ -295,10 +289,7 @@ unextendMenus
 				ifNotNil: 
 					[:menuBar |
 					(menuBar findCommand: #help)
-						ifNotNil: 
-							[:helpMenu |
-							(helpMenu findCommand: (Message selector: #browseKeyBindingsOfShell: argument: each view))
-								ifNotNil: [:item | helpMenu removeItem: item]]].
+						ifNotNil: [:helpMenu | (helpMenu findCommand: #browseKeyBindings) ifNotNil: [:item | helpMenu removeItem: item]]].
 			(each isKindOf: ClassBrowserShell)
 				ifTrue: 
 					[(each loadedPlugins detect: [:plugin | plugin isKindOf: ClassCommentPlugin] ifNone: nil)
