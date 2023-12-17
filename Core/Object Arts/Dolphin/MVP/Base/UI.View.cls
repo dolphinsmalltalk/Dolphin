@@ -4041,11 +4041,16 @@ wmInitMenu: message wParam: wParam lParam: lParam
 wmInitMenuPopup: message wParam: wParam lParam: lParam
 	"Private - Context menu or sub-menu can update its state on screen to reflect the current event target."
 
-	| ctxtMenu subMenu |
 	lParam highWord ~~ 0 ifTrue: [^nil	"default processing for system menus"].
-	^((ctxtMenu := self queryContextMenu) notNil
-		and: [(subMenu := ctxtMenu menuFromHandle: wParam) notNil])
-			ifTrue: [subMenu queryAllFromView: self]!
+	^self queryContextMenu
+		ifNotNil: 
+			[:ctxtMenu |
+			(ctxtMenu menuFromHandle: wParam)
+				ifNotNil: 
+					[:subMenu |
+					subMenu queryAllFromView: self.
+					"Handled"
+					0]]!
 
 wmInputLangChange: message wParam: wParam lParam: lParam
 	"Private - Handle the Win32 WM_INPUTLANGCHANGE message.

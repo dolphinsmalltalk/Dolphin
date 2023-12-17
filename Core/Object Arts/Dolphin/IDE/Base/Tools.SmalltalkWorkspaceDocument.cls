@@ -45,10 +45,6 @@ applyOptions
 areVariableTipsEnabled: aBoolean
 	workspacePresenter areVariableTipsEnabled: aBoolean!
 
-buildPopupForCommand: aSymbol
-	aSymbol == #newIdeaSpace ifTrue: [^SmalltalkToolShell buildIdeaSpacePopup].
-	^nil!
-
 canSaveState
 	"Private - Answer true if the receiver can successfully have it's state saved by #saveStateOn:. Some
 	tools may not be able to save their state and therefore will not be able to be exported as
@@ -177,17 +173,6 @@ isText
 language: aSymbol
 	workspacePresenter view lexer: aSymbol!
 
-onDropDown: aToolbarButton 
-	"Private - The receiver's toolbar has sent a notification that a button's drop-down arrow
-	has been pressed. Generate and pop-up the appropriate menu."
-
-	| popup |
-	popup := self buildPopupForCommand: aToolbarButton command asSymbol.
-	popup isNil ifTrue: [^nil].
-	popup queryAllAlong: self commandPolicy recursive: true.
-	popup showIn: self position: aToolbarButton screenRectangle bottomLeft.
-	^0!
-
 onViewAvailable
 	super onViewAvailable.
 	self applyOptions!
@@ -196,7 +181,7 @@ onViewOpened
 	"Private - Received when the receiver's view has been connected. 
 	Transfer any file contents across to the view"
 
-	| modifiedModel toolbar |
+	| modifiedModel |
 	super onViewOpened.
 	self view acceptDroppedFiles: true.
 	(self view viewNamed: 'errors' ifNone: nil)
@@ -206,12 +191,6 @@ onViewOpened
 	modifiedModel
 		when: #valueChanged
 		send: #updateCaption
-		to: self.
-	"Enable toolbar pulldowns"
-	toolbar := self view viewNamed: 'smalltalkTools'.
-	toolbar presenterConnectionPoint
-		when: #dropDown:
-		send: #onDropDown:
 		to: self.
 	self fileLoad!
 
@@ -308,7 +287,6 @@ workspace
 !Tools.SmalltalkWorkspaceDocument categoriesForMethods!
 applyOptions!options!private! !
 areVariableTipsEnabled:!accessing!options!public! !
-buildPopupForCommand:!commands-menus!private! !
 canSaveState!private!saved state!testing! !
 createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !
@@ -335,7 +313,6 @@ isModified!public!testing! !
 isModified:!modes!public! !
 isText!public!testing! !
 language:!options!public! !
-onDropDown:!event handling!private! !
 onViewAvailable!event handling!public! !
 onViewOpened!event handling!private! !
 openWorkspace!commands-actions!public! !

@@ -296,27 +296,28 @@ browseSystem
 	<commandQuery: #queryBrowseClass:>
 	self developmentSystem browseSystem: self actualClass!
 
-buildHistoryFutureMenu
+buildHistoryFutureMenu: aMenu
 	"Private - Answer a dynamically created future visit menu."
 
-	^(self buildHistoryMenu: history upToEnd command: #historyForward:)
-		text: 'Forward';
-		yourself!
+	super buildHistoryFutureMenu: aMenu.
+	self
+		buildHistoryMenu: aMenu
+		visits: history upToEnd
+		command: #historyForward:!
 
-buildHistoryMenu: visits command: cmdSelector
+buildHistoryMenu: aMenu visits: aSequenceableCollection command: cmdSelector
 	"Private - Answer a dynamically created past visit history menu."
 
-	| popup class subMenu selectors |
-	popup := Menu new.
+	| class subMenu selectors |
 	class := nil.
-	visits keysAndValuesDo: 
+	aSequenceableCollection keysAndValuesDo: 
 			[:i :m |
 			| mclass sel |
 			mclass := m methodClass.
 			mclass = class
 				ifFalse: 
 					[selectors := IdentitySet new.
-					subMenu := popup addSubmenu: mclass name.
+					subMenu := aMenu addSubmenu: mclass name.
 					class := mclass].
 			sel := m selector.
 			"We only want to add each method to the menu once"
@@ -325,22 +326,16 @@ buildHistoryMenu: visits command: cmdSelector
 					[subMenu addCommand: (Message selector: cmdSelector argument: i) description: sel.
 					selectors add: sel].
 			subMenu setDefault: 1].
-	popup setDefault: 1.
-	^popup!
+	aMenu setDefault: 1!
 
-buildHistoryPastMenu
+buildHistoryPastMenu: aMenu
 	"Private - Answer a dynamically created past visit history menu."
 
-	^(self buildHistoryMenu: history past command: #historyBack:)
-		text: 'Past';
-		yourself!
-
-buildPopupForCommand: aSymbol 
-	"Private - Dynamically build an appropriate popup menu for aSymbol command."
-
-	aSymbol == #historyBack ifTrue: [^self buildHistoryPastMenu].
-	aSymbol == #historyForward ifTrue: [^self buildHistoryFutureMenu].
-	^super buildPopupForCommand: aSymbol!
+	super buildHistoryPastMenu: aMenu.
+	self
+		buildHistoryMenu: aMenu
+		visits: history past
+		command: #historyBack:!
 
 canRemoveMethodsInCategory
 	| cat |
@@ -1621,7 +1616,7 @@ onVariableSelected
 onViewOpened
 	"Private - Received when the receiver's view is been connected. "
 
-	| toolbar modifiedModel |
+	| modifiedModel |
 	super onViewOpened.
 	self createPlugins.
 	methodBrowserPresenter beSorted: [:a :b | a selector <= b selector].
@@ -1651,11 +1646,6 @@ onViewOpened
 	modifiedModel
 		when: #valueChanged
 		send: #updateCaption
-		to: self.
-	toolbar := self view viewNamed: 'classBrowserTools'.
-	toolbar presenterConnectionPoint
-		when: #dropDown:
-		send: #onDropDown:
 		to: self.
 
 	"Really a CardContainer view, but we treat as if a presenter"
@@ -2527,10 +2517,9 @@ browseReferencesMatching:in:!helpers!private! !
 browserEnvironment!accessing!public! !
 browseSelectorsInProtocol!commands-actions!private! !
 browseSystem!commands-actions!public! !
-buildHistoryFutureMenu!helpers!menus!private! !
-buildHistoryMenu:command:!helpers!menus!private! !
-buildHistoryPastMenu!helpers!menus!private! !
-buildPopupForCommand:!event handling!private! !
+buildHistoryFutureMenu:!helpers!menus!private! !
+buildHistoryMenu:visits:command:!helpers!menus!private! !
+buildHistoryPastMenu:!helpers!menus!private! !
 canRemoveMethodsInCategory!commands-queries!private! !
 canSaveMethod!private!testing! !
 canSaveState!private!saved state! !

@@ -172,15 +172,9 @@ onViewModeChanged
 onViewOpened
 	"Private - Received when the receiver's view is been connected. "
 
-	| toolbar |
 	super onViewOpened.
 	systemFolderPresenter selectionByIndex: 1.
-	toolbar := self view viewNamed: 'systemShellTools'.
-	toolbar presenterConnectionPoint 
-		when: #dropDown:
-		send: #onDropDown:
-		to: systemFolderPresenter view.
-	systemFolderPresenter view 
+	systemFolderPresenter view
 		when: #viewModeChanged
 		send: #onViewModeChanged
 		to: self!

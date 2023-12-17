@@ -170,6 +170,16 @@ postCopy
 	commandDescription := commandDescription copy.
 	^self!
 
+printOn: aStream
+	"Appends the receiver to aStream as a representation that a 
+	developer would want to see"
+
+	aStream
+		basicPrint: self;
+		nextPut: $(;
+		print: self description;
+		nextPut: $)!
+
 queryAlong: aCommandPolicy
 	"Answer a <CommandQuery> reflecting the current state of the receiver's command for the
 	specified <commandPolicy>. In this case we want to preconfigure the query with some static
@@ -240,6 +250,7 @@ lastQuery!accessing!private! !
 lastQuery:!accessing!private! !
 populateItemInfo:!private!realizing/unrealizing! !
 postCopy!copying!public! !
+printOn:!printing!public! !
 queryAlong:!operations!public! !
 registerAcceleratorKeyIn:!menus!public! !
 stbSaveOn:!binary filing!public! !

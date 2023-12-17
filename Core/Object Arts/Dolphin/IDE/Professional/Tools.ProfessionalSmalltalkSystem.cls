@@ -44,6 +44,21 @@ browseSystemPackages: aCollection
 		packages: aCollection;
 		yourself!
 
+buildIdeaSpaceDropdownMenu: aMenu
+	aMenu
+		clear;
+		addCommand: #newIdeaSpace description: '&New IdeaSpace';
+		addCommand: #openIdeaSpace description: '&Open IdeaSpace from Template…';
+		addSeparator;
+		addCommand: #saveIdeaSpace description: '&Save IdeaSpace Template';
+		addCommand: #saveIdeaSpaceAs description: 'Save IdeaSpace &Template As…';
+		addCommand: #revertIdeaSpace description: '&Revert IdeaSpace to Template';
+		addSeparator;
+		addCommand: #addToNewIdeaSpace description: '&Add to New IdeaSpace';
+		addCommand: #dragToolToIdeaSpace description: '&Drag to Existing IdeaSpace';
+		addSeparator;
+		addCommand: #breakoutCurrentCard description: '&Breakout Tool to Desktop'!
+
 classBrowserClasses
 	^Set
 		with: self hierarchyBrowserClass
@@ -71,6 +86,7 @@ ideaSpaceClass: toolClass
 	ideaSpaceClass := toolClass!
 
 newIdeaSpace
+	<menuPopulator: #buildIdeaSpaceDropdownMenu:>
 	^self ideaSpaceClass show!
 
 openDeploymentLog: aString
@@ -130,16 +146,17 @@ systemModelFromDeploymentLog: aString
 browseDeployedPackage:!helpers!public! !
 browseDeploymentLog:!helpers!public! !
 browseEnvironment:!browsing!public! !
-browseSources!commands!public! !
+browseSources!commands-actions!public! !
 browseSystemModel:!browsing!public! !
 browseSystemOnMethod:!browsing!public! !
 browseSystemPackages:!browsing!public! !
+buildIdeaSpaceDropdownMenu:!commands-menus!private! !
 classBrowserClasses!accessing!public! !
 classChooserClass!options!public! !
 disassembleMethod:!public! !
 ideaSpaceClass!accessing!public! !
 ideaSpaceClass:!accessing!public! !
-newIdeaSpace!commands!public! !
+newIdeaSpace!commands-actions!public! !
 openDeploymentLog:!helpers!private! !
 packagedResourceIdentifierDialogClass!options!public! !
 packagedResourceIdentifierDialogClass:!accessing!public! !

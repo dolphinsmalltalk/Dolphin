@@ -545,12 +545,18 @@ postCopy
 	^self!
 
 printOn: aStream
-	"Append, to aStream, a String whose characters are a description of the receiver as a developer
-	would want to see it."
+	"Append, to aStream, a String whose characters are a description of the receiver as a developer would want to see it."
 
 	aStream
 		basicPrint: self;
-		nextPut: $(; display: self text; nextPut: $)!
+		nextPut: $(.
+	self name
+		ifNil: 
+			[| label |
+			label := self text.
+			label isEmpty ifFalse: [aStream print: label]]
+		ifNotNil: [:symbol | aStream print: symbol].
+	aStream nextPut: $)!
 
 queryAllAlong: aCommandPolicy recursive: aBoolean
 	"Private - Query the command status for the receiver and each of its command items and
@@ -587,7 +593,8 @@ queryAllAlong: aCommandPolicy recursive: aBoolean
 										setMenuItemInfo: hMenu
 										uItem: i - 1
 										fByPosition: true
-										lpmii: itemInfo]]]]!
+										lpmii: itemInfo]]]].
+	^menuQuery!
 
 queryAllFromView: aView
 	"Private - Query each menu item along a route from the <View>, aView."
