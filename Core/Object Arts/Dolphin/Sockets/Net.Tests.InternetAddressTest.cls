@@ -30,7 +30,7 @@ testHost
 	| name ip |
 	name := InternetAddress host: 'dns.google.com'.
 	ip := InternetAddress ipAddress: name ipAddress.
-	self assert: ip host equals: name host!
+	self assert: ip host equals: 'dns.google'!
 
 testIsIPString
 	self deny: (InternetAddress isIPString: '').
