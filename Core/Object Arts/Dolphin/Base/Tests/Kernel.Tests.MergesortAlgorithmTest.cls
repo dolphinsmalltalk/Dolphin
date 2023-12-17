@@ -15,6 +15,7 @@ algorithmToTest
 	^MergesortAlgorithm!
 
 testBigStringSort
+	<knownSlowTest>
 	self bigStringSort!
 
 testTempArrayLargeEnough
