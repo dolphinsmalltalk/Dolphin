@@ -1079,9 +1079,7 @@ wmInitMenu: message wParam: wParam lParam: lParam
 	^0 "prevent further processing"!
 
 wmInitMenuPopup: message wParam: wParam lParam: lParam
-	"Private - A sub-menu from the receiver's menu bar is about to be popped.
-	Direct the popup menu indicated, which should be connected to menuBar,
-	to update its items current state for our view."
+	"Private - A sub-menu from the receiver's menu bar is about to be popped. Direct the popup menu indicated, which should be connected to menuBar, to update its items current state for our view."
 
 	| popup |
 	lParam highWord ~~ 0 ifTrue: [^self onAboutToDisplaySystemMenu: wParam].
@@ -1092,10 +1090,9 @@ wmInitMenuPopup: message wParam: wParam lParam: lParam
 				wParam: wParam
 				lParam: lParam].
 
-	"Starting with the focus window, query the command route for the menu and its items,
-	 and enable/disable as appropriate. The menu may also be dynamically updated by
-	 the command target, which is sent a #onAboutToDisplayMenu: event"
+	"Starting with the focus window, query the command route for the menu and its items, and enable/disable as appropriate. The menu may also be dynamically updated by the command target, which is sent a #onAboutToDisplayMenu: event"
 	popup queryAllFromView: self class focus ?? self.
+	"Handled"
 	^0!
 
 wmNcActivate: message wParam: wParam lParam: lParam

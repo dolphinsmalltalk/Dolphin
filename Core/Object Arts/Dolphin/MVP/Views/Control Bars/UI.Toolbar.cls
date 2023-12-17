@@ -2,7 +2,7 @@
 
 UI.ControlBarAbstract
 	subclass: #'UI.Toolbar'
-	instanceVariableNames: 'idMap items bitmapsStart insets tbFlags indent bitmapSize buttonSize _unused27 layoutManager'
+	instanceVariableNames: 'idMap items bitmapsStart insets tbFlags indent bitmapSize buttonSize dropDownMenu layoutManager'
 	classVariableNames: ''
 	imports: #(#{OS.ToolbarConstants})
 	classInstanceVariableNames: ''
@@ -494,11 +494,15 @@ nmNotify: pNMHDR
 		ifNotNil: [:action | self perform: action with: pNMHDR]!
 
 onDropDown: aToolbarButton
-	"Private - The receiver's control has sent a notification that a drop-down
-	style buttons drop-down arrow has been pressed. Handle in some
-	application specific manner, and answer zero if handled."
+	"Private - The receiver's control has sent a notification that a drop-down style buttons drop-down arrow has been pressed.  We use the generic command routing and querying mechanism to identify a target that implements and can populate the menu. This works very similarly to standard dynamic menu population, except that the menu is always built completely from scratch. All the boilerplate code that used to be required to handle the #dropDown: event is no longer needed - it is only necessary to implement a menu populator method, and associate that with the drop-down button commands (that should already exist) using #menuPopulator: annotations. For backwards compatibility, if there is no command target on the path prepared to populate the menu, we will then trigger the #dropDown: event that used to be hooked in order to build and show menus for toolbar drop-downs. Otherwise normal menu processing applies, i.e. #onAboutToDisplayMenu: is sent to presenter/view for both the popup itself and any sub-menus that are opened, and the default implementations will trigger the aboutToDisplayMenu: event off the presenter. If a menu is populated through the shared mechanism, then the #dropDown: event is not triggered."
 
-	self presenter trigger: #dropDown: with: aToolbarButton.
+	| emptyMenu |
+	dropDownMenu := Menu new name: aToolbarButton command asSymbol.
+	dropDownMenu showIn: self position: aToolbarButton screenRectangle bottomLeft.
+	emptyMenu := dropDownMenu isEmpty.
+	dropDownMenu := nil.
+	emptyMenu ifTrue: [self presenter trigger: #dropDown: with: aToolbarButton].
+	dropDownMenu := nil.
 	^TBDDRET_DEFAULT!
 
 onEraseRequired: aColorEvent
@@ -979,7 +983,23 @@ wmCreate: message wParam: wParam lParam: lParam
 	^super
 		wmCreate: message
 		wParam: wParam
-		lParam: lParam! !
+		lParam: lParam!
+
+wmInitMenuPopup: message wParam: wParam lParam: lParam
+	"Private - In addition to the normal context menu handling, the toolbar also has drop-down menus associated with drop-down items. These are queried in the normal way, allowing any #menuPopulator: and #commandQuery: methods registered on the command path to populate and update the status of the menu."
+
+	dropDownMenu
+		ifNil: 
+			[^super
+				wmInitMenuPopup: message
+				wParam: wParam
+				lParam: lParam].
+	^(dropDownMenu menuFromHandle: wParam)
+		ifNotNil: 
+			[:subMenu |
+			subMenu queryAllFromView: self.
+			"Handled"
+			0]! !
 !UI.Toolbar categoriesForMethods!
 actualBitmapSize!geometry!public! !
 addBitmap:index:!helpers!private! !
@@ -1092,6 +1112,7 @@ updateSize!operations!private! !
 updateSizePosted!operations!private! !
 validateUserInterface!operations!public! !
 wmCreate:wParam:lParam:!event handling-win32!private! !
+wmInitMenuPopup:wParam:lParam:!event handling-win32!private! !
 !
 
 !UI.Toolbar class methodsFor!

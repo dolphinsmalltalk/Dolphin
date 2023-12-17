@@ -372,18 +372,9 @@ basicUpdateColumn: aListViewColumn
 beSorted: aBlockClosure 
 	self list: (self list asSortedCollection: aBlockClosure)!
 
-buildViewsPopup
-	| popup |
-	popup := Menu new.
-	popup
-		addCommand: (Message selector: #extraLargeIconMode) description: 'Extra large icons';
-		addCommand: (Message selector: #thumbnailsMode) description: 'Thumbnails';
-		addCommand: (Message selector: #tileIconMode) description: 'Tiles';
-		addCommand: (Message selector: #largeIconMode) description: 'Icons';
-		addCommand: (Message selector: #listMode) description: 'List';
-		addCommand: (Message selector: #reportMode) description: 'Details'.
-	popup items do: [:each | each isRadioButtonStyle: true].
-	^popup!
+buildViewsPopup: aMenu
+	#(#extraLargeIconMode 'Extra large icons' #thumbnailsMode 'Thumbnails' #tileIconMode 'Tiles' #largeIconMode 'Icons' #listMode 'List' #reportMode 'Details')
+		pairsDo: [:selector :description | (aMenu addCommand: selector description: description) isRadioButtonStyle: true]!
 
 cancelLabelEdit
 	"Private - Cancel current inline editing."
@@ -1812,17 +1803,6 @@ onDisplayDetailsRequired: anLVITEM
 			[(self stateImageFromRow: rowObject) ifNotNil: [:stateImage | anLVITEM iStateImage: stateImage]].
 	^0	"suppress default processing"!
 
-onDropDown: aToolbarButton 
-	"Private - The receiver's toolbar has sent a notification that a button's drop-down arrow
-	has been pressed. Generate and pop-up the appropriate menu."
-
-	| popup |
-	aToolbarButton command asSymbol == #viewModeSelect ifFalse: [^nil].
-	popup := self buildViewsPopup.
-	popup queryAllAlong: self commandPolicy recursive: true.
-	popup showIn: self position: aToolbarButton screenRectangle bottomLeft.
-	^0!
-
 onEraseRequired: aColorEvent
 	"Handler for erase background. ListView controls manage their own background colours so
 	we pass on erase background requests"
@@ -2064,6 +2044,7 @@ removeColumnAtIndex: columnIndex
 		update!
 
 reportMode
+	<commandQuery: #queryReportMode:>
 	self viewMode: #report!
 
 resetSelection
@@ -2427,8 +2408,9 @@ viewModeChanged
 viewModeSelect
 	"Toggle the view mode of the receiver"
 
-	self 
-		viewMode: (#(#report #extraLargeIcons #thumbnails #tileIcons #largeIcons #smallIcons #list #report) 
+	<menuPopulator: #buildViewsPopup:>
+	self
+		viewMode: (#(#report #extraLargeIcons #thumbnails #tileIcons #largeIcons #smallIcons #list #report)
 				after: self viewMode)!
 
 wantCustomDrawItemNotifications: pNMHDR
@@ -2467,7 +2449,7 @@ basicRemoveColumnAtIndex:!columns!public!removing! !
 basicResetSelection!private!selection! !
 basicUpdateColumn:!columns!private!updating! !
 beSorted:!public!sorting! !
-buildViewsPopup!helpers!private! !
+buildViewsPopup:!commands-menus!private! !
 cancelLabelEdit!operations!private! !
 caretIndex!public!selection! !
 caretIndex:!public!selection! !
@@ -2630,7 +2612,6 @@ nmSelChanged:!event handling-win32!private! !
 notificationClass!constants!private! !
 onButtonPressed:!event handling!private! !
 onDisplayDetailsRequired:!event handling!private! !
-onDropDown:!event handling!private! !
 onEraseRequired:!event handling!public! !
 onItem:removedAtIndex:!event handling!public! !
 onItems:addedAtIndex:!event handling!public! !
@@ -2699,7 +2680,7 @@ updateItem:atIndex:!event handling!public! !
 updateSelectionCache!helpers!private!selection! !
 viewMode!accessing!public! !
 viewModeChanged!helpers!private! !
-viewModeSelect!commands-actions!public! !
+viewModeSelect!commands-actions!commands-menus!public! !
 wantCustomDrawItemNotifications:!helpers!private! !
 !
 

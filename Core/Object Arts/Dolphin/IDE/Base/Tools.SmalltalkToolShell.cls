@@ -116,9 +116,15 @@ browseTests
 
 	^self developmentSystem testBrowserClass show!
 
-buildPopupForCommand: aSymbol 
-	aSymbol == #newIdeaSpace ifTrue: [^self class buildIdeaSpacePopup].
-	^nil!
+buildHistoryFutureMenu: aMenu
+	aMenu
+		clear;
+		text: '&Forward'!
+
+buildHistoryPastMenu: aMenu
+	aMenu
+		clear;
+		text: '&Back'!
 
 canRefactor
 	"Private - Answer whether the development tools support refactoring (requires that the Refactoring Engine be
@@ -252,6 +258,7 @@ help
 historyBack
 	"Private - Return to the previously visited method."
 
+	<menuPopulator: #buildHistoryPastMenu:>
 	<commandQuery: #queryHistoryBack:>
 	self historyBack: 1!
 
@@ -266,6 +273,7 @@ historyForward
 	"Private - Return to the previously visited class which has been
 	moved back over by a jump back in time."
 
+	<menuPopulator: #buildHistoryFutureMenu:>
 	<commandQuery: #queryHistoryForward:>
 	self historyForward: 1!
 
@@ -316,17 +324,6 @@ isIdeaSpaceCard
 methodBrowserClass
 	^MethodBrowser!
 
-onDropDown: aToolbarButton
-	"Private - The receiver's toolbar has sent a notification that a button's drop-down arrow
-	has been pressed. Generate and pop-up the appropriate menu."
-
-	| popup |
-	popup := self buildPopupForCommand: aToolbarButton command asSymbol.
-	popup isNil ifTrue: [^nil].
-	popup queryAllAlong: self commandPolicy recursive: true.
-	popup showIn: self position: aToolbarButton screenRectangle bottomLeft.
-	^0!
-
 onViewAvailable
 	super onViewAvailable.
 	self applyOptions!
@@ -334,16 +331,7 @@ onViewAvailable
 onViewOpened
 	super onViewOpened.
 	fontSizePresenter model: (ValueAspectAdaptor subject: self aspect: #fontSize).
-	self class defaultSlideyPinsMap ifNotNil: [:map | self slideyPinMap: map].
-
-	"Enable toolbar pulldowns"
-	(self view viewNamed: 'smalltalkTools' ifNone: nil)
-		ifNotNil: 
-			[:toolbar |
-			toolbar presenterConnectionPoint
-				when: #dropDown:
-				send: #onDropDown:
-				to: self]!
+	self class defaultSlideyPinsMap ifNotNil: [:map | self slideyPinMap: map]!
 
 onViewStateRestored
 	super onViewStateRestored.
@@ -590,7 +578,8 @@ browseReferences!commands-actions!public! !
 browseReferencesCommand!commands-mappings!private! !
 browserEnvironment!accessing!public! !
 browseTests!public! !
-buildPopupForCommand:!private! !
+buildHistoryFutureMenu:!commands-menus!private! !
+buildHistoryPastMenu:!commands-menus!private! !
 canRefactor!private!testing! !
 canSaveState!private!saved state! !
 changeManager!accessing!public! !
@@ -624,7 +613,6 @@ inspectItCommand!commands-mappings!private! !
 inspectSystemOptions!commands-actions!public! !
 isIdeaSpaceCard!public! !
 methodBrowserClass!constants!private! !
-onDropDown:!private! !
 onViewAvailable!event handling!public! !
 onViewOpened!private! !
 onViewStateRestored!event handling!public! !
@@ -682,23 +670,6 @@ activeIdeaSpace
 
 applyOptions
 	"Override point for subclases that wish to update instances"!
-
-buildIdeaSpacePopup
-	| popup |
-	popup := Menu new.
-	popup
-		addCommand: (Message selector: #newIdeaSpace) description: 'New IdeaSpace';
-		addCommand: (Message selector: #openIdeaSpace) description: 'Open IdeaSpace from Template…';
-		addSeparator;
-		addCommand: (Message selector: #saveIdeaSpace) description: 'Save IdeaSpace Template';
-		addCommand: (Message selector: #saveIdeaSpaceAs) description: 'Save IdeaSpace Template as…';
-		addCommand: (Message selector: #revertIdeaSpace) description: 'Revert IdeaSpace to Template';
-		addSeparator;
-		addCommand: (Message selector: #addToNewIdeaSpace) description: 'Add to New IdeaSpace';
-		addCommand: (Message selector: #dragToolToIdeaSpace) description: 'Drag to Existing IdeaSpace';
-		addSeparator;
-		addCommand: (Message selector: #breakoutCurrentCard) description: 'Breakout Tool to Desktop'.
-	^popup!
 
 canUseIdeaSpace
 	"Answers true if instances of the receiver can be opened inside an IdeaSpaceShelll
@@ -1076,7 +1047,6 @@ userSettingsRootKey
 !Tools.SmalltalkToolShell class categoriesForMethods!
 activeIdeaSpace!public! !
 applyOptions!accessing!options!private! !
-buildIdeaSpacePopup!private! !
 canUseIdeaSpace!options!public! !
 canUseIdeaSpace:!options!public! !
 canUseIdeaSpaceAspect!private! !

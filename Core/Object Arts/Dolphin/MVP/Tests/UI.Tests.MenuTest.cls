@@ -23,7 +23,7 @@ exampleStrings
 
 testAllItems
 	self assert: (self exampleMenu allItems collect: [:each | each printString])
-		equals: #('a MenuBar' 'a Menu(&File)' 'a CommandMenuItem(&New)' 'DividerMenuItem break' 'a CommandMenuItem(&Open...)' 'DividerMenuItem separator' 'a CommandMenuItem(E&xit)' 'DividerMenuItem barBreak' 'a CommandMenuItem(F&ire!!)' 'DividerMenuItem break' 'a Menu(&Tools)' 'a CommandMenuItem(&Workspace...)' 'DividerMenuItem separator' 'a Menu(&Options)' 'a CommandMenuItem(Default Font...)' 'a Menu(&Theme)' 'a CommandMenuItem(&Dark)' 'a CommandMenuItem(&Light)')!
+		equals: #('a MenuBar' 'a Menu(''&File'')' 'a CommandMenuItem(''&New'')' 'DividerMenuItem break' 'a CommandMenuItem(''&Open...'')' 'DividerMenuItem separator' 'a CommandMenuItem(''E&xit'')' 'DividerMenuItem barBreak' 'a CommandMenuItem(''F&ire!!'')' 'DividerMenuItem break' 'a Menu(''&Tools'')' 'a CommandMenuItem(''&Workspace...'')' 'DividerMenuItem separator' 'a Menu(''&Options'')' 'a CommandMenuItem(''Default Font...'')' 'a Menu(''&Theme'')' 'a CommandMenuItem(''&Dark'')' 'a CommandMenuItem(''&Light'')')!
 
 testAllMenus
 	self assert: (self exampleMenu allMenus collect: [:each | each text])

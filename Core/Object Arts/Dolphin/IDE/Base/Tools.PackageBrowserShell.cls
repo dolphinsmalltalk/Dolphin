@@ -243,12 +243,6 @@ browseVariableReferences
 	<commandQuery: #hasVariableSelected>
 	self model browseSharedVariableReferences: self sharedVariable in: self browserEnvironment!
 
-buildPopupForCommand: aSymbol 
-	"Private - Dynamically build an appropriate popup menu for aSymbol command."
-
-	aSymbol == #viewModeSelect ifTrue: [^classesPresenter view buildViewsPopup].
-	^super buildPopupForCommand: aSymbol!
-
 cacheCurrentCard: aView
 	currentCard := aView name asSymbol!
 
@@ -866,20 +860,12 @@ onViewClosed
 onViewOpened
 	"Private - Received when the receiver's view is been connected. "
 
-	| toolbar |
 	super onViewOpened.
 	(self view viewNamed: 'errors' ifNone: nil)
 		ifNotNil: 
 			[:item |
 			item model: statusModel.
 			scriptTextPresenter errorModel: statusModel].
-
-	"Enable view mode pulldown"
-	toolbar := self view viewNamed: 'viewTools'.
-	toolbar presenterConnectionPoint
-		when: #dropDown:
-		send: #onDropDown:
-		to: self.
 
 	"Really a CardContainer view, but we treat as if a presenter"
 	cardsPresenter := self view viewNamed: 'ownedCards'.
@@ -1289,7 +1275,6 @@ browseReferencesCommand!commands-mappings!private! !
 browseSystem!commands-actions!public! !
 browseVariableClass!commands-actions!public! !
 browseVariableReferences!commands-actions!public! !
-buildPopupForCommand:!event handling!private! !
 cacheCurrentCard:!event handling!private! !
 canSaveState!private!saved state! !
 clearCard:!private!updating! !

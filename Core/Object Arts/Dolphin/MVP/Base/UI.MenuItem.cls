@@ -139,16 +139,6 @@ populateItemInfo: aMENUITEMINFO
 
 	^self subclassResponsibility!
 
-printOn: aStream
-	"Appends the receiver to aStream as a representation that a 
-	developer would want to see"
-
-	aStream
-		basicPrint: self;
-		nextPut: $(;
-		display: self;
-		nextPut: $)!
-
 registerAcceleratorKeyIn: anAcceleratorTable
 	"Register the accelerator key associated with this menu item, if
 	there is one, in anAcceleratorTable."!
@@ -198,7 +188,6 @@ itemWithId:!accessing!public! !
 menuFromHandle:!accessing!public! !
 name!accessing!public! !
 populateItemInfo:!private!realizing/unrealizing! !
-printOn:!printing!public! !
 registerAcceleratorKeyIn:!menus!public! !
 styleFlags!accessing!private! !
 styleFlags:!accessing!not an aspect!private! !

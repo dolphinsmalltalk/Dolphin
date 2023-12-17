@@ -52,25 +52,19 @@ Try:
 browserView
 	^browser view!
 
-buildPopupForCommand: aSymbol
-	aSymbol == #settingsMenu ifTrue: [^self buildSettingsPopup].
-	^nil!
-
-buildSettingsPopup
-	| menu submenu |
-	menu := Menu new yourself.
-	"name: #settingsMenu;"
-	menu
+buildSettingsPopup: aMenu
+	| submenu |
+	aMenu
 		addCommand: #toggleEventLogging description: 'Log WebView2 &Events to Transcript';
 		addSeparator.
-	submenu := menu addSubmenu: '&Default WebView2 UI'.
+	submenu := aMenu addSubmenu: '&Default WebView2 UI'.
 	submenu
 		addCommand: #toggleAllowContextMenu description: 'Context &Menus';
 		addCommand: #toggleBrowserAcceleratorKeysEnabled description: '&Accelerator Keys';
 		addCommand: #toggleBuiltinErrorPageEnabled description: '&Error Pages';
 		addCommand: #toggleDefaultScriptDialogsEnabled description: 'Script &Dialogs'.
 	"	name: #defaultWebviewUIEnablement;"
-	menu
+	aMenu
 		addSeparator;
 		addCommand: #toggleAllowExternalDrop description: 'Accept &Dropped Files';
 		addCommand: #toggleDevToolsEnabled description: '&DevTools (F12)';
@@ -80,7 +74,7 @@ buildSettingsPopup
 		addCommand: #toggleSwipeNavigation description: 'S&wipe Navigation';
 		addCommand: #toggleStatusBar description: '&Status Bubbles';
 		addCommand: #toggleZoomControl description: '&Zoom Control'.
-	submenu := (menu addSubmenu: 'Preferred &Color Scheme') yourself.
+	submenu := (aMenu addSubmenu: 'Preferred &Color Scheme') yourself.
 	"name: #colorScheme;"
 	#('&Auto' '&Light' '&Dark') keysAndValuesDo: 
 			[:eachKey :eachValue |
@@ -90,7 +84,7 @@ buildSettingsPopup
 								description: eachValue))
 						isRadioButtonStyle: true;
 						yourself)].
-	menu
+	aMenu
 		addSeparator;
 		addCommand: #toggleGeneralAutofill description: 'General &Autofill';
 		addCommand: #togglePasswordAutosave description: '&Password Autosave';
@@ -98,7 +92,7 @@ buildSettingsPopup
 		addCommand: #toggleJavaScript description: '&JavaScript';
 		addCommand: #toggleInPrivateMode description: 'In Private &Mode';
 		yourself.
-	submenu := (menu addSubmenu: '&Tracking Prevention Level') yourself.
+	submenu := (aMenu addSubmenu: '&Tracking Prevention Level') yourself.
 	"name: #trackingPreventionLevel;"
 	#('&None' '&Basic' 'Ba&lanced' '&Strict') keysAndValuesDo: 
 			[:eachKey :eachValue |
@@ -108,8 +102,7 @@ buildSettingsPopup
 								description: eachValue))
 						isRadioButtonStyle: true;
 						yourself)].
-	menu addCommand: #toggleSmartScreen description: '&SmartScreen'.
-	^menu!
+	aMenu addCommand: #toggleSmartScreen description: '&SmartScreen'!
 
 createComponents
 	"Create the presenters contained by the receiver"
@@ -256,17 +249,6 @@ onDocumentTitleChanged
 
 	self caption: self browserView documentTitle!
 
-onDropDown: aToolbarButton
-	"Private - The receiver's toolbar has sent a notification that a button's drop-down arrow
-	has been pressed. Generate and pop-up the appropriate menu."
-
-	| popup |
-	popup := self buildPopupForCommand: aToolbarButton command asSymbol.
-	popup isNil ifTrue: [^nil].
-	popup queryAllAlong: self commandPolicy recursive: true.
-	popup showIn: self position: aToolbarButton screenRectangle bottomLeft.
-	^0!
-
 onFavIconChanged
 	self webview2 getFavIcon: WebView2.COREWEBVIEW2_FAVICON_IMAGE_FORMAT_PNG
 		thenDo: [:hr :stream | self view smallIcon: (Gdiplus.Bitmap fromIStream: stream) asIcon]!
@@ -311,16 +293,7 @@ onViewOpened
 	statusItem := self view viewNamed: 'zoom'.
 	statusItem model: zoomModel.
 	statusItem := self view viewNamed: 'profile'.
-	statusItem model: profileModel.
-
-	"Enable toolbar pulldowns"
-	(self view viewNamed: 'browserTools' ifNone: nil)
-		ifNotNil: 
-			[:toolbar |
-			toolbar presenterConnectionPoint
-				when: #dropDown:
-				send: #onDropDown:
-				to: self]!
+	statusItem model: profileModel!
 
 onWebResourceRequested: anICoreWebView2WebResourceRequestedEventArgs
 	"Private - Implement web request filter, in this case to block images when that option is enabled by the user."
@@ -524,6 +497,7 @@ refresh
 
 settingsMenu
 	<commandQuery: #hasWebview>
+	<menuPopulator: #buildSettingsPopup:>
 	^self!
 
 toggleAllowContextMenu
@@ -673,8 +647,7 @@ zoomReset
 	browser view zoomFactor: 1! !
 !OS.COM.Examples.WebBrowserShell categoriesForMethods!
 browserView!accessing!public! !
-buildPopupForCommand:!commands-actions!private! !
-buildSettingsPopup!commands-actions!private! !
+buildSettingsPopup:!commands-actions!private! !
 createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !
 displayError:!operations!private! !
@@ -692,7 +665,6 @@ navigate!commands-actions!public! !
 navigateTo:!operations!private! !
 onColorSchemeChanged!private!updating! !
 onDocumentTitleChanged!event handling!private! !
-onDropDown:!event handling!private! !
 onFavIconChanged!event handling!private! !
 onProcessFailed:!event handling!private! !
 onSourceChanged:!event handling!private! !

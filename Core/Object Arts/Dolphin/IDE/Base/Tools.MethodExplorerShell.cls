@@ -48,27 +48,25 @@ browseMethodsInEnvironments: aCollectionOfBrowserEnvironments
 			ifNotNil: [:first | historyTree selection: first].
 	self setInitialFocus!
 
-buildHistoryFutureMenu
+buildHistoryFutureMenu: aMenu
 	"Private - Answer a dynamically created future visit menu."
 
-	^(self buildHistoryMenu: historyList upToEnd command: #historyForward:)
-		text: 'Forward';
-		yourself!
+	super buildHistoryFutureMenu: aMenu.
+	self buildHistoryMenu: aMenu visits: historyList upToEnd command: #historyForward:!
 
-buildHistoryMenu: visits command: cmdSelector
+buildHistoryMenu: aMenu visits: aSequenceableCollection command: cmdSelector
 	"Private - Answer a dynamically created past visit history menu."
 
-	| popup lastEnv subMenu methods |
-	popup := Menu new.
+	| lastEnv subMenu methods |
 	lastEnv := nil.
-	visits keysAndValuesDo: 
+	aSequenceableCollection keysAndValuesDo: 
 			[:i :each |
 			| env method |
 			env := each key.
 			env == lastEnv
 				ifFalse: 
 					[methods := Set new.
-					subMenu := popup addSubmenu: env displayString.
+					subMenu := aMenu addSubmenu: env displayString.
 					lastEnv := env].
 			method := each value ?? '(none)'.
 			"We only want to add each method to the menu once"
@@ -77,22 +75,16 @@ buildHistoryMenu: visits command: cmdSelector
 					[subMenu addCommand: (Message selector: cmdSelector argument: i) description: method displayString.
 					methods add: method].
 			subMenu setDefault: 1].
-	popup setDefault: 1.
-	^popup!
+	aMenu setDefault: 1!
 
-buildHistoryPastMenu
+buildHistoryPastMenu: aMenu
 	"Private - Answer a dynamically created past visit history menu."
 
-	^(self buildHistoryMenu: historyList past command: #historyBack:)
-		text: 'Past';
-		yourself!
-
-buildPopupForCommand: aSymbol 
-	"Private - Dynamically build an appropriate popup menu for aSymbol command."
-
-	aSymbol == #historyBack ifTrue: [^self buildHistoryPastMenu].
-	aSymbol == #historyForward ifTrue: [^self buildHistoryFutureMenu].
-	^super buildPopupForCommand: aSymbol!
+	super buildHistoryPastMenu: aMenu.
+	self
+		buildHistoryMenu: aMenu
+		visits: historyList past
+		command: #historyBack:!
 
 canSaveState
 	"Private - Answer true if the receiver can successfully have it's state saved by #saveStateOn:. Some
@@ -201,18 +193,6 @@ onTreeSelectionChanged
 			browserPresenter methods: env.
 			self selectFirstMethod]!
 
-onViewOpened
-	"Private - Received when the receiver's view is been connected. "
-
-	| toolbar |
-	super onViewOpened.
-	toolbar := self view viewNamed: 'historyTools'.
-	toolbar presenterConnectionPoint 
-		when: #dropDown:
-		send: #onDropDown:
-		to: self.
-!
-
 pastSize
 	^historyList pastSize!
 
@@ -286,10 +266,9 @@ addSearch:under:!public! !
 addToCommandRoute:!commands!public! !
 browseMethodsIn:!public! !
 browseMethodsInEnvironments:!public! !
-buildHistoryFutureMenu!helpers!menus!private! !
-buildHistoryMenu:command:!helpers!menus!private! !
-buildHistoryPastMenu!helpers!menus!private! !
-buildPopupForCommand:!event handling!private! !
+buildHistoryFutureMenu:!commands-menus!private! !
+buildHistoryMenu:visits:command:!commands-menus!private! !
+buildHistoryPastMenu:!commands-menus!private! !
 canSaveState!private!saved state! !
 createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !
@@ -305,7 +284,6 @@ methods:!accessing!public! !
 onMethodSelected!event handling!private! !
 onTimerTick:!event handling!private! !
 onTreeSelectionChanged!event handling!private! !
-onViewOpened!event handling!private! !
 pastSize!accessing!public! !
 queryHistoryBack:!commands!private! !
 queryHistoryForward:!commands!private! !

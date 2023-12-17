@@ -45,20 +45,6 @@ newView
 		ifFalse: [self model openViewComposer]
  !
 
-onViewOpened
-	"Private - Received when the receiver's view is been connected. "
-
-	super onViewOpened.
-
-	"Enable view mode pulldown"
-	(self view viewNamed: 'viewTools' ifNone: nil)
-		ifNotNil: 
-			[:toolbar |
-			toolbar presenterConnectionPoint
-				when: #dropDown:
-				send: #onDropDown:
-				to: resourceToolboxPresenter categoriesPresenter view]!
-
 resource
 	"Answer the selected resource identifier in the receiver or nil if there
 	is none"
@@ -102,7 +88,6 @@ canSaveState!private!saved state! !
 createComponents!**auto generated**!initializing!private! !
 defaultHelpId!public! !
 newView!commands!public! !
-onViewOpened!event handling!private! !
 resource!accessing!public! !
 resource:!accessing!public! !
 resourceToolboxPresenter!private! !
