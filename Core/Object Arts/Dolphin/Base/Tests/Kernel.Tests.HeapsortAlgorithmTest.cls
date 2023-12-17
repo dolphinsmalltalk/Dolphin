@@ -15,6 +15,8 @@ algorithmToTest
 	^HeapsortAlgorithm!
 
 testBigStringSort
+	<skipIf: #isCiBuild>
+	<knownSlowTest>
 	self bigStringSort! !
 !Kernel.Tests.HeapsortAlgorithmTest categoriesForMethods!
 algorithmToTest!private!unit tests! !
