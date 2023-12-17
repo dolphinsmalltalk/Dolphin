@@ -1272,7 +1272,7 @@ displayedContents!accessing!public! !
 editLabelStyle!constants!private! !
 ensureVisible:!drawing!public! !
 expand:!expanding/collapsing!public! !
-expandAll!commands!public! !
+expandAll!commands-actions!public! !
 expandAll:!expanding/collapsing!public! !
 expandHandle:!expanding/collapsing!private! !
 findNode:!public!selection! !

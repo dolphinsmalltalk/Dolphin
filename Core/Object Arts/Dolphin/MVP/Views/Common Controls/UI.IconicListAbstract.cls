@@ -72,6 +72,25 @@ beSmallIcons
 
 	self viewMode: #smallIcons!
 
+buildViewsPopup: aMenu
+	self class viewModeNames do: 
+			[:each |
+			| pair |
+			pair := ##(IdentityDictionary withAll: {
+								#noIcons -> #(#beNoIcons '&No Icons').
+								#list -> #(#listMode '&List').
+								#report -> #(#reportMode '&Details').
+								#smallIcons -> #(#smallIconMode '&Small Icons').
+								#mediumSmallIcons -> #(#mediumSmallIconMode 'M&edium-small Icons').
+								#mediumIcons -> #(#mediumIconMode '&Medium Icons').
+								#largeIcons -> #(#largeIconMode '&Icons').
+								#tileIcons -> #(#tileIconMode '&Tiles').
+								#thumbnails -> #(#thumbnailsMode 'Thum&bnails').
+								#extraLargeIcons -> #(#extraLargeIconMode '&Extra-large Icons')
+							})
+						at: each.
+			(aMenu addCommand: pair first description: pair second) isRadioButtonStyle: true]!
+
 canEditLabels
 	"Answer whether the receiver's labels can be edited in-place."
 
@@ -269,6 +288,12 @@ errorInCommonControlCall: hItem
 
 !
 
+extraLargeIconMode
+	"Place the receiver in extra large icons mode"
+
+	<commandQuery: #queryExtraLargeIconMode:>
+	self viewMode: #extraLargeIcons!
+
 getEditControl
 	^self subclassResponsibility!
 
@@ -393,6 +418,24 @@ largeIconExtent: aPointOrNil
 	largeIconExtent := aPointOrNil.
 	self applyImageLists
 !
+
+largeIconMode
+	"Place the receiver in large icons mode"
+
+	<commandQuery: #queryLargeIconMode:>
+	self viewMode: #largeIcons!
+
+mediumIconMode
+	"Place the receiver in medium icons mode"
+
+	<commandQuery: #queryMediumIconMode:>
+	self viewMode: #mediumIcons!
+
+mediumSmallIconMode
+	"Place the receiver in medium-small icons mode"
+
+	<commandQuery: #queryMediumSmallIconMode:>
+	self viewMode: #mediumSmallIcons!
 
 newSelectionsFromEvent: aMouseEvent
 	"Private - Answer a collection of the <integer> selections that would occur if the `MouseEvent` argument was passed to the control.
@@ -697,8 +740,34 @@ positionForKeyboardContextMenu
 		ifTrue: [super positionForKeyboardContextMenu]
 		ifFalse: [self mapPointToScreen: (self itemRect: selections first textOnly: true) bottomLeft]!
 
+queryExtraLargeIconMode: aCommandQuery
+	self queryViewMode: aCommandQuery name: #extraLargeIcons!
+
+queryLargeIconMode: aCommandQuery
+	self queryViewMode: aCommandQuery name: #largeIcons!
+
+queryMediumIconMode: aCommandQuery
+	self queryViewMode: aCommandQuery name: #mediumIcons!
+
+queryMediumSmallIconMode: aCommandQuery
+	self queryViewMode: aCommandQuery name: #mediumSmallIcons!
+
 queryRenameIt: aCommandQuery
 	aCommandQuery isEnabled: (self canEditLabels and: [self hasSelection])!
+
+querySmallIconMode: aCommandQuery
+	self queryViewMode: aCommandQuery name: #smallIcons!
+
+queryThumbnailsMode: aCommandQuery
+	self queryViewMode: aCommandQuery name: #thumbnails!
+
+queryTileIconMode: aCommandQuery
+	self queryViewMode: aCommandQuery name: #tileIcons!
+
+queryViewMode: aCommandQuery name: aSymbol
+	aCommandQuery
+		beEnabled;
+		isChecked: self viewMode == aSymbol!
 
 renameIt
 	<commandQuery: #queryRenameIt:>
@@ -725,6 +794,12 @@ smallIconExtent
 
 	^Icon.SmallExtent!
 
+smallIconMode
+	"Place the receiver in small icons mode"
+
+	<commandQuery: #querySmallIconMode:>
+	self viewMode: #smallIcons!
+
 stateImageManager
 	"Answers the receiver's state image manager."
 
@@ -746,6 +821,18 @@ stbSaveOn: anSTBOutFiler
 themeSubAppName
 	^'explorer'!
 
+thumbnailsMode
+	"Place the receiver in thumbnails mode"
+
+	<commandQuery: #queryThumbnailsMode:>
+	self viewMode: #thumbnails!
+
+tileIconMode
+	"Place the receiver in tile icons mode"
+
+	<commandQuery: #queryTileIconMode:>
+	self viewMode: #tileIcons!
+
 viewMode
 	"Answer the symbolic name of the receiver's current view mode."
 
@@ -764,6 +851,14 @@ viewMode: aSymbol
 
 viewModeChanged
 	self applyImageLists!
+
+viewModeSelect
+	"Toggle the view mode of the receiver"
+
+	<menuPopulator: #buildViewsPopup:>
+	| viewModes |
+	viewModes := self class viewModeNames.
+	self viewMode: (viewModes at: (viewModes indexOf: self viewMode) \\ viewModes size + 1)!
 
 wantCustomDrawItemNotifications: pNMHDR
 	^self customDrawBlock notNil!
@@ -785,6 +880,7 @@ basicEditItemLabel:!operations!private! !
 basicItemFromPoint:!enquiries!private! !
 beLargeIcons!modes!public! !
 beSmallIcons!modes!public! !
+buildViewsPopup:!commands-menus!private! !
 canEditLabels!accessing-styles!public!testing! !
 canEditLabels:!accessing-styles!public! !
 customDrawBlock!accessing!public! !
@@ -808,6 +904,7 @@ ensureItemVisible:!operations!public! !
 ensureSelectionVisible!public!selection! !
 ensureVisible:!operations!public! !
 errorInCommonControlCall:!exceptions!private! !
+extraLargeIconMode!commands-actions!public! !
 getEditControl!accessing!private! !
 getImageBlock!adapters!public! !
 getImageBlock:!adapters!public! !
@@ -830,6 +927,9 @@ itemRect:textOnly:!enquiries!public! !
 itemStructure!constants!private! !
 largeIconExtent!constants!public! !
 largeIconExtent:!constants!public! !
+largeIconMode!commands-actions!public! !
+mediumIconMode!commands-actions!public! !
+mediumSmallIconMode!commands-actions!public! !
 newSelectionsFromEvent:!event handling!private! !
 nmBeginDrag:!event handling-win32!private! !
 nmBeginLabelEdit:!event handling-win32!private! !
@@ -852,19 +952,31 @@ onLeftButtonDoubleClicked:!event handling!public! !
 onSelRemoved!public!selection! !
 onViewCreated!event handling!public! !
 positionForKeyboardContextMenu!enquiries!public! !
+queryExtraLargeIconMode:!commands-queries!private! !
+queryLargeIconMode:!commands-queries!private! !
+queryMediumIconMode:!commands-queries!private! !
+queryMediumSmallIconMode:!commands-queries!private! !
 queryRenameIt:!commands-queries!private! !
+querySmallIconMode:!commands-queries!private! !
+queryThumbnailsMode:!commands-queries!private! !
+queryTileIconMode:!commands-queries!private! !
+queryViewMode:name:!commands-queries!private! !
 renameIt!commands-actions!public! !
 setViewMode:!accessing!private! !
 showDragDrop:highlight:!drag & drop!event handling!public! !
 showDropHighlight:!drag & drop!private! !
 smallIconExtent!constants!public! !
+smallIconMode!commands-actions!public! !
 stateImageManager!image management!public! !
 stateImageManager:!image management!public! !
 stbSaveOn:!binary filing!public! !
 themeSubAppName!constants!private! !
+thumbnailsMode!commands-actions!public! !
+tileIconMode!commands-actions!public! !
 viewMode!accessing!public! !
 viewMode:!accessing!public! !
 viewModeChanged!helpers!private! !
+viewModeSelect!commands-actions!commands-menus!public! !
 wantCustomDrawItemNotifications:!event handling-win32!private! !
 wmDestroy:wParam:lParam:!event handling-win32!private! !
 !
@@ -918,12 +1030,17 @@ value: anObject
 
 	^anObject iconImageIndex!
 
+viewModeNames
+	^#(#noIcons #list #report #smallIcons #mediumSmallIcons #mediumIcons #largeIcons #tileIcons #thumbnails #extraLargeIcons)
+		intersection: self viewModes keys!
+
 viewModes
 	^ViewModes! !
 !UI.IconicListAbstract class categoriesForMethods!
 stbConvertFromVersion3:!binary filing!private! !
 stbConvertFromVersion9:!binary filing!private! !
 value:!evaluating!private! !
+viewModeNames!constants!public! !
 viewModes!accessing!public! !
 !
 

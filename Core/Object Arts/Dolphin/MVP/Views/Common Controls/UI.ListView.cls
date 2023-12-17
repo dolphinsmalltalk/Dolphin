@@ -372,10 +372,6 @@ basicUpdateColumn: aListViewColumn
 beSorted: aBlockClosure 
 	self list: (self list asSortedCollection: aBlockClosure)!
 
-buildViewsPopup: aMenu
-	#(#extraLargeIconMode 'Extra large icons' #thumbnailsMode 'Thumbnails' #tileIconMode 'Tiles' #largeIconMode 'Icons' #listMode 'List' #reportMode 'Details')
-		pairsDo: [:selector :description | (aMenu addCommand: selector description: description) isRadioButtonStyle: true]!
-
 cancelLabelEdit
 	"Private - Cancel current inline editing."
 
@@ -565,12 +561,6 @@ errorInCommonControlCall: index
 			size := self itemCount.
 			(index between: 0 and: size - 1) ifFalse: [^self errorSubscriptBounds: index]].
 	^self errorInCommonControlCall!
-
-extraLargeIconMode
-	"Place the receiver in extra large icons mode"
-
-	<commandQuery: #queryExtraLargeIconMode:>
-	self viewMode: #extraLargeIcons!
 
 findItem: aString startingAt: anInteger wrap: aBoolean
 	"Private - Perform a search for the first item starting with the <readableString>,
@@ -1071,12 +1061,6 @@ largeIconExtent: aPointOrNil
 			["Remove any custom spacing if insufficient for the icon size"
 			self setIconSpacing: ((aPointOrNil notNil and: [aPointOrNil > iconSpacing]) ifFalse: [iconSpacing])].
 	^super largeIconExtent: aPointOrNil!
-
-largeIconMode
-	"Place the receiver in large icons mode"
-
-	<commandQuery: #queryLargeIconMode:>
-	self viewMode: #largeIcons!
 
 lastSelIndices
 	^lastSelIndices!
@@ -1974,40 +1958,11 @@ primaryColumn
 
 	^columns first!
 
-queryExtraLargeIconMode: aCommandQuery
-	aCommandQuery
-		beEnabled;
-		isChecked: self viewMode == #extraLargeIcons!
-
-queryLargeIconMode: aCommandQuery
-	aCommandQuery
-		beEnabled;
-		isChecked: self viewMode == #largeIcons!
-
 queryListMode: aCommandQuery
-	aCommandQuery
-		beEnabled;
-		isChecked: self viewMode == #list!
+	self queryViewMode: aCommandQuery name: #list!
 
 queryReportMode: aCommandQuery
-	aCommandQuery
-		beEnabled;
-		isChecked: self viewMode == #report!
-
-querySmallIconMode: aCommandQuery
-	aCommandQuery
-		beEnabled;
-		isChecked: self viewMode == #smallIcons!
-
-queryThumbnailsMode: aCommandQuery
-	aCommandQuery
-		beEnabled;
-		isChecked: self viewMode == #thumbnails!
-
-queryTileIconMode: aCommandQuery
-	aCommandQuery
-		beEnabled;
-		isChecked: self viewMode == #tileIcons!
+	self queryViewMode: aCommandQuery name: #report!
 
 refreshContents
 	"Refresh the receiver's contents from the model"
@@ -2222,12 +2177,6 @@ showsSelAlways: aBoolean
 
 	self baseStyleMask: LVS_SHOWSELALWAYS set: aBoolean recreateIfChanged: false!
 
-smallIconMode
-	"Place the receiver in small icons mode"
-
-	<commandQuery: #querySmallIconMode:>
-	self viewMode: #smallIcons!
-
 sortOnColumn: aListViewColumn
 	"Sorts the receiver according to the sort block in aListViewColumn"
 
@@ -2320,18 +2269,6 @@ thumbnailsImageManager
 			thumbnailsImageManager maskcolor: Color default].
 	^thumbnailsImageManager!
 
-thumbnailsMode
-	"Place the receiver in thumbnails mode"
-
-	<commandQuery: #queryThumbnailsMode:>
-	self viewMode: #thumbnails!
-
-tileIconMode
-	"Place the receiver in tile icons mode"
-
-	<commandQuery: #queryTileIconMode:>
-	self viewMode: #tileIcons!
-
 updateAllNonVirtual
 	"Private - Update the text and images the list view stores for each item in this non-virtual list."
 
@@ -2405,14 +2342,6 @@ viewModeChanged
 	self updateAll.
 	self trigger: #viewModeChanged!
 
-viewModeSelect
-	"Toggle the view mode of the receiver"
-
-	<menuPopulator: #buildViewsPopup:>
-	self
-		viewMode: (#(#report #extraLargeIcons #thumbnails #tileIcons #largeIcons #smallIcons #list #report)
-				after: self viewMode)!
-
 wantCustomDrawItemNotifications: pNMHDR
 	^self customDrawBlock notNil or: [self hasSubItemCustomDraw]! !
 !UI.ListView categoriesForMethods!
@@ -2449,7 +2378,6 @@ basicRemoveColumnAtIndex:!columns!public!removing! !
 basicResetSelection!private!selection! !
 basicUpdateColumn:!columns!private!updating! !
 beSorted:!public!sorting! !
-buildViewsPopup:!commands-menus!private! !
 cancelLabelEdit!operations!private! !
 caretIndex!public!selection! !
 caretIndex:!public!selection! !
@@ -2473,7 +2401,6 @@ ensureItemsVisible:!helpers!private! !
 ensureSelectionVisible!public!selection! !
 ensureVisible:!operations!public! !
 errorInCommonControlCall:!exceptions!private! !
-extraLargeIconMode!commands-actions!public! !
 findItem:startingAt:wrap:!private!searching! !
 forecolor:!accessing!public! !
 forgetLastClickedColumn!helpers!private! !
@@ -2535,7 +2462,6 @@ itemRect:textOnly:!enquiries!public! !
 itemsPerPage!geometry!public! !
 itemStructure!constants!private! !
 largeIconExtent:!constants!public! !
-largeIconMode!commands-actions!public! !
 lastSelIndices!accessing!private! !
 listMode!commands-actions!public! !
 listViewStyleMask:set:!accessing-styles!private! !
@@ -2627,13 +2553,8 @@ onSelRemoved!public!selection! !
 onStateRestored!binary filing!private! !
 onViewCreated!event handling!public! !
 primaryColumn!columns!private! !
-queryExtraLargeIconMode:!commands-queries!private! !
-queryLargeIconMode:!commands-queries!private! !
 queryListMode:!commands-queries!private! !
 queryReportMode:!commands-queries!private! !
-querySmallIconMode:!commands-queries!private! !
-queryThumbnailsMode:!commands-queries!private! !
-queryTileIconMode:!commands-queries!private! !
 refreshContents!public!updating! !
 refreshNonVirtual!private!updating! !
 removeColumn:!columns!public!removing! !
@@ -2661,7 +2582,6 @@ setWidthOfColumn:to:!columns!public! !
 showDropHighlight:!drag & drop!private! !
 showsSelAlways!accessing-styles!public! !
 showsSelAlways:!accessing-styles!public! !
-smallIconMode!commands-actions!public! !
 sortOnColumn:!columns!public!sorting! !
 state!accessing!private! !
 stateImageFromRow:!helpers!private! !
@@ -2671,8 +2591,6 @@ textFromRow:!adapters!private! !
 thumbnailExtent!accessing!public! !
 thumbnailExtent:!accessing!public! !
 thumbnailsImageManager!image management!private! !
-thumbnailsMode!commands-actions!public! !
-tileIconMode!commands-actions!public! !
 updateAllNonVirtual!private!updating! !
 updateAllVirtual!private!updating! !
 updateColumn:!columns!private!updating! !
@@ -2680,7 +2598,6 @@ updateItem:atIndex:!event handling!public! !
 updateSelectionCache!helpers!private!selection! !
 viewMode!accessing!public! !
 viewModeChanged!helpers!private! !
-viewModeSelect!commands-actions!commands-menus!public! !
 wantCustomDrawItemNotifications:!helpers!private! !
 !
 
