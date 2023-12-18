@@ -44,13 +44,15 @@ get_sessionId: sessionId
 sessionId
 	"Answer the <lpwstr> value of the 'sessionId' property of the receiver."
 
-	| answer |
-	answer := StructurePointer newNull: TaskMemory elementClass: Utf16String.
-	self get_sessionId: answer.
-	^answer asObject! !
+	| ptr answer |
+	ptr := TaskMemory new.
+	self get_sessionId: ptr.
+	answer := Utf16String fromAddress: ptr.
+	ptr free.
+	^answer! !
 !WebView2.ICoreWebView2DevToolsProtocolEventReceivedEventArgs2 categoriesForMethods!
 get_sessionId:!**auto generated**!COM Interfaces-ICoreWebView2DevToolsProtocolEventReceivedEventArgs2!private! !
-sessionId!**auto generated**!properties!public! !
+sessionId!properties!public! !
 !
 
 !WebView2.ICoreWebView2DevToolsProtocolEventReceivedEventArgs2 class methodsFor!

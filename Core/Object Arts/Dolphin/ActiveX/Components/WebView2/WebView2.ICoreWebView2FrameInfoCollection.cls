@@ -42,10 +42,18 @@ GetIterator: iterator
 	^self invalidCall: _failureCode!
 
 iteratorClass
-	^ICoreWebView2FrameInfoCollectionIterator! !
+	^ICoreWebView2FrameInfoCollectionIterator!
+
+printOn: aPuttableStream
+	aPuttableStream
+		basicPrint: self;
+		nextPut: $(.
+	self do: [:each | each printOn: aPuttableStream] separatedBy: [aPuttableStream space].
+	aPuttableStream nextPut: $)! !
 !WebView2.ICoreWebView2FrameInfoCollection categoriesForMethods!
 GetIterator:!**auto generated**!COM Interfaces-ICoreWebView2FrameInfoCollection!private! !
 iteratorClass!constants!private! !
+printOn:!printing!public! !
 !
 
 !WebView2.ICoreWebView2FrameInfoCollection class methodsFor!

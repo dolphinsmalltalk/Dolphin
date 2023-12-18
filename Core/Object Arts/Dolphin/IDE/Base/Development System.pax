@@ -10098,7 +10098,7 @@ publishedAspectsOfInstances
 
 	| aspects |
 	aspects := super publishedAspectsOfInstances.
-	#(#allowSSO #isCustomCrashReportingEnabled #canNavigateToStrings #isStatusBarEnabled #isScriptEnabled #areBrowserAcceleratorKeysEnabled #allowExternalDrop #allowContextMenu #areDefaultScriptDialogsEnabled #areDevToolsEnabled #areHostObjectsAllowed #isBuiltInErrorPageEnabled #isGeneralAutofillEnabled #isPasswordAutosaveEnabled #isPinchZoomEnabled #isSwipeNavigationEnabled #isWebMessageEnabled #isZoomControlEnabled #isInPrivateModeEnabled)
+	#(#allowSSO #isCustomCrashReportingEnabled #canNavigateToStrings #isStatusBarEnabled #isScriptEnabled #areBrowserAcceleratorKeysEnabled #allowExternalDrop #allowContextMenu #areDefaultScriptDialogsEnabled #areDevToolsEnabled #areHostObjectsAllowed #isBuiltInErrorPageEnabled #isGeneralAutofillEnabled #isPasswordAutosaveEnabled #isPinchZoomEnabled #isSwipeNavigationEnabled #isWebMessageEnabled #isZoomControlEnabled #isInPrivateModeEnabled #areBrowserExtensionsEnabled)
 		do: [:each | aspects add: (Aspect boolean: each)].
 	aspects add: (Aspect
 				choice: #trackingPreventionLevel

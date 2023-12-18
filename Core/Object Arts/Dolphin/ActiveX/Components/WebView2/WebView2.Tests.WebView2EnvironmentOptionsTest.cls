@@ -32,6 +32,18 @@ testAllowSSO
 	self deny: subject allowSSO.
 	self deny: interface allowSingleSignOnUsingOSPrimaryAccount.!
 
+testAreBrowserExtensionsEnabled
+	| subject interface |
+	subject := WebView2EnvironmentOptions new.
+	interface := subject queryInterface: ICoreWebView2EnvironmentOptions6.
+	self deny: subject areBrowserExtensionsEnabled.
+	self deny: interface areBrowserExtensionsEnabled.
+	interface areBrowserExtensionsEnabled: true.
+	self assert: subject areBrowserExtensionsEnabled.
+	self assert: interface areBrowserExtensionsEnabled.
+	interface areBrowserExtensionsEnabled: false.
+	self deny: subject areBrowserExtensionsEnabled!
+
 testEnableTrackingPrevention
 	| subject interface |
 	subject := WebView2EnvironmentOptions new.
@@ -92,6 +104,7 @@ testTargetCompatibleBrowserVersion
 !WebView2.Tests.WebView2EnvironmentOptionsTest categoriesForMethods!
 testAdditionalBrowserArguments!public! !
 testAllowSSO!public! !
+testAreBrowserExtensionsEnabled!public! !
 testEnableTrackingPrevention!public! !
 testExclusiveDataFolderAccess!public! !
 testIsCustomCrashReportingEnabled!public! !

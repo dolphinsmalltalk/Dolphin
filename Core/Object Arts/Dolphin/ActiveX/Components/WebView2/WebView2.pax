@@ -45,6 +45,7 @@ package setClassNames: #(
 	#{WebView2.ICoreWebView2_18}
 	#{WebView2.ICoreWebView2_19}
 	#{WebView2.ICoreWebView2_2}
+	#{WebView2.ICoreWebView2_20}
 	#{WebView2.ICoreWebView2_3}
 	#{WebView2.ICoreWebView2_4}
 	#{WebView2.ICoreWebView2_5}
@@ -53,11 +54,16 @@ package setClassNames: #(
 	#{WebView2.ICoreWebView2_8}
 	#{WebView2.ICoreWebView2_9}
 	#{WebView2.ICoreWebView2AcceleratorKeyPressedEventArgs}
+	#{WebView2.ICoreWebView2AcceleratorKeyPressedEventArgs2}
 	#{WebView2.ICoreWebView2AcceleratorKeyPressedEventHandler}
 	#{WebView2.ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler}
 	#{WebView2.ICoreWebView2BasicAuthenticationRequestedEventArgs}
 	#{WebView2.ICoreWebView2BasicAuthenticationRequestedEventHandler}
 	#{WebView2.ICoreWebView2BasicAuthenticationResponse}
+	#{WebView2.ICoreWebView2BrowserExtension}
+	#{WebView2.ICoreWebView2BrowserExtensionEnableCompletedHandler}
+	#{WebView2.ICoreWebView2BrowserExtensionList}
+	#{WebView2.ICoreWebView2BrowserExtensionRemoveCompletedHandler}
 	#{WebView2.ICoreWebView2BrowserProcessExitedEventArgs}
 	#{WebView2.ICoreWebView2BrowserProcessExitedEventHandler}
 	#{WebView2.ICoreWebView2BytesReceivedChangedEventHandler}
@@ -113,6 +119,7 @@ package setClassNames: #(
 	#{WebView2.ICoreWebView2Environment10}
 	#{WebView2.ICoreWebView2Environment11}
 	#{WebView2.ICoreWebView2Environment12}
+	#{WebView2.ICoreWebView2Environment13}
 	#{WebView2.ICoreWebView2Environment2}
 	#{WebView2.ICoreWebView2Environment3}
 	#{WebView2.ICoreWebView2Environment4}
@@ -126,6 +133,7 @@ package setClassNames: #(
 	#{WebView2.ICoreWebView2EnvironmentOptions3}
 	#{WebView2.ICoreWebView2EnvironmentOptions4}
 	#{WebView2.ICoreWebView2EnvironmentOptions5}
+	#{WebView2.ICoreWebView2EnvironmentOptions6}
 	#{WebView2.ICoreWebView2EstimatedEndTimeChangedEventHandler}
 	#{WebView2.ICoreWebView2EventArgs}
 	#{WebView2.ICoreWebView2EventHandler}
@@ -139,12 +147,14 @@ package setClassNames: #(
 	#{WebView2.ICoreWebView2Frame2}
 	#{WebView2.ICoreWebView2Frame3}
 	#{WebView2.ICoreWebView2Frame4}
+	#{WebView2.ICoreWebView2Frame5}
 	#{WebView2.ICoreWebView2FrameContentLoadingEventHandler}
 	#{WebView2.ICoreWebView2FrameCreatedEventArgs}
 	#{WebView2.ICoreWebView2FrameCreatedEventHandler}
 	#{WebView2.ICoreWebView2FrameDestroyedEventHandler}
 	#{WebView2.ICoreWebView2FrameDOMContentLoadedEventHandler}
 	#{WebView2.ICoreWebView2FrameInfo}
+	#{WebView2.ICoreWebView2FrameInfo2}
 	#{WebView2.ICoreWebView2FrameInfoCollection}
 	#{WebView2.ICoreWebView2FrameInfoCollectionIterator}
 	#{WebView2.ICoreWebView2FrameNameChangedEventHandler}
@@ -155,6 +165,7 @@ package setClassNames: #(
 	#{WebView2.ICoreWebView2GetCookiesCompletedHandler}
 	#{WebView2.ICoreWebView2GetFaviconCompletedHandler}
 	#{WebView2.ICoreWebView2GetNonDefaultPermissionSettingsCompletedHandler}
+	#{WebView2.ICoreWebView2GetProcessExtendedInfosCompletedHandler}
 	#{WebView2.ICoreWebView2HistoryChangedEventHandler}
 	#{WebView2.ICoreWebView2HttpHeadersCollection}
 	#{WebView2.ICoreWebView2HttpHeadersCollectionIterator}
@@ -194,6 +205,8 @@ package setClassNames: #(
 	#{WebView2.ICoreWebView2PrintSettings2}
 	#{WebView2.ICoreWebView2PrintToPdfCompletedHandler}
 	#{WebView2.ICoreWebView2PrintToPdfStreamCompletedHandler}
+	#{WebView2.ICoreWebView2ProcessExtendedInfo}
+	#{WebView2.ICoreWebView2ProcessExtendedInfoCollection}
 	#{WebView2.ICoreWebView2ProcessFailedEventArgs}
 	#{WebView2.ICoreWebView2ProcessFailedEventArgs2}
 	#{WebView2.ICoreWebView2ProcessFailedEventHandler}
@@ -206,6 +219,11 @@ package setClassNames: #(
 	#{WebView2.ICoreWebView2Profile4}
 	#{WebView2.ICoreWebView2Profile5}
 	#{WebView2.ICoreWebView2Profile6}
+	#{WebView2.ICoreWebView2Profile7}
+	#{WebView2.ICoreWebView2Profile8}
+	#{WebView2.ICoreWebView2ProfileAddBrowserExtensionCompletedHandler}
+	#{WebView2.ICoreWebView2ProfileDeletedEventHandler}
+	#{WebView2.ICoreWebView2ProfileGetBrowserExtensionsCompletedHandler}
 	#{WebView2.ICoreWebView2RasterizationScaleChangedEventHandler}
 	#{WebView2.ICoreWebView2ScriptDialogOpeningEventArgs}
 	#{WebView2.ICoreWebView2ScriptDialogOpeningEventHandler}
@@ -357,6 +375,11 @@ Kernel.Namespace
 			'COREWEBVIEW2_DOWNLOAD_STATE_INTERRUPTED' -> 16r1.
 			'COREWEBVIEW2_FAVICON_IMAGE_FORMAT_JPEG' -> 16r1.
 			'COREWEBVIEW2_FAVICON_IMAGE_FORMAT_PNG' -> 16r0.
+			'COREWEBVIEW2_FRAME_KIND_EMBED' -> 16r3.
+			'COREWEBVIEW2_FRAME_KIND_IFRAME' -> 16r2.
+			'COREWEBVIEW2_FRAME_KIND_MAIN_FRAME' -> 16r1.
+			'COREWEBVIEW2_FRAME_KIND_OBJECT' -> 16r4.
+			'COREWEBVIEW2_FRAME_KIND_UNKNOWN' -> 16r0.
 			'COREWEBVIEW2_HOST_RESOURCE_ACCESS_KIND_ALLOW' -> 16r1.
 			'COREWEBVIEW2_HOST_RESOURCE_ACCESS_KIND_DENY' -> 16r0.
 			'COREWEBVIEW2_HOST_RESOURCE_ACCESS_KIND_DENY_CORS' -> 16r2.
@@ -552,6 +575,7 @@ OS.COM.InterfaceImplementation
 	classInstanceVariableNames: ''
 	classConstants: {
 			'AllowSSOMask' -> 16r1.
+			'BrowseExtensionsEnabledMask' -> 16r8.
 			'CustomCrashReportingMask' -> 16r4.
 			'ExclusiveUserDataFolderAccessMask' -> 16r2
 		}!
@@ -600,6 +624,13 @@ WebView2.ICoreWebView2Interface
 	classConstants: {}!
 WebView2.ICoreWebView2Interface
 	subclass: #'WebView2.ICoreWebView2BasicAuthenticationResponse'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+WebView2.ICoreWebView2Interface
+	subclass: #'WebView2.ICoreWebView2BrowserExtension'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -746,6 +777,13 @@ WebView2.ICoreWebView2Interface
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WebView2.ICoreWebView2Interface
+	subclass: #'WebView2.ICoreWebView2EnvironmentOptions6'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+WebView2.ICoreWebView2Interface
 	subclass: #'WebView2.ICoreWebView2EventArgs'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -779,7 +817,7 @@ WebView2.ICoreWebView2Interface
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'KindNames' -> #('UNKNOWN' 'MAIN_FRAME' 'IFRAME' 'EMBED' 'OBJECT') }!
 WebView2.ICoreWebView2Interface
 	subclass: #'WebView2.ICoreWebView2FrameInfoCollectionIterator'
 	instanceVariableNames: ''
@@ -813,6 +851,13 @@ WebView2.ICoreWebView2Interface
 	classConstants: {}!
 WebView2.ICoreWebView2Interface
 	subclass: #'WebView2.ICoreWebView2PrintSettings'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+WebView2.ICoreWebView2Interface
+	subclass: #'WebView2.ICoreWebView2ProcessExtendedInfo'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1003,6 +1048,13 @@ WebView2.ICoreWebView2_18
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+WebView2.ICoreWebView2_19
+	subclass: #'WebView2.ICoreWebView2_20'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 WebView2.ICoreWebView2Certificate
 	subclass: #'WebView2.ICoreWebView2ClientCertificate'
 	instanceVariableNames: ''
@@ -1053,6 +1105,13 @@ WebView2.ICoreWebView2HttpHeadersCollection
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WebView2.ICoreWebView2Sequence
+	subclass: #'WebView2.ICoreWebView2BrowserExtensionList'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+WebView2.ICoreWebView2Sequence
 	subclass: #'WebView2.ICoreWebView2ClientCertificateCollection'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -1088,6 +1147,13 @@ WebView2.ICoreWebView2Sequence
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WebView2.ICoreWebView2Sequence
+	subclass: #'WebView2.ICoreWebView2ProcessExtendedInfoCollection'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+WebView2.ICoreWebView2Sequence
 	subclass: #'WebView2.ICoreWebView2ProcessInfoCollection'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -1103,6 +1169,20 @@ WebView2.ICoreWebView2Sequence
 	classConstants: {}!
 WebView2.ICoreWebView2CompletedHandler
 	subclass: #'WebView2.ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+WebView2.ICoreWebView2CompletedHandler
+	subclass: #'WebView2.ICoreWebView2BrowserExtensionEnableCompletedHandler'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+WebView2.ICoreWebView2CompletedHandler
+	subclass: #'WebView2.ICoreWebView2BrowserExtensionRemoveCompletedHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1186,6 +1266,13 @@ WebView2.ICoreWebView2CompletedHandler
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WebView2.ICoreWebView2CompletedHandler
+	subclass: #'WebView2.ICoreWebView2GetProcessExtendedInfosCompletedHandler'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+WebView2.ICoreWebView2CompletedHandler
 	subclass: #'WebView2.ICoreWebView2PrintCompletedHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -1201,6 +1288,20 @@ WebView2.ICoreWebView2CompletedHandler
 	classConstants: {}!
 WebView2.ICoreWebView2CompletedHandler
 	subclass: #'WebView2.ICoreWebView2PrintToPdfStreamCompletedHandler'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+WebView2.ICoreWebView2CompletedHandler
+	subclass: #'WebView2.ICoreWebView2ProfileAddBrowserExtensionCompletedHandler'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+WebView2.ICoreWebView2CompletedHandler
+	subclass: #'WebView2.ICoreWebView2ProfileGetBrowserExtensionsCompletedHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1341,6 +1442,13 @@ WebView2.ICoreWebView2Environment10
 	classConstants: {}!
 WebView2.ICoreWebView2Environment11
 	subclass: #'WebView2.ICoreWebView2Environment12'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+WebView2.ICoreWebView2Environment12
+	subclass: #'WebView2.ICoreWebView2Environment13'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1502,6 +1610,13 @@ WebView2.ICoreWebView2EventArgs
 	classConstants: {}!
 WebView2.ICoreWebView2EventArgs
 	subclass: #'WebView2.ICoreWebView2WebResourceResponseReceivedEventArgs'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+WebView2.ICoreWebView2AcceleratorKeyPressedEventArgs
+	subclass: #'WebView2.ICoreWebView2AcceleratorKeyPressedEventArgs2'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1851,6 +1966,13 @@ WebView2.ICoreWebView2EventHandler
 	classInstanceVariableNames: ''
 	classConstants: {}!
 WebView2.ICoreWebView2EventHandler
+	subclass: #'WebView2.ICoreWebView2ProfileDeletedEventHandler'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+WebView2.ICoreWebView2EventHandler
 	subclass: #'WebView2.ICoreWebView2RasterizationScaleChangedEventHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -1962,6 +2084,20 @@ WebView2.ICoreWebView2Frame3
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+WebView2.ICoreWebView2Frame4
+	subclass: #'WebView2.ICoreWebView2Frame5'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+WebView2.ICoreWebView2FrameInfo
+	subclass: #'WebView2.ICoreWebView2FrameInfo2'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 WebView2.ICoreWebView2PrintSettings
 	subclass: #'WebView2.ICoreWebView2PrintSettings2'
 	instanceVariableNames: ''
@@ -1999,6 +2135,20 @@ WebView2.ICoreWebView2Profile4
 	classConstants: {}!
 WebView2.ICoreWebView2Profile5
 	subclass: #'WebView2.ICoreWebView2Profile6'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+WebView2.ICoreWebView2Profile6
+	subclass: #'WebView2.ICoreWebView2Profile7'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+WebView2.ICoreWebView2Profile7
+	subclass: #'WebView2.ICoreWebView2Profile8'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

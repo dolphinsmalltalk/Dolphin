@@ -74,6 +74,13 @@ areBrowserAcceleratorKeysEnabled: aBoolean
 	settingsFlags := settingsFlags mask: DisableBrowserAcceleratorKeysMask set: aBoolean not.
 	self webviewSettings ifNotNil: [:settings | settings areBrowserAcceleratorKeysEnabled: aBoolean]!
 
+areBrowserExtensionsEnabled
+	^environmentOptions areBrowserExtensionsEnabled!
+
+areBrowserExtensionsEnabled: aBoolean
+	self areBrowserExtensionsEnabled = aBoolean ifTrue: [^self].
+	self recreateAround: [environmentOptions areBrowserExtensionsEnabled: aBoolean]!
+
 areDefaultScriptDialogsEnabled
 	^settingsFlags noMask: DisableDefaultScriptDialogsMask!
 
@@ -631,6 +638,8 @@ allowSSO!public!settings! !
 allowSSO:!public!settings! !
 areBrowserAcceleratorKeysEnabled!public!settings! !
 areBrowserAcceleratorKeysEnabled:!public!settings! !
+areBrowserExtensionsEnabled!public!settings!testing! !
+areBrowserExtensionsEnabled:!public!settings! !
 areDefaultScriptDialogsEnabled!public!settings! !
 areDefaultScriptDialogsEnabled:!public!settings! !
 areDevToolsEnabled!public!settings! !

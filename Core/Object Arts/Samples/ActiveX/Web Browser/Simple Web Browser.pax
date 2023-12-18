@@ -11,7 +11,7 @@ This is a minimalist browser based on the WebView2 Edge Browser control, which o
 	OS.COM.Examples.WebBrowserShell show
 ```
 
-The sample demonstrates WebView2 integration, including sinking events.
+The sample demonstrates WebView2 integration, including sinking events. It also demonstrates how to associate a dynamic menu with sub-menus for a drop-down toolbar button.
 
 ## Deployment:
 

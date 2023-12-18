@@ -56,7 +56,7 @@ Invoke:args:!**auto generated**!COM Interfaces-ICoreWebView2AcceleratorKeyPresse
 !WebView2.ICoreWebView2AcceleratorKeyPressedEventHandler class methodsFor!
 
 argsClass
-	^ICoreWebView2AcceleratorKeyPressedEventArgs!
+	^ICoreWebView2AcceleratorKeyPressedEventArgs2!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2AcceleratorKeyPressedEventHandler'

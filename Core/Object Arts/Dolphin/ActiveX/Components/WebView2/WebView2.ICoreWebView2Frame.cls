@@ -171,6 +171,22 @@ executeScript: aString thenDo: aDyadicValuable
 	self ExecuteScript: aString asUtf16String handler: handler.
 	handler free!
 
+frameId
+	"Answer the <uint32> value of the 'FrameId' property of the receiver."
+
+	| answer |
+	answer := UInt32 new.
+	self get_FrameId: answer.
+	^answer asObject!
+
+get_FrameId: id
+	"Private - Get the value of the 'FrameId' property of the receiver.
+
+		HRESULT __stdcall FrameId(
+			[out, retval]unsigned int* id);"
+
+	^E_NOTIMPL!
+
 get_name: name
 	"Private - Get the value of the 'name' property of the receiver.
 
@@ -338,6 +354,8 @@ addHostObjectToScriptWithOrigins:object:originsCount:origins:!**auto generated**
 AddHostObjectToScriptWithOrigins:object:originsCount:origins:!**auto generated**!COM Interfaces-ICoreWebView2Frame!private! !
 ExecuteScript:handler:!COM Interfaces-ICoreWebView2Frame2!methods!private! !
 executeScript:thenDo:!methods!public! !
+frameId!properties!public! !
+get_FrameId:!**auto generated**!COM Interfaces-ICoreWebView2Frame5!private! !
 get_name:!**auto generated**!COM Interfaces-ICoreWebView2Frame!private!properties! !
 isDestroyed!methods!public! !
 IsDestroyed:!**auto generated**!COM Interfaces-ICoreWebView2Frame!methods!private! !

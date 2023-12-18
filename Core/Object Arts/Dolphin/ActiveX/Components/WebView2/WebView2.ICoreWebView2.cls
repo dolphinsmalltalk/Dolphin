@@ -755,6 +755,14 @@ faviconUri
 	ptr free.
 	^answer!
 
+frameId
+	"Answer the <uint32> value of the 'FrameId' property of the receiver."
+
+	| answer |
+	answer := UInt32 new.
+	self get_FrameId: answer.
+	^answer asObject!
+
 get_BrowserProcessId: value
 	"Private - Get the value of the 'BrowserProcessId' property of the receiver.
 
@@ -850,6 +858,14 @@ get_FaviconUri: value
 	"Not really implemented in this version of WebView2"
 	value value: ('' asUtf16String copyToCOMTaskMemory detach).
 	^S_FALSE!
+
+get_FrameId: id
+	"Private - Get the value of the 'FrameId' property of the receiver.
+
+		HRESULT __stdcall FrameId(
+			[out, retval]unsigned int* id);"
+
+	^E_NOTIMPL!
 
 get_IsDefaultDownloadDialogOpen: value
 	"Private - Get the value of the 'IsDefaultDownloadDialogOpen' property of the receiver.
@@ -1704,6 +1720,7 @@ environment!properties!public! !
 ExecuteScript:handler:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 executeScript:thenDo:!async requests!public! !
 faviconUri!properties!public! !
+frameId!properties!public! !
 get_BrowserProcessId:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 get_CanGoBack:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 get_CanGoForward:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
@@ -1714,6 +1731,7 @@ get_DefaultDownloadDialogMargin:!COM Interfaces-ICoreWebView2_9!private! !
 get_DocumentTitle:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 get_Environment:!COM Interfaces-ICoreWebView2_2!private!properties! !
 get_FaviconUri:!**auto generated**!COM Interfaces-ICoreWebView2_15!private! !
+get_FrameId:!COM Interfaces-ICoreWebView2_20!private! !
 get_IsDefaultDownloadDialogOpen:!COM Interfaces-ICoreWebView2_9!private! !
 get_IsDocumentPlayingAudio:!COM Interfaces-ICoreWebView2_8!private! !
 get_IsMuted:!COM Interfaces-ICoreWebView2_8!private! !

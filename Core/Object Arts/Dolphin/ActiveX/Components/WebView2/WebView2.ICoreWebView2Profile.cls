@@ -50,6 +50,33 @@ interface ICoreWebView2Profile : IUnknown
 !WebView2.ICoreWebView2Profile categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
 !WebView2.ICoreWebView2Profile methodsFor!
 
+Add_Deleted: eventHandler token: token
+	"Private - Invoke the add_Deleted() method of the COM object.
+
+		HRESULT __stdcall add_Deleted(
+			[in]ICoreWebView2ProfileDeletedEventHandler* eventHandler,
+			[out]EventRegistrationToken* token);"
+
+	^E_NOTIMPL!
+
+AddBrowserExtension: extensionFolderPath handler: handler
+	"Invoke the AddBrowserExtension() method of the COM object.
+
+		HRESULT __stdcall AddBrowserExtension(
+			[in]LPWSTR extensionFolderPath,
+			[in]ICoreWebView2ProfileAddBrowserExtensionCompletedHandler* handler);"
+
+	^E_NOTIMPL!
+
+addBrowserExtension: extensionFolderPath thenDo: aDyadicValuable
+	"Add a browser extension to be loaded from the specified path. When done, invoke the completion handler passing an hresult success/failure code as the first argument, and an <ICoreWebView2BrowserExtension> on the new extension, if successfully loaded."
+
+	| handler |
+	handler := (WebView2CompletionHandler completionBlock: aDyadicValuable)
+				queryInterface: ICoreWebView2ProfileAddBrowserExtensionCompletedHandler.
+	self AddBrowserExtension: extensionFolderPath asUtf16String handler: handler.
+	handler free!
+
 ClearBrowsingData: dataKinds handler: handler
 	"Private - Invoke the ClearBrowsingData() method of the COM object.
 
@@ -139,6 +166,13 @@ defaultDownloadFolderPath: value
 defaultTrackingPreventionLevel
 	^COREWEBVIEW2_TRACKING_PREVENTION_LEVEL_BALANCED!
 
+Delete
+	"Invoke the Delete() method of the COM object.
+
+		HRESULT __stdcall Delete();"
+
+	^E_NOTIMPL!
+
 displayOn: aStream
 	| name |
 	self isNull ifTrue: [^super displayOn: aStream].
@@ -224,6 +258,21 @@ get_ProfilePath: value
 
 	<virtual stdcall: hresult 6 lpwstr*>
 	^self invalidCall: _failureCode!
+
+GetBrowserExtensions: handler
+	"Invoke the GetBrowserExtensions() method of the COM object.
+
+		HRESULT __stdcall GetBrowserExtensions(
+			[in]ICoreWebView2ProfileGetBrowserExtensionsCompletedHandler* handler);"
+
+	^E_NOTIMPL!
+
+getBrowserExtensionsThenDo: aDyadicValuable
+	| handler |
+	handler := (WebView2CompletionHandler completionBlock: aDyadicValuable)
+				queryInterface: ICoreWebView2ProfileGetBrowserExtensionsCompletedHandler.
+	self GetBrowserExtensions: handler.
+	handler free!
 
 GetNonDefaultPermissionSettings: completedHandler
 	"Invoke the GetNonDefaultPermissionSettings() method of the COM object.
@@ -385,6 +434,14 @@ put_PreferredTrackingPreventionLevel: value
 
 	^E_NOTIMPL!
 
+Remove_Deleted: token
+	"Invoke the remove_Deleted() method of the COM object.
+
+		HRESULT __stdcall remove_Deleted(
+			[in]EventRegistrationToken token);"
+
+	^E_NOTIMPL!
+
 SetPermissionState: permissionKind origin: origin state: state completedHandler: completedHandler
 	"Invoke the SetPermissionState() method of the COM object.
 
@@ -408,17 +465,21 @@ setPermissionState: permissionKindInteger origin: originString state: stateInteg
 		completedHandler: handler.
 	handler free! !
 !WebView2.ICoreWebView2Profile categoriesForMethods!
+Add_Deleted:token:!COM Interfaces-ICoreWebView2Profile8!private! !
+AddBrowserExtension:handler:!COM Interfaces-ICoreWebView2Profile7!public! !
+addBrowserExtension:thenDo:!async requests!public! !
 ClearBrowsingData:handler:!COM Interfaces-ICoreWebView2Profile2!private! !
 clearBrowsingData:startTime:endTime:handler:!methods!public! !
-clearBrowsingData:thenDo:!methods!public! !
+clearBrowsingData:thenDo:!async requests!public! !
 ClearBrowsingDataAll:!COM Interfaces-ICoreWebView2Profile2!private! !
-clearBrowsingDataAllThenDo:!methods!public! !
+clearBrowsingDataAllThenDo:!async requests!public! !
 ClearBrowsingDataInTimeRange:startTime:endTime:handler:!COM Interfaces-ICoreWebView2Profile2!private! !
-clearBrowsingDataThenDo:!methods!public! !
+clearBrowsingDataThenDo:!async requests!public! !
 cookieManager!properties!public! !
 defaultDownloadFolderPath!properties!public! !
 defaultDownloadFolderPath:!**auto generated**!properties!public! !
 defaultTrackingPreventionLevel!constants!private! !
+Delete!COM Interfaces-ICoreWebView2Profile8!public! !
 displayOn:!displaying!public! !
 get_CookieManager:!COM Interfaces-ICoreWebView2Profile5!private! !
 get_DefaultDownloadFolderPath:!**auto generated**!COM Interfaces-ICoreWebView2Profile!private! !
@@ -429,8 +490,10 @@ get_PreferredColorScheme:!**auto generated**!COM Interfaces-ICoreWebView2Profile
 get_PreferredTrackingPreventionLevel:!COM Interfaces-ICoreWebView2Profile3!private! !
 get_ProfileName:!**auto generated**!COM Interfaces-ICoreWebView2Profile!private! !
 get_ProfilePath:!**auto generated**!COM Interfaces-ICoreWebView2Profile!private! !
+GetBrowserExtensions:!COM Interfaces-ICoreWebView2Profile7!public! !
+getBrowserExtensionsThenDo:!async requests!public! !
 GetNonDefaultPermissionSettings:!COM Interfaces-ICoreWebView2Profile4!public! !
-getNonDefaultPermissionSettingsThenDo:!methods!public! !
+getNonDefaultPermissionSettingsThenDo:!async requests!public! !
 icon!displaying!public! !
 isGeneralAutofillEnabled!properties!public! !
 isGeneralAutofillEnabled:!properties!public! !
@@ -449,8 +512,9 @@ put_IsGeneralAutofillEnabled:!COM Interfaces-ICoreWebView2Profile6!private! !
 put_IsPasswordAutosaveEnabled:!COM Interfaces-ICoreWebView2Profile6!private! !
 put_PreferredColorScheme:!**auto generated**!COM Interfaces-ICoreWebView2Profile!private! !
 put_PreferredTrackingPreventionLevel:!COM Interfaces-ICoreWebView2Profile3!private! !
+Remove_Deleted:!COM Interfaces-ICoreWebView2Profile8!public! !
 SetPermissionState:origin:state:completedHandler:!COM Interfaces-ICoreWebView2Profile4!public! !
-setPermissionState:origin:state:thenDo:!methods!public! !
+setPermissionState:origin:state:thenDo:!async requests!public! !
 !
 
 !WebView2.ICoreWebView2Profile class methodsFor!

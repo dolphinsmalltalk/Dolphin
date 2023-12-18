@@ -64,8 +64,12 @@ defineFunctions
 	self
 		defineFunction: #get_ParameterObjectAsJson:
 			argumentTypes: 'lpwstr*'
-! !
+!
+
+latestDerivation
+	^##(super latestDerivation)! !
 !WebView2.ICoreWebView2DevToolsProtocolEventReceivedEventArgs class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
+latestDerivation!enquiries!public! !
 !
 
