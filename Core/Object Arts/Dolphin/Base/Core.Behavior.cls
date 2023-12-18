@@ -394,6 +394,26 @@ includesSelector: aSymbol
 
 	^methodDictionary notNil and: [methodDictionary includesKey: aSymbol]!
 
+indexOfInstVar: aString
+	"Answer the index of the specified inst. var in the receiver, or
+	if no matching instance variable, raise a NotFoundError."
+
+	^self indexOfInstVar: aString ifAbsent: [self errorNotFound: aString]!
+
+indexOfInstVar: aString ifAbsent: aNiladicValuable
+	"Answer the <integer> index of the inst. var of the receiver identified by the
+	<readableString> name, aString, or if no matching instance variable, the result of
+	evaluating the <niladicValuable>, aNiladicValuable."
+
+	| index |
+	index := self instanceVariableNames indexOf: aString asString.
+	^index == 0
+		ifTrue: 
+			[superclass
+				ifNil: [aNiladicValuable value]
+				ifNotNil: [superclass indexOfInstVar: aString ifAbsent: aNiladicValuable]]
+		ifFalse: [index + (superclass ifNil: [0] ifNotNil: [superclass instSize])]!
+
 inheritsFrom: aBehavior
 	"Answer whether the receiver is a subclass of the argument. This is the same as #includesBehavior:, but starts from the superclass of the receiver."
 
@@ -913,15 +933,14 @@ whichMethodsAccess: aString
 	"Answer a <Set> of methods from the receiver's local method dictionary whose methods access 
 	the instance variable of the receiver named by the argument."
 
-	^self whichMethodsAccess: aString
-		at: (self allInstanceVariableNames indexOf: aString)!
+	^self whichMethodsAccess: aString at: (self indexOfInstVar: aString ifAbsent: 0)!
 
 whichMethodsAccess: aString at: anInteger
 	"Private - Answer a <Set> of selectors from the receiver's local method dictionary whose 
 	methods access the instance variable with the specified index."
 
-	^self 
-		selectMethods: [:method | method accessesInstVar: aString at: anInteger]!
+	anInteger == 0 ifTrue: [^##(IdentitySet new)].
+	^self selectMethods: [:method | method accessesInstVar: aString at: anInteger]!
 
 whichMethodsAssign: aString
 	"Answer a <collection> of <CompiledMethod>s that write to the instance variable
@@ -1026,6 +1045,8 @@ hasMethods!methods-testing!public! !
 hierarchyBindingFor:!bindings!public! !
 includesBehavior:!class hierarchy-testing!public! !
 includesSelector:!methods-testing!public! !
+indexOfInstVar:!instance variables!public! !
+indexOfInstVar:ifAbsent:!instance variables!public! !
 inheritsFrom:!class hierarchy-testing!public! !
 instanceCount!accessing!public! !
 instanceSpec!instance specification-accessing!private! !
