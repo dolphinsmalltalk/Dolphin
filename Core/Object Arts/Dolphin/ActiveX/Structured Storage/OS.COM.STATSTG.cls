@@ -149,12 +149,14 @@ name: aString
 	| name size utf16 |
 	utf16 := aString asUtf16String.
 	size := utf16 byteSize.
+	"Note that CoTaskMemAlloc does not guarantee to initialize/zero the memory, so we must be sure to add the null terminator."
 	name := Ole32 coTaskMemAlloc: size.
 	name
 		replaceFrom: 1
-		to: size - 2
-		with: utf16
-		startingAt: 1.
+			to: size - 2
+			with: utf16
+			startingAt: 1;
+		uint16AtOffset: size - 2 put: 0.
 	self pwcsName: name
 	"struct now has ownership of the name"!
 

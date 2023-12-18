@@ -12,6 +12,7 @@ package setClassNames: #(
 package setMethodNames: #(
 	#(#{Core.Tests.AbstractFileStreamTest} #testIStream)
 	#(#{Core.Tests.AbstractFileStreamTest} #testIStreamStat)
+	#(#{Core.Tests.AbstractFileStreamTest} #verifyIStreamStat)
 ).
 
 package setPrerequisites: #(
@@ -66,7 +67,25 @@ testIStream
 		equals: clsid asByteArray , helloWorld , (ByteArray new: empty - helloWorld size) , helloWorld!
 
 testIStreamStat
-	| stat subject istream |
+	| anon |
+	"Ensure library proxy is resolved"
+	Ole32 asParameter.
+	anon := OLELibrary newAnonymousSubclass.
+	"Wrap the default allocator with one that fills the allocated blocks with garbage. This helps detect assumptions that the blocks are zero'd (which they aren't)"
+	self assertNotNil: (anon
+				compile: 'coTaskMemAlloc: cb
+		| p |
+		p := OLELibrary default coTaskMemAlloc: cb.
+		Kernel32 fillMemory: p length: cb fill: 16rCD.
+		^p').
+	OLELibrary sharedVariableName binding setValue: (anon new
+				handle: OLELibrary default handle;
+				yourself).
+	[self verifyIStreamStat]
+		ensure: [OLELibrary sharedVariableName binding setValue: OLELibrary default]!
+
+verifyIStreamStat
+	| istream stat subject |
 	subject := self tempWriteStream: #binary.
 	subject nextPutAll: self randomData1.
 	istream := subject queryInterface: IStream.
@@ -83,10 +102,12 @@ testIStreamStat
 	self assert: stat isFinalizable.
 	self assert: stat name equals: tempFileName.
 	self assert: stat mtime equals: (File lastWriteTime: tempFileName).
-	self assert: stat grfMode equals: StorageConstants.STGM_READ | StorageConstants.STGM_SHARE_DENY_WRITE.
+	self assert: stat grfMode
+		equals: StorageConstants.STGM_READ | StorageConstants.STGM_SHARE_DENY_WRITE.
 	self assert: stat isOLEStream.
 	self assert: stat grfLocksSupported equals: 0.
 	self assert: stat cbSize equals: self randomData1 size.
+	stat free.
 	istream free.
 	subject close.
 	subject := self streamClass
@@ -97,12 +118,15 @@ testIStreamStat
 	self assert: subject isWriteable.
 	istream := subject queryInterface: IStream.
 	stat := istream stat.
-	self assert: stat grfMode equals: StorageConstants.STGM_READWRITE | StorageConstants.STGM_SHARE_DENY_WRITE.
+	self assert: stat grfMode
+		equals: StorageConstants.STGM_READWRITE | StorageConstants.STGM_SHARE_DENY_WRITE.
+	stat free.
 	istream free.
 	subject close! !
 !Core.Tests.AbstractFileStreamTest categoriesForMethods!
 testIStream!public!unit tests! !
 testIStreamStat!public!unit tests! !
+verifyIStreamStat!helpers!public! !
 !
 
 "End of package definition"!

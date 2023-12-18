@@ -86,6 +86,7 @@ testStat
 	self assert: stat isOLEStream.
 	self assert: stat grfLocksSupported equals: 0.
 	self assert: stat isFinalizable.
+	stat free.
 	subject close!
 
 testTruncateFile

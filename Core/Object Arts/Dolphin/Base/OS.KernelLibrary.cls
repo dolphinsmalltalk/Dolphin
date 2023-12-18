@@ -467,6 +467,10 @@ fileTimeToSystemTime: lpFileTime lpSystemTime: lpSystemTime
 	<stdcall: bool FileTimeToSystemTime void* SYSTEMTIME*>
 	^self invalidCall: _failureCode!
 
+fillMemory: pvDest length: cBytes fill: byteValue
+	<stdcall: void RtlFillMemory void* uint32 int32>
+	^self invalidCall: _failureCode!
+
 findClose: hFindFile
 	"Close the specified find file handle returned by a previous call to FindFirstFile().
 
@@ -2128,6 +2132,7 @@ expandEnvironmentStrings:!public!win32 functions-process and thread! !
 expandEnvironmentStrings:lpDst:nSize:!public!win32 functions-process and thread! !
 fileTimeToLocalTime:lpLocalFileTime:!public!win32 functions-date and time! !
 fileTimeToSystemTime:lpSystemTime:!public!win32 functions-date and time! !
+fillMemory:length:fill:!public!win32 functions-memory management! !
 findClose:!public!win32 functions-file management! !
 findFirstFile:lpFindFileData:!public!win32 functions-file management! !
 findNextFile:lpFindFileData:!public!win32 functions-file management! !
