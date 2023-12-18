@@ -555,26 +555,6 @@ includeSelector: aSelector inCategory: categoryObject
 		ifFalse: [catalogue at: category put: (selectors copyWith: aSelector)].
 	self methodsCatalogue: catalogue!
 
-indexOfInstVar: aString
-	"Answer the index of the specified inst. var in the receiver, or
-	if no matching instance variable, raise a NotFoundError."
-
-	^self indexOfInstVar: aString ifAbsent: [self errorNotFound: aString]!
-
-indexOfInstVar: aString ifAbsent: aNiladicValuable
-	"Answer the <integer> index of the inst. var of the receiver identified by the
-	<readableString> name, aString, or if no matching instance variable, the result of
-	evaluating the <niladicValuable>, aNiladicValuable."
-
-	| index |
-	index := self instanceVariableNames indexOf: aString asString.
-	^index == 0
-		ifTrue: 
-			[superclass
-				ifNil: [aNiladicValuable value]
-				ifNotNil: [superclass indexOfInstVar: aString ifAbsent: aNiladicValuable]]
-		ifFalse: [index + (superclass ifNil: [0] ifNotNil: [superclass instSize])]!
-
 instanceClass
 	"Answer the receiver's singleton instance (the actual class object)."
 
@@ -1125,8 +1105,6 @@ hierarchyBindingFor:!bindings!public! !
 imports!pool variables!public! !
 includesCategory:!categories-testing!public! !
 includeSelector:inCategory:!categories-testing!public! !
-indexOfInstVar:!instance variables!public! !
-indexOfInstVar:ifAbsent:!instance variables!public! !
 instanceClass!accessing!public! !
 instanceVariableNames!instance variables!public! !
 instanceVariableString!accessing!public! !
