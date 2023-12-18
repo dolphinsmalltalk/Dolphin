@@ -197,8 +197,12 @@ defineFunctions
 			argumentTypes: 'sdword*';
 		defineFunction: #put_Handled:
 			argumentTypes: 'sdword'
-! !
+!
+
+latestDerivation
+	^##(super latestDerivation)! !
 !WebView2.ICoreWebView2AcceleratorKeyPressedEventArgs class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public!template definition! !
+latestDerivation!enquiries!public! !
 !
 

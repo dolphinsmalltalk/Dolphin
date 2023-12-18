@@ -338,6 +338,23 @@ get_UserDataFolder: value
 
 	^E_NOTIMPL!
 
+GetProcessExtendedInfos: handler
+	"Invoke the GetProcessExtendedInfos() method of the COM object.
+
+		HRESULT __stdcall GetProcessExtendedInfos(
+			[in]ICoreWebView2GetProcessExtendedInfosCompletedHandler* handler);"
+
+	^E_NOTIMPL!
+
+getProcessExtendedInfosThenDo: aDyadicValuable
+	"Invoke the CreateCoreWebView2ControllerWithOptions() method of the COM object."
+
+	| handler |
+	handler := (WebView2CompletionHandler completionBlock: aDyadicValuable)
+				queryInterface: ICoreWebView2GetProcessExtendedInfosCompletedHandler.
+	self GetProcessExtendedInfos: handler.
+	handler free!
+
 GetProcessInfos: value
 	"Private - Invoke the GetProcessInfos() method of the COM object.
 
@@ -416,12 +433,12 @@ browserVersionString!properties!public! !
 createContextMenuItem:iconStream:kind:!methods!public! !
 CreateContextMenuItem:iconStream:kind:item:!COM Interfaces-ICoreWebView2Environment9!private! !
 CreateCoreWebView2CompositionController:handler:!COM Interfaces-ICoreWebView2Environment3!methods!private! !
-createCoreWebView2CompositionController:thenDo:!methods!public! !
-createCoreWebView2CompositionController:withOptions:thenDo:!methods!public! !
+createCoreWebView2CompositionController:thenDo:!async requests!public! !
+createCoreWebView2CompositionController:withOptions:thenDo:!async requests!public! !
 CreateCoreWebView2CompositionControllerWithOptions:options:handler:!COM Interfaces-ICoreWebView2Environment10!private! !
 CreateCoreWebView2Controller:handler:!**auto generated**!COM Interfaces-ICoreWebView2Environment!private! !
-createCoreWebView2Controller:thenDo:!methods!public! !
-createCoreWebView2Controller:withOptions:thenDo:!methods!public! !
+createCoreWebView2Controller:thenDo:!async requests!public! !
+createCoreWebView2Controller:withOptions:thenDo:!async requests!public! !
 createCoreWebView2ControllerOptions!methods!public! !
 CreateCoreWebView2ControllerOptions:!COM Interfaces-ICoreWebView2Environment10!private! !
 CreateCoreWebView2ControllerWithOptions:options:handler:!COM Interfaces-ICoreWebView2Environment10!private! !
@@ -439,6 +456,8 @@ failureReportFolderPath!properties!public! !
 get_BrowserVersionString:!**auto generated**!COM Interfaces-ICoreWebView2Environment!private! !
 get_FailureReportFolderPath:!COM Interfaces-ICoreWebView2Environment11!private! !
 get_UserDataFolder:!COM Interfaces-ICoreWebView2Environment7!private!properties! !
+GetProcessExtendedInfos:!COM Interfaces-ICoreWebView2Environment13!public! !
+getProcessExtendedInfosThenDo:!async requests!public! !
 GetProcessInfos:!COM Interfaces-ICoreWebView2Environment8!methods!private! !
 getProviderForHwnd:!methods!public! !
 GetProviderForHwnd:provider:!COM Interfaces-ICoreWebView2Environment4!methods!private! !

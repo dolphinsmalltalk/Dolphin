@@ -8,6 +8,7 @@ OS.COM.InterfaceImplementation
 	classInstanceVariableNames: ''
 	classConstants: {
 			'AllowSSOMask' -> 16r1.
+			'BrowseExtensionsEnabledMask' -> 16r8.
 			'CustomCrashReportingMask' -> 16r4.
 			'ExclusiveUserDataFolderAccessMask' -> 16r2
 		}!
@@ -27,6 +28,12 @@ allowSSO
 
 allowSSO: aBoolean
 	flags := flags mask: AllowSSOMask set: aBoolean!
+
+areBrowserExtensionsEnabled
+	^flags allMask: BrowseExtensionsEnabledMask!
+
+areBrowserExtensionsEnabled: aBoolean
+	flags := flags mask: BrowseExtensionsEnabledMask set: aBoolean!
 
 browserVersion
 	^browserVersion!
@@ -58,6 +65,15 @@ get_AllowSingleSignOnUsingOSPrimaryAccount: allow
 			[out, retval]long* allow);"
 
 	allow value: self allowSSO asParameter.
+	^S_OK!
+
+get_AreBrowserExtensionsEnabled: value
+	"Private - Get the value of the 'AreBrowserExtensionsEnabled' property of the receiver.
+
+		HRESULT __stdcall AreBrowserExtensionsEnabled(
+			[out, retval]long* value);"
+
+	value value: self areBrowserExtensionsEnabled asParameter.
 	^S_OK!
 
 get_EnableTrackingPrevention: value
@@ -155,6 +171,16 @@ put_AllowSingleSignOnUsingOSPrimaryAccount: allow
 	self allowSSO: allow asBoolean.
 	^S_OK!
 
+put_AreBrowserExtensionsEnabled: value
+	"Private - Set the value of the 'AreBrowserExtensionsEnabled' property of the object wrapped by the 
+	 receiver to the <int32> argument, value.
+
+		HRESULT __stdcall AreBrowserExtensionsEnabled(
+			[in]long value);"
+
+	self areBrowserExtensionsEnabled: value asBoolean.
+	^S_OK!
+
 put_EnableTrackingPrevention: value
 	"Private - Set the value of the 'EnableTrackingPrevention' property of the object wrapped by the 
 	 receiver to the <int32> argument, value.
@@ -220,7 +246,8 @@ supportedInterfaces
 		ICoreWebView2EnvironmentOptions2.
 		ICoreWebView2EnvironmentOptions3.
 		ICoreWebView2EnvironmentOptions4.
-		ICoreWebView2EnvironmentOptions5
+		ICoreWebView2EnvironmentOptions5.
+		ICoreWebView2EnvironmentOptions6
 	}!
 
 trackingPreventionLevel
@@ -246,12 +273,15 @@ additionalBrowserArguments!accessing!public! !
 additionalBrowserArguments:!accessing!public! !
 allowSSO!accessing!public! !
 allowSSO:!accessing!public! !
+areBrowserExtensionsEnabled!accessing!public! !
+areBrowserExtensionsEnabled:!accessing!public! !
 browserVersion!accessing!public! !
 browserVersion:!accessing!public! !
 exclusiveUserDataFolderAccess!accessing!public! !
 exclusiveUserDataFolderAccess:!accessing!public! !
 get_AdditionalBrowserArguments:!COM Interfaces-ICoreWebView2EnvironmentOptions!private! !
 get_AllowSingleSignOnUsingOSPrimaryAccount:!COM Interfaces-ICoreWebView2EnvironmentOptions!private! !
+get_AreBrowserExtensionsEnabled:!COM Interfaces-ICoreWebView2EnvironmentOptions6!private! !
 get_EnableTrackingPrevention:!COM Interfaces-ICoreWebView2EnvironmentOptions5!private! !
 get_ExclusiveUserDataFolderAccess:!COM Interfaces-ICoreWebView2EnvironmentOptions2!private! !
 get_IsCustomCrashReportingEnabled:!COM Interfaces-ICoreWebView2EnvironmentOptions3!private! !
@@ -265,6 +295,7 @@ locale!accessing!public! !
 locale:!accessing!public! !
 put_AdditionalBrowserArguments:!COM Interfaces-ICoreWebView2EnvironmentOptions!private! !
 put_AllowSingleSignOnUsingOSPrimaryAccount:!COM Interfaces-ICoreWebView2EnvironmentOptions!private! !
+put_AreBrowserExtensionsEnabled:!COM Interfaces-ICoreWebView2EnvironmentOptions6!private! !
 put_EnableTrackingPrevention:!COM Interfaces-ICoreWebView2EnvironmentOptions5!private! !
 put_ExclusiveUserDataFolderAccess:!COM Interfaces-ICoreWebView2EnvironmentOptions2!private! !
 put_IsCustomCrashReportingEnabled:!COM Interfaces-ICoreWebView2EnvironmentOptions3!private! !
@@ -281,6 +312,7 @@ WebView2.WebView2EnvironmentOptions methodProtocol: #ICoreWebView2EnvironmentOpt
 WebView2.WebView2EnvironmentOptions methodProtocol: #ICoreWebView2EnvironmentOptions3 attributes: #(#readOnly) selectors: #(#get_IsCustomCrashReportingEnabled: #put_IsCustomCrashReportingEnabled:)!
 WebView2.WebView2EnvironmentOptions methodProtocol: #ICoreWebView2EnvironmentOptions4 attributes: #(#readOnly) selectors: #(#GetCustomSchemeRegistrations:schemeRegistrations: #SetCustomSchemeRegistrations:schemeRegistrations:)!
 WebView2.WebView2EnvironmentOptions methodProtocol: #ICoreWebView2EnvironmentOptions5 attributes: #(#readOnly) selectors: #(#get_EnableTrackingPrevention: #put_EnableTrackingPrevention:)!
+WebView2.WebView2EnvironmentOptions methodProtocol: #ICoreWebView2EnvironmentOptions6 attributes: #(#readOnly) selectors: #(#get_AreBrowserExtensionsEnabled: #put_AreBrowserExtensionsEnabled:)!
 
 !WebView2.WebView2EnvironmentOptions class methodsFor!
 

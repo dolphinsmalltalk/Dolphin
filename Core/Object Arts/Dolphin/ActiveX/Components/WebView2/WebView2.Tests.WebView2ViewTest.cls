@@ -289,9 +289,9 @@ verifyWebViewEnvironmentProperties
 verifyWebViewProfile
 	"In general we can't assert for particular profile property values, as these may have been altered from the defaults in a persistent profile."
 
-	| profile cookieManager |
+	| profile cookieManager extensions |
 	profile := presenter view webview profile.
-	self assert: profile isKindOf: ICoreWebView2Profile6.
+	self assert: profile isKindOf: ICoreWebView2Profile8.
 	self assert: (profile profilePath beginsWith: presenter view defaultUserDataFolder).
 	self assert: profile defaultDownloadFolderPath equals: SessionManager current downloadsDirectory.
 	"ICoreWebView2Profile2: No new properties"
@@ -306,12 +306,19 @@ verifyWebViewProfile
 	self assert: cookieManager isKindOf: ICoreWebView2CookieManager.
 	"ICoreWebView2Profile6: isGeneralAutofillEnabled, isPasswordAutosaveEnabled"
 	self assert: profile isGeneralAutofillEnabled isKindOf: Boolean.
-	self assert: profile isPasswordAutosaveEnabled isKindOf: Boolean!
+	self assert: profile isPasswordAutosaveEnabled isKindOf: Boolean.
+	"ICoreWebView2Profile7: GetBrowserExtensions"
+	profile getBrowserExtensionsThenDo: 
+			[:hr :list |
+			self assert: hr equals: S_OK.
+			extensions := list].
+	self waitAtMost: 100 milliseconds while: [extensions isNil].
+	self assert: (extensions anySatisfy: [:each | each name = 'Microsoft Clipboard Extension'])!
 
 verifyWebViewProperties
 	| defaultMargin webview2 baseInterface |
 	webview2 := presenter view webview.
-	self assert: webview2 isKindOf: ICoreWebView2_19.
+	self assert: webview2 isKindOf: ICoreWebView2_20.
 	baseInterface := webview2 queryInterface: ICoreWebView2.
 	"ICoreWebView2: browserProcessId, canGoBack, canGoForward, containsFullScreenElement, documentTitle, settings, source"
 	self assert: baseInterface browserProcessId equals: webview2 browserProcessId.
@@ -387,7 +394,9 @@ verifyWebViewProperties
 	webview2 memoryUsageTargetLevel: COREWEBVIEW2_MEMORY_USAGE_TARGET_LEVEL_LOW.
 	self assert: baseInterface memoryUsageTargetLevel equals: COREWEBVIEW2_MEMORY_USAGE_TARGET_LEVEL_NORMAL.
 	self assert: webview2 memoryUsageTargetLevel equals: COREWEBVIEW2_MEMORY_USAGE_TARGET_LEVEL_LOW.
-!
+	"ICoreWebView2_20: frameId"
+	self assert: baseInterface frameId equals: 0.
+	self deny: webview2 frameId equals: 0!
 
 verifyWebViewSettings
 	| settings baseSettings userAgent hidden |

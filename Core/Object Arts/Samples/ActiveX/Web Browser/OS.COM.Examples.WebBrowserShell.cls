@@ -49,8 +49,39 @@ Try:
 !OS.COM.Examples.WebBrowserShell categoriesForClass!Samples! !
 !OS.COM.Examples.WebBrowserShell methodsFor!
 
+areBrowserExtensionsEnabled
+	^browser view areBrowserExtensionsEnabled!
+
+browserExtensionsMenu
+	<commandQuery: #hasWebview>
+	<commandQuery: #areBrowserExtensionsEnabled>
+	"Because the query to return the extensions list is asynchronous, the experience is not very good if we defer the query until the menu is about to popup. It is better to build this directly while building the outer settings menu."
+	"<menuPopulator: #buildExtensionsMenu:>"
+	!
+
 browserView
 	^browser view!
+
+buildBrowserExtensionsMenu: aMenu
+	aMenu clear.
+	self webview2 profile getBrowserExtensionsThenDo: 
+			[:hr :extensionsList |
+			hr = S_OK
+				ifTrue: 
+					[extensionsList do: 
+							[:each |
+							aMenu addCommand: (Message selector: #toggleEnableBrowserExtension: argument: each)
+								description: each name]]]!
+
+buildColorSchemeMenu: aMenu
+	aMenu clear.
+	#('&Auto' '&Light' '&Dark') keysAndValuesDo: 
+			[:eachKey :eachValue |
+			aMenu
+				addItem: ((CommandMenuItem command: (Message selector: #preferredColorScheme: argument: eachKey - 1)
+						description: eachValue)
+						isRadioButtonStyle: true;
+						yourself)]!
 
 buildSettingsPopup: aMenu
 	| submenu |
@@ -63,7 +94,13 @@ buildSettingsPopup: aMenu
 		addCommand: #toggleBrowserAcceleratorKeysEnabled description: '&Accelerator Keys';
 		addCommand: #toggleBuiltinErrorPageEnabled description: '&Error Pages';
 		addCommand: #toggleDefaultScriptDialogsEnabled description: 'Script &Dialogs'.
-	"	name: #defaultWebviewUIEnablement;"
+	aMenu
+		addSeparator;
+		addCommand: #toggleEnableBrowserExtensions description: 'Enable E&xtensions'.
+	submenu := aMenu addSubmenu: '&Extensions'.
+	submenu name: #browserExtensionsMenu.
+	"Better UI experience if we trigger the asynchronous query to get the browser extensions list now"
+	self buildBrowserExtensionsMenu: submenu.
 	aMenu
 		addSeparator;
 		addCommand: #toggleAllowExternalDrop description: 'Accept &Dropped Files';
@@ -73,36 +110,35 @@ buildSettingsPopup: aMenu
 		addCommand: #togglePinchZoomEnabled description: 'P&inch Zoom';
 		addCommand: #toggleSwipeNavigation description: 'S&wipe Navigation';
 		addCommand: #toggleStatusBar description: '&Status Bubbles';
-		addCommand: #toggleZoomControl description: '&Zoom Control'.
-	submenu := (aMenu addSubmenu: 'Preferred &Color Scheme') yourself.
-	"name: #colorScheme;"
-	#('&Auto' '&Light' '&Dark') keysAndValuesDo: 
-			[:eachKey :eachValue |
-			submenu
-				addItem: ((CommandMenuItem commandDescription: (CommandDescription
-								command: (Message selector: #preferredColorScheme: argument: eachKey - 1)
-								description: eachValue))
-						isRadioButtonStyle: true;
-						yourself)].
-	aMenu
+		addCommand: #toggleZoomControl description: '&Zoom Control';
+		addItem: ((Menu description: 'Preferred &Color Scheme')
+					name: #colorSchemeMenu;
+					yourself);
 		addSeparator;
 		addCommand: #toggleGeneralAutofill description: 'General &Autofill';
 		addCommand: #togglePasswordAutosave description: '&Password Autosave';
 		addCommand: #toggleBlockImages description: 'Block &Images';
 		addCommand: #toggleJavaScript description: '&JavaScript';
 		addCommand: #toggleInPrivateMode description: 'In Private &Mode';
-		yourself.
-	submenu := (aMenu addSubmenu: '&Tracking Prevention Level') yourself.
-	"name: #trackingPreventionLevel;"
+		addItem: ((Menu description: '&Tracking Prevention Level')
+					name: #trackingPreventionLevelMenu;
+					yourself);
+		addCommand: #toggleSmartScreen description: '&SmartScreen'!
+
+buildTrackingPreventionLevelMenu: aMenu
+	aMenu clear.
 	#('&None' '&Basic' 'Ba&lanced' '&Strict') keysAndValuesDo: 
 			[:eachKey :eachValue |
-			submenu
-				addItem: ((CommandMenuItem commandDescription: (CommandDescription
-								command: (Message selector: #trackingPreventionLevel: argument: eachKey - 1)
-								description: eachValue))
+			aMenu addItem: ((CommandMenuItem
+						command: (Message selector: #trackingPreventionLevel: argument: eachKey - 1)
+						description: eachValue)
 						isRadioButtonStyle: true;
-						yourself)].
-	aMenu addCommand: #toggleSmartScreen description: '&SmartScreen'!
+						yourself)]!
+
+colorSchemeMenu
+	<commandQuery: #hasWebview>
+	<menuPopulator: #buildColorSchemeMenu:>
+	!
 
 createComponents
 	"Create the presenters contained by the receiver"
@@ -432,6 +468,18 @@ queryToggleDevToolsEnabled: aCommandQuery
 		beEnabled;
 		isChecked: browser view areDevToolsEnabled!
 
+queryToggleEnableBrowserExtension: aCommandQuery
+	| browserExt |
+	browserExt := aCommandQuery command arguments single.
+	aCommandQuery
+		beEnabled;
+		isChecked: browserExt isEnabled!
+
+queryToggleEnableBrowserExtensions: aCommandQuery
+	aCommandQuery
+		beEnabled;
+		isChecked: browser view areBrowserExtensionsEnabled!
+
 queryToggleEventLogging: aCommandQuery
 	aCommandQuery
 		beEnabled;
@@ -553,6 +601,22 @@ toggleDevToolsEnabled
 	"Most settings do not take effect until after navigation, so refresh"
 	self refresh!
 
+toggleEnableBrowserExtension: anICoreWebView2BrowserExtension
+	"Note that this doesn't appear to have any lasting effect. The interface indicates that an extension has been disabled, but when the list of extensions are queried again, they are all enabled."
+
+	<commandQuery: #queryToggleEnableBrowserExtension:>
+	| enable |
+	enable := anICoreWebView2BrowserExtension isEnabled not.
+	anICoreWebView2BrowserExtension enable: enable
+		thenDo: 
+			[:hr |
+			SessionManager current traceLine: '<1?Enabled:Disabled> extension <2p> (<3d>)'
+						<< { enable. anICoreWebView2BrowserExtension name. HRESULT fromInteger: 0 }]!
+
+toggleEnableBrowserExtensions
+	<commandQuery: #queryToggleEnableBrowserExtensions:>
+	browser view areBrowserExtensionsEnabled: self areBrowserExtensionsEnabled not!
+
 toggleEventLogging
 	<commandQuery: #queryToggleEventLogging:>
 	self isLoggingEvents: self isLoggingEvents not!
@@ -631,6 +695,11 @@ trackingPreventionLevel: anInteger
 	<commandQuery: #queryTrackingPreventionLevel:>
 	self browserView trackingPreventionLevel: anInteger!
 
+trackingPreventionLevelMenu
+	<commandQuery: #hasWebview>
+	<menuPopulator: #buildTrackingPreventionLevelMenu:>
+	!
+
 updateColorScheme
 	self class updateColorScheme: self preferredColorScheme!
 
@@ -646,8 +715,14 @@ zoomReset
 	<acceleratorKey: 'Ctrl+0'>
 	browser view zoomFactor: 1! !
 !OS.COM.Examples.WebBrowserShell categoriesForMethods!
+areBrowserExtensionsEnabled!commands-queries!public! !
+browserExtensionsMenu!commands-menus!public! !
 browserView!accessing!public! !
-buildSettingsPopup:!commands-actions!private! !
+buildBrowserExtensionsMenu:!commands-menus!private! !
+buildColorSchemeMenu:!commands-menus!private! !
+buildSettingsPopup:!commands-menus!private! !
+buildTrackingPreventionLevelMenu:!commands-menus!private! !
+colorSchemeMenu!commands-menus!public! !
 createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !
 displayError:!operations!private! !
@@ -691,6 +766,8 @@ queryToggleBrowserAcceleratorKeysEnabled:!commands-queries!private! !
 queryToggleBuiltinErrorPageEnabled:!commands-queries!private! !
 queryToggleDefaultScriptDialogsEnabled:!commands-queries!private! !
 queryToggleDevToolsEnabled:!commands-queries!private! !
+queryToggleEnableBrowserExtension:!commands-queries!private! !
+queryToggleEnableBrowserExtensions:!commands-queries!private! !
 queryToggleEventLogging:!commands-queries!private! !
 queryToggleGeneralAutofill:!commands-queries!private! !
 queryToggleInPrivateMode:!commands-queries!private! !
@@ -712,6 +789,8 @@ toggleBrowserAcceleratorKeysEnabled!commands-actions!public! !
 toggleBuiltinErrorPageEnabled!commands-actions!public! !
 toggleDefaultScriptDialogsEnabled!commands-actions!public! !
 toggleDevToolsEnabled!commands-actions!public! !
+toggleEnableBrowserExtension:!commands-actions!public! !
+toggleEnableBrowserExtensions!commands-actions!public! !
 toggleEventLogging!commands-actions!public! !
 toggleGeneralAutofill!commands-actions!public! !
 toggleInPrivateMode!commands-actions!public! !
@@ -724,6 +803,7 @@ toggleSwipeNavigation!commands-actions!public! !
 toggleWebMessaging!commands-actions!public! !
 toggleZoomControl!commands-actions!public! !
 trackingPreventionLevel:!commands-actions!public! !
+trackingPreventionLevelMenu!commands-menus!public! !
 updateColorScheme!private!updating! !
 webview2!accessing!private! !
 webviewSettings!accessing!private! !
