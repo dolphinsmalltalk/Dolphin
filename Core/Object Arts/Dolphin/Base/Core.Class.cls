@@ -581,13 +581,7 @@ nestedClasses
 nestedClassesDo: aMonadicValuable
 	"Evaluate the <monadicValuable> argument for each of the <Class>es that are values of bindings in the receiver, excluding classes that are aliased into this namespace."
 
-	self bindingsDo: 
-			[:each |
-			each isClassVariable
-				ifFalse: 
-					[| value |
-					value := each value.
-					(value class isMeta and: [value environment == self]) ifTrue: [aMonadicValuable value: value]]]!
+	self bindingsDo: [:each | each isClassBinding ifTrue: [aMonadicValuable value: each value]]!
 
 newBindingContextForIdentifier: aString environment: aNamespace
 	^BindingContext

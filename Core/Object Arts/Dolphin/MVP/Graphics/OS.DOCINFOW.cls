@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure
+OS.SizedStructure
 	subclass: #'OS.DOCINFOW'
 	instanceVariableNames: 'docName'
 	classVariableNames: ''
@@ -8,7 +8,6 @@ OS.Win32Structure
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_DOCINFOW_Size' -> 16r14.
-			'_OffsetOf_dwSize' -> 16r0.
 			'_OffsetOf_fwType' -> 16r10.
 			'_OffsetOf_lpszDatatype' -> 16rC.
 			'_OffsetOf_lpszDocName' -> 16r4.
@@ -24,11 +23,6 @@ DOCINFO is used in conjunction with the StartDoc() GDI call.'!
 docName: aString
 	docName := aString asUtf16String.
 	self lpszDocName: docName!
-
-dwSize: anInteger
-	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
-
-	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
 
 fwType: anInteger
 	"Set the receiver's 'fwType' field to the value of the argument, anInteger"
@@ -51,7 +45,6 @@ lpszOutput: anUtf16String
 	bytes uintPtrAtOffset: _OffsetOf_lpszOutput put: anUtf16String yourAddress! !
 !OS.DOCINFOW categoriesForMethods!
 docName:!accessing!public! !
-dwSize:!**compiled accessors**!public! !
 fwType:!**compiled accessors**!public! !
 lpszDatatype:!**compiled accessors**!public! !
 lpszDocName:!**compiled accessors**!public! !
@@ -76,8 +69,8 @@ defineFields
 		DWORD	fwType;		// Windows 95 only; ignored on Windows NT
 		} DOCINFO;"
 
+	super defineFields.
 	self
-		defineField: #dwSize type: UInt32Field writeOnly beOverride;
 		defineField: #lpszDocName type: (PointerField type: Utf16String) beWriteOnly;
 		defineField: #lpszOutput type: (PointerField type: Utf16String) beWriteOnly;
 		defineField: #lpszDatatype type: (PointerField type: Utf16String) beWriteOnly;

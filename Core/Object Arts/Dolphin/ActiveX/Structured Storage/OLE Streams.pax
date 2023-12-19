@@ -84,24 +84,7 @@ Kernel.SharedPool
 			'STREAM_SEEK_END' -> 16r2.
 			'STREAM_SEEK_SET' -> 16r0
 		}!
-OS.COM.IUnknown
-	subclass: #'OS.COM.ISequentialStream'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-OS.COM.ISequentialStream
-	subclass: #'OS.COM.IStream'
-	instanceVariableNames: 'name mode'
-	classVariableNames: ''
-	imports: #(#{OS.COM.StorageConstants})
-	classInstanceVariableNames: ''
-	classConstants: {
-			'WriteOpenModes'
-				-> (IdentityDictionary withAll: { #append -> 16r11. #create -> 16r11. #truncate -> 16r1011 })
-		}!
-OS.COM.FinalizableStructure
+External.FinalizableStructure
 	subclass: #'OS.COM.STATSTG'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -120,6 +103,23 @@ OS.COM.FinalizableStructure
 			'_OffsetOf_reserved' -> 16r44.
 			'_OffsetOf_type' -> 16r4.
 			'_STATSTG_Size' -> 16r48
+		}!
+OS.COM.IUnknown
+	subclass: #'OS.COM.ISequentialStream'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.COM.ISequentialStream
+	subclass: #'OS.COM.IStream'
+	instanceVariableNames: 'name mode'
+	classVariableNames: ''
+	imports: #(#{OS.COM.StorageConstants})
+	classInstanceVariableNames: ''
+	classConstants: {
+			'WriteOpenModes'
+				-> (IdentityDictionary withAll: { #append -> 16r11. #create -> 16r11. #truncate -> 16r1011 })
 		}!
 
 "Loose Methods"!

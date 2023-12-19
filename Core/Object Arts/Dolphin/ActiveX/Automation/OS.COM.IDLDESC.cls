@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.OLEStructure
+External.Structure
 	subclass: #'OS.COM.IDLDESC'
 	instanceVariableNames: ''
 	classVariableNames: ''

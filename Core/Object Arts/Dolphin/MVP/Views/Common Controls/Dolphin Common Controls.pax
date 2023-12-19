@@ -505,21 +505,21 @@ UI.LabelEditEvent
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.Win32Structure
+External.Structure
 	subclass: #'OS.CCHITTESTINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.CommCtrlConstants})
 	classInstanceVariableNames: ''
 	classConstants: { '_CCHITTESTINFO_Size' -> 16r8. '_OffsetOf_pt' -> 16r0 }!
-OS.Win32Structure
+External.Structure
 	subclass: #'OS.CCITEM'
 	instanceVariableNames: 'text'
 	classVariableNames: ''
 	imports: #(#{OS.CommCtrlConstants})
 	classInstanceVariableNames: ''
 	classConstants: { '_CCITEM_Size' -> 16r4. '_OffsetOf_mask' -> 16r0 }!
-OS.Win32Structure
+External.Structure
 	subclass: #'OS.LVBKIMAGEW'
 	instanceVariableNames: 'buf'
 	classVariableNames: ''
@@ -534,7 +534,7 @@ OS.Win32Structure
 			'_OffsetOf_xOffsetPercent' -> 16r10.
 			'_OffsetOf_yOffsetPercent' -> 16r14
 		}!
-OS.Win32Structure
+External.Structure
 	subclass: #'OS.LVCOLUMNW'
 	instanceVariableNames: 'text'
 	classVariableNames: ''
@@ -556,7 +556,7 @@ OS.Win32Structure
 			'AlignmentMap'
 				-> (IdentityDictionary withAll: { #center -> 16r2. #left -> 16r0. #right -> 16r1 })
 		}!
-OS.Win32Structure
+External.Structure
 	subclass: #'OS.LVFINDINFOW'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -570,7 +570,7 @@ OS.Win32Structure
 			'_OffsetOf_pt' -> 16rC.
 			'_OffsetOf_vkDirection' -> 16r14
 		}!
-OS.Win32Structure
+External.Structure
 	subclass: #'OS.TVINSERTSTRUCTW'
 	instanceVariableNames: ''
 	classVariableNames: ''

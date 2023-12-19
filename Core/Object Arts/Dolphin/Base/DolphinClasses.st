@@ -2995,11 +2995,7 @@ Core.Object
 	classVariableNames: 'RecordClasses'
 	imports: #()
 	classInstanceVariableNames: 'template flags alignment'
-	classConstants: {
-			'_Structure_Size' -> 16r0.
-			'CompileNewFieldsMask' -> 16r1.
-			'UncompiledFieldsMask' -> 16r2
-		}!
+	classConstants: { 'CompileNewFieldsMask' -> 16r1. 'UncompiledFieldsMask' -> 16r2 }!
 Core.Object
 	subclass: #'Kernel.UndeclaredVariable'
 	instanceVariableNames: ''
@@ -4802,6 +4798,21 @@ External.Structure
 			'_OffsetOf_UnicodeDefaultChar' -> 16r12
 		}!
 External.Structure
+	subclass: #'OS.EXCEPTION_RECORD'
+	instanceVariableNames: 'info'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_EXCEPTION_RECORD_Size' -> 16r50.
+			'_OffsetOf_ExceptionAddress' -> 16rC.
+			'_OffsetOf_ExceptionCode' -> 16r0.
+			'_OffsetOf_ExceptionFlags' -> 16r4.
+			'_OffsetOf_ExceptionInformation' -> 16r14.
+			'_OffsetOf_ExceptionRecord' -> 16r8.
+			'_OffsetOf_NumberParameters' -> 16r10
+		}!
+External.Structure
 	subclass: #'External.ExternalArray'
 	instanceVariableNames: 'length'
 	classVariableNames: ''
@@ -4809,12 +4820,70 @@ External.Structure
 	classInstanceVariableNames: ''
 	classConstants: {}!
 External.Structure
+	subclass: #'OS.FILETIME'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_FILETIME_Size' -> 16r8.
+			'_OffsetOf_dwHighDateTime' -> 16r4.
+			'_OffsetOf_dwLowDateTime' -> 16r0.
+			'SmalltalkEpoch' -> 16r150560D76A70000.
+			'UnixEpoch' -> 16r19DB1DED53E8000
+		}!
+External.Structure
+	subclass: #'External.FinalizableStructure'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+External.Structure
+	subclass: #'OS.MSG'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #(#{OS.Win32Constants private})
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_MSG_Size' -> 16r1C.
+			'_OffsetOf_hwnd' -> 16r0.
+			'_OffsetOf_lParam' -> 16rC.
+			'_OffsetOf_message' -> 16r4.
+			'_OffsetOf_time' -> 16r10.
+			'_OffsetOf_wParam' -> 16r8.
+			'_OffsetOf_x' -> 16r14.
+			'_OffsetOf_y' -> 16r18
+		}!
+External.Structure
+	subclass: #'OS.NUMBERFMTW'
+	instanceVariableNames: 'decimalSeparator numberGrouping groupSeparator'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_NUMBERFMTW_Size' -> 16r18.
+			'_OffsetOf_grouping' -> 16r8.
+			'_OffsetOf_LeadingZero' -> 16r4.
+			'_OffsetOf_lpDecimalSep' -> 16rC.
+			'_OffsetOf_lpThousandSep' -> 16r10.
+			'_OffsetOf_negativeOrder' -> 16r14.
+			'_OffsetOf_NumDigits' -> 16r0
+		}!
+External.Structure
 	subclass: #'External.SCALAR'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: { '_OffsetOf_value' -> 16r0. '_SCALAR_Size' -> 16r0 }!
+	classConstants: { '_OffsetOf_value' -> 16r0 }!
+External.Structure
+	subclass: #'OS.SizedStructure'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #(#{OS.Win32Constants private})
+	classInstanceVariableNames: ''
+	classConstants: { '_OffsetOf_dwSize' -> 16r0. '_Win32SizedStructure_Size' -> 16r4 }!
 External.Structure
 	subclass: #'External.StructurePointer'
 	instanceVariableNames: 'elementClass'
@@ -4823,6 +4892,42 @@ External.Structure
 	classInstanceVariableNames: ''
 	classConstants: {}!
 External.Structure
+	subclass: #'OS.SYSTEMTIME'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_OffsetOf_wDay' -> 16r6.
+			'_OffsetOf_wDayOfWeek' -> 16r4.
+			'_OffsetOf_wHour' -> 16r8.
+			'_OffsetOf_wMilliseconds' -> 16rE.
+			'_OffsetOf_wMinute' -> 16rA.
+			'_OffsetOf_wMonth' -> 16r2.
+			'_OffsetOf_wSecond' -> 16rC.
+			'_OffsetOf_wYear' -> 16r0.
+			'_SYSTEMTIME_Size' -> 16r10
+		}!
+External.Structure
+	subclass: #'OS.TIME_ZONE_INFORMATION'
+	instanceVariableNames: 'zoneId offset'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_OffsetOf_bias' -> 16r0.
+			'_OffsetOf_daylightBias' -> 16rA8.
+			'_OffsetOf_daylightDate' -> 16r98.
+			'_OffsetOf_daylightName' -> 16r58.
+			'_OffsetOf_standardBias' -> 16r54.
+			'_OffsetOf_standardDate' -> 16r44.
+			'_OffsetOf_standardName' -> 16r4.
+			'_TIME_ZONE_INFORMATION_Size' -> 16rAC.
+			'TIME_ZONE_ID_DAYLIGHT' -> 16r2.
+			'TIME_ZONE_ID_STANDARD' -> 16r1.
+			'TIME_ZONE_ID_UNKNOWN' -> 16r0
+		}!
+External.Structure
 	subclass: #'External.VOID'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -4830,12 +4935,42 @@ External.Structure
 	classInstanceVariableNames: ''
 	classConstants: {}!
 External.Structure
-	subclass: #'OS.Win32Structure'
+	subclass: #'OS.VS_FIXEDFILEINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{OS.Win32Constants private})
+	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'_OffsetOf_dwFileDateLS' -> 16r30.
+			'_OffsetOf_dwFileDateMS' -> 16r2C.
+			'_OffsetOf_dwFileFlags' -> 16r1C.
+			'_OffsetOf_dwFileFlagsMask' -> 16r18.
+			'_OffsetOf_dwFileOS' -> 16r20.
+			'_OffsetOf_dwFileSubtype' -> 16r28.
+			'_OffsetOf_dwFileType' -> 16r24.
+			'_OffsetOf_dwFileVersionLS' -> 16rC.
+			'_OffsetOf_dwFileVersionMS' -> 16r8.
+			'_OffsetOf_dwProductVersionLS' -> 16r14.
+			'_OffsetOf_dwProductVersionMS' -> 16r10.
+			'_OffsetOf_dwSignature' -> 16r0.
+			'_OffsetOf_dwStrucVersion' -> 16r4.
+			'_VS_FIXEDFILEINFO_Size' -> 16r34
+		}!
+External.Structure
+	subclass: #'OS.WIN32_FILE_ATTRIBUTE_DATA'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_OffsetOf_dwFileAttributes' -> 16r0.
+			'_OffsetOf_ftCreationTime' -> 16r4.
+			'_OffsetOf_ftLastAccessTime' -> 16rC.
+			'_OffsetOf_ftLastWriteTime' -> 16r14.
+			'_OffsetOf_nFileSizeHigh' -> 16r1C.
+			'_OffsetOf_nFileSizeLow' -> 16r20.
+			'_WIN32_FILE_ATTRIBUTE_DATA_Size' -> 16r24
+		}!
 External.ExternalArray
 	subclass: #'External.DOUBLEArray'
 	instanceVariableNames: ''
@@ -4923,6 +5058,13 @@ External.UIntPtrArray
 External.UIntPtrArray
 	subclass: #'External.PointerArray'
 	instanceVariableNames: 'elementClass'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.FILETIME
+	subclass: #'OS.LocalFILETIME'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -5067,51 +5209,7 @@ External.LPVOID
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.Win32Structure
-	subclass: #'OS.EXCEPTION_RECORD'
-	instanceVariableNames: 'info'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-			'_EXCEPTION_RECORD_Size' -> 16r50.
-			'_OffsetOf_ExceptionAddress' -> 16rC.
-			'_OffsetOf_ExceptionCode' -> 16r0.
-			'_OffsetOf_ExceptionFlags' -> 16r4.
-			'_OffsetOf_ExceptionInformation' -> 16r14.
-			'_OffsetOf_ExceptionRecord' -> 16r8.
-			'_OffsetOf_NumberParameters' -> 16r10
-		}!
-OS.Win32Structure
-	subclass: #'OS.FILETIME'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-			'_FILETIME_Size' -> 16r8.
-			'_OffsetOf_dwHighDateTime' -> 16r4.
-			'_OffsetOf_dwLowDateTime' -> 16r0.
-			'SmalltalkEpoch' -> 16r150560D76A70000.
-			'UnixEpoch' -> 16r19DB1DED53E8000
-		}!
-OS.Win32Structure
-	subclass: #'OS.MSG'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-			'_MSG_Size' -> 16r1C.
-			'_OffsetOf_hwnd' -> 16r0.
-			'_OffsetOf_lParam' -> 16rC.
-			'_OffsetOf_message' -> 16r4.
-			'_OffsetOf_time' -> 16r10.
-			'_OffsetOf_wParam' -> 16r8.
-			'_OffsetOf_x' -> 16r14.
-			'_OffsetOf_y' -> 16r18
-		}!
-OS.Win32Structure
+OS.SizedStructure
 	subclass: #'OS.MSGBOXPARAMSW'
 	instanceVariableNames: 'text caption'
 	classVariableNames: ''
@@ -5121,7 +5219,6 @@ OS.Win32Structure
 			'_MSGBOXPARAMSW_Size' -> 16r28.
 			'_OffsetOf_dwContextHelpId' -> 16r1C.
 			'_OffsetOf_dwLanguageId' -> 16r24.
-			'_OffsetOf_dwSize' -> 16r0.
 			'_OffsetOf_dwStyle' -> 16r14.
 			'_OffsetOf_hInstance' -> 16r8.
 			'_OffsetOf_hwndOwner' -> 16r4.
@@ -5130,22 +5227,7 @@ OS.Win32Structure
 			'_OffsetOf_lpszIcon' -> 16r18.
 			'_OffsetOf_lpszText' -> 16rC
 		}!
-OS.Win32Structure
-	subclass: #'OS.NUMBERFMTW'
-	instanceVariableNames: 'decimalSeparator numberGrouping groupSeparator'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-			'_NUMBERFMTW_Size' -> 16r18.
-			'_OffsetOf_Grouping' -> 16r8.
-			'_OffsetOf_LeadingZero' -> 16r4.
-			'_OffsetOf_lpDecimalSep' -> 16rC.
-			'_OffsetOf_lpThousandSep' -> 16r10.
-			'_OffsetOf_NegativeOrder' -> 16r14.
-			'_OffsetOf_NumDigits' -> 16r0
-		}!
-OS.Win32Structure
+OS.SizedStructure
 	subclass: #'OS.OSVERSIONINFOEXW'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -5156,7 +5238,6 @@ OS.Win32Structure
 			'_OffsetOf_dwMajorVersion' -> 16r4.
 			'_OffsetOf_dwMinorVersion' -> 16r8.
 			'_OffsetOf_dwPlatformId' -> 16r10.
-			'_OffsetOf_dwSize' -> 16r0.
 			'_OffsetOf_szCSDVersion' -> 16r14.
 			'_OffsetOf_wProductType' -> 16r11A.
 			'_OffsetOf_wReserved' -> 16r11B.
@@ -5165,7 +5246,7 @@ OS.Win32Structure
 			'_OffsetOf_wSuiteMask' -> 16r118.
 			'_OSVERSIONINFOEXW_Size' -> 16r11C
 		}!
-OS.Win32Structure
+OS.SizedStructure
 	subclass: #'OS.SECURITY_ATTRIBUTES'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -5173,90 +5254,9 @@ OS.Win32Structure
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_OffsetOf_bInheritHandle' -> 16r8.
-			'_OffsetOf_dwSize' -> 16r0.
 			'_OffsetOf_lpSecurityDescriptor' -> 16r4.
 			'_SECURITY_ATTRIBUTES_Size' -> 16rC
 		}!
-OS.Win32Structure
-	subclass: #'OS.SYSTEMTIME'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-			'_OffsetOf_wDay' -> 16r6.
-			'_OffsetOf_wDayOfWeek' -> 16r4.
-			'_OffsetOf_wHour' -> 16r8.
-			'_OffsetOf_wMilliseconds' -> 16rE.
-			'_OffsetOf_wMinute' -> 16rA.
-			'_OffsetOf_wMonth' -> 16r2.
-			'_OffsetOf_wSecond' -> 16rC.
-			'_OffsetOf_wYear' -> 16r0.
-			'_SYSTEMTIME_Size' -> 16r10
-		}!
-OS.Win32Structure
-	subclass: #'OS.TIME_ZONE_INFORMATION'
-	instanceVariableNames: 'zoneId offset'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-			'_OffsetOf_bias' -> 16r0.
-			'_OffsetOf_daylightBias' -> 16rA8.
-			'_OffsetOf_daylightDate' -> 16r98.
-			'_OffsetOf_daylightName' -> 16r58.
-			'_OffsetOf_standardBias' -> 16r54.
-			'_OffsetOf_standardDate' -> 16r44.
-			'_OffsetOf_standardName' -> 16r4.
-			'_TIME_ZONE_INFORMATION_Size' -> 16rAC.
-			'TIME_ZONE_ID_DAYLIGHT' -> 16r2.
-			'TIME_ZONE_ID_STANDARD' -> 16r1.
-			'TIME_ZONE_ID_UNKNOWN' -> 16r0
-		}!
-OS.Win32Structure
-	subclass: #'OS.VS_FIXEDFILEINFO'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-			'_OffsetOf_dwFileDateLS' -> 16r30.
-			'_OffsetOf_dwFileDateMS' -> 16r2C.
-			'_OffsetOf_dwFileFlags' -> 16r1C.
-			'_OffsetOf_dwFileFlagsMask' -> 16r18.
-			'_OffsetOf_dwFileOS' -> 16r20.
-			'_OffsetOf_dwFileSubtype' -> 16r28.
-			'_OffsetOf_dwFileType' -> 16r24.
-			'_OffsetOf_dwFileVersionLS' -> 16rC.
-			'_OffsetOf_dwFileVersionMS' -> 16r8.
-			'_OffsetOf_dwProductVersionLS' -> 16r14.
-			'_OffsetOf_dwProductVersionMS' -> 16r10.
-			'_OffsetOf_dwSignature' -> 16r0.
-			'_OffsetOf_dwStrucVersion' -> 16r4.
-			'_VS_FIXEDFILEINFO_Size' -> 16r34
-		}!
-OS.Win32Structure
-	subclass: #'OS.WIN32_FILE_ATTRIBUTE_DATA'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-			'_OffsetOf_dwFileAttributes' -> 16r0.
-			'_OffsetOf_ftCreationTime' -> 16r4.
-			'_OffsetOf_ftLastAccessTime' -> 16rC.
-			'_OffsetOf_ftLastWriteTime' -> 16r14.
-			'_OffsetOf_nFileSizeHigh' -> 16r1C.
-			'_OffsetOf_nFileSizeLow' -> 16r20.
-			'_WIN32_FILE_ATTRIBUTE_DATA_Size' -> 16r24
-		}!
-OS.FILETIME
-	subclass: #'OS.LocalFILETIME'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
 OS.WIN32_FILE_ATTRIBUTE_DATA
 	subclass: #'OS.WIN32_FIND_DATAW'
 	instanceVariableNames: 'directory'

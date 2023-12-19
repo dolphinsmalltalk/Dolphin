@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.OLEStructure
+OS.SizedStructure
 	subclass: #'OS.COM.PICTDESC'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -9,7 +9,6 @@ OS.COM.OLEStructure
 	classConstants: {
 			'_OffsetOf_dw1' -> 16rC.
 			'_OffsetOf_dw2' -> 16r10.
-			'_OffsetOf_dwSize' -> 16r0.
 			'_OffsetOf_handle' -> 16r8.
 			'_OffsetOf_picType' -> 16r4.
 			'_PICTDESC_Size' -> 16r14
@@ -38,11 +37,6 @@ dw2: anInteger
 
 	bytes uint32AtOffset: _OffsetOf_dw2 put: anInteger!
 
-dwSize: anInteger
-	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
-
-	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
-
 handle
 	"Answer the <Integer> value of the receiver's 'handle' field."
 
@@ -67,7 +61,6 @@ dw1!**compiled accessors**!public! !
 dw1:!**compiled accessors**!public! !
 dw2!**compiled accessors**!public! !
 dw2:!**compiled accessors**!public! !
-dwSize:!**compiled accessors**!public! !
 handle!**compiled accessors**!public! !
 handle:!**compiled accessors**!public! !
 picType!**compiled accessors**!public! !
@@ -115,8 +108,8 @@ defineFields
 		} PICTDESC, FAR* LPPICTDESC;
 	"
 
+	super defineFields.
 	self
-		defineField: #dwSize type: UInt32Field writeOnly;	"Renamed from cbSizeOfStruct"
 		defineField: #picType type: UInt32Field new;
 
 		"Next version of Dolphin can handle unions, in mean time..."

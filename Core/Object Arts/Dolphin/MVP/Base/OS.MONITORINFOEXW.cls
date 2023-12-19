@@ -1,12 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.MONITORINFO
+OS.SizedStructure
 	subclass: #'OS.MONITORINFOEXW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: { '_MONITORINFOEXW_Size' -> 16r68. '_OffsetOf_szDevice' -> 16r28 }!
+	classConstants: {
+			'_MONITORINFOEXW_Size' -> 16r68.
+			'_OffsetOf_dwFlags' -> 16r24.
+			'_OffsetOf_rcMonitor' -> 16r4.
+			'_OffsetOf_rcWork' -> 16r14.
+			'_OffsetOf_szDevice' -> 16r28.
+			'MONITORINFOF_PRIMARY' -> 16r1
+		}!
 OS.MONITORINFOEXW guid: (Core.GUID fromString: '{b51d5aa0-7d88-48dc-8c48-36240b05b9ad}')!
 OS.MONITORINFOEXW comment: '`MONITORINFOEXW` is an `External.Structure` class to wrap the struct ''Win32.MONITORINFOEXW'' from type information in the ''Win32 API'' library.
 
@@ -29,11 +36,35 @@ struct tagMONITORINFOEXW {
 !OS.MONITORINFOEXW categoriesForClass!Win32-Structs! !
 !OS.MONITORINFOEXW methodsFor!
 
+dwFlags
+	"Answer the <Integer> value of the receiver's 'dwFlags' field."
+
+	^bytes uint32AtOffset: _OffsetOf_dwFlags!
+
+isPrimary
+	"Answer whether the receiver represents the primary/main monitor."
+
+	^self dwFlags allMask: MONITORINFOF_PRIMARY!
+
+rcMonitor
+	"Answer the <RECTL> value of the receiver's 'rcMonitor' field."
+
+	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rcMonitor!
+
+rcWork
+	"Answer the <RECTL> value of the receiver's 'rcWork' field."
+
+	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rcWork!
+
 szDevice
 	"Answer the <Utf16String> value of the receiver's 'szDevice' field."
 
 	^Utf16String fromAddress: bytes yourAddress + _OffsetOf_szDevice! !
 !OS.MONITORINFOEXW categoriesForMethods!
+dwFlags!**compiled accessors**!public! !
+isPrimary!public!testing! !
+rcMonitor!**compiled accessors**!public! !
+rcWork!**compiled accessors**!public! !
 szDevice!**compiled accessors**!public! !
 !
 
@@ -59,9 +90,10 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #szDevice
-		type: (StringField type: Utf16String length: 32) beReadOnly
-		offset: 40.
+		defineField: #rcMonitor type: (StructureField type: RECTL) beReadOnly offset: 4;
+		defineField: #rcWork type: (StructureField type: RECTL) beReadOnly offset: 20;
+		defineField: #dwFlags type: UInt32Field new beReadOnly offset: 36;
+		defineField: #szDevice type: (StringField type: Utf16String length: 32) beReadOnly offset: 40.
 	self byteSize: 104!
 
 getFieldNames

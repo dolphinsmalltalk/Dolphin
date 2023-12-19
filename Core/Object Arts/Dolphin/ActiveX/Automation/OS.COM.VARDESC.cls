@@ -10,7 +10,6 @@ OS.COM.MemberDesc
 			'_OffsetOf_elemdesc' -> 16rC.
 			'_OffsetOf_lpstrSchema' -> 16r4.
 			'_OffsetOf_lpvarValue' -> 16r8.
-			'_OffsetOf_memid' -> 16r0.
 			'_OffsetOf_oInst' -> 16r8.
 			'_OffsetOf_varkind' -> 16r20.
 			'_OffsetOf_wVarFlags' -> 16r1C.
@@ -143,11 +142,6 @@ lpvarValue
 
 	^VARIANT fromAddress: (bytes intPtrAtOffset: _OffsetOf_lpvarValue)!
 
-memid
-	"Answer the <Integer> value of the receiver's 'memid' field."
-
-	^bytes int32AtOffset: _OffsetOf_memid!
-
 oInst
 	"Answer the <Integer> value of the receiver's 'oInst' field."
 
@@ -184,7 +178,6 @@ isStringField!public!testing! !
 isSymbolicConstant!public!testing! !
 isUnion!public!testing! !
 lpvarValue!**compiled accessors**!public! !
-memid!**compiled accessors**!public! !
 oInst!**compiled accessors**!public! !
 value!accessing!public! !
 varkind!**compiled accessors**!public! !
@@ -220,8 +213,8 @@ defineFields
 	*** We rename this to 'elemdesc' to make a polymorphic accessor shared with FUNCDESC
 	"
 
+	super defineFields.
 	self
-		defineField: #memid type: Int32Field readOnly;
 		defineField: #lpstrSchema type: (PointerField type: Utf16String) beFiller;
 		defineField: #lpvarValue type: (PointerField type: VARIANT) beReadOnly;
 		defineField: #elemdesc type: (StructureField type: ELEMDESC) beReadOnly;

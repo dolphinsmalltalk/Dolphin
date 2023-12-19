@@ -1065,17 +1065,6 @@ gdipCreateFontFromDC: hdc font: font
 	<stdcall: errno GdipCreateFontFromDC handle handle*>
 	^self invalidCall: _failureCode!
 
-gdipCreateFontFromLogfontA: hdc logfont: logfont font: font
-	"Invoke the GdipCreateFontFromLogfontA() function of the module wrapped by the receiver.
-
-		GpStatus __stdcall GdipCreateFontFromLogfontA(
-			HDC HDC,
-			[in]LOGFONTA* LOGFONT,
-			[out, retval]PGpFont* font);"
-
-	<stdcall: errno GdipCreateFontFromLogfontA handle LOGFONT* handle*>
-	^self invalidCall: _failureCode!
-
 gdipCreateFontFromLogfontW: hdc logfont: logfont font: font
 	"Invoke the GdipCreateFontFromLogfontW() function of the module wrapped by the receiver.
 
@@ -3702,17 +3691,6 @@ gdipGetLineWrapMode: brush wrapMode: wrapMode
 			GpWrapMode* WrapMode);"
 
 	<stdcall: errno GdipGetLineWrapMode handle int32*>
-	^self invalidCall: _failureCode!
-
-gdipGetLogFontA: font graphics: graphics logfonta: logfonta
-	"Invoke the GdipGetLogFontA() function of the module wrapped by the receiver.
-
-		GpStatus __stdcall GdipGetLogFontA(
-			PGpFont font,
-			PGpGraphics graphics,
-			LOGFONTA* LOGFONTA);"
-
-	<stdcall: errno GdipGetLogFontA handle handle LOGFONT*>
 	^self invalidCall: _failureCode!
 
 gdipGetLogFontW: font graphics: graphics logfontw: logfontw
@@ -7269,7 +7247,6 @@ gdipCreateCustomLineCap:strokePath:baseCap:baseInset:customCap:!**auto generated
 gdipCreateFont:emSize:style:unit:font:!**auto generated**!GDI+ Flat API-Font Functions!public! !
 gdipCreateFontFamilyFromName:fontCollection:fontFamily:!**auto generated**!GDI+ Flat API-FontFamily Functions!public! !
 gdipCreateFontFromDC:font:!**auto generated**!GDI+ Flat API-Font Functions!public! !
-gdipCreateFontFromLogfontA:logfont:font:!**auto generated**!GDI+ Flat API-Font Functions!public! !
 gdipCreateFontFromLogfontW:logfont:font:!**auto generated**!GDI+ Flat API-Font Functions!public! !
 gdipCreateFromHDC:graphics:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
 gdipCreateFromHDC2:hDevice:graphics:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
@@ -7491,7 +7468,6 @@ gdipGetLineRectI:rect:!**auto generated**!GDI+ Flat API-LinearGradientBrush Func
 gdipGetLineSpacing:style:lineSpacing:!**auto generated**!GDI+ Flat API-FontFamily Functions!public! !
 gdipGetLineTransform:matrix:!**auto generated**!GDI+ Flat API-LinearGradientBrush Functions!public! !
 gdipGetLineWrapMode:wrapMode:!**auto generated**!GDI+ Flat API-LinearGradientBrush Functions!public! !
-gdipGetLogFontA:graphics:logfonta:!**auto generated**!GDI+ Flat API-Font Functions!public! !
 gdipGetLogFontW:graphics:logfontw:!**auto generated**!GDI+ Flat API-Font Functions!public! !
 gdipGetMatrixElements:matrixOut:!**auto generated**!GDI+ Flat API-Matrix Functions!public! !
 gdipGetMetafileDownLevelRasterizationLimit:metafileRasterizationLimitDpi:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !

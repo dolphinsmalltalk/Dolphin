@@ -17,7 +17,7 @@ package setClassNames: #(
 
 package setMethodNames: #(
 	#(#{Graphics.AbstractFont class} #fromOleFont:)
-	#(#{OS.AbstractLOGFONT class} #fromOleFont:)
+	#(#{OS.LOGFONTW class} #fromOleFont:)
 ).
 
 package setPrerequisites: #(
@@ -60,7 +60,7 @@ fromOleFont: pFont
 fromOleFont:!instance creation!public! !
 !
 
-!OS.AbstractLOGFONT class methodsFor!
+!OS.LOGFONTW class methodsFor!
 
 fromOleFont: pFont
 	"Answer a new instance of the receiver populated with details from the OLE font on which the
@@ -84,7 +84,7 @@ fromOleFont: pFont
 		lfQuality:
 		lfPitchAndFamily:
 "! !
-!OS.AbstractLOGFONT class categoriesForMethods!
+!OS.LOGFONTW class categoriesForMethods!
 fromOleFont:!instance creation!public! !
 !
 

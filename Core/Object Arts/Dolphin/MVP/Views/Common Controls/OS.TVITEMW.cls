@@ -44,7 +44,7 @@ allCallbacks
 	bytes
 		int32AtOffset: _OffsetOf_iImage put: I_IMAGECALLBACK;
 		int32AtOffset: _OffsetOf_cChildren put: I_CHILDRENCALLBACK;
-		uint32AtOffset: _OffsetOf_pszText put: LPSTR_TEXTCALLBACK.
+		uint32AtOffset: _OffsetOf_pszText put: OS.Win32Constants.LPSTR_TEXTCALLBACK.
 	self maskIn: ##(TVIF_TEXT | TVIF_CHILDREN | TVIF_IMAGE)!
 
 beStateExpandedOnce

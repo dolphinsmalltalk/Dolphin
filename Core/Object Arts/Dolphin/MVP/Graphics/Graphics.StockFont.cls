@@ -29,14 +29,10 @@ basicRealize
 
 	self handle: (self getStockObject: id)!
 
-logFont
-	"Answer the receiver's logical attributes."
-
-	^logfont
-		ifNil: 
-			[(logfont := LOGFONTW newBuffer)
-				getData: self handle;
-				yourself]!
+getLogFont
+	logfont := LOGFONTW newBuffer.
+	self getData: logfont.
+	^logfont!
 
 ownedHandle: aHandle 
 	"Private - Set the handle of the external graphics's tool object represented and owned by
@@ -79,7 +75,7 @@ setId: anInteger
 !Graphics.StockFont categoriesForMethods!
 basicFree!private!realizing/unrealizing! !
 basicRealize!private!realizing/unrealizing! !
-logFont!accessing!public! !
+getLogFont!initializing!private! !
 ownedHandle:!accessing!private! !
 printOn:!development!printing!public! !
 resolution:!accessing!public! !

@@ -39,6 +39,17 @@ OS.COM.AbstractDispatchImplementation
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'GenericEventMask' -> 16r2. 'NoIndividualEventsMask' -> 16r4. 'TraceMask' -> 16r1 }!
+External.Structure
+	subclass: #'OS.COM.CONNECTDATA'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_CONNECTDATA_Size' -> 16r8.
+			'_OffsetOf_dwCookie' -> 16r4.
+			'_OffsetOf_punk' -> 16r0
+		}!
 OS.COM.IUnknown
 	subclass: #'OS.COM.IConnectionPoint'
 	instanceVariableNames: ''
@@ -60,17 +71,6 @@ OS.COM.IEnumUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.OLEStructure
-	subclass: #'OS.COM.CONNECTDATA'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-			'_CONNECTDATA_Size' -> 16r8.
-			'_OffsetOf_dwCookie' -> 16r4.
-			'_OffsetOf_punk' -> 16r0
-		}!
 
 "End of package definition"!
 

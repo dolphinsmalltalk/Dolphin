@@ -57,7 +57,6 @@ package setClassNames: #(
 	#{Graphics.ThemeColor}
 	#{Graphics.VirtualColor}
 	#{Graphics.WatermarkBitmapInitializer}
-	#{OS.AbstractLOGFONT}
 	#{OS.BITMAP}
 	#{OS.BITMAPFILEHEADER}
 	#{OS.BITMAPINFO}
@@ -72,7 +71,6 @@ package setClassNames: #(
 	#{OS.GRADIENT_TRIANGLE}
 	#{OS.ICONINFO}
 	#{OS.LOGBRUSH}
-	#{OS.LOGFONT}
 	#{OS.LOGFONTW}
 	#{OS.LOGPALETTE}
 	#{OS.LOGPEN}
@@ -631,6 +629,60 @@ Graphics.ImageManager
 	classInstanceVariableNames: ''
 	classConstants: {}!
 External.Structure
+	subclass: #'OS.BITMAP'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_BITMAP_Size' -> 16r18.
+			'_OffsetOf_bmBits' -> 16r14.
+			'_OffsetOf_bmBitsPixel' -> 16r12.
+			'_OffsetOf_bmHeight' -> 16r8.
+			'_OffsetOf_bmPlanes' -> 16r10.
+			'_OffsetOf_bmType' -> 16r0.
+			'_OffsetOf_bmWidth' -> 16r4.
+			'_OffsetOf_bmWidthBytes' -> 16rC
+		}!
+External.Structure
+	subclass: #'OS.BITMAPFILEHEADER'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_BITMAPFILEHEADER_Size' -> 16rE.
+			'_OffsetOf_bfOffBits' -> 16rA.
+			'_OffsetOf_bfReserved1' -> 16r6.
+			'_OffsetOf_bfReserved2' -> 16r8.
+			'_OffsetOf_bfSize' -> 16r2.
+			'_OffsetOf_bfType' -> 16r0
+		}!
+External.Structure
+	subclass: #'OS.BITMAPINFO'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_BITMAPINFO_Size' -> 16r2C.
+			'_OffsetOf_bmiColors' -> 16r28.
+			'_OffsetOf_bmiHeader' -> 16r0
+		}!
+External.Structure
+	subclass: #'OS.BLENDFUNCTION'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_BLENDFUNCTION_Size' -> 16r4.
+			'_OffsetOf_AlphaFormat' -> 16r3.
+			'_OffsetOf_BlendFlags' -> 16r1.
+			'_OffsetOf_BlendOp' -> 16r0.
+			'_OffsetOf_SourceConstantAlpha' -> 16r2
+		}!
+External.Structure
 	subclass: #'OS.DEVMODE'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -672,30 +724,52 @@ External.Structure
 			'_OffsetOf_dmYResolution' -> 16r40
 		}!
 External.Structure
-	subclass: #'External.SIZE'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-External.SIZE
-	subclass: #'OS.SIZEL'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: { '_OffsetOf_cx' -> 16r0. '_OffsetOf_cy' -> 16r4. '_SIZEL_Size' -> 16r8 }!
-OS.Win32Structure
-	subclass: #'OS.AbstractLOGFONT'
+	subclass: #'OS.GRADIENT_RECT'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-			'_AbstractLOGFONT_Size' -> 16r1C.
+			'_GRADIENT_RECT_Size' -> 16r8.
+			'_OffsetOf_lowerRight' -> 16r4.
+			'_OffsetOf_upperLeft' -> 16r0
+		}!
+External.Structure
+	subclass: #'OS.GRADIENT_TRIANGLE'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_GRADIENT_TRIANGLE_Size' -> 16rC.
+			'_OffsetOf_Vertex1' -> 16r0.
+			'_OffsetOf_Vertex2' -> 16r4.
+			'_OffsetOf_Vertex3' -> 16r8
+		}!
+External.Structure
+	subclass: #'OS.LOGBRUSH'
+	instanceVariableNames: 'hatch'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_LOGBRUSH_Size' -> 16rC.
+			'_OffsetOf_lbColor' -> 16r4.
+			'_OffsetOf_lbHatch' -> 16r8.
+			'_OffsetOf_lbStyle' -> 16r0
+		}!
+External.Structure
+	subclass: #'OS.LOGFONTW'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_LOGFONTW_Size' -> 16r5C.
 			'_OffsetOf_lfCharSet' -> 16r17.
 			'_OffsetOf_lfClipPrecision' -> 16r19.
 			'_OffsetOf_lfEscapement' -> 16r8.
+			'_OffsetOf_lfFaceName' -> 16r1C.
 			'_OffsetOf_lfHeight' -> 16r0.
 			'_OffsetOf_lfItalic' -> 16r14.
 			'_OffsetOf_lfOrientation' -> 16rC.
@@ -707,48 +781,172 @@ OS.Win32Structure
 			'_OffsetOf_lfWeight' -> 16r10.
 			'_OffsetOf_lfWidth' -> 16r4
 		}!
-OS.Win32Structure
-	subclass: #'OS.BITMAP'
+External.Structure
+	subclass: #'OS.LOGPALETTE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-			'_BITMAP_Size' -> 16r18.
-			'_OffsetOf_bmBits' -> 16r14.
-			'_OffsetOf_bmBitsPixel' -> 16r12.
-			'_OffsetOf_bmHeight' -> 16r8.
-			'_OffsetOf_bmPlanes' -> 16r10.
-			'_OffsetOf_bmType' -> 16r0.
-			'_OffsetOf_bmWidth' -> 16r4.
-			'_OffsetOf_bmWidthBytes' -> 16rC
+			'_LOGPALETTE_Size' -> 16r404.
+			'_OffsetOf_palNumEntries' -> 16r2.
+			'_OffsetOf_palPalEntry' -> 16r4.
+			'_OffsetOf_palVersion' -> 16r0
 		}!
-OS.Win32Structure
-	subclass: #'OS.BITMAPFILEHEADER'
+External.Structure
+	subclass: #'OS.LOGPEN'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-			'_BITMAPFILEHEADER_Size' -> 16rE.
-			'_OffsetOf_bfOffBits' -> 16rA.
-			'_OffsetOf_bfReserved1' -> 16r6.
-			'_OffsetOf_bfReserved2' -> 16r8.
-			'_OffsetOf_bfSize' -> 16r2.
-			'_OffsetOf_bfType' -> 16r0
+			'_LOGPEN_Size' -> 16r10.
+			'_OffsetOf_lopnColor' -> 16rC.
+			'_OffsetOf_lopnStyle' -> 16r0.
+			'_OffsetOf_lopnWidth' -> 16r4
 		}!
-OS.Win32Structure
-	subclass: #'OS.BITMAPINFO'
+External.Structure
+	subclass: #'OS.PALETTEENTRY'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-			'_BITMAPINFO_Size' -> 16r2C.
-			'_OffsetOf_bmiColors' -> 16r28.
-			'_OffsetOf_bmiHeader' -> 16r0
+			'_OffsetOf_peBlue' -> 16r2.
+			'_OffsetOf_peFlags' -> 16r3.
+			'_OffsetOf_peGreen' -> 16r1.
+			'_OffsetOf_peRed' -> 16r0.
+			'_PALETTEENTRY_Size' -> 16r4
 		}!
-OS.Win32Structure
+External.Structure
+	subclass: #'OS.PANOSE'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_OffsetOf_bArmStyle' -> 16r6.
+			'_OffsetOf_bContrast' -> 16r4.
+			'_OffsetOf_bFamilyType' -> 16r0.
+			'_OffsetOf_bLetterform' -> 16r7.
+			'_OffsetOf_bMidline' -> 16r8.
+			'_OffsetOf_bProportion' -> 16r3.
+			'_OffsetOf_bSerifStyle' -> 16r1.
+			'_OffsetOf_bStrokeVariation' -> 16r5.
+			'_OffsetOf_bWeight' -> 16r2.
+			'_OffsetOf_bXHeight' -> 16r9.
+			'_PANOSE_Size' -> 16rA
+		}!
+External.Structure
+	subclass: #'OS.RGBQUAD'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_OffsetOf_rgbBlue' -> 16r0.
+			'_OffsetOf_rgbGreen' -> 16r1.
+			'_OffsetOf_rgbRed' -> 16r2.
+			'_OffsetOf_rgbReserved' -> 16r3.
+			'_RGBQUAD_Size' -> 16r4
+		}!
+External.Structure
+	subclass: #'External.SIZE'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+External.Structure
+	subclass: #'OS.TEXTMETRICW'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_OffsetOf_tmAscent' -> 16r4.
+			'_OffsetOf_tmAveCharWidth' -> 16r14.
+			'_OffsetOf_tmBreakChar' -> 16r32.
+			'_OffsetOf_tmCharSet' -> 16r38.
+			'_OffsetOf_tmDefaultChar' -> 16r30.
+			'_OffsetOf_tmDescent' -> 16r8.
+			'_OffsetOf_tmDigitizedAspectX' -> 16r24.
+			'_OffsetOf_tmDigitizedAspectY' -> 16r28.
+			'_OffsetOf_tmExternalLeading' -> 16r10.
+			'_OffsetOf_tmFirstChar' -> 16r2C.
+			'_OffsetOf_tmHeight' -> 16r0.
+			'_OffsetOf_tmInternalLeading' -> 16rC.
+			'_OffsetOf_tmItalic' -> 16r34.
+			'_OffsetOf_tmLastChar' -> 16r2E.
+			'_OffsetOf_tmMaxCharWidth' -> 16r18.
+			'_OffsetOf_tmOverhang' -> 16r20.
+			'_OffsetOf_tmPitchAndFamily' -> 16r37.
+			'_OffsetOf_tmStruckOut' -> 16r36.
+			'_OffsetOf_tmUnderlined' -> 16r35.
+			'_OffsetOf_tmWeight' -> 16r1C.
+			'_TEXTMETRICW_Size' -> 16r3C
+		}!
+External.Structure
+	subclass: #'OS.TRIVERTEX'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_OffsetOf_alpha' -> 16rE.
+			'_OffsetOf_blue' -> 16rC.
+			'_OffsetOf_green' -> 16rA.
+			'_OffsetOf_red' -> 16r8.
+			'_OffsetOf_x' -> 16r0.
+			'_OffsetOf_y' -> 16r4.
+			'_TRIVERTEX_Size' -> 16r10
+		}!
+OS.BITMAP
+	subclass: #'OS.DIBSECTION'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_DIBSECTION_Size' -> 16r54.
+			'_OffsetOf_dsBitfields' -> 16r40.
+			'_OffsetOf_dsBmih' -> 16r18.
+			'_OffsetOf_dshSection' -> 16r4C.
+			'_OffsetOf_dsOffset' -> 16r50
+		}!
+External.FinalizableStructure
+	subclass: #'OS.ICONINFO'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_ICONINFO_Size' -> 16r14.
+			'_OffsetOf_fIcon' -> 16r0.
+			'_OffsetOf_hbmColor' -> 16r10.
+			'_OffsetOf_hbmMask' -> 16rC.
+			'_OffsetOf_xHotspot' -> 16r4.
+			'_OffsetOf_yHotspot' -> 16r8
+		}!
+OS.LOGFONTW
+	subclass: #'OS.ENUMLOGFONTW'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_ENUMLOGFONTW_Size' -> 16r11C.
+			'_OffsetOf_elfFullName' -> 16r5C.
+			'_OffsetOf_elfStyle' -> 16rDC
+		}!
+External.SIZE
+	subclass: #'OS.SIZEL'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: { '_OffsetOf_cx' -> 16r0. '_OffsetOf_cy' -> 16r4. '_SIZEL_Size' -> 16r8 }!
+OS.SizedStructure
 	subclass: #'OS.BITMAPINFOHEADER'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -765,23 +963,9 @@ OS.Win32Structure
 			'_OffsetOf_biSizeImage' -> 16r14.
 			'_OffsetOf_biWidth' -> 16r4.
 			'_OffsetOf_biXPelsPerMeter' -> 16r18.
-			'_OffsetOf_biYPelsPerMeter' -> 16r1C.
-			'_OffsetOf_dwSize' -> 16r0
+			'_OffsetOf_biYPelsPerMeter' -> 16r1C
 		}!
-OS.Win32Structure
-	subclass: #'OS.BLENDFUNCTION'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-			'_BLENDFUNCTION_Size' -> 16r4.
-			'_OffsetOf_AlphaFormat' -> 16r3.
-			'_OffsetOf_BlendFlags' -> 16r1.
-			'_OffsetOf_BlendOp' -> 16r0.
-			'_OffsetOf_SourceConstantAlpha' -> 16r2
-		}!
-OS.Win32Structure
+OS.SizedStructure
 	subclass: #'OS.DOCINFOW'
 	instanceVariableNames: 'docName'
 	classVariableNames: ''
@@ -789,86 +973,12 @@ OS.Win32Structure
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_DOCINFOW_Size' -> 16r14.
-			'_OffsetOf_dwSize' -> 16r0.
 			'_OffsetOf_fwType' -> 16r10.
 			'_OffsetOf_lpszDatatype' -> 16rC.
 			'_OffsetOf_lpszDocName' -> 16r4.
 			'_OffsetOf_lpszOutput' -> 16r8
 		}!
-OS.Win32Structure
-	subclass: #'OS.GRADIENT_RECT'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-			'_GRADIENT_RECT_Size' -> 16r8.
-			'_OffsetOf_lowerRight' -> 16r4.
-			'_OffsetOf_upperLeft' -> 16r0
-		}!
-OS.Win32Structure
-	subclass: #'OS.GRADIENT_TRIANGLE'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-			'_GRADIENT_TRIANGLE_Size' -> 16rC.
-			'_OffsetOf_Vertex1' -> 16r0.
-			'_OffsetOf_Vertex2' -> 16r4.
-			'_OffsetOf_Vertex3' -> 16r8
-		}!
-OS.Win32Structure
-	subclass: #'OS.ICONINFO'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-			'_ICONINFO_Size' -> 16r14.
-			'_OffsetOf_fIcon' -> 16r0.
-			'_OffsetOf_hbmColor' -> 16r10.
-			'_OffsetOf_hbmMask' -> 16rC.
-			'_OffsetOf_xHotspot' -> 16r4.
-			'_OffsetOf_yHotspot' -> 16r8
-		}!
-OS.Win32Structure
-	subclass: #'OS.LOGBRUSH'
-	instanceVariableNames: 'hatch'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-			'_LOGBRUSH_Size' -> 16rC.
-			'_OffsetOf_lbColor' -> 16r4.
-			'_OffsetOf_lbHatch' -> 16r8.
-			'_OffsetOf_lbStyle' -> 16r0
-		}!
-OS.Win32Structure
-	subclass: #'OS.LOGPALETTE'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-			'_LOGPALETTE_Size' -> 16r404.
-			'_OffsetOf_palNumEntries' -> 16r2.
-			'_OffsetOf_palPalEntry' -> 16r4.
-			'_OffsetOf_palVersion' -> 16r0
-		}!
-OS.Win32Structure
-	subclass: #'OS.LOGPEN'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-			'_LOGPEN_Size' -> 16r10.
-			'_OffsetOf_lopnColor' -> 16rC.
-			'_OffsetOf_lopnStyle' -> 16r0.
-			'_OffsetOf_lopnWidth' -> 16r4
-		}!
-OS.Win32Structure
+OS.SizedStructure
 	subclass: #'OS.NONCLIENTMETRICSW'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -876,7 +986,6 @@ OS.Win32Structure
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_NONCLIENTMETRICSW_Size' -> 16r1F8.
-			'_OffsetOf_dwSize' -> 16r0.
 			'_OffsetOf_iBorderWidth' -> 16r4.
 			'_OffsetOf_iCaptionHeight' -> 16r14.
 			'_OffsetOf_iCaptionWidth' -> 16r10.
@@ -893,14 +1002,13 @@ OS.Win32Structure
 			'_OffsetOf_lfSmCaptionFont' -> 16r7C.
 			'_OffsetOf_lfStatusFont' -> 16r13C
 		}!
-OS.Win32Structure
+OS.SizedStructure
 	subclass: #'OS.OUTLINETEXTMETRICW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-			'_OffsetOf_dwSize' -> 16r0.
 			'_OffsetOf_otmAscent' -> 16r64.
 			'_OffsetOf_otmDescent' -> 16r68.
 			'_OffsetOf_otmEMSquare' -> 16r60.
@@ -933,133 +1041,6 @@ OS.Win32Structure
 			'_OffsetOf_otmTextMetrics' -> 16r4.
 			'_OffsetOf_otmusMinimumPPEM' -> 16r94.
 			'_OUTLINETEXTMETRICW_Size' -> 16rD8
-		}!
-OS.Win32Structure
-	subclass: #'OS.PALETTEENTRY'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-			'_OffsetOf_peBlue' -> 16r2.
-			'_OffsetOf_peFlags' -> 16r3.
-			'_OffsetOf_peGreen' -> 16r1.
-			'_OffsetOf_peRed' -> 16r0.
-			'_PALETTEENTRY_Size' -> 16r4
-		}!
-OS.Win32Structure
-	subclass: #'OS.PANOSE'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-			'_OffsetOf_bArmStyle' -> 16r6.
-			'_OffsetOf_bContrast' -> 16r4.
-			'_OffsetOf_bFamilyType' -> 16r0.
-			'_OffsetOf_bLetterform' -> 16r7.
-			'_OffsetOf_bMidline' -> 16r8.
-			'_OffsetOf_bProportion' -> 16r3.
-			'_OffsetOf_bSerifStyle' -> 16r1.
-			'_OffsetOf_bStrokeVariation' -> 16r5.
-			'_OffsetOf_bWeight' -> 16r2.
-			'_OffsetOf_bXHeight' -> 16r9.
-			'_PANOSE_Size' -> 16rA
-		}!
-OS.Win32Structure
-	subclass: #'OS.RGBQUAD'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-			'_OffsetOf_rgbBlue' -> 16r0.
-			'_OffsetOf_rgbGreen' -> 16r1.
-			'_OffsetOf_rgbRed' -> 16r2.
-			'_OffsetOf_rgbReserved' -> 16r3.
-			'_RGBQUAD_Size' -> 16r4
-		}!
-OS.Win32Structure
-	subclass: #'OS.TEXTMETRICW'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-			'_OffsetOf_tmAscent' -> 16r4.
-			'_OffsetOf_tmAveCharWidth' -> 16r14.
-			'_OffsetOf_tmBreakChar' -> 16r32.
-			'_OffsetOf_tmCharSet' -> 16r38.
-			'_OffsetOf_tmDefaultChar' -> 16r30.
-			'_OffsetOf_tmDescent' -> 16r8.
-			'_OffsetOf_tmDigitizedAspectX' -> 16r24.
-			'_OffsetOf_tmDigitizedAspectY' -> 16r28.
-			'_OffsetOf_tmExternalLeading' -> 16r10.
-			'_OffsetOf_tmFirstChar' -> 16r2C.
-			'_OffsetOf_tmHeight' -> 16r0.
-			'_OffsetOf_tmInternalLeading' -> 16rC.
-			'_OffsetOf_tmItalic' -> 16r34.
-			'_OffsetOf_tmLastChar' -> 16r2E.
-			'_OffsetOf_tmMaxCharWidth' -> 16r18.
-			'_OffsetOf_tmOverhang' -> 16r20.
-			'_OffsetOf_tmPitchAndFamily' -> 16r37.
-			'_OffsetOf_tmStruckOut' -> 16r36.
-			'_OffsetOf_tmUnderlined' -> 16r35.
-			'_OffsetOf_tmWeight' -> 16r1C.
-			'_TEXTMETRICW_Size' -> 16r3C
-		}!
-OS.Win32Structure
-	subclass: #'OS.TRIVERTEX'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-			'_OffsetOf_alpha' -> 16rE.
-			'_OffsetOf_blue' -> 16rC.
-			'_OffsetOf_green' -> 16rA.
-			'_OffsetOf_red' -> 16r8.
-			'_OffsetOf_x' -> 16r0.
-			'_OffsetOf_y' -> 16r4.
-			'_TRIVERTEX_Size' -> 16r10
-		}!
-OS.AbstractLOGFONT
-	subclass: #'OS.LOGFONT'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: { '_LOGFONT_Size' -> 16r3C. '_OffsetOf_lfFaceName' -> 16r1C }!
-OS.AbstractLOGFONT
-	subclass: #'OS.LOGFONTW'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: { '_LOGFONTW_Size' -> 16r5C. '_OffsetOf_lfFaceName' -> 16r1C }!
-OS.LOGFONTW
-	subclass: #'OS.ENUMLOGFONTW'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-			'_ENUMLOGFONTW_Size' -> 16r11C.
-			'_OffsetOf_elfFullName' -> 16r5C.
-			'_OffsetOf_elfStyle' -> 16rDC
-		}!
-OS.BITMAP
-	subclass: #'OS.DIBSECTION'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-			'_DIBSECTION_Size' -> 16r54.
-			'_OffsetOf_dsBitfields' -> 16r40.
-			'_OffsetOf_dsBmih' -> 16r18.
-			'_OffsetOf_dshSection' -> 16r4C.
-			'_OffsetOf_dsOffset' -> 16r50
 		}!
 OS.TEXTMETRICW
 	subclass: #'OS.NEWTEXTMETRICW'

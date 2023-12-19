@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure
+OS.SizedStructure
 	subclass: #'OS.FLASHWINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -9,7 +9,6 @@ OS.Win32Structure
 	classConstants: {
 			'_FLASHWINFO_Size' -> 16r14.
 			'_OffsetOf_dwFlags' -> 16r8.
-			'_OffsetOf_dwSize' -> 16r0.
 			'_OffsetOf_dwTimeout' -> 16r10.
 			'_OffsetOf_hwnd' -> 16r4.
 			'_OffsetOf_uCount' -> 16rC
@@ -34,20 +33,15 @@ dwFlags: anInteger
 
 	bytes uint32AtOffset: _OffsetOf_dwFlags put: anInteger!
 
-dwSize: anInteger
-	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
-
-	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
-
 dwTimeout: anInteger
 	"Set the receiver's 'dwTimeout' field to the value of the argument, anInteger"
 
 	bytes uint32AtOffset: _OffsetOf_dwTimeout put: anInteger!
 
-hwnd: anExternalHandle
-	"Set the receiver's 'hwnd' field to the value of the argument, anExternalHandle"
+hwnd: aHandle
+	"Set the receiver's 'hwnd' field to the value of the argument, aHandle"
 
-	bytes uintPtrAtOffset: _OffsetOf_hwnd put: anExternalHandle!
+	bytes uintPtrAtOffset: _OffsetOf_hwnd put: aHandle!
 
 uCount: anInteger
 	"Set the receiver's 'uCount' field to the value of the argument, anInteger"
@@ -56,7 +50,6 @@ uCount: anInteger
 !OS.FLASHWINFO categoriesForMethods!
 dwFlags!**compiled accessors**!public! !
 dwFlags:!**compiled accessors**!public! !
-dwSize:!**compiled accessors**!public! !
 dwTimeout:!**compiled accessors**!public! !
 hwnd:!**compiled accessors**!public! !
 uCount:!**compiled accessors**!public! !
@@ -81,8 +74,8 @@ defineFields
 		} FLASHWINFO;
 	"
 
+	super defineFields.
 	self
-		defineField: #dwSize type: UInt32Field writeOnly beOverride;
 		defineField: #hwnd type: HANDLEField writeOnly;
 		defineField: #dwFlags type: UInt32Field new;
 		defineField: #uCount type: UInt32Field writeOnly;

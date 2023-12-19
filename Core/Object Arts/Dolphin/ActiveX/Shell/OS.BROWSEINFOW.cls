@@ -29,6 +29,9 @@ displayName
 
 	^displayName trimNulls!
 
+dwSize: anInteger
+	"BROWSEINFOW is unusual among common dialog structures in not having a structure size field."!
+
 flags
 	"Answer the <Integer> value of the receiver's 'flags' field."
 
@@ -52,22 +55,15 @@ initialize: anInteger
 	displayName := Utf16String newFixed: MAX_PATH.
 	self pszDisplayName: displayName!
 
-lpfnHook: anExternalAddress
-	"Set the receiver's 'lpfnHook' field to the value of the argument, anExternalAddress"
+lpfnHook: anAddress
+	"Set the receiver's 'lpfnHook' field to the value of the argument, anAddress"
 
-	bytes uintPtrAtOffset: _OffsetOf_lpfnHook put: anExternalAddress!
+	bytes uintPtrAtOffset: _OffsetOf_lpfnHook put: anAddress!
 
 lpszTitle: anUtf16String
 	"Set the receiver's 'lpszTitle' field to the value of the argument, anUtf16String"
 
 	bytes uintPtrAtOffset: _OffsetOf_lpszTitle put: anUtf16String yourAddress!
-
-ownerView: aView
-	"Set the owning window of the dialog to aView."
-
-	| hWnd |
-	hWnd := aView asParameter.
-	hWnd isNull ifFalse: [self hwndOwner: hWnd].!
 
 pidlRoot
 	"Answer the <Integer> value of the receiver's 'pidlRoot' field."
@@ -91,13 +87,13 @@ title: text
 	self lpszTitle: (title := text asUtf16String)! !
 !OS.BROWSEINFOW categoriesForMethods!
 displayName!accessing!public! !
+dwSize:!initializing!public! !
 flags!**compiled accessors**!public! !
 flags:!**compiled accessors**!public! !
 hwndOwner:!**compiled accessors**!public! !
 initialize:!initializing!private! !
 lpfnHook:!**compiled accessors**!public! !
 lpszTitle:!**compiled accessors**!public! !
-ownerView:!accessing!public! !
 pidlRoot!**compiled accessors**!public! !
 pidlRoot:!**compiled accessors**!public! !
 pszDisplayName:!**compiled accessors**!public! !
@@ -126,7 +122,7 @@ defineFields
 		} BROWSEINFOW;"
 
 	self
-		defineField: #hwndOwner type: UInt32Field writeOnly;
+		defineField: #hwndOwner type: UInt32Field writeOnly beOverride;
 		defineField: #pidlRoot type: UInt32Field new;
 		defineField: #pszDisplayName type: (PointerField type: Utf16String) beWriteOnly;
 		defineField: #lpszTitle type: (PointerField type: Utf16String) beWriteOnly;

@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Win32Structure subclass: #MEMORY_BASIC_INFORMATION
+ExternalStructure subclass: #MEMORY_BASIC_INFORMATION
 	instanceVariableNames: ''
 	classVariableNames: '_MEMORY_BASIC_INFORMATION_Size _OffsetOf_AllocationBase _OffsetOf_AllocationProtect _OffsetOf_BaseAddress _OffsetOf_Protect _OffsetOf_RegionSize _OffsetOf_State _OffsetOf_Type'
 	poolDictionaries: ''

@@ -17,15 +17,6 @@ createHandle
 
 	^self getStockObject: id!
 
-getData: aWinStruct
-	"Private - Get the data bytes of the receiver's external resource object into	
-	the specified structure. N.B. This only works for GDI objects."
-
-	^Gdi32
-		getObject: self asParameter
-		cbBuffer: aWinStruct byteSize
-		lpvObject: aWinStruct!
-
 id
 	^id!
 
@@ -38,7 +29,7 @@ id: anInteger
 name
 	"Answer the symbolic name of this stock pen."
 
-	^#(#white #black #null) at: id - ##(WHITE_PEN - 1)!
+	^#('white' 'black' 'null') at: id - ##(WHITE_PEN - 1)!
 
 ownedHandle: aHandle 
 	"Private - Set the handle of the external graphics's tool object represented and owned by
@@ -60,7 +51,6 @@ styleName
 	^#solid! !
 !Graphics.StockPen categoriesForMethods!
 createHandle!private!realizing/unrealizing! !
-getData:!accessing!private! !
 id!public! !
 id:!private!realizing/unrealizing! !
 name!accessing!public! !

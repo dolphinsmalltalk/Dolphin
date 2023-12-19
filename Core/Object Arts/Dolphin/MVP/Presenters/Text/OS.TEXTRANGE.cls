@@ -23,11 +23,31 @@ Instance Variables:
 !OS.TEXTRANGE categoriesForClass!Win-Structs! !
 !OS.TEXTRANGE methodsFor!
 
+cpMax
+	"Answer the receiver's cpMax field as a Smalltalk object."
+
+	^(bytes int32AtOffset: CHARRANGE._OffsetOf_cpMax)!
+
+cpMax: anInteger
+	bytes int32AtOffset: CHARRANGE._OffsetOf_cpMax put: anInteger!
+
+cpMin
+	"Answer the receiver's cpMin field as a Smalltalk object."
+
+	^(bytes int32AtOffset: CHARRANGE._OffsetOf_cpMin)!
+
+cpMin: anInteger
+	bytes int32AtOffset: CHARRANGE._OffsetOf_cpMin put: anInteger!
+
 lpstrText: anUtf16String
 	"Set the receiver's 'lpstrText' field to the value of the argument, anUtf16String"
 
 	bytes uintPtrAtOffset: _OffsetOf_lpstrText put: anUtf16String yourAddress! !
 !OS.TEXTRANGE categoriesForMethods!
+cpMax!accessing!public! !
+cpMax:!accessing!public! !
+cpMin!accessing!public! !
+cpMin:!accessing!public! !
 lpstrText:!**compiled accessors**!public! !
 !
 

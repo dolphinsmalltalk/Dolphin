@@ -1928,18 +1928,13 @@ OS.AbstractTEXTRANGE
 			'_OffsetOf_lpstrText' -> 16r8.
 			'_TextRangeFull_Size' -> 16rC
 		}!
-OS.AbstractTEXTRANGE
+UI.Scintilla.TextRangeFull
 	subclass: #'UI.Scintilla.TextToFindFull'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-			'_OffsetOf_chrg' -> 16r0.
-			'_OffsetOf_chrgText' -> 16rC.
-			'_OffsetOf_lpstrText' -> 16r8.
-			'_TextToFindFull_Size' -> 16r14
-		}!
+	classConstants: { '_OffsetOf_chrgText' -> 16rC. '_TextToFindFull_Size' -> 16r14 }!
 OS.NMHDR
 	subclass: #'UI.Scintilla.SCNotification'
 	instanceVariableNames: 'view textString'

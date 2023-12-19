@@ -7,7 +7,6 @@ OS.CommonDialogStructure
 	imports: #(#{OS.PrintDialogConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
-			'_OffsetOf_dwSize' -> 16r0.
 			'_OffsetOf_flags' -> 16r14.
 			'_OffsetOf_hDC' -> 16r10.
 			'_OffsetOf_hDevMode' -> 16r8.
@@ -15,7 +14,6 @@ OS.CommonDialogStructure
 			'_OffsetOf_hInstance' -> 16r22.
 			'_OffsetOf_hPrintTemplate' -> 16r3A.
 			'_OffsetOf_hSetupTemplate' -> 16r3E.
-			'_OffsetOf_hwndOwner' -> 16r4.
 			'_OffsetOf_lCustData' -> 16r26.
 			'_OffsetOf_lpfnHook' -> 16r2A.
 			'_OffsetOf_lpfnSetupHook' -> 16r2E.
@@ -32,11 +30,6 @@ OS.PRINTDLGW guid: (Core.GUID fromString: '{87b4c609-026e-11d3-9fd7-00a0cc3e4a32
 OS.PRINTDLGW comment: ''!
 !OS.PRINTDLGW categoriesForClass!External-Data-Structured-Win32! !
 !OS.PRINTDLGW methodsFor!
-
-dwSize: anInteger
-	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
-
-	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
 
 flags
 	"Answer the <Integer> value of the receiver's 'flags' field."
@@ -61,15 +54,10 @@ hDC: anInteger
 hookFlag
 	^PD_ENABLEPRINTHOOK!
 
-hwndOwner: anInteger
-	"Set the receiver's 'hwndOwner' field to the value of the argument, anInteger"
+lpfnHook: anAddress
+	"Set the receiver's 'lpfnHook' field to the value of the argument, anAddress"
 
-	bytes uint32AtOffset: _OffsetOf_hwndOwner put: anInteger!
-
-lpfnHook: anExternalAddress
-	"Set the receiver's 'lpfnHook' field to the value of the argument, anExternalAddress"
-
-	bytes uintPtrAtOffset: _OffsetOf_lpfnHook put: anExternalAddress!
+	bytes uintPtrAtOffset: _OffsetOf_lpfnHook put: anAddress!
 
 nCopies
 	"Answer the <Integer> value of the receiver's 'nCopies' field."
@@ -109,22 +97,13 @@ nToPage
 nToPage: anInteger
 	"Set the receiver's 'nToPage' field to the value of the argument, anInteger"
 
-	bytes uint16AtOffset: _OffsetOf_nToPage put: anInteger!
-
-ownerView: aView
-	"Set the parent window for the dialog to aView."
-
-	| hWnd |
-	hWnd := aView asParameter.
-	hWnd isNull ifFalse: [self hwndOwner: hWnd].! !
+	bytes uint16AtOffset: _OffsetOf_nToPage put: anInteger! !
 !OS.PRINTDLGW categoriesForMethods!
-dwSize:!**compiled accessors**!public! !
 flags!**compiled accessors**!public! !
 flags:!**compiled accessors**!public! !
 hDC!**compiled accessors**!public! !
 hDC:!**compiled accessors**!public! !
 hookFlag!accessing!public! !
-hwndOwner:!**compiled accessors**!public! !
 lpfnHook:!**compiled accessors**!public! !
 nCopies!**compiled accessors**!public! !
 nCopies:!**compiled accessors**!public! !
@@ -134,7 +113,6 @@ nMaxPage:!**compiled accessors**!public! !
 nMinPage:!**compiled accessors**!public! !
 nToPage!**compiled accessors**!public! !
 nToPage:!**compiled accessors**!public! !
-ownerView:!accessing!public! !
 !
 
 !OS.PRINTDLGW class methodsFor!
@@ -169,9 +147,8 @@ defineFields
 		HANDLE				hSetupTemplate;
 	} PRINTDLGW;"
 
+	super defineFields.
 	self
-		defineField: #dwSize type: UInt32Field writeOnly beOverride;
-		defineField: #hwndOwner type: UInt32Field writeOnly;
 		defineField: #hDevMode type: UInt32Field new beUncompiled;
 		defineField: #hDevNames type: UInt32Field new beUncompiled;
 		defineField: #hDC type: UInt32Field new;

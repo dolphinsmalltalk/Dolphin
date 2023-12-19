@@ -282,7 +282,9 @@ equivalentLegacyPrerequisites
 				'Dolphin Binary Filer' -> 'Dolphin'.
 				'Dolphin STx Filer Core' -> 'Dolphin'.
 				'Dolphin STx Filer Core (Old versions)' -> 'Dolphin'.
-				'Dolphin Literal Filer (Old versions)' -> 'Dolphin'
+				'Dolphin Literal Filer (Old versions)' -> 'Dolphin'.
+				'Dolphin MVP (Deprecated)' -> 'Dolphin MVP Base'.
+				'Dolphin Base (Deprecated)' -> 'Dolphin'.
 			})!
 
 fileOutAttributesOfClass: aClass

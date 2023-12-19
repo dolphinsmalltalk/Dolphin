@@ -47,6 +47,18 @@ Core.Object
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+External.Structure
+	subclass: #'OS.COM.CATEGORYINFO'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+			'_CATEGORYINFO_Size' -> 16r114.
+			'_OffsetOf_catid' -> 16r0.
+			'_OffsetOf_lcid' -> 16r10.
+			'_OffsetOf_szDescription' -> 16r14
+		}!
 OS.COM.IUnknown
 	subclass: #'OS.COM.ICatInformation'
 	instanceVariableNames: ''
@@ -61,18 +73,6 @@ OS.COM.IUnknown
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-OS.COM.OLEStructure
-	subclass: #'OS.COM.CATEGORYINFO'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-			'_CATEGORYINFO_Size' -> 16r114.
-			'_OffsetOf_catid' -> 16r0.
-			'_OffsetOf_lcid' -> 16r10.
-			'_OffsetOf_szDescription' -> 16r14
-		}!
 
 "Loose Methods"!
 

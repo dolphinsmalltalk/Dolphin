@@ -229,7 +229,7 @@ drawItemImage: itemImage on: hDC at: topLeft disabled: aBoolean
 		y: topLeft y
 		cx: extent x
 		cy: extent y
-		fuFlags: ##(DST_COMPLEX | DSS_DISABLED).
+		fuFlags: ##(DST_COMPLEX bitOr: DSS_DISABLED).
 	callback free!
 
 findCommand: aSymbol
@@ -352,7 +352,7 @@ insertIntoMenu: parentMenu at: position info: aMENUITEMINFO
 		fMask: (image
 					ifNil: [##(MIIM_SUBMENU | MIIM_STRING | MIIM_ID)]
 					ifNotNil: 
-						[aMENUITEMINFO bitmap: image.
+						[aMENUITEMINFO image: image.
 						##(MIIM_SUBMENU | MIIM_STRING | MIIM_ID | MIIM_BITMAP)]).
 	(User32
 		insertMenuItem: hParent

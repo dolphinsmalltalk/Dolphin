@@ -150,7 +150,7 @@ testPrintFloatGrouping
 	#(-1 10000) do: 
 			[:each |
 			self should: [format grouping: each] raise: Error.
-			format Grouping: each.
+			format bytes uint32AtOffset: OS.NUMBERFMTW._OffsetOf_grouping put: each.
 			self
 				should: [subject printFloat: 1.23 format: format]
 				raise: OS.HRESULTError
@@ -179,7 +179,7 @@ testPrintFloatNumDigits
 			[:each |
 			self should: [format decimalPlaces: each] raise: Error.
 			"If we force it in, we expect an invalid parameter error from GetNumberFormat"
-			format NumDigits: each.
+			format bytes uint32AtOffset: OS.NUMBERFMTW._OffsetOf_NumDigits put: each.
 			self
 				should: [subject printFloat: 0.0123456789 format: format]
 				raise: OS.Win32Error

@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure
+External.Structure
 	subclass: #'OS.LOGBRUSH'
 	instanceVariableNames: 'hatch'
 	classVariableNames: ''
@@ -29,17 +29,12 @@ color
 
 	^Graphics.Color fromCOLORREF: self lbColor!
 
-color: aColor
-	"Sets the colour member of the receiver from  the <Color> argument."
-
-	self lbColor: aColor asCOLORREF!
-
 hatch
 	"Answer the hatch object. This is either a <Bitmap>, or one of a set of standard <integer> constants."
 
 	^hatch
 		ifNil: 
-			[self lbStyle = BS_PATTERN ifTrue: [hatch := Graphics.Bitmap fromHandle: self lbHatch] ifFalse: [self lbHatch]]!
+			[self lbStyle = OS.Win32Constants.BS_PATTERN ifTrue: [hatch := Graphics.Bitmap fromHandle: self lbHatch] ifFalse: [self lbHatch]]!
 
 hatch: aBitmapOrInteger 
 	hatch := aBitmapOrInteger.
@@ -48,7 +43,7 @@ hatch: aBitmapOrInteger
 hatchStyleName
 	"Answer the symbolic hatch style name, or if not a hatched brush"
 
-	^self lbStyle == BS_HATCHED
+	^self lbStyle == OS.Win32Constants.BS_HATCHED
 		ifTrue: [#(#horizontal #vertical #reverseDiagonal #diagonal #cross #diamond) lookup: self lbHatch + 1]!
 
 lbColor
@@ -79,10 +74,16 @@ lbStyle
 lbStyle: anInteger
 	"Set the receiver's 'lbStyle' field to the value of the argument, anInteger"
 
-	bytes uint32AtOffset: _OffsetOf_lbStyle put: anInteger! !
+	bytes uint32AtOffset: _OffsetOf_lbStyle put: anInteger!
+
+style: styleFlags color: aColour hatch: hatchObject
+	hatch := hatchObject.
+	bytes
+		uint32AtOffset: _OffsetOf_lbStyle put: styleFlags;
+		uint32AtOffset: _OffsetOf_lbColor put: aColour asCOLORREF;
+		uintPtrAtOffset: _OffsetOf_lbHatch put: hatchObject asParameter! !
 !OS.LOGBRUSH categoriesForMethods!
 color!accessing!public! !
-color:!accessing!public! !
 hatch!accessing!public! !
 hatch:!accessing!public! !
 hatchStyleName!accessing!public! !
@@ -92,6 +93,7 @@ lbHatch!**compiled accessors**!public! !
 lbHatch:!**compiled accessors**!public! !
 lbStyle!**compiled accessors**!public! !
 lbStyle:!**compiled accessors**!public! !
+style:color:hatch:!initializing!private! !
 !
 
 !OS.LOGBRUSH class methodsFor!
@@ -130,12 +132,26 @@ stbConvertFrom: anSTBClassFormat
 		yourself]!
 
 stbVersion
-	^1! !
+	^1!
+
+style: styleFlags color: aColour hatch: hatchObject
+	^self newBuffer
+		style: styleFlags
+		color: aColour
+		hatch: hatchObject!
+
+withStyle: styleFlags color: aColour hatch: hatchObject
+	^self newBuffer
+		style: styleFlags
+		color: aColour
+		hatch: hatchObject! !
 !OS.LOGBRUSH class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 stbConvertFrom:!binary filing!public! !
 stbVersion!binary filing!public! !
+style:color:hatch:!instance creation!public! !
+withStyle:color:hatch:!instance creation!public! !
 !
 

@@ -15,12 +15,10 @@ OS.CommonDialogStructure
 			'_OffsetOf_hDevMode' -> 16r8.
 			'_OffsetOf_hDevNames' -> 16rC.
 			'_OffsetOf_hInstance' -> 16r38.
-			'_OffsetOf_hwndOwner' -> 16r4.
 			'_OffsetOf_lpCallback' -> 16r40.
 			'_OffsetOf_lphPropertyPages' -> 16r48.
 			'_OffsetOf_lpPageRanges' -> 16r28.
 			'_OffsetOf_lpPrintTemplateName' -> 16r3C.
-			'_OffsetOf_lStructSize' -> 16r0.
 			'_OffsetOf_nCopies' -> 16r34.
 			'_OffsetOf_nMaxPage' -> 16r30.
 			'_OffsetOf_nMaxPageRanges' -> 16r24.
@@ -108,77 +106,67 @@ Flags2: anInteger
 	bytes uint32AtOffset: _OffsetOf_Flags2 put: anInteger!
 
 hDC
-	"Answer the <ExternalHandle> value of the receiver's 'hDC' field."
+	"Answer the <Handle> value of the receiver's 'hDC' field."
 
 	^(bytes uintPtrAtOffset: _OffsetOf_hDC) asExternalHandle!
 
-hDC: anExternalHandle
-	"Set the receiver's 'hDC' field to the value of the argument, anExternalHandle"
+hDC: aHandle
+	"Set the receiver's 'hDC' field to the value of the argument, aHandle"
 
-	bytes uintPtrAtOffset: _OffsetOf_hDC put: anExternalHandle!
+	bytes uintPtrAtOffset: _OffsetOf_hDC put: aHandle!
 
 hDevMode
-	"Answer the <ExternalHandle> value of the receiver's 'hDevMode' field."
+	"Answer the <Handle> value of the receiver's 'hDevMode' field."
 
 	^(bytes uintPtrAtOffset: _OffsetOf_hDevMode) asExternalHandle!
 
-hDevMode: anExternalHandle
-	"Set the receiver's 'hDevMode' field to the value of the argument, anExternalHandle"
+hDevMode: aHandle
+	"Set the receiver's 'hDevMode' field to the value of the argument, aHandle"
 
-	bytes uintPtrAtOffset: _OffsetOf_hDevMode put: anExternalHandle!
+	bytes uintPtrAtOffset: _OffsetOf_hDevMode put: aHandle!
 
 hDevNames
-	"Answer the <ExternalHandle> value of the receiver's 'hDevNames' field."
+	"Answer the <Handle> value of the receiver's 'hDevNames' field."
 
 	^(bytes uintPtrAtOffset: _OffsetOf_hDevNames) asExternalHandle!
 
-hDevNames: anExternalHandle
-	"Set the receiver's 'hDevNames' field to the value of the argument, anExternalHandle"
+hDevNames: aHandle
+	"Set the receiver's 'hDevNames' field to the value of the argument, aHandle"
 
-	bytes uintPtrAtOffset: _OffsetOf_hDevNames put: anExternalHandle!
+	bytes uintPtrAtOffset: _OffsetOf_hDevNames put: aHandle!
 
 hInstance
-	"Answer the <ExternalHandle> value of the receiver's 'hInstance' field."
+	"Answer the <Handle> value of the receiver's 'hInstance' field."
 
 	^(bytes uintPtrAtOffset: _OffsetOf_hInstance) asExternalHandle!
 
-hInstance: anExternalHandle
-	"Set the receiver's 'hInstance' field to the value of the argument, anExternalHandle"
+hInstance: aHandle
+	"Set the receiver's 'hInstance' field to the value of the argument, aHandle"
 
-	bytes uintPtrAtOffset: _OffsetOf_hInstance put: anExternalHandle!
-
-hwndOwner
-	"Answer the <ExternalHandle> value of the receiver's 'hwndOwner' field."
-
-	^(bytes uintPtrAtOffset: _OffsetOf_hwndOwner) asExternalHandle!
-
-hwndOwner: anExternalHandle
-	"Set the receiver's 'hwndOwner' field to the value of the argument, anExternalHandle"
-
-	bytes uintPtrAtOffset: _OffsetOf_hwndOwner put: anExternalHandle!
+	bytes uintPtrAtOffset: _OffsetOf_hInstance put: aHandle!
 
 lpCallback
-	"Answer the <IUnknown> value of the receiver's 'lpCallback' field."
+	"Answer the <OS.COM.IUnknown> value of the receiver's 'lpCallback' field."
 
-	^COM.IUnknown fromAddress: (bytes intPtrAtOffset: _OffsetOf_lpCallback)!
+	^OS.COM.IUnknown fromAddress: (bytes intPtrAtOffset: _OffsetOf_lpCallback)!
 
 lpCallback: anIUnknown
 	"Set the receiver's 'lpCallback' field to the value of the argument, anIUnknown"
 
 	bytes uintPtrAtOffset: _OffsetOf_lpCallback put: anIUnknown yourAddress!
 
-lpfnHook: anExternalAddress
-	self shouldNotImplement!
+lpfnHook: anExternalAddress 
+	#todo "Need to implement the IUnknown based callback hook"!
 
 lphPropertyPages
-	"Answer the <ExternalHandle> value of the receiver's 'lphPropertyPages' field."
+	"Answer the <Handle> value of the receiver's 'lphPropertyPages' field."
 
 	^Handle fromAddress: (bytes intPtrAtOffset: _OffsetOf_lphPropertyPages)!
 
-lphPropertyPages: anExternalHandle
-	"Set the receiver's 'lphPropertyPages' field to the value of the argument, anExternalHandle"
+lphPropertyPages: aHandle
+	"Set the receiver's 'lphPropertyPages' field to the value of the argument, aHandle"
 
-	bytes uintPtrAtOffset: _OffsetOf_lphPropertyPages put: anExternalHandle yourAddress!
+	bytes uintPtrAtOffset: _OffsetOf_lphPropertyPages put: aHandle yourAddress!
 
 lpPageRanges
 	"Answer the <PRINTPAGERANGE> value of the receiver's 'lpPageRanges' field."
@@ -199,16 +187,6 @@ lpPrintTemplateName: anUtf16String
 	"Set the receiver's 'lpPrintTemplateName' field to the value of the argument, anUtf16String"
 
 	bytes uintPtrAtOffset: _OffsetOf_lpPrintTemplateName put: anUtf16String yourAddress!
-
-lStructSize
-	"Answer the <Integer> value of the receiver's 'lStructSize' field."
-
-	^bytes uint32AtOffset: _OffsetOf_lStructSize!
-
-lStructSize: anInteger
-	"Set the receiver's 'lStructSize' field to the value of the argument, anInteger"
-
-	bytes uint32AtOffset: _OffsetOf_lStructSize put: anInteger!
 
 nCopies
 	"Answer the <Integer> value of the receiver's 'nCopies' field."
@@ -296,19 +274,15 @@ hDevNames!**compiled accessors**!public! !
 hDevNames:!**compiled accessors**!public! !
 hInstance!**compiled accessors**!public! !
 hInstance:!**compiled accessors**!public! !
-hwndOwner!**compiled accessors**!public! !
-hwndOwner:!**compiled accessors**!public! !
 lpCallback!**compiled accessors**!public! !
 lpCallback:!**compiled accessors**!public! !
-lpfnHook:!**compiled accessors**!public! !
+lpfnHook:!public! !
 lphPropertyPages!**compiled accessors**!public! !
 lphPropertyPages:!**compiled accessors**!public! !
 lpPageRanges!**compiled accessors**!public! !
 lpPageRanges:!**compiled accessors**!public! !
 lpPrintTemplateName!**compiled accessors**!public! !
 lpPrintTemplateName:!**compiled accessors**!public! !
-lStructSize!**compiled accessors**!public! !
-lStructSize:!**compiled accessors**!public! !
 nCopies!**compiled accessors**!public! !
 nCopies:!**compiled accessors**!public! !
 nMaxPage!**compiled accessors**!public! !
@@ -361,9 +335,8 @@ defineFields
 		} PRINTDLGEX;
 "
 
+	super defineFields.
 	self
-		defineField: #lStructSize type: UInt32Field new;
-		defineField: #hwndOwner type: HANDLEField new;
 		defineField: #hDevMode type: HANDLEField new;
 		defineField: #hDevNames type: HANDLEField new;
 		defineField: #hDC type: HANDLEField new;
@@ -385,10 +358,10 @@ defineFields
 		defineField: #dwResultAction type: UInt32Field new!
 
 getFieldNames
-	^#(#lStructSize #hwndOwner #hDevMode #hDevNames #hDC #flags #Flags2 #ExclusionFlags #nPageRanges #nMaxPageRanges #lpPageRanges #nMinPage #nMaxPage #nCopies #hInstance #lpPrintTemplateName #lpCallback #nPropertyPages #lphPropertyPages #nStartPage #dwResultAction)! !
+	^#(#dwSize #hwndOwner #hDevMode #hDevNames #hDC #flags #Flags2 #ExclusionFlags #nPageRanges #nMaxPageRanges #lpPageRanges #nMinPage #nMaxPage #nCopies #hInstance #lpPrintTemplateName #lpCallback #nPropertyPages #lphPropertyPages #nStartPage #dwResultAction)! !
 !OS.PRINTDLGEXW class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
-defineFields!**auto generated**!public!template definition! !
+defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !
 

@@ -143,13 +143,13 @@ classAdded:!event handling!private! !
 classesByGuid!private! !
 classRemoved:!private!removing! !
 classUpdated:!event handling!private! !
-clearCachedClasses!private! !
+clearCachedClasses!initializing!private! !
 declareVariable:!public! !
 developmentSystem!accessing!public! !
 getEvents!events!private! !
 oldNames!accessing!public! !
 removeClass:!operations!public! !
-resetOldNames!private! !
+resetOldNames!initializing!private! !
 setEvents:!events!private! !
 shortNameFor:!enquiries!private! !
 shortNameFor:in:!helpers!private! !

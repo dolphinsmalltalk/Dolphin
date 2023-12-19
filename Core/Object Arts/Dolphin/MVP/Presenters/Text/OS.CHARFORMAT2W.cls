@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure
+OS.SizedStructure
 	subclass: #'OS.CHARFORMAT2W'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -19,7 +19,6 @@ OS.Win32Structure
 			'_OffsetOf_dwCookie' -> 16r68.
 			'_OffsetOf_dwEffects' -> 16r8.
 			'_OffsetOf_dwMask' -> 16r4.
-			'_OffsetOf_dwSize' -> 16r0.
 			'_OffsetOf_lcid' -> 16r64.
 			'_OffsetOf_sSpacing' -> 16r5C.
 			'_OffsetOf_sStyle' -> 16r6C.
@@ -191,11 +190,6 @@ dwMask: anInteger
 	"Set the receiver's 'dwMask' field to the value of the argument, anInteger"
 
 	bytes uint32AtOffset: _OffsetOf_dwMask put: anInteger!
-
-dwSize: anInteger
-	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
-
-	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
 
 effectsAny: anInteger
 	"Private - Answer true if the effects field contains the bit flags represented by anInteger."
@@ -484,7 +478,6 @@ dwEffects!**compiled accessors**!public! !
 dwEffects:!**compiled accessors**!public! !
 dwMask!**compiled accessors**!public! !
 dwMask:!**compiled accessors**!public! !
-dwSize:!**compiled accessors**!public! !
 effectsAny:!accessing!private! !
 faceName:!accessing!public! !
 font!accessing!public! !
@@ -534,8 +527,8 @@ defineFields
 		self compileDefinition
 	"
 
+	super defineFields.
 	self
-		defineField: #dwSize type: UInt32Field writeOnly beOverride;
 		defineField: #dwMask type: UInt32Field new;
 		defineField: #dwEffects type: UInt32Field new;
 		defineField: #yHeight type: Int32Field new;
@@ -556,9 +549,9 @@ defineFields
 		defineField: #bRevAuthor type: UInt8Field new;
 		defineField: #bUnderlineColor type: UInt8Field new!
 
-fromChooseFont: aCHOOSEFRONT 
+fromChooseFont: aCHOOSEFONT 
 	^(self new)
-		populateFromChooseFont: aCHOOSEFRONT;
+		populateFromChooseFont: aCHOOSEFONT;
 		yourself!
 
 getFieldNames

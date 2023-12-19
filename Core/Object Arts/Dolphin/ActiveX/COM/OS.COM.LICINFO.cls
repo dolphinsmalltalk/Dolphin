@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.OLEStructure
+OS.SizedStructure
 	subclass: #'OS.COM.LICINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -8,7 +8,6 @@ OS.COM.OLEStructure
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_LICINFO_Size' -> 16rC.
-			'_OffsetOf_dwSize' -> 16r0.
 			'_OffsetOf_fLicVerified' -> 16r8.
 			'_OffsetOf_fRuntimeKeyAvail' -> 16r4
 		}!
@@ -26,11 +25,6 @@ Member variables:
 !OS.COM.LICINFO categoriesForClass!External-Data-Structured-COM! !
 !OS.COM.LICINFO methodsFor!
 
-dwSize: anInteger
-	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
-
-	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
-
 fLicVerified
 	"Answer the <Boolean> value of the receiver's 'fLicVerified' field."
 
@@ -41,7 +35,6 @@ fRuntimeKeyAvail
 
 	^(bytes uint32AtOffset: _OffsetOf_fRuntimeKeyAvail) asBoolean! !
 !OS.COM.LICINFO categoriesForMethods!
-dwSize:!**compiled accessors**!public! !
 fLicVerified!**compiled accessors**!public! !
 fRuntimeKeyAvail!**compiled accessors**!public! !
 !
@@ -63,8 +56,8 @@ defineFields
 			BOOL  fLicVerified;
 		};"
 
+	super defineFields.
 	self
-		defineField: #dwSize		type: UInt32Field writeOnly beOverride;
 		defineField: #fRuntimeKeyAvail	type: BOOLField readOnly;
 		defineField: #fLicVerified		type: BOOLField readOnly!
 

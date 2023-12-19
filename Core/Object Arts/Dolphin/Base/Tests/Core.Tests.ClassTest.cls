@@ -142,8 +142,7 @@ testNestedClasses
 	| expected actual |
 	expected := (Smalltalk allClasses select: [:each | each environment == Smalltalk]) asSet.
 	actual := Smalltalk nestedClasses.
-	self assert: actual size equals: expected size.
-	self assert: actual asSet equals: expected!
+	self assert: actual asSortedArray equals: expected asSortedArray!
 
 testPoolBinding
 	"Should be able to resolve imported pool bindings from the class"

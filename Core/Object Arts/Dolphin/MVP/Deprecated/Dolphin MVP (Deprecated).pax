@@ -9,12 +9,13 @@ This package includes legacy classes and methods from Dolphin''s base MVP packag
 
 package basicPackageVersion: '6.2'.
 
-package basicScriptAt: #postinstall put: '#(#MultipleChoicePresenter #StaticViewAbstract #CompositePresenter #CheckedPushButton)
-	do: [:each | (Smalltalk bindingFor: each) isDeprecated: true]'.
+package basicScriptAt: #postinstall put: 'self variableNames do: [:each | each binding isDeprecated: true].
+Smalltalk resetOldNames'.
 
 package classNames
 	add: #ComparisonPolicy;
 	add: #LegacyCommandPolicy;
+	add: #LOGFONT;
 	add: #Msimg32Library;
 	add: #MultipleSelectionListBox;
 	add: #MultipleSelectionListView;
@@ -175,6 +176,11 @@ Object subclass: #ComparisonPolicy
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+Object subclass: #LOGFONT
+	instanceVariableNames: ''
+	classVariableNames: '_OffsetOf_lfFaceName'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 CommandPolicy subclass: #LegacyCommandPolicy
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -329,17 +335,16 @@ fonts: aString do: operation
 		);"
 
 	| callback answer |
-	#deprecated.	"Use fontFamilies:do:, which uses the newer Windows API."
-	callback := External.Callback block: 
+	callback := Callback block: 
 					[:lplf :lptm :dwType :lpData |
 					operation
 						value: lplf
 						value: lptm
 						value: dwType]
-				descriptor: (External.FunctionDescriptor returnType: 'sdword'
-						argumentTypes: ##('<1p>* lpvoid dword uintptr' << LOGFONTW)).
+				descriptor: ##(FunctionDescriptor returnType: 'sdword'
+						argumentTypes: '<1p>* lpvoid dword uintptr' << LOGFONTW).
 	answer := Gdi32
-				enumFonts: self asParameter
+				enumFonts: handle
 				lpFaceName: aString
 				lpFontFunc: callback asParameter
 				lParam: 0.

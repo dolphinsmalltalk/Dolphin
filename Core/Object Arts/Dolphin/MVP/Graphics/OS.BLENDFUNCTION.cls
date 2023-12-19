@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure
+External.Structure
 	subclass: #'OS.BLENDFUNCTION'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -64,15 +64,15 @@ BlendOp: anInteger
 
 	bytes uint8AtOffset: _OffsetOf_BlendOp put: anInteger!
 
-blendPercentage: aNumber 
+blendPercentage: aNumber
 	"Sets the percentage blend of the receiver to <Number> argument, which must be in the range 0..100"
 
-	self SourceConstantAlpha: (aNumber * 255 / 100) truncated!
+	self SourceConstantAlpha: aNumber * 255 // 100!
 
 initialize
 	super initialize.
 	self usePerPixelAlpha: true.
-	self BlendOp: AC_SRC_OVER!
+	"AC_SRC_OVER = 0, so is the default BlendOp"!
 
 SourceConstantAlpha
 	"Answer the <Integer> value of the receiver's 'SourceConstantAlpha' field."
@@ -88,7 +88,7 @@ usePerPixelAlpha: aBoolean
 	"Determines whether the source bitmaps alpha channel should be used when performing the
 	blend. If not then only the constant alpha is used."
 
-	self AlphaFormat: (aBoolean ifTrue: [AC_SRC_ALPHA] ifFalse: [0])! !
+	self AlphaFormat: (aBoolean ifTrue: [OS.Win32Constants.AC_SRC_ALPHA] ifFalse: [0])! !
 !OS.BLENDFUNCTION categoriesForMethods!
 AlphaFormat!**compiled accessors**!public! !
 AlphaFormat:!**compiled accessors**!public! !

@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure
+External.Structure
 	subclass: #'OS.AbstractCHARRANGE'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -18,22 +18,18 @@ asObject
 	^self cpMin to: self cpMax!
 
 cpMax
-	self subclassResponsibility!
+	"Answer the <Integer> value of the receiver's 'cpMax' field."
 
-cpMax: anInteger
-	self subclassResponsibility!
+	^self subclassResponsibility!
 
 cpMin
-	self subclassResponsibility!
+	"Answer the <Integer> value of the receiver's 'cpMin' field."
 
-cpMin: anInteger
-	self subclassResponsibility! !
+	^self subclassResponsibility! !
 !OS.AbstractCHARRANGE categoriesForMethods!
 asObject!accessing!public! !
 cpMax!**compiled accessors**!public! !
-cpMax:!**compiled accessors**!public! !
 cpMin!**compiled accessors**!public! !
-cpMin:!**compiled accessors**!public! !
 !
 
 !OS.AbstractCHARRANGE class methodsFor!

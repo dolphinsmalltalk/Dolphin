@@ -485,12 +485,6 @@ gdipCreateFontFromDC: hdc font: font
 	messages addLast: (Message selector: #gdipCreateFontFromDC:font: arguments: activeProc topFrame arguments).
 	^S_OK!
 
-gdipCreateFontFromLogfontA: hdc logfont: logfont font: font
-	| activeProc |
-	(activeProc := Processor activeProcess) == process ifFalse: [^super gdipCreateFontFromLogfontA: hdc logfont: logfont font: font].
-	messages addLast: (Message selector: #gdipCreateFontFromLogfontA:logfont:font: arguments: activeProc topFrame arguments).
-	^S_OK!
-
 gdipCreateFontFromLogfontW: hdc logfont: logfont font: font
 	| activeProc |
 	(activeProc := Processor activeProcess) == process ifFalse: [^super gdipCreateFontFromLogfontW: hdc logfont: logfont font: font].
@@ -1791,12 +1785,6 @@ gdipGetLineWrapMode: brush wrapMode: wrapMode
 	| activeProc |
 	(activeProc := Processor activeProcess) == process ifFalse: [^super gdipGetLineWrapMode: brush wrapMode: wrapMode].
 	messages addLast: (Message selector: #gdipGetLineWrapMode:wrapMode: arguments: activeProc topFrame arguments).
-	^S_OK!
-
-gdipGetLogFontA: font graphics: graphics logfonta: logfonta
-	| activeProc |
-	(activeProc := Processor activeProcess) == process ifFalse: [^super gdipGetLogFontA: font graphics: graphics logfonta: logfonta].
-	messages addLast: (Message selector: #gdipGetLogFontA:graphics:logfonta: arguments: activeProc topFrame arguments).
 	^S_OK!
 
 gdipGetLogFontW: font graphics: graphics logfonta: logfonta
@@ -3760,7 +3748,6 @@ gdipCreateCustomLineCap:strokePath:baseCap:baseInset:customCap:!**auto generated
 gdipCreateFont:emSize:style:unit:font:!**auto generated**!GDI+ Flat API-Font Functions!public! !
 gdipCreateFontFamilyFromName:fontCollection:fontFamily:!**auto generated**!GDI+ Flat API-FontFamily Functions!public! !
 gdipCreateFontFromDC:font:!**auto generated**!GDI+ Flat API-Font Functions!public! !
-gdipCreateFontFromLogfontA:logfont:font:!**auto generated**!GDI+ Flat API-Font Functions!public! !
 gdipCreateFontFromLogfontW:logfont:font:!**auto generated**!GDI+ Flat API-Font Functions!public! !
 gdipCreateFromHDC:graphics:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
 gdipCreateFromHDC2:hDevice:graphics:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !
@@ -3978,7 +3965,6 @@ gdipGetLineRectI:rect:!**auto generated**!GDI+ Flat API-LinearGradientBrush Func
 gdipGetLineSpacing:style:lineSpacing:!**auto generated**!GDI+ Flat API-LinearGradientBrush Functions!public! !
 gdipGetLineTransform:matrix:!**auto generated**!GDI+ Flat API-LinearGradientBrush Functions!public! !
 gdipGetLineWrapMode:wrapMode:!**auto generated**!GDI+ Flat API-LinearGradientBrush Functions!public! !
-gdipGetLogFontA:graphics:logfonta:!**auto generated**!GDI+ Flat API-Font Functions!public! !
 gdipGetLogFontW:graphics:logfonta:!**auto generated**!GDI+ Flat API-Font Functions!public! !
 gdipGetMatrixElements:matrixOut:!**auto generated**!GDI+ Flat API-Matrix Functions!public! !
 gdipGetMetafileDownLevelRasterizationLimit:metafileRasterizationLimitDpi:!**auto generated**!GDI+ Flat API-Graphics Functions!public! !

@@ -97,7 +97,7 @@ defineFields
 	self
 		defineField: #dwReserved0 type: UInt32Field filler;
 		defineField: #dwReserved1 type: UInt32Field filler;
-		defineField: #cFileName type: (StringField type: Utf16String length: MAX_PATH) beReadOnly;
+		defineField: #cFileName type: (StringField type: Utf16String length: OS.Win32Constants.MAX_PATH) beReadOnly;
 		defineField: #cAlternateFileName type: (StringField type: Utf16String length: 14) beReadOnly!
 
 getFieldNames

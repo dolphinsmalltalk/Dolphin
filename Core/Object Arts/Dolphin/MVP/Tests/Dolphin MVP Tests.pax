@@ -184,6 +184,7 @@ package setPrerequisites: #(
 	'..\..\System\Filer\Dolphin Literal Out Filer'
 	'..\Metafiles\Dolphin Metafile Records'
 	'..\Views\MoenTree\Dolphin MoenTree View'
+	'..\Deprecated\Dolphin MVP (Deprecated)'
 	'..\Base\Dolphin MVP Base'
 	'..\Presenters\Number\Dolphin Number Presenter'
 	'..\Dialogs\Progress\Dolphin Progress Dialog'

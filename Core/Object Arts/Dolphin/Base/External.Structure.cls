@@ -6,11 +6,7 @@ Core.Object
 	classVariableNames: 'RecordClasses'
 	imports: #()
 	classInstanceVariableNames: 'template flags alignment'
-	classConstants: {
-			'_Structure_Size' -> 16r0.
-			'CompileNewFieldsMask' -> 16r1.
-			'UncompiledFieldsMask' -> 16r2
-		}!
+	classConstants: { 'CompileNewFieldsMask' -> 16r1. 'UncompiledFieldsMask' -> 16r2 }!
 External.Structure guid: (Core.GUID fromString: '{87b4c489-026e-11d3-9fd7-00a0cc3e4a32}')!
 External.Structure isNonInstantiable: true!
 External.Structure comment: ''!
@@ -586,11 +582,9 @@ defineFields
 !
 
 defineSizeConstant: newByteSize
-	| constName |
-	constName := '_<1s>_Size' << (self unqualifiedName ?? '').
-	self definesNewFields
-		ifTrue: [self addClassConstant: constName value: newByteSize]
-		ifFalse: [self removeClassVarName: constName]!
+	(self definesNewFields and: [newByteSize ~~ 0])
+		ifTrue: [self addClassConstant: self sizeConstantName value: newByteSize]
+		ifFalse: [self removeClassVarName: self sizeConstantName]!
 
 definesNewFields
 	"Private - Answer whether the receiver defines any new fields, as opposed to
@@ -615,7 +609,8 @@ defineTemplate
 			["Receiver doesn't define any new fields, so inherit the lot"
 			self inheritTemplate].
 	self removeRedundantOffsetConstants.
-	template notNil ifTrue: [self changedByteSizeFrom: oldByteSize].
+	template ifNotNil: [self changedByteSizeFrom: oldByteSize].
+	template beImmutableObject.
 	^template!
 
 descriptorClass
@@ -906,7 +901,7 @@ registerClass: structureClass forGUID: aGUID
 
 removeRedundantOffsetConstants
 	| prefix redundant |
-	classPool isNil ifTrue: [^self].
+	classPool ifNil: [^self].
 	prefix := self fieldOffsetConstantPrefix.
 	redundant := OrderedCollection new.
 	classPool associationsDo: 
@@ -946,6 +941,9 @@ shouldCompileNewFields
 	This is usually true, so field accessors are normally generated. However it can be turned off for a whole structure, or part of the structure. Also, individual fields can be marked as uncompiled, overriding this setting."
 
 	^flags anyMask: CompileNewFieldsMask!
+
+sizeConstantName
+	^'_<1s>_Size' << (self unqualifiedName ?? '')!
 
 structurePacker
 	"Answer the object which implements the structure packing algorithm
@@ -990,7 +988,7 @@ baseAlignment!private!template definition! !
 basicByteSize!accessing!public! !
 beCompiled!modes!public!template definition! !
 beUncompiled!modes!public!template definition! !
-byteSize!**compiled accessors**!constants!public! !
+byteSize!constants!public! !
 byteSize:!initializing!private! !
 canUnderstand:!methods-testing!public! !
 changedByteSizeFrom:!private!template definition! !
@@ -1040,6 +1038,7 @@ removeRedundantOffsetConstants!private!template definition! !
 resetTemplate!public!template definition! !
 setGuid:!accessing!private! !
 shouldCompileNewFields!private!testing! !
+sizeConstantName!private!template definition! !
 structurePacker!public!template definition! !
 template!accessing!private! !
 uninitializeBeforeRemove!class hierarchy-removing!public! !

@@ -37,10 +37,9 @@ dwItemSpec
 	^bytes uint32AtOffset: _OffsetOf_dwItemSpec!
 
 iItem
-	"Answer the item index (appropriate when originating from a control whose items
-	are externally identified by integer keys)."
+	"Answer the item index (appropriate when originating from a control whose items are externally identified by integer keys)."
 
-	^bytes int32AtOffset: 12!
+	^bytes int32AtOffset: _OffsetOf_dwItemSpec!
 
 position
 	^self pt asPoint!

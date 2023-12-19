@@ -15,11 +15,31 @@ UI.Scintilla.TextRangeFull guid: (Core.GUID fromString: '{80bf6d59-182f-4d0c-97b
 UI.Scintilla.TextRangeFull comment: ''!
 !UI.Scintilla.TextRangeFull methodsFor!
 
+cpMax
+	"Answer the receiver's cpMax field as a Smalltalk object."
+
+	^bytes intPtrAtOffset: CharacterRangeFull._OffsetOf_cpMax!
+
+cpMax: anInteger
+	bytes intPtrAtOffset: CharacterRangeFull._OffsetOf_cpMax put: anInteger!
+
+cpMin
+	"Answer the receiver's cpMin field as a Smalltalk object."
+
+	^bytes intPtrAtOffset: CharacterRangeFull._OffsetOf_cpMin!
+
+cpMin: anInteger
+	bytes intPtrAtOffset: CharacterRangeFull._OffsetOf_cpMin put: anInteger!
+
 lpstrText: anUtf8String
 	"Set the receiver's 'lpstrText' field to the value of the argument, anUtf8String"
 
 	bytes uintPtrAtOffset: _OffsetOf_lpstrText put: anUtf8String yourAddress! !
 !UI.Scintilla.TextRangeFull categoriesForMethods!
+cpMax!accessing!public! !
+cpMax:!accessing!public! !
+cpMin!accessing!public! !
+cpMin:!accessing!public! !
 lpstrText:!**compiled accessors**!public! !
 !
 

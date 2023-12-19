@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure
+External.Structure
 	subclass: #'OS.WIN32_FILE_ATTRIBUTE_DATA'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -68,12 +68,12 @@ isDirectory
 	"Answer whether the receiver describes a directory (as opposed to a file) 
 	in the host file system."
 
-	^self dwFileAttributes allMask: FILE_ATTRIBUTE_DIRECTORY!
+	^self dwFileAttributes allMask: OS.Win32Constants.FILE_ATTRIBUTE_DIRECTORY!
 
 isReadOnly
 	"Answer whether the receiver describes a read only file."
 
-	^self dwFileAttributes allMask: FILE_ATTRIBUTE_READONLY
+	^self dwFileAttributes allMask: OS.Win32Constants.FILE_ATTRIBUTE_READONLY
 !
 
 nFileSizeHigh

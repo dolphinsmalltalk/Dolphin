@@ -52,7 +52,7 @@ Kernel.SharedPool
 			'MOUSEEVENTF_XDOWN' -> 16r80.
 			'MOUSEEVENTF_XUP' -> 16r100
 		}!
-OS.Win32Structure
+External.Structure
 	subclass: #'OS.INPUT'
 	instanceVariableNames: ''
 	classVariableNames: ''

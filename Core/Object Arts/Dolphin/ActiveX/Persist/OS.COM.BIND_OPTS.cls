@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.OLEStructure
+OS.SizedStructure
 	subclass: #'OS.COM.BIND_OPTS'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -8,7 +8,6 @@ OS.COM.OLEStructure
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_BIND_OPTS_Size' -> 16r10.
-			'_OffsetOf_dwSize' -> 16r0.
 			'_OffsetOf_dwTickCountDeadline' -> 16rC.
 			'_OffsetOf_grfFlags' -> 16r4.
 			'_OffsetOf_grfMode' -> 16r8
@@ -21,11 +20,6 @@ BIND_OPTS is used to specify options to be taken account of when a moniker is be
 BIND_OPTS has been superceded by BIND_OPTS2 with the advent of DCOM.'!
 !OS.COM.BIND_OPTS categoriesForClass!External-Data-Structured-COM! !
 !OS.COM.BIND_OPTS methodsFor!
-
-dwSize: anInteger
-	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
-
-	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
 
 dwTickCountDeadline
 	"Answer the <Integer> value of the receiver's 'dwTickCountDeadline' field."
@@ -57,7 +51,6 @@ grfMode: anInteger
 
 	bytes uint32AtOffset: _OffsetOf_grfMode put: anInteger! !
 !OS.COM.BIND_OPTS categoriesForMethods!
-dwSize:!**compiled accessors**!public! !
 dwTickCountDeadline!**compiled accessors**!public! !
 dwTickCountDeadline:!**compiled accessors**!public! !
 grfFlags!**compiled accessors**!public! !
@@ -67,6 +60,9 @@ grfMode:!**compiled accessors**!public! !
 !
 
 !OS.COM.BIND_OPTS class methodsFor!
+
+byteSize
+	^_BIND_OPTS_Size!
 
 defineFields
 	"Define the fields of the BIND_OPTS structure.
@@ -82,9 +78,8 @@ defineFields
 		};
 	"
 
+	super defineFields.
 	self
-		"Use standard name for structure size member"
-		defineField: #dwSize				type: UInt32Field writeOnly beOverride;
 		defineField: #grfFlags				type: UInt32Field new;
 		defineField: #grfMode				type: UInt32Field new;
 		defineField: #dwTickCountDeadline	type: UInt32Field new!
@@ -92,6 +87,7 @@ defineFields
 getFieldNames
 	^#(#dwSize #grfFlags #grfMode #dwTickCountDeadline)! !
 !OS.COM.BIND_OPTS class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

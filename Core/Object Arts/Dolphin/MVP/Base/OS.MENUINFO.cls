@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure
+OS.SizedStructure
 	subclass: #'OS.MENUINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -11,7 +11,6 @@ OS.Win32Structure
 			'_OffsetOf_cyMax' -> 16rC.
 			'_OffsetOf_dwContextHelpID' -> 16r14.
 			'_OffsetOf_dwMenuData' -> 16r18.
-			'_OffsetOf_dwSize' -> 16r0.
 			'_OffsetOf_dwStyle' -> 16r8.
 			'_OffsetOf_fMask' -> 16r4.
 			'_OffsetOf_hbrBack' -> 16r10
@@ -40,11 +39,6 @@ dwContextHelpID: anInteger
 	"Set the receiver's 'dwContextHelpID' field to the value of the argument, anInteger"
 
 	bytes uint32AtOffset: _OffsetOf_dwContextHelpID put: anInteger!
-
-dwSize: anInteger
-	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
-
-	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
 
 dwStyle
 	"Answer the <Integer> value of the receiver's 'dwStyle' field."
@@ -77,7 +71,6 @@ cyMax!**compiled accessors**!public! !
 cyMax:!**compiled accessors**!public! !
 dwContextHelpID!**compiled accessors**!public! !
 dwContextHelpID:!**compiled accessors**!public! !
-dwSize:!**compiled accessors**!public! !
 dwStyle!**compiled accessors**!public! !
 dwStyle:!**compiled accessors**!public! !
 fMask!**compiled accessors**!public! !
@@ -108,8 +101,8 @@ defineFields
 
 	"Implementation Note: cbSize is renamed to dwSize to override superclass accessor"
 
+	super defineFields.
 	self
-		defineField: #dwSize type: UInt32Field writeOnly;
 		defineField: #fMask type: UInt32Field new;
 		defineField: #dwStyle type: UInt32Field new;
 		defineField: #cyMax type: UInt32Field new;

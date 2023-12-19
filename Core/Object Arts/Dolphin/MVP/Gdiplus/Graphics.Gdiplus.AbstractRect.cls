@@ -70,9 +70,6 @@ y:!accessing!public! !
 
 !Graphics.Gdiplus.AbstractRect class methodsFor!
 
-getFieldNames
-	^#(#x #y #width #height)!
-
 left: left top: top right: right bottom: bottom
 	"Answer a new instance of the receiver with the specified position corner positions."
 
@@ -93,7 +90,6 @@ marshal: aRect
 newBuffer
 	^self basicNew bytes: (ByteArray newFixed: self byteSize)! !
 !Graphics.Gdiplus.AbstractRect class categoriesForMethods!
-getFieldNames!**compiled accessors**!constants!private! !
 left:top:right:bottom:!instance creation!public! !
 marshal:!instance creation!public! !
 newBuffer!instance creation!public! !

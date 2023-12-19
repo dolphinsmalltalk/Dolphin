@@ -35,7 +35,7 @@ id: anInteger
 name
 	"Answer the symbolic name of this stock brush."
 
-	^#(#white #silver #gray #darkGray #black #transparent) at: id + 1!
+	^#('white' 'silver' 'gray' 'darkGray' 'black' 'transparent') at: id + 1!
 
 ownedHandle: aHandle 
 	"Private - Set the handle of the external graphics's tool object represented and owned by

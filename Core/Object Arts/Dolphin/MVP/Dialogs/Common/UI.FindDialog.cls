@@ -64,7 +64,7 @@ initialize
 
 	super initialize.
 	findWhatBuf := Utf16String newFixed: 256.
-	findDetails := FindDetails new!
+	findDetails := self class defaultModel!
 
 prepareStruct
 	"Private - Initialize the parameter structure to be passed to the Win32 API associated with

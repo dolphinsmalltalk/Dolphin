@@ -163,16 +163,6 @@ createEllipticRgnIndirect: lprc
 	<stdcall: handle CreateEllipticRgnIndirect RECTL*>
 	^self invalidCall: _failureCode!
 
-createFontIndirectA: lplf
-	"Invoke the CreateFontIndirect() function of the module wrapped by the receiver.
-	Helpstring: Creates a logical font that has the characteristics specified in the specified structure
-
-		HFONT __stdcall CreateFontIndirect(
-			LOGFONT* lplf);"
-
-	<stdcall: handle CreateFontIndirectA lpvoid>
-	^self invalidCall: _failureCode!
-
 createFontIndirectW: lplf
 	"Invoke the CreateFontIndirect() function of the module wrapped by the receiver.
 	Helpstring: Creates a logical font that has the characteristics specified in the specified structure
@@ -539,20 +529,6 @@ getNearestPaletteIndex: hpal crColor: crColor
 			COLORREF crColor);"
 
 	<stdcall: uint32 GetNearestPaletteIndex handle uint32>
-	^self invalidCall: _failureCode!
-
-getObject: objectHandle cbBuffer: count lpvObject: buffer
-	"Obtains information about a specified graphics object. Depending on 
-	the graphics object, the function places a filled-in BITMAP, DIBSECTION, 
-	EXTLOGPEN, LOGBRUSH, LOGFONT, or LOGPEN structure, or a count of table 
-	entries (for a logical palette), into a specified buffer. 
-		int GetObject(
-  			HGDIOBJ hgdiobj,	// handle to graphics object of interest
-			int cbBuffer,	// size of buffer for object information 
-			LPVOID lpvObject 	// pointer to buffer for object information  
-		);"
-
-	<stdcall: int32 GetObjectA handle int32 lpvoid>
 	^self invalidCall: _failureCode!
 
 getObjectW: objectHandle cbBuffer: count lpvObject: buffer
@@ -1218,7 +1194,6 @@ createCompatibleDC:!**auto generated**!public!win32 functions-device context! !
 createDC:lpszDevice:lpszOutput:lpInitData:!public!win32 functions-device context! !
 createDIBSection:pbmi:iUsage:ppvBits:hSection:dwOffset:!**auto generated**!public!win32 functions-bitmap! !
 createEllipticRgnIndirect:!**auto generated**!public!win32 functions-region! !
-createFontIndirectA:!**auto generated**!public!win32 functions-font and text! !
 createFontIndirectW:!**auto generated**!public!win32 functions-font and text! !
 createHatchBrush:color:!**auto generated**!public!win32 functions-brush! !
 createIC:lpszDevice:lpszOutput:lpdvminit:!**auto generated**!public!win32 functions-device context! !
@@ -1251,7 +1226,6 @@ getDIBColorTable:uStartIndex:cEntries:pColors:!**auto generated**!public!win32 f
 getDIBits:hbm:uStartScan:cScanLines:lpvBits:lpbi:uUsage:!**auto generated**!public! !
 getMapMode:!**auto generated**!public!win32 functions-transformations! !
 getNearestPaletteIndex:crColor:!**auto generated**!public!win32 functions-color! !
-getObject:cbBuffer:lpvObject:!public!win32 functions-device context! !
 getObjectW:cbBuffer:lpvObject:!public!win32 functions-device context! !
 getOutlineTextMetrics:cbData:lpotm:!public!win32 functions-font and text! !
 getPaletteEntries:iStartIndex:nEntries:lppe:!**auto generated**!public!win32 functions-color! !

@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure
+OS.SizedStructure
 	subclass: #'OS.OSVERSIONINFOEXW'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -11,7 +11,6 @@ OS.Win32Structure
 			'_OffsetOf_dwMajorVersion' -> 16r4.
 			'_OffsetOf_dwMinorVersion' -> 16r8.
 			'_OffsetOf_dwPlatformId' -> 16r10.
-			'_OffsetOf_dwSize' -> 16r0.
 			'_OffsetOf_szCSDVersion' -> 16r14.
 			'_OffsetOf_wProductType' -> 16r11A.
 			'_OffsetOf_wReserved' -> 16r11B.
@@ -87,11 +86,6 @@ dwPlatformId: anInteger
 
 	bytes uint32AtOffset: _OffsetOf_dwPlatformId put: anInteger!
 
-dwSize: anInteger
-	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
-
-	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
-
 szCSDVersion
 	"Answer the <Utf16String> value of the receiver's 'szCSDVersion' field."
 
@@ -145,7 +139,6 @@ dwMinorVersion!**compiled accessors**!public! !
 dwMinorVersion:!**compiled accessors**!public! !
 dwPlatformId!**compiled accessors**!public! !
 dwPlatformId:!**compiled accessors**!public! !
-dwSize:!**compiled accessors**!public! !
 szCSDVersion!**compiled accessors**!public! !
 wProductType!**compiled accessors**!public! !
 wProductType:!**compiled accessors**!public! !
@@ -183,10 +176,8 @@ defineFields
 		} OSVERSIONINFOEXW;
 "
 
+	super defineFields.
 	self
-		defineField: #dwSize
-			type: UInt32Field new beWriteOnly
-			offset: 0;
 		defineField: #dwMajorVersion
 			type: UInt32Field new
 			offset: 4;
@@ -223,7 +214,7 @@ getFieldNames
 	^#(#dwSize #dwMajorVersion #dwMinorVersion #dwBuildNumber #dwPlatformId #szCSDVersion #wServicePackMajor #wServicePackMinor #wSuiteMask #wProductType)! !
 !OS.OSVERSIONINFOEXW class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
-defineFields!**auto generated**!public!template definition! !
+defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !
 

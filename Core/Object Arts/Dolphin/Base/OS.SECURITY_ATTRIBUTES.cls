@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure
+OS.SizedStructure
 	subclass: #'OS.SECURITY_ATTRIBUTES'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -8,7 +8,6 @@ OS.Win32Structure
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_OffsetOf_bInheritHandle' -> 16r8.
-			'_OffsetOf_dwSize' -> 16r0.
 			'_OffsetOf_lpSecurityDescriptor' -> 16r4.
 			'_SECURITY_ATTRIBUTES_Size' -> 16rC
 		}!
@@ -42,24 +41,18 @@ bInheritHandle: aBoolean
 
 	bytes uint32AtOffset: _OffsetOf_bInheritHandle put: aBoolean asParameter!
 
-dwSize: anInteger
-	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
-
-	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
-
 lpSecurityDescriptor
-	"Answer the <ExternalAddress> value of the receiver's 'lpSecurityDescriptor' field."
+	"Answer the <Address> value of the receiver's 'lpSecurityDescriptor' field."
 
 	^(bytes uintPtrAtOffset: _OffsetOf_lpSecurityDescriptor) asExternalAddress!
 
-lpSecurityDescriptor: anExternalAddress
-	"Set the receiver's 'lpSecurityDescriptor' field to the value of the argument, anExternalAddress"
+lpSecurityDescriptor: anAddress
+	"Set the receiver's 'lpSecurityDescriptor' field to the value of the argument, anAddress"
 
-	bytes uintPtrAtOffset: _OffsetOf_lpSecurityDescriptor put: anExternalAddress! !
+	bytes uintPtrAtOffset: _OffsetOf_lpSecurityDescriptor put: anAddress! !
 !OS.SECURITY_ATTRIBUTES categoriesForMethods!
 bInheritHandle!**compiled accessors**!public! !
 bInheritHandle:!**compiled accessors**!public! !
-dwSize:!**compiled accessors**!public! !
 lpSecurityDescriptor!**compiled accessors**!public! !
 lpSecurityDescriptor:!**compiled accessors**!public! !
 !
@@ -82,8 +75,8 @@ defineFields
 		} SECURITY_ATTRIBUTES;
 "
 
+	super defineFields.
 	self
-		defineField: #dwSize type: UInt32Field new beWriteOnly;
 		defineField: #lpSecurityDescriptor type: LPVOIDField new;
 		defineField: #bInheritHandle type: BOOLField new!
 

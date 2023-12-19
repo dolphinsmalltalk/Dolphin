@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.FinalizableStructure
+External.FinalizableStructure
 	subclass: #'OS.COM.STGMEDIUM'
 	instanceVariableNames: 'value'
 	classVariableNames: 'GetSelectors'

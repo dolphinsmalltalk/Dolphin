@@ -73,7 +73,7 @@ testStbConversion
 	"Color window brush binaryStoreBytes"
 	version0bytes := #[33 83 84 66 32 52 32 6 4 13 0 83 121 115 67 111 108 111 114 66 114 117 115 104 0 0 0 0 32 0 0 0 0 0 0 0 11 0 0 0].
 	brush := Object fromBinaryStoreBytes: version0bytes.
-	self assert: brush class identicalTo: Brush sysColorBrushClass.
+	self assert: brush class identicalTo: SysColorBrush.
 	self assert: brush color equals: Color window!
 
 testStbConversion2

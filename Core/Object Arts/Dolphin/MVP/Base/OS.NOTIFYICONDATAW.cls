@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure
+OS.SizedStructure
 	subclass: #'OS.NOTIFYICONDATAW'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -8,7 +8,6 @@ OS.Win32Structure
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_NOTIFYICONDATAW_Size' -> 16r98.
-			'_OffsetOf_dwSize' -> 16r0.
 			'_OffsetOf_hIcon' -> 16r14.
 			'_OffsetOf_hWnd' -> 16r4.
 			'_OffsetOf_szTip' -> 16r18.
@@ -21,33 +20,28 @@ OS.NOTIFYICONDATAW comment: ''!
 !OS.NOTIFYICONDATAW categoriesForClass!No category! !
 !OS.NOTIFYICONDATAW methodsFor!
 
-dwSize: anInteger
-	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
+hIcon: aHandle
+	"Set the receiver's 'hIcon' field to the value of the argument, aHandle"
 
-	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
+	bytes uintPtrAtOffset: _OffsetOf_hIcon put: aHandle!
 
-hIcon: anExternalHandle
-	"Set the receiver's 'hIcon' field to the value of the argument, anExternalHandle"
+hWnd: aHandle
+	"Set the receiver's 'hWnd' field to the value of the argument, aHandle"
 
-	bytes uintPtrAtOffset: _OffsetOf_hIcon put: anExternalHandle!
-
-hWnd: anExternalHandle
-	"Set the receiver's 'hWnd' field to the value of the argument, anExternalHandle"
-
-	bytes uintPtrAtOffset: _OffsetOf_hWnd put: anExternalHandle!
+	bytes uintPtrAtOffset: _OffsetOf_hWnd put: aHandle!
 
 icon: anIconOrHandle
 	"Set the receiver's hIcon field."
 
 	self hIcon: anIconOrHandle asParameter.
-	self uFlags: (self uFlags bitOr: NIF_ICON)!
+	self uFlags: (self uFlags bitOr: OS.Win32Constants.NIF_ICON)!
 
 message: anIntegerMessageNumber
 	"Set the receiver's uCallbackMessage (message sent to window when mouse over
 	the icon in the taskbar) field."
 
 	self uCallbackMessage: anIntegerMessageNumber.
-	self uFlags: (self uFlags bitOr: NIF_MESSAGE)!
+	self uFlags: (self uFlags bitOr: OS.Win32Constants.NIF_MESSAGE)!
 
 szTip
 	"Answer the <Utf16String> value of the receiver's 'szTip' field."
@@ -70,7 +64,7 @@ tipText: aString
 	"Set the receiver's szTip (tip text) field."
 
 	self szTip: aString.
-	self uFlags: (self uFlags bitOr: NIF_TIP)!
+	self uFlags: (self uFlags bitOr: OS.Win32Constants.NIF_TIP)!
 
 uCallbackMessage: anInteger
 	"Set the receiver's 'uCallbackMessage' field to the value of the argument, anInteger"
@@ -92,7 +86,6 @@ uID: anInteger
 
 	bytes uint32AtOffset: _OffsetOf_uID put: anInteger! !
 !OS.NOTIFYICONDATAW categoriesForMethods!
-dwSize:!**compiled accessors**!public! !
 hIcon:!**compiled accessors**!public! !
 hWnd:!**compiled accessors**!public! !
 icon:!accessing!public! !
@@ -126,8 +119,8 @@ defineFields
 		} NOTIFYICONDATA;
 	"
 
+	super defineFields.
 	self
-		defineField: #dwSize type: UInt32Field writeOnly beOverride;
 		defineField: #hWnd type: HANDLEField writeOnly;
 		defineField: #uID type: UInt32Field writeOnly;
 		defineField: #uFlags type: UInt32Field new;

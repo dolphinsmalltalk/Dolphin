@@ -119,14 +119,13 @@ UI.MessageBoxAbstract
 	imports: #(#{OS.TooltipConstants} #{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: { 'IconIds' -> #[64 48 16]. 'LargeIconMask' -> 16r1. 'SilentMask' -> 16r2 }!
-OS.Win32Structure
+OS.SizedStructure
 	subclass: #'OS.TOOLINFOW'
 	instanceVariableNames: 'text'
 	classVariableNames: ''
 	imports: #(#{OS.TooltipConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
-			'_OffsetOf_dwSize' -> 16r0.
 			'_OffsetOf_hinst' -> 16r20.
 			'_OffsetOf_hwnd' -> 16r8.
 			'_OffsetOf_lParam' -> 16r28.

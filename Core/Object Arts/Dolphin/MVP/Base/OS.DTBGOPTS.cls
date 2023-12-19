@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure
+OS.SizedStructure
 	subclass: #'OS.DTBGOPTS'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -9,7 +9,6 @@ OS.Win32Structure
 	classConstants: {
 			'_DTBGOPTS_Size' -> 16r18.
 			'_OffsetOf_dwFlags' -> 16r4.
-			'_OffsetOf_dwSize' -> 16r0.
 			'_OffsetOf_rcClip' -> 16r8
 		}!
 OS.DTBGOPTS guid: (Core.GUID fromString: '{cdf611d8-4c3f-48a1-b3eb-fd222762e69b}')!
@@ -42,16 +41,6 @@ dwFlags: anInteger
 
 	bytes uint32AtOffset: _OffsetOf_dwFlags put: anInteger!
 
-dwSize
-	"Answer the <Integer> value of the receiver's 'dwSize' field."
-
-	^bytes uint32AtOffset: _OffsetOf_dwSize!
-
-dwSize: anInteger
-	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
-
-	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
-
 rcClip
 	"Answer the <RECTL> value of the receiver's 'rcClip' field."
 
@@ -68,8 +57,6 @@ rcClip: aRECTL
 !OS.DTBGOPTS categoriesForMethods!
 dwFlags!**compiled accessors**!public! !
 dwFlags:!**compiled accessors**!public! !
-dwSize!**compiled accessors**!public! !
-dwSize:!**compiled accessors**!public! !
 rcClip!**compiled accessors**!public! !
 rcClip:!**compiled accessors**!public! !
 !
@@ -91,8 +78,8 @@ defineFields
 		} DTBGOPTS;
 "
 
+	super defineFields.
 	self
-		defineField: #dwSize type: UInt32Field new;
 		defineField: #dwFlags type: UInt32Field new;
 		defineField: #rcClip type: (StructureField type: RECTL)!
 
@@ -100,7 +87,7 @@ getFieldNames
 	^#(#dwSize #dwFlags #rcClip)! !
 !OS.DTBGOPTS class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
-defineFields!**auto generated**!public!template definition! !
+defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !
 

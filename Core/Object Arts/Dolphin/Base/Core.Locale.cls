@@ -313,7 +313,7 @@ getNumberFormat
 		numberGrouping: self numberGrouping;
 		decimalSeparator: self decimalSeparator;
 		groupSeparator: self thousandSeparator;
-		negativeNumberMode: self negativeNumberMode;
+		negativeOrder: self negativeNumberMode;
 		yourself!
 
 hash
@@ -406,7 +406,7 @@ lastTwoDigitYear
 lcid
 	"Answer the <integer> Windows locale id (LCID) of the receiver."
 
-	^self basicLcid bitAnd: ##(NLS_VALID_LOCALE_MASK | (16rF << 20)	"sort version")!
+	^self basicLcid bitAnd: ##(NLS_VALID_LOCALE_MASK bitOr: (16rF bitShift: 20)	"sort version")!
 
 listSeparator
 	"Answer the String used in the receiver locale to separate items in lists, typically a comma."

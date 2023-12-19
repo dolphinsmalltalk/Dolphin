@@ -4240,16 +4240,16 @@ compileAllDefinitions
 compileByteSize
 	"Private - Define a #byteSize method for the structure class that returns a constant."
 
-	| methodText |
-	self definesNewFields ifFalse: [^self].
+	| methodText constName |
+	constName := self sizeConstantName.
+	(self definesClassVariable: constName) ifFalse: [^self].
 	methodText := String smalltalkWriteStream: 256.
 	methodText
 		nextPutAll: #byteSize;
 		crtab;
-		nextPutAll: '^_';
-		nextPutAll: self unqualifiedName ?? '';
-		nextPutAll: '_Size'.
-	self class compile: methodText contents categories: {'constants'. 'public'. self autoGenCategory}!
+		nextPut: $^;
+		nextPutAll: constName.
+	self class compile: methodText contents categories: { 'constants'. 'public'. self autoGenCategory }!
 
 compileDefinition
 	"Builds a new template and generates compiled methods for accessing the fields 
@@ -4660,7 +4660,10 @@ publishedAspectsOfInstances
 	^super publishedAspectsOfInstances
 		add: (Aspect color: #color);
 		add: (Aspect integer: #width);
-		add: (Aspect symbol: #styleName from: self styleNames);
+		add: (Aspect
+					choice: #styleName
+					from: self styleNames
+					type: String);
 		yourself! !
 !Graphics.Pen class categoriesForMethods!
 publishedAspectsOfInstances!public! !

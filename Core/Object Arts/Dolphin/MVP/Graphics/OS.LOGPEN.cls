@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure
+External.Structure
 	subclass: #'OS.LOGPEN'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -71,13 +71,13 @@ width
 	i.e lopnWidth.x value of 0 and 1 are equivalent. Slightly odd choice, but it does mean that a solid single-pixel black pen has a LOGPEN that is all zeros."
 
 	| lopnWidthX |
-	lopnWidthX := bytes int32AtOffset: 4.
+	lopnWidthX := bytes int32AtOffset: _OffsetOf_lopnWidth.
 	^lopnWidthX == 0 ifTrue: [1] ifFalse: [lopnWidthX]!
 
 width: anInteger 
 	"Set the <integer> width of the pen described by the receiver."
 
-	bytes int32AtOffset: 4 put: anInteger! !
+	bytes int32AtOffset: _OffsetOf_lopnWidth put: anInteger! !
 !OS.LOGPEN categoriesForMethods!
 color!accessing!public! !
 color:!accessing!public! !

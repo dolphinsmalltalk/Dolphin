@@ -6,7 +6,7 @@ External.Structure
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: { '_OffsetOf_value' -> 16r0. '_SCALAR_Size' -> 16r0 }!
+	classConstants: { '_OffsetOf_value' -> 16r0 }!
 External.SCALAR guid: (Core.GUID fromString: '{704554ca-46f7-49b2-92df-edcbe398040a}')!
 External.SCALAR isNonInstantiable: true!
 External.SCALAR comment: ''!
@@ -41,16 +41,12 @@ value:!public! !
 
 !External.SCALAR class methodsFor!
 
-byteSize
-	^_SCALAR_Size!
-
 defineFields
 	self defineField: #value type: (FillerField byteSize: 0)!
 
 getFieldNames
 	^#(#value)! !
 !External.SCALAR class categoriesForMethods!
-byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!constants!private! !
 !

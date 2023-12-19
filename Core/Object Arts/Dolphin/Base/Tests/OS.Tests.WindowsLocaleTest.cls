@@ -153,14 +153,14 @@ testDisplayFloatOnNegativeModes
 	"Fake up the other modes - zero is bracketed"
 	subject := Locale standard: 'en-US'.
 	format := subject numberFormat copy.
-	format negativeNumberMode: 0.
+	format negativeOrder:  0.
 	self assert: (subject printFloat: -0.0 format: format) equals: '0.00'.
 	self assert: (subject printFloat: -1.25 format: format) equals: '(1.25)'.
 	self assert: (subject printFloat: -0.0001 format: format) equals: '0.00'.
 	self assert: (subject printFloat: -123456789.123456789 format: format) equals: '(123,456,789.12)'.
 
 	"Mode 4 is trailing minus after space"
-	format negativeNumberMode: 4.
+	format negativeOrder: 4.
 	self assert: (subject printFloat: -0.0 format: format) equals: '0.00'.
 	self assert: (subject printFloat: -1.25 format: format) equals: '1.25 -'.
 	self assert: (subject printFloat: -0.0001 format: format) equals: '0.00'.

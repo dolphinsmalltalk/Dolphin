@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.Win32Structure
+OS.SizedStructure
 	subclass: #'OS.BITMAPINFOHEADER'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -17,8 +17,7 @@ OS.Win32Structure
 			'_OffsetOf_biSizeImage' -> 16r14.
 			'_OffsetOf_biWidth' -> 16r4.
 			'_OffsetOf_biXPelsPerMeter' -> 16r18.
-			'_OffsetOf_biYPelsPerMeter' -> 16r1C.
-			'_OffsetOf_dwSize' -> 16r0
+			'_OffsetOf_biYPelsPerMeter' -> 16r1C
 		}!
 OS.BITMAPINFOHEADER guid: (Core.GUID fromString: '{87b4c5cb-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.BITMAPINFOHEADER comment: 'BITMAPINFOHEADER is an <ExternalStructure> class to represent the Win32 structure of the same name.
@@ -132,11 +131,6 @@ depth
 
 	^self biBitCount!
 
-dwSize: anInteger
-	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
-
-	bytes uint32AtOffset: _OffsetOf_dwSize put: anInteger!
-
 extent
 	"Answer the width and height (in pels) of the bitmap described by the receiver."
 
@@ -179,7 +173,6 @@ biXPelsPerMeter:!**compiled accessors**!public! !
 biYPelsPerMeter!**compiled accessors**!public! !
 biYPelsPerMeter:!**compiled accessors**!public! !
 depth!accessing!public! !
-dwSize:!**compiled accessors**!public! !
 extent!accessing!public! !
 numQuads!initializing!public! !
 !
@@ -194,8 +187,8 @@ defineFields
 		BITMAPINFOHEADER compileDefinition
 	"
 
+	super defineFields.
 	self
-		defineField: #dwSize type: UInt32Field writeOnly beOverride;
 		defineField: #biWidth type: Int32Field new;
 		defineField: #biHeight type: Int32Field new;
 		defineField: #biPlanes type: UInt16Field new;

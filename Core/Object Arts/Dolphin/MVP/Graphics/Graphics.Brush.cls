@@ -69,7 +69,7 @@ bitmap: aBitmap
 	"Answer a new instance of the receiver for painting the specified <Bitmap> pattern."
 
 	^self 
-		withStyle: BS_PATTERN
+		style: BS_PATTERN
 		color: Color black
 		hatch: aBitmap!
 
@@ -145,14 +145,11 @@ icon
 
 	^##(self) defaultIcon!
 
-logBrushClass
-	^LOGBRUSH!
-
 newColor: aColour 
 	"Private - Answer a new instance of the receiver for painting in the specified solid colour."
 
 	^self 
-		withStyle: BS_SOLID
+		style: BS_SOLID
 		color: aColour
 		hatch: 0!
 
@@ -171,8 +168,13 @@ silver
 
 	^StockBrush fromId: LTGRAY_BRUSH!
 
-sysColorBrushClass
-	^SysColorBrush!
+style: styleFlags color: aColour hatch: hatchObject
+	"Answer a new instance of the receiver with the specified style, colour and hatching attributes. The hatchObject can be either a <Bitmap> or one of the <integer> constants from the Win32 HS_xxx enumeration."
+
+	^self fromLogBrush: (LOGBRUSH
+				style: styleFlags
+				color: aColour
+				hatch: hatchObject)!
 
 transparent
 	"Answer the stock transparent (aka Null, aka Hollow) brush."
@@ -195,13 +197,11 @@ white
 	^StockBrush fromId: WHITE_BRUSH!
 
 withStyle: styleFlags color: aColour hatch: hatchObject
-	"Answer a new instance of the receiver with the specified style, colour and hatching attributes. The hatchObject can be either a <Bitmap> or one of the <integer> constants from the Win32 HS_xxx enumeration."
-
-	^self fromLogBrush: (LOGBRUSH newBuffer
-				lbStyle: styleFlags;
-				color: aColour;
-				hatch: hatchObject;
-				yourself)! !
+	#deprecated.
+	^self
+		style: styleFlags
+		color: aColour
+		hatch: hatchObject! !
 !Graphics.Brush class categoriesForMethods!
 bitmap:!instance creation!public! !
 black!instance creation!public! !
@@ -218,12 +218,11 @@ gray!instance creation!public! !
 horizontal!instance creation!public! !
 horizontal:!instance creation!public! !
 icon!constants!public! !
-logBrushClass!constants!private! !
 newColor:!instance creation!private! !
 reverseDiagonal!instance creation!public! !
 reverseDiagonal:!instance creation!public! !
 silver!instance creation!public! !
-sysColorBrushClass!instance creation!public! !
+style:color:hatch:!instance creation!public! !
 transparent!instance creation!public! !
 vertical!instance creation!public! !
 vertical:!instance creation!public! !

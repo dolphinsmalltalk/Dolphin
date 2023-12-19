@@ -87,14 +87,13 @@ displayValue: anInteger
 		lParam: anInteger!
 
 getRange
-	| min max |
-	min := Int32 new.
-	max := Int32 new.
+	| buffer |
+	buffer := ByteArray newFixed: 8.
 	self
 		sendMessage: UDM_GETRANGE32
-		wParam: min yourAddress
-		lParam: max yourAddress.
-	^min value to: max value!
+		wParam: buffer yourAddress
+		lParam: buffer yourAddress + 4.
+	^(buffer int32AtOffset: 0) to: (buffer int32AtOffset: 4)!
 
 getStep
 	"Private - Answer the amount by which the spin button's value changes each time the button

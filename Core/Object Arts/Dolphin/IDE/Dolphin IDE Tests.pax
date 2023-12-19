@@ -47,6 +47,7 @@ package setPrerequisites: #(
 	'..\MVP\Graphics\Dolphin GDI Graphics'
 	'..\MVP\Models\List\Dolphin List Models'
 	'..\System\Filer\Dolphin Literal Filer (Old versions)'
+	'..\MVP\Deprecated\Dolphin MVP (Deprecated)'
 	'..\MVP\Base\Dolphin MVP Base'
 	'..\MVP\Tests\Dolphin MVP Tests'
 	'Professional\Dolphin Professional Tools'
