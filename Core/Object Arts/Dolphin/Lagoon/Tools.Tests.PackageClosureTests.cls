@@ -23,9 +23,7 @@ simpleGuiAppUnimplementedMessages
 		- ttmRelayEvent: - only sent (from MVP base) if the Dolphin ToolTips package is loaded. This may show up in the UnimplementedMessages section of the actual deployment log for GUI apps.
 		- #isStable, #override:with: #removeOverrideFor: #saveObject: #saveObject:as: #saveSingleton: #saveSingleton:class:name: #saveSingleton:name: - STBOutFiler methods sent by stbSaveOn:'s, which will be removed on deployment if the STB/STLOutFilers are not part of the app. However as STBOutFiler is no longer part of the base Dolphin package, it will be missing in any application that does not use STB, causing these methods to have no implementation in the dummy deployment environment. An app such as Etch-A-Sketch does use STB to save documents, so it won't be missing these in the deployment environment, but most of the test apps will as they don't use STB for writing, only STL for reading view resources."
 
-	#todo.	"Extra STBOutFiler messages from Clipboard, to be removed"
-	^#(#ttmRelayEvent: #defineTemplate #isStable #override:with: #removeOverrideFor: #saveObject: #saveObject:as: #saveSingleton: #saveSingleton:class:name:)
-		, #(#binaryStoreBytes #fromBinaryStoreBytes:)!
+	^#(#ttmRelayEvent: #defineTemplate #isStable #override:with: #removeOverrideFor: #saveObject: #saveObject:as: #saveSingleton: #saveSingleton:class:name:)!
 
 testCommandLineHelloWorld
 	"Tests predicted unimplemented messages of a minimal console application. Note that the actual set will be less and can be determined by deploying the application with deployment logging enabled, and looking at the UnimplementedMesages element in the resulting log. In the case of 'Hello World' the unimplemented message set should actually be empty when deploying."

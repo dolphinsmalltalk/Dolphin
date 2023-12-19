@@ -129,34 +129,8 @@ getFormatName: format
 				cchMaxCount: name size.
 	^len == 0 ifFalse: [(name resize: len) asUtf8String]!
 
-getObject
-	"Answer the <Object> stored on the clipboard or raise an error if none."
-
-	^self getObjectIfNone: [self errorFormatNotAvailable: #Object]!
-
-getObjectClass
-        "Answer the <Class> for the <Object> stored on the clipboard or raise an error if there is
-	none."
-
-	^self getObjectClassIfNone: [self errorFormatNotAvailable: #ObjectClass]!
-
-getObjectClassIfNone: exceptionHandler
-	"Answer the <Class> of the <Object> stored on the clipboard. If no object is currently
-	available, the answers the result of evaluating the <niladicValuable> exceptionHandler."
-
-	^self getRegisteredFormat: #ObjectClass ifNone: exceptionHandler!
-
-getObjectIfNone: exceptionHandler
-	"Answer the <object> stored on the clipboard. If no object is currently available, the
-	answers the result of evaluating the <niladicValuable> exceptionHandler."
-
-	^self getRegisteredFormat: #Object ifNone: exceptionHandler!
-
 getRegisteredFormat: name ifNone: exceptionHandler
-	"Answer an <Object> representing the contents of the clipboard of the named pre-registered
-	format translated to an appropriate Smalltalk object using the right-to-left conversion of
-	the type converter registered for that format. If the format is not currently available, the
-	answers the result of evaluating the <niladicValuable> exceptionHandler."
+	"Answer an <Object> representing the contents of the clipboard of the named pre-registered format translated to an appropriate Smalltalk object using the right-to-left conversion of the type converter registered for that format. If the format is not currently available or the data cannot be read, then answers the result of evaluating the <niladicValuable> exceptionHandler."
 
 	| formatId |
 	formatId := registeredFormats at: name.
@@ -164,7 +138,7 @@ getRegisteredFormat: name ifNone: exceptionHandler
 			[| handle |
 			handle := User32 getClipboardData: formatId first.
 			handle isNull ifTrue: [^exceptionHandler value].
-			formatId last rightToLeft: handle]!
+			[formatId second rightToLeft: handle] on: Error do: [:ex | exceptionHandler value]]!
 
 getText
 	"Answer a <readableString> containing the CF_UNICODETEXT contents 
@@ -186,25 +160,17 @@ initialize
 		Clipboard current initialize
 	"
 
-	| nullConversion objectConverter |
+	| nullConversion |
 	isOpen := false.
 	registeredFormats := IdentityDictionary new.
 	idToName := IdentityDictionary new.
 	nullConversion := NullConverter new.
-	objectConverter := PluggableTypeConverter
-				leftToRight: [:obj | External.Memory copyBytesToGlobalHeap: obj binaryStoreBytes]
-				rightToLeft: [:handle | Object fromBinaryStoreBytes: (ByteArray fromGlobalHandle: handle)].
 	self
 		addRegisteredFormat: #String
 			id: CF_UNICODETEXT
 			converter: (PluggableTypeConverter
-					leftToRight: [:obj | External.Memory copyBytesToGlobalHeap: obj asString asUtf16String]
+					leftToRight: [:obj | External.Memory copyBytesToGlobalHeap: obj asUtf16String]
 					rightToLeft: [:handle | Utf16String fromGlobalHandle: handle]);
-		addRegisteredFormat: #AnsiString
-			id: CF_TEXT
-			converter: (PluggableTypeConverter
-					leftToRight: [:obj | External.Memory copyBytesToGlobalHeap: obj asString asAnsiString]
-					rightToLeft: [:handle | AnsiString fromGlobalHandle: handle]);
 		addRegisteredFormat: #Bitmap
 			id: CF_BITMAP
 			converter: (PluggableTypeConverter leftToRight: [:bmp | bmp copy detachHandle]
@@ -218,13 +184,7 @@ initialize
 		addRegisteredFormat: #DIBSection
 			id: CF_DIB
 			converter: (PluggableTypeConverter leftToRight: [:ds | ds copyToGlobalHeap]
-					rightToLeft: [:handle | DIBSection fromGlobalHandle: handle]);
-		addRegisteredFormat: #Object
-			id: (User32 registerClipboardFormat: 'Smalltalk Object Format')
-			converter: objectConverter;
-		addRegisteredFormat: #ObjectClass
-			id: (User32 registerClipboardFormat: 'Smalltalk Object Class Format')
-			converter: objectConverter!
+					rightToLeft: [:handle | DIBSection fromGlobalHandle: handle])!
 
 isBitmapAvailable
 	"Answer whether the clipboard contains a bitmap."
@@ -353,10 +313,6 @@ getBitmapIfNone:!accessing!public! !
 getDIBSection!accessing!public! !
 getDIBSectionIfNone:!accessing!public! !
 getFormatName:!accessing!public! !
-getObject!accessing!public! !
-getObjectClass!accessing!public! !
-getObjectClassIfNone:!accessing!public! !
-getObjectIfNone:!accessing!public! !
 getRegisteredFormat:ifNone:!accessing!public! !
 getText!accessing!public! !
 getTextIfNone:!accessing!public! !

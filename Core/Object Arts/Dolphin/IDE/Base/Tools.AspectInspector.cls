@@ -186,20 +186,19 @@ queryCommand: query
 			[query
 				isEnabled: (accessor notNil and: [accessor canReset]);
 				text: (query commandDescription menuText
-							expandMacrosWithArguments: {accessor isNil or: [accessor aspectDescriptor hasDefault not]}
+							expandMacrosWithArguments: { accessor isNil or: [accessor aspectDescriptor hasDefault not] }
 							locale: Locale smalltalk).
 			^true].
 	#pasteAspect == command
 		ifTrue: 
-			[| text |
+			[| text class |
 			text := 'nil'.
-			Clipboard current isObjectAvailable
+			(Clipboard current isObjectAvailable
+				and: [(class := Clipboard current getObjectClassIfNone: nil) notNil])
 				ifTrue: 
-					[| class |
-					class := Clipboard current getObjectClass.
-					text := class printString.
+					[text := class printString.
 					query isEnabled: accessor notNil].
-			query text: (query commandDescription description expandMacrosWithArguments: {text}
+			query text: (query commandDescription description expandMacrosWithArguments: { text }
 						locale: Locale smalltalk).
 			^true].
 	^super queryCommand: query!

@@ -836,6 +836,7 @@ package setPrerequisites: #(
 	'..\..\MVP\Base\Dolphin Base Dialogs'
 	'..\..\MVP\Base\Dolphin Basic Geometry'
 	'..\..\System\Filer\Dolphin Binary Filer'
+	'..\..\MVP\Base\Dolphin Binary Object Clipboard Format'
 	'..\..\MVP\Presenters\Boolean\Dolphin Boolean Presenter'
 	'Dolphin Browser Environments'
 	'..\..\MVP\Views\Cards\Dolphin Card Containers'

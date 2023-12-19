@@ -1,0 +1,76 @@
+﻿| package |
+package := Package name: 'Dolphin Binary Object Clipboard Format'.
+package paxVersion: 2.1;
+	basicComment: 'Dolphin 🐬 Smalltalk Generic Object Clipboard Format
+Copyright © Object Arts Ltd. 1997-2023.
+
+Supports copy and paste of generic object graphs via the Windows clipboard. The STB serialization mechanism is used.
+
+Note: STB is insecure in that it can be used to transport arbitrary objects including code. This package has been split from the standard clipboard support in order that the Object format is not included in applications unless explicitly linked in by explicitly declaring a manual package dependency.'.
+
+
+package setClassNames: #(
+	#{UI.ClipboardBinaryObjectTypeConverter}
+).
+
+package setMethodNames: #(
+	#(#{UI.Clipboard} #getObject)
+	#(#{UI.Clipboard} #getObjectClass)
+	#(#{UI.Clipboard} #getObjectClassIfNone:)
+	#(#{UI.Clipboard} #getObjectIfNone:)
+).
+
+package setPrerequisites: #(
+	'..\..\Base\Dolphin'
+	'Dolphin MVP Base'
+	'..\Type Converters\Dolphin Type Converters'
+	'..\..\System\Filer\Dolphin Validating Binary Filer'
+).
+
+package!
+
+"Class Definitions"!
+
+UI.TypeConverter
+	subclass: #'UI.ClipboardBinaryObjectTypeConverter'
+	instanceVariableNames: 'classLocator'
+	classVariableNames: 'Current'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+"Loose Methods"!
+
+!UI.Clipboard methodsFor!
+
+getObject
+	"Answer the <Object> stored on the clipboard or raise an error if none."
+
+	^self getObjectIfNone: [self errorFormatNotAvailable: #Object]!
+
+getObjectClass
+        "Answer the <Class> for the <Object> stored on the clipboard or raise an error if there is
+	none."
+
+	^self getObjectClassIfNone: [self errorFormatNotAvailable: #ObjectClass]!
+
+getObjectClassIfNone: exceptionHandler
+	"Answer the <Class> of the <Object> stored on the clipboard. If no object is currently
+	available, the answers the result of evaluating the <niladicValuable> exceptionHandler."
+
+	^self getRegisteredFormat: #ObjectClass ifNone: exceptionHandler!
+
+getObjectIfNone: exceptionHandler
+	"Answer the <object> stored on the clipboard. If no object is currently available, the
+	answers the result of evaluating the <niladicValuable> exceptionHandler."
+
+	^self getRegisteredFormat: #Object ifNone: exceptionHandler! !
+!UI.Clipboard categoriesForMethods!
+getObject!accessing!public! !
+getObjectClass!accessing!public! !
+getObjectClassIfNone:!accessing!public! !
+getObjectIfNone:!accessing!public! !
+!
+
+"End of package definition"!
+

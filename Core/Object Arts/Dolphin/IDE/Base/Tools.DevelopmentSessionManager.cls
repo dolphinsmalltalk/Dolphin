@@ -704,11 +704,11 @@ tertiaryStartup
 	SmalltalkSystemShell is available)."
 
 	"Invalidate options before restoring window state"
+
 	SmalltalkToolShell invalidateOptions.
-
 	super tertiaryStartup.
-
 	self disableWindowGhosting.
+	ClipboardBinaryObjectTypeConverter current beUnrestricted.
 	"Flush any output accumulated in the transcript buffer during startup."
 	TranscriptShell current flush.
 	self mainShellClass onStartup.

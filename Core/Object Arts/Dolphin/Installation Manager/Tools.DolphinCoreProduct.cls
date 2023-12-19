@@ -20,14 +20,18 @@ contents
 
 	"Base"
 	contents
+		add: #('Core\Object Arts\Dolphin\MVP\Base\Dolphin Binary Object Clipboard Format.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Rich Text Presenter.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Views\Path\Dolphin StaticPath Control.pax' #encrypted #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Views\SysLink\Dolphin SysLink Control.pax' #encrypted #imageBased);
 		add: #('Core\Contributions\Refactory\Refactoring Browser\Formatters\RBFormatters.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\System\Announcements\Dolphin Announcements.pax' #plain #imageBased);
 		
-		"##(self paxesUnder: 'Core\Object Arts\Dolphin\MVP\Presenters\Prompters' encrypted: false) asArray"
-		addAll: #(#('Core\Object Arts\Dolphin\MVP\Presenters\Prompters\Dolphin Choice Prompter.pax' #plain #imageBased) #('Core\Object Arts\Dolphin\MVP\Presenters\Prompters\Dolphin In-place Text Editor.pax' #plain #imageBased) #('Core\Object Arts\Dolphin\MVP\Presenters\Prompters\Dolphin Integer Prompter.pax' #plain #imageBased) #('Core\Object Arts\Dolphin\MVP\Presenters\Prompters\Dolphin Key-Value Prompter.pax' #plain #imageBased) #('Core\Object Arts\Dolphin\MVP\Presenters\Prompters\Dolphin Prompter.pax' #plain #imageBased));
+		add: #('Core\Object Arts\Dolphin\MVP\Presenters\Prompters\Dolphin Choice Prompter.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\MVP\Presenters\Prompters\Dolphin In-place Text Editor.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\MVP\Presenters\Prompters\Dolphin Integer Prompter.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\MVP\Presenters\Prompters\Dolphin Key-Value Prompter.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\MVP\Presenters\Prompters\Dolphin Prompter.pax' #plain #imageBased);
 
 		add: #('Core\Object Arts\Dolphin\ActiveX\COM\OLE COM.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\COM\OLE COM (Old Names).pax' #plain #imageBased);
