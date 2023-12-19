@@ -637,22 +637,22 @@ protocolANYName
 protocolMsgParmSpec
 	"Answer the protocol message parameter specification class object."
 
-	^ SUnitNameResolver classNamed: #'MsgParmSpec'!
+	^#{MsgParmSpec} value!
 
 protocolMsgReturnValueRuleSpec
 	"Answer the protocol message return value rule specification class object."
 
-	^ SUnitNameResolver classNamed: #'MsgReturnRuleSpec'!
+	^#{MsgReturnRuleSpec} value!
 
 protocolMsgReturnValueSpec
 	"Answer the protocol message return value specification class object."
 
-	^ SUnitNameResolver classNamed: #'MsgReturnSpec'!
+	^#{MsgReturnSpec} value!
 
 protocolMsgSpec
 	"Answer the protocol message specification class object."
 
-	^ SUnitNameResolver classNamed: #'ProtocolMsgSpec'!
+	^#{ProtocolMsgSpec} value!
 
 protocolNamed: protocolName 
 	"Answer the protocol named protocolName."
