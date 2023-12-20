@@ -53,9 +53,7 @@ stbConvertFrom: anSTBClassFormat
 
 	^
 	[:data |
-	Notification
-		signal: 'STB reference to deprecated class ComparisonPolicy encountered. Please resave the offending resource or binary file'.
-	"In the meantime, provide a replacement SearchPolicy. This will map the standard equality/identity/never/always directly. Other cases will yield a pluggable search policy with the original block, which may not work."
+	"Provide a replacement SearchPolicy. This will map the standard equality/identity/never/always directly. Other cases will yield a pluggable search policy with the original block, which may not work."
 	self searchPolicyForComparison: data first]!
 
 stbVersion

@@ -134,12 +134,7 @@ verifyStbUpgrade: pathString
 	filer := (STBInFiler on: stream)
 				context: View desktop;
 				yourself.
-	viewProxy := [filer basicNext] on: Notification
-				do: 
-					[:ex |
-					self assert: ex description
-						equals: 'STB reference to deprecated class ComparisonPolicy encountered. Please resave the offending resource or binary file'.
-					ex resume].
+	viewProxy := filer basicNext.
 	stream close.
 	version := viewProxy version.
 	"Sanity check we got what it said on the tin"
@@ -153,7 +148,8 @@ verifyStbUpgrade: pathString
 			notifications add: ex.
 			ex resume].
 	parts := $. split: parts first.
-	self verifyUpgradedView: version identifier: (ResourceIdentifier class: parts first asQualifiedReference value name: parts last).
+	self verifyUpgradedView: version
+		identifier: (ResourceIdentifier class: parts first asQualifiedReference value name: parts last).
 	^notifications!
 
 verifyStlUpgrade: aResourceIdentifier
