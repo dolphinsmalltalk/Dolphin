@@ -2,7 +2,7 @@
 
 Refactory.Browser.Tests.RefactoringBrowserTest
 	subclass: #'Refactory.Browser.Tests.RefactoringTest'
-	instanceVariableNames: 'manager changeSet model'
+	instanceVariableNames: 'manager model'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -386,7 +386,8 @@ tearDown
 	super tearDown.
 	RefactoringManager instance release.
 	(RefactoringManager classPool associationAt: #Instance
-		ifAbsent: [RefactoringManager classPool associationAt: 'Instance']) value: manager!
+		ifAbsent: [RefactoringManager classPool associationAt: 'Instance']) value: manager.
+	manager := model := nil!
 
 verifyMethod: aSymbol of: aClass equals: aString
 	| parseTree modelClass method |

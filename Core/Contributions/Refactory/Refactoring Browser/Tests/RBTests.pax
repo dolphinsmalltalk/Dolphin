@@ -139,7 +139,7 @@ XProgramming.SUnit.TestCase
 	classConstants: {}!
 Refactory.Browser.Tests.RefactoringBrowserTest
 	subclass: #'Refactory.Browser.Tests.BrowserEnvironmentTest'
-	instanceVariableNames: 'browser universalEnvironment totalSelectors'
+	instanceVariableNames: 'universalEnvironment totalSelectors'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -223,7 +223,7 @@ Refactory.Browser.Tests.RefactoringBrowserTest
 	classConstants: {}!
 Refactory.Browser.Tests.RefactoringBrowserTest
 	subclass: #'Refactory.Browser.Tests.RefactoringTest'
-	instanceVariableNames: 'manager changeSet model'
+	instanceVariableNames: 'manager model'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

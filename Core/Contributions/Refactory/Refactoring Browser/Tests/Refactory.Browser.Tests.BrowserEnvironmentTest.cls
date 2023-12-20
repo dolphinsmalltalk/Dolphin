@@ -2,7 +2,7 @@
 
 Refactory.Browser.Tests.RefactoringBrowserTest
 	subclass: #'Refactory.Browser.Tests.BrowserEnvironmentTest'
-	instanceVariableNames: 'browser universalEnvironment totalSelectors'
+	instanceVariableNames: 'universalEnvironment totalSelectors'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
