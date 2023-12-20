@@ -17,6 +17,7 @@ onAxEvent: aSymbol withArguments: anArray
 
 setUp
 	| itf analyzer |
+	super setUp.
 	analyzer := TestTypelib current analyzer.
 	analyzer isNil ifTrue: [self skip].
 	itf := Smalltalk at: #TLATESTLibITestFireEvents
@@ -39,10 +40,7 @@ tearDown
 	super tearDown.
 	sink ifNotNil: [sink disconnect].
 	object free.
-	received ifNotNil: [received do: [:each | each value free]].
-	(MemoryManager current)
-		collectGarbage;
-		administerLastRites!
+	received ifNotNil: [received do: [:each | each value free]]!
 
 testNoArgs
 	self assert: received isEmpty.

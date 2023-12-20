@@ -19,7 +19,8 @@ setUp
 	temp := File temporaryFilename!
 
 tearDown
-	(File exists: temp) ifTrue: [File delete: temp]!
+	(File exists: temp) ifTrue: [File delete: temp].
+	super tearDown!
 
 testAppendToFile
 	| stream |

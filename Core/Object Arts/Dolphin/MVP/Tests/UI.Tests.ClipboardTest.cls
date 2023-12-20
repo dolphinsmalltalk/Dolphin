@@ -33,10 +33,12 @@ sampleUnicodeString
 
 setUp
 	self skipUnless: [self isUnattendedSession not].
+	super setUp.
 	Clipboard current empty!
 
 tearDown
-	Clipboard current empty!
+	Clipboard current empty.
+	super tearDown!
 
 testAnsiString
 	"We no longer deal with CF_TEXT as it is largely obsolete, and these get copied/pasted as CF_UNICODETEXT instead. The system will make CF_TEXT available to any other application that might still need it."

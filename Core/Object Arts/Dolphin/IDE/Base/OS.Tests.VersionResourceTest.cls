@@ -37,6 +37,7 @@ modifyVersionResource: versionResource
 
 setUp
 	| pVer header |
+	super setUp.
 	updatePath := File temporaryFilename.
 	File copy: self sourcePath to: updatePath.
 	sourceModule := DynamicLinkLibrary open: self sourcePath.
@@ -51,7 +52,8 @@ sourcePath
 
 tearDown
 	sourceModule close.
-	File delete: updatePath!
+	File delete: updatePath.
+	super tearDown!
 
 testRoundTripUnpackPack
 	| packedBytes repackedBytes versionResource versionResource2 |

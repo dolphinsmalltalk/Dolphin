@@ -18,6 +18,7 @@ rootFolder
 	^'\'!
 
 setUp
+	super setUp.
 	c := self folderClass pathname: 'c:\'.
 	windows := self folderClass pathname: 'c:\windows\'.
 	system := self folderClass pathname: 'c:\windows\system32\'.

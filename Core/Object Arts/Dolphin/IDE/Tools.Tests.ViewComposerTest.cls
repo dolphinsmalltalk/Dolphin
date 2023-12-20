@@ -84,7 +84,8 @@ tearDown
 	vc
 		ifNotNil: 
 			[vc destroy.
-			vc := nil]!
+			vc := nil].
+	super tearDown!
 
 testBasicEdit
 	| sampleResourceIdentifier rid |

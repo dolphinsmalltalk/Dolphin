@@ -15,6 +15,7 @@ Graphics.Tests.AbstractRectangleTest comment: ''!
 setUp
 	"Note that desktop is always a fixed size to make writing the tests easier"
 
+	super setUp.
 	desktop := self subjectClass origin: 0 @ 0 corner: 1280 @ 1024.
 	oddDesktop := self subjectClass origin: -1 @ 2 corner: 1279 @ 1023.
 	unary := self subjectClass origin: 0 @ 0 extent: 1 @ 1!

@@ -12,11 +12,12 @@ Tools.Tests.ClosedCommandDescriptionTest comment: ''!
 !Tools.Tests.ClosedCommandDescriptionTest methodsFor!
 
 setUp
+	super setUp.
 	dialog := ClosedCommandDescriptionIssueDialog showOn: 'blah'!
 
 tearDown
-
-	dialog  destroy.!
+	dialog destroy.
+	super tearDown!
 
 testArgument
 	"self halt."

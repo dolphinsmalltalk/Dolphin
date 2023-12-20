@@ -16,6 +16,7 @@ layoutManagerClass
 	^self subclassResponsibility!
 
 setUp
+	super setUp.
 	shell := ShellView show.
 	shell
 		caption: self class name asPhrase;
@@ -25,7 +26,11 @@ setUp
 	shell show!
 
 tearDown
-	shell notNil ifTrue: [shell destroy]! !
+	shell
+		ifNotNil: 
+			[shell destroy.
+			shell := nil].
+	super tearDown! !
 !UI.Tests.LayoutManagerTest categoriesForMethods!
 layoutManagerClass!private!unit tests! !
 setUp!public!unit tests! !

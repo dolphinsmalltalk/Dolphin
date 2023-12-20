@@ -87,7 +87,8 @@ shouldSetupPresenter
 	^(self thisTestMethod hasAnnotation: #nocreate) not!
 
 tearDown
-	self destroyPresenter!
+	self destroyPresenter.
+	super tearDown!
 
 testStbUpgradeFromBinaryResources
 	"Test upgrades of old STB version .vu resources. These were used in versions of Dolphin prior to 6.0, after which the STL format was introduced and the resources stored as literal arrays in class methods.

@@ -28,7 +28,11 @@ newCanonicalModel
 	model := self createCanonicalSubject!
 
 subjectClass
-	^self subclassResponsibility! !
+	^self subclassResponsibility!
+
+tearDown
+	model := nil.
+	super tearDown! !
 !Graphics.Gdiplus.Tests.GdiplusTest categoriesForMethods!
 createCanonicalSubject!private!running! !
 fileResource!accessing!public! !
@@ -36,6 +40,7 @@ getSampleBrush!accessing!public! !
 getSampleSolidBrush!accessing!public! !
 newCanonicalModel!public!running! !
 subjectClass!constants!private! !
+tearDown!public!running! !
 !
 
 !Graphics.Gdiplus.Tests.GdiplusTest class methodsFor!
