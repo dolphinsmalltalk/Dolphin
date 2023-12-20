@@ -117,7 +117,8 @@ tearDown
 	tempFile
 		ifNotNil: [
 			[tempFile close.
-			File delete: tempFile name] on: OS.Win32Error do: [:e | ]]!
+			File delete: tempFile name] on: OS.Win32Error do: [:e | ]].
+	super tearDown!
 
 test64BitSeek
 	"Tests #755"

@@ -27,6 +27,7 @@ runTestForPairs: pairs
 			self assert: result equals: each last]!
 
 setUp
+	super setUp.
 	settings := Dictionary new.
 	{RBConfigurableFormatter. RBSourceFormatter}
 		do: [:each | each classPool keysAndValuesDo: [:key :value | settings at: key put: value]].
@@ -60,8 +61,8 @@ smokeTestForMethodsOfClasses: aCollectionOfClasses
 					self assert: tree equals: (self parseMethod: (RBFormatter1 format: tree) in: class)]]!
 
 tearDown
-	settings 
-		keysAndValuesDo: [:key :value | (RBFormatter1 bindingFor: key) value: value]!
+	settings keysAndValuesDo: [:key :value | (RBFormatter1 bindingFor: key) value: value].
+	super tearDown!
 
 testAllSettingsInitialized
 	settings keysAndValuesDo: [:eachKey :eachValue | self denyIsNil: eachValue]!

@@ -56,6 +56,7 @@ openSubject: aNiladicValuable
 	^result!
 
 setUp
+	super setUp.
 	subject := MessageBox new.
 	"We need the message loop to run in the main process"
 	subject beTaskModal.
@@ -69,7 +70,8 @@ tearDown
 			subject handle ifNotNil: [subject clickButton: OS.Win32Constants.IDOK].
 			subject destroy].
 	subject := nil.
-	enablement ifNotNil: [enablement do: [:each | each first isEnabled: each second]]!
+	enablement ifNotNil: [enablement do: [:each | each first isEnabled: each second]].
+	super tearDown!
 
 testAbortRetryIgnore
 	| buttonId expectedButtonLabels |

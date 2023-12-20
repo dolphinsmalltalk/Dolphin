@@ -82,7 +82,8 @@ tearDown
 		ifTrue: 
 			[webviewEnvironment free.
 			webviewEnvironment := nil].
-	presenter removeAllEventsTriggered!
+	presenter removeAllEventsTriggered.
+	super tearDown!
 
 testContextMenu
 	<knownSlowTest>

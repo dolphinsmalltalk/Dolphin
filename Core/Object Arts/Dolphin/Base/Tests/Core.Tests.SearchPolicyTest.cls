@@ -16,6 +16,7 @@ policyClass
 	^self subclassResponsibility!
 
 setUp
+	super setUp.
 	policy := self policyClass new!
 
 testNewLookupTable

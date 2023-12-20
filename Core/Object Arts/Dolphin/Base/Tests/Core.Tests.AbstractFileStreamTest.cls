@@ -65,6 +65,7 @@ readWriteStreamOnString: aString
 	^stream!
 
 setUp
+	super setUp.
 	tempFileName := File temporaryFilename!
 
 sharingError
@@ -106,7 +107,8 @@ tearDown
 				print: tempFileName;
 				nextPutAll: ': '.
 			ex toTrace].
-	tempFileName := nil!
+	tempFileName := nil.
+	super tearDown!
 
 tearDownTempStream
 	filestream close!

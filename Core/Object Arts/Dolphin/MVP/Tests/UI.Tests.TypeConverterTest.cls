@@ -13,10 +13,13 @@ UI.Tests.TypeConverterTest comment: ''!
 !UI.Tests.TypeConverterTest methodsFor!
 
 setUp
+	super setUp.
 	edit := TextEdit show!
 
 tearDown
-	edit topShell destroy!
+	edit topShell destroy.
+	edit := nil.
+	super tearDown!
 
 testInvalidFormat
 	self subclassResponsibility!

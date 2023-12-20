@@ -2,7 +2,7 @@
 
 Graphics.Gdiplus.Tests.GdiplusTest
 	subclass: #'Graphics.Gdiplus.Tests.InitializerTests'
-	instanceVariableNames: 'constructorArgs'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

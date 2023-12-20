@@ -150,6 +150,10 @@ setUp
 		buildMethodTitleSearch;
 		buildMethodArgumentSearch!
 
+tearDown
+	classSearches := rewrites := nil.
+	super tearDown!
+
 testAllSearches
 	classSearches keysAndValuesDo: 
 			[:class :searches | 
@@ -743,6 +747,7 @@ exampleClasses!private! !
 isEquivalentMethod:to:!private! !
 parseError:!private! !
 setUp!accessing!public! !
+tearDown!public!running! !
 testAllSearches!public!unit tests! !
 testArray!public!unit tests! !
 testBlockRewrites!public!unit tests! !

@@ -13,6 +13,7 @@ Refactory.Browser.Tests.RewriteTestCase comment: ''!
 !Refactory.Browser.Tests.RewriteTestCase methodsFor!
 
 setUp
+	super setUp.
 	env := BrowserEnvironment new.
 	env := env forClasses: {UI.Examples.Animal. UI.Examples.Animal class}.
 	env := env referencesTo: #notify:caption:!

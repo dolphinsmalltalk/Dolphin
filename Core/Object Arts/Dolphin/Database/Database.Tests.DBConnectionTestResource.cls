@@ -52,7 +52,8 @@ setUp
 	(isAvailable := self createDatabase) ifTrue: [self connect]!
 
 tearDown
-	self dropDatabase! !
+	self dropDatabase.
+	super tearDown! !
 !Database.Tests.DBConnectionTestResource categoriesForMethods!
 canConnect!private! !
 connect!private! !

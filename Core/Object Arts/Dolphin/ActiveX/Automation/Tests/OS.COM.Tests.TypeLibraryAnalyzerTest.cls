@@ -13,7 +13,8 @@ OS.COM.Tests.TypeLibraryAnalyzerTest comment: 'If these tests fail make sure you
 
 tearDown
 	Tests.TestTypelib reset.
-	(Package manager packageNamed: 'Excel' ifNone: nil) ifNotNil: [:package | package uninstall]!
+	(Package manager packageNamed: 'Excel' ifNone: nil) ifNotNil: [:package | package uninstall].
+	super tearDown!
 
 testDefaultArgs
 	| obj tlb |

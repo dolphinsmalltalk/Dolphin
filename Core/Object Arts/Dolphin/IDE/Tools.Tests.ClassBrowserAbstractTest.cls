@@ -184,7 +184,8 @@ tearDown
 	methods := packageA methods.
 	super tearDown.
 	self deleteTestMethods: methods.
-	methodsPresenter := packageA := nil!
+	methodsPresenter := packageA := nil.
+	super tearDown!
 
 testAddRemoveOfInheritedMethods
 	presenter actualClass: ClassBrowserAbstractTest.

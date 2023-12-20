@@ -27,7 +27,8 @@ setUsKeyboard
 	^self setCurrentKeyboardLayout: '00000409'!
 
 tearDown
-	savedLayout ifNotNil: [Keyboard layoutName: savedLayout]! !
+	savedLayout ifNotNil: [Keyboard layoutName: savedLayout].
+	super tearDown! !
 !UI.Tests.AbstractKeyboardTest categoriesForMethods!
 setCurrentKeyboardLayout:!helpers!private! !
 setUkKeyboard!initializing!private! !

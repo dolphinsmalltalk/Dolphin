@@ -22,6 +22,10 @@ setUp
 subjectClass
 	^TextureBrushInitializer!
 
+tearDown
+	image := nil.
+	super tearDown!
+
 testCreateHandle
 	| constructor messages |
 	model
@@ -59,6 +63,7 @@ testCreateHandleWithBounds
 !Graphics.Gdiplus.Tests.TextureBrushInitializerTest categoriesForMethods!
 setUp!public!running! !
 subjectClass!constants!private! !
+tearDown!public!running! !
 testCreateHandle!public!unit tests! !
 testCreateHandleWithBounds!public!unit tests! !
 !

@@ -12,6 +12,7 @@ Tools.Tests.DebuggerTest comment: ''!
 !Tools.Tests.DebuggerTest methodsFor!
 
 setUp
+	super setUp.
 	CompiledCode initializeInfoCache.
 	savedShowWalkbacks := Debugger showWalkbacks.
 	savedView := Debugger defaultView.
@@ -22,13 +23,17 @@ setUp
 tearDown
 	process isNil
 		ifFalse: 
-			[
-			process debugger ifNotNil: [:debugger | debugger view destroy. process debugger: nil].
+			[process debugger
+				ifNotNil: 
+					[:debugger |
+					debugger view destroy.
+					process debugger: nil].
 			process terminate.
 			process := nil].
 	Debugger
 		showWalkbacks: savedShowWalkbacks;
-		defaultView: savedView!
+		defaultView: savedView.
+	super tearDown!
 
 testNoShowWalkbacks
 	| start |

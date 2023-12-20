@@ -22,11 +22,13 @@ field: aString fromRow: aDBRow
 	^aDBRow at: aString!
 
 setUp
+	super setUp.
 	connection := self databaseResource newConnection.
 	self skipUnless: [connection notNil]!
 
 tearDown
-	connection ifNotNil: [:cnxn | cnxn close]!
+	connection ifNotNil: [:cnxn | cnxn close].
+	super tearDown!
 
 testCollect
 	| names rs |

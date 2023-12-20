@@ -52,6 +52,7 @@ queryCommand: aCommandQuery
 	^self class commandAnnotations queryCommand: aCommandQuery ofTarget: self!
 
 setUp
+	super setUp.
 	subclass := self class newAnonymousSubclass.
 	subclass2 := subclass newAnonymousSubclass.
 	subclass addSubclass: subclass2.

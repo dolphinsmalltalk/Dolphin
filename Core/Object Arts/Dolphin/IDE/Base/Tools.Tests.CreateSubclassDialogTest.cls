@@ -12,7 +12,10 @@ Tools.Tests.CreateSubclassDialogTest comment: ''!
 !Tools.Tests.CreateSubclassDialogTest methodsFor!
 
 tearDown
-	subject ifNotNil: [subject destroy].
+	subject
+		ifNotNil: 
+			[subject destroy.
+			subject := nil].
 	^super tearDown!
 
 testNameValidation

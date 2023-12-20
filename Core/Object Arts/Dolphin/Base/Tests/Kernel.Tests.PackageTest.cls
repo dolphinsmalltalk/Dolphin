@@ -256,6 +256,7 @@ loadTestPackage: aString
 
 setUp
 	| var |
+	super setUp.
 	var := Package classPool associationAt: 'CheckTimestamps'.
 	checkTimestamps := var value.
 	var value: true!
@@ -268,7 +269,8 @@ tearDown
 	#{Smalltalk.ScribbleTest} ifDefined: [:class | class removeFromSystem].
 	scribbleClass := #{Smalltalk.Scribble} value.
 	#(#looseA #looseC) do: [:each | scribbleClass removeSelector: each ifAbsent: nil].
-	#(#resource_Scribble_test) do: [:each | scribbleClass class removeSelector: each ifAbsent: nil]!
+	#(#resource_Scribble_test) do: [:each | scribbleClass class removeSelector: each ifAbsent: nil].
+	super tearDown!
 
 testForwardRefLoadPac
 	"#1720: Test loading and converting of old packages with forward reference view referereces"

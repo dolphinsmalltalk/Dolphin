@@ -27,6 +27,7 @@ assert: rng generates: anArray epsilon: aFloat
 						epsilon: aFloat)]!
 
 setUp
+	super setUp.
 	gen := Random seed: 112629!
 
 testCRT

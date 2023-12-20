@@ -38,6 +38,7 @@ newTestSubjectToModify: aClass
 		yourself!
 
 setUp
+	super setUp.
 	dirtiedClasses := false.
 	wasOAD := Smalltalk developmentSystem isOAD.
 	Smalltalk developmentSystem isOAD: false!

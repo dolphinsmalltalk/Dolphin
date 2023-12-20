@@ -15,6 +15,7 @@ onValueChanged
 	changed := true!
 
 setUp
+	super setUp.
 	startTime := Time fromString: '01:01:01'.
 	newTime := Time fromString: '23:59:59'.
 	value := ValueHolder new.
