@@ -626,12 +626,7 @@ onCloseRequested
 
 	self queryClose
 		ifTrue: 
-			["Ensure the window is repainted in case we popped up a dialog in queryClose,
-			but don't bother with re-layout as this may be expensive and we are going
-			away anyway."
-			flags := flags bitOr: LayoutValidMask.
-			self update.
-			Processor isActiveMain ifTrue: [self destroy] ifFalse: [[self destroy] postToInputQueue].
+			[Processor isActiveMain ifTrue: [self destroy] ifFalse: [[self destroy] postToInputQueue].
 			^true].
 	^false!
 
