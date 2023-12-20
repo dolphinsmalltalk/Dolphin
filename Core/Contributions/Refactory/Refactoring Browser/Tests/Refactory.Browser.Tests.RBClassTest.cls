@@ -27,6 +27,10 @@ setUp
 	classConstants: { ''ClassConstant1'' -> 1.23 }'.
 	newClass := model classNamed: #SomeClassName!
 
+tearDown
+	super tearDown.
+	model := objectClass := newClass := messageNodeClass := nil!
+
 testAllBehaviorsDo
 	"RBClass>>allBehaviorsDo: enumerates through the namespace hierarchy, so if we start from the model class for Root it will include all potential classes in the universe, not just those in the model environment. This will include model mirrors of real classes, and model only classes."
 
@@ -431,6 +435,7 @@ testWithAllSubclasses
 	self assert: all asArray equals: {newClass metaclass}! !
 !Refactory.Browser.Tests.RBClassTest categoriesForMethods!
 setUp!private!set up! !
+tearDown!public!running! !
 testAllBehaviorsDo!public!unit tests! !
 testAllClassVarNames!public!unit tests! !
 testAllImports!public!unit tests! !
