@@ -65,7 +65,7 @@ fullName
 fullNameFor: aString
 	"Private - Answer the full name  of a variable with the specified local identifier, assumed to be in this namespace. This will be a (potentially) dot-separated path string that is bindable from any top-level namespace, including Smalltalk."
 
-	^nil!
+	^aString!
 
 fullPath
 	^nil!
