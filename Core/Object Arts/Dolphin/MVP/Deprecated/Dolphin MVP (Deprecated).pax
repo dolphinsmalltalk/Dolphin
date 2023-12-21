@@ -742,10 +742,10 @@ asDword!converting!public! !
 !Presenter class methodsFor!
 
 addCommandQueryHandler: aSymbol
-	Notification deprecated.	"This mechanism is replaced by <commandQuerySelector: #queryBlah:> annotations, declared in the corresponding command methods. These are added to a query selector map automatically on package load."
-	queryCommandHandlers := queryCommandHandlers
+	Notification deprecated.	"This mechanism is replaced by <commandQuerySelector: #queryBlah:> annotations, declared in the corresponding command methods. These are added to a CommandQueryRegister automatically on package load."
+	legacyQueryCommandHandlers := legacyQueryCommandHandlers
 				ifNil: [{ aSymbol }]
-				ifNotNil: [queryCommandHandlers copyWith: aSymbol]!
+				ifNotNil: [legacyQueryCommandHandlers copyWith: aSymbol]!
 
 removeCommandQueryHandler: aSymbol
 	"Unregister an additional CommandQuery handler to reverse out a previous
@@ -753,7 +753,7 @@ removeCommandQueryHandler: aSymbol
 	uninstalling command handlers."
 
 	Notification deprecated.	"see #addCommandQueryHandler:"
-	queryCommandHandlers := queryCommandHandlers copyWithout: aSymbol! !
+	legacyQueryCommandHandlers := legacyQueryCommandHandlers copyWithout: aSymbol! !
 !Presenter class categoriesForMethods!
 addCommandQueryHandler:!accessing!public! !
 removeCommandQueryHandler:!accessing!public! !

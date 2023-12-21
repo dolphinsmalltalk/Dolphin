@@ -3,7 +3,7 @@ package := Package name: 'Dolphin MVP (Old Names)'.
 package paxVersion: 2.1;
 	basicComment: 'Dolphin Smalltalk Graphical User Interface framework (Pre-namespace Names).
 
-This package includes legacy aliases for MVP classes that have been renamed in Dolphin 7.2 following the addition of Namespaces.'.
+This package includes legacy aliases for MVP classes that have been renamed in Dolphin 8 following the addition of Namespaces.'.
 
 
 package setVariableNames: #(

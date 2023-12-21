@@ -4606,12 +4606,12 @@ punctuation: aStringOrNil
 
 queryToggleIndentationGuides: aCommandQuery
 	aCommandQuery
-		isEnabled: true;
+		beEnabled;
 		isChecked: self hasIndentationGuides!
 
 queryToggleLineEndings: aCommandQuery
 	aCommandQuery
-		isEnabled: true;
+		beEnabled;
 		isChecked: self hasVisibleLineEndings!
 
 queryToggleLineNumbers: aCommandQuery
@@ -4619,17 +4619,17 @@ queryToggleLineNumbers: aCommandQuery
 		ifNotNil: 
 			[:margin |
 			aCommandQuery
-				isEnabled: true;
+				beEnabled;
 				isChecked: margin width ~= 0]!
 
 queryToggleStyling: aCommandQuery
 	aCommandQuery
-		isEnabled: true;
+		beEnabled;
 		isChecked: self isStylingEnabled!
 
 queryToggleWhitespace: aCommandQuery
 	aCommandQuery
-		isEnabled: true;
+		beEnabled;
 		isChecked: self whitespaceVisibility ~~ #invisible!
 
 rangeOfIndicator: anIntegerOrSymbol at: positionInteger

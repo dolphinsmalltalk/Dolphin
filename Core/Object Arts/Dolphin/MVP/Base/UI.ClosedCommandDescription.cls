@@ -25,23 +25,22 @@ queryCommand: aCommandQuery
 	"Update the <CommandQuery> argument with status and target details about the 
 	receiver's own command. Answer whether the command query has been handled."
 
-	^queryBlock isNil 
-		ifTrue: 
-			[(self command class conformsToProtocol: #commandTarget) 
+	^queryBlock
+		ifNil: 
+			[(self command class conformsToProtocol: #commandTarget)
 				ifTrue: [self command queryCommand: aCommandQuery]
 				ifFalse: 
 					["If no query block and dumb command, such as a Symbol, enable if
 					the receiver was specified when this closed command was created."
-
-					self receiver 
+					self receiver
 						ifNil: [false]
 						ifNotNil: 
-							[:target | 
+							[:target |
 							aCommandQuery
-								isEnabled: true;
+								beEnabled;
 								receiver: target.
 							true]]]
-		ifFalse: 
+		ifNotNil: 
 			[queryBlock value: aCommandQuery.
 			"If the queryBlock has not set the receiver, then default to the pre-set receiver."
 			aCommandQuery receiver isNil ifTrue: [aCommandQuery receiver: self receiver].

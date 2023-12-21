@@ -24,6 +24,7 @@ chooseIcon
 	Icon choose ifNotNil: [:icon | imageModel value: icon]!
 
 clearIcon
+	<commandQuery: #hasImage>
 	imageModel value: nil!
 
 createComponents
@@ -42,6 +43,9 @@ createSchematicWiring
 		when: #inspecteeChanged
 		send: #onInspecteeChanged
 		to: self!
+
+hasImage
+	^imageModel value notNil!
 
 model: aCommandMenuItem
 	"Set the model associated with the receiver."
@@ -72,29 +76,17 @@ onViewOpened
 	cardsPresenter 
 		when: #currentCardChangedFrom:to:
 		send: #onCardChangedFrom:to:
-		to: self!
-
-queryCommand: aCommandQuery 
-	"Enters details about a potential command for the receiver into the <CommandQuery>
-	arugment."
-
-	| cmd |
-	cmd := aCommandQuery commandSymbol.
-	#clearIcon == cmd 
-		ifTrue: 
-			[aCommandQuery isEnabled: imageModel value notNil.
-			^true].
-	^super queryCommand: aCommandQuery ! !
+		to: self! !
 !Tools.MenuItemDialog categoriesForMethods!
-chooseIcon!commands!private! !
-clearIcon!commands!private! !
+chooseIcon!commands-actions!private! !
+clearIcon!commands-actions!private! !
 createComponents!public! !
 createSchematicWiring!initializing!public! !
+hasImage!commands-queries!public!testing! !
 model:!public! !
 onCardChangedFrom:to:!event handling!private! !
 onInspecteeChanged!event handling!private! !
 onViewOpened!event handling!public! !
-queryCommand:!public! !
 !
 
 !Tools.MenuItemDialog class methodsFor!

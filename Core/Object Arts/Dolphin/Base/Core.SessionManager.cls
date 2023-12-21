@@ -1109,6 +1109,9 @@ versionInfo
 
 	^VersionInfo forPath: (External.DynamicLinkLibrary moduleFileName: nil)!
 
+warning: aString
+	^Warning signal: aString!
+
 windowsDirectory
 	"Answer the path of the Windows directory on the host computer for the current session."
 
@@ -1258,6 +1261,7 @@ unregisterConsoleCtrlHandler!operations!private! !
 unregisterServer:!accessing!public! !
 userName!accessing!public! !
 versionInfo!accessing-version!public! !
+warning:!public! !
 windowsDirectory!accessing!public! !
 !
 

@@ -41,32 +41,20 @@ Core.Object
 !UI.Shell methodsFor!
 
 queryRedo: aCommandQuery
-	aCommandQuery beDisabled.
-	self hasCommandHistory
+	| command |
+	(self hasCommandHistory and: [commandHistory hasFuture]) ifFalse: [^self].
+	command := commandHistory next.
+	command canRedo
 		ifTrue: 
-			[| description |
-			description := ''.
-			commandHistory hasFuture
-				ifTrue: 
-					[| command |
-					command := commandHistory next.
-					command canRedo
-						ifTrue: 
-							[description := command description.
-							aCommandQuery beEnabled]].
-			aCommandQuery text: (aCommandQuery commandDescription menuText expandMacrosWith: description)]!
+			[aCommandQuery
+				beEnabled;
+				expandMenuTextWith: command description]!
 
 queryUndo: aCommandQuery
-	aCommandQuery beDisabled.
-	self hasCommandHistory
-		ifTrue: 
-			[| description |
-			description := commandHistory pastSize >= 0
-						ifTrue: 
-							[aCommandQuery beEnabled.
-							commandHistory current description]
-						ifFalse: [''].
-			aCommandQuery text: (aCommandQuery commandDescription menuText expandMacrosWith: description)]!
+	(self hasCommandHistory and: [commandHistory hasPast]) ifFalse: [^self].
+	aCommandQuery
+		beEnabled;
+		expandMenuTextWith: commandHistory current description!
 
 redo
 	"Redo the last command that is forward in the command history list. During the redo operation

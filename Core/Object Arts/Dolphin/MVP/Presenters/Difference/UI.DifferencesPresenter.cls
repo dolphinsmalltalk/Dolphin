@@ -143,36 +143,36 @@ parseWordsFrom: aString
 
 queryToggleIndentGuides: aCommandQuery
 	aCommandQuery
-		isEnabled: true;
+		beEnabled;
 		isChecked: beforePresenter view hasIndentationGuides!
 
 queryToggleLineNumberMargins: aCommandQuery
 	beforePresenter view lineNumberMargin
-		ifNil: [aCommandQuery isEnabled: false]
+		ifNil: [aCommandQuery beDisabled]
 		ifNotNil: 
 			[:margin |
 			aCommandQuery
-				isEnabled: true;
+				beEnabled;
 				isChecked: margin width ~= 0]!
 
 queryToggleSyntaxColoring: aCommandQuery
 	aCommandQuery
-		isEnabled: true;
+		beEnabled;
 		isChecked: beforePresenter view isStylingEnabled!
 
 queryToggleVisibleLineEndings: aCommandQuery
 	aCommandQuery
-		isEnabled: true;
+		beEnabled;
 		isChecked: beforePresenter view hasVisibleLineEndings!
 
 queryToggleVisibleWhitespace: aCommandQuery
 	aCommandQuery
-		isEnabled: true;
+		beEnabled;
 		isChecked: beforePresenter view whitespaceVisibility ~~ #invisible!
 
 queryToggleWrapping: aCommandQuery
 	aCommandQuery
-		isEnabled: true;
+		beEnabled;
 		isChecked: beforePresenter view wordWrap!
 
 reduce: anArray 

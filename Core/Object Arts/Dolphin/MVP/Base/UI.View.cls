@@ -5,7 +5,7 @@ Core.Object
 	instanceVariableNames: 'handle creationParent creationStyle presenter model backcolor preferredExtent flags contextMenu font events interactor'
 	classVariableNames: 'MessageMap NextId ViewClosedError WndClassAtom'
 	imports: #(#{OS.Win32Constants} #{OS.Win32Errors})
-	classInstanceVariableNames: 'theme commandQueries'
+	classInstanceVariableNames: 'theme'
 	classConstants: {
 			'CreateCenteredMask' -> 16r40.
 			'DragSourceMask' -> 16r4.
@@ -2241,12 +2241,13 @@ onAboutToCreate
 
 	^nil!
 
-onAboutToDisplayMenu: popup
+onAboutToDisplayMenu: aMenu
 	"The pop-up <Menu>, popup, is about to be displayed.
 	This is our opportunity to update it, e.g. to add/remove items."
 
-	self presenter trigger: #aboutToDisplayMenu: with: popup.
-	^0  "prevent default processing" !
+	self class commandAnnotations onAboutToDisplayMenu: aMenu for: self.
+	self presenter trigger: #aboutToDisplayMenu: with: aMenu.
+	^0	"prevent default processing"!
 
 onActionPerformed
 	"Handler for an action in the receiver. 
@@ -2596,12 +2597,19 @@ onSysKeyTyped: aKeyEvent
 onTipDetailsRequired: aNMTTDISPINFO 
 	self presenter trigger: #tipDetailsRequired: with: aNMTTDISPINFO!
 
-onTipTextRequired: tool
-	"Tool tip text is required for the <ToolbarItem>, tool.
-	This event is sent to the receiver if it is current <commandTarget>
-	for the command associated with the toolbar item."
+onTipTextRequired: aToolbarItem
+	"Tool tip text is required for the <ToolbarItem> argument."
 
-	^tool toolTipText!
+	"Historic override point, for backwards compatibility. New code should override #onTipTextRequired:query:, although often this is unnecessary now if the tip text is the same as the dynamic menu text for a command."
+
+	^nil!
+
+onTipTextRequired: aToolbarItem query: aCommandQuery
+	"Tool tip text is required for the <ToolbarItem> first argument, for the command with query details in the <CommandQuery> second argument.
+	This event is sent to the receiver if it is current <commandTarget> for the command associated with the toolbar item."
+
+	^(self onTipTextRequired: aToolbarItem)
+		ifNil: [aCommandQuery text ifNil: [aToolbarItem toolTipText]]!
 
 onViewClosed
 	"Handler for view destroy"
@@ -2866,27 +2874,12 @@ printOn: aStream
 propagateSettingsChange: aSettingsChangeEvent
 	self subViewsDo: [:each | each settingChanged: aSettingsChangeEvent]!
 
-queryCommand: aCommandQuery 
-	"Private - Enter details about a potential command for the receiver 
-	into the <CommandQuery>, query."
+queryCommand: aCommandQuery
+	"Enter details about a potential command for the receiver  into the <CommandQuery> argument."
 
-	(self queryCommandHandlers: aCommandQuery) ifTrue: [^true].
+	(self queryRegisteredCommands: aCommandQuery) ifTrue: [^true].
 	(aCommandQuery canPerformAgainst: self) ifTrue: [aCommandQuery beEnabled].
 	^false	"There was no specific enablement of the command at this level"!
-
-queryCommandHandlers: aCommandQuery
-	| class command |
-	class := self class.
-	command := aCommandQuery commandSymbol.
-	
-	[(class commandQueries lookup: command)
-		ifNotNil: 
-			[:handler |
-			"Unless the handler specifically returns false, assume the command query was handled and terminate the search"
-			(handler value: self value: aCommandQuery) == false ifFalse: [^true]].
-	class == ##(self)]
-			whileFalse: [class := class superclass].
-	^false!
 
 queryCommandRouteFor: action
 	"Private - Answer <CommandQuery> that indicates how the <commandDescription>, action,
@@ -2909,6 +2902,9 @@ queryMouseTracking
 	tme dwFlags: TME_QUERY.
 	tme hwndTrack: handle.
 	^(User32 trackMouseEvent: tme) ifTrue: [tme] ifFalse: [nil]!
+
+queryRegisteredCommands: aCommandQuery
+	^self class commandAnnotations queryCommand: aCommandQuery ofTarget: self!
 
 recreate
 	"Recreate the receiver if it is currently open. Useful for applying styles that are only
@@ -4892,6 +4888,7 @@ onSysKeyReleased:!event handling!public! !
 onSysKeyTyped:!event handling!public! !
 onTipDetailsRequired:!event handling!public! !
 onTipTextRequired:!event handling!public! !
+onTipTextRequired:query:!event handling!public! !
 onViewClosed!event handling!public! !
 onViewCreated!event handling!public! !
 onViewDestroyed!event handling!public! !
@@ -4928,11 +4925,11 @@ preTranslateMouseInput:!dispatching!public! !
 previousSiblingView!hierarchy!public!sub views! !
 printOn:!development!printing!public! !
 propagateSettingsChange:!event handling!private! !
-queryCommand:!commands-queries!private! !
-queryCommandHandlers:!commands-queries!private! !
+queryCommand:!commands-queries!public! !
 queryCommandRouteFor:!commands-queries!private! !
 queryContextMenu!menus!public! !
 queryMouseTracking!enquiries!private! !
+queryRegisteredCommands:!commands!private! !
 recreate!public!realizing/unrealizing! !
 recreateAround:!private!realizing/unrealizing! !
 rectangle!geometry!public! !
@@ -5153,16 +5150,6 @@ activeOrDesktop
 
 	^self activeHandle ifNotNil: [:hWnd | View fromHandle: hWnd] ifNil: [self desktop]!
 
-annotatedMethodRemoved: aCompiledMethod
-	"Private - An annotated method of the receiver has been removed. This is an opportunity to update any metadata that might be based on method annotations."
-
-	(aCompiledMethod hasAnnotation: #commandQuery:) ifTrue: [self resetCommandQueries]!
-
-annotationsUpdated: aCompilationResult
-	"Private - Annotations may have been added or removed in the receiver's methods. This is an opportunity to update any metadata that might be based on method annotations."
-
-	(CommandQuery validateQueriesIn: aCompilationResult) ifTrue: [self resetCommandQueries]!
-
 buildMessageMap
 	"Private - Initialize the map of Windows message numbers to the selectors of the low-level event handlers in the receiver.
 	N.B. Must not be stripped, as this is the only thing which prevents the handlers themselves from being stripped.
@@ -5247,8 +5234,8 @@ closeAll
 
 	^(self topLevelViews reject: [ :w | w close ]) isEmpty!
 
-commandQueries
-	^commandQueries ifNil: [commandQueries := CommandQuery findQueryHandlersIn: self]!
+commandAnnotations
+	^CommandAnnotationsRegister.Current annotationsFor: self!
 
 cursor
 	"Answers the default cursor to be used for the mouse pointer when over instances of the receiver.
@@ -5482,9 +5469,6 @@ reregisterClass
 		unregisterClass;
 		registerClass
 !
-
-resetCommandQueries
-	commandQueries := nil!
 
 resetTheme
 	theme := nil!
@@ -5757,12 +5741,10 @@ wndClassName
 active!accessing!public! !
 activeHandle!accessing!private! !
 activeOrDesktop!enquiries!public! !
-annotatedMethodRemoved:!private! !
-annotationsUpdated:!private! !
 buildMessageMap!constants!must not strip!private! !
 capture!accessing!public! !
 closeAll!operations!private! !
-commandQueries!accessing!private! !
+commandAnnotations!accessing!public! !
 cursor!accessing!public! !
 defaultGetImageBlock!adapters!constants!public! !
 defaultGetTextBlock!adapters!constants!public! !
@@ -5791,7 +5773,6 @@ registerMessage:!dispatching!public! !
 registerMessageMappings:!class initialization!public! !
 releaseCapture!operations!public! !
 reregisterClass!operations!private! !
-resetCommandQueries!initializing!private! !
 resetTheme!private!theming! !
 resource_Default_view!public!resources-views! !
 selectorForMessage:!dispatching!private! !

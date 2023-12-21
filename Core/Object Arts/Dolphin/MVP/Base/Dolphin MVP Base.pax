@@ -77,6 +77,8 @@ package setClassNames: #(
 	#{UI.ClosedCommandDescription}
 	#{UI.ColorEvent}
 	#{UI.Command}
+	#{UI.CommandAnnotations}
+	#{UI.CommandAnnotationsRegister}
 	#{UI.CommandDescription}
 	#{UI.CommandMenuItem}
 	#{UI.CommandPolicy}
@@ -1280,12 +1282,31 @@ Core.Object
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Object
+	subclass: #'UI.CommandAnnotations'
+	instanceVariableNames: 'targetClass commandQueries menuPopulators accelerators acceleratorKeys'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Object
+	subclass: #'UI.CommandAnnotationsRegister'
+	instanceVariableNames: 'register'
+	classVariableNames: 'Current'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Object
 	subclass: #'UI.CommandDescription'
 	instanceVariableNames: 'command description acceleratorKey flags image'
 	classVariableNames: 'CommandDescriptionRegistry CurrentId'
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: { 'DefaultMask' -> 16r1. 'ModalMask' -> 16r2. 'NotAbortableMask' -> 16r4 }!
+	classConstants: {
+			'DefaultMask' -> 16r1.
+			'ModalMask' -> 16r2.
+			'NotAbortableMask' -> 16r4.
+			'TextSubstitutionsMask' -> 16r8
+		}!
 Core.Object
 	subclass: #'UI.CommandPolicy'
 	instanceVariableNames: 'source path'
@@ -1297,9 +1318,9 @@ Core.Object
 	subclass: #'UI.CommandQuery'
 	instanceVariableNames: 'commandDescription receiver source text flags image validationResult'
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.MENUITEMINFOW private})
 	classInstanceVariableNames: ''
-	classConstants: { 'CheckedMask' -> 16r2. 'DefaultMask' -> 16r4. 'EnabledMask' -> 16r1 }!
+	classConstants: {}!
 Core.Object
 	subclass: #'UI.DisplayMonitor'
 	instanceVariableNames: 'handle info devices'
@@ -1411,7 +1432,7 @@ Core.Object
 	subclass: #'UI.MenuItem'
 	instanceVariableNames: 'flags'
 	classVariableNames: 'Dividers'
-	imports: #(#{OS.Win32Constants})
+	imports: #(#{OS.MENUITEMINFOW private})
 	classInstanceVariableNames: ''
 	classConstants: { 'StringSeparator' -> $/. 'StylesMask' -> 16rFFFFF }!
 Core.Object
@@ -1419,14 +1440,14 @@ Core.Object
 	instanceVariableNames: 'model view parentPresenter events subPresenters names helpId'
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})
-	classInstanceVariableNames: 'acceleratorKeyAnnotations commandQueries queryCommandHandlers'
+	classInstanceVariableNames: 'legacyQueryCommandHandlers'
 	classConstants: {}!
 Core.Object
 	subclass: #'UI.View'
 	instanceVariableNames: 'handle creationParent creationStyle presenter model backcolor preferredExtent flags contextMenu font events interactor'
 	classVariableNames: 'MessageMap NextId ViewClosedError WndClassAtom'
 	imports: #(#{OS.Win32Constants} #{OS.Win32Errors})
-	classInstanceVariableNames: 'theme commandQueries'
+	classInstanceVariableNames: 'theme'
 	classConstants: {
 			'CreateCenteredMask' -> 16r40.
 			'DragSourceMask' -> 16r4.
@@ -1602,9 +1623,9 @@ Graphics.GraphicsTool
 	classConstants: { 'KeySeparator' -> $+ }!
 Graphics.GraphicsTool
 	subclass: #'UI.Menu'
-	instanceVariableNames: 'items text name flags image imageManager id _reserved1 _reserved2'
+	instanceVariableNames: 'items text name flags image imageManager id lastQuery _reserved2'
 	classVariableNames: 'DrawStateCallbackDescriptor'
-	imports: #()
+	imports: #(#{OS.MENUITEMINFOW private} #{OS.MENUINFO private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Graphics.SystemFont
@@ -1728,7 +1749,7 @@ UI.LinearLayout
 	classConstants: {}!
 UI.MenuItem
 	subclass: #'UI.CommandMenuItem'
-	instanceVariableNames: 'commandDescription image _reserved'
+	instanceVariableNames: 'commandDescription lastQuery _reserved'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -2037,7 +2058,19 @@ OS.SizedStructure
 			'_OffsetOf_dwMenuData' -> 16r18.
 			'_OffsetOf_dwStyle' -> 16r8.
 			'_OffsetOf_fMask' -> 16r4.
-			'_OffsetOf_hbrBack' -> 16r10
+			'_OffsetOf_hbrBack' -> 16r10.
+			'MIM_APPLYTOSUBMENUS' -> 16r80000000.
+			'MIM_BACKGROUND' -> 16r2.
+			'MIM_HELPID' -> 16r4.
+			'MIM_MAXHEIGHT' -> 16r1.
+			'MIM_MENUDATA' -> 16r8.
+			'MIM_STYLE' -> 16r10.
+			'MNS_AUTODISMISS' -> 16r10000000.
+			'MNS_CHECKORBMP' -> 16r4000000.
+			'MNS_DRAGDROP' -> 16r20000000.
+			'MNS_MODELESS' -> 16r40000000.
+			'MNS_NOCHECK' -> 16r80000000.
+			'MNS_NOTIFYBYPOS' -> 16r8000000
 		}!
 OS.SizedStructure
 	subclass: #'OS.MENUITEMINFOW'
@@ -2057,7 +2090,44 @@ OS.SizedStructure
 			'_OffsetOf_hbmpItem' -> 16r2C.
 			'_OffsetOf_hbmpUnchecked' -> 16r1C.
 			'_OffsetOf_hSubMenu' -> 16r14.
-			'_OffsetOf_wID' -> 16r10
+			'_OffsetOf_wID' -> 16r10.
+			'MF_APPEND' -> 16r100.
+			'MF_BYCOMMAND' -> 16r0.
+			'MF_BYPOSITION' -> 16r400.
+			'MF_CHANGE' -> 16r80.
+			'MF_DELETE' -> 16r200.
+			'MF_HELP' -> 16r4000.
+			'MF_INSERT' -> 16r0.
+			'MF_MOUSESELECT' -> 16r8000.
+			'MF_POPUP' -> 16r10.
+			'MF_REMOVE' -> 16r1000.
+			'MF_SYSMENU' -> 16r2000.
+			'MF_USECHECKBITMAPS' -> 16r200.
+			'MFS_CHECKED' -> 16r8.
+			'MFS_DEFAULT' -> 16r1000.
+			'MFS_DISABLED' -> 16r3.
+			'MFS_ENABLED' -> 16r0.
+			'MFS_HILITE' -> 16r80.
+			'MFS_UNCHECKED' -> 16r0.
+			'MFS_UNHILITE' -> 16r0.
+			'MFT_BITMAP' -> 16r4.
+			'MFT_MENUBARBREAK' -> 16r20.
+			'MFT_MENUBREAK' -> 16r40.
+			'MFT_OWNERDRAW' -> 16r100.
+			'MFT_RADIOCHECK' -> 16r200.
+			'MFT_RIGHTJUSTIFY' -> 16r4000.
+			'MFT_RIGHTORDER' -> 16r2000.
+			'MFT_SEPARATOR' -> 16r800.
+			'MFT_STRING' -> 16r0.
+			'MIIM_BITMAP' -> 16r80.
+			'MIIM_CHECKMARKS' -> 16r8.
+			'MIIM_DATA' -> 16r20.
+			'MIIM_FTYPE' -> 16r100.
+			'MIIM_ID' -> 16r2.
+			'MIIM_STATE' -> 16r1.
+			'MIIM_STRING' -> 16r40.
+			'MIIM_SUBMENU' -> 16r4.
+			'MIIM_TYPE' -> 16r10
 		}!
 OS.SizedStructure
 	subclass: #'OS.MONITORINFOEXW'
@@ -2226,13 +2296,13 @@ icon!constants!public! !
 
 !Core.MessageSend methodsFor!
 
-queryCommand: query
-	"Private - Enters status and target details about the receiver's own command into the 
-	<CommandQuery>, query.
-	Implementation Note: As the receiver represents a fully closed command, we can
-	skip all further routing (the CommandDescription itself is queried first by default)."
+queryCommand: aCommandQuery
+	"Private - Enters status and target details about the receiver's own command into the <CommandQuery> argument.
+	Implementation Note: As the receiver represents a fully closed command, we can	skip all further routing (the CommandDescription itself is queried first by default)."
 
-	query isEnabled: true; receiver: self receiver.
+	aCommandQuery
+		beEnabled;
+		receiver: self receiver.
 	^true! !
 !Core.MessageSend categoriesForMethods!
 queryCommand:!commands!private! !

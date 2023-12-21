@@ -359,11 +359,11 @@ preStripScript: aString
 
 	preStripScript := (aString notNil and: [aString notEmpty]) ifTrue: [aString]!
 
-queryCommand: query 
+queryCommand: query
 	"Private - Enter details about a potential command for the receiver 
 	into the <CommandQuery>, query."
 
-	(query canPerformAgainst: self) ifTrue: [query isEnabled: true].
+	(query canPerformAgainst: self) ifTrue: [query beEnabled].
 	^false	"There was no specific enablement of the command at this level"!
 
 retainInstVarNames: aBoolean
@@ -620,9 +620,10 @@ stbVersion!binary filing!development!public! !
 deploy
 	"Open a new Application Deployment Wizard on the image stripper of the current package."
 
+	<commandQuery: #hasSinglePackage>
 	ApplicationDeploymentWizard showModalOn: (self singlePackage aspectValue: #imageStripper)! !
 !Tools.PackageSelector categoriesForMethods!
-deploy!commands!public! !
+deploy!commands-actions!public! !
 !
 
 "End of package definition"!

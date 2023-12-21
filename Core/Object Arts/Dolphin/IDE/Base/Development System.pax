@@ -1585,7 +1585,7 @@ UI.Dialog
 	classConstants: {}!
 Tools.MenuItemDialog
 	subclass: #'Tools.CommandMenuItemDialog'
-	instanceVariableNames: 'acceleratorPresenter isRadioButtonStylePresenter isDefaultPresenter isModalPresenter'
+	instanceVariableNames: 'acceleratorPresenter isRadioButtonStylePresenter isDefaultPresenter isModalPresenter hasSubstitutionsPresenter'
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''

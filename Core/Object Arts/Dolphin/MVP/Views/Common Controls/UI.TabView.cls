@@ -399,15 +399,6 @@ preTranslateKeyboardInput: aMSG
 			^true].
 	^false!
 
-queryCommand: aCommandQuery 
-	"Private - Update aCommandQuery to indicates how a command would be processed.
-	if sent to the receiver."
-
-	"Note: TabViews must respond to the CommandTarget protocol in order to address issue #1841 where CardContainers
-	were not receiving #queryCommand: messages when their owned TabViews were right clicked. Hence the addition of
-	the dummy implementation here."
-	!
-
 refreshContents
 	"Refresh the receiver's contents to match the contents collection"
 
@@ -671,7 +662,6 @@ onMouseHovering:!constants!public! !
 onMouseMoved:!event handling!public! !
 onViewCreated!event handling!public! !
 preTranslateKeyboardInput:!public! !
-queryCommand:!private! !
 refreshContents!public!updating! !
 rows!geometry!public! !
 selectionByIndex!public!selection! !

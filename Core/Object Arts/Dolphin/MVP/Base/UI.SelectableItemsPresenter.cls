@@ -52,11 +52,7 @@ onSelectionChanging: aSelectionChangingEvent
 	self view onSelectionChanging: aSelectionChangingEvent!
 
 queryDeleteIt: aCommandQuery
-	self deleteItCommand
-		ifNil: 
-			["Not handled at this level, but continue searching the chain"
-			aCommandQuery text: aCommandQuery menuText << $…]
-		ifNotNil: [:selector | self queryContextCommand: aCommandQuery as: selector]!
+	self deleteItCommand ifNotNil: [:selector | self queryContextCommand: aCommandQuery as: selector]!
 
 resetForItem: anObject
 	"Private - Try to ensure that the receiver is set to display anObject if possible"
@@ -151,7 +147,7 @@ selections: aCollection ifAbsent: exceptionHandler
 			self selectableItems selections: aCollection ifAbsent: exceptionHandler]! !
 !UI.SelectableItemsPresenter categoriesForMethods!
 clearSelection!commands-actions!public! !
-deleteItCommand!helpers!private! !
+deleteItCommand!commands-mappings!private! !
 ensureSelectionVisible!public!selection! !
 hasSelection!public!selection! !
 hasSingleSelection!public!selection! !

@@ -1996,37 +1996,37 @@ primaryColumn
 
 queryExtraLargeIconMode: aCommandQuery
 	aCommandQuery
-		isEnabled: true;
+		beEnabled;
 		isChecked: self viewMode == #extraLargeIcons!
 
 queryLargeIconMode: aCommandQuery
 	aCommandQuery
-		isEnabled: true;
+		beEnabled;
 		isChecked: self viewMode == #largeIcons!
 
 queryListMode: aCommandQuery
 	aCommandQuery
-		isEnabled: true;
+		beEnabled;
 		isChecked: self viewMode == #list!
 
 queryReportMode: aCommandQuery
 	aCommandQuery
-		isEnabled: true;
+		beEnabled;
 		isChecked: self viewMode == #report!
 
 querySmallIconMode: aCommandQuery
 	aCommandQuery
-		isEnabled: true;
+		beEnabled;
 		isChecked: self viewMode == #smallIcons!
 
 queryThumbnailsMode: aCommandQuery
 	aCommandQuery
-		isEnabled: true;
+		beEnabled;
 		isChecked: self viewMode == #thumbnails!
 
 queryTileIconMode: aCommandQuery
 	aCommandQuery
-		isEnabled: true;
+		beEnabled;
 		isChecked: self viewMode == #tileIcons!
 
 refreshContents

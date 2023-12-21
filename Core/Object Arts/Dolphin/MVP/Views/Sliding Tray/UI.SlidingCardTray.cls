@@ -261,10 +261,10 @@ pinStateId
 
 queryTogglePin: aCommandQuery
 	slider
-		ifNil: [aCommandQuery isEnabled: false]
+		ifNil: [aCommandQuery beDisabled]
 		ifNotNil: 
 			[aCommandQuery
-				isEnabled: true;
+				beEnabled;
 				isChecked: slider isPinned]!
 
 setSlider: aSlideyInneyOuteyThing

@@ -74,6 +74,11 @@ method: aCompiledMethod rawTextMap: textArray rawTempsMap: tempsArray flags: anI
 	rawTempsMap := tempsArray.
 	flags := anInteger!
 
+methodClass
+	"Answer the class of the new method, if any."
+
+	^method ifNotNil: [method methodClass]!
+
 oldMethod
 	^oldMethod!
 
@@ -91,6 +96,11 @@ rawTempsMap: anObject
 
 rawTextMap: anObject
 	rawTextMap := anObject!
+
+selector
+	"Answer the selector of the new method, if any."
+
+	^method ifNotNil: [method selector]!
 
 tempsAtIp: anInteger
 	"Private - Answer the temps map entry for the scope that most closely encloses the specified
@@ -121,12 +131,14 @@ isNew!accessing!public! !
 method!accessing!public! !
 method:!accessing!private! !
 method:rawTextMap:rawTempsMap:flags:!initializing!private! !
+methodClass!accessing!public! !
 oldMethod!accessing!public! !
 oldMethod:!accessing!public! !
 package!accessing!public! !
 package:!accessing!public! !
 rawTempsMap:!accessing!private! !
 rawTextMap:!accessing!private! !
+selector!accessing!public! !
 tempsAtIp:!accessing!development!private! !
 tempsMap!accessing!development!public! !
 textMap!accessing!development!public! !

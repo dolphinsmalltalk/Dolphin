@@ -6,7 +6,12 @@ Core.Object
 	classVariableNames: 'CommandDescriptionRegistry CurrentId'
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: { 'DefaultMask' -> 16r1. 'ModalMask' -> 16r2. 'NotAbortableMask' -> 16r4 }!
+	classConstants: {
+			'DefaultMask' -> 16r1.
+			'ModalMask' -> 16r2.
+			'NotAbortableMask' -> 16r4.
+			'TextSubstitutionsMask' -> 16r8
+		}!
 UI.CommandDescription guid: (Core.GUID fromString: '{87b4c469-026e-11d3-9fd7-00a0cc3e4a32}')!
 UI.CommandDescription comment: 'A CommandDescription acts as the fundamental source for all MVP user interface commands. An instance of this class holds the command itself, a textual description of the command''s function and, optionally, an accelerator key that may trigger the command action when used within a menu. The command can be a <Message>, <Symbol> or, indeed, any object that responds to the <commandMessage> protocol. For most commands, symbols are prevalent but messages can sometimes be more convenient, especially if the command is to carry parameters, such as in dynamically constructed menus (e.g. the browser history list).
 
@@ -59,13 +64,11 @@ acceleratorKeyString: keys
 
 	self acceleratorKey: (AcceleratorTable keyCodeFromInvariantString: keys)!
 
-canPerformAgainst: destination
-	"Answer whether the command described by the receiver can be 
-	executed against the hypothetical <commandTarget>, destination."
+canPerformAgainst: aCommandTarget
+	"Answer whether the command described by the receiver can be  executed against the hypothetical <commandTarget> argument."
 
 	| selector |
-	^(selector := self commandSymbol) isNil or: [destination respondsTo: selector]
-!
+	^(selector := self commandSymbol) isNil or: [aCommandTarget respondsTo: selector]!
 
 command
 	"Answers the <commandMessage> forwarded to a command target when
@@ -90,6 +93,11 @@ commandSymbol
 
 	^self command ifNotNil: [:cmd | cmd asSymbol]!
 
+defaultMenuText
+	"Answer the default menu text (i.e. the text that appears in a menu) for the receiver, with any insertions expanded with nil substitutions."
+
+	^self hasTextSubstitutions ifTrue: [self expandedMenuText: #()] ifFalse: [self menuText]!
+
 description
 	"Answers a short <readableString> description of the receiver's command. Uses the string
 	representation of the command itself if no explicit description has been provided."
@@ -107,10 +115,33 @@ displayOn: aPuttableStream
 
 	self description displayOn: aPuttableStream!
 
+expandedMenuText: aSequenceableCollection
+	"Answer the menu text (i.e. the text that appears in a menu) for the receiver, with insertions expanded from the argument, if any."
+
+	| stream |
+	stream := String writeStream.
+	self description expandMacrosWithArguments: aSequenceableCollection on: stream.
+	self printAcceleratorOn: stream.
+	^stream contents!
+
 hasAcceleratorKey
 	"Answer whether the receiver defines an accelerator key."
 
 	^acceleratorKey ~= 0!
+
+hasTextSubstitutions
+	"Answer whether the receiver's command text has substitution macros that need to be expanded to compute dynamic menu text."
+
+	^flags allMask: TextSubstitutionsMask!
+
+hasTextSubstitutions: aBoolean
+	"Set whether the receiver's command text has substitution macros that need to be expanded to compute dynamic menu text.
+	If this is set, then the default menu text of the item will be expanded with with nils for the substitutions, e.g.
+		'Foo <p:bar>' expandMacros => 'Foo bar'
+	It is expected that command query handlers that enabled the command will provide a meaningful substitution according to context.
+	"
+
+	flags := flags mask: TextSubstitutionsMask set: aBoolean!
 
 id
 	"Answer a unique <integer> id for the receiver's command obtained from the command registry."
@@ -157,13 +188,13 @@ isModalCommand: aBoolean
 	flags := flags mask: ModalMask set: aBoolean!
 
 menuText
-	"Private - Answer the menu text (i.e. the text that appears in a menu) for the receiver."
+	"Private - Answer the menu text (i.e. the text that appears in a menu, including any accelerator key) for the receiver."
 
-	| menuText |
-	menuText := self description.
-	self hasAcceleratorKey
-		ifTrue: [menuText := menuText , String tab , self acceleratorKeyDisplayString].
-	^menuText!
+	| stream |
+	stream := String writeStream.
+	stream nextPutAll: self description.
+	self printAcceleratorOn: stream.
+	^stream contents!
 
 messages
 	"Answer a <collection> of the messages sent by the receiver."
@@ -176,6 +207,12 @@ performAgainst: anObject
 
 	^self command forwardTo: anObject!
 
+printAcceleratorOn: aPuttableStream
+	acceleratorKey ~~ 0
+		ifTrue: 
+			[aPuttableStream tab.
+			AcceleratorTable printKeyCode: acceleratorKey on: aPuttableStream]!
+
 printOn: aStream
 	"Append a representation of the receiver to the <puttableStream> target that an 
 	developer would want to see."
@@ -186,15 +223,13 @@ printOn: aStream
 		display: self;
 		nextPut: $)!
 
-queryCommand: query
-	"Private - Enters status and target details about the receiver's own command into the 
-	<CommandQuery>, query.
-	Implementation Note: If the receiver represents a fully closed command, then we can
-	skip all further routing (the CommandDescription itself is queried first by default),
-	but we leave this decision to the command object itself if it appears capable."
+queryCommand: aCommandQuery
+	"Private - Enters status and target details about the receiver's own command into the <CommandQuery> argument."
+
+	"Implementation Note: If the receiver represents a fully closed command, then we can skip all further routing (the CommandDescription itself is queried first by default), but we delegate this decision to the command object itself iff it implements the <commandTarget> protocol."
 
 	(self command class conformsToProtocol: #commandTarget)
-		ifTrue: [^self command queryCommand: query].
+		ifTrue: [^self command queryCommand: aCommandQuery].
 	^false!
 
 registerAcceleratorKeyIn: accelerators 
@@ -206,22 +241,26 @@ registerAcceleratorKeyIn: accelerators
 toolTipText
 	"Answer a <readableString> suitable for displaying in a Tool-tip control."
 
-	^self description! !
+	^self hasTextSubstitutions ifTrue: [self description expandMacros] ifFalse: [self description]! !
 !UI.CommandDescription categoriesForMethods!
 acceleratorKey!accessing!public! !
 acceleratorKey:!accessing!public! !
 acceleratorKeyDisplayString!accessing!public! !
 acceleratorKeyString!accessing!public! !
 acceleratorKeyString:!accessing!public! !
-canPerformAgainst:!commands!public!testing! !
+canPerformAgainst:!commands-queries!public!testing! !
 command!accessing!public! !
 command:!accessing!public! !
 commandString!accessing!public! !
 commandSymbol!accessing!public! !
+defaultMenuText!accessing!public! !
 description!accessing!public! !
 description:!accessing!public! !
 displayOn:!printing!public! !
+expandedMenuText:!accessing!public! !
 hasAcceleratorKey!public!testing! !
+hasTextSubstitutions!public!testing! !
+hasTextSubstitutions:!accessing!public! !
 id!accessing!public! !
 image!accessing!public! !
 image:!accessing!public! !
@@ -229,12 +268,13 @@ initialize!initializing!private! !
 isAbortable!public!testing! !
 isAbortable:!accessing!public! !
 isModalCommand!public!testing! !
-isModalCommand:!public!testing! !
+isModalCommand:!accessing!public! !
 menuText!accessing!private! !
 messages!enquiries!public! !
 performAgainst:!operations!private! !
+printAcceleratorOn:!accessing!public! !
 printOn:!development!printing!public! !
-queryCommand:!commands!private! !
+queryCommand:!commands-queries!private! !
 registerAcceleratorKeyIn:!operations!private! !
 toolTipText!accessing!public! !
 !

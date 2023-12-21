@@ -21,7 +21,7 @@ Instance Variables:
 addCommand
 	"Append a new empty command to the current menu."
 
-	self addItem: self newCommandItem.!
+	self addItem: self newCommandItem!
 
 addItem: menuItem
 	"Private - Add menuItem after the position of the current selection."
@@ -44,7 +44,7 @@ addItem: menuItem view: menuView index: index
 addMenu
 	"Apend a new menu to the current menu."
 
-	self addItem: self newMenu.!
+	self addItem: self newMenu!
 
 addSeparator
 	"Append a new Separator divider to the current menu."
@@ -67,6 +67,7 @@ arena
 clearSelection
 	"Removes the current selections from the receiver"
 
+	<commandQuery: #hasSelection>
 	| index selectionView |
 	selectionView := self selectionView.
 	index := selectionView selectionByIndex.
@@ -100,13 +101,16 @@ commandItemClass
 copySelection
 	"Copies the primary selection to the clipboard"
 
+	<commandQuery: #hasSelection>
 	Clipboard current setObject: self selection!
 
 cutSelection
 	"Cuts the current selections to the clipboard"
 
-	self copySelection; clearSelection
-!
+	<commandQuery: #hasSelection>
+	self
+		copySelection;
+		clearSelection!
 
 dragCoordinator
 	"Private - Answer the drag object used to synchronize writing to the receiver's view."
@@ -158,6 +162,19 @@ hasClipboard
 		ifNil: [false]
 		ifNotNil: [:class | (class includesBehavior: Menu) or: [class includesBehavior: MenuItem]]!
 
+hasItemSelected
+	| item |
+	item := self selection.
+	^item notNil and: [item isKindOf: self commandItemClass]!
+
+hasMenuSelected
+	| item |
+	item := self selection.
+	^item notNil and: [item isKindOf: self menuClass]!
+
+hasSelection
+	^self selection notNil!
+
 initialize
 	"Private - Initialize the state of the receiver."
 
@@ -187,8 +204,9 @@ model: aSubjectModel
 !
 
 mutateIntoCommand
-	"Private - Mutate the selected item into a <CommandMenuItem>."
+	"Mutate the selected item into a <CommandMenuItem>."
 
+	<commandQuery: #hasMenuSelected>
 	self mutateSelection: 
 			[:item |
 			| proceed |
@@ -198,17 +216,18 @@ mutateIntoCommand
 					[(MessageBox new
 						caption: 'Mutate Menu into Command…';
 						headline: 'Discard menu sub-items?';
-						confirm: 'The menu <1p> has sub-items that will be lost.<n><n>Are you sure you want to contine?'
+						confirm: 'The menu <p> has sub-items that will be lost.<n><n>Are you sure you want to contine?'
 									<< item description)
 							ifFalse: [proceed := false]].
 			proceed ifTrue: [self commandItemClass commandDescription: item commandDescription]]!
 
 mutateIntoMenu
-	"Private - Mutate the selected item into a <Menu>."
+	"Mutate the selected item into a <Menu>."
 
+	<commandQuery: #hasItemSelected>
 	self mutateSelection: 
-			[:item | 
-			(self newMenu)
+			[:item |
+			self newMenu
 				name: item commandDescription commandSymbol;
 				text: item description;
 				yourself]!
@@ -387,9 +406,9 @@ openSelectedSubmenuOf: aView
 		ifTrue: [self openMenu: selected at: (aView originForSubmenu: aView selectionByIndex)]!
 
 pasteClipboard
-	"Pastes clipboard contents into the primary selection. We can assume that the clipboard
-	contains a single view to paste"
+	"Pastes clipboard contents into the primary selection."
 
+	<commandQuery: #hasClipboard>
 	| selectionView index |
 	selectionView := self selectionView.
 	index := selectionView selectionByIndex.
@@ -401,35 +420,11 @@ pasteClipboard
 properties
 	"Open a dialog to allow editing of the selected menu item."
 
+	<commandQuery: #hasSelection>
 	| menuView |
 	self selection edit.
 	menuView := self selectionView.
 	self update: menuView do: [self generateAcceleratorConflicts]!
-
-queryCommand: query 
-	"Private - Enters details about a potential command for the receiver into the 
-	<CommandQuery>,  query."
-
-	| command |
-	command := query commandSymbol.
-	command == #pasteClipboard 
-		ifTrue: 
-			[query isEnabled: self hasClipboard.
-			^true].
-	command == #mutateIntoMenu 
-		ifTrue: 
-			[| item |
-			item := self selection.
-			query isEnabled: (item notNil and: [item isKindOf: self commandItemClass]).
-			^true].
-	command == #mutateIntoCommand
-		ifTrue: 
-			[| item |
-			item := self selection.
-			query isEnabled: (item notNil and: [item isKindOf: self menuClass]).
-			^true].
-
-	^super queryCommand: query!
 
 removeItemView: menuView index: index 
 	"Private - Removes the current selections from the receiver"
@@ -493,30 +488,33 @@ update: aMenuComposerView do: operation
 	aMenuComposerView refreshContents.
 	self openSelectedSubmenuOf: aMenuComposerView! !
 !Tools.MenuComposer categoriesForMethods!
-addCommand!commands!public! !
+addCommand!commands-actions!public! !
 addItem:!adding!private! !
 addItem:view:index:!adding!private! !
-addMenu!commands!public! !
-addSeparator!commands!public! !
-apply!commands!public! !
+addMenu!commands-actions!public! !
+addSeparator!commands-actions!public! !
+apply!commands-actions!public! !
 arena!accessing!public! !
-clearSelection!commands!public! !
+clearSelection!commands-actions!public! !
 closeSubmenuViewsOf:!operations!private! !
 collectAcceleratorsOf:into:!helpers!private! !
-commandItemClass!commands!private! !
-copySelection!commands!public! !
-cutSelection!commands!public! !
+commandItemClass!constants!private! !
+copySelection!commands-actions!public! !
+cutSelection!commands-actions!public! !
 dragCoordinator!constants!drag & drop!private! !
 ensureMinimumMenuContents:!helpers!private! !
 generateAcceleratorConflicts!helpers!private! !
 generateAcceleratorConflicts:!helpers!private! !
-hasClipboard!private!testing! !
+hasClipboard!commands-queries!private!testing! !
+hasItemSelected!commands-queries!private! !
+hasMenuSelected!commands-queries!private! !
+hasSelection!commands-queries!private!selection!testing! !
 initialize!initializing!private! !
 menu!accessing!public! !
 menuClass!constants!private! !
 model:!accessing!public! !
-mutateIntoCommand!commands!private! !
-mutateIntoMenu!commands!private! !
+mutateIntoCommand!commands-actions!public! !
+mutateIntoMenu!commands-actions!public! !
 mutateSelection:!helpers!private! !
 newCommandItem!helpers!private! !
 newMenu!helpers!private! !
@@ -527,9 +525,8 @@ onMenuTrack:!event handling!private! !
 onViewOpened!adding!private! !
 openMenu:at:!operations!private! !
 openSelectedSubmenuOf:!operations!private! !
-pasteClipboard!commands!public! !
-properties!commands!public! !
-queryCommand:!commands!private! !
+pasteClipboard!commands-actions!public! !
+properties!commands-actions!public! !
 removeItemView:index:!private!removing! !
 selection!public!selection! !
 selectionView!private!selection! !

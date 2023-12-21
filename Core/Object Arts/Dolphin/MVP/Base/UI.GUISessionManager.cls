@@ -34,7 +34,7 @@ allocConsole
 			User32
 				deleteMenu: hMenu
 				uPosition: SC_CLOSE
-				uFlags: MF_BYCOMMAND]!
+				uFlags: MENUITEMINFOW.MF_BYCOMMAND]!
 
 basicShutdown
 	"Private - Perform basic system shutdown operations, just prior to the VM putting

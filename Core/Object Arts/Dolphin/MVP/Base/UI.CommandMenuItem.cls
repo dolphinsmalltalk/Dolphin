@@ -2,7 +2,7 @@
 
 UI.MenuItem
 	subclass: #'UI.CommandMenuItem'
-	instanceVariableNames: 'commandDescription image _reserved'
+	instanceVariableNames: 'commandDescription lastQuery _reserved'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -68,6 +68,12 @@ commandString
 
 	^self commandDescription commandString!
 
+defaultImage
+	^commandDescription image!
+
+defaultText
+	^commandDescription defaultMenuText!
+
 description
 	"Answers a short <readableString> description of the receiver's command."
 
@@ -83,6 +89,12 @@ displayOn: aPuttableStream
 
 	self description displayOn: aPuttableStream!
 
+hasTextSubstitutions
+	^self commandDescription hasTextSubstitutions!
+
+hasTextSubstitutions: aBoolean
+	self commandDescription hasTextSubstitutions: aBoolean!
+
 id
 	"Answers the menu item identifier for the receiver. This is the command
 	id that Windows uses to identify the command."
@@ -92,12 +104,11 @@ id
 image
 	"Answer the <Image> currently associated with this menu item."
 
-	^image ifNil: [self commandDescription image]!
+	^(lastQuery ifNotNil: [lastQuery image]) ifNil: [self defaultImage]!
 
 image: anImageOrNil 
-	"Sets the image associoated with the receiver's command to anImageOrNil."
+	"Sets the image associated with the receiver's command to anImageOrNil."
 
-	image := nil.
 	^self commandDescription image: anImageOrNil!
 
 isAbortable: aBoolean
@@ -138,6 +149,16 @@ itemWithId: anInteger
 
 	^anInteger = self id ifTrue: [self]!
 
+lastQuery
+	^lastQuery
+		ifNil: 
+			[lastQuery := UI.CommandQuery new
+						beEnabled;
+						yourself]!
+
+lastQuery: aCommandQuery
+	lastQuery := aCommandQuery!
+
 populateItemInfo: aMENUITEMINFO
 	"Private - Copy the receiver's item information into the <MENUITEMINFOW> argument."
 
@@ -149,7 +170,7 @@ postCopy
 	commandDescription := commandDescription copy.
 	^self!
 
-queryAlong: aCommandPolicy 
+queryAlong: aCommandPolicy
 	"Answer a <CommandQuery> reflecting the current state of the receiver's command for the
 	specified <commandPolicy>. In this case we want to preconfigure the query with some static
 	settings (actually only whether the command is the default at this time)."
@@ -158,7 +179,6 @@ queryAlong: aCommandPolicy
 	query := aCommandPolicy newCommandQuery: self commandDescription.
 	query isDefault: self isDefault.
 	aCommandPolicy queryCommand: query.
-	image := query image.
 	^query!
 
 registerAcceleratorKeyIn: anAcceleratorTable
@@ -168,16 +188,17 @@ registerAcceleratorKeyIn: anAcceleratorTable
 	self commandDescription registerAcceleratorKeyIn: anAcceleratorTable.
 !
 
-stbSaveOn: anSTBOutFiler 
+stbSaveOn: anSTBOutFiler
 	"Output the receiver to anSTBOutFiler. We don't want the cached images to be saved."
 
-	anSTBOutFiler override: image with: nil.
-	super stbSaveOn: anSTBOutFiler!
+	| savedLastQuery |
+	savedLastQuery := lastQuery.
+	[super stbSaveOn: anSTBOutFiler] ensure: [lastQuery := savedLastQuery]!
 
 text
 	"Answer the menu text (i.e. the text that appears in the menu) for the receiver."
 
-	^self commandDescription menuText!
+	^(lastQuery ifNotNil: [lastQuery text]) ifNil: [self defaultText]!
 
 toStrings
 	^String writeStream
@@ -197,9 +218,13 @@ command:!accessing!public! !
 commandDescription!accessing!private! !
 commandDescription:!accessing!private! !
 commandString!accessing!public! !
+defaultImage!accessing!private! !
+defaultText!accessing!private! !
 description!accessing!public! !
 description:!accessing!public! !
 displayOn:!displaying!public! !
+hasTextSubstitutions!public!testing! !
+hasTextSubstitutions:!accessing!public! !
 id!accessing!public! !
 image!accessing!public! !
 image:!accessing!public! !
@@ -211,6 +236,8 @@ isModalCommand:!accessing!public! !
 isRadioButtonStyle!accessing!public! !
 isRadioButtonStyle:!accessing!public! !
 itemWithId:!accessing!public! !
+lastQuery!accessing!private! !
+lastQuery:!accessing!private! !
 populateItemInfo:!private!realizing/unrealizing! !
 postCopy!copying!public! !
 queryAlong:!operations!public! !
@@ -221,6 +248,7 @@ toStrings!public! !
 !
 
 UI.CommandMenuItem methodProtocol: #commandSource attributes: #(#readOnly) selectors: #(#commandDescription)!
+UI.CommandMenuItem methodProtocol: #menuItem attributes: #(#readOnly) selectors: #(#acceleratorKey #command #hasSubmenu #id #image #insertIntoMenu:at:info: #items #menuFromHandle: #queryAlong: #registerAcceleratorKeyIn: #text)!
 
 !UI.CommandMenuItem class methodsFor!
 
@@ -254,7 +282,7 @@ new
 stbConvertFrom: anSTBClassFormat
 	"Convert from earlier version models.
 		1: 'flags' instance variable pushed up.
-		2: 'image' instance variable added to CommandMenuItem subclass"
+		2: 'image' instance variable and spare added"
 
 	| ver |
 	ver := anSTBClassFormat version.

@@ -4,7 +4,7 @@ Core.Object
 	subclass: #'UI.MenuItem'
 	instanceVariableNames: 'flags'
 	classVariableNames: 'Dividers'
-	imports: #(#{OS.Win32Constants})
+	imports: #(#{OS.MENUITEMINFOW private})
 	classInstanceVariableNames: ''
 	classConstants: { 'StringSeparator' -> $/. 'StylesMask' -> 16rFFFFF }!
 UI.MenuItem guid: (Core.GUID fromString: '{87b4c49d-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -149,12 +149,6 @@ printOn: aStream
 		display: self;
 		nextPut: $)!
 
-queryAlong: aCommandPolicy 
-	"Answer a <CommandQuery> reflecting the current state of the receiver's command for the
-	specified <commandPolicy>."
-
-	^aCommandPolicy query: self commandDescription!
-
 registerAcceleratorKeyIn: anAcceleratorTable
 	"Register the accelerator key associated with this menu item, if
 	there is one, in anAcceleratorTable."!
@@ -205,15 +199,12 @@ menuFromHandle:!accessing!public! !
 name!accessing!public! !
 populateItemInfo:!private!realizing/unrealizing! !
 printOn:!printing!public! !
-queryAlong:!operations!public! !
 registerAcceleratorKeyIn:!menus!public! !
 styleFlags!accessing!private! !
 styleFlags:!accessing!not an aspect!private! !
 text!accessing!public! !
 toStrings!converting!public! !
 !
-
-UI.MenuItem methodProtocol: #menuItem attributes: #(#readOnly) selectors: #(#acceleratorKey #command #hasSubmenu #id #image #insertIntoMenu:at:info: #items #menuFromHandle: #queryAlong: #registerAcceleratorKeyIn: #text)!
 
 !UI.MenuItem class methodsFor!
 

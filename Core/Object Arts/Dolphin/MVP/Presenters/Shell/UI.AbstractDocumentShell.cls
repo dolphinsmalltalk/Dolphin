@@ -33,6 +33,21 @@ basicCaption
 
 	^''!
 
+buildRecentFilesMenu: aMenyu
+	aMenyu clear.
+	self getRecentList do: 
+			[:each |
+			| nameToDisplay |
+			nameToDisplay := each.
+			self hasFilename
+				ifTrue: 
+					[nameToDisplay := (FolderRelativeFileLocator basePath: (File splitPathFrom: self filename))
+								relativePathTo: each].
+			aMenyu addCommand: (Message selector: #openOn: argument: each) description: nameToDisplay].
+	aMenyu
+		addSeparator;
+		addCommand: (Message selector: #fileClearRecentList) description: 'Clear Recent List'!
+
 canSave
 	"Answer whether the document is in a valid state and can be saved. Subclasses to override as
 	appropriate."
@@ -93,13 +108,15 @@ fileOpen
 	^self openOn: openFilename!
 
 fileOpenRecentMenu
-	<commandQuery: #hasRecentFiles>!
+	<commandQuery: #hasRecentFiles>
+	<menuPopulator: #buildRecentFilesMenu:>
+	!
 
 fileRevert
 	"Revert the contents of the receiver's document to those in the
 	associated file"
 
-	<queryCommand: #hasFilename>
+	<commandQuery: #hasFilename>
 	self isModified
 		ifTrue: 
 			[(MessageBox new
@@ -162,26 +179,6 @@ isText
 	to determine how the document data should be written and read"
 
 	^false!
-
-onAboutToDisplayMenu: fileRecentMenu
-	"Private - The system is about to display the <Menu>, popup, this is our chance
-	to fiddle with it and display the recent files list if appropriate."
-
-	super onAboutToDisplayMenu: fileRecentMenu.
-	fileRecentMenu name == #fileOpenRecentMenu ifFalse: [^self].
-	fileRecentMenu clear.
-	self getRecentList do: 
-			[:each |
-			| nameToDisplay |
-			nameToDisplay := each.
-			self hasFilename
-				ifTrue: 
-					[nameToDisplay := (FolderRelativeFileLocator basePath: (File splitPathFrom: self filename))
-								relativePathTo: each].
-			fileRecentMenu addCommand: (Message selector: #openOn: argument: each) description: nameToDisplay].
-	fileRecentMenu
-		addSeparator;
-		addCommand: (Message selector: #fileClearRecentList) description: 'Clear Recent List'!
 
 onCloseRequested: boolValueHolder
 	"Private - A request to close the view onto the receiver as occurred.
@@ -325,6 +322,7 @@ updateCaption
 !UI.AbstractDocumentShell categoriesForMethods!
 addToRecentList:!public! !
 basicCaption!accessing!private! !
+buildRecentFilesMenu:!private! !
 canSave!commands-queries!public! !
 canSaveAs!commands-queries!public! !
 canSaveState!private!saved state! !
@@ -346,7 +344,6 @@ hasRecentFiles!private!testing! !
 isModified!public!testing! !
 isModified:!modes!not an aspect!public! !
 isText!public!testing! !
-onAboutToDisplayMenu:!event handling!private! !
 onCloseRequested:!event handling!private! !
 onPromptToSaveChanges:!private!testing! !
 openOn:!public! !

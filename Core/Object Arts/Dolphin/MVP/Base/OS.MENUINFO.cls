@@ -13,7 +13,19 @@ OS.SizedStructure
 			'_OffsetOf_dwMenuData' -> 16r18.
 			'_OffsetOf_dwStyle' -> 16r8.
 			'_OffsetOf_fMask' -> 16r4.
-			'_OffsetOf_hbrBack' -> 16r10
+			'_OffsetOf_hbrBack' -> 16r10.
+			'MIM_APPLYTOSUBMENUS' -> 16r80000000.
+			'MIM_BACKGROUND' -> 16r2.
+			'MIM_HELPID' -> 16r4.
+			'MIM_MAXHEIGHT' -> 16r1.
+			'MIM_MENUDATA' -> 16r8.
+			'MIM_STYLE' -> 16r10.
+			'MNS_AUTODISMISS' -> 16r10000000.
+			'MNS_CHECKORBMP' -> 16r4000000.
+			'MNS_DRAGDROP' -> 16r20000000.
+			'MNS_MODELESS' -> 16r40000000.
+			'MNS_NOCHECK' -> 16r80000000.
+			'MNS_NOTIFYBYPOS' -> 16r8000000
 		}!
 OS.MENUINFO guid: (Core.GUID fromString: '{d51f8f53-401e-4f12-9712-28458e3c48ca}')!
 OS.MENUINFO comment: 'MENUINFO is an <ExternalStructure> class to represent the Win32 structure of the same name. The MENUINFO structure suprises by containing information about a menu.'!
