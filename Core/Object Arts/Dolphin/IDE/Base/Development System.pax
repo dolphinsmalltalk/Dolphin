@@ -307,6 +307,7 @@ package setMethodNames: #(
 	#(#{External.ExternalArray} #publishedKeyedAspectsBatchSize)
 	#(#{External.ExternalArray class} #newInstanceAspect:class:)
 	#(#{External.ExternalArray class} #shouldOverrideGetFieldNames)
+	#(#{External.ExternalMethod} #isSimpleSelfSend:)
 	#(#{External.ExternalMethod class} #publishedAspectsOfInstances)
 	#(#{External.Field} #autoGenCategories)
 	#(#{External.Field} #autoGenComment)
@@ -3685,6 +3686,16 @@ newInstanceAspect:class:!adapters!private! !
 shouldOverrideGetFieldNames!compiling!private! !
 !
 
+!External.ExternalMethod methodsFor!
+
+isSimpleSelfSend: aSymbol
+	"Private - Answer whether the receiver is a method that just sends the specified selector (which must be zero-argument) to self. Note that this does not work for special selectors such as #class, #new, etc, that have specific bytecode encodings."
+
+	^false! !
+!External.ExternalMethod categoriesForMethods!
+isSimpleSelfSend:!private!testing! !
+!
+
 !External.ExternalMethod class methodsFor!
 
 publishedAspectsOfInstances
@@ -4956,7 +4967,7 @@ isSimpleSelfSend: aSymbol
 
 	^(byteCodes == ##(self packByteCodes: { ShortSendSelfZeroArgs. ReturnFromMessage } asByteArray)
 		or: [byteCodes == ##(self packByteCodes: { ShortSendSelfZeroArgs. PopReturnSelf } asByteArray)])
-			and: [(self basicAt: 1) == aSymbol and: [self extraIndex == Normal]]!
+			and: [(self basicAt: 1) == aSymbol and: [(header bitShift: PrimitiveIndexShift) == 0]]!
 
 mapIp: anInteger toDebug: debugCompiledMethod
 	| i interp first map debugMap debugDispatcher debugFirst |

@@ -8,6 +8,7 @@ Core.Object
 	classInstanceVariableNames: ''
 	classConstants: {
 			'Normal' -> 16r0.
+			'PrimitiveIndexShift' -> -16r17.
 			'PrivateMask' -> 16r1.
 			'ReturnFalse' -> 16r3.
 			'ReturnInstanceVariable' -> 16r6.
@@ -239,14 +240,15 @@ extraIndex
 	"Private - Answer the 'extra' index of the receiver. This is the primitive index
 	See class comment for further details."
 
-	^(header bitShift: -23) bitAnd: 255!
+	^(header bitShift: PrimitiveIndexShift) bitAnd: 255!
 
 extraIndex: anInteger
 	"Private - Set the extraIndex in the method header - used as the primitive index."
 
 	"The header value must be a SmallInteger, but holds a 31-bit value so may be negative - asStackPointer is not well named, but ensures that the full 31-bits can be held in the SmallInteger range."
 
-	header := ((header bitAnd: 16r7FFFFF) bitOr: ((anInteger bitAnd: 255) bitShift: 23)) asStackPointer!
+	header := ((header bitAnd: 16r7FFFFF)
+				bitOr: ((anInteger bitAnd: 255) bitShift: ##(-1 * PrimitiveIndexShift))) asStackPointer!
 
 fullBindingFor: aString
 	"Answer a variable binding for the named variable in the scope of this method, and failing that in the receiver's environment. If there is no such variable, then answer nil."

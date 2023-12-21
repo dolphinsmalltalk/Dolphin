@@ -2487,6 +2487,7 @@ Core.Object
 	classInstanceVariableNames: ''
 	classConstants: {
 			'Normal' -> 16r0.
+			'PrimitiveIndexShift' -> -16r17.
 			'PrivateMask' -> 16r1.
 			'ReturnFalse' -> 16r3.
 			'ReturnInstanceVariable' -> 16r6.
