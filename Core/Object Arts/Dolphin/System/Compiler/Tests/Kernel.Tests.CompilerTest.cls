@@ -29,18 +29,34 @@ compilationWarningClass
 	^CompilerWarningNotification!
 
 compileExpression: aString 
-	^self compileExpression: aString in: nil!
+	^self shouldnt: [self compileExpression: aString in: nil] raise: Compiler notificationClass!
+
+compileExpression: aString expectingWarning: anInteger
+	^self compileExpression: aString expectingWarningMatching: [:ex | ex errorCode = anInteger]!
+
+compileExpression: aString expectingWarningMatching: aMonadicValuable
+	| result warnings |
+	warnings := OrderedCollection new: 1.
+	result := [self compileExpression: aString in: nil] on: self compilationWarningClass
+				do: 
+					[:ex |
+					warnings addLast: ex.
+					ex resume].
+	self assert: (aMonadicValuable value: warnings single).
+	^result!
 
 compileExpression: aString in: aClass
-	| result |
-	self shouldnt: 
-			[result := Compiler
-						compileExpression: aString
-						in: aClass
-						environment: nil
-						flags: defaultCompileFlags]
-		raise: self compilationErrorClass.
-	^result!
+	^
+	[Compiler
+		compileExpression: aString
+		in: aClass
+		environment: nil
+		flags: defaultCompileFlags]
+			on: self compilationErrorClass
+			do: [:ex | self fail: 'Unexpected compilation error: <p>' << ex]!
+
+compileExpressionIgnoringWarnings: aString
+	^[self compileExpression: aString in: nil] on: self compilationWarningClass do: [:ex | ex resume]!
 
 compileMethod: aString in: aClass
 	^Compiler
@@ -71,8 +87,11 @@ evaluateExpression: aString
 getTestMethod: aSymbol
 	| oldMethod result method |
 	oldMethod := DolphinCompilerTestMethods compiledMethodAt: aSymbol.
-	self shouldnt: [result := self compileMethod: oldMethod getSource in: DolphinCompilerTestMethods]
-		raise: self compilationErrorClass.
+	result := [self compileMethod: oldMethod getSource in: DolphinCompilerTestMethods]
+				on: self compilationErrorClass
+				do: [:ex | self fail: 'Unexpected exception: <p>' << ex]
+				on: self compilationWarningClass
+				do: [:ex | ex resume].
 	method := result method.
 	method selector: aSymbol.
 	method
@@ -452,7 +471,7 @@ testDecrementPushTempOptimisation
 	self assert: disasm equals: expected.
 	self assert: (expr value: nil) equals: 1.
 	expr := (self
-				compileExpression: '| t1 t2 t3 t4 t5 t6 t7 j | t1 := t2 := t3 := t4 := t5 := t6 := t7 := 1. 5 to: 1 by: -1 do: [:i | j := i]. j')
+				compileExpressionIgnoringWarnings: '| t1 t2 t3 t4 t5 t6 t7 j | t1 := t2 := t3 := t4 := t5 := t6 := t7 := 1. 5 to: 1 by: -1 do: [:i | j := i]. j')
 					method.
 	disasm := expr disassembly.
 	expected := 'Normal, 0 args, 9 stack temps, <1d> literals
@@ -518,7 +537,7 @@ testDecrementTempOptimisation
 	self assert: disasm equals: expected.
 	self assert: (expr value: nil) equals: 0.
 	expr := (self
-				compileExpression: '| t1 t2 t3 t4 t5 t6 t7 t8 i | t1 := t2 := t3 := t4 := t5 := t6 := t7 := t8 := 1. i := 5. [i < 1] whileFalse: [i := i - 1]. i')
+				compileExpressionIgnoringWarnings: '| t1 t2 t3 t4 t5 t6 t7 t8 i | t1 := t2 := t3 := t4 := t5 := t6 := t7 := t8 := 1. i := 5. [i < 1] whileFalse: [i := i - 1]. i')
 					method.
 	disasm := expr disassembly.
 	expected := 'Normal, 0 args, 9 stack temps, <1d> literals
@@ -1233,15 +1252,16 @@ testOptimizedLoopReadBeforeWritten
 	| expected expr actual |
 	expected := OrderedCollection new.
 	(1 to: 5) do: 
-			[:i | 
+			[:i |
 			| a |
 			expected add: a displayString , i displayString.
 			a := i].
-	expr := (self 
-				compileExpression: '| r | r := OrderedCollection new. 1 to: 5 do: [:i | | a | r add: a displayString, i displayString. a := i]. r') 
-					method.
+	expr := (self
+				compileExpression: '| r | r := OrderedCollection new. 1 to: 5 do: [:i | | a | r add: a displayString, i displayString. a := i]. r'
+				expectingWarning: CWarnReadBeforeWritten) method.
 	actual := expr value.
-	self skip: 'Results of actual block evaluation in a loop and optimized loop should be the same - any	read-before-written locals must be reinitialized to nil on each iteration'.
+	self
+		skip: 'Results of actual block evaluation in a loop and optimized loop should be the same - any	read-before-written locals must be reinitialized to nil on each iteration'.
 	self assert: actual equals: expected!
 
 testPopReturn
@@ -1609,7 +1629,7 @@ testTempPairing
 	t8 := 8. t9 := 9. t10 := 10. t11 := 11. t12 := 12. t13 := 13. t14 := 14. t15 := 15. t16 := 16. '.
 
 	"short push + short push"
-	method := (self compileExpression: prefix , ' t6 - t7') method.
+	method := (self compileExpressionIgnoringWarnings: prefix , ' t6 - t7') method.
 	pairs := method byteCodeSegments select: [:each | each first = PushTempPair].
 	self assert: pairs size equals: 1.
 	pair := pairs first.
@@ -1617,7 +1637,7 @@ testTempPairing
 	self assert: (method value: nil withArguments: #()) equals: 6 - 7.
 
 	"short push + long push"
-	method := (self compileExpression: prefix , ' t7 - t8') method.
+	method := (self compileExpressionIgnoringWarnings: prefix , ' t7 - t8') method.
 	pairs := method byteCodeSegments select: [:each | each first = PushTempPair].
 	self assert: pairs size equals: 1.
 	pair := pairs first.
@@ -1625,7 +1645,7 @@ testTempPairing
 	self assert: (method value: nil withArguments: #()) equals: 7 - 8.
 
 	"long push + short push"
-	method := (self compileExpression: prefix , ' t8 - t7') method.
+	method := (self compileExpressionIgnoringWarnings: prefix , ' t8 - t7') method.
 	pairs := method byteCodeSegments select: [:each | each first = PushTempPair].
 	self assert: pairs size equals: 1.
 	pair := pairs first.
@@ -1633,7 +1653,7 @@ testTempPairing
 	self assert: (method value: nil withArguments: #()) equals: 8 - 7.
 
 	"long push + long push"
-	method := (self compileExpression: prefix , ' t8 - t10') method.
+	method := (self compileExpressionIgnoringWarnings: prefix , ' t8 - t10') method.
 	pairs := method byteCodeSegments select: [:each | each first = PushTempPair].
 	self assert: pairs size equals: 1.
 	pair := pairs first.
@@ -1641,25 +1661,25 @@ testTempPairing
 	self assert: (method value: nil withArguments: #()) equals: 8 - 10.
 
 	"short + long (out of range)"
-	method := (self compileExpression: prefix , ' t7 - t16') method.
+	method := (self compileExpressionIgnoringWarnings: prefix , ' t7 - t16') method.
 	pairs := method byteCodeSegments select: [:each | each first = PushTempPair].
 	self assert: pairs isEmpty.
 	self assert: (method value: nil withArguments: #()) equals: 7 - 16.
 
 	"long + long (out of range)"
-	method := (self compileExpression: prefix , ' t8 - t16') method.
+	method := (self compileExpressionIgnoringWarnings: prefix , ' t8 - t16') method.
 	pairs := method byteCodeSegments select: [:each | each first = PushTempPair].
 	self assert: pairs isEmpty.
 	self assert: (method value: nil withArguments: #()) equals: 8 - 16.
 
 	"long (out of range) + short"
-	method := (self compileExpression: prefix , ' t16 - t7') method.
+	method := (self compileExpressionIgnoringWarnings: prefix , ' t16 - t7') method.
 	pairs := method byteCodeSegments select: [:each | each first = PushTempPair].
 	self assert: pairs isEmpty.
 	self assert: (method value: nil withArguments: #()) equals: 16 - 7.
 
 	"long (out of range) + long"
-	method := (self compileExpression: prefix , ' t16 - t8') method.
+	method := (self compileExpressionIgnoringWarnings: prefix , ' t16 - t8') method.
 	pairs := method byteCodeSegments select: [:each | each first = PushTempPair].
 	self assert: pairs isEmpty.
 	self assert: (method value: nil withArguments: #()) equals: 16 - 8!
@@ -1697,10 +1717,13 @@ testTextMapsExhaustive
 	"Check that the release and debug text maps match for every method in the system .... with a
 	couple of exceptions... ahem"
 
-	<knownSlowTest>
 	"Take 20+ seconds to run, which add another 30% to the test runtime"
+
+	<knownSlowTest>
 	<skipIf: #isCiBuild>
-	self knownTextMapIssues not methodsDo: [:each | self verifyTextMapsOf: each]!
+	[self knownTextMapIssues not methodsDo: [:each | self verifyTextMapsOf: each]]
+		on: self compilationWarningClass
+		do: [:ex | ex resume]!
 
 testTextMapsOfCleanBlocks
 	#('[:a|a > 5 ifTrue: [''Many''] ifFalse: [a printString]]' '[1]' '[]')
@@ -1709,7 +1732,7 @@ testTextMapsOfCleanBlocks
 testTimesRepeat
 	"This is erroneous, but compiler does not detect that, just looks for literal zero arg block, which is OK I think"
 
-	| result method src warnings |
+	| result method src |
 	result := self compileExpression: '5 timesRepeat: []'.
 	method := result method.
 	self assert: method literals last equals: #timesRepeat:.
@@ -1717,9 +1740,7 @@ testTimesRepeat
 	self deny: method needsContext.
 	self deny: (method byteCodeSegments anySatisfy: [:each | each first = BlockCopy]).
 	self assert: (method value: nil withArguments: #()) equals: 5.
-	self
-		shouldnt: [result := self compileExpression: '| a | a := 0. 10 + (5 timesRepeat: [a := a + 1]). a']
-		raise: self compilationWarningClass.
+	result := self compileExpression: '| a | a := 0. 10 + (5 timesRepeat: [a := a + 1]). a'.
 	method := result method.
 	self denyIsNil: method.
 	self deny: method needsContext.
@@ -1728,17 +1749,11 @@ testTimesRepeat
 
 	"Test case which cannot be inlined"
 	src := '| aBlock i | i := 0. aBlock := [i := i + 1]. 5 timesRepeat: aBlock. i.'.
-	warnings := OrderedCollection new.
-	[result := self compileExpression: src] on: self compilationWarningClass
-		do: 
-			[:ex |
-			warnings add: ex.
-			ex resume].
-	self
-		assert: (warnings anySatisfy: 
+	result := self compileExpression: src
+				expectingWarningMatching: 
 					[:each |
 					each errorCode = CWarnExpectNiladicBlockArg
-						and: [(src copyFrom: each range start to: each range stop) = 'timesRepeat:']]).
+						and: [(src copyFrom: each range start to: each range stop) = 'timesRepeat:']].
 	method := result method.
 	self denyIsNil: method.
 	self assert: method needsContext.
@@ -1746,8 +1761,7 @@ testTimesRepeat
 	self assert: (method value: nil withArguments: #()) equals: 5.
 
 	"Test 0 iterations, which compiler can remove (should come down to just a Return Zero, or at least return literal constant zero"
-	self shouldnt: [result := self compileExpression: '0 timesRepeat: [Sound bell]']
-		raise: self compilationWarningClass.
+	result := self compileExpression: '0 timesRepeat: [Sound bell]'.
 	method := result method.
 	self denyIsNil: method.
 	self assert: method isPacked.
@@ -1759,8 +1773,7 @@ testTimesRepeat
 	self assert: (method value: nil withArguments: #()) equals: 0.
 
 	"Test 0 iterations, which compiler can remove (should come down to just a Return Zero, or at least return literal constant zero"
-	self shouldnt: [result := self compileExpression: '-1 timesRepeat: [Sound bell]']
-		raise: self compilationWarningClass.
+	result := self compileExpression: '-1 timesRepeat: [Sound bell]'.
 	method := result method.
 	self denyIsNil: method.
 	self assert: method isPacked.
@@ -1789,8 +1802,8 @@ testToByDo
 								expandMacrosWith: i).
 			method := result method.
 			literals := method literals.
-			self assert: (literals copyFrom: 1 to: 2) equals: {OrderedCollection binding. #add:}.
-			self assert: (literals copyFrom: 3) asSet equals: #(new #to:by:do:) asSet.
+			self assert: (literals copyFrom: 1 to: 2) equals: { OrderedCollection binding. #add: }.
+			self assert: (literals copyFrom: 3) asSet equals: #(#new #to:by:do:) asSet.
 			self denyIsNil: method.
 			self deny: method needsContext.
 			self assert: (method value: nil withArguments: #()) equals: (i to: 2) asOrderedCollection.
@@ -1802,13 +1815,11 @@ testToByDo
 			self deny: method needsContext.
 			self assert: (method value: nil withArguments: #()) equals: (i to: 1 by: -1) asOrderedCollection].
 	src := '| aBlock i | i := 0. aBlock := [:each | i := i + each]. 1 to: 5 by: 2 do: aBlock. i'.
-	self
-		should: [result := self compileExpression: src]
-		raise: self compilationWarningClass
-		matching: 
-			[:ex |
-			ex errorCode = CWarnExpectMonadicBlockArg
-				and: [(src copyFrom: ex range start to: ex range stop) = 'aBlock']]!
+	result := self compileExpression: src
+				expectingWarningMatching: 
+					[:ex |
+					ex errorCode = CWarnExpectMonadicBlockArg
+						and: [(src copyFrom: ex range start to: ex range stop) = 'aBlock']]!
 
 testToByDoWithFloatSteps
 	{ 1 to: 2 by: 0.5. 1 to: 0 by: -0.5 } do: 
@@ -1843,13 +1854,7 @@ testWhileFalse
 	self assert: (method value: nil withArguments: #()) equals: 11.
 
 	"Test case which cannot be inlined"
-	result := 
-			[self compileExpression: '| i block | i := 0. block := [i := i + 1. i > 10]. block whileFalse. i']
-					on: self compilationWarningClass
-					do: 
-						[:ex |
-						self assert: ex errorCode equals: CWarnExpectNiladicBlockReceiver.
-						ex resume].
+	result := self compileExpression: '| i block | i := 0. block := [i := i + 1. i > 10]. block whileFalse. i'  expectingWarning: CWarnExpectNiladicBlockReceiver.
 	method := result method.
 	self denyIsNil: method.
 	self assert: method needsContext.
@@ -1869,13 +1874,9 @@ testWhileTrue
 	self assert: (method value: nil withArguments: #()) equals: 11.
 
 	"Test case which cannot be inlined"
-	result := 
-			[self compileExpression: '| i block | i := 0. block := [i := i + 1. i <= 10]. block whileTrue. i']
-					on: self compilationWarningClass
-					do: 
-						[:ex |
-						self assert: ex errorCode equals: CWarnExpectNiladicBlockReceiver.
-						ex resume].
+	result := self
+				compileExpression: '| i block | i := 0. block := [i := i + 1. i <= 10]. block whileTrue. i'
+				expectingWarning: CWarnExpectNiladicBlockReceiver.
 	method := result method.
 	self denyIsNil: method.
 	self assert: method needsContext.
@@ -2052,7 +2053,10 @@ checkCompileError:range:code:line:source:!helpers!private! !
 compilationErrorClass!constants!private! !
 compilationWarningClass!constants!private! !
 compileExpression:!helpers!private! !
+compileExpression:expectingWarning:!helpers!private! !
+compileExpression:expectingWarningMatching:!helpers!private! !
 compileExpression:in:!helpers!private! !
+compileExpressionIgnoringWarnings:!helpers!private! !
 compileMethod:in:!helpers!private! !
 debugCompileResultFor:!helpers!private! !
 defaultCompileFlags!helpers!private! !

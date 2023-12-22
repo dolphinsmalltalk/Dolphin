@@ -208,13 +208,13 @@ shouldnt: aNiladicValuable description: aStringOrValuable
 	self deny: aNiladicValuable value description: aStringOrValuable!
 
 shouldnt: aNiladicValuable raise: anExceptionSelector
-	self
+	^self
 		shouldnt: aNiladicValuable
 		raise: anExceptionSelector
 		description: 'Unexpected exception: <1p>'!
 
 shouldnt: aNiladicValuable raise: anExceptionSelector description: aStringOrValuable
-	[aNiladicValuable value]
+	^[aNiladicValuable value]
 		on: anExceptionSelector
 		do: 
 			[:ex |
