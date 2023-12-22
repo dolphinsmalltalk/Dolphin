@@ -71,6 +71,12 @@ logNotifications
 notify: aNotification
 	notifications add: aNotification!
 
+processorDescription
+	^OS.AdvApi32
+		regGetString: OS.WinRegConstants.HKEY_LOCAL_MACHINE
+		key: 'HARDWARE\Description\System\CentralProcessor\0'
+		value: 'ProcessorNameString'!
+
 startingCase: aTestCase
 	self emitTimestamp.
 	stream
@@ -84,6 +90,8 @@ startingRun: aTestSuite
 		print: DateAndTime now;
 		nextPutAll: ' in locale ';
 		print: Locale default code;
+		nextPutAll: ' on ';
+		nextPutAll: self processorDescription;
 		cr;
 		flush!
 
@@ -149,6 +157,7 @@ initializedResource:in:!logging!public! !
 initializingResource:!logging!public! !
 logNotifications!logging!public! !
 notify:!logging!public! !
+processorDescription!helpers!private! !
 startingCase:!logging!public! !
 startingRun:!logging!public! !
 stream:!accessing!private! !
