@@ -77,15 +77,16 @@ closeChangesFile
 closeSourceAt: anInteger
 	"Private - Closes the source FileStream SourceFiles at: anInteger and nil it out."
 
-	(SourceFiles at: anInteger) notNil ifTrue: [
-		(SourceFiles at: anInteger) close.
-		SourceFiles at: anInteger put: nil ].
-!
+	(SourceFiles at: anInteger)
+		ifNotNil: 
+			[:file |
+			file close.
+			SourceFiles at: anInteger put: nil]!
 
 closeSources
 	"Private - Closes the changes and the sources files."
 
-	self closeSourcesFile; closeChangesFile!
+	1 to: SourceFiles size do: [:i | self closeSourceAt: i]!
 
 closeSourcesFile
 	"Private - Close the sources FileStream."
@@ -297,7 +298,7 @@ mutex: anObject
 onExit
 	"Private - The system is about to exit, close the source files."
 
-	SourceFiles do: [:f | f notNil ifTrue: [f close]]
+	self closeSources
 !
 
 openChangesFile: filePath
