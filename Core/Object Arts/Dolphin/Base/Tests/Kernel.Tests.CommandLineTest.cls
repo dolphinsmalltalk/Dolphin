@@ -254,7 +254,10 @@ testBlockRequiredArgumentPresent
 
 testEmptyArguments
 	| commandLine |
-	commandLine := CommandLine argv: { self dolphinLauncherExe. self dproImageName. ''. '-a'. 'bb'. '' }.
+	commandLine := (CommandLine
+				argv: { self dolphinLauncherExe. self dproImageName. ''. '-a'. 'bb'. '' })
+				addOption: $a;
+				yourself.
 	self assert: commandLine arguments equals: { self dproImageName. ''. 'bb'. '' }!
 
 testLongAmbiguousOption
