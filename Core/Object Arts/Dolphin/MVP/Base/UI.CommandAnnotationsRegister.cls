@@ -11,11 +11,12 @@ UI.CommandAnnotationsRegister guid: (Core.GUID fromString: '{e5ddba4d-9de4-4c48-
 UI.CommandAnnotationsRegister comment: ''!
 !UI.CommandAnnotationsRegister methodsFor!
 
+addAnnotationsFor: aClass
+	^(aClass conformsToProtocol: #commandTarget)
+		ifTrue: [register at: aClass put: (CommandAnnotations targetClass: aClass)]!
+
 annotationsFor: aClass
-	^(register lookup: aClass)
-		ifNil: 
-			[(aClass conformsToProtocol: #commandTarget)
-				ifTrue: [register at: aClass put: (CommandAnnotations targetClass: aClass)]]!
+	^(register lookup: aClass) ifNil: [self addAnnotationsFor: aClass]!
 
 initialize
 	register := IdentityDictionary new.
@@ -53,12 +54,15 @@ onMethodRemoved: aCompiledMethod
 			annotations onMethodRemoved: aCompiledMethod]!
 
 onMethodUpdated: aCompilationResult
-	(register lookup: aCompilationResult methodClass)
-		ifNotNil: 
-			[:annotations |
-			"Any method update, whether annotated or not, may have an impact on the command annotations. For example annotations may be removed."
-			annotations onMethodUpdated: aCompilationResult]! !
+	((register lookup: aCompilationResult methodClass)
+		ifNil: 
+			[aCompilationResult isInteractive ifTrue: [self addAnnotationsFor: aCompilationResult methodClass]])
+			ifNotNil: 
+				[:annotations |
+				"Any method update, whether annotated or not, may have an impact on the command annotations. For example annotations may be removed."
+				annotations onMethodUpdated: aCompilationResult]! !
 !UI.CommandAnnotationsRegister categoriesForMethods!
+addAnnotationsFor:!helpers!private! !
 annotationsFor:!public! !
 initialize!public! !
 onClassRemoved:!event handling!private! !
