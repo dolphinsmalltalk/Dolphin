@@ -126,7 +126,7 @@ storeOn: aStream
 
 suggestedVariableNameIn: aClass
 	#rbFix.	"Added to generate a type specific parameter name based on the initializer rather than always using 'anObject'"
-	^([Compiler evaluate: initializer] on: Error do: [:ex | nil])
+	^([Compiler evaluate: initializer] on: Error, CompilerErrorNotification do: [:ex | nil])
 		ifNil: ['anObject']
 		ifNotNil: [:init | Smalltalk developmentSystem nameForArgument: init]!
 
