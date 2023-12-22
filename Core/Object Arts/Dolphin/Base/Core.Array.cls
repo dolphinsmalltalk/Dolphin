@@ -101,12 +101,11 @@ printOn: aStream do: aMonadicValuable
 							self do: aMonadicValuable separatedBy: [aStream space].
 							aStream nextPut: $)]]]!
 
-refersTo: anObject asLiteralOf: aCompiledCode
+refersToLiteral: anObject
 	"Private - Answer whether the receiver is a reference to the literal argument."
 
 	self = anObject ifTrue: [^true].
-	1 to: self size
-		do: [:i | ((self at: i) refersTo: anObject asLiteralOf: aCompiledCode) ifTrue: [^true]].
+	1 to: self size do: [:i | ((self at: i) refersToLiteral: anObject) ifTrue: [^true]].
 	^false!
 
 replaceElementsOf: anIndexableObject from: startInteger to: stopInteger startingAt: startAtInteger
@@ -171,7 +170,7 @@ isSelfEvaluating!public!testing! !
 isSelfEvaluating:!private!testing! !
 printOn:!printing!public! !
 printOn:do:!printing!private! !
-refersTo:asLiteralOf:!private!testing! !
+refersToLiteral:!private!testing! !
 replaceElementsOf:from:to:startingAt:!private!replacing! !
 replaceFrom:to:with:startingAt:!public!replacing! !
 storeOn:!printing!public! !

@@ -173,7 +173,7 @@ printOn: aStream
 		ifTrue: [aStream nextPutAll: self]
 		ifFalse: [super printOn: aStream]!
 
-refersTo: anObject asLiteralOf: aCompiledMethod
+refersToLiteral: anObject
 	"Private - Answer whether the receiver is a reference to the literal argument.
 	This assumes that the receiver is in the role of a literal."
 
@@ -217,7 +217,7 @@ keywords!accessing!public! !
 mutableCopy!copying!public! !
 numArgs!accessing!public! !
 printOn:!printing!public! !
-refersTo:asLiteralOf:!private!testing! !
+refersToLiteral:!private!testing! !
 replaceFrom:to:with:startingAt:!public!replacing! !
 shallowCopy!copying!public! !
 sortUsing:!public!sorting! !

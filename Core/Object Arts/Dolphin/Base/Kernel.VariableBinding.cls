@@ -142,7 +142,7 @@ owningPackage: aPackageOrNil
 
 	self class packageManager addVariableNamed: self fullyQualifiedReference to: aPackageOrNil!
 
-refersTo: anObject asLiteralOf: aCompiledMethod
+refersToLiteral: anObject
 	^(self = anObject or: [value == anObject and: [self isClassBinding]])
 		or: [environment includesEnvironment: anObject]!
 
@@ -184,7 +184,7 @@ key:value:!initializing!private! !
 key:value:environment:flags:!initializing!private! !
 owningPackage!accessing!development!public! !
 owningPackage:!accessing!development!public! !
-refersTo:asLiteralOf:!private!testing! !
+refersToLiteral:!private!testing! !
 setFlags:!accessing!private! !
 shortName!accessing!public! !
 targetVariable!accessing!public! !

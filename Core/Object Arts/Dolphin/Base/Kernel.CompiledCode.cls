@@ -562,7 +562,7 @@ refersToLiteral: anObject
 	"Implementation Note: This deliberately does not take account of special selectors and is open coded for speed."
 
 	1 to: self size
-		do: [:i | ((self basicAt: i) refersTo: anObject asLiteralOf: self) ifTrue: [^true]].
+		do: [:i | ((self basicAt: i) refersToLiteral: anObject) ifTrue: [^true]].
 	^false!
 
 replaceElementsOf: anIndexableObject from: startInteger to: stopInteger startingAt: startAtInteger

@@ -114,20 +114,18 @@ testIsSelfEvaluatingInScope
 testRefersToLiteralPoolVariable
 	"A BindingReference matches literals for the same path..."
 
-	| method poolConstRef poolConst |
-	method := self class lookupMethod: testSelector.
+	| poolConstRef poolConst |
 	"BindingRef to a pool variable."
 	poolConstRef := self newSubjectWithPathString: '_PrimitiveFailureCode.AccessViolation'.
 	poolConst := _PrimitiveFailureCode localBindingFor: 'AccessViolation'.
 	self assert: (poolConstRef
-				refersTo: (self newSubjectWithPath: #(#_PrimitiveFailureCode 'AccessViolation'))
-				asLiteralOf: method).
-	self assert: (poolConstRef refersTo: poolConst asLiteralOf: method).
-	self deny: (poolConstRef refersTo: poolConst value asLiteralOf: method).
+				refersToLiteral: (self newSubjectWithPath: #(#_PrimitiveFailureCode 'AccessViolation'))).
+	self assert: (poolConstRef refersToLiteral: poolConst).
+	self deny: (poolConstRef refersToLiteral: poolConst value).
 	"Should a BindingRef implicitly refers to refs along its path? Not entirely sure, but at the moment not"
-	self deny: (poolConstRef refersTo: #{Kernel._PrimitiveFailureCode} asLiteralOf: method).
+	self deny: (poolConstRef refersToLiteral: #{Kernel._PrimitiveFailureCode}).
 	#namespaceToDo.	"This should be true - a reference to a nested binding is implicitly a reference to the outer binding."
-	self deny: (poolConstRef refersTo: _PrimitiveFailureCode binding asLiteralOf: method)!
+	self deny: (poolConstRef refersToLiteral: _PrimitiveFailureCode binding)!
 
 testScope
 	| subject coreRelative |

@@ -522,7 +522,7 @@ quo: aNumber
 	<primitive: 13>
 	^aNumber quotientFromInteger: self!
 
-refersTo: anObject asLiteralOf: aCompiledMethod
+refersToLiteral: anObject
 	"Private - Answer whether the receiver is a reference to the literal argument.
 	This assumes that the receiver is in the role of a literal."
 
@@ -597,7 +597,7 @@ printString!printing!public! !
 printStringBase:!printing!public! !
 printStringBase:nDigits:!printing!public! !
 quo:!arithmetic!public! !
-refersTo:asLiteralOf:!private!testing! !
+refersToLiteral:!private!testing! !
 shallowCopy!copying!public! !
 species!accessing!public! !
 !

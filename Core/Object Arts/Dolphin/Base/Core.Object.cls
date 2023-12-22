@@ -1129,7 +1129,7 @@ propertyManager
 
 	^_PropertyRegister!
 
-refersTo: anObject asLiteralOf: aCompiledCode
+refersToLiteral: anObject
 	"Private - Answer whether the receiver, a literal of the <CompiledCode> 2nd argument, is a reference to the <Object> first argument."
 
 	^self class == anObject class and: [self = anObject]!
@@ -1605,7 +1605,7 @@ propertyAt:!properties!public! !
 propertyAt:ifAbsent:!properties!public! !
 propertyAt:put:!properties!public! !
 propertyManager!private!properties! !
-refersTo:asLiteralOf:!private!testing! !
+refersToLiteral:!private!testing! !
 release!dependency!public! !
 removeAllEventsTriggered!events!public! !
 removeAllProperties!properties!public! !

@@ -106,11 +106,11 @@ printOn: aStream
 		display: self;
 		nextPut: $)!
 
-refersTo: anObject asLiteralOf: aCompiledCode
+refersToLiteral: anObject
 	"Private - Answer whether the receiver is a reference to the literal argument."
 
 	1 to: self basicSize
-		do: [:i | ((self basicAt: i) refersTo: anObject asLiteralOf: aCompiledCode) ifTrue: [^true]].
+		do: [:i | ((self basicAt: i) refersToLiteral: anObject) ifTrue: [^true]].
 	^false!
 
 selectors
@@ -182,7 +182,7 @@ environment!public!searching! !
 first!enumerating!public! !
 includesSelector:!public!searching! !
 printOn:!printing!public! !
-refersTo:asLiteralOf:!private!testing! !
+refersToLiteral:!private!testing! !
 selectors!accessing!public! !
 selectorsAndArgumentsDo:!enumerating!public! !
 size!accessing!public! !

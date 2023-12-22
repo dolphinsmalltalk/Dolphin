@@ -827,7 +827,7 @@ rewriteQualifiedReferencesWith:!public!transforming! !
 !Kernel.StLiteralValueNode methodsFor!
 
 refersToSymbol: aSymbol
-	^self value refersTo: aSymbol asLiteralOf: nil! !
+	^self value refersToLiteral: aSymbol! !
 !Kernel.StLiteralValueNode categoriesForMethods!
 refersToSymbol:!public!testing! !
 !

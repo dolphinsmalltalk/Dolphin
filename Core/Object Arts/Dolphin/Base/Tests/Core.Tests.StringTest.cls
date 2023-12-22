@@ -854,13 +854,12 @@ testRefersToLiteral
 
 	N.B. they *should* still count as referring to other encodings of the same string."
 
-	| str method |
-	method := self class lookupMethod: testSelector.
+	| str |
 	str := 'abc' asUtf8String.
-	self assert: (str refersTo: 'abc' asAnsiString asLiteralOf: method).
-	self assert: (str refersTo: 'abc' asUtf8String asLiteralOf: method).
-	self deny: (str refersTo: #abc asLiteralOf: method).
-	self deny: (str refersTo: 'ab' asLiteralOf: method)!
+	self assert: (str refersToLiteral: 'abc' asAnsiString).
+	self assert: (str refersToLiteral: 'abc' asUtf8String).
+	self deny: (str refersToLiteral: #abc).
+	self deny: (str refersToLiteral: 'ab')!
 
 testReverse
 	"Tests reversing a variety of 1, 2, 3 and 4 byte encodings, and with embedded nulls"

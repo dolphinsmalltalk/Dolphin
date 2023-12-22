@@ -168,7 +168,7 @@ printString
 
 	^'nil'!
 
-refersTo: anObject asLiteralOf: aCompiledMethod
+refersToLiteral: anObject
 	^anObject isNil!
 
 shallowCopy
@@ -227,7 +227,7 @@ notNil!public!testing! !
 notNull!private!testing! !
 printOn:!printing!public! !
 printString!printing!public! !
-refersTo:asLiteralOf:!private!testing! !
+refersToLiteral:!private!testing! !
 shallowCopy!copying!public! !
 subclass:instanceVariableNames:classVariableNames:imports:!class hierarchy-adding!public! !
 subclass:instanceVariableNames:classVariableNames:imports:classInstanceVariableNames:classConstants:!class hierarchy-adding!public! !

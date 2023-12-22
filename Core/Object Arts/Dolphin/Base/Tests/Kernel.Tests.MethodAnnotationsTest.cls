@@ -145,13 +145,13 @@ testPrintOn
 testRefersToLiteral
 	| subject |
 	subject := self canonicalSubject.
-	self assert: (subject refersTo: #namespace: asLiteralOf: nil).
-	self assert: (subject refersTo: Core asLiteralOf: nil).
-	self deny: (subject refersTo: #Core asLiteralOf: nil).
-	self assert: (subject refersTo: #mutable asLiteralOf: nil).
+	self assert: (subject refersToLiteral: #namespace:).
+	self assert: (subject refersToLiteral: Core).
+	self deny: (subject refersToLiteral: #Core).
+	self assert: (subject refersToLiteral: #mutable).
 	"And one of the annotation message arguments"
-	self assert: (subject refersTo: #three asLiteralOf: nil).
-	self deny: (self emptySubject refersTo: nil asLiteralOf: nil)!
+	self assert: (subject refersToLiteral: #three).
+	self deny: (self emptySubject refersToLiteral: nil)!
 
 testResize
 	| subject |

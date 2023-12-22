@@ -329,32 +329,30 @@ testPrivateRelative
 	self deny: subject equals: private!
 
 testRefersToLiteralClass
-	| method objectRef |
-	method := self class lookupMethod: testSelector.
+	| objectRef |
 	objectRef := self newSubjectWithPathString: #'Core.Object'.
-	self assert: (objectRef refersTo: (self newSubjectWithPath: #(#Core #Object)) asLiteralOf: method).
+	self assert: (objectRef refersToLiteral: (self newSubjectWithPath: #(#Core #Object))).
 	".. and the binding to which it would resolve ..."
-	self assert: (objectRef refersTo: Object binding asLiteralOf: method).
+	self assert: (objectRef refersToLiteral: Object binding).
 	"... and the target class."
-	self assert: (objectRef refersTo: Object asLiteralOf: method).
-	self deny: (objectRef refersTo: nil asLiteralOf: method).
+	self assert: (objectRef refersToLiteral: Object).
+	self deny: (objectRef refersToLiteral: nil).
 	"Should refer to the Namespace too"
-	self assert: (objectRef refersTo: Core asLiteralOf: method).
+	self assert: (objectRef refersToLiteral: Core).
 	"And so on up the namespace hierarchy"
-	self assert: (objectRef refersTo: Root asLiteralOf: method)!
+	self assert: (objectRef refersToLiteral: Root)!
 
 testRefersToLiteralNotFound
-	| method objectRef |
-	method := self class lookupMethod: testSelector.
+	| objectRef |
 	objectRef := self newSubjectWithPathString: #'Core.Object2'.
-	self deny: (objectRef refersTo: (self newSubjectWithPath: #(#Core #Object)) asLiteralOf: method).
+	self deny: (objectRef refersToLiteral: (self newSubjectWithPath: #(#Core #Object))).
 	".. and the binding to which it would resolve ..."
-	self deny: (objectRef refersTo: Object binding asLiteralOf: method).
+	self deny: (objectRef refersToLiteral: Object binding).
 	"... and the target class."
-	self deny: (objectRef refersTo: Object asLiteralOf: method).
-	self deny: (objectRef refersTo: nil asLiteralOf: method).
+	self deny: (objectRef refersToLiteral: Object).
+	self deny: (objectRef refersToLiteral: nil).
 	"It doesn't refer to the namespace along the path either. This could perhaps be correct either way, but as the reference itself doesn't resolve it doesn't really refer to anything."
-	self deny: (objectRef refersTo: Core asLiteralOf: method)!
+	self deny: (objectRef refersToLiteral: Core)!
 
 testRelativeNoScope
 	self should: [self newSubjectWithPath: #('_' 'Object')] raise: Error!

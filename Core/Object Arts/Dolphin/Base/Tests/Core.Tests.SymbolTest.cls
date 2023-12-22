@@ -132,11 +132,9 @@ testPrintString
 			self assert: (print second == $' and: [print last == $'])]!
 
 testRefersToLiteral
-	| method |
-	method := self class >> testSelector.
-	self assert: (#abc refersTo: #abc asLiteralOf: method).
-	self deny: (#abc refersTo: 'abc' asLiteralOf: method).
-	self deny: (#abc refersTo: #ab asLiteralOf: method)!
+	self assert: (#abc refersToLiteral: #abc).
+	self deny: (#abc refersToLiteral: 'abc').
+	self deny: (#abc refersToLiteral: #ab)!
 
 testReplaceFromToWithStartingAt
 	self 

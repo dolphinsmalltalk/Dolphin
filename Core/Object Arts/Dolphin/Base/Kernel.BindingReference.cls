@@ -307,11 +307,10 @@ realReference
 
 	^self!
 
-refersTo: anObject asLiteralOf: aCompiledCode
+refersToLiteral: anObject
 	"Private - Answer whether the receiver, a literal of the <CompiledCode> 2nd argument, is a reference to the <Object> first argument."
 
-	^self = anObject
-		or: [anObject notNil and: [self bindingOrNil refersTo: anObject asLiteralOf: aCompiledCode]]!
+	^self = anObject or: [anObject notNil and: [self bindingOrNil refersToLiteral: anObject]]!
 
 scope
 	"Private - Answer the <bindingScope> in which the reference was created. For relative references this is used to determine the start point for binding resolution. For absolute references this should always be nil."
@@ -419,7 +418,7 @@ pathString!accessing!public! !
 printOn:!printing!public! !
 private!converting!public! !
 realReference!accessing!public! !
-refersTo:asLiteralOf:!private!testing! !
+refersToLiteral:!private!testing! !
 scope!constants!private! !
 scope:!converting!private! !
 shortName!accessing!public! !

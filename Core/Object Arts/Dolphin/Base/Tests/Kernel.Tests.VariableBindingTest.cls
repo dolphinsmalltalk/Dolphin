@@ -43,8 +43,8 @@ testRefersToLiteral
 	method := self class lookupMethod: testSelector.
 	subject := Object binding.
 	self assert: (method refersToLiteral: subject).
-	self assert: (subject refersTo: subject asLiteralOf: method).
-	self assert: (subject refersTo: Object asLiteralOf: method).
+	self assert: (subject refersToLiteral: subject ).
+	self assert: (subject refersToLiteral: Object ).
 	"Shouldn't matter that the ref is fully qualified (makes no difference to compiled literals)"
 	self assert: (method refersToLiteral: Core.Association).
 	self assert: (method refersToLiteral: Core.Association binding).

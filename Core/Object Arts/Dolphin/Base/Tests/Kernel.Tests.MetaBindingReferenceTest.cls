@@ -121,17 +121,14 @@ testPathStringWithClass
 			self assert: subject value identicalTo: Association class]!
 
 testRefersToLiteral
-	| method |
-	method := self class >> testSelector.
 	"A BindingReference matches literals for the same path..."
 
 	"self assert: (Object class fullyQualifiedReference refersToLiteral: (self subjectClass pathString: 'Object'))."
 
 	".. and the binding to which it would resolve ..."
-
-	self assert: (#{Object class} refersTo: Object binding asLiteralOf: method).
+	self assert: (#{Object class} refersToLiteral: Object binding).
 	"... but not the target value."
-	self deny: (#{Object class} refersTo: #{Object class} value asLiteralOf: method)!
+	self deny: (#{Object class} refersToLiteral: #{Object class} value)!
 
 testStbConvertFromVersion1
 	| subject expected |

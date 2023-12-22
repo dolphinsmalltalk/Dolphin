@@ -659,7 +659,7 @@ printString
 
 	^self shortName!
 
-refersTo: anObject asLiteralOf: aCompiledCode
+refersToLiteral: anObject
 	"Private - Answer whether the receiver, a literal of the <CompiledCode> 2nd argument, is a reference to the <Object> first argument."
 
 	^(self class == anObject class and: [self = anObject])
@@ -1187,7 +1187,7 @@ printFullNameOn:!helpers!private! !
 printNameOn:relativeTo:!printing!private! !
 printOn:!printing!public! !
 printString!printing!public! !
-refersTo:asLiteralOf:!private!testing! !
+refersToLiteral:!private!testing! !
 relativeShortName:!class variables!private! !
 removeBindingFor:!bindings!public! !
 removeClassConstant:!class variables!development!public! !
