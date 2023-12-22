@@ -33,6 +33,12 @@ julianEpoch
 		second: 0
 		offset: 0 hours!
 
+test1193
+	| today ut |
+	today := Date today.
+	ut := today asDateAndTime asUnixTime.
+	self assert: today equals: (DateAndTime fromUnixTime: ut) asDate!
+
 testAddDuration
 	| subject epochSeconds |
 	subject := DateAndTime
@@ -85,14 +91,13 @@ testAddDuration
 				day: 29)!
 
 testAsDate
-	| subject |
+	| subject utcSeconds |
 	subject := self canonicalInstance.
-	"Note that the offset is ignored - the date is not adjusted to local time"
+	utcSeconds := 1564663499833333333 / 500000000.
+	self assert: (DateAndTime utcSeconds: utcSeconds offset: 0) equals: subject.
+	"#1193: Dates are assumed to be in local time."
 	self assert: subject asDate
-		equals: (Date
-				newDay: 29
-				monthIndex: 2
-				year: 2000)!
+		equals: (Date fromSeconds: utcSeconds + Locale timeZoneInformation offsetSeconds)!
 
 testAsFILETIME
 	| filetime |
@@ -170,10 +175,14 @@ testAsSYSTEMTIMEInvalidMilliseconds
 	self assert: actual wMilliseconds equals: 999!
 
 testAsTime
-	"Offset is ignored - the date is not adjusted to local time"
+	"#1193: A Time representing the local timezone equivalent is expected"
 
-	self assert: self canonicalInstance asTime
-		equals: (Time fromSeconds: (12 * 60 + 59) * 60 + 59 + (666666666 / 1000000000))!
+	| subject utcSeconds |
+	subject := self canonicalInstance.
+	utcSeconds := 1564663499833333333 / 500000000.
+	self assert: (DateAndTime utcSeconds: utcSeconds offset: 0) equals: subject.
+	self assert: subject asTime
+		equals: (Time fromSeconds: utcSeconds + Locale timeZoneInformation offsetSeconds)!
 
 testAsUnixTime
 	| subject |
@@ -804,6 +813,7 @@ testYearMonthDayHourMinuteSecondOffsetErrors
 !Core.Tests.DateAndTimeTest categoriesForMethods!
 canonicalInstance!constants!private! !
 julianEpoch!constants!private! !
+test1193!public!unit tests! !
 testAddDuration!public! !
 testAsDate!public!unit tests! !
 testAsFILETIME!public!unit tests! !

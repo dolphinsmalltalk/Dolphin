@@ -58,11 +58,9 @@ Core.Magnitude
 !Core.DateAndTime methodsFor!
 
 asDate
-	"Answer a <Date> representing the date of the receiver. The <Date> will be that at the receiver's offset, so:
-		- if a date in the local timezone is needed, send #asLocal first (i.e. `dateAndTime asLocal asDate`)
-		- if a UTC date is needed, send #asUTC first (i.e. `dateAndTime asUTC asDate`)."
+	"Answer a <Date> representing the date of the receiver. <Date>s are not timezone aware, but we follow the convention that they are assumed to represent a local time. Thefore we first convert the receiver to a local DateAndTime, and then extract the date from that."
 
-	^self dayMonthYearDo: 
+	^self asLocal dayMonthYearDo: 
 			[:d :m :y |
 			Date
 				newDay: d
@@ -70,11 +68,10 @@ asDate
 				year: y]!
 
 asTime
-	"Answer a <Time> representing the local time of the receiver. The <Time> will be that at the receiver's offset, so:
-		- if a time in the local timezone is needed and the DateAndTime, send #asLocal first (i.e. `dateAndTime asLocal asTime`)
-		- if a UTC time is needed, send #asUTC first (i.e. `dateAndTime asUTC asTime`)."
+	"Answer a <Time> representing the local time of the receiver."
 
-	^Time fromSeconds: seconds!
+	^Time fromSeconds: self asLocal seconds
+!
 
 asTimeStamp
 	"Answer a <TimeStamp> representing the local date and time of the receiver. The <TimeStamp> will be that at the receiver's offset, so:
