@@ -299,6 +299,7 @@ testContextMenuEdit
 			ensure: [inspectee destroy]!
 
 testCopyAndPasteMenu
+	<skipUnless: #isInForeground>
 	| inspectee1 inspectee2 |
 	inspectee1 := ShellView new.
 	inspectee1 create.
