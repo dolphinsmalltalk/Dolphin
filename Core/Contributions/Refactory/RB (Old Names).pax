@@ -14,6 +14,7 @@ package setVariableNames: #(
 	#{Smalltalk.CompositeLintRule}
 	#{Smalltalk.CreateAccessorsForVariableRefactoring}
 	#{Smalltalk.ParseTreeLintRule}
+	#{Smalltalk.ParseTreeRewriter}
 	#{Smalltalk.ParseTreeSearcher}
 	#{Smalltalk.RBCondition}
 	#{Smalltalk.RBMethodName}
@@ -37,6 +38,7 @@ package setAliasVariableNames: #(
 	#{Smalltalk.CompositeLintRule}
 	#{Smalltalk.CreateAccessorsForVariableRefactoring}
 	#{Smalltalk.ParseTreeLintRule}
+	#{Smalltalk.ParseTreeRewriter}
 	#{Smalltalk.ParseTreeSearcher}
 	#{Smalltalk.RBCondition}
 	#{Smalltalk.RBMethodName}
@@ -77,6 +79,8 @@ Smalltalk.CompositeLintRule := Refactory.Browser.CompositeLintRule!
 Smalltalk.CreateAccessorsForVariableRefactoring := Refactory.Browser.CreateAccessorsForVariableRefactoring!
 
 Smalltalk.ParseTreeLintRule := Refactory.Browser.ParseTreeLintRule!
+
+Smalltalk.ParseTreeRewriter := Refactory.Browser.ParseTreeRewriter!
 
 Smalltalk.ParseTreeSearcher := Refactory.Browser.ParseTreeSearcher!
 
