@@ -159,6 +159,7 @@ beBroken
 
 	flags := flags maskClear: RunMask.	"no longer running"
 	Processor enableInterrupts.
+	breakWhen removeAll.
 	self mainView enable
 
 	!
