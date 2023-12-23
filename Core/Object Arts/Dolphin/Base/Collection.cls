@@ -212,6 +212,12 @@ copyEmpty: anInteger
 
 	^self class new: anInteger!
 
+copyingClass
+	"Private - Answer the class of object expected when the receiver is copied in whole or in part."
+
+	<primitive: 111>
+	^self class!
+
 copyLike
 	"Private - Answer an empty collection of the same species as the receiver with 
 	sufficient capacity for anInteger number of elements."
@@ -623,6 +629,7 @@ asSortedCollectionUsing:!converting!public! !
 collect:!enumerating!public! !
 copyEmpty!copying!public! !
 copyEmpty:!copying!private! !
+copyingClass!copying!private! !
 copyLike!enumerating!private! !
 copyLike:!copying!private! !
 copySize!copying!private! !

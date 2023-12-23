@@ -32,9 +32,12 @@ testAssociations
 		equals: {1 -> $a. 2 -> $£. 4 -> $\x6587. 7 -> $\x1F42C. 11 -> $1. 12 -> $\x1F37A}!
 
 testCopyWith
-	| string |
-	string := self assimilateString: 'a£文1🍺'.
-	self assert: (string copyWith: Character dolphin) equals: 'a£文1🍺🐬'!
+	| subject actual |
+	subject := self assimilateString: 'a£文1🍺'.
+	self assert: subject length equals: 5.
+	actual := subject copyWith: Character dolphin.
+	self assert: actual equals: 'a£文1🍺🐬'.
+	self assert: actual length equals: 6!
 
 testCopyWithAtIndex
 	| string |

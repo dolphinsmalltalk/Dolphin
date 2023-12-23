@@ -593,7 +593,7 @@ on: aFile type: aSymbol
 		ifFalse: 
 			[flags := ReadOnlyMask.
 			mode := 'r'].
-	handle := crt _fdopen: fd mode: (mode copyWith: (encoding == #binary ifTrue: [$b] ifFalse: [$t])).
+	handle := crt _fdopen: fd mode: mode , (encoding == #binary ifTrue: ['b'] ifFalse: ['t']).
 	handle isNil ifTrue: [CRTError signal].
 	^(self newForEncoding: encoding)
 		setStream: handle

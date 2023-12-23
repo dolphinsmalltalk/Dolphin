@@ -87,7 +87,7 @@ printSetSizeIsExpression: anStProgramNode for: anExternalField variable: aString
 	| expr setter structClass sizeFieldName |
 	expr := self invertSizeIsExpression: anStProgramNode paramName: anExternalField valueParameterName.
 	sizeFieldName := expr variable name.
-	setter := (sizeFieldName copyWith: $:) asSymbol.
+	setter := (sizeFieldName , ':') asSymbol.
 	structClass := anExternalField structClass.
 	((structClass template includesKey: sizeFieldName) or: [structClass canUnderstand: setter])
 		ifTrue: 

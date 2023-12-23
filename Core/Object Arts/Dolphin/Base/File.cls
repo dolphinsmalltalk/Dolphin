@@ -1560,11 +1560,9 @@ windowsDirectory
 workingDirectory
 	"Answer the current working directory."
 
-	| buf dir |
-	buf := CRTLibrary default _wgetcwd: nil maxlen: 0.
-	dir := Utf16String fromAddress: buf.
-	CRTLibrary default free: buf.
-	^dir last = $\ ifTrue: [dir] ifFalse: [dir copyWith: $\]!
+	| dir |
+	dir := KernelLibrary default getCurrentDirectory.
+	^dir lastCodeUnit == $\ ifTrue: [dir] ifFalse: [dir , '\']!
 
 workingDirectory: aString
 	"Set the current working directory."

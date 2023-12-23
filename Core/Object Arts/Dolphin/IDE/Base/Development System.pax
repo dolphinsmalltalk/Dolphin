@@ -3550,7 +3550,7 @@ compileNewFields
 			field isWriteable
 				ifTrue: 
 					[| setSelector |
-					setSelector := (getSelector copyWith: ':') asSymbol.
+					setSelector := (getSelector , ':') asSymbol.
 					(self shouldCompile: setSelector forField: field)
 						ifTrue: [self compileSetMethod: setSelector forField: field]]]!
 
