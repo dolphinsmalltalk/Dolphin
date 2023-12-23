@@ -79,8 +79,7 @@ defaultScrollInset
 	^15!
 
 defaultScrollInterval
-	"Answers the time (in ms) between the scroll operations while the
-	drop pointer is in the scroll zone"
+	"Answers the <Duration> to wait between the scroll operations while the drop pointer is in the scroll zone"
 
 	^100 milliseconds!
 
@@ -237,6 +236,8 @@ initialize
 	"Private - Initialize the receiver."
 
 	defaultOperation := #move.
+	operationsSupportedByDropTarget := #(#move #copy).
+	inDropTargetScrollZone := false.
 	dragImages := self class defaultDragImages copy.
 	^self!
 
@@ -319,6 +320,16 @@ operationDescriptions
 resetOperation
 	operation := nil!
 
+scrollDelay
+	"Answers the <Duration> of the delay between the drop pointer entering the scroll zone and a scroll operation starting"
+
+	^self defaultScrollDelay!
+
+scrollInterval
+	"Answers the <Duration> to wait between the scroll operations while the drop pointer is in the scroll zone"
+
+	^self defaultScrollInterval!
+
 showDragImage
 	"Show the current drag image. This may be useful to targets wishing to draw some sort of
 	emphasis."
@@ -336,10 +347,10 @@ startScrollProcess
 
 	self stopScrollProcess.
 	scrollProcess := 
-			[self defaultScrollDelay wait.
+			[self scrollDelay wait.
 			
 			[dropTarget ddScroll: self.
-			self defaultScrollInterval wait] repeat]
+			self scrollInterval wait] repeat]
 					forkAt: Processor userBackgroundPriority!
 
 stopScrollProcess
@@ -437,6 +448,8 @@ operation!accessing!public! !
 operation:!accessing!public! !
 operationDescriptions!accessing!public! !
 resetOperation!accessing!public! !
+scrollDelay!accessing!public! !
+scrollInterval!accessing!public! !
 showDragImage!operations!public! !
 solidifyOperation!operations!private! !
 startScrollProcess!operations!private! !

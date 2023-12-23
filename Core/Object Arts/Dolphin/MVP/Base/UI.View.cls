@@ -3017,17 +3017,8 @@ requestDragObjects: aDragDropSession
 	self presenter trigger: #drag: with: aDragDropSession!
 
 requestDropOperations: aDragDropSession
-	"Update the <DragDropSession>, session, with the set of supported 
-	drag and drop operation symbols (for right-button drags).
-	Implementation Note: Set up some sensible default operations, and then trigger a 
-	#requestDropOperations: event off the receiver's presenter to give its observers an 
-	opportunity to override those defaults."
+	"Provide observers with an opportunity to update the <DragDropSession> argument with the set of supported drag and drop operation symbols (for right-button drags)."
 
-	aDragDropSession supportedOperations isNil 
-		ifTrue: 
-			["Presenter hasn't suggested anything, fill in some defaults"
-
-			aDragDropSession supportedOperations: #(#move #copy)].
 	self presenter trigger: #requestDropOperations: with: aDragDropSession!
 
 requestLayoutRectangle: aRectangle 
