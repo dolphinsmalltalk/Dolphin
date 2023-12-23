@@ -39,6 +39,7 @@ package classNames
 	add: #IconTest;
 	add: #ImageViewAbstractTest;
 	add: #ImageViewTest;
+	add: #InternalDragDropSessionTest;
 	add: #LayoutManagerTest;
 	add: #LinkButtonTest;
 	add: #ListBoxTest;
@@ -235,6 +236,11 @@ DolphinTest subclass: #FolderTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #IconTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #InternalDragDropSessionTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
