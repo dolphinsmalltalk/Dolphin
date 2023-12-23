@@ -1,14 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-DolphinTest subclass: #InternalDragDropSessionTest
+Core.Tests.DolphinTest
+	subclass: #'UI.Tests.InternalDragDropSessionTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-InternalDragDropSessionTest guid: (GUID fromString: '{7ad52eea-323b-4bef-a087-a775a45fc039}')!
-InternalDragDropSessionTest comment: ''!
-!InternalDragDropSessionTest categoriesForClass!Unclassified! !
-!InternalDragDropSessionTest methodsFor!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.InternalDragDropSessionTest guid: (Core.GUID fromString: '{7ad52eea-323b-4bef-a087-a775a45fc039}')!
+UI.Tests.InternalDragDropSessionTest comment: ''!
+!UI.Tests.InternalDragDropSessionTest methodsFor!
 
 testInitialState
 	| subject |
@@ -27,7 +28,7 @@ testInitialState
 	self assert: subject operationDescriptions equals: DragDropSession.OperationDescriptions.
 	self assert: subject scrollDelay equals: 1 seconds.
 	self assert: subject scrollInterval equals: 100 milliseconds! !
-!InternalDragDropSessionTest categoriesForMethods!
+!UI.Tests.InternalDragDropSessionTest categoriesForMethods!
 testInitialState!public! !
 !
 

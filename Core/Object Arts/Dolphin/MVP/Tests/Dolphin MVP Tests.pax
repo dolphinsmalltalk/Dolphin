@@ -68,6 +68,7 @@ package setClassNames: #(
 	#{UI.Tests.ImageViewTest}
 	#{UI.Tests.InplaceTextEditorTest}
 	#{UI.Tests.IntegerToTextTest}
+	#{UI.Tests.InternalDragDropSessionTest}
 	#{UI.Tests.KeyboardTest}
 	#{UI.Tests.LayoutManagerTest}
 	#{UI.Tests.LinkButtonTest}
@@ -328,6 +329,13 @@ Core.Tests.DolphinTest
 	classConstants: {}!
 Core.Tests.DolphinTest
 	subclass: #'UI.Tests.FramingConstraintsTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.DolphinTest
+	subclass: #'UI.Tests.InternalDragDropSessionTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
