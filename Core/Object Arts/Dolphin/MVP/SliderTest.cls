@@ -13,6 +13,21 @@ SliderTest comment: ''!
 classToTest
 	^Slider!
 
+oldDolphinVersionsForStbUpgrade
+	^#(4)!
+
+testHasTicks
+	presenter hasTicks: false.
+	self deny: presenter hasTicks.
+	self deny: presenter hasAutoTicks.
+	presenter ticks: #().
+	self deny: presenter hasTicks.
+	self deny: presenter hasAutoTicks.
+	presenter ticks: #(0 100).
+	self assert: presenter hasTicks.
+	self deny: presenter hasAutoTicks.
+!
+
 testRange
 	| range |
 	presenter hasAutoTicks: true.
@@ -27,9 +42,44 @@ testRange
 							[:step |
 							range := start to: stop by: step.
 							presenter range: range.
-							self assert: presenter range equals: range]]]! !
+							self assert: presenter range equals: range]]].
+	"Empty range can be set, although only logically"
+	presenter range: (1 to: 0).
+	self assert: presenter range equals: (1 to: 0)!
+
+verifyStbUpgrade: anInteger
+	| notifications |
+	notifications := super verifyStbUpgrade: anInteger.
+	self assert: notifications single description
+		equals: 'Deprecated message sent: Slider>>#selection: from: MessageSendAbstract>>#value'!
+
+verifyUpgradedView: anInteger
+	| view |
+	super verifyUpgradedView: anInteger.
+	view := self view.
+	self assert: view interactor identicalTo: view.
+	self assert: view hasTicks.
+	self assert: view tickStyle identicalTo: #bottom.
+	anInteger < 10
+		ifTrue: 
+			[self assert: view typeconverter isNullConverter.
+			self assert: view backcolor identicalTo: Color default.
+			self deny: view hasAutoTicks.
+			self assert: view range equals: (0 to: 100)]
+		ifFalse: 
+			[self assertIsNil: view backcolor.
+			self assert: view hasAutoTicks.
+			self assert: view range equals: (0 to: 100 by: 10)]!
+
+vuFile
+	^'NumberPresenter.Slider view.vu'! !
 !SliderTest categoriesForMethods!
 classToTest!helpers!private! !
+oldDolphinVersionsForStbUpgrade!constants!private! !
+testHasTicks!public!unit tests! !
 testRange!public!unit tests! !
+verifyStbUpgrade:!helpers!private! !
+verifyUpgradedView:!helpers!private! !
+vuFile!constants!private! !
 !
 
