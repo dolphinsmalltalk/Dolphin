@@ -578,6 +578,19 @@ getCPInfoExW: codepage dwFlags: dwFlags lpCPInfoEx: lpCPInfoEx
 	<stdcall: bool GetCPInfoExW dword dword CPINFOEXW*>
 	^self invalidCall: _failureCode!
 
+getCurrentDirectory
+	"Answer the <readableString> current working directory path"
+
+	| len buf |
+	(len := self getCurrentDirectory: 0 lpBuffer: nil) == 0 ifTrue: [^self systemError].
+	buf := Utf16String newFixed: len - 1.
+	(self getCurrentDirectory: len lpBuffer: buf) == 0 ifTrue: [^self systemError].
+	^buf!
+
+getCurrentDirectory: nBufferLength lpBuffer: lpBuffer
+	<stdcall: dword GetCurrentDirectoryW dword lpwstr>
+	^self invalidCall: _failureCode!
+
 getCurrentProcess
 	"Answer handle of the Dolphin process.
 
@@ -1736,6 +1749,8 @@ getCommandLine!public!win32 functions-process and thread! !
 getComputerName:nSize:!public!win32 functions-system information! !
 getConsoleTitle:nSize:!**auto generated**!public!win32 functions-console! !
 getCPInfoExW:dwFlags:lpCPInfoEx:!**auto generated**!public!win32 functions-national language support! !
+getCurrentDirectory!public!win32 functions- directory management! !
+getCurrentDirectory:lpBuffer:!public!win32 functions- directory management! !
 getCurrentProcess!public!win32 functions-process and thread! !
 getCurrentThread!public!win32 functions-process and thread! !
 getCurrentThreadId!public!win32 functions-process and thread! !

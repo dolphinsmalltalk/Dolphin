@@ -694,6 +694,13 @@ isString
 
 	^true!
 
+lastCodeUnit
+	"Answer a <Character> representing the last code unit in the receiver. Raise an exception if the receiver is empty."
+
+	"Note that this may not be a surrogate character and so may not represent an entire code point."
+
+	^self at: self size!
+
 leftString: anInteger
 	"Answer a new string comprising up to the leftmost anInteger <Characters> of the receiver. 
 	If the receiver has less than anInteger characters, then copy only those characters in the receiver."
@@ -1255,6 +1262,7 @@ indexOfAnyOf:startingAt:!public!searching! !
 indexOfSubCollection:startingAt:!public!searching! !
 isLiteral!public!testing! !
 isString!public!testing! !
+lastCodeUnit!accessing!public! !
 leftString:!copying!public! !
 length!accessing!public! !
 lines!copying!public! !

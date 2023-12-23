@@ -285,6 +285,21 @@ testCopyToComTaskMemory
 			copy := self collectionClass fromAddress: heapBlock.
 			self assert: copy equals: subject]!
 
+testCopyWith
+	| subject copy |
+	subject := self collectionClass empty.
+	copy := subject copyWith: $£.
+	self assert: copy class identicalTo: copy copyingClass.
+	self assert: copy equals: '£'.
+	subject := self assimilateString: 'a'.
+	copy := subject copyWith: $©.
+	self assert: copy class identicalTo: copy copyingClass.
+	self assert: copy equals: 'a©'.
+	subject := self assimilateString: 'a©b'.
+	copy := subject copyWith: $£.
+	self assert: copy class identicalTo: copy copyingClass.
+	self assert: copy equals: 'a©b£'!
+
 testCopyWithout
 	| string |
 	string := self assimilateString: 'abcba'.
@@ -1178,6 +1193,7 @@ testCaseConversions!public!unit tests! !
 testClassFromAddress!public!unit tests! !
 testClassReadFrom!public!unit tests! !
 testCopyToComTaskMemory!public!unit tests! !
+testCopyWith!public! !
 testCopyWithout!public! !
 testEmpty!public!testing / accessing! !
 testEquals!public!unit tests! !

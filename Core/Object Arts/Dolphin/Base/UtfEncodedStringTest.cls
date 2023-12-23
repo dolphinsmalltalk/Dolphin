@@ -178,6 +178,24 @@ testCopyReplacingWithObject
 	actual := subject copyReplacing: $\x1F37A withObject: $\x6587.
 	self assert: actual equals: 'a£文£1文'!
 
+testCopyWith
+	| subject copy |
+	super testCopyWith.
+	subject := self collectionClass empty.
+	copy := subject copyWith: $🐬.
+	self assert: copy class identicalTo: copy copyingClass.
+	self assert: copy equals: '🐬'.
+	subject := self assimilateString: 'a'.
+	copy := subject copyWith: $🐬.
+	self assert: copy class identicalTo: copy copyingClass.
+	self assert: copy equals: 'a🐬'.
+	subject := self assimilateString: 'a£文1🍺'.
+	self assert: subject length equals: 5.
+	copy := subject copyWith: $🐬.
+	self assert: copy class identicalTo: copy copyingClass.
+	self assert: copy equals: 'a£文1🍺🐬'.
+	self assert: copy length equals: 6!
+
 testCopyWithout
 	| string |
 	super testCopyWithout.
@@ -631,6 +649,7 @@ testBeginsWithIgnoreCase!public!unit tests! !
 testCollect!public!unit tests! !
 testCopyReplaceAllWith!public!unit tests! !
 testCopyReplacingWithObject!public!unit tests! !
+testCopyWith!public! !
 testCopyWithout!public!unit tests! !
 testCopyWithoutIndex!public!unit tests! !
 testDecodeAt!public!unit tests! !

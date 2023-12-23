@@ -69,6 +69,13 @@ copyFrom: startInteger to: stopInteger
 		with: self
 		startingAt: startInteger!
 
+copyingClass
+	"Private - Answer the class of object expected when the receiver is copied in whole or in part."
+
+	"Symbols are immutable identity values; we can't have a direct copy of a symbol, and neither do we necessarily want to intern slices of a symbol."
+
+	^Utf8String!
+
 deepCopy
 	"Answer the receiver - Symbols are unique, so a copy with the same characters
 	must not exist.
@@ -196,6 +203,7 @@ argumentCount!accessing!public! !
 asString!converting!public! !
 asSymbol!converting!public! !
 copyFrom:to:!copying!public! !
+copyingClass!copying!private! !
 deepCopy!copying!public! !
 displayString!printing!public! !
 forwardTo:!operations!public! !
