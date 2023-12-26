@@ -81,6 +81,15 @@ deny: aBoolean description: aStringOrValuable resumable: resumableBoolean
 		description: aStringOrValuable
 		resumable: resumableBoolean!
 
+evaluatePreconditions
+	| annotations |
+	annotations := self thisTestMethod annotations.
+	annotations ifNil: [^self].
+	annotations withSelector: #skipIf:
+		do: [:each | (self perform: each single) ifTrue: [TestSkip signal: '<1p> skipIf: <2p>']].
+	annotations withSelector: #skipUnless:
+		do: [:each | (self perform: each single) ifFalse: [TestSkip signal: '<1p> skipUnless: <2p>']]!
+
 fail: aString
 	self logFailure: aString.
 	TestResult failure signal: aString!
@@ -173,13 +182,7 @@ setTestSelector: aSymbol
 	flags := 0!
 
 setUp
-	| annotations |
-	annotations := self thisTestMethod annotations.
-	annotations ifNil: [^self].
-	annotations withSelector: #skipIf:
-		do: [:each | (self perform: each single) ifTrue: [TestSkip signal: '<1p> skipIf: <2p>']].
-	annotations withSelector: #skipUnless:
-		do: [:each | (self perform: each single) ifFalse: [TestSkip signal: '<1p> skipUnless: <2p>']]!
+	self evaluatePreconditions!
 
 should: aNiladicValuable
 	self assert: aNiladicValuable value!
@@ -252,6 +255,7 @@ debugAsFailure!public!running! !
 deny:!asserting!public! !
 deny:description:!asserting!public! !
 deny:description:resumable:!asserting!public! !
+evaluatePreconditions!public!running! !
 fail:!asserting!public! !
 failureLog!Accessing!public! !
 isDebug!public!running! !

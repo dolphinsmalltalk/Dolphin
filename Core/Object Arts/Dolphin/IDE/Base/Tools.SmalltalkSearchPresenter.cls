@@ -2,7 +2,7 @@
 
 UI.Presenter
 	subclass: #'Tools.SmalltalkSearchPresenter'
-	instanceVariableNames: 'environment'
+	instanceVariableNames: 'searchEnvironment'
 	classVariableNames: 'AutoCompleteDwell MaxCompletionListHeight MaxCompletionListWidth OptionFlags'
 	imports: #(#{UI.Scintilla private})
 	classInstanceVariableNames: ''
@@ -12,16 +12,18 @@ Tools.SmalltalkSearchPresenter comment: ''!
 !Tools.SmalltalkSearchPresenter categoriesForClass!MVP-Resources-IDE Tools! !
 !Tools.SmalltalkSearchPresenter methodsFor!
 
-addMethodsOfClass: aClass startingWith: aString toSearchCandidates: anOrderedCollection max: anInteger
-	| prefix |
-	prefix := aString , '>>'.
-	environment selectorsForClass: aClass
+addMethodsOfClass: aClass startingWith: aString toSearchCandidates: aSet max: anInteger
+	| format |
+	format := ((BindingReference isQualifiedName: aString)
+				or: [aClass shortName = aClass unqualifiedName])
+					ifTrue: [aString , '>><d>']
+					ifFalse: ['<1d>>>%<d> (<2d>)' << { aString. aClass environment fullName }].
+	searchEnvironment selectorsForClass: aClass
 		do: 
 			[:each |
-			anOrderedCollection
-				add: (SmalltalkSearchCandidate matchingName: prefix , each object: (aClass compiledMethodAt: each)).
-			anOrderedCollection size > anInteger ifTrue: [^#()]].
-	^anOrderedCollection!
+			aSet add: (ListItem object: (aClass compiledMethodAt: each) text: format << each).
+			aSet size > anInteger ifTrue: [OperationAborted signal]].
+	^aSet!
 
 applyOptions
 	"Private - Apply the class options to the receiver"
@@ -42,7 +44,7 @@ autoComplete: aSymbol at: posInteger maxItems: maxInteger
 classMatchingName: aString
 	^(BindingReference isQualifiedName: aString)
 		ifTrue: [aString asQualifiedReference valueOrNil]
-		ifFalse: [environment classes detect: [:each | each name = aString] ifNone: nil]!
+		ifFalse: [searchEnvironment classes detect: [:each | each name = aString] ifNone: nil]!
 
 completeWordAt: anInteger with: aString 
 	| replaceRange replaceText |
@@ -52,6 +54,14 @@ completeWordAt: anInteger with: aString
 	view
 		selectionRange: replaceRange;
 		replaceSelection: aString!
+
+completionForChoice: aString
+	| parts |
+	aString first isUpperCase ifFalse: [^aString].
+	(Package manager packageNamed: aString ifNone: nil) ifNotNil: [^aString].
+	parts := $( split: aString.
+	parts size = 1 ifTrue: [^aString].
+	^(parts second readStream upTo: $)) , '.' , parts first trimBlanks!
 
 completionListSortBlock
 	^ScintillaView listSortBlock: false!
@@ -86,7 +96,7 @@ filterForClassNamesMatching: aString
 					[
 					[:each |
 					| name |
-					((name := each name) beginsWith: aString) ifTrue: [name]]]]
+					((name := each name) beginsWith: aString) ifTrue: [name asString]]]]
 		ifFalse: 
 			[isQualifiedName
 				ifTrue: 
@@ -98,7 +108,7 @@ filterForClassNamesMatching: aString
 					[
 					[:each |
 					| name |
-					(each isMetaclass not and: [(name := each name) beginsWith: aString]) ifTrue: [name]]]]!
+					(each isMetaclass not and: [(name := each name) beginsWith: aString]) ifTrue: [name asString]]]]!
 
 findDetails
 	^nil!
@@ -116,7 +126,7 @@ hasSearchText
 
 initialize
 	super initialize.
-	environment := Refactory.Browser.BrowserEnvironment new!
+	searchEnvironment := Refactory.Browser.BrowserEnvironment new!
 
 insertCompletion: aString at: anInteger 
 	"Private - Private-"
@@ -141,15 +151,18 @@ maybeShowCompletionList
 	self view selectionRange isEmpty ifFalse: [^self].
 	last := view caretPosition - 1.
 	styleName := (view styleAt: last) name.
-	self
+	
+	[self
 		autoComplete: styleName
 		at: last
-		maxItems: self maxAutoCompletionListSize!
+		maxItems: self maxAutoCompletionListSize]
+			on: OperationAborted
+			do: [:ex | ]!
 
-onAutoComplete: aString startingAt: anInteger accept: aValueHolder 
-	"Private - "
+onAutoComplete: aString startingAt: anInteger accept: aValueHolder
+	"Private - The user has made a choice from the auto-completion list. Perform our own insertion, and suppress the view's default completion."
 
-	self insertCompletion: aString at: anInteger.
+	self insertCompletion: (self completionForChoice: aString) at: anInteger.
 	aValueHolder value: false!
 
 onCharAdded: aCharacter
@@ -187,17 +200,23 @@ rangeToCompleteAt: anInteger
 				ifTrue: [self styleRunRangeAt: anInteger]
 				ifFalse: [anInteger to: view caretPosition - 1]]!
 
+searchEnvironment
+	^searchEnvironment!
+
+searchEnvironment: aBrowserEnvironment
+	searchEnvironment := aBrowserEnvironment!
+
 searchItemsStartingWith: aString maxItems: anInteger
 	| candidates count |
 	"Treat searches beginning with punctuation as a selector search,
 	to allow searching for underscore-prefixed or binary selectors."
 	aString first isUppercase ifFalse: [^self selectorsStartingWith: aString maxItems: anInteger].
-	candidates := OrderedCollection new.
+	candidates := Set new.
 	Package manager packages
-		do: [:each | (each name beginsWith: aString) ifTrue: [candidates add: each]].
+		do: [:each | (each name beginsWith: aString) ifTrue: [candidates add: (ListItem object: each text: each name)]].
 	"Very unlikely there will be too many matching packages, but if so don't display a list"
 	count := candidates size.
-	count > anInteger ifTrue: [^#()].
+	count > anInteger ifTrue: [OperationAborted signal].
 	"Find matching classes in the environment"
 	(aString includes: $>)
 		ifTrue: 
@@ -214,29 +233,43 @@ searchItemsStartingWith: aString maxItems: anInteger
 		ifFalse: 
 			[| matchBlock |
 			matchBlock := self filterForClassNamesMatching: aString.
-			environment classesDo: 
+			searchEnvironment classesDo: 
 					[:each |
 					(matchBlock value: each)
 						ifNotNil: 
 							[:name |
-							candidates add: (SmalltalkSearchCandidate matchingName: name object: each).
+							| candidate |
+							candidate := ListItem object: each text: name.
+							"Occassionally we may get classes that cannot be referred to unambiguously using their unqualified name, in which case we need to append the namespace to disambiguate. When selected for autocompletion, the qualified class name will be inserted"
+							(candidates addNewElement: candidate)
+								ifFalse: 
+									[| existing |
+									existing := candidates remove: candidate.
+									"Occassionaly we may encounter a package with the same name as a class, e.g. RBParser. In that case we leave the package name unchanged."
+									existing object isBehavior
+										ifTrue: [existing text: (self unambiguousCompletionFor: name class: existing object)].
+									candidates add: existing.
+									candidate text: (self unambiguousCompletionFor: name class: each)].
+							candidates add: candidate.
 							"If there are too many matching classes, don't display anything yet."
-							candidates size > anInteger ifTrue: [^#()]]].
+							candidates size > anInteger ifTrue: [OperationAborted signal]]].
 			"If we found only one class, then also add all its methods"
 			candidates size - count = 1
 				ifTrue: 
 					[| candidate |
-					candidate := candidates last.
+					"Even though there is only one class, there may be a matching package too, so we need to find the class"
+					candidate := candidates detect: [:each | each object isBehavior].
 					candidates := self
 								addMethodsOfClass: candidate object
-								startingWith: candidate matchingName
+								startingWith: candidate object name
 								toSearchCandidates: candidates
 								max: anInteger]].
 	^candidates!
 
 searchObject
-	| searchText |
-	searchText := self searchText.
+	^self searchObjectFromText: self searchText!
+
+searchObjectFromText: searchText
 	searchText isEmpty ifTrue: [^nil].
 	(searchText first isUppercase not and: [Symbol isLiteralSymbol: searchText])
 		ifTrue: [^Symbol findInterned: searchText].
@@ -252,13 +285,12 @@ searchText: aString
 
 selectorsStartingWith: aString maxItems: anInteger
 	| stream |
-	stream := Array writeStream: (anInteger bitShift: -1).
-	SmalltalkSystem current allSelectors do: 
-			[:each |
-			(each beginsWith: aString)
-				ifTrue: 
-					[stream nextPut: each.
-					stream size > anInteger ifTrue: [^#()]]].
+	stream := LimitedWriteStream
+				over: (Array writeStream: (anInteger bitShift: -1))
+				limit: anInteger
+				limitBlock: [:s | OperationAborted signal].
+	SmalltalkSystem current allSelectors
+		do: [:each | (each beginsWith: aString) ifTrue: [stream nextPut: (ListItem object: each text: each)]].
 	^stream contents!
 
 showCompletionList: aCollection prefixLength: anInteger
@@ -282,9 +314,6 @@ showCompletionListAt: posInteger maxItems: maxInteger
 startAutocompleteTimer
 	self view setTimer: SCI_AUTOCSHOW interval: self class autoCompleteDwell!
 
-styleRunBefore: anInteger
-	^view styler styleRunBefore: anInteger!
-
 styleRunRangeAt: anInteger
 	^(view styleAt: anInteger) name == #specialCharacter
 		ifTrue: [anInteger to: anInteger]
@@ -293,13 +322,17 @@ styleRunRangeAt: anInteger
 styleRunStartAt: anInteger
 	^(view styleAt: anInteger) name == #specialCharacter
 		ifTrue: [anInteger]
-		ifFalse: [view styleRunStartAt: anInteger]! !
+		ifFalse: [view styleRunStartAt: anInteger]!
+
+unambiguousCompletionFor: aString class: aClass
+	^'<1d> (<2d>)' << { aString. aClass environment fullName }! !
 !Tools.SmalltalkSearchPresenter categoriesForMethods!
 addMethodsOfClass:startingWith:toSearchCandidates:max:!autocompletion!helpers!private! !
 applyOptions!operations!options!private! !
 autoComplete:at:maxItems:!autocompletion!helpers!private! !
 classMatchingName:!helpers!private! !
 completeWordAt:with:!autocompletion!helpers!private! !
+completionForChoice:!autocompletion!private! !
 completionListSortBlock!autocompletion!constants!private! !
 createSchematicWiring!initializing!private! !
 filterForClassNamesMatching:!autocompletion!helpers!private! !
@@ -320,17 +353,20 @@ onViewAvailable!event handling!public! !
 onViewStateRestored!event handling!public! !
 performSmalltalkSearchFor:!operations!private! !
 rangeToCompleteAt:!autocompletion!helpers!private! !
+searchEnvironment!accessing!private! !
+searchEnvironment:!accessing!private! !
 searchItemsStartingWith:maxItems:!autocompletion!helpers!private! !
 searchObject!helpers!public! !
+searchObjectFromText:!helpers!public! !
 searchText!accessing!public! !
 searchText:!accessing!public! !
 selectorsStartingWith:maxItems:!autocompletion!helpers!private! !
 showCompletionList:prefixLength:!autocompletion!helpers!private! !
 showCompletionListAt:maxItems:!helpers!private! !
 startAutocompleteTimer!autocompletion!helpers!private! !
-styleRunBefore:!accessing!autocompletion!private! !
 styleRunRangeAt:!accessing!autocompletion!private! !
 styleRunStartAt:!accessing!autocompletion!private! !
+unambiguousCompletionFor:class:!autocompletion!helpers!private! !
 !
 
 !Tools.SmalltalkSearchPresenter class methodsFor!

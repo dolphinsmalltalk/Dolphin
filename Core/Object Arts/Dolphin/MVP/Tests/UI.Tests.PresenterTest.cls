@@ -22,6 +22,14 @@ destroyPresenter
 	shell = View desktop ifTrue: [presenter destroy] ifFalse: [shell close].
 	presenter := nil!
 
+hasTestStbViewResources
+	| resourceDir |
+	resourceDir := self resourceDir.
+	^File exists: resourceDir!
+
+hasTestStlViewResources
+	^self oldStlResources notEmpty!
+
 initializePresenter
 	self classToTest
 		ifNotNil: 
@@ -65,6 +73,9 @@ nonProportionalFont
 oldStlResources
 	^self class resourceIdentifiers!
 
+resourceDir
+	^self resourceFilename: 'ViewResources\' , self classToTest name!
+
 sendKeyPress: vkInteger extended: aBoolean
 	| scanCode flags |
 	scanCode := User32 mapVirtualKey: vkInteger uMapType: 0.
@@ -101,12 +112,10 @@ testStbUpgradeFromBinaryResources
 		- Override the #verifyUpgradedView: method to add any further validation of the upgrade process, if required."
 
 	<nocreate>
-	| resourceDir |
-	resourceDir := self resourceFilename: 'ViewResources\' , self classToTest name.
-	(File exists: resourceDir) ifFalse: [^self].
+	<skipUnless: #hasTestStbViewResources>
 	File
 		for: '*.vu'
-		in: resourceDir
+		in: self resourceDir
 		do: 
 			[:each |
 			self verifyStbUpgrade: each path.
@@ -120,6 +129,7 @@ testStlUpgradesFromLiteralResources
 		- Override the #verifyUpgradedView: method to add any further validation of the upgrade process, if required."
 
 	<nocreate>
+	<skipUnless: #hasTestStbViewResources>
 	self oldStlResources do: 
 			[:each |
 			self verifyStlUpgrade: each.
@@ -180,10 +190,13 @@ waitForInputIdle
 !UI.Tests.PresenterTest categoriesForMethods!
 classToTest!constants!private! !
 destroyPresenter!public!Running! !
+hasTestStbViewResources!private!testing! !
+hasTestStlViewResources!private!testing! !
 initializePresenter!public!Running! !
 leftClickAt:!helpers!private! !
 nonProportionalFont!constants!private! !
 oldStlResources!constants!private! !
+resourceDir!public!unit tests! !
 sendKeyPress:extended:!helpers!public! !
 setUp!public!Running! !
 shouldSetupPresenter!helpers!private! !
@@ -196,5 +209,18 @@ verifyUpgradedView:identifier:!helpers!private! !
 view!accessing!private! !
 viewClass!constants!private! !
 waitForInputIdle!helpers!private! !
+!
+
+!UI.Tests.PresenterTest class methodsFor!
+
+allTestSelectors
+	| selectors |
+	selectors := super allTestSelectors.
+	"We don't want the STB/STL upgrades reported as skipped if there are no test resources for a particular class"
+	#(#testStbUpgradeFromBinaryResources #testStlUpgradesFromLiteralResources)
+		do: [:each | [(self selector: each) evaluatePreconditions] on: TestSkip do: [:ex | selectors remove: each]].
+	^selectors! !
+!UI.Tests.PresenterTest class categoriesForMethods!
+allTestSelectors!Accessing!public! !
 !
 

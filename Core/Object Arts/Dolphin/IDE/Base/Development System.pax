@@ -114,7 +114,6 @@ package setClassNames: #(
 	#{Tools.SingleUnarySendMethodCategory}
 	#{Tools.SmalltalkExpressionStyler}
 	#{Tools.SmalltalkMethodStyler}
-	#{Tools.SmalltalkSearchCandidate}
 	#{Tools.SmalltalkSearchPresenter}
 	#{Tools.SmalltalkStyler}
 	#{Tools.SmalltalkStylingScanner}
@@ -1000,13 +999,6 @@ Core.Object
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Object
-	subclass: #'Tools.SmalltalkSearchCandidate'
-	instanceVariableNames: 'matchingName object'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Core.Object
 	subclass: #'Tools.SmalltalkSystemIcon'
 	instanceVariableNames: 'openBlock icon description tool helpId'
 	classVariableNames: ''
@@ -1413,7 +1405,7 @@ UI.Presenter
 	classConstants: {}!
 UI.Presenter
 	subclass: #'Tools.SmalltalkSearchPresenter'
-	instanceVariableNames: 'environment'
+	instanceVariableNames: 'searchEnvironment'
 	classVariableNames: 'AutoCompleteDwell MaxCompletionListHeight MaxCompletionListWidth OptionFlags'
 	imports: #(#{UI.Scintilla private})
 	classInstanceVariableNames: ''

@@ -1617,7 +1617,7 @@ Core.Object
 	classConstants: {}!
 Core.Object
 	subclass: #'UI.Scintilla.ListItem'
-	instanceVariableNames: 'text icon'
+	instanceVariableNames: 'object text icon'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
