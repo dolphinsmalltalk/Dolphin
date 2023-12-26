@@ -2,7 +2,7 @@
 
 Core.Object
 	subclass: #'UI.Scintilla.ListItem'
-	instanceVariableNames: 'text icon'
+	instanceVariableNames: 'object text icon'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -17,6 +17,12 @@ UI.Scintilla.ListItem comment: '`UI.Scintilla.ListItem`s can be used to wrap ite
 !UI.Scintilla.ListItem categoriesForClass!Kernel-Objects! !
 !UI.Scintilla.ListItem methodsFor!
 
+= anObject
+	^anObject == self or: 
+			[anObject class == self class and: 
+					["The names have to be unique within the list"
+					anObject text = text]]!
+
 displayOn: aPuttableStream
 	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
@@ -25,8 +31,19 @@ displayOn: aPuttableStream
 displayString
 	^text!
 
+hash
+	^text hash!
+
 icon
 	^icon!
+
+object
+	^object!
+
+object: anObject text: aString icon: anIcon
+	object := anObject.
+	text := aString.
+	icon := anIcon!
 
 printOn: aPuttableStream
 	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
@@ -42,15 +59,23 @@ printOn: aPuttableStream
 text
 	^text!
 
+text: aString 
+	text := aString!
+
 text: aString icon: anIcon
 	text := aString.
 	icon := anIcon! !
 !UI.Scintilla.ListItem categoriesForMethods!
+=!comparing!public! !
 displayOn:!displaying!public! !
 displayString!displaying!public! !
+hash!comparing!public! !
 icon!accessing!public! !
+object!accessing!public! !
+object:text:icon:!initializing!private! !
 printOn:!displaying!public! !
 text!accessing!public! !
+text:!accessing!public! !
 text:icon:!initializing!private! !
 !
 
@@ -59,10 +84,21 @@ text:icon:!initializing!private! !
 icon
 	^ScintillaView icon!
 
-text: aString icon: anIcon
-	^self new text: aString icon: anIcon! !
+object: anObject text: aString
+	^self
+		object: anObject
+		text: aString
+		icon: anObject icon!
+
+object: anObject text: aString icon: anIcon
+	<primitive: 157>
+	^self new
+		object: anObject
+		text: aString
+		icon: anIcon! !
 !UI.Scintilla.ListItem class categoriesForMethods!
 icon!constants!development!public! !
-text:icon:!initializing!public! !
+object:text:!instance creation!public! !
+object:text:icon:!instance creation!public! !
 !
 

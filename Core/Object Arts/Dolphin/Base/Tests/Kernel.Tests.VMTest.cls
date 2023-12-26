@@ -384,10 +384,10 @@ isGPF: gpf reading: aBoolean address: anAddress
 	address := info at: 2.
 	^(isReading eqv: aBoolean) and: [address = anAddress]!
 
-skipIfVMDoesNotSupportArgumentConversionsThatAllocateMemoryInOverlappedCalls
+isOnVMSupportingArgumentConversionsThatAllocateMemoryInOverlappedCalls
 	"Private - Currently it is not safe to performed overlapped calls with parameter types that require conversion and need to allocate memory to perform the conversion. E.g. an lpwstr parameter passed a Utf8String argument. The workaround is to ensure that the arguments are converted to the correct type in Smalltalk, e.g. by sending #asUtf16String to any strings passed as arguments to lpwstr parameters."
 
-	^self skip!
+	^false!
 
 suspendAndTerminate
 	"N.B. Timing is critical to much of this, so its not going to be possible to debug through it. Its really only to show up
@@ -508,15 +508,15 @@ testExtCallOverlappedArgLppvoid
 	self verifyExtCallArgLppvoid: true!
 
 testExtCallOverlappedArgLpstr
-	self skipIfVMDoesNotSupportArgumentConversionsThatAllocateMemoryInOverlappedCalls.
+	<skipUnless: #isOnVMSupportingArgumentConversionsThatAllocateMemoryInOverlappedCalls>
 	self verifyExtCallArgLpstr: true!
 
 testExtCallOverlappedArgLpstr8
-	self skipIfVMDoesNotSupportArgumentConversionsThatAllocateMemoryInOverlappedCalls.
+	<skipUnless: #isOnVMSupportingArgumentConversionsThatAllocateMemoryInOverlappedCalls>
 	self verifyExtCallArgLpstr8: true!
 
 testExtCallOverlappedArgLpwstr
-	self skipIfVMDoesNotSupportArgumentConversionsThatAllocateMemoryInOverlappedCalls.
+	<skipUnless: #isOnVMSupportingArgumentConversionsThatAllocateMemoryInOverlappedCalls>
 	self verifyExtCallArgLpwstr: true!
 
 testExtCallOverlappedCrtFault
@@ -3961,7 +3961,7 @@ hashBytes:!helpers!private! !
 immutableTestSubjects!constants!private!unit tests! !
 isFault:raisedIn:receiver:!helpers!private! !
 isGPF:reading:address:!helpers!private! !
-skipIfVMDoesNotSupportArgumentConversionsThatAllocateMemoryInOverlappedCalls!helpers!private! !
+isOnVMSupportingArgumentConversionsThatAllocateMemoryInOverlappedCalls!private!testing! !
 suspendAndTerminate!helpers!private! !
 testAllReferences!public!unit tests! !
 testAllReferencesWeak!public! !

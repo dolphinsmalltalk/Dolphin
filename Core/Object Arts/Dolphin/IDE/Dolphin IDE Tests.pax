@@ -23,6 +23,7 @@ package setClassNames: #(
 	#{Tools.Tests.PackageSelectorTest}
 	#{Tools.Tests.PublishedAspectInspectorTest}
 	#{Tools.Tests.ResourceBrowserTest}
+	#{Tools.Tests.SmalltalkSearchPresenterTest}
 	#{Tools.Tests.SmalltalkStylerTest}
 	#{Tools.Tests.SmalltalkSystemShellTest}
 	#{Tools.Tests.SystemBrowserTest}
@@ -68,8 +69,10 @@ package setPrerequisites: #(
 	'..\MVP\Presenters\Tree\Dolphin Tree Presenter'
 	'..\MVP\Type Converters\Dolphin Type Converters'
 	'..\MVP\Models\Value\Dolphin Value Models'
+	'..\MVP\Gdiplus\Gdiplus'
 	'..\..\..\Contributions\IDB\IDB Method History'
 	'..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments'
+	'..\..\..\Contributions\Refactory\Refactoring Browser\Parser\RBParser'
 	'..\..\..\Contributions\Refactory\Refactoring Browser\Refactorings\RBRefactorings'
 	'..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
 	'..\ActiveX\Shell\Windows Shell'
@@ -167,6 +170,13 @@ UI.Tests.PresenterTest
 UI.Tests.PresenterTest
 	subclass: #'Tools.Tests.ResourceBrowserTest'
 	instanceVariableNames: 'testClass'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.PresenterTest
+	subclass: #'Tools.Tests.SmalltalkSearchPresenterTest'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

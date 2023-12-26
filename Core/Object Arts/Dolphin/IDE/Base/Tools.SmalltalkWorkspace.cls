@@ -63,6 +63,69 @@ In Dolphin 5.1 and earlier `SmalltalkWorkspace` could work with an `TextEdit` vi
 !Tools.SmalltalkWorkspace categoriesForClass!MVP-Presenters!MVP-Resources-IDE Tools! !
 !Tools.SmalltalkWorkspace methodsFor!
 
+addAllStaticIdentifiersStartingWith: aString to: aSet limit: anInteger
+	| visited class visitStatics filter env |
+	visited := IdentitySet new.
+	filter := aString isEmpty
+				ifTrue: 
+					[
+					[:each |
+					self
+						addStatic: each
+						toCompletionList: aSet
+						limit: anInteger]]
+				ifFalse: 
+					[| ignoreCase |
+					ignoreCase := self isAutoCompletionCaseInsensitive.
+					
+					[:each |
+					(each key beginsWith: aString ignoreCase: ignoreCase)
+						ifTrue: 
+							[self
+								addStatic: each
+								toCompletionList: aSet
+								limit: anInteger]]].
+	env := self searchEnvironment.
+	visitStatics := 
+			[:eachClass |
+			(visited includes: eachClass)
+				ifFalse: 
+					[visited add: eachClass.
+					(env includesClassOrMetaclass: eachClass realClass)
+						ifTrue: 
+							[eachClass bindingsDo: filter.
+							eachClass importedNamespacesDo: 
+									[:eachNs |
+									(visited includes: eachNs)
+										ifFalse: 
+											[visited add: eachNs.
+											(env includesClassOrMetaclass: eachNs realClass) ifTrue: [eachNs bindingsDo: filter]]]]]].
+	class := self selfClass instanceClass.
+	class withAllSuperclassesDo: visitStatics.
+	class environment ?? Smalltalk withAllSuperclassesDo: visitStatics.
+	"Finally any namespaces configured into the workspace scope"
+	namespaces do: [:each | each bindingsDo: filter].
+	^aSet!
+
+addStatic: aVariableBinding toCompletionList: aSet limit: anInteger
+	| candidate |
+	candidate := ListItem
+				object: aVariableBinding
+				text: aVariableBinding key asString
+				icon: aVariableBinding value icon.
+	"Occassionally we may get classes that cannot be identified unambiguously using their unqualified name alone, in which case we need to append the namespace to disambiguate. When selected for autocompletion, the qualified class name will be inserted"
+	(aSet addNewElement: candidate)
+		ifFalse: 
+			[| existing |
+			existing := aSet remove: candidate.
+			"Occasionally we may encounter a package with the same name as a class, e.g. RBParser. In that case we leave the package name unchanged."
+			(existing object isKindOf: VariableBinding)
+				ifTrue: [existing text: (self unambiguousCompletionForBinding: existing object)].
+			aSet add: existing.
+			candidate text: (self unambiguousCompletionForBinding: aVariableBinding)].
+	aSet add: candidate.
+	aSet size > anInteger ifTrue: [OperationAborted signal]!
+
 allPools
 	"Private - Answers an Array of all the PoolDictionaries used during evaluations in the receiver. The workspacePool of locals must be the first element of the array"
 
@@ -549,6 +612,20 @@ completeWordAt: anInteger with: aString
 		replaceSelection: (addSpace ifTrue: [aString , ' '] ifFalse: [aString]).
 	^addSpace!
 
+completionForChoice: aString
+	| parts unqualifiedName fullName var |
+	aString first isUpperCase ifFalse: [^aString].
+	parts := $( split: aString.
+	parts size = 1 ifTrue: [^aString].
+	"If the class resolves unambiguously in context using only the unqualified name, then insert that. Otherwise insert the fully qualified name."
+	unqualifiedName := parts first trimBlanks.
+	fullName := (parts second readStream upTo: $)) , BindingReference.PathSeparatorString
+				, unqualifiedName.
+	var := self resolveIdentifier: unqualifiedName.
+	^(var notNil and: [var isStaticVariable and: [var binding fullName = fullName]])
+		ifTrue: [unqualifiedName]
+		ifFalse: [fullName]!
+
 completionListSortBlock
 	^ScintillaView listSortBlock: self isAutoCompletionCaseInsensitive!
 
@@ -804,27 +881,26 @@ firstError
 	^ordered isEmpty ifFalse: [ordered first]!
 
 getCompletionSignatureFor: aString at: anInteger
-	| prev receiverStyle selector |
+	| selector |
 	selector := aString asSymbol.
-	prev := self styleRunBefore: anInteger - 1.
-	prev isNil
-		ifTrue: 
+	(self styleRunBefore: anInteger - 1)
+		ifNil: 
 			[(self selfClass lookupMethod: selector)
 				ifNotNil: [:method | ^self developmentSystem signatureOfMethod: method]]
-		ifFalse: 
-			[receiverStyle := prev value.
+		ifNotNil: 
+			[:prev |
+			| receiverStyle |
+			receiverStyle := prev value.
 			receiverStyle == #identifier
 				ifTrue: 
-					[| range c |
+					[| range |
 					range := prev key.
-					c := self classForRange: range.
-					c
+					(self classForRange: range)
 						ifNotNil: 
 							[:methodClass |
 							(methodClass lookupMethod: selector)
 								ifNotNil: [:method | ^self developmentSystem signatureOfMethod: method]]]].
-	"Perform a breadth-first traversal of the class hierarchy to find the highest definition of
-	the selector and use the signature of that."
+	"Perform a breadth-first traversal of the class hierarchy to find the highest definition of the selector and use the signature of that."
 	Smalltalk allBehaviorsDo: 
 			[:each |
 			(each includesSelector: selector)
@@ -1030,7 +1106,8 @@ maybeShowCompletionList
 	view isReadOnly ifTrue: [^self].
 	last := view caretPosition - 1.
 	styleName := (view styleAt: last) name.
-	(self
+	
+	[(self
 		autoComplete: styleName
 		at: last
 		maxItems: self class maxAutoCompletionListSize)
@@ -1043,15 +1120,16 @@ maybeShowCompletionList
 				((char == $^ and: [styleName == #specialCharacter])
 					or: [char == $\x20 and: [(view styleIdAt: last) = (view idOfStyleNamed: #whitespace)]])
 						ifTrue: 
-							[self showCompletionListAfterStyleRun: (self styleRunBefore: last) maxItems: self class maxAutoCompletionListSize]]!
+							[self showCompletionListAfterStyleRun: (self styleRunBefore: last)
+								maxItems: self class maxAutoCompletionListSize]]]
+			on: OperationAborted
+			do: [:ex | ]!
 
 messagesForStyleRun: anAssociation startingWith: aString maxItems: anInteger
-	"Private - Answer the set of selectors that could potentially be sent as messages following
-	the specified token."
+	"Private - Answer a completion list of selectors that could potentially be sent as messages following the specified token."
 
 	| selectors class ignoreCase icon |
 	ignoreCase := self isAutoCompletionCaseInsensitive.
-	icon := Message icon.
 	class := self classForStyleRun: anAssociation.
 	"When completing against a variable that happens to have the value nil,
 	treat it as possibly being of any type, as most likely it is simply uninitialized."
@@ -1063,8 +1141,14 @@ messagesForStyleRun: anAssociation startingWith: aString maxItems: anInteger
 			(each beginsWith: aString ignoreCase: ignoreCase)
 				ifTrue: 
 					[selectors add: each.
-					selectors size > anInteger ifTrue: [^#()]]].
-	^selectors collect: [:each | ListItem text: each icon: icon]!
+					selectors size > anInteger ifTrue: [OperationAborted signal]]].
+	icon := Message icon.
+	^selectors collect: 
+			[:each |
+			ListItem
+				object: each
+				text: each
+				icon: icon]!
 
 modifiedModel
 	^modifiedModel!
@@ -1093,12 +1177,12 @@ nodeForRange: anInterval
 		ifNotNil: [:tree | (tree whichNodeIsContainedBy: anInterval) ifNil: [tree bestNodeFor: anInterval]]!
 
 onAutoComplete: aString startingAt: anInteger accept: aValueHolder
-	"Private - "
+	"Private - The user has made a choice from the auto-completion list. Perform our own insertion, and suppress the view's default completion."
 
 	((view styleAt: anInteger) name ~~ #literalSymbol and: [aString includes: $:])
 		ifTrue: [self insertKeywordCompletion: aString startingAt: anInteger]
-		ifFalse: [self insertCompletion: aString at: anInteger].
-	aValueHolder value: false.!
+		ifFalse: [self insertCompletion: (self completionForChoice: aString) at: anInteger].
+	aValueHolder value: false!
 
 onCharAdded: aCharacter 
 	(self isAutoCompletionEnabled and: [self isSyntaxColoringEnabled]) ifFalse: [^self].
@@ -1236,39 +1320,6 @@ publishedAspects
 		add: self class indicatorDefinitionsAspect;
 		yourself!
 
-putAllStaticIdentifiersStartingWith: aString on: aWriteStream
-	| visited class visitStatics select env |
-	visited := IdentitySet new.
-	select := aString isEmpty
-				ifTrue: [[:each | aWriteStream nextPut: (ListItem text: each key icon: each value icon)]]
-				ifFalse: 
-					[| ignoreCase |
-					ignoreCase := self isAutoCompletionCaseInsensitive.
-					
-					[:each |
-					(each key beginsWith: aString ignoreCase: ignoreCase)
-						ifTrue: [aWriteStream nextPut: (ListItem text: each key icon: each value icon)]]].
-	env := self searchEnvironment.
-	visitStatics := 
-			[:eachClass |
-			(visited includes: eachClass)
-				ifFalse: 
-					[visited add: eachClass.
-					(env includesClassOrMetaclass: eachClass realClass)
-						ifTrue: 
-							[eachClass bindingsDo: select.
-							eachClass importedNamespacesDo: 
-									[:eachNs |
-									(visited includes: eachNs)
-										ifFalse: 
-											[visited add: eachNs.
-											(env includesClassOrMetaclass: eachNs realClass) ifTrue: [eachNs bindingsDo: select]]]]]].
-	class := self selfClass instanceClass.
-	class withAllSuperclassesDo: visitStatics.
-	class environment ?? Smalltalk withAllSuperclassesDo: visitStatics.
-	"Finally any namespaces configured into the workspace scope"
-	namespaces do: [:each | each bindingsDo: select]!
-
 queryBrowseClassOfLiteral: aCommandQuery
 	self selectedLiteralValue
 		ifNotNil: 
@@ -1381,7 +1432,7 @@ reformatSource
 	<commandQuery: #canReformatSource>
 	| source formatter reformatted expr tabs |
 	source := self hasSelection ifTrue: [self selection] ifFalse: [self text].
-	tabs := (source findFirst: [:each | each ~~ Character tab]) - 1.
+	tabs := (source findFirst: [:each | each ~~ $\t]) - 1.
 	expr := 
 			[| context |
 			context := self parseContext.
@@ -1392,11 +1443,9 @@ reformatSource
 					on: Parser notificationClass
 					do: [:e | e okToContinue ifTrue: [e exit: nil] ifFalse: [^self]].
 	formatter := expr formatterClass new.
-	tabs <= 0
-		ifTrue: [reformatted := formatter format: expr]
-		ifFalse: 
-			[formatter indent: tabs
-				around: [reformatted := (source copyFrom: 1 to: tabs) , (formatter format: expr)]].
+	reformatted := tabs <= 0
+				ifTrue: [formatter format: expr]
+				ifFalse: [formatter indent: tabs around: [(source copyFrom: 1 to: tabs) , (formatter format: expr)]].
 	^self hasSelection
 		ifTrue: [self replaceSelection: reformatted]
 		ifFalse: 
@@ -1542,7 +1591,7 @@ selectorsStartingWith: aString maxItems: anInteger
 					[
 					[:eachClass |
 					selectors addAll: eachClass selectors.
-					selectors size > anInteger ifTrue: [^#()]]]
+					selectors size > anInteger ifTrue: [OperationAborted signal]]]
 				ifFalse: 
 					[| ignoreCase |
 					ignoreCase := self isAutoCompletionCaseInsensitive.
@@ -1553,7 +1602,7 @@ selectorsStartingWith: aString maxItems: anInteger
 							(eachSelector beginsWith: aString ignoreCase: ignoreCase)
 								ifTrue: 
 									[selectors add: eachSelector.
-									selectors size > anInteger ifTrue: [^#()]]]]]).
+									selectors size > anInteger ifTrue: [OperationAborted signal]]]]]).
 	"Remove anything already overridden"
 	^selectors difference: class selectors!
 
@@ -1810,7 +1859,7 @@ symbolsStartingWith: aString maxItems: anInteger
 			(each beginsWith: aString ignoreCase: ignoreCase)
 				ifTrue: 
 					[stream nextPut: each.
-					stream size > anInteger ifTrue: [^#()]]].
+					stream size > anInteger ifTrue: [OperationAborted signal]]].
 	^stream contents!
 
 text
@@ -1845,6 +1894,11 @@ toggleAutoCompletion
 toggleStyling
 	<commandQuery: #queryToggleStyling:>
 	^self view toggleStyling!
+
+unambiguousCompletionForBinding: aVariableBinding
+	"Private - Generate an insertion string for the specified variable that is unambiguous for the user, but that also allows us to later identify the correct identifier to insert, since unfortunately Scintilla does not pass the index of the item selected from the auto-completion list, only the string. We can do this by appending the namespace fullname in some unique way. We must use a smple space, i.e. $\x20,  to separate the namespace qualification from the unqualified name because the Scintilla list uses a simple C sort of the items, not a linguistic sort. This means that any of the other Unicode spaces will cause the qualified items to sort after any longer unqualified identifiers of the same prefix, which is certainly not what we want. We use some special brackets around the qualified name, however, to avoid confusing with normal brackets, although in practice these are only likely in package names, and these should not appear in the completion lists in workspaces, only in the search presenter."
+
+	^'<1d> (<2d>)' << { aVariableBinding key. aVariableBinding environment fullName }!
 
 updateErrorStatus
 	self errorModel ifNotNil: [:errors | errors value: self firstError]!
@@ -1895,11 +1949,8 @@ variableMetadataProvider: aVariableResolver
 visibleIdentifiersAt: posInteger startingWith: aString atMost: maxInteger
 	"Private - Build and answer a collection of identifiers that are visible at the <integer> caret position, posInteger, as potential completions for the <String> prefix, aString. If in case-sensitive mode assume that the convention is followed of starting all class/pool/global variables with an uppercase letter, and all temps and inst. vars with a lowercase letter. If there are more matching identifiers than the maximum specified by the <integer>, maxInteger, then answer an empty collection."
 
-	| ignoreCase identifiers |
-	identifiers := LimitedWriteStream
-				on: (Array new: maxInteger)
-				limit: maxInteger
-				limitBlock: [^#()].
+	| ignoreCase candidates |
+	candidates := Set new.
 	ignoreCase := self isAutoCompletionCaseInsensitive.
 	(ignoreCase or: [aString isEmpty or: [aString first isUppercase not]])
 		ifTrue: 
@@ -1907,16 +1958,25 @@ visibleIdentifiersAt: posInteger startingWith: aString atMost: maxInteger
 			#(nil true false) do: 
 					[:each |
 					(each printString beginsWith: aString ignoreCase: ignoreCase)
-						ifTrue: [identifiers nextPut: (ListItem text: each printString icon: each icon)]].
+						ifTrue: [candidates add: (ListItem object: each text: each printString)]].
 			currentNode := self nodeForRange: (posInteger to: posInteger).
 			self allVariablesVisibleFrom: currentNode
 				do: 
 					[:each |
 					(each name beginsWith: aString ignoreCase: ignoreCase)
-						ifTrue: [identifiers nextPut: (ListItem text: each name icon: (self iconForVariable: each))]]].
+						ifTrue: 
+							[candidates add: (ListItem
+										object: each
+										text: each name
+										icon: (self iconForVariable: each)).
+							candidates size > maxInteger ifTrue: [OperationAborted signal]]]].
 	(ignoreCase or: [aString isEmpty or: [aString first isUppercase]])
-		ifTrue: [self putAllStaticIdentifiersStartingWith: aString on: identifiers].
-	^identifiers contents!
+		ifTrue: 
+			[self
+				addAllStaticIdentifiersStartingWith: aString
+				to: candidates
+				limit: maxInteger].
+	^candidates!
 
 workspacePool
 	"Answer the <Dictionary> for locals used in evaluations within the receiver"
@@ -1938,6 +1998,8 @@ wrapLinesInRange: anInterval indent: anInteger
 				tabWidth: scintilla tabWidth.
 	scintilla replaceTarget: justified"Private - Answer the development system model."! !
 !Tools.SmalltalkWorkspace categoriesForMethods!
+addAllStaticIdentifiersStartingWith:to:limit:!autocompletion!private! !
+addStatic:toCompletionList:limit:!autocompletion!private! !
 allPools!accessing!private! !
 allVariablesVisibleFrom:do:!autocompletion!enumerating!private! !
 applyOptions!operations!options!private! !
@@ -1989,6 +2051,7 @@ completeInitialWord!autocompletion!helpers!private! !
 completeQualifiedIdentifier:startingWith:maxItems:!autocompletion!helpers!private! !
 completeWord!autocompletion!commands-actions!public! !
 completeWordAt:with:!autocompletion!helpers!private! !
+completionForChoice:!autocompletion!private! !
 completionListSortBlock!autocompletion!constants!private! !
 completionStringFor:at:!autocompletion!helpers!private! !
 copySelection!commands-actions!public! !
@@ -2074,7 +2137,6 @@ printIt!commands-actions!public! !
 prompt:toSaveChanges:!helpers!private! !
 promptForVariableName:!helpers!private! !
 publishedAspects!development!public! !
-putAllStaticIdentifiersStartingWith:on:!autocompletion!helpers!private! !
 queryBrowseClassOfLiteral:!commands-queries!private! !
 queryBrowseDefinitions:!commands-queries!private! !
 queryBrowseLiteralReferences:!commands-queries!private! !
@@ -2130,7 +2192,7 @@ stylerClass:!accessing!public! !
 styleRunBefore:!accessing!autocompletion!private! !
 styleRunRangeAt:!accessing!autocompletion!private! !
 styleRunStartAt:!accessing!autocompletion!private! !
-suggestClassForVariable:!autocompletion!helpers!public! !
+suggestClassForVariable:!helpers!public! !
 symbolsStartingWith:maxItems:!autocompletion!helpers!private! !
 text!accessing!public! !
 text:!accessing!public! !
@@ -2140,6 +2202,7 @@ textStyles:!accessing!public! !
 tipForVariable:!helpers!public! !
 toggleAutoCompletion!commands-actions!public! !
 toggleStyling!commands-actions!public! !
+unambiguousCompletionForBinding:!autocompletion!private! !
 updateErrorStatus!operations!public! !
 validateUserInterface!operations!public! !
 variableForIdentifierStyle:range:!helpers!private! !

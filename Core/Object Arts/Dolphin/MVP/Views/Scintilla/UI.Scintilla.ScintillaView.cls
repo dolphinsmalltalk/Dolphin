@@ -528,7 +528,7 @@ autoCompletionSeparator: aCharacter
 	self sciAutoCSetSeparator: aCharacter asInteger!
 
 autoCompletionSortMode
-	"Answer the <Character> used as the separator between entries in an auto-completion list <String>."
+	"Answer the symbolic name of the auto-completion list sorting mode."
 
 	^self class autoCompletionSortModes at: self sciAutoCGetOrder + 1!
 
