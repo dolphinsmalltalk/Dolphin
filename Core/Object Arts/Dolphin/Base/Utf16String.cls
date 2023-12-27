@@ -36,6 +36,13 @@ _beginsString: aString
 				buf2: self
 				count: size * 2) == 0]!
 
+_endsString: aString
+	| i size comparand |
+	comparand := aString asUtf16String.
+	size := comparand size.
+	i := size - self size + 1.
+	^self = (i <= 1 ifTrue: [comparand] ifFalse: [comparand copyFrom: i to: size])!
+
 asByteString: aClass
 	"Private - Answer a byte-string encoded <String> of the specified class containing the same characters as the receiver."
 
@@ -142,7 +149,7 @@ decodeAt: anInteger
 					Character.Utf8Default]]
 		ifFalse: 
 			[surrogateBits == Character.Utf16TrailMask
-				ifTrue: [self errorIntraCharacterIndex: anInteger]
+				ifTrue: [Character.Utf8Default]
 				ifFalse: [Character utf16Value: leading ifInvalid: [Character.Utf8Default]]]!
 
 decodeNextFrom: aReadStream
@@ -373,6 +380,7 @@ wordAtOffset: anInteger put: anObject
 	^self primitiveFailed: _failureCode! !
 !Utf16String categoriesForMethods!
 _beginsString:!comparing!double dispatch!private! !
+_endsString:!comparing!double dispatch!private! !
 asByteString:!converting!private! !
 asLowercase!converting!public! !
 asUppercase!converting!public! !

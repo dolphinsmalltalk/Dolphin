@@ -314,6 +314,23 @@ testCopyWithout
 testEmpty
 	self assert: self collectionClass empty class identicalTo: self collectionClass!
 
+testEndsWithEmpty
+	| empty |
+	empty := self collectionClass empty.
+	self deny: (empty endsWith: $d).
+	self deny: (empty endsWith: $\0).
+	self deny: (empty endsWith: $🐬).
+	self deny: (empty endsWith: '🐬' asUtf8String).
+	self deny: (empty endsWith: '🐬' asUtf16String).
+	self deny: (empty endsWith: 'a' asAnsiString).
+	self deny: (empty endsWith: #($a)).
+	self deny: (empty endsWith: #[0]).
+	self assert: (empty endsWith: AnsiString empty).
+	self assert: (empty endsWith: Utf8String empty).
+	self assert: (empty endsWith: Utf16String empty).
+	self assert: (empty endsWith: #()).
+	self assert: (empty endsWith: #[])!
+
 testEquals
 	| abc |
 	self equalityTestCases do: 
@@ -1195,7 +1212,8 @@ testClassReadFrom!public!unit tests! !
 testCopyToComTaskMemory!public!unit tests! !
 testCopyWith!public! !
 testCopyWithout!public! !
-testEmpty!public!testing / accessing! !
+testEmpty!public!unit tests! !
+testEndsWithEmpty!public!unit tests! !
 testEquals!public!unit tests! !
 testExpandMacrosWith!public!unit tests! !
 testExpandMacrosWithArguments!public!unit tests! !

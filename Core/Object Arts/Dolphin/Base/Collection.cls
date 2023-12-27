@@ -14,6 +14,9 @@ Collection comment: ''!
 _beginsString: aString
 	^aString basicBeginsWith: self!
 
+_endsString: aString
+	^aString asArray endsWith: self!
+
 _indexOfAnyInString: aString startingAt: anInteger 
 	aString from: anInteger keysAndValuesDo: [:i :elem | (self includes: elem) ifTrue: [^i]].
 	^0!
@@ -609,6 +612,7 @@ union: comperand
 ! !
 !Collection categoriesForMethods!
 _beginsString:!comparing!double dispatch!private! !
+_endsString:!comparing!double dispatch!private! !
 _indexOfAnyInString:startingAt:!double dispatch!private!searching! !
 add:!adding!public! !
 addAll:!adding!public! !

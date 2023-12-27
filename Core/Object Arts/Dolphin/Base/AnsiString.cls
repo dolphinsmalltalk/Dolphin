@@ -25,6 +25,9 @@ _beginsString: aString
 				buf2: self
 				count: size) == 0]!
 
+_endsString: aString
+	^self asUtf8String _endsString: aString!
+
 asAnsiString
 	"Answer an ANSI encoded string representation of the receiver."
 
@@ -154,6 +157,7 @@ urlDecoded
 	^unescaped contents! !
 !AnsiString categoriesForMethods!
 _beginsString:!comparing!double dispatch!private! !
+_endsString:!comparing!double dispatch!private! !
 asAnsiString!converting!public! !
 asLowercase!converting!public! !
 asUppercase!converting!public! !
