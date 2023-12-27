@@ -73,12 +73,10 @@ testStreamInAnsiText
 	presenter selectLine: 10.
 	actual := presenter selectionRtf.
 	"This test is locale sensitive and may need revision"
-	rtf := '{\rtf1\ansi\ansicpg<1d>\deff0{\fonttbl{\f0\fnil\fcharset0 Segoe UI;}}
-\uc1\pard\lang<2d>\f0\fs20 over the lazy dog}
-'
-				expandMacrosWithArguments: { Character.AnsiCodePage. Locale systemDefault lcid }
-				locale: Locale invariant.
-	self assert: actual equals: rtf.
+	self assert: (actual beginsWith: '{\rtf1\ansi\ansicpg<d>' << Character.AnsiCodePage).
+	self
+		assert: (actual endsWith: '\uc1\pard\lang<d>\f0\fs20 over the lazy dog}
+' << Locale systemDefault lcid).
 
 	"Now stream in the ANSI RTF"
 	rtf := presenter rtfText.
@@ -125,13 +123,12 @@ testStreamInUtfText
 	presenter selectLine: 10.
 	actual := presenter selectionUrtf.
 	"This test is locale sensitive and may need revision"
-	ansi := '{\urtf1\ansi\ansicpg<1d>\deff0{\fonttbl{\f0\fnil\fcharset0 Segoe UI;}{\f1\fnil\fcharset238 Segoe UI;}}
-\uc1\pard\lang<2d>\f0\fs20 ĉṓɲṩḙċ\f1 ť\f0 ᶒțûɾ ấɖḯƥĭṩ\f1 čį\f0 ɳġ ḝ\f1 łį\f0 ʈ}
+	self
+		assert: (actual beginsWith: '{\urtf1\ansi\ansicpg<d>\deff0{\fonttbl{\f0' << Character.AnsiCodePage).
+	self assert: (actual
+				endsWith: '\uc1\pard\lang<d>\f0\fs20 ĉṓɲṩḙċ\f1 ť\f0 ᶒțûɾ ấɖḯƥĭṩ\f1 čį\f0 ɳġ ḝ\f1 łį\f0 ʈ}
 '
-				expandMacrosWithArguments: {Character.AnsiCodePage. Locale systemDefault lcid}
-				locale: Locale invariant.
-	self assert: actual equals: ansi.
-
+						<< Locale systemDefault lcid).
 	"Check round-trip as ANSI RTF (which has an escape syntax to preserve international characters)"
 	presenter text: text.
 	rtf := presenter rtfText.

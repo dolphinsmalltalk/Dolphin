@@ -40,6 +40,13 @@ _beginsString: aString
 				buf2: self
 				count: size) == 0]!
 
+_endsString: aString
+	| i size comparand |
+	comparand := aString asUtf8String.
+	size := comparand size.
+	i := size - self size + 1.
+	^self = (i <= 1 ifTrue: [comparand] ifFalse: [comparand copyFrom: i to: size])!
+
 asUtf8String
 	"Answer a UTF-8 encoded string representation of the receiver."
 
@@ -706,6 +713,7 @@ urlEncoded
 	^encodedStream grabContents! !
 !Core.Utf8String categoriesForMethods!
 _beginsString:!comparing!double dispatch!private! !
+_endsString:!comparing!double dispatch!private! !
 asUtf8String!converting!public! !
 asUtf8StringCopy!converting!public! !
 before:ifAbsent:!public!searching! !

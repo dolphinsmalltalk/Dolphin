@@ -342,7 +342,8 @@ testEndsWith
 	self assert: (sequence endsWith: (self newUnsortedCollection: #($1 $3 $2))) not.
 	self assert: (sequence endsWith: (self newUnsortedCollection: #($1 $2 $4))) not.
 	self assert: (sequence endsWith: (self newUnsortedCollection: #($1 $2 $3 $4))) not.
-	self assert: (sequence endsWith: (self newUnsortedCollection: #($4 $1 $2 $3))) not!
+	self assert: (sequence endsWith: (self newUnsortedCollection: #($4 $1 $2 $3))) not.
+	self assert: (sequence endsWith: (Set with: (self assimilate: $3)))!
 
 testFindFirst
 	| subject matchAll matchNone b c d matchB matchC |

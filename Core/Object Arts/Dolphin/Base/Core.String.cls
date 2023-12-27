@@ -486,6 +486,11 @@ encodeOn: aWriteStream put: aCharacter
 
 	^self subclassResponsibility!
 
+endsWith: anObject
+	"Answer whether the receiver ends with the argument."
+
+	^anObject _endsString: self!
+
 expandMacros
 	"Expand the receiver with replacable arguments.
 	See #expandMacrosWithArguments: for further details."
@@ -1285,6 +1290,7 @@ displayOn:!printing!public! !
 displayString!printing!public! !
 encodedSizeAt:!encode/decode!private! !
 encodeOn:put:!encode/decode!private! !
+endsWith:!comparing!public! !
 expandMacros!printing!public! !
 expandMacrosIn:!double dispatch!private! !
 expandMacrosWith:!printing!public! !
