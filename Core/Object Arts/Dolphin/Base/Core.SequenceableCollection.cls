@@ -603,13 +603,12 @@ encoding
 endsWith: aCollection
 	"Answer whether the receiver ends with the sequence of objects in the <Collection> argument"
 
-	| i |
-	(i := self size - aCollection size + 1) < 1 ifTrue: [^false].
-	aCollection do: 
-			[:each |
-			(self at: i) = each ifFalse: [^false].
-			i := i + 1].
-	^true!
+	| stream i |
+	i := self size - aCollection size.
+	i < 0 ifTrue: [^false].
+	stream := ReadStream on: self.
+	stream position: i.
+	^aCollection allSatisfy: [:each | stream next = each]!
 
 errorCollectionsOfDifferentSizes
 	^self error: 'collections are of different sizes'!

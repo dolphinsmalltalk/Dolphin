@@ -42,6 +42,13 @@ _beginsString: aString
 				buf2: self
 				count: size * 2) == 0]!
 
+_endsString: aString
+	| i size comparand |
+	comparand := aString asUtf16String.
+	size := comparand size.
+	i := size - self size + 1.
+	^self = (i <= 1 ifTrue: [comparand] ifFalse: [comparand copyFrom: i to: size])!
+
 asUtf16String
 	"Answer a UTF16-encoded equivalent of the receiver."
 
@@ -320,6 +327,7 @@ uint16AtOffset: anInteger put: anObject
 	^self primitiveFailed: _failureCode! !
 !Core.Utf16String categoriesForMethods!
 _beginsString:!comparing!double dispatch!private! !
+_endsString:!comparing!double dispatch!private! !
 asUtf16String!converting!public! !
 asUtf16StringCopy!converting!public! !
 asUtf8String!converting!public! !

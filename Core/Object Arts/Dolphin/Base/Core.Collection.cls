@@ -16,6 +16,9 @@ Core.Collection comment: ''!
 _beginsString: aString
 	^aString basicBeginsWith: self!
 
+_endsString: aString
+	^aString asArray endsWith: self!
+
 add: newElement
 	"Include the <Object> argument, newElement, as one of the receiver's 
 	elements. Answer newElement."
@@ -579,6 +582,7 @@ union: comperand
 		yourself! !
 !Core.Collection categoriesForMethods!
 _beginsString:!comparing!double dispatch!private! !
+_endsString:!comparing!double dispatch!private! !
 add:!adding!public! !
 addAll:!adding!public! !
 allSatisfy:!enumerating!public! !
