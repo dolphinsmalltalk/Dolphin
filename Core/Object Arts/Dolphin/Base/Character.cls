@@ -55,6 +55,12 @@ At present only byte characters (that are not control characters) have a printab
 _beginsString: aString
 	^aString first = self!
 
+_endsString: aString
+	| i |
+	i := aString size - (aString encodedSizeOf: self) + 1.
+	i < 1 ifTrue: [^false].
+	^(aString decodeAt: i) = self!
+
 _separateSubStringsIn: tokens
 	| start answer size end codeUnits |
 	size := tokens size.
@@ -503,6 +509,7 @@ to: aCharacter
 	^(self codePoint to: aCharacter codePoint) collect: [:each | Character codePoint: each]! !
 !Character categoriesForMethods!
 _beginsString:!comparing!double dispatch!private! !
+_endsString:!comparing!double dispatch!private! !
 _separateSubStringsIn:!private!tokenizing! !
 <!comparing!public! !
 =!comparing!public! !

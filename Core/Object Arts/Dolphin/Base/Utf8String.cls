@@ -36,6 +36,14 @@ _beginsString: aString
 				buf2: self
 				count: size) == 0]!
 
+_endsString: aString
+	| i size comparand |
+	comparand := aString asUtf8String.
+	size := comparand size.
+	i := size - self size + 1.
+	^self = (i <= 1 ifTrue: [comparand] ifFalse: [comparand copyFrom: i to: size])
+!
+
 asLowercase
 	"Answer a <readableString> which is a copy of the receiver but with the contents converted
 	to lowercase."
@@ -104,7 +112,7 @@ decodeAt: anInteger
 	c < 16rC0
 		ifTrue: 
 			["On a continution byte so in the middle of a character, which is invalid"
-			^self errorIntraCharacterIndex: anInteger].
+			^Character.Utf8Default].
 	"At least 2 byte character"
 	size := self size.
 	anInteger < size ifFalse: [^Character.Utf8Default].
@@ -534,6 +542,7 @@ urlEncoded
 	^encodedStream grabContents! !
 !Utf8String categoriesForMethods!
 _beginsString:!comparing!double dispatch!private! !
+_endsString:!comparing!double dispatch!private! !
 asLowercase!converting!public! !
 asUppercase!converting!public! !
 asUtf8String!converting!public! !

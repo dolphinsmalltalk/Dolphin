@@ -219,7 +219,7 @@ testDecodeAt
 			actual := subject decodeAt: 1.
 			self assert: actual equals: each.
 			"Starting in the middle of a character should always be an error"
-			2 to: subject size do: [:i | self should: [subject decodeAt: i] raise: Error]].
+			2 to: subject size do: [:i | self assert: (subject decodeAt: i) equals: Character replacement]].
 	self decodeInvalidContinuations do: 
 			[:each |
 			| subject actual |
@@ -305,6 +305,41 @@ testEncodeOnPut
 						self assert: actual2 equals: actual.
 						self assert: stream atEnd.
 						self assert: actual equals: each]]!
+
+testEndsWithExtended
+	| chars string |
+	string := self assimilateString: 'abc🐬e'.
+	chars := string asArray.
+	self assert: chars size equals: 5.
+	1 to: 6
+		do: 
+			[:each |
+			| tail |
+			tail := chars copyFrom: each to: chars size.
+			self assert: (string endsWith: tail).
+			self assert: (string endsWith: (Utf8String withAll: tail)).
+			self assert: (string endsWith: (Utf16String withAll: tail)).
+			self deny: (string endsWith: $d).
+			self deny: (string endsWith: $🐬)].
+	self assert: (string endsWith: 'e' asAnsiString).
+	self deny: (string endsWith: 'd' asAnsiString).
+	self deny: (string endsWith: '🐬e' asAnsiString).
+	self deny: (string endsWith: 'c🐬' asUtf16String).
+	self deny: (string endsWith: 'c🐬' asUtf8String).
+	self deny: (string endsWith: '🐬' asUtf16String).
+	self deny: (string endsWith: '🐬' asUtf8String).
+	self deny: (string endsWith: #(101)).
+	self deny: (string endsWith: #[101]).
+	self assert: (string endsWith: $e).
+	self deny: (string endsWith: $d).
+	self deny: (string endsWith: $¬).
+	self deny: (string endsWith: $Ā).
+	self deny: (string endsWith: $ࠀ).
+	self deny: (string endsWith: $🐬).
+	string := string copyFrom: 1 to: string size - 1.
+	self assert: (string endsWith: $🐬).
+	self deny: (string endsWith: $🐭).
+	self deny: (string endsWith: $? asAnsiString)!
 
 testFindFirst
 	| subject index |
@@ -656,6 +691,7 @@ testDecodeAt!public!unit tests! !
 testDecodeNextFrom!constants!public! !
 testDetectIfNoneExtended!public!unit tests! !
 testEncodeOnPut!public!unit tests! !
+testEndsWithExtended!public!unit tests! !
 testFindFirst!public!unit tests! !
 testFindLast!public!unit tests! !
 testFindStringStartingAt!public!unit tests! !
