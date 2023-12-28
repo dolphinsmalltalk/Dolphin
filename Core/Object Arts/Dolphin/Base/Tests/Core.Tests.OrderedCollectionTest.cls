@@ -22,7 +22,7 @@ newCollection: aCollection
 				ifTrue: [self collectionClass withAll: #($1)]
 				ifFalse: 
 					[subject := self collectionClass withAll: (self assimilateElements: aCollection).
-					subject := self collectionClass withAll: (Array with: subject first) , subject].
+					subject := self collectionClass withAll: { subject first } , subject].
 	subject removeFirst.
 	^subject!
 

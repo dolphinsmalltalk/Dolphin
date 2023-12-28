@@ -74,7 +74,7 @@ character: aCharacter
 character: aCharacter classification: aSymbol
 	^self
 		choice: aCharacter
-		from: (Array with: aSymbol)
+		from: { aSymbol }
 		type: Character!
 
 icon

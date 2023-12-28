@@ -379,10 +379,10 @@ testSortedCollectionDefaultAlgorithm
 testStockFont
 	| subject rehydrated font |
 	subject := Graphics.Font system.
-	testKey objectAt: self selector put: { subject. Array with: subject }.
+	testKey objectAt: self selector put: { subject. { subject } }.
 	rehydrated := testKey objectAt: self selector.
 	font := subject copy.
-	self assert: rehydrated equals: {font. {font}}!
+	self assert: rehydrated equals: { font. { font } }!
 
 testUnsafeObjects
 	| subject rehydrated notifications duration literal |
