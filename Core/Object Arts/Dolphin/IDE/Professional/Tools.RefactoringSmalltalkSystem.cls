@@ -1188,25 +1188,26 @@ removeFilteredMethod: aCompiledMethod forLintRule: aLintRule
 	self trigger: #lintRuleFilterChanged: with: aLintRule!
 
 removeImportFromClasses: aCollectionOfClasses
-	| classes allImports import refactoringModel refactorings  count caption |
+	| allImports import refactoringModel refactorings count dialog |
 	allImports := Set new.
-	classes := aCollectionOfClasses asArray.
-	classes do: [:each | allImports addAll: each imports].
+	aCollectionOfClasses do: [:each | allImports addAll: each imports].
 	count := aCollectionOfClasses size.
-	caption := 'Remove import from <1d>...' << (count = 1 ifTrue: [aCollectionOfClasses anyOne] ifFalse: ['<1d> classes' << count]).
-	import := ChoicePrompter choices: allImports asSortedCollection caption: caption.
-	import ifNil: [^self].
+	dialog := ChoicePrompter refactoringChoices: allImports asSortedCollection
+				caption: 'Remove import from <d>...'
+						<< (count = 1 ifTrue: [aCollectionOfClasses single unqualifiedName] ifFalse: ['<d> classes' << count]).
+	dialog ifNil: [^self].
+	import := dialog value.
 	refactoringModel := RBModel new.
-	refactorings := classes collect: 
+	refactorings := aCollectionOfClasses collect: 
 					[:each |
-					AddImportRefactoring
+					RemoveImportRefactoring
 						model: refactoringModel
-						addImport: import
-						to: each].
+						removeImport: import
+						from: each].
 	refactoringModel name: (count = 1
-				ifTrue: [refactorings first displayString]
-				ifFalse: ['Remove Import <1p> from <2d> Classes' << {import. refactorings size}]).
-	self performRefactorings: refactorings showChanges: true!
+				ifTrue: [refactorings single displayString]
+				ifFalse: ['Remove Import <1p> from <2d> Classes' << { import. count }]).
+	self performRefactorings: refactorings showChanges: dialog showChanges!
 
 removeInstanceVariable: aString from: aClass within: aBrowserEnvironment
 	^self removeInstanceVariables: {aClass -> aString} within: aBrowserEnvironment!
