@@ -972,6 +972,23 @@ subclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: 
 	subclass class instanceVariableNames: classInstVarString.
 	^subclass!
 
+subclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString package: categoryString
+	"Pharo compatibility"
+
+	^self isVariable
+		ifTrue: 
+			[self
+				variableSubclass: aClassSymbol
+				instanceVariableNames: instVarString
+				classVariableNames: classVarString
+				imports: #()]
+		ifFalse: 
+			[self
+				subclass: aClassSymbol
+				instanceVariableNames: instVarString
+				classVariableNames: classVarString
+				imports: #()]!
+
 subclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString category: aCategoryOrString
 	"If aClassSymbol is not an existing class then create and answer a new fixed pointer subclass, otherwise modify the class with name aClassSymbol to have the indicated features and answer it.
 	Primarily present for backwards compatibility with Smalltalk-80 and used by the Refactory Browser classes."
@@ -1224,6 +1241,7 @@ stbModifyExportProxy:!binary filing!private! !
 storeGUID!private!source filing-class definition! !
 subclass:instanceVariableNames:classVariableNames:imports:!class hierarchy-adding!public! !
 subclass:instanceVariableNames:classVariableNames:imports:classInstanceVariableNames:classConstants:!class hierarchy-adding!public! !
+subclass:instanceVariableNames:classVariableNames:package:!class hierarchy-adding!public! !
 subclass:instanceVariableNames:classVariableNames:poolDictionaries:category:!class hierarchy-adding!public! !
 subclasses!class hierarchy-accessing!public! !
 subclasses:!class hierarchy-mutating!public! !

@@ -53,7 +53,7 @@ isChunkClassFor: aString tokens: anArrayOfStToken
 	Abd variableByteSubclass: #Def instanceVariableNames: ''	classVariableNames: '' poolDictionaries: '' classInstanceVariableNames: ''"
 
 	| token |
-	anArrayOfStToken size < 11 ifTrue: [^false].
+	anArrayOfStToken size < 9 ifTrue: [^false].
 	(self isToken: (anArrayOfStToken at: 4) keyword: 'instanceVariableNames:') ifFalse: [^false].
 	(self isToken: anArrayOfStToken second
 		amongKeywords: ##(Set withAll: #('subclass:' 'variableSubclass:' 'variableByteSubclass:')))
