@@ -211,7 +211,7 @@ UI.Tests.SelectableItemsTest
 	classConstants: {}!
 UI.Tests.SelectableItemsTest
 	subclass: #'Tools.Tests.PackageSelectorTest'
-	instanceVariableNames: 'packageA'
+	instanceVariableNames: 'packageA defaultPackage'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

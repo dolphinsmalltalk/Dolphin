@@ -872,7 +872,7 @@ setAsDefaultPackage
 	self packageManager defaultPackage: (package isDefaultPackage ifFalse: [package]).
 	pkgList := self selectableItems model.
 	pkgList refresh: package.
-	oldDefault notNil ifTrue: [pkgList refresh: oldDefault]!
+	oldDefault notNil ifTrue: [pkgList refresh: oldDefault ifAbsent: nil]!
 
 singlePackage
 	"Private - Answer the selected package iff a single package is selected, otherwise nil."
