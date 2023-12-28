@@ -16,6 +16,14 @@ makeTestMethodFrom: anExternalMethod overlapped: aBoolean
 		ifTrue: [anExternalMethod copy extraIndex: 48; yourself]
 		ifFalse: [anExternalMethod]!
 
+testClosedBaseInstance
+	"Verify that the correct culprit is identified for bad call-outs"
+
+	| subject |
+	subject := DynamicLinkLibrary open: 'kernel32'.
+	subject close.
+	self assert: subject printString equals: 'a DynamicLinkLibrary(NULL - nil)'!
+
 testInvalidCallArguments
 	"Verify that the correct culprit is identified for bad call-outs"
 
@@ -86,6 +94,7 @@ verifyInvalidCallArguments: aBoolean
 		matching: [:ex | ex hresult = (HRESULT fromPrimitiveFailureCode: _PrimitiveFailureCode.InvalidParameter)]! !
 !External.Tests.DynamicLinkLibraryTest categoriesForMethods!
 makeTestMethodFrom:overlapped:!helpers!private! !
+testClosedBaseInstance!public!unit tests! !
 testInvalidCallArguments!public!unit tests! !
 testInvalidOverlappedCallArguments!public!unit tests! !
 testSingletonSerialisationToStb!public!unit tests! !

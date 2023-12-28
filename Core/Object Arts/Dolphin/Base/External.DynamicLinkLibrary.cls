@@ -407,10 +407,9 @@ default: anExternalLibrary
 	self setDefault: anExternalLibrary!
 
 fileName
-	"Answer the host system file name for the external library the 
-	receiver represents."
+	"Answer the host system file name for the external library the receiver represents."
 
-	^self error: 'Cannot open anonymous library'!
+	^nil!
 
 fromHandle: aHandle
 	"Answers an instance of ExternalLibrary attached to aHandle."
