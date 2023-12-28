@@ -2,7 +2,7 @@
 
 UI.Tests.SelectableItemsTest
 	subclass: #'Tools.Tests.PackageSelectorTest'
-	instanceVariableNames: 'packageA'
+	instanceVariableNames: 'packageA defaultPackage'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -17,10 +17,25 @@ classToTest
 createPackage: aString
 	^Package manager newPackage: aString!
 
+losesSelectionOnPackageCreation
+	"Private - Currently creating a new package completely resets the package selector."
+
+	^true!
+
+losesSelectionOnPackageRemoval
+	"Private - Currently removing an existing package completely resets the package selector."
+
+	^true!
+
 removePackage: aPackage 
 	Package manager removePackage: aPackage!
 
+setUp
+	super setUp.
+	defaultPackage := Package manager defaultPackage!
+
 tearDown
+	Package manager defaultPackage: defaultPackage.
 	packageA notNil ifTrue: [self removePackage: packageA].
 	super tearDown!
 
@@ -50,38 +65,56 @@ testFilter
 	self assert: presenter selections asSet equals: Package manager packages asSet!
 
 testPackageCreationDoesntAlterSelection
+	<skipIf: #losesSelectionOnPackageRemoval>
 	| selections |
-	self skip: 'Creating a new package completely resets the package selector.'.
-	presenter selections: (Array with: self class owningPackage).
+	presenter selections: { self class owningPackage }.
 	selections := presenter selections.
 	self assert: (selections size = 1 and: [selections first = self class owningPackage]).
-	self 
+	self
 		shouldnt: [packageA := self createPackage: 'Core\Object Arts\Dolphin\Tests\A']
 		triggerAnyOf: #(#selectionChanged #selectionChanging)
 		against: presenter.
 	self assert: presenter selections = selections!
 
 testPackageRemovalDoesntAlterSelection
+	<skipIf: #losesSelectionOnPackageRemoval>
 	| selections newSelections |
-	self skip: 'Removing a package resets the selection.'.
 	packageA := self createPackage: 'Core\Object Arts\Dolphin\Tests\A'.
-	presenter selections: (Array with: self class owningPackage).
+	presenter selections: { self class owningPackage }.
 	selections := presenter selections.
 	self assert: (selections size = 1 and: [selections first = self class owningPackage]).
-	self 
+	self
 		shouldnt: [self removePackage: packageA]
 		triggerAnyOf: #(#selectionChanged #selectionChanging)
 		against: presenter.
 	packageA := nil.
 	newSelections := presenter selections.
-	self assert: newSelections = selections! !
+	self assert: newSelections = selections!
+
+testSetDefaultPackage
+	presenter selections: { self class owningPackage }.
+	presenter setAsDefaultPackage.
+	self assert: Package manager defaultPackage identicalTo: self class owningPackage.
+	presenter setAsDefaultPackage.
+	self assertIsNil: Package manager defaultPackage.
+	presenter setAsDefaultPackage.
+	self assert: Package manager defaultPackage identicalTo: self class owningPackage.
+	"Indirectly change the filter so that the default package is no longer in the list"
+	presenter selections: { Object owningPackage }.
+	presenter setAsDefaultPackage.
+	"This used to error if the old default package was not in view"
+	self assert: Package manager defaultPackage identicalTo: Object owningPackage! !
 !Tools.Tests.PackageSelectorTest categoriesForMethods!
 classToTest!helpers!private! !
 createPackage:!helpers!private! !
+losesSelectionOnPackageCreation!private!testing! !
+losesSelectionOnPackageRemoval!private!testing! !
 removePackage:!helpers!private! !
-tearDown!private! !
-testFilter!public! !
-testPackageCreationDoesntAlterSelection!public! !
-testPackageRemovalDoesntAlterSelection!public! !
+setUp!public!Running! !
+tearDown!public!Running! !
+testFilter!public!tests! !
+testPackageCreationDoesntAlterSelection!public!tests! !
+testPackageRemovalDoesntAlterSelection!public!tests! !
+testSetDefaultPackage!public!tests! !
 !
 
