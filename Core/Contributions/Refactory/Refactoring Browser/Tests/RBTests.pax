@@ -41,7 +41,6 @@ package setClassNames: #(
 	#{Refactory.Browser.Tests.InlineTemporaryRefactoringTest}
 	#{Refactory.Browser.Tests.MoveMethodRefactoringTest}
 	#{Refactory.Browser.Tests.MoveVariableDefinitionRefactoringTest}
-	#{Refactory.Browser.Tests.ParserTest}
 	#{Refactory.Browser.Tests.ParseTreeRewriterTest}
 	#{Refactory.Browser.Tests.ParseTreeSearcherTest}
 	#{Refactory.Browser.Tests.PluggableEnvironmentTest}
@@ -87,6 +86,37 @@ package setClassNames: #(
 
 package setMethodNames: #(
 	#(#{Core.String} #withCRs)
+	#(#{Kernel.Tests.ParserTest} #addArgumentSearchWith:selectors:inClass:to:)
+	#(#{Kernel.Tests.ParserTest} #addMethodSearchWith:selectors:inClass:to:)
+	#(#{Kernel.Tests.ParserTest} #addSearchWith:selectors:inClass:to:)
+	#(#{Kernel.Tests.ParserTest} #buildArgumentSearch:)
+	#(#{Kernel.Tests.ParserTest} #buildClassSearches)
+	#(#{Kernel.Tests.ParserTest} #buildMessageSearch:)
+	#(#{Kernel.Tests.ParserTest} #buildMethodArgumentSearch:)
+	#(#{Kernel.Tests.ParserTest} #buildMethodSearch:)
+	#(#{Kernel.Tests.ParserTest} #buildMethodTitleSearch:)
+	#(#{Kernel.Tests.ParserTest} #buildSimpleLiteralSearch:)
+	#(#{Kernel.Tests.ParserTest} #buildSimpleVariableSearch:)
+	#(#{Kernel.Tests.ParserTest} #buildStatementSearch:)
+	#(#{Kernel.Tests.ParserTest} #testAllSearches)
+	#(#{Kernel.Tests.ParserTest} #testBlockRewrites)
+	#(#{Kernel.Tests.ParserTest} #testComparingTrees2)
+	#(#{Kernel.Tests.ParserTest} #testCopyInContext)
+	#(#{Kernel.Tests.ParserTest} #testEqualToWithMappingAfterRewrite)
+	#(#{Kernel.Tests.ParserTest} #testEqualToWithMappingRename)
+	#(#{Kernel.Tests.ParserTest} #testExtendedLiterals)
+	#(#{Kernel.Tests.ParserTest} #testFormatter)
+	#(#{Kernel.Tests.ParserTest} #testLiterals)
+	#(#{Kernel.Tests.ParserTest} #testMultimatch)
+	#(#{Kernel.Tests.ParserTest} #testPatternCascade)
+	#(#{Kernel.Tests.ParserTest} #testPatternNodeCopy)
+	#(#{Kernel.Tests.ParserTest} #testReadBeforeWritten)
+	#(#{Kernel.Tests.ParserTest} #testReadBeforeWritten1)
+	#(#{Kernel.Tests.ParserTest} #testReplacingNodes)
+	#(#{Kernel.Tests.ParserTest} #testRewriteMethods)
+	#(#{Kernel.Tests.ParserTest} #testRewrites)
+	#(#{Kernel.Tests.ParserTest} #testSearching)
+	#(#{Kernel.Tests.ParserTest} #testSmallDictionary)
 	#(#{Refactory.Browser.TestData.RefactoryTestDataApp} #inlineParameterMethod:)
 	#(#{Refactory.Browser.TestData.RefactoryTestDataApp} #sendInlineParameterMethod)
 	#(#{Refactory.Browser.TestData.RefactoryTestDataApp} #testMethod1)
@@ -117,6 +147,7 @@ package setPrerequisites: #(
 	'RBTestMethods'
 	'RBTestMethodsExtra'
 	'..\..\..\..\Object Arts\Samples\MVP\Scribble\Scribble'
+	'..\..\..\..\Object Arts\Dolphin\System\Compiler\Tests\Smalltalk Compiler Tests'
 	'..\..\..\..\Object Arts\Dolphin\System\Compiler\Smalltalk Parser'
 	'..\..\..\Camp Smalltalk\SUnit\SUnit'
 	'..\..\..\Camp Smalltalk\SUnit\SUnitPreload'
@@ -154,13 +185,6 @@ Refactory.Browser.Tests.RefactoringBrowserTest
 Refactory.Browser.Tests.RefactoringBrowserTest
 	subclass: #'Refactory.Browser.Tests.ClassDetailsTest'
 	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Refactory.Browser.Tests.RefactoringBrowserTest
-	subclass: #'Refactory.Browser.Tests.ParserTest'
-	instanceVariableNames: 'currentSelector classSearches rewrites'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -686,6 +710,488 @@ withCRs
 	^stream contents! !
 !Core.String categoriesForMethods!
 withCRs!converting!public! !
+!
+
+!Kernel.Tests.ParserTest methodsFor!
+
+addArgumentSearchWith: aCodeString selectors: selectorCollection inClass: aClass to: aDictionary
+	<namespace: Refactory.Browser>
+	| search |
+	search := ParseTreeSearcher new.
+	search matchesAnyArgumentOf: { aCodeString }
+		do: 
+			[:aNode :answer |
+			answer
+				remove: aNode methodNode selector;
+				yourself].
+	search answer: selectorCollection asBag.
+	(aDictionary at: aClass ifAbsentPut: [Set new]) add: search!
+
+addMethodSearchWith: aCodeString selectors: selectorCollection inClass: aClass to: aDictionary
+	<namespace: Refactory.Browser>
+	| search |
+	search := ParseTreeSearcher new.
+	search matchesAnyMethodOf: { aCodeString }
+		do: 
+			[:aNode :answer |
+			answer
+				remove: aNode methodNode selector;
+				yourself].
+	search answer: selectorCollection asBag.
+	(aDictionary at: aClass ifAbsentPut: [Set new]) add: search!
+
+addSearchWith: aCodeString selectors: selectorCollection inClass: aClass to: aDictionary
+	<namespace: Refactory.Browser>
+	| search |
+	search := ParseTreeSearcher new.
+	search matches: aCodeString
+		do: 
+			[:aNode :answer |
+			answer
+				remove: aNode methodNode selector;
+				yourself].
+	search answer: selectorCollection asBag.
+	(aDictionary at: aClass ifAbsentPut: [Set new]) add: search!
+
+buildArgumentSearch: aDictionary
+	<namespace: Refactory.Browser>
+	self
+		addArgumentSearchWith: 'aSmalllintContext'
+		selectors: #(#checkMethod: #checkClass:)
+		inClass: TestData.BasicLintRuleTestData
+		to: aDictionary!
+
+buildClassSearches
+	| classSearches |
+	classSearches := Dictionary new.
+	self
+		buildMethodSearch: classSearches;
+		buildSimpleVariableSearch: classSearches;
+		buildSimpleLiteralSearch: classSearches;
+		buildMessageSearch: classSearches;
+		buildStatementSearch: classSearches;
+		buildArgumentSearch: classSearches;
+		buildMethodTitleSearch: classSearches;
+		buildMethodArgumentSearch: classSearches.
+	^classSearches!
+
+buildMessageSearch: aDictionary
+	<namespace: Refactory.Browser>
+	self
+		addSearchWith: '``@receiver -> ``@arg'
+		selectors: #(#superSends #superSends)
+		inClass: TestData.TransformationRuleTestData
+		to: aDictionary!
+
+buildMethodArgumentSearch: aDictionary
+	"Two argument methods"
+
+	<namespace: Refactory.Browser>
+	self
+		addMethodSearchWith: '`arg1: `arg1 `arg2: `arg2 | `@temps | `@.Stmts'
+		selectors: #(#subclassOf:overrides: #createMatcherFor:method: #createParseTreeRule:name:)
+		inClass: TestData.BasicLintRuleTestData class
+		to: aDictionary!
+
+buildMethodSearch: aDictionary
+	"Simple forwarders"
+
+	<namespace: Refactory.Browser>
+	self
+		addMethodSearchWith: '`@methodName: `@args ^`@object `@methodName: `@args'
+		selectors: #(#problemCount #isEmpty)
+		inClass: TestData.TransformationRuleTestData
+		to: aDictionary!
+
+buildMethodTitleSearch: aDictionary
+	<namespace: Refactory.Browser>
+	self
+		addMethodSearchWith: 'initialize | `@temps | `@.Stmts'
+		selectors: #(#initialize)
+		inClass: TestData.BasicLintRuleTestData
+		to: aDictionary!
+
+buildSimpleLiteralSearch: aDictionary
+	<namespace: Refactory.Browser>
+	| search |
+	search := ParseTreeSearcher new.
+	search matchesAnyTreeOf: {
+				self
+					parseExpression: '#(''bugs'' ''possible bugs'' ''unnecessary code'' ''intention revealing'' ''miscellaneous'')'
+			}
+		do: 
+			[:aNode :answer |
+			answer
+				remove: aNode methodNode selector;
+				yourself].
+	search answer: #(#lintProtocols) asBag.
+	(aDictionary at: TestData.BasicLintRuleTestData class ifAbsentPut: [Set new]) add: search!
+
+buildSimpleVariableSearch: aDictionary
+	<namespace: Refactory.Browser>
+	self
+		addSearchWith: 'result'
+		selectors: #(#checkClass: #checkMethod: #isEmpty #problemCount #resetResult #resetResult #resetResult #result #result: #resultClass: #viewResults)
+		inClass: TestData.BasicLintRuleTestData
+		to: aDictionary!
+
+buildStatementSearch: aDictionary
+	"Two or more statements"
+
+	<namespace: Refactory.Browser>
+	self
+		addSearchWith: '| `@temps | ``@.Stmts1. ``.Stmt1. ``@.Stmts2. ``.Stmt2. ``@.Stmts3'
+		selectors: #(#checkMethod: #rewriteUsing: #viewResults #superSends)
+		inClass: TestData.TransformationRuleTestData
+		to: aDictionary!
+
+testAllSearches
+	| classSearches |
+	classSearches := self buildClassSearches.
+	classSearches keysAndValuesDo: 
+			[:class :searches |
+			class selectors
+				do: [:sel | searches do: [:each | each executeTree: (class parseTreeFor: sel) initialAnswer: each answer]]].
+	classSearches do: [:searches | searches do: [:each | self assert: each answer isEmpty]].
+	classSearches := nil!
+
+testBlockRewrites
+	<namespace: Refactory.Browser>
+	| rewriter tree |
+	tree := self parseMethod: 'method: asdf
+	<primitive: 1>
+	^asdf + self foo + asdf'.
+	rewriter := ParseTreeRewriter new.
+	rewriter
+		replace: 'asdf'
+		with: 'fdsa'
+		when: [:aNode | aNode parent parent isReturn].
+	rewriter replace: 'self foo'
+		withValueFrom: [:aNode | StBasicVariableNode named: aNode selector asString].
+	rewriter
+		replaceArgument: 'asdf'
+		withValueFrom: [:aNode | StBasicVariableNode named: 'xxx']
+		when: [:aNode | false].
+	rewriter executeTree: tree.
+	self compare: rewriter tree
+		to: (self parseMethod: 'method: asdf
+	<primitive: 1>
+	^asdf +  foo + fdsa')!
+
+testComparingTrees2
+	<namespace: Refactory.Browser>
+	| class |
+	class := TestData.BasicLintRuleTestData class.
+	class selectors
+		do: [:each | self compare: (class parseTreeFor: each) to: (class parseTreeFor: each)]!
+
+testCopyInContext
+	| tree copy |
+	tree := self treeWithEverything.
+	self verifyParentLinksInTree: tree.
+	tree makeTreeImmutable.
+	copy := tree copyInContext: LookupTable new.
+	self compare: copy to: tree.
+	self verifyTree: copy isDeepCopyOf: tree.
+	tree := self treeWithAllNodeTypes.
+	self verifyParentLinksInTree: tree.
+	tree makeTreeImmutable.
+	copy := tree copyInContext: LookupTable new.
+	self compare: copy to: tree.
+	self verifyTree: copy isDeepCopyOf: tree.
+	self exampleClasses do: 
+			[:class |
+			class selectors do: 
+					[:each |
+					| copy |
+					tree := class parseTreeFor: each.
+					self verifyParentLinksInTree: tree.
+					tree makeTreeImmutable.
+					copy := tree copyInContext: LookupTable new.
+					self compare: tree to: copy.
+					self verifyTree: copy isDeepCopyOf: tree]]!
+
+testEqualToWithMappingAfterRewrite
+	"#965 -- when replacing the argument of a method (or block),
+	you end up with an RBVariableNode where there would normally be an RBParameterNode.
+	This has no effect on formatting or equality comparison, but equalTo:withMapping:
+	*was* being picky about it, and it shouldn't be"
+
+	<namespace: Refactory.Browser>
+	| pattern tree1 tree2 context |
+	pattern := RBPatternParser parseMethod: 'foo: `arg ^`arg baz'.
+	context := RBSmallDictionary new
+				at: '-source-' put: nil;
+				at: (RBPatternVariableNode named: '`arg') put: (StBasicVariableNode named: 'bar');
+				yourself.
+	tree1 := pattern copyInContext: context.
+	tree2 := self parseMethod: 'foo: abc ^abc baz'.
+	self assert: (tree1 equalTo: tree2 withMapping: LookupTable new).
+	self assert: (tree1 equalTo: tree2 withMapping: (LookupTable with: 'bar' -> 'abc')).
+	self deny: (tree1 equalTo: tree2 withMapping: (LookupTable with: 'bar' -> 'def')).
+	"The base case is the following:"
+	self assert: ((StBasicVariableNode named: 'foo') equalTo: (StParameterNode named: 'foo')
+				withMapping: LookupTable new)!
+
+testEqualToWithMappingRename
+	| tree1 tree2 |
+	tree1 := self parseMethod: 'foo: bar ^bar baz'.
+	tree2 := self parseMethod: 'foo: abc ^abc baz'.
+	self assert: (tree1 equalTo: tree2 withMapping: LookupTable new).
+	self assert: (tree1 equalTo: tree2 withMapping: (LookupTable with: 'bar' -> 'abc')).
+	self deny: (tree1 equalTo: tree2 withMapping: (LookupTable with: 'bar' -> 'def'))!
+
+testExtendedLiterals
+	<namespace: Refactory.Browser>
+	| tree searcher |
+	tree := self parseMethod: 'test ##(Array with: 1 with: 2 with: #literal) at: ##esatom'.
+	searcher := ParseTreeRewriter new.
+	searcher replace: '##(`@object with: `#literal1 with: `#literal2 with: `#literal3)'
+		with: '##(`@object with: `#literal3 with: `#literal2 with: `#literal1)'.
+	searcher executeTree: tree.
+	tree := searcher tree.
+	searcher := ParseTreeRewriter new.
+	searcher replace: '2' with: '2.5'.
+	searcher executeTree: tree.
+	self assert: (self parseMethod: searcher tree formattedCode)
+		equals: (self parseMethod: 'test ##(Array with: #literal with: 2.5 with: 1) at: ##esatom')!
+
+testFormatter
+	<namespace: Refactory.Browser>
+	| class |
+	class := TestData.BasicLintRuleTestData class.
+	class selectors do: 
+			[:each |
+			self compare: (class parseTreeFor: each)
+				to: (Parser parseMethod: (class parseTreeFor: each) printString in: class)]!
+
+testLiterals
+	self assert: (StLiteralNode value: #(1 2 #(#asdf))) formattedCode equals: '#(1 2 #(#asdf))'!
+
+testMultimatch
+	<namespace: Refactory.Browser>
+	| rewriter count |
+	count := 0.
+	rewriter := ParseTreeRewriter new.
+	rewriter
+		replace: '``@object at: ``@foo'
+		with: '``@object foo: ``@foo'
+		when: [:aNode | (count := count + 1) == 2].
+	self compare: (rewriter
+				executeTree: (self parseExpression: 'self at: (bar at: 3)');
+				tree)
+		to: (self parseExpression: 'self at: (bar foo: 3)')!
+
+testPatternCascade
+	<namespace: Refactory.Browser>
+	| rewriter |
+	rewriter := ParseTreeRewriter new.
+	rewriter replace: 'self `;messages; foo: 4; `;messages1'
+		with: 'self `;messages1; bar: 4; `;messages'.
+	self compare: (rewriter
+				executeTree: (self parseExpression: 'self foo; printString; foo: 4; bar. self foo: 4');
+				tree)
+		to: (self parseExpression: 'self bar; bar: 4; foo; printString. self foo:4')!
+
+testPatternNodeCopy
+	<namespace: Refactory.Browser>
+	| tree copy |
+	tree := RBPatternParser
+				parseMethod: 'method: arg1 | temps | temps := #(10 ##(#sequence -> true. #optimized -> true)). temps foo; foo. `@patternVar bar. ^(temps collect: [:e | e `patternMsg `{:msgNode | ''*pattern*'' match: msgNode selector}])'.
+	copy := tree copy.
+	self compare: copy to: tree.
+	self verifyTree: copy isDeepCopyOf: tree!
+
+testReadBeforeWritten
+	<namespace: Refactory.Browser>
+	#(#('a ifTrue: [^self]' true) #('self foo. a := b' false) #('condition ifTrue: [a := b] ifFalse: [self foo: a]' true) #('condition ifTrue: [a := b] ifFalse: [self foo]. a isNil' true) #('condition ifTrue: [a := b]. a := c' false) #('[a := b] whileFalse: [a isNil]' false) #('self foo: b' false))
+		do: 
+			[:each |
+			self
+				assert: ((RBReadBeforeWrittenTester readBeforeWritten: #('a') in: (self parseExpression: each first))
+						includes: 'a')
+				identicalTo: each last.
+			self assert: (RBReadBeforeWrittenTester isVariable: 'a'
+						readBeforeWrittenIn: (self parseExpression: each first))
+				equals: each last].
+	#('| temp read written written1 |
+			read ifTrue: [^self].
+			written1 := self foo ifFalse: [written := true] ifTrue: [written := false].
+			[temp := true] whileTrue: [temp notNil & written].
+			^temp' '| read written |
+			self foo ifTrue: [written := true] ifFalse: [written := false].
+			self foo ifTrue: [read := true].
+			^read' '| read written |
+			self foo do: [:i | i].
+			[| i | i := 1. i == 1] whileFalse: [read notNil]' '| written |
+			[written := 2] whileFalse.
+			self do: [:each | | read | each & read]' '| read |
+			self do: [:each | read := each].
+			self do: [:each | each & read]')
+		do: 
+			[:each |
+			| read |
+			read := RBReadBeforeWrittenTester variablesReadBeforeWrittenIn: (self parseExpression: each).
+			self assert: (read size = 1 and: [read includes: 'read'])]!
+
+testReadBeforeWritten1
+	<namespace: Refactory.Browser>
+	self
+		assert: (RBReadBeforeWrittenTester variablesReadBeforeWrittenIn: (self
+						parseMethod: 'addAll: aCollection
+	"Answer aCollection, having added all elements of aCollection to the receiver.
+
+	 Fail if aCollection is not a kind of Collection."
+
+	| newSize elementsSize growSize |
+	(newSize := aCollection size * 2) > elements size ifTrue: [self rehash: newSize].
+	elementsSize := elements size.
+	growSize := elementsSize // 2.
+	aCollection do:
+			[:newObject |
+			| hashIndex element |
+			newObject == nil ifFalse:
+					[hashIndex := self hashIndexFor: newObject.
+
+					[(element := elements at: hashIndex) == nil
+						ifTrue:
+							[elements at: hashIndex put: newObject.
+							(elementCount := elementCount + 1) > growSize ifTrue:
+									[self expand.
+									elementsSize := elements size.
+									growSize := elementsSize // 2].
+							true]
+						ifFalse: [element == newObject]]
+							whileFalse:
+								[(hashIndex := hashIndex + 1) > elementsSize ifTrue: [hashIndex := 1]]]].
+	^aCollection'))
+				isEmpty!
+
+testReplacingNodes
+	<namespace: Refactory.Browser>
+	| tree search block |
+	tree := self
+				parseMethod: '+ a | a b | self ifTrue: [a] ifFalse: [b := c]. a := b. [:b :c :a | a foo: a; foo1: a; foo2: a foo: b]. ^a'.
+	search := ParseTreeSearcher new.
+	block := [:aNode :answer | aNode replaceWith: (StBasicVariableNode named: 'q')].
+	search
+		matches: 'a' do: block;
+		matchesArgument: 'a' do: block.
+	search executeTree: tree.
+	self assert: tree
+		equals: (self
+				parseMethod: '+ q | q b | self ifTrue: [q] ifFalse: [b := c]. q := b. [:b :c :q | q foo: q; foo1: q; foo2: q foo: b]. ^q').
+	self assert: tree removeDeadCode
+		equals: (self parseMethod: '+ q | q b | self ifTrue: [] ifFalse: [b := c]. q := b. ^q')!
+
+testRewriteMethods
+	<namespace: Refactory.Browser>
+	#(#('arg1: a arg2: b | temp1 temp2 | self stmt1 ifTrue: [^a]. self arg1: a arg2: b' 'arg2: a arg1: b | temp1 temp2 | self stmt1 ifTrue: [^a]. self arg2: b arg2: a' '`arg1: `var1 `arg2: `var2 | `@temps | ``@.stmts. self `arg1: `var1 `arg2: `var2. `@.stmts1' '`arg2: `var1 `arg1: `var2 | `@temps | ``@.stmts. self `arg2: `var2 `arg2: `var1. `@.stmts1') #('arg1: a arg2: b | temp1 temp2 | self stmt1. self arg1: a arg2: b' 'arg1: a arg2: b | temp1 temp2 | [self stmt1] repeat' '`@args: `@vars | `@temps | `@.stmts. self `@args: `@vars' '`@args: `@vars | `@temps | [`@.stmts] repeat') #('+ a | temps | ^self primitiveValue' '- a | temps | ^self primitiveValue' '+ `temp | `@tmps | `@.stmts' '- `temp | `@tmps | `@.stmts') #('a self stmt1. self stmt2' 'a self stmt1. self stmt2' 'b | `@temps | `@.stmts' 'c | `@temps | `@.stmts'))
+		do: 
+			[:each |
+			| rewrite |
+			rewrite := ParseTreeRewriter new.
+			rewrite replaceMethod: (each at: 3) with: each last.
+			self compare: (self
+						parseMethod: (rewrite
+								executeTree: (self parseMethod: each first);
+								tree) formattedCode)
+				to: (self parseMethod: (each at: 2)).
+			rewrite := ParseTreeRewriter new.
+			rewrite replaceTree: (RBPatternParser parseMethod: (each at: 3))
+				withTree: (RBPatternParser parseMethod: each last).
+			self compare: (self
+						parseMethod: (rewrite
+								executeTree: (self parseMethod: each first);
+								tree) formattedCode)
+				to: (self parseMethod: (each at: 2))]!
+
+testRewrites
+	<namespace: Refactory.Browser>
+	#(#('[:c | |a| a foo1; foo2]' '[:c | |a| b foo1; foo2]' 'a' 'b') #('self foo: 1. bar foo1 foo: 2. (self foo: a) foo: (b foo: c)' 'self bar: 1. bar foo1 bar: 2. (self bar: a) bar: (b bar: c)' '``@rcvr foo: ``@arg1' '``@rcvr bar: ``@arg1') #('3 + 4' '4 + 4' '3' '4') #('a := self a' 'b := self a' 'a' 'b') #('^self at: 1 put: 2' '^self put: 1 put: 2' '^`@rcvr `at: `@arg1 put: `@arg2' '^`@rcvr put: `@arg1 put: `@arg2') #('1 + 2 + 3' '0 + 0 + 0' '`#literal' '0') #('1 + 2 + 3. 3 foo: 4' '3 + (2 + 1). 4 foo: 3' '``@rcvr `msg: ``@arg' '``@arg `msg: ``@rcvr') #('self foo: a bar: b. 1 foo: a bar: b' '2 foo: a bar: b. 1 foo: a bar: b' 'self `@msg: `@args' '2 `@msg: `@args') #('a := b. a := c + d' 'b := a. a := c + d' '`var1 := `var2' '`var2 := `var1') #('^self foo value: 1' 'self return: (self foo value: 1)' '^`@anything' 'self return: `@anything') #('self first; second. self first; second. self a. self b' '2 timesRepeat: [self first; second]. self a. self b' '`.Stmt1. `.Stmt1. `@.stmts' '2 timesRepeat: [`.Stmt1]. `@.stmts') #('[:a | self a: 1 c: 2; b]' '[:a | self d: 2 e: 1; f. self halt]' '`@rcvr `msg1: `@arg1 `msg2: `@arg2; `msg' '`@rcvr d: `@arg2 e: `@arg1; f. self halt'))
+		do: 
+			[:each |
+			| rewrite |
+			rewrite := ParseTreeRewriter new.
+			rewrite replace: (each at: 3) with: each last.
+			self compare: (self
+						parseExpression: (rewrite
+								executeTree: (self parseExpression: each first);
+								tree) formattedCode)
+				to: (self parseExpression: (each at: 2))]
+	"#('#{Object}' 'Object' '#{Object}' 'Object') #('Smalltalk.Object' 'Smalltalk.Object printString' '`var' '`var printString') #('Smalltalk. Object' 'Smalltalk printString. Object printString' '`var' '`var printString')"!
+
+testSearching
+	<namespace: Refactory.Browser>
+	| searcher |
+	searcher := ParseTreeSearcher new.
+	searcher matches: '``@rcv at: ``@arg `sel: ``@arg1' do: [:aNode :answer | answer + 1].
+	self
+		assert: (searcher executeTree: (self
+						parseExpression: 'self at: 1 put: 2; at: 2 ifAbsent: []; ifAbsent: 2 at: 1; at: 4; foo')
+				initialAnswer: 0)
+		equals: 2.
+	searcher := ParseTreeSearcher new.
+	searcher matches: '``@rcv `at: ``@arg1 `at: ``@arg2' do: [:aNode :answer | answer + 1].
+	self assert: (searcher
+				executeTree: (self parseExpression: 'self at: 1 at: 3; at: 1 put: 32; at: 2; foo; at: 1 at: 1 at: 2')
+				initialAnswer: 0)
+		equals: 1.
+	searcher := ParseTreeSearcher new.
+	searcher matchesMethod: 'at: `object `put: `o1 ``@rcv `put: 1' do: [:aNode :answer | true].
+	self assert: (searcher executeTree: (self parseMethod: 'at: a put: b self foo put: 1')
+				initialAnswer: false)!
+
+testSmallDictionary
+	<namespace: Refactory.Browser>
+	| dictionary total |
+	dictionary := RBSmallDictionary new: 100.
+	dictionary
+		add: 1 -> 3;
+		at: 2 put: 4;
+		at: 1 put: 4.
+	self assert: dictionary size equals: 2.
+	self assert: (dictionary inject: 0 into: [:sum :each | sum + each]) equals: 8.
+	self assert: (dictionary includesKey: 1).
+	self deny: (dictionary includesKey: 3).
+	total := 0.
+	dictionary keysDo: [:each | total := total + each].
+	self assert: total equals: 3.
+	dictionary removeKey: 2.
+	dictionary copy associationsDo: [:each | dictionary remove: each].
+	self assert: dictionary size equals: 0! !
+!Kernel.Tests.ParserTest categoriesForMethods!
+addArgumentSearchWith:selectors:inClass:to:!accessing!public! !
+addMethodSearchWith:selectors:inClass:to:!accessing!public! !
+addSearchWith:selectors:inClass:to:!accessing!public! !
+buildArgumentSearch:!accessing!private! !
+buildClassSearches!public!unit tests! !
+buildMessageSearch:!accessing!private! !
+buildMethodArgumentSearch:!accessing!private! !
+buildMethodSearch:!accessing!private! !
+buildMethodTitleSearch:!accessing!private! !
+buildSimpleLiteralSearch:!accessing!private! !
+buildSimpleVariableSearch:!accessing!private! !
+buildStatementSearch:!accessing!private! !
+testAllSearches!public!unit tests! !
+testBlockRewrites!public!unit tests! !
+testComparingTrees2!public!unit tests! !
+testCopyInContext!public!unit tests! !
+testEqualToWithMappingAfterRewrite!public!unit tests! !
+testEqualToWithMappingRename!public!unit tests! !
+testExtendedLiterals!public!unit tests! !
+testFormatter!public!unit tests! !
+testLiterals!public!unit tests! !
+testMultimatch!public!unit tests! !
+testPatternCascade!public!unit tests! !
+testPatternNodeCopy!public!unit tests! !
+testReadBeforeWritten!public!unit tests! !
+testReadBeforeWritten1!public!unit tests! !
+testReplacingNodes!public!unit tests! !
+testRewriteMethods!public!unit tests! !
+testRewrites!public!unit tests! !
+testSearching!public!unit tests! !
+testSmallDictionary!public!unit tests! !
 !
 
 !Refactory.Browser.TestData.RefactoryTestDataApp methodsFor!

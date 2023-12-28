@@ -37,8 +37,11 @@ match: aNode inContext: aDictionary
 	aNode class == self matchingClass ifFalse: [^false].
 	self isSelectorList
 		ifTrue: 
-			[^(aDictionary at: self keywords first ifAbsentPut: [aNode selector]) = aNode selector
-				and: [(aDictionary at: arguments first ifAbsentPut: [aNode arguments]) = aNode arguments]].
+			[| other |
+			other := aNode selector.
+			^(aDictionary at: self keywords first ifAbsentPutClean: other) = other and: 
+					[other := aNode arguments.
+					(aDictionary at: arguments first ifAbsentPutClean: other) = other]].
 	^self matchArgumentsAgainst: aNode inContext: aDictionary!
 
 matchArgumentsAgainst: aNode inContext: aDictionary

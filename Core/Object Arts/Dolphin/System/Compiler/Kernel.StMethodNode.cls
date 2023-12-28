@@ -228,6 +228,9 @@ source: anObject
 start
 	^1!
 
+statements
+	^self body statements!
+
 stop
 	^source size!
 
@@ -287,6 +290,7 @@ setSelector:!initializing!private! !
 source!accessing!public! !
 source:!accessing!public! !
 start!accessing!public! !
+statements!accessing!public! !
 stop!accessing!public! !
 tags!accessing!public! !
 tags:!accessing!private! !

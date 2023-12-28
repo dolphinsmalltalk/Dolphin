@@ -116,8 +116,8 @@ knownTextMapIssues
 	to put a text map entry in for the unconditional jump (wouldn't do any harm)."
 	bad add: DolphinCompilerTestMethods >> #testWarningReadBeforeWrittenBlockTemp.
 	"These case have an extra entry in the debug temps map, apparently due to the optimizatiom of ifNil:ifNotNil:. In the non-debug method the unecessary ifNotNil: branch is optimized away"
-	{ Dictionary. OS.IniFileAbstract. Namespace class. DolphinCompilerTestMethods }
-		do: [:each | bad add: each >> #associationAt:].
+	#(#{Dictionary} #{OS.IniFileAbstract} #{Namespace class} #{DolphinCompilerTestMethods})
+		do: [:each | bad add: each value >> #associationAt:].
 	^Refactory.Browser.BrowserEnvironment new forMethods: bad asArray!
 
 messageFromError: ex

@@ -34,7 +34,6 @@ package setPrerequisites: #(
 	'..\Smalltalk Compiler'
 	'..\Smalltalk Parser'
 	'..\..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
-	'..\..\Win32\Windows Ini Files'
 ).
 
 package!
