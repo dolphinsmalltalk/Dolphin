@@ -19,7 +19,9 @@ package setVariableNames: #(
 	#{Smalltalk.RBCondition}
 	#{Smalltalk.RBMethodName}
 	#{Smalltalk.RBNamespace}
+	#{Smalltalk.RBParser}
 	#{Smalltalk.RBPatternMethodNode}
+	#{Smalltalk.RBProgramNodeVisitor}
 	#{Smalltalk.RefactoringError}
 	#{Smalltalk.RefactoryChangeManager}
 	#{Smalltalk.RenameClassVariableRefactoring}
@@ -43,7 +45,9 @@ package setAliasVariableNames: #(
 	#{Smalltalk.RBCondition}
 	#{Smalltalk.RBMethodName}
 	#{Smalltalk.RBNamespace}
+	#{Smalltalk.RBParser}
 	#{Smalltalk.RBPatternMethodNode}
+	#{Smalltalk.RBProgramNodeVisitor}
 	#{Smalltalk.RefactoringError}
 	#{Smalltalk.RefactoryChangeManager}
 	#{Smalltalk.RenameClassVariableRefactoring}
@@ -60,6 +64,7 @@ package setPrerequisites: #(
 	'Refactoring Browser\Parser\RBParser'
 	'Refactoring Browser\Refactorings\RBRefactorings'
 	'Refactoring Browser\SmallLint\RBSmallLint'
+	'..\..\Object Arts\Dolphin\System\Compiler\Smalltalk Parser'
 ).
 
 package!
@@ -90,7 +95,11 @@ Smalltalk.RBMethodName := Refactory.Browser.RBMethodName!
 
 Smalltalk.RBNamespace := Refactory.Browser.RBModel!
 
+Smalltalk.RBParser := Refactory.Browser.RBParser!
+
 Smalltalk.RBPatternMethodNode := Refactory.Browser.RBPatternMethodNode!
+
+Smalltalk.RBProgramNodeVisitor := Kernel.ParseNodeVisitor!
 
 Smalltalk.RefactoringError := Refactory.Browser.RefactoringError!
 

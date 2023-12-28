@@ -45,7 +45,7 @@ testClassAndPackageAmbiguity
 				asSortedArray: subject completionListSortBlock.
 	self assert: items first text equals: 'RBParser'.
 	self assert: items second text equals: 'RBParser (Refactory.Browser)'.
-	self assert: items third text equals: 'RBParser>>qualifiedReferenceNodeClass (Refactory.Browser)'!
+	self assert: items third text equals: 'RBParser>>qualifiedReferenceNodeClass'!
 
 testCompletionFromChoice
 	<nocreate>
