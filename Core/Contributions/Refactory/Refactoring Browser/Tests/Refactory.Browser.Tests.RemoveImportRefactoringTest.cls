@@ -44,7 +44,7 @@ testRemoveImport
 		of: class
 		equals: '<1s> ^#{OS.CRTConstants.EINVAL}' << #refersToImportedPoolConstantBindingUnqualified.
 	"Fully-qualified binding reference should have been left unchanged"
-	self assertIsNil: (model changes changeForClassNamed: RefactoryTestDataApp fullyQualifiedReference
+	self assertIsNil: (model changes changeForClassNamed: RefactoryTestDataApp
 				selector: #refersToPoolConstantBindingFullyQualified)! !
 !Refactory.Browser.Tests.RemoveImportRefactoringTest categoriesForMethods!
 testNonExistantImport!public! !

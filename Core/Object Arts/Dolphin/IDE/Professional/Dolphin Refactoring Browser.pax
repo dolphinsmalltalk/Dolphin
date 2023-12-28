@@ -207,6 +207,8 @@ package setMethodNames: #(
 	#(#{Refactory.Browser.VariableRefactoring} #displayPrefix)
 	#(#{Refactory.Browser.VariableRefactoring} #getOptionPullUpNonSharedInstVar:)
 	#(#{Refactory.Browser.VariableRefactoring class} #displayPrefix)
+	#(#{Tools.ChooseNamespaceDialog} #createComponents)
+	#(#{Tools.ChooseNamespaceDialog} #showChanges)
 	#(#{Tools.ChooseNamespaceDialog class} #resource_Refactoring_view)
 	#(#{Tools.ClassBrowserAbstract} #abstractInstanceVariables)
 	#(#{Tools.ClassBrowserAbstract} #canPushDownInstanceVariables)
@@ -379,6 +381,9 @@ package setMethodNames: #(
 	#(#{Tools.PackageSelector} #moveAllTempsToInnerScope)
 	#(#{Tools.PackageSelector} #removeDuplicateMethods)
 	#(#{Tools.SmalltalkToolShell} #chooseMethodForRefactoring:)
+	#(#{UI.ChoicePrompter} #showChanges)
+	#(#{UI.ChoicePrompter class} #refactoringChoices:caption:)
+	#(#{UI.ChoicePrompter class} #resource_Refactoring_view)
 	#(#{UI.Presenter class} #resource_Refactoring_OK_Cancel_button_block)
 ).
 
@@ -2576,6 +2581,21 @@ displayPrefix
 displayPrefix!constants!displaying!public! !
 !
 
+!Tools.ChooseNamespaceDialog methodsFor!
+
+createComponents
+	"Create the presenters contained by the receiver"
+
+	super createComponents.
+	self add: BooleanPresenter new name: 'showChanges'!
+
+showChanges
+	^(self presenterNamed: 'showChanges') value! !
+!Tools.ChooseNamespaceDialog categoriesForMethods!
+createComponents!initializing!public! !
+showChanges!accessing!public! !
+!
+
 !Tools.ChooseNamespaceDialog class methodsFor!
 
 resource_Refactoring_view
@@ -4374,6 +4394,46 @@ chooseMethodForRefactoring: aString
 	^self developmentSystem chooseMethodFromEnvironment: self selectionEnvironment caption: aString! !
 !Tools.SmalltalkToolShell categoriesForMethods!
 chooseMethodForRefactoring:!private!refactoring! !
+!
+
+!UI.ChoicePrompter methodsFor!
+
+showChanges
+	^(self presenterNamed: 'showChanges') value! !
+!UI.ChoicePrompter categoriesForMethods!
+showChanges!accessing!public! !
+!
+
+!UI.ChoicePrompter class methodsFor!
+
+refactoringChoices: aSequenceableCollection caption: aStringCaptionOrNil
+	"Shows a dialog to allow the user to choose from aSequenceableCollection. The dialog is given a caption according to aStringCaptionOrNil. If nil then
+	the default caption is used. Answer the dialog, or nil if cancelled.
+	For refactoring purposes the dialog also includes a checkbox to allow the user to choose to see the eventual refactoring changes before they are applied."
+
+	| instance |
+	instance := self
+				create: 'Refactoring view'
+				on: (aSequenceableCollection notEmpty ifTrue: [aSequenceableCollection first]) asValue
+				choices: aSequenceableCollection
+				caption: aStringCaptionOrNil.
+	"We now hack in a BooleanPresenter attached to the checkbox - for anything more complex than this, it would be better to subclass ChoicePrompter"
+	(instance add: BooleanPresenter new name: 'showChanges')
+		view: (instance view viewNamed: 'showChanges') presenterConnectionPoint.
+	^instance showModal ifNotNil: [instance]!
+
+resource_Refactoring_view
+	"Answer the literal data from which the 'Refactoring view' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Refactoring_view)
+	"
+
+	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.DialogView} 38 #{Core.Array} 30 nil nil 8 #(13369344 65536) 32 nil 518 #{Graphics.ThemeColor} #dialog 518 #{Graphics.Point} 501 701 133 nil 1030 #{Graphics.Font} nil true 262 #{OS.LOGFONTW} 8 #[244 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 83 0 101 0 103 0 111 0 101 0 32 0 85 0 73 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 130 193 193 nil 32 1798 #{UI.BorderLayout} 1 1 nil 18 #{UI.ReferenceView} 50 14 nil 32 50 2 8 1140850688 131073 288 nil nil nil 5 nil nil nil 288 582 1 #{UI.ResourceIdentifier} #{UI.Presenter} #resource_Refactoring_OK_Cancel_button_block nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createAt:extent: 50 2 130 15 549 130 639 71 288 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 7 0 0 0 18 1 0 0 70 1 0 0 53 1 0 0] 8 #() 130 193 193 nil 27 nil nil 18 #{UI.ListBox} 50 17 nil 32 50 2 8 1144062209 1025 592 838 2 #{UI.ListModel} 550 #{Core.OrderedCollection} 0 nil 6 #{Kernel.IdentitySearchPolicy} 6 #{Graphics.Color} #default nil 5 nil nil nil 592 nil nil 518 #{Core.Message} #displayString 8 #() 8 #() nil 386 50 2 434 #createAt:extent: 50 2 130 15 15 130 639 535 592 434 #horizontalExtent: 8 #(0) 592 514 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 7 0 0 0 7 0 0 0 70 1 0 0 18 1 0 0] 8 #() 576 nil 27 518 #{Kernel.STBIdentityDictionaryProxy} #{Core.IdentityDictionary} 50 2 592 8 'choices' 518 #{Graphics.Rectangle} 130 15 15 130 17 15 nil nil nil nil 1 nil nil nil 130 501 311 1 nil nil 774 #{Core.Semaphore} nil nil 1 nil nil 386 50 2 434 #createAt:extent: 50 2 130 6143 21 130 701 711 32 434 #text: 50 1 8 'Choose one of:' 32 514 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 93 13 0 0 109 1 0 0] 50 2 592 288 576 nil 27)! !
+!UI.ChoicePrompter class categoriesForMethods!
+refactoringChoices:caption:!instance creation!public! !
+resource_Refactoring_view!public!resources-views! !
 !
 
 !UI.Presenter class methodsFor!

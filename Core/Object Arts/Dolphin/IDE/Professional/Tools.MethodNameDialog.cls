@@ -109,7 +109,7 @@ createSchematicWiring!initializing!public! !
 model:!accessing!public! !
 onParameter:renamedTo:accept:!event handling!public! !
 onSignatureChanged!event handling!private! !
-showChanges!public! !
+showChanges!accessing!public! !
 validater:!accessing!public! !
 validationResultPresenterClass!constants!public! !
 !

@@ -40,7 +40,7 @@ storeOn:!printing!public! !
 model: aRBModel removeImport: aBindingReference from: aClass
 	^self new
 		model: aRBModel;
-		import: aBindingReference class: aClass! !
+		import: aBindingReference asQualifiedReference class: aClass! !
 !Refactory.Browser.RemoveImportRefactoring class categoriesForMethods!
 model:removeImport:from:!public! !
 !

@@ -40,7 +40,7 @@ createComponents!initializing!public! !
 model:!accessing!public! !
 scopeNames!constants!public! !
 selectors:!public! !
-showChanges!public! !
+showChanges!accessing!public! !
 !
 
 !Tools.RenameAccessorsDialog class methodsFor!
