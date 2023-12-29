@@ -26,7 +26,7 @@ testAllForHost
 
 testHost
 	| name ip |
-	self skipUnless: [self isOnline].
+	self skipUnless: [self isCiBuild not and: [self isOnline]].
 	name := InternetAddress host: 'dns.google.com'.
 	ip := InternetAddress ipAddress: name ipAddress.
 	self assert: ip host equals: 'dns.google'!
