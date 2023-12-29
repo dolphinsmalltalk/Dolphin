@@ -6,6 +6,7 @@ package paxVersion: 1;
 
 package classNames
 	add: #SmalltalkParserErrorTest;
+	add: #SmalltalkScannerTest;
 	add: #StIdentifierTokenTest;
 	add: #StLiteralArrayTokenTest;
 	add: #StLiteralTokenTest;
@@ -33,6 +34,11 @@ package!
 
 "Class Definitions"!
 
+DolphinTest subclass: #SmalltalkScannerTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 DolphinTest subclass: #StTokenTest
 	instanceVariableNames: ''
 	classVariableNames: ''
