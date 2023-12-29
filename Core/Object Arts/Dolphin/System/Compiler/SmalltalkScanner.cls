@@ -636,7 +636,7 @@ scanSmalltalkReal: anInteger sign: signInteger
 						scale: (self readIntegerOfRadix: 10) ?? scale].
 			exponent := 0].
 	^self
-		newFloatToken: significand
+		newFloatToken: significand * signInteger
 		precision: precision
 		exponent: exponent!
 
