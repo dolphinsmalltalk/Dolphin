@@ -133,11 +133,23 @@ new
 
 	<primitive: 70>
 	_failureCode == _PrimitiveFailureCode.NonInstantiable ifTrue: [^StBasicVariableNode new].
-	^self primitiveFailed: _failureCode! !
+	^self primitiveFailed: _failureCode!
+
+selfNode
+	^StSelfVariableNode start: 0!
+
+superNode
+	^StSuperVariableNode start: 0!
+
+thisContextNode
+	^StThisContextVariableNode start: 0! !
 !Kernel.StVariableNode class categoriesForMethods!
 identifierToken:!instance creation!public! !
 named:!instance creation!public! !
 named:start:!instance creation!public! !
 new!instance creation!public! !
+selfNode!instance creation!public! !
+superNode!instance creation!public! !
+thisContextNode!instance creation!public! !
 !
 

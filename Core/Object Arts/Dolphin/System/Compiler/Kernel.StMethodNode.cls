@@ -113,6 +113,9 @@ fullBindingFor: aString
 
 	^methodClass fullBindingFor: aString environment: self environment!
 
+hasAnnotation: aSymbol
+	^self tags anySatisfy: [:each | each selector == aSymbol]!
+
 hash
 	^(self selector hash bitXor: self body hash) bitXor: self arguments hash!
 
@@ -264,6 +267,7 @@ displayOn:!printing!public! !
 environment!accessing!public! !
 environment:!accessing!public! !
 fullBindingFor:!binding!public! !
+hasAnnotation:!public!testing! !
 hash!comparing!public! !
 isExternalCall!public!testing! !
 isInlined!public!testing! !

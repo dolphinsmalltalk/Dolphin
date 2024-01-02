@@ -73,9 +73,9 @@ compileDelegatorMethod
 				selectorParts: parseTree selectorParts
 				arguments: (parseTree argumentNames collect: 
 							[:each |
-							each = selfVariableName ifTrue: [StSelfVariableNode start: 0] ifFalse: [StBasicVariableNode named: each]]).
+							each = selfVariableName ifTrue: [StVariableNode selfNode] ifFalse: [StBasicVariableNode named: each]]).
 	self hasOnlySelfReturns ifFalse: [delegatorNode := StReturnNode value: delegatorNode].
-	statementNode := StSequenceNode temporaries: #() statements: {delegatorNode}.
+	statementNode := StSequenceNode temporaries: #() statements: { delegatorNode }.
 	method := (class whoDefinesMethod: selector) methodFor: selector.
 	model compileTree: (method parseTree
 				body: statementNode;

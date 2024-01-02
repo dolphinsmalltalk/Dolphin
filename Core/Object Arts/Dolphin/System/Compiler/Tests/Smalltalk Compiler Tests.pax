@@ -70,7 +70,7 @@ Core.Tests.DolphinTest
 	classConstants: {}!
 Core.Tests.DolphinTest
 	subclass: #'Kernel.Tests.ParserTest'
-	instanceVariableNames: ''
+	instanceVariableNames: 'allowEmptyStatements'
 	classVariableNames: ''
 	imports: #(#{External.ExtCallArgTypes} #{Kernel.ParseErrorCodes})
 	classInstanceVariableNames: ''

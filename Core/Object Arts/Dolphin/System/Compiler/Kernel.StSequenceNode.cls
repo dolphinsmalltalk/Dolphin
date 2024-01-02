@@ -104,6 +104,9 @@ outer
 
 	^self parent!
 
+periods
+	^periods!
+
 periods: anOrderedCollection
 	periods := anOrderedCollection!
 
@@ -173,6 +176,7 @@ leftBar!accessing!public! !
 leftBar:temporaries:rightBar:!initializing!public! !
 methodComments!accessing!public! !
 outer!accessing!public! !
+periods!accessing!private! !
 periods:!accessing!public! !
 postCopy!copying!public! !
 rightBar!accessing!private! !

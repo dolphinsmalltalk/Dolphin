@@ -40,6 +40,11 @@ isBinary: aString
 
 	^false!
 
+isBinaryStarting: aCharacter
+	"Answer whether the receiver is a binary token starting with the specified <Character>."
+
+	^false!
+
 isEof
 	^false!
 
@@ -113,6 +118,7 @@ comments:!accessing!private! !
 isAssignment!public!testing! !
 isBinary!public!testing! !
 isBinary:!public!testing! !
+isBinaryStarting:!public!testing! !
 isEof!public!testing! !
 isIdentifier!public!testing! !
 isKeyword!public!testing! !

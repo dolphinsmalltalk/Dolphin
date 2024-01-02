@@ -21,10 +21,16 @@ isBinary
 isBinary: aSymbol
 	"Answer whether the receiver is a binary token with the specified value."
 
-	^self value == aSymbol! !
+	^self value == aSymbol!
+
+isBinaryStarting: aCharacter
+	"Answer whether the receiver is a binary token starting with the specified <Character>."
+
+	^self value first == aCharacter! !
 !Kernel.StBinarySelectorToken categoriesForMethods!
 acceptVisitor:!public!visitor! !
 isBinary!public!testing! !
 isBinary:!public!testing! !
+isBinaryStarting:!public!testing! !
 !
 

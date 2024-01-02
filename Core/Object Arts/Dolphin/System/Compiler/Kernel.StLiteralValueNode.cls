@@ -60,9 +60,17 @@ literalToken: aLiteralToken
 		yourself!
 
 value: aValue
-	^self literalToken: (StLiteralToken value: aValue)! !
+	^self literalToken: (StLiteralToken value: aValue)!
+
+value: anObject start: startInteger stop: stopInteger
+	^self literalToken: (StLiteralToken
+				start: startInteger
+				comments: nil
+				value: anObject
+				stop: stopInteger)! !
 !Kernel.StLiteralValueNode class categoriesForMethods!
 literalToken:!instance creation!public! !
 value:!instance creation!public! !
+value:start:stop:!instance creation!public! !
 !
 

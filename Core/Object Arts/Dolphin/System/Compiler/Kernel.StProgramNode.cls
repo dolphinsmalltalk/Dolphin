@@ -393,6 +393,16 @@ source
 
 	^parent notNil ifTrue: [parent source] ifFalse: [nil]!
 
+sourceCode
+	"Answer the source code of this node (if available)."
+
+	^self source
+		ifNotNil: 
+			[:source |
+			| interval |
+			interval := self sourceInterval.
+			source copyFrom: interval start to: interval stop]!
+
 sourceInterval
 	^self start to: self stop!
 
@@ -526,6 +536,7 @@ scope:!accessing!public! !
 sentMessages!accessing!public! !
 size!enumerating!public! !
 source!accessing!public! !
+sourceCode!accessing!public! !
 sourceInterval!accessing!public! !
 start!accessing!public! !
 startWithoutParentheses!accessing!public! !

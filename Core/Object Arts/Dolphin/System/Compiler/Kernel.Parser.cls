@@ -267,20 +267,16 @@ parseBlockArgsInto: node
 	args addLast: arg.
 	currentToken isSpecial: $:]
 			whileTrue.
-	currentToken isBinary
+	(currentToken isBinaryStarting: $|)
 		ifTrue: 
 			[node bar: currentToken start.
 			currentToken value == #|
 				ifTrue: [self step]
 				ifFalse: 
-					[currentToken value == #'||'
-						ifTrue: 
-							["Hack the current token to be the start of temps bar"
-							currentToken
-								value: #|;
-								start: currentToken start + 1]
-						ifFalse: 
-							[self parserError: CErrBlockArgListNotClosed range: (node start to: args last stop)]]]
+					["Consume only the args closing bar"
+					currentToken
+						value: (currentToken value copyFrom: 2) asSymbol;
+						start: currentToken start + 1]]
 		ifFalse: 
 			["St-80 allows, for example, [:a] as a valid block, ANSI requires the arg list termination bar, i.e. [:a|]"
 			(st80Syntax and: [currentToken isSpecial: $]])
@@ -919,7 +915,8 @@ parseStatementsOf: aNode
 							declarations..."
 							rightBar := self errorPosition - 1]]
 				ifFalse: 
-					[currentToken value == #'||'
+					["Empty temp declarations scanned as a binary selector"
+					currentToken value == #'||'
 						ifTrue: 
 							[rightBar := (leftBar := currentToken start) + 1.
 							self step]]].
@@ -949,15 +946,21 @@ parseTags
 	self step.
 	tag := self parseTag: start.
 	tags nextPut: tag.
-	(currentToken isBinary: #>)
-		ifFalse: 
-			[self parserError: CErrExpectCloseTag.
-			"Error ignored, attempt to recover..."
-			tag stop: currentToken start - 1.
-			methodNode tags: tags grabContents.
-			^self].
 	tag stop: currentToken start.
-	self step.
+	(currentToken isBinary: #>)
+		ifTrue: [self step]
+		ifFalse: 
+			[(currentToken isBinaryStarting: $>)
+				ifFalse: 
+					[self parserError: CErrExpectCloseTag.
+					"Error ignored, attempt to recover..."
+					tag stop: currentToken start - 1.
+					methodNode tags: tags grabContents.
+					^self].
+			"Closing angle bracket was scanned as the start of a binary selector. Consume only the bracket."
+			currentToken
+				value: (currentToken value copyFrom: 2) asSymbol;
+				start: currentToken start + 1].
 	currentToken isBinary: #<]
 			whileTrue.
 	methodNode tags: tags grabContents!
@@ -1156,6 +1159,17 @@ step
 			nextToken := nil]
 		ifFalse: [currentToken := scanner next]!
 
+stepBinaryFirst
+	"Private - Patch over-scanning of binary selectors, e.g. the sequence >| might occur at the end of a tag (annotation) but actually be intended to represent closing the last tag and opening of temp declarations."
+
+	| binarySelector |
+	binarySelector := currentToken value.
+	currentToken value: binarySelector first asSymbol.
+	^currentToken := StBinarySelectorToken
+				start: currentToken start + 1
+				comments: nil
+				value: (binarySelector copyFrom: 2) asSymbol!
+
 tempDeclClass
 	^StTempDeclNode!
 
@@ -1289,6 +1303,7 @@ scanner:!accessing!public! !
 scannerClass!constants!private! !
 sequenceNodeClass!constants!private! !
 step!parsing!private! !
+stepBinaryFirst!parsing!private! !
 tempDeclClass!constants!private! !
 validateArg:args:!parsing!private! !
 validateTemp:of:temps:!parsing!private! !

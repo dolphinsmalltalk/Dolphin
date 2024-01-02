@@ -33,9 +33,9 @@ constructLookupNodeFor: aString in: aRBBlockNode
 						value: aString
 						stop: nil).
 	^StMessageNode
-		receiver: (StSelfVariableNode start: 0)
+		receiver: StVariableNode selfNode
 		selector: #lookupMatchFor:in:
-		arguments: {argumentNode. aRBBlockNode arguments last}!
+		arguments: { argumentNode. aRBBlockNode arguments last }!
 
 copyInContext: aDictionary 
 	^self replacingBlock value: aDictionary!

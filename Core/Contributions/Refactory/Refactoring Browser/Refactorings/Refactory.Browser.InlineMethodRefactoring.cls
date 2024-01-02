@@ -118,7 +118,7 @@ inlineSourceReplacing: aParseTree
 		addNodes: (statements copyFrom: 1 to: (statements size - 1 max: 0)) before: nodeUnderSequence;
 		addTemporariesNamed: inlineParseTree body temporaryNames.
 	aParseTree
-		replaceWith: (statements isEmpty ifTrue: [StSelfVariableNode start: 0] ifFalse: [statements last])!
+		replaceWith: (statements isEmpty ifTrue: [StVariableNode selfNode] ifFalse: [statements last])!
 
 insertInlinedMethod
 	| node |
