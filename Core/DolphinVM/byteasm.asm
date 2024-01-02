@@ -1361,13 +1361,10 @@ ReturnOopToSender MACRO oop
 ENDM
 
 BEGINBYTECODE popReturnSelf
-	mov		eax, [_SP]
-	sub		_SP, OOPSIZE
-	mov		ecx, [_BP-OOPSIZE]				; Receiver is one below _BP
-	ReturnOopToSender
+	; The pop isn't needed, since the return will use the stored stack point of the calling frame anyway
 ENDBYTECODE popReturnSelf
 
-BEGINBYTECODE returnSelf
+BEGINBYTECODENOALIGN returnSelf
 ;;
 ;; Return receiver to sending context is a very common operation (default method
 ;; return), but dynamically it occurs much less frequently than return message
