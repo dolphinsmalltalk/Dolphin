@@ -27,10 +27,9 @@ testAllForHost
 
 testHost
 	<skipUnless: #isOnline>
-	| name ip |
-	name := InternetAddress host: 'dns.google.com'.
-	ip := InternetAddress ipAddress: name ipAddress.
-	self assert: ip host equals: 'dns.google'!
+	| ip |
+	ip := InternetAddress ipAddress: #[9 9 9 9].
+	self assert: ip host equals: 'dns9.quad9.net'!
 
 testIsIPString
 	self deny: (InternetAddress isIPString: '').
