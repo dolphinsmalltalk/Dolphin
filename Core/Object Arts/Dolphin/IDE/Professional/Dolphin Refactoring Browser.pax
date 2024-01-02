@@ -2732,7 +2732,6 @@ queryOverrideMethods: aCommandQuery
 	class := self actualClass.
 	class superclass ifNil: [^self].
 	methods := self selectedOverridableMethods.
-	methods isEmpty ifTrue: [^self].
 	aCommandQuery
 		beEnabled;
 		expandMenuTextWith: (methods size == 1 ifTrue: [methods single] ifFalse: ['Methods'])!
