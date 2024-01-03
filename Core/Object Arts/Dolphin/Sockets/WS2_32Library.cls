@@ -6,7 +6,7 @@ ExternalLibrary subclass: #WS2_32Library
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 WS2_32Library guid: (GUID fromString: '{d368efd5-8705-4c18-ada5-9a1e95868480}')!
-WS2_32Library comment: 'WS2_32Library is the <ExternalLibrary> class to represent the dynamic link library, ''WS2_32.dll''.It was generated generated from type information in the ''Windows Sockets 2 Type Library'' library. It contains methods for each of the functions defined by the corresponding module in that type library.
+WS2_32Library comment: 'WS2_32Library is the <ExternalLibrary> class to represent the dynamic link library, ''WS2_32.dll''. It was generated generated from type information in the ''Windows Sockets 2 Type Library'' library. It contains methods for each of the functions defined by the corresponding module in that type library.
 
 This library contains functions pertaining to the use of TCP/IP sockets under Windows through the Sockets 2 (blocking) API.
 

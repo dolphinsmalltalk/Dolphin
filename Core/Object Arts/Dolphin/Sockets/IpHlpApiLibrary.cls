@@ -6,7 +6,7 @@ ExternalLibrary subclass: #IPHlpApiLibrary
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 IPHlpApiLibrary guid: (GUID fromString: '{a63698ae-5cef-4f53-bf10-c4a77a8b979a}')!
-IPHlpApiLibrary comment: 'IPHlpApiLibrary is the <ExternalLibrary> class to represent the dynamic link library, ''iphlpapi.DLL''.It was generated generated from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library. It contains methods for each of the functions defined by the corresponding module in that type library.
+IPHlpApiLibrary comment: 'IPHlpApiLibrary is the <ExternalLibrary> class to represent the dynamic link library, ''iphlpapi.DLL''. It was generated generated from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library. It contains methods for each of the functions defined by the corresponding module in that type library.
 
 The type library contains the following helpstring for this module
 	"IP Helper Library"

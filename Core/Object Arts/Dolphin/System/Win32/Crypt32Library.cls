@@ -6,7 +6,7 @@ ExternalLibrary subclass: #Crypt32Library
 	poolDictionaries: 'WinCryptConstants'
 	classInstanceVariableNames: ''!
 Crypt32Library guid: (GUID fromString: '{02c78993-ba10-47a1-953f-63f60b7693ab}')!
-Crypt32Library comment: 'Crypt32Library is the <ExternalLibrary> class to represent the dynamic link library, ''Crypt32.dll''.It was generated generated from type information in the ''Win32 API'' library. It contains methods for each of the functions defined by the corresponding module in that type library.
+Crypt32Library comment: 'Crypt32Library is the <ExternalLibrary> class to represent the dynamic link library, ''Crypt32.dll''. It was generated generated from type information in the ''Win32 API'' library. It contains methods for each of the functions defined by the corresponding module in that type library.
 
 The type library contains the following helpstring for this module
 	"Crypto API"

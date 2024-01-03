@@ -6,7 +6,7 @@ PermanentLibrary subclass: #NTLibrary
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 NTLibrary guid: (GUID fromString: '{8293e458-7d81-4aba-97a5-c1001c4b2153}')!
-NTLibrary comment: 'NtDllLibrary is the <ExternalLibrary> class to represent the dynamic link library, ''ntdll.dll''.It was generated generated from type information in the ''Win32 API'' library. It contains methods for each of the functions defined by the corresponding module in that type library.
+NTLibrary comment: 'NtDllLibrary is the <ExternalLibrary> class to represent the dynamic link library, ''ntdll.dll''. It was generated generated from type information in the ''Win32 API'' library. It contains methods for each of the functions defined by the corresponding module in that type library.
 
 The type library contains the following helpstring For this Module
 	"Windows NT Runtime Library"
