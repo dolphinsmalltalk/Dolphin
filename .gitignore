@@ -50,3 +50,4 @@ DolphinBoot
 hooks
 lfs
 *.exe.WebView2
+Package backups/
