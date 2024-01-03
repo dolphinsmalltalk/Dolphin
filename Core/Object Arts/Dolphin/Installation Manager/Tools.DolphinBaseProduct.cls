@@ -140,6 +140,7 @@ contents
 		add: #('Core\Contributions\IDB\IDB DeviceIndependentBitmap.pax' #plain #imageBased);
 		add: #('Core\Contributions\IDB\IDB Image Library.pax' #plain #imageBased);
 		add: #('Core\Contributions\IDB\IDB MultipleFileOpenDialog.pax' #plain #imageBased);
+		add: #('Core\Contributions\IDB\IDB IDE Package Backup.pax' #plain #imageBased);
 		yourself.
 
 	"Solutions Software components"
