@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'IDB IDE Package Backup'.
 package paxVersion: 1;
 	basicComment: 'Automatic backup of packages
@@ -12,15 +12,9 @@ Public Domain Freeware
 
 package basicPackageVersion: '6a'.
 
-package basicScriptAt: #postinstall put: 'PackageManager current when: #aboutToSave: send: #onAboutToSavePackage: to: PackageBackup!!'.
-package basicScriptAt: #preuninstall put: 'PackageManager current removeEventsTriggeredFor: PackageBackup!!'.
 
 package classNames
 	add: #PackageBackup;
-	yourself.
-
-package methodNames
-	add: #Package -> #savePACBackupTo:;
 	yourself.
 
 package binaryGlobalNames: (Set new
@@ -29,9 +23,9 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\Object Arts\Dolphin\Base\Dolphin';
-	yourself).
+package setPrerequisites: #(
+	'..\..\Object Arts\Dolphin\IDE\Base\Development System'
+	'..\..\Object Arts\Dolphin\Base\Dolphin').
 
 package!
 
@@ -39,7 +33,7 @@ package!
 
 Object subclass: #PackageBackup
 	instanceVariableNames: ''
-	classVariableNames: 'BackupFolder'
+	classVariableNames: 'BackupFolder Instance'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
@@ -47,21 +41,6 @@ Object subclass: #PackageBackup
 
 
 "Loose Methods"!
-
-!Package methodsFor!
-
-savePACBackupTo: aFolderName 
-	| pathname |
-	#idbAdded.
-	(File exists: self packageFileName) 
-		ifTrue: 
-			[File createDirectory: aFolderName.
-			pathname := File 
-						composePath: aFolderName
-						stem: (File splitStemFrom: self packageFileName) , ' ' , Time now asMilliseconds printString
-						extension: self class packageExtension.
-			File copy: self packageFileName to: pathname]! !
-!Package categoriesFor: #savePACBackupTo:!helpers!idb goodies!public! !
 
 "End of package definition"!
 
