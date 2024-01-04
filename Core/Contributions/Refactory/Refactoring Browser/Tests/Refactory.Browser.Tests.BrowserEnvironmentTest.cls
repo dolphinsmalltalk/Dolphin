@@ -2,7 +2,7 @@
 
 Refactory.Browser.Tests.RefactoringBrowserTest
 	subclass: #'Refactory.Browser.Tests.BrowserEnvironmentTest'
-	instanceVariableNames: 'universalEnvironment totalSelectors'
+	instanceVariableNames: 'universalEnvironment totalSelectors selectorCount'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -21,13 +21,12 @@ categoriesFor: anEnvironment
 
 classesFor: aBrowserEnvironment
 	| allClasses |
-	allClasses := aBrowserEnvironment classes asSet.
-	allClasses addAll: aBrowserEnvironment not classes.
+	allClasses := aBrowserEnvironment classes union: aBrowserEnvironment not classes.
 	universalEnvironment classesDo: [:each | allClasses remove: each].
 	self assert: allClasses isEmpty!
 
 classNamesFor: anEnvironment
-	"N.B. A class can be in an environment, and in its inverse, if it is only partially included in the original environment"
+	"Private - N.B. A class can be in an environment, and in its inverse, if it is only partially included in the original environment"
 
 	| classNames allClassNames |
 	classNames := anEnvironment classNames
@@ -41,29 +40,24 @@ classNamesFor: anEnvironment
 copyFor: aBrowserEnvironment
 	| newEnvironment |
 	newEnvironment := aBrowserEnvironment copy.
-	self assert: newEnvironment numberSelectors equals: aBrowserEnvironment numberSelectors.
+	self assert: newEnvironment numberSelectors equals: selectorCount.
 	self assert: (aBrowserEnvironment & newEnvironment not) numberSelectors equals: 0!
 
-keysFor: aBrowserEnvironment
-	| allKeys |
-	allKeys := aBrowserEnvironment keys asSet.
-	allKeys addAll: aBrowserEnvironment not keys.
-	allKeys removeAll: Smalltalk keys.
-	self assert: allKeys isEmpty!
-
-labelFor: aBrowserEnvironment 
-	self deny: aBrowserEnvironment label isNil.
-	self deny: aBrowserEnvironment label isEmpty.
-	self deny: aBrowserEnvironment defaultLabel isNil.
-	self deny: aBrowserEnvironment defaultLabel isEmpty!
+labelFor: aBrowserEnvironment
+	| default label |
+	label := aBrowserEnvironment label.
+	self deny: label isNil.
+	self deny: label isEmpty.
+	default := aBrowserEnvironment defaultLabel.
+	self deny: default isNil.
+	self deny: default isEmpty!
 
 numberSelectorsFor: aBrowserEnvironment
-	| selectorCount |
 	selectorCount := aBrowserEnvironment numberSelectors.
 	self assert: selectorCount + aBrowserEnvironment not numberSelectors equals: self totalSelectors.
 	self assert: (aBrowserEnvironment & aBrowserEnvironment not) numberSelectors equals: 0.
-	self assert: (universalEnvironment & aBrowserEnvironment) numberSelectors equals: selectorCount.
-	self assert: (aBrowserEnvironment & universalEnvironment) numberSelectors equals: selectorCount!
+	self assert: universalEnvironment & aBrowserEnvironment identicalTo: aBrowserEnvironment.
+	self assert: aBrowserEnvironment & universalEnvironment identicalTo: aBrowserEnvironment!
 
 setUp
 	super setUp.
@@ -73,12 +67,8 @@ setUp
 storeStringFor: aBrowserEnvironment
 	| newEnvironment |
 	newEnvironment := Compiler evaluate: aBrowserEnvironment storeString.
-	self assert: newEnvironment numberSelectors equals: aBrowserEnvironment numberSelectors.
+	self assert: newEnvironment numberSelectors equals: selectorCount.
 	self assert: (aBrowserEnvironment & newEnvironment not) numberSelectors equals: 0!
-
-tearDown
-	totalSelectors := nil.
-	super tearDown!
 
 testAllClassesDo
 	| allClasses |
@@ -340,12 +330,9 @@ totalSelectors
 	^totalSelectors ifNil: [totalSelectors := universalEnvironment numberSelectors]!
 
 uniqueClassesIn: aBrowserEnvironment
-	| allBehaviors |
-	allBehaviors := Set new.
-	aBrowserEnvironment classesDo: 
-			[:each |
-			self deny: (allBehaviors includes: each).
-			allBehaviors add: each]!
+	| classes |
+	classes := Set new.
+	aBrowserEnvironment classesDo: [:each | self assert: (classes addNewElement: each)]!
 
 universalTestFor: aBrowserEnvironment
 	self labelFor: aBrowserEnvironment.
@@ -358,16 +345,14 @@ universalTestFor: aBrowserEnvironment
 	self classesFor: aBrowserEnvironment.
 	self assert: aBrowserEnvironment problemCount = 0 equals: aBrowserEnvironment isEmpty! !
 !Refactory.Browser.Tests.BrowserEnvironmentTest categoriesForMethods!
-categoriesFor:!public!universal tests! !
-classesFor:!BrowserEnvironment tests!public! !
-classNamesFor:!BrowserEnvironment tests!public! !
-copyFor:!public!universal tests! !
-keysFor:!public!universal tests! !
-labelFor:!BrowserEnvironment tests!public! !
-numberSelectorsFor:!public!universal tests! !
+categoriesFor:!private!universal tests! !
+classesFor:!private!universal tests! !
+classNamesFor:!private!universal tests! !
+copyFor:!private!universal tests! !
+labelFor:!private!universal tests! !
+numberSelectorsFor:!private!universal tests! !
 setUp!public!set up! !
-storeStringFor:!public!universal tests! !
-tearDown!public!Running! !
+storeStringFor:!private!universal tests! !
 testAllClassesDo!BrowserEnvironment tests!public! !
 testAndEnvironment!AndEnvironment tests!public! !
 testBindingFor!BrowserEnvironment tests!public! !
@@ -389,7 +374,7 @@ testSelectorEnvironment!BrowserEnvironment tests!public! !
 testSelectorEnvironmentCopy!BrowserEnvironment tests!public! !
 testSystemIntegrity!BrowserEnvironment tests!public! !
 totalSelectors!accessing!private! !
-uniqueClassesIn:!public!universal tests! !
-universalTestFor:!public!universal tests! !
+uniqueClassesIn:!private!universal tests! !
+universalTestFor:!private!universal tests! !
 !
 

@@ -139,7 +139,7 @@ XProgramming.SUnit.TestCase
 	classConstants: {}!
 Refactory.Browser.Tests.RefactoringBrowserTest
 	subclass: #'Refactory.Browser.Tests.BrowserEnvironmentTest'
-	instanceVariableNames: 'universalEnvironment totalSelectors'
+	instanceVariableNames: 'universalEnvironment totalSelectors selectorCount'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
