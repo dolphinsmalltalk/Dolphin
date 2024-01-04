@@ -8,7 +8,7 @@ Core.Utf8String
 	classInstanceVariableNames: ''
 	classConstants: {
 			'CharClassifications'
-				-> #(nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil #binary nil nil nil #binary #binary nil nil nil #binary #binary #binary #binary nil #binary #digit #digit #digit #digit #digit #digit #digit #digit #digit #digit #colon nil #binary #binary #binary #binary #binary #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic nil #binary nil nil #alphabetic nil #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic nil #binary nil #binary nil)
+				-> #(nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil #binary nil nil nil #binary #binary nil nil nil #binary #binary #binary #binary nil #binary #digit #digit #digit #digit #digit #digit #digit #digit #digit #digit #colon nil #binary #binary #binary #binary #binary #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic nil #binary nil nil #alphabetic nil #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic nil #binary nil #binary nil)
 		}!
 Core.Symbol guid: (Core.GUID fromString: '{87b4c51d-026e-11d3-9fd7-00a0cc3e4a32}')!
 Core.Symbol isNullTerminated: true!
@@ -29,19 +29,22 @@ Symbol complies with the following ANSI protocols:
 argumentCount
 	"Answer the <integer> number of arguments required by a method with the receiver as its selector. The result is undefined if the receiver is not a valid selector."
 
-	| len ch |
+	| len |
 	len := self basicSize.
 	len == 0 ifTrue: [^0].
-	ch := self at: 1.
-	^(ch isEnglishLetter or: [ch == $_])
+	(CharClassifications lookup: (self basicAt: 1)) == #alphabetic
+		ifFalse: 
+			["If valid selector, must be binary"
+			^1].
+	(self at: len) == $:
 		ifTrue: 
-			[(self at: len) == $:
-				ifTrue: [(self
-						occurrencesOf: $:
-						from: 1
-						to: len - 1) + 1]
-				ifFalse: [0]]
-		ifFalse: [1]!
+			["Keyword"
+			^(self
+				occurrencesOf: $:
+				from: 2
+				to: len - 1) + 1].
+	"Unary"
+	^0!
 
 asString
 	"Answer a new <String> containing the characters of the receiver."
@@ -288,12 +291,12 @@ initialize
 	Table isNil ifTrue: [Table := Array new: 3989].
 	empty := #''.
 	VM registryAt: #Symbol put: self.
-	classificationTable := Array new: 128.
+	classificationTable := Array new: 127.
 	'_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
-		do: [:alpha | classificationTable at: alpha codePoint + 1 put: #alphabetic].
-	'01234567890' do: [:digit | classificationTable at: digit codePoint + 1 put: #digit].
-	'!!%&*+,-/<=>?@\~|' do: [:binary | classificationTable at: binary codePoint + 1 put: #binary].
-	classificationTable at: $: codePoint + 1 put: #colon.
+		do: [:alpha | classificationTable at: alpha codePoint put: #alphabetic].
+	'01234567890' do: [:digit | classificationTable at: digit codePoint put: #digit].
+	'!!%&*+,-/<=>?@\~|' do: [:binary | classificationTable at: binary codePoint put: #binary].
+	classificationTable at: $: codePoint put: #colon.
 	self addClassConstant: 'CharClassifications' value: classificationTable!
 
 intern: aString
@@ -320,11 +323,11 @@ isLiteralSymbol: aSymbol
 	| size class |
 	size := aSymbol basicSize.
 	size == 0 ifTrue: [^false].
-	class := CharClassifications lookup: (aSymbol basicAt: 1) + 1.
+	class := CharClassifications lookup: (aSymbol basicAt: 1).
 	class == #binary
 		ifTrue: 
 			[2 to: size
-				do: [:i | (CharClassifications lookup: (aSymbol basicAt: i) + 1) == #binary ifFalse: [^false]]]
+				do: [:i | (CharClassifications lookup: (aSymbol basicAt: i)) == #binary ifFalse: [^false]]]
 		ifFalse: 
 			[| includesColon initial |
 			class == #alphabetic ifFalse: [^false].
@@ -333,7 +336,7 @@ isLiteralSymbol: aSymbol
 			2 to: size
 				do: 
 					[:i |
-					class := CharClassifications lookup: (aSymbol basicAt: i) + 1.
+					class := CharClassifications lookup: (aSymbol basicAt: i).
 					initial
 						ifTrue: 
 							[class == #alphabetic ifFalse: [^false].
