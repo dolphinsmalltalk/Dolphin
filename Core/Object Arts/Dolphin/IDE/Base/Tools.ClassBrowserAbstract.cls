@@ -1812,6 +1812,7 @@ queryHistoryForward: aCommandQuery
 
 queryNewMethod: aCommandQuery
 	| cat |
+	self selectedClass ifNil: [^self].
 	cat := self category.
 	aCommandQuery
 		beEnabled;
