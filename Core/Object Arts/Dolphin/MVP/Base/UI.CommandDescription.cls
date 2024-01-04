@@ -8,8 +8,10 @@ Core.Object
 	classInstanceVariableNames: ''
 	classConstants: {
 			'DefaultMask' -> 16r1.
+			'MaximumId' -> 16r7FFF.
 			'ModalMask' -> 16r2.
 			'NotAbortableMask' -> 16r4.
+			'StartingId' -> 16rFA0.
 			'TextSubstitutionsMask' -> 16r8
 		}!
 UI.CommandDescription guid: (Core.GUID fromString: '{87b4c469-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -319,16 +321,11 @@ initialize
 	CommandDescriptionRegistry isNil
 		ifTrue: 
 			[CommandDescriptionRegistry := WeakIdentityDictionary newWithWeakKeys: 150.
-			CurrentId := self startingId]
+			CurrentId := StartingId]
 		ifFalse: 
 			[CommandDescriptionRegistry
 				haveStrongValues;
 				haveWeakKeys]!
-
-maximumId
-	"Private - Answer the maximum id that we have available."
-
-	^32767!
 
 new
 	"Instances of the receiver must have a command selector specified."
@@ -338,20 +335,17 @@ new
 nextId
 	"Private - Answer the next <SmallInteger> id to use."
 
-	| wrapped max |
+	| wrapped |
 	wrapped := false.
-	max := self maximumId.
-	[ 	(CurrentId := CurrentId + 1) > max ifTrue: [
-			wrapped ifTrue: [^self error: 'There are no unused command ids available.'].
+	
+	[(CurrentId := CurrentId + 1) > MaximumId
+		ifTrue: 
+			[wrapped ifTrue: [^self error: 'There are no unused command ids available. Try closing some windows.'].
 			wrapped := true.
-			CurrentId := self startingId].
-		CommandDescriptionRegistry identityIncludes: CurrentId] whileTrue.
+			CurrentId := StartingId].
+	CommandDescriptionRegistry identityIncludes: CurrentId]
+			whileTrue.
 	^CurrentId!
-
-startingId
-	"Private - Answer the first id which we can safely use."
-
-	^4000!
 
 stbConvertFrom: anSTBClassFormat
 	"Convert from earlier CommandDescription versions."
@@ -420,10 +414,8 @@ command:description:!instance creation!public! !
 command:description:image:!instance creation!public! !
 idFor:!command registry!private! !
 initialize!development!initializing!private! !
-maximumId!command registry!private! !
 new!instance creation!public! !
 nextId!command registry!private! !
-startingId!command registry!private! !
 stbConvertFrom:!binary filing!public! !
 stbConvertFromVersion1:!binary filing!public! !
 stbConvertFromVersion3:!binary filing!public! !

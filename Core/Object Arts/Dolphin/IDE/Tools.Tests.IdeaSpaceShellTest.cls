@@ -232,11 +232,11 @@ testHistoryRemove
 	self assert: hist isEmpty!
 
 testRemoveCard
-	| sb |
-	sb := self newSystemBrowserCard.
-	self newClassBrowserCard.
+	| card1 |
+	card1 := self newInspectorShellCard.
+	self newInspectorShellCard.
 	super assert: presenter cards size = 2.
-	sb exit.
+	card1 exit.
 	super assert: presenter cards size = 1.
 	presenter closeCard.
 	super assert: presenter cards isEmpty!

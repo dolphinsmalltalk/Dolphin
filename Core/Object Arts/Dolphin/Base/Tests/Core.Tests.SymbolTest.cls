@@ -33,14 +33,23 @@ newEmptyCollection: anInteger
 	^Symbol intern: (String new: anInteger)!
 
 testArgumentCount
+	self assert: #'' argumentCount equals: 0.
 	self assert: #< argumentCount equals: 1.
+	self assert: #<= argumentCount equals: 1.
 	self assert: #<==> argumentCount equals: 1.
+	self assert: #a argumentCount equals: 0.
 	self assert: #a: argumentCount equals: 1.
-	self assert: #size argumentCount equals: 0.
-	self assert: #_dup: argumentCount equals: 1.
 	self assert: #a:b: argumentCount equals: 2.
 	self assert: #a:r:g:b: argumentCount equals: 4.
-	self assert: #ab:c:def: argumentCount equals: 3!
+	self assert: #ab:c:def: argumentCount equals: 3.
+	self assert: #size argumentCount equals: 0.
+	self assert: #_dup: argumentCount equals: 1.
+	self assert: #_ argumentCount equals: 0.
+	self assert: #_: argumentCount equals: 1.
+	self assert: #_:_: argumentCount equals: 2.
+
+	"Result for non-selectors is undefined, but should not fail"
+	#(#'123' #'🐬' #'a:🐬:') do: [:each | self shouldnt: [each argumentCount] raise: Error]!
 
 testAsString
 	#('abc ' '£' '€' '🐬' '你好') do: 

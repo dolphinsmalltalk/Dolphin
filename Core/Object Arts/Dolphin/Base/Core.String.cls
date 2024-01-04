@@ -915,19 +915,24 @@ occurrencesOf: anObject
 		from: 1
 		to: self size!
 
-occurrencesOf: anObject from: startInteger to: endInteger 
-	| current occurrences |
-	current := startInteger.
+occurrencesOf: anObject from: startInteger to: endInteger
+	"Answer how many of the receiver's elements are equal to anObject between the specified code-unit indices. If anObject is not a <Character>, then the answer will be zero. It does not matter if the start of end indices do not correspond to the first and last code-units of complete code-points, but if they do then the incomplete characters of which the indexed code-unit is a part will not be matched, i.e.
+		('🐬a🐬' occurrencesOf: $🐬 from: 2 to: 5) = 0
+		('🐬a🐬' occurrencesOf: $a from: 2 to: 5) = 1
+	"
+
+	| next occurrences |
 	occurrences := 0.
-	[current > endInteger] whileFalse: 
-			[| next |
-			(next := self 
+	next := startInteger.
+	
+	[next > endInteger
+		or: [(next := self
 						nextIndexOf: anObject
-						from: current
-						to: endInteger) == 0 
-				ifTrue: [^occurrences].
-			occurrences := occurrences + 1.
-			current := next + 1].
+						from: next
+						to: endInteger) == 0]]
+			whileFalse: 
+				[occurrences := occurrences + 1.
+				next := next + 1].
 	^occurrences!
 
 prevIndexOf: anObject from: hiInteger to: loInteger

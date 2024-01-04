@@ -1303,8 +1303,10 @@ Core.Object
 	classInstanceVariableNames: ''
 	classConstants: {
 			'DefaultMask' -> 16r1.
+			'MaximumId' -> 16r7FFF.
 			'ModalMask' -> 16r2.
 			'NotAbortableMask' -> 16r4.
+			'StartingId' -> 16rFA0.
 			'TextSubstitutionsMask' -> 16r8
 		}!
 Core.Object

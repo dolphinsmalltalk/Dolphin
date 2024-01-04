@@ -849,12 +849,52 @@ testNewWithAll
 
 testOccurrencesOf
 	| subject |
-	subject := self assimilateString: '🐬a£文🐬Ā🍺'.
-	self assert: (subject occurrencesOf: Character dolphin) equals: 2.
+	subject := self assimilateString: '🐬a£文🐬Ā🍺Ā'.
+	self assert: (subject occurrencesOf: $🐬) equals: 2.
 	self assert: (subject occurrencesOf: $£) equals: 1.
+	self assert: (subject occurrencesOf: $文) equals: 1.
 	self assert: (subject occurrencesOf: $ð) equals: 0.
+	self assert: (subject occurrencesOf: $Ā) equals: 2.
 	subject := self collectionClass empty.
-	self assert: (subject occurrencesOf: Character dolphin) equals: 0!
+	self assert: (subject occurrencesOf: $🐬) equals: 0!
+
+testOccurrencesOfFromTo
+	| subject |
+	subject := self assimilateString: '🐬a£文a🐬Ā🍺'.
+	self assert: (subject
+				occurrencesOf: $🐬
+				from: 1
+				to: subject size - 1)
+		equals: 2.
+	2 to: 6
+		do: 
+			[:i |
+			self assert: (subject
+						occurrencesOf: $🐬
+						from: i
+						to: subject size - 1)
+				equals: 1].
+	self assert: (subject
+				occurrencesOf: $a
+				from: 2
+				to: subject size - 1)
+		equals: 2.
+	self assert: (subject
+				occurrencesOf: $🍺
+				from: 2
+				to: subject size)
+		equals: 1.
+	self assert: (subject
+				occurrencesOf: $🍺
+				from: 2
+				to: subject size - 1)
+		equals: 0.
+	subject := self collectionClass empty.
+	self assert: (subject
+				occurrencesOf: $🐬
+				from: 1
+				to: subject size)
+		equals: 0!
 
 testPairsDo
 	| subject pairs |
@@ -1040,6 +1080,7 @@ testMatchExtended!public! !
 testMidString!public!unit tests! !
 testNewWithAll!public! !
 testOccurrencesOf!public!unit tests! !
+testOccurrencesOfFromTo!public!unit tests! !
 testPairsDo!public!unit tests! !
 testReject!public!unit tests! !
 testReverseComposites!public!unit tests! !
