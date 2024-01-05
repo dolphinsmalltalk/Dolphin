@@ -665,6 +665,9 @@ onPositionChanged: aPositionEvent
 	does not, so we override to invalidate only on resize. This is also a suitable
 	time to revalidate too."
 
+	self isTopView ifFalse: 
+			["May be embedded in some sort of MDI shell, e.g. the Idea Space. If so we do not want to perform the shell-level processing such as revalidating the layout."
+			^super onPositionChanged: aPositionEvent].
 	aPositionEvent isClientAreaChanged ifTrue: [self invalidateLayoutDeeply].
 	(aPositionEvent isHideWindow not and: [self isWindowVisible])
 		ifTrue: 
@@ -679,6 +682,7 @@ onSettingChanged: aSettingsChangeEvent
 	^aSettingsChangeEvent lResult!
 
 onStateRestored
+	self isTopView ifFalse: [^self].
 	self updateMenuBar.
 	self setDefId: defaultButton.
 	self invalidateUserInterface!
@@ -853,31 +857,24 @@ resolutionScaledBy: scale
 !
 
 restorePlacement: aWINDOWPLACEMENT resolution: aPointResolution
-	"Private - Restore the placement for the receiver to aWINDOWPLACEMENT which was measured at
-	a screen resolution of aPointResolution. If the current resolution is different then the
-	placement rectangle will have to be scaled appropriately. Subclasses can override this
-	message to compensate for a resolution change in any other ways required."
+	"Private - Restore the placement for the receiver to aWINDOWPLACEMENT which was measured at a screen resolution of aPointResolution. If the current resolution is different then the placement rectangle will have to be scaled appropriately. Subclasses can override this message to compensate for a resolution change in any other ways required."
 
-	| rect desktopResolution |
-	rect := aWINDOWPLACEMENT rcNormalPosition asRectangle.
+	| rect desktopResolution extent |
+	self isTopView ifFalse: [^super restorePlacement: aWINDOWPLACEMENT resolution: aPointResolution].
+	rect := aWINDOWPLACEMENT rcNormalPosition.
 	desktopResolution := View desktop resolution.
 	aPointResolution = desktopResolution
 		ifFalse: 
 			[| scale |
-			"Resolution is now different so recompute the placement"
 			scale := desktopResolution / aPointResolution.
-			rect := (rect scaleBy: scale) truncated.
+			rect scaleBy: scale.
 			self resolutionScaledBy: scale].
-
-	"If the receiver wants to use a preferred extent, then use that. Otherwise, choose a default
-	extent."
 	self usePreferredExtent
 		ifTrue: 
-			[| extent |
-			extent := self preferredExtent ifNil: [self defaultExtentWithin: creationParent].
-			rect extent: extent].
-	rect position: (self defaultPositionWithin: creationParent forExtent: rect extent).
-	aWINDOWPLACEMENT rcNormalPosition: rect asParameter.
+			[extent := self preferredExtent ifNil: [self defaultExtentWithin: creationParent].
+			rect extent: extent]
+		ifFalse: [extent := rect extent].
+	rect position: (self defaultPositionWithin: creationParent forExtent: extent).
 	self placement: aWINDOWPLACEMENT!
 
 setButtonId: id style: style
@@ -992,6 +989,7 @@ updateIcons
 	"Private - Update the large and small icons of the receiver"
 
 	| actualLargeIcon |
+	self isTopView ifFalse: [^self].
 	actualLargeIcon := largeIcon ifNil: [self presenter icon].
 	self
 		sendMessage: WM_SETICON

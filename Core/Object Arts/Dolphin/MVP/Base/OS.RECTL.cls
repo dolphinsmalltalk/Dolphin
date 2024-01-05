@@ -53,6 +53,13 @@ extent
 	^Graphics.Point x: (bytes int32AtOffset: _OffsetOf_right) - (bytes int32AtOffset: _OffsetOf_left)
 		y: (bytes int32AtOffset: _OffsetOf_bottom) - (bytes int32AtOffset: _OffsetOf_top)!
 
+extent: aPoint
+	"Set the extent of the receiver to the <Point> argument. The origin remains the same and the corner stays in the same quadrant it was in relative to the origin point. If aPoint contains any negative value, the result is undefined."
+
+	bytes
+		int32AtOffset: _OffsetOf_right put: (bytes int32AtOffset: _OffsetOf_left) + aPoint x;
+		int32AtOffset: _OffsetOf_bottom put: (bytes int32AtOffset: _OffsetOf_top) + aPoint y!
+
 height
 	"Answer the height of the receiver."
 
@@ -107,6 +114,7 @@ bottom!**compiled accessors**!public! !
 bottom:!**compiled accessors**!public! !
 bottomRight!accessing!public! !
 extent!accessing!public! !
+extent:!accessing!public! !
 height!accessing!public! !
 left!**compiled accessors**!public! !
 left:!**compiled accessors**!public! !

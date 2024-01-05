@@ -3080,27 +3080,23 @@ restoreFromProxy: aViewProxy
 	self handle.
 	self onRestoredFromProxy!
 
-restorePlacement: aWINDOWPLACEMENT resolution: aPointResolution 
+restorePlacement: aWINDOWPLACEMENT resolution: aPointResolution
 	"Private - Restore the placement for the receiver to aWINDOWPLACEMENT which was
 	measured at a screen resolution of aPointResolution. If the current resolution is different
 	then the placement rectangle will have to be scaled appropriately. 
 	Subclasses can override this message to compensate for a resolution change
 	in any other ways required."
 
-	| placement res |
-	placement := aWINDOWPLACEMENT.
+	| res |
 	res := self resolution.
-	aPointResolution = res 
+	aPointResolution = res
 		ifFalse: 
-			["Resolution is now different so recompute the placement"
-
-			| rect scale |
+			[| scale |
+			"Resolution is now different so recompute the placement"
 			scale := res / aPointResolution.
-			rect := placement rcNormalPosition asRectangle.
-			rect := rect scaleBy: scale.
-			placement rcNormalPosition: rect truncated asParameter.
+			aWINDOWPLACEMENT rcNormalPosition scaleBy: scale.
 			self resolutionScaledBy: scale].
-	self placement: placement!
+	self placement: aWINDOWPLACEMENT!
 
 richText: aRichText
 	"Private - Set the text contents of the receiver to the RTF text, aRichText.
@@ -3234,10 +3230,8 @@ setNoRedrawCount: anInteger
 	^self propertyAt: #_noRedrawCount put: anInteger!
 
 setParent: aView
-	| isDesktopParent |
 	self parentView: aView.
-	isDesktopParent := aView == self class desktop.
-	self setWindowStyle: (self getWindowStyle mask: WS_CHILD set: isDesktopParent not).
+	self setWindowStyle: (self getWindowStyle mask: WS_CHILD set: aView ~~ self class desktop).
 	User32 setParent: handle hWndNewParent: aView asParameter!
 
 setRedraw: aBoolean
