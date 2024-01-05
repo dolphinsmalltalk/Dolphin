@@ -660,6 +660,9 @@ onPositionChanged: aPositionEvent
 	does not, so we override to invalidate only on resize. This is also a suitable
 	time to revalidate too."
 
+	self isTopView ifFalse:
+			["May be embedded in some sort of MDI shell, e.g. the Idea Space. If so we do not want to perform the shell-level processing, especially revalidating the layout as this can cause the view to paint incorrectly."
+			"^super onPositionChanged: aPositionEvent"].
 	aPositionEvent isClientAreaChanged ifTrue: [self invalidateLayoutDeeply].
 	(aPositionEvent isHideWindow not and: [self isWindowVisible])
 		ifTrue: 
@@ -689,6 +692,7 @@ onSettingChanged: aSettingsChangeEvent
 	^aSettingsChangeEvent lResult!
 
 onStateRestored
+	self isTopView ifFalse: [^self].
 	self updateMenuBar.
 	self setDefId: defaultButton.
 	self invalidateUserInterface!
@@ -872,6 +876,7 @@ restorePlacement: aWINDOWPLACEMENT resolution: aPointResolution
 	message to compensate for a resolution change in any other ways required."
 
 	| rect desktopResolution |
+	self isTopView ifFalse: [^super restorePlacement: aWINDOWPLACEMENT resolution: aPointResolution].
 	rect := aWINDOWPLACEMENT rcNormalPosition asRectangle.
 	desktopResolution := View desktop resolution.
 	aPointResolution = desktopResolution
@@ -1005,6 +1010,7 @@ updateIcons
 	"Private - Update the large and small icons of the receiver"
 
 	| actualLargeIcon |
+	self isTopView ifFalse: [^self].
 	actualLargeIcon := largeIcon notNil ifTrue: [largeIcon] ifFalse: [self presenter icon].
 	self
 		sendMessage: WM_SETICON
