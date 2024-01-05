@@ -47,6 +47,13 @@ bottomRight
 
 	^self right @ self bottom!
 
+bottomRight: aPoint
+	"Set the receiver's bottom right position to the <Point> argument."
+
+	self
+		right: aPoint x;
+		bottom: aPoint y!
+
 center
 	"Answer a <Point> representing the position of the centre of the receiver."
 
@@ -118,11 +125,37 @@ origin
 	^self topLeft
 !
 
+origin: aPoint
+	"Set the Point at the top left corner of the receiver"
+
+	self topLeft: aPoint!
+
+position: aPoint
+	"Move the receiver so that its top-left corner is at the specified position."
+
+	| ext |
+	ext := self extent.
+	self
+		topLeft: aPoint;
+		extent: ext!
+
 right
 	^self subclassResponsibility!
 
 right: anObject
 	self subclassResponsibility!
+
+scaleBy: delta
+	"Scale the receiver in-place by the specified <Point> or <Number> multiplier."
+
+	self
+		topLeft: self topLeft * delta;
+		bottomRight: self bottomRight * delta!
+
+scaledBy: delta
+	"Answer a new <Rectangle> representing the receiver with origin and corner multiplied by delta, where delta is a Point or a Number. Uses the #vertex:vertex: constructor in order to create a normalised rectangle"
+
+	^self species vertex: self origin * delta vertex: self corner * delta!
 
 species
 	^UI.Rectangle!
@@ -137,6 +170,13 @@ topLeft
 	"Answer a Point representing the top left position of the receiver."
 
 	^self left @ self top!
+
+topLeft: aPoint
+	"Set the <Point> representing the top left position of the receiver."
+
+	self
+		left: aPoint x;
+		top: aPoint y!
 
 width
 	"Answer the width of the receiver."
@@ -155,6 +195,7 @@ asRectangle!converting!public! !
 bottom!accessing!public! !
 bottom:!accessing!public! !
 bottomRight!accessing!public! !
+bottomRight:!accessing!public! !
 center!accessing!public! !
 centerRight!public! !
 centerX!accessing!public! !
@@ -168,12 +209,17 @@ height:!accessing!public! !
 left!accessing!public! !
 left:!accessing!public! !
 origin!accessing!public! !
+origin:!accessing!public! !
+position:!public! !
 right!accessing!public! !
 right:!accessing!public! !
+scaleBy:!public!transforming! !
+scaledBy:!public!transforming! !
 species!comparing!public! !
 top!accessing!public! !
 top:!accessing!public! !
 topLeft!accessing!public! !
+topLeft:!accessing!public! !
 width!accessing!public! !
 width:!accessing!public! !
 !

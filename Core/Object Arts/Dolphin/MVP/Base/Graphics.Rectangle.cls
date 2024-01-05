@@ -437,10 +437,13 @@ rounded
 
 	^self species origin: origin rounded corner: corner rounded!
 
-scaleBy: delta 
-	"Answer a new <Rectangle> representing the receiver with origin and corner multiplied by
-	delta, where delta is a Point or a Number. Use the #vertex:vertex: constructor in order to
-	create a normalised rectangle"
+scaleBy: delta
+	"Retained for backwards compatibility, but discouraged because the use of the present tense implies that the operation happens in place, but in fact a new instance is answered. #scaledBy: should be used in preference."
+
+	^self scaledBy: delta!
+
+scaledBy: delta
+	"Answer a new <Rectangle> representing the receiver with origin and corner multiplied by delta, where delta is a Point or a Number. Uses the #vertex:vertex: constructor in order to create a normalised rectangle"
 
 	^self species vertex: origin * delta vertex: corner * delta!
 
@@ -615,6 +618,7 @@ rightCenter!accessing!public! !
 rightCenter:!accessing!public! !
 rounded!public!truncation and round off! !
 scaleBy:!public!transforming! !
+scaledBy:!public!transforming! !
 subtract:!public!rectangle functions! !
 top!accessing!public! !
 top:!accessing!public! !

@@ -79,7 +79,6 @@ breakoutCurrentCard
 	"Break the current card out onto the desktop"
 
 	<commandQuery: #hasCurrentCard>
-	self removeCardMenubarAndAccelerators.
 	self breakoutCard: self currentCard!
 
 canMoveCardLeft
@@ -358,8 +357,8 @@ registerForCardEvents
 removeCard: cardToRemove 
 	| last |
 	last := self removeHistoryForCard: cardToRemove.
-	self removeCardMenubarAndAccelerators.
 	cardsPresenter remove: cardToRemove.
+	self hasCurrentCard ifFalse: [self removeCardMenubarAndAccelerators].
 	^last!
 
 removeCardMenubarAndAccelerators

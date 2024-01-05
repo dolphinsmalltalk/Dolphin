@@ -22,11 +22,7 @@ create: aClassSymbol subclassOf: aClass
 
 createThreeCards
 	| tools |
-	tools := Array new: 3.
-	presenter view noRedrawDo: 
-			[tools at: 1 put: self newInspectorShellCard.
-			tools at: 2 put: self newInspectorShellCard.
-			tools at: 3 put: self newInspectorShellCard].
+	tools := presenter view noRedrawDo: [(1 to: 3) collect: [:i | self newInspectorShellCard]].
 	self assert: presenter cards size equals: 3.
 	tools do: 
 			[:each |

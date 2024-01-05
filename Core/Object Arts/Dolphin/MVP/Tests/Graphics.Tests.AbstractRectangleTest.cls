@@ -92,12 +92,37 @@ testOriginCorner
 	rect2 := testMethod value: self subjectClass withArguments: {100 @ 200. 300 @ 400}.
 	self assert: rect2 equals: rect!
 
+testPosition
+	| rect ext |
+	rect := self subjectClass origin: 2 @ 1 corner: 6 @ 4.
+	ext := rect extent.
+	rect position: 1 @ 3.
+	self assert: rect origin equals: 1 @ 3.
+	self assert: rect extent equals: ext.
+	self assert: rect corner equals: rect origin + ext!
+
 testRight
 	self assert: desktop right equals: 1280.
 	desktop right: 3072.
 	self assert: desktop right equals: 3072.
 	self assert: desktop width equals: 3072
 !
+
+testScaledBy
+	| rect |
+	rect := 2 @ 2 corner: 6 @ 4.
+	self assert: (rect scaledBy: 2) left equals: 4.
+	self assert: (rect scaledBy: 2) right equals: 12.
+	self assert: (rect scaledBy: 2) top equals: 4.
+	self assert: (rect scaledBy: 2) bottom equals: 8.
+	self assert: (rect scaledBy: 1 / 2) left equals: 1.
+	self assert: (rect scaledBy: 1 / 2) right equals: 3.
+	self assert: (rect scaledBy: 1 / 2) top equals: 1.
+	self assert: (rect scaledBy: 1 / 2) bottom equals: 2.
+	self assert: (rect scaledBy: 0) left equals: 0.
+	self assert: (rect scaledBy: 0) right equals: 0.
+	self assert: (rect scaledBy: 0) top equals: 0.
+	self assert: (rect scaledBy: 0) bottom equals: 0!
 
 testTop
 	self assert: oddDesktop top equals: 2.
@@ -121,7 +146,9 @@ testCopy!public! !
 testHeight!public!unit tests! !
 testLeft!public!unit tests! !
 testOriginCorner!public!unit tests! !
+testPosition!public!unit tests! !
 testRight!public!unit tests! !
+testScaledBy!public!unit tests! !
 testTop!public!unit tests! !
 testWidth!public!unit tests! !
 !
