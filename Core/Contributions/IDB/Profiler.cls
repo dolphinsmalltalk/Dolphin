@@ -187,7 +187,7 @@ profile: aBlock inSetNamed: aString collect: collectBoolean on: onBoolean
 		on: onBoolean!
 
 profileTestCase: aTestCase
-	^self profile: [aTestCase runCase] inSetNamed: aTestCase printString!
+	^self profile: [aTestCase runCase] inSetNamed: '<1d> - <2d>' << { aTestCase. DateAndTime now }!
 
 removeAllSampleSets
 	"Remove all the sample sets"
