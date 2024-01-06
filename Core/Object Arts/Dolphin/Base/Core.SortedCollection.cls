@@ -279,7 +279,7 @@ reSort
 		from: firstIndex
 		to: lastIndex!
 
-reverse
+reversed
 	"Answer a copy of the receiver but with its elements in reverse order."
 
 	" Implementation Note: Refine in order to answer an OrderedCollection because obviously
@@ -358,7 +358,7 @@ insert:before:!adding!private! !
 replaceFrom:to:with:startingAt:!public!replacing! !
 resize:!mutating!private! !
 reSort!operations!public! !
-reverse!copying!public! !
+reversed!copying!public! !
 select:!enumerating!public! !
 setSortAlgorithm:!initializing!private! !
 sortBlock!accessing!public! !

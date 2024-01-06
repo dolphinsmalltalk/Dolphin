@@ -1129,6 +1129,11 @@ resize: anInteger
 		become: self!
 
 reverse
+	"Retained for ANSI compatibility (#reverse is a member of the sequencedCollection family of protocols), but discouraged because the use of the present tense implies that the operation happens in place, but in fact a new instance is answered. #reversed should be used in preference."
+
+	^self reversed!
+
+reversed
 	"Answer a new <sequencedReadableCollection> which contains the same elements as the receiver, but in reverse order."
 
 	^self reversedFrom: 1 to: self size!
@@ -1381,6 +1386,7 @@ replaceFrom:to:with:startingAt:!public!replacing! !
 replaceFrom:to:withObject:!public!replacing! !
 resize:!mutating!private! !
 reverse!copying!public! !
+reversed!copying!public! !
 reversedFrom:to:!copying!public! !
 reverseDo:!enumerating!public! !
 runsAndValuesDo:!enumerating!public! !

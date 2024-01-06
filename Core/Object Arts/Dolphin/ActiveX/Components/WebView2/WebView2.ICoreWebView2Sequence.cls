@@ -263,6 +263,11 @@ printOn: aPuttableStream
 	aPuttableStream nextPut: $)!
 
 reverse
+	"Implemented because this is part of the ANSI compatibility sequencedReadableCollection protocols, but discouraged because the use of the present tense implies that the operation happens in place, whereas in fact a new instance is answered. #reversed should be used in preference."
+
+	^self reversed!
+
+reversed
 	"Answer a new <sequencedReadableCollection> which contains the same elements as the receiver, but in reverse order."
 
 	^self reversedFrom: 1 to: self size!
@@ -335,6 +340,7 @@ last!accessing!public! !
 nextIndexOf:from:to:!public!searching! !
 printOn:!printing!public! !
 reverse!copying!public! !
+reversed!copying!public! !
 reversedFrom:to:!copying!public! !
 reverseDo:!enumerating!public! !
 size!accessing!public! !

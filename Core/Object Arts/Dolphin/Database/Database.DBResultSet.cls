@@ -455,7 +455,7 @@ resize: anInteger
 
 	^self shouldNotImplement!
 
-reverse
+reversed
 	"Answer a new <sequencedReadableCollection> which contains the same elements
 	as the receiver, but in reverse order."
 
@@ -603,7 +603,7 @@ rawCollect:!enumerating!private! !
 rawDo:!enumerating!private! !
 realize!binding!private! !
 resize:!mutating!private! !
-reverse!copying!public! !
+reversed!copying!public! !
 reverseDo:!enumerating!public! !
 scrollTo:!accessing!private! !
 select:!enumerating!public! !
