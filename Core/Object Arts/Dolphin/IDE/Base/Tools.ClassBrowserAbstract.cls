@@ -2231,8 +2231,14 @@ setVisitTimer
 shortCaption
 	| stream |
 	stream := String smalltalkWriteStream: 32.
-	self printShortCaptionForClass: self actualClass on: stream.
-	self isModified ifTrue: [stream nextPut: $*].
+	self isOpen
+		ifTrue: 
+			[self printShortCaptionForClass: self actualClass on: stream.
+			self isModified ifTrue: [stream nextPut: $*]]
+		ifFalse: 
+			[stream
+				nextPutAll: 'A closed ';
+				print: self class].
 	^stream contents!
 
 slideyPinNames
