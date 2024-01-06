@@ -4139,7 +4139,7 @@ hasRefactorableMethodSelected
 	^self hasMethodSelected!
 
 methodRefactoringsMenu
-	<commandQuery: #hasPackages:>
+	<commandQuery: #hasPackages>
 	Sound warningBeep!
 
 newMethodNamePrompter: aCompiledMethod caption: aString allowExisting: aBoolean
