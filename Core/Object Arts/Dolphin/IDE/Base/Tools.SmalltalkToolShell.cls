@@ -160,14 +160,9 @@ clearSelection
 configureFromSavedStateString: aSavedStateString
 	"Configures the receiver using the monadic block source in aSavedStateString"
 
-	| result |
-	result := Compiler
-				compileForEvaluation: aSavedStateString
-				in: nil
-				environment: nil
-				evaluationPools: #()
-				flags: 0.
-	self view noRedrawDo: [(result method value: nil) value: self]!
+	| expr |
+	expr := Compiler compileExpression: aSavedStateString in: nil.
+	self view noRedrawDo: [(expr value: nil) value: self]!
 
 createComponents
 	"Private - Create the presenters contained by the receiver"

@@ -510,16 +510,14 @@ compileRange: anInterval ifFail: failBlock debug: aBoolean
 	context := self evaluationContext.
 	compiler := context basicClass compilerClass.
 	
-	[| f pools |
-	f := self defaultCompilerFlags.
-	aBoolean ifTrue: [f := f | DebugMethod].
-	pools := self allPools.
-	result := compiler
+	[result := compiler
 				compileForEvaluation: source
 				in: (context ifNotNil: [context basicClass])
 				environment: self parseContext environment
-				evaluationPools: pools
-				flags: f]
+				evaluationPools: self allPools
+				flags: (aBoolean
+						ifTrue: [self defaultCompilerFlags bitOr: DebugMethod]
+						ifFalse: [self defaultCompilerFlags])]
 			on: compiler warningClass
 			do: [:cw | self compilerNotification: cw offset: offset]
 			on: compiler errorClass
@@ -544,10 +542,12 @@ compilerNotification: aCompilerNotification offset: anInteger
 	source, and display an Ok/Cancel message box with the error/warning. If the user presses Ok,
 	then the compilation is permitted to continue, whereas Cancel aborts it."
 
-	compilationErrors addLast: aCompilerNotification.
+	| copy |
+	copy := aCompilerNotification copy.
+	compilationErrors addLast: copy .
 	self errorModel notNil 
 		ifTrue: 
-			[self showError: aCompilerNotification offset: anInteger.
+			[self showError: copy offset: anInteger.
 			^aCompilerNotification isUserResumable 
 				ifTrue: [aCompilerNotification resume]
 				ifFalse: [aCompilerNotification return]].

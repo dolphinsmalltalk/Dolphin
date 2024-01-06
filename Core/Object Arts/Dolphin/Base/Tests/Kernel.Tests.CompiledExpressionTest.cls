@@ -31,7 +31,7 @@ testAsDebugMethodWithCustomEnvironment
 	expr := (Compiler
 				compileExpression: self class name
 				in: Object
-				environment: self class environment) method.
+				environment: self class environment).
 	self assert: expr environment identicalTo: self class environment.
 	self assert: (expr value: Object name) identicalTo: self class.
 	self deny: expr isDebugMethod.
@@ -42,10 +42,10 @@ testAsDebugMethodWithCustomEnvironment
 
 testGetDebugInfoWithCustomEnvironment
 	| expr debugInfo |
-	expr := (Compiler
+	expr := Compiler
 				compileExpression: self class name
 				in: Object
-				environment: self class environment) method.
+				environment: self class environment.
 	self assert: expr environment identicalTo: self class environment.
 	self assert: (expr value: Object name) identicalTo: self class.
 	debugInfo := expr getDebugInfo.

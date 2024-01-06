@@ -155,7 +155,7 @@ basicCompile: aString flags: anInteger environment: aNamespace
 	result := error := stubMethod := nil.
 	
 	[result := self compilerClass
-				compile: aString
+				compileForMethod: aString
 				in: self
 				environment: aNamespace
 				flags: anInteger]
@@ -710,7 +710,7 @@ recompileMethod: aCompiledMethod environment: aNamespace flags: anInteger
 	stubMethodResult := nil.
 	result := 
 			[self compilerClass
-				compile: aCompiledMethod getSource
+				compileForMethod: aCompiledMethod getSource
 				in: self
 				environment: aNamespace
 				flags: anInteger]

@@ -28,8 +28,8 @@ compilationErrorClass
 compilationWarningClass
 	^CompilerWarningNotification!
 
-compileExpression: aString 
-	^self shouldnt: [self compileExpression: aString in: nil] raise: Compiler notificationClass!
+compileExpression: aString
+	^self compileExpression: aString in: nil!
 
 compileExpression: aString expectingWarning: anInteger
 	^self compileExpression: aString expectingWarningMatching: [:ex | ex errorCode = anInteger]!
@@ -47,10 +47,11 @@ compileExpression: aString expectingWarningMatching: aMonadicValuable
 
 compileExpression: aString in: aClass
 	^
-	[Compiler
-		compileExpression: aString
+	[self compilerClass
+		compileForEvaluation: aString
 		in: aClass
 		environment: nil
+		evaluationPools: nil
 		flags: defaultCompileFlags]
 			on: self compilationErrorClass
 			do: [:ex | self fail: 'Unexpected compilation error: <p>' << ex]!
@@ -59,15 +60,21 @@ compileExpressionIgnoringWarnings: aString
 	^[self compileExpression: aString in: nil] on: self compilationWarningClass do: [:ex | ex resume]!
 
 compileMethod: aString in: aClass
-	^Compiler
-		compile: aString
+	^self compilerClass
+		compileForMethod: aString
 		in: aClass
 		environment: nil
 		flags: defaultCompileFlags!
 
+compilerClass
+	^Compiler!
+
+compilerNotificationClass
+	^Compiler notificationClass!
+
 debugCompileResultFor: aCompiledMethod
-	^Compiler
-		compile: aCompiledMethod getSource
+	^self compilerClass
+		compileForMethod: aCompiledMethod getSource
 		in: aCompiledMethod methodClass
 		environment: aCompiledMethod environment
 		flags: ##(CompilerFlags.DebugMethod | CompilerFlags.TextMap | CompilerFlags.TempsMap)!
@@ -75,14 +82,17 @@ debugCompileResultFor: aCompiledMethod
 defaultCompileFlags
 	^defaultCompileFlags!
 
+disassemble: method
+	^(Tools.Disassembler method: method) disassemble!
+
 evalTestMethod: aCompiledMethod 
 	^self evalTestMethod: aCompiledMethod withArgs: #()!
 
 evalTestMethod: aCompiledMethod withArgs: anArray
 	^aCompiledMethod value: DolphinCompilerTestMethods new withArguments: anArray!
 
-evaluateExpression: aString 
-	^Compiler evaluate: aString!
+evaluateExpression: aString
+	^self compilerClass evaluate: aString!
 
 getTestMethod: aSymbol
 	| oldMethod result method |
@@ -160,11 +170,6 @@ setUp
 	super setUp.
 	defaultCompileFlags := Interactive!
 
-shortPushOne
-	| shortPushOne |
-	shortPushOne := ShortPushImmediate + (1 - -1).
-	^shortPushOne!
-
 specialTempCases
 	| specials |
 	specials := OrderedCollection new.
@@ -196,14 +201,28 @@ specialTempCases
 test1054
 	| method |
 	method := (self compileExpression: '1') method.
-	self assert: method byteCodes equals: (ByteArray with: self shortPushOne with: ReturnFromMessage).
-	method := (self compileMethod: 'a ^1' in: UndefinedObject) method.
-	self assert: method byteCodes equals: (ByteArray with: self shortPushOne with: ReturnFromMessage)!
+	self assert: method extraIndex equals: CompiledCode.ReturnLiteralConstant0.
+	"Because a quick method was generated, the 1 does get added to the literal frame"
+	self assert: method literals single equals: 1.
+	self assert: method argumentCount equals: 0.
+	self assert: method stackTempCount equals: 0.
+	self assert: method envTempCount equals: 0.
+	self deny: method needsContext.
+	self assert: method byteCodes equals: (ByteArray with: ShortPushOne with: ReturnFromMessage).
+	method := (self compileMethod: 'a ^-1' in: UndefinedObject) method.
+	self assert: method extraIndex equals: CompiledCode.ReturnLiteralConstant0.
+	self assert: method literals single equals: -1.
+	self assert: method argumentCount equals: 0.
+	self assert: method stackTempCount equals: 0.
+	self assert: method envTempCount equals: 0.
+	self deny: method needsContext.
+	self assert: method byteCodes equals: (ByteArray with: ShortPushMinusOne with: ReturnFromMessage)!
 
 testBlockTempsMap
 	"#1461"
+
 	| result map max |
-	result := Compiler 
+	result := self compilerClass
 				debugInfoForExpression: '[#(1 2 3) do: [:each | each = 2 ifTrue: [Error signal]]] on: Error do: [:ex | self halt]'
 				in: Object
 				environment: nil
@@ -212,10 +231,10 @@ testBlockTempsMap
 	map := result tempsMap.
 	max := result method byteCodes size.
 	map do: 
-			[:each | 
+			[:each |
 			| i |
 			i := each key.
-			i isInteger 
+			i isInteger
 				ifFalse: 
 					[self assert: (i start between: 1 and: max).
 					i := i stop].
@@ -257,7 +276,7 @@ testBraceArrays
 		equals: #(#(#(#() #(#() 1) #(2 #())))).
 	self assert: (self
 				evaluateExpression: '| stringConst | stringConst := ''12345''. {SmallInteger maximum. stringConst.1.2345.{2 log. Object}}')
-		equals: {SmallInteger maximum. '12345'. 1.2345. {2 log. Object}}.
+		equals: { SmallInteger maximum. '12345'. 1.2345. { 2 log. Object } }.
 	text := String writeStream.
 	array := Array writeStream.
 	text nextPut: ${.
@@ -270,21 +289,21 @@ testBraceArrays
 	text nextPut: $}.
 	array := array contents.
 	text := text contents.
-	self assert: (Compiler evaluate: text) equals: array!
+	self assert: (self evaluateExpression: text) equals: array!
 
 testByteArraysInLiteralArrays
 	"#980"
 
 	| compiled text |
 	text := '#(#[])'.
-	self shouldnt: [compiled := self compileExpression: text] raise: Compiler notificationClass.
-	self assert: (compiled method value: nil) equals: {#[]}.
+	self shouldnt: [compiled := self compileExpression: text] raise: self compilerNotificationClass.
+	self assert: (compiled method value: nil) equals: { #[] }.
 	text := '#(1 #[0])'.
-	self shouldnt: [compiled := self compileExpression: text] raise: Compiler notificationClass.
-	self assert: (compiled method value: nil) equals: {1. #[0]}.
+	self shouldnt: [compiled := self compileExpression: text] raise: self compilerNotificationClass.
+	self assert: (compiled method value: nil) equals: { 1. #[0] }.
 	text := '#(1 #[0 255] 2)'.
-	self shouldnt: [compiled := self compileExpression: text] raise: Compiler notificationClass.
-	self assert: (compiled method value: nil) equals: {1. #[0 255]. 2}!
+	self shouldnt: [compiled := self compileExpression: text] raise: self compilerNotificationClass.
+	self assert: (compiled method value: nil) equals: { 1. #[0 255]. 2 }!
 
 testCharacterScanning
 	| result |
@@ -582,11 +601,7 @@ testDecrementTempOptimisation
 
 testEmpty
 	| method |
-	method := (Compiler
-				compile: 'nothing'
-				in: UndefinedObject
-				environment: nil
-				flags: 0) method.
+	method := self compilerClass compile: 'nothing' in: UndefinedObject.
 	self assert: method byteCodes equals: (ByteArray with: ReturnSelf)!
 
 testEmptyIfInLoop
@@ -813,13 +828,13 @@ testIncrementDecrementOptimisation
 			self assert: (method value: nil withArguments: #()) equals: 0.
 			self assert: method byteCodes
 				equals: (ByteArray
-						with: self shortPushOne
+						with: ShortPushOne
 						with: Decrement
 						with: ReturnFromMessage).
 			debugMethod := method asDebugMethod.
 			self assert: debugMethod byteCodes
 				equals: (ByteArray
-						with: self shortPushOne
+						with: ShortPushOne
 						with: Break
 						with: Decrement
 						with: Break
@@ -837,13 +852,13 @@ testIncrementDecrementOptimisation
 			self assert: (method value: nil withArguments: #()) equals: 2.
 			self assert: method byteCodes
 				equals: (ByteArray
-						with: self shortPushOne
+						with: ShortPushOne
 						with: Increment
 						with: ReturnFromMessage).
 			debugMethod := method asDebugMethod.
 			self assert: debugMethod byteCodes
 				equals: (ByteArray
-						with: self shortPushOne
+						with: ShortPushOne
 						with: Break
 						with: Increment
 						with: Break
@@ -1035,7 +1050,7 @@ testIntegerScanningBoundaries
 
 testKeywordAnnotations
 	| method |
-	method := Compiler
+	method := self compilerClass
 				compile: 'test 
 	<string: ''abc''> 
 	<namespace: Smalltalk>
@@ -1047,37 +1062,41 @@ testKeywordAnnotations
 	self assert: method isAnnotated.
 	self assert: method annotations isImmutable.
 	self assert: method annotations asArray
-		equals: {Message selector: #string: arguments: #('abc').
-				Message selector: #namespace: arguments: {Smalltalk}.
+		equals: {
+				Message selector: #string: arguments: #('abc').
+				Message selector: #namespace: arguments: { Smalltalk }.
 				Message selector: #smallint:largeint: arguments: #(123 16r7FFFFFFFFFFFFFFF).
 				Message selector: #float: arguments: #(4.56).
-				Message selector: #class:static: arguments: {Core.Tests. Processor}.
-				Message selector: #expr: arguments: {Dictionary withAll: {'a' -> 1. 'b' -> 2}}}.
+				Message selector: #class:static: arguments: { Core.Tests. Processor }.
+				Message selector: #expr: arguments: { Dictionary withAll: { 'a' -> 1. 'b' -> 2 } }
+			}.
 	self assert: method annotations last arguments isImmutable.
 	self assert: method customEnvironment identicalTo: Smalltalk!
 
 testLiteralArray
-	self assert: (Compiler evaluate: '#(-)') equals: {#-}.
-	self assert: (Compiler evaluate: '#(-1)') equals: {-1}.
-	self assert: (Compiler evaluate: '#(-a)') equals: {#-. #a}.
-	self assert: (Compiler evaluate: '#(- 1)') equals: {#-. 1}!
+	self assert: (self evaluateExpression: '#(-)') equals: { #- }.
+	self assert: (self evaluateExpression: '#(-1)') equals: { -1 }.
+	self assert: (self evaluateExpression: '#(-a)') equals: { #-. #a }.
+	self assert: (self evaluateExpression: '#(- 1)') equals: { #-. 1 }!
 
 testLiteralStringEncoding
 	"The compiler should now always produce Utf8String instances for literals, whether they are entirely Ascii or not."
 
-	{'abc' asAnsiString.
+	{
+		'abc' asAnsiString.
 		'1234' asAnsiString.
 		$£ asUtf8String.
 		(Character codePoint: 128) asUtf8String.
 		Character dolphin asUtf8String.
-		Character byteCharacterSet copyFrom: 2 to: 128} do: 
+		Character byteCharacterSet copyFrom: 2 to: 128
+	} do: 
 				[:each |
 				| actual array |
-				actual := Compiler evaluate: each printString.
+				actual := self evaluateExpression: each printString.
 				self assert: actual equals: each.
 				self assert: actual isKindOf: Utf8String.
 				array := '#(' , each printString , ')'.
-				actual := (Compiler evaluate: array) first.
+				actual := (self evaluateExpression: array) first.
 				self assert: actual equals: each.
 				self assert: actual isKindOf: Utf8String]!
 
@@ -1441,17 +1460,57 @@ testReturnImmediate
 testReturnPseudoVar
 	| method |
 	#(true false nil) keysAndValuesDo: 
-			[:eachKey :eachValue |
-			| selector bytecodes retInstr |
-			selector := ('testReturn' , eachValue printString capitalized) asSymbol.
-			method := self getTestMethod: selector.
-			retInstr := ReturnSelf + eachKey.
-			bytecodes := retInstr odd
-						ifTrue: [ByteArray with: retInstr]
-						ifFalse: [ByteArray with: Nop with: retInstr].
-			self assert: method byteCodes equals: bytecodes.
-			self assert: (method value: DolphinCompilerTestMethods new withArguments: #())
-				equals: eachValue]!
+			[:i :each |
+			| bytecode expectedBytecodes source |
+			source := each printString.
+			method := (self compileExpression: source) method.
+			self assert: method getSource equals: source.
+			self assert: method extraIndex equals: CompiledCode.ReturnTrue - 1 + i.
+			"Because a quick method was generated, the 1 does get added to the literal frame"
+			self assert: method literals equals: #().
+			self assert: method argumentCount equals: 0.
+			self assert: method stackTempCount equals: 0.
+			self assert: method envTempCount equals: 0.
+			self deny: method needsContext.
+			self assert: (method value: nil withArguments: #()) identicalTo: each.
+			bytecode := ReturnPseudo - 1 + i.
+			expectedBytecodes := (bytecode even ifTrue: [{ Nop. bytecode }] ifFalse: [{ bytecode }])
+						asByteArray.
+			self assert: method byteCodes equals: expectedBytecodes.
+			method := (self compileMethod: 'a ^' , source in: UndefinedObject) method.
+			self assert: method extraIndex equals: CompiledCode.ReturnTrue - 1 + i.
+			self assert: method literals equals: #().
+			self assert: method argumentCount equals: 0.
+			self assert: method stackTempCount equals: 0.
+			self assert: method envTempCount equals: 0.
+			self deny: method needsContext.
+			self assert: method byteCodes equals: expectedBytecodes.
+			self assert: (method value: nil withArguments: #()) identicalTo: each]!
+
+testReturnSelf
+	| method expectedBytecodes receiver |
+	method := (self compileExpression: 'self' in: Object) method.
+	self assert: method getSource equals: 'self'.
+	self assert: method extraIndex equals: CompiledCode.ReturnSelf.
+	"Because a quick method was generated, the 1 does get added to the literal frame"
+	self assert: method literals equals: #().
+	self assert: method argumentCount equals: 0.
+	self assert: method stackTempCount equals: 0.
+	self assert: method envTempCount equals: 0.
+	self deny: method needsContext.
+	receiver := Object new.
+	self assert: (method value: receiver withArguments: #()) identicalTo: receiver.
+	expectedBytecodes := { OpcodePool.ReturnSelf } asByteArray.
+	self assert: method byteCodes equals: expectedBytecodes.
+	method := (self compileMethod: 'a ^self' in: Object) method.
+	self assert: method extraIndex equals: CompiledCode.ReturnSelf.
+	self assert: method literals equals: #().
+	self assert: method argumentCount equals: 0.
+	self assert: method stackTempCount equals: 0.
+	self assert: method envTempCount equals: 0.
+	self deny: method needsContext.
+	self assert: method byteCodes equals: expectedBytecodes.
+	self assert: (method value: receiver withArguments: #()) identicalTo: receiver!
 
 testScanningScaledDecimals
 	"Test Number>>readFrom: with ScaledDecimals"
@@ -1477,7 +1536,7 @@ testScope
 	a 
 		ifNil: [b ifNotNil: [:arg | arg "do nothing"]]
 		ifNotNil: [:arg | arg "do nothing"]]'.
-	self shouldnt: [compiled := self compileExpression: text] raise: Compiler notificationClass.
+	self shouldnt: [compiled := self compileExpression: text] raise: self compilerNotificationClass.
 	"Temps cannot be reused"
 	"	self assert: compiled method tempCount == 4."
 	self assert: (compiled method value: nil withArguments: #()) tempCount identicalTo: 4.
@@ -1485,7 +1544,7 @@ testScope
 	a := 1.
 	a ifNotNil: [:arg | arg "do nothing"].
 	a ifNotNil: [:arg | arg "do nothing"]]'.
-	self shouldnt: [compiled := self compileExpression: text] raise: Compiler notificationClass.
+	self shouldnt: [compiled := self compileExpression: text] raise: self compilerNotificationClass.
 	"	self assert: compiled method tempCount == 3."
 	self assert: (compiled method value: nil withArguments: #()) tempCount identicalTo: 3.
 	compiled := nil.
@@ -1494,7 +1553,7 @@ testScope
 	arg ifNil: [self halt]]'.
 	self
 		should: 
-			[Compiler
+			[self compilerClass
 				compileExpression: text
 				in: UndefinedObject
 				environment: nil
@@ -1539,6 +1598,59 @@ testSpecialLiteralsAsUnarySelectors
 							self assert: ex severityName equals: #Warning.
 							ex resume].
 			self denyIsNil: method]!
+
+testSpecialSendsOneArg
+	#(#+ #- #< #> #<= #>= #= #~= #* #/ #\\ #bitShift: #// #bitAnd: #bitOr: #== #value: #new: #at: #basicNew: #basicAt: #~~ #??)
+		do: 
+			[:each |
+			| method |
+			method := (self compileMethod: 'foo ^1 <d> 2' << each in: UndefinedObject) method.
+			self assert: method literals single identicalTo: each.
+			self deny: method isPrimitive.
+			self assert: method argumentCount equals: 0.
+			self assert: method stackTempCount equals: 0.
+			self assert: method envTempCount equals: 0.
+			self deny: method needsContext.
+			self assert: (self disassemble: method)
+				equals: '	1	Push 1
+	2	Push 2
+	3	Special Send <p>
+	4	Return' << each]!
+
+testSpecialSendsTwoArgs
+	#(#at:put: #value:value: #basicAt:put:) do: 
+			[:each |
+			| keywords method |
+			keywords := $: split: each.
+			method := (self compileMethod: 'foo ^self <1s>: 1 <2s>: 2' << keywords in: UndefinedObject) method.
+			self assert: method literals single identicalTo: each.
+			self deny: method isPrimitive.
+			self assert: method argumentCount equals: 0.
+			self assert: method stackTempCount equals: 0.
+			self assert: method envTempCount equals: 0.
+			self deny: method needsContext.
+			self assert: (self disassemble: method)
+				equals: '	1	Push Self
+	2	Push 1
+	3	Push 2
+	4	Special Send <p>
+	5	Return' << each]!
+
+testSpecialSendsZeroArgs
+	#(#value #class #size #new #basicClass #basicSize #isNil #notNil #not) do: 
+			[:each |
+			| method |
+			method := (self compileMethod: 'foo ^self <d>' << each in: UndefinedObject) method.
+			self assert: method literals single identicalTo: each.
+			self deny: method isPrimitive.
+			self assert: method argumentCount equals: 0.
+			self assert: method stackTempCount equals: 0.
+			self assert: method envTempCount equals: 0.
+			self deny: method needsContext.
+			self assert: (self disassemble: method)
+				equals: '	1	Push Self
+	2	Special Send <p>
+	3	Return' << each]!
 
 testStringLiteralFolding
 	"String literals should be folded to a single immutable instance in the literal frame if they occur more than once."
@@ -1686,7 +1798,7 @@ testTempPairing
 
 testTextMapOfEmptyBlock
 	| block method debugMethod |
-	block := Compiler evaluate: '| x | x := []. x'.
+	block := self evaluateExpression: '| x | x := []. x'.
 	self assert: block identicalTo: VM emptyBlock.
 	method := block method.
 	self assert: method byteCodes
@@ -2058,8 +2170,11 @@ compileExpression:expectingWarningMatching:!helpers!private! !
 compileExpression:in:!helpers!private! !
 compileExpressionIgnoringWarnings:!helpers!private! !
 compileMethod:in:!helpers!private! !
+compilerClass!constants!private! !
+compilerNotificationClass!constants!private! !
 debugCompileResultFor:!helpers!private! !
 defaultCompileFlags!helpers!private! !
+disassemble:!public!unit tests-code gen! !
 evalTestMethod:!helpers!private! !
 evalTestMethod:withArgs:!helpers!private! !
 evaluateExpression:!helpers!private! !
@@ -2073,9 +2188,8 @@ scanScaledDecimal:!helpers!private! !
 scanSmallIntegerNonNumericEnd:!helpers!private! !
 setInteractiveCompile!helpers!private! !
 setUp!helpers!private! !
-shortPushOne!helpers!private! !
 specialTempCases!constants!private! !
-test1054!public!unit tests! !
+test1054!public!unit tests-code gen! !
 testBlockTempsMap!public!unit tests! !
 testBlockWithAllTempTypes!public!unit tests! !
 testBraceArrays!public!unit tests! !
@@ -2130,11 +2244,15 @@ testRadixInteger!public!unit tests! !
 testReturnFromOptimizedBlock!public!unit tests! !
 testReturnIfNotNil!public!unit tests!unit tests-text maps! !
 testReturnImmediate!exceptions!public!unit tests! !
-testReturnPseudoVar!public!unit tests! !
+testReturnPseudoVar!public!unit tests-code gen! !
+testReturnSelf!public!unit tests-code gen! !
 testScanningScaledDecimals!public!unit tests! !
 testScope!public!unit tests! !
 testSharedOuterTemps!public!unit tests! !
 testSpecialLiteralsAsUnarySelectors!public! !
+testSpecialSendsOneArg!public!unit tests-code gen! !
+testSpecialSendsTwoArgs!public!unit tests-code gen! !
+testSpecialSendsZeroArgs!public!unit tests-code gen! !
 testStringLiteralFolding!public!unit tests! !
 testStringLiteralWithEmbeddedNulls!public!unit tests! !
 testSymbolScanning!public!unit tests! !

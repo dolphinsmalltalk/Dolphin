@@ -84,12 +84,14 @@ Kernel.SharedPool
 			'ShortPushFalse' -> 16r3B.
 			'ShortPushImmediate' -> 16r3D.
 			'ShortPushInstVar' -> 16r1.
+			'ShortPushMinusOne' -> 16r3D.
 			'ShortPushNil' -> 16r3C.
 			'ShortPushOne' -> 16r3F.
 			'ShortPushOuterTemp' -> 16r1B.
 			'ShortPushSelfAndTemp' -> 16r41.
 			'ShortPushStatic' -> 16r2D.
 			'ShortPushTemp' -> 16r11.
+			'ShortPushTrue' -> 16r3A.
 			'ShortPushTwo' -> 16r40.
 			'ShortPushZero' -> 16r3E.
 			'ShortSendIsNil' -> 16r9C.

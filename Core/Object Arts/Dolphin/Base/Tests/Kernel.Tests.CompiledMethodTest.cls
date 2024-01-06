@@ -103,7 +103,7 @@ testMessages
 	"Supersend"
 	self assert: ((Bag >> #postCopy) messages includes: #postCopy).
 	"Long send"
-	self assert: ((Compiler class >> #notificationCallback:) messages
+	self assert: ((CompilerLibrary class >> #notificationCallback:) messages
 				includes: #code:in:for:selector:position:line:range:extras:).
 	"isZero (i.e. == 0)"
 	self assert: (Collection >> #isEmpty) messages asSortedArray equals: #(#== #size)!

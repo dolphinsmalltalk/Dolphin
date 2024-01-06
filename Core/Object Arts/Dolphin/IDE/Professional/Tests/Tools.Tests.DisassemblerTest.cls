@@ -13,9 +13,9 @@ Tools.Tests.DisassemblerTest comment: ''!
 
 testExLongPushImmediate
 	| method |
-	method := (Compiler
+	method := Compiler
 				compileExpression: '{##(SmallInteger minimum).  ##(SmallInteger maximum).  32768. -32769}'
-				in: Object) method.
+				in: Object.
 	self assert: (Disassembler method: method) disassemble
 		equals: '	1	Push -1073741824
 	6	Push 1073741823

@@ -76,6 +76,9 @@ parseAll
 			errors].
 	^progress showModal!
 
+parseErrorClass
+	^self parserClass errorClass!
+
 parseExpression: aString
 	^self parserClass parseExpression: aString!
 
@@ -96,7 +99,7 @@ tearDown
 testAnnotationAndTempsNoSpace
 	| method tag source body |
 	source := 'foo<foo: 1 bar: 2>|t1 t2|'.
-	method := self parserClass parseMethod: source.
+	method := self parseMethod: source.
 	tag := method tags single.
 	self assert: (source at: tag start) equals: $<.
 	self assert: (source at: tag stop) equals: $>.
@@ -109,7 +112,7 @@ testAnnotationAndTempsNoSpace
 testAnnotationAndTempsNoSpace2
 	| method source body |
 	source := 'foo<foo: 1 bar: 2><foo>|t1 t2|'.
-	method := self parserClass parseMethod: source.
+	method := self parseMethod: source.
 	method tags inject: 1
 		into: 
 			[:i :tag |
@@ -222,27 +225,27 @@ testBinarySelectors
 testBlockNodeIsUsed
 	| tree |
 	" block node is not a used-node"
-	tree := self parserClass parseMethod: 'tmp [ 3+4 ]'.
+	tree := self parseMethod: 'tmp [ 3+4 ]'.
 	self deny: tree body statements last isUsed.
 	" even a block node with non-local return is not *used* "
-	tree := self parserClass parseMethod: 'tmp [^ 3+4 ]'.
+	tree := self parseMethod: 'tmp [^ 3+4 ]'.
 	self deny: tree body statements last isUsed.
 
 	"an explicit return node is *used*"
-	tree := self parserClass parseMethod: 'tmp ^[ 3+4 ]'.
+	tree := self parseMethod: 'tmp ^[ 3+4 ]'.
 	self assert: tree body statements last isUsed!
 
 testBlockReturnNode
 	| tree |
 	" no explicit return"
-	tree := self parserClass parseMethod: 'tmp [ 3+4 ]'.
+	tree := self parseMethod: 'tmp [ 3+4 ]'.
 	self deny: tree lastIsReturn.
 	" no explicit return the block local return should not count as method return "
-	tree := self parserClass parseMethod: 'tmp [^ 3+4 ]'.
+	tree := self parseMethod: 'tmp [^ 3+4 ]'.
 	self deny: tree lastIsReturn.
 
 	" explicit return"
-	tree := self parserClass parseMethod: 'tmp ^ [ 3+4 ]'.
+	tree := self parseMethod: 'tmp ^ [ 3+4 ]'.
 	self assert: tree lastIsReturn!
 
 testBlockWithArgsAndEmptyTemps
@@ -260,26 +263,25 @@ testBlockWithArgsAndEmptyTemps
 	self assert: message argument name equals: 'b'!
 
 testCascade
-	self assert: (self parserClass parseExpression: ' self msg; yourself') isCascade.
-	self assert: (self parserClass parseExpression: ' self msg:(arg msg:arg); yourself') isCascade.
-	self assert: (self parserClass parseExpression: ' (self msg); yourself') isCascade.
-	self should: [self parserClass parseExpression: ' self ; yourself'] raise: CompilerErrorNotification.
-	self should: [self parserClass parseExpression: ' (self) ; yourself']
-		raise: CompilerErrorNotification.
-	self should: [self parseExpression: ' self msg ;  ; yourself'] raise: CompilerErrorNotification!
+	self assert: (self parseExpression: ' self msg; yourself') isCascade.
+	self assert: (self parseExpression: ' self msg:(arg msg:arg); yourself') isCascade.
+	self assert: (self parseExpression: ' (self msg); yourself') isCascade.
+	self should: [self parseExpression: ' self ; yourself'] raise: self parseErrorClass.
+	self should: [self parseExpression: ' (self) ; yourself'] raise: self parseErrorClass.
+	self should: [self parseExpression: ' self msg ;  ; yourself'] raise: self parseErrorClass!
 
 testCascadeReplacement
 	"Cascade is composed of an ordered collection of messages, each with the same receiver."
 
 	| cascade |
-	cascade := self parserClass parseExpression: 'self foo; bar; baz'.
+	cascade := self parseExpression: 'self foo; bar; baz'.
 	"The replacement is made on the collection."
-	(cascade messages at: 2) replaceWith: (self parserClass parseExpression: 'self bar: 2').
-	self assert: cascade equals: (self parserClass parseExpression: 'self foo; bar: 2; baz').
+	(cascade messages at: 2) replaceWith: (self parseExpression: 'self bar: 2').
+	self assert: cascade equals: (self parseExpression: 'self foo; bar: 2; baz').
 
 	"The replacement can be a message with another receiver"
-	(cascade messages at: 3) replaceWith: (self parserClass parseExpression: 'notself barataba').
-	self assert: (cascade messages at: 3) receiver equals: (self parserClass parseExpression: 'notself')!
+	(cascade messages at: 3) replaceWith: (self parseExpression: 'notself barataba').
+	self assert: (cascade messages at: 3) receiver equals: (self parseExpression: 'notself')!
 
 testComparingTrees
 	self compare: self treeWithAllNodeTypes to: self treeWithAllNodeTypes.
@@ -309,7 +311,7 @@ testCopy
 					self verifyTree: copy isDeepCopyOf: tree]]!
 
 testCreationBlockNodeWithExpression
-	self compare: (self parserClass parseExpression: '[:a :b | a messaged. b messaged.]')
+	self compare: (self parseExpression: '[:a :b | a messaged. b messaged.]')
 		to: (StBlockNode
 				arguments: (OrderedCollection with: (StVariableNode named: 'a') with: (StVariableNode named: 'b'))
 				body: (StSequenceNode statements: (OrderedCollection
@@ -317,7 +319,7 @@ testCreationBlockNodeWithExpression
 								with: (StMessageNode receiver: (StVariableNode named: #b) selector: #messaged))))!
 
 testCreationCascadeNodeFromExpression
-	self compare: (self parserClass parseExpression: 'cascade firstMessage; secondMessage; lastMessage')
+	self compare: (self parseExpression: 'cascade firstMessage; secondMessage; lastMessage')
 		to: (StCascadeNode messages: (OrderedCollection
 						with: (StMessageNode receiver: (StVariableNode named: 'cascade') selector: #firstMessage)
 						with: (StMessageNode receiver: (StVariableNode named: 'cascade') selector: #secondMessage)
@@ -325,7 +327,7 @@ testCreationCascadeNodeFromExpression
 				semicolons: (OrderedCollection with: 21 with: 37))!
 
 testCreationLiteralArrayNodeWithExpression
-	self compare: (self parserClass parseExpression: '#(literal1 literal2)')
+	self compare: (self parseExpression: '#(literal1 literal2)')
 		to: (StLiteralArrayNode
 				startPosition: 1
 				contents: (Array with: (StLiteralValueNode value: #literal1)
@@ -333,14 +335,14 @@ testCreationLiteralArrayNodeWithExpression
 				stopPosition: 20)!
 
 testCreationLiteralValueNodeWithExpression
-	self compare: (self parserClass parseExpression: '#literal')
+	self compare: (self parseExpression: '#literal')
 		to: (StLiteralValueNode
 				value: #literal
 				start: 1
 				stop: 8)!
 
 testCreationLiteralValueNodeWithExpressionForNumber
-	self compare: (self parserClass parseExpression: '2r10100')
+	self compare: (self parseExpression: '2r10100')
 		to: (StLiteralValueNode
 				value: 20
 				start: 1
@@ -349,7 +351,7 @@ testCreationLiteralValueNodeWithExpressionForNumber
 testCreationMessageNodeFromExpression
 	"Verify the good parsing of an expression."
 
-	self compare: (self parserClass parseExpression: 'self + 0')
+	self compare: (self parseExpression: 'self + 0')
 		to: (StMessageNode
 				receiver: (StVariableNode named: 'self')
 				selector: #+
@@ -361,33 +363,31 @@ testCreationProtocol
 				receiver: StVariableNode selfNode
 				selector: #+
 				arguments: (Array with: (StLiteralNode value: 0)))
-		to: (self parserClass parseExpression: 'self + 0').
+		to: (self parseExpression: 'self + 0').
 	messageNode := StMessageNode receiver: StVariableNode selfNode selector: #foo.
 	self compare: (StMethodNode selector: #bar
 				body: (StSequenceNode statements: (OrderedCollection
 								with: (StCascadeNode messages: (OrderedCollection with: messageNode with: messageNode)))))
-		to: (self parserClass parseMethod: 'bar self foo; foo')!
+		to: (self parseMethod: 'bar self foo; foo')!
 
 testCreationSelfNodeWithExpression
-	self compare: (self parserClass parseExpression: 'self') to: StVariableNode selfNode!
+	self compare: (self parseExpression: 'self') to: StVariableNode selfNode!
 
 testCreationSuperNodeWithExpression
-	self compare: (self parserClass parseExpression: 'super') to: StVariableNode superNode!
+	self compare: (self parseExpression: 'super') to: StVariableNode superNode!
 
 testCreationThisContexNodeWithExpression
-	self compare: (self parserClass parseExpression: 'thisContext')
-		  to: StVariableNode thisContextNode!
+	self compare: (self parseExpression: 'thisContext') to: StVariableNode thisContextNode!
 
 testCreationVariableNodeWithExpression
-	self compare: (self parserClass parseExpression: 'variable')
-		to: (StVariableNode named: #variable start: 1)!
+	self compare: (self parseExpression: 'variable') to: (StVariableNode named: #variable start: 1)!
 
 testDelimitationsOfArrayNodesAreBrackets
 	Parser allowEmptyStatements: true.
 	#('{}' '{.}' '{..}' '{foo. bar}' '{foo. bar.}' '{foo. bar. .}' '{. foo. bar}' '{foo.. bar}') do: 
 			[:each |
 			| tree |
-			tree := self parserClass parseExpression: each.
+			tree := self parseExpression: each.
 			self assert: tree left equals: 1.
 			self assert: tree right equals: each size]!
 
@@ -511,12 +511,12 @@ testExternalCalls
 	"Void is not a valid argument type (can only be used for return)"
 	self
 		should: [self parseMethod: 'blah: x <stdcall: void blah void>']
-		raise: self parserClass errorClass
+		raise: self parseErrorClass
 		matching: [:err | err errorCode = CErrArgTypeCannotBeVoid].
 
 	"Mismatch between Smalltalk arguments and external argument types."
 	self should: [self parseMethod: 'blah: x _: y <stdcall: void blah void>']
-		raise: self parserClass errorClass.
+		raise: self parseErrorClass.
 
 
 	"Many simple args"
@@ -764,7 +764,7 @@ testIdentificationOfPrimitiveMethods
 													false : is not primitive."
 
 	#(#('foo ^true' false) #('foo <some: #tag> ^true' false) #(' foo <some: #tag> <primitive: 123> ^self' true) #('foo primitive:= 123. ^self' false))
-		do: [:each | self assert: (self parserClass parseMethod: each first) isPrimitive equals: each last]!
+		do: [:each | self assert: (self parseMethod: each first) isPrimitive equals: each last]!
 
 testIntervals
 	| tree |
@@ -781,12 +781,12 @@ testIntervals
 
 testInvalidPragmaPosition
 	#('foo self. <foo: $a>' '<foo: $a>' 'foo [:x | <foo: $a> ] value' 'foo ^ <foo: $a>')
-		do: [:each | self should: [self parserClass parseMethod: each] raise: CompilerErrorNotification]!
+		do: [:each | self should: [self parseMethod: each] raise: self parseErrorClass]!
 
 testInvalidSelectorRaisesSyntaxError
 	"Could propose multiple reparations like assignement, period, array..."
 
-	self should: [self parserClass parseExpression: 'temp 1 + 3'] raise: CompilerErrorNotification!
+	self should: [self parseExpression: 'temp 1 + 3'] raise: self parseErrorClass!
 
 testIsA
 	| nodes types |
@@ -820,7 +820,7 @@ testLiteralArray
 	"Test the good parsing of the elements of a literal array which means treating each as a literal."
 
 	| tree collection |
-	tree := self parserClass
+	tree := self
 				parseExpression: '#( a #b #''c'' . + - 1 -2 3.4 #true true #false false #nil nil "comment" ''string'' #[ 1 2 3 ] #(1 2 3))'.
 	collection := OrderedCollection new.
 	"Create a collection with the expected values contained in the literal array."
@@ -850,7 +850,7 @@ testLiteralArrayContainsLiteralValues
 	"Test the good parsing of the elements of a literal array which means treating each as a literal."
 
 	| tree collection |
-	tree := self parserClass
+	tree := self
 				parseExpression: '#( a #b #''c'' . + - 1 -2 3.4 #true true #false false #nil nil "comment" ''string'' #[ 1 2 3 ] #(1 2 3))'.
 	collection := OrderedCollection new.
 	"Create a collection with the expected values contained in the literal array."
@@ -896,27 +896,27 @@ testLiteralMessages
 
 testMethodNodeEndAtTheEndOfTheString
 	| tree |
-	tree := self parserClass parseExpression: 'foo kung foo. 1+2+3. #''alabama''.  '.
+	tree := self parseExpression: 'foo kung foo. 1+2+3. #''alabama''.  '.
 	self assert: tree parent source equals: 'foo kung foo. 1+2+3. #''alabama''.  '.
 	self assert: tree parent stop equals: tree parent sourceCode size.
-	tree := self parserClass parseMethod: 'foo kung foo. 1+2+3. #''alabama''.  '.
-	self assert: tree source equals: 'foo kung foo. 1+2+3. #''alabama''.  '.
-	self assert: tree stop equals: tree newSource size!
+	tree := self parseMethod: 'foo kung foo. 1 + 2 + 3. #''alabama''.  '.
+	self assert: tree source equals: 'foo kung foo. 1 + 2 + 3. #''alabama''.  '.
+	self assert: tree stop equals: tree source size!
 
 testMethodNodeStartAtOne
 	| tree |
 	"When there are multiple statements, the node returned is the Sequence node (child of the method node)."
-	tree := self parserClass parseExpression: 'foo koong. ^foo'.
+	tree := self parseExpression: 'foo koong. ^foo'.
 	self assert: tree parent start equals: 1.
 
 	"In Dolphin leading whitespace before an expression is skipped, so even these start at 1"
-	tree := self parserClass parseExpression: '  foo koong. ^foo'.
+	tree := self parseExpression: '  foo koong. ^foo'.
 	self assert: tree parent start equals: 1.
 
 	"parseMethod always return a method node."
-	tree := self parserClass parseMethod: 'foo koong. ^foo'.
+	tree := self parseMethod: 'foo koong. ^foo'.
 	self assert: tree start equals: 1.
-	tree := self parserClass parseMethod: '  foo koong. ^foo'.
+	tree := self parseMethod: '  foo koong. ^foo'.
 	self assert: tree start equals: 1!
 
 testMethodPatterns
@@ -956,9 +956,6 @@ testModifying
 		raise: Error
 		matching: [:ex | ex messageText = 'Attempting to assign selector with wrong number of arguments.']!
 
-testNegativeNumberError
-	self should: [self parserClass parseExpression: '- 2'] raise: CompilerErrorNotification!
-
 testNodesDo
 	| size |
 	size := 0.
@@ -990,13 +987,48 @@ testNodeWithMissingArgumentHasSameSourceAsOriginal
 	self assert: errorNode value isEmpty.
 	self assert: errorNode sourceInterval isEmpty!
 
-testNumberParsing
-	| numbers node |
-	self skip: 'Compiler does not parse radix integers with exponent. RBParser does.'.
-	numbers := #(#('1' 1) #('-1' -1) #('123' 123) #('123' 123) #('-123' -123) #('1.1' 1.1) #('-1.1' -1.1) #('1.23' 1.23) #('-1.23' -1.23) #('1e3' 1e3) #('-1e3' -1e3) #('1e-3' 1e-3) #('-1e-3' -1e-3) #('2r1e8' 2r1e8) #('-2r1e8' -2r1e8) #('2r1e-8' 2r1e-8) #('-2r1e-8' -2r1e-8) #('0.50s2' 0.50s2) #('0.500s3' 0.500s3) #('0.050s3' 0.050s3)).
-	numbers do: 
+testNumberNegativeWithWhitespace
+	| number |
+	"ANSI X3J20, 3.4.6.1 Numeric Literals: 'White space is allowed between the '-' and the <number>'"
+	number := self parseExpression: ' -	2 '.
+	self assert: number isLiteralNode.
+	self assert: number value equals: -2.
+	self assert: number sourceCode equals: '-	2'!
+
+testNumberParsingFloats
+	| node |
+	#(#('1.1' 1.1) #('-1.1' -1.1) #('1.23' 1.23) #('- 1.23' -1.23) #('- 0.254d2' -25.4) #('0.254e-2' 0.00254))
+		do: 
 			[:spec |
-			node := self parserClass parseExpression: spec first.
+			node := self parseExpression: spec first.
+			self assert: node source equals: spec first.
+			self assert: node value equals: spec second]!
+
+testNumberParsingIntegers
+	| node |
+	#(#('1' 1) #('-1' -1) #('123' 123) #('123' 123) #('-123' -123) #('1e3' 1e3) #('-1e3' -1e3) #('1e-3' 1e-3) #('- 1e-3' -1e-3))
+		do: 
+			[:spec |
+			node := self parseExpression: spec first.
+			self assert: node source equals: spec first.
+			self assert: (node value isInteger or: [node value isFraction]).
+			self assert: node value equals: spec second]!
+
+testNumberParsingRadixIntegersWithExponent
+	| node |
+	"N.B: Compiler does not parse radix integers with exponent. RBParser does.."
+	{ #('2r1e8' 1e8). #('-2r1e8' -1e8). { '2r1e-8'. 1 / 100000000 }. { '-2r1e-8'. -1 / 100000000 } }
+		do: 
+			[:spec |
+			node := self parseExpression: spec first.
+			self assert: node source equals: spec first.
+			self assert: node value equals: spec second]!
+
+testNumberParsingScaledDecimals
+	| node |
+	#(#('0.525s2' 0.525s2) #('0.500s3' 0.500s3) #('0.051s3' 0.051s3) #('0.125s' 0.125s3)) do: 
+			[:spec |
+			node := self parseExpression: spec first.
 			self assert: node source equals: spec first.
 			self assert: node value equals: spec second]!
 
@@ -1053,7 +1085,7 @@ testParseExpressionGivesTheWriteAmountOfStatements
 		do: 
 			[:each |
 			| tree |
-			tree := self parserClass parseExpression: each first.
+			tree := self parseExpression: each first.
 			self assert: tree statements size equals: each second.
 			self assert: tree periods size equals: each last]!
 
@@ -1065,18 +1097,22 @@ testParseGivesMethod
 
 	| tree |
 	"When there are multiple statements, the node returned is the Sequence node (child of the method node)."
-	tree := self parserClass parseExpression: 'foo koong. ^foo'.
+	tree := self parseExpression: 'foo koong. ^foo'.
 	self assert: tree parent isMethod.
 
 	"When there is a single statement, the node returned is the overarching node of the statement (child of the sequence node)."
-	tree := self parserClass parseExpression: 'foo koong foo'.
+	tree := self parseExpression: 'foo koong foo'.
 	self assert: tree parent parent isMethod.
 
 	"parseMethod always return a method node."
-	tree := self parserClass parseMethod: 'foo koong. ^foo'.
+	tree := self parseMethod: 'foo koong. ^foo'.
 	self assert: tree isMethod.
-	tree := self parserClass parseMethod: 'foo koong foo'.
+	tree := self parseMethod: 'foo koong foo'.
 	self assert: tree isMethod!
+
+testParseMethodPatternGivesSelector
+	#(#('+ a ^self + a' #+) #('foo ^self foo' #foo) #('foo: a b ^self foo: b' #foo:) #('foo: a bar: b ^a + b' #foo:bar:))
+		do: [:each | self assert: (self parserClass parseMethodPattern: each first) identicalTo: each last]!
 
 testParseRegistersTheSourceInMethodNode
 	"The parsing of an expression or a method gives a method node.
@@ -1086,35 +1122,34 @@ testParseRegistersTheSourceInMethodNode
 
 	| tree |
 	"When there are multiple statements, the node returned is the Sequence node (child of the method node)."
-	tree := self parserClass parseExpression: 'foo koong. ^foo'.
+	tree := self parseExpression: 'foo koong. ^foo'.
 	self assert: tree parent source equals: 'foo koong. ^foo'.
 
 	"When there is a single statement, the node returned is the overarching node of the statement (child of the sequence node)."
-	tree := self parserClass parseExpression: 'foo koong foo'.
+	tree := self parseExpression: 'foo koong foo'.
 	self assert: tree parent parent source equals: 'foo koong foo'.
 
 	"parseMethod always return a method node."
-	tree := self parserClass parseMethod: 'foo koong. ^foo'.
+	tree := self parseMethod: 'foo koong. ^foo'.
 	self assert: tree source equals: 'foo koong. ^foo'.
-	tree := self parserClass parseMethod: 'foo koong foo'.
+	tree := self parseMethod: 'foo koong foo'.
 	self assert: tree source equals: 'foo koong foo'!
 
 testParsingArrayGivesArrayNode
 	| tree |
 	#('{}' '{foo}' '{foo. bar.}') do: 
 			[:each |
-			tree := self parserClass parseExpression: each.
+			tree := self parseExpression: each.
 			self assert: tree isDynamicArray]!
 
 testParsingLiteralMessages
-	self assert: (self parserClass parseExpression: 'nil self nil') isMessage.
-	self assert: (self parserClass parseExpression: 'self true') isMessage.
-	self assert: (self parserClass parseExpression: 'self false') isMessage.
-	self assert: (self parserClass parseExpression: 'self -1') isMessage.
-
-	self assert: (self parserClass parseMethod: 'nil') isMethod.
-	self assert: (self parserClass parseMethod: 'true') isMethod.
-	self assert: (self parserClass parseMethod: 'false') isMethod!
+	self assert: (self parseExpression: 'nil self nil') isMessage.
+	self assert: (self parseExpression: 'self true') isMessage.
+	self assert: (self parseExpression: 'self false') isMessage.
+	self assert: (self parseExpression: 'self -1') isMessage.
+	self assert: (self parseMethod: 'nil') isMethod.
+	self assert: (self parseMethod: 'true') isMethod.
+	self assert: (self parseMethod: 'false') isMethod!
 
 testParsingPragmaRecogniseAndStorePragmas
 	"Tests that the pragmas are correctly interpreted.
@@ -1126,9 +1161,9 @@ testParsingPragmaRecogniseAndStorePragmas
 	#('foo <foo>' 'foo <foo: 1>' 'foo <foo: 1.2>' 'foo <foo: -3>' 'foo <foo: #a>' 'foo <foo: #< >' 'foo <foo: #> >' 'foo <foo: $a>' 'foo <foo: ''bar''>' 'foo <foo: true>' 'foo <foo: false>' 'foo <foo: nil>' 'foo <foo: #(1 2)>' 'foo <foo: 1 bar: 2>' 'foo <foo: 1.2> |t| ' 'foo <foo: 1 bar: 2> |t|')
 		do: 
 			[:each |
-			tree := self parserClass parseMethod: each.
+			tree := self parseMethod: each.
 			self assert: tree tags size equals: 1].
-	self assert: (self parserClass parseMethod: 'foo <pragma1> <pragma2> |t|') tags size equals: 2!
+	self assert: (self parseMethod: 'foo <pragma1> <pragma2> |t|') tags size equals: 2!
 
 testParsingPragmaRecogniseArguments
 	"Tests that the pragmas are correctly interpreted.
@@ -1140,7 +1175,7 @@ testParsingPragmaRecogniseArguments
 	#(#('foo <foo>' #foo #()) #('foo <foo: 1>' #foo: #(1)) #('foo <foo: 1.2>' #foo: #(1.2)) #('foo <foo: -3>' #foo: #(-3)) #('foo <foo: #a>' #foo: #(#a)) #('foo <foo: #< >' #foo: #(#<)) #('foo <foo: #> >' #foo: #(#>)) #('foo <foo: $a>' #foo: #($a)) #('foo <foo: ''bar''>' #foo: #('bar')) #('foo <foo: true>' #foo: #(true)) #('foo <foo: false>' #foo: #(false)) #('foo <foo: nil>' #foo: #(nil)) #('foo <foo: #(1 2)>' #foo: #(#(1 2))) #('foo <foo: 1 bar: 2>' #foo:bar: #(1 2)) #('foo <foo: 1.2> |t|' #foo: #(1.2)) #('foo <foo: 1 bar: 2> |t|' #foo:bar: #(1 2)))
 		do: 
 			[:each |
-			tree := self parserClass parseMethod: each first.
+			tree := self parseMethod: each first.
 			self assert: tree tags size equals: 1.
 			node := tree tags first.
 			1 to: node arguments size
@@ -1151,27 +1186,14 @@ testParsingPragmaRecogniseSelector
 	 1. The string to be parsed.
 	 2. The selector in parsed pragma.
 	 3. The selector arguments."
+
 	| tree node |
-	#(('foo <foo>' 				#foo ())
-	('foo <foo: 1>' 				#foo: (1))
-	('foo <foo: 1.2>' 			#foo: (1.2))
-	('foo <foo: -3>' 			#foo: (-3))
-	('foo <foo: #a>' 			#foo: (a))
-	('foo <foo: #< >' 			#foo: (<))
-	('foo <foo: #> >' 			#foo: (>))
-	('foo <foo: $a>' 			#foo: ($a))
-	('foo <foo: ''bar''>' 		#foo: ('bar'))
-	('foo <foo: true>' 			#foo: (true))
-	('foo <foo: false>' 			#foo: (false))
-	('foo <foo: nil>' 			#foo: (nil))
-	('foo <foo: #(1 2)>' 		#foo: ((1 2)))
-	('foo <foo: 1 bar: 2>' 		#foo:bar: (1 2))
-	('foo <foo: 1.2> |t|' 		#foo: (1.2))
-	('foo <foo: 1 bar: 2> |t|' #foo:bar: (1 2))
-	) do: [ :each |
-		tree := self parserClass parseMethod: each first.
-		node := tree tags first.
-		self assert: node selector equals: each second.]!
+	#(#('foo <foo>' #foo #()) #('foo <foo: 1>' #foo: #(1)) #('foo <foo: 1.2>' #foo: #(1.2)) #('foo <foo: -3>' #foo: #(-3)) #('foo <foo: #a>' #foo: #(#a)) #('foo <foo: #< >' #foo: #(#<)) #('foo <foo: #> >' #foo: #(#>)) #('foo <foo: $a>' #foo: #($a)) #('foo <foo: ''bar''>' #foo: #('bar')) #('foo <foo: true>' #foo: #(true)) #('foo <foo: false>' #foo: #(false)) #('foo <foo: nil>' #foo: #(nil)) #('foo <foo: #(1 2)>' #foo: #(#(1 2))) #('foo <foo: 1 bar: 2>' #foo:bar: #(1 2)) #('foo <foo: 1.2> |t|' #foo: #(1.2)) #('foo <foo: 1 bar: 2> |t|' #foo:bar: #(1 2)))
+		do: 
+			[:each |
+			tree := self parseMethod: each first.
+			node := tree tags first.
+			self assert: node selector equals: each second]!
 
 testPositions
 	| blockNode optimized |
@@ -1205,9 +1227,9 @@ testPragmaConstantLiteralArgument
 	validPragma := 'foo <return: #Point> ^ 0@0'.
 	"Point as argument is also allowed (in Dolphin)"
 	validPragmaInDolphin := 'foo <return: Point> ^ 0@0'.
-	self shouldnt: [self parserClass parseMethod: primitiveDeclartion] raise: CompilerErrorNotification.
-	self shouldnt: [self parserClass parseMethod: validPragma] raise: CompilerErrorNotification.
-	self shouldnt: [self parserClass parseMethod: validPragmaInDolphin] raise: CompilerErrorNotification!
+	self shouldnt: [self parseMethod: primitiveDeclartion] raise: self parseErrorClass.
+	self shouldnt: [self parseMethod: validPragma] raise: self parseErrorClass.
+	self shouldnt: [self parseMethod: validPragmaInDolphin] raise: self parseErrorClass!
 
 testPragmaImplicitLiteralArrayIsInvalid
 	| pragmaWithExpressionAsArgument pragmaWithLiteralArrayAsArgument pragmaWithStringAsArgument |
@@ -1217,31 +1239,30 @@ testPragmaImplicitLiteralArrayIsInvalid
 	pragmaWithExpressionAsArgument := 'foo
 	<func: (3+4) res: 7>
 	^ self'.
-	self should:[self parserClass parseMethod: pragmaWithExpressionAsArgument] raise: CompilerErrorNotification.
+	self should: [self parseMethod: pragmaWithExpressionAsArgument] raise: self parseErrorClass.
 
 	"an explicit literal array is allowed"
 	pragmaWithLiteralArrayAsArgument := 'foo
 	<func: #(3+4) res: 7>
 	^ self'.
 	"Should work"
-	self shouldnt: [self parserClass parseMethod: pragmaWithLiteralArrayAsArgument] raise: CompilerErrorNotification.
+	self shouldnt: [self parseMethod: pragmaWithLiteralArrayAsArgument] raise: self parseErrorClass.
 
 	"and of course a string literal"
 	pragmaWithStringAsArgument := 'foo
 	<func: ''(3+4)'' res: 7>
 	^ self'.
 	"should work"
-	self shouldnt: [self parserClass parseMethod: pragmaWithStringAsArgument] raise: CompilerErrorNotification!
+	self shouldnt: [self parseMethod: pragmaWithStringAsArgument] raise: self parseErrorClass!
 
 testPragmaInExpression
 	"Test if a working pragma in a method is faulty in an expression."
 
-	self should: [self parserClass parseExpression: '<some: #tag> | token |  true']
-		raise: CompilerErrorNotification!
+	self should: [self parseExpression: '<some: #tag> | token |  true'] raise: self parseErrorClass!
 
 testPragmaPrimitiveError
 	| tree pragma |
-	tree := self parserClass parseMethod: 'veryBasicAt: index
+	tree := self parseMethod: 'veryBasicAt: index
 	<primitive: 123 error: code>
 	^ code'.
 	self assert: tree tags size equals: 1.
@@ -1253,7 +1274,7 @@ testPragmas
 	#(#('foo <foo>' #foo #()) #('foo <foo: 1>' #foo: #(1)) #('foo <foo: 1.2>' #foo: #(1.2)) #('foo <foo: -3>' #foo: #(-3)) #('foo <foo: #a>' #foo: #(#a)) #('foo <foo: #< >' #foo: #(#<)) #('foo <foo: #> >' #foo: #(#>)) #('foo <foo: $a>' #foo: #($a)) #('foo <foo: ''bar''>' #foo: #('bar')) #('foo <foo: true>' #foo: #(true)) #('foo <foo: false>' #foo: #(false)) #('foo <foo: nil>' #foo: #(nil)) #('foo <foo: #(1 2)>' #foo: #(#(1 2))) #('foo <foo: 1 bar: 2>' #foo:bar: #(1 2)) #('foo <foo: 1.2> |t|' #foo: #(1.2)) #('foo <foo: 1 bar: 2>|t|' #foo:bar: #(1 2)))
 		do: 
 			[:each |
-			tree := self parserClass parseMethod: each first.
+			tree := self parseMethod: each first.
 			self assert: tree tags size equals: 1.
 			node := tree tags first.
 			self assert: node selector equals: each second.
@@ -1261,19 +1282,19 @@ testPragmas
 				do: [:i | self assert: (node arguments at: i) value equals: (each last at: i)].
 			self assert: (each first at: node start) equals: $<.
 			self assert: (each first at: node stop) equals: $>].
-	self assert: (self parserClass parseMethod: 'selector <a>') isMethod.
+	self assert: (self parseMethod: 'selector <a>') isMethod.
 	self
-		assert: (self parserClass
-				parseMethod: '
+		assert: (self parseMethod: '
 	selector
 		"comment1"
 		|temp|
 		"comment2"
 		<a>
 		#<.
-		^1') isMethod.
-	self should: 
-			[self parserClass parseMethod: '
+		^1')
+				isMethod.
+	self
+		should: [self parseMethod: '
 	selector
 		"comment1"
 		|temp|
@@ -1281,7 +1302,7 @@ testPragmas
 		<a>
 		<.
 		^1']
-		raise: CompilerErrorNotification!
+		raise: self parseErrorClass!
 
 testPrimitives
 	self assert: (Object parseTreeFor: #basicAt:) isPrimitive.
@@ -1296,8 +1317,12 @@ testPrimitiveTagChildren
 	self assert: tag parent identicalTo: parseTree.
 	self assert: tag isKindOf: StPrimitiveNode.
 	self assert: tag selector identicalTo: #primitive:.
-	self assert: tag children size equals: 0.
+	self assert: tag children size equals: 1.
 	self assert: (tag defines: '_failureCode').
+	errorTempDecl := tag children single.
+	self assert: errorTempDecl parent identicalTo: tag.
+	self assert: errorTempDecl isKindOf: StTempDeclNode.
+	self assert: errorTempDecl name equals: '_failureCode'.
 	parseTree := self parseMethod: 'test <primitive: 123 error: ec>'.
 	tag := parseTree tags first.
 	self assert: tag isKindOf: StPrimitiveNode.
@@ -1336,6 +1361,87 @@ testQuerying
 	self assert: tree allArgumentVariables asSortedCollection asArray equals: #('a' 'arg1').
 	self assert: tree allTemporaryVariables asSortedCollection asArray equals: #('b')!
 
+testQueryingPrimitiveErrorVar
+	| method ifFalseBlock |
+	method := self
+				parseMethod: 'clone
+	"Answer a shallow copy of the receiver."
+	<primitive: 148 error: ec>
+	| copy |
+	ec == #''insufficient object memory'' ifFalse:
+		[|nothing| nothing := nil.
+		^ noting].copy := nil
+	^ copy'.
+	self assert: (method body whoDefines: 'copy') equals: method body.
+	ifFalseBlock := method body children second argument.
+	self assert: (ifFalseBlock body whoDefines: 'nothing') equals: ifFalseBlock body.
+	self assert: (method body whoDefines: 'ec') equals: method!
+
+testScopesEnclosingMatchingLiterals
+	| tree |
+	tree := self parseMethod: 'tmp [ $] ]'.
+	self assert: tree statements first isBlock.
+	tree := self parseMethod: 'tmp ($))'.
+	self assert: tree statements first isLiteralNode.
+	tree := self parseMethod: 'tmp #( $) )'.
+	self assert: tree statements first isLiteralArray.
+	tree := self parseMethod: 'tmp { $} }'.
+	self assert: tree statements first isDynamicArray!
+
+testSemiColonAfterMessageIsCascade
+	self assert: (self parserClass parseExpression: ' self msg; yourself') isCascade.
+	self assert: (self parserClass parseExpression: ' self msg:(arg msg:arg); yourself') isCascade.
+	self
+		assert: (self parserClass parseExpression: ' self msg: arg msga:arga ; ibm ; yourself') isCascade!
+
+testSequenceNodeEndAtTheEndOfTheString
+	| tree |
+	tree := self parseExpression: 'foo kung foo. 1+2+3. #''alabama''.'.
+	self assert: tree source equals: 'foo kung foo. 1+2+3. #''alabama''.'.
+	self assert: tree stop equals: tree parent source size.
+	tree := self parseMethod: 'foo kung foo. 1+2+3. #''alabama''.'.
+	self assert: tree source equals: 'foo kung foo. 1+2+3. #''alabama''.'.
+	self assert: tree body stop equals: tree source size!
+
+testSequenceNodeStartAtFirstTokenAfterTheSelector
+	"Beginning spaces are trimmed before the start of sequence node."
+
+	| tree |
+	"Here, the selector is the implicit #noMethod"
+	tree := self parserClass parseExpression: 'foo koong. ^foo'.
+	self assert: tree start equals: 1.
+
+	"There are 2 spaces before foo."
+	tree := self parserClass parseExpression: '  foo koong. ^foo'.
+	self assert: tree start equals: 3.
+
+	"Here, foo is the method selector so the sequence start at koong."
+	tree := self parserClass parseMethod: 'foo koong. ^foo'.
+	self assert: tree body start equals: 5.
+
+	"There are 2 spaces before foo."
+	tree := self parserClass parseMethod: '  foo koong. ^foo'.
+	self assert: tree body start equals: 7!
+
+testStatements
+	self parserClass allowEmptyStatements: true.
+	#(#('' 0 0) #('.' 0 1) #('| bar |' 0 0) #('| bar | .' 0 1) #('| bar | ..' 0 2) #('foo. bar' 2 1) #('foo. bar.' 2 2) #('foo. bar. .' 2 3) #('. foo. bar' 2 2))
+		do: 
+			[:each |
+			| tree |
+			tree := self parserClass parseExpression: each first.
+			self assert: tree statements size equals: each second.
+			self assert: tree periods size equals: each last]!
+
+testString
+	self assert: (self parseMethod: 'selector ^ ''<''') isMethod.
+	self assert: (self parseMethod: 'selector ^ ''<'', self') isMethod.
+	self assert: (self parseMethod: 'selector ''=''') isMethod.
+	self assert: (self parseMethod: 'selector '':=''') isMethod.
+	self assert: (self parseMethod: 'selector ''<''') isMethod.
+	self assert: (self parseMethod: 'selector ''>''') isMethod.
+	self assert: (self parseMethod: 'selector ^ ''<>''') isMethod!
+
 testTokens
 	| tokens scanner |
 	scanner := Scanner on: '#foo foo: bar := [ ##( + foo.bar.baz' readStream.
@@ -1351,6 +1457,15 @@ testUnaryAnnotationChildren
 	self assert: annotation isKindOf: StAnnotationNode.
 	self assert: annotation selector identicalTo: #mutable.
 	self assert: annotation children size equals: 0!
+
+testUnfinishedStatementWithLeadingBracesRaisesError
+	self should: [self parseExpression: '[]}'] raise: self parseErrorClass!
+
+testUnfinishedStatementWithLeadingBracketRaisesError
+	self should: [self parseExpression: '[]]'] raise: self parseErrorClass!
+
+testUnfinishedStatementWithLeadingParenthesisRaisesError
+	self should: [self parseExpression: '[])'] raise: self parseErrorClass!
 
 treeWithAllNodeTypes
 	^self
@@ -1396,10 +1511,11 @@ verifyTree: copiedNode isDeepCopyOf: originalNode
 !Kernel.Tests.ParserTest categoriesForMethods!
 assertTree:equals:!helpers!private! !
 compare:to:!helpers!private! !
-exampleClasses!private! !
+exampleClasses!constants!private! !
 foo!public!unit tests! !
 isEquivalentMethod:to:!helpers!private! !
 parseAll!long running!public! !
+parseErrorClass!constants!private! !
 parseExpression:!helpers!private! !
 parseMethod:!helpers!private! !
 parserClass!constants!private! !
@@ -1421,60 +1537,63 @@ testComparingTrees!public!unit tests! !
 testCopy!public!unit tests! !
 testCreationBlockNodeWithExpression!public!unit tests! !
 testCreationCascadeNodeFromExpression!public!unit tests! !
-testCreationLiteralArrayNodeWithExpression!public! !
-testCreationLiteralValueNodeWithExpression!public! !
-testCreationLiteralValueNodeWithExpressionForNumber!public! !
-testCreationMessageNodeFromExpression!public! !
-testCreationProtocol!public! !
-testCreationSelfNodeWithExpression!public! !
-testCreationSuperNodeWithExpression!public! !
-testCreationThisContexNodeWithExpression!public! !
-testCreationVariableNodeWithExpression!public! !
-testDelimitationsOfArrayNodesAreBrackets!public! !
+testCreationLiteralArrayNodeWithExpression!public!unit tests! !
+testCreationLiteralValueNodeWithExpression!public!unit tests! !
+testCreationLiteralValueNodeWithExpressionForNumber!public!unit tests! !
+testCreationMessageNodeFromExpression!public!unit tests! !
+testCreationProtocol!public!unit tests! !
+testCreationSelfNodeWithExpression!public!unit tests! !
+testCreationSuperNodeWithExpression!public!unit tests! !
+testCreationThisContexNodeWithExpression!public!unit tests! !
+testCreationVariableNodeWithExpression!public!unit tests! !
+testDelimitationsOfArrayNodesAreBrackets!public!unit tests! !
 testEquality!public!unit tests! !
-testEqualToWithMapping!public! !
+testEqualToWithMapping!public!unit tests! !
 testEquivalentExceptRenaming!public!unit tests! !
 testExpressionSolver!public!unit tests! !
-testExternalCallChildren!public! !
+testExternalCallChildren!public!unit tests! !
 testExternalCallEquality!public!unit tests! !
 testExternalCalls!public!unit tests! !
-testGeneralBlockIntervalsArray!public! !
-testGeneralBlockIntervalsAssignement!public! !
-testGeneralBlockIntervalsBlock!public! !
-testGeneralBlockIntervalsCascade!public! !
-testGeneralBlockIntervalsLiteralArray!public! !
-testGeneralBlockIntervalsLiteralValue!public! !
-testGeneralBlockIntervalsMessage!public! !
-testGeneralBlockIntervalsReturn!public! !
-testGeneralMethodIntervalsArray!public! !
-testGeneralMethodIntervalsAssignement!public! !
-testGeneralMethodIntervalsBlock!public! !
-testGeneralMethodIntervalsCascade!public! !
-testGeneralMethodIntervalsComment!public! !
-testGeneralMethodIntervalsLiteralArray!public! !
-testGeneralMethodIntervalsLiteralValue!public! !
-testGeneralMethodIntervalsMessage!public! !
-testGeneralMethodIntervalsPragma!public! !
-testGeneralMethodIntervalsReturn!public! !
-testIdentificationOfPrimitiveMethods!public! !
+testGeneralBlockIntervalsArray!public!unit tests! !
+testGeneralBlockIntervalsAssignement!public!unit tests! !
+testGeneralBlockIntervalsBlock!public!unit tests! !
+testGeneralBlockIntervalsCascade!public!unit tests! !
+testGeneralBlockIntervalsLiteralArray!public!unit tests! !
+testGeneralBlockIntervalsLiteralValue!public!unit tests! !
+testGeneralBlockIntervalsMessage!public!unit tests! !
+testGeneralBlockIntervalsReturn!public!unit tests! !
+testGeneralMethodIntervalsArray!public!unit tests! !
+testGeneralMethodIntervalsAssignement!public!unit tests! !
+testGeneralMethodIntervalsBlock!public!unit tests! !
+testGeneralMethodIntervalsCascade!public!unit tests! !
+testGeneralMethodIntervalsComment!public!unit tests! !
+testGeneralMethodIntervalsLiteralArray!public!unit tests! !
+testGeneralMethodIntervalsLiteralValue!public!unit tests! !
+testGeneralMethodIntervalsMessage!public!unit tests! !
+testGeneralMethodIntervalsPragma!public!unit tests! !
+testGeneralMethodIntervalsReturn!public!unit tests! !
+testIdentificationOfPrimitiveMethods!public!unit tests! !
 testIntervals!public!unit tests! !
 testInvalidPragmaPosition!public!unit tests! !
 testInvalidSelectorRaisesSyntaxError!public!unit tests! !
 testIsA!public!unit tests! !
-testKeywordAnnotationChildren!public! !
-testLiteralArray!public! !
-testLiteralArrayContainsLiteralValues!public! !
+testKeywordAnnotationChildren!public!unit tests! !
+testLiteralArray!public!unit tests! !
+testLiteralArrayContainsLiteralValues!public!unit tests! !
 testLiteralIntevals!public!unit tests! !
 testLiteralMessages!public!unit tests! !
 testMethodNodeEndAtTheEndOfTheString!public!unit tests! !
 testMethodNodeStartAtOne!public!unit tests! !
 testMethodPatterns!public!unit tests! !
 testModifying!public!unit tests! !
-testNegativeNumberError!public!unit tests! !
 testNodesDo!public!unit tests! !
 testNodesDoAll!public!unit tests! !
 testNodeWithMissingArgumentHasSameSourceAsOriginal!public!unit tests! !
-testNumberParsing!public!unit tests! !
+testNumberNegativeWithWhitespace!public!unit tests! !
+testNumberParsingFloats!public!unit tests! !
+testNumberParsingIntegers!public!unit tests! !
+testNumberParsingRadixIntegersWithExponent!public!unit tests! !
+testNumberParsingScaledDecimals!public!unit tests! !
 testNumberRadixParsing!public!unit tests! !
 testParentOfArgumentNodeIsMethodNode!public!unit tests! !
 testParentOfMethodNodeIsNil!public!unit tests! !
@@ -1483,8 +1602,9 @@ testParentOfStatementsIsSequenceNode!public!unit tests! !
 testParents!public!unit tests! !
 testParseExpressionGivesTheWriteAmountOfStatements!public!unit tests! !
 testParseGivesMethod!public!unit tests! !
-testParseRegistersTheSourceInMethodNode!public! !
-testParsingArrayGivesArrayNode!public! !
+testParseMethodPatternGivesSelector!public!unit tests! !
+testParseRegistersTheSourceInMethodNode!public!unit tests! !
+testParsingArrayGivesArrayNode!public!unit tests! !
 testParsingLiteralMessages!public!unit tests! !
 testParsingPragmaRecogniseAndStorePragmas!public!unit tests! !
 testParsingPragmaRecogniseArguments!public!unit tests! !
@@ -1498,10 +1618,20 @@ testPragmas!public!unit tests! !
 testPrimitives!public!unit tests! !
 testPrimitiveTagChildren!public!unit tests! !
 testQuerying!public!unit tests! !
+testQueryingPrimitiveErrorVar!public!unit tests! !
+testScopesEnclosingMatchingLiterals!public!unit tests! !
+testSemiColonAfterMessageIsCascade!public!unit tests! !
+testSequenceNodeEndAtTheEndOfTheString!public!unit tests! !
+testSequenceNodeStartAtFirstTokenAfterTheSelector!public!unit tests! !
+testStatements!public!unit tests! !
+testString!public!unit tests! !
 testTokens!public!unit tests! !
 testUnaryAnnotationChildren!public!unit tests! !
+testUnfinishedStatementWithLeadingBracesRaisesError!public!unit tests! !
+testUnfinishedStatementWithLeadingBracketRaisesError!public!unit tests! !
+testUnfinishedStatementWithLeadingParenthesisRaisesError!public!unit tests! !
 treeWithAllNodeTypes!constants!private! !
-treeWithEverything!private! !
+treeWithEverything!constants!private! !
 verifyParentLinksInTree:!helpers!private! !
 verifyTree:isDeepCopyOf:!helpers!private! !
 !

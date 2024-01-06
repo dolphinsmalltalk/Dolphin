@@ -69,7 +69,7 @@ load
 	compiler := methodClass compilerClass.
 	^(
 	[compiler
-		compile: self getSource
+		compileForMethod: self getSource
 		in: methodClass
 		environment: self environment
 		flags: methodClass defaultCompilationFlags]

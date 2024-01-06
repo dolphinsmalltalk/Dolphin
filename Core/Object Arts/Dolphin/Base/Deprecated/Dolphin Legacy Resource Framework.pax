@@ -183,7 +183,7 @@ fileOutResource:!public!source filing-file out! !
 !Kernel.BlockClosure class methodsFor!
 
 attemptToRecompile: aBlockClosure
-	| oldMethod result newBlock newMethod receiver |
+	| oldMethod newBlock newMethod receiver |
 	oldMethod := aBlockClosure method.
 	Notification signal: 'Recompiling block: ' , aBlockClosure printString.
 	oldMethod class ~~ CompiledExpression
@@ -191,13 +191,12 @@ attemptToRecompile: aBlockClosure
 			[Notification signal: 'Unable to recompile block because it was created by a method '.
 			^aBlockClosure].
 	receiver := aBlockClosure receiver.
-	result := Compiler
-				compileForEvaluation: oldMethod getSource
+	newMethod := Compiler
+				compileExpression: oldMethod getSource
 				in: (receiver ifNotNil: [oldMethod methodClass])
 				environment: oldMethod customEnvironment
 				evaluationPools: oldMethod evaluationPools
 				flags: 0.
-	newMethod := result method.
 	newMethod isNil
 		ifTrue: 
 			[Notification signal: 'Error recompiling block'.

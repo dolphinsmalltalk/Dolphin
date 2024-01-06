@@ -21,7 +21,7 @@ defaultCompileFlags
 parseExpression: aString in: aClass
 	errors := OrderedCollection new.
 	^
-	[Compiler
+	[self parserClass
 		compileForEvaluation: aString
 		in: aClass
 		environment: nil
@@ -34,7 +34,7 @@ parseExpression: aString in: aClass
 				ex pass]!
 
 parseMethod: aString in: aClass
-	^Compiler
+	^self parserClass
 		compile: aString
 		in: aClass
 		environment: nil
@@ -68,8 +68,8 @@ testErrorsBadPools
 	source := 'xyz'.
 	self
 		should: 
-			[Compiler
-				compileForEvaluation: source
+			[self parserClass
+				compileExpression: source
 				in: nil
 				environment: nil
 				evaluationPools: 'Bad pools'
@@ -82,7 +82,7 @@ testErrorsBadPools
 			self
 				checkCompileError: ex
 				range: range
-				code: ParseErrorCodes.CErrBadPools
+				code: CErrBadPools
 				line: 1
 				source: source]!
 

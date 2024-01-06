@@ -36,7 +36,7 @@ resumeWithStubMethod
 	selector isEmpty ifTrue: [^nil].
 	methodClass := compilerErrorNotification methodClass.
 	result := methodClass compilerClass
-				compile: (CompileFailedMethod buildSourceForSelector: selector class: methodClass)
+				compileForMethod: (CompileFailedMethod buildSourceForSelector: selector class: methodClass)
 				in: methodClass
 				environment: self environment
 				flags: methodClass defaultCompilationFlags.

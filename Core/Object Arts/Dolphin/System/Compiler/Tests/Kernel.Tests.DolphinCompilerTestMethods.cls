@@ -257,20 +257,11 @@ testOverriddenMethodArgumentWarning: a
 	a := 2.
 	[a]]!
 
-testReturnFalse
-	^false!
-
 testReturnFromOptimizedBlock
 	^
 	[1 > 2 ifTrue: [^1] ifFalse: [[^self]].
 	2 < 1] 
 			whileTrue: [1 > 2 ifTrue: [^nil] ifFalse: [[^self] value]]!
-
-testReturnNil
-	^nil!
-
-testReturnTrue
-	^true!
 
 testSharedOuterTemps1
 	| a |
@@ -593,10 +584,7 @@ testNestedCopyingBlocks!public!unit tests! !
 testNestedWhileTrueAtStartOfCleanBlock!public!unit tests! !
 testOverriddenBlockArgumentWarning!public!unit tests! !
 testOverriddenMethodArgumentWarning:!public!unit tests! !
-testReturnFalse!public!unit tests! !
 testReturnFromOptimizedBlock!public!unit tests! !
-testReturnNil!public!unit tests! !
-testReturnTrue!public!unit tests! !
 testSharedOuterTemps1!public!unit tests! !
 testSharedOuterTemps2!public!unit tests! !
 testTempsMapInlinedReturn!public!unit tests! !

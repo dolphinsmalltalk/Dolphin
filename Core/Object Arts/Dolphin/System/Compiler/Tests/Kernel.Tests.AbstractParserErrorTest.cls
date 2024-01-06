@@ -88,11 +88,10 @@ evaluateExpression: aString
 	^Compiler evaluate: aString!
 
 getTestMethod: aSymbol
-	| oldMethod result method |
+	| oldMethod method |
 	oldMethod := DolphinCompilerTestMethods compiledMethodAt: aSymbol.
-	self shouldnt: [result := self compileMethod: oldMethod getSource in: DolphinCompilerTestMethods]
+	self shouldnt: [method := self compileMethod: oldMethod getSource in: DolphinCompilerTestMethods]
 		raise: Compiler errorClass.
-	method := result method.
 	method selector: aSymbol.
 	method
 		sourceDescriptor: oldMethod sourceDescriptor;
@@ -941,7 +940,7 @@ testErrorsInvalidExpressionStart
 		range: (2 to: 3)
 		line: 1
 		code: CErrInvalExprStart.
-	source := '1 - - 1'.
+	source := '1 - + 1'.
 	self 
 		parseExprError: source
 		range: (5 to: 5)
