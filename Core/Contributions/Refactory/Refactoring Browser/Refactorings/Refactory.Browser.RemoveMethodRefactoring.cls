@@ -44,6 +44,7 @@ justSendsSuper: aSelector
 	| matcher parseTree superclass |
 	matcher := ParseTreeSearcher justSendsSuper.
 	parseTree := class parseTreeFor: aSelector.
+	parseTree ifNil: [^false].
 	(matcher executeTree: parseTree initialAnswer: false) ifFalse: [^false].
 	parseTree lastIsReturn ifTrue: [^true].
 	superclass := class superclass whoDefinesMethod: aSelector.
