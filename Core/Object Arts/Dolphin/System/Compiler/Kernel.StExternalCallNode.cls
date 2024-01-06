@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.StTagNode
+Kernel.AbstractPrimitiveCallNode
 	subclass: #'Kernel.StExternalCallNode'
 	instanceVariableNames: 'nameOrOrdinal returnType argumentTypes flags callingConvention'
 	classVariableNames: ''
@@ -41,14 +41,14 @@ childrenDo: aMonadicValuable
 	aMonadicValuable value: returnType.
 	argumentTypes do: aMonadicValuable!
 
-defines: aName
-	^'_failureCode' = aName!
-
 flags
 	^flags!
 
 flags: anInteger
 	flags := anInteger!
+
+hasDefaultErrorTemp
+	^true!
 
 hash
 	^((nameOrOrdinal hash + callingConvention) hashMultiply + returnType hash) hashMultiply
@@ -56,7 +56,8 @@ hash
 
 initialize
 	flags := 0.
-	argumentTypes := #().!
+	argumentTypes := #().
+	self setDefaultErrorTemp!
 
 isExternalCall
 	^true!
@@ -105,9 +106,9 @@ argumentTypes:!accessing!public! !
 callingConvention!accessing!public! !
 callingConvention:!accessing!public! !
 childrenDo:!accessing!public! !
-defines:!public!testing! !
 flags!accessing!private! !
 flags:!initializing!private! !
+hasDefaultErrorTemp!accessing!public! !
 hash!comparing!public! !
 initialize!initializing!public! !
 isExternalCall!public!testing! !

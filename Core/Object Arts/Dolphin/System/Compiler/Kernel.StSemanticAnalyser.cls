@@ -2,7 +2,7 @@
 
 Kernel.SemanticAnalyser
 	subclass: #'Kernel.StSemanticAnalyser'
-	instanceVariableNames: 'literals stringLiterals tempDecls isMutator'
+	instanceVariableNames: 'literals stringLiterals isMutator'
 	classVariableNames: 'OptimizedMessages'
 	imports: #()
 	classInstanceVariableNames: ''
@@ -406,12 +406,6 @@ isReceiverOfNilTest: aVariableNode
 					[#(#notNil #isNil #ifNil: #ifNotNil: #ifNil:ifNotNil: #ifNotNil:ifNil:) 
 						identityIncludes: parentNode selector]]!
 
-isTempVariable: aStVariableNode
-	"Private - Answer whether the specified variable node represents one of the temporaries in
-	the parse tree (note that parameters are included)."
-
-	^self tempDecls includes: aStVariableNode!
-
 newLiteralsCollection
 	^IdentityDictionary new!
 
@@ -468,9 +462,6 @@ signalError: codeInteger forNode: aStProgramNode range: anInterval extras: anArr
 	(err severityClass == Error and: [errorBlock notNil]) ifTrue: [errorBlock value: err].
 	"If the error block returns, then the exception is signalled"
 	^err signal!
-
-tempDecls
-	^tempDecls ifNil: [tempDecls := methodNode allDefinedVariableNodes]!
 
 undeclaredVariable: aStVariableNode
 	"Private - The argument <StVariableNode> represents an identifier that cannot be bound in its scope."
@@ -671,7 +662,6 @@ exitMethodNode:!helpers!private! !
 expectNamespace:!error handling!private! !
 initialize!initializing!public! !
 isReceiverOfNilTest:!helpers!private! !
-isTempVariable:!helpers!private! !
 newLiteralsCollection!helpers!initializing!private! !
 processBlock:!helpers!private! !
 readStaticVariable:!helpers!private! !
@@ -680,7 +670,6 @@ signalError:forNode:!error handling!private! !
 signalError:forNode:extra:!error handling!private! !
 signalError:forNode:extras:!error handling!private! !
 signalError:forNode:range:extras:!error handling!private! !
-tempDecls!accessing!private! !
 undeclaredVariable:!error handling!private! !
 visitAnnotationNode:!public!visiting! !
 visitArgumentNodes:!public!visiting! !

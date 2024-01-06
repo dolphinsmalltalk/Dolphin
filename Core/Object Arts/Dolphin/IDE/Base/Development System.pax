@@ -5782,7 +5782,7 @@ displayOn:!printing!public! !
 category
 	"Answer a descriptive category name for this scope."
 
-	^'Block'! !
+	^'block'! !
 !Kernel.StBlockScope categoriesForMethods!
 category!constants!public! !
 !
@@ -5802,7 +5802,7 @@ displayOn:!printing!public! !
 category
 	"Answer a descriptive category name for this scope."
 
-	^'Class'!
+	^'class'!
 
 isVisibleSelector: aSymbol
 	^SmalltalkSystem current allSelectors includes: aSymbol! !
@@ -5816,7 +5816,7 @@ isVisibleSelector:!helpers!private! !
 category
 	"Answer a descriptive category name for this scope."
 
-	^'Workspace'! !
+	^'workspace'! !
 !Kernel.StEvalScope categoriesForMethods!
 category!constants!public! !
 !
@@ -5956,9 +5956,18 @@ debugInfoInFrame: aStackFrame
 printDescriptionOn: aStream
 	scope
 		ifNotNil: 
-			[aStream
-				nextPutAll: scope category;
-				space].
+			[#todo.	"Copy down copied variables and set storage class to #copy, then it will be useful to show the storage class"
+			(storage == #stack or: [true])
+				ifTrue: 
+					[aStream
+						nextPutAll: scope category capitalized;
+						space]
+				ifFalse: 
+					[aStream
+						nextPutAll: (storage ifNil: ['Unused'] ifNotNil: [storage capitalized]);
+						space;
+						nextPutAll: scope category;
+						space]].
 	aStream
 		nextPutAll: self category;
 		nextPutAll: ' ''';
@@ -6006,7 +6015,7 @@ displayOn:!printing!public! !
 category
 	"Answer a descriptive category name for this scope."
 
-	^'Method'! !
+	^'method'! !
 !Kernel.StMethodScope categoriesForMethods!
 category!constants!public! !
 !
@@ -6024,7 +6033,7 @@ textStyle!constants!public! !
 category
 	"Answer a descriptive category name for this scope."
 
-	^'Optimized Block'! !
+	^'optimized block'! !
 !Kernel.StOptimizedBlockScope categoriesForMethods!
 category!constants!public! !
 !
@@ -6070,11 +6079,11 @@ displayOn: aPuttableStream
 	aPuttableStream
 		nextPutAll: '<Primitive: ';
 		display: self primitiveIndex.
-	errorTemp
-		ifNotNil: 
+	self hasDefaultErrorTemp
+		ifFalse: 
 			[aPuttableStream
 				nextPutAll: ' error: ';
-				nextPutAll: errorTemp name].
+				nextPutAll: self errorTemp name].
 	aPuttableStream nextPut: $>! !
 !Kernel.StPrimitiveNode categoriesForMethods!
 displayOn:!printing!public! !
@@ -6147,7 +6156,7 @@ displayOn:!printing!public! !
 
 printDescriptionOn: aStream
 	aStream
-		nextPutAll: 'receiver: a subinstance of ';
+		nextPutAll: 'Receiver: A subinstance of ';
 		print: scope methodClass!
 
 printInfoTipOn: aStream frame: aStackFrame

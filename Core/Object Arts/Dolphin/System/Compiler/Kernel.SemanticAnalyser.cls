@@ -155,8 +155,7 @@ visitParameterNode: aStParameterNode
 	aStParameterNode variable: (currentScope declareArgument: aStParameterNode)!
 
 visitPrimitiveNode: aStPrimitiveNode
-	currentScope declareLocalVariable: (StGeneratedTempVariable
-				node: (aStPrimitiveNode errorTemp ifNil: [StTempDeclNode named: '_failureCode']))!
+	currentScope declareLocalVariable: (StGeneratedTempVariable node: aStPrimitiveNode errorTemp)!
 
 visitTempDeclNode: aStTempDeclNode
 	aStTempDeclNode variable: (currentScope declareTemp: aStTempDeclNode)!

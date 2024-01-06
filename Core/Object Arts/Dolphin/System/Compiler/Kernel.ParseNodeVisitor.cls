@@ -91,7 +91,7 @@ visitParameterNode: aStParameterNode
 	^self visitVariableNode: aStParameterNode!
 
 visitPrimitiveNode: aPrimitiveNode
-	aPrimitiveNode errorTemp ifNotNil: [:temp | self visitNode: temp].
+	self visitNode: aPrimitiveNode errorTemp.
 	^aPrimitiveNode!
 
 visitQualifiedReferenceNode: aQualifiedReferenceNode
@@ -116,12 +116,14 @@ visitSuperVariableNode: aSuperVariableNode
 	^self visitSpecialVariableNode: aSuperVariableNode!
 
 visitTempDeclNode: aTempDeclNode
-	^self visitVariableNode: aTempDeclNode!
+	"For backwards compat, redirect to argument visitor"
+
+	^self visitArgumentNode: aTempDeclNode!
 
 visitTemporaryNodes: aNodeCollection
 	"Visit temporary declarations in a method or block body"
 
-	^self visitArgumentNodes: aNodeCollection!
+	^aNodeCollection do: [:each | self visitTempDeclNode: each]!
 
 visitThisContextVariableNode: aStSelfVariableNode
 	^self visitSpecialVariableNode: aStSelfVariableNode!

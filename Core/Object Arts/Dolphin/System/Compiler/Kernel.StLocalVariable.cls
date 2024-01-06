@@ -2,7 +2,7 @@
 
 Kernel.StVariable
 	subclass: #'Kernel.StLocalVariable'
-	instanceVariableNames: 'node storage reads'
+	instanceVariableNames: 'node storage reads index'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -29,6 +29,12 @@ addRead: aStVariableNode fromScope: aStSemanticScope
 				ifFalse: 
 					["Not already shared, so promote to copied"
 					storage := #copied]]!
+
+index
+	^index!
+
+index: anInteger
+	index := anInteger!
 
 isLocalVariable
 	"Answer whether the receiver describes a local variable, i.e. a temp or argument."
@@ -68,6 +74,8 @@ storage
 	^storage! !
 !Kernel.StLocalVariable categoriesForMethods!
 addRead:fromScope:!public! !
+index!accessing!public! !
+index:!accessing!public! !
 isLocalVariable!public!testing! !
 isRead!public!testing! !
 markNestedRead!private! !

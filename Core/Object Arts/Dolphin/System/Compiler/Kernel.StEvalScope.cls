@@ -22,12 +22,11 @@ pools: anArray
 	pools := anArray!
 
 resolveIdentifier: aString
-	"Private - Lookup and return an <StVariable> describing the variable definition in this scope matching the variable reference specified by the (non-special) <StVariableNode> argument."
+	"Private - Lookup and return an <StVariable> describing the variable definition in this scope matching the variable identified by the <String> argument."
 
 	pools do: 
 			[:each |
-			(each bindingFor: aString)
-				ifNotNil: [:binding | ^StWorkspaceVariable scope: self binding: binding]].
+			(each bindingFor: aString) ifNotNil: [:binding | ^StWorkspaceVariable scope: self binding: binding]].
 	^outer resolveIdentifier: aString!
 
 visibleVariablesDo: aMonadicValuable visited: aSet

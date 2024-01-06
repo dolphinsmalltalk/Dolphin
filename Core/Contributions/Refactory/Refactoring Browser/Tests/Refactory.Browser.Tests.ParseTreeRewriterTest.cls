@@ -34,11 +34,11 @@ testBlockRewrites
 		with: 'fdsa'
 		when: [:aNode | aNode parent parent isReturn].
 	"here we want the replace self foo by the value the selector of the self foo expression, i.e. foo"
-	rewriter replace: 'self foo' withValueFrom: [:aNode | StBasicVariableNode named: aNode selector asString].
+	rewriter replace: 'self foo' withValueFrom: [:aNode | StVariableNode named: aNode selector asString].
 	"here the condition is false so the rule is not executed."
 	rewriter
 		replaceArgument: 'asdf'
-		withValueFrom: [:aNode | StBasicVariableNode named: 'xxx']
+		withValueFrom: [:aNode | StVariableNode named: 'xxx']
 		when: [:aNode | true].
 	rewriter executeTree: tree.
 	self compare: rewriter tree
@@ -81,11 +81,11 @@ testBlockRewritesArguments
 	^asdf + self foo + asdf'.
 	rewriter
 		replaceArgument: 'asdf'
-		withValueFrom: [:aNode | StBasicVariableNode named: 'xxx']
+		withValueFrom: [:aNode | StVariableNode named: 'xxx']
 		when: [:aNode | true].
 	rewriter
 		replaceArgument: 'bar'
-		withValueFrom: [:aNode | StBasicVariableNode named: 'yyy']
+		withValueFrom: [:aNode | StVariableNode named: 'yyy']
 		when: [:aNode | true].
 	rewriter executeTree: tree.
 	self compare: rewriter tree
@@ -107,11 +107,11 @@ testBlockRewritesArgumentsTakeIntoAccountConditions
 	^asdf + self foo + asdf'.
 	rewriter
 		replaceArgument: 'asdf'
-		withValueFrom: [:aNode | StBasicVariableNode named: 'xxx']
+		withValueFrom: [:aNode | StVariableNode named: 'xxx']
 		when: [:aNode | true].
 	rewriter
 		replaceArgument: 'bar'
-		withValueFrom: [:aNode | StBasicVariableNode named: 'yyy']
+		withValueFrom: [:aNode | StVariableNode named: 'yyy']
 		when: [:aNode | false].
 	rewriter executeTree: tree.
 	self compare: rewriter tree
@@ -150,7 +150,7 @@ testBlockRewritesWithTrueConditionIsNotExecutedWhenNotMatchingCorrectNode
 	tree := self treeToBeRewritten.
 	rewriter
 		replaceArgument: 'asdf'
-		withValueFrom: [:aNode | StBasicVariableNode named: 'xxx']
+		withValueFrom: [:aNode | StVariableNode named: 'xxx']
 		when: [:aNode | true].
 	rewriter executeTree: tree.
 	self compare: rewriter tree
@@ -270,7 +270,7 @@ testRewriteNamespaceAnnotation
 	rewriter := ParseTreeRewriter new.
 	rewriter
 		replace: '`identifier'
-		withValueFrom: [:variableNode | StBasicVariableNode named: 'Refactory.Browser']
+		withValueFrom: [:variableNode | StVariableNode named: 'Refactory.Browser']
 		when: [:variableNode | variableNode parent isAnnotation].
 	self compare: (self
 				parseMethod: (rewriter

@@ -274,9 +274,7 @@ parseBlockArgsInto: node
 				ifTrue: [self step]
 				ifFalse: 
 					["Consume only the args closing bar"
-					currentToken
-						value: (currentToken value copyFrom: 2) asSymbol;
-						start: currentToken start + 1]]
+					currentToken trimFirst]]
 		ifFalse: 
 			["St-80 allows, for example, [:a] as a valid block, ANSI requires the arg list termination bar, i.e. [:a|]"
 			(st80Syntax and: [currentToken isSpecial: $]])
@@ -338,15 +336,17 @@ parseCascadeMessage
 
 parseExpression: aString
 	| body method |
-	method := self methodNodeClass
-				selectorParts: {StIdentifierToken
+	method := self methodNodeClass selectorParts: {
+						StIdentifierToken
 							start: nil
 							comments: nil
-							value: 'doIt'}
+							value: 'doIt'
+					}
 				arguments: #().
 	method
 		source: aString;
-		methodClass: methodClass environment: environment.
+		methodClass: methodClass environment: environment;
+		isExpression: true.
 	body := self parseStatementsOf: method.
 	method body: body.
 	self atEnd
@@ -725,7 +725,8 @@ parsePrimitive: startInteger
 	(currentToken isKeyword and: [currentToken value = 'error:'])
 		ifTrue: 
 			[self step.
-			primitiveNode errorTemp: self parseTempDecl].
+			primitiveNode errorTemp: self parseTempDecl]
+		ifFalse: [primitiveNode setDefaultErrorTemp].
 	^primitiveNode!
 
 parsePrimitiveIdentifier: aStVariableNodeClass
@@ -743,6 +744,7 @@ parsePrimitiveLiteral
 
 parsePrimitiveObject
 	"Attempt to recover by treating it as a literal value, the AST will be invalid of course"
+
 	currentToken isIdentifier ifTrue: [^self parsePrimitiveIdentifier: self variableNodeClass].
 	(currentToken isLiteralToken and: [currentToken isMultiKeyword not])
 		ifTrue: [^self parsePrimitiveLiteral].
@@ -757,6 +759,15 @@ parsePrimitiveObject
 			char == ${ ifTrue: [^self parseBraceArray]].
 	currentToken isOptimized ifTrue: [^self parseOptimizedExpression].
 	currentToken isQualifiedReference ifTrue: [^self parseQualifiedReference].
+	((currentToken isBinary: #-) and: [self nextToken isNumberLiteralToken])
+		ifTrue: 
+			["Patch up the case of a negative number with whitespace between the '-' sign and the number."
+			nextToken
+				start: currentToken start;
+				value: nextToken value negated;
+				source: (source copyFrom: currentToken start to: nextToken stop).
+			self step.
+			^self parsePrimitiveLiteral].
 	^self invalidExpressionStart!
 
 parseQualifiedReference
@@ -896,7 +907,7 @@ parseStatementsOf: aNode
 	| temps leftBar rightBar |
 	temps := #().
 	leftBar := rightBar := nil.
-	currentToken isBinary
+	(currentToken isBinaryStarting: $|)
 		ifTrue: 
 			[currentToken value == #|
 				ifTrue: 
@@ -909,17 +920,12 @@ parseStatementsOf: aNode
 							self step]
 						ifFalse: 
 							[self parserError: CErrTempListNotClosed range: (leftBar to: self errorPosition - 1).
-							"If this error is ignored, we can recover
-							but it is possible that some of the first
-							statement has been treated as temporary
-							declarations..."
+							"If this error is ignored, we can recover but it is possible that some of the first statement has been treated as temporary declarations..."
 							rightBar := self errorPosition - 1]]
 				ifFalse: 
 					["Empty temp declarations scanned as a binary selector"
-					currentToken value == #'||'
-						ifTrue: 
-							[rightBar := (leftBar := currentToken start) + 1.
-							self step]]].
+					rightBar := (leftBar := currentToken start) + 1.
+					self step]].
 	^self parseStatementList: (self sequenceNodeClass
 				leftBar: leftBar
 				temporaries: temps
@@ -957,10 +963,8 @@ parseTags
 					tag stop: currentToken start - 1.
 					methodNode tags: tags grabContents.
 					^self].
-			"Closing angle bracket was scanned as the start of a binary selector. Consume only the bracket."
-			currentToken
-				value: (currentToken value copyFrom: 2) asSymbol;
-				start: currentToken start + 1].
+			"Closing angle bracket was scanned as the start of a binary selector. Consume only that bracket."
+			currentToken trimFirst].
 	currentToken isBinary: #<]
 			whileTrue.
 	methodNode tags: tags grabContents!
@@ -1129,8 +1133,11 @@ reportError: anInteger at: posInteger line: lineInteger range: anInterval extras
 				line: lineInteger
 				range: anInterval
 				extras: anArray.
-	"Warnings are not passed to the error block"
-	(err severityClass == Error and: [errorBlock notNil]) ifTrue: [errorBlock value: err].
+	err severityClass == Error
+		ifTrue: 
+			[methodNode ifNotNil: [methodNode hasErrors: true].
+			"Warnings are not passed to the error block"
+			errorBlock ifNotNil: [errorBlock value: err]].
 	"If the error block returns, then the exception is signalled"
 	^err signal!
 
@@ -1158,17 +1165,6 @@ step
 			[currentToken := nextToken.
 			nextToken := nil]
 		ifFalse: [currentToken := scanner next]!
-
-stepBinaryFirst
-	"Private - Patch over-scanning of binary selectors, e.g. the sequence >| might occur at the end of a tag (annotation) but actually be intended to represent closing the last tag and opening of temp declarations."
-
-	| binarySelector |
-	binarySelector := currentToken value.
-	currentToken value: binarySelector first asSymbol.
-	^currentToken := StBinarySelectorToken
-				start: currentToken start + 1
-				comments: nil
-				value: (binarySelector copyFrom: 2) asSymbol!
 
 tempDeclClass
 	^StTempDeclNode!
@@ -1303,7 +1299,6 @@ scanner:!accessing!public! !
 scannerClass!constants!private! !
 sequenceNodeClass!constants!private! !
 step!parsing!private! !
-stepBinaryFirst!parsing!private! !
 tempDeclClass!constants!private! !
 validateArg:args:!parsing!private! !
 validateTemp:of:temps:!parsing!private! !

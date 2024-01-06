@@ -22,6 +22,7 @@ package basicPackageVersion: '7.0'.
 
 package setClassNames: #(
 	#{Kernel.AbstractLiteralArrayNode}
+	#{Kernel.AbstractPrimitiveCallNode}
 	#{Kernel.ParseNodeVisitor}
 	#{Kernel.Parser}
 	#{Kernel.Scanner}
@@ -148,11 +149,11 @@ Kernel.StProgramNode
 	classConstants: {}!
 Kernel.StProgramNode
 	subclass: #'Kernel.StMethodNode'
-	instanceVariableNames: 'selector selectorParts body source arguments tags replacements nodeReplacements methodClass environment'
+	instanceVariableNames: 'selector selectorParts body source arguments tags replacements nodeReplacements methodClass environment flags irMethod'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'HasErrorsMask' -> 16r2. 'IsExpressionMask' -> 16r1 }!
 Kernel.StProgramNode
 	subclass: #'Kernel.StReturnNode'
 	instanceVariableNames: 'return value'
@@ -182,22 +183,29 @@ Kernel.StProgramNode
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Kernel.StTagNode
+	subclass: #'Kernel.AbstractPrimitiveCallNode'
+	instanceVariableNames: 'errorTemp'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.StTagNode
 	subclass: #'Kernel.StAnnotationNode'
 	instanceVariableNames: 'selector arguments'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.StTagNode
+Kernel.AbstractPrimitiveCallNode
 	subclass: #'Kernel.StExternalCallNode'
 	instanceVariableNames: 'nameOrOrdinal returnType argumentTypes flags callingConvention'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: { 'OverlappedMask' -> 16r1. 'VirtualMask' -> 16r2 }!
-Kernel.StTagNode
+Kernel.AbstractPrimitiveCallNode
 	subclass: #'Kernel.StPrimitiveNode'
-	instanceVariableNames: 'primitiveIndex errorTemp'
+	instanceVariableNames: 'primitiveIndex'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

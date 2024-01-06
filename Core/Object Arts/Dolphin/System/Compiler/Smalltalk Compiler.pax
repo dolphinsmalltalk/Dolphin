@@ -85,7 +85,7 @@ Kernel.SemanticAnalyser
 	classConstants: {}!
 Kernel.SemanticAnalyser
 	subclass: #'Kernel.StSemanticAnalyser'
-	instanceVariableNames: 'literals stringLiterals tempDecls isMutator'
+	instanceVariableNames: 'literals stringLiterals isMutator'
 	classVariableNames: 'OptimizedMessages'
 	imports: #()
 	classInstanceVariableNames: ''
@@ -146,7 +146,7 @@ Kernel.StVariable
 	classConstants: {}!
 Kernel.StVariable
 	subclass: #'Kernel.StLocalVariable'
-	instanceVariableNames: 'node storage reads'
+	instanceVariableNames: 'node storage reads index'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

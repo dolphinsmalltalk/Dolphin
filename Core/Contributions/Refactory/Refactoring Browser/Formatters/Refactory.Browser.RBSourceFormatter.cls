@@ -136,11 +136,10 @@ visitPrimitiveNode: aStPrimitiveNode
 	codeStream
 		nextPutAll: '<primitive: ';
 		print: aStPrimitiveNode primitiveIndex.
-	aStPrimitiveNode errorTemp
-		ifNotNil: 
-			[:errorTemp |
-			codeStream nextPutAll: ' error: '.
-			self visitNode: errorTemp].
+	aStPrimitiveNode hasDefaultErrorTemp
+		ifFalse: 
+			[codeStream nextPutAll: ' error: '.
+			self visitNode: aStPrimitiveNode errorTemp].
 	codeStream nextPut: $>!
 
 visitQualifiedReferenceNode: aQualifiedReferenceNode

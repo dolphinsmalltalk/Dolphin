@@ -38,6 +38,7 @@ package setClassNames: #(
 package setMethodNames: #(
 	#(#{Kernel.AbstractLiteralArrayNode} #match:inContext:)
 	#(#{Kernel.AbstractLiteralArrayNode} #replaceNode:withNode:)
+	#(#{Kernel.AbstractPrimitiveCallNode} #replaceNode:withNode:)
 	#(#{Kernel.CompileFailedMethod} #refersToVariable:)
 	#(#{Kernel.ParseNodeVisitor} #visitPatternBlockNode:)
 	#(#{Kernel.ParseNodeVisitor} #visitPatternWrapperBlockNode:)
@@ -96,7 +97,6 @@ package setMethodNames: #(
 	#(#{Kernel.StMethodNode} #clearReplacements)
 	#(#{Kernel.StMethodNode} #copyInContext:)
 	#(#{Kernel.StMethodNode} #equalTo:withMapping:)
-	#(#{Kernel.StMethodNode} #initialize)
 	#(#{Kernel.StMethodNode} #map:to:)
 	#(#{Kernel.StMethodNode} #mappingFor:)
 	#(#{Kernel.StMethodNode} #match:inContext:)
@@ -112,7 +112,6 @@ package setMethodNames: #(
 	#(#{Kernel.StOptimizedNode} #replaceNode:withNode:)
 	#(#{Kernel.StPrimitiveNode} #copyInContext:)
 	#(#{Kernel.StPrimitiveNode} #equalTo:withMapping:)
-	#(#{Kernel.StPrimitiveNode} #replaceNode:withNode:)
 	#(#{Kernel.StProgramNode} #addReplacement:)
 	#(#{Kernel.StProgramNode} #asReturn)
 	#(#{Kernel.StProgramNode} #clearReplacements)
@@ -350,6 +349,14 @@ replaceNode: aNode withNode: anotherNode
 				collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]])! !
 !Kernel.AbstractLiteralArrayNode categoriesForMethods!
 match:inContext:!matching!public! !
+replaceNode:withNode:!public!replacing! !
+!
+
+!Kernel.AbstractPrimitiveCallNode methodsFor!
+
+replaceNode: aNode withNode: anotherNode
+	errorTemp == aNode ifTrue: [self errorTemp: anotherNode]! !
+!Kernel.AbstractPrimitiveCallNode categoriesForMethods!
 replaceNode:withNode:!public!replacing! !
 !
 
@@ -850,8 +857,13 @@ replaceSourceWithMessageNode:!private!replacing! !
 addNode: aNode 
 	^body addNode: aNode!
 
-addReplacement: aStringReplacement 
-	replacements isNil ifTrue: [^self].
+addReplacement: aStringReplacement
+	replacements
+		ifNil: 
+			[replacements := SortedCollection sortBlock: 
+							[:a :b |
+							a startPosition < b startPosition
+								or: [a startPosition = b startPosition and: [a stopPosition < b stopPosition]]]].
 	replacements add: aStringReplacement!
 
 addReturn
@@ -882,7 +894,7 @@ changeSourceSelectors: oldSelectorParts arguments: oldArguments
 			do: [:ex | ex return]!
 
 clearReplacements
-	replacements := nil!
+	replacements := DeafObject current!
 
 copyInContext: aDictionary
 	^self class new
@@ -908,12 +920,6 @@ equalTo: anObject withMapping: aDictionary
 				withMapping: aDictionary) ifFalse: [^false].
 			aDictionary removeKey: (self arguments at: i) name].
 	^self tags = anObject tags!
-
-initialize
-	replacements := SortedCollection sortBlock: 
-					[:a :b |
-					a startPosition < b startPosition
-						or: [a startPosition = b startPosition and: [a stopPosition < b stopPosition]]]!
 
 map: oldNode to: newNode
 	(nodeReplacements
@@ -947,7 +953,7 @@ matchTagsAgainst: aStMethodNode inContext: aDictionary
 		allSatisfy: [:matchNode | otherTags anySatisfy: [:tagNode | matchNode match: tagNode inContext: aDictionary]]!
 
 newSource
-	replacements isNil ifTrue: [^self formattedCode].
+	(replacements isNil or: [replacements isEmpty]) ifTrue: [^self formattedCode].
 	^[self reformatSource] on: Error do: [:ex | ex return: self formattedCode]!
 
 references: aVariableName 
@@ -994,7 +1000,6 @@ changeSourceSelectors:arguments:!private!replacing! !
 clearReplacements!public!replacing! !
 copyInContext:!matching!public! !
 equalTo:withMapping:!comparing!public! !
-initialize!initializing!public! !
 map:to:!public!replacing! !
 mappingFor:!public!replacing! !
 match:inContext:!matching!public! !
@@ -1033,22 +1038,16 @@ replaceNode:withNode:!public!replacing! !
 copyInContext: aDictionary
 	| copy |
 	copy := self class primitiveIndex: primitiveIndex.
-	errorTemp ifNotNil: [copy errorTemp: (errorTemp copyInContext: aDictionary)].
+	copy errorTemp: (errorTemp copyInContext: aDictionary).
 	^copy!
 
 equalTo: anObject withMapping: aDictionary
 	self class == anObject class ifFalse: [^false].
 	primitiveIndex == anObject primitiveIndex ifFalse: [^false].
-	^(errorTemp isNil
-		ifTrue: [anObject errorTemp isNil]
-		ifFalse: [errorTemp equalTo: anObject errorTemp withMapping: aDictionary]) ifFalse: [^false]!
-
-replaceNode: aNode withNode: anotherNode
-	errorTemp == aNode ifTrue: [self errorTemp: anotherNode]! !
+	^errorTemp equalTo: anObject errorTemp withMapping: aDictionary! !
 !Kernel.StPrimitiveNode categoriesForMethods!
 copyInContext:!matching!public! !
 equalTo:withMapping:!public! !
-replaceNode:withNode:!public!replacing! !
 !
 
 !Kernel.StProgramNode methodsFor!
@@ -1321,7 +1320,7 @@ addReturn
 addSelfReturn
 	| node |
 	self lastIsReturn ifTrue: [^self].
-	node := StReturnNode value: (StSelfVariableNode start: 0).
+	node := StReturnNode value: StVariableNode selfNode.
 	self addNode: node!
 
 addTemporariesNamed: aCollection 

@@ -107,6 +107,7 @@ package setMethodNames: #(
 	#(#{Kernel.Tests.ParserTest} #testExtendedLiterals)
 	#(#{Kernel.Tests.ParserTest} #testFormatter)
 	#(#{Kernel.Tests.ParserTest} #testLiterals)
+	#(#{Kernel.Tests.ParserTest} #testMatchInContext)
 	#(#{Kernel.Tests.ParserTest} #testMultimatch)
 	#(#{Kernel.Tests.ParserTest} #testPatternCascade)
 	#(#{Kernel.Tests.ParserTest} #testPatternNodeCopy)
@@ -968,6 +969,18 @@ testFormatter
 testLiterals
 	self assert: (StLiteralNode value: #(1 2 #(#asdf))) formattedCode equals: '#(1 2 #(#asdf))'!
 
+testMatchInContext
+	| tree |
+	tree := self treeWithEverything.
+	self assert: (tree match: tree inContext: Dictionary new).
+	tree := self treeWithAllNodeTypes.
+	self assert: (tree match: tree inContext: Dictionary new).
+
+	self exampleClasses do: [ :class |
+		class methodsDo: [ :each |
+			tree := each parseTree.
+			self assert: (tree match: tree inContext: Dictionary new) ] ]!
+
 testMultimatch
 	<namespace: Refactory.Browser>
 	| rewriter count |
@@ -1182,6 +1195,7 @@ testEqualToWithMappingRename!public!unit tests! !
 testExtendedLiterals!public!unit tests! !
 testFormatter!public!unit tests! !
 testLiterals!public!unit tests! !
+testMatchInContext!public!unit tests! !
 testMultimatch!public!unit tests! !
 testPatternCascade!public!unit tests! !
 testPatternNodeCopy!public!unit tests! !

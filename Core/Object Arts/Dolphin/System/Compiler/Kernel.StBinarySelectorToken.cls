@@ -24,13 +24,22 @@ isBinary: aSymbol
 	^self value == aSymbol!
 
 isBinaryStarting: aCharacter
-	"Answer whether the receiver is a binary token starting with the specified <Character>."
+	"Answer whether the receiver is a binary selector token starting with the specified <Character>."
 
-	^self value first == aCharacter! !
+	"We know that the characters of binary selectors are all ASCII, so we can just identity compare against the first code unit"
+
+	^(value at: 1) == aCharacter!
+
+trimFirst
+	"Private - Trim the first character from the selector because the parser has recognised it as a preceding token and not part of this binary token"
+
+	value := (value copyFrom: 2) asSymbol.
+	start := start + 1! !
 !Kernel.StBinarySelectorToken categoriesForMethods!
 acceptVisitor:!public!visitor! !
 isBinary!public!testing! !
 isBinary:!public!testing! !
 isBinaryStarting:!public!testing! !
+trimFirst!helpers!private! !
 !
 

@@ -2,11 +2,11 @@
 
 Kernel.StProgramNode
 	subclass: #'Kernel.StMethodNode'
-	instanceVariableNames: 'selector selectorParts body source arguments tags replacements nodeReplacements methodClass environment'
+	instanceVariableNames: 'selector selectorParts body source arguments tags replacements nodeReplacements methodClass environment flags irMethod'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'HasErrorsMask' -> 16r2. 'IsExpressionMask' -> 16r1 }!
 Kernel.StMethodNode guid: (Core.GUID fromString: '{a10b25e1-f065-457c-90d9-2571ebf23f51}')!
 Kernel.StMethodNode comment: 'StMethodNode is the parse tree node type that represents a Smalltalk method.
 
@@ -88,8 +88,9 @@ childrenDo: aMonadicValuable
 customEnvironment
 	^environment!
 
-defines: aName 
-	^arguments anySatisfy: [:each | each name = aName]!
+defines: aName
+	^(arguments anySatisfy: [:each | each name = aName])
+		or: [tags notNil and: [tags anySatisfy: [:each | each defines: aName]]]!
 
 displayOn: aPuttableStream
 	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
@@ -116,11 +117,27 @@ fullBindingFor: aString
 hasAnnotation: aSymbol
 	^self tags anySatisfy: [:each | each selector == aSymbol]!
 
+hasErrors
+	^flags anyMask: HasErrorsMask!
+
+hasErrors: aBoolean
+	flags := flags mask: HasErrorsMask set: aBoolean!
+
 hash
 	^(self selector hash bitXor: self body hash) bitXor: self arguments hash!
 
+initialize
+	flags := 0!
+
+isExpression
+	^flags anyMask: IsExpressionMask!
+
+isExpression: aBoolean
+	flags := flags mask: IsExpressionMask set: aBoolean!
+
 isExternalCall
-	^tags notNil and: [tags isExternalCall]!
+	#todo. "Create FunctionDescriptor during analysis and determine from that when analysis has been done."
+	^tags notNil and: [tags anySatisfy: [:each | each isExternalCall]]!
 
 isInlined
 	^false!
@@ -143,8 +160,8 @@ lastIsReturn
 methodClass
 	^methodClass!
 
-methodClass: each
-	self methodClass: each environment: nil.
+methodClass: aClassDescription
+	self methodClass: aClassDescription environment: nil.
 	scope ifNotNil: [scope outer: self newClassScope]!
 
 methodClass: aClass environment: aNamespaceOrNil
@@ -268,7 +285,12 @@ environment!accessing!public! !
 environment:!accessing!public! !
 fullBindingFor:!binding!public! !
 hasAnnotation:!public!testing! !
+hasErrors!accessing!public!testing! !
+hasErrors:!accessing!public! !
 hash!comparing!public! !
+initialize!initializing!public! !
+isExpression!accessing!public!testing! !
+isExpression:!accessing!public! !
 isExternalCall!public!testing! !
 isInlined!public!testing! !
 isLast:!public!testing! !
