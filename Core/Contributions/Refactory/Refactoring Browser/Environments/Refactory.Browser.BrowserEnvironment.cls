@@ -49,6 +49,9 @@ allClassesDo: aBlock
 
 	Smalltalk allBehaviorsDo: aBlock!
 
+approximateNumberOfClasses
+	^Smalltalk allClasses size!
+
 bindingFor: aString
 	^(Smalltalk resolveBindingPath: (BindingReference.PathSeparator split: aString))
 		ifNotNil: 
@@ -81,8 +84,10 @@ categories
 	"^Smalltalk organization categories select: [:each | self includesCategory: each]"!
 
 classes
+	"Answer a <Set> of all the classes and metaclasses in the receiver."
+
 	| classes |
-	classes := Set new.
+	classes := IdentitySet new: self approximateNumberOfClasses * 2.
 	self classesDo: [:each | classes add: each].
 	^classes!
 
@@ -90,9 +95,13 @@ classesAndSelectorsDo: aBlock
 	self classesDo: [:class | self selectorsForClass: class do: [:sel | aBlock value: class value: sel]]!
 
 classesDo: aBlock
+	"Evaluate the <monadicValuable> argument for each class and metaclass in the receiver (i.e. this is really a `behaviorsDo:` method)."
+
 	self allClassesDo: aBlock!
 
 classNames
+	"Answer the names of all the classes in the receiver. Note that this does not include metaclass names, but if a metaclass is included in the receiver then its instance class name will be included, even if the class itself is not part of the environment."
+
 	| classes names |
 	classes := self allClasses.
 	names := Set new: classes size.
@@ -407,6 +416,7 @@ whichProtocolsInclude: aSelector in: aClass
 addSearchString:!accessing!public! !
 allClasses!enumerating!public! !
 allClassesDo:!enumerating!public! !
+approximateNumberOfClasses!accessing!private! !
 bindingFor:!public! !
 categories!accessing!public! !
 classes!accessing/classes!public! !

@@ -73,6 +73,11 @@ addAll: newElements
 	mutex critical: [newElements do: [:each | super add: each]].
 	^newElements!
 
+allSatisfy: aMonadicValuable
+	"Answer whether the <monadicValuable> argument evaluates to true for every element of the receiver."
+
+	^mutex critical: [super allSatisfy: aMonadicValuable]!
+
 asArray
 	"Answer an Array whose elements are those of the receiver (ordering is possibly arbitrary).
 	Must implement as critical section as otherwise Array size might be wrong."
@@ -179,6 +184,7 @@ shrink
 !Core.SharedSet categoriesForMethods!
 add:!adding!public! !
 addAll:!adding!public! !
+allSatisfy:!enumerating!public! !
 asArray!converting!public! !
 asByteArray!converting!public! !
 do:!enumerating!public! !

@@ -76,7 +76,7 @@ Refactory.Browser.BrowserEnvironmentWrapper
 	classConstants: {}!
 Refactory.Browser.BrowserEnvironmentWrapper
 	subclass: #'Refactory.Browser.ClassEnvironment'
-	instanceVariableNames: 'classes metaClasses'
+	instanceVariableNames: 'classes'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

@@ -2,7 +2,7 @@
 
 Refactory.Browser.BrowserEnvironmentWrapper
 	subclass: #'Refactory.Browser.ClassEnvironment'
-	instanceVariableNames: 'classes metaClasses'
+	instanceVariableNames: 'classes'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -17,16 +17,20 @@ Instance Variables:
 !Refactory.Browser.ClassEnvironment methodsFor!
 
 addClass: aClass
-	(aClass isMeta ifTrue: [metaClasses] ifFalse: [classes]) add: aClass instanceClass fullName!
+	classes add: aClass fullyQualifiedReference!
+
+approximateNumberOfClasses
+	^classes size!
 
 classes: aCollection 
 	aCollection do: [:each | self addClass: each]!
 
 classes: classArray metaClasses: metaArray
-	"Private - Used to recreate an environment from its storeString"
+	"Private - Used to recreate an environment from a legacy storeString"
 
-	classes := classArray asSet.
-	metaClasses := metaArray asSet!
+	classes := Set new.
+	classArray do: [:each | classes add: each asQualifiedReference].
+	metaArray do: [:each | classes add: (each , ' class') asQualifiedReference]!
 
 classesAndSelectorsDo: aBlock
 	#rbFix.	"Override to avoid #includesClass: check in #selectorsForClass:do:"
@@ -40,24 +44,21 @@ classesAndSelectorsDo: aBlock
 classesDo: aBlock
 	classes do: 
 			[:each |
-			(Smalltalk resolveBindingPath: (BindingReference.PathSeparator split: each))
-				ifNotNil: [:binding | (environment includesClass: binding value) ifTrue: [aBlock value: binding value]]].
-	metaClasses do: 
-			[:each |
-			(Smalltalk resolveBindingPath: (BindingReference.PathSeparator split: each))
-				ifNotNil: 
-					[:binding |
-					| meta |
-					meta := binding value class.
-					(environment includesClass: meta) ifTrue: [aBlock value: meta]]]!
+			each valueOrNil
+				ifNotNil: [:class | (environment includesClass: class) ifTrue: [aBlock value: class]]]!
 
 classNames
-	^(Set withAll: classes)
-		addAll: metaClasses;
-		yourself!
+	"Answer a <Collection> of the full names of each instance class in this environment."
+
+	^classes collect: [:each | each instance asString]!
+
+classReferences: anArray
+	"Private - Used to recreate an environment from a storeString"
+
+	classes := anArray asSet!
 
 defaultLabel
-	^$\x20 join: classes!
+	^$\x20 join: self classNames!
 
 definesClass: aClass
 	^self includesClass: aClass!
@@ -65,40 +66,30 @@ definesClass: aClass
 includesCategory: aCategory
 	^(super includesCategory: aCategory) and: 
 			[(environment classNamesFor: aCategory) inject: false
-				into: 
-					[:bool :each |
-					bool or: 
-							[| binding |
-							binding := Smalltalk resolveBindingPath: (BindingReference.PathSeparator split: each).
-							binding notNil
-								and: [(self includesClass: binding value) or: [self includesClass: binding value class]]]]]!
+				into: [:bool :each | bool or: [classes includes: each asQualifiedReference]]]!
 
 includesClass: aClass
-	^((aClass isMeta ifTrue: [metaClasses] ifFalse: [classes]) includes: aClass instanceClass fullName)
-		and: [super includesClass: aClass]!
+	^classes includes: aClass fullyQualifiedReference!
 
 initialize
 	super initialize.
-	classes := Set new.
-	metaClasses := Set new!
+	classes := Set new!
 
 isClassEnvironment
 	^true!
 
 isEmpty
-	^classes isEmpty and: [metaClasses isEmpty]!
+	^classes isEmpty!
 
 postCopy
 	classes := classes copy.
-	metaClasses := metaClasses copy.
 	^super postCopy!
 
 problemCount
 	^self numberClasses!
 
 removeClass: aClass
-	(aClass isMeta ifTrue: [metaClasses] ifFalse: [classes]) remove: aClass instanceClass fullName
-		ifAbsent: nil!
+	classes remove: aClass asQualifiedReference ifAbsent: nil!
 
 selectorsForClass: aClass do: aBlock
 	#rbFix.	"Implement to avoid need for #includesClass: test in loop by performing it up front."
@@ -110,29 +101,29 @@ selectorsForClass: aClass do: aBlock
 storeOn: aStream
 	aStream nextPut: $(.
 	super storeOn: aStream.
-	aStream nextPutAll: ' classes: '.
+	aStream nextPutAll: ' classReferences: '.
 	classes asArray storeOn: aStream.
-	aStream nextPutAll: ' metaClasses: '.
-	metaClasses asArray storeOn: aStream.
 	aStream nextPut: $)! !
 !Refactory.Browser.ClassEnvironment categoriesForMethods!
 addClass:!adding!public! !
-classes:!initialize/release!public! !
-classes:metaClasses:!initialize/release!private! !
-classesAndSelectorsDo:!accessing!public! !
-classesDo:!accessing/classes!public! !
+approximateNumberOfClasses!accessing!private! !
+classes:!initializing!public! !
+classes:metaClasses:!initializing!private! !
+classesAndSelectorsDo:!enumerating!public! !
+classesDo:!enumerating!public! !
 classNames!accessing/classes!public! !
+classReferences:!initializing!private! !
 defaultLabel!constants!private! !
 definesClass:!public!testing! !
 includesCategory:!public!testing! !
 includesClass:!public!testing! !
-initialize!initialize/release!public! !
+initialize!initializing!public! !
 isClassEnvironment!public!testing! !
 isEmpty!public!testing! !
 postCopy!copying!public! !
 problemCount!accessing!public! !
 removeClass:!public!removing! !
-selectorsForClass:do:!accessing!public! !
+selectorsForClass:do:!enumerating!public! !
 storeOn:!printing!public! !
 !
 

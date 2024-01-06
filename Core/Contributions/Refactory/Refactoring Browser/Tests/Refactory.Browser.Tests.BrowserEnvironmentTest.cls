@@ -20,17 +20,17 @@ categoriesFor: anEnvironment
 	allCategories do: [:each | self assert: (universalEnvironment classNamesFor: each) isEmpty]!
 
 classesFor: aBrowserEnvironment
-	| allClasses |
-	allClasses := aBrowserEnvironment classes union: aBrowserEnvironment not classes.
-	universalEnvironment classesDo: [:each | allClasses remove: each].
-	self assert: allClasses isEmpty!
+	self assert: (aBrowserEnvironment not classes
+				addAll: aBrowserEnvironment classes;
+				yourself)
+		equals: universalEnvironment classes!
 
 classNamesFor: anEnvironment
 	"Private - N.B. A class can be in an environment, and in its inverse, if it is only partially included in the original environment"
 
 	| classNames allClassNames |
-	classNames := anEnvironment classNames
-				addAll: anEnvironment not classNames;
+	classNames := anEnvironment not classNames
+				addAll: anEnvironment classNames;
 				yourself.
 	allClassNames := universalEnvironment classNames.
 	self assert: classNames equals: allClassNames.
@@ -62,7 +62,8 @@ numberSelectorsFor: aBrowserEnvironment
 setUp
 	super setUp.
 	universalEnvironment := BrowserEnvironment new.
-	universalEnvironment beImmutableObject!
+	universalEnvironment beImmutableObject.
+	totalSelectors := selectorCount := nil!
 
 storeStringFor: aBrowserEnvironment
 	| newEnvironment |
@@ -101,8 +102,7 @@ testAndEnvironment
 
 testBindingFor
 	| subject |
-	subject := ClassEnvironment onEnvironment: universalEnvironment
-				classes: { Object. Object class. Core }.
+	subject := universalEnvironment forClasses: { Object. Object class. Core }.
 	self assert: (subject bindingFor: #'Core.Object') identicalTo: Object binding.
 	self assertIsNil: (subject bindingFor: #'Core.Association').
 	self assert: (subject bindingFor: #'Core.Processor') identicalTo: (Core bindingFor: #Processor)!
@@ -122,18 +122,25 @@ testCategoryEnvironment
 	self assert: (aCategoryEnvironment implementorsOf: #printString) numberSelectors equals: 4!
 
 testClassEnvironment
-	| aClassEnvironment classes |
-	classes := {Object. Object class}.
-	aClassEnvironment := ClassEnvironment onEnvironment: universalEnvironment classes: classes.
-	self universalTestFor: aClassEnvironment.
-	self assert: (aClassEnvironment implementorsOf: #printString) numberSelectors equals: 1.
+	| subject classes |
+	classes := { Object. Object class }.
+	subject := ClassEnvironment onEnvironment: universalEnvironment classes: classes.
+	self universalTestFor: subject.
+	"Note that classNames does not include metaclass names."
+	self assert: subject classNames asArray equals: #('Core.Object').
+	self assert: (subject implementorsOf: #printString) numberSelectors equals: 1.
 	#rbFix.	"Test #definesClass: and #includesClass"
-	self deny: (aClassEnvironment includesClass: Association).
-	self deny: (aClassEnvironment definesClass: Association).
+	self deny: (subject includesClass: Association).
+	self deny: (subject definesClass: Association).
 	classes do: 
 			[:each |
-			self assert: (aClassEnvironment includesClass: each).
-			self assert: (aClassEnvironment definesClass: each)]!
+			self assert: (subject includesClass: each).
+			self assert: (subject definesClass: each)].
+	"Older storeString format"
+	subject := (ClassEnvironment onEnvironment: BrowserEnvironment new)
+				classes: #('Core.Object')
+				metaClasses: #('Core.Association').
+	self assert: subject classes equals: (Set with: Object with: Association class)!
 
 testConstructedClassEnvironment
 	| environment classes |

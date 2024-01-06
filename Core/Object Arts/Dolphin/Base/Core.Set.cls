@@ -85,6 +85,17 @@ addNewElement: anObject
 			true]
 		ifNotNil: [false]!
 
+allSatisfy: aMonadicValuable
+	"Answer whether the <monadicValuable> argument evaluates to true for every element of the receiver."
+
+	"Implementation Note: Override for performance reasons only (the superclass implementation requires a full block)."
+
+	tally == 0
+		ifFalse: 
+			[1 to: self basicSize
+				do: [:i | (self basicAt: i) ifNotNil: [:each | (aMonadicValuable value: each) ifFalse: [^false]]]].
+	^true!
+
 approxSize
 	"Private - Answer the approximate size of the receiver.
 	Implementation Note: Sets keep a tally, so we can use the actual size."
@@ -375,6 +386,7 @@ _deepCopyElementsInto:trail:!copying!private! !
 add:!adding!public! !
 addIfAbsent:!adding!public! !
 addNewElement:!adding!public! !
+allSatisfy:!enumerating!public! !
 approxSize!accessing!private! !
 asSet!converting!public! !
 at:!accessing!public! !

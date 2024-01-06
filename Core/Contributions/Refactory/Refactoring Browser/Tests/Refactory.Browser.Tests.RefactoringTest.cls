@@ -15,20 +15,19 @@ Refactory.Browser.Tests.RefactoringTest comment: ''!
 
 abstractVariableTestData
 	| testModel |
-	(testModel := Refactory.Browser.RBModel
-				onEnvironment: ((Refactory.Browser.ClassEnvironment
-						onEnvironment: Refactory.Browser.BrowserEnvironment new)
-							classes: (#(#{Smalltalk.Bar} #{Smalltalk.Foo}) inject: OrderedCollection new
-									into: 
-										[:sum :each |
-										| class |
-										class := each valueOrNil.
-										class notNil
-											ifTrue: 
-												[sum
-													add: class;
-													add: class class].
-										sum]))
+	(testModel := RBModel
+				onEnvironment: ((ClassEnvironment onEnvironment: BrowserEnvironment new)
+						classes: (#(#{Smalltalk.Bar} #{Smalltalk.Foo}) inject: OrderedCollection new
+								into: 
+									[:sum :each |
+									| class |
+									class := each valueOrNil.
+									class notNil
+										ifTrue: 
+											[sum
+												add: class;
+												add: class class].
+									sum]))
 							not)
 			name: 'Test'.
 	#('Core.Object subclass: #Foo
@@ -66,21 +65,21 @@ abstractVariableTestData
 
 childrenToSiblingTestData
 	| testModel |
-	(testModel := Refactory.Browser.RBModel
-				onEnvironment: ((Refactory.Browser.ClassEnvironment
-						onEnvironment: Refactory.Browser.BrowserEnvironment new)
+	(testModel := RBModel
+				onEnvironment: ((ClassEnvironment
+						onEnvironment: BrowserEnvironment new)
 							classes: (#(#ConcreteSubclass #ConcreteSuperclass #NoMoveSubclass) inject: OrderedCollection new
 									into: 
 										[:sum :each |
 										| class |
-										class := Refactory.Browser.Tests at: each ifAbsent: [nil].
+										class := Tests at: each ifAbsent: [nil].
 										class notNil ifTrue: [sum add: class].
 										sum])
 										, (#(#ConcreteSubclass #ConcreteSuperclass #NoMoveSubclass) inject: OrderedCollection new
 												into: 
 													[:sum :each |
 													| class |
-													class := Refactory.Browser.Tests at: each ifAbsent: [nil].
+													class := Tests at: each ifAbsent: [nil].
 													class notNil ifTrue: [sum add: class class].
 													sum]))
 							not)
@@ -123,24 +122,23 @@ instVarName1 := instVarName2 := ClassVarName1 := ClassVarName2 := 0' #everyone))
 
 inlineMethodTestData
 	| testModel |
-	(testModel := Refactory.Browser.RBModel
-				onEnvironment: ((Refactory.Browser.ClassEnvironment
-						onEnvironment: Refactory.Browser.BrowserEnvironment new)
-							classes: (#(#{RenameClassVariableChange} #{VariableCompositeRefactoryChange} #{RenameInstanceVariableChange} #{CompositeRefactoryChange} #{RenameVariableChange} #{RefactoryChange})
-									inject: OrderedCollection new
-									into: 
-										[:sum :each |
-										| class |
-										class := each valueOrNil.
-										class notNil ifTrue: [sum add: class].
-										sum])
-										, (#() inject: OrderedCollection new
-												into: 
-													[:sum :each |
-													| class |
-													class := each valueOrNil.
-													class notNil ifTrue: [sum add: class class].
-													sum]))
+	(testModel := RBModel
+				onEnvironment: ((ClassEnvironment onEnvironment: BrowserEnvironment new)
+						classes: (#(#{RenameClassVariableChange} #{VariableCompositeRefactoryChange} #{RenameInstanceVariableChange} #{CompositeRefactoryChange} #{RenameVariableChange} #{RefactoryChange})
+								inject: OrderedCollection new
+								into: 
+									[:sum :each |
+									| class |
+									class := each valueOrNil.
+									class notNil ifTrue: [sum add: class].
+									sum])
+									, (#() inject: OrderedCollection new
+											into: 
+												[:sum :each |
+												| class |
+												class := each valueOrNil.
+												class notNil ifTrue: [sum add: class class].
+												sum]))
 							not)
 			name: 'Test'.
 	#('Object subclass: #RefactoryChange

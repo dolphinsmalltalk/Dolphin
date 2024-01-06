@@ -55,13 +55,16 @@ allClassesDo: aBlock
 					i \\ step == 0 ifTrue: [progress value: i * 100 // numClasses]].
 			progress value: 100]!
 
+approximateNumberOfClasses
+	^8!
+
 classesDo: aBlock 
 	self 
 		allClassesDo: [:each | (self includesClass: each) ifTrue: [aBlock value: each]]!
 
 classNames
 	| names |
-	names := Set new.
+	names := Set new: self approximateNumberOfClasses.
 	self classesDo: [:each | names add: each instanceClass fullName].
 	^names!
 
@@ -147,6 +150,7 @@ storeOn: aStream
 !Refactory.Browser.BrowserEnvironmentWrapper categoriesForMethods!
 allClasses!enumerating!public! !
 allClassesDo:!enumerating!private! !
+approximateNumberOfClasses!accessing!private! !
 classesDo:!accessing/classes!public! !
 classNames!accessing/classes!public! !
 definesClass:!public!testing! !

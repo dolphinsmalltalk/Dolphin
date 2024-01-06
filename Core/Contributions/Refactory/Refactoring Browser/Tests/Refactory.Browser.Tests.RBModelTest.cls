@@ -147,10 +147,8 @@ testImplementors
 testIncludesClass
 	self assert: (RBModel new includesClassNamed: #'Core.Object').
 	self deny: (RBModel new includesClassNamed: #Object1).
-	self
-		deny: ((RBModel
-				onEnvironment: (ClassEnvironment onEnvironment: BrowserEnvironment new classes: {Object}))
-					includesClassNamed: #OrderedCollection)!
+	self deny: ((RBModel onEnvironment: (BrowserEnvironment new forClasses: { Object }))
+				includesClassNamed: #OrderedCollection)!
 
 testMetaclassNamed
 	| model metaclass |
