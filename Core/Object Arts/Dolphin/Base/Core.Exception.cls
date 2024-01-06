@@ -320,7 +320,7 @@ postCopy
 	therefore we nil the state associated with the context in which the original was raised."
 
 	super postCopy.
-	_environmentWhenRaised := _process := _signalFrame := _continueBlock := _resignalBlock := nil.
+	_activeHandler := _environmentWhenRaised := _process := _signalFrame := _continueBlock := _resignalBlock := nil.
 	^self!
 
 printOn: aStream

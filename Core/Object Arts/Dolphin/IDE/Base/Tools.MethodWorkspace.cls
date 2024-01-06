@@ -56,7 +56,7 @@ autoParse
 			do: 
 				[:err |
 				"err toTrace"
-				compilationErrors addLast: err.
+				compilationErrors addLast: err copy.
 				err resume].
 	self highlightCompilationErrors: 0.
 	self errorModel isNil ifTrue: [^self].
@@ -253,7 +253,7 @@ buildParseTree
 			on: Compiler notificationClass
 			do: 
 				[:err |
-				compilationErrors addLast: err.
+				compilationErrors addLast: err copy.
 				err resume]!
 
 canSaveMethod
@@ -605,7 +605,7 @@ reformattedSource
 		ifNil: [self formattedCode: ast]
 		ifNotNil: 
 			[:ex |
-			self showError: ex offset: 0.
+			self showError: ex copy offset: 0.
 			nil]!
 
 repositionAtSourceLine: anInteger 
