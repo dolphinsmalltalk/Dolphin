@@ -58,7 +58,10 @@ classesDo: aBlock
 								add: className meta]]]!
 
 defaultLabel
-	^', ' join: self packageNames!
+	| names count |
+	names := self packageNames.
+	count := names size.
+	^count > 3 ifTrue: ['<d> Packages' << count] ifFalse: [', ' join: names]!
 
 definesClass: aClass
 	^packages identityIncludes: aClass owningPackage!

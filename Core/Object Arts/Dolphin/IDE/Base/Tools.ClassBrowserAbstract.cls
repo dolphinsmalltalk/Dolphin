@@ -2528,7 +2528,7 @@ buildHistoryFutureMenu:!helpers!menus!private! !
 buildHistoryMenu:visits:command:!helpers!menus!private! !
 buildHistoryPastMenu:!helpers!menus!private! !
 canRemoveMethodsInCategory!commands-queries!private! !
-canSaveMethod!private!testing! !
+canSaveMethod!commands-queries!private!testing! !
 canSaveState!private!saved state! !
 canShowLocalHierarchy!private!testing! !
 cardsPresenter!accessing!private! !
@@ -2559,7 +2559,7 @@ emphasiseProtocolItem:isRelevant:!helpers!private! !
 ensureDefinitionVisible!operations!private! !
 ensureSourceVisible!operations!private! !
 futureSize!accessing!public! !
-hasClassSelected!public!testing! !
+hasClassSelected!commands-queries!public!testing! !
 hasEditableMethodSelected!public!testing! !
 hasEditableMethodsSelected!public!testing! !
 hasHistory!private!testing! !

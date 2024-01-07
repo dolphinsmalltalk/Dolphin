@@ -309,9 +309,8 @@ changeNamespaceOfClasses: aCollectionOfClasses
 		showChanges: chooser showChanges!
 
 chooseMethodFromEnvironment: aBrowserEnvironment caption: aString
-	^ChoicePrompter
-		choices: (aBrowserEnvironment allMethods asSortedCollection: [:a :b | a printString <= b printString])
-		caption: aString!
+	^ChoicePrompter choices: (aBrowserEnvironment allMethods asSortedCollection: [:a :b | a <= b])
+		caption: aString << aBrowserEnvironment!
 
 chooseSelectorInEnvironment: aBrowserEnvironment caption: aString
 	| selectors |

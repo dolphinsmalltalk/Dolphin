@@ -214,6 +214,7 @@ package setMethodNames: #(
 	#(#{Tools.ClassBrowserAbstract} #canPushDownInstanceVariables)
 	#(#{Tools.ClassBrowserAbstract} #canPushDownMethods)
 	#(#{Tools.ClassBrowserAbstract} #canPushUpMethods)
+	#(#{Tools.ClassBrowserAbstract} #methodRefactoringsMenu)
 	#(#{Tools.ClassBrowserAbstract} #methodRefactoringTool)
 	#(#{Tools.ClassBrowserAbstract} #methodsToOverride)
 	#(#{Tools.ClassBrowserAbstract} #overrideMethods)
@@ -380,7 +381,7 @@ package setMethodNames: #(
 	#(#{Tools.PackageBrowserShell} #renameMethodReferences:)
 	#(#{Tools.PackageSelector} #moveAllTempsToInnerScope)
 	#(#{Tools.PackageSelector} #removeDuplicateMethods)
-	#(#{Tools.SmalltalkToolShell} #chooseMethodForRefactoring:)
+	#(#{Tools.SmalltalkToolShell} #chooseMethodForRefactoring:caption:)
 	#(#{UI.ChoicePrompter} #showChanges)
 	#(#{UI.ChoicePrompter class} #refactoringChoices:caption:)
 	#(#{UI.ChoicePrompter class} #resource_Refactoring_view)
@@ -2631,6 +2632,12 @@ canPushUpMethods
 	^self methodRefactoringTool canPushUpMethods
 		and: [(self selectedMethods collect: [:each | each methodClass]) asSet size = 1]!
 
+methodRefactoringsMenu
+	"The Method/Refactorings menu should be enabled if there is a class selection as some commands may prompt for the target method(s) even if there is no method selection."
+
+	<commandQuery: #hasClassSelected>
+	!
+
 methodRefactoringTool
 	^methodBrowserPresenter refactoringTool!
 
@@ -2655,6 +2662,7 @@ overrideMethods
 	<commandQuery: #queryOverrideMethods:>
 	| stream class changes name methods devsys |
 	class := self actualClass.
+	#todo. "Encapsulate into a Refactoring class"
 	stream := String writeStream.
 	changes := CompositeRefactoryChange new.
 	methods := self methodsToOverride.
@@ -2753,7 +2761,7 @@ removeInstanceVariables
 	self model removeInstanceVariables: self variables within: self searchEnvironment!
 
 renameMethod
-	(self chooseMethodForRefactoring: 'Rename Method…') 
+	(self chooseMethodForRefactoring: nil caption: 'Choose Method to Rename in <d>…')
 		ifNotNil: [:method | self methodRefactoringTool renameMethod: method]!
 
 selectedOverridableMethods
@@ -2765,6 +2773,7 @@ abstractInstanceVariables!commands-actions!private!refactoring! !
 canPushDownInstanceVariables!private!refactoring!testing! !
 canPushDownMethods!private!refactoring!testing! !
 canPushUpMethods!private!refactoring!updating! !
+methodRefactoringsMenu!commands-menus!public! !
 methodRefactoringTool!commands-actions!private!refactoring! !
 methodsToOverride!helpers!private! !
 overrideMethods!commands-actions!private!refactoring! !
@@ -4094,8 +4103,9 @@ addParameter
 	only within the selected packages."
 
 	<commandQuery: #hasPackages>
-	(self chooseMethodForRefactoring: 'Add Parameter in Package(s)…')
-		ifNotNil: [:method | self addParameterTo: method]!
+	(self chooseMethodForRefactoring: [:each | each selector isInfix not]
+		caption: 'Choose Method for Parameter Addition in <d>…')
+			ifNotNil: [:method | self addParameterTo: method]!
 
 addParameterTo: aCompiledMethod
 	self model addParameterToMethod: aCompiledMethod inPackages: self packages!
@@ -4244,6 +4254,7 @@ removeMethods
 	of the selected packages (i.e. references from methods owned by other packages are not
 	considered as part of the decision as to whether it will be safe to remove the method)."
 
+	<commandQuery: #hasMethodsSelected>
 	| mb |
 	mb := MessageBox new
 				headline: 'Remove unreferenced loose methods?';
@@ -4266,12 +4277,15 @@ removeParameter
 
 	<commandQuery: #hasPackages>
 	| method ast arg |
-	method := self chooseMethodForRefactoring: 'Remove Parameter in Package(s)…'.
+	method := self chooseMethodForRefactoring: 
+					[:each |
+					each argumentCount > 1 or: [each argumentCount = 1 and: [each selector isInfix not]]]
+				caption: 'Choose Method for Parameter Removal in <d>…'.
 	method isNil ifTrue: [^self].
 	ast := method parseTreeNoError.
 	ast isNil ifTrue: [^self].
 	arg := ChoicePrompter choices: ast argumentNames
-				caption: 'Remove Parameter from <1p> in Package(s)…' << method selector.
+				caption: 'Remove Parameter from <1p> in <2d>…' << { method selector. self selectionEnvironment }.
 	arg notNil ifTrue: [methodRefactoringTool removeParameter: arg from: method]!
 
 removeParameterMenu
@@ -4307,7 +4321,7 @@ renameMethod
 	renamed at package scope, not just loose methods."
 
 	<commandQuery: #hasPackages>
-	(self chooseMethodForRefactoring: 'Rename Method in Package(s)…')
+	(self chooseMethodForRefactoring: nil caption: 'Choose Method to Rename in <d>…')
 		ifNotNil: [:method | methodRefactoringTool renameMethod: method]!
 
 renameMethodReferences: aCompiledMethod
@@ -4355,6 +4369,7 @@ renameMethodReferences:!operations!private!refactoring! !
 !Tools.PackageSelector methodsFor!
 
 moveAllTempsToInnerScope
+	<commandQuery: #hasPackages>
 	(MessageBox new
 		headline: 'Move All Temps to Inner Scope?';
 		confirm: 'This refactoring will move all temporaries in all methods in the selected package(s) into the tightest scope that contains both the variable assignment and references. Any unreferenced temporaries will be removed.
@@ -4389,10 +4404,17 @@ removeDuplicateMethods!development!private! !
 
 !Tools.SmalltalkToolShell methodsFor!
 
-chooseMethodForRefactoring: aString 
-	^self developmentSystem chooseMethodFromEnvironment: self selectionEnvironment caption: aString! !
+chooseMethodForRefactoring: aMonadicValuable caption: aString
+	| selection |
+	selection := self selectionEnvironment.
+	aMonadicValuable
+		ifNotNil: 
+			[selection := (selection selectMethods: aMonadicValuable)
+						label: selection label;
+						yourself].
+	^self developmentSystem chooseMethodFromEnvironment: selection caption: aString! !
 !Tools.SmalltalkToolShell categoriesForMethods!
-chooseMethodForRefactoring:!private!refactoring! !
+chooseMethodForRefactoring:caption:!private!refactoring! !
 !
 
 !UI.ChoicePrompter methodsFor!
