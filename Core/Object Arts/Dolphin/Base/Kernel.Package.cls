@@ -1704,24 +1704,22 @@ tracePrerequisitesOfResources: anIdentityDictionary packagedVariables: aLookupTa
 	collectorClass ifNil: [^self].
 	self allResourceIdentifiers do: 
 			[:each |
-			| method |
 			each resource
 				ifNotNil: 
 					[:array |
-					| collector |
+					| collector method |
 					method := each compiledMethod.
 					collector := collectorClass on: array readStream.
 					collector classes do: 
-							[:eachLiteral |
-							(self bindingRefToLiteral: eachLiteral)
-								ifNotNil: 
-									[:ref |
-									self
-										trace: anIdentityDictionary
-										prerequisite: (aLookupTable lookup: ref)
-										from: method
-										to: ref
-										dependency: 'references variable']].
+							[:eachClass |
+							| ref |
+							ref := eachClass fullyQualifiedReference.
+							self
+								trace: anIdentityDictionary
+								prerequisite: (aLookupTable lookup: ref)
+								from: method
+								to: ref
+								dependency: 'references variable'].
 					collector resourceIdentifiers do: 
 							[:rid |
 							self
