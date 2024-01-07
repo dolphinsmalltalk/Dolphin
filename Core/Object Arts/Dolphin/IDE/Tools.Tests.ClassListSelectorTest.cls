@@ -140,6 +140,16 @@ testAddRemoveListItems
 	self removeClassesGHI.
 	nilSubclasses do: [:each | self denyContains: each]!
 
+testHierarchyMove
+	<nocreate>
+	| env |
+	"Constraining the model with to BrowserEnvironment containing only a limited subset of all classes both speeds up the test and gives us some coverage of the filtering mechanism"
+	presenter := self classToTest show.
+	env := Refactory.Browser.BrowserEnvironment new.
+	presenter browserEnvironment: (env forPackages: { packageA. packageB. packageC })
+				| (env forClasses: { Object. Behavior }).
+	^super testHierarchyMove!
+
 treeModel
 	^presenter classHierarchyPresenter treeModel! !
 !Tools.Tests.ClassListSelectorTest categoriesForMethods!
@@ -151,6 +161,7 @@ listModel!accessing!private! !
 removalOfSelectionLeaves:!helpers!private! !
 resetSelection!helpers!private! !
 testAddRemoveListItems!public!unit tests! !
+testHierarchyMove!public!unit tests! !
 treeModel!accessing!private! !
 !
 
