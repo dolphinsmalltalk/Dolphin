@@ -1,8 +1,8 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Tests.PresenterTest
+UI.Tests.SelectableItemsTest
 	subclass: #'UI.Tests.SlideyInneyOuteyThingTest'
-	instanceVariableNames: ''
+	instanceVariableNames: 'allowCardChange'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -13,6 +13,70 @@ UI.Tests.SlideyInneyOuteyThingTest comment: ''!
 
 classToTest
 	^SlideyInneyOuteyThing!
+
+initializePresenter
+	super initializePresenter.
+	presenter animationDuration: 0 milliseconds.
+	#(#red #green #blue) do: 
+			[:each |
+			| child |
+			child := ColorView new.
+			child model value: (Color perform: each).
+			presenter tray addSubView: child.
+			child arrangement: each capitalized].
+	allowCardChange := true!
+
+objectsToTest
+	^{5. 0. '&Hello && Welcome'. #(1 2 3). 0 @ 0}!
+
+onCardChangedFrom: oldCard to: newCard
+	events addLast: ((SelectionChangedEvent forSource: presenter tray)
+				oldSelection: oldCard;
+				newSelection: newCard;
+				yourself)!
+
+onCardChanging: aSelectionChangingEvent
+	events add: aSelectionChangingEvent.
+	aSelectionChangingEvent value: allowCardChange!
+
+selectionView
+	^presenter tabs!
+
+testCardChange
+	"Verify that preventing the card change works, and that multiple events are not sent."
+
+	| mouseClick event |
+	"Programmatic selection change will not trigger the changing event - the change cannot be prevented"
+	events := OrderedCollection new.
+	presenter tray
+		when: #currentCardChanging:
+			send: #onCardChanging:
+			to: self;
+		when: #currentCardChangedFrom:to:
+			send: #onCardChangedFrom:to:
+			to: self.
+	presenter tabs selectionByIndex: 1.
+	self assert: events size equals: 1.
+	event := events single.
+	self assert: event isKindOf: SelectionChangeEvent.
+	self assert: event oldSelection value equals: Color blue.
+	self assert: event newSelection value equals: Color red.
+	"Change selection by mouse click"
+	events := OrderedCollection new.
+	mouseClick := self mouseDownEventOnItem: 2 buttons: { #left }.
+	self sendClickEvent: mouseClick.
+	self assert: presenter tabs selectionsByIndex equals: #(2).
+	self assert: events size equals: 2.
+	event := events first.
+	self assert: event isKindOf: SelectionChangingEvent.
+	self assert: event oldSelections equals: { 'Red' }.
+	"Block selection change by mouse click"
+	events := OrderedCollection new.
+	allowCardChange := false.
+	mouseClick := self mouseDownEventOnItem: 3 buttons: { #left }.
+	self sendClickEvent: mouseClick.
+	self assert: presenter tabs selectionsByIndex equals: #(2).
+	self assert: events size equals: 1!
 
 verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	| view |
@@ -27,6 +91,12 @@ verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	self assert: view inheritContextMenu! !
 !UI.Tests.SlideyInneyOuteyThingTest categoriesForMethods!
 classToTest!helpers!private! !
+initializePresenter!public!Running! !
+objectsToTest!helpers!private! !
+onCardChangedFrom:to:!event handling!private! !
+onCardChanging:!event handling!private! !
+selectionView!accessing!private! !
+testCardChange!public!unit tests! !
 verifyUpgradedView:identifier:!helpers!private! !
 !
 

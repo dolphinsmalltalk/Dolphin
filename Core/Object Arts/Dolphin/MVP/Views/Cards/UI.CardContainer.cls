@@ -237,10 +237,10 @@ onTabChanged
 	focus and a key is typed."
 	self hasFocusDeeply ifTrue: [self tabOntoCurrentCard]!
 
-onTabChanging: booleanValue
+onTabChanging: aSelectionChangingEvent
 	"Private - A tab has been selected by the user."
 
-	self trigger: #currentCardChanging: with: booleanValue!
+	self trigger: #currentCardChanging: with: aSelectionChangingEvent!
 
 onViewCreated
 	super onViewCreated.

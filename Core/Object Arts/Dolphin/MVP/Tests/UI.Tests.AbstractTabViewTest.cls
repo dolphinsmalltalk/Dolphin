@@ -13,28 +13,45 @@ UI.Tests.AbstractTabViewTest comment: ''!
 !UI.Tests.AbstractTabViewTest methodsFor!
 
 addTestTabs
-	| objects |
-	objects := self objectsToTest.
-	presenter parentView extent: 500 @ 100.
-	presenter viewMode: #smallIcons.
 	presenter model
 		removeAll;
-		addAll: objects!
+		addAll: self objectsToTest!
 
 autoSelectsFirst
 	^true!
 
+initializePresenter
+	super initializePresenter.
+	presenter parentView extent: 500 @ 100.
+	presenter viewMode: #smallIcons.
+	"For the non-inherited tests, add some example tabs"
+	((self class lookupMethod: self selector) methodClass includesBehavior: AbstractTabViewTest)
+		ifTrue: [self addTestTabs]!
+
 removingResetsSelection
 	^false!
 
+testSelectionChangeDenied
+	| mouseClick event |
+	presenter selectionByIndex: 1.
+	self observeSelectionEvents.
+	selectionChanging := 
+			[:selectionChange |
+			self assert: selectionChange oldSelections equals: {self objectsToTest first}.
+			events add: selectionChange.
+			selectionChange value: false].
+	mouseClick := self mouseDownEventOnItem: 2 buttons: { #left }.
+	self sendClickEvent: mouseClick.
+	self assert: presenter selectionsByIndex equals: #(1).
+	event := events single.
+	self assert: event isKindOf: SelectionChangingEvent!
+
 testSelectionsPreservedOnRecreate
-	self addTestTabs.
 	presenter selectionByIndex: 2.
 	presenter recreate.
 	self assert: presenter selectionsByIndex equals: #(2)!
 
 testSetTextImageDoesNotAffectSelection
-	self addTestTabs.
 	presenter selectionByIndex: 2.
 	self
 		shouldnt: [presenter view getImageBlock: [:each | each icon imageIndex + 1]]
@@ -56,7 +73,9 @@ verifyUpgradedView: anInteger identifier: aResourceIdentifier
 !UI.Tests.AbstractTabViewTest categoriesForMethods!
 addTestTabs!helpers!private! !
 autoSelectsFirst!private!testing! !
+initializePresenter!public!Running! !
 removingResetsSelection!public!testing! !
+testSelectionChangeDenied!public!unit tests! !
 testSelectionsPreservedOnRecreate!public!unit tests! !
 testSetTextImageDoesNotAffectSelection!public!unit tests! !
 verifyUpgradedView:identifier:!helpers!private! !

@@ -741,13 +741,6 @@ UI.Tests.PresenterTest
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.Tests.PresenterTest
-	subclass: #'UI.Tests.SlideyInneyOuteyThingTest'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-UI.Tests.PresenterTest
 	subclass: #'UI.Tests.SpinButtonTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -897,6 +890,13 @@ UI.Tests.SelectableItemsTest
 UI.Tests.SelectableItemsTest
 	subclass: #'UI.Tests.SelectableTreeItemsTest'
 	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.SelectableItemsTest
+	subclass: #'UI.Tests.SlideyInneyOuteyThingTest'
+	instanceVariableNames: 'allowCardChange'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

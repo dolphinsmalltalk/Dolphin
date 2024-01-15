@@ -38,17 +38,19 @@ UI.CapturingInteractor
 UI.ContainerView
 	subclass: #'UI.SlideyInneyOuteyThing'
 	instanceVariableNames: 'tabs tray trayExtent animationDuration tickCounter siotFlags _siotReserved1 _siotReserved2'
-	classVariableNames: 'AnimationDuration SlideInDelay'
+	classVariableNames: ''
 	imports: #(#{OS.ThemeConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'AnimatedCardChangeMask' -> 16r8.
 			'AnimatedUnpinMask' -> 16r2.
+			'AnimationDuration' -> 16rC8.
 			'AnimationMask' -> 16rC0010.
 			'Animations' -> (IdentityDictionary
 						withAll: { #blend -> 16r80000. #collapse -> 16r10. #roll -> 16r0. #slide -> 16r40000 }).
 			'HideOnUnpinMask' -> 16r1.
-			'ResizableMask' -> 16r4
+			'ResizableMask' -> 16r4.
+			'SlideInDelay' -> 16r1F4
 		}!
 UI.CardContainer
 	subclass: #'UI.SlidingCardTray'
