@@ -3,28 +3,36 @@
 UI.ContainerView
 	subclass: #'UI.SlideyInneyOuteyThing'
 	instanceVariableNames: 'tabs tray trayExtent animationDuration tickCounter siotFlags _siotReserved1 _siotReserved2'
-	classVariableNames: 'AnimationDuration SlideInDelay'
+	classVariableNames: ''
 	imports: #(#{OS.ThemeConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'AnimatedCardChangeMask' -> 16r8.
 			'AnimatedUnpinMask' -> 16r2.
+			'AnimationDuration' -> 16rC8.
 			'AnimationMask' -> 16rC0010.
 			'Animations' -> (IdentityDictionary
 						withAll: { #blend -> 16r80000. #collapse -> 16r10. #roll -> 16r0. #slide -> 16r40000 }).
 			'HideOnUnpinMask' -> 16r1.
-			'ResizableMask' -> 16r4
+			'ResizableMask' -> 16r4.
+			'SlideInDelay' -> 16r1F4
 		}!
 UI.SlideyInneyOuteyThing guid: (Core.GUID fromString: '{b9cf8580-efea-4336-84cd-3108804dd202}')!
-UI.SlideyInneyOuteyThing comment: 'SlideyInneyOuteyThing is a decorator for a <CardContainer> which behaves like one of those slidey-inney-outey-things one sees in Visual Studio.NET, i.e: It displays a thin tab strip most of the time, but slides cards smoothly out (as if they were on a sliding "tray") when one hovers over them. The tray slides out over the top of any sibling views of the SlideyInneyOuteyThing, and so it does not cause any re-layout within the parent. The tray can then be pinned into place if desired, in which case the parent is re-layed out to accommodate the full extent of the SlideyInneyOuteyThing. When pinned a SlideyInneyOuteyThing behaves visually like a normal <CardContainer>. When unpinned, the tray will slide back when the user moves outside the tray/tabs for a short period. This is useful for panes which are used only occasionally since they need consume only a little space (for the tabs) when they are not being used.
+UI.SlideyInneyOuteyThing comment: '`SlideyInneyOuteyThing` is a decorator for a `CardContainer` which behaves like one of those slidey-inney-outey-things one sees in Visual Studio, i.e: It displays a thin tab strip most of the time, but slides cards smoothly out (as if they were on a sliding "tray") when one hovers over them. The tray slides out over the top of any sibling views of the `SlideyInneyOuteyThing`, and so it does not cause any re-layout within the parent. The tray can then be pinned into place if desired, in which case the parent is re-layed out to accommodate the full extent of the `SlideyInneyOuteyThing`. When pinned a `SlideyInneyOuteyThing` behaves visually like a normal `CardContainer`. When unpinned, the tray will slide back when the user moves outside the tray/tabs for a short period. This is useful for panes which are used only occasionally since they need consume only a little space (for the tabs) when they are not being used.
 
-A SlideyInneyOuteyThing must be used in conjunction with a <SlidingCardTray> as its actual <CardContainer>, and can host only one such card container. The cards themselves must be added to the <SlidingCardTray>, NOT to the SlideyInneyOuteyThing which, as mentioned, is a decorator rather than a card container itself.
+A `SlideyInneyOuteyThing` must be used in conjunction with a `SlidingCardTray` as its actual `CardContainer`, and can host only one such card container. The cards themselves must be added to the `SlidingCardTray`,  *not* to the `SlideyInneyOuteyThing` which, as mentioned, is a decorator rather than a card container itself.
 
-Instance Variables:
-	tabs			<TabView>. The tabs, shared with the tray.
-	tray			<SlidingCardTray> which actually contains the cards.
-	slideExtent	<Point>. The extent of the tray when slid out.
-	'!
+## Instance Variables:
+  `tabs`		`TabView`. The tabs. Shared with the tray.
+  `tray`		`SlidingCardTray` that actually contains the cards.
+  `trayExtent`		`Point`. The extent of the tray when slid out.
+  `animationDuration`		`<integer>`. Number of milliseconds for sliding animations.
+  `tickCounter`		`<integer>`. Internal counter of 50mS timer ticks used to determine when to hide the tray.
+  `siotFlags`		`<integer>`. Various flags specific to the SIOT.
+  `_siotReserved1`		Reserved for future use.
+  `_siotReserved2`		Reserved for future use.
+
+'!
 !UI.SlideyInneyOuteyThing categoriesForClass!MVP-Resources-Card Containers!MVP-Views! !
 !UI.SlideyInneyOuteyThing methodsFor!
 
@@ -52,18 +60,19 @@ animatePositiveFlag
 	^self isVertical ifTrue: [AW_HOR_POSITIVE] ifFalse: [AW_VER_POSITIVE]!
 
 animateTray: aBoolean
-	User32
-		animateWindow: tray asParameter
-		dwTime: self animationDuration
-		dwFlags: (self trayAnimationType bitOr: (aBoolean
-						ifFalse: 
-							[AW_HIDE | (self isInverted ifFalse: [self animateNegativeFlag] ifTrue: [self animatePositiveFlag])]
-						ifTrue: [self isInverted ifTrue: [self animateNegativeFlag] ifFalse: [self animatePositiveFlag]]))!
+	animationDuration = 0
+		ifTrue: [User32 showWindow: tray asParameter nCmdShow: (aBoolean ifTrue: [SW_SHOW] ifFalse: [SW_HIDE])]
+		ifFalse: 
+			[User32
+				animateWindow: tray asParameter
+				dwTime: animationDuration
+				dwFlags: self trayAnimationType | (aBoolean
+								ifFalse: 
+									[AW_HIDE | (self isInverted ifFalse: [self animateNegativeFlag] ifTrue: [self animatePositiveFlag])]
+								ifTrue: [self isInverted ifTrue: [self animateNegativeFlag] ifFalse: [self animatePositiveFlag]])]!
 
 animation
-	"Answer the symbolic name of the animation used to reveal the card tray. This could be
-	#roll, #slide, #blend or #collapse. Note that #blend doesn't actually fade in the tray, but
-	shows it immediately (which effectively allows animation to be disabled)."
+	"Answer the symbolic name of the animation used to reveal the card tray. This could be #roll, #slide, #blend or #collapse. Note that is only retained for backwards compatibility as it isn't actually a valid choice for non-top-level windows. The effect of using #blends is to disable animation, although this can also be achieved more correctly by setting the animation duration to 0."
 
 	^Animations keyAtValue: (siotFlags bitAnd: AnimationMask)!
 
@@ -71,10 +80,12 @@ animation: aSymbol
 	siotFlags := (siotFlags maskClear: AnimationMask) maskSet: (Animations at: aSymbol ifAbsent: 0)!
 
 animationDuration
-	"Answer the number of milliseconds that the animations should take. This is only relevant if
-	#slide or #roll animations are configured."
+	"Answer the <Duration> that the animations should take. If the duration is empty, then there is no animation."
 
-	^animationDuration!
+	^animationDuration milliseconds!
+
+animationDuration: aDuration
+	animationDuration := aDuration asMilliseconds rounded!
 
 autoHideTimerInterval
 	^50!
@@ -185,7 +196,7 @@ initialize
 	super initialize.
 	trayExtent := 100 @ 100.
 	animationDuration := AnimationDuration.
-	siotFlags := AnimatedUnpinMask | HideOnUnpinMask | AnimatedCardChangeMask!
+	siotFlags := ##(AnimatedUnpinMask | HideOnUnpinMask | AnimatedCardChangeMask)!
 
 isCardChangeAnimated
 	"Answer whether changing cards when unpinned is animated. This does not apply when the tray is pinned."
@@ -307,9 +318,6 @@ observeTabs
 		when: #mouseHovering:
 			send: #onMouseHovering:
 			to: self;
-		when: #selectionChanging:
-			send: #onTabChanging:
-			to: self;
 		when: #selectionChanged
 			send: #onTabChanged
 			to: self;
@@ -343,9 +351,6 @@ onTabChanged
 	(self isPinned not and: [self isCardChangeAnimated]) ifTrue: [tray hide].
 	tray onTabChanged.
 	self showTray!
-
-onTabChanging: aSelectionChangingEvent 
-	tray onTabChanging: aSelectionChangingEvent!
 
 onTabClicked
 	self isTrayVisible ifTrue: [^self].
@@ -534,7 +539,8 @@ animateTray:!helpers!private! !
 animation!accessing!public! !
 animation:!accessing!public! !
 animationDuration!constants!public! !
-autoHideTimerInterval!constants!public! !
+animationDuration:!accessing!public! !
+autoHideTimerInterval!constants!private! !
 backcolor:!accessing!public! !
 calculateExtent:!geometry!private! !
 canAcceptSubViews!hierarchy!public!sub views! !
@@ -572,7 +578,6 @@ observeTabs!event handling!private! !
 onMouseHovering:!constants!private! !
 onMouseMoved:!event handling!private! !
 onTabChanged!event handling!private! !
-onTabChanging:!private! !
 onTabClicked!event handling!private! !
 onTimerTick:!event handling!private! !
 onViewCreated!event handling!private! !
@@ -598,8 +603,6 @@ icon
 	^##(self) defaultIcon!
 
 initialize
-	AnimationDuration := 200.
-	SlideInDelay := 500.
 	self addClassConstant: 'AnimationMask' value: AW_SLIDE | AW_BLEND | AW_CENTER.
 	self addClassConstant: 'Animations'
 		value: (IdentityDictionary

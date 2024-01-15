@@ -44,7 +44,7 @@ mouseDownEventAt: position buttons: anArray
 	mouseButton := mouseButton anyOne.
 	keys := (anArray collect: [:each | MouseEvent wParamFlags at: each]) fold: [:a :b | a bitOr: b].
 	^MouseEvent
-		window: presenter
+		window: self selectionView
 		message: (##(IdentityDictionary
 				withAll: {#left -> WM_LBUTTONDOWN. #right -> WM_RBUTTONDOWN. #middle -> WM_MBUTTONDOWN})
 					at: mouseButton)
@@ -52,13 +52,13 @@ mouseDownEventAt: position buttons: anArray
 		lParam: position asUInt32!
 
 mouseDownEventOn: anObject buttons: anArray
-	^self mouseDownEventOnItem: (presenter view handleFromObject: anObject) buttons: anArray!
+	^self mouseDownEventOnItem: (self selectionView handleFromObject: anObject) buttons: anArray!
 
 mouseDownEventOnItem: itemHandle buttons: anArray
 	| position |
 	position := itemHandle isNull
-				ifTrue: [presenter view clientRectangle corner - 1]
-				ifFalse: [(presenter view itemRect: itemHandle) origin + 1].
+				ifTrue: [self selectionView clientRectangle corner - 1]
+				ifFalse: [(self selectionView itemRect: itemHandle) origin + 1].
 	^self mouseDownEventAt: position buttons: anArray!
 
 mouseUpForMouseDown: aMouseEvent
@@ -98,15 +98,20 @@ onTimerTick: wParam
 			presenter postMessage: wParam + 1 wParam: 0 lParam: 0]!
 
 postMouseEvents: aSequencedReadableCollection
+	| view |
 	self assert: aSequencedReadableCollection first isButtonDown.
 	"Clear the message queue"
 	SessionManager inputState pumpMessages.
+	view := self selectionView.
 	aSequencedReadableCollection do: 
 			[:each |
-			presenter view
+			view
 				postMessage: each message
 				wParam: each wParam
 				lParam: each lParam]!
+
+selectionView
+	^presenter view!
 
 sendClickEvent: aMouseEvent
 	| pos |
@@ -168,6 +173,7 @@ onSelectionChanged!event handling!private! !
 onSelectionChanging:!event handling!private! !
 onTimerTick:!event handling!private! !
 postMouseEvents:!helpers!private! !
+selectionView!accessing!private! !
 sendClickEvent:!helpers!private! !
 sendMouseEvents:!helpers!private! !
 setupClickTimeout!helpers!private! !

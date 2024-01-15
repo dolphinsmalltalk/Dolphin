@@ -19,7 +19,6 @@ testLabelWithAmpersand
 	We have to use a bit of sleight of hand to test this, as the public effect is purely visual. Luckily the underlying API is able to modify the drawn text in place with any ellipsis that it adds. We can exploit this capability to capture the actual text it decides to draw."
 
 	| rect anon canvas actual expected extent text |
-	self addTestTabs.
 	rect := presenter itemRect: 3.
 	text := self objectsToTest at: 3.
 	"About time we did a port of MethodWrappers really"

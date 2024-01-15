@@ -8,14 +8,20 @@ UI.CardContainer
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.SlidingCardTray guid: (Core.GUID fromString: '{c8908738-f06b-4eac-89ba-67add22cec3b}')!
-UI.SlidingCardTray comment: 'A SlidingCardTray is a specialised <CardContainer> for use in conjunction with a <SlideyInneyOuteyView> to implement a tabbed view which slides out the contained cards when the user hovers over the tabs, and slides them back in again when the user leaves the window for a short while. 
+UI.SlidingCardTray comment: 'A `SlidingCardTray` is a specialised `CardContainer` for use in conjunction with a `SlideyInneyOuteyView` to implement a tabbed view which slides out the contained cards when the user hovers over the tabs, and slides them back in again when the user leaves the window for a short while. 
 
-Instance Variables:
-	theme		<ExternalHandle>. XP theme handle.
-	slider		<SlideyInneyOuteyView>. Owner controlling the slide animation.
-	pinSize		<Point>. Size of the pin displayed on the tray caption bar.
-	pinInteractor	<ButtonInteractor> for the pin.
-	'!
+## Instance Variables:
+  `_sctReserved0`		Reserved for future use
+  `slider`				`SlideyInneyOuteyThing`. Owner controlling the slide animation.
+  `pinSize`				`Point`. Size of the pin displayed on the tray caption bar.
+  `pinInteractor`		`ButtonInteractor` for the pin.
+  `_sctReserved1`		Reserved for future use
+  `_sctReserved2`		Reserved for future use
+
+## Class Variables:
+  `PinImageList`		`UndefinedObject`
+
+'!
 !UI.SlidingCardTray categoriesForClass!MVP-Views! !
 !UI.SlidingCardTray methodsFor!
 
@@ -40,9 +46,6 @@ captionGeometryChanged
 
 edgeExtent
 	^2 @ 2!
-
-headerBackgroundPart
-	^EBP_HEADERBACKGROUND!
 
 headerHeight
 	^pinSize y + 2!
@@ -193,7 +196,7 @@ paintThemedBackgroundOn: aCanvas
 	UxTheme
 		drawThemeBackground: self theme
 		hdc: aCanvas asParameter
-		iPartId: self headerBackgroundPart
+		iPartId: EBP_HEADERBACKGROUND
 		iStateId: 0
 		pRect: self headerRectangle asParameter
 		pClipRect: nil!
@@ -336,13 +339,12 @@ wmNcHitTest: message wParam: wParam lParam: lParam
 	edge := self sizingEdgeInfo.
 	^(edge value containsPoint: lParam lowWord @ lParam highWord) ifTrue: [edge key] ifFalse: [HTCLIENT]!
 
-wmNcPaint: message wParam: wParam lParam: lParam 
+wmNcPaint: message wParam: wParam lParam: lParam
 	"Private - Paint the non-client area of the window when unpinned."
 
 	| canvas |
 	self isPinned ifTrue: [^nil].
 	canvas := Canvas forNonClientView: self.
-	"canvas excludeClipRectangle: (self calcClientRectangleFromRectangle: canvas clipBox)."
 	self paintEdgesOn: canvas.
 	canvas free.
 	^0!
@@ -363,7 +365,6 @@ calcClientRectangleFromRectangle:!event handling-win32!private! !
 calculateExtent:!geometry!private! !
 captionGeometryChanged!event handling!private! !
 edgeExtent!constants!private! !
-headerBackgroundPart!constants!private! !
 headerHeight!constants!private! !
 headerRectangle!painting!private! !
 hitTest:!painting!private! !
@@ -392,7 +393,7 @@ pinImageList!accessing!private! !
 pinInset!constants!private! !
 pinRectangle!accessing!private! !
 pinStateId!accessing!private! !
-queryTogglePin:!commands-actions!private! !
+queryTogglePin:!commands-queries!private! !
 setSlider:!initializing!private! !
 sizingEdgeInfo!helpers!private! !
 tabOrientation:!accessing-styles!public! !
