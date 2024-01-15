@@ -192,46 +192,39 @@ autoResizeColumns
 	"Private - Attempt to share the available width in the receiver between all automagically resizeable
 	columns. This only has a visible effect in #report mode, or if the list is subsequently switched to report mode."
 
-	self isReportMode
-		ifTrue: [self autoResizeColumns: (self adjustForStaticEdgeBug: self clientRectangle) width]!
+	self isReportMode ifFalse: [^self].
+	self autoResizeColumns: (self adjustForStaticEdgeBug: self clientRectangle) width!
 
 autoResizeColumns: anInteger
-	"Private - Attempt to share the specified <integer> width (which must be the client width of the view,
-	after subtracting for borders and such) between all automagically resizeable columns in the receiver.
-	This only has a visible effect in #report mode."
+	"Private - Attempt to share the specified <integer> width (which must be the client width of the view, after subtracting for borders and such) between all automagically resizeable columns in the receiver. This only has a visible effect in #report mode."
 
-	| cols count autoCols fixedWidth idealWidth remainingWidth |
-	fixedWidth := autoCols := 0.
-	cols := self allColumns.
-	count := cols size.
+	| width autoCols count |
+	width := anInteger.
+	count := columns size.
+	autoCols := OrderedCollection new: count.
 	1 to: count
 		do: 
 			[:i |
-			(cols at: i) isAutoResize
-				ifTrue: [autoCols := autoCols + 1]
-				ifFalse: [fixedWidth := fixedWidth + (self lvmGetColumnWidth: i - 1)]].
-	autoCols == 0 ifTrue: [^self].
-	remainingWidth := anInteger - fixedWidth.
-	remainingWidth <= 0 ifTrue: [^self].
+			(columns at: i) isAutoResize
+				ifTrue: [autoCols addLast: i]
+				ifFalse: [width := width - (self lvmGetColumnWidth: i - 1)]].
+	count := autoCols size.
+	(count == 0 or: [width <= 0]) ifTrue: [^self].
 	"Split the available width between the auto columns - note the use of fractional arithmetic to avoid accumulating a rounding error"
-	idealWidth := remainingWidth / autoCols.
+	width := width / count.
 	"Suppress painting while changing the columns widths as, if there are multiple auto-resize columns, there is no point repainting the intermediate states"
 	self noRedrawDo: 
-			[| actualAccum idealAccum |
-			idealAccum := actualAccum := 0.
+			[| accum |
+			accum := 0.
 			1 to: count
 				do: 
 					[:i |
-					| each |
-					each := cols at: i.
-					each isAutoResize
-						ifTrue: 
-							[| thisWidth |
-							idealAccum := idealAccum + idealWidth.
-							thisWidth := (idealAccum - actualAccum) rounded.
-							each basicWidth: thisWidth.
-							self lvmSetColumnWidth: i - 1 to: thisWidth.
-							actualAccum := actualAccum + thisWidth]]]!
+					| thisWidth j |
+					thisWidth := (width * i - accum) rounded.
+					j := autoCols at: i.
+					(columns at: j) basicWidth: thisWidth.
+					self lvmSetColumnWidth: j - 1 to: thisWidth.
+					accum := accum + thisWidth]]!
 
 backcolorChanged
 	super backcolorChanged.

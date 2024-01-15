@@ -267,10 +267,11 @@ isAutoResize
 
 	^flags anyMask: AutoResizeMask!
 
-isAutoResize: aBoolean 
+isAutoResize: aBoolean
 	"Set the auto-resize feature of the receiver to aBoolean. If enabled, the receiver will 
 	attempt to share the available width in its parent with other auto-resize columns"
 
+	self isAutoResize == aBoolean ifTrue: [^self].
 	flags := flags mask: AutoResizeMask set: aBoolean.
 	self parent ifNotNil: [:list | list autoResizeColumns]!
 
