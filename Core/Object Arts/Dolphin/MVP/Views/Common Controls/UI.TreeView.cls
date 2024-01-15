@@ -92,19 +92,30 @@ applyExtendedStyles
 	"Private - Apply any extended TreeView styles after view creation or recreation. 
 	At present these are not configurable - we just hard-code the use of double-buffering to reduce flickering, which can otherwise be very noticeable with custom-drawing, especially if the CDIS_DISABLED state is used."
 
-	self tvmSetExtendedStyle: TVS_EX_DOUBLEBUFFER lParam: TVS_EX_DOUBLEBUFFER!
+	User32
+		sendMessageU: handle
+		msg: TVM_SETEXTENDEDSTYLE
+		wParam: TVS_EX_DOUBLEBUFFER
+		lParam: TVS_EX_DOUBLEBUFFER!
 
 applyImageLists
 	"Private - Set the receiver's image lists from the image managers."
 
 	| imList stateImList imageSize |
 	imageSize := self imageExtent.
-	imList := imageSize > 0 
+	imList := imageSize > 0
 				ifTrue: 
 					[stateImList := self stateImageManager ifNotNil: [:sim | sim imageListWithExtent: imageSize].
 					self imageManager imageListWithExtent: imageSize].
-	self tvmSetImageList: imList type: TVSIL_NORMAL.
-	self tvmSetImageList: stateImList type: TVSIL_STATE!
+	User32
+		sendMessageU: handle
+			msg: TVM_SETIMAGELIST
+			wParam: TVSIL_NORMAL
+			lParam: imList asParameter;
+		sendMessageU: handle
+			msg: TVM_SETIMAGELIST
+			wParam: TVSIL_STATE
+			lParam: stateImList asParameter!
 
 basicAdd: anObject atIndex: anInteger 
 	"Private - Adds an item to the list view at the index given by anInteger"
@@ -139,7 +150,11 @@ basicClear
 	self resetSelection.
 
 	"Now delete all elements"
-	self tvmDeleteItem: TVI_ROOT!
+	User32
+		sendMessage: handle
+		msg: TVM_DELETEITEM
+		wParam: 0
+		lParam: TVI_ROOT!
 
 basicEditItemLabel: hItem
 	"Private - Initiate in-place editing of the item in the receiver with the specified
@@ -165,7 +180,11 @@ basicItemFromPoint: aPoint
 basicParentOf: aHandle
 	"Private - Answer the handle of the parent of the item in the receiver with handle, aHandle."
 
-	^self tvmGetNextItem: aHandle code: TVGN_PARENT!
+	^User32
+		sendMessageU: handle
+		msg: TVM_GETNEXTITEM
+		wParam: TVGN_PARENT
+		lParam: aHandle!
 
 basicRefresh: anObject handle: hItem
 	"Private - Update the text, image, and children flag of the specified element of the tree."
@@ -188,12 +207,17 @@ basicRefresh: anObject handle: hItem
 							tvItem
 								image: index - 1;
 								selectedImage: index - 1]]].
-	self tvmSetItem: tvItem!
+	User32
+		sendMessage: handle
+		msg: TVM_SETITEMW
+		wParam: 0
+		lpParam: tvItem!
 
 basicRefreshContents
 	| roots |
 	self basicClear.
 	roots := self model roots.
+	roots isEmpty ifTrue: [^self].
 	self 
 		basicAddAll: roots
 		inHandle: TVGN_ROOT
@@ -212,7 +236,11 @@ basicRemove: aHandle
 	removed the item."
 
 	objectHandleMap removeKey: (handleObjectMap removeKey: aHandle).
-	self tvmDeleteItem: aHandle.
+	User32
+		sendMessage: handle
+		msg: TVM_DELETEITEM
+		wParam: 0
+		lParam: aHandle.
 	^aHandle!
 
 basicRemoveAtIndex: anInteger
@@ -247,16 +275,17 @@ collapse: anObject
 
 	self collapseHandle: (self handleFromObject: anObject)!
 
-collapseHandle: aHandle 
+collapseHandle: aHandle
 	| selection |
 	selection := self selectionOrNil.
-	"We also have to reset the children callback as it appears the TreeView will not ask again 
-	 even though the node is collapsed and reset."
-	self tvmExpand: aHandle code: (TVE_COLLAPSE bitOr: TVE_COLLAPSERESET).
-	(self isSelected: selection) 
+	User32
+		sendMessage: handle
+		msg: TVM_EXPAND
+		wParam: ##(TVE_COLLAPSE bitOr: TVE_COLLAPSERESET)
+		lParam: aHandle.
+	(self isSelected: selection)
 		ifFalse: 
 			["The selection was changed"
-
 			self onSelChanged: nil]!
 
 connectModel
@@ -305,7 +334,14 @@ ensureVisible: aHandle
 expand: anObject
 	"Expand anObject to show its children."
 
-	(self handleFromObject: anObject) ifNotNil: [:hItem | self expandHandle: hItem]!
+	(self handleFromObject: anObject)
+		ifNotNil: 
+			[:hItem |
+			User32
+				sendMessage: handle
+				msg: TVM_EXPAND
+				wParam: TVE_EXPAND
+				lParam: hItem]!
 
 expandAll
 	"Expand the entire tree below the current selection."
@@ -318,14 +354,6 @@ expandAll: anObject
 
 	self expand: anObject.
 	(self model childrenOf: anObject) do: [:each | self expandAll: each].
-!
-
-expandHandle: aHandle
-	"Private - Expand the node with the specified handle to display its children, if any."
-
-	^self tvmExpand: aHandle code: TVE_EXPAND
-	
-
 !
 
 findNode: anObject
@@ -354,40 +382,52 @@ getEditControl
 
 !
 
-getIndent
-	"Private - Answer the pixel indentation of child items relative to their
-	parents."
-
-	^self sendMessage: TVM_GETINDENT wParam: 0 lParam: 0!
-
 getItemState: itemHandle
 	| tvItem |
-	(tvItem := TVITEMW newBuffer)
-		hItem: itemHandle;
-		mask: ##(TVIF_CHILDREN | TVIF_STATE).
-	self tvmGetItem: tvItem.
+	tvItem := TVITEMW newBuffer
+				hItem: itemHandle;
+				mask: ##(TVIF_CHILDREN | TVIF_STATE);
+				yourself.
+	User32
+		sendMessage: handle
+		msg: TVM_GETITEMW
+		wParam: 0
+		lpParam: tvItem.
 	^tvItem!
 
 getItemText: itemHandle
 	| tvItem |
-	tvItem := TVITEMW newBuffer.
-	tvItem hItem: itemHandle.
-	tvItem newTextBuffer: 128.
-	self tvmGetItem: tvItem.
+	tvItem := TVITEMW newBuffer
+				hItem: itemHandle;
+				newTextBuffer: 128;
+				yourself.
+	User32
+		sendMessage: handle
+		msg: TVM_GETITEMW
+		wParam: 0
+		lpParam: tvItem.
 	^tvItem pszText!
 
 getSelectionsByIndex
 	"Private - Query the control for the current selection"
 
 	| selection |
-	selection := self tvmGetNextItem: nil code: TVGN_CARET.
-	^selection == 0 ifTrue: [#()] ifFalse: [{selection}]!
+	selection := User32
+				sendMessageU: handle
+				msg: TVM_GETNEXTITEM
+				wParam: TVGN_CARET
+				lParam: nil.
+	^selection == 0 ifTrue: [#()] ifFalse: [{ selection }]!
 
 getSingleSelection
 	"Private - Answer the 'index' (or in the case of the receiver, the handle) of the selected object in 
 	the receiver, or zero if there is no selection."
 
-	^self tvmGetNextItem: nil code: TVGN_CARET!
+	^User32
+		sendMessageU: handle
+		msg: TVM_GETNEXTITEM
+		wParam: TVGN_CARET
+		lParam: nil!
 
 handleFromObject: anObject
 	^objectHandleMap lookup: anObject!
@@ -571,10 +611,18 @@ itemCount
 	^self sendMessage: TVM_GETCOUNT!
 
 itemRect: itemHandle textOnly: aBoolean
-	"Answers the rectangle surrounding the item with anIntegerIndex within
-	the receiver, optionally for the text label only."
+	"Answers the <Rectangle> surrounding the receiver's item with the specified handle, optionally for the text part of the label only."
 
-	^(self tvmGetItemRect: itemHandle textOnly: aBoolean) asRectangle!
+	| rect |
+	rect := RECTL newBuffer.
+	"The handle of the item being queried is passed in the output RECT buffer"
+	rect bytes uintPtrAtOffset: 0 put: itemHandle asInteger.
+	User32
+		sendMessage: handle
+		msg: TVM_GETITEMRECT
+		wParam: aBoolean asParameter
+		lpParam: rect.
+	^rect asRectangle!
 
 itemStructure
 	^TVITEMW!
@@ -624,7 +672,7 @@ nmNotify: pNMHDR
 		at: TVN_FIRST - TVN_ITEMCHANGEDW + 1 put: #tvnItemChanged:;
 		at: TVN_FIRST - TVN_BEGINLABELEDITW + 1 put: #nmBeginLabelEdit:;
 		at: TVN_FIRST - TVN_ENDLABELEDITW + 1 put: #nmEndLabelEdit:;
-		yourself) lookup: ##(TVN_FIRST + 1) - (pNMHDR int32AtOffset: 8))
+		yourself) lookup: ##(TVN_FIRST + 1) - (pNMHDR int32AtOffset: NMHDR._OffsetOf_code))
 		ifNil: [super nmNotify: pNMHDR]
 		ifNotNil: [:action | self perform: action with: pNMHDR]!
 
@@ -673,12 +721,6 @@ objectFromHandle: aHandle ifAbsent: exceptionHandler
 
 	^handleObjectMap at: aHandle ifAbsent: exceptionHandler!
 
-onAdd: anObject atIndex: anIntegerIndex
-	"Private - Event received when anObject has been added to the receiver's
-	model at anIntegerIndex. Trees use #onAdd:in:."
-
-	self shouldNotImplement.!
-
 onDestroyed
 	"Private - Handler for window destruction notification.
 	Implementation Note: In order to speed up deletion we first reset the handleObjectMap so that
@@ -692,8 +734,8 @@ onDisplayDetailsRequired: aTVITEM
 	"Private - Get the display info for the requested <TVITEM>."
 
 	| object requestMask |
-	object := handleObjectMap lookup: aTVITEM handle.
-	"The TreeView sometimes asks for display details for items that are being removed"
+	object := handleObjectMap lookup: aTVITEM hItem.
+	"The TreeView sometimes asks for display details for items that are being removed, or are being added but for which we do not yet have the handle"
 	object ifNil: [^0].
 	requestMask := aTVITEM mask.
 	(requestMask allMask: TVIF_CHILDREN)
@@ -894,9 +936,6 @@ onViewCreated
 refreshContents
 	"Repopulate the receiver with the elements of the receiver's model."
 
-	"If there are no lines (and therefore expansion buttons) at the roots, then the roots ought
-	to be expanded as there is otherwise no visual indication to the user that there might be
-	subnodes)."
 	self isOpen ifFalse: [^self].
 	self noRedrawDo: [self basicRefreshContents]!
 
@@ -906,11 +945,15 @@ refreshHasChildren: hItem
 	expansion button or not."
 
 	| tvItem |
-	tvItem := TVITEMW newBuffer.
-	tvItem
-		hItem: hItem;
-		childrenCallback.
-	self tvmSetItem: tvItem!
+	tvItem := TVITEMW newBuffer
+				hItem: hItem;
+				childrenCallback;
+				yourself.
+	User32
+		sendMessage: handle
+		msg: TVM_SETITEMW
+		wParam: 0
+		lpParam: tvItem!
 
 resetSelection
 	"Sets the receiver to have no selected object."
@@ -950,7 +993,11 @@ selection: anObject ifAbsent: exceptionHandler
 selectionByIndex
 	"Answer the 'index' (or in the case of the receiver, the handle) of the selected object in the receiver, or 0 if there is no selection."
 
-	^self tvmGetNextItem: nil code: TVGN_CARET!
+	^User32
+		sendMessageU: handle
+		msg: TVM_GETNEXTITEM
+		wParam: TVGN_CARET
+		lParam: nil!
 
 selectionByIndex: itemHandle ifAbsent: exceptionHandler
 	"Select the object identified by the 'handle', itemHandle, in the receiver.
@@ -1031,81 +1078,6 @@ showsSelAlways: aBoolean
 		set: aBoolean
 		recreateIfChanged: true	"Recreate required to take effect"!
 
-tvmDeleteItem: aHandle
-	"Private - Delete aHandle from the tree view."
-
-	^(self sendMessage: TVM_DELETEITEM wParam: 0 lParam: aHandle) asBoolean
-	
-
-!
-
-tvmExpand: aHandle code: anInteger
-	"Private - Expand/Collapse aHandle depending on anInteger."
-
-	^self sendMessage: TVM_EXPAND wParam: anInteger lParam: aHandle
-	
-
-!
-
-tvmGetItem: aTvItem
-	"Private - Answer the boolean result of sending the receiver a TVM_GETITEM message."
-
-	^(self sendMessage: TVM_GETITEMW wParam: 0 lpParam: aTvItem) asBoolean
-
-
-
-	
-
-!
-
-tvmGetItemRect: aHandle textOnly: aBoolean
-	"Private - Answer the bounding rectangle for the tree-view item identified by aHandle. If aBoolean is true,
-	the bounding rectangle includes only the text of the item, otherwise, it includes the entire line
-	that the item occupies in the tree-view control."
-
-	| rect |
-	rect := RECTL newBuffer.
-	rect bytes uint32AtOffset: 0 put: aHandle asInteger.
-	self
-		sendMessage: TVM_GETITEMRECT
-		wParam: aBoolean asParameter
-		lpParam: rect.
-	^rect!
-
-tvmGetNextItem: aHandle code: anInteger
-	"Private - Send TVM_GETNEXTITEM with anInteger and aHandle to the tree view."
-
-	^User32
-		sendMessageU: handle
-		msg: TVM_GETNEXTITEM
-		wParam: anInteger
-		lParam: aHandle!
-
-tvmSetExtendedStyle: maskInteger lParam: valueInteger
-	^User32
-		sendMessageU: handle
-		msg: TVM_SETEXTENDEDSTYLE
-		wParam: maskInteger
-		lParam: valueInteger!
-
-tvmSetImageList: aWinImageList type: anIntegerImageType
-	"Private - Set the receiver's normal/state image list depending on anIntegerImageType.
-	 Answer the receiver's previous <Imagelist>."
-
-	^ImageList fromHandle: (User32
-				sendMessageU: handle
-				msg: TVM_SETIMAGELIST
-				wParam: anIntegerImageType
-				lParam: aWinImageList asParameter)!
-
-tvmSetItem: aTvItem
-	"Private - Answer the boolean result of sending the receiver a TVM_SETITEM message."
-
-	^(self
-		sendMessage: TreeViewConstants.TVM_SETITEMW
-		wParam: 0
-		lpParam: aTvItem) asBoolean!
-
 tvnGetInfoTip: pNMHDR
 	"Private - Default handler for the TVN_GETINFOTIPA notification message.
 	Answer nil to accept the default processing."
@@ -1180,10 +1152,7 @@ updateIndentation
 		ifNotNil: 
 			[| imageWidth |
 			imageWidth := self imageExtent x.
-			self
-				sendMessage: TVM_SETINDENT
-				wParam: (imageWidth + indentSeparation max: self minimumIndent)
-				lParam: 0.
+			self sendMessage: TVM_SETINDENT wParam: (imageWidth + indentSeparation max: self minimumIndent).
 			indentSeparation := (self sendMessage: TVM_GETINDENT) - imageWidth]!
 
 updateItem: anObject
@@ -1225,11 +1194,11 @@ wantCustomDrawItemNotifications: pNMHDR
 	empty paint area and invalid colours. We suppress these as they are, ahem, unhelpful."
 
 	^self customDrawBlock notNil and: 
-			[(pNMHDR int32AtOffset: NMCUSTOMDRAW._OffsetOf_rc + RECTL._OffsetOf_right)
-				- (pNMHDR int32AtOffset: NMCUSTOMDRAW._OffsetOf_rc + RECTL._OffsetOf_left) > 0
+			[(pNMHDR int32AtOffset: ##(NMCUSTOMDRAW._OffsetOf_rc + RECTL._OffsetOf_right))
+				- (pNMHDR int32AtOffset: ##(NMCUSTOMDRAW._OffsetOf_rc + RECTL._OffsetOf_left)) > 0
 				and: 
-					[(pNMHDR int32AtOffset: NMCUSTOMDRAW._OffsetOf_rc + RECTL._OffsetOf_bottom)
-						- (pNMHDR int32AtOffset: NMCUSTOMDRAW._OffsetOf_rc + RECTL._OffsetOf_top) > 0]]!
+					[(pNMHDR int32AtOffset: ##(NMCUSTOMDRAW._OffsetOf_rc + RECTL._OffsetOf_bottom))
+						- (pNMHDR int32AtOffset: ##(NMCUSTOMDRAW._OffsetOf_rc + RECTL._OffsetOf_top)) > 0]]!
 
 wmKeyDown: message wParam: wParam lParam: lParam
 	"Private - Handle WM_KEYDOWN.
@@ -1274,11 +1243,9 @@ ensureVisible:!drawing!public! !
 expand:!expanding/collapsing!public! !
 expandAll!commands-actions!public! !
 expandAll:!expanding/collapsing!public! !
-expandHandle:!expanding/collapsing!private! !
 findNode:!public!selection! !
 forecolor:!accessing!public! !
 getEditControl!accessing!private! !
-getIndent!accessing!private! !
 getItemState:!helpers!private! !
 getItemText:!accessing!private! !
 getSelectionsByIndex!private!selection! !
@@ -1324,7 +1291,6 @@ nmNotify:!event handling!event handling-win32!private! !
 nmRClick:!event handling-win32!public! !
 notificationClass!constants!private! !
 objectFromHandle:ifAbsent:!accessing!private! !
-onAdd:atIndex:!event handling!private! !
 onDestroyed!event handling!private! !
 onDisplayDetailsRequired:!event handling!private! !
 onItem:addedAtIndex:!event handling!public! !
@@ -1356,14 +1322,6 @@ setViewMode:!accessing!private! !
 showDropHighlight:!drag & drop!private! !
 showsSelAlways!accessing-styles!public! !
 showsSelAlways:!accessing-styles!public! !
-tvmDeleteItem:!accessing!private! !
-tvmExpand:code:!expanding/collapsing!private! !
-tvmGetItem:!accessing!private! !
-tvmGetItemRect:textOnly:!geometry!private! !
-tvmGetNextItem:code:!accessing!private! !
-tvmSetExtendedStyle:lParam:!image management!private! !
-tvmSetImageList:type:!image management!private! !
-tvmSetItem:!accessing!private! !
 tvnGetInfoTip:!event handling-win32!private! !
 tvnItemChanged:!event handling-win32!private! !
 tvnItemChanging:!event handling-win32!private! !
