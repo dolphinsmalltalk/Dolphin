@@ -120,8 +120,10 @@ actualClasses
 	^classesPresenter actualClasses!
 
 addCategoriesOfMethod: aCompiledMethod
-	(aCompiledMethod realCategories difference: categoriesPresenter model asSet) 
-		do: [:each | categoriesPresenter model addCategory: each]!
+	| categoryModel |
+	categoryModel := categoriesPresenter model.
+	(aCompiledMethod realCategories difference: categoryModel asSet)
+		do: [:each | categoryModel addCategory: each]!
 
 addMethod: method toCategory: target
 	"Private - Add the <CompiledMethod>, method, to the <methodCategory>,
@@ -409,6 +411,12 @@ classMethodFilter
 	method should be displayed in the receiver by warrant of the class that is selected."
 
 	^[:m | (self isMethodVisible: m)]!
+
+classMode
+	^classesPresenter isInstanceMode ifTrue: [#instanceMode] ifFalse: [#classMode]!
+
+classMode: aSymbol
+	modePresenter value: aSymbol!
 
 createAccessors
 	"Private - Generate get and set accessors for the currently selected instance variables.
@@ -880,14 +888,13 @@ isInheritedMethod: aCompiledMethod
 isInstanceMode
 	"Private - Answer true if the receiver is in instance mode"
 
-	^modePresenter value == #instanceMode
+	^classesPresenter isInstanceMode
 !
 
-isInstanceMode: aBoolean 
-	"Private - Set the receiver into class mode, i.e. displaying the class methods
-	on the selected class."
+isInstanceMode: aBoolean
+	"Private - Set the receiver into class mode, i.e. displaying the class methods on the selected class."
 
-	modePresenter value: (aBoolean ifTrue: [#instanceMode] ifFalse: [#classMode])!
+	self classMode: (aBoolean ifTrue: [#instanceMode] ifFalse: [#classMode])!
 
 isLocalHierarchyMode
 	"Private - Answer whether the receiver is in 'local hierarchy' mode displaying a subset of the entire
@@ -990,6 +997,11 @@ methodProtocols
 methodProtocols: aCollection 
 	protocolsPresenter view invalidate!
 
+methods
+	"Answer a <sequencedReadableCollection> of the methods currently visible in the receiver's method list."
+
+	^methodBrowserPresenter list!
+
 methodsMatching: aMonadicValuable
 	^self actualClassChainMethods select: aMonadicValuable!
 
@@ -1050,16 +1062,15 @@ onClassCategorized: aClass
 		self updateCaption]!
 
 onClassModeChanged
-	"Private - The user has switched between class and Instance modes, or vice versa,
-	so the method filters list need to be refreshed appropriately."
+	"Private - The user has switched between class and Instance modes, or vice versa, so the method filters list need to be refreshed appropriately."
 
-	"This may have no effect, but sometimes the classes presenter will change mode, e.g. 
-	 due to a history skip, so that our own instance/class mode tab is out of step."
-	self isInstanceMode: classesPresenter isInstanceMode.
+	"This may have no effect, but sometimes the classes presenter will change mode, e.g. due to a history skip, so that our own instance/class mode tab is out of step."
 
-	self updateFilters.
-	self updatePackage.
-	self updateCaption!
+	self
+		isInstanceMode: classesPresenter isInstanceMode;
+		updateFilters;
+		updatePackage;
+		updateCaption!
 
 onClassRepackaged: aClass from: source to: destination
 	"Private - A class has been repackaged. If it is currently under scrutiny, refresh the displayed package."
@@ -1081,11 +1092,12 @@ onClassSelected
 			[methodBrowserPresenter
 				filter: [:method | false];
 				clear].
-	self updateFilters.
-	self updatePackage.
-	self updateClassDefinition.
-	self updateSourceEnablement.
-	self updateCaption.
+	self
+		updateFilters;
+		updatePackage;
+		updateClassDefinition;
+		updateSourceEnablement;
+		updateCaption.
 
 	"If we have a plugin as the current card then let it decide whether to show the class definition pane"
 	(self loadedPlugins includes: self currentCard)
@@ -1099,27 +1111,25 @@ onClassSelectionChanging: aSelectionChangingEvent
 
 	self onPromptToSaveChanges: aSelectionChangingEvent!
 
-onClassUpdated: aClass 
-	"Private - A class within the receiver has changed. 
-	Refresh the definition pane if it is the selected class,
-	and refresh other panes if it is the actual class/metaclass being
-	displayed."
+onClassUpdated: aClass
+	"Private - A class within the receiver has changed. Refresh the definition pane if it is the selected class, and refresh other panes if it is the actual class/metaclass being displayed."
 
 	| class |
 	class := self actualClass.
-	(class isNil or: [(class instanceClass includesBehavior: aClass instanceClass) not]) 
+	(class isNil or: [(class instanceClass includesBehavior: aClass instanceClass) not])
 		ifTrue: [^self].
-	class instanceClass == aClass instanceClass 
+	class instanceClass == aClass instanceClass
 		ifTrue: 
-			[self 
+			[self
 				updateClass: 'definition'
 				presenter: definitionPresenter
 				source: (self definitionOfClass: aClass instanceClass)].
 
 	"If displaying the actual class or a superclass, then may need to refresh variables"
 	(class includesBehavior: aClass) ifFalse: [^self].
-	self updateVariables.
-	self updateCaption!
+	self
+		updateVariables;
+		updateCaption!
 
 onCloseRequested: boolValueHolder
 	"Private - A request to close the view onto the receiver as occurred.
@@ -1311,14 +1321,14 @@ onMethodAdded: aCompilationResult
 	being displayed. We must also ensure that the method's categories are correctly 
 	displayed within the receiver's category presenter, if the method is visible."
 
-	| method visible actualClass methodClass |
-	method := aCompilationResult method.
+	| method visible actualClass |
 	actualClass := self actualClass.
-	methodClass := method methodClass.
-	(self isShowInheritedMethods and: [actualClass includesBehavior: methodClass])
+	actualClass ifNil: [^self].
+	method := aCompilationResult method.
+	(self isShowInheritedMethods and: [actualClass includesBehavior: method methodClass])
 		ifTrue: 
 			[| superclass selector |
-			superclass := methodClass superclass.
+			superclass := method methodClass superclass.
 			selector := method selector.
 			((visible := (actualClass lookupMethod: selector) == method) and: [superclass notNil])
 				ifTrue: 
@@ -1328,7 +1338,7 @@ onMethodAdded: aCompilationResult
 					the search in the superclass of the method, just like a Smalltalk supersend."
 					(superclass lookupMethod: selector)
 						ifNotNil: [:overridden | methodBrowserPresenter model remove: overridden ifAbsent: nil]]]
-		ifFalse: [visible := methodClass == actualClass].
+		ifFalse: [visible := method methodClass == actualClass].
 	visible ifTrue: [self addCategoriesOfMethod: method]!
 
 onMethodCategorized: aCompiledMethod 
@@ -1443,7 +1453,7 @@ onModeSelectionChanged
 	changingEvent := SelectionChangingEvent forSource: modePresenter view.
 	changingEvent
 		newSelection: modePresenter value;
-		oldSelection: (classesPresenter isInstanceMode ifTrue: [#instanceMode] ifFalse: [#classMode]).
+		oldSelection: self classMode.
 	self onPromptToSaveMethodChanges: changingEvent.
 	changingEvent value
 		ifTrue: [classesPresenter isInstanceMode: changingEvent newSelection == #instanceMode]
@@ -1866,11 +1876,12 @@ queryToggleProtocolReadOnly: aCommandQuery
 
 queryToggleShowInheritedMethods: aCommandQuery
 	| showing |
+	(self hasClassSelected and: [self actualClass superclass notNil]) ifFalse: [^self].
 	showing := self isShowInheritedMethods.
 	aCommandQuery
+		beEnabled;
 		isChecked: showing;
-		isEnabled: (self hasClassSelected and: [self actualClass superclass notNil]);
-		expandMenuTextWith: self isShowInheritedMethods!
+		expandMenuTextWith: showing!
 
 recordMethodVisit
 	"Add to the visit history - note that the current item is at the top of the history list"
@@ -2326,11 +2337,12 @@ updateClassDefinition
 		evaluationContext: selection!
 
 updateFilters
-	"Private - Update the various filter lists displayed in the middle pane of the
-	browser."
+	"Private - Update the various filter lists displayed in the middle pane of the browser."
 
-	self updateCategories; updateProtocols; updateVariables
-!
+	self
+		updateCategories;
+		updateProtocols;
+		updateVariables!
 
 updateMethodsInCategory
 	"Private - Set the methods of the receiver's methodBrowserPresenter so it
@@ -2389,30 +2401,29 @@ updateSourceEnablement
 updateVariables
 	"Private - Update the list of instance variables in this class and its superclasses."
 
-	| class |
+	| class count vars |
 	variablesPresenter hasView ifFalse: [^self].
-	(class := self actualClass) isNil 
-		ifTrue: [variablesPresenter clear]
+	((class := self actualClass) isNil or: [(count := class instSize) = 0])
+		ifTrue: 
+			[variablesPresenter clear.
+			^self].
+	"Construct a list associating each class with each of its instance variables"
+	vars := OrderedCollection new: count.
+	class withAllSuperclasses reverseDo: 
+			[:eachClass |
+			eachClass instanceVariableNames do: [:eachInstVar | vars addLast: eachClass -> eachInstVar]].
+	variablesPresenter model list = vars
 		ifFalse: 
-			["Construct a list associating each class with each of its instance variables"
-			| vars |
-			vars := OrderedCollection new: 20.
-			class withAllSuperclasses 
-				reverseDo: [:eachClass | eachClass instanceVariableNames do: [:eachInstVar | vars addLast: eachClass -> eachInstVar]].
-			variablesPresenter model list = vars 
-				ifFalse: 
-					[| selectedVars |
-					selectedVars := variablesPresenter selections.
-					variablesPresenter model list: vars.
-					selectedVars := selectedVars intersection: vars.
-					selectedVars notEmpty 
-						ifTrue: 
-							[variablesPresenter selections: selectedVars.
-							^self]].
-			"If there will be no selection, or the variables list has not changed, then
-			the list view won't issue a selection change event, so we must forcibly
-			refresh the methods list"
-			self onVariableSelected]!
+			[| selectedVars |
+			selectedVars := variablesPresenter selections.
+			variablesPresenter model list: vars.
+			selectedVars := selectedVars intersection: vars.
+			selectedVars notEmpty
+				ifTrue: 
+					[variablesPresenter selections: selectedVars.
+					^self]].
+	"If there will be no selection, or the variables list has not changed, then the list view won't issue a selection change event, so we must forcibly refresh the methods list"
+	self onVariableSelected!
 
 validateProtocol: targetProtocol renameTo: newName
 	"Private - Warn that renaming a protocol is not wise, especially if it already has conforming
@@ -2541,6 +2552,8 @@ classDefinition!accessing!private! !
 classForNewMethod!operations!private! !
 classMenu!commands-menus!private! !
 classMethodFilter!accessing!private! !
+classMode!accessing!private! !
+classMode:!modes!private! !
 createAccessors!commands-actions!private!refactoring! !
 createComponents!initializing!private! !
 createPlugins!initializing!public! !
@@ -2608,6 +2621,7 @@ methodCategories:!accessing!private! !
 methodMenu!commands-menus!private! !
 methodProtocols!accessing!private! !
 methodProtocols:!accessing!public! !
+methods!accessing!public! !
 methodsMatching:!helpers!private! !
 modifiedModel:!accessing!public! !
 namespaceForNewMethodOf:!accessing!private! !
@@ -2696,7 +2710,7 @@ renameInstanceVariable!commands-actions!private!refactoring! !
 renameIt!commands-actions!public! !
 renameItCommand!commands-mappings!private! !
 renameMethodCategory!commands-actions!private! !
-renameMethodCategory:to:!commands-actions!public! !
+renameMethodCategory:to:!commands-actions!private! !
 renameMethodCategoryInPlace!commands-actions!private! !
 renameMethodProtocol!commands-actions!private! !
 resetFor:!commands-actions!private! !

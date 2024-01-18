@@ -31,6 +31,7 @@ package setClassNames: #(
 ).
 
 package setMethodNames: #(
+	#(#{Tools.ClassBrowserAbstract} #categoriesPresenter)
 	#(#{Tools.ClassBrowserShell class} #correspondingTestCase)
 ).
 
@@ -239,6 +240,14 @@ Tools.Tests.ClassSelectorTest
 	classConstants: {}!
 
 "Loose Methods"!
+
+!Tools.ClassBrowserAbstract methodsFor!
+
+categoriesPresenter
+	^categoriesPresenter! !
+!Tools.ClassBrowserAbstract categoriesForMethods!
+categoriesPresenter!accessing!private! !
+!
 
 !Tools.ClassBrowserShell class methodsFor!
 

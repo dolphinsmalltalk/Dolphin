@@ -21,25 +21,19 @@ addCategory: aCategory
 	"Private - Adds aCategory and all of its parent categories to the receiver. 
 	Parses the name of aCategory to split off the parents"
 
-	| name parent |
-	name := aCategory name.
+	| name parent i end |
 	parent := title.
-
-	"Do fast check to avoid expense of subStrings: for common case"
-	(name identityIncludes: Category.Separator)
-		ifTrue: 
-			[| names moniker |
-			names := Category.Separator split: name.
-			moniker := String writeStream: name size.
-			1 to: names size - 1
-				do: 
-					[:i |
-					| part branch |
-					part := names at: i.
-					moniker nextPutAll: part.
-					branch := self add: (IntermediateCategory name: moniker contents) asChildOf: parent.
-					moniker nextPut: Category.Separator.
-					parent := branch]].
+	name := aCategory name.
+	end := name size.
+	i := 0.
+	
+	[i := name
+				nextIdentityIndexOf: Category.Separator
+				from: i + 1
+				to: end.
+	i == 0]
+			whileFalse: 
+				[parent := self add: (IntermediateCategory name: (name copyFrom: 1 to: i - 1)) asChildOf: parent].
 	self add: aCategory asChildOf: parent!
 
 list: list
