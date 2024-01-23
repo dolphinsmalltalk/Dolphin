@@ -1169,8 +1169,8 @@ removeEventsTriggeredFor: anObject
 	"Removes all events of the receiver destined for anObject."
 
 	| events |
-	(events := self getEvents) notNil ifTrue: [ 
-		self setEvents: (events removeEventsTriggeredFor: anObject)]!
+	events := self getEvents.
+	events ifNotNil: [self setEvents: (events removeEventsTriggeredFor: anObject)]!
 
 removePropertyAt: aSymbol
 	"Removes a property of the receiver whose name matches aSymbol."

@@ -41,17 +41,16 @@ corpsesDo: aBlock
 	to clear the slots formerly occupied by corpses so that they are not
 	subsequently treated as deaths, use the #nilCorpsesAndDo: message"
 
-	| deathAt size corpse |
+	| deathAt size |
 	size := self basicSize.
-	corpse := DeadObject.Current.
 	deathAt := self
-				basicIdentityIndexOf: corpse
+				basicIdentityIndexOf: DeadObject.Current
 				from: 1
 				to: size.
-	[deathAt > 0] whileTrue: 
+	[deathAt == 0] whileFalse: 
 			[aBlock value: deathAt.
 			deathAt := self
-						basicIdentityIndexOf: corpse
+						basicIdentityIndexOf: DeadObject.Current
 						from: deathAt + 1
 						to: size]!
 

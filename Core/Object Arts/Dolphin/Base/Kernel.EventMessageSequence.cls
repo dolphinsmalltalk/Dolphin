@@ -59,12 +59,10 @@ includes: aMessage
 	"Answer whether the argument, anObject, is equal to one of the 
 	receiver's elements."
 
-	| corpse |
-	corpse := DeadObject.Current.
 	1 to: receivers basicSize
 		do: 
 			[:index |
-			(receivers at: index) == corpse
+			(receivers at: index) == DeadObject.Current
 				ifFalse: [(messages at: index) ifNotNil: [:msg | msg = aMessage ifTrue: [^true]]]].
 	^false!
 
@@ -90,18 +88,23 @@ messages
 	^answer!
 
 removeMessagesFor: anObject
-	"Removes all the messages in this sequence that are destined for anObject. Answers the receiver."
+	"Removes all the messages in this sequence that are destined for anObject. Answers the remaining number of messages."
 
-	| corpse |
-	corpse := DeadObject.Current.
-	1 to: receivers basicSize
-		do: 
-			[:index |
-			(receivers at: index) == anObject
-				ifTrue: 
-					[tally := tally - 1.
-					receivers at: index put: corpse.	"corpse marks empty slots"
-					messages at: index put: nil]]!
+	| index end |
+	end := receivers basicSize.
+	index := receivers
+				nextIdentityIndexOf: anObject
+				from: 1
+				to: end.
+	[index == 0] whileFalse: 
+			[tally := tally - 1.
+			receivers at: index put: DeadObject.Current.	"corpse marks empty slots"
+			messages at: index put: nil.
+			index := receivers
+						nextIdentityIndexOf: anObject
+						from: index + 1
+						to: end].
+	^tally!
 
 size
 	"Answers the number of messages in the receiver"

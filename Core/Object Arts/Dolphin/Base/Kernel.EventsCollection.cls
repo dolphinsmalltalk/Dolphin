@@ -28,7 +28,7 @@ addEvent: aSymbol action: aValuable
 asMinimumRepresentation
 	"Private - Answers nil if the receiver is empty, otherwise self."
 
-	^self notEmpty ifTrue: [self]!
+	^self isEmpty ifFalse: [self]!
 
 hasActionsForEvent: aSymbol
 	^mutex critical: [(self at: aSymbol ifAbsent: #()) notEmpty]!
@@ -37,8 +37,7 @@ removeActionsForEvent: aSymbol
 	^mutex critical: [self removeKey: aSymbol ifAbsent: nil]!
 
 removeEventsTriggeredFor: anObject
-	"Private - Removes all events where the target is anObject. If the receiver becomes empty,
-	answers nil, otherwise answers self."
+	"Private - Removes all events where the target is anObject. If the receiver becomes empty answers nil, otherwise answers self."
 
 	^mutex critical: 
 			[| empty |
@@ -46,11 +45,10 @@ removeEventsTriggeredFor: anObject
 			self keysAndValuesDo: 
 					[:eachKey :eachValue |
 					eachValue isNil
-						ifFalse: 
-							[eachValue removeMessagesFor: anObject.
-							eachValue isEmpty ifTrue: [empty add: eachKey]]].
-			self removeAllKeys: empty.
-			self asMinimumRepresentation]!
+						ifFalse: [(eachValue removeMessagesFor: anObject) == 0 ifTrue: [empty add: eachKey]]].
+			self
+				removeAllKeys: empty;
+				asMinimumRepresentation]!
 
 shrink
 	"Private - Removes all empty message sequences."

@@ -275,8 +275,9 @@ printOn: aStream
 
 	mutex critical: [super printOn: aStream]!
 
-removeAllKeys: keys
-	^mutex critical: [super removeAllKeys: keys]!
+removeAllKeys: aCollection
+	aCollection isEmpty ifTrue: [^self].
+	mutex critical: [super removeAllKeys: aCollection]!
 
 removeKey: key ifAbsent: exceptionHandler
 	"Remove the key (and its associated value), from the receiver. If key is
