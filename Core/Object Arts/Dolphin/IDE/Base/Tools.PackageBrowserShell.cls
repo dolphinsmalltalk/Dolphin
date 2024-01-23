@@ -849,14 +849,6 @@ onVariableRepackaged: aBindingReference from: oldPackage to: newPackage
 		card: #variables
 		list: variablesPresenter model!
 
-onViewClosed
-	"Private - Sent by the receiver's view when it has been closed.
-	Disconnect from any events triggered by the devlopment system"
-
-	super onViewClosed.
-	self release
-!
-
 onViewOpened
 	"Private - Received when the receiver's view is been connected. "
 
@@ -963,8 +955,7 @@ release
 	system dictionary."
 
 	super release.
-	self packageManager removeEventsTriggeredFor: self.
-	Smalltalk removeEventsTriggeredFor: self!
+	self packageManager removeEventsTriggeredFor: self!
 
 removeClasses
 	"Private - Remove the currently selected classes from the package."
@@ -1331,7 +1322,6 @@ onScriptSelected!event handling!private! !
 onVariableRemoved:!event handling!private! !
 onVariableRenamed:from:!event handling!private! !
 onVariableRepackaged:from:to:!event handling!private! !
-onViewClosed!event handling!private! !
 onViewOpened!event handling!private! !
 openWorkspace!commands-actions!public! !
 packages!accessing!public! !

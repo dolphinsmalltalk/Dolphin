@@ -161,14 +161,10 @@ fileSaveAs
 	self saveFile: pathname.
 	self updateFilesKeepingSelection!
 
-onCloseRequested: aValueHolder 
+onCloseRequested: aValueHolder
 	"The shell is about to be closed. Check for any changes before allowing this"
 
-	self promptForChanges 
-		ifFalse: 
-			[SessionManager current removeEventsTriggeredFor: self.
-			^self].
-	aValueHolder value: false!
+	aValueHolder value: self promptForChanges not!
 
 onFileSelectionChanged
 	"The file selection has changed so update the text views and the caption"
@@ -278,6 +274,12 @@ queryCommand: aCommandQuery
 			^true].
 	^super queryCommand: aCommandQuery!
 
+release
+	"Remove references to objects that may refer back to the receiver. "
+
+	super release.
+	SessionManager current removeEventsTriggeredFor: self.!
+
 removeCr
 	"Toggle whether we remove Crs on saving"
 
@@ -345,6 +347,7 @@ onSessionStarted!event handling!public! !
 onViewOpened!event handling!public! !
 promptForChanges!helpers!public! !
 queryCommand:!commands!public! !
+release!dependency!public! !
 removeCr!commands!public! !
 saveFile:!helpers!public! !
 setHTML:!helpers!public! !

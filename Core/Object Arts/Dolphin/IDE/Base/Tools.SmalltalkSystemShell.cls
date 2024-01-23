@@ -159,7 +159,6 @@ onViewDestroyed
 	and is expected to be the last communication from Windows. There is nothing
 	more we can do to save the patient. No event is triggered."
 
-	SessionManager current removeEventsTriggeredFor: self.
 	self unregisterHotKey.
 	self == Default ifTrue: [Default := nil].
 	super onViewDestroyed!
@@ -200,6 +199,12 @@ registerHotKey
 		registerHotKeyId: 1000
 		modifiers: modifiers
 		vkey: codes first!
+
+release
+	"Remove references to objects that may refer back to the receiver. "
+
+	super release.
+	SessionManager current removeEventsTriggeredFor: self.!
 
 resetSelection
 	"Private - Reset any selection in the receiver."
@@ -272,6 +277,7 @@ onViewOpened!event handling!private! !
 onViewStateRestored!event handling!private! !
 properties!commands-actions!public! !
 registerHotKey!helpers!private! !
+release!dependency!public! !
 resetSelection!event handling!private! !
 resetWhenInvisible!options!public! !
 searchEnvironment!commands-actions!public! !

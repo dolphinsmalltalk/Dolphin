@@ -155,11 +155,6 @@ onSelectionChanged
 		ifFalse: [chunkText text: String new].
 	self clearStatusReport!
 
-onViewClosed
-	super onViewClosed.
-	SmalltalkSystem current removeEventsTriggeredFor: self.
-	SessionManager current resourceManager removeEventsTriggeredFor: self!
-
 onViewOpened
 	super onViewOpened.
 	filter := ChunkBrowserFilter new.
@@ -210,6 +205,11 @@ queryToggleRestrictingMostRecent: aCommandQuery
 queryToggleRestrictingPicked: aCommandQuery
 	aCommandQuery beEnabled.
 	aCommandQuery isChecked: filter isRestrictingPicked!
+
+release
+	super release.
+	SmalltalkSystem current removeEventsTriggeredFor: self.
+	SessionManager current resourceManager removeEventsTriggeredFor: self!
 
 restore: aCollection
 	| failures stream |
@@ -365,7 +365,6 @@ isFilteringChunks!commands!commands-actions!commands-queries!public! !
 onActionPerformed!event handling!public! !
 onRefreshNeeded!event handling!public! !
 onSelectionChanged!event handling!public! !
-onViewClosed!event handling!public! !
 onViewOpened!event handling!public! !
 pickSelection!commands!commands-actions!public! !
 printableView!accessing!printing!public! !
@@ -375,6 +374,7 @@ queryToggleChunkType:!commands!commands-queries!public! !
 queryToggleComparisonType:!commands!commands-queries!public! !
 queryToggleRestrictingMostRecent:!commands!commands-queries!public! !
 queryToggleRestrictingPicked:!commands!commands-queries!public! !
+release!event handling!public! !
 restore:!commands!commands-actions!public! !
 restorePicked!commands!commands-actions!public! !
 restoreSelection!commands!commands-actions!public! !

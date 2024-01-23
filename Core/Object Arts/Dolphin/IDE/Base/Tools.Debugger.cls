@@ -1037,13 +1037,6 @@ onVariableValueChanged
 			varName := localAccessor name.
 			varName notEmpty ifTrue: [inspectorPresenter workspacePool at: varName put: localAccessor value]]!
 
-onViewClosed
-	"Private - Sent by the receiver's view when it has been closed. Disconnect from any events
-	triggered by the devlopment system"
-
-	super onViewClosed.
-	self model removeEventsTriggeredFor: self!
-
 onWalkback: titleString topFrame: aStackFrame resumable: aBoolean 
 	"Private - Bring up a walkback window on the receiver with the specified title and with
 	aStackFrame as the top frame of the stack trace."
@@ -1985,7 +1978,6 @@ onStep:!event handling!private! !
 onTempSelected!event handling!private! !
 onTerminate!event handling!private! !
 onVariableValueChanged!public! !
-onViewClosed!event handling!private! !
 onWalkback:topFrame:resumable:!event handling!private! !
 parseContext!accessing!public! !
 parseTree!accessing!private! !

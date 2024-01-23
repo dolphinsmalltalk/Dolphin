@@ -160,13 +160,6 @@ onTipTextRequired: tool
 
 	^tool toolTipText!
 
-onViewClosed
-	"Private - This is needed to prevent events trying to access this shell
-	after it is closed but before it is garbage collected"
-
-	super onViewClosed.
-	SmalltalkSystem current removeEventsTriggeredFor: self!
-
 onViewOpened	
 	super onViewOpened.
 	source view isReadOnly: true.
@@ -287,7 +280,6 @@ onMethodRemoved:!event handling!public! !
 onMethodUpdated:!event handling!public! !
 onSliderValueChanged!initializing!operations!public! !
 onTipTextRequired:!event handling!public! !
-onViewClosed!event handling!public! !
 onViewOpened!event handling!public! !
 parseContext!public! !
 printableView!accessing!printing!public! !

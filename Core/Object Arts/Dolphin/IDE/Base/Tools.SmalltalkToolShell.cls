@@ -323,6 +323,14 @@ onViewAvailable
 	super onViewAvailable.
 	self applyOptions!
 
+onViewClosed
+	"Private - Sent by the receiver's view when it has been closed.
+	Disconnect from any events triggered by the devlopment system"
+
+	super onViewClosed.
+	self release
+!
+
 onViewOpened
 	super onViewOpened.
 	fontSizePresenter model: (ValueAspectAdaptor subject: self aspect: #fontSize).
@@ -429,6 +437,12 @@ redoChange
 
 refactoringsMenu
 	"Enable the Refactorings menu when the Refactoring Browser support is loaded"!
+
+release
+	"Remove references to objects that may refer back to the receiver. "
+
+	super release.
+	self model removeEventsTriggeredFor: self!
 
 rememberThisSize
 	"Record the size of the receiver as the default extent for its tool class."
@@ -609,6 +623,7 @@ inspectSystemOptions!commands-actions!public! !
 isIdeaSpaceCard!public! !
 methodBrowserClass!constants!private! !
 onViewAvailable!event handling!public! !
+onViewClosed!event handling!private! !
 onViewOpened!private! !
 onViewStateRestored!event handling!public! !
 packageManager!constants!private! !
@@ -631,6 +646,7 @@ queryRedoChange:!commands-queries!private! !
 queryUndoChange:!commands-queries!private! !
 redoChange!commands-actions!public! !
 refactoringsMenu!public! !
+release!dependency!public! !
 rememberThisSize!commands-actions!public! !
 saveStateAspects:for:on:!helpers!private!saved state! !
 saveStateOn:!private!saved state! !

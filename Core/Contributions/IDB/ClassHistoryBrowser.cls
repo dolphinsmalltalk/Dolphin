@@ -114,13 +114,6 @@ onMethodRemoved: aCompiledMethod
 onMethodUpdated: aCompilationResult 
 	self onImageChanged: aCompilationResult method!
 
-onViewClosed
-	"Private - This is needed to prevent events trying to access this shell
-	after it is closed but before it is garbage collected"
-
-	super onViewClosed.
-	SmalltalkSystem current removeEventsTriggeredFor: self!
-
 setClass: aClass
 	"Private - Initialize the list. This is used the first time the browser is opened and
 	also whenever a method in the selected class is edivted/deleted"
@@ -158,7 +151,6 @@ onImageChanged:!event handling!public! !
 onMethodAdded:!event handling!public! !
 onMethodRemoved:!event handling!public! !
 onMethodUpdated:!event handling!public! !
-onViewClosed!event handling!public! !
 setClass:!initializing!public! !
 updateHistory!initializing!public! !
 !
