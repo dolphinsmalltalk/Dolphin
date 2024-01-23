@@ -10,6 +10,7 @@ package classNames
 	add: #AbstractPointTest;
 	add: #AbstractRectangleTest;
 	add: #AbstractShellViewTest;
+	add: #AbstractTabViewTest;
 	add: #AbstractTextEditTest;
 	add: #AcceleratorTableTest;
 	add: #ARGBTest;
@@ -81,6 +82,7 @@ package classNames
 	add: #SingleSelectListBoxTest;
 	add: #SingleSelectListViewTest;
 	add: #SliderTest;
+	add: #SlideyInneyOuteyThingTest;
 	add: #StaticPathTest;
 	add: #StaticTextTest;
 	add: #StyledContainerTest;
@@ -138,6 +140,7 @@ package setPrerequisites: #(
 	'Views\Scintilla\Dolphin Scintilla View'
 	'Views\Scrollbars\Dolphin Scrollbars'
 	'Views\Slider\Dolphin Slider Control'
+	'Views\Sliding Tray\Dolphin Slidey-Inney-Outey Thing'
 	'Views\Styled Views\Dolphin Styled Views'
 	'Views\SysLink\Dolphin SysLink Control'
 	'Presenters\Text\Dolphin Text Presenter'
@@ -446,7 +449,7 @@ PresenterTest subclass: #ScrollingDecoratorTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 PresenterTest subclass: #SelectableItemsTest
-	instanceVariableNames: ''
+	instanceVariableNames: 'events selectionChanging selectionChanged timedout'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -515,8 +518,18 @@ SelectableItemsTest subclass: #SelectableTreeItemsTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+SelectableItemsTest subclass: #SlideyInneyOuteyThingTest
+	instanceVariableNames: 'allowCardChange'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+SelectableListItemsTest subclass: #AbstractTabViewTest
+	instanceVariableNames: 'allowCardChange'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 SelectableListItemsTest subclass: #ListControlTest
-	instanceVariableNames: 'selectionChanged selectionChanging timedout events clicks'
+	instanceVariableNames: 'clicks'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -525,7 +538,12 @@ SelectableListItemsTest subclass: #ListPresenterTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SelectableListItemsTest subclass: #TabViewTest
+AbstractTabViewTest subclass: #TabViewTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+AbstractTabViewTest subclass: #TabViewXPTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -559,11 +577,6 @@ ListViewTest subclass: #SingleSelectListViewTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ListViewConstants'
-	classInstanceVariableNames: ''!
-TabViewTest subclass: #TabViewXPTest
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 SelectableTreeItemsTest subclass: #MoenTreeViewTest2
 	instanceVariableNames: ''

@@ -2538,10 +2538,14 @@ onGlobalRenamed: anAssocation from: aSymbol
 		with: anAssocation
 		with: aSymbol!
 
-onMethodAdded: aCompilationResult 
-	allSelectors isNil ifFalse: [allSelectors add: aCompilationResult method selector].
-	self packageManager onMethodAdded: aCompilationResult.
-	self trigger: #methodAdded: with: aCompilationResult!
+onMethodAdded: aCompilationResult
+	| method |
+	method := aCompilationResult method.
+	allSelectors isNil ifFalse: [allSelectors add: method selector].
+	method methodClass isAnonymous
+		ifFalse: 
+			[self packageManager onMethodAdded: aCompilationResult.
+			self trigger: #methodAdded: with: aCompilationResult]!
 
 onMethodCategorized: aCompiledMethod
 	"The method aCompiledMethod has been re-categorized.
