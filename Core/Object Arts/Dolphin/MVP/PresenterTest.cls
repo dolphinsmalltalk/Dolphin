@@ -15,15 +15,23 @@ classToTest
 	^self subclassResponsibility!
 
 destroyPresenter
-	presenter isNil
-		ifFalse: 
-			[| shell |
-			shell := presenter topShell.
-			shell = View desktop ifTrue: [presenter destroy] ifFalse: [shell close].
-			presenter := nil]!
+	| shell |
+	presenter ifNil: [^self].
+	shell := presenter topShell.
+	shell = View desktop ifTrue: [presenter destroy] ifFalse: [shell close].
+	presenter := nil!
 
 initializePresenter
-	presenter := self classToTest show!
+	self classToTest
+		ifNotNil: 
+			[:subjectClass |
+			| shell |
+			presenter := subjectClass show.
+			shell := presenter topShell.
+			shell = View desktop
+				ifFalse: 
+					[shell view text: self printString.
+					presenter view = shell view ifFalse: [shell view name: presenter view as: 'view']]]!
 
 leftClickAt: aPoint 
 	"Fire a left-click at the specified client coordinate of the tested presenter."

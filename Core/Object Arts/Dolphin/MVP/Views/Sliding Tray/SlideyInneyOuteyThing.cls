@@ -46,14 +46,19 @@ animateNegativeFlag
 animatePositiveFlag
 	^self isVertical ifTrue: [AW_HOR_POSITIVE] ifFalse: [AW_VER_POSITIVE]!
 
-animateTray: aBoolean 
-	UserLibrary default 
-		animateWindow: tray asParameter
-		dwTime: self animationDuration
-		dwFlags: (self trayAnimationType bitOr: (aBoolean 
-						ifFalse: 
-							[AW_HIDE | (self isInverted ifFalse: [self animateNegativeFlag] ifTrue: [self animatePositiveFlag])]
-						ifTrue: [self isInverted ifTrue: [self animateNegativeFlag] ifFalse: [self animatePositiveFlag]]))!
+animateTray: aBoolean
+	animationDuration = 0
+		ifTrue: 
+			[UserLibrary default showWindow: tray asParameter
+				nCmdShow: (aBoolean ifTrue: [SW_SHOW] ifFalse: [SW_HIDE])]
+		ifFalse: 
+			[UserLibrary default
+				animateWindow: tray asParameter
+				dwTime: animationDuration
+				dwFlags: (self trayAnimationType bitOr: (aBoolean
+								ifFalse: 
+									[AW_HIDE | (self isInverted ifFalse: [self animateNegativeFlag] ifTrue: [self animatePositiveFlag])]
+								ifTrue: [self isInverted ifTrue: [self animateNegativeFlag] ifFalse: [self animatePositiveFlag]]))]!
 
 animation
 	"Answer the symbolic name of the animation used to reveal the card tray. This could be
@@ -66,10 +71,12 @@ animation: aSymbol
 	siotFlags := (siotFlags maskClear: AnimationMask) maskSet: (Animations at: aSymbol ifAbsent: [0])!
 
 animationDuration
-	"Answer the number of milliseconds that the animations should take. This is only relevant if
-	#slide or #roll animations are configured."
+	"Answer the <Duration> that the animations should take. If the duration is empty, then there is no animation."
 
-	^animationDuration!
+	^animationDuration milliseconds!
+
+animationDuration: aDuration
+	animationDuration := aDuration asMilliseconds rounded!
 
 autoHideTimerInterval
 	^50!
@@ -120,6 +127,7 @@ createTray
 	self createTabs.
 	self isStateRestoring ifTrue: [^self].
 	tray := (SlidingCardTray new)
+				beDefaultThemed;
 				layoutManager: self layoutManager;
 				setSlider: self;
 				parentView: self;
@@ -301,9 +309,6 @@ observeTabs
 		when: #mouseHovering:
 			send: #onMouseHovering:
 			to: self;
-		when: #selectionChanging:
-			send: #onTabChanging:
-			to: self;
 		when: #selectionChanged
 			send: #onTabChanged
 			to: self;
@@ -337,9 +342,6 @@ onTabChanged
 	(self isPinned not and: [self isCardChangeAnimated]) ifTrue: [tray hide].
 	tray onTabChanged.
 	self showTray!
-
-onTabChanging: aSelectionChangingEvent 
-	tray onTabChanging: aSelectionChangingEvent!
 
 onTabClicked
 	self isTrayVisible ifTrue: [^self].
@@ -529,6 +531,7 @@ animateTray:!helpers!private! !
 animation!accessing!public! !
 animation:!accessing!public! !
 animationDuration!constants!public! !
+animationDuration:!constants!public! !
 autoHideTimerInterval!constants!public! !
 backcolor:!accessing!public! !
 calculateExtent:!geometry!private! !
@@ -567,7 +570,6 @@ observeTabs!event handling!private! !
 onMouseHovering:!constants!private! !
 onMouseMoved:!event handling!private! !
 onTabChanged!event handling!private! !
-onTabChanging:!private! !
 onTabClicked!event handling!private! !
 onTimerTick:!event handling!private! !
 onViewCreated!event handling!private! !

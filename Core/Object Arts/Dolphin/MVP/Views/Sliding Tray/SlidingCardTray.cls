@@ -39,9 +39,6 @@ captionGeometryChanged
 edgeExtent
 	^2 @ 2!
 
-headerBackgroundPart
-	^EBP_HEADERBACKGROUND!
-
 headerHeight
 	^pinSize y + 2!
 
@@ -191,7 +188,7 @@ paintThemedBackgroundOn: aCanvas
 	ThemeLibrary default 
 		drawThemeBackground: self theme
 		hdc: aCanvas asParameter
-		iPartId: self headerBackgroundPart
+		iPartId: EBP_HEADERBACKGROUND
 		iStateId: 0
 		pRect: self headerRectangle asParameter
 		pClipRect: nil!
@@ -325,13 +322,12 @@ wmNcHitTest: message wParam: wParam lParam: lParam
 	edge := self sizingEdgeInfo.
 	^(edge value containsPoint: lParam lowWord @ lParam highWord) ifTrue: [edge key] ifFalse: [HTCLIENT]!
 
-wmNcPaint: message wParam: wParam lParam: lParam 
+wmNcPaint: message wParam: wParam lParam: lParam
 	"Private - Paint the non-client area of the window when unpinned."
 
 	| canvas |
 	self isPinned ifTrue: [^nil].
 	canvas := Canvas forNonClientView: self.
-	"canvas excludeClipRectangle: (self calcClientRectangleFromRectangle: canvas clipBox)."
 	self paintEdgesOn: canvas.
 	canvas free.
 	^0!
@@ -352,7 +348,6 @@ calcClientRectangleFromRectangle:!event handling-win32!private! !
 calculateExtent:!geometry!private! !
 captionGeometryChanged!event handling!private! !
 edgeExtent!constants!private! !
-headerBackgroundPart!constants!private! !
 headerHeight!constants!private! !
 headerRectangle!painting!private! !
 hitTest:!painting!private! !

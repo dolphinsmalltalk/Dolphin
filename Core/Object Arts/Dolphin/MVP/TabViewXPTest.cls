@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-TabViewTest subclass: #TabViewXPTest
+AbstractTabViewTest subclass: #TabViewXPTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
