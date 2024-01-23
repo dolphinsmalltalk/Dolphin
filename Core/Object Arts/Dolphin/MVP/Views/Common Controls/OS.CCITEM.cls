@@ -244,10 +244,7 @@ defineFields
 		CCITEM compileDefinition
 	"
 
-	self
-		defineField: #mask
-		type: UInt32Field new
-		offset: 0! !
+	self defineField: #mask type: UInt32Field new! !
 !OS.CCITEM class categoriesForMethods!
 defineFields!public!template definition! !
 !

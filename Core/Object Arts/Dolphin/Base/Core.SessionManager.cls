@@ -99,7 +99,7 @@ argv
 							[:i |
 							| offset |
 							offset := (i - 1) * VMConstants.IntPtrSize.
-							argv at: i put: (Utf16String fromAddress: (lppstr uint32AtOffset: offset))]]].
+							argv at: i put: (Utf16String fromAddress: (lppstr uintPtrAtOffset: offset))]]].
 	^argv!
 
 argvLegacyOptionsRemoved

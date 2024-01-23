@@ -721,7 +721,7 @@ variant
 	N.B. Assumes that the receiver is of type VT_VARIANT|VT_BYREF."
 
 	self assert: [self isByRef].
-	^VARIANT fromAddress: (bytes uint32AtOffset: _OffsetOf_pvarVal)!
+	^VARIANT fromAddress: (bytes uintPtrAtOffset: _OffsetOf_pvarVal)!
 
 variant: newValue
 	"Set the <VARIANT> value, newValue, into the receiver."

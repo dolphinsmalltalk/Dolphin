@@ -255,7 +255,7 @@ clear: addressOrBytes
 	"Free external resources referenced by the structure
 	of the receiver's element type at the specified address."
 
-	self bstrFieldOffsets do: [:each | OleAut32 sysFreeString: (addressOrBytes uint32AtOffset: each)]!
+	self bstrFieldOffsets do: [:each | OleAut32 sysFreeString: (addressOrBytes uintPtrAtOffset: each)]!
 
 defineFields
 	"Define the fields of the EXCEPINFO structure.

@@ -25,7 +25,7 @@ code
 hwndFrom
 	"Answer the <Integer> value of the receiver's 'hwndFrom' field."
 
-	^bytes uint32AtOffset: _OffsetOf_hwndFrom!
+	^bytes uintPtrAtOffset: _OffsetOf_hwndFrom!
 
 idFrom
 	"Answer the <Integer> value of the receiver's 'idFrom' field."
@@ -53,7 +53,7 @@ defineFields
 	"
 
 	self
-		defineField: #hwndFrom type: UInt32Field readOnly;
+		defineField: #hwndFrom type: UIntPtrField readOnly;
 		defineField: #idFrom type: UIntPtrField readOnly;
 		defineField: #code type: Int32Field readOnly!
 

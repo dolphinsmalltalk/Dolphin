@@ -161,24 +161,12 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #dwState
-			type: UInt32Field new
-			offset: 4;
-		defineField: #stateMask
-			type: UInt32Field new
-			offset: 8;
-		defineField: #pszText
-			type: (PointerField type: Utf16String)
-			offset: 12;
-		defineField: #cchTextMax
-			type: Int32Field new
-			offset: 16;
-		defineField: #iImage
-			type: Int32Field new
-			offset: 20;
-		defineField: #lParam
-			type: UIntPtrField new
-			offset: 24!
+		defineField: #dwState type: UInt32Field new;
+		defineField: #stateMask type: UInt32Field new;
+		defineField: #pszText type: (PointerField type: Utf16String);
+		defineField: #cchTextMax type: Int32Field new;
+		defineField: #iImage type: Int32Field new;
+		defineField: #lParam type: UIntPtrField new!
 
 getFieldNames
 	^#(#mask #dwState #stateMask #pszText #cchTextMax #iImage #lParam)! !

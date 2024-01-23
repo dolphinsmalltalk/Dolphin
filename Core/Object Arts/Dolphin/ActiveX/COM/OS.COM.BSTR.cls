@@ -181,7 +181,7 @@ basicNew
 	^self newFixed: 4!
 
 clear: anExternalAddress
-	OleAut32 sysFreeString: (anExternalAddress uint32AtOffset: 0)!
+	OleAut32 sysFreeString: (anExternalAddress uintPtrAtOffset: 0)!
 
 fromInteger: anAddress
 	"Answer a new instance of the receiver that points at a copy of the 

@@ -396,7 +396,7 @@ atAddress: anAddress
 	contains an interface pointer, so the address is dereferenced to get
 	the actual address."
 
-	^self fromAddress: (anAddress asExternalAddress uint32AtOffset: 0)!
+	^self fromAddress: (anAddress asExternalAddress uintPtrAtOffset: 0)!
 
 attach: interfaceAddress
 	"Attach the a new pointer instance of the receiver to the interface at 
@@ -455,7 +455,7 @@ clear: addressOrBytes
 
 	"In this case we are given the address of a slot holding an COM interface pointer, i.e. an IUnknown**, so we have to dereference the address to get the interface pointer, i.e. this is like #atAddress:, except that we don't want to add a further reference."
 
-	(IUnknown attach: (addressOrBytes uint32AtOffset: 0)) free!
+	(IUnknown attach: (addressOrBytes uintPtrAtOffset: 0)) free!
 
 clearVTable
 	functions := #().
