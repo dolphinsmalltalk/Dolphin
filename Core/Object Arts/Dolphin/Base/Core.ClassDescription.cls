@@ -875,13 +875,13 @@ removeUnsupportedProtocols: aCollectionOfMethodProtocols selector: aSymbol
 	| unsupported |
 	unsupported := self protocols select: [:each | each includesSelector: aSymbol].
 	unsupported do: [:each | each removeClass: self].
-	unsupported addAll: aCollectionOfMethodProtocols.
+	aCollectionOfMethodProtocols addAll: unsupported.
 	self subclassesDo: 
 			[:eachSubclass |
 			"If the subclass has its own implementation for the selector, then it can still support the protocol, otherwise it might need to remove further protocols"
 			(eachSubclass canUnderstand: aSymbol)
-				ifTrue: [unsupported do: [:eachProtocol | eachProtocol addClass: eachSubclass]]
-				ifFalse: [eachSubclass removeUnsupportedProtocols: unsupported selector: aSymbol]]!
+				ifTrue: [aCollectionOfMethodProtocols do: [:eachProtocol | eachProtocol addClass: eachSubclass]]
+				ifFalse: [eachSubclass removeUnsupportedProtocols: aCollectionOfMethodProtocols selector: aSymbol]]!
 
 resourceIdentifiers
 	| identifiers |

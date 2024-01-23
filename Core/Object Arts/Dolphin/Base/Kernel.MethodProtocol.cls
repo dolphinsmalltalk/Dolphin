@@ -260,17 +260,10 @@ includesMethod: method
 	^(method methodClass conformsToProtocol: self) 
 		and: [self includesSelector: method selector]!
 
-includesSelector: selector
-	"Answer whether the receiver includes the selector represented by the 
-	<Symbol>, selector."
+includesSelector: aSymbol
+	"Answer whether the receiver includes the selector represented by the <Symbol> argument."
 
-	^selectors identityIncludes: selector!
-
-initialize
-	"Private - Initialize the receiver."
-
-	selectors := IdentitySet new.
-	flags := 0!
+	^selectors includes: aSymbol!
 
 isANSI
 	"Answer whether the receiver is an ANSI standard protocol."
@@ -394,12 +387,10 @@ selectors
 
 	^selectors!
 
-setName: stem
-	"Private - Set the name of the receiver to the <Symbol> equivalent 
-	of the <readableString>, stem."
-
-	name := stem asSymbol.
-	self initialize!
+setName: aString
+	name := aString asSymbol.
+	selectors := IdentitySet new.
+	flags := 0!
 
 updateBaseClasses
 	"Private - The receiver has changed in such a way that it's
@@ -430,7 +421,6 @@ displayOn:!displaying!public! !
 hash!comparing!public! !
 includesMethod:!public!testing! !
 includesSelector:!public!testing! !
-initialize!initializing!private! !
 isANSI!public!testing! !
 isANSI:!modes!public! !
 isReadOnly!public!testing! !
@@ -446,7 +436,7 @@ removeSelector:!public!removing! !
 removeSelector:ifAbsent:!public!removing! !
 rename:!operations!public! !
 selectors!accessing!public! !
-setName:!accessing!private! !
+setName:!initializing!private! !
 updateBaseClasses!private!updating! !
 !
 
@@ -490,8 +480,7 @@ name: protocolName
 	<Symbol> name, protocolName."
 
 	| symbol |
-	symbol := protocolName asSymbol.
-	^(Protocols lookup: symbol)
+	^(Protocols lookup: (symbol := protocolName asSymbol))
 		ifNil: 
 			[Protocols at: symbol
 				put: (self basicNew

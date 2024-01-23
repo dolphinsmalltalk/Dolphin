@@ -184,10 +184,9 @@ nmDblClk: pNMHDR
 	^nil!
 
 nmDummy: pNMHDR
-	"Default handler for an uninteresting notification message.
-	Answer nil to accept default processing."
+	"Default handler for an uninteresting notification message."
 
-	^nil!
+	^0!
 
 nmEndWait: pNMHDR
 	"Default handler for a NM_ENDWAIT notification message.
