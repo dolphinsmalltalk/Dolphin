@@ -24,6 +24,7 @@ package setClassNames: #(
 	#{OS.Tests.POINTSTest}
 	#{OS.Tests.RECTLTest}
 	#{OS.Tests.TCITEMWTest}
+	#{OS.Tests.TVITEMEXWTest}
 	#{OS.Tests.TVITEMWTest}
 	#{UI.Tests}
 	#{UI.Tests.AbstractCardContainerTest}
@@ -499,7 +500,7 @@ OS.Tests.CCITEMTest
 	subclass: #'OS.Tests.LVITEMWTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.ListViewConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 OS.Tests.CCITEMTest
@@ -511,6 +512,13 @@ OS.Tests.CCITEMTest
 	classConstants: {}!
 OS.Tests.CCITEMTest
 	subclass: #'OS.Tests.TVITEMWTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #(#{OS.TreeViewConstants})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.Tests.TVITEMWTest
+	subclass: #'OS.Tests.TVITEMEXWTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

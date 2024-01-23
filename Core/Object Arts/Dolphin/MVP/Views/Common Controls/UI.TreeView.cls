@@ -39,9 +39,13 @@ Class Variables:
 !UI.TreeView categoriesForClass!MVP-Views! !
 !UI.TreeView methodsFor!
 
-addNonVirtualItems: aCollection insertStruct: aTVINSERTSTRUCT
-	| tvItem getText getImage |
-	tvItem := aTVINSERTSTRUCT item.
+addNonVirtualItems: aCollection inHandle: parentHandle afterHandle: siblingHandle
+	| tvis tvItem getText getImage |
+	tvis := TVINSERTSTRUCTW hParent: parentHandle hInsertAfter: siblingHandle.
+	tvItem := tvis item.
+	tvItem
+		iImage: 0;
+		iSelectedImage: 0.
 	getText := self getTextBlock.
 	getImage := self getImageBlock.
 	"Add items with subclassing removed so don't receive TVM_INSERTITEMs"
@@ -52,8 +56,8 @@ addNonVirtualItems: aCollection insertStruct: aTVINSERTSTRUCT
 					tvItem
 						text: (getText value: each) displayString;
 						children: (model hasChildren: each) asParameter.
-					getImage notNil
-						ifTrue: 
+					getImage
+						ifNotNil: 
 							[(getImage value: each)
 								ifNotNil: 
 									[:index |
@@ -64,7 +68,7 @@ addNonVirtualItems: aCollection insertStruct: aTVINSERTSTRUCT
 								sendMessageU: handle
 								msg: TVM_INSERTITEMW
 								wParam: 0
-								lpParam: aTVINSERTSTRUCT.
+								lpParam: tvis.
 					hItem == 0 ifFalse: [objectHandleMap at: (handleObjectMap at: hItem put: each) put: hItem]]]!
 
 addRoot: anObject
@@ -74,8 +78,9 @@ addRoot: anObject
 		afterHandle: TVI_LAST.
 	self hasLinesAtRoot ifFalse: [self expand: anObject]!
 
-addVirtualItems: aCollection insertStruct: aTVINSERTSTRUCT
-	aTVINSERTSTRUCT allCallbacks.
+addVirtualItems: aCollection inHandle: parentHandle afterHandle: siblingHandle
+	| tvis |
+	tvis := TVINSERTSTRUCTW hParent: parentHandle hInsertAfter: siblingHandle.
 	self withOldWndProc: 
 			["Add items with subclassing removed so don't receive TVM_INSERTITEMs"
 			aCollection do: 
@@ -85,7 +90,7 @@ addVirtualItems: aCollection insertStruct: aTVINSERTSTRUCT
 								sendMessageU: handle
 								msg: TVM_INSERTITEMW
 								wParam: 0
-								lpParam: aTVINSERTSTRUCT.
+								lpParam: tvis.
 					hItem == 0 ifFalse: [objectHandleMap at: (handleObjectMap at: hItem put: each) put: hItem]]]!
 
 applyExtendedStyles
@@ -129,15 +134,18 @@ basicAddAll: objects inHandle: aParentHandle afterHandle: aSiblingHandle
 
 	"Add items with subclassing removed so don't receive TVM_INSERTITEMs"
 
-	| tvis |
 	objects isEmpty ifTrue: [^objects].
-	tvis := TVINSERTSTRUCTW newBuffer.
-	tvis
-		hParent: aParentHandle;
-		hInsertAfter: aSiblingHandle.
 	self isVirtual
-		ifTrue: [self addVirtualItems: objects insertStruct: tvis]
-		ifFalse: [self addNonVirtualItems: objects insertStruct: tvis].
+		ifTrue: 
+			[self
+				addVirtualItems: objects
+				inHandle: aParentHandle
+				afterHandle: aSiblingHandle]
+		ifFalse: 
+			[self
+				addNonVirtualItems: objects
+				inHandle: aParentHandle
+				afterHandle: aSiblingHandle].
 	^objects!
 
 basicClear
@@ -190,14 +198,14 @@ basicRefresh: anObject handle: hItem
 	"Private - Update the text, image, and children flag of the specified element of the tree."
 
 	| tvItem |
-	tvItem := TVITEMW newBuffer.
-	tvItem hItem: hItem.
 	self isVirtual
-		ifTrue: [tvItem allCallbacks]
+		ifTrue: [tvItem := TVITEMEXW hItem: hItem]
 		ifFalse: 
-			[tvItem
-				text: (self getTextBlock value: anObject) displayString;
-				children: (self model hasChildren: anObject) asParameter.
+			[tvItem := TVITEMEXW newBuffer
+						hItem: hItem;
+						text: (self getTextBlock value: anObject) displayString;
+						children: (self model hasChildren: anObject) asParameter;
+						yourself.
 			self getImageBlock
 				ifNotNil: 
 					[:getImage |
@@ -648,7 +656,7 @@ nmDeleteItem: pNMHDR
 	handleObjectMap isEmpty
 		ifFalse: 
 			[(handleObjectMap
-				removeKey: (pNMHDR uint32AtOffset: ##(NMTREEVIEWW._OffsetOf_itemOld + TVITEMW._OffsetOf_hItem))
+				removeKey: (pNMHDR uintPtrAtOffset: ##(NMTREEVIEWW._OffsetOf_itemOld + TVITEMW._OffsetOf_hItem))
 				ifAbsent: nil) ifNotNil: [:object | objectHandleMap removeKey: object]].
 	^nil!
 
@@ -1214,9 +1222,9 @@ wmKeyDown: message wParam: wParam lParam: lParam
 				wParam: wParam
 				lParam: lParam].! !
 !UI.TreeView categoriesForMethods!
-addNonVirtualItems:insertStruct:!adding!private! !
+addNonVirtualItems:inHandle:afterHandle:!adding!private! !
 addRoot:!adding!private! !
-addVirtualItems:insertStruct:!adding!private! !
+addVirtualItems:inHandle:afterHandle:!adding!private! !
 applyExtendedStyles!private!updating! !
 applyImageLists!image management!private! !
 basicAdd:atIndex:!adding!private! !

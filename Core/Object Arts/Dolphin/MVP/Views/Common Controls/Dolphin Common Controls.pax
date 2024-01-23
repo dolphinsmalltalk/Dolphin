@@ -581,7 +581,9 @@ External.Structure
 			'_OffsetOf_hInsertAfter' -> 16r4.
 			'_OffsetOf_hParent' -> 16r0.
 			'_OffsetOf_item' -> 16r8.
-			'_TVINSERTSTRUCTW_Size' -> 16r40
+			'_TVINSERTSTRUCTW_Size' -> 16r44.
+			'CallbackPrototype'
+				-> #[0 0 0 0 0 0 0 0 83 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 0 0 0 0 255 255 255 255 0 0 0 0 255 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
 		}!
 OS.CCHITTESTINFO
 	subclass: #'OS.LVHITTESTINFO'
@@ -658,7 +660,7 @@ OS.CCITEM
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.TreeViewConstants})
-	classInstanceVariableNames: ''
+	classInstanceVariableNames: 'callbackPrototype'
 	classConstants: {
 			'_OffsetOf_cChildren' -> 16r20.
 			'_OffsetOf_cchTextMax' -> 16r14.
@@ -681,8 +683,9 @@ OS.TVITEMW
 			'_OffsetOf_hwnd' -> 16r30.
 			'_OffsetOf_iExpandedImage' -> 16r34.
 			'_OffsetOf_iIntegral' -> 16r28.
+			'_OffsetOf_iReserved' -> 16r38.
 			'_OffsetOf_uStateEx' -> 16r2C.
-			'_TVITEMEXW_Size' -> 16r38
+			'_TVITEMEXW_Size' -> 16r3C
 		}!
 OS.NMHDR
 	subclass: #'OS.NMCUSTOMDRAW'

@@ -94,6 +94,18 @@ dwState: anInteger
 
 	bytes uint32AtOffset: _OffsetOf_dwState put: anInteger!
 
+getValidFields
+	| mask fields |
+	mask := self mask.
+	fields := Array writeStream: 8.
+	fields nextPutAll: #(#mask #iItem).
+	self iSubItem == 0 ifFalse: [fields nextPut: #iSubItem].
+	#(##(LVIF_TEXT) #text ##(LVIF_IMAGE) #iImage ##(LVIF_INDENT) #iIndent ##(LVIF_PARAM) #lParam)
+		pairsDo: [:flag :symbol | (mask allMask: flag) ifTrue: [fields nextPut: symbol]].
+	(mask allMask: LVIF_STATE)
+		ifTrue: [(self stateMask allMask: LVIS_STATEIMAGEMASK) ifTrue: [fields nextPut: #iStateImage]].
+	^fields contents!
+
 handle
 	"Answer the 'handle' of the item described by the receiver."
 
@@ -206,11 +218,11 @@ puColumns
 
 	^UInt32Array fromAddress: (bytes intPtrAtOffset: _OffsetOf_puColumns) length: self cColumns!
 
-puColumns: aUInt32Array
-	"Set the receiver's 'puColumns' field to the value of the argument, aUInt32Array"
+puColumns: anUInt32Array
+	"Set the receiver's 'puColumns' field to the value of the argument, anUInt32Array"
 
-	bytes uintPtrAtOffset: _OffsetOf_puColumns put: aUInt32Array yourAddress.
-	self cColumns: aUInt32Array size!
+	bytes uintPtrAtOffset: _OffsetOf_puColumns put: anUInt32Array yourAddress.
+	self cColumns: anUInt32Array size!
 
 row: rowInteger text: aString imageIndex: imageInteger indent: indentInteger
 	| mask iImage |
@@ -224,24 +236,6 @@ row: rowInteger text: aString imageIndex: imageInteger indent: indentInteger
 			[self iIndent: indentInteger.
 			mask := mask bitOr: LVIF_INDENT.
 			indentInteger < 0 ifTrue: [iImage := UI.ListView.NoImageIndex]].
-	iImage
-		ifNotNil: 
-			[self iImage: iImage - 1.
-			mask := mask bitOr: LVIF_IMAGE].
-	self mask: mask!
-
-row: rowInteger text: aString imageIndex: imageInteger indent: indentInteger stateImageIndex: stateImageInteger
-	| mask iImage |
-	self
-		iItem: rowInteger - 1;
-		pszText: (text := aString asUtf16String).
-	mask := LVIF_TEXT.
-	iImage := imageInteger.
-	indentInteger == 0
-		ifFalse: 
-			[self iIndent: indentInteger.
-			mask := mask bitOr: LVIF_INDENT.
-			indentInteger < 0 ifTrue: [iImage := 0]].
 	iImage
 		ifNotNil: 
 			[self iImage: iImage - 1.
@@ -270,7 +264,7 @@ textPointerOffset
 
 	^_OffsetOf_pszText! !
 !OS.LVITEMW categoriesForMethods!
-allCallbacks!accessing!public! !
+allCallbacks!initializing!private! !
 cchTextMax!**compiled accessors**!public! !
 cchTextMax:!**compiled accessors**!public! !
 cchTextMaxOffset!constants!private! !
@@ -279,6 +273,7 @@ cColumns:!**compiled accessors**!public! !
 column:!accessing!public! !
 dwState!**compiled accessors**!public! !
 dwState:!**compiled accessors**!public! !
+getValidFields!printing!private! !
 handle!accessing!public! !
 iGroup!**compiled accessors**!public! !
 iGroupId!**compiled accessors**!public! !
@@ -303,7 +298,6 @@ pszText:!**compiled accessors**!public! !
 puColumns!**compiled accessors**!public! !
 puColumns:!**compiled accessors**!public! !
 row:text:imageIndex:indent:!accessing!private! !
-row:text:imageIndex:indent:stateImageIndex:!accessing!private! !
 stateImageIndex:!accessing!public! !
 stateMask!**compiled accessors**!public! !
 stateMask:!**compiled accessors**!public! !
@@ -311,11 +305,6 @@ textPointerOffset!constants!private! !
 !
 
 !OS.LVITEMW class methodsFor!
-
-allCallbacks
-	^self basicNew
-		bytes: CallbackPrototype shallowCopy;
-		yourself!
 
 byteSize
 	^_LVITEMW_Size!
@@ -347,54 +336,35 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #iItem
-			type: Int32Field new
-			offset: 4;
-		defineField: #iSubItem
-			type: Int32Field new
-			offset: 8;
-		defineField: #dwState
-			type: UInt32Field new
-			offset: 12;
-		defineField: #stateMask
-			type: UInt32Field new
-			offset: 16;
-		defineField: #pszText
-			type: (PointerField type: Utf16String)
-			offset: 20;
-		defineField: #cchTextMax
-			type: Int32Field new
-			offset: 24;
-		defineField: #iImage
-			type: Int32Field new
-			offset: 28;
-		defineField: #lParam
-			type: IntPtrField new
-			offset: 32;
-		defineField: #iIndent
-			type: Int32Field new
-			offset: 36;
-		defineField: #iGroupId
-			type: Int32Field new
-			offset: 40;
-		defineField: #cColumns
-			type: UInt32Field new
-			offset: 44;
+		defineField: #iItem type: Int32Field new;
+		defineField: #iSubItem type: Int32Field new;
+		defineField: #dwState type: UInt32Field new;
+		defineField: #stateMask type: UInt32Field new;
+		defineField: #pszText type: (PointerField type: Utf16String);
+		defineField: #cchTextMax type: Int32Field new;
+		defineField: #iImage type: Int32Field new;
+		defineField: #lParam type: IntPtrField new;
+		defineField: #iIndent type: Int32Field new;
+		defineField: #iGroupId type: Int32Field new;
+		defineField: #cColumns type: UInt32Field new;
 		defineField: #puColumns
 			type: (ArrayPointerField type: UInt32Array
-					arrayLength: (ConformantArrayFieldLength lengthField: #cColumns))
-			offset: 48;
+					arrayLength: (ConformantArrayFieldLength lengthField: #cColumns));
 		defineField: #piColFmt
 			type: (ArrayPointerField type: Int32Array
-					arrayLength: (ConformantArrayFieldLength lengthField: #cColumns))
-			offset: 52;
-		defineField: #iGroup
-			type: Int32Field new beReadOnly
-			offset: 56.
-	self byteSize: 60!
+					arrayLength: (ConformantArrayFieldLength lengthField: #cColumns));
+		defineField: #iGroup type: Int32Field new beReadOnly.
+	self assert: [self byteSize == 60]!
 
 getFieldNames
 	^#(#mask #iItem #iSubItem #dwState #stateMask #pszText #cchTextMax #iImage #lParam #iIndent #iGroupId #cColumns #puColumns #piColFmt #iGroup)!
+
+iItem: anInteger
+	^self basicNew
+		bytes: (CallbackPrototype shallowCopy
+					int32AtOffset: _OffsetOf_iItem put: anInteger;
+					yourself);
+		yourself!
 
 initialize
 	self addClassConstant: 'CallbackPrototype'
@@ -402,10 +372,10 @@ initialize
 				allCallbacks;
 				bytes)! !
 !OS.LVITEMW class categoriesForMethods!
-allCallbacks!public! !
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
+iItem:!public! !
 initialize!development!public! !
 !
 

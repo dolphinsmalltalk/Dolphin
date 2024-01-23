@@ -10,8 +10,9 @@ OS.TVITEMW
 			'_OffsetOf_hwnd' -> 16r30.
 			'_OffsetOf_iExpandedImage' -> 16r34.
 			'_OffsetOf_iIntegral' -> 16r28.
+			'_OffsetOf_iReserved' -> 16r38.
 			'_OffsetOf_uStateEx' -> 16r2C.
-			'_TVITEMEXW_Size' -> 16r38
+			'_TVITEMEXW_Size' -> 16r3C
 		}!
 OS.TVITEMEXW guid: (Core.GUID fromString: '{f1c35f1c-58a2-4d7f-9fd9-3184f8aa1c31}')!
 OS.TVITEMEXW comment: ''!
@@ -28,6 +29,9 @@ iExpandedImage: anInteger
 
 	bytes int32AtOffset: _OffsetOf_iExpandedImage put: anInteger!
 
+maskSelectableFields
+	^super maskSelectableFields , #(#iIntegral #uStateEx #iExpandedImage)!
+
 uStateEx
 	"Answer the <Integer> value of the receiver's 'uStateEx' field."
 
@@ -40,6 +44,7 @@ uStateEx: anInteger
 !OS.TVITEMEXW categoriesForMethods!
 iExpandedImage!**compiled accessors**!public! !
 iExpandedImage:!**compiled accessors**!public! !
+maskSelectableFields!constants!private! !
 uStateEx!**compiled accessors**!public! !
 uStateEx:!**compiled accessors**!public! !
 !
@@ -57,24 +62,21 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #iIntegral
-			type: Int32Field uncompiled
-			offset: 40;
-		defineField: #uStateEx
-			type: UInt32Field new
-			offset: 44;
-		defineField: #hwnd
-			type: HANDLEField uncompiled
-			offset: 48;
-		defineField: #iExpandedImage
-			type: Int32Field new
-			offset: 52!
+		defineField: #iIntegral type: Int32Field uncompiled;
+		defineField: #uStateEx type: UInt32Field new;
+		defineField: #hwnd type: HANDLEField uncompiled;
+		defineField: #iExpandedImage type: Int32Field new;
+		defineField: #iReserved type: Int32Field filler!
 
 getFieldNames
-	^#(#mask #hItem #dwState #stateMask #pszText #cchTextMax #iImage #iSelectedImage #cChildren #lParam #iIntegral #uStateEx #hwnd #iExpandedImage)! !
+	^#(#mask #hItem #dwState #stateMask #pszText #cchTextMax #iImage #iSelectedImage #cChildren #lParam #iIntegral #uStateEx #hwnd #iExpandedImage)!
+
+initialize
+	self initializeCallbackPrototype! !
 !OS.TVITEMEXW class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
+initialize!class initialization!public! !
 !
 

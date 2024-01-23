@@ -594,6 +594,7 @@ package setMethodNames: #(
 	#(#{OS.RegKeyAbstract} #debugPrintOn:)
 	#(#{OS.RGBQUAD} #printFields:on:)
 	#(#{OS.SYSTEMTIME} #printOn:)
+	#(#{OS.TVITEMW} #printableFields)
 	#(#{OS.VersionInfo class} #publishedAspectsOfInstances)
 	#(#{OS.VS_FIXEDFILEINFO class} #publishedAspectsOfInstances)
 	#(#{OS.WINDOWPOS} #printOn:)
@@ -6760,16 +6761,13 @@ printFieldsOn:!printing!private! !
 !OS.LVITEMW methodsFor!
 
 printableFields
-	| mask fields |
-	mask := self mask.
-	fields := OrderedCollection with: #iItem.
-	self iSubItem == 0 ifFalse: [fields addLast: #iSubItem].
-	#(##(LVIF_TEXT) #text ##(LVIF_IMAGE) #iImage ##(LVIF_INDENT) #iIndent ##(LVIF_PARAM) #lParam)
-		pairsDo: [:flag :symbol | (mask allMask: flag) ifTrue: [fields addLast: symbol]].
-	(mask allMask: LVIF_STATE)
-		ifTrue: [
-			(self stateMask allMask: LVIS_STATEIMAGEMASK) 
-				ifTrue: [fields add: #iStateImage]].
+	| fields i |
+	fields := self getValidFields.
+	i := fields identityIndexOf: #text.
+	i == 0
+		ifFalse: 
+			[(bytes intPtrAtOffset: _OffsetOf_pszText) == OS.Win32Constants.LPSTR_TEXTCALLBACK
+				ifTrue: [^fields copyWithoutIndex: i]].
 	^fields! !
 !OS.LVITEMW categoriesForMethods!
 printableFields!printing!private! !
@@ -6859,6 +6857,21 @@ printOn: aStream
 ! !
 !OS.SYSTEMTIME categoriesForMethods!
 printOn:!printing!public! !
+!
+
+!OS.TVITEMW methodsFor!
+
+printableFields
+	| fields i |
+	fields := self getValidFields.
+	i := fields identityIndexOf: #pszText.
+	i == 0
+		ifFalse: 
+			[(bytes intPtrAtOffset: _OffsetOf_pszText) == OS.Win32Constants.LPSTR_TEXTCALLBACK
+				ifTrue: [^fields copyWithoutIndex: i]].
+	^fields! !
+!OS.TVITEMW categoriesForMethods!
+printableFields!printing!private! !
 !
 
 !OS.VersionInfo class methodsFor!

@@ -5,7 +5,7 @@ OS.CCITEM
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.TreeViewConstants})
-	classInstanceVariableNames: ''
+	classInstanceVariableNames: 'callbackPrototype'
 	classConstants: {
 			'_OffsetOf_cChildren' -> 16r20.
 			'_OffsetOf_cchTextMax' -> 16r14.
@@ -44,7 +44,7 @@ allCallbacks
 	bytes
 		int32AtOffset: _OffsetOf_iImage put: I_IMAGECALLBACK;
 		int32AtOffset: _OffsetOf_cChildren put: I_CHILDRENCALLBACK;
-		uint32AtOffset: _OffsetOf_pszText put: OS.Win32Constants.LPSTR_TEXTCALLBACK.
+		uint32AtOffset: _OffsetOf_pszText put: Win32Constants.LPSTR_TEXTCALLBACK.
 	self maskIn: ##(TVIF_TEXT | TVIF_CHILDREN | TVIF_IMAGE)!
 
 beStateExpandedOnce
@@ -106,10 +106,10 @@ getValidFields
 	mask := self mask.
 	fields := Array writeStream: 8.
 	fields nextPutAll: #(#mask #hItem).
-	#(#pszText #iImage #lParam #dwState #hItem #iSelectedImage #cChildren) inject: 1
+	self maskSelectableFields inject: TVIF_TEXT
 		into: 
 			[:bit :each |
-			(mask allMask: bit) ifTrue: [fields nextPut: each].
+			(each notNil and: [mask allMask: bit]) ifTrue: [fields nextPut: each].
 			bit bitShift: 1].
 	^fields contents!
 
@@ -121,12 +121,12 @@ handle
 hItem
 	"Answer the <Integer> value of the receiver's 'hItem' field."
 
-	^bytes uint32AtOffset: _OffsetOf_hItem!
+	^bytes uintPtrAtOffset: _OffsetOf_hItem!
 
 hItem: anInteger
 	"Set the receiver's 'hItem' field to the value of the argument, anInteger"
 
-	bytes uint32AtOffset: _OffsetOf_hItem put: anInteger!
+	bytes uintPtrAtOffset: _OffsetOf_hItem put: anInteger!
 
 iImage
 	"Answer the <Integer> value of the receiver's 'iImage' field."
@@ -171,6 +171,9 @@ lParam: anInteger
 	"Set the receiver's 'lParam' field to the value of the argument, anInteger"
 
 	bytes uintPtrAtOffset: _OffsetOf_lParam put: anInteger!
+
+maskSelectableFields
+	^#(#pszText #iImage #lParam #dwState nil #iSelectedImage #cChildren)!
 
 pszText
 	"Answer the <Utf16String> value of the receiver's 'pszText' field."
@@ -226,6 +229,7 @@ iSelectedImage:!**compiled accessors**!public! !
 isStateExpandedOnce!public!testing! !
 lParam!**compiled accessors**!public! !
 lParam:!**compiled accessors**!public! !
+maskSelectableFields!constants!private! !
 pszText!**compiled accessors**!public! !
 pszText:!**compiled accessors**!public! !
 selectedImage:!accessing!public! !
@@ -239,6 +243,15 @@ textPointerOffset!constants!private! !
 byteSize
 	^_TVITEMW_Size!
 
+callbacksForItem: anExternalHandle
+	"Answer an instance of the receiver configured to request callbacks for the item text and images of the tree view item with the specified handle."
+
+	^self basicNew
+		bytes: (callbackPrototype shallowCopy
+					uint32AtOffset: _OffsetOf_hItem put: anExternalHandle;
+					yourself);
+		yourself!
+
 defineFields
 	"Define the fields of the Win32 TVITEMW structure
 
@@ -247,40 +260,44 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #hItem
-			type: UInt32Field new
-			offset: 4;
-		defineField: #dwState
-			type: UInt32Field new
-			offset: 8;
-		defineField: #stateMask
-			type: UInt32Field new
-			offset: 12;
-		defineField: #pszText
-			type: (PointerField type: Utf16String)
-			offset: 16;
-		defineField: #cchTextMax
-			type: Int32Field new
-			offset: 20;
-		defineField: #iImage
-			type: Int32Field new
-			offset: 24;
-		defineField: #iSelectedImage
-			type: Int32Field new
-			offset: 28;
-		defineField: #cChildren
-			type: Int32Field new
-			offset: 32;
-		defineField: #lParam
-			type: UIntPtrField new
-			offset: 36.
+		defineField: #hItem type: UIntPtrField new;
+		defineField: #dwState type: UInt32Field new;
+		defineField: #stateMask type: UInt32Field new;
+		defineField: #pszText type: (PointerField type: Utf16String);
+		defineField: #cchTextMax type: Int32Field new;
+		defineField: #iImage type: Int32Field new;
+		defineField: #iSelectedImage type: Int32Field new;
+		defineField: #cChildren type: Int32Field new;
+		defineField: #lParam type: UIntPtrField new.
 	self assert: [self basicByteSize = 40]!
 
 getFieldNames
-	^#(#mask #hItem #dwState #stateMask #pszText #cchTextMax #iImage #iSelectedImage #cChildren #lParam)! !
+	^#(#mask #hItem #dwState #stateMask #pszText #cchTextMax #iImage #iSelectedImage #cChildren #lParam)!
+
+hItem: anExternalHandle
+	"Answer an instance of the receiver configured for the item with the specified handle."
+
+	^self basicNew
+		bytes: ((ByteArray newFixed: self byteSize)
+					uint32AtOffset: _OffsetOf_hItem put: anExternalHandle;
+					yourself);
+		yourself!
+
+initialize
+	self initializeCallbackPrototype!
+
+initializeCallbackPrototype
+	callbackPrototype := self new
+				allCallbacks;
+				bytes.
+	callbackPrototype beImmutableObject! !
 !OS.TVITEMW class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
+callbacksForItem:!instance creation!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
+hItem:!instance creation!public! !
+initialize!class initialization!public! !
+initializeCallbackPrototype!class initialization!private! !
 !
 

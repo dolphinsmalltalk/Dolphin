@@ -280,13 +280,11 @@ basicAdd: anObject atIndex: anInteger
 	"Private - Adds an item to the list view at the index given by anInteger"
 
 	self isVirtual
-		ifTrue: [self lvmInsertItem: (LVITEMW allCallbacks
-						iItem: anInteger - 1;
-						yourself)]
+		ifTrue: [self lvmInsertItem: (LVITEMW iItem: anInteger - 1)]
 		ifFalse: 
 			[self
 				addOrUpdate: false
-				nonVirtualItems: {anObject}
+				nonVirtualItems: { anObject }
 				afterIndex: anInteger - 1]!
 
 basicAddColumn: aListViewColumn atIndex: anInteger
@@ -1808,7 +1806,7 @@ onItems: aSequenceableCollection addedAtIndex: anInteger
 				ifTrue: [self lvmSetItemCount: self lvmGetItemCount + count]
 				ifFalse: 
 					[| lvItem |
-					lvItem := LVITEMW allCallbacks.
+					lvItem := LVITEMW iItem: 0.
 					anInteger - 1 to: anInteger + count - 2
 						do: 
 							[:index |
