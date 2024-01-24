@@ -328,7 +328,7 @@ nmNotify: pNMHDR
 		at: TCN_FIRST - TCN_KEYDOWN + 1 put: #nmKeyDown:;
 		at: TCN_FIRST - TCN_SELCHANGE + 1 put: #nmSelChanged:;
 		at: TCN_FIRST - TCN_SELCHANGING + 1 put: #tcnSelChanging:;
-		yourself) lookup: ##(TCN_FIRST + 1) - (pNMHDR int32AtOffset: 8))
+		yourself) lookup: ##(TCN_FIRST + 1) - (pNMHDR int32AtOffset: NMHDR._OffsetOf_code))
 		ifNil: [super nmNotify: pNMHDR]
 		ifNotNil: [:action | self perform: action with: pNMHDR]!
 

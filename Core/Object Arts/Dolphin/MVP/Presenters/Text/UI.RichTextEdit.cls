@@ -397,7 +397,7 @@ nmNotify: pNMHDR
 	^(##((Array new: EN_DRAGDROPDONE - EN_MSGFILTER + 1 withAll: #nmDummy:)
 		at: EN_SELCHANGE - EN_MSGFILTER + 1 put: #enSelChange:;
 		at: EN_LINK - EN_MSGFILTER + 1 put: #enLink:;
-		yourself) lookup: (pNMHDR int32AtOffset: 8) - ##(EN_MSGFILTER - 1))
+		yourself) lookup: (pNMHDR int32AtOffset: NMHDR._OffsetOf_code) - ##(EN_MSGFILTER - 1))
 		ifNil: [super nmNotify: pNMHDR]
 		ifNotNil: [:action | self perform: action with: pNMHDR]!
 

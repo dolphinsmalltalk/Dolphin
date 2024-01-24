@@ -1685,7 +1685,7 @@ nmNotify: pNMHDR
 		at: LVN_FIRST - LVN_ENDSCROLL + 1 put: #lvnEndScroll:;
 		at: LVN_FIRST - LVN_LINKCLICK + 1 put: #lvnLinkClick:;
 		at: LVN_FIRST - LVN_GETEMPTYMARKUP + 1 put: #lvnGetEmptyMarkup:;
-		yourself) lookup: ##(LVN_FIRST + 1) - (pNMHDR int32AtOffset: 8))
+		yourself) lookup: ##(LVN_FIRST + 1) - (pNMHDR int32AtOffset: NMHDR._OffsetOf_code))
 		ifNil: [super nmNotify: pNMHDR]
 		ifNotNil: [:action | self perform: action with: pNMHDR]!
 

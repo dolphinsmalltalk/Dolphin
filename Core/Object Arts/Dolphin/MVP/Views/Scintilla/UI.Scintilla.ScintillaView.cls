@@ -4390,7 +4390,7 @@ nmNotify: pNMHDR
 		at: SCN_AUTOCCOMPLETED - SCN_STYLENEEDED + 1 put: #scnAutoCCompleted:;
 		at: SCN_MARGINRIGHTCLICK - SCN_STYLENEEDED + 1 put: #scnMarginRightClick:;
 		at: SCN_AUTOCSELECTIONCHANGE - SCN_STYLENEEDED + 1 put: #scnAutoCSelectionChange:;
-		yourself) lookup: (pNMHDR int32AtOffset: 8) - ##(SCN_STYLENEEDED - 1))
+		yourself) lookup: (pNMHDR int32AtOffset: NMHDR._OffsetOf_code) - ##(SCN_STYLENEEDED - 1))
 		ifNotNil: [:action | self perform: action with: pNMHDR]!
 
 onEraseRequired: aColorEvent 

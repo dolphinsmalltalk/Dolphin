@@ -4240,7 +4240,7 @@ wmNotify: message wParam: wParam lParam: lParam
 
 	| pNMHdr |
 	^(SessionManager.Current inputState
-		lookupWindow: ((pNMHdr := lParam asExternalAddress) uint32AtOffset: 0))
+		lookupWindow: ((pNMHdr := lParam asExternalAddress) uint32AtOffset: NMHDR._OffsetOf_hwndFrom))
 			ifNotNil: [:control | control nmNotify: pNMHdr]!
 
 wmPaint: message wParam: wParam lParam: lParam
