@@ -544,6 +544,7 @@ defineConstantsPool
 				'SCI_CANUNDO' -> 2174.
 				'SCI_CHANGEINSERTION' -> 2672.
 				'SCI_CHANGELEXERSTATE' -> 2617.
+				'SCI_CHANGESELECTIONMODE' -> 2659.
 				'SCI_CHARLEFT' -> 2304.
 				'SCI_CHARLEFTEXTEND' -> 2305.
 				'SCI_CHARLEFTRECTEXTEND' -> 2428.
@@ -988,6 +989,7 @@ defineConstantsPool
 				'SCI_SEARCHPREV' -> 2368.
 				'SCI_SELECTALL' -> 2013.
 				'SCI_SELECTIONDUPLICATE' -> 2469.
+				'SCI_SELECTIONFROMPOINT' -> 2474.
 				'SCI_SELECTIONISRECTANGLE' -> 2372.
 				'SCI_SETACCESSIBILITY' -> 2702.
 				'SCI_SETADDITIONALCARETSBLINK' -> 2567.
@@ -1071,6 +1073,7 @@ defineConstantsPool
 				'SCI_SETMOUSEDWELLTIME' -> 2264.
 				'SCI_SETMOUSESELECTIONRECTANGULARSWITCH' -> 2668.
 				'SCI_SETMOUSEWHEELCAPTURES' -> 2696.
+				'SCI_SETMOVEEXTENDSSELECTION' -> 2719.
 				'SCI_SETMULTIPASTE' -> 2614.
 				'SCI_SETMULTIPLESELECTION' -> 2563.
 				'SCI_SETOVERTYPE' -> 2186.
@@ -1456,7 +1459,7 @@ generateNotificationMap
 	stream
 		nextPutAll: 'yourself) ';
 		display: #lookup:;
-		nextPutAll: ' (pNMHDR int32AtOffset: 8) - ##(';
+		nextPutAll: ' (pNMHDR int32AtOffset: NMHDR._OffsetOf_code) - ##(';
 		nextPutAll: scnFirst;
 		nextPutAll: ' - 1))
 		ifNotNil: [:action | self perform: action with: pNMHDR]'.
