@@ -53,24 +53,28 @@ and: operand
 asBit
 	"Answer the equivalent binary value of the receiver (0 for false, 1 for true)."
 
-	^self subclassResponsibility!
+	^self asInteger!
 
 asBoolean
 	"Answer the receiver as a Boolean value (true OR false)."
 
 	^self!
 
-asParameter
-	"Answer the value of the receiver in a form suitable for
-	passing to an external function call."
+asInteger
+	"Answer a sensible integer equivalent of the receiver."
 
 	^self subclassResponsibility!
+
+asParameter
+	"Answer the value of the receiver in a form suitable for passing to an external function call."
+
+	^self asInteger!
 
 asUInt32
 	"Answer the receiver in a form suitable for passing/returning as a
 	32-bit integer value."
 
-	^self subclassResponsibility!
+	^self asInteger!
 
 asUIntPtr
 	"Answer the receiver in a form suitable for passing/returning as a Windows LRESULT
@@ -78,7 +82,7 @@ asUIntPtr
 	default window proc. of the window to be called for most objects other than Integers when
 	used as a return value)."
 
-	^self subclassResponsibility!
+	^self asInteger!
 
 deepCopy
 	"Answer the receiver as Booleans are immutable"
@@ -194,6 +198,7 @@ xor: operand
 and:!control flow!public! !
 asBit!converting!public! !
 asBoolean!converting!public! !
+asInteger!converting!public! !
 asParameter!converting!public! !
 asUInt32!converting!public! !
 asUIntPtr!converting!public! !

@@ -26,31 +26,15 @@ and: operand
 
 	^operand value!
 
-asBit
-	"Answer the equivalent binary value of the receiver."
+asInteger
+	"Answer a sensible integer equivalent of the receiver."
 
 	^1!
 
 asParameter
-	"Answer the value of the receiver in a form suitable for
-	passing to an external function call."
+	"Answer the value of the receiver in a form suitable for passing to an external function call."
 
-	^1
-!
-
-asUInt32
-	"Answer the receiver in a form suitable for passing/returning as a
-	32-bit integer value."
-
-	^1!
-
-asUIntPtr
-	"Answer the receiver in a form suitable for passing/returning as a Windows LRESULT
-	(32 or 64-bit, depending on host OS) return value. The default is self (which will cause the
-	default window proc. of the window to be called for most objects other than Integers when
-	used as a return value)."
-
-	^1!
+	^OS.Win32Constants.TRUE!
 
 ifFalse: operand 
 	"Evaluate and answer the result of the evaluating the <niladicValuable>
@@ -123,10 +107,8 @@ xor: operand
 	^operand not! !
 !Core.True categoriesForMethods!
 and:!control flow!public! !
-asBit!converting!public! !
+asInteger!converting!public! !
 asParameter!converting!public! !
-asUInt32!converting!public! !
-asUIntPtr!converting!public! !
 ifFalse:!control flow!public! !
 ifFalse:ifTrue:!control flow!public! !
 ifTrue:!control flow!public! !

@@ -55,6 +55,8 @@ package methodNames
 	add: #ListModel -> #updateItem:;
 	add: #ListModel -> #updateItem:ifAbsent:;
 	add: #ListView -> #columns;
+	add: #ListView -> #lvmSetExtendedListViewStyle:;
+	add: #ListView -> #lvmSetExtendedListViewStyle:dwExStyle:;
 	add: #LOGBRUSH -> #style;
 	add: #LOGBRUSH -> #style:;
 	add: #LOGPEN -> #style;
@@ -612,9 +614,30 @@ resource_Multiselection_list_box!public!resources-views! !
 
 columns
 	#deprecated. "5.0"
-	^self allColumns copyFrom: 2! !
+	^self allColumns copyFrom: 2!
+
+lvmSetExtendedListViewStyle: style
+	"Private - Set the extended styles of the receiver.
+	Implementation Note: Present for backward compatibility with pre-3.0 resources."
+
+	#deprecated.
+	lvStyle := style bitOr: LVS_EX_DOUBLEBUFFER.
+	User32
+		sendMessage: handle
+		msg: LVM_SETEXTENDEDLISTVIEWSTYLE
+		wParam: 0
+		lpParam: style asParameter!
+
+lvmSetExtendedListViewStyle: anInteger dwExStyle: aBoolean
+	"Private - Set the extended styles of the receiver.
+	Implementation Note: Present for backward compatibility with Dolphin 3.x resources where this message was included in the state message sequence. This didn't last long, as by Dolphin 4.0 an inst var had been added to hold the style and the message was then sent directly by the ListView>>#onViewCreated method."
+
+	#deprecated.
+	self listViewStyleMask: anInteger set: aBoolean! !
 !ListView categoriesForMethods!
 columns!columns!public! !
+lvmSetExtendedListViewStyle:!accessing!private! !
+lvmSetExtendedListViewStyle:dwExStyle:!accessing!private! !
 !
 
 !LOGBRUSH methodsFor!

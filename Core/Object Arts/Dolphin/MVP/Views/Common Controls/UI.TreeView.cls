@@ -2,7 +2,7 @@
 
 UI.IconicListAbstract
 	subclass: #'UI.TreeView'
-	instanceVariableNames: 'handleObjectMap indentSeparation viewMode tvFlags objectHandleMap'
+	instanceVariableNames: 'handleObjectMap indentSeparation viewMode tvFlags objectHandleMap tvStyle _unused28 _unused29 _unused30 _unused31 _unused32 _unused33 _unused34'
 	classVariableNames: ''
 	imports: #(#{OS.TreeViewConstants})
 	classInstanceVariableNames: ''
@@ -199,10 +199,9 @@ basicRefresh: anObject handle: hItem
 
 	| tvItem |
 	self isVirtual
-		ifTrue: [tvItem := TVITEMEXW hItem: hItem]
+		ifTrue: [tvItem := TVITEMEXW callbacksForItem: hItem]
 		ifFalse: 
-			[tvItem := TVITEMEXW newBuffer
-						hItem: hItem;
+			[tvItem := (TVITEMEXW hItem: hItem)
 						text: (self getTextBlock value: anObject) displayString;
 						children: (self model hasChildren: anObject) asParameter;
 						yourself.
@@ -390,10 +389,9 @@ getEditControl
 
 !
 
-getItemState: itemHandle
+getItemState: anExternalHandle
 	| tvItem |
-	tvItem := TVITEMW newBuffer
-				hItem: itemHandle;
+	tvItem := (TVITEMW hItem: anExternalHandle)
 				mask: ##(TVIF_CHILDREN | TVIF_STATE);
 				yourself.
 	User32
@@ -405,8 +403,7 @@ getItemState: itemHandle
 
 getItemText: itemHandle
 	| tvItem |
-	tvItem := TVITEMW newBuffer
-				hItem: itemHandle;
+	tvItem := (TVITEMW hItem: itemHandle)
 				newTextBuffer: 128;
 				yourself.
 	User32
@@ -447,6 +444,18 @@ handleFromObject: anObject ifAbsent: exceptionHandler
 
 	^objectHandleMap at: anObject ifAbsent: exceptionHandler!
 
+hasAutomaticHorizontalScrolling
+	"Answer whether the view will scroll automatically in the horizontal plane to bring items into view."
+
+	^tvStyle allMask: TVS_EX_AUTOHSCROLL!
+
+hasAutomaticHorizontalScrolling: aBoolean
+	"Set whether the view will scroll automatically in the horizontal plane to bring items into view."
+
+	"Contrary to the documentation this does not remove the horizontal scroll bar, rather it moves the viewing window left or right as it judges appropriate for the selection or mouse position."
+
+	self treeViewStyleMask: TVS_EX_AUTOHSCROLL set: aBoolean!
+
 hasButtons
 	"Answer whether the receiver has expand/contract buttons associated
 	with its nodes which the user can single click over to expand/contract the
@@ -472,6 +481,20 @@ hasCheckBoxes: aBoolean
 	Note that this style is permanent and requires a re-create to take effect."
 
 	self baseStyleMask: TVS_CHECKBOXES set: aBoolean recreateIfChanged: true!
+
+hasFadingExpandos
+	"Answer whether the expandos in the tree fade away when not hovering over it."
+
+	"N.B. this flickers a lot without double-buffering enabled (see #isDouble Buffered)."
+
+	^tvStyle allMask: TVS_EX_FADEINOUTEXPANDOS!
+
+hasFadingExpandos: aBoolean
+	"Set whether the expandos in the tree fade away when not hovering over it."
+
+	"N.B. this flickers a lot without double-buffering enabled (see #isDouble Buffered)."
+
+	self treeViewStyleMask: TVS_EX_FADEINOUTEXPANDOS set: aBoolean!
 
 hasFullRowSelect
 	"Answer whether the receiver highlights the whole row when a selection is made, or just the label."
@@ -558,7 +581,17 @@ initialize
 
 	super initialize.
 	viewMode := #noIcons.
-	tvFlags := 0.!
+	tvStyle := tvFlags := 0!
+
+isDoubleBuffered
+	"Answer whether the tree display is double-buffered to avoid flicker. This is useful for trees that are frequently updated by background events."
+
+	^tvStyle allMask: TVS_EX_DOUBLEBUFFER!
+
+isDoubleBuffered: aBoolean 
+	"Set whether thet tree display is double-buffered to avoid flicker. This is useful for	trees that are frequently updated by background events."
+
+	self treeViewStyleMask: TVS_EX_DOUBLEBUFFER set: aBoolean!
 
 isExpandAllEnabled
 	"Answer whether the tree will expand all nodes below the selected node when the '*' key is
@@ -930,14 +963,19 @@ onViewCreated
 	"The receiver's window has been created. Copy across to it any information
 	held in instance variables"
 
-	"Some vagary of the TreeView causes the font to be incorrectly restored during 
-	ControlView>>onCreated. We force it again here"
-
 	super onViewCreated.
 	self newMaps.
+	"Some vagary of the TreeView causes the font to be incorrectly restored during ControlView>>onCreated. We force it again here"
 	self applyFont.
 	self refreshContents.
 	self viewMode: self viewMode.
+	tvStyle == 0
+		ifFalse: 
+			[User32
+				sendMessage: handle
+				msg: TVM_SETEXTENDEDSTYLE
+				wParam: -1
+				lParam: tvStyle].
 	indentSeparation ifNotNil: [self updateIndentation].
 	self applyExtendedStyles!
 
@@ -947,14 +985,11 @@ refreshContents
 	self isOpen ifFalse: [^self].
 	self noRedrawDo: [self basicRefreshContents]!
 
-refreshHasChildren: hItem
-	"Private - Update the TreeView's understanding of whether the element of the receiver
-	with handle, hItem, has children or not. This affects whether the TreeView displays an
-	expansion button or not."
+refreshHasChildren: anExternalHandle
+	"Private - Update the TreeView's understanding of whether the element of the receiver	with the specified handle has children or not. This affects whether the TreeView displays an expansion button or not."
 
 	| tvItem |
-	tvItem := TVITEMW newBuffer
-				hItem: hItem;
+	tvItem := (TVITEMW hItem: anExternalHandle)
 				childrenCallback;
 				yourself.
 	User32
@@ -1085,6 +1120,19 @@ showsSelAlways: aBoolean
 		baseStyleMask: TVS_SHOWSELALWAYS
 		set: aBoolean
 		recreateIfChanged: true	"Recreate required to take effect"!
+
+treeViewStyleMask: anInteger set: aBoolean
+	"Private - Sets/clears the tree view extended style bits in the <integer> first argument according to the <Boolean> second argument. Answer the previous extended style flags."
+
+	| valueMask prevStyle |
+	valueMask := anInteger bitAnd: 0 - aBoolean asInteger.
+	prevStyle := User32
+				sendMessage: handle
+				msg: TVM_SETEXTENDEDSTYLE
+				wParam: anInteger
+				lParam: valueMask.
+	tvStyle := (prevStyle bitAnd: anInteger bitInvert) bitOr: valueMask.
+	^prevStyle!
 
 tvnGetInfoTip: pNMHDR
 	"Private - Default handler for the TVN_GETINFOTIPA notification message.
@@ -1260,10 +1308,14 @@ getSelectionsByIndex!private!selection! !
 getSingleSelection!private!selection! !
 handleFromObject:!accessing!private! !
 handleFromObject:ifAbsent:!accessing!private! !
+hasAutomaticHorizontalScrolling!accessing-styles!public! !
+hasAutomaticHorizontalScrolling:!accessing-styles!public! !
 hasButtons!accessing-styles!public! !
 hasButtons:!accessing-styles!public! !
 hasCheckBoxes!accessing-styles!public! !
 hasCheckBoxes:!accessing-styles!public! !
+hasFadingExpandos!accessing-styles!public! !
+hasFadingExpandos:!accessing-styles!public! !
 hasFullRowSelect!accessing-styles!public! !
 hasFullRowSelect:!accessing-styles!public! !
 hasHotTracking!accessing-styles!public! !
@@ -1280,6 +1332,8 @@ includesItem:!enquiries!public! !
 indentSeparation!accessing!public! !
 indentSeparation:!accessing!public! !
 initialize!initializing!private! !
+isDoubleBuffered!accessing-styles!public! !
+isDoubleBuffered:!accessing-styles!public! !
 isExpandAllEnabled!accessing!public! !
 isExpandAllEnabled:!accessing!public! !
 isExpanded:!public!testing! !
@@ -1330,6 +1384,7 @@ setViewMode:!accessing!private! !
 showDropHighlight:!drag & drop!private! !
 showsSelAlways!accessing-styles!public! !
 showsSelAlways:!accessing-styles!public! !
+treeViewStyleMask:set:!accessing-styles!private! !
 tvnGetInfoTip:!event handling-win32!private! !
 tvnItemChanged:!event handling-win32!private! !
 tvnItemChanging:!event handling-win32!private! !
@@ -1365,6 +1420,12 @@ icon
 initialize
 	CommCtrlLibrary addInitFlag: ICC_TREEVIEW_CLASSES!
 
+stbConvert: instVarArray fromVersion: verInteger
+	| instVars |
+	instVars := super stbConvert: instVarArray fromVersion: verInteger.
+	verInteger < 14 ifTrue: [instVars := self stbConvertFromVersion13: instVars].
+	^instVars!
+
 stbConvertFromVersion10: anArray
 	"Private - Perform an STB conversion from a version 10 <TreeView> to version 11,
 	i.e. append tvFlags and reserve another slot for later use."
@@ -1380,6 +1441,21 @@ stbConvertFromVersion10: anArray
 			startingAt: 1;
 		at: size + 1 put: 0;
 		yourself!
+
+stbConvertFromVersion13: anArray
+	"Private - Perform an STB conversion from a version 13 <TreeView> to version 14,
+	i.e. append tvStyle and reserve 7 additional slots for later use."
+
+	| size |
+	size := anArray size.
+	^(anArray resize: size + 8)
+		at: size + 1 put: 0;
+		yourself!
+
+stbVersion
+	"14: Adds tvStyle and 7 spares"
+
+	^14!
 
 themePartName
 	^#TreeView!
@@ -1398,7 +1474,10 @@ winClassName
 defaultModel!models!public! !
 icon!constants!public! !
 initialize!development!initializing!private! !
+stbConvert:fromVersion:!binary filing!public! !
 stbConvertFromVersion10:!binary filing!private! !
+stbConvertFromVersion13:!binary filing!private! !
+stbVersion!binary filing!public! !
 themePartName!constants!public! !
 uninitialize!class hierarchy-removing!private! !
 updateModes!accessing!private! !

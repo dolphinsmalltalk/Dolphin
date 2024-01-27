@@ -1062,11 +1062,18 @@ listMode
 	<commandQuery: #queryListMode:>
 	self viewMode: #list!
 
-listViewStyleMask: mask set: aBoolean
-	"Private - Sets/clears the list view extended style bits in the <integer>, mask, 
-	according to aBoolean. Answer the previous extended style flags."
+listViewStyleMask: anInteger set: aBoolean
+	"Private - Sets/clears the list view extended style bits in the <integer> first argument according to the <Boolean> second argument. Answer the previous extended style flags."
 
-	^self lvmSetExtendedListViewStyle: mask dwExStyle: aBoolean asParameter negated!
+	| valueMask prevStyle |
+	valueMask := anInteger bitAnd: 0 - aBoolean asInteger.
+	prevStyle := User32
+				sendMessage: handle
+				msg: LVM_SETEXTENDEDLISTVIEWSTYLE
+				wParam: anInteger
+				lParam: valueMask.
+	lvStyle := (prevStyle bitAnd: anInteger bitInvert) bitOr: valueMask.
+	^prevStyle!
 
 lvFlags
 	^lvFlags ?? 0!
@@ -1393,31 +1400,6 @@ lvmSetColumnWidth: itemIndex to: anInteger
 		msg: LVM_SETCOLUMNWIDTH
 		wParam: itemIndex
 		lParam: anInteger!
-
-lvmSetExtendedListViewStyle: style
-	"Private - Set the extended styles of the receiver.
-	Implementation Note: Present for backward compatibility with pre-3.0 resources."
-
-	#deprecated.
-	lvStyle := style bitOr: LVS_EX_DOUBLEBUFFER.
-	User32
-		sendMessage: handle
-		msg: LVM_SETEXTENDEDLISTVIEWSTYLE
-		wParam: 0
-		lpParam: style asParameter!
-
-lvmSetExtendedListViewStyle: dwExMask dwExStyle: dwExStyle
-	"Private - Set or reset the masked extended styles of the receiver.
-	Answer the previous style flags."
-
-	| prevStyle |
-	prevStyle := User32
-				sendMessage: handle
-				msg: LVM_SETEXTENDEDLISTVIEWSTYLE
-				wParam: dwExMask
-				lParam: dwExStyle.
-	lvStyle := (prevStyle bitAnd: dwExMask bitInvert) bitOr: (dwExStyle bitAnd: dwExMask).
-	^prevStyle!
 
 lvmSetIconSpacing: aPoint
 	"Private - Set the spacing between icons displayed in the receiver.
@@ -1936,7 +1918,13 @@ onViewCreated
 	self allColumns
 		keysAndValuesDo: [:eachIndex :eachColumn | self basicAddColumn: eachColumn atIndex: eachIndex].
 	self viewMode: self viewMode.
-	self lvmSetExtendedListViewStyle: -1 dwExStyle: lvStyle.
+	lvStyle == 0
+		ifFalse: 
+			[User32
+				sendMessage: handle
+				msg: LVM_SETEXTENDEDLISTVIEWSTYLE
+				wParam: -1
+				lParam: lvStyle].
 	self basicRefreshContents.
 	self applyImageLists.
 	self basicSelectionsByIndex: lastSelIndices.
@@ -2490,8 +2478,6 @@ lvmSetCallbackMask:!accessing!private! !
 lvmSetColumn:at:!columns!private! !
 lvmSetColumnOrderArray:!accessing!private! !
 lvmSetColumnWidth:to:!accessing!private! !
-lvmSetExtendedListViewStyle:!accessing!private! !
-lvmSetExtendedListViewStyle:dwExStyle:!accessing!private! !
 lvmSetIconSpacing:!accessing!private! !
 lvmSetImageList:type:!image management!private! !
 lvmSetItem:!accessing!private! !

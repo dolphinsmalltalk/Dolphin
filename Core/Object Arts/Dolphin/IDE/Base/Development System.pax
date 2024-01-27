@@ -9844,7 +9844,7 @@ publishedAspectsOfInstances
 
 	| aspects |
 	aspects := super publishedAspectsOfInstances.
-	#(#hasLinesAtRoot #hasLines #hasButtons #canEditLabels #showsSelAlways #isMonoExpandable #hasInfoTips #hasCheckBoxes #isExpandAllEnabled #hasFullRowSelect)
+	#(#hasLinesAtRoot #hasLines #hasButtons #canEditLabels #showsSelAlways #isMonoExpandable #hasInfoTips #hasCheckBoxes #isExpandAllEnabled #hasFullRowSelect #isDoubleBuffered)
 		do: [:each | aspects add: (Aspect boolean: each)].
 	aspects
 		add: (Aspect integer: #indentSeparation);
