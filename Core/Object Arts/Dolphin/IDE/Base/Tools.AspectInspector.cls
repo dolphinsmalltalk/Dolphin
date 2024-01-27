@@ -278,13 +278,11 @@ treeHasGridLines: anObject
 	treeHasGridLines := anObject!
 
 treeUpdateMode
-	"Answer the symbolic name of the TreeView refresh mode to be used in the inspector's 
-	aspect tree. This is one of:
+	"Answer the symbolic name of the TreeView refresh mode to be used in the inspector's aspect tree. This is one of:
 		static	- The tree is fully populated with all display information on opening
-		lazy - The tree enquires display information as required, but only once
-		dynamic - The tree enquires display information on every repaint.
-	The recommended mode is #lazy (at least for the PAI), since this will work best for potentially 
-	slow access 	to aspect text and images."
+		lazy 		- The tree enquires display information as required, but only once
+		dynamic 	- The tree enquires display information on every repaint.
+	The recommended mode is #lazy (at least for the PAI), since this will work best for potentially slow access to aspect text and images."
 
 	^treeUpdateMode!
 

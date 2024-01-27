@@ -2248,6 +2248,16 @@ thumbnailsImageManager
 			thumbnailsImageManager maskcolor: Color default].
 	^thumbnailsImageManager!
 
+updateAll
+	"Re-render the model's contents. This is a similar operation to #refreshContents, except
+	that it is assumed that the models contents are the same objects, but may have changed
+	internally so that their visual representation must be updated. This is typically a very
+	cheap operation for virtual (dynamic) lists, since these just need to repaint. For
+	non-virtual lists the list entries must be individually updated or (for simpler lists)
+	removed and re-added."
+
+	self isVirtual ifTrue: [self updateAllVirtual] ifFalse: [self updateAllNonVirtual]!
+
 updateAllNonVirtual
 	"Private - Update the text and images the list view stores for each item in this non-virtual list."
 
@@ -2568,6 +2578,7 @@ textFromRow:!adapters!private! !
 thumbnailExtent!accessing!public! !
 thumbnailExtent:!accessing!public! !
 thumbnailsImageManager!image management!private! !
+updateAll!public!updating! !
 updateAllNonVirtual!private!updating! !
 updateAllVirtual!private!updating! !
 updateColumn:!columns!private!updating! !

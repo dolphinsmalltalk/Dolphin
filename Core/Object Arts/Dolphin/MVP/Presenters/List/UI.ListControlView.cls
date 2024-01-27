@@ -583,7 +583,7 @@ updateAll
 	non-virtual lists the list entries must be individually updated or (for simpler lists)
 	removed and re-added."
 
-	self isVirtual ifTrue: [self updateAllVirtual] ifFalse: [self updateAllNonVirtual]!
+	self updateAllNonVirtual!
 
 updateAllNonVirtual
 	| selections |

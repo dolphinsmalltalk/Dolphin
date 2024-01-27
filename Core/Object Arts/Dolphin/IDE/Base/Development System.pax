@@ -9848,7 +9848,7 @@ publishedAspectsOfInstances
 		do: [:each | aspects add: (Aspect boolean: each)].
 	aspects
 		add: (Aspect integer: #indentSeparation);
-		add: (Aspect symbol: #updateMode from: UpdateModes);
+		add: (Aspect symbol: #updateMode from: self updateModes);
 		yourself.
 	^aspects! !
 !UI.TreeView class categoriesForMethods!

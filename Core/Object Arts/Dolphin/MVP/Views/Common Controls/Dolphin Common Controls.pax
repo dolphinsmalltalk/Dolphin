@@ -48,6 +48,11 @@ package setClassNames: #(
 	#{UI.TabView}
 	#{UI.TabViewXP}
 	#{UI.TreeView}
+	#{UI.TreeViewDynamicUpdateMode}
+	#{UI.TreeViewLazyUpdateMode}
+	#{UI.TreeViewStaticUpdateMode}
+	#{UI.TreeViewUpdateMode}
+	#{UI.TreeViewVirtualUpdateMode}
 ).
 
 package setMethodNames: #(
@@ -493,6 +498,13 @@ Core.Object
 	imports: #(#{OS.ListViewConstants})
 	classInstanceVariableNames: ''
 	classConstants: { 'AutoResizeMask' -> 16r1. 'SortInvertedMask' -> 16r2 }!
+Core.Object
+	subclass: #'UI.TreeViewUpdateMode'
+	instanceVariableNames: 'view'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 UI.Event
 	subclass: #'UI.LabelEditEvent'
 	instanceVariableNames: 'cancel item object text'
@@ -846,6 +858,34 @@ OS.NMGETINFOTIP
 			'_OffsetOf_lParam' -> 16r18.
 			'_OffsetOf_pszText' -> 16rC
 		}!
+UI.TreeViewUpdateMode
+	subclass: #'UI.TreeViewStaticUpdateMode'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.TreeViewUpdateMode
+	subclass: #'UI.TreeViewVirtualUpdateMode'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.TreeViewVirtualUpdateMode
+	subclass: #'UI.TreeViewDynamicUpdateMode'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.TreeViewVirtualUpdateMode
+	subclass: #'UI.TreeViewLazyUpdateMode'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 UI.ListControlView
 	subclass: #'UI.IconicListAbstract'
 	instanceVariableNames: 'getImageBlock imageManager stateImageManager getInfoTipBlock customDrawBlock largeIconExtent thumbnailsImageManager'
@@ -907,15 +947,19 @@ UI.IconicListAbstract
 		}!
 UI.IconicListAbstract
 	subclass: #'UI.TreeView'
-	instanceVariableNames: 'handleObjectMap indentSeparation viewMode tvFlags objectHandleMap tvStyle _unused28 _unused29 _unused30 _unused31 _unused32 _unused33 _unused34'
+	instanceVariableNames: 'handleObjectMap indentSeparation viewMode tvFlags objectHandleMap tvStyle updateMode _unused29 _unused30 _unused31 _unused32 _unused33 _unused34'
 	classVariableNames: ''
 	imports: #(#{OS.TreeViewConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'DisableExpandAllMask' -> 16r1.
-			'NonVirtualMask' -> 16r2.
-			'UpdateModeMask' -> 16r6.
-			'UpdateModes' -> #(#dynamic #static #lazy)
+			'LegacyUpdateModeMask' -> 16r6.
+			'UpdateModes'
+				-> (IdentityDictionary withAll: {
+								#dynamic -> TreeViewDynamicUpdateMode.
+								#lazy -> TreeViewLazyUpdateMode.
+								#static -> TreeViewStaticUpdateMode
+							})
 		}!
 UI.TabView
 	subclass: #'UI.TabViewXP'

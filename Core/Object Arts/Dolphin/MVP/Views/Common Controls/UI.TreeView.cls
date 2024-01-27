@@ -2,15 +2,19 @@
 
 UI.IconicListAbstract
 	subclass: #'UI.TreeView'
-	instanceVariableNames: 'handleObjectMap indentSeparation viewMode tvFlags objectHandleMap tvStyle _unused28 _unused29 _unused30 _unused31 _unused32 _unused33 _unused34'
+	instanceVariableNames: 'handleObjectMap indentSeparation viewMode tvFlags objectHandleMap tvStyle updateMode _unused29 _unused30 _unused31 _unused32 _unused33 _unused34'
 	classVariableNames: ''
 	imports: #(#{OS.TreeViewConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'DisableExpandAllMask' -> 16r1.
-			'NonVirtualMask' -> 16r2.
-			'UpdateModeMask' -> 16r6.
-			'UpdateModes' -> #(#dynamic #static #lazy)
+			'LegacyUpdateModeMask' -> 16r6.
+			'UpdateModes'
+				-> (IdentityDictionary withAll: {
+								#dynamic -> TreeViewDynamicUpdateMode.
+								#lazy -> TreeViewLazyUpdateMode.
+								#static -> TreeViewStaticUpdateMode
+							})
 		}!
 UI.TreeView guid: (Core.GUID fromString: '{87b4c732-026e-11d3-9fd7-00a0cc3e4a32}')!
 UI.TreeView comment: 'TreeView is a <treeView> wrapping the Windows "SysTreeView32" common control. It is for single selection use and, therefore, implements the <selectableItems> protocol for use with any <treeModel>. 
@@ -39,59 +43,12 @@ Class Variables:
 !UI.TreeView categoriesForClass!MVP-Views! !
 !UI.TreeView methodsFor!
 
-addNonVirtualItems: aCollection inHandle: parentHandle afterHandle: siblingHandle
-	| tvis tvItem getText getImage |
-	tvis := TVINSERTSTRUCTW hParent: parentHandle hInsertAfter: siblingHandle.
-	tvItem := tvis item.
-	tvItem
-		iImage: 0;
-		iSelectedImage: 0.
-	getText := self getTextBlock.
-	getImage := self getImageBlock.
-	"Add items with subclassing removed so don't receive TVM_INSERTITEMs"
-	self withOldWndProc: 
-			[aCollection do: 
-					[:each |
-					| hItem |
-					tvItem
-						text: (getText value: each) displayString;
-						children: (model hasChildren: each) asParameter.
-					getImage
-						ifNotNil: 
-							[(getImage value: each)
-								ifNotNil: 
-									[:index |
-									tvItem
-										image: index - 1;
-										selectedImage: index - 1]].
-					hItem := User32
-								sendMessageU: handle
-								msg: TVM_INSERTITEMW
-								wParam: 0
-								lpParam: tvis.
-					hItem == 0 ifFalse: [objectHandleMap at: (handleObjectMap at: hItem put: each) put: hItem]]]!
-
 addRoot: anObject
-	self
-		basicAddAll: {anObject}
+	updateMode
+		addItems: { anObject }
 		inHandle: TVGN_ROOT
 		afterHandle: TVI_LAST.
 	self hasLinesAtRoot ifFalse: [self expand: anObject]!
-
-addVirtualItems: aCollection inHandle: parentHandle afterHandle: siblingHandle
-	| tvis |
-	tvis := TVINSERTSTRUCTW hParent: parentHandle hInsertAfter: siblingHandle.
-	self withOldWndProc: 
-			["Add items with subclassing removed so don't receive TVM_INSERTITEMs"
-			aCollection do: 
-					[:each |
-					| hItem |
-					hItem := User32
-								sendMessageU: handle
-								msg: TVM_INSERTITEMW
-								wParam: 0
-								lpParam: tvis.
-					hItem == 0 ifFalse: [objectHandleMap at: (handleObjectMap at: hItem put: each) put: hItem]]]!
 
 applyExtendedStyles
 	"Private - Apply any extended TreeView styles after view creation or recreation. 
@@ -126,27 +83,6 @@ basicAdd: anObject atIndex: anInteger
 	"Private - Adds an item to the list view at the index given by anInteger"
 
 	^self shouldNotImplement!
-
-basicAddAll: objects inHandle: aParentHandle afterHandle: aSiblingHandle
-	"Private - Insert the <collection> of <Object>s, objects, into the tree view.
-	We also add each object to our mapping dictionary which ensures that we can 
-	map between the Windows-managed tree info and Smalltalk objects."
-
-	"Add items with subclassing removed so don't receive TVM_INSERTITEMs"
-
-	objects isEmpty ifTrue: [^objects].
-	self isVirtual
-		ifTrue: 
-			[self
-				addVirtualItems: objects
-				inHandle: aParentHandle
-				afterHandle: aSiblingHandle]
-		ifFalse: 
-			[self
-				addNonVirtualItems: objects
-				inHandle: aParentHandle
-				afterHandle: aSiblingHandle].
-	^objects!
 
 basicClear
 	"Private - Clears all items from the tree view and also clears the map"
@@ -194,44 +130,15 @@ basicParentOf: aHandle
 		wParam: TVGN_PARENT
 		lParam: aHandle!
 
-basicRefresh: anObject handle: hItem
-	"Private - Update the text, image, and children flag of the specified element of the tree."
-
-	| tvItem |
-	self isVirtual
-		ifTrue: [tvItem := TVITEMEXW callbacksForItem: hItem]
-		ifFalse: 
-			[tvItem := (TVITEMEXW hItem: hItem)
-						text: (self getTextBlock value: anObject) displayString;
-						children: (self model hasChildren: anObject) asParameter;
-						yourself.
-			self getImageBlock
-				ifNotNil: 
-					[:getImage |
-					(getImage value: anObject)
-						ifNotNil: 
-							[:index |
-							tvItem
-								image: index - 1;
-								selectedImage: index - 1]]].
-	User32
-		sendMessage: handle
-		msg: TVM_SETITEMW
-		wParam: 0
-		lpParam: tvItem!
-
 basicRefreshContents
 	| roots |
 	self basicClear.
 	roots := self model roots.
 	roots isEmpty ifTrue: [^self].
-	self 
-		basicAddAll: roots
+	updateMode
+		addItems: roots
 		inHandle: TVGN_ROOT
 		afterHandle: TVI_LAST.
-	"If there are no lines (and therefore expansion buttons) at the roots, then the roots ought
-	to be expanded as there is otherwise no visual indication to the user that there might be
-	subnodes)."
 	self hasLinesAtRoot ifFalse: [roots reverseDo: [:each | self expand: each]]!
 
 basicRemove: aHandle
@@ -581,7 +488,8 @@ initialize
 
 	super initialize.
 	viewMode := #noIcons.
-	tvStyle := tvFlags := 0!
+	tvStyle := tvFlags := 0.
+	updateMode := TreeViewDynamicUpdateMode forTreeView: self!
 
 isDoubleBuffered
 	"Answer whether the tree display is double-buffered to avoid flicker. This is useful for trees that are frequently updated by background events."
@@ -641,10 +549,10 @@ isSmallIcons
 	^self viewMode == #smallIcons!
 
 isVirtual
-	"Private - Answer true if the receiver configures the tree to ask for 
-	text and images by callback (i.e. lazy or dynamic mode)."
+	"Answer true if the receiver configures the tree to ask for text and images by callback (i.e. lazy or dynamic mode).
+	To configure the tree in non-virtual mode the #updateMode should be set to #static."
 
-	^tvFlags noMask: NonVirtualMask!
+	^updateMode isVirtual!
 
 itemCount
 	"Answer the total number of items in the view."
@@ -792,7 +700,7 @@ onDisplayDetailsRequired: aTVITEM
 			[self getImageBlock
 				ifNotNil: [:getImage | (getImage value: object) ifNotNil: [:index | aTVITEM images: index - 1]]].
 	(requestMask allMask: TVIF_TEXT) ifTrue: [aTVITEM textInBuffer: (self getTextBlock value: object)].
-	(tvFlags anyMask: UpdateModeMask) ifTrue: [aTVITEM maskIn: TVIF_DI_SETITEM].
+	updateMode viewStoresItemData ifTrue: [aTVITEM maskIn: TVIF_DI_SETITEM].
 	"Suppress default processing"
 	^0!
 
@@ -841,8 +749,8 @@ onItem: anObject addedInParent: aParentObject
 	[previousSiblingIndex > 0
 		and: [(previousSiblingHandle := self handleFromObject: (siblings at: previousSiblingIndex)) isNil]]
 			whileTrue: [previousSiblingIndex := previousSiblingIndex - 1].
-	self
-		basicAddAll: {anObject}
+	updateMode
+		addItems: { anObject }
 		inHandle: parentHandle
 		afterHandle: previousSiblingHandle ?? TVI_FIRST!
 
@@ -957,7 +865,7 @@ onTreeChanged: anObject
 		ifNotNil: 
 			[:hItem |
 			self collapseHandle: hItem.
-			self basicRefresh: anObject handle: hItem]!
+			updateMode refreshItem: anObject handle: hItem]!
 
 onViewCreated
 	"The receiver's window has been created. Copy across to it any information
@@ -1134,6 +1042,22 @@ treeViewStyleMask: anInteger set: aBoolean
 	tvStyle := (prevStyle bitAnd: anInteger bitInvert) bitOr: valueMask.
 	^prevStyle!
 
+tvmInsertItem: anObject tvis: aTVINSERTSTRUCT
+	| hItem |
+	hItem := User32
+				sendMessageU: handle
+				msg: TVM_INSERTITEMW
+				wParam: 0
+				lpParam: aTVINSERTSTRUCT.
+	hItem == 0 ifFalse: [objectHandleMap at: (handleObjectMap at: hItem put: anObject) put: hItem]!
+
+tvmSetItem: tvItem
+	User32
+		sendMessage: self handle
+		msg: TVM_SETITEMW
+		wParam: 0
+		lpParam: tvItem!
+
 tvnGetInfoTip: pNMHDR
 	"Private - Default handler for the TVN_GETINFOTIPA notification message.
 	Answer nil to accept the default processing."
@@ -1171,11 +1095,15 @@ tvnItemExpanding: pNMHDR
 	(self objectFromHandle: hParent ifAbsent: nil)
 		ifNotNil: 
 			[:parentObject |
-			Cursor wait showWhile: 
-					[self
-						basicAddAll: (self model childrenOf: parentObject)
-						inHandle: hParent
-						afterHandle: TVI_LAST].
+			| children |
+			children := self model childrenOf: parentObject.
+			children isEmpty
+				ifFalse: 
+					[Cursor wait showWhile: 
+							[updateMode
+								addItems: children
+								inHandle: hParent
+								afterHandle: TVI_LAST]].
 			"Inform the parent item that we don't want to be informed when we are expanded again"
 			tviParent beStateExpandedOnce].
 	^nil	"accept the default processing"!
@@ -1188,14 +1116,18 @@ tvnSelChanging: pNMHDR
 
 	^(self onSelChanging: pNMHDR) not!
 
+updateAll
+	"Re-render the model's contents. This is a similar operation to #refreshContents, except that it is assumed that the models contents are the same objects, but may have changed internally so that their visual representation must be updated. The effect will depend on the current update mode:
+		#dynamic - the view is just invalidated to trigger repaint, which will re-request text, icons, etc
+		#lazy, #static - the view is asked to refresh each item individually."
+
+	updateMode updateAll!
+
 updateAllNonVirtual
 	"Private - Update the text and images the tree view stores for each item in non-dynamic tree."
 
 	handleObjectMap 
-		keysAndValuesDo: [:eachHandle :eachObject | self basicRefresh: eachObject handle: eachHandle]!
-
-updateAllVirtual
-	self updateMode == #dynamic ifTrue: [super updateAllVirtual] ifFalse: [self updateAllNonVirtual]!
+		keysAndValuesDo: [:eachHandle :eachObject | updateMode refreshItem: eachObject handle: eachHandle]!
 
 updateIndentation
 	"Private - Update the identation of child items to reflect the current values
@@ -1212,7 +1144,7 @@ updateIndentation
 			indentSeparation := (self sendMessage: TVM_GETINDENT) - imageWidth]!
 
 updateItem: anObject
-	(self handleFromObject: anObject) ifNotNil: [:hItem | self basicRefresh: anObject handle: hItem]!
+	(self handleFromObject: anObject) ifNotNil: [:hItem | updateMode refreshItem: anObject handle: hItem]!
 
 updateMode
 	"Answer the desired update mode, one of:
@@ -1221,9 +1153,9 @@ updateMode
 		#static	- tree nodes fully populated with display details when first added
 	The display details referred to are the label text, icon, and whether or not the node has children."
 
-	^UpdateModes at: ((tvFlags bitAnd: UpdateModeMask) bitShift: -1) + 1!
+	^updateMode name!
 
-updateMode: aSymbol 
+updateMode: aSymbol
 	"Set the desired update mode, one of:
 		#dynamic	- display details re-requested by callback on every paint
 		#lazy		- display details initially requested by callback on first paint only
@@ -1231,8 +1163,7 @@ updateMode: aSymbol
 	The display details referred to are the label test, icon, and whether or not the node has children.
 	Note that the update mode should not be changed after the tree has been populated."
 
-	tvFlags := (tvFlags maskClear: UpdateModeMask) 
-				bitOr: ((UpdateModes indexOf: aSymbol) - 1 bitShift: 1)!
+	updateMode := (UpdateModes at: aSymbol ?? #dynamic) forTreeView: self!
 
 viewMode
 	"Answer the view mode of the receiver. See the class method #viewModes for the
@@ -1270,18 +1201,14 @@ wmKeyDown: message wParam: wParam lParam: lParam
 				wParam: wParam
 				lParam: lParam].! !
 !UI.TreeView categoriesForMethods!
-addNonVirtualItems:inHandle:afterHandle:!adding!private! !
 addRoot:!adding!private! !
-addVirtualItems:inHandle:afterHandle:!adding!private! !
 applyExtendedStyles!private!updating! !
 applyImageLists!image management!private! !
 basicAdd:atIndex:!adding!private! !
-basicAddAll:inHandle:afterHandle:!adding!private! !
 basicClear!operations!private! !
 basicEditItemLabel:!operations!private! !
 basicItemFromPoint:!accessing!private! !
 basicParentOf:!accessing!private! !
-basicRefresh:handle:!private!updating! !
 basicRefreshContents!private!updating! !
 basicRemove:!private!removing! !
 basicRemoveAtIndex:!private!removing! !
@@ -1342,7 +1269,7 @@ isMonoExpandable!accessing-styles!public! !
 isMonoExpandable:!accessing-styles!public! !
 isSelected:!public!testing! !
 isSmallIcons!public!testing! !
-isVirtual!accessing-styles!private! !
+isVirtual!accessing-styles!public! !
 itemCount!accessing!public! !
 itemRect:textOnly:!enquiries!public! !
 itemStructure!constants!private! !
@@ -1385,14 +1312,16 @@ showDropHighlight:!drag & drop!private! !
 showsSelAlways!accessing-styles!public! !
 showsSelAlways:!accessing-styles!public! !
 treeViewStyleMask:set:!accessing-styles!private! !
+tvmInsertItem:tvis:!adding!private! !
+tvmSetItem:!private!updating! !
 tvnGetInfoTip:!event handling-win32!private! !
 tvnItemChanged:!event handling-win32!private! !
 tvnItemChanging:!event handling-win32!private! !
 tvnItemExpanded:!event handling-win32!private! !
 tvnItemExpanding:!event handling-win32!private! !
 tvnSelChanging:!event handling-win32!private! !
+updateAll!public!updating! !
 updateAllNonVirtual!private!updating! !
-updateAllVirtual!private!updating! !
 updateIndentation!private!updating! !
 updateItem:!event handling!public! !
 updateMode!accessing!public! !
@@ -1420,12 +1349,6 @@ icon
 initialize
 	CommCtrlLibrary addInitFlag: ICC_TREEVIEW_CLASSES!
 
-stbConvert: instVarArray fromVersion: verInteger
-	| instVars |
-	instVars := super stbConvert: instVarArray fromVersion: verInteger.
-	verInteger < 14 ifTrue: [instVars := self stbConvertFromVersion13: instVars].
-	^instVars!
-
 stbConvertFromVersion10: anArray
 	"Private - Perform an STB conversion from a version 10 <TreeView> to version 11,
 	i.e. append tvFlags and reserve another slot for later use."
@@ -1442,15 +1365,18 @@ stbConvertFromVersion10: anArray
 		at: size + 1 put: 0;
 		yourself!
 
-stbConvertFromVersion13: anArray
-	"Private - Perform an STB conversion from a version 13 <TreeView> to version 14,
-	i.e. append tvStyle and reserve 7 additional slots for later use."
-
-	| size |
-	size := anArray size.
-	^(anArray resize: size + 8)
+stbConvertProxy: anSTBViewProxy
+	| size vars |
+	super stbConvertProxy: anSTBViewProxy.
+	anSTBViewProxy version < 14 ifFalse: [^self].
+	vars := anSTBViewProxy instVars.
+	size := vars size.
+	(vars resize: size + 8)
 		at: size + 1 put: 0;
-		yourself!
+		at: size + 2
+			put: ((##({ TreeViewDynamicUpdateMode. TreeViewStaticUpdateMode. TreeViewLazyUpdateMode })
+					at: (((vars at: ##(self indexOfInstVar: 'tvFlags')) bitAnd: LegacyUpdateModeMask) bitShift: -1) + 1)
+						forTreeView: anSTBViewProxy)!
 
 stbVersion
 	"14: Adds tvStyle and 7 spares"
@@ -1464,7 +1390,7 @@ uninitialize
 	CommCtrlLibrary removeInitFlag: ICC_TREEVIEW_CLASSES!
 
 updateModes
-	^UpdateModes!
+	^UpdateModes keys asSortedArray!
 
 winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
@@ -1474,9 +1400,8 @@ winClassName
 defaultModel!models!public! !
 icon!constants!public! !
 initialize!development!initializing!private! !
-stbConvert:fromVersion:!binary filing!public! !
 stbConvertFromVersion10:!binary filing!private! !
-stbConvertFromVersion13:!binary filing!private! !
+stbConvertProxy:!binary filing!public! !
 stbVersion!binary filing!public! !
 themePartName!constants!public! !
 uninitialize!class hierarchy-removing!private! !
