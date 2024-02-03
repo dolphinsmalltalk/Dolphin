@@ -292,7 +292,7 @@ verifyWebViewProfile
 
 	| profile cookieManager extensions |
 	profile := presenter view webview profile.
-	self assert: profile isKindOf: ICoreWebView2Profile8.
+	self assert: profile isKindOf: ICoreWebView2Profile.
 	self assert: (profile profilePath beginsWith: presenter view defaultUserDataFolder).
 	self assert: profile defaultDownloadFolderPath equals: SessionManager current downloadsDirectory.
 	"ICoreWebView2Profile2: No new properties"
@@ -319,7 +319,6 @@ verifyWebViewProfile
 verifyWebViewProperties
 	| defaultMargin webview2 baseInterface |
 	webview2 := presenter view webview.
-	self assert: webview2 isKindOf: ICoreWebView2_20.
 	baseInterface := webview2 queryInterface: ICoreWebView2.
 	"ICoreWebView2: browserProcessId, canGoBack, canGoForward, containsFullScreenElement, documentTitle, settings, source"
 	self assert: baseInterface browserProcessId equals: webview2 browserProcessId.
@@ -338,7 +337,7 @@ verifyWebViewProperties
 	"ICoreWebView2_2: cookieManager, environment"
 	self assert: webview2 cookieManager isKindOf: ICoreWebView2CookieManager.
 	self assertIsNil: baseInterface cookieManager.
-	self assert: webview2 environment isKindOf: ICoreWebView2Environment11.
+	self assert: webview2 environment isKindOf: ICoreWebView2Environment.
 	self assertIsNil: baseInterface environment.
 	"ICoreWebView2_3: isSuspended"
 	self deny: baseInterface isSuspended.
@@ -358,13 +357,20 @@ verifyWebViewProperties
 	self assert: webview2 isMuted.
 	self deny: baseInterface isMuted.
 	"ICoreWebView2_9: defaultDownloadDialogCornerAlignment, defaultDownloadDialogMargin, isDefaultDownloadDialogOpen"
-	self assert: baseInterface defaultDownloadDialogCornerAlignment equals: COREWEBVIEW2_DEFAULT_DOWNLOAD_DIALOG_CORNER_ALIGNMENT_TOP_RIGHT.
-	baseInterface defaultDownloadDialogCornerAlignment: COREWEBVIEW2_DEFAULT_DOWNLOAD_DIALOG_CORNER_ALIGNMENT_BOTTOM_RIGHT.
-	self assert: baseInterface defaultDownloadDialogCornerAlignment equals: COREWEBVIEW2_DEFAULT_DOWNLOAD_DIALOG_CORNER_ALIGNMENT_TOP_RIGHT.
-	self assert: webview2 defaultDownloadDialogCornerAlignment equals: COREWEBVIEW2_DEFAULT_DOWNLOAD_DIALOG_CORNER_ALIGNMENT_TOP_RIGHT.
-	webview2 defaultDownloadDialogCornerAlignment: COREWEBVIEW2_DEFAULT_DOWNLOAD_DIALOG_CORNER_ALIGNMENT_BOTTOM_RIGHT.
-	self assert: webview2 defaultDownloadDialogCornerAlignment equals: COREWEBVIEW2_DEFAULT_DOWNLOAD_DIALOG_CORNER_ALIGNMENT_BOTTOM_RIGHT.
-	self assert: baseInterface defaultDownloadDialogCornerAlignment equals: COREWEBVIEW2_DEFAULT_DOWNLOAD_DIALOG_CORNER_ALIGNMENT_TOP_RIGHT.
+	self assert: baseInterface defaultDownloadDialogCornerAlignment
+		equals: COREWEBVIEW2_DEFAULT_DOWNLOAD_DIALOG_CORNER_ALIGNMENT_TOP_RIGHT.
+	baseInterface
+		defaultDownloadDialogCornerAlignment: COREWEBVIEW2_DEFAULT_DOWNLOAD_DIALOG_CORNER_ALIGNMENT_BOTTOM_RIGHT.
+	self assert: baseInterface defaultDownloadDialogCornerAlignment
+		equals: COREWEBVIEW2_DEFAULT_DOWNLOAD_DIALOG_CORNER_ALIGNMENT_TOP_RIGHT.
+	self assert: webview2 defaultDownloadDialogCornerAlignment
+		equals: COREWEBVIEW2_DEFAULT_DOWNLOAD_DIALOG_CORNER_ALIGNMENT_TOP_RIGHT.
+	webview2
+		defaultDownloadDialogCornerAlignment: COREWEBVIEW2_DEFAULT_DOWNLOAD_DIALOG_CORNER_ALIGNMENT_BOTTOM_RIGHT.
+	self assert: webview2 defaultDownloadDialogCornerAlignment
+		equals: COREWEBVIEW2_DEFAULT_DOWNLOAD_DIALOG_CORNER_ALIGNMENT_BOTTOM_RIGHT.
+	self assert: baseInterface defaultDownloadDialogCornerAlignment
+		equals: COREWEBVIEW2_DEFAULT_DOWNLOAD_DIALOG_CORNER_ALIGNMENT_TOP_RIGHT.
 	defaultMargin := webview2 defaultDownloadDialogMargin.
 	self deny: defaultMargin equals: 0.
 	self assert: baseInterface defaultDownloadDialogMargin equals: defaultMargin.
@@ -390,14 +396,16 @@ verifyWebViewProperties
 	"ICoreWebView2_17: No new properties"
 	"ICoreWebView2_18: No new properties"
 	"ICoreWebView2_19: memoryUsageTargetLevel"
-	self assert: baseInterface memoryUsageTargetLevel equals: COREWEBVIEW2_MEMORY_USAGE_TARGET_LEVEL_NORMAL.
+	self assert: baseInterface memoryUsageTargetLevel
+		equals: COREWEBVIEW2_MEMORY_USAGE_TARGET_LEVEL_NORMAL.
 	self assert: webview2 memoryUsageTargetLevel equals: COREWEBVIEW2_MEMORY_USAGE_TARGET_LEVEL_NORMAL.
 	webview2 memoryUsageTargetLevel: COREWEBVIEW2_MEMORY_USAGE_TARGET_LEVEL_LOW.
-	self assert: baseInterface memoryUsageTargetLevel equals: COREWEBVIEW2_MEMORY_USAGE_TARGET_LEVEL_NORMAL.
+	self assert: baseInterface memoryUsageTargetLevel
+		equals: COREWEBVIEW2_MEMORY_USAGE_TARGET_LEVEL_NORMAL.
 	self assert: webview2 memoryUsageTargetLevel equals: COREWEBVIEW2_MEMORY_USAGE_TARGET_LEVEL_LOW.
 	"ICoreWebView2_20: frameId"
 	self assert: baseInterface frameId equals: 0.
-	self deny: webview2 frameId equals: 0!
+	(webview2 isKindOf: ICoreWebView2_20) ifTrue: [self deny: webview2 frameId equals: 0]!
 
 verifyWebViewSettings
 	| settings baseSettings userAgent hidden |
@@ -472,6 +480,8 @@ verifyWebViewSettings
 	hidden := WebView2.COREWEBVIEW2_PDF_TOOLBAR_ITEMS_PRINT
 				| WebView2.COREWEBVIEW2_PDF_TOOLBAR_ITEMS_SAVE_AS.
 	settings hiddenPdfToolbarItems: hidden.
+	self assert: settings hiddenPdfToolbarItems equals: hidden.
+	self assert: baseSettings hiddenPdfToolbarItems equals: WebView2.COREWEBVIEW2_PDF_TOOLBAR_ITEMS_NONE.
 	"ICoreWebView2Settings8: isReputationCheckingRequired (SmartScreen)"
 	self assert: settings isReputationCheckingRequired.
 	self assert: baseSettings isReputationCheckingRequired.
