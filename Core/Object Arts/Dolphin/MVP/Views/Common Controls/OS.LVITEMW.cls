@@ -309,6 +309,13 @@ textPointerOffset!constants!private! !
 byteSize
 	^_LVITEMW_Size!
 
+callbacksForIndex: anInteger
+	^self basicNew
+		bytes: (CallbackPrototype shallowCopy
+					int32AtOffset: _OffsetOf_iItem put: anInteger;
+					yourself);
+		yourself!
+
 defineFields
 	"Define the fields of the LVITEMW structure.
 
@@ -359,13 +366,6 @@ defineFields
 getFieldNames
 	^#(#mask #iItem #iSubItem #dwState #stateMask #pszText #cchTextMax #iImage #lParam #iIndent #iGroupId #cColumns #puColumns #piColFmt #iGroup)!
 
-iItem: anInteger
-	^self basicNew
-		bytes: (CallbackPrototype shallowCopy
-					int32AtOffset: _OffsetOf_iItem put: anInteger;
-					yourself);
-		yourself!
-
 initialize
 	self addClassConstant: 'CallbackPrototype'
 		value: (self new
@@ -373,9 +373,9 @@ initialize
 				bytes)! !
 !OS.LVITEMW class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
+callbacksForIndex:!instance creation!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
-iItem:!public! !
 initialize!development!public! !
 !
 

@@ -168,6 +168,9 @@ destroyTree
 			presenter isOpen ifTrue: [presenter destroy].
 			presenter := nil]!
 
+getItemText: anObject
+	^presenter view getTextBlock value: anObject!
+
 initializePresenter
 	self
 		createShell;
@@ -1275,6 +1278,7 @@ createTree!helpers!private! !
 createView!helpers!private! !
 destroyPresenter!public!Running! !
 destroyTree!private!Running! !
+getItemText:!helpers!private! !
 initializePresenter!helpers!public! !
 mouseDownEventOn:buttons:!helpers!private! !
 moveChild:of:toRoot:!helpers!private! !

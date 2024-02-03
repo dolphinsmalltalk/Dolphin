@@ -1,8 +1,8 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object
+UI.IconicListUpdateMode
 	subclass: #'UI.TreeViewUpdateMode'
-	instanceVariableNames: 'view'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -19,63 +19,18 @@ UI.TreeViewUpdateMode comment: '`TreeViewUpdateMode` is the abstract class of po
 
 addItems: aCollection inHandle: parentHandle afterHandle: siblingHandle
 	self subclassResponsibility
-	!
-
-isVirtual
-	^self subclassResponsibility!
-
-name
-	"Answer the name of this tree view update mode, one of:
-		#dynamic	- display details re-requested by callback on every paint
-		#lazy		- display details initially requested by callback on first paint only
-		#static	- tree nodes fully populated with display details when first added
-	The display details referred to are the label text, icon, and whether or not the node has children."
-
-	^self subclassResponsibility!
-
-refreshItem: anObject handle: hItem
-	"Update the text, image, and children flag of the specified element of the tree."
-
-	self subclassResponsibility!
-
-setView: aTreeView
-	view := aTreeView.
-	^self!
-
-updateAll
-	^self subclassResponsibility!
-
-view
-	^view!
-
-viewStoresItemData
-	"Answer whether the TreeView stores text and icon data in this update mode."
-
-	^true! !
+	! !
 !UI.TreeViewUpdateMode categoriesForMethods!
 addItems:inHandle:afterHandle:!adding!public! !
-isVirtual!public!testing! !
-name!accessing!public! !
-refreshItem:handle:!public!updating! !
-setView:!initializing!private! !
-updateAll!public!updating! !
-view!accessing!private! !
-viewStoresItemData!public!testing! !
 !
 
 !UI.TreeViewUpdateMode class methodsFor!
-
-forTreeView: aTreeView
-	^self new
-		setView: aTreeView;
-		yourself!
 
 icon
 	"Answers an Icon that can be used to represent this class"
 
 	^TreeView icon! !
 !UI.TreeViewUpdateMode class categoriesForMethods!
-forTreeView:!public! !
 icon!constants!public! !
 !
 

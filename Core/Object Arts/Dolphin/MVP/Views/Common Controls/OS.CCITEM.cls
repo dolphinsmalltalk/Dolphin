@@ -165,10 +165,10 @@ text
 
 	^text ifNil: [self pszText]!
 
-text: aString
-	"Sets receiver's pszMember field to Utf16String. We also hang on to it in our text instance var to ensure that its lifetime is sufficiently long for us to safely use it."
+text: anObject
+	"Sets receiver's pszText field to the <Utf16String> displayString of the argument. We also hang on to it in our text instance var to ensure that its lifetime is sufficiently long for us to safely use it."
 
-	text := aString displayString asUtf16String.
+	text := anObject displayString asUtf16String.
 	self
 		pszText: text;
 		cchTextMax: text size + 1;

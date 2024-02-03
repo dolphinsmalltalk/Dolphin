@@ -563,6 +563,11 @@ hasChildren: aMoenTreeNode
 hasIcons
 	^iconExtent > 0 and: [getImageBlock notNil]!
 
+hasLinesAtRoot: aBoolean
+	"For compatibility with TreeView. No effect here."
+
+	!
+
 hasSelection
 	"Answer true if the receiver has a selection."
 
@@ -1714,6 +1719,20 @@ updateItem: anObject
 	(self findNodeForObject: anObject) 
 		ifNotNil: [:node | node isVisible ifTrue: [self updateNode: node]]!
 
+updateMode
+	"Answer the configured update mode."
+
+	"For compability with TreeView/ListView. This is always #dynamic for the MoenTreeView, because it is entirely implemented in Smalltalk."
+
+	^#dynamic!
+
+updateMode: aSymbol
+	"Set the desired update mode."
+
+	"For compability with TreeView/ListView. This must always be #dynamic for the MoenTreeView, because it is entirely implemented in Smalltalk."
+
+	aSymbol == #dynamic ifFalse: [self error: 'Unsupported update mode: ' , aSymbol]!
+
 updateNode: aMoenTreeNode 
 	| parent |
 	parent := aMoenTreeNode parent.
@@ -1844,6 +1863,7 @@ hasButtons!accessing-styles!public!testing! !
 hasButtons:!accessing-styles!public! !
 hasChildren:!private!searching! !
 hasIcons!geometry!private! !
+hasLinesAtRoot:!public! !
 hasSelection!public!testing! !
 hasSingleSelection!public!testing! !
 hasWordWrap!private!testing! !
@@ -1944,6 +1964,8 @@ unzip:!private!tree layout! !
 updateAll!painting!public! !
 updateGeometry!private!updating! !
 updateItem:!event handling!public! !
+updateMode!accessing!public! !
+updateMode:!accessing!public! !
 updateNode:!helpers!private! !
 updateSelection!private!selection! !
 updateTree:imagesOnly:!painting!public! !
@@ -2040,6 +2062,9 @@ stbConvertFromVersion9: anArray
 themePartName
 	^#TreeView!
 
+updateModes
+	^#(#dynamic)!
+
 value: anObject
 	"Private - Implement this message from the monadic valuable to support the default
 	'get image' functionality for an iconic list.  By default we assume icons can be used
@@ -2064,6 +2089,7 @@ stbConvertFromVersion6:!binary filing!private! !
 stbConvertFromVersion7:!binary filing!private! !
 stbConvertFromVersion9:!binary filing!private! !
 themePartName!constants!public!theming! !
+updateModes!constants!private! !
 value:!evaluating!private! !
 viewModes!constants!public! !
 !

@@ -15,10 +15,18 @@ UI.TreeViewLazyUpdateMode comment: '`TreeViewLazyUpdateMode` is a partially-dyna
 name
 	^#lazy!
 
-updateAll
-	view updateAllNonVirtual! !
+updateAllItems
+	view updateAllItems!
+
+viewStoresItemData
+	"Answer whether the view stores text and icon data in this update mode."
+
+	"This mode is initially virtual, but we want to ask the tree to store the data it is given when it first requests it."
+
+	^true! !
 !UI.TreeViewLazyUpdateMode categoriesForMethods!
 name!accessing!public! !
-updateAll!public!updating! !
+updateAllItems!public!updating! !
+viewStoresItemData!public!testing! !
 !
 

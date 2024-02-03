@@ -44,12 +44,15 @@ isVirtual
 name
 	^#static!
 
-refreshItem: anObject handle: hItem
+updateAllItems
+	view updateAllItems!
+
+updateItem: anObject at: anExternalHandle
 	"Update the text, image, and children flag of the specified element of the tree."
 
 	| tvItem |
-	tvItem := (TVITEMEXW hItem: hItem)
-				text: (view getTextBlock value: anObject) displayString;
+	tvItem := (TVITEMEXW hItem: anExternalHandle)
+				text: (view getTextBlock value: anObject);
 				children: (view model hasChildren: anObject) asInteger;
 				yourself.
 	view getImageBlock
@@ -61,15 +64,12 @@ refreshItem: anObject handle: hItem
 					tvItem
 						image: index - 1;
 						selectedImage: index - 1]].
-	view tvmSetItem: tvItem!
-
-updateAll
-	view updateAllNonVirtual! !
+	view tvmSetItem: tvItem! !
 !UI.TreeViewStaticUpdateMode categoriesForMethods!
 addItems:inHandle:afterHandle:!adding!public! !
 isVirtual!public!testing! !
 name!accessing!public! !
-refreshItem:handle:!public!updating! !
-updateAll!public!updating! !
+updateAllItems!public!updating! !
+updateItem:at:!public!updating! !
 !
 

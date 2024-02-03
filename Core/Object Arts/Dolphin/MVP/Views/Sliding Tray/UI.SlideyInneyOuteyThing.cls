@@ -307,7 +307,7 @@ layoutManager: aLayoutManager
 
 newTabs
 	^TabViewXP new
-		isVertical: true;
+		tabOrientation: #left;
 		yourself!
 
 observeTabs

@@ -32,6 +32,14 @@ defaultSelectionChangedAction
 				newSelections: presenter view selections;
 				yourself)]!
 
+getItemText: anObject
+	| view |
+	view := presenter view.
+	^view getItemText: (view handleFromObject: anObject)!
+
+isSelectionLostOnRemove
+	^false!
+
 mouseDownEventOn: anObject buttons: anArray
 	| position treeView |
 	treeView := presenter view.
@@ -42,6 +50,37 @@ mouseDownEventOn: anObject buttons: anArray
 
 objectsToTest
 	^{Object. View. Behavior. Magnitude. ArithmeticValue. Point. Number. Point3D}!
+
+paintTree
+	false
+		ifTrue: 
+			[(presenter view)
+				invalidate;
+				update]!
+
+refreshTree: aSymbol
+	| child root text |
+	presenter view updateMode: aSymbol.
+	root := '1' -> 1.
+	presenter model addRoot: root.
+	child := '1.1' -> 2.
+	presenter model add: child asChildOf: root.
+	presenter view expandAll: root.
+	self paintTree.
+	text := root displayString.
+	self assert: (self getItemText: root) equals: text.
+	root value: 3.
+	presenter view updateMode == #dynamic
+		ifFalse: 
+			[self assert: (self getItemText: root) equals: text.
+			self paintTree.
+			self assert: (self getItemText: root) equals: text]
+		ifTrue: 
+			["Just re-requesting the text should be sufficient to get it to redisplay"
+			self assert: (self getItemText: root) equals: root displayString].
+	presenter model refreshTree: root.
+	self assert: (self getItemText: root) equals: root displayString.
+	self paintTree!
 
 testAddRemove
 	"Test adding and removing to the model"
@@ -74,6 +113,38 @@ testAddRemove
 	objects do: [:each | self denyContains: each].
 	self assert: presenter model isEmpty.
 	self assert: presenter view size equals: 0!
+
+testCollapseOneLevel
+	presenter view hasLinesAtRoot: true.
+	presenter model: (TreeModel withRoots: #('1') searchPolicy: SearchPolicy equality).
+	presenter model add: '1.1' asChildOf: '1'.
+	presenter view expandAll: '1'.
+	presenter model collapse: '1'.
+	self paintTree!
+
+testCollapseTwoLevels
+	| treeView |
+	treeView := presenter view.
+	treeView hasLinesAtRoot: true.
+	presenter model: (TreeModel withRoots: #('1') searchPolicy: SearchPolicy equality).
+	presenter model add: '1.1' asChildOf: '1'.
+	#('1.1.1' '1.1.2') do: [:each | presenter model add: each asChildOf: '1.1'].
+	treeView expandAll: '1'.
+	self
+		assert: (treeView isExpanded: '1');
+		assert: (treeView isExpanded: '1.1');
+		yourself.
+	presenter model collapse: '1.1'.
+	self
+		paintTree;
+		assert: (treeView isExpanded: '1');
+		deny: (treeView isExpanded: '1.1');
+		yourself.
+	presenter model collapse: '1'.
+	self paintTree
+		deny: (treeView isExpanded: '1');
+		deny: (treeView isExpanded: '1.1');
+		yourself!
 
 testHierarchyMove
 	"Test moving classes around the hierarchy"
@@ -118,6 +189,10 @@ testHierarchyMove
 	"Tidy up"
 	self treeModel removeAll!
 
+testRefreshTree
+	presenter view hasLinesAtRoot: true.
+	self viewClass updateModes do: [:each | self refreshTree: each]!
+
 testSelection
 	"Test selection"
 
@@ -134,7 +209,7 @@ testSelection
 			self assert: presenter selection identicalTo: each.
 			event := events single.
 			self assert: event isKindOf: SelectionChangedEvent.
-			self assert: event newSelections equals: {each}].
+			self assert: event newSelections equals: { each }].
 	events := OrderedCollection new.
 	presenter resetSelection.
 	event := events single.
@@ -153,20 +228,25 @@ testSelection
 	self assert: presenter selection identicalTo: objects first.
 	self assert: events isEmpty.
 	"remove of selected object should trigger #selectionChanged and leave either a sibling, or the parent of the selection selected"
-	{Number. Point3D. Point. ArithmeticValue} do: 
+	{ Number. Point3D. Point. ArithmeticValue } do: 
 			[:each |
 			presenter selection: each.
 			events := OrderedCollection new.
 			self treeModel remove: each.
-			"If the selected object has siblings, the next of those should be selected, if not the parent"
-			presenter selection = each superclass
-				ifTrue: 
-					["Parent selected, should be no remaining siblings of the removed child"
-					self assert: (self treeModel childrenOf: presenter selection) isEmpty]
-				ifFalse: [self assert: presenter selection superclass equals: each superclass].
 			event := events single.
 			self assert: event isKindOf: SelectionChangedEvent.
-			self assert: event newSelections equals: {presenter selection}].
+			self isSelectionLostOnRemove
+				ifFalse: 
+					["If the selected object has siblings, the next of those should be selected, if not the parent"
+					presenter selection = each superclass
+						ifTrue: 
+							["Parent selected, should be no remaining siblings of the removed child"
+							self assert: (self treeModel childrenOf: presenter selection) isEmpty]
+						ifFalse: [self assert: presenter selection superclass equals: each superclass].
+					self assert: event newSelections equals: { presenter selection }]
+				ifTrue: 
+					[self deny: presenter hasSelection.
+					self assert: event newSelections equals: #()]].
 
 	"No selection tests"
 	objects do: [:each | self treeModel add: each asChildOf: each superclass].
@@ -186,16 +266,26 @@ testSelectionChangeTriggeredOnRemove
 	self addRoot: #a.
 	self addRoot: #b.
 	presenter selection: #a.
-	self 
+	self
 		should: [self treeModel remove: #a]
 		trigger: #selectionChanged
 		butNot: #selectionChanging:
 		against: presenter.
-	self 
-		should: [self treeModel remove: #b]
-		trigger: #selectionChanged
-		butNot: #selectionChanging:
-		against: presenter!
+	"TreeListPresenter is based on ListView, which has different behaviour with regards to selection when the selected item is removed. In a TreeView, the selection is moved to a sibling or parent. In the ListView, the selection is just removed. We don't try to fight it."
+	self isSelectionLostOnRemove
+		ifTrue: 
+			[self deny: presenter hasSelection.
+			self
+				shouldnt: [self treeModel remove: #b]
+				triggerAnyOf: #(#selectionChanging: #selectionChanged)
+				against: presenter]
+		ifFalse: 
+			[self assert: presenter hasSelection.
+			self
+				should: [self treeModel remove: #b]
+				trigger: #selectionChanged
+				butNot: #selectionChanging:
+				against: presenter]!
 
 testSelectionChanging
 	| objects selection selChanging selChanged |
@@ -234,36 +324,60 @@ testSelectionChanging
 	self assert: selChanged isKindOf: SelectionChangedEvent.
 	self assert: selChanging newSelections equals: #()!
 
+testSelectionSetter
+	| object1 |
+	object1 := '1'.
+	presenter model: (TreeModel withRoots: {object1} searchPolicy: SearchPolicy equality).
+	self assert: (presenter selection: object1) identicalTo: object1!
+
+testSelectionsPreservedOnRecreate
+	| root child |
+	presenter view hasLinesAtRoot: true.
+	root := '1'.
+	presenter model addRoot: root.
+	child := '1.1'.
+	presenter model add: child asChildOf: root.
+	presenter selection: child.
+	presenter view recreate.
+	self assert: presenter selection equals: child
+!
+
 testSetImageBlockDoesNotAffectSelection
 	| objects |
 	objects := self addAllTestObjects.
-	presenter view viewMode: #smallIcons.
-	presenter selection: objects last.
-	self
-		shouldnt: [presenter view getImageBlock: [:each | each icon imageIndex + 1]]
-		trigger: #selectionChanged
-		against: presenter.
-	self assert: presenter selection identicalTo: objects last.
-	self
-		shouldnt: [presenter selection: objects last]
-		trigger: #selectionChanging:
-		against: presenter!
+	presenter view class updateModes do: 
+			[:each |
+			presenter view updateMode: each.
+			presenter view viewMode: #smallIcons.
+			presenter selection: objects last.
+			self
+				shouldnt: [presenter view getImageBlock: [:each1 | each1 icon imageIndex + 1]]
+				trigger: #selectionChanged
+				against: presenter.
+			self assert: presenter selection identicalTo: objects last.
+			self
+				shouldnt: [presenter selection: objects last]
+				trigger: #selectionChanging:
+				against: presenter]!
 
 testSetTextBlockDoesNotAffectSelection
 	| objects |
 	objects := self addAllTestObjects.
-	presenter selection: objects last.
-	self
-		shouldnt: 
-			["Remove an object after the selection"
-			presenter view getTextBlock: [:each | each printString , ' &c']]
-		trigger: #selectionChanged
-		against: presenter.
-	self assert: presenter selection identicalTo: objects last.
-	self
-		shouldnt: [presenter selection: objects last]
-		trigger: #selectionChanging:
-		against: presenter!
+	presenter view class updateModes do: 
+			[:each |
+			presenter view updateMode: each.
+			presenter selection: objects last.
+			self
+				shouldnt: 
+					["Remove an object after the selection"
+					presenter view getTextBlock: [:each1 | each1 printString , ' &c']]
+				trigger: #selectionChanged
+				against: presenter.
+			self assert: presenter selection identicalTo: objects last.
+			self
+				shouldnt: [presenter selection: objects last]
+				trigger: #selectionChanging:
+				against: presenter]!
 
 treeModel
 	^presenter model! !
@@ -272,13 +386,22 @@ addAllObjects:!private!unit tests! !
 addAllTestObjects!private!unit tests! !
 addRoot:!public!unit tests! !
 defaultSelectionChangedAction!helpers!private! !
+getItemText:!helpers!private! !
+isSelectionLostOnRemove!private!testing! !
 mouseDownEventOn:buttons:!helpers!private! !
 objectsToTest!helpers!private! !
+paintTree!helpers!private! !
+refreshTree:!helpers!private! !
 testAddRemove!public!unit tests! !
+testCollapseOneLevel!public!unit tests! !
+testCollapseTwoLevels!public!unit tests! !
 testHierarchyMove!public!unit tests! !
+testRefreshTree!public!unit tests! !
 testSelection!public!unit tests! !
 testSelectionChangeTriggeredOnRemove!public!unit tests! !
 testSelectionChanging!public!unit tests! !
+testSelectionSetter!public!unit tests! !
+testSelectionsPreservedOnRecreate!public!unit tests! !
 testSetImageBlockDoesNotAffectSelection!public!unit tests! !
 testSetTextBlockDoesNotAffectSelection!public!unit tests! !
 treeModel!public!unit tests! !

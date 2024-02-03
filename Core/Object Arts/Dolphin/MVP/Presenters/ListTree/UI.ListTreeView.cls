@@ -182,7 +182,7 @@ basicCollapse: anObject
 	"as with #expand: we allow the tree model to say that an object has children even if
 	the actual set thereof is zero-sized, hence we display a #Closed image even if there
 	were no actual children to remove"
-	self setItemAt: (self handleFromObject: anObject) stateImage: ClosedImageIndex!
+	updateMode updateStateImageOf: anObject at: (self handleFromObject: anObject)!
 
 basicOnItem: aChildObject movedToParent: aParentObject
 	"private -- implementation of #onItem:movedToParent:  This is factored
@@ -192,58 +192,50 @@ basicOnItem: aChildObject movedToParent: aParentObject
 	there's no way to ensure that the *old* parent's icon will be correct"
 
 	| itemDisplayed itemExpanded parentExpanded |
-
 	"Warning: sin is prettier than this horribly fragile logic"
 
 	"work out the status quo for the child object"
 	(self isItemDisplayed: aChildObject)
-		ifTrue: [itemDisplayed := true. itemExpanded := self isItemExpanded: aChildObject]
+		ifTrue: 
+			[itemDisplayed := true.
+			itemExpanded := self isItemExpanded: aChildObject]
 		ifFalse: [itemDisplayed := itemExpanded := false].
 
 	"ditto for the new parent.  We treat a nil parent (child is a root) as 'expanded' to simplify (ha!!) the logic"
 	aParentObject notNil
-		ifTrue: [(self isItemDisplayed: aParentObject)
-			ifTrue: [parentExpanded := self isItemExpanded: aParentObject]
-			ifFalse: [parentExpanded := false]]
+		ifTrue: 
+			[(self isItemDisplayed: aParentObject)
+				ifTrue: [parentExpanded := self isItemExpanded: aParentObject]
+				ifFalse: [parentExpanded := false]]
 		ifFalse: [parentExpanded := true].
 
 	"if the item wasn't visible before, then we can early-out, just ensuring that it's added to the new
 	parent if necessary.  Remember that the caller will update the status icons for us"
-	itemDisplayed ifFalse:
-		[parentExpanded ifTrue: [self additem: aChildObject toParent: aParentObject].
-		^ self].
+	itemDisplayed
+		ifFalse: 
+			[parentExpanded ifTrue: [self additem: aChildObject toParent: aParentObject].
+			^self].
 
 	"otherwise the item must be visible, so must ensure that the new parent is expanded, but if the
 	parent is not already expanded, then expanding it will create a duplicate of the existing row, so we
 	have to remove the old row first in that case.  (BTW, we don't need to worry about the hidden-expanded
 	stuff causing aChildObject to be expanded when the new parent is, since aChildObject is displayed
 	currently and therefore not on the hidden expanded list)"
-	parentExpanded ifFalse:
-		[self removeFromDisplay: aChildObject].
-	aParentObject isNil ifFalse:
-		[self
-			ensureItemDisplayed: aParentObject;
-			expand: aParentObject].
+	parentExpanded ifFalse: [self removeFromDisplay: aChildObject].
+	aParentObject isNil
+		ifFalse: 
+			[self
+				ensureItemDisplayed: aParentObject;
+				expand: aParentObject].
 
 	"now we know that the item is visible; if it had been visible before, and the new parent was already
 	expanded then we'll need to update the display order. The same applies if the item itself was already
 	expanded since any children will still be in their old positions"
 	(parentExpanded or: [itemExpanded]) ifTrue: [self updateDisplayOrder].
 
-	"and lastly ensure that the indentations are all OK.  This step is unecessary if we're virtual,
-	and in fact causes a common control error, so we only do it if we're not"
-	self isVirtual ifFalse: [self unorderedTreeOf: aChildObject do: [:each | self setItemIndentation: each]].
-!
-
-basicSetItemAt: indexInteger stateImage: stateImageInteger
-	"private -- update the 'state' image for anObject"
-
-	| lvItem |
-	lvItem := LVITEMW newBuffer
-				iItem: indexInteger - 1;
-				stateImageIndex: stateImageInteger;
-				yourself.	"a 1-based index in Windows !!"
-	self lvmSetItem: indexInteger - 1 state: lvItem!
+	"and lastly ensure that the indentations are all OK.  This step is unecessary if we're virtual as the indents will be updated when the list is redrawn."
+	self isVirtual
+		ifFalse: [self unorderedTreeOf: aChildObject do: [:each | self setItemIndentation: each]]!
 
 beNoIcons
 	"supplied for consistency with TreeView"
@@ -574,12 +566,12 @@ expand: anObject
 	so that TreeModels that distinguish between having a zero-sized set of children and not having
 	children will display properly"
 	index := self handleFromObject: anObject.
-	self setItemAt: index stateImage: OpenImageIndex.
 
 	"Insert the children"
 	children := self childrenOf: anObject.
 	self addAll: children afterIndex: index.
 	self addExpanded: anObject.
+	updateMode updateStateImageOf: anObject at: index.
 
 	"apply our record of which children were expanded when this node was last closed"
 	hiddenExpanded notNil
@@ -889,11 +881,6 @@ inRootOrder: aCollection
 	^ (sortBlock isNil or: [self doSortRoots not])
 		ifTrue: [aCollection]
 		ifFalse: [(aCollection asSortedCollection: sortBlock) asOrderedCollection].!
-
-invalidateItemAt: anInteger
-	"private -- invalidate the item with the 1-based integer index"
-
-	self invalidateRect: (self itemRect: anInteger textOnly: false)!
 
 isExpanded: anObject
 	"Answers if the node associated with anObject is expanded."
@@ -1361,11 +1348,7 @@ refreshItemState: anObject
 	"private -- update the 'state' image for anObject"
 
 	(self handleFromObject: anObject)
-		ifNotNil: 
-			[:index |
-			self isVirtual
-				ifTrue: [self invalidateItemAt: index]
-				ifFalse: [self setItemAt: index stateImage: (self stateImageFromRow: anObject)]]!
+		ifNotNil: [:index | updateMode updateStateImageOf: anObject at: index]!
 
 removeAllExcept: aSet
 	"private -- remove all the items that are not in aSet. The set is assumed to have the
@@ -1619,30 +1602,11 @@ selectParentOf: anObject because: aSymbol
 	all := {parent}.
 	(self checkSelectAll: all because: aSymbol) ifTrue: [self selections: all]!
 
-setItem: anObject indentation: anInteger
-	"private -- update the indentation for anObject.
-	Note: this causes a Windows error if our control is virtual"
-
-	| anLvItem |
-	(self handleFromObject: anObject)
-		ifNotNil: 
-			[:objectIndex |
-			anLvItem := LVITEMW newBuffer
-						iItem: objectIndex - 1;
-						indent: anInteger;
-						yourself.
-			self lvmSetItem: anLvItem.
-			self invalidateItemAt: objectIndex]!
-
-setItemAt: indexInteger stateImage: stateImageInteger
-	self basicSetItemAt: indexInteger stateImage: stateImageInteger.
-	self invalidateItemAt: indexInteger!
-
 setItemIndentation: anObject
-	"private -- update the indent for anObject.
-	Note: this causes a Windows error if our control is virtual"
+	"Private -- Update the indent for anObject."
 
-	self setItem: anObject indentation: (self indentFromRow: anObject)!
+	(self handleFromObject: anObject)
+		ifNotNil: [:objectIndex | updateMode updateIndentOf: anObject at: objectIndex]!
 
 setModel: aListOrTreeModel
 	"private -- called to set our model.  Since we play games with the model (the one we hold may
@@ -1844,25 +1808,10 @@ updateItem: arg1
 
 	^Error notYetImplemented!
 
-updateMode
-	"supplied for consistency with TreeView>>updateMode.  Actually we always
-	reply #dynamic (mainly because Windows keeps asking for the indentation even
-	after it has been told it; otherwise we would be #dynamic or #static according
-	as we are #isVirtual)"
-
-	^ #dynamic.!
-
-updateMode: aSymbol
-	"supplied for consistency with TreeView>>viewMode.  Actually we ignore this"!
-
 updateStates
 	"private -- update the 'state' images for all objects"
 
-	self isVirtual
-		ifFalse: 
-			[self model
-				keysAndValuesDo: [:index :each | self basicSetItemAt: index stateImage: (self stateImageFromRow: each)]].
-	self invalidate!
+	updateMode updateStateImages!
 
 useSmartRefresh
 	"set whether we attempt to preserve open subbranches of the tree when we
@@ -1934,7 +1883,6 @@ allExpandedItems!accessing!do copy!public! !
 allHiddenExpandedItems!accessing!do copy!public! !
 basicCollapse:!do copy!expanding/collapsing!private! !
 basicOnItem:movedToParent:!do copy!event handling!private! !
-basicSetItemAt:stateImage:!do copy!private!states! !
 beNoIcons!do copy!modes!public! !
 beSorted:!accessing!do copy!public!sorting! !
 checkChangeSelectionFrom:to:because:!do copy!events!helpers!private! !
@@ -2004,7 +1952,6 @@ indentSeparation:!accessing-styles!do copy!public! !
 initialize!do copy!initializing!private! !
 inOrder:parent:!do copy!private!sorting! !
 inRootOrder:!do copy!private!sorting! !
-invalidateItemAt:!do copy!helpers!private! !
 isExpanded:!public! !
 isItemDisplayed:!do copy!public!testing! !
 isItemExpandable:!do copy!public!testing! !
@@ -2063,8 +2010,6 @@ selectionRoots!do copy!private!selection! !
 selectionRootsOrRoots!do copy!private!selection! !
 selectionsAsSet!accessing!do copy!public!selection! !
 selectParentOf:because:!do copy!private!selection!user initiated actions! !
-setItem:indentation:!do copy!private!states! !
-setItemAt:stateImage:!do copy!expanding/collapsing!private! !
 setItemIndentation:!do copy!private!states! !
 setModel:!accessing!do copy!models!private! !
 sortBlock!accessing!do copy!public!sorting! !
@@ -2086,8 +2031,6 @@ updateDisplayOrder!do copy!private!updating! !
 updateDisplayOrderFrom:to:!do copy!private!updating! !
 updateExpanded!do copy!private!updating! !
 updateItem:!public! !
-updateMode!accessing!do copy!public! !
-updateMode:!accessing!do copy!public! !
 updateStates!do copy!private!states!updating! !
 useSmartRefresh!accessing-styles!do copy!public! !
 useSmartRefresh:!accessing-styles!do copy!public! !

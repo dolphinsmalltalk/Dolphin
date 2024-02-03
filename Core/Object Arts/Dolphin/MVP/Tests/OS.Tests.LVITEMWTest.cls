@@ -16,7 +16,7 @@ subjectClass
 
 testInstanceCreation
 	| subject |
-	subject := self subjectClass iItem: 1234.
+	subject := self subjectClass callbacksForIndex: 1234.
 	self assert: subject iItem equals: 1234.
 	self assert: subject handle equals: 1235.
 	self assert: subject printString

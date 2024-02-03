@@ -65,12 +65,6 @@ basicAdd: anObject atIndex: anInteger
 
 	^self subclassResponsibility!
 
-basicClear
-	"Private - Clears down the associated control(but not its model)"
-
-	^self subclassResponsibility
-!
-
 basicRefreshContents
 	"Private - Refresh the receiver's contents to match the contents collection, but do not trigger a selection change event."
 
@@ -284,10 +278,11 @@ onActionPerformed
 	self hasSelection ifTrue: [super onActionPerformed]!
 
 onItem: anObject addedAtIndex: anInteger 
-	"Event received when an <Object> has been added to the receiver's model at the specified
-	<integer> index. By default, do nothing."
+	"Event received when an <Object> has been added to the receiver's
+	model at the specified <integer> index. Insert the object into the list control."
 
-	!
+	self basicAdd: anObject atIndex: anInteger.
+	self updateSelectionCache!
 
 onItem: anObject removedAtIndex: anInteger 
 	"Event received when the <Object>, anObject, has been removed from the receiver's model at
@@ -298,7 +293,7 @@ onItem: anObject removedAtIndex: anInteger
 onItem: anObject updatedAtIndex: anInteger 
 	"Updates the item at the specified <integer> index to reflect its current state."
 
-	self updateItem: anObject atIndex: anInteger	!
+	self updateItem: anObject at: anInteger	!
 
 onItems: aSequenceableCollection addedAtIndex: anInteger 
 	"Event received when the specified sequence of objects has been added to the receiver's model beginning at the specified <integer> index. By default, do nothing."
@@ -583,21 +578,12 @@ updateAll
 	non-virtual lists the list entries must be individually updated or (for simpler lists)
 	removed and re-added."
 
-	self updateAllNonVirtual!
+	self subclassResponsibility!
 
-updateAllNonVirtual
-	| selections |
-	selections := self selectionsByIndex.
-	self basicRefreshContents.
-	self basicSelectionsByIndex: selections!
+updateItem: anObject at: anInteger
+	"Re-render the item that is the first argument, which is at the <integer> 2nd argument index in the list."
 
-updateAllVirtual
-	self invalidate!
-
-updateItem: anObject atIndex: anInteger 
-	"Re-render the specified item, which is at the specified <integer> index in the list."
-
-	!
+	self subclassResponsibility!
 
 updateSelectionCache
 	"Private - If there is a cached selection, update it."
@@ -609,7 +595,6 @@ addSelections:ifAbsent:!public!selection! !
 addSelectionsByIndex:!public!selection! !
 anchorIndex!public!selection! !
 basicAdd:atIndex:!adding!private! !
-basicClear!private!removing! !
 basicRefreshContents!private!updating! !
 basicRemoveAtIndex:!private!removing! !
 basicResetSelection!private!selection! !
@@ -681,9 +666,7 @@ setSingleSelection:!public!selection! !
 size!accessing!public! !
 state!accessing!private! !
 updateAll!public!updating! !
-updateAllNonVirtual!private!updating! !
-updateAllVirtual!private!updating! !
-updateItem:atIndex:!event handling!public! !
+updateItem:at:!public!updating! !
 updateSelectionCache!helpers!private!selection! !
 !
 

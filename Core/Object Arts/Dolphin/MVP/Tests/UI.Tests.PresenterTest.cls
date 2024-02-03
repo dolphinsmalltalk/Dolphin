@@ -129,7 +129,7 @@ testStlUpgradesFromLiteralResources
 		- Override the #verifyUpgradedView: method to add any further validation of the upgrade process, if required."
 
 	<nocreate>
-	<skipUnless: #hasTestStbViewResources>
+	<skipUnless: #hasTestStlViewResources>
 	self oldStlResources do: 
 			[:each |
 			self verifyStlUpgrade: each.

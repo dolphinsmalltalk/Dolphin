@@ -77,6 +77,7 @@ package setClassNames: #(
 	#{UI.Tests.ListControlTest}
 	#{UI.Tests.ListModelTest}
 	#{UI.Tests.ListPresenterTest}
+	#{UI.Tests.ListTreePresenterTest}
 	#{UI.Tests.ListViewTest}
 	#{UI.Tests.MenuTest}
 	#{UI.Tests.MoenTreeViewTest}
@@ -123,7 +124,6 @@ package setClassNames: #(
 	#{UI.Tests.TimeToTextTest}
 	#{UI.Tests.ToolbarTest}
 	#{UI.Tests.TreePresenterTest}
-	#{UI.Tests.TreeViewTest}
 	#{UI.Tests.TypeConverterTest}
 	#{UI.Tests.ValueBufferTest}
 	#{UI.Tests.ValueConverterTest}
@@ -185,6 +185,7 @@ package setPrerequisites: #(
 	'..\..\Base\Dolphin Legacy Date & Time'
 	'..\Models\List\Dolphin List Models'
 	'..\Presenters\List\Dolphin List Presenter'
+	'..\Presenters\ListTree\Dolphin List Tree Presenter'
 	'..\..\System\Filer\Dolphin Literal Filer'
 	'..\..\System\Filer\Dolphin Literal Filer (Old versions)'
 	'..\..\System\Filer\Dolphin Literal Out Filer'
@@ -987,6 +988,13 @@ UI.Tests.ListViewTest
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.Tests.SelectableTreeItemsTest
+	subclass: #'UI.Tests.ListTreePresenterTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.SelectableTreeItemsTest
 	subclass: #'UI.Tests.MoenTreeViewTest'
 	instanceVariableNames: 'nodeA nodeB nodeC nodeD nodeE nodeF shell scroller useShell'
 	classVariableNames: ''
@@ -995,13 +1003,6 @@ UI.Tests.SelectableTreeItemsTest
 	classConstants: {}!
 UI.Tests.SelectableTreeItemsTest
 	subclass: #'UI.Tests.TreePresenterTest'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-UI.Tests.SelectableTreeItemsTest
-	subclass: #'UI.Tests.TreeViewTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

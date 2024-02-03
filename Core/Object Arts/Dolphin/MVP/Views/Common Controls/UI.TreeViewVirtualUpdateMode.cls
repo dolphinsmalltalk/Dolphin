@@ -22,14 +22,15 @@ addItems: aCollection inHandle: parentHandle afterHandle: siblingHandle
 isVirtual
 	^true!
 
-refreshItem: anObject handle: hItem
+updateItem: anObject at: anExternalHandle
 	"Update the text, image, and children flag of the specified element of the tree."
 
 	"Instruct the tree to send notification callbacks to fetch the item text, icon, etc"
-	view tvmSetItem: (TVITEMEXW callbacksForItem: hItem)! !
+
+	view tvmSetItem: (TVITEMEXW callbacksForItem: anExternalHandle)! !
 !UI.TreeViewVirtualUpdateMode categoriesForMethods!
 addItems:inHandle:afterHandle:!adding!public! !
 isVirtual!public!testing! !
-refreshItem:handle:!public!updating! !
+updateItem:at:!public!updating! !
 !
 

@@ -469,23 +469,26 @@ tabOrientation
 	^TabOrientations at: (self baseStyle bitAnd: OrientationMask)!
 
 tabOrientation: aSymbol
-	"Set the orientation (i.e. the edge along which the tabs are displayed) of the receiver
-	to that named by the <Symbol> argument. Note that if a vertical mode is selected then the
-	single-line (scrolling tabs) mode is not supported so we switch on the multiline flag implicitly."
+	"Set the orientation (i.e. the edge along which the tabs are displayed) of the receiver to that named by the <Symbol> argument. Note that if a vertical mode is selected then the single-line (scrolling tabs) mode is not supported so we switch on the multiline flag implicitly."
 
 	| orientationFlags mask initialSelections |
+	self tabOrientation == aSymbol ifTrue: [^self].
 	initialSelections := self selections.
 	orientationFlags := TabOrientations keyAtValue: aSymbol ifAbsent: 0.
 	mask := (orientationFlags allMask: TCS_VERTICAL)
 				ifTrue: 
-					[orientationFlags := orientationFlags | TCS_MULTILINE.
-					OrientationMask | TCS_MULTILINE]
+					[orientationFlags := orientationFlags bitOr: TCS_MULTILINE.
+					OrientationMask bitOr: TCS_MULTILINE]
 				ifFalse: [OrientationMask].
 	(self
 		baseStyle: orientationFlags
 		maskedBy: mask
-		recreateIfChanged: true) ifTrue: [self invalidateLayout].
-	self noEventsDo: [self selections: initialSelections]!
+		recreateIfChanged: true)
+			ifFalse: 
+				["No change"
+				^self].
+	self invalidateLayout.
+	initialSelections isEmpty ifFalse: [self noEventsDo: [self selections: initialSelections]]!
 
 tabViewStyleAllMask: anInteger
 	"Private - Answers true if the tab view's extended style bits contains all the bits in anInteger"
@@ -574,20 +577,23 @@ tcnSelChanging: pNMHDR
 			event value])
 		not!
 
-updateAllNonVirtual
-	"Private - Update the text and images the tree view stores for each item in non-dynamic view."
+updateAll
+	"Re-render the model's contents. This is a similar operation to #refreshContents, except
+	that it is assumed that the models contents are the same objects, but may have changed
+	internally so that their visual representation must be updated. This is typically a very
+	cheap operation for virtual (dynamic) lists, since these just need to repaint. For
+	non-virtual lists the list entries must be individually updated or (for simpler lists)
+	removed and re-added."
 
-	self list keysAndValuesDo: [:index :each | self updateItem: each atIndex: index]!
+	self list keysAndValuesDo: [:index :each | self updateItem: each at: index]!
 
-updateItem: anObject atIndex: aninteger 
-	"Re-render the specified item, which is at the specified <integer> index in the list."
+updateItem: anObject at: aninteger
+	"Re-render the item that is the first argument, which is at the <integer> 2nd argument index in the list."
 
-	| tcItem |
-	tcItem := self makeTcItemStruct: anObject.
-	self 
+	self
 		sendMessage: TCM_SETITEMW
 		wParam: aninteger - 1
-		lpParam: tcItem asParameter!
+		lpParam: (self makeTcItemStruct: anObject)!
 
 updateSelectionCache
 	"Private - The tab view is somewhat unlike other Windows list controls. The first item to be added to
@@ -683,8 +689,8 @@ tcmInsertItem:atOffset:!adding!private! !
 tcmSetExtendedStyle:dwExStyle:!accessing-styles!private! !
 tcmSetImageList:!image management!private! !
 tcnSelChanging:!event handling-win32!private! !
-updateAllNonVirtual!private!updating! !
-updateItem:atIndex:!event handling!public! !
+updateAll!public!updating! !
+updateItem:at:!public!updating! !
 updateSelectionCache!event handling!private! !
 viewMode!accessing!public! !
 viewModeChanged!helpers!private! !

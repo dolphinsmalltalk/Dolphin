@@ -639,17 +639,10 @@ onDisplayDetailsChanged: item
 
 	^0!
 
-onDisplayDetailsRequired: item
+onDisplayDetailsRequired: aCCITEM
 	"Private - Get the display info for the requested item."
 
-	^nil "accept default processing"!
-
-onItem: anObject addedAtIndex: anInteger 
-	"Event received when an <Object> has been added to the receiver's
-	model at the specified <integer> index. Insert the object into the list control."
-
-	self basicAdd: anObject atIndex: anInteger.
-	self updateSelectionCache!
+	^0!
 
 onItem: anObject removedAtIndex: anInteger 
 	"Event received when the <Object>, anObject, has been removed from the receiver's
@@ -944,7 +937,6 @@ notificationClass!constants!private! !
 onAboutToEditLabel:!event handling!public! !
 onDisplayDetailsChanged:!event handling!private! !
 onDisplayDetailsRequired:!event handling!private! !
-onItem:addedAtIndex:!event handling!public! !
 onItem:removedAtIndex:!event handling!public! !
 onKeyTyped:!event handling!public! !
 onLabelOf:editedTo:!event handling!public! !
