@@ -26,6 +26,11 @@ basicAdd: anObject
 
 	^self subclassResponsibility!
 
+basicClear
+	"Private - Clear all items from the list."
+
+	self subclassResponsibility!
+
 basicRefreshContents
 	self noRedrawDo: 
 			[self basicClear.
@@ -78,13 +83,6 @@ initialize
 
 lastSelIndices
 	^lastSelIndices!
-
-onItem: anObject addedAtIndex: anInteger 
-	"Event received when an <Object> has been added to the receiver's
-	model at the specified <integer> index. Insert the object into the list control."
-
-	self basicAdd: anObject atIndex: anInteger.
-	self updateSelectionCache!
 
 onItem: anObject removedAtIndex: anInteger 
 	"Event received when the <Object>, anObject, has been removed from the receiver's model at
@@ -226,16 +224,29 @@ setSelectionsByIndex: indices
 	"Note: We have to check again whether the selection has changed because of the single-select case"
 	self onSelChanged!
 
-updateItem: anObject atIndex: anInteger 
-	"Re-render the specified item, which is at the specified <integer> index in the list."
+updateAll
+	"Re-render the model's contents. This is a similar operation to #refreshContents, except
+	that it is assumed that the models contents are the same objects, but may have changed
+	internally so that their visual representation must be updated. This is typically a very
+	cheap operation for virtual (dynamic) lists, since these just need to repaint. For
+	non-virtual lists the list entries must be individually updated or (for simpler lists)
+	removed and re-added."
+
+	| selections |
+	selections := self selectionsByIndex.
+	self basicRefreshContents.
+	self basicSelectionsByIndex: selections!
+
+updateItem: anObject at: anInteger
+	"Re-render the item that is the first argument, which is at the <integer> 2nd argument index in the list."
 
 	"Implementation Note: The simple ListBox control has no way to do this directly, so we must
 	add a new item and remove the old one, maintaining the selection as we do so."
 
 	self basicAdd: anObject atIndex: anInteger.
-	(lastSelIndices includes: anInteger) 
+	(lastSelIndices includes: anInteger)
 		ifTrue: 
-			[self isMultiSelect 
+			[self isMultiSelect
 				ifTrue: [self selectIndex: anInteger set: true]
 				ifFalse: [self setSingleSelection: anInteger]].
 	self basicRemoveAtIndex: anInteger + 1!
@@ -246,6 +257,7 @@ updateSelectionCache
 	lastSelIndices notEmpty ifTrue: [lastSelIndices := self getSelectionsByIndex]! !
 !UI.BasicListAbstract categoriesForMethods!
 basicAdd:!adding!private! !
+basicClear!private!removing! !
 basicRefreshContents!private!updating! !
 basicResetSelection!private!selection! !
 canHScroll!public! !
@@ -257,7 +269,6 @@ displayStringFor:!adding!private! !
 ensureSelectionVisible!public!selection! !
 initialize!initializing!public! !
 lastSelIndices!private! !
-onItem:addedAtIndex:!event handling!public! !
 onItem:removedAtIndex:!event handling!public! !
 onKeyTyped:!event handling!public! !
 onLeftButtonDoubleClicked:!event handling!public! !
@@ -271,7 +282,8 @@ selections:ifAbsent:!public!selection! !
 selectionsByIndex!public!selection! !
 selectionsByIndex:ifAbsent:!public!selection! !
 setSelectionsByIndex:!private!selection! !
-updateItem:atIndex:!event handling!public! !
+updateAll!public!updating! !
+updateItem:at:!public!updating! !
 updateSelectionCache!helpers!private!selection! !
 !
 

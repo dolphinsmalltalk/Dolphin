@@ -229,18 +229,16 @@ row: rowInteger text: aString imageIndex: imageInteger indent: indentInteger
 	self
 		iItem: rowInteger - 1;
 		pszText: (text := aString asUtf16String).
-	mask := LVIF_TEXT.
-	iImage := imageInteger.
+	mask := ##(LVIF_TEXT | LVIF_IMAGE).
+	iImage := imageInteger ?? UI.ListView.NoImageIndex.
 	indentInteger == 0
-		ifFalse:
+		ifFalse: 
 			[self iIndent: indentInteger.
 			mask := mask bitOr: LVIF_INDENT.
 			indentInteger < 0 ifTrue: [iImage := UI.ListView.NoImageIndex]].
-	iImage
-		ifNotNil: 
-			[self iImage: iImage - 1.
-			mask := mask bitOr: LVIF_IMAGE].
-	self mask: mask!
+	self
+		iImage: iImage - 1;
+		mask: mask!
 
 stateImageIndex: anInteger
 	"Set content's state image index to anInteger. Any other state is discarded."
@@ -309,6 +307,13 @@ textPointerOffset!constants!private! !
 byteSize
 	^_LVITEMW_Size!
 
+callbacksForIndex: anInteger
+	^self basicNew
+		bytes: (CallbackPrototype shallowCopy
+					int32AtOffset: _OffsetOf_iItem put: anInteger;
+					yourself);
+		yourself!
+
 defineFields
 	"Define the fields of the LVITEMW structure.
 
@@ -359,13 +364,6 @@ defineFields
 getFieldNames
 	^#(#mask #iItem #iSubItem #dwState #stateMask #pszText #cchTextMax #iImage #lParam #iIndent #iGroupId #cColumns #puColumns #piColFmt #iGroup)!
 
-iItem: anInteger
-	^self basicNew
-		bytes: (CallbackPrototype shallowCopy
-					int32AtOffset: _OffsetOf_iItem put: anInteger;
-					yourself);
-		yourself!
-
 initialize
 	self addClassConstant: 'CallbackPrototype'
 		value: (self new
@@ -373,9 +371,9 @@ initialize
 				bytes)! !
 !OS.LVITEMW class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
+callbacksForIndex:!instance creation!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
-iItem:!public! !
 initialize!development!public! !
 !
 

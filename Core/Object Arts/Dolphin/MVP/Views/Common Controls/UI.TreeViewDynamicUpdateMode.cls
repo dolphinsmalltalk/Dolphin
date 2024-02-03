@@ -15,16 +15,10 @@ UI.TreeViewDynamicUpdateMode comment: '`TreeViewDynamicUpdateMode` is a fully-dy
 name
 	^#dynamic!
 
-updateAll
-	view invalidate!
-
-viewStoresItemData
-	"Answer whether the TreeView stores text and icon data in this mode."
-
-	^false! !
+updateAllItems
+	view invalidate! !
 !UI.TreeViewDynamicUpdateMode categoriesForMethods!
 name!accessing!public! !
-updateAll!public!updating! !
-viewStoresItemData!public!testing! !
+updateAllItems!public!updating! !
 !
 

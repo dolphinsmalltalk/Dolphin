@@ -489,7 +489,8 @@ initialize
 	super initialize.
 	viewMode := #noIcons.
 	tvStyle := tvFlags := 0.
-	updateMode := TreeViewDynamicUpdateMode forTreeView: self!
+	"Default to dynamic/virtual mode where the tree does not hold any data required for display, but requests it every time painting is required."
+	updateMode := TreeViewDynamicUpdateMode forIconicList: self!
 
 isDoubleBuffered
 	"Answer whether the tree display is double-buffered to avoid flicker. This is useful for trees that are frequently updated by background events."
@@ -591,14 +592,14 @@ newMaps
 
 nmDeleteItem: pNMHDR
 	"Private - Default handler for the TVN_DELETEITEM notification message.
-	Remove the itemOld object from our map if it is present.
-	Answer nil to accept the default processing (which we must do or the TreeView leaks)."
+	Remove the itemOld object from our map if it is present."
 
 	handleObjectMap isEmpty
 		ifFalse: 
 			[(handleObjectMap
 				removeKey: (pNMHDR uintPtrAtOffset: ##(NMTREEVIEWW._OffsetOf_itemOld + TVITEMW._OffsetOf_hItem))
 				ifAbsent: nil) ifNotNil: [:object | objectHandleMap removeKey: object]].
+	"Answer nil to accept the default processing (which we must do or the TreeView leaks... apparently, although I can't see why it would since this is a notification originally sent to the parent?)."
 	^nil!
 
 nmNotify: pNMHDR
@@ -655,8 +656,8 @@ nmRClick: pNMHDR
 				sendMessage: WM_CONTEXTMENU
 				wParam: handle
 				lParam: pt asUIntPtr].
-	"Suppress default processing"
-	^true!
+	"Return non-zero to prevent the default processing"
+	^TRUE!
 
 notificationClass
 	"Private - Answer the class of NMXXXXVIEW structure associated with the receiver."
@@ -697,8 +698,9 @@ onDisplayDetailsRequired: aTVITEM
 					^0]].
 	((requestMask allMask: TVIF_IMAGE) and: [self hasIcons])
 		ifTrue: 
-			[self getImageBlock
-				ifNotNil: [:getImage | (getImage value: object) ifNotNil: [:index | aTVITEM images: index - 1]]].
+			[aTVITEM
+				images: ((self getImageBlock ifNotNil: [:getImage | getImage value: object]) ?? ##(I_IMAGENONE + 1))
+						- 1].
 	(requestMask allMask: TVIF_TEXT) ifTrue: [aTVITEM textInBuffer: (self getTextBlock value: object)].
 	updateMode viewStoresItemData ifTrue: [aTVITEM maskIn: TVIF_DI_SETITEM].
 	"Suppress default processing"
@@ -865,7 +867,7 @@ onTreeChanged: anObject
 		ifNotNil: 
 			[:hItem |
 			self collapseHandle: hItem.
-			updateMode refreshItem: anObject handle: hItem]!
+			updateMode updateItem: anObject at: hItem]!
 
 onViewCreated
 	"The receiver's window has been created. Copy across to it any information
@@ -1058,38 +1060,46 @@ tvmSetItem: tvItem
 		wParam: 0
 		lpParam: tvItem!
 
-tvnGetInfoTip: pNMHDR
-	"Private - Default handler for the TVN_GETINFOTIPA notification message.
-	Answer nil to accept the default processing."
+tvnGetInfoTip: pNMTVGETINFOTIPW
+	"Private - Default handler for the TVN_GETINFOTIP notification message."
 
-	^getInfoTipBlock isNil
+	getInfoTipBlock isNil
 		ifFalse: 
 			[| nmtv |
-			nmtv := NMTVGETINFOTIPW fromAddress: pNMHDR.
+			nmtv := NMTVGETINFOTIPW fromAddress: pNMTVGETINFOTIPW.
 			(self objectFromHandle: nmtv itemHandle ifAbsent: nil)
-				ifNotNil: [:object | nmtv text: (getInfoTipBlock value: object) displayString].
-			0]!
+				ifNotNil: [:object | nmtv text: (getInfoTipBlock value: object)]].
 
-tvnItemChanged: anExternalAddress 
-	^nil!
+	"The control ignores the return value for this notification code."
+	^0!
 
-tvnItemChanging: anExternalAddress 
-	^nil!
+tvnItemChanged: pNMTVITEMCHANGE
+	"Private - Notification that an item in the tree has changed."
+
+	"The documentation says to return FALSE to accept the change, or TRUE to prevent the change, but this is presumably a copy&paste error from TVN_ITEMCHANGING, since the item has already changed."
+
+	^FALSE!
+
+tvnItemChanging: pNMTVITEMCHANGE
+	"Private - Notification that an item in the tree is about to change. Return FALSE to accept the change, or TRUE to prevent the change."
+
+	^FALSE!
 
 tvnItemExpanded: pNMHDR
-	"Private - Default handler for the TVN_ITEMEXPANDEDW notification message.
-	Answer nil to accept the default processing."
+	"Private - Default handler for the TVN_ITEMEXPANDEDW notification message."
 
-	^nil!
+	"Return value not used, but suppress needless call to DefWindowProc on the parent"
+
+	^0!
 
 tvnItemExpanding: pNMHDR
 	"Private - Default handler for the TVN_ITEMEXPANDINGW notification message."
 
 	| tviParent hParent |
-	(pNMHDR uint32AtOffset: NMTREEVIEWW._OffsetOf_action) == TVE_EXPAND ifFalse: [^nil].
+	(pNMHDR uint32AtOffset: NMTREEVIEWW._OffsetOf_action) == TVE_EXPAND ifFalse: [^FALSE].
 	tviParent := TVITEMW fromAddress: pNMHDR asInteger + NMTREEVIEWW._OffsetOf_itemNew.
 	"See if we have been expanded before"
-	tviParent isStateExpandedOnce ifTrue: [^nil].
+	tviParent isStateExpandedOnce ifTrue: [^FALSE].
 	"If not, add the children"
 	hParent := tviParent hItem.
 	(self objectFromHandle: hParent ifAbsent: nil)
@@ -1106,7 +1116,7 @@ tvnItemExpanding: pNMHDR
 								afterHandle: TVI_LAST]].
 			"Inform the parent item that we don't want to be informed when we are expanded again"
 			tviParent beStateExpandedOnce].
-	^nil	"accept the default processing"!
+	^FALSE	"Allow the expansion to proceed - returning TRUE would prevent"!
 
 tvnSelChanging: pNMHDR
 	"Private - Default handler for the TVN_SELCHANGINGW notification message.
@@ -1121,13 +1131,13 @@ updateAll
 		#dynamic - the view is just invalidated to trigger repaint, which will re-request text, icons, etc
 		#lazy, #static - the view is asked to refresh each item individually."
 
-	updateMode updateAll!
+	updateMode updateAllItems!
 
-updateAllNonVirtual
+updateAllItems
 	"Private - Update the text and images the tree view stores for each item in non-dynamic tree."
 
-	handleObjectMap 
-		keysAndValuesDo: [:eachHandle :eachObject | updateMode refreshItem: eachObject handle: eachHandle]!
+	handleObjectMap
+		keysAndValuesDo: [:eachHandle :eachObject | updateMode updateItem: eachObject at: eachHandle]!
 
 updateIndentation
 	"Private - Update the identation of child items to reflect the current values
@@ -1144,14 +1154,17 @@ updateIndentation
 			indentSeparation := (self sendMessage: TVM_GETINDENT) - imageWidth]!
 
 updateItem: anObject
-	(self handleFromObject: anObject) ifNotNil: [:hItem | updateMode refreshItem: anObject handle: hItem]!
+	(self handleFromObject: anObject) ifNotNil: [:hItem | updateMode updateItem: anObject at: hItem]!
+
+updateItem: anObject at: anInteger
+	self shouldNotImplement!
 
 updateMode
-	"Answer the desired update mode, one of:
-		#dynamic	- display details re-requested by callback on every paint
-		#lazy		- display details initially requested by callback on first paint only
-		#static	- tree nodes fully populated with display details when first added
-	The display details referred to are the label text, icon, and whether or not the node has children."
+	"Answer the configured update mode, one of:
+		#dynamic	- Display details re-requested by callback on every paint
+		#lazy		- Supported by TreeView only. Display details initially requested by callback on first paint only
+		#static		- Items fully populated with display details when first added
+	The display details referred to are the label text, icon, and (in a tree) whether or not the item has children."
 
 	^updateMode name!
 
@@ -1163,7 +1176,7 @@ updateMode: aSymbol
 	The display details referred to are the label test, icon, and whether or not the node has children.
 	Note that the update mode should not be changed after the tree has been populated."
 
-	updateMode := (UpdateModes at: aSymbol ?? #dynamic) forTreeView: self!
+	updateMode := (UpdateModes at: aSymbol ?? #dynamic) forIconicList: self!
 
 viewMode
 	"Answer the view mode of the receiver. See the class method #viewModes for the
@@ -1321,9 +1334,10 @@ tvnItemExpanded:!event handling-win32!private! !
 tvnItemExpanding:!event handling-win32!private! !
 tvnSelChanging:!event handling-win32!private! !
 updateAll!public!updating! !
-updateAllNonVirtual!private!updating! !
+updateAllItems!private!updating! !
 updateIndentation!private!updating! !
 updateItem:!event handling!public! !
+updateItem:at:!public!updating! !
 updateMode!accessing!public! !
 updateMode:!accessing!public! !
 viewMode!accessing!public! !
@@ -1376,10 +1390,10 @@ stbConvertProxy: anSTBViewProxy
 		at: size + 2
 			put: ((##({ TreeViewDynamicUpdateMode. TreeViewStaticUpdateMode. TreeViewLazyUpdateMode })
 					at: (((vars at: ##(self indexOfInstVar: 'tvFlags')) bitAnd: LegacyUpdateModeMask) bitShift: -1) + 1)
-						forTreeView: anSTBViewProxy)!
+						forIconicList: anSTBViewProxy)!
 
 stbVersion
-	"14: Adds tvStyle and 7 spares"
+	"14: Adds tvStyle, updateMode, and 6 spares"
 
 	^14!
 
@@ -1405,7 +1419,7 @@ stbConvertProxy:!binary filing!public! !
 stbVersion!binary filing!public! !
 themePartName!constants!public! !
 uninitialize!class hierarchy-removing!private! !
-updateModes!accessing!private! !
+updateModes!constants!private! !
 winClassName!constants!private! !
 !
 

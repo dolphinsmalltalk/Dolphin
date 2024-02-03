@@ -139,7 +139,7 @@ iImage: anInteger
 	bytes int32AtOffset: _OffsetOf_iImage put: anInteger!
 
 images: anInteger
-	"Set the receiver's images (including that if selected) to that in the image list with the specified index."
+	"Set the receiver's images (including that if selected) to that with the specified index in the tree view's image list."
 
 	bytes
 		int32AtOffset: _OffsetOf_iImage put: anInteger;
@@ -201,6 +201,20 @@ stateMask: anInteger
 
 	bytes uint32AtOffset: _OffsetOf_stateMask put: anInteger!
 
+text: aString hasChildren: aBoolean image: anInteger
+	"Initialize the receiver for setting text ,image and children count of a tree node. Note that this is only used for the #static update mode, as in #dynamic mode the data is requested by callback."
+
+	| iImage |
+	iImage := (anInteger ?? ##(I_IMAGENONE + 1)) - 1.
+	text := aString displayString asUtf16String.
+	bytes
+		uintPtrAtOffset: _OffsetOf_pszText put: text yourAddress;
+		int32AtOffset: _OffsetOf_cchTextMax put: text size + 1;
+		int32AtOffset: _OffsetOf_cChildren put: aBoolean asInteger;
+		int32AtOffset: _OffsetOf_iImage put: iImage;
+		int32AtOffset: _OffsetOf_iSelectedImage put: iImage;
+		uint32AtOffset: _OffsetOf_mask put: ##(TVIF_TEXT | TVIF_CHILDREN | TVIF_IMAGE | TVIF_SELECTEDIMAGE)!
+
 textPointerOffset
 	"Private - Answer the offset of the text pointer in the receiver. "
 
@@ -235,6 +249,7 @@ pszText:!**compiled accessors**!public! !
 selectedImage:!accessing!public! !
 stateMask!**compiled accessors**!public! !
 stateMask:!**compiled accessors**!public! !
+text:hasChildren:image:!initializing!public! !
 textPointerOffset!constants!private! !
 !
 

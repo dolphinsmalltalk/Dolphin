@@ -166,7 +166,7 @@ typeIcon
 	^aspectDescriptor icon!
 
 typeImage
-	^aspectDescriptor icon ifNil: [0] ifNotNil: [:icon | icon imageIndex]!
+	^self typeIcon ifNotNil: [:icon | icon imageIndex]!
 
 value
 	"Answers the <Object> value of the receiver.
@@ -190,7 +190,7 @@ valueIcon
 	^[self value icon] on: Error do: [:ex | self icon]!
 
 valueImage
-	^[self valueIcon ifNil: [0] ifNotNil: [:icon | icon imageIndex]] on: Error do: [:ex | -1]!
+	^[self valueIcon ifNotNil: [:icon | icon imageIndex]] on: Error do: [:ex | -1]!
 
 valueNameInfo
 	"Answer a string that can be used in an info tip to describe the receiver"

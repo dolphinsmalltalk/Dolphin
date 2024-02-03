@@ -40,11 +40,15 @@ package setClassNames: #(
 	#{OS.TVITEMEXW}
 	#{OS.TVITEMW}
 	#{UI.IconicListAbstract}
+	#{UI.IconicListUpdateMode}
 	#{UI.LabelEditedEvent}
 	#{UI.LabelEditEvent}
 	#{UI.LabelEditingEvent}
 	#{UI.ListView}
 	#{UI.ListViewColumn}
+	#{UI.ListViewStaticUpdateMode}
+	#{UI.ListViewUpdateMode}
+	#{UI.ListViewVirtualUpdateMode}
 	#{UI.TabView}
 	#{UI.TabViewXP}
 	#{UI.TreeView}
@@ -492,19 +496,19 @@ Kernel.SharedPool
 			'TVSIL_STATE' -> 16r2
 		}!
 Core.Object
+	subclass: #'UI.IconicListUpdateMode'
+	instanceVariableNames: 'view'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Object
 	subclass: #'UI.ListViewColumn'
 	instanceVariableNames: 'text width alignment getTextBlock getSortValueBlock getContentsBlock name parent getImageBlock flags getInfoTipBlock customDrawBlock'
 	classVariableNames: ''
 	imports: #(#{OS.ListViewConstants})
 	classInstanceVariableNames: ''
 	classConstants: { 'AutoResizeMask' -> 16r1. 'SortInvertedMask' -> 16r2 }!
-Core.Object
-	subclass: #'UI.TreeViewUpdateMode'
-	instanceVariableNames: 'view'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
 UI.Event
 	subclass: #'UI.LabelEditEvent'
 	instanceVariableNames: 'cancel item object text'
@@ -522,6 +526,62 @@ UI.LabelEditEvent
 UI.LabelEditEvent
 	subclass: #'UI.LabelEditingEvent'
 	instanceVariableNames: 'font forecolor'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.IconicListUpdateMode
+	subclass: #'UI.ListViewUpdateMode'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #(#{OS.ListViewConstants})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.IconicListUpdateMode
+	subclass: #'UI.TreeViewUpdateMode'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.ListViewUpdateMode
+	subclass: #'UI.ListViewStaticUpdateMode'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.ListViewUpdateMode
+	subclass: #'UI.ListViewVirtualUpdateMode'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.TreeViewUpdateMode
+	subclass: #'UI.TreeViewStaticUpdateMode'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.TreeViewUpdateMode
+	subclass: #'UI.TreeViewVirtualUpdateMode'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.TreeViewVirtualUpdateMode
+	subclass: #'UI.TreeViewDynamicUpdateMode'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.TreeViewVirtualUpdateMode
+	subclass: #'UI.TreeViewLazyUpdateMode'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -603,7 +663,7 @@ External.Structure
 			'_OffsetOf_item' -> 16r8.
 			'_TVINSERTSTRUCTW_Size' -> 16r44.
 			'CallbackPrototype'
-				-> #[0 0 0 0 0 0 0 0 83 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 0 0 0 0 255 255 255 255 0 0 0 0 255 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+				-> #[0 0 0 0 0 0 0 0 67 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 0 0 0 0 255 255 255 255 0 0 0 0 255 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
 		}!
 OS.CCHITTESTINFO
 	subclass: #'OS.LVHITTESTINFO'
@@ -858,34 +918,6 @@ OS.NMGETINFOTIP
 			'_OffsetOf_lParam' -> 16r18.
 			'_OffsetOf_pszText' -> 16rC
 		}!
-UI.TreeViewUpdateMode
-	subclass: #'UI.TreeViewStaticUpdateMode'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-UI.TreeViewUpdateMode
-	subclass: #'UI.TreeViewVirtualUpdateMode'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-UI.TreeViewVirtualUpdateMode
-	subclass: #'UI.TreeViewDynamicUpdateMode'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-UI.TreeViewVirtualUpdateMode
-	subclass: #'UI.TreeViewLazyUpdateMode'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
 UI.ListControlView
 	subclass: #'UI.IconicListAbstract'
 	instanceVariableNames: 'getImageBlock imageManager stateImageManager getInfoTipBlock customDrawBlock largeIconExtent thumbnailsImageManager'
@@ -905,7 +937,7 @@ UI.ListControlView
 		}!
 UI.IconicListAbstract
 	subclass: #'UI.ListView'
-	instanceVariableNames: 'lastClickedColIndex columns viewMode lastSelIndices iconSpacing lvStyle thumbnailExtent lvFlags backImage backImageOffset backImageAlpha approvedSelIndices noRedrawCount _unused36 _unused37 _unused38 _unused39 _unused40 _unused41 _unused42 _unused43 _unused44 _unused45'
+	instanceVariableNames: 'lastClickedColIndex columns viewMode lastSelIndices iconSpacing lvStyle thumbnailExtent lvFlags backImage backImageOffset backImageAlpha approvedSelIndices noRedrawCount updateMode _unused37 _unused38 _unused39 _unused40 _unused41 _unused42 _unused43 _unused44 _unused45'
 	classVariableNames: 'SelectionStateMask UnknownItem'
 	imports: #(#{OS.ListViewConstants})
 	classInstanceVariableNames: ''
@@ -921,7 +953,7 @@ UI.IconicListAbstract
 								#thumbnails -> 16r0.
 								#tileIcons -> 16r0
 							}).
-			'NoImageIndex' -> 16r0
+			'NoImageIndex' -> -16r1
 		}!
 UI.IconicListAbstract
 	subclass: #'UI.TabView'

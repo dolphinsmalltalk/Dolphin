@@ -16,7 +16,7 @@ subjectClass
 
 testInstanceCreation
 	| subject |
-	subject := self subjectClass iItem: 1234.
+	subject := self subjectClass callbacksForIndex: 1234.
 	self assert: subject iItem equals: 1234.
 	self assert: subject handle equals: 1235.
 	self assert: subject printString
@@ -47,7 +47,8 @@ testInstanceCreation2
 		imageIndex: nil
 		indent: 0.
 	self assert: subject printString
-		equals: 'a <1p>(mask=<2p> iItem=14 text=''Foo'')' << { self subjectClass. LVIF_TEXT }.
+		equals: 'a <1p>(mask=<2p> iItem=14 text=''Foo'' iImage=<3p>)'
+				<< { self subjectClass. LVIF_TEXT | LVIF_IMAGE. I_IMAGENONE }.
 	subject
 		row: 16
 		text: 'bar'
@@ -62,16 +63,16 @@ testInstanceCreation2
 		imageIndex: 124
 		indent: -1.
 	self assert: subject printString
-		equals: 'a <1p>(mask=<2p> iItem=16 text=''Foobar'' iImage=-1 iIndent=-1)'
-				<< { self subjectClass. LVIF_TEXT | LVIF_IMAGE | LVIF_INDENT }.
+		equals: 'a <1p>(mask=<2p> iItem=16 text=''Foobar'' iImage=<3p> iIndent=-1)'
+				<< { self subjectClass. LVIF_TEXT | LVIF_IMAGE | LVIF_INDENT. I_IMAGENONE }.
 	subject
 		row: 18
 		text: 'Foo bar'
 		imageIndex: nil
 		indent: 2.
 	self assert: subject printString
-		equals: 'a <1p>(mask=<2p> iItem=17 text=''Foo bar'' iIndent=2)'
-				<< { self subjectClass. LVIF_TEXT | LVIF_INDENT }! !
+		equals: 'a <1p>(mask=<2p> iItem=17 text=''Foo bar'' iImage=<3p> iIndent=2)'
+				<< { self subjectClass. LVIF_TEXT | LVIF_INDENT | LVIF_IMAGE. I_IMAGENONE }! !
 !OS.Tests.LVITEMWTest categoriesForMethods!
 subjectClass!constants!public! !
 testInstanceCreation!constants!public! !

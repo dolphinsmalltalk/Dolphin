@@ -204,7 +204,7 @@ nmHover: pNMHDR
 nmKeyDown: pNMHDR
 	"Default handler for a NM_KEYDOWN notification message.
 	Answer nil to accept default processing.
-	Subclasses may answer 0 to prevent the control from processing the key press."
+	In some cases subclasses may answer 0 to prevent the control from processing the key press."
 
 	^nil!
 

@@ -4,7 +4,7 @@ UI.Tests.ListControlTest
 	subclass: #'UI.Tests.ListViewTest'
 	instanceVariableNames: 'nmClick'
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.CommCtrlConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.Tests.ListViewTest guid: (Core.GUID fromString: '{bce10a8d-244e-4377-846c-bcbef9d853a1}')!
@@ -369,9 +369,10 @@ testSetTextBlockDoesNotAffectSelection
 			presenter view isVirtual: false]!
 
 testSetTextImageDoesNotAffectSelection
-	| objects |
+	| objects getImage |
 	objects := self objectsToTest.
 	presenter view isVirtual: false.
+	getImage := [:each | each isString ifFalse: [each icon imageIndex]].
 	0 to: 1
 		do: 
 			[:i |
@@ -380,11 +381,16 @@ testSetTextImageDoesNotAffectSelection
 			presenter model addAll: objects.
 			presenter selectionByIndex: 2.
 			self
-				shouldnt: 
-					["Remove an object after the selection"
-					presenter view getImageBlock: [:each | each icon imageIndex + 1]]
+				shouldnt: [presenter view getImageBlock: getImage]
 				trigger: #selectionChanged
 				against: presenter.
+			objects keysAndValuesDo: 
+					[:eachKey :eachValue |
+					| item |
+					item := self getItem: eachKey.
+					self assert: item pszText equals: eachValue displayString.
+					self assert: item iImage
+						equals: ((getImage value: eachValue) ifNil: [I_IMAGENONE] ifNotNil: [:imageIndex | imageIndex - 1])].
 			self assert: presenter selectionByIndex identicalTo: 2.
 			self
 				shouldnt: [presenter selectionByIndex: 2]

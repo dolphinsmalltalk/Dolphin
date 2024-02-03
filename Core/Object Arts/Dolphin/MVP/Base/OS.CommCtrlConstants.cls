@@ -67,6 +67,7 @@ Kernel.SharedPool
 			'GDTR_MAX' -> 16r2.
 			'GDTR_MIN' -> 16r1.
 			'I_IMAGECALLBACK' -> -16r1.
+			'I_IMAGENONE' -> -16r2.
 			'ICC_ANIMATE_CLASS' -> 16r80.
 			'ICC_BAR_CLASSES' -> 16r4.
 			'ICC_COOL_CLASSES' -> 16r400.

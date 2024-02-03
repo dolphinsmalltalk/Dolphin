@@ -168,6 +168,12 @@ destroyTree
 			presenter isOpen ifTrue: [presenter destroy].
 			presenter := nil]!
 
+getItemImage: anObject
+	^((presenter view getImageBlock value: anObject) ?? ##(OS.CommCtrlConstants.I_IMAGENONE + 1)) - 1!
+
+getItemText: anObject
+	^presenter view getTextBlock value: anObject!
+
 initializePresenter
 	self
 		createShell;
@@ -1275,6 +1281,8 @@ createTree!helpers!private! !
 createView!helpers!private! !
 destroyPresenter!public!Running! !
 destroyTree!private!Running! !
+getItemImage:!helpers!private! !
+getItemText:!helpers!private! !
 initializePresenter!helpers!public! !
 mouseDownEventOn:buttons:!helpers!private! !
 moveChild:of:toRoot:!helpers!private! !

@@ -77,6 +77,7 @@ package setClassNames: #(
 	#{UI.Tests.ListControlTest}
 	#{UI.Tests.ListModelTest}
 	#{UI.Tests.ListPresenterTest}
+	#{UI.Tests.ListTreePresenterTest}
 	#{UI.Tests.ListViewTest}
 	#{UI.Tests.MenuTest}
 	#{UI.Tests.MoenTreeViewTest}
@@ -123,7 +124,6 @@ package setClassNames: #(
 	#{UI.Tests.TimeToTextTest}
 	#{UI.Tests.ToolbarTest}
 	#{UI.Tests.TreePresenterTest}
-	#{UI.Tests.TreeViewTest}
 	#{UI.Tests.TypeConverterTest}
 	#{UI.Tests.ValueBufferTest}
 	#{UI.Tests.ValueConverterTest}
@@ -144,6 +144,8 @@ package setMethodNames: #(
 	#(#{Kernel.Tests.STLFilerTest} #testShellReadWrite)
 	#(#{Kernel.Tests.STLFilerTest} #verifyRectangleReadWriteAtVersion:)
 	#(#{Kernel.Tests.STLFilerTest} #verifyResourceReadWrite:version:)
+	#(#{UI.ListView} #getItemImage:)
+	#(#{UI.TreeView} #getItemImage:)
 ).
 
 package setVariableNames: #(
@@ -185,6 +187,7 @@ package setPrerequisites: #(
 	'..\..\Base\Dolphin Legacy Date & Time'
 	'..\Models\List\Dolphin List Models'
 	'..\Presenters\List\Dolphin List Presenter'
+	'..\Presenters\ListTree\Dolphin List Tree Presenter'
 	'..\..\System\Filer\Dolphin Literal Filer'
 	'..\..\System\Filer\Dolphin Literal Filer (Old versions)'
 	'..\..\System\Filer\Dolphin Literal Out Filer'
@@ -269,7 +272,7 @@ Core.Tests.DolphinTest
 	subclass: #'OS.Tests.CCITEMTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.CommCtrlConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Tests.DolphinTest
@@ -955,7 +958,7 @@ UI.Tests.ListControlTest
 	subclass: #'UI.Tests.ListViewTest'
 	instanceVariableNames: 'nmClick'
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.CommCtrlConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.Tests.ListBoxTest
@@ -987,6 +990,13 @@ UI.Tests.ListViewTest
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.Tests.SelectableTreeItemsTest
+	subclass: #'UI.Tests.ListTreePresenterTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.SelectableTreeItemsTest
 	subclass: #'UI.Tests.MoenTreeViewTest'
 	instanceVariableNames: 'nodeA nodeB nodeC nodeD nodeE nodeF shell scroller useShell'
 	classVariableNames: ''
@@ -997,14 +1007,7 @@ UI.Tests.SelectableTreeItemsTest
 	subclass: #'UI.Tests.TreePresenterTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-UI.Tests.SelectableTreeItemsTest
-	subclass: #'UI.Tests.TreeViewTest'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.CommCtrlConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.Tests.StaticViewTest
@@ -1241,6 +1244,40 @@ testResourceReadWrite6!public!unit tests! !
 testShellReadWrite!public!unit tests! !
 verifyRectangleReadWriteAtVersion:!helpers!private! !
 verifyResourceReadWrite:version:!helpers!private! !
+!
+
+!UI.ListView methodsFor!
+
+getItemImage: anInteger
+	| item |
+	item := LVITEMW newBuffer
+				iItem: anInteger - 1;
+				mask: LVIF_IMAGE;
+				yourself.
+	self lvmGetItem: item.
+	^item iImage! !
+!UI.ListView categoriesForMethods!
+getItemImage:!accessing!private! !
+!
+
+!UI.TreeView methodsFor!
+
+getItemImage: anExternalHandle
+	| tvItem imageIndex |
+	tvItem := (TVITEMW hItem: anExternalHandle)
+				mask: TVIF_IMAGE;
+				yourself.
+	User32
+		sendMessage: handle
+		msg: TVM_GETITEMW
+		wParam: 0
+		lpParam: tvItem.
+	"Note that there is a bug in the control: If I_IMAGENONE is set, the iImage field is set to 65534, suggesting that only 16 bits are written.
+	We use a cheesy workaround for this, since at present this operation is only used in tests as there is generally no need to read the image index."
+	imageIndex := tvItem iImage.
+	^imageIndex == 65534 ifTrue: [I_IMAGENONE] ifFalse: [imageIndex]! !
+!UI.TreeView categoriesForMethods!
+getItemImage:!helpers!private! !
 !
 
 "End of package definition"!

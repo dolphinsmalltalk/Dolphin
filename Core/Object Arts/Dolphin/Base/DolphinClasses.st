@@ -1361,8 +1361,6 @@ Kernel.SharedPool
 			'HWND_NOTOPMOST' -> -16r2.
 			'HWND_TOP' -> 16r0.
 			'HWND_TOPMOST' -> -16r1.
-			'I_IMAGECALLBACK' -> -16r1.
-			'I_IMAGENONE' -> -16r2.
 			'ICON_BIG' -> 16r1.
 			'ICON_SMALL' -> 16r0.
 			'IDABORT' -> 16r3.
@@ -1426,8 +1424,6 @@ Kernel.SharedPool
 			'KLF_SUBSTITUTE_OK' -> 16r2.
 			'LF_FACESIZE' -> 16r20.
 			'LF_FULLFACESIZE' -> 16r40.
-			'LIM_LARGE' -> 16r1.
-			'LIM_SMALL' -> 16r1.
 			'LOAD_LIBRARY_AS_DATAFILE' -> 16r2.
 			'LOAD_LIBRARY_AS_IMAGE_RESOURCE' -> 16r20.
 			'LOGPIXELSX' -> 16r58.

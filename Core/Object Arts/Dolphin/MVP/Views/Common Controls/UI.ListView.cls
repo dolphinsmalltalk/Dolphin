@@ -2,7 +2,7 @@
 
 UI.IconicListAbstract
 	subclass: #'UI.ListView'
-	instanceVariableNames: 'lastClickedColIndex columns viewMode lastSelIndices iconSpacing lvStyle thumbnailExtent lvFlags backImage backImageOffset backImageAlpha approvedSelIndices noRedrawCount _unused36 _unused37 _unused38 _unused39 _unused40 _unused41 _unused42 _unused43 _unused44 _unused45'
+	instanceVariableNames: 'lastClickedColIndex columns viewMode lastSelIndices iconSpacing lvStyle thumbnailExtent lvFlags backImage backImageOffset backImageAlpha approvedSelIndices noRedrawCount updateMode _unused37 _unused38 _unused39 _unused40 _unused41 _unused42 _unused43 _unused44 _unused45'
 	classVariableNames: 'SelectionStateMask UnknownItem'
 	imports: #(#{OS.ListViewConstants})
 	classInstanceVariableNames: ''
@@ -18,7 +18,7 @@ UI.IconicListAbstract
 								#thumbnails -> 16r0.
 								#tileIcons -> 16r0
 							}).
-			'NoImageIndex' -> 16r0
+			'NoImageIndex' -> -16r1
 		}!
 UI.ListView guid: (Core.GUID fromString: '{87b4c730-026e-11d3-9fd7-00a0cc3e4a32}')!
 UI.ListView comment: '`ListView` is the `<listView>` implementing the Windows "SysListView32" common control. It is for single selection use and, therefore, implements the `<selectableItems>` protocol for use with any `<listModel>`.
@@ -53,14 +53,6 @@ The underlying Windows common control is a sophisticated one with many options. 
 !UI.ListView categoriesForClass!MVP-Views! !
 !UI.ListView methodsFor!
 
-addAllNonVirtual
-	"Private - Add all the row and column items for a non-virtual list."
-
-	self 
-		addOrUpdate: false
-		nonVirtualItems: self list
-		afterIndex: 0!
-
 addColumn
 	"Append a new default column to the report views columns. 
 	Answers the new column"
@@ -91,49 +83,6 @@ addColumn: newColumn atIndex: columnIndex
 	self invalidateLayout.
 	self updateAll.
 	^newColumn!
-
-addOrUpdate: aBoolean nonVirtualItems: aSequenceableCollection afterIndex: anInteger
-	"Private - Add/update row and column items for specified sequence of objects to the ListView,
-	starting at the specified row index."
-
-	| lvItem primaryImageSupplier primaryTextSupplier isMultiColumn colImageBlock msg |
-	primaryImageSupplier := primaryTextSupplier := self.
-	colImageBlock := [:eachRow :eachCol | nil].
-	(isMultiColumn := self isReportMode)
-		ifTrue: 
-			[primaryTextSupplier := self allColumns at: 1 ifAbsent: [self].
-			self hasColumnImages
-				ifTrue: 
-					[colImageBlock := [:eachRow :eachCol | eachCol imageFromRow: eachRow].
-					primaryImageSupplier := primaryTextSupplier]].
-	lvItem := LVITEMW newBuffer.
-	msg := aBoolean ifTrue: [LVM_SETITEMW] ifFalse: [LVM_INSERTITEMW].
-	aSequenceableCollection keysAndValuesDo: 
-			[:i :each |
-			lvItem
-				row: i + anInteger
-				text: (primaryTextSupplier textFromRow: each)
-				imageIndex: (primaryImageSupplier imageFromRow: each)
-				indent: (self indentFromRow: each).
-			(self stateImageFromRow: each) ifNotNil: [:state | lvItem stateImageIndex: state].
-			User32
-				sendMessage: handle
-				msg: msg
-				wParam: 0
-				lpParam: lvItem].
-	isMultiColumn ifFalse: [^self].
-	self allColumns from: 2
-		keysAndValuesDo: 
-			[:j :eachCol |
-			lvItem column: j.
-			aSequenceableCollection keysAndValuesDo: 
-					[:i :eachRow |
-					lvItem
-						row: i + anInteger
-						text: (eachCol textFromRow: eachRow)
-						imageIndex: (colImageBlock value: eachRow value: eachCol)
-						indent: 0.
-					self lvmSetItem: lvItem]]!
 
 adjustForStaticEdgeBug: aRectangle
 	"#1063: If we have a static edge but no other edge style, the view behaves as though it
@@ -279,13 +228,7 @@ backImageOffset: aPoint
 basicAdd: anObject atIndex: anInteger
 	"Private - Adds an item to the list view at the index given by anInteger"
 
-	self isVirtual
-		ifTrue: [self lvmInsertItem: (LVITEMW iItem: anInteger - 1)]
-		ifFalse: 
-			[self
-				addOrUpdate: false
-				nonVirtualItems: { anObject }
-				afterIndex: anInteger - 1]!
+	updateMode insertItem: anObject atIndex: anInteger!
 
 basicAddColumn: aListViewColumn atIndex: anInteger
 	"Private - Insert aListViewColumn in the associated control at the index 
@@ -319,18 +262,7 @@ basicItemFromPoint: aPoint
 	^struct!
 
 basicRefreshContents
-	| count |
-	self isVirtual
-		ifTrue: 
-			[count := self size.
-			self
-				basicResetSelection;
-				lvmSetItemCount: count.
-			count > 0
-				ifTrue: 
-					["If virtual, then don't need to actually add the items (hooray!!)"
-					self autoResizeColumns]]
-		ifFalse: [self refreshNonVirtual]!
+	updateMode refreshAllItems!
 
 basicRemoveAtIndex: anInteger
 	"Private - Delete item at anInteger index in the list view.
@@ -686,7 +618,7 @@ hasButtons
 hasCheckBoxes
 	"Answer whether the receiver has check-boxes associated with its items. This feature is only supported in non-virtual mode."
 
-	^(lvStyle allMask: LVS_EX_CHECKBOXES) and: [self isVirtual not]!
+	^(lvStyle allMask: LVS_EX_CHECKBOXES) and: [self hasOwnerData not]!
 
 hasCheckBoxes: aBoolean
 	"Set whether the receiver has check-boxes associated with its items. Note that check-boxes are only supported when in non-virtual mode, and are also mutually exclusive with any other use of state images in the list."
@@ -805,6 +737,9 @@ hasInfoTips: aBoolean
 hasLargeImages
 	^viewMode == #thumbnails or: [viewMode == #extraLargeIcons]!
 
+hasOwnerData
+	^self baseStyleAllMask: LVS_OWNERDATA!
+
 hasPrimaryColumnImages
 	^(self isReportMode and: [self hasColumnImages]) 
 		ifTrue: [self primaryColumn getImageBlock notNil]
@@ -917,6 +852,10 @@ initialize
 	lvStyle := self defaultListViewExStyle.
 	self primaryColumn isAutoResize: true!
 
+initializeUpdateMode: aBoolean
+	updateMode := (aBoolean ifTrue: [ListViewVirtualUpdateMode] ifFalse: [ListViewStaticUpdateMode])
+				forIconicList: self!
+
 invalidateHeader
 	"Invalidate the header of the list view to cause it to be repainted.
 	This is only really useful to work around bugs in the control?"
@@ -929,19 +868,26 @@ invalidateHeader
 				lpRect: nil
 				bErase: true]!
 
+invalidateItemAt: anInteger
+	"Private - Invalidate the item with the 1-based integer index to cause it to be redrawn."
+
+	User32
+		sendMessage: handle
+		msg: LVM_REDRAWITEMS
+		wParam: anInteger - 1
+		lParam: anInteger - 1!
+
 isArrangeable
 	"Answer true if the item positions in the receiver can be set in the current view style."
 
 	^#(#largeIcons #smallIcons) includes: self viewMode!
 
 isAutoArranged
-	"Answer whether the icons in the receiver are automatically arranged into a grid as they are
-	added, and that grid is recalculated to give a best-fit when the view is resized.."
+	"Answer whether the icons in the receiver are automatically arranged into a grid as they are added, and that grid is recalculated to give a best-fit when the view is resized.."
 
-	"Implementation Note: From MSDN: 'All virtual list-view controls default to the
-	LVS_AUTOARRANGE style.'"
+	"Implementation Note: From MSDN: 'All virtual list-view controls default to the LVS_AUTOARRANGE style.'"
 
-	^(self baseStyleAllMask: LVS_AUTOARRANGE) or: [self isVirtual]!
+	^(creationStyle at: 1) anyMask: ##(LVS_AUTOARRANGE | LVS_OWNERDATA)!
 
 isAutoArranged: aBoolean 
 	"Set whether icons should be automatically arranged."
@@ -991,27 +937,21 @@ isReportMode
 	^viewMode == #report!
 
 isVirtual
-	"Answer whether the receiver has the owner data style.
-	This is not available in pre-IE4 versions of the CommCtrl Library
-	but then those are no longer supported by Dolphin!!"
+	"Answer whether the receiver has the owner data style."
 
-	^(self baseStyleAllMask: LVS_OWNERDATA)!
+	^updateMode isVirtual!
 
 isVirtual: aBoolean
-	"Sets the receiver to be virtual or not depending on the value of aBoolean (i.e. sets/clears
-	the LVS_OWNERDATA style)."
+	"Sets the receiver to be virtual or not depending on the value of aBoolean (i.e. sets/clears the LVS_OWNERDATA style)."
 
-	"Implementation Note: From MSDN: 'Dynamically switching to and from the LVS_OWNERDATA style
-	is not supported.' i.e. Cannot be changed on-the-fly without view recreation."
-
+	self isVirtual == aBoolean ifTrue: [^self].
+	self initializeUpdateMode: aBoolean.
+	"From MSDN: 'Dynamically switching to and from the LVS_OWNERDATA style is not supported.' i.e. Cannot be changed on-the-fly without view recreation."
 	self
 		baseStyleMask: LVS_OWNERDATA
 		set: aBoolean
 		recreateIfChanged: true.
-	self isOpen
-		ifTrue: 
-			[self lvmSetCallbackMask: (self lvmGetCallbackMask mask: LVIS_STATEIMAGEMASK
-						set: (aBoolean and: [self stateImageManager notNil]))]!
+	self isOpen ifTrue: [updateMode applyCallbackMask]!
 
 itemCount
 	"Answer the total number of items in the view."
@@ -1351,7 +1291,7 @@ lvmRedrawItems: firstIndex to: lastIndex
 		sendMessage: handle
 		msg: LVM_REDRAWITEMS
 		wParam: firstIndex
-		lpParam: lastIndex!
+		lParam: lastIndex!
 
 lvmSetBkImage: aLVBKIMAGEW
 	"Private - Set the background image according to the information held in the <LVBKIMAGEW> argument."
@@ -1428,7 +1368,7 @@ lvmSetItem: anLvItem
 	self
 		sendMessageNz: LVM_SETITEMW
 		wParam: 0
-		lpParam: anLvItem asParameter!
+		lpParam: anLvItem!
 
 lvmSetItem: anInteger position: aPos
 	"Private - Move an item to the specified position in the receiver when
@@ -1447,7 +1387,7 @@ lvmSetItem: index state: anLvItem
 		sendMessage: handle
 		msg: LVM_SETITEMSTATE
 		wParam: index
-		lpParam: anLvItem asParameter) == 0
+		lpParam: anLvItem) == 0
 		ifTrue: 
 			["Control didn't like it, try and deduce why..."
 			^self errorInCommonControlCall: index]!
@@ -1461,15 +1401,13 @@ lvmSetItemCount: size
 		wParam: size
 		lParam: 0!
 
-lvmSetItemText: anLvItem index: index
+lvmSetItemText: anLvItem index: anInteger
 	"Private - Change the text of an item or subitem."
 
-	(User32
-		sendMessage: handle
-		msg: LVM_SETITEMTEXTW
-		wParam: index
-		lpParam: anLvItem asParameter) == 0
-		ifTrue: [^self errorInCommonControlCall: index]!
+	self
+		sendMessageNz: LVM_SETITEMTEXTW
+		wParam: anInteger
+		lpParam: anLvItem!
 
 lvmSetView: anInteger
 	User32
@@ -1489,54 +1427,57 @@ lvmUpdate: anInteger
 		lParam: 0) == 0
 		ifTrue: [^self errorInCommonControlCall: anInteger]!
 
-lvnBeginScroll: pNMHDR 
-	^nil!
+lvnBeginScroll: pNMVSCROLL
+	"Private - Notification that a scrolling operation has been initiated."
 
-lvnColumnClick: anNMHDR 
+	"Return value not used, but suppress needless call to DefWindowProc on the parent"
+
+	^0!
+
+lvnColumnClick: pNMLISTVIEW
 	"Private - Default handler for the LVN_COLUMNCLICK notification message.
 	Attempts to maintain current selection and to keep it visible."
 
 	| nmlv |
-	nmlv := self notificationClass fromAddress: anNMHDR yourAddress.
+	nmlv := self notificationClass fromAddress: pNMLISTVIEW.
 	self columnClicked: nmlv iSubItem + 1.
+	"Return value not used, but suppress needless call to DefWindowProc on the parent"
 	^0!
 
-lvnColumnDropDown: pNMHDR
-	^nil!
+lvnColumnDropDown: pNMLISTVIEW
+	"Private - Notification that a drop-down button on a column header has been clicked."
 
-lvnColumnOverflowClick: pNMHDR
-	^nil!
+	"Return value not used, but suppress needless call to DefWindowProc on the parent"
 
-lvnDeleteAllItems: pNMHDR
+	^0!
+
+lvnDeleteAllItems: pNMLISTVIEW
 	"Private - Default handler for the LVN_DELETEALLITEMS notification message.
-	Answer true (1) to suppress individual LVN_DELETEITEM notifications."
+	Answer TRUE (1) to suppress individual LVN_DELETEITEM notifications."
 
 	^TRUE
 
 	!
 
-lvnEndScroll: pNMHDR 
-	^nil!
+lvnEndScroll: pNMVSCROLL
+	"Private - Notification that a scrolling operation is ending in the ListView."
 
-lvnFindItem: pNMHDR
-	| f lvfi nmlv |
-	nmlv := NMLVFINDITEMW fromAddress: pNMHDR.
-	lvfi := nmlv lvfi.
-	f := lvfi flags.
-	(f allMask: LVFI_STRING) ifFalse: [^-1	"Can't find it"].
-	^(self
-		findItem: lvfi psz
-		startingAt: nmlv iStart + 1
-		wrap: (f allMask: LVFI_WRAP)) - 1!
+	"Return value not used, but suppress needless call to DefWindowProc on the parent"
 
-lvnGetEmptyMarkup: pNMHDR
-	^nil!
+	^0!
 
-lvnGetInfoTip: pNMHDR
+lvnGetEmptyMarkup: pNMLVEMPTYMARKUP
+	"Private - Notification that the list is empty to request markup to display instead."
+
+	"Expected to return TRUE if the argument has been populated with the markup to display when the list is empty."
+
+	^FALSE!
+
+lvnGetInfoTip: pNMLVGETINFOTIPW
 	"Private - Default handler for the LVN_GETINFOTIPW notification message."
 
 	| nmlv target prefixText |
-	nmlv := NMLVGETINFOTIPW fromAddress: pNMHDR.
+	nmlv := NMLVGETINFOTIPW fromAddress: pNMLVGETINFOTIPW.
 	target := self objectFromHandle: nmlv itemHandle ifAbsent: UnknownItem.
 	"ListView may occassionally ask for info tip for item we don't have (e.g. off end of list)"
 	target == UnknownItem ifTrue: [^0].
@@ -1550,46 +1491,74 @@ lvnGetInfoTip: pNMHDR
 				ifFalse: [self]) infoTipFromRow: target withPrefix: prefixText).
 	^0	"Return value is ignored"!
 
-lvnHotTrack: anAddress 
-"	| nmlv |
-	nmlv := OS.NMLISTVIEW fromAddress: anAddress."
-	^0!
+lvnHotTrack: pNMLISTVIEW
+	"Private - Notification that the mouse is hovering over an item in the ListView."
 
-lvnIncrementalSearch: pNMHDR
-	^nil!
-
-lvnInsertItem: pNMHDR
-	"Private - Default handler for the LVN_INSERTITEM notification message.
-	Answer nil to accept default processing."
-
-	^nil
-
-
-	!
-
-lvnItemActivate: anExternalAddress
-	^0!
-
-lvnItemChanged: anNMHDR
-	"Private - Item has changed.
-	We no longer use this notification to look for selection changes, as it
-	is absurdly difficult to tell what is going on from a disconnected series
-	of events with no indication as to the overall effect."
+	"Allow the list to peform normal track selection (if in that mode). Non-zero to suppress."
 
 	^0!
 
-lvnItemChanging: pNMHDR
-	"Private - Default handler for the LVN_ITEMCHANGING notification message.
-	Answer false (0) to allow the change, or true (1) to prevent it"
+lvnIncrementalSearch: pNMLVFINDITEM
+	"Private - Notification that an incremental search has started."
 
-	^0
-!
+	"Return value not used, but suppress needless call to DefWindowProc on the parent"
 
-lvnLinkClick: pNMHDR
-	^nil!
-
-lvnMarqueeBegin: anExternalAddress 
 	^0!
+
+lvnInsertItem: pNMLISTVIEW
+	"Private - Notification that a new item has been inserted in the list.."
+
+	"Return value not used, but suppress needless call to DefWindowProc on the parent"
+
+	^0!
+
+lvnItemActivate: pNMITEMACTIVATE
+	"Private - Notification that an item has been activated."
+
+	"Return value of 0 is required. The documentation does not specify what happens if a non-zero value is returned."
+
+	^0!
+
+lvnItemChanged: pNMLISTVIEW
+	"Private - Notification that an Item has been changed."
+
+	"We no longer use this notification to look for selection changes, as it is absurdly difficult to tell what is going on from a disconnected series of events with no indication as to the overall effect."
+
+	"Return value not used, but suppress needless call to DefWindowProc on the parent"
+
+	^0!
+
+lvnItemChanging: pNMLISTVIEW
+	"Private - Notification that an item is about to be changed."
+
+	"Return FALSE (0) to allow the change, or TRUE (1) to prevent it"
+
+	^FALSE!
+
+lvnLinkClick: pNMLVLINK
+	"Private - Notification that a link has been clicked."
+
+	"Return value not used, but suppress needless call to DefWindowProc on the parent"
+
+	^0!
+
+lvnMarqueeBegin: anExternalAddress
+	"Private - Notification that a marquee, aka bounding-box, selection has been initiated."
+
+	"Allow the marquee selection to proceed by returning zero. To cancel the selection operation, return non-zero."
+
+	^0!
+
+lvnODFindItem: pNMLVFINDITEM
+	| f lvfi nmlv |
+	nmlv := NMLVFINDITEMW fromAddress: pNMLVFINDITEM.
+	lvfi := nmlv lvfi.
+	f := lvfi flags.
+	(f allMask: LVFI_STRING) ifFalse: [^-1	"Can't find it"].
+	^(self
+		findItem: lvfi psz
+		startingAt: nmlv iStart + 1
+		wrap: (f allMask: LVFI_WRAP)) - 1!
 
 lvnODStateChanged: pNMHDR
 	"Private - Default handler for the LVN_ODSTATECHANGED notification message."
@@ -1648,19 +1617,17 @@ nmNotify: pNMHDR
 		at: LVN_FIRST - LVN_COLUMNCLICK + 1 put: #lvnColumnClick:;
 		at: LVN_FIRST - LVN_BEGINDRAG + 1 put: #nmBeginDrag:;
 		at: LVN_FIRST - LVN_BEGINRDRAG + 1 put: #nmBeginRDrag:;
-		at: LVN_FIRST - LVN_ODCACHEHINT + 1 put: #nmDummy:;
 		at: LVN_FIRST - LVN_ITEMACTIVATE + 1 put: #lvnItemActivate:;
 		at: LVN_FIRST - LVN_ODSTATECHANGED + 1 put: #lvnODStateChanged:;
 		at: LVN_FIRST - LVN_HOTTRACK + 1 put: #lvnHotTrack:;
 		at: LVN_FIRST - LVN_GETDISPINFOW + 1 put: #nmGetDispInfoW:;
 		at: LVN_FIRST - LVN_SETDISPINFOW + 1 put: #nmSetDispInfoW:;
-		at: LVN_FIRST - LVN_ODFINDITEMW + 1 put: #lvnFindItem:;
+		at: LVN_FIRST - LVN_ODFINDITEMW + 1 put: #lvnODFindItem:;
 		at: LVN_FIRST - LVN_KEYDOWN + 1 put: #nmKeyDown:;
 		at: LVN_FIRST - LVN_MARQUEEBEGIN + 1 put: #lvnMarqueeBegin:;
 		at: LVN_FIRST - LVN_GETINFOTIPW + 1 put: #lvnGetInfoTip:;
 		at: LVN_FIRST - LVN_INCREMENTALSEARCHW + 1 put: #lvnIncrementalSearch:;
 		at: LVN_FIRST - LVN_COLUMNDROPDOWN + 1 put: #lvnColumnDropDown:;
-		at: LVN_FIRST - LVN_COLUMNOVERFLOWCLICK + 1 put: #lvnColumnOverflowClick:;
 		at: LVN_FIRST - LVN_BEGINSCROLL + 1 put: #lvnBeginScroll:;
 		at: LVN_FIRST - LVN_ENDSCROLL + 1 put: #lvnEndScroll:;
 		at: LVN_FIRST - LVN_LINKCLICK + 1 put: #lvnLinkClick:;
@@ -1726,8 +1693,8 @@ onDisplayDetailsRequired: anLVITEM
 
 	| rowObject mask column subItem |
 	rowObject := self objectFromHandle: anLVITEM handle ifAbsent: UnknownItem.
-	"List sometimes asks for lvitem we no longer have, answer nil to accept default processing"
-	rowObject == UnknownItem ifTrue: [^nil].
+	"List sometimes asks for lvitem we no longer have"
+	rowObject == UnknownItem ifTrue: [^0].
 	subItem := anLVITEM iSubItem.
 	self isReportMode ifTrue: [column := columns at: subItem + 1].
 	mask := anLVITEM mask.
@@ -1779,26 +1746,7 @@ onItem: anObject removedAtIndex: anInteger
 onItems: aSequenceableCollection addedAtIndex: anInteger
 	"Event received when the specified sequence of objects has been added to the receiver's model beginning at the specified <integer> index. By default, do nothing."
 
-	self isVirtual
-		ifTrue: 
-			[| count |
-			count := aSequenceableCollection size.
-			"In a virtual list, if more than a few items are being added, we may as well just update the virtual size. This will cause the list to be redrawn completely, but unless inserting at the end that is likely anyway, and this is many times faster than sending multiple LVM_INSERTITEM messages."
-			count > 3
-				ifTrue: [self lvmSetItemCount: self lvmGetItemCount + count]
-				ifFalse: 
-					[| lvItem |
-					lvItem := LVITEMW iItem: 0.
-					anInteger - 1 to: anInteger + count - 2
-						do: 
-							[:index |
-							lvItem iItem: index.
-							self lvmInsertItem: lvItem]]]
-		ifFalse: 
-			[self
-				addOrUpdate: false
-				nonVirtualItems: aSequenceableCollection
-				afterIndex: anInteger - 1].
+	updateMode insertItems: aSequenceableCollection at: anInteger.
 	self updateSelectionCache!
 
 onKeyPressed: aKeyEvent
@@ -1913,6 +1861,7 @@ onViewCreated
 	super onViewCreated.
 	noRedrawCount := 0.
 	approvedSelIndices := nil.
+	updateMode ifNil: [self initializeUpdateMode: self hasOwnerData].
 	self setControlBackcolor.
 	self forecolor ifNotNil: [:fore | self forecolor: fore].
 	self allColumns
@@ -1929,8 +1878,7 @@ onViewCreated
 	self applyImageLists.
 	self basicSelectionsByIndex: lastSelIndices.
 	self iconSpacing ifNotNil: [:spacing | self lvmSetIconSpacing: spacing].
-	(self isVirtual and: [self stateImageManager notNil])
-		ifTrue: [self lvmSetCallbackMask: LVIS_STATEIMAGEMASK]!
+	updateMode applyCallbackMask!
 
 primaryColumn
 	"Private - Answer the primary column for the report view mode"
@@ -1951,11 +1899,6 @@ refreshContents
 	self applyImageLists.
 	"List will not send selection change event when ALL items deleted, so we need one now"
 	self onSelChanged!
-
-refreshNonVirtual
-	self withOldWndProc: [self noRedrawDo: 
-					[self basicClear.
-					self addAllNonVirtual]]!
 
 removeColumn: aListViewColumn
 	"Remove the column from the view."
@@ -2099,7 +2042,7 @@ setItem: anInteger checked: aBoolean
 
 	| item |
 	item := LVITEMW newBuffer
-				iStateImage: aBoolean asParameter + 1;
+				iStateImage: aBoolean asInteger + 1;
 				yourself.
 	self lvmSetItem: anInteger - 1 state: item!
 
@@ -2256,22 +2199,7 @@ updateAll
 	non-virtual lists the list entries must be individually updated or (for simpler lists)
 	removed and re-added."
 
-	self isVirtual ifTrue: [self updateAllVirtual] ifFalse: [self updateAllNonVirtual]!
-
-updateAllNonVirtual
-	"Private - Update the text and images the list view stores for each item in this non-virtual list."
-
-	self 
-		addOrUpdate: true
-		nonVirtualItems: self list
-		afterIndex: 0!
-
-updateAllVirtual
-	"Private - Re-render a virtual list. In this case we have a special operation which allows us to
-	repaint the list content without invalidating the column headings, etc, thus reducing
-	flashing."
-
-	self lvmRedrawItems: 0 to: self size - 1!
+	updateMode updateAllItems!
 
 updateColumn: aListViewColumn
 	"Private - Update the view to reflect the current state of aListViewColumn."
@@ -2279,19 +2207,26 @@ updateColumn: aListViewColumn
 	self basicUpdateColumn: aListViewColumn.
 	self updateAll!
 
-updateItem: anObject atIndex: anInteger
+updateItem: anObject at: anInteger
 	"Re-render the specified item, which is at the specified <integer> index in the list."
 
-	self isVirtual
-		ifTrue: 
-			["We always use callback mode, so we can simply request that the item be
-			redrawn, and let the ListView re-request the details."
-			self lvmRedrawItems: anInteger - 1 to: anInteger - 1]
-		ifFalse: 
-			[self
-				addOrUpdate: true
-				nonVirtualItems: {anObject}
-				afterIndex: anInteger - 1]!
+	updateMode updateItem: anObject at: anInteger!
+
+updateMode
+	"Answer the configured update mode, one of:
+		#dynamic	- Display details re-requested by callback on every paint (the control has LVS_OWNERDATA style)
+		#static		- Items fully populated with display details when first added
+	The display details referred to are the label text, and images. Note that the indent is always requested by the control dynamically, even when not in owner-data mode."
+
+	^updateMode name!
+
+updateMode: aSymbol
+	"Set the desired update mode, one of:
+		#dynamic	- Display details re-requested by callback on every paint (the control has LVS_OWNERDATA style)
+		#static		- Items fully populated with display details when first added
+	The display details referred to are the label text, and images. Note that the indent is always requested by the control dynamically, even when not in owner-data mode."
+
+	self isVirtual: aSymbol == #dynamic!
 
 updateSelectionCache
 	"Private - The receiver's model is being modified, so we may need to account for selection changes caused by that.
@@ -2334,11 +2269,9 @@ viewModeChanged
 wantCustomDrawItemNotifications: pNMHDR
 	^self customDrawBlock notNil or: [self hasSubItemCustomDraw]! !
 !UI.ListView categoriesForMethods!
-addAllNonVirtual!private!updating! !
 addColumn!adding!columns!public! !
 addColumn:!adding!columns!public! !
 addColumn:atIndex:!adding!columns!public! !
-addOrUpdate:nonVirtualItems:afterIndex:!private!updating! !
 adjustForStaticEdgeBug:!helpers!private! !
 allColumns!columns!public! !
 anchorIndex!public!selection! !
@@ -2423,6 +2356,7 @@ hasHotTracking:!accessing-styles!public! !
 hasInfoTips!accessing-styles!public! !
 hasInfoTips:!accessing-styles!public! !
 hasLargeImages!private!testing! !
+hasOwnerData!accessing-styles!public! !
 hasPrimaryColumnImages!private!testing! !
 hasSortHeaders!accessing-styles!public! !
 hasSortHeaders:!accessing-styles!public! !
@@ -2434,7 +2368,9 @@ imageFromRow:!adapters!private! !
 indentFromRow:!adapters!private! !
 infoTipFromRow:withPrefix:!adapters!private! !
 initialize!initializing!private! !
+initializeUpdateMode:!accessing-styles!private! !
 invalidateHeader!private!updating! !
+invalidateItemAt:!helpers!private! !
 isArrangeable!arranging!public! !
 isAutoArranged!arranging!public! !
 isAutoArranged:!accessing-styles!public! !
@@ -2500,20 +2436,19 @@ lvmUpdate:!operations!private! !
 lvnBeginScroll:!event handling-win32!private! !
 lvnColumnClick:!event handling-win32!private! !
 lvnColumnDropDown:!event handling-win32!private! !
-lvnColumnOverflowClick:!event handling-win32!private! !
 lvnDeleteAllItems:!event handling-win32!private! !
 lvnEndScroll:!event handling-win32!private! !
-lvnFindItem:!event handling-win32!private! !
 lvnGetEmptyMarkup:!event handling-win32!private! !
 lvnGetInfoTip:!event handling-win32!private! !
 lvnHotTrack:!event handling-win32!private! !
 lvnIncrementalSearch:!event handling-win32!private! !
 lvnInsertItem:!event handling-win32!private! !
 lvnItemActivate:!event handling-win32!private! !
-lvnItemChanged:!private!selection! !
+lvnItemChanged:!event handling-win32!private! !
 lvnItemChanging:!event handling-win32!private! !
 lvnLinkClick:!event handling-win32!private! !
 lvnMarqueeBegin:!event handling-win32!private! !
+lvnODFindItem:!event handling-win32!private! !
 lvnODStateChanged:!event handling-win32!private! !
 maybeSelChanging:!event handling!private! !
 nmBeginDrag:!event handling-win32!private! !
@@ -2543,7 +2478,6 @@ primaryColumn!columns!private! !
 queryListMode:!commands-queries!private! !
 queryReportMode:!commands-queries!private! !
 refreshContents!public!updating! !
-refreshNonVirtual!private!updating! !
 removeColumn:!columns!public!removing! !
 removeColumnAtIndex:!columns!public!removing! !
 reportMode!commands-actions!public! !
@@ -2579,10 +2513,10 @@ thumbnailExtent!accessing!public! !
 thumbnailExtent:!accessing!public! !
 thumbnailsImageManager!image management!private! !
 updateAll!public!updating! !
-updateAllNonVirtual!private!updating! !
-updateAllVirtual!private!updating! !
 updateColumn:!columns!private!updating! !
-updateItem:atIndex:!event handling!public! !
+updateItem:at:!public!updating! !
+updateMode!accessing!public! !
+updateMode:!accessing!public! !
 updateSelectionCache!helpers!private!selection! !
 viewMode!accessing!public! !
 viewModeChanged!helpers!private! !
@@ -2620,7 +2554,8 @@ initialize
 						#list -> LVS_LIST.
 						#report -> LVS_REPORT
 					}).
-	UnknownItem := Object new!
+	UnknownItem := Object new.
+	self addClassConstant: 'NoImageIndex' value: I_IMAGENONE + 1!
 
 onStartup
 	SelectionStateMask := NtDll isWine
@@ -2719,6 +2654,9 @@ themePartName
 uninitialize
 	CommCtrlLibrary removeInitFlag: ICC_LISTVIEW_CLASSES!
 
+updateModes
+	^#(#dynamic #static)!
+
 viewModes
 	^LvModes!
 
@@ -2739,6 +2677,7 @@ stbConvertFromVersion5:!binary filing!private! !
 stbVersion!binary filing!public! !
 themePartName!constants!public! !
 uninitialize!class hierarchy-removing!private! !
+updateModes!constants!private! !
 viewModes!accessing!public! !
 winClassName!constants!private! !
 !

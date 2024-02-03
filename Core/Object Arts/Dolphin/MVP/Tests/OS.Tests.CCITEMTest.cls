@@ -4,7 +4,7 @@ Core.Tests.DolphinTest
 	subclass: #'OS.Tests.CCITEMTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.CommCtrlConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 OS.Tests.CCITEMTest guid: (Core.GUID fromString: '{dac52b06-6287-4083-8ce5-db04742e148e}')!
