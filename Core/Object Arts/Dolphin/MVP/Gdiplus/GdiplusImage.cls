@@ -514,6 +514,18 @@ rectScaledToFit: aRectangle centered: aBoolean
 	"NB: might need to use truncate instead of rounded below"
 	^origin rounded extent: extent truncated!
 
+resolution
+	"Answer an <Point> specifying the horizontal and vertical DPI of the receiver."
+
+	| buf status dpiX |
+	buf := ByteArray new: 4.
+	(status := GdiplusLibrary default gdipGetImageHorizontalResolution: self asParameter resolution: buf)
+		== Ok ifFalse: [GdiplusError signal: 'gdipGetImageHorizontalResolution failed' with: status].
+	dpiX := buf floatAtOffset: 0.
+	(status := GdiplusLibrary default gdipGetImageVerticalResolution: self asParameter resolution: buf)
+		== Ok ifFalse: [GdiplusError signal: 'GdipGetImageVerticalResolution failed' with: status].
+	^dpiX asInteger @ (buf floatAtOffset: 0) asInteger!
+
 rotateLeft
 	"Rotate the receiver 90 degrees counterclockwise."
 
@@ -798,6 +810,7 @@ propertySize:!accessing-properties!private! !
 propertyTagDateTime!accessing-properties!public! !
 rectScaledToFit:!helpers!public! !
 rectScaledToFit:centered:!helpers!public! !
+resolution!accessing!public! !
 rotateLeft!operations!public! !
 rotateRight!operations!public! !
 saveAdd:!file operations!public! !

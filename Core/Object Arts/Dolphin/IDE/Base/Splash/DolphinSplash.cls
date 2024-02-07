@@ -23,10 +23,10 @@ animationDuration
 
 	^3500!
 
-defaultExtent
-	"Answer the default size of the receiver"
+creationExtent
+	"Answer extent in pels at which the receiver should be created. This is typically the default design extent at 96 dpi, scaled to the logical display DPI."
 
-	^self objectsInside defaultExtent!
+	^self objectsInside creationExtent!
 
 defaultSplashDelay
 	"Answer the default delay that a splash should be displayed for"
@@ -74,7 +74,7 @@ showWindow
 
 !DolphinSplash categoriesForMethods!
 animationDuration!constants!private! !
-defaultExtent!accessing!public! !
+creationExtent!accessing!public! !
 defaultSplashDelay!constants!public! !
 defaultWindowStyle!constants!private! !
 give256ColorDisplayWarning!operations!private! !

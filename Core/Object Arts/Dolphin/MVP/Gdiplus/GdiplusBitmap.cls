@@ -320,7 +320,7 @@ fromImage: aGdiplusImage extent: aPoint
 	bitmap := self extent: aPoint.
 	bitmap graphics
 		drawImage: aGdiplusImage
-			at: 0 @ 0
+			at: Point.Zero
 			extent: aPoint;
 		free.
 	^bitmap!

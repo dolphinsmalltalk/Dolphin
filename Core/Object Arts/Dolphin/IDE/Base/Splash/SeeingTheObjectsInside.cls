@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 GdiplusDoubleBufferedView subclass: #SeeingTheObjectsInside
-	instanceVariableNames: 'background dolphinOutline points sun stepProcess random insideObjectsScale dolphinIntensity textureMap objects dolphins dolphinInside splashDelay hintBubble startTime info baseScale'
+	instanceVariableNames: 'background dolphinOutline points sun stepProcess random insideObjectsScale dolphinIntensity textureMap objects dolphins dolphinInside splashDelay hintBubble startTime info baseScale sunPosition'
 	classVariableNames: ''
 	poolDictionaries: 'GdiplusConstants'
 	classInstanceVariableNames: 'splashPlayTheGame difficultyLevel'!
@@ -36,24 +36,12 @@ addInsideObject: anObject minScale: minScale maxScale: maxScale
 	self model add: anObject.
 !
 
-background
-	^background 
-		ifNil: 
-			[background := GdiplusBitmap fromFile: 'Resources\Dolphin7Splash.png'
-						usingLocator: FileLocator installRelative.
-			self baseStyle = 1 
-				ifFalse: 
-					[background := GdiplusBitmap fromImage: background
-								centeredIn: (background extent * self baseScale) rounded]]!
+creationExtent
+	"Answer extent in pels at which the receiver should be created. This is typically the default design extent at 96 dpi, scaled to the logical display DPI."
 
-baseScale
-	"Answer a scale that fits the receiver to the desktop"
+	"Note that we have already scaled the bitmap for DPI, so the base size is equivalent to the 96 dpi size, but scaled down to use no more than 75% of the screen if necessary."
 
-	^baseScale
-!
-
-defaultExtent
-	^self background extent!
+	^background extent!
 
 dismiss
 	self topShell close!
@@ -83,12 +71,12 @@ dolphinMinScale
 	^0.3!
 
 dolphinOutline
-	^dolphinOutline 
+	^dolphinOutline
 		ifNil: 
 			[dolphinOutline := GdiplusBitmap fromFile: 'Resources\DolphinOutline.png'
 						usingLocator: FileLocator installRelative.
-			self baseStyle = 1 
-				ifFalse: [dolphinOutline := GdiplusBitmap fromImage: dolphinOutline scaledBy: self baseScale]]!
+			self baseStyle = 1
+				ifFalse: [dolphinOutline := GdiplusBitmap fromImage: dolphinOutline scaledBy: baseScale]]!
 
 drawInfoTextOn: graphics
 	| fontCopyright brush stringFormat |
@@ -99,13 +87,12 @@ drawInfoTextOn: graphics
 		textRenderingHint: TextRenderingHintAntiAlias;
 		drawString: info
 			font: fontCopyright
-			at: (48 @ 630 * self baseScale) rounded
+			at: (48 @ 630 * baseScale) rounded
 			format: stringFormat
 			brush: brush.
 	stringFormat free.
 	fontCopyright free.
-	brush free.
-!
+	brush free!
 
 elapsedTime
 	"Answer the elapsed time in ms since the start of the animation"
@@ -159,26 +146,17 @@ fill
 frameRate
 	^25!
 
-hasHintBubble
-	^hintBubble notNil and: [hintBubble tooltip notNil]!
-
-initialize
-	| copyright scale |
-	super initialize.
-	self backcolor: Color white.
-	insideObjectsScale := 0.1.
-	dolphinIntensity := 0.
-	self loadTextureMap: 'ObjectsInside'.
-	random := Random new.
+getBlurb
+	| copyright stream |
 	copyright := $. split: VMLibrary default versionInfo legalCopyright.
-	info := Utf16String writeStream.
-	info nextPutAll: copyright first.
+	stream := Utf16String writeStream.
+	stream nextPutAll: copyright first.
 	(copyright size > 1 and: [copyright second notEmpty])
 		ifTrue: 
-			[info
+			[stream
 				nextPutAll: ', ';
 				nextPutAll: copyright second].
-	info
+	stream
 		nextPut: $.;
 		cr;
 		nextPutAll: 'Dolphin ';
@@ -187,14 +165,25 @@ initialize
 	SessionManager current bootInfo
 		ifNotNil: 
 			[:bootInfo |
-			info
+			stream
 				cr;
 				nextPutAll: 'Image boot info: ';
 				nextPutAll: bootInfo].
-	info := info contents.
-	scale := View desktop extent * 0.75 / self originalBitmapExtent.
-	baseScale := (scale x min: scale y) min: 1.
-	self startStepProcess!
+	^stream contents!
+
+hasHintBubble
+	^hintBubble notNil and: [hintBubble tooltip notNil]!
+
+initialize
+	super initialize.
+	self backcolor: Color white.
+	insideObjectsScale := 0.1.
+	dolphinIntensity := 0.
+	random := Random new.
+	info := self getBlurb.
+	self loadBackgroundBitmap.
+	self loadTextureMap: 'ObjectsInside'.
+!
 
 insideObjectMaxScale
 	^1!
@@ -217,15 +206,23 @@ isPointInDolphin: aPoint
 	pixel := self backSurface pixelAt: aPoint.
 	^pixel = dolphinInside color!
 
+loadBackgroundBitmap
+	| dpiScale scale originalBitmapExtent |
+	background := GdiplusBitmap fromFile: 'Resources\Dolphin7Splash.png'
+				usingLocator: FileLocator installRelative.
+	dpiScale := View desktop dpi / background resolution x.
+	originalBitmapExtent := background extent.
+	scale := View desktop extent * 0.75 / (originalBitmapExtent * dpiScale).
+	baseScale := (scale x min: scale y) min: dpiScale.
+	baseScale = 1 ifFalse: [background := GdiplusBitmap fromImage: background scaledBy: baseScale]!
+
 loadTextureMap: mapName
-	| textureFileName mapFileName texture map scale |
+	| textureFileName mapFileName texture map |
 	textureFileName := 'Resources\' , (File default: mapName extension: 'png').
 	texture := GdiplusBitmap fromFile: textureFileName usingLocator: FileLocator installRelative.
 	mapFileName := 'Resources\' , (File default: mapName extension: 'txt').
 	map := FileStream read: (FileLocator installRelative localFileSpecFor: mapFileName) text: true.
 	textureMap := LookupTable new.
-	scale := View desktop extent * 0.75 / self originalBitmapExtent.
-	baseScale := (scale x min: scale y) min: 1.
 	[map atEnd] whileFalse: 
 			[| elements pos ext bm |
 			elements := $, split: map nextLine.
@@ -235,8 +232,7 @@ loadTextureMap: mapName
 			textureMap at: elements first put: (ObjectInside fromImage: bm scaledBy: baseScale)].
 	sun := textureMap removeKey: 'SeeingTheObjects.png'.
 	dolphins := {textureMap removeKey: 'Dolphin1.png'. textureMap removeKey: 'Dolphin2.png'}.
-	objects := textureMap values.
-	^textureMap!
+	objects := textureMap values!
 
 onDestroyed
 	self stopStepProcess.
@@ -263,13 +259,13 @@ onViewCreated
 	"Private - The receiver has just been created."
 
 	super onViewCreated.
+	"The rotating sun should be inset half an inch from the top right corner"
+	sunPosition := (background extent x @ 0 - ((sun extent + self dpi) / 2)) truncated abs.
+	self startStepProcess.
 	self fill!
 
-originalBitmapExtent
-	^710 @ 710!
-
 pointResolution
-	^(25 @ 25) * self baseScale!
+	^25 @ 25 * baseScale!
 
 points
 	"Compute a set of point locations that are inside the dolphin"
@@ -285,7 +281,7 @@ points
 				add: 518 @ 394;
 				add: 335 @ 52;
 				add: 62 @ 307.
-			mask := self background.
+			mask := background.
 			6 to: mask width - 6
 				by: self pointResolution x
 				do: 
@@ -321,7 +317,7 @@ render
 			each scale: existingScale * insideObjectsScale.
 			each drawOn: graphics.
 			each scale: existingScale].
-	back := self background.
+	back := background.
 	graphics
 		drawImage: back
 		at: Point zero
@@ -332,7 +328,7 @@ render
 		at: Point zero
 		extent: dolphin extent.
 	sun
-		position: self sunPosition;
+		position: sunPosition;
 		drawOn: graphics.
 	self drawInfoTextOn: graphics.
 	super render.
@@ -351,7 +347,7 @@ showHintBubble
 				willFade: true;
 				timeout: 5 seconds.
 	hintBubble
-		position: (self mapPointToScreen: self sunPosition);
+		position: (self mapPointToScreen: sunPosition);
 		notify: 'Find the dolphin inside and click to continue.'!
 
 startStepProcess
@@ -388,16 +384,11 @@ stopStepProcess
 	stepProcess 
 		ifNotNil: 
 			[stepProcess terminate.
-			stepProcess := nil]!
-
-sunPosition
-	^(612 @ 98) * self baseScale! !
+			stepProcess := nil]! !
 
 !SeeingTheObjectsInside categoriesForMethods!
 addInsideObject:minScale:maxScale:!private! !
-background!accessing!private! !
-baseScale!constants!public! !
-defaultExtent!accessing!private! !
+creationExtent!accessing!private! !
 dismiss!event handling!private! !
 dolphinInsideBaseColor!constants!public! !
 dolphinInsideIntensityColor!constants!public! !
@@ -410,6 +401,7 @@ drawInfoTextOn:!operations!private! !
 elapsedTime!operations!public! !
 fill!event handling!private! !
 frameRate!constants!public! !
+getBlurb!helpers!private! !
 hasHintBubble!event handling!private!testing! !
 initialize!initializing!private! !
 insideObjectMaxScale!constants!public! !
@@ -417,12 +409,12 @@ insideObjectMinScale!constants!public! !
 insideObjectScaleInPeriod!constants!operations!public! !
 isActionPoint:!event handling!private! !
 isPointInDolphin:!event handling!private!testing! !
+loadBackgroundBitmap!initializing!private! !
 loadTextureMap:!accessing!private! !
 onDestroyed!event handling!private! !
 onGetCursor:!event handling!private! !
 onLeftButtonPressed:!event handling!private! !
 onViewCreated!event handling!private! !
-originalBitmapExtent!constants!public! !
 pointResolution!constants!public! !
 points!accessing!private! !
 random!operations!private! !
@@ -434,7 +426,6 @@ step!operations!public! !
 stepDolphinInsideIntensity!operations!private! !
 stepInsideObjectsScale!operations!private! !
 stopStepProcess!initializing!private! !
-sunPosition!constants!public! !
 !
 
 !SeeingTheObjectsInside class methodsFor!

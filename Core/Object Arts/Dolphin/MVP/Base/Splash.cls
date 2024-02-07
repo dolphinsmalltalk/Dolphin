@@ -29,7 +29,7 @@ bitmap: aBitmap
 	"Private - Set the bitmap to display in the receiver"
 
 	bitmap := aBitmap.
-	self isOpen ifTrue: [self extent: self defaultExtent]!
+	self isOpen ifTrue: [self normalizedExtent: self defaultExtent]!
 
 close
 	"Closes the receiver by cancelling the Delay the splash is waiting on"
@@ -85,7 +85,12 @@ onPaintRequired: aPaintEvent
 
 	| canvas |
 	canvas := aPaintEvent canvas.
-	bitmap notNil ifTrue: [bitmap drawOn: canvas at: Point zero].
+	bitmap notNil
+		ifTrue: 
+			[bitmap
+				drawOn: canvas
+				at: Point zero
+				extent: self extent].
 	self overlayWith ifNotNil: [:overlay | overlay value: canvas]!
 
 overlayWith
