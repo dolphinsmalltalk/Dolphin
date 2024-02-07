@@ -205,7 +205,7 @@ windowSystemShutdown
 windowSystemStartup
 	"Private - Perform window system startup operations."
 
-	#(#{Canvas} #{GraphicsTool} #{Clipboard} #{ClipboardBinaryObjectTypeConverter} #{View} #{ToolbarIconButton} #{Command})
+	#(#{GraphicsTool} #{Clipboard} #{ClipboardBinaryObjectTypeConverter} #{View} #{ToolbarIconButton} #{Command})
 		do: [:s | s ifDefined: [:c | c onStartup]]! !
 
 !UI.GUISessionManager categoriesForMethods!

@@ -2343,7 +2343,7 @@ UI.View
 
 UI.View
 	subclass: #'UI.DesktopView'
-	instanceVariableNames: 'resolution _unused14 _unused15 _unused16'
+	instanceVariableNames: '_dvReserved0 _dvReserved1 _dvReserved2 _dvReserved3'
 	classVariableNames: 'Current'
 	imports: #()
 	classInstanceVariableNames: ''

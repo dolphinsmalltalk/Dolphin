@@ -3,7 +3,7 @@
 Core.Object
 	subclass: #'Graphics.Canvas'
 	instanceVariableNames: 'handle source owned pen brush font saved saveIds'
-	classVariableNames: 'DesktopResolution'
+	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {
@@ -1116,9 +1116,9 @@ windowScaling!public!transformations! !
 desktopResolution
 	"Answer the resolution of the active desktop."
 
-	DesktopResolution isNil ifTrue: [
-		DesktopResolution := self forDesktop resolution].
-	^DesktopResolution!
+	| dpi |
+	dpi := User32 getDpiForSystem.
+	^Point x: dpi y: dpi!
 
 forDesktop
 	"Answers a new Canvas with an owned hDC for the REAL desktop window."
@@ -1177,11 +1177,6 @@ onExit
 
 	self primAllInstances do: [ :i | i onExit ]!
 
-onStartup
-	"Private - Perform system startup processing."
-
-	DesktopResolution := nil!
-
 releaseDC: hDC
 	"Delete the specified hDC.
 	Canvas implements this to provide the second half of the 'DC source' protocol
@@ -1189,16 +1184,6 @@ releaseDC: hDC
 	Answer whether the DC was indeed deleted."
 
 	^(Gdi32 deleteDC: hDC asParameter) ~~ 0!
-
-screenResolution
-	"Answers a Point containing the logical pixels per inch of the screen.
-	This is to avoid going recursive when creating a font."
-
-	| display resolution |
-	display := self forDisplay.
-	resolution := display resolution.
-	display free.
-	^resolution!
 
 withDC: hDC ownedBy: aDCSource
 	"Answers a new Canvas with the given hDC owned by aDCSource.
@@ -1236,9 +1221,7 @@ initialize!class initialization!public! !
 new!instance creation!private! !
 on:!instance creation!public! !
 onExit!event handling!public! !
-onStartup!event handling!private! !
 releaseDC:!operations!public! !
-screenResolution!environment!public! !
 withDC:ownedBy:!instance creation!public! !
 withNonOwnedDC:!instance creation!public! !
 withOwnedDC:!instance creation!public! !

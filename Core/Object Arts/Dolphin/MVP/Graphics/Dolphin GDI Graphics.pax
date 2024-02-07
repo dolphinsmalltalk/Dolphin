@@ -164,7 +164,7 @@ package!
 Core.Object
 	subclass: #'Graphics.Canvas'
 	instanceVariableNames: 'handle source owned pen brush font saved saveIds'
-	classVariableNames: 'DesktopResolution'
+	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {

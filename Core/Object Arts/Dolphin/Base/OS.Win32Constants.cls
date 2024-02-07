@@ -823,6 +823,7 @@ Kernel.SharedPool
 			'UISF_ACTIVE' -> 16r4.
 			'UISF_HIDEACCEL' -> 16r2.
 			'UISF_HIDEFOCUS' -> 16r1.
+			'USER_DEFAULT_SCREEN_DPI' -> 16r60.
 			'VER_AND' -> 16r6.
 			'VER_BUILDNUMBER' -> 16r4.
 			'VER_EQUAL' -> 16r1.

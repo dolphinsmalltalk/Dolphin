@@ -117,6 +117,7 @@ package methodNames
 	add: 'Brush class' -> #hatchedDiagonal;
 	add: 'Brush class' -> #hollow;
 	add: 'Brush class' -> #ltGray;
+	add: 'Canvas class' -> #screenResolution;
 	add: 'ChoicePresenter class' -> #resource_Multiselection_list_box;
 	add: 'Color class' -> #buttonFace;
 	add: 'ImageList class' -> #width:height:flags:size:growthGranularity:;
@@ -393,6 +394,16 @@ fonts:do:!enumerating!public! !
 origin:!operations!public! !
 setBkMode:!modes!public! !
 setTextColor:!modes!public! !
+!
+
+!Canvas class methodsFor!
+
+screenResolution
+	Notification deprecated.
+	^self desktopResolution! !
+
+!Canvas class categoriesForMethods!
+screenResolution!environment!public! !
 !
 
 !ChoicePresenter class methodsFor!

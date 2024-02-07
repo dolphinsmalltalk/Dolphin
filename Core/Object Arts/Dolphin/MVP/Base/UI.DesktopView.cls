@@ -2,7 +2,7 @@
 
 UI.View
 	subclass: #'UI.DesktopView'
-	instanceVariableNames: 'resolution _unused14 _unused15 _unused16'
+	instanceVariableNames: '_dvReserved0 _dvReserved1 _dvReserved2 _dvReserved3'
 	classVariableNames: 'Current'
 	imports: #()
 	classInstanceVariableNames: ''
@@ -121,6 +121,11 @@ displayOn: aPuttableStream
 
 	aPuttableStream nextPutAll: 'Desktop'!
 
+dpi
+	"Answer the logical dots-per-inch for this Window."
+
+	^User32 getDpiForSystem!
+
 ensureSubView: aView rectangleVisible: aRectangle
 	"Private - Ensures that the aRectangle area of the receiver's sub-<View>, aView,
 	is visible in the receiver if the parent has this level of control."
@@ -218,8 +223,7 @@ onAboutToDisplaySystemMenu: hMenu
 onStartup
 	"Make sure the receiver represents the desktop window handle."
 
-	self assumeDesktopHandle.
-	resolution := nil!
+	self assumeDesktopHandle!
 
 onViewActivated: anEvent
 	"Default handler for window activation.
@@ -286,14 +290,6 @@ repositionShell: aShellView
 		ifTrue: [aShellView centerNear: activeMonitor workArea center]
 		ifFalse: [aShellView displayOnMonitor: activeMonitor]!
 
-resolution
-	"Answer the logical pixels per inch of the desktop"
-
-	resolution isNil ifTrue: [
-		resolution := self canvas resolution ].
-	^resolution
-!
-
 screenRectangle
 	"Answer the boundary of the receiver window in screen coordinates"
 
@@ -350,6 +346,7 @@ centerExtent:!geometry!private! !
 commandPolicyWithSource:!commands!public! !
 defaultExtentOf:!geometry!helpers!private! !
 displayOn:!displaying!public! !
+dpi!accessing!public! !
 ensureSubView:rectangleVisible:!private!updating! !
 ensureSubViewVisible:!public!sub views! !
 ensureVisible!accessing!public! !
@@ -375,7 +372,6 @@ performCommand:!commands!public! !
 queryContextMenu!menus!public! !
 refresh!drawing!public! !
 repositionShell:!helpers!private! !
-resolution!accessing!public! !
 screenRectangle!geometry!public! !
 setDefaultButton:state:!accessing!default button!private! !
 setFocus!operations!public! !
