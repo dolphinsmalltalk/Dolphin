@@ -233,8 +233,8 @@ queryCommand: aCommandQuery
 rememberThisSize
 	"Record the size of the receiver as the default extent for its tool class."
 
-	(self class)
-		defaultExtent: self view extent;
+	self class
+		defaultExtent: self view normalizedExtent;
 		defaultSlideyPinsMap: self slideyPinMap!
 
 saveStateAspects: aSymbolArray for: aStringName on: aWriteStream 
@@ -313,7 +313,7 @@ show
 	"Shows the view of the receiver.
 	Pick up the default extent if any."
 
-	self class defaultExtent ifNotNil: [:ext | self view extent: ext].
+	self class defaultExtent ifNotNil: [:ext | self view normalizedExtent: ext].
 	^super show!
 
 slideyPinMap
@@ -449,13 +449,13 @@ defaultDefaultView
 	^View defaultView!
 
 defaultExtent
-	"Answer a <Point> which is the user's chosen default extent for new instances
-	of the receiver, or nil if left up to Windows."
+	"Answer a <Point> which is the user's chosen default extent for new instances of the receiver, or nil if left up to Windows.
+	Note that the answer assumes a resolution of 96 DPI, so needs to be scaled to the target monitor."
 
 	^defaultExtent!
 
 defaultExtent: aPoint
-	"Set the default extent to be used for instances of the receiver to the <Point> argument.
+	"Set the default extent to be used for instances of the receiver to the <Point> argument, which is expected to specify the normalized (i.e. at 96 DPI) pixel extent to use.
 	If the argument is nil, then let Windows decide."
 
 	defaultExtent := aPoint!
