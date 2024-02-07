@@ -238,7 +238,7 @@ print: anObject
 rememberThisSize
 	"Record the size of the receiver as the default extent for its tool class."
 
-	self class defaultExtent: self view extent!
+	self class defaultExtent: self view normalizedExtent!
 
 reset
 	"Set the receiver's position reference to the beginning of the collection"

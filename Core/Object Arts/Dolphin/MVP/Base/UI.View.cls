@@ -2239,6 +2239,16 @@ noRedrawDo: aNiladicBlock
 	self disableRedraw.
 	^aNiladicBlock ensure: [self enableRedraw]!
 
+normalizedExtent
+	"Answer the dimensions of the receiver's outer (non-client) window in 96 dpi pixels."
+
+	^self extent * USER_DEFAULT_SCREEN_DPI // self resolution!
+
+normalizedExtent: aPoint
+	"Set the dimensions of the receiver's outer window to the equivalent of the 96-dpi extent, aPoint, at the receiver's current resolution."
+
+	self extent: aPoint * self resolution // USER_DEFAULT_SCREEN_DPI!
+
 oldWndProc: anAddress
 	"Private - Save the address of the old window procedure prior to subclassing."
 
@@ -4841,6 +4851,8 @@ nmNotify:!event handling-win32!private! !
 nonClientCanvas!drawing!public! !
 nonReferenceAncestor!accessing!public! !
 noRedrawDo:!operations!public! !
+normalizedExtent!geometry!public! !
+normalizedExtent:!geometry!public! !
 oldWndProc:!accessing!private! !
 onAboutToCreate!event handling!public! !
 onAboutToDisplayMenu:!event handling!public! !
