@@ -1022,6 +1022,7 @@ Win32Constants at: 'UIS_SET' put: 16r1!
 Win32Constants at: 'UISF_ACTIVE' put: 16r4!
 Win32Constants at: 'UISF_HIDEACCEL' put: 16r2!
 Win32Constants at: 'UISF_HIDEFOCUS' put: 16r1!
+Win32Constants at: 'USER_DEFAULT_SCREEN_DPI' put: 16r60!
 Win32Constants at: 'VER_AND' put: 16r6!
 Win32Constants at: 'VER_BUILDNUMBER' put: 16r4!
 Win32Constants at: 'VER_EQUAL' put: 16r1!
