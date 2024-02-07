@@ -207,6 +207,14 @@ getDlgItem: aWindowHandle nIDDlgItem: anIntegerId
 	<stdcall: handle GetDlgItem handle sdword>
 	^self invalidCall: _failureCode!
 
+getDpiForSystem
+	<stdcall: dword GetDpiForSystem>
+	^self invalidCall: _failureCode!
+
+getDpiForWindow: hWnd
+	<stdcall: dword GetDpiForWindow handle>
+	^self invalidCall: _failureCode!
+
 getKeyboardLayout: anInteger
 	<stdcall: handle GetKeyboardLayout sdword>
 	^self invalidCall: _failureCode!
@@ -767,6 +775,8 @@ getActiveWindow!public!win32 functions-keyboard input! !
 getAsyncKeyState:!public!win32 functions-keyboard input! !
 getDesktopWindow!public!win32 functions-window! !
 getDlgItem:nIDDlgItem:!public!win32 functions-dialog box! !
+getDpiForSystem!public!win32 functions-high DPI! !
+getDpiForWindow:!public!win32 functions-high DPI! !
 getKeyboardLayout:!public!win32 functions-keyboard input! !
 getKeyboardLayoutName:!public!win32 functions-keyboard input! !
 getKeyboardState:!public!win32 functions-keyboard input! !

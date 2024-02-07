@@ -185,7 +185,7 @@ windowSystemStartup
 
 	| env |
 	env := self class environment.
-	#(#Canvas #GraphicsTool #Clipboard #View #ToolbarIconButton #Command) 
+	#(#GraphicsTool #Clipboard #View #ToolbarIconButton #Command) 
 		do: [:s | env at: s ifPresent: [:c | c onStartup]]! !
 
 !GUISessionManager categoriesForMethods!

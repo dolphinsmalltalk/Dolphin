@@ -425,7 +425,7 @@ package!
 
 Object subclass: #Canvas
 	instanceVariableNames: 'handle source owned pen brush font saved saveIds'
-	classVariableNames: 'DesktopResolution'
+	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 
@@ -1402,7 +1402,7 @@ View subclass: #ControlView
 	classInstanceVariableNames: ''!
 
 View subclass: #DesktopView
-	instanceVariableNames: 'resolution defaultExtentBlock dvReserved1 dvReserved2'
+	instanceVariableNames: '_dvReserved0 _dvReserved1 _dvReserved2 _dvReserved3'
 	classVariableNames: 'Current'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

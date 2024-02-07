@@ -675,9 +675,8 @@ create
 
 	| extent |
 	creationParent isNil ifTrue: [self parentView: self class desktop].
-	extent := self defaultExtent.
-	^self createAt: (self defaultPositionWithin: creationParent forExtent: extent)
-		extent: extent!
+	extent := self creationExtent.
+	^self createAt: (self defaultPositionWithin: creationParent forExtent: extent) extent: extent!
 
 createAt: position extent: extentPoint
 	"Private - Create the View window ensuring it has the VM window procedure.
@@ -686,6 +685,11 @@ createAt: position extent: extentPoint
 	self hookWindowCreate.
 	self unhookWindowCreate: (self basicCreateAt: position extent: extentPoint).
 	self presenter onViewCreated!
+
+creationExtent
+	"Answer extent in pels at which the receiver should be created. This is typically the default design extent at 96 dpi, scaled to the logical display DPI."
+
+	^self defaultExtent * creationParent resolution // USER_DEFAULT_SCREEN_DPI!
 
 creationParentView
 	"Private - Answer the View where the receiver must be created"
@@ -811,9 +815,7 @@ defaultBackcolor
 	^Color window!
 
 defaultExtent
-	"Private - Answer the default size of the receiver. This is used only to
-	set the size of a view when it is created. Thereafter preferredExtent is
-	used when the desired size of a view is requested."
+	"Private - Answer the default size of the receiver. This is used only to determine the size of a view when it is created (although after scaling to the display DPI - see #creationExtent). Thereafter preferredExtent is used when the desired size of a view is requested."
 
 	^100 @ 100!
 
@@ -1018,6 +1020,11 @@ displayOnMaxCharacters
 	"Private - Answers the maximum number of characters to display with #displayOn:"
 
 	^50!
+
+dpi
+	"Answer the logical dots-per-inch for this Window."
+
+	^UserLibrary default getDpiForWindow: handle!
 
 dragCut: session
 	"The <DragDropSession>, session, has just completed a successful move operation.
@@ -3088,10 +3095,11 @@ requestLayoutRectangle: aRectangle
 	self parentView validateLayout!
 
 resolution
-	"Answer the logical pixels per inch for the receiver; i.e. the screen's
-	logical pixels per inch"
+	"Answer the logical pixels per inch for the receiver; i.e. the window's ogical pixels per inch"
 
-	^self class desktop resolution!
+	| dpi |
+	dpi := self dpi.
+	^Point x: dpi y: dpi!
 
 resolutionScaledBy: scale
 	"Private - The receiver is being loaded and it has been determined that the pixel resolution
@@ -4681,6 +4689,7 @@ contextMenu!menus!public! !
 contextMenu:!menus!public! !
 create!private!realizing/unrealizing! !
 createAt:extent:!private!realizing/unrealizing! !
+creationExtent!geometry!private!realizing/unrealizing! !
 creationParentView!accessing!private! !
 cursor!constants!public! !
 cursorPosition!accessing!public! !
@@ -4716,6 +4725,7 @@ displayMonitor!accessing!public! !
 displayOn:!displaying!public! !
 displayOnFormats!displaying!private! !
 displayOnMaxCharacters!constants!displaying!private! !
+dpi!accessing!public! !
 dragCut:!drag & drop!public! !
 dragDropSessionClass!constants!public! !
 dragEnter:!drag & drop!public! !
