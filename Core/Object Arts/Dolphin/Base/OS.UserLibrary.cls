@@ -350,12 +350,6 @@ messageBox: anExternalHandle text: textString caption: captionString style: styl
 	struct caption: captionString.
 	iconId := iconIdentifier.
 	iconId isNil
-		ifTrue: 
-			["Windows no longer supports MB_ICONQUESTION, so set it as a user icon instead."
-			(styleInteger bitAnd: MB_ICONMASK) = MB_ICONQUESTION
-				ifTrue: 
-					[struct lpszIcon: IDI_QUESTION.
-					dwStyle := (dwStyle maskClear: MB_ICONMASK) maskSet: MB_USERICON]]
 		ifFalse: 
 			[iconId := iconId asResourceId.
 			struct lpszIcon: iconId asUIntPtr.
