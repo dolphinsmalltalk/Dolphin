@@ -64,7 +64,7 @@ onCreated: anEvent
 
 	super onCreated: anEvent.
 	self initializeSurfacesFor: self extent.
-	UserLibrary default 
+	User32 
 		setLayeredWindowAttributes: self handle
 		lcrKey: 0
 		bAlpha: self alphaPercentage*255//100

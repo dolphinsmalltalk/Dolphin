@@ -561,12 +561,14 @@ rectScaledToFit: aRectangle centered: aBoolean
 	^origin rounded extent: extent truncated!
 
 resolution
-	| buf x |
+	"Answer an <Point> specifying the horizontal and vertical DPI of the receiver."
+
+	| buf dpiX |
 	buf := ByteArray new: 4.
 	Gdip gdipGetImageHorizontalResolution: self asParameter resolution: buf.
-	x := buf floatAtOffset: 0.
+	dpiX := buf floatAtOffset: 0.
 	Gdip gdipGetImageVerticalResolution: handle resolution: buf.
-	^x @ (buf floatAtOffset: 0)!
+	^dpiX @ (buf floatAtOffset: 0)!
 
 rotateLeft
 	"Rotate the receiver 90 degrees counterclockwise."

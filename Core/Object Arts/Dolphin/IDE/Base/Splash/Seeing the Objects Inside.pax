@@ -50,7 +50,7 @@ UI.Splash
 
 Graphics.Gdiplus.DoubleBufferedView
 	subclass: #'Tools.SeeingTheObjectsInside'
-	instanceVariableNames: 'background points sun stepProcess random insideObjectsScale dolphinIntensity objects dolphins dolphinInside hintBubble startTime info baseScale cachedBackground cachedOutline'
+	instanceVariableNames: 'background dolphinOutline points sun stepProcess random insideObjectsScale dolphinIntensity textureMap objects dolphins dolphinInside splashDelay hintBubble startTime info baseScale sunPosition'
 	classVariableNames: ''
 	imports: #(#{Graphics private} #{Graphics.Gdiplus private})
 	classInstanceVariableNames: 'splashPlayTheGame'
