@@ -454,7 +454,7 @@ rememberThisSize
 
 	self class
 		defaultSlideyPinsMap: self slideyPinMap;
-		defaultExtent: self view normalizedExtent
+		defaultExtent: self view dipExtent
 !
 
 saveStateAspects: aSymbolArray for: aStringName on: aWriteStream
@@ -537,7 +537,7 @@ show
 	"Shows the view of the receiver.
 	Pick up the default extent if any."
 
-	self class defaultExtent ifNotNil: [:ext | self view normalizedExtent: ext].
+	self class defaultExtent ifNotNil: [:ext | self view dipExtent: ext].
 	^super show!
 
 slideyPinMap

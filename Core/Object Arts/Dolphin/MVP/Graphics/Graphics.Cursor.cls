@@ -119,9 +119,9 @@ default
 !
 
 defaultExtent
-	"Answer a Point that gives the dimensions of a standard size cursor."
+	"Answer a Point that gives the dimensions of a standard size cursor at the current system DPI."
 
-	"Note that these days this is a logical size, and seems to always be 32@32 on Windows 11, no matter what. See the comment in SystemMetrics>>#cursorExtent for further details."
+	"Note that these days this is a logical size, and seems to always be the same on Windows 11. See the comment in SystemMetrics>>#cursorExtent for further details."
 
 	^DefaultExtent!
 

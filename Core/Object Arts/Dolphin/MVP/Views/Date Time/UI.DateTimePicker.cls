@@ -51,9 +51,7 @@ canShowNone: aBoolean
 		recreateIfChanged: true	"Recreate required for this change to take effect"!
 
 defaultExtent
-	"Private - Answer the default size of the receiver. This is used only to
-	set the size of a view when it is created. Thereafter preferredExtent is
-	used when the desired size of a view is requested."
+	"Private - Answer the default size of the receiver in device-independent pixels (96-dpi DIPs). This is used only to determine the size of a view when it is created (although after scaling DIPs to the monitor DPI). Thereafter #preferredExtent is used when the desired size of a view is requested."
 
 	^##(200 @ 25)!
 

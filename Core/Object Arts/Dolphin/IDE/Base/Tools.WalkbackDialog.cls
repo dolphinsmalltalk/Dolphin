@@ -69,8 +69,9 @@ debuggable: aBoolean
 	debuggable := aBoolean!
 
 defaultExtent
-	"Answer the default size of the receiver.
-	As the receiver is created from a dialog template, this is fixed."
+	"Private - Answer the default size of the receiver in device-independent pixels (96-dpi DIPs). This is used only to determine the size of a view when it is created (although after scaling DIPs to the monitor DPI). Thereafter #preferredExtent is used when the desired size of a view is requested."
+	
+	"As the receiver is created from a dialog template, this is actually ignored and the dialog will be scaled by Windows from the template definition."
 
 	^252@126!
 
@@ -157,7 +158,7 @@ callStack:!accessing!public! !
 caption:!accessing!public! !
 copyWalkbackToClipboard!commands!public! !
 debuggable:!accessing!public! !
-defaultExtent!constants!public! !
+defaultExtent!constants!private! !
 onInitDialog!event handling!private! !
 resumable:!accessing!public! !
 runModalLoop!operations!private! !

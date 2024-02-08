@@ -74,10 +74,9 @@ defaultBackcolor
 				b: 153]!
 
 defaultExtent
-	"Private - Answer the default size of the receiver to be used when it is created."
+	"Private - Answer the default size of the receiver in device-independent pixels (96-dpi). This is used only to determine the size of a view when it is created (although after scaling DIPs to the display DPI - see #creationExtent). Thereafter preferredExtent is used when the desired size of a view is requested."
 
-	"Implementation Note: Splitters used to be one pixel larger than the standard Windows sizing frame,
-	however, the default sizing frame seems to have grown larger over the years so now we hard code a reasonable value."
+	"Implementation Note: Splitters used to be one pixel larger than the standard Windows sizing frame, however, the default sizing frame seems to have grown larger over the years so now we hard code a reasonable value."
 
 	"^SystemMetrics current sizingFrameExtent+1"
 

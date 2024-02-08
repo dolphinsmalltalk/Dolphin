@@ -216,7 +216,7 @@ rememberThisSize
 	"Record the size of the receiver as the default extent for its tool class."
 
 	<commandQuery: #hasNonDefaultExtent>
-	self class defaultExtent: self view normalizedExtent!
+	self class defaultExtent: self view dipExtent!
 
 saveStateOn: aWriteStream
 	"Private - Write the source of a monadic block that will configure an instance of the receiver's class
@@ -278,7 +278,7 @@ show
 	"Shows the view of the receiver.
 	Pick up the default extent if any."
 
-	self class defaultExtent ifNotNil: [:ext | self view normalizedExtent: ext].
+	self class defaultExtent ifNotNil: [:ext | self view dipExtent: ext].
 	^super show!
 
 systemModel

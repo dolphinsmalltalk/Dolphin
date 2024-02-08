@@ -684,9 +684,10 @@ createAt: positionPoint extent: extentPoint
 	self presenter onViewCreated!
 
 creationExtent
-	"Answer extent in pels at which the receiver should be created. This is typically the default design extent at 96 dpi, scaled to the logical display DPI."
+	"Private - Answer extent in device pels at which the receiver should be created. This is typically the default design extent at 96 dpi (aka Dips, or device-independent pixels), scaled to the parent's DPI.
+	This should only used for determining the creation size, and requires that the parent has been set in advance."
 
-	^self defaultExtent * creationParent resolution // USER_DEFAULT_SCREEN_DPI!
+	^creationParent extentFromDips: self defaultExtent!
 
 creationParentView
 	"Private - Answer the View where the receiver must be created"
@@ -812,7 +813,7 @@ defaultBackcolor
 	^Color.Window!
 
 defaultExtent
-	"Private - Answer the default size of the receiver. This is used only to determine the size of a view when it is created (although after scaling to the display DPI - see #creationExtent). Thereafter preferredExtent is used when the desired size of a view is requested."
+	"Private - Answer the default size of the receiver in device-independent pixels (96-dpi DIPs). This is used only to determine the size of a view when it is created (although after scaling DIPs to the display DPI - see #creationExtent). Thereafter #preferredExtent is used when the desired size of a view is requested."
 
 	^100 @ 100!
 
@@ -891,6 +892,16 @@ destroy
 	for WM_CLOSE is to call DestroyWindow)."
 
 	^self basicDestroy!
+
+dipExtent
+	"Answer the dimensions of the receiver's outer (non-client) window as measured in device-indepent pixels (DIPs are 96-dpi)."
+
+	^self extentToDips: self extent!
+
+dipExtent: aPoint
+	"Set the dimensions of the receiver's outer window to the equivalent of the device-indepent pixel (DIPs are 96-dpi) extent, aPoint, at the receiver's current resolution."
+
+	self extent: (self extentFromDips: aPoint)!
 
 disable
 	"Disable the receiver from receiving input events."
@@ -1239,6 +1250,16 @@ extent: aPoint
 	"Set the dimensions of the receiver's outer window to aPoint."
 
 	aPoint = self extent ifFalse: [self setExtent: aPoint]!
+
+extentFromDips: aPoint
+	"Scale the device-independent pixel (DIP) extent representer by the <Point> argument to the receiver's resolution and answer the result. DIPs are equivalent to 96-dpi."
+
+	^aPoint * self resolution // USER_DEFAULT_SCREEN_DPI!
+
+extentToDips: aPoint
+	"Scale the extent at the receiver's resolution (i.e. device-dependent pixels) represented by the <Point> argument to the device-independent (96-dpi) equivalent, and answer the result."
+
+	^aPoint * USER_DEFAULT_SCREEN_DPI // self resolution!
 
 filerProxy
 	"Private - Answer a filer proxy that represents the receiver."
@@ -2239,16 +2260,6 @@ noRedrawDo: aNiladicBlock
 	self disableRedraw.
 	^aNiladicBlock ensure: [self enableRedraw]!
 
-normalizedExtent
-	"Answer the dimensions of the receiver's outer (non-client) window in 96 dpi pixels."
-
-	^self extent * USER_DEFAULT_SCREEN_DPI // self resolution!
-
-normalizedExtent: aPoint
-	"Set the dimensions of the receiver's outer window to the equivalent of the 96-dpi extent, aPoint, at the receiver's current resolution."
-
-	self extent: aPoint * self resolution // USER_DEFAULT_SCREEN_DPI!
-
 oldWndProc: anAddress
 	"Private - Save the address of the old window procedure prior to subclassing."
 
@@ -3068,16 +3079,11 @@ resolution
 	dpi := self dpi.
 	^Point x: dpi y: dpi!
 
-resolutionScaledBy: scale
-	"Private - The receiver is being loaded and it has been determined that the pixel resolution
-	has changed since the point at which the view was saved. Scale any internal pixels by <Point>
-	scale. Note that the placement (position and extent) of the receiver has already been scaled
-	in #restorePlacement:resolution:."
+resolutionScaledBy: aPoint
+	"Private - The receiver is being loaded and it has been determined that the pixel resolution has changed since the point at which the view was saved. Scale any internal pixels by the <Point> argument.
+	Note that the placement (position and extent) of the receiver has already been scaled in #restorePlacement:resolution:."
 
-	preferredExtent notNil ifTrue: [
-		preferredExtent := (preferredExtent*scale) truncated ]
-
-!
+	preferredExtent ifNotNil: [preferredExtent := (preferredExtent * aPoint) truncated]!
 
 restoreFromProxy: aViewProxy
 	"Private - Complete state restoration from proxy form by apply the saved state, and restoring the subviews from their proxies."
@@ -4660,7 +4666,7 @@ ddOperations:!drag & drop!private! !
 ddOver:!drag & drop!private! !
 ddScroll:!drag & drop!private! !
 defaultBackcolor!colors!constants!private! !
-defaultExtent!constants!private! !
+defaultExtent!constants!geometry!private!realizing/unrealizing! !
 defaultId!accessing!private! !
 defaultPositionWithin:forExtent:!geometry!private! !
 defaultProportion!constants!private! !
@@ -4671,6 +4677,8 @@ defaultWindowProcessing:wParam:lParam:!dispatching!private! !
 defaultWindowStyle!constants!private! !
 deferLayout:!constants!private! !
 destroy!public!realizing/unrealizing! !
+dipExtent!accessing!geometry!public! !
+dipExtent:!accessing!geometry!public! !
 disable!operations!public! !
 disableRedraw!drawing!public! !
 disconnectFromModel!operations!private! !
@@ -4705,8 +4713,10 @@ exStyleMask:set:!accessing-styles!private! !
 exStyleMask:set:recreateIfChanged:!accessing-styles!private! !
 extendedStyle!accessing-styles!private! !
 extendedStyle:!accessing-styles!private! !
-extent!geometry!public! !
-extent:!geometry!public! !
+extent!accessing!geometry!public! !
+extent:!accessing!geometry!public! !
+extentFromDips:!geometry!public!utilities! !
+extentToDips:!geometry!public!utilities! !
 filerProxy!binary filing!private! !
 filerProxyIn:!binary filing!private! !
 findItem:ifAbsent:!hierarchy!private! !
@@ -4851,8 +4861,6 @@ nmNotify:!event handling-win32!private! !
 nonClientCanvas!drawing!public! !
 nonReferenceAncestor!accessing!public! !
 noRedrawDo:!operations!public! !
-normalizedExtent!geometry!public! !
-normalizedExtent:!geometry!public! !
 oldWndProc:!accessing!private! !
 onAboutToCreate!event handling!public! !
 onAboutToDisplayMenu:!event handling!public! !

@@ -73,7 +73,7 @@ defaultButton
 	^self findItem: self defaultButtonId ifAbsent: nil!
 
 defaultExtent
-	"Answer the default size of the receiver"
+	"Private - Answer the default size of the receiver in device-independent pixels (96-dpi DIPs). This is used only to determine the size of a view when it is created (although after scaling DIPs to the display DPI - see #creationExtent). Thereafter #preferredExtent is used when the desired size of a view is requested."
 
 	"Implementation Note: This is used only for creation, and as the initial size and position are ignored when creating a dialog, we may as well answer any fixed point rather than calculating something that will be ignored."
 
@@ -432,7 +432,7 @@ basicCreate:at:extent:!private!realizing/unrealizing! !
 cancel!commands!public! !
 createAt:extent:!private!realizing/unrealizing! !
 defaultBackcolor!colors!constants!private! !
-defaultButton!colors!constants!public! !
+defaultButton!accessing!public! !
 defaultExtent!constants!public! !
 defaultPositionWithin:forExtent:!geometry!private! !
 defaultWindowProcessing:wParam:lParam:!dispatching!private! !

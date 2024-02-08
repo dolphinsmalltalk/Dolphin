@@ -33,7 +33,9 @@ circleVelocity
 	^6.5!
 
 defaultExtent
-	^400@400!
+	"Private - Answer the default size of the receiver in device-independent pixels (96-dpi DIPs). This is used only to determine the size of a view when it is created (although after scaling DIPs to the monitor DPI). Thereafter #preferredExtent is used when the desired size of a view is requested."
+
+	^400 @ 400!
 
 defaultWindowStyle
 	"Private - Answer the default basic window creation style"
@@ -161,7 +163,7 @@ stopStepProcess
 !UI.Examples.SlidingBallDemo categoriesForMethods!
 circleExtent!constants!public! !
 circleVelocity!constants!public! !
-defaultExtent!constants!public! !
+defaultExtent!constants!private! !
 defaultWindowStyle!constants!private! !
 frameRate!constants!public! !
 initialize!event handling!private! !

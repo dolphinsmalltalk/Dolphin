@@ -79,9 +79,7 @@ defaultButtonId
 	^0!
 
 defaultExtent
-	"Private - Answer the default size of the receiver. This is used only to
-	set the size of a view when it is created. Thereafter preferredExtent is
-	used when the desired size of a view is requested."
+	"Private - Answer the default size of the receiver in device-independent pixels (96-dpi DIPs). This is used only to determine the size of a view when it is created (although after scaling DIPs to the display DPI - see #creationExtent). Thereafter #preferredExtent is used when the desired size of a view is requested."
 
 	^##(350 @ 250)!
 
@@ -257,16 +255,12 @@ removeSubView: aView
 	names removeKey: aView ifAbsent: nil.
 	^aView!
 
-resolutionScaledBy: scale
-	"Private - The receiver is being loaded and it has been determined that the pixel resolution
-	has changed since the point at which the view was saved. Scale any internal pixels by <Point>
-	scale. Note that the placement (position and extent) of the receiver has already been scaled
-	in #restorePlacement:resolution:."
+resolutionScaledBy: aPoint
+	"Private - The receiver is being loaded and it has been determined that the pixel resolution has changed since the point at which the view was saved. Scale any internal pixels by the <Point> argument. 
+	Note that the placement (position and extent) of the receiver has already been scaled in #restorePlacement:resolution:."
 
-	super resolutionScaledBy: scale.
-	self layoutManager notNil ifTrue: [
-		self layoutManager resolutionScaledBy: scale ].
-!
+	super resolutionScaledBy: aPoint.
+	self layoutManager ifNotNil: [:lm | lm resolutionScaledBy: aPoint]!
 
 tabFirst
 	"Set focus to the first subview with a tab stop (if any). Answers the view tabbed

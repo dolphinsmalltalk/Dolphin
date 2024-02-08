@@ -165,6 +165,12 @@ createAt: position extent: extentPoint
 		ifNil: [super createAt: position extent: extentPoint]
 		ifNotNil: [:hook | hook value: self value: [super createAt: position extent: extentPoint]]!
 
+creationExtent
+	"Private - Answer extent in device pels at which the receiver should be created. This is typically the default design extent at 96 dpi (aka Dips, or device-independent pixels), scaled to the parent's DPI.
+	This should only used for determining the creation size, and requires that the parent has been set in advance."
+
+	^View desktop extent // 1.5!
+
 defaultButtonId
 	"Private - Answer the id of the default PushButton for the receiver or nil
 	if there is none"
@@ -182,9 +188,11 @@ defaultButtonId: anInteger
 		self resetDefaultButton]!
 
 defaultExtent
-	"Answer the default size of the receiver"
+	"Private - Answer the default size of the receiver in device-independent pixels (96-dpi). This is used only to determine the size of a view when it is created (although after scaling DIPs to the display DPI - see #creationExtent). Thereafter preferredExtent is used when the desired size of a view is requested."
+	
+	"We want to occupy no more than 2/3 of the display. Since the desktop extent will be at the display DPI, we would need to scale this back to DIPs only for it to be scaled back by #creationExtent. Rather than scale back and forth we override #creationExtent instead."
 
-	^View desktop extent // 1.5!
+	^self shouldNotImplement!
 
 defaultExtentWithin: aParentView
 	"Private - Answer the default extent of the receiver within aParentView."
@@ -847,18 +855,12 @@ resetDefaultButton
 	defaultButton := IDOK.
 	self findItemHandle: defaultButton ifAbsent: [defaultButton := 0]!
 
-resolutionScaledBy: scale
-	"Private - The receiver is being loaded and it has been determined that the pixel resolution
-	has changed since the point at which the view was saved. Scale any internal pixels by <Point>
-	scale. "
+resolutionScaledBy: aPoint
+	"Private - The receiver is being loaded and it has been determined that the pixel resolution has changed since the point at which the view was saved. Scale any internal pixels by the <Point> argument. "
 
-	super resolutionScaledBy: scale.
-	minExtent notNil ifTrue: [
-		minExtent := (minExtent*scale) truncated ].
-	maxExtent notNil ifTrue: [
-		maxExtent := (maxExtent*scale) truncated ]
-
-!
+	super resolutionScaledBy: aPoint.
+	minExtent ifNotNil: [minExtent := (minExtent * aPoint) truncated].
+	maxExtent ifNotNil: [maxExtent := (maxExtent * aPoint) truncated]!
 
 restorePlacement: aWINDOWPLACEMENT resolution: aPointResolution
 	"Private - Restore the placement for the receiver to aWINDOWPLACEMENT which was measured at a screen resolution of aPointResolution. If the current resolution is different then the placement rectangle will have to be scaled appropriately. Subclasses can override this message to compensate for a resolution change in any other ways required."
@@ -1219,6 +1221,7 @@ commandPolicyClass!commands!constants!public! !
 commandPolicyWithSource:!commands!public! !
 commandSource!accessing!public! !
 createAt:extent:!public!realizing/unrealizing! !
+creationExtent!geometry!private!realizing/unrealizing! !
 defaultButtonId!accessing!default button!private! !
 defaultButtonId:!accessing!default button!private! !
 defaultExtent!constants!public! !
