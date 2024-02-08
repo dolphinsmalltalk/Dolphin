@@ -24,9 +24,17 @@ animationDuration
 	^3500!
 
 creationExtent
-	"Answer extent in pels at which the receiver should be created. This is typically the default design extent at 96 dpi, scaled to the logical display DPI."
+	"Private - Answer extent in device pels at which the receiver should be created. This is typically the default design extent at 96 dpi (aka Dips, or device-independent pixels), scaled to the parent's DPI.
+	This should only used for determining the creation size, and requires that the parent has been set in advance."
 
 	^self objectsInside creationExtent!
+
+defaultExtent
+	"Private - Answer the default size of the receiver in device-independent pixels (96-dpi). This is used only to determine the size of a view when it is created (although after scaling DIPs to the display DPI - see #creationExtent). Thereafter preferredExtent is used when the desired size of a view is requested."
+	
+	"As we have pre-scaled the background bitmap not just for DPI, but to fit, it makes more sense to provide a scaled extent directly by overriding #creationExtent, in which case this should not be called."
+
+	^self shouldNotImplement!
 
 defaultSplashDelay
 	"Answer the default delay that a splash should be displayed for"
@@ -74,7 +82,8 @@ showWindow
 
 !DolphinSplash categoriesForMethods!
 animationDuration!constants!private! !
-creationExtent!accessing!public! !
+creationExtent!geometry!private!realizing/unrealizing! !
+defaultExtent!constants!public! !
 defaultSplashDelay!constants!public! !
 defaultWindowStyle!constants!private! !
 give256ColorDisplayWarning!operations!private! !

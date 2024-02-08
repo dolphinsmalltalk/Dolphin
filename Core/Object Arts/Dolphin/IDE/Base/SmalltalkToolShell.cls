@@ -234,7 +234,7 @@ rememberThisSize
 	"Record the size of the receiver as the default extent for its tool class."
 
 	self class
-		defaultExtent: self view normalizedExtent;
+		defaultExtent: self view dipExtent;
 		defaultSlideyPinsMap: self slideyPinMap!
 
 saveStateAspects: aSymbolArray for: aStringName on: aWriteStream 
@@ -313,7 +313,7 @@ show
 	"Shows the view of the receiver.
 	Pick up the default extent if any."
 
-	self class defaultExtent ifNotNil: [:ext | self view normalizedExtent: ext].
+	self class defaultExtent ifNotNil: [:ext | self view dipExtent: ext].
 	^super show!
 
 slideyPinMap

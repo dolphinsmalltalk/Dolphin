@@ -47,8 +47,7 @@ commandSource
 	^self parentView!
 
 defaultExtent
-	"Private - Answer the default size of the receiver
-	to be used when it is created."
+	"Private - Answer the default size of the receiver in device-independent pixels (96-dpi DIPs). This is used only to determine the size of a view when it is created (although after scaling DIPs to the monitor DPI). Thereafter #preferredExtent is used when the desired size of a view is requested."
 
 	^##(100 @ 35)!
 

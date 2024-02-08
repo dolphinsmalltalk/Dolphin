@@ -29,7 +29,7 @@ bitmap: aBitmap
 	"Private - Set the bitmap to display in the receiver"
 
 	bitmap := aBitmap.
-	self isOpen ifTrue: [self normalizedExtent: self defaultExtent]!
+	self isOpen ifTrue: [self dipExtent: self defaultExtent]!
 
 close
 	"Closes the receiver by cancelling the Delay the splash is waiting on"
@@ -37,7 +37,7 @@ close
 	splashDelay signal!
 
 defaultExtent
-	"Answer the default size of the receiver"
+	"Private - Answer the default size of the receiver in device-independent pixels (96-dpi DIPs). This is used only to determine the size of a view when it is created (although after scaling DIPs to the monitor DPI). Thereafter #preferredExtent is used when the desired size of a view is requested."
 
 	(bitmap isNil or: [bitmap handle isNull]) ifTrue: [^200@200].
 	^bitmap extent + (self frameWidths * 2)!
@@ -141,7 +141,7 @@ showWindow
 !Splash categoriesForMethods!
 bitmap:!accessing!initializing!private! !
 close!operations!public! !
-defaultExtent!constants!public! !
+defaultExtent!constants!private! !
 defaultSplashDelay!constants!public! !
 defaultWindowExStyle!constants!private! !
 defaultWindowStyle!constants!private! !

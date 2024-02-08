@@ -61,7 +61,7 @@ defaultBackcolor
 	^(self hasCaption or: [self isThemed not]) ifTrue: [Color face3d] ifFalse: [super defaultBackcolor]!
 
 defaultExtent
-	"Answer the default size of the receiver"
+	"Private - Answer the default size of the receiver in device-independent pixels (96-dpi DIPs). This is used only to determine the size of a view when it is created (although after scaling DIPs to the display DPI - see #creationExtent). Thereafter #preferredExtent is used when the desired size of a view is requested."
 
 	"Implementation Note: This is used only for creation, and as the the initial size and position are ignored when creating a dialog, we may as well answer any fixed point rather than calculating something that will be ignored."
 
@@ -410,7 +410,7 @@ answer:!accessing!not an aspect!public! !
 basicCreateAt:extent:!private!realizing/unrealizing! !
 cancel!commands!public! !
 defaultBackcolor!colors!constants!private! !
-defaultExtent!constants!public! !
+defaultExtent!constants!private! !
 defaultPositionWithin:forExtent:!geometry!private! !
 defaultWindowProcessing:wParam:lParam:!dispatching!private! !
 defaultWindowStyle!constants!private! !

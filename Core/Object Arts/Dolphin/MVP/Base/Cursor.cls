@@ -192,7 +192,7 @@ ddNone
 	^DDNone!
 
 defaultExtent
-	"Answer a Point that gives the dimensions of a standard size cursor."
+	"Answer a Point that gives the dimensions of a standard size cursor at the current system DPI."
 
 	^SystemMetrics current cursorExtent!
 

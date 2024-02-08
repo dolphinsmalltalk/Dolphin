@@ -259,7 +259,7 @@ queryCommand: aCommandQuery
 rememberThisSize
 	"Record the size of the receiver as the default extent for its tool class."
 
-	self class defaultExtent: self view normalizedExtent!
+	self class defaultExtent: self view dipExtent!
 
 reset
 	"Set the receiver's position reference to the beginning of the collection"
@@ -392,7 +392,7 @@ current
 	Transcript = DeafObject current 
 		ifTrue: 
 			[Transcript := super create.
-			self defaultExtent ifNotNil: [:ext | Transcript view extent: ext]].
+			self defaultExtent ifNotNil: [:ext | Transcript view dipExtent: ext]].
 	^Transcript!
 
 default
