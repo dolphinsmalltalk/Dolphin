@@ -182,18 +182,23 @@ cueBanner: aString
 		wParam: 0
 		szParam: aString ?? ''!
 
+defaultDroppedHeight
+	"Answer the default dropped height (the height of the drop-down) in device-independent pixels (96-dpi)."
+
+	^200!
+
 defaultWindowStyle
 	"Private - Answer a default window base style to use when creating a combobox."
 
 	^super defaultWindowStyle bitOr: ##(CBS_HASSTRINGS | CBS_NOINTEGRALHEIGHT | CBS_DROPDOWN)!
 
 droppedHeight
-	"Answer the height of the drop down list component of the receiver."
+	"Answer the height of the drop down list component of the receiver, measured at the receiver's current DPI."
 
-	^droppedHeight!
+	^droppedHeight ifNil: [self mapDipsToPels: self defaultDroppedHeight]!
 
-droppedHeight: anInteger 
-	"Set the dropped height of the receiver."
+droppedHeight: anInteger
+	"Set the dropped height of the receiver to the number of device pixels represented by the <integer> argument."
 
 	droppedHeight := anInteger.
 	self height: self actualHeight!
@@ -242,12 +247,6 @@ getSingleSelection
 	zero if there is none."
 
 	^(self sendMessage: CB_GETCURSEL) + 1!
-
-initialize
-	"Private - Initialize the state of the receiver."
-
-	super initialize.
-	droppedHeight := 200.!
 
 itemCount
 	"Answers the count of elements in the receiver. This may be 
@@ -319,6 +318,10 @@ placement: aWINDOWPLACEMENT
 			placement rcNormalPosition: rect].
 	super placement: placement!
 
+resolutionScaledBy: aPoint
+	super resolutionScaledBy: aPoint.
+	droppedHeight ifNotNil: [droppedHeight := droppedHeight * aPoint y]!
+
 selectionByIndex
 	"Answer the one-based <integer> 'index' of the selected object in the receiver or zero if there is none."
 
@@ -372,6 +375,7 @@ cbnSetFocus!event handling-win32!private! !
 command:id:!commands!private! !
 cueBanner!event handling!public! !
 cueBanner:!event handling!public! !
+defaultDroppedHeight!initializing!private! !
 defaultWindowStyle!constants!private! !
 droppedHeight!accessing!public! !
 droppedHeight:!accessing!public! !
@@ -380,13 +384,13 @@ editView!accessing!public! !
 extent:!geometry!public! !
 getSelectionsByIndex!private!selection! !
 getSingleSelection!helpers!private!selection! !
-initialize!initializing!private! !
 itemCount!accessing!public! !
 itemFromPoint:!enquiries!private! !
 mode!accessing-styles!public! !
 mode:!accessing-styles!public! !
 onPositionChanged:!event handling!public! !
 placement:!geometry!private! !
+resolutionScaledBy:!geometry!private! !
 selectionByIndex!helpers!private!selection! !
 setSingleSelection:!private!selection! !
 textLimit:!accessing!public! !
