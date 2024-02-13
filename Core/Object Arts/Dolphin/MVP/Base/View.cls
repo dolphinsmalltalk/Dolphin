@@ -418,6 +418,19 @@ basicPaint: message wParam: wParam lParam: lParam
 				canv free].
 	^0	"We've handled it"!
 
+basicRestorePlacement: aWINDOWPLACEMENT resolution: aPointResolution
+	| res |
+	res := creationParent resolution.
+	aPointResolution = res
+		ifFalse: 
+			[| scale |
+			"Resolution is now different so recompute the placement before it is applied"
+			scale := res / aPointResolution.
+			aWINDOWPLACEMENT rcNormalPosition scaleBy: scale.
+			"Make any other adjustments required for a change of resolution"
+			self resolutionScaledBy: scale].
+	self placement: aWINDOWPLACEMENT!
+
 beActive
 	"Make the receiver the active window."
 
@@ -516,7 +529,7 @@ calcExtentFromClientExtent: aPoint
 
 	^(self calcRectangleFromClientRectangle: (Rectangle origin: Point.Zero corner: aPoint)) extent!
 
-calcRectangleFromClientRectangle: aRectangle 
+calcRectangleFromClientRectangle: aRectangle
 	"Private - Given a client rectangle represented by the <Rectangle> argument, answer the
 	window rectangle that would be required to achieve this taking into account the current
 	window styles etc Note that the answered rectangle is in the COORDINATE SYSTEM OF THE
@@ -527,11 +540,12 @@ calcRectangleFromClientRectangle: aRectangle
 
 	| rect |
 	rect := RECT fromRectangle: aRectangle.
-	UserLibrary default 
-		adjustWindowRectEx: rect
+	UserLibrary default
+		adjustWindowRectExForDpi: rect
 		dwStyle: self baseStyle
 		bMenu: self hasMenu
-		dwExStyle: self extendedStyle.
+		dwExStyle: self extendedStyle
+		dpi: self dpi.
 	^rect asRectangle!
 
 calculateExtent
@@ -690,7 +704,7 @@ creationExtent
 	"Private - Answer extent in device pels at which the receiver should be created. This is typically the default design extent at 96 dpi (aka Dips, or device-independent pixels), scaled to the parent's DPI.
 	This should only used for determining the creation size, and requires that the parent has been set in advance."
 
-	^creationParent extentFromDips: self defaultExtent!
+	^creationParent mapDipsToPels: self defaultExtent!
 
 creationParentView
 	"Private - Answer the View where the receiver must be created"
@@ -818,7 +832,9 @@ defaultBackcolor
 defaultExtent
 	"Private - Answer the default size of the receiver in device-independent pixels (96-dpi DIPs). This is used only to determine the size of a view when it is created (although after scaling DIPs to the display DPI - see #creationExtent). Thereafter #preferredExtent is used when the desired size of a view is requested."
 
-	^100 @ 100!
+	"Note: This extent is somewhat unusual in being specified in device-independent pixels. This is because it is generally defined as a constant in code, and there are many implementations pre-dating the introduction of High DPI awareness."
+
+	^##(100 @ 100)!
 
 defaultId
 	"Private - Answer the id to be used when the receiver is created 
@@ -899,12 +915,12 @@ destroy
 dipExtent
 	"Answer the dimensions of the receiver's outer (non-client) window as measured in device-indepent pixels (DIPs are 96-dpi)."
 
-	^self extentToDips: self extent!
+	^self mapPelsToDips: self extent!
 
 dipExtent: aPoint
 	"Set the dimensions of the receiver's outer window to the equivalent of the device-indepent pixel (DIPs are 96-dpi) extent, aPoint, at the receiver's current resolution."
 
-	self extent: (self extentFromDips: aPoint)!
+	self extent: (self mapDipsToPels: aPoint)!
 
 disable
 	"Disable the receiver from receiving input events."
@@ -1257,16 +1273,6 @@ extent: aPoint
 	"Set the dimensions of the receiver's outer window to aPoint."
 
 	aPoint = self extent ifFalse: [self setExtent: aPoint]!
-
-extentFromDips: aPoint
-	"Scale the device-independent pixel (DIP) extent representer by the <Point> argument to the receiver's resolution and answer the result. DIPs are equivalent to 96-dpi."
-
-	^aPoint * self resolution // USER_DEFAULT_SCREEN_DPI!
-
-extentToDips: aPoint
-	"Scale the extent at the receiver's resolution (i.e. device-dependent pixels) represented by the <Point> argument to the device-independent (96-dpi) equivalent, and answer the result."
-
-	^aPoint * USER_DEFAULT_SCREEN_DPI // self resolution!
 
 filerProxy
 	"Private - Answer a filer proxy that represents the receiver."
@@ -2145,18 +2151,13 @@ literalStoreOn: aStream
 		override: self with: viewProxy;
 		nextPut: self!
 
-loadViewResource: aResourceArray forEdit: isLoadingForEdit 
+loadViewResource: aResourceArray forEdit: isLoadingForEdit
 	"Add an instance of the resource held in anSTLArray. Answer the new view."
 
-	| stream filerClass |
-	filerClass := (aResourceArray isKindOf: ByteArray) ifTrue: [STBInFiler] ifFalse: [STLInFiler].
-	stream := aResourceArray readStream.
-	^
-	[(filerClass on: stream)
+	^aResourceArray stbInFiler
 		isUpgrading: isLoadingForEdit;
 		context: self;
-		next] 
-			ensure: [stream close]!
+		next!
 
 managedSubViews
 	"Answer an OrderedCollection of the sub views of the receiver that are managed.
@@ -2174,6 +2175,16 @@ managedSubViewsDo: aMonadicValuable
 	the layout manager (if any)."
 
 	self subViewsDo: [:each | each isManaged ifTrue: [aMonadicValuable value: each]]!
+
+mapDipsToPels: aMagnitude
+	"Scale the DIPs (device-independent pixel, i.e. 96-dpi) <Magnitude> argument to the receiver's DPI and answer the result."
+
+	^aMagnitude * self dpi // USER_DEFAULT_SCREEN_DPI!
+
+mapPelsToDips: aMagnitude
+	"Scale the device-dependent pixel <Magnitude> argument from the receiver's DPI to DIPs (device-independent, i.e. 96-dpi, pixels) equivalent, and answer the result."
+
+	^aMagnitude * USER_DEFAULT_SCREEN_DPI // self dpi!
 
 mapPoint: aPoint to: anotherView
 	"Maps aPoint from the coordinate system of the receiver into that of anotherView"
@@ -2213,16 +2224,19 @@ mapScreenToClient: aPoint
 	^pt asPoint!
 
 maxExtent
-	"Answers the maximum extent for the receiver or nil if there is no constraint.
-	This only applies for	views being resized directly by the UI. It is not considered
-	during layout by a LayoutManager."
+	"Answers the maximum extent for the receiver, measured in device pixels, or nil if there is no constraint.
+	This only applies for	views being resized directly by the UI. It is not considered during layout by a LayoutManager."
 
 	^nil!
 
+metrics
+	"Answer a <SytemMetrics> instance that can provide standard measurements scaled to the receiver's current DPI."
+
+	^SystemMetrics forDpi: self dpi!
+
 minExtent
-	"Answers the minimum extent for the receiver or nil if there is no constraint.
-	This only applies for	views being resized directly by the UI. It is not considered
-	during layout by a LayoutManager."
+	"Answers the minimum extent for the receiver, measured in device pixels, or nil if there is no constraint.
+	This only applies for	views being resized directly by the UI. It is not considered during layout by a LayoutManager."
 
 	^nil!
 
@@ -2849,13 +2863,12 @@ postMessage: anIntegerMessageID wParam: wParam lParam: lParam
 		lParam: lParam!
 
 preferredExtent
-	"Answer the preferred size of the receiver or nil if none has been specified"
+	"Answer the preferred size of the receiver at it's current resolution, or nil if none has been specified."
 
 	^preferredExtent!
 
-preferredExtent: aPointOrNil 
-	"Set the preferred size of the receiver to aPointOrNil. If nil is specified then this implies that
-	the receiver has no preferred extent"
+preferredExtent: aPointOrNil
+	"Set the preferred size of the receiver to aPointOrNil. If nil is specified then this implies that the receiver has no preferred extent. If not nil, then the argument specifies the extent to be used at current DPI. This will be rescaled as necessary."
 
 	preferredExtent = aPointOrNil ifTrue: [^self].
 	preferredExtent := aPointOrNil.
@@ -3151,27 +3164,10 @@ restoreFromProxy: aViewProxy
 	self handle.
 	self onRestoredFromProxy!
 
-restorePlacement: aWINDOWPLACEMENT resolution: aPointResolution 
-	"Private - Restore the placement for the receiver to aWINDOWPLACEMENT which was
-	measured at a screen resolution of aPointResolution. If the current resolution is different
-	then the placement rectangle will have to be scaled appropriately. 
-	Subclasses can override this message to compensate for a resolution change
-	in any other ways required."
+restorePlacement: aWINDOWPLACEMENT resolution: aPoint
+	"Private - Restore the placement for the receiver to the <WINDOWPLACEMENT> first argument, which was measured at the screen resolution described by the <Point> 2nd argument. If the current resolution is different then the placement rectangle will have to be scaled appropriately. The view is also invited to rescale any other geometry it may need to change."
 
-	| placement res |
-	placement := aWINDOWPLACEMENT.
-	res := self resolution.
-	aPointResolution = res 
-		ifFalse: 
-			["Resolution is now different so recompute the placement"
-
-			| rect scale |
-			scale := res / aPointResolution.
-			rect := placement rcNormalPosition asRectangle.
-			rect := rect scaleBy: scale.
-			placement rcNormalPosition: rect truncated asParameter.
-			self resolutionScaledBy: scale].
-	self placement: placement!
+	self basicRestorePlacement: aWINDOWPLACEMENT resolution: aPoint!
 
 richText: aRichText
 	"Private - Set the text contents of the receiver to the RTF text, aRichText.
@@ -3421,10 +3417,12 @@ showShell
 	"Private - Show the receiver within a shell"
 
 	| shell |
-	shell := ShellView new create; yourself.
-	shell extent: (shell calcExtentFromClientExtent: self defaultExtent).
-	shell layoutManager: GridLayout new.
+	shell := ShellView new
+				create;
+				yourself.
 	self parentView: shell.
+	shell extent: (shell calcExtentFromClientExtent: self creationExtent).
+	shell layoutManager: GridLayout new.
 	self create show.
 	shell show!
 
@@ -4670,6 +4668,7 @@ basicDestroy!private!realizing/unrealizing! !
 basicFont:!accessing!private! !
 basicInvalidateLayout!geometry!private! !
 basicPaint:wParam:lParam:!drawing!private! !
+basicRestorePlacement:resolution:!geometry!private! !
 beActive!operations!public! !
 beCentered!operations!public! !
 beDefaultThemed!modes!public! !
@@ -4769,8 +4768,6 @@ extendedStyle!accessing-styles!private! !
 extendedStyle:!accessing-styles!private! !
 extent!accessing!geometry!public! !
 extent:!accessing!geometry!public! !
-extentFromDips:!geometry!public!utilities! !
-extentToDips:!geometry!public!utilities! !
 filerProxy!binary filing!private! !
 findItemHandle:ifAbsent:!hierarchy!private! !
 findMatch:inRange:!private!searching & replacing! !
@@ -4895,11 +4892,14 @@ literalStoreOn:!literal filing!public! !
 loadViewResource:forEdit:!binary filing!public! !
 managedSubViews!hierarchy!public!sub views! !
 managedSubViewsDo:!hierarchy!public!sub views! !
+mapDipsToPels:!helpers!public! !
+mapPelsToDips:!geometry!public!utilities! !
 mapPoint:to:!geometry!public! !
 mapPointToScreen:!geometry!public! !
 mapRectangle:to:!geometry!public! !
 mapScreenToClient:!geometry!public! !
 maxExtent!accessing!public! !
+metrics!accessing!public! !
 minExtent!accessing!public! !
 model!accessing!public! !
 model:!accessing!public! !
@@ -5406,15 +5406,17 @@ foregroundHandle
 
 	^UserLibrary default getForegroundWindow!
 
-frameWidths: anInteger 
-	"Answer the widths of the frames (if any) which will result from the Window style bits in the <integer> argument."
+frameWidths: anInteger
+	"Answer the device-independent pixel widths of the frames (if any) which will result from the Window style bits in the <integer> argument."
 
-	^(anInteger allMask: WS_DLGFRAME) 
-		ifTrue: [SystemMetrics current dialogFrameExtent]
+	"Note: As the result must be a measurement at 96-dpi, we use the default SystemMetrics, not the current ones."
+
+	^(anInteger allMask: WS_DLGFRAME)
+		ifTrue: [SystemMetrics default dialogFrameExtent]
 		ifFalse: 
-			[(anInteger allMask: WS_THICKFRAME) 
-				ifTrue: [SystemMetrics current sizingFrameExtent]
-				ifFalse: [(anInteger allMask: WS_BORDER) ifTrue: [SystemMetrics current borderExtent] ifFalse: [0 @ 0]]]!
+			[(anInteger allMask: WS_THICKFRAME)
+				ifTrue: [SystemMetrics default sizingFrameExtent]
+				ifFalse: [(anInteger allMask: WS_BORDER) ifTrue: [SystemMetrics default borderExtent] ifFalse: [0 @ 0]]]!
 
 freeTheme
 	theme notNull ifTrue: [ThemeLibrary default closeThemeData: theme].

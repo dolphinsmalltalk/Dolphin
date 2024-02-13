@@ -51,11 +51,6 @@ createHandle
 
 	^logfont createFont!
 
-desktopResolution
-	"Private - Answer the resolution of the active desktop."
-
-	^Canvas desktopResolution!
-
 displayOn: aStream
 	"Append, to aStream, a String whose characters are a representation of the receiver as a user
 	would want to see it."
@@ -81,7 +76,7 @@ initialize
 
 	super initialize.
 	(logfont := LOGFONTW new) lfWeight: FW_NORMAL.
-	resolution := self desktopResolution.!
+	resolution := SystemMetrics current resolution!
 
 isBold
 	"Answer whether the receiver is bold."
@@ -234,6 +229,12 @@ resolution: aPoint
 	self pointSize: ptSize] 
 			ifCurtailed: [resolution := oldres]!
 
+setLogFont: aLOGFONT resolution: aPoint
+	ownsHandle := true.
+	logfont := aLOGFONT.
+	resolution := aPoint.
+	^self!
+
 weight
 	"Answer the receiver's <integer> 'weight' (thickness)."
 
@@ -255,7 +256,6 @@ beUnderlined!accessing!public! !
 characterSet!accessing!public! !
 characterSet:!accessing!public! !
 createHandle!private!realizing/unrealizing! !
-desktopResolution!initializing!private! !
 displayOn:!displaying!public! !
 handle:!accessing!public! !
 hash!comparing!public! !
@@ -283,6 +283,7 @@ postCopy!copying!public! !
 printOn:!development!printing!public! !
 resolution!accessing!public! !
 resolution:!accessing!public! !
+setLogFont:resolution:!accessing!initializing!private! !
 weight!accessing!public! !
 weight:!accessing!public! !
 !
@@ -303,9 +304,12 @@ defaultPointSize
 fromLogFont: aLOGFONT
 	"Answer a new instance of the receiver with specified logical attributes."
 
-	^self new
-		logFont: aLOGFONT;
-		yourself!
+	^self fromLogFont: aLOGFONT resolution: SystemMetrics current resolution!
+
+fromLogFont: aLOGFONT resolution: aPoint
+	"Answer a new instance of the receiver with specified logical attributes."
+
+	^self basicNew setLogFont: aLOGFONT resolution: aPoint!
 
 icon
 	"Answers an Icon that can be used to represent this class"
@@ -360,6 +364,7 @@ uninitialize
 default!instance creation!public! !
 defaultPointSize!constants!private! !
 fromLogFont:!instance creation!public! !
+fromLogFont:resolution:!instance creation!public! !
 icon!constants!public! !
 name:!instance creation!public! !
 name:pixelSize:!instance creation!public! !

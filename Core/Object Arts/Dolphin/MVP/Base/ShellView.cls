@@ -162,12 +162,6 @@ createAt: position extent: extentPoint
 
 	self class createHookBlock value: self value: [super createAt: position extent: extentPoint]!
 
-creationExtent
-	"Private - Answer extent in device pels at which the receiver should be created. This is typically the default design extent at 96 dpi (aka Dips, or device-independent pixels), scaled to the parent's DPI.
-	This should only used for determining the creation size, and requires that the parent has been set in advance."
-
-	^View desktop extent // 1.5!
-
 defaultButtonId
 	"Private - Answer the id of the default PushButton for the receiver or nil
 	if there is none"
@@ -187,9 +181,10 @@ defaultButtonId: anInteger
 defaultExtent
 	"Private - Answer the default size of the receiver in device-independent pixels (96-dpi). This is used only to determine the size of a view when it is created (although after scaling DIPs to the display DPI - see #creationExtent). Thereafter preferredExtent is used when the desired size of a view is requested."
 	
-	"We want to occupy no more than 2/3 of the display. Since the desktop extent will be at the display DPI, we would need to scale this back to DIPs only for it to be scaled back by #creationExtent. Rather than scale back and forth we override #creationExtent instead."
+	"We want to occupy no more than 2/3 of the display. Since the desktop extent will be at the display DPI, we would need to scale this back to DIPs only for it to be scaled back by #creationExtent. Rather than scale back and forth we override #creationExtent instead.
+	However it is possible that superclasses will be using this, so we scale down the creationExtent."
 
-	^self shouldNotImplement!
+	^creationParent dipExtent // 1.5!
 
 defaultExtentWithin: aParentView
 	"Private - Answer the default extent of the receiver within aParentView."
@@ -553,13 +548,12 @@ lastFocus: aView
 	lastFocus := aView!
 
 maxExtent
-	"Answers the maximum extent for the receiver or nil if there is no constraint"
+	"Answers the minimum extent for the receiver at its current resolution (i.e. in device pixels) or nil if there is no constraint."
 
 	^maxExtent!
 
 maxExtent: aPointOrNil 
-	"Set the maximum extent for the receiver to aPointOrNil. If nil
-	this implies no constraint"
+	"Set the maximum extent for the receiver at its current resolution to aPointOrNil. If nil	this implies no constraint"
 
 	maxExtent := aPointOrNil.
 	maxExtent isNil ifTrue: [^self].
@@ -587,18 +581,17 @@ menuBar: aMenuBarOrNil
 	self invalidateLayout!
 
 minExtent
-	"Answers the minimum extent for the receiver or nil if there is no constraint"
+	"Answers the minimum extent for the receiver at its current resolution (i.e. in device pixels) or nil if there is no constraint."
 
 	^minExtent!
 
-minExtent: aPointOrNil 
-	"Set the minimum extent for the receiver to aPointOrNil. If nil
-	this implies no constraint"
+minExtent: aPointOrNil
+	"Set the minimum extent for the receiver at its current resolution to aPointOrNil. If nil this implies no constraint"
 
 	minExtent := aPointOrNil.
-	maxExtent isNil ifTrue: [^self].
-	minExtent notNil ifTrue: [minExtent := maxExtent min: minExtent].
-	self extent: (maxExtent min: self extent)!
+	maxExtent ifNil: [^self].
+	minExtent ifNotNil: [minExtent := self maxExtent min: minExtent].
+	self extent: (self maxExtent min: self extent)!
 
 minimize
 	"Show the receiver in a minimized state"
@@ -882,27 +875,22 @@ restorePlacement: aWINDOWPLACEMENT resolution: aPointResolution
 	placement rectangle will have to be scaled appropriately. Subclasses can override this
 	message to compensate for a resolution change in any other ways required."
 
-	| rect desktopResolution |
+	| rect res |
 	self isTopView ifFalse: [^super restorePlacement: aWINDOWPLACEMENT resolution: aPointResolution].
-	rect := aWINDOWPLACEMENT rcNormalPosition asRectangle.
-	desktopResolution := View desktop resolution.
-	aPointResolution = desktopResolution
+	res := self resolution.
+	rect := aWINDOWPLACEMENT rcNormalPosition.
+	aPointResolution = res
 		ifFalse: 
 			[| scale |
 			"Resolution is now different so recompute the placement"
-			scale := desktopResolution / aPointResolution.
-			rect := (rect scaleBy: scale) truncated.
+			scale := res / aPointResolution.
+			rect scaleBy: scale.
 			self resolutionScaledBy: scale].
 
-	"If the receiver wants to use a preferred extent, then use that. Otherwise, choose a default
-	extent."
+	"If the receiver wants to use a preferred extent, then use that. Otherwise, choose a default extent."
 	self usePreferredExtent
-		ifTrue: 
-			[| extent |
-			extent := self preferredExtent ifNil: [self defaultExtentWithin: creationParent].
-			rect extent: extent].
+		ifTrue: [rect extent: (self preferredExtent ifNil: [self defaultExtentWithin: creationParent])].
 	rect position: (self defaultPositionWithin: creationParent forExtent: rect extent).
-	aWINDOWPLACEMENT rcNormalPosition: rect asParameter.
 	self placement: aWINDOWPLACEMENT!
 
 setButtonId: id style: style 
@@ -1243,10 +1231,9 @@ commandPolicyClass!commands!constants!public! !
 commandPolicyWithSource:!commands!public! !
 commandSource!accessing!public! !
 createAt:extent:!public!realizing/unrealizing! !
-creationExtent!geometry!private!realizing/unrealizing! !
 defaultButtonId!accessing!default button!private! !
 defaultButtonId:!accessing!default button!private! !
-defaultExtent!constants!public! !
+defaultExtent!constants!private! !
 defaultExtentWithin:!geometry!private! !
 defaultPositionWithin:forExtent:!geometry!private! !
 defaultShowStyle!constants!private! !

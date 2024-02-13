@@ -111,10 +111,11 @@ calcRectangleFromClientRectangle: aRectangle
 	| rect |
 	rect := RECT fromRectangle: aRectangle.
 	UserLibrary default 
-		adjustWindowRectEx: rect
-		dwStyle: self baseStyle | WS_BORDER
+		adjustWindowRectExForDpi: rect
+		dwStyle: (self baseStyle bitOr: WS_BORDER)
 		bMenu: false
-		dwExStyle: self extendedStyle.
+		dwExStyle: self extendedStyle
+		dpi: self dpi.
 	^rect asRectangle!
 
 calculateExtent: aLayoutContext

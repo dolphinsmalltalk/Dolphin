@@ -240,7 +240,7 @@ package methodNames
 	add: #String -> #setTextInto:;
 	add: #Symbol -> #copyToClipboard;
 	add: #UndefinedObject -> #asResourceId;
-	add: #UserLibrary -> #adjustWindowRectEx:dwStyle:bMenu:dwExStyle:;
+	add: #UserLibrary -> #adjustWindowRectExForDpi:dwStyle:bMenu:dwExStyle:dpi:;
 	add: #UserLibrary -> #animateWindow:dwTime:dwFlags:;
 	add: #UserLibrary -> #attachThreadInput:idAttachTo:fAttach:;
 	add: #UserLibrary -> #beginDeferWindowPos:;
@@ -383,6 +383,7 @@ package methodNames
 	add: #UserLibrary -> #setWindowULongPtr:nIndex:dwNewLong:;
 	add: #UserLibrary -> #showCursor:;
 	add: #UserLibrary -> #systemParametersInfo:uiParam:pvParam:fWinIni:;
+	add: #UserLibrary -> #systemParametersInfoForDpi:uiParam:pvParam:fWinIni:dpi:;
 	add: #UserLibrary -> #trackMouseEvent:;
 	add: #UserLibrary -> #trackPopupMenu:uFlags:x:y:nReserved:hWnd:prcRect:;
 	add: #UserLibrary -> #translateAccelerator:haccl:lpmsg:;
@@ -568,8 +569,8 @@ Object subclass: #Presenter
 	classInstanceVariableNames: ''!
 
 Object subclass: #SystemMetrics
-	instanceVariableNames: 'menuCheckExtent smallIconExtent largeIconExtent dragHysteresis scrollThumbExtent sizingFrameExtent dialogFrameExtent borderExtent nonClientMetrics menuFont edgeExtent hasFlatMenus iconTitleFont hasSmoothScrollingLists isVistaOrLater defaultColorDepth hasIconScaleDown isNotWine'
-	classVariableNames: 'Current'
+	instanceVariableNames: 'dpi menuCheckExtent smallIconExtent largeIconExtent dragHysteresis scrollThumbExtent sizingFrameExtent dialogFrameExtent borderExtent nonClientMetrics menuFont edgeExtent iconTitleFont defaultColorDepth tileIconExtent'
+	classVariableNames: 'Current Default HasFlatMenus HasIconScaleDown Instances IsNotWine IsVistaOrLater MouseHoverTime SysParamVariables WheelScrollLines'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 
@@ -580,7 +581,7 @@ Object subclass: #View
 	classInstanceVariableNames: 'theme'!
 
 Object subclass: #ViewState
-	instanceVariableNames: 'view state placement subViewStates'
+	instanceVariableNames: 'view state placement resolution subViewStates'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -1715,19 +1716,18 @@ asResourceId!converting!public! !
 
 !UserLibrary methodsFor!
 
-adjustWindowRectEx: rect dwStyle: styleFlags bMenu: menuPresent dwExStyle: exStyleFlags
-	"Calculates the required size of the rectangle of a window with extended style based 
-	on the desired client-rectangle size. The window rectangle can then be passed to the 
-	CreateWindowEx function to create a window whose client area is the desired size. 
+adjustWindowRectExForDpi: rect dwStyle: styleFlags bMenu: menuPresent dwExStyle: exStyleFlags dpi: dpi
+	"Calculates the required size of the rectangle of a window with extended style based on the desired client-rectangle size. The window rectangle can then be passed to the CreateWindowEx function to create a window whose client area is the desired size. 
 
-	BOOL AdjustWindowRectEx(
+	BOOL AdjustWindowRectExForDpi(
 		LPRECT lpRect,		// pointer to client-rectangle structure
 		DWORD dwStyle,		// window styles
 		BOOL bMenu,		// menu-present flag
-		DWORD dwExStyle 	// extended style
+		DWORD dwExStyle,	// extended style
+		UINT dpi
 		);"
 
-	<stdcall: bool AdjustWindowRectEx RECT* dword bool dword>
+	<stdcall: bool AdjustWindowRectExForDpi RECT* dword bool dword dword>
 	^self invalidCall: _failureCode!
 
 animateWindow: hwnd dwTime: dwTime dwFlags: dwFlags
@@ -3260,6 +3260,19 @@ systemParametersInfo: uiAction uiParam: param1 pvParam: param2 fWinIni: update
 	<stdcall: bool SystemParametersInfoW dword dword lpvoid dword>
 	^self invalidCall: _failureCode!
 
+systemParametersInfoForDpi: uiAction uiParam: param1 pvParam: param2 fWinIni: update dpi: dpi
+	"
+	BOOL SystemParametersInfoForDpi(
+		UINT uiAction,	// system parameter to query or set
+		UINT uiParam,	// depends on action to be taken
+		PVOID pvParam,	// depends on action to be taken
+		UINT fWinIni, 	// user profile update flag
+		UINT dpi
+	);"
+
+	<stdcall: bool SystemParametersInfoForDpi dword dword lpvoid dword dword>
+	^self invalidCall: _failureCode!
+
 trackMouseEvent: lpEventTrack
 	"Invoke the TRACKMOUSEEVENT() function of the module wrapped by the receiver.
 	Helpstring: Posts messages when the mouse pointer leaves a window or hovers over a window for a specified amount of time.
@@ -3349,7 +3362,7 @@ windowFromPoint: aPOINTL
 	^self invalidCall: _failureCode! !
 
 !UserLibrary categoriesForMethods!
-adjustWindowRectEx:dwStyle:bMenu:dwExStyle:!public!win32 functions-coordinate space and transformation! !
+adjustWindowRectExForDpi:dwStyle:bMenu:dwExStyle:dpi:!public!win32 functions-coordinate space and transformation! !
 animateWindow:dwTime:dwFlags:!**auto generated**!public! !
 attachThreadInput:idAttachTo:fAttach:!public!win32 functions-message and message queue! !
 beginDeferWindowPos:!**auto generated**!public! !
@@ -3492,6 +3505,7 @@ setWindowULong:nIndex:dwNewLong:!public!win32 functions-window class! !
 setWindowULongPtr:nIndex:dwNewLong:!public!win32 functions-window class! !
 showCursor:!public!win32 functions-cursor! !
 systemParametersInfo:uiParam:pvParam:fWinIni:!public!win32 functions-string manipulation! !
+systemParametersInfoForDpi:uiParam:pvParam:fWinIni:dpi:!public!win32 functions-string manipulation! !
 trackMouseEvent:!public!win32 functions-mouse input! !
 trackPopupMenu:uFlags:x:y:nReserved:hWnd:prcRect:!public!win32 functions-menu! !
 translateAccelerator:haccl:lpmsg:!public!win32 functions-keyboard accelerator! !

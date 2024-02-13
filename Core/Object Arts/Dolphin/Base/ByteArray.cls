@@ -588,6 +588,9 @@ sqwordAtOffset: offset put: value
 		dwordAtOffset: offset put: (value bitAnd: 16rFFFFFFFF);
 		sdwordAtOffset: offset+4 put: (value bitShift: -32)!
 
+stbInFiler
+	^STBInFiler on: self readStream!
+
 stbSaveOn: anSTBOutFiler 
 	"Save out a binary representation of the receiver to anSTBOutFiler.
 	We override because we know we can use a block write here. The format
@@ -774,6 +777,7 @@ sdwordAtOffset:!accessing!primitives!public! !
 sdwordAtOffset:put:!accessing!primitives!public! !
 sqwordAtOffset:!accessing!public! !
 sqwordAtOffset:put:!accessing!public! !
+stbInFiler!binary filing!public! !
 stbSaveOn:!binary filing!public! !
 storeOn:!printing!public! !
 swordAtOffset:!accessing!primitives!public! !
