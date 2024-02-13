@@ -139,7 +139,7 @@ imageManager
 
 imageSizeIn: aRectangle
 	| minImageSize imageSize |
-	minImageSize := Icon smallExtent y.
+	minImageSize := self parentView metrics smallIconExtent y.
 	imageSize := aRectangle height.
 	^imageSize < minImageSize ifTrue: [minImageSize] ifFalse: [imageSize truncateTo: minImageSize]!
 

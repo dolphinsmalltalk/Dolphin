@@ -46,7 +46,7 @@ testItemLayout
 
 	self assert: presenter clientExtent x >= 200.
 	presenter hasSizeGrip: true.
-	self assert: presenter sizeGripWidth equals: SystemMetrics current scrollThumbExtent x.
+	self assert: presenter sizeGripWidth equals: presenter metrics scrollThumbExtent x.
 	2 timesRepeat: 
 			["One resizable item (only)"
 			self testItemLayout: {StatusBarItem new
@@ -146,7 +146,7 @@ testItemLayout: aCollectionOfStatusBarItems
 	rightMargin := borders at: 1.
 	gap := borders at: 3.
 	totalWidth := rightMargin + widths sum + ((widths size - 1) * gap)
-				+ (presenter hasSizeGrip ifTrue: [SystemMetrics current scrollThumbExtent x] ifFalse: [0]).
+				+ (presenter hasSizeGrip ifTrue: [presenter metrics scrollThumbExtent x] ifFalse: [0]).
 	"These tests assume that the bar is of sufficient width to at least fit all items at full width."
 	barWidth := presenter clientExtent x.
 	self assert: totalWidth <= barWidth.
