@@ -348,7 +348,7 @@ verticalScrollTo: anInteger
 			0]!
 
 wheelScrollLines
-	^SystemMetrics current getSysParamInt32: SPI_GETWHEELSCROLLLINES! !
+	^self metrics wheelScrollLines ! !
 
 !UI.ScrollingDecorator categoriesForMethods!
 addSubView:!hierarchy!public!sub views! !

@@ -21,16 +21,15 @@ Instance Variables:
 
 !UI.ScrollBar methodsFor!
 
-calculateExtent: aLayoutContext 
-	"Private - Answer the calculated extent of the receiver that should be used by a
-	layout manager during its layout process."
+calculateExtent: aLayoutContext
+	"Private - Answer the calculated extent of the receiver that should be used by a layout manager during it's layout process."
 
-	^self calcExtentFromClientExtent: self defaultExtent!
+	^self calcExtentFromClientExtent: self creationExtent!
 
 defaultExtent
-	"Private - Answer the default size of the receiver in device-independent pixels (96-dpi DIPs). This is used only to determine the size of a view when it is created (although after scaling DIPs to the display DPI - see #creationExtent). Thereafter #preferredExtent is used when the desired size of a view is requested."
+	"Private - Answer the default size of the receiver in device-independent pixels (i.e. 96-dpi DIPs)."
 
-	^self isVertical ifTrue: [self class defaultHeight @ 200] ifFalse: [200 @ self class defaultWidth]!
+	^self isVertical ifTrue: [self class defaultWidth @ 200] ifFalse: [200 @ self class defaultHeight]!
 
 displayValue
 	"Private - Answer the displayed contents, the current scroll position,
@@ -230,7 +229,9 @@ state!accessing!private! !
 !UI.ScrollBar class methodsFor!
 
 defaultHeight
-	^SystemMetrics current scrollThumbExtent y!
+	"Answer the height of a horizontal scroll bar in device-independent pixels (i.e. at 96-dpi)."
+
+	^SystemMetrics default scrollbarHeight!
 
 defaultModel
 	"Answer a default model to be assigned to the receiver when it is initialized."
@@ -238,7 +239,9 @@ defaultModel
 	^0 asValue!
 
 defaultWidth
-	^SystemMetrics current scrollThumbExtent x!
+	"Answer the width of a vertical scroll bar in device-independent pixels (i.e. at 96-dpi)."
+
+	^SystemMetrics default scrollbarWidth!
 
 icon
 	"Answers an Icon that can be used to represent this class"
