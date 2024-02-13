@@ -10,7 +10,7 @@ UI.IconicListAbstract
 			'OrientationMask' -> 16r82.
 			'TabOrientations'
 				-> (IdentityDictionary withAll: { 16r0 -> #top. 16r2 -> #bottom. 16r80 -> #left. 16r82 -> #right }).
-			'TabViewModes'
+			'TabViewImageSizes'
 				-> (IdentityDictionary withAll: {
 								#extraLargeIcons -> (16r100 @ 16r100).
 								#largeIcons -> (16r20 @ 16r20).
@@ -113,6 +113,7 @@ calcRectangleFromClientRectangle: aRectangle
 	window rectangle that would be required to achieve this taking into account the current
 	window styles etc. Note that the answered rectangle is in the client's coordinate system."
 
+	#highDpiTodo. "Is this a DPI aware adjustment? Probably not."
 	^self tcmAdjustRect: true for: aRectangle!
 
 canEditLabels
@@ -707,6 +708,11 @@ icon
 
 	^##(self) defaultIcon!
 
+imageSizes
+	"Answer the map of named image sizes applicable in this type of iconic list. The sizes themselves are specified in device-independent pixels (i.e. 96-dpi)."
+
+	^TabViewImageSizes!
+
 initialize
 	"Private - Initialise the receiver's class variables.
 		TabView initialize
@@ -720,7 +726,7 @@ initialize
 						TCS_VERTICAL -> #left.
 						(TCS_BOTTOM | TCS_VERTICAL) -> #right
 					}).
-	self addClassConstant: 'TabViewModes'
+	self addClassConstant: 'TabViewImageSizes'
 		value: (IdentityDictionary withAll: {
 						#noIcons -> (0 @ 0).
 						#smallIcons -> (16 @ 16).
@@ -738,9 +744,6 @@ tabOrientations
 uninitialize
 	CommCtrlLibrary removeInitFlag: ICC_TAB_CLASSES!
 
-viewModes
-	^TabViewModes!
-
 winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
 
@@ -749,10 +752,10 @@ winClassName
 
 !UI.TabView class categoriesForMethods!
 icon!constants!public! !
+imageSizes!accessing!public! !
 initialize!development!initializing!private! !
 tabOrientations!accessing!constants!public! !
 uninitialize!class hierarchy-removing!private! !
-viewModes!accessing!public! !
 winClassName!constants!private! !
 !
 

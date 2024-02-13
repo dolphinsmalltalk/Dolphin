@@ -7,7 +7,7 @@ UI.ListControlView
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-			'ViewModes'
+			'ImageSizes'
 				-> (IdentityDictionary withAll: {
 								#extraLargeIcons -> (16r100 @ 16r100).
 								#largeIcons -> (16r20 @ 16r20).
@@ -367,9 +367,9 @@ hideDropHighlight
 	self removePropertyAt: #dropHighlight ifAbsent: nil!
 
 imageExtent
-	"Private - Answer the extent of images to use based on the current view mode"
+	"Private - Answer the extent of images to use based on the current view mode and resolution."
 
-	^self class viewModes at: self viewMode!
+	^self mapDipsToPels: (self class imageSizes at: self viewMode)!
 
 imageManager
 	"Private - Answer the receiver's normal image manager."
@@ -412,9 +412,9 @@ itemStructure
 	^self subclassResponsibility!
 
 largeIconExtent
-	"Answer image extent for the large icons mode."
+	"Answer image extent measured in device-independent (96-dpi) pixesl for the large icons mode. This will be scaled to the receiver's resolution."
 
-	^largeIconExtent isNil ifTrue: [Icon.LargeExtent] ifFalse: [largeIconExtent]!
+	^largeIconExtent ifNil: [SystemMetrics default largeIconExtent]!
 
 largeIconExtent: aPointOrNil
 	"Set the image extent for the large icons mode."
@@ -787,9 +787,9 @@ showDropHighlight: anItem
 !
 
 smallIconExtent
-	"Answer image extent for the small icons mode."
+	"Answer device-independent pixel extent for the small icons mode. This will be scaled to the receiver's resolution to generate the actual small image extent."
 
-	^Icon.SmallExtent!
+	^SystemMetrics default smallIconExtent!
 
 smallIconMode
 	"Place the receiver in small icons mode"
@@ -980,6 +980,11 @@ wmDestroy:wParam:lParam:!event handling-win32!private! !
 
 !UI.IconicListAbstract class methodsFor!
 
+imageSizes
+	"Answer the map of named image sizes applicable in this type of iconic list. The sizes themselves are specified in device-independent pixels (i.e. 96-dpi)."
+
+	^ImageSizes!
+
 stbConvertFromVersion3: anArray
 	"Private - Perform an STB conversion from a version 3 (or earlier) <View> to version 4, 
 	i.e. add getInfoTipBlock inst var in IconicListAbstract and subclasses."
@@ -1032,9 +1037,10 @@ viewModeNames
 		intersection: self viewModes keys!
 
 viewModes
-	^ViewModes! !
+	^self imageSizes! !
 
 !UI.IconicListAbstract class categoriesForMethods!
+imageSizes!accessing!public! !
 stbConvertFromVersion3:!binary filing!private! !
 stbConvertFromVersion9:!binary filing!private! !
 value:!evaluating!private! !

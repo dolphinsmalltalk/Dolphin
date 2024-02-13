@@ -966,7 +966,7 @@ UI.ListControlView
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-			'ViewModes'
+			'ImageSizes'
 				-> (IdentityDictionary withAll: {
 								#extraLargeIcons -> (16r100 @ 16r100).
 								#largeIcons -> (16r20 @ 16r20).
@@ -1008,7 +1008,7 @@ UI.IconicListAbstract
 			'OrientationMask' -> 16r82.
 			'TabOrientations'
 				-> (IdentityDictionary withAll: { 16r0 -> #top. 16r2 -> #bottom. 16r80 -> #left. 16r82 -> #right }).
-			'TabViewModes'
+			'TabViewImageSizes'
 				-> (IdentityDictionary withAll: {
 								#extraLargeIcons -> (16r100 @ 16r100).
 								#largeIcons -> (16r20 @ 16r20).
