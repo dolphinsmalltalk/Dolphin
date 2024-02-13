@@ -23,7 +23,7 @@ calculateExtent: aLayoutContext
 	"Private - Answer the calculated extent of the receiver that should be used by a
 	layout manager during it's layout process."
 
-	^self calcExtentFromClientExtent: self defaultExtent!
+	^self calcExtentFromClientExtent: self creationExtent!
 
 cancelTrackingAt: aPoint 
 	| position |
