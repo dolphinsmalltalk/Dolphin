@@ -85,6 +85,7 @@ package classNames
 	add: #StaticPathTest;
 	add: #StaticTextTest;
 	add: #StyledContainerTest;
+	add: #SystemMetricsTest;
 	add: #TabViewTest;
 	add: #TabViewXPTest;
 	add: #TextEditTest;
@@ -321,6 +322,12 @@ DolphinTest subclass: #ScintillaIndicatorTest
 	classInstanceVariableNames: ''!
 
 DolphinTest subclass: #ScintillaLexerMetadataTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+DolphinTest subclass: #SystemMetricsTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

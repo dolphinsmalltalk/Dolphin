@@ -892,6 +892,7 @@ Win32Constants at: 'SORT_STRINGSORT' put: 16r1000!
 Win32Constants at: 'SPI_GETFLATMENU' put: 16r1022!
 Win32Constants at: 'SPI_GETICONTITLELOGFONT' put: 16r1F!
 Win32Constants at: 'SPI_GETLISTBOXSMOOTHSCROLLING' put: 16r1006!
+Win32Constants at: 'SPI_GETMENUSHOWDELAY' put: 16r6A!
 Win32Constants at: 'SPI_GETMOUSEHOVERTIME' put: 16r66!
 Win32Constants at: 'SPI_GETNONCLIENTMETRICS' put: 16r29!
 Win32Constants at: 'SPI_GETWHEELSCROLLLINES' put: 16r68!
@@ -899,7 +900,11 @@ Win32Constants at: 'SPI_GETWORKAREA' put: 16r30!
 Win32Constants at: 'SPI_SETFLATMENU' put: 16r1023!
 Win32Constants at: 'SPI_SETICONTITLELOGFONT' put: 16r22!
 Win32Constants at: 'SPI_SETLISTBOXSMOOTHSCROLLING' put: 16r1007!
+Win32Constants at: 'SPI_SETMENUSHOWDELAY' put: 16r6B!
+Win32Constants at: 'SPI_SETMOUSEHOVERTIME' put: 16r67!
 Win32Constants at: 'SPI_SETNONCLIENTMETRICS' put: 16r2A!
+Win32Constants at: 'SPI_SETWHEELSCROLLLINES' put: 16r69!
+Win32Constants at: 'SPI_SETWORKAREA' put: 16r2F!
 Win32Constants at: 'SPIF_SENDCHANGE' put: 16r2!
 Win32Constants at: 'SPIF_UPDATEINIFILE' put: 16r1!
 Win32Constants at: 'SRCAND' put: 16r8800C6!

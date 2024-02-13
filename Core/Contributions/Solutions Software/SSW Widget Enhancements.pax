@@ -399,12 +399,12 @@ wmNotify:wParam:lParam:!event handling-win32!private! !
 hasListViewAlphaBlendedHighlights
 	"Does the host support alpha-blended list view selection highlights?"
 
-	^VMLibrary default isWindowsVistaOrGreater!
+	^IsVistaOrLater!
 
 hasListViewHotTracking
 	"Does the host support hot tracking in list views?"
 
-	^VMLibrary default isWindowsVistaOrGreater! !
+	^IsVistaOrLater! !
 
 !SystemMetrics categoriesForMethods!
 hasListViewAlphaBlendedHighlights!capability enquiries!public! !

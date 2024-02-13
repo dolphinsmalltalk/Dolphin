@@ -445,10 +445,10 @@ canDisplay
 	"Displays of less than 800x600 resolution or with a palette cannot correctly display the Dolphin
 	splash bitmap. Also Win95/NT can't do the alpha blending thing."
 
-	| desktopCanvas |
-	desktopCanvas := Canvas forDesktop.
-	^(desktopCanvas colorDepth > 8 and: [desktopCanvas extent >= (800 @ 600)]) 
-		and: [SystemMetrics current supportsAlphaBlending]!
+	| metrics |
+	metrics := SystemMetrics current.
+	^(metrics defaultColorDepth > 8 and: [View desktop extent >= (800 @ 600)])
+		and: [metrics supportsAlphaBlending]!
 
 splashPlayTheGame
 	^splashPlayTheGame ifNil: [splashPlayTheGame := false]!

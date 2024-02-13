@@ -320,6 +320,10 @@ getSystemMetrics: index
 	<stdcall: sdword GetSystemMetrics sdword>
 	^self invalidCall: _failureCode!
 
+getSystemMetricsForDpi: index dpi: dpi
+	<stdcall: sdword GetSystemMetricsForDpi sdword dword>
+	^self invalidCall: _failureCode!
+
 inSendMessage
 	<stdcall: bool InSendMessage>
 	^self invalidCall: _failureCode!
@@ -788,6 +792,7 @@ getQueueStatus:!public!win32 functions-message and message queue! !
 getSysColor:!public!win32 functions-system information! !
 getSysColorBrush:!public!win32 functions-cursor! !
 getSystemMetrics:!public!win32 functions-system information! !
+getSystemMetricsForDpi:dpi:!public!win32 functions-high DPI! !
 inSendMessage!public!win32 functions-message and message queue! !
 isCharAlpha:!public!win32 functions-string manipulation! !
 isCharAlphaNumeric:!public!win32 functions-string manipulation! !

@@ -52,11 +52,11 @@ IDispatch subclass: #IFontDisp
 !AbstractLOGFONT class methodsFor!
 
 fromOleFont: pFont
-	"Answer a new instance of the receiver populated with details from the OLE font on which the
-	<IFont>|<IFontDisp> argument, anIFont, is an interface."
+	"Answer a new instance of the receiver populated with details from the OLE font on which the <IFont>|<IFontDisp> argument, anIFont, is an interface.
+	Note that the height is set to a DIP/96-dpi measurement, scaled from the 72-dpi of the OLE font."
 
 	^self new
-		lfHeight: (pFont size * View desktop resolution y / 72) asInteger;
+		lfHeight: (pFont size * USER_DEFAULT_SCREEN_DPI / 72) asInteger;
 "		lfWidth:
 		lfEscapement:
 		lfOrientation:
@@ -82,7 +82,8 @@ fromOleFont: pFont
 	"Answer a new instance of the receiver which is equivalent to the OLE font on which the
 	<IFont>|<IFontDisp> argument, anIFont, is an interface."
 
-	^self fromLogFont: (LOGFONTW fromOleFont: pFont)! !
+	^self fromLogFont: (LOGFONTW fromOleFont: pFont)
+		resolution: ##(USER_DEFAULT_SCREEN_DPI @ USER_DEFAULT_SCREEN_DPI)! !
 
 !Font class categoriesForMethods!
 fromOleFont:!instance creation!public! !

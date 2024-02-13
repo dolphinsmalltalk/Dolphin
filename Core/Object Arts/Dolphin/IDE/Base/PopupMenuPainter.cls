@@ -15,11 +15,11 @@ PopupMenuPainter comment: ''!
 !PopupMenuPainter methodsFor!
 
 borderInset
-	"Private - Answer a <Rectangle> indicating the inset at each corner of the receiver filled by the
-	border and any 3d edge."
+	"Private - Answer a <Rectangle> indicating the inset at each corner of the receiver filled by the border and any 3d edge."
 
-	| extent |
-	extent := SystemMetrics current borderExtent + SystemMetrics current edgeExtent.
+	| extent metrics |
+	metrics := SystemMetrics current.
+	extent := metrics borderExtent + metrics edgeExtent.
 	^extent corner: extent!
 
 calculateGeometry: aCanvas 

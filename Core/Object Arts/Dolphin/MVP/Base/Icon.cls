@@ -360,7 +360,7 @@ defaultApplication
 !
 
 defaultExtent
-	"Answer a Point that gives the dimensions of a standard size icon."
+	"Answer a Point that gives the dimensions of a standard size icon at the current system DPI."
 
 	^self largeExtent
 !
@@ -376,7 +376,9 @@ exclamation
 	^self warning!
 
 extraLargeExtent
-	^256 @ 256!
+	"Answer a <Point> that gives the dimensions of an extra large size icon."
+
+	^SystemMetrics current extraLargeIconExtent!
 
 filesType
 	"Private - Answer a two element array suitable for adding to the FileDialog
@@ -406,7 +408,8 @@ information
 	^Information ifNil: [Information := self fromSystemId: IDI_INFORMATION]!
 
 largeExtent
-	"Answer a <Point> that gives the dimensions of a standard size icon."
+	"Answer a <Point> that gives the dimensions of a standard size icon.
+	Note that this will have been rescaled to the system (primary monitor) DPI. The baseline at 96-dpi is 32@32, so as an example at 120dpi/125% it will be 40@40."
 
 	^SystemMetrics current largeIconExtent!
 
@@ -432,16 +435,15 @@ question
 	^Question ifNil: [Question := self fromSystemId: IDI_QUESTION]!
 
 smallExtent
-	"Answer a <Point> that gives the dimensions of a small size icon."
+	"Answer a <Point> that gives the dimensions of a small size icon. 
+	Note that this will have been rescaled to the system (primary monitor) DPI. The baseline at 96-dpi is 16@16, so as an example at 120dpi/125% it will be 20@20."
 
 	^SystemMetrics current smallIconExtent!
 
 tileExtent
 	"Answer a Point that gives the dimensions of a tile size icon."
 
-	#todo. "Is there a system metric for this?"
-
-	^48 @ 48!
+	^SystemMetrics current tileIconExtent!
 
 uninitialize
 	"Uninitialize the class variables of the receiver."

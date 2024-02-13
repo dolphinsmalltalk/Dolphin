@@ -44,10 +44,10 @@ height
 
 	| status height |
 	height := FLOAT new.
-	(status := GdiplusLibrary default 
+	(status := GdiplusLibrary default
 				gdipGetFontHeightGivenDPI: self asParameter
-				dpi: DesktopView current resolution y
-				height: height) = Ok 
+				dpi: SystemMetrics current dpi
+				height: height) = Ok
 		ifFalse: [GdiplusError signal: 'GdipGetFontHeightGivenDPI failed' with: status].
 	^height value!
 

@@ -1,8 +1,8 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Object subclass: #SystemMetrics
-	instanceVariableNames: 'menuCheckExtent smallIconExtent largeIconExtent dragHysteresis scrollThumbExtent sizingFrameExtent dialogFrameExtent borderExtent nonClientMetrics menuFont edgeExtent hasFlatMenus iconTitleFont hasSmoothScrollingLists isVistaOrLater defaultColorDepth hasIconScaleDown isNotWine'
-	classVariableNames: 'Current'
+	instanceVariableNames: 'dpi menuCheckExtent smallIconExtent largeIconExtent dragHysteresis scrollThumbExtent sizingFrameExtent dialogFrameExtent borderExtent nonClientMetrics menuFont edgeExtent iconTitleFont defaultColorDepth tileIconExtent'
+	classVariableNames: 'Current Default HasFlatMenus HasIconScaleDown Instances IsNotWine IsVistaOrLater MouseHoverTime SysParamVariables WheelScrollLines'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 
@@ -37,6 +37,9 @@ Class Variables:
 borderExtent
 	^borderExtent ifNil: [borderExtent := self getMetric: SM_CXBORDER pair: SM_CYBORDER]!
 
+captionHeight
+	^self nonClientMetrics iCaptionHeight!
+
 cursorExtent
 	"Answer a <Point> that gives the dimensions of the system cursor."
 
@@ -51,6 +54,9 @@ defaultColorDepth
 dialogFrameExtent
 	^dialogFrameExtent ifNil: [dialogFrameExtent := self getMetric: SM_CXDLGFRAME pair: SM_CYDLGFRAME]!
 
+dpi
+	^dpi!
+
 dragHysteresis
 	"Answer the default distance in pixels that the mouse must move before 
 	a tracking operation is actually started"
@@ -64,6 +70,12 @@ edgeExtent
 	"Answer the dimensions of 3d window borders."
 
 	^edgeExtent ifNil: [edgeExtent := self getMetric: SM_CXEDGE pair: SM_CYEDGE]!
+
+extraLargeIconExtent
+	"Answer a <Point> that gives the dimensions of an extra large icon."
+
+	"Currently, this if fixed."
+	^256@256!
 
 getDefaultColorDepth
 	"Private - Answer the default color depth based on that of the current screen driver."
@@ -81,92 +93,99 @@ getDefaultColorDepth
 getIconTitleFont
 	"Private - Answer a <Font> which is that used for icon titles on the desktop.
 
-		SystemMetrics current getIconTitleFont
+		(SystemMetrics forDpi: 192) getIconTitleFont
 	"
 
-	^Font fromLogFont: (self 
-				getSysParamW: SPI_GETICONTITLELOGFONT
-				type: LOGFONTW
-				ifError: [^Font system])
-!
+	^(self
+		getSysParamForDpi: SPI_GETICONTITLELOGFONT
+		type: LOGFONTW
+		ifError: []) ifNil: [Font system] ifNotNil: [:lf | Font fromLogFont: lf resolution: dpi @ dpi]!
 
 getMetric: anInteger 
-	^UserLibrary default getSystemMetrics: anInteger!
+	^UserLibrary default getSystemMetricsForDpi: anInteger dpi: dpi!
 
 getMetric: anInteger1 pair: anInteger2 
 	^(self getMetric: anInteger1) @ (self getMetric: anInteger2)!
+
+getNonClientMetrics
+	^self
+		getSysParamForDpi: SPI_GETNONCLIENTMETRICS
+		type: NONCLIENTMETRICSW
+		ifError: [UserLibrary default systemError]!
 
 getSysParam: anInteger type: anExternalStructureClass ifError: aNiladicValuable
 	| struct |
 	struct := anExternalStructureClass new.
 	(UserLibrary default
 		systemParametersInfo: anInteger
-		uiParam: 0
+		uiParam: struct byteSize
 		pvParam: struct
 		fWinIni: 0) ifFalse: [^aNiladicValuable value].
-	^struct!
+	^struct value!
 
-getSysParamBool: anInteger 
-	^(self 
-		getSysParam: anInteger
-		type: BOOL
-		ifError: [^false]) value!
+getSysParamBool: anInteger
+	^(self getSysParamDword: anInteger ifError: [0]) asBoolean!
 
-getSysParamDword: anInteger 
-	^(self getSysParamStruct: anInteger type: DWORDBytes) value!
-
-getSysParamSdword: anInteger
-	^(self getSysParamStruct: anInteger type: DWORDBytes) asSignedInteger!
-
-getSysParamStruct: anInteger type: anExternalStructureClass 
-	^self 
-		getSysParam: anInteger
-		type: anExternalStructureClass
-		ifError: [UserLibrary default systemError]!
-
-getSysParamW: anInteger type: anExternalStructureClass ifError: aNiladicValuable
+getSysParamDword: anInteger ifError: aNiladicValuable
 	| struct |
-	struct := anExternalStructureClass new.
+	struct := DWORDBytes new.
 	(UserLibrary default
 		systemParametersInfo: anInteger
 		uiParam: 0
 		pvParam: struct
 		fWinIni: 0) ifFalse: [^aNiladicValuable value].
-	^struct!
+	^struct value!
+
+getSysParamForDpi: anInteger type: anExternalStructureClass ifError: aNiladicValuable
+	"Private - Rather stupidly the Windows API SystemParametersInfoForDpi  doesn't work for any system parameter as one might expect, but only for a limited set that are documented as varying at different DPIs. It would be simpler, and less likely to break with future modifications/additions, if it just did what the GetSystemMetrics call does and work for everything, ignoring the DPI when it isn't relevant. As it stands we need to call both functions. The DPI aware function is called for these three settings only:
+		SPI_GETICONTITLELOGFONT
+		SPI_GETICONMETRICS
+		SPI_GETNONCLIENTMETRICS
+	For everything else, the non-DPI aware function must be called as the DPI-aware one just returns false and doesn't populate the structure.
+	"
+
+	| struct |
+	struct := anExternalStructureClass new.
+	(UserLibrary default
+		systemParametersInfoForDpi: anInteger
+		uiParam: struct byteSize
+		pvParam: struct
+		fWinIni: 0
+		dpi: dpi) ifFalse: [^aNiladicValuable value].
+	^struct value!
 
 hasButtonNotes
 	"Answer whether the host supports 'notes' for link buttons."
 
-	^isVistaOrLater!
+	^IsVistaOrLater!
 
 hasDesktopComposition
 	"Answer whether the host supports off-screen desktop composition,"
 
-	^isVistaOrLater!
+	^IsVistaOrLater!
 
 hasEnhancedThemes
 	"Answer whether the host supports enhanced desktop themes (Vista and later)."
 
-	^isVistaOrLater!
+	^IsVistaOrLater!
 
 hasFlatMenus
 	"Answer whether the host menu style is 'flat'"
 
-	^hasFlatMenus ifNil: [hasFlatMenus := self getSysParamBool: SPI_GETFLATMENU]!
+	^HasFlatMenus ifNil: [HasFlatMenus := self getSysParamBool: SPI_GETFLATMENU]!
 
 hasGdiPalettes
 	"Answer whether the host supports GDI palettes."
 
-	"Wine doesn't yet implement GDILibrary>>getPaletteEntries:"
+	"Wine does not implement GDILibrary>>getPaletteEntries:, and probably never will since palettes are essentially obsolete."
 
 	#wineFix.
-	^isNotWine!
+	^IsNotWine!
 
 hasIconScaleDown
-	"Answer whether the host supports scaling down of larger icons when the requested size is
-	not available (as opposed to scaling up)."
+	"Answer whether the host supports scaling down of larger icons when the requested size is not available (as opposed to scaling up)."
 
-	^hasIconScaleDown!
+	^HasIconScaleDown!
 
 hasImageListDragCursors
 	"Answer whether the host supports using image lists for drag cursors."
@@ -174,33 +193,24 @@ hasImageListDragCursors
 	"Wine doesn't appear to support setting drag cursors from image lists."
 
 	#wineFix.
-	^isNotWine!
+	^IsNotWine!
 
 hasLinkButtons
 	"Answer whether the host supports link buttons (i.e. push buttons with the BS_COMMANDLINK
 	style)."
 
-	^isVistaOrLater!
+	^IsVistaOrLater!
 
 hasMenuBitmaps
 	"Answer whether the host support direct setting of menu bitmaps through the menu item info
 	structure. If false they have to be provided through a callback."
 
-	^isVistaOrLater!
+	^IsVistaOrLater!
 
 hasSmoothScrollingLists
 	"Answer whether the host supports smooth (as opposed to jump) scrolling of lists."
 
-	hasSmoothScrollingLists isNil
-		ifTrue: 
-			[| bool |
-			bool := DWORD new.
-			hasSmoothScrollingLists := (UserLibrary default
-						systemParametersInfo: SPI_GETLISTBOXSMOOTHSCROLLING
-						uiParam: 0
-						pvParam: bool
-						fWinIni: 0) ifTrue: [bool value asBoolean] ifFalse: [false]].
-	^hasSmoothScrollingLists!
+	^self getSysParamBool: SPI_GETLISTBOXSMOOTHSCROLLING!
 
 hasTextBoxMargins
 	"Answer whether the host supports configurable margins for EDIT controls."
@@ -208,7 +218,7 @@ hasTextBoxMargins
 	"Wine doesn't yet implement EM_SETMARGINS "
 
 	#wineFix.
-	^isNotWine!
+	^IsNotWine!
 
 hasThemes
 	"Answer whether the host support desktop themes (XP and later)."
@@ -216,36 +226,23 @@ hasThemes
 	"Wine currently errors on theme APIs, so bypass"
 
 	#wineFix.
-	^isNotWine!
+	^IsNotWine!
 
 hasTreeViewHotTracking
 	"Does the host support hot tracking in tree views?"
 
-	^isVistaOrLater!
+	^IsVistaOrLater!
 
 hasWebView
 	"Answer whether the host provides a WebView2 Edge Browser control."
 
 	#wineFix.
-	^isNotWine!
+	^IsNotWine!
 
 iconTitleFont
 	"Answer a <Font> which is that used for icon titles on the desktop."
 
 	^iconTitleFont ifNil: [iconTitleFont := self getIconTitleFont]!
-
-initialize
-	"Private - "
-
-	"So many capabilities depend on these flag, we may as well query them immediately. These also cannot change because of a Windows settings change."
-
-	isVistaOrLater := VMLibrary default isWindowsVistaOrGreater.
-	isNotWine := NTLibrary isWine not.
-	"Wine does not support the ComMCtrlLibrary>>loadIconWithScaleDown:.. method which is normally
-	availble under Vista and later. Hence we don't allow this to be called even if the Windows
-	version indicates Vista is available."
-	hasIconScaleDown := isVistaOrLater & isNotWine.
-	SessionManager current when: #settingChanged: send: #onSettingChanged: to: self!
 
 isSlowMachine
 	"Answer true if this machine is judged to be slow."
@@ -256,6 +253,16 @@ largeIconExtent
 	"Answer a <Point> that gives the dimensions of a large size icon."
 
 	^largeIconExtent ifNil: [largeIconExtent := self getMetric: SM_CXICON pair: SM_CYICON]!
+
+mapDipsToPels: aMagnitude
+	"Scale the device-independent pixel (DIP) extent representer by the <Magnitude> argument to the receiver's DPI and answer the result. DIPs are equivalent to 96-dpi."
+
+	^aMagnitude * dpi / USER_DEFAULT_SCREEN_DPI!
+
+mapPelsToDips: aMagnitude
+	"Scale the device-dependent pixel <Magnitude> argument from the receiver's DPI to DIPs (device-independent, i.e. 96-dpi, pixels) equivalent, and answer the result."
+
+	^aMagnitude * USER_DEFAULT_SCREEN_DPI / dpi!
 
 menuBarColor
 	^ThemeLibrary default isAppThemed ifTrue: [Color menuBar] ifFalse: [Color menu]!
@@ -318,31 +325,20 @@ monitorCount
 	^self getMetric: SM_CMONITORS!
 
 mouseHoverTime
-	^(self 
-		getSysParam: SPI_GETMOUSEHOVERTIME
-		type: DWORD
-		ifError: [^400]) value!
+	^MouseHoverTime
+		ifNil: [MouseHoverTime := self getSysParamDword: SPI_GETMOUSEHOVERTIME ifError: [400]]!
 
 nonClientMetrics
 	"
 		SystemMetrics current nonClientMetrics
 	"
-	nonClientMetrics isNil
-		ifTrue: 
-			["N.B. SPI_GETNONCLIENTMETRICS does not work in NT 3.51, but we no longer support it."
-			nonClientMetrics := self
-						getSysParamW: SPI_GETNONCLIENTMETRICS
-						type: NONCLIENTMETRICSW
-						ifError: [UserLibrary default systemError]].
-	^nonClientMetrics
 
-!
+	^nonClientMetrics ifNil: [nonClientMetrics := self getNonClientMetrics]!
 
 onSettingChanged: anArray
 	| code |
 	(##(#('Policy' 'intl' 'Environment' 'ImmersiveColorSet') asSet) includes: anArray first)
-		ifTrue: 
-			[^self].
+		ifTrue: [^self].
 	menuCheckExtent := smallIconExtent := largeIconExtent := dragHysteresis := scrollThumbExtent := sizingFrameExtent := dialogFrameExtent := borderExtent := edgeExtent := nil.
 	code := anArray second.
 	code == SPI_SETICONTITLELOGFONT
@@ -352,18 +348,20 @@ onSettingChanged: anArray
 	code == SPI_SETNONCLIENTMETRICS
 		ifTrue: 
 			[menuFont := nonClientMetrics := nil.
-			^self].
-	code == SPI_SETFLATMENU
-		ifTrue: 
-			[hasFlatMenus := nil.
-			^self].
-	code == SPI_SETLISTBOXSMOOTHSCROLLING
-		ifTrue: 
-			[hasSmoothScrollingLists := nil.
 			^self]!
 
 paddedBorderThickness
 	^self nonClientMetrics iPaddedBorderWidth!
+
+printOn: aStream
+	aStream
+		basicPrint: self;
+		nextPut: $(;
+		print: dpi;
+		nextPutAll: ' dpi)'!
+
+resolution
+	^dpi @ dpi!
 
 scrollbarHeight
 	"Answer the height, in pixels, of a horizontal scroll bar."
@@ -378,6 +376,10 @@ scrollbarWidth
 scrollThumbExtent
 	^scrollThumbExtent ifNil: [scrollThumbExtent := self getMetric: SM_CXHTHUMB pair: SM_CYVTHUMB]!
 
+setDpi: anInteger
+	dpi := anInteger.
+	^self!
+
 setSysParamBool: anInteger value: aBoolean
 	^UserLibrary default
 		systemParametersInfo: anInteger
@@ -386,9 +388,8 @@ setSysParamBool: anInteger value: aBoolean
 		fWinIni: 0!
 
 sizingFrameExtent
-	sizingFrameExtent isNil 
-		ifTrue: [sizingFrameExtent := self getMetric: SM_CXSIZEFRAME pair: SM_CYSIZEFRAME].
-	^sizingFrameExtent!
+	^sizingFrameExtent
+		ifNil: [sizingFrameExtent := self getMetric: SM_CXSIZEFRAME pair: SM_CYSIZEFRAME]!
 
 smallIconExtent
 	"Answer a <Point> that gives the dimensions of a small size icon."
@@ -399,6 +400,12 @@ supportsAlphaBlending
 	"Answer whether the host supports alpha blending."
 
 	^true!
+
+tileIconExtent
+	"Answer a <Point> that gives the dimensions of an icon tile."
+
+	#todo.	"Is there a system metric for this?"
+	^tileIconExtent ifNil: [tileIconExtent := self mapDipsToPels: ##(48 @ 48)]!
 
 virtualScreenExtent
 	"Answer the extent of the virtual screen, i.e. including desktops on all monitors"
@@ -413,26 +420,32 @@ virtualScreenOrigin
 virtualScreenRectangle
 	"Answer the rectangle of the virtual screen, i.e. including desktops on all monitors"
 
-	^self virtualScreenOrigin extent: self virtualScreenExtent! !
+	^self virtualScreenOrigin extent: self virtualScreenExtent!
+
+wheelScrollLines
+	^WheelScrollLines
+		ifNil: [WheelScrollLines := self getSysParamDword: SPI_GETWHEELSCROLLLINES ifError: [3]]! !
 
 !SystemMetrics categoriesForMethods!
 borderExtent!constants!public! !
+captionHeight!accessing!public! !
 cursorExtent!constants!public! !
 defaultColorDepth!accessing!public! !
 dialogFrameExtent!constants!public! !
+dpi!accessing!public! !
 dragHysteresis!constants!public! !
 dragImageColorDepth!accessing!private! !
 edgeExtent!constants!public! !
+extraLargeIconExtent!constants!public! !
 getDefaultColorDepth!accessing!helpers!private! !
 getIconTitleFont!geometry!private! !
 getMetric:!helpers!private! !
 getMetric:pair:!helpers!private! !
+getNonClientMetrics!constants!private! !
 getSysParam:type:ifError:!helpers!private! !
 getSysParamBool:!helpers!private! !
-getSysParamDword:!helpers!private! !
-getSysParamSdword:!helpers!private! !
-getSysParamStruct:type:!helpers!private! !
-getSysParamW:type:ifError:!helpers!private! !
+getSysParamDword:ifError:!helpers!private! !
+getSysParamForDpi:type:ifError:!helpers!private! !
 hasButtonNotes!capability enquiries!public! !
 hasDesktopComposition!capability enquiries!public! !
 hasEnhancedThemes!capability enquiries!public! !
@@ -448,9 +461,10 @@ hasThemes!capability enquiries!public! !
 hasTreeViewHotTracking!capability enquiries!public! !
 hasWebView!capability enquiries!public! !
 iconTitleFont!geometry!public! !
-initialize!initializing!private! !
 isSlowMachine!public!testing! !
 largeIconExtent!constants!public! !
+mapDipsToPels:!helpers!public! !
+mapPelsToDips:!geometry!public!utilities! !
 menuBarColor!constants!public! !
 menuBarHeight!constants!public! !
 menuCheckExtent!constants!public! !
@@ -467,25 +481,65 @@ mouseHoverTime!constants!public! !
 nonClientMetrics!constants!public! !
 onSettingChanged:!event handling-win32!private! !
 paddedBorderThickness!constants!public! !
+printOn:!printing!public! !
+resolution!public! !
 scrollbarHeight!constants!public! !
 scrollbarWidth!constants!public! !
 scrollThumbExtent!constants!public! !
+setDpi:!initializing!private! !
 setSysParamBool:value:!helpers!private! !
 sizingFrameExtent!constants!public! !
 smallIconExtent!constants!public! !
 supportsAlphaBlending!capability enquiries!public! !
+tileIconExtent!constants!public! !
 virtualScreenExtent!constants!public! !
 virtualScreenOrigin!constants!public! !
 virtualScreenRectangle!constants!public! !
+wheelScrollLines!constants!public! !
 !
 
 !SystemMetrics class methodsFor!
 
-current
-	"Answer the current instance of the receiver."
+cacheDpiIndependentSettings
+	IsVistaOrLater := VMLibrary default isWindowsVistaOrGreater.
+	IsNotWine := NTLibrary isWine not.
+	"Wine does not support the CommCtrlLibrary>>loadIconWithScaleDown:&c method which is normally available under Vista and later. Hence we don't allow this to be called even if the Windows version indicates Vista is available."
+	HasIconScaleDown := IsVistaOrLater & IsNotWine!
 
-	Current isNil ifTrue: [Current := self basicNew initialize].
-	^Current!
+current
+	"Answer the current instance of the receiver. This provides metrics at the system DPI setting."
+
+	^Current ifNil: [Current := self forDpi: UserLibrary default getDpiForSystem]!
+
+default
+	"Answer an instance of the receiver that returns device-independent metrics (i.e. at 96-dpi)."
+
+	^Default ifNil: [Default := self forDpi: USER_DEFAULT_SCREEN_DPI]!
+
+forDpi: anInteger
+	"Answer an instance of the receiver to query metrics at the specified DPI."
+
+	^(Instances lookup: anInteger)
+		ifNil: 
+			[IsVistaOrLater ifNil: [self cacheDpiIndependentSettings].
+			Instances at: anInteger put: (self basicNew setDpi: anInteger)]!
+
+initialize
+	| sysParamVars |
+	sysParamVars := IdentityDictionary new.
+	{SPI_SETFLATMENU.
+		'HasFlatMenus'.
+		SPI_SETMOUSEHOVERTIME.
+		'MouseHoverTime'.
+		SPI_SETWHEELSCROLLLINES.
+		'WheelScrollLines'}
+			pairsDo: [:setting :varName | sysParamVars at: setting put: (self bindingFor: varName)].
+	self addClassConstant: 'SysParamVariables' value: sysParamVars.
+	self reset.
+	SessionManager current
+		when: #settingChanged:
+		send: #onSettingChanged:
+		to: self!
 
 new
 	^self shouldNotImplement!
@@ -493,10 +547,18 @@ new
 onPreStripImage
 	self reset!
 
+onSettingChanged: anArray
+	"Note that in system high DPI awareness mode, that the screen resolution is not changed for running apps, so we don't need to accommodate that yet"
+
+	Instances do: [:each | each onSettingChanged: anArray].
+	SysParamVariables at: anArray second ifPresent: [:var | var value: nil]!
+
 reset
 	"Reinitialize the receiver. This is done on startup (see UserLibrary class>>clear) or when system settings are changed."
 
-	Current := nil!
+	Default := Current := IsVistaOrLater := IsNotWine := HasIconScaleDown := nil.
+	SysParamVariables do: [:each | each value: nil].
+	Instances := IdentityDictionary new!
 
 uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
@@ -504,9 +566,14 @@ uninitialize
 	self reset! !
 
 !SystemMetrics class categoriesForMethods!
+cacheDpiIndependentSettings!initializing!private! !
 current!instance creation!public! !
+default!instance creation!public! !
+forDpi:!instance creation!public! !
+initialize!class initialization!public! !
 new!instance creation!public! !
 onPreStripImage!event handling!public! !
+onSettingChanged:!event handling-win32!private! !
 reset!initializing!public! !
 uninitialize!class hierarchy-removing!private! !
 !
