@@ -54,3 +54,4 @@ lfs
 *.exe.WebView2
 backup/
 Package backups/
+backup/
