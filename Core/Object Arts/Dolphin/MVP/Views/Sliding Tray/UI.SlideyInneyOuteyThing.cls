@@ -456,7 +456,7 @@ showShell
 	shell := ShellView new
 				create;
 				yourself.
-	shell extent: (shell calcExtentFromClientExtent: self defaultExtent).
+	shell extent: (shell calcExtentFromClientExtent: self creationExtent).
 	shell layoutManager: BorderLayout new.
 	self
 		parentView: shell;

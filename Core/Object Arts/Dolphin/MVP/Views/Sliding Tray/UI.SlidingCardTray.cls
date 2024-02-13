@@ -154,7 +154,7 @@ onViewDestroyed
 	self freeTheme!
 
 openTheme
-	pinSize := Icon smallExtent asParameter.
+	pinSize := self metrics smallIconExtent asParameter.
 	self isThemed
 		ifTrue: 
 			[UxTheme
@@ -274,7 +274,11 @@ queryTogglePin: aCommandQuery
 				beEnabled;
 				isChecked: slider isPinned]!
 
-setSlider: aSlideyInneyOuteyThing
+resolutionScaledBy: aPoint
+	super resolutionScaledBy: aPoint.
+	pinSize := pinSize * aPoint!
+
+setSlider: aSlideyInneyOuteyThing 
 	slider := aSlideyInneyOuteyThing.
 	tabs := slider tabs.
 	pinInteractor := (ButtonInteractor forPresenter: self)
@@ -285,8 +289,8 @@ setSlider: aSlideyInneyOuteyThing
 sizingEdgeInfo
 	| rect frameExtent hit |
 	rect := self screenRectangle.
-	frameExtent := SystemMetrics current sizingFrameExtent.
-	hit := self isVertical
+	frameExtent := self metrics sizingFrameExtent.
+	hit := self isVertical 
 				ifTrue: 
 					[self isInverted
 						ifTrue: 
@@ -399,6 +403,7 @@ pinInset!constants!private! !
 pinRectangle!accessing!private! !
 pinStateId!accessing!private! !
 queryTogglePin:!commands-queries!private! !
+resolutionScaledBy:!geometry!private! !
 setSlider:!initializing!private! !
 sizingEdgeInfo!helpers!private! !
 tabOrientation:!accessing-styles!public! !
