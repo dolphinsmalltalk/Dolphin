@@ -27,7 +27,7 @@ colorsDown
 colorsSize
 	"The size of the square that displays each colour"
 
-	^16!
+	^16 * self dpi // USER_DEFAULT_SCREEN_DPI!
 
 colorTable
 	"Lazily initialize the colour table that the images all use"
@@ -56,7 +56,7 @@ indexOfRGB: anRGB
 margin
 	"The size of the margin surrounding the colour display"
 
-	^4!
+	^4 * self dpi // USER_DEFAULT_SCREEN_DPI!
 
 onLeftButtonPressed: aMouseEvent
 	"Convert the mouse location into a colour and, if not nil, tell any interested parties"

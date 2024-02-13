@@ -17,7 +17,9 @@ HelloWorld show.'!
 !HelloWorld methodsFor!
 
 defaultExtent
-	"Private - Answer the default size of the receiver in device-independent pixels (96-dpi DIPs). This is used only to determine the size of a view when it is created (although after scaling DIPs to the display DPI - see #creationExtent). Thereafter #preferredExtent is used when the desired size of a view is requested."
+	"Private - Answer the default size of the receiver. This is used only to
+	set the size of a view when it is created. Thereafter preferredExtent is
+	used when the desired size of a view is requested."
 
 	^##(400 @ 400)!
 
@@ -31,9 +33,9 @@ helloWorldText
 		with: Character dolphin!
 
 minExtent
-	"Answers the minimum extent for the receiver, in this case 3/4 of the original default size"
+	"Answers the minimum extent for the receiver at its current resolution, in this case 3/4 of the original creation size."
 
-	^self defaultExtent * 3 // 4!
+	^self creationExtent * 3 // 4!
 
 onPaintRequired: aPaintEvent
 	"A portion of the receiver window has been exposed and needs repainting.
