@@ -292,7 +292,7 @@ sbSetTipText: iPart text: lpszToolTip
 		lpParam: lpszToolTip!
 
 scrollbarWidth
-	^SystemMetrics current scrollThumbExtent x!
+	^self metrics scrollThumbExtent x!
 
 setControlBackcolor: aColor 
 	self 

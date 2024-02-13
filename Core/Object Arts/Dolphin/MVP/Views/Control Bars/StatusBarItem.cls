@@ -56,7 +56,7 @@ drawItem: aCanvas bounding: aRectangle
 	possible that the status bar is too small to draw even a 16x16 icon (most likely it is less
 	than 15 pixels high due to a design-time error. In this case draw a 16x16 icon and just let
 	the system truncate it."
-	minHeight := Icon smallExtent y.
+	minHeight := self parentView metrics smallIconExtent y.
 	imageHeight := aRectangle height.
 	imageHeight := imageHeight < minHeight 
 				ifTrue: [minHeight]
