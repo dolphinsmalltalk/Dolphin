@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Object subclass: #ViewState
-	instanceVariableNames: 'view state placement subViewStates'
+	instanceVariableNames: 'view state placement resolution subViewStates'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -24,6 +24,7 @@ recordStateOf: aView forRecreate: aBoolean
 	aBoolean ifTrue: [view setStateRestoring].
 	state := aView state.
 	placement := aView placement.
+	resolution := aView resolution.
 	subViewStates := aView subViews collect: [:each |
 		ViewState recordStateOf: each forRecreate: aBoolean]!
 
@@ -34,7 +35,7 @@ restore
 	view state: state.
 	subViewStates do: [:each | each restore].
 	view
-		placement: placement;
+		basicRestorePlacement: placement resolution: resolution;
 		basicInvalidateLayout;
 		isStateRestoring: false! !
 !ViewState categoriesForMethods!

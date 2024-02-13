@@ -82,6 +82,9 @@ replaceFrom: startInteger to: stopInteger with: aSequencedReadableCollection sta
 		to: stopInteger
 		startingAt: startAtInteger!
 
+stbInFiler
+	^STLInFiler on: self readStream!
+
 storeOn: aStream
 	"Append to the <puttableStream> argument, target, an expression which when 
 	evaluated will answer a collection similar to the receiver."
@@ -106,6 +109,7 @@ printPrefixOn:!printing!private! !
 refersToLiteral:!private!testing! !
 replaceElementsOf:from:to:startingAt:!private!replacing! !
 replaceFrom:to:with:startingAt:!public!replacing! !
+stbInFiler!binary filing!public! !
 storeOn:!printing!public! !
 !
 

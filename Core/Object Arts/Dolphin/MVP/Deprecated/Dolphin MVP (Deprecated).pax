@@ -100,6 +100,7 @@ package methodNames
 	add: #TypeConverter -> #leftExceptionalValue:;
 	add: #TypeConverter -> #rightExceptionalValue;
 	add: #TypeConverter -> #rightExceptionalValue:;
+	add: #UserLibrary -> #adjustWindowRectEx:dwStyle:bMenu:dwExStyle:;
 	add: #UserLibrary -> #winHelp:lpszHelp:uCommand:dwData:;
 	add: #View -> #defaultWindowProcessing:;
 	add: #View -> #hasWindowEdge;
@@ -118,6 +119,7 @@ package methodNames
 	add: 'Color class' -> #buttonFace;
 	add: 'ListPresenter class' -> #resource_Multiselection_enhanced_list_view;
 	add: 'ListPresenter class' -> #resource_Multiselection_list_box;
+	add: 'MouseTracker class' -> #defaultHysteresis;
 	add: 'PaintEvent class' -> #handle:wParam:hdc:paintStruct:;
 	add: 'RGB class' -> #stdColor:;
 	add: 'ScintillaIndicatorStyle class' -> #styleNames;
@@ -638,6 +640,17 @@ updateItem: element andChildren: andChildren imagesOnly: aBoolean
 updateItem:andChildren:imagesOnly:!painting!public! !
 !
 
+!MouseTracker class methodsFor!
+
+defaultHysteresis
+	"Answer the default distance in pixels that the mouse must move before a tracking operation is actually started"
+
+	#deprecated.
+	^SystemMetrics current dragHysteresis! !
+!MouseTracker class categoriesForMethods!
+defaultHysteresis!constants!public! !
+!
+
 !PaintEvent class methodsFor!
 
 handle: hWnd wParam: wParam hdc: hdc paintStruct: ps
@@ -1017,6 +1030,11 @@ rightExceptionalValue:!accessing!public! !
 
 !UserLibrary methodsFor!
 
+adjustWindowRectEx: rect dwStyle: styleFlags bMenu: menuPresent dwExStyle: exStyleFlags
+	<stdcall: bool AdjustWindowRectEx RECT* dword bool dword>
+	#deprecated. "Not DPI aware"
+	^self invalidCall: _failureCode!
+
 winHelp: hwndMain lpszHelp: lpszHelp uCommand: uCommand dwData: dwData
 	"Invoke the WinHelp() function of the module wrapped by the receiver.
 	Helpstring: Starts windows help and passes a request for help
@@ -1030,6 +1048,7 @@ winHelp: hwndMain lpszHelp: lpszHelp uCommand: uCommand dwData: dwData
 	<stdcall: bool WinHelpA handle lpstr dword uintptr>
 	^self invalidCall: _failureCode! !
 !UserLibrary categoriesForMethods!
+adjustWindowRectEx:dwStyle:bMenu:dwExStyle:!public!win32 functions-coordinate space and transformation! !
 winHelp:lpszHelp:uCommand:dwData:!**auto generated**!public! !
 !
 
