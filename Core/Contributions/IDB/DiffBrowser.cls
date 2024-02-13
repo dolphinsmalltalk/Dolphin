@@ -41,7 +41,7 @@ about: aString
 		hasMinimize: false;
 		isResizable: false;
 		position: self view position + self view cursorPosition;
-		extent: 200 @ 180;
+		dipExtent: 200 @ 180;
 		caption: 'About';
 		addSubView: (edit := MultilineTextEdit new);
 		show.

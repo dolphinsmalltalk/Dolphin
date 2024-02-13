@@ -151,7 +151,7 @@ locationDescription
 margin
 	"Answer the size of the margin added to the outsides of the image display"
 
-	^8!
+	^8 * self dpi // USER_DEFAULT_SCREEN_DPI!
 
 onImageChanged: aRectangleOrNil
 	"The model has changed one or more of the pixels contained within aRectangle.
@@ -193,10 +193,6 @@ onMouseMoved: aMouseEvent
 			self presenter trigger: #locationDescriptionChanged.
 			aMouseEvent isLButtonDown ifTrue: [self onLeftButtonPressed: aMouseEvent]]!
 
-onMouseWheel: aMouseEvent
-	self parentView parentView scroll: aMouseEvent wheelDirection
-		toNextIn: ((1 to: self model height) collect: [:each | each * (zoom - 1) + self margin])!
-
 onPaintRequired: aPaintEvent
 	"Redraw the receiver using the current model. If the image is not zoomed then 
 	we just draw the bitmap that the model maintains, otherwise we have to paint 
@@ -230,7 +226,7 @@ preferredExtent
 	factor and the margin allowed around all four edges. If this answers the correct
 	size then the parent view, a ScrollingDecorator, can set its scroll bars correctly"
 
-	self model isNil ifTrue: [^10 @ 10].
+	self model isNil ifTrue: [^10 @ 10 * self dpi // USER_DEFAULT_SCREEN_DPI].
 	^self model extent * (zoom - 1) + (self margin * 2)!
 
 showZone
@@ -355,7 +351,6 @@ onImageChanged:!event handling!public! !
 onLeftButtonPressed:!event handling!public! !
 onMiddleButtonPressed:!event handling!public! !
 onMouseMoved:!event handling!public! !
-onMouseWheel:!event handling!public! !
 onPaintRequired:!event handling!public! !
 onRightButtonPressed:!event handling!public! !
 preferredExtent!geometry!public! !
