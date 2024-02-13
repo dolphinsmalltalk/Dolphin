@@ -85,7 +85,7 @@ showWindow
 !Tools.DolphinSplash categoriesForMethods!
 animationDuration!constants!private! !
 creationExtent!geometry!private!realizing/unrealizing! !
-defaultExtent!constants!public! !
+defaultExtent!constants!private! !
 defaultSplashDelay!constants!public! !
 defaultWindowStyle!constants!private! !
 give256ColorDisplayWarning!operations!private! !
@@ -103,9 +103,10 @@ canDisplay
 	"Displays of less than 800x600 resolution or with a palette cannot correctly display the Dolphin
 	splash bitmap. Also Win95/NT can't do the alpha blending thing."
 
-	| desktopCanvas |
-	desktopCanvas := Canvas forDesktop.
-	^desktopCanvas colorDepth > 8 and: [desktopCanvas extent >= (800 @ 600)]!
+	| metrics |
+	metrics := OS.SystemMetrics current.
+	^(metrics defaultColorDepth > 8 and: [DisplayMonitor active rectangle extent >= ##(800 @ 600)])
+		and: [metrics supportsAlphaBlending]!
 
 publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."

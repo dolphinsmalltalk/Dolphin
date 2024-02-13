@@ -58,7 +58,7 @@ height
 	height := ByteArray newFixed: 4.
 	Gdip
 		gdipGetFontHeightGivenDPI: self handle
-		dpi: UI.DesktopView current resolution y
+		dpi: SystemMetrics current dpi
 		height: height.
 	^height floatAtOffset: 0!
 
