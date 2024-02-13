@@ -37,9 +37,7 @@ Toolbar holds a list of `<ToolbarItem>` items matching the order of items in the
 !UI.Toolbar methodsFor!
 
 actualBitmapSize
-	"Answer the size of bitmaps shown on the toolbar. This can be visually inherited from a
-	parent toolbar, which is useful in allowing the bitmap size to be changed just by changing
-	that of the topmost toolbar."
+	"Answer the device-independent (aka DIPs, or 96-dpi)  of bitmaps shown on the toolbar. This can be visually inherited from a parent toolbar, which is useful in allowing the bitmap size to be changed just by changing that of the topmost toolbar."
 
 	^bitmapSize
 		ifNil: 
@@ -100,19 +98,16 @@ addString: aString
 	^self tbAddString: aString!
 
 addSystemBitmap: systemBitmapId index: anIntegerIndex
-	"Private - Add the system defined sub-bitmap identified by anIntegerIndex within
-	the bitmap identified by systemBitmapId"
+	"Private - Add the system defined sub-bitmap identified by anIntegerIndex within the bitmap identified by systemBitmapId"
 
 	| start |
+	#highDpiTodo. "System bitmaps don't work. Gets loaded directly into the image list without rescaling."
 	start := bitmapsStart at: systemBitmapId
 				ifAbsentPutClean: 
 					[self
-						sendMessage: TB_ADDBITMAP
-						wParam: 0
-						lpParam: (TBADDBITMAP newBuffer
-								hInst: HINST_COMMCTRL;
-								nID: systemBitmapId;
-								yourself)].
+						sendMessage: TB_LOADIMAGES
+						wParam: systemBitmapId
+						lParam: HINST_COMMCTRL].
 	^start + anIntegerIndex!
 
 applyFont
@@ -164,35 +159,32 @@ basicAddItems: tools
 	^tools!
 
 bitmapSize
-	"Answer the size of bitmaps shown on the toolbar"
+	"Answer the device-independent (aka DIPs, or 96-dpi) size of bitmaps shown on the toolbar."
 
 	^bitmapSize!
 
 bitmapSize: aPoint
-	"Set the size of bitmaps shown on the toolbar to aPoint"
+	"Set the device-independent (aka DIPs, or 96-dpi) size of bitmaps shown on the toolbar to the <Point> argument."
 
 	bitmapSize = aPoint ifTrue: [^self].
 	bitmapSize := aPoint.
 	buttonSize
 		ifNil: 
-			["The Toolbar has a bug whereby it doesn't update its metrics correctly if
-			the bitmap size is changed - the default button size is generally too large,
-			especially if switching to a smaller size. Therefore we recreate the control."
+			["The Toolbar has a bug whereby it doesn't update its metrics correctly if the bitmap size is changed - the default button size is generally too large, especially if switching to a smaller size. Therefore we recreate the control."
 			self recreate]
 		ifNotNil: [self updateAllItems]!
 
 buttonSize
-	"Answer the size of buttons shown on the toolbar"
+	"Answer the device-independent (aka DIPs, or 96-dpi) size of buttons shown on the toolbar"
 
-	^buttonSize ifNil: [self isOpen ifTrue: [self tbGetButtonSize]]!
+	^buttonSize ifNil: [self isOpen ifTrue: [self mapPelsToDips: self tbGetButtonSize]]!
 
 buttonSize: aPointOrNil
-	"Set the size of buttons shown on the toolbar to aPointOrNil. If nil then the buttons assume
-	a default size, which is the preferred option for normal use."
+	"Set the device-independent (aka DIPs, or 96-dpi) size of buttons shown on the toolbar to aPointOrNil. If nil then the buttons assume a default size, which is the preferred option for normal use."
 
 	buttonSize = aPointOrNil ifTrue: [^self].
 	buttonSize := aPointOrNil.
-	self updateAllItems.!
+	self updateAllItems!
 
 calculateExtent: aLayoutContext
 	"Private - Answer an extent for the receiver within the specified <LayoutContext>."
@@ -236,7 +228,7 @@ canCustomize: aBoolean
 		set: aBoolean
 		recreateIfChanged: false!
 
-changeButtonSize: aNiladicBlock 
+changeButtonSize: aNiladicBlock
 	"Private - Apply an operation that affects the button geometry of the toolbar, requiring
 	that it recalculates its layout. Due to a bug in the common controls DLL if we want to
 	maintain a consistent border width (of zero) between flat and non-flat styles we must turn
@@ -244,10 +236,10 @@ changeButtonSize: aNiladicBlock
 
 	| style |
 	style := self getWindowStyle.
-	(style allMask: TBSTYLE_FLAT) ifTrue: [^aNiladicBlock value].
+	(style allMask: TBSTYLE_FLAT) ifTrue: [^aNiladicBlock value: self dpi / USER_DEFAULT_SCREEN_DPI].
 	^
 	[self setWindowStyle: (style bitOr: ##(TBSTYLE_FLAT | TBSTYLE_TRANSPARENT)).
-	aNiladicBlock value] 
+	aNiladicBlock value: self dpi / USER_DEFAULT_SCREEN_DPI]
 			ensure: [self setWindowStyle: style]!
 
 clearIdMap
@@ -269,7 +261,7 @@ commandSource
 	^self topShell commandSource!
 
 defaultBitmapSize
-	"Private - Answer a default size for bitmaps in the receiver"
+	"Private - Answer a default DIPs size (i.e. 96-dpi) for bitmaps in the receiver."
 
 	^16 @ 16!
 
@@ -579,7 +571,7 @@ onViewCreated
 		wParam: TBBUTTON._TBBUTTON_Size
 		lParam: 0.
 	bitmapsStart := LookupTable new.
-	self changeButtonSize: [self tbSetBitmapSize: self actualBitmapSize].
+	self changeButtonSize: [:scale | self tbSetBitmapSize: self actualBitmapSize * scale].
 	self tbSetExtendedStyle: ##(TBSTYLE_EX_DRAWDDARROWS | TBSTYLE_EX_DOUBLEBUFFER).
 	self clearIdMap.
 	self indent == 0 ifFalse: [self tbSetIndent: self indent].
@@ -604,6 +596,11 @@ removeItem: aToolbarItem
 	self tbDeleteButton: index - 1.
 	^aToolbarItem!
 
+scaledBitmapSize
+	"Answer the actual size of bitmaps shown on the toolbar at its current resolution."
+
+	^self mapDipsToPels: self actualBitmapSize!
+
 size
 	"Answer the number of ToolbarItems in the receiver."
 
@@ -614,7 +611,7 @@ tbAddBitmap: aBitmap
 	gdiBitmap := aBitmap asBitmap.
 	gdiBitmap setMap3DColors: true.
 	"If the extent reported by the bitmap is not correct, then the start index will be out, so watch out for caching duff old extent (see Bitmap>>loadFromInstance)."
-	size := gdiBitmap extent x // self actualBitmapSize x.
+	size := gdiBitmap extent x // self scaledBitmapSize x.
 
 	"#305 We must make sure that the bitmap is not selected into a DC or the result will be a blank image in the list. This won't damage the bitmap in any way because the canvas can always be lazily recreated."
 	gdiBitmap freeDC.
@@ -959,8 +956,9 @@ updateSize
 
 	self isOpen ifFalse: [^self].
 	self changeButtonSize: 
-			[buttonSize ifNotNil: [self tbSetButtonSize: buttonSize].
-			self tbSetBitmapSize: self actualBitmapSize].
+			[:scale |
+			buttonSize ifNotNil: [self tbSetButtonSize: buttonSize * scale].
+			self tbSetBitmapSize: self actualBitmapSize * scale].
 	self tbAutoSize!
 
 updateSizePosted
@@ -1067,6 +1065,7 @@ onStateRestored!binary filing!private! !
 onViewCreated!event handling!public! !
 removeAllItems!public!removing! !
 removeItem:!public!removing! !
+scaledBitmapSize!geometry!public! !
 size!geometry!public! !
 tbAddBitmap:!helpers!private! !
 tbAddString:!adding!private! !
