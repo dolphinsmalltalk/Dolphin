@@ -2,7 +2,7 @@
 
 Core.Object
 	subclass: #'UI.ViewState'
-	instanceVariableNames: 'view state placement subViewStates'
+	instanceVariableNames: 'view state placement resolution subViewStates'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -31,8 +31,9 @@ recordStateOf: aView forRecreate: aBoolean
 	state := aView state.
 	state freeze.
 	placement := aView placement.
-	subViewStates := aView subViews
-				collect: [:each | ViewState recordStateOf: each forRecreate: aBoolean]!
+	resolution := aView resolution.
+	subViewStates := aView subViews collect: [:each |
+		ViewState recordStateOf: each forRecreate: aBoolean]!
 
 restore
 	"Restore the receiver's view to its former glory"
@@ -41,9 +42,9 @@ restore
 	view state: state.
 	subViewStates do: [:each | each restore].
 	view
-		placement: placement;
-		basicInvalidateLayout.
-	view resetStateRestoring! !
+		basicRestorePlacement: placement resolution: resolution;
+		basicInvalidateLayout;
+		isStateRestoring: false! !
 
 !UI.ViewState categoriesForMethods!
 recordStateOf:forRecreate:!initializing!private! !

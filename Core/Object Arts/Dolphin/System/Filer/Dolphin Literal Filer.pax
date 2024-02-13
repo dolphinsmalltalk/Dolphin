@@ -15,6 +15,7 @@ package setClassNames: #(
 ).
 
 package setMethodNames: #(
+	#(#{Core.Array} #stbInFiler)
 	#(#{Core.Object class} #fromLiteralStoreArray:)
 	#(#{Core.Object class} #fromLiteralStoreArray:context:)
 	#(#{Core.Object class} #literalReadFrom:)
@@ -39,6 +40,15 @@ Kernel.STxInFiler
 	classConstants: { 'Signature' -> #'!!STL' }!
 
 "Loose Methods"!
+
+!Core.Array methodsFor!
+
+stbInFiler
+	^STLInFiler on: self readStream! !
+
+!Core.Array categoriesForMethods!
+stbInFiler!binary filing!public! !
+!
 
 !Core.Object class methodsFor!
 

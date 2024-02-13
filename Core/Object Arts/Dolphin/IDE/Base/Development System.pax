@@ -10444,15 +10444,10 @@ aspectDisplayOn: aStream
 loadViewResource: aResourceArray forEdit: isLoadingForEdit
 	"Add an instance of the resource held in aResourceArray. Answer the new view."
 
-	| stream filerClass |
-	filerClass := (aResourceArray isKindOf: ByteArray) ifTrue: [STBInFiler] ifFalse: [STLInFiler].
-	stream := aResourceArray readStream.
-	^
-	[(filerClass on: stream)
+	^aResourceArray stbInFiler
 		isUpgrading: isLoadingForEdit;
 		context: self;
-		next]
-			ensure: [stream close]!
+		next!
 
 publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by the receiver."

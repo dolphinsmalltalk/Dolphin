@@ -55,7 +55,7 @@ initialize
 	"Initialise the receiver."
 
 	super initialize.
-	resolution := Canvas desktopResolution!
+	resolution := SystemMetrics current resolution!
 
 isBold
 	"Answer whether the receiver is bold."
@@ -150,6 +150,12 @@ resolution: aPoint
 	self pointSize: ptSize] 
 			ifCurtailed: [resolution := oldres]!
 
+setLogFont: aLOGFONT resolution: aPoint
+	ownsHandle := true.
+	logfont := aLOGFONT.
+	resolution := aPoint.
+	^self!
+
 species
 	^Font!
 
@@ -187,6 +193,7 @@ pointSize:!accessing!public! !
 postCopy!copying!public! !
 resolution!accessing!public! !
 resolution:!accessing!public! !
+setLogFont:resolution:!initializing!private! !
 species!public! !
 unstyledCopy!copying!public! !
 weight!accessing!public! !
@@ -215,7 +222,12 @@ fromId: anInteger
 fromLogFont: aLOGFONT
 	"Answer a new instance of the receiver with specified logical attributes."
 
-	^Font new setLogFont: aLOGFONT!
+	^self fromLogFont: aLOGFONT resolution: SystemMetrics current resolution!
+
+fromLogFont: aLOGFONT resolution: aPoint
+	"Answer a new instance of the receiver with specified logical attributes."
+
+	^self basicNew setLogFont: aLOGFONT resolution: aPoint!
 
 icon
 	"Answers an Icon that can be used to represent this class"

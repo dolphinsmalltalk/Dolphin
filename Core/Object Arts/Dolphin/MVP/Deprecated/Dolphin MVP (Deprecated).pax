@@ -109,6 +109,7 @@ package methodNames
 	add: #TypeConverter -> #leftExceptionalValue:;
 	add: #TypeConverter -> #rightExceptionalValue;
 	add: #TypeConverter -> #rightExceptionalValue:;
+	add: #UserLibrary -> #adjustWindowRectEx:dwStyle:bMenu:dwExStyle:;
 	add: #UserLibrary -> #winHelp:lpszHelp:uCommand:dwData:;
 	add: #View -> #defaultWindowProcessing:;
 	add: #View -> #winHelpPopup:topic:;
@@ -1164,6 +1165,11 @@ rightExceptionalValue:!accessing!public! !
 
 !UserLibrary methodsFor!
 
+adjustWindowRectEx: rect dwStyle: styleFlags bMenu: menuPresent dwExStyle: exStyleFlags
+	<stdcall: bool AdjustWindowRectEx RECT* dword bool dword>
+	#deprecated. "Not DPI aware"
+	^self invalidCall: _failureCode!
+
 winHelp: hwndMain lpszHelp: lpszHelp uCommand: uCommand dwData: dwData
 	"Invoke the WinHelp() function of the module wrapped by the receiver.
 	Helpstring: Starts windows help and passes a request for help
@@ -1178,6 +1184,7 @@ winHelp: hwndMain lpszHelp: lpszHelp uCommand: uCommand dwData: dwData
 	^self invalidCall: _failureCode! !
 
 !UserLibrary categoriesForMethods!
+adjustWindowRectEx:dwStyle:bMenu:dwExStyle:!public!win32 functions-coordinate space and transformation! !
 winHelp:lpszHelp:uCommand:dwData:!**auto generated**!public! !
 !
 

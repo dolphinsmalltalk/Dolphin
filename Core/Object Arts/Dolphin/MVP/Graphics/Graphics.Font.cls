@@ -129,10 +129,6 @@ printOn: aStream
 				separatedBy: [aStream nextPut: $;].
 			aStream nextPut: $)]!
 
-setLogFont: aLOGFONT
-	logfont := aLOGFONT.
-	^self!
-
 weight: anInteger 
 	"Set the receiver's 'weight' (thickness)."
 
@@ -156,7 +152,6 @@ logFont:!accessing!public! !
 name:!accessing!public! !
 pixelSize:!accessing!public! !
 printOn:!development!printing!public! !
-setLogFont:!initializing!private! !
 weight:!accessing!public! !
 !
 

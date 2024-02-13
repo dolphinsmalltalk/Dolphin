@@ -13,6 +13,7 @@ package setClassNames: #(
 ).
 
 package setMethodNames: #(
+	#(#{Core.ByteArray} #stbInFiler)
 	#(#{Core.ByteArray} #stbSaveOn:)
 	#(#{Core.ByteArray class} #stbReadFrom:format:size:)
 	#(#{Core.Class} #stbSaveOn:)
@@ -59,12 +60,16 @@ Kernel.STxOutFiler
 
 !Core.ByteArray methodsFor!
 
+stbInFiler
+	^STBInFiler on: self readStream!
+
 stbSaveOn: anSTxOutFiler
 	"Save out a serialised representation of the receiver to anSTxOutFiler."
 
 	anSTxOutFiler saveByteArray: self! !
 
 !Core.ByteArray categoriesForMethods!
+stbInFiler!binary filing!public! !
 stbSaveOn:!binary filing!public! !
 !
 

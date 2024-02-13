@@ -158,7 +158,7 @@ package setMethodNames: #(
 	#(#{OS.CommCtrlLibrary class} #sharedVariableName)
 	#(#{OS.KernelLibrary} #getConsoleWindow)
 	#(#{OS.SystemMetrics} #menuBarColor)
-	#(#{OS.UserLibrary} #adjustWindowRectEx:dwStyle:bMenu:dwExStyle:)
+	#(#{OS.UserLibrary} #adjustWindowRectExForDpi:dwStyle:bMenu:dwExStyle:dpi:)
 	#(#{OS.UserLibrary} #animateWindow:dwTime:dwFlags:)
 	#(#{OS.UserLibrary} #attachThreadInput:idAttachTo:fAttach:)
 	#(#{OS.UserLibrary} #beginDeferWindowPos:)
@@ -279,6 +279,7 @@ package setMethodNames: #(
 	#(#{OS.UserLibrary} #setWindowULong:nIndex:dwNewLong:)
 	#(#{OS.UserLibrary} #setWindowULongPtr:nIndex:dwNewLong:)
 	#(#{OS.UserLibrary} #systemParametersInfo:uiParam:pvParam:fWinIni:)
+	#(#{OS.UserLibrary} #systemParametersInfoForDpi:uiParam:pvParam:fWinIni:dpi:)
 	#(#{OS.UserLibrary} #trackMouseEvent:)
 	#(#{OS.UserLibrary} #trackPopupMenu:uFlags:x:y:nReserved:hWnd:prcRect:)
 	#(#{OS.UserLibrary} #translateAccelerator:haccl:lpmsg:)
@@ -1492,7 +1493,7 @@ Core.Object
 
 Core.Object
 	subclass: #'UI.ViewState'
-	instanceVariableNames: 'view state placement subViewStates'
+	instanceVariableNames: 'view state placement resolution subViewStates'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -2555,19 +2556,18 @@ menuBarColor!constants!public! !
 
 !OS.UserLibrary methodsFor!
 
-adjustWindowRectEx: rect dwStyle: styleFlags bMenu: menuPresent dwExStyle: exStyleFlags
-	"Calculates the required size of the rectangle of a window with extended style based 
-	on the desired client-rectangle size. The window rectangle can then be passed to the 
-	CreateWindowEx function to create a window whose client area is the desired size. 
+adjustWindowRectExForDpi: rect dwStyle: styleFlags bMenu: menuPresent dwExStyle: exStyleFlags dpi: dpi
+	"Calculates the required size of the rectangle of a window with extended style based on the desired client-rectangle size. The window rectangle can then be passed to the CreateWindowEx function to create a window whose client area is the desired size. 
 
-	BOOL AdjustWindowRectEx(
+	BOOL AdjustWindowRectExForDpi(
 		LPRECT lpRect,		// pointer to client-rectangle structure
 		DWORD dwStyle,		// window styles
 		BOOL bMenu,		// menu-present flag
-		DWORD dwExStyle 	// extended style
+		DWORD dwExStyle,	// extended style
+		UINT dpi
 		);"
 
-	<stdcall: bool AdjustWindowRectEx RECTL* uint32 bool uint32>
+	<stdcall: bool AdjustWindowRectExForDpi RECTL* uint32 bool uint32 uint32>
 	^self invalidCall: _failureCode!
 
 animateWindow: hwnd dwTime: dwTime dwFlags: dwFlags
@@ -3835,6 +3835,19 @@ systemParametersInfo: uiAction uiParam: param1 pvParam: param2 fWinIni: update
 	<stdcall: bool SystemParametersInfoW uint32 uint32 lpvoid uint32>
 	^self invalidCall: _failureCode!
 
+systemParametersInfoForDpi: uiAction uiParam: param1 pvParam: param2 fWinIni: update dpi: dpi
+	"
+	BOOL SystemParametersInfoForDpi(
+		UINT uiAction,	// system parameter to query or set
+		UINT uiParam,	// depends on action to be taken
+		PVOID pvParam,	// depends on action to be taken
+		UINT fWinIni, 	// user profile update flag
+		UINT dpi
+	);"
+
+	<stdcall: bool SystemParametersInfoForDpi dword dword lpvoid dword dword>
+	^self invalidCall: _failureCode!
+
 trackMouseEvent: lpEventTrack
 	"Invoke the TRACKMOUSEEVENT() function of the module wrapped by the receiver.
 	Helpstring: Posts messages when the mouse pointer leaves a window or hovers over a window for a specified amount of time.
@@ -3924,7 +3937,7 @@ windowFromPoint: aPOINTL
 	^self invalidCall: _failureCode! !
 
 !OS.UserLibrary categoriesForMethods!
-adjustWindowRectEx:dwStyle:bMenu:dwExStyle:!public!win32 functions-coordinate space and transformation! !
+adjustWindowRectExForDpi:dwStyle:bMenu:dwExStyle:dpi:!public!win32 functions-coordinate space and transformation! !
 animateWindow:dwTime:dwFlags:!**auto generated**!public! !
 attachThreadInput:idAttachTo:fAttach:!public!win32 functions-message and message queue! !
 beginDeferWindowPos:!**auto generated**!public! !
@@ -4045,6 +4058,7 @@ setWindowPos:hWndInsertAfter:x:y:cx:cy:uFlags:!public!win32 functions-window! !
 setWindowULong:nIndex:dwNewLong:!public!win32 functions-window class! !
 setWindowULongPtr:nIndex:dwNewLong:!public!win32 functions-window class! !
 systemParametersInfo:uiParam:pvParam:fWinIni:!public!win32 functions-string manipulation! !
+systemParametersInfoForDpi:uiParam:pvParam:fWinIni:dpi:!public!win32 functions-string manipulation! !
 trackMouseEvent:!public!win32 functions-mouse input! !
 trackPopupMenu:uFlags:x:y:nReserved:hWnd:prcRect:!public!win32 functions-menu! !
 translateAccelerator:haccl:lpmsg:!public!win32 functions-keyboard accelerator! !
