@@ -18,7 +18,7 @@ _buttonExtent
 
 	| size | 
 
-	self isThemed ifFalse: [^(UserLibrary default getSystemMetrics: SM_CXMENUCHECK)@(UserLibrary default getSystemMetrics: SM_CYMENUCHECK)].
+	self isThemed ifFalse: [^self metrics menuCheckExtent].
 
 	size := SIZE new.
 	ThemeLibrary default getThemePartSize: self theme hdc: self canvas asParameter iPartId: self iPartId iStateId: self defaultIStateId prc: nil eSize: TS_DRAW psz: size.

@@ -156,7 +156,7 @@ helpId
 iconTitleFont
 	"Answer a <Font> which is that used for icon titles on the desktop."
 
-	^SystemMetrics current iconTitleFont!
+	^self metrics iconTitleFont!
 
 invalidateLayout
 	"Nothing to do."
@@ -328,7 +328,7 @@ workArea
 	"Answer a <Rectangle> which is the desktop area excluding that 
 	occupied by the tool bar."
 
-	^(SystemMetrics current getSysParamStruct: SPI_GETWORKAREA type: RECTL) asRectangle! !
+	^DisplayMonitor primary workArea! !
 
 !UI.DesktopView categoriesForMethods!
 actualFont!accessing!private! !

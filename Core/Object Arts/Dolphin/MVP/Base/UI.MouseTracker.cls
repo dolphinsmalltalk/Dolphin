@@ -207,7 +207,7 @@ origin: aPoint
 setPresenter: aPresenter
 	super setPresenter: aPresenter.
 	self origin: Point new.
-	hysteresis := self class defaultHysteresis.
+	hysteresis := aPresenter view metrics dragHysteresis.
 	stateFlags := 0.
 	dragButton := #left!
 
@@ -322,12 +322,6 @@ trackPositionDelta:!accessing!private! !
 
 !UI.MouseTracker class methodsFor!
 
-defaultHysteresis
-	"Answer the default distance in pixels that the mouse must move before 
-	a tracking operation is actually started"
-
-	^SystemMetrics current dragHysteresis!
-
 forPresenter: aPresenter startingAt: aPoint 
 	"Answers an instance of the receiver for tracking the mouse from aPoint
 	in screen coordinates"
@@ -342,7 +336,6 @@ icon
 	^##(self) defaultIcon! !
 
 !UI.MouseTracker class categoriesForMethods!
-defaultHysteresis!constants!public! !
 forPresenter:startingAt:!instance creation!public! !
 icon!constants!public! !
 !

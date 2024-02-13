@@ -30,8 +30,7 @@ applyPreferredExtent
 	absolute maximum extent to which the receiver can later be resized by the user is given by
 	the #maxExtent."
 
-	| maxExtentToUse preferredClientExtent actualExtentToUse screenRectangle insets aspectView |
-	maxExtentToUse := self view extent.
+	| preferredClientExtent actualExtentToUse screenRectangle inset insets aspectView |
 	aspectView := aspectPresenterInDialog view.
 	preferredClientExtent := aspectView calculateExtent.
 	self isSingleLineValueWorkspace
@@ -40,12 +39,14 @@ applyPreferredExtent
 			preferredClientExtent y: preferredClientExtent y - (aspectView lineHeight: 1)].
 	preferredClientExtent x: (preferredClientExtent x max: aspectRectangle width).
 
-	"Workout if we need to inset our aspect presenter"
-	insets := 2 @ 0 corner: 2 @ 2.
+	"Inset our aspect presenter a little"
+	inset := self view mapDipsToPels: 2.
+	insets := inset @ 0 corner: inset @ inset.
 	hookPresenter view insets: insets.
 
 	"Now ask for the ideal extent and map to the desktop"
-	actualExtentToUse := maxExtentToUse min: preferredClientExtent + insets topLeft + insets bottomRight.
+	actualExtentToUse := self view extent
+				min: preferredClientExtent + insets topLeft + insets bottomRight.
 	screenRectangle := self view
 				calcRectangleFromClientRectangle: (aspectRectangle topLeft extent: actualExtentToUse).
 
@@ -55,7 +56,6 @@ applyPreferredExtent
 
 	"Once we're done we can decide where to position the buttons"
 	self arrangeToolbarButtons.
-
 	self view ensureLayoutValid.
 	"Looks nicer without borders in small dialogs"
 	self isSingleLine ifTrue: [self removeBordersFromAspectPresenter]!

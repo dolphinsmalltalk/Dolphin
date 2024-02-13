@@ -124,6 +124,7 @@ package methodNames
 	add: 'ImageList class' -> #width:height:flags:size:growthGranularity:;
 	add: 'ListPresenter class' -> #resource_Multiselection_enhanced_list_view;
 	add: 'ListPresenter class' -> #resource_Multiselection_list_box;
+	add: 'MouseTracker class' -> #defaultHysteresis;
 	add: 'PaintEvent class' -> #handle:wParam:hdc:paintStruct:;
 	add: 'Presenter class' -> #addCommandQueryHandler:;
 	add: 'Presenter class' -> #removeCommandQueryHandler:;
@@ -778,6 +779,18 @@ updateItem: element andChildren: andChildren imagesOnly: aBoolean
 
 !MoenTreeView categoriesForMethods!
 updateItem:andChildren:imagesOnly:!painting!public! !
+!
+
+!MouseTracker class methodsFor!
+
+defaultHysteresis
+	"Answer the default distance in pixels that the mouse must move before a tracking operation is actually started"
+
+	#deprecated.
+	^SystemMetrics current dragHysteresis! !
+
+!MouseTracker class categoriesForMethods!
+defaultHysteresis!constants!public! !
 !
 
 !PaintEvent class methodsFor!
