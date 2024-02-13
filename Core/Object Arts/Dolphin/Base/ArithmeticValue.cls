@@ -106,22 +106,6 @@ addToInteger: anInteger
 
 	^anInteger retry: #+ coercing: self!
 
-addToPoint: aPoint
-	"Private - Answer the result of adding the receiver to the known Point, aPoint, by coercing 
-	the less general of it and the receiver. Overridden by subclasses which can implement 
-	more efficiently."
-
-	^aPoint retry: #+ coercing: self
-!
-
-addToPoint3D: aPoint3D
-	"Private - Answer the result of adding the receiver to the known Point3D, aPoint3D, by coercing 
-	the less general of it and the receiver. Overridden by subclasses which can implement 
-	more efficiently."
-
-	^aPoint3D retry: #+ coercing: self
-!
-
 addToScaledDecimal: operand
 	"Private - Answer the result of adding the receiver to the known <ScaledDecimal>, operand."
 
@@ -164,20 +148,6 @@ divideIntoInteger: anInteger
 
 	^anInteger retry: #/ coercing: self!
 
-divideIntoPoint: aPoint
-	"Private - Answer the result of dividing the receiver into the known Point, aPoint, by 
-	coercing the less general of it and the receiver. Overridden by subclasses which 
-	can implement more efficiently."
-
-	^aPoint retry: #/ coercing: self!
-
-divideIntoPoint3D: aPoint3D
-	"Private - Answer the result of dividing the receiver into the known Point3D, aPoint3D, by 
-	coercing the less general of it and the receiver. Overridden by subclasses which 
-	can implement more efficiently."
-
-	^aPoint3D retry: #/ coercing: self!
-
 divideIntoScaledDecimal: operand
 	"Private - Answer the result of dividing the known <ScaledDecimal>, operand, by the receiver."
 
@@ -211,29 +181,48 @@ floor
 
 	^self // 1!
 
+fractionPart
+	"Answer a <number> of the same type as the receiver, representing the fractional part of  the receiver."
+
+	^self - self truncated!
+
 generality
 	"Private - Answer the Smalltalk generality of the receiver, used for performing type conversions"
 
 	^self subclassResponsibility!
 
+greaterOrEqualToFloat: aFloat
+	"Private - Answer whether the receiver is greater than or equal to the known <Float> argument, by coercing the less general of it and the receiver."
+
+	^aFloat retry: #<= coercing: self!
+
+greaterOrEqualToFraction: aFraction
+	"Private - Answer whether the receiver is greater than or equal to the known <Fraction> argument, by coercing the less general of it and the receiver."
+
+	^aFraction retry: #<= coercing: self!
+
+greaterOrEqualToInteger: anInteger
+	"Private - Answer whether the receiver is greater than or equal to the known <integer> argument, by coercing the less general of it and the receiver. "
+
+	^anInteger retry: #<= coercing: self!
+
+greaterOrEqualToScaledDecimal: aScaledDecimal
+	"Private - Answer whether the receiver is greater than or equal to the known <ScaledDecimal> argument."
+
+	^aScaledDecimal retry: #<= coercing: self!
+
 greaterThanFloat: aFloat
-	"Private - Answer whether the receiver is greater than the known Float, aFloat, by coercing 
-	the less general of it and the receiver. Overridden by subclasses which can implement 
-	more efficiently."
+	"Private - Answer whether the receiver is greater than the known Float, aFloat, by coercing the less general of it and the receiver."
 
 	^aFloat retry: #< coercing: self!
 
 greaterThanFraction: aFraction
-	"Private - Answer whether the receiver is greater than the known Fraction, aFraction, by 
-	coercing the less general of it and the receiver. Overridden by subclasses which 
-	can implement more efficiently."
+	"Private - Answer whether the receiver is greater than the known <Fraction> argument."
 
 	^aFraction retry: #< coercing: self!
 
 greaterThanInteger: anInteger
-	"Private - Answer whether the receiver is greater than the known integer, anInteger, by 
-	coercing the less general of it and the receiver. Overridden by subclasses which 
-	can implement more efficiently."
+	"Private - Answer whether the receiver is greater than the known <integer> argument."
 
 	^anInteger retry: #< coercing: self!
 
@@ -241,6 +230,11 @@ greaterThanScaledDecimal: operand
 	"Private - Answer whether the receiver is greater than the known <ScaledDecimal>, operand."
 
 	^operand retry: #< coercing: self!
+
+integerPart
+	"Answer an <integer>  representing the whole integer part of the receiver."
+
+	^self truncated!
 
 isZero
 	"Answer whether the receiver is zero. Many subclasses cannot be zero, since
@@ -269,20 +263,6 @@ multiplyByInteger: anInteger
 	Overridden by subclasses which can implement more efficiently."
 
 	^anInteger retry: #* coercing: self!
-
-multiplyByPoint: aPoint
-	"Private - Answer the result of multiplying the known Point, aPoint,
-	by the receiver, by coercing the less general of it and the recever.
-	Overridden by subclasses which can implement more efficiently."
-
-	^aPoint retry: #* coercing: self!
-
-multiplyByPoint3D: aPoint3D
-	"Private - Answer the result of multiplying the known Point3D, aPoint3D,
-	by the receiver, by coercing the less general of it and the recever.
-	Overridden by subclasses which can implement more efficiently."
-
-	^aPoint3D retry: #* coercing: self!
 
 multiplyByScaledDecimal: operand
 	"Private - Answer the result of multiplying the known <ScaledDecimal>, operand, by receiver."
@@ -441,22 +421,6 @@ subtractFromInteger: anInteger
 
 	^anInteger retry: #- coercing: self!
 
-subtractFromPoint: aPoint
-	"Private - Answer the result of subtracting the receiver from the known Point,
-	aPoint, by coercing the less general of it and the receiver. Overridden by 
-	subclasses which can implement more efficiently."
-
-	^aPoint retry: #- coercing: self
-!
-
-subtractFromPoint3D: aPoint3D
-	"Private - Answer the result of subtracting the receiver from the known Point3D,
-	aPoint3D, by coercing the less general of it and the receiver. Overridden by 
-	subclasses which can implement more efficiently."
-
-	^aPoint3D retry: #- coercing: self
-!
-
 subtractFromScaledDecimal: operand
 	"Private - Answer the result of subtracting the receiver from the 
 	known <ScaledDecimal>, operand."
@@ -495,33 +459,33 @@ abs!arithmetic!public! !
 addToFloat:!double dispatch!private! !
 addToFraction:!double dispatch!private! !
 addToInteger:!double dispatch!private! !
-addToPoint:!double dispatch!private! !
-addToPoint3D:!double dispatch!private! !
 addToScaledDecimal:!double dispatch!private! !
 ceiling!public!truncation and round off! !
 coerce:!coercing!private! !
 divideIntoFloat:!double dispatch!private! !
 divideIntoFraction:!double dispatch!private! !
 divideIntoInteger:!double dispatch!private! !
-divideIntoPoint:!double dispatch!private! !
-divideIntoPoint3D:!double dispatch!private! !
 divideIntoScaledDecimal:!double dispatch!private! !
 equalToFloat:!double dispatch!private! !
 equalToFraction:!double dispatch!private! !
 equalToInteger:!double dispatch!private! !
 equalToScaledDecimal:!double dispatch!private! !
 floor!public!truncation and round off! !
+fractionPart!accessing!public! !
 generality!coercing!private! !
+greaterOrEqualToFloat:!double dispatch!private! !
+greaterOrEqualToFraction:!double dispatch!private! !
+greaterOrEqualToInteger:!double dispatch!private! !
+greaterOrEqualToScaledDecimal:!double dispatch!private! !
 greaterThanFloat:!double dispatch!private! !
 greaterThanFraction:!double dispatch!private! !
 greaterThanInteger:!double dispatch!private! !
 greaterThanScaledDecimal:!double dispatch!private! !
+integerPart!accessing!public! !
 isZero!public!testing! !
 multiplyByFloat:!double dispatch!private! !
 multiplyByFraction:!double dispatch!private! !
 multiplyByInteger:!double dispatch!private! !
-multiplyByPoint:!double dispatch!private! !
-multiplyByPoint3D:!double dispatch!private! !
 multiplyByScaledDecimal:!double dispatch!private! !
 negated!arithmetic!public! !
 negative!public!testing! !
@@ -543,8 +507,6 @@ strictlyPositive!public!testing! !
 subtractFromFloat:!double dispatch!private! !
 subtractFromFraction:!double dispatch!private! !
 subtractFromInteger:!double dispatch!private! !
-subtractFromPoint:!double dispatch!private! !
-subtractFromPoint3D:!double dispatch!private! !
 subtractFromScaledDecimal:!double dispatch!private! !
 truncated!public!truncation and round off! !
 truncateTo:!public!truncation and round off! !

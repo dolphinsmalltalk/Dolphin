@@ -17,16 +17,15 @@ POINTLTest comment: ''!
 subjectClass
 	^POINTL!
 
-testAsDwordOverflow
-	| subject |
-	subject := self subjectClass x: 16r100000 y: 16rBEEF.
-	self
-		should: [subject asDword]
-		raise: HRESULTError
-		matching: [:ex | ex hresult = (HRESULT fromPrimitiveFailureCode: _PrimitiveFailureCode.IntegerOutOfRange)]! !
+testDivideLarge
+	| largeNeg largePos subject |
+	largeNeg := SmallInteger minimum - 1.
+	largePos := SmallInteger maximum + 1.
+	subject := self subjectClass x: largeNeg y: largePos.
+	self assert: subject / largeNeg equals: 1 @ (largePos / largeNeg)! !
 
 !POINTLTest categoriesForMethods!
 subjectClass!constants!private! !
-testAsDwordOverflow!public!unit tests! !
+testDivideLarge!public! !
 !
 

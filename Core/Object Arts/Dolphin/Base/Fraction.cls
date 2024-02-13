@@ -53,6 +53,11 @@ Instance Variables:
 
 	^aNumber greaterThanFraction: self!
 
+<= aNumber
+	"Answer whether the receiver is less than or equal to the argument, aNumber."
+
+	^aNumber greaterOrEqualToFraction: self!
+
 = anObject
 	"Answer whether the receiver is numerically equivalent to the <Object>, anObject - i.e. whether the difference between the receiver and comparand is zero."
 
@@ -207,21 +212,58 @@ generality
 	^30
 !
 
-greaterThanFloat: aFloat
-	"Private - Answer whether the receiver is greater than the known Float, aFloat"
+greaterOrEqualToFloat: aFloat
+	"Private - Answer whether the receiver is greater than or equal to the known <Float> argument."
 
-	| fpclass |
-	fpclass := aFloat fpClass.
-	^((fpclass anyMask: Float.FpClassFinite) and: [self greaterThanFraction: aFloat asTrueFraction])
-		or: [fpclass anyMask: Float.FpClassNegative]!
+	| fpclass negativeArg |
+	negativeArg := (fpclass := aFloat fpClass) anyMask: Float.FpClassNegative.
+	(fpclass anyMask: Float.FpClassFinite)
+		ifFalse: 
+			["aFloat is a NaN, -∞ or ∞, so obviously we are only greater if it is -∞."
+			^negativeArg].
+	numerator < 0 ~~ negativeArg
+		ifTrue: 
+			["Different signs - as the receiver cannot be zero, it is greater if the argument is negative"
+			^negativeArg].
+	"Fast cases eliminated, we need to compare fractions"
+	^self greaterOrEqualToFraction: aFloat asTrueFraction!
+
+greaterOrEqualToFraction: aFraction
+	"Private - Answer whether the receiver is greater than or equal to the known <Fraction> argument."
+
+	^numerator * aFraction denominator >= (aFraction numerator * denominator)!
+
+greaterOrEqualToInteger: anInteger
+	"Private - Answer whether the receiver is greater than or equal to the known <integer> argument."
+
+	^anInteger * denominator <= numerator!
+
+greaterThanFloat: aFloat
+	"Private - Answer whether the receiver is greater than the known Float argument."
+
+	"Implementation Note: The FP classification checks are expanded inline for performance reasons.
+	"
+
+	| fpclass negativeArg |
+	negativeArg := (fpclass := aFloat fpClass) anyMask: Float.FpClassNegative.
+	(fpclass anyMask: Float.FpClassFinite)
+		ifFalse: 
+			["aFloat is NaN, -∞ or ∞, so obviously we are only greater if it is -∞."
+			^negativeArg].
+	numerator < 0 ~~ negativeArg
+		ifTrue: 
+			["Different signs - as the receiver cannot be zero, it is greater if the argument is negative"
+			^negativeArg].
+	"Fast cases eliminated, we need to compare fractions"
+	^self greaterThanFraction: aFloat asTrueFraction!
 
 greaterThanFraction: aFraction
-	"Private - Answer whether the receiver is greater than the known Fraction, aFraction"
+	"Private - Answer whether the receiver is greater than the known <Fraction> argument."
 
 	^numerator * aFraction denominator > (aFraction numerator * denominator)!
 
 greaterThanInteger: anInteger
-	"Private - Answer whether the receiver is greater than the known integer, anInteger"
+	"Private - Answer whether the receiver is greater than the known <integer> argument."
 
 	^anInteger * denominator < numerator!
 
@@ -381,6 +423,7 @@ truncated
 //!arithmetic!public! !
 +!arithmetic!public! !
 <!comparing!public! !
+<=!comparing!public! !
 =!comparing!public! !
 addToFloat:!double dispatch!private! !
 addToFraction:!double dispatch!private! !
@@ -398,6 +441,9 @@ equalToFraction:!double dispatch!private! !
 equalToInteger:!double dispatch!private! !
 equalToScaledDecimal:!double dispatch!private! !
 generality!coercing!private! !
+greaterOrEqualToFloat:!double dispatch!private! !
+greaterOrEqualToFraction:!double dispatch!private! !
+greaterOrEqualToInteger:!double dispatch!private! !
 greaterThanFloat:!double dispatch!private! !
 greaterThanFraction:!double dispatch!private! !
 greaterThanInteger:!double dispatch!private! !

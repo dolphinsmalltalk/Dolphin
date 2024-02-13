@@ -24,6 +24,37 @@ asDword
 
 	^self shouldNotImplement!
 
+asUIntPtr
+	"Answer the receiver in a form suitable for passing or returning as a  machine-word sized (32 or 64-bit) value."
+
+	^self shouldNotImplement!
+
+ceiling
+	"Answer a new Point with the x and y values of the receiver truncated
+	toward positive infinity."
+
+	^self x ceiling @ self y ceiling!
+
+floor
+	"Answer a new <Point> with the x and y values of the receiver truncated toward negative infinity."
+
+	^self x floor @ self y floor!
+
+isZero
+	"Answer whether the receiver is equal to Point zero."
+
+	^(bytes qwordAtOffset: 0) == 0!
+
+rounded
+	"Answer a new Point with the x and y values of the receiver rounded."
+
+	^self x rounded @ self y rounded!
+
+truncated
+	"Answer a new Point with the x and y values of the receiver truncated toward zero"
+
+	^self x truncated @ self y truncated!
+
 x
 	"Answer the <Float> value of the receiver's 'x' field."
 
@@ -46,6 +77,12 @@ y: aFloat
 
 !POINTF categoriesForMethods!
 asDword!converting!public! !
+asUIntPtr!converting!public! !
+ceiling!public!truncation and round off! !
+floor!public!truncation and round off! !
+isZero!public!testing! !
+rounded!public!truncation and round off! !
+truncated!public!truncation and round off! !
 x!**compiled accessors**!public! !
 x:!**compiled accessors**!public! !
 y!**compiled accessors**!public! !

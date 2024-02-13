@@ -82,7 +82,7 @@ Float comment: 'Float is the class of double precision floating point Numbers (6
 	"The primitive will fail if aNumber is not a SmallInteger of Float."
 
 	<primitive: 162>
-	^self isNaN not and: [aNumber greaterThanFloat: self]!
+	^aNumber greaterThanFloat: self!
 
 <= aNumber
 	"Answer whether the receiver is less than or equal to the argument, aNumber."
@@ -90,7 +90,7 @@ Float comment: 'Float is the class of double precision floating point Numbers (6
 	"Implementation Note: Superclass implementation does not work correctly for comparisons against NaN, which must always be false (except for ~=)."
 
 	<primitive: 214>
-	^(self isNaN or: [aNumber < self]) not!
+	^aNumber greaterOrEqualToFloat: self!
 
 = anObject
 	"Answer whether the receiver is numerically equivalent to the argument, anObject (e.g. 1 = 1.0 is true). If either receiver or argument are NaN, then answer false."
@@ -114,7 +114,7 @@ Float comment: 'Float is the class of double precision floating point Numbers (6
 	"Implementation Note: Superclass implementation does not work correctly for comparisons against NaN, which must always be false (except for ~=)."
 
 	<primitive: 46>
-	^(self isNaN or: [aNumber > self]) not!
+	^aNumber <= self!
 
 abs
 	"Answer a <Float> that is the absolute value - positive magnitude - of the receiver."
@@ -650,8 +650,22 @@ greaterOrEquals: aNumber
 	(self equals: aNumber) ifTrue: [^true].
 	^self > aNumber!
 
+greaterOrEqualToFraction: aFraction
+	"Private - Answer whether the receiver is greater than or equal to the known <Fraction> argument."
+
+	| fpclass |
+	fpclass := self fpClass.
+	^(fpclass anyMask: Float.FpClassFinite)
+		ifTrue: [self asTrueFraction greaterOrEqualToFraction: aFraction]
+		ifFalse: [(fpclass bitAnd: ##(FpClassNaN | FpClassNegative)) == 0]!
+
+greaterOrEqualToInteger: anInteger
+	"Private - Answer whether the receiver is greater than or equal to the known <integer> argument."
+
+	^anInteger asFloat <= self!
+
 greaterThanFraction: aFraction
-	"Private - Answer whether the receiver is greater than the known Fraction, aFraction."
+	"Private - Answer whether the receiver is greater than the known <Fraction> argument."
 
 	| fpclass |
 	fpclass := self fpClass.
@@ -660,7 +674,7 @@ greaterThanFraction: aFraction
 		ifFalse: [fpclass noMask: ##(FpClassNaN | FpClassNegative)]!
 
 greaterThanInteger: anInteger
-	"Private - Answer whether the receiver is greater than the known Integer, anInteger."
+	"Private - Answer whether the receiver is greater than the known <Integer> argument."
 
 	^self isNaN not and: [anInteger asFloat < self]!
 
@@ -1059,6 +1073,8 @@ fpClass!helpers!private! !
 fractionPart!accessing!public! !
 generality!coercing!private! !
 greaterOrEquals:!comparing!public! !
+greaterOrEqualToFraction:!double dispatch!private! !
+greaterOrEqualToInteger:!double dispatch!private! !
 greaterThanFraction:!double dispatch!private! !
 greaterThanInteger:!double dispatch!private! !
 hash!comparing!public! !

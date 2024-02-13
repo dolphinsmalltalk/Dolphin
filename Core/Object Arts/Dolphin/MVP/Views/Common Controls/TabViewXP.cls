@@ -118,7 +118,7 @@ onSelChanged: anArray
 	lastSelection notNil 
 		ifTrue: 
 			[| rect |
-			rect := self mapRectangle: ((self itemRect: lastSelection) expandBy: self selExtra)
+			rect := self mapRectangle: ((self itemRect: lastSelection) expandedBy: self selExtra)
 						to: self parentView.
 			self parentView invalidateRect: rect].
 	super onSelChanged: anArray!
@@ -189,7 +189,7 @@ paintTabLabelsOn: aCanvas
 			self
 				paintLabel: selectedIndex
 				on: aCanvas
-				in: (rect translateBy: 0 @ (self isInverted ifTrue: [self selExtra] ifFalse: [self selExtra negated])).
+				in: (rect translatedBy: 0 @ (self isInverted ifTrue: [self selExtra] ifFalse: [self selExtra negated])).
 			self hasFocus ifTrue: [UserLibrary default drawFocusRect: aCanvas asParameter lprc: (rect insetBy: 1) asParameter]].
 	selectedIndex + 1 to: itemCount
 		do: 
@@ -270,7 +270,7 @@ paintThemedTabsOn: aCanvas offset: aMonadicValuable
 
 	"Paint the active selected tab. This must be done last as it is made slightly larger, and
 	therefore draws over the top of the inactive tabs"
-	rcItem := (aMonadicValuable value: (self itemRect: selected)) expandBy: self selExtra.
+	rcItem := (aMonadicValuable value: (self itemRect: selected)) expandedBy: self selExtra.
 	part := selected == 1
 				ifTrue: 
 					["Clip out the last line to avoid the theme bitmap overwriting the left edge if selection is first item"
@@ -346,7 +346,7 @@ paintVerticalTabLabelsOn: aCanvas
 		paintVerticalLabel: selectedIndex
 		on: aCanvas
 		in: (rect 
-				translateBy: (self isInverted ifTrue: [self selExtra] ifFalse: [self selExtra negated]) @ 0).
+				translatedBy: (self isInverted ifTrue: [self selExtra] ifFalse: [self selExtra negated]) @ 0).
 	self hasFocus 
 		ifTrue: [UserLibrary default drawFocusRect: aCanvas asParameter lprc: (rect insetBy: 1) asParameter].
 	selectedIndex + 1 to: itemCount

@@ -95,7 +95,7 @@ drawBorderOn: aCanvas imageRect: imageRect displayRect: displayRect
 		 both scaling and clipping types of viewModes.
 	- Expand by the padding. NOTE: if insets>0, and viewMode clips (ie #normal #centered) 
 		you need to draw the border the width of the padding. (or it will look strange)"
-	edgeRect := (imageRect intersect: displayRect) expandBy: self insets.
+	edgeRect := (imageRect intersect: displayRect) expandedBy: self insets.
 	aCanvas 
 		drawEdge: edgeRect
 		edge: edgeStyle

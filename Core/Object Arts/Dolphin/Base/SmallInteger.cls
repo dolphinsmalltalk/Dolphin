@@ -106,7 +106,7 @@ _deepCopy: anIdentityDictionary
 	"The primitive fails if aNumber is not an Integer."
 
 	<primitive: 20>
-	^super <= aNumber!
+	^aNumber greaterOrEqualToInteger: self!
 
 = aNumber
 	"Answer whether the receiver is equal to aNumber. Numbers are considered equal if their difference is zero."

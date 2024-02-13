@@ -16,12 +16,6 @@ ExternalPointTest comment: ''!
 
 !ExternalPointTest methodsFor!
 
-testAsDword
-	| dword subject |
-	subject := self subjectClass x: 16r7654 y: 16r3210.
-	dword := subject asDword.
-	self assert: dword equals: 16r32107654!
-
 testAsObject
 	| point subject |
 	subject := self subjectClass x: 101 y: 202.
@@ -29,6 +23,17 @@ testAsObject
 	self assert: point class equals: Point.
 	self assert: point x equals: 101.
 	self assert: point y equals: 202!
+
+testMarshal
+	| subject |
+	subject := self subjectClass marshal: 101 @ 202.
+	self assert: subject isKindOf: self subjectClass.
+	self assert: subject equals: 101 @ 202.
+	self assert: (self subjectClass marshal: subject) identicalTo: subject!
+
+testPrintString
+	self assert: self subjectClass new printString equals: ('a ', self subjectClass name, '(0@0)').
+	self assert: (self subjectClass fromPoint: (123@456)) printString equals: ('a ', self subjectClass name, '(123@456)')!
 
 testValue
 	| point subject |
@@ -39,8 +44,9 @@ testValue
 	self assert: point y equals: 202! !
 
 !ExternalPointTest categoriesForMethods!
-testAsDword!public!unit tests! !
 testAsObject!public!unit tests! !
+testMarshal!public!unit tests! !
+testPrintString!public!unit tests! !
 testValue!public!unit tests! !
 !
 

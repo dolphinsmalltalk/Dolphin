@@ -20,25 +20,21 @@ PointTest comment: 'This is the unit test for the class Point. Unit tests are a 
 subjectClass
 	^Point!
 
-testAbs
-	self assert: (self subjectClass x: 0 y: 0) abs equals: (self subjectClass x: 0 y: 0).
-	self assert: (self subjectClass x: 1 y: 1) abs equals: (self subjectClass x: 1 y: 1).
-	self assert: (self subjectClass x: -1 y: 1) abs equals: (self subjectClass x: 1 y: 1).
-	self assert: (self subjectClass x: 1 y: -1) abs equals: (self subjectClass x: 1 y: 1).
-	self assert: (self subjectClass x: -1 y: -1) abs equals: (self subjectClass x: 1 y: 1)!
+subjectSupportNonIntegralValues
+	^true!
 
-testEquals
-	self assert: (self subjectClass x: 0 y: 0) equals: 0.
-	self assert: 0 equals: (self subjectClass x: 0 y: 0).
-	self assert: (self subjectClass x: 1 y: 1) equals: (self subjectClass x: 1 y: 1).
-	self deny: (self subjectClass x: 1 y: 2) equals: (self subjectClass x: 2 y: 1).
-	self deny: (self subjectClass x: 1 y: 2) equals: 1.5!
+testAsUIntPtr
+	| result |
+	result := ((17 / 4) @ (11 / 4)) asUIntPtr.
+	self assert: result >> VMConstants.HalfPtrBits equals: 3.
+	self assert: (result bitAnd: VMConstants.HalfPtrMask) equals: 4!
 
-testIsZero
-	self assert: (self subjectClass x: 0 y: 0) isZero.
-	self deny: (self subjectClass x: 0 y: 1) isZero.
-	self deny: (self subjectClass x: 1 y: 0) isZero.
-	self deny: (self subjectClass x: 1 y: 1) isZero!
+testDivideLarge
+	| largeNeg largePos subject |
+	largeNeg := SmallInteger minimum - 1.
+	largePos := SmallInteger maximum + 1.
+	subject := self subjectClass x: largeNeg y: largePos.
+	self assert: subject / largeNeg equals: 1 @ (largePos / largeNeg)!
 
 testStrictlyPositive
 	self deny: (self subjectClass x: 0 y: 0) strictlyPositive.
@@ -50,9 +46,9 @@ testStrictlyPositive
 
 !PointTest categoriesForMethods!
 subjectClass!constants!private! !
-testAbs!public!unit tests! !
-testEquals!public!unit tests! !
-testIsZero!public!unit tests! !
+subjectSupportNonIntegralValues!private!testing! !
+testAsUIntPtr!public! !
+testDivideLarge!public! !
 testStrictlyPositive!public!unit tests! !
 !
 

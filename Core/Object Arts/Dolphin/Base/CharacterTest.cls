@@ -159,6 +159,15 @@ testCodePoint
 			self assert: ch isSurrogate.
 			self assert: ch codePoint equals: each]!
 
+testComparing
+	self deny: $a equals: $A.
+	self assert: (Character codePoint: 0) equals: $\0.
+	self assert: (Character codePoint: 255) equals: $ÿ.
+	self deny: $\xFFFC equals: $\xFFFD.
+	self deny: $\x200E equals: 16r200E.
+	self deny: (Character utf8Value: 240) equals: $ð.
+	self deny: (Character utf8Value: 16r80) equals: $\x80!
+
 testDigitValue
 	self assert: Character null digitValue equals: -1!
 
@@ -510,6 +519,7 @@ testAsUtf8String!public!unit tests! !
 testClassCodePoint!public!unit tests! !
 testClassNewCode!public! !
 testCodePoint!public!unit tests! !
+testComparing!public! !
 testDigitValue!public!unit tests! !
 testEquals!public!unit tests! !
 testIdentity!public!unit tests! !

@@ -48,6 +48,7 @@ package classNames
 	yourself.
 
 package methodNames
+	add: #AbstractPointTest -> #testComparePOINTF;
 	add: #Bitmap -> #hdc;
 	add: 'Bitmap class' -> #gdipCopyOfIcon:extent:backcolor:;
 	add: 'Bitmap class' -> #gdipCopyOfImageIndex:extent:backcolor:;
@@ -290,6 +291,21 @@ TestResource subclass: #GdiplusFileResource
 	classInstanceVariableNames: ''!
 
 "Loose Methods"!
+
+!AbstractPointTest methodsFor!
+
+testComparePOINTF
+	| subject point |
+	point := POINTF fromPoint: 101.0 @ 102.0.
+	subject := self subjectClass x: point x y: point y.
+	self assert: subject equals: subject.
+	self assert: subject species identicalTo: Point.
+	self assert: subject hash equals: point hash.
+	self assert: subject equals: point.
+	self assert: point equals: subject! !
+!AbstractPointTest categoriesForMethods!
+testComparePOINTF!public!unit tests! !
+!
 
 !Bitmap methodsFor!
 

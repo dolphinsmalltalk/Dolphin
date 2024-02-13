@@ -18,13 +18,34 @@ POINTL comment: '`POINTL` is an `ExternalStructure` class to wrap the Win32 POIN
 
 !POINTL methodsFor!
 
+asDword
+	"Answer the receiver in a form suitable for passing or returning as a 32-bit value (i.e. a 32-bit integer)."
+
+	^((bytes sdwordAtOffset: _OffsetOf_x) bitAnd: 16rFFFF)
+		bitOr: (((bytes sdwordAtOffset: _OffsetOf_y) bitAnd: 16rFFFF) bitShift: 16)!
+
+asPoint
+	"Answer a <Point> that matches the receiver."
+
+	^Point x: (bytes sdwordAtOffset: _OffsetOf_x) y: (bytes sdwordAtOffset: _OffsetOf_y)!
+
 asUIntPtr
 	"Answer the receiver in a form suitable for passing or returning 
 	as a  machine-word sized (32 or 64-bit) value."
 
 	"Implementation Note: The compiler will optimise out the condition because it is constant."
 
-	^VMConstants.IsWin64 ifTrue: [bytes uintPtrAtOffset: 0] ifFalse: [self asPoint asUIntPtr]!
+	^VMConstants.IsWin64
+		ifTrue: [bytes uintPtrAtOffset: 0]
+		ifFalse: 
+			[((bytes sdwordAtOffset: _OffsetOf_x) bitAnd: VMConstants.HalfPtrMask)
+				bitOr: (((bytes sdwordAtOffset: _OffsetOf_y) bitAnd: VMConstants.HalfPtrMask)
+						bitShift: VMConstants.HalfPtrBits)]!
+
+isZero
+	"Answer whether the receiver is equal to Point zero."
+
+	^(bytes sqwordAtOffset: 0) == 0!
 
 x
 	"Answer the <Integer> value of the receiver's 'x' field."
@@ -37,10 +58,10 @@ x: anInteger
 	bytes sdwordAtOffset: _OffsetOf_x put: anInteger!
 
 x: xInteger y: yInteger
-
 	bytes
 		sdwordAtOffset: _OffsetOf_x put: xInteger;
-		sdwordAtOffset: _OffsetOf_y put: yInteger!
+		sdwordAtOffset: _OffsetOf_y put: yInteger.
+	^self!
 
 y
 	"Answer the <Integer> value of the receiver's 'y' field."
@@ -53,7 +74,10 @@ y: anInteger
 	bytes sdwordAtOffset: _OffsetOf_y put: anInteger! !
 
 !POINTL categoriesForMethods!
+asDword!converting!public! !
+asPoint!converting!public! !
 asUIntPtr!converting!public! !
+isZero!public! !
 x!**compiled accessors**!public! !
 x:!**compiled accessors**!public! !
 x:y:!initializing!public! !

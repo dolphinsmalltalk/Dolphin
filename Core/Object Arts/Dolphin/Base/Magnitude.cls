@@ -45,11 +45,10 @@ Subclasses of Magnitude must implement the following comparing protocol (at the 
 
 	^operand < self!
 
->= operand
-	"Answer whether the receiver is greater than or equal to the <magnitude>, operand.
-	Implemented in terms of #<, which must be implemented by subclasses."
+>= aMagnitude
+	"Answer whether the receiver is greater than or equal to the <magnitude>, argument."
 
-	^(operand isNaN or: [self < operand]) not!
+	^aMagnitude <= self!
 
 between: min and: max
 	"Answer whether the receiver is inclusively between the <magnitude> arguments, 

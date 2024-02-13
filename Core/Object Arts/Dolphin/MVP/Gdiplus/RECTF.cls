@@ -40,6 +40,18 @@ asRectangle
 bottom
 	^self y + self height!
 
+bottom: aNumber
+	self height: aNumber - self y!
+
+extent: newExtent
+	"Set the extent of the receiver to aPoint. (The origin remains the same and
+	the corner stays in the same quadrant it was in relative to the origin point.
+	If aPoint contains any negative value, the result is undefined)."
+
+	self
+		width: newExtent x;
+		height: newExtent y!
+
 height
 	"Answer the <Float> value of the receiver's 'height' field."
 
@@ -53,11 +65,22 @@ height: aFloat
 left
 	^self x!
 
+left: aNumber
+	self width: self width + (self x - aNumber).
+	self x: aNumber!
+
 right
 	^self x + self width!
 
+right: aNumber
+	self width: aNumber - self x!
+
 top
 	^self y!
+
+top: aNumber
+	self height: self height + (self y - aNumber).
+	self y: aNumber!
 
 width
 	"Answer the <Float> value of the receiver's 'width' field."
@@ -92,11 +115,16 @@ y: aFloat
 !RECTF categoriesForMethods!
 asRectangle!converting!public! !
 bottom!accessing!public! !
+bottom:!accessing!public! !
+extent:!accessing!public! !
 height!**compiled accessors**!public! !
 height:!**compiled accessors**!public! !
-left!public! !
+left!accessing!public! !
+left:!accessing!public! !
 right!accessing!public! !
-top!public! !
+right:!accessing!public! !
+top!accessing!public! !
+top:!accessing!public! !
 width!**compiled accessors**!public! !
 width:!**compiled accessors**!public! !
 x!**compiled accessors**!public! !
@@ -157,6 +185,14 @@ left: left top: top width: width height: height
 				floatAtOffset: 12 put: height;
 				yourself)!
 
+marshal: aRect
+	self == aRect class ifTrue: [^aRect].
+	^self
+		left: aRect left
+		top: aRect top
+		width: aRect width
+		height: aRect height!
+
 newBuffer
 	^self basicNew bytes: (ByteArray newFixed: 16)! !
 
@@ -166,6 +202,7 @@ fromRectangle:!instance creation!public! !
 getFieldNames!**compiled accessors**!constants!private! !
 left:top:right:bottom:!instance creation!public! !
 left:top:width:height:!instance creation!public! !
+marshal:!instance creation!public! !
 newBuffer!instance creation!public! !
 !
 

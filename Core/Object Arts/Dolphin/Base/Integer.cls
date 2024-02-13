@@ -458,6 +458,26 @@ gcdbin: operand
 			whileFalse.
 	^u bitShift: k!
 
+greaterOrEqualToFloat: aFloat
+	"Private - Answer whether the receiver is greater than or equal to the know <Float> argument."
+
+	| fpclass negativeArg |
+	negativeArg := (fpclass := aFloat fpClass) anyMask: Float.FpClassNegative.
+	(fpclass anyMask: Float.FpClassFinite)
+		ifFalse: 
+			["aFloat is a NaN, -∞ or ∞, so obviously we are only >= if it is -∞."
+			^negativeArg].
+	self < 0 ~~ negativeArg
+		ifTrue: 
+			["Different signs - receiver >= if the argument is negative"
+			^negativeArg].
+	^self greaterOrEqualToFraction: aFloat asTrueFraction!
+
+greaterOrEqualToFraction: aFraction
+	"Private - Answer whether the receiver is greater than or equal to the known <Fraction> argument."
+
+	^self * aFraction denominator >= aFraction numerator!
+
 greaterThanFloat: aFloat
 	"Private - Answer whether the receiver is greater than the known Float, aFloat."
 
@@ -470,7 +490,7 @@ greaterThanFloat: aFloat
 			fpclass anyMask: Float.FpClassNegative]!
 
 greaterThanFraction: aFraction
-	"Private - Answer whether the receiver is greater than the known Fraction, aFraction"
+	"Private - Answer whether the receiver is greater than the known <Fraction> argument."
 
 	^aFraction numerator < (self * aFraction denominator)!
 
@@ -855,6 +875,8 @@ floor!public!truncation and round off! !
 fractionPart!accessing!public! !
 gcd:!factorization!public! !
 gcdbin:!factorization!public! !
+greaterOrEqualToFloat:!double dispatch!private! !
+greaterOrEqualToFraction:!double dispatch!private! !
 greaterThanFloat:!double dispatch!private! !
 greaterThanFraction:!double dispatch!private! !
 hashMultiply!comparing!public! !

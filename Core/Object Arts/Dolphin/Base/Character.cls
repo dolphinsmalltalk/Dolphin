@@ -244,6 +244,11 @@ encoding
 
 	^String encodingName: self basicEncoding!
 
+greaterOrEqualToInteger: anInteger
+	"Private - Answer whether the receiver is greater than or equal to the known <integer> argument."
+
+	^self codePoint >= anInteger!
+
 hash
 	"Answer the <SmallInteger> hash value for the receiver."
 
@@ -539,6 +544,7 @@ deepCopy!copying!public! !
 digitValue!accessing!public! !
 displayOn:!printing!public! !
 encoding!accessing!public! !
+greaterOrEqualToInteger:!double dispatch!private! !
 hash!comparing!public! !
 isAlphaNumeric!public!testing! !
 isAscii!public!testing! !

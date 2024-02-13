@@ -40,6 +40,18 @@ bottom: anInteger
 
 	bytes sdwordAtOffset: _OffsetOf_bottom put: anInteger!
 
+bottomRight
+	"Answer a <Point> representing the bottom right position of the receiver."
+
+	^Point x: (bytes sdwordAtOffset: _OffsetOf_right) y: (bytes dwordAtOffset: _OffsetOf_bottom)!
+
+bottomRight: aPoint
+	"Set the <Point> representing the bottom right corner of the receiver."
+
+	bytes
+		sdwordAtOffset: _OffsetOf_right put: aPoint x;
+		sdwordAtOffset: _OffsetOf_bottom put: aPoint y!
+
 extent
 	"Answer a Point representing the extent of the receiver. The x coordinate is the width and the y coordinate is the height."
 
@@ -47,6 +59,18 @@ extent
 
 	^Point x: (bytes sdwordAtOffset: _OffsetOf_right) - (bytes sdwordAtOffset: _OffsetOf_left)
 		y: (bytes sdwordAtOffset: _OffsetOf_bottom) - (bytes sdwordAtOffset: _OffsetOf_top)!
+
+extent: aPoint
+	"Set the extent of the receiver to the <Point> argument. The origin remains the same and the corner stays in the same quadrant it was in relative to the origin point. If aPoint contains any negative value, the result is undefined."
+
+	bytes
+		sdwordAtOffset: _OffsetOf_right put: (bytes sdwordAtOffset: _OffsetOf_left) + aPoint x;
+		sdwordAtOffset: _OffsetOf_bottom put: (bytes sdwordAtOffset: _OffsetOf_top) + aPoint y!
+
+height
+	"Answer the height of the receiver."
+
+	^(bytes sdwordAtOffset: _OffsetOf_bottom) - (bytes sdwordAtOffset: _OffsetOf_top)!
 
 left
 	"Answer the <Integer> value of the receiver's 'left' field."
@@ -68,6 +92,18 @@ right: anInteger
 
 	bytes sdwordAtOffset: _OffsetOf_right put: anInteger!
 
+rightCenter
+	"Answer a <Point> specifying the position of the centre of the receiver's right edge."
+
+	^self right @ self centerY!
+
+scaleBy: aMagnitude
+	"Scale the receiver in-place by the specified <Point> or <Number> multiplier."
+
+	self
+		topLeft: self topLeft * aMagnitude;
+		bottomRight: self bottomRight * aMagnitude!
+
 top
 	"Answer the <Integer> value of the receiver's 'top' field."
 
@@ -76,19 +112,45 @@ top
 top: anInteger
 	"Set the receiver's 'top' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: _OffsetOf_top put: anInteger! !
+	bytes sdwordAtOffset: _OffsetOf_top put: anInteger!
+
+topLeft
+	"Answer a <Point> representing the top left position of the receiver."
+
+	^Point x: (bytes sdwordAtOffset: _OffsetOf_left) y: (bytes sdwordAtOffset: _OffsetOf_top)!
+
+topLeft: aPoint
+	"Set the <Point> representing the top left position of the receiver."
+
+	bytes
+		sdwordAtOffset: _OffsetOf_left put: aPoint x;
+		sdwordAtOffset: _OffsetOf_top put: aPoint y!
+
+width
+	"Answer the width of the receiver."
+
+	^(bytes sdwordAtOffset: _OffsetOf_right) - (bytes sdwordAtOffset: _OffsetOf_left)! !
 
 !RECT categoriesForMethods!
 asRectangle!converting!public! !
 bottom!**compiled accessors**!public! !
 bottom:!**compiled accessors**!public! !
+bottomRight!accessing!public! !
+bottomRight:!accessing!public! !
 extent!accessing!public! !
+extent:!accessing!public! !
+height!public! !
 left!**compiled accessors**!public! !
 left:!**compiled accessors**!public! !
 right!**compiled accessors**!public! !
 right:!**compiled accessors**!public! !
+rightCenter!accessing!public! !
+scaleBy:!public!transforming! !
 top!**compiled accessors**!public! !
 top:!**compiled accessors**!public! !
+topLeft!accessing!public! !
+topLeft:!accessing!public! !
+width!accessing!public! !
 !
 
 !RECT class methodsFor!

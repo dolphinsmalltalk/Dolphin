@@ -15,9 +15,22 @@ POINTSTest comment: ''!
 !POINTSTest methodsFor!
 
 subjectClass
-	^POINTS! !
+	^POINTS!
+
+testAsDwordOverflow
+	| subject |
+	"Can't overflow 32-bits in this case"
+	subject := self subjectClass x: 16r7FFF y: 16r7FFF.
+	self assert: subject asDword equals: 16r7FFF7FFF.
+	subject := self subjectClass x: 16r7FFF y: -16r8000.
+	self assert: subject asDword equals: 16r80007FFF.
+	subject := self subjectClass x: -16r8000 y: 16r7FFF.
+	self assert: subject asDword equals: 16r7FFF8000.
+	subject := self subjectClass x: -16r8000 y: -16r8000.
+	self assert: subject asDword equals: 16r80008000! !
 
 !POINTSTest categoriesForMethods!
 subjectClass!constants!private! !
+testAsDwordOverflow!public!unit tests! !
 !
 

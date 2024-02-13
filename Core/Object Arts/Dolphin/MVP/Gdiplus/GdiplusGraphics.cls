@@ -1021,7 +1021,7 @@ exampleGdipGDrawingShapes
 	1 to: polygonPoints size
 		do: [:i | graphics drawString: i displayString at: (polygonPoints at: i)].
 	"Arc: Draw"
-	arcRect := rectEllipse translateBy: 220 @ 0.
+	arcRect := rectEllipse translatedBy: 220 @ 0.
 	graphics 
 		drawArc: arcRect
 		pen: redPen
@@ -1029,7 +1029,7 @@ exampleGdipGDrawingShapes
 		sweepAngle: 215.
 	graphics drawRectangle: arcRect pen: blackPen.
 	"Pie: Draw and fill."
-	pieRect := arcRect translateBy: 0 @ 120.
+	pieRect := arcRect translatedBy: 0 @ 120.
 	graphics 
 		drawPie: pieRect
 		pen: redPen

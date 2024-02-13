@@ -19,7 +19,7 @@ asBackgroundGdiplusBrushFor: aView
 
 	| clientRect colorRect p1 mid p2 c1 c2 brush |
 	clientRect := aView clientRectangle.
-	colorRect := clientRect expandBy: 1 asPoint.
+	colorRect := clientRect expandedBy: 1 asPoint.
 	p1 := self startPoint * colorRect extent + colorRect position.
 	mid := self endPoint * colorRect extent + colorRect position.
 	p2 := p1 + ((mid - p1) * 2).

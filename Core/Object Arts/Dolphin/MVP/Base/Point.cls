@@ -55,16 +55,16 @@ Arithmetic operations can be carried out between two Points or between a Point a
 	N.B. No double dispatch, as would need to do for more than just #<."
 
 	| aPoint |
-	aPoint := anArithmeticValue asPoint.
-	^x < aPoint x and: [ y < aPoint y ]!
+	aPoint := anArithmeticValue asGenericPoint.
+	^x < aPoint x and: [y < aPoint y]!
 
 <= anArithmeticValue
 	"Answer whether the receiver is neither below nor to the right of anArithmeticValue.
 	A double dispatch of #< with the superclass implementation of #<= would not work here."
 
 	| aPoint |
-	aPoint := anArithmeticValue asPoint.
-	^x <= aPoint x and: [ y <= aPoint y ]!
+	aPoint := anArithmeticValue asGenericPoint.
+	^x <= aPoint x and: [y <= aPoint y]!
 
 = comperand
 	"Answer whether the receiver is considered equivalent to the
@@ -74,41 +74,25 @@ Arithmetic operations can be carried out between two Points or between a Point a
 		ifTrue: [x = comperand x and: [y = comperand y]]
 		ifFalse: [super = comperand]!
 
-> anArithmeticValue
-	"Answer whether the receiver is below and to the right of anArithmeticValue.
-	A double dispatch of #< with the superclass implementation of #> would not work here."
-
-	| aPoint |
-	aPoint := anArithmeticValue asPoint.
-	^x > aPoint x and: [y > aPoint y]
-!
-
->= anArithmeticValue
-	"Answer whether the receiver is neither above nor to the left of anArithmeticValue.
-	A double dispatch of #< with the superclass implementation of #>= would not work here."
-	
-	| aPoint |
-	aPoint := anArithmeticValue asPoint.
-	^x >= aPoint x and: [ y >= aPoint y ]
-!
-
 abs
 	"Answer a <Point> that is the absolute value (positive magnitude) of the receiver."
 
 	^x abs @ y abs!
 
 addToPoint: aPoint
-	"Private - Answer the result of adding the receiver to the known Point,
-	aPoint, by coercing the less general of it and the receiver. Overridden by 
-	subclasses which can implement more efficiently."
+	"Private - Answer the <point> result of adding the receiver to the known <point> argument."
 
 	^(aPoint x + x) @ (aPoint y + y)!
 
 asDword
-	"Answer the receiver in a form suitable for returning as the result of a window
-	procedure (or passing to a function expecting a 32-bit value)."
+	"Answer the receiver in a form suitable for returning as the result of a window procedure (or passing to a function expecting a 32-bit value)."
 
-	^(DWORD fromPoint: self) value!
+	^((y bitAnd: 16rFFFF) bitShift: 16) bitOr: (x bitAnd: 16rFFFF)!
+
+asGenericPoint
+	"Answer the receiver"
+
+	^self!
 
 asParameter
 	"Answer the receiver in a form suitable for passing to an external function."
@@ -126,13 +110,11 @@ asPoint3D
 	^self x @ self y @ 0!
 
 asUIntPtr
-	"Answer the receiver in a form suitable for passing/returning as a Windows LRESULT
-	(32 or 64-bit, depending on host OS) return value. The default is self (which will cause the
-	default window proc. of the window to be called for most objects other than Integers when
-	used as a return value)."
+	"Answer the receiver in a form suitable for passing/returning as a Windows LRESULT (32 or 64-bit, depending on host OS) return value.
+	If the integer values of the receiver's two co-ordindates are too large to fit in 16 or 32 bits each, then they are truncated."
 
-	^(self x bitAnd: VMConstants.HalfPtrMask) 
-		bitOr: ((self y bitAnd: VMConstants.HalfPtrMask) bitShift: VMConstants.HalfPtrBits)!
+	^(self x asInteger bitAnd: VMConstants.HalfPtrMask)
+		bitOr: ((self y asInteger bitAnd: VMConstants.HalfPtrMask) bitShift: VMConstants.HalfPtrBits)!
 
 ceiling
 	"Answer a new Point with the x and y values of the receiver truncated
@@ -144,7 +126,7 @@ coerce: anArithmeticValue
 	"Private - Answer the lower generality ArithmeticValue, anArithmeticValue, 
 	converted to a Point."
 
-	^anArithmeticValue asPoint!
+	^anArithmeticValue asGenericPoint!
 
 corner: aPoint
 	"Answers a Rectangle defined by the receiver and aPoint."
@@ -170,9 +152,7 @@ dist: aPoint
 	^(aPoint - self) r!
 
 divideIntoPoint: aPoint
-	"Private - Answer the result of dividing the receiver into the known Point, aPoint, by 
-	coercing the less general of it and the receiver. Overridden by subclasses which 
-	can implement more efficiently."
+	"Private - Answer the <point> result of dividing the receiver into the known <point> argument."
 
 	^(aPoint x / x) @ (aPoint y / y)!
 
@@ -192,7 +172,7 @@ floor
 	"Answer a new Point with the x and y values of the receiver truncated
 	toward negative infinity."
 
-	^x floor @ y floor!
+	^Point x: x floor y: y floor!
 
 generality
 	"Private - Answer the Smalltalk generality of the receiver, used for performing type conversions"
@@ -217,9 +197,7 @@ min: aPoint
 	^(x min: aPoint x) @ (y min: aPoint y)!
 
 multiplyByPoint: aPoint
-	"Private - Answer the result of multiplying the known Point, aPoint,
-	by the receiver, by coercing the less general of it and the recever.
-	Overridden by subclasses which can implement more efficiently."
+	"Private - Answer the <point> result of multiplying the the known <point> argument by the receiver."
 
 	^(x * aPoint x) @ (y * aPoint y)!
 
@@ -256,17 +234,15 @@ roundTo: aNumber
 	^(x roundTo: aNumber) @ (y roundTo: aNumber)!
 
 subtractFromPoint: aPoint
-	"Private - Answer the result of subtracting the receiver from the known Point,
-	aPoint, by coercing the less general of it and the receiver. Overridden by 
-	subclasses which can implement more efficiently."
+	"Private - Answer the <point> result of subtracting the receiver from the the known <point> argument."
 
-	^(aPoint x - x) @ (aPoint y - y)!
+	^Point x: aPoint x - x y: aPoint y - y!
 
 transpose
 	"Answer a new Point with the x and y coordinates of the receiver
 	reversed"
 
-	^y @ x!
+	^self class x: y y: x!
 
 truncated
 	"Answer a new Point with the x and y values of the receiver truncated toward zero"
@@ -309,11 +285,10 @@ y: aNumber
 <!comparing!public! !
 <=!comparing!public! !
 =!comparing!public! !
->!comparing!public! !
->=!comparing!public! !
 abs!arithmetic!public! !
 addToPoint:!double dispatch!private! !
 asDword!converting!public! !
+asGenericPoint!converting!public! !
 asParameter!converting!public! !
 asPoint!converting!public! !
 asPoint3D!converting!public! !
@@ -346,6 +321,8 @@ x:y:!accessing!private! !
 y!accessing!public! !
 y:!accessing!public! !
 !
+
+Point methodProtocol: #point attributes: #(#readOnly) selectors: #(#- #% #* #** #/ #// #\\ #+ #< #<= #= #> #>= #abs #addToFloat: #addToFraction: #addToInteger: #addToPoint: #addToScaledDecimal: #asGenericPoint #asPoint #between:and: #ceiling #corner: #degrees #dist: #divideIntoFloat: #divideIntoFraction: #divideIntoInteger: #divideIntoPoint: #divideIntoScaledDecimal: #dotProduct: #equalToFloat: #equalToFraction: #equalToInteger: #equalToScaledDecimal: #extent: #floor #fractionPart #generality #greaterOrEqualToInteger: #greaterThanFloat: #greaterThanFraction: #greaterThanInteger: #greaterThanScaledDecimal: #integerPart #isZero #max: #min: #multiplyByFloat: #multiplyByFraction: #multiplyByInteger: #multiplyByPoint: #multiplyByScaledDecimal: #negated #negative #positive #quo: #r #raisedTo: #raisedToInteger: #reciprocal #rem: #roundDownTo: #rounded #roundTo: #roundUpTo: #sign #squared #strictlyPositive #subtractFromFloat: #subtractFromFraction: #subtractFromInteger: #subtractFromPoint: #subtractFromScaledDecimal: #transpose #truncated #truncateTo: #understandsArithmetic #x #x: #y #y:)!
 
 !Point class methodsFor!
 
@@ -387,4 +364,6 @@ unitialize!class hierarchy-removing!public! !
 x:y:!instance creation!public! !
 zero!instance creation!public! !
 !
+
+Point class methodProtocol: #'point factory' attributes: #(#readOnly) selectors: #(#new #x:y:)!
 

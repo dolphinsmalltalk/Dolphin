@@ -20,9 +20,23 @@ package methodNames
 	add: #ArithmeticValue -> #_expandRectangle:;
 	add: #ArithmeticValue -> #_insetRectangle:;
 	add: #ArithmeticValue -> #_offsetRectangle:;
+	add: #ArithmeticValue -> #addToPoint:;
+	add: #ArithmeticValue -> #addToPoint3D:;
+	add: #ArithmeticValue -> #asGenericPoint;
+	add: #ArithmeticValue -> #asPoint;
+	add: #ArithmeticValue -> #divideIntoPoint:;
+	add: #ArithmeticValue -> #divideIntoPoint3D:;
+	add: #ArithmeticValue -> #multiplyByPoint:;
+	add: #ArithmeticValue -> #multiplyByPoint3D:;
+	add: #ArithmeticValue -> #subtractFromPoint:;
+	add: #ArithmeticValue -> #subtractFromPoint3D:;
 	add: #Number -> #@;
+	add: #Number -> #addToPoint:;
 	add: #Number -> #asPoint;
 	add: #Number -> #asPoint3D;
+	add: #Number -> #divideIntoPoint:;
+	add: #Number -> #multiplyByPoint:;
+	add: #Number -> #subtractFromPoint:;
 	add: #UserLibrary -> #subtractRect:lprcSrc1:lprcSrc2:;
 	add: 'DWORD class' -> #fromPoint:;
 	yourself.
@@ -119,12 +133,83 @@ _offsetRectangle: aRectangle
 	"Private - Offset the <Rectangle> argument by the magnitude of the receiver.
 	Double-dispatched from the Rectangle itself."
 
-	^aRectangle species origin: aRectangle origin + self corner: aRectangle corner + self! !
+	^aRectangle species origin: aRectangle origin + self corner: aRectangle corner + self!
+
+addToPoint: aPoint
+	"Private - Answer the <point> result of adding the receiver to the known <point> argument."
+
+	^aPoint retry: #+ coercing: self
+!
+
+addToPoint3D: aPoint3D
+	"Private - Answer the result of adding the receiver to the known Point3D, aPoint3D, by coercing 
+	the less general of it and the receiver. Overridden by subclasses which can implement 
+	more efficiently."
+
+	^aPoint3D retry: #+ coercing: self
+!
+
+asGenericPoint
+	"Answer a <point> with the receiver as both co-ordinates."
+
+	^self asPoint!
+
+asPoint
+	"Answer the receiver"
+
+	^self subclassResponsibility!
+
+divideIntoPoint: aPoint
+	"Private - Answer the <point> result of dividing the receiver into the known <point> argument."
+
+	^aPoint retry: #/ coercing: self!
+
+divideIntoPoint3D: aPoint3D
+	"Private - Answer the result of dividing the receiver into the known Point3D, aPoint3D, by 
+	coercing the less general of it and the receiver. Overridden by subclasses which 
+	can implement more efficiently."
+
+	^aPoint3D retry: #/ coercing: self!
+
+multiplyByPoint: aPoint
+	"Private - Answer the <point> result of multiplying the the known <point> argument by the receiver."
+
+	^aPoint retry: #* coercing: self!
+
+multiplyByPoint3D: aPoint3D
+	"Private - Answer the result of multiplying the known Point3D, aPoint3D,
+	by the receiver, by coercing the less general of it and the recever.
+	Overridden by subclasses which can implement more efficiently."
+
+	^aPoint3D retry: #* coercing: self!
+
+subtractFromPoint: aPoint
+	"Private - Answer the <point> result of subtracting the receiver from the the known <point> argument."
+
+	^aPoint retry: #- coercing: self!
+
+subtractFromPoint3D: aPoint3D
+	"Private - Answer the result of subtracting the receiver from the known Point3D,
+	aPoint3D, by coercing the less general of it and the receiver. Overridden by 
+	subclasses which can implement more efficiently."
+
+	^aPoint3D retry: #- coercing: self
+! !
 
 !ArithmeticValue categoriesForMethods!
 _expandRectangle:!double dispatch!private! !
 _insetRectangle:!double dispatch!private! !
 _offsetRectangle:!double dispatch!private! !
+addToPoint:!double dispatch!private! !
+addToPoint3D:!double dispatch!private! !
+asGenericPoint!converting!double dispatch!public! !
+asPoint!converting!public! !
+divideIntoPoint:!double dispatch!private! !
+divideIntoPoint3D:!double dispatch!private! !
+multiplyByPoint:!double dispatch!private! !
+multiplyByPoint3D:!double dispatch!private! !
+subtractFromPoint:!double dispatch!private! !
+subtractFromPoint3D:!double dispatch!private! !
 !
 
 !DWORD class methodsFor!
@@ -154,6 +239,11 @@ fromPoint:!instance creation!private! !
 
 	^Point x: self y: yCoord!
 
+addToPoint: aPoint
+	"Private - Answer the <point> result of adding the receiver to the known <point> argument."
+
+	^Point x: aPoint x + self y: aPoint y + self!
+
 asPoint
 	"Answer a Point with the receiver as both co-ordinates."
 
@@ -162,12 +252,31 @@ asPoint
 asPoint3D
 	"Answer a Point with the receiver as all three co-ordinates."
 
-	^self @ self @ self! !
+	^self @ self @ self!
+
+divideIntoPoint: aPoint
+	"Private - Answer the <point> result of dividing the receiver into the known <point> argument."
+
+	^Point x: aPoint x / self y: aPoint y / self!
+
+multiplyByPoint: aPoint
+	"Private - Answer the <point> result of multiplying the the known <point> argument by the receiver."
+
+	^Point x: aPoint x * self y: aPoint y * self!
+
+subtractFromPoint: aPoint
+	"Private - Answer the <point> result of subtracting the receiver from the the known <point> argument."
+
+	^Point x: aPoint x - self y: aPoint y - self! !
 
 !Number categoriesForMethods!
 @!converting!public! !
+addToPoint:!double dispatch!private! !
 asPoint!converting!public! !
 asPoint3D!converting!public! !
+divideIntoPoint:!double dispatch!private! !
+multiplyByPoint:!double dispatch!private! !
+subtractFromPoint:!double dispatch!private! !
 !
 
 !UserLibrary methodsFor!

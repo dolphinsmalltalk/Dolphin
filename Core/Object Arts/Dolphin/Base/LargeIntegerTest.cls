@@ -922,6 +922,34 @@ testGreaterOrEqual
 			self assert: pair last >= pair first].
 	self should: [SmallInteger maximum + 1 >= nil] raise: MessageNotUnderstood!
 
+testGreaterOrEqualToFloat
+	| pos neg |
+	pos := SmallInteger maximum + 1.
+	neg := SmallInteger minimum - 1.
+	"+ve"
+	self deny: (pos greaterOrEqualToFloat: Float infinity).
+	self deny: (pos greaterOrEqualToFloat: Float nan).
+	self assert: (pos greaterOrEqualToFloat: Float negativeInfinity).
+	self assert: (pos greaterOrEqualToFloat: Float negativeZero).
+	self assert: (pos greaterOrEqualToFloat: Float zero).
+	self deny: (pos greaterOrEqualToFloat: Float fmax).
+	self assert: (pos greaterOrEqualToFloat: Float fmin).
+	self assert: (pos greaterOrEqualToFloat: Float fminDenormalized).
+	self assert: (pos greaterOrEqualToFloat: pos asFloat).
+	self assert: (pos greaterOrEqualToFloat: neg asFloat).
+	"-ve"
+	self deny: (neg greaterOrEqualToFloat: Float infinity).
+	self deny: (neg greaterOrEqualToFloat: Float nan).
+	self assert: (neg greaterOrEqualToFloat: Float negativeInfinity).
+	self deny: (neg greaterOrEqualToFloat: Float negativeZero).
+	self deny: (neg greaterOrEqualToFloat: Float zero).
+	self deny: (neg greaterOrEqualToFloat: Float pi).
+	self deny: (neg greaterOrEqualToFloat: pos asFloat).
+	self assert: (neg greaterOrEqualToFloat: neg asFloat).
+	self deny: (neg greaterOrEqualToFloat: Float fmin negated).
+	self deny: (neg greaterOrEqualToFloat: Float fminDenormalized negated).
+	self assert: (neg greaterOrEqualToFloat: Float fmax negated)!
+
 testGreaterThan
 	self largePositive do: 
 			[:each |
@@ -938,6 +966,35 @@ testGreaterThan
 			self deny: pair first > pair last.
 			self assert: pair last > pair first].
 	self should: [SmallInteger maximum + 1 > nil] raise: MessageNotUnderstood!
+
+testGreaterThanFloat
+	| pos neg |
+	pos := SmallInteger maximum + 1.
+	neg := SmallInteger minimum - 1.
+	"+ve"
+	self deny: (pos greaterThanFloat: Float infinity).
+	self deny: (pos greaterThanFloat: Float nan).
+	self assert: (pos greaterThanFloat: Float negativeInfinity).
+	self assert: (pos greaterThanFloat: Float negativeZero).
+	self assert: (pos greaterThanFloat: Float zero).
+	self deny: (pos greaterThanFloat: Float fmax).
+	self assert: (pos greaterThanFloat: Float fmin).
+	self assert: (pos greaterThanFloat: Float fminDenormalized).
+	self assert: (pos greaterThanFloat: Float pi).
+	self deny: (pos greaterThanFloat: pos asFloat).
+	self assert: (pos greaterThanFloat: neg asFloat).
+	"-ve"
+	self deny: (neg greaterThanFloat: Float infinity).
+	self deny: (neg greaterThanFloat: Float nan).
+	self assert: (neg greaterThanFloat: Float negativeInfinity).
+	self deny: (neg greaterThanFloat: Float negativeZero).
+	self deny: (neg greaterThanFloat: Float zero).
+	self deny: (neg greaterThanFloat: Float pi).
+	self deny: (neg greaterThanFloat: pos asFloat).
+	self deny: (neg greaterThanFloat: neg asFloat).
+	self deny: (neg greaterThanFloat: Float fmin negated).
+	self deny: (neg greaterThanFloat: Float fminDenormalized negated).
+	self assert: (neg greaterThanFloat: Float fmax negated)!
 
 testHighBit
 	31 to: 256 do: [:each | self assert: (2 ** each) highBit equals: each + 1]!
@@ -1015,6 +1072,35 @@ testLessOrEqual
 			self deny: pair last <= pair first].
 	self should: [SmallInteger maximum + 1 <= nil] raise: MessageNotUnderstood!
 
+testLessOrEqualToFloat
+	| pos neg |
+	pos := SmallInteger maximum + 1.
+	neg := SmallInteger minimum - 1.
+	"+ve"
+	self assert: pos <= Float infinity.
+	self deny: pos <= Float nan.
+	self deny: pos <= Float negativeInfinity.
+	self deny: pos <= Float negativeZero.
+	self deny: pos <= Float zero.
+	self deny: pos <= Float fmin.
+	self deny: pos <= Float fminDenormalized.
+	self assert: pos <= Float fmax.
+	self deny: pos <= Float pi.
+	self assert: pos <= pos asFloat.
+	self deny: pos <= neg asFloat.
+	"-ve"
+	self assert: neg <= Float infinity.
+	self deny: neg <= Float nan.
+	self deny: neg <= Float negativeInfinity.
+	self assert: neg <= Float negativeZero.
+	self assert: neg <= Float zero.
+	self assert: neg <= Float fmin negated.
+	self assert: neg <= Float fminDenormalized negated.
+	self deny: neg <= Float fmax negated.
+	self assert: neg <= Float pi.
+	self assert: neg <= pos asFloat.
+	self assert: neg <= neg asFloat!
+
 testLessThan
 	self largePositive do: 
 			[:each |
@@ -1031,6 +1117,36 @@ testLessThan
 			self assert: pair first < pair last.
 			self deny: pair last < pair first].
 	self should: [SmallInteger maximum + 1 < nil] raise: MessageNotUnderstood!
+
+testLessThanFloat
+	| pos neg zero |
+	pos := SmallInteger maximum + 1.
+	neg := SmallInteger minimum - 1.
+	"+ve"
+	self assert: pos < Float infinity.
+	self deny: pos < Float nan.
+	self deny: pos < Float negativeInfinity.
+	self deny: pos < Float negativeZero.
+	self deny: pos < Float zero.
+	self deny: pos < Float pi.
+	self deny: pos < pos asFloat.
+	self deny: pos < neg asFloat.
+	"-ve"
+	self assert: neg < Float infinity.
+	self deny: neg < Float nan.
+	self deny: neg < Float negativeInfinity.
+	self assert: neg < Float negativeZero.
+	self assert: neg < Float zero.
+	self assert: neg < Float pi.
+	self assert: neg < pos asFloat.
+	self deny: neg < neg asFloat.
+	"zero"
+	zero := 0s.
+	self assert: zero < Float infinity.
+	self deny: zero < Float nan.
+	self deny: zero < Float negativeInfinity.
+	self deny: zero < Float negativeZero.
+	self deny: zero < Float zero!
 
 testLowBit
 	#(#(16r40000000 31) #(16r80000000 32) #(16r70000000 29) #(16r10000000000000000 65))
@@ -1175,6 +1291,12 @@ testNegate
 	self assert: res equals: -16r800000000000000000000000.
 	res := res negated.
 	self assert: res equals: a!
+
+testOdd
+	self deny: (2 ** 63) odd.
+	self assert: (2 ** 63 + 1) odd.
+	self deny: (-2 ** 64) odd.
+	self assert: (-2 ** 64 + 1) odd!
 
 testPrintLargeBase2
 	"#1664."
@@ -1409,16 +1531,21 @@ testEqual!public!unit tests! !
 testEven!public!unit tests! !
 testGcd!public!unit tests! !
 testGreaterOrEqual!public!unit tests! !
+testGreaterOrEqualToFloat!public!unit tests! !
 testGreaterThan!public!unit tests! !
+testGreaterThanFloat!public!unit tests! !
 testHighBit!public!unit tests! !
 testImmutable!public!unit tests! !
 testLessOrEqual!public!unit tests! !
+testLessOrEqualToFloat!public!unit tests! !
 testLessThan!public!unit tests! !
+testLessThanFloat!public!unit tests! !
 testLowBit!public!unit tests! !
 testMod!public!unit tests! !
 testModulo!public!unit tests! !
 testMulSmall!public!unit tests! !
 testNegate!public!unit tests! !
+testOdd!public!unit tests! !
 testPrintLargeBase2!public!unit tests! !
 testPrintStringBase!public!unit tests! !
 testPrintUnnormalized!public!unit tests! !

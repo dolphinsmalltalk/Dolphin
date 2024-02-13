@@ -29,7 +29,7 @@ actualInsets: aLayoutContext
 	computed from the configured insets (#inset aspect) and any implicit insets managed by the
 	receiver"
 
-	^self insets translateBy: (self implicitInsets: aLayoutContext)!
+	^self insets translatedBy: (self implicitInsets: aLayoutContext)!
 
 actualPreferredExtent: aLayoutContext 
 	"Private - Answer the preferred extent of the receiver given the suggested extent specifed
