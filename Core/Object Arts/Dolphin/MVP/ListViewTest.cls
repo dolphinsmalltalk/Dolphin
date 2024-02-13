@@ -134,7 +134,7 @@ testAutoResizeColumnsPositionChangedAddingScrollbar
 	"One pixel shorter, and a scrollbar appears, which we must compensate for."
 	presenter topShell height: 342 + shellNCHeight.
 	self assert: (presenter getWindowStyle allMask: WS_VSCROLL).
-	self verifyColumnWidths: {196 - SystemMetrics current scrollbarWidth}!
+	self verifyColumnWidths: {196 - presenter metrics scrollbarWidth}!
 
 testAutoResizeColumnsWithChangedBorderStyles
 	presenter viewMode: #report.
@@ -162,13 +162,13 @@ testAutoResizeColumnsWithLargeNumberOfItems
 	"With reasonably normal font settings, this is squarely in the range where
 	LVM_APPROXIMATEVIEWRECT will overflow and return a negative value."
 	presenter list: (1 to: 2000).
-	self verifyColumnWidths: {196 - SystemMetrics current scrollbarWidth}.
+	self verifyColumnWidths: {196 - presenter metrics scrollbarWidth}.
 	"Use a massive font to trigger the bug with a (relatively) small number of rows."
 	font := presenter actualFont copy.
 	font pointSize: font pointSize * 4.
 	presenter font: font.
 	presenter list: (1 to: 500).
-	self verifyColumnWidths: {196 - SystemMetrics current scrollbarWidth}!
+	self verifyColumnWidths: {196 - presenter metrics scrollbarWidth}!
 
 testBackImage
 	| watermark |

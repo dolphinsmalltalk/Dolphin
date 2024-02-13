@@ -2,7 +2,7 @@
 
 ListControlView subclass: #IconicListAbstract
 	instanceVariableNames: 'getImageBlock imageManager stateImageManager getInfoTipBlock customDrawBlock largeIconExtent thumbnailsImageManager'
-	classVariableNames: 'ViewModes'
+	classVariableNames: 'ImageSizes'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
@@ -334,9 +334,9 @@ hideDropHighlight
 	self removePropertyAt: #dropHighlight ifAbsent: []!
 
 imageExtent
-	"Private - Answer the extent of images to use based on the current view mode"
+	"Private - Answer the extent of images to use based on the current view mode and resolution."
 
-	^self class viewModes at: self viewMode!
+	^self mapDipsToPels: (self class imageSizes at: self viewMode)!
 
 imageManager
 	"Private - Answer the receiver's normal image manager."
@@ -382,9 +382,9 @@ itemRect: itemHandle textOnly: aBoolean
 	^self subclassResponsibility!
 
 largeIconExtent
-	"Answer image extent for the large icons mode."
+	"Answer image extent measured in device-independent (96-dpi) pixesl for the large icons mode. This will be scaled to the receiver's resolution."
 
-	^largeIconExtent isNil ifTrue: [Icon largeExtent] ifFalse: [largeIconExtent]!
+	^largeIconExtent ifNil: [SystemMetrics default largeIconExtent]!
 
 largeIconExtent: aPointOrNil
 	"Set the image extent for the large icons mode."
@@ -712,9 +712,9 @@ showDropHighlight: anItem
 !
 
 smallIconExtent
-	"Answer image extent for the small icons mode."
+	"Answer device-independent pixel extent for the small icons mode. This will be scaled to the receiver's resolution to generate the actual small image extent."
 
-	^Icon smallExtent!
+	^SystemMetrics default smallIconExtent!
 
 stateImageManager
 	"Answers the receiver's state image manager."
@@ -864,12 +864,19 @@ wmDestroy:wParam:lParam:!event handling-win32!private! !
 
 !IconicListAbstract class methodsFor!
 
+imageSizes
+	"Answer the map of named image sizes applicable in this type of iconic list. The sizes themselves are specified in device-independent pixels (i.e. 96-dpi)."
+
+	^ImageSizes!
+
 initialize
 	"Private - Initialise the receiver's class variables.
 		IconicListAbstract initialize
 	"
 
-	self addClassConstant: 'ViewModes'
+	"Standard icon sizes at 96-dpi"
+
+	self addClassConstant: 'ImageSizes'
 		value: (IdentityDictionary new
 				at: #noIcons put: 0 @ 0;
 				at: #smallIcons put: 16 @ 16;
@@ -931,9 +938,10 @@ value: anObject
 	^anObject iconImageIndex!
 
 viewModes
-	^ViewModes! !
+	^self imageSizes! !
 
 !IconicListAbstract class categoriesForMethods!
+imageSizes!accessing!public! !
 initialize!development!initializing!private! !
 stbConvertFromVersion3:!binary filing!private! !
 stbConvertFromVersion9:!binary filing!private! !

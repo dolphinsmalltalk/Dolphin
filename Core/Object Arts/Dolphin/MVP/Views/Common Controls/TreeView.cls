@@ -97,7 +97,7 @@ applyImageLists
 
 	| imList stateImList imageSize |
 	imageSize := self imageExtent.
-	imList := imageSize > 0 
+	imList := imageSize > 0
 				ifTrue: 
 					[stateImList := self stateImageManager ifNotNil: [:sim | sim imageListWithExtent: imageSize].
 					self imageManager imageListWithExtent: imageSize].

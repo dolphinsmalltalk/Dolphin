@@ -167,11 +167,12 @@ applyImageLists
 
 	| largeImList smallExt |
 	largeImList := self customImageExtent
-				ifNotNil: [:ext | self thumbnailsImageManager imageListWithExtent: ext]
+				ifNotNil: [:ext | self thumbnailsImageManager imageListWithExtent: (self mapDipsToPels: ext)]
 				ifNil: 
 					[thumbnailsImageManager := nil.
-					self imageManager ifNotNil: [:im | im imageListWithExtent: self largeIconExtent]].
-	smallExt := self smallIconExtent.
+					self imageManager
+						ifNotNil: [:im | im imageListWithExtent: (self mapDipsToPels: self largeIconExtent)]].
+	smallExt := self mapDipsToPels: self smallIconExtent.
 	self lvmSetImageList: (self imageManager ifNotNil: [:im | im imageListWithExtent: smallExt])
 		type: LVSIL_SMALL.
 	self lvmSetImageList: largeImList type: LVSIL_NORMAL.
@@ -515,8 +516,11 @@ customDrawSubItem: context
 				evaluateDrawBlock: custom]!
 
 customImageExtent
+	"Private - Answer a custom image extent for the receiver if in thumbnails or extra large icons mode, or nil if not so configured.
+	Note that the extent is measured in DIPs (device-independent, or 96-dpi, pixels). It will be scaled to the receiver's actual resolution."
+
 	viewMode == #thumbnails ifTrue: [^self thumbnailExtent].
-	viewMode == #extraLargeIcons ifTrue: [^Icon extraLargeExtent].
+	viewMode == #extraLargeIcons ifTrue: [^SystemMetrics default extraLargeIconExtent].
 	^nil!
 
 defaultListViewExStyle
@@ -526,7 +530,9 @@ defaultListViewExStyle
 	^##(LVS_EX_FULLROWSELECT | LVS_EX_HEADERDRAGDROP|LVS_EX_INFOTIP)!
 
 defaultThumbnailExtent
-	^64@64!
+	"Answer the default size of thumbnail images in device-independent (96-dpi) pixels."
+
+	^##(64 @ 64)!
 
 defaultWindowStyle
 	"Private - Answer a base style to use when creating a ListView."
@@ -878,6 +884,12 @@ iconSpacing: aPointOrNil
 
 	self setIconSpacing: (iconSpacing := aPointOrNil).
 	self applyFont!
+
+imageExtent
+	"Private - Answer the device-independent (96-dpi) extent of images to use based on the current view mode"
+
+	viewMode == #thumbnails ifTrue: [^self thumbnailExtent].
+	^ImageSizes at: self viewMode ifAbsent: [self smallIconExtent]!
 
 imageFromRow: item
 	"Private - Answer the image for row which represents the <Object>, item.
@@ -1782,7 +1794,7 @@ onPositionChanged: aPositionEvent
 					[| requiredHeight |
 					requiredHeight := self lvmGetOrigin y + (self itemRect: count) bottom.
 					requiredHeight > clientRect height
-						ifTrue: [clientWidth := clientWidth - SystemMetrics current scrollbarWidth]].
+						ifTrue: [clientWidth := clientWidth - self metrics scrollbarWidth]].
 			self autoResizeColumns: clientWidth].
 	^super onPositionChanged: aPositionEvent!
 
@@ -2160,9 +2172,13 @@ textFromRow: item
 !
 
 thumbnailExtent
+	"Answer the size of thumbnail images to be used in the receiver. The measurement is specified in device-independent (96-dpi) pixels. Typically these are scaled to the actual DPI of the window."
+
 	^thumbnailExtent ifNil: [self defaultThumbnailExtent]!
 
 thumbnailExtent: aPointOrNil
+	"Set the size of thumbnail images to be used in the receiver. The measurement must be specified in device-independent (96-dpi) pixels. Typically these are scaled to the actual DPI of the window."
+
 	thumbnailExtent := aPointOrNil = self defaultThumbnailExtent ifFalse: [aPointOrNil]!
 
 thumbnailsImageManager
@@ -2373,6 +2389,7 @@ hasSubItemCustomDraw!private!testing! !
 hideDropHighlight!drag & drop!private! !
 iconSpacing!accessing!public! !
 iconSpacing:!accessing!public! !
+imageExtent!accessing!private! !
 imageFromRow:!adapters!private! !
 indentFromRow:!adapters!private! !
 infoTipFromRow:withPrefix:!adapters!private! !
@@ -2557,7 +2574,7 @@ initialize
 	"Private - Initialise the receiver's class variables.
 		self initialize
 	"
-	
+
 	self addClassConstant: 'NoImageIndex' value: 0.
 	self addClassConstant: 'LvModes'
 		value: (IdentityDictionary new

@@ -2,7 +2,7 @@
 
 IconicListAbstract subclass: #TabView
 	instanceVariableNames: 'viewMode'
-	classVariableNames: 'OrientationMask TabOrientations TabViewModes'
+	classVariableNames: 'OrientationMask TabOrientations TabViewImageSizes'
 	poolDictionaries: 'TabViewConstants'
 	classInstanceVariableNames: ''!
 
@@ -95,6 +95,7 @@ calcRectangleFromClientRectangle: aRectangle
 	window styles etc Note that the answered rectangle is in the COORDINATE SYSTEM OF THE
 	CLIENT."
 
+	#highDpiTodo. "Is this a DPI aware adjustment? Probably not."
 	^self tcmAdjustRect: true for: aRectangle!
 
 canEditLabels
@@ -489,7 +490,7 @@ tabViewStyleMask: mask set: aBoolean
 
 	^self tcmSetExtendedStyle: mask dwExStyle: aBoolean asParameter negated!
 
-tcmAdjustRect: aBooleanMode for: aRectangle 
+tcmAdjustRect: aBooleanMode for: aRectangle
 	"Private - Calculates the display area for a given window rectangle or calculates
 	the window rectangle that would correspond to a specified display area. The operation
 	is determined by aBooleanMode being false or true respectively. Answers the calculated
@@ -499,10 +500,10 @@ tcmAdjustRect: aBooleanMode for: aRectangle
 	"The control has a bug whereby TCM_ADJUSTRECT sometimes GPFs when it has no extent"
 	aRectangle extent isZero ifTrue: [^aRectangle].
 	wr := aRectangle asParameter.
-	self 
+	self
 		sendMessage: TCM_ADJUSTRECT
 		wParam: aBooleanMode asParameter
-		lpParam: wr asParameter.
+		lpParam: wr.
 	^wr asRectangle!
 
 tcmGetCurFocus
@@ -688,6 +689,11 @@ icon
 
 	^##(self) defaultIcon!
 
+imageSizes
+	"Answer the map of named image sizes applicable in this type of iconic list. The sizes themselves are specified in device-independent pixels (i.e. 96-dpi)."
+
+	^TabViewImageSizes!
+
 initialize
 	"Private - Initialise the receiver's class variables.
 		TabView initialize
@@ -703,7 +709,7 @@ initialize
 				shrink;
 				isImmutable: true;
 				yourself).
-	self addClassConstant: 'TabViewModes'
+	self addClassConstant: 'TabViewImageSizes'
 		value: (IdentityDictionary new
 				at: #noIcons put: 0 @ 0;
 				at: #smallIcons put: 16 @ 16;
@@ -720,9 +726,6 @@ initialize
 tabOrientations
 	^TabOrientations!
 
-viewModes
-	^TabViewModes!
-
 winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
 
@@ -731,9 +734,9 @@ winClassName
 
 !TabView class categoriesForMethods!
 icon!constants!public! !
+imageSizes!accessing!public! !
 initialize!development!initializing!private! !
 tabOrientations!accessing!constants!public! !
-viewModes!accessing!public! !
 winClassName!constants!private! !
 !
 
