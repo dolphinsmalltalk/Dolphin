@@ -60,6 +60,9 @@ We are grateful to Richard A. Harmon for contributing his ANSI compliant ScaledD
 	^operand greaterThanScaledDecimal: self
 !
 
+<= anArithmeticValue
+	^anArithmeticValue greaterOrEqualToScaledDecimal: self!
+
 = anObject
 	"Answer whether the receiver is numerically equivalent to the <Object>, anObject - i.e. whether the difference between the receiver and comparand is zero."
 
@@ -168,6 +171,16 @@ generality
 	compatibility with existing applications)."
 
 	^35!
+
+greaterOrEqualToFloat: aFloat
+	"Private - Answer whether the receiver is greater than or equal to the known <Float> argument."
+
+	^self asFloat >= aFloat!
+
+greaterOrEqualToScaledDecimal: aScaledDecimal
+	"Private - Answer whether the receiver is greater than the known <ScaledDecimal> argument."
+
+	^aScaledDecimal asFraction <= fraction!
 
 greaterThanScaledDecimal: comperand
 	"Private - Answer whether the receiver is greater than the known <ScaledDecimal>, comperand."
@@ -302,6 +315,7 @@ truncated
 //!arithmetic!public! !
 +!arithmetic!public! !
 <!comparing!public! !
+<=!comparing!public! !
 =!comparing!public! !
 addToScaledDecimal:!double dispatch!private! !
 asFloat!converting!public! !
@@ -315,6 +329,8 @@ equalToInteger:!double dispatch!private! !
 equalToScaledDecimal:!double dispatch!private! !
 fractionPart!accessing!public! !
 generality!coercing!private! !
+greaterOrEqualToFloat:!double dispatch!private! !
+greaterOrEqualToScaledDecimal:!double dispatch!private! !
 greaterThanScaledDecimal:!double dispatch!private! !
 hash!comparing!public! !
 integerPart!accessing!public! !

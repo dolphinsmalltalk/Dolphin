@@ -294,7 +294,7 @@ generality
 	^20!
 
 greaterThanInteger: anInteger
-	"Private - Answer whether the receiver is greater than the known integer, anInteger."
+	"Private - Answer whether the receiver is greater than the known <integer> argument."
 
 	<primitive: 24>
 	^super greaterThanInteger: anInteger!

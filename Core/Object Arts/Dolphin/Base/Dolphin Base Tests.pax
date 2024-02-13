@@ -62,6 +62,7 @@ package classNames
 	add: #FILETIMETest;
 	add: #FLOATArrayTest;
 	add: #FloatTest;
+	add: #FractionTest;
 	add: #GenericExternalArrayTest;
 	add: #GUIDTest;
 	add: #HeapsortAlgorithmTest;
@@ -343,6 +344,11 @@ DolphinTest subclass: #FILETIMETest
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #FloatTest
 	instanceVariableNames: 'fpeMask'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #FractionTest
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
