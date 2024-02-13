@@ -142,7 +142,7 @@ onViewDestroyed
 	self freeTheme!
 
 openTheme
-	pinSize := SystemMetrics current smallIconExtent asParameter.
+	pinSize := self metrics smallIconExtent asParameter.
 	self isThemed
 		ifTrue: 
 			[ThemeLibrary default
@@ -254,6 +254,10 @@ pinStateId
 				ifTrue: [self isPinPressed ifTrue: [EBHP_PRESSED] ifFalse: [EBHP_HOT]]
 				ifFalse: [EBHP_NORMAL]]!
 
+resolutionScaledBy: aPoint
+	super resolutionScaledBy: aPoint.
+	pinSize := pinSize * aPoint!
+
 setSlider: aSlideyInneyOuteyThing 
 	slider := aSlideyInneyOuteyThing.
 	tabs := slider tabs.
@@ -265,7 +269,7 @@ setSlider: aSlideyInneyOuteyThing
 sizingEdgeInfo
 	| rect frameExtent hit |
 	rect := self screenRectangle.
-	frameExtent := SystemMetrics current sizingFrameExtent.
+	frameExtent := self metrics sizingFrameExtent.
 	hit := self isVertical 
 				ifTrue: 
 					[self isInverted 
@@ -376,6 +380,7 @@ pinImageList!accessing!private! !
 pinInset!constants!private! !
 pinRectangle!accessing!private! !
 pinStateId!accessing!private! !
+resolutionScaledBy:!geometry!private! !
 setSlider:!initializing!private! !
 sizingEdgeInfo!helpers!private! !
 tabOrientation:!accessing-styles!public! !
