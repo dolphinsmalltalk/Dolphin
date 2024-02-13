@@ -95,7 +95,7 @@ adornmentRectanglesFor: aView do: aMonadicValuable
 	selection adornments of aView."
 
 	| grabberExt viewRect |
-	grabberExt := Grabber defaultExtent.
+	grabberExt := self grabberExtent.
 	viewRect := aView rectangle insetBy: grabberExt // 2 negated.
 	viewRect
 		origin: (self mapPoint: viewRect origin toArenaFromView: aView);
@@ -299,7 +299,7 @@ borderRectanglesFor: aView
 	"Private - Answer a collection of rectangles that mark the borders of aView"
 
 	| extent rect topLeft height width |
-	extent := Grabber defaultExtent.
+	extent := self grabberExtent.
 	rect := aView rectangle.
 	topLeft := self mapPoint: rect topLeft toArenaFromView: aView.
 	height := rect height.
@@ -1000,6 +1000,9 @@ getAdornmentRegion
 
 
 !
+
+grabberExtent
+	^self view mapDipsToPels: Grabber defaultExtent!
 
 grabberHitBy: aPoint
 	"Private - Answer the grabber under aPoint or nil otherwise"
@@ -2590,6 +2593,7 @@ fileOpen!commands-actions!public! !
 fileSave!commands-actions!public! !
 forceLayoutFor:!geometry!private! !
 getAdornmentRegion!adornments!private! !
+grabberExtent!constants!private! !
 grabberHitBy:!adornments!private! !
 grabbers!adornments!private! !
 grid!accessing!private! !
