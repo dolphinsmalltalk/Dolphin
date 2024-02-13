@@ -33,7 +33,7 @@ imageLayout
 					[:each | 
 					| imageRect |
 					imageRect := lineRect topRight extent: each extent + (self margin * 2).
-					imageRect right > (self parentView parentView width - 24) 
+					imageRect right > (self parentView parentView width - self metrics scrollbarWidth ) 
 						ifTrue: 
 							["allow for future scrollbar width"
 
@@ -49,7 +49,7 @@ initialize
 	self usePreferredExtent: true!
 
 margin
-	^8!
+	^8 * self dpi // USER_DEFAULT_SCREEN_DPI!
 
 onLeftButtonDoubleClicked: aMouseEvent
 	self setCapture!
@@ -100,11 +100,6 @@ onMouseMoved: aMouseEvent
 	lastImage := image.
 	self presenter trigger: #mouseOver: with: image!
 
-onMouseWheel: aMouseEvent
-	self parentView parentView scroll: aMouseEvent wheelDirection
-		toNextIn: (self imageLayout collect: [:each | each top]) asSet asSortedCollection 
-				asOrderedCollection!
-
 onPaintRequired: aPaintEvent
 	| canvas paintRect |
 	self model isNil ifTrue: [^self].
@@ -132,7 +127,7 @@ onPositionChanged: aPositionEvent
 	^super onPositionChanged: aPositionEvent!
 
 preferredExtent
-	self model isNil ifTrue: [^10 @ 10].
+	self model isNil ifTrue: [^10 @ 10 * self dpi // USER_DEFAULT_SCREEN_DPI].
 	self imageLayout.
 	^imageLayoutRect corner max: Point one! !
 !ILLibraryWorkspace categoriesForMethods!
@@ -145,7 +140,6 @@ onLeftButtonPressed:!event handling!public! !
 onLeftButtonReleased:!event handling!public! !
 onLibraryChanged:!event handling!public! !
 onMouseMoved:!event handling!public! !
-onMouseWheel:!event handling!public! !
 onPaintRequired:!event handling!public! !
 onPositionChanged:!event handling!public! !
 preferredExtent!geometry!public! !
