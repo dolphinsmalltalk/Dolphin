@@ -105,7 +105,7 @@ defaultColor
 defaultExtent
 	"Private - Answers the default extent to be used for the receiver"
 
-	^self class defaultExtent!
+	^view mapDipsToPels: self class defaultExtent!
 
 draw
 	"Draws the receiver in its arena"
@@ -269,7 +269,7 @@ cursors
 !
 
 defaultExtent
-	"Private - Answers the default extent to be used for the receiver"
+	"Private - Answers the default extent to be used for the receiver, measured in device-independent (96 dpi) pixels."
 
 	^6 @ 6!
 
