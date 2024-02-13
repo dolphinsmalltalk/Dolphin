@@ -166,9 +166,11 @@ badgeTile: anIconBadge color: aColor extent: extent
 		yourself!
 
 defaultExtent
+	#highDpiTodo. "Should this be scaled?"
 	^48 @ 48!
 
 defaultTileExtent
+	#highDpiTodo.	"Should this be scaled?"
 	^128 @ 128!
 
 filesType

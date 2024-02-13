@@ -778,7 +778,7 @@ setColumnIcon: anImage atIndex: anInteger
 shouldOwnerDrawSelectionHighlight
 
 	"Themed controls appear to draw their own alpha-blended highlights"
-	^self isThemed not or: [SystemMetrics current hasListViewAlphaBlendedHighlights not]!
+	^self isThemed not or: [self metrics hasListViewAlphaBlendedHighlights not]!
 
 showColumn: aColumn
 
