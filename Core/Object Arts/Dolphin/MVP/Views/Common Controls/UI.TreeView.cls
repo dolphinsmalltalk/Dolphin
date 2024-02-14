@@ -882,7 +882,6 @@ onViewCreated
 	"Some vagary of the TreeView causes the font to be incorrectly restored during ControlView>>onCreated. We force it again here"
 	self applyFont.
 	self refreshContents.
-	self viewMode: self viewMode.
 	tvStyle == 0
 		ifFalse: 
 			[User32
@@ -890,7 +889,7 @@ onViewCreated
 				msg: TVM_SETEXTENDEDSTYLE
 				wParam: -1
 				lParam: tvStyle].
-	indentSeparation ifNotNil: [self updateIndentation].
+	self updateIndentation.
 	self applyExtendedStyles!
 
 refreshContents
