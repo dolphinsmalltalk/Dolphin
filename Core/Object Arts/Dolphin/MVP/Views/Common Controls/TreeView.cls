@@ -876,8 +876,7 @@ onViewCreated
 	self newMaps.
 	self applyFont.
 	self refreshContents.
-	self viewMode: self viewMode.
-	indentSeparation ifNotNil: [self updateIndentation]!
+	self updateIndentation!
 
 refreshContents
 	"Repopulate the receiver with the elements of the receiver's model."
