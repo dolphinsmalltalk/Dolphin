@@ -247,7 +247,7 @@ testPasteToArena
 	vc pasteClipboard.
 	"Check new button exists"
 	self assert: vc primarySelection class identicalTo: PushButton.
-	self assert: vc primarySelection parentView identicalTo: View desktop.
+	self assert: vc primarySelection parentView isDesktop.
 	vc viewCloseNoPrompt!
 
 testWidenSelection

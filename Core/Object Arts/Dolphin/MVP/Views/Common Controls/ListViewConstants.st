@@ -180,6 +180,7 @@ ListViewConstants at: 'LVS_ALIGNMASK' put: 16rC00!
 ListViewConstants at: 'LVS_ALIGNTOP' put: 16r0!
 ListViewConstants at: 'LVS_AUTOARRANGE' put: 16r100!
 ListViewConstants at: 'LVS_EDITLABELS' put: 16r200!
+ListViewConstants at: 'LVS_EX_AUTOSIZECOLUMNS' put: 16r10000000!
 ListViewConstants at: 'LVS_EX_BORDERSELECT' put: 16r8000!
 ListViewConstants at: 'LVS_EX_CHECKBOXES' put: 16r4!
 ListViewConstants at: 'LVS_EX_DOUBLEBUFFER' put: 16r10000!
@@ -187,6 +188,7 @@ ListViewConstants at: 'LVS_EX_FLATSB' put: 16r100!
 ListViewConstants at: 'LVS_EX_FULLROWSELECT' put: 16r20!
 ListViewConstants at: 'LVS_EX_GRIDLINES' put: 16r1!
 ListViewConstants at: 'LVS_EX_HEADERDRAGDROP' put: 16r10!
+ListViewConstants at: 'LVS_EX_HEADERINALLVIEWS' put: 16r2000000!
 ListViewConstants at: 'LVS_EX_HIDELABELS' put: 16r20000!
 ListViewConstants at: 'LVS_EX_INFOTIP' put: 16r400!
 ListViewConstants at: 'LVS_EX_LABELTIP' put: 16r4000!
