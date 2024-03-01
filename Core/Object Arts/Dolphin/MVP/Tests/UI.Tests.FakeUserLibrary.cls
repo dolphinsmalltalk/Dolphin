@@ -75,6 +75,12 @@ open!private!realizing/unrealizing! !
 
 !UI.Tests.FakeUserLibrary class methodsFor!
 
+clear
+	"Private - Clear down cached external function addresses and any default 
+	instances of the receiver from previous runs. etc."
+
+	"Nothing to do"!
+
 openDefault
 	"Do nothing - we don't want to overwrite the real UserLibrary on startup"!
 
@@ -85,6 +91,7 @@ uninitialize
 ! !
 
 !UI.Tests.FakeUserLibrary class categoriesForMethods!
+clear!initializing!private! !
 openDefault!instance creation!private!realizing/unrealizing! !
 uninitialize!class hierarchy-removing!private! !
 !
