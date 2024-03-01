@@ -184,10 +184,15 @@ bridge: line1 and: x1 and: y1 and: line2 and: x2 and: y2
 				nextLink: r).
 	^r!
 
+buttonRectangleOfNode: aMoenTreeNode
+	| pels |
+	pels := self buttonSize.
+	^aMoenTreeNode rectangle rightCenter + (1 @ (pels // 2 - pels)) extent: pels @ pels!
+
 buttonSize
 	"Answer the width and height of the expand/collapse buttons as an <integer> number of pels."
 
-	^9!
+	^9 * self dpi // USER_DEFAULT_SCREEN_DPI!
 
 calculateClientExtent
 	"Private - Generate the receiver's calculateExtent value and also the final positions of each
@@ -500,7 +505,7 @@ generateNodeClipRects
 	used to work out which trees overlap an area of the screen or contain a <Point>, e.g. when
 	repainting."
 
-	anchorNode calculateClipRect!
+	anchorNode calculateClipRect: self buttonSize!
 
 generatePosition: aMoenTreeNode absolute: aPoint 
 	"Private - Recursively set the position of the <MoenTreeNode> argument, and all its 
@@ -622,21 +627,20 @@ hitTest: position
 
 	^self hitTest: position search: anchorNode!
 
-hitTest: aPoint search: node 
+hitTest: aPoint search: node
 	"Private - Search for the node in the receiver that coincides with aPoint, restricting
 	search to the <MoenTreeNode>, node, and all its children. Answer nil if no node coincides,
 	or an association the key of which is the symbolic hit type, and the value of which is the
 	node which was hit."
 
 	(node clip containsPoint: aPoint) ifFalse: [^nil].
-	(node rectangle containsPoint: aPoint) 
+	(node rectangle containsPoint: aPoint)
 		ifTrue: [^#item -> node]
 		ifFalse: 
-			[(self hasButtons and: [node buttonRectangle containsPoint: aPoint]) 
+			[(self hasButtons and: [(self buttonRectangleOfNode: node) containsPoint: aPoint])
 				ifTrue: [^#button -> node]
 				ifFalse: 
-					[node 
-						visibleChildrenDo: [:child | (self hitTest: aPoint search: child) ifNotNil: [:hit | ^hit]]]].
+					[node visibleChildrenDo: [:child | (self hitTest: aPoint search: child) ifNotNil: [:hit | ^hit]]]].
 	^nil!
 
 iconExtent: aPoint
@@ -750,7 +754,10 @@ isExpanded: anObject
 
 	^anObject notNil and: [(self nodeForObject: anObject) isExpanded]!
 
-itemFromPoint: aPoint
+isThemed
+	^false!
+
+itemFromPoint: aPoint 
 	"Private - Answer the node of the receiver under the <Point> argument or nil if none."
 
 	^(self hitTest: aPoint) value!
@@ -1145,16 +1152,14 @@ onItem: anObject addedInParent: parentObject
 
 	| parentNode newNode |
 	parentNode := self findNodeForObject: parentObject.
-	parentNode isNil 
+	parentNode isNil
 		ifTrue: 
 			["Parent isn't even in tree (its parent not expanded)"
-
 			^self].
-	parentNode hasExpanded 
+	parentNode hasExpanded
 		ifFalse: 
 			["Parent not expanded so new child not visible, but need to redraw the expansion button (if any)"
-
-			self hasButtons ifTrue: [self invalidateRect: parentNode buttonRectangle].
+			self hasButtons ifTrue: [self invalidateRect: (self buttonRectangleOfNode: parentNode)].
 			^self].
 	newNode := self addTreeFor: anObject parentNode: parentNode.
 	self calculateNodeExtents: newNode.
@@ -1350,7 +1355,7 @@ onTreeChanged: anObjectOrNil
 	anObjectOrNil isNil ifTrue: [ ^self refreshContents].
 	self onItemUpdated: anObjectOrNil; collapse: anObjectOrNil !
 
-paint: aMoenTreeNode on: aCanvas fromPoint: aPoint 
+paint: aMoenTreeNode on: aCanvas fromPoint: aPoint
 	"Private - Paint the tree object onto the canvas together with all its children."
 
 	| rectangle buttonRect tailPoint drawButton |
@@ -1358,20 +1363,20 @@ paint: aMoenTreeNode on: aCanvas fromPoint: aPoint
 	aPoint notNil ifTrue: [aCanvas lineFrom: aPoint to: rectangle leftCenter].
 	(aCanvas isRectangleVisible: aMoenTreeNode clip) ifFalse: [^self].
 	self paintNode: aMoenTreeNode on: aCanvas.
-	(drawButton := (self hasChildren: aMoenTreeNode) and: [self hasButtons]) 
+	(drawButton := (self hasChildren: aMoenTreeNode) and: [self hasButtons])
 		ifTrue: 
-			[buttonRect := aMoenTreeNode buttonRectangle.
+			[buttonRect := self buttonRectangleOfNode: aMoenTreeNode.
 			tailPoint := buttonRect center]
 		ifFalse: [tailPoint := rectangle rightCenter].
 	aMoenTreeNode visibleChildrenDo: 
-			[:each | 
-			self 
+			[:each |
+			self
 				paint: each
 				on: aCanvas
 				fromPoint: tailPoint].
-	drawButton 
+	drawButton
 		ifTrue: 
-			[self 
+			[self
 				paintButton: buttonRect
 				on: aCanvas
 				isExpanded: aMoenTreeNode isExpanded]!
@@ -1390,12 +1395,14 @@ paintButton: aRectangle on: aCanvas isExpanded: aBoolean
 				isExpanded: aBoolean]!
 
 paintClassicButton: aRectangle on: aCanvas isExpanded: aBoolean
-	| pen |
+	| pen inset|
 	aCanvas rectangle: aRectangle.
 	pen := aCanvas pen: Pen black.
-	aCanvas lineFrom: aRectangle leftCenter + (2 @ 0) to: aRectangle rightCenter - (2 @ 0).
+	inset := 2 * self dpi // USER_DEFAULT_SCREEN_DPI.
+	aCanvas lineFrom: aRectangle leftCenter + (inset @ 0) to: aRectangle rightCenter - (inset @ 0).
 	aBoolean
-		ifFalse: [aCanvas lineFrom: aRectangle topCenter + (0 @ 2) to: aRectangle bottomCenter - (0 @ 2)].
+		ifFalse: 
+			[aCanvas lineFrom: aRectangle topCenter + (0 @ inset) to: aRectangle bottomCenter - (0 @ inset)].
 	aCanvas pen: pen!
 
 paintNode: aMoenTreeNode on: aCanvas
@@ -1824,6 +1831,7 @@ autoExpandNode:!adding!private! !
 basicExpandNode:!operations!private! !
 basicSelection:cause:!private!selection! !
 bridge:and:and:and:and:and:!private!tree layout! !
+buttonRectangleOfNode:!geometry!private! !
 buttonSize!constants!private! !
 calculateClientExtent!geometry!private! !
 calculateExtent:!accessing!private! !
@@ -1890,6 +1898,7 @@ invalidateTree:imagesOnly:!painting!private! !
 isAutoExpanding!accessing-styles!public!testing! !
 isAutoExpanding:!accessing!public! !
 isExpanded:!public!testing! !
+isThemed!private!testing! !
 itemFromPoint:!helpers!private! !
 join:!private!tree layout! !
 layoutLeaf:!private!tree layout! !

@@ -60,7 +60,7 @@ onViewOpened
 	is large, let's occupy most of the available screen area."
 
 	super onViewOpened.
-	self view rectangle: (View desktop workArea insetBy: 50).
+	self view rectangle: (self view monitor workArea insetBy: 50).
 	classesPresenter expandAll: nil!
 
 searchForClass: aClass 
