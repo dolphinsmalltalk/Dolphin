@@ -34,29 +34,15 @@ Class Variables:
 
 !MoenTreeNode methodsFor!
 
-buttonRectangle
-	"Private - Answer the rectangle occuppied by the expand/contract button which 
-	is outside the normal client area of the receiver."
-
-	| pels |
-	pels := self buttonSize.
-	^self rectangle rightCenter + (1 @ (pels // 2 - pels)) extent: pels @ pels!
-
-buttonSize
-	^9!
-
-calculateClipRect
-	"Private - Calculate, cache, and answer the receiver's clipping rectangle.
-	The clipping rectangle is that area which precisely contains the receiver 
-	and all its _visible_ children."
+calculateClipRect: anInteger
+	"Private - Calculate, cache, and answer the receiver's clipping rectangle, based on the button size provided as the argument.
+	The clipping rectangle is that area which precisely contains the receiver and all its _visible_ children."
 
 	| rect |
-	rect := self position extent: self extent + (self buttonSize@0).
-	self visibleChildrenDo: [:each | rect := rect merge: each calculateClipRect].
+	rect := self position extent: self extent + (anInteger @ 0).
+	self visibleChildrenDo: [:each | rect := rect merge: (each calculateClipRect: anInteger)].
 	self clip: rect.
-	^rect
-
-!
+	^rect!
 
 child
 	"Private - Answer the value of the receiver's 'child' instance variable."
@@ -264,9 +250,7 @@ visiblePreOrderDo: operation
 	self visibleChildrenDo: [:each | each visiblePreOrderDo: operation]! !
 
 !MoenTreeNode categoriesForMethods!
-buttonRectangle!accessing!private! !
-buttonSize!constants!private! !
-calculateClipRect!geometry!private! !
+calculateClipRect:!geometry!private! !
 child!accessing!private! !
 child:!accessing!private! !
 children!enumerating!private! !
