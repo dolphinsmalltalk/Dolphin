@@ -75,3 +75,14 @@ initializeForDesktopActive!initializing!public! !
 open!private!realizing/unrealizing! !
 !
 
+!FakeUserLibrary class methodsFor!
+
+clear
+	"Private - Clear down cached external function addresses and any default 
+	instances of the receiver from previous runs. etc."
+
+	"Nothing to do"! !
+!FakeUserLibrary class categoriesForMethods!
+clear!initializing!private! !
+!
+
