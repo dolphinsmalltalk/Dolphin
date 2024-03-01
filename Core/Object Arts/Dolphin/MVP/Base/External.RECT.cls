@@ -245,10 +245,10 @@ fromRectangle: aRectangle
 
 	self == aRectangle class ifTrue: [^aRectangle].
 	^self 
-		left: aRectangle left
-		top: aRectangle top
-		right: aRectangle right
-		bottom: aRectangle bottom
+		left: aRectangle left asInteger
+		top: aRectangle top asInteger
+		right: aRectangle right asInteger
+		bottom: aRectangle bottom asInteger
 !
 
 left: left top: top right: right bottom: bottom
@@ -270,10 +270,10 @@ marshal: aRectangle
 
 	self == aRectangle class ifTrue: [^aRectangle].
 	^self 
-		left: aRectangle left
-		top: aRectangle top
-		right: aRectangle right
-		bottom: aRectangle bottom
+		left: aRectangle left asInteger
+		top: aRectangle top asInteger
+		right: aRectangle right asInteger
+		bottom: aRectangle bottom asInteger
 !
 
 origin: originPoint corner: cornerPoint

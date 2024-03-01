@@ -703,7 +703,7 @@ External.POINT methodProtocol: #point attributes: #(#readOnly) selectors: #(#- #
 fromPoint: aPoint
 	"Answer a new instance of the receiver representing aPoint."
 	
-	^self x: aPoint x y: aPoint y!
+	^self x: aPoint x asInteger y: aPoint y asInteger!
 
 getFieldNames
 	^#(#x #y)!

@@ -39,15 +39,22 @@ bottom
 
 	^bytes int32AtOffset: _OffsetOf_bottom!
 
-bottom: anInteger
-	"Set the receiver's 'bottom' field to the value of the argument, anInteger"
+bottom: aNumber
+	"Set the receiver's 'bottom' field to the integer value of the argument."
 
-	bytes int32AtOffset: _OffsetOf_bottom put: anInteger!
+	bytes int32AtOffset: _OffsetOf_bottom put: aNumber asInteger!
 
 bottomRight
 	"Answer a <Point> representing the bottom right position of the receiver."
 
 	^Graphics.Point x: (bytes int32AtOffset: _OffsetOf_right) y: (bytes int32AtOffset: _OffsetOf_bottom)!
+
+bottomRight: aPoint
+	"Set the <Point> representing the bottom right corner of the receiver."
+
+	bytes
+		int32AtOffset: _OffsetOf_right put: aPoint x asInteger;
+		int32AtOffset: _OffsetOf_bottom put: aPoint y asInteger!
 
 extent
 	"Answer a Point representing the extent of the receiver. The x coordinate is the width and the y coordinate is the height."
@@ -61,8 +68,8 @@ extent: aPoint
 	"Set the extent of the receiver to the <Point> argument. The origin remains the same and the corner stays in the same quadrant it was in relative to the origin point. If aPoint contains any negative value, the result is undefined."
 
 	bytes
-		int32AtOffset: _OffsetOf_right put: (bytes int32AtOffset: _OffsetOf_left) + aPoint x;
-		int32AtOffset: _OffsetOf_bottom put: (bytes int32AtOffset: _OffsetOf_top) + aPoint y!
+		int32AtOffset: _OffsetOf_right put: ((bytes int32AtOffset: _OffsetOf_left) + aPoint x) asInteger;
+		int32AtOffset: _OffsetOf_bottom put: ((bytes int32AtOffset: _OffsetOf_top) + aPoint y) asInteger!
 
 height
 	"Answer the height of the receiver."
@@ -74,20 +81,20 @@ left
 
 	^bytes int32AtOffset: _OffsetOf_left!
 
-left: anInteger
-	"Set the receiver's 'left' field to the value of the argument, anInteger"
+left: aNumber
+	"Set the receiver's 'left' field to the integer value of the argument."
 
-	bytes int32AtOffset: _OffsetOf_left put: anInteger!
+	bytes int32AtOffset: _OffsetOf_left put: aNumber asInteger!
 
 right
 	"Answer the <Integer> value of the receiver's 'right' field."
 
 	^bytes int32AtOffset: _OffsetOf_right!
 
-right: anInteger
-	"Set the receiver's 'right' field to the value of the argument, anInteger"
+right: aNumber
+	"Set the receiver's 'right' field to the integer value of the argument."
 
-	bytes int32AtOffset: _OffsetOf_right put: anInteger!
+	bytes int32AtOffset: _OffsetOf_right put: aNumber asInteger!
 
 subtract: aRectangle
 	| result |
@@ -103,10 +110,10 @@ top
 
 	^bytes int32AtOffset: _OffsetOf_top!
 
-top: anInteger
-	"Set the receiver's 'top' field to the value of the argument, anInteger"
+top: aNumber
+	"Set the receiver's 'top' field to the integer value of the argument."
 
-	bytes int32AtOffset: _OffsetOf_top put: anInteger!
+	bytes int32AtOffset: _OffsetOf_top put: aNumber asInteger!
 
 topLeft
 	"Answer a <Point> representing the top left position of the receiver."
@@ -116,18 +123,19 @@ topLeft
 !OS.RECTL categoriesForMethods!
 asRectangle!converting!public! !
 bottom!**compiled accessors**!public! !
-bottom:!**compiled accessors**!public! !
+bottom:!accessing!public! !
 bottomRight!accessing!public! !
+bottomRight:!accessing!public! !
 extent!accessing!public! !
 extent:!accessing!public! !
 height!accessing!public! !
 left!**compiled accessors**!public! !
-left:!**compiled accessors**!public! !
+left:!accessing!public! !
 right!**compiled accessors**!public! !
-right:!**compiled accessors**!public! !
+right:!accessing!public! !
 subtract:!public!rectangle functions! !
 top!**compiled accessors**!public! !
-top:!**compiled accessors**!public! !
+top:!accessing!public! !
 topLeft!accessing!public! !
 !
 
@@ -159,8 +167,8 @@ extent: newExtent
 	"Answer a new instance of the receiver with zero origin and the specified extent."
 
 	^self basicNew bytes: ((ByteArray newFixed: _RECTL_Size)
-				int32AtOffset: _OffsetOf_right put: newExtent x;
-				int32AtOffset: _OffsetOf_bottom put: newExtent y;
+				int32AtOffset: _OffsetOf_right put: newExtent x asInteger;
+				int32AtOffset: _OffsetOf_bottom put: newExtent y asInteger;
 				yourself)!
 
 getFieldNames

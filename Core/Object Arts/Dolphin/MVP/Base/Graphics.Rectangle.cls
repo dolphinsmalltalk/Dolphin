@@ -80,10 +80,10 @@ asParameter
 	a Win32 RECTL structure."
 
 	^RECTL
-		left: origin x
-		top: origin y
-		right: corner x
-		bottom: corner y!
+		left: origin x asInteger
+		top: origin y asInteger
+		right: corner x asInteger
+		bottom: corner y asInteger!
 
 asRectangle
 	^self!
