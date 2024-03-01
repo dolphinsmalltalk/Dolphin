@@ -115,13 +115,10 @@ resizeToFitPage
 	area of the desktop."
 
 	| maxExtent extent |
-	maxExtent := View desktop workArea extent.
-	extent := self view calcExtentFromClientExtent: self pageExtent.
+	maxExtent := self view monitor workArea extent.
+	extent := self view calcExtentFromClientExtent: self pageExtent * self view scaleFactor.
 	extent := extent min: maxExtent.
-	self view 
-		rectangle: ((maxExtent - extent)//2 extent: extent)
-		
-!
+	self view rectangle: ((maxExtent - extent) // 2 extent: extent)!
 
 show
 	"Shows the view of the receiver."
