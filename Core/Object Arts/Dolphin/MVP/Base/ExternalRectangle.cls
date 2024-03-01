@@ -448,10 +448,10 @@ fromRectangle: aRectangle
 
 	self == aRectangle class ifTrue: [^aRectangle].
 	^self 
-		left: aRectangle left
-		top: aRectangle top
-		right: aRectangle right
-		bottom: aRectangle bottom
+		left: aRectangle left asInteger
+		top: aRectangle top asInteger
+		right: aRectangle right asInteger
+		bottom: aRectangle bottom asInteger
 !
 
 icon
@@ -477,11 +477,11 @@ marshal: aRectangle
 	"Answer the argument marshalled as an instance of the receiver."
 
 	self == aRectangle class ifTrue: [^aRectangle].
-	^self
-		left: aRectangle left
-		top: aRectangle top
-		right: aRectangle right
-		bottom: aRectangle bottom!
+	^self 
+		left: aRectangle left asInteger
+		top: aRectangle top asInteger
+		right: aRectangle right asInteger
+		bottom: aRectangle bottom asInteger!
 
 origin: originPoint corner: cornerPoint
 	"Answer a new instance of the receiver with the specified origin and opposite corner"

@@ -62,10 +62,10 @@ deferWindowPositions: aSequencedReadableCollection
 						deferWindowPos: hdwp
 						hwnd: view asParameter
 						hwndInsertAfter: 0
-						x: rect left
-						y: rect top
-						cx: rect width
-						cy: rect height
+						x: rect left asInteger
+						y: rect top asInteger
+						cx: rect width asInteger
+						cy: rect height asInteger
 						uFlags: flags].
 	userLib endDeferWindowPos: hdwp!
 

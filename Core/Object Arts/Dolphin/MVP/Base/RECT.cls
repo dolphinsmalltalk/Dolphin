@@ -35,22 +35,22 @@ bottom
 
 	^bytes sdwordAtOffset: _OffsetOf_bottom!
 
-bottom: anInteger
-	"Set the receiver's 'bottom' field to the value of the argument, anInteger"
+bottom: aNumber
+	"Set the receiver's 'bottom' field to the integer value of the argument."
 
-	bytes sdwordAtOffset: _OffsetOf_bottom put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_bottom put: aNumber asInteger!
 
 bottomRight
 	"Answer a <Point> representing the bottom right position of the receiver."
 
-	^Point x: (bytes sdwordAtOffset: _OffsetOf_right) y: (bytes dwordAtOffset: _OffsetOf_bottom)!
+	^Point x: (bytes sdwordAtOffset: _OffsetOf_right) y: (bytes sdwordAtOffset: _OffsetOf_bottom)!
 
 bottomRight: aPoint
 	"Set the <Point> representing the bottom right corner of the receiver."
 
 	bytes
-		sdwordAtOffset: _OffsetOf_right put: aPoint x;
-		sdwordAtOffset: _OffsetOf_bottom put: aPoint y!
+		sdwordAtOffset: _OffsetOf_right put: aPoint x asInteger;
+		sdwordAtOffset: _OffsetOf_bottom put: aPoint y asInteger!
 
 extent
 	"Answer a Point representing the extent of the receiver. The x coordinate is the width and the y coordinate is the height."
@@ -64,8 +64,8 @@ extent: aPoint
 	"Set the extent of the receiver to the <Point> argument. The origin remains the same and the corner stays in the same quadrant it was in relative to the origin point. If aPoint contains any negative value, the result is undefined."
 
 	bytes
-		sdwordAtOffset: _OffsetOf_right put: (bytes sdwordAtOffset: _OffsetOf_left) + aPoint x;
-		sdwordAtOffset: _OffsetOf_bottom put: (bytes sdwordAtOffset: _OffsetOf_top) + aPoint y!
+		sdwordAtOffset: _OffsetOf_right put: ((bytes sdwordAtOffset: _OffsetOf_left) + aPoint x) asInteger;
+		sdwordAtOffset: _OffsetOf_bottom put: ((bytes sdwordAtOffset: _OffsetOf_top) + aPoint y) asInteger!
 
 height
 	"Answer the height of the receiver."
@@ -77,20 +77,20 @@ left
 
 	^bytes sdwordAtOffset: _OffsetOf_left!
 
-left: anInteger
-	"Set the receiver's 'left' field to the value of the argument, anInteger"
+left: aNumber
+	"Set the receiver's 'left' field to the integer value of the argument."
 
-	bytes sdwordAtOffset: _OffsetOf_left put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_left put: aNumber asInteger!
 
 right
 	"Answer the <Integer> value of the receiver's 'right' field."
 
 	^bytes sdwordAtOffset: _OffsetOf_right!
 
-right: anInteger
-	"Set the receiver's 'right' field to the value of the argument, anInteger"
+right: aNumber
+	"Set the receiver's 'right' field to the integer value of the argument."
 
-	bytes sdwordAtOffset: _OffsetOf_right put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_right put: aNumber asInteger!
 
 rightCenter
 	"Answer a <Point> specifying the position of the centre of the receiver's right edge."
@@ -109,10 +109,10 @@ top
 
 	^bytes sdwordAtOffset: _OffsetOf_top!
 
-top: anInteger
-	"Set the receiver's 'top' field to the value of the argument, anInteger"
+top: aNumber
+	"Set the receiver's 'top' field to the integer value of the argument."
 
-	bytes sdwordAtOffset: _OffsetOf_top put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_top put: aNumber asInteger!
 
 topLeft
 	"Answer a <Point> representing the top left position of the receiver."
@@ -123,8 +123,8 @@ topLeft: aPoint
 	"Set the <Point> representing the top left position of the receiver."
 
 	bytes
-		sdwordAtOffset: _OffsetOf_left put: aPoint x;
-		sdwordAtOffset: _OffsetOf_top put: aPoint y!
+		sdwordAtOffset: _OffsetOf_left put: aPoint x asInteger;
+		sdwordAtOffset: _OffsetOf_top put: aPoint y asInteger!
 
 width
 	"Answer the width of the receiver."
@@ -178,8 +178,8 @@ extent: newExtent
 	"Answer a new instance of the receiver with zero origin and the specified extent."
 
 	^self basicNew bytes: ((ByteArray newFixed: 16)
-				sdwordAtOffset: 8 put: newExtent x;
-				sdwordAtOffset: 12 put: newExtent y;
+				sdwordAtOffset: 8 put: newExtent x asInteger;
+				sdwordAtOffset: 12 put: newExtent y asInteger;
 				yourself)!
 
 getFieldNames

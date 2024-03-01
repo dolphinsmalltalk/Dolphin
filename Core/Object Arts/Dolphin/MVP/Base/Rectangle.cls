@@ -78,10 +78,10 @@ asParameter
 	a Win32 RECT structure."
 
 	^RECT
-		left: origin x
-		top: origin y
-		right: corner x
-		bottom: corner y!
+		left: origin x asInteger
+		top: origin y asInteger
+		right: corner x asInteger
+		bottom: corner y asInteger!
 
 bottom
 	"Answer the y coordinate of the receiver's bottom edge."
@@ -646,11 +646,10 @@ center: centrePoint extent: extentPoint
 
 	^self origin: centrePoint - (extentPoint // 2) extent: extentPoint!
 
-extent: arg1
-	"This is an auto-generated target implementation for the protocol <rectangle factory>
-	and remains to be correctly implemented."
+extent: aPoint
+	"Answer an instance of the receiver of the extent, aPoint with origin at (0@0)."
 
-	^Error notYetImplemented!
+	^self origin: Point.Zero corner: aPoint!
 
 initialize
 	self addClassConstant: 'Empty'

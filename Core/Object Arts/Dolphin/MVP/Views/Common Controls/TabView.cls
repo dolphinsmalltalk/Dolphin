@@ -499,7 +499,7 @@ tcmAdjustRect: aBooleanMode for: aRectangle
 	| wr |
 	"The control has a bug whereby TCM_ADJUSTRECT sometimes GPFs when it has no extent"
 	aRectangle extent isZero ifTrue: [^aRectangle].
-	wr := aRectangle asParameter.
+	wr := RECT marshal: aRectangle.
 	self
 		sendMessage: TCM_ADJUSTRECT
 		wParam: aBooleanMode asParameter

@@ -67,12 +67,12 @@ Arithmetic operations can be carried out between two Points or between a Point a
 	^x <= aPoint x and: [y <= aPoint y]!
 
 = comperand
-	"Answer whether the receiver is considered equivalent to the
-	<Object> argument, comperand."
+	"Answer whether the receiver is considered equivalent to the <Object> argument, comperand."
 
-	^self species == comperand species
-		ifTrue: [x = comperand x and: [y = comperand y]]
-		ifFalse: [super = comperand]!
+	^self == comperand or: 
+			[self species == comperand species
+				ifTrue: [x = comperand x and: [y = comperand y]]
+				ifFalse: [super = comperand]]!
 
 abs
 	"Answer a <Point> that is the absolute value (positive magnitude) of the receiver."
@@ -82,7 +82,7 @@ abs
 addToPoint: aPoint
 	"Private - Answer the <point> result of adding the receiver to the known <point> argument."
 
-	^(aPoint x + x) @ (aPoint y + y)!
+	^Point x: aPoint x + x y: aPoint y + y!
 
 asDword
 	"Answer the receiver in a form suitable for returning as the result of a window procedure (or passing to a function expecting a 32-bit value)."
@@ -151,10 +151,15 @@ dist: aPoint
 
 	^(aPoint - self) r!
 
+divideIntoInteger: anInteger
+	"Private - Answer the <point> result of dividing the receiver into the known <integer> argument."
+
+	^Point x: anInteger / x y: anInteger / y!
+
 divideIntoPoint: aPoint
 	"Private - Answer the <point> result of dividing the receiver into the known <point> argument."
 
-	^(aPoint x / x) @ (aPoint y / y)!
+	^Point x: aPoint x / x y: aPoint y / y!
 
 dotProduct: aPoint 
 	"Answer a Number that is the sum of the product of the x coordinates
@@ -199,7 +204,7 @@ min: aPoint
 multiplyByPoint: aPoint
 	"Private - Answer the <point> result of multiplying the the known <point> argument by the receiver."
 
-	^(x * aPoint x) @ (y * aPoint y)!
+	^Point x: x * aPoint x y: y * aPoint y!
 
 printOn: target
 	"Append a short textual description of the receiver to the
@@ -298,6 +303,7 @@ coerce:!coercing!private! !
 corner:!converting!public! !
 degrees!accessing!public! !
 dist:!operations!public! !
+divideIntoInteger:!double dispatch!private! !
 divideIntoPoint:!double dispatch!private! !
 dotProduct:!operations!public! !
 extent:!converting!public! !
