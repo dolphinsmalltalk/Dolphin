@@ -258,6 +258,13 @@ drawMenuBar
 
 	^User32 drawMenuBar: self asParameter!
 
+ensureLayoutValid
+	"If the receiver's layout is invalid, then validate the layout from this point. Answer whether any layout was performed."
+
+	self isLayoutValid ifTrue: [^false].
+	self validateLayout.
+	^true!
+
 ensureSubViewVisible: aSubView 
 	"Terminate the recursion as making a sub-view visible should not change the z-order of the Windows on the desktop (or indeed in an idea space).
 	Sending #ensureVisible to a ShellView that is a direct child of the desktop will bring it to the top of the z-order, however sending #ensureVisible to one of its direct or indirect children will not."
@@ -1185,6 +1192,7 @@ displayOnMonitor:!geometry!helpers!public! !
 dmGetDefId:wParam:lParam:!default button!event handling-win32!private! !
 dmSetDefId:wParam:lParam:!default button!event handling-win32!private! !
 drawMenuBar!menus!public! !
+ensureLayoutValid!geometry!public! !
 ensureSubViewVisible:!public!sub views! !
 exit!commands!public! !
 filerProxyIn:!binary filing!private! !
