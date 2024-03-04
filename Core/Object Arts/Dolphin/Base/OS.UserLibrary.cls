@@ -3,10 +3,10 @@
 External.PermanentLibrary
 	subclass: #'OS.UserLibrary'
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: 'DpiAwareness'
 	imports: #(#{OS.MessageBoxConstants private})
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'DpiAwarenessModes' -> #(#unaware #system #perMonitor #perMonitorV2 #gdiScaled) }!
 
 OS.UserLibrary guid: (Core.GUID fromString: '{64674046-3a82-101b-8181-00aa003743d3}')!
 
@@ -243,6 +243,12 @@ getSystemMetrics: index
 
 	<stdcall: int32 GetSystemMetrics int32>
 	^self invalidCall: _failureCode!
+
+initialize
+	"We must ensure the DPI awareness level is set before we do anything that might do any UI operations, otherwise we'll end up with a mess."
+
+	self setProcessDpiAwarenessContext: DpiAwareness.
+	^self!
 
 inSendMessage
 	<stdcall: bool InSendMessage>
@@ -655,6 +661,7 @@ getQueueStatus:!public!win32 functions-message and message queue! !
 getSysColor:!public!win32 functions-system information! !
 getSysColorBrush:!public!win32 functions-cursor! !
 getSystemMetrics:!public!win32 functions-system information! !
+initialize!initializing!public! !
 inSendMessage!public!win32 functions-message and message queue! !
 isWindow:!public!win32 functions-window! !
 isWindowEnabled:!public!win32 functions-window! !
@@ -695,18 +702,34 @@ clear
 	super clear.
 	#(#{OS.SystemMetrics} #{UI.DisplayMonitor}) do: [:each | each ifDefined: [:c | c reset]]!
 
+dpiAwareness
+	"Answer the DPI awareness mode for this session."
+
+	^DpiAwarenessModes at: DpiAwareness negated!
+
+dpiAwareness: aSymbol
+	"Set the DPI awareness mode to be applied when this image is restarted. N.B. Windows does not support changing the DPI awareness of an entire running process, so this cannot take effect until restart."
+
+	DpiAwareness := (DpiAwarenessModes indexOf: aSymbol) negated!
+
 fileName
 	"Answer the host system file name of the external library which 
 	the receiver represents."
 
 	^'USER32'!
 
+initialize
+	DpiAwareness := DPI_AWARENESS_CONTEXT_SYSTEM_AWARE! !
+
 sharedVariableName
 	^#{User32}! !
 
 !OS.UserLibrary class categoriesForMethods!
 clear!initializing!private! !
+dpiAwareness!accessing!public! !
+dpiAwareness:!accessing!public! !
 fileName!constants!public! !
+initialize!class initialization!public! !
 sharedVariableName!constants!private! !
 !
 

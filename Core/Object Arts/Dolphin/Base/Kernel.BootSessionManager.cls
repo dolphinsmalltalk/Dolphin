@@ -60,6 +60,7 @@ initializeBootPackages: anOrderedCollection
 	CompilerNotification initialize.
 	#{Utf8String} value initialize.
 	#{SmalltalkLocale} value initialize.
+	UserLibrary initialize.
 	"Any new base classes may require initialization"
 	anOrderedCollection do: [:each | each initializeAfterLoad]!
 

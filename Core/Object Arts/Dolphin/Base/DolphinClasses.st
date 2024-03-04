@@ -1208,6 +1208,18 @@ Kernel.SharedPool
 			'DM_GETDEFID' -> 16r400.
 			'DM_SETDEFID' -> 16r401.
 			'DONT_RESOLVE_DLL_REFERENCES' -> 16r1.
+			'DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE' -> -16r3.
+			'DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2' -> -16r4.
+			'DPI_AWARENESS_CONTEXT_SYSTEM_AWARE' -> -16r2.
+			'DPI_AWARENESS_CONTEXT_UNAWARE' -> -16r1.
+			'DPI_AWARENESS_CONTEXT_UNAWARE_GDISCALED' -> -16r5.
+			'DPI_AWARENESS_INVALID' -> -16r1.
+			'DPI_AWARENESS_PER_MONITOR_AWARE' -> 16r2.
+			'DPI_AWARENESS_SYSTEM_AWARE' -> 16r1.
+			'DPI_AWARENESS_UNAWARE' -> 16r0.
+			'DPI_HOSTING_BEHAVIOR_DEFAULT' -> 16r0.
+			'DPI_HOSTING_BEHAVIOR_INVALID' -> -16r1.
+			'DPI_HOSTING_BEHAVIOR_MIXED' -> 16r1.
 			'DS_3DLOOK' -> 16r4.
 			'DSS_DISABLED' -> 16r20.
 			'DSS_HIDEPREFIX' -> 16r200.
@@ -4030,10 +4042,10 @@ External.PermanentLibrary
 External.PermanentLibrary
 	subclass: #'OS.UserLibrary'
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: 'DpiAwareness'
 	imports: #(#{OS.MessageBoxConstants private})
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: { 'DpiAwarenessModes' -> #(#unaware #system #perMonitor #perMonitorV2 #gdiScaled) }!
 
 External.PermanentLibrary
 	subclass: #'Kernel.VMLibrary'
