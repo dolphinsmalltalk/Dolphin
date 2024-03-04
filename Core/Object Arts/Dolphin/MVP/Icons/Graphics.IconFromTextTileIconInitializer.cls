@@ -45,7 +45,7 @@ printImage: anImage on: aWriteStream
 		print: anImage class;
 		nextPutAll: ' fromTextTile: ';
 		print: textTile.
-	extent = Icon.LargeExtent
+	extent = SystemMetrics default largeIconExtent
 		ifFalse: 
 			[aWriteStream
 				nextPutAll: ' extent: ';

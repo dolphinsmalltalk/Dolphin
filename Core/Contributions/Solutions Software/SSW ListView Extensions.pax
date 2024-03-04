@@ -161,8 +161,7 @@ rowPixelHeight
 	^(self smallImageExtent y + 1) max: (self actualFont pixelSize + 9)!
 
 smallImageExtent
-
-	^Icon smallExtent!
+	^self metrics smallIconExtent!
 
 vertScrollBy: anInteger
 

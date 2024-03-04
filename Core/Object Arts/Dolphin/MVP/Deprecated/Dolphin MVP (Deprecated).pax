@@ -121,6 +121,10 @@ package methodNames
 	add: 'Canvas class' -> #screenResolution;
 	add: 'ChoicePresenter class' -> #resource_Multiselection_list_box;
 	add: 'Color class' -> #buttonFace;
+	add: 'Icon class' -> #extraLargeExtent;
+	add: 'Icon class' -> #largeExtent;
+	add: 'Icon class' -> #smallExtent;
+	add: 'Icon class' -> #tileExtent;
 	add: 'ImageList class' -> #width:height:flags:size:growthGranularity:;
 	add: 'ListPresenter class' -> #resource_Multiselection_enhanced_list_view;
 	add: 'ListPresenter class' -> #resource_Multiselection_list_box;
@@ -526,6 +530,41 @@ enumFonts: dcHandle lpFaceName: aString lpFontFunc: aCallbackThunk lParam: anInt
 
 !GDILibrary categoriesForMethods!
 enumFonts:lpFaceName:lpFontFunc:lParam:!public!win32 functions-font and text! !
+!
+
+!Icon class methodsFor!
+
+extraLargeExtent
+	"Answer a <Point> that gives the dimensions of an extra large size icon at the current system DPI."
+
+	#deprecated.	"Varies by monitor DPI and should be queried from a SystemMetrics configured for the correct DPI of the monitor where the icon is to be displayed."
+	^SystemMetrics current extraLargeIconExtent!
+
+largeExtent
+	"Answer a <Point> that gives the dimensions of a standard size icon.
+	Note that this will have been rescaled to the system (primary monitor) DPI. The baseline at 96-dpi is 32@32, so as an example at 120dpi/125% it will be 40@40."
+
+	#deprecated.	"Varies by monitor DPI and should be queried from a SystemMetrics configured for the correct DPI of the monitor where the icon is to be displayed."
+	^SystemMetrics current largeIconExtent!
+
+smallExtent
+	"Answer a <Point> that gives the dimensions of a small size icon. 
+	Note that this will have been rescaled to the system (primary monitor) DPI. The baseline at 96-dpi is 16@16, so as an example at 120dpi/125% it will be 20@20."
+
+	#deprecated. "Varies by monitor DPI and should be queried from a SystemMetrics configured for the correct DPI of the monitor where the icon is to be displayed."
+	^SystemMetrics current smallIconExtent!
+
+tileExtent
+	"Answer a Point that gives the dimensions of a tile size icon."
+
+	#deprecated.	"Varies by monitor DPI and should be queried from a SystemMetrics configured for the correct DPI of the monitor where the icon is to be displayed."
+	^SystemMetrics current tileIconExtent! !
+
+!Icon class categoriesForMethods!
+extraLargeExtent!constants!public! !
+largeExtent!constants!public! !
+smallExtent!constants!public! !
+tileExtent!constants!public! !
 !
 
 !Image methodsFor!

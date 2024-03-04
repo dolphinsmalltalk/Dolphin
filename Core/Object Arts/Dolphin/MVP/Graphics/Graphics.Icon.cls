@@ -52,7 +52,7 @@ asIcon
 asLargeIcon
 	"Answer an `Icon` like the receiver but optimized for the standard large icon size (32x32)."
 
-	^self withExtent: self class largeExtent!
+	^self withExtent: SystemMetrics current largeIconExtent!
 
 asMenuBitmap
 	"Answer a 32-bpp bitmap (i.e. with alpha channel) containing the receiver's image at system
@@ -64,7 +64,7 @@ asMenuBitmap
 asSmallIcon
 	"Answer an `Icon` like the receiver but optimized for the standard small icon size (16x16)."
 
-	^self withExtent: SmallExtent!
+	^self withExtent: SystemMetrics default smallIconExtent!
 
 createHandle
 	"Private - Answer an external handle to the image represented by the receiver.
@@ -349,8 +349,6 @@ blank
 cacheSystemMetrics
 	| metrics |
 	metrics := SystemMetrics current.
-	LargeExtent := metrics largeIconExtent.
-	SmallExtent := metrics smallIconExtent.
 	HasScaleDown := metrics hasIconScaleDown!
 
 clear
@@ -377,7 +375,7 @@ defaultApplication
 defaultExtent
 	"Answer a Point that gives the dimensions of a standard size icon at the current system DPI."
 
-	^self largeExtent!
+	^SystemMetrics current largeIconExtent!
 
 defaultHandle
 	^self question handle
@@ -392,11 +390,6 @@ exclamation
 	"Answer a new instance of the Exclamation mark icon (used in warning messages)"
 
 	^self warning!
-
-extraLargeExtent
-	"Answer a <Point> that gives the dimensions of an extra large size icon."
-
-	^SystemMetrics current extraLargeIconExtent!
 
 filesType
 	"Private - Answer a two element array suitable for adding to the FileDialog
@@ -446,20 +439,6 @@ information
 
 	^Information ifNil: [Information := self fromSystemId: IDI_INFORMATION]!
 
-initialize
-	"Private - "
-
-	SessionManager current
-		when: #settingChanged:
-		send: #onSettingChanged:
-		to: self!
-
-largeExtent
-	"Answer a <Point> that gives the dimensions of a standard size icon.
-	Note that this will have been rescaled to the system (primary monitor) DPI. The baseline at 96-dpi is 32@32, so as an example at 120dpi/125% it will be 40@40."
-
-	^LargeExtent!
-
 newSystemInitializer: anInteger
 	^IconFromSystemInitializer identifier: anInteger!
 
@@ -497,12 +476,6 @@ shield
 
 	^self fromSystemId: IDI_SHIELD!
 
-smallExtent
-	"Answer a <Point> that gives the dimensions of a small size icon. 
-	Note that this will have been rescaled to the system (primary monitor) DPI. The baseline at 96-dpi is 16@16, so as an example at 120dpi/125% it will be 20@20."
-
-	^SmallExtent!
-
 systemNames
 	^##(LookupTable withAll: {IDI_APPLICATION -> #defaultApplication.
 				IDI_ERROR -> #error.
@@ -510,11 +483,6 @@ systemNames
 				IDI_QUESTION -> #question.
 				IDI_WARNING -> #warning.
 				IDI_WINLOGO -> #window})!
-
-tileExtent
-	"Answer a Point that gives the dimensions of a tile size icon."
-
-	^SystemMetrics current tileIconExtent!
 
 uninitialize
 	"Uninitialize the class variables of the receiver."
@@ -545,7 +513,6 @@ defaultExtent!constants!public! !
 defaultHandle!private! !
 error!instance creation!public! !
 exclamation!instance creation!public! !
-extraLargeExtent!constants!public! !
 filesType!constants!private! !
 freeHandle:!private!realizing/unrealizing! !
 fromBitmap:!instance creation!public! !
@@ -556,8 +523,6 @@ icon!constants!public! !
 imageManager!accessing!public! !
 imageType!constants!private! !
 information!instance creation!public! !
-initialize!class hierarchy-removing!private! !
-largeExtent!constants!public! !
 newSystemInitializer:!helpers!private! !
 null!instance creation!public! !
 onPreStripImage!class hierarchy-removing!private! !
@@ -566,9 +531,7 @@ onStartup2!event handling!private! !
 question!instance creation!public! !
 resetSystemInstances!helpers!private! !
 shield!instance creation!public! !
-smallExtent!constants!public! !
 systemNames!public! !
-tileExtent!constants!public! !
 uninitialize!class hierarchy-removing!private! !
 warning!instance creation!public! !
 window!instance creation!public! !

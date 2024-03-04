@@ -146,7 +146,7 @@ asParameter
 asSmallIcon
 	"Answer a 'small' (16x16) `Icon` equivalent of the receiver."
 
-	^Icon initializer: (IconFromTextTileIconInitializer extent: Icon.SmallExtent textTile: self)!
+	^Icon initializer: (IconFromTextTileIconInitializer extent: SystemMetrics default smallIconExtent textTile: self)!
 
 bitmapWithExtent: aPoint
 	| bitmap graphics |
@@ -484,7 +484,7 @@ Graphics.TextTileIcon methodProtocol: #image attributes: #(#readOnly) selectors:
 !Graphics.TextTileIcon class methodsFor!
 
 defaultExtent
-	^Icon largeExtent!
+	^SystemMetrics default largeIconExtent!
 
 icon
 	^(self

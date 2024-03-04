@@ -15,10 +15,10 @@ Graphics.IconFromShellStockInitializer comment: ''!
 !Graphics.IconFromShellStockInitializer methodsFor!
 
 createImage: anImage extent: aPoint
-	^(aPoint isZero or: [aPoint = Icon.LargeExtent])
+	^(aPoint isZero or: [aPoint = SystemMetrics default largeIconExtent])
 		ifTrue: [(self getStockIconInfo: ##(SHGSI_ICON | SHGSI_LARGEICON)) hIcon]
 		ifFalse: 
-			[aPoint = Icon.SmallExtent
+			[aPoint = SystemMetrics default smallIconExtent
 				ifTrue: [(self getStockIconInfo: ##(SHGSI_ICON | SHGSI_SMALLICON)) hIcon]
 				ifFalse: 
 					[| info |

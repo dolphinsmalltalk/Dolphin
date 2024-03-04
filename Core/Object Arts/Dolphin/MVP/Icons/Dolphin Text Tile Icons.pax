@@ -53,7 +53,7 @@ Graphics.ImageInitializer
 !Graphics.Icon class methodsFor!
 
 fromTextTile: aTextTileIcon
-	^self fromTextTile: aTextTileIcon extent: LargeExtent!
+	^self fromTextTile: aTextTileIcon extent: SystemMetrics default largeIconExtent!
 
 fromTextTile: aTextTileIcon extent: aPoint
 	^self initializer: (IconFromTextTileIconInitializer extent: aPoint textTile: aTextTileIcon)! !
