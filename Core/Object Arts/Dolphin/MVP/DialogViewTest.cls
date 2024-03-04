@@ -46,6 +46,8 @@ createTestShells: aDisplayMonitor
 				text: self printString , ' shell2'!
 
 dialogExtent
+	"Answer the extent to use for the test dialogs. Note that this is fixed - we deliberately don't scale it to monitor dpi."
+
 	^250 @ 350!
 
 evaluateInModalDialog: aBlock owner: ownerView centered: aBoolean

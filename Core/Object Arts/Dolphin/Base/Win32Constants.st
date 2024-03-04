@@ -290,6 +290,7 @@ Win32Constants at: 'EVENTLOG_INFORMATION_TYPE' put: 16r4!
 Win32Constants at: 'EVENTLOG_SUCCESS' put: 16r0!
 Win32Constants at: 'EVENTLOG_WARNING_TYPE' put: 16r2!
 Win32Constants at: 'EXCEPTION_MAXIMUM_PARAMETERS' put: 16rF!
+Win32Constants at: 'FALSE' put: 16r0!
 Win32Constants at: 'FALT' put: 16r10!
 Win32Constants at: 'FCONTROL' put: 16r8!
 Win32Constants at: 'FILE_ATTRIBUTE_DIRECTORY' put: 16r10!

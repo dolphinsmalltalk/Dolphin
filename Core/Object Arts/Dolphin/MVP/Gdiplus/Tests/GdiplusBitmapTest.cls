@@ -43,7 +43,7 @@ testFromIcon
 	model := GdiplusBitmap fromIcon: self icon.
 	self assert: model isPersistent.
 	"mmm ... how does it choose the icon format to use?"
-	self assert: model extent equals: 32 @ 32.
+	self assert: model extent equals: SystemMetrics current largeIconExtent.
 	self assertPersistedValid!
 
 testFromIconXP

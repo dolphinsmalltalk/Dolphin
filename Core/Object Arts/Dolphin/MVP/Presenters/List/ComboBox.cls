@@ -195,7 +195,7 @@ defaultWindowStyle
 droppedHeight
 	"Answer the height of the drop down list component of the receiver, measured at the receiver's current DPI."
 
-	^droppedHeight ifNil: [self mapDipsToPels: self defaultDroppedHeight]!
+	^droppedHeight ifNil: [self defaultDroppedHeight * self dpi // USER_DEFAULT_SCREEN_DPI]!
 
 droppedHeight: anInteger
 	"Set the dropped height of the receiver to the number of device pixels represented by the <integer> argument."
@@ -317,7 +317,7 @@ placement: aWINDOWPLACEMENT
 
 resolutionScaledBy: aPoint
 	super resolutionScaledBy: aPoint.
-	droppedHeight ifNotNil: [droppedHeight := (droppedHeight * aPoint y) truncated]!
+	droppedHeight ifNotNil: [droppedHeight := droppedHeight * aPoint y]!
 
 selectionByIndex
 	"Answer the one-based <integer> 'index' of the selected object in the receiver or zero if there is none."

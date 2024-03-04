@@ -22,7 +22,7 @@ absorbCard: card
 		y: 0
 		width: 0
 		height: 0
-		flags: SWP_NOSIZE | SWP_NOMOVE | SWP_NOACTIVATE.
+		flags: ##(SWP_NOSIZE | SWP_NOMOVE | SWP_NOACTIVATE).
 	cardsPresenter view ensureTabsAtBack.
 	cardsPresenter add: card.
 	card view basicMenu: nil.

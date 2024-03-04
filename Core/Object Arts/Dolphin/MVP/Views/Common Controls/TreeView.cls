@@ -230,7 +230,7 @@ basicResetSelection
 		lParam: 0!
 
 beDefaultThemed
-	SystemMetrics current hasTreeViewHotTracking ifTrue: [self hasHotTracking: true].
+	self metrics hasTreeViewHotTracking ifTrue: [self hasHotTracking: true].
 	super beDefaultThemed!
 
 beNoIcons

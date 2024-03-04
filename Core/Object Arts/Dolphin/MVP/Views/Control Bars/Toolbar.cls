@@ -40,7 +40,7 @@ Toolbar holds a list of `<ToolbarItem>` items matching the order of items in the
 actualBitmapSize
 	"Private - Answer the actual pixel extent of bitmaps shown on the toolbar, measure at the current window DPI. This can be visually inherited from a parent toolbar, which is useful in allowing the image size to be changed just by changing that of the topmost toolbar."
 
-	^self mapDipsToPels: (ImageSizes at: self actualImageSize)!
+	^(ImageSizes at: self actualImageSize) * self dpi // USER_DEFAULT_SCREEN_DPI!
 
 actualImageSize
 	"Private - Answer the symbolic size of images to be shown as buttons on the toolbar. This can be visually inherited from a parent toolbar, which is useful in allowing the bitmap size to be changed just by changing that of the topmost toolbar."
@@ -727,7 +727,7 @@ tbGetIdealHeight
 	size := SIZE new.
 	self 
 		sendMessage: TB_GETIDEALSIZE
-		wParam: true asParameter
+		wParam: TRUE
 		lpParam: size.
 	^size cy!
 
@@ -738,7 +738,7 @@ tbGetIdealWidth
 	size := SIZE new.
 	self 
 		sendMessage: TB_GETIDEALSIZE
-		wParam: false asParameter
+		wParam: FALSE
 		lpParam: size.
 	^size cx!
 

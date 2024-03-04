@@ -34,6 +34,7 @@ initializePresenter
 			to: self.
 	webViewReady := false.
 	presenter createView: URLPresenter defaultView.
+	presenter topShell show.
 	"We need to wait until the web view is ready before we commence any testing"
 	self waitAtMost: 20 seconds while: [webViewReady not].
 	self assert: presenter view webview notNull.

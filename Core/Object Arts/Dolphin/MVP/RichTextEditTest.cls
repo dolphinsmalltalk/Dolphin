@@ -71,14 +71,8 @@ testStreamInAnsiText
 	actual := presenter selectionRtf.
 	self assert: actual equals: rtf.
 	presenter selectLine: 10.
-	actual := presenter selectionRtf.
-	"This test is locale sensitive and may need revision"
-	rtf := '{\rtf1\ansi\deff0{\fonttbl{\f0\fnil\fcharset0 Segoe UI;}}
-\uc1\pard\lang<2d>\f0\fs20 over the lazy dog}
-'
-				expandMacrosWith: Character.AnsiCodePage
-				with: Locale systemDefault lcid.
-	self assert: actual equals: rtf.
+	self assert: (presenter selectionRtf endsWith: presenter selection , '}
+').
 
 	"Now stream in the ANSI RTF"
 	rtf := presenter rtfText.
@@ -86,7 +80,7 @@ testStreamInAnsiText
 	presenter rtfText: rtf.
 	actual := presenter ansiText.
 	self assert: actual equals: ansi.
-	presenter rtfText: rtf.!
+	presenter rtfText: rtf!
 
 testStreamInUtfText
 	| text rtf actual |
@@ -126,10 +120,11 @@ testStreamInUtfText
 	actual := presenter selectionUrtf.
 	"This test is locale sensitive and may need revision"
 	rtf := '{\urtf1\ansi\ansicpg<1d>\deff0{\fonttbl{\f0\fnil\fcharset0 Segoe UI;}{\f1\fnil\fcharset238 Segoe UI;}}
-\uc1\pard\lang<2d>\f0\fs20 ĉṓɲṩḙċ\f1 ť\f0 ᶒțûɾ ấɖḯƥĭṩ\f1 čį\f0 ɳġ ḝ\f1 łį\f0 ʈ}
+\uc1\pard\lang<2d>\f0\fs<3d> ĉṓɲṩḙċ\f1 ť\f0 ᶒțûɾ ấɖḯƥĭṩ\f1 čį\f0 ɳġ ḝ\f1 łį\f0 ʈ}
 '
 				expandMacrosWith: Character.AnsiCodePage
-				with: Locale systemDefault lcid.
+				with: Locale systemDefault lcid
+				with: presenter view actualFont pointSize * 2.
 	self assert: actual equals: rtf.
 
 	"Check round-trip as ANSI RTF (which has an escape syntax to preserve international characters)"

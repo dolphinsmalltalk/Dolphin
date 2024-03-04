@@ -1450,7 +1450,7 @@ resetTreeToRoots
 resolutionScaledBy: aPoint
 	"private -- I'm not sure what this does, but it's copied from TreeView"
 
-	indentSeparation := (indentSeparation * aPoint x) truncated.
+	indentSeparation := indentSeparation * aPoint x.
 	super resolutionScaledBy: aPoint!
 
 retainExpanded
@@ -2153,6 +2153,8 @@ fillStateImageManager
 	#todo.	"Yes, we should use the theme images from the tree view."
 
 	"I should factor this stuff out"
+	
+	#highDpiTodo.	"Needs scaling"
 	extent := self stateImageExtent.
 	box := 4 @ 4 corner: 13 @ 13.
 	hLineF := 6 @ 8.
@@ -2224,6 +2226,7 @@ fillStateImageManagerFrom: anImage
 fillStateImageManagerThemed
 
 	| extent theme image rect canvas |
+	#highDpiTodo.	"Single class-wide image list will not be sufficient for per-monitor DPI as the extent may vary per instance."
 	extent := self stateImageExtent.
 	rect := RECT extent: extent.
 

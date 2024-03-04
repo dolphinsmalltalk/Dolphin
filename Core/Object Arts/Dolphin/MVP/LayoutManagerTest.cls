@@ -20,13 +20,14 @@ layoutManagerClass
 	^self subclassResponsibility!
 
 setUp
-	shell := ShellView show.
+	shell := ShellView new.
 	shell
+		create;
 		caption: self class name asPhrase;
 		backcolor: Color face3d;
-		extent: 300 @ 200.
-	shell layoutManager: self layoutManagerClass new.
-	shell show!
+		dipExtent: 300 @ 200;
+		layoutManager: self layoutManagerClass new;
+		show!
 
 tearDown
 	shell notNil ifTrue: [shell destroy]! !

@@ -19,7 +19,7 @@ AbstractTabViewTest comment: ''!
 addTestTabs
 	| objects |
 	objects := self objectsToTest.
-	presenter parentView extent: 500 @ 100.
+	presenter parentView dipExtent: 500 @ 100.
 	presenter viewMode: #smallIcons.
 	presenter model
 		removeAll;
@@ -30,7 +30,7 @@ autoSelectsFirst
 
 initializePresenter
 	super initializePresenter.
-	presenter parentView extent: 500 @ 100.
+	presenter parentView dipExtent: 500 @ 100.
 	presenter viewMode: #smallIcons.
 	"For the non-inherited tests, add some example tabs"
 	((self class lookupMethod: self selector) methodClass includesBehavior: AbstractTabViewTest)

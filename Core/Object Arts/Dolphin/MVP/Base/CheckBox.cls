@@ -35,7 +35,7 @@ is3State: aBoolean
 paintTransparentBackgroundOn: aCanvas 
 	self isThemed ifFalse: [^self].
 	ThemeLibrary default 
-		drawThemeParentBackground: self asParameter
+		drawThemeParentBackground: handle
 		hdc: aCanvas asParameter
 		prc: nil! !
 

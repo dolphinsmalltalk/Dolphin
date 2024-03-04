@@ -38,7 +38,7 @@ applyPreferredExtent
 	preferredClientExtent x: (preferredClientExtent x max: aspectRectangle width).
 
 	"Inset our aspect presenter a little"
-	inset := self view mapDipsToPels: 2.
+	inset := 2 * self view dpi // USER_DEFAULT_SCREEN_DPI.
 	insets := inset @ 0 corner: inset @ inset.
 	hookPresenter view insets: insets.
 

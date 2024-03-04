@@ -36,7 +36,7 @@ testCalculateExtent
 	subject usePreferredExtent: true.
 	shell := subject parentView.
 	shell
-		extent: 500 @ 75;
+		dipExtent: 500 @ 75;
 		layoutManager: FlowLayout new.
 	actualText := '	The quick brown 狐狸 jumped over the lazy Лиса'.
 	subject text: actualText.

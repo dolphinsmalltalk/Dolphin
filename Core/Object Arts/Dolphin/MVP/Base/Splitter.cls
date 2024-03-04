@@ -23,7 +23,7 @@ calculateExtent: aLayoutContext
 	"Private - Answer the calculated extent of the receiver that should be used by a
 	layout manager during it's layout process."
 
-	^self calcExtentFromClientExtent: (self mapDipsToPels: self defaultExtent)!
+	^self calcExtentFromClientExtent: self defaultExtent * self dpi // USER_DEFAULT_SCREEN_DPI!
 
 cancelTrackingAt: aPoint 
 	| position |

@@ -168,7 +168,7 @@ UserLibrary subclass: #FakeUserLibrary
 	classInstanceVariableNames: ''!
 
 DolphinTest subclass: #AbstractContainerViewTest
-	instanceVariableNames: 'containerView'
+	instanceVariableNames: 'containerView initialParentRect'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!

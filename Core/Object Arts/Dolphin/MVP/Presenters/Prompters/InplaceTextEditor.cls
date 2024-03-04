@@ -96,10 +96,10 @@ font: aFont
 	maxCharWidth := self view canvas textMetrics tmMaxCharWidth!
 
 implicitBorder
-	"Private - Widths of the implicit border on an edit control that has to be added to the
-	calculated extent."
+	"Private - Widths of the implicit border on an edit control that has to be added to the calculated extent."
 
-	^1@1 corner: 1@1!
+	#highDpiTodo.	"Does this need to be dpi scaled? It appears not, but need to test with higher scale factors to be sure."
+	^1 @ 1 corner: 1 @ 1!
 
 initialize
 	"Private - Initialize the receiver"

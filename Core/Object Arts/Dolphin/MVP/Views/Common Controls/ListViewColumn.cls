@@ -398,13 +398,13 @@ width
 		ifTrue: [view lvmGetColumnWidth: self index - 1]
 		ifFalse: [self basicWidth]!
 
-width: anInteger
+width: aNumber
 	"Set the width of the column to the specified <integer> number of pixels.
 	N.B. This may cause the width of other (auto-resizable) columns to change."
 
-	self basicWidth: anInteger.
+	self basicWidth: aNumber.
 	#highDpiTodo.	"We should not be sending the new width to the control at this point if not in report mode, but then need to send later when entering report mode"
-	self parent ifNotNil: [:view | view setWidthOfColumn: self index to: anInteger]! !
+	self parent ifNotNil: [:view | view setWidthOfColumn: self index to: aNumber asInteger]! !
 
 !ListViewColumn categoriesForMethods!
 alignment!alignment!public! !
