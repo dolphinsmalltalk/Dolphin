@@ -235,11 +235,12 @@ onInitDialog
 
 	"Similarly, Windows always creates dialog as a child of the desktop. Force the required
 	parent here"
-	User32 setParent: self asParameter hWndNewParent: creationParent asParameter.
+	User32 setParent: handle hWndNewParent: creationParent asParameter.
+
 	(self isPropertyPage and: [self isThemed])
 		ifTrue: 
 			["Property pages in tabbed dialogs require a specific theme"
-			UxTheme enableThemeDialogTexture: self asParameter dwFlags: ETDT_ENABLETAB].
+			UxTheme enableThemeDialogTexture: handle dwFlags: ETDT_ENABLETAB].
 
 	"Tell Windows NOT to set the focus. We set focus later after we have populated the dialog
 	(though subclasses loaded from a Windows dialog template resource may wish to return true
@@ -334,10 +335,8 @@ setItem: anIntegerId int: anInteger
 setItem: anInteger text: aString
 	"Private - Set the text of the receiver's control with the specified id."
 
-	(User32
-		setDlgItemText: self asParameter
-		nIDDlgItem: anInteger
-		lpString: aString) ifFalse: [User32 systemError]!
+	(User32 setDlgItemText: handle nIDDlgItem: anInteger lpString: aString)
+		ifFalse: [User32 systemError]!
 
 showModal
 	"Private - Show the receiver as a dialog modal to the current active window. Note that if the Dialog has already been created, it will have taken activation, and it is no longer possible to determine the previously active window."
@@ -485,7 +484,10 @@ on: aSubjectModel
 !
 
 uninitialize
-	View unregisterMessageMappings: {WM_INITDIALOG}! !
+	View unregisterMessageMappings: {WM_INITDIALOG}!
+
+winClassName
+	^'#32770'! !
 
 !UI.DialogView class categoriesForMethods!
 icon!constants!public! !
@@ -493,5 +495,6 @@ initialize!initializing!private! !
 new!instance creation!public! !
 on:!instance creation!public! !
 uninitialize!class hierarchy-removing!private! !
+winClassName!constants!private! !
 !
 
