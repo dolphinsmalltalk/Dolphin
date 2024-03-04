@@ -35,7 +35,7 @@ defaultBackcolor
 	^Color tooltip!
 
 endTracking
-	self sendMessage: TTM_TRACKACTIVATE wParam: false asParameter!
+	self sendMessage: TTM_TRACKACTIVATE wParam: FALSE!
 
 forecolor: aColorOrNil
 	"Sets the foreground colour of the receiver to aColorOrNil.
@@ -207,7 +207,7 @@ showDuration: anInteger
 startTracking: aTOOLINFO 
 	self 
 		sendMessage: TTM_TRACKACTIVATE
-		wParam: true asParameter
+		wParam: TRUE
 		lpParam: aTOOLINFO!
 
 tools

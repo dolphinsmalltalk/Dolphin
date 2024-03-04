@@ -378,7 +378,7 @@ icon
 	"Answers an Icon that can be used to represent this class: ✖"
 
 	<namespace: Graphics>
-	^##((TextTileIcon text: $\x2716)
+	^##((TextTileIcon text: $\x2716 fontName: 'Segoe UI Emoji')
 		textcolor: Color red;
 		yourself)! !
 

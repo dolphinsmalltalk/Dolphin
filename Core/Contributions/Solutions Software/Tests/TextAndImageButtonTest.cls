@@ -25,7 +25,7 @@ setUp
 	shell layoutManager: BorderLayout new.
 	shell addSubView: button.
 	button arrangement: #center.
-	shell rectangle: (100 @ 100 extent: 250 @ 100).
+	shell dipRectangle: (100 @ 100 extent: 250 @ 100).
 	shell show!
 
 tearDown

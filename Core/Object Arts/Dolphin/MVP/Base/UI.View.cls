@@ -281,11 +281,11 @@ baseStyle: styleBitsToAdd maskedBy: styleBitMask recreateIfChanged: aBoolean
 	newBaseStyle := (baseStyle bitAnd: styleBitMask bitInvert)
 				bitOr: (styleBitsToAdd bitAnd: styleBitMask).
 	newBaseStyle = baseStyle ifTrue: [^false].
+	self baseStyle: newBaseStyle.
 	aBoolean
-		ifTrue: [self recreateAround: [self baseStyle: newBaseStyle]]
+		ifTrue: [self recreateAround: []]
 		ifFalse: 
-			[self baseStyle: newBaseStyle.
-			self isOpen
+			[self isOpen
 				ifTrue: 
 					[self setWindowStyle: ((self getWindowStyle bitAnd: styleBitMask bitInvert)
 								bitOr: (styleBitsToAdd bitAnd: styleBitMask))]].
@@ -916,12 +916,17 @@ destroy
 dipExtent
 	"Answer the dimensions of the receiver's outer (non-client) window as measured in device-indepent pixels (DIPs are 96-dpi)."
 
-	^self mapPelsToDips: self extent!
+	^self extent * USER_DEFAULT_SCREEN_DPI / self dpi!
 
 dipExtent: aPoint
 	"Set the dimensions of the receiver's outer window to the equivalent of the device-indepent pixel (DIPs are 96-dpi) extent, aPoint, at the receiver's current resolution."
 
-	self extent: (self mapDipsToPels: aPoint)!
+	self extent: aPoint * self scaleFactor!
+
+dipRectangle: aRectangle
+	"Set the dimensions of the receiver's outer window to the equivalent of the device-indepent pixel (DIPs are 96-dpi) extent, aPoint, at the receiver's current resolution."
+
+	self rectangle: (aRectangle scaledBy: self scaleFactor)!
 
 disable
 	"Disable the receiver from receiving input events."
@@ -1217,11 +1222,10 @@ exStyle: styleBitsInteger maskedBy: styleMaskInteger recreateIfChanged: aBoolean
 	newExStyle := (exStyle bitAnd: styleMaskInteger bitInvert)
 				bitOr: (styleBitsInteger bitAnd: styleMaskInteger).
 	newExStyle = exStyle ifTrue: [^false].
+	self extendedStyle: newExStyle.
 	aBoolean
-		ifTrue: [self recreateAround: [self extendedStyle: newExStyle]]
-		ifFalse: 
-			[self extendedStyle: newExStyle.
-			self isOpen ifTrue: [self setWindowExStyle: newExStyle]].
+		ifTrue: [self recreateAround: []]
+		ifFalse: [self isOpen ifTrue: [self setWindowExStyle: newExStyle]].
 	^true!
 
 exStyleMask: exStyleBitsMask set: aBoolean 
@@ -1511,7 +1515,7 @@ getWindowDC
 getWindowExStyle
 	"Private - Answer the extended window style of the receiver."
 
-	^self getWindowLong: GWL_EXSTYLE
+	^User32 getWindowExStyle: handle
 !
 
 getWindowLong: anInteger
@@ -1537,20 +1541,12 @@ getWindowRect
 getWindowStyle
 	"Private - Answer the window style of the receiver."
 
-	^User32 getWindowLong: handle nIndex: GWL_STYLE!
+	^User32 getWindowStyle: handle!
 
 getWindowText
 	"Private - Answers the text from the receiver"
 
-	| textLen text |
-	textLen := self textLength.
-	text := Utf16String newFixed: textLen.
-	User32
-		getWindowText: handle
-		lpString: text
-		nMaxCount: textLen + 1.
-	"We must return UTF-16 text in order to be compatible with other control APIs that may return character counts expressed in UTF-16 code units (e.g. the Edit control's EM_LINELENGTH)"
-	^text!
+	^User32 getWindowText: handle!
 
 getWndProc
 	"Private - Answer the window procedure of the receiver."
@@ -1627,7 +1623,7 @@ hasFixedWidth
 hasFocus
 	"Answer true if the receiver has focus"
 
-	^self == self class focus!
+	^handle = self class focusHandle!
 
 hasFocusDeeply
 	"Answer whether the receiver or any of its children, or its children's children, and so on,
@@ -2150,16 +2146,6 @@ managedSubViewsDo: aMonadicValuable
 	the layout manager (if any)."
 
 	self subViewsDo: [:each | each isManaged ifTrue: [aMonadicValuable value: each]]!
-
-mapDipsToPels: aMagnitude
-	"Scale the DIPs (device-independent pixel, i.e. 96-dpi) <Magnitude> argument to the receiver's DPI and answer the result."
-
-	^aMagnitude * self dpi / USER_DEFAULT_SCREEN_DPI!
-
-mapPelsToDips: aMagnitude
-	"Scale the device-dependent pixel <Magnitude> argument from the receiver's DPI to DIPs (device-independent, i.e. 96-dpi, pixels) equivalent, and answer the result."
-
-	^aMagnitude * USER_DEFAULT_SCREEN_DPI / self dpi!
 
 mapPoint: aPoint to: anotherView
 	"Maps aPoint from the coordinate system of the receiver into that of anotherView"
@@ -2824,14 +2810,13 @@ position: aPoint
 	"Set the top left position of the receiver to aPoint. aPoint is in the coordinate
 	system of the receiver's parent. Answer whether the position request was accepted."
 
-	^User32
-		setWindowPos: handle
-		hWndInsertAfter: 0
-		x: aPoint x
-		y: aPoint y
-		cx: 0
-		cy: 0
-		uFlags: ##(SWP_NOSIZE | SWP_NOZORDER | SWP_NOACTIVATE)!
+	^self
+		setWindowPosAfter: 0
+		x: aPoint x asInteger
+		y: aPoint y asInteger
+		width: 0
+		height: 0
+		flags: ##(SWP_NOSIZE | SWP_NOZORDER | SWP_NOACTIVATE)!
 
 positionForKeyboardContextMenu
 	"Answer the desired position for a context menu requested from the keyboard.
@@ -3000,7 +2985,7 @@ recreationParameters
 	| rect |
 	rect := self getRect.
 	^WindowCreationParameters
-		position: rect origin
+		position: rect topLeft
 		extent: rect extent
 		dpi: self dpi
 		styles: creationStyle
@@ -3019,14 +3004,13 @@ rectangle: aRectangle
 	newRectangle := self adjustRectangle: aRectangle.
 	newRectangle = self rectangle
 		ifFalse: 
-			[User32
-				setWindowPos: handle
-				hWndInsertAfter: 0
-				x: aRectangle left
-				y: aRectangle top
-				cx: aRectangle width
-				cy: aRectangle height
-				uFlags: ##(SWP_NOZORDER bitOr: SWP_NOACTIVATE)]!
+			[self 
+				setWindowPosAfter: 0
+				x: aRectangle left asInteger
+				y: aRectangle top asInteger
+				width: aRectangle width asInteger
+				height: aRectangle height asInteger
+				flags: ##(SWP_NOZORDER | SWP_NOACTIVATE)]!
 
 refreshContents
 	"The receiver's display needs to be refreshed. The default is to invalidate the
@@ -3122,8 +3106,7 @@ resolutionScaledBy: aPoint
 	"Private - The receiver is being loaded and it has been determined that the pixel resolution has changed since the point at which the view was saved. Scale any internal pixels by the <Point> argument.
 	Note that the placement (position and extent) of the receiver has already been scaled in #restorePlacement:resolution:."
 
-	#highDpiTodo. "The general approach of rescaling stored geometry to a new DPI on load risks accumulating rounding error, particularly if we truncate as in all the existing resolutionScaledBy: methods. E.g. let's say we rescale 122 pixels from 96 dpi to 120 and truncate, we get 152. We resave at 120 dpi, and then reload again at 96 dpi, scaling down with truncation to 121. The round trip has lost a pixel. We either need to store the original design value with design dpi (or some normalized value such as DIPs) and always rescale from there, or scale to potentially non-integral values (e.g. Fractions) that are converted to integers by rounding/truncating as required."
-	preferredExtent ifNotNil: [preferredExtent := (preferredExtent * aPoint) truncated]!
+	preferredExtent ifNotNil: [preferredExtent := preferredExtent * aPoint]!
 
 restoreFromProxy: aViewProxy
 	"Private - Complete state restoration from proxy form by apply the saved state, and restoring the subviews from their proxies."
@@ -3159,6 +3142,11 @@ richText: aRichText
 
 	self plainText: aRichText asString
 !
+
+scaleFactor
+	"Answer the DPI scale factor of the receiver relative to 96-dpi, e.g. for a scale of 125% this might be 5/4 (i.e. 1.25). At 96-dpi, the scale will be 1."
+
+	^self dpi / USER_DEFAULT_SCREEN_DPI!
 
 screenRectangle
 	"Answer the <Rectangle> boundary of the receiver window in screen coordinates"
@@ -3401,8 +3389,7 @@ showShell
 				create;
 				yourself.
 	self parentView: shell.
-	shell
-		extent: (shell calcExtentFromClientExtent: self defaultExtent * shell dpi / USER_DEFAULT_SCREEN_DPI).
+	shell extent: (shell calcExtentFromClientExtent: self defaultExtent * shell scaleFactor).
 	self configureDefaultShell: shell.
 	self create show.
 	shell show!
@@ -3644,6 +3631,7 @@ textLength
 	^User32 getWindowTextLength: handle!
 
 theme
+	#highDpiTodo. "Single class side theme handle may be insufficient for per-monitor high DPI"
 	^self class theme!
 
 themeSubAppName
@@ -3836,6 +3824,8 @@ windowName
 	^''!
 
 windowTitle
+	"Answer the window title that is set/restored through WindowCreationParameters. Generally this is the window text."
+
 	^self plainText!
 
 winFinalize
@@ -4181,11 +4171,12 @@ wmMButtonUp: message wParam: wParam lParam: lParam
 				lParam: lParam)!
 
 wmMeasureItem: message wParam: wParam lParam: lParam
-	| struct extent |
+	| struct extent menuMetrics |
 	struct := MEASUREITEMSTRUCT fromAddress: lParam.
 	struct CtlType == ODT_MENU ifFalse: [^nil].
-	extent := SystemMetrics current menuImageExtent.
-	struct itemWidth: extent x + SystemMetrics current menuImageTextGap.
+	menuMetrics := self metrics.
+	extent := menuMetrics menuImageExtent.
+	struct itemWidth: extent x + menuMetrics menuImageTextGap.
 	struct itemHeight: extent y.
 	^TRUE!
 
@@ -4536,22 +4527,12 @@ wmXButtonUp: message wParam: wParam lParam: lParam
 wndClassAtom
 	"Answer the `<integer>` atom that uniquely identifies the receiver's Window class."
 
-	^User32 getClassLongPtr: self asParameter nIndex: GCW_ATOM!
+	^User32 getClassAtom: handle!
 
 wndClassName
 	"Answer the `String` name of the receiver's Window class."
 
-	| buf |
-	self isOpen ifFalse: [^self class wndClassName].
-	"Per https://docs.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-wndclassexw, the maximum length of a window class name is 256,
-	although it not specified whether this includes the null terminator."
-	buf := Utf16String newFixed: 256.
-	(User32
-		getClassName: self asParameter
-		lpClassName: buf
-		nMaxCount: 256) == 0
-		ifTrue: [Win32Error signal].
-	^buf trimNulls!
+	^User32 getClassName: handle!
 
 x
 	"Answer the left coordinate of the receiver in the coordinate system of the parent."
@@ -4712,6 +4693,7 @@ deferLayout:!constants!private! !
 destroy!public!realizing/unrealizing! !
 dipExtent!accessing!geometry!public! !
 dipExtent:!accessing!geometry!public! !
+dipRectangle:!accessing!geometry!public! !
 disable!operations!public! !
 disableRedraw!drawing!public! !
 disconnectFromModel!operations!private! !
@@ -4723,7 +4705,7 @@ displayMonitor!accessing!public! !
 displayOn:!displaying!public! !
 displayOnFormats!displaying!private! !
 displayOnMaxCharacters!constants!displaying!private! !
-dpi!accessing!public! !
+dpi!geometry!public! !
 dragCut:!drag & drop!public! !
 dragDropSessionClass!constants!public! !
 dragEnter:!drag & drop!public! !
@@ -4875,8 +4857,6 @@ layoutExtent:!geometry!public! !
 layoutManager!geometry!public! !
 managedSubViews!hierarchy!public!sub views! !
 managedSubViewsDo:!hierarchy!public!sub views! !
-mapDipsToPels:!helpers!public! !
-mapPelsToDips:!geometry!public!utilities! !
 mapPoint:to:!geometry!public! !
 mapPointToScreen:!geometry!public! !
 mapRectangle:to:!geometry!public! !
@@ -5010,6 +4990,7 @@ resolutionScaledBy:!geometry!private! !
 restoreFromProxy:!binary filing!private! !
 restorePlacement:resolution:!geometry!private! !
 richText:!accessing!private! !
+scaleFactor!geometry!public! !
 screenRectangle!geometry!public! !
 screenRectangle:!geometry!public! !
 scrollBy:clip:!public!scrolling! !
@@ -5290,6 +5271,17 @@ capture
 	capturedHandle := User32 getCapture.
 	^capturedHandle notNil ifTrue: [self withHandle: capturedHandle] ifFalse: []!
 
+classForUnregisteredHandle: aHandle
+	"Private - Answer the View class to use to wrap a Window handle that is external to Dolphin, either because the Window belongs to another process, or because it was not directly created by Dolphin. An example of the latter would be the common dialogs and their controls. The dialogs are opened by Dolphin calling system APIs, and these APIs then internally create a dialog from a template. Both the dialog and the controls on the dialog are unregistered/unowned"
+
+	| style |
+	(User32 isDialog: aHandle) ifTrue: [^#{UI.DialogView} valueOrNil ?? ShellView].
+	style := User32 getWindowStyle: aHandle.
+	(style allMask: WS_CHILDWINDOW) ifFalse: [^ShellView].
+	style := User32 getWindowExStyle: aHandle.
+	(style anyMask: WS_EX_CONTROLPARENT) ifTrue: [^ContainerView].
+	^View!
+
 closeAll
 	"Private - Ask all top level views to close (they will receiver a WM_CLOSE, which
 	they may refuse). Answer whether all windows are closed."
@@ -5416,21 +5408,9 @@ fromHandle: aHandle
 
 	^SessionManager.Current inputState windowAt: aHandle
 		ifAbsent: 
-			[| unknownView parentView parentHandle |
-			unknownView := self new handle: aHandle.
-
-			"Locate a suitable parent view"
-			parentHandle := unknownView getParent.
-			parentView := View withHandle: parentHandle.
-			parentView isNil
-				ifTrue: 
-					[| parentStyle parentClass |
-					"Decide in a suitable class for the parent"
-					parentStyle := User32 getWindowLong: parentHandle nIndex: GWL_STYLE.
-					parentClass := (parentStyle anyMask: WS_CHILD) ifTrue: [ContainerView] ifFalse: [ShellView].
-					parentView := parentClass fromHandle: parentHandle].
-			unknownView parentView: parentView.
-			unknownView]!
+			[(self newUnregistered: aHandle)
+				parentView: (View fromHandle: (User32 getParent: aHandle));
+				yourself]!
 
 fromPoint: aPoint
 	"Private - Answers the View beneath aPoint (in screen coordinates)."
@@ -5463,6 +5443,11 @@ new
 
 	^super new initialize!
 
+newUnregistered: aHandle
+	| class |
+	class := self == ##(self) ifTrue: [self classForUnregisteredHandle: aHandle] ifFalse: [self].
+	^class new handle: aHandle!
+
 onExit
 	"Clean up the residue on Dolphin exit."
 
@@ -5490,6 +5475,7 @@ onStartup
 	UxTheme onStartup!
 
 openTheme
+	#highDpiTodo.	"Need to use OpenThemeDataForDpi for per-monitor high DPI"
 	^(self themePartName isNil or: [UxTheme isAppThemed not])
 		ifTrue: [##(External.Handle new)]
 		ifFalse: [UxTheme openThemeData: nil pszClassList: self themePartName asUtf16String]!
@@ -5808,6 +5794,7 @@ activeHandle!accessing!private! !
 activeOrDesktop!enquiries!public! !
 buildMessageMap!constants!must not strip!private! !
 capture!accessing!public! !
+classForUnregisteredHandle:!helpers!private! !
 closeAll!operations!private! !
 commandAnnotations!accessing!public! !
 cursor!accessing!public! !
@@ -5830,6 +5817,7 @@ fromPoint:!instance creation!private! !
 icon!constants!public! !
 initialize!development!initializing!private! !
 new!instance creation!public! !
+newUnregistered:!instance creation!public! !
 onExit!event handling!public! !
 onStartup!event handling!public! !
 openTheme!private!theming! !

@@ -37,7 +37,7 @@ helloWorldText
 minExtent
 	"Answers the minimum extent for the receiver at its current resolution, in this case 3/4 of the original creation size."
 
-	^(self mapDipsToPels: self defaultExtent) * 3 // 4!
+	^self defaultExtent * self scaleFactor * 3 // 4!
 
 onPaintRequired: aPaintEvent
 	"A portion of the receiver window has been exposed and needs repainting.

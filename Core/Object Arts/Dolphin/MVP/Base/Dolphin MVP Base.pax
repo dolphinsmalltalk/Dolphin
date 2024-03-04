@@ -195,12 +195,16 @@ package setMethodNames: #(
 	#(#{OS.UserLibrary} #flashWindowEx:)
 	#(#{OS.UserLibrary} #getAncestor:gaFlags:)
 	#(#{OS.UserLibrary} #getCapture)
+	#(#{OS.UserLibrary} #getClassAtom:)
 	#(#{OS.UserLibrary} #getClassLongPtr:nIndex:)
+	#(#{OS.UserLibrary} #getClassName:)
 	#(#{OS.UserLibrary} #getClassName:lpClassName:nMaxCount:)
 	#(#{OS.UserLibrary} #getClientRect:lpRect:)
 	#(#{OS.UserLibrary} #getClipboardData:)
 	#(#{OS.UserLibrary} #getClipboardFormatName:lpszFormatName:cchMaxCount:)
 	#(#{OS.UserLibrary} #getDlgCtrlID:)
+	#(#{OS.UserLibrary} #getDpiForSystem)
+	#(#{OS.UserLibrary} #getDpiForWindow:)
 	#(#{OS.UserLibrary} #getFocus)
 	#(#{OS.UserLibrary} #getForegroundWindow)
 	#(#{OS.UserLibrary} #getLastActivePopup:)
@@ -212,14 +216,18 @@ package setMethodNames: #(
 	#(#{OS.UserLibrary} #getProp:lpString:)
 	#(#{OS.UserLibrary} #getScrollInfo:fnBar:lpsi:)
 	#(#{OS.UserLibrary} #getSystemMenu:bRevert:)
+	#(#{OS.UserLibrary} #getSystemMetricsForDpi:dpi:)
 	#(#{OS.UserLibrary} #getTopWindow:)
 	#(#{OS.UserLibrary} #getUpdateRect:lpRect:bErase:)
 	#(#{OS.UserLibrary} #getWindow:uCmd:)
 	#(#{OS.UserLibrary} #getWindowDC:)
+	#(#{OS.UserLibrary} #getWindowExStyle:)
 	#(#{OS.UserLibrary} #getWindowLong:nIndex:)
 	#(#{OS.UserLibrary} #getWindowLongPtr:nIndex:)
 	#(#{OS.UserLibrary} #getWindowPlacement:lpwndpl:)
 	#(#{OS.UserLibrary} #getWindowRect:lpRect:)
+	#(#{OS.UserLibrary} #getWindowStyle:)
+	#(#{OS.UserLibrary} #getWindowText:)
 	#(#{OS.UserLibrary} #getWindowText:lpString:nMaxCount:)
 	#(#{OS.UserLibrary} #getWindowTextLength:)
 	#(#{OS.UserLibrary} #getWindowThreadProcessId:lpdwProcessId:)
@@ -230,6 +238,7 @@ package setMethodNames: #(
 	#(#{OS.UserLibrary} #invalidateRgn:hRgn:bErase:)
 	#(#{OS.UserLibrary} #isChild:hWnd:)
 	#(#{OS.UserLibrary} #isClipboardFormatAvailable:)
+	#(#{OS.UserLibrary} #isDialog:)
 	#(#{OS.UserLibrary} #isDialogMessage:lpMsg:)
 	#(#{OS.UserLibrary} #isForegroundProcess:)
 	#(#{OS.UserLibrary} #isIconic:)
@@ -2949,12 +2958,27 @@ getCapture
 	<stdcall: handle GetCapture>
 	^self invalidCall: _failureCode!
 
+getClassAtom: hWnd
+	^self getClassLongPtr: hWnd nIndex: GCW_ATOM!
+
 getClassLongPtr: hWnd nIndex: nIndex
 	<stdcall: uintptr GetClassLongW handle int32>
 	^self invalidCall: _failureCode!
 
+getClassName: anExternalHandle
+	| buf |
+	buf := Utf16String newFixed: 256.
+	"Per https://docs.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-wndclassexw, the maximum length of a window class name is 256,
+	although it not specified whether this includes the null terminator."
+	(self
+		getClassName: anExternalHandle
+		lpClassName: buf
+		nMaxCount: 256) == 0
+		ifTrue: [Win32Error signal].
+	^buf trimNulls!
+
 getClassName: aWindowHandle lpClassName: aByteBuffer nMaxCount: anInteger
-	"Retrieves the name of the Windows class to which the specified window belongs.
+	"Private - Retrieves the name of the Windows class to which the specified window belongs.
 		int GetClassName(
 			HWND hWnd,			// handle of window
 			LPWSTR lpClassName,	// address of UTF16 buffer for class name
@@ -3000,6 +3024,14 @@ getClipboardFormatName: format lpszFormatName: lpszFormatName cchMaxCount: cchMa
 
 getDlgCtrlID: hWnd
 	<stdcall: int32 GetDlgCtrlID handle>
+	^self invalidCall: _failureCode!
+
+getDpiForSystem
+	<stdcall: dword GetDpiForSystem>
+	^self invalidCall: _failureCode!
+
+getDpiForWindow: hWnd
+	<stdcall: dword GetDpiForWindow handle>
 	^self invalidCall: _failureCode!
 
 getFocus
@@ -3102,6 +3134,10 @@ getSystemMenu: anExternalHandle bRevert: aBoolean
 	<stdcall: handle GetSystemMenu handle bool>
 	^self invalidCall: _failureCode!
 
+getSystemMetricsForDpi: index dpi: dpi
+	<stdcall: sdword GetSystemMetricsForDpi sdword dword>
+	^self invalidCall: _failureCode!
+
 getTopWindow: aHandle
 	"Answer the handle of the top-most child of the window with the specified handle.
 		HWND GetTopWindow(
@@ -3146,6 +3182,9 @@ getWindowDC: aWindowHandle
 
 	<stdcall: handle GetWindowDC handle>
 	^self invalidCall: _failureCode!
+
+getWindowExStyle: hWnd
+	^self getWindowLong: hWnd nIndex: GWL_EXSTYLE!
 
 getWindowLong: aWindowHandle nIndex: zeroBasedIntegerOffset
 	"Answer various signed 32-bit integer values retrieved from the window with handle, aWindowHandle.
@@ -3220,6 +3259,20 @@ getWindowRect: aWindowHandle lpRect: aRECT
 
 	<stdcall: bool GetWindowRect handle RECTL*>
 	^self invalidCall: _failureCode!
+
+getWindowStyle: hWnd
+	^self getWindowLong: hWnd nIndex: GWL_STYLE!
+
+getWindowText: hWnd
+	| text textLen |
+	textLen := self getWindowTextLength: hWnd.
+	text := Utf16String newFixed: textLen.
+	self
+		getWindowText: hWnd
+		lpString: text
+		nMaxCount: textLen + 1.
+	"We must return UTF-16 text in order to be compatible with other control APIs that may return character counts expressed in UTF-16 code units (e.g. the Edit control's EM_LINELENGTH)"
+	^text!
 
 getWindowText: aWindow lpString: aBuffer nMaxCount: len
 	"Copy the text of the specified window (its title bar, or other appropriate text)
@@ -3322,6 +3375,9 @@ isClipboardFormatAvailable: format
 
 	<stdcall: bool IsClipboardFormatAvailable uint32>
 	^self invalidCall: _failureCode!
+
+isDialog: anExternalHandle
+	^(self getClassAtom: anExternalHandle) == 32770!
 
 isDialogMessage: aHandle lpMsg: aMSG
 	"Determine whether a message is intended for the specified dialog 
@@ -3994,11 +4050,18 @@ findWindow:lpWindowName:!public!win32 functions-filled shape! !
 flashWindowEx:!public!win32 functions-error handling! !
 getAncestor:gaFlags:!**auto generated**!public! !
 getCapture!public!win32 functions-mouse input! !
+getClassAtom:!public!win32 functions-window class! !
 getClassLongPtr:nIndex:!public!win32 functions-window class! !
+getClassName:!public!win32 functions-window class! !
 getClassName:lpClassName:nMaxCount:!public!win32 functions-window class! !
 getClientRect:lpRect:!public!win32 functions-window! !
 getClipboardData:!public!win32 functions-clipboard! !
 getClipboardFormatName:lpszFormatName:cchMaxCount:!public!win32 functions-clipboard! !
+getDlgCtrlID:!public!win32 functions-dialog box! !
+getDC:!not an aspect!public!win32 functions-device context! !
+getDCEx:hrgnClip:flags:!public!win32 functions-device context! !
+getDpiForSystem!public!win32 functions-high DPI! !
+getDpiForWindow:!public!win32 functions-high DPI! !
 getDlgCtrlID:!public!win32 functions-dialog box! !
 getFocus!public!win32 functions-keyboard input! !
 getForegroundWindow!public!win32 functions-keyboard input! !
@@ -4011,17 +4074,21 @@ getNextDlgTabItem:hCtl:bPrevious:!public!win32 functions-window! !
 getProp:lpString:!public!win32 functions-window property! !
 getScrollInfo:fnBar:lpsi:!public!win32 functions-scroll bar! !
 getSystemMenu:bRevert:!public!win32 functions-menu!win32 functions-system information! !
+getSystemMetricsForDpi:dpi:!public!win32 functions-high DPI! !
 getTopWindow:!public!win32 functions-window! !
 getUpdateRect:lpRect:bErase:!public!win32 functions-painting and drawing! !
 getWindow:uCmd:!public!win32 functions-window! !
 getWindowDC:!public!win32 functions-device context! !
-getWindowLong:nIndex:!public!win32 functions-window class! !
-getWindowLongPtr:nIndex:!public!win32 functions-window class! !
+getWindowStyle:!public!win32 functions-window! !
+getWindowText:!public!win32 functions-window! !
+getWindowText:lpString:nMaxCount:!public!win32 functions-window! !
+getWindowTextLength:!public!win32 functions-window! !
+getWindowThreadProcessId:lpdwProcessId:!**auto generated**!public!win32 functions-window! !
 getWindowPlacement:lpwndpl:!public!win32 functions-window! !
 getWindowRect:lpRect:!public!win32 functions-window! !
 getWindowText:lpString:nMaxCount:!public! !
 getWindowTextLength:!public! !
-getWindowThreadProcessId:lpdwProcessId:!**auto generated**!public!win32 functions-window! !
+getWindowThreadProcessId:lpdwProcessId:!public!win32 functions-window! !
 getWindowULong:nIndex:!public!win32 functions-window class! !
 getWindowULongPtr:nIndex:!public!win32 functions-window class! !
 insertMenuItem:uItem:fByPosition:lpmii:!public!win32 functions-menu! !
@@ -4029,6 +4096,7 @@ invalidate:lpRect:bErase:!public!win32 functions-painting and drawing! !
 invalidateRgn:hRgn:bErase:!public!win32 functions-painting and drawing! !
 isChild:hWnd:!public!win32 functions-window! !
 isClipboardFormatAvailable:!public!win32 functions-clipboard! !
+isDialog:!public!queries! !
 isDialogMessage:lpMsg:!public!win32 functions-dialog box! !
 isForegroundProcess:!enquiries!public! !
 isIconic:!public!win32 functions-icon! !

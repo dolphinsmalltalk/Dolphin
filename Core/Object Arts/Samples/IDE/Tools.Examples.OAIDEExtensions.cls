@@ -65,8 +65,8 @@ browseKeyBindingsOfShell: aShellView
 	self printHtmlDescriptionOfKeyBindingsForShell: aShellView on: stream.
 	stream nextPutAll: '</BODY></HTML>'.
 	shell := Shell create.
-	shell view
-		extent: 430 @ 600;
+	(shell view)
+		dipExtent: 450 @ 600;
 		layoutManager: GridLayout new;
 		largeIcon: (Icon fromId: 'HotKey.ico');
 		isPersistentView: false.

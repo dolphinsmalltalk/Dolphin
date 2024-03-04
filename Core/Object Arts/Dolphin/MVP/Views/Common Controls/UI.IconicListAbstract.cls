@@ -369,7 +369,7 @@ hideDropHighlight
 imageExtent
 	"Private - Answer the extent of images to use based on the current view mode and resolution."
 
-	^self mapDipsToPels: (self class imageSizes at: self viewMode)!
+	^(self class imageSizes at: self viewMode) * self dpi // USER_DEFAULT_SCREEN_DPI!
 
 imageManager
 	"Private - Answer the receiver's normal image manager."

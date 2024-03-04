@@ -1083,7 +1083,7 @@ setAlignment: anInteger
 setMarginWidths: anArray
 	"Private - Set the widths of the right and left margins of the control to the <integer> pixel widths specified in the 2-element <Array> argument."
 
-	SystemMetrics current hasTextBoxMargins ifFalse: [^self].
+	self metrics hasTextBoxMargins ifFalse: [^self].
 	self
 		sendMessage: EM_SETMARGINS
 		wParam: ##(EC_LEFTMARGIN | EC_RIGHTMARGIN)
@@ -1279,6 +1279,10 @@ wantTab: aBoolean
 	teFlags := teFlags mask: WantTabMask set: aBoolean!
 
 windowTitle
+	"Answer the window title that is set/restored through WindowCreationParameters. Generally this is the window text."
+
+	"The Edit control ignores the text passed as the window title for the CreateWindowEx call, so we don't store the text in the WindowCreationState"
+
 	^nil!
 
 wmKeyDown: message wParam: wParam lParam: lParam

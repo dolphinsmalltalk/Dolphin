@@ -660,7 +660,7 @@ UI.Tests.PresenterTest
 
 UI.Tests.PresenterTest
 	subclass: #'UI.Tests.AbstractContainerViewTest'
-	instanceVariableNames: ''
+	instanceVariableNames: 'initialParentRect'
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''

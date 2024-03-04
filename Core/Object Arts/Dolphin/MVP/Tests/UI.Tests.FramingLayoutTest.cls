@@ -49,6 +49,7 @@ testFramingCalculationSerialisation
 testResizeParentRelative
 	| layout button rect offsets marginExtents |
 	layout := shell layoutManager.
+	"Note that we deliberately avoid doing any DPI scaling here to avoid the comparisons being affected by rounding. The actual sizes used don't matter."
 	shell insets: (5 @ 10 corner: 15 @ 20).
 	button := shell addSubView: PushButton new.
 	button arrangement

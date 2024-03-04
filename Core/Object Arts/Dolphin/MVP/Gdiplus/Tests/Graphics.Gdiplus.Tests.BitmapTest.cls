@@ -93,7 +93,7 @@ testFromIcon
 	model := self subjectClass fromIcon: self icon.
 	self assert: model isPersistent.
 	"mmm ... how does it choose the icon format to use?"
-	self assert: model extent equals: 32 @ 32.
+	self assert: model extent equals: SystemMetrics current largeIconExtent.
 	self assert: model frameCount equals: 1.
 	self deny: model hasAlpha.
 	self deny: model isScalable.
@@ -107,7 +107,7 @@ testFromIconXP
 	model := self subjectClass fromIcon: (Icon fromFile: self fileResource pafWinXP32x32ico).
 	model handle.
 	"SW: Why did I have 48@48 ?"
-	self assert: model extent equals: 32 @ 32.
+	self assert: model extent equals: Icon largeExtent.
 	self assertPersistedValid free.
 	self assertClonedValid free!
 

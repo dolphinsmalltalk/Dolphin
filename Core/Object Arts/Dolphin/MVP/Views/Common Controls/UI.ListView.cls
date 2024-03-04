@@ -79,6 +79,9 @@ addColumn: newColumn atIndex: columnIndex
 	at the <integer> index columnIndex, shifting the positions of all 
 	subsequent columns up by one. Answers the inserted column."
 
+	"If the column is of fixed width, assume the width was specified in code at 96 dpi"
+
+	newColumn resolutionScaledBy: self resolution / USER_DEFAULT_SCREEN_DPI.
 	lastClickedColIndex notNil
 		ifTrue: [lastClickedColIndex >= columnIndex ifTrue: [lastClickedColIndex := lastClickedColIndex + 1]].
 	columns add: newColumn beforeIndex: columnIndex.
@@ -125,14 +128,15 @@ anchorIndex: anInteger
 applyImageLists
 	"Private - Set the receiver's image lists from the image managers."
 
-	| largeImList smallExt |
+	| largeImList smallExt dpi |
+	dpi := self dpi.
 	largeImList := self customImageExtent
-				ifNotNil: [:ext | self thumbnailsImageManager imageListWithExtent: (self mapDipsToPels: ext)]
+				ifNotNil: [:ext | self thumbnailsImageManager imageListWithExtent: ext * dpi // USER_DEFAULT_SCREEN_DPI]
 				ifNil: 
 					[thumbnailsImageManager := nil.
 					self imageManager
-						ifNotNil: [:im | im imageListWithExtent: (self mapDipsToPels: self largeIconExtent)]].
-	smallExt := self mapDipsToPels: self smallIconExtent.
+						ifNotNil: [:im | im imageListWithExtent: self largeIconExtent * dpi // USER_DEFAULT_SCREEN_DPI]].
+	smallExt := self smallIconExtent * dpi // USER_DEFAULT_SCREEN_DPI.
 	self lvmSetImageList: (self imageManager ifNotNil: [:im | im imageListWithExtent: smallExt])
 		type: LVSIL_SMALL.
 	self lvmSetImageList: largeImList type: LVSIL_NORMAL.
@@ -146,8 +150,7 @@ autoResizeColumns
 	"Private - Attempt to share the available width in the receiver between all automagically resizeable
 	columns. This only has a visible effect in #report mode, or if the list is subsequently switched to report mode."
 
-	self isReportMode ifFalse: [^self].
-	self autoResizeColumns: (self adjustForStaticEdgeBug: self clientRectangle) width!
+	self isReportMode ifTrue: [self autoResizeColumns: self availableClientWidth]!
 
 autoResizeColumns: anInteger
 	"Private - Attempt to share the specified <integer> width (which must be the client width of the view, after subtracting for borders and such) between all automagically resizeable columns in the receiver. This only has a visible effect in #report mode."
@@ -179,6 +182,9 @@ autoResizeColumns: anInteger
 					(columns at: j) basicWidth: thisWidth.
 					self lvmSetColumnWidth: j - 1 to: thisWidth.
 					accum := accum + thisWidth]]!
+
+availableClientWidth
+	^(self adjustForStaticEdgeBug: self clientRectangle) width!
 
 backcolorChanged
 	super backcolorChanged.
@@ -303,6 +309,16 @@ beSorted: aBlockClosure
 cacheColumnWidths
 	self allColumns
 		keysAndValuesDo: [:eachKey :eachValue | eachValue basicWidth: (self lvmGetColumnWidth: eachKey - 1)]!
+
+calculateExtent: aLayoutContext
+	| extent |
+	extent := aLayoutContext clientExtentOf: self.
+	"The extent calculated by the list view will include space for the header, if any"
+	extent := self
+				lvmApproximateViewRect: self itemCount
+				cx: extent x
+				cy: extent y.
+	^self calcExtentFromClientExtent: extent!
 
 cancelLabelEdit
 	"Private - Cancel current inline editing."
@@ -552,9 +568,13 @@ forgetLastClickedColumn
 	lastClickedColIndex := nil!
 
 getEditControl
-	^self sendMessage: LVM_GETEDITCONTROL
+	^self sendMessage: LVM_GETEDITCONTROL!
 
-!
+getHeaderRect
+	| rect |
+	rect := RECTL new.
+	self isReportMode ifTrue: [User32 getWindowRect: self lvmGetHeader lpRect: rect].
+	^rect!
 
 getItemChecked: anInteger
 	"Answer whether the item with the specified index is 'checked' or not. The result is unspecified if the receiver is not in `hasCheckBoxes` mode."
@@ -1962,7 +1982,7 @@ resolutionScaledBy: aPoint
 	in #restorePlacement:resolution:."
 
 	self allColumns do: [:each | each resolutionScaledBy: aPoint].
-	iconSpacing ifNotNil: [self iconSpacing: (iconSpacing * aPoint) truncated]!
+	iconSpacing ifNotNil: [self iconSpacing: iconSpacing * aPoint]!
 
 selectAll
 	| size |
@@ -2212,6 +2232,19 @@ thumbnailsImageManager
 			thumbnailsImageManager maskcolor: Color default].
 	^thumbnailsImageManager!
 
+thumbnailsMode
+	"Place the receiver in thumbnails mode"
+
+	self viewMode: #thumbnails!
+
+tileIconMode
+	"Place the receiver in tile icons mode"
+
+	self viewMode: #tileIcons!
+
+topIndex
+	^self lvmGetTopIndex + 1!
+
 updateAll
 	"Re-render the model's contents. This is a similar operation to #refreshContents, except
 	that it is assumed that the models contents are the same objects, but may have changed
@@ -2274,8 +2307,8 @@ viewModeChanged
 	(self customImageExtent
 		ifNil: 
 			[viewMode == #largeIcons
-				ifTrue: [Icon largeExtent]
-				ifFalse: [viewMode == #tileIcons ifTrue: [Icon tileExtent]]])
+				ifTrue: [self metrics largeIconExtent]
+				ifFalse: [viewMode == #tileIcons ifTrue: [self metrics tileIconExtent]]])
 			ifNil: [self applyImageLists]
 			ifNotNil: [:ext | self largeIconExtent: ext].
 	style := LvModes at: viewMode ifAbsent: [LVS_REPORT].
@@ -2301,6 +2334,7 @@ anchorIndex:!public!selection! !
 applyImageLists!image management!private! !
 autoResizeColumns!operations!private! !
 autoResizeColumns:!helpers!private! !
+availableClientWidth!operations!private! !
 backcolorChanged!helpers!private! !
 backImage!accessing!public! !
 backImage:!accessing!public! !
@@ -2323,6 +2357,7 @@ basicResetSelection!private!selection! !
 basicUpdateColumn:!columns!private!updating! !
 beSorted:!public!sorting! !
 cacheColumnWidths!helpers!private! !
+calculateExtent:!geometry!private! !
 cancelLabelEdit!operations!private! !
 caretIndex!public!selection! !
 caretIndex:!public!selection! !
@@ -2350,6 +2385,7 @@ findItem:startingAt:wrap:!private!searching! !
 forecolor:!accessing!public! !
 forgetLastClickedColumn!helpers!private! !
 getEditControl!accessing!private! !
+getHeaderRect!accessing!private! !
 getItemChecked:!accessing!public! !
 getItemText:!accessing!private! !
 getNoRedrawCount!private! !
@@ -2536,6 +2572,9 @@ textFromRow:!adapters!private! !
 thumbnailExtent!accessing!public! !
 thumbnailExtent:!accessing!public! !
 thumbnailsImageManager!image management!private! !
+thumbnailsMode!commands!public! !
+tileIconMode!commands!public! !
+topIndex!accessing!public! !
 updateAll!public!updating! !
 updateColumn:!columns!private!updating! !
 updateItem:at:!public!updating! !

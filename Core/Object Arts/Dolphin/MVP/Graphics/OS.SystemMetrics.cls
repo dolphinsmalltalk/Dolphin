@@ -200,6 +200,9 @@ iconTitleFont
 
 	^iconTitleFont ifNil: [iconTitleFont := self getIconTitleFont]!
 
+iconTitleFont: aFont
+	iconTitleFont := aFont!
+
 isSlowMachine
 	"Answer true if this machine is judged to be slow."
 
@@ -306,6 +309,11 @@ printOn: aStream
 resolution
 	^dpi @ dpi!
 
+scaleFactor
+	"Answer the DPI scale factor of these metrics, e.g. for a scale of 125% this might be 5/4 (i.e. 1.25)"
+
+	^dpi / USER_DEFAULT_SCREEN_DPI!
+
 scrollbarHeight
 	"Answer the height, in pixels, of a horizontal scroll bar."
 
@@ -342,8 +350,7 @@ smallIconExtent
 tileIconExtent
 	"Answer a <Point> that gives the dimensions of an icon tile."
 
-	#todo.	"Is there a system metric for this?"
-	^tileIconExtent ifNil: [tileIconExtent := self mapDipsToPels: ##(48 @ 48)]!
+	^tileIconExtent ifNil: [tileIconExtent := ##(48 @ 48) * dpi // USER_DEFAULT_SCREEN_DPI]!
 
 virtualScreenExtent
 	"Answer the extent of the virtual screen, i.e. including desktops on all monitors"
@@ -391,6 +398,7 @@ hasTextBoxMargins!capability enquiries!public! !
 hasThemes!capability enquiries!public! !
 hasWebView!capability enquiries!public! !
 iconTitleFont!geometry!public! !
+iconTitleFont:!geometry!private! !
 isSlowMachine!public!testing! !
 largeIconExtent!constants!public! !
 menuBarHeight!constants!public! !
@@ -410,6 +418,7 @@ onSettingChanged:!event handling-win32!private! !
 paddedBorderThickness!constants!public! !
 printOn:!printing!public! !
 resolution!public! !
+scaleFactor!accessing!public! !
 scrollbarHeight!constants!public! !
 scrollbarWidth!constants!public! !
 scrollThumbExtent!constants!public! !
@@ -448,7 +457,7 @@ forDpi: anInteger
 	^(Instances lookup: anInteger)
 		ifNil: 
 			[IsVistaOrLater ifNil: [self cacheDpiIndependentSettings].
-			Instances at: anInteger put: (self basicNew setDpi: anInteger)]!
+			Instances at: anInteger put: (self newForDpi: anInteger)]!
 
 initialize
 	| sysParamVars |
@@ -469,6 +478,11 @@ initialize
 
 new
 	^self shouldNotImplement!
+
+newForDpi: anInteger
+	"Answer a new, uncached, instance of the receiver for the specified DPI. For most purposes #forDpi: shouild be used in preference."
+
+	^self basicNew setDpi: anInteger!
 
 onPreStripImage
 	self reset!
@@ -498,6 +512,7 @@ default!instance creation!public! !
 forDpi:!instance creation!public! !
 initialize!class initialization!public! !
 new!instance creation!public! !
+newForDpi:!instance creation!public! !
 onPreStripImage!event handling!public! !
 onSettingChanged:!event handling-win32!private! !
 reset!initializing!public! !

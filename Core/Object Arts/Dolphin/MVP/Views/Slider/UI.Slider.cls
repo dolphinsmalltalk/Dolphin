@@ -44,7 +44,7 @@ channelRectangle
 clearTicks
 	"Clears the current ticks"
 
-	self sendMessage: TBM_CLEARTICS wParam: true asParameter.
+	self sendMessage: TBM_CLEARTICS wParam: TRUE.
 	self sendMessage: TBM_SETTICFREQ wParam: 1!
 
 defaultExtent
@@ -62,7 +62,7 @@ displayValue: anInteger
 
 	self 
 		sendMessage: TBM_SETPOS
-		wParam: true asParameter
+		wParam: TRUE
 		lParam: anInteger!
 
 getRect: msgInteger
@@ -240,11 +240,11 @@ selectionRange: anIntervalOrNil
 			[self isSelectionEnabled: true.
 			self 
 				sendMessage: TBM_SETSELSTART
-				wParam: false asParameter
+				wParam: FALSE
 				lParam: anIntervalOrNil start.
 			self 
 				sendMessage: TBM_SETSELEND
-				wParam: true asParameter
+				wParam: TRUE
 				lParam: anIntervalOrNil stop]
 		ifFalse: [self isSelectionEnabled: false]!
 
@@ -278,7 +278,7 @@ state
 	^state!
 
 tbmClearSel
-	self sendMessage: TBM_CLEARSEL wParam: true asParameter!
+	self sendMessage: TBM_CLEARSEL wParam: TRUE!
 
 tbmGetBuddy: aBoolean 
 	"Private - Get the handle of the buddy window. If aBoolean is true we answer

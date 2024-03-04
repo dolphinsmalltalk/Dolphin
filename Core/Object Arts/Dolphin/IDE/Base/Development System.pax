@@ -978,7 +978,7 @@ Core.Object
 
 Core.Object
 	subclass: #'Tools.MenuPainter'
-	instanceVariableNames: 'menu conflictingMnemonics conflictingAccelerators'
+	instanceVariableNames: 'view menu conflictingMnemonics conflictingAccelerators'
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants private} #{OS private})
 	classInstanceVariableNames: ''
@@ -8288,26 +8288,27 @@ example1
 		FramingLayout example1
 	"
 
-	| shell layout label button text1 text2 |
+	| shell layout label button text1 text2 dpiScale |
 	(shell := View desktop addSubView: ShellView new)
 		caption: 'FramingLayout example 1';
 		backcolor: Color face3d;
-		layoutManager: (layout := FramingLayout new);
-		extent: 300 @ 200.
-	shell insets: (10 @ 10 corner: 10 @ 10).
+		layoutManager: (layout := FramingLayout new).
+	dpiScale := shell scaleFactor.
+	shell extent: (300 @ 200) * dpiScale.
+	shell insets: ((10 @ 10 corner: 10 @ 10) scaledBy: dpiScale).
 	label := shell addSubView: StaticText new.
 	button := shell addSubView: PushButton new.
 	text1 := shell addSubView: MultilineTextEdit new.
 	text2 := shell addSubView: MultilineTextEdit new.
 	label text: 'Fixed @ Top Left'.
-	label rectangle: (10 @ 10 extent: 100 @ 20).
+	label rectangle: ((10 @ 10 extent: 100 @ 20) scaledBy: dpiScale).
 	button
 		text: 'Hugs topright';
 		command: #yourself.
 	button arrangement
 		leftFraming: #fixedViewRight;
 		rightFraming: #fixedParentRight;
-		leftOffset: -100;
+		leftOffset: -100 * dpiScale;
 		rightOffset: 0.
 	text1
 		text: 'Consumes half the width and all the bottom space';
@@ -8315,7 +8316,7 @@ example1
 	text1 arrangement
 		rightFraming: #relativeParentWidth;
 		bottomFraming: #fixedParentBottom.
-	layout resize: text1 to: (10 @ 40 corner: 130 @ 190).
+	layout resize: text1 to: ((10 @ 40 corner: 130 @ 190) scaledBy: dpiScale).
 	text2
 		text: 'Floats in the same relative postion, keeps same extent';
 		wordWrap: true.
@@ -8324,7 +8325,7 @@ example1
 		rightFraming: #fixedViewLeft;
 		topFraming: #relativeParentHeight;
 		bottomFraming: #fixedViewTop.
-	layout resize: text2 to: (140 @ 40 corner: 290 @ 80).
+	layout resize: text2 to: ((140 @ 40 corner: 290 @ 80) scaledBy: dpiScale).
 	shell show! !
 
 !UI.FramingLayout class categoriesForMethods!
@@ -9614,7 +9615,7 @@ publishedAspectsOfInstances
 	| maxMinExtentEditBlock |
 	maxMinExtentEditBlock := 
 			[:p |
-			p model value: (p model value isNil ifTrue: [p parentPresenter model value extent])].
+			p model value: (p model value isNil ifTrue: [p parentPresenter parentPresenter model value extent])].
 	^super publishedAspectsOfInstances
 		add: (Aspect autostring: #caption);
 		add: (Aspect boolean: #isResizable);

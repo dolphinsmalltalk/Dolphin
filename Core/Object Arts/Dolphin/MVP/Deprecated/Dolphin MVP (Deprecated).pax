@@ -110,6 +110,7 @@ package methodNames
 	add: #TypeConverter -> #rightExceptionalValue;
 	add: #TypeConverter -> #rightExceptionalValue:;
 	add: #UserLibrary -> #adjustWindowRectEx:dwStyle:bMenu:dwExStyle:;
+	add: #UserLibrary -> #setSysColors:lpaElements:lpaRgbValues:;
 	add: #UserLibrary -> #winHelp:lpszHelp:uCommand:dwData:;
 	add: #View -> #defaultWindowProcessing:;
 	add: #View -> #winHelpPopup:topic:;
@@ -1222,6 +1223,21 @@ adjustWindowRectEx: rect dwStyle: styleFlags bMenu: menuPresent dwExStyle: exSty
 	#deprecated. "Not DPI aware"
 	^self invalidCall: _failureCode!
 
+setSysColors: count lpaElements: elements lpaRgbValues: values
+	"
+		Sets the colors for the specified display elements. Display elements are the various parts of a window and the display that appear on the system display screen.hasCaption: true;
+		hasCaption: false;
+
+		BOOL WINAPI SetSysColors(
+			__in  int cElements,
+			__in  const INT* lpaElements,
+			__in  const COLORREF* lpaRgbValues
+			);"
+
+	<stdcall: bool SetSysColors sdword sdword* ColorRef*>
+	#deprecated.	"Obsolete and unused"
+	^self invalidCall: _failureCode!
+
 winHelp: hwndMain lpszHelp: lpszHelp uCommand: uCommand dwData: dwData
 	"Invoke the WinHelp() function of the module wrapped by the receiver.
 	Helpstring: Starts windows help and passes a request for help
@@ -1237,6 +1253,7 @@ winHelp: hwndMain lpszHelp: lpszHelp uCommand: uCommand dwData: dwData
 
 !UserLibrary categoriesForMethods!
 adjustWindowRectEx:dwStyle:bMenu:dwExStyle:!public!win32 functions-coordinate space and transformation! !
+setSysColors:lpaElements:lpaRgbValues:!public! !
 winHelp:lpszHelp:uCommand:dwData:!**auto generated**!public! !
 !
 

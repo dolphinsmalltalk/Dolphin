@@ -187,14 +187,15 @@ createView: aResourceNameString
 						layoutManager: GridLayout new;
 						caption: self printString;
 						largeIcon: self icon;
-						show;
 						yourself]
 				ifNotNil: [:parent | parent view].
 
 	"Create the new view"
 	newView := self class loadViewResource: aResourceNameString inContext: parentView.
 	self view: newView.
-	surrogateShellView notNil ifTrue: [self onViewOpened].
+	surrogateShellView notNil ifTrue: [
+		surrogateShellView extent: (surrogateShellView calcExtentFromClientExtent:newView extent).
+		self onViewOpened].
 	self show.
 	^newView!
 
@@ -268,6 +269,9 @@ errorDuplicateName: aString
 	"Report that aString is already in use"
 
 	^self error: 'duplicate name: ', aString!
+
+extent
+	^self view extent!
 
 extent: aPoint 
 	self view extent: aPoint!
@@ -854,6 +858,7 @@ dragOver:!event handling!public! !
 drop:!event handling!public! !
 ensureVisible!accessing!public! !
 errorDuplicateName:!exceptions!public! !
+extent!accessing!public! !
 extent:!accessing!public! !
 getEvents!events!private! !
 hasFocus!public!testing! !

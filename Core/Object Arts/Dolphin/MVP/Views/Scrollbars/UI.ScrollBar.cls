@@ -24,7 +24,7 @@ Instance Variables:
 calculateExtent: aLayoutContext
 	"Private - Answer the calculated extent of the receiver that should be used by a layout manager during it's layout process."
 
-	^self calcExtentFromClientExtent: (self mapDipsToPels: self defaultExtent)!
+	^self calcExtentFromClientExtent: self defaultExtent * self dpi // USER_DEFAULT_SCREEN_DPI!
 
 defaultExtent
 	"Private - Answer the default size of the receiver in device-independent pixels (i.e. 96-dpi DIPs)."

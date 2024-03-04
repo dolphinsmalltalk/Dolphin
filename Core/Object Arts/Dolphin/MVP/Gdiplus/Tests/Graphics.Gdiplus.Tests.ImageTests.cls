@@ -45,7 +45,7 @@ testJpegContentType
 
 testResolution
 	self deny: model hasDPI.
-	self assert: model resolution equals: 96@96.
+	self assert: model resolution equals: SystemMetrics current resolution.
 	self freeModel.
 	model := self subjectClass fromFile: self fileResource pafSeattleNightJpg.
 	self assert: model hasDPI.

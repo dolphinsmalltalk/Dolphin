@@ -56,6 +56,14 @@ getItem: anInteger
 	presenter view lvmGetItem: item.
 	^item!
 
+minNonScrolledExtent
+	| extent |
+	extent := presenter
+				lvmApproximateViewRect: presenter itemCount - 1
+				cx: -1
+				cy: -1.
+	^presenter calcExtentFromClientExtent: extent!
+
 newSelectionAfterLeftClickOutsideList: anArrayOfInteger 
 	^#()!
 
@@ -115,26 +123,30 @@ testAutoResizeColumns
 	presenter addColumn isAutoResize: true.
 	self verifyColumnWidths: #(48 100 48).
 	"Rounding errors do not accumulate"
-	presenter columnsList second width: 101.
+	presenter columnsList second width: 101 * presenter scaleFactor.
 	self verifyColumnWidths: #(48 101 47).
 	"Resizes when a column is removed"
 	presenter removeColumnAtIndex: 3.
 	self verifyColumnWidths: #(95 101)!
 
 testAutoResizeColumnsPositionChangedAddingScrollbar
-	| shellNCHeight |
+	| shellNCHeight minHeightNoScrollbar |
 	shellNCHeight := presenter topShell height - presenter height.
 	presenter viewMode: #report.
 	presenter list: (1 to: 15).
+	"This test assumes no scrollbar needed"
+	self deny: (presenter getWindowStyle allMask: WS_VSCROLL).
 	self verifyColumnWidths: #(196).
 	"This is the shortest we can be without a vertical scrollbar. Sanity-check that one is in fact not shown."
-	presenter topShell height: 343 + shellNCHeight.
+	minHeightNoScrollbar := self minNonScrolledExtent y + shellNCHeight.
+	presenter topShell height: minHeightNoScrollbar.
 	self deny: (presenter getWindowStyle allMask: WS_VSCROLL).
 	self verifyColumnWidths: #(196).
 	"One pixel shorter, and a scrollbar appears, which we must compensate for."
-	presenter topShell height: 342 + shellNCHeight.
+	presenter topShell height: minHeightNoScrollbar - 1.
+	"Scrollbar should have been added"
 	self assert: (presenter getWindowStyle allMask: WS_VSCROLL).
-	self verifyColumnWidths: {196 - presenter metrics scrollbarWidth}!
+	self verifyColumnWidths: {196 - SystemMetrics default scrollbarWidth}!
 
 testAutoResizeColumnsWithChangedBorderStyles
 	presenter viewMode: #report.
@@ -162,13 +174,13 @@ testAutoResizeColumnsWithLargeNumberOfItems
 	"With reasonably normal font settings, this is squarely in the range where
 	LVM_APPROXIMATEVIEWRECT will overflow and return a negative value."
 	presenter list: (1 to: 2000).
-	self verifyColumnWidths: {196 - presenter metrics scrollbarWidth}.
+	self verifyColumnWidths: {196 - SystemMetrics default scrollbarWidth}.
 	"Use a massive font to trigger the bug with a (relatively) small number of rows."
 	font := presenter actualFont copy.
 	font pointSize: font pointSize * 4.
 	presenter font: font.
 	presenter list: (1 to: 500).
-	self verifyColumnWidths: {196 - presenter metrics scrollbarWidth}!
+	self verifyColumnWidths: {196 - SystemMetrics default scrollbarWidth}!
 
 testBackImage
 	| watermark |
@@ -409,7 +421,16 @@ verifyClicks: anArray
 			self assert: click position equals: expected second]!
 
 verifyColumnWidths: widths
-	presenter columnsList with: widths do: [:col :width | self assert: col width equals: width]!
+	| totalColumnWidth |
+	totalColumnWidth := presenter columnsList inject: 0 into: [:sum :each | sum + each width].
+	self assert: totalColumnWidth equals: presenter availableClientWidth.
+	presenter columnsList with: widths
+		do: 
+			[:col :width |
+			self
+				assert: col width
+				closeTo: width * presenter scaleFactor
+				precision: 2]!
 
 verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	| view |
@@ -430,6 +451,7 @@ classToTest!helpers!private! !
 forceColumnResize!helpers!private! !
 getColumns!helpers!private! !
 getItem:!helpers!private! !
+minNonScrolledExtent!helpers!private! !
 newSelectionAfterLeftClickOutsideList:!constants!private! !
 newSelectionsFromEvent:!helpers!private! !
 setColumns:!helpers!private! !

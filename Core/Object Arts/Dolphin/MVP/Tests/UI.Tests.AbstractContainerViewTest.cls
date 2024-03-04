@@ -2,7 +2,7 @@
 
 UI.Tests.PresenterTest
 	subclass: #'UI.Tests.AbstractContainerViewTest'
-	instanceVariableNames: ''
+	instanceVariableNames: 'initialParentRect'
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
@@ -98,13 +98,18 @@ initializePresenter
 	presenter backcolor: self backgroundColor!
 
 initialParentExtent
-	"Answer the extent of the view under test. Keep this fairly small to avoid length
+	"Private - Answer the extent of the view under test. Keep this fairly small to avoid length
 	Bitmap>>pixelData calls when extracting the visible data"
 
 	^30 @ 40!
 
 initialParentRect
-	^10 @ 20 extent: self initialParentExtent!
+	^initialParentRect!
+
+setUp
+	super setUp.
+	initialParentRect := ((10 @ 20 extent: self initialParentExtent) scaledBy: self view scaleFactor)
+				truncated!
 
 testBorderedNcRectangle
 	"Check that applying a border correctly changes the NC and Client rectagle calcs"
@@ -117,17 +122,16 @@ testBorderedNcRectangle
 
 testNcCalcSize
 	"Border off - simple text"
-
 	| containerView rect params ret parentRect |
 	containerView := self view.
 	rect := RECTL marshal: containerView rectangle.
-	self assert: rect asRectangle equals: self initialParentRect.
+	self assert: rect asRectangle equals: initialParentRect.
 	ret := containerView
 				sendMessage: WM_NCCALCSIZE
 				wParam: false asParameter
 				lpParam: rect asParameter.
 	self assert: ret equals: 0.
-	self assert: rect asRectangle equals: self initialParentRect.
+	self assert: rect asRectangle equals: initialParentRect.
 
 	"Border off advanced test"
 	params := NCCALCSIZE_PARAMS new.
@@ -140,16 +144,15 @@ testNcCalcSize
 	self assert: ret equals: 0.
 
 	"Border on simple test"
-	containerView hasBorder: true.
 	rect := RECTL marshal: containerView rectangle.
-	self assert: rect asRectangle equals: self initialParentRect.
+	self assert: rect asRectangle equals: initialParentRect.
 	ret := containerView
 				sendMessage: WM_NCCALCSIZE
 				wParam: false asParameter
 				lpParam: rect asParameter.
 	self assert: ret equals: 0.
-	self assert: rect topLeft equals: self initialParentRect topLeft + 1 asPoint.
-	self assert: rect bottomRight equals: self initialParentRect bottomRight - 1 asPoint.
+	self assert: rect topLeft equals: initialParentRect topLeft + 1 asPoint.
+	self assert: rect bottomRight equals: initialParentRect bottomRight - 1 asPoint.
 
 	"Border on advanced test"
 	params := NCCALCSIZE_PARAMS new.
@@ -198,8 +201,9 @@ checkBorderedNcRectangle:!helpers!private! !
 checkPoints:inBitmap:color:!helpers!private! !
 checkRectangle:inBitmap:color:!helpers!private! !
 initializePresenter!public!Running! !
-initialParentExtent!private!Running! !
-initialParentRect!private!Running! !
+initialParentExtent!constants!private! !
+initialParentRect!accessing!private! !
+setUp!public!Running! !
 testBorderedNcRectangle!public!unit tests! !
 testNcCalcSize!public!unit tests! !
 testNonBorderedNcRectangle!public!unit tests! !
