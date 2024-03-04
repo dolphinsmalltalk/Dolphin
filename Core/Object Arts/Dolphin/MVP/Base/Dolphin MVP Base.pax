@@ -382,6 +382,7 @@ package methodNames
 	add: #UserLibrary -> #setMenuInfo:lpcmi:;
 	add: #UserLibrary -> #setMenuItemInfo:uItem:fByPosition:lpmii:;
 	add: #UserLibrary -> #setParent:hWndNewParent:;
+	add: #UserLibrary -> #setProcessDpiAwarenessContext:;
 	add: #UserLibrary -> #setProp:lpString:hData:;
 	add: #UserLibrary -> #setScrollInfo:fnBar:lpsi:fRedraw:;
 	add: #UserLibrary -> #setWindowLong:nIndex:dwNewLong:;
@@ -3201,6 +3202,14 @@ setParent: hWndChild hWndNewParent: hWndParent
 	<stdcall: dword SetParent handle handle>
 	^self invalidCall: _failureCode!
 
+setProcessDpiAwarenessContext: value
+	"BOOL SetProcessDpiAwarenessContext(
+		[in] DPI_AWARENESS_CONTEXT value
+	);"
+
+	<stdcall: bool SetProcessDpiAwarenessContext sdword>
+	^self invalidCall: _failureCode!
+
 setProp: aWindowHandle lpString: name hData: anObject
 	"Answer true if name and anObject are successfully added to the property list.
 	The SetProp function adds a new entry or changes an existing entry in the property list of the specified window.
@@ -3551,6 +3560,7 @@ setMenuDefaultItem:uItem:fByPos:!public!win32 functions-menu! !
 setMenuInfo:lpcmi:!public!win32 functions-menu! !
 setMenuItemInfo:uItem:fByPosition:lpmii:!public!win32 functions-menu! !
 setParent:hWndNewParent:!public!win32 functions-window! !
+setProcessDpiAwarenessContext:!public!win32 functions-high DPI! !
 setProp:lpString:hData:!public!win32 functions-window property! !
 setScrollInfo:fnBar:lpsi:fRedraw:!public!win32 functions-scroll bar! !
 setWindowLong:nIndex:dwNewLong:!public!win32 functions-window class! !
