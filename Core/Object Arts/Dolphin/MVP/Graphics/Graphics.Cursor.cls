@@ -3,7 +3,7 @@
 Graphics.Icon
 	subclass: #'Graphics.Cursor'
 	instanceVariableNames: ''
-	classVariableNames: 'AppStarting Arrow Cross Current DDCopy DDCopyScroll DDLink DDLinkScroll DDMove DDMoveScroll DDNone DefaultExtent Hand Help IBeam No SizeAll SizeNESW SizeNS SizeNWSE SizeWE SplitHorizontal SplitVertical UpArrow Wait'
+	classVariableNames: 'AppStarting Arrow Cross Current DDCopy DDCopyScroll DDLink DDLinkScroll DDMove DDMoveScroll DDNone DefaultExtent Hand Help IBeam No SizeAll SizeNESW SizeNS SizeNWSE SizeWE UpArrow Wait'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -257,16 +257,6 @@ sizeWE
 
 	^SizeWE ifNil: [SizeWE := self fromSystemId: IDC_SIZEWE]!
 
-splitHorizontal
-	"Answer the instance that is the SplitHorizontal cursor."
-
-	^SplitHorizontal ifNil: [SplitHorizontal := self fromId: 'HSPLIT' in: VM]!
-
-splitVertical
-	"Answer the instance that is the SplitVertical cursor."
-
-	^SplitVertical ifNil: [SplitVertical := self fromId: 'VSPLIT' in: VM]!
-
 systemNames
 	^##(LookupTable withAll: {
 				IDC_APPSTARTING -> 'appStarting'.
@@ -290,7 +280,6 @@ uninitialize
 
 	DDCopy := DDCopyScroll := DDLink := DDLinkScroll := DDMove := DDMoveScroll := DDNone := nil.
 	self resetSystemInstances.
-	SplitHorizontal := SplitVertical := nil.
 	Current := nil!
 
 upArrow
@@ -345,9 +334,7 @@ sizeNESW!instance creation!public! !
 sizeNS!instance creation!public! !
 sizeNWSE!instance creation!public! !
 sizeWE!instance creation!public! !
-splitHorizontal!instance creation!public! !
-splitVertical!instance creation!public! !
-systemNames!public! !
+systemNames!constants!public! !
 uninitialize!class hierarchy-removing!private! !
 upArrow!instance creation!public! !
 wait!instance creation!public! !

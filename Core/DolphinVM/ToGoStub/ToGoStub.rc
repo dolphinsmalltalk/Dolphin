@@ -27,10 +27,6 @@ LANGUAGE LANG_NEUTRAL, SUBLANG_DEFAULT
 // Cursor
 //
 
-HSPLIT                  CURSOR                  "..\\res\\hsplit.cur"
-
-VSPLIT                  CURSOR                  "..\\res\\vsplit.cur"
-
 
 /////////////////////////////////////////////////////////////////////////////
 //

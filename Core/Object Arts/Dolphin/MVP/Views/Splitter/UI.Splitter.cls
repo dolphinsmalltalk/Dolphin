@@ -55,10 +55,7 @@ continueTrackingAt: aPoint from: aPreviousPoint
 cursor
 	"Answer the cursor to be used in conjunction with instances of the receiver."
 
-	^self isVertical
-		ifTrue: [Cursor splitHorizontal]
-		ifFalse: [Cursor splitVertical]
-!
+	^self isVertical ifTrue: [Cursor sizeNS] ifFalse: [Cursor sizeWE]!
 
 defaultBackcolor
 	"Private - Answers the default colour to be used for the receiver."

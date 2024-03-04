@@ -538,8 +538,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="devres.rc2" />
-    <None Include="Res\hsplit.cur" />
-    <None Include="Res\vsplit.cur" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="rc_devrs.h" />

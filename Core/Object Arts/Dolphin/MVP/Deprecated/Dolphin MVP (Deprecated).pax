@@ -122,6 +122,8 @@ package methodNames
 	add: 'Canvas class' -> #screenResolution;
 	add: 'ChoicePresenter class' -> #resource_Multiselection_list_box;
 	add: 'Color class' -> #buttonFace;
+	add: 'Cursor class' -> #splitHorizontal;
+	add: 'Cursor class' -> #splitVertical;
 	add: 'Icon class' -> #extraLargeExtent;
 	add: 'Icon class' -> #largeExtent;
 	add: 'Icon class' -> #smallExtent;
@@ -510,6 +512,21 @@ asIndexedColorUsingPalette: hPalette
 !ColorRef categoriesForMethods!
 asIndexedColor!converting!public! !
 asIndexedColorUsingPalette:!converting!public! !
+!
+
+!Cursor class methodsFor!
+
+splitHorizontal
+	#deprecated.
+	^self sizeNS!
+
+splitVertical
+	#deprecated.
+	^self sizeWE! !
+
+!Cursor class categoriesForMethods!
+splitHorizontal!instance creation!public! !
+splitVertical!instance creation!public! !
 !
 
 !GDILibrary methodsFor!

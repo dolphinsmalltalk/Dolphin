@@ -1059,12 +1059,6 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Res\hsplit.cur">
-      <Filter>Cursors</Filter>
-    </None>
-    <None Include="Res\vsplit.cur">
-      <Filter>Cursors</Filter>
-    </None>
     <None Include="devres.rc2" />
   </ItemGroup>
   <ItemGroup>
@@ -1073,9 +1067,6 @@
     </Filter>
     <Filter Include="Bitmaps">
       <UniqueIdentifier>{902049ce-4897-4858-90fd-dd356d482e3b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Cursors">
-      <UniqueIdentifier>{58e534a7-29cb-498c-9bc5-6cfa30202eb4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
