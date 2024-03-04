@@ -70,6 +70,9 @@ addColumn: newColumn atIndex: columnIndex
 	at the <integer> index columnIndex, shifting the positions of all 
 	subsequent columns up by one. Answers the inserted column."
 
+	"If the column is of fixed width, assume the width was specified in code at 96 dpi"
+
+	newColumn resolutionScaledBy: self resolution / USER_DEFAULT_SCREEN_DPI.
 	lastClickedColIndex notNil
 		ifTrue: [lastClickedColIndex >= columnIndex ifTrue: [lastClickedColIndex := lastClickedColIndex + 1]].
 	columns add: newColumn beforeIndex: columnIndex.
@@ -160,14 +163,15 @@ anchorIndex: anInteger
 applyImageLists
 	"Private - Set the receiver's image lists from the image managers."
 
-	| largeImList smallExt |
+	| largeImList smallExt dpi |
+	dpi := self dpi.
 	largeImList := self customImageExtent
-				ifNotNil: [:ext | self thumbnailsImageManager imageListWithExtent: (self mapDipsToPels: ext)]
+				ifNotNil: [:ext | self thumbnailsImageManager imageListWithExtent: ext * dpi // USER_DEFAULT_SCREEN_DPI]
 				ifNil: 
 					[thumbnailsImageManager := nil.
 					self imageManager
-						ifNotNil: [:im | im imageListWithExtent: (self mapDipsToPels: self largeIconExtent)]].
-	smallExt := self mapDipsToPels: self smallIconExtent.
+						ifNotNil: [:im | im imageListWithExtent: self largeIconExtent * dpi // USER_DEFAULT_SCREEN_DPI]].
+	smallExt := self smallIconExtent * dpi // USER_DEFAULT_SCREEN_DPI.
 	self lvmSetImageList: (self imageManager ifNotNil: [:im | im imageListWithExtent: smallExt])
 		type: LVSIL_SMALL.
 	self lvmSetImageList: largeImList type: LVSIL_NORMAL.
@@ -181,8 +185,7 @@ autoResizeColumns
 	"Private - Attempt to share the available width in the receiver between all automagically resizeable
 	columns. This only has a visible effect in #report mode, or if the list is subsequently switched to report mode."
 
-	self isReportMode
-		ifTrue: [self autoResizeColumns: (self adjustForStaticEdgeBug: self clientRectangle) width]!
+	self isReportMode ifTrue: [self autoResizeColumns: self availableClientWidth]!
 
 autoResizeColumns: clientWidth
 	"Private - Attempt to share the specified <integer> width (which must be the client width of the view,
@@ -218,6 +221,9 @@ autoResizeColumns: clientWidth
 							eachValue basicWidth: thisWidth.
 							self lvmSetColumnWidth: eachKey - 1 to: thisWidth.
 							actualAccum := actualAccum + thisWidth]]]!
+
+availableClientWidth
+	^(self adjustForStaticEdgeBug: self clientRectangle) width!
 
 backcolorChanged
 	super backcolorChanged.
@@ -376,6 +382,16 @@ buildViewsPopup
 cacheColumnWidths
 	self allColumns
 		keysAndValuesDo: [:eachKey :eachValue | eachValue basicWidth: (self lvmGetColumnWidth: eachKey - 1)]!
+
+calculateExtent: aLayoutContext
+	| extent |
+	extent := aLayoutContext clientExtentOf: self.
+	"The extent calculated by the list view will include space for the header, if any"
+	extent := self
+				lvmApproximateViewRect: self itemCount
+				cx: extent x
+				cy: extent y.
+	^self calcExtentFromClientExtent: extent!
 
 cancelLabelEdit
 	"Private - Cancel current inline editing."
@@ -632,6 +648,12 @@ forgetLastClickedColumn
 	lastClickedColIndex isNil ifTrue: [^self].
 	self setColumnIcon: nil atIndex: lastClickedColIndex.
 	lastClickedColIndex := nil!
+
+getHeaderRect
+	| rect |
+	rect := RECT new.
+	self isReportMode ifTrue: [UserLibrary default getWindowRect: self lvmGetHeader lpRect: rect].
+	^rect!
 
 getItemChecked: anInteger
 	"Answer whether the item with the specified index is 'checked' or not. The result is unspecified if the receiver is not in `hasCheckBoxes` mode."
@@ -1346,7 +1368,7 @@ lvmSetColumnWidth: itemIndex to: anInteger
 	"wParam = (WPARAM) (int) iCol; 
 	lParam = MAKELPARAM((int) cx, 0); "
 
-	self sendMessage: LVM_SETCOLUMNWIDTH wParam: itemIndex lpParam: anInteger!
+	self sendMessage: LVM_SETCOLUMNWIDTH wParam: itemIndex lParam: anInteger!
 
 lvmSetExtendedListViewStyle: style
 	"Private - Set the extended styles of the receiver.
@@ -1938,7 +1960,7 @@ resolutionScaledBy: aPoint
 	in #restorePlacement:resolution:."
 
 	self allColumns do: [:each | each resolutionScaledBy: aPoint].
-	iconSpacing ifNotNil: [self iconSpacing: (iconSpacing * aPoint) truncated]!
+	iconSpacing ifNotNil: [self iconSpacing: iconSpacing * aPoint]!
 
 selectAll
 	| size |
@@ -2198,6 +2220,9 @@ tileIconMode
 
 	self viewMode: #tileIcons!
 
+topIndex
+	^self lvmGetTopIndex + 1!
+
 updateAllNonVirtual
 	"Private - Update the text and images the list view stores for each item in this non-virtual list."
 
@@ -2265,8 +2290,8 @@ viewModeChanged
 	(self customImageExtent
 		ifNil: 
 			[viewMode == #largeIcons
-				ifTrue: [Icon largeExtent]
-				ifFalse: [viewMode == #tileIcons ifTrue: [Icon tileExtent]]])
+				ifTrue: [self metrics largeIconExtent]
+				ifFalse: [viewMode == #tileIcons ifTrue: [self metrics tileIconExtent]]])
 			ifNil: [self applyImageLists]
 			ifNotNil: [:ext | self largeIconExtent: ext].
 	style := LvModes at: viewMode ifAbsent: [LVS_REPORT].
@@ -2300,6 +2325,7 @@ anchorIndex:!public!selection! !
 applyImageLists!image management!private! !
 autoResizeColumns!operations!private! !
 autoResizeColumns:!helpers!private! !
+availableClientWidth!operations!private! !
 backcolorChanged!helpers!private! !
 backImage!accessing!public! !
 backImage:!accessing!public! !
@@ -2323,6 +2349,7 @@ basicUpdateColumnAtIndex:!columns!private!updating! !
 beSorted:!public!sorting! !
 buildViewsPopup!helpers!private! !
 cacheColumnWidths!helpers!private! !
+calculateExtent:!geometry!private! !
 cancelLabelEdit!operations!private! !
 caretIndex!public!selection! !
 caretIndex:!public!selection! !
@@ -2350,6 +2377,7 @@ extraLargeIconMode!commands!public! !
 findItem:startingAt:wrap:!private!searching! !
 forecolor:!accessing!public! !
 forgetLastClickedColumn!helpers!private! !
+getHeaderRect!accessing!private! !
 getItemChecked:!accessing!public! !
 getItemText:!accessing!private! !
 getSelectedCount!private!selection! !
@@ -2539,6 +2567,7 @@ thumbnailExtent:!accessing!public! !
 thumbnailsImageManager!image management!private! !
 thumbnailsMode!commands!public! !
 tileIconMode!commands!public! !
+topIndex!accessing!public! !
 updateAllNonVirtual!private!updating! !
 updateAllVirtual!private!updating! !
 updateColumn:!columns!private!updating! !

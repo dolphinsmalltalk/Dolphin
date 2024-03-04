@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 DolphinTest subclass: #AbstractContainerViewTest
-	instanceVariableNames: 'containerView'
+	instanceVariableNames: 'containerView initialParentRect'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
@@ -85,13 +85,12 @@ initialParentExtent
 
 	^30 @ 40!
 
-initialParentRect
-	^10 @ 20 extent: self initialParentExtent!
-
 setUp
 	containerView := self containerClass show.
 	containerView topView layoutManager: nil.
-	containerView rectangle: self initialParentRect.
+	initialParentRect := ((10 @ 20 extent: self initialParentExtent) scaledBy: containerView scaleFactor)
+				truncated.
+	containerView rectangle: initialParentRect.
 	containerView backcolor: self backgroundColor!
 
 tearDown
@@ -110,13 +109,13 @@ testNcCalcSize
 
 	| rect params ret parentRect |
 	rect := RECT fromRectangle: containerView rectangle.
-	self assert: rect asRectangle equals: self initialParentRect.
+	self assert: rect asRectangle equals: initialParentRect.
 	ret := containerView
 				sendMessage: WM_NCCALCSIZE
 				wParam: false asParameter
 				lpParam: rect asParameter.
 	self assert: ret equals: 0.
-	self assert: rect asRectangle equals: self initialParentRect.
+	self assert: rect asRectangle equals: initialParentRect.
 
 	"Border off advanced test"
 	params := NCCALCSIZE_PARAMS new.
@@ -131,14 +130,14 @@ testNcCalcSize
 	"Border on simple test"
 	containerView hasBorder: true.
 	rect := RECT fromRectangle: containerView rectangle.
-	self assert: rect asRectangle equals: self initialParentRect.
+	self assert: rect asRectangle equals: initialParentRect.
 	ret := containerView
 				sendMessage: WM_NCCALCSIZE
 				wParam: false asParameter
 				lpParam: rect asParameter.
 	self assert: ret equals: 0.
-	self assert: rect topLeft equals: self initialParentRect topLeft + 1 asPoint.
-	self assert: rect bottomRight equals: self initialParentRect bottomRight - 1 asPoint.
+	self assert: rect topLeft equals: initialParentRect topLeft + 1 asPoint.
+	self assert: rect bottomRight equals: initialParentRect bottomRight - 1 asPoint.
 
 	"Border on advanced test"
 	params := NCCALCSIZE_PARAMS new.
@@ -185,7 +184,6 @@ checkPoints:inBitmap:color:!private! !
 checkRectangle:inBitmap:color:!private! !
 containerClass!private! !
 initialParentExtent!private!Running! !
-initialParentRect!private!Running! !
 setUp!public!Running! !
 tearDown!public!Running! !
 testBorderedNcRectangle!public! !

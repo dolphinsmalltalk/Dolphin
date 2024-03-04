@@ -1056,7 +1056,7 @@ setAlignment: anInteger
 
 setMarginWidths: anArray 
 	| margins |
-	SystemMetrics current hasTextBoxMargins ifFalse: [^self].
+	self metrics hasTextBoxMargins ifFalse: [^self].
 	margins := (DWORD new)
 				highWord: anArray first;
 				lowWord: anArray last.
@@ -1245,6 +1245,10 @@ wantTab: aBoolean
 	teFlags := teFlags mask: WantTabMask set: aBoolean!
 
 windowTitle
+	"Answer the window title that is set/restored through WindowCreationParameters. Generally this is the window text."
+
+	"The Edit control ignores the text passed as the window title for the CreateWindowEx call, so we don't store the text in the WindowCreationState"
+
 	^nil!
 
 wmKeyDown: message wParam: wParam lParam: lParam

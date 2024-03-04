@@ -714,7 +714,7 @@ safeCreateControlFromStream: pStream
 	self assert: [unkControl isNull].
 	control := self hostInterface
 				createControlLicEx: wszName
-				hWnd: self asParameter
+				hWnd: handle
 				pStream: pStream
 				piAdvise: unkSink
 				bstrLic: self licenseKey.
@@ -977,7 +977,7 @@ example2
 	shell := ShellView new 
 			layoutManager: BorderLayout new;
 			create; 
-			extent: 300@300;
+			dipExtent: 300@300;
 			yourself.
 	host := self new
 			progId: '{8E27C92B-1264-101C-8A2F-040224009C02}';	"You can use the CLSID or a prog id"
@@ -1008,7 +1008,7 @@ example3
 	shell := ShellView new 
 			layoutManager: BorderLayout new;
 			create; 
-			extent: 400@300;
+			dipExtent: 400@300;
 			yourself.
 	host := self new
 			progId: 'MSFlexGridLib.MSFlexGrid';
