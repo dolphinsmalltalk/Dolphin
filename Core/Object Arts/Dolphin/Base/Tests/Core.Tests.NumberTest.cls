@@ -257,6 +257,11 @@ testClassReadFromColonScaledDecimals
 	self assert: result identicalTo: 123.
 	self assert: source upToEnd equals: '.s'!
 
+testCloseToPrecision
+	self deny: (125 closeTo: 126 precision: 0.5).
+	self assert: -125 closeTo: -126 precision: 1.
+	self assert: 22 / 7 closeTo: Float pi precision: 0.002!
+
 testRoundUpTo
 	self should: [1 roundUpTo: 0] raise: ZeroDivide.
 	self assert: (1 roundUpTo: 1) equals: 1.
@@ -279,6 +284,7 @@ testClassReadFromColonFloats!public!unit tests! !
 testClassReadFromColonFractions!public!unit tests! !
 testClassReadFromColonIntegers!public!unit tests! !
 testClassReadFromColonScaledDecimals!public!unit tests! !
+testCloseToPrecision!public!unit tests! !
 testRoundUpTo!public!unit tests! !
 !
 

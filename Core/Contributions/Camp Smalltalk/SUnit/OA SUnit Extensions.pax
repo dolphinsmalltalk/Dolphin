@@ -17,6 +17,8 @@ package setClassNames: #(
 package setMethodNames: #(
 	#(#{XProgramming.SUnit.TestCase} #<=)
 	#(#{XProgramming.SUnit.TestCase} #=)
+	#(#{XProgramming.SUnit.TestCase} #assert:closeTo:)
+	#(#{XProgramming.SUnit.TestCase} #assert:closeTo:precision:)
 	#(#{XProgramming.SUnit.TestCase} #assert:equals:description:)
 	#(#{XProgramming.SUnit.TestCase} #assert:identicalTo:)
 	#(#{XProgramming.SUnit.TestCase} #assert:isKindOf:)
@@ -99,6 +101,14 @@ XProgramming.SUnit.TestRunLogger
 	"Answer whether the argument, aTestCase, is considered exactly equivalent to the receiver."
 
 	^self class == aTestCase class and: [self selector == aTestCase selector]!
+
+assert: actualNumber closeTo: expectedNumber
+	(actualNumber closeTo: expectedNumber)
+		ifFalse: [self fail: (self comparingStringBetween: expectedNumber and: actualNumber)]!
+
+assert: actualNumber closeTo: expectedNumber precision: precisionNumber
+	(actualNumber closeTo: expectedNumber precision: precisionNumber)
+		ifFalse: [self fail: (self comparingStringBetween: expectedNumber and: actualNumber)]!
 
 assert: actualObject equals: expectedObject description: aStringOrValue
 	expectedObject = actualObject
@@ -323,6 +333,8 @@ thisTestMethod
 !XProgramming.SUnit.TestCase categoriesForMethods!
 <=!comparing!public! !
 =!comparing!public! !
+assert:closeTo:!asserting!public! !
+assert:closeTo:precision:!asserting!public! !
 assert:equals:description:!asserting!public! !
 assert:identicalTo:!asserting!public! !
 assert:isKindOf:!asserting!public! !

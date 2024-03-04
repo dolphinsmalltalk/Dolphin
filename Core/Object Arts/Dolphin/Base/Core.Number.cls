@@ -95,9 +95,7 @@ closeTo: aNumber
 	^ self closeTo: aNumber precision: 0.0001!
 
 closeTo: aNumber precision: precisionFloat
-	| max |
-	^(max := self abs max: aNumber abs) <= precisionFloat
-		or: [(self - aNumber) abs < (precisionFloat * max)]!
+	^(self - aNumber) abs <= precisionFloat!
 
 copy
 	"Answer a copy of the receiver (by default a copy which shares the receiver's 
