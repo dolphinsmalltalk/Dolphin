@@ -223,12 +223,12 @@ onInitDialog
 
 	"Similarly, Windows always creates dialog as a child of the desktop. Force the required
 	parent here"
-	UserLibrary default setParent: self asParameter hWndNewParent: creationParent asParameter.
+	UserLibrary default setParent: handle hWndNewParent: creationParent asParameter.
 
 	(self isPropertyPage and: [self isThemed])
 		ifTrue: [
 			"Property pages in tabbed dialogs require a specific theme"
-			ThemeLibrary default enableThemeDialogTexture: self asParameter dwFlags: ETDT_ENABLETAB].
+			ThemeLibrary default enableThemeDialogTexture: handle dwFlags: ETDT_ENABLETAB].
 
 	"Tell Windows NOT to set the focus. We set focus later after we have populated the dialog
 	(though subclasses loaded from a Windows dialog template resource may wish to return true
@@ -323,7 +323,7 @@ setItem: anIntegerId int: anInteger
 setItem: anInteger text: aString
 	"Private - Set the text of the receiver's control with the specified id."
 
-	(UserLibrary default setDlgItemText: self asParameter nIDDlgItem: anInteger lpString: aString)
+	(UserLibrary default setDlgItemText: handle nIDDlgItem: anInteger lpString: aString)
 		ifFalse: [UserLibrary default systemError]!
 
 showModal
@@ -465,12 +465,16 @@ on: aSubjectModel
 	"Create a new instance of the receiver editing the value of aSubjectModel."
 
 	^super new model: aSubjectModel.
-! !
+!
+
+winClassName
+	^'#32770'! !
 
 !DialogView class categoriesForMethods!
 icon!constants!public! !
 initialize!development!initializing!public! !
 new!instance creation!public! !
 on:!instance creation!public! !
+winClassName!constants!private! !
 !
 

@@ -75,8 +75,7 @@ allAdditionalKeyBindings
 basicMenu: aMenuBarOrNil
 	"Private - Set the menu bar for this window to aMenuBarOrNil."
 
-	UserLibrary default
-		setMenu: self asParameter hMenu: aMenuBarOrNil asParameter!
+	UserLibrary default setMenu: handle hMenu: aMenuBarOrNil asParameter!
 
 buildCombinedAcceleratorTable
 	combinedAcceleratorTable := acceleratorTable
@@ -259,7 +258,7 @@ drawMenuBar
 	"Draw the receiver's menu bar, either when initially set or after it has been updated.
 	Answer whether the request succeeded."
 
-	^UserLibrary default drawMenuBar: self asParameter!
+	^UserLibrary default drawMenuBar: handle!
 
 ensureLayoutValid
 	"If the receiver's layout is invalid, then validate the layout from this point. Answer whether any layout was performed."
@@ -301,7 +300,7 @@ flash: flashCountInteger flags: flagsInteger
 	| params |
 	params := FLASHWINFO new.
 	params
-		hwnd: self asParameter;
+		hwnd: handle;
 		uCount: flashCountInteger;
 		dwFlags: flagsInteger.
 	^(UserLibrary default flashWindowEx: params) ~= 0!
@@ -316,12 +315,17 @@ getDefId
 		ifFalse: [0]!
 
 getLastActivePopup
+	"Private - Answers the last popup window that had activation, or nil if there is no popup."
+
+	^self getLastActivePopupHandle ifNotNil: [:hWnd | View fromHandle: hWnd]!
+
+getLastActivePopupHandle
 	"Private - Answers the last popup window that had activation, or nil
 	if there is no popup."
 
 	| hWnd |
-	hWnd := UserLibrary default getLastActivePopup: self asParameter.
-	^(hWnd notNil and: [hWnd ~= handle]) ifTrue: [View fromHandle: hWnd]!
+	hWnd := UserLibrary default getLastActivePopup: handle.
+	^hWnd ~= handle ifTrue: [hWnd]!
 
 hasCaption
 	"Answers true if the receiver has a caption bar. i.e. it has the WS_CAPTION style"
@@ -445,7 +449,7 @@ isLayeredWindow: aBoolean
 isMaximized
 	"Answer whether the receiver is currently maximized."
 
-	^UserLibrary default isZoomed: self asParameter!
+	^UserLibrary default isZoomed: handle!
 
 isMinimized
 	"Answer whether the receiver is currently minimized."
@@ -626,12 +630,10 @@ onGetCursor: aSymbol
 	"The named area of the window associated with the receiver has been hit.
 	Answer the appropriate mouse cursor, or nil to accept the default."
 
-	^aSymbol == #error 
+	^aSymbol == #error
 		ifTrue: 
 			["Display the wait cursor, if no popup"
-
-			(self getLastActivePopup isNil and: [self isEnabled not]) 
-				ifTrue: [Cursor wait]]
+			(self getLastActivePopupHandle isNil and: [self isEnabled not]) ifTrue: [Cursor wait]]
 		ifFalse: [super onGetCursor: aSymbol]!
 
 onIdleEntered
@@ -727,10 +729,9 @@ onViewDeactivated: anEvent
 	so that it can be restored on re-activation"
 
 	| focus |
-	focus := self class focus.
-	(focus notNil 
-		and: [UserLibrary default isChild: self asParameter hWnd: focus asParameter]) 
-			ifTrue: [self lastFocus: focus].
+	focus := self class focusHandle.
+	(focus notNil and: [UserLibrary default isChild: handle hWnd: focus])
+		ifTrue: [self lastFocus: (View fromHandle: focus)].
 	self trigger: #viewDeactivated.
 	^0!
 
@@ -850,8 +851,8 @@ resolutionScaledBy: aPoint
 	"Private - The receiver is being loaded and it has been determined that the pixel resolution has changed since the point at which the view was saved. Scale any internal pixels by the <Point> argument. "
 
 	super resolutionScaledBy: aPoint.
-	minExtent ifNotNil: [minExtent := (minExtent * aPoint) truncated].
-	maxExtent ifNotNil: [maxExtent := (maxExtent * aPoint) truncated]!
+	minExtent ifNotNil: [minExtent := minExtent * aPoint].
+	maxExtent ifNotNil: [maxExtent := maxExtent * aPoint]!
 
 restorePlacement: aWINDOWPLACEMENT resolution: aPoint
 	"Private - Restore the placement for the receiver to aWINDOWPLACEMENT which was measured at a screen resolution of aPointResolution. If the current resolution is different then the placement rectangle will have to be scaled appropriately. Note that this is only used when restoring from an STBViewProxy (i.e. reconstituting a view from binary-filed form), such as when creating a view instance from a view resource."
@@ -959,7 +960,7 @@ translateAccelerator: aMSG
 	hAccel := self combinedAcceleratorTable asParameter.
 	^hAccel ~= 0 and: 
 			[(UserLibrary default 
-				translateAccelerator: self asParameter
+				translateAccelerator: handle
 				haccl: combinedAcceleratorTable asParameter
 				lpmsg: aMSG) ~~ false]	"useful on image restart of debugged process"!
 
@@ -1220,6 +1221,7 @@ flash:!operations!public! !
 flash:flags:!operations!public! !
 getDefId!default button!private! !
 getLastActivePopup!hierarchy!private! !
+getLastActivePopupHandle!hierarchy!private! !
 hasCaption!accessing-styles!public! !
 hasCaption:!accessing-styles!public! !
 hasMaximize!accessing-styles!public! !

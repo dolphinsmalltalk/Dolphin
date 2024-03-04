@@ -73,9 +73,7 @@ cdnIncludeItem: anExternalAddress
 cdnInitDone: anExternalAddress
 	"Private - Initialisation of the dialog box is complete."
 
-	| ofn |
-	ofn := OFNOTIFYW fromAddress: anExternalAddress.
-	ofn.
+	self setInitialPosition.
 	^0!
 
 cdnSelChange: anExternalAddress 
@@ -116,7 +114,14 @@ defaultExtension: aString
 defaultStyle
 	"Answers the default style for the receiver."
 
-	^##(OFN_HIDEREADONLY | OFN_EXPLORER | OFN_ENABLESIZING)!
+	^##(OFN_HIDEREADONLY | OFN_EXPLORER | OFN_ENABLESIZING | OFN_ENABLEHOOK)!
+
+dialogView
+	"Answer a <View> wrapping the actual dialog."
+
+	"For a file dialog in OFN_EXPLORER mode, the receiver's view is actually a child. We need to answer the parent, which is the real top-level dialog."
+
+	^self view parentView!
 
 extractPathNames: aString
 	| multisz strings pathNames |
@@ -254,6 +259,8 @@ initialize
 	"Private - Initialize the receiver"
 
 	super initialize.
+	"It is generally better to use system placement for the file dialogs as they are large and difficult to place well."
+	positioning := #system.
 	self fileTypes: (Array with: self allFilesType).
 	style := self defaultStyle.
 	validationBlock := [:path | true]!
@@ -357,6 +364,7 @@ commonDialogSelector!constants!private! !
 defaultExtension!accessing!public! !
 defaultExtension:!accessing!public! !
 defaultStyle!constants!public! !
+dialogView!public! !
 extractPathNames:!helpers!private! !
 extractResult:!helpers!private! !
 fileTypes!accessing!public! !
