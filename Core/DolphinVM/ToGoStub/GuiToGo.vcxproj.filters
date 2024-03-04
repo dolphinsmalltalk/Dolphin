@@ -23,12 +23,6 @@
   <ItemGroup>
     <None Include="..\Res\Ist.rc2" />
     <None Include="togo.def" />
-    <None Include="..\Res\hsplit.cur">
-      <Filter>Resources</Filter>
-    </None>
-    <None Include="..\Res\vsplit.cur">
-      <Filter>Resources</Filter>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Resources">

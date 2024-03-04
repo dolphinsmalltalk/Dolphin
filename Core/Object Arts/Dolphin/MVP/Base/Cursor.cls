@@ -301,18 +301,6 @@ sizeWE
 	SizeWE isNil ifTrue: [SizeWE := self fromSystemId: IDC_SIZEWE].
 	^SizeWE!
 
-splitHorizontal
-	"Answer the instance that is the SplitHorizontal cursor."
-
-	SplitHorizontal isNil ifTrue: [SplitHorizontal := self fromId: 'HSPLIT' in: VMLibrary default].
-	^SplitHorizontal!
-
-splitVertical
-	"Answer the instance that is the SplitVertical cursor."
-
-	SplitVertical isNil ifTrue: [SplitVertical := self fromId: 'VSPLIT' in: VMLibrary default].
-	^SplitVertical!
-
 uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
@@ -371,8 +359,6 @@ sizeNESW!instance creation!public! !
 sizeNS!instance creation!public! !
 sizeNWSE!instance creation!public! !
 sizeWE!instance creation!public! !
-splitHorizontal!instance creation!public! !
-splitVertical!instance creation!public! !
 uninitialize!class hierarchy-removing!private! !
 upArrow!instance creation!public! !
 wait!instance creation!public! !
