@@ -31,11 +31,9 @@ defaultExtent
 !
 
 defaultWindowStyle
-	"Private - Answer a default style to use when creating a static control. We specify the
-	SS_NOTIFY style to ensure that we are notified of mouse clicks."
+	"Private - Answer a default style to use when creating a static control. We specify the SS_NOTIFY style to ensure that we are notified of mouse clicks."
 
-	^(super defaultWindowStyle maskClear: WS_TABSTOP) bitOr: SS_NOTIFY
-!
+	^##(WS_CLIPSIBLINGS | SS_NOTIFY)!
 
 invalidateOnResize
 	"Private - The Windows static controls do not normally expect to be resized so they do not redraw correctly. We therefore force them to redraw on resize."
@@ -82,9 +80,28 @@ onPositionChanged: aPositionEvent
 	(self invalidateOnResize and: [aPositionEvent isResize]) ifTrue: [self invalidate].
 	^super onPositionChanged: aPositionEvent!
 
+state
+	"Private - Answer a MessageSequence which, when replayed, will restore the receiver  to its current state"
+
+	"STATIC control ignores the text passed as the window title for the CreateWindowEx call, so we don't store the text in the WindowCreationState"
+
+	^super state
+		add: (MessageSend
+					receiver: self
+					selector: #text:
+					argument: self text);
+		yourself!
+
 updateModel
 	"Flush changes in the view back to the associated model.
-	Static views don't allow such changes"! !
+	Static views don't allow such changes"!
+
+windowTitle
+	"Answer the window title that is set/restored through WindowCreationParameters. Generally this is the window text."
+
+	"The Static control ignores the text passed as the window title for the CreateWindowEx call, so we don't store the text in the WindowCreationState"
+
+	^nil! !
 
 !StaticView categoriesForMethods!
 defaultBackcolor!colors!constants!private! !
@@ -96,7 +113,9 @@ isSunken!accessing-styles!public!testing! !
 isSunken:!accessing-styles!public! !
 onLeftButtonDoubleClicked:!event handling!public! !
 onPositionChanged:!event handling-win32!public! !
+state!accessing!private! !
 updateModel!public!updating! !
+windowTitle!accessing!public! !
 !
 
 !StaticView class methodsFor!

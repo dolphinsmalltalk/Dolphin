@@ -37,12 +37,20 @@ style: rectangleStyleName
 	"Set the style of rectangle required of the receiver to that identifier by the symbolic
 	name, rectangleStyleName."
 
-	self setStyle: (StyleMap at: rectangleStyleName)! !
+	self setStyle: (StyleMap at: rectangleStyleName)!
+
+windowTitle
+	"Answer the window title that is set/restored through WindowCreationParameters. Generally this is the window text."
+
+	"The Static control ignores the text passed as the window title for the CreateWindowEx call, and we don't need it in this case anyway, so don't store the text in the WindowCreationState"
+
+	^nil! !
 
 !StaticRectangle categoriesForMethods!
 setStyle:!accessing!private! !
 style!accessing!public! !
 style:!accessing!public! !
+windowTitle!accessing!public! !
 !
 
 !StaticRectangle class methodsFor!
