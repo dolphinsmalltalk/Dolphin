@@ -1002,22 +1002,11 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Res\hsplit.cur">
-      <Filter>Cursors</Filter>
-    </None>
-    <None Include="Res\vsplit.cur">
-      <Filter>Cursors</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <Filter Include="Icons">
       <UniqueIdentifier>{3f5f5314-0463-47fc-bd13-89681c0609c2}</UniqueIdentifier>
     </Filter>
     <Filter Include="Bitmaps">
       <UniqueIdentifier>{902049ce-4897-4858-90fd-dd356d482e3b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Cursors">
-      <UniqueIdentifier>{58e534a7-29cb-498c-9bc5-6cfa30202eb4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -55,10 +55,6 @@ END
 // Cursor
 //
 
-HSPLIT                  CURSOR                  "..\\res\\hsplit.cur"
-
-VSPLIT                  CURSOR                  "..\\res\\vsplit.cur"
-
 #endif    // Neutral (Default) resources
 /////////////////////////////////////////////////////////////////////////////
 

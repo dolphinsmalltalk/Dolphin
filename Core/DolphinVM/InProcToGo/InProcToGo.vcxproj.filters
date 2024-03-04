@@ -22,12 +22,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="IPToGo.def" />
-    <None Include="..\Res\vsplit.cur">
-      <Filter>Resources</Filter>
-    </None>
-    <None Include="..\Res\hsplit.cur">
-      <Filter>Resources</Filter>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Resources">

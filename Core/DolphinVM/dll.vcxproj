@@ -248,10 +248,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="DolphinSmalltalk.tlb" />
-    <None Include="Res\hsplit.cur" />
     <None Include="Res\ist.rc2" />
     <MessageTable Include="Res\MESSAGES.MC" />
-    <None Include="Res\vsplit.cur" />
     <None Include="VM.def" />
   </ItemGroup>
   <ItemGroup>
