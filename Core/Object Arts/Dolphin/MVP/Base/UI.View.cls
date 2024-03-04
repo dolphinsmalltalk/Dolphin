@@ -5475,10 +5475,12 @@ onStartup
 	UxTheme onStartup!
 
 openTheme
-	#highDpiTodo.	"Need to use OpenThemeDataForDpi for per-monitor high DPI"
+	#highDpiTodo.	"Instances will need theme handle opened at relevant DPI. A single class-wide theme handle is inadequate."
 	^(self themePartName isNil or: [UxTheme isAppThemed not])
 		ifTrue: [##(External.Handle new)]
-		ifFalse: [UxTheme openThemeData: nil pszClassList: self themePartName asUtf16String]!
+		ifFalse: 
+			["UxTheme openThemeDataForDpi: nil pszClassList: self themePartName asUtf16String dpi: User32 getDpiForSystem]"
+			UxTheme openThemeData: nil pszClassList: self themePartName asUtf16String]!
 
 registerClass
 	"Private - Register the receiver's corresponding Win32 class - answer the class atom.

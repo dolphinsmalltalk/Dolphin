@@ -246,6 +246,16 @@ enableTheming: fEnable
 
 	^E_NOTIMPL!
 
+endBufferedAnimation: hBufferedPaint fUpdateTarget: fUpdateTarget
+	"Invoke the EndBufferedAnimation() function of the module wrapped by the receiver.
+	Helpstring: Ends a buffered animation operation.
+
+		HRESULT __stdcall EndBufferedAnimation(
+			[in]HANDLE hBufferedPaint,
+			[in]BOOL fUpdateTarget);"
+
+	^E_NOTIMPL!
+
 endBufferedPaint: hBufferedPaint fUpdateTarget: fUpdateTarget
 	"Invoke the EndBufferedPaint() function of the module wrapped by the receiver.
 	Helpstring: Ends a buffered paint operation.
@@ -669,6 +679,20 @@ getThemeTextMetrics: htheme hdc: hDC iPartId: iPartId iStateId: iStateId pTM: pt
 
 	^(Gdi32 getTextMetrics: hDC lptm: ptm) ifTrue: [S_OK] ifFalse: [(HRESULT win32Error: 2) asInteger]!
 
+getThemeTransitionDuration: htheme iPartId: iPartId iStateIdFrom: iStateIdFrom iStateIdTo: iStateIdTo iPropId: iPropId pdwDuration: pdwDuration
+	"Gets the duration for the specified transition.
+	HRESULT GetThemeTransitionDuration(
+		HTHEME hTheme,
+		int    iPartId,
+		int    iStateIdFrom,
+		int    iStateIdTo,
+		int    iPropId,
+	_Out_ DWORD  *pdwDuration
+	);"
+
+	pdwDuration value: 0.
+	^S_OK!
+
 getWindowTheme: hwnd 
 	"Invoke the GetWindowTheme() function of the module wrapped by the receiver.
 	Helpstring: If window is themed, returns its most recent HTHEME from OpenThemeData() - otherwise, returns NULL.
@@ -767,6 +791,18 @@ openThemeData: hwnd pszClassList: pszClassList
 
 	^nil!
 
+openThemeDataForDpi: hwnd pszClassList: pszClassList dpi: dpi
+	"Invoke the OpenThemeData() function of the module wrapped by the receiver.
+	Helpstring: Open the theme data for the specified HWND and semi-colon separated list of class names.
+
+		HTHEME __stdcall OpenThemeData(
+			[in]HWND HWND,
+			[in]LPWSTR pszClassList
+			[in]DWORD dpi
+		);"
+
+	^nil!
+
 setThemeAppProperties: dwFlags 
 	"Invoke the SetThemeAppProperties() function of the module wrapped by the receiver.
 	Helpstring: Sets the flags that control theming within the app
@@ -787,14 +823,14 @@ setWindowTheme: hwnd pszSubAppName: pszSubAppName pszSubIdList: pszSubIdList
 	^E_NOTIMPL! !
 
 !OS.MockThemeLibrary categoriesForMethods!
-beginBufferedAnimation:hdcTarget:prcTarget:dwFormat:pPaintParams:pAnimationParams:phdcFrom:phdcTo:!**auto generated**!public! !
-beginBufferedPaint:prcTarget:dwFormat:pPaintParams:phDC:!**auto generated**!public! !
-bufferedPaintClear:prc:!**auto generated**!public! !
-bufferedPaintInit!**auto generated**!public! !
-bufferedPaintRenderAnimation:hdcTarget:!**auto generated**!public! !
-bufferedPaintSetAlpha:prc:alpha:!**auto generated**!public! !
-bufferedPaintStopAllAnimations:!**auto generated**!public! !
-bufferedPaintUnInit!public! !
+beginBufferedAnimation:hdcTarget:prcTarget:dwFormat:pPaintParams:pAnimationParams:phdcFrom:phdcTo:!public!win32 functions-visual styles! !
+beginBufferedPaint:prcTarget:dwFormat:pPaintParams:phDC:!public!win32 functions-visual styles! !
+bufferedPaintClear:prc:!public!win32 functions-visual styles! !
+bufferedPaintInit!public!win32 functions-visual styles! !
+bufferedPaintRenderAnimation:hdcTarget:!public!win32 functions-visual styles! !
+bufferedPaintSetAlpha:prc:alpha:!public!win32 functions-visual styles! !
+bufferedPaintStopAllAnimations:!public!win32 functions-visual styles! !
+bufferedPaintUnInit!public!win32 functions-visual styles! !
 closeThemeData:!public!win32 functions-visual styles! !
 drawThemeBackground:hdc:iPartId:iStateId:pRect:pClipRect:!public!win32 functions-visual styles! !
 drawThemeBackgroundEx:hdc:iPartId:iStateId:pRect:pOptions:!public!win32 functions-visual styles! !
@@ -804,11 +840,12 @@ drawThemeParentBackground:hdc:prc:!public!win32 functions-visual styles! !
 drawThemeText:hdc:iPartId:iStateId:pszText:iCharCount:dwTextFlags:dwTextFlags2:pRect:!public!win32 functions-visual styles! !
 enableThemeDialogTexture:dwFlags:!public!win32 functions-visual styles! !
 enableTheming:!public!win32 functions-visual styles! !
-endBufferedPaint:fUpdateTarget:!**auto generated**!public! !
-getBufferedPaintBits:ppbBuffer:pcxRow:!**auto generated**!public! !
-getBufferedPaintDC:!**auto generated**!public! !
-getBufferedPaintTargetDC:!**auto generated**!public! !
-getBufferedPaintTargetRect:prc:!**auto generated**!public! !
+endBufferedAnimation:fUpdateTarget:!public!win32 functions-visual styles! !
+endBufferedPaint:fUpdateTarget:!public!win32 functions-visual styles! !
+getBufferedPaintBits:ppbBuffer:pcxRow:!public!win32 functions-visual styles! !
+getBufferedPaintDC:!public!win32 functions-visual styles! !
+getBufferedPaintTargetDC:!public!win32 functions-visual styles! !
+getBufferedPaintTargetRect:prc:!public!win32 functions-visual styles! !
 getCurrentThemeName:cchMaxNameChars:pszColorBuff:cchMaxColorChars:pszSizeBuff:cchMaxSizeChars:!public!win32 functions-visual styles! !
 getThemeAppProperties!public!win32 functions-visual styles! !
 getThemeBackgroundContentRect:hdc:iPartId:iStateId:pBoundingRect:pContentRect:!public!win32 functions-visual styles! !
@@ -838,16 +875,18 @@ getThemeSysSize:iSizeId:!public!win32 functions-visual styles! !
 getThemeSysString:iStringId:pszStringBuff:cchMaxStringChars:!public!win32 functions-visual styles! !
 getThemeTextExtent:hdc:iPartId:iStateId:pszText:iCharCount:dwTextFlags:pBoundingRect:pExtentRect:!public!win32 functions-visual styles! !
 getThemeTextMetrics:hdc:iPartId:iStateId:pTM:!public!win32 functions-visual styles! !
+getThemeTransitionDuration:iPartId:iStateIdFrom:iStateIdTo:iPropId:pdwDuration:!public!win32 functions-visual styles! !
 getWindowTheme:!public!win32 functions-visual styles! !
 hitTestThemeBackground:hdc:iPartId:iStateId:dwOptions:pRect:hrgn:ptTest:pwHitTestCode:!public!win32 functions-visual styles! !
 isAppThemed!public!win32 functions-visual styles! !
-isCompositionActive!**auto generated**!public! !
+isCompositionActive!public!win32 functions-visual styles! !
 isThemeActive!public!win32 functions-visual styles! !
 isThemeBackgroundPartiallyTransparent:iPartId:iStateId:!public!win32 functions-visual styles! !
 isThemeDialogTextureEnabled:!public!win32 functions-visual styles! !
 isThemePartDefined:iPartId:iStateId:!public!win32 functions-visual styles! !
 open:!private!realizing/unrealizing! !
 openThemeData:pszClassList:!public!win32 functions-visual styles! !
+openThemeDataForDpi:pszClassList:dpi:!public!win32 functions-visual styles! !
 setThemeAppProperties:!public!win32 functions-visual styles! !
 setWindowTheme:pszSubAppName:pszSubIdList:!public!win32 functions-visual styles! !
 !

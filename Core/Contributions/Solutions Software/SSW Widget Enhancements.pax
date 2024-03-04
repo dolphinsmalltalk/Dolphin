@@ -40,7 +40,6 @@ package methodNames
 	add: #SystemMetrics -> #hasListViewAlphaBlendedHighlights;
 	add: #SystemMetrics -> #hasListViewHotTracking;
 	add: #TextEdit -> #hasCueBanner;
-	add: #ThemeLibrary -> #endBufferedAnimation:fUpdateTarget:;
 	add: #ThemeLibrary -> #getThemeTransitionDuration:iPartId:iStateIdFrom:iStateIdTo:iPropId:pdwDuration:;
 	add: #Toolbar -> #addItem:after:;
 	add: #Toolbar -> #addItem:before:;
@@ -432,17 +431,6 @@ hasCueBanner!public!testing! !
 
 !ThemeLibrary methodsFor!
 
-endBufferedAnimation: hBufferedPaint fUpdateTarget: fUpdateTarget
-	"Invoke the EndBufferedAnimation() function of the module wrapped by the receiver.
-	Helpstring: Ends a buffered animation operation.
-
-		HRESULT __stdcall EndBufferedAnimation(
-			[in]HANDLE hBufferedPaint,
-			[in]BOOL fUpdateTarget);"
-
-	<stdcall: hresult EndBufferedAnimation handle bool>
-	^self invalidCall: _failureCode!
-
 getThemeTransitionDuration: htheme iPartId: iPartId iStateIdFrom: iStateIdFrom iStateIdTo: iStateIdTo iPropId: iPropId pdwDuration: pdwDuration
 	"Gets the duration for the specified transition.
 	HRESULT GetThemeTransitionDuration(
@@ -458,7 +446,6 @@ getThemeTransitionDuration: htheme iPartId: iPartId iStateIdFrom: iStateIdFrom i
 	^self invalidCall: _failureCode! !
 
 !ThemeLibrary categoriesForMethods!
-endBufferedAnimation:fUpdateTarget:!public! !
 getThemeTransitionDuration:iPartId:iStateIdFrom:iStateIdTo:iPropId:pdwDuration:!public! !
 !
 

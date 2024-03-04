@@ -574,6 +574,17 @@ enableTheming: fEnable
 	<stdcall: hresult EnableTheming bool>
 	^self invalidCall: _failureCode!
 
+endBufferedAnimation: hBufferedPaint fUpdateTarget: fUpdateTarget
+	"Invoke the EndBufferedAnimation() function of the module wrapped by the receiver.
+	Helpstring: Ends a buffered animation operation.
+
+		HRESULT __stdcall EndBufferedAnimation(
+			[in]HANDLE hBufferedPaint,
+			[in]BOOL fUpdateTarget);"
+
+	<stdcall: hresult EndBufferedAnimation handle bool>
+	^self invalidCall: _failureCode!
+
 endBufferedPaint: hBufferedPaint fUpdateTarget: fUpdateTarget
 	"Invoke the EndBufferedPaint() function of the module wrapped by the receiver.
 	Helpstring: Ends a buffered paint operation.
@@ -1132,6 +1143,19 @@ openThemeData: hwnd pszClassList: pszClassList
 	<stdcall: handle OpenThemeData handle lpwstr>
 	^self invalidCall: _failureCode!
 
+openThemeDataForDpi: hwnd pszClassList: pszClassList dpi: dpi
+	"Invoke the OpenThemeData() function of the module wrapped by the receiver.
+	Helpstring: Open the theme data for the specified HWND and semi-colon separated list of class names.
+
+		HTHEME __stdcall OpenThemeData(
+			[in]HWND HWND,
+			[in]LPWSTR pszClassList
+			[in]DWORD dpi
+		);"
+
+	<stdcall: handle OpenThemeDataForDpi handle lpwstr uint32>
+	^self invalidCall: _failureCode!
+
 refreshImmersiveColorPolicyState
 	<stdcall: int32 104>
 	^0!
@@ -1166,71 +1190,73 @@ UxTheme shouldAppsUseDarkMode
 "! !
 
 !OS.ThemeLibrary categoriesForMethods!
-beginBufferedAnimation:hdcTarget:prcTarget:dwFormat:pPaintParams:pAnimationParams:phdcFrom:phdcTo:!**auto generated**!public! !
-beginBufferedPaint:prcTarget:dwFormat:pPaintParams:phDC:!**auto generated**!public! !
-bufferedPaintClear:prc:!**auto generated**!public! !
-bufferedPaintInit!**auto generated**!public! !
-bufferedPaintRenderAnimation:hdcTarget:!**auto generated**!public! !
-bufferedPaintSetAlpha:prc:alpha:!**auto generated**!public! !
-bufferedPaintStopAllAnimations:!**auto generated**!public! !
-bufferedPaintUnInit!public! !
-closeThemeData:!**auto generated**!public! !
-drawThemeBackground:hdc:iPartId:iStateId:pRect:pClipRect:!**auto generated**!public! !
-drawThemeBackgroundEx:hdc:iPartId:iStateId:pRect:pOptions:!**auto generated**!public! !
-drawThemeEdge:hdc:iPartId:iStateId:pDestRect:uEdge:uFlags:pContentRect:!**auto generated**!public! !
-drawThemeIcon:hdc:iPartId:iStateId:pRect:himl:iImageIndex:!**auto generated**!public! !
-drawThemeParentBackground:hdc:prc:!**auto generated**!public! !
-drawThemeText:hdc:iPartId:iStateId:pszText:iCharCount:dwTextFlags:dwTextFlags2:pRect:!**auto generated**!public! !
-enableThemeDialogTexture:dwFlags:!**auto generated**!public! !
-enableTheming:!**auto generated**!public! !
-endBufferedPaint:fUpdateTarget:!**auto generated**!public! !
-getBufferedPaintBits:ppbBuffer:pcxRow:!**auto generated**!public! !
-getBufferedPaintDC:!**auto generated**!public! !
-getBufferedPaintTargetDC:!**auto generated**!public! !
-getBufferedPaintTargetRect:prc:!**auto generated**!public! !
-getCurrentThemeName:cchMaxNameChars:pszColorBuff:cchMaxColorChars:pszSizeBuff:cchMaxSizeChars:!**auto generated**!public! !
-getThemeAppProperties!**auto generated**!public! !
-getThemeBackgroundContentRect:hdc:iPartId:iStateId:pBoundingRect:pContentRect:!**auto generated**!public! !
-getThemeBackgroundExtent:hdc:iPartId:iStateId:pContentRect:pExtentRect:!**auto generated**!public! !
-getThemeBackgroundRegion:hdc:iPartId:iStateId:pRect:pRegion:!**auto generated**!public! !
-getThemeBool:iPartId:iStateId:iPropId:pfVal:!**auto generated**!public! !
-getThemeColor:iPartId:iStateId:iPropId:pColor:!**auto generated**!public! !
-getThemeDocumentationProperty:pszPropertyName:pszValueBuff:cchMaxValChars:!**auto generated**!public! !
-getThemeEnumValue:iPartId:iStateId:iPropId:piVal:!**auto generated**!public! !
-getThemeFilename:iPartId:iStateId:iPropId:pszThemeFileName:cchMaxBuffChars:!**auto generated**!public! !
-getThemeFont:hdc:iPartId:iStateId:iPropId:pFont:!**auto generated**!public! !
-getThemeInt:iPartId:iStateId:iPropId:piVal:!**auto generated**!public! !
-getThemeMargins:hdc:iPartId:iStateId:iPropId:prc:pMargins:!**auto generated**!public! !
-getThemeMetric:hdc:iPartId:iStateId:iPropId:piVal:!**auto generated**!public! !
-getThemePartSize:hdc:iPartId:iStateId:prc:eSize:psz:!**auto generated**!public! !
-getThemePosition:iPartId:iStateId:iPropId:pPoint:!**auto generated**!public! !
-getThemePropertyOrigin:iPartId:iStateId:iPropId:pOrigin:!**auto generated**!public! !
-getThemeRect:iPartId:iStateId:iPropId:pRect:!**auto generated**!public! !
-getThemeString:iPartId:iStateId:iPropId:pszBuff:cchMaxBuffChars:!**auto generated**!public! !
-getThemeSysBool:iBoolId:!**auto generated**!public! !
-getThemeSysColor:iColorId:!**auto generated**!public! !
-getThemeSysColorBrush:iColorId:!**auto generated**!public! !
-getThemeSysFont:iFontId:!helpers!public! !
-getThemeSysFont:iFontId:plf:!**auto generated**!public! !
-getThemeSysInt:iIntId:piValue:!**auto generated**!public! !
-getThemeSysSize:iSizeId:!**auto generated**!public! !
-getThemeSysString:iStringId:pszStringBuff:cchMaxStringChars:!**auto generated**!public! !
-getThemeTextExtent:hdc:iPartId:iStateId:pszText:iCharCount:dwTextFlags:pBoundingRect:pExtentRect:!**auto generated**!public! !
-getThemeTextMetrics:hdc:iPartId:iStateId:pTM:!**auto generated**!public! !
-getWindowTheme:!**auto generated**!public! !
-hitTestThemeBackground:hdc:iPartId:iStateId:dwOptions:pRect:hrgn:ptTest:pwHitTestCode:!**auto generated**!public! !
-isAppThemed!**auto generated**!public! !
-isCompositionActive!**auto generated**!public! !
-isThemeActive!**auto generated**!public! !
-isThemeBackgroundPartiallyTransparent:iPartId:iStateId:!**auto generated**!public! !
-isThemeDialogTextureEnabled:!**auto generated**!public! !
-isThemePartDefined:iPartId:iStateId:!**auto generated**!public! !
-onExit!private! !
-onStartup!private! !
-openThemeData:pszClassList:!**auto generated**!public! !
+beginBufferedAnimation:hdcTarget:prcTarget:dwFormat:pPaintParams:pAnimationParams:phdcFrom:phdcTo:!**auto generated**!public!win32 functions-visual styles! !
+beginBufferedPaint:prcTarget:dwFormat:pPaintParams:phDC:!**auto generated**!public!win32 functions-visual styles! !
+bufferedPaintClear:prc:!**auto generated**!public!win32 functions-visual styles! !
+bufferedPaintInit!**auto generated**!public!win32 functions-visual styles! !
+bufferedPaintRenderAnimation:hdcTarget:!**auto generated**!public!win32 functions-visual styles! !
+bufferedPaintSetAlpha:prc:alpha:!**auto generated**!public!win32 functions-visual styles! !
+bufferedPaintStopAllAnimations:!**auto generated**!public!win32 functions-visual styles! !
+bufferedPaintUnInit!public!win32 functions-visual styles! !
+closeThemeData:!public!win32 functions-visual styles! !
+drawThemeBackground:hdc:iPartId:iStateId:pRect:pClipRect:!**auto generated**!public!win32 functions-visual styles! !
+drawThemeBackgroundEx:hdc:iPartId:iStateId:pRect:pOptions:!**auto generated**!public!win32 functions-visual styles! !
+drawThemeEdge:hdc:iPartId:iStateId:pDestRect:uEdge:uFlags:pContentRect:!**auto generated**!public!win32 functions-visual styles! !
+drawThemeIcon:hdc:iPartId:iStateId:pRect:himl:iImageIndex:!**auto generated**!public!win32 functions-visual styles! !
+drawThemeParentBackground:hdc:prc:!**auto generated**!public!win32 functions-visual styles! !
+drawThemeText:hdc:iPartId:iStateId:pszText:iCharCount:dwTextFlags:dwTextFlags2:pRect:!**auto generated**!public!win32 functions-visual styles! !
+enableThemeDialogTexture:dwFlags:!**auto generated**!public!win32 functions-visual styles! !
+enableTheming:!**auto generated**!public!win32 functions-visual styles! !
+endBufferedAnimation:fUpdateTarget:!public!win32 functions-visual styles! !
+endBufferedPaint:fUpdateTarget:!**auto generated**!public!win32 functions-visual styles! !
+getBufferedPaintBits:ppbBuffer:pcxRow:!**auto generated**!public!win32 functions-visual styles! !
+getBufferedPaintDC:!**auto generated**!public!win32 functions-visual styles! !
+getBufferedPaintTargetDC:!**auto generated**!public!win32 functions-visual styles! !
+getBufferedPaintTargetRect:prc:!**auto generated**!public!win32 functions-visual styles! !
+getCurrentThemeName:cchMaxNameChars:pszColorBuff:cchMaxColorChars:pszSizeBuff:cchMaxSizeChars:!**auto generated**!public!win32 functions-visual styles! !
+getThemeAppProperties!**auto generated**!public!win32 functions-visual styles! !
+getThemeBackgroundContentRect:hdc:iPartId:iStateId:pBoundingRect:pContentRect:!**auto generated**!public!win32 functions-visual styles! !
+getThemeBackgroundExtent:hdc:iPartId:iStateId:pContentRect:pExtentRect:!**auto generated**!public!win32 functions-visual styles! !
+getThemeBackgroundRegion:hdc:iPartId:iStateId:pRect:pRegion:!**auto generated**!public!win32 functions-visual styles! !
+getThemeBool:iPartId:iStateId:iPropId:pfVal:!**auto generated**!public!win32 functions-visual styles! !
+getThemeColor:iPartId:iStateId:iPropId:pColor:!**auto generated**!public!win32 functions-visual styles! !
+getThemeDocumentationProperty:pszPropertyName:pszValueBuff:cchMaxValChars:!**auto generated**!public!win32 functions-visual styles! !
+getThemeEnumValue:iPartId:iStateId:iPropId:piVal:!**auto generated**!public!win32 functions-visual styles! !
+getThemeFilename:iPartId:iStateId:iPropId:pszThemeFileName:cchMaxBuffChars:!**auto generated**!public!win32 functions-visual styles! !
+getThemeFont:hdc:iPartId:iStateId:iPropId:pFont:!**auto generated**!public!win32 functions-visual styles! !
+getThemeInt:iPartId:iStateId:iPropId:piVal:!**auto generated**!public!win32 functions-visual styles! !
+getThemeMargins:hdc:iPartId:iStateId:iPropId:prc:pMargins:!**auto generated**!public!win32 functions-visual styles! !
+getThemeMetric:hdc:iPartId:iStateId:iPropId:piVal:!**auto generated**!public!win32 functions-visual styles! !
+getThemePartSize:hdc:iPartId:iStateId:prc:eSize:psz:!**auto generated**!public!win32 functions-visual styles! !
+getThemePosition:iPartId:iStateId:iPropId:pPoint:!**auto generated**!public!win32 functions-visual styles! !
+getThemePropertyOrigin:iPartId:iStateId:iPropId:pOrigin:!**auto generated**!public!win32 functions-visual styles! !
+getThemeRect:iPartId:iStateId:iPropId:pRect:!**auto generated**!public!win32 functions-visual styles! !
+getThemeString:iPartId:iStateId:iPropId:pszBuff:cchMaxBuffChars:!**auto generated**!public!win32 functions-visual styles! !
+getThemeSysBool:iBoolId:!**auto generated**!public!win32 functions-visual styles! !
+getThemeSysColor:iColorId:!**auto generated**!public!win32 functions-visual styles! !
+getThemeSysColorBrush:iColorId:!**auto generated**!public!win32 functions-visual styles! !
+getThemeSysFont:iFontId:!public!win32 functions-visual styles! !
+getThemeSysFont:iFontId:plf:!**auto generated**!public!win32 functions-visual styles! !
+getThemeSysInt:iIntId:piValue:!**auto generated**!public!win32 functions-visual styles! !
+getThemeSysSize:iSizeId:!**auto generated**!public!win32 functions-visual styles! !
+getThemeSysString:iStringId:pszStringBuff:cchMaxStringChars:!**auto generated**!public!win32 functions-visual styles! !
+getThemeTextExtent:hdc:iPartId:iStateId:pszText:iCharCount:dwTextFlags:pBoundingRect:pExtentRect:!**auto generated**!public!win32 functions-visual styles! !
+getThemeTextMetrics:hdc:iPartId:iStateId:pTM:!**auto generated**!public!win32 functions-visual styles! !
+getWindowTheme:!**auto generated**!public!win32 functions-visual styles! !
+hitTestThemeBackground:hdc:iPartId:iStateId:dwOptions:pRect:hrgn:ptTest:pwHitTestCode:!**auto generated**!public!win32 functions-visual styles! !
+isAppThemed!**auto generated**!public!win32 functions-visual styles! !
+isCompositionActive!**auto generated**!public!win32 functions-visual styles! !
+isThemeActive!**auto generated**!public!win32 functions-visual styles! !
+isThemeBackgroundPartiallyTransparent:iPartId:iStateId:!**auto generated**!public!win32 functions-visual styles! !
+isThemeDialogTextureEnabled:!**auto generated**!public!win32 functions-visual styles! !
+isThemePartDefined:iPartId:iStateId:!**auto generated**!public!win32 functions-visual styles! !
+onExit!event handling!private! !
+onStartup!event handling!private! !
+openThemeData:pszClassList:!**auto generated**!public!win32 functions-visual styles! !
+openThemeDataForDpi:pszClassList:dpi:!**auto generated**!public!win32 functions-visual styles! !
 refreshImmersiveColorPolicyState!public!undocumented dark mode APIs! !
-setThemeAppProperties:!**auto generated**!public! !
-setWindowTheme:pszSubAppName:pszSubIdList:!**auto generated**!public! !
+setThemeAppProperties:!**auto generated**!public!win32 functions-visual styles! !
+setWindowTheme:pszSubAppName:pszSubIdList:!**auto generated**!public!win32 functions-visual styles! !
 shouldAppsUseDarkMode!public!undocumented dark mode APIs! !
 !
 

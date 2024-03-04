@@ -3,7 +3,7 @@
 Core.Object
 	subclass: #'OS.SystemMetrics'
 	instanceVariableNames: 'dpi menuCheckExtent smallIconExtent largeIconExtent dragHysteresis scrollThumbExtent sizingFrameExtent dialogFrameExtent borderExtent nonClientMetrics menuFont edgeExtent iconTitleFont defaultColorDepth tileIconExtent'
-	classVariableNames: 'Current Default HasFlatMenus HasIconScaleDown Instances IsNotWine IsVistaOrLater MouseHoverTime SysParamVariables WheelScrollLines'
+	classVariableNames: 'Current Default HasFlatMenus Instances IsNotWine MouseHoverTime SysParamVariables WheelScrollLines'
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -436,10 +436,7 @@ wheelScrollLines!constants!public! !
 !OS.SystemMetrics class methodsFor!
 
 cacheDpiIndependentSettings
-	IsVistaOrLater := VMLibrary default isWindowsVistaOrGreater.
-	IsNotWine := NTLibrary isWine not.
-	"Wine does not support the CommCtrlLibrary>>loadIconWithScaleDown:&c method which is normally available under Vista and later. Hence we don't allow this to be called even if the Windows version indicates Vista is available."
-	HasIconScaleDown := IsVistaOrLater & IsNotWine!
+	IsNotWine := NtDll isWine not!
 
 current
 	"Answer the current instance of the receiver. This provides metrics at the system DPI setting."
@@ -456,7 +453,7 @@ forDpi: anInteger
 
 	^(Instances lookup: anInteger)
 		ifNil: 
-			[IsVistaOrLater ifNil: [self cacheDpiIndependentSettings].
+			[IsNotWine ifNil: [self cacheDpiIndependentSettings].
 			Instances at: anInteger put: (self newForDpi: anInteger)]!
 
 initialize
@@ -496,7 +493,7 @@ onSettingChanged: anArray
 reset
 	"Reinitialize the receiver. This is done on startup (see UserLibrary class>>clear) or when system settings are changed."
 
-	Default := Current := IsVistaOrLater := IsNotWine := HasIconScaleDown := nil.
+	Default := Current := IsNotWine := nil.
 	SysParamVariables do: [:each | each value: nil].
 	Instances := IdentityDictionary new!
 
