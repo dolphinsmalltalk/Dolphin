@@ -25,11 +25,10 @@ fileName
 	^'dwmapi'!
 
 isDesktopCompositionEnabled
-	^SystemMetrics current hasDesktopComposition and: 
-			[| answer |
-			answer := BOOL new.
-			self default dwmIsCompositionEnabled: answer.
-			answer asObject]! !
+	| answer |
+	answer := DWORDBytes new.
+	self default dwmIsCompositionEnabled: answer.
+	^answer value asBoolean! !
 !DwmApiLibrary class categoriesForMethods!
 fileName!constants!public! !
 isDesktopCompositionEnabled!public!queries! !

@@ -5537,10 +5537,12 @@ onStartup
 	ThemeLibrary default onStartup!
 
 openTheme
-	#highDpiTodo.	"Need to use OpenThemeDataForDpi for per-monitor high DPI"
+	#highDpiTodo.	"Instances will need theme handle opened at relevant DPI. A single class-wide theme handle is inadequate."
 	^(self themePartName isNil or: [ThemeLibrary isAppThemed not])
 		ifTrue: [##(ExternalHandle new)]
-		ifFalse: [ThemeLibrary default openThemeData: nil pszClassList: self themePartName asUtf16String]!
+		ifFalse: 
+			["ThemeLibrary default openThemeDataForDpi: nil pszClassList: self themePartName asUtf16String dpi: UserLibrary default getDpiForSystem]"
+			ThemeLibrary default openThemeData: nil pszClassList: self themePartName asUtf16String]!
 
 registerClass
 	"Private - Register the receivers corresponding Win32 class - answer the class atom.
