@@ -123,10 +123,10 @@ originForSubmenu: itemIndex
 refreshContents
 	"The model held by the associated presenter has been replaced."
 
-	self menu 
+	self menu
 		ifNotNil: 
-			[:m | 
-			painter := m painterClass forMenu: m.
+			[:m |
+			painter := m painterClass forMenu: m inComposerView: self.
 			self extent: (self evaluateWithCanvas: [:canvas | painter calculateGeometry: canvas])].
 	self invalidateRect: nil erase: false!
 

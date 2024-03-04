@@ -15,10 +15,11 @@ PopupMenuPainter comment: ''!
 !PopupMenuPainter methodsFor!
 
 borderInset
-	"Private - Answer a <Rectangle> indicating the inset at each corner of the receiver filled by the border and any 3d edge."
+	"Private - Answer a <Rectangle> indicating the inset at each corner of the receiver filled by the
+	border and any 3d edge."
 
 	| extent metrics |
-	metrics := SystemMetrics current.
+	metrics := self metrics.
 	extent := metrics borderExtent + metrics edgeExtent.
 	^extent corner: extent!
 
@@ -30,7 +31,7 @@ calculateGeometry: aCanvas
 	menu hasSharedImageColumn 
 		ifFalse: 
 			[(items anySatisfy: [:each | each image notNil]) ifTrue: [textOffset := textOffset + imageWidth]].
-	acceleratorOffset := textOffset + SystemMetrics current menuTextAcceleratorGap 
+	acceleratorOffset := textOffset + self metrics menuTextAcceleratorGap 
 				+ (items inject: 0 into: [:max :each | max max: (self widthOfItemText: each using: aCanvas)]).
 	submenuOffset := acceleratorOffset 
 				+ (items inject: 0 into: [:max :each | max max: (self widthOfItemAccelerator: each using: aCanvas)]).
@@ -39,7 +40,7 @@ calculateGeometry: aCanvas
 	^last bottomRight + self borderInset corner!
 
 dividerHeight
-	^SystemMetrics current menuDividerHeight!
+	^self metrics menuDividerHeight!
 
 gutterWidth
 	^(self imageExtent x + self imageMargin) * 2!
@@ -56,7 +57,7 @@ insertBefore: index position: localPoint canvas: aCanvas
 itemHeight
 	"Private - Answer the height of a menu item as currently configured."
 
-	^SystemMetrics current menuHeight!
+	^self metrics menuHeight!
 
 itemRect: anInteger using: aCanvas 
 	"Answer the <Rectangle> of the indexed menu item relative to the receiver's origin."
@@ -75,7 +76,7 @@ paintEdgeOn: aCanvas in: aRectangle
 	"Private - Paint the receiver's 3-d shadow border."
 
 	| cx cy oldPen |
-	SystemMetrics current hasFlatMenus ifFalse: [^super paintEdgeOn: aCanvas in: aRectangle].
+	self metrics hasFlatMenus ifFalse: [^super paintEdgeOn: aCanvas in: aRectangle].
 	cx := aRectangle width.
 	cy := aRectangle height.
 	oldPen := aCanvas pen: Color shadow3d pen.
@@ -87,25 +88,25 @@ paintEdgeOn: aCanvas in: aRectangle
 		lineTo: (cx - 1) @ 0] 
 			ensure: [aCanvas pen: oldPen]!
 
-paintItem: aMenuItem on: aCanvas in: aRectangle 
+paintItem: aMenuItem on: aCanvas in: aRectangle
 	| aPoint offset border imageWidth |
 	aPoint := aRectangle origin.
-	border := SystemMetrics current paddedBorderThickness.
+	border := self metrics paddedBorderThickness.
 	imageWidth := self imageExtent x.
 	offset := border + (menu hasSharedImageColumn ifTrue: [0] ifFalse: [imageWidth]).
-	self 
+	self
 		paintItemImage: aMenuItem
 		on: aCanvas
 		at: aPoint + (offset @ 1).
-	self 
+	self
 		paintItemText: aMenuItem
 		on: aCanvas
 		in: (aRectangle insetOriginBy: textOffset @ 1).
-	self 
+	self
 		paintItemAccelerator: aMenuItem
 		on: aCanvas
 		in: (aRectangle insetOriginBy: acceleratorOffset @ 1 cornerBy: (imageWidth + border) @ 0).
-	aMenuItem size = 0 
+	aMenuItem size = 0
 		ifFalse: [self drawArrawOn: aCanvas in: (aRectangle insetOriginBy: submenuOffset @ 0)]!
 
 paintItemAccelerator: aMenuItem on: aCanvas in: aRectangle
@@ -134,7 +135,7 @@ paintSeparatorOn: aCanvas in: aRectangle
 	"Private - Paint a menu item separator in the specified Rectangle."
 
 	| offset |
-	offset := textOffset - SystemMetrics current paddedBorderThickness.
+	offset := textOffset - self metrics paddedBorderThickness.
 	UserLibrary default 
 		drawEdge: aCanvas asParameter
 		qrc: (RECT 

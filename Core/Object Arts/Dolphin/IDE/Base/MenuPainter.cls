@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Object subclass: #MenuPainter
-	instanceVariableNames: 'menu conflictingMnemonics conflictingAccelerators'
+	instanceVariableNames: 'view menu conflictingMnemonics conflictingAccelerators'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
@@ -53,6 +53,9 @@ createDragImage: anInteger using: aCanvas
 			ensure: [bmpCanvas restore].
 	bitmap freeDC.
 	^bitmap!
+
+dpi
+	^view dpi!
 
 drawArrawOn: aCanvas in: aRectangle 
 	self 
@@ -128,18 +131,17 @@ findMnemonicConflicts
 						ifFalse: [mns at: mnemonic put: item]]]!
 
 horizontalSpacer
-	"Private - Answer a number of pixels used as a unit for separation between
-	horizontal elements."
+	"Private - Answer a number of pixels used as a unit for separation between horizontal elements."
 
-	^7!
+	^7 * self dpi // USER_DEFAULT_SCREEN_DPI !
 
 imageExtent
 	"Private - Answer the width and height of menu item images."
 
-	^SystemMetrics current menuImageExtent!
+	^self metrics menuImageExtent!
 
 imageMargin
-	^2!
+	^2 * self dpi // USER_DEFAULT_SCREEN_DPI!
 
 initializeCanvas: canvas 
 	"Private - Set up the <Canvas> argument for drawing the menu items."
@@ -179,10 +181,13 @@ menuColor
 menuFont
 	"Private - Answer the currently configured menu font."
 
-	^SystemMetrics current menuFont!
+	^self metrics menuFont!
 
 menuTextColor
 	^Color menuText!
+
+metrics
+	^view metrics!
 
 offsetForSubmenu: anInteger canvas: aCanvas 
 	^self subclassResponsibility!
@@ -223,22 +228,25 @@ paintEdgeOn: aCanvas in: aRectangle
 paintItem: aMenuItem on: aCanvas in: aRectangle 
 	^self subclassResponsibility!
 
-paintItemImage: aMenuItem on: aCanvas at: aPoint 
+paintItemImage: aMenuItem on: aCanvas at: aPoint
 	"Private - If the menu item has an icon, paint it and answer true. Else answer false."
 
-	aMenuItem image 
+	| imageExtent itemHeight |
+	imageExtent := self imageExtent.
+	itemHeight := self itemHeight.
+	aMenuItem image
 		ifNil: 
 			[aMenuItem isRadioButtonStyle ifFalse: [^false].
 			self drawBulletOn: aCanvas
-				in: ((aPoint extent: self imageExtent) insetBy: 0 @ ((self itemHeight - self imageExtent y) // 2))]
+				in: ((aPoint extent: imageExtent) insetBy: 0 @ ((itemHeight - imageExtent y) // 2))]
 		ifNotNil: 
-			[:image | 
+			[:image |
 			| imageManager |
 			imageManager := menu imageManager.
-			(imageManager imageListWithExtent: self imageExtent) 
+			(imageManager imageListWithExtent: imageExtent)
 				draw: (imageManager indexOfImage: image)
 				on: aCanvas
-				at: aPoint + (0 @ ((self itemHeight - self imageExtent y) // 2))].
+				at: aPoint + (0 @ ((itemHeight - imageExtent y) // 2))].
 	^true!
 
 paintItemsOn: aCanvas selected: anInteger 
@@ -380,6 +388,9 @@ splitMenuText: aString
 			next: 1.
 		stream upToEnd}!
 
+view: aMenuComposerView
+	view := aMenuComposerView!
+
 widthOfItemAccelerator: aMenuItem using: aCanvas
 	| text tabIndex menuFont size oldFont |
 	text := aMenuItem text.
@@ -425,6 +436,7 @@ borderInset!constants!private! !
 calculateGeometry:!public!updating! !
 conflictingAccelerators:!accessing!public! !
 createDragImage:using:!painting!public! !
+dpi!accessing!private! !
 drawArrawOn:in:!painting!private! !
 drawBulletOn:in:!painting!private! !
 drawCheckOn:in:!painting!private! !
@@ -442,6 +454,7 @@ menu:!initializing!private! !
 menuColor!constants!private! !
 menuFont!constants!private! !
 menuTextColor!constants!private! !
+metrics!accessing!private! !
 offsetForSubmenu:canvas:!helpers!public! !
 paint:on:in:!painting!private! !
 paintBackgroundOn:in:!painting!private! !
@@ -457,6 +470,7 @@ paintSmudge:on:!painting!private! !
 paintSmudgeFor:on:in:!painting!private! !
 setHighlightColors:!painting!private! !
 splitMenuText:!helpers!private! !
+view:!accessing!private! !
 widthOfItemAccelerator:using:!helpers!private! !
 widthOfItemText:using:!helpers!private! !
 !
@@ -465,8 +479,9 @@ MenuPainter methodProtocol: #menuPainter attributes: #() selectors: #(#calculate
 
 !MenuPainter class methodsFor!
 
-forMenu: aMenu 
-	^(self new)
+forMenu: aMenu inComposerView: aMenuComposerView
+	^self new
+		view: aMenuComposerView;
 		menu: aMenu;
 		yourself!
 
@@ -476,7 +491,7 @@ icon
 	^Menu icon! !
 
 !MenuPainter class categoriesForMethods!
-forMenu:!public! !
+forMenu:inComposerView:!public! !
 icon!constants!public! !
 !
 

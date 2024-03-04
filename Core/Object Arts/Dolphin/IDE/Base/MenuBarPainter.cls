@@ -18,7 +18,7 @@ borderInset
 	"Private - Answer a <Rectangle> indicating the inset at each corner of the receiver filled by
 	the border."
 
-	^0 @ 0 corner: 0 @ SystemMetrics current borderExtent y!
+	^0 @ 0 corner: 0 @ self metrics borderExtent y!
 
 calculateGeometry: anObject 
 	^5000 @ self itemHeight!
@@ -35,26 +35,27 @@ insertBefore: anInteger position: aPoint canvas: aCanvas
 itemHeight
 	"Private - Answer the height of a menu item as currently configured."
 
-	^SystemMetrics current menuBarHeight!
+	^self metrics menuBarHeight!
 
-itemRect: anInteger using: aCanvas 
+itemRect: anInteger using: aCanvas
 	"Answer the <Rectangle> of the indexed menu item relative to the receiver's origin."
 
-	| space height inset |
+	| space height inset imageWidth |
 	space := self horizontalSpacer * 2.
 	inset := self borderInset.
 	height := self itemHeight - inset corner y.
+	imageWidth := self imageExtent x.
 	^(1 to: anInteger) inject: (inset origin extent: Point zero)
 		into: 
-			[:sum :index | 
+			[:sum :index |
 			| width item |
 			item := menu itemAt: index.
 			width := self widthOfItemText: item using: aCanvas.
-			item image ifNotNil: [width := width + self imageExtent x].
+			item image ifNotNil: [width := width + imageWidth].
 			sum topRight extent: (space + width) @ height]!
 
 menuColor
-	^SystemMetrics current menuBarColor!
+	^self metrics menuBarColor!
 
 offsetForSubmenu: anInteger canvas: aCanvas 
 	^(self itemRect: anInteger using: aCanvas) bottomLeft!
@@ -69,17 +70,18 @@ paintEdgeOn: aCanvas in: aRectangle
 		lineFrom: 0 @ cy - 1 to: cx @ cy - 1;
 		pen: oldPen!
 
-paintItem: aMenuItem on: aCanvas in: aRectangle 
+paintItem: aMenuItem on: aCanvas in: aRectangle
 	"Private - Paint the menu item on the canvas in the specified <Rectangle>."
 
-	| textRect |
-	textRect := (self 
+	| textRect margin |
+	margin := self imageMargin.
+	textRect := (self
 				paintItemImage: aMenuItem
 				on: aCanvas
-				at: aRectangle origin + (self imageMargin @ 0)) 
-					ifTrue: [aRectangle insetOriginBy: (self imageExtent x + (self imageMargin * 2)) @ 0]
+				at: aRectangle origin + (margin @ 0))
+					ifTrue: [aRectangle insetOriginBy: (self imageExtent x + (margin * 2)) @ 0]
 					ifFalse: [aRectangle].
-	self 
+	self
 		paintItemText: aMenuItem
 		on: aCanvas
 		in: textRect!
