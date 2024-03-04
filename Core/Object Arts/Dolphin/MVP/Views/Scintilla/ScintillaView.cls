@@ -4859,7 +4859,7 @@ onViewCreated
 	"Disable notifications via WM_COMMAND such as EN_CHANGE, EN_KILLFOCUS, etc. These are better handled through NM_NOTIFY."
 	self sendMessage: SCI_SETCOMMANDEVENTS wParam: 0.
 	"It would be nice to be able to used DirectWrite mode by default for for better quality text rendering, hardware acceleration, and support for fonts with colour (e.g. for emojis), but the interaction with auto-completion is just too clunky. There is a noticeable delay when the auto-completion list is shown and refreshed. This is may be because Scintilla is still using a (GDI) ListBox for the auto-completion. Interaction when drawing over other GDI windows is also rather flishy-flashy. In the single-line search presenter the Scintilla view frequently fails to paint text (when the text is slightly too large vertically), and the auto-completion list comes up at the wrong location (over the text)."
-	(false and: [VMLibrary default isWindowsVistaOrGreater])
+	false
 		ifTrue: 
 			[self
 				drawingTechnology: #directWrite;

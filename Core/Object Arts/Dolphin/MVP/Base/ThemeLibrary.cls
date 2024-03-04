@@ -356,6 +356,98 @@ module Theme
 
 !ThemeLibrary methodsFor!
 
+beginBufferedAnimation: hwnd hdcTarget: hdcTarget prcTarget: prcTarget dwFormat: dwFormat pPaintParams: pPaintParams pAnimationParams: pAnimationParams phdcFrom: phdcFrom phdcTo: phdcTo
+	"Invoke the BeginBufferedAnimation() function of the module wrapped by the receiver.
+
+		HANDLE __stdcall BeginBufferedAnimation(
+			[in]HWND HWND,
+			[in]HDC hdcTarget,
+			[in]RECT* prcTarget,
+			[in]BP_BUFFERFORMAT dwFormat,
+			[in]BP_PAINTPARAMS* pPaintParams,
+			[in]BP_ANIMATIONPARAMS* pAnimationParams,
+			[out]HDC* phdcFrom,
+			[out]HDC* phdcTo);"
+
+	<stdcall: handle BeginBufferedAnimation handle handle RECT* sdword BP_PAINTPARAMS* BP_ANIMATIONPARAMS* handle* handle*>
+	^self invalidCall: _failureCode!
+
+beginBufferedPaint: hdcTarget prcTarget: prcTarget dwFormat: dwFormat pPaintParams: pPaintParams phDC: phDC
+	"Invoke the BeginBufferedPaint() function of the module wrapped by the receiver.
+	Helpstring: Begins a buffered paint operation.
+
+		HANDLE __stdcall BeginBufferedPaint(
+			[in]HDC hdcTarget,
+			[in]RECT* prcTarget,
+			[in]BP_BUFFERFORMAT dwFormat,
+			[in]BP_PAINTPARAMS* pPaintParams,
+			[out]HDC* phDC);"
+
+	<stdcall: handle BeginBufferedPaint handle RECT* sdword BP_PAINTPARAMS* handle*>
+	^self invalidCall: _failureCode!
+
+bufferedPaintClear: hBufferedPaint prc: prc
+	"Invoke the BufferedPaintClear() function of the module wrapped by the receiver.
+	Helpstring: Returns the target rectangle specified during BeginBufferedPaint.
+
+		HRESULT __stdcall BufferedPaintClear(
+			[in]HANDLE hBufferedPaint,
+			[in, optional]RECT* prc);"
+
+	<stdcall: hresult BufferedPaintClear handle RECT*>
+	^self invalidCall: _failureCode!
+
+bufferedPaintInit
+	"Invoke the BufferedPaintInit() function of the module wrapped by the receiver.
+	Helpstring: Initialize the Buffered Paint API.
+
+		HRESULT __stdcall BufferedPaintInit();"
+
+	<stdcall: hresult BufferedPaintInit>
+	^self invalidCall: _failureCode!
+
+bufferedPaintRenderAnimation: hwnd hdcTarget: hdcTarget
+	"Invoke the BufferedPaintRenderAnimation() function of the module wrapped by the receiver.
+
+		BOOL __stdcall BufferedPaintRenderAnimation(
+			[in]HWND HWND,
+			[in]HDC hdcTarget);"
+
+	<stdcall: bool BufferedPaintRenderAnimation handle handle>
+	^self invalidCall: _failureCode!
+
+bufferedPaintSetAlpha: hBufferedPaint prc: prc alpha: alpha
+	"Invoke the BufferedPaintSetAlpha() function of the module wrapped by the receiver.
+	Helpstring: Returns the target rectangle specified during BeginBufferedPaint.
+
+		HRESULT __stdcall BufferedPaintSetAlpha(
+			[in]HANDLE hBufferedPaint,
+			[in]RECT* prc,
+			[in]BYTE Alpha);"
+
+	<stdcall: hresult BufferedPaintSetAlpha handle RECT* byte>
+	^self invalidCall: _failureCode!
+
+bufferedPaintStopAllAnimations: hwnd
+	"Invoke the BufferedPaintStopAllAnimations() function of the module wrapped by the receiver.
+
+		HRESULT __stdcall BufferedPaintStopAllAnimations(
+			[in]HWND HWND);"
+
+	<stdcall: hresult BufferedPaintStopAllAnimations handle>
+	^self invalidCall: _failureCode!
+
+bufferedPaintUnInit
+	"Invoke the BufferedPaintUnInit() function of the module wrapped by the receiver.
+	Helpstring: Uninitialize the Buffered Paint API.
+
+		HRESULT __stdcall BufferedPaintUnInit();"
+
+	"Ignore any errors from calling this function, as we call it on shutdown."
+
+	<stdcall: sdword BufferedPaintUnInit>
+	^self invalidCall: _failureCode!
+
 closeThemeData: htheme
 	"Invoke the CloseThemeData() function of the module wrapped by the receiver.
 	Helpstring: Closes the theme data handle. Return value is HRESULT error code.
@@ -478,6 +570,60 @@ enableTheming: fEnable
 			[in]BOOL fEnable);"
 
 	<stdcall: hresult EnableTheming bool>
+	^self invalidCall: _failureCode!
+
+endBufferedPaint: hBufferedPaint fUpdateTarget: fUpdateTarget
+	"Invoke the EndBufferedPaint() function of the module wrapped by the receiver.
+	Helpstring: Ends a buffered paint operation.
+
+		HRESULT __stdcall EndBufferedPaint(
+			[in]HANDLE hBufferedPaint,
+			[in]BOOL fUpdateTarget);"
+
+	<stdcall: hresult EndBufferedPaint handle bool>
+	^self invalidCall: _failureCode!
+
+getBufferedPaintBits: hBufferedPaint ppbBuffer: ppbBuffer pcxRow: pcxRow
+	"Invoke the GetBufferedPaintBits() function of the module wrapped by the receiver.
+	Helpstring: Returns the target rectangle specified during BeginBufferedPaint.
+
+		HRESULT __stdcall GetBufferedPaintBits(
+			[in]HANDLE hBufferedPaint,
+			[out]RGBQUAD** ppbBuffer,
+			[out]int* pcxRow);"
+
+	<stdcall: hresult GetBufferedPaintBits handle RGBQUAD** sdword*>
+	^self invalidCall: _failureCode!
+
+getBufferedPaintDC: hBufferedPaint
+	"Invoke the GetBufferedPaintDC() function of the module wrapped by the receiver.
+	Helpstring: Returns the target rectangle specified during BeginBufferedPaint.
+
+		HDC __stdcall GetBufferedPaintDC(
+			[in]HANDLE hBufferedPaint);"
+
+	<stdcall: handle GetBufferedPaintDC handle>
+	^self invalidCall: _failureCode!
+
+getBufferedPaintTargetDC: hBufferedPaint
+	"Invoke the GetBufferedPaintTargetDC() function of the module wrapped by the receiver.
+	Helpstring: Returns the target rectangle specified during BeginBufferedPaint.
+
+		HDC __stdcall GetBufferedPaintTargetDC(
+			[in]HANDLE hBufferedPaint);"
+
+	<stdcall: handle GetBufferedPaintTargetDC handle>
+	^self invalidCall: _failureCode!
+
+getBufferedPaintTargetRect: hBufferedPaint prc: prc
+	"Invoke the GetBufferedPaintTargetRect() function of the module wrapped by the receiver.
+	Helpstring: Returns the target rectangle specified during BeginBufferedPaint.
+
+		HRESULT __stdcall GetBufferedPaintTargetRect(
+			[in]HANDLE hBufferedPaint,
+			[out, retval]RECT* prc);"
+
+	<stdcall: hresult GetBufferedPaintTargetRect handle RECT*>
 	^self invalidCall: _failureCode!
 
 getCurrentThemeName: pszThemeFileName cchMaxNameChars: cchMaxNameChars pszColorBuff: pszColorBuff cchMaxColorChars: cchMaxColorChars pszSizeBuff: pszSizeBuff cchMaxSizeChars: cchMaxSizeChars
@@ -902,6 +1048,15 @@ isAppThemed
 	<stdcall: bool IsAppThemed>
 	^self invalidCall: _failureCode!
 
+isCompositionActive
+	"Invoke the IsCompositionActive() function of the module wrapped by the receiver.
+	Helpstring: Tells if the DWM is running, and composition effects are possible for this process (themes are active).
+
+		BOOL __stdcall IsCompositionActive();"
+
+	<stdcall: bool IsCompositionActive>
+	^self invalidCall: _failureCode!
+
 isThemeActive
 	"Invoke the IsThemeActive() function of the module wrapped by the receiver.
 	Helpstring: Can be used to test if a system theme is active for the current user session.
@@ -948,14 +1103,12 @@ isThemePartDefined: htheme iPartId: iPartId iStateId: iStateId
 onExit
 	"Private - Perform any uninitialization required at system shutdown time"
 
-	"By default nothing is required"
-
-	!
+	self bufferedPaintUnInit!
 
 onStartup
 	"Private - Perform any initialization required at system startup time"
 
-	"By default no action is required"!
+	self bufferedPaintInit!
 
 openThemeData: hwnd pszClassList: pszClassList
 	"Invoke the OpenThemeData() function of the module wrapped by the receiver.
@@ -966,6 +1119,19 @@ openThemeData: hwnd pszClassList: pszClassList
 			[in]LPWSTR pszClassList);"
 
 	<stdcall: handle OpenThemeData handle lpwstr>
+	^self invalidCall: _failureCode!
+
+openThemeDataForDpi: hwnd pszClassList: pszClassList dpi: dpi
+	"Invoke the OpenThemeData() function of the module wrapped by the receiver.
+	Helpstring: Open the theme data for the specified HWND and semi-colon separated list of class names.
+
+		HTHEME __stdcall OpenThemeData(
+			[in]HWND HWND,
+			[in]LPWSTR pszClassList
+			[in]DWORD dpi
+		);"
+
+	<stdcall: handle OpenThemeDataForDpi handle lpwstr dword>
 	^self invalidCall: _failureCode!
 
 setThemeAppProperties: dwFlags
@@ -991,55 +1157,70 @@ setWindowTheme: hwnd pszSubAppName: pszSubAppName pszSubIdList: pszSubIdList
 	^self invalidCall: _failureCode! !
 
 !ThemeLibrary categoriesForMethods!
-closeThemeData:!**auto generated**!public! !
-drawThemeBackground:hdc:iPartId:iStateId:pRect:pClipRect:!**auto generated**!public! !
-drawThemeBackgroundEx:hdc:iPartId:iStateId:pRect:pOptions:!**auto generated**!public! !
-drawThemeEdge:hdc:iPartId:iStateId:pDestRect:uEdge:uFlags:pContentRect:!**auto generated**!public! !
-drawThemeIcon:hdc:iPartId:iStateId:pRect:himl:iImageIndex:!**auto generated**!public! !
-drawThemeParentBackground:hdc:prc:!**auto generated**!public! !
-drawThemeText:hdc:iPartId:iStateId:pszText:iCharCount:dwTextFlags:dwTextFlags2:pRect:!**auto generated**!public! !
-enableThemeDialogTexture:dwFlags:!**auto generated**!public! !
-enableTheming:!**auto generated**!public! !
-getCurrentThemeName:cchMaxNameChars:pszColorBuff:cchMaxColorChars:pszSizeBuff:cchMaxSizeChars:!**auto generated**!public! !
-getThemeAppProperties!**auto generated**!public! !
-getThemeBackgroundContentRect:hdc:iPartId:iStateId:pBoundingRect:pContentRect:!**auto generated**!public! !
-getThemeBackgroundExtent:hdc:iPartId:iStateId:pContentRect:pExtentRect:!**auto generated**!public! !
-getThemeBackgroundRegion:hdc:iPartId:iStateId:pRect:pRegion:!**auto generated**!public! !
-getThemeBool:iPartId:iStateId:iPropId:pfVal:!**auto generated**!public! !
-getThemeColor:iPartId:iStateId:iPropId:pColor:!**auto generated**!public! !
-getThemeDocumentationProperty:pszPropertyName:pszValueBuff:cchMaxValChars:!**auto generated**!public! !
-getThemeEnumValue:iPartId:iStateId:iPropId:piVal:!**auto generated**!public! !
-getThemeFilename:iPartId:iStateId:iPropId:pszThemeFileName:cchMaxBuffChars:!**auto generated**!public! !
-getThemeFont:hdc:iPartId:iStateId:iPropId:pFont:!**auto generated**!public! !
-getThemeInt:iPartId:iStateId:iPropId:piVal:!**auto generated**!public! !
-getThemeMargins:hdc:iPartId:iStateId:iPropId:prc:pMargins:!**auto generated**!public! !
-getThemeMetric:hdc:iPartId:iStateId:iPropId:piVal:!**auto generated**!public! !
-getThemePartSize:hdc:iPartId:iStateId:prc:eSize:psz:!**auto generated**!public! !
-getThemePosition:iPartId:iStateId:iPropId:pPoint:!**auto generated**!public! !
-getThemePropertyOrigin:iPartId:iStateId:iPropId:pOrigin:!**auto generated**!public! !
-getThemeRect:iPartId:iStateId:iPropId:pRect:!**auto generated**!public! !
-getThemeString:iPartId:iStateId:iPropId:pszBuff:cchMaxBuffChars:!**auto generated**!public! !
-getThemeSysBool:iBoolId:!**auto generated**!public! !
-getThemeSysColor:iColorId:!**auto generated**!public! !
-getThemeSysColorBrush:iColorId:!**auto generated**!public! !
-getThemeSysFont:iFontId:plf:!**auto generated**!public! !
-getThemeSysInt:iIntId:piValue:!**auto generated**!public! !
-getThemeSysSize:iSizeId:!**auto generated**!public! !
-getThemeSysString:iStringId:pszStringBuff:cchMaxStringChars:!**auto generated**!public! !
-getThemeTextExtent:hdc:iPartId:iStateId:pszText:iCharCount:dwTextFlags:pBoundingRect:pExtentRect:!**auto generated**!public! !
-getThemeTextMetrics:hdc:iPartId:iStateId:pTM:!**auto generated**!public! !
-getWindowTheme:!**auto generated**!public! !
-hitTestThemeBackground:hdc:iPartId:iStateId:dwOptions:pRect:hrgn:ptTest:pwHitTestCode:!**auto generated**!public! !
-isAppThemed!**auto generated**!public! !
-isThemeActive!**auto generated**!public! !
-isThemeBackgroundPartiallyTransparent:iPartId:iStateId:!**auto generated**!public! !
-isThemeDialogTextureEnabled:!**auto generated**!public! !
-isThemePartDefined:iPartId:iStateId:!**auto generated**!public! !
-onExit!private! !
-onStartup!private! !
-openThemeData:pszClassList:!**auto generated**!public! !
-setThemeAppProperties:!**auto generated**!public! !
-setWindowTheme:pszSubAppName:pszSubIdList:!**auto generated**!public! !
+beginBufferedAnimation:hdcTarget:prcTarget:dwFormat:pPaintParams:pAnimationParams:phdcFrom:phdcTo:!**auto generated**!public!win32 functions-visual styles! !
+beginBufferedPaint:prcTarget:dwFormat:pPaintParams:phDC:!**auto generated**!public!win32 functions-visual styles! !
+bufferedPaintClear:prc:!**auto generated**!public!win32 functions-visual styles! !
+bufferedPaintInit!**auto generated**!public!win32 functions-visual styles! !
+bufferedPaintRenderAnimation:hdcTarget:!**auto generated**!public!win32 functions-visual styles! !
+bufferedPaintSetAlpha:prc:alpha:!**auto generated**!public!win32 functions-visual styles! !
+bufferedPaintStopAllAnimations:!**auto generated**!public!win32 functions-visual styles! !
+bufferedPaintUnInit!public!win32 functions-visual styles! !
+closeThemeData:!public!win32 functions-visual styles! !
+drawThemeBackground:hdc:iPartId:iStateId:pRect:pClipRect:!**auto generated**!public!win32 functions-visual styles! !
+drawThemeBackgroundEx:hdc:iPartId:iStateId:pRect:pOptions:!**auto generated**!public!win32 functions-visual styles! !
+drawThemeEdge:hdc:iPartId:iStateId:pDestRect:uEdge:uFlags:pContentRect:!**auto generated**!public!win32 functions-visual styles! !
+drawThemeIcon:hdc:iPartId:iStateId:pRect:himl:iImageIndex:!**auto generated**!public!win32 functions-visual styles! !
+drawThemeParentBackground:hdc:prc:!**auto generated**!public!win32 functions-visual styles! !
+drawThemeText:hdc:iPartId:iStateId:pszText:iCharCount:dwTextFlags:dwTextFlags2:pRect:!**auto generated**!public!win32 functions-visual styles! !
+enableThemeDialogTexture:dwFlags:!**auto generated**!public!win32 functions-visual styles! !
+enableTheming:!**auto generated**!public!win32 functions-visual styles! !
+endBufferedPaint:fUpdateTarget:!**auto generated**!public!win32 functions-visual styles! !
+getBufferedPaintBits:ppbBuffer:pcxRow:!**auto generated**!public!win32 functions-visual styles! !
+getBufferedPaintDC:!**auto generated**!public!win32 functions-visual styles! !
+getBufferedPaintTargetDC:!**auto generated**!public!win32 functions-visual styles! !
+getBufferedPaintTargetRect:prc:!**auto generated**!public!win32 functions-visual styles! !
+getCurrentThemeName:cchMaxNameChars:pszColorBuff:cchMaxColorChars:pszSizeBuff:cchMaxSizeChars:!**auto generated**!public!win32 functions-visual styles! !
+getThemeAppProperties!**auto generated**!public!win32 functions-visual styles! !
+getThemeBackgroundContentRect:hdc:iPartId:iStateId:pBoundingRect:pContentRect:!**auto generated**!public!win32 functions-visual styles! !
+getThemeBackgroundExtent:hdc:iPartId:iStateId:pContentRect:pExtentRect:!**auto generated**!public!win32 functions-visual styles! !
+getThemeBackgroundRegion:hdc:iPartId:iStateId:pRect:pRegion:!**auto generated**!public!win32 functions-visual styles! !
+getThemeBool:iPartId:iStateId:iPropId:pfVal:!**auto generated**!public!win32 functions-visual styles! !
+getThemeColor:iPartId:iStateId:iPropId:pColor:!**auto generated**!public!win32 functions-visual styles! !
+getThemeDocumentationProperty:pszPropertyName:pszValueBuff:cchMaxValChars:!**auto generated**!public!win32 functions-visual styles! !
+getThemeEnumValue:iPartId:iStateId:iPropId:piVal:!**auto generated**!public!win32 functions-visual styles! !
+getThemeFilename:iPartId:iStateId:iPropId:pszThemeFileName:cchMaxBuffChars:!**auto generated**!public!win32 functions-visual styles! !
+getThemeFont:hdc:iPartId:iStateId:iPropId:pFont:!**auto generated**!public!win32 functions-visual styles! !
+getThemeInt:iPartId:iStateId:iPropId:piVal:!**auto generated**!public!win32 functions-visual styles! !
+getThemeMargins:hdc:iPartId:iStateId:iPropId:prc:pMargins:!**auto generated**!public!win32 functions-visual styles! !
+getThemeMetric:hdc:iPartId:iStateId:iPropId:piVal:!**auto generated**!public!win32 functions-visual styles! !
+getThemePartSize:hdc:iPartId:iStateId:prc:eSize:psz:!**auto generated**!public!win32 functions-visual styles! !
+getThemePosition:iPartId:iStateId:iPropId:pPoint:!**auto generated**!public!win32 functions-visual styles! !
+getThemePropertyOrigin:iPartId:iStateId:iPropId:pOrigin:!**auto generated**!public!win32 functions-visual styles! !
+getThemeRect:iPartId:iStateId:iPropId:pRect:!**auto generated**!public!win32 functions-visual styles! !
+getThemeString:iPartId:iStateId:iPropId:pszBuff:cchMaxBuffChars:!**auto generated**!public!win32 functions-visual styles! !
+getThemeSysBool:iBoolId:!**auto generated**!public!win32 functions-visual styles! !
+getThemeSysColor:iColorId:!**auto generated**!public!win32 functions-visual styles! !
+getThemeSysColorBrush:iColorId:!**auto generated**!public!win32 functions-visual styles! !
+getThemeSysFont:iFontId:plf:!**auto generated**!public!win32 functions-visual styles! !
+getThemeSysInt:iIntId:piValue:!**auto generated**!public!win32 functions-visual styles! !
+getThemeSysSize:iSizeId:!**auto generated**!public!win32 functions-visual styles! !
+getThemeSysString:iStringId:pszStringBuff:cchMaxStringChars:!**auto generated**!public!win32 functions-visual styles! !
+getThemeTextExtent:hdc:iPartId:iStateId:pszText:iCharCount:dwTextFlags:pBoundingRect:pExtentRect:!**auto generated**!public!win32 functions-visual styles! !
+getThemeTextMetrics:hdc:iPartId:iStateId:pTM:!**auto generated**!public!win32 functions-visual styles! !
+getWindowTheme:!**auto generated**!public!win32 functions-visual styles! !
+hitTestThemeBackground:hdc:iPartId:iStateId:dwOptions:pRect:hrgn:ptTest:pwHitTestCode:!**auto generated**!public!win32 functions-visual styles! !
+isAppThemed!**auto generated**!public!win32 functions-visual styles! !
+isCompositionActive!**auto generated**!public!win32 functions-visual styles! !
+isThemeActive!**auto generated**!public!win32 functions-visual styles! !
+isThemeBackgroundPartiallyTransparent:iPartId:iStateId:!**auto generated**!public!win32 functions-visual styles! !
+isThemeDialogTextureEnabled:!**auto generated**!public!win32 functions-visual styles! !
+isThemePartDefined:iPartId:iStateId:!**auto generated**!public!win32 functions-visual styles! !
+onExit!event handling!private! !
+onStartup!event handling!private! !
+openThemeData:pszClassList:!**auto generated**!public!win32 functions-visual styles! !
+openThemeDataForDpi:pszClassList:dpi:!**auto generated**!public!win32 functions-visual styles! !
+setThemeAppProperties:!**auto generated**!public!win32 functions-visual styles! !
+setWindowTheme:pszSubAppName:pszSubIdList:!**auto generated**!public!win32 functions-visual styles! !
 !
 
 !ThemeLibrary class methodsFor!
@@ -1055,7 +1236,7 @@ isAppThemed
 
 new
 	^(SystemMetrics current hasThemes 
-		ifTrue: [SystemMetrics current hasEnhancedThemes ifTrue: [VistaThemeLibrary] ifFalse: [self]]
+		ifTrue: [self]
 		ifFalse: [MockThemeLibrary]) basicNew!
 
 onStartup2

@@ -2,7 +2,7 @@
 
 Object subclass: #SystemMetrics
 	instanceVariableNames: 'dpi menuCheckExtent smallIconExtent largeIconExtent dragHysteresis scrollThumbExtent sizingFrameExtent dialogFrameExtent borderExtent nonClientMetrics menuFont edgeExtent iconTitleFont defaultColorDepth tileIconExtent'
-	classVariableNames: 'Current Default HasFlatMenus HasIconScaleDown Instances IsNotWine IsVistaOrLater MouseHoverTime SysParamVariables WheelScrollLines'
+	classVariableNames: 'Current Default HasFlatMenus Instances IsNotWine MouseHoverTime SysParamVariables WheelScrollLines'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 
@@ -154,21 +154,6 @@ getSysParamForDpi: anInteger type: anExternalStructureClass ifError: aNiladicVal
 		dpi: dpi) ifFalse: [^aNiladicValuable value].
 	^struct value!
 
-hasButtonNotes
-	"Answer whether the host supports 'notes' for link buttons."
-
-	^IsVistaOrLater!
-
-hasDesktopComposition
-	"Answer whether the host supports off-screen desktop composition,"
-
-	^IsVistaOrLater!
-
-hasEnhancedThemes
-	"Answer whether the host supports enhanced desktop themes (Vista and later)."
-
-	^IsVistaOrLater!
-
 hasFlatMenus
 	"Answer whether the host menu style is 'flat'"
 
@@ -185,7 +170,7 @@ hasGdiPalettes
 hasIconScaleDown
 	"Answer whether the host supports scaling down of larger icons when the requested size is not available (as opposed to scaling up)."
 
-	^HasIconScaleDown!
+	^IsNotWine!
 
 hasImageListDragCursors
 	"Answer whether the host supports using image lists for drag cursors."
@@ -194,18 +179,6 @@ hasImageListDragCursors
 
 	#wineFix.
 	^IsNotWine!
-
-hasLinkButtons
-	"Answer whether the host supports link buttons (i.e. push buttons with the BS_COMMANDLINK
-	style)."
-
-	^IsVistaOrLater!
-
-hasMenuBitmaps
-	"Answer whether the host support direct setting of menu bitmaps through the menu item info
-	structure. If false they have to be provided through a callback."
-
-	^IsVistaOrLater!
 
 hasSmoothScrollingLists
 	"Answer whether the host supports smooth (as opposed to jump) scrolling of lists."
@@ -227,11 +200,6 @@ hasThemes
 
 	#wineFix.
 	^IsNotWine!
-
-hasTreeViewHotTracking
-	"Does the host support hot tracking in tree views?"
-
-	^IsVistaOrLater!
 
 hasWebView
 	"Answer whether the host provides a WebView2 Edge Browser control."
@@ -443,19 +411,13 @@ getSysParam:type:ifError:!helpers!private! !
 getSysParamBool:!helpers!private! !
 getSysParamDword:ifError:!helpers!private! !
 getSysParamForDpi:type:ifError:!helpers!private! !
-hasButtonNotes!capability enquiries!public! !
-hasDesktopComposition!capability enquiries!public! !
-hasEnhancedThemes!capability enquiries!public! !
 hasFlatMenus!capability enquiries!public! !
 hasGdiPalettes!capability enquiries!public! !
 hasIconScaleDown!capability enquiries!public! !
 hasImageListDragCursors!capability enquiries!public! !
-hasLinkButtons!capability enquiries!public! !
-hasMenuBitmaps!capability enquiries!public! !
 hasSmoothScrollingLists!capability enquiries!public! !
 hasTextBoxMargins!capability enquiries!public! !
 hasThemes!capability enquiries!public! !
-hasTreeViewHotTracking!capability enquiries!public! !
 hasWebView!capability enquiries!public! !
 iconTitleFont!geometry!public! !
 iconTitleFont:!geometry!private! !
@@ -498,10 +460,7 @@ wheelScrollLines!constants!public! !
 !SystemMetrics class methodsFor!
 
 cacheDpiIndependentSettings
-	IsVistaOrLater := VMLibrary default isWindowsVistaOrGreater.
-	IsNotWine := NTLibrary isWine not.
-	"Wine does not support the CommCtrlLibrary>>loadIconWithScaleDown:&c method which is normally available under Vista and later. Hence we don't allow this to be called even if the Windows version indicates Vista is available."
-	HasIconScaleDown := IsVistaOrLater & IsNotWine!
+	IsNotWine := NTLibrary isWine not!
 
 current
 	"Answer the current instance of the receiver. This provides metrics at the system DPI setting."
@@ -518,7 +477,7 @@ forDpi: anInteger
 
 	^(Instances lookup: anInteger)
 		ifNil: 
-			[IsVistaOrLater ifNil: [self cacheDpiIndependentSettings].
+			[IsNotWine ifNil: [self cacheDpiIndependentSettings].
 			Instances at: anInteger put: (self newForDpi: anInteger)]!
 
 initialize
@@ -558,7 +517,7 @@ onSettingChanged: anArray
 reset
 	"Reinitialize the receiver. This is done on startup (see UserLibrary class>>clear) or when system settings are changed."
 
-	Default := Current := IsVistaOrLater := IsNotWine := HasIconScaleDown := nil.
+	Default := Current := IsNotWine := nil.
 	SysParamVariables do: [:each | each value: nil].
 	Instances := IdentityDictionary new!
 

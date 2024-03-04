@@ -233,7 +233,7 @@ setDefault: aBoolean
 
 setNote
 	| text |
-	(self style = #link and: [self metrics hasButtonNotes]) ifFalse: [^self].
+	self style = #link ifFalse: [^self].
 	text := self note asUtf16String.
 	(self
 		sendMessage: BCM_SETNOTE

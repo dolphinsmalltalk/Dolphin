@@ -83,8 +83,14 @@ package methodNames
 	add: #StatusBarItemAbstract -> #beFullWidth;
 	add: #STBViewProxy -> #for:;
 	add: #SystemColor -> #asIndexedColor;
+	add: #SystemMetrics -> #hasButtonNotes;
+	add: #SystemMetrics -> #hasDesktopComposition;
+	add: #SystemMetrics -> #hasEnhancedThemes;
 	add: #SystemMetrics -> #hasFlashWindow;
+	add: #SystemMetrics -> #hasLinkButtons;
+	add: #SystemMetrics -> #hasMenuBitmaps;
 	add: #SystemMetrics -> #hasMenuImages;
+	add: #SystemMetrics -> #hasTreeViewHotTracking;
 	add: #TextEdit -> #find:range:down:wholeWord:matchCase:;
 	add: #TextEdit -> #findNextWrapped:down:wholeWord:matchCase:;
 	add: #TextEdit -> #isLowercase;
@@ -1004,21 +1010,65 @@ fromId:!instance creation!public! !
 
 !SystemMetrics methodsFor!
 
+hasButtonNotes
+	"Answer whether the host supports 'notes' for link buttons."
+
+	#deprecated.	"Introduced in Vista, so long since available on all supported platforms"
+	^true!
+
+hasDesktopComposition
+	"Answer whether the host supports off-screen desktop composition,"
+
+	#deprecated.	"Introduced in Vista, so long since available on all supported platforms"
+	^true!
+
+hasEnhancedThemes
+	"Answer whether the host supports enhanced desktop themes (Vista and later)."
+
+	#deprecated.	"Introduced in Vista, so long since available on all supported platforms"
+	^true!
+
 hasFlashWindow
 	"Answer whether the host supports the FlashWindowEx API."
 
 	#deprecated.
 	^true!
 
+hasLinkButtons
+	"Answer whether the host supports link buttons (i.e. push buttons with the BS_COMMANDLINK
+	style)."
+
+	#deprecated.	"Introduced in Vista, so long since available on all supported platforms"
+	^true!
+
+hasMenuBitmaps
+	"Answer whether the host support direct setting of menu bitmaps through the menu item info
+	structure. If false they have to be provided through a callback."
+
+	#deprecated.	"Introduced in Vista, so long since available on all supported platforms"
+	^true!
+
 hasMenuImages
 	"Answer whether the host supports images on menus."
 
 	#deprecated. "We no longer support OSs earlier than Vista, let alone XP."
+	^true!
+
+hasTreeViewHotTracking
+	"Does the host support hot tracking in tree views?"
+
+	#deprecated.	"Introduced in Vista, so long since available on all supported platforms"
 	^true! !
 
 !SystemMetrics categoriesForMethods!
+hasButtonNotes!capability enquiries!public! !
+hasDesktopComposition!capability enquiries!public! !
+hasEnhancedThemes!capability enquiries!public! !
 hasFlashWindow!capability enquiries!public! !
+hasLinkButtons!capability enquiries!public! !
+hasMenuBitmaps!capability enquiries!public! !
 hasMenuImages!capability enquiries!public! !
+hasTreeViewHotTracking!capability enquiries!public! !
 !
 
 !TextEdit methodsFor!

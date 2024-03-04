@@ -370,28 +370,24 @@ isWindowsVersionOrGreater: wMajorVersion wMinorVersion: wMinorVersion wServicePa
 								condition: VER_GREATER_EQUAL])!
 
 isWindowsVistaOrGreater
-	^self
-		isWindowsVersionOrGreater: 6
-		wMinorVersion: 0
-		wServicePackMajor: 0!
+	"This must be the case. Only Windows 10 and later are supported now."
+
+	^true!
 
 isWindowsVistaSP1OrGreater
-	^self
-		isWindowsVersionOrGreater: 6
-		wMinorVersion: 0
-		wServicePackMajor: 1!
+	"This must be the case. Only Windows 10 and later are supported now."
+
+	^true!
 
 isWindowsVistaSP2OrGreater
-	^self
-		isWindowsVersionOrGreater: 6
-		wMinorVersion: 0
-		wServicePackMajor: 2!
+	"This must be the case. Only Windows 10 and later are supported now."
+
+	^true!
 
 isWindowsXPOrGreater
-	^self
-		isWindowsVersionOrGreater: 5
-		wMinorVersion: 1
-		wServicePackMajor: 0!
+	"This must be the case. Only Windows 10 and later are supported now."
+
+	^true!
 
 kernelHandle
 	"Private - Answer the handle of the KernelLibrary. This cannot be obtained in the normal way

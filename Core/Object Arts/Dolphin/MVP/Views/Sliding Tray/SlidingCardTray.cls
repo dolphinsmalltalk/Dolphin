@@ -43,8 +43,25 @@ captionGeometryChanged
 edgeExtent
 	^2 @ 2!
 
+getThemePinSize
+	#highDpiTodo.	"Pin size from theme doesn't scale with DPI - always 16@16. Might change with per-monitor DPI awareness, so re-evalulate then."
+	^(false and: [self isThemed])
+		ifTrue: 
+			[| pt |
+			pt := POINTL newBuffer.
+			ThemeLibrary default
+				getThemePartSize: self theme
+				hdc: nil
+				iPartId: EBP_HEADERPIN
+				iStateId: EBHP_NORMAL
+				prc: nil
+				eSize: TS_TRUE
+				psz: pt.
+			pt asObject]
+		ifFalse: [self metrics smallIconExtent]!
+
 headerHeight
-	^pinSize y + 2!
+	^self pinSize y + 2!
 
 headerRectangle
 	| rect |
@@ -146,18 +163,7 @@ onViewDestroyed
 	self freeTheme!
 
 openTheme
-	pinSize := self metrics smallIconExtent asParameter.
-	self isThemed
-		ifTrue: 
-			[ThemeLibrary default
-				getThemePartSize: self theme
-				hdc: nil
-				iPartId: EBP_HEADERPIN
-				iStateId: EBHP_NORMAL
-				prc: nil
-				eSize: TS_TRUE
-				psz: pinSize].
-	pinSize := pinSize asObject!
+	pinSize := self getThemePinSize!
 
 paintClassicBackgroundOn: aCanvas
 	aCanvas fillRectangle: self headerRectangle color: Color inactiveCaption!
@@ -241,11 +247,15 @@ pinInset
 	^2 @ 1!
 
 pinRectangle
-	| insetRect |
+	| insetRect pinExt |
 	insetRect := self headerRectangle insetBy: self pinInset.
-	^(self isVertical and: [self isInverted]) 
-		ifTrue: [insetRect origin extent: pinSize]
-		ifFalse: [(insetRect right - pinSize x) @ insetRect top extent: pinSize]!
+	pinExt := self pinSize.
+	^(self isVertical and: [self isInverted])
+		ifTrue: [insetRect origin extent: pinExt]
+		ifFalse: [(insetRect right - pinExt x) @ insetRect top extent: pinExt]!
+
+pinSize
+	^pinSize ifNil: [pinSize := self getThemePinSize]!
 
 pinStateId
 	^self isPinned 
@@ -260,7 +270,7 @@ pinStateId
 
 resolutionScaledBy: aPoint
 	super resolutionScaledBy: aPoint.
-	pinSize := pinSize * aPoint!
+	pinSize := nil!
 
 setSlider: aSlideyInneyOuteyThing 
 	slider := aSlideyInneyOuteyThing.
@@ -357,6 +367,7 @@ calcClientRectangleFromRectangle:!event handling-win32!private! !
 calculateExtent:!geometry!private! !
 captionGeometryChanged!event handling!private! !
 edgeExtent!constants!private! !
+getThemePinSize!helpers!private! !
 headerHeight!constants!private! !
 headerRectangle!painting!private! !
 hitTest:!painting!private! !
@@ -384,6 +395,7 @@ paintThemedPinOn:!painting!private! !
 pinImageList!accessing!private! !
 pinInset!constants!private! !
 pinRectangle!accessing!private! !
+pinSize!accessing!private! !
 pinStateId!accessing!private! !
 resolutionScaledBy:!geometry!private! !
 setSlider:!initializing!private! !

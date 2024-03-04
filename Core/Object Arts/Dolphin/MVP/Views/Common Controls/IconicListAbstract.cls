@@ -735,7 +735,7 @@ stbSaveOn: anSTBOutFiler
 	^super stbSaveOn: anSTBOutFiler!
 
 themeSubAppName
-	^SystemMetrics current hasEnhancedThemes ifTrue: ['explorer'] ifFalse: [super themeSubAppName]!
+	^'explorer'!
 
 viewMode
 	"Answer the symbolic name of the receiver's current view mode."

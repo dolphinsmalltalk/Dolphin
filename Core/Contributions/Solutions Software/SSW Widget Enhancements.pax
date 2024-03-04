@@ -41,6 +41,8 @@ package methodNames
 	add: #SystemMetrics -> #hasListViewAlphaBlendedHighlights;
 	add: #SystemMetrics -> #hasListViewHotTracking;
 	add: #TextEdit -> #hasCueBanner;
+	add: #ThemeLibrary -> #endBufferedAnimation:fUpdateTarget:;
+	add: #ThemeLibrary -> #getThemeTransitionDuration:iPartId:iStateIdFrom:iStateIdTo:iPropId:pdwDuration:;
 	add: #Toolbar -> #addItem:after:;
 	add: #Toolbar -> #addItem:before:;
 	add: #Toolbar -> #itemWithCommand:;
@@ -55,8 +57,6 @@ package methodNames
 	add: #View -> #shouldShowFocusRect:;
 	add: #View -> #shouldShowKeyboardAccelerators;
 	add: #View -> #tabPrevious;
-	add: #VistaThemeLibrary -> #endBufferedAnimation:fUpdateTarget:;
-	add: #VistaThemeLibrary -> #getThemeTransitionDuration:iPartId:iStateIdFrom:iStateIdTo:iPropId:pdwDuration:;
 	add: #WinImageList -> #draw:on:at:extent:backcolor:forecolor:flags:;
 	add: 'Color class' -> #buttonShadow;
 	yourself.
@@ -399,12 +399,12 @@ wmNotify:wParam:lParam:!event handling-win32!private! !
 hasListViewAlphaBlendedHighlights
 	"Does the host support alpha-blended list view selection highlights?"
 
-	^IsVistaOrLater!
+	^VMLibrary default isWindowsVistaOrGreater!
 
 hasListViewHotTracking
 	"Does the host support hot tracking in list views?"
 
-	^IsVistaOrLater! !
+	^VMLibrary default isWindowsVistaOrGreater! !
 
 !SystemMetrics categoriesForMethods!
 hasListViewAlphaBlendedHighlights!capability enquiries!public! !
@@ -426,6 +426,37 @@ hasCueBanner
 
 !TextEdit categoriesForMethods!
 hasCueBanner!public!testing! !
+!
+
+!ThemeLibrary methodsFor!
+
+endBufferedAnimation: hBufferedPaint fUpdateTarget: fUpdateTarget
+	"Invoke the EndBufferedAnimation() function of the module wrapped by the receiver.
+	Helpstring: Ends a buffered animation operation.
+
+		HRESULT __stdcall EndBufferedAnimation(
+			[in]HANDLE hBufferedPaint,
+			[in]BOOL fUpdateTarget);"
+
+	<stdcall: hresult EndBufferedAnimation handle bool>
+	^self invalidCall: _failureCode!
+
+getThemeTransitionDuration: htheme iPartId: iPartId iStateIdFrom: iStateIdFrom iStateIdTo: iStateIdTo iPropId: iPropId pdwDuration: pdwDuration
+	"Gets the duration for the specified transition.
+	HRESULT GetThemeTransitionDuration(
+		HTHEME hTheme,
+		int    iPartId,
+		int    iStateIdFrom,
+		int    iStateIdTo,
+		int    iPropId,
+	_Out_ DWORD  *pdwDuration
+	);"
+
+	<stdcall: hresult GetThemeTransitionDuration handle sdword sdword sdword sdword sdword*>
+	^self invalidCall: _failureCode! !
+!ThemeLibrary categoriesForMethods!
+endBufferedAnimation:fUpdateTarget:!public! !
+getThemeTransitionDuration:iPartId:iStateIdFrom:iStateIdTo:iPropId:pdwDuration:!public! !
 !
 
 !Toolbar methodsFor!
@@ -570,38 +601,6 @@ shouldShowFocusRect!public!testing! !
 shouldShowFocusRect:!public!testing! !
 shouldShowKeyboardAccelerators!public!testing! !
 tabPrevious!commands!public! !
-!
-
-!VistaThemeLibrary methodsFor!
-
-endBufferedAnimation: hBufferedPaint fUpdateTarget: fUpdateTarget
-	"Invoke the EndBufferedAnimation() function of the module wrapped by the receiver.
-	Helpstring: Ends a buffered animation operation.
-
-		HRESULT __stdcall EndBufferedAnimation(
-			[in]HANDLE hBufferedPaint,
-			[in]BOOL fUpdateTarget);"
-
-	<stdcall: hresult EndBufferedAnimation handle bool>
-	^self invalidCall: _failureCode!
-
-getThemeTransitionDuration: htheme iPartId: iPartId iStateIdFrom: iStateIdFrom iStateIdTo: iStateIdTo iPropId: iPropId pdwDuration: pdwDuration
-	"Gets the duration for the specified transition.
-	HRESULT GetThemeTransitionDuration(
-		HTHEME hTheme,
-		int    iPartId,
-		int    iStateIdFrom,
-		int    iStateIdTo,
-		int    iPropId,
-	_Out_ DWORD  *pdwDuration
-	);"
-
-	<stdcall: hresult GetThemeTransitionDuration handle sdword sdword sdword sdword sdword*>
-	^self invalidCall: _failureCode! !
-
-!VistaThemeLibrary categoriesForMethods!
-endBufferedAnimation:fUpdateTarget:!public! !
-getThemeTransitionDuration:iPartId:iStateIdFrom:iStateIdTo:iPropId:pdwDuration:!public! !
 !
 
 !WinImageList methodsFor!

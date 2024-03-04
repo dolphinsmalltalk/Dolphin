@@ -215,7 +215,6 @@ package classNames
 	add: #View;
 	add: #ViewState;
 	add: #VirtualColor;
-	add: #VistaThemeLibrary;
 	add: #WindowCreationParameters;
 	add: #WINDOWPLACEMENT;
 	add: #WINDOWPOS;
@@ -580,7 +579,7 @@ Object subclass: #Presenter
 
 Object subclass: #SystemMetrics
 	instanceVariableNames: 'dpi menuCheckExtent smallIconExtent largeIconExtent dragHysteresis scrollThumbExtent sizingFrameExtent dialogFrameExtent borderExtent nonClientMetrics menuFont edgeExtent iconTitleFont defaultColorDepth tileIconExtent'
-	classVariableNames: 'Current Default HasFlatMenus HasIconScaleDown Instances IsNotWine IsVistaOrLater MouseHoverTime SysParamVariables WheelScrollLines'
+	classVariableNames: 'Current Default HasFlatMenus Instances IsNotWine MouseHoverTime SysParamVariables WheelScrollLines'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 
@@ -825,12 +824,6 @@ PermanentLibrary subclass: #GDILibrary
 	classInstanceVariableNames: ''!
 
 ThemeLibrary subclass: #MockThemeLibrary
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-ThemeLibrary subclass: #VistaThemeLibrary
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
