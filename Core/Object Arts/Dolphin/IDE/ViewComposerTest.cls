@@ -211,7 +211,7 @@ testIgnoreShellPreferredExtent
 	self assert: vc composingView usePreferredExtent.
 	"If this test fails check to see that ShellView>>resourcce_Default_view does indeed have an
 	extent of 600@400 when saved by the VC"
-	self assert: vc composingView extent equals: 600 @ 400!
+	self assert: vc composingView dipExtent equals: 600 @ 400!
 
 testNoDragResourceOverInUseArena
 	| session toolbox |

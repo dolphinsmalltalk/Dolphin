@@ -57,10 +57,10 @@ x: anInteger
 
 	bytes sdwordAtOffset: _OffsetOf_x put: anInteger!
 
-x: xInteger y: yInteger
+x: xNumber y: yNumber
 	bytes
-		sdwordAtOffset: _OffsetOf_x put: xInteger;
-		sdwordAtOffset: _OffsetOf_y put: yInteger.
+		sdwordAtOffset: _OffsetOf_x put: xNumber asInteger;
+		sdwordAtOffset: _OffsetOf_y put: yNumber asInteger.
 	^self!
 
 y
@@ -115,8 +115,8 @@ x: x y: y
 
 	^self basicNew 
 		bytes: ((ByteArray newFixed: 8)
-				sdwordAtOffset: _OffsetOf_x put: x;
-				sdwordAtOffset: _OffsetOf_y put: y;
+				sdwordAtOffset: _OffsetOf_x put: x asInteger;
+				sdwordAtOffset: _OffsetOf_y put: y asInteger;
 				yourself)
 ! !
 

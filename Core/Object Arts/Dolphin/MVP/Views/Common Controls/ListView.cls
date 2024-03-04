@@ -2226,7 +2226,7 @@ tileIconMode
 	self viewMode: #tileIcons!
 
 topIndex
-	^self lvmGetTopIndex + 1!
+	^(self sendMessage: LVM_GETTOPINDEX) + 1!
 
 updateAllNonVirtual
 	"Private - Update the text and images the list view stores for each item in this non-virtual list."
