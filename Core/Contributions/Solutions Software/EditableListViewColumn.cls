@@ -59,7 +59,7 @@ createEditorIn: aView
 
 customDrawIcon: aContext
 
-	| image iSubItem imageRect canvas origin |
+	| image iSubItem imageRect canvas origin iconSize |
 
 	self hasColumnImage ifFalse: [^self].
 
@@ -81,8 +81,9 @@ customDrawIcon: aContext
 
 	image isNil ifTrue: [^self].
 
-	origin := imageRect origin + ((imageRect extent - Icon smallExtent) // 2) + (self parent columnImagePadding@0).
-	(self parent imageManager imageListWithExtent: Icon smallExtent) draw: image on: canvas at: origin flags: 0.
+	iconSize := aContext metrics smallIconExtent.
+	origin := imageRect origin + ((imageRect extent - iconSize) // 2) + (self parent columnImagePadding@0).
+	(self parent imageManager imageListWithExtent: iconSize) draw: image on: canvas at: origin flags: 0.
 
 	canvas free!
 

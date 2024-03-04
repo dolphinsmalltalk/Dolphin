@@ -817,7 +817,7 @@ singleSelect: anInteger
 smallImageExtent
 	"Private - Answer the value of the receiver's 'smallImageExtent' instance variable."
 
-	^smallImageExtent ifNil: [Icon smallExtent]!
+	^smallImageExtent ifNil: [self metrics smallIconExtent]!
 
 smallImageExtent: anObject
 	"Private - Set the value of the receiver's 'smallImageExtent' instance variable to the argument."

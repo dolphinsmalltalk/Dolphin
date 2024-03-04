@@ -170,9 +170,10 @@ extent
 	the ICONINFO in order to release the bmp's."
 
 	| info extent |
-	self isRealized ifFalse: [
-		"We always do the default load at 32x32. Other sizes are loaded on request."
-		^self class largeExtent].
+	self isRealized
+		ifFalse: 
+			["We always do the default load at 32x32. Other sizes are loaded on request."
+			^self class defaultExtent].
 	info := self getIconInfo.
 	extent := info extent.
 	info free.
@@ -362,8 +363,7 @@ defaultApplication
 defaultExtent
 	"Answer a Point that gives the dimensions of a standard size icon at the current system DPI."
 
-	^self largeExtent
-!
+	^SystemMetrics current largeIconExtent!
 
 error
 	"Answer a new instance of the default system 'error' icon (used in serious warning messages)"
@@ -374,11 +374,6 @@ exclamation
 	"Answer a new instance of the Exclamation mark icon (used in warning messages)"
 
 	^self warning!
-
-extraLargeExtent
-	"Answer a <Point> that gives the dimensions of an extra large size icon."
-
-	^SystemMetrics current extraLargeIconExtent!
 
 filesType
 	"Private - Answer a two element array suitable for adding to the FileDialog
@@ -407,12 +402,6 @@ information
 
 	^Information ifNil: [Information := self fromSystemId: IDI_INFORMATION]!
 
-largeExtent
-	"Answer a <Point> that gives the dimensions of a standard size icon.
-	Note that this will have been rescaled to the system (primary monitor) DPI. The baseline at 96-dpi is 32@32, so as an example at 120dpi/125% it will be 40@40."
-
-	^SystemMetrics current largeIconExtent!
-
 null
 	^NullIcon current!
 
@@ -433,17 +422,6 @@ question
 	"N.B. It is imperative that this always loads, as it is used to provide the handle for any icon that fails to load!!"
 
 	^Question ifNil: [Question := self fromSystemId: IDI_QUESTION]!
-
-smallExtent
-	"Answer a <Point> that gives the dimensions of a small size icon. 
-	Note that this will have been rescaled to the system (primary monitor) DPI. The baseline at 96-dpi is 16@16, so as an example at 120dpi/125% it will be 20@20."
-
-	^SystemMetrics current smallIconExtent!
-
-tileExtent
-	"Answer a Point that gives the dimensions of a tile size icon."
-
-	^SystemMetrics current tileIconExtent!
 
 uninitialize
 	"Uninitialize the class variables of the receiver."
@@ -469,19 +447,15 @@ defaultApplication!instance creation!public! !
 defaultExtent!constants!public! !
 error!instance creation!public! !
 exclamation!instance creation!public! !
-extraLargeExtent!constants!public! !
 filesType!constants!private! !
 hand!instance creation!public! !
 icon!constants!public! !
 imageManager!accessing!public! !
 information!instance creation!public! !
-largeExtent!constants!public! !
 null!instance creation!public! !
 onPreStripImage!class hierarchy-removing!private! !
 onStartup2!event handling!private! !
 question!instance creation!public! !
-smallExtent!constants!public! !
-tileExtent!constants!public! !
 uninitialize!class hierarchy-removing!private! !
 warning!instance creation!public! !
 window!instance creation!public! !

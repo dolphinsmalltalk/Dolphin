@@ -173,6 +173,11 @@ lParam
 
 	^bytes uintPtrAtOffset: _OffsetOf_lParam!
 
+metrics
+	"Answer the <SystemMetrics> applicable in this custom drawing context."
+
+	^view metrics!
+
 rc
 	"Answer the <RECT> value of the receiver's 'rc' field."
 
@@ -219,6 +224,7 @@ item!accessing!public! !
 item:!accessing!private! !
 itemHandle!accessing!private! !
 lParam!**compiled accessors**!public! !
+metrics!accessing!public! !
 rc!**compiled accessors**!public! !
 uItemState!**compiled accessors**!public! !
 view!accessing!public! !
