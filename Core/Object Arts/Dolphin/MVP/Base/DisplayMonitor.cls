@@ -184,6 +184,20 @@ resolution
 
 	^resolution ifNil: [resolution := self getResolution: MDT_DEFAULT]!
 
+scaleFactor
+	"Answer the scale factor for this monitor."
+
+	^self scalePercentage / 100!
+
+scalePercentage
+	"Answer the scale factor for this monitor. This is the percentage scaling, so for example 125 indicates 1.25x scalling or 120-dpi."
+
+	| factor |
+	#highDpiTodo.	"What does this return for custom scale factors?"
+	factor := ByteArray newFixed: 4.
+	SHCoreLibrary default getScaleFactorForMonitor: handle pScale: factor.
+	^factor sdwordAtOffset: 0!
+
 workArea
 	"Answer a <rectangle> which is the desktop area displayed by this monitor, excluding any areas used by the window manager, such as the taskbar. Note that the origin can be negative for displays other than the primary that are organised to be right of the primary."
 
@@ -216,6 +230,8 @@ origin!accessing!public! !
 printOn:!printing!public! !
 rectangle!accessing!public! !
 resolution!geometry!public! !
+scaleFactor!geometry!public! !
+scalePercentage!geometry!public! !
 workArea!accessing!public! !
 !
 
