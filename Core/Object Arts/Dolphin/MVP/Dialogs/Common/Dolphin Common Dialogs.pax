@@ -95,8 +95,8 @@ NMHDR subclass: #OFNOTIFYW
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ValueDialog subclass: #CommonDialog
-	instanceVariableNames: 'winStruct hook'
-	classVariableNames: ''
+	instanceVariableNames: 'winStruct hook positioning'
+	classVariableNames: 'CreateCenteredMask'
 	poolDictionaries: 'CommonDialogConstants Win32Constants'
 	classInstanceVariableNames: 'hookHandlers'!
 CommonDialog subclass: #ColorDialog

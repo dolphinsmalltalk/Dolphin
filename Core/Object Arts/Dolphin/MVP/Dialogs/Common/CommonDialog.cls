@@ -1,8 +1,8 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 ValueDialog subclass: #CommonDialog
-	instanceVariableNames: 'winStruct hook'
-	classVariableNames: ''
+	instanceVariableNames: 'winStruct hook positioning'
+	classVariableNames: 'CreateCenteredMask'
 	poolDictionaries: 'CommonDialogConstants Win32Constants'
 	classInstanceVariableNames: 'hookHandlers'!
 CommonDialog guid: (GUID fromString: '{87b4c6a8-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -56,6 +56,16 @@ createHook
 								with: lParam) asUIntPtr]]
 				argumentTypes: 'handle dword uintptr uintptr']!
 
+dialogView
+	"Answer a <View> wrapping the actual dialog."
+
+	^self view!
+
+extent
+	"Answer a <Point> representing the pixel extent of the receiver's view."
+
+	^self dialogView extent!
+
 extractResult: apiResult
 	"Private - Extract and apply the result from the parameter structure 
 	passed to the Win32 API associated with this common dialog, immediately 
@@ -67,15 +77,38 @@ initialize
 	"Private - Initialize the receiver"
 
 	winStruct := self winStructClass new.
-	super initialize.
+	positioning := #centerOwner.
+	super initialize!
 
-!
+initialPositioning
+	"Answer the inital positioning used to place the dialog when opened, one of:
+		- #system, let Windows decide
+		- #centerOwner, centre over the owner window
+		- #centerMonitor, centre on the monitor of the owner window
+		- #centerMouse, centre over the mouse position"
+
+	^positioning!
+
+initialPositioning: aSymbol
+	"Set the inital positioning used to place the dialog when opened. See #initialPositioning for the list of options."
+
+	positioning := aSymbol!
 
 ownerView: aView
 	"Private - Set the receivers ownerView to aView."
 
 	super ownerView: aView.
 	self winStruct ownerView: aView.!
+
+position
+	"Answer a <Point> representing the screen position of the receiver's view."
+
+	^self dialogView getWindowRect topLeft!
+
+position: aPoint
+	"Set the top left position of the receiver's view to the screen co-ordinate represented by the <Point> argument. Answer whether the position request was accepted."
+
+	self dialogView position: aPoint!
 
 prepareStruct
 	"Private - Initialize the parameter structure to be passed to the Win32
@@ -84,9 +117,19 @@ prepareStruct
 
 	!
 
-setViewIcon: anIcon
-	"Set the icon of a view opened on the receiver.
-	We don't want to foist our icon onto the common dialogs, so override to do nothing."!
+setInitialPosition
+	(##(IdentityDictionary withAll: {#system -> [:dialog | ].
+				#centerOwner -> 
+						[:dialog |
+						Transcript
+							print: dialog extent;
+							cr.
+						dialog position: dialog ownerView getWindowRect center - (dialog extent / 2)].
+				#centerMonitor
+					-> [:dialog | dialog position: dialog ownerView monitor workArea center - (dialog extent / 2)].
+				#centerMouse -> [:dialog | dialog position: Cursor position - (dialog extent / 2)].
+				#originMouse -> [:dialog | dialog position: Cursor position]})
+		lookup: self initialPositioning) ifNotNil: [:monad | monad value: self]!
 
 showModal
 	"Create and show the receiver's modal dialog. Answer the 'result' (as defined by the
@@ -137,22 +180,28 @@ winStructClass
 
 	^self subclassResponsibility!
 
-wmInitDialog: message wParam: wParam lParam: lParam 
-	"Private - A WM_INITDIALOG message was sent to the hook procedure. This is sent after the common
-	dialog itself has handled the message."
+wmInitDialog: message wParam: wParam lParam: lParam
+	"Private - A WM_INITDIALOG message was sent to the hook procedure. This is sent after the common dialog itself has handled the message."
 
 	self caption ifNotNil: [:text | self view caption: text].
+	self setInitialPosition.
 	^1! !
 !CommonDialog categoriesForMethods!
 attachHandle:!private!realizing/unrealizing! !
 basicShowModal!private!realizing/unrealizing! !
 checkError!helpers!private! !
 createHook!helpers!private! !
+dialogView!public! !
+extent!public! !
 extractResult:!helpers!private! !
 initialize!accessing!initializing!private! !
+initialPositioning!public! !
+initialPositioning:!public! !
 ownerView:!accessing!private! !
+position!public! !
+position:!public! !
 prepareStruct!helpers!private! !
-setViewIcon:!operations!public! !
+setInitialPosition!public! !
 showModal!public!realizing/unrealizing! !
 updateIcon!private!updating! !
 winStruct!accessing!private! !

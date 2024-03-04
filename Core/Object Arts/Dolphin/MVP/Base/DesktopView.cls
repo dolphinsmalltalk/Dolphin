@@ -449,8 +449,8 @@ initialize
 	"Private - Initialize the DesktopView singleton."
 
 	Current := self new
-			assumeDesktopHandle;
-			yourself!
+				assumeDesktopHandle;
+				yourself!
 
 stbConvertFromVersion9: anArray
 	"Private - Perform an STB conversion from a version 9 (or earlier) instance
@@ -480,7 +480,10 @@ uninitialize
 	Current
 		winFinalize;
 		handle: nil.
-	Current := nil! !
+	Current := nil!
+
+winClassName
+	^'#32769'! !
 !DesktopView class categoriesForMethods!
 current!accessing!public! !
 current:!accessing!public! !
@@ -488,5 +491,6 @@ icon!constants!public! !
 initialize!development!initializing!private! !
 stbConvertFromVersion9:!binary filing!private! !
 uninitialize!class hierarchy-removing!private! !
+winClassName!constants!private! !
 !
 
