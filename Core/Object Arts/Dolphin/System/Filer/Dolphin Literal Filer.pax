@@ -14,6 +14,7 @@ package classNames
 	yourself.
 
 package methodNames
+	add: #Array -> #stbInFiler;
 	add: #ArrayedCollection -> #literalPrintOn:;
 	add: #Boolean -> #literalPrintOn:;
 	add: #Character -> #literalPrintOn:;
@@ -68,6 +69,14 @@ STBOutFiler subclass: #STLOutFiler
 
 
 "Loose Methods"!
+
+!Array methodsFor!
+
+stbInFiler
+	^STLInFiler on: self readStream! !
+!Array categoriesForMethods!
+stbInFiler!binary filing!public! !
+!
 
 !ArrayedCollection methodsFor!
 
