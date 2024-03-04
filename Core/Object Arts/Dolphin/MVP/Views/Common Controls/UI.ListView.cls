@@ -2243,7 +2243,7 @@ tileIconMode
 	self viewMode: #tileIcons!
 
 topIndex
-	^self lvmGetTopIndex + 1!
+	^(self sendMessage: LVM_GETTOPINDEX) + 1!
 
 updateAll
 	"Re-render the model's contents. This is a similar operation to #refreshContents, except

@@ -58,8 +58,8 @@ x: anInteger
 
 x: xInteger y: yInteger
 	bytes
-		int32AtOffset: _OffsetOf_x put: xInteger;
-		int32AtOffset: _OffsetOf_y put: yInteger.
+		int32AtOffset: _OffsetOf_x put: xInteger asInteger;
+		int32AtOffset: _OffsetOf_y put: yInteger asInteger.
 	^self!
 
 y
@@ -110,8 +110,8 @@ x: x y: y
 	all the <ExternalStructure> framework methods."
 
 	^self basicNew bytes: ((ByteArray newFixed: _POINTL_Size)
-				int32AtOffset: _OffsetOf_x put: x;
-				int32AtOffset: _OffsetOf_y put: y;
+				int32AtOffset: _OffsetOf_x put: x asInteger;
+				int32AtOffset: _OffsetOf_y put: y asInteger;
 				yourself)! !
 
 !OS.POINTL class categoriesForMethods!
