@@ -238,6 +238,11 @@ Win32Constants at: 'DLGC_WANTTAB' put: 16r2!
 Win32Constants at: 'DM_GETDEFID' put: 16r400!
 Win32Constants at: 'DM_SETDEFID' put: 16r401!
 Win32Constants at: 'DONT_RESOLVE_DLL_REFERENCES' put: 16r1!
+Win32Constants at: 'DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE' put: -16r3!
+Win32Constants at: 'DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2' put: -16r4!
+Win32Constants at: 'DPI_AWARENESS_CONTEXT_SYSTEM_AWARE' put: -16r2!
+Win32Constants at: 'DPI_AWARENESS_CONTEXT_UNAWARE' put: -16r1!
+Win32Constants at: 'DPI_AWARENESS_CONTEXT_UNAWARE_GDISCALED' put: -16r5!
 Win32Constants at: 'DS_3DLOOK' put: 16r4!
 Win32Constants at: 'DSS_DISABLED' put: 16r20!
 Win32Constants at: 'DSS_HIDEPREFIX' put: 16r200!

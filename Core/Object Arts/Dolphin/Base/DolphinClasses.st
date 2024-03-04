@@ -1062,7 +1062,7 @@ PermanentLibrary subclass: #NTLibrary
 	classInstanceVariableNames: ''!
 PermanentLibrary subclass: #UserLibrary
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: 'DpiAwareness DpiAwarenessModes'
 	poolDictionaries: 'MessageBoxConstants'
 	classInstanceVariableNames: ''!
 PermanentLibrary subclass: #VMLibrary

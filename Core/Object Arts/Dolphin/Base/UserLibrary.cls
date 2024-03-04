@@ -2,10 +2,11 @@
 
 PermanentLibrary subclass: #UserLibrary
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: 'DpiAwareness DpiAwarenessModes'
 	poolDictionaries: 'MessageBoxConstants'
 	classInstanceVariableNames: ''!
 UserLibrary guid: (GUID fromString: '{64674046-3a82-101b-8181-00aa003743d3}')!
+UserLibrary addClassConstant: 'DpiAwarenessModes' value: #(#unaware #system #perMonitor #perMonitorV2 #gdiScaled)!
 UserLibrary comment: 'UserLibrary is the <ExternalLibrary> class to represent the Windows system DLL, User32.DLL.
 
 The default instance of this class provides access to most of the Win32 window management API. New functions may be added as required, but the external function naming convention should be followed.
@@ -307,6 +308,12 @@ getSystemMetrics: index
 
 	<stdcall: sdword GetSystemMetrics sdword>
 	^self invalidCall: _failureCode!
+
+initialize
+	"We must ensure the DPI awareness level is set before we do anything that might do any UI operations, otherwise we'll end up with a mess."
+
+	self setProcessDpiAwarenessContext: DPI_AWARENESS_CONTEXT_SYSTEM_AWARE.
+	^self!
 
 inSendMessage
 	<stdcall: bool InSendMessage>
@@ -773,6 +780,7 @@ getQueueStatus:!public!win32 functions-message and message queue! !
 getSysColor:!public!win32 functions-system information! !
 getSysColorBrush:!public!win32 functions-cursor! !
 getSystemMetrics:!public!win32 functions-system information! !
+initialize!initializing!public! !
 inSendMessage!public!win32 functions-message and message queue! !
 isCharAlpha:!public!win32 functions-string manipulation! !
 isCharAlphaNumeric:!public!win32 functions-string manipulation! !
@@ -819,13 +827,31 @@ clear
 	#(#SystemMetrics #DisplayMonitor) 
 		do: [:each | self environment at: each ifPresent: [:c | c reset]]!
 
+dpiAwareness
+	"Answer the DPI awareness mode for this session."
+
+	^DpiAwarenessModes at: DpiAwareness negated!
+
+dpiAwareness: aSymbol
+	"Set the DPI awareness mode to be applied when this image is restarted. N.B. Windows does not support changing the DPI awareness of an entire running process, so this cannot take effect until restart."
+
+	DpiAwareness := (DpiAwarenessModes indexOf: aSymbol) negated!
+
 fileName
 	"Answer the host system file name of the external library which 
 	the receiver represents."
 
-	^'USER32'! !
+	^'USER32'!
+
+initialize
+	self addClassConstant: 'DpiAwarenessModes'
+		value: #(#unaware #system #perMonitor #perMonitorV2 #gdiScaled).
+	DpiAwareness := DPI_AWARENESS_CONTEXT_SYSTEM_AWARE! !
 !UserLibrary class categoriesForMethods!
 clear!initializing!private! !
+dpiAwareness!accessing!public! !
+dpiAwareness:!accessing!public! !
 fileName!constants!public! !
+initialize!class initialization!public! !
 !
 
