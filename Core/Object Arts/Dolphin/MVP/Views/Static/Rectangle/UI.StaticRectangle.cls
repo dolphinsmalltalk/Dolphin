@@ -95,11 +95,19 @@ winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
 
 	^'STATIC'
-! !
+!
+
+windowTitle
+	"Answer the window title that is set/restored through WindowCreationParameters. Generally this is the window text."
+
+	"The Static control ignores the text passed as the window title for the CreateWindowEx call, and we don't need it in this case anyway, so don't store the text in the WindowCreationState"
+
+	^nil! !
 
 !UI.StaticRectangle class categoriesForMethods!
 initialize!development!initializing!private! !
 resource_Default_view!public!resources-views! !
 winClassName!constants!private! !
+windowTitle!accessing!public! !
 !
 
