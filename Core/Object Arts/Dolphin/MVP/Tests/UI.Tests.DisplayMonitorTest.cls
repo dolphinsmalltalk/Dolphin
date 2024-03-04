@@ -150,7 +150,11 @@ testPrintString
 		ifTrue: 
 			[| secondary |
 			secondary := all detect: [:each | each isPrimary not].
-			self assert: secondary printString equals: 'a DisplayMonitor(<1p>)' << secondary deviceName]! !
+			self assert: secondary printString equals: 'a DisplayMonitor(<1p>)' << secondary deviceName]!
+
+testScaleFactor
+	DisplayMonitor desktopMonitors
+		do: [:each | self assert: each scaleFactor equals: each dpi / Win32Constants.USER_DEFAULT_SCREEN_DPI]! !
 
 !UI.Tests.DisplayMonitorTest categoriesForMethods!
 testActive!public!unit tests! !
@@ -165,5 +169,6 @@ testNearestPoint!public!unit tests! !
 testNearestRectangle!public!unit tests! !
 testPrimary!public!unit tests! !
 testPrintString!public!unit tests! !
+testScaleFactor!public!unit tests! !
 !
 

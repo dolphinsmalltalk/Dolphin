@@ -18,10 +18,15 @@ OS.SHCoreLibrary comment: ''!
 
 getDpiForMonitor: hmonitor dpiType: dpiType dpiX: dpiX dpiY: dpiY
 	<stdcall: hresult GetDpiForMonitor handle int32 uint32* uint32*>
+	^self invalidCall: _failureCode!
+
+getScaleFactorForMonitor: hMod pScale: pScale
+	<stdcall: hresult GetScaleFactorForMonitor handle int32*>
 	^self invalidCall: _failureCode! !
 
 !OS.SHCoreLibrary categoriesForMethods!
 getDpiForMonitor:dpiType:dpiX:dpiY:!public!win32 functions-high DPI! !
+getScaleFactorForMonitor:pScale:!public!win32 functions-high DPI! !
 !
 
 !OS.SHCoreLibrary class methodsFor!
