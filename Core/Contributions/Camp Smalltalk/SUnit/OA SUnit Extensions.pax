@@ -10,6 +10,8 @@ Extensions to the basic SUnit unit testing packages, including the ability to te
 package methodNames
 	add: #TestCase -> #<=;
 	add: #TestCase -> #=;
+	add: #TestCase -> #assert:closeTo:;
+	add: #TestCase -> #assert:closeTo:precision:;
 	add: #TestCase -> #assert:equals:description:;
 	add: #TestCase -> #assert:identicalTo:;
 	add: #TestCase -> #assert:isKindOf:;
@@ -67,6 +69,14 @@ package!
 	"Answer whether the argument, aTestCase, is considered exactly equivalent to the receiver."
 
 	^self class == aTestCase class and: [self selector == aTestCase selector]!
+
+assert: actualNumber closeTo: expectedNumber
+	(actualNumber closeTo: expectedNumber)
+		ifFalse: [self fail: (self comparingStringBetween: expectedNumber and: actualNumber)]!
+
+assert: actualNumber closeTo: expectedNumber precision: precisionNumber
+	(actualNumber closeTo: expectedNumber precision: precisionNumber)
+		ifFalse: [self fail: (self comparingStringBetween: expectedNumber and: actualNumber)]!
 
 assert: actualObject equals: expectedObject description: aStringOrValue
 	expectedObject = actualObject
@@ -291,6 +301,8 @@ skipUnless: aNiladicValuable
 !TestCase categoriesForMethods!
 <=!comparing!public! !
 =!comparing!public! !
+assert:closeTo:!asserting!public! !
+assert:closeTo:precision:!asserting!public! !
 assert:equals:description:!asserting!public! !
 assert:identicalTo:!asserting!public! !
 assert:isKindOf:!asserting!public! !
