@@ -2,7 +2,7 @@
 
 UI.ContainerView
 	subclass: #'UI.ShellView'
-	instanceVariableNames: 'menuBar acceleratorTable combinedAcceleratorTable lastFocus defaultButton largeIcon smallIcon maxExtent minExtent flashes svFlags _svReserved2'
+	instanceVariableNames: 'menuBar acceleratorTable combinedAcceleratorTable lastFocus defaultButton largeIcon smallIcon maxExtent minExtent flashes svFlags dpi'
 	classVariableNames: 'DialogMessageMap'
 	imports: #(#{OS.ButtonConstants})
 	classInstanceVariableNames: ''
@@ -60,6 +60,10 @@ activateLastPopup
 				and: [popup isEnabled and: 
 							[popup beForeground.
 							true]]]!
+
+actualFont
+	#highDpiToDo. "Not sure we need to do this. Consumer of font should scale before use?"
+	^font ifNil: [self parentView actualFont atDpi: self dpi]!
 
 addCommandHistory: aCommand
 	"Private - Provided for protocol compatiblity with Shell presenters.
@@ -251,6 +255,11 @@ dmSetDefId: message wParam: wParam lParam: lParam
 	def := self defaultButtonId.
 	def isNull ifFalse: [self setButtonId: def style: BS_DEFPUSHBUTTON].
 	^0!
+
+dpi
+	"Answer the logical pixels per inch for the receiver; i.e. the screen's logical pixels per inch"
+
+	^dpi ifNil: [dpi := super dpi]!
 
 drawMenuBar
 	"Draw the receiver's menu bar, either when initially set or after it has been updated.
@@ -1020,6 +1029,33 @@ wmActivate: message wParam: wParam lParam: lParam
 		ifTrue: [self presenter onViewDeactivated: event]
 		ifFalse: [self presenter onViewActivated: event	"send onActivate for WA_ACTIVE and WA_CLICKACTIVE"]!
 
+wmDpiChanged: message wParam: wParam lParam: lParam
+	"Private - Handles a WM_DPICHANGED message. This is only sent to top-level windows (e.g. ShellViews in Dolphin)
+		- wParam encodes the new DPI with the X-axis value in the low word, and y-axis in the high word.
+		- lParam is a pointer to a RECTL providing the suggested new rectangle for the window.
+	"
+
+	| newDpi newRect |
+	newDpi := wParam lowWord.
+	newRect := RECTL fromAddress: lParam.
+	self resolutionScaledBy: newDpi / self resolution.
+	dpi := newDpi.
+	font ifNil: [self fontChanged] ifNotNil: [
+		#highDpiToDo. "Not sure we need to do this. Can scale font at point of use"
+		self font: (font atDpi: newDpi)].
+	self rectangle: newRect.
+	^0!
+
+wmDpiChangedBeforeParent: message wParam: wParam lParam: lParam
+	"Respond to a parent DPI change - we only expect to receive this message when embedded as a child, e.g. in an Idea Space. In this case we will not receive a WM_DPICHANGED, so we need to also update the cached DPI here or the fonts, etc, inherited by subviews may not be scaled correctly."
+
+	dpi := super dpi.
+	super
+		wmDpiChangedBeforeParent: message
+		wParam: wParam
+		lParam: lParam.
+	^0!
+
 wmGetMinMaxInfo: message wParam: wParam lParam: lParam
 	| min max |
 	((min := self minExtent) notNil or: [(max := self maxExtent) notNil])
@@ -1168,6 +1204,7 @@ wmWindowPosChanged: message wParam: wParam lParam: lParam
 acceleratorTable!accelerator!public! !
 acceleratorTable:!accelerator!public! !
 activateLastPopup!helpers!private! !
+actualFont!accessing!font!private! !
 addCommandHistory:!accessing!private! !
 allAdditionalAccelerators!accessing!public! !
 allAdditionalKeyBindings!accessing!public! !
@@ -1194,6 +1231,7 @@ dispatchUser:wParam:lParam:!dispatching!private! !
 displayOnMonitor:!geometry!helpers!public! !
 dmGetDefId:wParam:lParam:!default button!event handling-win32!private! !
 dmSetDefId:wParam:lParam:!default button!event handling-win32!private! !
+dpi!accessing!public! !
 drawMenuBar!menus!public! !
 ensureLayoutValid!geometry!public! !
 ensureSubViewVisible:!public!sub views! !
@@ -1292,6 +1330,8 @@ updateMenuBar!menus!public! !
 validateUserInterface!operations!public! !
 winFinalize!event handling!private! !
 wmActivate:wParam:lParam:!event handling-win32!private! !
+wmDpiChanged:wParam:lParam:!event handling-win32!private! !
+wmDpiChangedBeforeParent:wParam:lParam:!event handling-win32!private! !
 wmGetMinMaxInfo:wParam:lParam:!event handling-win32!private! !
 wmInitMenu:wParam:lParam:!event handling-win32!private! !
 wmInitMenuPopup:wParam:lParam:!event handling-win32!private! !

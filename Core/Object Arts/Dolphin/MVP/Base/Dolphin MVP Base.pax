@@ -2408,7 +2408,7 @@ UI.AbstractDelegatingView
 
 UI.ContainerView
 	subclass: #'UI.ShellView'
-	instanceVariableNames: 'menuBar acceleratorTable combinedAcceleratorTable lastFocus defaultButton largeIcon smallIcon maxExtent minExtent flashes svFlags _svReserved2'
+	instanceVariableNames: 'menuBar acceleratorTable combinedAcceleratorTable lastFocus defaultButton largeIcon smallIcon maxExtent minExtent flashes svFlags dpi'
 	classVariableNames: 'DialogMessageMap'
 	imports: #(#{OS.ButtonConstants})
 	classInstanceVariableNames: ''
