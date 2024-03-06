@@ -1188,6 +1188,9 @@ Win32Constants at: 'WM_DESTROYCLIPBOARD' put: 16r307!
 Win32Constants at: 'WM_DEVICECHANGE' put: 16r219!
 Win32Constants at: 'WM_DEVMODECHANGE' put: 16r1B!
 Win32Constants at: 'WM_DISPLAYCHANGE' put: 16r7E!
+Win32Constants at: 'WM_DPICHANGED' put: 16r2E0!
+Win32Constants at: 'WM_DPICHANGED_AFTERPARENT' put: 16r2E3!
+Win32Constants at: 'WM_DPICHANGED_BEFOREPARENT' put: 16r2E2!
 Win32Constants at: 'WM_DRAWCLIPBOARD' put: 16r308!
 Win32Constants at: 'WM_DRAWITEM' put: 16r2B!
 Win32Constants at: 'WM_DROPFILES' put: 16r233!
@@ -1201,6 +1204,7 @@ Win32Constants at: 'WM_EXITMENULOOP' put: 16r212!
 Win32Constants at: 'WM_EXITSIZEMOVE' put: 16r232!
 Win32Constants at: 'WM_FONTCHANGE' put: 16r1D!
 Win32Constants at: 'WM_GETDLGCODE' put: 16r87!
+Win32Constants at: 'WM_GETDPISCALEDSIZE' put: 16r2E4!
 Win32Constants at: 'WM_GETFONT' put: 16r31!
 Win32Constants at: 'WM_GETHOTKEY' put: 16r33!
 Win32Constants at: 'WM_GETICON' put: 16r7F!

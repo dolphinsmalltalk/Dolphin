@@ -4024,6 +4024,29 @@ wmDestroy: message wParam: wParam lParam: lParam
 
 	^self onDestroyed!
 
+wmDpiChanged: message wParam: wParam lParam: lParam
+	"Private - Handles a WM_DPICHANGED message. This is only sent to top-level windows (e.g. ShellViews in Dolphin), so we don't actually expect to handle it at this level.
+		- wParam encodes the new DPI with the X-axis value in the low word, and y-axis in the high word (although the docs make clear that both will always be the same value)
+		- lParam is a pointer to a RECTL providing the suggested new rectangle for the window.
+	"
+
+	^nil!
+
+wmDpiChangedAfterParent: message wParam: wParam lParam: lParam
+	"Private - Handles a WM_DPICHANGED_AFTERPARENT message. This is only sent to child windows, bottom-up, before the top-level window receives a WM_DPICHANGED."
+
+	"MS documentation states that this message has no handler in the DefWindowProc, but controls may well implement it, so ensure it is forwarded"
+	^nil!
+
+wmDpiChangedBeforeParent: message wParam: wParam lParam: lParam
+	"Private - Handles a WM_DPICHANGED_BEFOREPARENT message. This is only sent to child windows, bottom-up, before the top-level window receives a WM_DPICHANGED."
+
+	| newDpi |
+	newDpi := self dpi.
+	self resolutionScaledBy: newDpi @ newDpi / self topView dpi.
+	font ifNotNil: [self font: (font atDpi: newDpi)].
+	^nil!
+
 wmDrawItem: message wParam: wParam lParam: lParam 
 	"Private - Default handler for a WM_DRAWITEM."
 
@@ -5129,6 +5152,9 @@ wmContextMenu:wParam:lParam:!event handling-win32!private! !
 wmCreate:wParam:lParam:!event handling-win32!private! !
 wmCtlColor:wParam:lParam:!event handling-win32!private! !
 wmDestroy:wParam:lParam:!event handling-win32!private! !
+wmDpiChanged:wParam:lParam:!event handling-win32!private! !
+wmDpiChangedAfterParent:wParam:lParam:!event handling-win32!private! !
+wmDpiChangedBeforeParent:wParam:lParam:!event handling-win32!private! !
 wmDrawItem:wParam:lParam:!event handling-win32!private! !
 wmEnterIdle:wParam:lParam:!event handling-win32!private! !
 wmEnterMenuLoop:wParam:lParam:!event handling-win32!private! !
@@ -5321,6 +5347,9 @@ buildMessageMap
 		at: WM_ACTIVATEAPP + 1 put: #wmActivateApp:wParam:lParam:;
 		at: WM_TIMECHANGE + 1 put: #wmTimeChange:wParam:lParam:;
 		at: WM_INPUTLANGCHANGE + 1 put: #wmInputLangChange:wParam:lParam:;
+		at: WM_DPICHANGED + 1 put: #wmDpiChanged:wParam:lParam:;
+		at: WM_DPICHANGED_BEFOREPARENT + 1 put: #wmDpiChangedBeforeParent:wParam:lParam:;
+		at: WM_DPICHANGED_AFTERPARENT + 1 put: #wmDpiChangedAfterParent:wParam:lParam:;
 		yourself!
 
 capture

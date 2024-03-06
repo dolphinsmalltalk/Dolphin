@@ -1456,7 +1456,7 @@ AbstractDelegatingView subclass: #ReferenceView
 	classInstanceVariableNames: ''!
 
 ContainerView subclass: #ShellView
-	instanceVariableNames: 'menuBar acceleratorTable combinedAcceleratorTable lastFocus defaultButton largeIcon smallIcon maxExtent minExtent flashes svFlags _svReserved2'
+	instanceVariableNames: 'menuBar acceleratorTable combinedAcceleratorTable lastFocus defaultButton largeIcon smallIcon maxExtent minExtent flashes svFlags dpi'
 	classVariableNames: 'DefaultButtonIndex DialogMessageMap TransientMask'
 	poolDictionaries: 'ButtonConstants'
 	classInstanceVariableNames: ''!

@@ -852,7 +852,7 @@ fileName
 initialize
 	self addClassConstant: 'DpiAwarenessModes'
 		value: #(#unaware #system #perMonitor #perMonitorV2 #gdiScaled).
-	DpiAwareness := DPI_AWARENESS_CONTEXT_SYSTEM_AWARE! !
+	DpiAwareness := DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2! !
 
 !UserLibrary class categoriesForMethods!
 clear!initializing!private! !
