@@ -131,6 +131,7 @@ package methodNames
 	add: 'ImageList class' -> #width:height:flags:size:growthGranularity:;
 	add: 'ListPresenter class' -> #resource_Multiselection_enhanced_list_view;
 	add: 'ListPresenter class' -> #resource_Multiselection_list_box;
+	add: 'ListTreeView class' -> #stateImageBlock:;
 	add: 'MouseTracker class' -> #defaultHysteresis;
 	add: 'PaintEvent class' -> #handle:wParam:hdc:paintStruct:;
 	add: 'Presenter class' -> #addCommandQueryHandler:;
@@ -175,6 +176,7 @@ package setPrerequisites: #(
 	'..\Presenters\Prompters\Dolphin In-place Text Editor'
 	'..\Models\List\Dolphin List Models'
 	'..\Presenters\List\Dolphin List Presenter'
+	'..\Presenters\ListTree\Dolphin List Tree Presenter'
 	'..\Views\MoenTree\Dolphin MoenTree View'
 	'..\Base\Dolphin MVP Base'
 	'..\Presenters\Prompters\Dolphin Prompter'
@@ -703,6 +705,16 @@ resource_Multiselection_list_box
 !ListPresenter class categoriesForMethods!
 resource_Multiselection_enhanced_list_view!public!resources-views! !
 resource_Multiselection_list_box!public!resources-views! !
+!
+
+!ListTreeView class methodsFor!
+
+stateImageBlock: a0Block
+	Notification deprecated
+	"No longer supported as multiple image sizes will be needed. If custom tree expandos really are needed, then something based on icons would be better."! !
+
+!ListTreeView class categoriesForMethods!
+stateImageBlock:!accessing!do not copy!public! !
 !
 
 !ListView methodsFor!

@@ -77,8 +77,11 @@ package basicPackageVersion: '7.01'.
 
 
 package setClassNames: #(
+	#{UI.AbstractListTreeViewStateImageManager}
 	#{UI.ListTreePresenter}
 	#{UI.ListTreeView}
+	#{UI.ListTreeViewStateImageManager}
+	#{UI.UnthemedListTreeViewStateImageManager}
 ).
 
 package setMethodNames: #(
@@ -112,6 +115,30 @@ package!
 
 "Class Definitions"!
 
+Core.Object
+	subclass: #'UI.AbstractListTreeViewStateImageManager'
+	instanceVariableNames: 'imageLists'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+UI.AbstractListTreeViewStateImageManager
+	subclass: #'UI.ListTreeViewStateImageManager'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+UI.AbstractListTreeViewStateImageManager
+	subclass: #'UI.UnthemedListTreeViewStateImageManager'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: { 'BoxSize' -> 16r9 }!
+
 UI.ListPresenter
 	subclass: #'UI.ListTreePresenter'
 	instanceVariableNames: ''
@@ -125,7 +152,7 @@ UI.ListView
 	instanceVariableNames: 'hasExplicitTreeModel treeModel dummy3 expanded hiddenExpanded options indentSeparation getChildrenBlock hasChildrenBlock getParentBlock sortBlock doSortChildrenBlock dummy2 dummy1'
 	classVariableNames: ''
 	imports: #()
-	classInstanceVariableNames: 'stateImageManager stateImageBlock'
+	classInstanceVariableNames: 'stateImageManager stateImageBlock unthemedStateImageManager'
 	classConstants: {
 			'ClosedImageIndex' -> 16r3.
 			'DisableExpandAllMask' -> 16r1.
