@@ -76,8 +76,11 @@ History:
 package basicPackageVersion: '7.01'.
 
 package classNames
+	add: #AbstractListTreeViewStateImageManager;
 	add: #ListTreePresenter;
 	add: #ListTreeView;
+	add: #ListTreeViewStateImageManager;
+	add: #UnthemedListTreeViewStateImageManager;
 	yourself.
 
 package methodNames
@@ -114,6 +117,24 @@ package!
 
 "Class Definitions"!
 
+Object subclass: #AbstractListTreeViewStateImageManager
+	instanceVariableNames: 'imageLists'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+AbstractListTreeViewStateImageManager subclass: #ListTreeViewStateImageManager
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+AbstractListTreeViewStateImageManager subclass: #UnthemedListTreeViewStateImageManager
+	instanceVariableNames: ''
+	classVariableNames: 'BoxSize'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
 ListPresenter subclass: #ListTreePresenter
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -124,7 +145,7 @@ ListView subclass: #ListTreeView
 	instanceVariableNames: 'hasExplicitTreeModel treeModel dummy3 expanded hiddenExpanded options indentSeparation getChildrenBlock hasChildrenBlock getParentBlock sortBlock doSortChildrenBlock dummy2 dummy1'
 	classVariableNames: 'ClosedImageIndex DisableExpandAllMask DoSortRootsMask HasButtonsMask HasLinesAtRootMask HasLinesMask LeafImageIndex OpenImageIndex UseSmartRefreshMask'
 	poolDictionaries: ''
-	classInstanceVariableNames: 'stateImageManager stateImageBlock'!
+	classInstanceVariableNames: 'stateImageManager stateImageBlock unthemedStateImageManager'!
 
 "Loose Methods"!
 

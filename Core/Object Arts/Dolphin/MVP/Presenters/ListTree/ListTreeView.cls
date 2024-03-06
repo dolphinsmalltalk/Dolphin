@@ -4,7 +4,7 @@ ListView subclass: #ListTreeView
 	instanceVariableNames: 'hasExplicitTreeModel treeModel dummy3 expanded hiddenExpanded options indentSeparation getChildrenBlock hasChildrenBlock getParentBlock sortBlock doSortChildrenBlock dummy2 dummy1'
 	classVariableNames: 'ClosedImageIndex DisableExpandAllMask DoSortRootsMask HasButtonsMask HasLinesAtRootMask HasLinesMask LeafImageIndex OpenImageIndex UseSmartRefreshMask'
 	poolDictionaries: ''
-	classInstanceVariableNames: 'stateImageManager stateImageBlock'!
+	classInstanceVariableNames: 'stateImageManager stateImageBlock unthemedStateImageManager'!
 
 ListTreeView guid: (GUID fromString: '{f2d6215c-2adc-4032-aacb-8c4da10950ab}')!
 
@@ -855,7 +855,7 @@ indentFromRow: anObject
 
 	| depth |
 	depth := treeModel depthOf: anObject.	"try to adjust to take #indentSeparation into account"
-	depth := depth * (1 + (indentSeparation / self class stateImageExtent x) rounded).	
+	depth := depth * (1 + (indentSeparation / self stateImageExtent x) rounded).
 	"if we have buttons then Windows'll add indent for the (possibly blank) state icon too,
 	so if we don't want #linesAtRoot (really #buttonsAtRoot) then reduce the depth by one
 	to hide any buttons in the first column"
@@ -1694,6 +1694,11 @@ sortOnColumn: aListViewColumn
 
 	Cursor wait showWhile: [sorter beSorted: aListViewColumn rowSortBlock].!
 
+stateImageExtent
+	"Private - Answer the pixel extent of the expandos in the tree at the view's current DPI."
+
+	^self metrics smallIconExtent!
+
 stateImageFromRow: anObject
 	"private -- answer the index of the state image that is appropriate for anObject"
 
@@ -1706,7 +1711,9 @@ stateImageManager
 	image list is always the same systemwide, and this avoids having to mess with
 	STBing images"
 
-	^self hasButtons ifTrue: [self class stateImageManager]!
+	^self hasButtons
+		ifTrue: 
+			[self isThemed ifTrue: [self class stateImageManager] ifFalse: [self class unthemedStateImageManager]]!
 
 toggleExpandAll: anObject
 	"expand/collapse the entire tree below anObject.
@@ -2083,6 +2090,7 @@ setModel:!accessing!do copy!models!private! !
 sortBlock!accessing!do copy!public!sorting! !
 sortBlock:!accessing!do copy!public!sorting! !
 sortOnColumn:!columns!do copy!public!sorting! !
+stateImageExtent!adapters!do copy!private! !
 stateImageFromRow:!adapters!do copy!private! !
 stateImageManager!do copy!image management!private! !
 toggleExpandAll:!do copy!expanding/collapsing!public! !
@@ -2142,132 +2150,11 @@ convertToLocalVersion1: anArray from: anInteger
 defaultOptions
 	"answer the bitmap of options that instances have by default"
 
-	^ HasButtonsMask | DoSortRootsMask.!
+	^##(HasButtonsMask | DoSortRootsMask)!
 
-fillStateImageManager
-	"private -- [re]fill in the shared ImageMaster that contains the image lists for the
-	leaf/expanded/not-expanded images"
-
-	| extent box hLineF hLineT vLineF vLineT boxPen linePen image |
-	"there *just has* to be a better way than this grubbing around"
-	#todo.	"Yes, we should use the theme images from the tree view."
-
-	"I should factor this stuff out"
-	
-	#highDpiTodo.	"Needs scaling"
-	extent := self stateImageExtent.
-	box := 4 @ 4 corner: 13 @ 13.
-	hLineF := 6 @ 8.
-	hLineT := 11 @ 8.
-	vLineF := 8 @ 6.
-	vLineT := 8 @ 11.
-	boxPen := Pen color: Color gray.
-	linePen := Pen color: Color black.
-
-	"NB: the order of insertion of images *must* match the indices stored as class constants."
-	stateImageManager maskcolor: Color white.
-
-	"image for state #Leaf"
-	image := Bitmap displayCompatibleWithExtent: extent.
-	image canvas erase.
-	stateImageManager addImage: image.
-	image freeDC.
-
-	"image for state #Open"
-	image := Bitmap displayCompatibleWithExtent: extent.
-	image canvas
-		erase;
-		pen: boxPen;
-		rectangle: box;
-		pen: linePen;
-		lineFrom: hLineF to: hLineT.
-	stateImageManager addImage: image.
-	image freeDC.
-
-	"image for state #Closed"
-	image := Bitmap displayCompatibleWithExtent: extent.
-	image canvas
-		erase;
-		pen: boxPen;
-		rectangle: box;
-		pen: linePen;
-		lineFrom: hLineF to: hLineT;
-		lineFrom: vLineF to: vLineT.
-	stateImageManager addImage: image.
-	image freeDC.
-	boxPen free.
-	linePen free!
-
-fillStateImageManagerFrom: anImage
-	"private -- [re]fill in the shared ImageMaster that contains the image lists for the
-	leaf/expanded/not-expanded images"
-
-	| zero extent srcOrigin image |
-
-	stateImageManager maskcolor: Color white.
-
-	extent := self stateImageExtent.
-	zero := 0@0.
-	srcOrigin := 0@0.
-
-	"NB: the order of insertion of images *must* match the output of:
-		self stateNames.
-	"
-	1 to: 5 do:
-		[:i |
-		image := (Bitmap displayCompatibleWithExtent: extent).
-		(image canvas)
-			drawBitmap: anImage at: zero extent: extent from: srcOrigin extent: extent rop: SRCCOPY;
-			free.
-		stateImageManager addImage: image.
-		srcOrigin x: (srcOrigin x + extent x)].
-!
-
-fillStateImageManagerThemed
-
-	| extent theme image rect canvas |
-	#highDpiTodo.	"Single class-wide image list will not be sufficient for per-monitor DPI as the extent may vary per instance."
-	extent := self stateImageExtent.
-	rect := RECT extent: extent.
-
-	theme := (ThemeLibrary default openThemeData: nil pszClassList: 'Explorer::TreeView').
-
-	stateImageManager maskcolor: Color white.
-
-	"image for state leaf"
-	image := Bitmap displayCompatibleWithExtent: extent.
-	image canvas erase.
-	stateImageManager addImage: image.
-	image freeDC.
-
-	"image for state expanded"
-	image := Bitmap displayCompatibleWithExtent: extent.
-	canvas := image canvas.
-	ThemeLibrary default 
-		drawThemeBackground: theme
-		hdc: canvas asParameter
-		iPartId: ThemeConstants.TVP_GLYPH
-		iStateId: ThemeConstants.GLPS_OPENED
-		pRect: rect
-		pClipRect: nil.
-	stateImageManager addImage: image.
-	image freeDC.
-
-	"image for state collapsed"
-	image := Bitmap displayCompatibleWithExtent: extent.
-	canvas := image canvas.
-	ThemeLibrary default 
-		drawThemeBackground: theme
-		hdc: canvas asParameter
-		iPartId: ThemeConstants.TVP_GLYPH
-		iStateId: ThemeConstants.GLPS_CLOSED
-		pRect: rect
-		pClipRect: nil.
-	stateImageManager addImage: image.
-	image freeDC.
-
-	ThemeLibrary default closeThemeData: theme.
-	!
+initialize
+	stateImageManager := ListTreeViewStateImageManager new.
+	unthemedStateImageManager := UnthemedListTreeViewStateImageManager new!
 
 internalListModelClass
 	"answer the factory object to use for our instances' internally
@@ -2287,57 +2174,8 @@ localStbVersion
 
 	^ 1.!
 
-onStartup
-	"called as the system starts up, ensure that we don't hold onto images from the
-	old session"
-
-	stateImageManager := nil.!
-
-stateImageBlock: a0Block
-	"set the <niladicValueable> that can optionally be used to supply bitmaps for
-	the open/closed icons in the tree.  It should answer an Image of size 80@16
-	and be made up of 5 sub-images (each 16@16) that correspond, in order, to
-	the states identified by #stateNames.  If this is nil (the default) then we generate icons
-	that match those in Win2K.  To supply icons like those in a default installation
-	of XP, try:
-
-		ListTreeView stateImageBlock: [Bitmap
-							fromFile: 'Resources\ListTreeIconsForXP.bmp'
-							usingLocator: (PackageRelativeFileLocator packageNamed: 'CU ListTree')].
-
-	which will take effect next time you start the image.  To turn it off again:
-
-		ListTreeView stateImageBlock: nil.
-
-	This isn't the best way of setting thjs kind of configuration, but -- in the absence
-	of any Windows-defined place where these icons live, its the best I can be
-	bothered with..."
-
-	stateImageBlock := a0Block.!
-
-stateImageExtent
-	"answer a Point indicating the size we use for state images.
-	Note that the state images don't visibly fill the extent"
-
-	^SystemMetrics current smallIconExtent!
-
 stateImageManager
-	"answer the shared ImageMaster that contains the image lists for the
-	leaf/expanded/not-expanded images"
-
-	stateImageManager isNil ifTrue: [stateImageManager := ImageManager new].
-
-	stateImageManager size = 0 ifTrue:
-		[| image |
-		[stateImageBlock isNil ifFalse: [image := stateImageBlock value]]
-			on: Exception
-			do: [:ex | ex notify. ex return: nil].
-		image isNil
-			ifTrue: [
-				ThemeLibrary isAppThemed ifTrue: [self fillStateImageManagerThemed] ifFalse: [self fillStateImageManager]]
-			ifFalse: [self fillStateImageManagerFrom: image]].
-
-	^ stateImageManager.!
+	^stateImageManager!
 
 stbConvert: anArray fromLocalVersion: anInteger
 	"private -- answer a version of anArray that represents the current version of our instances'
@@ -2379,25 +2217,24 @@ stbVersion
 	unamgiguity over the range [0, thePrime).
 	Note that we multiply *our* local version by the prime, this is necessary
 	to allow for older instances to appear to have a local version of 0"
-	^ self stbEncodingPrime * self localStbVersion + super stbVersion.! !
+	^ self stbEncodingPrime * self localStbVersion + super stbVersion.!
+
+unthemedStateImageManager
+	^unthemedStateImageManager! !
 
 !ListTreeView class categoriesForMethods!
 convertToLocalVersion0:from:!binary filing!do copy!private! !
 convertToLocalVersion1:from:!binary filing!do copy!private! !
 defaultOptions!constants!do copy!public! !
-fillStateImageManager!do not copy!initializing!private! !
-fillStateImageManagerFrom:!do not copy!initializing!private! !
-fillStateImageManagerThemed!do not copy!initializing!private! !
+initialize!public! !
 internalListModelClass!constants!do not copy!public! !
 internalTreeModelClass!constants!do copy!public! !
 localStbVersion!binary filing!constants!do copy!private! !
-onStartup!do not copy!events!public! !
-stateImageBlock:!accessing!do not copy!public! !
-stateImageExtent!constants!do copy!public! !
-stateImageManager!accessing!do not copy!public! !
+stateImageManager!accessing!public! !
 stbConvert:fromLocalVersion:!binary filing!do copy!private! !
 stbConvert:fromVersion:!binary filing!do copy!private! !
 stbEncodingPrime!binary filing!constants!do copy!private! !
 stbVersion!binary filing!do copy!public! !
+unthemedStateImageManager!accessing!public! !
 !
 
