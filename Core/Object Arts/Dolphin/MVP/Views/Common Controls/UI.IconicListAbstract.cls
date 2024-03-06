@@ -412,7 +412,7 @@ itemStructure
 	^self subclassResponsibility!
 
 largeIconExtent
-	"Answer image extent measured in device-independent (96-dpi) pixesl for the large icons mode. This will be scaled to the receiver's resolution."
+	"Answer image extent measured in device-independent (96-dpi) pixels for a large icon mode. This will be scaled to the receiver's resolution."
 
 	^largeIconExtent ifNil: [SystemMetrics default largeIconExtent]!
 
@@ -787,7 +787,7 @@ showDropHighlight: anItem
 !
 
 smallIconExtent
-	"Answer device-independent pixel extent for the small icons mode. This will be scaled to the receiver's resolution to generate the actual small image extent."
+	"Answer device-independent (96-dpi) pixel extent for the small icons mode. This will need to be scaled to the receiver's resolution to generate the actual small image extent."
 
 	^SystemMetrics default smallIconExtent!
 
@@ -869,7 +869,11 @@ wmDestroy: message wParam: wParam lParam: lParam
 	^super 
 		wmDestroy: message
 		wParam: wParam
-		lParam: lParam! !
+		lParam: lParam!
+
+wmDpiChangedAfterParent: message wParam: wParam lParam: lParam
+	self applyImageLists.
+	^nil! !
 
 !UI.IconicListAbstract categoriesForMethods!
 applyImageLists!image management!private! !
@@ -976,6 +980,7 @@ viewModeChanged!helpers!private! !
 viewModeSelect!commands-actions!commands-menus!public! !
 wantCustomDrawItemNotifications:!event handling-win32!private! !
 wmDestroy:wParam:lParam:!event handling-win32!private! !
+wmDpiChangedAfterParent:wParam:lParam:!event handling-win32!private! !
 !
 
 !UI.IconicListAbstract class methodsFor!
