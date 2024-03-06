@@ -4035,6 +4035,7 @@ wmDpiChanged: message wParam: wParam lParam: lParam
 wmDpiChangedAfterParent: message wParam: wParam lParam: lParam
 	"Private - Handles a WM_DPICHANGED_AFTERPARENT message. This is only sent to child windows, bottom-up, before the top-level window receives a WM_DPICHANGED."
 
+	self applyFont.
 	"MS documentation states that this message has no handler in the DefWindowProc, but controls may well implement it, so ensure it is forwarded"
 	^nil!
 
@@ -4044,7 +4045,6 @@ wmDpiChangedBeforeParent: message wParam: wParam lParam: lParam
 	| newDpi |
 	newDpi := self dpi.
 	self resolutionScaledBy: newDpi @ newDpi / self topView dpi.
-	font ifNotNil: [self font: (font atDpi: newDpi)].
 	^nil!
 
 wmDrawItem: message wParam: wParam lParam: lParam 

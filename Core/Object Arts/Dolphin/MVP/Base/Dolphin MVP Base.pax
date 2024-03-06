@@ -401,6 +401,7 @@ package methodNames
 	add: #UserLibrary -> #unregisterClass:hInstance:;
 	add: #UserLibrary -> #unregisterHotKey:id:;
 	add: #UserLibrary -> #validate:lpRect:;
+	add: #UserLibrary -> #windowFromDC:;
 	add: #UserLibrary -> #windowFromPoint:;
 	add: 'ConsoleSessionManager class' -> #icon;
 	add: 'Object class' -> #icon;
@@ -3407,6 +3408,13 @@ validate: hWnd lpRect: aRECT
 	<stdcall: bool ValidateRect handle RECT*>
 	^self invalidCall: _failureCode!
 
+windowFromDC: hDC
+	"HWND WindowFromDC(
+		[in] HDC hDC
+	);"
+	<stdcall: handle WindowFromDC handle>
+	^self invalidCall: _failureCode!
+
 windowFromPoint: aPOINTL
 	"The WindowFromPoint function retrieves the handle of the window that contains the
 	specified point. 
@@ -3585,6 +3593,7 @@ translateAccelerator:haccl:lpmsg:!public!win32 functions-keyboard accelerator! !
 unregisterClass:hInstance:!public!win32 functions-window class! !
 unregisterHotKey:id:!public!win32 functions-keyboard input! !
 validate:lpRect:!public!win32 functions-painting and drawing! !
+windowFromDC:!public!win32 functions-device context! !
 windowFromPoint:!public!win32 functions-window! !
 !
 

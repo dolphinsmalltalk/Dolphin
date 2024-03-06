@@ -1036,11 +1036,10 @@ wmCreate: message wParam: wParam lParam: lParam
 		lParam: lParam!
 
 wmDpiChangedAfterParent: message wParam: wParam lParam: lParam
-	super
-		wmDpiChangedAfterParent: message
-		wParam: wParam
-		lParam: lParam.
+	"Private - Handles a WM_DPICHANGED_AFTERPARENT message. This is only sent to child windows, bottom-up, before the top-level window receives a WM_DPICHANGED."
+
 	"Toolbars don't resize properly when the bitmap size is changed, so we have to recreate them. Note that as the WM_DPICHANGED_AFTERPARENT message is sent top-down (the opposite of WM_DPICHANGED_BEFOREPARENT), this will mean that the existing sub-toolbars will not receive the resize because they have been replaced, which is ideal"
+
 	self recreate.
 	"Obviously we don't want this passed on since we recreated the window and the new Toolbar won't be expecting it."
 	^0! !

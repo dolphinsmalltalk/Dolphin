@@ -50,7 +50,7 @@ characterSet: anInteger
 
 	anInteger = self characterSet ifTrue: [^self].
 	logfont lfCharSet: anInteger.
-	self free!
+	self styleChanged!
 
 createHandle
 	"Private - Answer an external handle to a new font as described by the logfont structure."
@@ -72,9 +72,7 @@ dpi
 	^dpi!
 
 dpi: anInteger
-	"Sets the logical pixels per inch of the receiver. Note that this will free the font handle, so don't change the resolution of a shared font (use #withResolution:)."
-
-	"Check the resolution for the receiver to see if it matches the supplied resolution in aPoint. If not, then the logical font information is rescaled and the receiver's resolution is changed to that in aPoint."
+	"Sets the logical pixels per inch of the receiver. Note that if the dpi changes, this will free the font handle, breaking any existing uses. This tends to be obvious as controls will mysteriously start painting using some default font. Changing the DPI of a shared font must therefore be avoided. Instead use #atDpi: to get an equivalent Font at the desired scale."
 
 	| oldDpi |
 	dpi = anInteger ifTrue: [^self].
@@ -86,6 +84,11 @@ dpi: anInteger
 	dpi := anInteger.
 	self pointSize: ptSize]
 			ifCurtailed: [dpi := oldDpi]!
+
+getLogFont
+	logfont := LOGFONTW newBuffer
+				getData: handle;
+				yourself!
 
 handle: hFont
 	"Sets the non-owned handle for the receiver and queries its logical info."
@@ -103,7 +106,7 @@ initialize
 
 	super initialize.
 	(logfont := LOGFONTW new) lfWeight: FW_NORMAL.
-	resolution := SystemMetrics current dpi!
+	dpi := SystemMetrics current dpi!
 
 isBold
 	"Answer whether the receiver is bold."
@@ -125,13 +128,13 @@ isItalic
 
 	^logfont lfItalic ~= 0!
 
-isItalic: aBoolean 
+isItalic: aBoolean
 	"Set whether the receiver is an italic typeface."
 
 	self isItalic == aBoolean ifTrue: [^self].
 	logfont lfItalic: aBoolean asParameter.
 	"Cause the receiver to be re-realized"
-	self free!
+	self styleChanged!
 
 isStruckThrough
 	"Answer whether the strike-out effect is set."
@@ -143,8 +146,7 @@ isStruckThrough: aBoolean
 
 	self isStruckThrough == aBoolean ifTrue: [^self].
 	logfont lfStrikeOut: aBoolean asParameter.
-	"Cause the receiver to be re-realized"
-	self free!
+	self styleChanged!
 
 isUnderlined
 	"Answer whether the receiver is underlined."
@@ -156,8 +158,7 @@ isUnderlined: aBoolean
 
 	self isUnderlined == aBoolean ifTrue: [^self].
 	logfont lfUnderline: aBoolean asParameter.
-	"Cause the receiver to be re-realized"
-	self free!
+	self styleChanged!
 
 logFont
 	"Answer the receiver's logical attributes."
@@ -168,7 +169,7 @@ logFont: aLOGFONT
 	"Set the receiver's logical attributes."
 
 	logfont := aLOGFONT.
-	self free!
+	self styleChanged!
 
 name
 	"Answer the face name of the font."
@@ -219,6 +220,7 @@ postCopy
 
 	super postCopy.
 	logfont := logfont copy.
+	series := nil.
 	^self!
 
 printOn: aStream
@@ -248,11 +250,29 @@ series
 series: aFontSeries
 	series := aFontSeries!
 
+setHandle: anExternalHandle dpi: anInteger
+	ownsHandle := false.
+	handle := anExternalHandle.
+	dpi := anInteger.
+	self getLogFont.
+	^self!
+
 setLogFont: aLOGFONT dpi: anInteger
 	ownsHandle := true.
 	logfont := aLOGFONT.
 	dpi := anInteger.
 	^self!
+
+setOwnedHandle: anExternalHandle dpi: anInteger
+	self ownedHandle: anExternalHandle.
+	dpi := anInteger.
+	self getLogFont.
+	^self!
+
+styleChanged
+	"Private - An attribute of the receiver has been changed, invalidating the handle and the relationship to the series."
+	self free.
+	series := nil!
 
 weight
 	"Answer the receiver's <integer> 'weight' (thickness)."
@@ -264,8 +284,7 @@ weight: anInteger
 
 	self weight = anInteger ifTrue: [^self].
 	logfont lfWeight: anInteger.
-	"Cause the receiver to be re-realized"
-	self free! !
+	self styleChanged! !
 
 !Font categoriesForMethods!
 =!comparing!public! !
@@ -277,8 +296,9 @@ characterSet!accessing!public! !
 characterSet:!accessing!public! !
 createHandle!private!realizing/unrealizing! !
 displayOn:!displaying!public! !
-dpi!mapping!public! !
+dpi!accessing!public!scaling! !
 dpi:!accessing!public!scaling! !
+getLogFont!initializing!private! !
 handle:!accessing!public! !
 hash!comparing!public! !
 initialize!initializing!public! !
@@ -307,7 +327,10 @@ resolution!accessing!public! !
 resolution:!accessing!public!scaling! !
 series!accessing!public! !
 series:!accessing!public! !
-setLogFont:dpi:!accessing!initializing!private! !
+setHandle:dpi:!initializing!private! !
+setLogFont:dpi:!initializing!private! !
+setOwnedHandle:dpi:!initializing!private! !
+styleChanged!modes!private! !
 weight!accessing!public! !
 weight:!accessing!public! !
 !
@@ -325,15 +348,34 @@ defaultPointSize
 
 	^10!
 
-fromLogFont: aLOGFONT
-	"Answer a new instance of the receiver with specified logical attributes."
+fromHandle: aHandle
+	Notification deprecated.	"Use #fromHandle:dpi:"
+	^self fromHandle: aHandle dpi: SystemMetrics current dpi!
 
+fromHandle: aHandle dpi: anInteger
+	"Answers an instance of the receiver with aHandle that has been created for use at the specified DPI. The handle is not owned by the instance and will not therefore be freed by it."
+
+	^self basicNew setHandle: aHandle dpi: anInteger!
+
+fromLogFont: aLOGFONT
+	"Answer a new instance of the receiver with specified logical attributes. Note that it is assumed that the font height in the LOGFONT is specified for a font to be used at the current system (i.e. primary monitor) DPI. It is usually preferable to use #fromLogFont:dpi: and specify the DPI, otherwise the font may be sized incorrectly. Unfortunately there is no way to specify a point size directly in a LOGFONT - the physical size must be specified."
+
+	Notification deprecated. "Use fromLogFont:dpi: to be explicit about the DPI"
 	^self fromLogFont: aLOGFONT dpi: SystemMetrics current dpi!
 
 fromLogFont: aLOGFONT dpi: anInteger
 	"Answer a new instance of the receiver with specified logical attributes."
 
 	^self basicNew setLogFont: aLOGFONT dpi: anInteger!
+
+fromOwnedHandle: aHandle
+	Notification deprecated.	"Use #fromOwnedHandle:dpi:"
+	^self fromOwnedHandle: aHandle dpi: SystemMetrics current dpi!
+
+fromOwnedHandle: aHandle dpi: anInteger
+	"Answers an instance of the receiver with aHandle assumed to have been created for the specified DPI. The handle is owned by the instance and will therefore be freed by it."
+
+	^self basicNew setOwnedHandle: aHandle dpi: anInteger!
 
 icon
 	"Answers an Icon that can be used to represent this class"
@@ -405,8 +447,12 @@ uninitialize
 !Font class categoriesForMethods!
 default!instance creation!public! !
 defaultPointSize!constants!private! !
+fromHandle:!instance creation!public! !
+fromHandle:dpi:!instance creation!public! !
 fromLogFont:!instance creation!public! !
 fromLogFont:dpi:!instance creation!public! !
+fromOwnedHandle:!instance creation!public! !
+fromOwnedHandle:dpi:!instance creation!public! !
 icon!constants!public! !
 name:!instance creation!public! !
 name:pixelSize:!instance creation!public! !

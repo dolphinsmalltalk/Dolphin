@@ -736,8 +736,7 @@ setFont: aFont
 	Note that the control may ignore the ambient property entirely, or
 	respect it only on initial creation."
 
-	aFont resolution: self resolution.
-	self ambientDispatch font: (IFontDisp fromFont: aFont)!
+	self ambientDispatch font: (IFontDisp fromFont: (aFont atDpi: self dpi))!
 
 showGrabHandles
 	"Answer whether the control should show grab handles.
