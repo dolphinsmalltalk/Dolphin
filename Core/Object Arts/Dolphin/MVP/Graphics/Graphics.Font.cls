@@ -36,7 +36,7 @@ characterSet: anInteger
 
 	anInteger = self characterSet ifTrue: [^self].
 	logfont lfCharSet: anInteger.
-	self free!
+	self styleChanged!
 
 getLogFont
 	logfont ifNil: [logfont := LOGFONTW newBuffer].
@@ -60,7 +60,7 @@ isItalic: aBoolean
 	self isItalic == aBoolean ifTrue: [^self].
 	logfont lfItalic: aBoolean asParameter.
 	"Cause the receiver to be re-realized"
-	self free!
+	self styleChanged!
 
 isStruckThrough: aBoolean 
 	"Set the struck out character effect."
@@ -68,7 +68,7 @@ isStruckThrough: aBoolean
 	self isStruckThrough == aBoolean ifTrue: [^self].
 	logfont lfStrikeOut: aBoolean asParameter.
 	"Cause the receiver to be re-realized"
-	self free!
+	self styleChanged!
 
 isUnderlined: aBoolean 
 	"Reset the receiver's underline attribute."
@@ -76,13 +76,13 @@ isUnderlined: aBoolean
 	self isUnderlined == aBoolean ifTrue: [^self].
 	logfont lfUnderline: aBoolean asParameter.
 	"Cause the receiver to be re-realized"
-	self free!
+	self styleChanged!
 
 logFont: aLOGFONT 
 	"Set the receiver's logical attributes."
 
 	logfont := aLOGFONT.
-	self free!
+	self styleChanged!
 
 name: aString
 	"Set the receiver's font name attribute. This has no affect if the receiver is already realized."
@@ -129,13 +129,19 @@ printOn: aStream
 				separatedBy: [aStream nextPut: $;].
 			aStream nextPut: $)]!
 
+styleChanged
+	"Private - An attribute of the receiver has been changed, invalidating the handle and the relationship to the series."
+
+	self free.
+	series := nil!
+
 weight: anInteger 
 	"Set the receiver's 'weight' (thickness)."
 
 	self weight = anInteger ifTrue: [^self].
 	logfont lfWeight: anInteger.
 	"Cause the receiver to be re-realized"
-	self free! !
+	self styleChanged! !
 
 !Graphics.Font categoriesForMethods!
 beBold!accessing!public! !
@@ -152,6 +158,7 @@ logFont:!accessing!public! !
 name:!accessing!public! !
 pixelSize:!accessing!public! !
 printOn:!development!printing!public! !
+styleChanged!helpers!private! !
 weight:!accessing!public! !
 !
 

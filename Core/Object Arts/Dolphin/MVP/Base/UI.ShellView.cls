@@ -1040,14 +1040,13 @@ wmDpiChanged: message wParam: wParam lParam: lParam
 	newRect := RECTL fromAddress: lParam.
 	self resolutionScaledBy: newDpi / self resolution.
 	dpi := newDpi.
-	font ifNil: [self fontChanged] ifNotNil: [
-		#highDpiToDo. "Not sure we need to do this. Can scale font at point of use"
-		self font: (font atDpi: newDpi)].
 	self rectangle: newRect.
 	^0!
 
 wmDpiChangedBeforeParent: message wParam: wParam lParam: lParam
-	"Respond to a parent DPI change - we only expect to receive this message when embedded as a child, e.g. in an Idea Space. In this case we will not receive a WM_DPICHANGED, so we need to also update the cached DPI here or the fonts, etc, inherited by subviews may not be scaled correctly."
+	"Private - Handles a WM_DPICHANGED_BEFOREPARENT message. This is only sent to child windows, bottom-up, before the top-level window receives a WM_DPICHANGED."
+
+	"N.B. We only expect to receive this message when embedded as a child, e.g. in an Idea Space. As a child, we will not receive a WM_DPICHANGED, so we need to also update the cached DPI here."
 
 	dpi := super dpi.
 	super

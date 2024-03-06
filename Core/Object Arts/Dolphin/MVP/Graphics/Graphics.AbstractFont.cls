@@ -55,9 +55,7 @@ dpi
 	^dpi!
 
 dpi: anInteger
-	"Sets the logical pixels per inch of the receiver. Note that this will free the font handle, so don't change the resolution of a shared font (use #withResolution:)."
-
-	"Check the resolution for the receiver to see if it matches the supplied resolution in aPoint. If not, then the logical font information is rescaled and the receiver's resolution is changed to that in aPoint."
+	"Sets the logical pixels per inch of the receiver. Note that if the dpi changes, this will free the font handle, breaking any existing uses. This tends to be obvious as controls will mysteriously start painting using some default font. Changing the DPI of a shared font must therefore be avoided. Instead use #atDpi: to get an equivalent Font at the desired scale."
 
 	| oldDpi |
 	dpi = anInteger ifTrue: [^self].
@@ -152,6 +150,7 @@ postCopy
 
 	super postCopy.
 	logfont := logfont copy.
+	series := nil.
 	^self!
 
 resolution
@@ -170,10 +169,22 @@ series
 series: aFontSeries
 	series := aFontSeries!
 
+setHandle: anExternalHandle dpi: anInteger
+	ownsHandle := false.
+	self handle: anExternalHandle.
+	dpi := anInteger.
+	^self!
+
 setLogFont: aLOGFONT dpi: anInteger
 	ownsHandle := true.
 	logfont := aLOGFONT.
 	dpi := anInteger.
+	^self!
+
+setOwnedHandle: anExternalHandle dpi: anInteger
+	self ownedHandle: anExternalHandle.
+	dpi := anInteger.
+	self getLogFont.
 	^self!
 
 species
@@ -196,7 +207,7 @@ atDpi:!public!scaling! !
 characterSet!accessing!public! !
 createHandle!private!realizing/unrealizing! !
 displayOn:!displaying!public! !
-dpi!mapping!public! !
+dpi!accessing!public!scaling! !
 dpi:!accessing!public!scaling! !
 getLogFont!initializing!private! !
 hash!comparing!public! !
@@ -218,7 +229,9 @@ resolution!accessing!public! !
 resolution:!accessing!public!scaling! !
 series!accessing!public! !
 series:!accessing!public! !
+setHandle:dpi:!initializing!private! !
 setLogFont:dpi:!initializing!private! !
+setOwnedHandle:dpi:!initializing!private! !
 species!public! !
 unstyledCopy!copying!public! !
 weight!accessing!public! !
@@ -237,6 +250,15 @@ defaultPointSize
 
 	^10!
 
+fromHandle: aHandle
+	Notification deprecated.	"Use #fromHandle:dpi:"
+	^self fromHandle: aHandle dpi: SystemMetrics current dpi!
+
+fromHandle: aHandle dpi: anInteger
+	"Answers an instance of the receiver with aHandle that has been created for use at the specified DPI. The handle is not owned by the instance and will not therefore be freed by it."
+
+	^self basicNew setHandle: aHandle dpi: anInteger!
+
 fromId: anInteger
 	"Answer a new instance of the receiver representing the stock font id anInteger."
 
@@ -245,14 +267,24 @@ fromId: anInteger
 		yourself!
 
 fromLogFont: aLOGFONT
-	"Answer a new instance of the receiver with specified logical attributes."
+	"Answer a new instance of the receiver with specified logical attributes. Note that it is assumed that the font height in the LOGFONT is specified for a font to be used at the current system (i.e. primary monitor) DPI. It is usually preferable to use #fromLogFont:dpi: and specify the DPI, otherwise the font may be sized incorrectly. Unfortunately there is no way to specify a point size directly in a LOGFONT - the physical size must be specified."
 
+	Notification deprecated. "Use fromLogFont:dpi: to be explicit about the DPI"
 	^self fromLogFont: aLOGFONT dpi: SystemMetrics current dpi!
 
 fromLogFont: aLOGFONT dpi: anInteger
 	"Answer a new instance of the receiver with specified logical attributes."
 
 	^self basicNew setLogFont: aLOGFONT dpi: anInteger!
+
+fromOwnedHandle: aHandle
+	Notification deprecated.	"Use #fromOwnedHandle:dpi:"
+	^self fromOwnedHandle: aHandle dpi: SystemMetrics current dpi!
+
+fromOwnedHandle: aHandle dpi: anInteger
+	"Answers an instance of the receiver with aHandle assumed to have been created for the specified DPI. The handle is owned by the instance and will therefore be freed by it."
+
+	^Font basicNew setOwnedHandle: aHandle dpi: anInteger!
 
 icon
 	"Answers an Icon that can be used to represent this class"
@@ -307,9 +339,13 @@ system
 !Graphics.AbstractFont class categoriesForMethods!
 default!instance creation!public! !
 defaultPointSize!constants!private! !
+fromHandle:!instance creation!public! !
+fromHandle:dpi:!instance creation!public! !
 fromId:!instance creation!public! !
 fromLogFont:!instance creation!public! !
 fromLogFont:dpi:!instance creation!public! !
+fromOwnedHandle:!instance creation!public! !
+fromOwnedHandle:dpi:!instance creation!public! !
 icon!constants!public! !
 name:!instance creation!public! !
 name:pixelSize:!instance creation!public! !

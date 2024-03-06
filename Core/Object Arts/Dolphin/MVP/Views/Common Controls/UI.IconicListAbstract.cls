@@ -872,6 +872,12 @@ wmDestroy: message wParam: wParam lParam: lParam
 		lParam: lParam!
 
 wmDpiChangedAfterParent: message wParam: wParam lParam: lParam
+	"Private - Handles a WM_DPICHANGED_AFTERPARENT message. This is only sent to child windows, bottom-up, before the top-level window receives a WM_DPICHANGED."
+
+	super
+		wmDpiChangedAfterParent: message
+		wParam: wParam
+		lParam: lParam.
 	self applyImageLists.
 	^nil! !
 

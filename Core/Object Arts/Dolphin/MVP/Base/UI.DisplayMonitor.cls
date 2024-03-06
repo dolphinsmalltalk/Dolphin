@@ -182,7 +182,7 @@ rectangle
 	^self info rcMonitor asRectangle!
 
 resolution
-	"Answer the logical resolution for this monitor. Note that this may not be the same as the physical resolution, depending on the DPI awareness of the application and the OS magnification setting. When DPI unaware, this is always 96. When system DPI aware it is the system-wide DPI, even if different than this monitor's DPI. When per-monitor DPI aware, it is the effective DPI of the monitor (i.e. the monitors's DPI at the configured magnification)."
+	"Answer the logical resolution for this monitor. Note that this may not be the same as the physical resolution, depending on the DPI awareness of the application and the OS magnification setting. When DPI unaware, this is always 96@96. When system DPI aware it is the system-wide DPI, even if different than this monitor's DPI. When per-monitor DPI aware, it is the effective DPI of the monitor (i.e. the monitors's DPI at the configured magnification)."
 
 	^resolution ifNil: [resolution := self getResolution: MDT_DEFAULT]!
 

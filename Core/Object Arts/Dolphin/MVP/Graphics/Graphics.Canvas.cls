@@ -177,6 +177,15 @@ colors
 
 	^2 raisedToInteger: (self colorDepth)!
 
+dpi
+	"Answers a Point containing the logical pixels per inch for the receiver."
+
+	"GetDeviceCaps always answer the system-wide (primary monitor) DPI for Window DCs. It is such an obvious high DPI issue that it must be a deliberate choice to do return the system DPI rather than the monitor DPI for the window, but frankly it is not very helpful. However, since we can query the window handle for Window DCs, we can get to the real DPI easily enough."
+
+	^(UserLibrary default windowFromDC: handle)
+		ifNil: [self getDeviceCaps: LOGPIXELSY]
+		ifNotNil: [:hWnd | UserLibrary default getDpiForWindow: hWnd]!
+
 drawBitmap: aBitmap at: dstOrigin extent: dstExtent from: srcOrigin extent: srcExtent rop: dwRasterOp
 	"Private - Blit the specified rectangle of aBitmap to the specified destination
 	rectangle with the specified raster op. The receiver is stretched to
@@ -305,8 +314,8 @@ font: aFont
 	oldFont := self font.
 	oldFont == aFont ifTrue: [^oldFont].
 	font := aFont.
-	(true or: [self mapMode = MM_TEXT]) ifTrue: [font := font atDpi: self resolution y].
-	self selectObject: aFont.
+	(true or: [self mapMode = MM_TEXT]) ifTrue: [font := font atDpi: self dpi].
+	self selectObject: font.
 	^oldFont!
 
 fontFamilies: aString do: aValuable
@@ -420,10 +429,17 @@ getClipBox
 getDeviceCaps: anInteger 
 	"Answer the specified device capability."
 
-	^GDILibrary default getDeviceCaps: self asParameter nIndex: anInteger!
+	^Gdi32 getDeviceCaps: self asParameter nIndex: anInteger!
+
+getDpi
+	"Private - GetDeviceCaps always answer the system-wide (primary monitor) DPI for Window DCs. It is such an obvious high DPI issue that it must be a deliberate choice to do return the system DPI rather than the monitor DPI for the window, but frankly it is not very helpful. However, since we can query the window handle for Window DCs, we can get to the real DPI easily enough."
+
+	^(User32 windowFromDC: handle)
+		ifNil: [self getDeviceCaps: LOGPIXELSY]
+		ifNotNil: [:hWnd | User32 getDpiForWindow: hWnd]!
 
 getFont
-	^Font fromHandle: self fontHandle!
+	^Font fromHandle: self fontHandle dpi: self dpi!
 
 getPixel: aPoint
 	"Private - Get the colour of the pixel at x@y. Note that the indices are zero-based!!"
@@ -1019,6 +1035,7 @@ brushOrigin:!accessing!public! !
 clipBox!accessing!public! !
 colorDepth!accessing!public! !
 colors!accessing!public! !
+dpi!accessing!public! !
 drawBitmap:at:extent:from:extent:rop:!colors!private! !
 drawEdge:edge:grfFlags:!drawing!public! !
 ellipse:!drawing!public! !

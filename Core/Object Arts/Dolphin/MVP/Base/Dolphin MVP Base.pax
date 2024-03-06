@@ -298,6 +298,7 @@ package setMethodNames: #(
 	#(#{OS.UserLibrary} #unregisterClass:hInstance:)
 	#(#{OS.UserLibrary} #unregisterHotKey:id:)
 	#(#{OS.UserLibrary} #validate:lpRect:)
+	#(#{OS.UserLibrary} #windowFromDC:)
 	#(#{OS.UserLibrary} #windowFromPoint:)
 	#(#{UI.ResourceIdentifier} #canShow)
 	#(#{UI.ResourceIdentifier} #fixupIcon)
@@ -4005,6 +4006,13 @@ validate: hWnd lpRect: aRECT
 	<stdcall: bool ValidateRect handle RECTL*>
 	^self invalidCall: _failureCode!
 
+windowFromDC: hDC
+	"HWND WindowFromDC(
+		[in] HDC hDC
+	);"
+	<stdcall: handle WindowFromDC handle>
+	^self invalidCall: _failureCode!
+
 windowFromPoint: aPOINTL
 	"The WindowFromPoint function retrieves the handle of the window that contains the
 	specified point. 
@@ -4165,6 +4173,7 @@ translateAccelerator:haccl:lpmsg:!public!win32 functions-keyboard accelerator! !
 unregisterClass:hInstance:!public!win32 functions-window class! !
 unregisterHotKey:id:!public!win32 functions-keyboard input! !
 validate:lpRect:!public!win32 functions-painting and drawing! !
+windowFromDC:!public!win32 functions-device context! !
 windowFromPoint:!public!win32 functions-window! !
 !
 
