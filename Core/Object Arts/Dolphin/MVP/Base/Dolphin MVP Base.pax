@@ -101,6 +101,7 @@ package classNames
 	add: #FLASHWINFO;
 	add: #FlowLayout;
 	add: #Font;
+	add: #FontSeries;
 	add: #FramingCalculation;
 	add: #FramingConstraints;
 	add: #FramingContext;
@@ -503,6 +504,12 @@ Object subclass: #Event
 Object subclass: #FindDetails
 	instanceVariableNames: 'pattern replaceWith searchMode flags action'
 	classVariableNames: 'IgnoreCaseMask UpMask WholeWordMask WrapMask'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+Object subclass: #FontSeries
+	instanceVariableNames: 'canonical instances'
+	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
@@ -1167,7 +1174,7 @@ GraphicsTool subclass: #Brush
 	classInstanceVariableNames: ''!
 
 GraphicsTool subclass: #Font
-	instanceVariableNames: 'logfont resolution'
+	instanceVariableNames: 'logfont dpi series'
 	classVariableNames: 'System'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

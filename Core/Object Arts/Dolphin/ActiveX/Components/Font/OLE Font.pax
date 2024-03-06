@@ -79,11 +79,11 @@ fromOleFont:!instance creation!public! !
 !Font class methodsFor!
 
 fromOleFont: pFont
-	"Answer a new instance of the receiver which is equivalent to the OLE font on which the
-	<IFont>|<IFontDisp> argument, anIFont, is an interface."
+	"Answer a new instance of the receiver which is equivalent to the OLE font on which the <IFont>|<IFontDisp> argument, anIFont, is an interface."
 
-	^self fromLogFont: (LOGFONTW fromOleFont: pFont)
-		resolution: ##(USER_DEFAULT_SCREEN_DPI @ USER_DEFAULT_SCREEN_DPI)! !
+	"Note that OLE Fonts are measured at 72 dpi, but the LOGFONT conversion has already scaled to 96-dpi."
+
+	^self fromLogFont: (LOGFONTW fromOleFont: pFont) dpi: USER_DEFAULT_SCREEN_DPI! !
 
 !Font class categoriesForMethods!
 fromOleFont:!instance creation!public! !

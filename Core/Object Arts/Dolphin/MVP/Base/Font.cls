@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 GraphicsTool subclass: #Font
-	instanceVariableNames: 'logfont resolution'
+	instanceVariableNames: 'logfont dpi series'
 	classVariableNames: 'System'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -18,6 +18,12 @@ Font comment: ''!
 	"Answer true if aFont is equal to (has the same logical font info) as the receiver."
 
 	^self species == aFont species and: [logfont = aFont logFont]!
+
+atDpi: anInteger
+	"Answer a <Font> that is same as the receiver, but with the specified resolution. If that resolution is the same as the receiver's, then answer the receiver."
+
+	dpi = anInteger ifTrue: [^self].
+	^self series atDpi: anInteger!
 
 beBold
 	"Set the receiver's bold attribute."
@@ -60,6 +66,27 @@ displayOn: aStream
 	self pointSize displayOn: aStream.
 	aStream nextPutAll: 'pt'!
 
+dpi
+	"Answer the logical pixels per inch of the receiver"
+
+	^dpi!
+
+dpi: anInteger
+	"Sets the logical pixels per inch of the receiver. Note that this will free the font handle, so don't change the resolution of a shared font (use #withResolution:)."
+
+	"Check the resolution for the receiver to see if it matches the supplied resolution in aPoint. If not, then the logical font information is rescaled and the receiver's resolution is changed to that in aPoint."
+
+	| oldDpi |
+	dpi = anInteger ifTrue: [^self].
+	self free.
+	oldDpi := dpi.
+	
+	[| ptSize |
+	ptSize := self pointSize.
+	dpi := anInteger.
+	self pointSize: ptSize]
+			ifCurtailed: [dpi := oldDpi]!
+
 handle: hFont
 	"Sets the non-owned handle for the receiver and queries its logical info."
 
@@ -76,7 +103,7 @@ initialize
 
 	super initialize.
 	(logfont := LOGFONTW new) lfWeight: FW_NORMAL.
-	resolution := SystemMetrics current resolution!
+	resolution := SystemMetrics current dpi!
 
 isBold
 	"Answer whether the receiver is bold."
@@ -156,8 +183,7 @@ name: aString
 pixelFromPoints: size
 	"Private - Answers a pixel size from a given point size."
 
-	^(size * resolution y / 72) rounded.
-!
+	^(size * self dpi / 72) rounded!
 
 pixelSize
 	"Answers the receiver's pixel size."
@@ -173,7 +199,7 @@ pixelSize: anInteger
 pointFromPixels: size
 	"Private - Answers a point size from a given pixel size."
 
-	^(size * 72 / resolution y) rounded.
+	^(size * 72 / self dpi) rounded.
 !
 
 pointSize
@@ -209,30 +235,23 @@ printOn: aStream
 resolution
 	"Answer the logical pixels per inch of the receiver"
 
-	^resolution!
+	^dpi @ dpi!
 
-resolution: aPoint 
-	"Sets the logical pixels per inch of the receiver"
+resolution: aPoint
+	"Sets the logical pixels per inch of the receiver. Note that this will free the font handle, so don't change the resolution of a shared font (use #withResolution:)."
 
-	"Check the resolution for the receiver to see if it matches
-	the supplied resolution in aPoint. If not, then the logical font information
-	is rescaled and the receiver's resolution is changed to that in aPoint."
+	self dpi: aPoint y!
 
-	| oldres |
-	resolution = aPoint ifTrue: [^self].
-	self free.
-	oldres := resolution.
-	
-	[| ptSize |
-	ptSize := self pointSize.
-	resolution := aPoint.
-	self pointSize: ptSize] 
-			ifCurtailed: [resolution := oldres]!
+series
+	^series ifNil: [FontSeries forFont: self]!
 
-setLogFont: aLOGFONT resolution: aPoint
+series: aFontSeries
+	series := aFontSeries!
+
+setLogFont: aLOGFONT dpi: anInteger
 	ownsHandle := true.
 	logfont := aLOGFONT.
-	resolution := aPoint.
+	dpi := anInteger.
 	^self!
 
 weight
@@ -250,6 +269,7 @@ weight: anInteger
 
 !Font categoriesForMethods!
 =!comparing!public! !
+atDpi:!public!scaling! !
 beBold!accessing!public! !
 beItalic!accessing!public! !
 beUnderlined!accessing!public! !
@@ -257,6 +277,8 @@ characterSet!accessing!public! !
 characterSet:!accessing!public! !
 createHandle!private!realizing/unrealizing! !
 displayOn:!displaying!public! !
+dpi!mapping!public! !
+dpi:!accessing!public!scaling! !
 handle:!accessing!public! !
 hash!comparing!public! !
 initialize!initializing!public! !
@@ -282,8 +304,10 @@ pointSize:!accessing!public! !
 postCopy!copying!public! !
 printOn:!development!printing!public! !
 resolution!accessing!public! !
-resolution:!accessing!public! !
-setLogFont:resolution:!accessing!initializing!private! !
+resolution:!accessing!public!scaling! !
+series!accessing!public! !
+series:!accessing!public! !
+setLogFont:dpi:!accessing!initializing!private! !
 weight!accessing!public! !
 weight:!accessing!public! !
 !
@@ -304,12 +328,12 @@ defaultPointSize
 fromLogFont: aLOGFONT
 	"Answer a new instance of the receiver with specified logical attributes."
 
-	^self fromLogFont: aLOGFONT resolution: SystemMetrics current resolution!
+	^self fromLogFont: aLOGFONT dpi: SystemMetrics current dpi!
 
-fromLogFont: aLOGFONT resolution: aPoint
+fromLogFont: aLOGFONT dpi: anInteger
 	"Answer a new instance of the receiver with specified logical attributes."
 
-	^self basicNew setLogFont: aLOGFONT resolution: aPoint!
+	^self basicNew setLogFont: aLOGFONT dpi: anInteger!
 
 icon
 	"Answers an Icon that can be used to represent this class"
@@ -349,6 +373,24 @@ reset
 
 	System := nil!
 
+stbConvertFrom: anSTBClassFormat
+	| version |
+	version := anSTBClassFormat version.
+	version == 0 ifTrue: [^[:data | (self stbConvertFromVersion0: data) becomeA: self]].
+	^super stbConvertFrom: anSTBClassFormat!
+
+stbConvertFromVersion0: anArray
+	"Private - Convert from version 0 font. Version 1 adds series instance variable, which is lazily initialized, and the DPI is stored as an integer value rather than a <Point>"
+
+	^(anArray resize: anArray size + 1)
+		at: 4 put: (anArray at: 4) y;
+		yourself!
+
+stbVersion
+	"Version 1 adds series inst var, and repurposes the resolution inst var to hold just the DPI (we don't need two dimensions to scale the font height)."
+
+	^1!
+
 system
 	"Answer the stock System font."
 
@@ -364,13 +406,16 @@ uninitialize
 default!instance creation!public! !
 defaultPointSize!constants!private! !
 fromLogFont:!instance creation!public! !
-fromLogFont:resolution:!instance creation!public! !
+fromLogFont:dpi:!instance creation!public! !
 icon!constants!public! !
 name:!instance creation!public! !
 name:pixelSize:!instance creation!public! !
 name:pointSize:!instance creation!public! !
 onPreStripImage!class hierarchy-removing!private! !
 reset!instance creation!public! !
+stbConvertFrom:!binary filing!private! !
+stbConvertFromVersion0:!binary filing!private! !
+stbVersion!binary filing!public! !
 system!instance creation!public! !
 uninitialize!class hierarchy-removing!private! !
 !
