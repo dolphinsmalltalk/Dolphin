@@ -15,9 +15,6 @@ UI.ToolbarBitmapButton comment: '`ToolbarBitmapButton` represents a user defined
 ## Instance Variables:
   `bitmap`			`Bitmap` containing one or more button images.
   `bitmapIndex`		`<integer>` index of this button''s image within the bitmap.
-
-
-
 '!
 
 !UI.ToolbarBitmapButton categoriesForClass!MVP-Views-Support! !

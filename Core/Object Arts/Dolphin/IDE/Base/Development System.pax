@@ -10123,9 +10123,10 @@ publishedAspects
 	self bitmap
 		ifNotNil: 
 			[:bmp |
-			aspects add: (Aspect
+			aspects 
+				add: (Aspect
 						choice: #bitmapIndex
-						from: [0 to: bmp extent x // (self toolbar ifNil: [16] ifNotNil: [:tb | tb actualBitmapSize x])]
+						from: [0 to: bmp extent x // (self toolbar ifNil: [OS.SystemMetrics default smallIconExtent x] ifNotNil: [:tb | tb bitmapSize x])]
 						type: Integer)].
 	^aspects! !
 
