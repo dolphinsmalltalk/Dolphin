@@ -1090,10 +1090,14 @@ itemsPerPage
 	^self sendMessage: LVM_GETCOUNTPERPAGE!
 
 largeIconExtent: aPointOrNil
+	"Set the icon extent for one of the large icon modes of the receiver. The <point> argument is specified in DIPs (96-dpi), or may be nil for a small icon mode (#list, #report, #smallIcons)."
+
 	iconSpacing notNil
 		ifTrue: 
 			["Remove any custom spacing if insufficient for the icon size"
-			self setIconSpacing: ((aPointOrNil notNil and: [aPointOrNil > iconSpacing]) ifFalse: [iconSpacing])].
+			self
+				setIconSpacing: ((aPointOrNil notNil
+						and: [aPointOrNil * self dpi // USER_DEFAULT_SCREEN_DPI > iconSpacing]) ifFalse: [iconSpacing])].
 	^super largeIconExtent: aPointOrNil!
 
 largeIconMode
@@ -2295,8 +2299,8 @@ viewModeChanged
 	(self customImageExtent
 		ifNil: 
 			[viewMode == #largeIcons
-				ifTrue: [self metrics largeIconExtent]
-				ifFalse: [viewMode == #tileIcons ifTrue: [self metrics tileIconExtent]]])
+				ifTrue: [SystemMetrics default largeIconExtent]
+				ifFalse: [viewMode == #tileIcons ifTrue: [SystemMetrics default tileIconExtent]]])
 			ifNil: [self applyImageLists]
 			ifNotNil: [:ext | self largeIconExtent: ext].
 	style := LvModes at: viewMode ifAbsent: [LVS_REPORT].
