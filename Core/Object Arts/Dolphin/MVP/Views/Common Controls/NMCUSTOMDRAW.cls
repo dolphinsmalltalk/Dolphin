@@ -64,6 +64,11 @@ canvas
 	canvas isNil ifTrue: [canvas := Canvas withNonOwnedDC: self hdc].
 	^canvas!
 
+dpi
+	"Answer the DPI of the control being drawn."
+
+	^view dpi!
+
 dwDrawStage
 	"Answer the <Integer> value of the receiver's 'dwDrawStage' field."
 
@@ -83,7 +88,9 @@ evaluateDrawBlock: customDrawBlock
 font
 	"Answer the character font."
 
-	^font ifNil: [font := self canvas font]!
+	"We assume the font is being accessed in order to be modified, so allocate a copy"
+
+	^font ifNil: [font := self canvas font copy]!
 
 font: aFont
 	"Set the character font.
@@ -195,7 +202,10 @@ view
 
 view: anIconListAbstract
 	"Private -"
-	view := anIconListAbstract! !
+	view := anIconListAbstract!
+
+viewFont
+	^view actualFont atDpi: self dpi! !
 
 !NMCUSTOMDRAW categoriesForMethods!
 applyFont!operations!private! !
@@ -203,6 +213,7 @@ backcolor!accessing!public! !
 backcolor:!accessing!public! !
 boundingRectangle!accessing!public! !
 canvas!accessing!public! !
+dpi!**compiled accessors**!public! !
 dwDrawStage!**compiled accessors**!public! !
 dwItemSpec!**compiled accessors**!public! !
 evaluateDrawBlock:!operations!public! !
@@ -229,6 +240,7 @@ rc!**compiled accessors**!public! !
 uItemState!**compiled accessors**!public! !
 view!accessing!public! !
 view:!accessing!private! !
+viewFont!accessing!private! !
 !
 
 NMCUSTOMDRAW methodProtocol: #customDrawContext attributes: #(#readOnly) selectors: #(#backcolor #backcolor: #boundingRectangle #canvas #font #font: #forecolor #forecolor: #hasFocus #isChecked #isDefault #isDisabled #isGrayed #isHot #isIndeterminate #isSelected #view)!

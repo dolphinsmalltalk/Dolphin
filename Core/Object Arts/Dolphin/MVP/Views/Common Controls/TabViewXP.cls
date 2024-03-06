@@ -28,7 +28,7 @@ createVerticalFont
 	| lf |
 	lf := self actualFont logFont copy.
 	lf lfEscapement: (self isInverted ifTrue: [2700] ifFalse: [900]).
-	^Font fromLogFont: lf!
+	^Font fromLogFont: lf dpi: self dpi!
 
 imageTextGap
 	^6!
