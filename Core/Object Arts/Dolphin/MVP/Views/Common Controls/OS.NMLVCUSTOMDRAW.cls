@@ -24,10 +24,9 @@ OS.NMLVCUSTOMDRAW comment: '`NMLVCUSTOMDRAW` is an `ExternalStructure` class to 
 !OS.NMLVCUSTOMDRAW methodsFor!
 
 applyFont
-	
 	"If a font has not been set, install the view's font to ensure any font change from a previous column is reset"
-	font isNil ifTrue: [font := self view actualFont].
 
+	font isNil ifTrue: [font := self viewFont].
 	^super applyFont!
 
 backcolor
@@ -73,12 +72,6 @@ column: aListViewColumn
 	"Private -"
 	column := aListViewColumn!
 
-font
-	"Answer the character font."
-
-	"We assume the font is being accessed in order to be modified, so use a copy"
-	^font ifNil: [font := self view actualFont copy]!
-
 forecolor
 	"Answer the foreground text colour."
 
@@ -122,7 +115,6 @@ clrTextBk!**compiled accessors**!public! !
 clrTextBk:!**compiled accessors**!public! !
 column!accessing!public! !
 column:!accessing!private! !
-font!accessing!public! !
 forecolor!accessing!public! !
 forecolor:!accessing!public! !
 iSubItem!**compiled accessors**!public! !

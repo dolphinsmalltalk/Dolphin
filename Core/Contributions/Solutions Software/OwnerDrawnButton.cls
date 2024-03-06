@@ -138,6 +138,7 @@ nmCustomDraw: pNMHDR
 	| customDraw |
 
 	customDraw := NMCUSTOMDRAW fromAddress: pNMHDR.
+	customDraw view: self.
 	(customDraw dwDrawStage allMask: CDDS_PREPAINT) ifTrue: [self onCustomDraw: customDraw].
 
 	^CDRF_SKIPDEFAULT!
