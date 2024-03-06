@@ -7753,7 +7753,7 @@ publishedAspects
 		ifNotNil: 
 			[:bmp |
 			aspects add: (Aspect choice: #bitmapIndex
-						from: (0 to: bmp extent x // (self toolbar ifNil: [16] ifNotNil: [:tb | tb actualBitmapSize x])))].
+						from: (0 to: bmp extent x // (self toolbar ifNil: [16] ifNotNil: [:tb | tb scaledBitmapSize x])))].
 	^aspects! !
 
 !ToolbarBitmapButton categoriesForMethods!

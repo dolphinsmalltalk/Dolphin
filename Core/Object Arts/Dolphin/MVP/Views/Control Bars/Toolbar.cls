@@ -37,11 +37,6 @@ Toolbar holds a list of `<ToolbarItem>` items matching the order of items in the
 
 !Toolbar methodsFor!
 
-actualBitmapSize
-	"Private - Answer the actual pixel extent of bitmaps shown on the toolbar, measure at the current window DPI. This can be visually inherited from a parent toolbar, which is useful in allowing the image size to be changed just by changing that of the topmost toolbar."
-
-	^(ImageSizes at: self actualImageSize) * self dpi // USER_DEFAULT_SCREEN_DPI!
-
 actualImageSize
 	"Private - Answer the symbolic size of images to be shown as buttons on the toolbar. This can be visually inherited from a parent toolbar, which is useful in allowing the bitmap size to be changed just by changing that of the topmost toolbar."
 
@@ -67,7 +62,7 @@ addBitmap: aBitmap index: anIntegerIndex
 					gdiBitmap setMap3DColors: true.
 					"If the extent reported by the bitmap is not correct, then the start index will be out,
 					 so watch out for caching duff old extent (see Bitmap>>loadFromInstance)."
-					size := gdiBitmap extent x // self actualBitmapSize x.
+					size := gdiBitmap extent x // self scaledBitmapSize x.
 
 					"#305 We must make sure that the bitmap is not selected into a DC or the result will
 					be a blank image in the list. This won't damage the bitmap in any way because the canvas
@@ -401,6 +396,7 @@ imageSize: aSymbol
 
 	self imageSize == aSymbol ifTrue: [^self].
 	imageSize := (ImageSizes includesKey: aSymbol) ifTrue: [aSymbol].
+	self invalidateLayout.
 	"If the toolbar does not have an explicit button size, then adjust the toolbar to use the new size of images"
 	buttonSize
 		ifNil: 
@@ -590,7 +586,7 @@ onViewCreated
 	super onViewCreated.
 	self tbButtonStructSize: TBBUTTON byteSize.
 	bitmapsStart := LookupTable new.
-	self changeButtonSize: [self tbSetBitmapSize: self actualBitmapSize].
+	self changeButtonSize: [self tbSetBitmapSize: self scaledBitmapSize].
 	self tbSetExtendedStyle: ##(TBSTYLE_EX_DRAWDDARROWS | TBSTYLE_EX_DOUBLEBUFFER).
 	self clearIdMap.
 	indent ifNotNil: [self tbSetIndent: indent].
@@ -619,6 +615,16 @@ resolutionScaledBy: aPoint
 	super resolutionScaledBy: aPoint.
 	buttonSize ifNotNil: [buttonSize := buttonSize * aPoint].
 	indent ifNotNil: [indent := indent * aPoint x]!
+
+scaledBitmapSize
+	"Private - Answer the actual pixel extent of bitmaps shown on the toolbar, measure at the current window DPI. This can be visually inherited from a parent toolbar, which is useful in allowing the image size to be changed just by changing that of the topmost toolbar."
+
+	^(ImageSizes at: self actualImageSize) * self dpi // USER_DEFAULT_SCREEN_DPI!
+
+setButtonSize
+	self changeButtonSize: 
+			[buttonSize ifNotNil: [self tbSetButtonSize: buttonSize].
+			self tbSetBitmapSize: self scaledBitmapSize]!
 
 size
 	"Answer the number of ToolbarItems in the receiver."
@@ -924,8 +930,7 @@ tbPressButton: anIntegerId state: pressBoolean
 		ifTrue: [^self errorInCommonControlCall]!
 
 tbSetBitmapSize: aPoint 
-	"Private - Set the size of the bitmapped images for the receiver
-	to aPoint. Must be sent before any items are added."
+	"Private - Set the size of the bitmapped images for the receiver to aPoint. The documentation does say that this must be sent before any items are added, and indeed the toolbar does not resize itself correctly if this is changed after the fact."
 
 	(self 
 		sendMessage: TB_SETBITMAPSIZE
@@ -1001,9 +1006,7 @@ updateSize
 	"Private - Update the toolbar button and bitmap sizes."
 
 	self isOpen ifFalse: [^self].
-	self changeButtonSize: 
-			[buttonSize ifNotNil: [self tbSetButtonSize: buttonSize].
-			self tbSetBitmapSize: self actualBitmapSize].
+	self setButtonSize.
 	self tbAutoSize!
 
 updateSizePosted
@@ -1030,10 +1033,19 @@ wmCreate: message wParam: wParam lParam: lParam
 	^super
 		wmCreate: message
 		wParam: wParam
-		lParam: lParam! !
+		lParam: lParam!
+
+wmDpiChangedAfterParent: message wParam: wParam lParam: lParam
+	super
+		wmDpiChangedAfterParent: message
+		wParam: wParam
+		lParam: lParam.
+	"Toolbars don't resize properly when the bitmap size is changed, so we have to recreate them. Note that as the WM_DPICHANGED_AFTERPARENT message is sent top-down (the opposite of WM_DPICHANGED_BEFOREPARENT), this will mean that the existing sub-toolbars will not receive the resize because they have been replaced, which is ideal"
+	self recreate.
+	"Obviously we don't want this passed on since we recreated the window and the new Toolbar won't be expecting it."
+	^0! !
 
 !Toolbar categoriesForMethods!
-actualBitmapSize!geometry!private! !
 actualImageSize!geometry!private! !
 addBitmap:index:!helpers!private! !
 addEditTools!adding!private! !
@@ -1054,7 +1066,7 @@ buttonSize:!geometry!public! !
 calculateExtent:!geometry!private! !
 canCustomize!accessing-styles!public! !
 canCustomize:!accessing-styles!public! !
-changeButtonSize:!helpers!private! !
+changeButtonSize:!geometry!private! !
 clearIdMap!initializing!private! !
 command:id:!commands!private! !
 commandSource!commands!public! !
@@ -1097,6 +1109,8 @@ onViewCreated!event handling!public! !
 removeAllItems!public!removing! !
 removeItem:!public!removing! !
 resolutionScaledBy:!geometry!private! !
+scaledBitmapSize!geometry!private! !
+setButtonSize!operations!private! !
 size!geometry!public! !
 tbAddButtons:!helpers!private! !
 tbAddString:!adding!private! !
@@ -1152,6 +1166,7 @@ updateSize!operations!private! !
 updateSizePosted!operations!private! !
 validateUserInterface!operations!public! !
 wmCreate:wParam:lParam:!event handling-win32!private! !
+wmDpiChangedAfterParent:wParam:lParam:!event handling-win32!private! !
 !
 
 !Toolbar class methodsFor!
