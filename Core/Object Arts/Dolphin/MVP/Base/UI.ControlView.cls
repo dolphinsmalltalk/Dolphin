@@ -354,12 +354,16 @@ setControlBackcolor: anIndexedColor
 setFont: aFont
 	"Private - Apply the specified font to the receiver's associated 
 	Windows control"
-	
-	"Ensure that the font is realized for the view resolution; i.e. the screen's
-	logical pixel's per inch."
-	aFont resolution: self resolution.
-	
-	self sendMessage: WM_SETFONT wParam: aFont asParameter lParam: 0!
+
+	| scaledFont |
+	"Ensure that the font is realized for the view resolution; i.e. the screen's logical pixel's per inch."
+	#highDpiToDo. "Using topView dpi on state restore is for editing purposes under DesignDesktopView, but is probably not the right approach. We need to create views for editing in a custom DPI context so can always be at 96dpi."
+	scaledFont := aFont
+				atDpi: (self isStateRestoring ifTrue: [self topView dpi] ifFalse: [self dpi]).
+	self
+		sendMessage: WM_SETFONT
+		wParam: scaledFont asParameter
+		lParam: 0!
 
 subclassWindow: hWnd
 	"Private - Subclass the receiver's associated Win32 window by substituting the VM's 

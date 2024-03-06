@@ -28,6 +28,7 @@ package setClassNames: #(
 	#{Graphics.DIBSectionFromBlankInitializer}
 	#{Graphics.DisplayCompatibleBitmapInitializer}
 	#{Graphics.Font}
+	#{Graphics.FontSeries}
 	#{Graphics.GraphicsTool}
 	#{Graphics.HatchBrush}
 	#{Graphics.Icon}
@@ -176,6 +177,14 @@ Core.Object
 	subclass: #'Graphics.Color'
 	instanceVariableNames: ''
 	classVariableNames: 'Black ColorNames CommonColors Default Face3d NamedColors None White Window WindowText'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+Core.Object
+	subclass: #'Graphics.FontSeries'
+	instanceVariableNames: 'canonical instances'
+	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -400,7 +409,7 @@ External.PermanentLibrary
 
 Graphics.GraphicsTool
 	subclass: #'Graphics.AbstractFont'
-	instanceVariableNames: 'logfont resolution'
+	instanceVariableNames: 'logfont dpi series'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

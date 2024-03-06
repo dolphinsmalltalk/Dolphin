@@ -297,7 +297,7 @@ font
 
 	^font ifNil: [self getFont]!
 
-font: aFont 
+font: aFont
 	"Select the specified <Font> into this canvas. Ensure that the font is realized for the
 	receiver's resolution. Answer the previously selected <Font>."
 
@@ -305,7 +305,7 @@ font: aFont
 	oldFont := self font.
 	oldFont == aFont ifTrue: [^oldFont].
 	font := aFont.
-	(true or: [self mapMode = MM_TEXT]) ifTrue: [font resolution: self resolution].
+	(true or: [self mapMode = MM_TEXT]) ifTrue: [font := font atDpi: self resolution y].
 	self selectObject: aFont.
 	^oldFont!
 

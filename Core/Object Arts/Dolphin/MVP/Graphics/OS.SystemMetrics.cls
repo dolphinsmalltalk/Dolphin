@@ -95,7 +95,7 @@ getIconTitleFont
 	^(self
 		getSysParamForDpi: SPI_GETICONTITLELOGFONT
 		type: LOGFONTW
-		ifError: []) ifNil: [Graphics.Font system] ifNotNil: [:lf | Graphics.Font fromLogFont: lf resolution: dpi @ dpi]!
+		ifError: []) ifNil: [Graphics.Font system] ifNotNil: [:lf | Graphics.Font fromLogFont: lf dpi: dpi]!
 
 getMetric: anInteger 
 	^User32 getSystemMetricsForDpi: anInteger dpi: dpi!
@@ -107,7 +107,7 @@ getNonClientMetrics
 	^self
 		getSysParamForDpi: SPI_GETNONCLIENTMETRICS
 		type: NONCLIENTMETRICSW
-		ifError: [UserLibrary default systemError]!
+		ifError: [User32 systemError]!
 
 getSysParamBool: anInteger
 	^(self getSysParamUInt32: anInteger ifError: [0]) asBoolean!
@@ -441,7 +441,7 @@ cacheDpiIndependentSettings
 current
 	"Answer the current instance of the receiver. This provides metrics at the system DPI setting."
 
-	^Current ifNil: [Current := self forDpi: UserLibrary default getDpiForSystem]!
+	^Current ifNil: [Current := self forDpi: User32 getDpiForSystem]!
 
 default
 	"Answer an instance of the receiver that returns device-independent metrics (i.e. at 96-dpi)."
