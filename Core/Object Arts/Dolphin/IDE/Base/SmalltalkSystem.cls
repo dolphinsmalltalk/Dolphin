@@ -2028,10 +2028,9 @@ initialize
 	"Set the development system Help/About dialog"
 	Object owningPackage aboutBlock: [:package | self aboutDolphin].
 
-	"Font for lists, trees, etc, in the dev tools - use the standard Windows font, Segoe UI, but
-	slightly larger than the normal icon title font. Note that there is a separate setting for
-	code panes."
-	self defaultFont: (Font name: 'Segoe UI' pointSize: 10).
+	"Font for lists, trees, etc, in the dev tools - use the standard Windows icon title font.
+	Note that there is a separate setting for code panes."
+	self defaultFont: nil.
 
 	"Default break key for interrupting non-responding operations during development."
 	self interruptHotKey: (AcceleratorTable keyCodeFromInvariantString: 'CTRL+F12').
