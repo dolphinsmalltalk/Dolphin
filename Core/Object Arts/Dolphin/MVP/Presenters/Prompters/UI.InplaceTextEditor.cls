@@ -2,7 +2,7 @@
 
 UI.Presenter
 	subclass: #'UI.InplaceTextEditor'
-	instanceVariableNames: 'textRectangle minExtent maxCharWidth confirmed ownerView validationResultPresenter'
+	instanceVariableNames: 'textRectangle minExtent textMetrics confirmed ownerView validationResultPresenter'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -94,8 +94,10 @@ findDetails
 	^nil!
 
 font: aFont
+	"Set the font to be used in the editor. This should generally match the font of the owner view."
+
 	self view font: aFont.
-	maxCharWidth := nil!
+	textMetrics := nil!
 
 getHintCaption: aValidationResult
 	^aValidationResult caption
@@ -119,10 +121,9 @@ hintPosition
 	^self view screenRectangle centerRight!
 
 implicitBorder
-	"Private - Widths of the implicit border on an edit control that has to be added to the calculated extent."
+	"Private - Widths of the implicit border on an edit control that has to be added to the calculated extent, plus some space for extra typing."
 
-	#highDpiTodo.	"Does this need to be dpi scaled? It appears not, but need to test with higher scale factors to be sure."
-	^1 @ 1 corner: 1 @ 1!
+	^0 @ 1 corner: self textMetrics tmMaxCharWidth @ 1!
 
 initialize
 	"Private - Initialize the receiver"
@@ -141,9 +142,6 @@ isConfirmed
 
 isInputValid
 	^self model isValid!
-
-maxCharWidth
-	^maxCharWidth ifNil: [maxCharWidth := self view canvas textMetrics tmMaxCharWidth]!
 
 model: aValueModel 
 	"Set the model of the receiver to be aValueModel. Register with its #valueChanged event"
@@ -190,7 +188,7 @@ onKeyTyped: aKeyEvent
 	^super onKeyTyped: aKeyEvent!
 
 onTextChanged
-	self resizeToFit!
+	self resizeToFit: view plainText!
 
 onValueChanged
 	"The value held by the receiver's model has changed. The default is to trigger a
@@ -200,7 +198,6 @@ onValueChanged
 
 onViewOpened
 	super onViewOpened.
-	self maxCharWidth.
 	self setInitialFocus!
 
 ownerView
@@ -220,9 +217,8 @@ pasteClipboard
 	pastedText := Clipboard current getTextOrEmpty.
 	newText := (currentText copyFrom: 1 to: insertionRange start - 1) , pastedText
 				, (currentText copyFrom: insertionRange stop + 1 to: currentText size).
-	view
-		extent: (self requiredExtent: newText);
-		pasteClipboard!
+	self resizeToFit: newText.
+	view pasteClipboard!
 
 performAction
 	| query |
@@ -239,12 +235,18 @@ requiredExtent: aString
 	| min preferred borders |
 	borders := self implicitBorder.
 	preferred := (view extentForText: aString)
-				+ ((self maxCharWidth + (borders left + borders right)) @ (borders top + borders bottom)).
+				+ ((borders left + borders right) @ (borders top + borders bottom)).
 	min := minExtent ifNil: [minExtent := preferred].
 	^min max: preferred!
 
-resizeToFit
-	view extent: (self requiredExtent: view plainText)!
+resizeToFit: aString
+	"Private - Adjust the width of the receiver to fit the text, allowing space for extra typing."
+
+	| extent requiredExtent |
+	extent := view extent.
+	requiredExtent := self requiredExtent: aString.
+	extent x: requiredExtent x.
+	view extent: extent!
 
 runModalInProcessLoop
 	^SessionManager inputState loopWhile: [self isOpen]!
@@ -253,18 +255,15 @@ setInitialFocus
 	self view setFocus!
 
 show
-	| pos offset preferred |
-	"Adjust the position of the dialog to be over the edited text."
+	| rect |
 	self view
 		selectAll;
 		setMarginWidths: #(0 0).
-	minExtent := nil.
-	self resizeToFit.
-	preferred := self view calculateExtent.
-	offset := (preferred - textRectangle extent) // 2 + self implicitBorder left.
-	pos := textRectangle origin - offset.
+	"Adjust the position of the dialog to be over the edited text."
+	rect := self view calcRectangleFromClientRectangle: textRectangle.
+	minExtent := rect extent.
 	self view
-		position: pos;
+		rectangle: (rect expandBy: self implicitBorder);
 		layout;
 		show!
 
@@ -284,10 +283,18 @@ showValidationResult: aValidationResult
 		hintFont: self hintFont;
 		value: aValidationResult!
 
+textMetrics
+	textMetrics
+		ifNil: 
+			[| canvas |
+			canvas := self view canvas.
+			canvas font: self view actualFont.
+			textMetrics := canvas textMetrics.
+			canvas free].
+	^textMetrics!
+
 textRectangle: aRectangle 
-	"Set the rectangle of the text being edited in-place. N.B. The Rectangle is expected to be
-	in the co-ordinates of the owner view (the parent with focus on whose behalf the receiver is
-	to edit text)."
+	"Set the rectangle of the text being edited in-place. N.B. The Rectangle is expected to be in the co-ordinates of the owner view (the parent with focus on whose behalf the receiver is to edit text)."
 
 	textRectangle := aRectangle!
 
@@ -338,7 +345,6 @@ implicitBorder!constants!private! !
 initialize!initializing!private! !
 isConfirmed!public!testing! !
 isInputValid!private!testing! !
-maxCharWidth!accessing!private! !
 model:!accessing!public! !
 ok!commands-actions!public! !
 onFocusLost!event handling!private! !
@@ -353,13 +359,14 @@ pasteClipboard!commands-actions!public! !
 performAction!operations!public! !
 queryOk:!commands-queries!private! !
 requiredExtent:!helpers!private! !
-resizeToFit!helpers!private! !
+resizeToFit:!helpers!private! !
 runModalInProcessLoop!helpers!private! !
 setInitialFocus!operations!public! !
-show!helpers!public! !
+show!helpers!private! !
 showModal!public!realizing/unrealizing! !
 showModalView!helpers!private! !
 showValidationResult:!helpers!private! !
+textMetrics!helpers!private! !
 textRectangle:!initializing!public! !
 validater!accessing!public! !
 validater:!initializing!public! !

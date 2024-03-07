@@ -29,7 +29,7 @@ package!
 
 UI.Presenter
 	subclass: #'UI.InplaceTextEditor'
-	instanceVariableNames: 'textRectangle minExtent maxCharWidth confirmed ownerView validationResultPresenter'
+	instanceVariableNames: 'textRectangle minExtent textMetrics confirmed ownerView validationResultPresenter'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
