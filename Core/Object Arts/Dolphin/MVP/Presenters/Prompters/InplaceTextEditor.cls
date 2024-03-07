@@ -83,17 +83,12 @@ createView: aResourceNameString
 	self view: (self class loadViewResource: aResourceNameString inContext: contextView).
 	^self view!
 
-editBox
-	"Private - Answer the TextEdit control"
-
-	^self view!
-
 findDetails
 	^nil!
 
-font: aFont 
+font: aFont
 	self view font: aFont.
-	maxCharWidth := self view canvas textMetrics tmMaxCharWidth!
+	maxCharWidth := nil!
 
 implicitBorder
 	"Private - Widths of the implicit border on an edit control that has to be added to the calculated extent."
@@ -107,6 +102,7 @@ initialize
 	super initialize.
 	self ownerView: View focus.
 	confirmed := false.
+	textRectangle := 0@0 extent: 100@20.
 	validationBlock := [:replyString | true]!
 
 isConfirmed
@@ -118,6 +114,9 @@ isConfirmed
 
 isInputValid
 	^(self validationBlock value: self editBox text) == true!
+
+maxCharWidth
+	^maxCharWidth ifNil: [maxCharWidth := self view canvas textMetrics tmMaxCharWidth]!
 
 model: aValueModel 
 	"Set the model of the receiver to be aValueModel. Register with it's #valueChanged event"
@@ -173,6 +172,7 @@ onValueChanged
 
 onViewOpened
 	super onViewOpened.
+	self maxCharWidth.
 	self setInitialFocus!
 
 ownerView
@@ -181,9 +181,23 @@ ownerView
 ownerView: aView 
 	ownerView := aView!
 
-queryCommand: aCommandQuery 
-	"Private - Enters details about a potential command for the receiver into the
-	<CommandQuery>."
+pasteClipboard
+	"Paste the clipboard text into the receiver's edit box."
+
+	"Implementation note: We have to resize the control in advance to be of sufficient size to receive the pasted text, and any existing text retained, or it may be truncated."
+
+	| insertionRange pastedText currentText newText |
+	currentText := view plainText.
+	insertionRange := view selectionRange.
+	pastedText := Clipboard current getTextOrEmpty.
+	newText := (currentText copyFrom: 1 to: insertionRange start - 1) , pastedText
+				, (currentText copyFrom: insertionRange stop + 1 to: currentText size).
+	view
+		extent: (self requiredExtent: newText);
+		pasteClipboard!
+
+queryCommand: aCommandQuery
+	"Private - Enters details about a potential command for the receiver into the <CommandQuery> argument."
 
 	aCommandQuery commandSymbol == #ok 
 		ifTrue: 
@@ -191,22 +205,38 @@ queryCommand: aCommandQuery
 			^true].
 	^super queryCommand: aCommandQuery!
 
-requiredExtent
+requiredExtent: aString
 	| min preferred borders |
 	borders := self implicitBorder.
-	preferred := self editBox calculateExtent 
-				+ ((maxCharWidth + (borders left + borders right)) @ (borders top + borders bottom)).
+	preferred := (view extentForText: aString)
+				+ ((self maxCharWidth + (borders left + borders right)) @ (borders top + borders bottom)).
 	min := minExtent ifNil: [minExtent := preferred].
 	^min max: preferred!
 
 resizeToFit
-	self view extent: self requiredExtent!
+	view extent: (self requiredExtent: view plainText)!
 
 runModalInProcessLoop
 	^SessionManager inputState loopWhile: [self isOpen]!
 
 setInitialFocus
-	self editBox setFocus!
+	self view setFocus!
+
+show
+	| pos offset preferred |
+	"Adjust the position of the dialog to be over the edited text."
+	self view
+		selectAll;
+		setMarginWidths: #(0 0).
+	minExtent := nil.
+	self resizeToFit.
+	preferred := self view calculateExtent.
+	offset := (preferred - textRectangle extent) // 2 + self implicitBorder left.
+	pos := textRectangle origin - offset.
+	self view
+		position: pos;
+		layout;
+		show!
 
 showModal
 	"Show the receiver's view as a modal 'dialog'. Answer the revised text, or the original text if cancelled."
@@ -216,22 +246,8 @@ showModal
 
 showModalView
 	
-	["Adjust the position of the dialog to be over the edited text."
-	| offset preferred pos |
-	(self editBox)
-		selectAll;
-		setMarginWidths: #(0 0).
-	minExtent := nil.
-	self resizeToFit.
-	preferred := self editBox calculateExtent.
-	offset := (preferred - textRectangle extent) // 2 + self implicitBorder left.
-	pos := textRectangle origin - offset.
-	(self view)
-		position: pos;
-		layout;
-		show.
-	self runModalInProcessLoop] 
-			ensure: [self view basicDestroy]!
+	[self show.
+	self runModalInProcessLoop] ensure: [self view basicDestroy]!
 
 textRectangle: aRectangle 
 	"Set the rectangle of the text being edited in-place. N.B. The Rectangle is expected to be
@@ -269,13 +285,13 @@ bufferedModelFor:!accessing!private! !
 cancel!commands!public! !
 createSchematicWiring!initializing!public! !
 createView:!operations!private! !
-editBox!helpers!private! !
 findDetails!public!searching & replacing! !
 font:!initializing!public! !
 implicitBorder!constants!private! !
 initialize!initializing!private! !
 isConfirmed!public!testing! !
 isInputValid!private!testing! !
+maxCharWidth!accessing!private! !
 model:!accessing!public! !
 ok!commands!public! !
 onFocusLost!event handling!private! !
@@ -286,11 +302,13 @@ onValueChanged!event handling!public! !
 onViewOpened!event handling!private! !
 ownerView!accessing!public! !
 ownerView:!accessing!public! !
+pasteClipboard!commands!public! !
 queryCommand:!commands!private! !
-requiredExtent!helpers!private! !
+requiredExtent:!helpers!private! !
 resizeToFit!helpers!private! !
 runModalInProcessLoop!helpers!private! !
 setInitialFocus!operations!public! !
+show!helpers!public! !
 showModal!public!realizing/unrealizing! !
 showModalView!helpers!private! !
 textRectangle:!initializing!public! !

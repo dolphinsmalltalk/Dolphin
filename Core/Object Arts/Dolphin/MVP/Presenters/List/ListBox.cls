@@ -135,14 +135,11 @@ clearSelectionsByIndex: collection
 command: anInteger id: id
 	"Private - Handler for a redirected WM_COMMAND notification message."
 
-	^((IdentityDictionary new
-		at: -2 put: #lbnErrSpace;
-		at: 1 put: #lbnSelChange;
-		at: 2 put: #lbnDblClk;
-		at: 3 put: #lbnSelCancel;
-		shrink;
-		yourself) lookup: anInteger)
-		ifNotNil: [:selector | self perform: selector]!
+	^(##(IdentityDictionary withAll: {LBN_ERRSPACE -> #errorOutOfMemory.
+				LBN_SELCHANGE -> #lbnSelChange.
+				LBN_DBLCLK -> #lbnDblClk.
+				LBN_SELCANCEL -> #lbnSelCancel})
+		lookup: anInteger) ifNotNil: [:selector | self perform: selector]!
 
 defaultWindowStyle
 	"Private - Answer the default basic window creation style for a list box"
@@ -359,13 +356,6 @@ lbnDblClk
 	"Private - A LBN_DBLCLK has been received by our parent window."
 
 	^nil.
-!
-
-lbnErrSpace
-	"Private - A LBN_ERRSPACE has been received by our parent window. 
-	Signal an OutOfMemoryError"
-
-	^self errorOutOfMemory.
 !
 
 lbnSelCancel
@@ -664,7 +654,6 @@ itemFromPoint:!enquiries!private! !
 itemRect:!accessing!public! !
 lbnBeginDrag:!event handling-win32!private! !
 lbnDblClk!event handling-win32!private! !
-lbnErrSpace!event handling-win32!private! !
 lbnSelCancel!event handling-win32!private!selection! !
 lbnSelChange!event handling-win32!private!selection! !
 maybeSelChanging:!event handling!private! !

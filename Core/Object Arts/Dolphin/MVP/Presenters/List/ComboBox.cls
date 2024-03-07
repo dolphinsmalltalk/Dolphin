@@ -114,13 +114,6 @@ cbnDblClk
 	self presenter performAction.
 	^nil!
 
-cbnErrSpace
-	"Private - A CBN_ERRSPACE has been received by our parent window. Signal an
-	OutOfMemoryError"
-
-	^self errorOutOfMemory
-!
-
 cbnKillFocus
 	"Private - An CBN_KILLFOCUS has been received by our parent window."
 
@@ -152,15 +145,12 @@ cbnSetFocus
 command: anInteger id: id
 	"Private - Handler for a redirected WM_COMMAND notification message."
 
-	^((IdentityDictionary new
-		at: -1 put: #cbnErrSpace;
-		at: 1 put: #cbnSelChange;
-		at: 2 put: #cbnDblClk;
-		at: 3 put: #cbnSetFocus;
-		at: 4 put: #cbnKillFocus;
-		shrink;
-		yourself) lookup: anInteger)
-		ifNotNil: [:selector | self perform: selector]!
+	^(##(IdentityDictionary withAll: {CBN_ERRSPACE -> #errorOutOfMemory.
+				CBN_SELCHANGE -> #cbnSelChange.
+				CBN_DBLCLK -> #cbnDblClk.
+				CBN_SETFOCUS -> #cbnSetFocus.
+				CBN_KILLFOCUS -> #cbnKillFocus})
+		lookup: anInteger) ifNotNil: [:selector | self perform: selector]!
 
 cueBanner
 	"Answer the textual cue to be displayed when this combo box is empty and does not have
@@ -365,7 +355,6 @@ basicRemoveAtIndex:!private!removing! !
 canHScroll!accessing-styles!public! !
 canHScroll:!accessing-styles!public! !
 cbnDblClk!event handling-win32!private! !
-cbnErrSpace!event handling-win32!private! !
 cbnKillFocus!event handling-win32!private! !
 cbnSelChange!event handling-win32!private!selection! !
 cbnSetFocus!event handling-win32!private! !

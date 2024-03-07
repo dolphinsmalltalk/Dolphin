@@ -39,6 +39,7 @@ package classNames
 	add: #IconTest;
 	add: #ImageViewAbstractTest;
 	add: #ImageViewTest;
+	add: #InplaceTextEditorTest;
 	add: #InternalDragDropSessionTest;
 	add: #LayoutManagerTest;
 	add: #LinkButtonTest;
@@ -126,6 +127,7 @@ package setPrerequisites: #(
 	'Presenters\Date Time\Dolphin Date Time Presenters'
 	'Presenters\Difference\Dolphin Differences Presenter'
 	'Presenters\Image\Dolphin Image Presenter'
+	'Presenters\Prompters\Dolphin In-place Text Editor'
 	'..\Base\Dolphin Legacy Date & Time'
 	'Models\List\Dolphin List Models'
 	'Presenters\List\Dolphin List Presenter'
@@ -493,6 +495,12 @@ PresenterTest subclass: #DifferencesPresenterTest
 
 PresenterTest subclass: #ImageViewAbstractTest
 	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+PresenterTest subclass: #InplaceTextEditorTest
+	instanceVariableNames: 'clipboard savedText'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

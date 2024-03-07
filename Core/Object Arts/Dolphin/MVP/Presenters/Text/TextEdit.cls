@@ -121,17 +121,7 @@ calcRectangleFromClientRectangle: aRectangle
 calculateExtent: aLayoutContext
 	"Private - Calculate an extent for the receiver that would allow it to display all the text that it currently contains on a single line."
 
-	| canvas extent margins text |
-	canvas := self canvas.
-	canvas font: self actualFont.
-	text := self plainText.
-	extent := canvas
-				textExtent: (text isEmpty ifTrue: ['.'] ifFalse: [text])
-				width: 0
-				flags: ##(DT_SINGLELINE | DT_EDITCONTROL | DT_NOPREFIX | DT_EXPANDTABS | DT_EXTERNALLEADING).
-	canvas free.
-	margins := self marginWidths.
-	^self calcExtentFromClientExtent: extent + ((margins first + margins last) @ 0)!
+	^self extentForText: self plainText!
 
 canHScroll
 	"Answer true if the receiver is in horizontal scrolling mode"
@@ -211,16 +201,13 @@ clearSelection
 command: anInteger id: id
 	"Private - Handler for a redirected WM_COMMAND notification message."
 
-	^((IdentityDictionary new
-		at: 16r100 put: #enSetFocus;
-		at: 16r200 put: #enKillFocus;
-		at: 16r300 put: #enChange;
-		at: 16r400 put: #enUpdate;
-		at: 16r500 put: #errorOutOfMemory;
-		at: 16r501 put: #enMaxText;
-		shrink;
-		yourself) lookup: anInteger)
-		ifNotNil: [:selector | self perform: selector]!
+	^(##(IdentityDictionary withAll: {EN_SETFOCUS -> #enSetFocus.
+				EN_KILLFOCUS -> #enKillFocus.
+				EN_CHANGE -> #enChange.
+				EN_UPDATE -> #enUpdate.
+				EN_ERRSPACE -> #errorOutOfMemory.
+				EN_MAXTEXT -> #enMaxText})
+		lookup: anInteger) ifNotNil: [:selector | self perform: selector]!
 
 copySelection
 	"Copy the current selection to the clipboard."
@@ -340,9 +327,9 @@ enKillFocus
 	^self presenter onKillFocus.!
 
 enMaxText
-	"Private - The receiver has hit its current text limit. Sensible responses might be to expand
-	the text limit with EM_SETLIMITTEXT (the default is 32Kb), or to inform the user that they are
-	trying to enter too much data."
+	"Private - The receiver has hit its current text limit, or `canHScroll` is false and a text insertion (e.g. a paste) would exceed the current width of the control. 
+	Sensible responses for the former might be to expand the text limit with EM_SETLIMITTEXT (the default is 32Kb), or to inform the user that they are trying to enter too much data.
+	Or for the latter, the control could be resized to accommodate more text."
 
 	^self onTextOverflow!
 
@@ -362,6 +349,18 @@ enUpdate
 
 	self invalidateUserInterface.
 	^nil!
+
+extentForText: aString
+	| extent margins canvas |
+	canvas := self canvas.
+	canvas font: self actualFont.
+	extent := canvas
+				textExtent: (aString isEmpty ifTrue: ['.'] ifFalse: [aString])
+				width: 0
+				flags: ##(DT_SINGLELINE | DT_EDITCONTROL | DT_NOPREFIX | DT_EXPANDTABS | DT_EXTERNALLEADING).
+	canvas free.
+	margins := self marginWidths.
+	^self calcExtentFromClientExtent: extent + ((margins first + margins last) @ 0)!
 
 find
 	"Launch the FindText dialog in response to a generic toolbar find command."
@@ -1342,6 +1341,7 @@ enMaxText!event handling-win32!private! !
 enSetFocus!event handling-win32!private! !
 ensureCaretVisible!caret!operations!public! !
 enUpdate!event handling-win32!private! !
+extentForText:!geometry!private! !
 find!public!searching & replacing! !
 find:range:!private!searching & replacing! !
 findDetails!private!searching & replacing! !

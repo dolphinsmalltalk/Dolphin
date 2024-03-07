@@ -45,6 +45,12 @@ ListBoxConstants at: 'LB_SETLOCALE' put: 16r1A5!
 ListBoxConstants at: 'LB_SETSEL' put: 16r185!
 ListBoxConstants at: 'LB_SETTABSTOPS' put: 16r192!
 ListBoxConstants at: 'LB_SETTOPINDEX' put: 16r197!
+ListBoxConstants at: 'LBN_DBLCLK' put: 16r2!
+ListBoxConstants at: 'LBN_ERRSPACE' put: -16r2!
+ListBoxConstants at: 'LBN_KILLFOCUS' put: 16r5!
+ListBoxConstants at: 'LBN_SELCANCEL' put: 16r3!
+ListBoxConstants at: 'LBN_SELCHANGE' put: 16r1!
+ListBoxConstants at: 'LBN_SETFOCUS' put: 16r4!
 ListBoxConstants at: 'LBS_DISABLENOSCROLL' put: 16r1000!
 ListBoxConstants at: 'LBS_EXTENDEDSEL' put: 16r800!
 ListBoxConstants at: 'LBS_HASSTRINGS' put: 16r40!

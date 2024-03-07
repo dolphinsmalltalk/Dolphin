@@ -45,6 +45,17 @@ ComboBoxConstants at: 'CB_SETMINVISIBLE' put: 16r1701!
 ComboBoxConstants at: 'CB_SETTOPINDEX' put: 16r15C!
 ComboBoxConstants at: 'CB_SHOWDROPDOWN' put: 16r14F!
 ComboBoxConstants at: 'CBM_FIRST' put: 16r1700!
+ComboBoxConstants at: 'CBN_CLOSEUP' put: 16r8!
+ComboBoxConstants at: 'CBN_DBLCLK' put: 16r2!
+ComboBoxConstants at: 'CBN_DROPDOWN' put: 16r7!
+ComboBoxConstants at: 'CBN_EDITCHANGE' put: 16r5!
+ComboBoxConstants at: 'CBN_EDITUPDATE' put: 16r6!
+ComboBoxConstants at: 'CBN_ERRSPACE' put: -16r1!
+ComboBoxConstants at: 'CBN_KILLFOCUS' put: 16r4!
+ComboBoxConstants at: 'CBN_SELCHANGE' put: 16r1!
+ComboBoxConstants at: 'CBN_SELENDCANCEL' put: 16rA!
+ComboBoxConstants at: 'CBN_SELENDOK' put: 16r9!
+ComboBoxConstants at: 'CBN_SETFOCUS' put: 16r3!
 ComboBoxConstants at: 'CBS_AUTOHSCROLL' put: 16r40!
 ComboBoxConstants at: 'CBS_DISABLENOSCROLL' put: 16r800!
 ComboBoxConstants at: 'CBS_DROPDOWN' put: 16r2!
