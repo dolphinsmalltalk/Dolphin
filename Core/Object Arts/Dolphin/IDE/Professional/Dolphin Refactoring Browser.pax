@@ -1516,7 +1516,7 @@ performMethodRenameRefactoring: aBlockClosure
 	^parentPresenter performMethodRenameRefactoring: aBlockClosure!
 
 renameVariable: aStVariableNode operation: operationBlock validationBlock: validationBlock
-	| name rectangle range style editor font newName |
+	| name range style editor font zoom newName |
 	range := aStVariableNode sourceInterval.
 	name := self plainTextRange: range.
 	self assert: [aStVariableNode name = name].
@@ -1532,11 +1532,17 @@ renameVariable: aStVariableNode operation: operationBlock validationBlock: valid
 							self errorModel value: ex.
 							err := ex].
 					err isNil]].
-	rectangle := self view boundingRectangleOfTextRange: range.
-	editor textRectangle: rectangle.
-	"Set the same font as the existing text so there is no visible 'jump'"
-	style := self view styleAt: range start.
+	editor textRectangle: (view boundingRectangleOfTextRange: range).
+	"Set the same font as the existing text so there is no visible 'jump' - we need to account for any zooming too"
+	style := view styleAt: range start.
 	font := self fontOfStyle: style.
+	zoom := view zoomLevel.
+	zoom = 0
+		ifFalse: 
+			[| points |
+			points := font pointSize.
+			font := font copy.
+			font pointSize: points + zoom].
 	editor font: font.
 	newName := view hideCaretWhile: [editor showModal].
 	self errorModel value: nil.
