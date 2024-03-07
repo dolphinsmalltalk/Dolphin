@@ -52,7 +52,8 @@ edgeExtent
 	^2 @ 2!
 
 getThemePinSize
-	#highDpiTodo.	"Pin size from theme doesn't scale with DPI - always 16@16. Might change with per-monitor DPI awareness, so re-evalulate then."
+	"Pin size from theme doesn't scale with DPI - always 16@16. This is the case even with per-monitor DPI awareness, and using a theme handle opened with OpenThemeDataForDpi at a DPI that corresponds to the dpi of one of the monitors (so that the system has definitely loaded the theme resource). I suspect that because windows itself doesn't use the pin graphic, that Microsoft haven't bothered to provide larger versions for higher DPI settings. Therefore we just assume the (scaled) small icon extent."
+
 	^(false and: [self isThemed])
 		ifTrue: 
 			[| pt |
@@ -63,7 +64,7 @@ getThemePinSize
 				iPartId: EBP_HEADERPIN
 				iStateId: EBHP_NORMAL
 				prc: nil
-				eSize: TS_TRUE
+				eSize: TS_DRAW
 				psz: pt.
 			pt asObject]
 		ifFalse: [self metrics smallIconExtent]!
