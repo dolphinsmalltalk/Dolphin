@@ -2942,6 +2942,12 @@ hasVisibleLineEndings: visibleBoolean
 				wParam: visibleBoolean asParameter
 				lParam: 0]!
 
+hideCaretWhile: aNiladicBlock
+	| caretStyle |
+	caretStyle := self sciGetCaretStyle.
+	self sciSetCaretStyle: CARETSTYLE_INVISIBLE.
+	^aNiladicBlock ensure: [self sciSetCaretStyle: caretStyle]!
+
 hideIndicators
 	"Private - Reconfigure all indicator styles to hidden apart from the default 3 pre-configured styles."
 
@@ -11606,6 +11612,7 @@ hasLineNumbers:!commands!margins!public! !
 hasSelection!public!selection! !
 hasVisibleLineEndings!**auto generated**!line endings!public!scintilla interface!testing! !
 hasVisibleLineEndings:!**auto generated**!line endings!public!scintilla interface!testing! !
+hideCaretWhile:!caret!public! !
 hideIndicators!helpers!indicators!private! !
 hideLinesFrom:to:!**auto generated**!folding!public!scintilla interface! !
 hideSelection:!**auto generated**!public!scintilla interface!selection! !

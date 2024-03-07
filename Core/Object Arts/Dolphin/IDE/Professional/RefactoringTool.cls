@@ -88,9 +88,13 @@ removeParameter: aStVariableNode from: method
 		environment: presenter searchEnvironment!
 
 renameIt
-	"Context-sensitive #renameIt command, usually bound to the F2 key"
+	"Context-sensitive #renameIt command, usually bound to the F2 key."
 
-	self renameItCommand value: self!
+	"Implementation Note: Defer the action so that the wait cursor is not active during any in-place edit operation that might be initiated."
+
+	| command |
+	command := self renameItCommand.
+	[command value: self] postToMessageQueue!
 
 renameItCommand
 	^self subclassResponsibility!

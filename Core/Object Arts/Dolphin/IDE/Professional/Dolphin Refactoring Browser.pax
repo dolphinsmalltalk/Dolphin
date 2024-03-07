@@ -1515,20 +1515,20 @@ performMethodRefactoring: aMonadicValuable
 performMethodRenameRefactoring: aBlockClosure 
 	^parentPresenter performMethodRenameRefactoring: aBlockClosure!
 
-renameVariable: aStVariableNode operation: operationBlock validationBlock: validationBlock 
-	| name rectangle range style editor font |
+renameVariable: aStVariableNode operation: operationBlock validationBlock: validationBlock
+	| name rectangle range style editor font newName |
 	range := aStVariableNode sourceInterval.
 	name := self plainTextRange: range.
 	self assert: [aStVariableNode name = name].
 	editor := InplaceTextEditor createOn: name asValue.
 	editor validationBlock: 
-			[:candidateName | 
+			[:candidateName |
 			"If the name is unchanged, treat as valid and ignore later"
 			candidateName = name or: 
 					[| err |
 					[validationBlock value: candidateName] on: RefactoringError
 						do: 
-							[:ex | 
+							[:ex |
 							self errorModel value: ex.
 							err := ex].
 					err isNil]].
@@ -1538,10 +1538,10 @@ renameVariable: aStVariableNode operation: operationBlock validationBlock: valid
 	style := self view styleAt: range start.
 	font := self fontOfStyle: style.
 	editor font: font.
-	editor showModal 
-		ifNotNil: 
-			[:newName | 
-			newName = name ifFalse: [self performMethodRefactoring: [:method | operationBlock value: newName]]]! !
+	newName := view hideCaretWhile: [editor showModal].
+	self errorModel value: nil.
+	(newName isNil or: [newName = name])
+		ifFalse: [self performMethodRefactoring: [:method | operationBlock value: newName]]! !
 
 !MethodWorkspace categoriesForMethods!
 canRefactor!public!refactoring!testing! !

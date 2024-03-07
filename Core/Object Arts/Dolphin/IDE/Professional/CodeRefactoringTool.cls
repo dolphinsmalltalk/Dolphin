@@ -710,7 +710,9 @@ renameMessageCommand
 						title: 'Rename']]!
 
 renameNode
-	self renameItCommand value: self!
+	| command |
+	command := self renameItCommand.
+	[command value: self] postToMessageQueue!
 
 renameTemporary: aStVariableNode 
 	| method |
@@ -735,7 +737,9 @@ renameVariable
 	"Invoke the 'Rename Variable'  refactoring to rename the selected variable, 
 	or that under the cursor if no selection. The name is looked up in scope rule order."
 
-	(self renameVariableCommand: self selectedNode) value: self!
+	| command |
+	command := self renameVariableCommand: self selectedNode.
+	[command value: self] postToMessageQueue!
 
 renameVariableCommand: anStVariableNode
 	^(##(IdentityDictionary new
