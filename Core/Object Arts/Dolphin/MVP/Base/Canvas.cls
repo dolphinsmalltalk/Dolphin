@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Object subclass: #Canvas
-	instanceVariableNames: 'handle source owned pen brush font saved saveIds'
+	instanceVariableNames: 'handle source owned pen brush font saved saveIds dpi'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
@@ -173,13 +173,12 @@ colors
 	^2 raisedToInteger: (self colorDepth)!
 
 dpi
-	"Answers a Point containing the logical pixels per inch for the receiver."
+	"Answers an <integer> representing the logical pixels per inch for the receiver."
 
-	"GetDeviceCaps always answer the system-wide (primary monitor) DPI for Window DCs. It is such an obvious high DPI issue that it must be a deliberate choice to do return the system DPI rather than the monitor DPI for the window, but frankly it is not very helpful. However, since we can query the window handle for Window DCs, we can get to the real DPI easily enough."
+	^dpi ifNil: [dpi := self getDpi]!
 
-	^(UserLibrary default windowFromDC: handle)
-		ifNil: [self getDeviceCaps: LOGPIXELSY]
-		ifNotNil: [:hWnd | UserLibrary default getDpiForWindow: hWnd]!
+dpi: anInteger
+	dpi := anInteger!
 
 drawBitmap: aBitmap at: dstOrigin extent: dstExtent from: srcOrigin extent: srcExtent rop: dwRasterOp 
 	"Private - Blit the specified rectangle of aBitmap to the specified destination
@@ -427,6 +426,13 @@ getDeviceCaps: anInteger
 	"Private - Answer the specified device capability."
 
 	^GDILibrary default getDeviceCaps: self asParameter nIndex: anInteger!
+
+getDpi
+	"Private - GetDeviceCaps always answer the system-wide (primary monitor) DPI for Window DCs. It is such an obvious high DPI issue that it must be a deliberate choice to do return the system DPI rather than the monitor DPI for the window, but frankly it is not very helpful. However, since we can query the window handle for Window DCs, we can get to the real DPI easily enough."
+
+	^(UserLibrary default windowFromDC: handle)
+		ifNil: [self getDeviceCaps: LOGPIXELSY]
+		ifNotNil: [:hWnd | UserLibrary default getDpiForWindow: hWnd]!
 
 getFont
 	^Font fromHandle: self fontHandle dpi: self dpi!
@@ -1058,6 +1064,7 @@ clipBox!accessing!public! !
 colorDepth!accessing!public! !
 colors!accessing!public! !
 dpi!accessing!public! !
+dpi:!accessing!public! !
 drawBitmap:at:extent:from:extent:rop:!colors!private! !
 drawEdge:edge:grfFlags:!drawing!public! !
 ellipse:!drawing!public! !
@@ -1082,6 +1089,7 @@ frameRectangle:brush:!drawing!public! !
 free!public!realizing/unrealizing! !
 getCurrentObject:!accessing!public! !
 getDeviceCaps:!accessing!private! !
+getDpi!accessing!helpers!private! !
 getFont!accessing!public!tools! !
 getPixel:!drawing!private! !
 handle!accessing!public! !
@@ -1233,8 +1241,17 @@ withNonOwnedDC: hDC
 	"Answers a new Canvas with the given non-owned hDC.
 	When this instance is freed it will use neither DeleteDC() nor ReleaseDC()."
 
-	^super new
+	^self basicNew
 		nonOwnedDC: hDC;
+		yourself!
+
+withNonOwnedDC: hDC dpi: anInteger
+	"Answers a new Canvas with the given non-owned hDC that has the DPI specified by the <integer> last argument.
+	When this instance is freed it will use neither DeleteDC() nor ReleaseDC()."
+
+	^self basicNew
+		nonOwnedDC: hDC;
+		dpi: anInteger;
 		yourself!
 
 withOwnedDC: hDC
@@ -1258,6 +1275,7 @@ onExit!event handling!public! !
 releaseDC:!operations!public! !
 withDC:ownedBy:!instance creation!public! !
 withNonOwnedDC:!instance creation!public! !
+withNonOwnedDC:dpi:!instance creation!public! !
 withOwnedDC:!instance creation!public! !
 !
 

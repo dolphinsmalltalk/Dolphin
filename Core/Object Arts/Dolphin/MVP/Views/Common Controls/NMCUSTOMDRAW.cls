@@ -58,11 +58,9 @@ boundingRectangle
 	^self rc asRectangle!
 
 canvas
-	"Answer the <Canvas> associated with the receiver (useful for custom modifications,
-	but private because care is needed to avoid leaks)."
+	"Answer the <Canvas> associated with the receiver (useful for custom modifications, but care is needed to avoid leaks)."
 
-	canvas isNil ifTrue: [canvas := Canvas withNonOwnedDC: self hdc].
-	^canvas!
+	^canvas ifNil: [canvas := Canvas withNonOwnedDC: self hdc dpi: view dpi]!
 
 dpi
 	"Answer the DPI of the control being drawn."
@@ -213,7 +211,7 @@ backcolor!accessing!public! !
 backcolor:!accessing!public! !
 boundingRectangle!accessing!public! !
 canvas!accessing!public! !
-dpi!**compiled accessors**!public! !
+dpi!accessing!high DPI!public! !
 dwDrawStage!**compiled accessors**!public! !
 dwItemSpec!**compiled accessors**!public! !
 evaluateDrawBlock:!operations!public! !
