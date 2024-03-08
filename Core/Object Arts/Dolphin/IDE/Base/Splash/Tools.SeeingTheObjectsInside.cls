@@ -79,7 +79,8 @@ dolphinOutline
 drawInfoTextOn: aGdiplusGraphics
 	| fontCopyright brush |
 	brush := Gdiplus.Brush color: Color white.
-	fontCopyright := Gdiplus.Font name: 'Arial' pointSize: 9.
+	#highDpiToDo.	"There must be a better way of working with GDI+ and per-monitor DPI than scaling everything to pixels. If we don't do this, then the font scaling always uses the primary monitor DPI (which is the DPI of the graphics context)."
+	fontCopyright := Gdiplus.Font name: 'Arial' pixelSize: 9 * self dpi / 72.
 	aGdiplusGraphics
 		textRenderingHint: TextRenderingHintAntiAlias;
 		drawString: info
