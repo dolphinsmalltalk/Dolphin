@@ -290,7 +290,7 @@ variableDescriptionsFor: aClass
 
 	| names stream instance instances |
 	instances := aClass allSubinstances.
-	instance := instances isEmpty ifTrue: [aClass new] ifFalse: [instances first].
+	instance := instances isEmpty ifTrue: [[aClass new] on: Error do: [:ex | aClass basicNew]] ifFalse: [instances first].
 	stream := WriteStream on: String new.
 	names := aClass instVarNames.
 	names notEmpty
