@@ -1503,14 +1503,16 @@ Core.Object
 			'ManagedMask' -> 16r2.
 			'MinimizedMask' -> 16r80.
 			'NoInheritMenuMask' -> 16r200.
+			'ProxyRestoringMask' -> 16r10.
+			'RestoringMask' -> 16r30.
 			'StateRestoringMask' -> 16r20.
-			'UIValidMask' -> 16r10.
+			'UIValidMask' -> 16r400.
 			'UsePreferredExtentMask' -> 16r100
 		}!
 
 Core.Object
 	subclass: #'UI.ViewState'
-	instanceVariableNames: 'view state placement resolution subViewStates'
+	instanceVariableNames: 'view state showCmd dpi subViewStates'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

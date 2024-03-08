@@ -14,8 +14,10 @@ Core.Object
 			'ManagedMask' -> 16r2.
 			'MinimizedMask' -> 16r80.
 			'NoInheritMenuMask' -> 16r200.
+			'ProxyRestoringMask' -> 16r10.
+			'RestoringMask' -> 16r30.
 			'StateRestoringMask' -> 16r20.
-			'UIValidMask' -> 16r10.
+			'UIValidMask' -> 16r400.
 			'UsePreferredExtentMask' -> 16r100
 		}!
 
@@ -342,24 +344,21 @@ basicAddSubView: aView
 		show.	"Forces creation"
 	^aView!
 
-basicCreateWindow: aWindowCreationState
+basicCreateWindowAt: positionPoint extent: extentPoint styles: anArray name: aString
 	"Private - Create the Win32 window for the receiver, and answer its handle."
 
-	| position extent scale dwStyle |
-	dwStyle := aWindowCreationState baseStyle.
-	scale := creationParent dpi / aWindowCreationState dpi.
-	position := aWindowCreationState position * scale.
-	extent := aWindowCreationState extent * scale.
+	| dwStyle |
+	dwStyle := anArray at: 1.
 	^User32
-		createWindowEx: aWindowCreationState extendedStyle
+		createWindowEx: (anArray at: 2)
 		lpClassName: self class winClassName asUtf16String
-		lpWindowName: aWindowCreationState title
+		lpWindowName: aString
 		dwStyle: dwStyle
-		x: position x asInteger
-		y: position y asInteger
-		nWidth: extent x asInteger
-		nHeight: extent y asInteger
-		hWndParent: self creationParentView asParameter
+		x: positionPoint x truncated
+		y: positionPoint y truncated
+		nWidth: extentPoint x truncated
+		nHeight: extentPoint y truncated
+		hWndParent: creationParent asParameter
 		hMenu: ((dwStyle anyMask: WS_CHILD) ifTrue: [self defaultId])
 		hInstance: VM applicationHandle
 		lpParam: nil!
@@ -420,9 +419,6 @@ basicPaint: message wParam: wParam lParam: lParam
 				canv free].
 	^0	"We've handled it"!
 
-basicRestorePlacement: aWINDOWPLACEMENT resolution: aPoint
-	self basicRestorePlacement: aWINDOWPLACEMENT scalingBy: creationParent resolution / aPoint!
-
 basicRestorePlacement: aWINDOWPLACEMENT scalingBy: aMagnitude
 	aMagnitude = 1
 		ifFalse: 
@@ -430,6 +426,9 @@ basicRestorePlacement: aWINDOWPLACEMENT scalingBy: aMagnitude
 			"Make any other adjustments required for a change of resolution"
 			self resolutionScaledBy: aMagnitude].
 	self placement: aWINDOWPLACEMENT!
+
+basicShowWithStyle: anInteger
+	^User32 showWindow: handle nCmdShow: anInteger!
 
 beActive
 	"Make the receiver the active window."
@@ -578,7 +577,7 @@ clearHandle
 	handle := nil!
 
 clearStateRestoring
-	flags := flags bitAnd: ##(StateRestoringMask bitInvert)!
+	flags := flags bitAnd: ##(RestoringMask bitInvert)!
 
 clientExtent
 	"Answer a <Point> representing the extent of the receiver's client area."
@@ -696,12 +695,25 @@ createAt: originPoint extent: extentPoint
 				dpi: USER_DEFAULT_SCREEN_DPI
 				styles: creationStyle)!
 
-createWindow: aWindowCreationState
+createWindow: aWindowCreationParameters
 	"Private - Create the View window ensuring it has the VM window procedure.
 	Answer the receiver."
 
+	| scale |
+	scale := creationParent dpi / aWindowCreationParameters dpi.
+	self
+		createWindowAt: aWindowCreationParameters position * scale
+		extent: aWindowCreationParameters extent * scale
+		styles: aWindowCreationParameters styles
+		name: aWindowCreationParameters title!
+
+createWindowAt: positionPoint extent: extentPoint styles: anArray name: aString
 	self hookWindowCreate.
-	self unhookWindowCreate: (self basicCreateWindow: aWindowCreationState).
+	self unhookWindowCreate: (self
+				basicCreateWindowAt: positionPoint
+				extent: extentPoint
+				styles: anArray
+				name: aString).
 	self presenter onViewCreated!
 
 creationParameters
@@ -2017,6 +2029,14 @@ isResizable: aBoolean
 		set: aBoolean
 		recreateIfChanged: false) ifTrue: [self frameChanged]!
 
+isRestoringFromProxy
+	"Private - Answer true if the state of the receiver is being restored, i.e. we are
+	within a #state: method. Used to disable some notification during this period when
+	sibling views may not yet be valid"
+
+	^flags allMask: ProxyRestoringMask
+!
+
 isSplitter
 	"Horrible type test, but marginally less horrible than the `each isKindOf: Splitter` there was before in ProportionalLayout."
 
@@ -2029,15 +2049,6 @@ isStateRestoring
 
 	^flags anyMask: StateRestoringMask
 !
-
-isStateRestoring: aBoolean
-	"Private - Set a flag to indicate that state of the receiver is being restored according to aBoolean. 
-	Used to disable some notifications during the period when the view or its siblings/children may not yet be valid."
-
-	aBoolean
-		ifTrue: [self setStateRestoring]
-		ifFalse: 
-			[self resetStateRestoring]!
 
 isTabStop
 	"Answers whether the receiver has the WS_TABSTOP style."
@@ -3111,15 +3122,10 @@ resolutionScaledBy: aPoint
 restoreFromProxy: aViewProxy
 	"Private - Complete state restoration from proxy form by apply the saved state, and restoring the subviews from their proxies."
 
-	"The creationParent is already set, but we set it again here
-	to so that #parentView: can set the WS_CHILD style appropriately."
-
+	"The creationParent is already set, but we set it again here so that #parentView: can set the WS_CHILD style appropriately."
 	self parentView: self creationParentView.
-	self setStateRestoring.
+	flags := flags bitOr: RestoringMask.
 	self state: aViewProxy state.
-	aViewProxy subViews do: [:proxy | proxy restoreView].
-	aViewProxy placement
-		ifNotNil: [:placement | self restorePlacement: placement resolution: aViewProxy resolution].
 	self resetStateRestoring.
 
 	"The STB mechanism does not save and restore event triggers.
@@ -3294,6 +3300,9 @@ setScrollInfo: siStruct bar: bar
 		fRedraw: true!
 
 setStateRestoring
+	"Private - Set a flag to indicate that state of the receiver is being restored according to aBoolean. 
+	Used to disable some notifications during the period when the view or its siblings/children may not yet be valid."
+
 	flags := flags bitOr: StateRestoringMask!
 
 setTimer: id interval: interval
@@ -3395,11 +3404,8 @@ showShell
 	shell show!
 
 showWithStyle: anInteger
-	"Private - Makes this window appear with the required style.
-	Answer whether the window was previously visible."
-
 	anInteger == SW_HIDE ifFalse: [self invalidateLayoutDeeply].
-	^User32 showWindow: handle nCmdShow: anInteger!
+	^self basicShowWithStyle: anInteger!
 
 state
 	"Private - Answer a MessageSequence which, when replayed, will restore the receiver 
@@ -4646,13 +4652,13 @@ baseStyleMask:set:!accessing-styles!private! !
 baseStyleMask:set:recreateIfChanged:!accessing-styles!private! !
 basicActualBackcolor!accessing!private! !
 basicAddSubView:!hierarchy!private!sub views! !
-basicCreateWindow:!private!realizing/unrealizing! !
+basicCreateWindowAt:extent:styles:name:!private!realizing/unrealizing! !
 basicDestroy!private!realizing/unrealizing! !
 basicFont:!accessing!private! !
 basicInvalidateLayout!geometry!private! !
 basicPaint:wParam:lParam:!drawing!private! !
-basicRestorePlacement:resolution:!geometry!private! !
 basicRestorePlacement:scalingBy:!geometry!private! !
+basicShowWithStyle:!operations!private! !
 beActive!operations!public! !
 beCentered!operations!public! !
 beDefaultThemed!modes!public! !
@@ -4690,6 +4696,7 @@ contextMenu:!menus!public! !
 create!private!realizing/unrealizing! !
 createAt:extent:!private!realizing/unrealizing! !
 createWindow:!private!realizing/unrealizing! !
+createWindowAt:extent:styles:name:!private!realizing/unrealizing! !
 creationParameters!geometry!private!realizing/unrealizing! !
 creationParentView!accessing!private! !
 cursor!constants!public! !
@@ -4859,9 +4866,9 @@ isReadOnly!public!testing! !
 isReadOnly:!public!testing! !
 isResizable!accessing-styles!public! !
 isResizable:!accessing-styles!public! !
+isRestoringFromProxy!private!testing! !
 isSplitter!accessing!public!testing! !
 isStateRestoring!private!testing! !
-isStateRestoring:!accessing!private! !
 isTabStop!accessing-styles!public! !
 isTabStop:!accessing-styles!public! !
 isThemed!private!testing! !

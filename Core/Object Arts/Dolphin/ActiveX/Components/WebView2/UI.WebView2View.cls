@@ -106,6 +106,12 @@ areHostObjectsAllowed: aBoolean
 	settingsFlags := settingsFlags mask: DisableHostObjectsMask set: aBoolean not.
 	self webviewSettings ifNotNil: [:settings | settings areHostObjectsAllowed: aBoolean]!
 
+basicShowWithStyle: anInteger
+	| result |
+	result := super basicShowWithStyle: anInteger.
+	webviewController ifNotNil: [webviewController isVisible: anInteger ~~ SW_HIDE].
+	^result!
+
 browserVersion
 	^self webviewEnvironment browserVersionString!
 
@@ -561,12 +567,6 @@ setFocus
 		ifNil: [super setFocus]
 		ifNotNil: [:chromeWidget | (View fromHandle: chromeWidget) setFocus]!
 
-showWithStyle: anInteger
-	| result |
-	result := super showWithStyle: anInteger.
-	webviewController ifNotNil: [webviewController isVisible: anInteger ~~ SW_HIDE].
-	^result!
-
 stop
 	webview Stop!
 
@@ -651,6 +651,7 @@ areDevToolsEnabled!public!settings! !
 areDevToolsEnabled:!public!settings! !
 areHostObjectsAllowed!public!settings! !
 areHostObjectsAllowed:!public!settings! !
+basicShowWithStyle:!operations!private! !
 browserVersion!accessing!public! !
 canGoBack!commands!public! !
 canGoForward!commands!public! !
@@ -722,7 +723,6 @@ resizeContentToFit!helpers!private! !
 scriptLocale!accessing!public! !
 scriptLocale:!accessing!public! !
 setFocus!operations!public! !
-showWithStyle:!operations!private! !
 stop!commands!public! !
 subclassWindow:!operations!private! !
 subViews!hierarchy!public!sub views! !

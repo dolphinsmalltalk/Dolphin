@@ -10,23 +10,6 @@ DesignDesktopView comment: ''!
 !DesignDesktopView categoriesForClass!MVP-Views! !
 !DesignDesktopView methodsFor!
 
-adjustCreationParameters: aWindowCreationState forShell: aShellView
-	"Private - The <ShellView> first argument is being created for the first time for design purposes (e.g. in the view composer). Answer a WindowCreationState based on that provided as the 2nd argument with any adjustments to position, extent, or styles, that are appropriate. This would typically involve determining the correct monitor on which to position the window, and either providing a default extent or scaling that specified to the monitor DPI."
-
-	"Shell's are created in a DesignDesktopView for design purposes, e.g. editing a new view resource the view composer, so we want to create them at a suitable default extent that is not too large and without the normal cascading behaviour and ensure they do not have a taskbar icon."
-
-	| extent |
-	extent := aWindowCreationState extent.
-	extent := extent = WindowCreationParameters.UseDefaultGeometry
-				ifTrue: [self defaultWindowExtent]
-				ifFalse: [extent * self dpi / aWindowCreationState dpi].
-	^aWindowCreationState shallowCopy
-		position: Point.Zero;
-		extent: extent;
-		dpi: self dpi;
-		extendedStyle: (aWindowCreationState extendedStyle bitOr: WS_EX_NOACTIVATE);
-		yourself!
-
 adjustPlacement: aWINDOWPLACEMENT ofShell: aShellView withResolution: aPoint
 	"Private - The <ShellView> first argument is being restored from an STBViewProxy (e.g. instantiated from a view resource) on this desktop. Adjust the <WINDOWPLACEMENT> 2nd argument to an appropriate position and/or extent, and scale the view to the target monitor's DPI from the original resolution specified by the <point> 3rd argument."
 
@@ -41,6 +24,16 @@ adjustPlacement: aWINDOWPLACEMENT ofShell: aShellView withResolution: aPoint
 			aShellView resolutionScaledBy: scale].
 	^self!
 
+createShellWindow: aShellView withParameters: aWindowCreationParameters
+	aShellView
+		createWindowAt: Point.Zero
+		extent: (aWindowCreationParameters extent = WindowCreationParameters.UseDefaultGeometry
+				ifTrue: [self defaultWindowExtent]
+				ifFalse: [aWindowCreationParameters extent * dpi / aWindowCreationParameters dpi])
+		styles: {aWindowCreationParameters baseStyle.
+				aWindowCreationParameters extendedStyle bitOr: WS_EX_NOACTIVATE}
+		name: aWindowCreationParameters title!
+
 defaultWindowExtent
 	^##(800 @ 600) * self dpi // USER_DEFAULT_SCREEN_DPI!
 
@@ -50,8 +43,8 @@ dpi
 dpi: anInteger
 	dpi := anInteger! !
 !DesignDesktopView categoriesForMethods!
-adjustCreationParameters:forShell:!geometry!private! !
 adjustPlacement:ofShell:withResolution:!geometry!private! !
+createShellWindow:withParameters:!public! !
 defaultWindowExtent!public! !
 dpi!accessing!public! !
 dpi:!initializing!private! !

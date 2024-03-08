@@ -54,21 +54,6 @@ addSubView: aView name: aNameString
 	self name: (self addSubView: aView) as: aNameString.
 	^aView!
 
-adjustCreationParameters: aWindowCreationState forShell: aShellView
-	"Private - The <ShellView> first argument is being created for the first time within this container. Answer a <WindowCreationState> based on that provided as the 2nd argument with any adjustments to position, extent, or styles, that are appropriate. This would typically involve determining the correct monitor on which to position the window, and either providing a default extent or scaling that specified to the monitor DPI."
-
-	| extent targetDpi |
-	targetDpi := self dpi.
-	extent := aWindowCreationState extent.
-	extent = WindowCreationParameters.UseDefaultGeometry
-		ifTrue: [self defaultExtentOf: aShellView]
-		ifFalse: [extent * targetDpi / aWindowCreationState dpi].
-	^aWindowCreationState shallowCopy
-		position: (aShellView isInitiallyCentered ifTrue: [self centerExtent: extent] ifFalse: [Point.Zero]);
-		extent: extent;
-		dpi: targetDpi;
-		yourself!
-
 adjustPlacement: aWINDOWPLACEMENT ofShell: aShellView withResolution: aPoint
 	"Private - The <ShellView> first argument is being restored from an STBViewProxy (e.g. instantiated from a view resource) as a child of this container (i.e. the shell will not be a top-level view). Adjust the <WINDOWPLACEMENT> 2nd argument to an appropriate position and/or extent, and scale the view to the target monitor's DPI from the original resolution specified by the <point> 3rd argument."
 
@@ -103,6 +88,20 @@ canAcceptSubViews
 	"Answer true if the receiver can accept aView sub viewss"
 
 	^true!
+
+createShellWindow: aShellView withParameters: aWindowCreationParameters
+	| extent targetDpi |
+	targetDpi := self dpi.
+	extent := aWindowCreationParameters extent = WindowCreationParameters.UseDefaultGeometry
+				ifTrue: [self defaultExtentOf: aShellView]
+				ifFalse: [aWindowCreationParameters extent * targetDpi / aWindowCreationParameters dpi].
+	aShellView
+		createWindowAt: (aShellView isInitiallyCentered
+				ifTrue: [self centerExtent: extent]
+				ifFalse: [Point.Zero])
+		extent: extent
+		styles: aWindowCreationParameters styles
+		name: aWindowCreationParameters title!
 
 defaultButtonId
 	^0!
@@ -324,11 +323,11 @@ viewNamed: aString ifNone: aNiladicValuable
 actualInsets:!accessing!private! !
 actualPreferredExtent:!geometry!private! !
 addSubView:name:!hierarchy!public!sub views! !
-adjustCreationParameters:forShell:!geometry!private! !
 adjustPlacement:ofShell:withResolution:!geometry!private! !
 arrangementOf:!accessing!public! !
 arrangementOf:put:!accessing!public! !
 canAcceptSubViews!hierarchy!public!sub views! !
+createShellWindow:withParameters:!realizing!public! !
 defaultButtonId!accessing!default button!private! !
 defaultExtent!constants!private! !
 defaultExtentOf:!geometry!public! !
