@@ -43,6 +43,22 @@ addItem: aStatusBarItem name: aString
 	self name: aStatusBarItem as: aString.
 	^aStatusBarItem!
 
+calcRectangleFromClientRectangle: aRectangle
+	| borders padding |
+	borders := self sbGetBorders.
+	padding := borders first @ borders second.
+	^aRectangle expandedBy: (padding corner: padding)!
+
+calculateExtent: aLayoutContext 
+	"Private - Calculate an extent for the receiver that has the correct height to accommodate text in the current font and/or small icons."
+
+	| extent clientExt |
+	clientExt := aLayoutContext clientExtentOf: self.
+	extent := clientExt x @ self preferredHeight.
+
+	"Now adjust required client extent to window extent"
+	^self calcExtentFromClientExtent: extent!
+
 contents
 	"Answer a copy of all the accessible parts of the receiver."
 
@@ -201,6 +217,16 @@ onViewCreated
 			part parentView: self.
 			self setItemText: part at: i]!
 
+preferredHeight
+	"Private - Answer the <integer> number of pels that would be the ideal height for the client area of the receiver."
+
+	| canvas fontHeight |
+	canvas := self canvas.
+	canvas font: self actualFont.
+	fontHeight := canvas textMetrics tmHeight.
+	canvas free.
+	^self metrics smallIconExtent y max: fontHeight!
+
 rectangleOfItem: aStatusBarItem 
 	^self itemRect: (self indexOfItem: aStatusBarItem)!
 
@@ -343,11 +369,22 @@ updateItem: aStatusBarItem
 	index == 0 ifTrue: [^self].
 	self setRightEdges.
 	self setItemText: aStatusBarItem at: index.
-	self invalidateRect: (self getItemRect: index - 1)! !
+	self invalidateRect: (self getItemRect: index - 1)!
+
+wmDpiChangedBeforeParent: message wParam: wParam lParam: lParam
+	super
+		wmDpiChangedBeforeParent: message
+		wParam: wParam
+		lParam: lParam.
+	"If not using preferred extent, then rescale the height. If using preferred extent, this will adjust automatically to fit the font/icons as part of layout."
+	self usePreferredExtent ifFalse: [self extent: self extent * self dpi // self topView dpi].
+	^nil! !
 
 !UI.StatusBar categoriesForMethods!
 addItem:!adding!items!public! !
 addItem:name:!adding!items!public! !
+calcRectangleFromClientRectangle:!geometry!private! !
+calculateExtent:!geometry!private! !
 contents!accessing!public! !
 defaultExtent!constants!private! !
 defaultWindowStyle!constants!private! !
@@ -370,7 +407,8 @@ layoutManager!geometry!public! !
 layoutManager:!geometry!public! !
 onDrawItem:!event handling-win32!public! !
 onViewCreated!event handling!public! !
-rectangleOfItem:!accessing!private! !
+preferredHeight!geometry!private! !
+rectangleOfItem:!geometry!private! !
 removeItem:!items!public!removing! !
 resolutionScaledBy:!geometry!private! !
 rightEdgesForWidth:!geometry!private! !
@@ -385,6 +423,7 @@ setWindowText:!accessing!private!win32 bug fix! !
 size!accessing!public! !
 sizeGripWidth!constants!private! !
 updateItem:!private!updating! !
+wmDpiChangedBeforeParent:wParam:lParam:!event handling-win32!private! !
 !
 
 !UI.StatusBar class methodsFor!

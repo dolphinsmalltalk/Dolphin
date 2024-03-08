@@ -3988,7 +3988,7 @@ wmDpiChanged: message wParam: wParam lParam: lParam
 	^nil!
 
 wmDpiChangedAfterParent: message wParam: wParam lParam: lParam
-	"Private - Handles a WM_DPICHANGED_AFTERPARENT message. This is only sent to child windows, bottom-up, before the top-level window receives a WM_DPICHANGED."
+	"Private - Handles a WM_DPICHANGED_AFTERPARENT message. This is only sent to child windows, top-down, after the top-level window receives a WM_DPICHANGED."
 
 	self applyFont.
 	"MS documentation states that this message has no handler in the DefWindowProc, but controls may well implement it, so ensure it is forwarded"
