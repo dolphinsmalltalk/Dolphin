@@ -241,11 +241,6 @@ basicOnItem: aChildObject movedToParent: aParentObject
 	self isVirtual
 		ifFalse: [self unorderedTreeOf: aChildObject do: [:each | self setItemIndentation: each]]!
 
-beNoIcons
-	"supplied for consistency with TreeView"
-
-	self viewMode: #noIcons.!
-
 beSorted: aSortBlock
 	"implemented so that we can implement the protocol of our Presenters"
 
@@ -1892,7 +1887,6 @@ allExpandedItems!accessing!do copy!public! !
 allHiddenExpandedItems!accessing!do copy!public! !
 basicCollapse:!do copy!expanding/collapsing!private! !
 basicOnItem:movedToParent:!do copy!event handling!private! !
-beNoIcons!do copy!modes!public! !
 beSorted:!accessing!do copy!public!sorting! !
 checkChangeSelectionFrom:to:because:!do copy!events!helpers!private! !
 checkSelectAll:because:!do copy!helpers!private! !

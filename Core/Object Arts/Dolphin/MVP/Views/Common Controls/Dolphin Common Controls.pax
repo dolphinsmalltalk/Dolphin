@@ -968,13 +968,15 @@ UI.ListControlView
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-			'ImageSizes'
+			'ViewModes'
 				-> (IdentityDictionary withAll: {
 								#extraLargeIcons -> (16r100 @ 16r100).
 								#largeIcons -> (16r20 @ 16r20).
 								#mediumIcons -> (16r18 @ 16r18).
+								#mediumSmallIcons -> (16r14 @ 16r14).
 								#noIcons -> (16r0 @ 16r0).
 								#smallIcons -> (16r10 @ 16r10).
+								#thumbnails -> (16r40 @ 16r40).
 								#tileIcons -> (16r30 @ 16r30)
 							})
 		}!
@@ -1009,18 +1011,7 @@ UI.IconicListAbstract
 	classConstants: {
 			'OrientationMask' -> 16r82.
 			'TabOrientations'
-				-> (IdentityDictionary withAll: { 16r0 -> #top. 16r2 -> #bottom. 16r80 -> #left. 16r82 -> #right }).
-			'TabViewImageSizes'
-				-> (IdentityDictionary withAll: {
-								#extraLargeIcons -> (16r100 @ 16r100).
-								#largeIcons -> (16r20 @ 16r20).
-								#mediumIcons -> (16r18 @ 16r18).
-								#mediumSmallIcons -> (16r14 @ 16r14).
-								#noIcons -> (16r0 @ 16r0).
-								#smallIcons -> (16r10 @ 16r10).
-								#thumbnails -> (16r40 @ 16r40).
-								#tileIcons -> (16r30 @ 16r30)
-							})
+				-> (IdentityDictionary withAll: { 16r0 -> #top. 16r2 -> #bottom. 16r80 -> #left. 16r82 -> #right })
 		}!
 
 UI.IconicListAbstract

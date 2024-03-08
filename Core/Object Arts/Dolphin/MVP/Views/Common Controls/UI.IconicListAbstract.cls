@@ -7,13 +7,15 @@ UI.ListControlView
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-			'ImageSizes'
+			'ViewModes'
 				-> (IdentityDictionary withAll: {
 								#extraLargeIcons -> (16r100 @ 16r100).
 								#largeIcons -> (16r20 @ 16r20).
 								#mediumIcons -> (16r18 @ 16r18).
+								#mediumSmallIcons -> (16r14 @ 16r14).
 								#noIcons -> (16r0 @ 16r0).
 								#smallIcons -> (16r10 @ 16r10).
+								#thumbnails -> (16r40 @ 16r40).
 								#tileIcons -> (16r30 @ 16r30)
 							})
 		}!
@@ -71,6 +73,11 @@ beLargeIcons
 	"Set the receiver's image extent to that for large icons."
 
 	self viewMode: #largeIcons!
+
+beNoIcons
+	"Set the receiver to display text only (no images)."
+
+	self viewMode: #noIcons!
 
 beSmallIcons
 	"Set the receiver's image extent to that for small icons."
@@ -369,7 +376,7 @@ hideDropHighlight
 imageExtent
 	"Private - Answer the extent of images to use based on the current view mode and resolution."
 
-	^(self class imageSizes at: self viewMode) * self dpi // USER_DEFAULT_SCREEN_DPI!
+	^(self class viewModes at: self viewMode) * self dpi // USER_DEFAULT_SCREEN_DPI!
 
 imageManager
 	"Private - Answer the receiver's normal image manager."
@@ -887,6 +894,7 @@ attachEditControl:!private! !
 basicEditItemLabel:!operations!private! !
 basicItemFromPoint:!enquiries!private! !
 beLargeIcons!modes!public! !
+beNoIcons!do copy!modes!public! !
 beSmallIcons!modes!public! !
 buildViewsPopup:!commands-menus!private! !
 canEditLabels!accessing-styles!public!testing! !
@@ -991,11 +999,6 @@ wmDpiChangedAfterParent:wParam:lParam:!event handling-win32!private! !
 
 !UI.IconicListAbstract class methodsFor!
 
-imageSizes
-	"Answer the map of named image sizes applicable in this type of iconic list. The sizes themselves are specified in device-independent pixels (i.e. 96-dpi)."
-
-	^ImageSizes!
-
 stbConvertFromVersion3: anArray
 	"Private - Perform an STB conversion from a version 3 (or earlier) <View> to version 4, 
 	i.e. add getInfoTipBlock inst var in IconicListAbstract and subclasses."
@@ -1048,14 +1051,13 @@ viewModeNames
 		intersection: self viewModes keys!
 
 viewModes
-	^self imageSizes! !
+	^ViewModes! !
 
 !UI.IconicListAbstract class categoriesForMethods!
-imageSizes!accessing!public! !
 stbConvertFromVersion3:!binary filing!private! !
 stbConvertFromVersion9:!binary filing!private! !
 value:!evaluating!private! !
 viewModeNames!constants!public! !
-viewModes!accessing!public! !
+viewModes!constants!public! !
 !
 

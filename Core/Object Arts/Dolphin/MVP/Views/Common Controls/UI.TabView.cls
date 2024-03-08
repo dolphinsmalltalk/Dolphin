@@ -9,18 +9,7 @@ UI.IconicListAbstract
 	classConstants: {
 			'OrientationMask' -> 16r82.
 			'TabOrientations'
-				-> (IdentityDictionary withAll: { 16r0 -> #top. 16r2 -> #bottom. 16r80 -> #left. 16r82 -> #right }).
-			'TabViewImageSizes'
-				-> (IdentityDictionary withAll: {
-								#extraLargeIcons -> (16r100 @ 16r100).
-								#largeIcons -> (16r20 @ 16r20).
-								#mediumIcons -> (16r18 @ 16r18).
-								#mediumSmallIcons -> (16r14 @ 16r14).
-								#noIcons -> (16r0 @ 16r0).
-								#smallIcons -> (16r10 @ 16r10).
-								#thumbnails -> (16r40 @ 16r40).
-								#tileIcons -> (16r30 @ 16r30)
-							})
+				-> (IdentityDictionary withAll: { 16r0 -> #top. 16r2 -> #bottom. 16r80 -> #left. 16r82 -> #right })
 		}!
 
 UI.TabView guid: (Core.GUID fromString: '{87b4c731-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -93,11 +82,6 @@ basicRemoveAtIndex: anInteger
 		sendMessageNz: TCM_DELETEITEM
 		wParam: anInteger - 1
 		lpParam: nil!
-
-beNoIcons
-	"Work without icons."
-
-	self viewMode: #noIcons!
 
 calcClientRectangleFromRectangle: aRectangle 
 	"Private - Given a window rectangle represented by the <Rectangle> argument, answer the
@@ -632,7 +616,6 @@ basicClear!public!removing! !
 basicItemFromPoint:!accessing!private! !
 basicRefreshContents!private!updating! !
 basicRemoveAtIndex:!public!removing! !
-beNoIcons!modes!public! !
 calcClientRectangleFromRectangle:!private! !
 calcRectangleFromClientRectangle:!geometry!private! !
 canEditLabels!accessing-styles!public!testing! !
@@ -708,11 +691,6 @@ icon
 
 	^##(self) defaultIcon!
 
-imageSizes
-	"Answer the map of named image sizes applicable in this type of iconic list. The sizes themselves are specified in device-independent pixels (i.e. 96-dpi)."
-
-	^TabViewImageSizes!
-
 initialize
 	"Private - Initialise the receiver's class variables.
 		TabView initialize
@@ -725,17 +703,6 @@ initialize
 						TCS_BOTTOM -> #bottom.
 						TCS_VERTICAL -> #left.
 						(TCS_BOTTOM | TCS_VERTICAL) -> #right
-					}).
-	self addClassConstant: 'TabViewImageSizes'
-		value: (IdentityDictionary withAll: {
-						#noIcons -> (0 @ 0).
-						#smallIcons -> (16 @ 16).
-						#mediumSmallIcons -> (20 @ 20).
-						#mediumIcons -> (24 @ 24).
-						#largeIcons -> (32 @ 32).
-						#tileIcons -> (48 @ 48).
-						#thumbnails -> (64 @ 64).
-						#extraLargeIcons -> (256 @ 256)
 					})!
 
 tabOrientations
@@ -752,7 +719,6 @@ winClassName
 
 !UI.TabView class categoriesForMethods!
 icon!constants!public! !
-imageSizes!accessing!public! !
 initialize!development!initializing!private! !
 tabOrientations!accessing!constants!public! !
 uninitialize!class hierarchy-removing!private! !

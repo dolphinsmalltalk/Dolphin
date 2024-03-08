@@ -179,11 +179,6 @@ beDefaultThemed
 	self hasHotTracking: true.
 	super beDefaultThemed!
 
-beNoIcons
-	"Work without icons."
-
-	self viewMode: #noIcons!
-
 collapse: anObject
 	"Collapse the displayed hierarchy below anObject, triggering a selection
 	change event if one of the children of the object was previously selected.
@@ -1231,7 +1226,6 @@ basicRemove:!private!removing! !
 basicRemoveAtIndex:!private!removing! !
 basicResetSelection!private!selection! !
 beDefaultThemed!modes!public! !
-beNoIcons!modes!public! !
 collapse:!expanding/collapsing!public! !
 collapseHandle:!expanding/collapsing!private! !
 connectModel!models!public! !

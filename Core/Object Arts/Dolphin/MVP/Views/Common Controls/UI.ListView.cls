@@ -838,7 +838,7 @@ imageExtent
 	"Private - Answer the device-independent (96-dpi) extent of images to use based on the current view mode"
 
 	viewMode == #thumbnails ifTrue: [^self thumbnailExtent].
-	^ImageSizes at: self viewMode ifAbsent: [self smallIconExtent]!
+	^ViewModes at: self viewMode ifAbsent: [self smallIconExtent]!
 
 imageFromRow: item
 	"Private - Answer the image for row which represents the <Object>, item.
@@ -2236,16 +2236,6 @@ thumbnailsImageManager
 			thumbnailsImageManager maskcolor: Color default].
 	^thumbnailsImageManager!
 
-thumbnailsMode
-	"Place the receiver in thumbnails mode"
-
-	self viewMode: #thumbnails!
-
-tileIconMode
-	"Place the receiver in tile icons mode"
-
-	self viewMode: #tileIcons!
-
 topIndex
 	^(self sendMessage: LVM_GETTOPINDEX) + 1!
 
@@ -2576,8 +2566,6 @@ textFromRow:!adapters!private! !
 thumbnailExtent!accessing!public! !
 thumbnailExtent:!accessing!public! !
 thumbnailsImageManager!image management!private! !
-thumbnailsMode!commands!public! !
-tileIconMode!commands!public! !
 topIndex!accessing!public! !
 updateAll!public!updating! !
 updateColumn:!columns!private!updating! !
@@ -2746,7 +2734,7 @@ stbVersion!binary filing!public! !
 themePartName!constants!public! !
 uninitialize!class hierarchy-removing!private! !
 updateModes!constants!private! !
-viewModes!accessing!public! !
+viewModes!constants!public! !
 winClassName!constants!private! !
 !
 
