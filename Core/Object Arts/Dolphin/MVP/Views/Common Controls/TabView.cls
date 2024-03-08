@@ -2,7 +2,7 @@
 
 IconicListAbstract subclass: #TabView
 	instanceVariableNames: 'viewMode'
-	classVariableNames: 'OrientationMask TabOrientations TabViewImageSizes'
+	classVariableNames: 'OrientationMask TabOrientations'
 	poolDictionaries: 'TabViewConstants'
 	classInstanceVariableNames: ''!
 
@@ -74,11 +74,6 @@ basicRemoveAtIndex: anInteger
 
 	(self sendMessage: TCM_DELETEITEM wParam: anInteger - 1) == 0 
 		ifTrue: [^self errorInCommonControlCall]!
-
-beNoIcons
-	"Work without icons."
-
-	self viewMode: #noIcons!
 
 calcClientRectangleFromRectangle: aRectangle 
 	"Private - Given a window rectangle represented by the <Rectangle> argument, answer the
@@ -613,7 +608,6 @@ basicClear!public!removing! !
 basicItemFromPoint:!accessing!private! !
 basicRefreshContents!private!updating! !
 basicRemoveAtIndex:!public!removing! !
-beNoIcons!modes!public! !
 calcClientRectangleFromRectangle:!private! !
 calcRectangleFromClientRectangle:!geometry!private! !
 canEditLabels!accessing-styles!public!testing! !
@@ -689,11 +683,6 @@ icon
 
 	^##(self) defaultIcon!
 
-imageSizes
-	"Answer the map of named image sizes applicable in this type of iconic list. The sizes themselves are specified in device-independent pixels (i.e. 96-dpi)."
-
-	^TabViewImageSizes!
-
 initialize
 	"Private - Initialise the receiver's class variables.
 		TabView initialize
@@ -706,19 +695,6 @@ initialize
 				at: TCS_BOTTOM put: #bottom;
 				at: TCS_VERTICAL put: #left;
 				at: TCS_BOTTOM | TCS_VERTICAL put: #right;
-				shrink;
-				isImmutable: true;
-				yourself).
-	self addClassConstant: 'TabViewImageSizes'
-		value: (IdentityDictionary new
-				at: #noIcons put: 0 @ 0;
-				at: #smallIcons put: 16 @ 16;
-				at: #mediumSmallIcons put: 20 @ 20;
-				at: #mediumIcons put: 24 @ 24;
-				at: #largeIcons put: 32 @ 32;
-				at: #tileIcons put: 48 @ 48;
-				at: #thumbnails put: 64 @ 64;
-				at: #extraLargeIcons put: 256 @ 256;
 				shrink;
 				isImmutable: true;
 				yourself)!
@@ -734,7 +710,6 @@ winClassName
 
 !TabView class categoriesForMethods!
 icon!constants!public! !
-imageSizes!accessing!public! !
 initialize!development!initializing!private! !
 tabOrientations!accessing!constants!public! !
 winClassName!constants!private! !

@@ -256,11 +256,6 @@ basicSetItemAt: indexInteger stateImage: stateImageInteger
 				yourself.	"a 1-based index in Windows !!"
 	self lvmSetItem: indexInteger - 1 state: lvItem!
 
-beNoIcons
-	"supplied for consistancy with TreeView"
-
-	self viewMode: #noIcons.!
-
 beSorted: aSortBlock
 	"implemented so that we can implement the protocol of our Presenters"
 
@@ -1956,7 +1951,6 @@ allHiddenExpandedItems!accessing!do copy!public! !
 basicCollapse:!do copy!expanding/collapsing!private! !
 basicOnItem:movedToParent:!do copy!event handling!private! !
 basicSetItemAt:stateImage:!do copy!private!states! !
-beNoIcons!do copy!modes!public! !
 beSorted:!accessing!do copy!public!sorting! !
 checkChangeSelectionFrom:to:because:!do copy!events!helpers!private! !
 checkSelectAll:because:!do copy!helpers!private! !

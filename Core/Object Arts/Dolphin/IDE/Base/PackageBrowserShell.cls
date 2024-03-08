@@ -212,10 +212,15 @@ browseSystem
 		ifTrue: [browser actualClass: class].
 	^browser!
 
-buildPopupForCommand: aSymbol 
+buildPopupForCommand: aSymbol
 	"Private - Dynamically build an appropriate popup menu for aSymbol command."
 
-	aSymbol == #viewModeSelect ifTrue: [^classesPresenter view buildViewsPopup].
+	aSymbol == #viewModeSelect
+		ifTrue: 
+			[| focus |
+			"Dolphin 8 integrates the population of pop-up menus with a new declarative command querying mechanism, and there is no need for any of this horribleness, but in D7 we'll live with the type switch"
+			focus := View focus.
+			^(focus isKindOf: IconicListAbstract) ifTrue: [focus buildViewsPopup] ifFalse: [Menu new]].
 	^super buildPopupForCommand: aSymbol!
 
 cacheCurrentCard

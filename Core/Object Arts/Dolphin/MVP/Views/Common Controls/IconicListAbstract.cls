@@ -2,7 +2,7 @@
 
 ListControlView subclass: #IconicListAbstract
 	instanceVariableNames: 'getImageBlock imageManager stateImageManager getInfoTipBlock customDrawBlock largeIconExtent thumbnailsImageManager'
-	classVariableNames: 'ImageSizes'
+	classVariableNames: 'ViewModes'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
@@ -59,10 +59,40 @@ beLargeIcons
 
 	self viewMode: #largeIcons!
 
+beNoIcons
+	"Set the receiver to display text only (no images)."
+
+	self viewMode: #noIcons!
+
 beSmallIcons
 	"Set the receiver's image extent to that for small icons."
 
 	self viewMode: #smallIcons!
+
+buildViewsPopup
+	| popup |
+	popup := Menu new.
+	self buildViewsPopup: popup.
+	^popup!
+
+buildViewsPopup: aMenu
+	self class viewModeNames do: 
+			[:each |
+			| pair |
+			pair := ##(IdentityDictionary withAll: {
+								#noIcons -> #(#beNoIcons '&No Icons').
+								#list -> #(#listMode '&List').
+								#report -> #(#reportMode '&Details').
+								#smallIcons -> #(#smallIconMode '&Small Icons').
+								#mediumSmallIcons -> #(#mediumSmallIconMode 'M&edium-small Icons').
+								#mediumIcons -> #(#mediumIconMode '&Medium Icons').
+								#largeIcons -> #(#largeIconMode '&Icons').
+								#tileIcons -> #(#tileIconMode '&Tiles').
+								#thumbnails -> #(#thumbnailsMode 'Thum&bnails').
+								#extraLargeIcons -> #(#extraLargeIconMode '&Extra-large Icons')
+							})
+						at: each.
+			(aMenu addCommand: pair first description: pair second) isRadioButtonStyle: true]!
 
 canEditLabels
 	"Answer whether the receiver's labels can be edited in-place."
@@ -268,6 +298,11 @@ errorInCommonControlCall: hItem
 
 !
 
+extraLargeIconMode
+	"Place the receiver in extra large icons mode"
+
+	self viewMode: #extraLargeIcons!
+
 getImageBlock
 	"Answer the block to use to find out the image index of an object that will
 	be placed in the receiver"
@@ -336,7 +371,7 @@ hideDropHighlight
 imageExtent
 	"Private - Answer the extent of images to use based on the current view mode and resolution."
 
-	^(self class imageSizes at: self viewMode) * self dpi // USER_DEFAULT_SCREEN_DPI!
+	^(self class viewModes at: self viewMode) * self dpi // USER_DEFAULT_SCREEN_DPI!
 
 imageManager
 	"Private - Answer the receiver's normal image manager."
@@ -392,6 +427,21 @@ largeIconExtent: aPointOrNil
 	largeIconExtent := aPointOrNil.
 	self applyImageLists
 !
+
+largeIconMode
+	"Place the receiver in large icons mode"
+
+	self viewMode: #largeIcons!
+
+mediumIconMode
+	"Place the receiver in medium icons mode"
+
+	self viewMode: #mediumIcons!
+
+mediumSmallIconMode
+	"Place the receiver in medium-small icons mode"
+
+	self viewMode: #mediumSmallIcons!
 
 newSelectionsFromEvent: aMouseEvent
 	"Private - Answer a collection of the <integer> selections that would occur if the `MouseEvent` argument was was passed to the control.
@@ -716,6 +766,11 @@ smallIconExtent
 
 	^SystemMetrics default smallIconExtent!
 
+smallIconMode
+	"Place the receiver in small icons mode"
+
+	self viewMode: #smallIcons!
+
 stateImageManager
 	"Answers the receiver's state image manager."
 
@@ -737,6 +792,16 @@ stbSaveOn: anSTBOutFiler
 themeSubAppName
 	^'explorer'!
 
+thumbnailsMode
+	"Place the receiver in thumbnails mode"
+
+	self viewMode: #thumbnails!
+
+tileIconMode
+	"Place the receiver in tile icons mode"
+
+	self viewMode: #tileIcons!
+
 viewMode
 	"Answer the symbolic name of the receiver's current view mode."
 
@@ -755,6 +820,13 @@ viewMode: aSymbol
 
 viewModeChanged
 	self applyImageLists!
+
+viewModeSelect
+	"Toggle the view mode of the receiver"
+
+	| viewModes |
+	viewModes := self class viewModeNames.
+	self viewMode: (viewModes at: (viewModes indexOf: self viewMode) \\ viewModes size + 1)!
 
 wantCustomDrawItemNotifications: pNMHDR
 	^self customDrawBlock notNil!
@@ -786,7 +858,10 @@ attachEditControl:!private! !
 basicEditItemLabel:!operations!private! !
 basicItemFromPoint:!enquiries!private! !
 beLargeIcons!modes!public! !
+beNoIcons!do copy!modes!public! !
 beSmallIcons!modes!public! !
+buildViewsPopup!helpers!private! !
+buildViewsPopup:!commands!private! !
 canEditLabels!accessing-styles!public!testing! !
 canEditLabels:!accessing-styles!public! !
 customDrawBlock!accessing!public! !
@@ -811,6 +886,7 @@ ensureItemVisible:!operations!public! !
 ensureSelectionVisible!public!selection! !
 ensureVisible:!operations!public! !
 errorInCommonControlCall:!exceptions!private! !
+extraLargeIconMode!commands!public! !
 getImageBlock!adapters!public! !
 getImageBlock:!adapters!public! !
 getInfoTipBlock!accessing!public! !
@@ -833,6 +909,9 @@ itemRect:!accessing!public! !
 itemRect:textOnly:!enquiries!public! !
 largeIconExtent!constants!public! !
 largeIconExtent:!constants!public! !
+largeIconMode!commands!public! !
+mediumIconMode!commands!public! !
+mediumSmallIconMode!commands!public! !
 newSelectionsFromEvent:!event handling!private! !
 nmBeginDrag:!event handling-win32!private! !
 nmBeginLabelEdit:!event handling-win32!private! !
@@ -861,24 +940,23 @@ setViewMode:!accessing!private! !
 showDragDrop:highlight:!drag & drop!event handling!public! !
 showDropHighlight:!drag & drop!private! !
 smallIconExtent!constants!public! !
+smallIconMode!commands!public! !
 stateImageManager!image management!public! !
 stateImageManager:!image management!public! !
 stbSaveOn:!binary filing!public! !
 themeSubAppName!constants!private! !
+thumbnailsMode!commands!public! !
+tileIconMode!commands!public! !
 viewMode!accessing!public! !
 viewMode:!accessing!public! !
 viewModeChanged!helpers!private! !
+viewModeSelect!commands!public! !
 wantCustomDrawItemNotifications:!event handling-win32!private! !
 wmDestroy:wParam:lParam:!event handling-win32!private! !
 wmDpiChangedAfterParent:wParam:lParam:!event handling-win32!private! !
 !
 
 !IconicListAbstract class methodsFor!
-
-imageSizes
-	"Answer the map of named image sizes applicable in this type of iconic list. The sizes themselves are specified in device-independent pixels (i.e. 96-dpi)."
-
-	^ImageSizes!
 
 initialize
 	"Private - Initialise the receiver's class variables.
@@ -887,17 +965,15 @@ initialize
 
 	"Standard icon sizes at 96-dpi"
 
-	self addClassConstant: 'ImageSizes'
-		value: (IdentityDictionary new
-				at: #noIcons put: 0 @ 0;
-				at: #smallIcons put: 16 @ 16;
-				at: #mediumIcons put: 24 @ 24;
-				at: #largeIcons put: 32 @ 32;
-				at: #tileIcons put: 48 @ 48;
-				at: #extraLargeIcons put: 256 @ 256;
-				shrink;
-				isImmutable: true;
-				yourself)!
+	self addClassConstant: 'ViewModes'
+		value: (IdentityDictionary withAll: {#noIcons -> (0 @ 0).
+						#smallIcons -> (16 @ 16).
+						#mediumSmallIcons -> (20 @ 20).
+						#mediumIcons -> (24 @ 24).
+						#largeIcons -> (32 @ 32).
+						#tileIcons -> (48 @ 48).
+						#thumbnails -> (64 @ 64).
+						#extraLargeIcons -> (256 @ 256)})!
 
 stbConvertFromVersion3: anArray 
 	"Private - Perform an STB conversion from a version 3 (or earlier) <View> to version 4, 
@@ -948,15 +1024,19 @@ value: anObject
 
 	^anObject iconImageIndex!
 
+viewModeNames
+	^#(#noIcons #list #report #smallIcons #mediumSmallIcons #mediumIcons #largeIcons #tileIcons #thumbnails #extraLargeIcons)
+		intersection: self viewModes keys!
+
 viewModes
-	^self imageSizes! !
+	^ViewModes! !
 
 !IconicListAbstract class categoriesForMethods!
-imageSizes!accessing!public! !
 initialize!development!initializing!private! !
 stbConvertFromVersion3:!binary filing!private! !
 stbConvertFromVersion9:!binary filing!private! !
 value:!evaluating!private! !
-viewModes!accessing!public! !
+viewModeNames!constants!public! !
+viewModes!constants!public! !
 !
 

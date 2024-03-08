@@ -233,7 +233,7 @@ NMGETINFOTIP subclass: #NMTVGETINFOTIPW
 
 ListControlView subclass: #IconicListAbstract
 	instanceVariableNames: 'getImageBlock imageManager stateImageManager getInfoTipBlock customDrawBlock largeIconExtent thumbnailsImageManager'
-	classVariableNames: 'ImageSizes'
+	classVariableNames: 'ViewModes'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
@@ -245,7 +245,7 @@ IconicListAbstract subclass: #ListView
 
 IconicListAbstract subclass: #TabView
 	instanceVariableNames: 'viewMode'
-	classVariableNames: 'OrientationMask TabOrientations TabViewImageSizes'
+	classVariableNames: 'OrientationMask TabOrientations'
 	poolDictionaries: 'TabViewConstants'
 	classInstanceVariableNames: ''!
 

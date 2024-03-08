@@ -370,20 +370,6 @@ basicUpdateColumnAtIndex: anInteger
 beSorted: aBlockClosure 
 	self list: (self list asSortedCollection: aBlockClosure)!
 
-buildViewsPopup
-	| popup |
-	popup := Menu new.
-	popup
-		addCommand: (Message selector: #extraLargeIconMode) description: 'Extra large icons';
-		addCommand: (Message selector: #thumbnailsMode) description: 'Thumbnails';
-		addCommand: (Message selector: #tileIconMode) description: 'Tiles';
-		addCommand: (Message selector: #largeIconMode) description: 'Icons';
-		addCommand: (Message selector: #listMode) description: 'List';
-		addCommand: (Message selector: #reportMode) description: 'Details'.
-	popup items do: [:each | each isRadioButtonStyle: true].
-	^popup
-!
-
 cacheColumnWidths
 	self allColumns
 		keysAndValuesDo: [:eachKey :eachValue | eachValue basicWidth: (self lvmGetColumnWidth: eachKey - 1)]!
@@ -595,11 +581,6 @@ errorInCommonControlCall: index
 			size := self itemCount.
 			(index between: 0 and: size - 1) ifFalse: [^self errorSubscriptBounds: index]].
 	^self errorInCommonControlCall!
-
-extraLargeIconMode
-	"Place the receiver in extra large icons mode"
-
-	self viewMode: #extraLargeIcons!
 
 findItem: aString startingAt: anInteger wrap: aBoolean
 	"Private - Perform a search for the first item starting with the <readableString>,
@@ -915,7 +896,7 @@ imageExtent
 	"Private - Answer the device-independent (96-dpi) extent of images to use based on the current view mode"
 
 	viewMode == #thumbnails ifTrue: [^self thumbnailExtent].
-	^ImageSizes at: self viewMode ifAbsent: [self smallIconExtent]!
+	^ViewModes at: self viewMode ifAbsent: [self smallIconExtent]!
 
 imageFromRow: item
 	"Private - Answer the image for row which represents the <Object>, item.
@@ -1099,11 +1080,6 @@ largeIconExtent: aPointOrNil
 				setIconSpacing: ((aPointOrNil notNil
 						and: [aPointOrNil * self dpi // USER_DEFAULT_SCREEN_DPI > iconSpacing]) ifFalse: [iconSpacing])].
 	^super largeIconExtent: aPointOrNil!
-
-largeIconMode
-	"Place the receiver in large icons mode"
-
-	self viewMode: #largeIcons!
 
 lastSelIndices
 	^lastSelIndices!
@@ -2123,11 +2099,6 @@ showsSelAlways: aBoolean
 
 	self baseStyleMask: LVS_SHOWSELALWAYS set: aBoolean recreateIfChanged: false!
 
-smallIconMode
-	"Place the receiver in small icons mode"
-
-	self viewMode: #smallIcons!
-
 sortOnColumn: aListViewColumn
 	"Sorts the receiver according to the sort block in aListViewColumn"
 
@@ -2219,16 +2190,6 @@ thumbnailsImageManager
 			thumbnailsImageManager maskcolor: Color default].
 	^thumbnailsImageManager!
 
-thumbnailsMode
-	"Place the receiver in thumbnails mode"
-
-	self viewMode: #thumbnails!
-
-tileIconMode
-	"Place the receiver in tile icons mode"
-
-	self viewMode: #tileIcons!
-
 topIndex
 	^(self sendMessage: LVM_GETTOPINDEX) + 1!
 
@@ -2312,13 +2273,6 @@ viewModeChanged
 	self updateAll.
 	self trigger: #viewModeChanged!
 
-viewModeSelect
-	"Toggle the view mode of the receiver"
-
-	self 
-		viewMode: (#(#report #extraLargeIcons #thumbnails #tileIcons #largeIcons #smallIcons #list #report) 
-				after: self viewMode)!
-
 wantCustomDrawItemNotifications: pNMHDR
 	^self customDrawBlock notNil or: [self hasSubItemCustomDraw]! !
 
@@ -2357,7 +2311,6 @@ basicRemoveColumnAtIndex:!columns!public!removing! !
 basicResetSelection!private!selection! !
 basicUpdateColumnAtIndex:!columns!private!updating! !
 beSorted:!public!sorting! !
-buildViewsPopup!helpers!private! !
 cacheColumnWidths!helpers!private! !
 calculateExtent:!geometry!private! !
 cancelLabelEdit!operations!private! !
@@ -2383,7 +2336,6 @@ ensureItemsVisible:!helpers!private! !
 ensureSelectionVisible!public!selection! !
 ensureVisible:!operations!public! !
 errorInCommonControlCall:!exceptions!private! !
-extraLargeIconMode!commands!public! !
 findItem:startingAt:wrap:!private!searching! !
 forecolor:!accessing!public! !
 forgetLastClickedColumn!helpers!private! !
@@ -2445,7 +2397,6 @@ itemFromPoint:!enquiries!private! !
 itemRect:textOnly:!enquiries!public! !
 itemsPerPage!geometry!public! !
 largeIconExtent:!constants!public! !
-largeIconMode!commands!public! !
 lastSelIndices!accessing!private! !
 listMode!commands!public! !
 listViewStyleAllMask:!accessing-styles!private! !
@@ -2565,7 +2516,6 @@ setWidthOfColumn:to:!columns!public! !
 showDropHighlight:!drag & drop!private! !
 showsSelAlways!accessing-styles!public! !
 showsSelAlways:!accessing-styles!public! !
-smallIconMode!commands!public! !
 sortOnColumn:!columns!public!sorting! !
 state!accessing!private! !
 stateImageFromRow:!helpers!private! !
@@ -2575,8 +2525,6 @@ textFromRow:!adapters!private! !
 thumbnailExtent!accessing!public! !
 thumbnailExtent:!accessing!public! !
 thumbnailsImageManager!image management!private! !
-thumbnailsMode!commands!public! !
-tileIconMode!commands!public! !
 topIndex!accessing!public! !
 updateAllNonVirtual!private!updating! !
 updateAllVirtual!private!updating! !
@@ -2586,7 +2534,6 @@ updateItem:atIndex:!event handling!public! !
 updateSelectionCache!helpers!private!selection! !
 viewMode!accessing!public! !
 viewModeChanged!helpers!private! !
-viewModeSelect!commands!public! !
 wantCustomDrawItemNotifications:!helpers!private! !
 !
 
@@ -2612,17 +2559,13 @@ initialize
 
 	self addClassConstant: 'NoImageIndex' value: 0.
 	self addClassConstant: 'LvModes'
-		value: (IdentityDictionary new
-				at: #thumbnails put: LVS_ICON;
-				at: #smallIcons put: LVS_SMALLICON;
-				at: #largeIcons put: LVS_ICON;
-				at: #tileIcons put: LVS_ICON;
-				at: #extraLargeIcons put: LVS_ICON;
-				at: #list put: LVS_LIST;
-				at: #report put: LVS_REPORT;
-				shrink;
-				isImmutable: true;
-				yourself).
+		value: (IdentityDictionary withAll: {#thumbnails -> LVS_ICON.
+						#smallIcons -> LVS_SMALLICON.
+						#largeIcons -> LVS_ICON.
+						#tileIcons -> LVS_ICON.
+						#extraLargeIcons -> LVS_ICON.
+						#list -> LVS_LIST.
+						#report -> LVS_REPORT}).
 	UnknownItem := Object new!
 
 onStartup
@@ -2740,7 +2683,7 @@ stbConvertFromVersion2:!binary filing!private! !
 stbConvertFromVersion5:!binary filing!private! !
 stbVersion!binary filing!public! !
 themePartName!constants!public! !
-viewModes!accessing!public! !
+viewModes!constants!public! !
 winClassName!constants!private! !
 !
 
