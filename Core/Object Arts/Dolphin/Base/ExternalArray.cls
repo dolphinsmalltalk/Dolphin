@@ -355,6 +355,9 @@ replaceFrom: startInteger to: stopInteger with: aByteObject startingAt: startAtI
 		to: stopInteger * elemSize
 		startingAt: startAtInteger!
 
+second
+	^self at: 2!
+
 select: discriminator
 	"Evaluate the <monadicValuable> argument, discriminator, for each of the receiver's elements.
 	Answer a new <collection> like the receiver containing only those elements for which 
@@ -458,6 +461,7 @@ packing!constants!private! !
 replaceBytesOf:from:to:startingAt:!double dispatch!private! !
 replaceElementsOf:from:to:startingAt:!private!replacing! !
 replaceFrom:to:with:startingAt:!public!replacing! !
+second!accessing!public! !
 select:!enumerating!public! !
 size!accessing!public! !
 species!constants!public! !
