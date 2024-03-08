@@ -43,43 +43,6 @@ addSubView: aView
 
 	^aView.!
 
-adjustCreationParameters: aWindowCreationState forShell: aShellView
-	"Private - The <ShellView> first argument is being created for the first time on this desktop. Answer a WindowCreationState based on that provided as the 2nd argument with any adjustments to position, extent, or styles, that are appropriate. This would typically involve determining the correct monitor on which to position the window, and either providing a default extent or scaling that specified to the monitor DPI."
-
-	| monitor position extent |
-	position := aWindowCreationState position.
-	extent := aWindowCreationState extent.
-	"If the position is not specified, we will need to work out a suitable position on the active monitor"
-	position = WindowCreationParameters.UseDefaultGeometry
-		ifTrue: 
-			["Default position, so should go on the active monitor"
-			monitor := DisplayMonitor active.
-			"Now work out the extent to use at the DPI of the active monitor, which is either the specified extent remapped to the active monitor DPI, or if unspecified the monitor default"
-			extent := extent = WindowCreationParameters.UseDefaultGeometry
-						ifTrue: [monitor defaultWindowExtent]
-						ifFalse: [extent * monitor dpi / aWindowCreationState dpi].
-			position := aShellView isInitiallyCentered
-						ifTrue: [monitor centerExtent: extent]
-						ifFalse: [monitor nextWindowPosition]]
-		ifFalse: 
-			["Position was specified. Determine the monitor from that - we have to scale to the system DPI"
-			position := position * DisplayMonitor primary dpi / aWindowCreationState dpi.
-			monitor := DisplayMonitor nearestPoint: position.
-			"Now we can calculate the extent as above"
-			extent := extent = WindowCreationParameters.UseDefaultGeometry
-						ifTrue: [monitor defaultWindowExtent]
-						ifFalse: [extent * monitor dpi / aWindowCreationState dpi].
-			"If should be initially centered, override the specified position, but keeping to the same monitor"
-			aShellView isInitiallyCentered
-				ifTrue: 
-					["Position so as to centre the window at whatever its extent should be"
-					position := monitor centerExtent: extent]].
-	^aWindowCreationState shallowCopy
-		position: (monitor adjustPosition: position forExtent: extent);
-		extent: extent;
-		dpi: monitor dpi;
-		yourself!
-
 adjustPlacement: aWINDOWPLACEMENT ofShell: aShellView withResolution: aPoint
 	"Private - The <ShellView> first argument is being restored from an STBViewProxy (e.g. instantiated from a view resource) on this desktop. Adjust the <WINDOWPLACEMENT> 2nd argument to an appropriate position and/or extent, and scale the view to the target monitor's DPI from the original resolution specified by the <point> 3rd argument."
 
@@ -93,7 +56,7 @@ adjustPlacement: aWINDOWPLACEMENT ofShell: aShellView withResolution: aPoint
 	aWINDOWPLACEMENT rectangle: (monitor
 				adjustWindowRect: ((aShellView isInitiallyCentered
 						ifTrue: [monitor centerExtent: extent]
-						ifFalse: [monitor nextWindowPosition]) extent: extent))!
+						ifFalse: [aShellView position]) extent: extent))!
 
 allParents
 	"Answers a <sequencedReadableCollection> of all parents of the receiver including, ultimately,
@@ -161,6 +124,46 @@ commandPolicyWithSource: sourceView
 
 	^CommandPolicy defaultClass 
 		commandSource: sourceView!
+
+createShellWindow: aShellView withParameters: aWindowCreationParameters
+	| monitor position extent targetDpi |
+	position := aWindowCreationParameters position.
+	extent := aWindowCreationParameters extent.
+	"If the position is not specified, we will need to work out a suitable position on the active monitor"
+	(aShellView isRestoringFromProxy or: [position = WindowCreationParameters.UseDefaultGeometry])
+		ifTrue: 
+			["Default position, so should go on the active monitor"
+			monitor := DisplayMonitor active.
+			targetDpi := monitor dpi.
+			"Now work out the extent to use at the DPI of the active monitor, which is either the specified extent remapped to the active monitor DPI, or if unspecified the monitor default"
+			extent := extent = WindowCreationParameters.UseDefaultGeometry
+						ifTrue: [monitor defaultWindowExtent]
+						ifFalse: [extent * targetDpi // aWindowCreationParameters dpi].
+			position := aShellView isInitiallyCentered
+						ifTrue: [monitor centerExtent: extent]
+						ifFalse: [monitor nextWindowPosition]]
+		ifFalse: 
+			["Position was specified. Determine the monitor from that."
+			monitor := DisplayMonitor nearestPoint: position.
+			targetDpi := monitor dpi.
+			"Now we can calculate the extent as above"
+			extent := extent = WindowCreationParameters.UseDefaultGeometry
+						ifTrue: [monitor defaultWindowExtent]
+						ifFalse: [extent * targetDpi // aWindowCreationParameters dpi].
+			"If should be initially centered, override the specified position, but keeping to the same monitor"
+			position := aShellView isInitiallyCentered
+						ifTrue: 
+							["Position so as to centre the window at whatever its extent should be"
+							monitor centerExtent: extent]
+						ifFalse: [position * targetDpi // aWindowCreationParameters dpi]].
+	"Set the dpi of the shell to that of the monitor we think it is on, and to which we have scaled it. This will mean that even if we made the wrong choice, and Windows thinks it is placed on another monitor, when it is moved between monitors it should at least rescale correctly. Note that we would at least need to clear any cached DPI, as otherwise the shell will keep getting rescaled from its original DPI. Basically the cached ShellView DPI needs to always be the same as the actual DPI, except during the per-monitor transition process when Windows is sending WM_DPICHANGED_BEFOREPARENT to all the children. In order for the children to rescale correctly, they need to know the DPI to which they were last scaled, which is the primary reason to cache the DPI in ShellView."
+	aShellView dpi: targetDpi.
+	"Finally, create the top-level Window"
+	aShellView
+		createWindowAt: (monitor adjustPosition: position forExtent: extent)
+		extent: extent
+		styles: aWindowCreationParameters styles
+		name: aWindowCreationParameters title!
 
 displayOn: aStream
 	"Append, to aStream, a String whose characters are a representation of the receiver as a user
@@ -381,7 +384,6 @@ workArea
 actualFont!accessing!private! !
 addCommandHistory:!accessing!private! !
 addSubView:!hierarchy!public!sub views! !
-adjustCreationParameters:forShell:!geometry!private! !
 adjustPlacement:ofShell:withResolution:!geometry!private! !
 allParents!hierarchy!public! !
 ambientBackcolor!accessing!private! !
@@ -393,6 +395,7 @@ caption!accessing!public! !
 caption:!accessing!public! !
 centerExtent:!geometry!private! !
 commandPolicyWithSource:!commands!public! !
+createShellWindow:withParameters:!public! !
 displayOn:!displaying!public! !
 dpi!accessing!public! !
 ensureSubView:rectangleVisible:!private!updating! !

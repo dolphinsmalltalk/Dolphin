@@ -1,20 +1,25 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Object subclass: #ViewState
-	instanceVariableNames: 'view state placement resolution subViewStates'
+	instanceVariableNames: 'view state showCmd dpi subViewStates'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
 ViewState guid: (GUID fromString: '{87b4c4cd-026e-11d3-9fd7-00a0cc3e4a32}')!
 
-ViewState comment: '`ViewState` is capable of holding the relevant state of any `View` so that it may be restored to the same state at a later date. Normally, a `ViewState` is used during an image save to capture the state of all of the open views so that they may be restored when the image is restarted, but it is also used when dynamic recreation of a view is required such as when changing certainWindow styles that may only be applied when a Window is created.
+ViewState comment: '`ViewState` is capable of holding the relevant state of any `View` so that it may be restored to the same state at a later date. Normally, a `ViewState` is used during an image save to capture the state of all of the open views so that they may be restored when the image is restarted, but it is also used when dynamic recreation of a view is required such as when changing certain window styles that may only be applied when a window is created.
 
-Instance Variables
-	view			`view` whose state has been saved.
-	state		`<monadicValuable>`
-	placement
-	subViewStates'!
+## Instance Variables:
+  `view`			`View` whose state has been saved.
+  `state`			`MessageSequence` to replay to restore extrinsic state of the view, e.g. creating the associated window
+  `showCmd`		`<integer>` from the SW_xxx enumeration to restore the visible state of the view via a call to the [ShowWindow](https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-showwindow) api
+  `dpi`			`<integer>` logical DPI of the View when saved
+  `subViewStates`	`<sequencedReadableCollection>` of `ViewState`s for any child `View`s
+
+
+
+'!
 
 !ViewState categoriesForClass!MVP-Views-Support! !
 
@@ -27,21 +32,28 @@ recordStateOf: aView forRecreate: aBoolean
 	view := aView.
 	aBoolean ifTrue: [view setStateRestoring].
 	state := aView state.
-	placement := aView placement.
-	resolution := aView resolution.
-	subViewStates := aView subViews collect: [:each |
-		ViewState recordStateOf: each forRecreate: aBoolean]!
+	showCmd := aView placement showCmd.
+	dpi := aView dpi.
+	subViewStates := aView subViews
+				collect: [:each | ViewState recordStateOf: each forRecreate: aBoolean]!
 
 restore
 	"Restore the receiver's view to its former glory"
 
-	view isStateRestoring: true.
-	view state: state.
-	subViewStates do: [:each | each restore].
+	| scale |
 	view
-		basicRestorePlacement: placement resolution: resolution;
+		setStateRestoring;
+		state: state.
+	subViewStates do: [:each | each restore].
+	scale := view resolution / dpi.
+	scale = 1
+		ifFalse: 
+			["Make adjustments required for a change of resolution"
+			view resolutionScaledBy: scale].
+	view
 		basicInvalidateLayout;
-		isStateRestoring: false! !
+		basicShowWithStyle: showCmd;
+		resetStateRestoring! !
 
 !ViewState categoriesForMethods!
 recordStateOf:forRecreate:!initializing!private! !

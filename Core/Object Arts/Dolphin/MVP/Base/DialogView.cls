@@ -33,7 +33,7 @@ answer: anObject
 
 	self model: anObject!
 
-basicCreateWindow: aWindowCreationState
+basicCreateWindowAt: originPoint extent: extentPoint styles: anArray name: anAnsiString
 	"Private - Create the Windows window ensuring it has the VM window procedure.
 	Answer the receiver. The position and size are currently ignored."
 
@@ -405,7 +405,7 @@ wmInitDialog: message wParam: wParam lParam: lParam
 !DialogView categoriesForMethods!
 answer!accessing!public! !
 answer:!accessing!not an aspect!public! !
-basicCreateWindow:!private!realizing/unrealizing! !
+basicCreateWindowAt:extent:styles:name:!private!realizing/unrealizing! !
 cancel!commands!public! !
 defaultBackcolor!colors!constants!private! !
 defaultExtent!constants!private! !

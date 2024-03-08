@@ -159,11 +159,12 @@ commandSource
 	source isNil ifTrue: [source := self].
 	^source!
 
-createWindow: aWindowCreationState
-	"Private - Create the View window ensuring it has the VM window procedure.
-	Answer the receiver."
+createWindow: aWindowCreationParameters
+	"Private - Create the View window ensuring it has the VM window procedure. Answer the receiver."
 
-	super createWindow: (creationParent adjustCreationParameters: aWindowCreationState forShell: self)!
+	"For shells we delegate to the parent (usually, but not always, the desktop), as it may want to adjust placement, styles, etc. We also have to clear any cached DPI as if being recreated, e.g. on restoring a saved image, the DPI may have changed."
+
+	creationParent createShellWindow: self withParameters: aWindowCreationParameters!
 
 creationParameters
 	"Private - Answer the extrinsic parameters for a CreateWindow call to create a window for a new instance of the receiver that hasn't been opened before."
@@ -262,6 +263,9 @@ dpi
 	"Answer the logical pixels per inch for the receiver; i.e. the screen's logical pixels per inch"
 
 	^dpi ifNil: [dpi := super dpi]!
+
+dpi: anInteger
+	dpi := anInteger!
 
 drawMenuBar
 	"Draw the receiver's menu bar, either when initially set or after it has been updated.
@@ -1064,9 +1068,9 @@ wmDpiChanged: message wParam: wParam lParam: lParam
 wmDpiChangedBeforeParent: message wParam: wParam lParam: lParam
 	"Private - Handles a WM_DPICHANGED_BEFOREPARENT message. This is only sent to child windows, bottom-up, before the top-level window receives a WM_DPICHANGED."
 
-	"N.B. We only expect to receive this message when embedded as a child, e.g. in an Idea Space. As a child, we will not receive a WM_DPICHANGED, so we need to also update the cached DPI here."
+	"N.B. We only expect to receive this message when embedded as a child, e.g. in an Idea Space. As a child, we will not receive a WM_DPICHANGED, so we need to clear the cached DPI here."
 
-	dpi := super dpi.
+	dpi := nil.
 	super
 		wmDpiChangedBeforeParent: message
 		wParam: wParam
@@ -1248,7 +1252,8 @@ dispatchUser:wParam:lParam:!dispatching!private! !
 displayOnMonitor:!geometry!helpers!public! !
 dmGetDefId:wParam:lParam:!default button!event handling-win32!private! !
 dmSetDefId:wParam:lParam:!default button!event handling-win32!private! !
-dpi!accessing!public! !
+dpi!accessing!high DPI!public! !
+dpi:!accessing!private! !
 drawMenuBar!menus!public! !
 ensureLayoutValid!geometry!public! !
 ensureSubViewVisible:!public!sub views! !

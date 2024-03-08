@@ -65,6 +65,17 @@ position: posPoint extent: extPoint dpi: anInteger styles: anArray title: aStrin
 	styles := anArray.
 	title := aString!
 
+printOn: aStream
+	aStream
+		basicPrint: self;
+		nextPut: $(;
+		print: position;
+		nextPutAll: ' extent: ';
+		print: extent;
+		nextPutAll: ' dpi: ';
+		print: dpi;
+		nextPut: $)!
+
 styles
 	"Answer a two-element <Array> containing the basic and extended window styles to be applied to the new window on creation."
 
@@ -86,6 +97,7 @@ extent:!accessing!public! !
 position!accessing!public! !
 position:!accessing!public! !
 position:extent:dpi:styles:title:!initializing!private! !
+printOn:!printing!public! !
 styles!accessing!public! !
 title!accessing!public! !
 !

@@ -437,7 +437,7 @@ package!
 "Class Definitions"!
 
 Object subclass: #Canvas
-	instanceVariableNames: 'handle source owned pen brush font saved saveIds'
+	instanceVariableNames: 'handle source owned pen brush font saved saveIds dpi'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
@@ -594,12 +594,12 @@ Object subclass: #SystemMetrics
 
 Object subclass: #View
 	instanceVariableNames: 'handle creationParent creationStyle presenter model backcolor preferredExtent flags contextMenu font events interactor'
-	classVariableNames: 'CreateCenteredMask DragSourceMask DropTargetMask LayoutValidMask ManagedMask MessageMap MinimizedMask NextId NoInheritMenuMask StateRestoringMask UIValidMask UsePreferredExtentMask ViewClosedError WndClassAtom'
+	classVariableNames: 'CreateCenteredMask DragSourceMask DropTargetMask LayoutValidMask ManagedMask MessageMap MinimizedMask NextId NoInheritMenuMask ProxyRestoringMask RestoringMask StateRestoringMask UIValidMask UsePreferredExtentMask ViewClosedError WndClassAtom'
 	poolDictionaries: 'Win32Constants Win32Errors'
 	classInstanceVariableNames: 'theme'!
 
 Object subclass: #ViewState
-	instanceVariableNames: 'view state placement resolution subViewStates'
+	instanceVariableNames: 'view state showCmd dpi subViewStates'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
