@@ -294,6 +294,7 @@ logFont
 	| answer |
 	answer := LOGFONTW newBuffer.
 	answer faceName: self szFaceName.
+	#highDpiToDo. "Need to use the DPI of the associated view"
 	answer lfHeight: (self pointSize * Graphics.Canvas desktopResolution y / 72) rounded negated.
 	answer lfWeight: (self isBold ifTrue: [FW_BOLD] ifFalse: [FW_NORMAL]).
 	answer lfItalic: self isItalic asParameter.
