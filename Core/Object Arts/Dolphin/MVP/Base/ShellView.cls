@@ -1063,7 +1063,7 @@ wmDpiChanged: message wParam: wParam lParam: lParam
 	self resolutionScaledBy: newDpi / self resolution.
 	dpi := newDpi.
 	self rectangle: newRect.
-	^0!
+	^nil!
 
 wmDpiChangedBeforeParent: message wParam: wParam lParam: lParam
 	"Private - Handles a WM_DPICHANGED_BEFOREPARENT message. This is only sent to child windows, bottom-up, before the top-level window receives a WM_DPICHANGED."
@@ -1075,7 +1075,7 @@ wmDpiChangedBeforeParent: message wParam: wParam lParam: lParam
 		wmDpiChangedBeforeParent: message
 		wParam: wParam
 		lParam: lParam.
-	^0!
+	^nil!
 
 wmGetMinMaxInfo: message wParam: wParam lParam: lParam
 	| min max |
@@ -1143,6 +1143,12 @@ wmNcActivate: message wParam: wParam lParam: lParam
 	^wParam = 0 
 		ifTrue: [self presenter onViewNcDeactivated: event]
 		ifFalse: [self presenter onViewNcActivated: event]!
+
+wmNcCreate: message wParam: wParam lParam: lParam
+	"Private - Default handler for a WM_NCCREATE. "
+
+	UserLibrary default enableNonClientDpiScaling: handle.
+	^nil!
 
 wmSetCursor: message wParam: wParam lParam: lParam
 	"Private - Handle the Win32 WM_SETCURSOR message. 
@@ -1358,6 +1364,7 @@ wmGetMinMaxInfo:wParam:lParam:!event handling-win32!private! !
 wmInitMenu:wParam:lParam:!event handling-win32!private! !
 wmInitMenuPopup:wParam:lParam:!event handling-win32!private! !
 wmNcActivate:wParam:lParam:!event handling-win32!private! !
+wmNcCreate:wParam:lParam:!event handling-win32!private! !
 wmSetCursor:wParam:lParam:!event handling-win32!private! !
 wmSettingChange:wParam:lParam:!event handling-win32!private! !
 wmSize:wParam:lParam:!event handling!event handling-win32!private! !

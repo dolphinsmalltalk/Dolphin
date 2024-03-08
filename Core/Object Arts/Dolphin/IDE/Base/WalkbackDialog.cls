@@ -161,6 +161,16 @@ wmCommand: message wParam: wParam lParam: lParam
 			^false].
 	^self destroy!
 
+wmDpiChanged: message wParam: wParam lParam: lParam
+	"Private - Handles a WM_DPICHANGED message. This is only sent to top-level windows (e.g. ShellViews in Dolphin)
+		- wParam encodes the new DPI with the X-axis value in the low word, and y-axis in the high word.
+		- lParam is a pointer to a RECTL providing the suggested new rectangle for the window.
+	"
+
+	super wmDpiChanged: message wParam: wParam lParam: lParam.
+	"In this case the controls are from a template, so we do need to call the DefDlgProc to rescale correctly."
+	^nil!
+
 wmSize: message wParam: wParam lParam: lParam
 	"Private - Default handler for a WM_SIZE (window resized) message."
 
@@ -182,6 +192,7 @@ runModalLoop!operations!private! !
 templateId!constants!private! !
 unhookWindowCreate:!operations!private! !
 wmCommand:wParam:lParam:!event handling-win32!public! !
+wmDpiChanged:wParam:lParam:!event handling-win32!private! !
 wmSize:wParam:lParam:!event handling-win32!private! !
 !
 
