@@ -237,6 +237,11 @@ onZOrderChanged
 	self invalidateLayout.
 	super onZOrderChanged!
 
+preferredHeight
+	"Private - Answer the <integer> number of pels that would be the ideal height for the client area of the receiver."
+
+	^self subclassResponsibility!
+
 removeSubView: aView
 	"Removes aView as a managed subview of the receiver. 
 	If aView is indeed a subview of the receiver then it is destroyed. If not,
@@ -324,6 +329,7 @@ nmRClick:!event handling-win32!public! !
 onSubViewAdded:!event handling!public! !
 onTipTextRequired:!event handling!private! !
 onZOrderChanged!event handling!public! !
+preferredHeight!private! !
 removeSubView:!hierarchy!public!sub views! !
 ttnGetDispInfo:!event handling-win32!private! !
 validateSubViewLayouts:!geometry!private! !

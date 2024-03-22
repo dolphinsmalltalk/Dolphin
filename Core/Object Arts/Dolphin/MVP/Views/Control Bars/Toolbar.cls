@@ -181,7 +181,6 @@ basicAddItems: tools
 bitmapSize
 	"Answer the device-independent (aka DIPs, or 96-dpi) size of bitmaps shown on the toolbar."
 
-	#deprecated.
 	^imageSize ifNotNil: [ImageSizes at: imageSize]!
 
 bitmapSize: aPoint
@@ -443,6 +442,9 @@ insets: aRectangle
 	insets := aRectangle = Rectangle new ifFalse: [aRectangle].
 	self invalidateLayout!
 
+isScalable
+	^items allSatisfy: [:each | each isScalable]!
+
 itemAtIndex: index
 	"Answers the <ToolbarItem> at the specified <integer> index in the receiver"
 
@@ -586,11 +588,16 @@ onViewCreated
 	super onViewCreated.
 	self tbButtonStructSize: TBBUTTON byteSize.
 	bitmapsStart := LookupTable new.
-	self changeButtonSize: [self tbSetBitmapSize: self scaledBitmapSize].
+	self setButtonSize.
 	self tbSetExtendedStyle: ##(TBSTYLE_EX_DRAWDDARROWS | TBSTYLE_EX_DOUBLEBUFFER).
 	self clearIdMap.
 	indent ifNotNil: [self tbSetIndent: indent].
 	self basicAddItems: items!
+
+preferredHeight
+	"Private - Answer the <integer> number of pels that would be the ideal height for the client area of the receiver."
+
+	^self buttonSize y + (self tbGetPadding y // 2)!
 
 removeAllItems
 	"Remove all the receivers buttons."
@@ -619,7 +626,9 @@ resolutionScaledBy: aPoint
 scaledBitmapSize
 	"Private - Answer the actual pixel extent of bitmaps shown on the toolbar, measure at the current window DPI. This can be visually inherited from a parent toolbar, which is useful in allowing the image size to be changed just by changing that of the topmost toolbar."
 
-	^(ImageSizes at: self actualImageSize) * self dpi // USER_DEFAULT_SCREEN_DPI!
+	| size |
+	size := ImageSizes at: self actualImageSize.
+	^self isScalable ifTrue: [size * self dpi // USER_DEFAULT_SCREEN_DPI] ifFalse: [size]!
 
 setButtonSize
 	self changeButtonSize: 
@@ -1040,7 +1049,7 @@ wmDpiChangedAfterParent: message wParam: wParam lParam: lParam
 
 	"Toolbars don't resize properly when the bitmap size is changed, so we have to recreate them. Note that as the WM_DPICHANGED_AFTERPARENT message is sent top-down (the opposite of WM_DPICHANGED_BEFOREPARENT), this will mean that the existing sub-toolbars will not receive the resize because they have been replaced, which is ideal"
 
-	self recreate.
+	self isScalable ifTrue: [self recreate].
 	"Obviously we don't want this passed on since we recreated the window and the new Toolbar won't be expecting it."
 	^0! !
 
@@ -1091,6 +1100,7 @@ indexOfItem:!accessing!private! !
 initialize!initializing!private! !
 insets!accessing!public! !
 insets:!accessing!public! !
+isScalable!public!testing! !
 itemAtIndex:!accessing!public! !
 itemClass!constants!public! !
 itemFromId:!accessing!private! !
@@ -1105,6 +1115,7 @@ onEraseRequired:!event handling!private! !
 onPositionChanged:!event handling!public! !
 onStateRestored!binary filing!private! !
 onViewCreated!event handling!public! !
+preferredHeight!private! !
 removeAllItems!public!removing! !
 removeItem:!public!removing! !
 resolutionScaledBy:!geometry!private! !

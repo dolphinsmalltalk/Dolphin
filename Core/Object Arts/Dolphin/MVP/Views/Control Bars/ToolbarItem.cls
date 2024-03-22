@@ -48,6 +48,11 @@ isDropdownStyle
 
 	^false!
 
+isScalable
+	"Answer whether the receiver can be scaled, e.g. for DPI."
+
+	^false!
+
 onClick: aPoint 
 	"This toolbar item was left-clicked at the specified <Point>."
 
@@ -105,6 +110,7 @@ getCommandId!commands!private! !
 imageIndexIn:!operations!private! !
 isDivider!public!testing! !
 isDropdownStyle!public!style! !
+isScalable!public!testing! !
 onClick:!event handling!public! !
 onDoubleClick:!event handling!public! !
 onRightClick:!event handling!public! !
