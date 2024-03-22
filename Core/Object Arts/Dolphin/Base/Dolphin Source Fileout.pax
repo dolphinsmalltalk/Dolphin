@@ -613,19 +613,27 @@ checkTimestamps
 	package file. If the package file has been modified since the package was loaded, then warn
 	the user to avoid inadvertent overwrites of later package versions causing loss of changes."
 
+	| mb |
 	(CheckTimestamps and: [self isRenegade]) ifFalse: [^self].
-	Warning 
-		signal: ('The package <1s> has been modified outside this image since it was loaded or last saved.
+	mb := MessageBox new.
+	mb
+		uniqueId: [self] method displayString;
+		isSuppressible: true;
+		caption: 'Overwrite modified package files?';
+		buttonStyle: #okCancel.
+	(mb
+		warning: ('The package <1p> has been modified outside this image since it was loaded or last saved.<n><n>Are you sure you want to overwrite the modified file(s) on disk?
 
-	Package timestamp:	<2s>
-	File modification time:	<3s>
+	Package timestamp:	<2d>
+	File modification time:	<3d>
 
-If you proceed and save it from this image then you may lose changes that have been made in another image. It is recommended that before proceeding you first take a backup copy of the current version on disk, or that you abort this operation.' 
-				expandMacrosWith: self name
-				with: self timestamp displayString
-				with: (FILETIME fromInteger: self fileModificationTime) displayString)
+If you proceed and save the package from this image then you may lose changes that have been written from another session. If you are not sure it is recommended that you cancel this operation and check whether there are unstaged changes in your workspace using your preferred git tooling.
 
-!
+Alternatively you can proceed and overwrite any changes on disk. You can also choose to suppress this warning so it is not shown again, however if you do so then in future modified files will be overwritten regardless of the choice that you make now.'
+				expandMacrosWithArguments: {self name.
+						self timestamp.
+						FILETIME fromInteger: self fileModificationTime}))
+			== #cancel ifTrue: [OperationAborted signal]!
 
 createPackagePath
 	"Private - Create the directory where the receiver resides on disk"
