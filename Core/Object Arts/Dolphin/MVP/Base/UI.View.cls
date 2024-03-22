@@ -3012,20 +3012,18 @@ rectangle
 	^self getRect asRectangle!
 
 rectangle: aRectangle
-	"Set the boundary of the receiver to aRectangle. 
-	aRectangle is in the coordinate system of the receiver's parent."
+	"Set the boundary of the receiver to the <rectangle> argument. The rectangle is in the coordinate system of the receiver's parent."
 
 	| newRectangle |
+	aRectangle = self getRect ifTrue: [^self].
 	newRectangle := self adjustRectangle: aRectangle.
-	newRectangle = self rectangle
-		ifFalse: 
-			[self 
-				setWindowPosAfter: 0
-				x: aRectangle left asInteger
-				y: aRectangle top asInteger
-				width: aRectangle width asInteger
-				height: aRectangle height asInteger
-				flags: ##(SWP_NOZORDER | SWP_NOACTIVATE)]!
+	self
+		setWindowPosAfter: 0
+		x: newRectangle left asInteger
+		y: newRectangle top asInteger
+		width: newRectangle width asInteger
+		height: newRectangle height asInteger
+		flags: ##(SWP_NOZORDER | SWP_NOACTIVATE)!
 
 refreshContents
 	"The receiver's display needs to be refreshed. The default is to invalidate the

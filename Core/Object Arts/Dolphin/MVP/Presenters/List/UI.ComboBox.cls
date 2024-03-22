@@ -185,13 +185,18 @@ defaultWindowStyle
 droppedHeight
 	"Answer the height of the drop down list component of the receiver, measured at the receiver's current DPI."
 
-	^droppedHeight ifNil: [self defaultDroppedHeight * self dpi // USER_DEFAULT_SCREEN_DPI]!
+	^droppedHeight
+		ifNil: 
+			[handle
+				ifNil: [self defaultDroppedHeight * self dpi // USER_DEFAULT_SCREEN_DPI]
+				ifNotNil: [self getDroppedControlRect height - self height]]!
 
 droppedHeight: anInteger
 	"Set the dropped height of the receiver to the number of device pixels represented by the <integer> argument."
 
+	droppedHeight = anInteger ifTrue: [^self].
 	droppedHeight := anInteger.
-	self height: self actualHeight!
+	self setActualHeight!
 
 editHwnd
 	"Private - Answer an <ExternalHandle> that is the handle of the Edit control
@@ -224,6 +229,17 @@ extent: aPoint
 
 	super 
 		extent: (self mode == #simple ifTrue: [aPoint] ifFalse: [aPoint x @ self actualHeight])!
+
+getDroppedControlRect
+	"Private - Answer the desktop co-ordinates, i.e. the window rectangle, of the receiver when in dropped state."
+
+	| rect |
+	rect := RECTL newBuffer.
+	self
+		sendMessage: CB_GETDROPPEDCONTROLRECT
+		wParam: 0
+		lpParam: rect.
+	^rect!
 
 getSelectionsByIndex
 	"Private - Query the current selections from the control"
@@ -314,6 +330,9 @@ selectionByIndex
 
 	^(self sendMessage: CB_GETCURSEL) + 1!
 
+setActualHeight
+	self setExtent: self width @ self actualHeight!
+
 setSingleSelection: anInteger 
 	"Private - Set the selection to the item with the specified index (1-based), scrolling it
 	into view if necessary."
@@ -368,6 +387,7 @@ droppedHeight:!accessing!public! !
 editHwnd!accessing!private! !
 editView!accessing!public! !
 extent:!geometry!public! !
+getDroppedControlRect!geometry!private! !
 getSelectionsByIndex!private!selection! !
 getSingleSelection!helpers!private!selection! !
 itemCount!accessing!public! !
@@ -378,6 +398,7 @@ onPositionChanged:!event handling!public! !
 placement:!geometry!private! !
 resolutionScaledBy:!geometry!private! !
 selectionByIndex!helpers!private!selection! !
+setActualHeight!geometry!private! !
 setSingleSelection:!private!selection! !
 textLimit:!accessing!public! !
 wmKillFocus:wParam:lParam:!event handling-win32!private! !
