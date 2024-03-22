@@ -455,6 +455,18 @@ getClipBox: hdc lprc: lprc
 	<stdcall: int32 GetClipBox handle RECTL*>
 	^self invalidCall: _failureCode!
 
+getClipRgn: hdc hrgn: hRegion
+	"The SelectClipRgn function selects a region as the current clipping region
+	for the specified device context. 
+
+	int GetClipRgn(
+		HDC hdc		// handle of device context 
+		HRGN hrgn		// handle of region   
+	);"
+
+	<stdcall: int32 GetClipRgn handle handle>
+	^self invalidCall: _failureCode!
+
 getCurrentObject: hdc uObjectType: uObjectType
 	"Invoke the GetCurrentObject() function of the module wrapped by the receiver.
 	Helpstring: Returns the currently selected object of the specified type
@@ -576,6 +588,10 @@ getPixel: aHandle xPos: xPos yPos: yPos
 		);"
 
 	<stdcall: uint32 GetPixel handle int32 int32>
+	^self invalidCall: _failureCode!
+
+getRgnBox: hRgn lprc: lprc
+	<stdcall: int32 GetRgnBox handle RECTL*>
 	^self invalidCall: _failureCode!
 
 getROP2: hdc
@@ -1223,6 +1239,7 @@ gdiTransparentBlt:xoriginDest:yoriginDest:wDest:hDest:hdcSrc:xoriginSrc:yoriginS
 getBkColor:!**auto generated**!public!win32 functions-device context! !
 getBkMode:!**auto generated**!public!win32 functions-device context! !
 getClipBox:lprc:!**auto generated**!public!win32 functions-clipping! !
+getClipRgn:hrgn:!public!win32 functions-clipping! !
 getCurrentObject:uObjectType:!**auto generated**!public!win32 functions-device context! !
 getDCBrushColor:!public!win32 functions-device context! !
 getDCPenColor:!public!win32 functions-device context! !
@@ -1235,6 +1252,7 @@ getObjectW:cbBuffer:lpvObject:!public!win32 functions-device context! !
 getOutlineTextMetrics:cbData:lpotm:!public!win32 functions-font and text! !
 getPaletteEntries:iStartIndex:nEntries:lppe:!**auto generated**!public!win32 functions-color! !
 getPixel:xPos:yPos:!public!win32 functions-device context! !
+getRgnBox:lprc:!public!win32 functions-region! !
 getROP2:!**auto generated**!public!win32 functions-device context! !
 getStockObject:!**auto generated**!public!win32 functions-device context! !
 getTextColor:!public!win32 functions-font and text! !

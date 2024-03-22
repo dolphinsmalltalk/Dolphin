@@ -16,6 +16,12 @@ Graphics.Region comment: ''!
 
 !Graphics.Region methodsFor!
 
+boundingRectangle
+	| rect |
+	rect := RECTL newBuffer.
+	Gdi32 getRgnBox: handle lprc: rect.
+	^rect asRectangle!
+
 combine: aRegion mode: anInteger
 	"Private - Answers a new region which is the combination of the receiver with aRegion
 	using anInteger mode"
@@ -65,6 +71,7 @@ union: aRegion
 	^self combine: aRegion mode: RGN_OR! !
 
 !Graphics.Region categoriesForMethods!
+boundingRectangle!operations!public! !
 combine:mode:!operations!private! !
 containsPoint:!operations!public!testing! !
 createHandle!private!realizing/unrealizing! !

@@ -167,6 +167,14 @@ clipBox
 
 	^self getClipBox asRectangle!
 
+clipRegion
+	"Answers the clipping <Region> for the receiver."
+
+	| answer |
+	answer := Region empty.
+	GDILibrary default getClipRgn: self asParameter hrgn: answer asParameter.
+	^answer!
+
 colorDepth
 	"Answers the colour bit depth supported by the receiver"
 
@@ -1032,9 +1040,10 @@ brush:!public!tools! !
 brushColor!accessing!colors!public! !
 brushOrigin:!accessing!public! !
 clipBox!accessing!public! !
+clipRegion!accessing!public! !
 colorDepth!accessing!public! !
 colors!accessing!public! !
-dpi!accessing!public! !
+dpi!accessing!high DPI!public! !
 dpi:!accessing!public! !
 drawBitmap:at:extent:from:extent:rop:!colors!private! !
 drawEdge:edge:grfFlags:!drawing!public! !
