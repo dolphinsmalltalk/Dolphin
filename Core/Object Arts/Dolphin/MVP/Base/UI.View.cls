@@ -345,7 +345,7 @@ basicAddSubView: aView
 	^aView!
 
 basicCreateWindowAt: positionPoint extent: extentPoint styles: anArray name: aString
-	"Private - Create the Win32 window for the receiver, and answer its handle."
+	"Private - Create the Win32 window for the receiver. Assumes that window creation has been hooked so that the window handle is attached and the window subclassed, if required, before the CreateWindowEx call returns."
 
 	| dwStyle |
 	dwStyle := anArray at: 1.
@@ -708,12 +708,17 @@ createWindow: aWindowCreationParameters
 		name: aWindowCreationParameters title!
 
 createWindowAt: positionPoint extent: extentPoint styles: anArray name: aString
-	self hookWindowCreate.
-	self unhookWindowCreate: (self
-				basicCreateWindowAt: positionPoint
-				extent: extentPoint
-				styles: anArray
-				name: aString).
+	"Private - Create and attach/subclass the actual Window for this View."
+
+	self onAboutToCreate.
+	Processor activeProcess newWindow: self.
+	self
+		basicCreateWindowAt: positionPoint
+		extent: extentPoint
+		styles: anArray
+		name: aString.
+	Processor activeProcess newWindow: nil.
+	handle isNull ifTrue: [^self errorCreateWindowFailed].
 	self presenter onViewCreated!
 
 creationParameters
@@ -1209,6 +1214,9 @@ eraseParentBackground: aCanvas
 				lParam: 0.
 	aCanvas windowOrigin: org.
 	^lResult!
+
+errorCreateWindowFailed
+	^Win32Error signal: 'failed to create window'!
 
 exStyle: exStyleBitsToSet maskedBy: exStyleBitMask 
 	"Private - Copies the bits in anInteger masked by exStyleBitMask to the extended style of
@@ -1721,12 +1729,6 @@ hide
 	"Makes the receiver invisible"
 
 	^self showWithStyle: SW_HIDE!
-
-hookWindowCreate
-	"Private - Hook window creation for the receiver so that we are able to intercept the very first message for the receiver and subclass the window at that point. The VM has a permanently installed CBT hook that receives and forwards any window creation methods to the GuiInputState. This means that we can subclass the window and receive every message for a View before its window class window proc, even if it is a control. We don't need to subclass our own windows, but it is still useful to be able to attach the handle immediately in order to be able to process the window creation messages at the Smalltalk level."
-
-	self onAboutToCreate.
-	Processor activeProcess newWindow: self!
 
 id
 	"Answer the Integer identifier of the receiver"
@@ -3715,12 +3717,6 @@ trackMouseLeave
 	tme hwndTrack: handle.
 	User32 trackMouseEvent: tme!
 
-unhookWindowCreate: hWnd
-	"Private - Undo #hookWindowCreate. The VM has a CBT hook that forwards any window creation events to the InputState, which will attach/subclass any window being created, and clear the newWindow thread variable. If the windowcreate fails this needs to be called as the VM may not have received any messages. We clear the newWindow thread variable before raising any error."
-
-	Processor activeProcess newWindow: nil.
-	hWnd isNull ifTrue: [^Win32Error signal: 'failed to create window']!
-
 unregisterHotKeyId: id
 	User32
 		registerHotKey: self handle
@@ -3999,9 +3995,11 @@ wmDpiChangedAfterParent: message wParam: wParam lParam: lParam
 wmDpiChangedBeforeParent: message wParam: wParam lParam: lParam
 	"Private - Handles a WM_DPICHANGED_BEFOREPARENT message. This is only sent to child windows, bottom-up, before the top-level window receives a WM_DPICHANGED."
 
-	| newDpi |
+	| newDpi scale |
 	newDpi := self dpi.
-	self resolutionScaledBy: newDpi @ newDpi / self topView dpi.
+	scale := newDpi @ newDpi / self topView dpi.
+	self resolutionScaledBy: scale.
+	self rectangle: (self getRect scaleBy: scale).
 	^nil!
 
 wmDrawItem: message wParam: wParam lParam: lParam
@@ -4074,6 +4072,8 @@ wmGetDpiScaledSize: message wParam: wParam lParam: lParam
 		- wParam encodes the new DPI with the X-axis value in the low word, and y-axis in the high word (although the docs make clear that both will always be the same value)
 		- lParam is a pointer to a SIZE structure into which the new window extent can be written.
 	"
+
+	"In general it is better to let Windows make decisions as to the size of rescaled windows to avoid any problems of flip-flopping between scales when dragging windows from one monitor to another at different DPIs in per-monitor mode."
 
 	^nil!
 
@@ -4762,6 +4762,7 @@ ensureSubViewVisible:!public!sub views! !
 ensureVisible!accessing!public! !
 enterIdle!event handling-win32!private! !
 eraseParentBackground:!event handling!private! !
+errorCreateWindowFailed!operations!private! !
 exStyle:maskedBy:!accessing-styles!private! !
 exStyle:maskedBy:recreateIfChanged:!accessing-styles!private! !
 exStyleMask:set:!accessing-styles!private! !
@@ -4831,7 +4832,6 @@ height!geometry!public! !
 height:!geometry!public! !
 helpId!accessing!public! !
 hide!operations!public! !
-hookWindowCreate!private!realizing/unrealizing! !
 id!accessing!public! !
 id:!accessing!public! !
 inheritContextMenu!public!testing! !
@@ -5090,7 +5090,6 @@ topView!hierarchy!public! !
 trackContextMenu:!menus!private! !
 trackMouseHover:!operations!public! !
 trackMouseLeave!operations!public! !
-unhookWindowCreate:!private!realizing/unrealizing! !
 unregisterHotKeyId:!helpers!public! !
 update!drawing!public! !
 updateModel!public!updating! !
@@ -5136,7 +5135,7 @@ wmEnterMenuLoop:wParam:lParam:!event handling-win32!private! !
 wmEraseBkGnd:wParam:lParam:!event handling-win32!private! !
 wmExitMenuLoop:wParam:lParam:!event handling-win32!private! !
 wmGetDlgCode:wParam:lParam:!event handling-win32!private! !
-wmGetDpiScaledSize:wParam:lParam:!event handling-win32!private! !
+wmGetDpiScaledSize:wParam:lParam:!private! !
 wmGetMinMaxInfo:wParam:lParam:!event handling-win32!private! !
 wmHotKey:wParam:lParam:!event handling-win32!private! !
 wmHScroll:wParam:lParam:!event handling-win32!private! !
@@ -5382,7 +5381,7 @@ defaultView
 desktop
 	"Answer the Desktop View"
 
-	^DesktopView current!
+	^DesktopView.Current!
 
 desktopHandle
 	"Private - Answer the handle of the Desktop window."

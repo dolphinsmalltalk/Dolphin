@@ -32,7 +32,7 @@ blockInput: aBoolean
 	<stdcall: bool BlockInput bool>
 	^self invalidCall: _failureCode!
 
-createDialog: hInstance lpTemplate: template hWndParent: hParent lpDialogFunc: dlgProc dwInitParam: lParam
+createDialogParam: hInstance lpTemplate: template hWndParent: hParent lpDialogFunc: dlgProc dwInitParam: lParam
 	"Create a modeless dialog box from a dialog box template resource. 
 		HWND CreateDialog(
   			HINSTANCE hInstance,		// handle of module containing template
@@ -42,7 +42,7 @@ createDialog: hInstance lpTemplate: template hWndParent: hParent lpDialogFunc: d
 			LPARAM dwInitParam 		// value passed to wmInitDialog:
 		);"
 
-	<stdcall: int32 CreateDialogParamW handle lpvoid handle lpvoid int32>
+	<stdcall: handle CreateDialogParamW handle lpvoid handle lpvoid int32>
 	^self invalidCall: _failureCode!
 
 defDlgProc: hWnd msg: msg wParam: wParam lParam: lParam
@@ -642,7 +642,7 @@ vkKeyScan: aChar
 
 !OS.UserLibrary categoriesForMethods!
 blockInput:!public!win32 functions-window! !
-createDialog:lpTemplate:hWndParent:lpDialogFunc:dwInitParam:!public!win32 functions-dialog box! !
+createDialogParam:lpTemplate:hWndParent:lpDialogFunc:dwInitParam:!public!win32 functions-dialog box! !
 defDlgProc:msg:wParam:lParam:!public!win32 functions-window procedure! !
 defWindowProc:msg:wParam:lParam:!public!win32 functions-window procedure! !
 destroyWindow:!public!win32 functions-window! !

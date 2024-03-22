@@ -257,7 +257,7 @@ show
 	has been opened with the LOAD_LIBRARY_AS_DATAFILE flag. Dialog templates
 	can only be loaded from DLLs that have been loaded as normal code modules."
 	hWnd := User32
-				createDialog: self resourceLib asParameter
+				createDialogParam: self resourceLib asParameter
 				lpTemplate: self template asResourceId
 				hWndParent: nil
 				lpDialogFunc: VM getDlgProc
