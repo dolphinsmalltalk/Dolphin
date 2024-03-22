@@ -14,6 +14,12 @@ Region comment: ''!
 
 !Region methodsFor!
 
+boundingRectangle
+	| rect |
+	rect := RECTL newBuffer.
+	GDILibrary default getRgnBox: handle lprc: rect.
+	^rect asRectangle!
+
 combine: aRegion mode: anInteger
 	"Private - Answers a new region which is the combination of the receiver with aRegion
 	using anInteger mode"
@@ -58,6 +64,7 @@ union: aRegion
 	^self combine: aRegion mode: RGN_OR! !
 
 !Region categoriesForMethods!
+boundingRectangle!operations!public! !
 combine:mode:!operations!private! !
 containsPoint:!operations!public!testing! !
 exclude:!operations!public! !
