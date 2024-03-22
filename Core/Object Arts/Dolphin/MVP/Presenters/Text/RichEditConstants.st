@@ -94,6 +94,7 @@ RichEditConstants at: 'EM_GETTEXTRANGE' put: 16r44B!
 RichEditConstants at: 'EM_GETUNDONAME' put: 16r456!
 RichEditConstants at: 'EM_GETWORDBREAKPROCEX' put: 16r450!
 RichEditConstants at: 'EM_GETWORDWRAPMODE' put: 16r467!
+RichEditConstants at: 'EM_GETZOOM' put: 16r4E0!
 RichEditConstants at: 'EM_HIDESELECTION' put: 16r43F!
 RichEditConstants at: 'EM_PASTESPECIAL' put: 16r440!
 RichEditConstants at: 'EM_REDO' put: 16r454!
@@ -117,6 +118,7 @@ RichEditConstants at: 'EM_SETTEXTMODE' put: 16r459!
 RichEditConstants at: 'EM_SETUNDOLIMIT' put: 16r452!
 RichEditConstants at: 'EM_SETWORDBREAKPROCEX' put: 16r451!
 RichEditConstants at: 'EM_SETWORDWRAPMODE' put: 16r466!
+RichEditConstants at: 'EM_SETZOOM' put: 16r4E1!
 RichEditConstants at: 'EM_STOPGROUPTYPING' put: 16r458!
 RichEditConstants at: 'EM_STREAMIN' put: 16r449!
 RichEditConstants at: 'EM_STREAMOUT' put: 16r44A!

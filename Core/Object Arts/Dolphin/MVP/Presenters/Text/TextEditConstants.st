@@ -70,6 +70,11 @@ TextEditConstants at: 'EN_VSCROLL' put: 16r602!
 TextEditConstants at: 'ES_AUTOHSCROLL' put: 16r80!
 TextEditConstants at: 'ES_AUTOVSCROLL' put: 16r40!
 TextEditConstants at: 'ES_CENTER' put: 16r1!
+TextEditConstants at: 'ES_EX_ALLOWEOL_ALL' put: 16r3!
+TextEditConstants at: 'ES_EX_ALLOWEOL_CR' put: 16r1!
+TextEditConstants at: 'ES_EX_ALLOWEOL_LF' put: 16r2!
+TextEditConstants at: 'ES_EX_CONVERT_EOL_ON_PASTE' put: 16r4!
+TextEditConstants at: 'ES_EX_ZOOMABLE' put: 16r10!
 TextEditConstants at: 'ES_LEFT' put: 16r0!
 TextEditConstants at: 'ES_LOWERCASE' put: 16r10!
 TextEditConstants at: 'ES_MULTILINE' put: 16r4!

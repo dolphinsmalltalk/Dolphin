@@ -212,7 +212,7 @@ faceName: aString
 	self szFaceName: aString asUtf16String!
 
 font
-	^Font fromLogFont: self logFont!
+	^Font fromLogFont: self logFont dpi: SystemMetrics current dpi!
 
 font: aFont 
 	"Set the character font."

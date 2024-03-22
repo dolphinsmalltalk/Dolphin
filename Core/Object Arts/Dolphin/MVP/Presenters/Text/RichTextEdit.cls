@@ -152,6 +152,15 @@ color: aColor
 	cf color: aColor.
 	self selectionCharFormat: cf!
 
+createWindowAt: positionPoint extent: extentPoint styles: anArray name: aString
+	"Private - RTE doesn't support DPI scaling directly, but we can achieve the same effect by using zoom."
+
+	super
+		createWindowAt: positionPoint
+		extent: extentPoint
+		styles: {anArray at: 1. (anArray at: 2) bitOr: ES_EX_ZOOMABLE}
+		name: aString!
+
 defaultCharFormat
 	"Private - Gets the default character attributes for the receiver."
 
@@ -387,6 +396,10 @@ nmNotify: pNMHDR
 		yourself) lookup: (pNMHDR sdwordAtOffset: 8) - ##(EN_MSGFILTER - 1))
 		ifNil: [super nmNotify: pNMHDR]
 		ifNotNil: [:action | self perform: action with: pNMHDR]!
+
+onRestoredFromProxy
+	super onRestoredFromProxy.
+	self zoomRelativeToSystemDpi!
 
 onRightButtonReleased: aMouseEvent
 	"Default handler for a Right button up mouse event.
@@ -737,7 +750,8 @@ setFont: aFont
 			cf := CHARFORMAT2W new.
 			cf font: aFont.
 			self setCharFormat: cf flags: SCF_ALL].
-	self isTextModified: modified!
+	self isTextModified: modified.
+	self zoomRelativeToSystemDpi!
 
 setMaxTextLimit
 	"Private - Increase the maximum text limit. The default is 32K."
@@ -881,6 +895,14 @@ winFinalize
 	streamIn isNil ifFalse: [streamIn free. streamIn := nil].
 	^super winFinalize!
 
+wmDpiChangedAfterParent: message wParam: wParam lParam: lParam
+	"Private - Handles a WM_DPICHANGED_AFTERPARENT message. This is only sent to child windows, top-down, after the top-level window receives a WM_DPICHANGED."
+
+	"We don't want to apply the font in this case, as it will reset all the formatting. The RichEdit control doesn't support high DPI per-monitor scaling anyway, and always displays as if at system DPI. This may explain why the Wordpad application, even in Windows 11, is configured for system-wide DPI awareness, i.e. if Wordpad is moved to a secondary monitor with a different DPI to the primary monitor, it is then scaled by the system and looks fuzzy. However, we can adjust the zoom level, which we do relative to the system dpi."
+
+	self zoomRelativeToSystemDpi.
+	^nil!
+
 wmInitMenu: message wParam: wParam lParam: lParam
 	"Private - A top-level menu is about to be popped.
 	Implementation Note: RichEdit control sets the I-beam cursor (if there is 
@@ -888,7 +910,36 @@ wmInitMenu: message wParam: wParam lParam: lParam
 	override back to the (correct) arrow cursor."
 
 	Cursor arrow setCursor.
-	^super wmInitMenu: message wParam: wParam lParam: lParam! !
+	^super wmInitMenu: message wParam: wParam lParam: lParam!
+
+zoomRatio
+	"Get the zoom ratio."
+
+	| wParam lParam |
+	lParam := UIntPtrBytes new.
+	wParam := DWORDBytes new.
+	self
+		sendMessage: EM_GETZOOM
+		wParam: wParam yourAddress
+		lpParam: lParam.
+	lParam := lParam value.
+	lParam == 0 ifTrue: [^1].
+	^wParam value / lParam!
+
+zoomRatio: aNumber
+	"Set the zoom ratio to the argument, which must be a <Number> in the range 1/64..64 exclusive. A zoom ratio of 1 is normal size"
+
+	| fraction |
+	fraction := aNumber asFraction.
+	fraction denominator > 32768 ifTrue: [fraction := fraction roundTo: ##(1 / 32768)].
+	(self
+		sendMessage: EM_SETZOOM
+		wParam: fraction numerator
+		lParam: fraction denominator) == 0
+		ifTrue: [self error: 'Invalid zoom ratio ' , fraction printString]!
+
+zoomRelativeToSystemDpi
+	self zoomRatio: self dpi / SystemMetrics current dpi! !
 
 !RichTextEdit categoriesForMethods!
 ansiText!public!streaming! !
@@ -909,6 +960,7 @@ canRedo!public!testing!undo & redo! !
 charNearestPosition:!accessing!public! !
 clear!operations!public! !
 color:!helpers!private! !
+createWindowAt:extent:styles:name:!private!realizing/unrealizing! !
 defaultCharFormat!accessing!private! !
 defaultCharFormat:!accessing!private! !
 defaultNotificationMask!constants!private! !
@@ -938,6 +990,7 @@ isUnderlined:!helpers!public! !
 isUrlDetectionEnabled!public!testing! !
 isUrlDetectionEnabled:!accessing!public! !
 nmNotify:!event handling-win32!private! !
+onRestoredFromProxy!binary filing!public! !
 onRightButtonReleased:!event handling!public! !
 onViewCreated!event handling!public! !
 onViewOpened!event handling!public! !
@@ -990,7 +1043,11 @@ urtfText!public!streaming! !
 utfText!public!streaming! !
 utfText:!public!streaming! !
 winFinalize!event handling!private! !
+wmDpiChangedAfterParent:wParam:lParam:!event handling-win32!private! !
 wmInitMenu:wParam:lParam:!event handling-win32!private! !
+zoomRatio!public!zooming! !
+zoomRatio:!public!zooming! !
+zoomRelativeToSystemDpi!event handling-win32!private! !
 !
 
 !RichTextEdit class methodsFor!
