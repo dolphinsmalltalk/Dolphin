@@ -74,7 +74,7 @@ isSelfEvaluating
 
 	^true!
 
-populateItemInfo: aMENUITEMINFO 
+populateItemInfo: aMENUITEMINFO metrics: aSystemMetrics
 	"Private - Copy the receiver's item information into the <MENUITEMINFOW> argument."
 
 	aMENUITEMINFO type: self styleFlags!
@@ -120,7 +120,7 @@ displayString!displaying!public! !
 id!accessing!public! !
 isDivider!public!testing! !
 isSelfEvaluating!public!testing! !
-populateItemInfo:!private!realizing/unrealizing! !
+populateItemInfo:metrics:!private!realizing/unrealizing! !
 printOn:!printing!public! !
 queryAlong:!operations!public! !
 styleName!accessing!public! !

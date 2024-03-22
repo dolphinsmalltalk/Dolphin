@@ -27,6 +27,28 @@ testMenuBarHeight
 	self assert: (SystemMetrics forDpi: 144) menuBarHeight
 		equals: SystemMetrics default menuBarHeight * 1.5!
 
+testMenuImageExtent
+	self assert: SystemMetrics default menuImageExtent equals: 16 @ 16.
+	self assert: (SystemMetrics forDpi: 120) menuImageExtent equals: 16 @ 16.
+	self assert: (SystemMetrics forDpi: 143) menuImageExtent equals: 16 @ 16.
+	self assert: (SystemMetrics forDpi: 144) menuImageExtent equals: 24 @ 24.
+	self assert: (SystemMetrics forDpi: 167) menuImageExtent equals: 24 @ 24.
+	self assert: (SystemMetrics forDpi: 168) menuImageExtent equals: 24 @ 24.
+	self assert: (SystemMetrics forDpi: 191) menuImageExtent equals: 24 @ 24.
+	self assert: (SystemMetrics forDpi: 192) menuImageExtent equals: 32 @ 32.
+	self assert: (SystemMetrics forDpi: 216) menuImageExtent equals: 32 @ 32.
+	self assert: (SystemMetrics forDpi: 240) menuImageExtent equals: 40 @ 40.
+	self assert: (SystemMetrics forDpi: 264) menuImageExtent equals: 40 @ 40.
+	self assert: (SystemMetrics forDpi: 288) menuImageExtent equals: 48 @ 48.
+	self assert: (SystemMetrics forDpi: 336) menuImageExtent equals: 48 @ 48.
+	self assert: (SystemMetrics forDpi: 336) menuImageExtent equals: 48 @ 48.
+	self assert: (SystemMetrics forDpi: 383) menuImageExtent equals: 48 @ 48.
+	self assert: (SystemMetrics forDpi: 384) menuImageExtent equals: 64 @ 64.
+	self assert: (SystemMetrics forDpi: 408) menuImageExtent equals: 64 @ 64.
+	self assert: (SystemMetrics forDpi: 432) menuImageExtent equals: 64 @ 64.
+	self assert: (SystemMetrics forDpi: 480) menuImageExtent equals: 64 @ 64.
+	self assert: (SystemMetrics forDpi: 576) menuImageExtent equals: 64 @ 64!
+
 testSmallIconExtent
 	| metrics |
 	metrics := SystemMetrics default.
@@ -37,6 +59,7 @@ testSmallIconExtent
 !OS.Tests.SystemMetricsTest categoriesForMethods!
 testLargeIconExtent!public! !
 testMenuBarHeight!public! !
+testMenuImageExtent!public! !
 testSmallIconExtent!public! !
 !
 

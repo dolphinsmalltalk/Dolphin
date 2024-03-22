@@ -163,10 +163,10 @@ lastQuery
 lastQuery: aCommandQuery
 	lastQuery := aCommandQuery!
 
-populateItemInfo: aMENUITEMINFO
+populateItemInfo: aMENUITEMINFO metrics: aSystemMetrics
 	"Private - Copy the receiver's item information into the <MENUITEMINFOW> argument."
 
-	aMENUITEMINFO commandMenuItem: self!
+	aMENUITEMINFO commandMenuItem: self metrics: aSystemMetrics!
 
 postCopy
 	"Apply any final flourish to the copy that may be required."
@@ -253,7 +253,7 @@ isRadioButtonStyle:!accessing!public! !
 itemWithId:!accessing!public! !
 lastQuery!accessing!private! !
 lastQuery:!accessing!private! !
-populateItemInfo:!private!realizing/unrealizing! !
+populateItemInfo:metrics:!private!realizing/unrealizing! !
 postCopy!copying!public! !
 printOn:!printing!public! !
 queryAlong:!operations!public! !

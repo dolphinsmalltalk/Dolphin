@@ -90,7 +90,7 @@ image
 insertIntoMenu: aMenu at: position info: aMENUITEMINFO
 	"Append the receiver to the menu, aMenu."
 
-	self populateItemInfo: aMENUITEMINFO.
+	self populateItemInfo: aMENUITEMINFO metrics: aMenu metrics.
 	(User32
 		insertMenuItem: aMenu asParameter
 		uItem: position
@@ -139,7 +139,7 @@ name
 
 	^nil!
 
-populateItemInfo: aMENUITEMINFO
+populateItemInfo: aMENUITEMINFO metrics: aSystemMetrics
 	"Private - Copy the receiver's item information into the <MENUITEMINFOW> argument."
 
 	^self subclassResponsibility!
@@ -193,7 +193,7 @@ itemsDo:!accessing!private! !
 itemWithId:!accessing!public! !
 menuFromHandle:!accessing!public! !
 name!accessing!public! !
-populateItemInfo:!private!realizing/unrealizing! !
+populateItemInfo:metrics:!private!realizing/unrealizing! !
 registerAcceleratorKeyIn:!menus!public! !
 styleFlags!accessing!private! !
 styleFlags:!accessing!not an aspect!private! !

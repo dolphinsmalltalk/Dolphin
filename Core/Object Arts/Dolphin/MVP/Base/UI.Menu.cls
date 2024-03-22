@@ -2,7 +2,7 @@
 
 Graphics.GraphicsTool
 	subclass: #'UI.Menu'
-	instanceVariableNames: 'items text name flags image imageManager id lastQuery _reserved2'
+	instanceVariableNames: 'items text name flags image metrics id lastQuery _reserved2'
 	classVariableNames: 'DrawStateCallbackDescriptor'
 	imports: #(#{OS.MENUITEMINFOW private} #{OS.MENUINFO private})
 	classInstanceVariableNames: ''
@@ -220,7 +220,7 @@ detach
 
 drawItemImage: itemImage on: hDC at: topLeft disabled: aBoolean
 	| imageList extent imageIndex callback |
-	extent := SystemMetrics current menuImageExtent.
+	extent := metrics menuImageExtent.
 	imageList := self imageManager imageListWithExtent: extent.
 	imageIndex := self imageManager indexOfImage: itemImage.
 	aBoolean
@@ -320,7 +320,7 @@ image: anIcon
 	image := anIcon!
 
 imageManager
-	^imageManager ifNil: [Icon imageManager]!
+	^Icon imageManager!
 
 includesCommand: command
 	^(self indexOfCommand: command ifAbsent: nil) notNil!
@@ -364,7 +364,10 @@ insertIntoMenu: parentMenu at: position info: aMENUITEMINFO
 	top-level menu."
 
 	| hParent |
-	hParent := parentMenu asParameter.
+	parentMenu
+		ifNotNil: 
+			[hParent := parentMenu asParameter.
+			self metrics: parentMenu metrics].
 	self realize.
 	hParent isNull ifTrue: [^self].
 	aMENUITEMINFO
@@ -374,7 +377,7 @@ insertIntoMenu: parentMenu at: position info: aMENUITEMINFO
 		fMask: (image
 					ifNil: [##(MIIM_SUBMENU | MIIM_STRING | MIIM_ID)]
 					ifNotNil: 
-						[aMENUITEMINFO image: image.
+						[aMENUITEMINFO setImage: image metrics: self metrics.
 						##(MIIM_SUBMENU | MIIM_STRING | MIIM_ID | MIIM_BITMAP)]).
 	(User32
 		insertMenuItem: hParent
@@ -511,6 +514,14 @@ menuFromHandle: menuHandle
 					found notNil ifTrue: [^found]]].
 	^nil!
 
+metrics
+	^metrics ifNil: [SystemMetrics current]!
+
+metrics: aSystemMetrics
+	metrics == aSystemMetrics ifTrue: [^self].
+	self free.
+	metrics := aSystemMetrics!
+
 name
 	"Answer the symbolic name of the receiver. The name is useful if the receiver is a dynamic
 	menu whose contents are to be adjusted at run-time, or for which the application wishes to
@@ -573,11 +584,12 @@ queryAllAlong: aCommandPolicy recursive: aBoolean
 	items on the menu has been determined are those items themselves routed around to determine
 	their status, and to allow the text to be updated."
 
-	| menuQuery itemInfo hMenu |
+	| menuQuery itemInfo hMenu itemMetrics |
 	menuQuery := self queryAlong: aCommandPolicy.
 	menuQuery isEnabled ifTrue: [menuQuery receiver onAboutToDisplayMenu: self].
 	itemInfo := MENUITEMINFOW newBuffer.
 	hMenu := self handle.
+	itemMetrics := self metrics.
 	items keysAndValuesDo: 
 			[:i :menuItem |
 			(aBoolean and: [menuItem hasSubmenu])
@@ -589,7 +601,7 @@ queryAllAlong: aCommandPolicy recursive: aBoolean
 							[:query |
 							| updated |
 
-							updated := itemInfo updateQuery: menuItem lastQuery to: query.
+							updated := itemInfo updateQuery: menuItem lastQuery to: query metrics: itemMetrics.
 							menuItem lastQuery: query.
 							updated
 								ifTrue: 
@@ -668,18 +680,15 @@ size
 	^items size!
 
 stbSaveOn: anSTBOutFiler
-	"Save out a binary representation of the receiver to anSTBOutFiler.
-	Only sub-instances of the receiver that are capable of persistency, i.e.
-	they hold enough information to re-create themselves, can be filed out."
-
-	| savedHandle savedId |
+	| savedHandle savedId savedMetrics |
+	savedMetrics := metrics.
 	savedId := id.
-	id := nil.
 	savedHandle := handle.
-	handle := nil.
+	metrics := id := handle := nil.
 	[super stbSaveOn: anSTBOutFiler] ensure: 
 			[handle := savedHandle.
-			id := savedId]!
+			id := savedId.
+			metrics := savedMetrics]!
 
 styleFlags
 	"Private - Answer the MENUITEMINFO style flags of the receiver (see
@@ -772,6 +781,8 @@ itemWithId:!accessing!public! !
 lastQuery!accessing!private! !
 lastQuery:!accessing!private! !
 menuFromHandle:!accessing!public! !
+metrics!accessing!public! !
+metrics:!accessing!private! !
 name!accessing!public! !
 name:!accessing!public! !
 notEmpty!public!testing! !
@@ -902,7 +913,7 @@ stbVersion
 		1: ?
 		2: Dolphin 4,5: Adds name
 		3: Dolphin 6: Adds flags (0), image), and bitmap
-		4: ? Adds imageManager, id, _reserved1, reserved2
+		4: ? Adds imageManager (now metrics), id, _reserved1, reserved2
 	"
 
 	^4!

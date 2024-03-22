@@ -2949,7 +2949,11 @@ queryContextMenu
 	recursion will terminate at the desktop if no intervening views have a context menu,
 	answering nil to indicate that there is no menu."
 
-	^self contextMenu ifNil: [self inheritContextMenu ifTrue: [self parentView queryContextMenu]]!
+	| menu |
+	menu := self contextMenu
+				ifNil: [self inheritContextMenu ifTrue: [self parentView queryContextMenu]].
+	menu ifNotNil: [menu metrics:  self metrics].
+	^menu!
 
 queryMouseTracking
 	| tme |

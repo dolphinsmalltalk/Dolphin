@@ -81,13 +81,13 @@ cch: anInteger
 
 	bytes uint32AtOffset: _OffsetOf_cch put: anInteger!
 
-commandMenuItem: aCommandMenuItem
+commandMenuItem: aCommandMenuItem metrics: aSystemMetrics
 	| mask fType |
 	mask := aCommandMenuItem image
 				ifNil: [##(MIIM_STRING | MIIM_ID)]
 				ifNotNil: 
 					[:img |
-					self image: img.
+					self setImage: img metrics: aSystemMetrics.
 					##(MIIM_STRING | MIIM_ID | MIIM_BITMAP)].
 	fType := aCommandMenuItem styleFlags.
 	fType == 0
@@ -164,17 +164,13 @@ hSubMenu: aHandle
 
 	bytes uintPtrAtOffset: _OffsetOf_hSubMenu put: aHandle!
 
-image: anImage
-	"Populate the receiver with a command image. We no longer use the HBMMENU_CALLBACK method with the menu images drawn on demand by Menu>>drawItemImage:on:at:disabled:, because that approach causes themed menus to be disabled. It seems a retrograde step to have to generate a 32-bit pre-multiplied alpha bitmap specifically for each image and to add that individually to the menu, but that is what we must do. It's not clear why Microsoft didn't use image lists for this instead of individual bitmaps. The IconImageManager does maintain a cache of menu bitmaps, so at least we don't have multiple copies."
+setImage: anIcon metrics: aSystemMetrics
+	"Private - Populate the receiver with a command image."
 
-	anImage
-		ifNil: 
-			[bitmap := nil.
-			bytes uintPtrAtOffset: _OffsetOf_hbmpItem put: 0]
-		ifNotNil: 
-			["Note that the menu doesn't take ownership of the bitmap. We are responsible for making sure it stays around long enough, and is freed when no longer needed. The menu bitmaps are cached in the IconImageManager."
-			bitmap := anImage asMenuBitmap.
-			bytes uintPtrAtOffset: _OffsetOf_hbmpItem put: bitmap handle]!
+	"We no longer use the HBMMENU_CALLBACK method with the menu images drawn on demand by Menu>>drawItemImage:on:at:disabled:, because that approach causes themed menus to be disabled. It seems a retrograde step to have to generate a 32-bit pre-multiplied alpha bitmap specifically for each image and to add that individually to the menu, but that is what we must do. It's not clear why Microsoft didn't use image lists for this instead of individual bitmaps. The IconImageManager does maintain a cache of menu bitmaps, so at least we don't have multiple copies. Note that the menu doesn't take ownership of the bitmap. We are responsible for making sure it stays around long enough, and is freed when no longer needed."
+
+	bitmap := anIcon asSharedBitmap: aSystemMetrics menuImageExtent.
+	self hbmpItem: bitmap handle!
 
 text: aString
 	self basicText: aString!
@@ -186,7 +182,7 @@ type: anInteger
 		uint32AtOffset: _OffsetOf_fType put: anInteger;
 		uint32AtOffset: _OffsetOf_fMask put: MIIM_FTYPE!
 
-updateQuery: priorCommandQuery to: newCommandQuery
+updateQuery: priorCommandQuery to: newCommandQuery metrics: aSystemMetrics
 	| mask |
 	mask := 0.
 	newCommandQuery text = priorCommandQuery text
@@ -198,7 +194,7 @@ updateQuery: priorCommandQuery to: newCommandQuery
 		ifFalse: 
 			["Image changed"
 			mask := mask bitOr: MIIM_BITMAP.
-			self image: newCommandQuery newMenuImage].
+			self setImage: newCommandQuery newMenuImage metrics: aSystemMetrics].
 	newCommandQuery menuStateFlags = priorCommandQuery menuStateFlags
 		ifFalse: 
 			["State changed"
@@ -220,7 +216,7 @@ wID: anInteger
 !OS.MENUITEMINFOW categoriesForMethods!
 basicText:!accessing!private! !
 cch:!**compiled accessors**!public! !
-commandMenuItem:!initializing!private! !
+commandMenuItem:metrics:!initializing!private! !
 dwItemData:!**compiled accessors**!public! !
 dwTypeData!**compiled accessors**!public! !
 dwTypeData:!**compiled accessors**!public! !
@@ -234,10 +230,10 @@ hbmpChecked:!**compiled accessors**!public! !
 hbmpItem:!**compiled accessors**!public! !
 hbmpUnchecked:!**compiled accessors**!public! !
 hSubMenu:!**compiled accessors**!public! !
-image:!helpers!public! !
+setImage:metrics:!helpers!public! !
 text:!accessing!public! !
 type:!accessing!private! !
-updateQuery:to:!operations!private! !
+updateQuery:to:metrics:!operations!private! !
 wID!**compiled accessors**!public! !
 wID:!**compiled accessors**!public! !
 !

@@ -763,6 +763,33 @@ Kernel.SharedPool
 			'MDS_HOTCHECKED' -> 16r6.
 			'MDS_NORMAL' -> 16r1.
 			'MDS_PRESSED' -> 16r3.
+			'MENU_BARBACKGROUND' -> 16r7.
+			'MENU_BARITEM' -> 16r8.
+			'MENU_CHEVRON_TMSCHEMA' -> 16r5.
+			'MENU_MENUBARDROPDOWN_TMSCHEMA' -> 16r4.
+			'MENU_MENUBARITEM_TMSCHEMA' -> 16r3.
+			'MENU_MENUDROPDOWN_TMSCHEMA' -> 16r2.
+			'MENU_MENUITEM_TMSCHEMA' -> 16r1.
+			'MENU_POPUPBACKGROUND' -> 16r9.
+			'MENU_POPUPBORDERS' -> 16rA.
+			'MENU_POPUPCHECK' -> 16rB.
+			'MENU_POPUPCHECKBACKGROUND' -> 16rC.
+			'MENU_POPUPGUTTER' -> 16rD.
+			'MENU_POPUPITEM' -> 16rE.
+			'MENU_POPUPITEM_FOCUSABLE' -> 16r1B.
+			'MENU_POPUPITEMKBFOCUS' -> 16r1A.
+			'MENU_POPUPSEPARATOR' -> 16rF.
+			'MENU_POPUPSUBMENU' -> 16r10.
+			'MENU_POPUPSUBMENU_HCHOT' -> 16r15.
+			'MENU_SEPARATOR_TMSCHEMA' -> 16r6.
+			'MENU_SYSTEMCLOSE' -> 16r11.
+			'MENU_SYSTEMCLOSE_HCHOT' -> 16r16.
+			'MENU_SYSTEMMAXIMIZE' -> 16r12.
+			'MENU_SYSTEMMAXIMIZE_HCHOT' -> 16r17.
+			'MENU_SYSTEMMINIMIZE' -> 16r13.
+			'MENU_SYSTEMMINIMIZE_HCHOT' -> 16r18.
+			'MENU_SYSTEMRESTORE' -> 16r14.
+			'MENU_SYSTEMRESTORE_HCHOT' -> 16r19.
 			'MINBS_DISABLED' -> 16r4.
 			'MINBS_HOT' -> 16r2.
 			'MINBS_NORMAL' -> 16r1.
@@ -1713,7 +1740,7 @@ Graphics.GraphicsTool
 
 Graphics.GraphicsTool
 	subclass: #'UI.Menu'
-	instanceVariableNames: 'items text name flags image imageManager id lastQuery _reserved2'
+	instanceVariableNames: 'items text name flags image metrics id lastQuery _reserved2'
 	classVariableNames: 'DrawStateCallbackDescriptor'
 	imports: #(#{OS.MENUITEMINFOW private} #{OS.MENUINFO private})
 	classInstanceVariableNames: ''

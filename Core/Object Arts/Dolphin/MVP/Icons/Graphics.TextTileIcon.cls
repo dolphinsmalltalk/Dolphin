@@ -128,11 +128,8 @@ asLargeIcon
 	^Icon fromTextTile: self!
 
 asMenuBitmap
-	"Answer a 32-bpp bitmap (i.e. with alpha channel) containing the receiver's image at system
-	menu image extent. Note that the result will be a shared bitmap which is always the same
-	instance for the same icon."
-
-	^self imageManager menuBitmapForIcon: self!
+	#deprecated.	"Extent required depends on DPI of the view the menu"
+	^self asSharedBitmap: SystemMetrics current menuImageExtent!
 
 asParameter
 	"Answer a Windows HICON handle for receiver's default icon representation, realizing it if necessary. 
@@ -142,6 +139,12 @@ asParameter
 
 
 !
+
+asSharedBitmap: aPoint
+	"Answer a 32-bpp bitmap (i.e. with alpha channel) containing the receiver's image at the specified extenT. The result will be a shared bitmap which is always the same
+	instance for the same icon."
+
+	^self imageManager bitmapForIcon: self extent: aPoint!
 
 asSmallIcon
 	"Answer a 'small' (16x16) `Icon` equivalent of the receiver."
@@ -439,6 +442,7 @@ asImageKey!converting!public! !
 asLargeIcon!converting!public! !
 asMenuBitmap!converting!public! !
 asParameter!converting!public! !
+asSharedBitmap:!converting!public! !
 asSmallIcon!converting!public! !
 bitmapWithExtent:!converting!private! !
 defaultFontName!accessing!constants!public! !
@@ -478,7 +482,7 @@ tilecolor!accessing!public! !
 withExtent:!public! !
 !
 
-Graphics.TextTileIcon methodProtocol: #icon attributes: #() selectors: #(#asAlphaBitmap: #asMenuBitmap #asParameter #asSmallIcon #drawOn: #drawOn:at: #drawOn:at:extent: #extent #imageIndex #isPersistent #isRealized #withExtent:)!
+Graphics.TextTileIcon methodProtocol: #icon attributes: #() selectors: #(#asAlphaBitmap: #asParameter #asSharedBitmap: #asSmallIcon #drawOn: #drawOn:at: #drawOn:at:extent: #extent #imageIndex #isPersistent #isRealized #withExtent:)!
 Graphics.TextTileIcon methodProtocol: #image attributes: #(#readOnly) selectors: #(#addToImageList:mask: #drawOn: #drawOn:at: #drawOn:at:extent: #extent #freeDC #isPersistent)!
 
 !Graphics.TextTileIcon class methodsFor!

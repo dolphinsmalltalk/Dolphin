@@ -56,16 +56,22 @@ asImageKey
 				yourself]!
 
 asMenuBitmap
-	"Answer a 32-bpp bitmap (i.e. with alpha channel) containing the receiver's image at system
-	menu image extent. Note that the result will be a shared bitmap which is always the same
-	instance for the same icon."
-
-	^self class imageManager menuBitmapForIcon: self!
+	Notification deprecated.	"Extent required depends on DPI of the view the menu"
+	^self asSharedBitmap: SystemMetrics current menuImageExtent!
 
 asParameter
 	"Create an icon from the image list so we can answer the handle"
 
 	^self asIcon detachHandle!
+
+asSharedBitmap: aPoint
+	"Answer a 32-bpp bitmap (i.e. with alpha channel) containing the receiver's image at the specified extenT. The result will be a shared bitmap which is always the same
+	instance for the same icon."
+
+	^self class imageManager bitmapForIcon: self extent: aPoint!
+
+asSmallIcon
+	^self asIcon asSmallIcon!
 
 bitmap
 	^tileColor isNil ifTrue: [gdiplusBitmap] ifFalse: [self tileBitmapWithExtent: gdiplusBitmap extent]!
@@ -107,6 +113,9 @@ imageManager
 imageType
 	^Win32Constants.IMAGE_ICON!
 
+isRealized
+	^self gdiplusBitmap isRealized!
+
 tileBitmapWithExtent: extent
 	| tileBitmap graphics |
 	tileBitmap := Gdiplus.Bitmap extent: extent.
@@ -127,7 +136,10 @@ tileColor
 	^tileColor!
 
 tileColor: aColor 
-	tileColor := aColor! !
+	tileColor := aColor!
+
+withExtent: aPoint
+	^self asIcon withExtent: aPoint! !
 
 !Graphics.InternalIcon categoriesForMethods!
 =!comparing!public! !
@@ -136,6 +148,8 @@ asAlphaBitmap:!converting!public! !
 asImageKey!converting!public! !
 asMenuBitmap!converting!public! !
 asParameter!converting!public! !
+asSharedBitmap:!converting!public! !
+asSmallIcon!converting!public! !
 bitmap!accessing!public! !
 drawOn:at:extent:!drawing-bitmaps!public! !
 drawOnGraphics:at:extent:from:extent:unit:attributes:!drawing-gdiplus!public! !
@@ -144,10 +158,14 @@ hotspot!accessing!public! !
 imageIndex!accessing!public! !
 imageManager!public! !
 imageType!constants!public! !
+isRealized!public!testing! !
 tileBitmapWithExtent:!accessing!helpers!private! !
 tileColor!accessing!private! !
 tileColor:!accessing!private! !
+withExtent:!converting!public! !
 !
+
+Graphics.InternalIcon methodProtocol: #icon attributes: #() selectors: #(#asAlphaBitmap: #asParameter #asSharedBitmap: #asSmallIcon #drawOn: #drawOn:at: #drawOn:at:extent: #extent #imageIndex #isPersistent #isRealized #withExtent:)!
 
 !Graphics.InternalIcon class methodsFor!
 

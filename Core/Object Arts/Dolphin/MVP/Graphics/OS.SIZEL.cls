@@ -47,6 +47,15 @@ height
 height: anObject
 	bytes int32AtOffset: _OffsetOf_cy put: anObject!
 
+scaleBy: anArithmeticValue
+	"Scale the receiver in-place by the specified <Point> or <Number> multiplier."
+
+	| scaled |
+	scaled := self asPoint * anArithmeticValue.
+	self
+		cx: scaled x truncated;
+		cy: scaled y truncated!
+
 width
 	^bytes int32AtOffset: _OffsetOf_cx!
 
@@ -61,6 +70,7 @@ cy!**compiled accessors**!public! !
 cy:!**compiled accessors**!public! !
 height!accessing!public! !
 height:!accessing!public! !
+scaleBy:!public!transforming! !
 width!accessing!public! !
 width:!accessing!public! !
 !

@@ -46,6 +46,8 @@ package methodNames
 	add: #ColorRef -> #asIndexedColor;
 	add: #ColorRef -> #asIndexedColorUsingPalette:;
 	add: #GDILibrary -> #enumFonts:lpFaceName:lpFontFunc:lParam:;
+	add: #Icon -> #asMenuBitmap;
+	add: #IconImageManager -> #menuBitmapForIcon:;
 	add: #Image -> #fileLocator:;
 	add: #Image -> #identifier:;
 	add: #IndexedColor -> #asIndexedColor;
@@ -552,6 +554,16 @@ enumFonts: dcHandle lpFaceName: aString lpFontFunc: aCallbackThunk lParam: anInt
 enumFonts:lpFaceName:lpFontFunc:lParam:!public!win32 functions-font and text! !
 !
 
+!Icon methodsFor!
+
+asMenuBitmap
+	Notification deprecated.	"Extent required depends on DPI of the view the menu"
+	^self asSharedBitmap: SystemMetrics current menuImageExtent! !
+
+!Icon categoriesForMethods!
+asMenuBitmap!converting!public! !
+!
+
 !Icon class methodsFor!
 
 extraLargeExtent
@@ -585,6 +597,16 @@ extraLargeExtent!constants!public! !
 largeExtent!constants!public! !
 smallExtent!constants!public! !
 tileExtent!constants!public! !
+!
+
+!IconImageManager methodsFor!
+
+menuBitmapForIcon: anIcon
+	Notification deprecated.	"Extent required depends on DPI of the view the menu"
+	^self bitmapForIcon: anIcon extent: SystemMetrics current menuImageExtent! !
+
+!IconImageManager categoriesForMethods!
+menuBitmapForIcon:!public!searching! !
 !
 
 !Image methodsFor!
