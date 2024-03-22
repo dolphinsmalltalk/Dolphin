@@ -272,6 +272,11 @@ onZOrderChanged
 	self invalidateLayout.
 	super onZOrderChanged!
 
+preferredHeight
+	"Private - Answer the <integer> number of pels that would be the ideal height for the client area of the receiver."
+
+	^self subclassResponsibility!
+
 removeItem: anObject
 	"Remove an item from the receiver's contents. Answer the item."
 
@@ -365,6 +370,7 @@ nmRClick:!event handling-win32!public! !
 onSubViewAdded:!event handling!public! !
 onTipTextRequired:!event handling!private! !
 onZOrderChanged!event handling!public! !
+preferredHeight!gemoetry!private! !
 removeItem:!items!public!removing! !
 removeSubView:!hierarchy!public!sub views! !
 ttnGetDispInfo:!event handling-win32!private! !
