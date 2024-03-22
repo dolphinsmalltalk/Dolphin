@@ -34,20 +34,18 @@ answer: anObject
 	self model: anObject!
 
 basicCreateWindowAt: originPoint extent: extentPoint styles: anArray name: anAnsiString
-	"Private - Create the Windows window ensuring it has the VM window procedure.
-	Answer the receiver. The position and size are currently ignored."
+	"Private - Create the Windows window ensuring it has the VM window procedure."
 
-	"Note: If the CreateDialogIndirect() API call GPFs it is almost certainly because 
-	an attempt is being made to load a dialog template from a resource library that
-	has been opened with the LOAD_LIBRARY_AS_DATAFILE flag. Dialog templates
-	can only be loaded from DLLs that have been loaded as normal code modules."
+	"Note: If the CreateDialogIndirect() API call GPFs it is almost certainly because an attempt is being made to load a dialog template from a resource library that has been opened with the LOAD_LIBRARY_AS_DATAFILE flag. Dialog templates can only be loaded from DLLs that have been loaded as normal code modules."
 
-	^UserLibrary default
-		createDialog: self resourceLib asParameter
+	UserLibrary default
+		createDialogParam: self resourceLib asParameter
 		lpTemplate: self templateId asResourceId
 		hWndParent: self class activeHandle
 		lpDialogFunc: VMLibrary default getDlgProc
-		dwInitParam: 0!
+		dwInitParam: 0.
+	"Position and size the dialog as requested."
+	self setInitialPosition: originPoint extent: extentPoint!
 
 cancel
 	"Process a cancel command. This is done by sending the correct cancel
@@ -216,23 +214,26 @@ oldWndProc: anAddress
 onInitDialog
 	"Default handler for dialog initialization."
 
-	"Since the dialog is loaded from a resource template the window styles will not match those
-	set for the receiver. Transfer our styles across here"
+	"In general we don't want the dialog manager to do any automatic DPI scaling as our dialogs are mostly not  built from templates. The simplest option, which also gives the best results, is to disable dialog manager scaling entirely so that the inherited behaviour from ShellView, and the View responses to the child DPI scaling messages, work exactly as for any other view. Note that this does require that the layout for the dialog is designed to allow for resizing. Dialogs with fixed positions for any controls will not rescale well. For any specialised subclass that is actually loaded entirely from a dialog template (including controls), the standard resize behaviour will work so the dialog manager resizing should be left enabled."
 
+	UserLibrary default
+		setDialogDpiChangeBehavior: handle
+		mask: DDC_DISABLE_ALL
+		values: DDC_DISABLE_ALL.
+
+	"Since the dialog itself (though not its controls) is loaded from a resource template the window styles will not match those	set for the receiver. Transfer our styles across here"
 	self styles: self styles.
 
-	"Similarly, Windows always creates dialog as a child of the desktop. Force the required
-	parent here"
+	"Similarly, Windows always creates dialog as a child of the desktop. Force the required parent (really owner) here"
 	UserLibrary default setParent: handle hWndNewParent: creationParent asParameter.
 
+	"Tabbed dialogs, e.g. wizards, need the tab theme explicitly enabled"
 	(self isPropertyPage and: [self isThemed])
-		ifTrue: [
-			"Property pages in tabbed dialogs require a specific theme"
+		ifTrue: 
+			["Property pages in tabbed dialogs require a specific theme"
 			ThemeLibrary default enableThemeDialogTexture: handle dwFlags: ETDT_ENABLETAB].
 
-	"Tell Windows NOT to set the focus. We set focus later after we have populated the dialog
-	(though subclasses loaded from a Windows dialog template resource may wish to return true
-	here)"
+	"Tell Windows NOT to set the focus. We set focus later after we have populated the dialog (though subclasses loaded from a Windows dialog template resource may wish to return true here)"
 	^false!
 
 performCommand: aCommand
@@ -288,6 +289,18 @@ runModalLoop
 			proc priority: proc priority + 1].
 	self isModal: true.
 	endModal wait!
+
+setInitialPosition: originPoint extent: extentPoint
+	"Private - Set the initial position and extent of the dialog window immediately after creation."
+
+	UserLibrary default
+		setWindowPos: handle
+		hWndInsertAfter: nil
+		x: originPoint x
+		y: originPoint y
+		cx: extentPoint x
+		cy: extentPoint y
+		uFlags: ##(SWP_NOACTIVATE | SWP_NOZORDER | SWP_NOSENDCHANGING)!
 
 setItem: anInteger font: aFontOrHandle
 	"Private - Set the font of the receiver's control with the specified id."
@@ -384,17 +397,6 @@ templateId
 
 	^139!
 
-wmGetDpiScaledSize: message wParam: wParam lParam: lParam
-	"Private - Handles a WM_GETDPISCALEDSIZE message. Like WM_DPICHANGED, this should only be sent to top-level windows (e.g. ShellViews in Dolphin), so we don't actually expect to receive it at this level.
-		- wParam encodes the new DPI with the X-axis value in the low word, and y-axis in the high word (although the docs make clear that both will always be the same value)
-		- lParam is a pointer to a SIZE structure into which the new window extent can be written.
-	"
-
-	| size |
-	size := SIZEL fromAddress: lParam.
-	size scaleBy: wParam / self dpi.
-	^TRUE!
-
 wmInitDialog: message wParam: wParam lParam: lParam
 	"A WM_INITDIALOG message was sent by the dialog proc. Answer false if the focus has been set,
 	or true if leaving that to Windows.
@@ -445,6 +447,7 @@ resourceLib!constants!public! !
 restorePlacement:resolution:!geometry!private! !
 runModalInProcessLoop!operations!private! !
 runModalLoop!operations!private! !
+setInitialPosition:extent:!private!realizing/unrealizing! !
 setItem:font:!accessing!private! !
 setItem:icon:!accessing!private! !
 setItem:int:!accessing!private! !
@@ -454,7 +457,6 @@ showModalTo:!private!realizing/unrealizing! !
 showModeless:!private!realizing/unrealizing! !
 subclassWindow:!operations!private! !
 templateId!constants!private! !
-wmGetDpiScaledSize:wParam:lParam:!event handling-win32!private! !
 wmInitDialog:wParam:lParam:!event handling-win32!public! !
 !
 

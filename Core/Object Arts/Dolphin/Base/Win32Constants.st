@@ -178,6 +178,10 @@ Win32Constants at: 'DATE_YEARMONTH' put: 16r8!
 Win32Constants at: 'DC_HASDEFID' put: 16r534B!
 Win32Constants at: 'DCX_INTERSECTRGN' put: 16r80!
 Win32Constants at: 'DCX_WINDOW' put: 16r1!
+Win32Constants at: 'DDC_DEFAULT' put: 16r0!
+Win32Constants at: 'DDC_DISABLE_ALL' put: 16r1!
+Win32Constants at: 'DDC_DISABLE_CONTROL_RELAYOUT' put: 16r4!
+Win32Constants at: 'DDC_DISABLE_RESIZE' put: 16r2!
 Win32Constants at: 'DEFAULT_GUI_FONT' put: 16r11!
 Win32Constants at: 'DEFAULT_PALETTE' put: 16rF!
 Win32Constants at: 'DESKTOPVERTRES' put: 16r76!
@@ -991,6 +995,7 @@ Win32Constants at: 'SWP_NOCOPYBITS' put: 16r100!
 Win32Constants at: 'SWP_NOMOVE' put: 16r2!
 Win32Constants at: 'SWP_NOOWNERZORDER' put: 16r200!
 Win32Constants at: 'SWP_NOREDRAW' put: 16r8!
+Win32Constants at: 'SWP_NOSENDCHANGING' put: 16r400!
 Win32Constants at: 'SWP_NOSIZE' put: 16r1!
 Win32Constants at: 'SWP_NOZORDER' put: 16r4!
 Win32Constants at: 'SWP_SHOWWINDOW' put: 16r40!

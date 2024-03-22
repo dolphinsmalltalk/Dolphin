@@ -71,6 +71,9 @@ defaultExtent
 
 	^252@126!
 
+errorCreateWindowFailed
+	Notification signal: 'Failed to open walkback dialog'!
+
 onInitDialog
 	"Private - The walkback is opening and all controls have been created.
 	Initialize as necessary."
@@ -128,22 +131,24 @@ runModalLoop
 	[self show] postToMessageQueue.
 	super runModalLoop!
 
+setInitialPosition: originPoint extent: extentPoint
+	"Private - Set the initial position and extent of the dialog window immediately after creation."
+
+	"In this case the dialog is loaded from a template, so we let the dialog manager worry about the correct extent."
+
+	UserLibrary default
+		setWindowPos: handle
+		hWndInsertAfter: nil
+		x: originPoint x
+		y: originPoint y
+		cx: 0
+		cy: 0
+		uFlags: ##(SWP_NOACTIVATE | SWP_NOZORDER | SWP_NOSENDCHANGING | SWP_NOSIZE)!
+
 templateId
 	"Private - Answer the dialog template for the receiver."
 
 	^136!
-
-unhookWindowCreate: hWnd
-	"Private - Undo #hookWindowCreate. Override to ignore
-	failure to open the walkback. The likelihood is that any
-	subsequent attempt to open a walkback would fail, and hence
-	a recursive error would result, therefore it is best to fall back
-	on using a message box for the walkback."
-
-	self primHookWindowCreate: false.
-	hWnd isNull
-		ifTrue: [Notification signal: 'Failed to open walkback dialog']
-!
 
 wmCommand: message wParam: wParam lParam: lParam
 	"Our command handling requirements are very simple, so to avoid having to create Smalltalk
@@ -170,15 +175,6 @@ wmDpiChanged: message wParam: wParam lParam: lParam
 	"In this case the controls are from a template, so let DefDlgProc do the scaling."
 	^nil!
 
-wmGetDpiScaledSize: message wParam: wParam lParam: lParam
-	"Private - Handles a WM_GETDPISCALEDSIZE message. Like WM_DPICHANGED, this should only be sent to top-level windows (e.g. ShellViews in Dolphin), so we don't actually expect to receive it at this level.
-		- wParam encodes the new DPI with the X-axis value in the low word, and y-axis in the high word (although the docs make clear that both will always be the same value)
-		- lParam is a pointer to a SIZE structure into which the new window extent can be written.
-	"
-
-	"Let DefDlgProc handle it"
-	^nil!
-
 wmSize: message wParam: wParam lParam: lParam
 	"Private - Default handler for a WM_SIZE (window resized) message."
 
@@ -193,15 +189,15 @@ caption:!accessing!public! !
 copyWalkbackToClipboard!commands!public! !
 debuggable:!accessing!public! !
 defaultExtent!constants!private! !
+errorCreateWindowFailed!operations!private! !
 onInitDialog!event handling!private! !
 primHookWindowCreate:!helpers!private! !
 resumable:!accessing!public! !
 runModalLoop!operations!private! !
+setInitialPosition:extent:!private!realizing/unrealizing! !
 templateId!constants!private! !
-unhookWindowCreate:!operations!private! !
 wmCommand:wParam:lParam:!event handling-win32!public! !
 wmDpiChanged:wParam:lParam:!event handling-win32!private! !
-wmGetDpiScaledSize:wParam:lParam:!event handling-win32!private! !
 wmSize:wParam:lParam:!event handling-win32!private! !
 !
 
