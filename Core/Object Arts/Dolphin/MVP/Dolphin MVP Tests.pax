@@ -22,6 +22,7 @@ package classNames
 	add: #ClipboardTest;
 	add: #ColorDialogTest;
 	add: #ColorTest;
+	add: #ComboBoxTest;
 	add: #CommandDescriptionTest;
 	add: #ContainerViewTest;
 	add: #DialogViewTest;
@@ -482,6 +483,12 @@ PresenterTest subclass: #CheckButtonTest
 	classInstanceVariableNames: ''!
 
 PresenterTest subclass: #ChoicePresenterTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+PresenterTest subclass: #ComboBoxTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

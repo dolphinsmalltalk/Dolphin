@@ -3586,7 +3586,7 @@ printOn: aStream
 		basicPrint: self;
 		nextPut: $(;
 		print: self topLeft;
-		nextPutAll: ', ';
+		nextPutAll: ' corner: ';
 		print: self bottomRight;
 		nextPut: $)! !
 
