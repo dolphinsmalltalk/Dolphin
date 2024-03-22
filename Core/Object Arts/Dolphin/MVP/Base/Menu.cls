@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 GraphicsTool subclass: #Menu
-	instanceVariableNames: 'items text name flags image imageManager id _reserved1 _reserved2'
+	instanceVariableNames: 'items text name flags image metrics id _reserved1 _reserved2'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -196,7 +196,7 @@ description: aString
 
 drawItemImage: itemImage on: hDC at: topLeft disabled: aBoolean
 	| imageList extent imageIndex callback |
-	extent := SystemMetrics current menuImageExtent.
+	extent := metrics menuImageExtent.
 	imageList := self imageManager imageListWithExtent: extent.
 	imageIndex := self imageManager indexOfImage: itemImage.
 	aBoolean
@@ -298,7 +298,7 @@ image: anIcon
 	image := anIcon!
 
 imageManager
-	^imageManager ifNil: [Icon imageManager]!
+	^Icon imageManager!
 
 includesCommand: command
 	^(self indexOfCommand: command ifAbsent: []) notNil!
@@ -342,7 +342,10 @@ insertIntoMenu: parentMenu at: position info: aMENUITEMINFO
 	top-level menu."
 
 	| hParent |
-	hParent := parentMenu asParameter.
+	parentMenu
+		ifNotNil: 
+			[hParent := parentMenu asParameter.
+			self metrics: parentMenu metrics].
 	self realize.
 	hParent isNull ifTrue: [^self].
 	aMENUITEMINFO subMenu: self text: self text.
@@ -474,6 +477,14 @@ menuFromHandle: menuHandle
 					found notNil ifTrue: [^found]]].
 	^nil!
 
+metrics
+	^metrics ifNil: [SystemMetrics current]!
+
+metrics: aSystemMetrics
+	metrics == aSystemMetrics ifTrue: [^self].
+	self free.
+	metrics := aSystemMetrics!
+
 name
 	"Answer the symbolic name of the receiver. The name is useful if the receiver is a dynamic
 	menu whose contents are to be adjusted at run-time, or for which the application wishes to
@@ -530,10 +541,11 @@ queryAllAlong: aCommandPolicy
 	items on the menu has been determined are those items themselves routed around to determine
 	their status, and to allow the text to be updated."
 
-	| query itemInfo |
+	| query itemInfo imageExtent |
 	query := self queryAlong: aCommandPolicy.
 	query isEnabled ifTrue: [query receiver onAboutToDisplayMenu: self].
 	itemInfo := MENUITEMINFOW new.
+	imageExtent := aCommandPolicy source metrics.
 	items keysAndValuesDo: 
 			[:i :menuItem |
 			| itemQuery |
@@ -544,7 +556,8 @@ queryAllAlong: aCommandPolicy
 				text: itemQuery text
 				state: (itemQuery isChecked ifTrue: [MFS_CHECKED] ifFalse: [MFS_UNCHECKED])
 						| (itemQuery isEnabled ifTrue: [MFS_ENABLED] ifFalse: [MFS_DISABLED])
-							| (itemQuery isDefault ifTrue: [MFS_DEFAULT] ifFalse: [0]).
+							| (itemQuery isDefault ifTrue: [MFS_DEFAULT] ifFalse: [0])
+				metrics: imageExtent.
 			self setItem: i info: itemInfo]!
 
 queryAllFromView: aView
@@ -625,6 +638,14 @@ size
 	"Answer the number of items (including separators) in the menu."
 
 	^items size!
+
+stbSaveOn: anSTBOutFiler
+	| savedHandle savedMetrics |
+	savedHandle := handle.
+	savedMetrics := metrics.
+	[anSTBOutFiler saveObject: self] ensure: 
+			[handle := savedHandle.
+			metrics := savedMetrics]!
 
 styleFlags
 	"Private - Answer the MENUITEMINFO style flags of the receiver (see
@@ -719,6 +740,8 @@ items:!accessing!public! !
 itemsDo:!enumerating!public! !
 itemWithId:!accessing!public! !
 menuFromHandle:!accessing!public! !
+metrics!accessing!public! !
+metrics:!accessing!private! !
 name!accessing!public! !
 name:!accessing!public! !
 notEmpty!public!testing! !
@@ -736,6 +759,7 @@ setDefault:!accessing!public! !
 setItem:info:!accessing!private! !
 showIn:position:!drawing!public! !
 size!accessing!public! !
+stbSaveOn:!binary filing!public! !
 styleFlags!private!realizing/unrealizing! !
 text!accessing!public! !
 text:!accessing!public! !
@@ -813,9 +837,11 @@ stbConvertFrom: anSTBClassFormat
 	newInstance]!
 
 stbConvertToVersion1: anArray 
-	"Hmmm, what happened from version 1 to version 2?"
+	"1: items becomes an Array"
 
-	^anArray!
+	^anArray shallowCopy
+		at: 3 put: (anArray at: 3) asArray;
+		yourself!
 
 stbConvertToVersion2: anArray 
 	"Private - Version 2 adds 'name' instance variable, defaulting to nil."

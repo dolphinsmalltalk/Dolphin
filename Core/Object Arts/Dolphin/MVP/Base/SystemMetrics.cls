@@ -37,6 +37,11 @@ Class Variables:
 borderExtent
 	^borderExtent ifNil: [borderExtent := self getMetric: SM_CXBORDER pair: SM_CYBORDER]!
 
+captionFont
+	"Answer the currently configured window caption font."
+
+	^Font fromLogFont: self nonClientMetrics lfCationFont dpi: self dpi!
+
 captionHeight
 	^self nonClientMetrics iCaptionHeight!
 
@@ -248,7 +253,7 @@ menuDividerHeight
 menuFont
 	"Answer the currently configured menu font."
 
-	^menuFont ifNil: [menuFont := Font fromLogFont: self nonClientMetrics lfMenuFont]!
+	^menuFont ifNil: [menuFont := Font fromLogFont: self nonClientMetrics lfMenuFont dpi: self dpi]!
 
 menuHeight
 	"Answer the height of a menu item as currently configured."
@@ -258,20 +263,20 @@ menuHeight
 menuImageExtent
 	"Answer a <Point>, being the width and height of the images displayed on menus."
 
-	"Implementation Note: This seems to be fixed and not available as a config. item?"
+	"Implementation Note: There does not seem to be a system metric for this, and annoyingly if one uses the small icon extent, which is scaled for DPI, it is then gives poor results for some scales. Unlike most places where images are used, for menu images there is some granularity and the images get resized to a fixed extent for that DPI. Results are particularly poor at 125% if we use a 20@20 icon. This seems to be because the theme images for menu check buttons at 120 and 144 dpi are the rather odd sizes 18@18 and 25@25. Scaling down a 20@20 icon to 18@18 does not give good results. Scaling down of larger icon images by small amounts is less noticeable, but we still get better results by providing an icon image that fits within the menu check button extent for that DPI so that it is not scaled down at all, and we can perform the mapping using a simple calculation that will work for any scale factor, including custom ones. At present Windows only includes theme images for DPIs up to 384/400%, topping out at 64@64."
 
-	^self smallIconExtent!
+	^((#(16 16 24 24 32 32 40 40 48 48 48 48) lookup: dpi // 24 - 3) ?? 64) asPoint!
 
 menuImageTextGap
-	"The gap between the text in a menu item and the image. It doesn't seem to be possible to
-	determine this from system metrics."
+	"The gap between the text in a menu item and the image. It doesn't seem to be possible to determine this from system metrics, and it doesn't appear to scale with DPI either."
 
+	#highDpiToDo. "Verify that this does not scale at higher DPIs"
 	^16!
 
 menuTextAcceleratorGap
-	"The gap between the text in a menu item and the accelerator. It doesn't seem to be possible to
-	determine this from system metrics."
+	"The gap between the text in a menu item and the accelerator. It doesn't seem to be possible to determine this from system metrics."
 
+	#highDpiToDo. "Verify that this does not scale at higher DPIs"
 	^32!
 
 menuWidth
@@ -393,11 +398,12 @@ wheelScrollLines
 
 !SystemMetrics categoriesForMethods!
 borderExtent!constants!public! !
+captionFont!constants!public! !
 captionHeight!accessing!public! !
 cursorExtent!constants!public! !
 defaultColorDepth!accessing!public! !
 dialogFrameExtent!constants!public! !
-dpi!accessing!public! !
+dpi!accessing!high DPI!public! !
 dragHysteresis!constants!public! !
 dragImageColorDepth!accessing!private! !
 edgeExtent!constants!public! !

@@ -42,12 +42,16 @@ cch: anInteger
 
 	bytes dwordAtOffset: _OffsetOf_cch put: anInteger!
 
-commandMenuItem: aCommandMenuItem 
+commandMenuItem: aCommandMenuItem metrics: aSystemMetrics
 	| mask fType |
-	mask := ##(MIIM_STRING | MIIM_ID).
-	mask := mask bitOr: (self setImage: aCommandMenuItem).
+	mask := aCommandMenuItem image
+				ifNil: [##(MIIM_STRING | MIIM_ID)]
+				ifNotNil: 
+					[:icon |
+					self setImage: icon metrics: aSystemMetrics.
+					##(MIIM_STRING | MIIM_ID | MIIM_BITMAP)].
 	fType := aCommandMenuItem styleFlags.
-	fType == 0 
+	fType == 0
 		ifFalse: 
 			[self fType: fType.
 			mask := mask bitOr: MIIM_FTYPE].
@@ -133,7 +137,7 @@ maskOut: anInteger
 
 	self fMask: (self fMask maskClear: anInteger)!
 
-menuItem: aMenuItem text: aStringOrNil state: stateInteger
+menuItem: aMenuItem text: aStringOrNil state: stateInteger metrics: aSystemMetrics
 	"Private - Update the details for a normal menu item (i.e. the text, type flags, and state).
 	This message is used when dynamically updating menu items."
 
@@ -143,36 +147,34 @@ menuItem: aMenuItem text: aStringOrNil state: stateInteger
 				ifFalse: 
 					[self basicText: aStringOrNil.
 					##(MIIM_FTYPE | MIIM_STATE | MIIM_STRING)].
-	mask := mask bitOr: (self setImage: aMenuItem).
+	aMenuItem image
+		ifNotNil: 
+			[:icon |
+			mask := mask bitOr: MIIM_BITMAP.
+			self setImage: icon metrics: aSystemMetrics].
 	self
 		fType: aMenuItem styleFlags;
 		fState: stateInteger;
-		fMask: mask
-!
+		fMask: mask!
 
-setImage: aCommandMenuItem
-	"Private - Populate the receiver with the command image, if any. We no longer use the HBMMENU_CALLBACK method with the menu images
-	drawn on demand by Menu>>drawItemImage:on:at:disabled:, because that approach causes themed menus to be disabled. It seems a
-	retrograde step to have to generate a 32-bit pre-multiplied alpha bitmap specifically for each image and to add that individually to the
-	menu, but that is what we must do. It's not clear why Microsoft didn't use image lists for this instead of individual bitmaps. The 
-	IconImageManager does maintain a cache of menu bitmaps, so at least we don't have multiple copies."
+setImage: anIcon metrics: aSystemMetrics
+	"Private - Populate the receiver with a command image."
 
-	^aCommandMenuItem image
-		ifNil: [0]
-		ifNotNil: 
-			[:image |
-			"Note that the menu doesn't take ownership of the bitmap. We are responsible
-			for making sure it stays around long enough, and is freed when no longer
-			needed."
-			bitmap := image asMenuBitmap.
-			self hbmpItem: bitmap handle.
-			MIIM_BITMAP]!
+	"We no longer use the HBMMENU_CALLBACK method with the menu images drawn on demand by Menu>>drawItemImage:on:at:disabled:, because that approach causes themed menus to be disabled. It seems a retrograde step to have to generate a 32-bit pre-multiplied alpha bitmap specifically for each image and to add that individually to the menu, but that is what we must do. It's not clear why Microsoft didn't use image lists for this instead of individual bitmaps. The IconImageManager does maintain a cache of menu bitmaps, so at least we don't have multiple copies. Note that the menu doesn't take ownership of the bitmap. We are responsible for making sure it stays around long enough, and is freed when no longer needed."
 
-subMenu: aMenu text: aString 
+	bitmap := anIcon asSharedBitmap: aSystemMetrics menuImageExtent.
+	self hbmpItem: bitmap handle!
+
+subMenu: aMenu text: aString
 	"Private - Set menu insertion details for a Sub-menu."
 
 	| mask |
-	mask := ##(MIIM_SUBMENU | MIIM_STRING | MIIM_ID) bitOr: (self setImage: aMenu).
+	mask := aMenu image
+				ifNil: [##(MIIM_SUBMENU | MIIM_STRING | MIIM_ID)]
+				ifNotNil: 
+					[:icon |
+					self setImage: icon metrics: aMenu metrics.
+					##(MIIM_SUBMENU | MIIM_STRING | MIIM_ID | MIIM_BITMAP)].
 	self
 		basicText: aString;
 		wID: aMenu id;
@@ -199,7 +201,7 @@ wID: anInteger
 !MENUITEMINFOW categoriesForMethods!
 basicText:!accessing!private! !
 cch:!**compiled accessors**!public! !
-commandMenuItem:!initializing!private! !
+commandMenuItem:metrics:!initializing!private! !
 dwItemData:!**compiled accessors**!public! !
 dwSize:!**compiled accessors**!public! !
 dwTypeData!**compiled accessors**!public! !
@@ -215,8 +217,8 @@ hbmpItem:!**compiled accessors**!public! !
 hbmpUnchecked:!**compiled accessors**!public! !
 hSubMenu:!**compiled accessors**!public! !
 maskOut:!accessing!private! !
-menuItem:text:state:!accessing!private! !
-setImage:!helpers!private! !
+menuItem:text:state:metrics:!accessing!private! !
+setImage:metrics:!helpers!private! !
 subMenu:text:!accessing!private! !
 type:!accessing!private! !
 wID!**compiled accessors**!public! !

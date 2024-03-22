@@ -327,6 +327,11 @@ getDefId
 		ifTrue: [lresult lowWord]
 		ifFalse: [0]!
 
+getDpi
+	"Private - Answer the logical dots-per-inch for this Window."
+
+	^UserLibrary default getDpiForWindow: handle!
+
 getLastActivePopup
 	"Private - Answers the last popup window that had activation, or nil if there is no popup."
 
@@ -698,7 +703,7 @@ onSettingChanged: aSettingsChangeEvent
 
 onStateRestored
 	self isTopView ifFalse: [^self].
-	self updateMenuBar.
+	menuBar ifNotNil: [self updateMenuBar].
 	self setDefId: defaultButton.
 	self invalidateUserInterface!
 
@@ -1004,6 +1009,7 @@ updateIcons
 updateMenuBar
 	self isStateRestoring ifTrue: [^self].
 	self releaseAccelerators.
+	menuBar ifNotNil: [menuBar metrics: self metrics].
 	self
 		basicMenu: menuBar;
 		drawMenuBar!
@@ -1063,7 +1069,15 @@ wmDpiChanged: message wParam: wParam lParam: lParam
 	self resolutionScaledBy: newDpi / self resolution.
 	dpi := newDpi.
 	self rectangle: newRect.
-	^nil!
+	"We must recreate the menubar to ensure it paints correctly at the new resolution"
+	self menuBar
+		ifNotNil: 
+			[:menu |
+			self releaseMenu.
+			menuBar := menu.
+			self updateMenuBar].
+	"Docs state that 0 should be returned if handled. It is stated that there is no implementation in the DefWindowProc anyway, but there definitely is one in DefDlgProc, and we normally want to suppress that because our dialogs are normally built from an empty template and then populated."
+	^0!
 
 wmDpiChangedBeforeParent: message wParam: wParam lParam: lParam
 	"Private - Handles a WM_DPICHANGED_BEFOREPARENT message. This is only sent to child windows, bottom-up, before the top-level window receives a WM_DPICHANGED."
@@ -1147,7 +1161,11 @@ wmNcActivate: message wParam: wParam lParam: lParam
 wmNcCreate: message wParam: wParam lParam: lParam
 	"Private - Default handler for a WM_NCCREATE. "
 
-	UserLibrary default enableNonClientDpiScaling: handle.
+	"The [documentation](https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-enablenonclientdpiscaling) states that it is not necessary to call EnableNonClientScaling for apps running at per monitor V2 awareness level, but as far as I can determine it makes no difference in any mode on Windows 11 as the NC areas are always scaled, regardless of mode and whether this is called or not. It also doesn't have any effect on the bug where at certain DPIs in per-monitor mode menu bars leave small black areas around some edges (i.e. don't paint the entire background)."
+
+	(UserLibrary.DpiAwareness == DPI_AWARENESS_CONTEXT_SYSTEM_AWARE 
+		or: [UserLibrary.DpiAwareness == DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE])
+			ifTrue: [UserLibrary default enableNonClientDpiScaling: handle].
 	^nil!
 
 wmSetCursor: message wParam: wParam lParam: lParam
@@ -1268,6 +1286,7 @@ filerProxy!binary filing!private! !
 flash:!operations!public! !
 flash:flags:!operations!public! !
 getDefId!default button!private! !
+getDpi!private! !
 getLastActivePopup!hierarchy!private! !
 getLastActivePopupHandle!hierarchy!private! !
 hasCaption!accessing-styles!public! !

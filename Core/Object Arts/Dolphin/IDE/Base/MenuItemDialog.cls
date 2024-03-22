@@ -56,7 +56,8 @@ model: aCommandMenuItem
 	commandPresenter model: (aspectBuffer aspectValue: #commandString).
 	imageModel := aspectBuffer aspectValue: #image.
 	iconPresenter model: (ValueConverter subject: imageModel
-				typeConverter: (PluggableTypeConverter leftToRight: [:icon | icon asMenuBitmap]
+				typeConverter: (PluggableTypeConverter
+						leftToRight: [:icon | icon asSharedBitmap: self view metrics menuImageExtent]
 						rightToLeft: [:icon | icon])).
 	iconIdPresenter model: (ValueConverter subject: imageModel
 				typeConverter: (PluggableTypeConverter leftToRight: [:icon | icon printString]

@@ -82,13 +82,12 @@ image
 insertIntoMenu: aMenu at: position info: aMENUITEMINFO
 	"Append the receiver to the menu, aMenu."
 
-	self populateItemInfo: aMENUITEMINFO.
-	(UserLibrary default 
+	self populateItemInfo: aMENUITEMINFO metrics: aMenu metrics.
+	(UserLibrary default
 		insertMenuItem: aMenu asParameter
 		uItem: position
 		fByPosition: true
-		lpmii: aMENUITEMINFO)
-			ifFalse: [Win32Error signal: 'Unable to realize ', self printString]!
+		lpmii: aMENUITEMINFO) ifFalse: [Win32Error signal: 'Unable to realize ' , self printString]!
 
 isDefault
 	"Answer whether the receiver is expecting to be the default item on a menu."
@@ -132,7 +131,7 @@ name
 
 	^nil!
 
-populateItemInfo: aMENUITEMINFO
+populateItemInfo: aMENUITEMINFO metrics: aSystemMetrics
 	"Private - Copy the receiver's item information into the <MENUITEMINFOW> argument."
 
 	^self subclassResponsibility!
@@ -196,7 +195,7 @@ itemsDo:!accessing!private! !
 itemWithId:!accessing!public! !
 menuFromHandle:!accessing!public! !
 name!public! !
-populateItemInfo:!private!realizing/unrealizing! !
+populateItemInfo:metrics:!private!realizing/unrealizing! !
 printOn:!printing!public! !
 queryAlong:!operations!public! !
 registerAcceleratorKeyIn:!menus!public! !

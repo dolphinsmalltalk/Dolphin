@@ -60,12 +60,11 @@ asCursor
 asIcon
 	^self!
 
-asMenuBitmap
-	"Answer a 32-bpp bitmap (i.e. with alpha channel) containing the receiver's image at system
-	menu image extent. Note that the result will be a shared bitmap which is always the same
+asSharedBitmap: aPoint
+	"Answer a 32-bpp bitmap (i.e. with alpha channel) containing the receiver's image at the specified extenT. The result will be a shared bitmap which is always the same
 	instance for the same icon."
 
-	^self imageManager menuBitmapForIcon: self!
+	^self imageManager bitmapForIcon: self extent: aPoint!
 
 basicFree
 	"Private - Free the receiver's Icon resource handle.
@@ -314,7 +313,7 @@ addToImageList:mask:!double dispatch!private! !
 asAlphaBitmap:!converting!public! !
 asCursor!public! !
 asIcon!public! !
-asMenuBitmap!converting!public! !
+asSharedBitmap:!converting!public! !
 basicFree!private!realizing/unrealizing! !
 createHandle!private!realizing/unrealizing! !
 drawDisabledOn:at:extent:!drawing-bitmaps!public! !

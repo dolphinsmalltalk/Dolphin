@@ -26,12 +26,6 @@ initialize
 	maskcolor := Color none.
 	bitmaps := LookupTable new!
 
-menuBitmapForIcon: anIcon
-	"Answer a 32-bit bitmap with alpha channel created from the <Icon> argument, with the
-	correct extent to display as a menu image."
-
-	^self bitmapForIcon: anIcon extent: SystemMetrics current menuImageExtent!
-
 newImages
 	bitmaps := LookupTable new.
 	^super newImages!
@@ -44,7 +38,6 @@ stbSaveOn: anSTBOutFiler
 !IconImageManager categoriesForMethods!
 bitmapForIcon:extent:!public!searching! !
 initialize!initializing!private! !
-menuBitmapForIcon:!public!searching! !
 newImages!private!removing! !
 stbSaveOn:!binary filing!public! !
 !

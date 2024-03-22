@@ -143,10 +143,10 @@ itemWithId: anInteger
 
 	^anInteger = self id ifTrue: [self]!
 
-populateItemInfo: aMENUITEMINFO 
+populateItemInfo: aMENUITEMINFO metrics: aSystemMetrics
 	"Private - Copy the receiver's item information into the <MENUITEMINFOW> argument."
 
-	aMENUITEMINFO commandMenuItem: self!
+	aMENUITEMINFO commandMenuItem: self metrics: aSystemMetrics!
 
 postCopy
 	"Apply any final flourish to the copy that may be required."
@@ -208,7 +208,7 @@ isModalCommand:!accessing!public! !
 isRadioButtonStyle!accessing!public! !
 isRadioButtonStyle:!accessing!public! !
 itemWithId:!accessing!public! !
-populateItemInfo:!private!realizing/unrealizing! !
+populateItemInfo:metrics:!private!realizing/unrealizing! !
 postCopy!copying!public! !
 queryAlong:!operations!public! !
 registerAcceleratorKeyIn:!menus!public! !

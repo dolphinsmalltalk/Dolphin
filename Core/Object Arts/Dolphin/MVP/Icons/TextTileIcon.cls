@@ -127,11 +127,8 @@ asBitmap
 	^self bitmapWithExtent: self extent!
 
 asMenuBitmap
-	"Answer a 32-bpp bitmap (i.e. with alpha channel) containing the receiver's image at system
-	menu image extent. Note that the result will be a shared bitmap which is always the same
-	instance for the same icon."
-
-	^self imageManager menuBitmapForIcon: self!
+	#deprecated.	"Extent required depends on DPI of the view the menu"
+	^self asSharedBitmap: SystemMetrics current menuImageExtent!
 
 asParameter
 	"Answer the handle of the receiver's default icon representation, realizing it if necessary. 
@@ -141,6 +138,12 @@ asParameter
 
 
 !
+
+asSharedBitmap: aPoint
+	"Answer a 32-bpp bitmap (i.e. with alpha channel) containing the receiver's image at the specified extenT. The result will be a shared bitmap which is always the same
+	instance for the same icon."
+
+	^self imageManager bitmapForIcon: self extent: aPoint!
 
 basicFontStyle
 	^fontStyle!
@@ -417,6 +420,7 @@ asAlphaBitmap:!converting!public! !
 asBitmap!converting!public! !
 asMenuBitmap!converting!public! !
 asParameter!converting!public! !
+asSharedBitmap:!converting!public! !
 basicFontStyle!accessing!private! !
 bitmapWithExtent:!converting!private! !
 defaultFontName!accessing!constants!public! !

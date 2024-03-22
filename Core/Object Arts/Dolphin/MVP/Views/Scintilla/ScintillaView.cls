@@ -3110,7 +3110,7 @@ imageIndexForIcon: anIcon
 		ifAbsentPut: 
 			[| type bmp |
 			type := registeredImages size.
-			bmp := anIcon asMenuBitmap.
+			bmp := anIcon asSharedBitmap: self metrics menuImageExtent.
 			type = 0
 				ifTrue: 
 					[| ext |

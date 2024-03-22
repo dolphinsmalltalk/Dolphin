@@ -60,7 +60,7 @@ isDivider
 
 	^true!
 
-populateItemInfo: aMENUITEMINFO 
+populateItemInfo: aMENUITEMINFO metrics: aSystemMetrics
 	"Private - Copy the receiver's item information into the <MENUITEMINFOW> argument."
 
 	aMENUITEMINFO type: self styleFlags!
@@ -94,7 +94,7 @@ commandDescription!accessing!private! !
 displayOn:!displaying!public! !
 id!accessing!public! !
 isDivider!public!testing! !
-populateItemInfo:!private!realizing/unrealizing! !
+populateItemInfo:metrics:!private!realizing/unrealizing! !
 queryAlong:!operations!public! !
 styleName!accessing!public! !
 styleName:!accessing!private! !

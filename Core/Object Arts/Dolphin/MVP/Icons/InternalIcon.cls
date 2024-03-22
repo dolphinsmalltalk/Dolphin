@@ -58,16 +58,19 @@ asAlphaBitmap: aPoint
 	^bmp!
 
 asMenuBitmap
-	"Answer a 32-bpp bitmap (i.e. with alpha channel) containing the receiver's image at system
-	menu image extent. Note that the result will be a shared bitmap which is always the same
-	instance for the same icon."
-
-	^self class imageManager menuBitmapForIcon: self!
+	Notification deprecated.	"Extent required depends on DPI of the view the menu"
+	^self asSharedBitmap: SystemMetrics current menuImageExtent!
 
 asParameter
 	"Create an icon from the image list so we can answer the handle"
 
 	^self asIcon detachHandle!
+
+asSharedBitmap: aPoint
+	"Answer a 32-bpp bitmap (i.e. with alpha channel) containing the receiver's image at the specified extenT. The result will be a shared bitmap which is always the same
+	instance for the same icon."
+
+	^self class imageManager bitmapForIcon: self extent: aPoint!
 
 bitmap
 	^tileColor isNil ifTrue: [gdiplusBitmap] ifFalse: [self tileBitmapWithExtent: gdiplusBitmap extent]!
@@ -136,6 +139,7 @@ addToImageList:mask:!double dispatch!private! !
 asAlphaBitmap:!converting!public! !
 asMenuBitmap!converting!public! !
 asParameter!converting!public! !
+asSharedBitmap:!converting!public! !
 bitmap!accessing!public! !
 drawOn:at:extent:!drawing-bitmaps!public! !
 drawOnGraphics:at:extent:from:extent:unit:attributes:!drawing-gdiplus!public! !

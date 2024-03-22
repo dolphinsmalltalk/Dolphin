@@ -41,6 +41,8 @@ package methodNames
 	add: #ColorRef -> #asIndexedColor;
 	add: #ColorRef -> #asIndexedColorUsingPalette:;
 	add: #GUISessionManager -> #whatsThis:;
+	add: #Icon -> #asMenuBitmap;
+	add: #IconImageManager -> #menuBitmapForIcon:;
 	add: #IndexedColor -> #asIndexedColor;
 	add: #ListBox -> #basicSelectionByIndex:;
 	add: #ListModel -> #updateAtIndex:;
@@ -516,6 +518,15 @@ whatsThis: object
 whatsThis:!commands!public! !
 !
 
+!Icon methodsFor!
+
+asMenuBitmap
+	Notification deprecated.	"Extent required depends on DPI of the view the menu"
+	^self asSharedBitmap: SystemMetrics current menuImageExtent! !
+!Icon categoriesForMethods!
+asMenuBitmap!converting!public! !
+!
+
 !Icon class methodsFor!
 
 extraLargeExtent
@@ -548,6 +559,15 @@ extraLargeExtent!constants!public! !
 largeExtent!constants!public! !
 smallExtent!constants!public! !
 tileExtent!constants!public! !
+!
+
+!IconImageManager methodsFor!
+
+menuBitmapForIcon: anIcon
+	Notification deprecated.	"Extent required depends on DPI of the view the menu"
+	^self bitmapForIcon: anIcon extent: SystemMetrics current menuImageExtent! !
+!IconImageManager categoriesForMethods!
+menuBitmapForIcon:!public!searching! !
 !
 
 !IndexedColor methodsFor!

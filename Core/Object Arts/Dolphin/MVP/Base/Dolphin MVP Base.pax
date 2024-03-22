@@ -1188,7 +1188,7 @@ GraphicsTool subclass: #Image
 	classInstanceVariableNames: ''!
 
 GraphicsTool subclass: #Menu
-	instanceVariableNames: 'items text name flags image imageManager id _reserved1 _reserved2'
+	instanceVariableNames: 'items text name flags image metrics id _reserved1 _reserved2'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
