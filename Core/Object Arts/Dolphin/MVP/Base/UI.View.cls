@@ -4071,6 +4071,14 @@ wmGetDlgCode: message wParam: wParam lParam: aMSGAddress
 				wParam: wParam
 				lParam: aMSGAddress)!
 
+wmGetDpiScaledSize: message wParam: wParam lParam: lParam
+	"Private - Handles a WM_GETDPISCALEDSIZE message. Like WM_DPICHANGED, this should only be sent to top-level windows (e.g. ShellViews in Dolphin), so we don't actually expect to receive it at this level.
+		- wParam encodes the new DPI with the X-axis value in the low word, and y-axis in the high word (although the docs make clear that both will always be the same value)
+		- lParam is a pointer to a SIZE structure into which the new window extent can be written.
+	"
+
+	^nil!
+
 wmGetMinMaxInfo: message wParam: wParam lParam: lParam 
 	"Private - Default handler for a WM_GETMINMAXINFO message."
 
@@ -5130,6 +5138,7 @@ wmEnterMenuLoop:wParam:lParam:!event handling-win32!private! !
 wmEraseBkGnd:wParam:lParam:!event handling-win32!private! !
 wmExitMenuLoop:wParam:lParam:!event handling-win32!private! !
 wmGetDlgCode:wParam:lParam:!event handling-win32!private! !
+wmGetDpiScaledSize:wParam:lParam:!event handling-win32!private! !
 wmGetMinMaxInfo:wParam:lParam:!event handling-win32!private! !
 wmHotKey:wParam:lParam:!event handling-win32!private! !
 wmHScroll:wParam:lParam:!event handling-win32!private! !
@@ -5302,6 +5311,7 @@ buildMessageMap
 		at: WM_DPICHANGED + 1 put: #wmDpiChanged:wParam:lParam:;
 		at: WM_DPICHANGED_BEFOREPARENT + 1 put: #wmDpiChangedBeforeParent:wParam:lParam:;
 		at: WM_DPICHANGED_AFTERPARENT + 1 put: #wmDpiChangedAfterParent:wParam:lParam:;
+		at: WM_GETDPISCALEDSIZE + 1 put: #wmGetDpiScaledSize:wParam:lParam:;
 		yourself!
 
 capture

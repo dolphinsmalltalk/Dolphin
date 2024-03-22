@@ -151,8 +151,16 @@ wmDpiChanged: message wParam: wParam lParam: lParam
 		- lParam is a pointer to a RECTL providing the suggested new rectangle for the window.
 	"
 
-	super wmDpiChanged: message wParam: wParam lParam: lParam.
-	"In this case the controls are from a template, so we do need to call the DefDlgProc to rescale correctly."
+	"In this case the controls are from a template, so let DefDlgProc do the scaling."
+	^nil!
+
+wmGetDpiScaledSize: message wParam: wParam lParam: lParam
+	"Private - Handles a WM_GETDPISCALEDSIZE message. Like WM_DPICHANGED, this should only be sent to top-level windows (e.g. ShellViews in Dolphin), so we don't actually expect to receive it at this level.
+		- wParam encodes the new DPI with the X-axis value in the low word, and y-axis in the high word (although the docs make clear that both will always be the same value)
+		- lParam is a pointer to a SIZE structure into which the new window extent can be written.
+	"
+
+	"Let DefDlgProc handle it"
 	^nil!
 
 wmSize: message wParam: wParam lParam: lParam
@@ -176,6 +184,7 @@ templateId!constants!private! !
 unhookWindowCreate:!private!realizing/unrealizing! !
 wmCommand:wParam:lParam:!event handling-win32!public! !
 wmDpiChanged:wParam:lParam:!event handling-win32!private! !
+wmGetDpiScaledSize:wParam:lParam:!event handling-win32!private! !
 wmSize:wParam:lParam:!event handling-win32!private! !
 !
 
