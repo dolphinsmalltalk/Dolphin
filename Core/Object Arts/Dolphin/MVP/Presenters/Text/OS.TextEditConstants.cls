@@ -76,6 +76,11 @@ Kernel.SharedPool
 			'ES_AUTOHSCROLL' -> 16r80.
 			'ES_AUTOVSCROLL' -> 16r40.
 			'ES_CENTER' -> 16r1.
+			'ES_EX_ALLOWEOL_ALL' -> 16r3.
+			'ES_EX_ALLOWEOL_CR' -> 16r1.
+			'ES_EX_ALLOWEOL_LF' -> 16r2.
+			'ES_EX_CONVERT_EOL_ON_PASTE' -> 16r4.
+			'ES_EX_ZOOMABLE' -> 16r10.
 			'ES_LEFT' -> 16r0.
 			'ES_LOWERCASE' -> 16r10.
 			'ES_MULTILINE' -> 16r4.

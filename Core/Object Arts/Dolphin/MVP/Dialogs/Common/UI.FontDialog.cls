@@ -27,13 +27,13 @@ basicShowModal
 
 	^ComDlg32 chooseFont: self winStruct asParameter!
 
-extractResult: result 
+extractResult: result
 	"Private - Extract and apply the result from the parameter structure 
 	passed to the Win32 API associated with this common dialog, immediately 
 	after the call to that API."
 
 	result ifFalse: [^self].
-	self value: (Font fromLogFont: self winStruct logFont).
+	self value: (Font fromLogFont: self winStruct logFont dpi: SystemMetrics current dpi).
 	self apply!
 
 initialize

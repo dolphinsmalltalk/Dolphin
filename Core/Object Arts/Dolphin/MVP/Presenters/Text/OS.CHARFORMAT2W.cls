@@ -209,7 +209,7 @@ faceName: aString
 	self szFaceName: aString asUtf16String!
 
 font
-	^Graphics.Font fromLogFont: self logFont!
+	^Graphics.Font fromLogFont: self logFont dpi: SystemMetrics current dpi!
 
 font: aFont 
 	"Set the character font."
