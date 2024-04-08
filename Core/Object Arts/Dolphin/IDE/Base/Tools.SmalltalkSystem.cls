@@ -1700,6 +1700,22 @@ dolphinWikiUrl
 dolphinWikiWeb
 	self openUrl: self dolphinWikiUrl!
 
+dpiAwareness
+	"Answer the DPI awareness mode for the development environment."
+
+	^OS.UserLibrary dpiAwareness!
+
+dpiAwareness: aSymbol
+	"Set the DPI awareness mode to be applied in the development environment. The mode can be one of:
+		#unaware	- Dolphin will be unaware of the monitor DPI settings and will operate at a virtual 96-dpi. Windows will scale everything, resulting in some blurriness of text and images
+		#gdiScaled	- As above, but GDI is able to scale some drawing, such as fonts, without using bitmaps scaling, so there is much less blurriness. There are, however, some compatibility issues with this mode as described in the commentary for issue #308.
+		#system		- Dolphin will be aware of the primary monitor DPI and will internally scale to this. Windows will scale any windows opened on or moved to secondary monitors at different DPIs. If the primary monitor DPI is changed, Dolphin will be unaware of the change and Windows will scale everything (i.e. no rescaling until restart).
+		#perMonitor	- Dolphin will be fully aware of the DPI settings of all monitors and will rescale internally when windows are opened on or moved to monitors at different DPIs. If the DPI settings are changed, Dolphin will respond immediately. Note that this corresponds to the Per Monitor V2 setting described in the Windows documentation."
+
+	"N.B. Windows does not support changing the DPI awareness of an entire running process, so this cannot take effect until restart."
+
+	OS.UserLibrary dpiAwareness: aSymbol!
+
 dropClassFile: aString
 	| defaultPackage |
 	defaultPackage := self packageManager defaultPackage.
@@ -4464,6 +4480,8 @@ dolphinNewsgroupUrl!public! !
 dolphinSmalltalkUrl!constants!private! !
 dolphinWikiUrl!public! !
 dolphinWikiWeb!commands-actions!public! !
+dpiAwareness!accessing!high DPI!public! !
+dpiAwareness:!accessing!public! !
 dropClassFile:!operations!private! !
 dropFile:!operations!private! !
 dropPackageFile:!operations!private! !
@@ -4810,6 +4828,7 @@ publishedAspectsOfInstances
 					choice: #displayItLocale
 					from: [{Locale smalltalk. Locale userDefault. Locale invariant}]
 					type: Locale);
+		add: (Aspect choice: #dpiAwareness from: #(#unaware #system #perMonitor #gdiScaled));
 		yourself!
 
 publishedEventsOfInstances
