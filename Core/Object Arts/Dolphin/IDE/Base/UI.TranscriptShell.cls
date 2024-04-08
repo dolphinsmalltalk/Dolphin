@@ -279,6 +279,9 @@ space
 
 	self nextPutAll: ' '!
 
+stackTrace: anInteger
+	Processor activeProcess topFrame printStackOn: self depth: anInteger!
+
 stbSaveOn: anSTxOutFiler
 	"Output the singleton receiver to anSTxOutFiler."
 
@@ -345,6 +348,7 @@ show!operations!public! !
 show:!printing!public! !
 smalltalkFilesType!constants!private! !
 space!adding!public! !
+stackTrace:!binary filing!public! !
 stbSaveOn:!binary filing!public! !
 tab!accessing!public! !
 tab:!accessing!public! !
