@@ -300,6 +300,9 @@ space
 
 	self nextPutAll: ' '!
 
+stackTrace: anInteger
+	Processor activeProcess topFrame printStackOn: self depth: anInteger!
+
 stbSaveOn: anSTBOutFiler
 	"Output the singleton receiver to anSTBOutFiler."
 
@@ -365,6 +368,7 @@ show!operations!public! !
 show:!printing!public! !
 smalltalkFilesType!constants!private! !
 space!adding!public! !
+stackTrace:!binary filing!public! !
 stbSaveOn:!binary filing!public! !
 tab!accessing!public! !
 tab:!accessing!public! !
