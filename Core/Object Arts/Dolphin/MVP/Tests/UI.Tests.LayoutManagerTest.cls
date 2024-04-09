@@ -26,7 +26,7 @@ setUp
 		create;
 		caption: self class name asPhrase;
 		backcolor: Color face3d;
-		dipExtent: 300 @ 200;
+		designExtent: 300 @ 200;
 		layoutManager: self layoutManagerClass new;
 		show!
 

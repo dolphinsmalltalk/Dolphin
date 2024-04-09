@@ -238,7 +238,7 @@ print: anObject
 rememberThisSize
 	"Record the size of the receiver as the default extent for its tool class."
 
-	self class defaultExtent: self view dipExtent!
+	self class defaultExtent: self view designExtent!
 
 reset
 	"Set the receiver's position reference to the beginning of the collection"
@@ -280,6 +280,8 @@ space
 	self nextPutAll: ' '!
 
 stackTrace: anInteger
+	"Dump frames of the current active process up to the specified depth, onto the receiver."
+
 	Processor activeProcess topFrame printStackOn: self depth: anInteger!
 
 stbSaveOn: anSTxOutFiler
@@ -374,10 +376,10 @@ create
 current
 	"Answer the singleton instance of the receiver"
 
-	Transcript = DeafObject current 
+	Transcript = DeafObject current
 		ifTrue: 
 			[Transcript := super create.
-			self defaultExtent ifNotNil: [:ext | Transcript view dipExtent: ext]].
+			self defaultExtent ifNotNil: [:ext | Transcript view designExtent: ext]].
 	^Transcript!
 
 default

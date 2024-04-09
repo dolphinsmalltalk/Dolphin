@@ -31,17 +31,17 @@ Version 6b
 © 2005 Ian Bartholomew
 http://www.idb.me.uk'!
 
-about: aString 
+about: aString
 	"Display the about view"
 
 	| edit |
-	(Shell create view)
+	Shell create view
 		layoutManager: BorderLayout new;
 		hasMaximize: false;
 		hasMinimize: false;
 		isResizable: false;
 		position: self view position + self view cursorPosition;
-		dipExtent: 200 @ 180;
+		designExtent: 200 @ 180;
 		caption: 'About';
 		addSubView: (edit := MultilineTextEdit new);
 		show.
