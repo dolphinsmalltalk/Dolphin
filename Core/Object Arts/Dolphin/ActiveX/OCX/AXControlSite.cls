@@ -978,28 +978,30 @@ example2
 	"
 
 	| shell host mscal |
-	shell := ShellView new 
-			layoutManager: BorderLayout new;
-			create; 
-			dipExtent: 300@300;
-			yourself.
+	shell := ShellView new
+				layoutManager: BorderLayout new;
+				create;
+				designExtent: 300 @ 300;
+				yourself.
 	host := self new
-			progId: '{8E27C92B-1264-101C-8A2F-040224009C02}';	"You can use the CLSID or a prog id"
-			parentView: shell;
-			arrangement: #center;
-			create; show;
-			yourself.
+				progId: '{8E27C92B-1264-101C-8A2F-040224009C02}';
+				parentView: shell;
+				arrangement: #center;
+				create;
+				show;
+				yourself.	"You can use the CLSID or a prog id"
 	shell show.
-	
-	"Simple demo of inbound events from the control"
-	host presenter when: #Click send: #bell to: Sound.
 
+	"Simple demo of inbound events from the control"
+	host presenter
+		when: #Click
+		send: #bell
+		to: Sound.
 	mscal := host controlDispatch.
 
 	"You can try setting some of the properties in the inspector and watch the effect on the control"
 	mscal inspect.
-	shell beActive
-!
+	shell beActive!
 
 example3
 	"Host the standard MS FlexGrid OCX in a visible window and drive it a little via IDispatch
@@ -1009,17 +1011,18 @@ example3
 	"
 
 	| shell host grid classes coords dispid |
-	shell := ShellView new 
-			layoutManager: BorderLayout new;
-			create; 
-			dipExtent: 400@300;
-			yourself.
+	shell := ShellView new
+				layoutManager: BorderLayout new;
+				create;
+				designExtent: 400 @ 300;
+				yourself.
 	host := self new
-			progId: 'MSFlexGridLib.MSFlexGrid';
-			parentView: shell;
-			arrangement: #center;
-			create; show;
-			yourself.
+				progId: 'MSFlexGridLib.MSFlexGrid';
+				parentView: shell;
+				arrangement: #center;
+				create;
+				show;
+				yourself.
 	shell show.
 	grid := host controlDispatch.
 
@@ -1028,36 +1031,59 @@ example3
 	worth generating the interface if you intend to make more than a few calls."
 	classes := Object subclasses asSortedCollection.
 	grid setProperty: 'redraw' value: false.
-	grid setProperty: 'FontName' value: 'Times New Roman'; setProperty: 'FontSize' value: 14.
+	grid
+		setProperty: 'FontName' value: 'Times New Roman';
+		setProperty: 'FontSize' value: 14.
 	grid setProperty: 'rows' value: classes size + 1.
 	grid setProperty: 'cols' value: 3.
 	dispid := grid idOfName: 'TextMatrix'.
 	"Note that it is much faster to use TextMatrix as changing the Row or Column not only involves
 	 more propputs, but also causes a large number of events to be sent back. This is especially
 	 important in the loop."
-	grid setPropertyId: dispid withArguments: #(0 0) value: 'Class'.
-	grid setProperty: 'ColWidth' item: 0 value: 3500.
-
-	grid setPropertyId: dispid withArguments: #(0 1) value: 'Methods'.
-	grid setPropertyId: dispid withArguments: #(0 2) value: 'Class Methods'.
+	grid
+		setPropertyId: dispid
+		withArguments: #(0 0)
+		value: 'Class'.
+	grid
+		setProperty: 'ColWidth'
+		item: 0
+		value: 3500.
+	grid
+		setPropertyId: dispid
+		withArguments: #(0 1)
+		value: 'Methods'.
+	grid
+		setPropertyId: dispid
+		withArguments: #(0 2)
+		value: 'Class Methods'.
 
 	"Allow columns and rows to be resized by the user"
 	grid setProperty: 'allowUserResizing' value: 3.
 	coords := Array new: 2.
-	1 to: classes size do: [:i | | class |
-		coords at: 1 put: i; at: 2 put: 0.
-		class := classes at: i.
-		grid setPropertyId: dispid withArguments: coords value: class name.
-		"Display the number of methods on the instance side..."
-		coords at: 2 put: 1.
-		grid setPropertyId: dispid
-			withArguments: coords 
-			value: class methodDictionary size.
-		"...And the class side."
-		coords at: 2 put: 2.
-		grid setPropertyId: dispid
-			withArguments: coords 
-			value: class class methodDictionary size].
+	1 to: classes size
+		do: 
+			[:i |
+			| class |
+			coords
+				at: 1 put: i;
+				at: 2 put: 0.
+			class := classes at: i.
+			grid
+				setPropertyId: dispid
+				withArguments: coords
+				value: class name.
+			"Display the number of methods on the instance side..."
+			coords at: 2 put: 1.
+			grid
+				setPropertyId: dispid
+				withArguments: coords
+				value: class methodDictionary size.
+			"...And the class side."
+			coords at: 2 put: 2.
+			grid
+				setPropertyId: dispid
+				withArguments: coords
+				value: class class methodDictionary size].
 	grid setProperty: 'redraw' value: true.
 	"Pop up the about box - special dispid"
 	host aboutControl!

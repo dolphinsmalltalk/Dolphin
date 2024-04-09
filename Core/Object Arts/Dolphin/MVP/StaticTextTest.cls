@@ -60,7 +60,7 @@ testCalculateExtentSimple
 
 	| actualText firstLine canvas shell expected actual |
 	shell := presenter parentView.
-	shell extent: 500 @ 100.
+	shell designExtent: 500 @ 100.
 	shell layoutManager: FlowLayout new.
 	presenter alignment: #simple.
 	actualText := (String with: Character tab)
@@ -72,7 +72,7 @@ lines'.
 	presenter text: actualText.
 	"If debugging through it can be useful to see the size the control actually wants to be"
 	presenter usePreferredExtent: true.
-	presenter extent: 20 @ 10.
+	presenter designExtent: 20 @ 10.
 	canvas := presenter canvas.
 	canvas font: presenter actualFont.
 	expected := presenter calcExtentFromClientExtent: (canvas textExtent: firstLine).
