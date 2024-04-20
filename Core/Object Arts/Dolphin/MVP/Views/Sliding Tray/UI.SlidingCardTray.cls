@@ -286,6 +286,8 @@ queryTogglePin: aCommandQuery
 				isChecked: slider isPinned]!
 
 resolutionScaledBy: aPoint
+	"Private - The receiver is being loaded and it has been determined that the pixel resolution has changed since the point at which the view was saved. Scale any internal pixels by the <Point> argument. "
+
 	super resolutionScaledBy: aPoint.
 	pinSize := nil!
 
