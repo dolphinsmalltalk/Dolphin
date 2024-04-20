@@ -20,6 +20,7 @@ package methodNames
 	add: #DolphinSureCertificate -> #backgroundImageFile;
 	add: #DolphinSureCertificate -> #gap;
 	add: #DolphinSureCertificate -> #image;
+	add: #DolphinSureCertificate -> #imageAtDpi:;
 	add: #DolphinSureCertificate -> #imageAttributes;
 	add: #DolphinSureCertificate -> #imagePrint:in:label:in:on:brush:;
 	add: #DolphinSureCertificate -> #show;
@@ -75,24 +76,28 @@ gap
 	^' '!
 
 image
-	"Answers an image displaying the certificate details"
+	"Answers an image displaying the certificate details scaled for the system DPI"
 
-	"First validate the certificate"
+	^self imageAtDpi: SystemMetrics current dpi!
 
-	| background image extent labelBox textBox graphics blackBrush dpi |
+imageAtDpi: anInteger
+	| extent labelBox image textBox background graphics blackBrush |
 	self validData.
 	background := GdiplusImage fromFile: self backgroundImageFile
 				usingLocator: FileLocator installRelative.
 	extent := background extent.
 	labelBox := RECTF origin: 35 @ 55 corner: 110 @ (extent y - 20).
 	textBox := RECTF origin: 120 @ 55 corner: extent - 20.
-	dpi := SystemMetrics current dpi.
-	extent := extent * dpi / 96.0.
-	labelBox scaleToDpi: dpi from: 96.
-	textBox scaleToDpi: dpi from: 96.
+	extent := extent * anInteger / 96.0.
+	labelBox scaleToDpi: anInteger from: 96.
+	textBox scaleToDpi: anInteger from: 96.
 	image := GdiplusBitmap width: extent x height: extent y.
+	"Set the resolution so that we can specify font sizes using points and have them auto-scaled."
+	image resolution: anInteger @ anInteger.
 	graphics := image graphics.
-	image graphics
+	graphics
+		interpolationMode: GdiplusConstants.InterpolationModeHighQualityBicubic;
+		textRenderingHint: GdiplusConstants.TextRenderingHintClearTypeGridFit;
 		drawImage: background
 		at: Point zero
 		extent: extent.
@@ -136,12 +141,11 @@ imagePrint: textString in: textRect label: labelString in: labelRect on: aGdiplu
 	the attribute data while the value is a selector to use to get the attribute data itself. Once
 	the attribute has been printed on the canvas then labelRect and textRect are updated to the next location."
 
-	| value font height fontHeight |
-	value := textString.
-	fontHeight := 8 * SystemMetrics current dpi / 72.0.
+	| font height fontName |
+	fontName := 'Arial'.
 	font := GdiplusFont
-				name: 'Arial'
-				pixelSize: fontHeight
+				name: fontName
+				pointSize: 8
 				style: GdiplusConstants.FontStyleBold.
 	height := (aGdiplusGraphics
 				measureString: labelString
@@ -155,16 +159,16 @@ imagePrint: textString in: textRect label: labelString in: labelRect on: aGdiplu
 		format: nil
 		brush: aGdiplusBrush.
 	font free.
-	font := GdiplusFont name: 'Arial' pixelSize: fontHeight.
+	font := GdiplusFont name: fontName pointSize: 8.
 	aGdiplusGraphics
-		drawString: value
+		drawString: textString
 		font: font
 		rect: textRect
 		format: nil
 		brush: aGdiplusBrush.
 	height := height
 				max: (aGdiplusGraphics
-						measureString: value
+						measureString: textString
 						font: font
 						rect: textRect
 						format: nil) height.
@@ -181,6 +185,7 @@ show
 backgroundImageFile!constants!private! !
 gap!drawing!helpers!private! !
 image!drawing!public! !
+imageAtDpi:!drawing!public! !
 imageAttributes!drawing!helpers!private! !
 imagePrint:in:label:in:on:brush:!drawing!helpers!private! !
 show!operations!public! !
