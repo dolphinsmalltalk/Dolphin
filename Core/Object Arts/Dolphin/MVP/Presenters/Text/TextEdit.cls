@@ -87,10 +87,10 @@ basicSelectionRange
 	means that the range should NEVER be empty."
 
 	| dwStart dwEnd |
-	dwStart := DWORD new.
-	dwEnd := DWORD new.
+	dwStart := DWORDBytes new.
+	dwEnd := DWORDBytes new.
 	self sendMessage: EM_GETSEL wParam: dwStart yourAddress lpParam: dwEnd.
-	^dwStart asInteger to: dwEnd asInteger!
+	^dwStart value to: dwEnd value!
 
 basicSelectionStart: start end: end
 	"Private - Sets the selected range of text to the range defined by start and end 
@@ -100,22 +100,19 @@ basicSelectionStart: start end: end
 
 	self sendMessage: EM_SETSEL wParam: start lParam: end!
 
-calcRectangleFromClientRectangle: aRectangle 
-	"Private - Given a client rectangle represented by the <Rectangle> argument, answer the
-	window rectangle that would be required to achieve this taking into account the current
-	window styles etc Note that the answered rectangle is in the COORDINATE SYSTEM OF THE
-	CLIENT.
+calcRectangleFromClientRectangle: aRectangle atDpi: anInteger
+	"Private - Given a client rectangle represented by the <Rectangle> argument, answer the window rectangle that would be required to achieve this at the specified dpi, taking into account the current window styles etc Note that the answered rectangle is in the COORDINATE SYSTEM OF THE CLIENT."
 
-	Implementation Note: We must override here because of EDIT controls implicit border."
+	"Implementation Note: We must override here because of EDIT controls implicit border."
 
 	| rect |
 	rect := RECT fromRectangle: aRectangle.
-	UserLibrary default 
+	UserLibrary default
 		adjustWindowRectExForDpi: rect
 		dwStyle: (self baseStyle bitOr: WS_BORDER)
 		bMenu: false
 		dwExStyle: self extendedStyle
-		dpi: self dpi.
+		dpi: anInteger.
 	^rect asRectangle!
 
 calculateExtent: aLayoutContext
@@ -813,7 +810,7 @@ passwordCharacter: aCharacter
 	"Set the <Character> displayed for every password typed when the receiver 
 	has the password style."
 
-	self sendMessage: EM_SETPASSWORDCHAR wParam: aCharacter asInteger!
+	self sendMessage: EM_SETPASSWORDCHAR wParam: aCharacter codePoint!
 
 pasteClipboard
 	"Paste the clipboard text into the receiver's window."
@@ -1081,7 +1078,7 @@ state
 
 	| state attrib |
 	state := super state.
-	"Edit control ignores the text passed as the window title for the CreateWindowEx call, so we don't store the text in the WindowCreationState"
+	"Edit control ignores the text passed as the window title for the CreateWindowEx call, so we don't store the text in the CreateWindow function object"
 	(attrib := self text) notEmpty
 		ifTrue: 
 			[state add: (MessageSend
@@ -1308,7 +1305,7 @@ basicPositionAtLine:!accessing!private! !
 basicSelectAll!private!selection! !
 basicSelectionRange!accessing!private! !
 basicSelectionStart:end:!accessing!private! !
-calcRectangleFromClientRectangle:!geometry!private! !
+calcRectangleFromClientRectangle:atDpi:!private! !
 calculateExtent:!geometry!private! !
 canHScroll!accessing-styles!public! !
 canHScroll:!accessing-styles!public! !

@@ -23,7 +23,6 @@ package methodNames
 	add: #ComboBox -> #droppedWidth:;
 	add: #ComboBox -> #hasCueBanner;
 	add: #Date -> #shortString;
-	add: #GDILibrary -> #getClipRgn:hrgn:;
 	add: #Icon -> #asSmallIcon;
 	add: #Icon -> #withExtent:;
 	add: #KeyEvent -> #resendTo:;
@@ -205,24 +204,6 @@ shortString
 
 !Date categoriesForMethods!
 shortString!printing!public! !
-!
-
-!GDILibrary methodsFor!
-
-getClipRgn: hdc hrgn: hRegion
-	"The SelectClipRgn function selects a region as the current clipping region
-	for the specified device context. 
-
-	int GetClipRgn(
-		HDC hdc		// handle of device context 
-		HRGN hrgn		// handle of region   
-	);"
-
-	<stdcall: sdword GetClipRgn handle handle>
-	^self invalidCall: _failureCode! !
-
-!GDILibrary categoriesForMethods!
-getClipRgn:hrgn:!public!win32 functions-clipping! !
 !
 
 !Icon methodsFor!
@@ -454,6 +435,7 @@ getThemeTransitionDuration: htheme iPartId: iPartId iStateIdFrom: iStateIdFrom i
 
 	<stdcall: hresult GetThemeTransitionDuration handle sdword sdword sdword sdword sdword*>
 	^self invalidCall: _failureCode! !
+
 !ThemeLibrary categoriesForMethods!
 endBufferedAnimation:fUpdateTarget:!public! !
 getThemeTransitionDuration:iPartId:iStateIdFrom:iStateIdTo:iPropId:pdwDuration:!public! !

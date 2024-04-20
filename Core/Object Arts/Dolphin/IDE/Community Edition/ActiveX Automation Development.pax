@@ -287,7 +287,6 @@ package methodNames
 	add: #DECIMAL -> #printOn:;
 	add: #ELEMDESC -> #idlAttributes;
 	add: #ExternalLibrary -> #DllRegisterServer;
-	add: #ExternalPoint -> #printOn:;
 	add: #FUNCDESC -> #buildMethodName;
 	add: #FUNCDESC -> #displayOn:;
 	add: #FUNCDESC -> #generate;
@@ -4833,19 +4832,6 @@ DllRegisterServer
 
 !ExternalLibrary categoriesForMethods!
 DllRegisterServer!operations!private! !
-!
-
-!ExternalPoint methodsFor!
-
-printOn: aStream
-	"Append a short textual description of the receiver to aStream."
-
-	aStream
-		basicPrint: self;
-		nextPut: $(; print: self asPoint; nextPut: $)! !
-
-!ExternalPoint categoriesForMethods!
-printOn:!printing!public! !
 !
 
 !ExternalStructure class methodsFor!

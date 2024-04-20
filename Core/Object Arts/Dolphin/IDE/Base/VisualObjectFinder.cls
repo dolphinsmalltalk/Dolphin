@@ -73,11 +73,7 @@ displayOn: aStream
 	aStream nextPutAll: 'Visual Object Finder'!
 
 endTrackingAt: aPoint
-	| foundObject |
-
-	foundObject := self visualObjectAt: aPoint.
-	self value: foundObject.
-!
+	self value: (self visualObjectAt: aPoint)!
 
 findObject
 	"Start a mouse tracker to find objects beneath the mouse cursor"
@@ -129,18 +125,18 @@ viewFromPoint: aPoint
 	| under child clientPoint desktop lastDolphin |
 	clientPoint := aPoint.
 	under := desktop := View desktop.
+	#highDpiToDo.	"ChildWindowFromPointEx does not appear to work correctly with mixed DPI"
 	
-	[child := UserLibrary default 
+	[child := UserLibrary default
 				childWindowFromPointEx: under asParameter
 				pt: clientPoint asParameter
-				uFlags: CWP_SKIPINVISIBLE "| CWP_SKIPTRANSPARENT".
-	child isNil or: [child = under asParameter]] 
+				uFlags: CWP_SKIPINVISIBLE.	"| CWP_SKIPTRANSPARENT"
+	child isNil or: [child = under asParameter]]
 			whileFalse: 
 				[clientPoint := desktop mapPoint: aPoint to: child.
 				under := View fromHandle: child.
-				(SessionManager inputState isDolphinWindow: under asParameter) 
-					ifTrue: [lastDolphin := under]].
-	^(under isDolphinWindow or: [self class findNonDolphinWindows]) 
+				(SessionManager inputState isDolphinWindow: child) ifTrue: [lastDolphin := under]].
+	^(under isDolphinWindow or: [self class findNonDolphinWindows])
 		ifTrue: [under]
 		ifFalse: [lastDolphin]!
 

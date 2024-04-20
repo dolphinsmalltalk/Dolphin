@@ -64,13 +64,6 @@ debuggable: aBoolean
 
 	debuggable := aBoolean!
 
-defaultExtent
-	"Private - Answer the default size of the receiver in device-independent pixels (96-dpi DIPs). This is used only to determine the size of a view when it is created (although after scaling DIPs to the monitor DPI). Thereafter #preferredExtent is used when the desired size of a view is requested."
-	
-	"As the receiver is created from a dialog template, this is actually ignored and the dialog will be scaled by Windows from the template definition."
-
-	^252@126!
-
 errorCreateWindowFailed
 	Notification signal: 'Failed to open walkback dialog'!
 
@@ -131,6 +124,20 @@ runModalLoop
 	[self show] postToMessageQueue.
 	super runModalLoop!
 
+setInitialPosition: aRectangle
+	"Private - Set the initial position and extent of the dialog window immediately after creation."
+
+	"In this case the dialog is loaded from a template, so we let the dialog manager worry about the correct extent."
+
+	UserLibrary default
+		setWindowPos: handle
+		hWndInsertAfter: nil
+		x: aRectangle left
+		y: aRectangle top
+		cx: 0
+		cy: 0
+		uFlags: ##(SWP_NOACTIVATE | SWP_NOZORDER | SWP_NOSENDCHANGING | SWP_NOSIZE)!
+
 setInitialPosition: originPoint extent: extentPoint
 	"Private - Set the initial position and extent of the dialog window immediately after creation."
 
@@ -188,12 +195,12 @@ callStack:!accessing!public! !
 caption:!accessing!public! !
 copyWalkbackToClipboard!commands!public! !
 debuggable:!accessing!public! !
-defaultExtent!constants!private! !
 errorCreateWindowFailed!operations!private! !
 onInitDialog!event handling!private! !
 primHookWindowCreate:!helpers!private! !
 resumable:!accessing!public! !
 runModalLoop!operations!private! !
+setInitialPosition:!private!realizing/unrealizing! !
 setInitialPosition:extent:!private!realizing/unrealizing! !
 templateId!constants!private! !
 wmCommand:wParam:lParam:!event handling-win32!public! !

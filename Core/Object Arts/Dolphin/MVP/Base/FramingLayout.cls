@@ -106,10 +106,8 @@ resize: aView to: aRectangle
 				layoutContext: context.
 			context setView: aView rectangle: aRectangle]!
 
-resolutionScaledBy: aPoint 
-	"Private - The receiver is being loaded and it has been determined that the pixel resolution
-	has changed since the point at which the view was saved. Scale any internal pixels by <Point>
-	scale."
+resolutionScaledBy: aPoint
+	"Private - The receiver is being loaded and it has been determined that the pixel resolution has changed since the point at which the view was saved. Scale any internal pixels by the <Point> argument."
 
 	framings do: [:each | each resolutionScaledBy: aPoint]! !
 

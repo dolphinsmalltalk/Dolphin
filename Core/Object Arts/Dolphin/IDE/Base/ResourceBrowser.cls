@@ -144,11 +144,18 @@ initialize
 	self reuseIfOpen: true.
 	self canUseIdeaSpace: true!
 
+previewDpiAwareness
+	^ResourceListPresenter previewDpiAwareness!
+
+previewDpiAwareness: aSymbol
+	ResourceListPresenter previewDpiAwareness: aSymbol!
+
 publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by the receiver."
 
 	^super publishedAspects
 		add: (Aspect boolean: #canUseIdeaSpace);
+		add: (Aspect choice: #previewDpiAwareness from: #(#gdiScaled #system #unaware));
 		yourself!
 
 resource_Default_view
@@ -182,6 +189,8 @@ toolsFolderHelpId
 displayOn:!displaying!public! !
 icon!constants!public! !
 initialize!initializing!private! !
+previewDpiAwareness!accessing!public! !
+previewDpiAwareness:!accessing!public! !
 publishedAspects!public! !
 resource_Default_view!public!resources-views! !
 showAsToolboxFor:at:!instance creation!public! !

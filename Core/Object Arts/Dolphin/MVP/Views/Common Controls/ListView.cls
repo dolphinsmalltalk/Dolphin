@@ -1939,13 +1939,10 @@ resetSelection
 				onSelChanged]!
 
 resolutionScaledBy: aPoint
-	"Private - The receiver is being loaded and it has been determined that the pixel resolution
-	has changed since the point at which the view was saved. Scale any internal pixels by <Point>
-	scale. Note that the placement (position and extent) of the receiver has already been scaled
-	in #restorePlacement:resolution:."
+	"Private - The receiver is being loaded and it has been determined that the pixel resolution has changed since the point at which the view was saved. Scale any internal pixels by the <Point> argument."
 
 	self allColumns do: [:each | each resolutionScaledBy: aPoint].
-	iconSpacing ifNotNil: [self iconSpacing: iconSpacing * aPoint]!
+	iconSpacing ifNotNil: [self iconSpacing: (iconSpacing * aPoint) truncated]!
 
 selectAll
 	| size |

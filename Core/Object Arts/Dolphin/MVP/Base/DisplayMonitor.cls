@@ -193,7 +193,7 @@ scalePercentage
 	"Answer the scale factor for this monitor. This is the percentage scaling, so for example 125 indicates 1.25x scalling or 120-dpi."
 
 	| factor |
-	#highDpiTodo.	"What does this return for custom scale factors?"
+	#highDpiToDo.	"What does this return for custom scale factors?"
 	factor := ByteArray newFixed: 4.
 	SHCoreLibrary default getScaleFactorForMonitor: handle pScale: factor.
 	^factor sdwordAtOffset: 0!

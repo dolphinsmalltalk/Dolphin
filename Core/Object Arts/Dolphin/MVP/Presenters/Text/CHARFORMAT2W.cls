@@ -297,7 +297,7 @@ logFont
 	| answer |
 	answer := LOGFONTW new.
 	answer faceName: self szFaceName.
-	#highDpiToDo. "Need to use the DPI of the associated view"
+	#highDpiToDo. "Need to use the DPI of the associated view for per-monitor awareness"
 	answer lfHeight: (self pointSize * Canvas desktopResolution y / 72) rounded negated.
 	answer lfWeight: (self isBold ifTrue: [FW_BOLD] ifFalse: [FW_NORMAL]).
 	answer lfItalic: self isItalic asParameter.

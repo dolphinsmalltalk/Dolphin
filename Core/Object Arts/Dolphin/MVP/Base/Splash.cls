@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ShellView subclass: #Splash
-	instanceVariableNames: 'splashDelay bitmap overlayWith'
+AbstractSplash subclass: #Splash
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
@@ -25,60 +25,30 @@ Instance Variables:
 
 !Splash methodsFor!
 
-bitmap: aBitmap
-	"Private - Set the bitmap to display in the receiver"
-
-	bitmap := aBitmap.
-	self isOpen ifTrue: [self dipExtent: self defaultExtent]!
-
-close
-	"Closes the receiver by cancelling the Delay the splash is waiting on"
-
-	splashDelay signal!
-
-defaultExtent
-	"Private - Answer the default size of the receiver in device-independent pixels (96-dpi DIPs). This is used only to determine the size of a view when it is created (although after scaling DIPs to the monitor DPI). Thereafter #preferredExtent is used when the desired size of a view is requested."
-
-	(bitmap isNil or: [bitmap handle isNull]) ifTrue: [^200@200].
-	^bitmap extent + (self frameWidths * 2)!
+creationFunction
+	| extent |
+	extent := (bitmap isNil or: [bitmap handle isNull])
+				ifTrue: 
+					[extent := 200 @ 200.
+					dpi := USER_DEFAULT_SCREEN_DPI]
+				ifFalse: 
+					[dpi := bitmap resolution y.
+					extent := bitmap extent + (self frameWidths * 2 * dpi // USER_DEFAULT_SCREEN_DPI)].
+	^CreateWindow
+		rectangle:  (self defaultPosition extent: extent)
+		dpi: dpi
+		styles: creationStyle!
 
 defaultSplashDelay
 	"Answer the default delay that a splash should be displayed for"
 
 	^Delay forMilliseconds: 4000!
 
-defaultWindowExStyle
-	"Private - Answer the default extended window creation style.
-	We use the WS_EX_TOOLWINDOW style to prevent splashes from appearing in the
-	desktop tray."
-
-	^super defaultWindowExStyle bitOr: WS_EX_TOOLWINDOW
-!
-
 defaultWindowStyle
 	"Private - Answer the default basic window creation style"
 
 	^##(WS_POPUP | WS_DLGFRAME)
 !
-
-forceClose
-	"Private - Handler for image save. Insist that the splash is forcefully closed before any image save."
-
-	splashDelay terminateProcess.
-	self destroy!
-
-initialize
-	"Private - Initialize the receiver. Create centered by default."
-
-	super initialize.
-	self isInitiallyCentered: true.
-!
-
-onLeftButtonPressed: aMouseEvent
-	"Splash shells go away when clicked"
-
-	self close.
-	^0!
 
 onPaintRequired: aPaintEvent
 	"Handler for paint event. Show the bitmap and paint any overlay on top of it."
@@ -91,94 +61,12 @@ onPaintRequired: aPaintEvent
 				drawOn: canvas
 				at: Point zero
 				extent: self extent].
-	self overlayWith ifNotNil: [:overlay | overlay value: canvas]!
-
-overlayWith
-	"Answer the <monadicValuable> that can be used to paint an overlay over the 
-	basic splash bitmap. A canvas is passed as the single parameter."
-	
-	^overlayWith!
-
-overlayWith: aMonadicValuable
-	"Sets the <monadicValuable> that can be used to paint an overlay over the 
-	basic splash bitmap. A canvas is passed as the single parameter."
-	
-	overlayWith := aMonadicValuable!
-
-show
-	"Shows the receiver for an indefinite time"
-
-	self showTimed: Semaphore new	!
-
-showTimed
-	"Shows the receiver and forks a process that will close it after the default delay"
-
-	^self showTimed: self defaultSplashDelay	!
-
-showTimed: aDelay 
-	"Shows the receiver and forks a process that will close it after aDelay"
-
-	(SessionManager current)
-		when: #imageSaveStarting
-			send: #forceClose
-			to: self;
-		when: #quitSessionRequested
-			send: #forceClose
-			to: self.
-	splashDelay := aDelay.
-	self showWindow.
-	
-	[splashDelay wait.
-	super close] fork.
-	^true!
-
-showWindow
-	"Private - Display the view."
-
-	super show.
-	self beTopMost; update! !
+	self overlayWith ifNotNil: [:overlay | overlay value: canvas]! !
 
 !Splash categoriesForMethods!
-bitmap:!accessing!initializing!private! !
-close!operations!public! !
-defaultExtent!constants!private! !
+creationFunction!geometry!private!realizing/unrealizing! !
 defaultSplashDelay!constants!public! !
-defaultWindowExStyle!constants!private! !
 defaultWindowStyle!constants!private! !
-forceClose!event handling!private! !
-initialize!initializing!private! !
-onLeftButtonPressed:!event handling!public! !
 onPaintRequired:!event handling!public! !
-overlayWith!accessing!public! !
-overlayWith:!accessing!public! !
-show!operations!public! !
-showTimed!operations!public! !
-showTimed:!operations!public! !
-showWindow!operations!private! !
-!
-
-!Splash class methodsFor!
-
-bitmap: aBitmap
-	"Creates an instance of the receiver that will display aBitmap"
- 
-	^self bitmap: aBitmap overlayWith: nil
-
-	!
-
-bitmap: aBitmap overlayWith: aBlock
-	"Creates an instance of the receiver that will display aBitmap and then
-	overlay this with some further painting specified in aBlock."
-
-	^super new
-		bitmap: aBitmap;
-		overlayWith: aBlock;
-		create;
-		yourself
-	! !
-
-!Splash class categoriesForMethods!
-bitmap:!instance creation!public! !
-bitmap:overlayWith:!instance creation!public! !
 !
 

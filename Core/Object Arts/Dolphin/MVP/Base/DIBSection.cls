@@ -79,17 +79,17 @@ createHandle
 		biHeight: extent y negated;
 		biPlanes: 1;
 		biBitCount: depth;
-		biCompression: BI_RGB.	"Top down pixel order"
+		biCompression: BI_RGB.
+	"It would be nice if we could set the bitmap resolution, and we can into biX/YPelsPerMeter, but there is no point as it does not appear to persist."
 
 	"Slot for pointer to the bitmap bits"
 	imageBits := ExternalAddress new.
 
 	"Create the bitmap but differently for RGB and paletized usage"
-	depth > 8 
+	depth > 8
 		ifTrue: 
 			["RGB usage"
-
-			dibSection := GDILibrary default 
+			dibSection := GDILibrary default
 						createDIBSection: 0
 						pbmi: info
 						iUsage: DIB_RGB_COLORS
@@ -97,18 +97,17 @@ createHandle
 						hSection: 0
 						dwOffset: 0]
 		ifFalse: 
-			["Paletized usage"
-
-			| palBitmap canvas bits |
+			[| palBitmap canvas bits |
+			"Paletized usage"
 			bits := DWORD new.
-			palBitmap := Bitmap 
+			palBitmap := Bitmap
 						width: 1
 						height: 1
 						planes: 1
 						bitsPerPixel: depth
 						bits: bits.
 			canvas := palBitmap canvas.
-			dibSection := GDILibrary default 
+			dibSection := GDILibrary default
 						createDIBSection: canvas asParameter
 						pbmi: info
 						iUsage: DIB_PAL_COLORS
@@ -128,7 +127,7 @@ erase
 	"Private - Erase area occupied by the DIB."
 
 	self canvas 
-		fillRectangle: (Rectangle origin: Point zero extent: self extent) 
+		fillRectangle: (RECT extent: self extent) 
 		brush: Brush white!
 
 errorInappropriateColorTable: aRGBQUADArray
@@ -168,6 +167,19 @@ imageBits
 
 	imageBits isNil ifTrue: [self cacheInfo].
 	^imageBits!
+
+resolution
+	"Answer an <Point> specifying the horizontal and vertical DPI of the receiver."
+
+	| info bmih resX |
+	info := self getDIBSECTION.
+	bmih := info dsBmih.
+	resX := bmih biXPelsPerMeter.
+	resX == 0
+		ifTrue: 
+			["Unspecified, assume 96"
+			^super resolution].
+	^resX @ bmih biYPelsPerMeter!
 
 setColorTable: anRGBQUADArray 
 	"Sets the colour table for the receiver to be that in anRGBQUADArray.
@@ -211,6 +223,7 @@ errorInappropriateColorTable:!exceptions!public! !
 getColorTable!accessing!public! !
 getDIBSECTION!accessing!public! !
 imageBits!accessing!public! !
+resolution!accessing!public! !
 setColorTable:!accessing!public! !
 width:height:depth:!initializing!private! !
 !

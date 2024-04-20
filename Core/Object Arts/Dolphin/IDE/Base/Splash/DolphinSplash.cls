@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Splash subclass: #DolphinSplash
+AbstractSplash subclass: #DolphinSplash
 	instanceVariableNames: 'objectsInside'
 	classVariableNames: ''
 	poolDictionaries: ''

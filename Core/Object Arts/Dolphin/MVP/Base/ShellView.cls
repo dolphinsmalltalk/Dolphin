@@ -63,7 +63,7 @@ activateLastPopup
 							true]]]!
 
 actualFont
-	#highDpiToDo. "Not sure we need to do this. Consumer of font should scale before use?"
+	#highDpiToDo. "Not sure we need #atDpi:. Consumer of font should scale before use?"
 	^font ifNil: [self parentView actualFont atDpi: self dpi]!
 
 addCommandHistory: aCommand
@@ -107,13 +107,14 @@ caption: aString
 	self text: aString.
 	self trigger: #captionChanged!
 
-centerNear: aPoint
+centerNear: aPoint atDpi: anInteger
 	"Private - Centre the receiver's client area over the specified screen co-ordinate as nearly as possible without causing the receiver to be off-screen or overlap monitors. If it is not possible to achieve this, perhaps because the receiver is too large for the display, favour keeping the receiver's top-left corner visible."
 
 	| extent |
-	extent := self clientExtent.
-	self positionNear: (self calcRectangleFromClientRectangle: (aPoint - (extent // 2) extent: extent))
-				origin!
+	extent := self clientExtent * anInteger // self dpi.
+	self
+		positionNear: (self calcRectangleFromClientRectangle: (aPoint - (extent // 2) extent: extent)
+				atDpi: anInteger) origin!
 
 close
 	"Asks the receiver to close itself, answering whether it is closed."
@@ -159,21 +160,12 @@ commandSource
 	source isNil ifTrue: [source := self].
 	^source!
 
-createWindow: aWindowCreationParameters
+createWindow: aCreateWindow
 	"Private - Create the View window ensuring it has the VM window procedure. Answer the receiver."
 
 	"For shells we delegate to the parent (usually, but not always, the desktop), as it may want to adjust placement, styles, etc. We also have to clear any cached DPI as if being recreated, e.g. on restoring a saved image, the DPI may have changed."
 
-	creationParent createShellWindow: self withParameters: aWindowCreationParameters!
-
-creationParameters
-	"Private - Answer the extrinsic parameters for a CreateWindow call to create a window for a new instance of the receiver that hasn't been opened before."
-
-	^WindowCreationParameters
-		position: WindowCreationParameters.UseDefaultGeometry
-		extent: self defaultExtent
-		dpi: USER_DEFAULT_SCREEN_DPI
-		styles: creationStyle!
+	creationParent createShellWindow: self withFunction: aCreateWindow!
 
 defaultButtonId
 	"Private - Answer the id of the default PushButton for the receiver or nil
@@ -194,7 +186,12 @@ defaultButtonId: anInteger
 defaultExtent
 	"Private - Answer the default size of the receiver in device-independent pixels (aka DIPs, i.e. 96-dpi). This is used only to determine the size of a view when it is first created (although after scaling DIPs to the monitor DPI). Thereafter preferredExtent is used when the desired size of a view is requested."
 
-	^WindowCreationParameters.UseDefaultGeometry!
+	^CreateWindow.UseDefaultGeometry!
+
+defaultPosition
+	"Private - Answer the default position for the receiver in device-independent pixels (aka DIPs, i.e. 96-dpi). Normally this is unspecified, so we want to open the new window at the next cascade position for the monitor."
+
+	^CreateWindow.UseDefaultGeometry!
 
 defaultShowStyle
 	^self isMaximized ifTrue: [SW_SHOWMAXIMIZED] ifFalse: [SW_SHOWNORMAL]!
@@ -791,19 +788,17 @@ parentView: aView
 		put: (self baseStyle mask: WS_CHILD set: (aView isNil or: [aView isDesktop]) not)!
 
 performCommand: aCommand
-	"Perform the <Command> argument, assumed to have been initiated from the receiver
-	or one of its sub-views, and answer the result. Can be overridden by subclasses that wish, 
-	for example, to add some generic undo/redo ability for all commands.
-	Note that as of Dolphin 5 the shell can be disabled for the duration of the command
-	if the <Command> is marked as modal, which can be done statically by setting
-	the #isModalCommand flag on the <CommandDescription>, or dynamically
+	"Perform the <Command> argument, assumed to have been initiated from the receiver or one of its sub-views, and answer the result. Can be overridden by subclasses that wish, for example, to add some generic undo/redo ability for all commands."
+
+	"Note that the shell can be disabled for the duration of the command if the <Command> is marked as modal, which can be done statically by setting the #isModalCommand flag on the <CommandDescription>, or dynamically
 	by setting the flag on the <CommandQuery>."
 
-	^aCommand isModalCommand 
+	^aCommand isModalCommand
 		ifTrue: 
 			[self disable.
-			[aCommand value] ensure: [self enable]]
-		ifFalse: [aCommand value]!
+			"In cases of mixed-mode DPI awareness the command may be initiated from a view that has a different DPI awareness to the receiver. To avoid propagating specialised DPI awareness modes from individual views, we must perform the command in our own DPI awareness context."
+			[self inDpiAwarenessContextDo: [aCommand value]] ensure: [self enable]]
+		ifFalse: [self inDpiAwarenessContextDo: [aCommand value]]!
 
 positionNear: aPoint
 	"Attempt to position the receiver at the origin, aPoint, in screen co-ordinates, but ensuring that the receiver's window will be entirely visible if possible, or if not so that at least the top-left corner is visible."
@@ -869,17 +864,14 @@ resolutionScaledBy: aPoint
 	"Private - The receiver is being loaded and it has been determined that the pixel resolution has changed since the point at which the view was saved. Scale any internal pixels by the <Point> argument. "
 
 	super resolutionScaledBy: aPoint.
-	minExtent ifNotNil: [minExtent := minExtent * aPoint].
-	maxExtent ifNotNil: [maxExtent := maxExtent * aPoint]!
+	minExtent ifNotNil: [minExtent := (minExtent * aPoint) truncated].
+	maxExtent ifNotNil: [maxExtent := (maxExtent * aPoint) truncated]!
 
-restorePlacement: aWINDOWPLACEMENT resolution: aPoint
+restore: anInteger resolution: aPoint
 	"Private - Restore the placement for the receiver to aWINDOWPLACEMENT which was measured at a screen resolution of aPointResolution. If the current resolution is different then the placement rectangle will have to be scaled appropriately. Note that this is only used when restoring from an STBViewProxy (i.e. reconstituting a view from binary-filed form), such as when creating a view instance from a view resource."
 
-	creationParent
-		adjustPlacement: aWINDOWPLACEMENT
-		ofShell: self
-		withResolution: aPoint.
-	self placement: aWINDOWPLACEMENT!
+	creationParent adjustPlacementOfShell: self forResolution: aPoint.
+	anInteger ifNotNil: [self basicShowWithStyle: anInteger]!
 
 setButtonId: id style: style 
 	"Private - Set the style of the child of the receiver with <integer> identifier, id, to the 
@@ -1258,17 +1250,17 @@ buildCombinedAcceleratorTable!private!realizing/unrealizing! !
 buttonRemoved:!default button!private! !
 caption!accessing!public! !
 caption:!accessing!public! !
-centerNear:!helpers!private! !
+centerNear:atDpi:!private! !
 close!public!realizing/unrealizing! !
 combinedAcceleratorTable!accelerator!accessing!private! !
 commandPolicyClass!commands!constants!public! !
 commandPolicyWithSource:!commands!public! !
 commandSource!accessing!public! !
 createWindow:!private!realizing/unrealizing! !
-creationParameters!geometry!private!realizing/unrealizing! !
 defaultButtonId!accessing!default button!private! !
 defaultButtonId:!accessing!default button!private! !
 defaultExtent!constants!private! !
+defaultPosition!geometry!private!realizing/unrealizing! !
 defaultShowStyle!constants!private! !
 defaultWindowStyle!constants!private! !
 dialogMessageMap!private! !
@@ -1357,7 +1349,7 @@ releaseAccelerators!private!realizing/unrealizing! !
 releaseMenu!private!realizing/unrealizing! !
 resetDefaultButton!accessing!default button!private! !
 resolutionScaledBy:!geometry!private! !
-restorePlacement:resolution:!geometry!private!realizing/unrealizing! !
+restore:resolution:!geometry!private!realizing/unrealizing! !
 setButtonId:style:!accessing!default button!private! !
 setDefaultButton:state:!accessing!default button!private! !
 setDefId:!default button!private! !

@@ -221,7 +221,7 @@ fileOutResource:!public!source filing-file out! !
 assignBinaryResourceData: aViewResource
 	| view desktopClass |
 	desktopClass := self class environment at: #DesignDesktopView.
-	view := aViewResource loadWithContext: desktopClass forSystemDpi forEdit: true.
+	view := aViewResource loadWithContext: desktopClass systemDpi forEdit: true.
 	self assign: view literalStoreArray.
 	view destroy! !
 

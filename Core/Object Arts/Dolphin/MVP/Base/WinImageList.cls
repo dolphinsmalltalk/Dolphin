@@ -206,16 +206,15 @@ extent
 	"Answer a <Point>, the x any y coordinates of which specify the width and height (respectively)
 	of the bitmaps held by the receiver."
 
-	^extent 
+	^extent
 		ifNil: 
-			[| cx cy |
-			cx := SDWORD new.
-			cy := SDWORD new.
-			CommCtrlLibrary default 
+			[| buf |
+			buf := ByteArray newFixed: 8.
+			CommCtrlLibrary default
 				imageList_GetIconSize: self handle
-				cx: cx
-				cy: cy.
-			extent := cx asInteger @ cy asInteger]!
+				cx: buf
+				cy: buf yourAddress + 4.
+			extent := (buf sdwordAtOffset: 0) @ (buf sdwordAtOffset: 4)]!
 
 getIcon: anIntegerIndex style: anIntegerStyle 
 	"Answer an instance of Icon generated from the image at anIntegerIndex."

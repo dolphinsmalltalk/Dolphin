@@ -1,15 +1,14 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 STBProxy subclass: #STBViewProxy
-	instanceVariableNames: 'viewClass instVars state placement subViews resolution events version'
-	classVariableNames: 'CreationParentIndex CreationStyleIndex EventsIndex HandleIndex'
+	instanceVariableNames: 'viewClass instVars state showCmd subViews resolution events version'
+	classVariableNames: 'CreationParentIndex EventsIndex HandleIndex'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 
 STBViewProxy guid: (GUID fromString: '{87b4c6f4-026e-11d3-9fd7-00a0cc3e4a32}')!
 
 STBViewProxy addClassConstant: 'CreationParentIndex' value: 16r2!
-STBViewProxy addClassConstant: 'CreationStyleIndex' value: 16r3!
 STBViewProxy addClassConstant: 'EventsIndex' value: 16rB!
 STBViewProxy addClassConstant: 'HandleIndex' value: 16r1!
 
@@ -73,9 +72,6 @@ parentView: aView
 	really an unimplemented message."
 
 	^self error: 'Not yet realized'!
-
-placement
-	^placement!
 
 printOn: aStream
 	"Append a debugging description of the receiver to aStream."
@@ -152,7 +148,7 @@ setView: aView
 	state := aView state.
 	aView isOpen
 		ifTrue: 
-			[placement := aView placement.
+			[showCmd := aView placement showCmd.
 			subViews := aView subViews asArray.
 			instVars at: HandleIndex put: nil].
 
@@ -161,6 +157,9 @@ setView: aView
 
 	"Set the resolution at which the view is being saved."
 	resolution := aView resolution!
+
+showCmd
+	^showCmd!
 
 state
 	^state!
@@ -223,7 +222,6 @@ instVars:!accessing!public! !
 isTopView!accessing!private! !
 nameOf:!accessing!public! !
 parentView:!accessing!private! !
-placement!accessing!public! !
 printOn:!development!printing!public! !
 resolution!accessing!private! !
 resolution:!accessing!private! !
@@ -232,6 +230,7 @@ restoreTopView!converting!private! !
 restoreView!converting!private! !
 setEvents:!events!private! !
 setView:!accessing!public! !
+showCmd!accessing!public! !
 state!accessing!public! !
 stbFixup:at:!converting!public! !
 subViews!accessing!public! !
@@ -263,32 +262,39 @@ initialize
 	self
 		addClassConstant: 'HandleIndex' value: (allInstVarNames indexOf: 'handle');
 		addClassConstant: 'CreationParentIndex' value: (allInstVarNames indexOf: 'creationParent');
-		addClassConstant: 'CreationStyleIndex' value: (allInstVarNames indexOf: 'creationStyle');
 		addClassConstant: 'EventsIndex' value: (allInstVarNames indexOf: 'events')!
 
 stbConvertFrom: anSTBClassFormat
 	"Convert from earlier version view proxies.
-	Note that as of Dolphin 4.0 upgrading of old View resources is handled by the View
-	classes themselves. In future this method should only be modified for genuine
-	upgrades to STBViewProxy, not for upgrades to individual view classes."
+	Note that from Dolphin 4.0 (circa 2000), version 10, responsibility for upgrading of old View resources was transferred to the View classes themselves. This method should only be modified for genuine upgrades to STBViewProxy, not for upgrades to individual view classes. Conversion of the proxy inst var arrays is now handled by View class>>#stbConvert:from:"
 
-	^[:data | | ver viewProxy |
-		ver := anSTBClassFormat version.
-
-		"Finally, generate a new viewProxy and fill with data"
-		viewProxy := self basicNew.
-		1 to: data size do: [:i | viewProxy instVarAt: i put: (data at: i)].
-
-		"Perform the version 6 to 7 conversion last as this affects only the proxy itself."
-		ver < 7 ifTrue: [viewProxy resolution: 96@96].
-
-		"As of version 10 we no longer attempt to maintain a single STB version for all view classes
-		 (i.e. that of the proxy), because this is difficult for a user to maintain and will clash with base
-		 system changes. In the case of older versions we assign over the common (proxy) version, and 
-		 code to upgrade from these versions is implemented in View class>>stbConvert:from:)."
-		ver < 10 ifTrue: [viewProxy version: ver].
-
-		viewProxy]!
+	| ver |
+	ver := anSTBClassFormat version.
+	ver < 7
+		ifTrue: 
+			[^
+			[:data |
+			(data resize: 8)
+				at: 4 put: ((data at: 4) ifNotNil: [:placement | placement showCmd]);
+				at: 6 put: ##(USER_DEFAULT_SCREEN_DPI @ USER_DEFAULT_SCREEN_DPI);
+				at: 8 put: ver;
+				becomeA: STBViewProxy]].
+	ver < 10
+		ifTrue: 
+			[^
+			[:data |
+			(data resize: 8)
+				at: 4 put: ((data at: 4) ifNotNil: [:placement | placement showCmd]);
+				at: 8 put: ver;
+				becomeA: STBViewProxy]].
+	ver < 11
+		ifTrue: 
+			[^
+			[:data |
+			data
+				at: 4 put: ((data at: 4) ifNotNil: [:placement | placement showCmd]);
+				becomeA: STBViewProxy]].
+	^super stbConvertFrom: anSTBClassFormat!
 
 stbVersion
 	"Answer the current binary filer version number for instances of the receiver.
@@ -302,12 +308,13 @@ stbVersion
 	7: 	Add resolution instance variable
 	8: 	Add events and unused instance variable to View, and events inst. var. to proxy.
 	9: 	ShellView defaultButton <PushButton> changed to defaultButtonId <integer>.
-	10: 	version instance variable added to record STB version of specific view class."
+	10: 	version instance variable added to record STB version of specific view class.
+	11.	Full WINDOWPLACEMENT replaced by just the showCmd."
 
 	"STBViewProxy should no longer need to be changed to upgrade view classes,
 	 so if you are changing this number, THINK AGAIN."
 
-	^10! !
+	^11! !
 
 !STBViewProxy class categoriesForMethods!
 forView:!instance creation!public! !

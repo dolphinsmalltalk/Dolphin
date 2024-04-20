@@ -28,9 +28,7 @@ getTextExtent: actualText
 testCalculateExtent
 	"Test that checkboxes are able to resize to fit their text (and button). We really don't need to verify this precisely as we aren't testing the control's behaviour, rather that it does size to fit."
 
-	| actualText shell subject textWidth |
-	"Use a non-proportional font to make calculating the expected result predictable"
-
+	| actualText shell subject textWidth buttonAndPadding |
 	"The check button should mean that the actual extent is always larger than the text extent, even given minor variations in the calculated text size"
 	subject := self view.
 	subject usePreferredExtent: true.
@@ -41,10 +39,12 @@ testCalculateExtent
 	actualText := '	The quick brown 狐狸 jumped over the lazy Лиса'.
 	subject text: actualText.
 	textWidth := (self getTextExtent: actualText) x.
-	self assert: (subject extent x between: textWidth and: textWidth + 25).
+	"To keep the test simple, we use a guess at the size of the checkbox plus padding that ought to be large enough. We don't care about precise accuracy."
+	buttonAndPadding := 20 * subject dpi // 96.
+	self assert: (subject extent x between: textWidth and: textWidth + buttonAndPadding).
 	subject text: 'abc'.
 	textWidth := (self getTextExtent: 'abc') x.
-	self assert: (subject extent x between: textWidth and: textWidth + 25)! !
+	self assert: (subject extent x between: textWidth and: textWidth + buttonAndPadding)! !
 
 !CheckButtonTest categoriesForMethods!
 getTextExtent:!helpers!private! !

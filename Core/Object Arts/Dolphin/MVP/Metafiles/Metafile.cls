@@ -167,6 +167,11 @@ printRecordsOn: aPuttableStream
 		extent: self extent.
 	bmp free!
 
+resolution
+	"Answer an <Point> specifying the horizontal and vertical DPI of the receiver."
+
+	^self header szlDevice asPoint!
+
 saveAsFile: pathString 
 	"Save this Metafile to a file at the specified path, any existing file at that path is
 	overwritten."
@@ -188,6 +193,7 @@ imageType!constants!private!testing! !
 loadFromFile:extent:!private!realizing/unrealizing! !
 play:on:at:extent:!enumerating!public! !
 printRecordsOn:!public! !
+resolution!accessing!public! !
 saveAsFile:!file operations!public! !
 !
 

@@ -2,7 +2,7 @@
 
 Object subclass: #View
 	instanceVariableNames: 'handle creationParent creationStyle presenter model backcolor preferredExtent flags contextMenu font events interactor'
-	classVariableNames: 'CreateCenteredMask DragSourceMask DropTargetMask LayoutValidMask ManagedMask MessageMap MinimizedMask NextId NoInheritMenuMask ProxyRestoringMask RestoringMask StateRestoringMask UIValidMask UsePreferredExtentMask ViewClosedError WndClassAtom'
+	classVariableNames: 'CreateCenteredMask DragSourceMask DropTargetMask LayoutValidMask ManagedMask MessageMap MinimizedMask MixedDpiAwarenessMask NextId NoInheritMenuMask ProxyRestoringMask RestoringMask StateRestoringMask UIValidMask UsePreferredExtentMask ViewClosedError WndClassAtom'
 	poolDictionaries: 'Win32Constants Win32Errors'
 	classInstanceVariableNames: 'theme'!
 
@@ -14,6 +14,7 @@ View addClassConstant: 'DropTargetMask' value: 16r8!
 View addClassConstant: 'LayoutValidMask' value: 16r1!
 View addClassConstant: 'ManagedMask' value: 16r2!
 View addClassConstant: 'MinimizedMask' value: 16r80!
+View addClassConstant: 'MixedDpiAwarenessMask' value: 16r800!
 View addClassConstant: 'NoInheritMenuMask' value: 16r200!
 View addClassConstant: 'ProxyRestoringMask' value: 16r10!
 View addClassConstant: 'RestoringMask' value: 16r30!
@@ -341,24 +342,15 @@ basicAddSubView: aView
 		show.	"Forces creation"
 	^aView!
 
-basicCreateWindowAt: positionPoint extent: extentPoint styles: anArray name: aString
-	"Private - Create the Win32 window for the receiver. Assumes that window creation has been hooked so that the window handle is attached and the window subclassed, if required, before the CreateWindowEx call returns."
+basicCreateWindow: aCreateWindow
+	"Private - Create and attach/subclass the actual Window for this View."
 
-	| dwStyle |
-	dwStyle := anArray at: 1.
-	UserLibrary default
-		createWindowEx: (anArray at: 2)
-		lpClassName: self class winClassName asUtf16String
-		lpWindowName: aString
-		dwStyle: dwStyle
-		x: positionPoint x truncated
-		y: positionPoint y truncated
-		nWidth: extentPoint x truncated
-		nHeight: extentPoint y truncated
-		hWndParent: creationParent asParameter
-		hMenu: ((dwStyle anyMask: WS_CHILD) ifTrue: [self defaultId])
-		hInstance: VMLibrary default applicationHandle
-		lpParam: nil!
+	self onAboutToCreate.
+	self primHookWindowCreate: true.
+	handle := aCreateWindow create: self.
+	self primHookWindowCreate: false.
+	handle isNull ifTrue: [^self errorCreateWindowFailed].
+	self presenter onViewCreated!
 
 basicDestroy
 	"Private - As #destroy, but must not be overridden."
@@ -419,13 +411,12 @@ basicPaint: message wParam: wParam lParam: lParam
 				canv free].
 	^0	"We've handled it"!
 
-basicRestorePlacement: aWINDOWPLACEMENT scalingBy: aMagnitude
+basicRestore: anInteger scalingBy: aMagnitude
 	aMagnitude = 1
 		ifFalse: 
-			[aWINDOWPLACEMENT scaleBy: aMagnitude.
-			"Make any other adjustments required for a change of resolution"
+			["Make any adjustments required for a change of resolution"
 			self resolutionScaledBy: aMagnitude].
-	self placement: aWINDOWPLACEMENT!
+	anInteger ifNotNil: [self basicShowWithStyle: anInteger]!
 
 basicShowWithStyle: anInteger
 	^UserLibrary default showWindow: handle nCmdShow: anInteger!
@@ -511,7 +502,7 @@ bmSetStyle: message wParam: wParam lParam: lParam
 
 	^nil!
 
-calcClientRectangleFromRectangle: aRectangle 
+calcClientRectangleFromRectangle: aRectangle
 	"Private - Given a window rectangle represented by the <Rectangle> argument, answer the
 	client area that this would provide, taking into account the current window styles etc. This
 	method is fed by the calculation from #calcRectangleFromClientRectangle: and should not
@@ -519,7 +510,7 @@ calcClientRectangleFromRectangle: aRectangle
 
 	| inflated |
 	inflated := self calcRectangleFromClientRectangle: aRectangle.
-	^0 @ 0 extent: aRectangle extent * ##(2@2) - inflated extent!
+	^0 @ 0 extent: aRectangle extent * ##(2 @ 2) - inflated extent!
 
 calcExtentFromClientExtent: aPoint
 	"Private - Given a client extent represented by the <Point> argument, answer the external
@@ -529,13 +520,16 @@ calcExtentFromClientExtent: aPoint
 	^(self calcRectangleFromClientRectangle: (RECT extent: aPoint)) extent!
 
 calcRectangleFromClientRectangle: aRectangle
-	"Private - Given a client rectangle represented by the <Rectangle> argument, answer the
-	window rectangle that would be required to achieve this taking into account the current
-	window styles etc Note that the answered rectangle is in the COORDINATE SYSTEM OF THE
-	CLIENT.
+	"Private - Given a client rectangle represented by the <Rectangle> argument, answer the window rectangle that would be required to achieve this at the receiver's current DPI taking into account the current window styles, etc. Note that the answered rectangle is in the COORDINATE SYSTEM OF THE CLIENT."
 
-	This method should be overridden by subclasses that wish to supply an NC rectangle different
-	from the default."
+	"#calcRectangleFromClientRectangle:atDpi: should be overridden by subclasses that wish to supply an NC rectangle different from the default."
+
+	^self calcRectangleFromClientRectangle: aRectangle atDpi: self dpi!
+
+calcRectangleFromClientRectangle: aRectangle atDpi: anInteger
+	"Private - Given a client rectangle represented by the <Rectangle> argument, answer the window rectangle that would be required to achieve this at the specified DPI, taking into account the current window styles, etc Note that the answered rectangle is in the COORDINATE SYSTEM OF THE CLIENT."
+
+	"This method should be overridden by subclasses that wish to supply an NC rectangle different from the default."
 
 	| rect |
 	rect := RECT marshal: aRectangle.
@@ -544,7 +538,7 @@ calcRectangleFromClientRectangle: aRectangle
 		dwStyle: self baseStyle
 		bMenu: self hasMenu
 		dwExStyle: self extendedStyle
-		dpi: self dpi.
+		dpi: anInteger.
 	^rect asRectangle!
 
 calculateExtent
@@ -579,6 +573,12 @@ centerExtent: aPoint
 
 	^(self extent - aPoint) // 2!
 
+childLayoutInvalidated
+	"Private - The layout of a child has changed. By default we invalidat our own layout, and pass up the parent chain to that the whole hierarchy has the opportunity to adjust its layout to reflect the change, e.g. to grow or shrink."
+
+	self basicInvalidateLayout.
+	self parentView childLayoutInvalidated!
+
 clearHandle
 	self handle: nil!
 
@@ -588,7 +588,7 @@ clearStateRestoring
 clientExtent
 	"Answer a <Point> representing the extent of the receiver's client area."
 
-	^self clientRectangle extent!
+	^self getClientRect extent!
 
 clientHeight
 	"Answer the height of the receiver's client area."
@@ -598,10 +598,7 @@ clientHeight
 clientRectangle
 	"Answer a Rectangle containing the bounding rectangle of the receiver's client area."
 
-	| rect |
-	rect := RECT new.
-	UserLibrary default getClientRect: handle lpRect: rect.
-	^rect asRectangle!
+	^self getClientRect asRectangle!
 
 clientWidth
 	"Answer the width of the receiver's client area."
@@ -690,51 +687,35 @@ create
 		default size."
 
 	creationParent isNil ifTrue: [self parentView: self class desktop].
-	^self createWindow: self creationParameters!
+	^self createWindow: self creationFunction!
 
 createAt: originPoint extent: extentPoint
 	"Private - Create the View window ensuring it has the VM window procedure. The window rectangle is specified by the origin <point> first argument, and the extent <point> second argument. For reasons of backwards compatibility, and because the default extent may well be expressed in code, it is assumed that the position and size arguments are measured in device-independent pixels (aka DIPs, i.e. 96-dpi). Answer the receiver."
 
-	self createWindow: (WindowCreationParameters
-				position: originPoint
-				extent: extentPoint
-				dpi: USER_DEFAULT_SCREEN_DPI
-				styles: creationStyle)!
+	self
+		createWindow: (self creationFunction: (originPoint extent: extentPoint) dpi: USER_DEFAULT_SCREEN_DPI)!
 
-createWindow: aWindowCreationParameters
+createWindow: aCreateWindow
 	"Private - Create the View window ensuring it has the VM window procedure.
 	Answer the receiver."
 
-	| scale |
-	scale := creationParent dpi / aWindowCreationParameters dpi.
-	self
-		createWindowAt: aWindowCreationParameters position * scale
-		extent: aWindowCreationParameters extent * scale
-		styles: aWindowCreationParameters styles
-		name: aWindowCreationParameters title!
+	aCreateWindow scaleToDpi: creationParent dpi.
+	self basicCreateWindow: aCreateWindow!
 
-createWindowAt: positionPoint extent: extentPoint styles: anArray name: aString
-	"Private - Create and attach/subclass the actual Window for this View."
+creationFunction
+	"Private - Answer a function object that encapsulates a CreateWindow API call to create a window for a new instance of the receiver that hasn't been opened before, with default position and extent."
 
-	self onAboutToCreate.
-	self primHookWindowCreate: true.
-	self
-		basicCreateWindowAt: positionPoint
-		extent: extentPoint
-		styles: anArray
-		name: aString.
-	self primHookWindowCreate: false.
-	handle isNull ifTrue: [^self errorCreateWindowFailed].
-	self presenter onViewCreated!
+	^self creationFunction: (self defaultPosition extent: self defaultExtent)
+		dpi: USER_DEFAULT_SCREEN_DPI!
 
-creationParameters
-	"Private - Answer the extrinsic parameters for a CreateWindow call to create a window for a new instance of the receiver that hasn't been opened before."
+creationFunction: aRectangle dpi: anInteger
+	"Private - Answer a function object that encapsulates a CreateWindow API call to create or recreate a window for the receiver, with the specified position and extent, measured at the specified DPI."
 
-	^WindowCreationParameters
-		position: Point.Zero
-		extent: self defaultExtent
-		dpi: USER_DEFAULT_SCREEN_DPI
-		styles: creationStyle!
+	^CreateWindow
+		rectangle: aRectangle
+		dpi: anInteger
+		styles: creationStyle
+		title: self windowTitle!
 
 creationParentView
 	"Private - Answer the View where the receiver must be created"
@@ -874,6 +855,9 @@ defaultId
 
 	^self class defaultId!
 
+defaultPosition
+	^Point.Zero!
+
 defaultProportion
 	"Private - Answer the default proportion to be assumed by the receiver when associated with
 	a container with a <ProportionalLayout>."
@@ -921,6 +905,11 @@ defaultWindowStyle
 
 	^WS_CLIPSIBLINGS!
 
+defaultWindowTitle
+	"Private - Answer the title to be passed to CreateWindow when creating the native window associated with the receiver. This would form the caption text for a top-level window."
+
+	^nil!
+
 deferLayout: aMonadicValuable 
 	"Private - Evaluate the <monadicValuable> argument, passing it a <LayoutContext> for performing window
 	layout operations. On completion, apply any changes recorded in the layout context."
@@ -929,27 +918,27 @@ deferLayout: aMonadicValuable
 	context := LayoutContext forContainer: self.
 	^[aMonadicValuable value: context] ensure: [context apply]!
 
+designExtent
+	"Answer the dimensions of the receiver's outer (non-client) window as measured in device-indepent pixels (DIPs are 96-dpi)."
+
+	^self extent * USER_DEFAULT_SCREEN_DPI // self dpi!
+
+designExtent: aPoint
+	"Set the dimensions of the receiver's outer window to the equivalent of the device-indepent pixel (DIPs are 96-dpi) extent, aPoint, at the receiver's current resolution."
+
+	self extent: (aPoint * self scaleFactor) truncated!
+
+designRectangle: aRectangle
+	"Set the dimensions of the receiver's outer window to the equivalent of the device-indepent pixel (DIPs are 96-dpi) extent, aPoint, at the receiver's current resolution."
+
+	self rectangle: (aRectangle scaledBy: self scaleFactor)!
+
 destroy
 	"Force the receiver closed. N.B. The receiver will receive WM_DESTROY
 	and WM_NCDESTROY messages, but not a WM_CLOSE (Default window processing
 	for WM_CLOSE is to call DestroyWindow)."
 
 	^self basicDestroy!
-
-dipExtent
-	"Answer the dimensions of the receiver's outer (non-client) window as measured in device-indepent pixels (DIPs are 96-dpi)."
-
-	^self extent * USER_DEFAULT_SCREEN_DPI / self dpi!
-
-dipExtent: aPoint
-	"Set the dimensions of the receiver's outer window to the equivalent of the device-indepent pixel (DIPs are 96-dpi) extent, aPoint, at the receiver's current resolution."
-
-	self extent: aPoint * self scaleFactor!
-
-dipRectangle: aRectangle
-	"Set the dimensions of the receiver's outer window to the equivalent of the device-indepent pixel (DIPs are 96-dpi) extent, aPoint, at the receiver's current resolution."
-
-	self rectangle: (aRectangle scaledBy: self scaleFactor)!
 
 disable
 	"Disable the receiver from receiving input events."
@@ -1081,6 +1070,21 @@ dpi
 	"Answer the logical dots-per-inch for this Window."
 
 	^UserLibrary default getDpiForWindow: handle!
+
+dpiAwareness
+	"Answer the symbolic name of the DPI awareness mode for this View."
+
+	^UserLibrary default getWindowDpiAwareness: handle!
+
+dpiAwareness: aSymbol
+	"Set the DPI awareness mode for this View, recreating if necessary. Note that in order for a non-top-level view to have a DPI awareness different from its parent, the parent must have mixed-mode hosting enabled. Mixed DPI awareness in a window hierarchy can sometimes be useful, but has many consequences that can be difficult to manage, so is not something to undertake lightly."
+
+	| context user32 |
+	context := UserLibrary dpiAwarenessContextFromName: aSymbol.
+	user32 := UserLibrary default.
+	(user32 areDpiAwarenessContextsEqual: context
+		dpiContextB: (user32 getWindowDpiAwarenessContext: handle))
+			ifFalse: [user32 inDpiAwarenessContext: context do: [self recreateAround: [:state | state dpiAwarenessContext: context ]]]!
 
 dragCut: session
 	"The <DragDropSession>, session, has just completed a successful move operation.
@@ -1449,6 +1453,12 @@ freeTheme
 		- caches theme metrics or colours that would be wrong if the Windows theme is changed by the user."
 !
 
+getClientRect
+	| rect |
+	rect := RECT newBuffer.
+	UserLibrary default getClientRect: handle lpRect: rect.
+	^rect!
+
 getDC
 	"Answer a device context to enable drawing on the receiver."
 
@@ -1763,6 +1773,9 @@ id: anInteger
 
 	^self setWindowLong: GWL_ID to: anInteger!
 
+inDpiAwarenessContextDo: aNiladicValuable
+	^UserLibrary default inWindowDpiAwarenessContext: handle do: aNiladicValuable!
+
 inheritContextMenu
 	"Answer whether the receiver will inherit the parent view's context menu if it has
 	none of its own. This is the default, and is useful when you wish to define a single
@@ -1831,7 +1844,7 @@ invalidateLayout
 	hierarchy needs to be recalculated."
 
 	self basicInvalidateLayout.
-	self allParentsDo: [:each | each basicInvalidateLayout]!
+	self parentView ifNotNil: [:parent | parent childLayoutInvalidated]!
 
 invalidateLayoutDeeply
 	self invalidateLayout.
@@ -1963,6 +1976,11 @@ isGroupStop: aBoolean
 
 	self baseStyleMask: WS_GROUP set: aBoolean recreateIfChanged: false!
 
+isInOwnDpiAwarenessContext
+	"Answer whether the current thread DPI awareness context is the same as that of this Window. If not then any geometry queries may return pixel measurements that are at a different scale that it might normally expect."
+
+	^UserLibrary default isAtWindowDpiAwareness: handle!
+
 isLayoutValid
 	"Answer true if the layout of the receiver is currently valid"
 
@@ -1988,6 +2006,9 @@ isOpen
 	has reused."
 
 	^handle notNil and: [UserLibrary default isWindow: handle]!
+
+isPerMonitorDpiAware
+	^self dpiAwareness == #perMonitor!
 
 isPersistentlyDisabled
 	"Private - Answer whether the receiver is disabled in a way that should be persisted.
@@ -2424,17 +2445,17 @@ onDrawMenuItem: aDRAWITEMSTRUCT
 					^TRUE]].
 	^nil!
 
-onEraseRequired: aColorEvent 
+onEraseRequired: aColorEvent
 	"Handler for erase background event- erase to the background colour,
 	or answer nil if no colour is set to accept the default window processing."
 
 	| bkColor |
-	self hasTransparentBackground 
+	self hasTransparentBackground
 		ifFalse: 
 			[bkColor := self actualBackcolor.
-			bkColor isNone 
+			bkColor isNone
 				ifFalse: 
-					[aColorEvent canvas fillRectangle: self clientRectangle color: bkColor.
+					[aColorEvent canvas fillRectangle: self getClientRect color: bkColor.
 					^true]].
 	^self eraseParentBackground: aColorEvent canvas!
 
@@ -2856,8 +2877,8 @@ position: aPoint
 
 	^self
 		setWindowPosAfter: 0
-		x: aPoint x asInteger
-		y: aPoint y asInteger
+		x: aPoint x
+		y: aPoint y
 		width: 0
 		height: 0
 		flags: ##(SWP_NOSIZE | SWP_NOZORDER | SWP_NOACTIVATE)!
@@ -2964,7 +2985,7 @@ printOn: aStream
 	aStream
 		basicPrint: self;
 		nextPut: $(;
-		display: (handle isNil ifTrue: ['NULL'] ifFalse: [handle asInteger printStringRadix: 16]);
+		display: (handle isNil ifTrue: ['NULL'] ifFalse: [handle]);
 		nextPutAll: ', ';
 		print: self displayString;
 		nextPut: $)!
@@ -3015,22 +3036,21 @@ recreate
 
 	self recreateAround: []!
 
-recreateAround: aNiladicValuable 
-	| prevSibling existingPresenter state savedEvents |
-	self isOpen 
+recreateAround: aNiladicValuable
+	| prevSibling existingPresenter savedEvents state |
+	self isOpen
 		ifFalse: 
-			[aNiladicValuable value.
+			[aNiladicValuable cull: nil.
 			^self].
 	existingPresenter := presenter.
 	presenter := self.
 	"Remember the z order position so it can be restored"
 	prevSibling := self getPreviousSibling.
-	"Destroy and recreate - As we are going to restore the state, we may want to avoid certain
-	actions we'd do in a normal destroy, so inform the ViewState this is a recreate."
-	state := ViewState recordStateOf: self forRecreate: true.
 	savedEvents := self getEvents.
+	"Destroy and recreate - As we are going to restore the state, we may want to avoid certain actions we'd do in a normal destroy, so inform the ViewState this is a recreate."
+	state := ViewState recordStateOf: self forRecreate: true.
 	self basicDestroy.
-	aNiladicValuable value.
+	aNiladicValuable cull: state.
 	state restore.
 	"Restore z-order position"
 	self zOrderAfter: prevSibling.
@@ -3038,17 +3058,10 @@ recreateAround: aNiladicValuable
 	"Finally restore the presenter"
 	presenter := existingPresenter!
 
-recreationParameters
-	"Private - Answer the extrinsic parameters for a CreateWindow call to recreate the receiver's window."
+recreationFunction
+	"Private - Answer a function object that encapsulates a CreateWindow API to recreate the receiver's window."
 
-	| rect |
-	rect := self getRect.
-	^WindowCreationParameters
-		position: rect topLeft
-		extent: rect extent
-		dpi: self dpi
-		styles: creationStyle
-		title: self windowTitle!
+	^self creationFunction: self getRect dpi: self dpi!
 
 rectangle
 	"Answer a Rectangle containing the receiver's outer rectangle in the coordinate system of its parent."
@@ -3063,10 +3076,10 @@ rectangle: aRectangle
 	newRectangle := self adjustRectangle: aRectangle.
 	self
 		setWindowPosAfter: 0
-		x: newRectangle left asInteger
-		y: newRectangle top asInteger
-		width: newRectangle width asInteger
-		height: newRectangle height asInteger
+		x: newRectangle left
+		y: newRectangle top
+		width: newRectangle width
+		height: newRectangle height
 		flags: ##(SWP_NOZORDER | SWP_NOACTIVATE)!
 
 refreshContents
@@ -3105,7 +3118,7 @@ removeSubView: aView
 
 repositionShell: aShellView
 	aShellView isInitiallyCentered
-		ifTrue: [aShellView centerNear: (self mapPointToScreen: self clientRectangle center)]
+		ifTrue: [aShellView centerNear: (self mapPointToScreen: self clientRectangle center) atDpi: self dpi]
 		ifFalse: 
 			["The view may already be positioned over the receiver, but not on the monitor on which the receiver is mostly displayed.
 			We don't want to reposition it in this case, as the shell might be something like an in-place editor and should stay where it is."
@@ -3169,10 +3182,14 @@ resolution
 	^Point x: dpi y: dpi!
 
 resolutionScaledBy: aPoint
-	"Private - The receiver is being loaded and it has been determined that the pixel resolution has changed since the point at which the view was saved. Scale any internal pixels by the <Point> argument.
-	Note that the placement (position and extent) of the receiver has already been scaled in #restorePlacement:resolution:."
+	"Private - The receiver is being loaded and it has been determined that the pixel resolution has changed since the point at which the view was saved. Scale any internal pixels by the <Point> argument.  Note that the placement (position and extent) of the receiver have already been scaled before the window was created."
 
-	preferredExtent ifNotNil: [preferredExtent := preferredExtent * aPoint]!
+	preferredExtent ifNotNil: [preferredExtent := (preferredExtent * aPoint) truncated]!
+
+restore: anInteger resolution: aPoint
+	"Private - Restore the placement for the receiver to the <WINDOWPLACEMENT> first argument, which was measured at the screen resolution described by the <Point> 2nd argument. If the current resolution is different then the placement rectangle will have to be scaled appropriately. The view is also invited to rescale any other geometry it may need to change."
+
+	self basicRestore: anInteger scalingBy: creationParent resolution / aPoint!
 
 restoreFromProxy: aViewProxy
 	"Private - Complete state restoration from proxy form by apply the saved state, and restoring the subviews from their proxies."
@@ -3184,8 +3201,7 @@ restoreFromProxy: aViewProxy
 	flags := flags bitOr: RestoringMask.
 	self state: aViewProxy state.
 	aViewProxy subViews do: [:proxy | proxy restoreView].
-	aViewProxy placement
-		ifNotNil: [:placement | self restorePlacement: placement resolution: aViewProxy resolution].
+	self restore: aViewProxy showCmd resolution: aViewProxy resolution.
 	self resetStateRestoring.
 	self connectModel.
 
@@ -3193,11 +3209,6 @@ restoreFromProxy: aViewProxy
 	yet caused the view to be realized. We do this here by forcing an access to its window handle. #57"
 	self handle.
 	self onRestoredFromProxy!
-
-restorePlacement: aWINDOWPLACEMENT resolution: aPoint
-	"Private - Restore the placement for the receiver to the <WINDOWPLACEMENT> first argument, which was measured at the screen resolution described by the <Point> 2nd argument. If the current resolution is different then the placement rectangle will have to be scaled appropriately. The view is also invited to rescale any other geometry it may need to change."
-
-	self basicRestorePlacement: aWINDOWPLACEMENT scalingBy: creationParent resolution / aPoint!
 
 richText: aRichText
 	"Private - Set the text contents of the receiver to the RTF text, aRichText.
@@ -3308,8 +3319,8 @@ setExtent: aPoint
 		setWindowPosAfter: 0
 		x: 0
 		y: 0
-		width: aPoint x asInteger
-		height: aPoint y asInteger
+		width: aPoint x
+		height: aPoint y
 		flags: ##(SWP_NOMOVE | SWP_NOZORDER | SWP_NOACTIVATE)!
 
 setFocus
@@ -3454,7 +3465,8 @@ showShell
 				create;
 				yourself.
 	self parentView: shell.
-	shell extent: (shell calcExtentFromClientExtent: self defaultExtent * shell scaleFactor).
+	shell
+		extent: (shell calcExtentFromClientExtent: self defaultExtent * shell dpi // USER_DEFAULT_SCREEN_DPI).
 	self configureDefaultShell: shell.
 	self create show.
 	shell show!
@@ -3480,7 +3492,7 @@ state
 			[answer add: (MessageSend
 						receiver: self
 						selector: #createWindow:
-						argument: self recreationParameters).
+						argument: self recreationFunction).
 			self isPersistentlyDisabled
 				ifTrue: 
 					[answer add: (MessageSend
@@ -3684,7 +3696,7 @@ textLength
 	^UserLibrary default getWindowTextLength: handle!
 
 theme
-	#highDpiTodo. "Single class side theme handle may be insufficient for per-monitor high DPI"
+	#highDpiToDo. "Single class side theme handle may be insufficient for per-monitor high DPI"
 	^self class theme!
 
 themeSubAppName
@@ -3867,13 +3879,10 @@ width: anInteger
 	self extent: anInteger @ self height
 !
 
-windowName
-	^''!
-
 windowTitle
-	"Answer the window title that is set/restored through WindowCreationParameters. Generally this is the window text."
+	"Answer the window title that is set/restored through CreateWindow. Generally this is the window text."
 
-	^self plainText!
+	^handle ifNil: [self defaultWindowTitle] ifNotNil: [self getWindowText]!
 
 winFinalize
 	"Private - Perform finalization actions for this view on destruction of the associated Window.
@@ -4036,11 +4045,12 @@ wmDpiChangedAfterParent: message wParam: wParam lParam: lParam
 wmDpiChangedBeforeParent: message wParam: wParam lParam: lParam
 	"Private - Handles a WM_DPICHANGED_BEFOREPARENT message. This is only sent to child windows, bottom-up, before the top-level window receives a WM_DPICHANGED."
 
-	| newDpi scale |
+	| newDpi scale oldDpi |
 	newDpi := self dpi.
-	scale := newDpi @ newDpi / self topView dpi.
+	oldDpi := self topView dpi.
+	scale := newDpi @ newDpi / oldDpi.
 	self resolutionScaledBy: scale.
-	self rectangle: (self getRect scaleBy: scale).
+	self rectangle: (self getRect scaleToDpi: newDpi from: oldDpi).
 	^nil!
 
 wmDrawItem: message wParam: wParam lParam: lParam 
@@ -4699,12 +4709,12 @@ baseStyleMask:set:!accessing-styles!private! !
 baseStyleMask:set:recreateIfChanged:!accessing-styles!private! !
 basicActualBackcolor!accessing!private! !
 basicAddSubView:!hierarchy!private!sub views! !
-basicCreateWindowAt:extent:styles:name:!private!realizing/unrealizing! !
+basicCreateWindow:!private!realizing/unrealizing! !
 basicDestroy!private!realizing/unrealizing! !
 basicFont:!accessing!private! !
 basicInvalidateLayout!geometry!private! !
 basicPaint:wParam:lParam:!drawing!private! !
-basicRestorePlacement:scalingBy:!geometry!private! !
+basicRestore:scalingBy:!geometry!private! !
 basicShowWithStyle:!operations!private! !
 beActive!operations!public! !
 beCentered!operations!public! !
@@ -4719,11 +4729,13 @@ bmSetStyle:wParam:lParam:!event handling-win32!private! !
 calcClientRectangleFromRectangle:!geometry!private! !
 calcExtentFromClientExtent:!geometry!private! !
 calcRectangleFromClientRectangle:!geometry!private! !
+calcRectangleFromClientRectangle:atDpi:!geometry!private! !
 calculateExtent!geometry!private! !
 calculateExtent:!geometry!private! !
 canAcceptSubViews!hierarchy!public!sub views!testing! !
 canvas!drawing!public! !
 centerExtent:!geometry!private! !
+childLayoutInvalidated!geometry!private! !
 clearHandle!private!realizing/unrealizing! !
 clearStateRestoring!helpers!private! !
 clientExtent!geometry!public! !
@@ -4743,8 +4755,8 @@ contextMenu:!menus!public! !
 create!private!realizing/unrealizing! !
 createAt:extent:!private!realizing/unrealizing! !
 createWindow:!private!realizing/unrealizing! !
-createWindowAt:extent:styles:name:!private!realizing/unrealizing! !
-creationParameters!geometry!private!realizing/unrealizing! !
+creationFunction!geometry!private!realizing/unrealizing! !
+creationFunction:dpi:!geometry!private!realizing/unrealizing! !
 creationParentView!accessing!private! !
 cursor!constants!public! !
 cursorPosition!accessing!public! !
@@ -4760,17 +4772,19 @@ ddScroll:!drag & drop!private! !
 defaultBackcolor!colors!constants!private! !
 defaultExtent!constants!geometry!private!realizing/unrealizing! !
 defaultId!accessing!private! !
+defaultPosition!geometry!private!realizing/unrealizing! !
 defaultProportion!constants!private! !
 defaultShowStyle!constants!private! !
 defaultStyle!constants!private! !
 defaultWindowExStyle!constants!private! !
 defaultWindowProcessing:wParam:lParam:!dispatching!private! !
 defaultWindowStyle!constants!private! !
+defaultWindowTitle!colors!constants!private! !
 deferLayout:!constants!private! !
+designExtent!accessing!geometry!public! !
+designExtent:!accessing!geometry!public! !
+designRectangle:!accessing!geometry!public! !
 destroy!public!realizing/unrealizing! !
-dipExtent!accessing!geometry!public! !
-dipExtent:!accessing!geometry!public! !
-dipRectangle:!accessing!geometry!public! !
 disable!operations!public! !
 disableRedraw!drawing!public! !
 disconnectFromModel!operations!private! !
@@ -4782,7 +4796,9 @@ displayMonitor!accessing!public! !
 displayOn:!displaying!public! !
 displayOnFormats!displaying!private! !
 displayOnMaxCharacters!constants!displaying!private! !
-dpi!geometry!public! !
+dpi!geometry!high DPI!public! !
+dpiAwareness!accessing!high DPI!public! !
+dpiAwareness:!accessing!high DPI!public! !
 dragCut:!drag & drop!public! !
 dragDropSessionClass!constants!public! !
 dragEnter:!drag & drop!public! !
@@ -4823,6 +4839,7 @@ forecolorChanged!private!updating! !
 frameChanged!helpers!private! !
 frameWidths!accessing!public! !
 freeTheme!private!theming! !
+getClientRect!geometry!private! !
 getDC!accessing!public! !
 getEvents!events!private! !
 getFileLocator!accessing!private! !
@@ -4870,6 +4887,7 @@ helpId!accessing!public! !
 hide!operations!public! !
 id!accessing!public! !
 id:!accessing!public! !
+inDpiAwarenessContextDo:!high DPI!public! !
 inheritContextMenu!public!testing! !
 inheritContextMenu:!accessing!public! !
 initialize!initializing!private! !
@@ -4899,10 +4917,12 @@ isEnabledDeeply:!accessing!public! !
 isForeground!public!testing! !
 isGroupStop!accessing-styles!public! !
 isGroupStop:!accessing-styles!public! !
+isInOwnDpiAwarenessContext!high DPI!public!testing! !
 isLayoutValid!geometry!public!testing! !
 isManaged!accessing!public! !
 isManaged:!accessing!public! !
 isOpen!public!testing! !
+isPerMonitorDpiAware!high DPI!instance creation!public!testing! !
 isPersistentlyDisabled!private!testing! !
 isPersistentView!public!testing! !
 isPopup!accessing-styles!public!testing! !
@@ -5046,7 +5066,7 @@ queryContextMenu!menus!public! !
 queryMouseTracking!enquiries!private! !
 recreate!public!realizing/unrealizing! !
 recreateAround:!private!realizing/unrealizing! !
-recreationParameters!geometry!private!realizing/unrealizing! !
+recreationFunction!geometry!private!realizing/unrealizing! !
 rectangle!geometry!public! !
 rectangle:!geometry!public! !
 refreshContents!public!updating! !
@@ -5062,8 +5082,8 @@ requestLayoutRectangle:!geometry!public! !
 resetStateRestoring!accessing!private! !
 resolution!accessing!public! !
 resolutionScaledBy:!geometry!private! !
+restore:resolution:!geometry!private! !
 restoreFromProxy:!binary filing!private! !
-restorePlacement:resolution:!geometry!private! !
 richText:!accessing!private! !
 scaleFactor!geometry!public! !
 screenRectangle!geometry!public! !
@@ -5141,7 +5161,6 @@ viewNamed:ifNone:!hierarchy!public!sub views! !
 whileInvisibleDo:!operations!public! !
 width!geometry!public! !
 width:!geometry!public! !
-windowName!private!realizing/unrealizing! !
 windowTitle!accessing!public! !
 winFinalize!finalizing!private! !
 withAllParents!hierarchy!public! !
@@ -5168,7 +5187,7 @@ wmEnterMenuLoop:wParam:lParam:!event handling-win32!private! !
 wmEraseBkGnd:wParam:lParam:!event handling-win32!private! !
 wmExitMenuLoop:wParam:lParam:!event handling-win32!private! !
 wmGetDlgCode:wParam:lParam:!event handling-win32!private! !
-wmGetDpiScaledSize:wParam:lParam:!private! !
+wmGetDpiScaledSize:wParam:lParam:!event handling-win32!private! !
 wmGetMinMaxInfo:wParam:lParam:!event handling-win32!private! !
 wmHotKey:wParam:lParam:!event handling-win32!private! !
 wmHScroll:wParam:lParam:!event handling-win32!private! !
@@ -5240,6 +5259,7 @@ zOrderTop!operations!public! !
 
 View methodProtocol: #commandTarget attributes: #(#readOnly) selectors: #(#queryCommand:)!
 View methodProtocol: #dcSource attributes: #(#readOnly) selectors: #(#getDC #releaseDC:)!
+View methodProtocol: #dpiAwareObject attributes: #(#readOnly) selectors: #(#inDpiAwarenessContextDo:)!
 View methodProtocol: #dragDropSessionSource attributes: #(#readOnly) selectors: #(#ddCut: #ddGetImages: #ddGetObjects:)!
 View methodProtocol: #dragDropSessionTarget attributes: #(#readOnly) selectors: #(#ddDrop: #ddEnter: #ddLeave: #ddOperations: #ddOver: #ddScroll:)!
 View methodProtocol: #dragSource attributes: #(#readOnly) selectors: #(#dragCut: #requestDragImages: #requestDragObjects:)!
@@ -5581,7 +5601,7 @@ onStartup
 	ThemeLibrary default onStartup!
 
 openTheme
-	#highDpiTodo.	"Instances will need theme handle opened at relevant DPI. A single class-wide theme handle is inadequate."
+	#highDpiToDo.	"Instances will need theme handle opened at relevant DPI. A single class-wide theme handle is inadequate."
 	^(self themePartName isNil or: [ThemeLibrary isAppThemed not])
 		ifTrue: [##(ExternalHandle new)]
 		ifFalse: 

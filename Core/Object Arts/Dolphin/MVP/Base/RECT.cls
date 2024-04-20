@@ -15,7 +15,9 @@ RECT addClassConstant: '_OffsetOf_top' value: 16r4!
 
 RECT comment: '`RECT` is an `ExternalStructure` class to wrap the standard Win32 structure of the same name.
 
-The `RECT` structure is used in many places in the Windows API to represent a rectangle consisting of 32-bit co-ordinates for top-left and bottom-right corners. `RECTL` is an alias for the same class/structure. `RECT` supports conversions to and from the Smalltalk `Rectangle` class.'!
+The `RECT` structure is used in many places in the Windows API to represent a rectangle consisting of 32-bit co-ordinates for top-left and bottom-right corners. Note that the convention is to interpret the co-ordinates of [RECTs as end-point exclusive](https://devblogs.microsoft.com/oldnewthing/20040218-00/?p=40563).
+
+`RECTL` is an alias for the same class/structure. `RECT` supports conversions to and from the Smalltalk `Rectangle` class.'!
 
 !RECT categoriesForClass!Win32-Structs! !
 
@@ -38,7 +40,7 @@ bottom
 bottom: aNumber
 	"Set the receiver's 'bottom' field to the integer value of the argument."
 
-	bytes sdwordAtOffset: _OffsetOf_bottom put: aNumber asInteger!
+	bytes sdwordAtOffset: _OffsetOf_bottom put: aNumber truncated!
 
 bottomRight
 	"Answer a <Point> representing the bottom right position of the receiver."
@@ -49,8 +51,8 @@ bottomRight: aPoint
 	"Set the <Point> representing the bottom right corner of the receiver."
 
 	bytes
-		sdwordAtOffset: _OffsetOf_right put: aPoint x asInteger;
-		sdwordAtOffset: _OffsetOf_bottom put: aPoint y asInteger!
+		sdwordAtOffset: _OffsetOf_right put: aPoint x truncated;
+		sdwordAtOffset: _OffsetOf_bottom put: aPoint y truncated!
 
 extent
 	"Answer a Point representing the extent of the receiver. The x coordinate is the width and the y coordinate is the height."
@@ -64,8 +66,8 @@ extent: aPoint
 	"Set the extent of the receiver to the <Point> argument. The origin remains the same and the corner stays in the same quadrant it was in relative to the origin point. If aPoint contains any negative value, the result is undefined."
 
 	bytes
-		sdwordAtOffset: _OffsetOf_right put: ((bytes sdwordAtOffset: _OffsetOf_left) + aPoint x) asInteger;
-		sdwordAtOffset: _OffsetOf_bottom put: ((bytes sdwordAtOffset: _OffsetOf_top) + aPoint y) asInteger!
+		sdwordAtOffset: _OffsetOf_right put: ((bytes sdwordAtOffset: _OffsetOf_left) + aPoint x) truncated;
+		sdwordAtOffset: _OffsetOf_bottom put: ((bytes sdwordAtOffset: _OffsetOf_top) + aPoint y) truncated!
 
 height
 	"Answer the height of the receiver."
@@ -80,7 +82,7 @@ left
 left: aNumber
 	"Set the receiver's 'left' field to the integer value of the argument."
 
-	bytes sdwordAtOffset: _OffsetOf_left put: aNumber asInteger!
+	bytes sdwordAtOffset: _OffsetOf_left put: aNumber truncated!
 
 right
 	"Answer the <Integer> value of the receiver's 'right' field."
@@ -90,19 +92,32 @@ right
 right: aNumber
 	"Set the receiver's 'right' field to the integer value of the argument."
 
-	bytes sdwordAtOffset: _OffsetOf_right put: aNumber asInteger!
+	bytes sdwordAtOffset: _OffsetOf_right put: aNumber truncated!
 
 rightCenter
 	"Answer a <Point> specifying the position of the centre of the receiver's right edge."
 
 	^self right @ self centerY!
 
-scaleBy: aMagnitude
-	"Scale the receiver in-place by the specified <Point> or <Number> multiplier."
+scaledBy: anArithmeticValue
+	"Answer a new <rectangle> representing the receiver with origin and corner multiplied by the <ArithmeticValue> argument. Uses the #vertex:vertex: constructor in order to create a normalised rectangle"
 
-	self
-		topLeft: self topLeft * aMagnitude;
-		bottomRight: self bottomRight * aMagnitude!
+	^self species vertex: (self topLeft * anArithmeticValue) truncated
+		vertex: (self bottomRight * anArithmeticValue) truncated!
+
+scaleToDpi: desiredInteger from: currentInteger
+	"Scale the receiver in-place by from the DPI represented by the first <integer> argument to that represented by the second integer argument."
+
+	"This method is purely to reduce the overhead of scaling when opening views, since we can expect to have to scale every window from a 96-dpi resource to the monitor DPI, which is increasingly unlikely to be a 96-dpi any more. Relative to scaleBy:, this is around 5x faster if using Float arithmetic for the scale, and around 10x faster than scaleBy: with a Fraction scale. The implementation could be simplified with a loop, but unrolled it runs about 25% faster."
+	bytes
+		sdwordAtOffset: _OffsetOf_left
+			put: (bytes sdwordAtOffset: _OffsetOf_left) * desiredInteger // currentInteger;
+		sdwordAtOffset: _OffsetOf_top
+			put: (bytes sdwordAtOffset: _OffsetOf_top) * desiredInteger // currentInteger;
+		sdwordAtOffset: _OffsetOf_right
+			put: (bytes sdwordAtOffset: _OffsetOf_right) * desiredInteger // currentInteger;
+		sdwordAtOffset: _OffsetOf_bottom
+			put: (bytes sdwordAtOffset: _OffsetOf_bottom) * desiredInteger // currentInteger!
 
 top
 	"Answer the <Integer> value of the receiver's 'top' field."
@@ -112,7 +127,7 @@ top
 top: aNumber
 	"Set the receiver's 'top' field to the integer value of the argument."
 
-	bytes sdwordAtOffset: _OffsetOf_top put: aNumber asInteger!
+	bytes sdwordAtOffset: _OffsetOf_top put: aNumber truncated!
 
 topLeft
 	"Answer a <Point> representing the top left position of the receiver."
@@ -123,8 +138,13 @@ topLeft: aPoint
 	"Set the <Point> representing the top left position of the receiver."
 
 	bytes
-		sdwordAtOffset: _OffsetOf_left put: aPoint x asInteger;
-		sdwordAtOffset: _OffsetOf_top put: aPoint y asInteger!
+		sdwordAtOffset: _OffsetOf_left put: aPoint x truncated;
+		sdwordAtOffset: _OffsetOf_top put: aPoint y truncated!
+
+truncated
+	"Answer a <rectangle> whose origin and corner coordinates are the same as the receiver's, but truncated to the nearest <integer>."
+
+	^self!
 
 width
 	"Answer the width of the receiver."
@@ -139,17 +159,19 @@ bottomRight!accessing!public! !
 bottomRight:!accessing!public! !
 extent!accessing!public! !
 extent:!accessing!public! !
-height!public! !
+height!accessing!public! !
 left!**compiled accessors**!public! !
 left:!**compiled accessors**!public! !
 right!**compiled accessors**!public! !
 right:!**compiled accessors**!public! !
 rightCenter!accessing!public! !
-scaleBy:!public!transforming! !
+scaledBy:!accessing!public! !
+scaleToDpi:from:!public!transforming! !
 top!**compiled accessors**!public! !
 top:!**compiled accessors**!public! !
 topLeft!accessing!public! !
 topLeft:!accessing!public! !
+truncated!converting!public! !
 width!accessing!public! !
 !
 
@@ -174,12 +196,12 @@ defineFields
 		defineField: #right type: SDWORDField new;
 		defineField: #bottom type: SDWORDField new!
 
-extent: newExtent
+extent: aPoint
 	"Answer a new instance of the receiver with zero origin and the specified extent."
 
 	^self basicNew bytes: ((ByteArray newFixed: 16)
-				sdwordAtOffset: 8 put: newExtent x asInteger;
-				sdwordAtOffset: 12 put: newExtent y asInteger;
+				sdwordAtOffset: _OffsetOf_right put: aPoint x;
+				sdwordAtOffset: _OffsetOf_bottom put: aPoint y;
 				yourself)!
 
 getFieldNames
@@ -193,10 +215,10 @@ left: leftInteger top: topInteger right: rightInteger bottom: bottomInteger
 	inline code."
 
 	^self basicNew bytes: ((ByteArray newFixed: 16)
-				sdwordAtOffset: 0 put: leftInteger;
-				sdwordAtOffset: 4 put: topInteger;
-				sdwordAtOffset: 8 put: rightInteger;
-				sdwordAtOffset: 12 put: bottomInteger;
+				sdwordAtOffset: _OffsetOf_left put: leftInteger;
+				sdwordAtOffset: _OffsetOf_top put: topInteger;
+				sdwordAtOffset: _OffsetOf_right put: rightInteger;
+				sdwordAtOffset: _OffsetOf_bottom put: bottomInteger;
 				yourself)!
 
 uninitialize

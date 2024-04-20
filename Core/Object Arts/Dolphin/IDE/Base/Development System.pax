@@ -48,6 +48,7 @@ package classNames
 	add: #DevelopmentSessionManager;
 	add: #DictionaryInspector;
 	add: #DolphinMoveClassChange;
+	add: #DpiSensitiveAspect;
 	add: #FlipperInspector;
 	add: #Grabber;
 	add: #ImageListView;
@@ -434,6 +435,7 @@ package methodNames
 	add: #View -> #visualObjectAtPoint:;
 	add: #WCHARField -> #accessorMessage;
 	add: #WCHARField -> #characterCreationMessage;
+	add: #WINDOWPLACEMENT -> #printableFields;
 	add: #WINDOWPOS -> #printOn:;
 	add: 'AbstractCardContainer class' -> #publishedAspectsOfInstances;
 	add: 'AbstractCardContainer class' -> #publishedEventsOfInstances;
@@ -743,8 +745,8 @@ package!
 "Class Definitions"!
 
 Object subclass: #Grabber
-	instanceVariableNames: 'rectangle aspect constrain view composer'
-	classVariableNames: 'Cursors'
+	instanceVariableNames: 'aspect flags view composer'
+	classVariableNames: 'ConstrainedMask ConstrainHorizontalMask ConstrainVerticalMask Cursors DefaultExtent'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 
@@ -781,6 +783,12 @@ Object subclass: #VisualShellFinder
 AttributeDescriptor subclass: #Aspect
 	instanceVariableNames: 'name presenterBlock editBlock immediateActionBlock category'
 	classVariableNames: 'EditInPlaceMask MultilineValueMask ReadOnlyPresenterBlockMask ValueWorkspaceEditorMask'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+Aspect subclass: #DpiSensitiveAspect
+	instanceVariableNames: ''
+	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
@@ -1104,7 +1112,7 @@ ListPresenter subclass: #MethodBrowser
 
 ListPresenter subclass: #ResourceListPresenter
 	instanceVariableNames: 'filterBlock resourcesPresenter previewPresenter resourceIdModel'
-	classVariableNames: ''
+	classVariableNames: 'DesignDesktop'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
@@ -1241,8 +1249,8 @@ SmalltalkToolShell subclass: #SmalltalkSystemShell
 	classInstanceVariableNames: ''!
 
 SmalltalkToolShell subclass: #ViewComposer
-	instanceVariableNames: 'toolboxPresenter status arenaPresenter inspector composingView ownsComposingView resourceIdentifier addPositionOffset grabbers selections grid viewHierarchyPresenter adornmentRegion primarySelection vcFlags modificationStatus image clipboard undoList'
-	classVariableNames: 'AdornmentModifiedFlag Clipboard DefaultGridResolution ExtentImage ModifiedFlag MouseClickFlag PositionImage RefreshFlag UndoRedoFlag'
+	instanceVariableNames: 'toolboxPresenter status arenaPresenter inspector composingView ownsComposingView resourceIdentifier addPositionOffset grabbers selections grid viewHierarchyPresenter primarySelection vcFlags modificationStatus image undoList'
+	classVariableNames: 'Clipboard DefaultGridResolution ExtentImage ModifiedFlag MouseClickFlag PositionImage RefreshFlag UndoRedoFlag'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 
@@ -1440,13 +1448,13 @@ ImageViewAbstract subclass: #ImageListView
 
 ImageView subclass: #ViewComposerArena
 	instanceVariableNames: 'composer'
-	classVariableNames: ''
+	classVariableNames: 'AdornmentHiddenMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
 DesktopView subclass: #DesignDesktopView
-	instanceVariableNames: 'dpi'
-	classVariableNames: ''
+	instanceVariableNames: 'dpiAwareness dpi'
+	classVariableNames: 'Default System'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
@@ -4321,10 +4329,10 @@ arrangementAspect!accessing!private! !
 publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
-	^(super publishedAspectsOfInstances)
+	^super publishedAspectsOfInstances
 		add: (Aspect boolean: #canHScroll);
 		add: (Aspect boolean: #hasPermanentScrollbars);
-		add: (Aspect extent: #horizontalExtent);
+		add: (Aspect integer: #scrollableWidth);
 		add: (Aspect choice: #selectionMode from: self selectionModes keys asSortedCollection);
 		yourself! !
 
@@ -4486,7 +4494,7 @@ publishedAspectsOfInstances
     
     	^(super publishedAspectsOfInstances)
     		add: (Aspect autostring: #text);
-    		add: (Aspect integer: #width);
+    		add: (Aspect width: #width);
     		add: (Aspect block: #getContentsBlock);
     		add: (Aspect block: #getImageBlock);
     		add: (Aspect block: #getTextBlock);
@@ -5910,7 +5918,8 @@ edit
 
 editViewUsing: aMonadicBlock
 	| view |
-	view := self loadWithContext: DesignDesktopView forSystemDpi.
+	view := Smalltalk developmentSystem loadViewResource: self resource
+				inContext: DesignDesktopView default.
 	aMonadicBlock value: view.
 	self assign: view literalStoreArray.
 	view destroy!
@@ -5940,7 +5949,7 @@ publishedAspects
 reassign
 	| view |
 	view := Smalltalk developmentSystem loadViewResource: self resource
-				inContext: DesignDesktopView forDefaultDpi.
+				inContext: DesignDesktopView default.
 	self assign: view literalStoreArray.
 	view destroy! !
 
@@ -8176,7 +8185,7 @@ editNewDefaultView
 	"Open the View Composer to create a new view for the receiver."
 
 	| resourceIdentifier view resName |
-	view := (DesignDesktopView forDpi: DisplayMonitor active dpi) addSubView: self new.
+	view := DesignDesktopView default addSubView: self new.
 	resName := Prompter
 				on: self defaultView
 				prompt: 'Resource name:'
@@ -8335,9 +8344,17 @@ publishedAspectsOfInstances!constants!public! !
 publishedEventsOfInstances!events!public! !
 !
 
+!WINDOWPLACEMENT methodsFor!
+
+printableFields
+	^super printableFields! !
+!WINDOWPLACEMENT categoriesForMethods!
+printableFields!printing!private! !
+!
+
 !WINDOWPOS methodsFor!
 
-printOn: aStream 
+printOn: aStream
 	"Append a textual representation of the receiver to aStream."
 
 	| flags first |
@@ -8347,20 +8364,33 @@ printOn: aStream
 		nextPutAll: '(after ';
 		print: (View fromHandle: self hwndInsertAfter);
 		nextPutAll: ', '.
-	self isRectangleChanged 
-		ifTrue: 
-			[aStream
-				print: self rectangle;
-				nextPutAll: ', '].
 	flags := self flags.
+	(flags allMask: SWP_NOMOVE)
+		ifFalse: 
+			[(flags allMask: SWP_NOSIZE)
+				ifFalse: 
+					[aStream
+						nextPutAll: ' rectangle ';
+						print: self rectangle]
+				ifTrue: 
+					[aStream
+						nextPutAll: ' position ';
+						print: self position].
+			aStream nextPutAll: ', ']
+		ifTrue: 
+			[(flags allMask: SWP_NOSIZE)
+				ifFalse: 
+					[aStream
+						nextPutAll: ' extent ';
+						print: self extent;
+						nextPutAll: ', ']].
 	first := true.
-	##((Win32Constants keys select: [:each | each beginsWith: 'SWP_']) asSortedCollection 
-		asArray) do: 
-				[:each | 
-				(flags allMask: (Win32Constants at: each)) 
-					ifTrue: 
-						[first ifTrue: [first := false] ifFalse: [aStream nextPut: $|].
-						aStream nextPutAll: each]]! !
+	##((Win32Constants keys select: [:each | each beginsWith: 'SWP_']) asSortedCollection asArray) do: 
+			[:each |
+			(flags allMask: (Win32Constants at: each))
+				ifTrue: 
+					[first ifTrue: [first := false] ifFalse: [aStream nextPut: $|].
+					aStream nextPutAll: each]]! !
 
 !WINDOWPOS categoriesForMethods!
 printOn:!printing!public! !

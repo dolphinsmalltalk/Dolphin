@@ -192,7 +192,7 @@ imageList_GetIconSize: himl cx: cx cy: cy
 			int* cx,
 			int* cy);"
 
-	<stdcall: bool ImageList_GetIconSize handle sdword sdword>
+	<stdcall: bool ImageList_GetIconSize handle sdword* sdword*>
 	^self invalidCall: _failureCode!
 
 imageList_GetImageCount: himl

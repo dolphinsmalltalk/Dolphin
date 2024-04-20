@@ -10,7 +10,7 @@ ExternalRectangle guid: (GUID fromString: '{e552b3f7-8653-46d4-b764-1e59cf1c15f7
 
 ExternalRectangle isAbstract: true!
 
-ExternalRectangle comment: '`RectangleStructure` is the abstract class of structures representing rectangular geometries. There are concrete subclasses for different types of position and extent values.'!
+ExternalRectangle comment: '`ExternalRectangle` is the abstract class of structures representing rectangular geometries. There are concrete subclasses for different types of position and extent values.'!
 
 !ExternalRectangle categoriesForClass!Win32-Structs! !
 
@@ -149,6 +149,11 @@ corner: aPoint
 
 	self bottomRight: aPoint!
 
+expandBy: delta
+	"Retained for backwards compatibility, but discouraged because the use of the present tense implies that the operation happens in place, but in fact a new instance is answered. #expandedBy: should be used in preference."
+
+	^self expandedBy: delta!
+
 expandedBy: delta
 	"Answer a new <Rectangle> that is expanded from the receiver by the argument delta, where
 	delta may be a <Rectangle>, a <Point>, or a <Number>."
@@ -276,6 +281,9 @@ origin: originPoint extent: extentPoint
 		origin: originPoint;
 		extent: extentPoint!
 
+position
+	^self origin!
+
 position: aPoint
 	"Move the receiver so that its top-left corner is at the specified position."
 
@@ -303,10 +311,16 @@ scaleBy: aMagnitude
 		topLeft: self topLeft * aMagnitude;
 		bottomRight: self bottomRight * aMagnitude!
 
-scaledBy: delta
-	"Answer a new <rectangle> representing the receiver with origin and corner multiplied by delta, where delta is a Point or a Number. Uses the #vertex:vertex: constructor in order to create a normalised rectangle"
+scaledBy: anArithmeticValue
+	"Answer a new <rectangle> representing the receiver with origin and corner multiplied by the <ArithmeticValue> argument. Uses the #vertex:vertex: constructor in order to create a normalised rectangle"
 
-	^self species vertex: self topLeft * delta vertex: self bottomRight * delta!
+	^self species vertex: (self topLeft * anArithmeticValue) truncated
+		vertex: (self bottomRight * anArithmeticValue) truncated!
+
+scaleToDpi: desiredInteger from: currentInteger
+	"Scale the receiver in-place by from the DPI represented by the first <integer> argument to that represented by the second integer argument."
+
+	self scaleBy: desiredInteger / currentInteger!
 
 species
 	^Rectangle!
@@ -314,7 +328,9 @@ species
 top
 	^self subclassResponsibility!
 
-top: anObject
+top: aNumber
+	"Set the position of the receiver's top edge to the <Number> argument."
+
 	self subclassResponsibility!
 
 topCenter
@@ -346,17 +362,15 @@ topRight: aPoint
 		top: aPoint y;
 		right: aPoint x!
 
-translatedBy: delta 
-	"Annswer a new <Rectangle> representing the receiver with origin and corner incremented by
-	delta, where delta is a <Point>, a <Number>, or another <Rectangle>."
+translatedBy: delta
+	"Annswer a new <Rectangle> representing the receiver with origin and corner incremented by delta, where delta is an <ArithmeticValue>, or another <rectangle>."
 
 	^delta _offsetRectangle: self!
 
 truncated
-	"Answer a new <Rectangle> whose origin and corner coordinates are the same as the
-	receiver's, but truncated to the nearest <integer>."
+	"Answer a <rectangle> whose origin and corner coordinates are the same as the receiver's, but truncated to the nearest <integer>."
 
-	^self species origin: self origin truncated corner: self corner truncated!
+	^self species origin: self topLeft truncated corner: self bottomRight truncated!
 
 width
 	"Answer the width of the receiver."
@@ -391,6 +405,7 @@ contains:!public!testing! !
 containsPoint:!public!testing! !
 corner!accessing!public! !
 corner:!accessing!public! !
+expandBy:!public!rectangle functions! !
 expandedBy:!public!rectangle functions! !
 extent!accessing!public! !
 extent:!accessing!public! !
@@ -410,12 +425,14 @@ origin!accessing!public! !
 origin:!accessing!public! !
 origin:corner:!accessing!public! !
 origin:extent:!accessing!public! !
+position!accessing!public! !
 position:!accessing!public! !
 right!accessing!public! !
 right:!accessing!public! !
 rightCenter!accessing!public! !
 scaleBy:!public!transforming! !
 scaledBy:!public! !
+scaleToDpi:from:!public!transforming! !
 species!comparing!public! !
 top!accessing!public! !
 top:!accessing!public! !
@@ -446,13 +463,7 @@ fromRectangle: aRectangle
 	"Answer a new instance of the receiver instantiated from the Smalltalk
 	Rectangle, aRectangle."
 
-	self == aRectangle class ifTrue: [^aRectangle].
-	^self 
-		left: aRectangle left asInteger
-		top: aRectangle top asInteger
-		right: aRectangle right asInteger
-		bottom: aRectangle bottom asInteger
-!
+	^self marshal: aRectangle!
 
 icon
 	"Answer a suitable iconic representation for the receiver."
@@ -477,11 +488,11 @@ marshal: aRectangle
 	"Answer the argument marshalled as an instance of the receiver."
 
 	self == aRectangle class ifTrue: [^aRectangle].
-	^self 
-		left: aRectangle left asInteger
-		top: aRectangle top asInteger
-		right: aRectangle right asInteger
-		bottom: aRectangle bottom asInteger!
+	^self
+		left: aRectangle left
+		top: aRectangle top
+		right: aRectangle right
+		bottom: aRectangle bottom!
 
 origin: originPoint corner: cornerPoint
 	"Answer a new instance of the receiver with the specified origin and opposite corner"

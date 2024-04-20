@@ -45,6 +45,7 @@ package methodNames
 	add: #IconImageManager -> #menuBitmapForIcon:;
 	add: #IndexedColor -> #asIndexedColor;
 	add: #ListBox -> #basicSelectionByIndex:;
+	add: #ListBox -> #horizontalExtent;
 	add: #ListModel -> #updateAtIndex:;
 	add: #ListModel -> #updateItem:;
 	add: #ListModel -> #updateItem:ifAbsent:;
@@ -588,10 +589,15 @@ asIndexedColor!converting!public! !
 
 basicSelectionByIndex: sel
 	#deprecated.	"Presenter for old view resources"
-	self basicSelectionsByIndex: sel! !
+	self basicSelectionsByIndex: sel!
+
+horizontalExtent
+	#deprecated.	"Misleading name. This is not an 2D extent, but a single width integer."
+	^self scrollableWidth! !
 
 !ListBox categoriesForMethods!
 basicSelectionByIndex:!private!selection! !
+horizontalExtent!accessing!public! !
 !
 
 !ListModel methodsFor!

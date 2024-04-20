@@ -214,6 +214,11 @@ index
 
 	^self parent allColumns indexOf: self!
 
+inDpiAwarenessContextDo: aNiladicValuable
+	^(parent notNil and: [parent isOpen])
+		ifTrue: [parent inDpiAwarenessContextDo: aNiladicValuable]
+		ifFalse: [aNiladicValuable value]!
+
 infoTipFromRow: item withPrefix: prefixText
 	"Private - Answer the info. tip for this column extracted from the <Object>, item,
 	which is an element of the receiver's parent <ListView>, with the <readableString>
@@ -311,13 +316,11 @@ printOn: aStream
 		basicPrint: self;
 		nextPut: $(; print: self text; nextPut: $)!
 
-resolutionScaledBy: scale
-	"Private - The receiver is being loaded and it has been determined that the pixel resolution
-	has changed since the point at which the view was saved. Scale any internal pixels by <Point>
-	scale."
+resolutionScaledBy: aPoint
+	"Private - The receiver is being loaded and it has been determined that the pixel resolution has changed since the point at which the view was saved. Scale any internal pixels by the <Point> argument."
 
-	#highDpiTodo. "Note that we are sending a new column width to the view, as the columns have already been added. If we do this in #list mode, it disables the LVs auto-sizing, which is undesirable. Probably need to delay sending column widths until go into report mode (if not already in report mode). Also when in report mode the columns are being resized multiple times."
-	self width: (width * scale x) truncated!
+	#highDpiToDo.	"Note that we are sending a new column width to the view, as the columns have already been added. If we do this in #list mode, it disables the LVs auto-sizing, which is undesirable. Probably need to delay sending column widths until go into report mode (if not already in report mode). Also when in report mode the columns are being resized multiple times."
+	self width: (width * aPoint x) truncated!
 
 rowSortBlock
 	"Private - Answer a two argument block that can be used to compare two rows based on this
@@ -390,20 +393,18 @@ update
 		self parent updateColumn: self ]!
 
 width
-	"Answer the real width of the column in pixels."
+	"Answer the real width of the column in pixels, measure at the parent ListView's current dpi."
 
-	| view |
-	view := self parent.
-	^(view notNil and: [view isOpen and: [view isReportMode]]) 
-		ifTrue: [view lvmGetColumnWidth: self index - 1]
+	^(parent notNil and: [parent isOpen and: [parent isReportMode]])
+		ifTrue: [parent lvmGetColumnWidth: self index - 1]
 		ifFalse: [self basicWidth]!
 
 width: aNumber
-	"Set the width of the column to the specified <integer> number of pixels.
+	"Set the width of the column to the specified <integer> number of pixels, which is a measurement at the parent ListView's current DPI.
 	N.B. This may cause the width of other (auto-resizable) columns to change."
 
 	self basicWidth: aNumber.
-	#highDpiTodo.	"We should not be sending the new width to the control at this point if not in report mode, but then need to send later when entering report mode"
+	#highDpiToDo.	"We should not be sending the new width to the control at this point if not in report mode, but then need to send later when entering report mode"
 	self parent ifNotNil: [:view | view setWidthOfColumn: self index to: aNumber asInteger]! !
 
 !ListViewColumn categoriesForMethods!
@@ -433,6 +434,7 @@ getTextBlock:!adapters!public! !
 headerIcon:!helpers!private! !
 imageFromRow:!adapters!private!wine fix! !
 index!accessing!public! !
+inDpiAwarenessContextDo:!public! !
 infoTipFromRow:withPrefix:!adapters!private! !
 initialize!initializing!private! !
 isAlignmentCenter!alignment!public! !
@@ -460,6 +462,8 @@ update!accessing!private! !
 width!accessing!public! !
 width:!accessing!public! !
 !
+
+ListViewColumn methodProtocol: #dpiAwareObject attributes: #(#readOnly) selectors: #(#inDpiAwarenessContextDo:)!
 
 !ListViewColumn class methodsFor!
 

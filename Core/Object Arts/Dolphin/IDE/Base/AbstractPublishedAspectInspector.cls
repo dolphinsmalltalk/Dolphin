@@ -127,15 +127,21 @@ getAspectsFor: anObject
 			ex toTrace.
 			LookupTable with: (Aspect name: #yourself)]!
 
-getSubAspectAccessorsFor: anAspectAccessor 
+getAspectValue: anAspectAccessor
+	^anAspectAccessor value!
+
+getMutableAspectValue: anAspectAccessor
+	^anAspectAccessor getMutableValue!
+
+getSubAspectAccessorsFor: anAspectAccessor
 	"Private - Answer a <sequencedReadableCollection> of the <AspectAccessor> child nodes 
 	below the <AspectAccessor> argument."
 
 	| subValue subject |
 	anAspectAccessor isReadable ifFalse: [^#()].
 	
-	[subValue := anAspectAccessor value.
-	subject := anAspectAccessor isMutable ifTrue: [subValue] ifFalse: [subValue copy]] 
+	[subValue := self getAspectValue: anAspectAccessor.
+	subject := anAspectAccessor isMutable ifTrue: [subValue] ifFalse: [subValue copy]]
 			on: Error
 			do: [:ex | subValue := subject := ex].
 	^(self getSubAspectsFor: subValue) collect: [:each | each accessorFor: subject]!
@@ -320,19 +326,19 @@ selectionPath: aSequencedReadableCollection
 setAspectValue: anObject 
 	aspectValueHolder value: anObject!
 
-setMutableValueOf: anAspectAccessor into: aValueHolder 
+setMutableValueOf: anAspectAccessor into: aValueHolder
 	"Private - Find the value of anAspectAccessor if it is readable. If it is then silently set the value
 	into aValueHolder and answer true"
 
 	| hasReadableValue aspectValue |
 	hasReadableValue := false.
-	anAspectAccessor isReadable 
+	anAspectAccessor isReadable
 		ifTrue: 
 			[aspectValue := 
 					[| value |
-					value := anAspectAccessor getMutableValue.
+					value := self getMutableAspectValue: anAspectAccessor.
 					hasReadableValue := true.
-					value] 
+					value]
 							on: Error
 							do: [:ex | ex]].
 
@@ -383,6 +389,8 @@ createValueHolderFor:!private! !
 displayOn:!displaying!public! !
 editAspect!operations!public! !
 getAspectsFor:!private! !
+getAspectValue:!helpers!private! !
+getMutableAspectValue:!private! !
 getSubAspectAccessorsFor:!helpers!private! !
 getSubAspectsFor:!helpers!private! !
 initialize!private! !

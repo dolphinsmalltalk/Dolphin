@@ -42,7 +42,7 @@ height
 	between the base lines of two consecutive lines of text. Thus, the line spacing includes
 	the blank space between lines along with the height of the character itself."
 
-	#highDpiTodo. "Callers of this may need to use #heightAtDpi: instead for per-monitor DPI"
+	#highDpiToDo. "Callers of this may need to use #heightAtDpi: instead for per-monitor DPI"
 	^self heightAtDpi: SystemMetrics current dpi!
 
 heightAtDpi: anInteger

@@ -239,7 +239,12 @@ printOn: aStream
 						space;
 						nextPutAll: #fromId:;
 						space;
-						print: id]]! !
+						print: id]]!
+
+resolution
+	"Answer an <Point> specifying the horizontal and vertical DPI of the receiver."
+
+	^##(USER_DEFAULT_SCREEN_DPI @ USER_DEFAULT_SCREEN_DPI)! !
 
 !Image categoriesForMethods!
 =!comparing!public! !
@@ -271,6 +276,7 @@ isShared!private!testing! !
 loadFromFile:extent:!private!realizing/unrealizing! !
 loadFromInstance:!private!realizing/unrealizing! !
 printOn:!printing!public! !
+resolution!accessing!public! !
 !
 
 Image methodProtocol: #image attributes: #(#readOnly) selectors: #(#drawOn: #drawOn:at: #drawOn:at:extent: #extent)!

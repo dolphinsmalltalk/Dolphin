@@ -88,6 +88,11 @@ hasParentView
 
 	^parentView notNil!
 
+inDpiAwarenessContextDo: aNiladicValuable
+	^(parentView notNil and: [parentView isOpen])
+		ifTrue: [parentView inDpiAwarenessContextDo: aNiladicValuable]
+		ifFalse: [aNiladicValuable value]!
+
 initialize
 	"Private - Initialize the state of the receiver."
 
@@ -226,9 +231,7 @@ refreshContents
 				updateTipText]!
 
 resolutionScaledBy: aPoint
-	"Private - The receiver is being loaded and it has been determined that the pixel resolution
-	has changed since the point at which the view was saved. Scale any internal pixels by <Point>
-	scale."
+	"Private - The receiver is being loaded and it has been determined that the pixel resolution has changed since the point at which the view was saved. Scale any internal pixels by the <Point> argument."
 
 	width < 0 ifTrue: [^self].
 	self width: (width * aPoint x) truncated!
@@ -281,8 +284,9 @@ drawItem:bounding:!drawing!private! !
 extent:!accessing!public! !
 getText!private!updating! !
 getTipText!private!updating! !
-hasBorder!public!testing! !
-hasParentView!private!testing!views! !
+hasBorder!accessing-styles!public! !
+hasParentView!private!views! !
+inDpiAwarenessContextDo:!high DPI!public! !
 initialize!initializing!private! !
 invalidate!drawing!public! !
 isAutoResize!public!testing! !
@@ -314,6 +318,8 @@ updateTipText!private!updating! !
 width!accessing!public! !
 width:!accessing!public! !
 !
+
+StatusBarItemAbstract methodProtocol: #dpiAwareObject attributes: #(#readOnly) selectors: #(#inDpiAwarenessContextDo:)!
 
 !StatusBarItemAbstract class methodsFor!
 

@@ -152,15 +152,6 @@ color: aColor
 	cf color: aColor.
 	self selectionCharFormat: cf!
 
-createWindowAt: positionPoint extent: extentPoint styles: anArray name: aString
-	"Private - RTE doesn't support DPI scaling directly, but we can achieve the same effect by using zoom."
-
-	super
-		createWindowAt: positionPoint
-		extent: extentPoint
-		styles: {anArray at: 1. (anArray at: 2) bitOr: ES_EX_ZOOMABLE}
-		name: aString!
-
 defaultCharFormat
 	"Private - Gets the default character attributes for the receiver."
 
@@ -939,7 +930,9 @@ zoomRatio: aNumber
 		ifTrue: [self error: 'Invalid zoom ratio ' , fraction printString]!
 
 zoomRelativeToSystemDpi
-	self zoomRatio: self dpi / SystemMetrics current dpi! !
+	self zoomRatio: (self dpiAwareness == #perMonitor
+				ifTrue: [self dpi / SystemMetrics current dpi]
+				ifFalse: [1])! !
 
 !RichTextEdit categoriesForMethods!
 ansiText!public!streaming! !
@@ -960,7 +953,6 @@ canRedo!public!testing!undo & redo! !
 charNearestPosition:!accessing!public! !
 clear!operations!public! !
 color:!helpers!private! !
-createWindowAt:extent:styles:name:!private!realizing/unrealizing! !
 defaultCharFormat!accessing!private! !
 defaultCharFormat:!accessing!private! !
 defaultNotificationMask!constants!private! !
@@ -1045,8 +1037,8 @@ utfText:!public!streaming! !
 winFinalize!event handling!private! !
 wmDpiChangedAfterParent:wParam:lParam:!event handling-win32!private! !
 wmInitMenu:wParam:lParam:!event handling-win32!private! !
-zoomRatio!public!zooming! !
-zoomRatio:!public!zooming! !
+zoomRatio!accessing!public!zooming! !
+zoomRatio:!accessing!public!zooming! !
 zoomRelativeToSystemDpi!event handling-win32!private! !
 !
 

@@ -124,7 +124,7 @@ addSystemBitmap: systemBitmapId index: anIntegerIndex
 	"Private - Add the system defined sub-bitmap identified by anIntegerIndex within the bitmap identified by systemBitmapId"
 
 	| start |
-	#highDpiTodo. "System bitmaps don't work. Gets loaded directly into the image list without rescaling."
+	#highDpiToDo. "System bitmaps don't work. Gets loaded directly into the image list without rescaling."
 	start := bitmapsStart at: systemBitmapId
 				ifAbsentPut: 
 					[self
@@ -190,13 +190,13 @@ bitmapSize: aPoint
 	self imageSize: (ImageSizes keyAtEqualValue: aPoint ifAbsent: [self defaultImageSize])!
 
 buttonSize
-	"Answer the size of buttons shown on the toolbar, measured in device pixels.
+	"Answer the size of buttons shown on the toolbar, measured in device pixels at the receiver's DPI.
 	It is recommended that this not be used and that the toolbar be allowed to choose the preferred size of button to fit the images."
 
 	^buttonSize ifNil: [self isOpen ifTrue: [self tbGetButtonSize]]!
 
 buttonSize: aPointOrNil
-	"Set the size of buttons shown on the toolbar to aPointOrNil. If nil then the buttons assume a default size, which is distinclty the preferred option for normal use."
+	"Set the size of buttons shown on the toolbar to aPointOrNil. If nil then the buttons assume a default size, which is distinctly the preferred option for normal use."
 
 	buttonSize = aPointOrNil ifTrue: [^self].
 	buttonSize := aPointOrNil.
@@ -619,9 +619,11 @@ removeItem: aToolbarItem
 	^aToolbarItem!
 
 resolutionScaledBy: aPoint
+	"Private - The receiver is being loaded and it has been determined that the pixel resolution has changed since the point at which the view was saved. Scale any internal pixels by the <Point> argument. "
+
 	super resolutionScaledBy: aPoint.
-	buttonSize ifNotNil: [buttonSize := buttonSize * aPoint].
-	indent ifNotNil: [indent := indent * aPoint x]!
+	buttonSize ifNotNil: [buttonSize := (buttonSize * aPoint) truncated].
+	indent ifNotNil: [indent := (indent * aPoint x) truncated]!
 
 scaledBitmapSize
 	"Private - Answer the actual pixel extent of bitmaps shown on the toolbar, measure at the current window DPI. This can be visually inherited from a parent toolbar, which is useful in allowing the image size to be changed just by changing that of the topmost toolbar."

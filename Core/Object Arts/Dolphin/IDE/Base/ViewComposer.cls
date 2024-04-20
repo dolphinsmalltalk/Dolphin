@@ -1,14 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 SmalltalkToolShell subclass: #ViewComposer
-	instanceVariableNames: 'toolboxPresenter status arenaPresenter inspector composingView ownsComposingView resourceIdentifier addPositionOffset grabbers selections grid viewHierarchyPresenter adornmentRegion primarySelection vcFlags modificationStatus image clipboard undoList'
-	classVariableNames: 'AdornmentModifiedFlag Clipboard DefaultGridResolution ExtentImage ModifiedFlag MouseClickFlag PositionImage RefreshFlag UndoRedoFlag'
+	instanceVariableNames: 'toolboxPresenter status arenaPresenter inspector composingView ownsComposingView resourceIdentifier addPositionOffset grabbers selections grid viewHierarchyPresenter primarySelection vcFlags modificationStatus image undoList'
+	classVariableNames: 'Clipboard DefaultGridResolution ExtentImage ModifiedFlag MouseClickFlag PositionImage RefreshFlag UndoRedoFlag'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 
 ViewComposer guid: (GUID fromString: '{045641aa-90d2-43e8-a81c-a3f76d7d35b4}')!
 
-ViewComposer addClassConstant: 'AdornmentModifiedFlag' value: 16r4!
 ViewComposer addClassConstant: 'ModifiedFlag' value: 16r1!
 ViewComposer addClassConstant: 'MouseClickFlag' value: 16r2!
 ViewComposer addClassConstant: 'RefreshFlag' value: 16r8!
@@ -16,9 +15,17 @@ ViewComposer addClassConstant: 'UndoRedoFlag' value: 16r10!
 
 ViewComposer comment: 'The View Composer is Dolphin''s GUI builder. It is used to graphically create views (the user interface components of the MVP framework). 
 
-The view resources are saved down as class-side methods, usually associated with the presenter classes to which the views will be attached. These methods are given selectors of the form, #resource_xxxx_yyyy, where xxxx_yyyy is the resource identifier. The resource methods answer an array of Smalltalk literals that can be used to rebuild an instance of the view when loaded via an STLInFiler.
+The view resources are saved down as class-side methods, usually associated with the presenter classes to which the views will be attached. These methods are given selectors of the form, #resource_xxxx_yyyy, where xxxx_yyyy is the resource identifier. The resource methods answer an array of Smalltalk literals that can be used to rebuild an instance of the view when loaded via an `STLInFiler`.
 
-The View Composer works by loading its ''composing view'' as a child of the desktop and positioning it offscreen so that it is invisible to the user. It then uses WM_PRINT messages to render an image of this view which it displays in its arenaPresenter. Using this shadow image of the real view has a couple of benefits. The first is that mouse clicks over the image can be intercepted directly, whereas mouse clicks over the real view would be handled by the Windows controls themselves. We also discovered that placing a real shell view inside another (e.g. as a composing view inside the View Composer) caused the menu bars for the shell view not to be displayed.
+The View Composer works by loading its ''composing view'' as a child of the desktop and positioning it offscreen so that it is invisible to the user. It then uses `WM_PRINT` messages to render an image of this view which it displays in its arenaPresenter. Using this shadow image of the real view has a couple of benefits. The first is that mouse clicks over the image can be intercepted directly, whereas mouse clicks over the real view would be handled by the Windows controls themselves. We also discovered that placing a real shell view inside another (e.g. as a composing view inside the View Composer) caused the menu bars for the shell view not to be displayed.
+
+
+##High Dpi
+
+We want to do all editing at a fixed DPI, the natural choice being device-independent pixels (aka DIPs), which is 96 dpi. To achieve this we create the hidden instance of the view being editing with a DPI awareness context of ''unaware'', which results in Windows virtualizing the pixel extents and positions, etc, to 96-dpi. The rendering of the view in the View Composer''s arena is a bitmap captured by sending a WM_PRINT message to the view. This will render at 96-dpi, so could end up being very small if viewed on a system with scaling of 200%+. We could just stretch this to fit, but the scaling up a bitmap gives very poor results. Scaling by Windows of the 96-dpi view may be blurry (although we can even avoid most of that by using the new gdi-scaling mode), but this is still much better than the results from StretchBlt. We would also have the additional complexity of mapping between the physical pixel positions at which the arena operates, and the logical DIPs of the edited view. It makes sense, therefore, for the at least the `ViewComposerArea` to be operating at 96-dpi too. We could open the entire VC at 96-dpi, but aside from the fact that the whole thing will be blurry, this has other important side effects. The most significant of these is that all new windows opened when the VC is processing a message will inherit the same DPI awareness context by default unless we explicitly switch the DPI awareness context. Changing the DPI awareness context at appropriate for the whole VC would generate quite a lot of additional complexity. Fortunately the DPI awareness mechanisms in modern Windows are quite sophisticated, and we can even have window with differing DPI awareness within the same window hierarchy, which is known as ''mixed DPI hosting behaviour''. We have to enable mixed hosting explicitly on the immediate parent of the arena (a `ScrollingDecorator`) . The documentation warns ominously of unexpected (but undetailed) side-effects of turning it on in general, but by doing for a single container we can then create just the arena sub-view in an ''unaware'' DPI awareness context. The system then scales the composed view image and we get a reasonable visual result along with 96-dpi editing, especially if the GDI scaled unaware mode is used. Mixed hosting does also add some complexity, however, as we need to be aware of the DPI awareness context we should be using when interacting between the arena and the rest of the VC, but this seems manageable.
+
+
+
 
 '!
 
@@ -26,43 +33,59 @@ The View Composer works by loading its ''composing view'' as a child of the desk
 
 !ViewComposer methodsFor!
 
-addGrabberFor: aGrabAspectSymbol of: aView
-	"Private - Create a new Grabber for aGrabAspectSymbol of our associated view and add it to
-	our collection of active grabbers. Answer the new grabber"
-
-	| grabber |
-	grabber := self createGrabberFor: aGrabAspectSymbol of: aView.
-	^self grabbers add: grabber.
-	!
-
 addGrabbers
 	"Private - Put up grabbers to manipulate the size of the primary selection"
 
-	| primaryView |
-	primaryView := self primarySelection.
-	(primaryView isNil or: [(self canSize: primaryView) not])
-		ifTrue: [ ^self ].
+	(primarySelection isNil or: [(self canSize: self primarySelection) not]) ifTrue: [^self].
+	grabbers := {Grabber
+					view: primarySelection
+					aspect: #topLeft
+					composer: self.
+				Grabber
+					view: primarySelection
+					aspect: #bottomRight
+					composer: self.
+				Grabber
+					view: primarySelection
+					aspect: #topRight
+					composer: self.
+				Grabber
+					view: primarySelection
+					aspect: #bottomLeft
+					composer: self.
+				(Grabber
+					view: primarySelection
+					aspect: #topCenter
+					composer: self) beVerticalOnly.
+				(Grabber
+					view: primarySelection
+					aspect: #bottomCenter
+					composer: self) beVerticalOnly.
+				(Grabber
+					view: primarySelection
+					aspect: #leftCenter
+					composer: self) beHorizontalOnly.
+				(Grabber
+					view: primarySelection
+					aspect: #rightCenter
+					composer: self) beHorizontalOnly}.
+	self isComposingViewPrimarySelection
+		ifTrue: 
+			["The composingView's origin should not be moved, and therefore the grabbers for the origin, top centre, and left centre should be completely disabled. The grabbers for top-right and bottom-left corners should be constrained to operate in horizontal and vertical planes respectively."
+			#(1 5 7) do: [:i | (grabbers at: i) beDisabled].
+			(grabbers at: 3) beHorizontalOnly.
+			(grabbers at: 4) beVerticalOnly].
+	self showAdornment!
 
-	"Corners first"
-	self addGrabberFor: #bottomRight of: primaryView.
-	self addGrabberFor: #topLeft of: primaryView.
-	self addGrabberFor: #topRight of: primaryView.
-	self addGrabberFor: #bottomLeft of: primaryView.
-
-	"Now centres"
-	(self addGrabberFor: #leftCenter of: primaryView) beHorizontalOnly.
-	(self addGrabberFor: #rightCenter of: primaryView) beHorizontalOnly.
-	(self addGrabberFor: #topCenter of: primaryView) beVerticalOnly.
-	(self addGrabberFor: #bottomCenter of: primaryView) beVerticalOnly
-!
-
-addSelectionFor: aView 
+addSelectionFor: aView
 	"Private - Adds a new selection"
 
-	self selections remove: aView ifAbsent: [].
-	self selections addFirst: aView.
+	self hideAdornment.
+	self selections
+		remove: aView ifAbsent: [];
+		addFirst: aView.
 	self updatePrimarySelection.
-	self updateAdornment.
+	self showAdornment.
 	self
 		dropUndoState;
 		saveUndoState!
@@ -70,58 +93,13 @@ addSelectionFor: aView
 adjustScroll
 	"Private - Ensure the arena adopts scroll bars if required."
 
-	| necessaryExtent |
-	necessaryExtent := self hasComposingView 
-				ifTrue: [self composingView rectangle extent]
-				ifFalse: [0 @ 0].
-	self arena preferredExtent: necessaryExtent + self arenaBorderSize.
-	(self arena parentView)
-		invalidateLayout;
-		validateLayout!
-
-adornmentRectanglesFor: aView
-	"Private - Answer a collection of rectangles that mark the edges of the secondary
-	selection adornments of aView."
-
-	| viewRects |
-	viewRects := OrderedCollection new.
-	self adornmentRectanglesFor: aView do: [:rect | viewRects add: rect].
-	^viewRects!
-
-adornmentRectanglesFor: aView do: aMonadicValuable
-	"Private - Evaluate the monadic valuable argument for a collection of rectangles that mark the edges of the secondary
-	selection adornments of aView."
-
-	| grabberExt viewRect |
-	grabberExt := self grabberExtent.
-	viewRect := aView rectangle insetBy: grabberExt // 2 negated.
-	viewRect
-		origin: (self mapPoint: viewRect origin toArenaFromView: aView);
-		corner: (self mapPoint: viewRect corner toArenaFromView: aView).
-	#(#topLeft #bottomRight #topRight #bottomLeft #topCenter #bottomCenter #leftCenter #rightCenter)
-		do: [:eachAspect | aMonadicValuable value: (Rectangle center: (viewRect perform: eachAspect) extent: grabberExt)]!
-
-adornmentRegion
-	"Private - Answers a Region occupied by all the selection adornments"
-
-	(adornmentRegion isNil or: [adornmentRegion isRealized not]) ifTrue: [self saveAdornmentRegion].
-	^adornmentRegion!
-
-adornmentRegionFor: aView
-	"Private - Answers a Region occupied by the selection adornments for aView"
-
-	| region1 |
-	region1 := Region empty.
-	self adornmentRectanglesFor: aView
-		do: 
-			[:each |
-			| region2 temp |
-			region2 := Region rectangle: (each insetBy: -1).
-			temp := region1 union: region2.
-			region1 free.
-			region2 free.
-			region1 := temp].
-	^region1!
+	self view inDpiAwarenessContextDo: 
+			[| arena necessaryExtent |
+			necessaryExtent := self composingView ifNotNil: [:cv | cv extent] ifNil: [0 @ 0].
+			"Note that the preferredExtent of the arena is set as measured at the VC dpi rather than the design DPI (96) that the arena runs at. This is because it is consumed by the parent scrolling decorator, which is at the VC dpi."
+			arena := self arena.
+			arena preferredExtent: necessaryExtent + (self arenaBorderSize * self view dpi // arena dpi).
+			arena parentView validateLayout]!
 
 alignBottoms
 	"Aligns the bottom edges of all the selections to match that of the
@@ -169,7 +147,7 @@ areDragObjects: aCollection acceptableFor: operationSymbol inView: aView
 	"Can aView currently accept a new view?"
 
 	| dragDropObject |
-	(aView = self arena or: [aView canAcceptSubViews]) ifFalse: [^false].
+	(aView == self arena or: [aView canAcceptSubViews]) ifFalse: [^false].
 
 	"Does the receiver support the intended operation?"
 	"(#(#copy #link) includes: operationSymbol) ifFalse: [^false]."
@@ -187,74 +165,14 @@ arena
 	^arenaPresenter view!
 
 arenaBorderSize
-	"Private - Answer a number of pixels border size for the arena"
+	"Private - Answer the DIPs size for the arena borders."
 
 	^20!
 
-arenaLeftButtonPressed: aMouseEvent 
-	"Private - Handles mouse down event. First check to see if it is within
-	any sizing grabber; if so perform the sizing operation.
-	Next see if it is within a selection border or a view; if so
-	drag all the selections."
-
-	"Create the mouse tracker now, just in case it's needed later.
-	This ensures that it tracks from the CURRENT mouse location"
-
-	| position grabberHit viewHit screenPosition mouseTracker |
-	screenPosition := aMouseEvent screenPosition.
-	mouseTracker := MouseTracker forPresenter: self startingAt: screenPosition.
-
-	"Has the mouse hit a Grabber ?"
-	position := aMouseEvent position - 1.
-	grabberHit := self grabberHitBy: position.
-	grabberHit notNil 
-		ifTrue: 
-			[self trackGrabber: grabberHit from: screenPosition.
-			^nil].
-
-	"Has the mouse hit a selection adornment ?"
-	self primarySelection notNil 
-		ifTrue: 
-			[| region |
-			region := self adornmentRegionFor: self primarySelection.
-			(region containsPoint: position) ifTrue: [viewHit := self primarySelection]].
-
-	"Has the mouse hit a selection border ?"
-	self primarySelection notNil 
-		ifTrue: 
-			[| region |
-			region := self borderRegionFor: self primarySelection.
-			(region containsPoint: position) ifTrue: [viewHit := self primarySelection]].
-	viewHit isNil 
-		ifTrue: 
-			["Has the mouse hit a view ?"
-			viewHit := self viewHitBy: position.
-			viewHit isNil 
-				ifTrue: 
-					[mouseTracker := nil.
-					viewHit := self composingView]].
-	viewHit isNil ifTrue: [^nil].
-	self isMouseClick: true.
-	aMouseEvent isCtrlDown 
-		ifTrue: 
-			[(self selections includes: viewHit) ifTrue: [mouseTracker := nil].
-			self toggleSelectionFor: viewHit]
-		ifFalse: 
-			[aMouseEvent isShiftDown 
-				ifTrue: [self addSelectionFor: viewHit]
-				ifFalse: [self primarySelection == viewHit ifFalse: [self selection: viewHit]]].
-	self isMouseClick: false.
-	mouseTracker notNil 
-		ifTrue: 
-			[mouseTracker startTracking: self.
-			viewHit == self composingView ifTrue: [self adjustScroll]].
-	^nil!
-
-arenaMouseMoved: aMouseEvent 
-	| cursor |
-	cursor := self cursor.
-	cursor notNil ifTrue: [cursor setCursor].
-	^nil!
+arenaDo: aMonadicValuable
+	| arena |
+	arena := self arena.
+	^arena inDpiAwarenessContextDo: [aMonadicValuable value: arena]!
 
 aspectAccessor
 	^inspector aspectAccessor!
@@ -263,6 +181,12 @@ aspectAccessor: anAspectAccessor
 	| accessor |
 	accessor := inspector aspectTreePresenter model asSet detect: [:each | each name=anAspectAccessor name] ifNone: [^self].
 	inspector aspectTreePresenter selection: accessor.!
+
+assertInArenaDpiContext
+	self arena assertInOwnDpiContext!
+
+assertInOwnDpiContext
+	self assert: [view isInOwnDpiAwarenessContext]!
 
 basicCaption
 	"Private - Answer a basic caption that can be used to label the receiver's view.
@@ -285,79 +209,27 @@ basicPasteResourceLink: aLiteralResourceIdentifier context: contextView
 
 	^contextView addSubView: (ReferenceView resourceIdentifier: aLiteralResourceIdentifier)!
 
-borderRectanglesFor: aView
-	"Private - Answer a collection of rectangles that mark the borders of aView"
-
-	| extent rect borderRects corner |
-	extent := self grabberExtent.
-	rect := aView rectangle.
-	borderRects := OrderedCollection new.
-	corner := self mapPoint: rect topLeft toArenaFromView: aView.
-	borderRects add: (corner extent: extent x @ rect height).
-	borderRects add: (corner extent: rect width @ extent y).
-	corner := self mapPoint: rect topRight toArenaFromView: aView.
-	borderRects add: (corner - (extent x @ 0) extent: extent x @ rect height).
-	corner := self mapPoint: rect bottomLeft toArenaFromView: aView.
-	borderRects add: (corner - (0 @ extent y) extent: rect width @ extent y).
-	^borderRects!
-
-borderRegionFor: aView 
-	"Private - Answers a Region occupied by the selection borders for aView"
-
-	| region1 |
-	region1 := Region empty.
-	(self borderRectanglesFor: aView) do: 
-			[:each | 
-			| region2 temp |
-			region2 := Region rectangle: (each insetBy: -1).
-			temp := region1 union: region2.
-			region1 free.
-			region2 free.
-			region1 := temp].
-	^region1!
-
 browseIt
 	"Open a new class browser on the hierarchy at the same point as the receiver."
 	
 	self composingView browse!
 
-calculatePositionOf: aView offsetBy: pointOffset 
-	"Private - Answers the constrained position in the arena of aView when offset by pointOffset."
-
-	| newPosition arenaPosition constrainedPosition parent parentArenaRect |
-	parent := aView parentView.
-	newPosition := aView position + pointOffset.
-	constrainedPosition := self constrainPoint: newPosition.
-	arenaPosition := self mapPoint: constrainedPosition toArenaFromView: aView.
-
-	"Ensure aView stays within its parent rectangle."
-	parentArenaRect := (self mapPoint: 0@0 toArenaFromView: aView) extent: parent clientExtent.
-	arenaPosition := arenaPosition max: parentArenaRect origin.
-	arenaPosition := arenaPosition min: parentArenaRect bottomRight-aView extent.
-	^arenaPosition!
-
 cancelSelectionFor: aView
 	"Private - Removes the selection for aView"
 
-	(self isSelected: aView) ifTrue: [
-		self invalidateAdornmentFor: aView.
-		self selections remove: aView.
-		self updateAdornment.
-		self updatePrimarySelection ]
-!
+	(self isSelected: aView) ifFalse: [^self].
+	self hideAdornment.
+	self selections remove: aView.
+	self updatePrimarySelection.
+	self showAdornment!
 
 cancelSelections
 	"Private - Removes all selections and grabbers"
 
-	self eraseAdornment.
+	self hideAdornment.
 	grabbers := nil.
 	selections := OrderedCollection new.
-	self primarySelection: nil.
-!
-
-cancelTrackingAt: aPoint 
-	self eraseTrackingAt: aPoint.
-	self updateAdornment!
+	self primarySelection: nil!
 
 canMove: aView 
 	"Private - Answer true if aView can be moved around by the receiver"
@@ -368,13 +240,14 @@ canPaste
 	"Private - Answer whether the ResourceManager clipboard can be pasted into the receiver."
 
 	| dragObjects |
-	(dragObjects := self clipboard) isNil ifTrue: [^false].
-	self composingView isNil ifTrue: [^true].
-	self primarySelection isNil ifTrue: [^false].
-	^self 
-		areDragObjects: dragObjects
-		acceptableFor: #copy
-		inView: self primarySelection!
+	dragObjects := self clipboard.
+	^dragObjects notNil and: 
+			[composingView isNil or: 
+					[primarySelection notNil and: 
+							[self
+								areDragObjects: dragObjects
+								acceptableFor: #copy
+								inView: primarySelection]]]!
 
 canSaveState
 	"Private - Answer true if the receiver can successfully have it's state saved by #saveStateOn:. Some
@@ -394,34 +267,27 @@ centerHorizontally
 	"Private - Move the selections so that the primary selection is centred horizontally in its parent,
 	but maintaining the relative positions of the other selections."
 
-	| primaryRectangle center delta |
-	primaryRectangle := self primarySelection rectangle.
-	center := self primarySelection parentView clientRectangle centerX.
-	delta := primaryRectangle centerX - center.
-	self eraseAdornment.
-	self selections 
-		do: [:each | self repositionView: each to: (each position x - delta rounded) @ each position y]!
+	self hideAdornment.
+	self inDesignDpiContextDo: 
+			[| primaryRectangle center delta |
+			primaryRectangle := self primarySelection rectangle.
+			center := self primarySelection parentView getClientRect centerX.
+			delta := primaryRectangle centerX - center.
+			self selections
+				do: [:each | self repositionView: each to: (each position x - delta rounded) @ each position y]]!
 
 centerVertically
 	"Private - Move the selections so that the primary selection is centred vertically in its parent, but
 	maintaining the relative positions of the other selections."
 
-	| primaryRectangle center delta |
-	primaryRectangle := self primarySelection rectangle.
-	center := self primarySelection parentView clientRectangle centerY.
-	delta := primaryRectangle centerY - center.
-	self eraseAdornment.
-	self selections 
-		do: [:each | self repositionView: each to: each position x @ (each position y - delta rounded)]!
-
-chooseBackgroundColor
-	"Set the background color of all selected objects to the users choice from a ColorDialog."
-
-	| color |
-	color := Color choose.
-	color notNil ifTrue:
-		[self selections do: [:v | v backcolor: color]].
-!
+	self hideAdornment.
+	self inDesignDpiContextDo: 
+			[| primaryRectangle center delta |
+			primaryRectangle := self primarySelection rectangle.
+			center := self primarySelection parentView getClientRect centerY.
+			delta := primaryRectangle centerY - center.
+			self selections
+				do: [:each | self repositionView: each to: each position x @ (each position y - delta rounded)]]!
 
 chooseFont
 	"Set the font of all selected objects to the users choice from a FontDialog."
@@ -430,15 +296,6 @@ chooseFont
 	font := Font choose.
 	font notNil ifTrue:
 		[self selections do: [:v | v font: font]].
-!
-
-chooseForegroundColor
-	"Set the foreground color of all selected objects to the users choice from a ColorDialog."
-
-	| color |
-	color := Color choose.
-	color notNil ifTrue:
-		[self selections do: [:v | v forecolor: color]].
 !
 
 clearSelection
@@ -472,7 +329,7 @@ composingView
 	^composingView
 !
 
-composingView: aView isOwned: isOwned 
+composingView: aView isOwned: isOwned
 	"Private - Sets the View that is currently being composed by the receiver.
 	If nil then we are not editing any view"
 
@@ -482,30 +339,14 @@ composingView: aView isOwned: isOwned
 	hierarchy clear.
 	hierarchy addRoot: composingView.
 	ownsComposingView := isOwned.
-	self ownsComposingView ifTrue: [self composingView position: self hidingOffset].
+	self positionComposingView.
 	self
 		updateCaption;
 		adjustScroll;
 		refreshImage!
 
-constrainPoint: aPoint
-	"Private - Answers the position for aPoint after any view constraints have been taken 
-	into consideration"
-
-	^grid constrainPoint: aPoint!
-
-constrainRectangle: aRectangle 
-	^grid constrainRectangle: aRectangle!
-
-continueTrackingAt: pointOffset from: previousPointOffset
-	"Private - Continue selection tracking at pointOffset when the previous tracking 
-	was at previousPointOffset. Part of the <MouseTracker> target protocol. 
-	Answers the actual position achieved after any view constraints
-	have been applied"
-
-	self eraseTrackingAt: previousPointOffset.
-	self drawTrackingAt: pointOffset.
-	^pointOffset!
+composingViewStl
+	^self inDesignDpiContextDo: [composingView literalStoreArray]!
 
 copyAspectsFrom: sourceView to: destinationView 
 	"Private - Transfer all the understood published 	aspects from
@@ -566,14 +407,6 @@ createComponents
 				add: ResourceToolboxPresenter new
 				name: 'toolbox'
 				helpId: 10830!
-
-createGrabberFor: aGrabAspectSymbol of: aView 
-	"Private - Answer a new Grabber for aGrabAspectSymbol of our associated view"
-
-	^Grabber 
-		view: aView
-		aspect: aGrabAspectSymbol
-		composer: self!
 
 createSchematicWiring
 	"Private - Create the trigger wiring for the receiver"
@@ -644,26 +477,6 @@ createViewHierarchyModel
 	tree getParentBlock: [:aView | aView parentView].
 	^tree!
 
-cursor
-	"Answers the cursor to be used.
-	If the mouse position is over a Grabber, then
-	answer the appropriate cursor."
-
-	"Has the mouse hit a selection border ?"
-
-	^self cursorAt: (DesktopView current mapPoint: Cursor position to: self arena)!
-
-cursorAt: position 
-	| grabberHit |
-	grabberHit := self grabberHitBy: position.
-	grabberHit notNil ifTrue: [^grabberHit cursor].
-	"Has the mouse hit a selection border ?"
-	^self primarySelection notNil 
-		ifTrue: 
-			[| region |
-			region := self borderRegionFor: self primarySelection.
-			(region containsPoint: position) ifTrue: [Cursor sizeAll]]!
-
 cutSelection
 	"Cuts the current selections to the clipboard"
 
@@ -691,22 +504,15 @@ decreaseWidth
 defaultComposingPosition
 	"Private - Answer aPoint used to offset the composing view within the arena when first shown"
 
-	^self arena insets origin!
+	^self arena defaultComposingPosition!
 
 defaultGridResolution
-	"Private - Answers the default grid resolution to use in the receiver."
+	"Private - Answers the default grid resolution to use in the receiver. Note that this is specified in device-independent pixels (i.e. arena resolution)."
 
 	^5!
 
 defaultHelpId
 	^10827!
-
-defaultSelectionWidth
-	"Private - Answer the default width of the selection border"
-
-	^self view metrics sizingFrameExtent x
-
-!
 
 deleteSelections
 	self selections copy do: [:each | self removeView: each].
@@ -719,11 +525,11 @@ dereference
 
 	| referenceView dereferencedView |
 	referenceView := self primarySelection.
-	(MessageBox 
-		confirm: ('This reference to ''<1d>'' will be replaced by a copy.<n><n>Are you sure you want to continue?' 
+	(MessageBox
+		confirm: ('This reference to ''<1d>'' will be replaced by a copy.<n><n>Are you sure you want to continue?'
 				expandMacrosWith: referenceView resourceIdentifier)
 		caption: 'Dereference to copy...') ifFalse: [^self].
-	self eraseAdornment.
+	self hideAdornment.
 	dereferencedView := self basicPasteResource: referenceView resource
 				context: referenceView parentView.
 	self copyAspectsFrom: referenceView to: dereferencedView.
@@ -731,127 +537,82 @@ dereference
 	self removeView: referenceView!
 
 designDesktop
-	^DesignDesktopView forDpi: self view dpi!
+	^DesignDesktopView default!
 
 distributeHorizontally
 	"Distribute the selected controls horizontally so that they are evenly spaced. The existing
 	relative positions of the selections are maintained (i.e. the leftmost control remains so
 	after distribution, etc)."
 
-	| distributees gap space totalWidth start clientWidth |
-	clientWidth := self selections first parentView clientWidth.
-	distributees := self selectionsByHorizontalPosition.
-	totalWidth := distributees inject: 0 into: [:sum :each | sum + each extent x].
-	space := clientWidth - totalWidth.
-	start := space < 0 
-				ifTrue: 
-					[gap := space / (distributees size - 1).
-					0]
-				ifFalse: 
-					[gap := space / (distributees size + 1).
-					gap rounded].
-	self eraseAdornment.
-	distributees inject: start
-		into: 
-			[:x :each | 
-			self repositionView: each to: x rounded @ each y.
-			x + each extent x + gap]!
+	self hideAdornment.
+	self inDesignDpiContextDo: 
+			[| distributees gap space totalWidth start |
+			distributees := self selectionsByHorizontalPosition.
+			totalWidth := distributees inject: 0 into: [:sum :each | sum + each width].
+			space := distributees first parentView clientWidth - totalWidth.
+			start := space < 0
+						ifTrue: 
+							[gap := space / (distributees size - 1).
+							0]
+						ifFalse: 
+							[gap := space / (distributees size + 1).
+							gap rounded].
+			distributees inject: start
+				into: 
+					[:x :each |
+					self repositionView: each to: x rounded @ each y.
+					x + each width + gap]]!
 
 distributeVertically
 	"Distribute the selected controls vertically so that they are evenly spaced."
 
-	| distributees totalHeight clientHeight gap start space |
-	distributees := self selectionsByVerticalPosition.
-	totalHeight := distributees inject: 0 into: [:sum :each | sum + each height].
-	clientHeight := distributees first parentView clientHeight.
-	space := clientHeight - totalHeight.
-	start := space < 0 
-				ifTrue: 
-					[gap := space / (distributees size - 1).
-					0]
-				ifFalse: 
-					[gap := space / (distributees size + 1).
-					gap rounded].
-	self eraseAdornment.
-	distributees inject: start
-		into: 
-			[:y :each | 
-			self repositionView: each to: each x @ y rounded.
-			y + each height + gap]!
+	self hideAdornment.
+	self inDesignDpiContextDo: 
+			[| distributees totalHeight gap start space |
+			distributees := self selectionsByVerticalPosition.
+			totalHeight := distributees inject: 0 into: [:sum :each | sum + each height].
+			space := distributees first parentView clientHeight - totalHeight.
+			start := space < 0
+						ifTrue: 
+							[gap := space / (distributees size - 1).
+							0]
+						ifFalse: 
+							[gap := space / (distributees size + 1).
+							gap rounded].
+			distributees inject: start
+				into: 
+					[:y :each |
+					self repositionView: each to: each x @ y rounded.
+					y + each height + gap]]!
 
 drawAdornment
 	"Private - Draws the adornment for the receiver on the associated view. It
 	must be painted after all child windows of the view have been drawn, 
 	so that it appears on top of them"
 
-	self arena update.
-	self secondarySelections do: [:each | self drawSelectionFor: each ].
-	self grabbers do: [:each | each draw].
-	self saveAdornmentRegion.
-
-!
-
-drawSelectionFor: aView
-	"Private - Paint the selection border for aView."
-
-	| canvas aMonadicValuable |
-	canvas := self arena canvas.
-	canvas pen: (Pen color: Color highlight).
-	aMonadicValuable := [:each | canvas rectangle: each].
-	self adornmentRectanglesFor: aView do: aMonadicValuable.
-	canvas free!
-
-drawTrackingAt: pointOffset 
-	"Private - Draws the tracking for the current selections when offset by pointOffset."
-
-	self moveableSelections do: 
-			[:each | 
-			| newPosition focusRect |
-			newPosition := self calculatePositionOf: each offsetBy: pointOffset.
-			focusRect := Rectangle origin: newPosition extent: each extent.
-			self arena drawFocusRect: focusRect.
-
-			"For the primary selection, we show the position and size in the statusbar."
-			each = self primarySelection 
-				ifTrue: 
-					[| positionInParent |
-					positionInParent := self mapPoint: newPosition toViewFromArena: each parentView.
-					status value: (Rectangle origin: positionInParent extent: focusRect extent)]]!
+	self arena showAdornment!
 
 dropIncrement
 	"Private - Answers a Point that is the incremental position between multiple dropped object"
 	
 	^10@10!
 
-dropTargetFromSession: session 
-	"Private - Determine where the view should be dropped."
-
-	| viewHit arenaPoint |
-	arenaPoint := session dragPointInView: self arena.
-	viewHit := self viewHitBy: arenaPoint.
-	
-	[viewHit isNil ifTrue: [^self arena].
-	viewHit canAcceptSubViews] 
-			whileFalse: [viewHit := viewHit parentView].
-	^viewHit!
-
 dropUndoState
 	undoList goBack: 1!
 
-dropView: aView onto: aTargetView at: aPoint 
+dropView: aView onto: aTargetView at: aPoint
 	"Private - Handle the drop of aView on aTargetView in the receiver.
 	Answer true if the operation succeeds, false otherwise"
 
 	| originalParent |
 	originalParent := aView parentView.
-	originalParent == aTargetView 
+	originalParent == aTargetView
 		ifFalse: 
-			["Only need to do anything if the view is not already in place"
-
-			| resource name |
-			resource := aView literalStoreArray .
+			[| resource name |
+			"Only need to do anything if the view is not already in place"
+			resource := self inDesignDpiContextDo: [aView literalStoreArray].
 			name := aView parentView notNil ifTrue: [aView name].
-			^self 
+			^self
 				dropViewResource: resource
 				onto: aTargetView
 				at: aPoint
@@ -916,36 +677,6 @@ endComposition
 	self closeComposingView.
 	self refreshImage!
 
-endTrackingAt: pointOffset 
-	"Private - End selection tracking at aPoint."
-
-	self eraseTrackingAt: pointOffset.
-	self moveableSelections do: 
-			[:each | 
-			"Don't think this should be necessary - reposition:to: should already do this"
-			| newPosition screenPosition positionInParent |
-			newPosition := self calculatePositionOf: each offsetBy: pointOffset.
-			screenPosition := newPosition - self defaultComposingPosition + self hidingOffset.
-			positionInParent := View desktop mapPoint: screenPosition to: each parentView.
-			self repositionView: each to: positionInParent].
-	self updateAdornment!
-
-eraseAdornment
-	"Private - Erases the adorment of selections."
-	
-	(self arena)
-		invalidateRgn: self adornmentRegion;
-		update.
-	self isAdornmentModified: false!
-
-eraseTrackingAt: aPoint
-	"Private - Erases the tracking for the current selection when the primary selection is
-	moved to aPoint. Since tracking is drawn with an Xor pen mode we can redraw
-	it once more to erase it"
-
-	self drawTrackingAt: aPoint	
-!
-
 fileNew
 	"Create a new Shell view to edit."
 
@@ -968,29 +699,14 @@ forceLayoutFor: aContainerView
 	self composingView notNil ifTrue: [
 		self composingView invalidateLayout; validateLayout ]!
 
-getAdornmentRegion
-	"Private - Answers a Region occupied by all the selection adornments"
-
-	^self selections inject: Region empty into: [:region :each | 
-		region union: (self adornmentRegionFor: each) ].
-
-
-!
-
-grabberExtent
-	^Grabber defaultExtent * self view dpi // USER_DEFAULT_SCREEN_DPI!
-
-grabberHitBy: aPoint
-	"Private - Answer the grabber under aPoint or nil otherwise"
-
-	^self grabbers detect: [ :each | each containsPoint: aPoint ] ifNone: []
-
-!
+getUndoState
+	^self
+		inDesignDpiContextDo: [{self composingView. selections. self aspectAccessor} literalStoreArray]!
 
 grabbers
 	"Private - Answers the collection of grabbers currently in operation"
 
-	^grabbers ifNil: [grabbers := IdentitySet new: 8]!
+	^grabbers ifNil: [#()]!
 
 grid
 	"Private - Answers the Grid associated with the receiver."
@@ -1029,10 +745,8 @@ hasMoveableSelection
 hasOwnedComposingView: aView 
 	^self composingView == aView and: [self ownsComposingView]!
 
-hasPreferredExtent
-	"Answers true if the primary selection is set to use a preferred extent"
-
-	^self primarySelection preferredExtent notNil!
+hasReferenceSelection
+	^self primarySelection isKindOf: ReferenceView!
 
 hasResource
 	"Private - Answer true if the receiver has a full resource identifier"
@@ -1045,6 +759,11 @@ hasSelection
 	^self selections notEmpty
 
 !
+
+hideAdornment
+	"Private - Ensure that any selection adornments are hidden."
+
+	self arenaDo: [:arena | arena hideAdornment]!
 
 hidingOffset
 	"Answers the <Point> location where our composing view should be positioned so that so that
@@ -1084,6 +803,9 @@ incrementAddPositionOffset
 
 	^addPositionOffset := addPositionOffset + self defaultComposingPosition!
 
+inDesignDpiContextDo: aNiladicBlock
+	^self arena inDpiAwarenessContextDo: aNiladicBlock!
+
 initialComposingPosition
 	"Private - Answer aPoint used to offset the composing view within the arena when first shown"
 
@@ -1108,34 +830,20 @@ inspector
 	^inspector!
 
 inspectSelection
-	"Removes the current selections from the receiver"
+	"Open an inspector on the selected view(s)"
 
-	| sel |
-	sel := self selections.
-	sel size = 1
-		ifTrue: [sel first inspect]
-		ifFalse: [sel asArray inspect]!
+	self selections size = 1
+		ifTrue: [self selections first inspect]
+		ifFalse: [self selections asArray inspect]!
 
 invalidateAdornmentFor: aView
 	"Private - Invalidates the region occupied by the adornments for aView 
 	and causes it to be repainted"
 
-	self arena invalidateRgn: (self adornmentRegionFor: aView)
+	self arenaDo: [:arena | arena invalidateAdornmentFor: aView]!
 
-
-!
-
-isAdornmentModified
-	"Private - Answer whether the adornments required updating."
-
-	^vcFlags allMask: AdornmentModifiedFlag
-!
-
-isAdornmentModified: aBoolean
-	"Private - Update the isAdornmentModified flag."
-
-	vcFlags := vcFlags mask: AdornmentModifiedFlag set: aBoolean
-!
+isComposingViewPrimarySelection
+	^primarySelection == self composingView!
 
 isImageDirty
 	^vcFlags anyMask: RefreshFlag!
@@ -1172,13 +880,6 @@ isMouseClick: aBoolean
 
 	vcFlags := vcFlags mask: MouseClickFlag set: aBoolean!
 
-isMouseTarget
-	"Private - Answer true if the receiver wants mouse events that would otherwise
-	go to the window under the mouse pointer"
-
-	^true
-!
-
 isSelected: aView
 	"Private - Answer true if the aView is selected"
 
@@ -1188,86 +889,65 @@ isSelected: aView
 isUndoRedoInProgress
 	^vcFlags anyMask: UndoRedoFlag!
 
-mapPoint: aPoint toArenaFromView: aView 
-	^(aView parentView mapPoint: aPoint to: View desktop) - self hidingOffset+self defaultComposingPosition!
-
-mapPoint: aPoint toViewFromArena: aView 
-	| offset |
-	offset := self defaultComposingPosition - self hidingOffset.
-	^(View desktop mapPoint: aPoint to: aView )-offset!
-
-mapRectangle: aRectangle toArenaFromView: aView 
-	| offset |
-	offset := self defaultComposingPosition - self hidingOffset.
-	^(aView parentView mapRectangle: aRectangle to: View desktop) moveBy: offset!
-
-mapRectangle: aRectangle toViewFromArena: aView 
-	| offset |
-	offset := self defaultComposingPosition - self hidingOffset.
-	^(View desktop mapRectangle: aRectangle to: aView parentView) moveBy: offset negated!
-
 matchBackgroundColors
 	"Matches the background colors of all the selections to that of the primary selection."
 
 	| color |
-	color := self primarySelection backcolor.
-	(self selections reject: [:v | v == self primarySelection]) do:
-		[:v | v backcolor: color].
-	self setModified
-!
+	color := primarySelection backcolor.
+	self secondarySelections do: [:v | v backcolor: color].
+	self setModified!
 
 matchFonts
 	"Matches the fonts of all the selections to that of the primary selection."
 
 	| font |
-	font := self primarySelection font.
-	(self selections reject: [:v | v == self primarySelection]) do:
-		[:v | v font: font].
-	self setModified
-!
+	font := primarySelection font.
+	self secondarySelections do: [:v | v font: font].
+	self setModified!
 
 matchForegroundColors
 	"Matches the foreground colors of all the selections to that of the primary selection."
 
 	| color |
-	color := self primarySelection forecolor.
-	(self selections reject: [:v | v == self primarySelection]) do:
-		[:v | v forecolor: color].
-	self setModified
-!
+	color := primarySelection forecolor.
+	self secondarySelections do: [:v | v forecolor: color].
+	self setModified!
 
-matchGeometryAspect: anAspectSymbol 
-	"Private - Matches the geometry aspect in anAspectSymbol (#x, #y, #width, #height etc) of the 
-	selections to that of the primary selection"
+matchGeometryAspect: anAspectSymbol
+	"Private - Matches the geometry aspect in anAspectSymbol (#x, #y, #width, #height etc) of the selections to that of the primary selection"
 
-	self safetyWrap: 
+	self hideAdornment.
+	self arena inDpiAwarenessContextDo: 
 			[| aspectSetSymbol primaryRectangle |
 			aspectSetSymbol := (anAspectSymbol , ':') asSymbol.
-			primaryRectangle := self primarySelection parentView 
-						mapRectangle: self primarySelection rectangle
-						to: self primarySelection topView.
+			primaryRectangle := primarySelection parentView mapRectangle: primarySelection rectangle
+						to: primarySelection topView.
 			self selections do: 
-					[:each | 
+					[:each |
 					| rectangle selectionRectangle |
 					rectangle := each topView mapRectangle: primaryRectangle to: each parentView.
 					selectionRectangle := each rectangle.
 					selectionRectangle perform: aspectSetSymbol with: (rectangle perform: anAspectSymbol).
-					each rectangle: selectionRectangle]]!
+					each rectangle: selectionRectangle]].
+	self setModified.
+	self showAdornment!
 
 matchHeights
 	"Matches the heights of all the selections to that of the primary selection"
 
-	self matchGeometryAspect: #height.!
+	self matchGeometryAspect: #height!
 
 matchSizes
 	"Matches the sizes of all the selections to that of the primary selection"
 
-	self matchHeights; matchWidths!
+	self
+		matchHeights;
+		matchWidths!
 
 matchWidths
 	"Matches the widths of all the selections to that of the primary selection"
 
-	self matchGeometryAspect: #width.!
+	self matchGeometryAspect: #width!
 
 maxUndoStates
 	^40!
@@ -1336,24 +1016,26 @@ newShellView
 	rid := ResourceIdentifier class: Shell name: Shell defaultView.
 	self openOnCopyOf: rid!
 
-nudgeBy: aPoint 
-	self moveableSelections do: [:each | self repositionView: each to: each position + aPoint]!
+nudgeBy: aPoint
+	self inDesignDpiContextDo: 
+			[self moveableSelections do: [:each | self repositionView: each to: each position + aPoint]]!
 
 nudgeDown
 	self nudgeBy: 0 @ 1!
 
-nudgeHorizontalGaps: delta 
+nudgeHorizontalGaps: delta
 	| distributees extra |
 	distributees := self selectionsByHorizontalPosition.
 	extra := distributees size - 1.
-	self eraseAdornment.
-	distributees inject: extra / 2 * delta negated
-		into: 
-			[:offset :each | 
-			| pos |
-			pos := each position.
-			self repositionView: each to: (pos x + offset rounded) @ pos y.
-			offset + delta]!
+	self hideAdornment.
+	self inDesignDpiContextDo: 
+			[distributees inject: extra / 2 * delta negated
+				into: 
+					[:offset :each |
+					| pos |
+					pos := each position.
+					self repositionView: each to: (pos x + offset rounded) @ pos y.
+					offset + delta]]!
 
 nudgeLeft
 	self nudgeBy: -1 @ 0!
@@ -1364,18 +1046,19 @@ nudgeRight
 nudgeUp
 	self nudgeBy: 0 @ -1!
 
-nudgeVerticalGaps: delta 
-	| distributees extra |
-	distributees := self selectionsByVerticalPosition.
-	extra := distributees size - 1.
-	self eraseAdornment.
-	distributees inject: extra / (2 * delta negated)
-		into: 
-			[:offset :each | 
-			| pos |
-			pos := each position.
-			self repositionView: each to: pos x @ (pos y + offset rounded).
-			offset + delta]!
+nudgeVerticalGaps: delta
+	self hideAdornment.
+	self inDesignDpiContextDo: 
+			[| distributees extra |
+			distributees := self selectionsByVerticalPosition.
+			extra := distributees size - 1.
+			distributees inject: extra / (2 * delta negated)
+				into: 
+					[:offset :each |
+					| pos |
+					pos := each position.
+					self repositionView: each to: pos x @ (pos y + offset rounded).
+					offset + delta]]!
 
 onCloseRequested: boolValueHolder
 	"Private - A request to close the view onto the receiver as occurred.
@@ -1395,13 +1078,13 @@ onDragCutHierarchy: session
 			viewHierarchyPresenter model remove: draggedView.
 			draggedView parentView removeSubView: draggedView]!
 
-onDragEnterArena: session 
+onDragEnterArena: session
 	"Private - The drag operation described by the <DragDropSession>, session,
 	has entered the receiver's arena window.
 	Note that we don't worry about setting up the drop operation just yet,
 	as we'll soon be getting an #onDragOverArena: message."
 
-	self eraseAdornment!
+	self hideAdornment!
 
 onDragHierarchy: session 
 	"Private - A drag has been started. Drag the currently selected view hierarchy."
@@ -1412,36 +1095,36 @@ onDragHierarchy: session
 		dragObjects: (OrderedCollection with: dragDropObject);
 		defaultOperation: #move!
 
-onDragLeaveArena: session 
-	"Private - The drag operation described by the <DragDropSession>, session,
-	has left the receiver's arena window."
+onDragLeaveArena: session
+	self arenaDo: 
+			[:arena |
+			session suggestedTarget ifNotNil: [:target | arena invalidateAdornmentFor: target].
+			arena showAdornment]!
 
-	session suggestedTarget notNil ifTrue: [self invalidateAdornmentFor: session suggestedTarget].
-	self drawAdornment!
+onDragOverArena: session
+	self arenaDo: 
+			[:arena |
+			| op dropTarget |
+			session operation: nil.
+			dropTarget := arena
+						dropTargetFromScreenPoint: session dragPoint * arena dpi // session dragSource dpi.
+			dropTarget == session suggestedTarget
+				ifFalse: 
+					[session suggestedTarget ifNotNil: [:target | arena invalidateAdornmentFor: target].
 
-onDragOverArena: session 
-	"Private - Answer the operation that would occur if a drop took place now."
-
-	| op dropTarget |
-	op := session intendedOperation.
-	session operation: nil.
-	"Determine where the view should be dropped. Make a note of this in the session."
-	dropTarget := self dropTargetFromSession: session.
-	dropTarget ~~ session suggestedTarget 
-		ifTrue: 
-			[session suggestedTarget notNil ifTrue: [self invalidateAdornmentFor: session suggestedTarget].
-
-			"Don't allow a drop outside of the composingView (unless the arena is empty."
-			(dropTarget == self arena and: [self composingView notNil]) ifTrue: [^session suggestedTarget: nil].
-			session hideCursorWhile: 
-					[self drawSelectionFor: dropTarget.
-					self arena update].
-			session suggestedTarget: dropTarget].
-	(self 
-		areDragObjects: session dragObjects
-		acceptableFor: op
-		inView: dropTarget) ifFalse: [^self].
-	session operation: op!
+					"Don't allow a drop outside of the composingView (unless the arena is empty)."
+					dropTarget == arena
+						ifTrue: [self hasComposingView ifTrue: [^session suggestedTarget: nil]]
+						ifFalse: 
+							[session hideCursorWhile: 
+									[arena drawSelectionFor: dropTarget.
+									arena update]].
+					session suggestedTarget: dropTarget].
+			op := session intendedOperation.
+			(self
+				areDragObjects: session dragObjects
+				acceptableFor: op
+				inView: dropTarget) ifTrue: [session operation: op]]!
 
 onDragOverHierarchy: session 
 	"Private - Answer the operation that would occur if a drop took place now from the
@@ -1469,122 +1152,117 @@ onDragOverHierarchy: session
 					[session operation: op.
 					^self]]!
 
-onDropOverArena: session 
-	"Private - The drag operation described by the <DragDropSession>, session, has 
-	culminated in a drop over the arena, which we handle here."
-
-	| dropObject dropTarget dropPosition pastee |
-	dropObject := session dragObjects first.
-	dropTarget := self dropTargetFromSession: session.
-	dropTarget = self arena ifTrue: [dropTarget := self designDesktop].
-	dropPosition := View desktop mapPoint: session dragPoint to: self arena.
-	dropPosition := self mapPoint: dropPosition toViewFromArena: dropTarget.
-	"dropPosition := session dragPointInView: dropTarget."
-	(session isCopy or: [session isMove]) 
-		ifTrue: 
-			[(dropObject isFormatAvailable: #ResourceIdentifier) 
+onDropOverArena: session
+	self arenaDo: 
+			[:arena |
+			| dropObject dropTarget position |
+			position := session dragPoint * arena dpi // session dragSource dpi.
+			dropTarget := arena dropTargetFromScreenPoint: position.
+			dropTarget == arena
 				ifTrue: 
-					[pastee := dropObject format: #ResourceIdentifier.
-					self 
-						dropViewResource: pastee resource
-						onto: dropTarget
-						at: dropPosition
-						named: nil]
+					[dropTarget := self designDesktop.
+					position := arena defaultComposingPosition]
 				ifFalse: 
-					[pastee := dropObject object.
-					self 
-						dropView: pastee
-						onto: dropTarget
-						at: dropPosition]].
-	session isLink
-		ifTrue: 
-			[pastee := dropObject format: #ResourceIdentifier.
-			self 
-				pasteResourceLink: pastee
-				context: dropTarget
-				position: dropPosition].
-	session suggestedTarget notNil ifTrue: [self invalidateAdornmentFor: session suggestedTarget]!
+					[position := View desktop mapPoint: position to: arena.
+					position := arena mapPoint: position toView: dropTarget].
+			dropObject := session dragObjects first.
+			(session isCopy or: [session isMove])
+				ifTrue: 
+					[(dropObject isFormatAvailable: #ResourceIdentifier)
+						ifTrue: 
+							[self
+								dropViewResource: (dropObject format: #ResourceIdentifier) resource
+								onto: dropTarget
+								at: position
+								named: nil]
+						ifFalse: 
+							[self
+								dropView: dropObject object
+								onto: dropTarget
+								at: position]].
+			session isLink
+				ifTrue: 
+					[self
+						pasteResourceLink: (dropObject format: #ResourceIdentifier)
+						context: dropTarget
+						position: position].
+			session suggestedTarget ifNotNil: [:target | arena invalidateAdornmentFor: target]]!
 
-onDropOverHierarchy: session 
+onDropOverHierarchy: session
 	"Private - The drag operation described by the <DragDropSession>, session,
 	would like to do a drop."
 
-	| parent ok position |
-	(parent := session suggestedTarget) notNil 
+	| parent |
+	(parent := session suggestedTarget) notNil
 		ifFalse: 
 			[session resetOperation.
 			Sound errorBeep.
 			^self].
-	position := self dropIncrement.
-	ok := false.
-	session dragObjects do: 
-			[:dropObject | 
-			(dropObject isObjectKindAvailable: View) 
-				ifTrue: 
-					["A view has been dropped onto the receiver"
-					ok := self 
-								dropView: dropObject object
-								onto: parent
-								at: dropObject object position].
-			(dropObject isFormatAvailable: #ResourceIdentifier) 
-				ifTrue: 
-					["A view resource has been dropped onto the receiver"
-					| rid |
-					rid := dropObject format: #ResourceIdentifier.
-					session isCopy 
+	(self inDesignDpiContextDo: 
+			[| position |
+			position := self dropIncrement.
+			session dragObjects allSatisfy: 
+					[:dropObject |
+					| ok |
+					ok := false.
+					(dropObject isObjectKindAvailable: View)
 						ifTrue: 
-							[self 
-								dropViewResource: rid resource
-								onto: parent
-								at: position
-								named: nil.
-							ok := true].
-					session isLink
-						ifTrue: 
-							[| dropee |
-							dropee := ReferenceView resourceIdentifier: rid.
-							ok := self 
-										dropView: dropee
+							["A view has been dropped onto the receiver"
+							ok := self
+										dropView: dropObject object
 										onto: parent
-										at: position].
+										at: dropObject object position].
+					(dropObject isFormatAvailable: #ResourceIdentifier)
+						ifTrue: 
+							[| rid |
+							"A view resource has been dropped onto the receiver"
+							rid := dropObject format: #ResourceIdentifier.
+							session isCopy
+								ifTrue: 
+									[self
+										dropViewResource: rid resource
+										onto: parent
+										at: position
+										named: nil.
+									ok := true].
+							session isLink
+								ifTrue: 
+									[| dropee |
+									dropee := ReferenceView resourceIdentifier: rid.
+									ok := self
+												dropView: dropee
+												onto: parent
+												at: position].
 
-					"Bump position"
-					position := position + self dropIncrement].
+							"Bump position"
+							position := position + self dropIncrement].
 
-			"Terminate early if operation fails"
-			ok 
-				ifFalse: 
-					[session resetOperation.
-					^self]]!
+					"Terminate if operation fails"
+					ok]])
+		ifFalse: [session resetOperation]!
 
 onHierarchySelection
 	"Private - The selection has changed in the view hierarchy presenter so
 	alter the primary selection"
 
-	self isMouseClick 
+	self hideAdornment.
+	self isMouseClick
 		ifFalse: 
 			[| v |
 			v := viewHierarchyPresenter selectionOrNil.
 			v isNil ifTrue: [self cancelSelections] ifFalse: [self selection: v]].
-	inspector model: primarySelection.
-	self refreshImage!
+	inspector model: primarySelection!
 
 onIdleEntered
 	"Private - Idle has been entered. Ensure the adornment is displayed correctly"
 
 	super onIdleEntered.
-	self isOpen
-		ifTrue: 
-			[self validateImage.
-			self validateAdornment]!
+	self isOpen ifTrue: [self validateImage]!
 
 onImageSaveCompleted
-	self ownsComposingView 
-		ifTrue: 
-			["Show the composing view that was hidden before image save. Note, if we
-			 don't do this then the VC will *appear* to work but all the non-client
-			 detail of views (i.e borders) will disappear (#2291)"
-			self composingView show]!
+	self ownsComposingView ifFalse: [^self].
+	"Show the composing view that was hidden before image save, without activing it (otherwise if editing a dialog this VC will be activated). Note, if we don't do this then the VC will *appear* to work but all the non-client detail of views (i.e borders) will disappear (#2291)"
+	self composingView basicShowWithStyle: SW_SHOWNOACTIVATE!
 
 onImageSaveStarting
 	"Save the current state of the receiver so it can be restored on image restart"
@@ -1622,35 +1300,43 @@ onRequestDropOpsForShield: session
 
 	session supportedOperations: #(copy link)!
 
-onSelectionPositioned: aPositionEvent 
+onSelectionPositioned: aPositionEvent
 	"Private - The selection has been resized or moved.
 	Refresh the receiver appropriately"
 
 	| updatedAspect |
 	aPositionEvent isMove ifTrue: [updatedAspect := #position].
 	aPositionEvent isResize ifTrue: [updatedAspect := #extent].
-	updatedAspect notNil ifTrue: [[inspector aspectChanged: updatedAspect] postToMessageQueue].
-	self updateAdornment!
+	updatedAspect notNil ifTrue: [[self adjustScroll. inspector aspectChanged: updatedAspect] postToMessageQueue].
+	self showAdornment!
 
 onSessionStarted
 	"Reassert the composingView to ensure the viewHierarchyPresenter state is refreshed"
+
 	
-	[
-	"Fix for #2261, where the VC was not correctly allowing views to be edited after image
+	["Fix for #2261, where the VC was not correctly allowing views to be edited after image
 	restart. Here we need to ensure that the view hierarchy tree pane is refreshed."
 	self composingView: self composingView isOwned: self ownsComposingView.
-
-	self ownsComposingView 
+	"Rebuilding the tree will have added an undo record, which we don't want"
+	#highDpiToDo. "This isn't right, as if some changes have been undone, we'll lose the redo history. Ideally need to stop the tree rebuild adding an undo record."
+	undoList goBack: 1; clearFuture.
+	self ownsComposingView
 		ifTrue: 
 			["Show the composing view that was hidden before image save. Note, if we
 			 don't do this then the VC will *appear* to work but all the non-client
 			 detail of views (i.e borders) will disappear (#2291)"
-			self composingView show]] 
+			self composingView show]]
 			postToInputQueue!
 
-onSettingChanged: aWindowEvent 
-	adornmentRegion := nil.
+onSettingChanged: aWindowEvent
+	image := nil.
+	self positionComposingView.
+	self refreshImage.
 	^super onSettingChanged: aWindowEvent!
+
+onViewAvailable
+	#highDpiToDo.	"Set in resource."
+	self arena view parentView isMixedDpiHost: true!
 
 onViewClosed
 	viewHierarchyPresenter removeEventsTriggeredFor: self.
@@ -1755,23 +1441,26 @@ pastedView: aView context: contextView
 	self drawAdornment.
 !
 
-pasteResource: aResourceArray context: contextView position: aPoint 
+pasteResource: aResourceArray context: contextView position: aPoint
 	"Private - Paste the view realized from anSTLArray into contextView at position aPoint.
 	Answers the pasted View."
 
-	| pastedView |
-	pastedView := self basicPasteResource: aResourceArray context: contextView.
-	pastedView position: (self snapPoint: aPoint context: contextView).
-	self pastedView: pastedView context: contextView.
-	^pastedView!
+	^self arenaDo: 
+			[:arena |
+			| pastedView |
+			pastedView := self basicPasteResource: aResourceArray context: contextView.
+			pastedView position: (arena snapPoint: aPoint context: contextView).
+			self pastedView: pastedView context: contextView.
+			pastedView]!
 
-pasteResourceLink: aLiteralResourceIdentifier context: contextView position: aPoint 
-	"Private - Paste arefernces to the view indicated by aLiteralResourceIdentifier into
+pasteResourceLink: aLiteralResourceIdentifier context: contextView position: aPoint
+	"Private - Paste a reference to the view indicated by aLiteralResourceIdentifier into
 	contextView at position aPoint. Answers the pasted View."
 
 	| pastedView |
+	self assertInArenaDpiContext.
 	pastedView := self basicPasteResourceLink: aLiteralResourceIdentifier context: contextView.
-	pastedView position: (self snapPoint: aPoint context: contextView).
+	pastedView position: (self arena snapPoint: aPoint context: contextView).
 	self pastedView: pastedView context: contextView.
 	^pastedView!
 
@@ -1779,47 +1468,59 @@ performCommand: aCommand
 	"Performs aCommand on the receiver and answer the result"
 
 	| result |
-	self eraseAdornment.
+	self hideAdornment.
 	result := super performCommand: aCommand.
 	self isOpen
 		ifTrue: 
 			[self validateLayout.
-			self drawAdornment].
+			self showAdornment].
 	^result!
 
 performUndoRedo: aNiladicValuable
+	| wasActive user32 dpiContext |
+	wasActive := self view isActive.
 	vcFlags := vcFlags maskSet: UndoRedoFlag.
-	aNiladicValuable ensure: [vcFlags := vcFlags maskClear: UndoRedoFlag]!
+	user32 := UserLibrary default.
+	dpiContext := user32
+				setThreadDpiAwarenessContext: (user32 getWindowDpiAwarenessContext: self arena handle).
+	aNiladicValuable ensure: 
+			[vcFlags := vcFlags maskClear: UndoRedoFlag.
+			user32 setThreadDpiAwarenessContext: dpiContext].
+	(wasActive and: [self view isActive not]) ifTrue: [self view zOrderTop]!
+
+positionComposingView
+	self ownsComposingView ifTrue: [self composingView position: self hidingOffset]!
 
 primarySelection
 	"Private - Answer the primary selection or nil if there is none."
 
 	^primarySelection!
 
-primarySelection: aViewOrNil 
+primarySelection: aViewOrNil
 	"Private - Set the primary selection to aViewOrNil."
 
-	primarySelection == aViewOrNil 
-		ifFalse: 
-			["The selection has changed"
-
-			"First remove event triggers for the old selection"
-			primarySelection removeEventsTriggeredFor: self.
-			primarySelection := aViewOrNil.
-			primarySelection notNil 
+	primarySelection == aViewOrNil ifTrue: [^self].
+	primarySelection removeEventsTriggeredFor: self.
+	self hideAdornment.
+	primarySelection := aViewOrNil.
+	primarySelection
+		ifNotNil: 
+			[primarySelection
+				when: #positionChanged:
+				send: #onSelectionPositioned:
+				to: self].
+	grabbers := nil.
+	self addGrabbers.
+	self resetAddPositionOffset.
+	primarySelection
+		ifNotNil: 
+			["Update the viewHierarchy."
+			viewHierarchyPresenter selectionOrNil == primarySelection
 				ifTrue: 
-					[primarySelection 
-						when: #positionChanged:
-						send: #onSelectionPositioned:
-						to: self].
-			self removeGrabbers.
-			self addGrabbers.
-			self resetAddPositionOffset.
-			primarySelection notNil 
-				ifTrue: 
-					["Update the viewHierarchy."
-					primarySelection ensureVisible.
-					viewHierarchyPresenter selection: primarySelection]]!
+					[primarySelection ensureVisible.
+					self refreshImage]
+				ifFalse: [viewHierarchyPresenter selection: primarySelection]].
+	self updateStatusBar!
 
 printShortCaptionOn: aWriteStream 
 	self hasComposingView 
@@ -1829,96 +1530,92 @@ printShortCaptionOn: aWriteStream
 				ifFalse: [aWriteStream display: resourceIdentifier]]
 		ifFalse: [aWriteStream nextPutAll: self basicCaption]!
 
-queryCommand: aCommandQuery 
+queryCommand: aCommandQuery
 	"Private - Enter details about a potential command for the receiver into the 
 	<CommandQuery> argument."
 
 	| command |
 	command := aCommandQuery commandSymbol.
-	(#(#copySelection #mutate #toggleGroupStop #toggleTabStop #decreaseHeight #decreaseWidth #increaseWidth #increaseHeight) 
-		identityIncludes: command) 
+	(#(#copySelection #cutSelection #clearSelection #inspectSelection #mutate #toggleGroupStop #toggleTabStop #decreaseHeight #decreaseWidth #increaseWidth #increaseHeight)
+		identityIncludes: command)
 			ifTrue: 
 				[aCommandQuery isEnabled: self hasSelection.
 				^true].
-	(#(#cutSelection #clearSelection) identityIncludes: command) 
-		ifTrue: 
-			[aCommandQuery isEnabled: self hasSelection.
-			^true].
-	(#(#nudgeLeft #nudgeRight #nudgeUp #nudgeDown #centerHorizontally #centerVertically) 
-		identityIncludes: command) 
+	(#(#nudgeLeft #nudgeRight #nudgeUp #nudgeDown #centerHorizontally #centerVertically)
+		identityIncludes: command)
 			ifTrue: 
 				[aCommandQuery isEnabled: self hasMoveableSelection.
 				^true].
-	(#(#fileSave #viewSave) identityIncludes: command) 
+	(#(#fileSave #viewSave) identityIncludes: command)
 		ifTrue: 
 			[aCommandQuery isEnabled: (self hasComposingView and: [self hasResource]).
 			^true].
-	#viewRevert == command 
+	#viewRevert == command
 		ifTrue: 
 			[aCommandQuery isEnabled: (self hasComposingView and: [self hasResource]).
 			^true].
-	(#(#referenceViewMenu #dereference #editReference) identityIncludes: command) 
+	(#(#referenceViewMenu #dereference #editReference) identityIncludes: command)
 		ifTrue: 
-			[aCommandQuery isEnabled: (self primarySelection isKindOf: ReferenceView).
+			[aCommandQuery isEnabled: self hasReferenceSelection.
 			^true].
-	(#(#viewExport #viewSaveAs #viewClose #viewTest) includes: command) 
+	(#(#viewExport #viewSaveAs #viewClose #viewTest) includes: command)
 		ifTrue: 
 			[aCommandQuery isEnabled: self hasComposingView.
 			^true].
-	(#(#zFront #zForward #zBackward #zBack) identityIncludes: command) 
+	(#(#zFront #zForward #zBackward #zBack) identityIncludes: command)
 		ifTrue: 
 			[aCommandQuery isEnabled: self primarySelection notNil.
 			^true].
-	#widenSelection == command 
+	#widenSelection == command
 		ifTrue: 
 			[| selected |
 			selected := self primarySelection.
 			aCommandQuery isEnabled: (selected notNil and: [selected ~~ self composingView]).
 			^true].
-	(#(#matchWidths #matchHeights #matchSizes #matchFonts #matchForegroundColors #matchBackgroundColors #alignLefts #alignMiddles #alignRights #alignTops #alignCenters #alignBottoms) 
-		identityIncludes: command) 
+	(#(#matchWidths #matchHeights #matchSizes #matchFonts #matchForegroundColors #matchBackgroundColors #alignLefts #alignMiddles #alignRights #alignTops #alignCenters #alignBottoms)
+		identityIncludes: command)
 			ifTrue: 
 				[aCommandQuery isEnabled: self selections size > 1.
 				^true].
-	(#(#distributeHorizontally #distributeVertically #removeHorizontalGaps #removeVerticalGaps #increaseHorizontalGaps #decreaseHorizontalGaps #increaseVerticalGaps #decreaseVerticalGaps) 
-		includes: command) 
+	(#(#distributeHorizontally #distributeVertically #removeHorizontalGaps #removeVerticalGaps #increaseHorizontalGaps #decreaseHorizontalGaps #increaseVerticalGaps #decreaseVerticalGaps)
+		includes: command)
 			ifTrue: 
-				[aCommandQuery isEnabled: (self selections size > 1 
+				[aCommandQuery isEnabled: (self selections size > 1
 							and: [(self selections collect: [:each | each parentView]) asSet size = 1]).
 				^true].
-	command == #editMenuBar 
+	command == #editMenuBar
 		ifTrue: 
 			[aCommandQuery isEnabled: (self composingView class conformsToProtocol: #topView).
 			^true].
-	command == #editContextMenu 
+	command == #editContextMenu
 		ifTrue: 
 			[aCommandQuery isEnabled: self primarySelection notNil.
 			^true].
-	command == #viewUndo 
+	command == #viewUndo
 		ifTrue: 
 			[aCommandQuery isEnabled: undoList hasPast.
 			^true].
-	command == #viewRedo 
+	command == #viewRedo
 		ifTrue: 
 			[aCommandQuery isEnabled: undoList hasFuture.
 			^true].
-	command == #toggleTabStop 
+	command == #toggleTabStop
 		ifTrue: 
-			[self hasSelection 
+			[self hasSelection
 				ifTrue: 
 					[aCommandQuery
 						isEnabled: true;
 						isChecked: (self selections detect: [:v | v isTabStop not] ifNone: []) isNil].
 			^true].
-	command == #toggleGroupStop 
+	command == #toggleGroupStop
 		ifTrue: 
-			[self hasSelection 
+			[self hasSelection
 				ifTrue: 
 					[aCommandQuery
 						isEnabled: true;
 						isChecked: self primarySelection isGroupStop].
 			^true].
-	command == #pasteClipboard 
+	command == #pasteClipboard
 		ifTrue: 
 			[aCommandQuery isEnabled: self canPaste.
 			^true].
@@ -1932,37 +1629,29 @@ refreshImage
 refreshPublishedAspects
 	inspector refresh!
 
-removeGrabbers
-	"Private - Destroy all the grabbers"
-
-	grabbers
-		ifNotNil: 
-			[grabbers do: [:each | each invalidate].
-			grabbers := nil]!
-
 removeHorizontalGaps
 	"Remove any vertical spacing between the selected controls."
 
-	| distributees first |
-	distributees := self selectionsByHorizontalPosition.
-	first := true.
-	distributees inject: 0
-		into: 
-			[:x :each | 
-			first ifTrue: [first := false] ifFalse: [self repositionView: each to: x @ each y].
-			each rectangle right]!
+	self inDesignDpiContextDo: 
+			[| first |
+			first := true.
+			self selectionsByHorizontalPosition inject: 0
+				into: 
+					[:x :each |
+					first ifTrue: [first := false] ifFalse: [self repositionView: each to: x @ each y].
+					each rectangle right]]!
 
 removeVerticalGaps
 	"Remove any vertical spacing between the selected controls."
 
-	| distributees first |
-	distributees := self selectionsByVerticalPosition.
-	first := true.
-	distributees inject: 0
-		into: 
-			[:y :each | 
-			first ifTrue: [first := false] ifFalse: [self repositionView: each to: each x @ y].
-			each rectangle bottom]!
+	self inDesignDpiContextDo: 
+			[| first |
+			first := true.
+			self selectionsByVerticalPosition inject: 0
+				into: 
+					[:y :each |
+					first ifTrue: [first := false] ifFalse: [self repositionView: each to: each x @ y].
+					each rectangle bottom]]!
 
 removeView: aView 
 	"Private - Removes aView from the receiver."
@@ -1977,18 +1666,18 @@ removeView: aView
 	aView parentView removeSubView: aView.
 	self forceLayoutFor: aView parentView!
 
-repositionView: each to: positionInParent 
-	| parentLayoutManager |
-	parentLayoutManager := each parentView layoutManager.
-	parentLayoutManager isNil 
-		ifTrue: 
-			[each
-				position: positionInParent;
-				invalidate]
-		ifFalse: 
-			[parentLayoutManager reposition: each to: positionInParent.
-			#todo.	"Don't think this should be necessary - reposition:to: should already do this"
-			parentLayoutManager layoutContainer: each parentView].
+repositionView: aView to: positionInParent
+	aView inDpiAwarenessContextDo: 
+			[aView parentView layoutManager
+				ifNil: 
+					[aView
+						position: positionInParent;
+						invalidate]
+				ifNotNil: 
+					[:parentLayoutManager |
+					parentLayoutManager reposition: aView to: positionInParent.
+					#todo.	"Don't think this should be necessary - reposition:to: should already do this"
+					parentLayoutManager layoutContainer: aView parentView]].
 	self setModified!
 
 resetAddPositionOffset
@@ -1999,19 +1688,18 @@ resetAddPositionOffset
 
 !
 
-resizeBy: aPoint 
-	self selections do: [:each | self resizeView: each to: each extent + aPoint]!
+resizeBy: aPoint
+	self hideAdornment.
+	self
+		inDesignDpiContextDo: [self selections do: [:each | self resizeView: each to: each extent + aPoint]]!
 
-resizeView: aView to: aPoint 
+resizeView: aView to: aPoint
 	| parent |
 	parent := aView parentView.
-	parent layoutManager 
-		ifNil: [aView extent: aPoint]
-		ifNotNil: 
-			[:layoutManager | 
-			| rect |
-			rect := aView rectangle.
-			layoutManager resize: aView to: (rect origin extent: aPoint)].
+	aView inDpiAwarenessContextDo: 
+			[parent layoutManager
+				ifNil: [aView extent: aPoint]
+				ifNotNil: [:layoutManager | layoutManager resize: aView to: (aView rectangle origin extent: aPoint)]].
 	parent validateLayout.
 	self setModified!
 
@@ -2049,23 +1737,6 @@ restoreUndoState: aLiteralStoreArray
 					self selections: (state at: 2)].
 			self aspectAccessor: (state at: 3)]!
 
-safetyWrap: aBlock
-	"Private - Executes aBlock which may cause some aspect of the adornment to change.
-	We wrap the block inside some safe redrawing of the adornment"
-
-	aBlock value.
-	self setModified.
-	self updatePrimarySelection.
-	self updateAdornment.
-
-!
-
-saveAdornmentRegion
-	"Private - Make a note of the selection region in case we have to invalidate it later"
-
-	adornmentRegion := self getAdornmentRegion.
-!
-
 saveStateOn: aWriteStream 
 	"Private - Write the source of a monadic block that will configure an instance of the receiver's class
 	to match the state current receiver, to aWriteStream. The block expects a fresh instance of
@@ -2088,8 +1759,7 @@ secondarySelections
 	"Private - Answer a collection of selected views that doesn't contain
 	the primary selection"
 
-	^self selections reject: [:each | each==self primarySelection]
-	!
+	^self selections reject: [:each | each == primarySelection]!
 
 selectAll
 	self selections: viewHierarchyPresenter model asOrderedCollection!
@@ -2098,10 +1768,12 @@ selection: aView
 	"Private - Sets the primary (and only selection) to be aView"
 
 	"If this view is already the primary and only selection then do nothing."
-	(self primarySelection == aView and: [ self selections size = 1 ]) ifTrue: [
-		^self ].
-	self cancelSelections.
-	self addSelectionFor: aView !
+
+	(self primarySelection == aView and: [self selections size = 1]) ifTrue: [^self].
+	self hideAdornment.
+	grabbers := nil.
+	selections := OrderedCollection new.
+	self addSelectionFor: aView!
 
 selections
 	"Private - Answer an OrderedCollection of selections within the receiver's jurisdiction"
@@ -2142,36 +1814,23 @@ shortCaption
 	self printShortCaptionOn: stream.
 	^stream contents!
 
+showAdornment
+	"Private - Ensure the adornment of the current selections is displayed"
+
+	| arena |
+	arena := self arena.
+	arena isAdornmentHidden ifFalse: [^self].
+	arena inDpiAwarenessContextDo: [arena showAdornment]!
+
 slideyPinNames
 	^super slideyPinNames , #('toolsSlidey' 'toolbarsSlidey' 'inspectorSlidey')!
 
-snapPoint: aPoint context: contextView
-	"Private - Answers an instance of Point which is aPoint snapped
-	to the grid. Both the argument aPoint and the answer are in the
-	coordinate space of the argument contextView."
+statusValue: aRectangle
+	"Private - Update the status bar position and extent."
 
-	^self arena
-		mapPoint: (self constrainPoint: (contextView
-			mapPoint: aPoint
-			to: self arena))
-		to: contextView.
-!
+	"We have to be careful not to update the composer StatusBar in the DPI awareness context of the arena, as even though Windows will ensure that the correct DPI awareness context is established for a Window before it dispatches it messages, when we set the value the StatusBarItems will invalidate their client area in the parent StatusBar and calculate the invalidation rectangle based on the current DPI context at the time."
 
-startTrackingAt: pointOffset
-	"Private - Start selection tracking at pointOffset. Part of the <MouseTracker> 
-	target protocol. Answers the actual position achieved after any  
-	constraints have been applied"
-
-	self eraseAdornment.
-	Cursor sizeAll setCursor.
-	self drawTrackingAt: pointOffset.
-	^pointOffset!
-
-status
-	"Private - Answer the receiver's status model."
-
-	^status
-!
+	view inDpiAwarenessContextDo: [status value: aRectangle]!
 
 toggleGroupStop
 	"Toggles the WS_GROUP style of the selected items."
@@ -2198,32 +1857,10 @@ toggleTabStop
 	self selections do: [ :v | v isTabStop: ts ].
 !
 
-trackGrabber: aGrabber from: aScreenPoint
-	"Private - Track aGrabber which has been hit with the mouse at aScreenPoint."
-
-	self eraseAdornment.
-	aGrabber cursor setCursor.
-	aGrabber trackMouseFrom: aScreenPoint.
-	(aGrabber view == self composingView) ifTrue: [
-		self adjustScroll ].
-	self updateAdornment.
-	self setModified.
-!
-
 undoState
-	| stateBlock |
-	stateBlock := 
-			[(Array 
-				with: self composingView
-				with: selections
-				with: self aspectAccessor) literalStoreArray].
-	^self composingView ifNil: [stateBlock value] ifNotNil: [:v | v whileInvisibleDo: stateBlock]!
-
-updateAdornment
-	"Private - Update the adornment of the current selections"
-
-	self isAdornmentModified: true
-!
+	^self composingView
+		ifNil: [self getUndoState]
+		ifNotNil: [:cv | cv whileInvisibleDo: [self getUndoState]]!
 
 updateCaption
 	"Private - The receiver has changed in such a way that the caption
@@ -2248,26 +1885,25 @@ updatePrimarySelection
 	actualPrimarySelection := self selections notEmpty ifTrue: [self selections first ].
 	self primarySelection: actualPrimarySelection!
 
-validateAdornment
-	self isAdornmentModified ifFalse: [^self].
-	self eraseAdornment.
-	self drawAdornment.
-	self primarySelection notNil
-		ifTrue: 
-			[| rect |
-			rect := self primarySelection rectangle.
-			self primarySelection = self composingView ifTrue: [rect moveBy: self hidingOffset negated].
-			status value: rect].
-	self isAdornmentModified: false!
+updateStatusBar
+	| rect |
+	primarySelection ifNil: [^self].
+	rect := primarySelection getRect.
+	self isComposingViewPrimarySelection ifTrue: [rect moveBy: self composingView position negated].
+	self statusValue: (rect scaleToDpi: primarySelection dpi from: self view dpi)!
 
 validateImage
 	"Private - Re-render the composing view and display it in the arenaPresenter."
 
 	((image notNil and: [image handle isNull]) or: [self isImageDirty]) ifFalse: [^self].
 	self isImageDirty: false.
-	image := self composingView notNil
-				ifTrue: [Bitmap fromView: self composingView background: self arena actualBackcolor brush].
-	arenaPresenter value: image!
+	"self view inDpiAwarenessContextDo: "
+			"["image := self composingView
+						ifNotNil: 
+							[:cv |
+							cv needsValidateLayout ifTrue: [cv validateLayout].
+							Bitmap fromView: cv background: nil"self arena actualBackcolor brush"].
+			arenaPresenter value: image"]"!
 
 validateLayout
 	"Private - Validate the layout for the view being composed"
@@ -2315,32 +1951,11 @@ viewExport
 	filename isNil ifTrue: [^nil].
 	self viewExportTo: filename!
 
-viewExportTo: filename 
-	self composingView binaryStoreOn: (FileStream write: filename text: false)!
+viewExportTo: aString
+	self inDesignDpiContextDo: [composingView binaryStoreOn: (FileStream write: aString text: false)]!
 
 viewHierarchyPresenter
 	^viewHierarchyPresenter!
-
-viewHitBy: aPoint
-	"Private - Answers the view that can be hit by a mouse action at aPoint. "
-
-	| viewHit |
-	self primarySelection notNil
-		ifTrue: 
-			[| lookInView |
-			lookInView := self primarySelection.
-			
-			[| position |
-			position := View desktop mapPoint: aPoint + self hidingOffset - self defaultComposingPosition
-						to: lookInView.
-			viewHit := lookInView subViewFromPoint: position.
-			lookInView := lookInView parentView.
-			viewHit isNil and: [lookInView isDesktop not]]
-					whileTrue].
-	self hasComposingView ifFalse: [^nil].
-	(viewHit isNil and: [(0 @ 0 corner: self composingView extent) containsPoint: aPoint])
-		ifTrue: [viewHit := self composingView].
-	^viewHit!
 
 viewImport
 	"Load the ViewResource from a file selected by the user."
@@ -2364,11 +1979,10 @@ viewImportFrom: filename
 viewOpen
 	"Prompt for a ViewResource and open it"
 
-	self viewClose 
-		ifTrue: 
-			[| rid viewResources |
-			viewResources := self allResourceIdentifiers asSortedCollection.
-			(rid := ChoicePrompter choices: viewResources caption: 'Open') notNil ifTrue: [self openOn: rid]]!
+	| rid viewResources |
+	self viewClose ifFalse: [^self].
+	viewResources := self allResourceIdentifiers asSortedCollection.
+	(rid := ChoicePrompter choices: viewResources caption: 'Open') notNil ifTrue: [self openOn: rid]!
 
 viewRedo
 	self performUndoRedo: [self restoreUndoState: (undoList goForward: 1)]!
@@ -2386,7 +2000,7 @@ viewSave
 	"Save the view as a resource."
 
 	self hasResource ifFalse: [^self viewSaveAs].
-	self resourceIdentifier assign: self composingView literalStoreArray.
+	self resourceIdentifier assign: self composingViewStl.
 	self isModified: false!
 
 viewSaveAs
@@ -2407,19 +2021,20 @@ viewSaveAs
 	self resourceIdentifier: rid.
 	self
 		updateCaption;
-		fileSave!
+		viewSave!
 
 viewTest
 	"Load the resource (being edited by the ViewComposer) in a test mode."
 
-	| testView parentView |
-	parentView := (self composingView isKindOf: ShellView) 
+	| testView parentView stl |
+	parentView := (self composingView isKindOf: ShellView)
 				ifTrue: [View desktop]
 				ifFalse: 
-					[(ShellView show)
+					[ShellView show
 						layoutManager: GridLayout new;
 						yourself].
-	testView := Object fromLiteralStoreArray: (self composingView literalStoreArray) context: parentView.
+	stl := self composingViewStl.
+	testView := Object fromLiteralStoreArray: stl context: parentView.
 	self view repositionShell: testView topView.
 	testView show!
 
@@ -2488,14 +2103,9 @@ zOrderChangedFor: aView
 	viewHierarchyPresenter model move: aView asChildOf: (viewHierarchyPresenter model parentOf: aView)! !
 
 !ViewComposer categoriesForMethods!
-addGrabberFor:of:!adornments!private! !
 addGrabbers!adornments!private! !
 addSelectionFor:!adornments!private! !
 adjustScroll!geometry!private! !
-adornmentRectanglesFor:!adornments!private! !
-adornmentRectanglesFor:do:!adornments!private! !
-adornmentRegion!adornments!private! !
-adornmentRegionFor:!adornments!private! !
 alignBottoms!commands!public! !
 alignCenters!commands!public! !
 alignLefts!commands!public! !
@@ -2506,46 +2116,36 @@ allResourceIdentifiers!public! !
 areDragObjects:acceptableFor:inView:!drag & drop!private! !
 arena!accessing!private! !
 arenaBorderSize!constants!private! !
-arenaLeftButtonPressed:!event handling!private! !
-arenaMouseMoved:!private! !
+arenaDo:!operations!private! !
 aspectAccessor!public! !
 aspectAccessor:!public! !
+assertInArenaDpiContext!development!private! !
+assertInOwnDpiContext!development!private! !
 basicCaption!accessing!private! !
 basicPasteResource:context:!operations!private! !
 basicPasteResourceLink:context:!private! !
-borderRectanglesFor:!adornments!private! !
-borderRegionFor:!adornments!private! !
 browseIt!commands!public! !
-calculatePositionOf:offsetBy:!adornments!private! !
 cancelSelectionFor:!adornments!private! !
 cancelSelections!adornments!private! !
-cancelTrackingAt:!private!tracking! !
 canMove:!private!testing! !
 canPaste!private!testing! !
 canSaveState!private!saved state! !
 canSize:!private!testing! !
 centerHorizontally!commands!private! !
 centerVertically!commands!private! !
-chooseBackgroundColor!commands!public! !
 chooseFont!commands!public! !
-chooseForegroundColor!commands!public! !
 clearSelection!commands!public! !
 clearUndoState!operations!private! !
 clipboard!accessing!public! !
 closeComposingView!helpers!private! !
 composingView!accessing!public! !
 composingView:isOwned:!accessing!private! !
-constrainPoint:!geometry!private! !
-constrainRectangle:!geometry!private! !
-continueTrackingAt:from:!private!tracking! !
+composingViewStl!commands!public! !
 copyAspectsFrom:to:!operations!private! !
 copySelection!commands!public! !
 createComponents!initializing!private! !
-createGrabberFor:of:!adornments!private! !
 createSchematicWiring!initializing!private! !
 createViewHierarchyModel!helpers!initializing!private! !
-cursor!accessing!public! !
-cursorAt:!helpers!private! !
 cutSelection!commands!public! !
 decreaseHeight!commands!public! !
 decreaseHorizontalGaps!commands!public! !
@@ -2554,17 +2154,13 @@ decreaseWidth!commands!public! !
 defaultComposingPosition!constants!private! !
 defaultGridResolution!constants!private! !
 defaultHelpId!public! !
-defaultSelectionWidth!constants!private! !
 deleteSelections!commands!public! !
 dereference!commands!private! !
 designDesktop!helpers!private! !
 distributeHorizontally!commands!public! !
 distributeVertically!commands!public! !
 drawAdornment!adornments!private! !
-drawSelectionFor:!adornments!private! !
-drawTrackingAt:!adornments!private! !
 dropIncrement!constants!private! !
-dropTargetFromSession:!drag & drop!private! !
 dropUndoState!operations!private! !
 dropView:onto:at:!drag & drop!private! !
 dropViewResource:onto:at:named:!drag & drop!private! !
@@ -2572,16 +2168,11 @@ editContextMenu!commands!public! !
 editMenuBar!commands!public! !
 editReference!commands!private! !
 endComposition!commands!public! !
-endTrackingAt:!private!tracking! !
-eraseAdornment!adornments!private! !
-eraseTrackingAt:!adornments!private! !
 fileNew!commands!public! !
 fileOpen!commands!public! !
 fileSave!commands!public! !
 forceLayoutFor:!geometry!private! !
-getAdornmentRegion!adornments!private! !
-grabberExtent!constants!private! !
-grabberHitBy:!adornments!private! !
+getUndoState!public! !
 grabbers!adornments!private! !
 grid!accessing!private! !
 grid:!accessing!private! !
@@ -2590,35 +2181,31 @@ hasClipboard!private!testing! !
 hasComposingView!private!testing! !
 hasMoveableSelection!private!testing! !
 hasOwnedComposingView:!public! !
-hasPreferredExtent!public!testing! !
+hasReferenceSelection!commands!private! !
 hasResource!private!testing! !
 hasSelection!private!testing! !
+hideAdornment!adornments!private! !
 hidingOffset!constants!private! !
 increaseHeight!commands!public! !
 increaseHorizontalGaps!commands!public! !
 increaseVerticalGaps!commands!public! !
 increaseWidth!commands!public! !
 incrementAddPositionOffset!operations!private! !
+inDesignDpiContextDo:!helpers!private! !
 initialComposingPosition!constants!private! !
 initialize!initializing!private! !
 inspector!accessing!private! !
 inspectSelection!commands!public! !
 invalidateAdornmentFor:!adornments!private! !
-isAdornmentModified!operations!private! !
-isAdornmentModified:!operations!private! !
+isComposingViewPrimarySelection!private!testing! !
 isImageDirty!private! !
 isImageDirty:!private! !
 isModified!public!testing! !
 isModified:!accessing!private! !
 isMouseClick!private!testing! !
 isMouseClick:!accessing!private! !
-isMouseTarget!private!testing! !
 isSelected:!private!testing! !
 isUndoRedoInProgress!private! !
-mapPoint:toArenaFromView:!helpers!private! !
-mapPoint:toViewFromArena:!private! !
-mapRectangle:toArenaFromView:!private! !
-mapRectangle:toViewFromArena:!private! !
 matchBackgroundColors!commands!public! !
 matchFonts!commands!public! !
 matchForegroundColors!commands!public! !
@@ -2642,12 +2229,12 @@ nudgeUp!commands!public! !
 nudgeVerticalGaps:!commands!public! !
 onCloseRequested:!event handling!private! !
 onDragCutHierarchy:!event handling!private! !
-onDragEnterArena:!event handling!private! !
+onDragEnterArena:!drag & drop!event handling!private! !
 onDragHierarchy:!event handling!private! !
-onDragLeaveArena:!event handling!private! !
-onDragOverArena:!event handling!private! !
+onDragLeaveArena:!drag & drop!event handling!private! !
+onDragOverArena:!drag & drop!event handling!private! !
 onDragOverHierarchy:!event handling!private! !
-onDropOverArena:!event handling!private! !
+onDropOverArena:!drag & drop!event handling!private! !
 onDropOverHierarchy:!event handling!private! !
 onHierarchySelection!event handling!private! !
 onIdleEntered!operations!private! !
@@ -2659,6 +2246,7 @@ onRequestDropOpsForShield:!event handling!private! !
 onSelectionPositioned:!event handling!private! !
 onSessionStarted!private! !
 onSettingChanged:!event handling-win32!private! !
+onViewAvailable!event handling!public! !
 onViewClosed!event handling!private! !
 onViewOpened!event handling!private! !
 openOn:!operations!private! !
@@ -2668,16 +2256,16 @@ pasteClipboard!commands!public! !
 pasteContext!operations!private! !
 pastedView:context:!operations!private! !
 pasteResource:context:position:!operations!public! !
-pasteResourceLink:context:position:!operations!public! !
+pasteResourceLink:context:position:!operations!private! !
 performCommand:!commands!public! !
 performUndoRedo:!helpers!private! !
+positionComposingView!accessing!private! !
 primarySelection!adornments!private! !
 primarySelection:!adornments!private! !
 printShortCaptionOn:!private!updating! !
 queryCommand:!commands!private! !
 refreshImage!private! !
 refreshPublishedAspects!commands!private! !
-removeGrabbers!adornments!private! !
 removeHorizontalGaps!commands!public! !
 removeVerticalGaps!commands!public! !
 removeView:!operations!private! !
@@ -2690,8 +2278,6 @@ resourceIdentifier:!public! !
 resourceManager!accessing!public! !
 restoreComposition:!private! !
 restoreUndoState:!public! !
-safetyWrap:!operations!private! !
-saveAdornmentRegion!adornments!private! !
 saveStateOn:!private!saved state! !
 saveUndoState!operations!private! !
 secondarySelections!adornments!private! !
@@ -2703,19 +2289,16 @@ selectionsByHorizontalPosition!helpers!private! !
 selectionsByVerticalPosition!helpers!private! !
 setModified!accessing!private! !
 shortCaption!accessing!public! !
+showAdornment!operations!private! !
 slideyPinNames!accessing!private! !
-snapPoint:context:!geometry!private! !
-startTrackingAt:!private!tracking! !
-status!accessing!private! !
+statusValue:!private!tracking! !
 toggleGroupStop!commands!public!tabbing! !
 toggleSelectionFor:!adornments!private! !
 toggleTabStop!commands!public!tabbing! !
-trackGrabber:from:!adornments!private! !
 undoState!public! !
-updateAdornment!operations!private! !
 updateCaption!private!updating! !
 updatePrimarySelection!adornments!private! !
-validateAdornment!operations!private! !
+updateStatusBar!operations!private! !
 validateImage!private! !
 validateLayout!geometry!private! !
 validateUserInterface!operations!private! !
@@ -2724,7 +2307,6 @@ viewCloseNoPrompt!commands!public! !
 viewExport!commands!public! !
 viewExportTo:!helpers!private! !
 viewHierarchyPresenter!accessing!private! !
-viewHitBy:!accessing!private! !
 viewImport!commands!public! !
 viewImportFrom:!helpers!private! !
 viewOpen!commands!public! !
@@ -2776,10 +2358,6 @@ copyAllToClipboard: aCollection
 	self clearClipboard.
 	aCollection do: [:each | self addToClipboard: each]!
 
-copyToClipboard: aView 
-	self clearClipboard.
-	self addToClipboard: aView!
-
 defaultDefaultView
 	^'Vertical view'!
 
@@ -2820,7 +2398,6 @@ initialize
 	self
 		addClassConstant: 'ModifiedFlag' value: 16r1;
 		addClassConstant: 'MouseClickFlag' value: 16r2;
-		addClassConstant: 'AdornmentModifiedFlag' value: 16r4;
 		addClassConstant: 'RefreshFlag' value: 16r8;
 		addClassConstant: 'UndoRedoFlag' value: 16r10.
 	self canUseIdeaSpace: true.
@@ -2829,6 +2406,15 @@ initialize
 				at: #toolbarsSlidey put: false;
 				yourself).
 	DefaultGridResolution := 5!
+
+loadViewResource: aString inContext: aParentView
+	"Private - Load a view resource called aString owned by this class."
+
+	"We want to do all editing at a fixed DPI, the natural choice being device-independent pixels (aka DIPs), which is 96 dpi. To achieve this we create the hidden instance of the view being editing with a DPI awareness context of 'unaware', which results in Windows virtualizing the pixel extents and positions, etc, to 96-dpi. The rendering of the view in the View Composer's arena is a bitmap captured by sending a WM_PRINT message to the view. This will render at 96-dpi, so could end up being very small if viewed on a system with scaling of 200%+. We could just stretch this to fit, but the scaling up a bitmap gives very poor results. Scaling by Windows of the 96-dpi view may be blurry (although we can even avoid most of that by using the new gdi-scaling mode), but this is still much better than the results from StretchBlt. We would also have the additional complexity of mapping between the physical pixel positions at which the arena operates, and the logical DIPs of the edited view. It makes sense, therefore, for the at least the arena to also be operating at 96-dpi too. We could open the entire VC at 96-dpi, but aside from the fact that the whole thing will be blurry, this has other important side effects. The most significant of these is that all new windows opened from commands in the VC will inherit the same DPI awareness context by default unless we explicitly switch the DPI awareness context. Changing the DPI awareness context at appropriate for the whole VC would generate quite a lot of additional complexity. Fortunately the DPI awareness mechanisms in modern Windows are quite sophisticated, and we can even have window with differing DPI awareness within the same window hierarchy, which is known as 'mixed DPI hosting behaviour'. We have to enable mixed hosting explicitly (the documentation warns ominously of unexpected effects of turning it on in general), but by doing so we can then create just the arena sub-view in an 'unaware' DPI awareness context. The system then scales the composed view image and we get a reasonable visual result along with 96-dpi editing. Mixed hosting does also add some complexity, however,
+	as we need to be aware of the DPI awareness context we should be using when interacting between the arena and the rest of the VC, but this seems manageable."
+
+	^UserLibrary default withDpiHostingBehavior: DPI_HOSTING_BEHAVIOR_MIXED
+		do: [super loadViewResource: aString inContext: aParentView]!
 
 openOn: aResourceIdentifier
 	^self show openOn: aResourceIdentifier!
@@ -2867,7 +2453,6 @@ clearClipboard!clipboard operations!public! !
 clipboard!accessing!public! !
 clipboard:!accessing!public! !
 copyAllToClipboard:!clipboard operations!public! !
-copyToClipboard:!clipboard operations!public! !
 defaultDefaultView!initializing!private! !
 defaultGridResolution!constants!public! !
 defaultGridResolution:!constants!public! !
@@ -2875,6 +2460,7 @@ displayOn:!displaying!public! !
 extentImage!constants!private! !
 icon!constants!public! !
 initialize!initializing!private! !
+loadViewResource:inContext:!public! !
 openOn:!instance creation!public! !
 positionImage!constants!private! !
 publishedAspects!constants!public! !

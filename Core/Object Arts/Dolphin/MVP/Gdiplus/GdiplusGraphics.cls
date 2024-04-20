@@ -250,7 +250,7 @@ drawImage: aGdiplusImage at: dstOrigin extent: dstExtent
 
 	| status |
 	(status := GdiplusLibrary default 
-				gdipDrawImageRectI: self asParameter
+				gdipDrawImageRect: self asParameter
 				image: aGdiplusImage asParameter
 				x: dstOrigin x
 				y: dstOrigin y

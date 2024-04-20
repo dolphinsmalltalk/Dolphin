@@ -393,7 +393,7 @@ verifyColumnWidths: widths
 			self
 				assert: col width
 				closeTo: width * presenter scaleFactor
-				precision: 2]! !
+				precision: 3]! !
 
 !ListViewTest categoriesForMethods!
 classToTest!helpers!private! !

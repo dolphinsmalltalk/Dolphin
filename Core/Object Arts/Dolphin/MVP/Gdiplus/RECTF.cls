@@ -43,14 +43,12 @@ bottom
 bottom: aNumber
 	self height: aNumber - self y!
 
-extent: newExtent
-	"Set the extent of the receiver to aPoint. (The origin remains the same and
-	the corner stays in the same quadrant it was in relative to the origin point.
-	If aPoint contains any negative value, the result is undefined)."
+extent: aPoint
+	"Set the extent of the receiver to aPoint. (The origin remains the same and the corner stays in the same quadrant it was in relative to the origin point. If aPoint contains any negative value, the result is undefined)."
 
 	self
-		width: newExtent x;
-		height: newExtent y!
+		width: aPoint x;
+		height: aPoint y!
 
 height
 	"Answer the <Float> value of the receiver's 'height' field."
@@ -66,6 +64,10 @@ left
 	^self x!
 
 left: aNumber
+	"Sets the position of the receiver's left edge."
+
+	"The corner is not expected to move, so the width must change."
+
 	self width: self width + (self x - aNumber).
 	self x: aNumber!
 
@@ -74,6 +76,35 @@ right
 
 right: aNumber
 	self width: aNumber - self x!
+
+scaleBy: aMagnitude
+	"Scale the receiver in-place by the specified <Point> or <Number> multiplier."
+
+	| p |
+	p := self topLeft * aMagnitude.
+	self
+		x: p x;
+		y: p y.
+	p := self extent * aMagnitude.
+	self
+		width: p x;
+		height: p y!
+
+scaledBy: anArithmeticValue
+	"Answer a new <rectangle> representing the receiver with origin and corner multiplied by the <ArithmeticValue> argument. Uses the #vertex:vertex: constructor in order to create a normalised rectangle"
+
+	^self species vertex: self topLeft * anArithmeticValue vertex: self bottomRight * anArithmeticValue!
+
+scaleToDpi: desiredInteger from: currentInteger
+	"Scale the receiver in-place by from the DPI represented by the first <integer> argument to that represented by the second integer argument."
+
+	| scale |
+	scale := desiredInteger asFloat / currentInteger.
+	bytes
+		floatAtOffset: _OffsetOf_x put: (bytes floatAtOffset: _OffsetOf_x) * scale;
+		floatAtOffset: _OffsetOf_y put: (bytes floatAtOffset: _OffsetOf_y) * scale;
+		floatAtOffset: _OffsetOf_width put: (bytes floatAtOffset: _OffsetOf_width) * scale;
+		floatAtOffset: _OffsetOf_height put: (bytes floatAtOffset: _OffsetOf_height) * scale!
 
 top
 	^self y!
@@ -123,6 +154,9 @@ left!accessing!public! !
 left:!accessing!public! !
 right!accessing!public! !
 right:!accessing!public! !
+scaleBy:!public!transforming! !
+scaledBy:!public! !
+scaleToDpi:from:!public!transforming! !
 top!accessing!public! !
 top:!accessing!public! !
 width!**compiled accessors**!public! !
@@ -154,15 +188,6 @@ defineFields
 		defineField: #width type: FLOATField new;
 		defineField: #height type: FLOATField new!
 
-fromRectangle: aRect
-	self == aRect class ifTrue: [^aRect].
-	^(self new)
-		x: aRect left;
-		y: aRect top;
-		width: aRect width;
-		height: aRect height;
-		yourself!
-
 getFieldNames
 	^#(#x #y #width #height)!
 
@@ -185,20 +210,21 @@ left: left top: top width: width height: height
 				floatAtOffset: 12 put: height;
 				yourself)!
 
-marshal: aRect
-	self == aRect class ifTrue: [^aRect].
+marshal: aRectangle
+	"Answer the argument marshalled as an instance of the receiver."
+
+	self == aRectangle class ifTrue: [^aRectangle].
 	^self
-		left: aRect left
-		top: aRect top
-		width: aRect width
-		height: aRect height!
+		left: aRectangle left
+		top: aRectangle top
+		width: aRectangle width
+		height: aRectangle height!
 
 newBuffer
 	^self basicNew bytes: (ByteArray newFixed: 16)! !
 
 !RECTF class categoriesForMethods!
 defineFields!public!template definition! !
-fromRectangle:!instance creation!public! !
 getFieldNames!**compiled accessors**!constants!private! !
 left:top:right:bottom:!instance creation!public! !
 left:top:width:height:!instance creation!public! !

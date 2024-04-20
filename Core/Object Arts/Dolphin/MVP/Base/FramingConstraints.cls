@@ -184,16 +184,13 @@ rectangleFor: aView within: aRectangle context: aLayoutContext
 					rectangle top: (topFraming calculateEdge: topOffset context: context)]].
 	^rectangle!
 
-resolutionScaledBy: aPoint 
-	"Private - The receiver is being loaded and it has been determined that the pixel resolution
-	has changed since the point at which the view was saved. Scale any internal pixels by the 
-	<Point> argument, which contains scaling ratios for x and y extents."
+resolutionScaledBy: aPoint
+	"Private - The receiver is being loaded and it has been determined that the pixel resolution has changed since the point at which the view was saved. Scale any internal pixels by the <Point> argument, which contains scaling ratios for x and y extents."
 
 	leftFraming isProportional ifFalse: [leftOffset := (leftOffset * aPoint x) truncated].
 	rightFraming isProportional ifFalse: [rightOffset := (rightOffset * aPoint x) truncated].
 	topFraming isProportional ifFalse: [topOffset := (topOffset * aPoint y) truncated].
-	bottomFraming isProportional 
-		ifFalse: [bottomOffset := (bottomOffset * aPoint y) truncated]!
+	bottomFraming isProportional ifFalse: [bottomOffset := (bottomOffset * aPoint y) truncated]!
 
 rightFraming
 	"Answer the <Symbol> name of the framing calculation used to calculate the receiver's right edge."

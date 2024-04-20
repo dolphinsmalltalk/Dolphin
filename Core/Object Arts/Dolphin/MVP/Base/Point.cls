@@ -238,6 +238,9 @@ roundTo: aNumber
 
 	^(x roundTo: aNumber) @ (y roundTo: aNumber)!
 
+subtractFromInteger: anInteger
+	^(Point x: anInteger y: anInteger) - self!
+
 subtractFromPoint: aPoint
 	"Private - Answer the <point> result of subtracting the receiver from the the known <point> argument."
 
@@ -318,6 +321,7 @@ r!accessing!public! !
 raisedTo:!mathematical!public! !
 rounded!public!truncation and round off! !
 roundTo:!public!truncation and round off! !
+subtractFromInteger:!double dispatch!private! !
 subtractFromPoint:!double dispatch!private! !
 transpose!operations!public! !
 truncated!public!truncation and round off! !

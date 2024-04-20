@@ -198,6 +198,12 @@ degrees
 				ifTrue: [y >= 0 ifTrue: [^theta radiansToDegrees] ifFalse: [^360.0 + theta radiansToDegrees]]
 				ifFalse: [^180.0 + theta radiansToDegrees]]!
 
+displayOn: aStream
+	"Append, to aStream, a String whose characters are a representation of the receiver as a user
+	would want to see it."
+
+	aStream print: self asPoint!
+
 dist: aPoint 
 	"Answer the distance between aPoint and the receiver."
 
@@ -393,6 +399,13 @@ positive
 
 	^self negative not!
 
+printOn: aStream
+	"Append a short textual description of the receiver to aStream."
+
+	aStream
+		basicPrint: self;
+		nextPut: $(; print: self asPoint; nextPut: $)!
+
 quo: operand
 	"Answer the <number> quotient resulting from by division of the receiver
 	by the argument, operand, with truncation toward zero.
@@ -471,6 +484,11 @@ roundUpTo: anArithmeticValue
 	is greater than or equal to the receiver."
 
 	^(self / anArithmeticValue) ceiling * anArithmeticValue!
+
+scaleBy: aMagnitude
+	"Scale the receiver in-place by the specified <Point> or <Number> multiplier."
+
+	self value: (self * aMagnitude) truncated!
 
 sign
 	"Answer the <integer> sign of the receiver:
@@ -604,6 +622,7 @@ ceiling!public!truncation and round off! !
 coerce:!coercing!private! !
 corner:!converting!public!truncation and round off! !
 degrees!accessing!public! !
+displayOn:!printing!public! !
 dist:!operations!public! !
 divideIntoFloat:!double dispatch!private! !
 divideIntoFraction:!double dispatch!private! !
@@ -642,6 +661,7 @@ multiplyByScaledDecimal:!double dispatch!private! !
 negated!arithmetic!public! !
 negative!public!testing! !
 positive!public!testing! !
+printOn:!printing!public! !
 quo:!arithmetic!public! !
 r!accessing!public! !
 raisedTo:!arithmetic!public! !
@@ -653,6 +673,7 @@ roundDownTo:!public!truncation and round off! !
 rounded!public!truncation and round off! !
 roundTo:!public!truncation and round off! !
 roundUpTo:!public!truncation and round off! !
+scaleBy:!public!transforming! !
 sign!accessing!public! !
 species!comparing!public! !
 squared!arithmetic!public! !

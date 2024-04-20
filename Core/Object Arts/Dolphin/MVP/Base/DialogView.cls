@@ -33,25 +33,16 @@ answer: anObject
 
 	self model: anObject!
 
-basicCreateWindowAt: originPoint extent: extentPoint styles: anArray name: anAnsiString
-	"Private - Create the Windows window ensuring it has the VM window procedure."
-
-	"Note: If the CreateDialogIndirect() API call GPFs it is almost certainly because an attempt is being made to load a dialog template from a resource library that has been opened with the LOAD_LIBRARY_AS_DATAFILE flag. Dialog templates can only be loaded from DLLs that have been loaded as normal code modules."
-
-	UserLibrary default
-		createDialogParam: self resourceLib asParameter
-		lpTemplate: self templateId asResourceId
-		hWndParent: self class activeHandle
-		lpDialogFunc: VMLibrary default getDlgProc
-		dwInitParam: 0.
-	"Position and size the dialog as requested."
-	self setInitialPosition: originPoint extent: extentPoint!
-
 cancel
 	"Process a cancel command. This is done by sending the correct cancel
 	command to follow the correct procedure for cancelling a dialog."
 
 	self destroy!
+
+creationFunction: aRectangle dpi: anInteger
+	"Private - Answer a function object that encapsulates a CreateWindow API call to create or recreate a window for the receiver, with the specified position and extent, measured at the specified DPI."
+
+	^CreateDialog rectangle: aRectangle dpi: anInteger!
 
 defaultBackcolor
 	"Private - Answer the default colour for the receiver's background"
@@ -63,7 +54,7 @@ defaultExtent
 
 	"Implementation Note: This is used only for creation, and as the the initial size and position are ignored when creating a dialog, we may as well answer any fixed point rather than calculating something that will be ignored."
 
-	^260 @ 295!
+	^##(260 @ 295)!
 
 defaultWindowProcessing: message wParam: wParam lParam: lParam
 	"Private - Pass a Windows message to the 'default' window procedure of the receiver.
@@ -260,10 +251,10 @@ resourceLib
 
 	^VMLibrary default!
 
-restorePlacement: aWINDOWPLACEMENT resolution: aPoint
+restore: anInteger resolution: aPoint
 	"The initial position for a dialog is ignored, so we just need to scale to the correct resolution for (what will be) the owner window"
 
-	self basicRestorePlacement: aWINDOWPLACEMENT scalingBy: View active resolution / aPoint!
+	self basicRestore: anInteger scalingBy: View active resolution / aPoint!
 
 runModalInProcessLoop
 	"Private - Create a modal message loop until our continue flag suggests exit. Note that here
@@ -289,6 +280,18 @@ runModalLoop
 			proc priority: proc priority + 1].
 	self isModal: true.
 	endModal wait!
+
+setInitialPosition: aRectangle
+	"Private - Set the initial position and extent of the dialog window immediately after creation."
+
+	UserLibrary default
+		setWindowPos: handle
+		hWndInsertAfter: nil
+		x: aRectangle top
+		y: aRectangle left
+		cx: aRectangle width
+		cy: aRectangle height
+		uFlags: ##(SWP_NOACTIVATE | SWP_NOZORDER | SWP_NOSENDCHANGING)!
 
 setInitialPosition: originPoint extent: extentPoint
 	"Private - Set the initial position and extent of the dialog window immediately after creation."
@@ -384,6 +387,18 @@ showModeless: aView
 	aView repositionShell: self.
 	self show!
 
+state
+	"Private - Answer a MessageSequence which, when replayed, will restore the receiver  to its current state"
+
+	"Dialog creation function does not take a window title parameter so we must preserve the text independently"
+
+	^super state
+		add: (MessageSend
+					receiver: self
+					selector: #setWindowText:
+					argument: self getWindowText);
+		yourself!
+
 subclassWindow: aWinHandle
 	"Private - Subclass the receiver's associated Win32 window by substituting the VM's 
 	window procedure for the default dialog proc."
@@ -418,8 +433,8 @@ wmInitDialog: message wParam: wParam lParam: lParam
 !DialogView categoriesForMethods!
 answer!accessing!public! !
 answer:!accessing!not an aspect!public! !
-basicCreateWindowAt:extent:styles:name:!private!realizing/unrealizing! !
 cancel!commands!public! !
+creationFunction:dpi:!geometry!private!realizing/unrealizing! !
 defaultBackcolor!colors!constants!private! !
 defaultExtent!constants!private! !
 defaultWindowProcessing:wParam:lParam:!dispatching!private! !
@@ -444,9 +459,10 @@ onInitDialog!event handling!public! !
 performCommand:!commands!public! !
 preTranslateKeyboardInput:!dispatching!public! !
 resourceLib!constants!public! !
-restorePlacement:resolution:!geometry!private! !
+restore:resolution:!geometry!private! !
 runModalInProcessLoop!operations!private! !
 runModalLoop!operations!private! !
+setInitialPosition:!private!realizing/unrealizing! !
 setInitialPosition:extent:!private!realizing/unrealizing! !
 setItem:font:!accessing!private! !
 setItem:icon:!accessing!private! !
@@ -455,6 +471,7 @@ setItem:text:!accessing!private! !
 showModal!private!realizing/unrealizing! !
 showModalTo:!private!realizing/unrealizing! !
 showModeless:!private!realizing/unrealizing! !
+state!accessing!private! !
 subclassWindow:!operations!private! !
 templateId!constants!private! !
 wmInitDialog:wParam:lParam:!event handling-win32!public! !

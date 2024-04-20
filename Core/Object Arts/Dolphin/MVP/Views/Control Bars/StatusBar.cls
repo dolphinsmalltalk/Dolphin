@@ -42,10 +42,10 @@ addItem: aStatusBarItem name: aString
 	self name: aStatusBarItem as: aString.
 	^aStatusBarItem!
 
-calcRectangleFromClientRectangle: aRectangle
+calcRectangleFromClientRectangle: aRectangle atDpi: anInteger
 	| borders padding |
 	borders := self sbGetBorders.
-	padding := borders first @ borders second.
+	padding := borders first @ borders second * anInteger // self dpi.
 	^aRectangle expandedBy: (padding corner: padding)!
 
 calculateExtent: aLayoutContext 
@@ -198,10 +198,10 @@ layoutManager: aLayoutManager
 	layoutManager := aLayoutManager.
 	self basicInvalidateLayout!
 
-onDrawItem: drawItemStruct 
+onDrawItem: drawItemStruct
 	| part |
 	part := parts at: drawItemStruct itemID + 1.
-	part drawItem: (Canvas withNonOwnedDC: drawItemStruct hDC)
+	part drawItem: (Canvas withNonOwnedDC: drawItemStruct hDC dpi: self dpi)
 		bounding: drawItemStruct rcItem asRectangle.
 	^true!
 
@@ -250,6 +250,8 @@ removeItem: aStatusBarItem
 	^aStatusBarItem!
 
 resolutionScaledBy: aPoint
+	"Private - The receiver is being loaded and it has been determined that the pixel resolution has changed since the point at which the view was saved. Scale any internal pixels by the <Point> argument. "
+
 	super resolutionScaledBy: aPoint.
 	parts do: [:each | each resolutionScaledBy: aPoint]!
 
@@ -408,7 +410,7 @@ wmDpiChangedBeforeParent: message wParam: wParam lParam: lParam
 !StatusBar categoriesForMethods!
 addItem:!adding!items!public! !
 addItem:name:!adding!items!public! !
-calcRectangleFromClientRectangle:!geometry!private! !
+calcRectangleFromClientRectangle:atDpi:!geometry!private! !
 calculateExtent:!geometry!private! !
 contents!accessing!public! !
 defaultExtent!constants!private! !

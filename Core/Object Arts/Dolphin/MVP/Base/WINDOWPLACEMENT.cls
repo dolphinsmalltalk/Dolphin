@@ -25,8 +25,8 @@ corner: aPoint
 	"Set the <point> representing the corner of the placement rectangle."
 
 	bytes
-		sdwordAtOffset: ##(_OffsetOf_rcNormalPosition + RECT._OffsetOf_right) put: aPoint x asInteger;
-		sdwordAtOffset: ##(_OffsetOf_rcNormalPosition + RECT._OffsetOf_bottom) put: aPoint y asInteger!
+		sdwordAtOffset: ##(_OffsetOf_rcNormalPosition + RECT._OffsetOf_right) put: aPoint x;
+		sdwordAtOffset: ##(_OffsetOf_rcNormalPosition + RECT._OffsetOf_bottom) put: aPoint y!
 
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
@@ -68,11 +68,11 @@ origin: aPoint
 	"Set the <point> representing the origin of the placement rectangle."
 
 	bytes
-		sdwordAtOffset: ##(_OffsetOf_rcNormalPosition + RECT._OffsetOf_left) put: aPoint x asInteger;
-		sdwordAtOffset: ##(_OffsetOf_rcNormalPosition + RECT._OffsetOf_top) put: aPoint y asInteger!
+		sdwordAtOffset: ##(_OffsetOf_rcNormalPosition + RECT._OffsetOf_left) put: aPoint x;
+		sdwordAtOffset: ##(_OffsetOf_rcNormalPosition + RECT._OffsetOf_top) put: aPoint y!
 
 ptMaxPosition
-	"Answer the <POINTL> value of the receiver's 'ptMaxPosition' field."
+	"Private - Answer the <POINTL> value of the receiver's 'ptMaxPosition' field."
 
 	^POINTL fromAddress: bytes yourAddress + _OffsetOf_ptMaxPosition!
 
@@ -86,7 +86,7 @@ ptMaxPosition: aPOINTL
 		startingAt: 1!
 
 ptMinPosition
-	"Answer the <POINTL> value of the receiver's 'ptMinPosition' field."
+	"Private - Answer the <POINTL> value of the receiver's 'ptMinPosition' field."
 
 	^POINTL fromAddress: bytes yourAddress + _OffsetOf_ptMinPosition!
 
@@ -113,11 +113,6 @@ rcNormalPosition: aRECT
 		to: ##(_OffsetOf_rcNormalPosition + RECT basicByteSize)
 		startingAt: 1!
 
-rectangle: aRectangle
-	self
-		origin: aRectangle origin;
-		corner: aRectangle corner!
-
 scaleBy: aMagnitude
 	"Scale the receiver in-place by the specified <Point> or <Number> multiplier."
 
@@ -127,13 +122,13 @@ scaleBy: aMagnitude
 	pt := (bytes sdwordAtOffset: ##(_OffsetOf_rcNormalPosition + RECT._OffsetOf_left))
 				@ (bytes sdwordAtOffset: ##(_OffsetOf_rcNormalPosition + RECT._OffsetOf_top)) * aMagnitude.
 	bytes
-		sdwordAtOffset: ##(_OffsetOf_rcNormalPosition + RECT._OffsetOf_left) put: pt x asInteger;
-		sdwordAtOffset: ##(_OffsetOf_rcNormalPosition + RECT._OffsetOf_top) put: pt y asInteger.
+		sdwordAtOffset: ##(_OffsetOf_rcNormalPosition + RECT._OffsetOf_left) put: pt x truncated;
+		sdwordAtOffset: ##(_OffsetOf_rcNormalPosition + RECT._OffsetOf_top) put: pt y truncated.
 	pt := (bytes sdwordAtOffset: ##(_OffsetOf_rcNormalPosition + RECT._OffsetOf_right))
 				@ (bytes sdwordAtOffset: ##(_OffsetOf_rcNormalPosition + RECT._OffsetOf_bottom)) * aMagnitude.
 	bytes
-		sdwordAtOffset: ##(_OffsetOf_rcNormalPosition + RECT._OffsetOf_right) put: pt x asInteger;
-		sdwordAtOffset: ##(_OffsetOf_rcNormalPosition + RECT._OffsetOf_bottom) put: pt y asInteger!
+		sdwordAtOffset: ##(_OffsetOf_rcNormalPosition + RECT._OffsetOf_right) put: pt x truncated;
+		sdwordAtOffset: ##(_OffsetOf_rcNormalPosition + RECT._OffsetOf_bottom) put: pt y truncated!
 
 showCmd
 	"Answer the <Integer> value of the receiver's 'showCmd' field."
@@ -161,13 +156,12 @@ height!accessing!public! !
 height:!accessing!public! !
 origin!accessing!public! !
 origin:!accessing!public! !
-ptMaxPosition!**compiled accessors**!public! !
-ptMaxPosition:!**compiled accessors**!public! !
-ptMinPosition!**compiled accessors**!public! !
-ptMinPosition:!**compiled accessors**!public! !
+ptMaxPosition!**compiled accessors**!private! !
+ptMaxPosition:!**compiled accessors**!private! !
+ptMinPosition!**compiled accessors**!private! !
+ptMinPosition:!**compiled accessors**!private! !
 rcNormalPosition!**compiled accessors**!public! !
 rcNormalPosition:!**compiled accessors**!public! !
-rectangle:!**compiled accessors**!public! !
 scaleBy:!public!transforming! !
 showCmd!**compiled accessors**!public! !
 showCmd:!**compiled accessors**!public! !
@@ -196,8 +190,8 @@ defineFields
 		defineField: #dwSize type: DWORDField writeOnly beOverride;
 		defineField: #flags type: DWORDField new;
 		defineField: #showCmd type: DWORDField new;
-		defineField: #ptMinPosition type: (StructureField type: POINTL);
-		defineField: #ptMaxPosition type: (StructureField type: POINTL);
+		defineField: #ptMinPosition type: (StructureField type: POINTL) beNonBrowsable;
+		defineField: #ptMaxPosition type: (StructureField type: POINTL) beNonBrowsable;
 		defineField: #rcNormalPosition type: (StructureField type: RECT)!
 
 getFieldNames

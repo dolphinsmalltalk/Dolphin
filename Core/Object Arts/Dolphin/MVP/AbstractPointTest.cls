@@ -178,6 +178,11 @@ testCorner
 				right: 101
 				bottom: 202)!
 
+testDisplayString
+	| subject |
+	subject := (self subjectClass x: 11 y: -22).
+	self assert: subject displayString equals: '11@-22'!
+
 testDivide
 	| subject2 subject1 point1 point2 large |
 	point1 := 10 @ 100.
@@ -516,6 +521,7 @@ testComparePOINTL!public!unit tests! !
 testComparePOINTS!public!unit tests! !
 testComparing!public!unit tests! !
 testCorner!public!unit tests! !
+testDisplayString!public!unit tests! !
 testDivide!public!unit tests! !
 testDotProduct!public!unit tests! !
 testEquals!public!unit tests! !

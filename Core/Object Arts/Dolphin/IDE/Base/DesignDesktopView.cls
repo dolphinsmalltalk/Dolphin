@@ -1,8 +1,8 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 DesktopView subclass: #DesignDesktopView
-	instanceVariableNames: 'dpi'
-	classVariableNames: ''
+	instanceVariableNames: 'dpiAwareness dpi'
+	classVariableNames: 'Default System'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DesignDesktopView guid: (GUID fromString: '{d1d4168d-347d-4e4c-b816-a73730045f7b}')!
@@ -10,29 +10,27 @@ DesignDesktopView comment: ''!
 !DesignDesktopView categoriesForClass!MVP-Views! !
 !DesignDesktopView methodsFor!
 
-adjustPlacement: aWINDOWPLACEMENT ofShell: aShellView withResolution: aPoint
-	"Private - The <ShellView> first argument is being restored from an STBViewProxy (e.g. instantiated from a view resource) on this desktop. Adjust the <WINDOWPLACEMENT> 2nd argument to an appropriate position and/or extent, and scale the view to the target monitor's DPI from the original resolution specified by the <point> 3rd argument."
+adjustPlacementOfShell: aShellView forResolution: aPoint
+	"Private - The <ShellView> first argument is being restored from an STBViewProxy (e.g. instantiated from a view resource) on this desktop. Adjust the placement of the window to an appropriate position and/or extent on the target monitor, also scaling any internal measurments to the monitor's DPI from the original resolution specified by the <point> final argument."
 
-	"Shell's are opened in a DesignDesktopView for design purposes, e.g. editing, so we want to leave the placement, etc, saved in the resource as is, just scaling to DPI."
+	"Shell's are opened in a DesignDesktopView for design purposes, e.g. editing, so we to leave the placement saved in the resource as is. We scale to DPI if needed, although usually this won't be required as we will be operating at the design DPI in which view resources are edited and saved. Occassionally we may open a resource at a different DPI, e.g. for previewing at system DPI."
 
-	| monitor scale |
-	monitor := DisplayMonitor active.
-	scale := monitor dpi / aPoint.
-	scale = 1
-		ifFalse: 
-			[aWINDOWPLACEMENT scaleBy: scale.
-			aShellView resolutionScaledBy: scale].
+	aPoint = dpi ifTrue: [^self].
+	aShellView resolutionScaledBy: dpi / aPoint!
+
+awarenessContext: awarenessInteger
+	dpiAwareness := awarenessInteger.
+	self initialize.
 	^self!
 
-createShellWindow: aShellView withParameters: aWindowCreationParameters
-	aShellView
-		createWindowAt: Point.Zero
-		extent: (aWindowCreationParameters extent = WindowCreationParameters.UseDefaultGeometry
+createShellWindow: aShellView withFunction: aCreateWindow
+	aCreateWindow
+		position: Point.Zero
+		extent: (aCreateWindow hasDefaultExtent
 				ifTrue: [self defaultWindowExtent]
-				ifFalse: [aWindowCreationParameters extent * dpi / aWindowCreationParameters dpi])
-		styles: {aWindowCreationParameters baseStyle.
-				aWindowCreationParameters extendedStyle bitOr: WS_EX_NOACTIVATE}
-		name: aWindowCreationParameters title!
+				ifFalse: [aCreateWindow extent * dpi // aCreateWindow dpi])
+		dpi: dpi.
+	aShellView basicCreateWindow: aCreateWindow!
 
 defaultWindowExtent
 	^##(800 @ 600) * self dpi // USER_DEFAULT_SCREEN_DPI!
@@ -40,38 +38,82 @@ defaultWindowExtent
 dpi
 	^dpi!
 
-dpi: anInteger
-	dpi := anInteger! !
+dpiAwareness
+	"Answer the symbolic name of the DPI awareness mode for this design desktop."
+
+	^UserLibrary.DpiAwarenessContexts at: dpiAwareness negated!
+
+dpiAwarenessContext
+	^dpiAwareness!
+
+initialize
+	handle := self class desktopHandle.
+	dpi := UserLibrary default getDpiFromDpiAwarenessContext: dpiAwareness!
+
+loadViewResource: aResourceArray forEdit: isLoadingForEdit
+	^UserLibrary default inDpiAwarenessContext: dpiAwareness
+		do: [super loadViewResource: aResourceArray forEdit: isLoadingForEdit]!
+
+printOn: aStream
+	aStream
+		display: self class;
+		space;
+		nextPutAll: self dpiAwareness! !
 !DesignDesktopView categoriesForMethods!
-adjustPlacement:ofShell:withResolution:!geometry!private! !
-createShellWindow:withParameters:!public! !
-defaultWindowExtent!public! !
-dpi!accessing!public! !
-dpi:!initializing!private! !
+adjustPlacementOfShell:forResolution:!geometry!private! !
+awarenessContext:!initializing!private! !
+createShellWindow:withFunction:!operations!public! !
+defaultWindowExtent!constants!public! !
+dpi!accessing!high DPI!public! !
+dpiAwareness!accessing!high DPI!public! !
+dpiAwarenessContext!accessing!high DPI!public! !
+initialize!initializing!private! !
+loadViewResource:forEdit:!binary filing!public! !
+printOn:!development!printing!public! !
 !
 
 !DesignDesktopView class methodsFor!
 
-forDefaultDpi
-	"Answer an instance of the receiver configured for device-independent pixels (aka DIPs, equivalent to 96-dpi)."
+awarenessContext: awarenessInteger
+	"Private - Answer an instance of the receiver configured for the specified DPI."
 
-	^self forDpi: USER_DEFAULT_SCREEN_DPI!
-
-forDpi: anInteger
-	"Answer an instance of the receiver configured for the specified DPI."
-
-	^self new
-		handle: self current handle;
-		dpi: anInteger;
+	^self basicNew
+		awarenessContext: awarenessInteger;
 		yourself!
 
-forSystemDpi
+default
+	"Answer an instance of the receiver configured for device-independent pixels (aka DIPs, equivalent to 96-dpi). The GDI scaling context is used because this gives much better results, avoiding blurry text."
+
+	^Default ifNil: [Default := self awarenessContext: DPI_AWARENESS_CONTEXT_UNAWARE_GDISCALED]!
+
+gdiScaled
+	"Answer an instance of the receiver configured for device-independent pixels (aka DIPs, equivalent to 96-dpi) with GDI scaling."
+
+	^self default!
+
+onStartup
+	Default ifNotNil: [Default initialize].
+	System ifNotNil: [System initialize]!
+
+perMonitor
+	^self current!
+
+system
 	"Answer an instance of the receiver configured for the current primary monitor DPI."
 
-	^self forDpi: UserLibrary default getDpiForSystem! !
+	^System ifNil: [System := self awarenessContext: DPI_AWARENESS_CONTEXT_SYSTEM_AWARE]!
+
+unaware
+	"Answer a DPI unaware instance of the receiver (96-dpi, bitmap scaling)."
+
+	^self awarenessContext: DPI_AWARENESS_CONTEXT_UNAWARE! !
 !DesignDesktopView class categoriesForMethods!
-forDefaultDpi!instance creation!public! !
-forDpi:!instance creation!public! !
-forSystemDpi!instance creation!public! !
+awarenessContext:!instance creation!private! !
+default!instance creation!public! !
+gdiScaled!instance creation!public! !
+onStartup!event handling!public! !
+perMonitor!instance creation!public! !
+system!instance creation!public! !
+unaware!instance creation!public! !
 !
 

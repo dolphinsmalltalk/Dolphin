@@ -28,21 +28,21 @@ createShell: aRectangle text: aString
 createSubjectDialog: aBoolean
 	| dialog |
 	dialog := DialogView new.
-	dialog
-		isInitiallyCentered: aBoolean;
-		create;
-		extent: self dialogExtent.
+	dialog isInitiallyCentered: aBoolean.
+	dialog createAt: CreateWindow.UseDefaultGeometry extent: self dialogExtent.
 	^dialog!
 
 createTestShells: aDisplayMonitor
 	"If there is more than one monitor, put the dialog owner on a monitor other than the primary monitor (regression test for #1116)"
 
 	owner := self
-				createShell: ((100 @ 50 extent: 640 @ 480) translatedBy: aDisplayMonitor workArea origin)
+				createShell: (((100 @ 50 extent: 640 @ 480) scaledBy: aDisplayMonitor dpi / 96) truncated
+						translatedBy: aDisplayMonitor workArea origin)
 				text: self printString , ' owner'.
 	"Create a 2nd shell to take activation from the owner. We do this because normally dialogs are opened modal to the active window."
 	shell2 := self
-				createShell: ((50 @ 25 extent: 320 @ 240) translatedBy: DisplayMonitor primary workArea origin)
+				createShell: (((50 @ 25 extent: 320 @ 240) scaledBy: DisplayMonitor primary dpi / 96) truncated
+						translatedBy: DisplayMonitor primary workArea origin)
 				text: self printString , ' shell2'!
 
 dialogExtent
@@ -82,6 +82,7 @@ testCenteringInOwner
 	self assert: dialogMonitor equals: secondary.
 	"We expect the client area of the dialog to be centred over the client area of the owner. There might be some rounding error causing the centers to be offset by at most 1"
 	self assert: (actualCenter - expectedCenter) abs <= 1.
+
 	"Lose activation and reposition the cursor to the secondary monitor"
 	cursorPos := secondary workArea center.
 	self setUpFakeUserLibrary.
@@ -104,11 +105,12 @@ testCenteringInOwnerModeless
 	dialog := self createSubjectDialog: true.
 	dialog showModeless: owner.
 	self assert: dialog displayMonitor equals: secondary.
-	self
-		assert: ((dialog mapPointToScreen: dialog clientRectangle center)
-				- (owner mapPointToScreen: owner clientRectangle center)) abs
-				<= 1.
-	dialog destroy!
+	dialog
+		text: 'Now you see me';
+		hasSysMenu: false.
+	dialog recreate.
+	self deny: dialog hasSysMenu.
+	self assert: dialog text equals: 'Now you see me'!
 
 testInplaceNotRepositioned
 	| desktopMonitors position dialog leftMonitor ownerRect |
@@ -172,46 +174,69 @@ testNearOwnerModeless
 	self assert: dialog position - dialog displayMonitor origin equals: position.
 	dialog destroy!
 
+testRecreate
+	"Test that a modeless dialog recreates with its previous state."
+
+	| secondary position dialog |
+	secondary := self getSecondaryMonitorIfAvailable.
+	self createTestShells: secondary.
+	dialog := self createSubjectDialog: false.
+	self assert: dialog displayMonitor equals: DisplayMonitor primary.
+	position := dialog position.
+	dialog showModeless: owner.
+	self assert: dialog displayMonitor equals: secondary.
+	"We should maintain the same position relative to the display origin"
+	self assert: dialog position - dialog displayMonitor origin equals: position.
+	dialog destroy!
+
 testRemainsOnScreen
 	"Test that an initially centred dialog is positioned so that it is fully visible, even if this means not being completely centred in the owner."
 
-	| rect workArea captureRect |
-	owner := ShellView new.
-	owner show.
+	| rect workArea captureRect monitor |
 	workArea := SystemMetrics current virtualScreenRectangle.
 	"Position the (small) owner top-left so the dialog needs to be bumped back to the origin"
-	owner rectangle: (Rectangle origin: workArea origin + (25 @ 25) extent: 75 @ 50).
+	monitor := DisplayMonitor containingPoint: workArea origin.
+	owner := self createShell: (Rectangle origin: workArea origin + (25 @ 25 * monitor dpi // 96)
+						extent: 75 @ 50 * monitor dpi // 96)
+				text: self printString.
 	captureRect := [:dialog | rect := dialog rectangle].
 	self
 		evaluateInModalDialog: captureRect
 		owner: owner
 		centered: true.
 	"Note that there may be areas of the virtual screen that are not visible on any monitor, either because the monitors are deliberately staggered, or are of different sizes"
-	self assert: rect origin equals: (self workAreaNearest: workArea topLeft) topLeft.
+	self assert: rect origin equals: monitor workArea topLeft.
 	"Now bottom-left"
-	owner rectangle: (Rectangle origin: workArea bottomLeft + (25 @ -100) extent: 75 @ 50).
+	monitor := DisplayMonitor nearestPoint: workArea bottomLeft.
+	owner rectangle: (Rectangle origin: workArea bottomLeft + (25 @ -100 * monitor dpi // 96)
+				extent: 75 @ 50 * monitor dpi // 96).
 	self
 		evaluateInModalDialog: captureRect
 		owner: owner
 		centered: true.
 	self assert: rect origin
-		equals: (self workAreaNearest: workArea bottomLeft) bottomLeft - (0 @ self dialogExtent y).
+		equals: monitor workArea bottomLeft - (0 @ self dialogExtent y * monitor dpi // 96).
 	"Now bottom-right"
-	owner rectangle: (Rectangle origin: workArea bottomRight + (-75 @ -100) extent: 75 @ 50).
+	monitor := DisplayMonitor nearestPoint: workArea bottomRight.
+	owner rectangle: (Rectangle origin: workArea bottomRight + (-75 @ -100 * monitor dpi // 96)
+				extent: 75 @ 50 * monitor dpi // 96).
 	self
 		evaluateInModalDialog: captureRect
 		owner: owner
 		centered: true.
 	self assert: rect origin
-		equals: (self workAreaNearest: workArea bottomRight) bottomRight - self dialogExtent.
-	"Now top-right"
-	owner rectangle: (Rectangle origin: workArea topRight + (-75 @ 25) extent: 75 @ 50).
+		equals: monitor workArea bottomRight - (self dialogExtent * monitor dpi // 96).
+	"Finally, top-right"
+	monitor := DisplayMonitor nearestPoint: workArea topRight.
+	owner rectangle: (Rectangle origin: workArea topRight + (-75 @ 25 * monitor dpi // 96)
+				extent: 75 @ 50 * monitor dpi // 96).
 	self
 		evaluateInModalDialog: captureRect
 		owner: owner
 		centered: true.
 	self assert: rect origin
-		equals: (self workAreaNearest: workArea topRight) topRight - (self dialogExtent x @ 0)!
+		equals: (self workAreaNearest: workArea topRight) topRight
+				- (self dialogExtent x @ 0 * monitor dpi // 96)!
 
 workAreaNearest: aPoint
 	^(DisplayMonitor nearestPoint: aPoint) workArea! !
@@ -227,7 +252,8 @@ testCenteringInOwnerModeless!public!unit tests! !
 testInplaceNotRepositioned!public!unit tests! !
 testNearOwnerModal!public!unit tests! !
 testNearOwnerModeless!public!unit tests! !
+testRecreate!public!unit tests! !
 testRemainsOnScreen!public!unit tests! !
-workAreaNearest:!public! !
+workAreaNearest:!helpers!private! !
 !
 

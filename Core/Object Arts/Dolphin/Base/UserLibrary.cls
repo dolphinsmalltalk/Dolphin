@@ -2,13 +2,14 @@
 
 PermanentLibrary subclass: #UserLibrary
 	instanceVariableNames: ''
-	classVariableNames: 'DpiAwareness DpiAwarenessModes'
+	classVariableNames: 'DpiAwareness DpiAwarenessContexts DpiAwarenesses'
 	poolDictionaries: 'MessageBoxConstants'
 	classInstanceVariableNames: ''!
 
 UserLibrary guid: (GUID fromString: '{64674046-3a82-101b-8181-00aa003743d3}')!
+UserLibrary addClassConstant: 'DpiAwarenessContexts' value: #(#unaware #system #perMonitorV1 #perMonitor #gdiScaled)!
 
-UserLibrary addClassConstant: 'DpiAwarenessModes' value: #(#unaware #system #perMonitor #perMonitorV2 #gdiScaled)!
+UserLibrary addClassConstant: 'DpiAwarenesses' value: #(#invalid #unaware #system #perMonitor)!
 
 UserLibrary comment: 'UserLibrary is the <ExternalLibrary> class to represent the Windows system DLL, User32.DLL.
 
@@ -834,14 +835,17 @@ clear
 		do: [:each | self environment at: each ifPresent: [:c | c reset]]!
 
 dpiAwareness
-	"Answer the DPI awareness mode for this session."
+	"Answer the symbolic name of the DPI awareness mode for this View."
 
-	^DpiAwarenessModes at: DpiAwareness negated!
+	^DpiAwarenessContexts at: DpiAwareness negated!
 
 dpiAwareness: aSymbol
 	"Set the DPI awareness mode to be applied when this image is restarted. N.B. Windows does not support changing the DPI awareness of an entire running process, so this cannot take effect until restart."
 
-	DpiAwareness := (DpiAwarenessModes indexOf: aSymbol) negated!
+	DpiAwareness := self dpiAwarenessContextFromName: aSymbol!
+
+dpiAwarenessContextFromName: aSymbol
+	^(DpiAwarenessContexts identityIndexOf: aSymbol) negated!
 
 fileName
 	"Answer the host system file name of the external library which 
@@ -850,14 +854,16 @@ fileName
 	^'USER32'!
 
 initialize
-	self addClassConstant: 'DpiAwarenessModes'
-		value: #(#unaware #system #perMonitor #perMonitorV2 #gdiScaled).
+	self addClassConstant: 'DpiAwarenessContexts'
+		value: #(#unaware #system #perMonitorV1 #perMonitor #gdiScaled).
+	self addClassConstant: 'DpiAwarenesses' value: #(#invalid #unaware #system #perMonitor).
 	DpiAwareness := DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2! !
 
 !UserLibrary class categoriesForMethods!
 clear!initializing!private! !
-dpiAwareness!accessing!public! !
-dpiAwareness:!accessing!public! !
+dpiAwareness!accessing!high DPI!public! !
+dpiAwareness:!accessing!high DPI!public! !
+dpiAwarenessContextFromName:!accessing!high DPI!public! !
 fileName!constants!public! !
 initialize!class initialization!public! !
 !

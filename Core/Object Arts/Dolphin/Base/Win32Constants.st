@@ -103,6 +103,7 @@ Win32Constants at: 'COLOR_3DSHADOW' put: 16r10!
 Win32Constants at: 'COLOR_ACTIVEBORDER' put: 16rA!
 Win32Constants at: 'COLOR_ACTIVECAPTION' put: 16r2!
 Win32Constants at: 'COLOR_APPWORKSPACE' put: 16rC!
+Win32Constants at: 'COLOR_BACKGROUND' put: 16r1!
 Win32Constants at: 'COLOR_BTNHIGHLIGHT' put: 16r14!
 Win32Constants at: 'COLOR_BTNTEXT' put: 16r12!
 Win32Constants at: 'COLOR_CAPTIONTEXT' put: 16r9!
@@ -247,6 +248,13 @@ Win32Constants at: 'DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2' put: -16r4!
 Win32Constants at: 'DPI_AWARENESS_CONTEXT_SYSTEM_AWARE' put: -16r2!
 Win32Constants at: 'DPI_AWARENESS_CONTEXT_UNAWARE' put: -16r1!
 Win32Constants at: 'DPI_AWARENESS_CONTEXT_UNAWARE_GDISCALED' put: -16r5!
+Win32Constants at: 'DPI_AWARENESS_INVALID' put: -16r1!
+Win32Constants at: 'DPI_AWARENESS_PER_MONITOR_AWARE' put: 16r2!
+Win32Constants at: 'DPI_AWARENESS_SYSTEM_AWARE' put: 16r1!
+Win32Constants at: 'DPI_AWARENESS_UNAWARE' put: 16r0!
+Win32Constants at: 'DPI_HOSTING_BEHAVIOR_DEFAULT' put: 16r0!
+Win32Constants at: 'DPI_HOSTING_BEHAVIOR_INVALID' put: -16r1!
+Win32Constants at: 'DPI_HOSTING_BEHAVIOR_MIXED' put: 16r1!
 Win32Constants at: 'DS_3DLOOK' put: 16r4!
 Win32Constants at: 'DSS_DISABLED' put: 16r20!
 Win32Constants at: 'DSS_HIDEPREFIX' put: 16r200!

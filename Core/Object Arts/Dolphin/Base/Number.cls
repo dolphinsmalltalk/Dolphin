@@ -71,7 +71,7 @@ asFraction
 	^self subclassResponsibility!
 
 asInteger
-	"Answer the nearest <integer> value to the receiver."
+	"Answer the nearest <integer> value to the receiver. Note that the ANSI Smalltalk standard specifies rounding rather than truncation."
 
 	^self rounded!
 

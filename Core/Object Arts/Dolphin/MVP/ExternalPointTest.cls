@@ -35,6 +35,22 @@ testPrintString
 	self assert: self subjectClass new printString equals: ('a ', self subjectClass name, '(0@0)').
 	self assert: (self subjectClass fromPoint: (123@456)) printString equals: ('a ', self subjectClass name, '(123@456)')!
 
+testScaleBy
+	"Test scaling in-place"
+
+	| subject |
+	subject := self subjectClass marshal: 6 @ 4.
+	subject scaleBy: 2.
+	self assert: subject x equals: 12.
+	self assert: subject y equals: 8.
+	subject := self subjectClass marshal: 6 @ 4.
+	subject scaleBy: 1 / 2.
+	self assert: subject x equals: 3.
+	self assert: subject y equals: 2.
+	subject scaleBy: 0.
+	self assert: subject x equals: 0.
+	self assert: subject y equals: 0!
+
 testValue
 	| point subject |
 	subject := self subjectClass x: 101 y: 202.
@@ -47,6 +63,7 @@ testValue
 testAsObject!public!unit tests! !
 testMarshal!public!unit tests! !
 testPrintString!public!unit tests! !
+testScaleBy!public! !
 testValue!public!unit tests! !
 !
 

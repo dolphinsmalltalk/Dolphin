@@ -561,10 +561,9 @@ dictionary: aSymbol
 	^self collection: aSymbol presenterClass: DictionaryPresenter!
 
 extent: aSymbol
-	"Answer an instance of the receiver for editing a <Point> extent aspect of an 
-	object. See #point:"
+	"Answer an instance of the receiver for editing a <Point> extent aspect of a View (or supporting object) that may be expressed in the virtualized co-ordinate system that is sensitive to DPI awareness context."
 
-	^self point: aSymbol!
+	^self logicalPoint: aSymbol!
 
 fileOpen: aFilenameAspectSymbol 
 	"Answer an instance of the receiver for aFilenameAspectSymbol.
@@ -679,6 +678,14 @@ list: aListAspectSymbol addEvaluationFrom: anArrayOfStrings
 list: aListAspectSymbol addFrom: anArray
 	#deprecated.
 	^self sequenceableCollection: aListAspectSymbol addFrom: anArray!
+
+logicalPoint: aSymbol
+	"Answer an instance of the receiver for editing a <Point> aspect of a View (or supporting object) that may be expressed in the virtualized co-ordinate system that is sensitive to DPI awareness context."
+
+	^(DpiSensitiveAspect name: aSymbol)
+		beImmutable;
+		beEditedInPlace;
+		yourself!
 
 maxDisplayCharacters
 	^40!
@@ -805,10 +812,9 @@ point: aSymbol
 		yourself!
 
 position: aSymbol
-	"Answer an instance of the receiver for editing a <Point> position aspect of an 
-	object. See #point:"
+	"Answer an instance of the receiver for editing a <Point> position aspect of a View (or supporting object) that may be expressed in the virtualized co-ordinate system that is sensitive to DPI awareness context."
 
-	^self point: aSymbol!
+	^self logicalPoint: aSymbol!
 
 rectangle: aSymbol
 	"Answer an instance of the receiver for editing a <Rectangle> aspect of an 
@@ -883,7 +889,12 @@ time: aSymbol
 	of an object with accessor, aSymbol.
 	The aspect is viewable and editable using a TimePresenter."
 
-	^self name: aSymbol presenterBlock: [:p :m | TimePresenter createIn: p on: m]! !
+	^self name: aSymbol presenterBlock: [:p :m | TimePresenter createIn: p on: m]!
+
+width: aSymbol
+	"Answer an instance of the receiver for editing a <Point> extent aspect of a View (or supporting object) that may be expressed in the virtualized co-ordinate system that is sensitive to DPI awareness context."
+
+	^(DpiSensitiveAspect number: aSymbol)! !
 
 !Aspect class categoriesForMethods!
 autostring:!instance creation!public! !
@@ -921,6 +932,7 @@ key:!instance creation!public! !
 list:!instance creation!public! !
 list:addEvaluationFrom:!instance creation!public! !
 list:addFrom:!instance creation!public! !
+logicalPoint:!instance creation!public! !
 maxDisplayCharacters!constants!public! !
 menu:!instance creation!must strip!public! !
 menuBar:!instance creation!must strip!public! !
@@ -942,5 +954,6 @@ sequenceableCollection:addFrom:!instance creation!public! !
 set:!instance creation!public! !
 string:!instance creation!public! !
 time:!instance creation!public! !
+width:!instance creation!public! !
 !
 

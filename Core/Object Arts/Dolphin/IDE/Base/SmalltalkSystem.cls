@@ -1789,7 +1789,7 @@ dolphinWikiWeb
 	self openUrl: self dolphinWikiUrl!
 
 dpiAwareness
-	"Answer the DPI awareness mode for the development environment."
+	"Answer the symbolic name of the DPI awareness mode for the development environment."
 
 	^UserLibrary dpiAwareness!
 

@@ -124,13 +124,11 @@ preferredLayoutExtentOf: aCompositeView context: aLayoutContext
 	^(insets left + insets right + (ncols * extent x) + ((ncols - 1) * self horizontalGap)) 
 		@ (insets top + insets bottom + (nrows * extent y) + ((nrows - 1) * self verticalGap))!
 
-resolutionScaledBy: scale 
-	"Private - The receiver is being loaded and it has been determined that the pixel resolution
-	has changed since the point at which the view was saved. Scale any internal pixels by <Point>
-	scale."
+resolutionScaledBy: aPoint
+	"Private - The receiver is being loaded and it has been determined that the pixel resolution has changed since the point at which the view was saved. Scale any internal pixels by the <Point> argument."
 
-	horizontalGap := (horizontalGap * scale x) truncated.
-	verticalGap := (verticalGap * scale y) truncated!
+	horizontalGap := (horizontalGap * aPoint x) truncated.
+	verticalGap := (verticalGap * aPoint y) truncated!
 
 rows
 	"Answers the number of rows for the receiver, or zero if unspecified."
