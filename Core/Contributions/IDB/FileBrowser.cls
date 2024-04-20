@@ -307,7 +307,7 @@ setImage: aFileBrowserFile
 	"If the selected file is an image file then diplay it on the image tab"
 
 	aFileBrowserFile isImageFile ifFalse: [^image value: nil].
-	image value: (OLEPicture fromFile: aFileBrowserFile path).
+	image value: (GdiplusImage fromFile: aFileBrowserFile path).
 	(image view)
 		viewMode: showImageAs;
 		layout!

@@ -14,36 +14,12 @@ DolphinSurePersonalCertificate comment: ''!
 
 !DolphinSurePersonalCertificate methodsFor!
 
-backgroundImageFile
-	"Private - Answers the resource name of the background image file
-	for the receiver"
-
-	^'Resources/DolphinSurePersonalCert.jpg'
-!
-
-imageAttributes
-	"Private - Answers an OrderedCollection detailing the attributes that should
-	appear on a image displaying the certificate details"
-
-	^##(OrderedCollection new
-		add: 'Serial no:' -> #serial;
-		add: 'Issued to:' -> #owner;
-		add: 'Details:' -> #details;
-		add: '' -> #gap;
-		add: 'Purpose:' -> #purpose;
-		add: '' -> #gap;
-		add: 'Validity:' -> #validityString;
-		add: 'Issued by:' -> #issuingAuthority;
-		yourself)!
-
 purpose
 	"Answers the purpose of this certificate"
 
 	^'This certificate ensures that the content is from a known individual and guarantees that it has not been modified since it was originally created.'! !
 
 !DolphinSurePersonalCertificate categoriesForMethods!
-backgroundImageFile!constants!private! !
-imageAttributes!drawing!helpers!private! !
 purpose!accessing!public! !
 !
 

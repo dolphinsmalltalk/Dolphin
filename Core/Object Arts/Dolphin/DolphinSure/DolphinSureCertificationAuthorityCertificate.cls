@@ -14,28 +14,12 @@ DolphinSureCertificationAuthorityCertificate comment: 'A DolphinSureCertificatio
 
 !DolphinSureCertificationAuthorityCertificate methodsFor!
 
-imageAttributes
-	"Private - Answers an OrderedCollection detailing the attributes that should
-	appear on a image displaying the certificate details"
-
-	^##(OrderedCollection new
-		add: 'Serial no:' -> #serial;
-		add: 'Certifying Authority:' -> #owner;
-		add: 'Details:' -> #details;
-		add: '' -> #gap;
-		add: 'Purpose:' -> #purpose;
-		add: '' -> #gap;
-		add: 'Validity:' -> #validityString;
-		add: 'Issued by:' -> #issuingAuthority;
-		yourself)!
-
 purpose
 	"Answers the purpose of this certificate"
 
 	^'This certificate belongs to a DolphinSure certifying authority and guarantees that the owner has the right to issue certificates to DolphinSure publishers.'! !
 
 !DolphinSureCertificationAuthorityCertificate categoriesForMethods!
-imageAttributes!accessing!private! !
 purpose!accessing!public! !
 !
 

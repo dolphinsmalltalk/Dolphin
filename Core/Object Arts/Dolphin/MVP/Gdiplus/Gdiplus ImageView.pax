@@ -14,7 +14,6 @@ package methodNames
 	add: #Bitmap -> #drawOnGraphics:at:extent:from:extent:unit:attributes:;
 	add: #Icon -> #drawOnGraphics:at:extent:from:extent:unit:attributes:;
 	add: #Image -> #drawOnGraphics:at:extent:from:extent:unit:attributes:;
-	add: #OLEPicture -> #drawOnGraphics:at:extent:from:extent:unit:attributes:;
 	add: 'ImagePresenter class' -> #resource_Gdiplus_view;
 	yourself.
 
@@ -32,8 +31,7 @@ package setPrerequisites: #(
 	'..\Base\Dolphin MVP Base'
 	'..\Type Converters\Dolphin Type Converters'
 	'..\Models\Value\Dolphin Value Models'
-	'Gdiplus'
-	'..\..\ActiveX\Components\Picture\OLE Picture').
+	'Gdiplus').
 
 package!
 
@@ -120,27 +118,6 @@ resource_Gdiplus_view
 
 !ImagePresenter class categoriesForMethods!
 resource_Gdiplus_view!public!resources-views! !
-!
-
-!OLEPicture methodsFor!
-
-drawOnGraphics: aGraphics at: dstOrigin extent: dstExtent from: srcOrigin extent: srcExtent unit: aUnit attributes: aImageAtt
-	"Subclass are responsible for drawing themselves on aGraphics.
-	Two techniques could be used
-		-The receiver converts itself to a Gdiplus object which draws itself.
-		-The receiver asks the graphics for a canvas"
-
-	"Note: the srcOrigin and srcExtent are ignored"
-
-	aGraphics doWithCanvas: 
-			[:aCanvas | 
-			self 
-				drawOn: aCanvas
-				at: dstOrigin
-				extent: dstExtent]! !
-
-!OLEPicture categoriesForMethods!
-drawOnGraphics:at:extent:from:extent:unit:attributes:!drawing-gdiplus!public! !
 !
 
 "End of package definition"!

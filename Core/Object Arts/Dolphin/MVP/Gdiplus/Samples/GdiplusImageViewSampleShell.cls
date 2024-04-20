@@ -86,8 +86,7 @@ onViewOpened
 				with: GdiplusImage
 				with: GdiplusBitmap
 				with: Bitmap
-				with: Icon
-				with: OLEPicture).
+				with: Icon).
 	edgeChoice model: (image view aspectValue: #imageBorder).
 	viewChoice model: (image view aspectValue: #viewMode).
 	interpolationChoice model: (image view aspectValue: #interpolationMode).

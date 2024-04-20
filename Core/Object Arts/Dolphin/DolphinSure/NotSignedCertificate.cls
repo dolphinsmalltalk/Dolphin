@@ -18,27 +18,11 @@ NotSignedCertificate new confirmTrustFor: ''Unsigned data'''!
 
 !NotSignedCertificate methodsFor!
 
-backgroundImageFile
-	"Private - Answers the resource name of the background image file
-	for the receiver"
-
-	^'Resources/DolphinSureNotSignedCert.jpg'
-!
-
 canBePermanentlyTrusted
 	"Answer true if the receiver can be added to the permanent trust store.
 	It is obviously not safe to always trust unsigned content."
 
 	^false!
-
-imageAttributes
-	"Private - Answers an OrderedCollection detailing the attributes that should
-	appear on a image displaying the certificate details"
-
-	^##(OrderedCollection new
-		add: '' -> #gap;
-		add: 'IMPORTANT:' -> #purpose;
-		yourself)!
 
 purpose
 	"Answers the purpose of this certificate"
@@ -50,9 +34,7 @@ It is therefore not possible to guarantee the identity of the publisher or ensur
 You must decide if you are willing to accept this content as safe.'! !
 
 !NotSignedCertificate categoriesForMethods!
-backgroundImageFile!constants!private! !
 canBePermanentlyTrusted!public!testing!trust! !
-imageAttributes!accessing!private! !
 purpose!accessing!public! !
 !
 

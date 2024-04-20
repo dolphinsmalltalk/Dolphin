@@ -69,18 +69,16 @@ createHandle
 
 	| hPic |
 	hPic := super createHandle.
-	hPic isNull 
+	hPic isNull
 		ifTrue: 
 			["By setting a non-zero extent we avoid client code getting division by zero when scaling"
-
 			hmExtent := extent := 1 @ 1]
 		ifFalse: 
-			[| dc |
+			[| dpi |
 			self assert: [picture notNull].
 			hmExtent := picture extent.
-			dc := Canvas forDesktop.
-			extent := dc hiMetricToPels: hmExtent.
-			dc free].
+			dpi := SystemMetrics current dpi.
+			extent := (dpi * hmExtent x // 2540) @ (dpi * hmExtent y // 2540)].
 	^hPic!
 
 drawOn: aCanvas at: aPoint extent: sizePoint
@@ -90,27 +88,25 @@ drawOn: aCanvas at: aPoint extent: sizePoint
 	pi := self picture.
 	extent isZero ifTrue: [^false].
 	hmHeight := hmExtent y.
-
 	hPalette := pi hPal.
-	hPalette notNull ifTrue: [ oldPalette := aCanvas palette: hPalette ].
-
+	hPalette notNull ifTrue: [oldPalette := aCanvas palette: hPalette].
 	answer := pi
-		Render: aCanvas asParameter
-		x: aPoint x
-		y: aPoint y
-		cx: sizePoint x
-		cy: sizePoint y
-		xSrc:	0
-		ySrc:	hmHeight - 1
-		cxSrc: hmExtent x
-		cySrc: hmHeight negated
-		prcWBounds: nil.
+				Render: aCanvas asParameter
+				x: aPoint x
+				y: aPoint y
+				cx: sizePoint x
+				cy: sizePoint y
+				xSrc: 0
+				ySrc: hmHeight - 1
+				cxSrc: hmExtent x
+				cySrc: hmHeight negated
+				prcWBounds: nil.
 
-	hPalette notNull ifTrue: [
-		"Tidy up palette manipulation"
-		aCanvas selectPalette: oldPalette ].
-
-	^answer==0!
+	hPalette notNull
+		ifTrue: 
+			["Tidy up palette manipulation"
+			aCanvas selectPalette: oldPalette].
+	^answer == 0!
 
 extent
 	"Answers the dimensions of the receiver in pixels"
@@ -163,6 +159,11 @@ picture: anIPicture
 	picture := anIPicture
 !
 
+resolution
+	"Answer an <Point> specifying the horizontal and vertical DPI of the receiver."
+
+	^##(72 @ 72)!
+
 saveAsFile: pathString 
 	"Save this picture to a file at the specified path, and existing file at that path is
 	overwritten."
@@ -188,6 +189,7 @@ isPersistent!private!testing! !
 loadFromFile:extent:!private!realizing/unrealizing! !
 picture!accessing!private! !
 picture:!accessing!private! !
+resolution!accessing!public! !
 saveAsFile:!file operations!public! !
 !
 

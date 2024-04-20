@@ -49,8 +49,8 @@ package setPrerequisites: #(
 	'..\..\Object Arts\Dolphin\MVP\Presenters\Tree\Dolphin Tree Presenter'
 	'..\..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters'
 	'..\..\Object Arts\Dolphin\MVP\Models\Value\Dolphin Value Models'
+	'..\..\Object Arts\Dolphin\MVP\Gdiplus\Gdiplus'
 	'IDB Common'
-	'..\..\Object Arts\Dolphin\ActiveX\Components\Picture\OLE Picture'
 	'..\..\Object Arts\Dolphin\ActiveX\Components\WebView2\WebView2'
 	'..\..\Object Arts\Dolphin\ActiveX\Shell\Windows Shell Namespace').
 

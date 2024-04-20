@@ -32,8 +32,7 @@ package setPrerequisites: #(
 	'..\..\Type Converters\Dolphin Type Converters'
 	'..\..\Models\Value\Dolphin Value Models'
 	'..\Gdiplus'
-	'..\Gdiplus ImageView'
-	'..\..\..\ActiveX\Components\Picture\OLE Picture').
+	'..\Gdiplus ImageView').
 
 package!
 
