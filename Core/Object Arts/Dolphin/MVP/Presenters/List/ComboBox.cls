@@ -152,6 +152,14 @@ command: anInteger id: id
 				CBN_KILLFOCUS -> #cbnKillFocus})
 		lookup: anInteger) ifNotNil: [:selector | self perform: selector]!
 
+createAt: originPoint extent: extentPoint
+	"Private - Create the View window ensuring it has the VM window procedure. The window rectangle is specified by the origin <point> first argument, and the extent <point> second argument. For reasons of backwards compatibility, and because the default extent may well be expressed in code, it is assumed that the position and size arguments are measured in device-independent pixels (aka DIPs, i.e. 96-dpi). Answer the receiver."
+
+	self
+		createWindow: (self creationFunction: (originPoint
+						extent: extentPoint + (0 @ (droppedHeight ifNil: [self defaultDroppedHeight])))
+				dpi: USER_DEFAULT_SCREEN_DPI)!
+
 cueBanner
 	"Answer the textual cue to be displayed when this combo box is empty and does not have
 	focus, or nil if none is set."
@@ -177,6 +185,9 @@ defaultDroppedHeight
 
 	^200!
 
+defaultExtent
+	^125 @ (23 + self defaultDroppedHeight)!
+
 defaultWindowStyle
 	"Private - Answer a default window base style to use when creating a combobox."
 
@@ -188,7 +199,10 @@ droppedHeight
 	^droppedHeight
 		ifNil: 
 			[handle
-				ifNil: [self defaultDroppedHeight * SystemMetrics current dpi // USER_DEFAULT_SCREEN_DPI]
+				ifNil: 
+					[self parentView
+						ifNil: [self defaultDroppedHeight]
+						ifNotNil: [:parent | self defaultDroppedHeight * parent dpi // USER_DEFAULT_SCREEN_DPI]]
 				ifNotNil: [self getDroppedControlRect height - self height]]!
 
 droppedHeight: anInteger
@@ -321,7 +335,7 @@ placement: aWINDOWPLACEMENT
 				ifFalse: 
 					[| placement |
 					placement := aWINDOWPLACEMENT copy.
-					placement height: self droppedHeight.
+					placement height: placement height + self droppedHeight.
 					placement])!
 
 recreationFunction
@@ -396,9 +410,11 @@ cbnKillFocus!event handling-win32!private! !
 cbnSelChange!event handling-win32!private!selection! !
 cbnSetFocus!event handling-win32!private! !
 command:id:!commands!private! !
+createAt:extent:!private!realizing/unrealizing! !
 cueBanner!event handling!public! !
 cueBanner:!event handling!public! !
 defaultDroppedHeight!initializing!private! !
+defaultExtent!constants!private! !
 defaultWindowStyle!constants!private! !
 droppedHeight!accessing!public! !
 droppedHeight:!accessing!public! !

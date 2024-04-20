@@ -100,6 +100,7 @@ package classNames
 	add: #ValueConverterTest;
 	add: #ViewTest;
 	add: #VirtualColorTest;
+	add: #WINDOWPLACEMENTTest;
 	add: #WindowsEventTest;
 	yourself.
 
@@ -358,6 +359,12 @@ DolphinTest subclass: #ValueConverterTest
 	classInstanceVariableNames: ''!
 
 DolphinTest subclass: #VirtualColorTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+DolphinTest subclass: #WINDOWPLACEMENTTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
