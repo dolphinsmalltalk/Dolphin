@@ -446,6 +446,12 @@ positionTray: aLayoutContext
 							left @ top corner: right @ (top + trayExtent y min: self parentView height)]].
 	aLayoutContext setView: tray rectangle: rect!
 
+resolutionScaledBy: aPoint
+	"Private - The resolution of the receiver has changed, e.g. it is being loaded and it has been determined that the pixel resolution has changed since the point at which the view was saved. Scale any internal pixels by the <Point> argument."
+
+	super resolutionScaledBy: aPoint.
+	trayExtent := (trayExtent * aPoint) truncated!
+
 showTray
 	"Show the tray, i.e. slide it out."
 
@@ -572,6 +578,7 @@ onViewCreated!event handling!private! !
 onViewDestroyed!event handling!private! !
 pin!commands!public! !
 positionTray:!geometry!private! !
+resolutionScaledBy:!geometry!private! !
 showTray!commands!public! !
 startAutoHideTimer!private! !
 tabs!public! !
