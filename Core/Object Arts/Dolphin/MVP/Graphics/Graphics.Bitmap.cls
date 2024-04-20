@@ -538,17 +538,21 @@ fromView: aView background: aBrush
 	"Answer a new bitmap instance of the receiver containing a dump of the current state of the <View> argument, painted over the top of a bitmap erased with the specified background brush.
 	In most cases Views are opaque and the background pattern will not be visible at all, but for transparent views with any transparency this will show through."
 
-	| answer canvas ext |
-	ext := aView extent.
-	answer := self displayCompatibleWithExtent: ext.
-	canvas := answer canvas.
-	canvas fillRectangle: (RECTL extent: ext) brush: aBrush.
-	aView
-		sendMessage: WM_PRINT
-		wParam: canvas handle
-		lParam: ##(PRF_CLIENT | PRF_ERASEBKGND | PRF_CHILDREN | PRF_NONCLIENT | PRF_OWNED).
-	answer freeDC.
-	^answer!
+	"The extent reported will depend on the thread DPI awareness context. Since the PhysicalToLogicalPointForPerMonitorDPI/LogicalToPhysicalPointForPerMonitorDPI don't actually seem to work as advertised, we just switch to the DPI context for the view in question to be sure we get the correct extent. The alternative would be to explicitly scale the extent from the current thread DPI context, although if that is per-monitor we'd need to determine the DPI of the monitor on which aView is located. It is easier/safer just to switch context temporarily."
+
+	^aView inDpiAwarenessContextDo: 
+			[| answer canvas ext |
+			ext := aView extent.
+			answer := self compatible: aView canvas extent: ext.
+			canvas := answer canvas.
+			aBrush ifNotNil: [canvas fillRectangle: (RECTL extent: ext) brush: aBrush].
+			"Note that PRF_ERASEBKGND is necessary here even though we may have apparently just erased the background, as otherwise some of that background colour may show through where it should not."
+			aView
+				sendMessage: WM_PRINT
+				wParam: canvas handle
+				lParam: ##(PRF_CLIENT | PRF_CHILDREN | PRF_NONCLIENT | PRF_OWNED | PRF_ERASEBKGND).
+			answer freeDC.
+			answer]!
 
 imageType
 	"Private - Answer the Win32 image type for the receiver."

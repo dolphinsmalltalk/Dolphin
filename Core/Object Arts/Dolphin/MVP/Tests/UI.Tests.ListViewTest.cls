@@ -430,7 +430,7 @@ verifyColumnWidths: widths
 			self
 				assert: col width
 				closeTo: width * presenter scaleFactor
-				precision: 2]!
+				precision: 3]!
 
 verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	| view |

@@ -73,7 +73,6 @@ package setMethodNames: #(
 	#(#{External.Int8 class} #fieldType)
 	#(#{External.IntegerBytes class} #fieldType)
 	#(#{External.IntPtr class} #fieldType)
-	#(#{External.POINT} #printOn:)
 	#(#{External.PointerArray class} #fieldType)
 	#(#{External.PointerArray class} #pointerFieldType)
 	#(#{External.PointerArrayField class} #printVariable:type:indirections:on:)
@@ -1209,19 +1208,6 @@ fieldType
 
 !External.IntPtr class categoriesForMethods!
 fieldType!constants!private! !
-!
-
-!External.POINT methodsFor!
-
-printOn: aStream
-	"Append a short textual description of the receiver to aStream."
-
-	aStream
-		basicPrint: self;
-		print: self asPoint! !
-
-!External.POINT categoriesForMethods!
-printOn:!printing!public! !
 !
 
 !External.PointerArray class methodsFor!

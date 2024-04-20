@@ -15,9 +15,20 @@ OS.Tests.RECTLTest comment: ''!
 !OS.Tests.RECTLTest methodsFor!
 
 subjectClass
-	^RECTL! !
+	^RECTL!
+
+testScaleToDpiFrom
+	"Test DPI scaling in-place"
+
+	| rect |
+	super testScaleToDpiFrom.
+	rect := self subjectClass marshal: (1@1 extent: 186@21).
+	rect scaleToDpi: 120 from: 96.
+	self assert: rect equals: (1@1 corner: 233@27)
+! !
 
 !OS.Tests.RECTLTest categoriesForMethods!
 subjectClass!constants!private! !
+testScaleToDpiFrom!public!unit tests! !
 !
 

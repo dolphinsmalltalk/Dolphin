@@ -29,6 +29,10 @@ left
 	^self x!
 
 left: aNumber
+	"Sets the position of the receiver's left edge."
+
+	"The corner is not expected to move, so the width must change."
+
 	self width: self width + (self x - aNumber).
 	self x: aNumber!
 

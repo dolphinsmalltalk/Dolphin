@@ -27,9 +27,8 @@ corner: aPoint
 	"Set the <point> representing the corner of the placement rectangle."
 
 	bytes
-		int32AtOffset: ##(_OffsetOf_rcNormalPosition + RECTL._OffsetOf_right) put: aPoint x asInteger;
-		int32AtOffset: ##(_OffsetOf_rcNormalPosition + RECTL._OffsetOf_bottom) put: aPoint y asInteger
-!
+		int32AtOffset: ##(_OffsetOf_rcNormalPosition + RECTL._OffsetOf_right) put: aPoint x;
+		int32AtOffset: ##(_OffsetOf_rcNormalPosition + RECTL._OffsetOf_bottom) put: aPoint y!
 
 extent
 	^self width @ self height!
@@ -66,11 +65,11 @@ origin: aPoint
 	"Set the <point> representing the origin of the placement rectangle."
 
 	bytes
-		int32AtOffset: ##(_OffsetOf_rcNormalPosition + RECTL._OffsetOf_left) put: aPoint x asInteger;
-		int32AtOffset: ##(_OffsetOf_rcNormalPosition + RECTL._OffsetOf_top) put: aPoint y asInteger!
+		int32AtOffset: ##(_OffsetOf_rcNormalPosition + RECTL._OffsetOf_left) put: aPoint x;
+		int32AtOffset: ##(_OffsetOf_rcNormalPosition + RECTL._OffsetOf_top) put: aPoint y!
 
 ptMaxPosition
-	"Answer the <POINTL> value of the receiver's 'ptMaxPosition' field."
+	"Private - Answer the <POINTL> value of the receiver's 'ptMaxPosition' field."
 
 	^POINTL fromAddress: bytes yourAddress + _OffsetOf_ptMaxPosition!
 
@@ -84,7 +83,7 @@ ptMaxPosition: aPOINTL
 		startingAt: 1!
 
 ptMinPosition
-	"Answer the <POINTL> value of the receiver's 'ptMinPosition' field."
+	"Private - Answer the <POINTL> value of the receiver's 'ptMinPosition' field."
 
 	^POINTL fromAddress: bytes yourAddress + _OffsetOf_ptMinPosition!
 
@@ -111,11 +110,6 @@ rcNormalPosition: aRECTL
 		to: ##(_OffsetOf_rcNormalPosition + RECTL._RECTL_Size)
 		startingAt: 1!
 
-rectangle: aRectangle
-	self
-		origin: aRectangle origin;
-		corner: aRectangle corner!
-
 scaleBy: aMagnitude
 	"Scale the receiver in-place by the specified <Point> or <Number> multiplier."
 
@@ -125,13 +119,13 @@ scaleBy: aMagnitude
 	pt := (bytes int32AtOffset: ##(_OffsetOf_rcNormalPosition + RECTL._OffsetOf_left))
 				@ (bytes int32AtOffset: ##(_OffsetOf_rcNormalPosition + RECTL._OffsetOf_top)) * aMagnitude.
 	bytes
-		int32AtOffset: ##(_OffsetOf_rcNormalPosition + RECTL._OffsetOf_left) put: pt x asInteger;
-		int32AtOffset: ##(_OffsetOf_rcNormalPosition + RECTL._OffsetOf_top) put: pt y asInteger.
+		int32AtOffset: ##(_OffsetOf_rcNormalPosition + RECTL._OffsetOf_left) put: pt x truncated;
+		int32AtOffset: ##(_OffsetOf_rcNormalPosition + RECTL._OffsetOf_top) put: pt y truncated.
 	pt := (bytes int32AtOffset: ##(_OffsetOf_rcNormalPosition + RECTL._OffsetOf_right))
 				@ (bytes int32AtOffset: ##(_OffsetOf_rcNormalPosition + RECTL._OffsetOf_bottom)) * aMagnitude.
 	bytes
-		int32AtOffset: ##(_OffsetOf_rcNormalPosition + RECTL._OffsetOf_right) put: pt x asInteger;
-		int32AtOffset: ##(_OffsetOf_rcNormalPosition + RECTL._OffsetOf_bottom) put: pt y asInteger!
+		int32AtOffset: ##(_OffsetOf_rcNormalPosition + RECTL._OffsetOf_right) put: pt x truncated;
+		int32AtOffset: ##(_OffsetOf_rcNormalPosition + RECTL._OffsetOf_bottom) put: pt y truncated!
 
 showCmd
 	"Answer the <Integer> value of the receiver's 'showCmd' field."
@@ -158,13 +152,12 @@ height!accessing!public! !
 height:!accessing!public! !
 origin!accessing!public! !
 origin:!accessing!public! !
-ptMaxPosition!**compiled accessors**!public! !
-ptMaxPosition:!**compiled accessors**!public! !
-ptMinPosition!**compiled accessors**!public! !
-ptMinPosition:!**compiled accessors**!public! !
+ptMaxPosition!**compiled accessors**!private! !
+ptMaxPosition:!**compiled accessors**!private! !
+ptMinPosition!**compiled accessors**!private! !
+ptMinPosition:!**compiled accessors**!private! !
 rcNormalPosition!**compiled accessors**!public! !
 rcNormalPosition:!**compiled accessors**!public! !
-rectangle:!accessing!public! !
 scaleBy:!public!transforming! !
 showCmd!**compiled accessors**!public! !
 showCmd:!**compiled accessors**!public! !
@@ -196,8 +189,8 @@ defineFields
 	self
 		defineField: #flags type: UInt32Field new;
 		defineField: #showCmd type: UInt32Field new;
-		defineField: #ptMinPosition type: (StructureField type: POINTL);
-		defineField: #ptMaxPosition type: (StructureField type: POINTL);
+		defineField: #ptMinPosition type: (StructureField type: POINTL) beNonBrowsable;
+		defineField: #ptMaxPosition type: (StructureField type: POINTL) beNonBrowsable;
 		defineField: #rcNormalPosition type: (StructureField type: RECTL)!
 
 getFieldNames

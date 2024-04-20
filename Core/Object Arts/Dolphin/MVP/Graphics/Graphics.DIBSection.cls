@@ -110,6 +110,19 @@ imageBytes
 
 	^ByteArray fromAddress: self imageBits length: self getInfo biSizeImage!
 
+resolution
+	"Answer an <Point> specifying the horizontal and vertical DPI of the receiver."
+
+	| info bmih resX |
+	info := self getInfo.
+	bmih := info dsBmih.
+	resX := bmih biXPelsPerMeter.
+	resX == 0
+		ifTrue: 
+			["Unspecified, assume 96"
+			^super resolution].
+	^resX @ bmih biYPelsPerMeter!
+
 setColorTable: anRGBQUADArray
 	"Sets the colour table for the receiver to be that in anRGBQUADArray.
 	Signals #errorInvalidColorTable if the table is the wrong size, or not appropriate,
@@ -140,6 +153,7 @@ getColorTable!accessing!public! !
 hasAlpha!public!testing! !
 imageBits!accessing!public! !
 imageBytes!copying!public! !
+resolution!accessing!public! !
 setColorTable:!accessing!public! !
 !
 

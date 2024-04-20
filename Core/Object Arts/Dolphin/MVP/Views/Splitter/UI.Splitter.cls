@@ -77,7 +77,7 @@ defaultExtent
 
 	"^SystemMetrics current sizingFrameExtent+1"
 
-	^5 asPoint!
+	^##(5@5)!
 
 defaultProportion
 	"Private - Answer the default proportion to be assumed by the receiver when associated with

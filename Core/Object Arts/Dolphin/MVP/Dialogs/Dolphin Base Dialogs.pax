@@ -7,6 +7,7 @@ Copyright (c) Object Arts Ltd. 1997-2022. Portions Copyright (c) CGI Group (Euro
 
 
 package setClassNames: #(
+	#{UI.CreateDialog}
 	#{UI.Dialog}
 	#{UI.DialogView}
 	#{UI.ValueDialog}
@@ -32,6 +33,14 @@ package setPrerequisites: #(
 package!
 
 "Class Definitions"!
+
+UI.CreateWindowApiCall
+	subclass: #'UI.CreateDialog'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 UI.Shell
 	subclass: #'UI.Dialog'

@@ -38,8 +38,8 @@ basicCreateHandle
 	| gpHandle |
 	gpHandle := Handle new.
 	Gdip
-		gdipCreateBitmapFromScan0: width
-		height: height
+		gdipCreateBitmapFromScan0: width asInteger
+		height: height asInteger
 		stride: 0
 		format: format
 		scan0: nil

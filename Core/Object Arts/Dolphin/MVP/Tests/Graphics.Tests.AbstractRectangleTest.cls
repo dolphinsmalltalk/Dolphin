@@ -113,20 +113,31 @@ testRight
 !
 
 testScaledBy
+	| subject scaled |
+	subject := self subjectClass origin: 2 @ 2 corner: 6 @ 4.
+	scaled := subject scaledBy: 2.
+	self assert: scaled equals: (4 @ 4 corner: 12 @ 8).
+	scaled := subject scaledBy: 1 / 2.
+	self assert: scaled equals: (1 @ 1 corner: 3 @ 2).
+	scaled := subject scaledBy: 0.
+	self assert: scaled equals: (0 @ 0 corner: 0 @ 0)!
+
+testScaleToDpiFrom
+	"Test DPI scaling in-place"
+
 	| rect |
-	rect := 2 @ 2 corner: 6 @ 4.
-	self assert: (rect scaledBy: 2) left equals: 4.
-	self assert: (rect scaledBy: 2) right equals: 12.
-	self assert: (rect scaledBy: 2) top equals: 4.
-	self assert: (rect scaledBy: 2) bottom equals: 8.
-	self assert: (rect scaledBy: 1 / 2) left equals: 1.
-	self assert: (rect scaledBy: 1 / 2) right equals: 3.
-	self assert: (rect scaledBy: 1 / 2) top equals: 1.
-	self assert: (rect scaledBy: 1 / 2) bottom equals: 2.
-	self assert: (rect scaledBy: 0) left equals: 0.
-	self assert: (rect scaledBy: 0) right equals: 0.
-	self assert: (rect scaledBy: 0) top equals: 0.
-	self assert: (rect scaledBy: 0) bottom equals: 0!
+	rect := self subjectClass origin: 2 @ 2 corner: 6 @ 4.
+	rect scaleToDpi: 192 from: 96.
+	self assert: rect left equals: 4.
+	self assert: rect right equals: 12.
+	self assert: rect top equals: 4.
+	self assert: rect bottom equals: 8.
+	rect := self subjectClass origin: 2 @ 2 corner: 6 @ 4.
+	rect scaleToDpi: 96 from: 192.
+	self assert: rect left equals: 1.
+	self assert: rect right equals: 3.
+	self assert: rect top equals: 1.
+	self assert: rect bottom equals: 2!
 
 testTop
 	self assert: oddDesktop top equals: 2.
@@ -154,6 +165,7 @@ testOriginCorner!public!unit tests! !
 testPosition!public!unit tests! !
 testRight!public!unit tests! !
 testScaledBy!public!unit tests! !
+testScaleToDpiFrom!public!unit tests! !
 testTop!public!unit tests! !
 testWidth!public!unit tests! !
 !

@@ -236,13 +236,13 @@ extent
 
 	^extent
 		ifNil: 
-			[| buffer |
-			buffer := ByteArray newFixed: 8.
+			[| buf |
+			buf := ByteArray newFixed: 8.
 			ComCtl32
 				imageList_GetIconSize: self handle
-				cx: buffer
-				cy: buffer yourAddress + 4.
-			extent := (buffer int32AtOffset: 0) @ (buffer int32AtOffset: 4)]!
+				cx: buf
+				cy: buf yourAddress + 4.
+			extent := (buf int32AtOffset: 0) @ (buf int32AtOffset: 4)]!
 
 getIcon: anIntegerIndex style: anIntegerStyle
 	"Answer an instance of Icon generated from the image at anIntegerIndex."

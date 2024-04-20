@@ -23,6 +23,7 @@ createImage: anImage extent: aPoint
 		biPlanes: 1;
 		biBitCount: depth.
 	"The default compression is BI_RGB (0), so we don't need to set it"
+	"It would be nice if we could set the bitmap resolution, and we can into biX/YPelsPerMeter, but there is no point as it does not appear to persist."
 	^depth > 8
 		ifTrue: 
 			["RGB usage"

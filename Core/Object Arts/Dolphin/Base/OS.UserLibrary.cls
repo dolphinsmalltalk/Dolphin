@@ -706,14 +706,17 @@ clear
 	#(#{OS.SystemMetrics} #{UI.DisplayMonitor}) do: [:each | each ifDefined: [:c | c reset]]!
 
 dpiAwareness
-	"Answer the DPI awareness mode for this session."
+	"Answer the symbolic name of the DPI awareness mode for this View."
 
-	^DpiAwarenessModes at: DpiAwareness negated!
+	^DpiAwarenessContexts at: DpiAwareness negated!
 
 dpiAwareness: aSymbol
 	"Set the DPI awareness mode to be applied when this image is restarted. N.B. Windows does not support changing the DPI awareness of an entire running process, so this cannot take effect until restart."
 
-	DpiAwareness := (DpiAwarenessModes indexOf: aSymbol) negated!
+	DpiAwareness := self dpiAwarenessContextFromName: aSymbol!
+
+dpiAwarenessContextFromName: aSymbol
+	^(DpiAwarenessContexts identityIndexOf: aSymbol) negated!
 
 fileName
 	"Answer the host system file name of the external library which 
@@ -729,8 +732,9 @@ sharedVariableName
 
 !OS.UserLibrary class categoriesForMethods!
 clear!initializing!private! !
-dpiAwareness!accessing!public! !
-dpiAwareness:!accessing!public! !
+dpiAwareness!accessing!high DPI!public! !
+dpiAwareness:!accessing!high DPI!public! !
+dpiAwarenessContextFromName:!accessing!high DPI!public! !
 fileName!constants!public! !
 initialize!class initialization!public! !
 sharedVariableName!constants!private! !

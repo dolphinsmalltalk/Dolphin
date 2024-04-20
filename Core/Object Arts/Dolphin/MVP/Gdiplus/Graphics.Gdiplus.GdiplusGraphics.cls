@@ -240,7 +240,7 @@ drawImage: aGdiplusImage at: dstOrigin extent: dstExtent
 	"Draw all of aGdiplusImage on the receiver, sized to fit the specified rectangle."
 
 	Gdip
-		gdipDrawImageRectI: self handle
+		gdipDrawImageRect: self handle
 		image: aGdiplusImage asParameter
 		x: dstOrigin x
 		y: dstOrigin y

@@ -187,6 +187,11 @@ loadResource: identifierObject fromModule: moduleObject extent: aPoint flags: an
 printOn: aStream
 	initializer printImage: self on: aStream!
 
+resolution
+	"Answer an <Point> specifying the horizontal and vertical DPI of the receiver."
+
+	^##(USER_DEFAULT_SCREEN_DPI @ USER_DEFAULT_SCREEN_DPI)!
+
 setInitializer: anImageInitializer
 	self initialize.
 	initializer := anImageInitializer.
@@ -222,6 +227,7 @@ isTransparent:!accessing!public! !
 loadFromFile:extent:flags:!private!realizing/unrealizing! !
 loadResource:fromModule:extent:flags:!private!realizing/unrealizing! !
 printOn:!printing!public! !
+resolution!accessing!public! !
 setInitializer:!private! !
 !
 

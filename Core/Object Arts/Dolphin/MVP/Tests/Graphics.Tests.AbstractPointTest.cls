@@ -140,6 +140,21 @@ testComparing
 	self deny: subject equals: 0.75s.
 	self deny: 0.75s equals: subject!
 
+testCorner
+	| subject |
+	subject := self subjectClass x: 11 y: 22.
+	self assert: (subject corner: 101 @ 202)
+		equals: (Rectangle
+				left: 11
+				top: 22
+				right: 101
+				bottom: 202)!
+
+testDisplayString
+	| subject |
+	subject := (self subjectClass x: 11 y: -22).
+	self assert: subject displayString equals: '11@-22'!
+
 testDivide
 	| subject2 subject1 point1 point2 large |
 	point1 := 10 @ 100.
@@ -398,6 +413,8 @@ testAsUInt32!public!unit tests! !
 testComparePOINTL!public!unit tests! !
 testComparePOINTS!public!unit tests! !
 testComparing!public!unit tests! !
+testCorner!public!unit tests! !
+testDisplayString!public!unit tests! !
 testDivide!public!unit tests! !
 testFractionPart!public!unit tests! !
 testGreaterOrEqual!public!unit tests! !

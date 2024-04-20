@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.Splash
+UI.AbstractSplash
 	subclass: #'Tools.DolphinSplash'
 	instanceVariableNames: 'objectsInside'
 	classVariableNames: ''

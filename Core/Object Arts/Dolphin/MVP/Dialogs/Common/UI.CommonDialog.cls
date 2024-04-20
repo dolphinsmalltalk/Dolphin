@@ -130,10 +130,10 @@ saveViewCaption
 setInitialPosition
 	(##(IdentityDictionary withAll: {#system -> [:dialog | ].
 				#centerOwner
-					-> [:dialog | dialog position: dialog ownerView getWindowRect center - (dialog extent / 2)].
+					-> [:dialog | dialog position: dialog ownerView getWindowRect center - (dialog extent // 2)].
 				#centerMonitor
-					-> [:dialog | dialog position: dialog ownerView monitor workArea center - (dialog extent / 2)].
-				#centerMouse -> [:dialog | dialog position: Cursor position - (dialog extent / 2)].
+					-> [:dialog | dialog position: dialog ownerView monitor workArea center - (dialog extent // 2)].
+				#centerMouse -> [:dialog | dialog position: Cursor position - (dialog extent // 2)].
 				#originMouse -> [:dialog | dialog position: Cursor position]})
 		lookup: self initialPositioning) ifNotNil: [:monad | monad value: self]!
 

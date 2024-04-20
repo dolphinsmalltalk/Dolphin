@@ -54,19 +54,14 @@ addSubView: aView name: aNameString
 	self name: (self addSubView: aView) as: aNameString.
 	^aView!
 
-adjustPlacement: aWINDOWPLACEMENT ofShell: aShellView withResolution: aPoint
-	"Private - The <ShellView> first argument is being restored from an STBViewProxy (e.g. instantiated from a view resource) as a child of this container (i.e. the shell will not be a top-level view). Adjust the <WINDOWPLACEMENT> 2nd argument to an appropriate position and/or extent, and scale the view to the target monitor's DPI from the original resolution specified by the <point> 3rd argument."
+adjustPlacementOfShell: aShellView forResolution: aPoint
+	"Private - The <ShellView> first argument is being restored from an STBViewProxy (e.g. instantiated from a view resource) as a child of this container (i.e. the shell will not be a top-level view). Adjust the placement of the window to an appropriate position and/or extent, also scaling any internal measurements to the target monitor's DPI from the original resolution specified by the <point> last argument."
 
-	| scale extent |
+	| scale |
 	scale := self dpi / aPoint.
-	extent := aWINDOWPLACEMENT extent.
-	scale = 1
-		ifFalse: 
-			[aShellView resolutionScaledBy: scale.
-			extent := extent * scale].
-	aWINDOWPLACEMENT
-		rectangle: ((aShellView isInitiallyCentered ifTrue: [self centerExtent: extent] ifFalse: [Point.Zero])
-				extent: extent)!
+	scale = 1 ifFalse: [aShellView resolutionScaledBy: scale].
+	aShellView isInitiallyCentered
+		ifTrue: [aShellView rectangle: (self centerExtent: aShellView extent)]!
 
 arrangementOf: aView 
 	"Answer the arrangement parameter for aView in the receiver's 
@@ -89,19 +84,17 @@ canAcceptSubViews
 
 	^true!
 
-createShellWindow: aShellView withParameters: aWindowCreationParameters
+createShellWindow: aShellView withFunction: aCreateWindow
 	| extent targetDpi |
 	targetDpi := self dpi.
-	extent := aWindowCreationParameters extent = WindowCreationParameters.UseDefaultGeometry
+	extent := aCreateWindow hasDefaultExtent
 				ifTrue: [self defaultExtentOf: aShellView]
-				ifFalse: [aWindowCreationParameters extent * targetDpi / aWindowCreationParameters dpi].
-	aShellView
-		createWindowAt: (aShellView isInitiallyCentered
-				ifTrue: [self centerExtent: extent]
-				ifFalse: [Point.Zero])
+				ifFalse: [aCreateWindow extent * targetDpi // aCreateWindow dpi].
+	aCreateWindow
+		position: (aShellView isInitiallyCentered ifTrue: [self centerExtent: extent] ifFalse: [Point.Zero])
 		extent: extent
-		styles: aWindowCreationParameters styles
-		name: aWindowCreationParameters title!
+		dpi: targetDpi.
+	aShellView basicCreateWindow: aCreateWindow!
 
 defaultButtonId
 	^0!
@@ -128,6 +121,9 @@ defaultWindowExStyle
 	work between siblings in a single level."
 
 	^super defaultWindowExStyle bitOr: WS_EX_CONTROLPARENT!
+
+dpiHostingBehavior
+	^User32 getWindowDpiHostingBehavior: handle!
 
 errorDuplicateName: aString 
 	"Report that aString is already in use as the name of a sub-view of the receiver."
@@ -190,6 +186,17 @@ isControlParent: aBoolean
 	Windows goes into an infinite loop in IsDialogMessage()."
 
 	^self exStyleMask: WS_EX_CONTROLPARENT set: aBoolean!
+
+isMixedDpiHost
+	"Answer whether the receiver can host child views with differing DPI awareness to its own. Note that this is only possible for views that themselves have per-monitor DPI awareness."
+
+	^flags allMask: MixedDpiAwarenessMask!
+
+isMixedDpiHost: aBoolean
+	"Set whether the receiver can host child views with differing DPI awareness to its own. Note that it is only possible to host windows at lower or equivalent awareness levels. For example a per-monitor aware window can host system or unaware window, but a system aware window cannot host a per-monitor aware window. Obviously this means that an unaware window cannot support mixed hosting."
+
+	flags := flags mask: MixedDpiAwarenessMask set: aBoolean.
+	self dpiHostingBehavior == DPI_HOSTING_BEHAVIOR_MIXED == aBoolean ifFalse: [self recreate]!
 
 layout: aLayoutContext 
 	"Private - Recalculate the geometry of the receiver"
@@ -273,6 +280,11 @@ onZOrderChanged
 	self invalidateLayout.
 	super onZOrderChanged!
 
+recreationFunction
+	| func |
+	func := super recreationFunction.
+	^self isMixedDpiHost ifTrue: [CreateMixedDpiHost decorating: func] ifFalse: [func]!
+
 removeSubView: aView
 	"Removes aView as a managed subview of the receiver. 
 	If aView is indeed a subview of the receiver then it is destroyed. If not,
@@ -284,8 +296,7 @@ removeSubView: aView
 	^aView!
 
 resolutionScaledBy: aPoint
-	"Private - The receiver is being loaded and it has been determined that the pixel resolution has changed since the point at which the view was saved. Scale any internal pixels by the <Point> argument. 
-	Note that the placement (position and extent) of the receiver has already been scaled in #restorePlacement:resolution:."
+	"Private - The receiver is being loaded and it has been determined that the pixel resolution has changed since the point at which the view was saved. Scale any internal pixels by the <Point> argument."
 
 	super resolutionScaledBy: aPoint.
 	self layoutManager ifNotNil: [:lm | lm resolutionScaledBy: aPoint]!
@@ -323,16 +334,17 @@ viewNamed: aString ifNone: aNiladicValuable
 actualInsets:!accessing!private! !
 actualPreferredExtent:!geometry!private! !
 addSubView:name:!hierarchy!public!sub views! !
-adjustPlacement:ofShell:withResolution:!geometry!private! !
+adjustPlacementOfShell:forResolution:!geometry!private! !
 arrangementOf:!accessing!public! !
 arrangementOf:put:!accessing!public! !
 canAcceptSubViews!hierarchy!public!sub views! !
-createShellWindow:withParameters:!realizing!public! !
+createShellWindow:withFunction:!operations!public! !
 defaultButtonId!accessing!default button!private! !
 defaultExtent!constants!private! !
 defaultExtentOf:!geometry!public! !
 defaultLayoutManager!constants!private! !
 defaultWindowExStyle!constants!private! !
+dpiHostingBehavior!private!testing! !
 errorDuplicateName:!exceptions!public! !
 filerProxyIn:!binary filing!private! !
 implicitInsets:!accessing!private! !
@@ -341,6 +353,8 @@ insets!accessing!public! !
 insets:!accessing!public! !
 isControlParent!accessing-styles!public! !
 isControlParent:!accessing-styles!public! !
+isMixedDpiHost!public!testing! !
+isMixedDpiHost:!public!testing! !
 layout:!geometry!private! !
 layoutManager!geometry!public! !
 layoutManager:!geometry!public! !
@@ -349,6 +363,7 @@ nameOf:!hierarchy!public!sub views! !
 onSubViewAdded:!event handling!public! !
 onSubViewRemoved:!event handling!private! !
 onZOrderChanged!event handling!public! !
+recreationFunction!geometry!private!realizing/unrealizing! !
 removeSubView:!hierarchy!public!sub views! !
 resolutionScaledBy:!geometry!private! !
 tabFirst!public!tabbing! !

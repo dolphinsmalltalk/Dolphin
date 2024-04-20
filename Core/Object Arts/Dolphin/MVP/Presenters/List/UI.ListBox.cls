@@ -101,15 +101,15 @@ basicResetSelection
 		ifFalse: [super basicResetSelection]!
 
 canHScroll
-	"Answer true if the receiver is in horizontal scrolling mode"
+	"Answer true if the receiver is in horizontal scrolling mode."
 
 	^self baseStyleAllMask: WS_HSCROLL!
 
-canHScroll: aBoolean 
-	"Sets the receiver into horizontal scrolling mode if aBoolean is true. 
-	This is the WS_HSCROLL style"
+canHScroll: aBoolean
+	"Sets the receiver into horizontal scrolling mode if aBoolean is true. This is the WS_HSCROLL style.
+	Note that ListBoxes do not automatically calculate the scrollable width (i.e. the width required to display all visible items), so just enabling a horizontal scrollbar by setting this boolean property is not sufficient. It is necessary to also set the scrollableWidth, and then a horizontal scrollbar will appear iff the client area of the listbox is narrower than that width."
 
-	(self 
+	(self
 		baseStyleMask: WS_HSCROLL
 		set: aBoolean
 		recreateIfChanged: false) ifTrue: [self frameChanged]!
@@ -248,12 +248,11 @@ hasPermanentScrollbars
 	^self baseStyleAllMask: LBS_DISABLENOSCROLL
 !
 
-hasPermanentScrollbars: aBoolean 
+hasPermanentScrollbars: aBoolean
 	"Sets the receiver to always display its scrollbars regardless of whether they are necessary.
-	This is the LBS_DISABLENOSCROLL style.
-	Incidentally, this is the only way to display a horizontal scroll bar"
+	This is the LBS_DISABLENOSCROLL style."
 
-	self 
+	self
 		baseStyleMask: LBS_DISABLENOSCROLL
 		set: aBoolean
 		recreateIfChanged: true	"Must recreate in order for this change to take effect"!
@@ -288,15 +287,9 @@ hideDropHighlight
 			canvas free].
 	self removePropertyAt: #dropHighlight ifAbsent: nil!
 
-horizontalExtent
-	"Answers the effective width of the receiver when horizontal scrolling is enabled"
-
-	^self sendMessage: LB_GETHORIZONTALEXTENT!
-
 horizontalExtent: anInteger
-	"Sets the effective width of the receiver when horizontal scrolling is enabled to anInteger."
-
-	self sendMessage: LB_SETHORIZONTALEXTENT wParam: anInteger asParameter!
+	#softDeprecated.	"Misleading name. This is not an 2D extent, but a single width integer."
+	self scrollableWidth: anInteger!
 
 initStorageFor: anInteger
 	"Private - Ask the listbox to preallocate space for anInteger number of entries, using a default size."
@@ -556,6 +549,16 @@ positionForKeyboardContextMenu
 		ifTrue: [super positionForKeyboardContextMenu]
 		ifFalse: [self mapPointToScreen: (self itemRect: caret) bottomLeft]!
 
+scrollableWidth
+	"Answers the effective width of the receiver when horizontal scrolling is enabled"
+
+	^self sendMessage: LB_GETHORIZONTALEXTENT!
+
+scrollableWidth: anInteger
+	"Sets the effective width of the receiver when horizontal scrolling is enabled to anInteger."
+
+	self sendMessage: LB_SETHORIZONTALEXTENT wParam: anInteger asParameter!
+
 selectAll
 	| count |
 	count := self itemCount.
@@ -620,16 +623,19 @@ showDropHighlight: anItem
 !
 
 state
-	"Private - Answer a MessageSequence which, when replayed, will restore the receiver 
-	to its current state. Add the horizontal extent aspect since it is not otherwise cached in an
-	instance variable"
+	"Private - Answer a MessageSequence which, when replayed, will restore the receiver to its current state. 
+	Add the scrollableWidth aspect since it is not otherwise cached in an instance variable."
 
-	^super state
-		add: (MessageSend
-					receiver: self
-					selector: #horizontalExtent:
-					argument: self horizontalExtent);
-		yourself! !
+	| state width |
+	state := super state.
+	width := self scrollableWidth.
+	width == 0
+		ifFalse: 
+			[state add: (MessageSend
+						receiver: self
+						selector: #scrollableWidth:
+						argument: width)].
+	^state! !
 
 !UI.ListBox categoriesForMethods!
 anchorIndex!public!selection! !
@@ -661,7 +667,6 @@ hasPermanentScrollbars:!accessing-styles!public! !
 hasToggleSelection!accessing-styles!public!testing! !
 hasToggleSelection:!accessing-styles!public! !
 hideDropHighlight!drag & drop!private! !
-horizontalExtent!accessing!public! !
 horizontalExtent:!accessing!public! !
 initStorageFor:!helpers!private! !
 isDragSource:!accessing!public! !
@@ -686,6 +691,8 @@ onRightButtonPressed:!event handling!public! !
 onSelChanged:!event handling!private! !
 onSelChanging:cause:!event handling!private! !
 positionForKeyboardContextMenu!enquiries!public! !
+scrollableWidth!accessing!public! !
+scrollableWidth:!accessing!public! !
 selectAll!public!selection! !
 selectedCount!public!selection! !
 selectIndex:set:!private!selection! !

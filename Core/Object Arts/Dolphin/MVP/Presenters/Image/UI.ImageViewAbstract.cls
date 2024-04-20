@@ -113,7 +113,7 @@ eraseBackground: aCanvas around: aRectangle
 	bkColor := self actualBackcolor.
 	bkColor isNone ifTrue: [^self].
 	aRectangle isNil ifFalse: [aCanvas excludeClipRectangle: aRectangle].
-	aCanvas fillRectangle: self clientRectangle color: bkColor!
+	aCanvas fillRectangle: self getClientRect color: bkColor!
 
 image: anImage
 	image := anImage!

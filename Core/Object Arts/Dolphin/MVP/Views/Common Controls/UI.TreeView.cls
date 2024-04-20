@@ -911,17 +911,11 @@ resetSelection
 
 	^self basicResetSelection!
 
-resolutionScaledBy: scale
-	"Private - The receiver is being loaded and it has been determined that the pixel resolution
-	has changed since the point at which the view was saved. Scale any internal pixels by <Point>
-	scale. Note that the placement (position and extent) of the receiver has already been scaled
-	in #restorePlacement:resolution:."
+resolutionScaledBy: aPoint
+	"Private - The receiver is being loaded and it has been determined that the pixel resolution has changed since the point at which the view was saved. Scale any internal pixels by <Point>the point argument."
 
 	indentSeparation isNil ifTrue: [^self].
-	indentSeparation := (indentSeparation * scale x) truncated.
-
-
-!
+	indentSeparation := (indentSeparation * aPoint x) truncated!
 
 restoreSelection: anObject 
 	"Private - Restore the selection in the receiver to be the <Object> argument, if that object

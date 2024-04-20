@@ -16,16 +16,18 @@ External.RECT
 
 OS.RECTL guid: (Core.GUID fromString: '{0a6e055d-001b-4817-b07d-fe982ca46330}')!
 
-OS.RECTL comment: '`RECT` is an `ExternalStructure` class to wrap the standard Win32 structure of the same name.
+OS.RECTL comment: '`OS.RECTL` is an `External.Structure` class to wrap the standard Win32 structure of the same name.
 
-The `RECT` structure is used in many places in the Windows API to represent a rectangle consisting of 32-bit co-ordinates for top-left and bottom-right corners. `RECTL` is an alias for the same class/structure. `RECT` supports conversions to and from the Smalltalk `Rectangle` class.'!
+The `RECTL` structure is used in many places in the Windows API to represent a rectangle consisting of 32-bit co-ordinates for top-left and bottom-right corners. 
+
+`RECTL` supports conversions to and from the Smalltalk `Rectangle` class, but implements the <rectangle> and <rectangle factory> protocols anyway.'!
 
 !OS.RECTL categoriesForClass!Win32-Structs! !
 
 !OS.RECTL methodsFor!
 
 asRectangle
-	"Answer a new Rectangle that matches the receiver."
+	"Answer a new `Rectangle` that matches the receiver."
 
 	"Implementation Note: This is used so much during layout, that it is worth providing an inlined implementation as an optimization."
 
@@ -42,7 +44,7 @@ bottom
 bottom: aNumber
 	"Set the receiver's 'bottom' field to the integer value of the argument."
 
-	bytes int32AtOffset: _OffsetOf_bottom put: aNumber asInteger!
+	bytes int32AtOffset: _OffsetOf_bottom put: aNumber truncated!
 
 bottomRight
 	"Answer a <Point> representing the bottom right position of the receiver."
@@ -53,8 +55,8 @@ bottomRight: aPoint
 	"Set the <Point> representing the bottom right corner of the receiver."
 
 	bytes
-		int32AtOffset: _OffsetOf_right put: aPoint x asInteger;
-		int32AtOffset: _OffsetOf_bottom put: aPoint y asInteger!
+		int32AtOffset: _OffsetOf_right put: aPoint x truncated;
+		int32AtOffset: _OffsetOf_bottom put: aPoint y truncated!
 
 extent
 	"Answer a Point representing the extent of the receiver. The x coordinate is the width and the y coordinate is the height."
@@ -68,8 +70,8 @@ extent: aPoint
 	"Set the extent of the receiver to the <Point> argument. The origin remains the same and the corner stays in the same quadrant it was in relative to the origin point. If aPoint contains any negative value, the result is undefined."
 
 	bytes
-		int32AtOffset: _OffsetOf_right put: ((bytes int32AtOffset: _OffsetOf_left) + aPoint x) asInteger;
-		int32AtOffset: _OffsetOf_bottom put: ((bytes int32AtOffset: _OffsetOf_top) + aPoint y) asInteger!
+		int32AtOffset: _OffsetOf_right put: ((bytes int32AtOffset: _OffsetOf_left) + aPoint x) truncated;
+		int32AtOffset: _OffsetOf_bottom put: ((bytes int32AtOffset: _OffsetOf_top) + aPoint y) truncated!
 
 height
 	"Answer the height of the receiver."
@@ -96,6 +98,31 @@ right: aNumber
 
 	bytes int32AtOffset: _OffsetOf_right put: aNumber asInteger!
 
+rightCenter
+	"Answer a <Point> specifying the position of the centre of the receiver's right edge."
+
+	^self right @ self centerY!
+
+scaledBy: anArithmeticValue
+	"Answer a new <rectangle> representing the receiver with origin and corner multiplied by the <ArithmeticValue> argument. Uses the #vertex:vertex: constructor in order to create a normalised rectangle"
+
+	^self species vertex: (self topLeft * anArithmeticValue) truncated
+		vertex: (self bottomRight * anArithmeticValue) truncated!
+
+scaleToDpi: desiredInteger from: currentInteger
+	"Scale the receiver in-place by from the DPI represented by the first <integer> argument to that represented by the second integer argument."
+
+	"This method is purely to reduce the overhead of scaling when opening views, since we can expect to have to scale every window from a 96-dpi resource to the monitor DPI, which is increasingly unlikely to be a 96-dpi any more. Relative to scaleBy:, this is around 5x faster if using Float arithmetic for the scale, and around 10x faster than scaleBy: with a Fraction scale. The implementation could be simplified with a loop, but unrolled it runs about 25% faster."
+	bytes
+		int32AtOffset: _OffsetOf_left
+			put: (bytes int32AtOffset: _OffsetOf_left) * desiredInteger // currentInteger;
+		int32AtOffset: _OffsetOf_top
+			put: (bytes int32AtOffset: _OffsetOf_top) * desiredInteger // currentInteger;
+		int32AtOffset: _OffsetOf_right
+			put: (bytes int32AtOffset: _OffsetOf_right) * desiredInteger // currentInteger;
+		int32AtOffset: _OffsetOf_bottom
+			put: (bytes int32AtOffset: _OffsetOf_bottom) * desiredInteger // currentInteger!
+
 subtract: aRectangle
 	| result |
 	result := RECTL newBuffer.
@@ -118,25 +145,40 @@ top: aNumber
 topLeft
 	"Answer a <Point> representing the top left position of the receiver."
 
-	^Graphics.Point x: (bytes int32AtOffset: _OffsetOf_left) y: (bytes int32AtOffset: _OffsetOf_top)! !
+	^Graphics.Point x: (bytes int32AtOffset: _OffsetOf_left) y: (bytes int32AtOffset: _OffsetOf_top)!
+
+truncated
+	"Answer a <rectangle> whose origin and corner coordinates are the same as the receiver's, but truncated to the nearest <integer>."
+
+	^self!
+
+width
+	"Answer the width of the receiver."
+
+	^(bytes int32AtOffset: _OffsetOf_right) - (bytes int32AtOffset: _OffsetOf_left)! !
 
 !OS.RECTL categoriesForMethods!
 asRectangle!converting!public! !
 bottom!**compiled accessors**!public! !
-bottom:!accessing!public! !
+bottom:!**compiled accessors**!public! !
 bottomRight!accessing!public! !
 bottomRight:!accessing!public! !
 extent!accessing!public! !
 extent:!accessing!public! !
 height!accessing!public! !
 left!**compiled accessors**!public! !
-left:!accessing!public! !
+left:!**compiled accessors**!public! !
 right!**compiled accessors**!public! !
-right:!accessing!public! !
-subtract:!public!rectangle functions! !
+right:!**compiled accessors**!public! !
+rightCenter!accessing!public! !
+scaledBy:!accessing!public! !
+scaleToDpi:from:!public!transforming! !
+subtract:!public! !
 top!**compiled accessors**!public! !
-top:!accessing!public! !
+top:!**compiled accessors**!public! !
 topLeft!accessing!public! !
+truncated!converting!public! !
+width!accessing!public! !
 !
 
 !OS.RECTL class methodsFor!
@@ -167,8 +209,8 @@ extent: newExtent
 	"Answer a new instance of the receiver with zero origin and the specified extent."
 
 	^self basicNew bytes: ((ByteArray newFixed: _RECTL_Size)
-				int32AtOffset: _OffsetOf_right put: newExtent x asInteger;
-				int32AtOffset: _OffsetOf_bottom put: newExtent y asInteger;
+				int32AtOffset: _OffsetOf_right put: newExtent x;
+				int32AtOffset: _OffsetOf_bottom put: newExtent y;
 				yourself)!
 
 getFieldNames

@@ -2,27 +2,22 @@
 
 Core.Object
 	subclass: #'Tools.Grabber'
-	instanceVariableNames: 'rectangle aspect constrain view composer'
+	instanceVariableNames: 'aspect flags view composer'
 	classVariableNames: 'Cursors'
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'ConstrainedMask' -> 16r3.
+			'ConstrainHorizontalMask' -> 16r2.
+			'ConstrainVerticalMask' -> 16r1.
+			'DefaultExtent' -> (16r6 @ 16r6)
+		}!
 
 Tools.Grabber guid: (Core.GUID fromString: '{7024e3c5-a46a-47fb-a7c0-e17bcf414e66}')!
 
 Tools.Grabber comment: ''!
 
 !Tools.Grabber methodsFor!
-
-alignWithView
-	"Private - Computes the boundary rectangle for the receiver to align with
-	the grab aspect of the associated view"
-
-	| point rect |
-	rect := self view rectangle insetBy: self defaultExtent // 2 negated.
-	point := rect perform: self aspect.
-	point := composer mapPoint: point toArenaFromView: view.
-	rectangle := Rectangle center: point extent: self defaultExtent!
 
 arena
 	"Answers the view where the receiver will be drawn."
@@ -34,29 +29,37 @@ aspect
 	
 	^aspect!
 
+beDisabled
+	"Disable dragging of the receiver."
+
+	flags := flags bitOr: ##(ConstrainHorizontalMask | ConstrainVerticalMask)!
+
 beHorizontalOnly
 	"Set the receiver for horizontal dragging only"
 
-	constrain := #horizontal.!
+	flags := (flags bitAnd: ##(ConstrainedMask bitInvert)) bitOr: ConstrainHorizontalMask!
 
 beVerticalOnly
 	"Set the receiver for vertical dragging only"
 
-	constrain := #vertical.!
+	flags := (flags bitAnd: ##(ConstrainedMask bitInvert)) bitOr: ConstrainVerticalMask!
 
-calculateViewRectangleFor: pointOffset 
+calculateViewRectangleFor: pointOffset
 	"Private - Calculates boundary rectangle for the associated view if the
 	receiver were allowed to modify its aspect to pointOffset. The rectangle is
 	in the coordinate system of the arena"
 
-	| rect parentArenaRect |
-	rect := composer mapRectangle: self view rectangle toArenaFromView: self view.
+	| rect parentArenaRect isComposingView arena |
+	composer assertInArenaDpiContext.
+	arena := self arena.
+	rect := arena mapRectangle: view rectangle fromView: view.
 	rect perform: self setAspect with: pointOffset.
-	rect := Rectangle origin: (self constrainPoint: rect origin)
+	isComposingView := composer composingView = view.
+	rect := Rectangle
+				origin: (isComposingView ifTrue: [rect origin] ifFalse: [self constrainPoint: rect origin])
 				corner: (self constrainPoint: rect corner).
-	parentArenaRect := composer mapRectangle: self view parentView clientRectangle
-				toArenaFromView: self view.
-	composer composingView = self view 
+	parentArenaRect := arena mapRectangle: view parentView getClientRect fromView: view.
+	isComposingView
 		ifFalse: 
 			["Constrain any view that is not top level to the size of it's parent"
 			rect topLeft: (rect topLeft max: parentArenaRect topLeft).
@@ -72,13 +75,6 @@ constrainPoint: aPoint
 
 	^self grid constrainPoint: aPoint!
 
-containsPoint: aPoint
-	"Answer true if aPoint (in the coordinate system of our associated shell)
-	is within the boundary of the receiver"
-
-	^self rectangle containsPoint: aPoint
-!
-
 continueTrackingAt: pointOffset from: previousPointOffset
 	"Private - Continue position tracking for the associated view at pointOffset when
 	the previous tracking position was at previousPointOffset. Part of the <MouseTracker>
@@ -93,6 +89,9 @@ cursor
 	"Answers the instance of Cursor which should be used to
 	indicate that the mouse pointer is over the receiver."
 
+	self isDisabled ifTrue: [^nil].
+	self isHorizontalOnly ifTrue: [^Cursor sizeWE].
+	self isVerticalOnly ifTrue: [^Cursor sizeNS].
 	^self cursors at: self aspect!
 
 cursors
@@ -109,24 +108,29 @@ defaultColor
 defaultExtent
 	"Private - Answers the default extent to be used for the receiver"
 
-	^self class defaultExtent * view dpi // USER_DEFAULT_SCREEN_DPI!
+	^DefaultExtent * view dpi // USER_DEFAULT_SCREEN_DPI!
 
-drawOn: aCanvas
-	"Draws the receiver in its arena"
+drawOn: aCanvas rectangle: aRectangle
+	self isDisabled
+		ifTrue: 
+			[aCanvas
+				brush: Brush white;
+				pen: Color highlight pen;
+				rectangle: aRectangle]
+		ifFalse: [aCanvas fillRectangle: aRectangle color: Color highlight]!
 
-	self alignWithView.
-	aCanvas fillRectangle: self rectangle color: self defaultColor!
+drawTrackingAt: pointOffset
+	"Private - Draws the tracking for the geometry aspect of the view associated with the receiver when offset by pointOffset."
 
-drawTrackingAt: pointOffset 
-	"Private - Draws the tracking for the aspect of the view associated with the receiver when 
-	offset by pointOffset."
-
-	| rect |
+	| rect arenaRect |
+	"We expect to be tracking in the arena DPI awareness context, i.e. in DIPs"
+	self arena assertInOwnDpiContext.
 	rect := self calculateViewRectangleFor: pointOffset.
 	self arena drawFocusRect: rect.
-	self status value: (self arena mapRectangle: rect to: self view parentView)!
+	arenaRect := self arena mapRectangle: rect to: view parentView.
+	composer statusValue: arenaRect!
 
-endTrackingAt: pointOffset 
+endTrackingAt: pointOffset
 	"Private - End position tracking for the associated view at aPoint.
 	Part of the <MouseTracker> target protocol."
 
@@ -136,13 +140,11 @@ endTrackingAt: pointOffset
 	| rect |
 	self eraseTrackingAt: pointOffset.
 	rect := self calculateViewRectangleFor: pointOffset.
-	rect := composer mapRectangle: rect toViewFromArena: self view.
-	self view requestLayoutRectangle: rect.
+	rect := self arena mapRectangle: rect toView: view.
+	view requestLayoutRectangle: rect.
 
 	"After moving the receiver to its new location trigger a notification."
-	self
-		alignWithView;
-		trigger: #aspectChanged!
+	self trigger: #aspectChanged!
 
 eraseTrackingAt: pointOffset
 	"Private - Erases the tracking for the aspect of the view associated with the receiver when offset
@@ -156,28 +158,20 @@ grid
 
 	^composer grid!
 
-invalidate
-	"Private - Invalidates the areas occupied by the receiver in the Shell associated with the receiver's view"
+isDisabled
+	"Answer true if the receiver is constrained for horizontal dragging only"
 
-	self arena invalidateRect: self rectangle
-
-	!
+	^flags allMask: ConstrainedMask!
 
 isHorizontalOnly
 	"Answer true if the receiver is constrained for horizontal dragging only"
 
-	^constrain == #horizontal!
+	^flags allMask: ConstrainHorizontalMask!
 
 isVerticalOnly
 	"Answer true if the receiver is constrained for vertical dragging only"
 
-	^constrain == #vertical!
-
-rectangle
-	"Private - Answers the boundary rectangle for the receiver in the coordinate
-	system of our associated view"
-
-	^rectangle!
+	^flags allMask: ConstrainVerticalMask!
 
 setAspect
 	"Private - Answers the symbol for setting the aspect (i.e. #topLeft:, #bottomRight:)"
@@ -192,15 +186,11 @@ startTrackingAt: pointOffset
 	self drawTrackingAt: pointOffset.
 	^pointOffset!
 
-status
-	^composer status!
-
-trackMouseFrom: aScreenPoint 
+trackMouseFrom: aScreenPoint origin: aPoint
 	"The mouse went down within the receiver. Start tracking its movement"
 
 	| tracker |
-	(tracker := MouseTracker forPresenter: self view presenter
-				startingAt: aScreenPoint) origin: self rectangle center.
+	(tracker := MouseTracker forPresenter: view presenter startingAt: aScreenPoint) origin: aPoint.
 	self isHorizontalOnly ifTrue: [tracker beHorizontalOnly].
 	self isVerticalOnly ifTrue: [tracker beVerticalOnly].
 	tracker startTracking: self!
@@ -210,45 +200,43 @@ view
 	
 	^view!
 
-view: aView aspect: anAspectSymbol composer: aViewComposer 
-	"Private - Sets the receiver's details."
-
+view: aView aspect: anAspectSymbol composer: aViewComposer
 	view := aView.
 	aspect := anAspectSymbol.
 	composer := aViewComposer.
-	self alignWithView! !
+	flags := 0.
+	^self! !
 
 !Tools.Grabber categoriesForMethods!
-alignWithView!operations!public! !
 arena!accessing!public! !
 aspect!accessing!public! !
+beDisabled!accessing!public! !
 beHorizontalOnly!accessing!public! !
 beVerticalOnly!accessing!public! !
-calculateViewRectangleFor:!operations!public! !
+calculateViewRectangleFor:!operations!private! !
 cancelTrackingAt:!private!tracking! !
 constrainPoint:!geometry!private! !
-containsPoint:!public!testing! !
 continueTrackingAt:from:!private!tracking! !
 cursor!accessing!public! !
 cursors!accessing!private! !
 defaultColor!constants!private! !
 defaultExtent!constants!private! !
-drawOn:!drawing!public! !
+drawOn:rectangle:!accessing!public! !
 drawTrackingAt:!private!tracking! !
 endTrackingAt:!private!tracking! !
 eraseTrackingAt:!private!tracking! !
 grid!accessing!public! !
-invalidate!drawing!private! !
+isDisabled!accessing!public! !
 isHorizontalOnly!accessing!public! !
 isVerticalOnly!accessing!public! !
-rectangle!accessing!private! !
 setAspect!accessing!private! !
 startTrackingAt:!private!tracking! !
-status!public! !
-trackMouseFrom:!public!tracking! !
+trackMouseFrom:origin:!public!tracking! !
 view!accessing!public! !
 view:aspect:composer:!initializing!private! !
 !
+
+Tools.Grabber methodProtocol: #mouseTrackerTarget attributes: #(#readOnly) selectors: #(#cancelTrackingAt: #continueTrackingAt:from: #endTrackingAt: #startTrackingAt:)!
 
 !Tools.Grabber class methodsFor!
 
@@ -273,11 +261,12 @@ cursors
 defaultExtent
 	"Private - Answers the default extent to be used for the receiver, measured in device-independent (96 dpi) pixels."
 
-	^6 @ 6!
+	^DefaultExtent!
 
 initialize
 	"Private - Register the receiver with the #onStartup event"
 
+	self addClassConstant: 'DefaultExtent' value: 6@6.
 	SessionManager current when: #sessionStarted send: #onStartup to: self!
 
 new
@@ -306,19 +295,17 @@ view: aView aspect: anAspectSymbol arena: arenaView grid: aGrid status: statusMo
 	"Answers an instance of the receiver for anAspectSymbol of aView. The new instance will be
 	drawn within aView."
 
-	^super new
+	^self basicNew
 		view: aView aspect: anAspectSymbol arena: arenaView grid: aGrid status: statusModel;
 		yourself!
 
-view: aView aspect: anAspectSymbol composer: aViewComposer 
-	"Answers an instance of the receiver for anAspectSymbol of aView. The new instance will be
-	drawn within aView."
+view: aView aspect: anAspectSymbol composer: aViewComposer
+	"Answers an instance of the receiver for anAspectSymbol of aView."
 
-	^(super new)
+	^self basicNew
 		view: aView
-			aspect: anAspectSymbol
-			composer: aViewComposer;
-		yourself! !
+		aspect: anAspectSymbol
+		composer: aViewComposer! !
 
 !Tools.Grabber class categoriesForMethods!
 cursors!accessing!private! !

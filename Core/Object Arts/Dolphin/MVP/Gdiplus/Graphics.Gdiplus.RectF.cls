@@ -43,6 +43,35 @@ height: aFloat
 
 	bytes floatAtOffset: _OffsetOf_height put: aFloat!
 
+scaleBy: aMagnitude
+	"Scale the receiver in-place by the specified <Point> or <Number> multiplier."
+
+	| p |
+	p := self topLeft * aMagnitude.
+	self
+		x: p x;
+		y: p y.
+	p := self extent * aMagnitude.
+	self
+		width: p x;
+		height: p y!
+
+scaledBy: anArithmeticValue
+	"Answer a new <rectangle> representing the receiver with origin and corner multiplied by the <ArithmeticValue> argument. Uses the #vertex:vertex: constructor in order to create a normalised rectangle"
+
+	^self species vertex: self topLeft * anArithmeticValue vertex: self bottomRight * anArithmeticValue!
+
+scaleToDpi: desiredInteger from: currentInteger
+	"Scale the receiver in-place by from the DPI represented by the first <integer> argument to that represented by the second integer argument."
+
+	| scale |
+	scale := desiredInteger asFloat / currentInteger.
+	bytes
+		floatAtOffset: _OffsetOf_x put: (bytes floatAtOffset: _OffsetOf_x) * scale;
+		floatAtOffset: _OffsetOf_y put: (bytes floatAtOffset: _OffsetOf_y) * scale;
+		floatAtOffset: _OffsetOf_width put: (bytes floatAtOffset: _OffsetOf_width) * scale;
+		floatAtOffset: _OffsetOf_height put: (bytes floatAtOffset: _OffsetOf_height) * scale!
+
 width
 	"Answer the <Float> value of the receiver's 'width' field."
 
@@ -76,6 +105,9 @@ y: aFloat
 !Graphics.Gdiplus.RectF categoriesForMethods!
 height!**compiled accessors**!public! !
 height:!**compiled accessors**!public! !
+scaleBy:!public!transforming! !
+scaledBy:!public! !
+scaleToDpi:from:!public!transforming! !
 width!**compiled accessors**!public! !
 width:!**compiled accessors**!public! !
 x!**compiled accessors**!public! !

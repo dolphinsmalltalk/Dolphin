@@ -127,13 +127,10 @@ basicSelectionStart: start end: end
 basicUndo
 	^(self sendMessage: EM_UNDO) asBoolean!
 
-calcRectangleFromClientRectangle: aRectangle
-	"Private - Given a client rectangle represented by the <Rectangle> argument, answer the
-	window rectangle that would be required to achieve this taking into account the current
-	window styles etc. Note that the answered rectangle is in the coordinate system of the
-	client.
+calcRectangleFromClientRectangle: aRectangle atDpi: anInteger
+	"Private - Given a client rectangle represented by the <Rectangle> argument, answer the window rectangle that would be required to achieve this at the specified dpi, taking into account the current window styles etc Note that the answered rectangle is in the COORDINATE SYSTEM OF THE CLIENT."
 
-	Implementation Note: We must override here because of EDIT control's implicit border."
+	"Implementation Note: We must override here because of EDIT control's implicit border."
 
 	| rect |
 	rect := RECTL marshal: aRectangle.
@@ -142,7 +139,7 @@ calcRectangleFromClientRectangle: aRectangle
 		dwStyle: (self baseStyle bitOr: WS_BORDER)
 		bMenu: false
 		dwExStyle: self extendedStyle
-		dpi: self dpi.
+		dpi: anInteger.
 	^rect asRectangle!
 
 calculateExtent: aLayoutContext
@@ -855,7 +852,7 @@ passwordCharacter: aCharacter
 	"Set the <Character> displayed for every password typed when the receiver 
 	has the password style."
 
-	self sendMessage: EM_SETPASSWORDCHAR wParam: aCharacter asInteger!
+	self sendMessage: EM_SETPASSWORDCHAR wParam: aCharacter codePoint!
 
 pasteClipboard
 	"Paste the clipboard text into the receiver's window."
@@ -1101,7 +1098,7 @@ state
 
 	| state attrib |
 	state := super state.
-	"Edit control ignores the text passed as the window title for the CreateWindowEx call, so we don't store the text in the WindowCreationState"
+	"Edit control ignores the text passed as the window title for the CreateWindowEx call, so we don't store the text in the CreateWindow function object"
 	(attrib := self text) notEmpty
 		ifTrue: 
 			[state add: (MessageSend
@@ -1344,7 +1341,7 @@ basicSelectAll!private!selection! !
 basicSelectionRange!accessing!private! !
 basicSelectionStart:end:!accessing!private! !
 basicUndo!private!undo & redo! !
-calcRectangleFromClientRectangle:!geometry!private! !
+calcRectangleFromClientRectangle:atDpi:!geometry!private! !
 calculateExtent:!geometry!private! !
 canCut!private!testing! !
 canFind!private!testing! !

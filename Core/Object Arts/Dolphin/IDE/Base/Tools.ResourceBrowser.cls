@@ -127,14 +127,22 @@ initialize
 		addSystemFolderIcon: self toolsFolderIcon;
 		registerTool: self!
 
+previewDpiAwareness
+	^ResourceListPresenter previewDpiAwareness!
+
+previewDpiAwareness: aSymbol
+	ResourceListPresenter previewDpiAwareness: aSymbol!
+
 publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by the receiver."
 
 	| aspects |
 	aspects := super publishedAspects.
 	(aspects at: #reuseIfOpen) defaultValue: true.
-	aspects add: self canUseIdeaSpaceAspect.
-	^aspects!
+	^aspects 
+		add: self canUseIdeaSpaceAspect;
+		add: (Aspect choice: #previewDpiAwareness from: #(#gdiScaled #system #unaware));
+		yourself!
 
 resource_Default_view
 	"Answer the literal data from which the 'Default view' resource can be reconstituted.
@@ -168,6 +176,8 @@ defaultOptionFlags!constants!options!private! !
 displayOn:!displaying!public! !
 icon!constants!public! !
 initialize!initializing!private! !
+previewDpiAwareness!accessing!public! !
+previewDpiAwareness:!accessing!public! !
 publishedAspects!public! !
 resource_Default_view!public!resources-views! !
 showAsToolboxFor:at:!instance creation!public! !

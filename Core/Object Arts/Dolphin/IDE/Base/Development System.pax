@@ -53,6 +53,7 @@ package setClassNames: #(
 	#{Tools.DesignDesktopView}
 	#{Tools.DevelopmentSessionManager}
 	#{Tools.DictionaryInspector}
+	#{Tools.DpiSensitiveAspect}
 	#{Tools.Examples}
 	#{Tools.FlipperInspector}
 	#{Tools.Grabber}
@@ -970,11 +971,16 @@ Core.Object
 
 Core.Object
 	subclass: #'Tools.Grabber'
-	instanceVariableNames: 'rectangle aspect constrain view composer'
+	instanceVariableNames: 'aspect flags view composer'
 	classVariableNames: 'Cursors'
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+			'ConstrainedMask' -> 16r3.
+			'ConstrainHorizontalMask' -> 16r2.
+			'ConstrainVerticalMask' -> 16r1.
+			'DefaultExtent' -> (16r6 @ 16r6)
+		}!
 
 Core.Object
 	subclass: #'Tools.MenuPainter'
@@ -1036,6 +1042,14 @@ Kernel.AttributeDescriptor
 			'ReadOnlyPresenterBlockMask' -> 16r10000.
 			'ValueWorkspaceEditorMask' -> 16r20000
 		}!
+
+Tools.Aspect
+	subclass: #'Tools.DpiSensitiveAspect'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 
 Tools.Aspect
 	subclass: #'Tools.KeyedAspect'
@@ -1582,7 +1596,7 @@ UI.ListPresenter
 UI.ListPresenter
 	subclass: #'Tools.ResourceListPresenter'
 	instanceVariableNames: 'filterBlock resourcesPresenter previewPresenter resourceIdModel'
-	classVariableNames: ''
+	classVariableNames: 'DesignDesktop'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -1803,12 +1817,11 @@ Tools.SmalltalkToolShell
 
 Tools.SmalltalkToolShell
 	subclass: #'Tools.ViewComposer'
-	instanceVariableNames: 'toolboxPresenter status arenaPresenter inspector composingView ownsComposingView resourceIdentifier addPositionOffset grabbers selections grid viewHierarchyPresenter adornmentRegion primarySelection vcFlags modificationStatus image undoList'
+	instanceVariableNames: 'toolboxPresenter status arenaPresenter inspector composingView ownsComposingView resourceIdentifier addPositionOffset grabbers selections grid viewHierarchyPresenter primarySelection vcFlags modificationStatus image undoList'
 	classVariableNames: 'Clipboard DefaultGridResolution ExtentImage PositionImage'
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {
-			'AdornmentModifiedFlag' -> 16r4.
 			'ModifiedFlag' -> 16r1.
 			'MouseClickFlag' -> 16r2.
 			'RefreshFlag' -> 16r8.
@@ -2042,14 +2055,6 @@ UI.ContainerView
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
-UI.DesktopView
-	subclass: #'Tools.DesignDesktopView'
-	instanceVariableNames: 'dpi'
-	classVariableNames: 'Default System Unaware'
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-	
 UI.DialogView
 	subclass: #'Tools.WalkbackDialog'
 	instanceVariableNames: 'callStack resumable caption debuggable'
@@ -2075,6 +2080,14 @@ UI.ImageView
 	subclass: #'Tools.ViewComposerArena'
 	instanceVariableNames: 'composer'
 	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: { 'AdornmentHiddenMask' -> 16r1000 }!
+
+UI.DesktopView
+	subclass: #'Tools.DesignDesktopView'
+	instanceVariableNames: 'dpiAwareness dpi'
+	classVariableNames: 'Default System'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -7244,30 +7257,40 @@ publishedAspectsOfInstances!constants!public! !
 printOn: aStream
 	"Append a textual representation of the receiver to aStream."
 
-	| flags separator |
+	| flags first |
 	self isNull ifTrue: [^super printOn: aStream].
 	aStream
 		basicPrint: self;
 		nextPutAll: '(after ';
-		print: (View fromHandle: self hwndInsertAfter);
+		print: (UI.View fromHandle: self hwndInsertAfter);
 		nextPutAll: ', '.
-	self isRectangleChanged
-		ifTrue: 
-			[aStream
-				print: self rectangle;
-				nextPutAll: ', '].
 	flags := self flags.
-	separator := 
-			[separator := '|'.
-			''].
-	##((OS.Win32Constants keys select: [:each | each beginsWith: 'SWP_']) asSortedCollection asArray)
-		do: 
+	(flags allMask: SWP_NOMOVE)
+		ifFalse: 
+			[(flags allMask: SWP_NOSIZE)
+				ifFalse: 
+					[aStream
+						nextPutAll: ' rectangle ';
+						print: self rectangle]
+				ifTrue: 
+					[aStream
+						nextPutAll: ' position ';
+						print: self position].
+			aStream nextPutAll: ', ']
+		ifTrue: 
+			[(flags allMask: SWP_NOSIZE)
+				ifFalse: 
+					[aStream
+						nextPutAll: ' extent ';
+						print: self extent;
+						nextPutAll: ', ']].
+	first := true.
+	##((OS.Win32Constants keys select: [:each | each beginsWith: 'SWP_']) asSortedArray) do: 
 			[:each |
 			(flags allMask: (OS.Win32Constants at: each))
 				ifTrue: 
-					[aStream
-						nextPutAll: separator value;
-						nextPutAll: each]]! !
+					[first ifTrue: [first := false] ifFalse: [aStream nextPut: $|].
+					aStream nextPutAll: each]]! !
 
 !OS.WINDOWPOS categoriesForMethods!
 printOn:!printing!public! !
@@ -8461,7 +8484,7 @@ publishedAspectsOfInstances
 	| aspects |
 	aspects := super publishedAspectsOfInstances.
 	#(#canHScroll #hasPermanentScrollbars #isReadOnly) do: [:each | aspects add: (Aspect boolean: each)].
-	aspects add: (Aspect extent: #horizontalExtent).
+	aspects add: (Aspect integer: #scrollableWidth).
 	aspects add: (Aspect symbol: #selectionMode from: ##(SelectionModes keys asSortedArray)).
 	^aspects! !
 
@@ -8612,7 +8635,7 @@ publishedAspectsOfInstances
 
 	^super publishedAspectsOfInstances
 		add: (Aspect autostring: #text);
-		add: (Aspect integer: #width);
+		add: (Aspect width: #width);
 		add: (Aspect block: #getContentsBlock);
 		add: (Aspect block: #getImageBlock);
 		add: (Aspect block: #getTextBlock);
@@ -9006,11 +9029,13 @@ edit
 	"Invoke a suitable editor on the resource identified by the receiver."
 
 	ViewComposer openOn: self!
+
 editViewUsing: aMonadicBlock
 	| view |
-	view := self loadWithContext: DesignDesktopView forSystemDpi.
+	view := Smalltalk developmentSystem loadViewResource: self resource
+				inContext: DesignDesktopView default.
 	aMonadicBlock value: view.
-	self assign: view literalStoreArray.
+	self assignView: view.
 	view destroy!
 
 hiddenObjects
@@ -9049,7 +9074,7 @@ publishedAspects
 reassign
 	| view |
 	view := Smalltalk developmentSystem loadViewResource: self resource
-				inContext: DesignDesktopView forDefaultDpi.
+				inContext: DesignDesktopView default.
 	self assignView: view.
 	view destroy!
 
@@ -10493,7 +10518,7 @@ editNewDefaultView
 	"Open the View Composer to create a new view for the receiver."
 
 	| resourceIdentifier view resName |
-	view := (DesignDesktopView forDpi: DisplayMonitor active dpi) addSubView: self new.
+	view := DesignDesktopView default addSubView: self new.
 	resName := Prompter
 				on: self defaultView
 				prompt: 'Resource name:'

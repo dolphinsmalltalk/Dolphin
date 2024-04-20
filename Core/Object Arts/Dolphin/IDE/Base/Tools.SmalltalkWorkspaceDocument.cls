@@ -544,7 +544,7 @@ optionsAspects
 					icon: ResourceIdentifier icon;
 					defaultValue: [View defaultView];
 					yourself);
-		add: (Aspect extent: #defaultExtent);
+		add: (Aspect point: #defaultExtent);
 		yourself.
 	^aspects!
 

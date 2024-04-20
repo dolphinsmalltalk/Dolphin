@@ -1418,9 +1418,9 @@ resetTreeToRoots
 	self model list: (OrderedCollection withAll: self roots).	"be sure to make a copy"!
 
 resolutionScaledBy: aPoint
-	"private -- I'm not sure what this does, but it's copied from TreeView"
+	"Private - The receiver is being loaded and it has been determined that the pixel resolution has changed since the point at which the view was saved. Scale any internal pixels by the <Point> argument. "
 
-	indentSeparation := indentSeparation * aPoint x.
+	indentSeparation := (indentSeparation * aPoint x) truncated.
 	super resolutionScaledBy: aPoint!
 
 retainExpanded

@@ -95,6 +95,9 @@ testBasicEdit
 	"Test open a default view that is reasonably complex"
 	rid := ResourceIdentifier class: ViewComposer.
 	self openTestSubjectOn: rid.
+	self assert: vc composingView dpiAwareness identicalTo: #gdiScaled.
+	self assert: vc composingView dpi equals: 96.
+	self assert: vc arena dpi equals: 96.
 	self assert: vc caption equals: rid displayString, '(UI.ShellView)'.
 	self assert: vc composingView class identicalTo: ShellView.
 	self assert: vc primarySelection equals: vc composingView.
@@ -157,7 +160,7 @@ testCutCopyPaste
 testDragResourceOverEmptyArena
 	| session |
 	self openTestSubjectOn: nil.
-	vc onDragOverArena: (session := self dragResourceFor: Shell).
+	vc arena onDragOver: (session := self dragResourceFor: Shell).
 	self assert: session operation identicalTo: #copy.
 	self assert: session suggestedTarget identicalTo: vc arena!
 
@@ -216,8 +219,8 @@ testIgnoreShellPreferredExtent
 	self openTestSubjectOnNewShell.
 	self assert: vc composingView usePreferredExtent.
 	"If this test fails check to see that ShellView>>resourcce_Default_view does indeed have an
-	extent of 600@400 when saved by the VC"
-	self assert: vc composingView dipExtent equals: 600 @ 400!
+	extent of 600@400 when saved by the VC. Remember that if we ask the "
+	self assert: (vc composingView inDpiAwarenessContextDo: [vc composingView extent]) equals: 600 @ 400!
 
 testNoDragResourceOverInUseArena
 	| session toolbox |
@@ -228,7 +231,7 @@ testNoDragResourceOverInUseArena
 	session
 		startTrackingAt: 20 @ 20;
 		operation: #copy.
-	vc onDragOverArena: session.
+	vc arena onDragOver: session.
 	self assertIsNil: session operation.
 	self assertIsNil: session suggestedTarget!
 

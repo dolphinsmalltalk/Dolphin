@@ -40,7 +40,7 @@ Core.Object
 	classInstanceVariableNames: ''
 	classConstants: { 'EdgePointResolution' -> 16rA }!
 
-UI.Splash
+UI.AbstractSplash
 	subclass: #'Tools.DolphinSplash'
 	instanceVariableNames: 'objectsInside'
 	classVariableNames: ''

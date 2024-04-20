@@ -77,7 +77,7 @@ updateModel
 	Static views don't allow such changes"!
 
 windowTitle
-	"Answer the window title that is set/restored through WindowCreationParameters. Generally this is the window text."
+	"Answer the window title that is set/restored through window creation function. Generally this is the window text."
 
 	"The Static control ignores the text passed as the window title for the CreateWindowEx call, so we don't store the text in the WindowCreationState"
 

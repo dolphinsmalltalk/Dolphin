@@ -322,8 +322,10 @@ placement: aWINDOWPLACEMENT
 					placement])!
 
 resolutionScaledBy: aPoint
+	"Private - The receiver is being loaded and it has been determined that the pixel resolution has changed since the point at which the view was saved. Scale any internal pixels by the <Point> argument. "
+
 	super resolutionScaledBy: aPoint.
-	droppedHeight ifNotNil: [droppedHeight := droppedHeight * aPoint y]!
+	droppedHeight ifNotNil: [droppedHeight := (droppedHeight * aPoint y) truncated]!
 
 selectionByIndex
 	"Answer the one-based <integer> 'index' of the selected object in the receiver or zero if there is none."

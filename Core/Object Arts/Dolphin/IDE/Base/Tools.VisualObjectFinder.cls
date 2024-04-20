@@ -70,11 +70,7 @@ displayOn: aPuttableStream
 	aPuttableStream nextPutAll: 'Visual Object Finder'!
 
 endTrackingAt: aPoint
-	| foundObject |
-
-	foundObject := self visualObjectAt: aPoint.
-	self value: foundObject.
-!
+	self value: (self visualObjectAt: aPoint)!
 
 findObject
 	"Start a mouse tracker to find objects beneath the mouse cursor"
@@ -126,6 +122,7 @@ viewFromPoint: aPoint
 	| under child clientPoint desktop lastDolphin |
 	clientPoint := aPoint.
 	under := desktop := View desktop.
+	#highDpiToDo.	"ChildWindowFromPointEx does not appear to work correctly with mixed DPI"
 	
 	[child := OS.User32
 				childWindowFromPointEx: under asParameter
@@ -135,7 +132,7 @@ viewFromPoint: aPoint
 			whileFalse: 
 				[clientPoint := desktop mapPoint: aPoint to: child.
 				under := View fromHandle: child.
-				(SessionManager inputState isDolphinWindow: under asParameter) ifTrue: [lastDolphin := under]].
+				(SessionManager inputState isDolphinWindow: child) ifTrue: [lastDolphin := under]].
 	^(under isDolphinWindow or: [self class findNonDolphinWindows])
 		ifTrue: [under]
 		ifFalse: [lastDolphin]!

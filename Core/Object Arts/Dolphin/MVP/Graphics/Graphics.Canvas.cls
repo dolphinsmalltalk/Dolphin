@@ -267,7 +267,7 @@ fillRectangle: aRectangle
 		hbr: self brush asParameter!
 
 fillRectangle: aRectangle brush: aBrush
-	"Draw a filled rectangle of size aRectangle using aBrush."
+	"Draw a filled rectangle of size aRectangle using aBrush. Note: Left and top borders are inclusive, right and bottom exclusive."
 
 	^User32
 		fillRect: handle

@@ -92,12 +92,12 @@ calcClientRectangleFromRectangle: aRectangle
 	(self tabOrientation == #bottom and: [self isThemed]) ifTrue: [clientRect := clientRect translatedBy: 0 @ -2].
 	^clientRect!
 
-calcRectangleFromClientRectangle: aRectangle 
+calcRectangleFromClientRectangle: aRectangle atDpi: anInteger
 	"Private - Given a client rectangle represented by the <Rectangle> argument, answer the
 	window rectangle that would be required to achieve this taking into account the current
 	window styles etc. Note that the answered rectangle is in the client's coordinate system."
 
-	#highDpiTodo. "Is this a DPI aware adjustment? Probably not."
+	#highDpiToDo.	"Is this a DPI aware adjustment? Probably not."
 	^self tcmAdjustRect: true for: aRectangle!
 
 canEditLabels
@@ -617,7 +617,7 @@ basicItemFromPoint:!accessing!private! !
 basicRefreshContents!private!updating! !
 basicRemoveAtIndex:!public!removing! !
 calcClientRectangleFromRectangle:!private! !
-calcRectangleFromClientRectangle:!geometry!private! !
+calcRectangleFromClientRectangle:atDpi:!private! !
 canEditLabels!accessing-styles!public!testing! !
 defaultBackcolor!private! !
 defaultExtent!constants!private! !

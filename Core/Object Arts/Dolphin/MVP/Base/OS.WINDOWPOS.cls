@@ -4,7 +4,7 @@ External.Structure
 	subclass: #'OS.WINDOWPOS'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_OffsetOf_cx' -> 16r10.
@@ -58,8 +58,18 @@ hwndInsertAfter
 
 	^bytes uint32AtOffset: _OffsetOf_hwndInsertAfter!
 
+isMove
+	"Answer whether the receiver is describing a move event."
+
+	^self flags noMask: SWP_NOMOVE!
+
 isRectangleChanged
 	^(self flags allMask: ##(Win32Constants.SWP_NOMOVE bitOr: Win32Constants.SWP_NOSIZE)) not!
+
+isResize
+	"Answer whether the receiver is describing a resize event."
+
+	^self flags noMask: SWP_NOSIZE!
 
 position
 	^self x @ self y!
@@ -85,7 +95,9 @@ cy:!**compiled accessors**!public! !
 extent!accessing!public! !
 flags!**compiled accessors**!public! !
 hwndInsertAfter!**compiled accessors**!public! !
+isMove!public!testing! !
 isRectangleChanged!public!testing! !
+isResize!public!testing! !
 position!accessing!public! !
 rectangle!accessing!public! !
 x!**compiled accessors**!public! !

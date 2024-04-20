@@ -2,13 +2,12 @@
 
 Kernel.STxProxy
 	subclass: #'UI.STBViewProxy'
-	instanceVariableNames: 'viewClass instVars state placement subViews resolution events version'
+	instanceVariableNames: 'viewClass instVars state showCmd subViews resolution events version'
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'CreationParentIndex' -> 16r2.
-			'CreationStyleIndex' -> 16r3.
 			'EventsIndex' -> 16rB.
 			'FlagsIndex' -> 16r8.
 			'HandleIndex' -> 16r1
@@ -76,9 +75,6 @@ parentView: aView
 	really an unimplemented message."
 
 	^self error: 'Not yet realized'!
-
-placement
-	^placement!
 
 printOn: aStream
 	"Append a debugging description of the receiver to aStream."
@@ -155,7 +151,7 @@ setView: aView
 	self state: aView state.
 	aView isOpen
 		ifTrue: 
-			[placement := aView placement.
+			[showCmd := aView placement showCmd.
 			subViews := aView subViews.
 			instVars at: HandleIndex put: nil].
 
@@ -168,6 +164,9 @@ setView: aView
 
 	"Set the resolution at which the view is being saved."
 	resolution := aView resolution!
+
+showCmd
+	^showCmd!
 
 state
 	^state!
@@ -238,7 +237,6 @@ instVars:!accessing!public! !
 isTopView!accessing!private! !
 nameOf:!accessing!public! !
 parentView:!accessing!private! !
-placement!accessing!public! !
 printOn:!development!printing!public! !
 resolution!accessing!private! !
 resolution:!accessing!private! !
@@ -247,6 +245,7 @@ restoreTopView!converting!private! !
 restoreView!converting!private! !
 setEvents:!events!private! !
 setView:!accessing!public! !
+showCmd!accessing!public! !
 state!accessing!public! !
 state:!accessing!public! !
 stbFixup:at:!converting!public! !
@@ -280,7 +279,6 @@ initialize
 	self
 		addClassConstant: 'HandleIndex' value: (allInstVarNames indexOf: 'handle');
 		addClassConstant: 'CreationParentIndex' value: (allInstVarNames indexOf: 'creationParent');
-		addClassConstant: 'CreationStyleIndex' value: (allInstVarNames indexOf: 'creationStyle');
 		addClassConstant: 'EventsIndex' value: (allInstVarNames indexOf: 'events');
 		addClassConstant: 'FlagsIndex' value: (allInstVarNames indexOf: 'flags')!
 
@@ -295,7 +293,8 @@ stbConvertFrom: anSTBClassFormat
 			[^
 			[:data |
 			(data resize: 8)
-				at: 6 put: 96 @ 96;
+				at: 4 put: ((data at: 4) ifNotNil: [:placement | placement showCmd]);
+				at: 6 put: ##(USER_DEFAULT_SCREEN_DPI @ USER_DEFAULT_SCREEN_DPI);
 				at: 8 put: ver;
 				becomeA: STBViewProxy]].
 	ver < 10
@@ -303,7 +302,15 @@ stbConvertFrom: anSTBClassFormat
 			[^
 			[:data |
 			(data resize: 8)
+				at: 4 put: ((data at: 4) ifNotNil: [:placement | placement showCmd]);
 				at: 8 put: ver;
+				becomeA: STBViewProxy]].
+	ver < 11
+		ifTrue: 
+			[^
+			[:data |
+			data
+				at: 4 put: ((data at: 4) ifNotNil: [:placement | placement showCmd]);
 				becomeA: STBViewProxy]].
 	^super stbConvertFrom: anSTBClassFormat!
 
@@ -319,11 +326,12 @@ stbVersion
 	7: 	Add resolution instance variable
 	8: 	Add events and unused instance variable to View, and events inst. var. to proxy.
 	9: 	ShellView defaultButton <PushButton> changed to defaultButtonId <integer>.
-	10: 	version instance variable added to record STB version of specific view class."
+	10: version instance variable added to record STB version of specific view class.
+	11.	Full WINDOWPLACEMENT replaced by just the showCmd."
 
 	"STBViewProxy should no longer need to be changed to upgrade view classes, so if you are changing this number, THINK AGAIN."
 
-	^10! !
+	^11! !
 
 !UI.STBViewProxy class categoriesForMethods!
 forView:!instance creation!public! !

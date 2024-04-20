@@ -178,13 +178,11 @@ resize: aSizedView to: aRectangle
 	aSizedView rectangle: aRectangle.
 	super resize: aSizedView to: aRectangle!
 
-resolutionScaledBy: scale 
-	"Private - The receiver is being loaded and it has been determined that the pixel resolution
-	has changed since the point at which the view was saved. Scale any internal pixels by
-	<Point> scale."
+resolutionScaledBy: aPoint
+	"Private - The receiver is being loaded and it has been determined that the pixel resolution has changed since the point at which the view was saved. Scale any internal pixels by the <Point> argument."
 
-	horizontalGap := (horizontalGap * scale x) truncated.
-	verticalGap := (verticalGap * scale y) truncated!
+	horizontalGap := (horizontalGap * aPoint x) truncated.
+	verticalGap := (verticalGap * aPoint y) truncated!
 
 verticalAlignment
 	^flags bitAnd: ##(AlignTop | AlignVCenter | AlignBottom)!

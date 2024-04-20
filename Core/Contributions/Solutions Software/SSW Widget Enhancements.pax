@@ -24,7 +24,6 @@ package methodNames
 	add: #ComboBox -> #droppedWidth:;
 	add: #ComboBox -> #hasCueBanner;
 	add: #Date -> #shortString;
-	add: #GDILibrary -> #getClipRgn:hrgn:;
 	add: #KeyEvent -> #resendTo:;
 	add: #Menu -> #showIn:position:rightAlign:;
 	add: #NullConverter -> #isNullConverter;
@@ -203,24 +202,6 @@ shortString
 
 !Date categoriesForMethods!
 shortString!printing!public! !
-!
-
-!GDILibrary methodsFor!
-
-getClipRgn: hdc hrgn: hRegion
-	"The SelectClipRgn function selects a region as the current clipping region
-	for the specified device context. 
-
-	int GetClipRgn(
-		HDC hdc		// handle of device context 
-		HRGN hrgn		// handle of region   
-	);"
-
-	<stdcall: sdword GetClipRgn handle handle>
-	^self invalidCall: _failureCode! !
-
-!GDILibrary categoriesForMethods!
-getClipRgn:hrgn:!public!win32 functions-clipping! !
 !
 
 !WinImageList methodsFor!

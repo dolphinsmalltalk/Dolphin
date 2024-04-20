@@ -932,7 +932,7 @@ publishedAspects
 					icon: UI.ResourceIdentifier icon;
 					defaultValue: self defaultDefaultView;
 					yourself);
-		add: (Aspect extent: #defaultExtent);
+		add: (Aspect point: #defaultExtent);
 		add: ((Aspect dictionary: #acceleratorKeyBindings)
 					beImmutable;
 					defaultValue: [self defaultAcceleratorKeyBindings];

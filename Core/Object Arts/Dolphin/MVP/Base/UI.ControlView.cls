@@ -157,7 +157,7 @@ getFont
 
 	| hFont |
 	hFont := self sendMessage: WM_GETFONT.
-	^hFont == 0 ifTrue: [Font system] ifFalse: [Font fromHandle: hFont]!
+	^hFont == 0 ifTrue: [Font system] ifFalse: [Font fromHandle: hFont dpi: self dpi]!
 
 itemFromId: dwItemSpec 
 	"Private - Answers the sub-item of the receiver with the specified <integer> item spec,

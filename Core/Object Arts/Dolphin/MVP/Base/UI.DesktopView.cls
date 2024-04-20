@@ -45,17 +45,17 @@ addSubView: aView
 
 	^aView.!
 
-adjustPlacement: aWINDOWPLACEMENT ofShell: aShellView withResolution: aPoint
-	"Private - The <ShellView> first argument is being restored from an STBViewProxy (e.g. instantiated from a view resource) on this desktop. Adjust the <WINDOWPLACEMENT> 2nd argument to an appropriate position and/or extent, and scale the view to the target monitor's DPI from the original resolution specified by the <point> 3rd argument."
+adjustPlacementOfShell: aShellView forResolution: aPoint
+	"Private - The <ShellView> first argument is being restored from an STBViewProxy (e.g. instantiated from a view resource) on this desktop. Adjust the placement of the window to an appropriate position and/or extent on the target monitor, also scaling any internal measurments to the monitor's DPI from the original resolution specified by the <point> final argument."
 
-	| monitor extent scale |
+	| monitor extent targetDpi |
 	monitor := DisplayMonitor active.
-	scale := monitor dpi / aPoint.
-	scale = 1 ifFalse: [aShellView resolutionScaledBy: scale].
+	targetDpi := monitor dpi.
+	aPoint = targetDpi ifFalse: [aShellView resolutionScaledBy: targetDpi / aPoint].
 	extent := aShellView usePreferredExtent
 				ifTrue: [aShellView preferredExtent ifNil: [monitor defaultWindowExtent]]
-				ifFalse: [aWINDOWPLACEMENT extent * scale].
-	aWINDOWPLACEMENT rectangle: (monitor
+				ifFalse: [aShellView extent].
+	aShellView rectangle: (monitor
 				adjustWindowRect: ((aShellView isInitiallyCentered
 						ifTrue: [monitor centerExtent: extent]
 						ifFalse: [aShellView position]) extent: extent))!
@@ -72,13 +72,6 @@ ambientBackcolor
 	default background colour."
 
 	^Color default!
-
-assumeDesktopHandle
-	"Ensure the receiver represents the Windows desktop.
-	Note that we associate with both the true desktop handle and null."
-
-	self attachHandle: self class desktopHandle.
-	SessionManager.Current inputState windowAt: 0 put: self!
 
 basicActualBackcolor
 	"Private - Answer the <Color> to be applied as the receiver's background colour."
@@ -117,6 +110,11 @@ centerExtent: aPoint
 
 	^DisplayMonitor active centerExtent: aPoint!
 
+childLayoutInvalidated
+	"Private - The layout of a child has changed. By default we invalidat our own layout, and pass up the parent chain to that the whole hierarchy has the opportunity to adjust its layout to reflect the change, e.g. to grow or shrink."
+
+	"Nothing to do"!
+
 commandPolicyWithSource: sourceView
 	"Answers a <CommandPolicy> object for routing commands originating
 	from the <View>, source.
@@ -126,45 +124,45 @@ commandPolicyWithSource: sourceView
 
 	^CommandPolicy defaultClass commandSource: sourceView!
 
-createShellWindow: aShellView withParameters: aWindowCreationParameters
+createShellWindow: aShellView withFunction: aCreateWindow
 	| monitor position extent targetDpi |
-	position := aWindowCreationParameters position.
-	extent := aWindowCreationParameters extent.
 	"If the position is not specified, we will need to work out a suitable position on the active monitor"
-	(aShellView isRestoringFromProxy or: [position = WindowCreationParameters.UseDefaultGeometry])
+	(aShellView isRestoringFromProxy or: [aCreateWindow hasDefaultPosition])
 		ifTrue: 
 			["Default position, so should go on the active monitor"
 			monitor := DisplayMonitor active.
 			targetDpi := monitor dpi.
 			"Now work out the extent to use at the DPI of the active monitor, which is either the specified extent remapped to the active monitor DPI, or if unspecified the monitor default"
-			extent := extent = WindowCreationParameters.UseDefaultGeometry
+			extent := aCreateWindow hasDefaultExtent
 						ifTrue: [monitor defaultWindowExtent]
-						ifFalse: [extent * targetDpi // aWindowCreationParameters dpi].
+						ifFalse: [aCreateWindow extent * targetDpi // aCreateWindow dpi].
 			position := aShellView isInitiallyCentered
 						ifTrue: [monitor centerExtent: extent]
 						ifFalse: [monitor nextWindowPosition]]
 		ifFalse: 
 			["Position was specified. Determine the monitor from that."
+			position := aCreateWindow position.
 			monitor := DisplayMonitor nearestPoint: position.
 			targetDpi := monitor dpi.
 			"Now we can calculate the extent as above"
-			extent := extent = WindowCreationParameters.UseDefaultGeometry
+			extent := aCreateWindow hasDefaultExtent
 						ifTrue: [monitor defaultWindowExtent]
-						ifFalse: [extent * targetDpi // aWindowCreationParameters dpi].
+						ifFalse: [aCreateWindow extent * targetDpi // aCreateWindow dpi].
 			"If should be initially centered, override the specified position, but keeping to the same monitor"
 			position := aShellView isInitiallyCentered
 						ifTrue: 
 							["Position so as to centre the window at whatever its extent should be"
 							monitor centerExtent: extent]
-						ifFalse: [position * targetDpi // aWindowCreationParameters dpi]].
+						ifFalse: [position * targetDpi // aCreateWindow dpi]].
 	"Set the dpi of the shell to that of the monitor we think it is on, and to which we have scaled it. This will mean that even if we made the wrong choice, and Windows thinks it is placed on another monitor, when it is moved between monitors it should at least rescale correctly. Note that we would at least need to clear any cached DPI, as otherwise the shell will keep getting rescaled from its original DPI. Basically the cached ShellView DPI needs to always be the same as the actual DPI, except during the per-monitor transition process when Windows is sending WM_DPICHANGED_BEFOREPARENT to all the children. In order for the children to rescale correctly, they need to know the DPI to which they were last scaled, which is the primary reason to cache the DPI in ShellView."
 	aShellView dpi: targetDpi.
-	"Finally, create the top-level Window"
-	aShellView
-		createWindowAt: (monitor adjustPosition: position forExtent: extent)
+	"Adjust the position to fit on the monitor, if possible"
+	aCreateWindow
+		position: (monitor adjustPosition: position forExtent: extent)
 		extent: extent
-		styles: aWindowCreationParameters styles
-		name: aWindowCreationParameters title!
+		dpi: targetDpi.
+	"Finally, create the top-level Window"
+	aShellView basicCreateWindow: aCreateWindow!
 
 displayOn: aPuttableStream
 	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
@@ -207,6 +205,14 @@ iconTitleFont
 	"Answer a <Font> which is that used for icon titles on the desktop."
 
 	^self metrics iconTitleFont!
+
+initialize
+	"Private - Ensure the receiver represents the Windows desktop.
+	Note that we associate with both the true desktop handle and null."
+
+	super initialize.
+	self attachHandle: self class desktopHandle.
+	SessionManager inputState windowAt: 0 put: self!
 
 invalidateLayout
 	"Nothing to do."
@@ -273,7 +279,7 @@ onAboutToDisplaySystemMenu: hMenu
 onStartup
 	"Make sure the receiver represents the desktop window handle."
 
-	self assumeDesktopHandle!
+	self initialize!
 
 onViewActivated: anEvent
 	"Default handler for window activation.
@@ -337,7 +343,7 @@ repositionShell: aShellView
 	| activeMonitor |
 	activeMonitor := DisplayMonitor active.
 	aShellView isInitiallyCentered
-		ifTrue: [aShellView centerNear: activeMonitor workArea center]
+		ifTrue: [aShellView centerNear: activeMonitor workArea center atDpi: activeMonitor dpi]
 		ifFalse: [aShellView displayOnMonitor: activeMonitor]!
 
 screenRectangle
@@ -383,26 +389,27 @@ workArea
 actualFont!accessing!private! !
 addCommandHistory:!accessing!private! !
 addSubView:!hierarchy!public!sub views! !
-adjustPlacement:ofShell:withResolution:!geometry!private! !
+adjustPlacementOfShell:forResolution:!geometry!private! !
 allParents!hierarchy!public! !
 ambientBackcolor!accessing!private! !
-assumeDesktopHandle!accessing!public! !
 basicActualBackcolor!accessing!private! !
 buttonRemoved:!default button!private! !
 canvas!accessing!public! !
 caption!accessing!public! !
 caption:!accessing!public! !
 centerExtent:!geometry!private! !
+childLayoutInvalidated!geometry!private! !
 commandPolicyWithSource:!commands!public! !
-createShellWindow:withParameters:!public! !
+createShellWindow:withFunction:!operations!public! !
 displayOn:!displaying!public! !
-dpi!accessing!public! !
+dpi!accessing!high DPI!public! !
 ensureSubView:rectangleVisible:!private!updating! !
 ensureSubViewVisible:!public!sub views! !
 ensureVisible!accessing!public! !
 filerProxyIn:!binary filing!private! !
 helpId!accessing!public! !
 iconTitleFont!geometry!public! !
+initialize!accessing!private! !
 invalidateLayout!geometry!public! !
 invalidateRect:erase:!drawing!public! !
 invalidateUserInterface!accessing!public! !
@@ -455,8 +462,8 @@ icon
 initialize
 	"Private - Initialize the DesktopView singleton."
 
-	Current := self new
-				assumeDesktopHandle;
+	Current := self basicNew
+				initialize;
 				yourself!
 
 stbConvertFromVersion9: anArray

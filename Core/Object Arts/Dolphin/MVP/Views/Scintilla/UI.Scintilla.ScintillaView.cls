@@ -511,7 +511,7 @@ autoCompletionImageIdSeparator: aCharacter
 	auto-completion list <String>. The default is '?' but this should be be changed if entries
 	may contain '?'."
 
-	self sciAutoCSetTypeSeparator: aCharacter asInteger!
+	self sciAutoCSetTypeSeparator: aCharacter codePoint!
 
 autoCompletionListPosition
 	"Retrieve the position of the caret when the auto-completion list was displayed."
@@ -531,7 +531,7 @@ autoCompletionSeparator: aCharacter
 	"Set the <Character> used as the separator between entries in an auto-completion list
 	string. The default is a space but this should be be changed if entries may contain such."
 
-	self sciAutoCSetSeparator: aCharacter asInteger!
+	self sciAutoCSetSeparator: aCharacter codePoint!
 
 autoCompletionSortMode
 	"Answer the symbolic name of the auto-completion list sorting mode."

@@ -71,6 +71,7 @@ package setClassNames: #(
 	#{OS.WNDCLASS}
 	#{UI.AbstractDelegatingView}
 	#{UI.AbstractNonReferenceDelegatingView}
+	#{UI.AbstractSplash}
 	#{UI.AcceleratorTable}
 	#{UI.BorderLayout}
 	#{UI.CapturingInteractor}
@@ -85,6 +86,12 @@ package setClassNames: #(
 	#{UI.CommandPolicy}
 	#{UI.CommandQuery}
 	#{UI.ContainerView}
+	#{UI.CreateInDpiAwarenessContext}
+	#{UI.CreateMixedDpiHost}
+	#{UI.CreateWindow}
+	#{UI.CreateWindowApiCall}
+	#{UI.CreateWindowDecorator}
+	#{UI.CreateWindowFunction}
 	#{UI.DefaultShellSessionManager}
 	#{UI.DelegatingCommandPolicy}
 	#{UI.DesktopView}
@@ -140,7 +147,6 @@ package setClassNames: #(
 	#{UI.ValuePresenter}
 	#{UI.View}
 	#{UI.ViewState}
-	#{UI.WindowCreationParameters}
 	#{UI.WindowsEvent}
 ).
 
@@ -162,7 +168,9 @@ package setMethodNames: #(
 	#(#{OS.SystemMetrics} #menuBarColor)
 	#(#{OS.UserLibrary} #adjustWindowRectExForDpi:dwStyle:bMenu:dwExStyle:dpi:)
 	#(#{OS.UserLibrary} #animateWindow:dwTime:dwFlags:)
+	#(#{OS.UserLibrary} #areDpiAwarenessContextsEqual:dpiContextB:)
 	#(#{OS.UserLibrary} #attachThreadInput:idAttachTo:fAttach:)
+	#(#{OS.UserLibrary} #awarenessFromDpiAwarenessContext:)
 	#(#{OS.UserLibrary} #beginDeferWindowPos:)
 	#(#{OS.UserLibrary} #beginPaint:lpPaint:)
 	#(#{OS.UserLibrary} #bringWindowToTop:)
@@ -195,6 +203,7 @@ package setMethodNames: #(
 	#(#{OS.UserLibrary} #findWindow:lpWindowName:)
 	#(#{OS.UserLibrary} #flashWindowEx:)
 	#(#{OS.UserLibrary} #getAncestor:gaFlags:)
+	#(#{OS.UserLibrary} #getAwarenessFromDpiAwarenessContext:)
 	#(#{OS.UserLibrary} #getCapture)
 	#(#{OS.UserLibrary} #getClassAtom:)
 	#(#{OS.UserLibrary} #getClassLongPtr:nIndex:)
@@ -203,9 +212,12 @@ package setMethodNames: #(
 	#(#{OS.UserLibrary} #getClientRect:lpRect:)
 	#(#{OS.UserLibrary} #getClipboardData:)
 	#(#{OS.UserLibrary} #getClipboardFormatName:lpszFormatName:cchMaxCount:)
+	#(#{OS.UserLibrary} #getDialogDpiChangeBehavior:)
 	#(#{OS.UserLibrary} #getDlgCtrlID:)
+	#(#{OS.UserLibrary} #getDpiAwarenessContextForProcess:)
 	#(#{OS.UserLibrary} #getDpiForSystem)
 	#(#{OS.UserLibrary} #getDpiForWindow:)
+	#(#{OS.UserLibrary} #getDpiFromDpiAwarenessContext:)
 	#(#{OS.UserLibrary} #getFocus)
 	#(#{OS.UserLibrary} #getForegroundWindow)
 	#(#{OS.UserLibrary} #getLastActivePopup:)
@@ -216,12 +228,20 @@ package setMethodNames: #(
 	#(#{OS.UserLibrary} #getNextDlgTabItem:hCtl:bPrevious:)
 	#(#{OS.UserLibrary} #getProp:lpString:)
 	#(#{OS.UserLibrary} #getScrollInfo:fnBar:lpsi:)
+	#(#{OS.UserLibrary} #getSystemDpiForProcess:)
 	#(#{OS.UserLibrary} #getSystemMenu:bRevert:)
 	#(#{OS.UserLibrary} #getSystemMetricsForDpi:dpi:)
+	#(#{OS.UserLibrary} #getThreadDpi)
+	#(#{OS.UserLibrary} #getThreadDpiAwareness)
+	#(#{OS.UserLibrary} #getThreadDpiAwarenessContext)
+	#(#{OS.UserLibrary} #getThreadDpiHostingBehavior)
 	#(#{OS.UserLibrary} #getTopWindow:)
 	#(#{OS.UserLibrary} #getUpdateRect:lpRect:bErase:)
 	#(#{OS.UserLibrary} #getWindow:uCmd:)
 	#(#{OS.UserLibrary} #getWindowDC:)
+	#(#{OS.UserLibrary} #getWindowDpiAwareness:)
+	#(#{OS.UserLibrary} #getWindowDpiAwarenessContext:)
+	#(#{OS.UserLibrary} #getWindowDpiHostingBehavior:)
 	#(#{OS.UserLibrary} #getWindowExStyle:)
 	#(#{OS.UserLibrary} #getWindowLong:nIndex:)
 	#(#{OS.UserLibrary} #getWindowLongPtr:nIndex:)
@@ -234,20 +254,28 @@ package setMethodNames: #(
 	#(#{OS.UserLibrary} #getWindowThreadProcessId:lpdwProcessId:)
 	#(#{OS.UserLibrary} #getWindowULong:nIndex:)
 	#(#{OS.UserLibrary} #getWindowULongPtr:nIndex:)
+	#(#{OS.UserLibrary} #inDpiAwarenessContext:do:)
+	#(#{OS.UserLibrary} #inheritWindowMonitor:hwndInherit:)
 	#(#{OS.UserLibrary} #insertMenuItem:uItem:fByPosition:lpmii:)
 	#(#{OS.UserLibrary} #invalidate:lpRect:bErase:)
 	#(#{OS.UserLibrary} #invalidateRgn:hRgn:bErase:)
+	#(#{OS.UserLibrary} #inWindowDpiAwarenessContext:do:)
+	#(#{OS.UserLibrary} #isAtWindowDpiAwareness:)
 	#(#{OS.UserLibrary} #isChild:hWnd:)
 	#(#{OS.UserLibrary} #isClipboardFormatAvailable:)
 	#(#{OS.UserLibrary} #isDialog:)
 	#(#{OS.UserLibrary} #isDialogMessage:lpMsg:)
 	#(#{OS.UserLibrary} #isForegroundProcess:)
 	#(#{OS.UserLibrary} #isIconic:)
+	#(#{OS.UserLibrary} #isProcessDPIAware)
+	#(#{OS.UserLibrary} #isValidDpiAwarenessContext:)
 	#(#{OS.UserLibrary} #isWindowUnicode:)
 	#(#{OS.UserLibrary} #isZoomed:)
 	#(#{OS.UserLibrary} #loadAccelerators:lpTableName:)
 	#(#{OS.UserLibrary} #loadMenu:lpMenuName:)
 	#(#{OS.UserLibrary} #lockWindowUpdate:)
+	#(#{OS.UserLibrary} #logicalToPhysicalPoint:lpPoint:)
+	#(#{OS.UserLibrary} #logicalToPhysicalPointForPerMonitorDPI:lpPoint:)
 	#(#{OS.UserLibrary} #makeDragList:)
 	#(#{OS.UserLibrary} #mapRectangle:from:to:)
 	#(#{OS.UserLibrary} #mapWindowPoints:hWndTo:lpPoints:cPoints:)
@@ -256,6 +284,8 @@ package setMethodNames: #(
 	#(#{OS.UserLibrary} #monitorFromRect:dwFlags:)
 	#(#{OS.UserLibrary} #monitorFromWindow:dwFlags:)
 	#(#{OS.UserLibrary} #openClipboard:)
+	#(#{OS.UserLibrary} #physicalToLogicalPoint:lpPoint:)
+	#(#{OS.UserLibrary} #physicalToLogicalPointForPerMonitorDPI:lpPoint:)
 	#(#{OS.UserLibrary} #printWindow:hdcBlt:nFlags:)
 	#(#{OS.UserLibrary} #redrawWindow:lprcUpdate:hrgnUpdate:flags:)
 	#(#{OS.UserLibrary} #registerClass:)
@@ -274,7 +304,7 @@ package setMethodNames: #(
 	#(#{OS.UserLibrary} #setCapture:)
 	#(#{OS.UserLibrary} #setClassLong:nIndex:dwNewLong:)
 	#(#{OS.UserLibrary} #setClipboardData:hMem:)
-	#(#{OS.UserLibrary} #setProcessDpiAwarenessContext:)
+	#(#{OS.UserLibrary} #setDialogDpiChangeBehavior:mask:values:)
 	#(#{OS.UserLibrary} #setFocus:)
 	#(#{OS.UserLibrary} #setForegroundWindow:)
 	#(#{OS.UserLibrary} #setLayeredWindowAttributes:lcrKey:bAlpha:dwFlags:)
@@ -283,8 +313,11 @@ package setMethodNames: #(
 	#(#{OS.UserLibrary} #setMenuInfo:lpcmi:)
 	#(#{OS.UserLibrary} #setMenuItemInfo:uItem:fByPosition:lpmii:)
 	#(#{OS.UserLibrary} #setParent:hWndNewParent:)
+	#(#{OS.UserLibrary} #setProcessDpiAwarenessContext:)
 	#(#{OS.UserLibrary} #setProp:lpString:hData:)
 	#(#{OS.UserLibrary} #setScrollInfo:fnBar:lpsi:fRedraw:)
+	#(#{OS.UserLibrary} #setThreadDpiAwarenessContext:)
+	#(#{OS.UserLibrary} #setThreadDpiHostingBehavior:)
 	#(#{OS.UserLibrary} #setWindowLong:nIndex:dwNewLong:)
 	#(#{OS.UserLibrary} #setWindowLongPtr:nIndex:dwNewLong:)
 	#(#{OS.UserLibrary} #setWindowPlacement:lpwndpl:)
@@ -301,6 +334,7 @@ package setMethodNames: #(
 	#(#{OS.UserLibrary} #validate:lpRect:)
 	#(#{OS.UserLibrary} #windowFromDC:)
 	#(#{OS.UserLibrary} #windowFromPoint:)
+	#(#{OS.UserLibrary} #withDpiHostingBehavior:do:)
 	#(#{UI.ResourceIdentifier} #canShow)
 	#(#{UI.ResourceIdentifier} #fixupIcon)
 	#(#{UI.ResourceIdentifier} #icon)
@@ -1377,6 +1411,14 @@ Core.Object
 	classConstants: {}!
 
 Core.Object
+	subclass: #'UI.CreateWindowFunction'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #(#{OS.Win32Constants})
+	classInstanceVariableNames: ''
+	classConstants: { 'UseDefaultGeometry' -> (-16r80000000 @ -16r80000000) }!
+
+Core.Object
 	subclass: #'UI.DisplayMonitor'
 	instanceVariableNames: 'handle info devices resolution metrics defaultWindowExtent lastWindowPosition cascadeOffset workArea'
 	classVariableNames: 'Instances'
@@ -1530,6 +1572,7 @@ Core.Object
 			'LayoutValidMask' -> 16r1.
 			'ManagedMask' -> 16r2.
 			'MinimizedMask' -> 16r80.
+			'MixedDpiAwarenessMask' -> 16r800.
 			'NoInheritMenuMask' -> 16r200.
 			'ProxyRestoringMask' -> 16r10.
 			'RestoringMask' -> 16r30.
@@ -1540,19 +1583,11 @@ Core.Object
 
 Core.Object
 	subclass: #'UI.ViewState'
-	instanceVariableNames: 'view state showCmd dpi subViewStates'
+	instanceVariableNames: 'view state showCmd dpi dpiAwareness subViewStates'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-
-Core.Object 
-	subclass: #'UI.WindowCreationParameters'
-	instanceVariableNames: 'position extent dpi styles title'
-	classVariableNames: ''
-	imports: #(#{OS.Win32Constants})
-	classInstanceVariableNames: ''
-	classConstants: { 'UseDefaultGeometry' -> -2147483648@-2147483648 }!
 
 UI.CommandDescription
 	subclass: #'UI.ClosedCommandDescription'
@@ -1564,6 +1599,46 @@ UI.CommandDescription
 
 UI.CommandPolicy
 	subclass: #'UI.DelegatingCommandPolicy'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+UI.CreateWindowFunction
+	subclass: #'UI.CreateWindowApiCall'
+	instanceVariableNames: 'rectangle dpi'
+	classVariableNames: ''
+	imports: #(#{OS.Win32Constants})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+UI.CreateWindowFunction
+	subclass: #'UI.CreateWindowDecorator'
+	instanceVariableNames: 'decorated'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+UI.CreateWindowApiCall
+	subclass: #'UI.CreateWindow'
+	instanceVariableNames: 'styles title'
+	classVariableNames: ''
+	imports: #(#{OS.Win32Constants})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+UI.CreateWindowDecorator
+	subclass: #'UI.CreateInDpiAwarenessContext'
+	instanceVariableNames: 'dpiAwarenessContext'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+UI.CreateWindowDecorator
+	subclass: #'UI.CreateMixedDpiHost'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1594,7 +1669,7 @@ External.DynamicLinkLibrary
 	classInstanceVariableNames: ''
 	classConstants: { 'DWMWA_USE_IMMERSIVE_DARK_MODE' -> 16r14 }!
 
-External.DynamicLinkLibrary 
+External.DynamicLinkLibrary
 	subclass: #'OS.SHCoreLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -2043,7 +2118,7 @@ External.Structure
 	subclass: #'OS.WINDOWPOS'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'_OffsetOf_cx' -> 16r10.
@@ -2377,13 +2452,12 @@ OS.SizedStructure
 
 Kernel.STxProxy
 	subclass: #'UI.STBViewProxy'
-	instanceVariableNames: 'viewClass instVars state placement subViews resolution events version'
+	instanceVariableNames: 'viewClass instVars state showCmd subViews resolution events version'
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {
 			'CreationParentIndex' -> 16r2.
-			'CreationStyleIndex' -> 16r3.
 			'EventsIndex' -> 16rB.
 			'FlagsIndex' -> 16r8.
 			'HandleIndex' -> 16r1
@@ -2446,8 +2520,16 @@ UI.ContainerView
 	classConstants: { 'DefaultButtonIndex' -> 16r14. 'TransientMask' -> 16r1 }!
 
 UI.ShellView
-	subclass: #'UI.Splash'
+	subclass: #'UI.AbstractSplash'
 	instanceVariableNames: 'splashDelay bitmap overlayWith'
+	classVariableNames: ''
+	imports: #(#{OS.Win32Constants})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+UI.AbstractSplash
+	subclass: #'UI.Splash'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -2645,6 +2727,15 @@ animateWindow: hwnd dwTime: dwTime dwFlags: dwFlags
 	<stdcall: bool AnimateWindow handle uint32 uint32>
 	^self invalidCall: _failureCode!
 
+areDpiAwarenessContextsEqual: dpiContextA dpiContextB: dpiContextB
+	"BOOL AreDpiAwarenessContextsEqual(
+		[in] DPI_AWARENESS_CONTEXT dpiContextA,
+		[in] DPI_AWARENESS_CONTEXT dpiContextB
+	);"
+
+	<stdcall: bool AreDpiAwarenessContextsEqual sdword sdword>
+	^self invalidCall: _failureCode!
+
 attachThreadInput: idAttach idAttachTo: idAttachTo fAttach: aBoolean
 	"The AttachThreadInput function attaches the input processing mechanism of one thread to that of another thread. 
 
@@ -2656,6 +2747,15 @@ attachThreadInput: idAttach idAttachTo: idAttachTo fAttach: aBoolean
 
 	<stdcall: bool AttachThreadInput uint32 uint32 bool>
 	^self invalidCall: _failureCode!
+
+awarenessFromDpiAwarenessContext: anExternalHandle
+	| awareness |
+	awareness := self getAwarenessFromDpiAwarenessContext: anExternalHandle.
+	^awareness == 0
+		ifTrue: 
+			[(self areDpiAwarenessContextsEqual: anExternalHandle
+				dpiContextB: DPI_AWARENESS_CONTEXT_UNAWARE_GDISCALED) ifTrue: [#gdiScaled] ifFalse: [#unaware]]
+		ifFalse: [DpiAwarenesses at: awareness + 2]!
 
 beginDeferWindowPos: nNumWindows
 	"Invoke the BeginDeferWindowPos() function of the module wrapped by the receiver.
@@ -2987,6 +3087,14 @@ getAncestor: hwnd gaFlags: gaFlags
 	<stdcall: handle GetAncestor handle uint32>
 	^self invalidCall: _failureCode!
 
+getAwarenessFromDpiAwarenessContext: value
+	"DPI_AWARENESS GetAwarenessFromDpiAwarenessContext(
+		[in] DPI_AWARENESS_CONTEXT value
+	);"
+
+	<stdcall: sdword GetAwarenessFromDpiAwarenessContext sdword>
+	^self invalidCall: _failureCode!
+
 getCapture
 	"Retreive the handle of the current window with mouse capture.
 		HANDLE GetCapture(VOID)."
@@ -3058,8 +3166,24 @@ getClipboardFormatName: format lpszFormatName: lpszFormatName cchMaxCount: cchMa
 	<stdcall: int32 GetClipboardFormatNameW uint32 lpwstr int32>
 	^self invalidCall: _failureCode!
 
+getDialogDpiChangeBehavior: hDlg
+	"DIALOG_DPI_CHANGE_BEHAVIORS GetDialogDpiChangeBehavior(
+		HWND                        hDlg,
+	);"
+
+	<stdcall: dword GetDialogDpiChangeBehavior handle>
+	^self invalidCall: _failureCode!
+
 getDlgCtrlID: hWnd
 	<stdcall: int32 GetDlgCtrlID handle>
+	^self invalidCall: _failureCode!
+
+getDpiAwarenessContextForProcess: hProcess
+	"DPI_AWARENESS_CONTEXT GetDpiAwarenessContextForProcess(
+		[in] HANDLE hProcess
+	);"
+
+	<stdcall: sdword GetDpiAwarenessContextForProcess handle>
 	^self invalidCall: _failureCode!
 
 getDpiForSystem
@@ -3068,6 +3192,14 @@ getDpiForSystem
 
 getDpiForWindow: hWnd
 	<stdcall: dword GetDpiForWindow handle>
+	^self invalidCall: _failureCode!
+
+getDpiFromDpiAwarenessContext: value
+	"UINT GetDpiFromDpiAwarenessContext(
+		[in] DPI_AWARENESS_CONTEXT value
+	);"
+
+	<stdcall: dword GetDpiFromDpiAwarenessContext sdword>
 	^self invalidCall: _failureCode!
 
 getFocus
@@ -3166,12 +3298,38 @@ getScrollInfo: aWindowHandle fnBar: flag lpsi: struct
 	<stdcall: bool GetScrollInfo handle int32 SCROLLINFO*>
 	^self invalidCall: _failureCode!
 
+getSystemDpiForProcess: hProcess
+	<stdcall: dword GetSystemDpiForProcess handle>
+	^self invalidCall: _failureCode!
+
 getSystemMenu: anExternalHandle bRevert: aBoolean
 	<stdcall: handle GetSystemMenu handle bool>
 	^self invalidCall: _failureCode!
 
 getSystemMetricsForDpi: index dpi: dpi
 	<stdcall: sdword GetSystemMetricsForDpi sdword dword>
+	^self invalidCall: _failureCode!
+
+getThreadDpi
+	"Answer the DPI applicable in the thread's current DPI awareness context. Note that this will only yield an actual DPI result in unaware or system aware modes. When in per-monitor mode, the answer is 0, since there is no one DPI. In that case the DPI has to be established in the context of a particular window or monitor."
+
+	^self getDpiFromDpiAwarenessContext: self getThreadDpiAwarenessContext!
+
+getThreadDpiAwareness
+	"Answer the symbolic name of the current thread DPI awareness context."
+
+	^self awarenessFromDpiAwarenessContext: self getThreadDpiAwarenessContext!
+
+getThreadDpiAwarenessContext
+	"DPI_AWARENESS_CONTEXT GetThreadDpiAwarenessContext();"
+
+	<stdcall: sdword GetThreadDpiAwarenessContext>
+	^self invalidCall: _failureCode!
+
+getThreadDpiHostingBehavior
+	"DPI_HOSTING_BEHAVIOR GetThreadDpiHostingBehavior();"
+
+	<stdcall: sdword GetThreadDpiHostingBehavior>
 	^self invalidCall: _failureCode!
 
 getTopWindow: aHandle
@@ -3217,6 +3375,27 @@ getWindowDC: aWindowHandle
 		HDC GetWindowDC(HWND hWnd);"
 
 	<stdcall: handle GetWindowDC handle>
+	^self invalidCall: _failureCode!
+
+getWindowDpiAwareness: anExternalHandle
+	"Answer the symbolic name of the DPI awareness context of the window with the specified handle."
+
+	^self awarenessFromDpiAwarenessContext: (self getWindowDpiAwarenessContext: anExternalHandle)!
+
+getWindowDpiAwarenessContext: hWnd
+	"DPI_AWARENESS_CONTEXT GetWindowDpiAwarenessContext(
+		[in] HWND hwnd
+	);"
+
+	<stdcall: sdword GetWindowDpiAwarenessContext sdword>
+	^self invalidCall: _failureCode!
+
+getWindowDpiHostingBehavior: hwnd
+	"DPI_HOSTING_BEHAVIOR GetWindowDpiHostingBehavior(
+		[in] HWND hwnd
+	);"
+
+	<stdcall: sdword GetWindowDpiHostingBehavior handle>
 	^self invalidCall: _failureCode!
 
 getWindowExStyle: hWnd
@@ -3358,6 +3537,23 @@ getWindowULongPtr: aWindowHandle nIndex: zeroBasedIntegerOffset
 	<stdcall: uintptr GetWindowLongPtrW handle int32>
 	^self invalidCall: _failureCode!
 
+inDpiAwarenessContext: anInteger do: aNiladicBlock
+	"Evaluate the niladic <BlockClosure> argument, aNiladicBlock, in the DPI awareness context identified by the <integer> first argument.
+	This can be useful to establish a known co-ordinate system when DPI-sensitive calculations need to be performed."
+
+	| currentContext |
+	currentContext := self setThreadDpiAwarenessContext: anInteger.
+	^aNiladicBlock ensure: [self setThreadDpiAwarenessContext: currentContext]!
+
+inheritWindowMonitor: hwnd hwndInherit: hwndInherit
+	"BOOL InheritWindowMonitor(
+		[in] HWND hwnd,
+		[in,optional] HWND hwndInherit
+	);"
+
+	<stdcall: bool InheritWindowMonitor handle handle>
+	^self invalidCall: _failureCode!
+
 insertMenuItem: hMenu uItem: anInteger fByPosition: aBoolean lpmii: aMENUITEMINFOW
 	"Insert a new item into a menu.
 
@@ -3396,6 +3592,20 @@ invalidateRgn: hWnd hRgn: aRegion bErase: aBoolean
 
 	<stdcall: bool InvalidateRgn handle handle bool>
 	^self invalidCall: _failureCode!
+
+inWindowDpiAwarenessContext: hWnd do: aNiladicBlock
+	"Evaluate the niladic <BlockClosure> argument, aNiladicBlock, in the DPI awareness context of the Window with <ExternalHandle>, hWnd.
+	This can be useful to establish a known co-ordinate system when DPI-sensitive calculations need to be performed."
+
+	| currentContext |
+	currentContext := self setThreadDpiAwarenessContext: (self getWindowDpiAwarenessContext: hWnd).
+	^aNiladicBlock ensure: [self setThreadDpiAwarenessContext: currentContext]!
+
+isAtWindowDpiAwareness: anExternalHandle
+	"Answer whether the current thread DPI awareness context is the same as that of the window with the specified handle. This is useful to know whether any queries for Window geometry will be in the Window's own context, or some foreign context. For example, if I am a DPI unaware window, then I expect to see all geometry in device-independent (96-dpi) pixels, but if my window geometry is queried from a per-monitor context, then the measurements will actually be in physical pixels and may be much larger."
+
+	^self areDpiAwarenessContextsEqual: self getThreadDpiAwarenessContext
+		dpiContextB: (self getWindowDpiAwarenessContext: anExternalHandle)!
 
 isChild: hWndParent hWnd: hWnd
 	"Answer whether the window identified by the handle, hWnd, is 
@@ -3444,6 +3654,18 @@ isIconic: aWindowHandle
 	<stdcall: bool IsIconic handle>
 	^self invalidCall: _failureCode!
 
+isProcessDPIAware
+	<stdcall: bool IsProcessDPIAware>
+	^self invalidCall: _failureCode!
+
+isValidDpiAwarenessContext: value
+	"BOOL IsValidDpiAwarenessContext(
+		[in] DPI_AWARENESS_CONTEXT value
+	);"
+
+	<stdcall: bool IsValidDpiAwarenessContext handle>
+	^self invalidCall: _failureCode!
+
 isWindowUnicode: hWnd
 	<stdcall: bool IsWindowUnicode handle>
 	^self invalidCall: _failureCode!
@@ -3487,6 +3709,24 @@ loadMenu: anExternalHandle lpMenuName: anIntegerOrString
 
 lockWindowUpdate: anExternalHandle
 	<stdcall: bool LockWindowUpdate handle>
+	^self invalidCall: _failureCode!
+
+logicalToPhysicalPoint: hWnd lpPoint: lpPoint
+	"BOOL LogicalToPhysicalPoin(
+		[in]      HWND    hWnd,
+		[in, out] LPPOINT lpPoint
+	);"
+
+	<stdcall: bool LogicalToPhysicalPoint handle POINTL*>
+	^self invalidCall: _failureCode!
+
+logicalToPhysicalPointForPerMonitorDPI: hWnd lpPoint: lpPoint
+	"BOOL LogicalToPhysicalPointForPerMonitorDPI(
+		[in]      HWND    hWnd,
+		[in, out] LPPOINT lpPoint
+	);"
+
+	<stdcall: bool LogicalToPhysicalPointForPerMonitorDPI handle POINTL*>
 	^self invalidCall: _failureCode!
 
 makeDragList: aWindowHandle
@@ -3577,6 +3817,24 @@ openClipboard: hWnd
 		BOOL OpenClipboard(HWND)"
 
 	<stdcall: bool OpenClipboard handle>
+	^self invalidCall: _failureCode!
+
+physicalToLogicalPoint: hWnd lpPoint: lpPoint
+	"BOOL PhysicalToLogicalPoint(
+		[in]      HWND    hWnd,
+		[in, out] LPPOINT lpPoint
+	);"
+
+	<stdcall: bool PhysicalToLogicalPoint handle POINTL*>
+	^self invalidCall: _failureCode!
+
+physicalToLogicalPointForPerMonitorDPI: hWnd lpPoint: lpPoint
+	"BOOL PhysicalToLogicalPointForPerMonitorDPI(
+		[in]      HWND    hWnd,
+		[in, out] LPPOINT lpPoint
+	);"
+
+	<stdcall: bool PhysicalToLogicalPointForPerMonitorDPI handle POINTL*>
 	^self invalidCall: _failureCode!
 
 printWindow: hwnd hdcBlt: hDC nFlags: anInteger
@@ -3761,6 +4019,16 @@ setClipboardData: uFormat hMem: hMem
 	<stdcall: handle SetClipboardData uint32 handle>
 	^self invalidCall: _failureCode!
 
+setDialogDpiChangeBehavior: hDlg mask: mas values: values
+	"BOOL SetDialogDpiChangeBehavior(
+		HWND                        hDlg,
+		DIALOG_DPI_CHANGE_BEHAVIORS mask,
+		DIALOG_DPI_CHANGE_BEHAVIORS values
+	);"
+
+	<stdcall: bool SetDialogDpiChangeBehavior handle sdword sdword>
+	^self invalidCall: _failureCode!
+
 setFocus: aWindowHandle
 	"Transfer the keyboard focus to the specified window. All keyboard input 
 	is directed to the window with focus.
@@ -3886,6 +4154,22 @@ setScrollInfo: aWindowHandle fnBar: flag lpsi: struct fRedraw: redraw
 		);"
 
 	<stdcall: int32 SetScrollInfo handle int32 SCROLLINFO* bool>
+	^self invalidCall: _failureCode!
+
+setThreadDpiAwarenessContext: value
+	"DPI_AWARENESS_CONTEXT SetThreadDpiAwarenessContext(
+		[in] DPI_AWARENESS_CONTEXT dpiContext
+	);"
+
+	<stdcall: sdword SetThreadDpiAwarenessContext sdword>
+	^self invalidCall: _failureCode!
+
+setThreadDpiHostingBehavior: value
+	"DPI_HOSTING_BEHAVIOR SetThreadDpiHostingBehavior(
+		[in] DPI_HOSTING_BEHAVIOR value
+	);"
+
+	<stdcall: sdword SetThreadDpiHostingBehavior sdword>
 	^self invalidCall: _failureCode!
 
 setWindowLong: hWnd nIndex: nIndex dwNewLong: dwNewLong
@@ -4063,12 +4347,22 @@ windowFromPoint: aPOINTL
 	for a nonrestrictive search."
 
 	<stdcall: handle WindowFromPoint POINTL>
-	^self invalidCall: _failureCode! !
+	^self invalidCall: _failureCode!
+
+withDpiHostingBehavior: anInteger do: aNiladicBlock
+	"Evaluate the niladic <BlockClosure> argument, aNiladicBlock, with the DPI hosting behaviour identified by the <integer> first argument.
+	This can be used to create windows with mixed DPI hosting capability."
+
+	| current |
+	current := self setThreadDpiHostingBehavior: DPI_HOSTING_BEHAVIOR_MIXED.
+	^aNiladicBlock ensure: [self setThreadDpiHostingBehavior: current]! !
 
 !OS.UserLibrary categoriesForMethods!
 adjustWindowRectExForDpi:dwStyle:bMenu:dwExStyle:dpi:!public!win32 functions-coordinate space and transformation! !
 animateWindow:dwTime:dwFlags:!**auto generated**!public! !
+areDpiAwarenessContextsEqual:dpiContextB:!public!win32 functions-high DPI! !
 attachThreadInput:idAttachTo:fAttach:!public!win32 functions-message and message queue! !
+awarenessFromDpiAwarenessContext:!high DPI!public!queries! !
 beginDeferWindowPos:!**auto generated**!public! !
 beginPaint:lpPaint:!public!win32 functions-painting and drawing! !
 bringWindowToTop:!public!win32 functions-window! !
@@ -4101,6 +4395,7 @@ enumWindows:lParam:!**auto generated**!public! !
 findWindow:lpWindowName:!public!win32 functions-filled shape! !
 flashWindowEx:!public!win32 functions-error handling! !
 getAncestor:gaFlags:!**auto generated**!public! !
+getAwarenessFromDpiAwarenessContext:!public!win32 functions-high DPI! !
 getCapture!public!win32 functions-mouse input! !
 getClassAtom:!public!win32 functions-window class! !
 getClassLongPtr:nIndex:!public!win32 functions-window class! !
@@ -4109,12 +4404,12 @@ getClassName:lpClassName:nMaxCount:!public!win32 functions-window class! !
 getClientRect:lpRect:!public!win32 functions-window! !
 getClipboardData:!public!win32 functions-clipboard! !
 getClipboardFormatName:lpszFormatName:cchMaxCount:!public!win32 functions-clipboard! !
+getDialogDpiChangeBehavior:!public!win32 functions-high DPI! !
 getDlgCtrlID:!public!win32 functions-dialog box! !
-getDC:!not an aspect!public!win32 functions-device context! !
-getDCEx:hrgnClip:flags:!public!win32 functions-device context! !
+getDpiAwarenessContextForProcess:!public!win32 functions-high DPI! !
 getDpiForSystem!public!win32 functions-high DPI! !
 getDpiForWindow:!public!win32 functions-high DPI! !
-getDlgCtrlID:!public!win32 functions-dialog box! !
+getDpiFromDpiAwarenessContext:!public!win32 functions-high DPI! !
 getFocus!public!win32 functions-keyboard input! !
 getForegroundWindow!public!win32 functions-keyboard input! !
 getLastActivePopup:!public!win32 functions-window! !
@@ -4125,38 +4420,54 @@ getNextDlgGroupItem:hCtl:bPrevious:!public!win32 functions-window! !
 getNextDlgTabItem:hCtl:bPrevious:!public!win32 functions-window! !
 getProp:lpString:!public!win32 functions-window property! !
 getScrollInfo:fnBar:lpsi:!public!win32 functions-scroll bar! !
+getSystemDpiForProcess:!public!win32 functions-high DPI! !
 getSystemMenu:bRevert:!public!win32 functions-menu!win32 functions-system information! !
 getSystemMetricsForDpi:dpi:!public!win32 functions-high DPI! !
+getThreadDpi!high DPI!public! !
+getThreadDpiAwareness!high DPI!public!queries! !
+getThreadDpiAwarenessContext!public!win32 functions-high DPI! !
+getThreadDpiHostingBehavior!public!win32 functions-high DPI! !
 getTopWindow:!public!win32 functions-window! !
 getUpdateRect:lpRect:bErase:!public!win32 functions-painting and drawing! !
 getWindow:uCmd:!public!win32 functions-window! !
 getWindowDC:!public!win32 functions-device context! !
+getWindowDpiAwareness:!high DPI!public!queries! !
+getWindowDpiAwarenessContext:!public!win32 functions-high DPI! !
+getWindowDpiHostingBehavior:!public!win32 functions-high DPI! !
+getWindowExStyle:!public! !
+getWindowLong:nIndex:!public!win32 functions-window! !
+getWindowLongPtr:nIndex:!public!win32 functions-window class! !
+getWindowPlacement:lpwndpl:!public!win32 functions-window! !
+getWindowRect:lpRect:!public!win32 functions-window! !
 getWindowStyle:!public!win32 functions-window! !
 getWindowText:!public!win32 functions-window! !
 getWindowText:lpString:nMaxCount:!public!win32 functions-window! !
 getWindowTextLength:!public!win32 functions-window! !
 getWindowThreadProcessId:lpdwProcessId:!**auto generated**!public!win32 functions-window! !
-getWindowPlacement:lpwndpl:!public!win32 functions-window! !
-getWindowRect:lpRect:!public!win32 functions-window! !
-getWindowText:lpString:nMaxCount:!public! !
-getWindowTextLength:!public! !
-getWindowThreadProcessId:lpdwProcessId:!public!win32 functions-window! !
 getWindowULong:nIndex:!public!win32 functions-window class! !
 getWindowULongPtr:nIndex:!public!win32 functions-window class! !
+inDpiAwarenessContext:do:!high DPI!operations!public! !
+inheritWindowMonitor:hwndInherit:!public!win32 functions-high DPI! !
 insertMenuItem:uItem:fByPosition:lpmii:!public!win32 functions-menu! !
 invalidate:lpRect:bErase:!public!win32 functions-painting and drawing! !
 invalidateRgn:hRgn:bErase:!public!win32 functions-painting and drawing! !
+inWindowDpiAwarenessContext:do:!high DPI!operations!public! !
+isAtWindowDpiAwareness:!high DPI!public!queries! !
 isChild:hWnd:!public!win32 functions-window! !
 isClipboardFormatAvailable:!public!win32 functions-clipboard! !
 isDialog:!public!queries! !
 isDialogMessage:lpMsg:!public!win32 functions-dialog box! !
 isForegroundProcess:!enquiries!public! !
 isIconic:!public!win32 functions-icon! !
+isProcessDPIAware!public!win32 functions-high DPI! !
+isValidDpiAwarenessContext:!public!win32 functions-high DPI! !
 isWindowUnicode:!public!win32 functions-window!win32 functions-window procedure! !
 isZoomed:!public!win32 functions-window! !
 loadAccelerators:lpTableName:!public!win32 functions-keyboard accelerator! !
 loadMenu:lpMenuName:!public!win32 functions-menu! !
 lockWindowUpdate:!public!win32 functions-painting and drawing! !
+logicalToPhysicalPoint:lpPoint:!public!win32 functions-high DPI! !
+logicalToPhysicalPointForPerMonitorDPI:lpPoint:!public!win32 functions-high DPI! !
 makeDragList:!public!win32 functions-list box! !
 mapRectangle:from:to:!geometry!public! !
 mapWindowPoints:hWndTo:lpPoints:cPoints:!public!win32 functions-coordinate space and transformation! !
@@ -4165,6 +4476,8 @@ monitorFromPoint:dwFlags:!**auto generated**!public!win32 functions-multiple dis
 monitorFromRect:dwFlags:!**auto generated**!public!win32 functions-multiple display monitors! !
 monitorFromWindow:dwFlags:!**auto generated**!public!win32 functions-multiple display monitors! !
 openClipboard:!public!win32 functions-clipboard! !
+physicalToLogicalPoint:lpPoint:!public!win32 functions-high DPI! !
+physicalToLogicalPointForPerMonitorDPI:lpPoint:!public!win32 functions-high DPI! !
 printWindow:hdcBlt:nFlags:!public!win32 functions-painting and drawing! !
 redrawWindow:lprcUpdate:hrgnUpdate:flags:!public!win32 functions-painting and drawing! !
 registerClass:!public!win32 functions-window class! !
@@ -4183,6 +4496,7 @@ sendMessageU:msg:wParam:lpParam:!public!win32 functions-message and message queu
 setCapture:!public!win32 functions-mouse input! !
 setClassLong:nIndex:dwNewLong:!public!win32 functions-window class! !
 setClipboardData:hMem:!public!win32 functions-clipboard! !
+setDialogDpiChangeBehavior:mask:values:!public!win32 functions-high DPI! !
 setFocus:!public!win32 functions-keyboard input! !
 setForegroundWindow:!public!win32 functions-keyboard input! !
 setLayeredWindowAttributes:lcrKey:bAlpha:dwFlags:!public!win32 functions-window! !
@@ -4194,6 +4508,8 @@ setParent:hWndNewParent:!public!win32 functions-window! !
 setProcessDpiAwarenessContext:!public!win32 functions-high DPI! !
 setProp:lpString:hData:!public!win32 functions-window property! !
 setScrollInfo:fnBar:lpsi:fRedraw:!public!win32 functions-scroll bar! !
+setThreadDpiAwarenessContext:!public!win32 functions-high DPI! !
+setThreadDpiHostingBehavior:!public!win32 functions-high DPI! !
 setWindowLong:nIndex:dwNewLong:!public!win32 functions-window class! !
 setWindowLongPtr:nIndex:dwNewLong:!public!win32 functions-window class! !
 setWindowPlacement:lpwndpl:!public!win32 functions-window! !
@@ -4210,6 +4526,7 @@ unregisterHotKey:id:!public!win32 functions-keyboard input! !
 validate:lpRect:!public!win32 functions-painting and drawing! !
 windowFromDC:!public!win32 functions-device context! !
 windowFromPoint:!public!win32 functions-window! !
+withDpiHostingBehavior:do:!high DPI!operations!public! !
 !
 
 !UI.ResourceIdentifier methodsFor!

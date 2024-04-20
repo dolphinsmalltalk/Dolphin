@@ -446,10 +446,19 @@ scaleBy: delta
 
 	^self scaledBy: delta!
 
-scaledBy: delta
-	"Answer a new <Rectangle> representing the receiver with origin and corner multiplied by delta, where delta is a Point or a Number. Uses the #vertex:vertex: constructor in order to create a normalised rectangle"
+scaledBy: anArithmeticValue
+	"Answer a new <Rectangle> representing the receiver with origin and corner multiplied by the <ArithmeticValue> argument. Uses the #vertex:vertex: constructor in order to create a normalised rectangle"
 
-	^self species vertex: origin * delta vertex: corner * delta!
+	^self species vertex: origin * anArithmeticValue vertex: corner * anArithmeticValue!
+
+scaleToDpi: desiredInteger from: currentInteger
+	"Scale the receiver in-place by from the DPI represented by the first <integer> argument to that represented by the second integer argument.
+	Note that the scaled points are also truncated. Co-ordinates in Win32 are integers, so some kind of rounding is required at or before the point of use. The expectation is that the scaling will be done once as otherwise there may be an accumulation of rounding error."
+
+	origin := Point x: origin x * desiredInteger // currentInteger
+				y: origin y * desiredInteger // currentInteger.
+	corner := Point x: corner x * desiredInteger // currentInteger
+				y: corner y * desiredInteger // currentInteger!
 
 subtract: aRectangle
 	| rect |
@@ -517,16 +526,12 @@ topRight: aPoint
 	corner x: aPoint x!
 
 translateBy: delta 
-	"Answer a new <Rectangle> representing the receiver with origin and corner incremented by
-	delta, where delta is a <Point>, a <Number>, or another <Rectangle>. This is the message
-	used in the IBM Red Book, but Smalltalk-80 uses #translatedBy: (which has the correct
-	tense)."
+	"Answer a new <Rectangle> representing the receiver with origin and corner incremented by delta, where delta is a <Point>, a <Number>, or another <Rectangle>. This is the message used in the IBM Red Book, but Smalltalk-80 uses #translatedBy: (which has the correct tense in that this is not an in-place operation, but rather returns a new Rectangle)."
 
 	^self translatedBy: delta!
 
 translatedBy: delta 
-	"Annswer a new <Rectangle> representing the receiver with origin and corner incremented by
-	delta, where delta is a <Point>, a <Number>, or another <Rectangle>."
+	"Annswer a new <Rectangle> representing the receiver with origin and corner incremented by delta, where delta is a <Point>, a <Number>, or another <Rectangle>."
 
 	^delta _offsetRectangle: self!
 
@@ -624,6 +629,7 @@ rightCenter:!accessing!public! !
 rounded!public!truncation and round off! !
 scaleBy:!public!transforming! !
 scaledBy:!public!transforming! !
+scaleToDpi:from:!public!transforming! !
 subtract:!public!rectangle functions! !
 top!accessing!public! !
 top:!accessing!public! !
@@ -643,7 +649,7 @@ width!accessing!public! !
 width:!accessing!public! !
 !
 
-Graphics.Rectangle methodProtocol: #rectangle attributes: #(#readOnly) selectors: #(#area #areasOutside: #bottom #bottom: #bottomCenter #bottomCenter: #bottomLeft #bottomLeft: #bottomRight #bottomRight: #contains: #containsPoint: #corner #corner: #expandBy: #extent #extent: #height #height: #insetBy: #intersect: #intersects: #left #left: #leftCenter #merge: #moveBy: #moveTo: #origin #origin: #origin:corner: #origin:extent: #right #right: #rightCenter #scaleBy: #top #top: #topCenter #topLeft #topLeft: #topRight #topRight: #translateBy: #truncated #width #width:)!
+Graphics.Rectangle methodProtocol: #rectangle attributes: #() selectors: #(#area #areasOutside: #bottom #bottom: #bottomCenter #bottomCenter: #bottomLeft #bottomLeft: #bottomRight #bottomRight: #center #center: #contains: #containsPoint: #corner #corner: #expandBy: #expandedBy: #extent #extent: #height #height: #insetBy: #intersect: #intersects: #left #left: #leftCenter #merge: #moveBy: #moveTo: #origin #origin: #origin:corner: #origin:extent: #right #right: #rightCenter #scaleBy: #scaledBy: #top #top: #topCenter #topLeft #topLeft: #topRight #topRight: #translatedBy: #truncated #width #width:)!
 
 !Graphics.Rectangle class methodsFor!
 

@@ -3,7 +3,7 @@
 UI.ListPresenter
 	subclass: #'Tools.ResourceListPresenter'
 	instanceVariableNames: 'filterBlock resourcesPresenter previewPresenter resourceIdModel'
-	classVariableNames: ''
+	classVariableNames: 'DesignDesktop'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -58,6 +58,15 @@ browseSystem
 caption
 	^''!
 
+changePreviewDpiAwareness
+	| resId |
+	resId := resourceIdModel value.
+	resourceIdModel value: nil.
+	previewPresenter view dpiAwareness: DesignDesktop dpiAwareness.
+	#highDpiToDo.	"Should be set in resource"
+	previewPresenter view isWholeBackgroundErased: true.
+	resourceIdModel value: resId!
+
 clear
 	"Empty the resource list."
 
@@ -89,8 +98,11 @@ createComponents
 	previewPresenter := self add: ImagePresenter new name: 'preview'.
 	resourceIdModel := ValueHolder new.
 	previewPresenter model: (ValueConverter subject: resourceIdModel
-				typeConverter: (PluggableTypeConverter
-						leftToRight: [:resourceId | self imageFromResource: resourceId]))!
+				typeConverter: ((PluggableTypeConverter
+						leftToRight: [:resourceId | self imageFromResource: resourceId]
+						rightToLeft: [:image | nil])
+						rightNullValue: View icon;
+						yourself))!
 
 createSchematicWiring
 	"Create the trigger wiring for the receiver"
@@ -151,10 +163,13 @@ filterBlock: monadicValuable
 	self selections: sels ifAbsent: []!
 
 imageFromResource: aResourceIdentifier
-	| shell resourceView |
-	shell := DesignDesktopView forSystemDpi.
-	resourceView := [shell loadViewResource: aResourceIdentifier resource forEdit: false] on: Error
-				do: [:x | ].
+	| resourceView |
+	resourceView := [DesignDesktop loadViewResource: aResourceIdentifier resource forEdit: false]
+				on: Error
+				do: 
+					[:x |
+					x toTrace.
+					nil].
 	^resourceView notNil 
 		ifTrue: 
 			[resourceView invalidateLayoutDeeply.
@@ -212,6 +227,13 @@ onResourceRepackaged: aResourceIdentifier from: aPackage to: aPackage2
 
 onResourceSelected
 	resourceIdModel value: self resourceIdentifier!
+
+onViewAvailable
+	#highDpiToDo.	"Temporary: This should be configured into the view resource"
+	previewPresenter view parentView isMixedDpiHost: true.
+	self changePreviewDpiAwareness.
+	previewPresenter view parentView invalidate.
+	^super onViewAvailable!
 
 passesFilter: aResourceIdentifier
 	^filterBlock isNil or: [filterBlock value: aResourceIdentifier]!
@@ -297,6 +319,7 @@ browseIt!commands-actions!public! !
 browseReferences!commands-actions!public! !
 browseSystem!commands-actions!public! !
 caption!accessing!public! !
+changePreviewDpiAwareness!event handling!helpers!private! !
 clear!commands-actions!public! !
 clearSelection!commands-actions!public! !
 confirmMoveResource:toPackage:!accessing!private! !
@@ -315,6 +338,7 @@ onMethodAdded:!event handling!private! !
 onMethodRemoved:!event handling!private! !
 onResourceRepackaged:from:to:!event handling!private! !
 onResourceSelected!event handling!private! !
+onViewAvailable!event handling!public! !
 passesFilter:!event handling!private! !
 queryBrowseOwningClass:!commands-queries!private! !
 queryShowResource:!commands-queries!private! !
@@ -340,6 +364,17 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^ResourceBrowser icon!
+
+initialize
+	DesignDesktop := DesignDesktopView default!
+
+previewDpiAwareness
+	^DesignDesktop dpiAwareness!
+
+previewDpiAwareness: aSymbol
+	aSymbol = DesignDesktop dpiAwareness ifTrue: [^self].
+	DesignDesktop := DesignDesktopView perform: aSymbol.
+	self allSubinstances do: [:each | each changePreviewDpiAwareness]!
 
 resource_Default_view
 	"Answer the literal data from which the 'Default view' resource can be reconstituted.
@@ -371,6 +406,9 @@ showResourcesReferencingView: aResourceIdentifier
 !Tools.ResourceListPresenter class categoriesForMethods!
 defaultModel!models!public! !
 icon!constants!public! !
+initialize!public! !
+previewDpiAwareness!accessing!public! !
+previewDpiAwareness:!accessing!public! !
 resource_Default_view!public!resources-views! !
 resource_Package_view!public!resources-views! !
 showResourcesReferencingView:!instance creation!public! !

@@ -39,6 +39,9 @@ testAreasOutside
 	self assert: ((100 @ 100 corner: 200 @ 200) areasOutside: (200 @ 200 corner: 400 @ 400))
 		equals: {100 @ 100 corner: 200 @ 200}!
 
+testCenterXMove
+	self assert: (desktop centerX: -320) equals: (-960 @ 0 extent: 1280 @ 1024)!
+
 testInsetBy
 	self assert: (desktop insetBy: 1) equals: (1 @ 1 corner: 1279 @ 1023).
 	self assert: (desktop insetBy: 2) equals: (2 @ 2 corner: 1278 @ 1022).
@@ -48,13 +51,24 @@ testInsetBy
 	self assert: ((1 @ 2 corner: 3 @ 4) insetBy: (2 @ 0 corner: 0 @ 0)) equals: (3 @ 2 corner: 3 @ 4).
 	#todo	"Add more insetBy: <Rectangle> tests"!
 
+testScaledBy
+	| subject scaled |
+	super testScaledBy.
+	subject := self subjectClass origin: 2 @ 3 corner: 6 @ 4.
+	scaled := subject scaledBy: 1.25.
+	self deny: scaled identicalTo: subject.
+	self assert: subject equals: (2 @ 3 corner: 6 @ 4).
+	self assert: scaled equals: (2.5 @ 3.75 corner: 7.5 @ 5)!
+
 testVertices
 	self assert: oddDesktop vertices equals: {-1 @ 2. 1279 @ 2. 1279 @ 1023. -1 @ 1023}! !
 
 !Graphics.Tests.RectangleTest categoriesForMethods!
 subjectClass!constants!private! !
 testAreasOutside!public!unit tests! !
+testCenterXMove!public!unit tests! !
 testInsetBy!public!unit tests! !
+testScaledBy!public!unit tests! !
 testVertices!public!unit tests! !
 !
 

@@ -432,7 +432,7 @@ borderInset!constants!private! !
 calculateGeometry:!public!updating! !
 conflictingAccelerators:!accessing!public! !
 createDragImage:using:!painting!public! !
-dpi!accessing!private! !
+dpi!accessing!high DPI!private! !
 drawArrawOn:in:!painting!private! !
 drawBulletOn:in:!painting!private! !
 drawCheckOn:in:!painting!private! !
