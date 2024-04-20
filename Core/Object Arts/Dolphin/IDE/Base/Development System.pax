@@ -101,6 +101,7 @@ package classNames
 	add: #ResourceBrowser;
 	add: #ResourceIdentifierDialog;
 	add: #ResourceListPresenter;
+	add: #ResourcePreview;
 	add: #ResourceToolboxPresenter;
 	add: #SequenceableCollectionInspector;
 	add: #SetBatchAspectAccessor;
@@ -266,6 +267,7 @@ package methodNames
 	add: #ExternalInteger -> #printOn:;
 	add: #ExternalIntegerBytes -> #debugPrintString;
 	add: #ExternalIntegerBytes -> #publishedKeyedAspects;
+	add: #ExternalRectangle -> #displayOn:;
 	add: #ExternalRectangle -> #printOn:;
 	add: #ExternalStructure -> #alternateInspectorClass;
 	add: #ExternalStructure -> #printableFields;
@@ -1111,8 +1113,8 @@ ListPresenter subclass: #MethodBrowser
 	classInstanceVariableNames: 'commandQueryHandlers'!
 
 ListPresenter subclass: #ResourceListPresenter
-	instanceVariableNames: 'filterBlock resourcesPresenter previewPresenter resourceIdModel'
-	classVariableNames: 'DesignDesktop'
+	instanceVariableNames: 'filterBlock resourcesPresenter previewPresenter'
+	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
@@ -1443,6 +1445,12 @@ DialogView subclass: #WalkbackDialog
 ImageViewAbstract subclass: #ImageListView
 	instanceVariableNames: ''
 	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+ImageView subclass: #ResourcePreview
+	instanceVariableNames: ''
+	classVariableNames: 'DesignDesktop'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
@@ -3586,6 +3594,12 @@ publishedAspectsOfInstances!constants!public! !
 
 !ExternalRectangle methodsFor!
 
+displayOn: aStream
+	"Append a short textual description of the receiver to aStream."
+
+	self isNull ifTrue: [^super displayOn: aStream].
+	aStream display: self asRectangle!
+
 printOn: aStream
 	"Append a short textual description of the receiver to aStream."
 
@@ -3593,12 +3607,11 @@ printOn: aStream
 	aStream
 		basicPrint: self;
 		nextPut: $(;
-		print: self topLeft;
-		nextPutAll: ' corner: ';
-		print: self bottomRight;
+		display: self;
 		nextPut: $)! !
 
 !ExternalRectangle categoriesForMethods!
+displayOn:!printing!public! !
 printOn:!printing!public! !
 !
 

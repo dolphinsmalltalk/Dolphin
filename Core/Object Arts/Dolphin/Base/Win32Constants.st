@@ -341,6 +341,8 @@ Win32Constants at: 'FORMAT_MESSAGE_FROM_HMODULE' put: 16r800!
 Win32Constants at: 'FORMAT_MESSAGE_FROM_STRING' put: 16r400!
 Win32Constants at: 'FORMAT_MESSAGE_FROM_SYSTEM' put: 16r1000!
 Win32Constants at: 'FORMAT_MESSAGE_IGNORE_INSERTS' put: 16r200!
+Win32Constants at: 'FR_NOT_ENUM' put: 16r20!
+Win32Constants at: 'FR_PRIVATE' put: 16r10!
 Win32Constants at: 'FSCTL_SET_SPARSE' put: 16r900C4!
 Win32Constants at: 'FSHIFT' put: 16r4!
 Win32Constants at: 'FVIRTKEY' put: 16r1!

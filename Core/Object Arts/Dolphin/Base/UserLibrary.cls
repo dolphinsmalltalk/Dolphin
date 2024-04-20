@@ -84,22 +84,6 @@ charUpperBuffW: aString cchLength: anInteger
 	<stdcall: dword CharUpperBuffW lpwstr dword>
 	^self invalidCall: _failureCode!
 
-copyImage: hImage uType: uType cxDesired: cxDesired cyDesired: cyDesired fuFlags: fuFlags
-	"The CopyImage function creates a new image (icon, cursor, or bitmap) and copies the attributes of
-	the specified image to the new one. If necessary, the function stretches the bits to fit the desired size
-	of the new image.
-	
-	HANDLE CopyImage(      
-		HANDLE hImage,
-		UINT uType,
-		int cxDesired,
-		int cyDesired,
-		UINT fuFlags
-		);"
-
-	<stdcall: handle CopyImage handle dword sdword sdword dword>
-	^self invalidCall: _failureCode!
-
 createDialogParam: hInstance lpTemplate: template hWndParent: hParent lpDialogFunc: dlgProc dwInitParam: lParam
 	"Create a modeless dialog box from a dialog box template resource. 
 		HWND CreateDialog(
@@ -154,10 +138,6 @@ destroyWindow: aWindowHandle
 		);"
 
 	<stdcall: bool DestroyWindow handle>
-	^self invalidCall: _failureCode!
-
-disableProcessWindowsGhosting
-	<stdcall: void DisableProcessWindowsGhosting>
 	^self invalidCall: _failureCode!
 
 dispatchMessage: aMSG
@@ -764,12 +744,10 @@ charLowerBuffW:cchLength:!public!win32 functions-string manipulation! !
 charUpper:!public!win32 functions-string manipulation! !
 charUpperBuffA:cchLength:!public!win32 functions-string manipulation! !
 charUpperBuffW:cchLength:!public!win32 functions-string manipulation! !
-copyImage:uType:cxDesired:cyDesired:fuFlags:!public!win32 functions-resources! !
 createDialogParam:lpTemplate:hWndParent:lpDialogFunc:dwInitParam:!public!win32 functions-dialog box! !
 defDlgProc:msg:wParam:lParam:!public!win32 functions-window procedure! !
 defWindowProc:msg:wParam:lParam:!public!win32 functions-window procedure! !
 destroyWindow:!public!win32 functions-window! !
-disableProcessWindowsGhosting!public!win32 functions-message and message queue! !
 dispatchMessage:!public!win32 functions-message and message queue! !
 enableWindow:bEnable:!public!win32 functions-keyboard input! !
 getActiveWindow!public!win32 functions-keyboard input! !

@@ -622,7 +622,7 @@ nmRClick: pNMHDR
 
 	| newSel pt curSel |
 	pt := Cursor position.
-	newSel := self selectionFromPoint: (self class desktop mapPoint: pt to: self).
+	newSel := self selectionFromPoint: (self mapScreenToClient: pt).
 	curSel := self selectionByIndex.
 	(newSel = curSel or: 
 			["Selection change permitted?"

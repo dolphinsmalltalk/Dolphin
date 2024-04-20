@@ -125,12 +125,9 @@ viewFromPoint: aPoint
 	| under child clientPoint desktop lastDolphin |
 	clientPoint := aPoint.
 	under := desktop := View desktop.
-	#highDpiToDo.	"ChildWindowFromPointEx does not appear to work correctly with mixed DPI"
 	
-	[child := UserLibrary default
-				childWindowFromPointEx: under asParameter
-				pt: clientPoint asParameter
-				uFlags: CWP_SKIPINVISIBLE.	"| CWP_SKIPTRANSPARENT"
+	[child := UserLibrary default realChildWindowFromPoint: under asParameter
+				ptParentClientCoords: clientPoint asParameter.
 	child isNil or: [child = under asParameter]]
 			whileFalse: 
 				[clientPoint := desktop mapPoint: aPoint to: child.
@@ -143,11 +140,11 @@ viewFromPoint: aPoint
 visualObjectAt: aPoint
 	"Private - Answer the visual object found under aPoint (in desktop coordinates) or nil if none"
 
-	^(foundView := self viewFromPoint: aPoint) 
+	^(foundView := self viewFromPoint: aPoint)
 		ifNotNil: 
-			[:viewUnderCursor | 
+			[:viewUnderCursor |
 			| localPoint |
-			localPoint := View desktop mapPoint: aPoint to: viewUnderCursor.
+			localPoint := viewUnderCursor mapScreenToClient: aPoint.
 			viewUnderCursor visualObjectAtPoint: localPoint]! !
 
 !VisualObjectFinder categoriesForMethods!

@@ -26,8 +26,8 @@ adornmentRectanglesFor: aView
 	^#(#topLeft #bottomRight #topRight #bottomLeft #topCenter #bottomCenter #leftCenter #rightCenter)
 		collect: [:eachAspect | Rectangle center: (viewRect perform: eachAspect) extent: Grabber.DefaultExtent]!
 
-assertInOwnDpiContext
-	self assert: [self isInOwnDpiAwarenessContext]!
+assertInNativeDpiContext
+	self assert: [self isInNativeDpiAwarenessContext]!
 
 borderRectanglesFor: aView
 	"Private - Answer a collection of rectangles that mark the borders of aView"
@@ -114,7 +114,7 @@ cursor
 	If the mouse position is over a Grabber, then
 	answer the appropriate cursor."
 
-	^self cursorAt: (View desktop mapPoint: Cursor position to: self)!
+	^self cursorAt: self cursorPosition!
 
 cursorAt: aPoint
 	| primary |
@@ -167,7 +167,7 @@ dropTargetFromScreenPoint: aPoint
 	"Private - Determine where the view should be dropped."
 
 	| viewHit arenaPoint |
-	arenaPoint := View desktop mapPoint: aPoint to: self.
+	arenaPoint := self mapScreenToClient: aPoint.
 	viewHit := self viewHitBy: arenaPoint.
 	
 	[viewHit isNil ifTrue: [^self].
@@ -185,7 +185,7 @@ endTrackingAt: pointOffset
 			"Don't think this should be necessary - reposition:to: should already do this"
 			newPosition := self calculatePositionOf: each offsetBy: pointOffset.
 			screenPosition := newPosition - self insets origin + self hidingOffset.
-			positionInParent := View desktop mapPoint: screenPosition to: each parentView.
+			positionInParent := each parentView mapScreenToClient: screenPosition.
 			composer repositionView: each to: positionInParent].
 	self showAdornment!
 
@@ -199,7 +199,7 @@ eraseTrackingAt: aPoint
 
 grabberHitBy: aPoint
 	| primary hitIndex rectangles |
-	self assertInOwnDpiContext.
+	self assertInNativeDpiContext.
 	primary := composer primarySelection.
 	primary ifNil: [^nil].
 	rectangles := self adornmentRectanglesFor: primary.
@@ -234,10 +234,10 @@ isAdornmentHidden: aBoolean
 	ivFlags := self ivFlags mask: AdornmentHiddenMask set: aBoolean!
 
 mapPoint: aPoint fromView: aView
-	^(aView parentView mapPoint: aPoint to: View desktop) - self hidingOffset + self insets origin!
+	^(aView parentView mapPointToScreen: aPoint) - self hidingOffset + self insets origin!
 
 mapPoint: aPoint toView: aView
-	^View desktop mapPoint: aPoint - self defaultComposingPosition + self hidingOffset to: aView!
+	^aView mapScreenToClient: aPoint - self defaultComposingPosition + self hidingOffset!
 
 mapRectangle: aRectangle fromView: aView
 	| offset |
@@ -386,7 +386,7 @@ viewHitBy: aPoint
 	"Private - Answers the view that can be hit by a mouse action at aPoint. "
 
 	| viewHit composingView |
-	self assertInOwnDpiContext.
+	self assertInNativeDpiContext.
 	composingView := composer composingView.
 	composingView ifNil: [^nil].
 	composer primarySelection
@@ -407,7 +407,7 @@ viewHitBy: aPoint
 
 !ViewComposerArena categoriesForMethods!
 adornmentRectanglesFor:!private! !
-assertInOwnDpiContext!helpers!private! !
+assertInNativeDpiContext!helpers!private! !
 borderRectanglesFor:!adornments!private! !
 borderRegionFor:!adornments!private! !
 calculatePositionOf:offsetBy:!adornments!private! !
@@ -416,7 +416,7 @@ childLayoutInvalidated!geometry!private! !
 composer:!public! !
 constrainPoint:!geometry!private! !
 continueTrackingAt:from:!private!tracking! !
-creationFunction:dpi:!geometry!private!realizing/unrealizing! !
+creationFunction:dpi:!private!realizing/unrealizing! !
 cursor!accessing!public! !
 cursorAt:!helpers!private! !
 defaultComposingPosition!constants!private! !

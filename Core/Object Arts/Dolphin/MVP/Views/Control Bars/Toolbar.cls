@@ -124,7 +124,7 @@ addSystemBitmap: systemBitmapId index: anIntegerIndex
 	"Private - Add the system defined sub-bitmap identified by anIntegerIndex within the bitmap identified by systemBitmapId"
 
 	| start |
-	#highDpiToDo. "System bitmaps don't work. Gets loaded directly into the image list without rescaling."
+	#highDpiToDo. "System bitmaps don't scale so currently their use disables scaling. Not a very satisfactory solution."
 	start := bitmapsStart at: systemBitmapId
 				ifAbsentPut: 
 					[self

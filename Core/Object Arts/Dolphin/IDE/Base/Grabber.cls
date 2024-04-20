@@ -123,7 +123,7 @@ drawTrackingAt: pointOffset
 
 	| rect arenaRect |
 	"We expect to be tracking in the arena DPI awareness context, i.e. in DIPs"
-	self arena assertInOwnDpiContext.
+	self arena assertInNativeDpiContext.
 	rect := self calculateViewRectangleFor: pointOffset.
 	self arena drawFocusRect: rect.
 	arenaRect := self arena mapRectangle: rect to: view parentView.

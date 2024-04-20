@@ -293,18 +293,6 @@ setInitialPosition: aRectangle
 		cy: aRectangle height
 		uFlags: ##(SWP_NOACTIVATE | SWP_NOZORDER | SWP_NOSENDCHANGING)!
 
-setInitialPosition: originPoint extent: extentPoint
-	"Private - Set the initial position and extent of the dialog window immediately after creation."
-
-	UserLibrary default
-		setWindowPos: handle
-		hWndInsertAfter: nil
-		x: originPoint x
-		y: originPoint y
-		cx: extentPoint x
-		cy: extentPoint y
-		uFlags: ##(SWP_NOACTIVATE | SWP_NOZORDER | SWP_NOSENDCHANGING)!
-
 setItem: anInteger font: aFontOrHandle
 	"Private - Set the font of the receiver's control with the specified id."
 
@@ -434,7 +422,7 @@ wmInitDialog: message wParam: wParam lParam: lParam
 answer!accessing!public! !
 answer:!accessing!not an aspect!public! !
 cancel!commands!public! !
-creationFunction:dpi:!geometry!private!realizing/unrealizing! !
+creationFunction:dpi:!private!realizing/unrealizing! !
 defaultBackcolor!colors!constants!private! !
 defaultExtent!constants!private! !
 defaultWindowProcessing:wParam:lParam:!dispatching!private! !
@@ -463,7 +451,6 @@ restore:resolution:!geometry!private! !
 runModalInProcessLoop!operations!private! !
 runModalLoop!operations!private! !
 setInitialPosition:!private!realizing/unrealizing! !
-setInitialPosition:extent:!private!realizing/unrealizing! !
 setItem:font:!accessing!private! !
 setItem:icon:!accessing!private! !
 setItem:int:!accessing!private! !

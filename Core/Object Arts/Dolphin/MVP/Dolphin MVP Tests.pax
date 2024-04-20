@@ -35,6 +35,7 @@ package classNames
 	add: #FileDialogTest;
 	add: #FlowLayoutTest;
 	add: #FolderTest;
+	add: #FontTest;
 	add: #FramingLayoutTest;
 	add: #GridLayoutTest;
 	add: #IconTest;
@@ -256,6 +257,12 @@ DolphinTest subclass: #FileDialogTest
 
 DolphinTest subclass: #FolderTest
 	instanceVariableNames: 'c windows system root oa'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+DolphinTest subclass: #FontTest
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

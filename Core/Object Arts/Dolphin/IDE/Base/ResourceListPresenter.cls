@@ -1,8 +1,8 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 ListPresenter subclass: #ResourceListPresenter
-	instanceVariableNames: 'filterBlock resourcesPresenter previewPresenter resourceIdModel'
-	classVariableNames: 'DesignDesktop'
+	instanceVariableNames: 'filterBlock resourcesPresenter previewPresenter'
+	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
@@ -50,15 +50,6 @@ browseSystem
 caption
 	^''!
 
-changePreviewDpiAwareness
-	| resId |
-	resId := resourceIdModel value.
-	resourceIdModel value: nil.
-	previewPresenter view dpiAwareness: DesignDesktop dpiAwareness.
-	#highDpiToDo.	"Should be set in resource"
-	previewPresenter view isWholeBackgroundErased: true.
-	resourceIdModel value: resId!
-
 clear
 	"Empty the resource list."
 
@@ -74,14 +65,7 @@ clearSelection
 createComponents
 	super createComponents.
 	resourcesPresenter := self add: ListPresenter new name: 'resources'.
-	previewPresenter := self add: ImagePresenter new name: 'preview'.
-	resourceIdModel := ValueHolder new.
-	previewPresenter model: (ValueConverter subject: resourceIdModel
-				typeConverter: ((PluggableTypeConverter
-						leftToRight: [:resourceId | self imageFromResource: resourceId]
-						rightToLeft: [:image | nil])
-						rightNullValue: View icon;
-						yourself))!
+	previewPresenter := self add: ValuePresenter new name: 'preview'!
 
 createSchematicWiring
 	"Create the trigger wiring for the receiver"
@@ -136,20 +120,6 @@ filterBlock: monadicValuable
 	self refresh.
 	self selections: sels ifAbsent: []!
 
-imageFromResource: aResourceIdentifier
-	| resourceView |
-	resourceView := [DesignDesktop loadViewResource: aResourceIdentifier resource forEdit: false]
-				on: Error
-				do: 
-					[:x |
-					x toTrace.
-					nil].
-	^resourceView notNil
-		ifTrue: 
-			[resourceView invalidateLayoutDeeply.
-			[Bitmap fromView: resourceView] ensure: [resourceView destroy]]
-		ifFalse: [Error icon]!
-
 initialize
 	"Private - Initialize the receiver"
 
@@ -201,14 +171,7 @@ onResourceRepackaged: aResourceIdentifier from: aPackage to: aPackage2
 		ifFalse: [index ~= 0 ifTrue: [self model removeAtIndex: index]]!
 
 onResourceSelected
-	resourceIdModel value: self resourceIdentifier!
-
-onViewAvailable
-	#highDpiToDo.	"Temporary: This should be configured into the view resource"
-	previewPresenter view parentView isMixedDpiHost: true.
-	self changePreviewDpiAwareness.
-	previewPresenter view parentView invalidate.
-	^super onViewAvailable!
+	previewPresenter value: self resourceIdentifier!
 
 passesFilter: aResourceIdentifier
 	^filterBlock isNil or: [filterBlock value: aResourceIdentifier]!
@@ -330,7 +293,6 @@ browseIt!commands!public! !
 browseReferences!commands!public! !
 browseSystem!commands!public! !
 caption!accessing!public! !
-changePreviewDpiAwareness!event handling!helpers!private! !
 clear!commands!public! !
 clearSelection!commands!public! !
 createComponents!initializing!public! !
@@ -339,7 +301,6 @@ defaultSortBlock!constants!private!sorting! !
 deleteResource!commands!public! !
 editResource!commands!public! !
 filterBlock:!accessing!public! !
-imageFromResource:!helpers!private! !
 initialize!initializing!private! !
 model:!accessing!public! !
 onDragResource:!event handling!private! !
@@ -347,7 +308,6 @@ onMethodAdded:!event handling!private! !
 onMethodRemoved:!event handling!private! !
 onResourceRepackaged:from:to:!event handling!private! !
 onResourceSelected!event handling!private! !
-onViewAvailable!event handling!public! !
 passesFilter:!event handling!private! !
 queryCommand:!commands!private! !
 queryMoveResource:toPackage:!accessing!private! !
@@ -375,17 +335,6 @@ icon
 
 	^ResourceBrowser icon!
 
-initialize
-	DesignDesktop := DesignDesktopView default!
-
-previewDpiAwareness
-	^DesignDesktop dpiAwareness!
-
-previewDpiAwareness: aSymbol
-	aSymbol = DesignDesktop dpiAwareness ifTrue: [^self].
-	DesignDesktop := DesignDesktopView perform: aSymbol.
-	self allSubinstances do: [:each | each changePreviewDpiAwareness]!
-
 resource_Default_view
 	"Answer the literal data from which the 'Default view' resource can be reconstituted.
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
@@ -394,7 +343,7 @@ resource_Default_view
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ContainerView) 34 15 nil nil 34 2 8 1409351680 131073 416 nil nil nil 5 265030 4 ##(Smalltalk.Menu) nil true 34 11 984134 2 ##(Smalltalk.CommandMenuItem) 1 1180998 4 ##(Smalltalk.CommandDescription) #browseHierarchy 8 '&Browse <1s>' 1 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'ClassBrowserShell.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil nil nil 530 1 562 #browseReferences 8 'Browse &References' 1 1 nil nil nil 983366 1 ##(Smalltalk.DividerMenuItem) 4097 530 1 562 #editResource 8 '&Edit' 9349 1 610 nil true 656 8 'ViewComposer.ico' 704 nil nil 530 1 562 #showResource 8 '&Show' 1 1 nil nil nil 530 1 562 #newView 8 '&New...' 1 1 nil nil nil 786 4097 530 1 562 #deleteResource 8 '&Delete...' 1 1 610 nil true 656 8 'EditClear.ico' 704 nil nil 786 4097 530 1 562 #resourcePackage 8 '&Package...' 1 1 nil nil nil 530 1 562 #categoryResource 8 'Categories...' 1 1 nil nil nil 8 '&View' nil 134217729 nil nil nil nil nil nil nil 416 1180166 ##(Smalltalk.ProportionalLayout) 170 176 34 4 410 ##(Smalltalk.ListView) 34 45 nil 416 34 2 8 1140854861 1025 1280 590662 2 ##(Smalltalk.ListModel) 138 144 8 #() nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 327686 ##(Smalltalk.Color) #default nil 13 nil nil nil 1280 nil 8 1883852064 ##(Smalltalk.BasicListAbstract) ##(Smalltalk.IconicListAbstract) 1049926 1 ##(Smalltalk.IconImageManager) nil nil nil nil nil nil 138 144 34 1 920646 5 ##(Smalltalk.ListViewColumn) 8 'View Name' 561 #left nil 459270 ##(Smalltalk.Message) #<= 8 #() nil nil 1280 ##(Smalltalk.IconicListAbstract) 3 nil nil #report 1392 nil 133221 nil 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 1 1 1762 561 463 1280 1714 #text: 34 1 8 'View Name' 1280 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 24 1 0 0 231 0 0 0] 8 #() 1762 193 193 nil 35 524806 ##(Smalltalk.Fraction) 7 11 410 ##(Smalltalk.ContainerView) 34 15 nil 416 34 2 8 1140850688 393217 1968 nil nil nil 5 nil nil nil 1968 788230 ##(Smalltalk.BorderLayout) 1 1 410 ##(Smalltalk.StaticText) 34 16 nil 1968 34 2 8 1140850944 1 2064 nil nil nil 5 nil nil nil 2064 nil 8 1883797456 852486 ##(Smalltalk.NullConverter) nil nil nil 1650 138 144 34 2 1714 #createAt:extent: 34 2 1762 11 11 1762 537 39 2064 1714 #text: 34 1 8 ' Preview' 2064 1858 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 17 1 0 0 24 0 0 0] 8 #() 1920 nil 27 nil nil nil 410 ##(Smalltalk.ImageView) 34 21 nil 1968 34 2 8 1140850944 262209 2384 721990 2 ##(Smalltalk.ValueHolder) nil nil 1376774 ##(Smalltalk.PluggableSearchPolicy) 1602 #= 8 #() 1602 #hash 8 #() nil 1442 #applicationWorkspace nil 5 nil nil nil 2384 nil nil 2146 nil nil nil nil #scaleBestFit 1 590342 ##(Smalltalk.Rectangle) 1762 21 21 1762 21 21 nil 1650 138 144 34 1 1714 #createAt:extent: 34 2 1762 11 49 1762 537 247 2384 1858 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 24 0 0 0 17 1 0 0 147 0 0 0] 8 #() 1920 nil 27 170 192 34 2 2384 8 'preview' 2610 1762 11 11 1762 11 11 1650 138 144 34 1 1714 #createAt:extent: 34 2 1762 1 473 1762 561 309 1968 1858 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 236 0 0 0 24 1 0 0 134 1 0 0] 34 2 2064 2384 1920 nil 27 1938 5 11 true 170 192 34 2 1280 8 'resources' nil 1650 138 144 34 2 1714 #createAt:extent: 34 2 1762 7039 21 1762 561 781 416 1714 #contextMenu: 34 1 496 416 1858 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 191 13 0 0 10 0 0 0 215 14 0 0 144 1 0 0] 34 3 1280 410 ##(Smalltalk.Splitter) 34 12 nil 416 34 2 8 1140850688 1 3344 nil nil nil 517 nil nil nil 1510470 1 ##(Smalltalk.DraggableViewInteractor) 3344 nil 1 #left nil nil nil 1762 1 1 1762 9 9 nil 3440 nil 1650 138 144 34 1 1714 #createAt:extent: 34 2 1762 1 463 1762 561 11 3344 1858 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 231 0 0 0 24 1 0 0 236 0 0 0] 8 #() 1920 nil 27 1968 1920 nil 27 )!
+	^#(#'!!STL' 4 788558 11 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ContainerView) 34 15 nil nil 34 2 8 1409351680 131073 416 nil nil nil 5 265030 4 ##(Smalltalk.Menu) nil true 34 11 984134 2 ##(Smalltalk.CommandMenuItem) 1 1180998 4 ##(Smalltalk.CommandDescription) #browseHierarchy 8 '&Browse <1s>' 1 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'ClassBrowserShell.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil nil nil 530 1 562 #browseReferences 8 'Browse &References' 1 1 nil nil nil 983366 1 ##(Smalltalk.DividerMenuItem) 4097 530 1 562 #editResource 8 '&Edit' 9349 1 610 nil true 656 8 'ViewComposer.ico' 704 nil nil 530 1 562 #showResource 8 '&Show' 1 1 nil nil nil 530 1 562 #newView 8 '&New...' 1 1 nil nil nil 786 4097 530 1 562 #deleteResource 8 '&Delete...' 1 1 610 nil true 656 8 'EditClear.ico' 704 nil nil 786 4097 530 1 562 #resourcePackage 8 '&Package...' 1 1 nil nil nil 530 1 562 #categoryResource 8 'Categories...' 1 1 nil nil nil 8 '&View' nil 134217729 nil nil nil nil nil nil nil 416 1180166 ##(Smalltalk.ProportionalLayout) 170 176 34 4 410 ##(Smalltalk.ListView) 34 45 nil 416 34 2 8 1140854861 1025 1280 590662 2 ##(Smalltalk.ListModel) 138 144 8 #() nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 327686 ##(Smalltalk.Color) #default nil 13 nil nil nil 1280 nil 8 1797996720 ##(Smalltalk.BasicListAbstract) ##(Smalltalk.IconicListAbstract) 1049926 1 ##(Smalltalk.IconImageManager) nil nil nil nil nil nil 138 144 34 1 920646 5 ##(Smalltalk.ListViewColumn) 8 'View Name' 553 #left nil 459270 ##(Smalltalk.Message) #<= 8 #() nil nil 1280 ##(Smalltalk.IconicListAbstract) 3 nil nil #report 8 #() nil 133221 nil 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createWindow: 34 1 787462 ##(Smalltalk.CreateWindow) 262406 ##(Smalltalk.RECT) 8 #[0 0 0 0 0 0 0 0 24 1 0 0 231 0 0 0] 193 1312 8 'View Name' 1280 3 8 #() 328198 ##(Smalltalk.Point) 193 193 nil 35 524806 ##(Smalltalk.Fraction) 7 11 410 ##(Smalltalk.ContainerView) 34 15 nil 416 34 2 8 1140850688 393217 1952 nil nil nil 4101 nil nil nil 1952 788230 ##(Smalltalk.BorderLayout) 1 1 410 ##(Smalltalk.StaticText) 34 16 nil 1952 34 2 8 1140850944 1 2048 nil nil nil 5 nil nil nil 2048 nil 8 1798140960 852486 ##(Smalltalk.NullConverter) nil nil nil 1666 138 144 34 2 1730 #createWindow: 34 1 1778 1810 8 #[5 0 0 0 5 0 0 0 17 1 0 0 24 0 0 0] 193 2080 nil 2048 1730 #text: 34 1 8 ' Preview' 2048 3 8 #() 1890 193 193 nil 27 nil nil nil 410 ##(Smalltalk.ResourcePreview) 34 21 nil 1952 34 2 8 1140850944 262209 2368 721990 2 ##(Smalltalk.ValueHolder) nil nil 1376774 ##(Smalltalk.PluggableSearchPolicy) 1602 #= 8 #() 1602 #hash 8 #() nil 1442 #applicationWorkspace nil 5 nil nil nil 2368 nil nil 2130 nil nil nil nil #scaleBestFit 3 590342 ##(Smalltalk.Rectangle) 1890 21 21 1890 21 21 nil 1666 138 144 34 2 1730 #createWindow: 34 1 1769990 ##(Smalltalk.CreateInDpiAwarenessContext) 1778 1810 8 #[5 0 0 0 24 0 0 0 17 1 0 0 147 0 0 0] 193 2400 nil -9 2368 1730 #text: 34 1 8 '' 2368 3 8 #() 1890 193 193 nil 27 170 192 34 2 2368 8 'preview' 2594 1890 11 11 1890 11 11 1666 138 144 34 1 1730 #createWindow: 34 1 1179910 ##(Smalltalk.CreateMixedDpiHost) 1778 1810 8 #[0 0 0 0 236 0 0 0 24 1 0 0 134 1 0 0] 193 1984 8 '' 1952 3 34 2 2048 2368 1890 193 193 nil 27 1922 5 11 true 170 192 34 2 1280 8 'resources' nil 1666 138 144 34 2 1730 #createWindow: 34 1 1778 1810 8 #[255 9 0 0 10 0 0 0 23 11 0 0 144 1 0 0] 193 448 8 '' 416 1730 #contextMenu: 34 1 496 416 3 34 3 1280 410 ##(Smalltalk.Splitter) 34 12 nil 416 34 2 8 1140850688 1 3456 nil nil nil 517 nil nil nil 1510470 1 ##(Smalltalk.DraggableViewInteractor) 3456 nil 1 #left nil nil nil 1890 1 1 1890 9 9 nil 3552 nil 1666 138 144 34 1 1730 #createWindow: 34 1 1778 1810 8 #[0 0 0 0 231 0 0 0 24 1 0 0 236 0 0 0] 193 3488 8 '' 3456 3 8 #() 1890 193 193 nil 27 1952 1890 193 193 nil 27 )!
 
 resource_Package_view
 	"Answer the literal data from which the 'Package view' resource can be reconstituted.
@@ -404,7 +353,7 @@ resource_Package_view
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Package_view)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ContainerView) 34 15 nil nil 34 2 8 1409351680 131073 416 nil nil nil 5 nil nil nil 416 1180166 ##(Smalltalk.ProportionalLayout) 170 176 34 4 410 ##(Smalltalk.ContainerView) 34 15 nil 416 34 2 8 1140850688 393217 544 nil nil nil 5 nil nil nil 544 788230 ##(Smalltalk.BorderLayout) 1 1 410 ##(Smalltalk.StaticText) 34 16 nil 544 34 2 8 1140850944 1 640 nil nil nil 5 nil nil nil 640 nil 8 1883797456 852486 ##(Smalltalk.NullConverter) nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 1 1 866 393 39 640 818 #text: 34 1 8 '   Preview' 640 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 196 0 0 0 19 0 0 0] 8 #() 866 193 193 nil 27 nil nil nil 410 ##(Smalltalk.ImageView) 34 21 nil 544 34 2 8 1140850944 262209 1040 721990 2 ##(Smalltalk.ValueHolder) nil nil 1376774 ##(Smalltalk.PluggableSearchPolicy) 459270 ##(Smalltalk.Message) #= 8 #() 1170 #hash 8 #() nil 327686 ##(Smalltalk.Color) #applicationWorkspace nil 5 nil nil nil 1040 nil nil 722 nil nil nil nil #scaleBestFit 1 590342 ##(Smalltalk.Rectangle) 866 21 21 866 21 21 nil 754 138 144 34 1 818 #createAt:extent: 34 2 866 1 39 866 393 609 1040 962 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 19 0 0 0 196 0 0 0 67 1 0 0] 8 #() 1024 nil 27 170 192 34 2 1040 8 'preview' nil 754 138 144 34 1 818 #createAt:extent: 34 2 866 785 1 866 397 651 544 962 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 136 1 0 0 0 0 0 0 78 2 0 0 69 1 0 0] 34 2 640 1040 1024 nil 27 524806 ##(Smalltalk.Fraction) 105 155 410 ##(Smalltalk.ListView) 34 45 nil 416 34 2 8 1140854857 1025 1760 590662 2 ##(Smalltalk.ListModel) 138 144 8 #() nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 1250 #default nil 13 nil nil nil 1760 nil 8 1883852064 ##(Smalltalk.BasicListAbstract) ##(Smalltalk.IconicListAbstract) 1049926 1 ##(Smalltalk.IconImageManager) nil nil nil nil nil nil 138 144 34 2 920646 5 ##(Smalltalk.ListViewColumn) 8 'View Name' 389 #left nil 1170 #<= 8 #() nil nil 1760 ##(Smalltalk.IconicListAbstract) 3 nil nil 2018 8 'Package' 387 #left ##(Smalltalk.BasicListAbstract) 787814 3 ##(Smalltalk.BlockClosure) 0 nil 1180966 ##(Smalltalk.CompiledExpression) 2 1 ##(Smalltalk.UndefinedObject) 8 'doIt' 8 '[:a :b | a name < b name]' 8 #[30 105 17 158 18 158 128 106] #name 2144 7 513 nil 1170 #owningPackage 8 #() nil 1760 nil 3 nil nil #report 1872 nil 133221 nil 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 754 138 144 34 2 818 #createAt:extent: 34 2 866 1 1 866 775 651 1760 818 #text: 34 1 8 'View Name' 1760 962 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 131 1 0 0 69 1 0 0] 8 #() 1024 nil 35 1730 205 155 false 170 192 34 2 1760 8 'resources' nil 754 138 144 34 1 818 #createAt:extent: 34 2 866 7039 21 866 1181 651 416 962 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 191 13 0 0 10 0 0 0 13 16 0 0 79 1 0 0] 34 3 1760 410 ##(Smalltalk.Splitter) 34 12 nil 416 34 2 8 1140850688 1 2704 nil nil nil 517 nil nil nil 1510470 1 ##(Smalltalk.DraggableViewInteractor) 2704 nil 1 #left nil nil nil 866 1 1 866 9 9 nil 2800 nil 754 138 144 34 1 818 #createAt:extent: 34 2 866 775 1 866 11 651 2704 962 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 131 1 0 0 0 0 0 0 136 1 0 0 69 1 0 0] 8 #() 1024 nil 27 544 1024 nil 27 )!
+	^#(#'!!STL' 4 788558 11 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ContainerView) 34 15 nil nil 34 2 8 1409351680 131073 416 nil nil nil 5 nil nil nil 416 1180166 ##(Smalltalk.ProportionalLayout) 170 176 34 4 410 ##(Smalltalk.ContainerView) 34 15 nil 416 34 2 8 1140850688 393217 544 nil nil nil 4101 nil nil nil 544 788230 ##(Smalltalk.BorderLayout) 1 1 410 ##(Smalltalk.StaticText) 34 16 nil 544 34 2 8 1140850944 1 640 nil nil nil 5 nil nil nil 640 nil 8 1798140960 852486 ##(Smalltalk.NullConverter) nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createWindow: 34 1 787462 ##(Smalltalk.CreateWindow) 262406 ##(Smalltalk.RECT) 8 #[0 0 0 0 0 0 0 0 196 0 0 0 19 0 0 0] 193 672 nil 640 818 #text: 34 1 8 '   Preview' 640 3 8 #() 328198 ##(Smalltalk.Point) 193 193 nil 27 nil nil nil 410 ##(Smalltalk.ResourcePreview) 34 21 nil 544 34 2 8 1140850944 262209 1040 721990 2 ##(Smalltalk.ValueHolder) nil nil 1376774 ##(Smalltalk.PluggableSearchPolicy) 459270 ##(Smalltalk.Message) #= 8 #() 1170 #hash 8 #() nil 327686 ##(Smalltalk.Color) #applicationWorkspace nil 5 nil nil nil 1040 nil nil 722 nil nil nil nil #scaleBestFit 3 590342 ##(Smalltalk.Rectangle) 1010 21 21 1010 21 21 nil 754 138 144 34 2 818 #createWindow: 34 1 1769990 ##(Smalltalk.CreateInDpiAwarenessContext) 866 898 8 #[0 0 0 0 20 0 0 0 196 0 0 0 68 1 0 0] 289 1072 nil -3 1040 818 #text: 34 1 8 '' 1040 3 8 #() 1010 289 289 nil 27 170 192 34 2 1040 8 'preview' nil 754 138 144 34 1 818 #createWindow: 34 1 1179910 ##(Smalltalk.CreateMixedDpiHost) 866 898 8 #[136 1 0 0 0 0 0 0 78 2 0 0 69 1 0 0] 193 576 8 '' 544 3 34 2 640 1040 1010 193 193 nil 27 524806 ##(Smalltalk.Fraction) 105 155 410 ##(Smalltalk.ListView) 34 45 nil 416 34 2 8 1140854857 1025 1888 590662 2 ##(Smalltalk.ListModel) 138 144 8 #() nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 1250 #default nil 13 nil nil nil 1888 nil 8 1797996720 ##(Smalltalk.BasicListAbstract) ##(Smalltalk.IconicListAbstract) 1049926 1 ##(Smalltalk.IconImageManager) nil nil nil nil nil nil 138 144 34 2 920646 5 ##(Smalltalk.ListViewColumn) 8 'View Name' 385 #left nil 1170 #<= 8 #() nil nil 1888 ##(Smalltalk.IconicListAbstract) 3 nil nil 2146 8 'Package' 383 #left ##(Smalltalk.BasicListAbstract) 787814 3 ##(Smalltalk.BlockClosure) 0 nil 1180966 ##(Smalltalk.CompiledExpression) 2 1 ##(Smalltalk.UndefinedObject) 8 'doIt' 8 '[:a :b | a name < b name]' 8 #[30 105 17 158 18 158 128 106] #name 2272 7 513 nil 1170 #owningPackage 8 #() nil 1888 nil 3 nil nil #report 8 #() nil 133221 nil 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 754 138 144 34 1 818 #createWindow: 34 1 866 898 8 #[0 0 0 0 0 0 0 0 131 1 0 0 69 1 0 0] 193 1920 8 'View Name' 1888 3 8 #() 1010 193 193 nil 35 1858 205 155 false 170 192 34 2 1888 8 'resources' nil 754 138 144 34 1 818 #createWindow: 34 1 866 898 8 #[255 9 0 0 10 0 0 0 77 12 0 0 79 1 0 0] 193 448 8 '' 416 3 34 3 1888 410 ##(Smalltalk.Splitter) 34 12 nil 416 34 2 8 1140850688 1 2816 nil nil nil 517 nil nil nil 1510470 1 ##(Smalltalk.DraggableViewInteractor) 2816 nil 1 #left nil nil nil 1010 1 1 1010 9 9 nil 2912 nil 754 138 144 34 1 818 #createWindow: 34 1 866 898 8 #[131 1 0 0 0 0 0 0 136 1 0 0 69 1 0 0] 193 2848 8 '' 2816 3 8 #() 1010 193 193 nil 27 544 1010 193 193 nil 27 )!
 
 showResourcesReferencingView: aResourceIdentifier 
 	| browser |
@@ -416,9 +365,6 @@ showResourcesReferencingView: aResourceIdentifier
 !ResourceListPresenter class categoriesForMethods!
 defaultModel!models!public! !
 icon!constants!public! !
-initialize!public! !
-previewDpiAwareness!accessing!public! !
-previewDpiAwareness:!accessing!public! !
 resource_Default_view!public!resources-views! !
 resource_Package_view!public!resources-views! !
 showResourcesReferencingView:!instance creation!public! !

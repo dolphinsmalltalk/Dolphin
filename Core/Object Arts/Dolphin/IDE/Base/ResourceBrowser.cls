@@ -145,10 +145,10 @@ initialize
 	self canUseIdeaSpace: true!
 
 previewDpiAwareness
-	^ResourceListPresenter previewDpiAwareness!
+	^ResourcePreview dpiAwareness!
 
 previewDpiAwareness: aSymbol
-	ResourceListPresenter previewDpiAwareness: aSymbol!
+	ResourcePreview dpiAwareness: aSymbol!
 
 publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by the receiver."

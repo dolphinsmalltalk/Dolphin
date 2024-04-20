@@ -49,8 +49,6 @@ drawItem: aCanvas bounding: aRectangle
 
 	| textOffset imageRect imageSize |
 	(model isNil or: [model value isNil]) ifTrue: [^self].
-	aCanvas save.
-	aCanvas font: parentView actualFont.
 	"The image is drawn in one of the system icon sizes (the largest that will fit). It's
 	possible that the status bar is too small to draw even a 16x16 icon (most likely it is less
 	than 15 pixels high due to a design-time error. In this case draw a 16x16 icon and just let
@@ -58,8 +56,7 @@ drawItem: aCanvas bounding: aRectangle
 	imageSize := self imageSizeIn: aRectangle.
 	imageRect := aRectangle origin extent: imageSize.
 	textOffset := 1 + (self drawImageOn: aCanvas in: imageRect).
-	self drawTextOn: aCanvas offset: textOffset.
-	aCanvas restore!
+	self drawTextOn: aCanvas offset: textOffset!
 
 drawTextFlags
 	^##(DT_SINGLELINE | DT_VCENTER | DT_NOPREFIX)!
@@ -69,7 +66,6 @@ drawTextOn: aCanvas offset: anInteger
 	text := self getText.
 	text isEmpty ifTrue: [^self].
 	aCanvas
-		backgroundMode: TRANSPARENT;
 		formatText: text
 			in: (self rectangle insetOriginBy: anInteger @ 0)
 			flags: self drawTextFlags!

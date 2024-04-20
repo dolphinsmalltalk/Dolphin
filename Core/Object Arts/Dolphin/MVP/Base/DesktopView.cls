@@ -22,11 +22,6 @@ Class Variables:
 
 !DesktopView methodsFor!
 
-actualFont
-	"Private - Answer the actual font to be used to paint text in the receiver"
-
-	^self font ifNil: [self iconTitleFont]!
-
 addCommandHistory: aCommand
 	"Private - Provided for protocol compatiblity with Shell presenters.
 	DesktopViews do not support command history do do nothing"
@@ -70,6 +65,13 @@ ambientBackcolor
 	default background colour."
 
 	^Color default!
+
+assumeDesktopHandle
+	"Ensure the receiver represents the Windows desktop.
+	Note that we associate with both the true desktop handle and null."
+
+	self attachHandle: self class desktopHandle.
+	SessionManager inputState windowAt: 0 put: self!
 
 basicActualBackcolor
 	"Private - Answer the <Color> to be applied as the receiver's background colour."
@@ -172,7 +174,7 @@ displayOn: aStream
 dpi
 	"Answer the logical dots-per-inch for this Window."
 
-	^UserLibrary default getDpiForSystem!
+	^self metrics dpi!
 
 ensureSubView: aView rectangleVisible: aRectangle
 	"Private - Ensures that the aRectangle area of the receiver's sub-<View>, aView,
@@ -196,6 +198,11 @@ filerProxy
 
 	^STBSingletonProxy forClass: self class!
 
+getActualFont
+	"Private - Answer the actual font to be used to paint text in the receiver"
+
+	^self font ifNil: [self iconTitleFont]!
+
 helpId
 	"Answer an integer ID used to associate the receicer with pop-up help"
 
@@ -207,11 +214,8 @@ iconTitleFont
 	^self metrics iconTitleFont!
 
 initialize
-	"Private - Ensure the receiver represents the Windows desktop.
-	Note that we associate with both the true desktop handle and null."
-
-	self attachHandle: self class desktopHandle.
-	SessionManager inputState windowAt: 0 put: self!
+	super initialize.
+	self assumeDesktopHandle!
 
 invalidateLayout
 	"Nothing to do."
@@ -228,10 +232,7 @@ invalidateRect: aRectangle erase: aBoolean
 !
 
 invalidateUserInterface
-	"Invalidates the user interface of the receiver indicating that it needs
-	to be requeried using #validateUserInterface (usually at idle time)"
-
-	flags := flags maskClear: UIValidMask.!
+	"This will may be received when opening a view that is normally a child (i.e. a non-ShellView) directly on the desktop, which would normally only happen for development purposes such as preview. There is nothing to do."!
 
 isDesktop
 	"Answer whether the receiver represents the desktop window"
@@ -250,6 +251,9 @@ layoutManager: layoutManager
 	does not support layout managers so we deny the ability to set one."
 
 	^self shouldNotImplement!
+
+metrics
+	^SystemMetrics current!
 
 name
 	"Answer the name of the receiver in its parent or nil if no name has been set.
@@ -279,7 +283,7 @@ onAboutToDisplaySystemMenu: hMenu
 onStartup
 	"Make sure the receiver represents the desktop window handle."
 
-	self initialize!
+	self assumeDesktopHandle!
 
 onViewActivated: anEvent
 	"Default handler for window activation.
@@ -386,12 +390,12 @@ workArea
 	^DisplayMonitor primary workArea! !
 
 !DesktopView categoriesForMethods!
-actualFont!accessing!private! !
 addCommandHistory:!accessing!private! !
 addSubView:!hierarchy!public!sub views! !
 adjustPlacementOfShell:forResolution:!geometry!private! !
 allParents!hierarchy!public! !
 ambientBackcolor!accessing!private! !
+assumeDesktopHandle!accessing!private! !
 basicActualBackcolor!accessing!private! !
 buttonRemoved:!default button!private! !
 canvas!accessing!public! !
@@ -407,15 +411,17 @@ ensureSubView:rectangleVisible:!private!updating! !
 ensureSubViewVisible:!public!sub views! !
 ensureVisible!accessing!public! !
 filerProxy!binary filing!private! !
+getActualFont!accessing!private! !
 helpId!accessing!public! !
 iconTitleFont!geometry!public! !
-initialize!accessing!private! !
+initialize!initializing!private! !
 invalidateLayout!geometry!public! !
 invalidateRect:erase:!drawing!public! !
-invalidateUserInterface!accessing!public! !
+invalidateUserInterface!public! !
 isDesktop!public!testing! !
 isLayoutValid!geometry!public!testing! !
 layoutManager:!geometry!public! !
+metrics!public! !
 name!accessing!public! !
 name:!accessing!public! !
 name:as:!hierarchy!public!sub views! !

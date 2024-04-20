@@ -117,9 +117,6 @@ defaultWindowExStyle
 
 	^super defaultWindowExStyle bitOr: WS_EX_CONTROLPARENT!
 
-dpiHostingBehavior
-	^UserLibrary default getWindowDpiHostingBehavior: handle!
-
 errorDuplicateName: aString 
 	"Report that aString is already in use as the name of a sub-view of the receiver."
 
@@ -171,17 +168,6 @@ isControlParent: aBoolean
 	Windows goes into an infinite loop in IsDialogMessage()."
 
 	^self exStyleMask: WS_EX_CONTROLPARENT set: aBoolean!
-
-isMixedDpiHost
-	"Answer whether the receiver can host child views with differing DPI awareness to its own. Note that this is only possible for views that themselves have per-monitor DPI awareness."
-
-	^flags allMask: MixedDpiAwarenessMask!
-
-isMixedDpiHost: aBoolean
-	"Set whether the receiver can host child views with differing DPI awareness to its own. Note that it is only possible to host windows at lower or equivalent awareness levels. For example a per-monitor aware window can host system or unaware window, but a system aware window cannot host a per-monitor aware window. Obviously this means that an unaware window cannot support mixed hosting."
-
-	flags := flags mask: MixedDpiAwarenessMask set: aBoolean.
-	self dpiHostingBehavior == DPI_HOSTING_BEHAVIOR_MIXED == aBoolean ifFalse: [self recreate]!
 
 layout: aLayoutContext 
 	"Private - Recalculate the geometry of the receiver"
@@ -268,11 +254,6 @@ onZOrderChanged
 	self invalidateLayout.
 	super onZOrderChanged!
 
-recreationFunction
-	| func |
-	func := super recreationFunction.
-	^self isMixedDpiHost ifTrue: [CreateMixedDpiHost decorating: func] ifFalse: [func]!
-
 removeSubView: aView
 	"Removes aView as a managed subview of the receiver. 
 	If aView is indeed a subview of the receiver then it is destroyed. If not,
@@ -338,7 +319,6 @@ defaultExtent!constants!private! !
 defaultExtentOf:!geometry!public! !
 defaultLayoutManager!constants!private! !
 defaultWindowExStyle!constants!private! !
-dpiHostingBehavior!private!testing! !
 errorDuplicateName:!exceptions!public! !
 implicitInsets:!accessing!private! !
 initialize!initializing!private! !
@@ -346,8 +326,6 @@ insets!accessing!public! !
 insets:!accessing!public! !
 isControlParent!accessing-styles!public! !
 isControlParent:!accessing-styles!public! !
-isMixedDpiHost!public!testing! !
-isMixedDpiHost:!public!testing! !
 layout:!geometry!private! !
 layoutManager!geometry!public! !
 layoutManager:!geometry!public! !
@@ -356,7 +334,6 @@ nameOf:!hierarchy!public!sub views! !
 onSubViewAdded:!event handling!public! !
 onSubViewRemoved:!event handling!private! !
 onZOrderChanged!event handling!public! !
-recreationFunction!geometry!private!realizing/unrealizing! !
 removeSubView:!hierarchy!public!sub views! !
 resolutionScaledBy:!geometry!private! !
 tabFirst!public!tabbing! !

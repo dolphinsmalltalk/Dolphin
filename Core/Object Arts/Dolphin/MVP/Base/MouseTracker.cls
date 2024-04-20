@@ -216,7 +216,7 @@ setPresenter: aPresenter
 
 simulateMouseMouse: aKeyEvent
 	| pos event wParam |
-	pos := Cursor position.
+	pos := self view cursorPosition.
 	wParam := 0.
 	##({VK_LBUTTON -> MK_LBUTTON.
 		VK_MBUTTON -> MK_MBUTTON.
@@ -230,7 +230,7 @@ simulateMouseMouse: aKeyEvent
 				window: self view
 				message: WM_MOUSEMOVE
 				wParam: wParam
-				lParam: (View desktop mapPoint: pos to: self view) asUIntPtr.
+				lParam: pos asUIntPtr.
 	self onMouseMoved: event.
 	^false!
 
@@ -249,7 +249,7 @@ startPointLocal
 	"Private - Answer the starting mouse position when the receiver was instantiated
 	in the coordinate system of the receiver's source."
 
-	startPointLocal isNil ifTrue: [startPointLocal := View desktop mapPoint: self startPoint to: self view].
+	startPointLocal isNil ifTrue: [startPointLocal := self view mapScreenToClient: self startPoint].
 	^startPointLocal!
 
 startTracking: aMouseTrackerTarget 

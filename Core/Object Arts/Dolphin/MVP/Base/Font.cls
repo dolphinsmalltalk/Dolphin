@@ -106,7 +106,8 @@ initialize
 
 	super initialize.
 	(logfont := LOGFONTW new) lfWeight: FW_NORMAL.
-	dpi := SystemMetrics current dpi!
+	"With per-monitor high DPI scaling, we don't know what actual pixel size font we will need out of context. If not running at 96-dpi, then the correct size of font will be derived based on this one at point of use, and both are linked together via a FontSeries, meaning that a reference to either will prevent both being GC'd. This is necessary because the object memory reference will likely be to the original 96-dpi font, but the font handle passed to a control may be from a scaled version of the font. The series also allows us to share a single scaled instance when installing the font into multiple controls."
+	dpi := USER_DEFAULT_SCREEN_DPI!
 
 isBold
 	"Answer whether the receiver is bold."
@@ -245,7 +246,7 @@ resolution: aPoint
 	self dpi: aPoint y!
 
 series
-	^series ifNil: [FontSeries forFont: self]!
+	^series ifNil: [series := FontSeries forFont: self]!
 
 series: aFontSeries
 	series := aFontSeries!
@@ -269,8 +270,25 @@ setOwnedHandle: anExternalHandle dpi: anInteger
 	self getLogFont.
 	^self!
 
+stbSaveOn: anSTBOutFiler
+	"Serialize the receiver to anSTBOutFiler."
+
+	"For Fonts we want to replace all instances from a series with a 96-dpi design instance, and we never want to serialize the series itself"
+
+	dpi == USER_DEFAULT_SCREEN_DPI
+		ifTrue: 
+			[| savedHandle savedSeries |
+			savedHandle := handle.
+			savedSeries := series.
+			handle := series := nil.
+			[anSTBOutFiler saveObject: self] ensure: 
+					[handle := savedHandle.
+					series := savedSeries]]
+		ifFalse: [anSTBOutFiler basicNextPut: (series atDpi: USER_DEFAULT_SCREEN_DPI)]!
+
 styleChanged
 	"Private - An attribute of the receiver has been changed, invalidating the handle and the relationship to the series."
+
 	self free.
 	series := nil!
 
@@ -330,6 +348,7 @@ series:!accessing!public! !
 setHandle:dpi:!initializing!private! !
 setLogFont:dpi:!initializing!private! !
 setOwnedHandle:dpi:!initializing!private! !
+stbSaveOn:!binary filing!public! !
 styleChanged!modes!private! !
 weight!accessing!public! !
 weight:!accessing!public! !
@@ -424,9 +443,14 @@ stbConvertFrom: anSTBClassFormat
 stbConvertFromVersion0: anArray
 	"Private - Convert from version 0 font. Version 1 adds series instance variable, which is lazily initialized, and the DPI is stored as an integer value rather than a <Point>"
 
-	^(anArray resize: anArray size + 1)
-		at: 4 put: (anArray at: 4) y;
-		yourself!
+	anArray resize: anArray size + 1.
+	anArray
+		replaceFrom: 6
+		to: anArray size
+		with: anArray
+		startingAt: 5.
+	anArray at: 4 put: (anArray at: 4) y.
+	^anArray!
 
 stbVersion
 	"Version 1 adds series inst var, and repurposes the resolution inst var to hold just the DPI (we don't need two dimensions to scale the font height)."

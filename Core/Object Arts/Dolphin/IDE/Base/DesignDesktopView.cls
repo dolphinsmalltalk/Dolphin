@@ -13,10 +13,14 @@ DesignDesktopView comment: ''!
 adjustPlacementOfShell: aShellView forResolution: aPoint
 	"Private - The <ShellView> first argument is being restored from an STBViewProxy (e.g. instantiated from a view resource) on this desktop. Adjust the placement of the window to an appropriate position and/or extent on the target monitor, also scaling any internal measurments to the monitor's DPI from the original resolution specified by the <point> final argument."
 
-	"Shell's are opened in a DesignDesktopView for design purposes, e.g. editing, so we to leave the placement saved in the resource as is. We scale to DPI if needed, although usually this won't be required as we will be operating at the design DPI in which view resources are edited and saved. Occassionally we may open a resource at a different DPI, e.g. for previewing at system DPI."
+	"Shell's are opened in a DesignDesktopView for design purposes, e.g. editing, so we to leave the placement saved in the resource as is. We scale to DPI if needed, although usually this won't be required as we will be operating at the design DPI in which view resources are edited and saved. Occassionally we may open a resource at a different DPI, e.g. for previewing at system DPI as this can be useful to check layout after scaling."
 
 	aPoint = dpi ifTrue: [^self].
 	aShellView resolutionScaledBy: dpi / aPoint!
+
+assumeDesktopHandle
+	handle := self class desktopHandle.
+	dpi := UserLibrary default getDpiFromDpiAwarenessContext: dpiAwareness!
 
 awarenessContext: awarenessInteger
 	dpiAwareness := awarenessInteger.
@@ -46,13 +50,14 @@ dpiAwareness
 dpiAwarenessContext
 	^dpiAwareness!
 
-initialize
-	handle := self class desktopHandle.
-	dpi := UserLibrary default getDpiFromDpiAwarenessContext: dpiAwareness!
-
 loadViewResource: aResourceArray forEdit: isLoadingForEdit
 	^UserLibrary default inDpiAwarenessContext: dpiAwareness
 		do: [super loadViewResource: aResourceArray forEdit: isLoadingForEdit]!
+
+metrics
+	"Answer a <SytemMetrics> instance that can provide standard measurements scaled to the receiver's current DPI."
+
+	^SystemMetrics forDpi: dpi!
 
 printOn: aStream
 	aStream
@@ -61,14 +66,15 @@ printOn: aStream
 		nextPutAll: self dpiAwareness! !
 !DesignDesktopView categoriesForMethods!
 adjustPlacementOfShell:forResolution:!geometry!private! !
+assumeDesktopHandle!initializing!private! !
 awarenessContext:!initializing!private! !
 createShellWindow:withFunction:!operations!public! !
 defaultWindowExtent!constants!public! !
 dpi!accessing!high DPI!public! !
 dpiAwareness!accessing!high DPI!public! !
 dpiAwarenessContext!accessing!high DPI!public! !
-initialize!initializing!private! !
 loadViewResource:forEdit:!binary filing!public! !
+metrics!public! !
 printOn:!development!printing!public! !
 !
 
@@ -92,8 +98,10 @@ gdiScaled
 	^self default!
 
 onStartup
-	Default ifNotNil: [Default initialize].
-	System ifNotNil: [System initialize]!
+	"As the receiver's instances are not registered windows, they won't receive onStartup from GuiInputState>>#guiStartup."
+
+	Default ifNotNil: [Default onStartup].
+	System ifNotNil: [System onStartup]!
 
 perMonitor
 	^self current!
