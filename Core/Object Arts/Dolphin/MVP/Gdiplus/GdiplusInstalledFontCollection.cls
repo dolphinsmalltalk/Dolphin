@@ -14,34 +14,10 @@ GdiplusInstalledFontCollection comment: 'GdiplusInstalledFontCollection class re
 
 !GdiplusInstalledFontCollection class methodsFor!
 
-exampleGdipIFCEnumerating
-	"MSDN:  GDI+ >  Using GDI+ >  Using Text and Fonts > Enumerating Installed Fonts
-	This example displays the names of all installed fonts in a rectangle that's inset from
-	the bounds of the bitmap.
-
-		self exampleGdipIFCEnumerating showExample
-	"
-
-	| bitmap rect names stream |
-	bitmap := GdiplusBitmap extent: 500 @ 400.
-	rect := bitmap bounds insetBy: 40.
-	names := GdiplusInstalledFontCollection new families collect: [:e | e name].
-	(stream := String new writeStream)
-		display: 'There are ';
-		display: names size;
-		display: ' installed fonts.  The family names are: ';
-		display: names first.
-	(2 to: names size) do: [:i | stream display: ', ' , (names at: i)].
-	(bitmap graphics)
-		drawString: stream contents layoutRect: rect;
-		drawRectangle: rect.
-	^bitmap!
-
 new
 	^self fromInitializer: GdiplusInstalledFontCollectionInitializer default! !
 
 !GdiplusInstalledFontCollection class categoriesForMethods!
-exampleGdipIFCEnumerating!examples!public!sunit! !
 new!instance creation!public! !
 !
 

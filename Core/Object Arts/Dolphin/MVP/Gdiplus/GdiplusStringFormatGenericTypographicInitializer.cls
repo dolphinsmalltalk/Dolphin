@@ -19,10 +19,14 @@ createHandle
 	gpHandle := ExternalHandle new.
 	(status := self library gdipStringFormatGetGenericTypographic: gpHandle) == Ok
 		ifFalse: [self gdiplusErrorWith: status].
-	^gpHandle! !
+	^gpHandle!
+
+isGenericTypographic
+	^true! !
 
 !GdiplusStringFormatGenericTypographicInitializer categoriesForMethods!
 createHandle!private!realizing/unrealizing! !
+isGenericTypographic!public!testing! !
 !
 
 !GdiplusStringFormatGenericTypographicInitializer class methodsFor!

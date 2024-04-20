@@ -39,10 +39,13 @@ package classNames
 	add: #GdiplusPenFromBrushInitializerTest;
 	add: #GdiplusPenFromColorInitializerTest;
 	add: #GdiplusPenTest;
+	add: #GdiplusRegionTest;
 	add: #GdiplusSolidBrushFromColorInitializerTest;
+	add: #GdiplusStringFormatTest;
 	add: #GdiplusTestInitializer;
 	add: #GdiplusTests;
 	add: #GpColorMatrixTest;
+	add: #GpRectTest;
 	add: #POINTFTest;
 	add: #RECTFTest;
 	yourself.
@@ -52,6 +55,132 @@ package methodNames
 	add: #Bitmap -> #hdc;
 	add: 'Bitmap class' -> #gdipCopyOfIcon:extent:backcolor:;
 	add: 'Bitmap class' -> #gdipCopyOfImageIndex:extent:backcolor:;
+	add: 'GdiplusAdjustableArrowCap class' -> #exampleGdipAACArrowCap;
+	add: 'GdiplusBitmap class' -> #exampleGdipBFromBitmap;
+	add: 'GdiplusBitmap class' -> #exampleGdipBFromByteArray;
+	add: 'GdiplusBitmap class' -> #exampleGdipBFromDIB;
+	add: 'GdiplusBitmap class' -> #exampleGdipBFromXPIcon;
+	add: 'GdiplusBitmap class' -> #exampleGdipBResize1;
+	add: 'GdiplusBitmap class' -> #exampleGdipBResize2;
+	add: 'GdiplusBitmap class' -> #exampleGdipBResize3;
+	add: 'GdiplusBitmap class' -> #exampleLockBitsTest1Bmp;
+	add: 'GdiplusBitmap class' -> #exampleLockBitsTest2Bmp;
+	add: 'GdiplusCachedBitmap class' -> #exampleGdipCBPerformance;
+	add: 'GdiplusCustomLineCap class' -> #exampleGdipCLCStrokeCaps;
+	add: 'GdiplusFont class' -> #exampleGdipFontHeight;
+	add: 'GdiplusFontFamily class' -> #exampleGdipFFClone;
+	add: 'GdiplusGraphics class' -> #exampleGdipGAlphaBlending;
+	add: 'GdiplusGraphics class' -> #exampleGdipGCropAndScale;
+	add: 'GdiplusGraphics class' -> #exampleGdipGDrawingALine;
+	add: 'GdiplusGraphics class' -> #exampleGdipGDrawingAString;
+	add: 'GdiplusGraphics class' -> #exampleGdipGDrawingShapes;
+	add: 'GdiplusGraphics class' -> #exampleGdipGFromCanvas;
+	add: 'GdiplusGraphics class' -> #exampleGdipGMeasureString;
+	add: 'GdiplusGraphics class' -> #exampleGdipGRotate;
+	add: 'GdiplusGraphics class' -> #exampleGdipGTransformations;
+	add: 'GdiplusGraphics class' -> #exampleGdipGTransformPoints;
+	add: 'GdiplusGraphics class' -> #exampleGdipMeasureCharacterRanges;
+	add: 'GdiplusGraphics class' -> #exampleGdipNestedContainers;
+	add: 'GdiplusGraphics class' -> #exampleGdipState;
+	add: 'GdiplusGraphicsPath class' -> #exampleGdipGPCreatingFigures;
+	add: 'GdiplusGraphicsPath class' -> #exampleGdipGPFillingFigures;
+	add: 'GdiplusGraphicsPath class' -> #exampleGdipGPGetBounds;
+	add: 'GdiplusHatchBrush class' -> #exampleGdipHBFillAShape;
+	add: 'GdiplusHatchBrush class' -> #exampleGdipHBFillAString;
+	add: 'GdiplusHatchBrush class' -> #exampleGdipHBStyles;
+	add: 'GdiplusImage class' -> #exampleGdipIDecoderFileExtensions;
+	add: 'GdiplusImage class' -> #exampleGdipIDecoders;
+	add: 'GdiplusImage class' -> #exampleGdipIEncoderClsid;
+	add: 'GdiplusImage class' -> #exampleGdipIEncoderFileExtensions;
+	add: 'GdiplusImage class' -> #exampleGdipIEncoderParameters;
+	add: 'GdiplusImage class' -> #exampleGdipIEncoders;
+	add: 'GdiplusImage class' -> #exampleGdipIEncoderValues;
+	add: 'GdiplusImage class' -> #exampleGdipIFlags;
+	add: 'GdiplusImage class' -> #exampleGdipIInterpMode;
+	add: 'GdiplusImage class' -> #exampleGdipIJPEGCompression;
+	add: 'GdiplusImage class' -> #exampleGdipILoadImage;
+	add: 'GdiplusImage class' -> #exampleGdipILoadImages;
+	add: 'GdiplusImage class' -> #exampleGdipILosslessRotation;
+	add: 'GdiplusImage class' -> #exampleGdipIMetadata;
+	add: 'GdiplusImage class' -> #exampleGdipIMetadata2;
+	add: 'GdiplusImage class' -> #exampleGdipIMultiFrame;
+	add: 'GdiplusImage class' -> #exampleGdipIMultiFrame2;
+	add: 'GdiplusImage class' -> #exampleGdipIMultiFrame3;
+	add: 'GdiplusImage class' -> #exampleGdipIPrinting1;
+	add: 'GdiplusImage class' -> #exampleGdipIPrinting2;
+	add: 'GdiplusImage class' -> #exampleGdipIPrinting3;
+	add: 'GdiplusImage class' -> #exampleGdipIPrinting4LabeledToAPage;
+	add: 'GdiplusImage class' -> #exampleGdipIPropertiesCopy;
+	add: 'GdiplusImage class' -> #exampleGdipIPropertyItem;
+	add: 'GdiplusImage class' -> #exampleGdipIPropertyItems;
+	add: 'GdiplusImage class' -> #exampleGdipISaveFrames;
+	add: 'GdiplusImage class' -> #exampleGdipISkewing;
+	add: 'GdiplusImage class' -> #exampleGdipIThumbnails;
+	add: 'GdiplusImageAttributes class' -> #exampleColorBars1;
+	add: 'GdiplusImageAttributes class' -> #exampleColorBars2;
+	add: 'GdiplusImageAttributes class' -> #exampleColorBars3;
+	add: 'GdiplusImageAttributes class' -> #exampleColorBars4;
+	add: 'GdiplusImageAttributes class' -> #exampleColorKeyTest;
+	add: 'GdiplusImageAttributes class' -> #exampleGdipIAAlphaBlending;
+	add: 'GdiplusImageAttributes class' -> #exampleGdipIAColorKey;
+	add: 'GdiplusImageAttributes class' -> #exampleGdipIAColorMatrix;
+	add: 'GdiplusImageAttributes class' -> #exampleGdipIAColorRemap;
+	add: 'GdiplusImageAttributes class' -> #exampleGdipIAGamma;
+	add: 'GdiplusImageAttributes class' -> #exampleGdipIAOutputChannel;
+	add: 'GdiplusImageAttributes class' -> #exampleGdipIAScaleColors;
+	add: 'GdiplusImageAttributes class' -> #exampleGdipIAShearColors;
+	add: 'GdiplusImageAttributes class' -> #exampleGdipIAThreshold;
+	add: 'GdiplusImageAttributes class' -> #exampleGdipIATranslateColors;
+	add: 'GdiplusImageAttributes class' -> #exampleRemapInput;
+	add: 'GdiplusInstalledFontCollection class' -> #exampleGdipIFCEnumerating;
+	add: 'GdiplusLinearGradientBrush class' -> #exampleGdipLGChangingColors;
+	add: 'GdiplusLinearGradientBrush class' -> #exampleGdipLGCustom;
+	add: 'GdiplusLinearGradientBrush class' -> #exampleGdipLGDiagonal;
+	add: 'GdiplusLinearGradientBrush class' -> #exampleGdipLGHorizontal;
+	add: 'GdiplusLinearGradientBrush class' -> #exampleGdipLGModeConstants;
+	add: 'GdiplusLinearGradientBrush class' -> #exampleGdipLGTiling;
+	add: 'GdiplusMatrix class' -> #exampleGdipMShadows;
+	add: 'GdiplusMatrix class' -> #exampleGdipMShear;
+	add: 'GdiplusMatrix class' -> #exampleGdipMTranslate;
+	add: 'GdiplusPathGradientBrush class' -> #exampleGdipPGBlendColors;
+	add: 'GdiplusPathGradientBrush class' -> #exampleGdipPGBlendFactors;
+	add: 'GdiplusPathGradientBrush class' -> #exampleGdipPGBounds;
+	add: 'GdiplusPathGradientBrush class' -> #exampleGdipPGCenterColor;
+	add: 'GdiplusPathGradientBrush class' -> #exampleGdipPGCenterPoint;
+	add: 'GdiplusPathGradientBrush class' -> #exampleGdipPGFocusScales;
+	add: 'GdiplusPathGradientBrush class' -> #exampleGdipPGGamma;
+	add: 'GdiplusPathGradientBrush class' -> #exampleGdipPGMultiply;
+	add: 'GdiplusPathGradientBrush class' -> #exampleGdipPGScale;
+	add: 'GdiplusPathGradientBrush class' -> #exampleGdipPGSurroundColors;
+	add: 'GdiplusPathGradientBrush class' -> #exampleGdipPGSurroundColors2;
+	add: 'GdiplusPathGradientBrush class' -> #exampleGdipPGTransform;
+	add: 'GdiplusPathGradientBrush class' -> #exampleGdipPGTranslate;
+	add: 'GdiplusPathGradientBrush class' -> #exampleGdipPGWrapMode;
+	add: 'GdiplusPathGradientBrush class' -> #examplesWorkspace;
+	add: 'GdiplusPathGradientBrush class' -> #rgb;
+	add: 'GdiplusPathGradientBrush class' -> #triangle;
+	add: 'GdiplusPen class' -> #exampleGdipPAttributes;
+	add: 'GdiplusPen class' -> #exampleGdipPCompoundArray;
+	add: 'GdiplusPen class' -> #exampleGdipPCustomCaps;
+	add: 'GdiplusPen class' -> #exampleGdipPDashCap;
+	add: 'GdiplusPen class' -> #exampleGdipPDashPattern;
+	add: 'GdiplusPen class' -> #exampleGdipPDrawing;
+	add: 'GdiplusPen class' -> #exampleGdipPFillWithTexture;
+	add: 'GdiplusPen class' -> #exampleGdipPJoiningLines;
+	add: 'GdiplusPen class' -> #exampleGdipPLineCaps;
+	add: 'GdiplusPen class' -> #examplesWorkspace;
+	add: 'GdiplusRegion class' -> #exampleClippingSimple;
+	add: 'GdiplusRegion class' -> #exampleClippingSimple2;
+	add: 'GdiplusRegion class' -> #exampleGdipRClipWithRegion;
+	add: 'GdiplusRegion class' -> #exampleGdipRHitTesting;
+	add: 'GdiplusSolidBrush class' -> #exampleGdipDropShadow;
+	add: 'GdiplusSolidBrush class' -> #exampleGdipSBFillAShape;
+	add: 'GdiplusStringFormat class' -> #exampleGdipSFFormatText;
+	add: 'GdiplusStringFormat class' -> #exampleGdipSFGenerics;
+	add: 'GdiplusStringFormat class' -> #exampleGdipSFTabs;
+	add: 'GdiplusStringFormat class' -> #exampleGdipSFTrimming;
+	add: 'GdiplusTextureBrush class' -> #exampleGdipTBFillAShape;
+	add: 'GdiplusTextureBrush class' -> #exampleGdipTBTilingAShape;
 	yourself.
 
 package binaryGlobalNames: (Set new
@@ -63,6 +192,8 @@ package globalAliases: (Set new
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
 	'..\..\Base\Dolphin Basic Geometry'
+	'..\..\Presenters\Image\Dolphin Image Presenter'
+	'..\..\..\Base\Dolphin Message Box'
 	'..\..\Base\Dolphin MVP Base'
 	'..\..\Dolphin MVP Tests'
 	'..\Gdiplus'
@@ -87,6 +218,12 @@ TestCase subclass: #GdiplusTests
 	classInstanceVariableNames: ''!
 
 ExternalPointTest subclass: #POINTFTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+ExternalRectangleTest subclass: #GpRectTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -165,6 +302,18 @@ GdiplusTests subclass: #GdiplusPathGradientBrushTest
 	classInstanceVariableNames: ''!
 
 GdiplusTests subclass: #GdiplusPenTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+GdiplusTests subclass: #GdiplusRegionTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+GdiplusTests subclass: #GdiplusStringFormatTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -303,6 +452,7 @@ testComparePOINTF
 	self assert: subject hash equals: point hash.
 	self assert: subject equals: point.
 	self assert: point equals: subject! !
+
 !AbstractPointTest categoriesForMethods!
 testComparePOINTF!public!unit tests! !
 !
@@ -352,6 +502,3750 @@ gdipCopyOfImageIndex: anIndex extent: extent backcolor: aColor
 !Bitmap class categoriesForMethods!
 gdipCopyOfIcon:extent:backcolor:!instance creation!public! !
 gdipCopyOfImageIndex:extent:backcolor:!instance creation!public! !
+!
+
+!GdiplusAdjustableArrowCap class methodsFor!
+
+exampleGdipAACArrowCap
+	"This example displays several lines with arrow caps, showing the effects of changing aspects.
+
+		self exampleGdipAACArrowCap showExample
+	"
+
+	| bitmap graphics arrowCap pen |
+	bitmap := GdiplusBitmap extent: 350 @ 300.
+	graphics := bitmap graphics.
+	arrowCap := GdiplusAdjustableArrowCap 
+				height: 10
+				width: 5
+				isFilled: false.
+	pen := GdiplusPen red width: 2.
+	pen customEndCap: arrowCap.
+	graphics drawLine: (20 @ 20 extent: 250 @ 0) pen: pen.
+	pen customStartCap: arrowCap.
+	arrowCap isFilled: true.
+	pen customEndCap: arrowCap.
+	graphics drawLine: (20 @ 70 extent: 250 @ 0) pen: pen.
+	pen customStartCap: arrowCap.
+	arrowCap height: 20.
+	pen customEndCap: arrowCap.
+	graphics drawLine: (20 @ 120 extent: 250 @ 0) pen: pen.
+	pen customStartCap: arrowCap.
+	arrowCap width: 10.
+	pen customEndCap: arrowCap.
+	graphics drawLine: (20 @ 170 extent: 250 @ 0) pen: pen.
+	pen customStartCap: arrowCap.
+	arrowCap middleInset: 5.
+	pen customEndCap: arrowCap.
+	graphics drawLine: (20 @ 220 extent: 250 @ 0) pen: pen.
+	pen customStartCap: arrowCap.
+	pen customEndCap: GdiplusCustomLineCap new.
+	graphics drawLine: (20 @ 270 extent: 250 @ 0) pen: pen.
+	^bitmap! !
+
+!GdiplusAdjustableArrowCap class categoriesForMethods!
+exampleGdipAACArrowCap!examples!public!unit tests! !
+!
+
+!GdiplusBitmap class methodsFor!
+
+exampleGdipBFromBitmap
+	"This example displays a GdiplusBitmap created from a bitmap that's a copy of an icon.
+
+		self exampleGdipBFromBitmap showExample
+	"
+
+	| bmp |
+	bmp := Bitmap 
+				gdipCopyOfIcon: self icon
+				extent: 32 @ 32
+				backcolor: Color black.
+	^GdiplusBitmap fromBitmap: bmp!
+
+exampleGdipBFromByteArray
+	"This example displays a GdiplusBitmap created from a ByteArray.
+
+		self exampleGdipBFromByteArray showExample
+	"
+
+	| testBytes |
+	testBytes := self fileResource fish32x32pngBytes.
+	^GdiplusBitmap fromByteArray: testBytes!
+
+exampleGdipBFromDIB
+	"This example creates aGdiplusBitmap from a DIBSection.
+
+		self exampleGdipBFromDIB showExample
+	"
+
+	| bmp |
+	bmp := DIBSection 
+				gdipCopyOfIcon: self icon
+				extent: 32 @ 32
+				backcolor: Color black.
+	^GdiplusBitmap fromBitmap: bmp!
+
+exampleGdipBFromXPIcon
+	"This example creates aGdiplusBitmap from an Icon file.
+	The file contains  three XP formats; 16x16/32x32/48x48
+
+		self exampleGdipBFromXPIcon showExample
+	"
+
+	| testIcon |
+	testIcon := Icon fromFile: self fileResource pafWinXP32x32ico.
+	^GdiplusBitmap fromIcon: testIcon!
+
+exampleGdipBResize1
+	"This example creates an image from an existing file and then creates several copies 
+	of the image, each resized a different way.  The copies are all displayed, each with a 
+	thin black line around the image bounds.
+
+		self exampleGdipBResize1 showExample
+	"
+
+	| bitmap image copy1 copy2 copy3 copy4 |
+	bitmap := GdiplusBitmap extent: 620 @ 200.
+	image := GdiplusImage fromFile: self fileResource pafEyeJpg.
+	copy1 := GdiplusBitmap fromImage: image extent: 100 @ 150.
+	copy2 := GdiplusBitmap fromImage: image centeredIn: 100 @ 150.
+	copy3 := GdiplusBitmap fromImage: image scaledBy: 1 / 4.
+	copy4 := GdiplusBitmap fromImage: image crop: (180 @ 220 extent: 200 @ 150).
+	(bitmap graphics)
+		drawImage: copy1 at: 10 @ 10;
+		drawRectangle: (10 @ 10 extent: copy1 extent);
+		drawString: 'withExtent:' at: 10 @ 170;
+		drawImage: copy2 at: 120 @ 10;
+		drawRectangle: (120 @ 10 extent: copy2 extent);
+		drawString: 'withCentering:' at: 120 @ 170;
+		drawImage: copy3 at: 230 @ 10;
+		drawRectangle: (230 @ 10 extent: copy3 extent);
+		drawString: 'withScale:' at: 230 @ 170;
+		drawImage: copy4 at: 400 @ 10;
+		drawRectangle: (400 @ 10 extent: copy4 extent);
+		drawString: 'withCrop:' at: 400 @ 170.
+	^bitmap!
+
+exampleGdipBResize2
+	"This example resizes an image from an existing file and saves the resized image to a file.
+
+		self exampleGdipBResize2 showExample
+	"
+
+	| image resizedImage toFile |
+	image := self fromFile: self fileResource pafSeattleNightJpg.
+	resizedImage := GdiplusBitmap fromImage: image scaledBy: 1 / 3.
+	toFile := self fileResource fileLocator localFileSpecFor: 'testResize.jpg'.
+	resizedImage saveToFile: toFile.
+	^self fromFile: toFile!
+
+exampleGdipBResize3
+	"This example resizes an image from an existing file and saves the resized image to a file.
+
+		self exampleGdipBResize3 showExample
+	"
+
+	| image resizedImage toFile |
+	image := self fromFile: self fileResource pafSeattleNightJpg.
+	resizedImage := GdiplusBitmap fromImage: image centeredIn: 400 @ 200.
+	toFile := self fileResource fileLocator localFileSpecFor: 'testResize.png'.
+	resizedImage saveToFile: toFile.
+	^self fromFile: toFile!
+
+exampleLockBitsTest1Bmp
+	| bitmap redBrush blueBrush |
+	bitmap := GdiplusBitmap width: 30 height: 16.
+	redBrush := GdiplusSolidBrush red.
+	blueBrush := GdiplusSolidBrush blue.
+	(bitmap graphics)
+		fillRectangle: (0 @ 0 extent: 30 @ 4) brush: redBrush;
+		fillRectangle: (0 @ 4 extent: 30 @ 4) brush: blueBrush;
+		fillRectangle: (0 @ 8 extent: 30 @ 4) brush: redBrush;
+		fillRectangle: (0 @ 12 extent: 30 @ 4) brush: blueBrush.
+	^bitmap!
+
+exampleLockBitsTest2Bmp
+	| bitmap redBrush blueBrush |
+	bitmap := GdiplusBitmap width: 120 height: 60.
+	redBrush := GdiplusSolidBrush red.
+	blueBrush := GdiplusSolidBrush blue.
+	(bitmap graphics)
+		fillRectangle: (0 @ 0 extent: 120 @ 12) brush: redBrush;
+		fillRectangle: (0 @ 12 extent: 120 @ 12) brush: blueBrush;
+		fillRectangle: (0 @ 24 extent: 120 @ 12) brush: redBrush;
+		fillRectangle: (0 @ 36 extent: 120 @ 12) brush: blueBrush;
+		fillRectangle: (0 @ 48 extent: 120 @ 12) brush: redBrush.
+	^bitmap! !
+
+!GdiplusBitmap class categoriesForMethods!
+exampleGdipBFromBitmap!examples!public!sunit! !
+exampleGdipBFromByteArray!examples!public!sunit! !
+exampleGdipBFromDIB!examples!public!sunit! !
+exampleGdipBFromXPIcon!examples!public!sunit! !
+exampleGdipBResize1!examples!public!sunit! !
+exampleGdipBResize2!examples!public!sunit! !
+exampleGdipBResize3!examples!public!sunit! !
+exampleLockBitsTest1Bmp!examples!private! !
+exampleLockBitsTest2Bmp!examples!private! !
+!
+
+!GdiplusCachedBitmap class methodsFor!
+
+exampleGdipCBPerformance
+	"MSDN: Using GDI+ > Using Images, Bitmaps, and Metafiles > Using a Cached Bitmap to Improve Performance
+	This example creates an image from file and a cached bitmap from the image.  It draws 
+	each a number of times, then shows the elapsed times.
+
+		RichTextPresenter showOn: self exampleGdipCBPerformance
+	"
+
+	| bitmap graphics image cachedBitmap strm time1 time2 |
+	bitmap := GdiplusBitmap new.
+	graphics := bitmap graphics.
+	image := GdiplusImage fromFile: 'Resources/Beach Ball.bmp' usingLocator: FileLocator installRelative.
+	cachedBitmap := GdiplusCachedBitmap bitmap: image graphics: graphics.
+	strm := String new writeStream.
+	strm
+		display: 'CachedBitmap drawing time';
+		cr.
+	time1 := [100 timesRepeat: [graphics drawImage: image at: 10 @ 10]] timeToRun.
+	strm display: '#drawImage: '.
+	time1 printHumanReadableOn: strm.
+	strm cr.
+	time2 := [100 timesRepeat: [graphics drawCachedBitmap: cachedBitmap at: 10 @ 200]] timeToRun.
+	strm display: '#drawCachedBitmap: '.
+	time2 printHumanReadableOn: strm.
+	^strm contents! !
+
+!GdiplusCachedBitmap class categoriesForMethods!
+exampleGdipCBPerformance!examples!public!sunit! !
+!
+
+!GdiplusCustomLineCap class methodsFor!
+
+exampleGdipCLCStrokeCaps
+	"This example creates a GdiplusCustomLineCap object , sets its stroke cap, and then 
+	assigns the custom cap's stroke cap as the end cap of a GdiplusPen.  The pen draws a
+	diagonal line.
+
+		self exampleGdipCLCStrokeCaps showExample
+	"
+
+	| bitmap graphics path customCap pen rect |
+	bitmap := GdiplusBitmap extent: 450 @ 300.
+	graphics := bitmap graphics.
+	path := GdiplusGraphicsPath new addLines: (Array 
+						with: -15 @ -15
+						with: 0 @ 0
+						with: 15 @ -15).
+	customCap := GdiplusCustomLineCap strokePath: path.
+	customCap startCap: LineCapTriangle endCap: LineCapRound.
+	pen := GdiplusPen red width: 5.5.
+	pen customEndCap: customCap.
+	rect := 50 @ 50 extent: 300 @ 100.
+	graphics
+		drawLine: rect pen: pen;
+		drawRectangle: rect pen: GdiplusPen black.
+	^bitmap! !
+
+!GdiplusCustomLineCap class categoriesForMethods!
+exampleGdipCLCStrokeCaps!examples!public!unit tests! !
+!
+
+!GdiplusFont class methodsFor!
+
+exampleGdipFontHeight
+	"MSDN:  Font::GetHeight
+	This example gets a font's line spacing and draws a few strings with different spacings between them.
+
+		self exampleGdipFontHeight showExample
+	"
+
+	| bitmap graphics font height |
+	bitmap := GdiplusBitmap extent: 450 @ 150.
+	graphics := bitmap graphics.
+	font := GdiplusFont name: 'Arial' pointSize: 18.
+	height := font heightFromGraphics: graphics.
+	graphics
+		drawString: 'The first line of text at the very top'
+			font: font
+			at: Point zero
+			format: nil
+			brush: nil;
+		drawString: 'The second line of text maybe too close'
+			font: font
+			at: 0 @ 0.6 * height
+			format: nil
+			brush: nil;
+		drawString: 'The third line of text is single spaced'
+			font: font
+			at: 0 @ 1.6 * height
+			format: nil
+			brush: nil.
+	^bitmap! !
+
+!GdiplusFont class categoriesForMethods!
+exampleGdipFontHeight!examples!public!sunit! !
+!
+
+!GdiplusFontFamily class methodsFor!
+
+exampleGdipFFClone
+	"MSDN: FontFamily::Clone
+	This example creates a GdiplusFontFamily, clones it, then creates a GdiplusFont from the clone.
+
+		self exampleGdipFFClone showExample
+	"
+
+	| bitmap fontFamily cloneFontFamily font |
+	bitmap := GdiplusBitmap extent: 250 @ 100.
+	fontFamily := GdiplusFontFamily fromName: 'arial'.
+	cloneFontFamily := fontFamily clone.
+	font := GdiplusFont fontFamily: cloneFontFamily emSize: 16.
+	bitmap graphics 
+		drawString: 'This is an Arial font'
+		font: font
+		at: 10 @ 10
+		format: nil
+		brush: nil.
+	^bitmap! !
+
+!GdiplusFontFamily class categoriesForMethods!
+exampleGdipFFClone!examples!public!sunit! !
+!
+
+!GdiplusGraphics class methodsFor!
+
+exampleGdipGAlphaBlending
+	"Using GDI+ .... Alpha Blending Lines and Fills ... Using Compositing Mode to Control Alpha Blending 
+
+		self exampleGdipGAlphaBlending showExample
+	"
+
+	"Create a blank bitmap."
+
+	| bitmap graphics redBrush greenBrush bitmap2 graphics2 |
+	bitmap := GdiplusBitmap width: 180 height: 100.
+	"Create a Graphics object that we can use to draw on the bitmap."
+	graphics := bitmap graphics.
+	"Create a red brush and a green brush, each with an alpha value of 160."
+	redBrush := GdiplusSolidBrush color: (Color fromArray: #(210 255 0 0)).
+	greenBrush := GdiplusSolidBrush color: (Color fromArray: #(210 0 255 0)).
+	"Set the compositing mode so that when we draw overlapping ellipses, 
+	the colors of the ellipses are not blended."
+	graphics compositingMode: CompositingModeSourceCopy.
+	"Fill an ellipse using a red brush that has an alpha value of 160."
+	graphics fillEllipse: (0 @ 0 extent: 150 @ 70) brush: redBrush.
+	"Fill a second ellipse using green brush that has an alpha value of 160. 
+	The green ellipse overlaps the red ellipse, but the green is not blended with the red."
+	graphics fillEllipse: (30 @ 30 extent: 150 @ 70) brush: greenBrush.
+	"Prepare to draw on the screen."
+	bitmap2 := GdiplusBitmap extent: 400 @ 200.
+	graphics2 := bitmap2 graphics clear: Color white.
+	graphics2 compositingQuality: CompositingQualityGammaCorrected.
+	"Draw a multicolored background."
+	graphics2 fillRectangle: (200 @ 0 extent: 60 @ 100) brush: (GdiplusSolidBrush color: Color aqua).
+	graphics2 fillRectangle: (260 @ 0 extent: 60 @ 100) brush: (GdiplusSolidBrush color: Color yellow).
+	graphics2 fillRectangle: (320 @ 0 extent: 60 @ 100) brush: (GdiplusSolidBrush color: Color fuchsia).
+	"Display the bitmap on a white background."
+	graphics2 drawImage: bitmap at: 0 @ 0.
+	"Display the bitmap on a multicolored background."
+	graphics2 drawImage: bitmap at: 200 @ 0.
+	^bitmap2!
+
+exampleGdipGCropAndScale
+	"This example draws an image with its upper-left corner at (0, 0) and then draws a portion 
+	of the image, scaled so that it fills a specified destination rectangle.
+
+		self exampleGdipGCropAndScale showExample
+	"
+
+	| image bitmap |
+	bitmap := GdiplusBitmap extent: 800 @ 400.
+	image := GdiplusImage fromFile: 'Resources/Beach Ball.bmp'
+				usingLocator: FileLocator installRelative.
+	(bitmap graphics)
+		drawImage: image at: 0 @ 0;
+		drawImage: image
+			at: 50 @ 100
+			extent: (image extent * 1.3) ceiling
+			from: 0 @ 0
+			extent: (image extent * 0.7) ceiling.
+	^bitmap!
+
+exampleGdipGDrawingALine
+	"From MSDN: Using GDI+ > Getting Started > Drawing a Line
+	This example uses a pen to draw a line on a Graphics object (which is obtained from an Image (bitmap).
+
+		self exampleGdipGDrawingALine showExample
+	"
+
+	| bitmap |
+	bitmap := GdiplusBitmap extent: 250 @ 200.
+	bitmap graphics 
+		drawLineFrom: 10 @ 10
+		to: 200 @ 100
+		pen: GdiplusPen red.
+	^bitmap!
+
+exampleGdipGDrawingAString
+	"From MSDN: Using GDI+ > Getting Started > Drawing a String.
+	This example draws a string on a Graphics object, using font and brush objects.
+	The font is actually derived from a GdiplusFontFamily object, using the helper constructor 
+	in GdiplusFont.  A second string is drawn relying on defaults for font and brush.
+
+		self exampleGdipGDrawingAString showExample
+	"
+
+	| bitmap font |
+	bitmap := GdiplusBitmap extent: 250 @ 100.
+	font := GdiplusFont name: 'Times New Roman' pointSize: 24.
+	bitmap graphics
+		drawString: 'Hello Dolphin!!'
+			font: font
+			at: 10 @ 20
+			format: nil
+			brush: GdiplusSolidBrush blue;
+		drawString: 'Hello Lagoon' at: 10 @ 75.
+	^bitmap!
+
+exampleGdipGDrawingShapes
+	"This example draws and fills a number of shapes, including arcs, pies, and curves.
+
+		self exampleGdipGDrawingShapes showExample
+	"
+
+	| bitmap graphics redPen blackPen greenBrush rectEllipse polygonPoints arcRect pieRect bezierPoints curvePoints closedCurvePoints |
+	bitmap := GdiplusBitmap extent: 700 @ 400.
+	graphics := bitmap graphics.
+	redPen := GdiplusPen red width: 5.
+	blackPen := GdiplusPen black.
+	greenBrush := GdiplusSolidBrush green.
+	"Ellipse: Draw and fill."
+	rectEllipse := 10 @ 10 extent: 200 @ 100.
+	graphics drawEllipse: rectEllipse pen: redPen.
+	graphics fillEllipse: rectEllipse brush: greenBrush.
+	graphics drawRectangle: rectEllipse pen: blackPen.
+	"Polygon: Draw and fill."
+	polygonPoints := (OrderedCollection 
+				with: 100 @ 130
+				with: 200 @ 160
+				with: 150 @ 230
+				with: 50 @ 230)
+				add: 10 @ 160;
+				yourself.
+	graphics drawPolygon: polygonPoints pen: redPen.
+	graphics fillPolygon: polygonPoints brush: greenBrush.
+	1 to: polygonPoints size
+		do: [:i | graphics drawString: i displayString at: (polygonPoints at: i)].
+	"Arc: Draw"
+	arcRect := rectEllipse translatedBy: 220 @ 0.
+	graphics 
+		drawArc: arcRect
+		pen: redPen
+		startAngle: 90
+		sweepAngle: 215.
+	graphics drawRectangle: arcRect pen: blackPen.
+	"Pie: Draw and fill."
+	pieRect := arcRect translatedBy: 0 @ 120.
+	graphics 
+		drawPie: pieRect
+		pen: redPen
+		startAngle: 0
+		sweepAngle: 215.
+	graphics 
+		fillPie: pieRect
+		brush: greenBrush
+		startAngle: 0
+		sweepAngle: 215.
+	graphics drawRectangle: pieRect pen: blackPen.
+	"Bezier: Draw"
+	bezierPoints := (polygonPoints collect: [:e | 0 @ 120 + e])
+				removeLast;
+				yourself.
+	graphics drawBezier: bezierPoints pen: redPen.
+	graphics drawPolygon: bezierPoints pen: blackPen.
+	1 to: 4 do: [:i | graphics drawString: i displayString at: (bezierPoints at: i)].
+	"Curve:  Draw"
+	curvePoints := (polygonPoints collect: [:e | 220 @ 120 + e])
+				removeAtIndex: 3;
+				yourself.
+	graphics drawCurve: curvePoints pen: redPen.	"same as with tension: 0.5"
+	graphics 
+		drawCurve: curvePoints
+		pen: blackPen
+		tension: 0.
+	graphics 
+		drawCurve: curvePoints
+		pen: (GdiplusPen blue width: 3)
+		tension: 1.
+	graphics 
+		drawCurve: curvePoints
+		pen: (GdiplusPen green width: 3)
+		tension: 2.
+	1 to: curvePoints size
+		do: [:i | graphics drawString: i displayString at: (curvePoints at: i)].
+	"Closed Curve:  Draw and fill"
+	closedCurvePoints := (polygonPoints collect: [:e | 440 @ -120 + e])
+				removeAtIndex: 3;
+				yourself.
+	graphics 
+		drawClosedCurve: closedCurvePoints
+		pen: blackPen
+		tension: 0.
+	graphics 
+		drawClosedCurve: closedCurvePoints
+		pen: redPen
+		tension: 0.5.
+	graphics 
+		drawClosedCurve: closedCurvePoints
+		pen: (GdiplusPen blue width: 3)
+		tension: -1.
+	graphics 
+		drawClosedCurve: closedCurvePoints
+		pen: (GdiplusPen green width: 3)
+		tension: -2.
+	1 to: curvePoints size
+		do: [:i | graphics drawString: i displayString at: (closedCurvePoints at: i)].
+	^bitmap!
+
+exampleGdipGFromCanvas
+	"This example creates aGdiplusGraphics from a Canvas.
+
+		self showExample: self exampleGdipGFromCanvas
+	"
+
+	| bmp canvas graphics |
+	bmp := DIBSection
+				width: 256
+				height: 256
+				depth: 32.
+	canvas := bmp canvas.
+	self icon
+		drawOn: bmp canvas
+		at: 0 @ 0
+		extent: 256 @ 256.
+	canvas := bmp canvas.
+	graphics := GdiplusGraphics fromCanvas: canvas.
+	graphics drawString: 'Hi' at: 120 @ 120.
+	bmp freeDC.
+	^bmp!
+
+exampleGdipGMeasureString
+	"MSDN: GDI+ Reference > Classes > Graphics > Graphics Methods > MeasureString Methods
+	This example draws a string, then measures the string size and draws a rectangle around it.
+
+		self exampleGdipGMeasureString showExample
+	"
+
+	| bitmap graphics string font layoutRect format boundRect |
+	bitmap := GdiplusBitmap extent: 300 @ 200.
+	graphics := bitmap graphics.
+	string := 'Measure the size of text to be placed in a rectangle.'.
+	font := GdiplusFont name: 'Arial' pointSize: 16.
+	layoutRect := 30 @ 20 extent: 200 @ 125.
+	format := GdiplusStringFormat centered.
+	boundRect := graphics
+				measureString: string
+				font: font
+				rect: layoutRect
+				format: format.
+	graphics
+		drawRectangle: layoutRect pen: GdiplusPen black;
+		drawRectangle: boundRect pen: GdiplusPen blue;
+		drawString: string
+			font: font
+			rect: layoutRect
+			format: format
+			brush: GdiplusSolidBrush blue.
+	^bitmap!
+
+exampleGdipGRotate
+	"MSDN:   GDI+ >  GDI+ Reference >  Classes >  Graphics >  Graphics Methods > RotateTransform
+	This example draws two ellipses (in black) and then rotates both (in red).  Notice the text in the
+	rotated ellipses is also rotated.
+	
+		self  exampleGdipGRotate showExample
+	"
+
+	| bitmap graphics rect1 rect2 blackPen redPen brush string format |
+	bitmap := GdiplusBitmap extent: 400 @ 350.
+	graphics := bitmap graphics.
+	rect1 := 0 @ 0 extent: 200 @ 80.
+	rect2 := 150 @ 75 extent: 200 @ 80.
+	blackPen := GdiplusPen black.
+	redPen := GdiplusPen red.
+	brush := GdiplusSolidBrush red.
+	format := GdiplusStringFormat centered.
+	graphics
+		drawEllipse: rect1 pen: blackPen;
+		rotateTransform: 30;
+		drawEllipse: rect1 pen: redPen;
+		drawString: '#1 rotated'
+			font: nil
+			rect: rect1
+			format: format
+			brush: brush;
+		resetTransform;
+		drawEllipse: rect2 pen: blackPen;
+		rotateTransform: 30;
+		drawEllipse: rect2 pen: redPen;
+		drawString: '#2 rotated'
+			font: nil
+			rect: rect2
+			format: format
+			brush: brush.
+	^bitmap!
+
+exampleGdipGTransformations
+	"MSDN:  GDI+ >  Using GDI+ >  Transformations > Using the World Transformation
+	This example draws a rectangle, then applies several transformations to a graphics, drawing
+	the rectangle each time.
+
+		self exampleGdipGTransformations showExample
+	"
+
+	| bitmap graphics rect transform |
+	bitmap := GdiplusBitmap extent: 550 @ 350.
+	graphics := bitmap graphics.
+	rect := 100 @ 50 extent: 100 @ 100.
+	graphics
+		drawRectangle: rect;
+		drawString: 'Original' at: rect origin;
+		scaleTransform: 1.75 @ 0.75 order: nil;
+		drawRectangle: rect pen: GdiplusPen red;
+		drawString: 'Scaled'
+			font: nil
+			at: rect origin
+			format: nil
+			brush: GdiplusSolidBrush red;
+		rotateTransform: 28 order: nil;
+		drawRectangle: rect pen: GdiplusPen blue;
+		drawString: ' and Rotated'
+			font: nil
+			at: rect origin
+			format: nil
+			brush: GdiplusSolidBrush blue;
+		translateTransform: 150 @ 0 order: nil;
+		drawRectangle: rect;
+		drawString: ' and Translated' at: rect origin.
+	transform := graphics transform asArray collect: [:e | e roundTo: 1.0e-002].
+	graphics resetTransform drawString: 'Final world transform: ' , transform displayString
+		at: 10 @ 250.
+	^bitmap!
+
+exampleGdipGTransformPoints
+	"MSDN:  GDI+ >  GDI+ Reference >  Classes >  Graphics >  Graphics Methods > TransformPoints
+	This example shows how GdiplusGraphics>>transformPoints actually changes the points
+	in an array.  A set of points is drawn, then the graphics is transformed and the points are
+	transformed according to the graphics' transformation.  The graphics transformation is reset
+	and the points are drawn again, showing the points have been transformed.
+
+		self exampleGdipGTransformPoints showExample
+	"
+
+	| bitmap pen points graphics |
+	bitmap := GdiplusBitmap extent: 300 @ 200.
+	pen := GdiplusPen blue width: 5.
+	points := Array with: 10 @ 10 with: 150 @ 50.
+	graphics := bitmap graphics.
+	graphics
+		drawLineFrom: points first
+			to: points second
+			pen: pen;
+		translateTransform: 30 @ 60.
+	points := graphics
+				transformPoints: points
+				destSpace: CoordinateSpacePage
+				srcSpace: CoordinateSpaceWorld.
+	graphics
+		resetTransform;
+		drawLineFrom: points first
+			to: points second
+			pen: pen.
+	^bitmap!
+
+exampleGdipMeasureCharacterRanges
+	"Ported from: https://docs.microsoft.com/en-us/windows/win32/api/gdiplusgraphics/nf-gdiplusgraphics-graphics-measurecharacterranges, with a minor change to include non-ascii characters:
+
+		self exampleGdipMeasureCharacterRanges showExample
+	"
+
+	| bitmap graphics blueBrush redBrush blackPen charRanges layoutRect_A layoutRect_B layoutRect_C strFormat charRangeRegions string myFont |
+	bitmap := GdiplusBitmap width: 510 height: 160.
+	"Create a Graphics object that we can use to draw on the bitmap."
+	graphics := bitmap graphics.
+	"Brushes and pens used for drawing and painting"
+	blueBrush :=GdiplusSolidBrush color: (Color fromArray: #(255 0 0 255)).
+	redBrush := GdiplusSolidBrush  color: (Color fromArray: #(100 255 0 0)).
+	blackPen := GdiplusPen color: (Color fromArray: #(255 0 0 0)).
+
+	"Layout rectangles used for drawing strings"
+	layoutRect_A := 20 @ 20 extent: 130 @ 130.
+	layoutRect_B := 160 @ 20 extent: 165 @ 130.
+	layoutRect_C := 335 @ 20 extent: 165 @ 130.
+
+	"Three different ranges of character positions within the string expressed as first position and length pairs."
+	"Note that per Smalltalk conventions we use Intervals with 1-based positions, whereas the source example is zero-based"
+	charRanges := {5 to: 9. 16 to: 18. 31 to: 45}.
+
+	"Font and string format to apply to string when drawing"
+	myFont := GdiplusFont name: 'Segoe UI Emoji' pointSize: 14.0.
+	strFormat := GdiplusStringFormat new.
+
+	"Other variables"
+	string := 'The quick, blue 🐬 easily jumps over the lazy 🐕.'.
+
+	"Set three ranges of character positions."
+	strFormat measurableCharacterRanges: charRanges.
+
+	"Get the regions that correspond to the ranges within the string when
+	layout rectangle A is used. Then draw the string, and show the regions."
+	charRangeRegions := graphics
+				measureCharacterRanges: string
+				font: myFont
+				rect: layoutRect_A
+				format: strFormat.
+	graphics
+		drawString: string
+		font: myFont
+		rect: layoutRect_A
+		format: strFormat
+		brush: blueBrush.
+	graphics drawRectangle: layoutRect_A pen: blackPen.
+	charRangeRegions do: [:each | graphics fillRegion: each brush: redBrush].
+	"charRangeRegions collect: [:each | each bounds: graphics]"
+
+	"Get the regions that correspond to the ranges within the string when
+	layout rectangle B is used. Then draw the string, and show the regions."
+	charRangeRegions := graphics
+				measureCharacterRanges: string
+				font: myFont
+				rect: layoutRect_B
+				format: strFormat.
+	graphics
+		drawString: string
+		font: myFont
+		rect: layoutRect_B
+		format: strFormat
+		brush: blueBrush.
+	graphics drawRectangle: layoutRect_B pen: blackPen.
+	charRangeRegions do: [:each | graphics fillRegion: each brush: redBrush].
+
+	"Get the regions that correspond to the ranges within the string when
+	layout rectangle C is used. Set trailing spaces to be included in the
+	regions. Then draw the string, and show the regions."
+	strFormat flags: StringFormatFlagsMeasureTrailingSpaces.
+	charRangeRegions := graphics
+				measureCharacterRanges: string
+				font: myFont
+				rect: layoutRect_C
+				format: strFormat.
+	graphics
+		drawString: string
+		font: myFont
+		rect: layoutRect_C
+		format: strFormat
+		brush: blueBrush.
+	graphics drawRectangle: layoutRect_C pen: blackPen.
+	charRangeRegions do: [:region | graphics fillRegion: region brush: redBrush].
+	^bitmap!
+
+exampleGdipNestedContainers
+	"MSDN:  Using GDI+ >  Using Graphics Containers > Nested Graphics Containers
+
+		self exampleGdipNestedContainers showExample
+	"
+
+	| bitmap graphics brush container redPen bluePen aquaBrush greenBrush outerContainer innerContainer path region font |
+	bitmap := GdiplusBitmap extent: 650 @ 450.
+	"Transformations in Nested Containers"
+	redPen := GdiplusPen red.
+	graphics := bitmap graphics.
+	graphics translateTransform: 100 @ 80.
+	container := graphics beginContainer.
+	graphics
+		rotateTransform: 30;
+		drawRectangle: (-60 @ -30 extent: 120 @ 60) pen: redPen;
+		endContainer: container;
+		drawRectangle: (-60 @ -30 extent: 120 @ 60) pen: redPen.
+
+	"Clipping in Nested Containers"
+	redPen := GdiplusPen red width: 2.
+	bluePen := GdiplusPen blue width: 2.
+	aquaBrush := GdiplusSolidBrush color: Color aqua.
+	greenBrush := GdiplusSolidBrush color: Color paleGreen.
+	graphics clipRectangle: (50 @ 65 extent: 150 @ 120) combineMode: nil.
+	graphics fillRectangle: (50 @ 65 extent: 150 @ 120) brush: aquaBrush.
+	container := graphics beginContainer.
+	path := GdiplusGraphicsPath new addEllipse: (75 @ 50 extent: 100 @ 150).
+	region := GdiplusRegion fromPath: path.
+	graphics
+		fillRegion: region brush: greenBrush;
+		clipRegion: region combineMode: nil;
+		drawLine: (50 @ 0 extent: 350 @ 300) pen: redPen;
+		endContainer: container;
+		drawLine: (70 @ 0 extent: 370 @ 300) pen: bluePen.
+
+	"Several Layers of Nested Containers"
+	graphics resetClip translateTransform: 175 @ 175.
+	brush := GdiplusSolidBrush blue.
+	font := GdiplusFont name: 'Times New Roman' pointSize: 36.
+	graphics textRenderingHint: TextRenderingHintAntiAlias.
+	outerContainer := graphics beginContainer.
+	graphics textRenderingHint: TextRenderingHintSingleBitPerPixel.
+	innerContainer := graphics beginContainer.
+	graphics
+		textRenderingHint: TextRenderingHintAntiAlias;
+		drawString: 'Inner Container'
+			font: font
+			at: 20 @ 10
+			format: nil
+			brush: brush;
+		endContainer: innerContainer;
+		drawString: 'Outer Container'
+			font: font
+			at: 20 @ 50
+			format: nil
+			brush: brush;
+		endContainer: outerContainer;
+		drawString: 'Graphics Object'
+			font: font
+			at: 20 @ 90
+			format: nil
+			brush: brush.
+	^bitmap!
+
+exampleGdipState
+	"MSDN:  Using GDI+ >  Using Graphics Containers > The State of a Graphics Object
+
+		self exampleGdipState
+	"
+
+	"Quality Settings"
+
+	| bitmap graphics pen brush region |
+	bitmap := GdiplusBitmap extent: 250 @ 275.
+	graphics := bitmap graphics.
+	pen := GdiplusPen red width: 5.
+	graphics smoothingMode: SmoothingModeAntiAlias.
+	graphics drawEllipse: (10 @ 10 extent: 200 @ 100) pen: pen.
+	graphics smoothingMode: SmoothingModeHighSpeed.
+	graphics drawEllipse: (10 @ 150 extent: 200 @ 100) pen: pen.
+	bitmap showExample.
+
+	"Transformations"
+	bitmap := GdiplusBitmap extent: 325 @ 325.
+	graphics := bitmap graphics.
+	pen := GdiplusPen red.
+	graphics resetTransform.
+	graphics rotateTransform: 30.
+	graphics drawEllipse: (50 @ 10 extent: 50 @ 25) pen: pen.
+	graphics pageUnit: UnitMillimeter.
+	graphics drawEllipse: (50 @ 10 extent: 50 @ 25) pen: pen.
+	bitmap showExample.
+
+	"Clipping Region"
+	bitmap := GdiplusBitmap extent: 175 @ 175.
+	graphics := bitmap graphics.
+	pen := GdiplusPen red width: 5.
+	brush := GdiplusSolidBrush color: (Color fromArray: #(255 180 255 255)).
+	"Create a plus-shaped region by forming the union of two rectangles."
+	region := GdiplusRegion fromRectangle: (50 @ 0 corner: 50 @ 150).
+	region combineRectangle: (0 @ 50 corner: 150 @ 50) mode: CombineModeUnion.
+	graphics fillRegion: region brush: brush.
+	"Set the clipping region."
+	graphics clipRegion: region combineMode: nil.
+	"Draw two clipped lines."
+	graphics drawLine: (0 @ 30 corner: 150 @ 160) pen: pen.
+	graphics drawLine: (40 @ 20 corner: 190 @ 150) pen: pen.
+	bitmap showExample! !
+
+!GdiplusGraphics class categoriesForMethods!
+exampleGdipGAlphaBlending!examples!public!sunit! !
+exampleGdipGCropAndScale!examples!public!sunit! !
+exampleGdipGDrawingALine!examples!public!sunit! !
+exampleGdipGDrawingAString!examples!public!sunit! !
+exampleGdipGDrawingShapes!examples!public!sunit! !
+exampleGdipGFromCanvas!examples!public!sunit! !
+exampleGdipGMeasureString!examples!public!sunit! !
+exampleGdipGRotate!examples!public!sunit! !
+exampleGdipGTransformations!examples!public!sunit! !
+exampleGdipGTransformPoints!examples!public!sunit! !
+exampleGdipMeasureCharacterRanges!examples!public!sunit! !
+exampleGdipNestedContainers!examples!public!sunit! !
+exampleGdipState!examples!public! !
+!
+
+!GdiplusGraphicsPath class methodsFor!
+
+exampleGdipGPCreatingFigures
+	"MSDN:  Using GDI+ >  Constructing and Drawing Paths > Creating Figures from Lines, Curves, and Shapes
+
+		self exampleGdipGPCreatingFigures showExample
+	"
+
+	| bitmap graphics path pen brush |
+	bitmap := GdiplusBitmap extent: 400 @ 300.
+	graphics := bitmap graphics.
+	pen := GdiplusPen red.
+	path := GdiplusGraphicsPath new.
+	path addArc: (0 @ 0 extent: 50 @ 50) angles: 0 @ -180.
+	graphics drawPath: path pen: pen.
+	"Create and draw a path that has two figures. The first is an arc followed by a line. The second 
+	is a line followed by a curve, followed by a line. The first is left open, and the second is closed."
+	pen color: Color blue.
+	path := GdiplusGraphicsPath new.
+	graphics translateTransform: 100 @ 0 order: nil.
+	path addArc: (175 @ 50 extent: 50 @ 50) angles: 0 @ 180.
+	path addLineFrom: 100 @ 0 to: 250 @ 20.
+	path startFigure.
+	path addLineFrom: 50 @ 20 to: 5 @ 90.
+	path addCurve: (Array 
+				with: 40 @ 60
+				with: 50 @ 70
+				with: 30 @ 90).
+	path addLineFrom: 50 @ 150 to: 150 @ 180.
+	path closeFigure.
+	graphics drawPath: path pen: pen.
+	"Create, draw and fill a path that has two lines, a rectangle, and an ellipse."
+	path := GdiplusGraphicsPath new.
+	graphics translateTransform: -100 @ 100 order: nil.
+	pen color: Color red.
+	brush := GdiplusSolidBrush color: Color darkGreen.
+	path addLineFrom: 10 @ 10 to: 100 @ 40.
+	path addLineFrom: 100 @ 60 to: 30 @ 60.
+	path addRectangle: (50 @ 35 extent: 20 @ 40).
+	path addEllipse: (10 @ 75 extent: 40 @ 30).
+	graphics drawPath: path pen: pen.
+	graphics fillPath: path brush: brush.
+	^bitmap!
+
+exampleGdipGPFillingFigures
+	"MSDN:   GDI+ >  Using GDI+ >  Constructing and Drawing Paths > Filling Open Figures
+
+		self exampleGdipGPFillingFigures showExample
+	"
+
+	| path pen brush bitmap |
+	path := GdiplusGraphicsPath new.
+	path addArc: (0 @ 0 extent: 150 @ 120) angles: 30 @ 120.
+	path addEllipse: (50 @ 50 extent: 50 @ 100).
+	pen := GdiplusPen blue width: 5.
+	brush := GdiplusSolidBrush red.
+	bitmap := GdiplusBitmap extent: 200 @ 200.
+	(bitmap graphics)
+		fillPath: path brush: brush;
+		drawPath: path pen: pen.
+	^bitmap!
+
+exampleGdipGPGetBounds
+	"
+		self exampleGdipGPGetBounds showExample
+	"
+
+	| bitmap graphics yellowPen pts path rect |
+	bitmap := GdiplusBitmap extent: 400 @ 400.
+	graphics := bitmap graphics.
+	yellowPen := GdiplusPen color: Color yellow width: 10.
+	pts := {120 @ 120. 200 @ 130. 150 @ 200. 130 @ 180}.
+
+	"Create a path that has one curve and one ellipse"
+	path := self new
+				addClosedCurve: pts;
+				addEllipse: (120 @ 220 extent: 100 @ 40);
+				yourself.
+
+	"Draw the path with a thick yellow pen and a thin black pen."
+	graphics
+		drawPath: path pen: yellowPen;
+		drawPath: path.
+
+	"Get the path's bounding rectangle."
+	rect := path boundsWithPen: yellowPen.
+	"This is much larger than I'd expect."
+	graphics drawRectangle: rect pen: GdiplusPen red.
+	^bitmap! !
+
+!GdiplusGraphicsPath class categoriesForMethods!
+exampleGdipGPCreatingFigures!examples!public!sunit! !
+exampleGdipGPFillingFigures!examples!public!sunit! !
+exampleGdipGPGetBounds!examples!public!sunit! !
+!
+
+!GdiplusHatchBrush class methodsFor!
+
+exampleGdipHBFillAShape
+	"MSDN: GDI+ > Using GDI+ > Using a Brush to Fill Shapes > Filling a Shape with a Hatch Pattern
+	This example fills an ellipse with a hatch pattern.
+
+		self exampleGdipHBFillAShape showExample
+	"
+
+	| bitmap brush |
+	bitmap := GdiplusBitmap extent: 250 @ 150.
+	brush := GdiplusHatchBrush
+				style: HatchStyleHorizontal
+				forecolor: Color red
+				backcolor: Color cyan.
+	bitmap graphics fillEllipse: (10 @ 10 extent: 200 @ 100) brush: brush.
+	^bitmap!
+
+exampleGdipHBFillAString
+	"This example fills a string with a hatch pattern.
+
+		self exampleGdipHBFillAString showExample
+	"
+
+	| bitmap brush font |
+	bitmap := GdiplusBitmap extent: 600 @ 150.
+	brush := GdiplusHatchBrush
+				style: HatchStyleLargeConfetti
+				forecolor: Color yellow
+				backcolor: Color blue.
+	font := GdiplusFont name: 'Arial' pointSize: 72.
+	bitmap graphics
+		drawString: 'Hello Dolphin'
+		font: font
+		at: 10 @ 10
+		format: nil
+		brush: brush.
+	^bitmap!
+
+exampleGdipHBStyles
+	"This example displays the effects of all HatchStyle constants.
+
+		self exampleGdipHBStyles showExample
+	"
+
+	| bitmap styles brush font row col corner |
+	bitmap := GdiplusBitmap extent: 800 @ 530.
+	font := GdiplusFont name: 'Arial' pointSize: 10.
+	styles := self enumsHatchStyle.
+	styles removeLast.	"HatchStyleTotal doesn't work"
+	styles keysAndValuesDo: 
+			[:i :e |
+			brush := GdiplusHatchBrush
+						style: e value
+						forecolor: Color red
+						backcolor: Color yellow.  
+			col := (i - 1) \\ 8.
+			row := ((i - 1) / 8) truncated.
+			corner := (col * 100 + 5) @ (row * 75 + 5).
+			bitmap graphics
+				fillRectangle: (corner extent: 90 @ 65) brush: brush;
+				drawString: (e key midString: e key size - 10 from: 11)
+					font: font
+					rect: (corner extent: 90 @ 65)
+					format: nil
+					brush: nil].
+	^bitmap! !
+
+!GdiplusHatchBrush class categoriesForMethods!
+exampleGdipHBFillAShape!examples!public!sunit! !
+exampleGdipHBFillAString!examples!public!sunit! !
+exampleGdipHBStyles!examples!public!sunit! !
+!
+
+!GdiplusImage class methodsFor!
+
+exampleGdipIDecoderFileExtensions
+	"This example displays the file extensions for all of the available image decoders.
+
+		RichTextPresenter showOn: self exampleGdipIDecoderFileExtensions
+	"
+
+	| strm |
+	strm := String new writeStream.
+	strm
+		display: 'Decoder file extensions: ';
+		cr.
+	self decoderFileExtensions do: 
+			[:e | 
+			strm
+				tab;
+				display: e;
+				cr].
+	^strm contents!
+
+exampleGdipIDecoders
+	"MSDN:  Using GDI+ >  Using Image Encoders and Decoders > Listing Installed Decoders
+	This example displays the mime types for all of the available image decoders.
+
+		RichTextPresenter showOn: self exampleGdipIDecoders
+	"
+
+	| strm |
+	strm := String new writeStream.
+	strm
+		display: 'Decoder mime types: ';
+		cr.
+	self decoderMimeTypes do: 
+			[:e | 
+			strm
+				tab;
+				display: e;
+				cr].
+	^strm contents!
+
+exampleGdipIEncoderClsid
+	"MSDN:  Using GDI+ >  Using Image Encoders and Decoders > Retrieving the Class Identifier
+	This example displays information about the image encoder for the png mime type.
+
+		RichTextPresenter showOn: self exampleGdipIEncoderClsid
+	"
+
+	| strm |
+	strm := String new writeStream.
+	self encoders keysAndValuesDo: 
+			[:i :e | 
+			e MimeType asString = 'image/png' 
+				ifTrue: 
+					[strm
+						display: 'An ImageCodecInfo object representing the PNG encoder';
+						cr;
+						display: 'was found at position ';
+						display: i displayString;
+						display: ' in the array.';
+						cr;
+						display: 'The CLSID of the PNG encoder is ';
+						display: e Clsid.
+					^strm contents]]!
+
+exampleGdipIEncoderFileExtensions
+	"This example displays the file extensions for all of the available image encoders.
+
+		RichTextPresenter showOn: self exampleGdipIEncoderFileExtensions
+	"
+
+	| strm |
+	strm := String new writeStream.
+	strm
+		display: 'Encoder file extensions: ';
+		cr.
+	self encoderFileExtensions do: 
+			[:e | 
+			strm
+				tab;
+				display: e;
+				cr].
+	^strm contents!
+
+exampleGdipIEncoderParameters
+	"MSDN: Using GDI+ >  Using Image Encoders & Decoders > Determining Parameters Supported
+	This example displays information about the image encoder for the jpeg mime type, as well as
+	one of the encoder parameters - EncoderQuality.
+
+		RichTextPresenter showOn: self exampleGdipIEncoderParameters
+	"
+
+	| image mimeType encoderClsid listSize encoderParameters encoder encoderParameterName valueType strm |
+	image := GdiplusBitmap new.
+	mimeType := 'image/jpeg'.
+	encoderClsid := GdiplusImage encoderClsid: mimeType.
+	listSize := image encoderParameterListSize: encoderClsid.
+	encoderParameters := image encoderParameterList: encoderClsid.
+	strm := String new writeStream.
+	encoder := encoderParameters Parameter at: 2.
+	encoderParameterName := (image class guidsEncoder detect: [:e | e value = encoder Guid]) 
+				key.
+	valueType := ULARGE_INTEGER atAddress: encoder Value.
+	strm
+		display: 'Parameters supported by mime type ' , mimeType;
+		cr;
+		cr;
+		display: ('The parameter list requires %i bytes.' sprintfWith: listSize);
+		cr;
+		display: ('There are %i GpEncoderParameter objects in the array.' 
+					sprintfWith: encoderParameters Count);
+		cr;
+		cr;
+		display: 'Parameter 2: ' , encoderParameterName;
+		cr;
+		display: 'The GUID is ' , encoder Guid displayString;
+		cr;
+		display: 'The value type is ' , encoder Type displayString;
+		cr;
+		display: 'The number of values is ' , encoder NumberOfValues displayString;
+		cr;
+		display: '	The minimum possible quality value is ' , valueType lowPart displayString;
+		cr;
+		display: '	The maximum possible quality value is ' , valueType highPart displayString;
+		cr.
+	^strm contents!
+
+exampleGdipIEncoders
+	"MSDN:  Using GDI+ >  Using Image Encoders and Decoders > Listing Installed Encoders
+	This example displays the mime types for all of the available image encoders.
+
+		RichTextPresenter showOn: self exampleGdipIEncoders
+	"
+
+	| strm |
+	strm := String new writeStream.
+	strm
+		display: 'Encoder mime types: ';
+		cr.
+	self encoderMimeTypes do: 
+			[:e | 
+			strm
+				tab;
+				display: e;
+				cr].
+	^strm contents!
+
+exampleGdipIEncoderValues
+	"MSDN: Using GDI+ >  Using Image Encoders & Decoders > Determining Parameters > EncoderValue
+	A given encoder supports certain parameter categories, and for each of those categories, that encoder
+	allows certain values.  This example displays information about the image encoder for the jpeg mime 
+	type, as well as one of the encoder parameters - EncoderTransformation.
+
+		RichTextPresenter showOn: self exampleGdipIEncoderValues
+	"
+
+	| image mimeType encoderClsid listSize encoderParameters encoder encoderParameterName valueType valueTypeName strm |
+	image := GdiplusBitmap new.
+	mimeType := 'image/jpeg'.
+	encoderClsid := GdiplusImage encoderClsid: mimeType.
+	listSize := image encoderParameterListSize: encoderClsid.
+	encoderParameters := image encoderParameterList: encoderClsid.
+	strm := String new writeStream.
+	encoder := encoderParameters Parameter at: 1.
+	encoderParameterName := (image class guidsEncoder detect: [:e | e value = encoder Guid]) 
+				key.
+	valueType := DWORDArray fromAddress: encoder Value yourAddress
+				length: encoder NumberOfValues.
+	valueTypeName := (image class enumsEncoderParameterValueType 
+				detect: [:e | e value = encoder Type]) key.
+	strm
+		display: 'Parameters supported by mime type ' , mimeType;
+		cr;
+		cr;
+		display: ('The parameter list requires %i bytes.' sprintfWith: listSize);
+		cr;
+		display: ('There are %i EncoderParameter objects in the array.' 
+					sprintfWith: encoderParameters Count);
+		cr;
+		cr;
+		display: 'Parameter 1: ' , encoderParameterName;
+		cr;
+		display: 'The GUID is ' , encoder Guid displayString;
+		cr;
+		display: 'The value type is ' , encoder Type displayString , ', which is type ' 
+					, valueTypeName;
+		cr;
+		display: 'The number of values is ' , encoder NumberOfValues displayString;
+		cr;
+		display: 'The allowable values are :';
+		cr.
+	valueType do: 
+			[:e | 
+			strm
+				display: '	' , e asInteger displayString , ': ' 
+							, (image class enumsEncoderParameterValueType detect: [:t | t value = encoder Type]) key;
+				cr].
+	^strm contents!
+
+exampleGdipIFlags
+	"This example enumerates the ImageFlags values for an image.
+
+		RichTextPresenter showOn: self exampleGdipIFlags
+	"
+
+	| image col strm |
+	image := self fromFile: self fileResource pafEyeJpg.
+	col := Dictionary new.
+	strm := String new writeStream.
+	strm
+		display: 'Image flags for file ' , image filename , ': ';
+		cr.
+	GdiplusBase enumsImageFlags do: 
+			[:e | 
+			strm
+				tab;
+				display: (e key midString: e key size - 10 from: 11);
+				nextPut: $ ;
+				display: (73750 bitAnd: e value) = e value;
+				cr].
+	^strm contents!
+
+exampleGdipIInterpMode
+	"MSDN: GDI+ > Using GDI+ > Using Images, Bitmaps, and Metafiles 
+		> Using Interpolation Mode to Control Image Quality During Scaling
+	This example displays the same image drawn using different interpolation modes.
+
+		self exampleGdipIInterpMode showExample
+	"
+
+	| bitmap image |
+	image := GdiplusImage fromFile: self fileResource pafEyeJpg.
+	bitmap := GdiplusBitmap extent: 600 @ 420.
+	(bitmap graphics)
+		interpolationMode: InterpolationModeLowQuality;
+		drawImage: image
+			at: 0 @ 0
+			extent: (0.4 * image extent) rounded;
+		drawString: 'LowQuality' at: 0 @ 0;
+		interpolationMode: InterpolationModeBilinear;
+		drawImage: image
+			at: 0 @ 210
+			extent: (0.4 * image extent) rounded;
+		drawString: 'Bilinear' at: 0 @ 210;
+		interpolationMode: InterpolationModeNearestNeighbor;
+		drawImage: image
+			at: 300 @ 0
+			extent: (0.4 * image extent) rounded;
+		drawString: 'NearestNeighbor' at: 300 @ 0;
+		interpolationMode: InterpolationModeHighQualityBicubic;
+		drawImage: image
+			at: 300 @ 210
+			extent: (0.4 * image extent) rounded;
+		drawString: 'HighQualityBicubic' at: 300 @ 210.
+	^bitmap!
+
+exampleGdipIJPEGCompression
+	"MSDN: Using GDI+ >  Using Image Encoders & Decoders > Setting JPEG Compression Level
+	This example saves the same image to several different files, using different compression levels.
+	It then reads all files back and displays the images.
+
+		self exampleGdipIJPEGCompression showExample
+	"
+
+	| image encoderParameters encoderParameter quality images bitmap toFile points |
+	image := GdiplusImage fromFile: self fileResource pafEyeJpg.
+	encoderParameters := GpEncoderParameters new.
+	encoderParameters Count: 1.
+	(encoderParameter := encoderParameters Parameter first)
+		Guid: EncoderQuality;
+		Type: EncoderParameterValueTypeLong;
+		NumberOfValues: 1.
+	quality := DWORD new.
+	encoderParameter Value: quality yourAddress.
+	images := OrderedCollection new.
+	#(0 30 70 100) do: 
+			[:num | 
+			quality value: num.
+			toFile := self fileResource fileLocator 
+						localFileSpecFor: 'test' , num displayString , '.jpg'.
+			image saveToFile: toFile encoderParams: encoderParameters.
+			images add: (GdiplusImage fromFile: toFile)].
+	bitmap := GdiplusBitmap extent: 810 @ 610.
+	points := Array 
+				with: 0 @ 0
+				with: 410 @ 0
+				with: 0 @ 310
+				with: 410 @ 310.
+	images keysAndValuesDo: 
+			[:i :e | 
+			| point fileSize text |
+			fileSize := ((File find: e filename) first fileSize / 1024) rounded.
+			point := points at: i.
+			text := (File splitFilenameFrom: e filename) , ' (' , fileSize displayString , ' kb)'.
+			(bitmap graphics)
+				drawImage: e
+					at: point
+					extent: 400 @ 300;
+				drawString: text at: point].
+	^bitmap!
+
+exampleGdipILoadImage
+	"This example loads an image from a file.
+
+		self exampleGdipILoadImage showExample
+	"
+
+	^GdiplusImage fromFile: self fileResource pafRgb0000FF_100x100bmp!
+
+exampleGdipILoadImages
+	"From MSDN: Using GDI+ > Using Images, Bitmaps, and Metafiles > Loading and Displaying Bitmaps
+	This example displays two images, one loaded from a disk file, the other from an Icon resource.
+
+		self exampleGdipILoadImages showExample
+	"
+
+	| bitmap image |
+	bitmap := GdiplusBitmap extent: 620 @ 200.
+	image := GdiplusImage fromFile: 'Resources/Beach Ball.bmp'
+				usingLocator: FileLocator installRelative.
+	bitmap graphics drawImage: image at: 60 @ 10.
+	image := GdiplusBitmap fromIcon: Icon warning.
+	bitmap graphics drawImage: image at: 10 @ 60.
+	^bitmap!
+
+exampleGdipILosslessRotation
+	"MSDN:  Using GDI+ >  Using Image Encoders & Decoders > Transforming a JPEG Without Loss
+	This example creates a GdiplusImage, rotates it left, saves it under a new filename, and answers 
+	a GdiplusImage from the new file.  Note: only image files whose width and height are
+	multiples of 16 can be rotated with no loss in quality.
+
+		self exampleGdipILosslessRotation showExample
+	"
+
+	| image encoderParameters toFilename encValue |
+	image := GdiplusImage fromFile: self fileResource pafEyeJpg.
+	"self assert: [image extent / 16 truncated * 16 = image extent]."
+	encoderParameters := GpEncoderParameters new Count: 1.
+	encValue := DWORD fromInteger: EncoderValueTransformRotate90.
+	(encoderParameters Parameter first)
+		Guid: EncoderTransformation;
+		Type: EncoderParameterValueTypeLong;
+		NumberOfValues: 1;
+		Value: encValue yourAddress.
+	toFilename := self fileResource fileLocator localFileSpecFor: 'testLosslessRotation.jpg'.
+	image saveToFile: toFilename encoderParams: encoderParameters.
+	^GdiplusImage fromFile: toFilename!
+
+exampleGdipIMetadata
+	"MSDN:  GDI+ >  Using GDI+ >  Using Images, Bitmaps, and Metafiles > Reading and Writing Metadata
+	This example reads and displays a file's property items (metadata).
+
+		SmalltalkWorkspaceDocument show workspace text: self exampleGdipIMetadata			
+	"
+
+	| image strm |
+	image := GdiplusImage fromFile: self fileResource pafEyeJpg.
+	strm := String writeStream.
+	strm
+		display: 'File: ' , image filename;
+		cr;
+		display: ('There are %i property items in the file.' sprintfWith: image propertiesCount);
+		cr;
+		display: ('The total size of all property items is %i bytes.' 
+					sprintfWith: image propertiesSize);
+		cr.
+	image properties keysAndValuesDo: 
+			[:i :e | 
+			strm
+				display: 'Property item ' , i displayString;
+				cr;
+				display: '  id: ' , e id hex;
+				cr;
+				display: '  type: ' , e typeName;
+				cr;
+				display: '  length: ' , e length displayString;
+				cr].
+	^strm contents!
+
+exampleGdipIMetadata2
+	"This example lists all of a file's image property items' descriptions and values.
+
+		SmalltalkWorkspaceDocument show workspace text: self exampleGdipIMetadata2		
+	"
+
+	| image strm |
+	image := GdiplusImage fromFile: self fileResource pafEyeJpg.
+	(strm := String writeStream)
+		nextPutAll: image filename;
+		cr;
+		cr.
+	image properties do: 
+			[:e | 
+			strm
+				nextPutAll: e id hex , ': ';
+				nextPutAll: e name , ' = ';
+				nextPutAll: e valueArray displayString;
+				cr].
+	^strm contents!
+
+exampleGdipIMultiFrame
+	"MSDN:  Using GDI+ >  Using Image Encoders & Decoders > Multiple-Frame Image 
+	This example creates a multiple-frame image and saves it to disk.  It then loads the file
+	and displays some frame information.
+
+		RichTextPresenter showOn: self exampleGdipIMultiFrame
+	"
+
+	| encoderParameters parameter value encoderClsid image1 image2 image3 toFile strm guids |
+	encoderParameters := GpEncoderParameters new Count: 1.
+	parameter := encoderParameters Parameter first.
+	value := DWORD new.
+	parameter
+		Guid: EncoderSaveFlag;
+		Type: EncoderParameterValueTypeLong;
+		NumberOfValues: 1;
+		Value: value yourAddress.
+	encoderClsid := GdiplusImage encoderClsid: 'image/tiff'.
+	image1 := GdiplusImage fromFile: self fileResource pafEyeJpg.
+	image2 := GdiplusImage fromFile: self fileResource pafFish32x32png.
+	image3 := GdiplusImage fromFile: self fileResource pafRgb0000FF_100x100bmp.
+	toFile := self fileResource fileLocator localFileSpecFor: 'testMultiframeImage.tif'.
+	value value: EncoderValueMultiFrame.
+	image1 saveToFile: toFile encoderParams: encoderParameters.
+	value value: EncoderValueFrameDimensionPage.
+	image1 saveAddImage: image2 encoderParams: encoderParameters.
+	image1 saveAddImage: image3 encoderParams: encoderParameters.
+	value value: EncoderValueFlush.
+	image1 saveAdd: encoderParameters.
+	image1 := GdiplusImage fromFile: toFile.
+	guids := image1 frameDimensionsList.
+	(strm := String new writeStream)
+		display: 'Frame information for file: ' , image1 filename;
+		cr;
+		display: ('The number of dimensions is %i.' sprintfWith: image1 frameDimensionsCount);
+		cr;
+		display: ('The first dimension ID is %s.' sprintfWith: guids first displayString);
+		cr;
+		display: ('The number of frames in that dimension is %i.' 
+					sprintfWith: (image1 frameCount: guids first));
+		cr.
+	^strm contents!
+
+exampleGdipIMultiFrame2
+	"MSDN:  Using GDI+ >  Using Image Encoders & Decoders > Copying Individual Frames 
+	This example saves each frame in a multiple-frame image to its own file on disk.  
+	It then loads all images from these files and displays them on a single bitmap.
+
+		self exampleGdipIMultiFrame2 showExample
+	"
+
+	| image bitmap graphics srcFile dstFile0 dstFile1 dstFile2 |
+	srcFile := self fileResource fileLocator localFileSpecFor: 'testMultiframeImage.tif'.
+	(File exists: srcFile) ifFalse: [^nil].
+	dstFile0 := self fileResource fileLocator localFileSpecFor: 'testMultiframe0.png'.
+	dstFile1 := self fileResource fileLocator localFileSpecFor: 'testMultiframe1.png'.
+	dstFile2 := self fileResource fileLocator localFileSpecFor: 'testMultiframe2.png'.
+	image := GdiplusImage fromFile: srcFile.
+	image selectActiveFrame: 0.
+	image saveToFile: dstFile0.
+	image selectActiveFrame: 1.
+	image saveToFile: dstFile1.
+	image selectActiveFrame: 2.
+	image saveToFile: dstFile2.
+	bitmap := GdiplusBitmap extent: 260 @ 350.
+	graphics := bitmap graphics.
+	image := GdiplusImage fromFile: dstFile0.
+	graphics 
+		drawImage: image
+		at: 10 @ 10
+		extent: 240 @ 180.
+	image := GdiplusImage fromFile: dstFile1.
+	graphics drawImage: image at: 10 @ 200.
+	image := GdiplusImage fromFile: dstFile2.
+	graphics drawImage: image at: 10 @ 240.
+	^bitmap!
+
+exampleGdipIMultiFrame3
+	"This example prompts for a multi-frame image file, e.g., an animated gif.  
+	It then displays every sixth frame in a separate view.
+
+		self exampleGdipIMultiFrame3
+	"
+
+	| frames |
+	frames := GdiplusImage prompt frames.
+	1 to: frames size
+		by: 6
+		do: [:i | ImagePresenter show: 'Basic image' on: (frames at: i)]!
+
+exampleGdipIPrinting1
+	"This example prints an image, plain and simple.  No units conversion or scaling is done.
+	The sample image has an extent of 909@682 which in default units of hundredths of inches
+	is 9.09 in. wide by 6.82 in. high.  If the prompted-for printer is set for portrait, the image will
+	be clipped, if set for landscape the full picture should print.
+
+		self exampleGdipIPrinting1
+	"
+
+	| printer graphics image |
+	printer := PrinterCanvas choose.
+	graphics := GdiplusGraphics fromCanvas: printer.
+	image := GdiplusImage fromFile: self fileResource pafSeattleNightJpg.
+	printer startDoc.
+	graphics drawImage: image.
+	printer endDoc!
+
+exampleGdipIPrinting2
+	"This example draws an image scaled to fit the page's longer dimension.  It prompts for a 
+	printer and displays a preview, then prompts for whether the image should be printed.
+
+		self exampleGdipIPrinting2
+	"
+
+	| printer graphics image pageExtent layoutRect bitmap graphicsB |
+	printer := PrinterCanvas choose.
+	graphics := GdiplusGraphics fromCanvas: printer.
+	image := GdiplusImage fromFile: self fileResource pafSeattleNightJpg.
+	"Convert pixels to hundredths of inches."
+	pageExtent := (printer extent * 100 / graphics resolution) truncated.
+	pageExtent x < pageExtent y ifTrue: [image rotateLeft].
+	layoutRect := Point zero extent: (image extent scaledTo: pageExtent) truncated.
+	"Preview image"
+	bitmap := GdiplusBitmap extent: (pageExtent / 2) rounded.
+	graphicsB := bitmap graphics.
+	graphicsB scaleTransform: 0.5 @ 0.5 order: nil.
+	graphicsB drawImage: image rectangle: layoutRect.
+	bitmap showExample.
+	"Print image"
+	(MessageBox confirm: 'Ok to print?') ifFalse: [^nil].
+	printer startDoc.
+	graphics drawImage: image rectangle: layoutRect.
+	printer endDoc!
+
+exampleGdipIPrinting3
+	"This example prints some example bitmaps.  The page is divided into three sections - 2 quarter pages at the top and a half page at the bottom.  
+
+		self exampleGdipIPrinting3
+	"
+
+	| printer graphics image1 image2 image3 res margin pageSize layoutSize boundingRect layoutRect |
+	image1 := self exampleGdipIMultiFrame2.
+	image2 := GdiplusGraphics exampleGdipGDrawingShapes rotateLeft.
+	image3 := GdiplusHatchBrush exampleGdipHBStyles.
+	printer := PrinterCanvas choose.
+	printer ifNil: [^self].
+	graphics := GdiplusGraphics fromCanvas: printer.
+	"Calculate 1/4 of page in hundredths of inches."
+	res := graphics resolution.
+	pageSize := ((printer extent x / res x) @ (printer extent y / res y) * 100) truncated.
+	margin := 25.
+	layoutSize := ((pageSize - margin) / 2) truncated.
+	pageSize x > pageSize y ifTrue: [graphics rotate: 90 at: pageSize x @ 0].
+	"Print first image in upper left."
+	printer startDoc.
+	boundingRect := Point zero extent: layoutSize.
+	layoutRect := image1 rectScaledToFit: boundingRect centered: true.
+	graphics drawImage: image1 rectangle: layoutRect.
+	graphics drawRectangle: boundingRect.
+	"Print second image in upper right."
+	boundingRect := (pageSize x - layoutSize x) @ 0 extent: layoutSize.
+	layoutRect := image2 rectScaledToFit: boundingRect centered: true.
+	graphics drawImage: image2 rectangle: layoutRect.
+	graphics drawRectangle: boundingRect.
+	"Print third image in lower half."
+	boundingRect := 0 @ (pageSize y - layoutSize y) extent: pageSize x @ layoutSize y.
+	layoutRect := image3 rectScaledToFit: boundingRect centered: true.
+	graphics drawImage: image3 rectangle: layoutRect.
+	graphics drawRectangle: boundingRect.
+	printer endDoc!
+
+exampleGdipIPrinting4LabeledToAPage
+	"This example prompts for and prints 4 images on a page.  First the printer dialog is shown and
+	then a file open dialog (four times).  A text label (e.g., filename or date) is printed for each 
+	picture, within the picture's frame at the lower right, taking into account any rotation.  A preview 
+	window shows what the printed page will look like and a prompt is issued whether to print or not.
+
+		self exampleGdipIPrinting4LabeledToAPage
+	"
+
+	| printer graphicsPrn res pagesize isPrinterPortrait margin quarterExtent font images image rotate extents corners bitmap graphicsB labels angle extent measure drawBlock x |
+	printer := PrinterCanvas choose.
+	graphicsPrn := GdiplusGraphics fromCanvas: printer.
+	res := graphicsPrn resolution.
+	pagesize := (printer extent / res * 100) truncated.	"hundredths of inches"
+	isPrinterPortrait := pagesize x < pagesize y.
+	margin := 25.	"1/4 inch"
+	"Calculate 1/4 of page in hundredths of inches."
+	quarterExtent := ((printer extent / res * 100 - margin) / 2) truncated.
+	font := GdiplusFont name: 'Arial' pointSize: 6.
+
+	"Load images, rotate as needed, calculate extents, assign labels."
+	images := Array new: 4.
+	rotate := Array new: 4.
+	extents := Array new: 4.
+	labels := Array new: 4.
+	1 to: 4
+		do: 
+			[:i |
+			image := GdiplusImage prompt.
+			images at: i put: image.
+			labels at: i put: (File splitStemFrom: image filename).
+			image isLandscape = isPrinterPortrait
+				ifTrue: 
+					[rotate at: i put: true.
+					extents at: i put: (image extent transpose scaledTo: quarterExtent) truncated]
+				ifFalse: 
+					[rotate at: i put: false.
+					extents at: i put: (image extent scaledTo: quarterExtent) truncated]].
+
+	"Calculate corners for each image."
+	corners := Array new: 4.
+	corners at: 1 put: Point zero.
+	corners at: 2 put: ((extents at: 1) x + margin) @ 0.
+	corners at: 3 put: 0 @ (quarterExtent y + margin).
+	corners at: 4 put: ((extents at: 3) x + margin) @ (corners at: 3) y.
+
+	"This could easily be a separate method."
+	drawBlock := 
+			[:graphics :scale |
+			1 to: 4
+				do: 
+					[:i |
+					angle := (rotate at: i) ifTrue: [90] ifFalse: [0].
+					extent := (rotate at: i) ifTrue: [(extents at: i) transpose] ifFalse: [extents at: i].
+					x := (rotate at: i) ifTrue: [(extents at: i) x] ifFalse: [0].
+					measure := graphics measureString: (labels at: i) font: font.
+					graphics
+						resetTransform;
+						scaleTransform: scale order: nil;
+						translateTransform: (corners at: i);
+						rotate: angle at: x @ 0;
+						drawImage: (images at: i)
+							at: 0 @ 0
+							extent: extent;
+						drawString: (labels at: i)
+							font: font
+							at: extent - measure
+							format: nil
+							brush: GdiplusSolidBrush red]].
+
+	"Preview images.  Draw them on a bitmap that's scaled to half the printer page."
+	bitmap := GdiplusBitmap extent: (pagesize / 2) rounded.
+	graphicsB := bitmap graphics.
+	drawBlock value: graphicsB value: 0.5 @ 0.5.
+	bitmap showExample.
+
+	"Print images"
+	(MessageBox confirm: 'Ok to print?') ifFalse: [^nil].
+	printer startDoc.
+	drawBlock value: graphicsPrn value: 1 @ 1.
+	printer endDoc!
+
+exampleGdipIPropertiesCopy
+	"This example takes an image from an existing file, resizes the image, copies all
+	of the first image's property items to the second, and saves the second image to file.  
+	It then loads the second file image and answers the image.
+
+		self exampleGdipIPropertiesCopy showExample
+	"
+
+	| image resizedImage toFile |
+	image := self fromFile: self fileResource pafEyeJpg.
+	resizedImage := GdiplusBitmap fromImage: image scaledBy: 1 / 4.
+	resizedImage copyPropertiesFrom: image.
+	toFile := self fileResource fileLocator localFileSpecFor: 'testPropertiesCopy.jpg'.
+	resizedImage saveToFile: toFile.
+	^self fromFile: toFile!
+
+exampleGdipIPropertyItem
+	"MSDN:  GDI+ >  GDI+ Reference >  Classes >  Image >  Image Methods > SetPropertyItem 
+	This example creates an Image object based on a jpeg file (some image formats, e.g., bmp,
+	don't support properties), sets the Title property, then retrieves and displays the new title.  Note
+	that it does not save the image back to file.
+
+		Notification signal: 'The image title is: ' , self exampleGdipIPropertyItem			
+	"
+
+	| image title propItem |
+	image := GdiplusImage fromFile: 'Resources/LagoonSideBar.jpg'
+				usingLocator: FileLocator installRelative.
+	title := 'Lagoon Sidebar'.
+	(propItem := GpPropertyItem new)
+		id: PropertyTagImageTitle;
+		length: title size;
+		Type: PropertyTagTypeASCII;
+		Value: title yourAddress.
+	image property: propItem.
+	propItem := title := nil.
+	propItem := image propertyFromId: PropertyTagImageTitle.
+	^title := AnsiString fromAddress: propItem Value!
+
+exampleGdipIPropertyItems
+	"This example prompts for a directory.  For each jpeg in the directory, the filename,
+	number of properties, and file extent are displayed.   It also checks for certain properties 
+	of each image and displays them if they exist.
+
+		RichTextPresenter show value: self exampleGdipIPropertyItems
+	"
+
+	| directory filenames strm image |
+	(directory := ((Smalltalk at: #BrowseFolderDialog) new)
+				value: 'c:\my documents';
+				showModal) ifNil: [^nil].
+	filenames := (File find: (File appendPathDelimiter: directory) , '*.jpg') 
+				collect: [:e | e path].
+	strm := String writeStream.
+	filenames do: 
+			[:filename | 
+			image := GdiplusImage fromFile: filename.
+			"Force realization now."
+			(
+			[image handle.
+			true] on: Error do: [:err | false]) 
+				ifTrue: 
+					[strm
+						nextPutAll: image propertiesCount displayString;
+						nextPutAll: ': ';
+						nextPutAll: filename;
+						nextPutAll: ', extent = ';
+						nextPutAll: image extent displayString;
+						cr.
+					(image hasPropertyId: PropertyTagExifUserComment) 
+						ifTrue: 
+							[strm
+								tab;
+								nextPutAll: 'PropertyTagExifUserComment: ';
+								nextPutAll: (image propertyFromId: 37510) valueArray asString trimNulls trimBlanks;
+								cr].
+					(image hasPropertyId: PropertyTagSoftwareUsed) 
+						ifTrue: 
+							[strm
+								tab;
+								nextPutAll: 'PropertyTagSoftwareUsed: ';
+								nextPutAll: (image propertyFromId: 305) valueArray asString trimNulls trimBlanks;
+								cr].
+					(image hasPropertyId: PropertyTagThumbnailWidth) 
+						ifTrue: 
+							[strm
+								tab;
+								nextPutAll: 'PropertyTagThumbnailWidth: ';
+								nextPutAll: (image propertyFromId: 20499) valueArray first displayString;
+								cr].
+					(image hasPropertyId: PropertyTagThumbnailData) 
+						ifTrue: 
+							[strm
+								tab;
+								nextPutAll: 'Image has PropertyTagThumbnailData';
+								cr]]].
+	^strm contents!
+
+exampleGdipISaveFrames
+	"This example prompts for a multi-frame file (e.g., an animated gif) and saves each frame to a separate file.
+	Output files are saved in the GdiplusTests file resource directory.
+
+		self exampleGdipISaveFrames
+	"
+
+	GdiplusImage prompt saveFramesToFiles: self fileResource fileLocator basePath!
+
+exampleGdipISkewing
+	"MSDN: GDI+ > Using GDI+ > Using Images, Bitmaps, and Metafiles 
+	> Rotating, Reflecting, and Skewing Images
+
+		self exampleGdipISkewing showExample
+	"
+
+	| bitmap image graphics |
+	bitmap := GdiplusBitmap extent: 300 @ 250.
+	graphics := bitmap graphics.
+	image := (GdiplusImage fromFile: 'Resources/Beach Ball.bmp'
+				usingLocator: FileLocator installRelative) thumbnailWithHeight: 75.
+	graphics
+		drawImage: image at: 10 @ 10;
+		drawImage: image
+			points: (Array 
+					with: 200 @ 20
+					with: 110 @ 200
+					with: 250 @ 50).
+	^bitmap!
+
+exampleGdipIThumbnails
+	"MSDN: GDI+ > Using GDI+ > Using Images, Bitmaps, and Metafiles > Creating Thumbnail Images
+
+		self exampleGdipIThumbnails	 showExample
+	"
+
+	| bitmap image thumbnail |
+	bitmap := GdiplusBitmap extent: 600 @ 300.
+	image := GdiplusImage fromFile: 'Resources/Beach Ball.bmp'
+				usingLocator: FileLocator installRelative.
+	thumbnail := image thumbnailScaledBy: 0.4.
+	(bitmap graphics)
+		drawImage: image at: 10 @ 10;
+		drawImage: thumbnail at: 10 @ 200.
+	^bitmap! !
+
+!GdiplusImage class categoriesForMethods!
+exampleGdipIDecoderFileExtensions!examples!public!sunit! !
+exampleGdipIDecoders!examples!public!sunit! !
+exampleGdipIEncoderClsid!examples!public!sunit! !
+exampleGdipIEncoderFileExtensions!examples!public!sunit! !
+exampleGdipIEncoderParameters!examples!public!sunit! !
+exampleGdipIEncoders!examples!public!sunit! !
+exampleGdipIEncoderValues!examples!public!sunit! !
+exampleGdipIFlags!examples!public!sunit! !
+exampleGdipIInterpMode!examples!public!sunit! !
+exampleGdipIJPEGCompression!examples!public!sunit! !
+exampleGdipILoadImage!examples!public!sunit! !
+exampleGdipILoadImages!examples!public!sunit! !
+exampleGdipILosslessRotation!examples!public!sunit! !
+exampleGdipIMetadata!examples!public!sunit! !
+exampleGdipIMetadata2!examples!public!sunit! !
+exampleGdipIMultiFrame!examples!public!sunit! !
+exampleGdipIMultiFrame2!examples!public!sunit! !
+exampleGdipIMultiFrame3!examples!public! !
+exampleGdipIPrinting1!examples!public! !
+exampleGdipIPrinting2!examples!public! !
+exampleGdipIPrinting3!examples!public! !
+exampleGdipIPrinting4LabeledToAPage!examples!public! !
+exampleGdipIPropertiesCopy!examples!public!sunit! !
+exampleGdipIPropertyItem!examples!public!sunit! !
+exampleGdipIPropertyItems!examples!public! !
+exampleGdipISaveFrames!examples!public! !
+exampleGdipISkewing!examples!public!sunit! !
+exampleGdipIThumbnails!examples!public!sunit! !
+!
+
+!GdiplusImageAttributes class methodsFor!
+
+exampleColorBars1
+	| bitmap |
+	bitmap := GdiplusBitmap extent: 160 @ 120.
+	(bitmap graphics)
+		fillRectangle: (0 @ 0 extent: 40 @ 120) brush: GdiplusSolidBrush black;
+		fillRectangle: (40 @ 0 extent: 40 @ 120) brush: GdiplusSolidBrush red;
+		fillRectangle: (80 @ 0 extent: 40 @ 120) brush: GdiplusSolidBrush green;
+		fillRectangle: (120 @ 0 extent: 40 @ 120) brush: GdiplusSolidBrush blue.
+	^bitmap!
+
+exampleColorBars2
+	| bitmap |
+	bitmap := GdiplusBitmap extent: 160 @ 120.
+	(bitmap graphics)
+		fillRectangle: (0 @ 0 extent: 40 @ 120)
+			brush: (GdiplusSolidBrush color: (Color fromNormalizedArray: #(1 0.4 0.4 0.4)));
+		fillRectangle: (40 @ 0 extent: 40 @ 120)
+			brush: (GdiplusSolidBrush color: (Color fromNormalizedArray: #(1 0.4 0.2 0.2)));
+		fillRectangle: (80 @ 0 extent: 40 @ 120)
+			brush: (GdiplusSolidBrush color: (Color fromNormalizedArray: #(1 0.2 0.4 0.2)));
+		fillRectangle: (120 @ 0 extent: 40 @ 120)
+			brush: (GdiplusSolidBrush color: (Color fromNormalizedArray: #(1 0.4 0.4 0.8))).
+	^bitmap!
+
+exampleColorBars3
+	| bitmap |
+	bitmap := GdiplusBitmap extent: 160 @ 120.
+	(bitmap graphics)
+		fillRectangle: (0 @ 0 extent: 40 @ 120)
+			brush: (GdiplusSolidBrush color: (Color fromNormalizedArray: #(1 0.6 0.6 0.6)));
+		fillRectangle: (40 @ 0 extent: 40 @ 120)
+			brush: (GdiplusSolidBrush color: (Color fromNormalizedArray: #(1 0 1 1)));
+		fillRectangle: (80 @ 0 extent: 40 @ 120)
+			brush: (GdiplusSolidBrush color: (Color fromNormalizedArray: #(1 1 1 0)));
+		fillRectangle: (120 @ 0 extent: 40 @ 120)
+			brush: (GdiplusSolidBrush color: (Color fromNormalizedArray: #(1 1 0 1))).
+	^bitmap!
+
+exampleColorBars4
+	| bitmap |
+	bitmap := GdiplusBitmap extent: 160 @ 120.
+	(bitmap graphics)
+		fillRectangle: (0 @ 0 extent: 40 @ 120)
+			brush: (GdiplusSolidBrush color: (Color fromNormalizedArray: #(1 0 0 1)));
+		fillRectangle: (40 @ 0 extent: 40 @ 120)
+			brush: (GdiplusSolidBrush color: (Color fromNormalizedArray: #(1 0.5 1 0.5)));
+		fillRectangle: (80 @ 0 extent: 40 @ 120)
+			brush: (GdiplusSolidBrush color: (Color fromNormalizedArray: #(1 1 1 0)));
+		fillRectangle: (120 @ 0 extent: 40 @ 120)
+			brush: (GdiplusSolidBrush color: (Color fromNormalizedArray: #(1 0.4 0.4 0.4))).
+	^bitmap!
+
+exampleColorKeyTest
+	| bitmap |
+	bitmap := GdiplusBitmap extent: 160 @ 120.
+	(bitmap graphics)
+		fillRectangle: (0 @ 0 extent: 160 @ 40)
+			brush: (GdiplusSolidBrush color: (Color fromArray: #(255 90 90 20)));
+		fillRectangle: (0 @ 40 extent: 160 @ 40)
+			brush: (GdiplusSolidBrush color: (Color fromArray: #(255 130 130 40)));
+		fillRectangle: (0 @ 80 extent: 160 @ 40)
+			brush: (GdiplusSolidBrush color: (Color fromArray: #(255 150 150 150))).
+	^bitmap!
+
+exampleGdipIAAlphaBlending
+	"Using GDI+ .... Alpha Blending Lines and Fills ... Using a Color Matrix to Set Alpha Values in Images
+
+		self exampleGdipIAAlphaBlending showExample
+	"
+
+	| bitmap graphics image pen colorMatrix imageAtt |
+	bitmap := GdiplusBitmap extent: 250 @ 150.
+	graphics := bitmap graphics.
+	image := GdiplusBitmap fromFile: self fileResource pafFish32x32png.
+	"Initialize the color matrix and change the value at row 4 column 4."
+	colorMatrix := GpColorMatrix identity atPoint: 4 @ 4 put: 0.8.
+	"Create an ImageAttributes object and set its color matrix. "
+	imageAtt := GdiplusImageAttributes new colorMatrix: colorMatrix.
+	"First draw a wide black line. "
+	pen := GdiplusPen color: (Color fromArray: #(255 0 0 0)) width: 5.
+	graphics drawLine: (10 @ 55 corner: 200 @ 55) pen: pen.
+	"Now draw the semitransparent bitmap image"
+	graphics 
+		drawImage: image
+		at: 30 @ 0
+		extent: image extent * 3
+		from: 0 @ 0
+		extent: image extent
+		unit: UnitPixel
+		attributes: imageAtt.
+	^bitmap!
+
+exampleGdipIAColorKey
+	"MSDN:  ImageAttributes::SetColorKey Method 
+
+		self exampleGdipIAColorKey showExample
+	"
+
+	| bitmap graphics image imageAtt |
+	bitmap := GdiplusBitmap extent: 450 @ 250.
+	graphics := bitmap graphics.
+	image := GdiplusImageAttributes exampleColorKeyTest.
+	(imageAtt := GdiplusImageAttributes new) 
+		colorKeys: ColorAdjustTypeBitmap
+		colorLow: (Color fromArray: #(255 100 95 30))
+		colorHigh: (Color fromArray: #(255 250 245 60)).
+	graphics
+		drawImage: image at: 10 @ 70;
+		drawImage: image
+			at: 210 @ 70
+			extent: image extent
+			from: Point zero
+			extent: image extent
+			unit: UnitPixel
+			attributes: imageAtt;
+		drawString: 'Original' at: 10 @ 40;
+		drawString: 'Color key set - middle stripe is transparent'
+			layoutRect: (210 @ 20 extent: 220 @ 50).
+	^bitmap!
+
+exampleGdipIAColorMatrix
+	"MSDN:  GDI+ >  Using GDI+ >  Recoloring > Using a Color Matrix to Transform a Single Color
+
+		self exampleGdipIAColorMatrix showExample
+ 	"
+
+	| bitmap image brush colorMatrix imageAttributes |
+	image := GdiplusBitmap extent: 160 @ 120.
+	"Create an image that's a solid color."
+	brush := GdiplusSolidBrush color: (Color fromNormalizedArray: #(1 0.2 0 0.4)).
+	image graphics fillRectangle: (Point zero extent: image extent) brush: brush.
+	"Create a color matrix and draw the image unchanged and changed."
+	(colorMatrix := GpColorMatrix identity)
+		atPoint: 1 @ 1 put: 2;
+		atPoint: 5 @ 1 put: 0.2;
+		atPoint: 5 @ 2 put: 0.2;
+		atPoint: 5 @ 3 put: 0.2.
+	imageAttributes := GdiplusImageAttributes new colorMatrix: colorMatrix.
+	bitmap := GdiplusBitmap extent: 400 @ 330.
+	(bitmap graphics)
+		drawImage: image at: 10 @ 10;
+		drawImage: image
+			at: 200 @ 10
+			extent: image extent
+			from: Point zero
+			extent: image extent
+			unit: UnitPixel
+			attributes: imageAttributes.
+	"Using the same color matrix, draw a picture, unchanged and changed."
+	image := GdiplusImage fromFile: self fileResource pafEyeJpg.
+	(bitmap graphics)
+		drawImage: image
+			at: 10 @ 150
+			extent: image extent / 4;
+		drawImage: image
+			at: 200 @ 150
+			extent: image extent / 4
+			from: Point zero
+			extent: image extent
+			unit: UnitPixel
+			attributes: imageAttributes.
+	^bitmap!
+
+exampleGdipIAColorRemap
+	"MSDN:  GDI+ >  Using GDI+ >  Recoloring > Using a Color Remap Table
+	Remapping is the process of converting the colors in an image according to a color remap table,
+	an array of GpColorMap structures, each of which contains an oldColor and a newColor.
+	This example creates a remap table with a single entry that maps all red pixels to blue.
+
+		self exampleGdipIAColorRemap showExample
+ 	"
+
+	| image table imageAttributes bitmap |
+	image := self exampleRemapInput.
+	table := StructureArray length: 1 elementClass: GpColorMap.
+	(table at: 1)
+		oldColor: Color red argbCode;
+		newColor: Color blue argbCode.
+	imageAttributes := GdiplusImageAttributes new remapTable: table.
+	bitmap := GdiplusBitmap extent: 400 @ 200.
+	bitmap graphics
+		drawImage: image at: 10 @ 10;
+		drawImage: image
+			at: 200 @ 10
+			extent: image extent
+			from: Point zero
+			extent: image extent
+			unit: UnitPixel
+			attributes: imageAttributes;
+		drawString: 'Using a remap table - map red to blue' at: 50 @ 150.
+	^bitmap!
+
+exampleGdipIAGamma
+	" GDI+ Ref .... Classes ... ImageAttributes::SetGamma Method
+
+		self exampleGdipIAGamma showExample
+	"
+
+	| image graphics bitmap imageAtt |
+	image := GdiplusImage fromFile: self fileResource pafEyeJpg.
+	imageAtt := GdiplusImageAttributes new.
+	imageAtt gamma: 0.7 type: ColorAdjustTypeBitmap.
+	bitmap := GdiplusBitmap extent: 700 @ 300.
+	graphics := bitmap graphics.
+	graphics
+		drawImage: image
+			at: 25 @ 25
+			extent: (image extent / 2) rounded;
+		drawImage: image
+			at: 350 @ 25
+			extent: (image extent / 2) rounded
+			from: 0 @ 0
+			extent: image extent
+			unit: UnitPixel
+			attributes: imageAtt.
+	^bitmap!
+
+exampleGdipIAOutputChannel
+	"MSDN:  ImageAttributes::SetOutputChannel Method 
+	This example displays the CMYK intensities of an image.
+
+		self exampleGdipIAOutputChannel showExample
+	"
+
+	| bitmap graphics image imageAtt |
+	bitmap := GdiplusBitmap extent: 550 @ 200.
+	graphics := bitmap graphics.
+	image := GdiplusImage fromFile: self fileResource pafMosaic2Bmp.
+	graphics
+		drawString: 'CMYK intensities of an image' at: 150 @ 10;
+		drawString: 'Original' at: 10 @ 50;
+		drawString: 'Cyan' at: 110 @ 50;
+		drawString: 'Magenta' at: 210 @ 50;
+		drawString: 'Yellow' at: 310 @ 50;
+		drawString: 'Black' at: 410 @ 50.
+	graphics drawImage: image at: 10 @ 70.
+	imageAtt := GdiplusImageAttributes new.
+	imageAtt outputChannel: ColorAdjustTypeBitmap channelFlags: ColorChannelFlagsC.
+	graphics 
+		drawImage: image
+		at: 110 @ 70
+		extent: image extent
+		from: Point zero
+		extent: image extent
+		unit: UnitPixel
+		attributes: imageAtt.
+	imageAtt outputChannel: ColorAdjustTypeBitmap channelFlags: ColorChannelFlagsM.
+	graphics 
+		drawImage: image
+		at: 210 @ 70
+		extent: image extent
+		from: Point zero
+		extent: image extent
+		unit: UnitPixel
+		attributes: imageAtt.
+	imageAtt outputChannel: ColorAdjustTypeBitmap channelFlags: ColorChannelFlagsY.
+	graphics 
+		drawImage: image
+		at: 310 @ 70
+		extent: image extent
+		from: Point zero
+		extent: image extent
+		unit: UnitPixel
+		attributes: imageAtt.
+	imageAtt outputChannel: ColorAdjustTypeBitmap channelFlags: ColorChannelFlagsK.
+	graphics 
+		drawImage: image
+		at: 410 @ 70
+		extent: image extent
+		from: Point zero
+		extent: image extent
+		unit: UnitPixel
+		attributes: imageAtt.
+	^bitmap!
+
+exampleGdipIAScaleColors
+	"MSDN:  GDI+ >  Using GDI+ >  Recoloring > Scaling Colors
+	A scaling multiples one or more of the four color components by a number. The color matrix's 
+	diagonal (1@1 through 4@4) has values that correspond to scalings for red, green, blue and alpha.  
+	This example displays two rows:  In the first row, a set of color bars is shown unchanged and then
+	with the blue component scaled by 2.  A picture with the blue component scaled is also shown.  
+	The second row shows a different set of color bars, first unchanged, then with rgb components 
+	scaled.  Again, a picture is shown with rgb scaled.
+
+		self exampleGdipIAScaleColors showExample
+ 	"
+
+	| bitmap bars image brush colorMatrix imageAttributes |
+	bars := self exampleColorBars2.
+	image := GdiplusImage fromFile: self fileResource pafEyeJpg.
+	colorMatrix := GpColorMatrix identity.
+	colorMatrix atPoint: 3 @ 3 put: 2.
+	imageAttributes := GdiplusImageAttributes new.
+	imageAttributes colorMatrix: colorMatrix.
+	bitmap := GdiplusBitmap extent: 600 @ 300.
+	(bitmap graphics)
+		drawImage: bars at: 10 @ 10;
+		drawImage: bars
+			at: 200 @ 10
+			extent: bars extent
+			from: Point zero
+			extent: bars extent
+			unit: UnitPixel
+			attributes: imageAttributes;
+		drawImage: image
+			at: 400 @ 10
+			extent: image extent / 4
+			from: Point zero
+			extent: image extent
+			unit: UnitPixel
+			attributes: imageAttributes.
+	"Using the same color matrix, draw a picture, unchanged and changed."
+	bars := self exampleColorBars3.
+	colorMatrix
+		atPoint: 1 @ 1 put: 0.75;
+		atPoint: 2 @ 2 put: 0.65;
+		atPoint: 3 @ 3 put: 0.5.
+	imageAttributes colorMatrix: colorMatrix.
+	(bitmap graphics)
+		drawImage: bars at: 10 @ 150;
+		drawImage: bars
+			at: 200 @ 150
+			extent: bars extent
+			from: Point zero
+			extent: bars extent
+			unit: UnitPixel
+			attributes: imageAttributes;
+		drawImage: image
+			at: 400 @ 150
+			extent: image extent / 4
+			from: Point zero
+			extent: image extent
+			unit: UnitPixel
+			attributes: imageAttributes.
+	^bitmap!
+
+exampleGdipIAShearColors
+	"MSDN:  GDI+ >  Using GDI+ >  Recoloring > Shearing Colors
+	Shearing increases or decreases a color component by an amount proportional to another color
+	component. This example increases the red component by one half the value of the blue component.
+.
+		self exampleGdipIAShearColors showExample
+ 	"
+
+	| bitmap image brush colorMatrix imageAttributes |
+	image := self exampleColorBars4.
+	colorMatrix := GpColorMatrix identity.
+	colorMatrix atPoint: 3 @ 1 put: 0.5.
+	imageAttributes := GdiplusImageAttributes new.
+	imageAttributes colorMatrix: colorMatrix.
+	bitmap := GdiplusBitmap extent: 600 @ 150.
+	(bitmap graphics)
+		drawImage: image at: 10 @ 10;
+		drawImage: image
+			at: 200 @ 10
+			extent: image extent
+			from: Point zero
+			extent: image extent
+			unit: UnitPixel
+			attributes: imageAttributes.
+	image := GdiplusImage fromFile: self fileResource pafEyeJpg.
+	bitmap graphics 
+		drawImage: image
+		at: 400 @ 10
+		extent: image extent / 4
+		from: Point zero
+		extent: image extent
+		unit: UnitPixel
+		attributes: imageAttributes.
+	^bitmap!
+
+exampleGdipIAThreshold
+	" GDI+ Ref .... Classes ... ImageAttributes::SetThreshold Method 
+
+		self exampleGdipIAThreshold showExample
+	"
+
+	| bitmap graphics image imageAtt |
+	bitmap := GdiplusBitmap extent: 300 @ 150.
+	graphics := bitmap graphics.
+	image := GdiplusImage fromFile: self fileResource pafFish32x32png.
+	"Create an ImageAttributes object, and set its bitmap threshold."
+	imageAtt := GdiplusImageAttributes new threshold: 0.6.
+	graphics 
+		drawImage: image
+		at: 100 @ 10
+		extent: image extent * 3
+		from: 0 @ 0
+		extent: image extent
+		unit: UnitPixel
+		attributes: imageAtt.
+	^bitmap!
+
+exampleGdipIATranslateColors
+	"MSDN:  GDI+ >  Using GDI+ >  Recoloring > Translating Colors
+	A translation adds a value to one or more of the four color components. The color matrix's fifth
+	row (5@1 through 5@4) has values that correspond to translations for red, green, blue and alpha.  
+	This example adds .75 to the red component of each pixel in two images.
+
+		self exampleGdipIATranslateColors showExample
+ 	"
+
+	| bitmap image brush colorMatrix imageAttributes |
+	image := self exampleColorBars1.
+	colorMatrix := GpColorMatrix identity.
+	colorMatrix atPoint: 5 @ 1 put: 0.75.
+	imageAttributes := GdiplusImageAttributes new colorMatrix: colorMatrix.
+	bitmap := GdiplusBitmap extent: 400 @ 300.
+	(bitmap graphics)
+		drawImage: image at: 10 @ 10;
+		drawImage: image
+			at: 200 @ 10
+			extent: image extent
+			from: Point zero
+			extent: image extent
+			unit: UnitPixel
+			attributes: imageAttributes.
+	image := GdiplusImage fromFile: self fileResource pafEyeJpg.
+	(bitmap graphics)
+		drawImage: image
+			at: 10 @ 150
+			extent: image extent / 4;
+		drawImage: image
+			at: 200 @ 150
+			extent: image extent / 4
+			from: Point zero
+			extent: image extent
+			unit: UnitPixel
+			attributes: imageAttributes.
+	^bitmap!
+
+exampleRemapInput
+	| bitmap |
+	bitmap := GdiplusBitmap extent: 160 @ 120.
+	bitmap graphics
+		clear: Color red;
+		fillRectangle: (50 @ 40 corner: 115 @ 80) brush: (GdiplusSolidBrush color: Color yellow);
+		fillEllipse: (30 @ 20 corner: 70 @ 100) brush: (GdiplusSolidBrush color: Color cyan);
+		fillRectangle: (80 @ 70 corner: 140 @ 100) brush: (GdiplusSolidBrush color: Color green);
+		fillEllipse: (80 @ 20 corner: 140 @ 50) brush: (GdiplusSolidBrush color: Color magenta).
+	^bitmap! !
+
+!GdiplusImageAttributes class categoriesForMethods!
+exampleColorBars1!examples!private! !
+exampleColorBars2!examples!private! !
+exampleColorBars3!examples!private! !
+exampleColorBars4!examples!private! !
+exampleColorKeyTest!examples!private! !
+exampleGdipIAAlphaBlending!examples!public!sunit! !
+exampleGdipIAColorKey!examples!public!sunit! !
+exampleGdipIAColorMatrix!examples!public!sunit! !
+exampleGdipIAColorRemap!examples!public!sunit! !
+exampleGdipIAGamma!examples!public!sunit! !
+exampleGdipIAOutputChannel!examples!public!sunit! !
+exampleGdipIAScaleColors!examples!public!sunit! !
+exampleGdipIAShearColors!examples!public!sunit! !
+exampleGdipIAThreshold!examples!public!sunit! !
+exampleGdipIATranslateColors!examples!public!sunit! !
+exampleRemapInput!examples!private! !
+!
+
+!GdiplusInstalledFontCollection class methodsFor!
+
+exampleGdipIFCEnumerating
+	"MSDN:  GDI+ >  Using GDI+ >  Using Text and Fonts > Enumerating Installed Fonts
+	This example displays the names of all installed fonts in a rectangle that's inset from
+	the bounds of the bitmap.
+
+		self exampleGdipIFCEnumerating showExample
+	"
+
+	| bitmap rect names stream |
+	bitmap := GdiplusBitmap extent: 500 @ 400.
+	rect := bitmap bounds insetBy: 40.
+	names := GdiplusInstalledFontCollection new families collect: [:e | e name].
+	(stream := String new writeStream)
+		display: 'There are ';
+		display: names size;
+		display: ' installed fonts.  The family names are: ';
+		display: names first.
+	(2 to: names size) do: [:i | stream display: ', ' , (names at: i)].
+	(bitmap graphics)
+		drawString: stream contents layoutRect: rect;
+		drawRectangle: rect.
+	^bitmap! !
+
+!GdiplusInstalledFontCollection class categoriesForMethods!
+exampleGdipIFCEnumerating!examples!public!sunit! !
+!
+
+!GdiplusLinearGradientBrush class methodsFor!
+
+exampleGdipLGChangingColors
+	"This example shows changing starting and ending colors.
+
+		self exampleGdipLGChangingColors showExample
+	"
+
+	| bitmap graphics points colors brush |
+	bitmap := GdiplusBitmap new.
+	graphics := bitmap graphics.
+	points := Array
+				with: 0 @ 0
+				with: 300 @ 0
+				with: 0 @ 200
+				with: 300 @ 200.
+	colors := #(#red #green #blue #magenta #cyan).
+	brush := GdiplusLinearGradientBrush
+				point1: 0 @ 0
+				point2: 0 @ 200
+				color1: Color blue
+				color2: Color blue.
+	points keysAndValuesDo: 
+			[:i :point |
+			brush startingColor: (Color named: (colors at: i))
+				endingColor: (Color named: (colors at: i + 1)).
+			graphics fillRectangle: (point extent: 300 @ 200) brush: brush].
+	^bitmap!
+
+exampleGdipLGCustom
+	"MSDN:   Using GDI+ >  Filling Shapes with a Gradient Brush > Creating a Linear Gradient, Custom
+	This example uses a customized linear gradient brush to fill an ellipse and a rectangle.
+
+		self exampleGdipLGCustom showExample
+	"
+
+	| bitmap brush |
+	bitmap := GdiplusBitmap extent: 600 @ 400.
+	brush := GdiplusLinearGradientBrush
+				point1: 0 @ 10
+				point2: 200 @ 10
+				color1: Color black
+				color2: Color red.
+	brush blendFactors: #(0.0 0.5 1.0) positions: #(0.0 0.2 1.0).
+	bitmap graphics
+		fillEllipse: (0 @ 30 extent: 200 @ 100) brush: brush;
+		fillRectangle: (0 @ 155 extent: 500 @ 30) brush: brush.
+	^bitmap!
+
+exampleGdipLGDiagonal
+	"MSDN:   Using GDI+ >  Filling Shapes with a Gradient Brush > Creating a Linear Gradient, Diagonal
+	This example uses a customized linear gradient brush to fill an ellipse and a line.
+
+		self exampleGdipLGDiagonal showExample
+	"
+
+	| bitmap brush pen |
+	bitmap := GdiplusBitmap extent: 600 @ 400.
+	brush := GdiplusLinearGradientBrush
+				point1: 0 @ 0
+				point2: 200 @ 100
+				color1: Color blue
+				color2: Color green.
+	pen := GdiplusPen brush: brush width: 10.
+	bitmap graphics
+		drawLine: (0 @ 0 extent: 600 @ 300) pen: pen;
+		fillEllipse: (10 @ 100 extent: 200 @ 100) brush: brush.
+	^bitmap!
+
+exampleGdipLGHorizontal
+	"MSDN:   Using GDI+ >  Filling Shapes with a Gradient Brush > Creating a Linear Gradient, Horizontal
+	This example uses a horizontal linear gradient brush to draw a line and fill an ellipse and rectangle.
+
+		self exampleGdipLGHorizontal showExample
+	"
+
+	| bitmap brush pen |
+	bitmap := GdiplusBitmap extent: 600 @ 250.
+	brush := GdiplusLinearGradientBrush 
+				point1: 0 @ 10
+				point2: 200 @ 10
+				color1: Color red
+				color2: Color blue.
+	pen := GdiplusPen brush: brush width: 3.
+	(bitmap graphics)
+		drawLine: (0 @ 10 corner: 200 @ 10) pen: pen;
+		fillEllipse: (0 @ 30 extent: 200 @ 100) brush: brush;
+		fillRectangle: (0 @ 155 extent: 500 @ 30) brush: brush.
+	^bitmap!
+
+exampleGdipLGModeConstants
+	"This example shows the different effects of LinearGradientMode constants.
+
+		self exampleGdipLGModeConstants showExample
+	"
+
+	| bitmap graphics points enum brush |
+	bitmap := GdiplusBitmap new.
+	graphics := bitmap graphics.
+	points := Array
+				with: 0 @ 0
+				with: 300 @ 0
+				with: 0 @ 200
+				with: 300 @ 200.
+	points keysAndValuesDo: 
+			[:i :point |
+			enum := self enumsLinearGradientMode at: i.
+			brush := GdiplusLinearGradientBrush
+						rect: (0 @ 0 corner: 300 @ 200)
+						color1: Color red
+						color2: Color yellow
+						mode: enum value.
+			graphics
+				fillRectangle: (point extent: 300 @ 200) brush: brush;
+				drawString: enum key at: point].
+	^bitmap!
+
+exampleGdipLGTiling
+	"This example shows the different effects of tiling with LinearGradientMode constants.
+
+		self exampleGdipLGTiling showExample
+	"
+
+	| bitmap graphics points enum brush |
+	bitmap := GdiplusBitmap new.
+	graphics := bitmap graphics.
+	points := Array
+				with: 0 @ 0
+				with: 300 @ 0
+				with: 0 @ 200
+				with: 300 @ 200.
+	points keysAndValuesDo: 
+			[:i :point |
+			enum := self enumsLinearGradientMode at: i.
+			brush := GdiplusLinearGradientBrush
+						rect: (0 @ 0 corner: 75 @ 50)
+						color1: Color blue
+						color2: Color cyan
+						mode: enum value.
+			graphics
+				fillRectangle: (point extent: 300 @ 200) brush: brush;
+				drawString: enum key at: point].
+	^bitmap! !
+
+!GdiplusLinearGradientBrush class categoriesForMethods!
+exampleGdipLGChangingColors!examples!public!sunit! !
+exampleGdipLGCustom!examples!public!sunit! !
+exampleGdipLGDiagonal!examples!public!sunit! !
+exampleGdipLGHorizontal!examples!public!sunit! !
+exampleGdipLGModeConstants!examples!public!sunit! !
+exampleGdipLGTiling!examples!public!sunit! !
+!
+
+!GdiplusMatrix class methodsFor!
+
+exampleGdipMShadows
+	"This example various transformations (shear, scale and translate) to display a string
+	in large font and its shadow.
+
+		self exampleGdipMShadows showExample
+	"
+
+	| bitmap graphics font matrix brush |
+	bitmap := GdiplusBitmap extent: 750 @ 200.
+	graphics := bitmap graphics.
+	(matrix := GdiplusMatrix new)
+		shearTransform: -1.4 @ 0;
+		scaleTransform: 1 @ 0.6;
+		translateTransform: 180 @ 86.
+	graphics transform: matrix.
+	font := GdiplusFont name: 'Times New Roman' pointSize: 100.
+	brush := GdiplusSolidBrush color: Color gray.
+	#(50 150 250 330 415 510 560) with: 'DOLPHIN'
+		do: 
+			[:num :char |
+			graphics
+				drawString: char asString
+				font: font
+				at: num @ 10
+				format: nil
+				brush: brush].
+	graphics resetTransform.
+	brush color: Color blue.
+	#(50 150 250 330 415 510 560) with: 'DOLPHIN'
+		do: 
+			[:num :char |
+			graphics
+				drawString: char asString
+				font: font
+				at: num @ 10
+				format: nil
+				brush: brush].
+	^bitmap!
+
+exampleGdipMShear
+	" MSDN:  GDI+ >  GDI+ Reference >  Classes >  Matrix >  Matrix Methods > Shear
+	This example creates a Matrix object and performs first a scale, then a shearing transformation on it.
+	A rectangle is drawn initially and then again after each transformation.  This particular shearing
+	slides the bottom edge of the rectangle to the right. The distance that the bottom edge slides is
+	3 multiplied by the height of the rectangle after it is stretched by the scaling transformation.
+
+		self exampleGdipMShear showExample
+	"
+
+	| bitmap graphics rect matrix |
+	bitmap := GdiplusBitmap extent: 550 @ 150.
+	graphics := bitmap graphics.
+	rect := 0 @ 0 extent: 100 @ 50.
+	graphics drawRectangle: rect pen: GdiplusPen black.
+	matrix := GdiplusMatrix new.
+	matrix scaleTransform: 2 @ 2.
+	graphics transform: matrix.
+	graphics drawRectangle: rect pen: GdiplusPen blue.
+	matrix shearTransform: 3 @ 0 order: MatrixOrderAppend.
+	graphics transform: matrix.
+	graphics drawRectangle: rect pen: GdiplusPen red.
+	^bitmap!
+
+exampleGdipMTranslate
+	"This example creates a GdiplusMatrix object, sets its elements to a rotation, then updates 
+	the matrix with the product of itself and a translation matrix. At that point, the matrix 
+	represents a composite transformation: first rotate, then translate, and it is used to set the 
+	world transformation of a GdiplusGraphics object, on which an ellipse is drawn.
+
+		self exampleGdipMTranslate showExample
+	"
+
+	| bitmap matrix pen |
+	bitmap := GdiplusBitmap extent: 500 @ 300.
+	(matrix := GdiplusMatrix new)
+		rotateTransform: 30;
+		translateTransform: 250 @ 100 order: MatrixOrderAppend.
+	pen := GdiplusPen blue.
+	(bitmap graphics)
+		drawEllipse: (Point zero extent: 200 @ 100) pen: pen;
+		drawString: 'Original' at: 60 @ 40;
+		transform: matrix;
+		drawEllipse: (Point zero extent: 200 @ 100) pen: pen;
+		drawString: 'Rotated and Translated' at: 20 @ 40;
+		drawLine: (-100 @ 0 corner: 100 @ 0) pen: pen;
+		drawLine: (0 @ -100 corner: 0 @ 100) pen: pen;
+		drawString: '0 @ 0' at: 0 @ 0.
+	^bitmap! !
+
+!GdiplusMatrix class categoriesForMethods!
+exampleGdipMShadows!examples!public!sunit! !
+exampleGdipMShear!examples!public!sunit! !
+exampleGdipMTranslate!examples!public!sunit! !
+!
+
+!GdiplusPathGradientBrush class methodsFor!
+
+exampleGdipPGBlendColors
+	"This example displays a triangular brush with different color and positions controlling the gradient areas.
+
+		self exampleGdipPGBlendColors showExample
+	"
+
+	| bitmap graphics brush colors |
+	bitmap := GdiplusBitmap extent: 400 @ 400.
+	graphics := bitmap graphics.
+	brush := GdiplusPathGradientBrush points: (Array 
+						with: 100 @ 0
+						with: 200 @ 200
+						with: 0 @ 200)
+				wrapMode: WrapModeTile.
+	colors := self rgb.
+	graphics
+		fillRectangle: (0 @ 0 extent: 200 @ 200) brush: brush;
+		drawString: 'Original' at: 0 @ 0 + 10.
+	brush blendColors: colors positions: #(0 0.1 1).
+	graphics
+		fillRectangle: (200 @ 0 extent: 200 @ 200) brush: brush;
+		drawString: 'Pos: ' , (((brush blendColors at: 2) at: 2) roundTo: 0.1) displayString
+			at: 200 @ 0 + 10.
+	brush blendColors: colors positions: #(0 0.5 1).
+	graphics
+		fillRectangle: (0 @ 200 extent: 200 @ 200) brush: brush;
+		drawString: 'Pos: ' , (((brush blendColors at: 2) at: 2) roundTo: 0.1) displayString
+			at: 0 @ 200 + 10.
+	brush blendColors: colors positions: #(0 0.9 1).
+	graphics
+		fillRectangle: (200 @ 200 extent: 200 @ 200) brush: brush;
+		drawString: 'Pos: ' , (((brush blendColors at: 2) at: 2) roundTo: 0.1) displayString
+			at: 200 @ 200 + 10.
+	^bitmap!
+
+exampleGdipPGBlendFactors
+	"This example shows the effects of setting blend factors and positions on ellipse and rectangle brushes.
+
+		self exampleGdipPGBlendFactors showExample
+	"
+
+	| bitmap graphics path brush |
+	bitmap := GdiplusBitmap extent: 600 @ 300.
+	graphics := bitmap graphics.
+	path := GdiplusGraphicsPath new addEllipse: (0 @ 0 corner: 200 @ 150).
+	(brush := GdiplusPathGradientBrush path: path)
+		wrapMode: WrapModeTile;
+		centerColor: Color blue;
+		surroundColors: (Array new: brush pointCount withAll: Color red).
+	graphics fillRectangle: (0 @ 0 extent: 200 @ 150) brush: brush.
+	brush blendFactors: #(0 0.4 0.8 1) positions: #(0 0.1 0.9 1).
+	graphics fillRectangle: (200 @ 0 extent: 200 @ 150) brush: brush.
+	brush blendFactors: #(0 0.1 0.5 1) positions: #(0 0.3 0.7 1).
+	graphics fillRectangle: (400 @ 0 extent: 200 @ 150) brush: brush.
+	path := GdiplusGraphicsPath new addRectangle: (0 @ 0 corner: 200 @ 150).
+	(brush := GdiplusPathGradientBrush path: path)
+		wrapMode: WrapModeTile;
+		centerColor: Color blue;
+		surroundColors: (Array with: Color green with: Color red).
+	graphics fillRectangle: (0 @ 150 extent: 200 @ 150) brush: brush.
+	brush blendFactors: #(0 0.4 0.8 1) positions: #(0 0.1 0.9 1).
+	graphics fillRectangle: (200 @ 150 extent: 200 @ 150) brush: brush.
+	brush blendFactors: #(0 0.1 0.5 1) positions: #(0 0.3 0.7 1).
+	graphics fillRectangle: (400 @ 150 extent: 200 @ 150) brush: brush.
+	^bitmap!
+
+exampleGdipPGBounds
+	"This example creates a path gradient brush from a polygon defined by 4 points and gets the
+	bounding rectangle of that polygon, i.e., the smallest rectangle that the polygon fits in.  It then
+	fills the polygon with the brush and draws outlines of the polygon and the bounding rectangle.
+	NB:  See comment below regarding problem with #bounds.
+
+		self exampleGdipPGBounds showExample
+	"
+
+	| bitmap points brush bounds |
+	bitmap := GdiplusBitmap extent: 250 @ 300.
+	points := Array 
+				with: 0 @ 0
+				with: 120 @ 20
+				with: 70 @ 80
+				with: 30 @ 180.
+	"We are going to translate the brush, shifting its origin. This didn't work correctly in the original code, as noted in a comment, because the bounding rectangle was assumed to be returned as an origin and corner pair, but rectangles in Gdiplus are always origin and extent. It is essential that GpRect's are used with the integer GDIP APIs, not RECT(L)s."
+	points := points collect: [:e | e + (20 @ 30)].
+	brush := GdiplusPathGradientBrush points: points.
+	bitmap graphics translateTransform: 20 @ 30.
+	bounds := brush bounds.
+	(bitmap graphics)
+		fillRectangle: bounds brush: brush;
+		drawRectangle: bounds pen: GdiplusPen new;
+		drawPolygon: points pen: GdiplusPen red.
+	"	fillPolygon: points brush: brush.	"
+	^bitmap!
+
+exampleGdipPGCenterColor
+	"This example creates a GdiplusPathGradientBrush from a path and sets its center color.
+
+		self exampleGdipPGCenterColor showExample
+	"
+
+	| bitmap path brush |
+	bitmap := GdiplusBitmap extent: 350 @ 250.
+	path := GdiplusGraphicsPath new addEllipse: (10 @ 10 corner: 300 @ 200).
+	brush := GdiplusPathGradientBrush path: path.
+	brush centerColor: Color blue.
+	bitmap graphics fillRectangle: (10 @ 10 corner: 300 @ 200) brush: brush.
+	^bitmap!
+
+exampleGdipPGCenterPoint
+	"This example shows the effect of changing the center point.
+
+		self exampleGdipPGCenterPoint showExample
+	"
+
+	| bitmap graphics path brush |
+	bitmap := GdiplusBitmap extent: 300 @ 450.
+	graphics := bitmap graphics.
+	path := GdiplusGraphicsPath new addEllipse: (Point zero extent: 300 @ 150).
+	(brush := GdiplusPathGradientBrush path: path)
+		centerColor: Color blue;
+		wrapMode: WrapModeTile;
+		surroundColor: Color cyan.
+	graphics fillEllipse: (0 @ 0 extent: 300 @ 150) brush: brush.
+	graphics drawString: 'Center Point - center' at: 0 @ 0 + 10.
+	brush centerPoint: 250 @ 75.
+	graphics fillEllipse: (0 @ 150 extent: 300 @ 150) brush: brush.
+	graphics drawString: 'Center Point - on right, inside ellipse' at: 0 @ 150 + 10.
+	brush centerPoint: 300 @ 75.
+	graphics fillEllipse: (0 @ 300 extent: 300 @ 150) brush: brush.
+	graphics drawString: 'Center Point - on right, outside ellipse' at: 0 @ 300 + 10.
+	^bitmap!
+
+exampleGdipPGFocusScales
+	"This example shows a triangle brush at normal size and then with focus scaled.
+
+		self exampleGdipPGFocusScales showExample
+	"
+
+	| bitmap brush focusBrush |
+	bitmap := GdiplusBitmap extent: 500 @ 250.
+	brush := GdiplusPathGradientBrush points: self triangle.
+	brush blendColors: (Array with: Color red with: Color blue) positions: #(0 1).
+	focusBrush := brush clone focusScales: 0.2 @ 0.6.
+	(bitmap graphics)
+		fillRectangle: (0 @ 0 extent: 200 @ 200) brush: brush;
+		drawString: 'Original' at: 0 @ 0;
+		translateTransform: 250 @ 0;
+		fillRectangle: (0 @ 0 extent: 200 @ 200) brush: focusBrush;
+		drawString: 'Focus scales' at: 0 @ 0.
+	^bitmap!
+
+exampleGdipPGGamma
+	"MSDN:  Using GDI+ >  Filling Shapes with a Gradient Brush > Applying Gamma Correction to a Gradient
+	This example shows a brush based on a star-shaped path with and without gamma correction applied.
+
+		self exampleGdipPGGamma showExample
+	"
+
+	| bitmap points path colors brush |
+	bitmap := GdiplusBitmap extent: 400 @ 200.
+	points := (OrderedCollection new)
+				add: 75 @ 0;
+				add: 100 @ 50;
+				add: 150 @ 50;
+				add: 112 @ 75;
+				add: 150 @ 150;
+				add: 75 @ 100;
+				add: 0 @ 150;
+				add: 37 @ 75;
+				add: 0 @ 50;
+				add: 50 @ 50;
+				yourself.
+	path := GdiplusGraphicsPath new addLines: points.
+	colors := (OrderedCollection new)
+				add: Color black;
+				add: Color green;
+				add: Color blue;
+				add: Color white;
+				add: Color black;
+				add: Color green;
+				add: Color blue;
+				add: Color white;
+				add: Color black;
+				add: Color green;
+				yourself.
+	(brush := GdiplusPathGradientBrush path: path)
+		centerColor: Color red;
+		surroundColors: colors.
+	bitmap graphics fillPath: path brush: brush.
+	brush isGammaCorrected: true.
+	(bitmap graphics)
+		translateTransform: 200 @ 0;
+		fillPath: path brush: brush;
+		resetTransform;
+		drawString: 'Original' at: 0 @ 160;
+		drawString: 'Gamma corrected' at: 200 @ 160.
+	^bitmap!
+
+exampleGdipPGMultiply
+	"This example shows a triangle brush at normal size, then scaled, then scaled and multiplied.
+
+		self exampleGdipPGMultiply showExample
+	"
+
+	| bitmap graphics points matrix brush |
+	bitmap := GdiplusBitmap extent: 650 @ 350.
+	graphics := bitmap graphics.
+	points := Array 
+				with: 0 @ 0
+				with: 150 @ 0
+				with: 150 @ 150.
+	brush := GdiplusPathGradientBrush points: points.
+	graphics
+		fillRectangle: (0 @ 0 extent: 200 @ 200) brush: brush;
+		drawString: 'Original' at: 0 @ 40.
+	matrix := GdiplusMatrix fromArray: #(1 0 0 1 150 150).
+	brush scaleTransform: 3 @ 1 order: nil.
+	graphics
+		fillRectangle: (0 @ 0 extent: 450 @ 150) brush: brush;
+		drawString: 'Scaled' at: 200 @ 0.
+	brush multiplyTransform: matrix order: MatrixOrderAppend.
+	graphics
+		fillRectangle: (0 @ 0 extent: 600 @ 300) brush: brush;
+		drawString: 'Scaled and Multiplied' at: 350 @ 150.
+	^bitmap!
+
+exampleGdipPGScale
+	"This example shows a triangle brush at normal size and then scaled.
+
+		self exampleGdipPGScale showExample
+	"
+
+	| bitmap points brush scaledBrush |
+	bitmap := GdiplusBitmap extent: 650 @ 350.
+	brush := GdiplusPathGradientBrush points: self triangle.
+	brush centerColor: Color red.
+	scaledBrush := brush copy scaleTransform: 3 @ 1.5.
+	(bitmap graphics)
+		fillRectangle: (0 @ 0 extent: 200 @ 200) brush: brush;
+		drawString: 'Original' at: 0 @ 40;
+		fillRectangle: (0 @ 0 extent: 600 @ 600) brush: scaledBrush;
+		drawString: 'Scaled' at: 200 @ 0.
+	^bitmap!
+
+exampleGdipPGSurroundColors
+	"This example creates a path gradient brush from a path, then sets its center and outer boundary colors.
+
+		self exampleGdipPGSurroundColors showExample
+	"
+
+	| bitmap brush |
+	bitmap := GdiplusBitmap extent: 400 @ 400.
+	brush := GdiplusPathGradientBrush points: self triangle.
+	brush wrapMode: WrapModeTile.
+	brush centerColor: Color yellow.
+	bitmap graphics fillRectangle: (0 @ 0 extent: 200 @ 200) brush: brush.
+	brush surroundColor: Color red.
+	bitmap graphics fillRectangle: (200 @ 0 extent: 200 @ 200) brush: brush.
+	brush surroundColors: (Array with: Color red with: Color green).
+	bitmap graphics fillRectangle: (0 @ 200 extent: 200 @ 200) brush: brush.
+	brush surroundColors: self rgb.
+	bitmap graphics fillRectangle: (200 @ 200 extent: 200 @ 200) brush: brush.
+	^bitmap!
+
+exampleGdipPGSurroundColors2
+	"This example creates a path gradient brush from a an elliptical path, then sets its outer boundary colors.
+
+		self exampleGdipPGSurroundColors2 showExample
+	"
+
+	| bitmap path brush |
+	bitmap := GdiplusBitmap extent: 600 @ 450.
+	path := GdiplusGraphicsPath new addEllipse: (0 @ 0 extent: 200 @ 150).
+	(brush := GdiplusPathGradientBrush path: path)
+		wrapMode: WrapModeTile;
+		centerColor: Color yellow.
+	bitmap graphics fillRectangle: (0 @ 0 extent: 200 @ 150) brush: brush.
+	brush surroundColors: (Array with: Color red).
+	bitmap graphics fillRectangle: (200 @ 0 extent: 200 @ 150) brush: brush.
+	brush surroundColors: (Array with: Color red with: Color green).
+	bitmap graphics fillRectangle: (400 @ 0 extent: 200 @ 150) brush: brush.
+	brush surroundColors: self rgb.
+	bitmap graphics fillRectangle: (0 @ 150 extent: 200 @ 150) brush: brush.
+	brush surroundColors: self rgb , (Array with: Color cyan).
+	bitmap graphics fillRectangle: (200 @ 150 extent: 200 @ 150) brush: brush.
+	brush surroundColors: self rgb , (Array with: Color cyan with: Color magenta).
+	bitmap graphics fillRectangle: (400 @ 150 extent: 200 @ 150) brush: brush.
+	brush 
+		surroundColors: self rgb , (Array 
+						with: Color cyan
+						with: Color magenta
+						with: Color black).
+	bitmap graphics fillRectangle: (0 @ 300 extent: 200 @ 150) brush: brush.
+	brush 
+		surroundColors: (Array new: 13 withAll: Color cyan) , (Array new: 13 withAll: Color magenta) 
+				, (Array new: 13 withAll: Color yellow) , (Array new: 13 withAll: Color red) 
+				, (Array new: 13 withAll: Color blue).
+	bitmap graphics fillRectangle: (200 @ 300 extent: 200 @ 150) brush: brush.
+	brush surroundColor: Color red.
+	bitmap graphics fillRectangle: (400 @ 300 extent: 200 @ 150) brush: brush.
+	^bitmap!
+
+exampleGdipPGTransform
+	"This example shows a triangle brush at normal size, then scaled, then scaled and multiplied.
+
+		self exampleGdipPGTransform showExample
+	"
+
+	| bitmap graphics matrix brush |
+	bitmap := GdiplusBitmap extent: 500 @ 350.
+	graphics := bitmap graphics.
+	brush := GdiplusPathGradientBrush points: self triangle.
+	brush wrapMode: WrapModeTile.
+	brush centerColor: Color yellow.
+	brush surroundColors: self rgb.
+	graphics
+		fillRectangle: (0 @ 0 extent: 200 @ 200) brush: brush;
+		drawString: 'Original' at: 0 @ 0.
+	"Set the transformation for the brush (rotate, then translate)."
+	matrix := GdiplusMatrix fromArray: #(0 1 -1 0 250 100).
+	brush transform: matrix.
+	graphics
+		fillRectangle: (250 @ 100 extent: 200 @ 200) brush: brush;
+		drawString: 'Rotated and translated' at: 250 @ 80.
+	^bitmap!
+
+exampleGdipPGTranslate
+	"This example shows a triangle brush before and after translation.
+
+		self exampleGdipPGTranslate showExample
+	"
+
+	| bitmap brush translateBrush |
+	bitmap := GdiplusBitmap extent: 400 @ 300.
+	brush := GdiplusPathGradientBrush points: self triangle.
+	brush centerColor: Color blue.
+	translateBrush := brush clone translateTransform: 125 @ 75.
+	(bitmap graphics)
+		fillRectangle: (0 @ 0 extent: 200 @ 200) brush: brush;
+		drawString: 'Original' at: 0 @ 0;
+		fillRectangle: (0 @ 0 extent: 400 @ 300) brush: translateBrush;
+		drawString: 'Translated' at: 200 @ 75.
+	^bitmap!
+
+exampleGdipPGWrapMode
+	"This example displays the effects of different WrapMode constants.
+
+		self exampleGdipPGWrapMode showExample
+	"
+
+	| bitmap pathPoints brush points modes |
+	bitmap := GdiplusBitmap extent: 600 @ 400.
+	pathPoints := Array 
+				with: 5 @ 5
+				with: 25 @ 30
+				with: 35 @ 60
+				with: 10 @ 50.
+	points := Array 
+				with: 0 @ 0
+				with: 200 @ 0
+				with: 400 @ 0
+				with: 0 @ 200
+				with: 200 @ 200.
+	"Take out 'reverse' in next line and see the effect on WrapModeClamp."
+	modes := self enumsWrapMode reverse.
+	self assert: [points size = modes size].
+	modes with: points
+		do: 
+			[:assoc :point | 
+			brush := GdiplusPathGradientBrush points: pathPoints wrapMode: assoc value.
+			brush centerColor: Color red.
+			(bitmap graphics)
+				fillRectangle: (point + 10 extent: 180 @ 180) brush: brush;
+				drawString: assoc key at: point].
+	^bitmap!
+
+examplesWorkspace
+	"Private - These are examples in progress.  Evaluate each block separately (or all at once).
+
+		self examplesWorkspace
+	"
+
+	| graphics bitmap points brush path colors rect |
+	#GdiplusPathGradientBrush.
+
+	"#blendFactors:positions:"
+	graphics := (bitmap := GdiplusBitmap new) graphics.
+	path := GdiplusGraphicsPath new addEllipse: (10 @ 10 corner: 300 @ 200).
+	brush := GdiplusPathGradientBrush path: path.
+	brush centerColor: Color red.
+	brush surroundColor: Color cyan.
+	brush blendFactors: #(0 0.4 0.8 1) positions: #(0 0.3 0.7 1).
+	graphics fillRectangle: (10 @ 10 corner: 350 @ 350) brush: brush.
+	bitmap showExample.
+
+	"blendTriangularShape:scale:"
+	graphics := (bitmap := GdiplusBitmap new) graphics.
+	path := GdiplusGraphicsPath new addEllipse: (10 @ 10 corner: 300 @ 200).
+	brush := GdiplusPathGradientBrush path: path.
+	brush centerColor: Color red.
+	colors := Array with: Color blue.
+	brush surroundColors: colors.
+	brush blendTriangularShape: 0.2 scale: 0.7.
+	graphics fillRectangle: (10 @ 10 corner: 350 @ 350) brush: brush.
+	bitmap showExample.
+
+	"blendBellShape:scale:"
+	graphics := (bitmap := GdiplusBitmap new) graphics.
+	path := GdiplusGraphicsPath new addEllipse: (10 @ 10 corner: 300 @ 200).
+	brush := GdiplusPathGradientBrush path: path.
+	brush centerColor: Color red.
+	colors := Array with: Color blue.
+	brush surroundColors: colors.
+	brush blendBellShape: 0.2 scale: 0.7.
+	graphics fillRectangle: (10 @ 10 corner: 350 @ 350) brush: brush.
+	bitmap showExample.
+
+	"#bounds"
+	graphics := (bitmap := GdiplusBitmap new) graphics.
+	points := Array 
+				with: 30 @ 20
+				with: 150 @ 40
+				with: 100 @ 100
+				with: 60 @ 200.
+	"	points := points collect: [:e | e - (30@20)].		"
+	"	points := points collect: [:e | e + (100@100)].	"
+	brush := GdiplusPathGradientBrush points: points.
+	rect := brush bounds.
+	graphics fillRectangle: rect brush: brush.
+	graphics drawRectangle: rect pen: GdiplusPen new.
+	graphics drawPolygon: points pen: GdiplusPen red.
+	"	graphics fillPolygon: points brush: brush.	"
+	bitmap showExample!
+
+rgb
+	"Private - Answer a 3-element Array containing red, green, and blue Colors."
+
+	^Array 
+		with: Color red
+		with: Color green
+		with: Color blue!
+
+triangle
+	^Array 
+		with: 100 @ 0
+		with: 200 @ 200
+		with: 0 @ 200! !
+
+!GdiplusPathGradientBrush class categoriesForMethods!
+exampleGdipPGBlendColors!examples!public!sunit! !
+exampleGdipPGBlendFactors!examples!public!sunit! !
+exampleGdipPGBounds!examples!public!sunit! !
+exampleGdipPGCenterColor!examples!public!sunit! !
+exampleGdipPGCenterPoint!examples!public!sunit! !
+exampleGdipPGFocusScales!examples!public!sunit! !
+exampleGdipPGGamma!examples!public!sunit! !
+exampleGdipPGMultiply!examples!public!sunit! !
+exampleGdipPGScale!examples!public!sunit! !
+exampleGdipPGSurroundColors!examples!public!sunit! !
+exampleGdipPGSurroundColors2!examples!public!sunit! !
+exampleGdipPGTransform!examples!public!sunit! !
+exampleGdipPGTranslate!examples!public!sunit! !
+exampleGdipPGWrapMode!examples!public!sunit! !
+examplesWorkspace!examples!private! !
+rgb!examples!private! !
+triangle!examples!private! !
+!
+
+!GdiplusPen class methodsFor!
+
+exampleGdipPAttributes
+	"From MSDN: Using GDI+ > Using a Pen to Draw Lines and Shapes > Setting Pen Width and Alignment
+
+		self exampleGdipPAttributes showExample
+	"
+
+	| bitmap graphics blackPen greenPen |
+	bitmap := GdiplusBitmap extent: 150 @ 300.
+	graphics := bitmap graphics.
+	blackPen := GdiplusPen black.
+	greenPen := GdiplusPen green width: 10.
+	graphics
+		drawLine: (10 @ 10 corner: 100 @ 50) pen: greenPen;
+		drawLine: (10 @ 10 corner: 100 @ 50) pen: blackPen;
+		drawRectangle: (10 @ 100 corner: 100 @ 150) pen: greenPen;
+		drawRectangle: (10 @ 100 corner: 100 @ 150) pen: blackPen.
+	greenPen
+		alignment: PenAlignmentInset;
+		width: 15.
+	graphics
+		drawRectangle: (10 @ 200 corner: 100 @ 250) pen: greenPen;
+		drawRectangle: (10 @ 200 corner: 100 @ 250) pen: blackPen.
+	^bitmap!
+
+exampleGdipPCompoundArray
+	"This example draws several thick lines that each appear as several thinner parallel lines.
+
+		self exampleGdipPCompoundArray showExample
+	"
+
+	| bitmap graphics pen |
+	bitmap := GdiplusBitmap extent: 450 @ 350.
+	graphics := bitmap graphics.
+	pen := GdiplusPen blue width: 30.
+	pen compoundArray: #(0 1).
+	graphics
+		drawLine: (10 @ 60 corner: 400 @ 60) pen: pen;
+		drawString: 'compoundArray: ' 
+					, (pen compoundArray collect: [:e | e roundTo: 0.1]) displayString
+			at: 100 @ 10.
+	pen compoundArray: #(0 0.5 0.9 1).
+	graphics
+		drawLine: (10 @ 160 corner: 400 @ 160) pen: pen;
+		drawString: 'compoundArray: ' 
+					, (pen compoundArray collect: [:e | e roundTo: 0.1]) displayString
+			at: 100 @ 110.
+	pen compoundArray: #(0 0.5 0.6 0.7 0.9 1).
+	graphics
+		drawLine: (10 @ 260 corner: 400 @ 260) pen: pen;
+		drawString: 'compoundArray: ' 
+					, (pen compoundArray collect: [:e | e roundTo: 0.1]) displayString
+			at: 100 @ 210.
+	^bitmap!
+
+exampleGdipPCustomCaps
+	"MSDN:  Pen::SetCustomStartCap and Pen::SetCustomEndCap Methods
+	This example creates a GdiplusGraphicsPath object and adds a rectangle to it
+	The code then creates a GdiplusPen object, sets the custom start and end caps 
+	based on the path object, and draws a line.
+
+		self exampleGdipPCustomCaps showExample
+	"
+
+	| bitmap graphics strokePath pen custCap |
+	bitmap := GdiplusBitmap extent: 300 @ 200.
+	graphics := bitmap graphics.
+	strokePath := GdiplusGraphicsPath new addRectangle: (-10 @ -5 corner: 20 @ 10).
+	pen := GdiplusPen blue.
+	custCap := GdiplusCustomLineCap strokePath: strokePath.
+	pen customStartCap: custCap.
+	pen customEndCap: custCap.
+	graphics drawLine: (20 @ 20 corner: 200 @ 100) pen: pen.
+	^bitmap!
+
+exampleGdipPDashCap
+	"MSDN:  Pen::SetDashCap Method
+
+		self exampleGdipPDashCap showExample
+	"
+
+	| bitmap graphics pen |
+	bitmap := GdiplusBitmap extent: 300 @ 200.
+	graphics := bitmap graphics.
+	pen := GdiplusPen blue width: 15.
+	pen dashStyle: DashStyleDash.
+	pen dashCap: DashCapTriangle.
+	graphics drawLine: (20 @ 20 corner: 280 @ 180) pen: pen.
+	^bitmap!
+
+exampleGdipPDashPattern
+	"This example draws a dashed line.  An array specifies the size of each pair of dash and space.
+
+		self exampleGdipPDashPattern showExample
+	"
+
+	| bitmap pen |
+	bitmap := GdiplusBitmap extent: 450 @ 200.
+	pen := GdiplusPen blue width: 5.
+	pen dashPattern: #(10 2).
+	(bitmap graphics)
+		drawLine: (10 @ 40 extent: 400 @ 0) pen: pen;
+		drawString: 'dashPattern: ' , (pen dashPattern collect: [:e | e asInteger]) displayString
+			at: 50 @ 10.
+	pen dashPattern: #(10 2 7 4).
+	(bitmap graphics)
+		drawLine: (10 @ 100 extent: 400 @ 0) pen: pen;
+		drawString: 'dashPattern: ' , (pen dashPattern collect: [:e | e asInteger]) displayString
+			at: 50 @ 70.
+	pen dashPattern: #(10 2 2 2 2 2).
+	(bitmap graphics)
+		drawLine: (10 @ 160 extent: 400 @ 0) pen: pen;
+		drawString: 'dashPattern: ' , (pen dashPattern collect: [:e | e asInteger]) displayString
+			at: 50 @ 130.
+	^bitmap!
+
+exampleGdipPDrawing
+	"MSDN:  Using GDI+ > Using a Pen to Draw Lines and Shapes > Using a Pen to Draw Lines and Rectangles 
+	This example draws a line and a thick-bordered rectangle.
+
+		self exampleGdipPDrawing showExample
+	"
+
+	| bitmap pen |
+	bitmap := GdiplusBitmap extent: 350 @ 150.
+	pen := GdiplusPen black.
+	(bitmap graphics)
+		drawLine: (20 @ 10 corner: 300 @ 100) pen: pen;
+		drawRectangle: (10 @ 10 corner: 100 @ 50) pen: (pen width: 5).
+	^bitmap!
+
+exampleGdipPFillWithTexture
+	"MSDN: Using GDI+ > Using a Pen to Draw Lines and Shapes > Drawing a Line Filled with a Texture
+	This example creates a blank Bitmap and accesses its Graphics object.  It creates a thumbnail Image
+	from an Image from a file.  It creates a Brush based on the image and a thick Pen based on the brush.
+	Finally, the graphics object draws the thumbnail Image and an ellipses. 
+
+		self exampleGdipPFillWithTexture showExample
+	"
+
+	| bitmap image brush pen |
+	bitmap := GdiplusBitmap extent: 350 @ 150.
+	image := (GdiplusImage fromFile: self fileResource pafEyeJpg) thumbnailWithHeight: 32.
+	brush := GdiplusTextureBrush image: image.
+	pen := GdiplusPen brush: brush width: 30.
+	(bitmap graphics)
+		drawImage: image;
+		drawEllipse: (100 @ 20 extent: 200 @ 100) pen: pen.
+	^bitmap!
+
+exampleGdipPJoiningLines
+	"From MSDN: Using GDI+ > Using a Pen to Draw Lines and Shapes > Joining Lines
+
+		self exampleGdipPJoiningLines showExample
+	"
+
+	| bitmap graphics path pen x |
+	bitmap := GdiplusBitmap extent: 600 @ 400.
+	graphics := bitmap graphics.
+	pen := GdiplusPen blue width: 15.
+	self enumsLineJoin keysAndValuesDo: 
+			[:i :e | 
+			path := GdiplusGraphicsPath new.
+			path startFigure.
+			x := (i - 1) * 120.
+			path addLineFrom: (x + 20) @ 50 to: (x + 70) @ 50.
+			path addLineFrom: (x + 70) @ 50 to: (x + 50) @ 100.
+			pen lineJoin: e value.
+			graphics
+				drawPath: path pen: pen;
+				drawString: e key at: ((i - 1) * 120) @ 20].
+	self enumsLineJoin keysAndValuesDo: 
+			[:i :e | 
+			path := GdiplusGraphicsPath new.
+			path startFigure.
+			x := (i - 1) * 120.
+			path addLineFrom: (x + 20) @ 150 to: (x + 50) @ 150.
+			path addLineFrom: (x + 70) @ 150 to: (x + 70) @ 200.
+			pen lineJoin: e value.
+			graphics drawPath: path pen: pen].
+	self enumsLineJoin keysAndValuesDo: 
+			[:i :e | 
+			path := GdiplusGraphicsPath new.
+			path startFigure.
+			x := (i - 1) * 120.
+			path addLineFrom: (x + 20) @ 250 to: (x + 70) @ 250.
+			path addLineFrom: (x + 70) @ 250 to: (x + 90) @ 300.
+			pen lineJoin: e value.
+			graphics drawPath: path pen: pen].
+	^bitmap!
+
+exampleGdipPLineCaps
+	"This example displays the various LineCap styles that can be used at the start and end of 
+	lines drawn with a pen.  For each cap style, the pen draws a vertical and diagonal line.  
+	Horizontal lines are drawn above and below all the lines to show where each line cap 
+	ends relative to its line end.
+
+		self exampleGdipPLineCaps showExample
+	"
+
+	| bitmap graphics path pen row x y |
+	bitmap := GdiplusBitmap extent: 750 @ 500.
+	graphics := bitmap graphics.
+	path := GdiplusGraphicsPath new.
+	pen := GdiplusPen red width: 9.
+	self enumsLineCap keysAndValuesDo: 
+			[:i :e | 
+			pen startCap: e value.
+			pen endCap: e value.
+			row := (i - 1) // 4.
+			y := row * 160 + 40.
+			x := (i - 1 - (row * 4)) * 175 + 10.
+			graphics
+				drawLine: (x @ y extent: 100 @ 100) pen: pen;
+				drawLine: ((x + 50) @ y extent: 0 @ 100) pen: pen;
+				drawString: e key at: x @ (row * 160 + 5)].
+	pen := GdiplusPen blue.
+	0 to: 2
+		do: 
+			[:i | 
+			graphics
+				drawLine: (5 @ (i * 160 + 40) extent: 700 @ 0) pen: pen;
+				drawLine: (5 @ (i * 160 + 140) extent: 700 @ 0) pen: pen].
+	^bitmap!
+
+examplesWorkspace
+	"Private - These are examples in progress.  Evaluate each block separately (or all at once).
+
+		self examplesWorkspace
+	"
+
+	| bitmap graphics pen matrix width pen2 brush |
+	#GdiplusPen.
+
+	"#transform:"
+	bitmap := GdiplusBitmap new.
+	graphics := bitmap graphics.
+	pen := GdiplusPen blue width: 2.
+	graphics drawRectangle: (10 @ 50 extent: 150 @ 100) pen: GdiplusPen black.
+	matrix := GdiplusMatrix fromArray: #(20 0 0 10 0 0).
+	pen transform: matrix.
+	graphics drawRectangle: (210 @ 50 extent: 150 @ 100) pen: pen.
+	pen resetTransform.
+	graphics drawRectangle: (10 @ 50 extent: 150 @ 100) pen: (pen color: Color red).
+	bitmap showExample.
+
+	"#scaleTransform:"
+	bitmap := GdiplusBitmap new.
+	graphics := bitmap graphics.
+	pen := GdiplusPen blue width: 2.
+	graphics drawRectangle: (50 @ 50 extent: 150 @ 100) pen: pen.
+	pen scaleTransform: 8 @ 4 order: MatrixOrderPrepend.
+	graphics drawRectangle: (250 @ 50 extent: 150 @ 100) pen: pen.
+	bitmap showExample.
+
+	"#rotateTransform:"
+	bitmap := GdiplusBitmap new.
+	graphics := bitmap graphics.
+	pen := GdiplusPen blue width: 5.
+	pen scaleTransform: 1 @ 4 order: MatrixOrderPrepend.
+	pen rotateTransform: 30 order: MatrixOrderPrepend.
+	graphics drawEllipse: (50 @ 50 extent: 200 @ 150) pen: pen.
+	pen resetTransform.
+	graphics drawEllipse: (50 @ 50 extent: 200 @ 150) pen: (pen color: Color red).
+	bitmap showExample.
+
+	"#dashStyle:"
+	bitmap := GdiplusBitmap new.
+	graphics := bitmap graphics.
+	pen := GdiplusPen blue width: 15.
+	pen dashStyle: DashStyleDash.
+	graphics drawLine: (0 @ 50 corner: 400 @ 150) pen: pen.
+	pen dashStyle: DashStyleDot.
+	graphics drawLine: (0 @ 80 corner: 400 @ 180) pen: pen.
+	pen dashStyle: DashStyleDashDot.
+	graphics drawLine: (0 @ 110 corner: 400 @ 210) pen: pen.
+	bitmap showExample.
+
+	"#brush:"
+	bitmap := GdiplusBitmap new.
+	graphics := bitmap graphics.
+	brush := GdiplusHatchBrush 
+				style: HatchStyleVertical
+				forecolor: Color red
+				backcolor: Color blue.
+	pen := GdiplusPen green width: 10.
+	graphics drawLine: (10 @ 10 corner: 200 @ 50) pen: pen.
+	pen brush: brush.
+	graphics drawLine: (10 @ 10 corner: 200 @ 100) pen: pen.
+	bitmap showExample! !
+
+!GdiplusPen class categoriesForMethods!
+exampleGdipPAttributes!examples!public!sunit! !
+exampleGdipPCompoundArray!examples!public!sunit! !
+exampleGdipPCustomCaps!examples!public!sunit! !
+exampleGdipPDashCap!examples!public!sunit! !
+exampleGdipPDashPattern!examples!public!sunit! !
+exampleGdipPDrawing!examples!public!sunit! !
+exampleGdipPFillWithTexture!examples!public!sunit! !
+exampleGdipPJoiningLines!examples!public!sunit! !
+exampleGdipPLineCaps!examples!public!unit tests! !
+examplesWorkspace!examples!private! !
+!
+
+!GdiplusRegion class methodsFor!
+
+exampleClippingSimple
+	"Private - Why is the region twice the width of the rectangle?
+	LAS: Good question - seems to be some sort of scaling going on relative to Point zero.
+
+		self exampleClippingSimple showExample
+	"
+
+	| bitmap graphics brush rect1 region1 |
+	bitmap := GdiplusBitmap extent: 350 @ 350.
+	graphics := bitmap graphics.
+	brush := GdiplusSolidBrush color: Color blue.
+	rect1 := 100 @ 50 extent: 50 @ 150.
+	region1 := GdiplusRegion fromRectangle: rect1.
+	region1 handle.
+	graphics
+		fillRegion: region1 brush: brush;
+		drawRectangle: rect1 pen: GdiplusPen black.
+	^bitmap!
+
+exampleClippingSimple2
+	"Private - If a transform is applied, then it looks right.  Not sure why.
+
+		self exampleClippingSimple2 showExample
+	"
+
+	| bitmap brush rect1 region1 |
+	bitmap := GdiplusBitmap extent: 350 @ 350.
+	brush := GdiplusSolidBrush color: Color blue.
+	rect1 := 0 @ 0 extent: 50 @ 150.
+	region1 := GdiplusRegion fromRectangle: rect1.
+	(bitmap graphics)
+		translateTransform: 100 @ 50 order: nil;
+		fillRegion: region1 brush: brush;
+		drawRectangle: (Point zero extent: rect1 extent) pen: GdiplusPen black.
+	^bitmap!
+
+exampleGdipRClipWithRegion
+	"MSDN:   GDI+ >  Using GDI+ >  Using Regions > Clipping with a Region
+
+		self exampleGdipRClipWithRegion showExample
+	"
+
+	| bitmap graphics path region pen fontFamily font brush |
+	bitmap := GdiplusBitmap extent: 200 @ 200.
+	graphics := bitmap graphics.
+	path := GdiplusGraphicsPath new.
+	path addPolygon: (Array 
+				with: 10 @ 10
+				with: 150 @ 10
+				with: 100 @ 75
+				with: 100 @ 150).
+	region := GdiplusRegion fromPath: path.
+	pen := GdiplusPen black.
+	graphics drawPath: path pen: pen.
+	graphics clipRegion: region combineMode: nil.
+	fontFamily := GdiplusFontFamily fromName: 'Arial'.
+	font := GdiplusFont 
+				fontFamily: fontFamily
+				emSize: 36
+				style: FontStyleBold
+				unit: UnitPixel.
+	brush := GdiplusSolidBrush red.
+	graphics 
+		drawString: 'A Clipping Region'
+		font: font
+		at: 15 @ 15
+		format: nil
+		brush: brush.
+	graphics 
+		drawString: 'A Clipping Region'
+		font: font
+		at: 15 @ 68
+		format: nil
+		brush: brush.
+	^bitmap!
+
+exampleGdipRHitTesting
+	"NB:  This example still does not work right.  Quite a puzzle.
+	MSDN:  GDI+ >  Using GDI+ >  Using Regions > Hit Testing with a Region
+
+		self exampleGdipRHitTesting
+	"
+
+	| bitmap graphics brush rect1 rect2 region1 region2 presenter onLeftButtonPressed |
+	bitmap := GdiplusBitmap new.
+	graphics := bitmap graphics.
+	brush := GdiplusSolidBrush green.
+	rect1 := 50 @ 0 extent: 50 @ 150.
+	rect2 := 0 @ 50 extent: 150 @ 50.
+	region1 := GdiplusRegion fromRectangle: rect1.
+	region2 := GdiplusRegion fromRectangle: rect2.
+	region1 unionRegion: region2.
+	graphics fillRegion: region1 brush: brush.
+	"Show in blue what region1's area should be."
+	graphics fillRectangle: rect1 brush: GdiplusSolidBrush blue.
+	graphics fillRectangle: rect2 brush: GdiplusSolidBrush blue.
+	(presenter := ImagePresenter show: 'Basic image' on: bitmap) view viewMode: #normal.
+	onLeftButtonPressed := 
+			[:aMouseEvent | 
+			(region1 isVisible: aMouseEvent x @ aMouseEvent y graphics: graphics) 
+				ifTrue: [brush color: Color green]
+				ifFalse: [brush color: Color red].
+			graphics fillRegion: region1 brush: brush.
+			presenter view invalidate].
+	presenter propertyAt: #clickHandler put: onLeftButtonPressed.
+	presenter 
+		when: #leftButtonPressed:
+		send: #value:
+		to: onLeftButtonPressed! !
+
+!GdiplusRegion class categoriesForMethods!
+exampleClippingSimple!examples!private! !
+exampleClippingSimple2!examples!private! !
+exampleGdipRClipWithRegion!examples!public!sunit! !
+exampleGdipRHitTesting!examples!public! !
+!
+
+!GdiplusSolidBrush class methodsFor!
+
+exampleGdipDropShadow
+	"
+	self exampleGdipDropShadow showExample
+	"
+
+	| rect shadowRect shadow bitmap offset |
+	rect := 0 @ 0 corner: 100 @ 60.
+	offset := 8@8.
+	shadowRect := rect topLeft // offset corner: rect extent // offset.
+	shadow := GdiplusBitmap extent: shadowRect extent.
+	shadow graphics fillRectangle: shadowRect
+		brush: (GdiplusSolidBrush color: (Color 
+						a: 128
+						r: 0
+						g: 0
+						b: 0)).
+	bitmap := GdiplusBitmap extent: rect extent + (offset*2).
+	(bitmap graphics)
+		interpolationMode: InterpolationModeHighQualityBicubic;
+		drawImage: shadow
+			at: offset
+			extent: rect extent
+			from: 0 @ 0
+			extent: shadowRect extent.
+	(bitmap graphics)
+		fillRectangle: rect brush: (GdiplusSolidBrush color: Color white);
+		drawRectangle: rect.
+	^bitmap!
+
+exampleGdipSBFillAShape
+	"MSDN: GDI+ > Using GDI+ > Using a Brush to Fill Shapes > Filling a Shape with a Solid Color
+
+		self exampleGdipSBFillAShape showExample
+	"
+
+	| bitmap |
+	bitmap := GdiplusBitmap extent: 200 @ 150.
+	bitmap graphics fillEllipse: (50 @ 50 extent: 100 @ 60) brush: GdiplusSolidBrush red.
+	^bitmap! !
+
+!GdiplusSolidBrush class categoriesForMethods!
+exampleGdipDropShadow!examples!public!sunit! !
+exampleGdipSBFillAShape!examples!public!sunit! !
+!
+
+!GdiplusStringFormat class methodsFor!
+
+exampleGdipSFFormatText
+	"MSDN:  GDI+ >  Using GDI+ >  Using Text and Fonts > Formatting Text
+	This example displays a string centered within a rectangle.
+
+		self exampleGdipSFFormatText showExample
+	"
+
+	| bitmap font rect |
+	bitmap := GdiplusBitmap extent: 300 @ 300.
+	font := GdiplusFont 
+				name: 'Arial'
+				emSize: 12
+				style: FontStyleBold
+				unit: UnitPoint.
+	rect := bitmap bounds insetBy: 75.
+	(bitmap graphics)
+		drawString: 'Use StringFormat and Rectangle objects to center text in a rectangle.'
+			font: font
+			rect: rect
+			format: GdiplusStringFormat centered
+			brush: GdiplusSolidBrush blue;
+		drawRectangle: rect.
+	^bitmap!
+
+exampleGdipSFGenerics
+	" GDI+ >  GDI+ Reference >  Classes >  StringFormat >  StringFormat Methods
+	This example draws a string three times, using different GdiplusStringFormat creation methods.
+ 
+		self exampleGdipSFGenerics showExample
+	"
+
+	| bitmap graphics brush font rect stringFormat pen |
+	bitmap := GdiplusBitmap extent: 300 @ 350.
+	graphics := bitmap graphics.
+	brush := GdiplusSolidBrush blue.
+	font := GdiplusFont name: 'Times New Roman' pointSize: 12.
+	rect := 30 @ 30 extent: 160 @ 50.
+	pen := GdiplusPen blue.
+	stringFormat := GdiplusStringFormat genericDefault.
+	graphics
+		drawString: 'This text was formatted by a generic StringFormat object.'
+		font: font
+		rect: rect
+		format: stringFormat
+		brush: brush.
+	graphics drawRectangle: rect pen: pen.
+	rect moveBy: 0 @ 100.
+	pen color: Color red.
+	brush color: Color red.
+	stringFormat := GdiplusStringFormat genericTypographic.
+	graphics
+		drawString: 'This text was formatted by a typographic StringFormat object.'
+		font: font
+		rect: rect
+		format: stringFormat
+		brush: brush.
+	graphics drawRectangle: rect pen: pen.
+	rect moveBy: 0 @ 100.
+	pen color: Color black.
+	brush color: Color black.
+	stringFormat := GdiplusStringFormat new.
+	graphics
+		drawString: 'This text was formatted by a new StringFormat object.'
+		font: font
+		rect: rect
+		format: stringFormat
+		brush: brush.
+	graphics drawRectangle: rect pen: pen.
+	^bitmap!
+
+exampleGdipSFTabs
+	"This example creates a GdiplusStringFormat instance, sets its tab-stops, and then draws a
+	string that contains embedded tabs.
+
+		self exampleGdipSFTabs showExample
+	"
+
+	| bitmap graphics font rect stringFormat |
+	bitmap := GdiplusBitmap extent: 550 @ 200.
+	graphics := bitmap graphics.
+	font := GdiplusFont name: 'Courier New' pointSize: 12.
+	stringFormat := GdiplusStringFormat new tabOffsets: #(0 150 100 100).
+	rect := 20 @ 20 extent: 500 @ 100.
+	graphics
+		drawString: 'Name	Test 1	Test 2	Test 3'
+			font: font
+			rect: rect
+			format: stringFormat
+			brush: GdiplusSolidBrush blue;
+		drawString: 'Tabs set at: ' , (stringFormat tabOffsets collect: [:e | e asInteger]) displayString
+			font: font
+			at: 20 @ 50
+			format: stringFormat
+			brush: GdiplusSolidBrush red;
+		drawRectangle: rect.
+	^bitmap!
+
+exampleGdipSFTrimming
+	"This example draws a string, using each of the available trimming styles.
+
+		self exampleGdipSFTrimming showExample
+	"
+
+	| bitmap graphics string font stringFormat row rect |
+	bitmap := GdiplusBitmap extent: 550 @ 450.
+	graphics := bitmap graphics.
+	string := 'One two three four five six seven eight nine'.
+	self enumsStringTrimming keysAndValuesDo: 
+			[:i :e |
+			stringFormat := GdiplusStringFormat new trimming: e value.
+			font := GdiplusFont name: 'Times New Roman' pointSize: 24.
+			row := (i - 1) // 2.
+			rect := ((i - 1 - (row * 2)) * 250 + 30) @ (row * 130 + 30) extent: 200 @ 80.
+			graphics
+				drawRectangle: rect pen: GdiplusPen black;
+				drawString: e key at: rect origin x @ rect origin y - 20;
+				drawString: string
+					font: font
+					rect: rect
+					format: stringFormat
+					brush: GdiplusSolidBrush red].
+	^bitmap! !
+
+!GdiplusStringFormat class categoriesForMethods!
+exampleGdipSFFormatText!examples!public!sunit! !
+exampleGdipSFGenerics!examples!public!sunit! !
+exampleGdipSFTabs!examples!public!sunit! !
+exampleGdipSFTrimming!examples!public!sunit! !
+!
+
+!GdiplusTextureBrush class methodsFor!
+
+exampleGdipTBFillAShape
+	"MSDN: GDI+ > Using GDI+ > Using a Brush to Fill Shapes > Filling a Shape with an Image Texture
+	The following example fills an ellipse with an image.  The code first creates an Image and then a 
+	Brush based on the image. The image in the brush is then scaled and the brush is used to fill an 
+	ellipse.  Three ellipses are drawn, with varying scales, i.e., smaller, equal, and greater, compared to 
+	the image.  When the scaled brush image is smaller than the ellipse, the brush is tiled in the ellipse.
+
+		self exampleGdipTBFillAShape showExample
+	"
+
+	| bitmap graphics image brush layoutExtent matrix fac |
+	bitmap := GdiplusBitmap extent: 600 @ 350.
+	graphics := bitmap graphics.
+	image := GdiplusImage fromFile: self fileResource pafEyeJpg.
+	layoutExtent := 180 @ 135.
+	fac := 0.25 * layoutExtent x / image width.
+	graphics 
+		drawImage: image
+		at: 200 @ 0
+		extent: layoutExtent.
+	brush := GdiplusTextureBrush image: image.
+	matrix := GdiplusMatrix rectangle: (fac @ 0 extent: 0 @ fac) point: Point new.
+	brush transform: matrix.
+	graphics fillEllipse: (0 @ 170 extent: layoutExtent) brush: brush.
+	fac := layoutExtent x / image width.
+	matrix := GdiplusMatrix rectangle: (fac @ 0 extent: 0 @ fac) point: Point new.
+	brush transform: matrix.
+	graphics fillEllipse: (200 @ 170 extent: layoutExtent) brush: brush.
+	fac := 4 * layoutExtent x / image width.
+	matrix := GdiplusMatrix rectangle: (fac @ 0 extent: 0 @ fac) point: Point new.
+	brush transform: matrix.
+	graphics fillEllipse: (400 @ 170 extent: layoutExtent) brush: brush.
+	^bitmap!
+
+exampleGdipTBTilingAShape
+	"MSDN: GDI+ > Using GDI+ > Using a Brush to Fill Shapes > Tiling a Shape with an Image
+
+		self exampleGdipTBTilingAShape showExample
+	"
+
+	| bitmap image brush pen |
+	bitmap := GdiplusBitmap extent: 250 @ 250.
+	image := (GdiplusImage fromFile: 'Resources/Beach Ball.bmp'
+				usingLocator: FileLocator installRelative) thumbnailWithHeight: 75.
+	brush := GdiplusTextureBrush image: image.
+	pen := GdiplusPen black.
+	(bitmap graphics)
+		drawRectangle: (0 @ 0 corner: 200 @ 200) pen: pen;
+		fillRectangle: (0 @ 0 extent: 200 @ 200) brush: brush.
+	^bitmap! !
+
+!GdiplusTextureBrush class categoriesForMethods!
+exampleGdipTBFillAShape!examples!public!sunit! !
+exampleGdipTBTilingAShape!examples!public!sunit! !
 !
 
 "End of package definition"!

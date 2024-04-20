@@ -65,26 +65,6 @@ name!accessing!public! !
 
 !GdiplusFontFamily class methodsFor!
 
-exampleGdipFFClone
-	"MSDN: FontFamily::Clone
-	This example creates a GdiplusFontFamily, clones it, then creates a GdiplusFont from the clone.
-
-		self exampleGdipFFClone showExample
-	"
-
-	| bitmap fontFamily cloneFontFamily font |
-	bitmap := GdiplusBitmap extent: 250 @ 100.
-	fontFamily := GdiplusFontFamily fromName: 'arial'.
-	cloneFontFamily := fontFamily clone.
-	font := GdiplusFont fontFamily: cloneFontFamily emSize: 16.
-	bitmap graphics 
-		drawString: 'This is an Arial font'
-		font: font
-		at: 10 @ 10
-		format: nil
-		brush: nil.
-	^bitmap!
-
 fromName: aString
 	^self fromName: aString fontCollection: nil!
 
@@ -104,7 +84,6 @@ icon
 	^Font icon! !
 
 !GdiplusFontFamily class categoriesForMethods!
-exampleGdipFFClone!examples!public!sunit! !
 fromName:!instance creation!public! !
 fromName:fontCollection:!instance creation!public! !
 genericSansSerif!instance creation!public! !

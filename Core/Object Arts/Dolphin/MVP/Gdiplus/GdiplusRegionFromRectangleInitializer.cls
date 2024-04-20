@@ -17,7 +17,7 @@ GdiplusRegionFromRectangleInitializer comment: ''!
 createHandle
 	| gpHandle status |
 	gpHandle := ExternalHandle new.
-	status := self library gdipCreateRegionRectI: rectangle asParameter region: gpHandle.
+	status := self library gdipCreateRegionRectI: (GpRect marshal: rectangle) region: gpHandle.
 	status == Ok ifFalse: [self gdiplusErrorWith: status].
 	^gpHandle!
 

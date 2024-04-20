@@ -18,15 +18,26 @@ All functions in this library use the stdcall calling convention.'!
 
 !GDILibrary methodsFor!
 
-addFontResource: fontFile
-	"Adds the font resource from the specified file to the system font table.
-	The font can subsequently be used for text output by any application. 
+addFontResource: lpFileName
+	"Invoke the AddFontResource() function of the module wrapped by the receiver.
+	Helpstring: Adds the font resource from the specified file to the system.
 
-	int AddFontResource(
-		LPCWSTR lpszFilename   // font file name
-	);"
+		int __stdcall AddFontResource(
+			LPCWSTR lpFileName);"
 
 	<stdcall: sdword AddFontResourceW lpwstr>
+	^self invalidCall: _failureCode!
+
+addFontResourceEx: lpFileName fl: fl res: res
+	"Invoke the AddFontResourceEx() function of the module wrapped by the receiver.
+	Helpstring: Adds the font resource from the specified file to the system.
+
+		int __stdcall AddFontResourceEx(
+			LPCWSTR lpFileName,
+			DWORD fl,
+			void* res);"
+
+	<stdcall: sdword AddFontResourceExW lpwstr dword void*>
 	^self invalidCall: _failureCode!
 
 beginPath: hdc
@@ -881,16 +892,26 @@ rectVisible: hdc lprc: aRECT
 	<stdcall: bool RectVisible handle RECT*>
 	^self invalidCall: _failureCode!
 
-removeFontResource: fontFile
-	"The RemoveFontResource function removes the fonts in the specified file from the system font table. 
-	If the font was added using the AddFontResourceEx function, you must use the RemoveFontResourceEx function. 
+removeFontResource: lpFileName
+	"Invoke the RemoveFontResource() function of the module wrapped by the receiver.
+	Helpstring: Removes the fonts in the specified file from the system font table.
 
-	BOOL RemoveFontResource(
-		LPCWSTR lpFileName   // name of font file
-		);
-	"
+		BOOL __stdcall RemoveFontResource(
+			LPCWSTR lpFileName);"
 
 	<stdcall: bool RemoveFontResourceW lpwstr>
+	^self invalidCall: _failureCode!
+
+removeFontResourceEx: lpFileName fl: fl pdv: pdv
+	"Invoke the RemoveFontResourceEx() function of the module wrapped by the receiver.
+	Helpstring: Removes the fonts in the specified file from the system font table.
+
+		int __stdcall RemoveFontResourceEx(
+			LPCWSTR lpFileName,
+			DWORD fl,
+			void* pdv);"
+
+	<stdcall: sdword RemoveFontResourceExW lpwstr dword void*>
 	^self invalidCall: _failureCode!
 
 restoreDC: hDC nSavedDC: nSavedDC
@@ -1238,7 +1259,8 @@ textOut: hdc nXStart: nXStart nYStart: nYStart lpString: lpString cbString: cbSt
 	^self invalidCall: _failureCode! !
 
 !GDILibrary categoriesForMethods!
-addFontResource:!public!win32 functions-font and text! !
+addFontResource:!**auto generated**!public!win32 functions-font and text! !
+addFontResourceEx:fl:res:!**auto generated**!public!win32 functions-font and text! !
 beginPath:!**auto generated**!public!win32 functions-path! !
 bitBlt:nXDest:nYDest:nWidth:nHeight:hdcSrc:nXSrc:nYSrc:dwRop:!**auto generated**!public!win32 functions-bitmap! !
 closeFigure:!**auto generated**!public!win32 functions-path! !
@@ -1313,7 +1335,8 @@ ptInRegion:x:y:!public!win32 functions-region! !
 realizePalette:!**auto generated**!public!win32 functions-color! !
 rectangle:nLeftRect:nTopRect:nRightRect:nBottomRect:!public!win32 functions-filled shape! !
 rectVisible:lprc:!public!win32 functions-device context! !
-removeFontResource:!public!win32 functions-font and text! !
+removeFontResource:!**auto generated**!public!win32 functions-font and text! !
+removeFontResourceEx:fl:pdv:!**auto generated**!public!win32 functions-font and text! !
 restoreDC:nSavedDC:!public!win32 functions-device context! !
 roundRect:nLeftRect:nTopRect:nRightRect:nBottomRect:nWidth:nHeight:!public!win32 functions-filled shape! !
 saveDC:!public!win32 functions-device context! !

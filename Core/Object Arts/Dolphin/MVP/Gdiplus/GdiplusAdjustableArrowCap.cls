@@ -95,43 +95,6 @@ width:!accessing!public! !
 
 !GdiplusAdjustableArrowCap class methodsFor!
 
-exampleGdipAACArrowCap
-	"This example displays several lines with arrow caps, showing the effects of changing aspects.
-
-		self exampleGdipAACArrowCap showExample
-	"
-
-	| bitmap graphics arrowCap pen |
-	bitmap := GdiplusBitmap extent: 350 @ 300.
-	graphics := bitmap graphics.
-	arrowCap := GdiplusAdjustableArrowCap 
-				height: 10
-				width: 5
-				isFilled: false.
-	pen := GdiplusPen red width: 2.
-	pen customEndCap: arrowCap.
-	graphics drawLine: (20 @ 20 extent: 250 @ 0) pen: pen.
-	pen customStartCap: arrowCap.
-	arrowCap isFilled: true.
-	pen customEndCap: arrowCap.
-	graphics drawLine: (20 @ 70 extent: 250 @ 0) pen: pen.
-	pen customStartCap: arrowCap.
-	arrowCap height: 20.
-	pen customEndCap: arrowCap.
-	graphics drawLine: (20 @ 120 extent: 250 @ 0) pen: pen.
-	pen customStartCap: arrowCap.
-	arrowCap width: 10.
-	pen customEndCap: arrowCap.
-	graphics drawLine: (20 @ 170 extent: 250 @ 0) pen: pen.
-	pen customStartCap: arrowCap.
-	arrowCap middleInset: 5.
-	pen customEndCap: arrowCap.
-	graphics drawLine: (20 @ 220 extent: 250 @ 0) pen: pen.
-	pen customStartCap: arrowCap.
-	pen customEndCap: GdiplusCustomLineCap new.
-	graphics drawLine: (20 @ 270 extent: 250 @ 0) pen: pen.
-	^bitmap!
-
 height: heightReal width: widthReal isFilled: isFilledBoolean
 	^self fromInitializer: (GdiplusAdjustableArrowCapInitializer 
 				height: heightReal
@@ -142,7 +105,6 @@ strokePath: aStrokePath
 	^self shouldNotImplement! !
 
 !GdiplusAdjustableArrowCap class categoriesForMethods!
-exampleGdipAACArrowCap!examples!public!unit tests! !
 height:width:isFilled:!instance creation!public! !
 strokePath:!instance creation!public! !
 !

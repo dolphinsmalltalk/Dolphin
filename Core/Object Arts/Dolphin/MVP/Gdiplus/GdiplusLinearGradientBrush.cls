@@ -54,6 +54,19 @@ blendFactors: factorsArray positions: positionsArray
 				count: positionsArray size.
 	status = Ok ifFalse: [GdiplusError signal: 'GdipSetLineBlend failed' with: status]!
 
+bounds
+	| rect status |
+	rect := GpRect newBuffer.
+	(status := GdiplusLibrary default gdipGetLineRectI: self asParameter rect: rect) == Ok
+		ifFalse: [GdiplusError signal: 'GdipGetLineRectI: failed' with: status].
+	^rect asRectangle!
+
+colors
+	^{self startingColor. self endingColor}!
+
+endingColor
+	^initializer color2!
+
 isGammaCorrected
 	"Answer whether gamma correction is applied to the receiver when rendering."
 
@@ -72,6 +85,9 @@ isGammaCorrected: aBoolean
 				useGammaCorrection: aBoolean asParameter) = Ok 
 		ifFalse: [GdiplusError signal: 'GdipSetLineGammaCorrection failed' with: status]!
 
+startingColor
+	^initializer color1!
+
 startingColor: startColor endingColor: endColor
 	"Set the receiver's starting and ending colors."
 
@@ -80,160 +96,28 @@ startingColor: startColor endingColor: endColor
 				gdipSetLineColors: self asParameter
 				color1: startColor argbCode
 				color2: endColor argbCode) == Ok
-		ifFalse: [GdiplusError signal: 'GdipSetLineColors failed' with: status]! !
+		ifFalse: [GdiplusError signal: 'GdipSetLineColors failed' with: status]!
+
+wrapMode
+	"Answer a number that indicates if and how painting is done outside the receiver's boundary path."
+
+	^initializer wrapMode! !
 
 !GdiplusLinearGradientBrush categoriesForMethods!
 blendCount!accessing!private! !
 blendFactors!accessing!public! !
 blendFactors:positions:!accessing!public! !
+bounds!accessing!public! !
+colors!accessing!public! !
+endingColor!accessing!public! !
 isGammaCorrected!accessing!public! !
 isGammaCorrected:!accessing!public! !
+startingColor!accessing!public! !
 startingColor:endingColor:!accessing!public! !
+wrapMode!accessing!public! !
 !
 
 !GdiplusLinearGradientBrush class methodsFor!
-
-exampleGdipLGChangingColors
-	"This example shows changing starting and ending colors.
-
-		self exampleGdipLGChangingColors showExample
-	"
-
-	| bitmap graphics points colors brush |
-	bitmap := GdiplusBitmap new.
-	graphics := bitmap graphics.
-	points := Array
-				with: 0 @ 0
-				with: 300 @ 0
-				with: 0 @ 200
-				with: 300 @ 200.
-	colors := #(#red #green #blue #magenta #cyan).
-	brush := GdiplusLinearGradientBrush
-				point1: 0 @ 0
-				point2: 0 @ 200
-				color1: Color blue
-				color2: Color blue.
-	points keysAndValuesDo: 
-			[:i :point |
-			brush startingColor: (Color named: (colors at: i))
-				endingColor: (Color named: (colors at: i + 1)).
-			graphics fillRectangle: (point extent: 300 @ 200) brush: brush].
-	^bitmap!
-
-exampleGdipLGCustom
-	"MSDN:   Using GDI+ >  Filling Shapes with a Gradient Brush > Creating a Linear Gradient, Custom
-	This example uses a customized linear gradient brush to fill an ellipse and a rectangle.
-
-		self exampleGdipLGCustom showExample
-	"
-
-	| bitmap brush |
-	bitmap := GdiplusBitmap extent: 600 @ 400.
-	brush := GdiplusLinearGradientBrush
-				point1: 0 @ 10
-				point2: 200 @ 10
-				color1: Color black
-				color2: Color red.
-	brush blendFactors: #(0.0 0.5 1.0) positions: #(0.0 0.2 1.0).
-	bitmap graphics
-		fillEllipse: (0 @ 30 extent: 200 @ 100) brush: brush;
-		fillRectangle: (0 @ 155 extent: 500 @ 30) brush: brush.
-	^bitmap!
-
-exampleGdipLGDiagonal
-	"MSDN:   Using GDI+ >  Filling Shapes with a Gradient Brush > Creating a Linear Gradient, Diagonal
-	This example uses a customized linear gradient brush to fill an ellipse and a line.
-
-		self exampleGdipLGDiagonal showExample
-	"
-
-	| bitmap brush pen |
-	bitmap := GdiplusBitmap extent: 600 @ 400.
-	brush := GdiplusLinearGradientBrush
-				point1: 0 @ 0
-				point2: 200 @ 100
-				color1: Color blue
-				color2: Color green.
-	pen := GdiplusPen brush: brush width: 10.
-	bitmap graphics
-		drawLine: (0 @ 0 extent: 600 @ 300) pen: pen;
-		fillEllipse: (10 @ 100 extent: 200 @ 100) brush: brush.
-	^bitmap!
-
-exampleGdipLGHorizontal
-	"MSDN:   Using GDI+ >  Filling Shapes with a Gradient Brush > Creating a Linear Gradient, Horizontal
-	This example uses a horizontal linear gradient brush to draw a line and fill an ellipse and rectangle.
-
-		self exampleGdipLGHorizontal showExample
-	"
-
-	| bitmap brush pen |
-	bitmap := GdiplusBitmap extent: 600 @ 250.
-	brush := GdiplusLinearGradientBrush 
-				point1: 0 @ 10
-				point2: 200 @ 10
-				color1: Color red
-				color2: Color blue.
-	pen := GdiplusPen brush: brush width: 3.
-	(bitmap graphics)
-		drawLine: (0 @ 10 corner: 200 @ 10) pen: pen;
-		fillEllipse: (0 @ 30 extent: 200 @ 100) brush: brush;
-		fillRectangle: (0 @ 155 extent: 500 @ 30) brush: brush.
-	^bitmap!
-
-exampleGdipLGModeConstants
-	"This example shows the different effects of LinearGradientMode constants.
-
-		self exampleGdipLGModeConstants showExample
-	"
-
-	| bitmap graphics points enum brush |
-	bitmap := GdiplusBitmap new.
-	graphics := bitmap graphics.
-	points := Array
-				with: 0 @ 0
-				with: 300 @ 0
-				with: 0 @ 200
-				with: 300 @ 200.
-	points keysAndValuesDo: 
-			[:i :point |
-			enum := self enumsLinearGradientMode at: i.
-			brush := GdiplusLinearGradientBrush
-						rect: (0 @ 0 corner: 300 @ 200)
-						color1: Color red
-						color2: Color yellow
-						mode: enum value.
-			graphics
-				fillRectangle: (point extent: 300 @ 200) brush: brush;
-				drawString: enum key at: point].
-	^bitmap!
-
-exampleGdipLGTiling
-	"This example shows the different effects of tiling with LinearGradientMode constants.
-
-		self exampleGdipLGTiling showExample
-	"
-
-	| bitmap graphics points enum brush |
-	bitmap := GdiplusBitmap new.
-	graphics := bitmap graphics.
-	points := Array
-				with: 0 @ 0
-				with: 300 @ 0
-				with: 0 @ 200
-				with: 300 @ 200.
-	points keysAndValuesDo: 
-			[:i :point |
-			enum := self enumsLinearGradientMode at: i.
-			brush := GdiplusLinearGradientBrush
-						rect: (0 @ 0 corner: 75 @ 50)
-						color1: Color blue
-						color2: Color cyan
-						mode: enum value.
-			graphics
-				fillRectangle: (point extent: 300 @ 200) brush: brush;
-				drawString: enum key at: point].
-	^bitmap!
 
 point1: point1 point2: point2 color1: color1 color2: color2
 	"Answer a LinearGradientBrush using a set of boundary points and boundary colors."
@@ -254,12 +138,6 @@ rect: rect color1: color1 color2: color2 mode: aLinearGradientMode
 				mode: aLinearGradientMode)! !
 
 !GdiplusLinearGradientBrush class categoriesForMethods!
-exampleGdipLGChangingColors!examples!public!sunit! !
-exampleGdipLGCustom!examples!public!sunit! !
-exampleGdipLGDiagonal!examples!public!sunit! !
-exampleGdipLGHorizontal!examples!public!sunit! !
-exampleGdipLGModeConstants!examples!public!sunit! !
-exampleGdipLGTiling!examples!public!sunit! !
 point1:point2:color1:color2:!instance creation!public! !
 rect:color1:color2:mode:!instance creation!public! !
 !

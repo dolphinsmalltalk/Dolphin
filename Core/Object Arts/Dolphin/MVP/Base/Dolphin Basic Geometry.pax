@@ -11,7 +11,9 @@ package classNames
 	add: #ExternalRectangle;
 	add: #Point;
 	add: #Point3D;
+	add: #POINTArray;
 	add: #POINTL;
+	add: #POINTLArray;
 	add: #RECT;
 	add: #Rectangle;
 	yourself.
@@ -74,6 +76,18 @@ ExternalStructure subclass: #ExternalPoint
 	classInstanceVariableNames: ''!
 
 ExternalStructure subclass: #ExternalRectangle
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+ExternalArray subclass: #POINTArray
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+POINTArray subclass: #POINTLArray
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

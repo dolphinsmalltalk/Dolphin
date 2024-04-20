@@ -17,11 +17,7 @@ GdiplusPathGradientFromPointsInitializer comment: ''!
 createHandle
 	| gpHandle status points |
 	gpHandle := ExternalHandle new.
-	points := StructureArray
-				withAll: pathPoints
-				elementClass: POINTL
-				initializer: [:pointl :point | pointl x: point x y: point y].
-	points beUnfinalizable.
+	points := POINTLArray marshal: pathPoints.
 	status := self library
 				gdipCreatePathGradientI: points
 				count: pathPoints size

@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Object subclass: #ObjectInside
-	instanceVariableNames: 'image edgePoints position scale rotation alpha color baseColor matrix'
+	instanceVariableNames: 'image edgePoints position scale rotation color baseColor matrix extent center baseScale attributes'
 	classVariableNames: 'EdgePointResolution'
 	poolDictionaries: 'GdiplusConstants'
 	classInstanceVariableNames: ''!
@@ -16,24 +16,14 @@ ObjectInside comment: ''!
 
 !ObjectInside methodsFor!
 
-alpha
-	^alpha!
+attributes
+	^attributes ifNil: [attributes := GdiplusImageAttributes new]!
 
-alpha: aFloat
-	alpha := aFloat!
+baseScale
+	^baseScale!
 
-baseColor
-	"Answer the base color to map from"
-
-	^baseColor!
-
-baseColor: aColor
-	"Set the base color to map from"
-
-	baseColor :=aColor!
-
-center
-	^self image extent // 2!
+baseScale: aFloat
+	baseScale := aFloat!
 
 color
 	"Answer the color to map the baseColor to, or nil if there is no deviation from the original"
@@ -43,66 +33,33 @@ color
 color: aColorOrNil
 	"Set the color to map the baseColor to, or nil if there is no deviation from the original"
 
-	color :=aColorOrNil!
+	color := aColorOrNil.
+	color ifNil: [^self].
+	self attributes remapColor: baseColor to: color!
 
-copy
-	^super copy
-		setImage: self image copy;
-		resetMatrix;
-		yourself!
-
-drawEdgePointsOn: aGdiplusGraphics 
+drawOn: aGdiplusGraphics
 	aGdiplusGraphics transform: self matrix.
-	self edgePoints do: [:each | aGdiplusGraphics drawRectangle: (each extent: 1)]!
-
-drawOn: aGdiplusGraphics 
-	| attributes extent |
-	extent := self extent.
-	attributes := GdiplusImageAttributes new.
-	self color 
-		ifNotNil: 
-			[:col | 
-			| table |
-			table := StructureArray length: 1 elementClass: GpColorMap.
-			(table at: 1)
-				oldColor: self baseColor argbCode;
-				newColor: col argbCode.
-			attributes remapTable: table].
-	self alpha 
-		ifNotNil: 
-			[:alph | 
-			| colorMatrix |
-			colorMatrix := GpColorMatrix identity.
-			colorMatrix atPoint: 4 @ 4 put: alph.
-			attributes colorMatrix: colorMatrix].
-	aGdiplusGraphics
-		interpolationMode: InterpolationModeHighQualityBicubic;
-		transform: self matrix;
-		drawImage: self image
-			at: Point zero
-			extent: extent
-			from: Point zero
-			extent: extent
-			unit: UnitPixel
-			attributes: attributes;
-		resetTransform.
-	attributes free!
+	attributes
+		ifNil: [aGdiplusGraphics drawImage: image]
+		ifNotNil: [aGdiplusGraphics drawImage: image attributes: attributes].
+	aGdiplusGraphics resetTransform!
 
 edgePoints
-	^edgePoints ifNil: [edgePoints := self findEdgePoints]!
-
-edgePoints: anArray
-	edgePoints := anArray!
+	^edgePoints
+		ifNil: 
+			[edgePoints := self findEdgePoints.
+			"B add: edgePoints size."
+			edgePoints]!
 
 extent
-	^self image extent!
+	^extent!
 
 findEdgePoints
 	| width argb gdipluslib imageHandle height pts |
-	pts := OrderedCollection new: 50.
-	height := image height.
-	width := image width.
-	argb := ByteArray new: 4.
+	pts := Array writeStream: 100.
+	height := extent y.
+	width := extent x.
+	argb := ByteArray newFixed: 4.
 	gdipluslib := GdiplusLibrary default.
 	imageHandle := image asParameter.
 	0 to: height + EdgePointResolution
@@ -121,32 +78,35 @@ findEdgePoints
 						x: (x min: width - 1)
 						y: ym
 						color: argb.
-					(argb dwordAtOffset: 0) == 0 == found
+					(argb sdwordAtOffset: 0) == 0 == found
 						ifTrue: 
-							[pts addLast: x @ y.
+							[pts nextPutAll: x @ y.
 							found := found not]]].
-	^pts!
+	^pts contents!
 
-image
-	^image!
+free
+	image free.
+	image := nil.
+	attributes free.
+	attributes := nil.
+	self resetMatrix!
 
 initialize
 	super initialize.
 	scale := 1.
 	rotation := 0.
-	alpha := 1.
 	baseColor := Color black.
 	position := Point zero
 !
 
 matrix
-	^matrix 
+	^matrix
 		ifNil: 
-			[matrix := (GdiplusMatrix new)
-						translateTransform: self position;
-						rotateTransform: self rotation;
-						scaleTransform: self scale asPoint;
-						translateTransform: self center negated;
+			[matrix := GdiplusMatrix new
+						translateTransform: position;
+						rotateTransform: rotation;
+						scaleTransform: scale asPoint;
+						translateTransform: center negated;
 						yourself]!
 
 position
@@ -156,8 +116,13 @@ position: aPoint
 	position := aPoint.
 	self resetMatrix!
 
+postCopy
+	image := image copy.
+	self resetMatrix.
+	^self!
+
 resetMatrix
-	matrix ifNotNil: [matrix free].
+	matrix free.
 	matrix := nil!
 
 rotation
@@ -171,18 +136,18 @@ scale
 	^scale!
 
 scale: aFloat 
+	scale = aFloat ifTrue: [^self].
 	scale := aFloat.
 	self resetMatrix!
 
-setImage: aGdiplusImage 
+setImage: aGdiplusImage
 	image := aGdiplusImage.
-
-!
+	extent := image extent.
+	center := extent / 2.0!
 
 testCollisionIn: aGdiplusBitmap
-	| white color1 gdiplusLib bitmapHandle |
-	white := Color white argbCode asSDword.
-	color1 := ByteArray new: 4.
+	| pixel gdiplusLib bitmapHandle |
+	pixel := ByteArray new: 4.
 	gdiplusLib := GdiplusLibrary default.
 	bitmapHandle := aGdiplusBitmap asParameter.
 	^(self matrix transformPoints: self edgePoints) anySatisfy: 
@@ -191,41 +156,37 @@ testCollisionIn: aGdiplusBitmap
 				gdipBitmapGetPixel: bitmapHandle
 				x: each x
 				y: each y
-				color: color1) == Ok
-				and: [(color1 sdwordAtOffset: 0) ~= white]]!
+				color: pixel) == Ok
+				and: [(pixel sdwordAtOffset: 0) ~~ ##(Color white argbCode asSDword)]]!
 
 x
-	^self position x!
+	^position x!
 
 x: aNumber
 	self position: aNumber @ self position y!
 
 y
-	^self position y!
+	^position y!
 
 y: aNumber
 	self position: self position x @ aNumber! !
 
 !ObjectInside categoriesForMethods!
-alpha!accessing!public! !
-alpha:!accessing!public! !
-baseColor!accessing!public! !
-baseColor:!accessing!public! !
-center!accessing!public! !
+attributes!accessing!private! !
+baseScale!accessing!public! !
+baseScale:!accessing!public! !
 color!accessing!public! !
 color:!accessing!public! !
-copy!copying!public! !
-drawEdgePointsOn:!operations!public! !
 drawOn:!operations!public! !
 edgePoints!accessing!public! !
-edgePoints:!accessing!public! !
 extent!accessing!public! !
 findEdgePoints!operations!private! !
-image!private! !
+free!finalizing!public! !
 initialize!private! !
 matrix!accessing!operations!public! !
-position!accessing!public! !
+position!public! !
 position:!accessing!public! !
+postCopy!copying!public! !
 resetMatrix!operations!public! !
 rotation!accessing!public! !
 rotation:!accessing!public! !
@@ -253,18 +214,11 @@ fromImage: aGdiplusImage
 	^super new 	
 		initialize;
 		setImage:aGdiplusImage;
-		yourself!
-
-fromImage: aGdiplusImage scaledBy: aFloatScale 
-	| scaledBitmap |
-	aFloatScale = 1 ifTrue: [^self fromImage: aGdiplusImage].
-	scaledBitmap := GdiplusBitmap fromImage: aGdiplusImage scaledBy: aFloatScale.
-	^self fromImage: scaledBitmap! !
+		yourself! !
 
 !ObjectInside class categoriesForMethods!
 chooseFile!public! !
 fromBytes:!public! !
 fromImage:!public! !
-fromImage:scaledBy:!public! !
 !
 

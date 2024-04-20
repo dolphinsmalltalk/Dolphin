@@ -17,10 +17,18 @@ GdiplusStringFormatInitializer comment: ''!
 !GdiplusStringFormatInitializer methodsFor!
 
 gdiplusConstructorErrorDescription
-	^'Error creating StringFormat'! !
+	^'Error creating StringFormat'!
+
+isGenericDefault
+	^false!
+
+isGenericTypographic
+	^false! !
 
 !GdiplusStringFormatInitializer categoriesForMethods!
 gdiplusConstructorErrorDescription!constants!private! !
+isGenericDefault!public!testing! !
+isGenericTypographic!public!testing! !
 !
 
 !GdiplusStringFormatInitializer class methodsFor!

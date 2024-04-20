@@ -29,6 +29,9 @@ setSampleEllipse
 setSampleNew
 	model := GdiplusGraphicsPath new!
 
+subjectClass
+	^GdiplusGraphicsPath!
+
 testBounds
 	self setSample3Points.
 	self assert: (Point zero extent: model bounds extent - 1) equals: (Point zero extent: 200 @ 150)!
@@ -59,6 +62,7 @@ testPointCount
 setSample3Points!public! !
 setSampleEllipse!public! !
 setSampleNew!public! !
+subjectClass!constants!private! !
 testBounds!public! !
 testConstructor3Points!public! !
 testConstructorPoints!public! !

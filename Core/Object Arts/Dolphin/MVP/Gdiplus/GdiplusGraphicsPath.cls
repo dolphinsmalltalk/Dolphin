@@ -35,8 +35,7 @@ addClosedCurve: aPointsCollection
 	| status |
 	(status := GdiplusLibrary default 
 				gdipAddPathClosedCurveI: self asParameter
-				points: (StructureArray withAll: (aPointsCollection collect: [:e | POINTL fromPoint: e])
-						elementClass: POINTL)
+				points:(POINTLArray marshal: aPointsCollection)
 				count: aPointsCollection size) = Ok 
 		ifFalse: [GdiplusError signal: 'GdipAddPathClosedCurveI failed' with: status]!
 
@@ -44,8 +43,7 @@ addCurve: aPointsCollection
 	| status |
 	(status := GdiplusLibrary default 
 				gdipAddPathCurveI: self asParameter
-				points: (StructureArray withAll: (aPointsCollection collect: [:e | POINTL fromPoint: e])
-						elementClass: POINTL)
+				points: (POINTLArray marshal: aPointsCollection)
 				count: aPointsCollection size) = Ok 
 		ifFalse: [GdiplusError signal: 'GdipAddPathCurveI failed' with: status]!
 
@@ -79,8 +77,7 @@ addPolygon: aPointsCollection
 	| status |
 	(status := GdiplusLibrary default 
 				gdipAddPathPolygonI: self asParameter
-				points: (StructureArray withAll: (aPointsCollection collect: [:e | POINTL fromPoint: e])
-						elementClass: POINTL)
+				points: (POINTLArray marshal: aPointsCollection)
 				count: aPointsCollection size) = Ok 
 		ifFalse: [GdiplusError signal: 'GdipAddPathPolygonI failed' with: status]!
 
@@ -102,7 +99,26 @@ basicFree
 bounds
 	"Answer a bounding Rectangle for the receiver."
 
-	^self getBounds: nil pen: nil!
+	^self bounds: nil withPen: nil!
+
+bounds: aGdiplusMatrix withPen: aGdiplusPen
+	"Answer a bounding Rectangle for the receiver.  aGdiplusMatrix specifies a temporary 
+	transformation to be applied to the receiver's path before the bounding rectangle is 
+	calculated.  aGdiplusPen influences the size of the bounding rectangle which will be 
+	large enough to enclose the receiver even if the path is drawn with a wide pen."
+
+	| status rect |
+	rect := GpRect newBuffer.
+	(status := GdiplusLibrary default
+				gdipGetPathWorldBoundsI: self asParameter
+				bounds: rect
+				matrix: aGdiplusMatrix asParameter
+				pen: aGdiplusPen asParameter) == Ok
+		ifFalse: [GdiplusError signal: 'GdipGetPathWorldBoundsI failed' with: status].
+	^rect asRectangle!
+
+boundsWithPen: aGdiplusPen
+	^self bounds: nil withPen: aGdiplusPen!
 
 closeFigure
 	| status |
@@ -124,22 +140,6 @@ fillMode: aFillModeConstant
 	| status |
 	(status := GdiplusLibrary default gdipSetPathFillMode: self asParameter fillMode: aFillModeConstant) 
 		= Ok ifFalse: [GdiplusError signal: 'GdipSetPathFillMode failed' with: status]!
-
-getBounds: aGdiplusMatrix pen: aGdiplusPen 
-	"Private - Answer a bounding Rectangle for the receiver.  aGdiplusMatrix specifies a temporary 
-	transformation to be applied to the receiver's path before the bounding rectangle is 
-	calculated.  aGdiplusPen influences the size of the bounding rectangle which will be 
-	large enough to enclose the receiver even if the path is drawn with a wide pen."
-
-	| status rect |
-	rect := RECTL new.
-	(status := GdiplusLibrary default 
-				gdipGetPathWorldBoundsI: self asParameter
-				bounds: rect
-				matrix: aGdiplusMatrix asParameter
-				pen: aGdiplusPen asParameter) = Ok 
-		ifFalse: [GdiplusError signal: 'GdipGetPathWorldBoundsI failed' with: status].
-	^rect asRectangle!
 
 pointCount
 	"Answer the number of points in the receiver."
@@ -166,75 +166,16 @@ addPolygon:!operations!public! !
 addRectangle:!operations!public! !
 basicFree!private!realizing/unrealizing! !
 bounds!accessing!public! !
+bounds:withPen:!enquiries!public! !
+boundsWithPen:!enquiries!public! !
 closeFigure!operations!public! !
 fillMode!accessing!public! !
 fillMode:!accessing!public! !
-getBounds:pen:!accessing!private! !
 pointCount!accessing!public! !
 startFigure!operations!public! !
 !
 
 !GdiplusGraphicsPath class methodsFor!
-
-exampleGdipGPCreatingFigures
-	"MSDN:  Using GDI+ >  Constructing and Drawing Paths > Creating Figures from Lines, Curves, and Shapes
-
-		self exampleGdipGPCreatingFigures showExample
-	"
-
-	| bitmap graphics path pen brush |
-	bitmap := GdiplusBitmap extent: 400 @ 300.
-	graphics := bitmap graphics.
-	pen := GdiplusPen red.
-	path := GdiplusGraphicsPath new.
-	path addArc: (0 @ 0 extent: 50 @ 50) angles: 0 @ -180.
-	graphics drawPath: path pen: pen.
-	"Create and draw a path that has two figures. The first is an arc followed by a line. The second 
-	is a line followed by a curve, followed by a line. The first is left open, and the second is closed."
-	pen color: Color blue.
-	path := GdiplusGraphicsPath new.
-	graphics translateTransform: 100 @ 0 order: nil.
-	path addArc: (175 @ 50 extent: 50 @ 50) angles: 0 @ 180.
-	path addLineFrom: 100 @ 0 to: 250 @ 20.
-	path startFigure.
-	path addLineFrom: 50 @ 20 to: 5 @ 90.
-	path addCurve: (Array 
-				with: 40 @ 60
-				with: 50 @ 70
-				with: 30 @ 90).
-	path addLineFrom: 50 @ 150 to: 150 @ 180.
-	path closeFigure.
-	graphics drawPath: path pen: pen.
-	"Create, draw and fill a path that has two lines, a rectangle, and an ellipse."
-	path := GdiplusGraphicsPath new.
-	graphics translateTransform: -100 @ 100 order: nil.
-	pen color: Color red.
-	brush := GdiplusSolidBrush color: Color darkGreen.
-	path addLineFrom: 10 @ 10 to: 100 @ 40.
-	path addLineFrom: 100 @ 60 to: 30 @ 60.
-	path addRectangle: (50 @ 35 extent: 20 @ 40).
-	path addEllipse: (10 @ 75 extent: 40 @ 30).
-	graphics drawPath: path pen: pen.
-	graphics fillPath: path brush: brush.
-	^bitmap!
-
-exampleGdipGPFillingFigures
-	"MSDN:   GDI+ >  Using GDI+ >  Constructing and Drawing Paths > Filling Open Figures
-
-		self exampleGdipGPFillingFigures showExample
-	"
-
-	| path pen brush bitmap |
-	path := GdiplusGraphicsPath new.
-	path addArc: (0 @ 0 extent: 150 @ 120) angles: 30 @ 120.
-	path addEllipse: (50 @ 50 extent: 50 @ 100).
-	pen := GdiplusPen blue width: 5.
-	brush := GdiplusSolidBrush red.
-	bitmap := GdiplusBitmap extent: 200 @ 200.
-	(bitmap graphics)
-		fillPath: path brush: brush;
-		drawPath: path pen: pen.
-	^bitmap!
 
 fillMode: aFillModeConstant 
 	"Answer a new instance of the receiver with specified FillMode constants.
@@ -260,8 +201,6 @@ points: points types: types fillMode: aFillModeConstant
 				fillMode: aFillModeConstant)! !
 
 !GdiplusGraphicsPath class categoriesForMethods!
-exampleGdipGPCreatingFigures!examples!public!sunit! !
-exampleGdipGPFillingFigures!examples!public!sunit! !
 fillMode:!instance creation!public! !
 new!instance creation!public! !
 points:types:fillMode:!instance creation!public! !

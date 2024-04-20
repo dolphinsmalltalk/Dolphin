@@ -64,7 +64,7 @@ testSmallIconExtent
 	metrics := SystemMetrics forDpi: 120.
 	self assert: metrics smallIconExtent equals: 20 @ 20! !
 !SystemMetricsTest categoriesForMethods!
-testIconTitleFont!public! !
+testIconTitleFont!public!unit tests! !
 testLargeIconExtent!public! !
 testMenuBarHeight!public! !
 testMenuImageExtent!public! !

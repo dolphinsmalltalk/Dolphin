@@ -41,7 +41,7 @@ anySatisfy: discriminator
 	Implementation Note: The argument is evaluated for every element of the
 	receiver iff it evaluates to false for every element."
 
-	self do: [:e | (discriminator value: e) ifTrue: [^true]].
+	1 to: self size do: [:i | (discriminator value: (self uncheckedAt: i)) ifTrue: [^true]].
 	^false!
 
 appendToStream: puttableStream
@@ -54,7 +54,13 @@ appendToStream: puttableStream
 asArray
 	"Answer an <Array> containing the constituent elements of the receiver."
 
-	^self collect: [:each | each]!
+	| answer size |
+	answer := Array new: (size := self length).
+	self
+		uncheckedFrom: 1
+		to: size
+		keysAndValuesDo: [:i :each | answer basicAt: i put: each].
+	^answer!
 
 asOrderedCollection
 	"Answer an <OrderedCollection> whose elements are those of the receiver
@@ -518,6 +524,10 @@ length: count elementSize: bytes
 	^(super new: count*bytes)
 		basicLength: count!
 
+marshal: aCollection
+	aCollection class == self ifTrue: [^aCollection].
+	^self withAll: aCollection!
+
 new: anInteger
 	"Answer a new instance of the receiver allocated at an immovable location."
 
@@ -539,7 +549,11 @@ withAll: newElements
 
 	| answer |
 	answer := self new: newElements size.
-	newElements inject: 1 into: [:i :elem | answer at: i put: elem. i + 1].
+	newElements inject: 1
+		into: 
+			[:i :elem |
+			answer uncheckedAt: i put: elem.
+			i + 1].
 	^answer! !
 
 !ExternalArray class categoriesForMethods!
@@ -550,6 +564,7 @@ fromAddress:!instance creation!public! !
 fromAddress:length:!instance creation!public! !
 getFieldNames!constants!private! !
 length:elementSize:!instance creation!private! !
+marshal:!instance creation!public! !
 new:!instance creation!public! !
 with:!instance creation!public! !
 withAll:!instance creation!public! !

@@ -21,7 +21,7 @@ basicFree
 
 bounds: graphics 
 	| status rect |
-	rect := RECT new.
+	rect := GpRect newBuffer.
 	(status := GdiplusLibrary default 
 				gdipGetRegionBoundsI: self asParameter
 				graphics: graphics asParameter
@@ -52,8 +52,8 @@ combineRectangle: aRectangle mode: aCombineModeConstant
 	| status |
 	(status := GdiplusLibrary default 
 				gdipCombineRegionRectI: self asParameter
-				rect: aRectangle asParameter
-				combineMode: aCombineModeConstant) = Ok 
+				rect: (GpRect marshal: aRectangle)
+				combineMode: aCombineModeConstant) == Ok 
 		ifFalse: [GdiplusError signal: 'GdipCombineRegionRectI failed' with: status]!
 
 combineRegion: aRegion mode: aCombineModeConstant 
@@ -72,6 +72,20 @@ complementRegion: aRegion
 
 intersectRegion: aRegion
 	self combineRegion: aRegion mode: CombineModeIntersect!
+
+isEmpty
+	^self isEmpty: nil!
+
+isEmpty: aGdiplusGraphics
+	| result graphics status |
+	result := ByteArray newFixed: 4.
+	graphics := aGdiplusGraphics ifNil: [GdiplusGraphics fromCanvas: View desktop canvas].
+	(status := GdiplusLibrary default
+				gdipIsEmptyRegion: self asParameter
+				graphics: graphics asParameter
+				result: result) == Ok
+		ifFalse: [GdiplusError signal: 'GdipIsEmptyRegion failed' with: status].
+	^(result sdwordAtOffset: 0) ~~ 0!
 
 isVisible: aPoint
 	"Answer whether aPoint is inside the receiver."
@@ -125,6 +139,8 @@ combineRegion:mode:!operations!public! !
 complementPath:!helpers!public! !
 complementRegion:!helpers!public! !
 intersectRegion:!helpers!public! !
+isEmpty!public!testing! !
+isEmpty:!public!testing! !
 isVisible:!public!testing! !
 isVisible:graphics:!public!testing! !
 makeEmpty!operations!public! !
@@ -134,116 +150,6 @@ xorRegion:!helpers!public! !
 !
 
 !GdiplusRegion class methodsFor!
-
-exampleClippingSimple
-	"Private - Why is the region twice the width of the rectangle?
-	LAS: Good question - seems to be some sort of scaling going on relative to Point zero.
-
-		self exampleClippingSimple showExample
-	"
-
-	| bitmap graphics brush rect1 region1 |
-	bitmap := GdiplusBitmap extent: 350 @ 350.
-	graphics := bitmap graphics.
-	brush := GdiplusSolidBrush color: Color blue.
-	rect1 := 100 @ 50 extent: 50 @ 150.
-	region1 := GdiplusRegion fromRectangle: rect1.
-	region1 handle.
-	graphics
-		fillRegion: region1 brush: brush;
-		drawRectangle: rect1 pen: GdiplusPen black.
-	^bitmap!
-
-exampleClippingSimple2
-	"Private - If a transform is applied, then it looks right.  Not sure why.
-
-		self exampleClippingSimple2 showExample
-	"
-
-	| bitmap brush rect1 region1 |
-	bitmap := GdiplusBitmap extent: 350 @ 350.
-	brush := GdiplusSolidBrush color: Color blue.
-	rect1 := 0 @ 0 extent: 50 @ 150.
-	region1 := GdiplusRegion fromRectangle: rect1.
-	(bitmap graphics)
-		translateTransform: 100 @ 50 order: nil;
-		fillRegion: region1 brush: brush;
-		drawRectangle: (Point zero extent: rect1 extent) pen: GdiplusPen black.
-	^bitmap!
-
-exampleGdipRClipWithRegion
-	"MSDN:   GDI+ >  Using GDI+ >  Using Regions > Clipping with a Region
-
-		self exampleGdipRClipWithRegion showExample
-	"
-
-	| bitmap graphics path region pen fontFamily font brush |
-	bitmap := GdiplusBitmap extent: 200 @ 200.
-	graphics := bitmap graphics.
-	path := GdiplusGraphicsPath new.
-	path addPolygon: (Array 
-				with: 10 @ 10
-				with: 150 @ 10
-				with: 100 @ 75
-				with: 100 @ 150).
-	region := GdiplusRegion fromPath: path.
-	pen := GdiplusPen black.
-	graphics drawPath: path pen: pen.
-	graphics clipRegion: region combineMode: nil.
-	fontFamily := GdiplusFontFamily fromName: 'Arial'.
-	font := GdiplusFont 
-				fontFamily: fontFamily
-				emSize: 36
-				style: FontStyleBold
-				unit: UnitPixel.
-	brush := GdiplusSolidBrush red.
-	graphics 
-		drawString: 'A Clipping Region'
-		font: font
-		at: 15 @ 15
-		format: nil
-		brush: brush.
-	graphics 
-		drawString: 'A Clipping Region'
-		font: font
-		at: 15 @ 68
-		format: nil
-		brush: brush.
-	^bitmap!
-
-exampleGdipRHitTesting
-	"NB:  This example still does not work right.  Quite a puzzle.
-	MSDN:  GDI+ >  Using GDI+ >  Using Regions > Hit Testing with a Region
-
-		self exampleGdipRHitTesting
-	"
-
-	| bitmap graphics brush rect1 rect2 region1 region2 presenter onLeftButtonPressed |
-	bitmap := GdiplusBitmap new.
-	graphics := bitmap graphics.
-	brush := GdiplusSolidBrush green.
-	rect1 := 50 @ 0 extent: 50 @ 150.
-	rect2 := 0 @ 50 extent: 150 @ 50.
-	region1 := GdiplusRegion fromRectangle: rect1.
-	region2 := GdiplusRegion fromRectangle: rect2.
-	region1 unionRegion: region2.
-	graphics fillRegion: region1 brush: brush.
-	"Show in blue what region1's area should be."
-	graphics fillRectangle: rect1 brush: GdiplusSolidBrush blue.
-	graphics fillRectangle: rect2 brush: GdiplusSolidBrush blue.
-	(presenter := ImagePresenter show: 'Basic image' on: bitmap) view viewMode: #normal.
-	onLeftButtonPressed := 
-			[:aMouseEvent | 
-			(region1 isVisible: aMouseEvent x @ aMouseEvent y graphics: graphics) 
-				ifTrue: [brush color: Color green]
-				ifFalse: [brush color: Color red].
-			graphics fillRegion: region1 brush: brush.
-			presenter view invalidate].
-	presenter propertyAt: #clickHandler put: onLeftButtonPressed.
-	presenter 
-		when: #leftButtonPressed:
-		send: #value:
-		to: onLeftButtonPressed!
 
 fromPath: aPath
 	^self fromInitializer: (GdiplusRegionFromPathInitializer fromPath: aPath)!
@@ -257,10 +163,6 @@ new
 	^self fromInitializer: GdiplusRegionInitializer default! !
 
 !GdiplusRegion class categoriesForMethods!
-exampleClippingSimple!examples!private! !
-exampleClippingSimple2!examples!private! !
-exampleGdipRClipWithRegion!examples!public!sunit! !
-exampleGdipRHitTesting!examples!public! !
 fromPath:!instance creation!public! !
 fromRectangle:!instance creation!public! !
 new!instance creation!public! !

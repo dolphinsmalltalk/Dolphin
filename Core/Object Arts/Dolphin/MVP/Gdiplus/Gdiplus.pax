@@ -125,6 +125,7 @@ GdiplusGUIDs
 package basicPackageVersion: '6.2'.
 
 package classNames
+	add: #AbstractRect;
 	add: #ENHMETAHEADER3;
 	add: #GdiplusAdjustableArrowCap;
 	add: #GdiplusAdjustableArrowCapInitializer;
@@ -212,6 +213,7 @@ package classNames
 	add: #GpMetafileHeader;
 	add: #GpPathData;
 	add: #GpPropertyItem;
+	add: #GpRect;
 	add: #GpWmfPlaceableFileHeader;
 	add: #GpWMFRect16;
 	add: #METAHEADER;
@@ -245,7 +247,6 @@ package setPrerequisites: #(
 	'..\..\Base\Dolphin Conformant Array Fields'
 	'..\Presenters\Image\Dolphin Image Presenter'
 	'..\Models\List\Dolphin List Models'
-	'..\..\Base\Dolphin Message Box'
 	'..\Base\Dolphin MVP Base'
 	'..\..\ActiveX\Structured Storage\OLE Structured Storage').
 
@@ -373,7 +374,19 @@ ExternalStructure subclass: #METAHEADER
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
-ExternalRectangle subclass: #RECTF
+ExternalRectangle subclass: #AbstractRect
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+AbstractRect subclass: #GpRect
+	instanceVariableNames: ''
+	classVariableNames: '_OffsetOf_height _OffsetOf_width _OffsetOf_x _OffsetOf_y'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+AbstractRect subclass: #RECTF
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_height _OffsetOf_width _OffsetOf_x _OffsetOf_y'
 	poolDictionaries: ''

@@ -120,6 +120,15 @@ Any state changes you make to the device context between GetHDC and ReleaseHDC w
 	hdc := self getHDC.
 	[anOperation value: hdc] ensure: [self releaseHDC: hdc]!
 
+dpi
+	"Answer the dots per inch of the display device associated with the receiver. It is assumed that the horizontal and vertical dpi are the same, which will be the case for any display device."
+
+	| status dpiY |
+	dpiY := ByteArray newFixed: 4.
+	(status := GdiplusLibrary default gdipGetDpiY: self asParameter dpi: dpiY) == Ok
+		ifFalse: [GdiplusError signal: 'GdipGetDpiY failed' with: status].
+	^(dpiY floatAtOffset: 0) asInteger!
+
 drawArc: aRectangle pen: aGdiplusPen startAngle: startAngle sweepAngle: sweepAngle 
 	"Draw an arc on the receiver in aRectangle, from startAngle with length sweepAngle, using aGdiplusPen."
 
@@ -158,21 +167,20 @@ drawCachedBitmap: aCachedBitmap at: aPoint
 				gdipDrawCachedBitmap: self asParameter
 				cachedBitmap: aCachedBitmap asParameter
 				x: aPoint x
-				y: aPoint y) = Ok 
+				y: aPoint y) == Ok 
 		ifFalse: [GdiplusError signal: 'GdipDrawCachedBitmap failed' with: status]!
 
-drawClosedCurve: aPointsCollection pen: aGdiplusPen tension: aReal 
+drawClosedCurve: aPointsCollection pen: aGdiplusPen tension: aReal
 	"Draw a closed cardinal spline on the receiver that passes through aPointsCollection using aGdiplusPen.
 	aReal specifies how tightly the curve bends through the coordinates of the cardinal spline."
 
 	| status |
-	(status := GdiplusLibrary default 
+	(status := GdiplusLibrary default
 				gdipDrawClosedCurve2I: self asParameter
 				pen: aGdiplusPen asParameter
-				points: (StructureArray withAll: (aPointsCollection collect: [:e | POINTL fromPoint: e])
-						elementClass: POINTL)
+				points: (POINTLArray marshal: aPointsCollection)
 				count: aPointsCollection size
-				tension: aReal) = Ok 
+				tension: aReal) = Ok
 		ifFalse: [GdiplusError signal: 'GdipDrawClosedCurve2I failed' with: status]!
 
 drawCurve: aPointsCollection pen: aGdiplusPen 
@@ -182,8 +190,7 @@ drawCurve: aPointsCollection pen: aGdiplusPen
 	(status := GdiplusLibrary default 
 				gdipDrawCurveI: self asParameter
 				pen: aGdiplusPen asParameter
-				points: (StructureArray withAll: (aPointsCollection collect: [:e | POINTL fromPoint: e])
-						elementClass: POINTL)
+				points: (POINTLArray marshal: aPointsCollection)
 				count: aPointsCollection size) = Ok 
 		ifFalse: [GdiplusError signal: 'GdipDrawCurveI failed' with: status]!
 
@@ -195,8 +202,7 @@ drawCurve: aPointsCollection pen: aGdiplusPen tension: aReal
 	(status := GdiplusLibrary default 
 				gdipDrawCurve2I: self asParameter
 				pen: aGdiplusPen asParameter
-				points: (StructureArray withAll: (aPointsCollection collect: [:e | POINTL fromPoint: e])
-						elementClass: POINTL)
+				points: (POINTLArray marshal: aPointsCollection)
 				count: aPointsCollection size
 				tension: aReal) = Ok 
 		ifFalse: [GdiplusError signal: 'GdipDrawCurve2I failed' with: status]!
@@ -235,15 +241,24 @@ drawEllipse: aRectangle pen: aPen
 drawImage: aGdiplusImage
 	"Draw all of aGdiplusImage on the receiver, at the receiver's origin."
 
-	self drawImage: aGdiplusImage at: Point zero!
+	| status |
+	(status := GdiplusLibrary default
+				gdipDrawImageI: self asParameter
+				image: aGdiplusImage asParameter
+				x: 0
+				y: 0) == Ok
+		ifFalse: [GdiplusError signal: 'GdipDrawImageI failed' with: status]!
 
 drawImage: aGdiplusImage at: aPoint
 	"Draw all of aGdiplusImage on the receiver, at aPoint."
 
-	self 
-		drawImage: aGdiplusImage
-		at: aPoint
-		extent: aGdiplusImage extent!
+	| status |
+	(status := GdiplusLibrary default
+				gdipDrawImageI: self asParameter
+				image: aGdiplusImage asParameter
+				x: aPoint x
+				y: aPoint y) == Ok
+		ifFalse: [GdiplusError signal: 'GdipDrawImageI failed' with: status]!
 
 drawImage: aGdiplusImage at: dstOrigin extent: dstExtent 
 	"Draw all of aGdiplusImage on the receiver, sized to fit the specified rectangle."
@@ -255,7 +270,7 @@ drawImage: aGdiplusImage at: dstOrigin extent: dstExtent
 				x: dstOrigin x
 				y: dstOrigin y
 				width: dstExtent x
-				height: dstExtent y) = Ok 
+				height: dstExtent y) == Ok 
 		ifFalse: [GdiplusError signal: 'GdipDrawImageRectI failed' with: status]!
 
 drawImage: aGdiplusImage at: dstOrigin extent: dstExtent from: srcOrigin extent: srcExtent
@@ -277,7 +292,7 @@ drawImage: aGdiplusImage at: dstOrigin extent: dstExtent from: srcOrigin extent:
 	srcUnit is the unit of measure for the source rectangle. imageAttributes specifies color adjustments."
 
 	| status |
-	status := GdiplusLibrary default
+	(status := GdiplusLibrary default
 				gdipDrawImageRectRectI: self asParameter
 				image: aGdiplusImage asParameter
 				dstx: dstOrigin x
@@ -291,20 +306,33 @@ drawImage: aGdiplusImage at: dstOrigin extent: dstExtent from: srcOrigin extent:
 				srcUnit: aSrcUnit ?? UnitPixel
 				imageAttributes: imageAttributes asParameter
 				callback: nil
-				callbackData: nil.
-	status = Ok ifFalse: [GdiplusError signal: 'GdipDrawImageRectRectI failed' with: status]!
+				callbackData: nil) == Ok
+		ifFalse: [GdiplusError signal: 'GdipDrawImageRectRectI failed' with: status]!
 
-drawImage: anImage points: threePoints 
+drawImage: aGdiplusImage attributes: imageAttributes
+	"Draw the <Gdiplus.Image> 1st argument at its full extent at the receiver's origin with <ImageAttributes> specified by the 2nd argument."
+
+	| extent |
+	extent := aGdiplusImage extent.
+	self
+		drawImage: aGdiplusImage
+		at: Point.Zero
+		extent: extent
+		from: Point.Zero
+		extent: extent
+		unit: UnitPixel
+		attributes: imageAttributes!
+
+drawImage: anImage points: threePoints
 	"Draw anImage on the receiver stretched to fit the parallelogram specified by threePoints."
 
 	| status |
 	self assert: [threePoints size = 3].
-	(status := GdiplusLibrary default 
+	(status := GdiplusLibrary default
 				gdipDrawImagePointsI: self asParameter
 				image: anImage asParameter
-				dstpoints: (StructureArray withAll: (threePoints collect: [:e | POINTL fromPoint: e])
-						elementClass: POINTL)
-				count: threePoints size) = Ok 
+				dstpoints: (POINTLArray marshal: threePoints)
+				count: threePoints size) == Ok
 		ifFalse: [GdiplusError signal: 'GdipDrawImagePointsI failed' with: status]!
 
 drawImage: aGdiplusImage rectangle: aRectangle
@@ -336,6 +364,9 @@ drawLineFrom: fromPoint to: toPoint pen: aGdiplusPen
 				y2: toPoint y) = Ok 
 		ifFalse: [GdiplusError signal: 'GdipDrawLineI failed' with: status]!
 
+drawPath: aPath
+	self drawPath: aPath pen: GdiplusPen black!
+
 drawPath: aPath pen: aPen 
 	"Draw aPath on the receiver using aPen."
 
@@ -361,16 +392,15 @@ drawPie: aRectangle pen: aGdiplusPen startAngle: startAngle sweepAngle: sweepAng
 				sweepAngle: sweepAngle) = Ok 
 		ifFalse: [GdiplusError signal: 'GdipDrawPieI failed' with: status]!
 
-drawPolygon: collectionOfPoints pen: aPen 
+drawPolygon: aPointsCollection pen: aPen 
 	"Draw a polygon on the receiver using aPen."
 
 	| status |
 	(status := GdiplusLibrary default 
 				gdipDrawPolygonI: self asParameter
 				pen: aPen asParameter
-				points: (StructureArray withAll: (collectionOfPoints collect: [:e | POINTL fromPoint: e])
-						elementClass: POINTL)
-				count: collectionOfPoints size) = Ok 
+				points: (POINTLArray marshal: aPointsCollection)
+				count: aPointsCollection size) == Ok 
 		ifFalse: [GdiplusError signal: 'GdipDrawPolygonI failed' with: status]!
 
 drawRectangle: aRectangle
@@ -404,10 +434,10 @@ drawString: aString at: aPoint
 drawString: aString font: aFont at: aPoint format: aStringFormat brush: aBrush
 	"Draw aString on the receiver at aPoint using aFont, aStringFormat, and aBrush."
 
-	self 
+	self
 		drawString: aString
 		font: aFont
-		rect: (aPoint extent: Point.Zero)
+		rect: (RECTF origin: aPoint extent: Point.Zero)
 		format: aStringFormat
 		brush: aBrush!
 
@@ -427,7 +457,7 @@ drawString: aString font: aFont rect: aRectangle format: aStringFormat brush: aB
 				str: text
 				length: text size
 				font: font asParameter
-				layoutRect: (RECTF fromRectangle: aRectangle)
+				layoutRect: (RECTF marshal: aRectangle)
 				stringFormat: format asParameter
 				brush: brush asParameter) == Ok
 		ifFalse: [GdiplusError signal: 'GdipDrawString failed' with: status]!
@@ -449,14 +479,20 @@ endContainer: containerInteger
 	(status := GdiplusLibrary default gdipEndContainer: self asParameter state: containerInteger) = Ok 
 		ifFalse: [GdiplusError signal: 'GdipEndContainer  failed' with: status]!
 
+erase
+	"Clear the receiver to white."
+
+	| status |
+	(status := GdiplusLibrary default gdipGraphicsClear: self asParameter color: -1) == Ok
+		ifFalse: [GdiplusError signal: 'GdipGraphicsClear failed' with: status]!
+
 fillClosedCurve: aPointsCollection brush: aGdiplusBrush
 	"Fills a closed cardinal spline on the receiver that passes through aPointsCollection using aGdiplusPen."
 	| status |
 	(status := GdiplusLibrary default 
 				gdipFillClosedCurveI: self asParameter
 				brush: aGdiplusBrush asParameter
-				points: (StructureArray withAll: (aPointsCollection collect: [:e | POINTL fromPoint: e])
-						elementClass: POINTL)
+				points: (POINTLArray marshal: aPointsCollection)
 				count: aPointsCollection size) = Ok 
 		ifFalse: [GdiplusError signal: 'GdipFillClosedCurveI failed' with: status]!
 
@@ -506,18 +542,17 @@ fillPolygon: collectionOfPoints brush: aBrush
 		brush: aBrush
 		fillMode: nil!
 
-fillPolygon: collectionOfPoints brush: aBrush fillMode: aFillModeConstant 
+fillPolygon: aPointsCollection brush: aBrush fillMode: aFillModeConstant
 	"Fill the interior of a polygon on the receiver with aBrush.  aFillMode specifies how to fill a closed area
 	that is within another closed area and that is created when the curve or path passes over itself."
 
 	| status |
-	(status := GdiplusLibrary default 
+	(status := GdiplusLibrary default
 				gdipFillPolygonI: self asParameter
 				brush: aBrush asParameter
-				points: (StructureArray withAll: (collectionOfPoints collect: [:e | POINTL fromPoint: e])
-						elementClass: POINTL)
-				count: collectionOfPoints size
-				fillMode: aFillModeConstant) = Ok 
+				points: (POINTLArray marshal: aPointsCollection)
+				count: aPointsCollection size
+				fillMode: aFillModeConstant) == Ok
 		ifFalse: [GdiplusError signal: 'GdipFillPolygonI failed' with: status]!
 
 fillRectangle: aRectangle brush: aGdiplusBrush 
@@ -532,6 +567,12 @@ fillRectangle: aRectangle brush: aGdiplusBrush
 				width: aRectangle width asInteger
 				height: aRectangle height asInteger) == Ok 
 		ifFalse: [GdiplusError signal: 'GdipFillRectangleI failed' with: status]!
+
+fillRectangle: aRectangle color: aColor
+	| fillBrush |
+	fillBrush := GdiplusSolidBrush color: aColor.
+	self fillRectangle: aRectangle brush: fillBrush.
+	fillBrush free!
 
 fillRegion: aRegion brush: aBrush 
 	"Fill aRegion on the receiver using aBrush."
@@ -578,6 +619,30 @@ interpolationMode: anInterpolationModeConstant
 	(status := GdiplusLibrary default gdipSetInterpolationMode: self asParameter
 				interpolationMode: anInterpolationModeConstant) = Ok 
 		ifFalse: [GdiplusError signal: 'GdipSetInterpolationMode failed' with: status]!
+
+measureCharacterRanges: aString font: aFont rect: aRectangle format: aStringFormat
+	| count regions handles utf16 status |
+	count := aStringFormat measurableCharacterRangeCount.
+	regions := Array new: count.
+	handles := HandleArray new: count.
+	1 to: count
+		do: 
+			[:i |
+			| region |
+			region := GdiplusRegion new.
+			regions at: i put: region.
+			handles at: i put: region asParameter].
+	utf16 := aString asUtf16String.
+	(status := GdiplusLibrary default
+		gdipMeasureCharacterRanges: self handle
+		str: utf16
+		length: utf16 size
+		font: aFont asParameter
+		layoutRect: (RECTF marshal: aRectangle)
+		stringFormat: aStringFormat asParameter
+		regionCount: count
+		regions: handles) == Ok ifFalse: [GdiplusError signal: 'GdipMeasureCharacterRanges failed' with: status].
+	^regions!
 
 measureString: aString font: aFont
 	"Answer a Point that is the extent of aString as specified by aFont."
@@ -684,20 +749,20 @@ resetTransform
 	"Set the receiver's transformation matrix to the identity matrix."
 
 	| status |
-	(status := GdiplusLibrary default gdipResetWorldTransform: self asParameter) = Ok 
+	(status := GdiplusLibrary default gdipResetWorldTransform: self asParameter) == Ok 
 		ifFalse: [GdiplusError signal: 'GdipResetWorldTransform failed' with: status]!
 
 resolution
-	"Answer the resolution, in dots per inch, of the display device associated with the receiver."
+	"Answer a <Point> specifying the horizontal and vertical DPI of the receiver."
 
-	| status dpiX dpiY |
-	dpiX := FLOAT new.
-	dpiY := FLOAT new.
-	(status := GdiplusLibrary default gdipGetDpiX: self asParameter dpi: dpiX) = Ok 
+	| buf status dpiX |
+	buf := ByteArray new: 4.
+	(status := GdiplusLibrary default gdipGetDpiX: self asParameter dpi: buf) == Ok
 		ifFalse: [GdiplusError signal: 'GdpiGetDpiX failed' with: status].
-	(status := GdiplusLibrary default gdipGetDpiY: self asParameter dpi: dpiY) = Ok 
+	dpiX := buf floatAtOffset: 0.
+	(status := GdiplusLibrary default gdipGetDpiY: self asParameter dpi: buf) == Ok
 		ifFalse: [GdiplusError signal: 'GdipGetDpiY failed' with: status].
-	^dpiX asFloat asInteger @ dpiY asFloat asInteger!
+	^dpiX asInteger @ (buf floatAtOffset: 0) asInteger!
 
 rotate: aRealAngle at: aPoint
 	"Translate the receiver's transformation matrix by a Point and then rotate it by aRealAngle."
@@ -710,15 +775,15 @@ rotateTransform: aRealAngle
 
 	self rotateTransform: aRealAngle order: MatrixOrderPrepend!
 
-rotateTransform: aRealAngle order: aMatrixOrderConstant 
+rotateTransform: aNumber order: aMatrixOrderConstant
 	"Set the receiver's transformation matrix to the product of itself and a rotation matrix 
 	defined by aRealAngle with the order of transformation specified by aMatrixOrderConstant."
 
 	| status |
-	(status := GdiplusLibrary default 
+	(status := GdiplusLibrary default
 				gdipRotateWorldTransform: self asParameter
-				angle: aRealAngle
-				order: aMatrixOrderConstant) = Ok 
+				angle: aNumber asFloat
+				order: aMatrixOrderConstant) = Ok
 		ifFalse: [GdiplusError signal: 'GdipRotateWorldTransform failed' with: status]!
 
 scaleTransform: aRealPoint 
@@ -733,8 +798,8 @@ scaleTransform: aRealPoint order: aMatrixOrderConstant
 	| status |
 	(status := GdiplusLibrary default 
 				gdipScaleWorldTransform: self asParameter
-				sx: aRealPoint x
-				sy: aRealPoint y
+				sx: aRealPoint x asFloat
+				sy: aRealPoint y asFloat
 				order: aMatrixOrderConstant) = Ok 
 		ifFalse: [GdiplusError signal: 'GdipScaleWorldTransform failed' with: status]!
 
@@ -785,11 +850,7 @@ transformPoints: aPointsCollection destSpace: destSpace srcSpace: srcSpace
 	is based on the current world and page transformations of the receiver."
 
 	| status points count |
-	points := StructureArray
-				withAll: aPointsCollection
-				elementClass: POINTL
-				initializer: [:pointl :point | pointl x: point x y: point y].
-	points beUnfinalizable.
+	points := POINTLArray marshal: aPointsCollection.
 	count := points size.
 	(status := GdiplusLibrary default
 				gdipTransformPointsI: self asParameter
@@ -798,7 +859,7 @@ transformPoints: aPointsCollection destSpace: destSpace srcSpace: srcSpace
 				points: points
 				count: count) == Ok
 		ifFalse: [GdiplusError signal: 'GdipTransformPointsI failed' with: status].
-	points with: (1 to: count) do: [:pointl :i | aPointsCollection at: i put: pointl asPoint]!
+	^points!
 
 translateTransform: aRealPoint 
 	"Translate (shift) the receiver's transformation matrix by aRealPoint."
@@ -830,6 +891,7 @@ compositingQuality!accessing-modes!public! !
 compositingQuality:!accessing-modes!public! !
 doWithCanvas:!gdi interop!public! !
 doWithDC:!gdi interop!public! !
+dpi!accessing!public! !
 drawArc:pen:startAngle:sweepAngle:!drawing-lines!public! !
 drawBezier:pen:!drawing-lines!public! !
 drawCachedBitmap:at:!drawing-bitmaps!public! !
@@ -843,10 +905,12 @@ drawImage:at:!drawing-bitmaps!public! !
 drawImage:at:extent:!drawing-bitmaps!public! !
 drawImage:at:extent:from:extent:!drawing-bitmaps!public! !
 drawImage:at:extent:from:extent:unit:attributes:!drawing-bitmaps!public! !
+drawImage:attributes:!drawing-bitmaps!public! !
 drawImage:points:!drawing-bitmaps!public! !
 drawImage:rectangle:!drawing-bitmaps!public! !
 drawLine:pen:!drawing-lines!public! !
 drawLineFrom:to:pen:!drawing-lines!public! !
+drawPath:!drawing-lines!public! !
 drawPath:pen:!drawing-lines!public! !
 drawPie:pen:startAngle:sweepAngle:!drawing-lines!public! !
 drawPolygon:pen:!drawing-lines!public! !
@@ -857,6 +921,7 @@ drawString:font:at:format:brush:!drawing-strings!public! !
 drawString:font:rect:format:brush:!drawing-strings!public! !
 drawString:layoutRect:!drawing-strings!public! !
 endContainer:!accessing-transformations!public! !
+erase!operations!public! !
 fillClosedCurve:brush:!drawing-lines!public! !
 fillEllipse:brush:!filling!public! !
 fillPath:brush:!filling!public! !
@@ -864,10 +929,12 @@ fillPie:brush:startAngle:sweepAngle:!filling!public! !
 fillPolygon:brush:!filling!public! !
 fillPolygon:brush:fillMode:!filling!public! !
 fillRectangle:brush:!filling!public! !
+fillRectangle:color:!public! !
 fillRegion:brush:!filling!public! !
 getHDC!gdi interop!private! !
 interpolationMode!accessing-modes!public! !
 interpolationMode:!accessing-modes!public! !
+measureCharacterRanges:font:rect:format:!drawing-strings!public! !
 measureString:font:!drawing-strings!public! !
 measureString:font:rect:format:!drawing-strings!public! !
 pageScale!accessing!public! !
@@ -898,462 +965,6 @@ translateTransform:order:!accessing-transformations!public! !
 
 !GdiplusGraphics class methodsFor!
 
-exampleGdipGAlphaBlending
-	"Using GDI+ .... Alpha Blending Lines and Fills ... Using Compositing Mode to Control Alpha Blending 
-
-		self exampleGdipGAlphaBlending showExample
-	"
-
-	"Create a blank bitmap."
-
-	| bitmap graphics redBrush greenBrush bitmap2 graphics2 |
-	bitmap := GdiplusBitmap width: 180 height: 100.
-	"Create a Graphics object that we can use to draw on the bitmap."
-	graphics := bitmap graphics.
-	"Create a red brush and a green brush, each with an alpha value of 160."
-	redBrush := GdiplusSolidBrush color: (Color fromArray: #(210 255 0 0)).
-	greenBrush := GdiplusSolidBrush color: (Color fromArray: #(210 0 255 0)).
-	"Set the compositing mode so that when we draw overlapping ellipses, 
-	the colors of the ellipses are not blended."
-	graphics compositingMode: CompositingModeSourceCopy.
-	"Fill an ellipse using a red brush that has an alpha value of 160."
-	graphics fillEllipse: (0 @ 0 extent: 150 @ 70) brush: redBrush.
-	"Fill a second ellipse using green brush that has an alpha value of 160. 
-	The green ellipse overlaps the red ellipse, but the green is not blended with the red."
-	graphics fillEllipse: (30 @ 30 extent: 150 @ 70) brush: greenBrush.
-	"Prepare to draw on the screen."
-	bitmap2 := GdiplusBitmap extent: 400 @ 200.
-	graphics2 := bitmap2 graphics clear: Color white.
-	graphics2 compositingQuality: CompositingQualityGammaCorrected.
-	"Draw a multicolored background."
-	graphics2 fillRectangle: (200 @ 0 extent: 60 @ 100) brush: (GdiplusSolidBrush color: Color aqua).
-	graphics2 fillRectangle: (260 @ 0 extent: 60 @ 100) brush: (GdiplusSolidBrush color: Color yellow).
-	graphics2 fillRectangle: (320 @ 0 extent: 60 @ 100) brush: (GdiplusSolidBrush color: Color fuchsia).
-	"Display the bitmap on a white background."
-	graphics2 drawImage: bitmap at: 0 @ 0.
-	"Display the bitmap on a multicolored background."
-	graphics2 drawImage: bitmap at: 200 @ 0.
-	^bitmap2!
-
-exampleGdipGCropAndScale
-	"This example draws an image with its upper-left corner at (0, 0) and then draws a portion 
-	of the image, scaled so that it fills a specified destination rectangle.
-
-		self exampleGdipGCropAndScale showExample
-	"
-
-	| image bitmap |
-	bitmap := GdiplusBitmap extent: 800 @ 400.
-	image := GdiplusImage fromFile: 'Resources/Beach Ball.bmp'
-				usingLocator: FileLocator installRelative.
-	(bitmap graphics)
-		drawImage: image at: 0 @ 0;
-		drawImage: image
-			at: 50 @ 100
-			extent: (image extent * 1.3) ceiling
-			from: 0 @ 0
-			extent: (image extent * 0.7) ceiling.
-	^bitmap!
-
-exampleGdipGDrawingALine
-	"From MSDN: Using GDI+ > Getting Started > Drawing a Line
-	This example uses a pen to draw a line on a Graphics object (which is obtained from an Image (bitmap).
-
-		self exampleGdipGDrawingALine showExample
-	"
-
-	| bitmap |
-	bitmap := GdiplusBitmap extent: 250 @ 200.
-	bitmap graphics 
-		drawLineFrom: 10 @ 10
-		to: 200 @ 100
-		pen: GdiplusPen red.
-	^bitmap!
-
-exampleGdipGDrawingAString
-	"From MSDN: Using GDI+ > Getting Started > Drawing a String.
-	This example draws a string on a Graphics object, using font and brush objects.
-	The font is actually derived from a GdiplusFontFamily object, using the helper constructor 
-	in GdiplusFont.  A second string is drawn relying on defaults for font and brush.
-
-		self exampleGdipGDrawingAString showExample
-	"
-
-	| bitmap font |
-	bitmap := GdiplusBitmap extent: 250 @ 100.
-	font := GdiplusFont name: 'Times New Roman' pointSize: 24.
-	bitmap graphics
-		drawString: 'Hello Dolphin!!'
-			font: font
-			at: 10 @ 20
-			format: nil
-			brush: GdiplusSolidBrush blue;
-		drawString: 'Hello Lagoon' at: 10 @ 75.
-	^bitmap!
-
-exampleGdipGDrawingShapes
-	"This example draws and fills a number of shapes, including arcs, pies, and curves.
-
-		self exampleGdipGDrawingShapes showExample
-	"
-
-	| bitmap graphics redPen blackPen greenBrush rectEllipse polygonPoints arcRect pieRect bezierPoints curvePoints closedCurvePoints |
-	bitmap := GdiplusBitmap extent: 700 @ 400.
-	graphics := bitmap graphics.
-	redPen := GdiplusPen red width: 5.
-	blackPen := GdiplusPen black.
-	greenBrush := GdiplusSolidBrush green.
-	"Ellipse: Draw and fill."
-	rectEllipse := 10 @ 10 extent: 200 @ 100.
-	graphics drawEllipse: rectEllipse pen: redPen.
-	graphics fillEllipse: rectEllipse brush: greenBrush.
-	graphics drawRectangle: rectEllipse pen: blackPen.
-	"Polygon: Draw and fill."
-	polygonPoints := (OrderedCollection 
-				with: 100 @ 130
-				with: 200 @ 160
-				with: 150 @ 230
-				with: 50 @ 230)
-				add: 10 @ 160;
-				yourself.
-	graphics drawPolygon: polygonPoints pen: redPen.
-	graphics fillPolygon: polygonPoints brush: greenBrush.
-	1 to: polygonPoints size
-		do: [:i | graphics drawString: i displayString at: (polygonPoints at: i)].
-	"Arc: Draw"
-	arcRect := rectEllipse translatedBy: 220 @ 0.
-	graphics 
-		drawArc: arcRect
-		pen: redPen
-		startAngle: 90
-		sweepAngle: 215.
-	graphics drawRectangle: arcRect pen: blackPen.
-	"Pie: Draw and fill."
-	pieRect := arcRect translatedBy: 0 @ 120.
-	graphics 
-		drawPie: pieRect
-		pen: redPen
-		startAngle: 0
-		sweepAngle: 215.
-	graphics 
-		fillPie: pieRect
-		brush: greenBrush
-		startAngle: 0
-		sweepAngle: 215.
-	graphics drawRectangle: pieRect pen: blackPen.
-	"Bezier: Draw"
-	bezierPoints := (polygonPoints collect: [:e | 0 @ 120 + e])
-				removeLast;
-				yourself.
-	graphics drawBezier: bezierPoints pen: redPen.
-	graphics drawPolygon: bezierPoints pen: blackPen.
-	1 to: 4 do: [:i | graphics drawString: i displayString at: (bezierPoints at: i)].
-	"Curve:  Draw"
-	curvePoints := (polygonPoints collect: [:e | 220 @ 120 + e])
-				removeAtIndex: 3;
-				yourself.
-	graphics drawCurve: curvePoints pen: redPen.	"same as with tension: 0.5"
-	graphics 
-		drawCurve: curvePoints
-		pen: blackPen
-		tension: 0.
-	graphics 
-		drawCurve: curvePoints
-		pen: (GdiplusPen blue width: 3)
-		tension: 1.
-	graphics 
-		drawCurve: curvePoints
-		pen: (GdiplusPen green width: 3)
-		tension: 2.
-	1 to: curvePoints size
-		do: [:i | graphics drawString: i displayString at: (curvePoints at: i)].
-	"Closed Curve:  Draw and fill"
-	closedCurvePoints := (polygonPoints collect: [:e | 440 @ -120 + e])
-				removeAtIndex: 3;
-				yourself.
-	graphics 
-		drawClosedCurve: closedCurvePoints
-		pen: blackPen
-		tension: 0.
-	graphics 
-		drawClosedCurve: closedCurvePoints
-		pen: redPen
-		tension: 0.5.
-	graphics 
-		drawClosedCurve: closedCurvePoints
-		pen: (GdiplusPen blue width: 3)
-		tension: -1.
-	graphics 
-		drawClosedCurve: closedCurvePoints
-		pen: (GdiplusPen green width: 3)
-		tension: -2.
-	1 to: curvePoints size
-		do: [:i | graphics drawString: i displayString at: (closedCurvePoints at: i)].
-	^bitmap!
-
-exampleGdipGFromCanvas
-	"This example creates aGdiplusGraphics from a Canvas.
-
-		self showExample: self exampleGdipGFromCanvas
-	"
-
-	| bmp canvas graphics |
-	bmp := DIBSection
-				width: 256
-				height: 256
-				depth: 32.
-	canvas := bmp canvas.
-	self icon
-		drawOn: bmp canvas
-		at: 0 @ 0
-		extent: 256 @ 256.
-	canvas := bmp canvas.
-	graphics := GdiplusGraphics fromCanvas: canvas.
-	graphics drawString: 'Hi' at: 120 @ 120.
-	bmp freeDC.
-	^bmp!
-
-exampleGdipGMeasureString
-	"MSDN: GDI+ Reference > Classes > Graphics > Graphics Methods > MeasureString Methods
-	This example draws a string, then measures the string size and draws a rectangle around it.
-
-		self exampleGdipGMeasureString showExample
-	"
-
-	| bitmap graphics string font layoutRect format boundRect |
-	bitmap := GdiplusBitmap extent: 300 @ 200.
-	graphics := bitmap graphics.
-	string := 'Measure the size of text to be placed in a rectangle.'.
-	font := GdiplusFont name: 'Arial' pointSize: 16.
-	layoutRect := 30 @ 20 extent: 200 @ 125.
-	format := GdiplusStringFormat centered.
-	boundRect := graphics
-				measureString: string
-				font: font
-				rect: layoutRect
-				format: format.
-	graphics
-		drawRectangle: layoutRect pen: GdiplusPen black;
-		drawRectangle: boundRect pen: GdiplusPen blue;
-		drawString: string
-			font: font
-			rect: layoutRect
-			format: format
-			brush: GdiplusSolidBrush blue.
-	^bitmap!
-
-exampleGdipGRotate
-	"MSDN:   GDI+ >  GDI+ Reference >  Classes >  Graphics >  Graphics Methods > RotateTransform
-	This example draws two ellipses (in black) and then rotates both (in red).  Notice the text in the
-	rotated ellipses is also rotated.
-	
-		self  exampleGdipGRotate showExample
-	"
-
-	| bitmap graphics rect1 rect2 blackPen redPen brush string format |
-	bitmap := GdiplusBitmap extent: 400 @ 350.
-	graphics := bitmap graphics.
-	rect1 := 0 @ 0 extent: 200 @ 80.
-	rect2 := 150 @ 75 extent: 200 @ 80.
-	blackPen := GdiplusPen black.
-	redPen := GdiplusPen red.
-	brush := GdiplusSolidBrush red.
-	format := GdiplusStringFormat centered.
-	graphics
-		drawEllipse: rect1 pen: blackPen;
-		rotateTransform: 30;
-		drawEllipse: rect1 pen: redPen;
-		drawString: '#1 rotated'
-			font: nil
-			rect: rect1
-			format: format
-			brush: brush;
-		resetTransform;
-		drawEllipse: rect2 pen: blackPen;
-		rotateTransform: 30;
-		drawEllipse: rect2 pen: redPen;
-		drawString: '#2 rotated'
-			font: nil
-			rect: rect2
-			format: format
-			brush: brush.
-	^bitmap!
-
-exampleGdipGTransformations
-	"MSDN:  GDI+ >  Using GDI+ >  Transformations > Using the World Transformation
-	This example draws a rectangle, then applies several transformations to a graphics, drawing
-	the rectangle each time.
-
-		self exampleGdipGTransformations showExample
-	"
-
-	| bitmap graphics rect transform |
-	bitmap := GdiplusBitmap extent: 550 @ 350.
-	graphics := bitmap graphics.
-	rect := 100 @ 50 extent: 100 @ 100.
-	graphics
-		drawRectangle: rect;
-		drawString: 'Original' at: rect origin;
-		scaleTransform: 1.75 @ 0.75 order: nil;
-		drawRectangle: rect pen: GdiplusPen red;
-		drawString: 'Scaled'
-			font: nil
-			at: rect origin
-			format: nil
-			brush: GdiplusSolidBrush red;
-		rotateTransform: 28 order: nil;
-		drawRectangle: rect pen: GdiplusPen blue;
-		drawString: ' and Rotated'
-			font: nil
-			at: rect origin
-			format: nil
-			brush: GdiplusSolidBrush blue;
-		translateTransform: 150 @ 0 order: nil;
-		drawRectangle: rect;
-		drawString: ' and Translated' at: rect origin.
-	transform := graphics transform asArray collect: [:e | e roundTo: 1.0e-002].
-	graphics resetTransform drawString: 'Final world transform: ' , transform displayString
-		at: 10 @ 250.
-	^bitmap!
-
-exampleGdipGTransformPoints
-	"MSDN:  GDI+ >  GDI+ Reference >  Classes >  Graphics >  Graphics Methods > TransformPoints
-	This example shows how GdiplusGraphics>>transformPoints actually changes the points
-	in an array.  A set of points is drawn, then the graphics is transformed and the points are
-	transformed according to the graphics' transformation.  The graphics transformation is reset
-	and the points are drawn again, showing the points have been transformed.
-
-		self exampleGdipGTransformPoints showExample
-	"
-
-	| bitmap pen points |
-	bitmap := GdiplusBitmap extent: 300 @ 200.
-	pen := GdiplusPen blue width: 5.
-	points := Array with: 10 @ 10 with: 150 @ 50.
-	(bitmap graphics)
-		drawLineFrom: points first
-			to: points second
-			pen: pen;
-		translateTransform: 30 @ 60;
-		transformPoints: points
-			destSpace: CoordinateSpacePage
-			srcSpace: CoordinateSpaceWorld;
-		resetTransform;
-		drawLineFrom: points first
-			to: points second
-			pen: pen.
-	^bitmap!
-
-exampleGdipNestedContainers
-	"MSDN:  Using GDI+ >  Using Graphics Containers > Nested Graphics Containers
-
-		self exampleGdipNestedContainers showExample
-	"
-
-	| bitmap graphics brush container redPen bluePen aquaBrush greenBrush outerContainer innerContainer path region font |
-	bitmap := GdiplusBitmap extent: 650 @ 450.
-	"Transformations in Nested Containers"
-	redPen := GdiplusPen red.
-	graphics := bitmap graphics.
-	graphics translateTransform: 100 @ 80.
-	container := graphics beginContainer.
-	graphics
-		rotateTransform: 30;
-		drawRectangle: (-60 @ -30 extent: 120 @ 60) pen: redPen;
-		endContainer: container;
-		drawRectangle: (-60 @ -30 extent: 120 @ 60) pen: redPen.
-
-	"Clipping in Nested Containers"
-	redPen := GdiplusPen red width: 2.
-	bluePen := GdiplusPen blue width: 2.
-	aquaBrush := GdiplusSolidBrush color: Color aqua.
-	greenBrush := GdiplusSolidBrush color: Color paleGreen.
-	graphics clipRectangle: (50 @ 65 extent: 150 @ 120) combineMode: nil.
-	graphics fillRectangle: (50 @ 65 extent: 150 @ 120) brush: aquaBrush.
-	container := graphics beginContainer.
-	path := GdiplusGraphicsPath new addEllipse: (75 @ 50 extent: 100 @ 150).
-	region := GdiplusRegion fromPath: path.
-	graphics
-		fillRegion: region brush: greenBrush;
-		clipRegion: region combineMode: nil;
-		drawLine: (50 @ 0 extent: 350 @ 300) pen: redPen;
-		endContainer: container;
-		drawLine: (70 @ 0 extent: 370 @ 300) pen: bluePen.
-
-	"Several Layers of Nested Containers"
-	graphics resetClip translateTransform: 175 @ 175.
-	brush := GdiplusSolidBrush blue.
-	font := GdiplusFont name: 'Times New Roman' pointSize: 36.
-	graphics textRenderingHint: TextRenderingHintAntiAlias.
-	outerContainer := graphics beginContainer.
-	graphics textRenderingHint: TextRenderingHintSingleBitPerPixel.
-	innerContainer := graphics beginContainer.
-	graphics
-		textRenderingHint: TextRenderingHintAntiAlias;
-		drawString: 'Inner Container'
-			font: font
-			at: 20 @ 10
-			format: nil
-			brush: brush;
-		endContainer: innerContainer;
-		drawString: 'Outer Container'
-			font: font
-			at: 20 @ 50
-			format: nil
-			brush: brush;
-		endContainer: outerContainer;
-		drawString: 'Graphics Object'
-			font: font
-			at: 20 @ 90
-			format: nil
-			brush: brush.
-	^bitmap!
-
-exampleGdipState
-	"MSDN:  Using GDI+ >  Using Graphics Containers > The State of a Graphics Object
-
-		self exampleGdipState
-	"
-
-	"Quality Settings"
-
-	| bitmap graphics pen brush region |
-	bitmap := GdiplusBitmap extent: 250 @ 275.
-	graphics := bitmap graphics.
-	pen := GdiplusPen red width: 5.
-	graphics smoothingMode: SmoothingModeAntiAlias.
-	graphics drawEllipse: (10 @ 10 extent: 200 @ 100) pen: pen.
-	graphics smoothingMode: SmoothingModeHighSpeed.
-	graphics drawEllipse: (10 @ 150 extent: 200 @ 100) pen: pen.
-	bitmap showExample.
-
-	"Transformations"
-	bitmap := GdiplusBitmap extent: 325 @ 325.
-	graphics := bitmap graphics.
-	pen := GdiplusPen red.
-	graphics resetTransform.
-	graphics rotateTransform: 30.
-	graphics drawEllipse: (50 @ 10 extent: 50 @ 25) pen: pen.
-	graphics pageUnit: UnitMillimeter.
-	graphics drawEllipse: (50 @ 10 extent: 50 @ 25) pen: pen.
-	bitmap showExample.
-
-	"Clipping Region"
-	bitmap := GdiplusBitmap extent: 175 @ 175.
-	graphics := bitmap graphics.
-	pen := GdiplusPen red width: 5.
-	brush := GdiplusSolidBrush color: (Color fromArray: #(255 180 255 255)).
-	"Create a plus-shaped region by forming the union of two rectangles."
-	region := GdiplusRegion fromRectangle: (50 @ 0 corner: 50 @ 150).
-	region combineRectangle: (0 @ 50 corner: 150 @ 50) mode: CombineModeUnion.
-	graphics fillRegion: region brush: brush.
-	"Set the clipping region."
-	graphics clipRegion: region combineMode: nil.
-	"Draw two clipped lines."
-	graphics drawLine: (0 @ 30 corner: 150 @ 160) pen: pen.
-	graphics drawLine: (40 @ 20 corner: 190 @ 150) pen: pen.
-	bitmap showExample!
-
 fromCanvas: aCanvas
 	^self fromInitializer: (GdiplusGraphicsFromHDCInitializer canvas: aCanvas)!
 
@@ -1366,18 +977,6 @@ icon
 	^Canvas icon! !
 
 !GdiplusGraphics class categoriesForMethods!
-exampleGdipGAlphaBlending!examples!public!sunit! !
-exampleGdipGCropAndScale!examples!public!sunit! !
-exampleGdipGDrawingALine!examples!public!sunit! !
-exampleGdipGDrawingAString!examples!public!sunit! !
-exampleGdipGDrawingShapes!examples!public!sunit! !
-exampleGdipGFromCanvas!examples!public!sunit! !
-exampleGdipGMeasureString!examples!public!sunit! !
-exampleGdipGRotate!examples!public!sunit! !
-exampleGdipGTransformations!examples!public!sunit! !
-exampleGdipGTransformPoints!examples!public!sunit! !
-exampleGdipNestedContainers!examples!public!sunit! !
-exampleGdipState!examples!public! !
 fromCanvas:!instance creation!public! !
 fromImage:!instance creation!public! !
 icon!constants!development!public! !

@@ -19,10 +19,14 @@ createHandle
 	gpHandle := ExternalHandle new.
 	(status := self library gdipStringFormatGetGenericDefault: gpHandle) == Ok
 		ifFalse: [self gdiplusErrorWith: status].
-	^gpHandle! !
+	^gpHandle!
+
+isGenericDefault
+	^true! !
 
 !GdiplusStringFormatGenericDefaultInitializer categoriesForMethods!
 createHandle!private!realizing/unrealizing! !
+isGenericDefault!public!testing! !
 !
 
 !GdiplusStringFormatGenericDefaultInitializer class methodsFor!

@@ -28,14 +28,20 @@ struct tagGpColorMatrix {
 
 !GpColorMatrix methodsFor!
 
-atPoint: aPoint 
-	^self row: aPoint x col: aPoint y!
+asArray
+	^self m!
+
+atPoint: aPoint
+	^bytes floatAtOffset: ((aPoint x - 1) * 5 + aPoint y - 1) * 4!
 
 atPoint: aPoint put: aNumber
-	self 
-		row: aPoint x
-		col: aPoint y
-		put: aNumber!
+	bytes floatAtOffset: ((aPoint x - 1) * 5 + aPoint y - 1) * 4 put: aNumber!
+
+closeTo: aNumber
+	^self closeTo: aNumber precision: 0.0000001!
+
+closeTo: aColorMatrix precision: aFloat
+	^self m closeTo: aColorMatrix asArray precision: aFloat!
 
 m
 	"Answer the <FLOATArray> value of the receiver's 'm' field."
@@ -53,15 +59,18 @@ m: aFLOATArray
 		to: size
 		startingAt: 1!
 
-row: rowInteger col: colInteger 
-	^self m at: (rowInteger - 1) * 5 + colInteger!
+row: rowInteger col: colInteger
+	^bytes floatAtOffset: ((rowInteger - 1) * 5 + colInteger - 1) * 4!
 
 row: rowInteger col: colInteger put: aNumber
-	self m at: (rowInteger - 1) * 5 + colInteger put: aNumber! !
+	bytes floatAtOffset: ((rowInteger - 1) * 5 + colInteger - 1) * 4 put: aNumber! !
 
 !GpColorMatrix categoriesForMethods!
+asArray!converting!public! !
 atPoint:!accessing!public! !
 atPoint:put:!accessing!public! !
+closeTo:!public! !
+closeTo:precision:!public! !
 m!**compiled accessors**!public! !
 m:!**compiled accessors**!public! !
 row:col:!accessing!public! !
@@ -90,25 +99,32 @@ getFieldNames
 identity
 	"Answer an instance of the receiver that represents an identity matrix."
 
-	^self withAll: self identityArray!
+	^self basicNew
+		bytes: #[0 0 128 63 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 128 63 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 128 63 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 128 63 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 128 63]
+					shallowCopy;
+		yourself!
 
-identityArray
-	"Answer an <Array> which can be used to construct an identity instance.
-	Note: do not modify this literal array directly"
+withAll: anArray
+	"Answer an instance created from anArray. anArray must have 25 <Number> elements"
 
-	^#(1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1)!
-
-withAll: anArray 
-	"Answer an instance created from anArray.
-	anArray should have 25 <Magnitude> elements"
-
-	^self new m: (FLOATArray withAll: anArray)! !
+	| floats |
+	anArray size == 25
+		ifFalse: [InvalidArgumentError signal: 'ColorMatrix requires 25 elements' with: 'anArray'].
+	floats := FLOATArray marshal: anArray.
+	^floats == anArray
+		ifTrue: 
+			[self newBuffer
+				m: floats;
+				yourself]
+		ifFalse: 
+			[self basicNew
+				bytes: floats bytes;
+				yourself]! !
 
 !GpColorMatrix class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 identity!instance creation!public! !
-identityArray!constants!public! !
 withAll:!instance creation!public! !
 !
 

@@ -96,36 +96,6 @@ unit!accessing!public! !
 
 !GdiplusFont class methodsFor!
 
-exampleGdipFontHeight
-	"MSDN:  Font::GetHeight
-	This example gets a font's line spacing and draws a few strings with different spacings between them.
-
-		self exampleGdipFontHeight showExample
-	"
-
-	| bitmap graphics font height |
-	bitmap := GdiplusBitmap extent: 450 @ 150.
-	graphics := bitmap graphics.
-	font := GdiplusFont name: 'Arial' pointSize: 18.
-	height := font heightFromGraphics: graphics.
-	graphics
-		drawString: 'The first line of text at the very top'
-			font: font
-			at: Point zero
-			format: nil
-			brush: nil;
-		drawString: 'The second line of text maybe too close'
-			font: font
-			at: 0 @ 0.6 * height
-			format: nil
-			brush: nil;
-		drawString: 'The third line of text is single spaced'
-			font: font
-			at: 0 @ 1.6 * height
-			format: nil
-			brush: nil.
-	^bitmap!
-
 fontFamily: fontFamily emSize: emSize
 	Notification deprecated.
 	^self fontFamily: fontFamily pointSize: emSize
@@ -194,7 +164,6 @@ new
 	^self fontFamily: GdiplusFontFamily genericSansSerif pointSize: Font default pointSize! !
 
 !GdiplusFont class categoriesForMethods!
-exampleGdipFontHeight!examples!public!sunit! !
 fontFamily:emSize:!instance creation!public! !
 fontFamily:emSize:style:unit:!instance creation!public! !
 fontFamily:pointSize:!instance creation!public! !

@@ -2,11 +2,13 @@
 
 GraphicsTool subclass: #Font
 	instanceVariableNames: 'logfont dpi series'
-	classVariableNames: 'System'
+	classVariableNames: 'Qualities System'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
 Font guid: (GUID fromString: '{87b4c634-026e-11d3-9fd7-00a0cc3e4a32}')!
+
+Font addClassConstant: 'Qualities' value: #(#default #draft #proof #nonantialiased #antialiased #cleartype #cleartypeNatural)!
 
 Font comment: ''!
 
@@ -235,6 +237,23 @@ printOn: aStream
 		nextPutAll: ' pointSize: '; print: self pointSize;
 		nextPut: $)!
 
+quality
+	^Qualities at: self logFont lfQuality + 1!
+
+quality: aSymbol
+	"Set the Font rendering quality to that named by the <Symbol> argument, one of:
+		default			- Use default font quality
+		draft				- Appearance of the font does not matter
+		proof			- Character quality of the font is more important than exact matching of the logical-font attributes.
+		nonantialiased		- Anti-aliasing is disabled
+		antialiased		- Font is anti-aliased if the font supports it, depending on size.
+		cleartype 			- Cleartype anti-aliasing is used, if the font supports it
+		cleartypeNatural	- Not well documented
+	See the documentation for the lfQuality member of [LOGFONTW](view-source:https://learn.microsoft.com/en-us/windows/win32/api/wingdi/ns-wingdi-logfontw) for further details.
+	Setting this value has no immediate effect if the receiver is already realized."
+
+	self logFont lfQuality: (Qualities identityIndexOf: aSymbol) - 1!
+
 resolution
 	"Answer the logical pixels per inch of the receiver"
 
@@ -341,6 +360,8 @@ pointSize!accessing!public! !
 pointSize:!accessing!public! !
 postCopy!copying!public! !
 printOn:!development!printing!public! !
+quality!accessing!public! !
+quality:!accessing!public! !
 resolution!accessing!public! !
 resolution:!accessing!public!scaling! !
 series!accessing!public! !

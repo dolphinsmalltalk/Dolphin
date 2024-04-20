@@ -18,83 +18,88 @@ Most of the current tests are kick-the-tyres tests. They all could be extended b
 
 !GdiplusGraphicsTest methodsFor!
 
-setUp
-	super setUp.
-	bitmap := DIBSection displayCompatibleWithExtent: 256 @ 256.
-	canvas := bitmap canvas.
-	canvas erase.
-	graphics := GdiplusGraphics fromCanvas: canvas!
+createCanonicalSubject
+	bitmap := GdiplusBitmap extent: 256 @ 256.
+	bitmap erase.
+	^self subjectClass fromImage: bitmap!
+
+subjectClass
+	^GdiplusGraphics!
 
 tearDown
-	graphics ifNotNil: 
-			[:g | 
-			graphics := nil.
-			g free].
-	canvas ifNotNil: 
-			[:c | 
-			canvas := nil.
-			c free].
-	bitmap ifNotNil: 
-			[:b | 
-			bitmap := nil.
-			b free].
-	super tearDown!
+	super tearDown.
+	bitmap free.
+	bitmap := nil!
 
 testCompositingMode
-	graphics compositingMode: CompositingModeSourceOver.
-	self assert: graphics compositingMode equals: CompositingModeSourceOver.
-	graphics compositingMode: CompositingModeSourceCopy.
-	self assert: graphics compositingMode equals: CompositingModeSourceCopy!
+	self newCanonicalModel.
+	model compositingMode: CompositingModeSourceOver.
+	self assert: model compositingMode equals: CompositingModeSourceOver.
+	model compositingMode: CompositingModeSourceCopy.
+	self assert: model compositingMode equals: CompositingModeSourceCopy!
 
 testCompositingQuality
-	graphics compositingQuality: CompositingQualityHighQuality.
-	self assert: graphics compositingQuality equals: CompositingQualityHighQuality.
-	graphics compositingQuality: CompositingQualityGammaCorrected.
-	self assert: graphics compositingQuality equals: CompositingQualityGammaCorrected!
+	self newCanonicalModel.
+	model compositingQuality: CompositingQualityHighQuality.
+	self assert: model compositingQuality equals: CompositingQualityHighQuality.
+	model compositingQuality: CompositingQualityGammaCorrected.
+	self assert: model compositingQuality equals: CompositingQualityGammaCorrected!
 
 testDrawImageRectRect
 	| image |
+	self newCanonicalModel.
 	image := GdiplusImage fromFile: self fileResource pafRgb0000FF_100x100bmp.
-	graphics
+	model
 		drawImage: image
 		at: 1 @ 1
 		extent: 200 @ 200
 		from: 0 @ 0
 		extent: 100 @ 100.
 	"what exactly am I testing?"
-	self assert: (canvas pixelAt: 0 @ 0) equals: Color white.
-	self assert: (canvas pixelAt: 1 @ 1) equals: Color blue.
+	self assert: (bitmap pixelAt: 0 @ 0) equals: Color white.
+	self assert: (bitmap pixelAt: 1 @ 1) equals: Color blue.
 	"mmm ... this edge has some kind of alaising?"
-	self assert: (canvas pixelAt: 199 @ 199) equals: Color blue.
-	self assert: (canvas pixelAt: 202 @ 202) equals: Color white!
+	self assert: (bitmap pixelAt: 199 @ 199) equals: Color blue.
+	self assert: (bitmap pixelAt: 202 @ 202) equals: Color white.
+	image free!
 
 testDrawLine1
 	"Kick the tyres test"
 
-	graphics 
+	self newCanonicalModel.
+	self assert: (bitmap pixelAt: 1 @ 1) equals: Color white.
+	model
 		drawLineFrom: 0 @ 0
 		to: 100 @ 100
-		pen: self getSamplePen!
+		pen: self getSamplePen.
+	self assert: (bitmap pixelAt: 1 @ 1) equals: Color red!
 
 testFillEllipse1
 	"Kick the tyres test"
 
-	graphics fillEllipse: (0 @ 0 extent: 100 @ 100) brush: self getSampleBrush!
+	self newCanonicalModel.
+	self assert: (bitmap pixelAt: 50 @ 50) equals: Color white.
+	model fillEllipse: (0 @ 0 extent: 100 @ 100) brush: GdiplusSolidBrush green.
+	self assert: (bitmap pixelAt: 50 @ 50) equals: Color green!
 
 testFillEllipse2
 	"Kick the tyres test"
 
-	graphics fillEllipse: (0 @ 0 extent: 100 @ 100) brush: self getSampleBrush!
+	self newCanonicalModel.
+	model fillEllipse: (0 @ 0 extent: 100 @ 100) brush: self getSampleBrush!
 
 testFillRectangle1
 	"Kick the tyres test"
 
-	graphics fillRectangle: (0 @ 0 extent: 100 @ 100) brush: self getSampleBrush!
+	self newCanonicalModel.
+	model fillRectangle: (0 @ 0 extent: 100 @ 100) brush: GdiplusSolidBrush red.
+	self assert: (bitmap pixelAt: 50 @ 50) equals: Color red!
 
 testFillRectangle2
 	"Kick the tyres test"
 
-	graphics fillRectangle: (0 @ 0 extent: 100 @ 100) brush: self getSampleBrush!
+	self newCanonicalModel.
+	model fillRectangle: (0 @ 0 extent: 100 @ 100) brush: self getSampleBrush!
 
 testFromCanvas
 	| bmp |
@@ -103,44 +108,43 @@ testFromCanvas
 	self assert: model handle class identicalTo: ExternalHandle!
 
 testFromImage
-	| image pixel pixelColor |
+	| image pixelColor |
 	image := GdiplusBitmap fromFile: self fileResource pafRgb0000FF_100x100bmp.
 	model := GdiplusGraphics fromImage: image.
 	self assert: model handle class identicalTo: ExternalHandle.
-	"Can the next 2 lines replace those below them?"
-	pixelColor := image pixelAt: 50 @ 50.
-	self assert: pixelColor equals: Color blue
-	"model doWithCanvas: [:aCanvas | pixel := aCanvas getPixel: 50 @ 50]."
-	"mmm ... format 'mismatch'?"
-	"pixelColor := RGB fromInteger: pixel.
-	self assert: pixel = ARGB blue code"!
+	model fillRectangle: (10 @ 20 extent: 10 @ 10) color: Color red.
+	pixelColor := image pixelAt: 15 @ 25.
+	self assert: pixelColor equals: Color red.
+	image free!
 
 testInterpolationMode
 	"Default interpolation mode is bilinear"
 
-	self assert: graphics interpolationMode equals: InterpolationModeBilinear.
-	self should: [graphics interpolationMode: InterpolationModeInvalid] raise: GdiplusError.
-	(Array with: InterpolationModeHighQuality with: InterpolationModeHighQualityBicubic) do: 
+	self newCanonicalModel.
+	self assert: model interpolationMode equals: InterpolationModeBilinear.
+	self should: [model interpolationMode: InterpolationModeInvalid] raise: GdiplusError.
+	{InterpolationModeHighQuality. InterpolationModeHighQualityBicubic} do: 
 			[:each |
-			graphics interpolationMode: each.
-			self assert: graphics interpolationMode equals: InterpolationModeHighQualityBicubic].
-	(Array
-		with: InterpolationModeBicubic
-		with: InterpolationModeNearestNeighbor
-		with: InterpolationModeHighQualityBilinear) do: 
-				[:each |
-				graphics interpolationMode: each.
-				self assert: graphics interpolationMode equals: each].
-	(Array
-		with: InterpolationModeBilinear
-		with: InterpolationModeDefault
-		with: InterpolationModeLowQuality) do: 
-				[:each |
-				graphics interpolationMode: each.
-				self assert: graphics interpolationMode equals: InterpolationModeBilinear]! !
+			model interpolationMode: each.
+			self assert: model interpolationMode equals: InterpolationModeHighQualityBicubic].
+	{InterpolationModeBicubic. InterpolationModeNearestNeighbor. InterpolationModeHighQualityBilinear}
+		do: 
+			[:each |
+			model interpolationMode: each.
+			self assert: model interpolationMode equals: each].
+	{InterpolationModeBilinear. InterpolationModeDefault. InterpolationModeLowQuality} do: 
+			[:each |
+			model interpolationMode: each.
+			self assert: model interpolationMode equals: InterpolationModeBilinear]!
+
+testPageUnit
+	self newCanonicalModel.
+	self assert: model pageUnit equals: UnitDisplay.
+	self assert: model pageUnitName equals: 'UnitDisplay'! !
 
 !GdiplusGraphicsTest categoriesForMethods!
-setUp!public!setup! !
+createCanonicalSubject!helpers!private! !
+subjectClass!constants!private! !
 tearDown!public!setup! !
 testCompositingMode!public!unit tests! !
 testCompositingQuality!public!unit tests! !
@@ -153,5 +157,6 @@ testFillRectangle2!public!unit tests! !
 testFromCanvas!public!unit tests! !
 testFromImage!public!unit tests! !
 testInterpolationMode!public!unit tests! !
+testPageUnit!public!unit tests! !
 !
 

@@ -31,7 +31,7 @@ testCreateHandle
 		mode: LinearGradientModeBackwardDiagonal.
 	model createHandle.
 	self assert: constructorArgs size equals: 6.
-	self assert: constructorArgs first class identicalTo: RECT.
+	self assert: constructorArgs first class identicalTo: GpRect.
 	self assert: constructorArgs first asRectangle equals: rectangle.
 	self assert: constructorArgs second equals: 1.
 	self assert: constructorArgs third equals: 2.

@@ -40,7 +40,7 @@ setSample3PointsPath
 
 setSampleEllipsePath
 	model := GdiplusPathGradientBrush 
-				path: (GdiplusGraphicsPath new addEllipse: (Point zero extent: 200 @ 100))!
+				path: (GdiplusGraphicsPath new addEllipse: (5@10 extent: 200 @ 100))!
 
 setSamplePathEmpty
 	model := GdiplusPathGradientBrush path: GdiplusGraphicsPath new!
@@ -71,7 +71,11 @@ testBlendFactors
 
 testBounds
 	self setSampleEllipsePath.
-	self assert: model bounds equals: (Point zero extent: 200 @ 100)!
+	model centerColor: Color blue.
+	self assert: model bounds equals: (5 @ 10 extent: 200 @ 100).
+	"The brush is translated within its original bounds so the bounds do not change, which is somewhat surprising"
+	model translateTransform: 20 @ 30.
+	self assert: model bounds equals: (5 @ 10 extent: 200 @ 100)!
 
 testCenterColor
 	self setSampleEllipsePath.

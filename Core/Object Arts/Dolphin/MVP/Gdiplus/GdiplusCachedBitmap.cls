@@ -33,32 +33,6 @@ bitmap: aBitmap graphics: aGraphics
 	^self 
 		fromInitializer: (GdiplusCachedBitmapInitializer bitmap: aBitmap graphics: aGraphics)!
 
-exampleGdipCBPerformance
-	"MSDN: Using GDI+ > Using Images, Bitmaps, and Metafiles > Using a Cached Bitmap to Improve Performance
-	This example creates an image from file and a cached bitmap from the image.  It draws 
-	each a number of times, then shows the elapsed times.
-
-		RichTextPresenter showOn: self exampleGdipCBPerformance
-	"
-
-	| bitmap graphics image cachedBitmap strm time1 time2 |
-	bitmap := GdiplusBitmap new.
-	graphics := bitmap graphics.
-	image := GdiplusImage fromFile: 'Resources/Beach Ball.bmp' usingLocator: FileLocator installRelative.
-	cachedBitmap := GdiplusCachedBitmap bitmap: image graphics: graphics.
-	strm := String new writeStream.
-	strm
-		display: 'CachedBitmap drawing time';
-		cr.
-	time1 := [100 timesRepeat: [graphics drawImage: image at: 10 @ 10]] timeToRun.
-	strm display: '#drawImage: '.
-	time1 printHumanReadableOn: strm.
-	strm cr.
-	time2 := [100 timesRepeat: [graphics drawCachedBitmap: cachedBitmap at: 10 @ 200]] timeToRun.
-	strm display: '#drawCachedBitmap: '.
-	time2 printHumanReadableOn: strm.
-	^strm contents!
-
 icon
 	"Answers an Icon that can be used to represent this class"
 
@@ -66,7 +40,6 @@ icon
 
 !GdiplusCachedBitmap class categoriesForMethods!
 bitmap:graphics:!instance creation!public! !
-exampleGdipCBPerformance!examples!public!sunit! !
 icon!constants!development!public! !
 !
 

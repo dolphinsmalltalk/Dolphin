@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ExternalRectangle subclass: #RECTF
+AbstractRect subclass: #RECTF
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_height _OffsetOf_width _OffsetOf_x _OffsetOf_y'
 	poolDictionaries: ''
@@ -34,15 +34,6 @@ struct tagRECTF {
 
 !RECTF methodsFor!
 
-asRectangle
-	^self x @ self y extent: self width @ self height!
-
-bottom
-	^self y + self height!
-
-bottom: aNumber
-	self height: aNumber - self y!
-
 extent: aPoint
 	"Set the extent of the receiver to aPoint. (The origin remains the same and the corner stays in the same quadrant it was in relative to the origin point. If aPoint contains any negative value, the result is undefined)."
 
@@ -60,36 +51,6 @@ height: aFloat
 
 	bytes floatAtOffset: _OffsetOf_height put: aFloat!
 
-left
-	^self x!
-
-left: aNumber
-	"Sets the position of the receiver's left edge."
-
-	"The corner is not expected to move, so the width must change."
-
-	self width: self width + (self x - aNumber).
-	self x: aNumber!
-
-right
-	^self x + self width!
-
-right: aNumber
-	self width: aNumber - self x!
-
-scaleBy: aMagnitude
-	"Scale the receiver in-place by the specified <Point> or <Number> multiplier."
-
-	| p |
-	p := self topLeft * aMagnitude.
-	self
-		x: p x;
-		y: p y.
-	p := self extent * aMagnitude.
-	self
-		width: p x;
-		height: p y!
-
 scaledBy: anArithmeticValue
 	"Answer a new <rectangle> representing the receiver with origin and corner multiplied by the <ArithmeticValue> argument. Uses the #vertex:vertex: constructor in order to create a normalised rectangle"
 
@@ -105,13 +66,6 @@ scaleToDpi: desiredInteger from: currentInteger
 		floatAtOffset: _OffsetOf_y put: (bytes floatAtOffset: _OffsetOf_y) * scale;
 		floatAtOffset: _OffsetOf_width put: (bytes floatAtOffset: _OffsetOf_width) * scale;
 		floatAtOffset: _OffsetOf_height put: (bytes floatAtOffset: _OffsetOf_height) * scale!
-
-top
-	^self y!
-
-top: aNumber
-	self height: self height + (self y - aNumber).
-	self y: aNumber!
 
 width
 	"Answer the <Float> value of the receiver's 'width' field."
@@ -144,21 +98,11 @@ y: aFloat
 	bytes floatAtOffset: _OffsetOf_y put: aFloat! !
 
 !RECTF categoriesForMethods!
-asRectangle!converting!public! !
-bottom!accessing!public! !
-bottom:!accessing!public! !
 extent:!accessing!public! !
 height!**compiled accessors**!public! !
 height:!**compiled accessors**!public! !
-left!accessing!public! !
-left:!accessing!public! !
-right!accessing!public! !
-right:!accessing!public! !
-scaleBy:!public!transforming! !
 scaledBy:!public! !
 scaleToDpi:from:!public!transforming! !
-top!accessing!public! !
-top:!accessing!public! !
 width!**compiled accessors**!public! !
 width:!**compiled accessors**!public! !
 x!**compiled accessors**!public! !
@@ -191,15 +135,6 @@ defineFields
 getFieldNames
 	^#(#x #y #width #height)!
 
-left: left top: top right: right bottom: bottom
-	"Answer a new instance of the receiver with the specified position corner positions."
-
-	^self
-		left: left
-		top: top
-		width: right - left
-		height: bottom - top!
-
 left: left top: top width: width height: height
 	"Answer a new instance of the receiver with the specified origin and extent."
 
@@ -208,27 +143,11 @@ left: left top: top width: width height: height
 				floatAtOffset: 4 put: top;
 				floatAtOffset: 8 put: width;
 				floatAtOffset: 12 put: height;
-				yourself)!
-
-marshal: aRectangle
-	"Answer the argument marshalled as an instance of the receiver."
-
-	self == aRectangle class ifTrue: [^aRectangle].
-	^self
-		left: aRectangle left
-		top: aRectangle top
-		width: aRectangle width
-		height: aRectangle height!
-
-newBuffer
-	^self basicNew bytes: (ByteArray newFixed: 16)! !
+				yourself)! !
 
 !RECTF class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
-left:top:right:bottom:!instance creation!public! !
 left:top:width:height:!instance creation!public! !
-marshal:!instance creation!public! !
-newBuffer!instance creation!public! !
 !
 

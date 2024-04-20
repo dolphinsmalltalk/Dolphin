@@ -20,7 +20,7 @@ bitmap: aBitmap graphics: aGraphics
 
 createHandle
 	| gpHandle status |
-	gpHandle := ExternalAddress new.
+	gpHandle := ExternalHandle new.
 	status := self library
 				gdipCreateCachedBitmap: bitmap asParameter
 				graphics: graphics asParameter

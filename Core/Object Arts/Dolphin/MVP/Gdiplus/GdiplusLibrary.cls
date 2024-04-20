@@ -411,7 +411,7 @@ gdipAddPathRectanglesI: path rects: rects count: count
 			[in]GpRect* rects,
 			int Count);"
 
-	<stdcall: sdword GdipAddPathRectanglesI handle RECT* sdword>
+	<stdcall: sdword GdipAddPathRectanglesI handle GpRect* sdword>
 	^self invalidCall: _failureCode!
 
 gdipAddPathString: path string: string length: length family: family style: style emSize: emSize layoutRect: layoutRect format: format
@@ -443,7 +443,7 @@ gdipAddPathStringI: path string: string length: length family: family style: sty
 			[in]RECT* layoutRect,
 			[in]PGpStringFormat format);"
 
-	<stdcall: sdword GdipAddPathStringI handle lpwstr sdword handle sdword float RECT* handle>
+	<stdcall: sdword GdipAddPathStringI handle lpwstr sdword handle sdword float GpRect* handle>
 	^self invalidCall: _failureCode!
 
 gdipBeginContainer: graphics dstrect: dstrect srcRect: srcRect unit: unit state: state
@@ -479,7 +479,7 @@ gdipBeginContainerI: graphics dstrect: dstrect srcRect: srcRect unit: unit state
 			GpUnit Unit,
 			GraphicsContainer* state);"
 
-	<stdcall: sdword GdipBeginContainerI handle RECT* RECT* sdword dword*>
+	<stdcall: sdword GdipBeginContainerI handle GpRect* GpRect* sdword dword*>
 	^self invalidCall: _failureCode!
 
 gdipBitmapGetPixel: bitmap x: x y: y color: color
@@ -504,7 +504,7 @@ gdipBitmapLockBits: bitmap rect: rect flags: flags format: format lockedBitmapDa
 			[in]PixelFormat format,
 			[out, retval]BitmapData* lockedBitmapData);"
 
-	<stdcall: sdword GdipBitmapLockBits handle RECT* dword sdword GpBitmapData*>
+	<stdcall: sdword GdipBitmapLockBits handle GpRect* dword sdword GpBitmapData*>
 	^self invalidCall: _failureCode!
 
 gdipBitmapSetPixel: bitmap x: x y: y color: color
@@ -737,7 +737,7 @@ gdipCombineRegionRectI: region rect: rect combineMode: combineMode
 			[in]GpRect* rect,
 			CombineMode CombineMode);"
 
-	<stdcall: sdword GdipCombineRegionRectI handle RECT* sdword>
+	<stdcall: sdword GdipCombineRegionRectI handle GpRect* sdword>
 	^self invalidCall: _failureCode!
 
 gdipCombineRegionRegion: region region2: region2 combineMode: combineMode
@@ -899,9 +899,9 @@ gdipCreateCachedBitmap: bitmap graphics: graphics cachedBitmap: cachedBitmap
 		GpStatus __stdcall GdipCreateCachedBitmap(
 			PGpBitmap bitmap,
 			PGpGraphics graphics,
-			[out, retval]GpCachedBitmap** cachedBitmap);"
+			[out, retval]PGpCachedBitmap* cachedBitmap);"
 
-	<stdcall: sdword GdipCreateCachedBitmap handle handle handle**>
+	<stdcall: sdword GdipCreateCachedBitmap handle handle handle*>
 	^self invalidCall: _failureCode!
 
 gdipCreateCustomLineCap: fillPath strokePath: strokePath baseCap: baseCap baseInset: baseInset customCap: customCap
@@ -1104,7 +1104,7 @@ gdipCreateLineBrushFromRectI: rect color1: color1 color2: color2 mode: mode wrap
 			GpWrapMode WrapMode,
 			[out, retval]PGpLineGradient* lineGradient);"
 
-	<stdcall: sdword GdipCreateLineBrushFromRectI RECT* dword dword sdword sdword handle*>
+	<stdcall: sdword GdipCreateLineBrushFromRectI GpRect* dword dword sdword sdword handle*>
 	^self invalidCall: _failureCode!
 
 gdipCreateLineBrushFromRectWithAngle: rect color1: color1 color2: color2 angle: angle isAngleScalable: isAngleScalable wrapMode: wrapMode lineGradient: lineGradient
@@ -1134,7 +1134,7 @@ gdipCreateLineBrushFromRectWithAngleI: rect color1: color1 color2: color2 angle:
 			GpWrapMode WrapMode,
 			[out, retval]PGpLineGradient* lineGradient);"
 
-	<stdcall: sdword GdipCreateLineBrushFromRectWithAngleI RECT* dword dword float sdword sdword handle*>
+	<stdcall: sdword GdipCreateLineBrushFromRectWithAngleI GpRect* dword dword float sdword sdword handle*>
 	^self invalidCall: _failureCode!
 
 gdipCreateLineBrushI: point1 point2: point2 color1: color1 color2: color2 wrapMode: wrapMode lineGradient: lineGradient
@@ -1194,7 +1194,7 @@ gdipCreateMatrix3I: rect dstplg: dstplg matrix: matrix
 			[in]GpPoint* dstplg,
 			[out, retval]PGpMatrix* matrix);"
 
-	<stdcall: sdword GdipCreateMatrix3I RECT* POINTL* handle*>
+	<stdcall: sdword GdipCreateMatrix3I GpRect* POINTL* handle*>
 	^self invalidCall: _failureCode!
 
 gdipCreateMetafileFromEmf: hEmf deleteEmf: deleteEmf metafile: metafile
@@ -1401,7 +1401,7 @@ gdipCreateRegionRectI: rect region: region
 			[in]GpRect* rect,
 			[out, retval]PGpRegion* region);"
 
-	<stdcall: sdword GdipCreateRegionRectI RECT* handle*>
+	<stdcall: sdword GdipCreateRegionRectI GpRect* handle*>
 	^self invalidCall: _failureCode!
 
 gdipCreateRegionRgnData: regionData size: size region: region
@@ -1533,7 +1533,7 @@ gdipDeleteCachedBitmap: cachedBitmap
 		GpStatus __stdcall GdipDeleteCachedBitmap(
 			GpCachedBitmap* cachedBitmap);"
 
-	<stdcall: sdword GdipDeleteCachedBitmap handle*>
+	<stdcall: sdword GdipDeleteCachedBitmap handle>
 	^self invalidCall: _failureCode!
 
 gdipDeleteCustomLineCap: customCap
@@ -1754,7 +1754,7 @@ gdipDrawCachedBitmap: graphics cachedBitmap: cachedBitmap x: x y: y
 			int x,
 			int y);"
 
-	<stdcall: sdword GdipDrawCachedBitmap handle handle* sdword sdword>
+	<stdcall: sdword GdipDrawCachedBitmap handle handle sdword sdword>
 	^self invalidCall: _failureCode!
 
 gdipDrawClosedCurve: graphics pen: pen points: points count: count
@@ -2293,7 +2293,7 @@ gdipDrawRectanglesI: graphics pen: pen rects: rects count: count
 			[in]GpRect* rects,
 			int Count);"
 
-	<stdcall: sdword GdipDrawRectanglesI handle handle RECT* sdword>
+	<stdcall: sdword GdipDrawRectanglesI handle handle GpRect* sdword>
 	^self invalidCall: _failureCode!
 
 gdipDrawString: graphics str: str length: length font: font layoutRect: layoutRect stringFormat: stringFormat brush: brush
@@ -2412,12 +2412,12 @@ gdipEnumerateMetafileDestRectI: graphics metafile: metafile destRect: destRect f
 		GpStatus __stdcall GdipEnumerateMetafileDestRectI(
 			PGpGraphics graphics,
 			[in]PGpMetafile metafile,
-			[in]RECT* destRect,
+			[in]GpRect* destRect,
 			EnumerateMetafileProc fnCallback,
 			VOID* callbackData,
 			[in]PGpImageAttributes imageAttributes);"
 
-	<stdcall: sdword GdipEnumerateMetafileDestRectI handle handle RECT* void* void* handle>
+	<stdcall: sdword GdipEnumerateMetafileDestRectI handle handle GpRect* void* void* handle>
 	^self invalidCall: _failureCode!
 
 gdipEnumerateMetafileSrcRectDestPoint: graphics metafile: metafile destPoint: destPoint srcRect: srcRect srcUnit: srcUnit fnCallback: fnCallback callbackData: callbackData imageAttributes: imageAttributes
@@ -2443,13 +2443,13 @@ gdipEnumerateMetafileSrcRectDestPointI: graphics metafile: metafile destPoint: d
 			PGpGraphics graphics,
 			[in]PGpMetafile metafile,
 			[in]POINT* destPoint,
-			[in]RECT* srcRect,
+			[in]GpRect* srcRect,
 			Unit srcUnit,
 			EnumerateMetafileProc fnCallback,
 			VOID* callbackData,
 			[in]PGpImageAttributes imageAttributes);"
 
-	<stdcall: sdword GdipEnumerateMetafileSrcRectDestPointI handle handle POINTL* RECT* sdword void* void* handle>
+	<stdcall: sdword GdipEnumerateMetafileSrcRectDestPointI handle handle POINTL* GpRect* sdword void* void* handle>
 	^self invalidCall: _failureCode!
 
 gdipEnumerateMetafileSrcRectDestPoints: graphics metafile: metafile destPoints: destPoints count: count srcRect: srcRect srcUnit: srcUnit fnCallback: fnCallback callbackData: callbackData imageAttributes: imageAttributes
@@ -2477,13 +2477,13 @@ gdipEnumerateMetafileSrcRectDestPointsI: graphics metafile: metafile destPoints:
 			[in]PGpMetafile metafile,
 			[in]POINT* destPoints,
 			int Count,
-			[in]RECT* srcRect,
+			[in]GpRect* srcRect,
 			Unit srcUnit,
 			EnumerateMetafileProc fnCallback,
 			VOID* callbackData,
 			[in]PGpImageAttributes imageAttributes);"
 
-	<stdcall: sdword GdipEnumerateMetafileSrcRectDestPointsI handle handle POINTL* sdword RECT* sdword void* void* handle>
+	<stdcall: sdword GdipEnumerateMetafileSrcRectDestPointsI handle handle POINTL* sdword GpRect* sdword void* void* handle>
 	^self invalidCall: _failureCode!
 
 gdipEnumerateMetafileSrcRectDestRect: graphics metafile: metafile destRect: destRect srcRect: srcRect srcUnit: srcUnit fnCallback: fnCallback callbackData: callbackData imageAttributes: imageAttributes
@@ -2508,14 +2508,14 @@ gdipEnumerateMetafileSrcRectDestRectI: graphics metafile: metafile destRect: des
 		GpStatus __stdcall GdipEnumerateMetafileSrcRectDestRectI(
 			PGpGraphics graphics,
 			[in]PGpMetafile metafile,
-			[in]RECT* destRect,
-			[in]RECT* srcRect,
+			[in]GpRect* destRect,
+			[in]GpRect* srcRect,
 			Unit srcUnit,
 			EnumerateMetafileProc fnCallback,
 			VOID* callbackData,
 			[in]PGpImageAttributes imageAttributes);"
 
-	<stdcall: sdword GdipEnumerateMetafileSrcRectDestRectI handle handle RECT* RECT* sdword void* void* handle>
+	<stdcall: sdword GdipEnumerateMetafileSrcRectDestRectI handle handle GpRect* GpRect* sdword void* void* handle>
 	^self invalidCall: _failureCode!
 
 gdipFillClosedCurve: graphics brush: brush points: points count: count
@@ -2740,7 +2740,7 @@ gdipFillRectanglesI: graphics brush: brush rects: rects count: count
 			[in]GpRect* rects,
 			int Count);"
 
-	<stdcall: sdword GdipFillRectanglesI handle handle RECT* sdword>
+	<stdcall: sdword GdipFillRectanglesI handle handle GpRect* sdword>
 	^self invalidCall: _failureCode!
 
 gdipFillRegion: graphics brush: brush region: region
@@ -2910,7 +2910,7 @@ gdipGetClipBoundsI: graphics rect: rect
 			PGpGraphics graphics,
 			GpRect* rect);"
 
-	<stdcall: sdword GdipGetClipBoundsI handle RECT*>
+	<stdcall: sdword GdipGetClipBoundsI handle GpRect*>
 	^self invalidCall: _failureCode!
 
 gdipGetCompositingMode: graphics compositingMode: compositingMode
@@ -3511,7 +3511,7 @@ gdipGetLineRectI: brush rect: rect
 			PGpLineGradient brush,
 			GpRect* rect);"
 
-	<stdcall: sdword GdipGetLineRectI handle RECT*>
+	<stdcall: sdword GdipGetLineRectI handle GpRect*>
 	^self invalidCall: _failureCode!
 
 gdipGetLineSpacing: family style: style lineSpacing: lineSpacing
@@ -3820,7 +3820,7 @@ gdipGetPathGradientRectI: brush rect: rect
 			PGpPathGradient brush,
 			GpRect* rect);"
 
-	<stdcall: sdword GdipGetPathGradientRectI handle RECT*>
+	<stdcall: sdword GdipGetPathGradientRectI handle GpRect*>
 	^self invalidCall: _failureCode!
 
 gdipGetPathGradientSurroundColorCount: brush count: count
@@ -3928,7 +3928,7 @@ gdipGetPathWorldBoundsI: path bounds: bounds matrix: matrix pen: pen
 			[in]PGpMatrix matrix,
 			[in]PGpPen pen);"
 
-	<stdcall: sdword GdipGetPathWorldBoundsI handle RECT* handle handle>
+	<stdcall: sdword GdipGetPathWorldBoundsI handle GpRect* handle handle>
 	^self invalidCall: _failureCode!
 
 gdipGetPenBrushFill: pen brush: brush
@@ -4227,7 +4227,7 @@ gdipGetRegionBoundsI: region graphics: graphics rect: rect
 			PGpGraphics graphics,
 			GpRect* rect);"
 
-	<stdcall: sdword GdipGetRegionBoundsI handle handle RECT*>
+	<stdcall: sdword GdipGetRegionBoundsI handle handle GpRect*>
 	^self invalidCall: _failureCode!
 
 gdipGetRegionData: region buffer: buffer bufferSize: bufferSize sizeFilled: sizeFilled
@@ -4295,7 +4295,7 @@ gdipGetRegionScansI: region rects: rects count: count matrix: matrix
 			int* Count,
 			PGpMatrix matrix);"
 
-	<stdcall: sdword GdipGetRegionScansI handle RECT* sdword* handle>
+	<stdcall: sdword GdipGetRegionScansI handle GpRect* sdword* handle>
 	^self invalidCall: _failureCode!
 
 gdipGetRenderingOrigin: graphics x: x y: y
@@ -4489,7 +4489,7 @@ gdipGetVisibleClipBoundsI: graphics rect: rect
 			PGpGraphics graphics,
 			GpRect* rect);"
 
-	<stdcall: sdword GdipGetVisibleClipBoundsI handle RECT*>
+	<stdcall: sdword GdipGetVisibleClipBoundsI handle GpRect*>
 	^self invalidCall: _failureCode!
 
 gdipGetWorldTransform: graphics matrix: matrix
@@ -5264,7 +5264,7 @@ gdipRecordMetafileFileNameI: filename referenceHdc: referenceHdc type: type fram
 			[in]LPWSTR description,
 			[out, retval]PGpMetafile* metafile);"
 
-	<stdcall: sdword GdipRecordMetafileFileNameI lpwstr handle sdword RECT* sdword lpwstr handle*>
+	<stdcall: sdword GdipRecordMetafileFileNameI lpwstr handle sdword GpRect* sdword lpwstr handle*>
 	^self invalidCall: _failureCode!
 
 gdipRecordMetafileI: referenceHdc type: type frameRect: frameRect frameUnit: frameUnit description: description metafile: metafile
@@ -5278,7 +5278,7 @@ gdipRecordMetafileI: referenceHdc type: type frameRect: frameRect frameUnit: fra
 			[in]LPWSTR description,
 			[out, retval]PGpMetafile* metafile);"
 
-	<stdcall: sdword GdipRecordMetafileI handle sdword RECT* sdword lpwstr handle*>
+	<stdcall: sdword GdipRecordMetafileI handle sdword GpRect* sdword lpwstr handle*>
 	^self invalidCall: _failureCode!
 
 gdipRecordMetafileStream: stream referenceHdc: referenceHdc type: type frameRect: frameRect frameUnit: frameUnit description: description metafile: metafile
@@ -5308,7 +5308,7 @@ gdipRecordMetafileStreamI: stream referenceHdc: referenceHdc type: type frameRec
 			[in]LPWSTR description,
 			[out, retval]PGpMetafile* metafile);"
 
-	<stdcall: sdword GdipRecordMetafileStreamI IStream* handle sdword RECT* sdword lpwstr handle*>
+	<stdcall: sdword GdipRecordMetafileStreamI IStream* handle sdword GpRect* sdword lpwstr handle*>
 	^self invalidCall: _failureCode!
 
 gdipReleaseDC: graphics hdc: hdc

@@ -36,6 +36,9 @@ compare: x to: y epsilon: epsilon
 	| max |
 	^(max := x abs max: y abs) <= epsilon or: [(x - y) abs < (epsilon * max)]!
 
+createCanonicalSubject
+	^self subjectClass new!
+
 fileLocator
 	^self fileResource fileLocator!
 
@@ -62,6 +65,12 @@ getSampleLinearGradientBrush
 getSamplePen
 	^GdiplusPen red!
 
+newCanonicalModel
+	model := self createCanonicalSubject!
+
+subjectClass
+	^self subclassResponsibility!
+
 tearDown
 	model 
 		ifNotNil: 
@@ -73,12 +82,15 @@ tearDown
 assertPersistedValid!asserting!public! !
 compare:to:!comparing!public! !
 compare:to:epsilon:!comparing!public! !
+createCanonicalSubject!helpers!public! !
 fileLocator!accessing!public! !
 fileResource!accessing!public! !
 getSampleBrush!accessing!public! !
 getSampleGDIBitmap!accessing!public! !
 getSampleLinearGradientBrush!accessing!public! !
 getSamplePen!accessing!public! !
+newCanonicalModel!helpers!public! !
+subjectClass!constants!private! !
 tearDown!public!Running! !
 !
 

@@ -87,7 +87,7 @@ getTabOffsets
 
 	| status count first array |
 	count := self tabStopCount.
-	first := SDWORD new.
+	first := FLOAT newBuffer.
 	array := FLOATArray new: count.
 	(status := GdiplusLibrary default 
 				gdipGetStringFormatTabStops: self asParameter
@@ -95,7 +95,16 @@ getTabOffsets
 				firstTabOffset: first
 				tabStops: array) == Ok 
 		ifFalse: [GdiplusError signal: 'GdipGetStringFormatTabStops failed' with: status].
-	^Array with: first value with: array asArray!
+	count == 0 ifTrue: [^{}].
+	first := first value.
+	first = 0 ifFalse: [array at: 1 put: (array at: 1) + first].
+	^array!
+
+isGenericDefault
+	^initializer isGenericDefault!
+
+isGenericTypographic
+	^initializer isGenericTypographic!
 
 lineAlignment
 	| buf status |
@@ -111,6 +120,31 @@ lineAlignment: aStringAlignmentConstant
 	(status := GdiplusLibrary default gdipSetStringFormatLineAlign: self asParameter
 				align: aStringAlignmentConstant) == Ok 
 		ifFalse: [GdiplusError signal: 'GdipSetStringFormatLineAlign failed' with: status]!
+
+measurableCharacterRangeCount
+	| buf status |
+	buf := ByteArray newFixed: 4.
+	(status := GdiplusLibrary default
+		gdipGetStringFormatMeasurableCharacterRangeCount: self asParameter
+		count: buf) == Ok ifFalse: [GdiplusError signal: 'GdipSetStringFormatMeasurableCharacterRanges failed' with: status].
+	^buf sdwordAtOffset: 0!
+
+measurableCharacterRanges: characterRanges
+	| charRanges count status |
+	count := characterRanges size.
+	charRanges := ByteArray new: count * 8.
+	1 to: count
+		do: 
+			[:j |
+			| each |
+			each := characterRanges at: j.
+			charRanges
+				sdwordAtOffset: (j - 1) * 8 put: each start - 1;
+				sdwordAtOffset: j * 8 - 4 put: each size].
+	(status := GdiplusLibrary default
+		gdipSetStringFormatMeasurableCharacterRanges: self asParameter
+		rangeCount: characterRanges size
+		ranges: charRanges) == Ok ifFalse: [GdiplusError signal: 'GdipSetStringFormatMeasurableCharacterRanges failed' with: status].!
 
 near
 	"Set the receiver so that text will be horizontally near aligned in a layout rectangle."
@@ -150,17 +184,32 @@ setTabStops: aRealArray first: aReal
 tabOffsets
 	"Answer an Array containing the receiver's tab offsets, including the initial offset."
 
-	| array |
-	array := self getTabOffsets.
-	^((OrderedCollection with: array first) , array second asOrderedCollection) asArray!
+	| status count first array |
+	count := self tabStopCount.
+	first := FLOAT newBuffer.
+	array := FLOATArray new: count.
+	(status := GdiplusLibrary default
+				gdipGetStringFormatTabStops: self asParameter
+				count: count
+				firstTabOffset: first
+				tabStops: array) == Ok
+		ifFalse: [GdiplusError signal: 'GdipGetStringFormatTabStops failed' with: status].
+	count == 0 ifTrue: [^{}].
+	first := first value.
+	first = 0 ifFalse: [array at: 1 put: (array at: 1) + first].
+	^array!
 
 tabOffsets: aRealArray
 	"Set the receiver's tab-stops, including the initial offset."
 
-	self setTabStops: ((aRealArray asOrderedCollection)
-				removeFirst;
-				yourself)
-		first: aRealArray first!
+	| status tabOffsets |
+	tabOffsets := FLOATArray marshal: aRealArray.
+	(status := GdiplusLibrary default
+				gdipSetStringFormatTabStops: self asParameter
+				firstTabOffset: 0
+				count: tabOffsets size
+				tabStops: tabOffsets) == Ok
+		ifFalse: [GdiplusError signal: 'GdipSetStringFormatTabStops failed' with: status]!
 
 tabStopCount
 	"Private - Answer the number of tab-stops in the receiver."
@@ -200,8 +249,12 @@ far!accessing!public! !
 flags!accessing!public! !
 flags:!accessing!public! !
 getTabOffsets!accessing!private! !
+isGenericDefault!public!testing! !
+isGenericTypographic!public!testing! !
 lineAlignment!accessing!public! !
 lineAlignment:!accessing!public! !
+measurableCharacterRangeCount!accessing!public! !
+measurableCharacterRanges:!accessing!public! !
 near!accessing!public! !
 printOn:!public! !
 setTabStops:first:!accessing!private! !
@@ -218,129 +271,6 @@ centered
 	"Answer an instance of the receiver with horizontal and vertical centering."
 
 	^self new centered!
-
-exampleGdipSFFormatText
-	"MSDN:  GDI+ >  Using GDI+ >  Using Text and Fonts > Formatting Text
-	This example displays a string centered within a rectangle.
-
-		self exampleGdipSFFormatText showExample
-	"
-
-	| bitmap font rect |
-	bitmap := GdiplusBitmap extent: 300 @ 300.
-	font := GdiplusFont 
-				name: 'Arial'
-				emSize: 12
-				style: FontStyleBold
-				unit: UnitPoint.
-	rect := bitmap bounds insetBy: 75.
-	(bitmap graphics)
-		drawString: 'Use StringFormat and Rectangle objects to center text in a rectangle.'
-			font: font
-			rect: rect
-			format: GdiplusStringFormat centered
-			brush: GdiplusSolidBrush blue;
-		drawRectangle: rect.
-	^bitmap!
-
-exampleGdipSFGenerics
-	" GDI+ >  GDI+ Reference >  Classes >  StringFormat >  StringFormat Methods
-	This example draws a string three times, using different GdiplusStringFormat creation methods.
- 
-		self exampleGdipSFGenerics showExample
-	"
-
-	| bitmap graphics brush font rect stringFormat pen |
-	bitmap := GdiplusBitmap extent: 300 @ 350.
-	graphics := bitmap graphics.
-	brush := GdiplusSolidBrush blue.
-	font := GdiplusFont name: 'Times New Roman' pointSize: 12.
-	rect := 30 @ 30 extent: 160 @ 50.
-	pen := GdiplusPen blue.
-	stringFormat := GdiplusStringFormat genericDefault.
-	graphics
-		drawString: 'This text was formatted by a generic StringFormat object.'
-		font: font
-		rect: rect
-		format: stringFormat
-		brush: brush.
-	graphics drawRectangle: rect pen: pen.
-	rect moveBy: 0 @ 100.
-	pen color: Color red.
-	brush color: Color red.
-	stringFormat := GdiplusStringFormat genericTypographic.
-	graphics
-		drawString: 'This text was formatted by a typographic StringFormat object.'
-		font: font
-		rect: rect
-		format: stringFormat
-		brush: brush.
-	graphics drawRectangle: rect pen: pen.
-	rect moveBy: 0 @ 100.
-	pen color: Color black.
-	brush color: Color black.
-	stringFormat := GdiplusStringFormat new.
-	graphics
-		drawString: 'This text was formatted by a new StringFormat object.'
-		font: font
-		rect: rect
-		format: stringFormat
-		brush: brush.
-	graphics drawRectangle: rect pen: pen.
-	^bitmap!
-
-exampleGdipSFTabs
-	"This example creates a GdiplusStringFormat instance, sets its tab-stops, and then draws a
-	string that contains embedded tabs.
-
-		self exampleGdipSFTabs showExample
-	"
-
-	| bitmap graphics font rect stringFormat |
-	bitmap := GdiplusBitmap extent: 550 @ 200.
-	graphics := bitmap graphics.
-	font := GdiplusFont name: 'Courier New' pointSize: 12.
-	stringFormat := GdiplusStringFormat new tabOffsets: #(0 150 100 100).
-	rect := 20 @ 20 extent: 500 @ 100.
-	graphics
-		drawString: 'Name	Test 1	Test 2	Test 3'
-			font: font
-			rect: rect
-			format: stringFormat
-			brush: GdiplusSolidBrush blue;
-		drawString: 'Tabs set at: ' , (stringFormat tabOffsets collect: [:e | e asInteger]) displayString
-			font: font
-			at: 20 @ 50
-			format: stringFormat
-			brush: GdiplusSolidBrush red;
-		drawRectangle: rect.
-	^bitmap!
-
-exampleGdipSFTrimming
-	"This example draws a string, using each of the available trimming styles.
-
-		self exampleGdipSFTrimming showExample
-	"
-
-	| bitmap graphics string font stringFormat row rect |
-	bitmap := GdiplusBitmap extent: 550 @ 450.
-	graphics := bitmap graphics.
-	string := 'One two three four five six seven eight nine'.
-	self enumsStringTrimming keysAndValuesDo: 
-			[:i :e |
-			stringFormat := GdiplusStringFormat new trimming: e value.
-			font := GdiplusFont name: 'Times New Roman' pointSize: 24.
-			row := (i - 1) // 2.
-			rect := ((i - 1 - (row * 2)) * 250 + 30) @ (row * 130 + 30) extent: 200 @ 80.
-			graphics
-				drawRectangle: rect pen: GdiplusPen black;
-				drawString: e key at: rect origin x @ rect origin y - 20;
-				drawString: string
-					font: font
-					rect: rect
-					format: stringFormat
-					brush: GdiplusSolidBrush red].
-	^bitmap!
 
 far
 	"Answer an instance of the receiver with horizontal far alignment."
@@ -387,10 +317,6 @@ uninitialize
 
 !GdiplusStringFormat class categoriesForMethods!
 centered!instance creation!public! !
-exampleGdipSFFormatText!examples!public!sunit! !
-exampleGdipSFGenerics!examples!public!sunit! !
-exampleGdipSFTabs!examples!public!sunit! !
-exampleGdipSFTrimming!examples!public!sunit! !
 far!instance creation!public! !
 flags:!instance creation!public! !
 flags:language:!instance creation!public! !

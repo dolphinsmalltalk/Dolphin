@@ -21,6 +21,9 @@ setSample1
 				color1: Color red
 				color2: Color blue!
 
+subjectClass
+	^GdiplusLinearGradientBrush!
+
 testClone
 	"force realize"
 
@@ -30,6 +33,21 @@ testClone
 	clone := model clone.
 	self assert: model initializer identicalTo: clone initializer.
 	self denyIsNil: clone basicHandle!
+
+testConstructFromRectangle
+	| recreated rect |
+	rect := 5 @ 15 extent: 250 @ 240.
+	model := self subjectClass
+				rect: rect
+				color1: Color red
+				color2: Color blue
+				mode: LinearGradientModeHorizontal.
+	self assert: model bounds equals: rect.
+	self assert: model colors equals: {Color red. Color blue}.
+	self deny: model isGammaCorrected.
+	self assert: model wrapMode equals: WrapModeTile.
+	model isGammaCorrected: true.
+	self assertPersistedValid!
 
 testConstructor1
 	self setSample1.
@@ -68,7 +86,8 @@ testGetBlend
 	"SW: How many bits of precision does REAL have?
 	BSM: Its probably only single precision, so only about 6 or 7 digits
 	LAS: In which case why isn't DignificantDifference in Float = 0.000001 so that Float>>equals: will work or 
-	suggestion: a Float>>equals:epsilon: method (in the base image)?"
+	suggestion: a Float>>equals:epsilon: method (in the base image)?
+	BSM: Because rather confusingly the class Float is actually an IEEE double-precision float. REAL/FLOAT is single precision. There is (now) Float>>#closeTo:precision:"
 	args second with: answer second do: [:f1 :f2 | self assert: (self compare: f1 to: f2)]!
 
 testGetBlendCount
@@ -111,7 +130,9 @@ testPersistentArgument
 
 !GdiplusLinearGradientBrushTest categoriesForMethods!
 setSample1!accessing!public! !
+subjectClass!constants!private! !
 testClone!public!unit tests! !
+testConstructFromRectangle!public!unit tests! !
 testConstructor1!public!unit tests! !
 testConstructor2!public!unit tests! !
 testFillingHorizontal!public!unit tests! !

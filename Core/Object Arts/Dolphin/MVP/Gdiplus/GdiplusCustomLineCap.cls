@@ -154,31 +154,6 @@ widthScale:!accessing!public! !
 
 !GdiplusCustomLineCap class methodsFor!
 
-exampleGdipCLCStrokeCaps
-	"This example creates a GdiplusCustomLineCap object , sets its stroke cap, and then 
-	assigns the custom cap's stroke cap as the end cap of a GdiplusPen.  The pen draws a
-	diagonal line.
-
-		self exampleGdipCLCStrokeCaps showExample
-	"
-
-	| bitmap graphics path customCap pen rect |
-	bitmap := GdiplusBitmap extent: 450 @ 300.
-	graphics := bitmap graphics.
-	path := GdiplusGraphicsPath new addLines: (Array 
-						with: -15 @ -15
-						with: 0 @ 0
-						with: 15 @ -15).
-	customCap := GdiplusCustomLineCap strokePath: path.
-	customCap startCap: LineCapTriangle endCap: LineCapRound.
-	pen := GdiplusPen red width: 5.5.
-	pen customEndCap: customCap.
-	rect := 50 @ 50 extent: 300 @ 100.
-	graphics
-		drawLine: rect pen: pen;
-		drawRectangle: rect pen: GdiplusPen black.
-	^bitmap!
-
 fillPath: aFillPath strokePath: aStrokePath baseCap: aBaseCap baseInset: aBaseInset 
 	^self fromInitializer: (GdiplusCustomLineCapInitializer 
 				fillPath: aFillPath
@@ -197,7 +172,6 @@ strokePath: aStrokePath
 		baseInset: 0! !
 
 !GdiplusCustomLineCap class categoriesForMethods!
-exampleGdipCLCStrokeCaps!examples!public!unit tests! !
 fillPath:strokePath:baseCap:baseInset:!instance creation!public! !
 new!instance creation!public! !
 strokePath:!instance creation!public! !
