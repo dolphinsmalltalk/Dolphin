@@ -212,11 +212,7 @@ testResourceBrowserPreview
 
 	| resourceId resourceView bmp toolbox resources |
 	resourceId := ResourceIdentifier class: ResourceBrowser name: 'Default view'.
-	resourceView := 
-			[Smalltalk developmentSystem loadViewResource: resourceId resource
-				inContext: DesignDesktopView default]
-					on: Error
-					do: [:x | ].
+	resourceView := DesignDesktopView default loadViewResource: resourceId resource forEdit: false.
 	bmp := resourceView notNil
 				ifTrue: 
 					[resourceView invalidateLayoutDeeply.

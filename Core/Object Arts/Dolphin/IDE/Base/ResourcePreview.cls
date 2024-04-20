@@ -44,7 +44,7 @@ imageFromResource: aResourceIdentifier
 	^resourceView notNil
 		ifTrue: 
 			[resourceView invalidateLayoutDeeply.
-			[Bitmap fromView: resourceView] ensure: [resourceView destroy]]
+			[resourceView screenshot: self actualBackcolor brush] ensure: [resourceView destroy]]
 		ifFalse: [Error icon]!
 
 recreationFunction

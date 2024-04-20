@@ -645,7 +645,7 @@ fromView: aView
 	"Answer a new bitmap instance of the receiver containing a dump of the current state of the 
 	<View> argument."
 
-	^self fromView: aView background: Brush white!
+	^self fromView: aView background: Color window brush!
 
 fromView: aView background: aBrush
 	"Answer a new bitmap instance of the receiver containing a dump of the current state of the <View> argument, painted over the top of a bitmap erased with the specified background brush.
@@ -653,19 +653,20 @@ fromView: aView background: aBrush
 
 	"The extent reported will depend on the thread DPI awareness context. Since the PhysicalToLogicalPointForPerMonitorDPI/LogicalToPhysicalPointForPerMonitorDPI don't actually seem to work as advertised, we just switch to the DPI context for the view in question to be sure we get the correct extent. The alternative would be to explicitly scale the extent from the current thread DPI context, although if that is per-monitor we'd need to determine the DPI of the monitor on which aView is located. It is easier/safer just to switch context temporarily."
 
-	^aView inDpiAwarenessContextDo: 
-			[| answer canvas ext |
-			ext := aView extent.
-			answer := self compatible: aView canvas extent: ext.
-			canvas := answer canvas.
-			aBrush ifNotNil: [canvas fillRectangle: (RECT extent: ext) brush: aBrush].
-			"Note that PRF_ERASEBKGND is necessary here even though we may have apparently just erased the background, as otherwise some of that background colour may show through where it should not."
-			aView
-				sendMessage: WM_PRINT
-				wParam: canvas handle
-				lParam: ##(PRF_CLIENT | PRF_CHILDREN | PRF_NONCLIENT | PRF_OWNED | PRF_ERASEBKGND).
-			answer freeDC.
-			answer]!
+	| answer canvas ext |
+	ext := aView inDpiAwarenessContextDo: [aView extent].
+	canvas := aView canvas.
+	answer := self compatible: canvas extent: ext.
+	canvas free.
+	canvas := answer canvas.
+	aBrush ifNotNil: [canvas fillRectangle: (RECT extent: ext) brush: aBrush].
+	"Note that PRF_ERASEBKGND is necessary here even though we may have apparently just erased the background, as otherwise some of that background colour may show through where it should not."
+	aView
+		sendMessage: WM_PRINT
+		wParam: canvas handle
+		lParam: ##(PRF_CLIENT | PRF_CHILDREN | PRF_NONCLIENT | PRF_OWNED | PRF_ERASEBKGND).
+	answer freeDC.
+	^answer!
 
 initialize
 	"Private - Initialize the receiver's class variables

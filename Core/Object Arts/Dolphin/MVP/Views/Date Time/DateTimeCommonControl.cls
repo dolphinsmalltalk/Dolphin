@@ -96,12 +96,12 @@ range
 	| array gd |
 	array := StructureArray length: 2 elementClass: SYSTEMTIME.
 	array beUnfinalizable.
-	gd := self 
+	gd := self
 				sendMessage: self getRangeMessage
 				wParam: 0
 				lpParam: array asParameter.
-	^Array with: ((gd anyMask: GDTR_MIN) ifTrue: [(array at: 1) copy])
-		with: ((gd anyMask: GDTR_MAX) ifTrue: [(array at: 2) copy])!
+	^{(gd anyMask: GDTR_MIN) ifTrue: [(array at: 1) copy].
+		(gd anyMask: GDTR_MAX) ifTrue: [(array at: 2) copy]}!
 
 range: interval 
 	"Set the allowable range of values. The first element of interval if either the
