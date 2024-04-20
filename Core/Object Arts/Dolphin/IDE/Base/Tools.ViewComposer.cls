@@ -1909,13 +1909,12 @@ validateImage
 
 	((image notNil and: [image handle isNull]) or: [self isImageDirty]) ifFalse: [^self].
 	self isImageDirty: false.
-	"self view inDpiAwarenessContextDo: "
-			"["image := self composingView
-						ifNotNil: 
-							[:cv |
-							cv needsValidateLayout ifTrue: [cv validateLayout].
-							Bitmap fromView: cv background: nil"self arena actualBackcolor brush"].
-			arenaPresenter value: image"]"!
+	image := self composingView
+				ifNotNil: 
+					[:cv |
+					cv needsValidateLayout ifTrue: [cv validateLayout].
+					cv screenshot: self arena actualBackcolor brush].
+	arenaPresenter value: image!
 
 validateLayout
 	"Private - Validate the layout for the view being composed"

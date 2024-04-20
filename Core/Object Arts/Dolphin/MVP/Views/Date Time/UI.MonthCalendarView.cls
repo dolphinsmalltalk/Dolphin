@@ -133,7 +133,7 @@ modelClass
 	^Date!
 
 nmFirst
-	^MCN_FIRST + 1!
+	^##(MCN_FIRST + 1)!
 
 onViewCreated
 	"The receiver window has been created. Copy the info held in instance variables across to
@@ -141,6 +141,15 @@ onViewCreated
 
 	super onViewCreated.
 	self setControlBackcolor!
+
+screenshot: aBrush
+	"The control appears to perform some kind of internal initialization when it first receives a WM_SIZE. If we don't do this, then the preview from sending WM_PRINT will be blank. Note that we have to be careful to request the extent in the correct DPI context, as Windows does not convert the lparam when sending the message."
+
+	self
+		sendMessage: WM_SIZE
+		wParam: 0
+		lParam: (self inDpiAwarenessContextDo: [self clientExtent]) asDword.
+	^super screenshot: nil!
 
 setControlBackcolor: aColor 
 	"The control itself defaults to 'Color window' for its background"
@@ -198,6 +207,7 @@ mcnSelect:!event handling-win32!private! !
 modelClass!accessing!private! !
 nmFirst!constants!private! !
 onViewCreated!event handling!public! !
+screenshot:!helpers!public! !
 setControlBackcolor:!accessing!private! !
 setRangeMessage!constants!private! !
 setSystemTime:!accessing!private! !

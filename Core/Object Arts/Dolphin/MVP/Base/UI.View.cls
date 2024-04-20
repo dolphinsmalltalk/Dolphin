@@ -3224,6 +3224,11 @@ screenRectangle: aRectangle
 	self rectangle: localRect.
 !
 
+screenshot: aBrush
+	"Generate a screenshot bitmap of the receiver, using the <Brush> argument to paint the background."
+
+	^Bitmap fromView: self background: aBrush!
+
 scrollBy: aPoint clip: clipRectangle
 	"Scroll the contents of the receiver by aPoint"
 
@@ -5106,6 +5111,7 @@ richText:!accessing!private! !
 scaleFactor!geometry!public! !
 screenRectangle!geometry!public! !
 screenRectangle:!geometry!public! !
+screenshot:!helpers!public! !
 scrollBy:clip:!public!scrolling! !
 scrollBy:scroll:clip:!public!scrolling! !
 sendMessage:!operations!private! !
