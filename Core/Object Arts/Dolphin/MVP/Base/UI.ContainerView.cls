@@ -94,7 +94,9 @@ createShellWindow: aShellView withFunction: aCreateWindow
 		position: (aShellView isInitiallyCentered ifTrue: [self centerExtent: extent] ifFalse: [Point.Zero])
 		extent: extent
 		dpi: targetDpi.
-	aShellView basicCreateWindow: aCreateWindow!
+	aShellView
+		dpi: targetDpi;
+		basicCreateWindow: aCreateWindow!
 
 defaultButtonId
 	^0!

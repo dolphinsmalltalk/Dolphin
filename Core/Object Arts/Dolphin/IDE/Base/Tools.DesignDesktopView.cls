@@ -40,7 +40,9 @@ createShellWindow: aShellView withFunction: aCreateWindow
 				ifTrue: [self defaultWindowExtent]
 				ifFalse: [aCreateWindow extent * dpi // aCreateWindow dpi])
 		dpi: dpi.
-	aShellView basicCreateWindow: aCreateWindow!
+	aShellView
+		dpi: dpi;
+		basicCreateWindow: aCreateWindow!
 
 defaultWindowExtent
 	^##(800 @ 600) * self dpi // USER_DEFAULT_SCREEN_DPI!
