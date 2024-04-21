@@ -2097,7 +2097,7 @@ UI.ImageView
 UI.DesktopView
 	subclass: #'Tools.DesignDesktopView'
 	instanceVariableNames: 'dpiAwareness dpi'
-	classVariableNames: 'Default System'
+	classVariableNames: 'Default System Unaware'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
