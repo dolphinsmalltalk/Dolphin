@@ -209,6 +209,8 @@ calculateExtent: aLayoutContext
 	required to draw all the buttons, etc, in the toolbar."
 
 	| size |
+	self indent: (self managedSubViews inject: 0
+				into: [:sum :each | sum + (aLayoutContext visibleExtentOf: each) x]).
 	size := self tbGetMaxSize.
 	"We need to workaround some Windows bugs: TB_GETMAXSIZE treats the height of a separator as
 	being the full bar height, regardless of whether horizontal or vertical. Another bug is it
@@ -404,15 +406,15 @@ imageSize: aSymbol
 		ifNotNil: [self updateAllItems]!
 
 indent
-	"Answer the number of pels by which the first button in the toolbar will be indented. 
+	"Answer the number of pels by which the first button in the toolbar will be indented. Note that this is now calculated automatically to allow space for any child views before the buttons are shown.
 	This provides a much better mechanism for reserving space in a toolbar for a nested control than the addition of a separator of a specified width that must be completely covered in order not to show unwanted visual artefacts. Weirdly MSDN still recommends the separator technique."
 
 	^indent ?? 0!
 
 indent: anInteger
-	indent = anInteger ifFalse: [
-		indent := anInteger.
-		self tbSetIndent: anInteger]!
+	indent = anInteger ifTrue: [^self].
+	indent := anInteger.
+	self tbSetIndent: anInteger!
 
 indexOfItem: aToolbarItem
 	"Private - Answer the index of aToolbarItem."
@@ -561,8 +563,8 @@ onEraseRequired: aColorEvent
 		ifFalse: 
 			[canvas
 				excludeClipRectangle: ((self isVertical
-						ifTrue: [rect left @ (rect top + (self calculateExtent: nil) y)]
-						ifFalse: [(rect left + (self calculateExtent: nil) x) @ rect top]) corner: rect corner)].
+						ifTrue: [rect left @ (rect top + (self calculateExtent: (LayoutContext  forContainer: self parentView)) y)]
+						ifFalse: [(rect left + (self calculateExtent: (LayoutContext  forContainer: self parentView)) x) @ rect top]) corner: rect corner)].
 	^true!
 
 onPositionChanged: aPositionEvent 
@@ -622,8 +624,7 @@ resolutionScaledBy: aPoint
 	"Private - The receiver is being loaded and it has been determined that the pixel resolution has changed since the point at which the view was saved. Scale any internal pixels by the <Point> argument. "
 
 	super resolutionScaledBy: aPoint.
-	buttonSize ifNotNil: [buttonSize := (buttonSize * aPoint) truncated].
-	indent ifNotNil: [indent := (indent * aPoint x) truncated]!
+	buttonSize ifNotNil: [buttonSize := (buttonSize * aPoint) truncated]!
 
 scaledBitmapSize
 	"Private - Answer the actual pixel extent of bitmaps shown on the toolbar, measure at the current window DPI. This can be visually inherited from a parent toolbar, which is useful in allowing the image size to be changed just by changing that of the topmost toolbar."

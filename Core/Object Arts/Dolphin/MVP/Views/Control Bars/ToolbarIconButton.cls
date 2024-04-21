@@ -35,11 +35,6 @@ imageIndexIn: aToolbar
 
 	^aToolbar addBitmap: self renderBitmap index: 0!
 
-isScalable
-	"Answer whether the receiver can be scaled, e.g. for DPI."
-
-	^true!
-
 renderBitmap
 	| image |
 	image := self commandDescription image ifNil: [self class defaultImage].
@@ -52,7 +47,6 @@ setCommandDescription: aCommandDescription
 
 !ToolbarIconButton categoriesForMethods!
 imageIndexIn:!operations!private! !
-isScalable!public!testing! !
 renderBitmap!private! !
 setCommandDescription:!public! !
 !

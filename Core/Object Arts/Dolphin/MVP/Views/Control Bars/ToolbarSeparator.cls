@@ -33,11 +33,6 @@ isDivider
 
 	^true!
 
-isScalable
-	"Answer whether the receiver can be scaled, e.g. for DPI."
-
-	^true!
-
 setWidth: anInteger
 	width := anInteger.
 	^self!
@@ -66,7 +61,6 @@ width: pixelWidth
 !ToolbarSeparator categoriesForMethods!
 imageIndexIn:!operations!private! !
 isDivider!public!testing! !
-isScalable!public!testing! !
 setWidth:!accessing!initializing!private! !
 style!private!style! !
 textIndexIn:!operations!private! !

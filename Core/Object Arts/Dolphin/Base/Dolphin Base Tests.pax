@@ -73,6 +73,7 @@ package classNames
 	add: #IntrosortAlgorithmTest;
 	add: #KeyboardTest;
 	add: #LargeIntegerTest;
+	add: #LayoutPlacementTest;
 	add: #LinkTest;
 	add: #LocaleTest;
 	add: #LookupTableTest;
@@ -393,6 +394,12 @@ DolphinTest subclass: #GUIDTest
 
 DolphinTest subclass: #IntegerTest
 	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+DolphinTest subclass: #LayoutPlacementTest
+	instanceVariableNames: 'view'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

@@ -141,6 +141,7 @@ package classNames
 	add: #LASTINPUTINFO;
 	add: #LayoutContext;
 	add: #LayoutManager;
+	add: #LayoutPlacement;
 	add: #LegacyCommandPolicy;
 	add: #LinearLayout;
 	add: #LOGBRUSH;
@@ -612,7 +613,7 @@ Object subclass: #Interactor
 	classInstanceVariableNames: ''!
 
 Object subclass: #LayoutContext
-	instanceVariableNames: 'container positions'
+	instanceVariableNames: 'container placements'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
@@ -621,6 +622,12 @@ Object subclass: #LayoutManager
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+Object subclass: #LayoutPlacement
+	instanceVariableNames: 'view rectangle show'
+	classVariableNames: ''
+	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 
 Object subclass: #MenuItem

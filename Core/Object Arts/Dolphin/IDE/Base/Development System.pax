@@ -7610,7 +7610,6 @@ publishedAspectsOfInstances
 		add: (Aspect boolean: #hasFlatAppearance);
 		add: (Aspect boolean: #hasListAppearance);
 		add: (Aspect boolean: #hasLabels);
-		add: (Aspect integer: #indent);
 		add: (Aspect boolean: #canCustomize);
 		add: (Aspect sequenceableCollection: #items
 					addEvaluationFrom: ##({ToolbarIconButton.

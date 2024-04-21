@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Object subclass: #LayoutContext
-	instanceVariableNames: 'container positions'
+	instanceVariableNames: 'container placements'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
@@ -21,7 +21,7 @@ apply
 
 	self deferRectangles ifFalse: [^self].
 	self repositionSubViewsOf: container.
-	positions at: container ifPresent: [:pos | container rectangle: (pos at: 2)]!
+	placements at: container ifPresent: [:placement | container rectangle: placement rectangle]!
 
 clientExtentOf: aView 
 	"Answer a <Point> representing the client extent of the specified <View>. This may be
@@ -33,9 +33,9 @@ clientRectangleOf: aView
 	"Answer the client  <Rectangle> of the specified <View>. This may be different to its current
 	client rectangle if it has been repositioned during this operation."
 
-	^(positions lookup: aView)
+	^(placements lookup: aView)
 		ifNil: [aView clientRectangle]
-		ifNotNil: [:array | aView calcClientRectangleFromRectangle: (array at: 2)]!
+		ifNotNil: [:placement | aView calcClientRectangleFromRectangle: placement rectangle]!
 
 deferRectangles
 	^true!
@@ -49,15 +49,14 @@ deferWindowPositions: aSequencedReadableCollection
 	aSequencedReadableCollection do: 
 			[:each |
 			| rect view flags |
-			view := each at: 1.
+			view := each view.
 			flags := ##(SWP_NOZORDER | SWP_NOACTIVATE).
-			rect := (each at: 2)
+			rect := each rectangle
 						ifNil: 
 							[flags := flags bitOr: ##(SWP_NOSIZE | SWP_NOMOVE).
 							Rectangle.Empty]
 						ifNotNil: [:r | view adjustRectangle: r].
-			(each at: 3)
-				ifNotNil: [:show | flags := flags bitOr: (show ifTrue: [SWP_SHOWWINDOW] ifFalse: [SWP_HIDEWINDOW])].
+			flags := flags bitOr: each showFlag.
 			hdwp := userLib
 						deferWindowPos: hdwp
 						hwnd: view asParameter
@@ -76,27 +75,28 @@ extentOf: aView
 
 	^(self rectangleOf: aView) extent!
 
-hideView: aView 
-	self setView: aView visibility: false!
+hideView: aView
+	(self placementForView: aView) show: false!
 
 isViewVisible: aView
 	"Answer whether the specified <View> will be visible after the window repositioning
 	operations specified in this context are applied."
 
-	(positions lookup: aView) ifNotNil: [:pos | (pos at: 3) ifNotNil: [:show | ^show]].
-	^aView hasVisibleStyle!
+	^(placements lookup: aView)
+		ifNil: [aView hasVisibleStyle]
+		ifNotNil: [:placement | placement isVisible]!
 
-positionForView: aView
-	^positions at: aView ifAbsentPut: [{aView. nil. nil}]!
+placementForView: aView
+	^placements at: aView ifAbsentPut: [LayoutPlacement view: aView]!
 
 rectangleOf: aView
 	"Answer the window <Rectangle> of the specified <View>. This may be different to its current
 	view rectangle if it has been repositioned during this operation."
 
-	(positions lookup: aView) ifNotNil: [:pos | (pos at: 2) ifNotNil: [:rect | ^rect]].
+	(placements lookup: aView) ifNotNil: [:placement | placement rectangle ifNotNil: [:rect | ^rect]].
 	^aView rectangle!
 
-repositionSubViewsOf: aView 
+repositionSubViewsOf: aView
 	"Private - Recursively reposition the sub-views of the argument.
 	Unfortunately the DeferWindowPos API has the limitation that all windows in the repositioning batch must have the same parent, and consequently we must recursively position the subviews as multiple batches,
 	rather than accumulating all the positions and then applying one large deferred update."
@@ -104,23 +104,14 @@ repositionSubViewsOf: aView
 	| pairs |
 	pairs := OrderedCollection new.
 	aView subViewsDo: 
-			[:each | 
+			[:each |
 			self repositionSubViewsOf: each.
-			positions at: each
-				ifPresent: 
-					[:pos | 
-					| view rect |
-					view := pos at: 1.
-					rect := pos at: 2.
-					((rect notNil and: [rect ~= view rectangle]) or: 
-							[| show |
-							show := pos at: 3.
-							show notNil and: [show ~= view isWindowVisible]]) 
-						ifTrue: [pairs addLast: pos]]].
+			placements at: each
+				ifPresent: [:placement | placement hasDeferredChange ifTrue: [pairs addLast: placement]]].
 	self deferWindowPositions: pairs!
 
-setContainer: aContainerView 
-	positions := LookupTable new.
+setContainer: aContainerView
+	placements := LookupTable new.
 	container := aContainerView!
 
 setView: aView extent: aPoint 
@@ -137,20 +128,27 @@ setView: aView origin: aPoint
 
 	^self setView: aView rectangle: (aPoint extent: (self extentOf: aView)).!
 
-setView: aView rectangle: aRectangle 
+setView: aView rectangle: aRectangle
 	"Set the window rectangle of the <View>, aView, to be the <Rectangle>, aRectangle. The view
 	will not actually be repositioned until the batch of deferred position changes represented
 	by the receiver are applied."
 
-	(self positionForView: aView) at: 2 put: aRectangle.
+	(self placementForView: aView) rectangle: aRectangle.
 	self deferRectangles ifFalse: [aView rectangle: aRectangle].
 	^aRectangle!
 
-setView: aView visibility: aBoolean 
-	(self positionForView: aView) at: 3 put: aBoolean!
+setView: aView visibility: aBoolean
+	(self placementForView: aView) show: aBoolean!
 
-showView: aView 
-	self setView: aView visibility: true! !
+showView: aView
+	(self placementForView: aView) show: true!
+
+visibleExtentOf: aView
+	"Answer a <Point>, being the window extent (not client extent) of the specified <View> that will be visible at the end of the layout operation."
+
+	^(placements lookup: aView)
+		ifNil: [aView hasVisibleStyle ifTrue: [aView getWindowRect extent] ifFalse: [Point.Zero]]
+		ifNotNil: [:placement | placement visibleExtent]! !
 
 !LayoutContext categoriesForMethods!
 apply!operations!public! !
@@ -161,7 +159,7 @@ deferWindowPositions:!operations!public! !
 extentOf:!accessing!public! !
 hideView:!accessing!public! !
 isViewVisible:!enquiries!public! !
-positionForView:!accessing!private! !
+placementForView:!accessing!private! !
 rectangleOf:!accessing!public! !
 repositionSubViewsOf:!operations!private! !
 setContainer:!initializing!private! !
@@ -170,6 +168,7 @@ setView:origin:!accessing!public! !
 setView:rectangle:!accessing!public! !
 setView:visibility:!accessing!public! !
 showView:!accessing!public! !
+visibleExtentOf:!accessing!public! !
 !
 
 !LayoutContext class methodsFor!

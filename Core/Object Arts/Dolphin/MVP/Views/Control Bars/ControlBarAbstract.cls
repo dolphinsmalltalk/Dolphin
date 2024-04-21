@@ -263,10 +263,10 @@ ttnGetDispInfo: anNMTTDISPINFOW
 	_tipText := anNMTTDISPINFOW text.
 	^ret!
 
-validateSubViewLayouts: anExternalHandle 
+validateSubViewLayouts: aLayoutContext
 	"Private - Validate the layout of the visible sub-views of the receiver."
 
-	self managedSubViewsDo: [:each | each validateLayout: anExternalHandle]!
+	self managedSubViewsDo: [:each | each validateLayout: aLayoutContext]!
 
 validateUserInterface
 	"Validates the user interface for the receiver. Usually performed at idle time
