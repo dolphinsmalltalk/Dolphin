@@ -1462,7 +1462,7 @@ ImageView subclass: #ViewComposerArena
 
 DesktopView subclass: #DesignDesktopView
 	instanceVariableNames: 'dpiAwareness dpi'
-	classVariableNames: 'Default System'
+	classVariableNames: 'Default System Unaware'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 

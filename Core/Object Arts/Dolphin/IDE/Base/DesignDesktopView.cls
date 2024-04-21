@@ -2,7 +2,7 @@
 
 DesktopView subclass: #DesignDesktopView
 	instanceVariableNames: 'dpiAwareness dpi'
-	classVariableNames: 'Default System'
+	classVariableNames: 'Default System Unaware'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DesignDesktopView guid: (GUID fromString: '{d1d4168d-347d-4e4c-b816-a73730045f7b}')!
@@ -102,8 +102,7 @@ gdiScaled
 onStartup
 	"As the receiver's instances are not registered windows, they won't receive onStartup from GuiInputState>>#guiStartup."
 
-	Default ifNotNil: [Default onStartup].
-	System ifNotNil: [System onStartup]!
+	{Default. System. Unaware} do: [:each | each ifNotNil: [each onStartup]]!
 
 perMonitor
 	^self current!
@@ -116,7 +115,7 @@ system
 unaware
 	"Answer a DPI unaware instance of the receiver (96-dpi, bitmap scaling)."
 
-	^self awarenessContext: DPI_AWARENESS_CONTEXT_UNAWARE! !
+	^Unaware ifNil: [Unaware := self awarenessContext: DPI_AWARENESS_CONTEXT_UNAWARE]! !
 !DesignDesktopView class categoriesForMethods!
 awarenessContext:!instance creation!private! !
 default!instance creation!public! !
