@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Object subclass: #DisplayMonitor
-	instanceVariableNames: 'handle info devices resolution metrics defaultWindowExtent lastWindowPosition cascadeOffset workArea'
+	instanceVariableNames: 'handle info devices dpi metrics defaultWindowExtent lastWindowPosition cascadeOffset workArea'
 	classVariableNames: 'Instances MDT_ANGULAR_DPI MDT_DEFAULT MDT_EFFECTIVE_DPI MDT_RAW_DPI MONITOR_DEFAULTTONEAREST MONITOR_DEFAULTTONULL MONITOR_DEFAULTTOPRIMARY'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -108,17 +108,24 @@ devices
 dpi
 	"Answer the logical DPI for this monitor. Note that this may not be the same as the physical DPI, depending on the DPI awareness of the application and the OS magnification setting. When DPI unaware, this is always 96. When system DPI aware it is the system-wide DPI, even if different than this monitor's DPI. When per-monitor DPI aware, it is the effective DPI of the monitor (i.e. the monitors's DPI at the configured magnification)."
 
-	^self resolution x!
+	^dpi ifNil: [dpi := UserLibrary default inSystemDpiAwarenessContextDo: [self effectiveDpi]]!
 
-getResolution: anInteger
+effectiveDpi
+	"Answer the logical DPI of this monitor as measured in the current thread DPI awareness context. This may be different to #dpi, which is the DPI at the process wide (default) context."
+
+	^self getDpi: MDT_DEFAULT!
+
+getDpi: anInteger
+	"Private - Query the specified DPI setting for this monitor. The documentation for GetDpiForMonitor states explicitly that the x and y values will always be the same, so we only bother to retrieve and store one."
+
 	| buf |
-	buf := ByteArray newFixed: 8.
+	buf := ByteArray newFixed: 4.
 	SHCoreLibrary default
 		getDpiForMonitor: handle
 		dpiType: anInteger
-		dpiX: buf yourAddress
-		dpiY: buf yourAddress + 4.
-	^(buf dwordAtOffset: 0) @ (buf dwordAtOffset: 4)!
+		dpiX: buf
+		dpiY: buf.
+	^buf dwordAtOffset: 0!
 
 handle
 	^handle!
@@ -174,6 +181,11 @@ printOn: aStream
 		print: self deviceName;
 		nextPut: $)!
 
+rawDpi
+	"Answer the physical DPI of this monitor. This is the raw DPI of the device, and does not take account of scaling."
+
+	^self getDpi: MDT_RAW_DPI!
+
 rectangle
 	"Answer a `Rectangle` which is the desktop area displayed by this monitor. This is in desktop co-ordinates. Note that the origin can be negative for displays other than the primary that are organised to be right of the primary."
 
@@ -182,7 +194,7 @@ rectangle
 resolution
 	"Answer the logical resolution for this monitor. Note that this may not be the same as the physical resolution, depending on the DPI awareness of the application and the OS magnification setting. When DPI unaware, this is always 96@96. When system DPI aware it is the system-wide DPI, even if different than this monitor's DPI. When per-monitor DPI aware, it is the effective DPI of the monitor (i.e. the monitors's DPI at the configured magnification)."
 
-	^resolution ifNil: [resolution := self getResolution: MDT_DEFAULT]!
+	^self dpi @ dpi!
 
 scaleFactor
 	"Answer the scale factor for this monitor."
@@ -216,8 +228,9 @@ centerExtent:!geometry!public! !
 defaultWindowExtent!accessing!public! !
 deviceName!accessing!public! !
 devices!accessing!private! !
-dpi!geometry!public! !
-getResolution:!geometry!private! !
+dpi!accessing!public! !
+effectiveDpi!accessing!public! !
+getDpi:!accessing!private! !
 handle!accessing!private! !
 handle:!accessing!private! !
 hash!comparing!public! !
@@ -228,10 +241,11 @@ metrics!accessing!public! !
 nextWindowPosition!geometry!public! !
 origin!accessing!public! !
 printOn:!printing!public! !
+rawDpi!accessing!public! !
 rectangle!accessing!public! !
-resolution!geometry!public! !
-scaleFactor!geometry!public! !
-scalePercentage!geometry!public! !
+resolution!accessing!public! !
+scaleFactor!accessing!public! !
+scalePercentage!accessing!public! !
 workArea!accessing!public! !
 !
 

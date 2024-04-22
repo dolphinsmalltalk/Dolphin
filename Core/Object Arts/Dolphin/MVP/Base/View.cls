@@ -280,7 +280,7 @@ baseStyle: styleBitsToAdd maskedBy: styleBitMask recreateIfChanged: aBoolean
 	newBaseStyle = baseStyle ifTrue: [^false].
 	self baseStyle: newBaseStyle.
 	aBoolean
-		ifTrue: [self recreateAround: []]
+		ifTrue: [self recreate]
 		ifFalse: 
 			[self isOpen
 				ifTrue: 
@@ -1267,7 +1267,7 @@ exStyle: styleBitsInteger maskedBy: styleMaskInteger recreateIfChanged: aBoolean
 	newExStyle = exStyle ifTrue: [^false].
 	self extendedStyle: newExStyle.
 	aBoolean
-		ifTrue: [self recreateAround: []]
+		ifTrue: [self recreate]
 		ifFalse: [self isOpen ifTrue: [self setWindowExStyle: newExStyle]].
 	^true!
 
@@ -1755,8 +1755,10 @@ hasVisibleStyle: aBoolean
 	"Set or clear the receiever's WS_VISIBLE style flag.
 	Answer whether the receiver's window was previously visible."
 
-	^self baseStyleMask: WS_VISIBLE set: aBoolean.
-!
+	^self
+		baseStyleMask: WS_VISIBLE
+		set: aBoolean
+		recreateIfChanged: false!
 
 height
 	"Answer the height of the receiver's outer window."
@@ -2844,7 +2846,7 @@ parentView: aView
 	receiver is not yet realized since Windows has a bug when reparenting"
 
 	creationParent := aView.
-	creationStyle at: 1 put: (self baseStyle mask: WS_CHILD set: true)!
+	creationStyle at: 1 put: (self baseStyle bitOr: WS_CHILD)!
 
 performAction
 	"Cause an #actionPerformed event to be routed"

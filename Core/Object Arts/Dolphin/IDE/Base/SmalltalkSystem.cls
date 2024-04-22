@@ -1791,18 +1791,18 @@ dolphinWikiWeb
 dpiAwareness
 	"Answer the symbolic name of the DPI awareness mode for the development environment."
 
-	^UserLibrary dpiAwareness!
+	^UserLibrary desiredDpiAwareness!
 
 dpiAwareness: aSymbol
 	"Set the DPI awareness mode to be applied in the development environment. The mode can be one of:
 		#unaware	- Dolphin will be unaware of the monitor DPI settings and will operate at a virtual 96-dpi. Windows will scale everything, resulting in some blurriness of text and images
 		#gdiScaled	- As above, but GDI is able to scale some drawing, such as fonts, without using bitmaps scaling, so there is much less blurriness. There are, however, some compatibility issues with this mode as described in the commentary for issue #308.
-		#system		- Dolphin will be aware of the primary monitor DPI and will internally scale to this. Windows will scale any windows opened on or moved to secondary monitors at different DPIs. If the primary monitor DPI is changed, Dolphin will be unaware of the change and Windows will scale everything (i.e. no rescaling until restart).
-		#perMonitor	- Dolphin will be fully aware of the DPI settings of all monitors and will rescale internally when windows are opened on or moved to monitors at different DPIs. If the DPI settings are changed, Dolphin will respond immediately. Note that this corresponds to the Per Monitor V2 setting described in the Windows documentation."
+		#system		- Dolphin will be aware of the primary monitor DPI and will internally scale to this. Windows will scale any windows opened on or moved to secondary monitors at different DPIs. If the primary monitor DPI is changed, Dolphin will be unaware of the change and Windows will scale everything (i.e. no rescaling until restart). This mode provides an acceptable user experience and it is not uncommon for applications to use this mode as it is considerably simpler to implement than per-monitor. Older code may require changes to operate correctly.
+		#perMonitor	- Dolphin will be fully aware of the DPI settings of all monitors and will rescale internally when windows are opened on or moved to monitors at different DPIs. If the DPI settings are changed, Dolphin will respond immediately. Note that this corresponds to the Per Monitor V2 setting described in the Windows documentation. This mode has the potential for the best user experience, and is the default. As with the system mode, older code may require changes to operate correctly and those changes may be more complex because it is not possible to rely on a single unchanging scale factor."
 
 	"N.B. Windows does not support changing the DPI awareness of an entire running process, so this cannot take effect until restart."
 
-	UserLibrary dpiAwareness: aSymbol!
+	UserLibrary desiredDpiAwareness: aSymbol!
 
 dropClassFile: aString
 	(MessageBox
