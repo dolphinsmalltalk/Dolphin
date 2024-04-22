@@ -639,7 +639,7 @@ renameClass: aStVariableNode
 
 renameClassVariable: aStVariableNode 
 	| definingBehavior methodClass oldName model |
-	methodClass := presenter selectedMethod methodClass.
+	methodClass := presenter selectedMethod methodClass instanceClass.
 	oldName := aStVariableNode name.
 	definingBehavior := methodClass whichClassDefinesClassVar: oldName.
 	model := self systemModel.
