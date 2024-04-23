@@ -357,6 +357,7 @@ package methodNames
 	add: #UserLibrary -> #getWindowULongPtr:nIndex:;
 	add: #UserLibrary -> #inDpiAwarenessContext:do:;
 	add: #UserLibrary -> #inheritWindowMonitor:hwndInherit:;
+	add: #UserLibrary -> #initialize;
 	add: #UserLibrary -> #insertMenuItem:uItem:fByPosition:lpmii:;
 	add: #UserLibrary -> #inSystemDpiAwarenessContextDo:;
 	add: #UserLibrary -> #invalidate:lpRect:bErase:;
@@ -451,6 +452,10 @@ package methodNames
 	add: #UserLibrary -> #withDpiHostingBehavior:do:;
 	add: 'ConsoleSessionManager class' -> #icon;
 	add: 'Object class' -> #icon;
+	add: 'UserLibrary class' -> #desiredDpiAwareness;
+	add: 'UserLibrary class' -> #desiredDpiAwareness:;
+	add: 'UserLibrary class' -> #dpiAwareness;
+	add: 'UserLibrary class' -> #dpiAwarenessContextFromName:;
 	yourself.
 
 package globalNames
@@ -1138,7 +1143,7 @@ Win32Structure subclass: #NMHDR
 
 Win32Structure subclass: #NONCLIENTMETRICSW
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_dwSize _OffsetOf_iBorderWidth _OffsetOf_iCaptionHeight _OffsetOf_iCaptionWidth _OffsetOf_iMenuHeight _OffsetOf_iMenuWidth _OffsetOf_iPaddedBorderWidth _OffsetOf_iScrollHeight _OffsetOf_iScrollWidth _OffsetOf_iSmCaptionHeight _OffsetOf_iSmCaptionWidth _OffsetOf_lfCationFont _OffsetOf_lfMenuFont _OffsetOf_lfMessageFont _OffsetOf_lfSmCaptionFont _OffsetOf_lfStatusFont'
+	classVariableNames: '_OffsetOf_dwSize _OffsetOf_iBorderWidth _OffsetOf_iCaptionHeight _OffsetOf_iCaptionWidth _OffsetOf_iMenuHeight _OffsetOf_iMenuWidth _OffsetOf_iPaddedBorderWidth _OffsetOf_iScrollHeight _OffsetOf_iScrollWidth _OffsetOf_iSmCaptionHeight _OffsetOf_iSmCaptionWidth _OffsetOf_lfCaptionFont _OffsetOf_lfMenuFont _OffsetOf_lfMessageFont _OffsetOf_lfSmCaptionFont _OffsetOf_lfStatusFont'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
@@ -2929,6 +2934,17 @@ inheritWindowMonitor: hwnd hwndInherit: hwndInherit
 	<stdcall: bool InheritWindowMonitor handle handle>
 	^self invalidCall: _failureCode!
 
+initialize
+	"We must ensure the DPI awareness level is set before we do anything that might do any UI operations, otherwise we'll end up with a mess."
+
+	self setProcessDpiAwarenessContext: DesiredDpiAwarenessContext.
+	"We cache the actual system-wide awareness context now because:
+		- it cannot be changed once set, but the configured context can be changed for the next image restart (so DpiAwarenessContext may not be the system-wide context)
+		- we may not get what we asked for, e.g. in an application with a manifest defined awareness
+		- the result of GetDpiAwarenessContextForProcess will depend on the thread awareness context at the time it is called (!!)"
+	SystemDpiAwarenessContext := self getDpiAwarenessContextForProcess: -1.
+	^self!
+
 insertMenuItem: hMenu uItem: anInteger fByPosition: aBoolean lpmii: aMENUITEMINFOW
 	"Insert a new item into a menu.
 
@@ -3996,6 +4012,7 @@ getWindowULong:nIndex:!public!win32 functions-window class! !
 getWindowULongPtr:nIndex:!public!win32 functions-window class! !
 inDpiAwarenessContext:do:!high DPI!operations!public! !
 inheritWindowMonitor:hwndInherit:!**auto generated**!public!win32 functions-high DPI! !
+initialize!initializing!public! !
 insertMenuItem:uItem:fByPosition:lpmii:!public!win32 functions-menu! !
 inSystemDpiAwarenessContextDo:!high DPI!operations!public! !
 invalidate:lpRect:bErase:!public!win32 functions-painting and drawing! !
@@ -4088,6 +4105,34 @@ validate:lpRect:!public!win32 functions-painting and drawing! !
 windowFromDC:!public!win32 functions-device context! !
 windowFromPoint:!public!win32 functions-window! !
 withDpiHostingBehavior:do:!high DPI!operations!public! !
+!
+
+!UserLibrary class methodsFor!
+
+desiredDpiAwareness
+	"Answer the symbolic name of the DPI awareness mode to be requested when the process starts. Note that this may not be the same as the current system DPI awareness because:
+		- the desired awareness can be configured for future image starts, but cannot take effect in the current session
+		- the awareness achieved may be different to that requested, e.g. in an application with a manifest that specifies a different awareness."
+
+	^DpiAwarenessContexts at: DesiredDpiAwarenessContext negated!
+
+desiredDpiAwareness: aSymbol
+	"Set the DPI awareness mode to be requested when this image is restarted. N.B. Windows does not support changing the DPI awareness of an entire running process, so this cannot take effect until restart."
+
+	DesiredDpiAwarenessContext := self dpiAwarenessContextFromName: aSymbol!
+
+dpiAwareness
+	"Answer the symbolic name of the actual system wide DPI awareness for this process. Note that this cannot be changed."
+
+	^self default awarenessFromDpiAwarenessContext: SystemDpiAwarenessContext!
+
+dpiAwarenessContextFromName: aSymbol
+	^(DpiAwarenessContexts identityIndexOf: aSymbol) negated! !
+!UserLibrary class categoriesForMethods!
+desiredDpiAwareness!accessing!high DPI!public! !
+desiredDpiAwareness:!accessing!high DPI!public! !
+dpiAwareness!accessing!high DPI!public! !
+dpiAwarenessContextFromName:!accessing!high DPI!public! !
 !
 
 "End of package definition"!

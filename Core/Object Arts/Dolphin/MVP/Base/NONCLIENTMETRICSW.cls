@@ -2,7 +2,7 @@
 
 Win32Structure subclass: #NONCLIENTMETRICSW
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_dwSize _OffsetOf_iBorderWidth _OffsetOf_iCaptionHeight _OffsetOf_iCaptionWidth _OffsetOf_iMenuHeight _OffsetOf_iMenuWidth _OffsetOf_iPaddedBorderWidth _OffsetOf_iScrollHeight _OffsetOf_iScrollWidth _OffsetOf_iSmCaptionHeight _OffsetOf_iSmCaptionWidth _OffsetOf_lfCationFont _OffsetOf_lfMenuFont _OffsetOf_lfMessageFont _OffsetOf_lfSmCaptionFont _OffsetOf_lfStatusFont'
+	classVariableNames: '_OffsetOf_dwSize _OffsetOf_iBorderWidth _OffsetOf_iCaptionHeight _OffsetOf_iCaptionWidth _OffsetOf_iMenuHeight _OffsetOf_iMenuWidth _OffsetOf_iPaddedBorderWidth _OffsetOf_iScrollHeight _OffsetOf_iScrollWidth _OffsetOf_iSmCaptionHeight _OffsetOf_iSmCaptionWidth _OffsetOf_lfCaptionFont _OffsetOf_lfMenuFont _OffsetOf_lfMessageFont _OffsetOf_lfSmCaptionFont _OffsetOf_lfStatusFont'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
@@ -19,7 +19,7 @@ NONCLIENTMETRICSW addClassConstant: '_OffsetOf_iScrollHeight' value: 16rC!
 NONCLIENTMETRICSW addClassConstant: '_OffsetOf_iScrollWidth' value: 16r8!
 NONCLIENTMETRICSW addClassConstant: '_OffsetOf_iSmCaptionHeight' value: 16r78!
 NONCLIENTMETRICSW addClassConstant: '_OffsetOf_iSmCaptionWidth' value: 16r74!
-NONCLIENTMETRICSW addClassConstant: '_OffsetOf_lfCationFont' value: 16r18!
+NONCLIENTMETRICSW addClassConstant: '_OffsetOf_lfCaptionFont' value: 16r18!
 NONCLIENTMETRICSW addClassConstant: '_OffsetOf_lfMenuFont' value: 16rE0!
 NONCLIENTMETRICSW addClassConstant: '_OffsetOf_lfMessageFont' value: 16r198!
 NONCLIENTMETRICSW addClassConstant: '_OffsetOf_lfSmCaptionFont' value: 16r7C!
@@ -68,6 +68,11 @@ iScrollWidth
 
 	^bytes sdwordAtOffset: _OffsetOf_iScrollWidth!
 
+lfCaptionFont
+	"Answer the <LOGFONTW> value of the receiver's 'lfCaptionFont' field."
+
+	^LOGFONTW fromAddress: bytes yourAddress + _OffsetOf_lfCaptionFont!
+
 lfMenuFont
 	"Answer the <LOGFONTW> value of the receiver's 'lfMenuFont' field."
 
@@ -81,6 +86,7 @@ iMenuWidth!**compiled accessors**!public! !
 iPaddedBorderWidth!**compiled accessors**!public! !
 iScrollHeight!**compiled accessors**!public! !
 iScrollWidth!**compiled accessors**!public! !
+lfCaptionFont!**compiled accessors**!public! !
 lfMenuFont!**compiled accessors**!public! !
 !
 
@@ -117,7 +123,7 @@ defineFields
 		defineField: #iScrollHeight type: SDWORDField readOnly;
 		defineField: #iCaptionWidth type: SDWORDField uncompiled;
 		defineField: #iCaptionHeight type: SDWORDField readOnly;
-		defineField: #lfCationFont type: (StructureField type: LOGFONTW) beUncompiled;
+		defineField: #lfCaptionFont type: (StructureField type: LOGFONTW) beReadOnly;
 		defineField: #iSmCaptionWidth type: SDWORDField uncompiled;
 		defineField: #iSmCaptionHeight type: SDWORDField uncompiled;
 		defineField: #lfSmCaptionFont type: (StructureField type: LOGFONTW) beUncompiled;
@@ -129,7 +135,7 @@ defineFields
 		defineField: #iPaddedBorderWidth type: SDWORDField readOnly!
 
 getFieldNames
-	^#(#dwSize #iBorderWidth #iScrollWidth #iScrollHeight #iCaptionWidth #iCaptionHeight #lfCationFont #iSmCaptionWidth #iSmCaptionHeight #lfSmCaptionFont #iMenuWidth #iMenuHeight #lfMenuFont #lfStatusFont #lfMessageFont #iPaddedBorderWidth)! !
+	^#(#dwSize #iBorderWidth #iScrollWidth #iScrollHeight #iCaptionWidth #iCaptionHeight #lfCaptionFont #iSmCaptionWidth #iSmCaptionHeight #lfSmCaptionFont #iMenuWidth #iMenuHeight #lfMenuFont #lfStatusFont #lfMessageFont #iPaddedBorderWidth)! !
 
 !NONCLIENTMETRICSW class categoriesForMethods!
 defineFields!public!template definition! !
