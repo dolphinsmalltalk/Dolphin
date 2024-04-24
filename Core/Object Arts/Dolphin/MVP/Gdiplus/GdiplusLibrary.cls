@@ -951,17 +951,6 @@ gdipCreateFontFromDC: hdc font: font
 	<stdcall: sdword GdipCreateFontFromDC handle handle*>
 	^self invalidCall: _failureCode!
 
-gdipCreateFontFromLogfontA: hdc logfont: logfont font: font
-	"Invoke the GdipCreateFontFromLogfontA() function of the module wrapped by the receiver.
-
-		GpStatus __stdcall GdipCreateFontFromLogfontA(
-			HDC HDC,
-			[in]LOGFONTA* LOGFONT,
-			[out, retval]PGpFont* font);"
-
-	<stdcall: sdword GdipCreateFontFromLogfontA handle LOGFONT* handle*>
-	^self invalidCall: _failureCode!
-
 gdipCreateFontFromLogfontW: hdc logfont: logfont font: font
 	"Invoke the GdipCreateFontFromLogfontA() function of the module wrapped by the receiver.
 
@@ -3545,21 +3534,10 @@ gdipGetLineWrapMode: brush wrapMode: wrapMode
 	<stdcall: sdword GdipGetLineWrapMode handle sdword*>
 	^self invalidCall: _failureCode!
 
-gdipGetLogFontA: font graphics: graphics logfonta: logfonta
-	"Invoke the GdipGetLogFontA() function of the module wrapped by the receiver.
-
-		GpStatus __stdcall GdipGetLogFontA(
-			PGpFont font,
-			PGpGraphics graphics,
-			LOGFONTA* LOGFONTA);"
-
-	<stdcall: sdword GdipGetLogFontA handle handle LOGFONT*>
-	^self invalidCall: _failureCode!
-
 gdipGetLogFontW: font graphics: graphics logfonta: logfonta
-	"Invoke the GdipGetLogFontA() function of the module wrapped by the receiver.
+	"Invoke the GdipGetLogFontW() function of the module wrapped by the receiver.
 
-		GpStatus __stdcall GdipGetLogFontA(
+		GpStatus __stdcall GdipGetLogFontW(
 			PGpFont font,
 			PGpGraphics graphics,
 			LOGFONTW* LOGFONTW);"
@@ -7046,7 +7024,6 @@ gdipCreateCustomLineCap:strokePath:baseCap:baseInset:customCap:!**auto generated
 gdipCreateFont:emSize:style:unit:font:!**auto generated**!public! !
 gdipCreateFontFamilyFromName:fontCollection:fontFamily:!**auto generated**!public! !
 gdipCreateFontFromDC:font:!**auto generated**!public! !
-gdipCreateFontFromLogfontA:logfont:font:!**auto generated**!public! !
 gdipCreateFontFromLogfontW:logfont:font:!**auto generated**!public! !
 gdipCreateFromHDC:graphics:!**auto generated**!public! !
 gdipCreateFromHDC2:hDevice:graphics:!**auto generated**!public! !
@@ -7264,7 +7241,6 @@ gdipGetLineRectI:rect:!**auto generated**!public! !
 gdipGetLineSpacing:style:lineSpacing:!**auto generated**!public! !
 gdipGetLineTransform:matrix:!**auto generated**!public! !
 gdipGetLineWrapMode:wrapMode:!**auto generated**!public! !
-gdipGetLogFontA:graphics:logfonta:!**auto generated**!public! !
 gdipGetLogFontW:graphics:logfonta:!**auto generated**!public! !
 gdipGetMatrixElements:matrixOut:!**auto generated**!public! !
 gdipGetMetafileDownLevelRasterizationLimit:metafileRasterizationLimitDpi:!**auto generated**!public! !

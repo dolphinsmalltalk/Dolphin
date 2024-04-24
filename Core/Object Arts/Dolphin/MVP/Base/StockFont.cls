@@ -35,10 +35,14 @@ id
 	^id!
 
 id: anInteger
-	"Private - Set receiver's id to anInteger and obtain the handle."
+	"Private - Initialize the receiver to represent the stock font with the specified <integer> id."
 
 	id := anInteger.
-	self basicRealize!
+	ownsHandle := false.
+	dpi := SystemMetrics current dpi.
+	logfont := LOGFONTW newBuffer.
+	self basicRealize.
+	^self!
 
 ownedHandle: aHandle 
 	"Private - Set the handle of the external graphics's tool object represented and owned by
@@ -53,7 +57,7 @@ ownedHandle: aHandle
 createHandle!private!realizing/unrealizing! !
 hash!comparing!public! !
 id!accessing!private! !
-id:!accessing!private! !
+id:!initializing!private! !
 ownedHandle:!accessing!private! !
 !
 
@@ -62,10 +66,7 @@ ownedHandle:!accessing!private! !
 fromId: anInteger
 	"Answer a new instance of the receiver representing the stock font id anInteger."
 
-	^self new
-		ownsHandle: false;
-		id: anInteger;
-		yourself! !
+	^self basicNew id: anInteger! !
 
 !StockFont class categoriesForMethods!
 fromId:!instance creation!public! !

@@ -15,8 +15,8 @@ package classNames
 	yourself.
 
 package methodNames
-	add: 'AbstractLOGFONT class' -> #fromOleFont:;
 	add: 'Font class' -> #fromOleFont:;
+	add: 'LOGFONTW class' -> #fromOleFont:;
 	yourself.
 
 package binaryGlobalNames: (Set new
@@ -49,7 +49,20 @@ IDispatch subclass: #IFontDisp
 
 "Loose Methods"!
 
-!AbstractLOGFONT class methodsFor!
+!Font class methodsFor!
+
+fromOleFont: pFont
+	"Answer a new instance of the receiver which is equivalent to the OLE font on which the <IFont>|<IFontDisp> argument, anIFont, is an interface."
+
+	"Note that OLE Fonts are measured at 72 dpi, but the LOGFONT conversion has already scaled to 96-dpi."
+
+	^self fromLogFont: (LOGFONTW fromOleFont: pFont) dpi: USER_DEFAULT_SCREEN_DPI! !
+
+!Font class categoriesForMethods!
+fromOleFont:!instance creation!public! !
+!
+
+!LOGFONTW class methodsFor!
 
 fromOleFont: pFont
 	"Answer a new instance of the receiver populated with details from the OLE font on which the <IFont>|<IFontDisp> argument, anIFont, is an interface.
@@ -72,20 +85,7 @@ fromOleFont: pFont
 "		faceName: pFont name;
 		yourself! !
 
-!AbstractLOGFONT class categoriesForMethods!
-fromOleFont:!instance creation!public! !
-!
-
-!Font class methodsFor!
-
-fromOleFont: pFont
-	"Answer a new instance of the receiver which is equivalent to the OLE font on which the <IFont>|<IFontDisp> argument, anIFont, is an interface."
-
-	"Note that OLE Fonts are measured at 72 dpi, but the LOGFONT conversion has already scaled to 96-dpi."
-
-	^self fromLogFont: (LOGFONTW fromOleFont: pFont) dpi: USER_DEFAULT_SCREEN_DPI! !
-
-!Font class categoriesForMethods!
+!LOGFONTW class categoriesForMethods!
 fromOleFont:!instance creation!public! !
 !
 

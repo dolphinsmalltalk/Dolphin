@@ -19,7 +19,9 @@ Font comment: ''!
 = aFont
 	"Answer true if aFont is equal to (has the same logical font info) as the receiver."
 
-	^self species == aFont species and: [logfont = aFont logFont]!
+	^self species == aFont species and: 
+			[series == aFont series
+				or: [(logfont equalExcludingSize: aFont logFont) and: [self pointSize == aFont pointSize]]]!
 
 atDpi: anInteger
 	"Answer a <Font> that is same as the receiver, but with the specified resolution. If that resolution is the same as the receiver's, then answer the receiver."
@@ -74,7 +76,7 @@ dpi
 	^dpi!
 
 dpi: anInteger
-	"Sets the logical pixels per inch of the receiver. Note that if the dpi changes, this will free the font handle, breaking any existing uses. This tends to be obvious as controls will mysteriously start painting using some default font. Changing the DPI of a shared font must therefore be avoided. Instead use #atDpi: to get an equivalent Font at the desired scale."
+	"Sets the logical pixels per inch of the receiver. Note that if the dpi changes, this will free the font handle, breaking any existing uses. This tends to be obvious as controls will mysteriously start painting using the system font. Changing the DPI of a shared font must therefore be avoided. Instead use #atDpi: to get an equivalent Font at the desired scale."
 
 	| oldDpi |
 	dpi = anInteger ifTrue: [^self].
@@ -101,7 +103,7 @@ handle: hFont
 hash
 	"Answer the SmallInteger hash value for the receiver."
 
-	^logfont hash!
+	^self pointSize hashMultiply + self name hash!
 
 initialize
 	"Initialise the receiver."
@@ -184,11 +186,6 @@ name: aString
 
 	logfont faceName: aString!
 
-pixelFromPoints: size
-	"Private - Answers a pixel size from a given point size."
-
-	^(size * self dpi / 72) rounded!
-
 pixelSize
 	"Answers the receiver's pixel size."
 
@@ -200,22 +197,16 @@ pixelSize: anInteger
 
 	self logFont lfHeight: anInteger negated!
 
-pointFromPixels: size
-	"Private - Answers a point size from a given pixel size."
-
-	^(size * 72 / self dpi) rounded.
-!
-
 pointSize
 	"Answers the receiver's point size."
 
-	^self pointFromPixels: self logFont lfHeight abs!
+	^(self logFont lfHeight abs * 72 / self dpi) rounded!
 
 pointSize: anInteger
 	"Convert anInteger to pixels and store in the receiver's logfont lfHeight.
 	This has no affect if the receiver is already realized."
 
-	self logFont lfHeight: (self pixelFromPoints: anInteger) negated!
+	self logFont lfHeight: (anInteger * self dpi / 72) rounded negated!
 
 postCopy
 	"Apply any final flourish to the copy that may be required in order to ensure that the copy
@@ -230,12 +221,35 @@ printOn: aStream
 	"Append, to aStream, a String whose characters are a description of the receiver as a developer
 	would want to see it."
 
+	| attributes weight |
+	attributes := OrderedCollection new.
+	weight := self weight.
+	weight == FW_NORMAL
+		ifFalse: 
+			[attributes add: (weight == FW_BOLD ifTrue: [#isBold: -> true] ifFalse: [#weight: -> self weight])].
+	self isItalic ifTrue: [attributes add: #isItalic: -> true].
+	self isUnderlined ifTrue: [attributes add: #isUnderlined: -> true].
+	self isStruckThrough ifTrue: [attributes add: #isStruckThrough: -> true].
+	attributes isEmpty ifFalse: [aStream nextPut: $(].
 	aStream
 		nextPut: $(;
-		display: self class;
-		nextPutAll: ' name: '; print: self name;
-		nextPutAll: ' pointSize: '; print: self pointSize;
-		nextPut: $)!
+		display: Font;
+		nextPutAll: ' name: ';
+		print: self name;
+		nextPutAll: ' pointSize: ';
+		print: self pointSize;
+		nextPut: $).
+	attributes isEmpty
+		ifFalse: 
+			[attributes do: 
+					[:each |
+					aStream
+						space;
+						nextPutAll: each key;
+						space;
+						print: each value]
+				separatedBy: [aStream nextPut: $;].
+			aStream nextPut: $)]!
 
 quality
 	^Qualities at: self logFont lfQuality + 1!
@@ -352,10 +366,8 @@ logFont!accessing!public! !
 logFont:!accessing!public! !
 name!accessing!public! !
 name:!accessing!public! !
-pixelFromPoints:!mapping!private! !
 pixelSize!accessing!public! !
 pixelSize:!accessing!public! !
-pointFromPixels:!mapping!private! !
 pointSize!accessing!public! !
 pointSize:!accessing!public! !
 postCopy!copying!public! !
@@ -395,6 +407,7 @@ fromHandle: aHandle
 fromHandle: aHandle dpi: anInteger
 	"Answers an instance of the receiver with aHandle that has been created for use at the specified DPI. The handle is not owned by the instance and will not therefore be freed by it."
 
+	aHandle = self system handle ifTrue: [^System].
 	^self basicNew setHandle: aHandle dpi: anInteger!
 
 fromLogFont: aLOGFONT
@@ -481,8 +494,7 @@ stbVersion
 system
 	"Answer the stock System font."
 
-	System isNil ifTrue: [System := StockFont fromId: SYSTEM_FONT].
-	^System!
+	^System ifNil: [System := StockFont fromId: SYSTEM_FONT]!
 
 uninitialize
 	"Uninitialize the class variables of the receiver as it is about to be removed from the system."

@@ -39,7 +39,6 @@ package basicScriptAt: #preuninstall put: 'MemoryManager current collectGarbage;
 
 package classNames
 	add: #AbstractDelegatingView;
-	add: #AbstractLOGFONT;
 	add: #AbstractNonReferenceDelegatingView;
 	add: #AbstractRGB;
 	add: #AbstractSplash;
@@ -637,6 +636,12 @@ Object subclass: #LayoutPlacement
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 
+Object subclass: #LOGFONT
+	instanceVariableNames: ''
+	classVariableNames: '_OffsetOf_lfFaceName'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
 Object subclass: #MenuItem
 	instanceVariableNames: 'flags'
 	classVariableNames: 'Dividers StringSeparator StylesMask'
@@ -967,12 +972,6 @@ ExternalSize subclass: #SIZE
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
-Win32Structure subclass: #AbstractLOGFONT
-	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_lfCharSet _OffsetOf_lfClipPrecision _OffsetOf_lfEscapement _OffsetOf_lfHeight _OffsetOf_lfItalic _OffsetOf_lfOrientation _OffsetOf_lfOutPrecision _OffsetOf_lfPitchAndFamily _OffsetOf_lfQuality _OffsetOf_lfStrikeOut _OffsetOf_lfUnderline _OffsetOf_lfWeight _OffsetOf_lfWidth'
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
 Win32Structure subclass: #ACCEL
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_cmd _OffsetOf_fVirt _OffsetOf_key'
@@ -1084,6 +1083,12 @@ Win32Structure subclass: #LASTINPUTINFO
 Win32Structure subclass: #LOGBRUSH
 	instanceVariableNames: 'hatch'
 	classVariableNames: '_OffsetOf_lbColor _OffsetOf_lbHatch _OffsetOf_lbStyle'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+Win32Structure subclass: #LOGFONTW
+	instanceVariableNames: ''
+	classVariableNames: '_OffsetOf_lfCharSet _OffsetOf_lfClipPrecision _OffsetOf_lfEscapement _OffsetOf_lfFaceName _OffsetOf_lfHeight _OffsetOf_lfItalic _OffsetOf_lfOrientation _OffsetOf_lfOutPrecision _OffsetOf_lfPitchAndFamily _OffsetOf_lfQuality _OffsetOf_lfStrikeOut _OffsetOf_lfUnderline _OffsetOf_lfWeight _OffsetOf_lfWidth'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
@@ -1228,18 +1233,6 @@ Win32Structure subclass: #WINDOWPOS
 Win32Structure subclass: #WNDCLASS
 	instanceVariableNames: 'menuName className'
 	classVariableNames: '_OffsetOf_cbClsExtra _OffsetOf_cbWndExtra _OffsetOf_hbrBackground _OffsetOf_hCursor _OffsetOf_hIcon _OffsetOf_hInstance _OffsetOf_lpfnWndProc _OffsetOf_lpszClassName _OffsetOf_lpszMenuName _OffsetOf_style'
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-AbstractLOGFONT subclass: #LOGFONT
-	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_lfFaceName'
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-AbstractLOGFONT subclass: #LOGFONTW
-	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_lfFaceName'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 

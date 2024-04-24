@@ -132,7 +132,7 @@ readObjectOfClass: aClass format: anObject
 	"First, read the basicSize (number of indexed variables)."
 
 	| basicSize fullSize stbClassFormat newObject |
-	basicSize := (self version < 3 or: [aClass isVariable]) ifTrue: [self readInteger] ifFalse: [0].
+	basicSize := self readIndexableSizeFor: aClass.
 	traceStream
 		nextPut: $[;
 		print: basicSize;

@@ -21,13 +21,14 @@ testFont
 	canvas := Canvas forDesktop.
 	font := canvas font.
 	self denyIsNil: font.
+	self assert: font equals: Font system.
 	newFont := Font name: 'Arial' pointSize: 10.
 	oldFont := canvas font: newFont.
 	self denyIsNil: oldFont.
 	self assert: font equals: oldFont.
 	self assert: canvas font equals: newFont.
 	font := canvas font: oldFont.
-	self assert: font identicalTo: newFont.
+	self assert: font series identicalTo: newFont series.
 	self assert: canvas font identicalTo: oldFont!
 
 testOutlineTextMetrics

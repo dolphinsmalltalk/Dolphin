@@ -17,9 +17,7 @@ STBInFiler comment: ''!
 basicNext
 	"Private - Answer the next object from the receiver's stream."
 
-	| prefix |
-	prefix := self readInteger.
-	^self readObjectWithPrefix: prefix!
+	^self readObjectWithPrefix: self readInteger!
 
 classAt: anInteger
 	"Private - Answer the map value for a class at anInteger. If anInteger is zero then answer nil.
@@ -129,6 +127,9 @@ readClassLocator: anIntegerFlags
 	locatorString := (stream next: (anIntegerFlags bitShift: STBPrefix.LocatorLenShift)) asString.
 	^(classLocator key: locatorString) locateClass!
 
+readIndexableSizeFor: aClass
+	^(version < 3 or: [aClass isVariable]) ifTrue: [self readInteger] ifFalse: [0]!
+
 readInteger
 	"Private - Answer the next 32-bit integer in the stream."
 
@@ -143,23 +144,20 @@ readMap
 	^readMap!
 
 readObjectOfClass: aClass
-	| converter |
-	converter := converters lookup: aClass.
-	^aClass stbReadFrom: self format: converter!
+	^aClass stbReadFrom: self format: (converters lookup: aClass)!
 
 readObjectOfClass: aClass format: anSTBClassConversion
 	"Private - Read the stream for the data to create an instance of aClass."
 
-	| basicSize fullSize newObject variable |
-	variable := aClass isVariable.
-	basicSize := (variable or: [self version < 3]) ifTrue: [self readInteger] ifFalse: [0].
+	| basicSize fullSize newObject |
+	basicSize := self readIndexableSizeFor: aClass.
 	"Create a new object of sufficient size to hold the stored data."
 	anSTBClassConversion isNil
 		ifTrue: 
 			["The object is of the current format.
 			Create an instance of the appropriate class."
 			fullSize := aClass instSize + basicSize.
-			newObject := variable ifTrue: [aClass basicNew: basicSize] ifFalse: [aClass basicNew]]
+			newObject := aClass isVariable ifTrue: [aClass basicNew: basicSize] ifFalse: [aClass basicNew]]
 		ifFalse: 
 			["The object is of an old format.
 			Create an Array or ByteArray to hold the stored data. This is
@@ -259,6 +257,7 @@ next!operations!public! !
 objectAt:!accessing!private! !
 readClassData:!helpers!private! !
 readClassLocator:!helpers!private! !
+readIndexableSizeFor:!operations!private! !
 readInteger!helpers!private! !
 readMap!accessing!private! !
 readObjectOfClass:!accessing!private! !

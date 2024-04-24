@@ -176,16 +176,6 @@ createEllipticRgnIndirect: lprc
 	<stdcall: handle CreateEllipticRgnIndirect RECT*>
 	^self invalidCall: _failureCode!
 
-createFontIndirectA: lplf
-	"Invoke the CreateFontIndirect() function of the module wrapped by the receiver.
-	Helpstring: Creates a logical font that has the characteristics specified in the specified structure
-
-		HFONT __stdcall CreateFontIndirect(
-			LOGFONT* lplf);"
-
-	<stdcall: handle CreateFontIndirectA LOGFONT*>
-	^self invalidCall: _failureCode!
-
 createFontIndirectW: lplf
 	"Invoke the CreateFontIndirect() function of the module wrapped by the receiver.
 	Helpstring: Creates a logical font that has the characteristics specified in the specified structure
@@ -1272,7 +1262,6 @@ createCompatibleDC:!**auto generated**!public!win32 functions-device context! !
 createDC:lpszDevice:lpszOutput:lpInitData:!public!win32 functions-device context! !
 createDIBSection:pbmi:iUsage:ppvBits:hSection:dwOffset:!**auto generated**!public!win32 functions-bitmap! !
 createEllipticRgnIndirect:!**auto generated**!public!win32 functions-region! !
-createFontIndirectA:!**auto generated**!public!win32 functions-font and text! !
 createFontIndirectW:!**auto generated**!public!win32 functions-font and text! !
 createHatchBrush:color:!**auto generated**!public!win32 functions-brush! !
 createIC:lpszDevice:lpszOutput:lpdvminit:!**auto generated**!public!win32 functions-device context! !

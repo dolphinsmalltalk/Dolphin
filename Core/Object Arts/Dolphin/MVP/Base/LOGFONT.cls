@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-AbstractLOGFONT subclass: #LOGFONT
+Object subclass: #LOGFONT
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_lfFaceName'
 	poolDictionaries: ''
@@ -14,66 +14,27 @@ LOGFONT comment: '<LOGFONT> is an <ExternalStructure> class to wrap the Win32 st
 
 LOGFONT has been replaced by LOGFONTW, but is retained due to references from pre-existing view resources (which contain Font instances that reference LOGFONT instances). It will be deprecated in a future release.'!
 
-!LOGFONT categoriesForClass!DxVBLibA-Structs! !
-
-!LOGFONT methodsFor!
-
-createFont
-	^GDILibrary default createFontIndirectA: self!
-
-faceName
-	"Answer the receiver's lfFaceName ANSI string field, having trimmed any extra nulls."
-	
-	^self lfFaceName trimNulls!
-
-faceName: aString
-	"Set the receiver's lfFaceName field."
-	
-	self lfFaceName: aString asAnsiString!
-
-getData: hFont
-	GDILibrary default
-		getObject: hFont
-		cbBuffer: self byteSize
-		lpvObject: self!
-
-lfFaceName
-	"Answer the <AnsiString> value of the receiver's 'lfFaceName' field."
-
-	^AnsiString fromAddress: bytes yourAddress + _OffsetOf_lfFaceName!
-
-lfFaceName: anAnsiString
-	"Set the receiver's 'lfFaceName' field to the value of the argument, anAnsiString"
-
-	| size |
-	size := anAnsiString byteSize - 1 min: 31.
-	anAnsiString
-		replaceBytesOf: bytes
-		from: ##(_OffsetOf_lfFaceName + 1)
-		to: _OffsetOf_lfFaceName + size
-		startingAt: 1.
-	bytes byteAtOffset: _OffsetOf_lfFaceName + size put: 0! !
-
-!LOGFONT categoriesForMethods!
-createFont!private!realizing/unrealizing! !
-faceName!accessing!public! !
-faceName:!accessing!public! !
-getData:!helpers!private! !
-lfFaceName!**compiled accessors**!public! !
-lfFaceName:!**compiled accessors**!public! !
-!
+!LOGFONT categoriesForClass!Deprecated! !
 
 !LOGFONT class methodsFor!
 
-defineFields
-	"Define the Win32 LOGFONT structure.
-		LOGFONT compileDefinition.
-	"
+stbReadFrom: anSTBInFiler format: anSTBClassConversion
+	"Replace the LOGFONT in the serialised data with an equivalent LOGFONTW"
 
-	super defineFields.
-	self defineField: #lfFaceName type: (StringField type: AnsiString length: LF_FACESIZE)! !
+	| logfontw lfbytes |
+	anSTBInFiler readIndexableSizeFor: self.
+	logfontw := LOGFONTW new.
+	anSTBInFiler register: logfontw.
+	lfbytes := anSTBInFiler basicNext.
+	logfontw bytes
+		replaceFrom: 1
+		to: LOGFONTW._OffsetOf_lfFaceName - 1
+		with: lfbytes
+		startingAt: 1.
+	logfontw faceName: (AnsiString fromAddress: lfbytes yourAddress + _OffsetOf_lfFaceName).
+	^logfontw! !
 
 !LOGFONT class categoriesForMethods!
-defineFields!public!template definition! !
+stbReadFrom:format:!public! !
 !
 
