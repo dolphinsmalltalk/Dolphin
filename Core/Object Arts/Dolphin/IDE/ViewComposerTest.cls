@@ -81,8 +81,10 @@ sampleClass
 tearDown
 	DragDropSession current ifNotNil: [:dd | dd cancelTrackingAt: 0 @ 0].
 	sampleClass ifNotNil: [sampleClass removeFromSystem].
-	vc destroy.
-	vc := nil!
+	vc
+		ifNotNil: 
+			[vc destroy.
+			vc := nil]!
 
 testBasicEdit
 	| sampleResourceIdentifier rid |

@@ -210,7 +210,7 @@ tearDown
 	| methods |
 	plugins do: [:a | a key plugins: a value].
 	methods := packageA methods.
-	browser destroy.
+	browser ifNotNil: [browser destroy].
 	self deleteTestMethods: methods.
 	browser := methodsPresenter := packageA := nil!
 

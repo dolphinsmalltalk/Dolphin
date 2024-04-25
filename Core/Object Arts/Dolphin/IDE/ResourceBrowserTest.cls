@@ -40,8 +40,10 @@ setUp
 				classInstanceVariableNames: ''!
 
 tearDown
-	self resourceBrowser destroy.
-	resourceBrowser := nil.
+	resourceBrowser
+		ifNotNil: 
+			[resourceBrowser destroy.
+			resourceBrowser := nil].
 	testClass removeFromSystem.
 	super tearDown!
 

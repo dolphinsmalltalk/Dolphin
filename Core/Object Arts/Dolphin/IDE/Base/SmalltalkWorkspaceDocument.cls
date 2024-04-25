@@ -402,7 +402,8 @@ workspace!accessing!public! !
 activeIdeaSpace
 	| ideaSpaceShellClass |
 	ideaSpaceShellClass := Smalltalk at: #IdeaSpaceShell ifAbsent: [^nil].
-	^(View active topShell isKindOf: ideaSpaceShellClass) ifTrue: [View active topShell]!
+	^View active
+		ifNotNil: [:active | (active topShell isKindOf: ideaSpaceShellClass) ifTrue: [active topShell]]!
 
 canUseIdeaSpace
 	"Answers true if an already open instance of the receiver should be reused instead of

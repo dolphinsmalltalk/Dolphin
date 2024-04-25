@@ -403,7 +403,8 @@ workspaceClass!constants!private! !
 activeIdeaSpace
 	| ideaSpaceShellClass |
 	ideaSpaceShellClass := Smalltalk at: #IdeaSpaceShell ifAbsent: [^nil].
-	^(View active topShell isKindOf: ideaSpaceShellClass) ifTrue: [View active topShell]!
+	^View active
+		ifNotNil: [:active | (active topShell isKindOf: ideaSpaceShellClass) ifTrue: [active topShell]]!
 
 buildIdeaSpacePopup
 	| popup |
