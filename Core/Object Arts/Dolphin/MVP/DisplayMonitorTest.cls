@@ -78,7 +78,8 @@ testComparing
 			self deny: secondary equals: primary]!
 
 testContainingPoint
-	self assert: (DisplayMonitor containingPoint: View desktop rectangle bottomRight - 1)
+	self
+		assert: (DisplayMonitor containingPoint: SystemMetrics current virtualScreenRectangle bottomRight - 1)
 		equals: DisplayMonitor primary.
 	self
 		assertIsNil: (DisplayMonitor containingPoint: SystemMetrics current virtualScreenRectangle corner + 1)!
@@ -120,7 +121,8 @@ testIntersecting
 		equals: DisplayMonitor primary!
 
 testNearestPoint
-	self assert: (DisplayMonitor nearestPoint: View desktop rectangle bottomRight - 1)
+	self
+		assert: (DisplayMonitor nearestPoint: SystemMetrics current virtualScreenRectangle bottomRight - 1)
 		equals: DisplayMonitor primary!
 
 testNearestRectangle
@@ -133,13 +135,10 @@ testPrimary
 	self assert: primary isPrimary.
 	self assert: primary isAttachedToDesktop.
 	rectangle := primary rectangle.
-	self assert: rectangle isKindOf: Rectangle.
 	self assert: rectangle equals: View desktop rectangle.
 	workArea := primary workArea.
-	self assert: workArea isKindOf: Rectangle.
 	self assert: (rectangle contains: workArea).
 	origin := primary origin.
-	self assert: origin isKindOf: Point.
 	"This seems to be true, even if the primary is right of a secondary (secondary then has negative origin)"
 	self assert: origin equals: 0 @ 0!
 

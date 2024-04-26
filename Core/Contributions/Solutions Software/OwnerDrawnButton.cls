@@ -101,7 +101,7 @@ isHot
 isOffScreen
 
 	"Primarily to detect if the receiver is in the ViewComposer"
-	^(View desktop rectangle containsPoint: (self mapPoint: self clientRectangle topLeft to: View desktop)) not!
+	^(SystemMetrics current virtualScreenRectangle containsPoint: (self mapPoint: self clientRectangle topLeft to: View desktop)) not!
 
 isPressed
 
