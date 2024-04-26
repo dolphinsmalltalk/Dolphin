@@ -26,22 +26,20 @@ create: aDialogView
 				dwInitParam: 0.
 	"Position and size the dialog as requested."
 	aDialogView setInitialPosition: rectangle.
-	^hDlg!
-
-rectangle: aRectangle dpi: anInteger
-	rectangle := aRectangle.
-	dpi := anInteger! !
+	^hDlg! !
 
 !UI.CreateDialog categoriesForMethods!
 create:!operations!public! !
-rectangle:dpi:!initializing!private! !
 !
 
 !UI.CreateDialog class methodsFor!
 
 rectangle: aRectangle dpi: anInteger
 	<primitive: 157>
-	^self new rectangle: aRectangle dpi: anInteger! !
+	^self new
+		rectangle: aRectangle;
+		dpi: anInteger;
+		yourself! !
 
 !UI.CreateDialog class categoriesForMethods!
 rectangle:dpi:!instance creation!public! !
