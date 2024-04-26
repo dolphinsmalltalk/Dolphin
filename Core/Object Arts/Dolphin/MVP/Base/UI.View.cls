@@ -686,8 +686,8 @@ create
 createAt: originPoint extent: extentPoint
 	"Private - Create the View window ensuring it has the VM window procedure. The window rectangle is specified by the origin <point> first argument, and the extent <point> second argument. For reasons of backwards compatibility, and because the default extent may well be expressed in code, it is assumed that the position and size arguments are measured in device-independent pixels (aka DIPs, i.e. 96-dpi). Answer the receiver."
 
-	self
-		createWindow: (self creationFunction: (originPoint extent: extentPoint) dpi: USER_DEFAULT_SCREEN_DPI)!
+	self createWindow: (self creationFunction: (Rectangle origin: originPoint extent: extentPoint)
+				dpi: USER_DEFAULT_SCREEN_DPI)!
 
 createWindow: aCreateWindow
 	"Private - Create the View window ensuring it has the VM window procedure.
