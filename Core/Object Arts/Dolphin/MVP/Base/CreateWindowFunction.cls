@@ -22,9 +22,14 @@ create: aView
 	^self subclassResponsibility!
 
 dpi
-	"Answer the <integer> logical dots-per-inch at which the <rectangle> stored in the receiver is measured."
+	"Answer the <integer> logical dots-per-inch at which the <rectangle> of the receiver is measured."
 
 	^self subclassResponsibility!
+
+dpi: anInteger
+	"Set the <integer> logical dots-per-inch at which the <rectangle> of the receiver is measured."
+
+	self subclassResponsibility!
 
 extent
 	"Answer a <point> expressing the width and height of the window to be created. These are measured at the receiver's DPI."
@@ -49,30 +54,17 @@ position
 position: positionPoint extent: extentPoint dpi: anInteger
 	"Set the position and extent of the window that will be created, and the dpi in which the pixel co-ordinates that it contains are measured."
 
-	self rectangle: (RECT origin: positionPoint extent: extentPoint) dpi: anInteger!
+	self subclassResponsibility!
 
 rectangle
 	"Answer the <rectangle> specifying the position and extent of the window that will be created."
 
 	^self subclassResponsibility!
 
-rectangle: aRectangle dpi: anInteger
-	"Private - Set the <rectangle> specifying the position and extent of the window that will be created, and the dpi in which the pixel co-ordinates that it contains are measured."
-
-	self subclassResponsibility!
-
 scaleToDpi: anInteger
 	"Private - Scale the receiver in-place from it's current DPI to that specified by the <SmallInteger> argument."
 
-	"Note that we scale the rectangle corners rather than origin and extent as this is what Windows DWM appears to do:
-		rect := (10@10 extent: 183@19) scaledBy: 1.25.
-		rect truncated extent	=> 229@24
-		rect extent truncated	=> 228@23"
-
-	| currentDpi |
-	currentDpi := self dpi.
-	currentDpi == anInteger
-		ifFalse: [self rectangle: (self rectangle scaleToDpi: anInteger from: currentDpi) dpi: anInteger]!
+	self subclassResponsibility!
 
 scaleToDpiOf: aView
 	"Scale the receiver in-place to the dpi of the <View> argument (which would normally be the parent). Note that the receiver should not be scaled multiple times, as rounding error may accumulate. The intent is that the receiver be scaled once for DPI, if required."
@@ -82,13 +74,13 @@ scaleToDpiOf: aView
 !CreateWindowFunction categoriesForMethods!
 create:!operations!public! !
 dpi!accessing!high DPI!public! !
+dpi:!accessing!high DPI!public! !
 extent!accessing!public! !
 hasDefaultExtent!public!testing! !
 hasDefaultPosition!public!testing! !
 position!accessing!public! !
 position:extent:dpi:!initializing!public! !
 rectangle!accessing!public! !
-rectangle:dpi:!initializing!private! !
 scaleToDpi:!helpers!high DPI!private! !
 scaleToDpiOf:!high DPI!operations!public! !
 !
