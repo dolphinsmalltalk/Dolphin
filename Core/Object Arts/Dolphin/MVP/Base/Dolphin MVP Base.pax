@@ -2755,10 +2755,10 @@ areDpiAwarenessContextsEqual: dpiContextA dpiContextB: dpiContextB
 	Helpstring: Determines whether two DPI_AWARENESS_CONTEXT values are equivalent.
 
 		BOOL __stdcall AreDpiAwarenessContextsEqual(
-			long dpiContextA,
-			long dpiContextB);"
+			INT_PTR dpiContextA,
+			INT_PTR dpiContextB);"
 
-	<stdcall: bool AreDpiAwarenessContextsEqual int32 int32>
+	<stdcall: bool AreDpiAwarenessContextsEqual intptr intptr>
 	^self invalidCall: _failureCode!
 
 attachThreadInput: idAttach idAttachTo: idAttachTo fAttach: aBoolean
@@ -3128,9 +3128,9 @@ getAwarenessFromDpiAwarenessContext: value
 	Helpstring: Retrieves the DPI_AWARENESS value from a DPI_AWARENESS_CONTEXT.
 
 		DPI_AWARENESS __stdcall GetAwarenessFromDpiAwarenessContext(
-			long value);"
+			INT_PTR value);"
 
-	<stdcall: int32 GetAwarenessFromDpiAwarenessContext int32>
+	<stdcall: int32 GetAwarenessFromDpiAwarenessContext intptr>
 	^self invalidCall: _failureCode!
 
 getCapture
@@ -3232,10 +3232,10 @@ getDpiAwarenessContextForProcess: hProcess
 	"Invoke the GetDpiAwarenessContextForProcess() function of the module wrapped by the receiver.
 	Helpstring: Gets a DPI_AWARENESS_CONTEXT handle for the specified process.
 
-		long __stdcall GetDpiAwarenessContextForProcess(
+		INT_PTR __stdcall GetDpiAwarenessContextForProcess(
 			HANDLE hProcess);"
 
-	<stdcall: int32 GetDpiAwarenessContextForProcess handle>
+	<stdcall: intptr GetDpiAwarenessContextForProcess handle>
 	^self invalidCall: _failureCode!
 
 getDpiForSystem
@@ -3262,9 +3262,9 @@ getDpiFromDpiAwarenessContext: value
 	Helpstring: Retrieves the DPI from a given DPI_AWARENESS_CONTEXT handle.
 
 		unsigned int __stdcall GetDpiFromDpiAwarenessContext(
-			long value);"
+			INT_PTR value);"
 
-	<stdcall: uint32 GetDpiFromDpiAwarenessContext int32>
+	<stdcall: uint32 GetDpiFromDpiAwarenessContext intptr>
 	^self invalidCall: _failureCode!
 
 getFocus
@@ -3395,9 +3395,9 @@ getThreadDpiAwarenessContext
 	"Invoke the GetThreadDpiAwarenessContext() function of the module wrapped by the receiver.
 	Helpstring: Get the DPI awareness for the current thread.
 
-		long __stdcall GetThreadDpiAwarenessContext();"
+		INT_PTR __stdcall GetThreadDpiAwarenessContext();"
 
-	<stdcall: int32 GetThreadDpiAwarenessContext>
+	<stdcall: intptr GetThreadDpiAwarenessContext>
 	^self invalidCall: _failureCode!
 
 getThreadDpiHostingBehavior
@@ -3463,10 +3463,10 @@ getWindowDpiAwarenessContext: hwnd
 	"Invoke the GetWindowDpiAwarenessContext() function of the module wrapped by the receiver.
 	Helpstring: Get the DPI awareness for the specified window.
 
-		long __stdcall GetWindowDpiAwarenessContext(
+		INT_PTR __stdcall GetWindowDpiAwarenessContext(
 			wireHWND hwnd);"
 
-	<stdcall: int32 GetWindowDpiAwarenessContext handle>
+	<stdcall: intptr GetWindowDpiAwarenessContext handle>
 	^self invalidCall: _failureCode!
 
 getWindowDpiHostingBehavior: hwnd
@@ -3772,9 +3772,9 @@ isValidDpiAwarenessContext: value
 	Helpstring: Determines whether a value is a valid DPI_AWARENESS_CONTEXT.
 
 		BOOL __stdcall IsValidDpiAwarenessContext(
-			long value);"
+			INT_PTR value);"
 
-	<stdcall: bool IsValidDpiAwarenessContext int32>
+	<stdcall: bool IsValidDpiAwarenessContext intptr>
 	^self invalidCall: _failureCode!
 
 isWindowUnicode: hWnd
@@ -4276,9 +4276,9 @@ setProcessDpiAwarenessContext: value
 	Helpstring: Sets the current process to a specified dots per inch (dpi) awareness context.
 
 		BOOL __stdcall SetProcessDpiAwarenessContext(
-			long value);"
+			INT_PTR value);"
 
-	<stdcall: bool SetProcessDpiAwarenessContext int32>
+	<stdcall: bool SetProcessDpiAwarenessContext intptr>
 	^self invalidCall: _failureCode!
 
 setProp: aWindowHandle lpString: name hData: anObject
@@ -4316,10 +4316,10 @@ setThreadDpiAwarenessContext: dpiContext
 	"Invoke the SetThreadDpiAwarenessContext() function of the module wrapped by the receiver.
 	Helpstring: Set the DPI awareness for the current thread to the provided value.
 
-		long __stdcall SetThreadDpiAwarenessContext(
-			long dpiContext);"
+		INT_PTR __stdcall SetThreadDpiAwarenessContext(
+			INT_PTR dpiContext);"
 
-	<stdcall: int32 SetThreadDpiAwarenessContext int32>
+	<stdcall: intptr SetThreadDpiAwarenessContext intptr>
 	^self invalidCall: _failureCode!
 
 setThreadDpiHostingBehavior: value
