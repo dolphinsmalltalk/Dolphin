@@ -810,7 +810,7 @@ unregister
 	| guid |
 	super unregister.
 	"IDispatch may be registered more than once for different dispinterfaces."
-	[(guid := InterfaceClasses keyAtValue: self ifAbsent: nil) notNil]
+	[(guid := InterfaceClasses keyAtValue: self ifAbsent: []) notNil]
 		whileTrue: [InterfaceClasses removeKey: guid]!
 
 vt
