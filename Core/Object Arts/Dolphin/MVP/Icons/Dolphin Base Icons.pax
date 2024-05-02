@@ -25,8 +25,10 @@ package methodNames
 	add: 'Boolean class' -> #icon;
 	add: 'BOOLEAN class' -> #icon;
 	add: 'BooleanPresenter class' -> #icon;
+	add: 'BorderLayout class' -> #icon;
 	add: 'ByteArray class' -> #icon;
 	add: 'CardLabel class' -> #icon;
+	add: 'CardLayout class' -> #icon;
 	add: 'Character class' -> #icon;
 	add: 'CheckButton class' -> #icon;
 	add: 'Collection class' -> #icon;
@@ -55,8 +57,10 @@ package methodNames
 	add: 'File class' -> #icon;
 	add: 'Float class' -> #icon;
 	add: 'FLOAT class' -> #icon;
+	add: 'FlowLayout class' -> #icon;
 	add: 'Fraction class' -> #icon;
 	add: 'FramingLayout class' -> #icon;
+	add: 'GridLayout class' -> #icon;
 	add: 'GUID class' -> #icon;
 	add: 'InputState class' -> #icon;
 	add: 'Integer class' -> #icon;
@@ -83,11 +87,13 @@ package methodNames
 	add: 'Point class' -> #icon;
 	add: 'Process class' -> #icon;
 	add: 'ProcessorScheduler class' -> #icon;
+	add: 'ProportionalLayout class' -> #icon;
 	add: 'RadioButton class' -> #icon;
 	add: 'RadioButtonSetPresenter class' -> #icon;
 	add: 'Rectangle class' -> #icon;
 	add: 'ResourceIdentifier class' -> #icon;
 	add: 'ScaledDecimal class' -> #icon;
+	add: 'ScrollingDecoratorLayout class' -> #icon;
 	add: 'SearchPolicy class' -> #icon;
 	add: 'Semaphore class' -> #icon;
 	add: 'Set class' -> #icon;
@@ -123,6 +129,7 @@ package setPrerequisites: #(
 	'..\..\Base\Dolphin Legacy Date & Time'
 	'..\Base\Dolphin MVP Base'
 	'..\Presenters\Radio\Dolphin Radio Buttons'
+	'..\Views\Scrollbars\Dolphin Scrollbars'
 	'Dolphin Text Tile Icons').
 
 package!
@@ -150,7 +157,7 @@ icon!constants!public! !
 icon
 	"Answers an Icon that can be used to represent this class."
 
-	^##((TextTileIcon text: $\x1F4E2)
+	^##((TextTileIcon text: $\xEC24 fontName: 'Segoe Fluent Icons')
 		textcolor: Color darkBlue;
 		yourself)! !
 
@@ -270,11 +277,23 @@ icon!constants!public! !
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^##((TextTileIcon text: $\x1F533 fontName: 'Segoe UI Emoji')
+	^##((TextTileIcon text: $\xE73B fontName: 'Segoe Fluent Icons')
 		textcolor: Color forestGreen;
+		margin: 1;
 		yourself)! !
 
 !BooleanPresenter class categoriesForMethods!
+icon!constants!public! !
+!
+
+!BorderLayout class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(TextTileIcon text: $\xF58A fontName: 'Segoe Fluent Icons')! !
+
+!BorderLayout class categoriesForMethods!
 icon!constants!public! !
 !
 
@@ -296,11 +315,22 @@ icon!constants!public! !
 icon
 	"Answers an Icon that can be used to represent this class."
 
-	^##((TextTileIcon text: $\x1F3F7 fontName: 'Segoe UI Emoji')
+	^##((TextTileIcon text: $\xE8EC fontName: 'Segoe Fluent Icons')
 		textcolor: Color darkBlue;
 		yourself)! !
 
 !CardLabel class categoriesForMethods!
+icon!constants!public! !
+!
+
+!CardLayout class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(TextTileIcon text: $\xF12B fontName: 'Segoe Fluent Icons')! !
+
+!CardLayout class categoriesForMethods!
 icon!constants!public! !
 !
 
@@ -322,7 +352,10 @@ icon!constants!public! !
 icon
 	"Answers an Icon that can be used to represent this class."
 
-	^##((TextTileIcon text: $\x2611 fontName: 'Segoe UI Emoji') textcolor: Color hotlight)! !
+	^##((TextTileIcon text: $\xE73D fontName: 'Segoe Fluent Icons')
+		textcolor: Color hotlight;
+		margin: 1;
+		yourself)! !
 
 !CheckButton class categoriesForMethods!
 icon!constants!public! !
@@ -526,7 +559,10 @@ icon!constants!public! !
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^##(TextTileIcon text: $\x1F4CF)! !
+	"Use the 'unit' fluent icon"
+
+	^##(TextTileIcon text: $\xECC6 fontName: 'Segoe Fluent Icons')! !
+
 !DpiAwareness class categoriesForMethods!
 icon!constants!public! !
 !
@@ -672,6 +708,17 @@ icon
 icon!constants!public! !
 !
 
+!FlowLayout class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(TextTileIcon text: $\xEABB fontName: 'Segoe Fluent Icons')! !
+
+!FlowLayout class categoriesForMethods!
+icon!constants!public! !
+!
+
 !Fraction class methodsFor!
 
 icon
@@ -690,9 +737,20 @@ icon!constants!public! !
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^(TextTileIcon text: $\x1F5BD)! !
+	^##(TextTileIcon text: $\xF246 fontName: 'Segoe Fluent Icons')! !
 
 !FramingLayout class categoriesForMethods!
+icon!constants!public! !
+!
+
+!GridLayout class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(TextTileIcon text: $\xF0E2 fontName: 'Segoe Fluent Icons')! !
+
+!GridLayout class categoriesForMethods!
 icon!constants!public! !
 !
 
@@ -773,7 +831,7 @@ icon!constants!public! !
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^##(TextTileIcon text: $\x29C9 fontName: 'Cambria')! !
+	^##(TextTileIcon text: $\xECA5 fontName: 'Segoe Fluent Icons')! !
 
 !LayoutManager class categoriesForMethods!
 icon!constants!public! !
@@ -784,7 +842,7 @@ icon!constants!public! !
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^##(TextTileIcon text: $\x1F517)! !
+	^##(TextTileIcon text: $\xE71B fontName: 'Segoe MDL2 Assets') textcolor: Color darkBlue! !
 
 !Link class categoriesForMethods!
 icon!public! !
@@ -1004,6 +1062,17 @@ icon
 icon!constants!public! !
 !
 
+!ProportionalLayout class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(TextTileIcon text: $\xE90D fontName: 'Segoe Fluent Icons')! !
+
+!ProportionalLayout class categoriesForMethods!
+icon!constants!public! !
+!
+
 !RadioButton class methodsFor!
 
 icon
@@ -1029,7 +1098,9 @@ icon!constants!public! !
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^##(TextTileIcon text: $\x25AD)! !
+	^##((TextTileIcon text: $\x25AD)
+		margin: -1;
+		yourself)! !
 
 !Rectangle class categoriesForMethods!
 icon!constants!public! !
@@ -1056,6 +1127,17 @@ icon
 		yourself)! !
 
 !ScaledDecimal class categoriesForMethods!
+icon!constants!public! !
+!
+
+!ScrollingDecoratorLayout class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(TextTileIcon text: $\xEC8F fontName: 'Segoe Fluent Icons')! !
+
+!ScrollingDecoratorLayout class categoriesForMethods!
 icon!constants!public! !
 !
 

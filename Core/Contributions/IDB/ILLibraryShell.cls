@@ -329,11 +329,15 @@ exeFileTypes
 	^#(#('Application files (*.exe)' '*.exe') #('All files (*.*)' '*.*'))!
 
 icon
-	^##(TextTileIcon text: $\x1F5BC
+	^##((TextTileIcon
+		text: $\xE8F1
+		fontName: 'Segoe Fluent Icons'
 		color: (Color
 				r: 246
 				g: 162
-				b: 17))!
+				b: 17))
+		margin: 1;
+		yourself)!
 
 iconFileExtension
 	^'ico'!
