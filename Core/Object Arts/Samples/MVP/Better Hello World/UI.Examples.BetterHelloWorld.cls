@@ -40,8 +40,8 @@ defaultModel
 icon
 	"Answers an Icon that can be used to represent this class."
 
-	^##((TextTileIcon text: $\x1F389 color: Color crimson)
-		fontStyle: #bold;
+	^##((TextTileIcon text: $\xED39 fontName: 'Segoe Fluent Icons' color: Color crimson)
+		margin:1;
 		yourself)!
 
 resource_Default_view

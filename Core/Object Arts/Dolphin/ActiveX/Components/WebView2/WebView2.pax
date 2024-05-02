@@ -4,7 +4,7 @@ package paxVersion: 2.1;
 	basicComment: '# Dolphin Smalltalk WebView2 Integration
 Copyright © Object Arts Ltd et al, 2022-23
 
-This package contains an integration of the Edge browser into Dolphin using the [WebView2 SDK](https://docs.microsoft.com/en-us/microsoft-edge/webview2). It replaces the obsolete `Internet Explorer` package, which is now deprecated and will no longer be loaded by default in Dolphin 8.
+This package contains an integration of the Edge browser into Dolphin using the [WebView2 SDK](https://docs.microsoft.com/en-us/microsoft-edge/webview2). It replaces the obsolete `Internet Explorer` package, which is no longer available.
 
 It requires that the WebView2 runtime is installed. See the above page for the (complicated) distribution options.
 If the runtime is not installed, then the view will display a link to the Microsoft page so the user can download and install if they wish.

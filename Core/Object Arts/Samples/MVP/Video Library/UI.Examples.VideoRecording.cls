@@ -158,7 +158,7 @@ title:!accessing!public! !
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^##(TextTileIcon text: $\x1F39E fontName: 'Segoe UI Emoji')!
+	^##(TextTileIcon text: $\xE714 fontName: 'Segoe Fluent Icons')!
 
 new
 	"Answer a new, initialised, instance of the receiver.

@@ -85,7 +85,12 @@ displayOn: aPuttableStream
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^##(TextTileIcon text: $\x1D6D1 color: Color skyBlue)!
+	^##((TextTileIcon
+		text: $\xE8EF
+		fontName: 'Segoe Fluent Icons'
+		color: Color skyBlue)
+		margin: 1;
+		yourself)!
 
 initialize
 	"Private - Initialize the receiver's class variables

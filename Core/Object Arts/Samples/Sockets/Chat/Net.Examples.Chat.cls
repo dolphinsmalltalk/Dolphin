@@ -466,10 +466,12 @@ validateUserInterface!operations!public! !
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^##(TextTileIcon
-		text: $\x1F5E3
-		fontName: 'Segoe UI Emoji'
-		color: Color teal)!
+	^##((TextTileIcon
+		text: $\xE8F2
+		fontName: 'Segoe Fluent Icons'
+		color: Color teal)
+		margin: 1;
+		yourself)!
 
 initialize
 	"Private - Initialize the receiver's class variables
