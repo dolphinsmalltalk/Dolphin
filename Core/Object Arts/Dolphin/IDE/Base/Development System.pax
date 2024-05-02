@@ -637,6 +637,7 @@ package methodNames
 	add: 'ToolbarSeparator class' -> #icon;
 	add: 'ToolbarSeparator class' -> #publishedAspectsOfInstances;
 	add: 'ToolbarSystemButton class' -> #publishedAspectsOfInstances;
+	add: 'ToolbarTextButton class' -> #publishedAspectsOfInstances;
 	add: 'ToolButton class' -> #publishedAspectsOfInstances;
 	add: 'Tooltip class' -> #publishedAspectsOfInstances;
 	add: 'TranscriptShell class' -> #publishedAspects;
@@ -7600,23 +7601,21 @@ publishedAspectsOfInstances!constants!public! !
 publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
-	^super publishedAspectsOfInstances
-		add: (Aspect rectangle: #insets);
-		add: (Aspect
-					choice: #imageSize
-					from: ImageSizes keys asSortedCollection
-					andNil: nil);
-		add: (Aspect boolean: #hasFlatAppearance);
-		add: (Aspect boolean: #hasListAppearance);
-		add: (Aspect boolean: #hasLabels);
-		add: (Aspect boolean: #canCustomize);
-		add: (Aspect sequenceableCollection: #items
-					addEvaluationFrom: ##({ToolbarIconButton.
-							ToolbarBitmapButton.
-							ToolbarSystemButton.
-							ToolbarSeparator} collect: [:each | each name , ' new']))
-						beImmutable;
-		yourself!
+	| aspects |
+	aspects := super publishedAspectsOfInstances
+				add: (Aspect rectangle: #insets);
+				add: (Aspect
+							choice: #imageSize
+							from: ImageSizes keys asSortedCollection
+							andNil: nil);
+				add: (Aspect sequenceableCollection: #items
+							addEvaluationFrom: ##({ToolbarIconButton. ToolbarBitmapButton. ToolbarTextButton. ToolbarSeparator}
+									collect: [:each | each name , ' new']))
+								beImmutable;
+				yourself.
+	#(#hasFlatAppearance #hasFluentIcons #hasListAppearance #hasLabels #canCustomize)
+		do: [:each | aspects add: (Aspect boolean: each)].
+	^aspects!
 
 publishedEventsOfInstances
     	"Answer a Set of Symbols that describe the published events triggered
@@ -7861,6 +7860,18 @@ publishedAspectsOfInstances
 		yourself! !
 
 !ToolbarSystemButton class categoriesForMethods!
+publishedAspectsOfInstances!constants!public! !
+!
+
+!ToolbarTextButton class methodsFor!
+
+publishedAspectsOfInstances
+	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
+
+	^(super publishedAspectsOfInstances)
+		add: (Aspect name: #buttonText);
+		yourself! !
+!ToolbarTextButton class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
 

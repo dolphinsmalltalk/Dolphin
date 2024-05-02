@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Object subclass: #View
-	instanceVariableNames: 'handle creationParent creationStyle presenter model backcolor preferredExtent flags contextMenu font events interactor'
+	instanceVariableNames: 'handle creationParent creationStyles presenter model backcolor preferredExtent flags contextMenu font events interactor'
 	classVariableNames: 'CreateCenteredMask DragSourceMask DropTargetMask LayoutValidMask ManagedMask MessageMap MinimizedMask MixedDpiAwarenessMask NextId NoInheritMenuMask ProxyRestoringMask RestoringMask StateRestoringMask UIValidMask UsePreferredExtentMask ViewClosedError WndClassAtom'
 	poolDictionaries: 'Win32Constants Win32Errors'
 	classInstanceVariableNames: 'theme'!
@@ -243,13 +243,13 @@ baseStyle
 	"Private - Answer the receiver's base creation style.
 	N.B. This may not be the receiver's current window style."
 
-	^creationStyle at: 1!
+	^creationStyles at: 1!
 
 baseStyle: anInteger
 	"Private - Set the receiver's base creation style.
 	N.B. This does not affect the windows current style (see baseStyle:etc)"
 
-	^creationStyle at: 1 put: anInteger!
+	^creationStyles at: 1 put: anInteger!
 
 baseStyle: anInteger maskedBy: aMaskInteger 
 	"Private - Copies the bits in anInteger masked by aMaskInteger to the base style of the
@@ -294,7 +294,7 @@ baseStyle: styleBitsToAdd maskedBy: styleBitMask recreateIfChanged: aBoolean
 baseStyleAllMask: anInteger
 	"Private - Answers true if the base creation style bits contains all the bits in anInteger"
 
-	^(creationStyle at: 1) allMask: anInteger!
+	^(creationStyles at: 1) allMask: anInteger!
 
 baseStyleMask: anInteger set: aBoolean 
 	"Private - Sets/clears the base creation style bits in anInteger according to aBoolean.
@@ -714,13 +714,18 @@ creationFunction: aRectangle dpi: anInteger
 	^CreateWindow
 		rectangle: aRectangle
 		dpi: anInteger
-		styles: creationStyle
+		styles: self creationStyles
 		title: self windowTitle!
 
 creationParentView
 	"Private - Answer the View where the receiver must be created"
 
 	^creationParent!
+
+creationStyles
+	"Private - Answer the base and extended style pair to be used when creating the receiver's Window. Subclasses may want to modify the styles to account for other settings that either require or exclude a particular window style."
+
+	^creationStyles!
 
 cursor
 	"Answers the cursor to be used while over the client area of the receiver. Subclasses
@@ -1296,14 +1301,14 @@ extendedStyle
 	"Private - Answer the receiver's extended creation style.
 	N.B. This may not be the receiver's current extended window style."
 
-	^creationStyle at: 2!
+	^creationStyles at: 2!
 
 extendedStyle: anInteger
 	"Private - Set the receiver's extended creation style.
 	N.B. This does not affect the style of windows which have already been created
 	(see exStyle:etc..)."
 
-	^creationStyle at: 2 put: anInteger!
+	^creationStyles at: 2 put: anInteger!
 
 extent
 	"Answer the dimensions of the receiver's outer (non-client) window."
@@ -1806,13 +1811,12 @@ inheritContextMenu: aBoolean
 initialize
 	"Private - Initialise the new receiver."
 
-	creationStyle := self defaultStyle.
+	creationStyles := self defaultStyle.
 	interactor := presenter := self.
 	flags := 0.
 	backcolor := Color default.
 	self isManaged: true.
-	self initializeModel
-!
+	self initializeModel!
 
 initializeModel
 	"Private - Set the default model for the receiver directly. Wire up the event triggers but don't trigger any change
@@ -2837,12 +2841,12 @@ parentView
 
 	^creationParent!
 
-parentView: aView 
+parentView: aView
 	"Private - Sets the parent of the receiver to aView. Can only be used when the
 	receiver is not yet realized since Windows has a bug when reparenting"
 
 	creationParent := aView.
-	creationStyle at: 1 put: (self baseStyle bitOr: WS_CHILD)!
+	creationStyles at: 1 put: (self baseStyle bitOr: WS_CHILD)!
 
 performAction
 	"Cause an #actionPerformed event to be routed"
@@ -3567,16 +3571,16 @@ styles
 	"Answer a two element Array containing the creation style bits for the receiver.
 	See the comment under #style:"
 
-	^creationStyle!
+	^creationStyles!
 
-styles: aStyleArray 
+styles: aStyleArray
 	"Private - Sets the creation style bits for the receiver from the two element aStyleArray. 
 	Windows seems to use the style bits as a rather confusing mixture of style and state (for example
 	WS_VSCROLL is used at creation time to indicate whether a vertical scroll bar
 	is required. Later it is used to indicate the actual presence of the bar). Here
 	we save the style bits so they can later be used if the window needs re-creating"
 
-	creationStyle := aStyleArray.
+	creationStyles := aStyleArray.
 	handle isNil ifTrue: [^self].
 	self setWindowStyle: self baseStyle.
 	self setWindowExStyle: self extendedStyle!
@@ -4804,6 +4808,7 @@ createWindow:!private!realizing/unrealizing! !
 creationFunction!geometry!private!realizing/unrealizing! !
 creationFunction:dpi:!private!realizing/unrealizing! !
 creationParentView!accessing!private! !
+creationStyles!private!realizing/unrealizing! !
 cursor!constants!public! !
 cursorPosition!accessing!public! !
 ddCut:!drag & drop!private! !
@@ -5657,11 +5662,10 @@ openTheme
 
 registerClass
 	"Private - Register the receivers corresponding Win32 class - answer the class atom.
-	Will work for subclasses that implement at least #winClassName, and 
-	optionally #winClassStyle and #winClassBrush"
+	Will work for subclasses that implement at least #winClassName, and optionally #winClassStyle and #winClassBrush"
 
 	| atom classStruct |
-	classStruct := (WNDCLASS new)
+	classStruct := WNDCLASS new
 				className: self wndClassName;
 				lpfnWndProc: VMLibrary default getWndProc;
 				hInstance: VMLibrary default applicationHandle;
@@ -5919,10 +5923,9 @@ viewClosedError
 	^ViewClosedError!
 
 winClassBrush
-	"Private - Answer the default class background brush handle to be used for instances 
-	of the receiver. Note that as of Dolphin 6 we no longer provide a class brush."
+	"Private - Answer the default class background brush handle to be used for instances of the receiver's windows. Note that in normal circumstances the default window procedure will not be invoked for WM_ERASEBKGND, so this should not come into play."
 
-	^0!
+	^COLOR_WINDOW + 1!
 
 winClassCursor
 	"Private - Answer the default icon handle to be used for instances of the receiver.

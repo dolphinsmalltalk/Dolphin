@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Object subclass: #TextTileIcon
-	instanceVariableNames: 'text fontName tilecolor textcolor icon fontStyle flags _reserved8 _reserved9'
+	instanceVariableNames: 'text fontName tilecolor textcolor icon fontStyle flags margin _reserved9'
 	classVariableNames: 'FontStyleNames RotationMask StringFormat'
 	poolDictionaries: 'GdiplusConstants'
 	classInstanceVariableNames: ''!
@@ -189,18 +189,17 @@ drawOn: aCanvas at: dstOrigin extent: dstExtent
 	self drawOnGraphics: graphics at: dstOrigin extent: dstExtent.
 	graphics free!
 
-drawOnGraphics: graphics at: originPoint extent: aPoint
-	| scale back textExtent height faceName utf16 f rect textBrush width style |
-	aPoint isZero ifTrue: [^self].
-	back := tilecolor.
-	rect := originPoint extent: aPoint.
-	back
+drawOnGraphics: graphics at: originPoint extent: extentPoint
+	| scale height faceName utf16 font rect textExtent width style format textBrush |
+	extentPoint isZero ifTrue: [^self].
+	rect := originPoint extent: extentPoint.
+	tilecolor
 		ifNotNil: 
 			[| backbrush |
-			backbrush := GdiplusSolidBrush color: back.
+			backbrush := tilecolor gdiplusBrush: rect.
 			graphics fillRectangle: rect brush: backbrush.
-			backbrush free.
-			rect := rect insetBy: 1 @ 0].
+			backbrush free].
+	margin ifNotNil: [rect := rect insetBy: extentPoint * margin // 16].
 	utf16 := self text asUtf16String.
 	"TextTileIcon can be used to render empty tiles efficiently if no text is provided."
 	utf16 isEmpty ifTrue: [^self].
@@ -211,32 +210,37 @@ drawOnGraphics: graphics at: originPoint extent: aPoint
 	"Work out a suitable font size to best fit the space"
 	faceName := self actualFontName.
 	style := self actualFontStyle.
-	f := GdiplusFont
+	font := GdiplusFont
 				name: faceName
 				pixelSize: height
 				style: style.
 	graphics textRenderingHint: TextRenderingHintAntiAlias.
+	format := GdiplusStringFormat genericTypographic clone.
+	format flags: (format flags maskClear: StringFormatFlagsLineLimit).
 	textExtent := (graphics
 				measureString: utf16
-				font: f
+				font: font
 				rect: RECTF new
-				format: GdiplusStringFormat genericTypographic) extent.
-	f free.
+				format: format) extent.
 	scale := width asFloat / textExtent x.
 	scale * textExtent y > height ifTrue: [scale := height asFloat / textExtent y].
-	f := GdiplusFont
-				name: faceName
-				pixelSize: (height * scale max: 1)
-				style: style.
-	textBrush := GdiplusSolidBrush color: self actualTextcolor.
+	scale = 1
+		ifFalse: 
+			[font free.
+			font := GdiplusFont
+						name: faceName
+						pixelSize: (height * scale max: 1)
+						style: style].
+	textBrush := GdiplusBrush color: self actualTextcolor.
 	graphics
 		drawString: utf16
-		font: f
+		font: font
 		rect: rect
-		format: self stringFormat
+		format: format
 		brush: textBrush.
-	f free.
-	textBrush free!
+	font free.
+	textBrush free.
+	graphics resetTransform!
 
 drawOnGraphics: aGraphics at: dstOrigin extent: dstExtent from: srcOrigin extent: srcExtent unit: aUnit attributes: aImageAtt 
 	"For compatibility with GdiplusImageView. The source origin, source extent, unit and attributes arguments are ignored."
@@ -302,6 +306,9 @@ largeIcon
 
 	(icon isNil or: [icon isRealized not]) ifTrue: [icon := (self bitmapWithExtent: SystemMetrics current largeIconExtent) asIcon].
 	^icon!
+
+margin: anInteger 
+	margin := anInteger!
 
 printOn: aStream
 	"Append the ASCII representation of the receiver to aStream."
@@ -383,7 +390,7 @@ storeOn: aStream
 stringFormat
 	(StringFormat isNil or: [StringFormat isRealized not])
 		ifTrue: 
-			[StringFormat := (GdiplusStringFormat flags: ##(StringFormatFlagsNoClip | StringFormatFlagsNoWrap))
+			[StringFormat := (GdiplusStringFormat flags: ##(StringFormatFlagsNoFitBlackBox | StringFormatFlagsNoClip | StringFormatFlagsNoWrap))
 						trimming: StringTrimmingNone;
 						lineAlignment: StringAlignmentCenter;
 						alignment: StringAlignmentCenter;
@@ -435,7 +442,7 @@ flags:!accessing!private! !
 fontName!accessing!public! !
 fontStyle!accessing!public! !
 fontStyle:!accessing!public! !
-freeDC!public! !
+freeDC!public!realizing/unrealizing! !
 hash!comparison!public! !
 hotspot!accessing!public! !
 icon!accessing!public! !
@@ -444,6 +451,7 @@ imageManager!image management!private! !
 imageType!constants!public! !
 isRealized!public!testing! !
 largeIcon!converting!public! !
+margin:!initializing!public! !
 printOn:!printing!public! !
 realize!public!realizing/unrealizing! !
 rotation!accessing!public! !
@@ -469,6 +477,7 @@ icon
 		fontName: 'Georgia'
 		color: Color cadetBlue)
 		fontStyle: #italic;
+		margin: 1;
 		yourself!
 
 new

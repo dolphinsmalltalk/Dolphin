@@ -8,11 +8,14 @@ CommCtrlConstants at: 'ACS_AUTOPLAY' put: 16r4!
 CommCtrlConstants at: 'ACS_CENTER' put: 16r1!
 CommCtrlConstants at: 'ACS_TRANSPARENT' put: 16r2!
 CommCtrlConstants at: 'CCM_FIRST' put: 16r2000!
+CommCtrlConstants at: 'CCM_GETCOLORSCHEME' put: 16r2003!
 CommCtrlConstants at: 'CCM_GETUNICODEFORMAT' put: 16r2006!
 CommCtrlConstants at: 'CCM_GETVERSION' put: 16r2008!
 CommCtrlConstants at: 'CCM_SETBKCOLOR' put: 16r2001!
+CommCtrlConstants at: 'CCM_SETCOLORSCHEME' put: 16r2002!
 CommCtrlConstants at: 'CCM_SETUNICODEFORMAT' put: 16r2005!
 CommCtrlConstants at: 'CCM_SETVERSION' put: 16r2007!
+CommCtrlConstants at: 'CCM_SETWINDOWTHEME' put: 16r200B!
 CommCtrlConstants at: 'CCS_ADJUSTABLE' put: 16r20!
 CommCtrlConstants at: 'CCS_BOTTOM' put: 16r3!
 CommCtrlConstants at: 'CCS_LEFT' put: 16r81!
@@ -62,6 +65,7 @@ CommCtrlConstants at: 'GDTR_MAX' put: 16r2!
 CommCtrlConstants at: 'GDTR_MIN' put: 16r1!
 CommCtrlConstants at: 'I_CHILDRENCALLBACK' put: -16r1!
 CommCtrlConstants at: 'I_IMAGECALLBACK' put: -16r1!
+CommCtrlConstants at: 'I_IMAGENONE' put: -16r2!
 CommCtrlConstants at: 'ICC_DATE_CLASSES' put: 16r121!
 CommCtrlConstants at: 'ICC_WIN95_CLASSES' put: 16rFF!
 CommCtrlConstants at: 'ILC_COLOR' put: 16r0!

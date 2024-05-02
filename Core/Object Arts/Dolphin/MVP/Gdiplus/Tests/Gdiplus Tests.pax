@@ -1325,7 +1325,7 @@ exampleGdipState
 	"Quality Settings"
 
 	| bitmap graphics pen brush region |
-	bitmap := GdiplusBitmap extent: 250 @ 275.
+	bitmap := GdiplusBitmap extent: 250 @ 275 dpi: 96.
 	graphics := bitmap graphics.
 	pen := GdiplusPen red width: 5.
 	graphics smoothingMode: SmoothingModeAntiAlias.
@@ -1335,7 +1335,7 @@ exampleGdipState
 	bitmap showExample.
 
 	"Transformations"
-	bitmap := GdiplusBitmap extent: 325 @ 325.
+	bitmap := GdiplusBitmap extent: 325 @ 325 dpi: 96.
 	graphics := bitmap graphics.
 	pen := GdiplusPen red.
 	graphics resetTransform.
@@ -1346,7 +1346,7 @@ exampleGdipState
 	bitmap showExample.
 
 	"Clipping Region"
-	bitmap := GdiplusBitmap extent: 175 @ 175.
+	bitmap := GdiplusBitmap extent: 175 @ 175" dpi: 96".
 	graphics := bitmap graphics.
 	pen := GdiplusPen red width: 5.
 	brush := GdiplusSolidBrush color: (Color fromArray: #(255 180 255 255)).
@@ -4069,6 +4069,7 @@ exampleGdipSFFormatText
 
 	| bitmap font rect |
 	bitmap := GdiplusBitmap extent: 300 @ 300.
+	bitmap resolution: 96@96.
 	font := GdiplusFont 
 				name: 'Arial'
 				emSize: 12
@@ -4093,6 +4094,7 @@ exampleGdipSFGenerics
 
 	| bitmap graphics brush font rect stringFormat pen |
 	bitmap := GdiplusBitmap extent: 300 @ 350.
+	bitmap resolution: 96@96.
 	graphics := bitmap graphics.
 	brush := GdiplusSolidBrush blue.
 	font := GdiplusFont name: 'Times New Roman' pointSize: 12.
@@ -4139,6 +4141,7 @@ exampleGdipSFTabs
 
 	| bitmap graphics font rect stringFormat |
 	bitmap := GdiplusBitmap extent: 550 @ 200.
+	bitmap resolution: 96@96.
 	graphics := bitmap graphics.
 	font := GdiplusFont name: 'Courier New' pointSize: 12.
 	stringFormat := GdiplusStringFormat new tabOffsets: #(0 150 100 100).
@@ -4165,6 +4168,7 @@ exampleGdipSFTrimming
 
 	| bitmap graphics string font stringFormat row rect |
 	bitmap := GdiplusBitmap extent: 550 @ 450.
+	bitmap resolution: 96@96.
 	graphics := bitmap graphics.
 	string := 'One two three four five six seven eight nine'.
 	self enumsStringTrimming keysAndValuesDo: 

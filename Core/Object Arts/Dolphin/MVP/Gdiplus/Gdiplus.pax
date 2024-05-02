@@ -223,6 +223,7 @@ package classNames
 package methodNames
 	add: #Bitmap -> #asColorKeyedBitmap;
 	add: #Bitmap -> #asColorKeyedBitmap:;
+	add: #Color -> #gdiplusBrush:;
 	add: #Point -> #scaledOver:;
 	add: #Point -> #scaledTo:;
 	add: #Rectangle -> #asGdiplusRectangle;
@@ -845,6 +846,17 @@ asColorKeyedBitmap: aKeyColor
 !Bitmap categoriesForMethods!
 asColorKeyedBitmap!public! !
 asColorKeyedBitmap:!public! !
+!
+
+!Color methodsFor!
+
+gdiplusBrush: aPoint
+	"Answer a Gdiplus.Brush configured for painting of the receiver's color at the specified extent, although the extent is irrelevant for solid colours and can be ignored."
+
+	^GdiplusSolidBrush color: self! !
+
+!Color categoriesForMethods!
+gdiplusBrush:!converting!public! !
 !
 
 !Point methodsFor!

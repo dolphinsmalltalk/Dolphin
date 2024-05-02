@@ -2,13 +2,17 @@
 
 ControlBarAbstract subclass: #Toolbar
 	instanceVariableNames: 'idMap items bitmapsStart insets tbFlags indent imageSize buttonSize _unused27 layoutManager'
-	classVariableNames: 'ImageSizes LabelsMask'
+	classVariableNames: 'FluentIconFonts FluentIconsMask ImageSizes IsScalableMask LabelsMask NotScalableMask ScalableMask'
 	poolDictionaries: 'ToolbarConstants'
 	classInstanceVariableNames: ''!
 
 Toolbar guid: (GUID fromString: '{87b4c72f-026e-11d3-9fd7-00a0cc3e4a32}')!
 
+Toolbar addClassConstant: 'FluentIconsMask' value: 16r2!
+Toolbar addClassConstant: 'IsScalableMask' value: 16r4!
 Toolbar addClassConstant: 'LabelsMask' value: 16r1!
+Toolbar addClassConstant: 'NotScalableMask' value: 16r8!
+Toolbar addClassConstant: 'ScalableMask' value: 16rC!
 
 Toolbar comment: '`Toolbar` is a `<compositeView>` implementing the Windows _ToolbarWindow32_ common control.
 
@@ -36,6 +40,9 @@ Toolbar holds a list of `<ToolbarItem>` items matching the order of items in the
 !Toolbar categoriesForClass!MVP-Views! !
 
 !Toolbar methodsFor!
+
+actualBitmapSize
+	^ImageSizes at: self actualImageSize!
 
 actualImageSize
 	"Private - Answer the symbolic size of images to be shown as buttons on the toolbar. This can be visually inherited from a parent toolbar, which is useful in allowing the bitmap size to be changed just by changing that of the topmost toolbar."
@@ -97,6 +104,7 @@ addItem: tool
 	(idMap includesKey: tool commandId) ifTrue: [^nil].
 	items := items copyWith: tool.
 	tool toolbar: self.
+	self isScalable: nil.
 	^self basicAddItems: {tool}!
 
 addItems: toolbarItems
@@ -107,6 +115,7 @@ addItems: toolbarItems
 	unique do: [:t | t toolbar: self].
 	items := items, unique.
 	self basicAddItems: unique.
+	self isScalable: nil.
 	^toolbarItems!
 
 addSeparator
@@ -157,23 +166,36 @@ basicAddItems: tools
 	positioning them beyond the present right most item. The tools are NOT added to the tools 
 	collection but they are added to the Id map. Answers the argument."
 
-	| buttons hasLabels |
+	| buttons |
 	tools isEmpty ifTrue: [^tools	"It is an error to set zero buttons on IE5/NT5"].
-	hasLabels := self hasLabels.
 	buttons := StructureArray
 				withAll: tools
 				elementClass: TBBUTTON
-				initializer: 
-					[:tbButton :toolbarItem |
-					| cmd |
-					cmd := toolbarItem getCommandId.
-					cmd == 0 ifFalse: [idMap at: cmd put: toolbarItem].
-					tbButton
-						iBitmap: (toolbarItem imageIndexIn: self);
-						idCommand: cmd;
-						fsState: TB_STATEENABLED;
-						fsStyle: toolbarItem style;
-						iString: (hasLabels ifTrue: [toolbarItem textIndexIn: self] ifFalse: [-1])].
+				initializer: (self hasLabels
+						ifTrue: 
+							[
+							[:tbButton :toolbarItem |
+							| cmd |
+							cmd := toolbarItem getCommandId.
+							cmd == 0 ifFalse: [idMap at: cmd put: toolbarItem].
+							tbButton
+								iBitmap: (toolbarItem imageIndexIn: self);
+								idCommand: cmd;
+								fsState: TB_STATEENABLED;
+								fsStyle: (toolbarItem style bitOr: ##(BTNS_AUTOSIZE | BTNS_SHOWTEXT));
+								iString: (toolbarItem textIndexIn: self)]]
+						ifFalse: 
+							[
+							[:tbButton :toolbarItem |
+							| cmd |
+							cmd := toolbarItem getCommandId.
+							cmd == 0 ifFalse: [idMap at: cmd put: toolbarItem].
+							tbButton
+								iBitmap: (toolbarItem imageIndexIn: self);
+								idCommand: cmd;
+								fsState: TB_STATEENABLED;
+								fsStyle: toolbarItem style;
+								iString: (toolbarItem isTextOnly ifTrue: [toolbarItem textIndexIn: self] ifFalse: [-1])]]).
 	buttons beUnfinalizable.	"Nothing to free here"
 	self tbAddButtons: buttons.
 	^tools!
@@ -202,6 +224,15 @@ buttonSize: aPointOrNil
 	buttonSize := aPointOrNil.
 	self updateAllItems!
 
+buttonSpacing
+	^self tbGetMetrics buttonSpacing!
+
+buttonSpacing: aPoint
+	| metrics |
+	metrics := TBMETRICS newBuffer.
+	metrics buttonSpacing: aPoint.
+	self tbSetMetrics: metrics!
+
 calculateExtent: aLayoutContext
 	"Private - Answer an extent for the receiver within the specified <LayoutContext>."
 
@@ -209,7 +240,7 @@ calculateExtent: aLayoutContext
 	required to draw all the buttons, etc, in the toolbar."
 
 	| size |
-	self indent: (self managedSubViews inject: 0
+	self indent: (self managedSubViews inject: self initialIndent
 				into: [:sum :each | sum + (aLayoutContext visibleExtentOf: each) x]).
 	size := self tbGetMaxSize.
 	"We need to workaround some Windows bugs: TB_GETMAXSIZE treats the height of a separator as
@@ -278,6 +309,13 @@ commandSource
 
 	^self topShell commandSource!
 
+creationStyles
+	"Private - Answer the base and extended style pair to be used when creating the receiver's Window."
+
+	^self hasFluentIcons
+		ifTrue: [{(creationStyles at: 1) bitOr: TBSTYLE_LIST. creationStyles at: 2}]
+		ifFalse: [creationStyles]!
+
 defaultExtent
 	"Private - Answer the default size of the receiver in device-independent pixels (96-dpi DIPs). This is used only to determine the size of a view when it is created (although after scaling DIPs to the monitor DPI). Thereafter #preferredExtent is used when the desired size of a view is requested."
 
@@ -311,14 +349,23 @@ defaultImageSize
 defaultWindowStyle
 	"Private - Answer a default base style to use when creating the receiver"
 
-	^super defaultWindowStyle 
-		bitOr: ##(TBSTYLE_TOOLTIPS | TBSTYLE_WRAPABLE)!
+	^super defaultWindowStyle bitOr: ##(TBSTYLE_TOOLTIPS | TBSTYLE_WRAPABLE | TBSTYLE_FLAT)!
 
 filerProxy
 	| saved |
 	saved := bitmapsStart.
 	bitmapsStart := nil.
 	^[super filerProxy] ensure: [bitmapsStart := saved]!
+
+fluentIconSpacing
+	^self scalePadding: 4!
+
+getActualFont
+	^font
+		ifNil: 
+			[self hasFluentIcons
+				ifTrue: [FluentIconFonts at: self actualImageSize]
+				ifFalse: [self parentView getActualFont]]!
 
 hasFlatAppearance
 	"Answer whether the receiver has a flat appearance. A flat toolbar draws its buttons without
@@ -342,6 +389,18 @@ hasFlatAppearance: aBoolean
 		set: aBoolean
 		recreateIfChanged: true!
 
+hasFluentIcons
+	"Answer whether the toolbar consists of text-only buttons that are assumed to be configured to use the glyphs from the [Segoe Fluent Icons](https://learn.microsoft.com/en-us/windows/apps/design/style/segoe-fluent-icons-font). This causes the font of the toolbar to be defaulted to 'Segoe Fluent Icons' at an appropriate point size for the image size so that any text-only buttons are drawn with characters from the font. This will probably not work well if the text of the buttons is not chosen from the fluent icon set. When this style is set, TBSTYLE_LIST (hasListAppearance) is implied."
+
+	^tbFlags allMask: FluentIconsMask!
+
+hasFluentIcons: aBoolean
+	"Set whether the toolbar consists of text-only buttons that are assumed to be configured to use the glyphs from the [Segoe Fluent Icons](https://learn.microsoft.com/en-us/windows/apps/design/style/segoe-fluent-icons-font). This causes the font of the toolbar to be defaulted to 'Segoe Fluent Icons' at an appropriate point size for the image size so that any text-only buttons are drawn with characters from the font. This will probably not work well if the text of the buttons is not chosen from the fluent icon set. Generally a fluent icons toolbar will consist entirely of text-only buttons (i.e. ToolbarTextButtons). This style implies TBSTYLE_LIST (hasListAppearance)."
+
+	self hasFluentIcons = aBoolean ifTrue: [^self].
+	tbFlags := tbFlags mask: FluentIconsMask set: aBoolean.
+	self recreate!
+
 hasLabels
 	"Answer whether labels are to be included in buttons."
 
@@ -354,13 +413,12 @@ hasLabels: aBoolean
 	self updateAllItems!
 
 hasListAppearance
-	"Answers true if the receiver has a list appearance. i.e. it has the TBSTYLE_LIST style"
+	"Answers true if the receiver has should display any button text alongside image rather than underneath it. i.e. it has (or will have when created) the TBSTYLE_LIST style. If the toolbar has fluent icons, this style is implied."
 
-	^self baseStyleAllMask: TBSTYLE_LIST!
+	^self hasFluentIcons or: [self baseStyleAllMask: TBSTYLE_LIST]!
 
 hasListAppearance: aBoolean 
-	"Sets the receiver to have a list appearance if aBoolean is true. This is the TBSTYLE_LIST
-	style"
+	"Sets the receiver to have a list appearance if aBoolean is true. This is the TBSTYLE_LIST style."
 
 	self 
 		baseStyleMask: TBSTYLE_LIST
@@ -421,6 +479,9 @@ indexOfItem: aToolbarItem
 
 	^items identityIndexOf: aToolbarItem!
 
+initialIndent
+	^self hasFluentIcons ifTrue: [self scalePadding: 2] ifFalse: [0]!
+
 initialize
 	"Private - Initialise the receiver."
 
@@ -445,7 +506,28 @@ insets: aRectangle
 	self invalidateLayout!
 
 isScalable
-	^items allSatisfy: [:each | each isScalable]!
+	| scalable |
+	scalable := (tbFlags bitAnd: ScalableMask) bitShift: ##(1 - ScalableMask lowBit).
+	^scalable == 0
+		ifTrue: 
+			[scalable := items allSatisfy: [:each | each isScalable].
+			self isScalable: scalable.
+			scalable]
+		ifFalse: [scalable == 1]!
+
+isScalable: aBooleanOrNil
+	tbFlags := tbFlags bitAnd: ##(ScalableMask bitInvert).
+	aBooleanOrNil ifNil: [^self].
+	tbFlags := tbFlags bitOr: (aBooleanOrNil ifTrue: [IsScalableMask] ifFalse: [NotScalableMask])!
+
+isWrapable
+	^self baseStyle allMask: TBSTYLE_WRAPABLE!
+
+isWrapable: aBoolean
+	self 
+		baseStyleMask: TBSTYLE_WRAPABLE
+		set: aBoolean
+		recreateIfChanged: true!
 
 itemAtIndex: index
 	"Answers the <ToolbarItem> at the specified <integer> index in the receiver"
@@ -481,6 +563,7 @@ items: tools
 
 	items := tools asArray.
 	items do: [:each | each toolbar: self ].
+	self isScalable: nil.
 	self recreate.!
 
 layoutManager
@@ -591,9 +674,13 @@ onViewCreated
 	self tbButtonStructSize: TBBUTTON byteSize.
 	bitmapsStart := LookupTable new.
 	self setButtonSize.
-	self tbSetExtendedStyle: ##(TBSTYLE_EX_DRAWDDARROWS | TBSTYLE_EX_DOUBLEBUFFER).
+	self tbSetExtendedStyle: (self hasLabels
+				ifTrue: [##(TBSTYLE_EX_DRAWDDARROWS | TBSTYLE_EX_DOUBLEBUFFER)]
+				ifFalse: [##(TBSTYLE_EX_DRAWDDARROWS | TBSTYLE_EX_DOUBLEBUFFER | TBSTYLE_EX_MIXEDBUTTONS)]).
 	self clearIdMap.
 	indent ifNotNil: [self tbSetIndent: indent].
+	"If we are using text-only buttons for fluent icons, we get better results without padding as the textual icon is then centred"
+	self hasFluentIcons ifTrue: [self setFluentIconMetrics].
 	self basicAddItems: items!
 
 preferredHeight
@@ -604,8 +691,14 @@ preferredHeight
 removeAllItems
 	"Remove all the receivers buttons."
 
-	items copy do: [ :each | self removeItem: each].
-!
+	| count |
+	count := items size.
+	count to: 1
+		by: -1
+		do: [:i | self tbDeleteButton: i].
+	self clearIdMap.
+	items := {}.
+	self isScalable: true!
 
 removeItem: aToolbarItem
 	"Remove aToolbarItem from both the internal collection of
@@ -617,6 +710,7 @@ removeItem: aToolbarItem
 	items := (items copyFrom: 1 to: index-1), (items copyFrom: index+1).
 	aToolbarItem commandId ~= 0 ifTrue: [
 		idMap removeKey: aToolbarItem commandId].
+	self isScalable: nil.
 	self tbDeleteButton: index.
 	^aToolbarItem!
 
@@ -630,13 +724,26 @@ scaledBitmapSize
 	"Private - Answer the actual pixel extent of bitmaps shown on the toolbar, measure at the current window DPI. This can be visually inherited from a parent toolbar, which is useful in allowing the image size to be changed just by changing that of the topmost toolbar."
 
 	| size |
-	size := ImageSizes at: self actualImageSize.
+	size := self actualBitmapSize.
 	^self isScalable ifTrue: [size * self dpi // USER_DEFAULT_SCREEN_DPI] ifFalse: [size]!
+
+scalePadding: anInteger
+	^anInteger * self actualBitmapSize x * self dpi // ##(16 * USER_DEFAULT_SCREEN_DPI)!
 
 setButtonSize
 	self changeButtonSize: 
 			[buttonSize ifNotNil: [self tbSetButtonSize: buttonSize].
 			self tbSetBitmapSize: self scaledBitmapSize]!
+
+setFluentIconMetrics
+	| metrics spacing |
+	metrics := self tbGetMetrics.
+	spacing := self fluentIconSpacing.
+	metrics
+		cxButtonSpacing: spacing;
+		cyButtonSpacing: spacing;
+		cxPad: (self scalePadding: 1).
+	self tbSetMetrics: metrics!
 
 size
 	"Answer the number of ToolbarItems in the receiver."
@@ -778,6 +885,18 @@ tbGetMaxSize
 	self sendMessage: TB_GETMAXSIZE wParam: 0 lpParam: size.
 	^size asPoint
 !
+
+tbGetMetrics
+	"Private - "
+
+	| metrics |
+	metrics := TBMETRICS newBuffer.
+	metrics dwMask: ##(TBMF_PAD | TBMF_BARPAD | TBMF_BUTTONSPACING).
+	self
+		sendMessage: TB_GETMETRICS
+		wParam: 0
+		lpParam: metrics.
+	^metrics!
 
 tbGetPadding
 	"Private - Answer the padding between buttons of the the receiver."
@@ -979,6 +1098,30 @@ tbSetIndent: anInteger
 	self sendMessage: TB_SETINDENT wParam: anInteger asInteger
 	!
 
+tbSetListGap: anInteger
+	"Private - Set the gap, in pixels, between buttons on the toolbar."
+
+	self
+		sendMessage: TB_SETLISTGAP
+		wParam: anInteger
+		lParam: 0!
+
+tbSetMetrics: aTBMETRICS
+	"Private - "
+
+	self
+		sendMessage: TB_SETMETRICS
+		wParam: 0
+		lpParam: aTBMETRICS!
+
+tbSetPadding: aPoint
+	"Private - Set the padding around buttons of the the receiver."
+
+	self
+		sendMessage: TB_SETPADDING
+		wParam: 0
+		lParam: aPoint asDword!
+
 tbSetRows: anIntegerRows large: largerBoolean
 	"Private - Set the number of rows in the receiver to anInteger. If largerBoolean is
 	true then more rows will be created if there is not enough horizontal width to
@@ -1057,6 +1200,7 @@ wmDpiChangedAfterParent: message wParam: wParam lParam: lParam
 	^0! !
 
 !Toolbar categoriesForMethods!
+actualBitmapSize!geometry!private! !
 actualImageSize!geometry!private! !
 addBitmap:index:!helpers!private! !
 addEditTools!adding!private! !
@@ -1074,6 +1218,8 @@ bitmapSize!geometry!public! !
 bitmapSize:!geometry!public! !
 buttonSize!geometry!public! !
 buttonSize:!geometry!public! !
+buttonSpacing!accessing!public! !
+buttonSpacing:!accessing!public! !
 calculateExtent:!geometry!private! !
 canCustomize!accessing-styles!public! !
 canCustomize:!accessing-styles!public! !
@@ -1081,14 +1227,19 @@ changeButtonSize:!geometry!private! !
 clearIdMap!initializing!private! !
 command:id:!commands!private! !
 commandSource!commands!public! !
+creationStyles!private!realizing/unrealizing! !
 defaultExtent!constants!private! !
 defaultGradientBackcolor!colors!constants!private! !
 defaultGradientForecolor!colors!constants!private! !
 defaultImageSize!constants!private! !
 defaultWindowStyle!constants!private! !
 filerProxy!binary filing!private! !
+fluentIconSpacing!geometry!private! !
+getActualFont!accessing!font!private! !
 hasFlatAppearance!accessing-styles!public! !
 hasFlatAppearance:!accessing-styles!public! !
+hasFluentIcons!accessing-styles!public! !
+hasFluentIcons:!accessing-styles!public! !
 hasLabels!accessing-styles!public! !
 hasLabels:!accessing-styles!public! !
 hasListAppearance!accessing-styles!public! !
@@ -1100,10 +1251,14 @@ imageSize:!geometry!public! !
 indent!accessing!public! !
 indent:!accessing!public! !
 indexOfItem:!accessing!private! !
+initialIndent!geometry!private! !
 initialize!initializing!private! !
 insets!accessing!public! !
 insets:!accessing!public! !
 isScalable!public!testing! !
+isScalable:!private!testing! !
+isWrapable!accessing-styles!public! !
+isWrapable:!accessing-styles!public! !
 itemAtIndex:!accessing!public! !
 itemClass!constants!public! !
 itemFromId:!accessing!private! !
@@ -1123,7 +1278,9 @@ removeAllItems!public!removing! !
 removeItem:!public!removing! !
 resolutionScaledBy:!geometry!private! !
 scaledBitmapSize!geometry!private! !
+scalePadding:!geometry!private! !
 setButtonSize!operations!private! !
+setFluentIconMetrics!geometry!private! !
 size!geometry!public! !
 tbAddButtons:!helpers!private! !
 tbAddString:!adding!private! !
@@ -1141,6 +1298,7 @@ tbGetIdealHeight!geometry!private! !
 tbGetIdealWidth!geometry!private! !
 tbGetItemRect:!geometry!private! !
 tbGetMaxSize!geometry!private! !
+tbGetMetrics!geometry!private! !
 tbGetPadding!geometry!private! !
 tbGetRect:!geometry!private! !
 tbGetRows!geometry!private! !
@@ -1171,6 +1329,9 @@ tbSetButtonSize:!geometry!private! !
 tbSetCmdID:id:!commands!private! !
 tbSetExtendedStyle:!helpers!private! !
 tbSetIndent:!operations!private! !
+tbSetListGap:!geometry!private! !
+tbSetMetrics:!geometry!private! !
+tbSetPadding:!geometry!private! !
 tbSetRows:large:!geometry!private! !
 tbSetState:state:!helpers!private! !
 tbSetToolTips:!accessing!private! !
@@ -1189,15 +1350,26 @@ initialize
 		Toolbar initialize
 	"
 
+	| iconSizes |
 	self addClassConstant: 'LabelsMask' value: 1.
-	self addClassConstant: 'ImageSizes'
-		value: (IdentityDictionary withAll: {#smallIcons -> (16 @ 16).
-						#mediumSmallIcons -> (20 @ 20).
-						#mediumIcons -> (24 @ 24).
-						#largeIcons -> (32 @ 32).
-						#smallTileIcons -> (40@40).
-						#tileIcons -> (48 @ 48).
-						#thumbnails -> (64 @ 64)})!
+	"Standard icons sizes at 96-dpi"
+	iconSizes := {#smallIcons -> (16 @ 16).
+				#mediumSmallIcons -> (20 @ 20).
+				#mediumIcons -> (24 @ 24).
+				#largeIcons -> (32 @ 32).
+				#smallTileIcons -> (40 @ 40).
+				#tileIcons -> (48 @ 48).
+				#thumbnails -> (64 @ 64)}.
+	self addClassConstant: 'ImageSizes' value: (IdentityDictionary withAll: iconSizes).
+	"Although we could calculate the required fluent icon font size on the fly, we need to prevent the instances being GC'd to keep the font handle live
+	while in use in any live toolbars."
+	self addClassConstant: 'FluentIconFonts'
+		value: (IdentityDictionary withAll: (iconSizes
+						collect: [:each | each key -> (Font name: 'Segoe Fluent Icons' pointSize: each value x * 72 // 96)])).
+	self addClassConstant: 'FluentIconsMask' value: 2.
+	self addClassConstant: 'IsScalableMask' value: 4.
+	self addClassConstant: 'NotScalableMask' value: 8.
+	self addClassConstant: 'ScalableMask' value: 4+8!
 
 resource_Default_view
 	"Answer the literal data from which the 'Default view' resource can be reconstituted.
@@ -1238,6 +1410,36 @@ resource_Find_tools
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.Toolbar) 34 25 nil nil 34 2 8 1409289036 131137 416 nil nil nil 517 nil nil nil 416 327686 ##(Smalltalk.Color) #default 8 1867527152 170 192 8 #() 170 192 34 4 54027 1115206 1 ##(Smalltalk.ToolbarIconButton) 416 1 1180998 4 ##(Smalltalk.CommandDescription) #find 8 'Find' 1 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'Find.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil 54027 54029 594 416 1 626 #findNext 8 'Find Next' 1 1 674 nil true 720 8 'FindNext.ico' 768 54029 34 3 608 800 1049158 1 ##(Smalltalk.ToolbarSeparator) 416 1 nil nil 1 nil nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 7039 21 1042 109 51 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 191 13 0 0 10 0 0 0 245 13 0 0 35 0 0 0] 8 #() 1042 193 193 nil 27 )!
+
+resource_Fluent_Edit_tools
+	"Answer the literal data from which the 'Fluent Edit tools' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Fluent_Edit_tools)
+	"
+
+	^#(#'!!STL' 4 788558 11 ##(Smalltalk.STBViewProxy) ##(Smalltalk.Toolbar) 34 28 nil nil 34 2 8 1409293132 131137 416 nil nil nil 519 nil nil nil 416 327686 ##(Smalltalk.Color) #default 8 1962208256 170 192 8 #() nil nil nil 170 192 34 10 10997 1115462 1 ##(Smalltalk.ToolbarTextButton) 416 161 1180998 4 ##(Smalltalk.CommandDescription) #undo 8 'Undo' 1 1 nil 10997 $\xE7A7 10993 594 416 161 626 #pasteClipboard 8 'Paste' 1 1 nil 10993 $\xE77F 10989 594 416 161 626 #cutSelection 8 'Cut' 1 1 nil 10989 $\xE8C6 10995 594 416 161 626 #clearSelection 8 'Delete' 1 1 nil 10995 $\xE894 10991 594 416 161 626 #copySelection 8 'Copy' 1 1 nil 10991 $\xE8C8 34 6 720 816 672 768 608 1049158 1 ##(Smalltalk.ToolbarSeparator) 416 1 nil nil 13 1 nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createWindow: 34 1 787462 ##(Smalltalk.CreateWindow) 262406 ##(Smalltalk.RECT) 8 #[255 9 0 0 10 0 0 0 142 10 0 0 35 0 0 0] 193 34 2 8 1140857676 131137 8 '' 416 1 8 #() 328198 ##(Smalltalk.Point) 193 193 nil 31 )!
+
+resource_Fluent_File_tools
+	"Answer the literal data from which the 'Fluent File tools' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Fluent_File_tools)
+	"
+
+	^#(#'!!STL' 4 788558 11 ##(Smalltalk.STBViewProxy) ##(Smalltalk.Toolbar) 34 28 nil nil 34 2 8 1409293132 131137 416 nil nil nil 519 nil nil nil 416 327686 ##(Smalltalk.Color) #default 8 1962208256 170 192 8 #() nil nil nil 170 192 34 6 11321 1115462 1 ##(Smalltalk.ToolbarTextButton) 416 161 1180998 4 ##(Smalltalk.CommandDescription) #fileSave 8 'Save' 1 1 nil 11321 $\xE105 11319 594 416 161 626 #fileOpen 8 'Open' 1 1 nil 11319 $\xE8E5 11317 594 416 161 626 #fileNew 8 'New' 1 1 nil 11317 $\xE8A5 34 4 720 672 608 1049158 1 ##(Smalltalk.ToolbarSeparator) 416 1 nil nil 13 1 nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createWindow: 34 1 787462 ##(Smalltalk.CreateWindow) 262406 ##(Smalltalk.RECT) 8 #[255 9 0 0 10 0 0 0 79 10 0 0 35 0 0 0] 193 34 2 8 1140857676 131137 8 '' 416 1 8 #() 328198 ##(Smalltalk.Point) 193 193 nil 31 )!
+
+resource_Fluent_Find_tools
+	"Answer the literal data from which the 'Fluent Find tools' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Fluent_Find_tools)
+	"
+
+	^#(#'!!STL' 4 788558 11 ##(Smalltalk.STBViewProxy) ##(Smalltalk.Toolbar) 34 28 nil nil 34 2 8 1409293132 131137 416 nil nil nil 519 nil nil nil 416 327686 ##(Smalltalk.Color) #default 8 1962208256 170 192 8 #() nil nil nil 170 192 34 4 11641 1115462 1 ##(Smalltalk.ToolbarTextButton) 416 161 1180998 4 ##(Smalltalk.CommandDescription) #findNext 8 'Find Next' 1 1 nil 11641 $\xE893 11639 594 416 161 626 #find 8 'Find' 1 1 nil 11639 $\xE721 34 3 672 608 1049158 1 ##(Smalltalk.ToolbarSeparator) 416 1 nil nil 13 1 nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createWindow: 34 1 787462 ##(Smalltalk.CreateWindow) 262406 ##(Smalltalk.RECT) 8 #[255 9 0 0 10 0 0 0 61 10 0 0 35 0 0 0] 193 34 2 8 1140857676 131137 8 '' 416 1 8 #() 328198 ##(Smalltalk.Point) 193 193 nil 31 )!
 
 resource_History_tools
 	"Answer the literal data from which the 'History tools' resource can be reconstituted.
@@ -1315,6 +1517,9 @@ resource_Default_view!public!resources-views! !
 resource_Edit_tools!public!resources-views! !
 resource_File_tools!public!resources-views! !
 resource_Find_tools!public!resources-views! !
+resource_Fluent_Edit_tools!public!resources-views! !
+resource_Fluent_File_tools!public!resources-views! !
+resource_Fluent_Find_tools!public!resources-views! !
 resource_History_tools!public!resources-views! !
 resource_Tool_bar!public!resources-views! !
 stbConvert:fromVersion:!binary filing!public! !

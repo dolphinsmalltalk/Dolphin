@@ -59,6 +59,16 @@ cloneFormat: aPixelFormatConstant
 
 	^self cloneBitmapRectangle: (Point zero extent: self extent) format: aPixelFormatConstant!
 
+dpi: anInteger
+	"Set  the horizontal and vertical DPI of the receiver to that specified by the <integer> argument."
+
+	| status |
+	(status := GdiplusLibrary default
+				gdipBitmapSetResolution: self asParameter
+				xdpi: anInteger
+				ydpi: anInteger) == Ok
+		ifFalse: [GdiplusError signal: 'gdipBitmapSetResolution: failed' with: status]!
+
 lockBits: rect flags: flags format: format lockedBitmapData: lockedBitmapData
 	| status |
 	(status := GdiplusLibrary default
@@ -125,6 +135,7 @@ asBitmap!public! !
 asIcon!public! !
 cloneBitmapRectangle:format:!copying!private! !
 cloneFormat:!copying!public! !
+dpi:!accessing!public! !
 lockBits:flags:format:lockedBitmapData:!accessing!public! !
 pixelAt:!accessing!public! !
 pixelAt:put:!accessing!public! !
@@ -138,6 +149,13 @@ extent: aPoint
 	"Creates a Bitmap object of a specified size with the default pixel format PixelFormat32bppARGB."
 
 	^self width: aPoint x height: aPoint y!
+
+extent: aPoint dpi: anInteger
+	"Creates a Bitmap object of a specified size and resolution and with the default pixel format PixelFormat32bppARGB."
+
+	^(self width: aPoint x height: aPoint y)
+		dpi: anInteger;
+		yourself.!
 
 fromBitmap: aBitmap
 	"Creates a Bitmap object based on a handle to a Windows Microsoft® Windows® 
@@ -252,6 +270,7 @@ width: width height: height format: aPixelFormat
 
 !GdiplusBitmap class categoriesForMethods!
 extent:!instance creation!public! !
+extent:dpi:!instance creation!public! !
 fromBitmap:!instance creation!public! !
 fromByteArray:!instance creation!public! !
 fromFile:usingLocator:!instance creation!public! !

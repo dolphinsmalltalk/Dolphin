@@ -40,12 +40,18 @@ clone!copying!public! !
 
 !GdiplusBrush class methodsFor!
 
+color: aColor
+	"Creates a SolidBrush object based on a color."
+
+	^GdiplusSolidBrush color: aColor!
+
 icon
 	"Answers an Icon that can be used to represent this class"
 
 	^Brush icon! !
 
 !GdiplusBrush class categoriesForMethods!
+color:!instance creation!public! !
 icon!constants!development!public! !
 !
 

@@ -177,8 +177,8 @@ resolution
 	resX := bmih biXPelsPerMeter.
 	resX == 0
 		ifTrue: 
-			["Unspecified, assume 96"
-			^super resolution].
+			["Unspecified, assume system DPI"
+			^self canvas resolution].
 	^resX @ bmih biYPelsPerMeter!
 
 setColorTable: anRGBQUADArray 

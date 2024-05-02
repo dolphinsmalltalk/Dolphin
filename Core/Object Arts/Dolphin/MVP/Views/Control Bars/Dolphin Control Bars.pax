@@ -20,6 +20,7 @@ package classNames
 	add: #TBADDBITMAP;
 	add: #TBBUTTON;
 	add: #TBBUTTONINFOW;
+	add: #TBMETRICS;
 	add: #Toolbar;
 	add: #ToolbarBitmapButton;
 	add: #ToolbarButton;
@@ -27,6 +28,7 @@ package classNames
 	add: #ToolbarItem;
 	add: #ToolbarSeparator;
 	add: #ToolbarSystemButton;
+	add: #ToolbarTextButton;
 	add: #ToolButton;
 	yourself.
 
@@ -78,6 +80,12 @@ Win32Structure subclass: #TBBUTTONINFOW
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_cchText _OffsetOf_cx _OffsetOf_dwMask _OffsetOf_dwSize _OffsetOf_fsState _OffsetOf_fsStyle _OffsetOf_idCommand _OffsetOf_iImage _OffsetOf_lParam _OffsetOf_pszText'
 	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+Win32Structure subclass: #TBMETRICS
+	instanceVariableNames: ''
+	classVariableNames: '_OffsetOf_cxBarPad _OffsetOf_cxButtonSpacing _OffsetOf_cxPad _OffsetOf_cyBarPad _OffsetOf_cyButtonSpacing _OffsetOf_cyPad _OffsetOf_dwMask _OffsetOf_dwSize'
+	poolDictionaries: 'ToolbarConstants'
 	classInstanceVariableNames: ''!
 
 NMHDR subclass: #NMMOUSE
@@ -134,6 +142,12 @@ ToolbarButton subclass: #ToolbarSystemButton
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
+ToolbarButton subclass: #ToolbarTextButton
+	instanceVariableNames: 'buttonText'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
 AbstractNonReferenceDelegatingView subclass: #ToolButton
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -154,7 +168,7 @@ ControlBarAbstract subclass: #StatusBar
 
 ControlBarAbstract subclass: #Toolbar
 	instanceVariableNames: 'idMap items bitmapsStart insets tbFlags indent imageSize buttonSize _unused27 layoutManager'
-	classVariableNames: 'ImageSizes LabelsMask'
+	classVariableNames: 'FluentIconFonts FluentIconsMask ImageSizes IsScalableMask LabelsMask NotScalableMask ScalableMask'
 	poolDictionaries: 'ToolbarConstants'
 	classInstanceVariableNames: ''!
 

@@ -290,6 +290,12 @@ detachHandle
 	self freeDC.
 	^super detachHandle!
 
+dimensions
+	| buf |
+	buf := SIZE newBuffer.
+	GDILibrary default getBitmapDimensionEx: self asParameter lpsize: buf.
+	^buf!
+
 drawDisabledOn: aCanvas at: aPoint extent: sizePoint
 	"Draw a disabled/grayed representation of the receiver on aCanvas at aPoint with extent sizePoint."
 
@@ -515,6 +521,13 @@ pixelData
 	self freeDC.
 	^pixData!
 
+resolution
+	"Answer an <Point> specifying the horizontal and vertical DPI of the receiver."
+
+	"Unspecified, assume system DPI. This probably won't be correct for bitmaps loaded from files, but should be for in-memory bitmaps."
+
+	^self canvas resolution!
+
 setMap3DColors: aBoolean
 	"Set whether the receivers colours will be mapped to suitable 3D ones
 	when loaded in."
@@ -556,6 +569,7 @@ createPalette!private!realizing/unrealizing! !
 createWatermarkAlphaPercent:backcolor:!helpers!public! !
 depth!accessing!public! !
 detachHandle!accessing!public! !
+dimensions!drawing-bitmaps!public! !
 drawDisabledOn:at:extent:!drawing-bitmaps!public! !
 drawOn:at:extent:!drawing-bitmaps!public! !
 drawOn:at:extent:from:extent:!drawing-bitmaps!public! !
@@ -579,6 +593,7 @@ loadFlags!private!realizing/unrealizing! !
 loadFromFile:extent:!private!realizing/unrealizing! !
 loadFromInstance:!private!realizing/unrealizing! !
 pixelData!accessing!public! !
+resolution!accessing!public! !
 setMap3DColors:!accessing!public! !
 stbFixup:at:!binary filing!public! !
 !
@@ -611,6 +626,9 @@ displayCompatibleWithExtent: aPoint
 				height: aPoint y.
 	canvas free.
 	^answer!
+
+extent: aPoint 
+	^self width: aPoint x height: aPoint y!
 
 filesType
 	"Private - Answer a two element array suitable for adding to the FileDialog
@@ -742,6 +760,7 @@ width: widthInteger height: heightInteger planes: planesInteger bitsPerPixel: bp
 compatible:extent:!instance creation!public! !
 compatible:width:height:!instance creation!public! !
 displayCompatibleWithExtent:!instance creation!public! !
+extent:!instance creation!public! !
 filesType!constants!private! !
 fromId:inFile:!instance creation!public! !
 fromId:inFile:flags:!instance creation!public! !

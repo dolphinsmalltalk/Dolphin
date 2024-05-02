@@ -53,6 +53,9 @@ isScalable
 
 	^true!
 
+isTextOnly
+	^false!
+
 onClick: aPoint 
 	"This toolbar item was left-clicked at the specified <Point>."
 
@@ -111,6 +114,7 @@ imageIndexIn:!operations!private! !
 isDivider!public!testing! !
 isDropdownStyle!public!style! !
 isScalable!public!testing! !
+isTextOnly!public! !
 onClick:!event handling!public! !
 onDoubleClick:!event handling!public! !
 onRightClick:!event handling!public! !

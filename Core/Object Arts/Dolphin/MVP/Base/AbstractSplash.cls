@@ -79,10 +79,10 @@ showTimed
 
 	^self showTimed: self defaultSplashDelay	!
 
-showTimed: aDelay 
+showTimed: aDelay
 	"Shows the receiver and forks a process that will close it after aDelay"
 
-	(SessionManager current)
+	SessionManager current
 		when: #imageSaveStarting
 			send: #forceClose
 			to: self;
@@ -93,7 +93,7 @@ showTimed: aDelay
 	self showWindow.
 	
 	[splashDelay wait.
-	super close] fork.
+	[super close] postToMessageQueue] fork.
 	^true!
 
 showWindow

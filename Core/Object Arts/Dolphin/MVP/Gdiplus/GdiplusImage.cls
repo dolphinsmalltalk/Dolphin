@@ -120,6 +120,13 @@ copyToClipboard
 
 	self asBitmap copyToClipboard!
 
+dpi
+	| buf status |
+	buf := ByteArray new: 4.
+	(status := GdiplusLibrary default gdipGetImageHorizontalResolution: self asParameter resolution: buf)
+		== Ok ifFalse: [GdiplusError signal: 'gdipGetImageHorizontalResolution failed' with: status].
+	^buf floatAtOffset: 0!
+
 drawOn: aCanvas 
 	"Draw the receiver on aCanvas (no stretching)."
 
@@ -774,6 +781,7 @@ clone!copying!public! !
 copy!copying!public! !
 copyPropertiesFrom:!accessing-properties!public! !
 copyToClipboard!copying!public! !
+dpi!accessing!public! !
 drawOn:!drawing-bitmaps!public! !
 drawOn:at:!drawing-bitmaps!public! !
 drawOn:at:extent:!drawing-bitmaps!public! !

@@ -48,7 +48,7 @@ setCommandDescription: aCommandDescription
 !ToolbarIconButton categoriesForMethods!
 imageIndexIn:!operations!private! !
 renderBitmap!private! !
-setCommandDescription:!public! !
+setCommandDescription:!initializing!private! !
 !
 
 !ToolbarIconButton class methodsFor!
