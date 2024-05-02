@@ -33,8 +33,11 @@ package setMethodNames: #(
 	#(#{Smalltalk.BasicImageStripper class} #stbVersion)
 	#(#{Smalltalk.ImageStripper} #canDeploy)
 	#(#{Smalltalk.ImageStripper} #compileExternalStructures:)
+	#(#{Smalltalk.ImageStripper} #defaultDpiAwareness)
 	#(#{Smalltalk.ImageStripper} #defaultSessionManagerClass)
 	#(#{Smalltalk.ImageStripper} #deploy)
+	#(#{Smalltalk.ImageStripper} #dpiAwareness)
+	#(#{Smalltalk.ImageStripper} #dpiAwareness:)
 	#(#{Smalltalk.ImageStripper} #editCustomOptions)
 	#(#{Smalltalk.ImageStripper} #executableName:)
 	#(#{Smalltalk.ImageStripper} #ignoreViewReferences:)
@@ -283,6 +286,11 @@ compileExternalStructures: aBoolean
 
 	flags := flags mask: CompileStructsMask set: aBoolean!
 
+defaultDpiAwareness
+	"Answer the default DPI awareness for deployed applications. Note that for pre-existing instances of ImageStripper in legacy applications, the unaware mode is maintained, i.e. this default is only used in new instances."
+
+	^DpiAwareness perMonitor!
+
 defaultSessionManagerClass
 	"Answer the default class of SessionManager to be installed into the 
 	deployed image."
@@ -292,6 +300,12 @@ defaultSessionManagerClass
 deploy
 	self canDeploy ifFalse: [self error: 'Deployment configuration incomplete'].
 	SessionManager inputState queueDeferredAction: (MessageSend receiver: self selector: #stripAndSaveWithProgress) !
+
+dpiAwareness
+	^DpiAwareness fromHandle: self dpiAwarenessContext!
+
+dpiAwareness: aDpiAwareness
+	dpiAwarenessContext := aDpiAwareness handle!
 
 editCustomOptions
 	"Open a <PublishedAspectInspector> on the version resource."
@@ -325,12 +339,11 @@ includeManifestResource: aBoolean
 initialize
 	"Private - Initialize the receiver"
 
-	self 
+	self
 		executableName: '';
 		runtimeSessionManagerClass: self defaultSessionManagerClass.
 	flags := self class defaultOptions.
-	
-	!
+	dpiAwarenessContext := DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2!
 
 isToGo: aBoolean 
 	"Set whether the resulting executable is to be deployed standalone (that is without
@@ -503,8 +516,11 @@ writeLogFile: aBoolean
 !ImageStripper categoriesForMethods!
 canDeploy!public!testing! !
 compileExternalStructures:!accessing!public! !
+defaultDpiAwareness!accessing!public! !
 defaultSessionManagerClass!accessing!public! !
 deploy!operations!public! !
+dpiAwareness!accessing!private! !
+dpiAwareness:!accessing!public! !
 editCustomOptions!accessing!public! !
 executableName:!accessing!public! !
 ignoreViewReferences:!accessing!public! !
@@ -565,6 +581,8 @@ publishedAspectsOfInstances
 		add: (Aspect multilineString: #preStripScript);
 		add: (Aspect name: #versionResource);
 		add: (Aspect fileOpen: #stubFilePath);
+		add: (Aspect choice: #dpiAwareness
+					from: {DpiAwareness perMonitor. DpiAwareness system. DpiAwareness gdiScaled. DpiAwareness unaware});
 		yourself.
 	^aspects!
 

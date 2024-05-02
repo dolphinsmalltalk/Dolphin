@@ -2,7 +2,7 @@
 
 BasicImageStripper
 	subclass: #ImageStripper
-	instanceVariableNames: 'rootPackageName executableName runtimeSessionManagerClass flags preStripScript versionResource exePath stubFilePath deploymentContext _unused11 _unused12 _unused13 snapshotType _unused15 _unused16 _unused17 _unused18 _unused19 _unused20 _unused21 _unused22'
+	instanceVariableNames: 'rootPackageName executableName runtimeSessionManagerClass flags preStripScript versionResource exePath stubFilePath deploymentContext _unused11 _unused12 _unused13 snapshotType _unused15 _unused16 _unused17 _unused18 _unused19 dpiAwarenessContext _unused21 _unused22'
 	classVariableNames: ''
 	imports: #(#{OS.MessageBoxConstants} #{OS.Win32Constants})
 	classInstanceVariableNames: ''
@@ -545,7 +545,9 @@ _installRuntimeSessionManager
 	"Private - Install the application <SessionManager>. For an application deployed with its
 	main window open this can often be just <RuntimeSessionManager> itself."
 
-	self runtimeSessionManagerClass installNew!
+	self runtimeSessionManagerClass installNew.
+	self isConsoleApplication
+		ifFalse: [UserLibrary.DesiredDpiAwarenessContext := self dpiAwarenessContext]!
 
 _logComment: aString
 	self _notify: aString.
@@ -1672,6 +1674,9 @@ developmentResources
 		do: [:s | s ifDefined: [:d | devres add: (ResourceIdentifier class: d name: 'Default view')]].
 	^devres!
 
+dpiAwarenessContext
+	^dpiAwarenessContext ?? DPI_AWARENESS_CONTEXT_UNAWARE!
+
 emptyMethodDictionariesOfStubbornClasses
 	"Answer whether the method dictionaries of classes that refuse to uninstall with their
 	owning package should be emptied. Although this is somewhat of a risky option, it does
@@ -2169,6 +2174,7 @@ compileExternalStructures!accessing!public! !
 developmentClasses!configuration!public! !
 developmentMethods!accessing!public! !
 developmentResources!configuration!public! !
+dpiAwarenessContext!accessing!private! !
 emptyMethodDictionariesOfStubbornClasses!public!testing! !
 executableName!accessing!public! !
 executablePath!accessing!public! !
