@@ -30,7 +30,8 @@ package globalAliases: (Set new
 package setPrerequisites: #(
 	'..\..\..\Dolphin\Base\Dolphin'
 	'..\..\..\Dolphin\MVP\Base\Dolphin Basic Geometry'
-	'..\..\..\Dolphin\MVP\Base\Dolphin MVP Base').
+	'..\..\..\Dolphin\MVP\Base\Dolphin MVP Base'
+	'..\..\..\Dolphin\MVP\Views\Tooltips\Dolphin Tooltips').
 
 package!
 

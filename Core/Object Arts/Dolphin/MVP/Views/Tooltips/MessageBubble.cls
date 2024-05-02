@@ -57,7 +57,7 @@ addTool
 	hwnd := self ownerHandle.
 	ti := TOOLINFOW new
 				uFlags: (itemFlags bitOr: TTF_IDISHWND);
-				text: self text;
+				text: self text ?? '';
 				hwnd: hwnd;
 				uId: hwnd;
 				yourself.
