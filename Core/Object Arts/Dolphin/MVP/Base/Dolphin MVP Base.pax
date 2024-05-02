@@ -1426,7 +1426,7 @@ Core.Object
 
 Core.Object
 	subclass: #'UI.DisplayMonitor'
-	instanceVariableNames: 'handle info devices dpi metrics defaultWindowExtent lastWindowPosition cascadeOffset workArea'
+	instanceVariableNames: 'handle info devices dpi metrics defaultWindowExtent lastWindowPosition cascadeOffset workArea deviceName isPrimary rectangle'
 	classVariableNames: 'Instances'
 	imports: #()
 	classInstanceVariableNames: ''

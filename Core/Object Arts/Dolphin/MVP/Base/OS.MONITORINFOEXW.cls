@@ -50,15 +50,23 @@ isPrimary
 
 	^self dwFlags allMask: MONITORINFOF_PRIMARY!
 
-rcMonitor
-	"Answer the <RECTL> value of the receiver's 'rcMonitor' field."
+rectangle
+	"Answer a <Rectangle> representing the total area of the monitor."
 
-	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rcMonitor!
+	^Rectangle
+		left: (bytes sdwordAtOffset: _OffsetOf_rcMonitor + RECT._OffsetOf_left)
+		top: (bytes sdwordAtOffset: _OffsetOf_rcMonitor + RECT._OffsetOf_top)
+		right: (bytes sdwordAtOffset: _OffsetOf_rcMonitor + RECT._OffsetOf_right)
+		bottom: (bytes sdwordAtOffset: _OffsetOf_rcMonitor + RECT._OffsetOf_bottom)!
 
-rcWork
-	"Answer the <RECTL> value of the receiver's 'rcWork' field."
+workArea
+	"Answer a <Rectangle> representing the usable area of the monitor."
 
-	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rcWork!
+	^Rectangle
+		left: (bytes sdwordAtOffset: _OffsetOf_rcWork + RECT._OffsetOf_left)
+		top: (bytes sdwordAtOffset: _OffsetOf_rcWork + RECT._OffsetOf_top)
+		right: (bytes sdwordAtOffset: _OffsetOf_rcWork + RECT._OffsetOf_right)
+		bottom: (bytes sdwordAtOffset: _OffsetOf_rcWork + RECT._OffsetOf_bottom)! !
 
 szDevice
 	"Answer the <Utf16String> value of the receiver's 'szDevice' field."
@@ -68,8 +76,8 @@ szDevice
 !OS.MONITORINFOEXW categoriesForMethods!
 dwFlags!**compiled accessors**!public! !
 isPrimary!public!testing! !
-rcMonitor!**compiled accessors**!public! !
-rcWork!**compiled accessors**!public! !
+rectangle!accessing!public! !
+workArea!accessing!public! !
 szDevice!**compiled accessors**!public! !
 !
 
@@ -95,8 +103,8 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #rcMonitor type: (StructureField type: RECTL) beReadOnly offset: 4;
-		defineField: #rcWork type: (StructureField type: RECTL) beReadOnly offset: 20;
+		defineField: #rcMonitor type: (StructureField type: RECTL) beUncompiled offset: 4;
+		defineField: #rcWork type: (StructureField type: RECTL) beUncompiled offset: 20;
 		defineField: #dwFlags type: UInt32Field new beReadOnly offset: 36;
 		defineField: #szDevice type: (StringField type: Utf16String length: 32) beReadOnly offset: 40.
 	self byteSize: 104!

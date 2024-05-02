@@ -670,10 +670,10 @@ initialize
 				beImmutableObject;
 				yourself!
 
-left: leftNumber top: topNumber right: rightNumber bottom: bottomNumber 
+left: leftNumber top: topNumber right: rightNumber bottom: bottomNumber
 	"Answer an instance of the receiver with the specified coodinates."
 
-	^self origin: leftNumber @ topNumber corner: rightNumber @ bottomNumber!
+	^self origin: (Point x: leftNumber y: topNumber) corner: (Point x: rightNumber y: bottomNumber)!
 
 new
 	"Answer a new, empty, rectangle."

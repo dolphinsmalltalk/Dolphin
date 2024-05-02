@@ -2,7 +2,7 @@
 
 Core.Object
 	subclass: #'UI.DisplayMonitor'
-	instanceVariableNames: 'handle info devices dpi metrics defaultWindowExtent lastWindowPosition cascadeOffset workArea'
+	instanceVariableNames: 'handle info devices dpi metrics defaultWindowExtent lastWindowPosition cascadeOffset workArea deviceName isPrimary rectangle'
 	classVariableNames: 'Instances'
 	imports: #()
 	classInstanceVariableNames: ''
@@ -44,7 +44,7 @@ adjustPosition: originPoint forExtent: extentPoint
 	If the extent is larger than the work area, then answer the work area's own origin."
 
 	| area |
-	area := self workArea.
+	area := self effectiveWorkArea.
 	^(originPoint min: area bottomRight - extentPoint) max: area topLeft!
 
 adjustWindowRect: aRectangle
@@ -52,10 +52,20 @@ adjustWindowRect: aRectangle
 	At present the extent is not changed, just the position. If the extent is larger than the work area, then the rectangle is positioned to the work area's own origin."
 
 	| area |
-	area := self workArea.
+	area := self effectiveWorkArea.
 	^aRectangle
 		position: ((aRectangle topLeft min: area bottomRight - aRectangle extent) max: area topLeft);
 		yourself!
+
+cacheInfo
+	| buf |
+	buf := MONITORINFOEXW newBuffer.
+	(UserLibrary dpiAwareness inContextDo: [UserLibrary default getMonitorInfo: handle lpmi: buf])
+		ifFalse: [Win32Error signal].
+	workArea := buf workArea.
+	rectangle := buf rectangle.
+	deviceName := buf szDevice.
+	isPrimary := buf isPrimary.!
 
 cascadeOffset
 	"Private - Answer the offset of a new default window position from the last. This should neatly cascade the windows in a diagonal down from a starting point inset from the top corner by one such offset.
@@ -70,7 +80,7 @@ cascadeOffset
 centerExtent: aPoint
 	"Answer the best origin `Point` for a view rectangle expected to be centred over the receiver of the specified extent."
 
-	^self adjustPosition: self workArea center - (aPoint // 2) forExtent: aPoint!
+	^self adjustPosition: self effectiveWorkArea center - (aPoint // 2) forExtent: aPoint!
 
 defaultWindowExtent
 	^defaultWindowExtent
@@ -87,7 +97,8 @@ defaultWindowExtent
 deviceName
 	"Answer the Window's device name for the monitor that the receiver represents."
 
-	^self info szDevice!
+	deviceName ifNil: [self cacheInfo].
+	^deviceName!
 
 devices
 	^devices
@@ -117,6 +128,11 @@ effectiveDpi
 
 	^self getDpi: MDT_DEFAULT!
 
+effectiveWorkArea
+	"Answer a <rectangle> which is the desktop area displayed by this monitor, excluding any areas used by the window manager, such as the taskbar. This area is measured in the current active DPI awareness context, so may be a virtualized rectangle. Note that the origin can be negative for displays other than the primary that are organised to be right of the primary."
+
+	^self info workArea!
+
 getDpi: anInteger
 	"Private - Query the specified DPI setting for this monitor. The documentation for GetDpiForMonitor states explicitly that the x and y values will always be the same, so we only bother to retrieve and store one."
 
@@ -139,11 +155,9 @@ hash
 	^self deviceName hash!
 
 info
-	^info
-		ifNil: 
-			[info := MONITORINFOEXW newBuffer.
-			(User32 getMonitorInfo: handle lpmi: info) ifFalse: [Win32Error signal].
-			info]!
+	info ifNil: [info := MONITORINFOEXW newBuffer].
+	(User32 getMonitorInfo: handle lpmi: info) ifFalse: [Win32Error signal].
+	^info!
 
 isAttachedToDesktop
 	"Answer whether the receiver has any displays attached to the desktop."
@@ -153,7 +167,8 @@ isAttachedToDesktop
 isPrimary
 	"Answer whether the receiver represents the primary/main monitor."
 
-	^self info isPrimary!
+	isPrimary ifNil: [self cacheInfo].
+	^isPrimary!
 
 metrics
 	"Answer a <SystemMetrics> that can be used to obtain metrics at the receiver's scale/DPI."
@@ -161,7 +176,7 @@ metrics
 	^metrics ifNil: [metrics := SystemMetrics forDpi: self dpi]!
 
 nextWindowPosition
-	"Answer the next default position for a new window on this monitor."
+	"Answer the next default position for a new window on this monitor. Note that this is measured in the default DPI awareness context for the session."
 
 	lastWindowPosition
 		ifNotNil: 
@@ -191,7 +206,8 @@ rawDpi
 rectangle
 	"Answer a `Rectangle` which is the desktop area displayed by this monitor. This is in desktop co-ordinates. Note that the origin can be negative for displays other than the primary that are organised to be right of the primary."
 
-	^self info rcMonitor asRectangle!
+	rectangle ifNil: [self cacheInfo].
+	^rectangle!
 
 resolution
 	"Answer the logical resolution for this monitor. Note that this may not be the same as the physical resolution, depending on the DPI awareness of the application and the OS magnification setting. When DPI unaware, this is always 96@96. When system DPI aware it is the system-wide DPI, even if different than this monitor's DPI. When per-monitor DPI aware, it is the effective DPI of the monitor (i.e. the monitors's DPI at the configured magnification)."
@@ -215,16 +231,14 @@ scalePercentage
 workArea
 	"Answer a <rectangle> which is the desktop area displayed by this monitor, excluding any areas used by the window manager, such as the taskbar. Note that the origin can be negative for displays other than the primary that are organised to be right of the primary."
 
-	^workArea
-		ifNil: 
-			[workArea := self info rcWork asRectangle
-						isImmutable: true;
-						yourself]! !
+	workArea ifNil: [self cacheInfo].
+	^workArea! !
 
 !UI.DisplayMonitor categoriesForMethods!
 =!comparing!public! !
 adjustPosition:forExtent:!geometry!public! !
 adjustWindowRect:!geometry!public! !
+cacheInfo!initializing!private! !
 cascadeOffset!accessing!private! !
 centerExtent:!geometry!public! !
 defaultWindowExtent!accessing!public! !
@@ -232,6 +246,7 @@ deviceName!accessing!public! !
 devices!accessing!private! !
 dpi!accessing!public! !
 effectiveDpi!accessing!public! !
+effectiveWorkArea!accessing!public! !
 getDpi:!accessing!private! !
 handle!accessing!private! !
 handle:!accessing!private! !
