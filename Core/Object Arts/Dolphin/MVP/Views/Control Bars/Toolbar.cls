@@ -1441,6 +1441,26 @@ resource_Fluent_Find_tools
 
 	^#(#'!!STL' 4 788558 11 ##(Smalltalk.STBViewProxy) ##(Smalltalk.Toolbar) 34 28 nil nil 34 2 8 1409293132 131137 416 nil nil nil 519 nil nil nil 416 327686 ##(Smalltalk.Color) #default 8 1962208256 170 192 8 #() nil nil nil 170 192 34 4 11641 1115462 1 ##(Smalltalk.ToolbarTextButton) 416 161 1180998 4 ##(Smalltalk.CommandDescription) #findNext 8 'Find Next' 1 1 nil 11641 $\xE893 11639 594 416 161 626 #find 8 'Find' 1 1 nil 11639 $\xE721 34 3 672 608 1049158 1 ##(Smalltalk.ToolbarSeparator) 416 1 nil nil 13 1 nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createWindow: 34 1 787462 ##(Smalltalk.CreateWindow) 262406 ##(Smalltalk.RECT) 8 #[255 9 0 0 10 0 0 0 61 10 0 0 35 0 0 0] 193 34 2 8 1140857676 131137 8 '' 416 1 8 #() 328198 ##(Smalltalk.Point) 193 193 nil 31 )!
 
+resource_Fluent_Font_Tools
+	"Answer the literal data from which the 'Fluent Font Tools' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Fluent_Font_Tools)
+	"
+
+	^#(#'!!STL' 4 788558 11 ##(Smalltalk.STBViewProxy) ##(Smalltalk.Toolbar) 34 28 nil nil 34 2 8 1409293132 131137 416 nil nil nil 519 nil nil nil 416 327686 ##(Smalltalk.Color) #default 8 1962208256 170 192 8 #() nil nil nil 170 192 34 14 10129 1115462 1 ##(Smalltalk.ToolbarTextButton) 416 161 1180998 4 ##(Smalltalk.CommandDescription) #chooseSelectionBackcolor 8 'Text highlight color…' 1 1 nil 10129 $\xE7E6 10125 594 416 161 626 #toggleStrikeout 8 'Strikethrough' 1 1 nil 10125 $\xEDE0 10121 594 416 161 626 #toggleItalic 8 'Italic' 1 1 nil 10121 $\xE8DB 10117 594 416 161 626 #chooseSelectionFont 8 'Font…' 1 1 nil 10117 $\xE8D2 10127 594 416 161 626 #chooseSelectionColor 8 'Text Color…' 1 1 nil 10127 $\xE8D3 10123 594 416 161 626 #toggleUnderlined 8 'Underlined' 1 1 nil 10123 $\xE8DC 10119 594 416 161 626 #toggleBold 8 'Bold' 1 1 nil 10119 $\xE8DD 34 8 768 912 720 864 672 816 608 1049158 1 ##(Smalltalk.ToolbarSeparator) 416 1 nil nil 13 5 nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createWindow: 34 1 787462 ##(Smalltalk.CreateWindow) 262406 ##(Smalltalk.RECT) 8 #[255 9 0 0 10 0 0 0 184 10 0 0 35 0 0 0] 193 34 2 8 1140857676 131137 8 '' 416 1 8 #() 328198 ##(Smalltalk.Point) 193 193 nil 31 )!
+
+resource_Fluent_Paragraph_Tools
+	"Answer the literal data from which the 'Fluent Paragraph Tools' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Fluent_Paragraph_Tools)
+	"
+
+	^#(#'!!STL' 4 788558 11 ##(Smalltalk.STBViewProxy) ##(Smalltalk.Toolbar) 34 28 nil nil 34 2 8 1409293132 131137 416 nil nil nil 519 nil nil nil 416 327686 ##(Smalltalk.Color) #default 8 1962208256 170 192 8 #() nil nil nil 170 192 34 6 10453 1115462 1 ##(Smalltalk.ToolbarTextButton) 416 161 1180998 4 ##(Smalltalk.CommandDescription) #alignParagraphRight 8 'Align text right' 1 1 nil 10453 $\xE8E2 10451 594 416 161 626 #alignParagraphCenter 8 'Center' 1 1 nil 10451 $\xE8E3 10449 594 416 161 626 #alignParagraphLeft 8 'Align text left' 1 1 nil 10449 $\xE8E4 34 4 720 672 608 1049158 1 ##(Smalltalk.ToolbarSeparator) 416 1 nil nil 13 1 nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createWindow: 34 1 787462 ##(Smalltalk.CreateWindow) 262406 ##(Smalltalk.RECT) 8 #[255 9 0 0 10 0 0 0 79 10 0 0 35 0 0 0] 193 34 2 8 1140857676 131137 8 '' 416 1 8 #() 328198 ##(Smalltalk.Point) 193 193 nil 31 )!
+
 resource_History_tools
 	"Answer the literal data from which the 'History tools' resource can be reconstituted.
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
@@ -1520,6 +1540,8 @@ resource_Find_tools!public!resources-views! !
 resource_Fluent_Edit_tools!public!resources-views! !
 resource_Fluent_File_tools!public!resources-views! !
 resource_Fluent_Find_tools!public!resources-views! !
+resource_Fluent_Font_Tools!public!resources-views! !
+resource_Fluent_Paragraph_Tools!public!resources-views! !
 resource_History_tools!public!resources-views! !
 resource_Tool_bar!public!resources-views! !
 stbConvert:fromVersion:!binary filing!public! !

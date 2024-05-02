@@ -34,6 +34,13 @@ bePlain
 
 	self view bePlain!
 
+chooseSelectionBackcolor
+	"Choose the background color for the selection in the receiver"
+
+	(ColorDialog on: (self view aspectValue: #selectionBackcolor))
+		caption: 'Highlight Color';
+		showModal!
+
 chooseSelectionColor
 	"Choose the color for the selection in the receiver"
 
@@ -94,6 +101,11 @@ toggleItalic
 
 	self view isItalic: self view isItalic not!
 
+toggleStrikeout
+	"Toggle strikethrough of the selection in the receiver"
+
+	self view isStruckThrough: self view isStruckThrough not!
+
 toggleUnderlined
 	"Toggle underline mode for the selection in the receiver"
 
@@ -104,11 +116,13 @@ alignParagraphCenter!commands!public! !
 alignParagraphLeft!commands!public! !
 alignParagraphRight!commands!public! !
 bePlain!commands!public! !
+chooseSelectionBackcolor!commands!public! !
 chooseSelectionColor!commands!public! !
 chooseSelectionFont!commands!public! !
 queryCommand:!commands!private! !
 toggleBold!commands!public! !
 toggleItalic!commands!public! !
+toggleStrikeout!commands!public! !
 toggleUnderlined!commands!public! !
 !
 

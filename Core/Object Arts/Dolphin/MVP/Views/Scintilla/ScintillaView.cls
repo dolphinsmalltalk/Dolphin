@@ -5065,45 +5065,49 @@ punctuation: aStringOrNil
 	punctuation := aStringOrNil.
 	punctuation ifNil: [self setCharacterClasses] ifNotNil: [self sciSetPunctuationChars: punctuation]!
 
-queryCommand: aCommandQuery 
+queryCommand: aCommandQuery
 	"Private - Enters details about a potential command for the receiver into the 
 	<CommandQuery>."
 
 	| command |
 	command := aCommandQuery commandSymbol.
-	command == #toggleStyling 
+	command == #toggleStyling
 		ifTrue: 
 			[aCommandQuery
 				isEnabled: true;
 				isChecked: self isStylingEnabled.
 			^true].
-	command == #toggleLineNumbers 
+	command == #toggleLineNumbers
 		ifTrue: 
-			[self lineNumberMargin 
+			[self lineNumberMargin
 				ifNil: [aCommandQuery isEnabled: false]
 				ifNotNil: 
-					[:margin | 
+					[:margin |
 					aCommandQuery
 						isEnabled: true;
 						isChecked: margin width ~= 0].
 			^true].
-	command == #toggleLineEndings 
+	command == #toggleLineEndings
 		ifTrue: 
 			[aCommandQuery
 				isEnabled: true;
 				isChecked: self hasVisibleLineEndings.
 			^true].
-	command == #toggleIndentationGuides 
+	command == #toggleIndentationGuides
 		ifTrue: 
 			[aCommandQuery
 				isEnabled: true;
 				isChecked: self hasIndentationGuides.
 			^true].
-	command == #toggleWhitespace 
+	command == #toggleWhitespace
 		ifTrue: 
 			[aCommandQuery
 				isEnabled: true;
 				isChecked: self whitespaceVisibility ~~ #invisible.
+			^true].
+	(#(#foldAll #unfoldAll) identityIncludes: command)
+		ifTrue: 
+			[aCommandQuery isEnabled: (self isFoldingEnabled and: [self textLength > 0]).
 			^true].
 	^super queryCommand: aCommandQuery!
 
