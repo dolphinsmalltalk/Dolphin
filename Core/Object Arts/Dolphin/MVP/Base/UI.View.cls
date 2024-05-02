@@ -1445,7 +1445,7 @@ frameChanged
 frameWidths
 	"Answer the widths of the frames (if any) configured for the receiver."
 
-	^self class frameWidths: self baseStyle!
+	^self metrics frameWidths: self baseStyle!
 
 freeTheme
 	"Private - Override point to free any theme related resources. Additional action is not generally required but may be needed if the instance:
@@ -5519,12 +5519,7 @@ frameWidths: anInteger
 
 	"Note: As the result must be a measurement at 96-dpi, we use the default SystemMetrics, not the current ones."
 
-	^(anInteger allMask: WS_DLGFRAME)
-		ifTrue: [SystemMetrics default dialogFrameExtent]
-		ifFalse: 
-			[(anInteger allMask: WS_THICKFRAME)
-				ifTrue: [SystemMetrics default sizingFrameExtent]
-				ifFalse: [(anInteger allMask: WS_BORDER) ifTrue: [SystemMetrics default borderExtent] ifFalse: [0 @ 0]]]!
+	^SystemMetrics default frameWidths: anInteger!
 
 freeTheme
 	theme notNull ifTrue: [UxTheme closeThemeData: theme].

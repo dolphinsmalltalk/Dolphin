@@ -79,6 +79,14 @@ extraLargeIconExtent
 	"Currently, this if fixed."
 	^256@256!
 
+frameWidths: anInteger
+	^(anInteger allMask: WS_DLGFRAME)
+		ifTrue: [self dialogFrameExtent]
+		ifFalse: 
+			[(anInteger allMask: WS_THICKFRAME)
+				ifTrue: [self sizingFrameExtent]
+				ifFalse: [(anInteger allMask: WS_BORDER) ifTrue: [self borderExtent] ifFalse: [0 @ 0]]]!
+
 getDefaultColorDepth
 	"Private - Answer the default color depth based on that of the current screen driver."
 
@@ -387,6 +395,7 @@ dpi!accessing!high DPI!public! !
 dragHysteresis!constants!public! !
 edgeExtent!constants!public! !
 extraLargeIconExtent!constants!public! !
+frameWidths:!constants!public! !
 getDefaultColorDepth!accessing!helpers!private! !
 getIconTitleFont!geometry!private! !
 getMetric:!helpers!private! !
