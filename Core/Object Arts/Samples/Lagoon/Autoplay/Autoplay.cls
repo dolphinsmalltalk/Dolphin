@@ -110,7 +110,7 @@ resizeToFitPage
 	area of the desktop."
 
 	| maxExtent extent |
-	maxExtent := self view monitor workArea extent.
+	maxExtent := self view monitor effectiveWorkArea extent.
 	extent := self view calcExtentFromClientExtent: self pageExtent * self view scaleFactor.
 	extent := extent min: maxExtent.
 	self view rectangle: ((maxExtent - extent) // 2 extent: extent)!

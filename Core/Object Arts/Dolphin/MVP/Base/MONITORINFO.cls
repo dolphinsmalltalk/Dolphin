@@ -51,22 +51,30 @@ isPrimary
 
 	^self dwFlags allMask: MONITORINFOF_PRIMARY!
 
-rcMonitor
-	"Answer the <RECTL> value of the receiver's 'rcMonitor' field."
+rectangle
+	"Answer a <Rectangle> representing the total area of the monitor."
 
-	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rcMonitor!
+	^Rectangle
+		left: (bytes sdwordAtOffset: _OffsetOf_rcMonitor + RECT._OffsetOf_left)
+		top: (bytes sdwordAtOffset: _OffsetOf_rcMonitor + RECT._OffsetOf_top)
+		right: (bytes sdwordAtOffset: _OffsetOf_rcMonitor + RECT._OffsetOf_right)
+		bottom: (bytes sdwordAtOffset: _OffsetOf_rcMonitor + RECT._OffsetOf_bottom)!
 
-rcWork
-	"Answer the <RECTL> value of the receiver's 'rcWork' field."
+workArea
+	"Answer a <Rectangle> representing the usable area of the monitor."
 
-	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rcWork! !
+	^Rectangle
+		left: (bytes sdwordAtOffset: _OffsetOf_rcWork + RECT._OffsetOf_left)
+		top: (bytes sdwordAtOffset: _OffsetOf_rcWork + RECT._OffsetOf_top)
+		right: (bytes sdwordAtOffset: _OffsetOf_rcWork + RECT._OffsetOf_right)
+		bottom: (bytes sdwordAtOffset: _OffsetOf_rcWork + RECT._OffsetOf_bottom)! !
 
 !MONITORINFO categoriesForMethods!
 dwFlags!**compiled accessors**!public! !
 dwSize:!**compiled accessors**!public! !
 isPrimary!public!testing! !
-rcMonitor!**compiled accessors**!public! !
-rcWork!**compiled accessors**!public! !
+rectangle!accessing!public! !
+workArea!accessing!public! !
 !
 
 !MONITORINFO class methodsFor!
@@ -86,10 +94,18 @@ defineFields
 "
 
 	self
-		defineField: #dwSize type: DWORDField new beWriteOnly offset: 0;
-		defineField: #rcMonitor type: (StructureField type: RECTL) beReadOnly offset: 4;
-		defineField: #rcWork type: (StructureField type: RECTL) beReadOnly offset: 20;
-		defineField: #dwFlags type: DWORDField new beReadOnly offset: 36.
+		defineField: #dwSize
+			type: DWORDField new beWriteOnly
+			offset: 0;
+		defineField: #rcMonitor
+			type: (StructureField type: RECTL) beUncompiled
+			offset: 4;
+		defineField: #rcWork
+			type: (StructureField type: RECTL) beUncompiled
+			offset: 20;
+		defineField: #dwFlags
+			type: DWORDField new beReadOnly
+			offset: 36.
 	self byteSize: 40!
 
 getFieldNames

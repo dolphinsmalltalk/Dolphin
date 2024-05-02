@@ -347,7 +347,7 @@ repositionShell: aShellView
 	| activeMonitor |
 	activeMonitor := DisplayMonitor active.
 	aShellView isInitiallyCentered
-		ifTrue: [aShellView centerNear: activeMonitor workArea center atDpi: activeMonitor dpi]
+		ifTrue: [aShellView centerNear: activeMonitor effectiveWorkArea center atDpi: activeMonitor dpi]
 		ifFalse: [aShellView displayOnMonitor: activeMonitor]!
 
 screenRectangle
@@ -387,7 +387,7 @@ withAllParentsDo: aMonadicValuable
 workArea
 	"Answer a <Rectangle> which is the desktop area of the primary monitor, excluding that part occupied by the task bar &c."
 
-	^DisplayMonitor primary workArea! !
+	^DisplayMonitor primary effectiveWorkArea! !
 
 !DesktopView categoriesForMethods!
 addCommandHistory:!accessing!private! !
