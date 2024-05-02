@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 BasicImageStripper subclass: #ImageStripper
-	instanceVariableNames: 'rootPackageName executableName runtimeSessionManagerClass flags preStripScript versionResource potentialAspectSetters stubFilePath logStream elementStack developmentClasses preservedMessages snapshotType rootClasses supersentMethods potentialAspectGetters notifier runFlags _unused20 _unused21 _unused22'
+	instanceVariableNames: 'rootPackageName executableName runtimeSessionManagerClass flags preStripScript versionResource potentialAspectSetters stubFilePath logStream elementStack developmentClasses preservedMessages snapshotType rootClasses supersentMethods potentialAspectGetters notifier runFlags dpiAwarenessContext _unused21 _unused22'
 	classVariableNames: 'AllResourcesStripped ClearGuidsMask CompileStructsMask EmptyMethodDictsMask FoldBytecodesMask FoldMethodDictsMask FoldStringsMask IgnoreViewReferencesMask KeepImageMask LogLiveClassesMask LogPrerequisitesMask LogReferencesMask NoXPManifestMask PreserveAspectsMask PurgeStubbornClassesMask RemoveAbstractUnreachable RetainDevSysMask RetainInstVarNamesMask RetainSubclassRespMask StripClassBuilderMask StripClassesMask StripClassInfoMask StripDeprecatedMask StripMethodsMask StripPackagesMask StripResourcesMask StripShouldNotImplMask ToGoMask UnattendedMask WriteLogMask'
 	poolDictionaries: 'MessageBoxConstants Win32Constants'
 	classInstanceVariableNames: ''!
@@ -466,6 +466,9 @@ disableDevelopmentSystem
 	self systemPackageManager onPreStripImage.
 	Smalltalk removeEventsTriggeredFor: Smalltalk developmentSystem!
 
+dpiAwarenessContext
+	^dpiAwarenessContext ?? DPI_AWARENESS_CONTEXT_UNAWARE!
+
 emptyMethodDictionariesOfStubbornClasses
 	"Answer whether the method dictionaries of classes that refuse to uninstall with their
 	owning package should be emptied. Although this is somewhat of a risky option, it does
@@ -639,7 +642,9 @@ installRuntimeSessionManager
 	"Private - Install the application <SessionManager>. For an application deployed with its
 	main window open this can often be just <RuntimeSessionManager> itself."
 
-	self runtimeSessionManagerClass installNew!
+	self runtimeSessionManagerClass installNew.
+	self isConsoleApplication
+		ifFalse: [UserLibrary.DesiredDpiAwarenessContext := self dpiAwarenessContext]!
 
 isConsoleApplication
 	^self runtimeSessionManagerClass asSessionManagerClass isConsoleApplication!
@@ -2064,6 +2069,7 @@ developmentMethods!accessing!public! !
 developmentResources!configuration!public! !
 disableClassChangeFlagging!operations!private! !
 disableDevelopmentSystem!operations!private! !
+dpiAwarenessContext!accessing!private! !
 emptyMethodDictionariesOfStubbornClasses!public!testing! !
 endElement:!helpers!private! !
 endTag!helpers!private! !
