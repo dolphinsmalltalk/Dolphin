@@ -525,10 +525,7 @@ displayOn: aPuttableStream
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^##(TextTileIcon
-		text: $\x1F310
-		fontName: 'Segoe UI Emoji'
-		color: Color forestGreen)!
+	^WebView2View icon!
 
 initialize
 	"Private - Initialize the receiver's class variables

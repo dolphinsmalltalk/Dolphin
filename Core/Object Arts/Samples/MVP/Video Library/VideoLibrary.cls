@@ -103,10 +103,10 @@ default
 
 icon
 	^##((TextTileIcon
-		text: $\x1F3AC
-		fontName: 'Segoe UI Emoji'
+		text: $\xE714
+		fontName: 'Segoe Fluent Icons'
 		color: Color darkSlateBlue)
-		fontStyle: #bold;
+		margin: 1;
 		yourself)!
 
 new

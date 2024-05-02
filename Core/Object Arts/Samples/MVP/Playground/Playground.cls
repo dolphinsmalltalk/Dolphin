@@ -81,7 +81,12 @@ shapes!accessing!public! !
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^##(TextTileIcon text: $\x1F388 fontName: 'Segoe UI Emoji' color: Color red)!
+	^##((TextTileIcon
+		text: $\xED55
+		fontName: 'Segoe Fluent Icons'
+		color: Color red)
+		margin: 1;
+		yourself)!
 
 new
 	"Create and show a new instance of the receiver. Answer the new instance"
