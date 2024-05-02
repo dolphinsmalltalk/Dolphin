@@ -26,17 +26,17 @@ Instance Variables:
 !Splash methodsFor!
 
 creationFunction
-	| extent |
+	| extent d |
 	extent := (bitmap isNil or: [bitmap handle isNull])
 				ifTrue: 
-					[extent := 200 @ 200.
-					dpi := USER_DEFAULT_SCREEN_DPI]
+					[d := USER_DEFAULT_SCREEN_DPI.
+					200 @ 200]
 				ifFalse: 
-					[dpi := bitmap resolution y.
-					extent := bitmap extent + (self frameWidths * 2 * dpi // USER_DEFAULT_SCREEN_DPI)].
+					[d := bitmap resolution x.
+					bitmap extent * d // USER_DEFAULT_SCREEN_DPI + (self frameWidths * 2)].
 	^CreateWindow
-		rectangle:  (self defaultPosition extent: extent)
-		dpi: dpi
+		rectangle: (self defaultPosition extent: extent)
+		dpi: d
 		styles: creationStyle!
 
 defaultSplashDelay
