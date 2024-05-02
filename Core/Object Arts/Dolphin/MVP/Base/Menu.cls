@@ -70,15 +70,28 @@ addSubmenu: aString
 	^self addItem: (Menu description: aString)!
 
 allItems
+	"Answer all the menus and items, recursively, in the receiver in depth-first order starting with the receiver itself."
+
 	| allItems |
-	allItems := OrderedCollection with: self.
-	self itemsDo: [:each | allItems addAll: each allItems].
-	^allItems!
+	allItems := (Array new: 8) writeStream.
+	self allItemsDo: [:each | allItems nextPut: each].
+	^allItems contents!
+
+allItemsDo: aMonadicValuable
+	aMonadicValuable value: self.
+	items do: [:each | each allItemsDo: aMonadicValuable]!
 
 allMenus
-	^(OrderedCollection with: self)
-		addAll: (self items select: [:each | each hasSubmenu]);
-		yourself!
+	"Answer all the menus, recursively, in the receiver in depth-first order starting with the receiver itself."
+
+	| menus |
+	menus := Array writeStream.
+	self allMenusDo: [:each | menus nextPut: each].
+	^menus contents!
+
+allMenusDo: aMonadicValuable
+	aMonadicValuable value: self.
+	items do: [:each | each allMenusDo: aMonadicValuable]!
 
 applyFlags
 	| struct |
@@ -234,25 +247,24 @@ drawItemImage: itemImage on: hDC at: topLeft disabled: aBoolean
 findCommand: aSymbol
 	"Answer the first <Menu>|<MenuItem> whose symbolic name or command matches the <Symbol> argument, or nil if there is no such item."
 
-	^items detect: [:aMenuItem | aMenuItem command == aSymbol] ifNone: []!
+	^items detect: [:aMenuItem | aMenuItem command = aSymbol] ifNone: []!
 
 flags: anInteger 
 	flags := anInteger!
 
-fromStrings: menuArray 
+fromStrings: anArray
 	"Private - Convert menuArray into a series of MenuItems.
 	menuArray is an array of strings. 
 	NB: Not realized yet."
 
-	self text: (menuArray at: 1 ifAbsent: [^self]).
-	menuArray 
-		from: 2
-		to: menuArray size
+	| label |
+	label := anArray lookup: 1.
+	label ifNil: [^self].
+	self text: label.
+	anArray from: 2
 		do: 
-			[:menuString | 
-			self addItem: ((menuString isMemberOf: Array) 
-						ifTrue: [self class fromStrings: menuString]
-						ifFalse: [MenuItem fromString: menuString])]!
+			[:each |
+			self addItem: (each isString ifTrue: [MenuItem fromString: each] ifFalse: [Menu fromStrings: each])]!
 
 hasSharedImageColumn
 	"Answer whether the checkmark column is also used for images - if the answer is false then separate
@@ -523,12 +535,18 @@ postCopy
 	^self!
 
 printOn: aStream
-	"Append, to aStream, a String whose characters are a description of the receiver as a developer
-	would want to see it."
+	"Append, to aStream, a String whose characters are a description of the receiver as a developer would want to see it."
 
 	aStream
 		basicPrint: self;
-		nextPut: $(; display: self text; nextPut: $)!
+		nextPut: $(.
+	self name
+		ifNil: 
+			[| label |
+			label := self text.
+			label isEmpty ifFalse: [aStream print: label]]
+		ifNotNil: [:symbol | aStream print: symbol].
+	aStream nextPut: $)!
 
 queryAllAlong: aCommandPolicy
 	"Private - Query the command status for the receiver and each of its command items and
@@ -643,6 +661,7 @@ stbSaveOn: anSTBOutFiler
 	| savedHandle savedMetrics |
 	savedHandle := handle.
 	savedMetrics := metrics.
+	handle := metrics := nil.
 	[anSTBOutFiler saveObject: self] ensure: 
 			[handle := savedHandle.
 			metrics := savedMetrics]!
@@ -662,6 +681,9 @@ text: textString
 	"Set the title of the Menu to textString."
 
 	text := textString	!
+
+toStrings
+	^{ text asUtf8String } , (items collect: [:each | each toStrings])!
 
 typeFlags
 	"Private - Answer the MENUITEMINFO style flags of the receiver (see
@@ -689,7 +711,9 @@ addItem:!adding!public! !
 addSeparator!adding!public! !
 addSubmenu:!adding!public! !
 allItems!public! !
+allItemsDo:!enumerating!public! !
 allMenus!public! !
+allMenusDo:!enumerating!public! !
 applyFlags!private!realizing/unrealizing! !
 basicFree!private!realizing/unrealizing! !
 basicRealize!public!realizing/unrealizing! !
@@ -763,6 +787,7 @@ stbSaveOn:!binary filing!public! !
 styleFlags!private!realizing/unrealizing! !
 text!accessing!public! !
 text:!accessing!public! !
+toStrings!converting!public! !
 typeFlags!private!realizing/unrealizing! !
 updateItem:id:text:!accessing!private! !
 !

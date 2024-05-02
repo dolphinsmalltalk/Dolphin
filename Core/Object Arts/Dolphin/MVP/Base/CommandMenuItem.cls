@@ -154,6 +154,16 @@ postCopy
 	commandDescription := commandDescription copy.
 	^self!
 
+printOn: aStream
+	"Appends the receiver to aStream as a representation that a 
+	developer would want to see"
+
+	aStream
+		basicPrint: self;
+		nextPut: $(;
+		print: self description;
+		nextPut: $)!
+
 queryAlong: aCommandPolicy 
 	"Answer a <CommandQuery> reflecting the current state of the receiver's command for the
 	specified <commandPolicy>. In this case we want to preconfigure the query with some static
@@ -182,7 +192,16 @@ stbSaveOn: anSTBOutFiler
 text
 	"Answer the menu text (i.e. the text that appears in the menu) for the receiver."
 
-	^self commandDescription menuText! !
+	^self commandDescription menuText!
+
+toStrings
+	^String writeStream
+		nextPutAll: self description;
+		nextPut: $/;
+		nextPutAll: self commandDescription acceleratorKeyDisplayString;
+		nextPut: $/;
+		nextPutAll: self commandDescription commandSymbol;
+		contents! !
 
 !CommandMenuItem categoriesForMethods!
 acceleratorKey!accessing!public! !
@@ -210,10 +229,12 @@ isRadioButtonStyle:!accessing!public! !
 itemWithId:!accessing!public! !
 populateItemInfo:metrics:!private!realizing/unrealizing! !
 postCopy!copying!public! !
+printOn:!printing!public! !
 queryAlong:!operations!public! !
 registerAcceleratorKeyIn:!menus!public! !
 stbSaveOn:!binary filing!public! !
 text!accessing!public! !
+toStrings!converting!public! !
 !
 
 CommandMenuItem methodProtocol: #commandSource attributes: #(#readOnly) selectors: #(#commandDescription)!
@@ -252,6 +273,23 @@ new
 
 	^self commandDescription: CommandDescription new!
 
+stbConvertFrom: anSTBClassFormat
+	"Convert from earlier version models.
+		1: 'flags' instance variable pushed up.
+		2: 'image' instance variable and spare added"
+
+	| ver |
+	ver := anSTBClassFormat version.
+	ver == 0 ifTrue: [^[:data | (self stbConvertFromVersion0: data) becomeA: self]].
+	ver == 1 ifTrue: [^[:data | (self stbConvertFromVersion1: data) becomeA: self]].
+	^super stbConvertFrom: anSTBClassFormat!
+
+stbConvertFromVersion0: anArray
+	^{ MFT_STRING. anArray at: 1. nil. nil }!
+
+stbConvertFromVersion1: anArray
+	^anArray resize: 4!
+
 stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
@@ -263,6 +301,9 @@ command:description:image:!instance creation!public! !
 commandDescription:!instance creation!public! !
 initialize!development!initializing!private! !
 new!instance creation!public! !
+stbConvertFrom:!binary filing!public! !
+stbConvertFromVersion0:!binary filing!development!private! !
+stbConvertFromVersion1:!binary filing!private! !
 stbVersion!binary filing!public! !
 !
 

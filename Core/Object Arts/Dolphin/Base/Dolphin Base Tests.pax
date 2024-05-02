@@ -79,6 +79,7 @@ package classNames
 	add: #LookupTableTest;
 	add: #MemoryManagerTest;
 	add: #MenuPainterTest;
+	add: #MenuTest;
 	add: #MergesortAlgorithmTest;
 	add: #MessageTest;
 	add: #MetaclassTest;
@@ -423,6 +424,12 @@ DolphinTest subclass: #MemoryManagerTest
 	classInstanceVariableNames: ''!
 
 DolphinTest subclass: #MenuPainterTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+DolphinTest subclass: #MenuTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

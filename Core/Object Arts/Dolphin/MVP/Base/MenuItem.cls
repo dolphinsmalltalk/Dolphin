@@ -42,6 +42,12 @@ acceleratorKey: anInteger
 allItems
 	^{self}!
 
+allItemsDo: aMonadicValuable 
+	aMonadicValuable value: self!
+
+allMenusDo: aMonadicValuable 
+!
+
 command
 	"Answer the command to action when this menu item is selected."
 
@@ -172,12 +178,17 @@ styleFlags: flagsInteger
 text
 	"Answer the menu text (i.e. the text that appears in the menu) for the receiver."
 
+	^self subclassResponsibility!
+
+toStrings
 	^self subclassResponsibility! !
 
 !MenuItem categoriesForMethods!
 acceleratorKey!accessing!public! !
 acceleratorKey:!accessing!private! !
 allItems!accessing!public! !
+allItemsDo:!enumerating!public! !
+allMenusDo:!accessing!enumerating!public! !
 command!commands!public! !
 commandDescription!accessing!private! !
 edit!accessing!operations!private! !
@@ -194,7 +205,7 @@ items!accessing!public! !
 itemsDo:!accessing!private! !
 itemWithId:!accessing!public! !
 menuFromHandle:!accessing!public! !
-name!public! !
+name!accessing!public! !
 populateItemInfo:metrics:!private!realizing/unrealizing! !
 printOn:!printing!public! !
 queryAlong:!operations!public! !
@@ -202,11 +213,33 @@ registerAcceleratorKeyIn:!menus!public! !
 styleFlags!accessing!private! !
 styleFlags:!accessing!not an aspect!private! !
 text!accessing!public! !
+toStrings!converting!public! !
 !
 
 MenuItem methodProtocol: #menuItem attributes: #(#readOnly) selectors: #(#acceleratorKey #command #hasSubmenu #id #image #insertIntoMenu:at:info: #items #menuFromHandle: #queryAlong: #registerAcceleratorKeyIn: #text)!
 
 !MenuItem class methodsFor!
+
+dividers
+	^Dividers
+		ifNil: 
+			[Dividers := LookupTable new
+						at: '-'
+							put: (DividerMenuItem basicNew
+									flags: MFT_SEPARATOR;
+									isImmutable: true ;
+									yourself);
+						at: '||'
+							put: (DividerMenuItem basicNew
+									flags: MFT_MENUBARBREAK;
+									isImmutable: true ;
+									yourself);
+						at: '|'
+							put: (DividerMenuItem basicNew
+									flags: MFT_MENUBREAK;
+									isImmutable: true ;
+									yourself);
+						yourself]!
 
 errorIllegalMenuString: illegalString
 	"Private - Raise an error to inform that illegalString can not be
@@ -214,35 +247,26 @@ errorIllegalMenuString: illegalString
 
 	self error: 'Illegal menu string: ', illegalString!
 
-fromString: menuString
+fromString: aString
 	"Answer a new sub-instance of the receiver generated from menuString."
 
-	| divider |
-	divider := Dividers lookup: menuString.
-	divider notNil
-		ifTrue: [^DividerMenuItem perform: divider]
-		ifFalse: 
+	^(self dividers lookup: aString)
+		ifNil: 
 			[| subStrings |
-			(subStrings := StringSeparator split: menuString) size == 3
+			(subStrings := StringSeparator split: aString) size == 3
 				ifTrue: 
 					[| commandDescription accel |
 					commandDescription := CommandDescription command: (subStrings at: 3) asSymbol.
 					commandDescription description: (subStrings at: 1).
 					(accel := subStrings at: 2) notEmpty ifTrue: [commandDescription acceleratorKeyString: accel].
-					^CommandMenuItem new commandDescription: commandDescription]
-				ifFalse: [self errorIllegalMenuString: menuString]]!
+					CommandMenuItem commandDescription: commandDescription]
+				ifFalse: [self errorIllegalMenuString: aString]]!
 
 initialize
 	"Private - Initialize the class variables of the receiver:
 		MenuItem initialize
 	"
 
-	Dividers := ##((LookupTable new)
-				at: '-' put: #separator;
-				at: '|' put: #break;
-				at: '||' put: #barBreak;
-				shrink;
-				yourself).
 	self addClassConstant: 'StringSeparator' value: $/.
 	self addClassConstant: 'StylesMask' value: 16rFFFFF	"Allows a lot of space for more Microsoft flags"!
 
@@ -251,6 +275,11 @@ new
 
 	^self subclassResponsibility
 !
+
+onPreStripImage
+	"Private - The image is about to be stripped. Nil the lazily initialized class variables."
+
+	self uninitialize!
 
 stbConvertFrom: anSTBClassFormat 
 	"Convert from earlier version models.
@@ -277,14 +306,22 @@ stbConvertFrom: anSTBClassFormat
 stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
-	^1! !
+	^1!
+
+uninitialize
+	"Private - Uninitialize the receiver as it is about to be removed from the system."
+
+	Dividers := nil! !
 
 !MenuItem class categoriesForMethods!
+dividers!accessing!private! !
 errorIllegalMenuString:!exceptions!private! !
 fromString:!instance creation!public! !
 initialize!development!initializing!private! !
 new!instance creation!private! !
+onPreStripImage!class hierarchy-removing!private! !
 stbConvertFrom:!binary filing!public! !
 stbVersion!binary filing!public! !
+uninitialize!class hierarchy-removing!private! !
 !
 

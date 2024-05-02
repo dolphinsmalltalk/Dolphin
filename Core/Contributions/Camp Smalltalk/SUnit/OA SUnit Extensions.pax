@@ -17,6 +17,7 @@ package methodNames
 	add: #TestCase -> #assert:isKindOf:;
 	add: #TestCase -> #assert:sameAs:;
 	add: #TestCase -> #assertIsNil:;
+	add: #TestCase -> #assertNotNil:;
 	add: #TestCase -> #debugWithResult;
 	add: #TestCase -> #debugWithResult:;
 	add: #TestCase -> #deny:equals:;
@@ -111,6 +112,9 @@ assertIsNil: anObject
 						print: anObject;
 						nextPutAll: '.';
 						contents)]!
+
+assertNotNil: anObject
+	anObject ifNil: [self fail: 'Expected non-nil object']!
 
 debugWithResult
 	| result |
@@ -308,6 +312,7 @@ assert:identicalTo:!asserting!public! !
 assert:isKindOf:!asserting!public! !
 assert:sameAs:!asserting!public! !
 assertIsNil:!asserting!public! !
+assertNotNil:!asserting!public! !
 debugWithResult!public!running! !
 debugWithResult:!private!running! !
 deny:equals:!asserting!public! !
