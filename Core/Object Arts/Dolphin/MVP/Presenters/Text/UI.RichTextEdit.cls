@@ -344,7 +344,7 @@ isBold
 	^self selectionCharFormat isBold!
 
 isBold: set
-	"Private - Turn on/off emboldening for the receiver's current selection."
+	"Turn on/off emboldening for the receiver's current selection."
 
 	self selectionCharFormat: (CHARFORMAT2W new
 				isBold: set;
@@ -356,7 +356,7 @@ isItalic
 	^self selectionCharFormat isItalic!
 
 isItalic: set
-	"Private - Turn on/off italics for the receiver's current selection."
+	"Turn on/off italics for the receiver's current selection."
 
 	self selectionCharFormat: (CHARFORMAT2W new
 				isItalic: set;
@@ -376,6 +376,18 @@ isSelectionKept: aBoolean
 		baseStyleMask: ECO_NOHIDESEL
 		set: aBoolean
 		recreateIfChanged: true	"Recreate required for this change to take effect"!
+
+isStruckThrough
+	"Answer true if receiver's current selection is struck out."
+
+	^self selectionCharFormat isStruckThrough!
+
+isStruckThrough: aBoolean
+	"Turn on/off strikethrough of the receiver's current selection."
+
+	self selectionCharFormat: (CHARFORMAT2W new
+				isStruckThrough: aBoolean;
+				yourself)!
 
 isUnderlined
 	"Answer true if receiver's current selection is underlined."
@@ -609,6 +621,18 @@ selection
 	"Strip off the final null if present"
 	(selection basicAt: cch) == 0 ifTrue: [selection resize: cch - 1].
 	^selection!
+
+selectionBackcolor
+	"Answer the background colour of the selection in the receiver "
+
+	^self selectionCharFormat backcolor!
+
+selectionBackcolor: aColorOrNil
+	"Set the background colour of the selection in the receiver to aColorOrNil. If nil then clear the background colour."
+
+	self selectionCharFormat: (CHARFORMAT2W new
+				backcolor: aColorOrNil;
+				yourself)!
 
 selectionCharFormat
 	"Private - Gets the attributes of the selection in the receiver."
@@ -975,11 +999,13 @@ getCharFormat:!helpers!private! !
 getWindowText:length:!accessing!private! !
 initialize!initializing!private! !
 isBold!helpers!public! !
-isBold:!helpers!private! !
+isBold:!helpers!public! !
 isItalic!helpers!public! !
-isItalic:!helpers!private! !
+isItalic:!helpers!public! !
 isSelectionKept!accessing!public! !
 isSelectionKept:!accessing!public! !
+isStruckThrough!helpers!public! !
+isStruckThrough:!helpers!public! !
 isUnderlined!helpers!public! !
 isUnderlined:!helpers!public! !
 isUrlDetectionEnabled!public!testing! !
@@ -1007,6 +1033,8 @@ richText:!accessing!private! !
 rtfText!public!streaming! !
 rtfText:!public!streaming! !
 selection!accessing!public! !
+selectionBackcolor!accessing!public! !
+selectionBackcolor:!operations!public! !
 selectionCharFormat!accessing!private! !
 selectionCharFormat:!accessing!private! !
 selectionColor!accessing!public! !

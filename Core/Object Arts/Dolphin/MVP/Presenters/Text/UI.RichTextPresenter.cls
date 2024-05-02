@@ -39,6 +39,13 @@ bePlain
 
 	self view bePlain!
 
+chooseSelectionBackcolor
+	"Choose the background color for the selection in the receiver"
+
+	(ColorDialog on: (self view aspectValue: #selectionBackcolor))
+		caption: 'Highlight Color';
+		showModal!
+
 chooseSelectionColor
 	"Choose the color for the selection in the receiver"
 
@@ -84,6 +91,11 @@ queryToggleItalic: aCommandQuery
 		beEnabled;
 		isChecked: self view isItalic!
 
+queryToggleStrikeout: aCommandQuery
+	aCommandQuery
+		beEnabled;
+		isChecked: self view isStruckThrough!
+
 queryToggleUnderlined: aCommandQuery
 	aCommandQuery
 		beEnabled;
@@ -103,6 +115,12 @@ toggleItalic
 	<acceleratorKey: 'Ctrl+I'>
 	self view isItalic: self view isItalic not!
 
+toggleStrikeout
+	"Toggle strikethrough of the selection in the receiver"
+
+	<commandQuery: #queryToggleStrikeout:>
+	self view isStruckThrough: self view isStruckThrough not!
+
 toggleUnderlined
 	"Toggle underline mode for the selection in the receiver"
 
@@ -115,6 +133,7 @@ alignParagraphCenter!commands-actions!public! !
 alignParagraphLeft!commands-actions!public! !
 alignParagraphRight!commands-actions!public! !
 bePlain!modes!public! !
+chooseSelectionBackcolor!commands-actions!public! !
 chooseSelectionColor!commands-actions!public! !
 chooseSelectionFont!commands-actions!public! !
 queryAlignParagraphCenter:!commands-queries!private! !
@@ -122,9 +141,11 @@ queryAlignParagraphLeft:!commands-queries!private! !
 queryAlignParagraphRight:!commands-queries!private! !
 queryToggleBold:!commands-queries!private! !
 queryToggleItalic:!commands-queries!private! !
+queryToggleStrikeout:!commands-queries!private! !
 queryToggleUnderlined:!commands-queries!private! !
 toggleBold!commands-actions!public! !
 toggleItalic!commands-actions!public! !
+toggleStrikeout!commands-actions!public! !
 toggleUnderlined!commands-actions!public! !
 !
 

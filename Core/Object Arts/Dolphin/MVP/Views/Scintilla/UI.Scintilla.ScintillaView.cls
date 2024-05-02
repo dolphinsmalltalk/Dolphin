@@ -2309,6 +2309,7 @@ findStyleStart: aSymbol before: anInteger
 foldAll
 	"Collapse the document at the fold points identified by the language lexer."
 
+	<commandQuery: #queryFolding:>
 	self sciFoldAll: ##(SC_FOLDACTION_CONTRACT | SC_FOLDACTION_CONTRACT_EVERY_LEVEL)!
 
 foldChildren: lineInteger action: actionInteger
@@ -4636,6 +4637,9 @@ punctuation: aStringOrNil
 	self characterClassifications: (self characterClassifications
 				punctuation: aStringOrNil;
 				yourself)!
+
+queryFolding: aCommandQuery
+	aCommandQuery isEnabled: (self isFoldingEnabled and: [self textLength > 0])!
 
 queryToggleIndentationGuides: aCommandQuery
 	aCommandQuery
@@ -9746,6 +9750,7 @@ undo
 			true]!
 
 unfoldAll
+	<commandQuery: #queryFolding:>
 	self sciFoldAll: SC_FOLDACTION_EXPAND!
 
 unindent
@@ -10651,6 +10656,7 @@ printMagnification!**auto generated**!printing!public!scintilla interface! !
 printMagnification:!**auto generated**!printing!public!scintilla interface! !
 punctuation!character classes!public! !
 punctuation:!character classes!public! !
+queryFolding:!commands-queries!private! !
 queryToggleIndentationGuides:!commands-actions!commands-queries!private! !
 queryToggleLineEndings:!commands-actions!commands-queries!private! !
 queryToggleLineNumbers:!commands-actions!commands-queries!private! !

@@ -39,6 +39,17 @@ The CHARFORMAT2W structure contains information about character formatting in a 
 
 !OS.CHARFORMAT2W methodsFor!
 
+backcolor
+	"Answer the character background color."
+
+	^Graphics.Color fromCOLORREF: self crBackColor!
+
+backcolor: aColor
+	"Set the character background colour."
+
+	self maskIn: CFM_BACKCOLOR.
+	self crBackColor: (aColor ifNil: [Graphics.Color window]) asCOLORREF!
+
 bAnimation
 	"Answer the <Integer> value of the receiver's 'bAnimation' field."
 
@@ -453,6 +464,8 @@ yHeight: anInteger
 	bytes int32AtOffset: _OffsetOf_yHeight put: anInteger! !
 
 !OS.CHARFORMAT2W categoriesForMethods!
+backcolor!accessing!public! !
+backcolor:!accessing!public! !
 bAnimation!**compiled accessors**!public! !
 bAnimation:!**compiled accessors**!public! !
 bCharSet!**compiled accessors**!public! !

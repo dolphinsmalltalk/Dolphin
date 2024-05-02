@@ -1432,6 +1432,26 @@ resource_Fluent_Find_tools
 
 	^#(#'!!STL' 6 2118 11 #{UI.STBViewProxy} #{UI.Toolbar} 38 #{Core.Array} 28 nil nil 50 2 8 1409293132 131137 32 nil nil nil 517 nil nil nil 32 6 #{Graphics.Color} #default nil 518 #{Kernel.STBIdentityDictionaryProxy} #{Core.IdentityDictionary} 8 #() nil nil nil nil 50 3 1350 1 #{UI.ToolbarTextButton} 32 161 1350 4 #{UI.CommandDescription} #find 8 'Find' 1 1 nil nil 8 $\xE721 210 32 161 242 #findNext 8 'Find Next' 1 1 nil nil 8 $\xE893 582 1 #{UI.ToolbarSeparator} 32 1 nil nil 13 1 nil nil nil nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createWindow: 50 1 1030 #{UI.CreateWindow} 262 #{OS.RECTL} 8 #[255 11 0 0 10 0 0 0 61 12 0 0 35 0 0 0] 193 50 2 8 1140857676 131137 8 '' 32 1 8 #() 518 #{Graphics.Point} 193 193 nil 31)!
 
+resource_Fluent_Font_Tools
+	"Answer the literal data from which the 'Fluent Font Tools' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Fluent_Font_Tools)
+	"
+
+	^#(#'!!STL' 6 2118 11 #{UI.STBViewProxy} #{UI.Toolbar} 38 #{Core.Array} 28 nil nil 50 2 8 1409293132 131137 32 nil nil nil 517 nil nil nil 32 6 #{Graphics.Color} #default nil 518 #{Kernel.STBIdentityDictionaryProxy} #{Core.IdentityDictionary} 8 #() nil nil nil nil 50 8 1350 1 #{UI.ToolbarTextButton} 32 161 1350 4 #{UI.CommandDescription} #chooseSelectionFont 8 'Font…' 1 1 nil nil 8 $\xE8D2 210 32 161 242 #toggleBold 8 'Bold' 1 1 nil nil 8 $\xE8DD 210 32 161 242 #toggleItalic 8 'Italic' 1 1 nil nil 8 $\xE8DB 210 32 161 242 #toggleUnderlined 8 'Underlined' 1 1 nil nil 8 $\xE8DC 210 32 161 242 #toggleStrikeout 8 'Strikethrough' 1 1 nil nil 8 $\xEDE0 210 32 161 242 #chooseSelectionColor 8 'Text Color…' 1 1 nil nil 8 $\xE8D3 210 32 161 242 #chooseSelectionBackcolor 8 'Text highlight color…' 1 1 nil nil 8 $\xE7E6 582 1 #{UI.ToolbarSeparator} 32 1 nil nil 13 5 nil nil nil nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createWindow: 50 1 1030 #{UI.CreateWindow} 262 #{OS.RECTL} 8 #[255 11 0 0 10 0 0 0 184 12 0 0 35 0 0 0] 193 50 2 8 1140857676 131137 8 '' 32 1 8 #() 518 #{Graphics.Point} 193 193 nil 31)!
+
+resource_Fluent_Paragraph_Tools
+	"Answer the literal data from which the 'Fluent Paragraph Tools' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Fluent_Paragraph_Tools)
+	"
+
+	^#(#'!!STL' 6 2118 11 #{UI.STBViewProxy} #{UI.Toolbar} 38 #{Core.Array} 28 nil nil 50 2 8 1409293132 131137 32 nil nil nil 517 nil nil nil 32 6 #{Graphics.Color} #default nil 518 #{Kernel.STBIdentityDictionaryProxy} #{Core.IdentityDictionary} 8 #() nil nil nil nil 50 4 1350 1 #{UI.ToolbarTextButton} 32 161 1350 4 #{UI.CommandDescription} #alignParagraphLeft 8 'Align text left' 1 1 nil nil 8 $\xE8E4 210 32 161 242 #alignParagraphCenter 8 'Center' 1 1 nil nil 8 $\xE8E3 210 32 161 242 #alignParagraphRight 8 'Align text right' 1 1 nil nil 8 $\xE8E2 582 1 #{UI.ToolbarSeparator} 32 1 nil nil 13 1 nil nil nil nil 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createWindow: 50 1 1030 #{UI.CreateWindow} 262 #{OS.RECTL} 8 #[255 11 0 0 10 0 0 0 79 12 0 0 35 0 0 0] 193 50 2 8 1140857676 131137 8 '' 32 1 8 #() 518 #{Graphics.Point} 193 193 nil 31)!
+
 resource_History_tools
 	"Answer the literal data from which the 'History tools' resource can be reconstituted.
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
@@ -1514,6 +1534,8 @@ resource_Find_tools!public!resources-views! !
 resource_Fluent_Edit_tools!public!resources-views! !
 resource_Fluent_File_tools!public!resources-views! !
 resource_Fluent_Find_tools!public!resources-views! !
+resource_Fluent_Font_Tools!public!resources-views! !
+resource_Fluent_Paragraph_Tools!public!resources-views! !
 resource_History_tools!public!resources-views! !
 resource_Tool_bar!public!resources-views! !
 stbConvert:fromVersion:!binary filing!public! !
