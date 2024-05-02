@@ -99,4 +99,5 @@ ShellConstants at: 'SEE_MASK_NOCLOSEPROCESS' put: 16r40!
 ShellConstants at: 'SEE_MASK_UNICODE' put: 16r10000!
 ShellConstants at: 'SHGFP_TYPE_CURRENT' put: 16r0!
 ShellConstants at: 'SHGFP_TYPE_DEFAULT' put: 16r1!
+ShellConstants at: 'SHGSI_ICONLOCATION' put: 16r0!
 ShellConstants shrink!

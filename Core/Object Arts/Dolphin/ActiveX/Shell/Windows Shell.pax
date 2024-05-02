@@ -15,12 +15,14 @@ package basicScriptAt: #preuninstall put: 'View unregisterShellMessages'.
 package classNames
 	add: #DroppedFilesList;
 	add: #ShellLibrary;
+	add: #SHSTOCKICONINFO;
 	yourself.
 
 package methodNames
 	add: #SessionManager -> #documentsDirectory;
 	add: #View -> #acceptDroppedFiles:;
 	add: #View -> #wmDropFiles:wParam:lParam:;
+	add: 'Icon class' -> #shellStock:;
 	add: 'View class' -> #registerShellMessages;
 	add: 'View class' -> #shellMessageMappings;
 	add: 'View class' -> #unregisterShellMessages;
@@ -57,7 +59,30 @@ ExternalLibrary subclass: #ShellLibrary
 	poolDictionaries: 'ShellConstants Win32Constants'
 	classInstanceVariableNames: ''!
 
+Win32Structure subclass: #SHSTOCKICONINFO
+	instanceVariableNames: ''
+	classVariableNames: '_OffsetOf_dwSize _OffsetOf_hIcon _OffsetOf_iIcon _OffsetOf_iSysImageIndex _OffsetOf_szPath'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
 "Loose Methods"!
+
+!Icon class methodsFor!
+
+shellStock: anInteger
+	"Answer a new instance of receiver representing the shell stock icon with the specified SHSTOCKICONID and default large icon extent."
+
+	| info |
+	info := SHSTOCKICONINFO newBuffer.
+	ShellLibrary default
+		shGetStockIconInfo: anInteger
+		uFlags: ShellConstants.SHGSI_ICONLOCATION
+		psii: info.
+	^self fromId: anInteger in: (ExternalResourceLibrary open: info szPath)! !
+
+!Icon class categoriesForMethods!
+shellStock:!instance creation!public! !
+!
 
 !SessionManager methodsFor!
 
