@@ -3618,7 +3618,7 @@ initialize
 		- it cannot be changed once set, but the configured context can be changed for the next image restart (so DpiAwarenessContext may not be the system-wide context)
 		- we may not get what we asked for, e.g. in an application with a manifest defined awareness
 		- the result of GetDpiAwarenessContextForProcess will depend on the thread awareness context at the time it is called (!!)"
-	SystemDpiAwareness := UI.DpiAwareness fromHandle: (self getDpiAwarenessContextForProcess: -1).
+	SystemDpiAwareness := UI.DpiAwareness fromHandle: self getThreadDpiAwarenessContext.
 	^self!
 
 insertMenuItem: hMenu uItem: anInteger fByPosition: aBoolean lpmii: aMENUITEMINFOW
