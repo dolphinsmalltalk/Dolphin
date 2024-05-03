@@ -31,11 +31,13 @@ backcolor: aColorOrNil
 bitmapSize
 	"Answer the size of bitmaps shown in the receiver"
 
+	#deprecated.
 	^self referee bitmapSize!
 
 bitmapSize: aPoint 
 	"Set the size of bitmaps shown in the receiver"
 
+	#deprecated.
 	self referee bitmapSize: aPoint.
 	self onResize!
 
@@ -68,7 +70,7 @@ createDelegate
 		isTransparent: true;
 		isManaged: false.
 	self basicAddSubView: referee.
-	self bitmapSize: self defaultBitmapSize.
+	self imageSize: self defaultImageSize.
 	self createInternalButton.
 	self onResize!
 
@@ -85,15 +87,13 @@ defaultBackcolor
 
 	^Color.Face3d!
 
-defaultBitmapSize
-	"Private - Answer a default DIPs size (i.e. 96-dpi) for bitmaps in the receiver."
-
-	^24@24!
-
 defaultExtent
 	"Private - Answer the default size of the receiver in device-independent pixels (96-dpi DIPs). This is used only to determine the size of a view when it is created (although after scaling DIPs to the monitor DPI). Thereafter #preferredExtent is used when the desired size of a view is requested."
 
 	^##(96 @ 48)!
+
+defaultImageSize
+	^#mediumIcons!
 
 hasFlatAppearance
 	"Answer whether the receiver has a flat appearance. A flat button draws its buttons without
@@ -129,6 +129,17 @@ hasListAppearance
 
 hasListAppearance: aBoolean 
 	self referee hasListAppearance: aBoolean!
+
+imageSize
+	"Answer the logical name of the size of image shown in the receiver"
+
+	^self referee imageSize!
+
+imageSize: aSymbol
+	"Set the size of images shown in the receiver"
+
+	self referee imageSize: aSymbol.
+	self onResize!
 
 internalButton
 	self referee items isEmpty ifTrue: [self createInternalButton].
@@ -220,14 +231,16 @@ commandDescription:!accessing!public! !
 createDelegate!event handling!private! !
 createInternalButton!event handling!private! !
 defaultBackcolor!private! !
-defaultBitmapSize!constants!private! !
 defaultExtent!constants!private! !
+defaultImageSize!constants!private! !
 hasFlatAppearance!accessing!accessing-styles!public! !
 hasFlatAppearance:!accessing!accessing-styles!public! !
 hasLabels!accessing!accessing-styles!public! !
 hasLabels:!accessing!accessing-styles!public! !
 hasListAppearance!accessing!public! !
 hasListAppearance:!accessing!public! !
+imageSize!accessing!geometry!public! !
+imageSize:!accessing!geometry!public! !
 internalButton!private! !
 isChecked!accessing!public!testing! !
 isChecked:!accessing!public!state! !

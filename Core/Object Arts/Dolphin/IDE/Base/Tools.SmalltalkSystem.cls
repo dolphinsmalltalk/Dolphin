@@ -350,7 +350,7 @@ allUnimplementedSelectors
 
 applyOptionsToTool: aSmalltalkToolShell
 	aSmalltalkToolShell view managedSubViews
-		do: [:each | (each isKindOf: Toolbar) ifTrue: [each bitmapSize: self toolbarBitmapSize]]!
+		do: [:each | (each isKindOf: Toolbar) ifTrue: [each imageSize: self toolbarImageSize]]!
 
 applyPublishedAspectsLiteralMap: aLookupTable to: aTool
 	"Private - Applies the literal publishes aspect values held in aLookupTable to aTool"
@@ -4051,11 +4051,11 @@ toolBackgroundColor
 toolBackgroundColor: aColor
 	(Color named: #toolBackground) actualColor: aColor!
 
-toolbarBitmapSize
-	^toolbarBitmapSize ifNil: [16@16]!
-
 toolbarBitmapSize: aPointOrNil
 	toolbarBitmapSize := aPointOrNil!
+
+toolbarImageSize
+	^toolbarBitmapSize ifNil: [#smallIcons]!
 
 toolsMenu
 	<menuPopulator: #populateToolsMenu:>
@@ -4703,8 +4703,8 @@ systemOptions!accessing!public! !
 testBrowserClass!options!public! !
 toolBackgroundColor!accessing!public! !
 toolBackgroundColor:!accessing!public! !
-toolbarBitmapSize!accessing!public! !
 toolbarBitmapSize:!accessing!public! !
+toolbarImageSize!accessing!public! !
 toolsMenu!commands-menus!public! !
 typeForArgumentClass:!helpers!private! !
 unimplementedSelectorsIn:!enquiries!public! !
@@ -4801,7 +4801,7 @@ publishedAspectsOfInstances
 	#(#autoFormatMethodSource #backupOnImageSave #preferAlternateInspectors #splashShowAtStartup)
 		do: [:each | aspects add: (Aspect boolean: each)].
 	^aspects
-		add: ((Aspect font: #defaultFont) category: #appearance);
+		add: ((Aspect font: #defaultFont) category: #appearance; yourself);
 		add: (Aspect
 					choice: #formatterClass
 					from: [(ClassCategory name: 'System-Compiler-Formatters') classes]
@@ -4811,7 +4811,7 @@ publishedAspectsOfInstances
 		add: (Aspect hotkey: #interruptHotKey);
 		add: ((Aspect
 					choice: #toolbarBitmapSize
-					from: ##({16 @ 16. 20 @ 20. 24 @ 24. 32 @ 32. 40 @ 40. 48 @ 48. 64 @ 64})
+					from: Toolbar.ImageSizes asSortedCollection
 					type: Point)
 					icon: External.SIZE icon;
 					yourself);

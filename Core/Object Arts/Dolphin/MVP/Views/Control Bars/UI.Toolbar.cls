@@ -2,11 +2,23 @@
 
 UI.ControlBarAbstract
 	subclass: #'UI.Toolbar'
-	instanceVariableNames: 'idMap items bitmapsStart insets tbFlags indent bitmapSize buttonSize dropDownMenu layoutManager'
+	instanceVariableNames: 'idMap items bitmapsStart insets tbFlags indent imageSize buttonSize dropDownMenu layoutManager'
 	classVariableNames: ''
 	imports: #(#{OS.ToolbarConstants})
 	classInstanceVariableNames: ''
-	classConstants: { 'LabelsMask' -> 16r1 }!
+	classConstants: {
+			'ImageSizes'
+				-> (IdentityDictionary withAll: {
+								#largeIcons -> (16r20 @ 16r20).
+								#mediumIcons -> (16r18 @ 16r18).
+								#mediumSmallIcons -> (16r14 @ 16r14).
+								#smallIcons -> (16r10 @ 16r10).
+								#smallTileIcons -> (16r28 @ 16r28).
+								#thumbnails -> (16r40 @ 16r40).
+								#tileIcons -> (16r30 @ 16r30)
+							}).
+			'LabelsMask' -> 16r1
+		}!
 
 UI.Toolbar guid: (Core.GUID fromString: '{87b4c72f-026e-11d3-9fd7-00a0cc3e4a32}')!
 
@@ -20,14 +32,15 @@ Toolbar holds a list of `<ToolbarItem>` items matching the order of items in the
   `bitmapsStart`		`LookupTable` of IDs for system bitmaps.
   `insets`			`Rectangle` specifying insets from edges for nested controls.
   `tbFlags`			`<integer>` toolbar specific flags.
-  `_reserved2`		`UndefinedObject` reserved for future use.
-  `bitmapSize`		`Point` size of each button bitmap.
-  `buttonSize`		`Point` size of each button.
+  `indent`			`SmallInteger` pixel indent before first button.
+  `imageSize`		`Symbol`. Logical size of button images.
+  `buttonSize`		`Point` size of each button. Used for setting a custom button size, but not recommended.
+  `_unused27`		Reserved for future use.
   `layoutManager`	`<layoutManager>` or `nil`, for managing the layout of sub-views.
 
 ## Class Variables:
   `LabelsMask`		`<integer>` mask for `hasLabels` flag.
-  `TbnMap`		`IdentityDictionary` mapping Windows messages to `<selector>`s.
+  `ImageSizes`		`IdentityDictionary` mapping logical image names to 96-dpi icon sizes.
 
 
 '!
@@ -37,16 +50,21 @@ Toolbar holds a list of `<ToolbarItem>` items matching the order of items in the
 !UI.Toolbar methodsFor!
 
 actualBitmapSize
-	"Answer the device-independent (aka DIPs, or 96-dpi)  of bitmaps shown on the toolbar. This can be visually inherited from a parent toolbar, which is useful in allowing the bitmap size to be changed just by changing that of the topmost toolbar."
+	"Private - Answer the actual pixel extent of bitmaps shown on the toolbar, measure at the current window DPI. This can be visually inherited from a parent toolbar, which is useful in allowing the image size to be changed just by changing that of the topmost toolbar."
 
-	^bitmapSize
-		ifNil: 
-			[| visibleParent |
-			"If nested in a Toolbar, inherit its bitmap size"
-			visibleParent := self parentView nonReferenceAncestor.
-			visibleParent class == self class
-				ifTrue: [visibleParent actualBitmapSize]
-				ifFalse: [self defaultBitmapSize]]!
+	^self mapDipsToPels: (ImageSizes at: self actualImageSize)!
+
+actualImageSize
+	"Private - Answer the symbolic size of images to be shown as buttons on the toolbar. This can be visually inherited from a parent toolbar, which is useful in allowing the bitmap size to be changed just by changing that of the topmost toolbar."
+
+	| visibleParent |
+	imageSize ifNotNil: [:symbol | ^symbol].
+
+	"If nested in a Toolbar, inherit its bitmap size"
+	visibleParent := self parentView nonReferenceAncestor.
+	^visibleParent class == self class
+		ifTrue: [visibleParent actualImageSize]
+		ifFalse: [self defaultImageSize]!
 
 addBitmap: aBitmap index: anInteger
 	"Private - Add the sub-bitmap identified by anIntegerIndex within aBitmap to the receiver. Answer the index of the sub-bitmap within the registered entries."
@@ -161,26 +179,23 @@ basicAddItems: tools
 bitmapSize
 	"Answer the device-independent (aka DIPs, or 96-dpi) size of bitmaps shown on the toolbar."
 
-	^bitmapSize!
+	#deprecated.
+	^imageSize ifNotNil: [ImageSizes at: imageSize]!
 
 bitmapSize: aPoint
 	"Set the device-independent (aka DIPs, or 96-dpi) size of bitmaps shown on the toolbar to the <Point> argument."
 
-	bitmapSize = aPoint ifTrue: [^self].
-	bitmapSize := aPoint.
-	buttonSize
-		ifNil: 
-			["The Toolbar has a bug whereby it doesn't update its metrics correctly if the bitmap size is changed - the default button size is generally too large, especially if switching to a smaller size. Therefore we recreate the control."
-			self recreate]
-		ifNotNil: [self updateAllItems]!
+	#deprecated.
+	self imageSize: (ImageSizes keyAtEqualValue: aPoint ifAbsent: [self defaultImageSize])!
 
 buttonSize
-	"Answer the device-independent (aka DIPs, or 96-dpi) size of buttons shown on the toolbar"
+	"Answer the size of buttons shown on the toolbar, measured in device pixels.
+	It is recommended that this not be used and that the toolbar be allowed to choose the preferred size of button to fit the images."
 
-	^buttonSize ifNil: [self isOpen ifTrue: [self mapPelsToDips: self tbGetButtonSize]]!
+	^buttonSize ifNil: [self isOpen ifTrue: [self tbGetButtonSize]]!
 
 buttonSize: aPointOrNil
-	"Set the device-independent (aka DIPs, or 96-dpi) size of buttons shown on the toolbar to aPointOrNil. If nil then the buttons assume a default size, which is the preferred option for normal use."
+	"Set the size of buttons shown on the toolbar to aPointOrNil. If nil then the buttons assume a default size, which is distinclty the preferred option for normal use."
 
 	buttonSize = aPointOrNil ifTrue: [^self].
 	buttonSize := aPointOrNil.
@@ -236,10 +251,10 @@ changeButtonSize: aNiladicBlock
 
 	| style |
 	style := self getWindowStyle.
-	(style allMask: TBSTYLE_FLAT) ifTrue: [^aNiladicBlock value: self dpi / USER_DEFAULT_SCREEN_DPI].
+	(style allMask: TBSTYLE_FLAT) ifTrue: [^aNiladicBlock value].
 	^
 	[self setWindowStyle: (style bitOr: ##(TBSTYLE_FLAT | TBSTYLE_TRANSPARENT)).
-	aNiladicBlock value: self dpi / USER_DEFAULT_SCREEN_DPI]
+	aNiladicBlock value]
 			ensure: [self setWindowStyle: style]!
 
 clearIdMap
@@ -260,18 +275,8 @@ commandSource
 
 	^self topShell commandSource!
 
-defaultBitmapSize
-	"Private - Answer a default DIPs size (i.e. 96-dpi) for bitmaps in the receiver."
-
-	^16 @ 16!
-
-defaultButtonSize
-	"Private - Answer a default size for buttons in the receiver"
-
-	^22 @ 22!
-
 defaultExtent
-	"Private - Answer the default size of the receiver in device-independent pixels (96-dpi DIPs). This is used only to determine the size of a view when it is created (although after scaling DIPs to the display DPI - see #creationExtent). Thereafter #preferredExtent is used when the desired size of a view is requested."
+	"Private - Answer the default size of the receiver in device-independent pixels (96-dpi DIPs). This is used only to determine the size of a view when it is created (although after scaling DIPs to the monitor DPI). Thereafter #preferredExtent is used when the desired size of a view is requested."
 
 	^##(350 @ 25)!
 
@@ -294,6 +299,11 @@ defaultGradientForecolor
 		r: 241
 		g: 239
 		b: 226!
+
+defaultImageSize
+	"Private - Answer the logical image size to be used by default. This is the smallest icon size, which at 96-dpi corresponds to 16@16. The actual image size will be scaled to the window DPI, e.g. at 120-dpi (or 125% scaling) the actual image size will be 20@20 for small icons."
+
+	^#smallIcons!
 
 defaultWindowStyle
 	"Private - Answer a default base style to use when creating the receiver"
@@ -387,6 +397,23 @@ hasTransparentBackground
 
 	^self baseStyle anyMask: ##(TBSTYLE_FLAT | TBSTYLE_TRANSPARENT)!
 
+imageSize
+	"Answer the symbolic size size of images shown on the toolbar."
+
+	^imageSize!
+
+imageSize: aSymbol
+	"Set the symbolic size of images shown on the toolbar."
+
+	self imageSize == aSymbol ifTrue: [^self].
+	imageSize := (ImageSizes includesKey: aSymbol) ifTrue: [aSymbol].
+	"If the toolbar does not have an explicit button size, then adjust the toolbar to use the new size of images"
+	buttonSize
+		ifNil: 
+			["The Toolbar has a bug whereby it doesn't update its metrics correctly if the image size is changed - the default button size is generally too large, especially if switching to a smaller size. Therefore we recreate the control."
+			self recreate]
+		ifNotNil: [self updateAllItems]!
+
 indent
 	"Answer the number of pels by which the first button in the toolbar will be indented. 
 	This provides a much better mechanism for reserving space in a toolbar for a nested control than the addition of a separator of a specified width that must be completely covered in order not to show unwanted visual artefacts. Weirdly MSDN still recommends the separator technique."
@@ -410,8 +437,7 @@ initialize
 	self clearIdMap.
 	items := {}.
 	tbFlags := 0.
-	bitmapSize := self defaultBitmapSize.
-	buttonSize := self defaultButtonSize.
+	imageSize := self defaultImageSize .
 	forecolor := Color default!
 
 insets
@@ -574,7 +600,7 @@ onViewCreated
 	self changeButtonSize: [:scale | self tbSetBitmapSize: self actualBitmapSize * scale].
 	self tbSetExtendedStyle: ##(TBSTYLE_EX_DRAWDDARROWS | TBSTYLE_EX_DOUBLEBUFFER).
 	self clearIdMap.
-	self indent == 0 ifFalse: [self tbSetIndent: self indent].
+	indent ifNotNil: [self tbSetIndent: indent].
 	self basicAddItems: items!
 
 removeAllItems
@@ -596,10 +622,10 @@ removeItem: aToolbarItem
 	self tbDeleteButton: index - 1.
 	^aToolbarItem!
 
-scaledBitmapSize
-	"Answer the actual size of bitmaps shown on the toolbar at its current resolution."
-
-	^self mapDipsToPels: self actualBitmapSize!
+resolutionScaledBy: aPoint
+	super resolutionScaledBy: aPoint.
+	buttonSize ifNotNil: [buttonSize := buttonSize * aPoint].
+	indent ifNotNil: [indent := indent * aPoint x]!
 
 size
 	"Answer the number of ToolbarItems in the receiver."
@@ -611,7 +637,7 @@ tbAddBitmap: aBitmap
 	gdiBitmap := aBitmap asBitmap.
 	gdiBitmap setMap3DColors: true.
 	"If the extent reported by the bitmap is not correct, then the start index will be out, so watch out for caching duff old extent (see Bitmap>>loadFromInstance)."
-	size := gdiBitmap extent x // self scaledBitmapSize x.
+	size := gdiBitmap extent x // self actualBitmapSize x.
 
 	"#305 We must make sure that the bitmap is not selected into a DC or the result will be a blank image in the list. This won't damage the bitmap in any way because the canvas can always be lazily recreated."
 	gdiBitmap freeDC.
@@ -912,7 +938,7 @@ tbSetExtendedStyle: tbExStyleMask
 !
 
 tbSetIndent: anInteger 
-	self sendMessage: TB_SETINDENT wParam: anInteger
+	self sendMessage: TB_SETINDENT wParam: anInteger asInteger
 	!
 
 tbSetRows: anIntegerRows large: largerBoolean
@@ -956,9 +982,8 @@ updateSize
 
 	self isOpen ifFalse: [^self].
 	self changeButtonSize: 
-			[:scale |
-			buttonSize ifNotNil: [self tbSetButtonSize: buttonSize * scale].
-			self tbSetBitmapSize: self actualBitmapSize * scale].
+			[buttonSize ifNotNil: [self tbSetButtonSize: buttonSize].
+			self tbSetBitmapSize: self actualBitmapSize].
 	self tbAutoSize!
 
 updateSizePosted
@@ -1004,7 +1029,8 @@ wmInitMenuPopup: message wParam: wParam lParam: lParam
 			0]! !
 
 !UI.Toolbar categoriesForMethods!
-actualBitmapSize!geometry!public! !
+actualBitmapSize!geometry!private! !
+actualImageSize!geometry!private! !
 addBitmap:index:!helpers!private! !
 addEditTools!adding!private! !
 addFileTools!adding!private! !
@@ -1028,11 +1054,10 @@ changeButtonSize:!helpers!private! !
 clearIdMap!initializing!private! !
 command:id:!commands!private! !
 commandSource!commands!public! !
-defaultBitmapSize!constants!private! !
-defaultButtonSize!constants!private! !
 defaultExtent!constants!private! !
 defaultGradientBackcolor!colors!constants!private! !
 defaultGradientForecolor!colors!constants!private! !
+defaultImageSize!constants!private! !
 defaultWindowStyle!constants!private! !
 filerProxyIn:!binary filing!private! !
 getItemRect:!geometry!private! !
@@ -1044,6 +1069,8 @@ hasListAppearance!accessing-styles!public! !
 hasListAppearance:!accessing-styles!public! !
 hasTransparentAppearance:!accessing-styles!public! !
 hasTransparentBackground!accessing-styles!private! !
+imageSize!geometry!public! !
+imageSize:!geometry!public! !
 indent!accessing!public! !
 indent:!accessing!public! !
 indexOfItem:!accessing!private! !
@@ -1065,7 +1092,7 @@ onStateRestored!binary filing!private! !
 onViewCreated!event handling!public! !
 removeAllItems!public!removing! !
 removeItem:!public!removing! !
-scaledBitmapSize!geometry!public! !
+resolutionScaledBy:!geometry!private! !
 size!geometry!public! !
 tbAddBitmap:!helpers!private! !
 tbAddString:!adding!private! !
@@ -1181,7 +1208,15 @@ resource_Tool_bar
 
 	^#(#'!!STL' 6 2118 10 #{UI.STBViewProxy} #{UI.Toolbar} 38 #{Core.Array} 28 nil nil 50 2 8 1409288972 131137 32 nil 6 #{Graphics.Color} #default nil 517 nil nil nil 32 128 nil 518 #{Kernel.STBIdentityDictionaryProxy} #{Core.IdentityDictionary} 8 #() nil nil nil nil 550 #{Core.OrderedCollection} 0 nil nil 1 nil nil nil nil 838 1 #{UI.FlowLayout} 1 1 1 262 #{Core.MessageSequence} 50 1 774 #{Core.MessageSend} #createAt:extent: 50 2 518 #{Graphics.Point} 6143 21 354 701 51 32 262 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 93 13 0 0 35 0 0 0] 8 #() 354 193 193 nil 29)!
 
-stbConvertFromVersion12: anArray
+stbConvert: anArray fromVersion: verInteger
+	"Convert from earlier version view by updating and answering the array of instance variables (for the View), instVarArray."
+
+	| instVars |
+	instVars := super stbConvert: anArray fromVersion: verInteger.
+	verInteger < 15 ifTrue: [instVars := self stbConvertFromVersion14: instVars].
+	^instVars!
+
+stbConvertFromVersion12: anArray 
 	"Private - Perform an STB conversion from a version 12 <View> to version 13."
 
 	| creationStyle |
@@ -1205,6 +1240,18 @@ stbConvertFromVersion13: anArray
 	anArray at: 24 put: nil.
 	^super stbConvertFromVersion13: anArray!
 
+stbConvertFromVersion14: anArray
+	"Private - Perform an STB conversion from a version 14 `Toolbar` to version 15. The only change is that the image size becomes a named logical value rather than a point size."
+
+	^anArray
+		at: 25 put: (ImageSizes keyAtEqualValue: (anArray at: 25) ifAbsent: [#smallIcons]);
+		yourself!
+
+stbVersion
+	"15: bitmapSize <Point> changes to imageSize <Symbol> - physical sizes are confusing with DPI scaling"
+
+	^15!
+
 themePartName
 	^#Toolbar!
 
@@ -1221,8 +1268,11 @@ resource_File_tools!public!resources-views! !
 resource_Find_tools!public!resources-views! !
 resource_History_tools!public!resources-views! !
 resource_Tool_bar!public!resources-views! !
+stbConvert:fromVersion:!binary filing!public! !
 stbConvertFromVersion12:!binary filing!private! !
 stbConvertFromVersion13:!binary filing!private! !
+stbConvertFromVersion14:!binary filing!private! !
+stbVersion!binary filing!public! !
 themePartName!constants!private! !
 winClassName!constants!private! !
 !
