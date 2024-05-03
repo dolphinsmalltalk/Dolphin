@@ -286,7 +286,7 @@ onPositionChanged: aPositionEvent
 	^(aPositionEvent isResize and: [self mode ~~ #simple]) 
 		ifFalse: [super onPositionChanged: aPositionEvent]!
 
-placement: aWINDOWPLACEMENT 
+placement: aWINDOWPLACEMENT
 	"Private - Sets the current placement (e.g. minimized/maximized/restored locations 
 	and extents) of the receiver from information in the <WINDOWPLACEMENT>
 	argument."
@@ -297,20 +297,17 @@ placement: aWINDOWPLACEMENT
 	control how big the drop-down should be.  The edit field is a fixed height based on 
 	the font size and system metrics."
 
-	| placement |
-	self mode == #simple 
-		ifTrue: [placement := aWINDOWPLACEMENT]
-		ifFalse: 
-			[| rect |
-			placement := aWINDOWPLACEMENT copy.
-			rect := aWINDOWPLACEMENT rcNormalPosition.
-			rect bottom: rect bottom + self droppedHeight.
-			placement rcNormalPosition: rect].
-	super placement: placement!
+	super placement: (self mode == #simple
+				ifTrue: [aWINDOWPLACEMENT]
+				ifFalse: 
+					[| placement |
+					placement := aWINDOWPLACEMENT copy.
+					placement height: self droppedHeight.
+					placement])!
 
 resolutionScaledBy: aPoint
 	super resolutionScaledBy: aPoint.
-	droppedHeight ifNotNil: [droppedHeight := droppedHeight * aPoint y]!
+	droppedHeight ifNotNil: [droppedHeight := (droppedHeight * aPoint y) truncated]!
 
 selectionByIndex
 	"Answer the one-based <integer> 'index' of the selected object in the receiver or zero if there is none."

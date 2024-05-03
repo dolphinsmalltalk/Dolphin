@@ -45,6 +45,58 @@ addSubView: aView
 
 	^aView.!
 
+adjustCreationParameters: aWindowCreationState forShell: aShellView
+	"Private - The <ShellView> first argument is being created for the first time on this desktop. Answer a WindowCreationState based on that provided as the 2nd argument with any adjustments to position, extent, or styles, that are appropriate. This would typically involve determining the correct monitor on which to position the window, and either providing a default extent or scaling that specified to the monitor DPI."
+
+	| monitor position extent |
+	position := aWindowCreationState position.
+	extent := aWindowCreationState extent.
+	"If the position is not specified, we will need to work out a suitable position on the active monitor"
+	position = WindowCreationParameters.UseDefaultGeometry
+		ifTrue: 
+			["Default position, so should go on the active monitor"
+			monitor := DisplayMonitor active.
+			"Now work out the extent to use at the DPI of the active monitor, which is either the specified extent remapped to the active monitor DPI, or if unspecified the monitor default"
+			extent := extent = WindowCreationParameters.UseDefaultGeometry
+						ifTrue: [monitor defaultWindowExtent]
+						ifFalse: [extent * monitor dpi / aWindowCreationState dpi].
+			position := aShellView isInitiallyCentered
+						ifTrue: [monitor centerExtent: extent]
+						ifFalse: [monitor nextWindowPosition]]
+		ifFalse: 
+			["Position was specified. Determine the monitor from that - we have to scale to the system DPI"
+			position := position * DisplayMonitor primary dpi / aWindowCreationState dpi.
+			monitor := DisplayMonitor nearestPoint: position.
+			"Now we can calculate the extent as above"
+			extent := extent = WindowCreationParameters.UseDefaultGeometry
+						ifTrue: [monitor defaultWindowExtent]
+						ifFalse: [extent * monitor dpi / aWindowCreationState dpi].
+			"If should be initially centered, override the specified position, but keeping to the same monitor"
+			aShellView isInitiallyCentered
+				ifTrue: 
+					["Position so as to centre the window at whatever its extent should be"
+					position := monitor centerExtent: extent]].
+	^aWindowCreationState shallowCopy
+		position: (monitor adjustPosition: position forExtent: extent);
+		extent: extent;
+		dpi: monitor dpi;
+		yourself!
+
+adjustPlacement: aWINDOWPLACEMENT ofShell: aShellView withResolution: aPoint
+	"Private - The <ShellView> first argument is being restored from an STBViewProxy (e.g. instantiated from a view resource) on this desktop. Adjust the <WINDOWPLACEMENT> 2nd argument to an appropriate position and/or extent, and scale the view to the target monitor's DPI from the original resolution specified by the <point> 3rd argument."
+
+	| monitor extent scale |
+	monitor := DisplayMonitor active.
+	scale := monitor dpi / aPoint.
+	scale = 1 ifFalse: [aShellView resolutionScaledBy: scale].
+	extent := aShellView usePreferredExtent
+				ifTrue: [aShellView preferredExtent ifNil: [monitor defaultWindowExtent]]
+				ifFalse: [aWINDOWPLACEMENT extent * scale].
+	aWINDOWPLACEMENT rectangle: (monitor
+				adjustWindowRect: ((aShellView isInitiallyCentered
+						ifTrue: [monitor centerExtent: extent]
+						ifFalse: [monitor nextWindowPosition]) extent: extent))!
+
 allParents
 	"Answers a <sequencedReadableCollection> of all parents of the receiver including, ultimately,
 	the desktop."
@@ -111,13 +163,8 @@ commandPolicyWithSource: sourceView
 
 	^CommandPolicy defaultClass commandSource: sourceView!
 
-defaultExtentOf: aShellView 
-	"Private - Answer the default extent of a ShellView created within the receiver."
-
-	^aShellView class defaultExtentBlock value: aShellView!
-
 displayOn: aPuttableStream
-	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
+	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
 	aPuttableStream nextPutAll: 'Desktop'!
 
@@ -325,8 +372,7 @@ withAllParentsDo: aMonadicValuable
 	^aMonadicValuable value: self!
 
 workArea
-	"Answer a <Rectangle> which is the desktop area excluding that 
-	occupied by the tool bar."
+	"Answer a <Rectangle> which is the desktop area of the primary monitor, excluding that part occupied by the task bar &c."
 
 	^DisplayMonitor primary workArea! !
 
@@ -334,6 +380,8 @@ workArea
 actualFont!accessing!private! !
 addCommandHistory:!accessing!private! !
 addSubView:!hierarchy!public!sub views! !
+adjustCreationParameters:forShell:!geometry!private! !
+adjustPlacement:ofShell:withResolution:!geometry!private! !
 allParents!hierarchy!public! !
 ambientBackcolor!accessing!private! !
 assumeDesktopHandle!accessing!public! !
@@ -344,7 +392,6 @@ caption!accessing!public! !
 caption:!accessing!public! !
 centerExtent:!geometry!private! !
 commandPolicyWithSource:!commands!public! !
-defaultExtentOf:!geometry!helpers!private! !
 displayOn:!displaying!public! !
 dpi!accessing!public! !
 ensureSubView:rectangleVisible:!private!updating! !

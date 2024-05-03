@@ -2082,19 +2082,7 @@ keywordsAndArgsOfMethod: aCompiledMethod
 		ifNotNil: [:ast | ast keywords -> ast argumentNames]!
 
 loadViewResource: aResourceArray inContext: contextView
-	ShellView
-		defaultExtentBlock: [:shellView | shellView extent];
-		createHookBlock: 
-				[:shellView :createBlock |
-				| exStyle |
-				exStyle := shellView extendedStyle.
-				shellView hasTaskbarIcon: false.
-				createBlock value.
-				shellView extendedStyle: exStyle].
-	^[contextView loadViewResource: aResourceArray forEdit: true] ensure: 
-			[ShellView
-				defaultExtentBlock: nil;
-				createHookBlock: nil]!
+	^contextView loadViewResource: aResourceArray forEdit: true!
 
 methodCategorizationPolicy
 	"Private - Answer the <MethodCategorizationPolicy> used by the receiver."

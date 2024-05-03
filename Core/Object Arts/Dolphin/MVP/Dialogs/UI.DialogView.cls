@@ -33,7 +33,7 @@ answer: anObject
 
 	self model: anObject!
 
-basicCreate: anInteger at: position extent: size
+basicCreateWindow: aWindowCreationState
 	"Private - Create the Windows window ensuring it has the VM window procedure.
 	Answer the receiver. The position and size are currently ignored."
 
@@ -47,20 +47,13 @@ basicCreate: anInteger at: position extent: size
 		lpTemplate: self templateId asResourceId
 		hWndParent: self class activeHandle
 		lpDialogFunc: VM getDlgProc
-		dwInitParam: anInteger!
+		dwInitParam: 0!
 
 cancel
 	"Process a cancel command. This is done by sending the correct cancel
 	command to follow the correct procedure for cancelling a dialog."
 
 	self destroy!
-
-createAt: positionPoint extent: extentPoint
-	"Private - Create the View window ensuring it has the VM window procedure.
-	Answer the receiver."
-
-	Processor activeProcess newWindow: self.
-	super createAt: positionPoint extent: extentPoint!
 
 defaultBackcolor
 	"Private - Answer the default colour for the receiver's background"
@@ -73,18 +66,11 @@ defaultButton
 	^self findItem: self defaultButtonId ifAbsent: nil!
 
 defaultExtent
-	"Private - Answer the default size of the receiver in device-independent pixels (96-dpi DIPs). This is used only to determine the size of a view when it is created (although after scaling DIPs to the display DPI - see #creationExtent). Thereafter #preferredExtent is used when the desired size of a view is requested."
+	"Private - Answer the default size of the receiver in device-independent pixels (96-dpi DIPs). This is used only to determine the size of a view when it is created (although after scaling DIPs to the monitor DPI). Thereafter #preferredExtent is used when the desired size of a view is requested."
 
 	"Implementation Note: This is used only for creation, and as the initial size and position are ignored when creating a dialog, we may as well answer any fixed point rather than calculating something that will be ignored."
 
 	^260 @ 295!
-
-defaultPositionWithin: aParentView forExtent: aPoint
-	"Private - Answer the default position of the receiver within aParentView given its intended extent aPoint."
-
-	"Implementation Note: This is used only for creation, and as the initial size and position are ignored when creating a dialog, we may as well answer any fixed point rather than calculating something that will be ignored."
-
-	^0 @ 0!
 
 defaultWindowProcessing: message wParam: wParam lParam: lParam
 	"Private - Pass a Windows message to the 'default' window procedure of the receiver.
@@ -284,6 +270,11 @@ resourceLib
 
 	^VM!
 
+restorePlacement: aWINDOWPLACEMENT resolution: aPoint
+	"The initial position for a dialog is ignored, so we just need to scale to the correct resolution for (what will be) the owner window"
+
+	self basicRestorePlacement: aWINDOWPLACEMENT scalingBy: View active resolution / aPoint!
+
 runModalInProcessLoop
 	"Private - Create a modal message loop until our continue flag suggests exit. Note that here
 	we run the dialog message loop in the current active process, rather than forking a new one.
@@ -428,13 +419,12 @@ wmInitDialog: message wParam: wParam lParam: lParam
 !UI.DialogView categoriesForMethods!
 answer!accessing!public! !
 answer:!accessing!not an aspect!public! !
-basicCreate:at:extent:!private!realizing/unrealizing! !
+basicCreateWindow:!private!realizing/unrealizing! !
 cancel!commands!public! !
 createAt:extent:!private!realizing/unrealizing! !
 defaultBackcolor!colors!constants!private! !
 defaultButton!accessing!public! !
 defaultExtent!constants!public! !
-defaultPositionWithin:forExtent:!geometry!private! !
 defaultWindowProcessing:wParam:lParam:!dispatching!private! !
 defaultWindowStyle!constants!private! !
 destroy!public!realizing/unrealizing! !
@@ -458,6 +448,7 @@ onInitDialog!event handling!public! !
 performCommand:!commands!public! !
 preTranslateKeyboardInput:!dispatching!public! !
 resourceLib!constants!public! !
+restorePlacement:resolution:!geometry!private! !
 runModalInProcessLoop!operations!private! !
 runModalLoop!operations!private! !
 setItem:font:!accessing!private! !

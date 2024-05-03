@@ -50,6 +50,7 @@ package setClassNames: #(
 	#{Tools.CreateSubclassDialog}
 	#{Tools.Debugger}
 	#{Tools.DebuggerMethodCategory}
+	#{Tools.DesignDesktopView}
 	#{Tools.DevelopmentSessionManager}
 	#{Tools.DictionaryInspector}
 	#{Tools.Examples}
@@ -2041,6 +2042,14 @@ UI.ContainerView
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
+UI.DesktopView
+	subclass: #'Tools.DesignDesktopView'
+	instanceVariableNames: 'dpi'
+	classVariableNames: 'Default System Unaware'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+	
 UI.DialogView
 	subclass: #'Tools.WalkbackDialog'
 	instanceVariableNames: 'callStack resumable caption debuggable'
@@ -8996,12 +9005,11 @@ edit
 	"Invoke a suitable editor on the resource identified by the receiver."
 
 	ViewComposer openOn: self!
-
-editViewUsing: aMonadicBlock 
-	| view | 
-	view := self loadWithContext: View desktop.
+editViewUsing: aMonadicBlock
+	| view |
+	view := self loadWithContext: DesignDesktopView forSystemDpi.
 	aMonadicBlock value: view.
-	self assignView: view.
+	self assign: view literalStoreArray.
 	view destroy!
 
 hiddenObjects
@@ -9039,7 +9047,8 @@ publishedAspects
 
 reassign
 	| view |
-	view := SmalltalkSystem current loadViewResource: self resource inContext: View desktop.
+	view := Smalltalk developmentSystem loadViewResource: self resource
+				inContext: DesignDesktopView forDefaultDpi.
 	self assignView: view.
 	view destroy!
 
@@ -10460,7 +10469,7 @@ publishedAspects
 		ifNotNil: 
 			[:parent |
 			parent layoutManager ifNotNil: [:layoutManager | aspects add: layoutManager arrangementAspect].
-			parent == View desktop ifFalse: [aspects add: (Aspect string: #name)]].
+			parent isDesktop ifFalse: [aspects add: (Aspect string: #name)]].
 	^aspects!
 
 visualObjectAtPoint: aPoint
@@ -10482,7 +10491,7 @@ editNewDefaultView
 	"Open the View Composer to create a new view for the receiver."
 
 	| resourceIdentifier view resName |
-	view := self desktop addSubView: self new.
+	view := (DesignDesktopView forDpi: DisplayMonitor active dpi) addSubView: self new.
 	resName := Prompter
 				on: self defaultView
 				prompt: 'Resource name:'

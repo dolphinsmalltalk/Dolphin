@@ -1099,28 +1099,35 @@ state
 	"Private - Answer a MessageSequence which, when replayed, will restore the receiver 
 	to its current state"
 
-	| state margins sel limit |
+	| state attrib |
 	state := super state.
-	sel := self selectionRange.
-	sel = self defaultSelectionRange
+	"Edit control ignores the text passed as the window title for the CreateWindowEx call, so we don't store the text in the WindowCreationState"
+	(attrib := self text) notEmpty
+		ifTrue: 
+			[state add: (MessageSend
+						receiver: self
+						selector: #text:
+						argument: attrib)].
+	attrib := self selectionRange.
+	attrib = self defaultSelectionRange
 		ifFalse: 
 			[state add: (MessageSend
 						receiver: self
 						selector: #selectionRange:
-						argument: sel)].
+						argument: attrib)].
 	self isTextModified
 		ifTrue: 
 			[state add: (MessageSend
 						receiver: self
 						selector: #isTextModified:
 						argument: true)].
-	margins := self marginWidths.
-	margins = #(0 0)
+	attrib := self marginWidths.
+	attrib = #(0 0)
 		ifFalse: 
 			[state add: (MessageSend
 						receiver: self
 						selector: #setMarginWidths:
-						argument: margins)].
+						argument: attrib)].
 	self cueBanner
 		ifNotNil: 
 			[:cue |
@@ -1130,13 +1137,13 @@ state
 								receiver: self
 								selector: #cueBanner:
 								argument: cue)]].
-	limit := self textLimit.
-	limit = self defaultTextLimit
+	attrib := self textLimit.
+	attrib = self defaultTextLimit
 		ifFalse: 
 			[state add: (MessageSend
 						receiver: self
 						selector: #textLimit:
-						argument: limit)].
+						argument: attrib)].
 	^state!
 
 suggestedFindText
@@ -1270,6 +1277,9 @@ wantTab: aBoolean
 	"Set whether the receiver wishes to receive tab characters as WM_CHAR messages."
 
 	teFlags := teFlags mask: WantTabMask set: aBoolean!
+
+windowTitle
+	^nil!
 
 wmKeyDown: message wParam: wParam lParam: lParam
 	"Private - Default handler for a WM_KEYDOWN.
@@ -1470,6 +1480,7 @@ wantReturn!public!testing! !
 wantReturn:!accessing!public! !
 wantTab!public!testing! !
 wantTab:!accessing!public! !
+windowTitle!accessing!public! !
 wmKeyDown:wParam:lParam:!event handling-win32!operations!private! !
 wmKillFocus:wParam:lParam:!event handling-win32!private! !
 wmNcHitTest:wParam:lParam:!event handling-win32!private! !

@@ -342,25 +342,27 @@ basicAddSubView: aView
 		show.	"Forces creation"
 	^aView!
 
-basicCreate: anInteger at: positionPoint extent: extentPoint
-	"Private - Create the Win32 window for the receiver, and answer its handle.
-	N.B. The window may not be properly subclassed - use #createAt:extent: instead."
+basicCreateWindow: aWindowCreationState
+	"Private - Create the Win32 window for the receiver, and answer its handle."
 
-	| dwStyle |
-	dwStyle := self baseCreationStyle.
+	| position extent scale dwStyle |
+	dwStyle := aWindowCreationState baseStyle.
+	scale := creationParent dpi / aWindowCreationState dpi.
+	position := aWindowCreationState position * scale.
+	extent := aWindowCreationState extent * scale.
 	^User32
-		createWindowEx: self extendedStyle
+		createWindowEx: aWindowCreationState extendedStyle
 		lpClassName: self class winClassName asUtf16String
-		lpWindowName: self windowName
+		lpWindowName: aWindowCreationState title
 		dwStyle: dwStyle
-		x: positionPoint x
-		y: positionPoint y
-		nWidth: extentPoint x
-		nHeight: extentPoint y
+		x: position x asInteger
+		y: position y asInteger
+		nWidth: extent x asInteger
+		nHeight: extent y asInteger
 		hWndParent: self creationParentView asParameter
 		hMenu: ((dwStyle anyMask: WS_CHILD) ifTrue: [self defaultId])
 		hInstance: VM applicationHandle
-		lpParam: anInteger!
+		lpParam: nil!
 
 basicDestroy
 	"Private - As #destroy, but must not be overridden."
@@ -418,17 +420,15 @@ basicPaint: message wParam: wParam lParam: lParam
 				canv free].
 	^0	"We've handled it"!
 
-basicRestorePlacement: aWINDOWPLACEMENT resolution: aPointResolution
-	| res |
-	res := creationParent resolution.
-	aPointResolution = res
+basicRestorePlacement: aWINDOWPLACEMENT resolution: aPoint
+	self basicRestorePlacement: aWINDOWPLACEMENT scalingBy: creationParent resolution / aPoint!
+
+basicRestorePlacement: aWINDOWPLACEMENT scalingBy: aMagnitude
+	aMagnitude = 1
 		ifFalse: 
-			[| scale |
-			"Resolution is now different so recompute the placement before it is applied"
-			scale := res / aPointResolution.
-			aWINDOWPLACEMENT rcNormalPosition scaleBy: scale.
+			[aWINDOWPLACEMENT scaleBy: aMagnitude.
 			"Make any other adjustments required for a change of resolution"
-			self resolutionScaledBy: scale].
+			self resolutionScaledBy: aMagnitude].
 	self placement: aWINDOWPLACEMENT!
 
 beActive
@@ -656,6 +656,9 @@ commandSource
 	^self
 !
 
+configureDefaultShell: aShellView
+	aShellView layoutManager: GridLayout new!
+
 connectModel
 	"Connect the receiver to its model, wiring events, etc.
 	This method should be overridden by subclasses. There is no need
@@ -681,27 +684,34 @@ create
 		default position,
 		default size."
 
-	| extent |
 	creationParent isNil ifTrue: [self parentView: self class desktop].
-	extent := self creationExtent.
-	^self createAt: (self defaultPositionWithin: creationParent forExtent: extent) extent: extent!
+	^self createWindow: self creationParameters!
 
-createAt: positionPoint extent: extentPoint
+createAt: originPoint extent: extentPoint
+	"Private - Create the View window ensuring it has the VM window procedure. The window rectangle is specified by the origin <point> first argument, and the extent <point> second argument. For reasons of backwards compatibility, and because the default extent may well be expressed in code, it is assumed that the position and size arguments are measured in device-independent pixels (aka DIPs, i.e. 96-dpi). Answer the receiver."
+
+	self createWindow: (WindowCreationParameters
+				position: originPoint
+				extent: extentPoint
+				dpi: USER_DEFAULT_SCREEN_DPI
+				styles: creationStyle)!
+
+createWindow: aWindowCreationState
 	"Private - Create the View window ensuring it has the VM window procedure.
 	Answer the receiver."
 
 	self hookWindowCreate.
-	self unhookWindowCreate: (self
-				basicCreate: 0
-				at: positionPoint
-				extent: extentPoint).
+	self unhookWindowCreate: (self basicCreateWindow: aWindowCreationState).
 	self presenter onViewCreated!
 
-creationExtent
-	"Private - Answer extent in device pels at which the receiver should be created. This is typically the default design extent at 96 dpi (aka Dips, or device-independent pixels), scaled to the parent's DPI.
-	This should only used for determining the creation size, and requires that the parent has been set in advance."
+creationParameters
+	"Private - Answer the extrinsic parameters for a CreateWindow call to create a window for a new instance of the receiver that hasn't been opened before."
 
-	^creationParent mapDipsToPels: self defaultExtent!
+	^WindowCreationParameters
+		position: Point.Zero
+		extent: self defaultExtent
+		dpi: USER_DEFAULT_SCREEN_DPI
+		styles: creationStyle!
 
 creationParentView
 	"Private - Answer the View where the receiver must be created"
@@ -827,7 +837,7 @@ defaultBackcolor
 	^Color.Window!
 
 defaultExtent
-	"Private - Answer the default size of the receiver in device-independent pixels (96-dpi DIPs). This is used only to determine the size of a view when it is created (although after scaling DIPs to the display DPI - see #creationExtent). Thereafter #preferredExtent is used when the desired size of a view is requested."
+	"Private - Answer the default size of the receiver in device-independent pixels (96-dpi DIPs). This is used only to determine the size of a view when it is created (although after scaling DIPs to the monitor DPI). Thereafter #preferredExtent is used when the desired size of a view is requested."
 
 	"Note: This extent is somewhat unusual in being specified in device-independent pixels. This is because it is generally defined as a constant in code, and there are many implementations pre-dating the introduction of High DPI awareness."
 
@@ -840,12 +850,6 @@ defaultId
 	counter (reset on image startup)."
 
 	^self class defaultId!
-
-defaultPositionWithin: aParentView forExtent: aPoint
-	"Private - Answer the default position of the receiver within aParentView given its intended extent aPoint.
-	This is used only on creation."
-
-	^Point.Zero!
 
 defaultProportion
 	"Private - Answer the default proportion to be assumed by the receiver when associated with
@@ -2057,7 +2061,7 @@ isThemed
 isTopView
 	"Answer whether the receiver is child of the Desktop."
 
-	^self isOpen and: [self parentView == self class desktop]!
+	^self isOpen and: [self parentView isDesktop]!
 
 isTransparent
 	"Answer whether the receiver is transparent (i.e. it has the WS_EX_TRANSPARENT style)."
@@ -2150,12 +2154,12 @@ managedSubViewsDo: aMonadicValuable
 mapDipsToPels: aMagnitude
 	"Scale the DIPs (device-independent pixel, i.e. 96-dpi) <Magnitude> argument to the receiver's DPI and answer the result."
 
-	^aMagnitude * self dpi // USER_DEFAULT_SCREEN_DPI!
+	^aMagnitude * self dpi / USER_DEFAULT_SCREEN_DPI!
 
 mapPelsToDips: aMagnitude
 	"Scale the device-dependent pixel <Magnitude> argument from the receiver's DPI to DIPs (device-independent, i.e. 96-dpi, pixels) equivalent, and answer the result."
 
-	^aMagnitude * USER_DEFAULT_SCREEN_DPI // self dpi!
+	^aMagnitude * USER_DEFAULT_SCREEN_DPI / self dpi!
 
 mapPoint: aPoint to: anotherView
 	"Maps aPoint from the coordinate system of the receiver into that of anotherView"
@@ -2224,6 +2228,11 @@ model: aModel
 		setModel: aModel;
 		connectModel;
 		onModelChanged!
+
+monitor
+	"Answer the <DisplayMonitor> on which the receiver is (or will be) predominantly displayed."
+
+	^DisplayMonitor nearestView: self!
 
 name
 	"Answer the name of the receiver in its parent or nil if no
@@ -2737,7 +2746,7 @@ parentPresenter
 	| parent |
 	presenter == self ifFalse: [^presenter parentPresenter].
 	parent := self parentView.
-	^(parent isNil or: [parent == self class desktop]) ifFalse: [parent presenter]!
+	^(parent isNil or: [parent isDesktop]) ifFalse: [parent presenter]!
 
 parentView
 	"Answer the parent View of the receiver assigned before creation,
@@ -2985,6 +2994,18 @@ recreateAround: aNiladicValuable
 	"Finally restore the presenter"
 	presenter := existingPresenter!
 
+recreationParameters
+	"Private - Answer the extrinsic parameters for a CreateWindow call to recreate the receiver's window."
+
+	| rect |
+	rect := self getRect.
+	^WindowCreationParameters
+		position: rect origin
+		extent: rect extent
+		dpi: self dpi
+		styles: creationStyle
+		title: self windowTitle!
+
 rectangle
 	"Answer a <Rectangle> containing the receiver's outer rectangle in the coordinate system of its parent."
 
@@ -3101,6 +3122,7 @@ resolutionScaledBy: aPoint
 	"Private - The receiver is being loaded and it has been determined that the pixel resolution has changed since the point at which the view was saved. Scale any internal pixels by the <Point> argument.
 	Note that the placement (position and extent) of the receiver has already been scaled in #restorePlacement:resolution:."
 
+	#highDpiTodo. "The general approach of rescaling stored geometry to a new DPI on load risks accumulating rounding error, particularly if we truncate as in all the existing resolutionScaledBy: methods. E.g. let's say we rescale 122 pixels from 96 dpi to 120 and truncate, we get 152. We resave at 120 dpi, and then reload again at 96 dpi, scaling down with truncation to 121. The round trip has lost a pixel. We either need to store the original design value with design dpi (or some normalized value such as DIPs) and always rescale from there, or scale to potentially non-integral values (e.g. Fractions) that are converted to integers by rounding/truncating as required."
 	preferredExtent ifNotNil: [preferredExtent := (preferredExtent * aPoint) truncated]!
 
 restoreFromProxy: aViewProxy
@@ -3129,7 +3151,7 @@ restoreFromProxy: aViewProxy
 restorePlacement: aWINDOWPLACEMENT resolution: aPoint
 	"Private - Restore the placement for the receiver to the <WINDOWPLACEMENT> first argument, which was measured at the screen resolution described by the <Point> 2nd argument. If the current resolution is different then the placement rectangle will have to be scaled appropriately. The view is also invited to rescale any other geometry it may need to change."
 
-	self basicRestorePlacement: aWINDOWPLACEMENT resolution: aPoint!
+	self basicRestorePlacement: aWINDOWPLACEMENT scalingBy: creationParent resolution / aPoint!
 
 richText: aRichText
 	"Private - Set the text contents of the receiver to the RTF text, aRichText.
@@ -3236,9 +3258,9 @@ setExtent: aPoint
 		hWndInsertAfter: 0
 		x: 0
 		y: 0
-		cx: aPoint x
-		cy: aPoint y
-		uFlags: ##(SWP_NOMOVE | SWP_NOZORDER | SWP_NOACTIVATE)!
+		width: aPoint x asInteger
+		height: aPoint y asInteger
+		flags: ##(SWP_NOMOVE | SWP_NOZORDER | SWP_NOACTIVATE)!
 
 setFocus
 	"Sets focus to the receiver. Answers the View which previously had focus, or nil if
@@ -3264,7 +3286,7 @@ setNoRedrawCount: anInteger
 
 setParent: aView
 	self parentView: aView.
-	self setWindowStyle: (self getWindowStyle mask: WS_CHILD set: aView ~~ self class desktop).
+	self setWindowStyle: (self getWindowStyle mask: WS_CHILD set: aView isDesktop not).
 	User32 setParent: handle hWndNewParent: aView asParameter!
 
 setRedraw: aBoolean
@@ -3379,8 +3401,9 @@ showShell
 				create;
 				yourself.
 	self parentView: shell.
-	shell extent: (shell calcExtentFromClientExtent: self creationExtent).
-	shell layoutManager: GridLayout new.
+	shell
+		extent: (shell calcExtentFromClientExtent: self defaultExtent * shell dpi / USER_DEFAULT_SCREEN_DPI).
+	self configureDefaultShell: shell.
 	self create show.
 	shell show!
 
@@ -3402,24 +3425,23 @@ state
 	answer := MessageSequence new.
 	handle notNull
 		ifTrue: 
-			[| txt |
-			answer add: (MessageSend
+			[answer add: (MessageSend
 						receiver: self
-						selector: #createAt:extent:
-						arguments: { self position. self extent }).
+						selector: #createWindow:
+						argument: self recreationParameters).
 			self isPersistentlyDisabled
 				ifTrue: 
 					[answer add: (MessageSend
 								receiver: self
 								selector: #isEnabled:
 								argument: false)].
-			(txt := self stateText) notEmpty
-				ifTrue: 
-					["views have no text by default"
+			self contextMenu isNil
+				ifFalse: 
+					["views do not have context menus by default"
 					answer add: (MessageSend
 								receiver: self
-								selector: #text:
-								argument: txt)]].
+								selector: #contextMenu:
+								argument: self contextMenu)]].
 	^answer!
 
 state: aMessageSequence
@@ -3812,6 +3834,9 @@ width: anInteger
 
 windowName
 	^''!
+
+windowTitle
+	^self plainText!
 
 winFinalize
 	"Private - Perform finalization actions for this view on destruction of the associated Window.
@@ -4617,12 +4642,13 @@ baseStyleMask:set:!accessing-styles!private! !
 baseStyleMask:set:recreateIfChanged:!accessing-styles!private! !
 basicActualBackcolor!accessing!private! !
 basicAddSubView:!hierarchy!private!sub views! !
-basicCreate:at:extent:!private!realizing/unrealizing! !
+basicCreateWindow:!private!realizing/unrealizing! !
 basicDestroy!private!realizing/unrealizing! !
 basicFont:!accessing!private! !
 basicInvalidateLayout!geometry!private! !
 basicPaint:wParam:lParam:!drawing!private! !
 basicRestorePlacement:resolution:!geometry!private! !
+basicRestorePlacement:scalingBy:!geometry!private! !
 beActive!operations!public! !
 beCentered!operations!public! !
 beDefaultThemed!modes!public! !
@@ -4653,12 +4679,14 @@ close!public!realizing/unrealizing! !
 command:id:!commands-routing!private! !
 commandPolicy!commands-routing!public! !
 commandSource!accessing!public! !
+configureDefaultShell:!operations!private! !
 connectModel!models!public! !
 contextMenu!menus!public! !
 contextMenu:!menus!public! !
 create!private!realizing/unrealizing! !
 createAt:extent:!private!realizing/unrealizing! !
-creationExtent!geometry!private!realizing/unrealizing! !
+createWindow:!private!realizing/unrealizing! !
+creationParameters!geometry!private!realizing/unrealizing! !
 creationParentView!accessing!private! !
 cursor!constants!public! !
 cursorPosition!accessing!public! !
@@ -4674,7 +4702,6 @@ ddScroll:!drag & drop!private! !
 defaultBackcolor!colors!constants!private! !
 defaultExtent!constants!geometry!private!realizing/unrealizing! !
 defaultId!accessing!private! !
-defaultPositionWithin:forExtent:!geometry!private! !
 defaultProportion!constants!private! !
 defaultShowStyle!constants!private! !
 defaultStyle!constants!private! !
@@ -4744,7 +4771,7 @@ getFirstChild!hierarchy!private!sub views! !
 getItem:!hierarchy!private! !
 getItem:ifAbsent:!hierarchy!private! !
 getItemHandle:ifAbsent:!hierarchy!private! !
-getNoRedrawCount!private! !
+getNoRedrawCount!accessing!private! !
 getOwner!hierarchy!private! !
 getParent!hierarchy!private! !
 getPreviousSibling!hierarchy!private! !
@@ -4859,6 +4886,7 @@ metrics!accessing!public! !
 minExtent!accessing!public! !
 model!accessing!public! !
 model:!accessing!public! !
+monitor!operations!public! !
 name!accessing!public! !
 name:!accessing!public! !
 nameOf:!hierarchy!public!sub views! !
@@ -4964,6 +4992,7 @@ queryMouseTracking!enquiries!private! !
 queryRegisteredCommands:!commands!private! !
 recreate!public!realizing/unrealizing! !
 recreateAround:!private!realizing/unrealizing! !
+recreationParameters!geometry!private!realizing/unrealizing! !
 rectangle!geometry!public! !
 rectangle:!geometry!public! !
 refreshContents!public!updating! !
@@ -4995,7 +5024,7 @@ setEvents:!events!private! !
 setExtent:!geometry!public! !
 setFocus!operations!public! !
 setModel:!accessing!private! !
-setNoRedrawCount:!private! !
+setNoRedrawCount:!accessing!private! !
 setParent:!accessing!private! !
 setRedraw:!operations!private! !
 setScrollInfo:bar:!accessing!private! !
@@ -5060,6 +5089,7 @@ whileInvisibleDo:!operations!public! !
 width!geometry!public! !
 width:!geometry!public! !
 windowName!private!realizing/unrealizing! !
+windowTitle!accessing!public! !
 winFinalize!finalizing!private! !
 withAllParents!hierarchy!public! !
 withAllParentsDo:!hierarchy!public! !

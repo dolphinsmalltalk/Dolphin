@@ -25,18 +25,10 @@ animationDuration
 
 	^3500!
 
-creationExtent
-	"Private - Answer extent in device pels at which the receiver should be created. This is typically the default design extent at 96 dpi (aka Dips, or device-independent pixels), scaled to the parent's DPI.
-	This should only used for determining the creation size, and requires that the parent has been set in advance."
-
-	^self objectsInside creationExtent!
-
 defaultExtent
-	"Private - Answer the default size of the receiver in device-independent pixels (96-dpi). This is used only to determine the size of a view when it is created (although after scaling DIPs to the display DPI - see #creationExtent). Thereafter preferredExtent is used when the desired size of a view is requested."
+	"Private - Answer the default size of the receiver in device-independent pixels (96-dpi). This is used only to determine the size of a view when it is created. Thereafter preferredExtent is used when the desired size of a view is requested."
 	
-	"As we have pre-scaled the background bitmap not just for DPI, but to fit, it makes more sense to provide a scaled extent directly by overriding #creationExtent, in which case this should not be called."
-
-	^self shouldNotImplement!
+	^self objectsInside defaultExtent!
 
 defaultSplashDelay
 	"Answer the default delay that a splash should be displayed for"
@@ -61,15 +53,8 @@ objectsInside
 	^objectsInside ifNil: [objectsInside := SeeingTheObjectsInside new]!
 
 onCreated: anEvent
-
-	"Private - shell := ShellView new create; yourself.
-	shell extent: (shell calcExtentFromClientExtent: self defaultExtent).
-	shell layoutManager: GridLayout new."
-
 	self addSubView: self objectsInside.
-	super onCreated: anEvent
-
-!
+	super onCreated: anEvent!
 
 onPaintRequired: aPaintEvent
 	"Private - Handler for paint event."!
@@ -84,7 +69,6 @@ showWindow
 
 !Tools.DolphinSplash categoriesForMethods!
 animationDuration!constants!private! !
-creationExtent!geometry!private!realizing/unrealizing! !
 defaultExtent!constants!private! !
 defaultSplashDelay!constants!public! !
 defaultWindowStyle!constants!private! !

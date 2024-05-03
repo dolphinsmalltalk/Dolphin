@@ -2,7 +2,7 @@
 
 Graphics.Gdiplus.DoubleBufferedView
 	subclass: #'Tools.SeeingTheObjectsInside'
-	instanceVariableNames: 'background dolphinOutline points sun stepProcess random insideObjectsScale dolphinIntensity textureMap objects dolphins dolphinInside splashDelay hintBubble startTime info baseScale sunPosition'
+	instanceVariableNames: 'background dolphinOutline points sun stepProcess random insideObjectsScale dolphinIntensity textureMap objects dolphins dolphinInside splashDelay hintBubble startTime info baseScale sunPosition originalBitmapDips'
 	classVariableNames: ''
 	imports: #(#{Graphics private} #{Graphics.Gdiplus private})
 	classInstanceVariableNames: 'splashPlayTheGame'
@@ -36,20 +36,10 @@ addInsideObject: anObject minScale: minScale maxScale: maxScale
 	self model add: anObject.
 !
 
-creationExtent
-	"Private - Answer extent in device pels at which the receiver should be created. This is typically the default design extent at 96 dpi (aka Dips, or device-independent pixels), scaled to the parent's DPI.
-	This should only used for determining the default creation size, and requires that the parent has been set in advance."
-
-	"Note that we have already scaled the bitmap for resolution and to fit the monitor, so the base size is equivalent to the Dip size, but scaled down to use no more than 75% of the screen if too large."
-
-	^background extent!
-
 defaultExtent
-	"Private - Answer the default size of the receiver in device-independent pixels (96-dpi DIPs). This is used only to determine the size of a view when it is created (although after scaling DIPs to the display DPI - see #creationExtent). Thereafter #preferredExtent is used when the desired size of a view is requested."
-	
-	"As we have pre-scaled the background bitmap not just for DPI, but to fit, it makes more sense to provide a scaled extent directly by overriding #creationExtent, in which case this should not be called."
+	"Private - Answer the default size of the receiver in device-independent pixels (96-dpi DIPs). This is used only to determine the size of a view when it is created (although after scaling DIPs to the monitor DPI). Thereafter #preferredExtent is used when the desired size of a view is requested."
 
-	^self shouldNotImplement!
+	^originalBitmapDips!
 
 dismiss
 	self topShell close!
@@ -211,12 +201,15 @@ isPointInDolphin: aPoint
 	^pixel = dolphinInside color!
 
 loadBackgroundBitmap
-	| dpiScale scale originalBitmapExtent |
+	| dpiScale scale bitmapDpi |
 	background := Gdiplus.Bitmap fromFile: 'Resources\DolphinSplash.png'
 				usingLocator: FileLocator installRelative.
-	dpiScale := View desktop dpi / background resolution x.
-	originalBitmapExtent := background extent.
-	scale := View desktop extent * 0.75 / (originalBitmapExtent * dpiScale).
+	"The bitmap has been saved at 72 dpi, but treat it as 96 to get 3/4 scale"
+	bitmapDpi := 96.	"background resolution x"
+	originalBitmapDips := background extent * USER_DEFAULT_SCREEN_DPI / bitmapDpi.
+	"Splash screen should always be shown on the active monitor"
+	dpiScale := DisplayMonitor active dpi / bitmapDpi.
+	scale := View desktop extent * 0.75 / (originalBitmapDips * dpiScale).
 	baseScale := (scale x min: scale y) min: dpiScale.
 	baseScale = 1 ifFalse: [background := Gdiplus.Bitmap fromImage: background scaledBy: baseScale]!
 
@@ -403,7 +396,6 @@ stopStepProcess
 
 !Tools.SeeingTheObjectsInside categoriesForMethods!
 addInsideObject:minScale:maxScale:!private! !
-creationExtent!geometry!private!realizing/unrealizing! !
 defaultExtent!constants!geometry!private!realizing/unrealizing! !
 dismiss!event handling!private! !
 dolphinInsideBaseColor!constants!public! !

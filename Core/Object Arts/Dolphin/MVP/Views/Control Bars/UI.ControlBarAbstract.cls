@@ -83,12 +83,6 @@ defaultBackcolor
 
 	^Color.Face3d!
 
-defaultExtentOf: arg1
-	"This is an auto-generated target implementation for the protocol <compositeView>
-	and remains to be correctly implemented."
-
-	^Error notYetImplemented!
-
 defaultWindowExStyle
 	"Private - Answer the default extended window creation style."
 
@@ -345,7 +339,6 @@ arrangementOf:!accessing!public! !
 arrangementOf:put:!accessing!public! !
 canAcceptSubViews!hierarchy!public!sub views!testing! !
 defaultBackcolor!colors!constants!private! !
-defaultExtentOf:!public! !
 defaultWindowExStyle!constants!private! !
 defaultWindowStyle!constants!private! !
 errorDuplicateName:!exceptions!public! !

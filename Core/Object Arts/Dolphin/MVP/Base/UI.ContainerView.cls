@@ -54,6 +54,35 @@ addSubView: aView name: aNameString
 	self name: (self addSubView: aView) as: aNameString.
 	^aView!
 
+adjustCreationParameters: aWindowCreationState forShell: aShellView
+	"Private - The <ShellView> first argument is being created for the first time within this container. Answer a <WindowCreationState> based on that provided as the 2nd argument with any adjustments to position, extent, or styles, that are appropriate. This would typically involve determining the correct monitor on which to position the window, and either providing a default extent or scaling that specified to the monitor DPI."
+
+	| extent targetDpi |
+	targetDpi := self dpi.
+	extent := aWindowCreationState extent.
+	extent = WindowCreationParameters.UseDefaultGeometry
+		ifTrue: [self defaultExtentOf: aShellView]
+		ifFalse: [extent * targetDpi / aWindowCreationState dpi].
+	^aWindowCreationState shallowCopy
+		position: (aShellView isInitiallyCentered ifTrue: [self centerExtent: extent] ifFalse: [Point.Zero]);
+		extent: extent;
+		dpi: targetDpi;
+		yourself!
+
+adjustPlacement: aWINDOWPLACEMENT ofShell: aShellView withResolution: aPoint
+	"Private - The <ShellView> first argument is being restored from an STBViewProxy (e.g. instantiated from a view resource) as a child of this container (i.e. the shell will not be a top-level view). Adjust the <WINDOWPLACEMENT> 2nd argument to an appropriate position and/or extent, and scale the view to the target monitor's DPI from the original resolution specified by the <point> 3rd argument."
+
+	| scale extent |
+	scale := self dpi / aPoint.
+	extent := aWINDOWPLACEMENT extent.
+	scale = 1
+		ifFalse: 
+			[aShellView resolutionScaledBy: scale.
+			extent := extent * scale].
+	aWINDOWPLACEMENT
+		rectangle: ((aShellView isInitiallyCentered ifTrue: [self centerExtent: extent] ifFalse: [Point.Zero])
+				extent: extent)!
+
 arrangementOf: aView 
 	"Answer the arrangement parameter for aView in the receiver's 
 	layout manager. If no parameter has been explicitly set, or if the
@@ -79,7 +108,7 @@ defaultButtonId
 	^0!
 
 defaultExtent
-	"Private - Answer the default size of the receiver in device-independent pixels (96-dpi DIPs). This is used only to determine the size of a view when it is created (although after scaling DIPs to the display DPI - see #creationExtent). Thereafter #preferredExtent is used when the desired size of a view is requested."
+	"Private - Answer the default size of the receiver in device-independent pixels (96-dpi DIPs). This is used only to determine the size of a view when it is created (although after scaling DIPs to the monitor DPI). Thereafter #preferredExtent is used when the desired size of a view is requested."
 
 	^##(350 @ 250)!
 
@@ -295,6 +324,8 @@ viewNamed: aString ifNone: aNiladicValuable
 actualInsets:!accessing!private! !
 actualPreferredExtent:!geometry!private! !
 addSubView:name:!hierarchy!public!sub views! !
+adjustCreationParameters:forShell:!geometry!private! !
+adjustPlacement:ofShell:withResolution:!geometry!private! !
 arrangementOf:!accessing!public! !
 arrangementOf:put:!accessing!public! !
 canAcceptSubViews!hierarchy!public!sub views! !

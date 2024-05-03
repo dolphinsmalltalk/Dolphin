@@ -121,6 +121,10 @@ testNearestPoint
 	self assert: (DisplayMonitor nearestPoint: View desktop rectangle bottomRight - 1)
 		equals: DisplayMonitor primary!
 
+testNearestRectangle
+	self assert: (DisplayMonitor nearestRectangle: (0 @ 0 corner: 100 @ 100))
+		equals: DisplayMonitor primary!
+
 testPrimary
 	| primary origin rectangle workArea |
 	primary := DisplayMonitor primary.
@@ -158,6 +162,7 @@ testDeviceName!public!unit tests! !
 testDisplayingAndNearestView!public!unit tests! !
 testIntersecting!public!unit tests! !
 testNearestPoint!public!unit tests! !
+testNearestRectangle!public!unit tests! !
 testPrimary!public!unit tests! !
 testPrintString!public!unit tests! !
 !

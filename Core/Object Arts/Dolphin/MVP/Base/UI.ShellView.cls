@@ -3,7 +3,7 @@
 UI.ContainerView
 	subclass: #'UI.ShellView'
 	instanceVariableNames: 'menuBar acceleratorTable combinedAcceleratorTable lastFocus defaultButton largeIcon smallIcon maxExtent minExtent flashes svFlags _svReserved2'
-	classVariableNames: 'CreateHookBlock DefaultExtentBlock DialogMessageMap'
+	classVariableNames: 'DialogMessageMap'
 	imports: #(#{OS.ButtonConstants})
 	classInstanceVariableNames: ''
 	classConstants: { 'DefaultButtonIndex' -> 16r14. 'TransientMask' -> 16r1 }!
@@ -157,13 +157,20 @@ commandSource
 	source isNil ifTrue: [source := self].
 	^source!
 
-createAt: position extent: extentPoint
-	"Private - Create the ShellView window after first giving the class side precreateHookBlock
-	a chance to adjust the receiver. Answer the realized receiver."
+createWindow: aWindowCreationState
+	"Private - Create the View window ensuring it has the VM window procedure.
+	Answer the receiver."
 
-	CreateHookBlock
-		ifNil: [super createAt: position extent: extentPoint]
-		ifNotNil: [:hook | hook value: self value: [super createAt: position extent: extentPoint]]!
+	super createWindow: (creationParent adjustCreationParameters: aWindowCreationState forShell: self)!
+
+creationParameters
+	"Private - Answer the extrinsic parameters for a CreateWindow call to create a window for a new instance of the receiver that hasn't been opened before."
+
+	^WindowCreationParameters
+		position: WindowCreationParameters.UseDefaultGeometry
+		extent: self defaultExtent
+		dpi: USER_DEFAULT_SCREEN_DPI
+		styles: creationStyle!
 
 defaultButtonId
 	"Private - Answer the id of the default PushButton for the receiver or nil
@@ -182,45 +189,9 @@ defaultButtonId: anInteger
 		self resetDefaultButton]!
 
 defaultExtent
-	"Private - Answer the default size of the receiver in device-independent pixels (96-dpi). This is used only to determine the size of a view when it is created (although after scaling DIPs to the display DPI - see #creationExtent). Thereafter preferredExtent is used when the desired size of a view is requested."
-	
-	"We want to occupy no more than 2/3 of the display. Since the desktop extent will be at the display DPI, we would need to scale this back to DIPs only for it to be scaled back by #creationExtent. Rather than scale back and forth we override #creationExtent instead.
-	However it is possible that superclasses will be using this, so we scale down the creationExtent."
+	"Private - Answer the default size of the receiver in device-independent pixels (aka DIPs, i.e. 96-dpi). This is used only to determine the size of a view when it is first created (although after scaling DIPs to the monitor DPI). Thereafter preferredExtent is used when the desired size of a view is requested."
 
-	^creationParent dipExtent // 1.5!
-
-defaultExtentWithin: aParentView
-	"Private - Answer the default extent of the receiver within aParentView."
-
-	^aParentView defaultExtentOf: self!
-
-defaultPositionWithin: aParentView forExtent: aPoint
-	"Private - Answer the default position of the receiver within aParentView given its intended extent aPoint.
-	This is used only on creation."
-
-	| testWindow defaultPosition activeMonitor defaultMonitor |
-	self isInitiallyCentered ifTrue: [^aParentView centerExtent: aPoint].
-
-	"If not creating on the desktop, create at the origin of the parent's client area"
-	aParentView parentView ifNotNil: [^0 @ 0].
-	"Otherwise determine a default location"
-	testWindow := ShellView new.
-	testWindow
-		parentView: aParentView;
-		handle: (testWindow
-					basicCreate: 0
-					at: ##(CW_USEDEFAULT @ CW_USEDEFAULT)
-					extent: aPoint).
-	defaultPosition := testWindow position.
-	testWindow basicDestroy.
-	"Reposition to within bounds of active monitor"
-	activeMonitor := DisplayMonitor active.
-	defaultMonitor := DisplayMonitor containingPoint: defaultPosition.
-	^activeMonitor = defaultMonitor
-		ifTrue: [defaultPosition]
-		ifFalse: 
-			[activeMonitor adjustPosition: activeMonitor origin + (defaultPosition - defaultMonitor origin)
-				forExtent: aPoint]!
+	^WindowCreationParameters.UseDefaultGeometry!
 
 defaultShowStyle
 	^self isMaximized ifTrue: [SW_SHOWMAXIMIZED] ifFalse: [SW_SHOWNORMAL]!
@@ -767,12 +738,12 @@ onViewRestored: aSizeEvent
 	self presenter trigger: #viewRestored.
 	^aSizeEvent defaultWindowProcessing!
 
-parentView: aView 
-	"Private - Sets the parent of the receiver to aView. Can only be used when the
-	receiver is not yet realized since Windows has a bug when reparenting"
+parentView: aView
+	"Private - Sets the parent of the receiver to aView. Can only be used when the receiver is not yet realized since Windows has a bug when reparenting"
 
 	creationParent := aView.
-	creationStyle at: 1 put: (self baseStyle mask: WS_CHILD set: aView ~~ self class desktop)!
+	creationStyle at: 1
+		put: (self baseStyle mask: WS_CHILD set: (aView isNil or: [aView isDesktop]) not)!
 
 performCommand: aCommand
 	"Perform the <Command> argument, assumed to have been initiated from the receiver
@@ -855,25 +826,13 @@ resolutionScaledBy: aPoint
 	minExtent ifNotNil: [minExtent := (minExtent * aPoint) truncated].
 	maxExtent ifNotNil: [maxExtent := (maxExtent * aPoint) truncated]!
 
-restorePlacement: aWINDOWPLACEMENT resolution: aPointResolution
-	"Private - Restore the placement for the receiver to aWINDOWPLACEMENT which was measured at a screen resolution of aPointResolution. If the current resolution is different then the placement rectangle will have to be scaled appropriately. Subclasses can override this message to compensate for a resolution change in any other ways required."
+restorePlacement: aWINDOWPLACEMENT resolution: aPoint
+	"Private - Restore the placement for the receiver to aWINDOWPLACEMENT which was measured at a screen resolution of aPointResolution. If the current resolution is different then the placement rectangle will have to be scaled appropriately. Note that this is only used when restoring from an STBViewProxy (i.e. reconstituting a view from binary-filed form), such as when creating a view instance from a view resource."
 
-	| rect res |
-	self isTopView ifFalse: [^super restorePlacement: aWINDOWPLACEMENT resolution: aPointResolution].
-	res := self resolution.
-	rect := aWINDOWPLACEMENT rcNormalPosition.
-	aPointResolution = res
-		ifFalse: 
-			[| scale |
-			"Resolution is now different so recompute the placement"
-			scale := res / aPointResolution.
-			rect scaleBy: scale.
-			self resolutionScaledBy: scale].
-
-	"If the receiver wants to use a preferred extent, then use that. Otherwise, choose a default extent."
-	self usePreferredExtent
-		ifTrue: [rect extent: (self preferredExtent ifNil: [self defaultExtentWithin: creationParent])].
-	rect position: (self defaultPositionWithin: creationParent forExtent: rect extent).
+	creationParent
+		adjustPlacement: aWINDOWPLACEMENT
+		ofShell: self
+		withResolution: aPoint.
 	self placement: aWINDOWPLACEMENT!
 
 setButtonId: id style: style
@@ -1213,12 +1172,11 @@ combinedAcceleratorTable!accelerator!accessing!private! !
 commandPolicyClass!commands!constants!public! !
 commandPolicyWithSource:!commands!public! !
 commandSource!accessing!public! !
-createAt:extent:!public!realizing/unrealizing! !
+createWindow:!private!realizing/unrealizing! !
+creationParameters!geometry!private!realizing/unrealizing! !
 defaultButtonId!accessing!default button!private! !
 defaultButtonId:!accessing!default button!private! !
 defaultExtent!constants!private! !
-defaultExtentWithin:!geometry!private! !
-defaultPositionWithin:forExtent:!geometry!private! !
 defaultShowStyle!constants!private! !
 defaultWindowStyle!constants!private! !
 dialogMessageMap!private! !
@@ -1302,7 +1260,7 @@ releaseAccelerators!private!realizing/unrealizing! !
 releaseMenu!private!realizing/unrealizing! !
 resetDefaultButton!accessing!default button!private! !
 resolutionScaledBy:!geometry!private! !
-restorePlacement:resolution:!geometry!private! !
+restorePlacement:resolution:!geometry!private!realizing/unrealizing! !
 setButtonId:style:!accessing!default button!private! !
 setDefaultButton:state:!accessing!default button!private! !
 setDefId:!default button!private! !
@@ -1340,26 +1298,6 @@ UI.ShellView methodProtocol: #topView attributes: #(#readOnly) selectors: #(#acc
 
 asSessionManagerClass
 	^DefaultShellSessionManager!
-
-createHookBlock: aDyadicBlock 
-	"Private - Set aDyadicBlock to be used to hook and wrap the actual window creation process.
-	The first argument is the ShellView that is about to be realized whilst the second is a
-	monadic valuable that will actually perform the creation"
-
-	"NOTE: This hook mechanism was introduced the allow the View Composer to temporarily change styles for
-	the views that it loads. It maybe useful for other purposes too"
-
-	CreateHookBlock := aDyadicBlock!
-
-defaultExtentBlock
-	DefaultExtentBlock isNil
-		ifTrue: 
-			[#todo.	"This should be using the default size as calculated by windows."
-			DefaultExtentBlock := [:shellView | View desktop workArea extent // ((4 / 3) @ (11 / 8))]].
-	^DefaultExtentBlock!
-
-defaultExtentBlock: aBlockClosure 
-	DefaultExtentBlock := aBlockClosure!
 
 icon
 	"Answers an Icon that can be used to represent this class"
@@ -1462,9 +1400,6 @@ uninitialize
 
 !UI.ShellView class categoriesForMethods!
 asSessionManagerClass!converting!public!VM and session managerment! !
-createHookBlock:!accessing!private!realizing/unrealizing! !
-defaultExtentBlock!accessing!geometry!private! !
-defaultExtentBlock:!accessing!geometry!private! !
 icon!constants!public! !
 initialize!development!initializing!private! !
 installNew!public! !

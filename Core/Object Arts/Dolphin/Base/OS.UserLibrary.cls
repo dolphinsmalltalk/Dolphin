@@ -708,7 +708,7 @@ clear
 	instances of the receiver from previous runs. etc."
 
 	super clear.
-	#(#{OS.SystemMetrics}) do: [:each | each ifDefined: [:c | c reset]]!
+	#(#{OS.SystemMetrics} #{UI.DisplayMonitor}) do: [:each | each ifDefined: [:c | c reset]]!
 
 fileName
 	"Answer the host system file name of the external library which 

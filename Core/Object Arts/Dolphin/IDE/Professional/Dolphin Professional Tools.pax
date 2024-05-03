@@ -468,7 +468,7 @@ updateHelpMenus
 
 	| view helpmenu toolShells |
 	view := (ResourceIdentifier class: SystemBrowserShell name: 'Default view')
-				loadWithContext: View desktop.
+				loadWithContext: DesignDesktopView forDefaultDpi.
 	helpmenu := (view menuBar findCommand: #help) binaryStoreBytes.
 	view destroy.
 	toolShells := (SmalltalkToolShell allSubclasses copyWith: SmalltalkWorkspaceDocument)

@@ -150,11 +150,10 @@ filterBlock: monadicValuable
 	self refresh.
 	self selections: sels ifAbsent: []!
 
-imageFromResource: aResourceIdentifier 
+imageFromResource: aResourceIdentifier
 	| shell resourceView |
-	shell := View desktop.
-	resourceView := [self developmentSystem loadViewResource: aResourceIdentifier resource inContext: shell] 
-				on: Error
+	shell := DesignDesktopView forSystemDpi.
+	resourceView := [shell loadViewResource: aResourceIdentifier resource forEdit: false] on: Error
 				do: [:x | ].
 	^resourceView notNil 
 		ifTrue: 

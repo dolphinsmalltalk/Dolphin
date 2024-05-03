@@ -81,7 +81,7 @@ basicWidth
 !
 
 basicWidth: widthPixels
-	"Private - Set the intended width of the column in pixels." 
+	"Private - Set the intended width of the column in pixels."
 
 	width := widthPixels!
 
@@ -319,10 +319,8 @@ resolutionScaledBy: scale
 	has changed since the point at which the view was saved. Scale any internal pixels by <Point>
 	scale."
 
-	width := (width * scale x) truncated
-
-
-!
+	#highDpiTodo. "Note that we are sending a new column width to the view, as the columns have already been added. If we do this in #list mode, it disables the LVs auto-sizing, which is undesirable. Probably need to delay sending column widths until go into report mode (if not already in report mode). Also when in report mode the columns are being resized multiple times."
+	self width: (width * scale x) truncated!
 
 rowSortBlock
 	"Private - Answer a two argument block that can be used to compare two rows based on this
@@ -401,11 +399,12 @@ width
 		ifTrue: [view lvmGetColumnWidth: self index - 1]
 		ifFalse: [self basicWidth]!
 
-width: anInteger 
+width: anInteger
 	"Set the width of the column to the specified <integer> number of pixels.
 	N.B. This may cause the width of other (auto-resizable) columns to change."
 
 	self basicWidth: anInteger.
+	#highDpiTodo.	"We should not be sending the new width to the control at this point if not in report mode, but then need to send later when entering report mode"
 	self parent ifNotNil: [:view | view setWidthOfColumn: self index to: anInteger]! !
 
 !UI.ListViewColumn categoriesForMethods!

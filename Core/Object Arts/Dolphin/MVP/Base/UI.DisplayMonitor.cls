@@ -2,11 +2,15 @@
 
 Core.Object
 	subclass: #'UI.DisplayMonitor'
-	instanceVariableNames: 'handle info devices'
-	classVariableNames: ''
+	instanceVariableNames: 'handle info devices resolution metrics defaultWindowExtent lastWindowPosition cascadeOffset workArea'
+	classVariableNames: 'Instances'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+			'MDT_ANGULAR_DPI' -> 16r1.
+			'MDT_DEFAULT' -> 16r0.
+			'MDT_EFFECTIVE_DPI' -> 16r0.
+			'MDT_RAW_DPI' -> 16r2.
 			'MONITOR_DEFAULTTONEAREST' -> 16r2.
 			'MONITOR_DEFAULTTONULL' -> 16r0.
 			'MONITOR_DEFAULTTOPRIMARY' -> 16r1
@@ -39,14 +43,46 @@ adjustPosition: originPoint forExtent: extentPoint
 	"Answer the nearest `Point` to originPoint that allows a rectangle with extent, extentPoint, to fit within the receiver's work area.
 	If the extent is larger than the work area, then answer the work area's own origin."
 
-	| workArea |
-	workArea := self workArea.
-	^(originPoint min: workArea bottomRight - extentPoint) max: workArea topLeft!
+	| area |
+	area := self workArea.
+	^(originPoint min: area bottomRight - extentPoint) max: area topLeft!
+
+adjustWindowRect: aRectangle
+	"Adjust the window rectangle that is the argument to fit within the receiver's work area. The rectangle is assumed to be scaled to the receiver's DPI.
+	At present the extent is not changed, just the position. If the extent is larger than the work area, then the rectangle is positioned to the work area's own origin."
+
+	| area |
+	area := self workArea.
+	^aRectangle
+		position: ((aRectangle topLeft min: area bottomRight - aRectangle extent) max: area topLeft);
+		yourself!
+
+cascadeOffset
+	"Private - Answer the offset of a new default window position from the last. This should neatly cascade the windows in a diagonal down from a starting point inset from the top corner by one such offset.
+	The caption of the previously opened window on the monitor should not be occluded by the new window, unless the position needs to wrap back to the starting point. A window with default extent should not be positioned below the point at which its corner would be within one offset of the corner of the work area in either dimension. If that would occur, the cascade is wrapped back around to the starting point."
+
+	^cascadeOffset
+		ifNil: 
+			[| captionHeight |
+			captionHeight := self metrics captionHeight.
+			cascadeOffset := captionHeight @ captionHeight + metrics sizingFrameExtent]!
 
 centerExtent: aPoint
 	"Answer the best origin `Point` for a view rectangle expected to be centred over the receiver of the specified extent."
 
 	^self adjustPosition: self workArea center - (aPoint // 2) forExtent: aPoint!
+
+defaultWindowExtent
+	^defaultWindowExtent
+		ifNil: 
+			[| maxExtent width aspectRatio |
+			maxExtent := self workArea extent.
+			width := maxExtent x.
+			aspectRatio := maxExtent y / width.
+			width := width * 3 / 4.
+			defaultWindowExtent := (width @ (width * aspectRatio - self metrics captionHeight)) truncated
+						isImmutable: true;
+						yourself]!
 
 deviceName
 	"Answer the Window's device name for the monitor that the receiver represents."
@@ -70,6 +106,21 @@ devices
 						[stream nextPut: device copy.
 						i := i + 1].
 			devices := stream grabContents]!
+
+dpi
+	"Answer the logical DPI for this monitor. Note that this may not be the same as the physical DPI, depending on the DPI awareness of the application and the OS magnification setting. When DPI unaware, this is always 96. When system DPI aware it is the system-wide DPI, even if different than this monitor's DPI. When per-monitor DPI aware, it is the effective DPI of the monitor (i.e. the monitors's DPI at the configured magnification)."
+
+	^self resolution x!
+
+getResolution: anInteger
+	| buf |
+	buf := ByteArray newFixed: 8.
+	SHCoreLibrary default
+		getDpiForMonitor: handle
+		dpiType: anInteger
+		dpiX: buf yourAddress
+		dpiY: buf yourAddress + 4.
+	^(buf dwordAtOffset: 0) @ (buf dwordAtOffset: 4)!
 
 handle
 	^handle!
@@ -97,6 +148,21 @@ isPrimary
 
 	^self info isPrimary!
 
+metrics
+	"Answer a <SystemMetrics> that can be used to obtain metrics at the receiver's scale/DPI."
+
+	^metrics ifNil: [metrics := SystemMetrics forDpi: self dpi]!
+
+nextWindowPosition
+	"Answer the next default position for a new window on this monitor."
+
+	lastWindowPosition
+		ifNotNil: 
+			[lastWindowPosition := lastWindowPosition + self cascadeOffset.
+			self workArea corner - (lastWindowPosition + self defaultWindowExtent) > cascadeOffset
+				ifTrue: [^lastWindowPosition]].
+	^lastWindowPosition := self workArea origin + self cascadeOffset!
+
 origin
 	"Answer a `Point` specifying the origin (top-left corner) of the display represented by the object."
 
@@ -115,26 +181,43 @@ rectangle
 
 	^self info rcMonitor asRectangle!
 
-workArea
-	"Answer a `Rectangle` which is the desktop area displayed by this monitor, excluding any areas used by the window manager, such as the taskbar. Note that the origin can be negative for displays other than the primary that are organised to be right of the primary."
+resolution
+	"Answer the logical resolution for this monitor. Note that this may not be the same as the physical resolution, depending on the DPI awareness of the application and the OS magnification setting. When DPI unaware, this is always 96. When system DPI aware it is the system-wide DPI, even if different than this monitor's DPI. When per-monitor DPI aware, it is the effective DPI of the monitor (i.e. the monitors's DPI at the configured magnification)."
 
-	^self info rcWork asRectangle! !
+	^resolution ifNil: [resolution := self getResolution: MDT_DEFAULT]!
+
+workArea
+	"Answer a <rectangle> which is the desktop area displayed by this monitor, excluding any areas used by the window manager, such as the taskbar. Note that the origin can be negative for displays other than the primary that are organised to be right of the primary."
+
+	^workArea
+		ifNil: 
+			[workArea := self info rcWork asRectangle
+						isImmutable: true;
+						yourself]! !
 
 !UI.DisplayMonitor categoriesForMethods!
 =!comparing!public! !
 adjustPosition:forExtent:!geometry!public! !
+adjustWindowRect:!geometry!public! !
+cascadeOffset!accessing!private! !
 centerExtent:!geometry!public! !
+defaultWindowExtent!accessing!public! !
 deviceName!accessing!public! !
 devices!accessing!private! !
+dpi!geometry!public! !
+getResolution:!geometry!private! !
 handle!accessing!private! !
 handle:!accessing!private! !
 hash!comparing!public! !
 info!accessing!private! !
 isAttachedToDesktop!public!testing! !
 isPrimary!public!testing! !
+metrics!accessing!public! !
+nextWindowPosition!geometry!public! !
 origin!accessing!public! !
 printOn:!printing!public! !
 rectangle!accessing!public! !
+resolution!geometry!public! !
 workArea!accessing!public! !
 !
 
@@ -192,15 +275,14 @@ forCanvas: aCanvas intersecting: aRectangle
 	^monitors grabContents!
 
 forCanvas: aCanvas intersecting: aRectangle do: aMonadicValuable
-	| user32 callback answer |
-	user32 := User32.
+	| callback answer |
 	callback := External.Callback block: 
 					[:hMonitor :hdc :lprect :lparam |
 					aMonadicValuable value: (DisplayMonitor fromHandle: hMonitor).
 					true]
 				descriptor: ##(External.FunctionDescriptor returnType: 'bool'
 						argumentTypes: 'handle handle <1p>* uint32' << RECTL).
-	answer := user32
+	answer := User32
 				enumDisplayMonitors: aCanvas asParameter
 				lprcClip: aRectangle asParameter
 				lpfnEnum: callback asParameter
@@ -209,14 +291,22 @@ forCanvas: aCanvas intersecting: aRectangle do: aMonadicValuable
 	^answer!
 
 fromHandle: anExternalHandle
-	^self new
-		handle: anExternalHandle;
-		yourself!
+	^Instances at: anExternalHandle
+		ifAbsentPut: 
+			[self new
+				handle: anExternalHandle;
+				yourself]!
 
 icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon!
+
+initialize
+	SessionManager current
+		when: #settingChanged:
+		send: #onSettingChanged:
+		to: self!
 
 intersecting: aRectangle
 	"Answer an instance of the receiver describing the monitor which has the largest intersection with the specified `Rectangle` of the screen co-ordinate space, or nil if there is no intersection."
@@ -231,6 +321,13 @@ nearestPoint: aPoint
 		ifNotNil: [:hMonitor | self fromHandle: hMonitor]
 		ifNil: [Win32Error signal]!
 
+nearestRectangle: aRectangle
+	"Answer an instance of the receiver describing the monitor that has the largest intersection with the <rectangle> argument."
+
+	^(User32 monitorFromRect: (RECT marshal: aRectangle) dwFlags: MONITOR_DEFAULTTONEAREST)
+		ifNotNil: [:hMonitor | self fromHandle: hMonitor]
+		ifNil: [Win32Error signal]!
+
 nearestView: aView
 	"Answer an instance of the receiver describing the monitor on which the specified `View` is either mostly displayed, or, if off-screen, to which it is nearest."
 
@@ -238,12 +335,20 @@ nearestView: aView
 		ifNotNil: [:hMonitor | self fromHandle: hMonitor]
 		ifNil: [Win32Error signal]!
 
+onSettingChanged: anArray
+	"Private - Respond to an OS settings change. Here we are only interested in a change of the monitor setup, which appears as a work area change. When received, we discard the cached instances."
+
+	anArray = ##({'All'. Win32Constants.SPI_SETWORKAREA}) ifTrue: [self reset]!
+
 primary
 	"Answer an instance of the receiver describing the primary display monitor."
 
 	^(User32 monitorFromWindow: nil dwFlags: MONITOR_DEFAULTTOPRIMARY)
 		ifNil: [Win32Error signal]
-		ifNotNil: [:hMonitor | self fromHandle: hMonitor]! !
+		ifNotNil: [:hMonitor | self fromHandle: hMonitor]!
+
+reset
+	Instances := SharedLookupTable new! !
 
 !UI.DisplayMonitor class categoriesForMethods!
 active!instance creation!public! !
@@ -256,9 +361,13 @@ forCanvas:intersecting:!enumerating!public! !
 forCanvas:intersecting:do:!enumerating!private! !
 fromHandle:!instance creation!private! !
 icon!constants!public! !
+initialize!class initialization!public! !
 intersecting:!instance creation!public! !
 nearestPoint:!instance creation!public! !
+nearestRectangle:!instance creation!public! !
 nearestView:!instance creation!public! !
+onSettingChanged:!event handling-win32!private! !
 primary!instance creation!public! !
+reset!initializing!public! !
 !
 

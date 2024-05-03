@@ -315,7 +315,7 @@ stbConvertFrom:!binary filing!development!public! !
 
 assignBinaryResourceData: aViewResource
 	| view stream |
-	view := aViewResource loadWithContext: #{View} value desktop forEdit: true.
+	view := aViewResource loadWithContext: #{DesignDesktopView} value forSystemDpi forEdit: true.
 	stream := Array writeStream: 128.
 	view binaryStoreUsing: (STLOutFiler4 on: stream).
 	self assign: stream contents.
