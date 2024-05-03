@@ -86,7 +86,7 @@ testStbRoundTrip
 testSystem
 	| systemFont |
 	systemFont := Font system.
-	self assert: systemFont pointSize equals: 10.
+	self assert: systemFont name equals: 'System'.
 	self assert: systemFont dpi equals: SystemMetrics current dpi.
 	self assert: Font system identicalTo: systemFont.
 	self assert: systemFont isKindOf: StockFont! !
