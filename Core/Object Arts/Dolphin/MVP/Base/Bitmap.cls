@@ -660,6 +660,7 @@ fromView: aView background: aBrush
 	canvas free.
 	canvas := answer canvas.
 	aBrush ifNotNil: [canvas fillRectangle: (RECT extent: ext) brush: aBrush].
+	canvas backcolor: aView actualBackcolor.
 	"Note that PRF_ERASEBKGND is necessary here even though we may have apparently just erased the background, as otherwise some of that background colour may show through where it should not."
 	aView
 		sendMessage: WM_PRINT

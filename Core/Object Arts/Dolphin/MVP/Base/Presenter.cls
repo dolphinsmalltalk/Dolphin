@@ -1075,12 +1075,10 @@ icon
 
 	^##(self) defaultIcon!
 
-loadViewResource: aString inContext: aParentView 
+loadViewResource: aString inContext: aParentView
 	"Private - Load a view resource called aString owned by this class."
 
-	| resourceIdentifier |
-	resourceIdentifier := ResourceIdentifier class: self name: aString.
-	^resourceIdentifier loadWithContext: aParentView!
+	^(ResourceIdentifier class: self name: aString) loadWithContext: aParentView!
 
 new
 	"Answer an instance of the receiver not yet connected to any view

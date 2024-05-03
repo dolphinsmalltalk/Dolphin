@@ -1789,7 +1789,7 @@ dolphinWikiWeb
 	self openUrl: self dolphinWikiUrl!
 
 dpiAwareness
-	"Answer the symbolic name of the DPI awareness mode for the development environment."
+	"Answer the preferred <DpiAwareness> context for the development environment."
 
 	^UserLibrary desiredDpiAwareness!
 
@@ -2204,9 +2204,6 @@ keywordsAndArgsOfMethod: aCompiledMethod
 	^aCompiledMethod parseTreeNoError 
 		ifNil: [self keywordsAndArgsForSelector: aCompiledMethod selector]
 		ifNotNil: [:ast | (ast selectorParts collect: [:each | each value]) -> ast argumentNames]!
-
-loadViewResource: aResourceArray inContext: contextView
-	^contextView loadViewResource: aResourceArray forEdit: true!
 
 messagesMatching: aMethodSearch in: aBrowserEnvironment 
 	^Array with: (self definitionsMatching: aMethodSearch in: aBrowserEnvironment)
@@ -4481,7 +4478,6 @@ isValidInstanceVariableName:for:!enquiries!helpers!private! !
 isValidNewClassVarName:for:!enquiries!helpers!private!refactoring! !
 keywordsAndArgsForSelector:!autocompletion!helpers!private! !
 keywordsAndArgsOfMethod:!autocompletion!helpers!private! !
-loadViewResource:inContext:!helpers!private! !
 messagesMatching:in:!browsing!private! !
 methodCategorizationPolicy!constants!private! !
 methodExplorerClass!options!public! !
@@ -4732,7 +4728,8 @@ publishedAspectsOfInstances
 					andNil: nil);
 		add: (Aspect choice: #defaultMaxStack from: #(32 64 96 128));
 		add: (Aspect choice: #displayItLocale from: {Locale smalltalk. Locale userDefault. Locale invariant});
-		add: (Aspect choice: #dpiAwareness from: #(#unaware #system #perMonitor #gdiScaled));
+		add: (Aspect choice: #dpiAwareness
+					from: {DpiAwareness unaware. DpiAwareness system. DpiAwareness perMonitor. DpiAwareness gdiScaled});
 		yourself!
 
 publishedEventsOfInstances

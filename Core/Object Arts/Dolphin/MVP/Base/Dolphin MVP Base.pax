@@ -96,6 +96,7 @@ package classNames
 	add: #DividerMenuItem;
 	add: #DOCINFOW;
 	add: #DoubleBufferedView;
+	add: #DpiAwareness;
 	add: #DpiChangedEvent;
 	add: #DragDropObject;
 	add: #DragDropSession;
@@ -254,7 +255,6 @@ package methodNames
 	add: #UserLibrary -> #animateWindow:dwTime:dwFlags:;
 	add: #UserLibrary -> #areDpiAwarenessContextsEqual:dpiContextB:;
 	add: #UserLibrary -> #attachThreadInput:idAttachTo:fAttach:;
-	add: #UserLibrary -> #awarenessFromDpiAwarenessContext:;
 	add: #UserLibrary -> #beginDeferWindowPos:;
 	add: #UserLibrary -> #beginPaint:lpPaint:;
 	add: #UserLibrary -> #bringWindowToTop:;
@@ -331,15 +331,12 @@ package methodNames
 	add: #UserLibrary -> #getSystemDpiForProcess:;
 	add: #UserLibrary -> #getSystemMenu:bRevert:;
 	add: #UserLibrary -> #getSystemMetricsForDpi:dpi:;
-	add: #UserLibrary -> #getThreadDpi;
-	add: #UserLibrary -> #getThreadDpiAwareness;
 	add: #UserLibrary -> #getThreadDpiAwarenessContext;
 	add: #UserLibrary -> #getThreadDpiHostingBehavior;
 	add: #UserLibrary -> #getTopWindow:;
 	add: #UserLibrary -> #getUpdateRect:lpRect:bErase:;
 	add: #UserLibrary -> #getWindow:uCmd:;
 	add: #UserLibrary -> #getWindowDC:;
-	add: #UserLibrary -> #getWindowDpiAwareness:;
 	add: #UserLibrary -> #getWindowDpiAwarenessContext:;
 	add: #UserLibrary -> #getWindowDpiHostingBehavior:;
 	add: #UserLibrary -> #getWindowExStyle:;
@@ -354,23 +351,18 @@ package methodNames
 	add: #UserLibrary -> #getWindowThreadProcessId:lpdwProcessId:;
 	add: #UserLibrary -> #getWindowULong:nIndex:;
 	add: #UserLibrary -> #getWindowULongPtr:nIndex:;
-	add: #UserLibrary -> #inDpiAwarenessContext:do:;
 	add: #UserLibrary -> #inheritWindowMonitor:hwndInherit:;
 	add: #UserLibrary -> #initialize;
 	add: #UserLibrary -> #insertMenuItem:uItem:fByPosition:lpmii:;
-	add: #UserLibrary -> #inSystemDpiAwarenessContextDo:;
 	add: #UserLibrary -> #invalidate:lpRect:bErase:;
 	add: #UserLibrary -> #invalidateRgn:hRgn:bErase:;
 	add: #UserLibrary -> #invertRect:lprc:;
-	add: #UserLibrary -> #inWindowDpiAwarenessContext:do:;
-	add: #UserLibrary -> #isAtWindowDpiAwareness:;
 	add: #UserLibrary -> #isChild:hWnd:;
 	add: #UserLibrary -> #isClipboardFormatAvailable:;
 	add: #UserLibrary -> #isDialog:;
 	add: #UserLibrary -> #isDialogMessage:lpMsg:;
 	add: #UserLibrary -> #isIconic:;
 	add: #UserLibrary -> #isProcessDPIAware;
-	add: #UserLibrary -> #isSystemDpiAwarenessContext:;
 	add: #UserLibrary -> #isValidDpiAwarenessContext:;
 	add: #UserLibrary -> #isWindowUnicode:;
 	add: #UserLibrary -> #isZoomed:;
@@ -454,7 +446,6 @@ package methodNames
 	add: 'UserLibrary class' -> #desiredDpiAwareness;
 	add: 'UserLibrary class' -> #desiredDpiAwareness:;
 	add: 'UserLibrary class' -> #dpiAwareness;
-	add: 'UserLibrary class' -> #dpiAwarenessContextFromName:;
 	yourself.
 
 package globalNames
@@ -538,6 +529,12 @@ Object subclass: #DisplayMonitor
 	instanceVariableNames: 'handle info devices dpi metrics defaultWindowExtent lastWindowPosition cascadeOffset workArea'
 	classVariableNames: 'Instances MDT_ANGULAR_DPI MDT_DEFAULT MDT_EFFECTIVE_DPI MDT_RAW_DPI MONITOR_DEFAULTTONEAREST MONITOR_DEFAULTTONULL MONITOR_DEFAULTTOPRIMARY'
 	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+Object subclass: #DpiAwareness
+	instanceVariableNames: 'handle name'
+	classVariableNames: 'Awarenesses AwarenessLevelNames ContextNames GdiScaled PerMonitor PerMonitorV1 System Unaware'
+	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 
 Object subclass: #DragDropObject
@@ -787,7 +784,7 @@ CreateWindowApiCall subclass: #CreateWindow
 	classInstanceVariableNames: ''!
 
 CreateWindowDecorator subclass: #CreateInDpiAwarenessContext
-	instanceVariableNames: 'dpiAwarenessContext'
+	instanceVariableNames: 'dpiAwareness'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -1772,14 +1769,8 @@ loadWithContext: context
 
 	^self loadWithContext: context forEdit: false!
 
-loadWithContext: context forEdit: aBoolean 
-	^self resource 
-		ifNotNil: 
-			[:resource | 
-			(STLInFiler on: resource readStream)
-				isUpgrading: aBoolean;
-				context: context;
-				next]!
+loadWithContext: context forEdit: aBoolean
+	^self resource ifNotNil: [:resource | context loadViewResource: resource forEdit: aBoolean]!
 
 show
 	"Display the resource identified by the receiver in whatever way is appropriate. 
@@ -1886,15 +1877,6 @@ attachThreadInput: idAttach idAttachTo: idAttachTo fAttach: aBoolean
 
 	<stdcall: bool AttachThreadInput dword dword bool>
 	^self invalidCall: _failureCode!
-
-awarenessFromDpiAwarenessContext: anExternalHandle
-	| awareness |
-	awareness := self getAwarenessFromDpiAwarenessContext: anExternalHandle.
-	^awareness == 0
-		ifTrue: 
-			[(self areDpiAwarenessContextsEqual: anExternalHandle
-				dpiContextB: DPI_AWARENESS_CONTEXT_UNAWARE_GDISCALED) ifTrue: [#gdiScaled] ifFalse: [#unaware]]
-		ifFalse: [DpiAwarenesses at: awareness + 2]!
 
 beginDeferWindowPos: nNumWindows
 	"Invoke the BeginDeferWindowPos() function of the module wrapped by the receiver.
@@ -2667,16 +2649,6 @@ getSystemMetricsForDpi: index dpi: dpi
 	<stdcall: sdword GetSystemMetricsForDpi sdword dword>
 	^self invalidCall: _failureCode!
 
-getThreadDpi
-	"Answer the DPI applicable in the thread's current DPI awareness context. Note that this will only yield an actual DPI result in unaware or system aware modes. When in per-monitor mode, the answer is 0, since there is no one DPI. In that case the DPI has to be established in the context of a particular window or monitor."
-
-	^self getDpiFromDpiAwarenessContext: self getThreadDpiAwarenessContext!
-
-getThreadDpiAwareness
-	"Answer the symbolic name of the current thread DPI awareness context."
-
-	^self awarenessFromDpiAwarenessContext: self getThreadDpiAwarenessContext!
-
 getThreadDpiAwarenessContext
 	"Invoke the GetThreadDpiAwarenessContext() function of the module wrapped by the receiver.
 	Helpstring: Get the DPI awareness for the current thread.
@@ -2739,11 +2711,6 @@ getWindowDC: aWindowHandle
 
 	<stdcall: handle GetWindowDC handle>
 	^self invalidCall: _failureCode!
-
-getWindowDpiAwareness: anExternalHandle
-	"Answer the symbolic name of the DPI awareness context of the window with the specified handle."
-
-	^self awarenessFromDpiAwarenessContext: (self getWindowDpiAwarenessContext: anExternalHandle)!
 
 getWindowDpiAwarenessContext: hwnd
 	"Invoke the GetWindowDpiAwarenessContext() function of the module wrapped by the receiver.
@@ -2906,16 +2873,6 @@ getWindowULongPtr: aWindowHandle nIndex: zeroBasedIntegerOffset
 	<stdcall: uintptr GetWindowLongPtrW handle sdword>
 	^self invalidCall: _failureCode!
 
-inDpiAwarenessContext: anInteger do: aNiladicBlock
-	"Evaluate the niladic <BlockClosure> argument, aNiladicBlock, in the DPI awareness context identified by the <integer> first argument.
-	This can be useful to establish a known co-ordinate system when DPI-sensitive calculations need to be performed."
-
-	| currentContext |
-	(self areDpiAwarenessContextsEqual: self getThreadDpiAwarenessContext dpiContextB: anInteger)
-		ifTrue: [^aNiladicBlock value].
-	currentContext := self setThreadDpiAwarenessContext: anInteger.
-	^aNiladicBlock ensure: [self setThreadDpiAwarenessContext: currentContext]!
-
 inheritWindowMonitor: hwnd hwndInherit: hwndInherit
 	"Invoke the InheritWindowMonitor() function of the module wrapped by the receiver.
 	Helpstring: Causes a specified window to inherit the monitor of another window.
@@ -2935,7 +2892,7 @@ initialize
 		- it cannot be changed once set, but the configured context can be changed for the next image restart (so DpiAwarenessContext may not be the system-wide context)
 		- we may not get what we asked for, e.g. in an application with a manifest defined awareness
 		- the result of GetDpiAwarenessContextForProcess will depend on the thread awareness context at the time it is called (!!)"
-	SystemDpiAwarenessContext := self getDpiAwarenessContextForProcess: -1.
+	SystemDpiAwareness := DpiAwareness fromHandle: (self getDpiAwarenessContextForProcess: -1).
 	^self!
 
 insertMenuItem: hMenu uItem: anInteger fByPosition: aBoolean lpmii: aMENUITEMINFOW
@@ -2950,11 +2907,6 @@ insertMenuItem: hMenu uItem: anInteger fByPosition: aBoolean lpmii: aMENUITEMINF
 
 	<stdcall: bool InsertMenuItemW handle dword bool MENUITEMINFOW*>
 	^self invalidCall: _failureCode!
-
-inSystemDpiAwarenessContextDo: aNiladicBlock
-	"Evaluate the niladic <BlockClosure> argument, aNiladicBlock, in the system-wide DPI awareness context. This is the context established when the process was started."
-
-	^self inDpiAwarenessContext: SystemDpiAwarenessContext do: aNiladicBlock!
 
 invalidate: hWnd lpRect: aRECT bErase: aBoolean
 	"Add aRECT to hWnd's update region (that portion of the
@@ -2993,18 +2945,6 @@ invertRect: hdc lprc: aRECT
 
 	<stdcall: bool InvertRect handle RECT*>
 	^self invalidCall: _failureCode!
-
-inWindowDpiAwarenessContext: hWnd do: aNiladicBlock
-	"Evaluate the niladic <BlockClosure> argument, aNiladicBlock, in the DPI awareness context of the Window with <ExternalHandle>, hWnd.
-	This can be useful to establish a known co-ordinate system when DPI-sensitive calculations need to be performed."
-
-	^self inDpiAwarenessContext: (self getWindowDpiAwarenessContext: hWnd) do: aNiladicBlock!
-
-isAtWindowDpiAwareness: anExternalHandle
-	"Answer whether the current thread DPI awareness context is the same as that of the window with the specified handle. This is useful to know whether any queries for Window geometry will be in the Window's own context, or some foreign context. For example, if I am a DPI unaware window, then I expect to see all geometry in device-independent (96-dpi) pixels, but if my window geometry is queried from a per-monitor context, then the measurements will actually be in physical pixels and may be much larger."
-
-	^self areDpiAwarenessContextsEqual: self getThreadDpiAwarenessContext
-		dpiContextB: (self getWindowDpiAwarenessContext: anExternalHandle)!
 
 isChild: hWndParent hWnd: hWnd
 	"Answer whether the window identified by the handle, hWnd, is 
@@ -3052,11 +2992,6 @@ isProcessDPIAware
 
 	<stdcall: bool IsProcessDPIAware>
 	^self invalidCall: _failureCode!
-
-isSystemDpiAwarenessContext: anInteger
-	"Answer whether the <integer> DPI awareness context argument is equivalent to the current system context."
-
-	^self areDpiAwarenessContextsEqual: anInteger dpiContextB: SystemDpiAwarenessContext!
 
 isValidDpiAwarenessContext: value
 	"Invoke the IsValidDpiAwarenessContext() function of the module wrapped by the receiver.
@@ -3903,7 +3838,6 @@ adjustWindowRectExForDpi:dwStyle:bMenu:dwExStyle:dpi:!public!win32 functions-coo
 animateWindow:dwTime:dwFlags:!**auto generated**!public! !
 areDpiAwarenessContextsEqual:dpiContextB:!**auto generated**!public!win32 functions-high DPI! !
 attachThreadInput:idAttachTo:fAttach:!public!win32 functions-message and message queue! !
-awarenessFromDpiAwarenessContext:!high DPI!public!queries! !
 beginDeferWindowPos:!**auto generated**!public! !
 beginPaint:lpPaint:!public!win32 functions-painting and drawing! !
 bringWindowToTop:!public!win32 functions-window! !
@@ -3980,15 +3914,12 @@ getScrollInfo:fnBar:lpsi:!public!win32 functions-scroll bar! !
 getSystemDpiForProcess:!**auto generated**!public!win32 functions-high DPI! !
 getSystemMenu:bRevert:!public!win32 functions-menu!win32 functions-system information! !
 getSystemMetricsForDpi:dpi:!public!win32 functions-high DPI! !
-getThreadDpi!high DPI!public! !
-getThreadDpiAwareness!high DPI!public!queries! !
 getThreadDpiAwarenessContext!**auto generated**!public!win32 functions-high DPI! !
 getThreadDpiHostingBehavior!**auto generated**!public!win32 functions-high DPI! !
 getTopWindow:!public!win32 functions-window! !
 getUpdateRect:lpRect:bErase:!public!win32 functions-painting and drawing! !
 getWindow:uCmd:!public!win32 functions-window! !
 getWindowDC:!public!win32 functions-device context! !
-getWindowDpiAwareness:!high DPI!public!queries! !
 getWindowDpiAwarenessContext:!**auto generated**!public!win32 functions-high DPI! !
 getWindowDpiHostingBehavior:!**auto generated**!public!win32 functions-high DPI! !
 getWindowExStyle:!public!win32 functions-window! !
@@ -4003,23 +3934,18 @@ getWindowTextLength:!public!win32 functions-window! !
 getWindowThreadProcessId:lpdwProcessId:!public!win32 functions-window! !
 getWindowULong:nIndex:!public!win32 functions-window class! !
 getWindowULongPtr:nIndex:!public!win32 functions-window class! !
-inDpiAwarenessContext:do:!high DPI!operations!public! !
 inheritWindowMonitor:hwndInherit:!**auto generated**!public!win32 functions-high DPI! !
 initialize!initializing!public! !
 insertMenuItem:uItem:fByPosition:lpmii:!public!win32 functions-menu! !
-inSystemDpiAwarenessContextDo:!high DPI!operations!public! !
 invalidate:lpRect:bErase:!public!win32 functions-painting and drawing! !
 invalidateRgn:hRgn:bErase:!public!win32 functions-painting and drawing! !
 invertRect:lprc:!public!win32 functions-filled shape! !
-inWindowDpiAwarenessContext:do:!high DPI!operations!public! !
-isAtWindowDpiAwareness:!high DPI!public!queries! !
 isChild:hWnd:!public!win32 functions-window! !
 isClipboardFormatAvailable:!public!win32 functions-clipboard! !
 isDialog:!public!queries! !
 isDialogMessage:lpMsg:!public!win32 functions-dialog box! !
 isIconic:!public!win32 functions-icon! !
 isProcessDPIAware!**auto generated**!public!win32 functions-high DPI! !
-isSystemDpiAwarenessContext:!high DPI!operations!public! !
 isValidDpiAwarenessContext:!**auto generated**!public!win32 functions-high DPI! !
 isWindowUnicode:!public!win32 functions-window!win32 functions-window procedure! !
 isZoomed:!public!win32 functions-window! !
@@ -4103,29 +4029,25 @@ withDpiHostingBehavior:do:!high DPI!operations!public! !
 !UserLibrary class methodsFor!
 
 desiredDpiAwareness
-	"Answer the symbolic name of the DPI awareness mode to be requested when the process starts. Note that this may not be the same as the current system DPI awareness because:
+	"Answer the <DpiAwareness> to be requested when the process starts. Note that this may not be the same as the current system DPI awareness because:
 		- the desired awareness can be configured for future image starts, but cannot take effect in the current session
 		- the awareness achieved may be different to that requested, e.g. in an application with a manifest that specifies a different awareness."
 
-	^DpiAwarenessContexts at: DesiredDpiAwarenessContext negated!
+	^DpiAwareness fromHandle: DesiredDpiAwarenessContext!
 
-desiredDpiAwareness: aSymbol
+desiredDpiAwareness: aDpiAwareness
 	"Set the DPI awareness mode to be requested when this image is restarted. N.B. Windows does not support changing the DPI awareness of an entire running process, so this cannot take effect until restart."
 
-	DesiredDpiAwarenessContext := self dpiAwarenessContextFromName: aSymbol!
+	DesiredDpiAwarenessContext := aDpiAwareness handle!
 
 dpiAwareness
-	"Answer the symbolic name of the actual system wide DPI awareness for this process. Note that this cannot be changed."
+	"Answer the <DpiAwareness> context established for this Dolphin process. Note that this cannot be changed in a running session, only on restart."
 
-	^self default awarenessFromDpiAwarenessContext: SystemDpiAwarenessContext!
-
-dpiAwarenessContextFromName: aSymbol
-	^(DpiAwarenessContexts identityIndexOf: aSymbol) negated! !
+	^SystemDpiAwareness! !
 !UserLibrary class categoriesForMethods!
 desiredDpiAwareness!accessing!high DPI!public! !
 desiredDpiAwareness:!accessing!high DPI!public! !
 dpiAwareness!accessing!high DPI!public! !
-dpiAwarenessContextFromName:!accessing!high DPI!public! !
 !
 
 "End of package definition"!

@@ -5,9 +5,13 @@ DesktopView subclass: #DesignDesktopView
 	classVariableNames: 'Default System Unaware'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DesignDesktopView guid: (GUID fromString: '{d1d4168d-347d-4e4c-b816-a73730045f7b}')!
+
 DesignDesktopView comment: ''!
+
 !DesignDesktopView categoriesForClass!MVP-Views! !
+
 !DesignDesktopView methodsFor!
 
 adjustPlacementOfShell: aShellView forResolution: aPoint
@@ -20,7 +24,7 @@ adjustPlacementOfShell: aShellView forResolution: aPoint
 
 assumeDesktopHandle
 	handle := self class desktopHandle.
-	dpi := UserLibrary default getDpiFromDpiAwarenessContext: dpiAwareness!
+	dpi := dpiAwareness dpi!
 
 awarenessContext: awarenessInteger
 	dpiAwareness := awarenessInteger.
@@ -45,16 +49,12 @@ dpi
 	^dpi!
 
 dpiAwareness
-	"Answer the symbolic name of the DPI awareness mode for this design desktop."
+	"Answer the <DpiAwareness> context of this design desktop."
 
-	^UserLibrary.DpiAwarenessContexts at: dpiAwareness negated!
-
-dpiAwarenessContext
 	^dpiAwareness!
 
 loadViewResource: aResourceArray forEdit: isLoadingForEdit
-	^UserLibrary default inDpiAwarenessContext: dpiAwareness
-		do: [super loadViewResource: aResourceArray forEdit: isLoadingForEdit]!
+	^dpiAwareness inContextDo: [super loadViewResource: aResourceArray forEdit: isLoadingForEdit]!
 
 metrics
 	"Answer a <SytemMetrics> instance that can provide standard measurements scaled to the receiver's current DPI."
@@ -65,7 +65,8 @@ printOn: aStream
 	aStream
 		display: self class;
 		space;
-		nextPutAll: self dpiAwareness! !
+		display: self dpiAwareness name! !
+
 !DesignDesktopView categoriesForMethods!
 adjustPlacementOfShell:forResolution:!geometry!private! !
 assumeDesktopHandle!initializing!private! !
@@ -74,7 +75,6 @@ createShellWindow:withFunction:!operations!public! !
 defaultWindowExtent!constants!public! !
 dpi!accessing!high DPI!public! !
 dpiAwareness!accessing!high DPI!public! !
-dpiAwarenessContext!accessing!high DPI!public! !
 loadViewResource:forEdit:!binary filing!public! !
 metrics!public! !
 printOn:!development!printing!public! !
@@ -82,17 +82,17 @@ printOn:!development!printing!public! !
 
 !DesignDesktopView class methodsFor!
 
-awarenessContext: awarenessInteger
-	"Private - Answer an instance of the receiver configured for the specified DPI."
-
-	^self basicNew
-		awarenessContext: awarenessInteger;
-		yourself!
-
 default
 	"Answer an instance of the receiver configured for device-independent pixels (aka DIPs, equivalent to 96-dpi). The GDI scaling context is used because this gives much better results, avoiding blurry text."
 
-	^Default ifNil: [Default := self awarenessContext: DPI_AWARENESS_CONTEXT_UNAWARE_GDISCALED]!
+	^Default ifNil: [Default := self dpiAwareness: DpiAwareness gdiScaled]!
+
+dpiAwareness: aDpiAwareness
+	"Private - Answer an instance of the receiver configured for the specified DPI."
+
+	^self basicNew
+		awarenessContext: aDpiAwareness;
+		yourself!
 
 gdiScaled
 	"Answer an instance of the receiver configured for device-independent pixels (aka DIPs, equivalent to 96-dpi) with GDI scaling."
@@ -110,15 +110,16 @@ perMonitor
 system
 	"Answer an instance of the receiver configured for the current primary monitor DPI."
 
-	^System ifNil: [System := self awarenessContext: DPI_AWARENESS_CONTEXT_SYSTEM_AWARE]!
+	^System ifNil: [System := self dpiAwareness: DpiAwareness system]!
 
 unaware
 	"Answer a DPI unaware instance of the receiver (96-dpi, bitmap scaling)."
 
-	^Unaware ifNil: [Unaware := self awarenessContext: DPI_AWARENESS_CONTEXT_UNAWARE]! !
+	^Unaware ifNil: [Unaware := self dpiAwareness: DpiAwareness unaware]! !
+
 !DesignDesktopView class categoriesForMethods!
-awarenessContext:!instance creation!private! !
 default!instance creation!public! !
+dpiAwareness:!instance creation!private! !
 gdiScaled!instance creation!public! !
 onStartup!event handling!public! !
 perMonitor!instance creation!public! !

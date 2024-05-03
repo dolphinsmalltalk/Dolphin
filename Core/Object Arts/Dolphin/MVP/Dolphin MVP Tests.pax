@@ -28,6 +28,7 @@ package classNames
 	add: #DialogViewTest;
 	add: #DifferencesPresenterTest;
 	add: #DisplayMonitorTest;
+	add: #DpiAwarenessTest;
 	add: #EvaluationConverterTest;
 	add: #ExternalPointTest;
 	add: #ExternalRectangleTest;
@@ -242,6 +243,12 @@ DolphinTest subclass: #DisplayMonitorTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+DolphinTest subclass: #DpiAwarenessTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 
 DolphinTest subclass: #EvaluationConverterTest

@@ -91,7 +91,7 @@ testBasicEdit
 	"Test open a default view that is reasonably complex"
 	rid := ResourceIdentifier class: ViewComposer.
 	self openTestSubjectOn: rid.
-	self assert: vc composingView dpiAwareness identicalTo: #gdiScaled.
+	self assert: vc composingView dpiAwareness equals: DpiAwareness gdiScaled.
 	self assert: vc composingView dpi equals: 96.
 	self assert: vc arena dpi equals: 96.
 	self assert: vc caption equals: rid displayString, '(ShellView)'.

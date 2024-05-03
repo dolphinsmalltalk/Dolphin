@@ -5930,12 +5930,13 @@ edit
     	!
 
 editViewUsing: aMonadicBlock
-	| view |
-	view := Smalltalk developmentSystem loadViewResource: self resource
-				inContext: DesignDesktopView default.
-	aMonadicBlock value: view.
-	self assign: view literalStoreArray.
-	view destroy!
+	| view designDesktop |
+	designDesktop := DesignDesktopView default.
+	view := designDesktop loadViewResource: self resource forEdit: true.
+	
+	[aMonadicBlock value: view.
+	self assign: (designDesktop inDpiAwarenessContextDo: [view literalStoreArray])]
+			ensure: [view destroy]!
 
 emit: aResourceArray asStringOn: aWriteStream 
 	aWriteStream nextPutAll: '#('.
@@ -5960,11 +5961,11 @@ publishedAspects
 	^answer!
 
 reassign
-	| view |
-	view := Smalltalk developmentSystem loadViewResource: self resource
-				inContext: DesignDesktopView default.
-	self assign: view literalStoreArray.
-	view destroy! !
+	| view designDesktop |
+	designDesktop := DesignDesktopView default.
+	view := designDesktop loadViewResource: self resource forEdit: true.
+	[self assign: (designDesktop dpiAwareness inContextDo: [view literalStoreArray])]
+		ensure: [view destroy]! !
 
 !ResourceIdentifier categoriesForMethods!
 assign:!accessing!public! !

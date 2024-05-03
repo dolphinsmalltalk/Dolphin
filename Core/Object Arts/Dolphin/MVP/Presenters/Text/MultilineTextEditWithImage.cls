@@ -101,16 +101,16 @@ defaultBackgroundImage
 	icon, toned down to a watermark."
 
 	| blend percent icon extent bmp color |
-	extent := 48 @ 48.
+	extent := 48 @ 48 * self dpi // USER_DEFAULT_SCREEN_DPI.
 	percent := 25.
 	color := self actualBackcolor.
 	"First we need an image to use, in this case we choose the default application icon. N.B. If we
 	draw the icon from an image list, then the correct sized icon is used automatically and we
 	get the best results"
 	icon := Bitmap displayCompatibleWithExtent: extent.
-	(IconImageManager current imageListWithExtent: extent) 
+	(IconImageManager current imageListWithExtent: extent)
 		draw: SessionManager current iconImageIndex
-		on: ((icon canvas)
+		on: (icon canvas
 				backcolor: color;
 				erase;
 				yourself)
@@ -119,12 +119,14 @@ defaultBackgroundImage
 
 	"Now we're going to layer the image onto a white Bitmap to create a watermark image"
 	bmp := Bitmap displayCompatibleWithExtent: extent.
-	(bmp canvas)
+	bmp canvas
 		backcolor: color;
 		erase.
 	blend := BLENDFUNCTION new.
-	blend blendPercentage: percent; usePerPixelAlpha: false.
-	icon 
+	blend
+		blendPercentage: percent;
+		usePerPixelAlpha: false.
+	icon
 		alphaBlendOn: bmp canvas
 		at: 0 @ 0
 		extent: bmp extent

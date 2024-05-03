@@ -2,14 +2,11 @@
 
 PermanentLibrary subclass: #UserLibrary
 	instanceVariableNames: ''
-	classVariableNames: 'DesiredDpiAwarenessContext DpiAwarenessContexts DpiAwarenesses SystemDpiAwarenessContext'
+	classVariableNames: 'DesiredDpiAwarenessContext SystemDpiAwareness'
 	poolDictionaries: 'MessageBoxConstants'
 	classInstanceVariableNames: ''!
 
 UserLibrary guid: (GUID fromString: '{64674046-3a82-101b-8181-00aa003743d3}')!
-UserLibrary addClassConstant: 'DpiAwarenessContexts' value: #(#unaware #system #perMonitorV1 #perMonitor #gdiScaled)!
-
-UserLibrary addClassConstant: 'DpiAwarenesses' value: #(#invalid #unaware #system #perMonitor)!
 
 UserLibrary comment: 'UserLibrary is the <ExternalLibrary> class to represent the Windows system DLL, User32.DLL.
 
@@ -812,10 +809,7 @@ fileName
 	^'USER32'!
 
 initialize
-	self addClassConstant: 'DpiAwarenessContexts'
-		value: #(#unaware #system #perMonitorV1 #perMonitor #gdiScaled).
-	self addClassConstant: 'DpiAwarenesses' value: #(#invalid #unaware #system #perMonitor).
-	SystemDpiAwarenessContext := DesiredDpiAwarenessContext := DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2! !
+	DesiredDpiAwarenessContext := DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2! !
 
 !UserLibrary class categoriesForMethods!
 clear!initializing!private! !

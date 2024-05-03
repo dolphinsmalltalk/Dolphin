@@ -210,9 +210,11 @@ DolphinTestClassResource subclass: #CompilerTestClasses
 testResourceBrowserPreview
 	"#1758"
 
-	| resourceId resourceView bmp toolbox resources |
+	| resourceId resourceView |
 	resourceId := ResourceIdentifier class: ResourceBrowser name: 'Default view'.
 	resourceView := DesignDesktopView default loadViewResource: resourceId resource forEdit: false.
+	
+	[| bmp toolbox resources |
 	bmp := resourceView notNil
 				ifTrue: 
 					[resourceView invalidateLayoutDeeply.
@@ -220,8 +222,8 @@ testResourceBrowserPreview
 				ifFalse: [Error icon].
 	toolbox := resourceView viewNamed: 'resourceToolbox'.
 	resources := resourceView viewNamed: 'resources'.
-	self assert: (resources viewNamed: 'resources') extent x equals: resources extent x.
-	resourceView destroy! !
+	self assert: (resources viewNamed: 'resources') extent x equals: resources extent x]
+			ensure: [resourceView destroy]! !
 
 !BorderLayoutTest categoriesForMethods!
 testResourceBrowserPreview!public!unit tests! !

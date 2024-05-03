@@ -155,7 +155,7 @@ publishedAspects
 
 	^super publishedAspects
 		add: (Aspect boolean: #canUseIdeaSpace);
-		add: (Aspect choice: #previewDpiAwareness from: #(#gdiScaled #system #unaware));
+		add: (Aspect choice: #previewDpiAwareness from: {DpiAwareness gdiScaled. DpiAwareness system. DpiAwareness unaware});
 		yourself!
 
 resource_Default_view

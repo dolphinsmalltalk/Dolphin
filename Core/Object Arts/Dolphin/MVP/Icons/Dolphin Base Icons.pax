@@ -42,6 +42,7 @@ package methodNames
 	add: 'Dictionary class' -> #icon;
 	add: 'DiskVolumeInformation class' -> #icon;
 	add: 'DOUBLE class' -> #icon;
+	add: 'DpiAwareness class' -> #icon;
 	add: 'Duration class' -> #icon;
 	add: 'Error class' -> #icon;
 	add: 'Exception class' -> #icon;
@@ -517,6 +518,16 @@ icon
 	^Float icon! !
 
 !DOUBLE class categoriesForMethods!
+icon!constants!public! !
+!
+
+!DpiAwareness class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(TextTileIcon text: $\x1F4CF)! !
+!DpiAwareness class categoriesForMethods!
 icon!constants!public! !
 !
 
