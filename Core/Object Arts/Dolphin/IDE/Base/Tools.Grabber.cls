@@ -52,7 +52,7 @@ calculateViewRectangleFor: pointOffset
 	| rect parentArenaRect isComposingView arena |
 	composer assertInArenaDpiContext.
 	arena := self arena.
-	rect := arena mapRectangle: view rectangle fromView: view.
+	rect := arena viewRectangle: view.
 	rect perform: self setAspect with: pointOffset.
 	isComposingView := composer composingView = view.
 	rect := Rectangle
@@ -153,6 +153,9 @@ eraseTrackingAt: pointOffset
 
 	self drawTrackingAt: pointOffset!
 
+grabPoint
+	^(self arena viewRectangle: view) perform: self aspect!
+
 grid
 	"Answers the grid which the receiver should snap to."
 
@@ -225,6 +228,7 @@ drawOn:rectangle:!accessing!public! !
 drawTrackingAt:!private!tracking! !
 endTrackingAt:!private!tracking! !
 eraseTrackingAt:!private!tracking! !
+grabPoint!accessing!public! !
 grid!accessing!public! !
 isDisabled!accessing!public! !
 isHorizontalOnly!accessing!public! !

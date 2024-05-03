@@ -63,9 +63,9 @@ dpi
 	^dpi!
 
 dragHysteresis
-	"Answer the default distance in pixels that the mouse must move before 
-	a tracking operation is actually started"
+	"Answer the default distance in pixels that the mouse must move before a tracking operation is actually started."
 
+	#highDpiToDo.	"I'd expect this value to be scaled for DPI, i.e. if it is 4@4 at 96 dpi, it should be 8@8 at: 200%/192 dpi. However it seems that GetSystemMetricsForDpi always returns the same value, regardless of the DPI argument. The docs do say that the value will be scaled in appropriate, and in this case it would be appropriate to do so so this looks like a bug."
 	^dragHysteresis ifNil: [dragHysteresis := self getMetric: SM_CXDRAG pair: SM_CYDRAG]!
 
 edgeExtent
