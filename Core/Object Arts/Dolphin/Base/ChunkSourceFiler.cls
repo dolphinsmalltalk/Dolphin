@@ -5,10 +5,15 @@ SourceFiler subclass: #ChunkSourceFiler
 	classVariableNames: 'NormalizeEolsMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ChunkSourceFiler guid: (GUID fromString: '{558b318a-9ff3-4346-a445-76ee18d5458b}')!
+
 ChunkSourceFiler addClassConstant: 'NormalizeEolsMask' value: 16r2!
+
 ChunkSourceFiler comment: ''!
+
 !ChunkSourceFiler categoriesForClass!Development!System-Support! !
+
 !ChunkSourceFiler methodsFor!
 
 emitChunk: aString
@@ -25,7 +30,7 @@ emitFooterForMethodsOf: aClass
 
 	self endChunk!
 
-emitGUIDOfClass: aClass 
+emitGUIDOfClass: aClass
 	"Private - Emit a GUID definition chunk for the <Class>, aClass, onto the <puttableStream>, aWriteStream."
 
 	| guid |
@@ -38,6 +43,7 @@ emitGUIDOfClass: aClass
 		print: guid asString;
 		nextPut: $);
 		nextPut: $!!;
+		cr;
 		cr!
 
 emitHeaderForMethodsOf: aClass 
@@ -193,6 +199,7 @@ storeSourceString: aString forMethod: aCompiledMethod
 		emitFooterForMethodsOf: methodClass;
 		flush
 ! !
+
 !ChunkSourceFiler categoriesForMethods!
 emitChunk:!private!source filing-file out! !
 emitFooterForMethodsOf:!private!source filing-file out! !
@@ -226,6 +233,7 @@ on: aWriteStream sourceFileIndex: anInteger
 	^(self on: aWriteStream)
 		sourceFileIndex: anInteger;
 		yourself! !
+
 !ChunkSourceFiler class categoriesForMethods!
 initialize!development!initializing!public! !
 on:sourceFileIndex:!instance creation!public! !

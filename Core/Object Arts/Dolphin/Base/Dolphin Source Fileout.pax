@@ -154,12 +154,6 @@ package setManualPrerequisites: #(
 
 package!
 
-"Class Definitions"!
-
-
-"Global Aliases"!
-
-
 "Loose Methods"!
 
 !BootSessionManager methodsFor!
@@ -205,6 +199,7 @@ saveImageTo: aString
 					openSources] 
 						on: Error
 						do: [:anError | anError resignalAsWarning]]! !
+
 !BootSessionManager categoriesForMethods!
 saveImageTo:!operations-saving!private! !
 !
@@ -230,6 +225,7 @@ emitCategoriesForMethods: aSequencableCollection of: aClass
 
 	aSequencableCollection isEmpty ifTrue: [^self].
 	stream
+		cr;
 		nextPut: $!!;
 		nextPutAll: aClass name;
 		space;
@@ -260,7 +256,8 @@ emitCategoriesOfClass: aClass
 		nextPutAll: #categoriesForClass;
 		nextPut: $!!.
 	categories asSortedCollection do: [:aCategory | self nextChunkPut: aCategory name].
-	self endChunk!
+	self endChunk.
+	stream cr!
 
 emitCategoriesOfMethod: aCompiledMethod 
 	"Private - Append a chunk to the <puttableStream>, aWriteStream,
@@ -293,8 +290,9 @@ emitCommentOfClass: aClass
 		space;
 		display: #comment:;
 		space.
-	self
-		nextChunkPut: aClass comment printString;
+	self nextChunkPut: aClass comment printString.
+	stream
+		cr;
 		cr!
 
 emitDeclarationForClass: aClass variable: anAssociation
@@ -318,7 +316,7 @@ emitMethod: aCompiledMethod
 
 	self storeSource: aCompiledMethod getSource for: aCompiledMethod!
 
-emitSetBehaviorFlag: flagName forClass: aClass 
+emitSetBehaviorFlag: flagName forClass: aClass
 	"Private - Emit an attribute for the <Class>, aClass, to define its special behaviour flag named by
 	the <Symbol>, flagName."
 
@@ -327,14 +325,16 @@ emitSetBehaviorFlag: flagName forClass: aClass
 		space;
 		nextPutAll: flagName;
 		nextPutAll: ': true!!';
+		cr;
 		cr!
 
-fileOutBasicDefinitionOfClass: aClass 
+fileOutBasicDefinitionOfClass: aClass
 	"Print a definition of the <Class>, aClass, onto the <puttableStream>, aWriteStream."
 
 	aClass printDefinitionOn: stream.
 	stream
 		nextPut: $!!;
+		cr;
 		cr!
 
 fileOutBinaryGlobal: anAssociation 
@@ -477,6 +477,7 @@ storeSource: aString for: aSourceObject
 	sourceFileIndex notNil 
 		ifTrue: 
 			[aSourceObject sourceDescriptor: (aString isEmpty ifFalse: [self sourceDescriptorForIndex: sourceFileIndex position: position])]! !
+
 !ChunkSourceFiler categoriesForMethods!
 emitCategories:for:in:!private!source filing-file out! !
 emitCategoriesForMethods:of:!private!source filing! !
@@ -527,6 +528,7 @@ storeClassCategories
 	The job is simply delegated to the receiver's source manager (if available)."
 
 	self sourceManager storeCategoriesForClass: self! !
+
 !Class categoriesForMethods!
 canFileOut!public!source filing! !
 definitionChunk!public!source filing-class definition! !
@@ -542,6 +544,7 @@ storeCategories
 	The job is simply delegated to the receiver's source manager."
 
 	self class sourceManager storeCategoriesForMethod: self.! !
+
 !CompiledMethod categoriesForMethods!
 storeCategories!private!source filing-methods! !
 !
@@ -553,6 +556,7 @@ storeClassCategories
 	The job is simply delegated to the receiver's source manager (if available)."
 
 	self instanceClass storeClassCategories! !
+
 !Metaclass categoriesForMethods!
 storeClassCategories!private!source filing-methods! !
 !
@@ -711,17 +715,18 @@ fileOutBootDefinitions
 				on: (FileStream write: self classDefinitionsFileName text: true).
 	[self fileOutClassDefinitionsOn: filer] ensure: [filer close]!
 
-fileOutClassDefinitionsOn: aSourceFiler 
+fileOutClassDefinitionsOn: aSourceFiler
 	"Private - Append the text definitions of the receivers owned classes to aFileStream.
 	This should produce the minimal amount of information to create a new class when 
 	loaded in (i.e. only the basic definitions are emitted)."
 
+	| classes |
+	classes := self classesInHierarchyOrder.
+	classes isEmpty ifTrue: [^self].
 	aSourceFiler
 		emitComment: 'Class Definitions';
 		cr.
-	self classesInHierarchyOrder 
-		do: [:aClass | aSourceFiler fileOutBasicDefinitionOfClass: aClass].
-	aSourceFiler cr!
+	classes do: [:aClass | aSourceFiler fileOutBasicDefinitionOfClass: aClass]!
 
 fileOutClassesOn: aSourceFiler 
 	"Private - Append definitions of all the classes owned by the
@@ -739,24 +744,30 @@ fileOutClassesOn: aSourceFiler
 			self fileOutMethodsOfClass: aClass on: aSourceFiler.
 			self fileOutMethodsOfClass: aClass class on: aSourceFiler]!
 
-fileOutGlobalAliasesOn: aSourceFiler 
+fileOutGlobalAliasesOn: aSourceFiler
 	"Private - File out the text representation of the receiver's global aliases onto the
 	<puttableStream>, stream."
 
+	| globals |
+	globals := self globalAliasVariables.
+	globals isEmpty ifTrue: [^self].
 	aSourceFiler
 		emitComment: 'Global Aliases';
 		cr.
-	(self globalAliasVariables asSortedCollection: self variableSortBlock) 
+	(globals asSortedCollection: self variableSortBlock)
 		do: [:var | aSourceFiler fileOutExpression: var key , ' := ' , var value name].
 	aSourceFiler cr!
 
-fileOutLooseMethodsOn: aSourceFiler 
+fileOutLooseMethodsOn: aSourceFiler
 	"Private - File out the loose methods owned by the receiver to the <SourceFiler> argument."
 
+	| loose |
+	loose := self methods.
+	loose isEmpty ifTrue: [^self].
 	aSourceFiler
 		emitComment: 'Loose Methods';
 		cr.
-	aSourceFiler fileOutMethods: self methods!
+	aSourceFiler fileOutMethods: loose!
 
 fileOutMethodsOfClass: aClass on: aSourceFiler 
 	"Private - Append any definitions of the classes methods which
@@ -1087,15 +1098,18 @@ savePAXPrerequisiteNamesOn: target
 		cr;
 		cr!
 
-savePAXScriptsOn: target 
+savePAXScriptsOn: target
 	"Private - File out the PAX source file representation of the receiver's scripts
 	onto the <puttableStream>, target.
 	Implementation Note: The scripts are installed using #basicScriptAt:put: to
 	avoid the package being flagged as changed and the consequent transmission 
 	of a change event."
 
-	self scripts keys asSortedCollection do: 
-			[:each | 
+	| scriptNames |
+	scriptNames := self scripts keys.
+	scriptNames isEmpty ifTrue: [^self].
+	scriptNames asSortedCollection do: 
+			[:each |
 			target
 				nextPutAll: 'package basicScriptAt: ';
 				print: each;
@@ -1148,6 +1162,7 @@ updateTimestamp
 	"Private - Synchronise the receiver's timestamp with its source file."
 
 	timestamp := self fileModificationTime! !
+
 !Package categoriesForMethods!
 allFileOutNames!accessing!private!source filing! !
 beNotUsingPAX!modes!public! !
@@ -1213,6 +1228,7 @@ fileOut
 
 fileOutOn: aSourceFiler
 	aSourceFiler fileOutPoolDictionary: self! !
+
 !PoolConstantsDictionary categoriesForMethods!
 canFileOut!development!public!source filing! !
 fileOut!development!public!source filing! !
@@ -1235,6 +1251,7 @@ fileOut
 
 fileOutOn: aSourceFiler
 	aSourceFiler fileOutPoolDictionary: self! !
+
 !PoolDictionary categoriesForMethods!
 canFileOut!development!public!source filing! !
 fileOut!development!public!source filing! !
@@ -1267,8 +1284,10 @@ emitClassPoolOfClass: aClass
 	| literalConstants |
 	literalConstants := aClass classPool associations
 				select: [:each | each isImmutable and: [each value isLiteral]].
+	literalConstants isEmpty ifTrue: [^self].
 	literalConstants asSortedCollection
-		do: [:each | self emitDeclarationForClass: aClass variable: each]!
+		do: [:each | self emitDeclarationForClass: aClass variable: each].
+	self cr!
 
 emitComment: aString 
 	"Private - Record aString to the source stream.
@@ -1430,6 +1449,7 @@ storeCommentString: aString forPackage: aPackage
 	descriptor so that the comment may be retrieved later."
 
 	^self subclassResponsibility! !
+
 !SourceFiler categoriesForMethods!
 emitCategoriesForMethods:of:!private!source filing! !
 emitCategoriesOfClass:!private!source filing! !
@@ -1730,6 +1750,7 @@ storeCategoriesForMethod: method
 						emitCategoriesOfMethod: method;
 						cr;
 						flush]]! !
+
 !SourceManager categoriesForMethods!
 basicCompressSources:!operations-source files!private! !
 compressChangedMethodsOf:onto:!operations-source files!private! !
