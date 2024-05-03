@@ -33,7 +33,7 @@ borderRectanglesFor: aView
 	"Private - Answer a collection of rectangles that mark the borders of aView"
 
 	| rect grabberWidth grabberHeight width height |
-	rect := self mapRectangle: aView getRect fromView: aView.
+	rect := self viewRectangle: aView.
 	grabberWidth := Grabber.DefaultExtent x.
 	grabberHeight := Grabber.DefaultExtent y.
 	width := rect width.
@@ -265,7 +265,7 @@ onLeftButtonPressed: aMouseEvent
 					[self
 						trackGrabber: grabber
 						from: screenPosition
-						origin: pair value center.
+						origin: grabber grabPoint.
 					^nil]].
 	"Has the mouse hit a selection border ?"
 	viewHit := nil.
@@ -403,7 +403,10 @@ viewHitBy: aPoint
 					whileTrue].
 	(viewHit isNil and: [(0 @ 0 corner: composingView extent) containsPoint: aPoint])
 		ifTrue: [viewHit := composingView].
-	^viewHit! !
+	^viewHit!
+
+viewRectangle: aView
+	^self mapRectangle: aView getRect fromView: aView! !
 
 !ViewComposerArena categoriesForMethods!
 adornmentRectanglesFor:!private! !
@@ -448,6 +451,7 @@ snapPoint:context:!geometry!private! !
 startTrackingAt:!private!tracking! !
 trackGrabber:from:origin:!adornments!private! !
 viewHitBy:!accessing!private! !
+viewRectangle:!enquiries!public! !
 !
 
 ViewComposerArena methodProtocol: #mouseTrackerTarget attributes: #(#readOnly) selectors: #(#cancelTrackingAt: #continueTrackingAt:from: #endTrackingAt: #startTrackingAt:)!
