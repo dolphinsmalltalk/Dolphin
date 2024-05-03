@@ -7572,10 +7572,9 @@ publishedAspectsOfInstances
 
 	^super publishedAspectsOfInstances
 		add: (Aspect rectangle: #insets);
-		add: (Aspect extent: #buttonSize);
 		add: (Aspect
-					choice: #bitmapSize
-					from: ##({16@16. 20 @ 20. 24 @ 24. 32 @ 32. 40 @ 40. 48 @ 48. 64 @ 64})
+					choice: #imageSize
+					from: ImageSizes keys asSortedCollection
 					andNil: nil);
 		add: (Aspect boolean: #hasFlatAppearance);
 		add: (Aspect boolean: #hasListAppearance);
@@ -7843,7 +7842,10 @@ publishedAspectsOfInstances
 
 	^(super publishedAspectsOfInstances)
 		add: (Aspect extent: #buttonSize);
-		add: (Aspect extent: #bitmapSize);
+		add: (Aspect
+					choice: #imageSize
+					from: Toolbar.ImageSizes keys asSortedCollection
+					andNil: nil);
 		add: (Aspect boolean: #hasListAppearance);
 		add: (Aspect boolean: #hasLabels);
 		add: (Aspect name: #commandDescription) beImmutable;

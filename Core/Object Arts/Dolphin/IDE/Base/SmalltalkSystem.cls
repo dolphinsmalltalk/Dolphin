@@ -347,7 +347,7 @@ allUnimplementedSelectors
 
 applyOptionsToTool: aSmalltalkToolShell
 	aSmalltalkToolShell view managedSubViews
-		do: [:each | (each isKindOf: Toolbar) ifTrue: [each bitmapSize: self toolbarBitmapSize]]!
+		do: [:each | (each isKindOf: Toolbar) ifTrue: [each imageSize: self toolbarImageSize]]!
 
 applyPublishedAspectsLiteralMap: aLookupTable to: aTool 
 	"Private - Applies the literal publishes aspect values held in aLookupTable to aTool"
@@ -4045,11 +4045,11 @@ toolBackgroundColor
 toolBackgroundColor: aColor
 	(Color named: #toolBackground) actualColor: aColor!
 
-toolbarBitmapSize
-	^toolbarBitmapSize ifNil: [16@16]!
-
 toolbarBitmapSize: aPointOrNil
 	toolbarBitmapSize := aPointOrNil!
+
+toolbarImageSize
+	^toolbarBitmapSize ifNil: [#smallIcons]!
 
 typeForArgumentClass: anObject 
 	^self argumentClasses detect: [:each | anObject includesBehavior: each] ifNone: [anObject]!
@@ -4642,8 +4642,8 @@ systemOptions!commands!public! !
 testBrowserClass!options!public! !
 toolBackgroundColor!accessing!public! !
 toolBackgroundColor:!accessing!public! !
-toolbarBitmapSize!accessing!public! !
 toolbarBitmapSize:!accessing!public! !
+toolbarImageSize!accessing!public! !
 typeForArgumentClass:!helpers!private! !
 undoChange!commands!public! !
 unimplementedSelectorsIn:!enquiries!public! !
@@ -4723,8 +4723,8 @@ publishedAspectsOfInstances
 		add: (Aspect color: #toolBackgroundColor);
 		add: (Aspect hotkey: #interruptHotKey);
 		add: (Aspect
-					choice: #toolbarBitmapSize
-					from: ##({16 @ 16. 20 @ 20. 24 @ 24. 32 @ 32. 40 @ 40. 48 @ 48. 64 @ 64})
+					choice: #toolbarImageSize
+					from: Toolbar.ImageSizes asSortedCollection
 					andNil: nil);
 		add: (Aspect choice: #defaultMaxStack from: #(32 64 96 128));
 		add: (Aspect choice: #displayItLocale from: {Locale smalltalk. Locale userDefault. Locale invariant});
