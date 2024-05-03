@@ -1,5 +1,5 @@
 //
-// IST.RC2 - resources Microsoft Visual C++ does not edit directly
+// Version.rc2 - Tokenized version resource that must not be edited by Microsoft Visual C++
 //
 #pragma code_page(65001)
 

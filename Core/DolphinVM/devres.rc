@@ -7,6 +7,7 @@
 //
 // Generated from the TEXTINCLUDE 2 resource.
 //
+#define WINVER 0xA00
 #include "winres.h"
 #include "Version.h"
 
@@ -31,9 +32,9 @@ LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
 
 !APPLICATION            ICON                    "Res\\flipper.ico"
 
-ACCELERATORPRESENTER.ICO ICON                   "Res\\AcceleratorPresenter.ico"
+ACCELERATORPRESENTER.ICO ICON                    "Res\\AcceleratorPresenter.ico"
 
-APPLICATIONDEPLOYMENTWIZARD.ICO ICON            "Res\\ApplicationDeploymentWizard.ico"
+APPLICATIONDEPLOYMENTWIZARD.ICO ICON                    "Res\\ApplicationDeploymentWizard.ico"
 
 ASPECTBUFFER.ICO        ICON                    "Res\\AspectBuffer.ico"
 
@@ -69,7 +70,7 @@ CLASSCOMMENT.ICO        ICON                    "Res\\ClassComment.ico"
 
 CLASSDEFINITION.ICO     ICON                    "Res\\ClassDefinition.ico"
 
-CLASSHIERARCHYDIAGRAM.ICO ICON                  "Res\\ClassHierarchyDiagram.ico"
+CLASSHIERARCHYDIAGRAM.ICO ICON                    "Res\\ClassHierarchyDiagram.ico"
 
 CLEARDOCUMENT.ICO       ICON                    "Res\\ClearDocument.ico"
 
@@ -93,13 +94,13 @@ COMBOBOX.ICO            ICON                    "Res\\Combobox.ico"
 
 COMINTERFACE.ICO        ICON                    "Res\\cominter.ico"
 
-COMPILEDCODE.ICO      ICON                      "Res\\CompiledCode.ico"
+COMPILEDCODE.ICO        ICON                    "Res\\CompiledCode.ico"
 
 COMPILEFAILEDMETHOD.ICO ICON                    "Res\\CompileFailedMethod.ico"
 
 COMPILER.ICO            ICON                    "Res\\Compiler.ico"
 
-CONSOLESESSIONMANAGER.ICO ICON                  "Res\\ConsoleSessionManager.ico"
+CONSOLESESSIONMANAGER.ICO ICON                    "Res\\ConsoleSessionManager.ico"
 
 CONTAINERVIEW.ICO       ICON                    "Res\\ContainerView.ico"
 
@@ -107,7 +108,7 @@ DATE.ICO                ICON                    "Res\\Date.ico"
 
 DATEPRESENTER.ICO       ICON                    "Res\\DatePresenter.ico"
 
-DATETIMECOMMONCONTROL.ICO ICON                  "Res\\DateTimePicker.ico"
+DATETIMECOMMONCONTROL.ICO ICON                    "Res\\DateTimePicker.ico"
 
 DEADOBJECT.ICO          ICON                    "Res\\DeadObject.ico"
 
@@ -129,7 +130,7 @@ DIALOGVIEW.ICO          ICON                    "Res\\DialogView.ico"
 
 DICTIONARY.ICO          ICON                    "Res\\Dictionary.ico"
 
-DISKVOLUMEINFORMATION.ICO ICON                  "Res\\DiskVolumeInformation.ico"
+DISKVOLUMEINFORMATION.ICO ICON                    "Res\\DiskVolumeInformation.ico"
 
 DISPLAYIT.ICO           ICON                    "Res\\DisplayIt.ico"
 
@@ -139,15 +140,15 @@ DOCUMENTSHELL.ICO       ICON                    "Res\\DocumentShell.ico"
 
 DOLPHINPACKAGE.ICO      ICON                    "Res\\DolphinPackage.ico"
 
-DOLPHINPACKAGEFOLDER.ICO ICON                   "Res\\DolphinPackageFolder.ico"
+DOLPHINPACKAGEFOLDER.ICO ICON                    "Res\\DolphinPackageFolder.ico"
 
-PROTECTEDPRODUCTSERIALNUMBER.ICO ICON           "Res\\ProtectedProductSerialNumber.ico"
+PROTECTEDPRODUCTSERIALNUMBER.ICO ICON                    "Res\\ProtectedProductSerialNumber.ico"
 
-DOLPHINSURECERTIFICATE.ICO ICON                 "Res\\DolphinSureCertificate.ico"
+DOLPHINSURECERTIFICATE.ICO ICON                    "Res\\DolphinSureCertificate.ico"
 
-DOLPHINSURECERTIFICATESTORE.ICO ICON            "Res\\DolphinSureCertificateStore.ico"
+DOLPHINSURECERTIFICATESTORE.ICO ICON                    "Res\\DolphinSureCertificateStore.ico"
 
-DOLPHINSURETRUSTEDDATA.ICO ICON                 "Res\\DolphinSureTrustedData.ico"
+DOLPHINSURETRUSTEDDATA.ICO ICON                    "Res\\DolphinSureTrustedData.ico"
 
 DOWNARROW.ICO           ICON                    "Res\\DownArrow.ico"
 
@@ -169,7 +170,7 @@ EDITUNDO.ICO            ICON                    "Res\\EditUndo.ico"
 
 ELLIPSISBUTTON.ICO      ICON                    "Res\\EllipsisButton.ico"
 
-ENVIRONMENTBROWSERSHELL.ICO ICON                "Res\\EnvironmentBrowserShell.ico"
+ENVIRONMENTBROWSERSHELL.ICO ICON                    "Res\\EnvironmentBrowserShell.ico"
 
 EVALUATEIT.ICO          ICON                    "Res\\EvaluateIt.ico"
 
@@ -185,7 +186,7 @@ EXTERNALLIBRARY.ICO     ICON                    "Res\\externallibrary.ico"
 
 EXTERNALSTRUCTURE.ICO   ICON                    "Res\\externalstructure.ico"
 
-FILE.ICO				ICON					"Res\File.ico"
+FILE.ICO                ICON                    "Res\\File.ico"
 
 FILEDIALOG.ICO          ICON                    "Res\\FileDialog.ico"
 
@@ -201,7 +202,7 @@ FILESAVEALL.ICO         ICON                    "Res\\FileSaveAll.ico"
 
 FILESYSTEMMONITOR.ICO   ICON                    "Res\\FileSystemMonitor.ico"
 
-FIND.ICO				ICON                    "Res\\Find.ico"
+FIND.ICO                ICON                    "Res\\Find.ico"
 
 FINDCLASS.ICO           ICON                    "Res\\FindClass.ico"
 
@@ -223,7 +224,7 @@ FONTVIEW.ICO            ICON                    "Res\\FontView.ico"
 
 GOSEARCH.ICO            ICON                    "Res\\GoSearch.ico"
 
-GOTOFOLDER.ICO          ICON                    "Res\GotoFolder.ico"
+GOTOFOLDER.ICO          ICON                    "Res\\GotoFolder.ico"
 
 GRAPHICSTOOL.ICO        ICON                    "Res\\GraphicsTool.ico"
 
@@ -231,15 +232,15 @@ GRAYEDCLASSCOMMENT.ICO  ICON                    "res\\GrayedClassComment.ico"
 
 GROUPBOX.ICO            ICON                    "Res\\GroupBox.ico"
 
-GUID.ICO				ICON                    "Res\\Guid.ico"
+GUID.ICO                ICON                    "Res\\Guid.ico"
 
 HELP.ICO                ICON                    "Res\\Help.ico"
 
 HISTORYLIST.ICO         ICON                    "Res\\HistoryList.ico"
 
-METHODHISTORY.ICO       ICON				    "Res\\MethodHistory.ico"
+METHODHISTORY.ICO       ICON                    "Res\\MethodHistory.ico"
 
-METHODHISTORYERASE.ICO  ICON				    "Res\\MethodHistoryErase.ico"
+METHODHISTORYERASE.ICO  ICON                    "Res\\MethodHistoryErase.ico"
 
 HISTORYBACK.ICO         ICON                    "Res\\HistoryBack.ico"
 
@@ -257,7 +258,7 @@ IDEASPACEBREAKOUT.ICO   ICON                    "Res\\IdeaSpaceBreakout.ico"
 
 IDEASPACESHELLADD.ICO   ICON                    "Res\\IdeaSpaceShellAdd.ico"
 
-IDEASPACESHELLADDDISABLED.ICO ICON              "res\\IdeaSpaceShellAddDisabled.ico"
+IDEASPACESHELLADDDISABLED.ICO ICON                    "res\\IdeaSpaceShellAddDisabled.ico"
 
 IDISPATCH.ICO           ICON                    "Res\\idispatch.ico"
 
@@ -297,7 +298,7 @@ LISTMODEL.ICO           ICON                    "Res\\ListModel.ico"
 
 LISTPRESENTER.ICO       ICON                    "Res\\ListPresenter.ico"
 
-LISTVIEW.ICO            ICON					"Res\\ListView.ico"
+LISTVIEW.ICO            ICON                    "Res\\ListView.ico"
 
 LISTVIEWCOLUMN.ICO      ICON                    "Res\\ListViewColumn.ico"
 
@@ -311,7 +312,7 @@ MESSAGE.ICO             ICON                    "Res\\Message.ico"
 
 MESSAGESENDABSTRACT.ICO ICON                    "Res\\MessageSendAbstract.ico"
 
-MESSAGESEQUENCEABSTRACT.ICO ICON                "Res\\MessageSequenceAbstract.ico"
+MESSAGESEQUENCEABSTRACT.ICO ICON                    "Res\\MessageSequenceAbstract.ico"
 
 METACLASS.ICO           ICON                    "Res\\Metaclass.ico"
 
@@ -321,7 +322,7 @@ METHODPROTOCOL.ICO      ICON                    "Res\\methodprotocol.ico"
 
 METHODPROTOCOL_ANSI.ICO ICON                    "Res\\methodprotocolansi.ico"
 
-METHODPROTOCOL_READONLY.ICO ICON                "Res\\methodprotocolro.ico"
+METHODPROTOCOL_READONLY.ICO ICON                    "Res\\methodprotocolro.ico"
 
 METHODSOURCE.ICO        ICON                    "Res\\MethodSource.ico"
 
@@ -357,7 +358,7 @@ PANIC.ICO               ICON                    "Res\\Panic.ico"
 
 PEN.ICO                 ICON                    "Res\\Pen.ico"
 
-POOLDICTIONARIESSHELL.ICO ICON                  "Res\\PoolDictionariesShell.ico"
+POOLDICTIONARIESSHELL.ICO ICON                    "Res\\PoolDictionariesShell.ico"
 
 POSITION.ICO            ICON                    "res\\POSITION.ICO"
 
@@ -409,7 +410,7 @@ RUNTOCURSOR.ICO         ICON                    "Res\\RunToCursor.ico"
 
 RUN.ICO                 ICON                    "Res\\Run.ico"
 
-SAMPLEAPPLICATIONSFOLDER.ICO ICON               "Res\\SampleApplicationsFolder.ico"
+SAMPLEAPPLICATIONSFOLDER.ICO ICON                    "Res\\SampleApplicationsFolder.ico"
 
 SCINTILLAVIEW.ICO       ICON                    "Res\\ScintillaView.ico"
 
@@ -421,17 +422,17 @@ SCROLLBAR.ICO           ICON                    "Res\\ScrollBar.ico"
 
 SCROLLINGDECORATOR.ICO  ICON                    "Res\\ScrollingDecorator.ico"
 
-SELECTALL.ICO			ICON                    "Res\\SelectAll.ico"
+SELECTALL.ICO           ICON                    "Res\\SelectAll.ico"
 
-SELECTHIDE.ICO			ICON                    "Res\\SelectHide.ico"
+SELECTHIDE.ICO          ICON                    "Res\\SelectHide.ico"
 
-SELECTINVERT.ICO		ICON                    "Res\\SelectInvert.ico"
+SELECTINVERT.ICO        ICON                    "Res\\SelectInvert.ico"
 
-SELECTNONE.ICO			ICON                    "Res\\SelectNone.ico"
+SELECTNONE.ICO          ICON                    "Res\\SelectNone.ico"
 
-SELECTOPEN.ICO			ICON                    "Res\\SelectOpen.ico"
+SELECTOPEN.ICO          ICON                    "Res\\SelectOpen.ico"
 
-SELECTPLAY.ICO			ICON                    "Res\\SelectPlay.ico"
+SELECTPLAY.ICO          ICON                    "Res\\SelectPlay.ico"
 
 SEARCHTEXT.ICO          ICON                    "Res\\SearchText.ico"
 
@@ -443,13 +444,13 @@ SHOWNEXTSTATEMENT.ICO   ICON                    "Res\\ShowNextStatement.ico"
 
 SLIDER.ICO              ICON                    "Res\\Slider.ico"
 
-SLIDEYINNEYOUTEYTHING.ICO ICON                  "Res\\SlideyInneyOuteyThing.ico"
+SLIDEYINNEYOUTEYTHING.ICO ICON                    "Res\\SlideyInneyOuteyThing.ico"
 
-SMALLTALKOPTIONSFOLDER.ICO ICON                 "Res\\SmalltalkOptionsFolder.ico"
+SMALLTALKOPTIONSFOLDER.ICO ICON                    "Res\\SmalltalkOptionsFolder.ico"
 
-SMALLTALKTOOLSFOLDER.ICO ICON                   "Res\\SmalltalkSystemToolsFolder.ico"
+SMALLTALKTOOLSFOLDER.ICO ICON                    "Res\\SmalltalkSystemToolsFolder.ico"
 
-SMALLTALKTOOLSHELL.ICO  ICON                   "Res\\SmalltalkToolShell.ico"
+SMALLTALKTOOLSHELL.ICO  ICON                    "Res\\SmalltalkToolShell.ico"
 
 SMALLTALKWORKSPACE.ICO  ICON                    "res\\SmalltalkWorkspace.ico"
 
@@ -505,11 +506,11 @@ TIME.ICO                ICON                    "Res\\Time.ico"
 
 TIMEPRESENTER.ICO       ICON                    "Res\\TimePresenter.ico"
 
-TIME_ZONE_INFORMATION.ICO ICON                  "Res\\TimeZone.ico"
+TIME_ZONE_INFORMATION.ICO ICON                    "Res\\TimeZone.ico"
 
 DATEANDTIME.ICO         ICON                    "Res\\DateAndTime.ico"
 
-TOGGLELOCALHIERARCHY.ICO ICON                   "Res\\ToggleLocalHierarchy.ico"
+TOGGLELOCALHIERARCHY.ICO ICON                    "Res\\ToggleLocalHierarchy.ico"
 
 TOOLBAR.ICO             ICON                    "Res\\Toolbar.ico"
 
@@ -535,7 +536,7 @@ VALUEBUFFER.ICO         ICON                    "Res\\ValueBuffer.ico"
 
 VALUECONVERTER.ICO      ICON                    "Res\\ValueConverter.ico"
 
-VALUECONVERTINGCONTROLVIEW.ICO ICON             "Res\\ValueConvertingControlView.ico"
+VALUECONVERTINGCONTROLVIEW.ICO ICON                    "Res\\ValueConvertingControlView.ico"
 
 VALUEDIALOG.ICO         ICON                    "Res\\ValueDialog.ico"
 
@@ -551,7 +552,7 @@ VIEWCOMPOSER.ICO        ICON                    "Res\\ViewComposer.ico"
 
 VIEWCONTENT.ICO         ICON                    "Res\\ViewContent.ico"
 
-VIEWDETAILS.ICO	        ICON                    "Res\\ViewDetails.ico"
+VIEWDETAILS.ICO         ICON                    "Res\\ViewDetails.ico"
 
 VIEWEXTRALARGEICONS.ICO ICON                    "Res\\ViewExtraLargeIcons.ico"
 
@@ -577,15 +578,16 @@ XML.ICO                 ICON                    "Res\\Xml.ico"
 
 UNITTESTPLUGIN.ICO      ICON                    "Res\\UnitTestPlugin.ico"
 
-UNITTESTPLUGINDEFECT.ICO ICON                   "Res\\UnitTestPluginDefect.ico"
+UNITTESTPLUGINDEFECT.ICO ICON                    "Res\\UnitTestPluginDefect.ico"
 
 UNITTESTPLUGINFAIL.ICO  ICON                    "Res\\UnitTestPluginFail.ico"
 
-UNITTESTPLUGINNOTEST.ICO ICON                   "Res\\UnitTestPluginNoTest.ico"
+UNITTESTPLUGINNOTEST.ICO ICON                    "Res\\UnitTestPluginNoTest.ico"
 
-UNITTESTPLUGINNOTRUN.ICO ICON                   "Res\\UnitTestPluginNotRun.ico"
+UNITTESTPLUGINNOTRUN.ICO ICON                    "Res\\UnitTestPluginNotRun.ico"
 
 UNITTESTPLUGINPASS.ICO  ICON                    "Res\\UnitTestPluginPass.ico"
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -618,16 +620,16 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 
 IDD_STRIPPERPROGRESS DIALOGEX 0, 0, 349, 99
 STYLE DS_SETFONT | DS_NOFAILCREATE | DS_CENTER | WS_POPUP | WS_CAPTION
-EXSTYLE WS_EX_CLIENTEDGE
 CAPTION "Dolphin Lagoon - Image Stripping in Progress"
-FONT 8, "Microsoft Sans Serif", 0, 0, 0x1
+FONT 8, "Segoe UI", 400, 0, 0x0
 BEGIN
-    CONTROL         "LagoonLogo.bmp",IDC_PROGRESSIMAGE,"Static",SS_BITMAP,0,0,15,13
+    CONTROL         "LagoonLogo.bmp",IDC_PROGRESSIMAGE,"Static",SS_BITMAP | SS_REALSIZECONTROL,0,0,113,100
     CONTROL         "Progress1",IDC_PROGRESSBAR,"msctls_progress32",0x0,114,73,232,9,WS_EX_STATICEDGE
-    LTEXT           "Image Stripping in Progress",IDC_PROGRESSCAPTION,114,2,233,12,NOT WS_VISIBLE
-    LTEXT           "The stripping process may take several minutes depending on the ImageStripper configuration. ",IDC_PROGRESSEXPLANATION,114,4,235,66
+    LTEXT           "Image Stripping in Progress",IDC_PROGRESSCAPTION,114,2,233,9,NOT WS_VISIBLE
+    LTEXT           "The stripping process may take several minutes depending on the ImageStripper configuration. ",IDC_PROGRESSEXPLANATION,114,3,235,67
     EDITTEXT        IDC_PROGRESSSTATUS,113,84,232,13,ES_AUTOHSCROLL | NOT WS_BORDER,WS_EX_STATICEDGE
 END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -658,57 +660,18 @@ END
 
 2 TEXTINCLUDE 
 BEGIN
+    "#define WINVER 0xA00\r\n"
     "#include ""winres.h""\r\n"
-    "#include ""Verson.h""\r\n"
+    "#include ""Version.h""\r\n"
     "\0"
 END
 
 3 TEXTINCLUDE 
 BEGIN
-    "#include ""res\\ist.rc2""  // non-Microsoft Visual C++ edited resources\0"
+    "#include ""res\\version.rc2""  // non-Microsoft Visual C++ edited resources\0"
 END
 
 #endif    // APSTUDIO_INVOKED
-
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// Version
-//
-
-VS_VERSION_INFO VERSIONINFO
-FILEVERSION DOLPHIN_VERINFO_VERSION
-PRODUCTVERSION DOLPHIN_VERINFO_VERSION
- FILEFLAGSMASK 0x1fL
-#ifdef _DEBUG
- FILEFLAGS 0x1L
-#else
- FILEFLAGS 0x0L
-#endif
- FILEOS 0x40004L
- FILETYPE 0x2L
- FILESUBTYPE 0x0L
-BEGIN
-    BLOCK "StringFileInfo"
-    BEGIN
-        BLOCK "040904b0"
-        BEGIN
-            VALUE "CompanyName", "Object Arts Ltd."
-            VALUE "FileDescription", "Dolphin 7.1 IDE Resources"
-			VALUE "FileVersion", DOLPHIN_ASSEMBLY_VERSION
-            VALUE "InternalName", "DolphinDevRes"
-            VALUE "LegalCopyright", "Copyright © Object Arts 1997-2018"
-            VALUE "OriginalFilename", "DolphinDR7.dll"
-            VALUE "ProductName", "Dolphin Smalltalk 7.1"
-            VALUE "ProductVersion", GIT_TAG
-            VALUE "WARNING", "Please edit this as a text file rather than with the resource editor to preserve GIT_TAG"
-        END
-    END
-    BLOCK "VarFileInfo"
-    BEGIN
-        VALUE "Translation", 0x409, 1200
-    END
-END
 
 #endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////
@@ -738,7 +701,7 @@ VCBAR.BMP               BITMAP                  "Res\\VCBar.bmp"
 //
 // Generated from the TEXTINCLUDE 3 resource.
 //
-#include "res\ist.rc2"  // non-Microsoft Visual C++ edited resources
+#include "res\version.rc2"  // non-Microsoft Visual C++ edited resources
 /////////////////////////////////////////////////////////////////////////////
 #endif    // not APSTUDIO_INVOKED
 

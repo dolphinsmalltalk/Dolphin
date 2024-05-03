@@ -313,6 +313,7 @@
     <Image Include="Res\PowerSwitch.ico" />
     <Image Include="Res\preferences.ico" />
     <Image Include="Res\PrinterCanvas.ico" />
+    <Image Include="Res\PrintIt.ico" />
     <Image Include="Res\ProcessorScheduler.ico" />
     <Image Include="Res\Profiler.ico" />
     <Image Include="Res\Properties.ico" />
@@ -341,6 +342,7 @@
     <Image Include="Res\StatusBar.ico" />
     <Image Include="Res\TestView.ico" />
     <Image Include="Res\TextDocument.ico" />
+    <Image Include="Res\TimeZone.ico" />
     <Image Include="Res\Toolbar.ico" />
     <Image Include="Res\UpArrow.ico" />
     <Image Include="Res\ViewContent.ico" />
@@ -519,6 +521,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="rc_devrs.h" />
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Res\version.rc2" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
