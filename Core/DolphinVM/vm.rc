@@ -96,7 +96,7 @@ END
 3 TEXTINCLUDE 
 BEGIN
     "1 TYPELIB ""ActiveXHost.tlb""\r\n"
-    "#include ""res\\ist.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""res\\version.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
     "#include ""messages.rc""\r\n"
     "\0"
 END
@@ -182,7 +182,7 @@ END
 // Generated from the TEXTINCLUDE 3 resource.
 //
 1 TYPELIB "ActiveXHost.tlb"
-#include "res\ist.rc2"  // non-Microsoft Visual C++ edited resources
+#include "res\version.rc2"  // non-Microsoft Visual C++ edited resources
 #include "messages.rc"
 
 /////////////////////////////////////////////////////////////////////////////

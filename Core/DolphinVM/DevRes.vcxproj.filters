@@ -2,6 +2,7 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClInclude Include="rc_devrs.h" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Res\AcceleratorPresenter.ico">
@@ -1057,6 +1058,8 @@
     <Image Include="Res\MoveLast.ico">
       <Filter>Icons</Filter>
     </Image>
+    <Image Include="Res\PrintIt.ico" />
+    <Image Include="Res\TimeZone.ico" />
   </ItemGroup>
   <ItemGroup>
     <None Include="devres.rc2" />
@@ -1071,5 +1074,8 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="devres.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Res\version.rc2" />
   </ItemGroup>
 </Project>
