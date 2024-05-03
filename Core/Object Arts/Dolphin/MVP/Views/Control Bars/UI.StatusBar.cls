@@ -219,6 +219,10 @@ removeItem: aStatusBarItem
 	index to: parts size do: [:i | self setItemText: (parts at: i) at: i].
 	^aStatusBarItem!
 
+resolutionScaledBy: aPoint
+	super resolutionScaledBy: aPoint.
+	parts do: [:each | each resolutionScaledBy: aPoint]!
+
 rightEdgesForWidth: anInteger
 	| edges width right fixedWidth numResizable numParts horizontalGap share |
 	numParts := parts size.
@@ -368,6 +372,7 @@ onDrawItem:!event handling-win32!public! !
 onViewCreated!event handling!public! !
 rectangleOfItem:!accessing!private! !
 removeItem:!items!public!removing! !
+resolutionScaledBy:!geometry!private! !
 rightEdgesForWidth:!geometry!private! !
 sbGetBorders!accessing!private! !
 sbGetTipText:!accessing!private! !
