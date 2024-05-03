@@ -21,10 +21,83 @@ WINDOWPLACEMENT comment: ''!
 
 !WINDOWPLACEMENT methodsFor!
 
+corner: aPoint
+	"Set the <point> representing the corner of the placement rectangle."
+
+	bytes
+		sdwordAtOffset: ##(_OffsetOf_rcNormalPosition + RECT._OffsetOf_right) put: aPoint x asInteger;
+		sdwordAtOffset: ##(_OffsetOf_rcNormalPosition + RECT._OffsetOf_bottom) put: aPoint y asInteger!
+
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
+
+extent
+	^self width @ self height!
+
+flags
+	"Answer the <Integer> value of the receiver's 'flags' field."
+
+	^bytes dwordAtOffset: _OffsetOf_flags!
+
+flags: anInteger
+	"Set the receiver's 'flags' field to the value of the argument, anInteger"
+
+	bytes dwordAtOffset: _OffsetOf_flags put: anInteger!
+
+height
+	"Answer the height of the receiver's placement rectangle."
+
+	^(bytes sdwordAtOffset: ##(_OffsetOf_rcNormalPosition + RECT._OffsetOf_bottom))
+		- (bytes sdwordAtOffset: ##(_OffsetOf_rcNormalPosition + RECT._OffsetOf_top))!
+
+height: anInteger
+	"Set the height of the placement rectangle to the <integer> argument."
+
+	bytes sdwordAtOffset: ##(_OffsetOf_rcNormalPosition + RECT._OffsetOf_bottom)
+		put: (bytes sdwordAtOffset: ##(_OffsetOf_rcNormalPosition + RECT._OffsetOf_bottom)) + anInteger!
+
+origin
+	"Answer a <Point> representing the origin (top-left corner) of the placement rectangle."
+
+	^(bytes sdwordAtOffset: ##(_OffsetOf_rcNormalPosition + RECT._OffsetOf_left))
+		@ (bytes sdwordAtOffset: ##(_OffsetOf_rcNormalPosition + RECT._OffsetOf_top))!
+
+origin: aPoint
+	"Set the <point> representing the origin of the placement rectangle."
+
+	bytes
+		sdwordAtOffset: ##(_OffsetOf_rcNormalPosition + RECT._OffsetOf_left) put: aPoint x asInteger;
+		sdwordAtOffset: ##(_OffsetOf_rcNormalPosition + RECT._OffsetOf_top) put: aPoint y asInteger!
+
+ptMaxPosition
+	"Answer the <POINTL> value of the receiver's 'ptMaxPosition' field."
+
+	^POINTL fromAddress: bytes yourAddress + _OffsetOf_ptMaxPosition!
+
+ptMaxPosition: aPOINTL
+	"Set the receiver's 'ptMaxPosition' field to the value of the argument, aPOINTL"
+
+	aPOINTL
+		replaceBytesOf: bytes
+		from: ##(_OffsetOf_ptMaxPosition + 1)
+		to: ##(_OffsetOf_ptMaxPosition + POINTL basicByteSize)
+		startingAt: 1!
+
+ptMinPosition
+	"Answer the <POINTL> value of the receiver's 'ptMinPosition' field."
+
+	^POINTL fromAddress: bytes yourAddress + _OffsetOf_ptMinPosition!
+
+ptMinPosition: aPOINTL
+	"Set the receiver's 'ptMinPosition' field to the value of the argument, aPOINTL"
+
+	aPOINTL
+		replaceBytesOf: bytes
+		from: ##(_OffsetOf_ptMinPosition + 1)
+		to: ##(_OffsetOf_ptMinPosition + POINTL basicByteSize)
+		startingAt: 1!
 
 rcNormalPosition
 	"Answer the <RECT> value of the receiver's 'rcNormalPosition' field."
@@ -40,6 +113,28 @@ rcNormalPosition: aRECT
 		to: ##(_OffsetOf_rcNormalPosition + RECT basicByteSize)
 		startingAt: 1!
 
+rectangle: aRectangle
+	self
+		origin: aRectangle origin;
+		corner: aRectangle corner!
+
+scaleBy: aMagnitude
+	"Scale the receiver in-place by the specified <Point> or <Number> multiplier."
+
+	"At present this only adjusts the placement rectangle, i.e. the rcNormalPosition field. This is done using inline code to directly access the RECT because this is called a lot when opening a complex view resource.The minimum and maximum position points are notionally used to represent the positions when minimised and maximised, although it is not clear that these are in fact relevant anymore. ptMinPosition is either (-1@-1) or -(32000@-32000) (after the window has been minimised or maximised), and ptMaxPosition is always (-1@-1)."
+
+	| pt |
+	pt := (bytes sdwordAtOffset: ##(_OffsetOf_rcNormalPosition + RECT._OffsetOf_left))
+				@ (bytes sdwordAtOffset: ##(_OffsetOf_rcNormalPosition + RECT._OffsetOf_top)) * aMagnitude.
+	bytes
+		sdwordAtOffset: ##(_OffsetOf_rcNormalPosition + RECT._OffsetOf_left) put: pt x asInteger;
+		sdwordAtOffset: ##(_OffsetOf_rcNormalPosition + RECT._OffsetOf_top) put: pt y asInteger.
+	pt := (bytes sdwordAtOffset: ##(_OffsetOf_rcNormalPosition + RECT._OffsetOf_right))
+				@ (bytes sdwordAtOffset: ##(_OffsetOf_rcNormalPosition + RECT._OffsetOf_bottom)) * aMagnitude.
+	bytes
+		sdwordAtOffset: ##(_OffsetOf_rcNormalPosition + RECT._OffsetOf_right) put: pt x asInteger;
+		sdwordAtOffset: ##(_OffsetOf_rcNormalPosition + RECT._OffsetOf_bottom) put: pt y asInteger!
+
 showCmd
 	"Answer the <Integer> value of the receiver's 'showCmd' field."
 
@@ -48,14 +143,35 @@ showCmd
 showCmd: anInteger
 	"Set the receiver's 'showCmd' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_showCmd put: anInteger! !
+	bytes dwordAtOffset: _OffsetOf_showCmd put: anInteger!
+
+width
+	"Answer the width of the receiver's placement rectangle."
+
+	^(bytes sdwordAtOffset: ##(_OffsetOf_rcNormalPosition + RECT._OffsetOf_right))
+		- (bytes sdwordAtOffset: ##(_OffsetOf_rcNormalPosition + RECT._OffsetOf_left))! !
 
 !WINDOWPLACEMENT categoriesForMethods!
+corner:!accessing!public! !
 dwSize:!**compiled accessors**!public! !
+extent!public! !
+flags!**compiled accessors**!public! !
+flags:!**compiled accessors**!public! !
+height!accessing!public! !
+height:!accessing!public! !
+origin!accessing!public! !
+origin:!accessing!public! !
+ptMaxPosition!**compiled accessors**!public! !
+ptMaxPosition:!**compiled accessors**!public! !
+ptMinPosition!**compiled accessors**!public! !
+ptMinPosition:!**compiled accessors**!public! !
 rcNormalPosition!**compiled accessors**!public! !
 rcNormalPosition:!**compiled accessors**!public! !
+rectangle:!**compiled accessors**!public! !
+scaleBy:!public!transforming! !
 showCmd!**compiled accessors**!public! !
 showCmd:!**compiled accessors**!public! !
+width!accessing!public! !
 !
 
 !WINDOWPLACEMENT class methodsFor!
@@ -76,17 +192,16 @@ defineFields
 			RECT  rcNormalPosition;
 		} WINDOWPLACEMENT;"
 
-	self 
+	self
 		defineField: #dwSize type: DWORDField writeOnly beOverride;
-		defineField: #flags type: DWORDField filler;
+		defineField: #flags type: DWORDField new;
 		defineField: #showCmd type: DWORDField new;
-		defineField: #ptMinPosition type: (StructureField type: POINTL) beFiller;
-		defineField: #ptMaxPosition type: (StructureField type: POINTL) beFiller;
-		defineField: #rcNormalPosition type: (StructureField type: RECT)
-!
+		defineField: #ptMinPosition type: (StructureField type: POINTL);
+		defineField: #ptMaxPosition type: (StructureField type: POINTL);
+		defineField: #rcNormalPosition type: (StructureField type: RECT)!
 
 getFieldNames
-	^#(#dwSize #showCmd #rcNormalPosition)! !
+	^#(#dwSize #flags #showCmd #ptMinPosition #ptMaxPosition #rcNormalPosition)! !
 
 !WINDOWPLACEMENT class categoriesForMethods!
 defineFields!public!template definition! !

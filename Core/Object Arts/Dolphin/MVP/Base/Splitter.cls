@@ -19,11 +19,11 @@ Splitter comment: 'Splitter is a <view> used for implementing "splitter bars" fo
 applyFont
 	"Nothing to do here as the receiver cannot display text."!
 
-calculateExtent: aLayoutContext 
+calculateExtent: aLayoutContext
 	"Private - Answer the calculated extent of the receiver that should be used by a
 	layout manager during it's layout process."
 
-	^self calcExtentFromClientExtent: self creationExtent!
+	^self calcExtentFromClientExtent: (self mapDipsToPels: self defaultExtent)!
 
 cancelTrackingAt: aPoint 
 	| position |
@@ -74,7 +74,7 @@ defaultBackcolor
 				b: 153]!
 
 defaultExtent
-	"Private - Answer the default size of the receiver in device-independent pixels (96-dpi). This is used only to determine the size of a view when it is created (although after scaling DIPs to the display DPI - see #creationExtent). Thereafter preferredExtent is used when the desired size of a view is requested."
+	"Private - Answer the default size of the receiver in device-independent pixels (96-dpi DIPs). This is used only to determine the size of a view when it is created (although after scaling DIPs to the monitor DPI). Thereafter #preferredExtent is used when the desired size of a view is requested."
 
 	"Implementation Note: Splitters used to be one pixel larger than the standard Windows sizing frame, however, the default sizing frame seems to have grown larger over the years so now we hard code a reasonable value."
 

@@ -120,6 +120,10 @@ cardLayout
 cards
 	^tray cards!
 
+configureDefaultShell: aShellView
+	aShellView layoutManager: BorderLayout new.
+	self arrangement: #west!
+
 createTabs
 	"Private - Add a <TabView> as a non-managed sub view of the receiver"
 
@@ -442,21 +446,6 @@ positionTray: aLayoutContext
 							left @ top corner: right @ (top + trayExtent y min: self parentView height)]].
 	aLayoutContext setView: tray rectangle: rect!
 
-showShell
-	"Private - Show the receiver within a shell"
-
-	| shell |
-	shell := ShellView new
-				create;
-				yourself.
-	shell extent: (shell calcExtentFromClientExtent: self creationExtent).
-	shell layoutManager: BorderLayout new.
-	self
-		parentView: shell;
-		arrangement: #west.
-	self create show.
-	shell show!
-
 showTray
 	"Show the tray, i.e. slide it out."
 
@@ -544,6 +533,7 @@ calculateExtent:!geometry!private! !
 canAcceptSubViews!hierarchy!public!sub views! !
 cardLayout!accessing!private! !
 cards!public!updating! !
+configureDefaultShell:!operations!private! !
 createTabs!helpers!private! !
 createTray!helpers!private! !
 defaultBackcolor!colors!constants!private! !
@@ -582,7 +572,6 @@ onViewCreated!event handling!private! !
 onViewDestroyed!event handling!private! !
 pin!commands!public! !
 positionTray:!geometry!private! !
-showShell!operations!private! !
 showTray!commands!public! !
 startAutoHideTimer!private! !
 tabs!public! !

@@ -125,13 +125,12 @@ filterBlock: monadicValuable
 	self refresh.
 	self selections: sels ifAbsent: []!
 
-imageFromResource: aResourceIdentifier 
+imageFromResource: aResourceIdentifier
 	| shell resourceView |
-	shell := View desktop.
-	resourceView := [self systemModel loadViewResource: aResourceIdentifier resource inContext: shell] 
-				on: Error
+	shell := DesignDesktopView forSystemDpi.
+	resourceView := [shell loadViewResource: aResourceIdentifier resource forEdit: false] on: Error
 				do: [:x | ].
-	^resourceView notNil 
+	^resourceView notNil
 		ifTrue: 
 			[resourceView invalidateLayoutDeeply.
 			[Bitmap fromView: resourceView] ensure: [resourceView destroy]]

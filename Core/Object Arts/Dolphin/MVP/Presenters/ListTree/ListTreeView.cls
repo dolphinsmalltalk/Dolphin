@@ -1447,14 +1447,11 @@ resetTreeToRoots
 	self discardAllExpanded.	
 	self model list: (OrderedCollection withAll: self roots).	"be sure to make a copy"!
 
-resolutionScaledBy: scale
+resolutionScaledBy: aPoint
 	"private -- I'm not sure what this does, but it's copied from TreeView"
 
-	indentSeparation := (indentSeparation * scale x) truncated.
-	super resolutionScaledBy: scale
-
-
-!
+	indentSeparation := (indentSeparation * aPoint x) truncated.
+	super resolutionScaledBy: aPoint!
 
 retainExpanded
 	"answer whether we retain a record of which items were expanded even

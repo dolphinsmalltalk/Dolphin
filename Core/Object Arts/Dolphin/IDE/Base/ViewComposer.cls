@@ -530,7 +530,7 @@ copyAspectsFrom: sourceView to: destinationView
 							(source canGet and: [destination canSet]) ifTrue: [destination value: source value]]]].
 	originalName := sourceView name.
 	originalPreviousSibling := sourceView previousSiblingView.
-	sourceView parentView == View desktop 
+	sourceView parentView isDesktop
 		ifFalse: 
 			[sourceView name: nil.
 			destinationView name: originalName].
@@ -704,7 +704,7 @@ defaultHelpId
 defaultSelectionWidth
 	"Private - Answer the default width of the selection border"
 
-	^SystemMetrics current sizingFrameExtent x
+	^self view metrics sizingFrameExtent x
 
 !
 
@@ -729,6 +729,9 @@ dereference
 	self copyAspectsFrom: referenceView to: dereferencedView.
 	self pastedView: dereferencedView context: referenceView parentView.
 	self removeView: referenceView!
+
+designDesktop
+	^DesignDesktopView forDpi: self view dpi!
 
 distributeHorizontally
 	"Distribute the selected controls horizontally so that they are evenly spaced. The existing
@@ -975,7 +978,7 @@ getAdornmentRegion
 !
 
 grabberExtent
-	^self view mapDipsToPels: Grabber defaultExtent!
+	^Grabber defaultExtent * self view dpi // USER_DEFAULT_SCREEN_DPI!
 
 grabberHitBy: aPoint
 	"Private - Answer the grabber under aPoint or nil otherwise"
@@ -1473,7 +1476,7 @@ onDropOverArena: session
 	| dropObject dropTarget dropPosition pastee |
 	dropObject := session dragObjects first.
 	dropTarget := self dropTargetFromSession: session.
-	dropTarget = self arena ifTrue: [dropTarget := View desktop].
+	dropTarget = self arena ifTrue: [dropTarget := self designDesktop].
 	dropPosition := View desktop mapPoint: session dragPoint to: self arena.
 	dropPosition := self mapPoint: dropPosition toViewFromArena: dropTarget.
 	"dropPosition := session dragPointInView: dropTarget."
@@ -1678,7 +1681,7 @@ openOn: aResourceIdentifier
 	self viewClose ifFalse: [^self].
 	aResourceIdentifier resource isNil 
 		ifTrue: [^self error: 'Unable to load ' , aResourceIdentifier printString].
-	position := self pasteContext == View desktop 
+	position := self pasteContext isDesktop
 				ifTrue: [self initialComposingPosition]
 				ifFalse: [self incrementAddPositionOffset].
 	"Pretend performing an undo/redo operation to suppress capture of undo history"
@@ -1731,8 +1734,8 @@ pasteClipboard
 pasteContext
 	"Private - Answers the context where the object on the clipboard should be pasted."
 
-	^self composingView isNil 
-		ifTrue: [View desktop]
+	^self composingView isNil
+		ifTrue: [self designDesktop]
 		ifFalse: [self primarySelection isNil ifTrue: [self composingView] ifFalse: [self primarySelection]]!
 
 pastedView: aView context: contextView 
@@ -1740,7 +1743,7 @@ pastedView: aView context: contextView
 	Perform post-paste operations."
 
 	aView show.
-	contextView == View desktop 
+	contextView isDesktop
 		ifTrue: [self composingView: aView isOwned: true]
 		ifFalse: 
 			[contextView validateLayout.
@@ -2039,7 +2042,7 @@ restoreUndoState: aLiteralStoreArray
 			self arena noRedrawDo: 
 					[| restoredView |
 					self endComposition.
-					state := self systemModel loadViewResource: aLiteralStoreArray inContext: View desktop.
+					state := self systemModel loadViewResource: aLiteralStoreArray inContext: self designDesktop.
 					restoredView := state at: 1.
 					self composingView: restoredView isOwned: restoredView notNil.
 					restoredView ifNotNil: [restoredView hasVisibleStyle: true].
@@ -2318,11 +2321,11 @@ viewExportTo: filename
 viewHierarchyPresenter
 	^viewHierarchyPresenter!
 
-viewHitBy: aPoint 
+viewHitBy: aPoint
 	"Private - Answers the view that can be hit by a mouse action at aPoint. "
 
 	| viewHit |
-	self primarySelection notNil 
+	self primarySelection notNil
 		ifTrue: 
 			[| lookInView |
 			lookInView := self primarySelection.
@@ -2332,10 +2335,10 @@ viewHitBy: aPoint
 						to: lookInView.
 			viewHit := lookInView subViewFromPoint: position.
 			lookInView := lookInView parentView.
-			viewHit isNil and: [lookInView ~~ View desktop]] 
+			viewHit isNil and: [lookInView isDesktop not]]
 					whileTrue].
 	self hasComposingView ifFalse: [^nil].
-	(viewHit isNil and: [(0 @ 0 corner: self composingView extent) containsPoint: aPoint]) 
+	(viewHit isNil and: [(0 @ 0 corner: self composingView extent) containsPoint: aPoint])
 		ifTrue: [viewHit := self composingView].
 	^viewHit!
 
@@ -2554,6 +2557,7 @@ defaultHelpId!public! !
 defaultSelectionWidth!constants!private! !
 deleteSelections!commands!public! !
 dereference!commands!private! !
+designDesktop!helpers!private! !
 distributeHorizontally!commands!public! !
 distributeVertically!commands!public! !
 drawAdornment!adornments!private! !

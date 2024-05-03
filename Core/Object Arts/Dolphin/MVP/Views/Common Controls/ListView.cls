@@ -378,6 +378,10 @@ buildViewsPopup
 	^popup
 !
 
+cacheColumnWidths
+	self allColumns
+		keysAndValuesDo: [:eachKey :eachValue | eachValue basicWidth: (self lvmGetColumnWidth: eachKey - 1)]!
+
 cancelLabelEdit
 	"Private - Cancel current inline editing."
 
@@ -1932,14 +1936,14 @@ resetSelection
 				basicResetSelection;
 				onSelChanged]!
 
-resolutionScaledBy: scale
+resolutionScaledBy: aPoint
 	"Private - The receiver is being loaded and it has been determined that the pixel resolution
 	has changed since the point at which the view was saved. Scale any internal pixels by <Point>
 	scale. Note that the placement (position and extent) of the receiver has already been scaled
 	in #restorePlacement:resolution:."
 
-	self allColumns do: [:each | each resolutionScaledBy: scale].
-	iconSpacing ifNotNil: [self iconSpacing: (iconSpacing * scale) truncated]!
+	self allColumns do: [:each | each resolutionScaledBy: aPoint].
+	iconSpacing ifNotNil: [self iconSpacing: (iconSpacing * aPoint) truncated]!
 
 selectAll
 	| size |
@@ -2110,11 +2114,8 @@ state
 
 	| sequence order |
 	sequence := super state.
-	self isReportMode
-		ifTrue: 
-			["Ensure the actual column widths are cached"
-			self allColumns
-				keysAndValuesDo: [:eachKey :eachValue | eachValue basicWidth: (self lvmGetColumnWidth: eachKey - 1)]].
+	"Ensure the actual column widths are cached"
+	self isReportMode ifTrue: [self cacheColumnWidths].
 	"Record the column order if anything other than ascending"
 	(order := self columnOrder) = (1 to: self columnCount)
 		ifFalse: 
@@ -2254,13 +2255,13 @@ updateSelectionCache
 viewMode
 	"Answer the view mode of the receiver.
 	This can be one of: 
-		#smallIcon		- 16x16 icon, (LVS_SMALLICONS)
-		#largeIcons	- 32x32 icon, (LVS_ICON)
-		#tileIcons		- 48x48 icon, (LVS_ICON)
-		#thumbnails 	- custom size, default 64x64 (LVS_ICON) 
-		#extraLargeIcons - 256x256 (LVS_ICON)
-		#list			- 16x16 icon, fixed columnar arrangement(LVS_LIST)
-		#report		- 16x16 icons, multi-column view, normally with column headers (LVS_REPORT)"
+		#smallIcon	- 16x16 DIPs icon, (LVS_SMALLICONS)
+		#largeIcons	- 32x32 DIPs icon, (LVS_ICON)
+		#tileIcons		- 48x48 DIPs icon, (LVS_ICON)
+		#thumbnails 	- custom size, default 64x64 DIPs (LVS_ICON) 
+		#extraLargeIcons - 256x256 DIPs (LVS_ICON)
+		#list			- 16x16 DIPs icon, fixed columnar arrangement (LVS_LIST)
+		#report		- 16x16 DIPs icons, multi-column view, normally with column headers (LVS_REPORT)"
 
 	^viewMode!
 
@@ -2327,6 +2328,7 @@ basicResetSelection!private!selection! !
 basicUpdateColumnAtIndex:!columns!private!updating! !
 beSorted:!public!sorting! !
 buildViewsPopup!helpers!private! !
+cacheColumnWidths!helpers!private! !
 cancelLabelEdit!operations!private! !
 caretIndex!public!selection! !
 caretIndex:!public!selection! !

@@ -2190,20 +2190,8 @@ keywordsAndArgsOfMethod: aCompiledMethod
 		ifNil: [self keywordsAndArgsForSelector: aCompiledMethod selector]
 		ifNotNil: [:ast | (ast selectorParts collect: [:each | each value]) -> ast argumentNames]!
 
-loadViewResource: aResourceArray inContext: contextView 
-	ShellView
-		defaultExtentBlock: [:shellView | shellView extent];
-		createHookBlock: 
-				[:shellView :createBlock | 
-				| exStyle |
-				exStyle := shellView extendedStyle.
-				shellView hasTaskbarIcon: false.
-				createBlock value.
-				shellView extendedStyle: exStyle].
-	^[contextView loadViewResource: aResourceArray forEdit: true] ensure: 
-			[ShellView
-				defaultExtentBlock: nil;
-				createHookBlock: nil]!
+loadViewResource: aResourceArray inContext: contextView
+	^contextView loadViewResource: aResourceArray forEdit: true!
 
 messagesMatching: aMethodSearch in: aBrowserEnvironment 
 	^Array with: (self definitionsMatching: aMethodSearch in: aBrowserEnvironment)

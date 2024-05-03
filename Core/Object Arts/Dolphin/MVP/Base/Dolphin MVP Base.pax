@@ -186,6 +186,7 @@ package classNames
 	add: #SelectionChangeEvent;
 	add: #SelectionChangingEvent;
 	add: #SettingsChangeEvent;
+	add: #SHCoreLibrary;
 	add: #Shell;
 	add: #ShellView;
 	add: #SIZE;
@@ -215,6 +216,7 @@ package classNames
 	add: #ViewState;
 	add: #VirtualColor;
 	add: #VistaThemeLibrary;
+	add: #WindowCreationParameters;
 	add: #WINDOWPLACEMENT;
 	add: #WINDOWPOS;
 	add: #WindowsEvent;
@@ -467,8 +469,8 @@ Object subclass: #CommandQuery
 	classInstanceVariableNames: ''!
 
 Object subclass: #DisplayMonitor
-	instanceVariableNames: 'handle info devices'
-	classVariableNames: 'MONITOR_DEFAULTTONEAREST MONITOR_DEFAULTTONULL MONITOR_DEFAULTTOPRIMARY'
+	instanceVariableNames: 'handle info devices resolution metrics defaultWindowExtent lastWindowPosition cascadeOffset workArea'
+	classVariableNames: 'Instances MDT_ANGULAR_DPI MDT_DEFAULT MDT_EFFECTIVE_DPI MDT_RAW_DPI MONITOR_DEFAULTTONEAREST MONITOR_DEFAULTTONULL MONITOR_DEFAULTTOPRIMARY'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
@@ -584,6 +586,12 @@ Object subclass: #ViewState
 	instanceVariableNames: 'view state placement resolution subViewStates'
 	classVariableNames: ''
 	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+Object subclass: #WindowCreationParameters
+	instanceVariableNames: 'position extent dpi styles title'
+	classVariableNames: 'UseDefaultGeometry'
+	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 
 Canvas subclass: #PrinterCanvas
@@ -788,6 +796,12 @@ ExternalLibrary subclass: #HTMLHelpLibrary
 	instanceVariableNames: 'cookie'
 	classVariableNames: ''
 	poolDictionaries: 'HTMLHelpConstants'
+	classInstanceVariableNames: ''!
+
+ExternalLibrary subclass: #SHCoreLibrary
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
 ExternalLibrary subclass: #ThemeLibrary
@@ -1434,7 +1448,7 @@ AbstractDelegatingView subclass: #ReferenceView
 
 ContainerView subclass: #ShellView
 	instanceVariableNames: 'menuBar acceleratorTable combinedAcceleratorTable lastFocus defaultButton largeIcon smallIcon maxExtent minExtent flashes svFlags _svReserved2'
-	classVariableNames: 'CreateHookBlock DefaultButtonIndex DefaultExtentBlock DialogMessageMap TransientMask'
+	classVariableNames: 'DefaultButtonIndex DialogMessageMap TransientMask'
 	poolDictionaries: 'ButtonConstants'
 	classInstanceVariableNames: ''!
 

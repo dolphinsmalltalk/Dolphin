@@ -44,6 +44,7 @@ package classNames
 	add: #Debugger;
 	add: #DebuggerMethodCategory;
 	add: #DebuggerShellView;
+	add: #DesignDesktopView;
 	add: #DevelopmentSessionManager;
 	add: #DictionaryInspector;
 	add: #DolphinMoveClassChange;
@@ -1439,6 +1440,12 @@ ImageViewAbstract subclass: #ImageListView
 
 ImageView subclass: #ViewComposerArena
 	instanceVariableNames: 'composer'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+DesktopView subclass: #DesignDesktopView
+	instanceVariableNames: 'dpi'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -5900,9 +5907,9 @@ edit
 	ViewComposer openOn: self
     	!
 
-editViewUsing: aMonadicBlock 
-	| view | 
-	view := self loadWithContext: View desktop.
+editViewUsing: aMonadicBlock
+	| view |
+	view := self loadWithContext: DesignDesktopView forSystemDpi.
 	aMonadicBlock value: view.
 	self assign: view literalStoreArray.
 	view destroy!
@@ -5931,7 +5938,8 @@ publishedAspects
 
 reassign
 	| view |
-	view := Smalltalk developmentSystem loadViewResource: self resource inContext: View desktop.
+	view := Smalltalk developmentSystem loadViewResource: self resource
+				inContext: DesignDesktopView forDefaultDpi.
 	self assign: view literalStoreArray.
 	view destroy! !
 
@@ -8146,7 +8154,7 @@ publishedAspects
 		ifNotNil: 
 			[:parent | 
 			parent layoutManager ifNotNil: [:layoutManager | aspects add: layoutManager arrangementAspect].
-			parent == View desktop ifFalse: [aspects add: (Aspect string: #name)]].
+			parent isDesktop ifFalse: [aspects add: (Aspect string: #name)]].
 	^aspects!
 
 visualObjectAtPoint: aPoint
@@ -8167,16 +8175,16 @@ editNewDefaultView
 	"Open the View Composer to create a new view for the receiver."
 
 	| resourceIdentifier view resName |
-	view := self desktop addSubView: self new.
-	resName := Prompter 
+	view := (DesignDesktopView forDpi: DisplayMonitor active dpi) addSubView: self new.
+	resName := Prompter
 				on: self defaultView
 				prompt: 'Resource name:'
 				caption: 'Create a view for class ' , self name.
 	resName isNil ifTrue: [^self].
 	resourceIdentifier := ResourceIdentifier class: self name: resName.
 	(resourceIdentifier resourceOrNil isNil or: 
-			[MessageBox 
-				confirm: ('<1d> already exists. Do you wish to overwrite it?' expandMacrosWith: resourceIdentifier)]) 
+			[MessageBox
+				confirm: ('<1d> already exists. Do you wish to overwrite it?' expandMacrosWith: resourceIdentifier)])
 		ifFalse: [^self].
 	resourceIdentifier assign: view literalStoreArray.
 	view destroy.

@@ -836,7 +836,7 @@ clear
 	instances of the receiver from previous runs. etc."
 
 	super clear.
-	#(#SystemMetrics) 
+	#(#SystemMetrics #DisplayMonitor) 
 		do: [:each | self environment at: each ifPresent: [:c | c reset]]!
 
 fileName

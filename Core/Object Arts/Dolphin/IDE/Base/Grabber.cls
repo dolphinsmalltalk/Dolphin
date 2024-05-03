@@ -109,7 +109,7 @@ defaultColor
 defaultExtent
 	"Private - Answers the default extent to be used for the receiver"
 
-	^view mapDipsToPels: self class defaultExtent!
+	^self class defaultExtent * view dpi // USER_DEFAULT_SCREEN_DPI!
 
 draw
 	"Draws the receiver in its arena"
