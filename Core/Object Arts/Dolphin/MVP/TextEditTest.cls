@@ -49,6 +49,7 @@ testStbUpgradeFromD3
 	"Test upgrade of 20+ year old Dolphin 3.0 (1999), STB version 8 binary resource"
 
 	| stream |
+	#nocreate.
 	stream := self d3ResourceStream: 'TextPresenter.Default view.vu'.
 	presenter := Object binaryReadFrom: stream context: View desktop.
 	stream close.

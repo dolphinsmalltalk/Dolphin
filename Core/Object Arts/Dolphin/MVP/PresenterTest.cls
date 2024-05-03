@@ -70,7 +70,11 @@ nonProportionalFont
 	^Font name: 'Courier'!
 
 setUp
-	self initializePresenter!
+	super setUp.
+	self shouldSetupPresenter ifTrue: [self initializePresenter]!
+
+shouldSetupPresenter
+	^(self thisTestMethod refersToLiteral: #nocreate) not!
 
 tearDown
 	self destroyPresenter!
@@ -89,6 +93,7 @@ initializePresenter!public!Running! !
 leftClickAt:!private!unit tests! !
 nonProportionalFont!constants!private! !
 setUp!public!Running! !
+shouldSetupPresenter!public!Running! !
 tearDown!public!Running! !
 view!accessing!private! !
 waitForInputIdle!private!unit tests! !
