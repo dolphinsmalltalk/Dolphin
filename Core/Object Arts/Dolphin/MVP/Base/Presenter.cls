@@ -799,8 +799,8 @@ view: aView
 	"Set the view for the receiver to aView. We also connect up any sub-views
 	to same named presenters in our subPresenters collection"
 
-	self attachSubPresenterViews: aView.	
 	view := aView.
+	self attachSubPresenterViews: aView.	
 	self onViewAvailable.
 	self connectView!
 

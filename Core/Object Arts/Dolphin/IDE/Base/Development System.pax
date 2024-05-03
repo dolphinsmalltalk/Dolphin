@@ -433,6 +433,7 @@ package methodNames
 	add: #VariableEnvironment -> #includesMethodUncached:;
 	add: #VariableEnvironment -> #updateCachesForMethod:;
 	add: #View -> #aspectDisplayOn:;
+	add: #View -> #literalStoreArray;
 	add: #View -> #publishedAspects;
 	add: #View -> #visualObjectAtPoint:;
 	add: #WCHARField -> #accessorMessage;
@@ -5930,13 +5931,11 @@ edit
     	!
 
 editViewUsing: aMonadicBlock
-	| view designDesktop |
-	designDesktop := DesignDesktopView default.
-	view := designDesktop loadViewResource: self resource forEdit: true.
+	| view |
+	view := DesignDesktopView default loadViewResource: self resource forEdit: true.
 	
 	[aMonadicBlock value: view.
-	self assign: (designDesktop inDpiAwarenessContextDo: [view literalStoreArray])]
-			ensure: [view destroy]!
+	self assign: view literalStoreArray] ensure: [view destroy]!
 
 emit: aResourceArray asStringOn: aWriteStream 
 	aWriteStream nextPutAll: '#('.
@@ -5964,8 +5963,7 @@ reassign
 	| view designDesktop |
 	designDesktop := DesignDesktopView default.
 	view := designDesktop loadViewResource: self resource forEdit: true.
-	[self assign: (designDesktop dpiAwareness inContextDo: [view literalStoreArray])]
-		ensure: [view destroy]! !
+	[self assign: view literalStoreArray] ensure: [view destroy]! !
 
 !ResourceIdentifier categoriesForMethods!
 assign:!accessing!public! !
@@ -8168,6 +8166,9 @@ aspectDisplayOn: aStream
   
   	self printOn: aStream!
 
+literalStoreArray
+	^DpiAwareness unaware inContextDo: [super literalStoreArray]!
+
 publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by the receiver."
 
@@ -8188,6 +8189,7 @@ visualObjectAtPoint: aPoint
 
 !View categoriesForMethods!
 aspectDisplayOn:!private! !
+literalStoreArray!literal filing!public! !
 publishedAspects!constants!public! !
 visualObjectAtPoint:!enquiries!private! !
 !

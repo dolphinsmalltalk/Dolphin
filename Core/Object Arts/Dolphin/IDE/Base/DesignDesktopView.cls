@@ -14,6 +14,9 @@ DesignDesktopView comment: ''!
 
 !DesignDesktopView methodsFor!
 
+addSubView: aView
+	^dpiAwareness inContextDo: [super addSubView: aView]!
+
 adjustPlacementOfShell: aShellView forResolution: aPoint
 	"Private - The <ShellView> first argument is being restored from an STBViewProxy (e.g. instantiated from a view resource) on this desktop. Adjust the placement of the window to an appropriate position and/or extent on the target monitor, also scaling any internal measurments to the monitor's DPI from the original resolution specified by the <point> final argument."
 
@@ -68,6 +71,7 @@ printOn: aStream
 		display: self dpiAwareness name! !
 
 !DesignDesktopView categoriesForMethods!
+addSubView:!hierarchy!public!sub views! !
 adjustPlacementOfShell:forResolution:!geometry!private! !
 assumeDesktopHandle!initializing!private! !
 awarenessContext:!initializing!private! !
