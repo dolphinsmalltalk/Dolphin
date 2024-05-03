@@ -225,6 +225,14 @@ refreshContents
 				update;
 				updateTipText]!
 
+resolutionScaledBy: aPoint
+	"Private - The receiver is being loaded and it has been determined that the pixel resolution
+	has changed since the point at which the view was saved. Scale any internal pixels by <Point>
+	scale."
+
+	width < 0 ifTrue: [^self].
+	self width: (width * aPoint x) truncated!
+
 style
 	"Answer the <integer> style flags to be used when displaying the receiver."
 
@@ -297,6 +305,7 @@ presenter:!initializing!public! !
 presenterConnectionPoint!accessing!public! !
 rectangle!accessing!public! !
 refreshContents!public!updating! !
+resolutionScaledBy:!geometry!public! !
 style!accessing!public! !
 style:!accessing!public! !
 toolTipText!event handling!private! !

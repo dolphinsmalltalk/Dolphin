@@ -298,7 +298,7 @@ wmNotify: message wParam: wParam lParam: lParam
 
 !ControlBarAbstract categoriesForMethods!
 actualInsets:!accessing!private! !
-actualPreferredExtent:!private! !
+actualPreferredExtent:!geometry!private! !
 addSubView:name:!public!sub views! !
 arrangementOf:!accessing!public! !
 arrangementOf:put:!accessing!public! !
