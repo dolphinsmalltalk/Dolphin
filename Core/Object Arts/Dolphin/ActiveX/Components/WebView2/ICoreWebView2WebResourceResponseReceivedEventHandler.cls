@@ -5,7 +5,9 @@ ICoreWebView2EventHandler subclass: #ICoreWebView2WebResourceResponseReceivedEve
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2WebResourceResponseReceivedEventHandler guid: (IID fromString: '{7de9898a-24f5-40c3-a2de-d4f458e69828}')!
+
 ICoreWebView2WebResourceResponseReceivedEventHandler comment: '`ICoreWebView2WebResourceResponseReceivedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2WebResourceResponseReceivedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -27,7 +29,9 @@ interface ICoreWebView2WebResourceResponseReceivedEventHandler : IUnknown
 };
 ```
 '!
+
 !ICoreWebView2WebResourceResponseReceivedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2WebResourceResponseReceivedEventHandler methodsFor!
 
 basicRegister: tokenBuffer
@@ -35,6 +39,7 @@ basicRegister: tokenBuffer
 
 basicUnregister
 	source Remove_WebResourceResponseReceived: token! !
+
 !ICoreWebView2WebResourceResponseReceivedEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
@@ -58,6 +63,7 @@ eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
 	^#webResourceResponseReceived:! !
+
 !ICoreWebView2WebResourceResponseReceivedEventHandler class categoriesForMethods!
 argsClass!constants!public! !
 defineFunctions!**auto generated**!initializing!public! !

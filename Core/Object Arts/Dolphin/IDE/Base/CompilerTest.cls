@@ -5,9 +5,13 @@ DolphinTest subclass: #CompilerTest
 	classVariableNames: 'TempInstrs'
 	poolDictionaries: 'CompilerFlags OpcodePool SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
+
 CompilerTest guid: (GUID fromString: '{5aff22bd-5d99-4b24-9b1d-c8d1ede77213}')!
+
 CompilerTest comment: ''!
+
 !CompilerTest categoriesForClass!Unclassified! !
+
 !CompilerTest methodsFor!
 
 assertBlocksOptimized: compiled
@@ -1475,6 +1479,7 @@ verifyTextMapsOf: each
 				ifFalse: 
 					[byte := debugMethod byteCodes at: ip.
 					self deny: byte equals: 0]]! !
+
 !CompilerTest categoriesForMethods!
 assertBlocksOptimized:!helpers!private! !
 checkCompileError:range:code:line:source:!helpers!private! !
@@ -1602,6 +1607,7 @@ initialize
 
 resources
 	^Array with: CompilerTestClasses! !
+
 !CompilerTest class categoriesForMethods!
 buildSuiteFromSelectors!Building Suites!public! !
 initialize!public!unit tests-long running! !

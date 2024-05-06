@@ -5,7 +5,9 @@ Object subclass: #CollectionCombinator
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 CollectionCombinator guid: (GUID fromString: '{569a1b4b-4d9d-4ddb-ab24-54771e8598e6}')!
+
 CollectionCombinator comment: 'For a collection of collections, enumerate all elements of the cartesian product. The code shows how recursion is used to implement variable nesting of loops.
 The cartesian product is usually a huge collection, that should not be kept in memory. Therefore the user of the class has to provide a block with one argument that is called each time a tuple is constructed. When possible, that block should not build a collection of all these tuples, but should immediately drop unsuitable tuples. 
 To get a first impression, try this with ''inspect it'':
@@ -21,7 +23,9 @@ To get a first impression, try this with ''inspect it'':
          processWith: [:item |result addLast: item].
     result
          '!
+
 !CollectionCombinator categoriesForClass!BlockCLosures-Tests! !
+
 !CollectionCombinator methodsFor!
 
 combineFromIdx: myIdx
@@ -47,6 +51,7 @@ forArrays: anArray processWith: aBlock
   buffer := Array new: anArray size.
   self combineFromIdx: 1
    ! !
+
 !CollectionCombinator categoriesForMethods!
 combineFromIdx:!helpers!private! !
 forArrays:processWith:!helpers!private! !

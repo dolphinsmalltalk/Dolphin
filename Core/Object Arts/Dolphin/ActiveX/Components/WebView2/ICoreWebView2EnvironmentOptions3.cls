@@ -5,7 +5,9 @@ ICoreWebView2Interface subclass: #ICoreWebView2EnvironmentOptions3
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2EnvironmentOptions3 guid: (IID fromString: '{4a5c436e-a9e3-4a2e-89c3-910d3513f5cc}')!
+
 ICoreWebView2EnvironmentOptions3 comment: '`ICoreWebView2EnvironmentOptions3` is a wrapper class for the COM interface ''WebView2.ICoreWebView2EnvironmentOptions3'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -29,7 +31,9 @@ interface ICoreWebView2EnvironmentOptions3 : IUnknown
 };
 ```
 '!
+
 !ICoreWebView2EnvironmentOptions3 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2EnvironmentOptions3 methodsFor!
 
 get_IsCustomCrashReportingEnabled: value
@@ -63,6 +67,7 @@ put_IsCustomCrashReportingEnabled: value
 
 	<virtual stdcall: hresult 5 sdword>
 	^self invalidCall: _failureCode! !
+
 !ICoreWebView2EnvironmentOptions3 categoriesForMethods!
 get_IsCustomCrashReportingEnabled:!**auto generated**!COM Interfaces-ICoreWebView2EnvironmentOptions3!private! !
 isCustomCrashReportingEnabled!properties!public! !
@@ -82,6 +87,7 @@ defineFunctions
 		defineFunction: #put_IsCustomCrashReportingEnabled:
 			argumentTypes: 'sdword'
 ! !
+
 !ICoreWebView2EnvironmentOptions3 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

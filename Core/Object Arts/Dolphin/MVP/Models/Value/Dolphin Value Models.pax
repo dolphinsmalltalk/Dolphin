@@ -7,7 +7,6 @@ Copyright (c) Object Arts Ltd. 1997-2001. Portions Copyright (c) CGI Group (Euro
 
 package basicPackageVersion: '6.2'.
 
-
 package classNames
 	add: #AspectBuffer;
 	add: #CompositeValueAdaptor;
@@ -46,54 +45,60 @@ Model subclass: #AspectBuffer
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Model subclass: #ValueModel
 	instanceVariableNames: 'settingValue comparisonPolicy'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ValueModel subclass: #ValueAdaptor
 	instanceVariableNames: 'subject'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ValueModel subclass: #ValueConverter
 	instanceVariableNames: 'subject typeConverter'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ValueModel subclass: #ValueHolder
 	instanceVariableNames: 'value'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ValueAdaptor subclass: #CompositeValueAdaptor
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ValueAdaptor subclass: #ValueAspectAdaptor
 	instanceVariableNames: 'aspect putSelector getSelector'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ValueAdaptor subclass: #ValueKeyedAdaptor
 	instanceVariableNames: 'key putSelector getSelector'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ValueAspectAdaptor subclass: #ValueModelAspectAdaptor
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ValueHolder subclass: #ValueBuffer
 	instanceVariableNames: 'subject modified gate'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -120,6 +125,7 @@ asValue
 	In the general case create an answer a ValueHolder onto the receiver"
 
 	^ValueHolder with: self! !
+
 !Object categoriesForMethods!
 aspectAdaptorClass!constants!private! !
 aspectValue:!converting!public! !

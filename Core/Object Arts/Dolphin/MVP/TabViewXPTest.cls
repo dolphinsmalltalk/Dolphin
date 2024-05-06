@@ -5,9 +5,13 @@ AbstractTabViewTest subclass: #TabViewXPTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TabViewXPTest guid: (GUID fromString: '{f55d0ba3-f595-4d2c-bfc2-65de737b4fcb}')!
+
 TabViewXPTest comment: ''!
+
 !TabViewXPTest categoriesForClass!Unclassified! !
+
 !TabViewXPTest methodsFor!
 
 classToTest
@@ -47,6 +51,7 @@ testLabelWithAmpersand
 	self assert: actual equals: expected.
 	actual := (anon classPool at: 'Rect') extent.
 	self assert: actual equals: extent! !
+
 !TabViewXPTest categoriesForMethods!
 classToTest!helpers!private! !
 testLabelWithAmpersand!public! !

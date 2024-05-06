@@ -5,13 +5,17 @@ IClassFactory subclass: #IClassFactory2
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IClassFactory2 guid: (IID fromString: '{b196b28f-bab4-101a-b69c-00aa00341d07}')!
+
 IClassFactory2 comment: '<IClassFactory2> is a wrapper class for the custom interface ''OCIDL.IClassFactory2'' generated from type information in the ''OCIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface.
 
 WARNING: This comment was automatically generated from the interface''s type information and any changes made here may be overwritten the next time this wrapper class is so generated.'!
+
 !IClassFactory2 categoriesForClass!COM-Interfaces! !
+
 !IClassFactory2 methodsFor!
 
 CreateInstanceLic: punkOuter pUnkReserved: pUnkReserved riid: riid bstrKey: bstrKey ppvObject: ppvObj
@@ -59,6 +63,7 @@ RequestLicKey: dwReserved pBstrKey: pBstrKey
 
 	<virtual stdcall: hresult 7 dword bstr*>
 	^self invalidCall: _failureCode! !
+
 !IClassFactory2 categoriesForMethods!
 CreateInstanceLic:pUnkReserved:riid:bstrKey:ppvObject:!**auto generated**!COM Interfaces-OCIDL.IClassFactory2!public! !
 GetLicInfo:!COM Interfaces-OCIDL.IClassFactory2!private! !
@@ -80,6 +85,7 @@ defineFunctions
 			argumentTypes: 'dword bstr*';
 		defineFunction: #CreateInstanceLic:pUnkReserved:riid:bstrKey:ppvObject:
 						argumentTypes: 'IUnknown* IUnknown* GUID* bstr IUnknown**'! !
+
 !IClassFactory2 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

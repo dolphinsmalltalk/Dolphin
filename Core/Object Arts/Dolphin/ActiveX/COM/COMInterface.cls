@@ -5,14 +5,20 @@ ExternalStructure subclass: #COMInterface
 	classVariableNames: '_OffsetOf_argSizes _OffsetOf_interfaceCookie _OffsetOf_objectCookie _OffsetOf_vtbl InterfaceClasses'
 	poolDictionaries: 'OLEConstants Win32Constants Win32Errors'
 	classInstanceVariableNames: 'argSizes functions typeLib'!
+
 COMInterface guid: (IID fromString: '{87b4c591-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 COMInterface isAbstract: true!
+
 COMInterface addClassConstant: '_OffsetOf_argSizes' value: 16r4!
 COMInterface addClassConstant: '_OffsetOf_interfaceCookie' value: 16rC!
 COMInterface addClassConstant: '_OffsetOf_objectCookie' value: 16r8!
 COMInterface addClassConstant: '_OffsetOf_vtbl' value: 16r0!
+
 COMInterface comment: ''!
+
 !COMInterface categoriesForClass!External-Data-Structured-COM! !
+
 !COMInterface methodsFor!
 
 _addRef 
@@ -317,6 +323,7 @@ vtbl: anExternalAddress
 	"Set the receiver's 'vtbl' field to the value of the argument, anExternalAddress"
 
 	bytes uintPtrAtOffset: _OffsetOf_vtbl put: anExternalAddress! !
+
 !COMInterface categoriesForMethods!
 _addRef!methods!private! !
 =!comparing!public! !
@@ -1056,6 +1063,7 @@ unregister
 	significance."
 
 	InterfaceClasses removeKey: self iid ifAbsent: []! !
+
 !COMInterface class categoriesForMethods!
 addFunction:selector:descriptor:!automatic generation!public! !
 argSizes!initializing!private! !

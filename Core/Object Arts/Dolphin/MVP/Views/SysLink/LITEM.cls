@@ -5,13 +5,16 @@ Win32Structure subclass: #LITEM
 	classVariableNames: '_OffsetOf_iLink _OffsetOf_mask _OffsetOf_state _OffsetOf_stateMask _OffsetOf_szID _OffsetOf_szURL'
 	poolDictionaries: 'SysLinkConstants'
 	classInstanceVariableNames: ''!
+
 LITEM guid: (GUID fromString: '{13cd21fb-f5bf-4908-a96b-3801b787a40e}')!
+
 LITEM addClassConstant: '_OffsetOf_iLink' value: 16r4!
 LITEM addClassConstant: '_OffsetOf_mask' value: 16r0!
 LITEM addClassConstant: '_OffsetOf_state' value: 16r8!
 LITEM addClassConstant: '_OffsetOf_stateMask' value: 16rC!
 LITEM addClassConstant: '_OffsetOf_szID' value: 16r10!
 LITEM addClassConstant: '_OffsetOf_szURL' value: 16r70!
+
 LITEM comment: 'LITEM is the class of <ExternalStructure> which represent the Windows Common Control structure of the same name.
 
 LITEMs are used in conjunction with the SysLink control, wrapped in Dolphin by <SysLinkView>.
@@ -25,7 +28,9 @@ LITEMs are used in conjunction with the SysLink control, wrapped in Dolphin by <
 	    WCHAR       szID[MAX_LINKID_TEXT] ;
 	    WCHAR       szUrl[L_MAX_URL_LENGTH] ;
 	} LITEM, * PLITEM ;'!
+
 !LITEM categoriesForClass!External-Data-Structured-Win32! !
+
 !LITEM methodsFor!
 
 handle
@@ -163,6 +168,7 @@ url: aString
 	self
 		maskIn: LIF_URL;
 		szURL: text! !
+
 !LITEM categoriesForMethods!
 handle!accessing!public! !
 id!accessing!public! !
@@ -208,6 +214,7 @@ defineFields
 
 getFieldNames
 	^#(#mask #iLink #state #stateMask #szID #szURL)! !
+
 !LITEM class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

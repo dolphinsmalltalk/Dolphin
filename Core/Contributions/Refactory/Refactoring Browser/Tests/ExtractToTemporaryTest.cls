@@ -5,9 +5,13 @@ RefactoringTest subclass: #ExtractToTemporaryTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExtractToTemporaryTest guid: (GUID fromString: '{1e11f73f-781c-4123-b98b-51d3251e5ae5}')!
+
 ExtractToTemporaryTest comment: ''!
+
 !ExtractToTemporaryTest categoriesForClass!Refactory-Testing! !
+
 !ExtractToTemporaryTest methodsFor!
 
 testBadInterval
@@ -77,6 +81,7 @@ testNonExistantSelector
 				to: 'asdf'
 				from: #checkClass1:
 				in: RefactoryTestDataApp)! !
+
 !ExtractToTemporaryTest categoriesForMethods!
 testBadInterval!failure tests!public! !
 testBadName!failure tests!public! !

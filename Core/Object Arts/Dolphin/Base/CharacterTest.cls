@@ -5,9 +5,13 @@ DolphinTest subclass: #CharacterTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 CharacterTest guid: (GUID fromString: '{b5b1b518-3a55-4441-9aa3-32c87f1aedba}')!
+
 CharacterTest comment: ''!
+
 !CharacterTest categoriesForClass!Tests-Magnitude-General! !
+
 !CharacterTest methodsFor!
 
 nonCharacters
@@ -494,6 +498,7 @@ testStb
 	bytes := Character dolphin binaryStoreBytes.
 	rehydrated := Object fromBinaryStoreBytes: bytes.
 	self assert: rehydrated equals: Character dolphin! !
+
 !CharacterTest categoriesForMethods!
 nonCharacters!constants!private! !
 testAnsiValue!public!unit tests! !

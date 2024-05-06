@@ -5,7 +5,9 @@ SequencedGrowableCollection subclass: #ListModel
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ListModel guid: (GUID fromString: '{87b4c522-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 ListModel comment: 'ListModel implements the <listModel> protocol for identity based <sequencedCollecion>s. All of the manipulations that modify the list will trigger notification events such that Observers will be informed of the changes. The <listModel> protocol defines the following events:
 
 #listChanged
@@ -23,7 +25,9 @@ Instance Variables:
 
 
 '!
+
 !ListModel categoriesForClass!Collections-Sequenceable!MVP-Models! !
+
 !ListModel methodsFor!
 
 add: newElement
@@ -301,6 +305,7 @@ stbSaveOn: anSTBOutFiler
 
 	anSTBOutFiler override: events with: nil.
 	super stbSaveOn: anSTBOutFiler.! !
+
 !ListModel categoriesForMethods!
 add:!adding!public! !
 add:afterIndex:!adding!public! !
@@ -400,6 +405,7 @@ stbConvertFrom: anSTBClassFormat
 
 stbVersion
 	^2! !
+
 !ListModel class categoriesForMethods!
 defaultSearchPolicy!constants!public! !
 new!instance creation!public! !

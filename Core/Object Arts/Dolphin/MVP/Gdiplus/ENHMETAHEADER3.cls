@@ -5,7 +5,9 @@ ExternalStructure subclass: #ENHMETAHEADER3
 	classVariableNames: '_OffsetOf_dSignature _OffsetOf_iType _OffsetOf_nBytes _OffsetOf_nDescription _OffsetOf_nHandles _OffsetOf_nPalEntries _OffsetOf_nRecords _OffsetOf_nSize _OffsetOf_nVersion _OffsetOf_offDescription _OffsetOf_rclBounds _OffsetOf_rclFrame _OffsetOf_sReserved _OffsetOf_szlDevice _OffsetOf_szlMillimeters'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETAHEADER3 guid: (GUID fromString: '{1b5c3dcf-8ea0-47df-b752-442dd272a353}')!
+
 ENHMETAHEADER3 addClassConstant: '_OffsetOf_dSignature' value: 16r28!
 ENHMETAHEADER3 addClassConstant: '_OffsetOf_iType' value: 16r0!
 ENHMETAHEADER3 addClassConstant: '_OffsetOf_nBytes' value: 16r30!
@@ -21,6 +23,7 @@ ENHMETAHEADER3 addClassConstant: '_OffsetOf_rclFrame' value: 16r18!
 ENHMETAHEADER3 addClassConstant: '_OffsetOf_sReserved' value: 16r3A!
 ENHMETAHEADER3 addClassConstant: '_OffsetOf_szlDevice' value: 16r48!
 ENHMETAHEADER3 addClassConstant: '_OffsetOf_szlMillimeters' value: 16r50!
+
 ENHMETAHEADER3 comment: '<ENHMETAHEADER3> is an <ExternalStructure> class to wrap the struct ''Gdiplus.ENHMETAHEADER3'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
@@ -48,7 +51,9 @@ struct tagENHMETAHEADER3 {
 	SIZEL szlMillimeters;
 } ENHMETAHEADER3;
 '!
+
 !ENHMETAHEADER3 categoriesForClass!Unclassified! !
+
 !ENHMETAHEADER3 methodsFor!
 
 dSignature
@@ -216,6 +221,7 @@ szlMillimeters: aSIZE
 		from: ##(_OffsetOf_szlMillimeters + 1)
 		to: ##(_OffsetOf_szlMillimeters + SIZE basicByteSize)
 		startingAt: 1! !
+
 !ENHMETAHEADER3 categoriesForMethods!
 dSignature!**compiled accessors**!public! !
 dSignature:!**compiled accessors**!public! !
@@ -295,6 +301,7 @@ defineFields
 
 getFieldNames
 	^#(#iType #nSize #rclBounds #rclFrame #dSignature #nVersion #nBytes #nRecords #nHandles #sReserved #nDescription #offDescription #nPalEntries #szlDevice #szlMillimeters)! !
+
 !ENHMETAHEADER3 class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

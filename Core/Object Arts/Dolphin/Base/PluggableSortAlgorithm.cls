@@ -5,14 +5,18 @@ SortAlgorithm subclass: #PluggableSortAlgorithm
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PluggableSortAlgorithm guid: (GUID fromString: '{725a8310-4a25-47fa-ba80-9dcef64b53e2}')!
+
 PluggableSortAlgorithm comment: 'PluggableSortAlgorithm is the class of <SortAlgorithm>s that allow the sort order relationship between elements to be configured by means of a pluggable sort block.
 
 Instance Variables:
 	sortBlock		<dyadicValuable> defines the sort-order relationship.
 
 '!
+
 !PluggableSortAlgorithm categoriesForClass!Kernel-Objects! !
+
 !PluggableSortAlgorithm methodsFor!
 
 compare: operand1 with: operand2 
@@ -28,6 +32,7 @@ sortBlock
 	"Answer a <dyadicVariable> that implements the sort-order comparison in use by the receiver."
 
 	^sortBlock! !
+
 !PluggableSortAlgorithm categoriesForMethods!
 compare:with:!comparing!public! !
 setSortBlock:!initializing!private! !
@@ -48,6 +53,7 @@ newSortBlock: aDyadicValuable
 	^(self basicNew)
 		setSortBlock: aDyadicValuable;
 		yourself! !
+
 !PluggableSortAlgorithm class categoriesForMethods!
 new!public! !
 newSortBlock:!instance creation!public! !

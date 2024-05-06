@@ -5,11 +5,14 @@ SOCKADDR subclass: #SOCKADDR_STORAGE
 	classVariableNames: '_OffsetOf___ss_align _OffsetOf___ss_pad1 _OffsetOf___ss_pad2 _OffsetOf_ss_family'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SOCKADDR_STORAGE guid: (GUID fromString: '{ff1980c9-d114-4e61-8569-e2ed5321209b}')!
+
 SOCKADDR_STORAGE addClassConstant: '_OffsetOf___ss_align' value: 16r8!
 SOCKADDR_STORAGE addClassConstant: '_OffsetOf___ss_pad1' value: 16r2!
 SOCKADDR_STORAGE addClassConstant: '_OffsetOf___ss_pad2' value: 16r10!
 SOCKADDR_STORAGE addClassConstant: '_OffsetOf_ss_family' value: 16r0!
+
 SOCKADDR_STORAGE comment: '<SOCKADDR_STORAGE> is an <ExternalStructure> class to wrap the struct ''Win32.SOCKADDR_STORAGE'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
@@ -27,7 +30,9 @@ struct tagSOCKADDR_STORAGE {
 	[hidden] BYTE __ss_pad2[112];
 } SOCKADDR_STORAGE;
 '!
+
 !SOCKADDR_STORAGE categoriesForClass!Win32-Structs! !
+
 !SOCKADDR_STORAGE class methodsFor!
 
 defineFields
@@ -53,6 +58,7 @@ defineFields
 
 getFieldNames
 	^#()! !
+
 !SOCKADDR_STORAGE class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

@@ -5,9 +5,13 @@ StdioFileStream subclass: #StdioBinaryFileStream
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StdioBinaryFileStream guid: (GUID fromString: '{70295d5a-b304-43e4-aa04-c800a93858d4}')!
+
 StdioBinaryFileStream comment: ''!
+
 !StdioBinaryFileStream categoriesForClass!Collections-Streams! !
+
 !StdioBinaryFileStream methodsFor!
 
 contentsSpecies
@@ -83,6 +87,7 @@ upToEnd
 	"Implementation Note: Override to provide a more efficient implementation by reading the bytes as a block."
 
 	^self basicNext: self size - self position! !
+
 !StdioBinaryFileStream categoriesForMethods!
 contentsSpecies!constants!private! !
 externalType!accessing!public! !
@@ -105,6 +110,7 @@ encodingType
 	Although this ought to be #binary at this level (untranslated binary being the most general), for historical compatibility it is not."
 
 	^#binary! !
+
 !StdioBinaryFileStream class categoriesForMethods!
 encodingMode!constants!private! !
 encodingType!constants!public! !

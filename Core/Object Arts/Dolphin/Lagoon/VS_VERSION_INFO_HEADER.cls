@@ -5,14 +5,19 @@ Win32Structure subclass: #VS_VERSION_INFO_HEADER
 	classVariableNames: '_OffsetOf_wLength _OffsetOf_wType _OffsetOf_wValueLength'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 VS_VERSION_INFO_HEADER guid: (GUID fromString: '{efc64c05-aa07-41b8-ba73-60f7974c6e3f}')!
+
 VS_VERSION_INFO_HEADER addClassConstant: '_OffsetOf_wLength' value: 16r0!
 VS_VERSION_INFO_HEADER addClassConstant: '_OffsetOf_wType' value: 16r4!
 VS_VERSION_INFO_HEADER addClassConstant: '_OffsetOf_wValueLength' value: 16r2!
+
 VS_VERSION_INFO_HEADER comment: 'VS_VERSION_INFO_HEADER is an ExternalStructure class to represent the headers for version resource blocks. It is not a real Win32 structure.
 
 See the VersionResource class.'!
+
 !VS_VERSION_INFO_HEADER categoriesForClass!External-Data-Structured-Win32! !
+
 !VS_VERSION_INFO_HEADER methodsFor!
 
 childrenOffset
@@ -76,6 +81,7 @@ wValueLength
 	"Answer the <Integer> value of the receiver's 'wValueLength' field."
 
 	^bytes wordAtOffset: _OffsetOf_wValueLength! !
+
 !VS_VERSION_INFO_HEADER categoriesForMethods!
 childrenOffset!accessing!public! !
 key!accessing!public! !
@@ -105,6 +111,7 @@ defineFields
 
 getFieldNames
 	^#(#wLength #wValueLength #wType)! !
+
 !VS_VERSION_INFO_HEADER class categoriesForMethods!
 defineFields!private!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

@@ -5,9 +5,13 @@ SequencedGrowableCollection variableSubclass: #OrderedCollection
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 OrderedCollection guid: (GUID fromString: '{87b4c523-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OrderedCollection comment: 'OrderedCollections store an ordered, contiguous sequence of elements. They are much like resizable arrays'!
+
 !OrderedCollection categoriesForClass!Collections-Sequenceable! !
+
 !OrderedCollection methodsFor!
 
 add: newElement afterIndex: index
@@ -525,6 +529,7 @@ uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: aDyadicValuable
 
 	startInteger to: stopInteger
 		do: [:i | aDyadicValuable value: i value: (self basicAt: i + firstIndex - 1)]! !
+
 !OrderedCollection categoriesForMethods!
 add:afterIndex:!adding!public! !
 addAllFirst:!adding!public! !
@@ -601,6 +606,7 @@ ofSize: count
 	^(self basicNew: count)
 		firstIndex: 1
 		lastIndex: count! !
+
 !OrderedCollection class categoriesForMethods!
 new!instance creation!public! !
 new:!instance creation!public! !

@@ -5,14 +5,18 @@ IDispatch subclass: #IXMLHttpRequest
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
 	classInstanceVariableNames: ''!
+
 IXMLHttpRequest guid: (IID fromString: '{ed8c108d-4349-11d2-91a4-00c04f7969e8}')!
+
 IXMLHttpRequest comment: '<IXMLHttpRequest> is a wrapper class for the COM interface ''MSXML.IXMLHttpRequest'' generated from type information in the ''Microsoft XML, version 2.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following (typically unhelpful) helpstring for this interface
 	"IXMLHttpRequest Interface"
 
 The Http Request COM object can be used to send and receive XML via HTTP to a Web server, including DAV enabled servers.'!
+
 !IXMLHttpRequest categoriesForClass!COM-Interfaces!MSXML-Interfaces! !
+
 !IXMLHttpRequest methodsFor!
 
 Abort
@@ -287,6 +291,7 @@ statusText
 	self get_statusText: answer.
 	^answer asObject
 ! !
+
 !IXMLHttpRequest categoriesForMethods!
 Abort!**auto generated**!COM Interfaces-IXMLHTTPRequest!public! !
 get_readyState:!**auto generated**!COM Interfaces-IXMLHTTPRequest!private! !
@@ -383,6 +388,7 @@ newXMLHTTP60
 
 	^self onCLSID: (CLSID fromString: '{88D96A0A-F192-11D4-A65F-0040963251E5}')
 ! !
+
 !IXMLHttpRequest class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 newXMLHTTP!**auto generated**!instance creation!public! !

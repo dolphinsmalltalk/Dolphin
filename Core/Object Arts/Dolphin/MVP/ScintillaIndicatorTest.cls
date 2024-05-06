@@ -5,9 +5,13 @@ DolphinTest subclass: #ScintillaIndicatorTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ScintillaIndicatorTest guid: (GUID fromString: '{f9336218-5504-41d4-bf04-d9bbe66ecfbe}')!
+
 ScintillaIndicatorTest comment: ''!
+
 !ScintillaIndicatorTest categoriesForClass!Unclassified! !
+
 !ScintillaIndicatorTest methodsFor!
 
 testStyleNameRangeTag
@@ -30,6 +34,7 @@ testStyleNameRangeTag
 	self assert: indicator1 styleName identicalTo: #normal.
 	self assert: indicator1 range equals: (1 to: 10).
 	self assert: indicator1 tag identicalTo: tag! !
+
 !ScintillaIndicatorTest categoriesForMethods!
 testStyleNameRangeTag!public!unit tests! !
 !

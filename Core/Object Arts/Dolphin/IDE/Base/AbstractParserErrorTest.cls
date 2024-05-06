@@ -5,10 +5,15 @@ DolphinTest subclass: #AbstractParserErrorTest
 	classVariableNames: ''
 	poolDictionaries: 'SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
+
 AbstractParserErrorTest guid: (GUID fromString: '{5f42cbdc-9ab6-40b0-826d-b9cb9dd30c78}')!
+
 AbstractParserErrorTest isAbstract: true!
+
 AbstractParserErrorTest comment: ''!
+
 !AbstractParserErrorTest categoriesForClass!Unclassified! !
+
 !AbstractParserErrorTest methodsFor!
 
 buildNestedBlocks: nesting 
@@ -1891,6 +1896,7 @@ writtenNotReadRange: aString
 	compiler on the temp decl, the parser on the first dead store."
 
 	^self subclassResponsibility! !
+
 !AbstractParserErrorTest categoriesForMethods!
 buildNestedBlocks:!helpers!private! !
 checkCompileError:range:code:line:source:!helpers!private! !

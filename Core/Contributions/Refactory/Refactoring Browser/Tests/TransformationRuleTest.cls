@@ -5,9 +5,13 @@ FooLintRuleTest subclass: #TransformationRuleTest
 	classVariableNames: 'RecursiveSelfRule'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TransformationRuleTest guid: (GUID fromString: '{f92d7547-3000-44f7-94ae-0c8b01fc5f2d}')!
+
 TransformationRuleTest comment: ''!
+
 !TransformationRuleTest categoriesForClass!Refactory-Test data! !
+
 !TransformationRuleTest methodsFor!
 
 checkMethod: aSmalllintContext 
@@ -52,6 +56,7 @@ viewResults
 
 	builder inspect.
 	self resetResult! !
+
 !TransformationRuleTest categoriesForMethods!
 checkMethod:!accessing!public! !
 hasConflicts!public!testing! !
@@ -288,6 +293,7 @@ unwindBlocks
 				"->"	'^[| `@temps | ``@.Statements. ``@object] valueOnUnwindDo: ``@block'))
 		methods: false
 		name: 'Move assignment out of valueNowOrUnwindDo: blocks'! !
+
 !TransformationRuleTest class categoriesForMethods!
 assignmentInIfTrue!public!transformations! !
 atIfAbsent!public!transformations! !

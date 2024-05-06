@@ -5,9 +5,13 @@ GUIDTest subclass: #CLSIDTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 CLSIDTest guid: (GUID fromString: '{b2531b96-ea2a-4bae-a00c-9e17f59bcac2}')!
+
 CLSIDTest comment: ''!
+
 !CLSIDTest categoriesForClass!Tests-Network-UUID! !
+
 !CLSIDTest methodsFor!
 
 subjectClass
@@ -24,6 +28,7 @@ testProgId
 	subject := CLSID fromProgID: 'ADODB.Command'.
 	actual := subject progID.
 	self assert: (actual beginsWith: 'ADODB.Command')! !
+
 !CLSIDTest categoriesForMethods!
 subjectClass!constants!private! !
 testDisplayString!constants!public! !

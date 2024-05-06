@@ -9,7 +9,6 @@ AcceleratorPresenter is a <valuePresenter> that displays a <valueModel> onto an 
 
 package basicPackageVersion: '6.0'.
 
-
 package classNames
 	add: #AcceleratorPresenter;
 	add: #AccelToHotKey;
@@ -42,21 +41,18 @@ ValuePresenter subclass: #AcceleratorPresenter
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TypeConverter subclass: #AccelToHotKey
 	instanceVariableNames: ''
 	classVariableNames: 'ModifierMap'
 	poolDictionaries: 'HotKeyConstants Win32Constants'
 	classInstanceVariableNames: ''!
+
 ValueConvertingControlView subclass: #HotKey
 	instanceVariableNames: 'invalidCombinationsRule defaultKeyRule'
 	classVariableNames: ''
 	poolDictionaries: 'HotKeyConstants'
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

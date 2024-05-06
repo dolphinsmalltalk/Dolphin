@@ -5,9 +5,13 @@ DolphinTest subclass: #ClipboardTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ClipboardTest guid: (GUID fromString: '{ea86f353-088f-4e28-b4db-bdb8b09e5e82}')!
+
 ClipboardTest comment: ''!
+
 !ClipboardTest categoriesForClass!Unclassified! !
+
 !ClipboardTest methodsFor!
 
 sampleAnsiString
@@ -114,6 +118,7 @@ testUtf8String
 	"We'll get back UTF-16, but the content should be the same."
 	actual := Clipboard current getText.
 	self assert: actual equals: utf8! !
+
 !ClipboardTest categoriesForMethods!
 sampleAnsiString!constants!private! !
 sampleBitmap!constants!private! !

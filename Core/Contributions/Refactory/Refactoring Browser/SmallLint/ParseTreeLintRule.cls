@@ -5,9 +5,13 @@ BasicLintRule subclass: #ParseTreeLintRule
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ParseTreeLintRule guid: (GUID fromString: '{db449dfa-5729-42a3-87e6-340f66c98e20}')!
+
 ParseTreeLintRule comment: ''!
+
 !ParseTreeLintRule categoriesForClass!Refactory-Lint! !
+
 !ParseTreeLintRule methodsFor!
 
 checkMethod: aSmalllintContext 
@@ -30,6 +34,7 @@ resetResult
 	result
 		label: self name;
 		matcher: matcher! !
+
 !ParseTreeLintRule categoriesForMethods!
 checkMethod:!accessing!public! !
 defaultResultClass!private! !
@@ -680,6 +685,7 @@ whileTrue
 yourselfNotUsed
 	^self createParseTreeRule: #('`{:node | node parent isUsed not} yourself')
 		name: 'Doesn''t use the result of a yourself message'! !
+
 !ParseTreeLintRule class categoriesForMethods!
 anySatisfy!intention revealing!public! !
 asOrderedCollectionNotNeeded!miscellaneous!public! !

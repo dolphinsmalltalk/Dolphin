@@ -5,12 +5,17 @@ ExternalPoint subclass: #POINTL
 	classVariableNames: '_OffsetOf_x _OffsetOf_y'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 POINTL guid: (GUID fromString: '{dbeaf6a6-d2f7-4153-a02e-a389955a892f}')!
+
 POINTL addClassConstant: '_OffsetOf_x' value: 16r0!
 POINTL addClassConstant: '_OffsetOf_y' value: 16r4!
+
 POINTL comment: '`POINTL` is an `ExternalStructure` class to wrap the Win32 POINTL structure. Instances of `POINTL` represent a cartesian coordinate with 32-bit signed integer x and y values.
 '!
+
 !POINTL categoriesForClass!Win32-Structs! !
+
 !POINTL methodsFor!
 
 asUIntPtr
@@ -46,6 +51,7 @@ y: anInteger
 	"Set the receiver's 'y' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_y put: anInteger! !
+
 !POINTL categoriesForMethods!
 asUIntPtr!converting!public! !
 x!**compiled accessors**!public! !
@@ -89,6 +95,7 @@ x: x y: y
 				sdwordAtOffset: _OffsetOf_y put: y;
 				yourself)
 ! !
+
 !POINTL class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 uninitialize!class hierarchy-removing!private! !

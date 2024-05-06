@@ -5,9 +5,13 @@ RefactoringTest subclass: #RenameTemporaryTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RenameTemporaryTest guid: (GUID fromString: '{04723e90-17c0-4d20-b025-d17029763fab}')!
+
 RenameTemporaryTest comment: ''!
+
 !RenameTemporaryTest categoriesForClass!Refactory-Testing! !
+
 !RenameTemporaryTest methodsFor!
 
 testBadInterval
@@ -80,6 +84,7 @@ testRenameTemporary
 								asdf isEmpty ifTrue: [^self].
 								asdf size == 1 ifTrue: [^asdf first viewResults].
 								SmalllintResultEditor openOn: self label: name')! !
+
 !RenameTemporaryTest categoriesForMethods!
 testBadInterval!failure tests!public! !
 testBadName!failure tests!public! !

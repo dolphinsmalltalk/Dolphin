@@ -5,10 +5,15 @@ ExternalArrayTest subclass: #GenericExternalArrayTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GenericExternalArrayTest guid: (GUID fromString: '{69952948-3aa8-44c5-956f-8731aa221d5f}')!
+
 GenericExternalArrayTest isAbstract: true!
+
 GenericExternalArrayTest comment: ''!
+
 !GenericExternalArrayTest categoriesForClass!Unclassified! !
+
 !GenericExternalArrayTest methodsFor!
 
 arrayValueString: eachValue
@@ -38,6 +43,7 @@ testInvalidLength
 	"#1051."
 
 	self should: [self arrayClass length: -1 elementClass: DWORD] raise: Error! !
+
 !GenericExternalArrayTest categoriesForMethods!
 arrayValueString:!private!unit tests! !
 elementClassNames!constants!private! !

@@ -15,7 +15,6 @@ MyOwnCertificate serial: ''MY100002'' owner: ''My Own Company Inc.'' details: ''
 
 Evaluate the above to create an example certificate for My Own Company inc.'.
 
-
 package classNames
 	add: #MyOwnCertificate;
 	add: #MyOwnCertificationAuthorityCertificate;
@@ -41,16 +40,12 @@ DolphinSureCertificate subclass: #MyOwnCertificate
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DolphinSureCertificationAuthorityCertificate subclass: #MyOwnCertificationAuthorityCertificate
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

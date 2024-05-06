@@ -14,7 +14,6 @@ For documentation evaluate:
 
 package basicPackageVersion: '6.1'.
 
-
 package classNames
 	add: #BCryptLibrary;
 	add: #DigitalSignatureAlgorithm;
@@ -66,79 +65,90 @@ Object subclass: #DigitalSignatureAlgorithm
 	classVariableNames: 'HighBitOfByte SmallPrimes'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #DolphinSureCertificateInfo
 	instanceVariableNames: 'serial owner details issued expiry publicKey'
 	classVariableNames: 'ValidStbClasses'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #DolphinSureCertificateStore
 	instanceVariableNames: 'regKey'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #DolphinSureTrustedData
 	instanceVariableNames: 'data description signature publisherCertificate'
 	classVariableNames: 'ValidStbClasses'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #PC1Cipher
 	instanceVariableNames: 'key box i j'
 	classVariableNames: 'RandPool'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #SecureHashAlgorithm
 	instanceVariableNames: 'context'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DolphinSureTrustedData subclass: #DolphinSureCertificate
 	instanceVariableNames: ''
 	classVariableNames: 'UntrustedContentWarning'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 DolphinSureCertificate subclass: #DolphinSureCertificationAuthorityCertificate
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DolphinSureCertificate subclass: #DolphinSurePersonalCertificate
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DolphinSureCertificate subclass: #NotSignedCertificate
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DolphinSureCertificate subclass: #ObjectArtsCertificate
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DolphinSureCertificationAuthorityCertificate subclass: #ObjectArtsRootCertificate
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Error subclass: #NotTrustedError
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Error subclass: #TrustedDataError
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalLibrary subclass: #BCryptLibrary
 	instanceVariableNames: 'shaAlgorithmHandle'
 	classVariableNames: ''
 	poolDictionaries: 'BCryptConstants'
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -196,6 +206,7 @@ secureFileItIn: aString
 	a warning is given to see if the user wished to continue with the file in."
 
 	self secureFileInFrom: aString readStream! !
+
 !SourceManager categoriesForMethods!
 emitSecureChunk:description:publisherCertificate:privateKey:on:!private!source filing! !
 secureChunkMarker!constants!private! !

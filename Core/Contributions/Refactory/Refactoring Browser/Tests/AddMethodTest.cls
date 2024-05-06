@@ -5,9 +5,13 @@ RefactoringTest subclass: #AddMethodTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AddMethodTest guid: (GUID fromString: '{6d550761-f858-4c04-be63-5475fe34219a}')!
+
 AddMethodTest comment: ''!
+
 !AddMethodTest categoriesForClass!Refactory-Testing! !
+
 !AddMethodTest methodsFor!
 
 setUp
@@ -65,6 +69,7 @@ testModelInheritedSelector
 				toClass: (model classNamed: #Bar)
 				inProtocols: #(#accessing).
 	self shouldFail: refactoring! !
+
 !AddMethodTest categoriesForMethods!
 setUp!public!set up! !
 testAddMethod!public!tests! !

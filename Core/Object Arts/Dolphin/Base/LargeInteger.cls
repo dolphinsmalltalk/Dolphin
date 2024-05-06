@@ -5,14 +5,19 @@ Integer variableByteSubclass: #LargeInteger
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 LargeInteger guid: (GUID fromString: '{87b4c65e-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 LargeInteger isIndirection: true!
+
 LargeInteger comment: 'Class LargeInteger is the class of Integers which are outside the range of SmallIntegers (i.e. outside (SmallInteger minimum..SmallInteger maximum). Basically any Integer requiring more than 31-bits to be represented in 2''s complement will be a LargeInteger.
 
 LargeIntegers in Dolphin do not follow the standard signed-magnitude radix-256 Smalltalk representation, with separate subclasses for positive and negative integers. Dolphin''s LargeIntegers follow standard machine representation, in that they are 2''s complement, 32-bit granular (i.e. they might have 32, 64, 96, ...n*32 bits). This representation has the dual advantages of higher performance, and simplified external interfacing. In particular the 32 and 64-bit Integers have the same representation externally as they do in Dolphin. Note that all integers are considered immutable - attempts to update the individual bytes will fail.
 
 LargeInteger includes high performance primitive implementations for the common arithmetical operations and bit manipulations.'!
+
 !LargeInteger categoriesForClass!Magnitude-Numbers! !
+
 !LargeInteger methodsFor!
 
 - operand
@@ -475,6 +480,7 @@ subtractFromInteger: anInteger
 	and therefore it is better to send #+ that #addToInteger:."
 
 	^self negated + anInteger! !
+
 !LargeInteger categoriesForMethods!
 -!arithmetic!public! !
 *!arithmetic!public! !
@@ -556,6 +562,7 @@ new64
 	N.B. The answer is not a valid LargeInteger since zero is a SmallInteger."
 
 	^self basicNew: 8! !
+
 !LargeInteger class categoriesForMethods!
 fromBytes:!instance creation!public! !
 fromSmallInteger:!instance creation!private! !

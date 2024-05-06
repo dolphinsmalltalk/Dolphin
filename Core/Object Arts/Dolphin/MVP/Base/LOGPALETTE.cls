@@ -5,10 +5,13 @@ Win32Structure subclass: #LOGPALETTE
 	classVariableNames: '_OffsetOf_palNumEntries _OffsetOf_palPalEntry _OffsetOf_palVersion'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 LOGPALETTE guid: (GUID fromString: '{87b4c5fa-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 LOGPALETTE addClassConstant: '_OffsetOf_palNumEntries' value: 16r2!
 LOGPALETTE addClassConstant: '_OffsetOf_palPalEntry' value: 16r4!
 LOGPALETTE addClassConstant: '_OffsetOf_palVersion' value: 16r0!
+
 LOGPALETTE comment: '<LOGPALETTE> is an <ExternalStructure> class to wrap the struct ''Win32.LOGPALETTE'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
@@ -25,7 +28,9 @@ struct tagLOGPALETTE {
 	[readonly, helpstring("Specifies an array of PALETTEENTRY structures that define the color and usage of each entry in the logical palette."), size_is("palNumEntries")] PALETTEENTRY palPalEntry[256];
 } LOGPALETTE;
 '!
+
 !LOGPALETTE categoriesForClass!Win32-Structs! !
+
 !LOGPALETTE methodsFor!
 
 palNumEntries
@@ -55,6 +60,7 @@ palVersion: anInteger
 	"Set the receiver's 'palVersion' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_palVersion put: anInteger! !
+
 !LOGPALETTE categoriesForMethods!
 palNumEntries!**compiled accessors**!public! !
 palNumEntries:!**compiled accessors**!public! !
@@ -100,6 +106,7 @@ new
 	^(super new)
 		palNumEntries: 256;
 		yourself! !
+
 !LOGPALETTE class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

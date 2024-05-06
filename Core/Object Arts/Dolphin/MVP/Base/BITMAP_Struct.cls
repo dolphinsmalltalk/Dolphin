@@ -5,7 +5,9 @@ Win32Structure subclass: #BITMAP
 	classVariableNames: '_OffsetOf_bmBits _OffsetOf_bmBitsPixel _OffsetOf_bmHeight _OffsetOf_bmPlanes _OffsetOf_bmType _OffsetOf_bmWidth _OffsetOf_bmWidthBytes'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 BITMAP guid: (GUID fromString: '{f44c9143-2b3f-11d3-8368-7a8b5a000000}')!
+
 BITMAP addClassConstant: '_OffsetOf_bmBits' value: 16r14!
 BITMAP addClassConstant: '_OffsetOf_bmBitsPixel' value: 16r12!
 BITMAP addClassConstant: '_OffsetOf_bmHeight' value: 16r8!
@@ -13,10 +15,13 @@ BITMAP addClassConstant: '_OffsetOf_bmPlanes' value: 16r10!
 BITMAP addClassConstant: '_OffsetOf_bmType' value: 16r0!
 BITMAP addClassConstant: '_OffsetOf_bmWidth' value: 16r4!
 BITMAP addClassConstant: '_OffsetOf_bmWidthBytes' value: 16rC!
+
 BITMAP comment: 'BITMAP is an <ExternalStructure> class to represent the Win32 structure of the same name.
 
 The BITMAP structure is used to describe bitmaps, containing attributes such as the width, height, and color format, and a pointer to the bitmap''s bits.'!
+
 !BITMAP categoriesForClass!External-Data-Structured-Win32! !
+
 !BITMAP methodsFor!
 
 bmBits
@@ -63,6 +68,7 @@ extent
 	"Answer the width and height (in pels) of the the bitmap described by the receiver."
 
 	^self bmWidth @ self bmHeight! !
+
 !BITMAP categoriesForMethods!
 bmBits!**compiled accessors**!public! !
 bmBitsPixel!**compiled accessors**!public! !
@@ -107,6 +113,7 @@ fileOutStem
 
 getFieldNames
 	^#(#bmType #bmWidth #bmHeight #bmWidthBytes #bmPlanes #bmBitsPixel #bmBits)! !
+
 !BITMAP class categoriesForMethods!
 defineFields!public!template definition! !
 fileOutStem!private!source filing! !

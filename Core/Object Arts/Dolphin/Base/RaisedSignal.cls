@@ -5,9 +5,13 @@ Error subclass: #RaisedSignal
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RaisedSignal guid: (GUID fromString: '{87b4c55f-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 RaisedSignal comment: ''!
+
 !RaisedSignal categoriesForClass!Kernel-Exception Handling! !
+
 !RaisedSignal methodsFor!
 
 _descriptionFormat
@@ -41,6 +45,7 @@ signalType: aSignal
 	a raise event."
 
 	signalType := aSignal! !
+
 !RaisedSignal categoriesForMethods!
 _descriptionFormat!displaying!public! !
 defaultAction!handling!public! !

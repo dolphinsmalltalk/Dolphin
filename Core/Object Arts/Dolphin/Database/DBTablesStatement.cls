@@ -5,9 +5,13 @@ DBSchemaStatement subclass: #DBTablesStatement
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DBTablesStatement guid: (GUID fromString: '{404f79f7-4450-4d9d-9c0e-d2e9c8f897c6}')!
+
 DBTablesStatement comment: 'DBTablesStatement is a specialized <DBSchemaStatement> for querying about tables in a database.'!
+
 !DBTablesStatement categoriesForClass!ODBC Interface! !
+
 !DBTablesStatement methodsFor!
 
 executeStatement
@@ -37,6 +41,7 @@ tableType
 
 tableType: aString
 	tableType := aString! !
+
 !DBTablesStatement categoriesForMethods!
 executeStatement!operations!private! !
 initialize:!initializing!private!searching! !

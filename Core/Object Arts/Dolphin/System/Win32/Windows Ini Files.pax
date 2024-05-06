@@ -7,7 +7,6 @@ Copyright (c) Object Arts Ltd, 2017
 
 This package provides a <Dictionary> interface over Windows "private" .ini files. This is a simple mechanism for implementing human readable config files.'.
 
-
 package classNames
 	add: #IniFile;
 	add: #IniFileAbstract;
@@ -43,19 +42,18 @@ Collection subclass: #IniFileAbstract
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IniFileAbstract subclass: #IniFile
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IniFileAbstract subclass: #IniFileSection
 	instanceVariableNames: 'name'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -166,6 +164,7 @@ writePrivateProfileStruct: lpszSection lpszKey: lpszKey lpStruct: lpStruct uSize
 
 	<stdcall: bool WritePrivateProfileStructW lpwstr lpwstr void* dword lpwstr>
 	^self invalidCall: _failureCode! !
+
 !KernelLibrary categoriesForMethods!
 getPrivateProfileInt:lpKeyName:nDefault:lpFileName:!**auto generated**!public!win32 functions-ini files! !
 getPrivateProfileSection:lpReturnedString:nSize:lpFileName:!**auto generated**!public!win32 functions-ini files! !

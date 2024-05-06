@@ -5,7 +5,9 @@ GraphicsTool subclass: #Menu
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Menu guid: (GUID fromString: '{87b4c636-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Menu comment: 'Menu is the class of objects use to represent popup menu''s in windows. A menu holds a list of items that may be commands, sub-menus, or dividers.
 
 Instance Variables:
@@ -19,7 +21,9 @@ Instance Variables:
 	_reserved1		<UndefinedObject>. Reserved for future use.
 	_reserved2		<UndefinedObject>. Reserved for future use.
 '!
+
 !Menu categoriesForClass!Graphics-Tools! !
+
 !Menu methodsFor!
 
 acceleratorKey
@@ -654,6 +658,7 @@ updateItem: indexInteger id: idInteger text: newText
 		uFlags: ##(MF_BYPOSITION | MFT_STRING)
 		uIDNewItem: idInteger
 		lpNewItem: newText! !
+
 !Menu categoriesForMethods!
 acceleratorKey!accessing!public! !
 addCommand:description:!adding!public! !
@@ -837,6 +842,7 @@ stbVersion
 
 uninitialize
 	View unregisterMessageMappings: {WM_CONTEXTMENU. WM_INITMENU. WM_INITMENUPOPUP}! !
+
 !Menu class categoriesForMethods!
 description:!instance creation!public! !
 fromStrings:!instance creation!public! !

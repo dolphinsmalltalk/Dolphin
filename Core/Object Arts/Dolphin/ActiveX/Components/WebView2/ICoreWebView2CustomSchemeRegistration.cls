@@ -5,7 +5,9 @@ ICoreWebView2Interface subclass: #ICoreWebView2CustomSchemeRegistration
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2CustomSchemeRegistration guid: (IID fromString: '{d60ac92c-37a6-4b26-a39e-95cfe59047bb}')!
+
 ICoreWebView2CustomSchemeRegistration comment: '`ICoreWebView2CustomSchemeRegistration` is a wrapper class for the COM interface ''WebView2.ICoreWebView2CustomSchemeRegistration'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -46,7 +48,9 @@ interface ICoreWebView2CustomSchemeRegistration : IUnknown
 };
 ```
 '!
+
 !ICoreWebView2CustomSchemeRegistration categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2CustomSchemeRegistration methodsFor!
 
 get_HasAuthorityComponent: hasAuthorityComponent
@@ -176,6 +180,7 @@ treatAsSecure: treatAsSecure
 	"Set the 'TreatAsSecure' property of the receiver to the <boolean> value of the argument."
 
 	self put_TreatAsSecure: treatAsSecure asParameter! !
+
 !ICoreWebView2CustomSchemeRegistration categoriesForMethods!
 get_HasAuthorityComponent:!**auto generated**!COM Interfaces-ICoreWebView2CustomSchemeRegistration!private! !
 get_SchemeName:!**auto generated**!COM Interfaces-ICoreWebView2CustomSchemeRegistration!private! !
@@ -215,6 +220,7 @@ defineFunctions
 		defineFunction: #put_HasAuthorityComponent:
 			argumentTypes: 'sdword'
 ! !
+
 !ICoreWebView2CustomSchemeRegistration class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

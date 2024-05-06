@@ -7,7 +7,6 @@ Copyright (c) Object Arts Ltd. 1997-2001. Portions Copyright (c) CGI Group (Euro
 
 package basicPackageVersion: '6.2'.
 
-
 package classNames
 	add: #AbstractToTextConverter;
 	add: #EvaluationConverter;
@@ -36,41 +35,42 @@ Object subclass: #TypeConverter
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TypeConverter subclass: #AbstractToTextConverter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TypeConverter subclass: #EvaluationConverter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TypeConverter subclass: #InvertingConverter
 	instanceVariableNames: 'wrappedConverter'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TypeConverter subclass: #MappingConverter
 	instanceVariableNames: 'leftToRightMap rightToLeftMap'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TypeConverter subclass: #NullConverter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TypeConverter subclass: #PluggableTypeConverter
 	instanceVariableNames: 'leftToRightBlock rightToLeftBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

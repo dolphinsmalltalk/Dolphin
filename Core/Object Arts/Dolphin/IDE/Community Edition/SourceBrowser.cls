@@ -5,7 +5,9 @@ SmalltalkToolShell subclass: #SourceBrowser
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SourceBrowser guid: (GUID fromString: '{87b4c6c4-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 SourceBrowser comment: 'SourceBrowser is a <SmalltalkToolShell> that implements a Source Management interface onto the various <sourceObject>s in the development system. SourceBrowser''s view of the system is somewhat different to the other tools in that operates on classes, packages, views, etc, as files. It allows these objects to externalized (filed out) and placed in a change control system. Source objects can be saved individually or en-masse and their change flags can be toggled on or off.
 
 SourceBrowsers are typically opened either from the main development system window, which opens the browser on all source objects in the system, or from the package browser in order to operate on the source objects in a package.
@@ -16,7 +18,9 @@ Instance Variables:
 	refreshBlock		<monadicValuable> that can be evaluated to refresh the browser display.
 
 '!
+
 !SourceBrowser categoriesForClass!MVP-Presenters! !
+
 !SourceBrowser methodsFor!
 
 allSourceObjects
@@ -315,6 +319,7 @@ viewRefresh
 
 	self refresh
 ! !
+
 !SourceBrowser categoriesForMethods!
 allSourceObjects!accessing!public! !
 browseChangedMethods!commands!public! !
@@ -401,6 +406,7 @@ typeOfObject: aSourceObject
 	^(aSourceObject isKindOf: Class)
 		ifTrue: [ 'a Class']
 		ifFalse: [ aSourceObject basicPrintString ]! !
+
 !SourceBrowser class categoriesForMethods!
 displayOn:!displaying!public! !
 forSourcesOfPackages:!instance creation!public! !

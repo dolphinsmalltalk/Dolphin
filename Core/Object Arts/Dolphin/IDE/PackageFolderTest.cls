@@ -5,9 +5,13 @@ FolderTest subclass: #PackageFolderTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PackageFolderTest guid: (GUID fromString: '{3a14afc2-659e-4b7b-af2f-dc8631af7128}')!
+
 PackageFolderTest comment: ''!
+
 !PackageFolderTest categoriesForClass!Unclassified! !
+
 !PackageFolderTest methodsFor!
 
 folderClass
@@ -23,6 +27,7 @@ testForPackage
 	dolphin := self folderClass forPackage: dolphinPackage.
 	self assert: dolphin name equals: 'Base'.
 	self assert: dolphin folderName equals: '$\' , dolphinPackageFolder! !
+
 !PackageFolderTest categoriesForMethods!
 folderClass!constants!private! !
 rootFolder!public!unit tests! !

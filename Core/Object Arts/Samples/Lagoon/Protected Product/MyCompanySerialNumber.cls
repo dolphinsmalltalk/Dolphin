@@ -5,11 +5,15 @@ ProtectedProductSerialNumber subclass: #MyCompanySerialNumber
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MyCompanySerialNumber guid: (GUID fromString: '{c1ed7586-afe1-4ee9-997a-01c157674e7d}')!
+
 MyCompanySerialNumber comment: 'This class is a serial number factory for products of "MyCompany". Any <ProtectedProductSessionManager> that wishes to make use of these serial numbers should override it''s #serialNumberClass to answer this class. New serial numbers can be generated for MyCompany''s products by evaluating:
 
 MyCompanySerialNumber new displayString "Display it"'!
+
 !MyCompanySerialNumber categoriesForClass!Unclassified! !
+
 !MyCompanySerialNumber class methodsFor!
 
 instanceDecodingKey
@@ -38,6 +42,7 @@ lockedMethodDecodingKeyHash
 
 	^ 1149340459812121771490846453905007528758311757049.
 	! !
+
 !MyCompanySerialNumber class categoriesForMethods!
 instanceDecodingKey!constants!private! !
 lockedMethodDecodingKey!constants!private! !

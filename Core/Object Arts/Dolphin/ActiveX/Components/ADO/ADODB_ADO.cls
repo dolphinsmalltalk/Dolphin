@@ -5,7 +5,9 @@ IDispatch subclass: #ADODB_ADO
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
+
 ADODB_ADO guid: (IID fromString: '{00000534-0000-0010-8000-00aa006d2ea4}')!
+
 ADODB_ADO comment: '`ADODB_ADO` is a wrapper class for the COM interface ''ADODB._ADO'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -28,7 +30,9 @@ interface _ADO : IDispatch
 };
 ```
 '!
+
 !ADODB_ADO categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
+
 !ADODB_ADO methodsFor!
 
 get_Properties: ppvObject
@@ -57,6 +61,7 @@ properties
 	answer := ADODBProperties newPointer.
 	self get_Properties: answer.
 	^answer asObject! !
+
 !ADODB_ADO categoriesForMethods!
 get_Properties:!**auto generated**!COM Interfaces-_ADO!private! !
 isExtensible!**auto generated**!public!testing! !
@@ -74,6 +79,7 @@ defineFunctions
 		defineFunction: #get_Properties:
 			argumentTypes: 'ADODBProperties**'
 ! !
+
 !ADODB_ADO class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

@@ -5,7 +5,9 @@ Brush subclass: #HatchBrush
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 HatchBrush guid: (GUID fromString: '{7b044e62-1bef-40c1-a50a-1f63f6d10c2d}')!
+
 HatchBrush comment: '`HatchBrush` is type of `Brush` that wraps a Windows GDI Brush object for drawing in one of the standard hashed patterns.
 
 HatchBrushes are not normally instantiated directly, but rather through one of the relevant instance creation methods of the superclass, `Brush`. For example:
@@ -16,7 +18,9 @@ HatchBrushes are not normally instantiated directly, but rather through one of t
   `id`		`<integer>` code from the HS_xxx enumeration, which specified the hatched pattern that will be drawn
   `color`	`<Color>` of the lines that will be drawn to form the pattern
 '!
+
 !HatchBrush categoriesForClass!Graphics-Tools! !
+
 !HatchBrush methodsFor!
 
 createHandle
@@ -49,6 +53,7 @@ printOn: aPuttableStream
 setId: anInteger color: aColor 
 	id := anInteger.
 	color := aColor! !
+
 !HatchBrush categoriesForMethods!
 createHandle!private!realizing/unrealizing! !
 name!accessing!public! !
@@ -62,6 +67,7 @@ fromId: anInteger color: aColor
 	"Answer a new instance of the receiver for painting a hatched pattern of the type identifiedby the <integer> argument, anInteger, which should be a code from the HS_xxx enumeration, in the <Color>, aColor."
 
 	^self new setId: anInteger color: aColor! !
+
 !HatchBrush class categoriesForMethods!
 fromId:color:!instance creation!public! !
 !

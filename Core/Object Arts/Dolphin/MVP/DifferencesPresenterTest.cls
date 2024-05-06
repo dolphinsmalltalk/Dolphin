@@ -5,9 +5,13 @@ PresenterTest subclass: #DifferencesPresenterTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DifferencesPresenterTest guid: (GUID fromString: '{ff71a471-024e-4959-8607-399cdf4faf2a}')!
+
 DifferencesPresenterTest comment: ''!
+
 !DifferencesPresenterTest categoriesForClass!Unclassified! !
+
 !DifferencesPresenterTest methodsFor!
 
 classToTest
@@ -29,6 +33,7 @@ baz'.
 	presenter comparisonMode: #line.
 	items := presenter itemsFrom: str.
 	self assert: items asArray equals: #('foo bar' 'baz')! !
+
 !DifferencesPresenterTest categoriesForMethods!
 classToTest!helpers!private! !
 testItemsFrom!public! !

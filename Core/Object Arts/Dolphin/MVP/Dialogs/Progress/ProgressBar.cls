@@ -5,14 +5,18 @@ ValueConvertingControlView subclass: #ProgressBar
 	classVariableNames: 'ValidRange'
 	poolDictionaries: 'ProgressBarConstants'
 	classInstanceVariableNames: ''!
+
 ProgressBar guid: (GUID fromString: '{87b4c737-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 ProgressBar comment: 'ProgressBar is a <valueView> implementing the Windows "msctls_progress32" common control. The <valueModel> associated with a ProgressBar must always yield an <integer> value when mapped through the installed type converter. A ProgressBar will normally be used in conjunction with a <NumberPresenter>.
 
 Class Variables:
 	ValidRange	<Interval> describing the range of displayable <integer> values.
 
 '!
+
 !ProgressBar categoriesForClass!MVP-Views! !
+
 !ProgressBar methodsFor!
 
 backcolorChanged
@@ -130,6 +134,7 @@ state
 	^super state
 		add: (MessageSend receiver: self selector: #range: argument: self range);
 		yourself! !
+
 !ProgressBar categoriesForMethods!
 backcolorChanged!helpers!private! !
 barPosition!accessing!private! !
@@ -180,6 +185,7 @@ winClassName
 
 	^'msctls_progress32'
 ! !
+
 !ProgressBar class categoriesForMethods!
 defaultModel!models!public! !
 icon!constants!public! !

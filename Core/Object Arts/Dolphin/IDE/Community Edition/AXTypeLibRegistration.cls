@@ -5,7 +5,9 @@ Object subclass: #AXTypeLibRegistration
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AXTypeLibRegistration guid: (GUID fromString: '{187aaa33-6992-4cfc-bac1-e8a4cb9ea0f9}')!
+
 AXTypeLibRegistration comment: 'AXTypeLibRegistration is a simple class to hold registration information for a type library which might not yet be loaded.
 
 Instance Variables:
@@ -14,7 +16,9 @@ Instance Variables:
 	versionString	<String>
 
 '!
+
 !AXTypeLibRegistration categoriesForClass!Unclassified! !
+
 !AXTypeLibRegistration methodsFor!
 
 < operand
@@ -86,6 +90,7 @@ versionString
 	"Answer the version string from the typelib's registration details."
 
 	^versionString! !
+
 !AXTypeLibRegistration categoriesForMethods!
 <!comparing!public! !
 <=!comparing!public! !
@@ -113,6 +118,7 @@ icon
 	"Answers an <Icon> that can be used to represent this class"
 
 	^AXTypeLibraryAnalyzer icon! !
+
 !AXTypeLibRegistration class categoriesForMethods!
 description:guidString:versionString:!instance creation!public! !
 icon!constants!public! !

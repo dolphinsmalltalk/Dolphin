@@ -5,7 +5,9 @@ SequenceableCollection subclass: #Interval
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Interval guid: (GUID fromString: '{87b4c50d-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Interval comment: '<Interval>s represent a finite arithmetic progressions, that is a <sequencedReadableCollection> of numbers across a specified range and with a specified step between each element.
 
 Instance Variables:
@@ -13,7 +15,9 @@ Instance Variables:
 	stop	<number>. Last element in the collection.
 	step	<number>. Difference between elements of the collection (approximate where the elements are Floats)
 '!
+
 !Interval categoriesForClass!Collections-Sequenceable! !
+
 !Interval methodsFor!
 
 - delta
@@ -227,6 +231,7 @@ uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: aDyadicValuable
 	enumerators."
 
 	startInteger to: stopInteger do: [:i | aDyadicValuable value: i value: start + (step * (i - 1))]! !
+
 !Interval categoriesForMethods!
 -!arithmetic!public! !
 +!arithmetic!public! !
@@ -284,6 +289,7 @@ new
 	"Use #from:to:[by:]"
 
 	^self shouldNotImplement! !
+
 !Interval class categoriesForMethods!
 from:to:!instance creation!public! !
 from:to:by:!instance creation!public! !

@@ -5,7 +5,9 @@ ICoreWebView2EventArgs subclass: #ICoreWebView2DevToolsProtocolEventReceivedEven
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2DevToolsProtocolEventReceivedEventArgs guid: (IID fromString: '{653c2959-bb3a-4377-8632-b58ada4e66c4}')!
+
 ICoreWebView2DevToolsProtocolEventReceivedEventArgs comment: '`ICoreWebView2DevToolsProtocolEventReceivedEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2DevToolsProtocolEventReceivedEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -26,7 +28,9 @@ interface ICoreWebView2DevToolsProtocolEventReceivedEventArgs : IUnknown
 };
 ```
 '!
+
 !ICoreWebView2DevToolsProtocolEventReceivedEventArgs categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2DevToolsProtocolEventReceivedEventArgs methodsFor!
 
 get_ParameterObjectAsJson: parameterObjectAsJson
@@ -47,6 +51,7 @@ parameterObjectAsJson
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
 	^answer! !
+
 !ICoreWebView2DevToolsProtocolEventReceivedEventArgs categoriesForMethods!
 get_ParameterObjectAsJson:!**auto generated**!COM Interfaces-ICoreWebView2DevToolsProtocolEventReceivedEventArgs!private! !
 parameterObjectAsJson!properties!public! !
@@ -62,6 +67,7 @@ defineFunctions
 		defineFunction: #get_ParameterObjectAsJson:
 			argumentTypes: 'lpwstr*'
 ! !
+
 !ICoreWebView2DevToolsProtocolEventReceivedEventArgs class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

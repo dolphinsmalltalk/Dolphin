@@ -284,294 +284,348 @@ Object subclass: #AXTypeInfoObject
 	classVariableNames: 'ClassCommentStyleMap GuidClash HighLevelWrapperStyleMap SuperclassClash TracingStyleMap'
 	poolDictionaries: 'AXAutomationConstants AXTypeGenerationFlags'
 	classInstanceVariableNames: ''!
+
 Object subclass: #AXTypeLibDocumentation
 	instanceVariableNames: 'name helpstring helpcontext helpfile'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AXTypeInfoObject subclass: #AXTypeInfoAnalyzer
 	instanceVariableNames: 'typeLib globalBinding guid index documentation'
 	classVariableNames: 'VTtoIDLTypeMap'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AXTypeInfoObject subclass: #AXTypeLibraryAnalyzer
 	instanceVariableNames: 'attributes prefix packageName globalName constantsPoolName aliasMap typeAnalyzers'
 	classVariableNames: 'TypeLibs'
 	poolDictionaries: 'AXAutomationErrors Win32Constants'
 	classInstanceVariableNames: ''!
+
 AXTypeInfoAnalyzer subclass: #AXAPIInfoAnalyzer
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AXTypeInfoAnalyzer subclass: #AXStructureTypeAnalyzer
 	instanceVariableNames: ''
 	classVariableNames: 'BuiltIns'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AXTypeInfoAnalyzer subclass: #TKindAliasAnalyzer
 	instanceVariableNames: ''
 	classVariableNames: 'BaseTypes'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AXTypeInfoAnalyzer subclass: #TKindCoclassAnalyzer
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AXTypeInfoAnalyzer subclass: #TKindEnumAnalyzer
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AXAPIInfoAnalyzer subclass: #AXInterfaceTypeAnalyzer
 	instanceVariableNames: 'protocol isSource'
 	classVariableNames: 'ReservedDispSelectors ReservedUnkSelectors'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AXAPIInfoAnalyzer subclass: #TKindModuleAnalyzer
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AXInterfaceTypeAnalyzer subclass: #TKindDispatchAnalyzer
 	instanceVariableNames: ''
 	classVariableNames: 'SpecialPropGets'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AXInterfaceTypeAnalyzer subclass: #TKindInterfaceAnalyzer
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AXStructureTypeAnalyzer subclass: #TKindRecordAnalyzer
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AXStructureTypeAnalyzer subclass: #TKindUnionAnalyzer
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 COMFunction subclass: #DispFunction
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'Win32Errors'
 	classInstanceVariableNames: ''!
+
 COMInterfaceImp subclass: #AXDispatchImpAbstract
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants AXAutomationErrors Win32Constants'
 	classInstanceVariableNames: ''!
+
 AXDispatchImpAbstract subclass: #AXDualImp
 	instanceVariableNames: 'interface piTypeInfo locale'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AXDualImp subclass: #AXForwardingDualImp
 	instanceVariableNames: 'interfaceClass server'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 COMEnumerator subclass: #COMVariantEnumerator
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IUnknown subclass: #ICreateErrorInfo
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IUnknown subclass: #IDispatch
 	instanceVariableNames: 'typeInfo dispatchImplementor'
 	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants AXAutomationErrors'
 	classInstanceVariableNames: ''!
+
 IUnknown subclass: #IPerPropertyBrowsing
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IUnknown subclass: #IProvideClassInfo
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IUnknown subclass: #IRecordInfo
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants AXAutomationErrors'
 	classInstanceVariableNames: ''!
+
 IUnknown subclass: #ITypeComp
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IUnknown subclass: #ITypeInfo
 	instanceVariableNames: 'attributes'
 	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants AXAutomationErrors'
 	classInstanceVariableNames: ''!
+
 IUnknown subclass: #ITypeLib
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants AXAutomationErrors'
 	classInstanceVariableNames: ''!
+
 IEnumXXXX subclass: #IEnumVARIANT
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IProvideClassInfo subclass: #IProvideClassInfo2
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ITypeInfo subclass: #ITypeInfo2
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ITypeLib subclass: #ITypeLib2
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GenericExternalArray subclass: #SAFEARRAY
 	instanceVariableNames: 'data start recordInfo'
 	classVariableNames: '_OffsetOf_cbElements _OffsetOf_cDims _OffsetOf_cLocks _OffsetOf_fFeatures _OffsetOf_pvData _OffsetOf_rgsabound'
 	poolDictionaries: 'AXAutomationConstants AXAutomationErrors'
 	classInstanceVariableNames: ''!
+
 DOUBLE subclass: #DATE
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
+
 SWORD subclass: #VARIANT_BOOL
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 LPVOID subclass: #LPBSTR
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 OLEStructure subclass: #AbstractELEMDESC
 	instanceVariableNames: 'owner tdesc'
 	classVariableNames: '_OffsetOf_tdescElem'
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
+
 OLEStructure subclass: #CURRENCY
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_cy'
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
+
 OLEStructure subclass: #CUSTDATAITEM
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_guid _OffsetOf_varValue'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 OLEStructure subclass: #DECIMAL
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_hi32 _OffsetOf_lo64 _OffsetOf_scale _OffsetOf_sign _OffsetOf_wReserved'
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
+
 OLEStructure subclass: #DISPPARAMS
 	instanceVariableNames: 'args vargs dispids'
 	classVariableNames: '_OffsetOf_cArgs _OffsetOf_cNamedArgs _OffsetOf_rgdispidNamedArgs _OffsetOf_rgvarg ZeroArgs'
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
+
 OLEStructure subclass: #FONTDESC
 	instanceVariableNames: 'name'
 	classVariableNames: '_OffsetOf_cySize _OffsetOf_dwSize _OffsetOf_fItalic _OffsetOf_fStrikethrough _OffsetOf_fUnderline _OffsetOf_lpstrName _OffsetOf_sCharset _OffsetOf_sWeight'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 OLEStructure subclass: #IDLDESC
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_dwReserved _OffsetOf_wIDLFlags'
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
+
 OLEStructure subclass: #PARAMDESC
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_pparamdescex _OffsetOf_wParamFlags'
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
+
 OLEStructure subclass: #PARAMDESCEX
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_cBytes _OffsetOf_varDefaultValue'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 OLEStructure subclass: #SAFEARRAYBOUND
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_cElements _OffsetOf_lLbound'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 OLEStructure subclass: #TLIBATTR
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_guid _OffsetOf_lcid _OffsetOf_syskind _OffsetOf_wLibFlags _OffsetOf_wMajorVerNum _OffsetOf_wMinorVerNum'
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
+
 OLEStructure subclass: #TYPEDESC
 	instanceVariableNames: 'owner classDesc typeInfo'
 	classVariableNames: '_OffsetOf_hreftype _OffsetOf_lpadesc _OffsetOf_lptdesc _OffsetOf_vt VTIndirections'
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
+
 AbstractELEMDESC subclass: #ARRAYDESC
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_cDims _OffsetOf_rgbounds'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AbstractELEMDESC subclass: #ELEMDESC
 	instanceVariableNames: 'param'
 	classVariableNames: '_OffsetOf_paramdesc'
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
+
 OLEFinalizableStructure subclass: #AXRecord
 	instanceVariableNames: 'recordInfo owner'
 	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants AXAutomationErrors'
 	classInstanceVariableNames: ''!
+
 OLEFinalizableStructure subclass: #AXTypeInfoStructure
 	instanceVariableNames: 'analyzer'
 	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
+
 OLEFinalizableStructure subclass: #CUSTDATA
 	instanceVariableNames: 'contents'
 	classVariableNames: '_OffsetOf_cCustData _OffsetOf_prgCustData WellKnownCustomAttributes'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 OLEFinalizableStructure subclass: #VARIANT
 	instanceVariableNames: 'data'
 	classVariableNames: '_OffsetOf_dblVal _OffsetOf_vt _OffsetOf_wReserved1 _OffsetOf_wReserved2 _OffsetOf_wReserved3 Unspecified VTClasses VTNames'
 	poolDictionaries: 'AXAutomationConstants AXAutomationErrors Win32Constants'
 	classInstanceVariableNames: ''!
+
 AXTypeInfoStructure subclass: #AXMemberDesc
 	instanceVariableNames: 'index customAttributes documentation'
 	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
+
 AXTypeInfoStructure subclass: #TYPEATTR
 	instanceVariableNames: 'piTypeInfo'
 	classVariableNames: '_OffsetOf_cbAlignment _OffsetOf_cbSizeInstance _OffsetOf_cbSizeVft _OffsetOf_cFuncs _OffsetOf_cImplTypes _OffsetOf_cVars _OffsetOf_dwReserved _OffsetOf_guid _OffsetOf_idldescType _OffsetOf_lcid _OffsetOf_lpstrSchema _OffsetOf_memidConstructor _OffsetOf_memidDestructor _OffsetOf_tdescAlias _OffsetOf_typekind _OffsetOf_wMajorVerNum _OffsetOf_wMinorVerNum _OffsetOf_wTypeFlags'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AXMemberDesc subclass: #FUNCDESC
 	instanceVariableNames: 'names arguments outputIndices retvalIndex methodName'
 	classVariableNames: '_OffsetOf_callconv _OffsetOf_cParams _OffsetOf_cParamsOpt _OffsetOf_cScodes _OffsetOf_elemdescFunc _OffsetOf_funckind _OffsetOf_invkind _OffsetOf_lprgelemdescParam _OffsetOf_lprgscode _OffsetOf_memid _OffsetOf_oVft _OffsetOf_wFuncFlags'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AXMemberDesc subclass: #VARDESC
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_elemdesc _OffsetOf_lpstrSchema _OffsetOf_lpvarValue _OffsetOf_memid _OffsetOf_oInst _OffsetOf_varkind _OffsetOf_wVarFlags'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -582,6 +636,7 @@ typeName
 	There is an appropriate built-in type which we can substitute."
 
 	^#bool! !
+
 !BOOL class categoriesForMethods!
 typeName!constants!private! !
 !
@@ -592,6 +647,7 @@ asVariant
 	"Answer the <VARIANT> representation of the receiver."
 
 	^VARIANT fromBoolean: self! !
+
 !Boolean categoriesForMethods!
 asVariant!converting!public! !
 !
@@ -603,6 +659,7 @@ typeName
 	There is an appropriate built-in type which we can substitute."
 
 	^#bool! !
+
 !BOOLEAN class categoriesForMethods!
 typeName!constants!private! !
 !
@@ -621,6 +678,7 @@ asVariant
 	This will also work fine for Utf16String."
 
 	^VARIANT fromString: self! !
+
 !BSTR categoriesForMethods!
 asSAFEARRAY!converting!public! !
 asVariant!converting!public! !
@@ -648,6 +706,7 @@ vt
 	type when represented in a <VARIANT>."
 
 	^AXAutomationConstants.VT_BSTR! !
+
 !BSTR class categoriesForMethods!
 fromObject:!instance creation!public! !
 newSAFEARRAY:!double dispatch!public! !
@@ -668,6 +727,7 @@ vt
 	type when represented in a <VARIANT>."
 
 	^AXAutomationConstants.VT_UI1! !
+
 !BYTE class categoriesForMethods!
 typeName!constants!private! !
 vt!constants!public! !
@@ -681,6 +741,7 @@ asSAFEARRAY
 	of the receiver's elements, assuming that such a representation is possible."
 
 	^SAFEARRAY withAll: self elementClass: BYTE! !
+
 !ByteArray categoriesForMethods!
 asSAFEARRAY!converting!public! !
 !
@@ -691,6 +752,7 @@ typeName
 	"Private - Answer the Dolphin external type name associated with the receiver."
 
 	^self name! !
+
 !ByteArray class categoriesForMethods!
 typeName!constants!private! !
 !
@@ -703,6 +765,7 @@ asVariant
 	^VARIANT new
 		sword: self codePoint;
 		yourself! !
+
 !Character categoriesForMethods!
 asVariant!converting!public! !
 !
@@ -721,6 +784,7 @@ vt
 
 	^AXAutomationConstants.VT_CLSID
 ! !
+
 !CLSID class categoriesForMethods!
 newSAFEARRAY:!double dispatch!public! !
 vt!constants!public! !
@@ -739,6 +803,7 @@ asVariant
 	"Answer the VARIANT representation of the receiver (a SAFEARRAY of VARIANT)."
 
 	^VARIANT fromCollection: self! !
+
 !Collection categoriesForMethods!
 asSAFEARRAY!converting!public! !
 asVariant!converting!public! !
@@ -772,6 +837,7 @@ typeInfoIfNone: exceptionHandler
 	Not all custom interfaces have an associated type library, but many do."
 
 	^(self coclassTypeInfoIfNone: [^exceptionHandler value]) defaultInterface! !
+
 !COMInterface categoriesForMethods!
 coclassTypeInfo!accessing!public! !
 coclassTypeInfoIfNone:!accessing!public! !
@@ -832,6 +898,7 @@ typeLib
 	or nil if the receiver does not have a type library."
 
 	^typeLib! !
+
 !COMInterface class categoriesForMethods!
 coclassTypeInfo!accessing!public! !
 coclassTypeInfoIfNone:!accessing!public! !
@@ -854,6 +921,7 @@ asVariant
 	"Answer the VARIANT representation of the receiver (a VT_DATE)."
 
 	^self asSYSTEMTIME asVariant! !
+
 !Date categoriesForMethods!
 asFloat!converting!public! !
 asVariant!converting!public! !
@@ -870,6 +938,7 @@ asVariant
 	"Answer the <VARIANT> representation of the receiver (a VT_DATE)."
 
 	^self asSYSTEMTIME asVariant! !
+
 !DateAndTime categoriesForMethods!
 asFloat!converting!public! !
 asVariant!converting!public! !
@@ -888,6 +957,7 @@ vt
 	type when represented in a <VARIANT>."
 
 	^AXAutomationConstants.VT_R8! !
+
 !DOUBLE class categoriesForMethods!
 typeName!constants!private! !
 vt!constants!public! !
@@ -906,6 +976,7 @@ vt
 	type when represented in a <VARIANT>."
 
 	^AXAutomationConstants.VT_UI4! !
+
 !DWORD class categoriesForMethods!
 typeName!constants!private! !
 vt!constants!public! !
@@ -924,6 +995,7 @@ vt
 	type when represented in a <VARIANT>."
 
 	^AXAutomationConstants.VT_PTR! !
+
 !ExternalAddress class categoriesForMethods!
 typeName!constants!private! !
 vt!constants!public! !
@@ -940,6 +1012,7 @@ asVariant
 	"Answer the VARIANT representation of the receiver (a VT_ARRAY|VT_XX)."
 
 	^VARIANT fromCollection: self! !
+
 !ExternalArray categoriesForMethods!
 asSAFEARRAY!converting!public! !
 asVariant!converting!public! !
@@ -952,6 +1025,7 @@ vt
 	type when represented in a <VARIANT>."
 
 	^AXAutomationConstants.VT_CARRAY! !
+
 !ExternalArray class categoriesForMethods!
 vt!constants!public! !
 !
@@ -963,6 +1037,7 @@ typeName
 	There is an appropriate built-in type which we can substitute."
 
 	^#handle! !
+
 !ExternalHandle class categoriesForMethods!
 typeName!constants!private! !
 !
@@ -979,6 +1054,7 @@ vt
 	"Private - Answer the VARIANT type required to represent the receiver."
 
 	^self subclassResponsibility! !
+
 !ExternalInteger class categoriesForMethods!
 typeName!constants!private! !
 vt!constants!private! !
@@ -992,6 +1068,7 @@ asVariant
 	^(VARIANT new)
 		vt: (self vt bitOr: AXAutomationConstants.VT_BYREF);
 		reference: self! !
+
 !ExternalScalar categoriesForMethods!
 asVariant!converting!public! !
 !
@@ -1015,6 +1092,7 @@ vt
 	"Private - Answer the VARIANT type required to represent the receiver."
 
 	^self class vt! !
+
 !ExternalStructure categoriesForMethods!
 asVariant!converting!public! !
 recordInfo!accessing!public! !
@@ -1423,6 +1501,7 @@ vt
 	type when represented in a <VARIANT>."
 
 	^AXAutomationConstants.VT_RECORD! !
+
 !ExternalStructure class categoriesForMethods!
 classForGUID:ifNone:!enquiries!private! !
 clearGuid!accessing!private! !
@@ -1467,6 +1546,7 @@ vt
 	type when represented in a <VARIANT>."
 
 	^AXAutomationConstants.VT_FILETIME! !
+
 !FILETIME class categoriesForMethods!
 vt!constants!public! !
 !
@@ -1477,6 +1557,7 @@ asVariant
 	"Answer the VARIANT representation of the receiver (a VT_R8)."
 
 	^VARIANT fromFloat: self! !
+
 !Float categoriesForMethods!
 asVariant!converting!public! !
 !
@@ -1494,6 +1575,7 @@ vt
 	type when represented in a <VARIANT>."
 
 	^AXAutomationConstants.VT_R4! !
+
 !FLOAT class categoriesForMethods!
 typeName!constants!private! !
 vt!constants!public! !
@@ -1506,6 +1588,7 @@ asVariant
 	Note that precision may be lost."
 
 	^self asFloat asVariant! !
+
 !Fraction categoriesForMethods!
 asVariant!converting!public! !
 !
@@ -1516,6 +1599,7 @@ typeName
 	"Private - Answer the Dolphin external type name associated with the receiver."
 
 	^self name! !
+
 !GUID class categoriesForMethods!
 typeName!constants!private! !
 !
@@ -1532,6 +1616,7 @@ vt
 	"Private - Answer the VARIANT type required to represent the receiver."
 
 	^AXAutomationConstants.VT_ERROR! !
+
 !HRESULT class categoriesForMethods!
 typeName!constants!private! !
 vt!constants!private! !
@@ -1560,6 +1645,7 @@ source: sourceString description: descriptionString helpContext: anInteger helpF
 	^ice errorInfo
 
 ! !
+
 !IErrorInfo class categoriesForMethods!
 fromEXCEPINFO:guid:!instance creation!public! !
 source:description:helpContext:helpFile:guid:!instance creation!public! !
@@ -1580,6 +1666,7 @@ vt
 	"Note: The compiler will optimise out the conditional because it is constant."
 
 	^VMConstants.IsWin64 ifTrue: [AXAutomationConstants.VT_I8] ifFalse: [AXAutomationConstants.VT_I4]! !
+
 !INT_PTR class categoriesForMethods!
 typeName!constants!private! !
 vt!constants!public! !
@@ -1591,6 +1678,7 @@ asVariant
 	"Answer the VARIANT representation of the receiver (a VT_I4, VT_I8, or VT_UI8)."
 
 	^self subclassResponsibility! !
+
 !Integer categoriesForMethods!
 asVariant!converting!public! !
 !
@@ -1601,6 +1689,7 @@ asVariant
 	"Answer the VARIANT representation of the receiver."
 
 	^VARIANT fromUnknown: self! !
+
 !IUnknown categoriesForMethods!
 asVariant!converting!public! !
 !
@@ -1612,6 +1701,7 @@ vt
 	type when represented in a <VARIANT>."
 
 	^AXAutomationConstants.VT_UNKNOWN! !
+
 !IUnknown class categoriesForMethods!
 vt!constants!public! !
 !
@@ -1629,6 +1719,7 @@ vt
 	type when represented in a <VARIANT>."
 
 	^AXAutomationConstants.VT_I8! !
+
 !LARGE_INTEGER class categoriesForMethods!
 typeName!constants!private! !
 vt!constants!public! !
@@ -1641,6 +1732,7 @@ asVariant
 	It is an error if the receiver is too large to be represented in 64-bits."
 
 	^VARIANT fromLargeInteger: self! !
+
 !LargeInteger categoriesForMethods!
 asVariant!converting!public! !
 !
@@ -1660,6 +1752,7 @@ vt
 
 	#todo "Is this right?".
 	^AXAutomationConstants.VT_VOID! !
+
 !LPVOID class categoriesForMethods!
 typeName!constants!private! !
 vt!constants!public! !
@@ -2093,6 +2186,7 @@ variantTimeToSystemTime: vtime lpSystemTime: lpSystemTime
 
 	<stdcall: bool VariantTimeToSystemTime double SYSTEMTIME*>
 	^self invalidCall: _failureCode! !
+
 !OLEAutLibrary categoriesForMethods!
 clearCustData:!Automation Functions-Error Handling API!public! !
 createErrorInfo:!Automation Functions-Error Handling API!public! !
@@ -2143,6 +2237,7 @@ vt
 	type when represented in a <VARIANT>."
 
 	^AXAutomationConstants.VT_UI8! !
+
 !QWORD class categoriesForMethods!
 vt!constants!public! !
 !
@@ -2160,6 +2255,7 @@ vt
 	type when represented in a <VARIANT>."
 
 	^AXAutomationConstants.VT_I1! !
+
 !SBYTE class categoriesForMethods!
 typeName!constants!private! !
 vt!constants!public! !
@@ -2176,6 +2272,7 @@ asVariant
 	^VARIANT new 
 		decimal: self;
 		yourself! !
+
 !ScaledDecimal categoriesForMethods!
 asVariant!converting!public! !
 !
@@ -2193,6 +2290,7 @@ vt
 	type when represented in a <VARIANT>."
 
 	^AXAutomationConstants.VT_I4! !
+
 !SDWORD class categoriesForMethods!
 typeName!constants!private! !
 vt!constants!public! !
@@ -2205,6 +2303,7 @@ asVariant
 	bitness of the host machine)."
 
 	^VARIANT fromSmallInteger: self! !
+
 !SmallInteger categoriesForMethods!
 asVariant!converting!public! !
 !
@@ -2216,6 +2315,7 @@ asVariant
 	This will also work fine for Utf16String."
 
 	^VARIANT fromString: self! !
+
 !String categoriesForMethods!
 asVariant!converting!public! !
 !
@@ -2239,6 +2339,7 @@ vt
 	type when represented in a <VARIANT>."
 
 	^AXAutomationConstants.VT_LPSTR! !
+
 !String class categoriesForMethods!
 pointerType!constants!private! !
 typeName!constants!private! !
@@ -2258,6 +2359,7 @@ vt
 	type when represented in a <VARIANT>."
 
 	^AXAutomationConstants.VT_I2! !
+
 !SWORD class categoriesForMethods!
 typeName!constants!private! !
 vt!constants!public! !
@@ -2277,6 +2379,7 @@ asVariant
 	"Answer the VARIANT representation of the receiver (a VT_DATE)"
 
 	^VARIANT fromDATE: self asFloat! !
+
 !SYSTEMTIME categoriesForMethods!
 asFloat!converting!public! !
 asVariant!converting!public! !
@@ -2289,6 +2392,7 @@ fromDATE: aFloat
 	systime := self new.
 	OLEAutLibrary default variantTimeToSystemTime: aFloat lpSystemTime: systime.
 	^systime! !
+
 !SYSTEMTIME class categoriesForMethods!
 fromDATE:!public! !
 !
@@ -2308,6 +2412,7 @@ vt
 	"Note: The compiler will optimise out the conditional because it is constant."
 
 	^VMConstants.IsWin64 ifTrue: [AXAutomationConstants.VT_UI8] ifFalse: [AXAutomationConstants.VT_UI4]! !
+
 !UINT_PTR class categoriesForMethods!
 typeName!constants!private! !
 vt!constants!public! !
@@ -2320,6 +2425,7 @@ typeName
 	There is an appropriate built-in type which we can substitute."
 
 	^#qword! !
+
 !ULARGE_INTEGER class categoriesForMethods!
 typeName!constants!private! !
 !
@@ -2333,6 +2439,7 @@ asVariant
 	appear more appropriate at first glance."
 
 	^VARIANT new! !
+
 !UndefinedObject categoriesForMethods!
 asVariant!converting!public! !
 !
@@ -2349,6 +2456,7 @@ vt
 	type when represented in a <VARIANT>."
 
 	^AXAutomationConstants.VT_EMPTY! !
+
 !UndefinedObject class categoriesForMethods!
 typeName!constants!private! !
 vt!constants!public! !
@@ -2373,6 +2481,7 @@ vt
 	type when represented in a <VARIANT>."
 
 	^AXAutomationConstants.VT_LPWSTR! !
+
 !Utf16String class categoriesForMethods!
 pointerType!constants!private! !
 typeName!constants!private! !
@@ -2392,6 +2501,7 @@ vt
 	type when represented in a <VARIANT>."
 
 	^AXAutomationConstants.VT_VOID! !
+
 !VOID class categoriesForMethods!
 typeName!constants!private! !
 vt!constants!public! !
@@ -2410,6 +2520,7 @@ vt
 	type when represented in a <VARIANT>."
 
 	^AXAutomationConstants.VT_UI2! !
+
 !WORD class categoriesForMethods!
 typeName!constants!private! !
 vt!constants!public! !

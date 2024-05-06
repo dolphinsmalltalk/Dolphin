@@ -5,9 +5,13 @@ ExternalArray subclass: #UINT_PTRArray
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 UINT_PTRArray guid: (GUID fromString: '{685f8656-e2d9-4365-8469-efaeb39fb86c}')!
+
 UINT_PTRArray comment: 'Specialized <ExternalArray> to represent contiguous single-dimensioned arrays of machine word sized unsigned integers.'!
+
 !UINT_PTRArray categoriesForClass!External-Data-Structured! !
+
 !UINT_PTRArray methodsFor!
 
 uncheckedAt: anInteger 
@@ -18,6 +22,7 @@ uncheckedAt: anInteger
 
 uncheckedAt: indexInteger put: valueInteger 
 	^bytes uintPtrAtOffset: (indexInteger - 1) * VMConstants.IntPtrSize put: valueInteger! !
+
 !UINT_PTRArray categoriesForMethods!
 uncheckedAt:!accessing!private! !
 uncheckedAt:put:!accessing!private! !
@@ -29,6 +34,7 @@ elementClass
 	"Answer the class of <ExternalStructure> used to represent elements of the receiver."
 
 	^UINT_PTR! !
+
 !UINT_PTRArray class categoriesForMethods!
 elementClass!constants!public! !
 !

@@ -5,9 +5,13 @@ RefactoryVariableChange subclass: #AddPoolVariableChange
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AddPoolVariableChange guid: (GUID fromString: '{48291ca4-180f-4a5e-b79e-409203e18930}')!
+
 AddPoolVariableChange comment: ''!
+
 !AddPoolVariableChange categoriesForClass!Refactory-Change Objects! !
+
 !AddPoolVariableChange methodsFor!
 
 asUndoOperation
@@ -43,6 +47,7 @@ variable
 		ifTrue: [variable]
 		ifFalse: 
 			[Smalltalk keyAtValue: variable ifAbsent: [self error: 'Cannot find value']]! !
+
 !AddPoolVariableChange categoriesForMethods!
 asUndoOperation!converting!public! !
 changeObject!private! !

@@ -5,9 +5,13 @@ ComboBox subclass: #EmbeddedComboBox
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 EmbeddedComboBox guid: (GUID fromString: '{37ad4011-9526-4f00-adbb-a2e73c6b5ebc}')!
+
 EmbeddedComboBox comment: ''!
+
 !EmbeddedComboBox categoriesForClass!Unclassified! !
+
 !EmbeddedComboBox methodsFor!
 
 allowNilSelection
@@ -212,6 +216,7 @@ stbSaveOn: anSTBOutFiler
 	handle isNil 
 		ifTrue: [anSTBOutFiler saveObject: self]
 		ifFalse: [super stbSaveOn: anSTBOutFiler]! !
+
 !EmbeddedComboBox categoriesForMethods!
 allowNilSelection!accessing!public! !
 allowNilSelection:!accessing!public! !
@@ -267,6 +272,7 @@ stbVersion
 	"21 - lastSelIndices already initialized to #() - see #1030"
 
 	^21! !
+
 !EmbeddedComboBox class categoriesForMethods!
 stbConvertFrom:!public! !
 stbVersion!binary filing!public! !

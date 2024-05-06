@@ -61,7 +61,6 @@ Smalltalk developmentSystem browseDeploymentLog: ''HelloCli.xml''.
 XmlPad filename: ''HelloCli.xml''
 ```'.
 
-
 package classNames
 	add: #CommandLineHelloWorld;
 	yourself.
@@ -84,11 +83,6 @@ ConsoleSessionManager subclass: #CommandLineHelloWorld
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

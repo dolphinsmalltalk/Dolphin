@@ -5,8 +5,11 @@ MultilineTextEdit subclass: #RichTextEdit
 	classVariableNames: 'AutoUrlDetectionMask Library ParagraphAlignmentMap StreamingDescriptor StreamInIndex'
 	poolDictionaries: 'CommonDialogConstants RichEditConstants'
 	classInstanceVariableNames: ''!
+
 RichTextEdit guid: (GUID fromString: '{87b4c744-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 RichTextEdit addClassConstant: 'AutoUrlDetectionMask' value: 16r1000000!
+
 RichTextEdit comment: 'RichTextEdit is a <valueView> class that implements the Windows "RichEdit" control for the displaying and editing of multi-line rich text. The <valueModel> associated with a RichTextEdit  must always yield a <richString> value when mapped through the installed type converter. A RichTextEdit will normally be used in conjunction with a <RichTextPresenter>. 
 
 Note that the <richString> protocol relies on double dispatch (using #setTextInto:) to set either plain text or rich text into a destination <view> depending on it''s capabilities.
@@ -19,7 +22,9 @@ Class Variables:
 	StreamingDescriptor	<ExternalDescriptor> for stream-in callback parameters.
 
 '!
+
 !RichTextEdit categoriesForClass!MVP-Views! !
+
 !RichTextEdit methodsFor!
 
 ansiText
@@ -884,6 +889,7 @@ wmInitMenu: message wParam: wParam lParam: lParam
 
 	Cursor arrow setCursor.
 	^super wmInitMenu: message wParam: wParam lParam: lParam! !
+
 !RichTextEdit categoriesForMethods!
 ansiText!public!streaming! !
 ansiText:!public!streaming! !
@@ -1028,6 +1034,7 @@ winClassName
 
 	self registerClass.
 	^'RichEdit20W'! !
+
 !RichTextEdit class categoriesForMethods!
 initialize!development!initializing!private! !
 maxTextLimit!constants!private! !

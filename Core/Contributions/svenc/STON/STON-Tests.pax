@@ -4,7 +4,6 @@ package paxVersion: 1;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
-
 package classNames
 	add: #IdentityBag;
 	add: #STONCStyleCommentsSkipStreamTest;
@@ -61,99 +60,114 @@ Object subclass: #STONTestDomainObject
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #STONTestKnownObject
 	instanceVariableNames: 'id description'
 	classVariableNames: 'KnownObjects'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #STONTestUser
 	instanceVariableNames: 'username password enabled'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Bag subclass: #IdentityBag
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Dictionary variableSubclass: #STONTestMap
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GUID variableByteSubclass: #UUID
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Association subclass: #STONTestAssociation
 	instanceVariableNames: 'timestamp'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 STONTestUser subclass: #STONTestUser2
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 STONTestUser subclass: #STONTestUser3
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TestCase subclass: #STONCStyleCommentsSkipStreamTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TestCase subclass: #STONJSONTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TestCase subclass: #STONReaderTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TestCase subclass: #STONTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TestCase subclass: #STONWriteReadTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TestCase subclass: #STONWriterTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 STONWriteReadTest subclass: #STONLargeWriteReadTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 STONWriteReadTest subclass: #STONWriteAsciiOnlyReadTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 STONWriteReadTest subclass: #STONWritePrettyPrinterReadTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 STONWriteReadTest subclass: #STONWriteReadCommentsTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -171,6 +185,7 @@ translateToUTC
 	"Private - This probably isn't correct, but then Dolphin's legacy Dates are not TZ aware. This is implemented purely to make the STON tests pass."
 
 	^self translateTo: 0 seconds! !
+
 !Date categoriesForMethods!
 translateTo:!private! !
 translateToUTC!private! !

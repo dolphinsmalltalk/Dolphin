@@ -5,13 +5,17 @@ IDispatch subclass: #IScriptModuleCollection
 	classVariableNames: ''
 	poolDictionaries: 'MSScriptControlConstants'
 	classInstanceVariableNames: ''!
+
 IScriptModuleCollection guid: (IID fromString: '{70841c6f-067d-11d0-95d8-00a02463ab28}')!
+
 IScriptModuleCollection comment: '<IScriptModuleCollection> is a wrapper class for the COM interface ''MSScriptControl.IScriptModuleCollection'' generated from type information in the ''Microsoft Script Control 1.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface:
 	"Collection of modules"
 '!
+
 !IScriptModuleCollection categoriesForClass!COM-Interfaces!MSScriptControl-Interfaces! !
+
 !IScriptModuleCollection methodsFor!
 
 _newEnum
@@ -115,6 +119,7 @@ item: index
 		ppmod: answer.
 	^answer asObject
 ! !
+
 !IScriptModuleCollection categoriesForMethods!
 _newEnum!**auto generated**!properties!public! !
 add:!**auto generated**!methods!public! !
@@ -157,6 +162,7 @@ initializeTypeLib
 		IScriptModuleCollection initializeTypeLib"
 
 	typeLib := MSScriptControlLib! !
+
 !IScriptModuleCollection class categoriesForMethods!
 clsid!**auto generated**!constants!private! !
 defineFunctions!**auto generated**!initializing!public! !

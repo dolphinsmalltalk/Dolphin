@@ -5,13 +5,17 @@ SelectableItemsPresenter subclass: #TreePresenter
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TreePresenter guid: (GUID fromString: '{87b4c688-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 TreePresenter comment: 'TreePresenter implements a <treePresenter> component that can be used to display the contents of a <treeModel> within a <treeView>. This is similar to the way a tree view is used to display a file system''s contents in the Window''s explorer. For presentation of a tree as a hierarchy of nested "folders" see the <FolderPresenter> class.
 
 TreePresenter conforms to <selectableItems> to provide methods for accessing the current selection. In addition, the <treePresenter> protocol allows the tree to be navigating using the #expand: , #collapse: and #up methods.
 
 '!
+
 !TreePresenter categoriesForClass!MVP-Presenters!MVP-Resources-Trees! !
+
 !TreePresenter methodsFor!
 
 collapse: anObject
@@ -64,6 +68,7 @@ up
 	| parent |
 	parent := self model parentOf: self selectionOrNil.
 	self expand: parent! !
+
 !TreePresenter categoriesForMethods!
 collapse:!operations!public! !
 expand:!operations!public! !
@@ -100,6 +105,7 @@ resource_Default_view
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.TreeView) 34 27 nil nil 34 2 8 1409352231 1025 416 590918 3 ##(Smalltalk.TreeModel) nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 525062 ##(Smalltalk.TreeNode) nil nil nil 170 192 8 #() 327686 ##(Smalltalk.Color) #default nil 5 nil nil nil 416 nil 8 1903706176 459270 ##(Smalltalk.Message) #displayString 8 #() ##(Smalltalk.IconicListAbstract) 1049926 1 ##(Smalltalk.IconImageManager) nil nil nil nil nil 170 176 592 nil #noIcons 1 170 ##(Smalltalk.PluggableLookupTable) 592 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 882 401 571 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 71 8 0 0 39 1 0 0] 8 #() 882 193 193 nil 27 )! !
+
 !TreePresenter class categoriesForMethods!
 defaultModel!models!public! !
 icon!constants!public! !

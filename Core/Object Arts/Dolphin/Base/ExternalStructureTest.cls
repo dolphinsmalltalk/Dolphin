@@ -5,9 +5,13 @@ DolphinTest subclass: #ExternalStructureTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalStructureTest guid: (GUID fromString: '{a9244232-e68c-4a65-bbf2-c8392aee459b}')!
+
 ExternalStructureTest comment: 'SUnitBrowser openOnTestCase: self'!
+
 !ExternalStructureTest categoriesForClass!Unclassified! !
+
 !ExternalStructureTest methodsFor!
 
 testCanUnderstand
@@ -117,6 +121,7 @@ testIsNull
 
 	struct bytes: ExternalAddress new.
 	self assert: struct isNull.! !
+
 !ExternalStructureTest categoriesForMethods!
 testCanUnderstand!public!unit tests! !
 testCompileDefinition!public!unit tests! !

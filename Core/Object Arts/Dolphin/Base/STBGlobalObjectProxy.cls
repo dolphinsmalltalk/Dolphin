@@ -5,9 +5,13 @@ STBProxy subclass: #STBGlobalObjectProxy
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 STBGlobalObjectProxy guid: (GUID fromString: '{87b4c6ed-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 STBGlobalObjectProxy comment: ''!
+
 !STBGlobalObjectProxy categoriesForClass!System-Binary storage! !
+
 !STBGlobalObjectProxy methodsFor!
 
 object: anObject
@@ -46,6 +50,7 @@ value
 	"Install object as a global in the Smalltalk System Dictionary and answer it."
 
 	^Smalltalk at: symbol put: object! !
+
 !STBGlobalObjectProxy categoriesForMethods!
 object:!accessing!private! !
 stbFixup:at:!accessing!public! !
@@ -64,6 +69,7 @@ for: anObject name: aSymbol
 		symbol: aSymbol;
 		object: anObject;
 		yourself! !
+
 !STBGlobalObjectProxy class categoriesForMethods!
 for:name:!instance creation!public! !
 !

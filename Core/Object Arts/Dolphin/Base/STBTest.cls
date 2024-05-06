@@ -5,9 +5,13 @@ DolphinTest subclass: #STBTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 STBTest guid: (GUID fromString: '{0e66d9d1-027f-4559-a87a-33e13ae709b8}')!
+
 STBTest comment: ''!
+
 !STBTest categoriesForClass!Unclassified! !
+
 !STBTest methodsFor!
 
 testByteArray
@@ -136,6 +140,7 @@ testTranscript
 	t := Object fromBinaryStoreBytes: stb.
 	self assert: t identityHash equals: i.
 	self assert: t identicalTo: Transcript! !
+
 !STBTest categoriesForMethods!
 testByteArray!public!unit tests! !
 testCharacters!public!unit tests! !

@@ -5,12 +5,16 @@ SingletonSearchPolicy subclass: #CaseInsensitiveSearchPolicy
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 CaseInsensitiveSearchPolicy guid: (GUID fromString: '{46f9c2fc-d025-11d3-93da-00a024ca708a}')!
+
 CaseInsensitiveSearchPolicy comment: 'CaseInsensitiveSearchPolicy is for configuring pluggable collections and models of strings to use case-insensitive equality based search and comparisons, i.e. using #sameAs: and the #hash of the lowercased equivalent of the string.
 
 N.B. Unlike other SearchPolicy classes, instances of this class are only appropriate for comparing and searching collections of strings, or objects which can be represented as strings (i.e. implementors of #asString).
 '!
+
 !CaseInsensitiveSearchPolicy categoriesForClass!Collections-Support! !
+
 !CaseInsensitiveSearchPolicy methodsFor!
 
 compare: operand1 with: operand2
@@ -42,6 +46,7 @@ name
 	"Answer the name of the `SearchPolicy`. This is nil apart from the named singletons."
 
 	^#caseInsensitive! !
+
 !CaseInsensitiveSearchPolicy categoriesForMethods!
 compare:with:!comparing!public! !
 hash:!comparing!public! !

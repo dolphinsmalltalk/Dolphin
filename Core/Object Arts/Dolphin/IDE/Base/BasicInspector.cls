@@ -5,7 +5,9 @@ ValuePresenter subclass: #BasicInspector
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 BasicInspector guid: (GUID fromString: '{87b4c68b-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 BasicInspector comment: 'BasicInspector is a <compositePresenter> that implements a generic inspect facility onto any <Object>.
 
 Example:
@@ -17,7 +19,9 @@ Instance Variables:
 
 
 '!
+
 !BasicInspector categoriesForClass!MVP-Presenters! !
+
 !BasicInspector methodsFor!
 
 accept
@@ -389,6 +393,7 @@ variableNamesList
 	inspected objects variables."
 
 	^variableNamesPresenter list! !
+
 !BasicInspector categoriesForMethods!
 accept!commands!public! !
 browseClass!commands!private! !
@@ -478,6 +483,7 @@ shellOn: anObject
 	shell view validateLayout.
 	shell show setInitialFocus.
 	^inspector! !
+
 !BasicInspector class categoriesForMethods!
 headerList!constants!public! !
 icon!constants!public! !

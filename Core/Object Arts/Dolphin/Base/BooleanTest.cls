@@ -5,9 +5,13 @@ DolphinTest subclass: #BooleanTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 BooleanTest guid: (GUID fromString: '{5aa57122-600d-4018-870d-8425b90179b2}')!
+
 BooleanTest comment: ''!
+
 !BooleanTest categoriesForClass!Unclassified! !
+
 !BooleanTest methodsFor!
 
 testEvaluatingConjunction
@@ -38,6 +42,7 @@ testXor
 	self assert: (false xor: true).
 	self deny: (false xor: false).
 	self deny: (true xor: true)! !
+
 !BooleanTest categoriesForMethods!
 testEvaluatingConjunction!public!unit tests! !
 testEvaluatingDisjunction!public!unit tests! !

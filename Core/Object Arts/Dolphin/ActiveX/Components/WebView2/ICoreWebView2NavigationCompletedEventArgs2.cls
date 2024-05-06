@@ -5,7 +5,9 @@ ICoreWebView2NavigationCompletedEventArgs subclass: #ICoreWebView2NavigationComp
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2NavigationCompletedEventArgs2 guid: (IID fromString: '{fdf8b738-ee1e-4db2-a329-8d7d7b74d792}')!
+
 ICoreWebView2NavigationCompletedEventArgs2 comment: '`ICoreWebView2NavigationCompletedEventArgs2` is a wrapper class for the COM interface ''WebView2.ICoreWebView2NavigationCompletedEventArgs2'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -26,7 +28,9 @@ interface ICoreWebView2NavigationCompletedEventArgs2 : ICoreWebView2NavigationCo
 };
 ```
 '!
+
 !ICoreWebView2NavigationCompletedEventArgs2 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2NavigationCompletedEventArgs2 methodsFor!
 
 get_HttpStatusCode: http_status_code
@@ -37,6 +41,7 @@ get_HttpStatusCode: http_status_code
 
 	<virtual stdcall: hresult 7 sdword*>
 	^self invalidCall: _failureCode! !
+
 !ICoreWebView2NavigationCompletedEventArgs2 categoriesForMethods!
 get_HttpStatusCode:!**auto generated**!COM Interfaces-ICoreWebView2NavigationCompletedEventArgs2!private! !
 !
@@ -51,6 +56,7 @@ defineFunctions
 		defineFunction: #get_HttpStatusCode:
 			argumentTypes: 'sdword*'
 ! !
+
 !ICoreWebView2NavigationCompletedEventArgs2 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

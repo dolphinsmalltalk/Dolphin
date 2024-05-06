@@ -5,9 +5,13 @@ Object subclass: #RegQueryInfo
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RegQueryInfo guid: (GUID fromString: '{87b4c4ae-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 RegQueryInfo comment: ''!
+
 !RegQueryInfo categoriesForClass!System-Support! !
+
 !RegQueryInfo methodsFor!
 
 keyClass
@@ -117,6 +121,7 @@ valueCount: anObject
 	This method was automatically generated, but may be modified."
 
 	valueCount := anObject! !
+
 !RegQueryInfo categoriesForMethods!
 keyClass!accessing!public! !
 keyClass:!accessing!public! !

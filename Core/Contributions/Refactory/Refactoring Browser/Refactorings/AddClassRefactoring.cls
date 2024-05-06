@@ -5,9 +5,13 @@ ClassRefactoring subclass: #AddClassRefactoring
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AddClassRefactoring guid: (GUID fromString: '{3623578c-f5f8-44a8-bafa-679532fa3a9a}')!
+
 AddClassRefactoring comment: ''!
+
 !AddClassRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !AddClassRefactoring methodsFor!
 
 addClass: aName superclass: aClass subclasses: aCollection category: aSymbol 
@@ -75,6 +79,7 @@ transform
 	(self model)
 		defineClass: self definitionMessage;
 		reparentClasses: subclasses to: (self model classNamed: className asSymbol)! !
+
 !AddClassRefactoring categoriesForMethods!
 addClass:superclass:subclasses:category:!initialize/release!public! !
 definitionMessage!public!transforming! !
@@ -100,6 +105,7 @@ model: aRBNamespace addClass: aName superclass: aClass subclasses: aCollection c
 			subclasses: aCollection
 			category: aSymbol;
 		yourself! !
+
 !AddClassRefactoring class categoriesForMethods!
 addClass:superclass:subclasses:category:!instance creation!public! !
 model:addClass:superclass:subclasses:category:!instance creation!public! !

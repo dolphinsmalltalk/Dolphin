@@ -5,9 +5,13 @@ IUnknown subclass: #ITypeComp
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ITypeComp guid: (IID fromString: '{00020403-0000-0000-c000-000000000046}')!
+
 ITypeComp comment: ''!
+
 !ITypeComp categoriesForClass!COM-Interfaces! !
+
 !ITypeComp methodsFor!
 
 Bind: bind lHashVal: lHashVal wFlags: wFlags ppTInfo: ppTInfo pDescKind: pDescKind pBindPtr: pBindPtr
@@ -25,6 +29,7 @@ BindType: bindType lHashVal: lHashVal ppTInfo: ppTInfo ppTComp: ppTComp
 
 	<virtual stdcall: hresult 5 lpwstr dword lppvoid lppvoid>
 	^self invalidCall: _failureCode! !
+
 !ITypeComp categoriesForMethods!
 Bind:lHashVal:wFlags:ppTInfo:pDescKind:pBindPtr:!COM Interfaces-ITypeComp!primitives!public! !
 BindType:lHashVal:ppTInfo:ppTComp:!COM Interfaces-ITypeComp!primitives!public! !
@@ -59,6 +64,7 @@ defineFunctions
 			 argumentTypes: 'lpwstr dword word ITypeInfo** SDWORD* lppvoid'; "'DESCKIND* BINDPTR*';"
 		defineFunction: #BindType:lHashVal:ppTInfo:ppTComp:        
 			 argumentTypes: 'lpwstr dword ITypeInfo** ITypeComp**'! !
+
 !ITypeComp class categoriesForMethods!
 defineFunctions!initializing!public! !
 !

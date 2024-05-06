@@ -5,7 +5,9 @@ ICoreWebView2Interface subclass: #ICoreWebView2
 	classVariableNames: ''
 	poolDictionaries: 'WebView2Constants'
 	classInstanceVariableNames: ''!
+
 ICoreWebView2 guid: (IID fromString: '{76eceacb-0462-4d94-ac83-423a6793775e}')!
+
 ICoreWebView2 comment: '`ICoreWebView2` is a wrapper class for the COM interface ''WebView2.ICoreWebView2'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -218,7 +220,9 @@ interface ICoreWebView2 : IUnknown
 };
 ```
 '!
+
 !ICoreWebView2 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2 methodsFor!
 
 Add_BasicAuthenticationRequested: eventHandler token: token
@@ -1591,6 +1595,7 @@ TrySuspend: handler
 			[in]ICoreWebView2TrySuspendCompletedHandler* handler);"
 
 	handler Invoke: E_NOTIMPL arg: 0! !
+
 !ICoreWebView2 categoriesForMethods!
 Add_BasicAuthenticationRequested:token:!COM Interfaces-ICoreWebView2_10!private! !
 Add_ClientCertificateRequested:token:!COM Interfaces-ICoreWebView2_5!private! !
@@ -1885,6 +1890,7 @@ defineFunctions
 		defineFunction: #Remove_WindowCloseRequested:
 			argumentTypes: 'sqword'
 ! !
+
 !ICoreWebView2 class categoriesForMethods!
 defineFunctions!initializing!public! !
 !

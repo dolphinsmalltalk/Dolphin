@@ -5,9 +5,13 @@ PoolDictionary variableSubclass: #PoolConstantsDictionary
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PoolConstantsDictionary guid: (GUID fromString: '{87b4c52e-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 PoolConstantsDictionary comment: ''!
+
 !PoolConstantsDictionary categoriesForClass!Collections-Unordered!System-Support! !
+
 !PoolConstantsDictionary methodsFor!
 
 add: anAssociation
@@ -99,6 +103,7 @@ removeIndex: anInteger
 
 	super removeIndex: anInteger.
 	self isChanged: true! !
+
 !PoolConstantsDictionary categoriesForMethods!
 add:!adding!public! !
 at:ifAbsentPut:!accessing!development!public! !
@@ -120,6 +125,7 @@ named: aSymbol
 	^(self new)
 		name: aSymbol;
 		yourself! !
+
 !PoolConstantsDictionary class categoriesForMethods!
 named:!instance creation!public! !
 !

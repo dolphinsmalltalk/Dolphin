@@ -5,10 +5,15 @@ PresenterTest subclass: #SelectableItemsTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SelectableItemsTest guid: (GUID fromString: '{eb11681e-441a-44d4-af4c-de1ea399a79e}')!
+
 SelectableItemsTest isAbstract: true!
+
 SelectableItemsTest comment: ''!
+
 !SelectableItemsTest categoriesForClass!Unclassified! !
+
 !SelectableItemsTest methodsFor!
 
 assertContains: anObject
@@ -159,6 +164,7 @@ setupClickTimeout
 		send: #onTimerTick:
 		to: self.
 	timedout := false! !
+
 !SelectableItemsTest categoriesForMethods!
 assertContains:!helpers!private! !
 defaultSelectionChangedAction!helpers!private! !

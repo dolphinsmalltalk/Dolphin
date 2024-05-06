@@ -5,9 +5,13 @@ GraphicsTool subclass: #Region
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Region guid: (GUID fromString: '{87b4c638-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Region comment: ''!
+
 !Region categoriesForClass!Graphics-Tools! !
+
 !Region methodsFor!
 
 combine: aRegion mode: anInteger
@@ -52,6 +56,7 @@ union: aRegion
 	"Answers a new region which is the union of the receiver with aRegion"
 
 	^self combine: aRegion mode: RGN_OR! !
+
 !Region categoriesForMethods!
 combine:mode:!operations!private! !
 containsPoint:!operations!public!testing! !
@@ -79,6 +84,7 @@ rectangle: aRectangle
 
 	^self fromOwnedHandle:
 		(GDILibrary default createRectRgnIndirect: aRectangle asParameter)! !
+
 !Region class categoriesForMethods!
 ellipse:!instance creation!public! !
 empty!instance creation!public! !

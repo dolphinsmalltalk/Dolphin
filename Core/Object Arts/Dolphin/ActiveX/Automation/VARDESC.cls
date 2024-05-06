@@ -5,7 +5,9 @@ AXMemberDesc subclass: #VARDESC
 	classVariableNames: '_OffsetOf_elemdesc _OffsetOf_lpstrSchema _OffsetOf_lpvarValue _OffsetOf_memid _OffsetOf_oInst _OffsetOf_varkind _OffsetOf_wVarFlags'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 VARDESC guid: (GUID fromString: '{c06f3b6b-0868-11d3-93af-00a024ca708a}')!
+
 VARDESC addClassConstant: '_OffsetOf_elemdesc' value: 16rC!
 VARDESC addClassConstant: '_OffsetOf_lpstrSchema' value: 16r4!
 VARDESC addClassConstant: '_OffsetOf_lpvarValue' value: 16r8!
@@ -13,6 +15,7 @@ VARDESC addClassConstant: '_OffsetOf_memid' value: 16r0!
 VARDESC addClassConstant: '_OffsetOf_oInst' value: 16r8!
 VARDESC addClassConstant: '_OffsetOf_varkind' value: 16r20!
 VARDESC addClassConstant: '_OffsetOf_wVarFlags' value: 16r1C!
+
 VARDESC comment: 'VARDESC is an <ExternalStructure> class to represent the OLE Automation structure of the same name.
 
 The VARDESC structure describes a variable constant or data member.
@@ -28,7 +31,9 @@ Member variables:
 	varkind		<SDWORD> from the VARKIND enumeration.
 
 Please see the MS Automation help for further information.'!
+
 !VARDESC categoriesForClass!External-Data-Structured-COM! !
+
 !VARDESC methodsFor!
 
 arguments
@@ -158,6 +163,7 @@ wVarFlags
 	"Answer the <Integer> value of the receiver's 'wVarFlags' field."
 
 	^bytes wordAtOffset: _OffsetOf_wVarFlags! !
+
 !VARDESC categoriesForMethods!
 arguments!accessing!public! !
 basicFree!private!realizing/unrealizing! !
@@ -225,6 +231,7 @@ defineFields
 
 getFieldNames
 	^#(#memid #lpvarValue #oInst #elemdesc #wVarFlags #varkind)! !
+
 !VARDESC class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

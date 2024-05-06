@@ -5,9 +5,13 @@ TestCaseHelper subclass: #CollectionHelper
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 CollectionHelper guid: (GUID fromString: '{4c586cba-e91f-4bc1-8324-8301fdb92c4c}')!
+
 CollectionHelper comment: ''!
+
 !CollectionHelper categoriesForClass!Unclassified! !
+
 !CollectionHelper methodsFor!
 
 canonicalElement
@@ -671,6 +675,7 @@ testXsize
 	" <collection>#size "
 	#'Collection'.
 	self assertSend: #size! !
+
 !CollectionHelper categoriesForMethods!
 canonicalElement!public! !
 canonicalObject!public! !
@@ -709,6 +714,7 @@ testXsize!public! !
 initialize
 	"CollectionHelper  initialize"
 	super initialize! !
+
 !CollectionHelper class categoriesForMethods!
 initialize!public! !
 !

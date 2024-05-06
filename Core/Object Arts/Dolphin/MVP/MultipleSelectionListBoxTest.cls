@@ -5,9 +5,13 @@ DolphinTest subclass: #MultipleSelectionListBoxTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MultipleSelectionListBoxTest guid: (GUID fromString: '{29849786-386a-43f0-a24e-f1970727a83b}')!
+
 MultipleSelectionListBoxTest comment: 'Test that the behaviour of the deprecated MultipleSelectionListBox class retains its legacy features in the refactored ListControlView hierarchy.'!
+
 !MultipleSelectionListBoxTest categoriesForClass!Unclassified! !
+
 !MultipleSelectionListBoxTest methodsFor!
 
 assertAllSelectionAre: anArray
@@ -206,6 +210,7 @@ testSelectionIfAbsent
 						with: [self assert: false]]
 				trigger: #selectionChanged
 				against: box]! !
+
 !MultipleSelectionListBoxTest categoriesForMethods!
 assertAllSelectionAre:!helpers!private! !
 classToTest!constants!private! !

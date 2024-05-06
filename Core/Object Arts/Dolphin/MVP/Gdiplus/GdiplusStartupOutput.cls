@@ -5,9 +5,12 @@ ExternalStructure subclass: #GdiplusStartupOutput
 	classVariableNames: '_OffsetOf_NotificationHook _OffsetOf_NotificationUnhook'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusStartupOutput guid: (GUID fromString: '{40bb7e65-cd3b-49aa-b850-f404c6d944fc}')!
+
 GdiplusStartupOutput addClassConstant: '_OffsetOf_NotificationHook' value: 16r0!
 GdiplusStartupOutput addClassConstant: '_OffsetOf_NotificationUnhook' value: 16r4!
+
 GdiplusStartupOutput comment: '<GdiplusStartupOutput> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GdiplusStartupOutput'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains the following helpstring for this struct
@@ -21,7 +24,9 @@ struct tagGdiplusStartupOutput {
 	[helpstring("''NotificationUnhook'' should be called after the message loop ends.")] void* NotificationUnhook;
 } GdiplusStartupOutput;
 '!
+
 !GdiplusStartupOutput categoriesForClass!Unclassified! !
+
 !GdiplusStartupOutput methodsFor!
 
 NotificationHook
@@ -43,6 +48,7 @@ NotificationUnhook: anExternalAddress
 	"Set the receiver's 'NotificationUnhook' field to the value of the argument, anExternalAddress"
 
 	bytes uintPtrAtOffset: _OffsetOf_NotificationUnhook put: anExternalAddress! !
+
 !GdiplusStartupOutput categoriesForMethods!
 NotificationHook!**compiled accessors**!public! !
 NotificationHook:!**compiled accessors**!public! !
@@ -70,6 +76,7 @@ defineFields
 
 getFieldNames
 	^#(#NotificationHook #NotificationUnhook)! !
+
 !GdiplusStartupOutput class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

@@ -5,7 +5,9 @@ Image subclass: #Icon
 	classVariableNames: 'Blank DefaultApplication Error Information Question Warning WinLogo'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Icon guid: (GUID fromString: '{87b4c63e-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Icon comment: 'Icon is the class of <Image>s that represent Windows'' icons (essentially a pair of bitmaps, one of which is a mask used to draw the other bitmap transparently).
 
 Class Variables:
@@ -18,7 +20,9 @@ Class Variables:
 	Warning			<Icon>. Standard system warning icon, as used in warning message boxes.
 
 '!
+
 !Icon categoriesForClass!Graphics-Tools! !
+
 !Icon methodsFor!
 
 addToImageList: aWinImageList mask: aColorOrNil 
@@ -303,6 +307,7 @@ valueWithHandle: operation forExtent: aPoint
 						UserLibrary default destroyIcon: hIcon.
 						^answer]].
 	^operation value: self asParameter! !
+
 !Icon categoriesForMethods!
 addToImageList:mask:!double dispatch!private! !
 asAlphaBitmap:!converting!public! !
@@ -453,6 +458,7 @@ window
 
 	WinLogo isNil ifTrue: [WinLogo := self fromSystemId: IDI_WINLOGO].
 	^WinLogo! !
+
 !Icon class categoriesForMethods!
 asterisk!instance creation!public! !
 blank!instance creation!public! !

@@ -5,9 +5,13 @@ IAdviseSink subclass: #IAdviseSink2
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IAdviseSink2 guid: (IID fromString: '{3d3f4f89-8502-4d89-bfd6-024365e274fc}')!
+
 IAdviseSink2 comment: ''!
+
 !IAdviseSink2 categoriesForClass!OBJIDL-Interfaces! !
+
 !IAdviseSink2 methodsFor!
 
 OnLinkSrcChange: onLinkSrcChange
@@ -17,6 +21,7 @@ OnLinkSrcChange: onLinkSrcChange
 
 	<virtual stdcall: void 9 IMoniker*>
 	^self invalidCall: _failureCode! !
+
 !IAdviseSink2 categoriesForMethods!
 OnLinkSrcChange:!COM Interfaces-IAdviseSink2!public! !
 !
@@ -31,6 +36,7 @@ defineFunctions
 
 	self
 		defineFunction: #OnLinkSrcChange: returnType: 'void' argumentTypes: 'IMoniker*'! !
+
 !IAdviseSink2 class categoriesForMethods!
 defineFunctions!initializing!public! !
 !

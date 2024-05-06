@@ -5,11 +5,15 @@ MouseTracker subclass: #DraggableViewInteractor
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DraggableViewInteractor guid: (GUID fromString: '{17db18df-6991-4fe4-b6f7-ebe986ea3281}')!
+
 DraggableViewInteractor comment: '`DraggableViewInteractor` is a `CapturingInteractor` that tracks hot state as the mouse moves over (hot) and out (cold) of the associated view. If the left mouse button is pressed down when hot, then the interactor initiates a "drag", sending tracking events to the its `Presenter` in the same way as a `MouseTracker` does.
 
 An example use is with `Splitter`s. When the mouse moves over the `Splitter`, the interactor moves into the "hot" state and invalidates the view. The view can choose to take account of the "hot" state when repainting, which the `Splitter` does by including some subtle adornment to indicate its presence to the user. Initiating a drag results in the interactor turning off the hot state, before sending the `Splitter` the normal `MouseTracker` tracking events, which it responds to by drawing its hypothetical new position, etc.'!
+
 !DraggableViewInteractor categoriesForClass!MVP-Interactors! !
+
 !DraggableViewInteractor methodsFor!
 
 changeHotState: aBoolean
@@ -44,6 +48,7 @@ onMouseMoved: aMouseEvent
 				isTracking: false;
 				isHot: true].
 	^false	"Suppress perform default processing"! !
+
 !DraggableViewInteractor categoriesForMethods!
 changeHotState:!accessing!private! !
 onLeftButtonPressed:!event handling!public! !

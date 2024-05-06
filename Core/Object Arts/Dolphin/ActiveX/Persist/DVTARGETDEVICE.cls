@@ -5,18 +5,23 @@ OLEStructure subclass: #DVTARGETDEVICE
 	classVariableNames: '_OffsetOf_tdDeviceNameOffset _OffsetOf_tdDriverNameOffset _OffsetOf_tdExtDevmodeOffset _OffsetOf_tdPortNameOffset _OffsetOf_tdSize'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DVTARGETDEVICE guid: (GUID fromString: '{48447b1a-95e7-4ede-be68-a34481486812}')!
+
 DVTARGETDEVICE addClassConstant: '_OffsetOf_tdDeviceNameOffset' value: 16r6!
 DVTARGETDEVICE addClassConstant: '_OffsetOf_tdDriverNameOffset' value: 16r4!
 DVTARGETDEVICE addClassConstant: '_OffsetOf_tdExtDevmodeOffset' value: 16rA!
 DVTARGETDEVICE addClassConstant: '_OffsetOf_tdPortNameOffset' value: 16r8!
 DVTARGETDEVICE addClassConstant: '_OffsetOf_tdSize' value: 16r0!
+
 DVTARGETDEVICE comment: '<DVTARGETDEVICE> is an <ExternalStructure> class to wrap the struct ''OCIDL.DVTARGETDEVICE'' from type information in the ''OCIDL Library'' library.
 
 The type library contains no documentation for this struct
 
 WARNING: This comment was automatically generated from the struct''s type information and any changes made here may be overwritten the next time this wrapper class is so generated.'!
+
 !DVTARGETDEVICE categoriesForClass!External-Data-Structured-COM! !
+
 !DVTARGETDEVICE methodsFor!
 
 tdData
@@ -86,6 +91,7 @@ tdSize: anInteger
 	"Set the receiver's 'tdSize' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_tdSize put: anInteger! !
+
 !DVTARGETDEVICE categoriesForMethods!
 tdData!accessing!public! !
 tdData:!accessing!public! !
@@ -138,6 +144,7 @@ defineFields
 
 getFieldNames
 	^#(#tdSize #tdDriverNameOffset #tdDeviceNameOffset #tdPortNameOffset #tdExtDevmodeOffset)! !
+
 !DVTARGETDEVICE class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

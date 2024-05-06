@@ -5,13 +5,17 @@ ChunkBrowserOtherChunk subclass: #ChunkBrowserSystemChunk
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ChunkBrowserSystemChunk guid: (GUID fromString: '{e2344df7-4685-46a5-a350-969184292b80}')!
+
 ChunkBrowserSystemChunk comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2006 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
+
 !ChunkBrowserSystemChunk categoriesForClass!IDB Goodies! !
+
 !ChunkBrowserSystemChunk methodsFor!
 
 compressedChanges
@@ -68,6 +72,7 @@ uninstallPackage
 
 	identity1 := 'Uninstall package'.
 	identity2 := self packageName! !
+
 !ChunkBrowserSystemChunk categoriesForMethods!
 compressedChanges!operations!public! !
 compressedSources!operations!public! !
@@ -141,6 +146,7 @@ symbolFor: aString
 			yourself).
 	^(lookup associations detect: [:each | (aString indexOfSubCollection: each key) ~= 0] ifNone: [nil])
 		ifNotNil: [:arg | arg value]! !
+
 !ChunkBrowserSystemChunk class categoriesForMethods!
 chunkType!constants!public! !
 hasText:!public!testing! !

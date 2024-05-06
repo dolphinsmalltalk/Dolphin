@@ -5,7 +5,9 @@ ICoreWebView2EventHandler subclass: #ICoreWebView2NewBrowserVersionAvailableEven
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2NewBrowserVersionAvailableEventHandler guid: (IID fromString: '{f9a2976e-d34e-44fc-adee-81b6b57ca914}')!
+
 ICoreWebView2NewBrowserVersionAvailableEventHandler comment: '`ICoreWebView2NewBrowserVersionAvailableEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2NewBrowserVersionAvailableEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -27,7 +29,9 @@ interface ICoreWebView2NewBrowserVersionAvailableEventHandler : IUnknown
 };
 ```
 '!
+
 !ICoreWebView2NewBrowserVersionAvailableEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2NewBrowserVersionAvailableEventHandler methodsFor!
 
 basicRegister: tokenBuffer
@@ -35,6 +39,7 @@ basicRegister: tokenBuffer
 
 basicUnregister
 	source Remove_NewBrowserVersionAvailable: token! !
+
 !ICoreWebView2NewBrowserVersionAvailableEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
@@ -55,6 +60,7 @@ eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
 	^#newBrowserVersionAvailable! !
+
 !ICoreWebView2NewBrowserVersionAvailableEventHandler class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 eventName!constants!public! !

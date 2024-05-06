@@ -5,9 +5,13 @@ DolphinTest subclass: #MemoryManagerTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MemoryManagerTest guid: (GUID fromString: '{088afee2-2321-4479-b639-9f5fdc0e4418}')!
+
 MemoryManagerTest comment: ''!
+
 !MemoryManagerTest categoriesForClass!Unclassified! !
+
 !MemoryManagerTest methodsFor!
 
 testBytesUsedByObject
@@ -53,6 +57,7 @@ testOtOverflow
 	subject compact.
 	1 to: max do: [:i | objects at: i put: Object new].
 	self assert: events notEmpty! !
+
 !MemoryManagerTest categoriesForMethods!
 testBytesUsedByObject!public!unit tests! !
 testOtOverflow!public!unit tests! !

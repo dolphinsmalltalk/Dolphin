@@ -5,10 +5,14 @@ TestCase subclass: #STONReaderTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 STONReaderTest guid: (GUID fromString: '{6a0fdc02-84d9-4344-8b1e-55e345843ec9}')!
+
 STONReaderTest comment: 'STONReaderTests test materialization.
 '!
+
 !STONReaderTest categoriesForClass!STON-Tests-Reader! !
+
 !STONReaderTest methodsFor!
 
 materialize: string
@@ -424,6 +428,7 @@ testWhitespace
 testWideSymbol
 	self assert: (self materialize: '#''яблоко''') equals: #'яблоко'.
 	self assert: (self materialize: '#яблоко') equals: #'яблоко'! !
+
 !STONReaderTest categoriesForMethods!
 materialize:!private! !
 testAssociation!public!tests! !

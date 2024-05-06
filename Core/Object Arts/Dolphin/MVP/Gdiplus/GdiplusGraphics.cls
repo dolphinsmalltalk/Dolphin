@@ -5,11 +5,15 @@ GdiplusBase subclass: #GdiplusGraphics
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusGraphics guid: (GUID fromString: '{76d4e292-3cd0-44ac-af53-a4209708faa5}')!
+
 GdiplusGraphics comment: 'GdiplusGraphics class provides methods for drawing lines, curves, figures, images, and text. An instance stores attributes of the display device and attributes of the items to be drawn.
 
 '!
+
 !GdiplusGraphics categoriesForClass!Unclassified! !
+
 !GdiplusGraphics methodsFor!
 
 basicFree
@@ -812,6 +816,7 @@ translateTransform: aRealPoint order: aMatrixOrderConstant
 				dy: aRealPoint y
 				order: aMatrixOrderConstant) = Ok 
 		ifFalse: [GdiplusError signal: 'GdipTranslateWorldTransform failed' with: status]! !
+
 !GdiplusGraphics categoriesForMethods!
 basicFree!private!realizing/unrealizing! !
 beginContainer!accessing-transformations!public! !
@@ -1359,6 +1364,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^Canvas icon! !
+
 !GdiplusGraphics class categoriesForMethods!
 exampleGdipGAlphaBlending!examples!public!sunit! !
 exampleGdipGCropAndScale!examples!public!sunit! !

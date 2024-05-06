@@ -5,7 +5,9 @@ MenuItem subclass: #DividerMenuItem
 	classVariableNames: 'BarBreak Break DividerLookup Separator'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DividerMenuItem guid: (GUID fromString: '{87b4c661-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 DividerMenuItem comment: 'DividerMenuItem represents a divider that can be placed between other items in a <Menu>. Separate singleton instances for the various styles are held in class variables and answered by the #separator, #break and #barBreak [instance creation] methods.
 
 Class Variables:
@@ -15,7 +17,9 @@ Class Variables:
 	Break		<DividerMenuItem> singleton instance for the break separater style
 
 '!
+
 !DividerMenuItem categoriesForClass!MVP-Views-Support! !
+
 !DividerMenuItem methodsFor!
 
 acceleratorKey
@@ -81,6 +85,7 @@ text
 	"Private - Answer the menu text (i.e. the text that appears in the menu) for the receiver."
 
 	^''! !
+
 !DividerMenuItem categoriesForMethods!
 acceleratorKey!accessing!private! !
 acceleratorKey:!accessing!private! !
@@ -163,6 +168,7 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	BarBreak := Break := Separator := nil! !
+
 !DividerMenuItem class categoriesForMethods!
 barBreak!instance creation!public! !
 break!instance creation!public! !

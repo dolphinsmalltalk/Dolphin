@@ -5,13 +5,16 @@ NMHDR subclass: #NMCUSTOMDRAW
 	classVariableNames: '_OffsetOf_dwDrawStage _OffsetOf_dwItemSpec _OffsetOf_hdc _OffsetOf_lParam _OffsetOf_rc _OffsetOf_uItemState'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 NMCUSTOMDRAW guid: (GUID fromString: '{1123e900-72b4-46d6-81b5-8122b9e2393f}')!
+
 NMCUSTOMDRAW addClassConstant: '_OffsetOf_dwDrawStage' value: 16rC!
 NMCUSTOMDRAW addClassConstant: '_OffsetOf_dwItemSpec' value: 16r24!
 NMCUSTOMDRAW addClassConstant: '_OffsetOf_hdc' value: 16r10!
 NMCUSTOMDRAW addClassConstant: '_OffsetOf_lParam' value: 16r2C!
 NMCUSTOMDRAW addClassConstant: '_OffsetOf_rc' value: 16r14!
 NMCUSTOMDRAW addClassConstant: '_OffsetOf_uItemState' value: 16r28!
+
 NMCUSTOMDRAW comment: '`NMCUSTOMDRAW` is an `ExternalStructure` class to represent the Win32 structure of the same name.
 
 `NMCUSTOMDRAW` structures are sent as parameter blocks along with certain WM_NOTIFY messages from Windows common controls such as the `ListView` and `TreeView` to request custom draw information for individual items (and optionally sub-items).
@@ -19,7 +22,9 @@ NMCUSTOMDRAW comment: '`NMCUSTOMDRAW` is an `ExternalStructure` class to represe
 All the fields in this structure are read-only. Specialized sub-structures provide fields which can be written to in order to pass custom draw settings back to the control (for example the foreground and background text colours). The DC associated with this structure can also be updated by changing the font, and so forth.
 
 '!
+
 !NMCUSTOMDRAW categoriesForClass!External-Data-Structured-Win32! !
+
 !NMCUSTOMDRAW methodsFor!
 
 applyFont
@@ -186,6 +191,7 @@ view
 view: anIconListAbstract
 	"Private -"
 	view := anIconListAbstract! !
+
 !NMCUSTOMDRAW categoriesForMethods!
 applyFont!operations!private! !
 backcolor!accessing!public! !
@@ -239,6 +245,7 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #dwDrawStage #hdc #rc #dwItemSpec #uItemState #lParam)! !
+
 !NMCUSTOMDRAW class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

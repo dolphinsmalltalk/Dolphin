@@ -5,7 +5,9 @@ Image subclass: #OLEPicture
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 OLEPicture guid: (CLSID fromString: '{0be35204-8f91-11ce-9de3-00aa004bb851}')!
+
 OLEPicture comment: 'OLEPicture is an <Image> class which wraps the standard OLE picture object.
 
 OLEPicture is capable of representing a wide range of image types, including icons, bitmaps, metafiles, and also JPEGs and GIFs.
@@ -15,7 +17,9 @@ Example:
 	pic := (OLEPicture fromFile: ''Resources/DolphinSureCert.jpg'' usingLocator: FileLocator installRelative).
 	ImagePresenter showOn: pic.
 '!
+
 !OLEPicture categoriesForClass!Graphics-Tools! !
+
 !OLEPicture methodsFor!
 
 = anObject 
@@ -169,6 +173,7 @@ saveAsFile: pathString
 	self picture saveAsFile: istream fSaveMemCopy: true.
 	istream free.
 	fstream close! !
+
 !OLEPicture categoriesForMethods!
 =!comparing!public! !
 addToImageList:mask:!double dispatch!private! !
@@ -193,6 +198,7 @@ fromIPicture: anIPicture
 		picture: anIPicture;
 		createHandle;
 		yourself! !
+
 !OLEPicture class categoriesForMethods!
 fromIPicture:!public! !
 !

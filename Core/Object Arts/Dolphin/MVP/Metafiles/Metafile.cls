@@ -5,13 +5,17 @@ Image subclass: #Metafile
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Metafile guid: (GUID fromString: '{9afeffe3-f782-4d07-ad88-4aab4659091e}')!
+
 Metafile comment: 'Metafile is the class of <Image>s that represent Windows'' Enhanced Metafiles.
 
 Instance Variables:
 	header	<ENHMETAHEADER>. Header data for the metafile.
 '!
+
 !Metafile categoriesForClass!Graphics-Tools! !
+
 !Metafile methodsFor!
 
 addToImageList: aWinImageList mask: aColorOrNil 
@@ -168,6 +172,7 @@ saveAsFile: pathString
 	overwritten."
 
 	GDILibrary default copyEnhMetaFile: self asParameter lpszFile: pathString! !
+
 !Metafile categoriesForMethods!
 addToImageList:mask:!private!testing! !
 basicFree!private!realizing/unrealizing! !
@@ -196,6 +201,7 @@ playRecord: anENHMETARECORD on: aCanvas handleTable: aHandleArray
 		lpHandletable: aHandleArray
 		lpEnhMetaRecord: anENHMETARECORD
 		nHandles: aHandleArray length! !
+
 !Metafile class categoriesForMethods!
 playRecord:on:handleTable:!operations!public! !
 !

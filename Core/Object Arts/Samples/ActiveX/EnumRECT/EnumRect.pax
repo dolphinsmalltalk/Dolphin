@@ -20,7 +20,6 @@ Above we are acting as both server and client from within the Dolphin image. You
 
 As an exercise you may like to try interfacing Kraig''s C++ sample to the Dolphin''s EnumRect sample, which is possible using C++ as a server, or Dolphin as a server. Note, however, that in order to use Dolphin as a server from a separate C++ executable, you will need to build a marshalling DLL (see Kraig''s book).'.
 
-
 package classNames
 	add: #EnumRECT;
 	add: #IEnumRECT;
@@ -46,16 +45,12 @@ COMInterfaceImp subclass: #EnumRECT
 	classVariableNames: 'CRECTS'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IEnumXXXX subclass: #IEnumRECT
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

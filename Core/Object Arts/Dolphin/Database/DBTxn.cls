@@ -5,7 +5,9 @@ Object subclass: #DBTxn
 	classVariableNames: ''
 	poolDictionaries: 'ODBCConstants'
 	classInstanceVariableNames: ''!
+
 DBTxn guid: (GUID fromString: '{87b4c478-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 DBTxn comment: 'A DBTxn instance represents a Database Connection transaction in progress.
 
 Generally one does not explicitly instantiate DBTxn instances, but rather one uses the methods DBConnection>>beginRWTxn, and DBConnection>>beginTxn to create an appropriate type of transaction on a specific connection. 
@@ -16,7 +18,9 @@ Instance Variables:
 	creator		<Object>
 
 '!
+
 !DBTxn categoriesForClass!ODBC Interface! !
+
 !DBTxn methodsFor!
 
 beReadOnly
@@ -85,6 +89,7 @@ transcriptMessage: aString
 				space;
 				nextPutAll: aString;
 				cr]! !
+
 !DBTxn categoriesForMethods!
 beReadOnly!accessing!public! !
 beReadWrite!accessing!public! !
@@ -114,6 +119,7 @@ newRWOn: aDBConnection
 		connection: aDBConnection;
 		beReadWrite;
 		yourself! !
+
 !DBTxn class categoriesForMethods!
 newOn:!instance creation!public! !
 newRWOn:!instance creation!public! !

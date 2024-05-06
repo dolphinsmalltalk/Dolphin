@@ -55,9 +55,6 @@ Object variableSubclass: #MethodContext
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
-"Global Aliases"!
-
-
 "Loose Methods"!
 
 !Package methodsFor!
@@ -245,6 +242,7 @@ versionLookup
 		at: 5 put: #loadVersion5:filer:;
 		shrink;
 		yourself	"same format as 4, except VM version loaded here")	"same format as 4, except VM version loaded here"! !
+
 !Package categoriesForMethods!
 basicLoadVersion4:filer:!binary filing!private! !
 errorUnknownFileVersion:!binary filing!exceptions!private! !
@@ -271,6 +269,7 @@ name: nameString comment: commentString
 	^(self name: nameString)
 		basicComment: commentString;
 		yourself! !
+
 !Package class categoriesForMethods!
 name:comment:!instance creation!public! !
 !

@@ -5,9 +5,13 @@ RefactoringBrowserTest subclass: #SmalllintTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SmalllintTest guid: (GUID fromString: '{1c8afe99-7a10-4ecd-a108-0f8f9bb5bdba}')!
+
 SmalllintTest comment: 'SUnitBrowser openOnTestCase: self'!
+
 !SmalllintTest categoriesForClass!Refactory-Testing! !
+
 !SmalllintTest methodsFor!
 
 blockRuleFor: aSelector 
@@ -236,6 +240,7 @@ testWhileTrue
 
 testYourselfNotUsed
 	self parseTreeRuleFor: self currentSelector! !
+
 !SmalllintTest categoriesForMethods!
 blockRuleFor:!public!set up! !
 blockRuleFor:plusSelectors:!public!set up! !

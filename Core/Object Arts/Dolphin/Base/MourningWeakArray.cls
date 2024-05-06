@@ -5,9 +5,13 @@ WeakArray variableSubclass: #MourningWeakArray
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MourningWeakArray guid: (GUID fromString: '{87b4c520-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 MourningWeakArray comment: ''!
+
 !MourningWeakArray categoriesForClass!Collections-Arrayed!Collections-Weak! !
+
 !MourningWeakArray methodsFor!
 
 elementsExpired: anInteger
@@ -44,6 +48,7 @@ pathologist: anObject
 	"Set the receiver's 'pathologist' to anObject. See #pathologist."
 
 	pathologist := anObject isNil ifTrue: [self class] ifFalse: [anObject]! !
+
 !MourningWeakArray categoriesForMethods!
 elementsExpired:!finalizing!public! !
 initialize!initializing!private! !
@@ -66,6 +71,7 @@ initialize
 	"Initialize the receiver."
 
 	self makeMourner! !
+
 !MourningWeakArray class categoriesForMethods!
 elementsExpired:of:!finalizing!private! !
 initialize!development!initializing!public! !

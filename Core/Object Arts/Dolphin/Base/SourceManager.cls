@@ -5,9 +5,13 @@ Object subclass: #SourceManager
 	classVariableNames: 'ChangesIndex DefaultInstance SourcesIndex'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SourceManager guid: (GUID fromString: '{87b4c4bd-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 SourceManager comment: ''!
+
 !SourceManager categoriesForClass!Development!System-Support! !
+
 !SourceManager methodsFor!
 
 basicChangesFiler
@@ -422,6 +426,7 @@ truncateChanges
 			self closeChangesFile.
 			(FileStream write: chgFile) close.	"truncate it"
 			self openChangesFile: chgFile]! !
+
 !SourceManager categoriesForMethods!
 basicChangesFiler!accessing!private! !
 basicOpenSources:!operations-source files!private! !
@@ -522,6 +527,7 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	self reset! !
+
 !SourceManager class categoriesForMethods!
 default!accessing!public! !
 default:!accessing!public! !

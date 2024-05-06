@@ -5,7 +5,9 @@ ADODB_Collection subclass: #ADODBFields15
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
+
 ADODBFields15 guid: (IID fromString: '{00001506-0000-0010-8000-00aa006d2ea4}')!
+
 ADODBFields15 comment: '`ADODBFields15` is a wrapper class for the COM interface ''ADODB.Fields15'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -31,7 +33,9 @@ interface Fields15 : _Collection
 };
 ```
 '!
+
 !ADODBFields15 categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
+
 !ADODBFields15 methodsFor!
 
 get_Item: index ppvObject: ppvObject
@@ -51,6 +55,7 @@ item: index
 	answer := ADODBField newPointer.
 	self get_Item: index asVariant ppvObject: answer.
 	^answer asObject! !
+
 !ADODBFields15 categoriesForMethods!
 get_Item:ppvObject:!**auto generated**!COM Interfaces-Fields15!private! !
 item:!**auto generated**!properties!public! !
@@ -66,6 +71,7 @@ defineFunctions
 		defineFunction: #get_Item:ppvObject:
 			argumentTypes: 'variant ADODBField**'
 ! !
+
 !ADODBFields15 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

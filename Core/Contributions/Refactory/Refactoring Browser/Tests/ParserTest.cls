@@ -5,9 +5,13 @@ RefactoringBrowserTest subclass: #ParserTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ParserTest guid: (GUID fromString: '{947b6d13-1a2a-43c0-8053-bde0fccfbd44}')!
+
 ParserTest comment: ''!
+
 !ParserTest categoriesForClass!Refactory-Testing! !
+
 !ParserTest methodsFor!
 
 buildArgumentSearch
@@ -744,6 +748,7 @@ verifyTree: copiedNode isDeepCopyOf: originalNode
 			(Array with: originalNode with: originalChild parent with: copiedNode with: copiedChild parent) collect: #identityHash.
 			"
 			self verifyTree: copiedChild isDeepCopyOf: originalChild]! !
+
 !ParserTest categoriesForMethods!
 buildArgumentSearch!accessing!public! !
 buildMessageSearch!accessing!public! !

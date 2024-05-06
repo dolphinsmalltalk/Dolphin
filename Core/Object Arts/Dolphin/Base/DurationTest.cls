@@ -5,9 +5,13 @@ DolphinTest subclass: #DurationTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DurationTest guid: (GUID fromString: '{3cf86074-481f-4b92-b7ed-6c9cbbe394df}')!
+
 DurationTest comment: ''!
+
 !DurationTest categoriesForClass!Unclassified! !
+
 !DurationTest methodsFor!
 
 testAbs
@@ -347,6 +351,7 @@ testSubtract
 	self assert: subject - subject equals: 0 seconds.
 	subject := 1.5 hours.
 	self assert: subject - -1800 seconds  equals: 2 hours! !
+
 !DurationTest categoriesForMethods!
 testAbs!public!unit tests! !
 testAdd!public!unit tests! !

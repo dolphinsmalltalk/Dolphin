@@ -5,9 +5,13 @@ STBProxy subclass: #STBResourceSTBFileAccessorProxy
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 STBResourceSTBFileAccessorProxy guid: (GUID fromString: '{87b4c6f1-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 STBResourceSTBFileAccessorProxy comment: ''!
+
 !STBResourceSTBFileAccessorProxy categoriesForClass!System-Binary storage! !
+
 !STBResourceSTBFileAccessorProxy methodsFor!
 
 bytes: aByteArray
@@ -37,6 +41,7 @@ stbFixup: inFiler at: anInteger
 	classLocator := inFiler classLocator copyWithCodeBase.
 	(accessor := ResourceSTBFileAccessor onFileName: fileName) classLocator: classLocator.
 	self become: accessor! !
+
 !STBResourceSTBFileAccessorProxy categoriesForMethods!
 bytes:!accessing!private! !
 fileName:!accessing!private! !
@@ -61,6 +66,7 @@ withExternalFile: aResourceSTBFileAccessor
 	^self basicNew
 		fileName: aResourceSTBFileAccessor fileName;
 		yourself! !
+
 !STBResourceSTBFileAccessorProxy class categoriesForMethods!
 withEmbeddedFile:!instance creation!public! !
 withExternalFile:!instance creation!public! !

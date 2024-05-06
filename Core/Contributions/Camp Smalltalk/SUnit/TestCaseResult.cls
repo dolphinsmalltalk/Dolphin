@@ -5,9 +5,13 @@ Object subclass: #TestCaseResult
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TestCaseResult guid: (GUID fromString: '{a233feef-eabb-4fa9-9cf3-09531d206233}')!
+
 TestCaseResult comment: 'Represents the results of executing an individual <TestCase>'!
+
 !TestCaseResult categoriesForClass!SUnit! !
+
 !TestCaseResult methodsFor!
 
 captureDiagnostics: anException
@@ -114,6 +118,7 @@ stacktrace
 	"Answer the stacktrace capture when the test failed/errored, or nil if the test passed."
 
 	^stacktrace! !
+
 !TestCaseResult categoriesForMethods!
 captureDiagnostics:!initializing!private! !
 case!accessing!public! !
@@ -150,6 +155,7 @@ case: aTestCase skipped: aTestSkip
 		setCase: aTestCase
 		outcome: #skipped
 		signal: aTestSkip! !
+
 !TestCaseResult class categoriesForMethods!
 case:duration:!instance creation!public! !
 case:error:!instance creation!public! !

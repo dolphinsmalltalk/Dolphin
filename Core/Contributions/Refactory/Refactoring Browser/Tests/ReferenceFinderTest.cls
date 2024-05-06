@@ -5,9 +5,13 @@ RefactoringBrowserTest subclass: #ReferenceFinderTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ReferenceFinderTest guid: (GUID fromString: '{9403e023-ffa2-4920-af9d-9b80e6055ac8}')!
+
 ReferenceFinderTest comment: ''!
+
 !ReferenceFinderTest categoriesForClass!Refactory-Testing! !
+
 !ReferenceFinderTest methodsFor!
 
 testAllPaths
@@ -47,6 +51,7 @@ testPathToInstance
 	path := ReferenceFinder findPathToInstanceOf: RefactoringManager.
 	self assert: path last class identicalTo: RefactoringManager.
 	self assert: path first identicalTo: Smalltalk! !
+
 !ReferenceFinderTest categoriesForMethods!
 testAllPaths!public!tests! !
 testAllPathsToInstance!public!tests! !

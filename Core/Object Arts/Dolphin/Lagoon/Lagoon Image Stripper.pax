@@ -11,7 +11,6 @@ See also the Application Deployment Kit package.'.
 
 package basicPackageVersion: '6.2'.
 
-
 package classNames
 	add: #BasicImageStripper;
 	add: #ImageStripper;
@@ -45,29 +44,30 @@ Object subclass: #BasicImageStripper
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #ImageStripperProgress
 	instanceVariableNames: 'handle oldWndProc progressProcess progressRange progress status cursor'
 	classVariableNames: 'CaptionId ExplanationId MessageMap ProgressId StatusId'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 Object subclass: #VersionResource
 	instanceVariableNames: 'fixedInfo stringTables translations'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 BasicImageStripper subclass: #ImageStripper
 	instanceVariableNames: 'rootPackageName executableName runtimeSessionManagerClass flags preStripScript versionResource potentialAspectSetters stubFilePath logStream elementStack developmentClasses preservedMessages snapshotType rootClasses supersentMethods potentialAspectGetters notifier runFlags _unused20 _unused21 _unused22'
 	classVariableNames: 'AllResourcesStripped ClearGuidsMask CompileStructsMask EmptyMethodDictsMask FoldBytecodesMask FoldMethodDictsMask FoldStringsMask IgnoreViewReferencesMask KeepImageMask LogLiveClassesMask LogPrerequisitesMask LogReferencesMask NoXPManifestMask PreserveAspectsMask PurgeStubbornClassesMask RemoveAbstractUnreachable RetainDevSysMask RetainInstVarNamesMask RetainSubclassRespMask StripClassBuilderMask StripClassesMask StripClassInfoMask StripDeprecatedMask StripMethodsMask StripPackagesMask StripResourcesMask StripShouldNotImplMask ToGoMask UnattendedMask WriteLogMask'
 	poolDictionaries: 'MessageBoxConstants Win32Constants'
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #VS_VERSION_INFO_HEADER
 	instanceVariableNames: 'key valueOffset'
 	classVariableNames: '_OffsetOf_wLength _OffsetOf_wType _OffsetOf_wValueLength'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -84,6 +84,7 @@ fullyCompileDefinition
 
 removeTemplate
 	template := nil! !
+
 !ExternalStructure class categoriesForMethods!
 fullyCompileDefinition!compiling!public! !
 removeTemplate!private!template definition! !
@@ -96,6 +97,7 @@ onPreStripImage
 
 	"Allows PropertyManager to be stripped if #propertyManager is never sent. If it is the method will still ref the var binding."
 	classPool removeKey: '_PropertyRegister'! !
+
 !Object class categoriesForMethods!
 onPreStripImage!class hierarchy-removing!private! !
 !
@@ -105,6 +107,7 @@ onPreStripImage!class hierarchy-removing!private! !
 messageBox: hWnd lpText: lpText lpCaption: lpCaption uType: uType
 	<stdcall: sdword MessageBoxW handle lpwstr lpwstr dword>
 	^self invalidCall: _failureCode! !
+
 !UserLibrary categoriesForMethods!
 messageBox:lpText:lpCaption:uType:!public!win32 functions-dialog box! !
 !

@@ -5,9 +5,13 @@ AbstractFileStreamTest subclass: #StdioFileStreamTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StdioFileStreamTest guid: (GUID fromString: '{d3e882fd-385f-45ec-b975-c31f9e777b4b}')!
+
 StdioFileStreamTest comment: ''!
+
 !StdioFileStreamTest categoriesForClass!Unclassified! !
+
 !StdioFileStreamTest methodsFor!
 
 bufferSize
@@ -153,6 +157,7 @@ testNextLineUpToEof
 			actual := filestream nextLine.
 			self assert: actual equals: expected.
 			filestream close]! !
+
 !StdioFileStreamTest categoriesForMethods!
 bufferSize!constants!private! !
 maxPosition!constants!private! !
@@ -174,6 +179,7 @@ allTestSelectors
 	| roCategory |
 	roCategory := 'strict utf8' asMethodCategory.
 	^super allTestSelectors reject: [:each | roCategory includesMethod: (self lookupMethod: each)]! !
+
 !StdioFileStreamTest class categoriesForMethods!
 allTestSelectors!Accessing!public! !
 !

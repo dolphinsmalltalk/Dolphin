@@ -5,12 +5,16 @@ PositionableStream subclass: #WriteStream
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 WriteStream guid: (GUID fromString: '{87b4c6fb-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 WriteStream comment: 'Class WriteStream is a concrete subclass of PositionableStream representing accessors for writing elements into a collecition. None of the next, next:, nor do: messages can be successfully sent to a WriteStream.
 
 Instance Variables:
 	writeLimit		<Integer>. Current maximum position up to which the stream may be positioned for writing.'!
+
 !WriteStream categoriesForClass!Collections-Streams! !
+
 !WriteStream methodsFor!
 
 << anObject
@@ -262,6 +266,7 @@ tab: tabCount
 	"Append the specified number of tabs to the receiver."
 
 	tabCount timesRepeat: [self tab]! !
+
 !WriteStream categoriesForMethods!
 <<!accessing!public! !
 basicNext:putAll:startingAt:!accessing!private! !
@@ -320,6 +325,7 @@ with: aCollection from: firstIndex to: lastIndex
 	^(self on: aCollection from: firstIndex to: lastIndex)
 		moveToEnd;
 		yourself! !
+
 !WriteStream class categoriesForMethods!
 with:!instance creation!public! !
 with:from:to:!instance creation!public! !

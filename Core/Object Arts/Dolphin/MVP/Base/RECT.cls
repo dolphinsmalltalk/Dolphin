@@ -5,15 +5,20 @@ ExternalRectangle subclass: #RECT
 	classVariableNames: '_OffsetOf_bottom _OffsetOf_left _OffsetOf_right _OffsetOf_top'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RECT guid: (GUID fromString: '{0a6e055d-001b-4817-b07d-fe982ca46330}')!
+
 RECT addClassConstant: '_OffsetOf_bottom' value: 16rC!
 RECT addClassConstant: '_OffsetOf_left' value: 16r0!
 RECT addClassConstant: '_OffsetOf_right' value: 16r8!
 RECT addClassConstant: '_OffsetOf_top' value: 16r4!
+
 RECT comment: '`RECT` is an `ExternalStructure` class to wrap the standard Win32 structure of the same name.
 
 The `RECT` structure is used in many places in the Windows API to represent a rectangle consisting of 32-bit co-ordinates for top-left and bottom-right corners. `RECTL` is an alias for the same class/structure. `RECT` supports conversions to and from the Smalltalk `Rectangle` class.'!
+
 !RECT categoriesForClass!Win32-Structs! !
+
 !RECT methodsFor!
 
 asRectangle
@@ -72,6 +77,7 @@ top: anInteger
 	"Set the receiver's 'top' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_top put: anInteger! !
+
 !RECT categoriesForMethods!
 asRectangle!converting!public! !
 bottom!**compiled accessors**!public! !
@@ -136,6 +142,7 @@ uninitialize
 	Make sure our alias disappears with us."
 
 	self environment removeKey: #RECTL ifAbsent: []! !
+
 !RECT class categoriesForMethods!
 defineFields!public!template definition! !
 extent:!instance creation!public! !

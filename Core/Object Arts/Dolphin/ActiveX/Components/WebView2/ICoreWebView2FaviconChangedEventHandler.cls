@@ -5,7 +5,9 @@ ICoreWebView2EventHandler subclass: #ICoreWebView2FaviconChangedEventHandler
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2FaviconChangedEventHandler guid: (IID fromString: '{2913da94-833d-4de0-8dca-900fc524a1a4}')!
+
 ICoreWebView2FaviconChangedEventHandler comment: '`ICoreWebView2FaviconChangedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2FaviconChangedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -27,7 +29,9 @@ interface ICoreWebView2FaviconChangedEventHandler : IUnknown
 };
 ```
 '!
+
 !ICoreWebView2FaviconChangedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2FaviconChangedEventHandler methodsFor!
 
 basicRegister: tokenBuffer
@@ -35,6 +39,7 @@ basicRegister: tokenBuffer
 
 basicUnregister
 	source Remove_FaviconChanged: token! !
+
 !ICoreWebView2FaviconChangedEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
@@ -55,6 +60,7 @@ eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
 	^#favIconChanged! !
+
 !ICoreWebView2FaviconChangedEventHandler class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 eventName!constants!public! !

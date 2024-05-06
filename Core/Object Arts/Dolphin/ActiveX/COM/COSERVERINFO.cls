@@ -5,17 +5,22 @@ OLEStructure subclass: #COSERVERINFO
 	classVariableNames: '_OffsetOf_dwReserved1 _OffsetOf_dwReserved2 _OffsetOf_pAuthInfo _OffsetOf_pwszName'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 COSERVERINFO guid: (GUID fromString: '{87b4c5b4-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 COSERVERINFO addClassConstant: '_OffsetOf_dwReserved1' value: 16r0!
 COSERVERINFO addClassConstant: '_OffsetOf_dwReserved2' value: 16rC!
 COSERVERINFO addClassConstant: '_OffsetOf_pAuthInfo' value: 16r8!
 COSERVERINFO addClassConstant: '_OffsetOf_pwszName' value: 16r4!
+
 COSERVERINFO comment: 'COSERVERINFO is an ExternalStructure class to represent the DCOM structure of the same name.
 
 COSERVERINFO is used to explicitly identify a remote machine when instantiating COM objects (i.e. it is used in conjunction with CoCreateInstanceEx)..
 
 The only relevant member at present is #pwszName, which would usually be a UNC or DNS name, or a numeric IP address.'!
+
 !COSERVERINFO categoriesForClass!External-Data-Structured-COM! !
+
 !COSERVERINFO methodsFor!
 
 hostName
@@ -50,6 +55,7 @@ pwszName: anUtf16String
 	"Set the receiver's 'pwszName' field to the value of the argument, anUtf16String"
 
 	bytes uintPtrAtOffset: _OffsetOf_pwszName put: anUtf16String yourAddress! !
+
 !COSERVERINFO categoriesForMethods!
 hostName!accessing!public! !
 hostName:!accessing!public! !
@@ -82,6 +88,7 @@ defineFields
 
 getFieldNames
 	^#(#pwszName #pAuthInfo)! !
+
 !COSERVERINFO class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

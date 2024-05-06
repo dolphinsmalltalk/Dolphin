@@ -7,7 +7,6 @@ Copyright (c) Object Arts Ltd, 2002.
 
 Extensions to the basic SUnit unit testing packages, including the ability to test that the correct set of SASE events are fired for particular actions.'.
 
-
 package methodNames
 	add: #TestCase -> #<=;
 	add: #TestCase -> #=;
@@ -52,12 +51,6 @@ package setPrerequisites: #(
 	'SUnit').
 
 package!
-
-"Class Definitions"!
-
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -294,6 +287,7 @@ skipUnless: aNiladicValuable
 	" If the assumption in the <niladicValuable> argument evaluates to false, abandon the running test and mark it as skipped."
 	
 	aNiladicValuable value ifFalse: [TestSkip signal: 'Assumption in #skipUnless: failed']! !
+
 !TestCase categoriesForMethods!
 <=!comparing!public! !
 =!comparing!public! !
@@ -343,6 +337,7 @@ buildSuiteFromConcreteMethods: testMethodSelectors
 
 debugWithResult: aSymbol
 	^(self selector: aSymbol) debugWithResult! !
+
 !TestCase class categoriesForMethods!
 buildSuiteFromConcreteMethods:!Instance Creation!public! !
 debugWithResult:!Instance Creation!public! !
@@ -374,6 +369,7 @@ debugCase: aTestCase
 				[:signal |
 				self addSkip: aTestCase signal: signal.
 				signal return]! !
+
 !TestResult categoriesForMethods!
 debugCase:!public!running! !
 !

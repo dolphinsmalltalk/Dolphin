@@ -5,9 +5,13 @@ Object subclass: #ReferenceFinder
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ReferenceFinder guid: (GUID fromString: '{bfcfc047-1208-409c-965c-bda23170a192}')!
+
 ReferenceFinder comment: ''!
+
 !ReferenceFinder categoriesForClass!Refactory-Browser! !
+
 !ReferenceFinder methodsFor!
 
 addBacklinkFrom: newObject to: anObject 
@@ -131,6 +135,7 @@ startFrom: anObject
 	backlinks last at: anObject put: nil.
 	#rbFix.	"Because an Object will be found on the path Smalltalk->Processor->active Process->obj, we add the active process to the backlinks so it appears that it has already been searched"
 	backlinks last at: Processor activeProcess put: nil! !
+
 !ReferenceFinder categoriesForMethods!
 addBacklinkFrom:to:!helpers!private! !
 addBacklinkLevel!helpers!private! !
@@ -200,6 +205,7 @@ new
 	^(super new)
 		initialize;
 		yourself! !
+
 !ReferenceFinder class categoriesForMethods!
 findAllPathsTo:!accessing!public! !
 findAllPathsTo:from:!accessing!public! !

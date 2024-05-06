@@ -5,13 +5,16 @@ Win32Structure subclass: #TRIVERTEX
 	classVariableNames: '_OffsetOf_alpha _OffsetOf_blue _OffsetOf_green _OffsetOf_red _OffsetOf_x _OffsetOf_y'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TRIVERTEX guid: (GUID fromString: '{c7529ab7-4488-494b-a3f0-8549402a5f57}')!
+
 TRIVERTEX addClassConstant: '_OffsetOf_alpha' value: 16rE!
 TRIVERTEX addClassConstant: '_OffsetOf_blue' value: 16rC!
 TRIVERTEX addClassConstant: '_OffsetOf_green' value: 16rA!
 TRIVERTEX addClassConstant: '_OffsetOf_red' value: 16r8!
 TRIVERTEX addClassConstant: '_OffsetOf_x' value: 16r0!
 TRIVERTEX addClassConstant: '_OffsetOf_y' value: 16r4!
+
 TRIVERTEX comment: '<TRIVERTEX> is an <ExternalStructure> class to wrap the struct ''Win32.TRIVERTEX'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains the following helpstring for this struct
@@ -31,7 +34,9 @@ struct tagTRIVERTEX {
 	COLOR16 Alpha;
 } TRIVERTEX;
 '!
+
 !TRIVERTEX categoriesForClass!Win32-Structs! !
+
 !TRIVERTEX methodsFor!
 
 alpha
@@ -105,6 +110,7 @@ y: anInteger
 	"Set the receiver's 'y' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_y put: anInteger! !
+
 !TRIVERTEX categoriesForMethods!
 alpha!**compiled accessors**!public! !
 alpha:!**compiled accessors**!public! !
@@ -150,6 +156,7 @@ defineFields
 
 getFieldNames
 	^#(#x #y #red #green #blue #alpha)! !
+
 !TRIVERTEX class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

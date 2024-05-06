@@ -5,14 +5,18 @@ ScintillaStyler subclass: #NullScintillaStyler
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 NullScintillaStyler guid: (GUID fromString: '{930680af-646b-4660-a349-1f5e5a8e0fec}')!
+
 NullScintillaStyler comment: 'NullScintillaStyler is a <ScintillaStyler> that leaves text in plain unformatted form, i.e. all text assumes the configured ''normal'' style, which is normally the style named #normal.
 
 This styler is useful either when one wants to use Scintilla, but with plain text, or to temporarily disable styling.
 
 Instance Variables:
 	normalStyleName		<Symbol>'!
+
 !NullScintillaStyler categoriesForClass!Kernel-Objects! !
+
 !NullScintillaStyler methodsFor!
 
 initialize
@@ -29,6 +33,7 @@ onStyleNeeded: aScintillaView from: startInteger to: stopInteger
 	In this case we just set to the default style, regardless."
 
 	aScintillaView applyStyle: self normalStyleName toNext: stopInteger - startInteger + 1! !
+
 !NullScintillaStyler categoriesForMethods!
 initialize!initializing!public! !
 normalStyleName!accessing!public! !
@@ -43,6 +48,7 @@ stbConvertFrom: anSTBVersion
 
 stbVersion
 	^1! !
+
 !NullScintillaStyler class categoriesForMethods!
 stbConvertFrom:!binary filing!public! !
 stbVersion!binary filing!public! !

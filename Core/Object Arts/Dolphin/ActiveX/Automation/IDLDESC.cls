@@ -5,9 +5,12 @@ OLEStructure subclass: #IDLDESC
 	classVariableNames: '_OffsetOf_dwReserved _OffsetOf_wIDLFlags'
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
+
 IDLDESC guid: (GUID fromString: '{c06f3b80-0868-11d3-93af-00a024ca708a}')!
+
 IDLDESC addClassConstant: '_OffsetOf_dwReserved' value: 16r0!
 IDLDESC addClassConstant: '_OffsetOf_wIDLFlags' value: 16r4!
+
 IDLDESC comment: 'IDLDESC is an <ExternalStructure> class to represent the AX Automation structure, IDLDESC.
 
 IDLDESC contains basic marshalling information for a function argument, basically consisting of flags which relate to attributes such as ''in'', ''out'' and ''retval'', which are defined in the IDL for the argument.
@@ -17,7 +20,9 @@ Member variables:
 	wIDLFlags	<WORD> Flags from the IDLFLAGS enumeration.
 
 Note that this structure is only 6-bytes long, and may require packing when embedded in other structures.'!
+
 !IDLDESC categoriesForClass!External-Data-Structured-COM! !
+
 !IDLDESC methodsFor!
 
 isIn
@@ -39,6 +44,7 @@ wIDLFlags
 	"Answer the <Integer> value of the receiver's 'wIDLFlags' field."
 
 	^bytes wordAtOffset: _OffsetOf_wIDLFlags! !
+
 !IDLDESC categoriesForMethods!
 isIn!public!testing! !
 isOut!public!testing! !
@@ -67,6 +73,7 @@ defineFields
 
 getFieldNames
 	^#(#wIDLFlags)! !
+
 !IDLDESC class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

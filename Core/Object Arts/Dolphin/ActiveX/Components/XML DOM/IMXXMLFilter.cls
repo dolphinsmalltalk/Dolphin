@@ -5,7 +5,9 @@ IDispatch subclass: #IMXXMLFilter
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
 	classInstanceVariableNames: ''!
+
 IMXXMLFilter guid: (IID fromString: '{c90352f7-643c-4fbc-bb23-e996eb2d51fd}')!
+
 IMXXMLFilter comment: '<IMXXMLFilter> is a wrapper class for the COM interface ''MSXML2.IMXXMLFilter'' generated from type information in the ''Microsoft XML, v6.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
@@ -66,7 +68,9 @@ interface IMXXMLFilter : IDispatch
 		[in]IUnknown* oHandler);
 };
 '!
+
 !IMXXMLFilter categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+
 !IMXXMLFilter methodsFor!
 
 contentHandler
@@ -284,6 +288,7 @@ setErrorHandler: oHandler
 
 	self putref_errorHandler: oHandler
 ! !
+
 !IMXXMLFilter categoriesForMethods!
 contentHandler!**auto generated**!properties!public! !
 dtdHandler!**auto generated**!properties!public! !
@@ -344,6 +349,7 @@ defineFunctions
 		defineFunction: #putref_errorHandler:
 			argumentTypes: 'IUnknown*'
 ! !
+
 !IMXXMLFilter class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

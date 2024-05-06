@@ -4,7 +4,6 @@ package paxVersion: 1;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
-
 package classNames
 	add: #DolphinSureTrustedDataTest;
 	add: #SecureHashAlgorithmTest;
@@ -30,16 +29,12 @@ DolphinTest subclass: #DolphinSureTrustedDataTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DolphinTest subclass: #SecureHashAlgorithmTest
 	instanceVariableNames: 'hash'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

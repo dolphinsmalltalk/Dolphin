@@ -5,9 +5,12 @@ HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_URLACL_SET
 	classVariableNames: '_OffsetOf_KeyDesc _OffsetOf_ParamDesc'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 HTTP_SERVICE_CONFIG_URLACL_SET guid: (GUID fromString: '{8144c4ca-dfd3-4ed0-a83b-ad096bd611a4}')!
+
 HTTP_SERVICE_CONFIG_URLACL_SET addClassConstant: '_OffsetOf_KeyDesc' value: 16r0!
 HTTP_SERVICE_CONFIG_URLACL_SET addClassConstant: '_OffsetOf_ParamDesc' value: 16r4!
+
 HTTP_SERVICE_CONFIG_URLACL_SET comment: '<HTTP_SERVICE_CONFIG_URLACL_SET> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_SERVICE_CONFIG_URLACL_SET'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -23,7 +26,9 @@ struct tagHTTP_SERVICE_CONFIG_URLACL_SET {
 	HTTP_SERVICE_CONFIG_URLACL_PARAM ParamDesc;
 } HTTP_SERVICE_CONFIG_URLACL_SET;
 '!
+
 !HTTP_SERVICE_CONFIG_URLACL_SET categoriesForClass!WinHttpServer-Structs! !
+
 !HTTP_SERVICE_CONFIG_URLACL_SET methodsFor!
 
 KeyDesc
@@ -45,6 +50,7 @@ ParamDesc: anUtf16String
 	"Set the receiver's 'ParamDesc' field to the value of the argument, anUtf16String"
 
 	bytes uintPtrAtOffset: _OffsetOf_ParamDesc put: anUtf16String yourAddress! !
+
 !HTTP_SERVICE_CONFIG_URLACL_SET categoriesForMethods!
 KeyDesc!**compiled accessors**!public! !
 KeyDesc:!**compiled accessors**!public! !
@@ -73,6 +79,7 @@ defineFields
 
 getFieldNames
 	^#(#KeyDesc #ParamDesc)! !
+
 !HTTP_SERVICE_CONFIG_URLACL_SET class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

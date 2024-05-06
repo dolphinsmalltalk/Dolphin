@@ -5,9 +5,13 @@ Event subclass: #WindowsEvent
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 WindowsEvent guid: (GUID fromString: '{87b4c482-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 WindowsEvent comment: ''!
+
 !WindowsEvent categoriesForClass!MVP-Views-Events! !
+
 !WindowsEvent methodsFor!
 
 defaultWindowProcessing
@@ -104,6 +108,7 @@ window: aView message: msgInteger wParam: wInteger lParam: lInteger
 
 wParam
 	^wParam! !
+
 !WindowsEvent categoriesForMethods!
 defaultWindowProcessing!event handling!public! !
 isHandled!public!testing! !
@@ -137,6 +142,7 @@ window: aView message: msgInteger wParam: wInteger lParam: lInteger
 		message: msgInteger
 		wParam: wInteger
 		lParam: lInteger! !
+
 !WindowsEvent class categoriesForMethods!
 window:message:wParam:lParam:!instance creation!public! !
 !

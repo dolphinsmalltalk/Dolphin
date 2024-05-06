@@ -5,9 +5,13 @@ MethodRefactoring subclass: #PushUpMethodRefactoring
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PushUpMethodRefactoring guid: (GUID fromString: '{9124b878-03e9-4e01-abb4-34cf953777f4}')!
+
 PushUpMethodRefactoring comment: ''!
+
 !PushUpMethodRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !PushUpMethodRefactoring methodsFor!
 
 checkBackReferencesTo: aSelector 
@@ -223,6 +227,7 @@ transform
 		pushUpMethods;
 		removePushedUpMethods;
 		removeDuplicateMethods! !
+
 !PushUpMethodRefactoring categoriesForMethods!
 checkBackReferencesTo:!preconditions!public! !
 checkClassVars!preconditions!public! !
@@ -257,6 +262,7 @@ model: aRBNamespace pushUp: selectorCollection from: aClass
 
 pushUp: selectorCollection from: aClass 
 	^self new pushUp: selectorCollection from: aClass! !
+
 !PushUpMethodRefactoring class categoriesForMethods!
 model:pushUp:from:!instance creation!public! !
 pushUp:from:!instance creation!public! !

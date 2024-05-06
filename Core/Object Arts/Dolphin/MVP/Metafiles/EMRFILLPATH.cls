@@ -5,8 +5,11 @@ ENHMETARECORD subclass: #EMRFILLPATH
 	classVariableNames: '_OffsetOf_rclBounds'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 EMRFILLPATH guid: (GUID fromString: '{2fe2f5ac-b812-4a5e-88b9-1b90a426c138}')!
+
 EMRFILLPATH addClassConstant: '_OffsetOf_rclBounds' value: 16r8!
+
 EMRFILLPATH comment: '<EMRFILLPATH> is an <ExternalStructure> class to wrap the struct ''Win32.EMRFILLPATH'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -21,7 +24,9 @@ struct tagEMRFILLPATH {
 	[helpstring("Inclusive-inclusive bounds in device units")] RECTL rclBounds;
 } EMRFILLPATH;
 '!
+
 !EMRFILLPATH categoriesForClass!Win32-Structs! !
+
 !EMRFILLPATH methodsFor!
 
 rclBounds
@@ -37,6 +42,7 @@ rclBounds: aRECT
 		from: ##(_OffsetOf_rclBounds + 1)
 		to: ##(_OffsetOf_rclBounds + RECT basicByteSize)
 		startingAt: 1! !
+
 !EMRFILLPATH categoriesForMethods!
 rclBounds!**compiled accessors**!public! !
 rclBounds:!**compiled accessors**!public! !
@@ -73,6 +79,7 @@ iTypes
 		with: EMR_FILLPATH
 		with: EMR_STROKEANDFILLPATH
 		with: EMR_STROKEPATH! !
+
 !EMRFILLPATH class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

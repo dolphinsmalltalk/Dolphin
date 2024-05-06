@@ -5,14 +5,18 @@ RBAbstractClass subclass: #RBClass
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RBClass guid: (GUID fromString: '{e6a15c71-6c8c-437d-856c-42cd447df930}')!
+
 RBClass comment: 'RBClass represents a Class.
 
 Instance Variables:
 	category	<Symbol>	name of the category that the class should be compiled in
 	classVariableNames	<SequenceableCollection of: Symbol>	class variables defined by the class
 	poolDictionaryNames	<Collection of: Symbol>	pool variables included by the class'!
+
 !RBClass categoriesForClass!Refactory-Model! !
+
 !RBClass methodsFor!
 
 addClassVariable: aString 
@@ -169,6 +173,7 @@ renameClassVariable: oldName to: newName around: aBlock
 sharedPools
 	^self allPoolDictionaryNames 
 		collect: [:each | Smalltalk at: each asSymbol ifAbsent: [Dictionary new]]! !
+
 !RBClass categoriesForMethods!
 addClassVariable:!public!variable accessing! !
 addPoolDictionary:!public!variable accessing! !
@@ -208,6 +213,7 @@ named: aSymbol
 	^(self new)
 		name: aSymbol;
 		yourself! !
+
 !RBClass class categoriesForMethods!
 existingNamed:!instance creation!public! !
 named:!instance creation!public! !

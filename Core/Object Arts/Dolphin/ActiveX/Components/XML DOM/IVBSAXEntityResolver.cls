@@ -5,7 +5,9 @@ IDispatch subclass: #IVBSAXEntityResolver
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
 	classInstanceVariableNames: ''!
+
 IVBSAXEntityResolver guid: (IID fromString: '{0c05d096-f45b-4aca-ad1a-aa0bc25518dc}')!
+
 IVBSAXEntityResolver comment: '<IVBSAXEntityResolver> is a wrapper class for the COM interface ''MSXML2.IVBSAXEntityResolver'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
@@ -31,7 +33,9 @@ interface IVBSAXEntityResolver : IDispatch
 		[out, retval]VARIANT* varInput);
 };
 '!
+
 !IVBSAXEntityResolver categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+
 !IVBSAXEntityResolver methodsFor!
 
 isExtensible
@@ -72,6 +76,7 @@ ResolveEntity: strPublicId strSystemId: strSystemId varInput: varInput
 
 	<virtual stdcall: hresult 8 bstr* bstr* variant*>
 	^self invalidCall: _failureCode! !
+
 !IVBSAXEntityResolver categoriesForMethods!
 isExtensible!**auto generated**!public!testing! !
 isVBCollection!**auto generated**!public!testing! !
@@ -89,6 +94,7 @@ defineFunctions
 		defineFunction: #ResolveEntity:strSystemId:varInput:
 			argumentTypes: 'bstr* bstr* variant*'
 ! !
+
 !IVBSAXEntityResolver class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

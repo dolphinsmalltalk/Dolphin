@@ -5,7 +5,9 @@ Win32Structure subclass: #PARAFORMAT
 	classVariableNames: '_OffsetOf_cTabCount _OffsetOf_dwMask _OffsetOf_dwSize _OffsetOf_dxOffset _OffsetOf_dxRightIndent _OffsetOf_dxStartIndent _OffsetOf_rgxTabs _OffsetOf_wAlignment _OffsetOf_wEffects _OffsetOf_wNumbering'
 	poolDictionaries: 'RichEditConstants'
 	classInstanceVariableNames: ''!
+
 PARAFORMAT guid: (GUID fromString: '{87b4c607-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 PARAFORMAT addClassConstant: '_OffsetOf_cTabCount' value: 16r1A!
 PARAFORMAT addClassConstant: '_OffsetOf_dwMask' value: 16r4!
 PARAFORMAT addClassConstant: '_OffsetOf_dwSize' value: 16r0!
@@ -16,8 +18,11 @@ PARAFORMAT addClassConstant: '_OffsetOf_rgxTabs' value: 16r1C!
 PARAFORMAT addClassConstant: '_OffsetOf_wAlignment' value: 16r18!
 PARAFORMAT addClassConstant: '_OffsetOf_wEffects' value: 16rA!
 PARAFORMAT addClassConstant: '_OffsetOf_wNumbering' value: 16r8!
+
 PARAFORMAT comment: ''!
+
 !PARAFORMAT categoriesForClass!External-Data-Structured-Win32! !
+
 !PARAFORMAT methodsFor!
 
 alignment
@@ -159,6 +164,7 @@ wNumbering: anInteger
 	"Set the receiver's 'wNumbering' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_wNumbering put: anInteger! !
+
 !PARAFORMAT categoriesForMethods!
 alignment!accessing!public! !
 alignment:!accessing!public! !
@@ -216,6 +222,7 @@ packing
 	"Note: The compiler will optimise out the conditional because it is constant."
 
 	^VMConstants.IsWin64 ifTrue: [8] ifFalse: [4]! !
+
 !PARAFORMAT class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

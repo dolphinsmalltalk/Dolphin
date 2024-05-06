@@ -5,7 +5,9 @@ CommonDialogStructure subclass: #PRINTDLGW
 	classVariableNames: '_OffsetOf_dwSize _OffsetOf_flags _OffsetOf_hDC _OffsetOf_hDevMode _OffsetOf_hDevNames _OffsetOf_hInstance _OffsetOf_hPrintTemplate _OffsetOf_hSetupTemplate _OffsetOf_hwndOwner _OffsetOf_lCustData _OffsetOf_lpfnHook _OffsetOf_lpfnSetupHook _OffsetOf_lpPrintTemplateName _OffsetOf_lpSetupTemplateName _OffsetOf_nCopies _OffsetOf_nFromPage _OffsetOf_nMaxPage _OffsetOf_nMinPage _OffsetOf_nToPage'
 	poolDictionaries: 'PrintDialogConstants'
 	classInstanceVariableNames: ''!
+
 PRINTDLGW guid: (GUID fromString: '{87b4c609-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 PRINTDLGW addClassConstant: '_OffsetOf_dwSize' value: 16r0!
 PRINTDLGW addClassConstant: '_OffsetOf_flags' value: 16r14!
 PRINTDLGW addClassConstant: '_OffsetOf_hDC' value: 16r10!
@@ -25,8 +27,11 @@ PRINTDLGW addClassConstant: '_OffsetOf_nFromPage' value: 16r18!
 PRINTDLGW addClassConstant: '_OffsetOf_nMaxPage' value: 16r1E!
 PRINTDLGW addClassConstant: '_OffsetOf_nMinPage' value: 16r1C!
 PRINTDLGW addClassConstant: '_OffsetOf_nToPage' value: 16r1A!
+
 PRINTDLGW comment: ''!
+
 !PRINTDLGW categoriesForClass!External-Data-Structured-Win32! !
+
 !PRINTDLGW methodsFor!
 
 dwSize: anInteger
@@ -113,6 +118,7 @@ ownerView: aView
 	| hWnd |
 	hWnd := aView asParameter.
 	hWnd isNull ifFalse: [self hwndOwner: hWnd].! !
+
 !PRINTDLGW categoriesForMethods!
 dwSize:!**compiled accessors**!public! !
 flags!**compiled accessors**!public! !
@@ -196,6 +202,7 @@ packing
 	PRINTDLG is an old Win16 structure with byte packing."
 
 	^1! !
+
 !PRINTDLGW class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

@@ -5,9 +5,13 @@ AbstractTutorial subclass: #SmalltalkSyntaxTutorial
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SmalltalkSyntaxTutorial guid: (GUID fromString: '{3692cc24-6c4c-4441-a0f0-ea8235ac2d25}')!
+
 SmalltalkSyntaxTutorial comment: 'The default ProfStef tutorial to learn Smalltalk syntax'!
+
 !SmalltalkSyntaxTutorial categoriesForClass!Kernel-Objects! !
+
 !SmalltalkSyntaxTutorial methodsFor!
 
 basicTypesArray
@@ -629,6 +633,7 @@ So let''s go to the first lesson.  Select the text below and click on the ''Eval
 
 ProfStef next.'
 ! !
+
 !SmalltalkSyntaxTutorial categoriesForMethods!
 basicTypesArray!pages!public! !
 basicTypesCharacters!pages!public! !

@@ -5,9 +5,13 @@ TestCaseHelper subclass: #CollectionStreamHelper
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 CollectionStreamHelper guid: (GUID fromString: '{42d3564c-fcc9-4e6e-a28c-7ac21388a210}')!
+
 CollectionStreamHelper comment: ''!
+
 !CollectionStreamHelper categoriesForClass!Unclassified! !
+
 !CollectionStreamHelper methodsFor!
 
 canonicalObject
@@ -22,6 +26,7 @@ testXcontents
 		should: [:r | r = 'this is a string'
 				& r size = self canonicalObject size]
 		conformTo: self protocol selector: #'contents'.! !
+
 !CollectionStreamHelper categoriesForMethods!
 canonicalObject!public! !
 object:!public! !
@@ -33,6 +38,7 @@ testXcontents!public! !
 initialize
 	"CollectionStreamHelper  initialize"
 	super initialize! !
+
 !CollectionStreamHelper class categoriesForMethods!
 initialize!public! !
 !

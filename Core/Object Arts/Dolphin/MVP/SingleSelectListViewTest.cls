@@ -5,9 +5,13 @@ ListViewTest subclass: #SingleSelectListViewTest
 	classVariableNames: ''
 	poolDictionaries: 'ListViewConstants'
 	classInstanceVariableNames: ''!
+
 SingleSelectListViewTest guid: (GUID fromString: '{176c59b9-4286-4753-8320-c9b5da469d9e}')!
+
 SingleSelectListViewTest comment: ''!
+
 !SingleSelectListViewTest categoriesForClass!Unclassified! !
+
 !SingleSelectListViewTest methodsFor!
 
 sortSelections
@@ -35,6 +39,7 @@ testSelectionModeChange
 	self assert: presenter selectionByIndex equals: caret.
 	presenter view selectionsByIndex: #(1 2).
 	self assert: presenter selectionsByIndex equals: #(1)! !
+
 !SingleSelectListViewTest categoriesForMethods!
 sortSelections!private!unit tests! !
 testSelectionModeChange!public!unit tests! !

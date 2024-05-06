@@ -5,9 +5,13 @@ STONWriteReadTest subclass: #STONLargeWriteReadTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 STONLargeWriteReadTest guid: (GUID fromString: '{29be0ac3-431b-4a04-95c4-c3c398ed2ca4}')!
+
 STONLargeWriteReadTest comment: 'STONLargeWriteReadTests test the optimalizations for large structures.'!
+
 !STONLargeWriteReadTest categoriesForClass!STON-Tests-Writer! !
+
 !STONLargeWriteReadTest methodsFor!
 
 materialize: string
@@ -30,6 +34,7 @@ serializeJson: anObject
 			prettyPrint: true;
 			optimizeForLargeStructures; 
 			nextPut: anObject ]! !
+
 !STONLargeWriteReadTest categoriesForMethods!
 materialize:!private! !
 serialize:!private! !

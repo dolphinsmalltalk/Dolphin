@@ -5,7 +5,9 @@ ExternalStructure subclass: #ExternalArray
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalArray guid: (GUID fromString: '{87b4c593-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 ExternalArray comment: 'ExternalArray is a specialized class of <ExternalStructure> to represent contiguous heterogeneous arrays of external types, be they scalar of structured. ExternalArray itself can be used to represent arrays of unsigned 8-bit integers (i.e. bytes). It and its various subclasses can be used for external interfacing tasks, such as where C arrays are expected.
 
 StructureArray is the most general of the subclasses in that it supports arbitrary element types (represented by other ExternalStructures), and can in fact perform the task of the other subclasses such as DWORDArray. The more specialized subclasses do, however, offer much greater efficiency where they are applicable.
@@ -16,7 +18,9 @@ Instance Variables:
 	length		<integer>. Number of elements in the instance.
 
 '!
+
 !ExternalArray categoriesForClass!External-Data-Structured! !
+
 !ExternalArray methodsFor!
 
 = comparand
@@ -413,6 +417,7 @@ with: aCollection do: aDyadicValuable
 			elem initializeAtAddress: addr.
 			aDyadicValuable value: elem value: each.
 			addr + spacing]! !
+
 !ExternalArray categoriesForMethods!
 =!public! !
 anySatisfy:!enumerating!public! !
@@ -533,6 +538,7 @@ withAll: newElements
 	answer := self new: newElements size.
 	newElements inject: 1 into: [:i :elem | answer at: i put: elem. i + 1].
 	^answer! !
+
 !ExternalArray class categoriesForMethods!
 alignment!constants!public! !
 elementClass!constants!public! !

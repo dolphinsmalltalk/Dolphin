@@ -5,11 +5,15 @@ GUID variableByteSubclass: #CLSID
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 CLSID guid: (GUID fromString: '{87b4c643-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 CLSID comment: 'CLSID the class of 128-bit Globally Unique Identifiers (guids) which are specifically used to uniquely identify coclasses (components) in COM.
 
 The CLSIDs of all coclasses registered on your machine can be found under the HKCR\CLSID key in your registry. Each correctly formed entry will have a human (are VB programmers human?) readable form (a ProgID) directly under HKCR.'!
+
 !CLSID categoriesForClass!External-Data-Structured-COM! !
+
 !CLSID methodsFor!
 
 displayOn: aStream
@@ -33,6 +37,7 @@ progID
 	pProgId := COMTaskMemory new.
 	OLELibrary default progIDFromCLSID: self lplpszProgID: pProgId.
 	^(Utf16String fromAddress: pProgId) asString! !
+
 !CLSID categoriesForMethods!
 displayOn:!displaying!public! !
 progID!displaying!public! !
@@ -66,6 +71,7 @@ initialize
 	"
 
 	self extraInstanceSpec: self byteSize! !
+
 !CLSID class categoriesForMethods!
 fromProgID:!instance creation!public! !
 fromString:!instance creation!public! !

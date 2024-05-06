@@ -5,13 +5,17 @@ SmalltalkToolShell subclass: #HistoryBrowser
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 HistoryBrowser guid: (GUID fromString: '{85db197d-2437-4a92-801b-9872fb8a2183}')!
+
 HistoryBrowser comment: 'Abstract superclass for the ClassHistoryBrowser and MethodHistoryBrowser
 
 (C) 2005 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
+
 !HistoryBrowser categoriesForClass!IDB Goodies! !
+
 !HistoryBrowser methodsFor!
 
 about: aString 
@@ -51,6 +55,7 @@ scannerClass
 	"Answer the current scanner class"
 
 	^ChunkFileMethodScanner! !
+
 !HistoryBrowser categoriesForMethods!
 about:!commands!public! !
 initialize!initializing!public! !
@@ -78,6 +83,7 @@ publishedAspects
 uninitialize
 	#(#ClassBrowserAbstract #MethodBrowserShell #Debugger) 
 		do: [:each | (Smalltalk at: each) removeCommandQueryHandler: #queryMethodHistoryCommand:]! !
+
 !HistoryBrowser class categoriesForMethods!
 icon!public! !
 initialize!initializing!private! !

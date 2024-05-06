@@ -5,9 +5,13 @@ GdiplusInitializer subclass: #GdiplusCachedBitmapInitializer
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusCachedBitmapInitializer guid: (GUID fromString: '{615de21c-61b0-11d7-b609-00e0987e8081}')!
+
 GdiplusCachedBitmapInitializer comment: ''!
+
 !GdiplusCachedBitmapInitializer categoriesForClass!Unclassified! !
+
 !GdiplusCachedBitmapInitializer methodsFor!
 
 bitmap: aBitmap graphics: aGraphics
@@ -26,6 +30,7 @@ createHandle
 
 gdiplusConstructorErrorDescription
 	^'Error creating CachedBitmap'! !
+
 !GdiplusCachedBitmapInitializer categoriesForMethods!
 bitmap:graphics:!initializing!private! !
 createHandle!private!realizing/unrealizing! !
@@ -36,6 +41,7 @@ gdiplusConstructorErrorDescription!constants!private! !
 
 bitmap: aBitmap graphics: aGraphics
 	^self new bitmap: aBitmap graphics: aGraphics! !
+
 !GdiplusCachedBitmapInitializer class categoriesForMethods!
 bitmap:graphics:!instance creation!public! !
 !

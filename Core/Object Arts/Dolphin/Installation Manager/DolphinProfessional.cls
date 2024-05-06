@@ -5,9 +5,13 @@ DolphinBaseProduct subclass: #DolphinProfessional
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DolphinProfessional guid: (GUID fromString: '{48eec5bd-f329-471a-99d8-41ffd76f7f98}')!
+
 DolphinProfessional comment: ''!
+
 !DolphinProfessional categoriesForClass!System-Support! !
+
 !DolphinProfessional methodsFor!
 
 contents
@@ -79,6 +83,7 @@ fullName
 	"Answer the full product name associated with the receiver"
 
 	^'Dolphin Smalltalk Professional'! !
+
 !DolphinProfessional categoriesForMethods!
 contents!accessing!public! !
 defaultSystemFolderExtent!private! !
@@ -119,6 +124,7 @@ shortProductName
 	"Answer the abbreviated product name"
 	
 	^'DPRO'! !
+
 !DolphinProfessional class categoriesForMethods!
 developmentClasses!public! !
 productLevel!constants!private! !

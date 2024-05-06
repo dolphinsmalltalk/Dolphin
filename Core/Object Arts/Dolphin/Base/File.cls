@@ -5,9 +5,12 @@ Object subclass: #File
 	classVariableNames: 'AccessFlagsMask CheckModes NoCheckModes OpenFlagsMask ShareModes'
 	poolDictionaries: 'CRTConstants Win32Constants Win32Errors'
 	classInstanceVariableNames: ''!
+
 File guid: (GUID fromString: '{87b4c48a-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 File addClassConstant: 'AccessFlagsMask' value: -16r8!
 File addClassConstant: 'OpenFlagsMask' value: 16r7!
+
 File comment: 'File is a class that exposes low-level (e.g. unbuffered) file I/O operations. It also includes a number of class side methods for manipulating file names and manipulating the file system.
 
 Instance Variables:
@@ -25,7 +28,9 @@ Class Variables:
 	ShareModes		<IdentityDictionary>
 
 '!
+
 !File categoriesForClass!System-Support! !
+
 !File methodsFor!
 
 accessFlags
@@ -517,6 +522,7 @@ writeByte: anIntegerOrCharacter
 	Answer 1 or signal a FileException if the operation fails."
 
 	^self write: (ByteArray with: anIntegerOrCharacter asInteger) count: 1! !
+
 !File categoriesForMethods!
 accessFlags!accessing!private! !
 asParameter!converting!public! !
@@ -1567,6 +1573,7 @@ workingDirectory: aString
 	"Set the current working directory."
 
 	^CRTLibrary default _chdir: aString! !
+
 !File class categoriesForMethods!
 appendPathDelimiter:!filename manipulation!public! !
 attributes:!enquiries!public! !

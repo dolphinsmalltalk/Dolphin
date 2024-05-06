@@ -5,9 +5,13 @@ BasicInspector subclass: #SequenceableCollectionInspector
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SequenceableCollectionInspector guid: (GUID fromString: '{87b4c696-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 SequenceableCollectionInspector comment: 'SequenceableCollectionInspector is a <compositePresenter> that implements a specialised inspect facility onto a <SequenceableCollection>. This allows the collection to be inspected via its integer indices.'!
+
 !SequenceableCollectionInspector categoriesForClass!MVP-Presenters! !
+
 !SequenceableCollectionInspector methodsFor!
 
 getField: anInteger
@@ -37,6 +41,7 @@ setField: anInteger to: anObject
 	anInteger > instSize 
 		ifTrue: [self selfField at: anInteger - instSize put: anObject]
 		ifFalse: [self selfField instVarAt: anInteger put: anObject]! !
+
 !SequenceableCollectionInspector categoriesForMethods!
 getField:!accessing!private! !
 getFieldList!accessing!private! !

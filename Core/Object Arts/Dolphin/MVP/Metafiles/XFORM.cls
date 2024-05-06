@@ -5,13 +5,16 @@ ExternalStructure subclass: #XFORM
 	classVariableNames: '_OffsetOf_eDx _OffsetOf_eDy _OffsetOf_eM11 _OffsetOf_eM12 _OffsetOf_eM21 _OffsetOf_eM22'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 XFORM guid: (GUID fromString: '{94b29afb-539e-4f6e-81d0-ed7aeb51f4ff}')!
+
 XFORM addClassConstant: '_OffsetOf_eDx' value: 16r10!
 XFORM addClassConstant: '_OffsetOf_eDy' value: 16r14!
 XFORM addClassConstant: '_OffsetOf_eM11' value: 16r0!
 XFORM addClassConstant: '_OffsetOf_eM12' value: 16r4!
 XFORM addClassConstant: '_OffsetOf_eM21' value: 16r8!
 XFORM addClassConstant: '_OffsetOf_eM22' value: 16rC!
+
 XFORM comment: '<XFORM> is an <ExternalStructure> class to wrap the struct ''Win32.XFORM'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -30,7 +33,9 @@ struct tagXFORM {
 	float eDy;
 } XFORM;
 '!
+
 !XFORM categoriesForClass!Win32-Structs! !
+
 !XFORM methodsFor!
 
 eDx
@@ -92,6 +97,7 @@ eM22: aFloat
 	"Set the receiver's 'eM22' field to the value of the argument, aFloat"
 
 	bytes floatAtOffset: _OffsetOf_eM22 put: aFloat! !
+
 !XFORM categoriesForMethods!
 eDx!**compiled accessors**!public! !
 eDx:!**compiled accessors**!public! !
@@ -135,6 +141,7 @@ defineFields
 
 getFieldNames
 	^#(#eM11 #eM12 #eM21 #eM22 #eDx #eDy)! !
+
 !XFORM class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

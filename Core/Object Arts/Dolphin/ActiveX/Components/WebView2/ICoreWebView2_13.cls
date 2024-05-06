@@ -5,7 +5,9 @@ ICoreWebView2_12 subclass: #ICoreWebView2_13
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2_13 guid: (IID fromString: '{f75f09a8-667e-4983-88d6-c8773f315e84}')!
+
 ICoreWebView2_13 comment: '`ICoreWebView2_13` is a wrapper class for the COM interface ''WebView2.ICoreWebView2_13'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -26,7 +28,9 @@ interface ICoreWebView2_13 : ICoreWebView2_12
 };
 ```
 '!
+
 !ICoreWebView2_13 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2_13 methodsFor!
 
 get_Profile: value
@@ -37,6 +41,7 @@ get_Profile: value
 
 	<virtual stdcall: hresult 106 ICoreWebView2Profile**>
 	^self invalidCall: _failureCode! !
+
 !ICoreWebView2_13 categoriesForMethods!
 get_Profile:!**auto generated**!COM Interfaces-ICoreWebView2_13!private! !
 !
@@ -51,6 +56,7 @@ defineFunctions
 		defineFunction: #get_Profile:
 			argumentTypes: 'ICoreWebView2Profile**'
 ! !
+
 !ICoreWebView2_13 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

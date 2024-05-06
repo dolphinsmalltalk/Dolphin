@@ -5,7 +5,9 @@ ICoreWebView2Sequence subclass: #ICoreWebView2CookieList
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2CookieList guid: (IID fromString: '{f7f6f714-5d2a-43c6-9503-346ece02d186}')!
+
 ICoreWebView2CookieList comment: '`ICoreWebView2CookieList` is a wrapper class for the COM interface ''WebView2.ICoreWebView2CookieList'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -30,7 +32,9 @@ interface ICoreWebView2CookieList : IUnknown
 };
 ```
 '!
+
 !ICoreWebView2CookieList categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2CookieList methodsFor!
 
 elementClass
@@ -45,6 +49,7 @@ GetValueAtIndex: index value: cookie
 
 	<virtual stdcall: hresult 5 dword ICoreWebView2Cookie**>
 	^self invalidCall: _failureCode! !
+
 !ICoreWebView2CookieList categoriesForMethods!
 elementClass!constants!private! !
 GetValueAtIndex:value:!**auto generated**!COM Interfaces-ICoreWebView2CookieList!private! !
@@ -62,6 +67,7 @@ defineFunctions
 		defineFunction: #GetValueAtIndex:value:
 			argumentTypes: 'dword ICoreWebView2Cookie**'
 ! !
+
 !ICoreWebView2CookieList class categoriesForMethods!
 defineFunctions!initializing!public! !
 !

@@ -5,7 +5,9 @@ ICoreWebView2EventHandler subclass: #ICoreWebView2IsDocumentPlayingAudioChangedE
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2IsDocumentPlayingAudioChangedEventHandler guid: (IID fromString: '{5def109a-2f4b-49fa-b7f6-11c39e513328}')!
+
 ICoreWebView2IsDocumentPlayingAudioChangedEventHandler comment: '`ICoreWebView2IsDocumentPlayingAudioChangedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2IsDocumentPlayingAudioChangedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -27,7 +29,9 @@ interface ICoreWebView2IsDocumentPlayingAudioChangedEventHandler : IUnknown
 };
 ```
 '!
+
 !ICoreWebView2IsDocumentPlayingAudioChangedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2IsDocumentPlayingAudioChangedEventHandler methodsFor!
 
 basicRegister: tokenBuffer
@@ -35,6 +39,7 @@ basicRegister: tokenBuffer
 
 basicUnregister
 	source Remove_IsDocumentPlayingAudioChanged: token! !
+
 !ICoreWebView2IsDocumentPlayingAudioChangedEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
@@ -55,6 +60,7 @@ eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
 	^#isDocumentPlayingAudioChanged! !
+
 !ICoreWebView2IsDocumentPlayingAudioChangedEventHandler class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 eventName!constants!public! !

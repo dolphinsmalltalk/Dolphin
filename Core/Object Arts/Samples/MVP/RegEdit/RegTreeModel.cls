@@ -5,9 +5,13 @@ VirtualTreeModel subclass: #RegTreeModel
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RegTreeModel guid: (GUID fromString: '{87b4c674-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 RegTreeModel comment: 'RegTreeModel implements a <treeModel> representing the hierarchy of <RegKey>s in the Windows system registry. For an example of its use, see the RegEdit sample application.'!
+
 !RegTreeModel categoriesForClass!MVP-Models! !
+
 !RegTreeModel methodsFor!
 
 approxSize
@@ -25,6 +29,7 @@ defaultGetParentBlock
 
 defaultHasChildrenBlock
 	^[:aRegKey | aRegKey notEmpty]! !
+
 !RegTreeModel categoriesForMethods!
 approxSize!accessing!private! !
 defaultGetChildrenBlock!initializing!private! !
@@ -43,6 +48,7 @@ defaultSearchPolicy
 	identical."
 
 	^SearchPolicy equality! !
+
 !RegTreeModel class categoriesForMethods!
 defaultSearchPolicy!accessing!public! !
 !

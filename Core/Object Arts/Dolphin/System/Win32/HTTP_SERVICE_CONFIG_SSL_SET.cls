@@ -5,9 +5,12 @@ HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_SSL_SET
 	classVariableNames: '_OffsetOf_KeyDesc _OffsetOf_ParamDesc'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 HTTP_SERVICE_CONFIG_SSL_SET guid: (GUID fromString: '{f2c9434b-739e-4905-bcf3-d552724f69ff}')!
+
 HTTP_SERVICE_CONFIG_SSL_SET addClassConstant: '_OffsetOf_KeyDesc' value: 16r0!
 HTTP_SERVICE_CONFIG_SSL_SET addClassConstant: '_OffsetOf_ParamDesc' value: 16r4!
+
 HTTP_SERVICE_CONFIG_SSL_SET comment: '<HTTP_SERVICE_CONFIG_SSL_SET> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SET'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -23,7 +26,9 @@ struct tagHTTP_SERVICE_CONFIG_SSL_SET {
 	HTTP_SERVICE_CONFIG_SSL_PARAM ParamDesc;
 } HTTP_SERVICE_CONFIG_SSL_SET;
 '!
+
 !HTTP_SERVICE_CONFIG_SSL_SET categoriesForClass!WinHttpServer-Structs! !
+
 !HTTP_SERVICE_CONFIG_SSL_SET methodsFor!
 
 KeyDesc
@@ -49,6 +54,7 @@ ParamDesc: aHTTP_SERVICE_CONFIG_SSL_PARAM
 		from: ##(_OffsetOf_ParamDesc + 1)
 		to: ##(_OffsetOf_ParamDesc + HTTP_SERVICE_CONFIG_SSL_PARAM basicByteSize)
 		startingAt: 1! !
+
 !HTTP_SERVICE_CONFIG_SSL_SET categoriesForMethods!
 KeyDesc!**compiled accessors**!public! !
 KeyDesc:!**compiled accessors**!public! !
@@ -77,6 +83,7 @@ defineFields
 
 getFieldNames
 	^#(#KeyDesc #ParamDesc)! !
+
 !HTTP_SERVICE_CONFIG_SSL_SET class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

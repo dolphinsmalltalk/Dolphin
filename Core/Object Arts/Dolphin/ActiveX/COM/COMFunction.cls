@@ -5,14 +5,18 @@ COMFunctionAbstract subclass: #COMFunction
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 COMFunction guid: (GUID fromString: '{87b4c466-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 COMFunction comment: 'COMFunction is the generic class of <COMFunctionAbstract> used to represent the majority of COM functions which are forwarded to the implementing <Object> (COM server) rather than the <COMObjectStub> or any other object.
 
 Instance Variables:
 	selector		<Symbol>. Selector to be forwarded.
 	descriptor		<ExternalDescriptor>. Argument type descriptions.
 '!
+
 !COMFunction categoriesForClass!COM-Implementations! !
+
 !COMFunction methodsFor!
 
 callback: stub interface: aCOMInterface withArgumentsAt: anAddress
@@ -49,6 +53,7 @@ selector: aSymbol
 	implementing the COM virtual function when that function is called."
 
 	selector := aSymbol! !
+
 !COMFunction categoriesForMethods!
 callback:interface:withArgumentsAt:!evaluating!private! !
 descriptor!accessing!private! !
@@ -74,6 +79,7 @@ selector: aSymbol descriptor: anExternalDescriptor
 	^self new
 		selector: aSymbol;
 		descriptor: anExternalDescriptor! !
+
 !COMFunction class categoriesForMethods!
 prototype:!instance creation!public! !
 selector:descriptor:!instance creation!public! !

@@ -11,7 +11,6 @@ The package also extends ByteArray to add methods to store instances in Base64 e
 
 package basicPackageVersion: '6.0'.
 
-
 package classNames
 	add: #Base64Codec;
 	yourself.
@@ -41,9 +40,6 @@ Object subclass: #Base64Codec
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
-"Global Aliases"!
-
-
 "Loose Methods"!
 
 !ByteArray methodsFor!
@@ -63,6 +59,7 @@ printBase64On: aStream
 	"Append a base64 string representation of the receiver to the <puttableStream> argument."
 
 	Base64Codec encodeFrom: self readStream onto: aStream! !
+
 !ByteArray categoriesForMethods!
 base64StoreOn:!printing!public! !
 printBase64On:!printing!public! !
@@ -75,6 +72,7 @@ fromBase64String: aString
 	stream := self writeStream: (aString size * 3 bitShift: -2).
 	Base64Codec decodeFrom: aString readStream onto: stream.
 	^stream grabContents! !
+
 !ByteArray class categoriesForMethods!
 fromBase64String:!instance creation!public! !
 !

@@ -5,7 +5,9 @@ Object subclass: #HistoryList
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 HistoryList guid: (GUID fromString: '{87b4c490-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 HistoryList comment: 'HistoryList maintains a list of recent visits which can be navigated back and forth, with similar behaviour to a Web browser''s history list.
 
 Instance Variables:
@@ -15,7 +17,9 @@ Instance Variables:
 	searchPolicy	<SearchPolicy> used to compare items when adding/removing visits.
 
 '!
+
 !HistoryList categoriesForClass!MVP-Presenters-Support! !
+
 !HistoryList methodsFor!
 
 addLast: anObject 
@@ -259,6 +263,7 @@ visit: item
 	(self isEmpty or: [(self searchPolicy compare: self current with: item) not]) 
 		ifTrue: [self addLast: item]
 		ifFalse: [self current: item]! !
+
 !HistoryList categoriesForMethods!
 addLast:!adding!public! !
 clear!operations!public! !
@@ -317,6 +322,7 @@ new: maxAge
 	with capacity for the specified maximum number of items."
 
 	^super new initialize: maxAge! !
+
 !HistoryList class categoriesForMethods!
 icon!constants!public! !
 new!instance creation!public! !

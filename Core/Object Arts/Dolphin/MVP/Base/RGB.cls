@@ -5,13 +5,17 @@ ColorRef subclass: #RGB
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RGB guid: (GUID fromString: '{87b4c53b-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 RGB comment: '`RGB` is the class of colour values specified as individual 8-bit red, green and blue levels encoded as a 32-bit integer with components in B,G,R order (aka a COLORREF). The RGB encoding is used with the older GDI and common control APIs, and cannot represent alpha/translucency, except for the special case of complete transparency (see `ColorNone`).
 
 
 
 '!
+
 !RGB categoriesForClass!Drawing! !
+
 !RGB methodsFor!
 
 alpha: anAlphaInteger
@@ -42,6 +46,7 @@ setCode: anInteger
 	"Private - Set the <integer> value of the ColorRef (i.e. that value passed to API calls to represent the color)."
 
 	code := anInteger bitAnd: 16rFFFFFF! !
+
 !RGB categoriesForMethods!
 alpha:!accessing!public! !
 asRGB!converting!public! !
@@ -107,6 +112,7 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^1! !
+
 !RGB class categoriesForMethods!
 fromInteger:!instance creation!private! !
 fromRgbCode:!instance creation!public! !

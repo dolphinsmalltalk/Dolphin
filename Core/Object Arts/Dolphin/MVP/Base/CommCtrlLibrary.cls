@@ -5,11 +5,15 @@ ExternalLibrary subclass: #CommCtrlLibrary
 	classVariableNames: 'InitFlags'
 	poolDictionaries: 'CommCtrlConstants'
 	classInstanceVariableNames: ''!
+
 CommCtrlLibrary guid: (GUID fromString: '{64674056-3a82-101b-8181-00aa003743d3}')!
+
 CommCtrlLibrary comment: 'CommCtrlLibrary is an <ExternalLibrary> to represent the Windows Common Controls Library, COMCTL32.DLL. This library implements the "newer" (post-Windows 95) controls such as the ListView and TreeView, with recent additions (known collectively as the IE4 controls) such as the DateTimePicker. A notable exception is the RichEdit control, which is implemented in its own library.
 
 Dolphin requires at least version 4.70 of this library (previous versions were supported by some older versions of Dolphin, but you must now upgrade to the latest DLL, which is available as a free download from Microsoft).'!
+
 !CommCtrlLibrary categoriesForClass!External-Libraries-Win32! !
+
 !CommCtrlLibrary methodsFor!
 
 imageList_AddMasked: himl hbmImage: hbmImage crMask: crMask
@@ -309,6 +313,7 @@ loadIconWithScaleDown: hInst pszName: pszName cx: cx cy: cy phico: phico
 
 	<stdcall: sdword LoadIconWithScaleDown handle lpvoid sdword sdword handle*>
 	^self invalidCall: _failureCode! !
+
 !CommCtrlLibrary categoriesForMethods!
 imageList_AddMasked:hbmImage:crMask:!**auto generated**!public!win32 functions-image list! !
 imageList_BeginDrag:iTrack:dxHotspot:dyHotspot:!**auto generated**!public!win32 functions-image list! !
@@ -363,6 +368,7 @@ initFlags
 
 initFlags: anInteger 
 	InitFlags := anInteger! !
+
 !CommCtrlLibrary class categoriesForMethods!
 closeDefault!private!realizing/unrealizing! !
 defaultInitFlags!accessing!private! !

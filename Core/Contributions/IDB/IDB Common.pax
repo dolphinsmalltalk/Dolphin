@@ -19,7 +19,6 @@ Public Domain Freeware
 
 package basicPackageVersion: '7c'.
 
-
 package classNames
 	add: #IdbShell;
 	add: #IdbToolShell;
@@ -53,14 +52,12 @@ SmalltalkToolShell subclass: #IdbShell
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IdbShell subclass: #IdbToolShell
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -75,6 +72,7 @@ idbDefaultIconName
 		composePath: SessionManager current idbResourcesFolder
 		stem: self name
 		extension: 'ico'! !
+
 !ClassDescription categoriesForMethods!
 idbDefaultIconName!constants!idb goodies!public! !
 !
@@ -98,6 +96,7 @@ idbResourcesFolder
 
 	#idbAdded.
 	^FileLocator imageRelative localFileSpecFor: 'Core\Contributions\Idb\Resources'! !
+
 !SessionManager categoriesForMethods!
 idbDocumentationFolder!accessing!idb goodies!public! !
 idbPackageFolder!accessing!idb goodies!public! !

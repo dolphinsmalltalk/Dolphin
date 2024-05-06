@@ -5,9 +5,13 @@ Object subclass: #Bytecode
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Bytecode guid: (GUID fromString: '{189ed4bc-e69b-44e3-8815-7b6d0bdf24b6}')!
+
 Bytecode comment: 'BytecodeRewrite is a private system utility class that supports the <BytecodeRewriter>.'!
+
 !Bytecode categoriesForClass!Kernel-Objects! !
+
 !Bytecode methodsFor!
 
 args
@@ -48,6 +52,7 @@ setInstruction: aSymbol arguments: anArray ip: aSmallInteger
 	args := anArray.
 	ip := aSmallInteger.
 ! !
+
 !Bytecode categoriesForMethods!
 args!accessing!public! !
 instruction!accessing!public! !
@@ -67,6 +72,7 @@ instruction: bytecodeInteger arguments: anArray ip: aSmallInteger
 		setInstruction: bytecodeInteger
 		arguments: anArray
 		ip: aSmallInteger! !
+
 !Bytecode class categoriesForMethods!
 instruction:arguments:ip:!instance creation!public! !
 !

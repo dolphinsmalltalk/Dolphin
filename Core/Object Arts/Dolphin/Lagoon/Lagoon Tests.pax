@@ -4,7 +4,6 @@ package paxVersion: 1;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
-
 package classNames
 	add: #CRTLibraryImportTest;
 	add: #LagoonTests;
@@ -44,19 +43,18 @@ DolphinTest subclass: #CRTLibraryImportTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DolphinTest subclass: #LagoonTests
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DolphinTest subclass: #PackageClosureTests
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -68,6 +66,7 @@ initializeForTests
 	logStream := WriteStream on: (String new: 256).
 	elementStack := OrderedCollection new.
 	potentialAspectGetters := IdentitySet new! !
+
 !ImageStripper categoriesForMethods!
 initializeForTests!initializing!public! !
 !
@@ -77,6 +76,7 @@ initializeForTests!initializing!public! !
 newForTests
 
 	^self new initializeForTests! !
+
 !ImageStripper class categoriesForMethods!
 newForTests!instance creation!public! !
 !

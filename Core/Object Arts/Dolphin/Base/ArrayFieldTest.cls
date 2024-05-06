@@ -5,9 +5,13 @@ ExternalFieldTest subclass: #ArrayFieldTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ArrayFieldTest guid: (GUID fromString: '{56f5e127-bdcd-4629-863f-d4f002b58b46}')!
+
 ArrayFieldTest comment: ''!
+
 !ArrayFieldTest categoriesForClass!Unclassified! !
+
 !ArrayFieldTest methodsFor!
 
 testReadFrom
@@ -25,6 +29,7 @@ testWriteInto
 	subject offset: 4.
 	subject writeInto: struct value: (DWORDArray withAll: #(16r7FFFFFFF 16rFFFFFFFF)) bytes.
 	self assert: struct asArray equals: #(1 16r7FFFFFFF 16rFFFFFFFF 4)! !
+
 !ArrayFieldTest categoriesForMethods!
 testReadFrom!public! !
 testWriteInto!public! !

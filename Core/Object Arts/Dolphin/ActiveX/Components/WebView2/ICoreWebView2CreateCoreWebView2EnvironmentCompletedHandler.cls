@@ -5,7 +5,9 @@ ICoreWebView2CompletedHandler subclass: #ICoreWebView2CreateCoreWebView2Environm
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler guid: (IID fromString: '{4e8a3389-c9d8-4bd2-b6b5-124fee6cc14d}')!
+
 ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler comment: '`ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -27,7 +29,9 @@ interface ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler : IUnknown
 };
 ```
 '!
+
 !ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler class methodsFor!
 
 defineFunctions
@@ -36,6 +40,7 @@ defineFunctions
 	"
 
 	self defineFunction: #Invoke:arg: argumentTypes: 'hresult ICoreWebView2Environment*'! !
+
 !ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler class categoriesForMethods!
 defineFunctions!initializing!public! !
 !

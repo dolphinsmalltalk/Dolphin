@@ -5,13 +5,17 @@ ProfilerPresenter subclass: #ProfilerListsPresenter
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ProfilerListsPresenter guid: (GUID fromString: '{425d0eb5-542e-11d3-998b-d5ca2c3c1d61}')!
+
 ProfilerListsPresenter comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
+
 !ProfilerListsPresenter categoriesForClass!IDB Goodies! !
+
 !ProfilerListsPresenter methodsFor!
 
 createComponents
@@ -79,6 +83,7 @@ update
 
 	(self presenterNamed: 'items') list: (self items select: [:each | self filter: each]).
 	(self presenterNamed: 'items') view layout! !
+
 !ProfilerListsPresenter categoriesForMethods!
 createComponents!initializing!public! !
 filterPercentage:!filtering!public! !

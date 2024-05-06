@@ -5,9 +5,13 @@ DolphinTest subclass: #AXEventSinkTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AXEventSinkTest guid: (GUID fromString: '{cdbe5d5c-f0bc-4943-b0d4-2d5e7e6419ca}')!
+
 AXEventSinkTest comment: ''!
+
 !AXEventSinkTest categoriesForClass!Unclassified! !
+
 !AXEventSinkTest methodsFor!
 
 onAxEvent: aSymbol withArguments: anArray 
@@ -63,6 +67,7 @@ testOneArgs
 					[:each | 
 					each key == #OneVariant: 
 						and: [each value size = 1 and: [each value first asObject = #[0 1 2 3 4 5 6 7 8 9]]]])! !
+
 !AXEventSinkTest categoriesForMethods!
 onAxEvent:withArguments:!private!unit tests! !
 setUp!public!unit tests! !
@@ -75,6 +80,7 @@ testOneArgs!public!unit tests! !
 
 resources
 	^Array with: TestTypelib! !
+
 !AXEventSinkTest class categoriesForMethods!
 resources!public!unit tests! !
 !

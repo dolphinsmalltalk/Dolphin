@@ -5,9 +5,13 @@ DolphinTest subclass: #ResourceIdentifierTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ResourceIdentifierTest guid: (GUID fromString: '{1e647bf5-1b62-4e30-af83-80b9bfbe65ad}')!
+
 ResourceIdentifierTest comment: ''!
+
 !ResourceIdentifierTest categoriesForClass!Unclassified! !
+
 !ResourceIdentifierTest methodsFor!
 
 createResourceNamed: aString for: aView on: aPresenterClass
@@ -92,6 +96,7 @@ testResourceSelector
 	self assert: (rid class nameFromSelector: selector) equals: rid name.
 	rid := ResourceIdentifier class: self class name: '1Default:view'.
 	self assert: (rid class selectorFromName: rid name) identicalTo: #resource_1Defaultview! !
+
 !ResourceIdentifierTest categoriesForMethods!
 createResourceNamed:for:on:!private!unit tests! !
 setUp!private!unit tests! !

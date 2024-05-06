@@ -5,9 +5,13 @@ GdiplusLinearGradientBrushInitializer subclass: #GdiplusLinearGradientBrushFromP
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusLinearGradientBrushFromPointsInitializer guid: (GUID fromString: '{e82f4257-44c1-45f0-8130-6e92d59ab946}')!
+
 GdiplusLinearGradientBrushFromPointsInitializer comment: ''!
+
 !GdiplusLinearGradientBrushFromPointsInitializer categoriesForClass!Unclassified! !
+
 !GdiplusLinearGradientBrushFromPointsInitializer methodsFor!
 
 createHandle
@@ -42,6 +46,7 @@ point1: aPoint1 point2: aPoint2 color1: startColor color2: endColor
 	point2 := aPoint2.
 	color1 := startColor.
 	color2 := endColor! !
+
 !GdiplusLinearGradientBrushFromPointsInitializer categoriesForMethods!
 createHandle!private!realizing/unrealizing! !
 point1:point2:color1:color2:!initializing!private! !

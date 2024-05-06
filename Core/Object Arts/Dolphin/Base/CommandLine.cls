@@ -1,12 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Object
-	subclass: #CommandLine
+Object subclass: #CommandLine
 	instanceVariableNames: 'arguments argv optArg optIndex optOpt optionPrefixChars options parsingArgStream parsingErrors parsingRules'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 CommandLine guid: (GUID fromString: '{4e9d5c42-1049-4f31-862c-cb56225aa08a}')!
+
 CommandLine comment: 'Instances of CommandLine can be used to parse command line options and arguments. 
 
 The basic implementation is guided by and modeled on getopt() in Unix (http://www.gnu.org/software/libc/manual/html_node/Using-Getopt.html), but also has a simpler API. 
@@ -49,7 +50,9 @@ commandLine := CommandLine new
 options := commandLine options.	"a Dictionary(''noArg'' -> nil ''reg'' -> ''arg1'' ''equal'' -> ''arg2'' ''optA'' -> nil ''optB'' -> ''arg3'')"
 arguments := commandLine arguments. "#(''arg4'')"
 '!
+
 !CommandLine categoriesForClass!Kernel-Objects! !
+
 !CommandLine methodsFor!
 
 addOption: aString 
@@ -295,6 +298,7 @@ parseNextOption: aReadStream
 processOptions
 	options ifNil: [self parse].
 	options do: [:each | each key ifNotNil: [:rule | rule value: each value]]! !
+
 !CommandLine categoriesForMethods!
 addOption:!public! !
 addOption:whenPresentDo:!public! !
@@ -338,6 +342,7 @@ options: aString
 	^(self argv: SessionManager current argv)
 		options: aString;
 		yourself! !
+
 !CommandLine class categoriesForMethods!
 argv:!public! !
 new!public! !

@@ -5,15 +5,20 @@ SmalltalkSystemIcon subclass: #SmalltalkSystemFolder
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SmalltalkSystemFolder guid: (GUID fromString: '{87b4c6df-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 SmalltalkSystemFolder comment: ''!
+
 !SmalltalkSystemFolder categoriesForClass!MVP-Models! !
+
 !SmalltalkSystemFolder methodsFor!
 
 isFolder
 	"Answers true if the receiver can hold contents"
 
 	^true! !
+
 !SmalltalkSystemFolder categoriesForMethods!
 isFolder!accessing!public! !
 !
@@ -59,6 +64,7 @@ icon: anIcon description: aStringDescription helpId: helpId
 		description: aStringDescription
 		openBlock: [:presenter :object | presenter expand: object]
 		helpId: helpId! !
+
 !SmalltalkSystemFolder class categoriesForMethods!
 description:!instance creation!public! !
 description:helpId:!instance creation!public! !

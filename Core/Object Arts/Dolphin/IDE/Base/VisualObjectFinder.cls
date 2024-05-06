@@ -5,9 +5,13 @@ InspectorAbstract subclass: #VisualObjectFinder
 	classVariableNames: 'FindNonDolphinWindows'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 VisualObjectFinder guid: (GUID fromString: '{b76a24f7-5ff3-41ac-9aa9-77ebf7b94816}')!
+
 VisualObjectFinder comment: ''!
+
 !VisualObjectFinder categoriesForClass!MVP-Presenters! !
+
 !VisualObjectFinder methodsFor!
 
 browseObject
@@ -149,6 +153,7 @@ visualObjectAt: aPoint
 			| localPoint |
 			localPoint := View desktop mapPoint: aPoint to: viewUnderCursor.
 			viewUnderCursor visualObjectAtPoint: localPoint]! !
+
 !VisualObjectFinder categoriesForMethods!
 browseObject!accessing!private! !
 cancelTrackingAt:!private!tracking! !
@@ -211,6 +216,7 @@ resource_Default_view
 
 unregisterAsToolWith: aSmalltalkSystem
 ! !
+
 !VisualObjectFinder class categoriesForMethods!
 findNonDolphinWindows!accessing!public! !
 findNonDolphinWindows:!accessing!public! !

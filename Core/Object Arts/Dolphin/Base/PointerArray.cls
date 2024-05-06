@@ -5,14 +5,18 @@ UINT_PTRArray subclass: #PointerArray
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PointerArray guid: (GUID fromString: '{fac953e0-dfd2-4e68-8c31-879bba4c50c4}')!
+
 PointerArray comment: 'Specialized <ExternalArray> to represent contiguous single-dimensioned arrays of pointers to arbitrary <ExternalStructure>s.
 
 Instance Variables:
 	elementClass	<ExternalStructure>. Class to represent elements of the array.
 
 '!
+
 !PointerArray categoriesForClass!External-Data-Structured! !
+
 !PointerArray methodsFor!
 
 elementClass
@@ -36,6 +40,7 @@ uncheckedAt: anInteger
 uncheckedAt: anInteger put: newValue 
 	super uncheckedAt: anInteger put: newValue yourAddress.
 	^newValue! !
+
 !PointerArray categoriesForMethods!
 elementClass!accessing!public! !
 elementClass:!accessing!private! !
@@ -65,6 +70,7 @@ length: anInteger elementClass: elementClass
 	of sufficient size to contain anInteger elements of type, elementClass."
 
 	^(self length: anInteger elementSize: self elementSize) elementClass: elementClass! !
+
 !PointerArray class categoriesForMethods!
 fromAddress:length:elementClass:!instance creation!public! !
 length:elementClass:!instance creation!public! !

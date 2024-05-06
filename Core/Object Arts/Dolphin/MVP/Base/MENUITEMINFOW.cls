@@ -5,7 +5,9 @@ Win32Structure subclass: #MENUITEMINFOW
 	classVariableNames: '_OffsetOf_cch _OffsetOf_dwItemData _OffsetOf_dwSize _OffsetOf_dwTypeData _OffsetOf_fMask _OffsetOf_fState _OffsetOf_fType _OffsetOf_hbmpChecked _OffsetOf_hbmpItem _OffsetOf_hbmpUnchecked _OffsetOf_hSubMenu _OffsetOf_wID'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MENUITEMINFOW guid: (GUID fromString: '{d9f31567-d705-4885-9ed7-f92ae9fefbf2}')!
+
 MENUITEMINFOW addClassConstant: '_OffsetOf_cch' value: 16r28!
 MENUITEMINFOW addClassConstant: '_OffsetOf_dwItemData' value: 16r20!
 MENUITEMINFOW addClassConstant: '_OffsetOf_dwSize' value: 16r0!
@@ -18,10 +20,13 @@ MENUITEMINFOW addClassConstant: '_OffsetOf_hbmpItem' value: 16r2C!
 MENUITEMINFOW addClassConstant: '_OffsetOf_hbmpUnchecked' value: 16r1C!
 MENUITEMINFOW addClassConstant: '_OffsetOf_hSubMenu' value: 16r14!
 MENUITEMINFOW addClassConstant: '_OffsetOf_wID' value: 16r10!
+
 MENUITEMINFOW comment: '<MENUITEMINFOA> is an <ExternalStructure> class to wrap the Win32 structure of the same name.
 
 See the Win32 SDK documentation for further information.'!
+
 !MENUITEMINFOW categoriesForClass!External-Data-Structured-Win32! !
+
 !MENUITEMINFOW methodsFor!
 
 basicText: aString
@@ -190,6 +195,7 @@ wID: anInteger
 	"Set the receiver's 'wID' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_wID put: anInteger! !
+
 !MENUITEMINFOW categoriesForMethods!
 basicText:!accessing!private! !
 cch:!**compiled accessors**!public! !
@@ -254,6 +260,7 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #fMask #fType #fState #wID #hSubMenu #hbmpChecked #hbmpUnchecked #dwItemData #dwTypeData #cch #hbmpItem)! !
+
 !MENUITEMINFOW class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

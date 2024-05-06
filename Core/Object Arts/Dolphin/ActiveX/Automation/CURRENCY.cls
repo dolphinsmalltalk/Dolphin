@@ -5,14 +5,19 @@ OLEStructure subclass: #CURRENCY
 	classVariableNames: '_OffsetOf_cy'
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
+
 CURRENCY guid: (GUID fromString: '{bbe7e662-de98-4ae2-b820-bae3e3c6127a}')!
+
 CURRENCY addClassConstant: '_OffsetOf_cy' value: 16r0!
+
 CURRENCY comment: 'CURRENCY is an <ExternalStructure> class to represent the Automation structure of the same name.
 
 CURRENCY is a 64-bit fractional value scaled by 10000 to give 4 decimal places. It provides limited scaled decimal capabilities for simple scripting languages such as VB. It corresponds to the variant type VT_CY.
 
 CURRENCYs are mapped to/from Dolphin''s <ScaledDecimal> objects, although of course the latter has unlimited  range, and therefore many ScaledDecimals cannot be represented in a CURRENCY.'!
+
 !CURRENCY categoriesForClass!External-Data-Structured-COM! !
+
 !CURRENCY methodsFor!
 
 asVariant
@@ -43,6 +48,7 @@ value: newValue
 	"Set the receiver's value to the <Number>, newValue."
 
 	self cy: (newValue * 10000) asInteger! !
+
 !CURRENCY categoriesForMethods!
 asVariant!converting!public! !
 cy!**compiled accessors**!public! !
@@ -97,6 +103,7 @@ vt
 	type when represented in a <VARIANT>."
 
 	^VT_CY! !
+
 !CURRENCY class categoriesForMethods!
 defineFields!public!template definition! !
 epsilon!constants!public! !

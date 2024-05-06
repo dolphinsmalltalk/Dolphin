@@ -6,7 +6,6 @@ package paxVersion: 1;
 
 package basicPackageVersion: '6.1'.
 
-
 package classNames
 	add: #GdiplusImageView;
 	yourself.
@@ -46,9 +45,6 @@ ImageViewAbstract subclass: #GdiplusImageView
 	poolDictionaries: 'GdiplusConstants'
 	classInstanceVariableNames: ''!
 
-"Global Aliases"!
-
-
 "Loose Methods"!
 
 !Bitmap methodsFor!
@@ -67,6 +63,7 @@ drawOnGraphics: aGraphics at: dstOrigin extent: dstExtent from: srcOrigin extent
 				extent: dstExtent
 				from: srcOrigin
 				extent: srcExtent]! !
+
 !Bitmap categoriesForMethods!
 drawOnGraphics:at:extent:from:extent:unit:attributes:!drawing-gdiplus!public! !
 !
@@ -87,6 +84,7 @@ drawOnGraphics: aGraphics at: dstOrigin extent: dstExtent from: srcOrigin extent
 				drawOn: aCanvas
 				at: dstOrigin
 				extent: dstExtent]! !
+
 !Icon categoriesForMethods!
 drawOnGraphics:at:extent:from:extent:unit:attributes:!drawing-gdiplus!public! !
 !
@@ -103,6 +101,7 @@ drawOnGraphics: aGraphics at: dstOrigin extent: dstExtent from: srcOrigin extent
 
 	Notification 
 		signal: 'Gdiplus drawOnGraphics not (yet) implement for ' , self class name displayString! !
+
 !Image categoriesForMethods!
 drawOnGraphics:at:extent:from:extent:unit:attributes:!drawing-gdiplus!public! !
 !
@@ -118,6 +117,7 @@ resource_Gdiplus_view
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.GdiplusImageView) 34 28 nil nil 34 2 8 1140850944 1 416 721990 2 ##(Smalltalk.ValueHolder) nil false 1310726 ##(Smalltalk.EqualitySearchPolicy) nil nil nil 5 nil nil nil 416 nil 8 4294902331 852486 ##(Smalltalk.NullConverter) nil nil nil nil #normal 1 590342 ##(Smalltalk.Rectangle) 328198 ##(Smalltalk.Point) 1 1 626 1 1 nil nil #none nil nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 626 1 1 626 201 201 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 100 0 0 0 100 0 0 0] 8 #() 626 193 193 nil 29 )! !
+
 !ImagePresenter class categoriesForMethods!
 resource_Gdiplus_view!public!resources-views! !
 !
@@ -138,6 +138,7 @@ drawOnGraphics: aGraphics at: dstOrigin extent: dstExtent from: srcOrigin extent
 				drawOn: aCanvas
 				at: dstOrigin
 				extent: dstExtent]! !
+
 !OLEPicture categoriesForMethods!
 drawOnGraphics:at:extent:from:extent:unit:attributes:!drawing-gdiplus!public! !
 !

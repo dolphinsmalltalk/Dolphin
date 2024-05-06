@@ -5,9 +5,13 @@ IPersistStream subclass: #IPersistStreamInit
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IPersistStreamInit guid: (IID fromString: '{7fd52380-4e07-101b-ae2d-08002b2ec713}')!
+
 IPersistStreamInit comment: ''!
+
 !IPersistStreamInit categoriesForClass!COM-Interfaces! !
+
 !IPersistStreamInit methodsFor!
 
 initNew
@@ -33,6 +37,7 @@ InitNew
 
 	<virtual stdcall: sdword 9>
 	^self invalidCall: _failureCode! !
+
 !IPersistStreamInit categoriesForMethods!
 initNew!initializing!public! !
 InitNew!COM Interfaces-IPersistStreamInit!public! !
@@ -49,6 +54,7 @@ defineFunctions
 
 	self
 		defineFunction: #InitNew returnType: 'sdword'! !
+
 !IPersistStreamInit class categoriesForMethods!
 defineFunctions!initializing!public! !
 !

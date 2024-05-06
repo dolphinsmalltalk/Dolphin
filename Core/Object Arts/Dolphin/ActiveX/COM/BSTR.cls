@@ -5,8 +5,11 @@ ExternalAddress variableByteSubclass: #BSTR
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 BSTR guid: (GUID fromString: '{87b4c519-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 BSTR isIndirection: true!
+
 BSTR comment: 'BSTR is an external structure to represent the OLE Automation string type of the same name.
 
 BSTR is defined as:
@@ -19,7 +22,9 @@ BSTRs are both null-terminated AND counted. They store their length as a 32-bit 
 BSTRs are stored in memory managed by the OLE Automation Library, which enables ownership to be passed from one function to another:  (down in the depths of OLEAut32.DLL the SysXXX functions map onto the services of the COM task memory allocator). Where a function is expecting a BSTR argument, then a BSTR allocated with SysAllocString must be passed rather than an ordinary Unicode string. The BSTR class can be used to create suitable parameters from other Smalltalk <readableString> classes.
 
 BSTRs use finalization to safely manage the sys. alloc''d string, but they may be explicitly free''d too.'!
+
 !BSTR categoriesForClass!External-Data-Unstructured! !
+
 !BSTR methodsFor!
 
 asAnsiString
@@ -171,6 +176,7 @@ value: newValue
 			bstr := newValue asBSTR.
 			bstr == newValue ifTrue: [bstr := bstr copy]].
 	super value: (bstr beUnfinalizable; yourself)! !
+
 !BSTR categoriesForMethods!
 asAnsiString!converting!public! !
 asBSTR!converting!public! !
@@ -265,6 +271,7 @@ uninitialize
 
 	VMLibrary default registryAt: #BSTR put: nil.
 	SessionManager current removeEventsTriggeredFor: self! !
+
 !BSTR class categoriesForMethods!
 basicNew!instance creation!private! !
 clear:!public!realizing/unrealizing! !

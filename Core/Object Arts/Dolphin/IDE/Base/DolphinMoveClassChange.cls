@@ -5,9 +5,13 @@ RefactoryClassChange subclass: #DolphinMoveClassChange
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DolphinMoveClassChange guid: (GUID fromString: '{bc59a55b-44a6-46b0-bead-8e1fbf05e2a9}')!
+
 DolphinMoveClassChange comment: 'DolphinMoveClassChange is a Dolphin specific class change that invokes the ClassBuilder to move a class under a new superclass.'!
+
 !DolphinMoveClassChange categoriesForClass!Refactory-Change Objects! !
+
 !DolphinMoveClassChange methodsFor!
 
 = anAddClassChange 
@@ -47,6 +51,7 @@ superclassName
 
 superclassName: aString 
 	superclassName := aString asSymbol! !
+
 !DolphinMoveClassChange categoriesForMethods!
 =!comparing!public! !
 asUndoOperation!converting!public! !
@@ -69,6 +74,7 @@ moveClassNamed: aSymbol toSuperClassNamed: superSymbol
 	^(self new changeClassName: aSymbol)
 		superclassName: superSymbol;
 		yourself! !
+
 !DolphinMoveClassChange class categoriesForMethods!
 move:toSuperclass:!instance creation!public! !
 moveClassNamed:toSuperClassNamed:!instance creation!public! !

@@ -5,10 +5,15 @@ Magnitude subclass: #ArithmeticValue
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ArithmeticValue guid: (GUID fromString: '{87b4c64f-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 ArithmeticValue isAbstract: true!
+
 ArithmeticValue comment: ''!
+
 !ArithmeticValue categoriesForClass!Magnitude-General! !
+
 !ArithmeticValue methodsFor!
 
 - operand
@@ -475,6 +480,7 @@ understandsArithmetic
 	All Numbers do."
 
 	^true! !
+
 !ArithmeticValue categoriesForMethods!
 -!arithmetic!public! !
 %!arithmetic!public! !
@@ -556,6 +562,7 @@ zero
 	"Answer the receiver's representation of zero."
 
 	^self subclassResponsibility! !
+
 !ArithmeticValue class categoriesForMethods!
 one!instance creation!public! !
 zero!instance creation!public! !

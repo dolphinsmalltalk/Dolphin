@@ -5,13 +5,17 @@ BrowserEnvironmentWrapper subclass: #ClassEnvironment
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ClassEnvironment guid: (GUID fromString: '{6ced2bfc-a2ca-479f-9eef-d74b2baa9d59}')!
+
 ClassEnvironment comment: 'A ClassEnvironment defines a slice of the system that includes all the classes, methods, resources, etc in a particular set of classes.
 
 Instance Variables:
 	classes	<Collection of: Symbol>		the class names (not metaclasses)
 	metaClasses	<Collection of: Symbol>	the class names for the metaclasses that are selected'!
+
 !ClassEnvironment categoriesForClass!Refactory-Environments! !
+
 !ClassEnvironment methodsFor!
 
 addClass: aClass 
@@ -120,6 +124,7 @@ storeOn: aStream
 				class := Smalltalk at: each ifAbsent: [nil].
 				class notNil ifTrue: [sum add: class class].
 				sum])))'! !
+
 !ClassEnvironment categoriesForMethods!
 addClass:!adding!public! !
 classes:!initialize/release!public! !
@@ -145,6 +150,7 @@ storeOn:!printing!public! !
 onEnvironment: anEnvironment classes: aCollection
 	^(self onEnvironment: anEnvironment)
 		classes: aCollection; yourself! !
+
 !ClassEnvironment class categoriesForMethods!
 onEnvironment:classes:!instance creation!public! !
 !

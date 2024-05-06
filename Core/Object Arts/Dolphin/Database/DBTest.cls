@@ -5,10 +5,15 @@ DolphinTest subclass: #DBTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DBTest guid: (GUID fromString: '{13e9a82d-7aae-43aa-864a-a15706b23ae3}')!
+
 DBTest isAbstract: true!
+
 DBTest comment: ''!
+
 !DBTest categoriesForClass!Unclassified! !
+
 !DBTest methodsFor!
 
 databaseResource
@@ -47,6 +52,7 @@ testIsEmpty
 	self assert: results isEmpty.
 	results := connection query: 'select CategoryID, CategoryName from categories where CategoryID = 1'.
 	self deny: results isEmpty! !
+
 !DBTest categoriesForMethods!
 databaseResource!helpers!private! !
 employeeNames!helpers!private! !

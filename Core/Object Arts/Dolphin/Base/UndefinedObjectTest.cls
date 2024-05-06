@@ -5,12 +5,16 @@ DolphinTest subclass: #UndefinedObjectTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 UndefinedObjectTest guid: (GUID fromString: '{9c1b04d8-3338-4b9a-b561-5482f01a3bae}')!
+
 UndefinedObjectTest comment: 'This is the unit test for the class UndefinedObject. Unit tests are a good way to exercise the functionality of your system in a repeatable and automatic manner. They are therefore recommended if you plan to release anything. For more information, see: 
 	- http://www.c2.com/cgi/wiki?UnitTest
 	- http://minnow.cc.gatech.edu/squeak/1547
 	- the sunit class category'!
+
 !UndefinedObjectTest categoriesForClass!Tests-Kernel-Objects! !
+
 !UndefinedObjectTest methodsFor!
 
 testClone
@@ -59,6 +63,7 @@ testStoreOn
 	nil storeOn: stream.
 	string := stream contents.
 	self assert: (Compiler evaluate: string) equals: nil! !
+
 !UndefinedObjectTest categoriesForMethods!
 testClone!public!testing / copying! !
 testDeepCopy!public!testing / copying! !

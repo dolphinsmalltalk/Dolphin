@@ -5,7 +5,9 @@ IUnknown subclass: #ADODBRecordsetEventsVt
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
+
 ADODBRecordsetEventsVt guid: (IID fromString: '{00001403-0000-0010-8000-00aa006d2ea4}')!
+
 ADODBRecordsetEventsVt comment: '`ADODBRecordsetEventsVt` is a wrapper class for the COM interface ''ADODB.RecordsetEventsVt'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -88,7 +90,9 @@ interface RecordsetEventsVt : IUnknown
 };
 ```
 '!
+
 !ADODBRecordsetEventsVt categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
+
 !ADODBRecordsetEventsVt methodsFor!
 
 endOfRecordset: fMoreData adStatus: adStatus pRecordset: pRecordset
@@ -345,6 +349,7 @@ WillMove: adReason adStatus: adStatus pRecordset: pRecordset
 
 	<virtual stdcall: hresult 10 sdword sdword* ADODB_Recordset*>
 	^self invalidCall: _failureCode! !
+
 !ADODBRecordsetEventsVt categoriesForMethods!
 endOfRecordset:adStatus:pRecordset:!**auto generated**!methods!public! !
 EndOfRecordset:adStatus:pRecordset:!**auto generated**!COM Interfaces-RecordsetEventsVt!private! !
@@ -400,6 +405,7 @@ defineFunctions
 		defineFunction: #FetchComplete:adStatus:pRecordset:
 			argumentTypes: 'ADODBError* sdword* ADODB_Recordset*'
 ! !
+
 !ADODBRecordsetEventsVt class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

@@ -5,9 +5,13 @@ StBlockScope subclass: #StOptimizedBlockScope
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StOptimizedBlockScope guid: (GUID fromString: '{c2ebf9a0-55a4-4d52-922c-923b6953482c}')!
+
 StOptimizedBlockScope comment: ''!
+
 !StOptimizedBlockScope categoriesForClass!Kernel-Objects! !
+
 !StOptimizedBlockScope methodsFor!
 
 hasFarReturn
@@ -28,6 +32,7 @@ realScope
 	the receiver will actually be allocated."
 
 	^self outer realScope! !
+
 !StOptimizedBlockScope categoriesForMethods!
 hasFarReturn!accessing!public! !
 markFarReturn!public!visiting! !

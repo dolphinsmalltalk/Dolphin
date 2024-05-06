@@ -5,9 +5,13 @@ Error subclass: #HRESULTError
 	classVariableNames: 'FacilityClasses'
 	poolDictionaries: 'FacilityCodes'
 	classInstanceVariableNames: ''!
+
 HRESULTError guid: (GUID fromString: '{87b4c55a-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 HRESULTError comment: ''!
+
 !HRESULTError categoriesForClass!System-Exception Handling! !
+
 !HRESULTError methodsFor!
 
 _descriptionArguments
@@ -71,6 +75,7 @@ statusCode
 	"Answer the error status code from the receiver's details."
 
 	^self hresult statusCode! !
+
 !HRESULTError categoriesForMethods!
 _descriptionArguments!displaying!public! !
 _descriptionFormat!displaying!public! !
@@ -146,6 +151,7 @@ unregisterFacilityClass: anExceptionClass
 
 	FacilityClasses removeKey: (FacilityClasses keyAtValue: anExceptionClass ifAbsent: [^self])
 ! !
+
 !HRESULTError class categoriesForMethods!
 fromHRESULT:!instance creation!public! !
 fromInteger:!instance creation!public! !

@@ -5,9 +5,13 @@ GdiplusBase subclass: #GdiplusFont
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusFont guid: (GUID fromString: '{5b5d4ae1-5c87-11d7-b609-00e0987e8081}')!
+
 GdiplusFont comment: 'GdiplusFont encapsulates the characteristics, such as family, height, size, and style (or combination of styles), of a specific font. A GdiplusFont is used when drawing strings on a GdiplusGraphics.'!
+
 !GdiplusFont categoriesForClass!Unclassified! !
+
 !GdiplusFont methodsFor!
 
 basicFree
@@ -74,6 +78,7 @@ unit
 	(status := GdiplusLibrary default gdipGetFontUnit: self asParameter unit: unit) = Ok 
 		ifFalse: [GdiplusError signal: 'GdipGetFontUnit failed' with: status].
 	^unit value! !
+
 !GdiplusFont categoriesForMethods!
 basicFree!private!realizing/unrealizing! !
 emSize!accessing!public! !
@@ -182,6 +187,7 @@ new
 	"Answer a new initialized instance of the receiver for the default font."
 
 	^self fontFamily: GdiplusFontFamily genericSansSerif pointSize: Font default pointSize! !
+
 !GdiplusFont class categoriesForMethods!
 exampleGdipFontHeight!examples!public!sunit! !
 fontFamily:emSize:!instance creation!public! !

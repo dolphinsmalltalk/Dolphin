@@ -5,9 +5,13 @@ SmalltalkToolShell subclass: #PoolDictionariesShell
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PoolDictionariesShell guid: (GUID fromString: '{558cac4a-ac5c-43bf-8f8e-247bb36208f5}')!
+
 PoolDictionariesShell comment: ''!
+
 !PoolDictionariesShell categoriesForClass!MVP-Presenters! !
+
 !PoolDictionariesShell methodsFor!
 
 addEntry
@@ -130,6 +134,7 @@ selectionOrNil
 
 selectionOrNil: aPoolConstantsDictionary
 	dictionariesPresenter selectionOrNil: aPoolConstantsDictionary! !
+
 !PoolDictionariesShell categoriesForMethods!
 addEntry!public! !
 addPool!commands!public! !
@@ -196,6 +201,7 @@ resource_Default_view
 
 toolsFolderHelpId
 	^10550! !
+
 !PoolDictionariesShell class categoriesForMethods!
 defaultModel!public! !
 displayOn:!public! !

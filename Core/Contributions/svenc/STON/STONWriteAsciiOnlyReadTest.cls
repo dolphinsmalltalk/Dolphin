@@ -5,9 +5,13 @@ STONWriteReadTest subclass: #STONWriteAsciiOnlyReadTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 STONWriteAsciiOnlyReadTest guid: (GUID fromString: '{4c42c50a-a5ee-46fb-865d-0ad651fd33ee}')!
+
 STONWriteAsciiOnlyReadTest comment: 'Unit tests for writing ASCII only'!
+
 !STONWriteAsciiOnlyReadTest categoriesForClass!STON-Tests-Writer! !
+
 !STONWriteAsciiOnlyReadTest methodsFor!
 
 serialize: anObject
@@ -23,6 +27,7 @@ serializeJson: anObject
 			on: stream; 
 			asciiOnly: true;
 			nextPut: anObject ]! !
+
 !STONWriteAsciiOnlyReadTest categoriesForMethods!
 serialize:!private! !
 serializeJson:!private! !

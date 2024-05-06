@@ -9,7 +9,6 @@ This package is part of the Dolphin Smalltalk Model View Presenter user-interfac
 
 package basicPackageVersion: '6.0'.
 
-
 package classNames
 	add: #FontPresenter;
 	add: #FontView;
@@ -37,16 +36,12 @@ ValuePresenter subclass: #FontPresenter
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StaticView subclass: #FontView
 	instanceVariableNames: 'previewText'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

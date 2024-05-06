@@ -5,9 +5,13 @@ StProgramNode subclass: #StExternalArgTypeNode
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StExternalArgTypeNode guid: (GUID fromString: '{49763c2e-001b-471d-9f27-1acec000b58d}')!
+
 StExternalArgTypeNode comment: ''!
+
 !StExternalArgTypeNode categoriesForClass!System-Compiler! !
+
 !StExternalArgTypeNode methodsFor!
 
 acceptVisitor: aProgramNodeVisitor
@@ -42,6 +46,7 @@ typeOrdinal
 
 typeOrdinal: anInteger 
 	typeOrdinal := anInteger! !
+
 !StExternalArgTypeNode categoriesForMethods!
 acceptVisitor:!public!visitor! !
 indirections!accessing!private! !

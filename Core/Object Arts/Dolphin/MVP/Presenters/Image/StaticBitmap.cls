@@ -5,9 +5,13 @@ StaticImage subclass: #StaticBitmap
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StaticBitmap guid: (GUID fromString: '{87b4c741-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 StaticBitmap comment: 'StaticBitmap is a <valueView> class for a Window STATIC control using the SS_BITMAP style. The <valueModel> associated with a StaticBitmap must always yield a <Bitmap> value when mapped through the installed type converter. A StaticBitmap will normally be used in conjunction with a <ImagePresenter>.'!
+
 !StaticBitmap categoriesForClass!MVP-Views! !
+
 !StaticBitmap methodsFor!
 
 defaultWindowStyle
@@ -21,6 +25,7 @@ setImage: aBitmapOrNil
 
 	image := aBitmapOrNil notNil ifTrue: [aBitmapOrNil freeDC; yourself].
 	self sendMessage: STM_SETIMAGE wParam: IMAGE_BITMAP lParam: image asParameter! !
+
 !StaticBitmap categoriesForMethods!
 defaultWindowStyle!constants!private! !
 setImage:!accessing!private! !

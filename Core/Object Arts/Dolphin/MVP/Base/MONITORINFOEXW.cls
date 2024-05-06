@@ -5,8 +5,11 @@ MONITORINFO subclass: #MONITORINFOEXW
 	classVariableNames: '_OffsetOf_szDevice'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MONITORINFOEXW guid: (GUID fromString: '{b51d5aa0-7d88-48dc-8c48-36240b05b9ad}')!
+
 MONITORINFOEXW addClassConstant: '_OffsetOf_szDevice' value: 16r28!
+
 MONITORINFOEXW comment: '`MONITORINFOEXW` is an `External.Structure` class to wrap the struct ''Win32.MONITORINFOEXW'' from type information in the ''Win32 API'' library.
 
 The type library contains no documentation for this struct
@@ -25,13 +28,16 @@ struct tagMONITORINFOEXW {
 } MONITORINFOEXW;
 ```
 '!
+
 !MONITORINFOEXW categoriesForClass!Win32-Structs! !
+
 !MONITORINFOEXW methodsFor!
 
 szDevice
 	"Answer the <Utf16String> value of the receiver's 'szDevice' field."
 
 	^Utf16String fromAddress: bytes yourAddress + _OffsetOf_szDevice! !
+
 !MONITORINFOEXW categoriesForMethods!
 szDevice!**compiled accessors**!public! !
 !
@@ -62,6 +68,7 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #rcMonitor #rcWork #dwFlags #szDevice)! !
+
 !MONITORINFOEXW class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

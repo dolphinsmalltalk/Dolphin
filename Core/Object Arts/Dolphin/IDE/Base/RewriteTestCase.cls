@@ -5,9 +5,13 @@ TestCase subclass: #RewriteTestCase
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RewriteTestCase guid: (GUID fromString: '{6a77c1e6-2f15-4abc-9442-261f617e5ba1}')!
+
 RewriteTestCase comment: ''!
+
 !RewriteTestCase categoriesForClass!Unclassified! !
+
 !RewriteTestCase methodsFor!
 
 setUp
@@ -42,6 +46,7 @@ testTransformationRule
 				name: 'Transform'.
 	SmalllintChecker runRule: rule onEnvironment: env.
 	self deny: rule changes changes isEmpty! !
+
 !RewriteTestCase categoriesForMethods!
 setUp!public!unit tests! !
 testEnvironment!public!unit tests! !

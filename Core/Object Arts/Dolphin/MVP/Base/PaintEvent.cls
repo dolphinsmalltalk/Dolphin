@@ -5,9 +5,13 @@ WindowsEvent subclass: #PaintEvent
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PaintEvent guid: (GUID fromString: '{87b4c550-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 PaintEvent comment: ''!
+
 !PaintEvent categoriesForClass!Events!MVP-Views-Events! !
+
 !PaintEvent methodsFor!
 
 canvas
@@ -42,6 +46,7 @@ window: aView wParam: anInteger hdc: dcExternalHandle paintStruct: aPAINTSTRUCT
 	lParam := 0.
 	hdc := dcExternalHandle.
 	paintStruct := aPAINTSTRUCT! !
+
 !PaintEvent categoriesForMethods!
 canvas!accessing!public! !
 hdc!accessing!public! !
@@ -60,6 +65,7 @@ window: aView wParam: wParam hdc: hdc paintStruct: ps
 		wParam: wParam
 		hdc: hdc
 		paintStruct: ps! !
+
 !PaintEvent class categoriesForMethods!
 window:wParam:hdc:paintStruct:!instance creation!public! !
 !

@@ -5,13 +5,17 @@ IEnumUnknown subclass: #IEnumMoniker
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IEnumMoniker guid: (IID fromString: '{00000102-0000-0000-c000-000000000046}')!
+
 IEnumMoniker comment: '<IEnumMoniker> is a wrapper class for the custom interface ''OBJIDL.IEnumMoniker'' generated from type information in the ''ObjIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface.
 
 WARNING: This comment was automatically generated from the interface''s type information and any changes made here may be overwritten the next time this wrapper class is so generated.'!
+
 !IEnumMoniker categoriesForClass!COM-Interfaces! !
+
 !IEnumMoniker class methodsFor!
 
 defineFunctions
@@ -25,6 +29,7 @@ elementClass
 	"Answer the class of element enumerated by the receiver."
 
 	^IMoniker! !
+
 !IEnumMoniker class categoriesForMethods!
 defineFunctions!initializing!public! !
 elementClass!constants!public! !

@@ -5,9 +5,13 @@ GdiplusInitializerTests subclass: #GdiplusImageFromIStreamInitializerTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusImageFromIStreamInitializerTest guid: (GUID fromString: '{fd12183c-22dc-4ca1-8ebc-e1d9e66485c2}')!
+
 GdiplusImageFromIStreamInitializerTest comment: ''!
+
 !GdiplusImageFromIStreamInitializerTest categoriesForClass!Unclassified! !
+
 !GdiplusImageFromIStreamInitializerTest methodsFor!
 
 gdipLoadImageFromStream: stream image: image 
@@ -31,6 +35,7 @@ testIsPersistent
 	"Cant persist an <IStream>"
 
 	self deny: model isPersistent! !
+
 !GdiplusImageFromIStreamInitializerTest categoriesForMethods!
 gdipLoadImageFromStream:image:!accessing!public! !
 setUp!public!setup! !

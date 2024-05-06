@@ -5,7 +5,9 @@ COMInterface subclass: #IUnknown
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IUnknown guid: (IID fromString: '{00000000-0000-0000-c000-000000000046}')!
+
 IUnknown comment: '`IUnknown` is a wrapper class for the COM interface ''stdole.IUnknown'' generated from type information in the ''OLE Automation'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -33,7 +35,9 @@ interface IUnknown
 	unsigned long __stdcall Release();
 };
 ```'!
+
 !IUnknown categoriesForClass!COM-Interfaces! !
+
 !IUnknown methodsFor!
 
 addRef 
@@ -83,6 +87,7 @@ Release
 
 	<virtual stdcall: dword 3>
 	^self invalidCall: _failureCode! !
+
 !IUnknown categoriesForMethods!
 addRef!methods!public! !
 AddRef!**auto generated**!COM Interfaces-IUnknown!private! !
@@ -125,6 +130,7 @@ uninitialize
 	"Private - Uninitialize the receiver prior to its removal from the image."
 
 	VMLibrary default registryAt: self name put: nil! !
+
 !IUnknown class categoriesForMethods!
 defineFunctions!initializing!public! !
 on:outerUnknown:!instance creation!private! !

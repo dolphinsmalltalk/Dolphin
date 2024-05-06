@@ -5,9 +5,13 @@ Object subclass: #FindDetails
 	classVariableNames: 'IgnoreCaseMask UpMask WholeWordMask WrapMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 FindDetails guid: (GUID fromString: '{ec9a373c-74cf-4a2c-b29c-227014e985f9}')!
+
 FindDetails comment: ''!
+
 !FindDetails categoriesForClass!Kernel-Objects! !
+
 !FindDetails methodsFor!
 
 action
@@ -111,6 +115,7 @@ searchMode
 searchMode: aSymbol 
 	(self class searchModes includes: aSymbol) ifFalse: [self error: 'Invalid search mode: ' , aSymbol].
 	searchMode := aSymbol! !
+
 !FindDetails categoriesForMethods!
 action!accessing!public! !
 action:!accessing!public! !
@@ -172,6 +177,7 @@ newPattern: aString
 
 searchModes
 	^#(#text #wildcardExpression)! !
+
 !FindDetails class categoriesForMethods!
 icon!constants!public! !
 initialize!development!initializing!public! !

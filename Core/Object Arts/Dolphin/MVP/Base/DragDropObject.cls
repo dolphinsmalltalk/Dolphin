@@ -5,10 +5,15 @@ Object subclass: #DragDropObject
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DragDropObject guid: (GUID fromString: '{87b4c480-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 DragDropObject isAbstract: true!
+
 DragDropObject comment: ''!
+
 !DragDropObject categoriesForClass!MVP-DragDrop! !
+
 !DragDropObject methodsFor!
 
 availableFormats
@@ -73,6 +78,7 @@ printOn: aStream
 		nextPut: $(;
 		print: self object;
 		nextPut: $)! !
+
 !DragDropObject categoriesForMethods!
 availableFormats!accessing!public! !
 format:!accessing!public! !
@@ -100,6 +106,7 @@ object: anObject
 	^self new
 		object: anObject;
 		yourself! !
+
 !DragDropObject class categoriesForMethods!
 new!instance creation!public! !
 object:!instance creation!public! !

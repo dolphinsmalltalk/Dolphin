@@ -5,7 +5,9 @@ SelectableItemsPresenter subclass: #PackageSelector
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: 'commandQueryHandlers'!
+
 PackageSelector guid: (GUID fromString: '{d41af949-f919-4f5f-986d-a50606ba68e9}')!
+
 PackageSelector comment: 'A PackageSelector is used to choose a Package from the complete set of packages available in the development system. It presents two panes; a hierarchical display of the folders in which the packages reside and a list of available packages. The folder display can be used as a filter to refine which packages are displayed in the list. When a folder is selected, only packages in the hierarchy beneath it are visible.
 
 Instance Variables:
@@ -13,7 +15,9 @@ Instance Variables:
 	packagesPresenter		<listPresenter> showing the packages filtered by the selected folder
 
 '!
+
 !PackageSelector categoriesForClass!MVP-Presenters!MVP-Resources-Misc! !
+
 !PackageSelector methodsFor!
 
 aboutPackage
@@ -952,6 +956,7 @@ uninstall: package
 	"Select nearest available folder in filter hierarchy"
 	[currentFolder notNil and: [(self filterPresenter selection: currentFolder ifAbsent: []) isNil]] 
 		whileTrue: [currentFolder := currentFolder parent]! !
+
 !PackageSelector categoriesForMethods!
 aboutPackage!commands!public! !
 addClass!commands!public! !
@@ -1089,6 +1094,7 @@ resource_Single_package_selector
 
 setCommandQueryHandlers: anArray 
 	commandQueryHandlers := anArray! !
+
 !PackageSelector class categoriesForMethods!
 defaultModel!models!public! !
 getCommandQueryHandlers!accessing!private! !

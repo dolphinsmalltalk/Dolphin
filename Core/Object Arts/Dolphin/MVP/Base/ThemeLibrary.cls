@@ -5,7 +5,9 @@ ExternalLibrary subclass: #ThemeLibrary
 	classVariableNames: 'IsAppThemed'
 	poolDictionaries: 'ThemeConstants'
 	classInstanceVariableNames: ''!
+
 ThemeLibrary guid: (GUID fromString: '{fb91df3f-4cb4-48a2-adee-a75b9a4d30a2}')!
+
 ThemeLibrary comment: 'ThemeLibrary is the <ExternalLibrary> class to represent the dynamic link library, ''UXTHEME.DLL''. It was generated generated from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library. It contains methods for each of the functions defined by the corresponding module in that type library.
 
 The type library contains the following helpstring for this module
@@ -349,7 +351,9 @@ module Theme
 		[in]DTBGOPTS* pOptions);
 };
 '!
+
 !ThemeLibrary categoriesForClass!Win32-Modules! !
+
 !ThemeLibrary methodsFor!
 
 closeThemeData: htheme
@@ -985,6 +989,7 @@ setWindowTheme: hwnd pszSubAppName: pszSubAppName pszSubIdList: pszSubIdList
 
 	<stdcall: hresult SetWindowTheme handle lpwstr lpwstr>
 	^self invalidCall: _failureCode! !
+
 !ThemeLibrary categoriesForMethods!
 closeThemeData:!**auto generated**!public! !
 drawThemeBackground:hdc:iPartId:iStateId:pRect:pClipRect:!**auto generated**!public! !
@@ -1058,6 +1063,7 @@ onStartup2
 
 	default := nil.
 	IsAppThemed := self default isThemeActive and: [default isAppThemed]! !
+
 !ThemeLibrary class categoriesForMethods!
 fileName!**auto generated**!constants!public! !
 isAppThemed!private!testing! !

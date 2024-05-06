@@ -5,9 +5,12 @@ Object subclass: #TextTileIcon
 	classVariableNames: 'FontStyleNames RotationMask StringFormat'
 	poolDictionaries: 'GdiplusConstants'
 	classInstanceVariableNames: ''!
+
 TextTileIcon guid: (GUID fromString: '{a5c05489-c3fa-486a-9e1b-1660f9b3a55a}')!
+
 TextTileIcon addClassConstant: 'FontStyleNames' value: #(#regular #bold #italic #boldItalic #underline #strikeout)!
 TextTileIcon addClassConstant: 'RotationMask' value: 16r3!
+
 TextTileIcon comment: 'An icon representation of one or more letters on a plain solid colour background, which can be `Color none` for a transparent background. The text can contain any Unicode characters (including symbols, emoticons, etc), although there is limited font support for extended characters (if the text renders as an empty box, try using the ''Segoe UI Symbol'' font).
 
 The text colour can be specified, but if not then either white or black will be chosen depending on the luminance of the background colour. When drawn on a transparent background the text is black by default.
@@ -29,7 +32,9 @@ Examples:
 	((TextTileIcon text: $\x2618 fontName: ''Segoe UI Symbol'' color: Color darkGreen) fontStyle: #bold) bitmapWithExtent: 128@128.
 
 	'!
+
 !TextTileIcon categoriesForClass!Unclassified! !
+
 !TextTileIcon methodsFor!
 
 = comperand
@@ -400,6 +405,7 @@ tilecolor
 	"Answer the tile background colour, or nil for transparent."
 
 	^tilecolor! !
+
 !TextTileIcon categoriesForMethods!
 =!comparison!public! !
 actualFontName!accessing!private! !
@@ -501,6 +507,7 @@ text: labelString fontName: fontString color: aColor
 		setText: labelString
 		fontName: fontString
 		color: aColor! !
+
 !TextTileIcon class categoriesForMethods!
 defaultExtent!constants!private! !
 icon!public! !

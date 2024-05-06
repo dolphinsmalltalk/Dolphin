@@ -15,7 +15,6 @@ Example usage:
 
 package basicPackageVersion: '6.0'.
 
-
 package classNames
 	add: #DebugTraceStream;
 	yourself.
@@ -43,11 +42,6 @@ Stream subclass: #DebugTraceStream
 	classVariableNames: 'Current'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

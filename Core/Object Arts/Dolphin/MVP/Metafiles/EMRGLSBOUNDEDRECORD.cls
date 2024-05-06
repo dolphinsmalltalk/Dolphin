@@ -5,10 +5,13 @@ ENHMETARECORD subclass: #EMRGLSBOUNDEDRECORD
 	classVariableNames: '_OffsetOf_cbData _OffsetOf_Data _OffsetOf_rclBounds'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 EMRGLSBOUNDEDRECORD guid: (GUID fromString: '{0814602c-a45e-4098-9b9b-833717f75760}')!
+
 EMRGLSBOUNDEDRECORD addClassConstant: '_OffsetOf_cbData' value: 16r18!
 EMRGLSBOUNDEDRECORD addClassConstant: '_OffsetOf_Data' value: 16r1C!
 EMRGLSBOUNDEDRECORD addClassConstant: '_OffsetOf_rclBounds' value: 16r8!
+
 EMRGLSBOUNDEDRECORD comment: '<EMRGLSBOUNDEDRECORD> is an <ExternalStructure> class to wrap the struct ''Win32.EMRGLSBOUNDEDRECORD'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -25,7 +28,9 @@ struct tagEMRGLSBOUNDEDRECORD {
 	BYTE* Data;
 } EMRGLSBOUNDEDRECORD;
 '!
+
 !EMRGLSBOUNDEDRECORD categoriesForClass!Win32-Structs! !
+
 !EMRGLSBOUNDEDRECORD methodsFor!
 
 cbData
@@ -68,6 +73,7 @@ rclBounds: aRECT
 		from: ##(_OffsetOf_rclBounds + 1)
 		to: ##(_OffsetOf_rclBounds + RECT basicByteSize)
 		startingAt: 1! !
+
 !EMRGLSBOUNDEDRECORD categoriesForMethods!
 cbData!**compiled accessors**!public! !
 cbData:!**compiled accessors**!public! !
@@ -113,6 +119,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_GLSBOUNDEDRECORD! !
+
 !EMRGLSBOUNDEDRECORD class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

@@ -5,9 +5,13 @@ TestCaseHelper subclass: #SequencedContractibleCollectionHelper
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SequencedContractibleCollectionHelper guid: (GUID fromString: '{02547c3f-e6c4-4b52-ae26-394eee3a484b}')!
+
 SequencedContractibleCollectionHelper comment: ''!
+
 !SequencedContractibleCollectionHelper categoriesForClass!Unclassified! !
+
 !SequencedContractibleCollectionHelper methodsFor!
 
 object
@@ -61,6 +65,7 @@ testXremoveLast
 		should: [ :result | result = getValue and: [ ((sequencedCollection at: (originalLength - 1)) = getValue2) and: [ sequencedCollection size = (originalLength - 1) ] ] ]
 		conformTo: #sequencedContractibleCollection
 		selector: #removeLast.! !
+
 !SequencedContractibleCollectionHelper categoriesForMethods!
 object!public! !
 object:!public! !

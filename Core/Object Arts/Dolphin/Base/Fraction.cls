@@ -5,7 +5,9 @@ Number subclass: #Fraction
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Fraction guid: (GUID fromString: '{87b4c65b-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Fraction comment: 'Instances of class Fraction represent rational numbers which are not integers, e.g. 3/4. They are always represented in the most reduced form possible. Fractions are usually created by a division operation between two integers where the numerator cannot be divided exactly the denominator. Unlike Float, Fraction has effectively limitless precision, and thus calculations involving Fractions do not suffer from rounding errors. This can be useful where absolute accuracy is required, but Fraction arithmetic is not supported directly by the CPU, and thus calculations are orders of magnitude slower.
 
 Instance Variables:
@@ -13,7 +15,9 @@ Instance Variables:
 	denominator	<integer>
 
 '!
+
 !Fraction categoriesForClass!Magnitude-Numbers! !
+
 !Fraction methodsFor!
 
 - aNumber
@@ -369,6 +373,7 @@ truncated
 	"Answer the receiver as a kind of Integer truncating the fraction part."
 
 	^numerator quo: denominator! !
+
 !Fraction categoriesForMethods!
 -!arithmetic!public! !
 *!arithmetic!public! !
@@ -448,6 +453,7 @@ readFrom: aStream
 	Does not handle NLS characters (e.g. thousand separators)"
 
 	^(super readFrom: aStream) asFraction! !
+
 !Fraction class categoriesForMethods!
 numerator:denominator:!instance creation!public! !
 rationalisedNumerator:denominator:!instance creation!public! !

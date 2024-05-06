@@ -5,9 +5,13 @@ Object subclass: #RBMethodName
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RBMethodName guid: (GUID fromString: '{93e47b87-9470-40bd-8893-a811fd4bee6b}')!
+
 RBMethodName comment: ''!
+
 !RBMethodName categoriesForClass!Refactory-Support! !
+
 !RBMethodName methodsFor!
 
 arguments
@@ -54,6 +58,7 @@ selectorSymbol
 setSelector: aSymbol arguments: anArray 
 	selector := aSymbol.
 	arguments := anArray! !
+
 !RBMethodName categoriesForMethods!
 arguments!accessing!public! !
 arguments:!accessing!public! !
@@ -77,6 +82,7 @@ selector: aSymbol arguments: stringCollection
 	^(self basicNew)
 		setSelector: aSymbol arguments: stringCollection;
 		yourself! !
+
 !RBMethodName class categoriesForMethods!
 new!instance creation!public! !
 selector:arguments:!instance creation!public! !

@@ -5,13 +5,17 @@ ChunkBrowserCategoryChunk subclass: #ChunkBrowserClassCategoryChunk
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ChunkBrowserClassCategoryChunk guid: (GUID fromString: '{d294e534-488e-4bcd-91d7-4f3217ae5669}')!
+
 ChunkBrowserClassCategoryChunk comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2006 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
+
 !ChunkBrowserClassCategoryChunk categoriesForClass!IDB Goodies! !
+
 !ChunkBrowserClassCategoryChunk methodsFor!
 
 = aChunk
@@ -40,6 +44,7 @@ restore
 			[:arg | 
 			(ClassCategory name: rawText) addClass: arg.
 			nil]! !
+
 !ChunkBrowserClassCategoryChunk categoriesForMethods!
 =!comparing!public! !
 browseTarget!operations!public! !
@@ -52,6 +57,7 @@ restore!operations!public! !
 
 chunkType
 	^#'Class Category'! !
+
 !ChunkBrowserClassCategoryChunk class categoriesForMethods!
 chunkType!constants!public! !
 !

@@ -5,9 +5,13 @@ ExceptionHandlerAbstract subclass: #ExceptionHandler
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExceptionHandler guid: (GUID fromString: '{87b4c575-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 ExceptionHandler comment: ''!
+
 !ExceptionHandler categoriesForClass!Kernel-Exception Handling! !
+
 !ExceptionHandler methodsFor!
 
 actionFor: exception
@@ -23,6 +27,7 @@ on: exceptionSelector do: monadicBlock
 	selector := exceptionSelector.
 	handler := monadicBlock
 ! !
+
 !ExceptionHandler categoriesForMethods!
 actionFor:!debugger-step over!helpers!private! !
 on:do:!debugger-step over!initializing!private! !

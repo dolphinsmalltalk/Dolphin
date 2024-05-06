@@ -5,10 +5,15 @@ Object subclass: #XmlDomVisitor
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 XmlDomVisitor guid: (GUID fromString: '{92cf165d-8533-4f76-9f0a-ff1c520339f4}')!
+
 XmlDomVisitor isAbstract: true!
+
 XmlDomVisitor comment: 'Abstract visitor for IXMLDOMDocument node tree.'!
+
 !XmlDomVisitor categoriesForClass!Kernel-Objects! !
+
 !XmlDomVisitor methodsFor!
 
 visitAttribute: anIXMLDOMAttribute
@@ -60,6 +65,7 @@ visitProcessingInstruction: anIXMLDOMProcessingInstruction
 
 visitText: anIXMLDOMText
 	self visitCharacterData: anIXMLDOMText! !
+
 !XmlDomVisitor categoriesForMethods!
 visitAttribute:!public!visiting! !
 visitCDATA:!public! !

@@ -5,10 +5,15 @@ AspectAccessor subclass: #BatchAspectAccessor
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 BatchAspectAccessor guid: (GUID fromString: '{3a00a038-5f65-4669-9966-cbdf3d444a7e}')!
+
 BatchAspectAccessor isAbstract: true!
+
 BatchAspectAccessor comment: ''!
+
 !BatchAspectAccessor categoriesForClass!MVP-Models! !
+
 !BatchAspectAccessor methodsFor!
 
 aspectClass
@@ -58,6 +63,7 @@ value
 
 valueIcon
 	^self icon! !
+
 !BatchAspectAccessor categoriesForMethods!
 aspectClass!accessing!public! !
 batchSize!accessing!public! !
@@ -94,6 +100,7 @@ subject: anObject keys: aSequencedReadableCollection startingAt: startInteger ba
 				startingAt: startInteger
 				batchSize: sizeInteger
 				accessorClass: self)! !
+
 !BatchAspectAccessor class categoriesForMethods!
 aspectBatchClass!public! !
 icon!constants!public! !

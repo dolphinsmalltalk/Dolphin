@@ -5,13 +5,18 @@ OLEStructure subclass: #SAFEARRAYBOUND
 	classVariableNames: '_OffsetOf_cElements _OffsetOf_lLbound'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SAFEARRAYBOUND guid: (GUID fromString: '{c06f3b74-0868-11d3-93af-00a024ca708a}')!
+
 SAFEARRAYBOUND addClassConstant: '_OffsetOf_cElements' value: 16r0!
 SAFEARRAYBOUND addClassConstant: '_OffsetOf_lLbound' value: 16r4!
+
 SAFEARRAYBOUND comment: '<SAFEARRAYBOUND> is an <ExternalStructure> class to wrap the struct ''''OAIDL.SAFEARRAYBOUND'''' from type information in the ''''Ole Automation Type Library'''' library.
 
 A SAFEARRAYBOUND describes one dimension of a SAFEARRAY, or C array when used to describe a VT_CARRAY in a <TYPEDESC>.'!
+
 !SAFEARRAYBOUND categoriesForClass!External-Data-Structured-COM! !
+
 !SAFEARRAYBOUND methodsFor!
 
 cElements
@@ -33,6 +38,7 @@ lLbound: anInteger
 	"Set the receiver's 'lLbound' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_lLbound put: anInteger! !
+
 !SAFEARRAYBOUND categoriesForMethods!
 cElements!**compiled accessors**!public! !
 cElements:!**compiled accessors**!public! !
@@ -59,6 +65,7 @@ defineFields
 
 getFieldNames
 	^#(#cElements #lLbound)! !
+
 !SAFEARRAYBOUND class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

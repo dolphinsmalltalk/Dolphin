@@ -5,7 +5,9 @@ ICoreWebView2EventHandler subclass: #ICoreWebView2ServerCertificateErrorDetected
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2ServerCertificateErrorDetectedEventHandler guid: (IID fromString: '{969b3a26-d85e-4795-8199-fef57344da22}')!
+
 ICoreWebView2ServerCertificateErrorDetectedEventHandler comment: '`ICoreWebView2ServerCertificateErrorDetectedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ServerCertificateErrorDetectedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -27,7 +29,9 @@ interface ICoreWebView2ServerCertificateErrorDetectedEventHandler : IUnknown
 };
 ```
 '!
+
 !ICoreWebView2ServerCertificateErrorDetectedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2ServerCertificateErrorDetectedEventHandler methodsFor!
 
 basicRegister: tokenBuffer
@@ -35,6 +39,7 @@ basicRegister: tokenBuffer
 
 basicUnregister
 	source Remove_ServerCertificateErrorDetected: token! !
+
 !ICoreWebView2ServerCertificateErrorDetectedEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
@@ -58,6 +63,7 @@ eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
 	^#serverCertificateErrorDetected:! !
+
 !ICoreWebView2ServerCertificateErrorDetectedEventHandler class categoriesForMethods!
 argsClass!constants!public! !
 defineFunctions!**auto generated**!initializing!public! !

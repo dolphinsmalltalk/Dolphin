@@ -5,13 +5,16 @@ HTTP_PROPERTY_FLAGS subclass: #HTTP_TIMEOUT_LIMIT_INFO
 	classVariableNames: '_OffsetOf_DrainEntityBody _OffsetOf_EntityBody _OffsetOf_HeaderWait _OffsetOf_IdleConnection _OffsetOf_MinSendRate _OffsetOf_RequestQueue'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 HTTP_TIMEOUT_LIMIT_INFO guid: (GUID fromString: '{7dae0007-41d0-4925-b425-a14d837d56d0}')!
+
 HTTP_TIMEOUT_LIMIT_INFO addClassConstant: '_OffsetOf_DrainEntityBody' value: 16r6!
 HTTP_TIMEOUT_LIMIT_INFO addClassConstant: '_OffsetOf_EntityBody' value: 16r4!
 HTTP_TIMEOUT_LIMIT_INFO addClassConstant: '_OffsetOf_HeaderWait' value: 16rC!
 HTTP_TIMEOUT_LIMIT_INFO addClassConstant: '_OffsetOf_IdleConnection' value: 16rA!
 HTTP_TIMEOUT_LIMIT_INFO addClassConstant: '_OffsetOf_MinSendRate' value: 16r10!
 HTTP_TIMEOUT_LIMIT_INFO addClassConstant: '_OffsetOf_RequestQueue' value: 16r8!
+
 HTTP_TIMEOUT_LIMIT_INFO comment: '<HTTP_TIMEOUT_LIMIT_INFO> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_TIMEOUT_LIMIT_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -32,7 +35,9 @@ struct tagHTTP_TIMEOUT_LIMIT_INFO {
 	[helpstring("The minimum send rate, in bytes-per-second, for the response. The default response send rate is 150 bytes-per-second.")] ULONG MinSendRate;
 } HTTP_TIMEOUT_LIMIT_INFO;
 '!
+
 !HTTP_TIMEOUT_LIMIT_INFO categoriesForClass!Win32-Structs! !
+
 !HTTP_TIMEOUT_LIMIT_INFO methodsFor!
 
 DrainEntityBody
@@ -94,6 +99,7 @@ RequestQueue: anInteger
 	"Set the receiver's 'RequestQueue' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_RequestQueue put: anInteger! !
+
 !HTTP_TIMEOUT_LIMIT_INFO categoriesForMethods!
 DrainEntityBody!**compiled accessors**!public! !
 DrainEntityBody:!**compiled accessors**!public! !
@@ -143,6 +149,7 @@ getFieldNames
 
 propertyId
 	^HttpServerTimeoutsProperty! !
+
 !HTTP_TIMEOUT_LIMIT_INFO class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

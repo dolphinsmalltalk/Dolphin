@@ -5,9 +5,13 @@ SmalltalkToolShell subclass: #UserPreferencesShell
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 UserPreferencesShell guid: (GUID fromString: '{952571b1-f954-4626-bf12-bdd570b30a14}')!
+
 UserPreferencesShell comment: ''!
+
 !UserPreferencesShell categoriesForClass!MVP-Presenters!MVP-Resources-IDE Tools! !
+
 !UserPreferencesShell methodsFor!
 
 createComponents
@@ -22,6 +26,7 @@ model: aListModelOfObjects
 
 selectionOrNil: aClass 
 	^preferencesPresenter selectionOrNil: aClass! !
+
 !UserPreferencesShell categoriesForMethods!
 createComponents!private! !
 model:!public! !
@@ -73,6 +78,7 @@ resource_Default_view
 
 toolsFolderHelpId
 	^10580! !
+
 !UserPreferencesShell class categoriesForMethods!
 defaultModel!public! !
 displayOn:!public! !

@@ -5,9 +5,13 @@ StVariable subclass: #StSpecialVariable
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StSpecialVariable guid: (GUID fromString: '{83bccab3-8ad0-4dbb-bbf0-dba008295503}')!
+
 StSpecialVariable comment: '<StSpecialVariable> is an abstract class of <StVariable> with concrete subclasses to describe the special variables, ''self'', ''super'', and ''thisContext''. '!
+
 !StSpecialVariable categoriesForClass!Kernel-Objects! !
+
 !StSpecialVariable methodsFor!
 
 isConstant
@@ -15,6 +19,7 @@ isConstant
 	variables self, super and thisContext, cannot be assigned to."
 
 	^true! !
+
 !StSpecialVariable categoriesForMethods!
 isConstant!public!testing! !
 !

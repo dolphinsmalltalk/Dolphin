@@ -5,14 +5,18 @@ IDispatch subclass: #CDOINNTPOnPostEarly
 	classVariableNames: ''
 	poolDictionaries: 'CDOConstants'
 	classInstanceVariableNames: ''!
+
 CDOINNTPOnPostEarly guid: (IID fromString: '{cd000033-8b95-11d1-82db-00c04fb1625d}')!
+
 CDOINNTPOnPostEarly comment: '<CDOINNTPOnPostEarly> is a wrapper class for the COM interface ''CDO.INNTPOnPostEarly'' generated from type information in the ''Microsoft CDO for Windows 2000 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"The interface to implement when creating NNTP OnPostEarly event sinks"
 
 Warning: This comment was automatically generated from the interface''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.'!
+
 !CDOINNTPOnPostEarly categoriesForClass!CDO-Interfaces!COM-Interfaces! !
+
 !CDOINNTPOnPostEarly methodsFor!
 
 isExtensible
@@ -36,6 +40,7 @@ OnPostEarly: msg EventStatus: eventStatus
 
 	<virtual stdcall: hresult 8 CDOIMessage* sdword*>
 	^self invalidCall: _failureCode! !
+
 !CDOINNTPOnPostEarly categoriesForMethods!
 isExtensible!**auto generated**!public!testing! !
 isVBCollection!**auto generated**!public!testing! !
@@ -60,6 +65,7 @@ initializeTypeLib
 	"
 
 	typeLib := CDOLib! !
+
 !CDOINNTPOnPostEarly class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 initializeTypeLib!**auto generated**!initializing!private! !

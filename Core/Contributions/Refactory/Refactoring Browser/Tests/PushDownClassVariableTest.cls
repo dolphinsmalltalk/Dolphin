@@ -5,9 +5,13 @@ RefactoringTest subclass: #PushDownClassVariableTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PushDownClassVariableTest guid: (GUID fromString: '{a5398930-2959-4aa2-a55c-3bce05b7412a}')!
+
 PushDownClassVariableTest comment: ''!
+
 !PushDownClassVariableTest categoriesForClass!Refactory-Testing! !
+
 !PushDownClassVariableTest methodsFor!
 
 testModelNonExistantName
@@ -114,6 +118,7 @@ testPushDownClassVariable
 	self executeRefactoring: refactoring.
 	(refactoring model classNamed: #LintRuleTest) withAllSubclasses 
 		do: [:each | self deny: (each directlyDefinesClassVariable: #Foo1)]! !
+
 !PushDownClassVariableTest categoriesForMethods!
 testModelNonExistantName!failure tests!public! !
 testModelPushDownToMultipleSubclassesFailure!failure tests!public! !

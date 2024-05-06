@@ -5,9 +5,13 @@ SUnitBrowserAbsUIState subclass: #SUnitBrowserUIState
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SUnitBrowserUIState guid: (GUID fromString: '{6d60a596-d4ba-4107-81f5-58ba06dde6db}')!
+
 SUnitBrowserUIState comment: ''!
+
 !SUnitBrowserUIState categoriesForClass!Unclassified! !
+
 !SUnitBrowserUIState methodsFor!
 
 areAnyTestsCompleted
@@ -166,6 +170,7 @@ testResult
 yellowBallIconSymbol
 
 	^#yellowBallIcon! !
+
 !SUnitBrowserUIState categoriesForMethods!
 areAnyTestsCompleted!private!querying! !
 colorSymbolFor:!color!public! !

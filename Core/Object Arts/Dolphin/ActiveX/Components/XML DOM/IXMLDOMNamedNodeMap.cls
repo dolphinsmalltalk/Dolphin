@@ -5,7 +5,9 @@ IDispatch subclass: #IXMLDOMNamedNodeMap
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
 	classInstanceVariableNames: ''!
+
 IXMLDOMNamedNodeMap guid: (IID fromString: '{2933bf83-7b36-11d2-b20e-00c04f983e60}')!
+
 IXMLDOMNamedNodeMap comment: '<IXMLDOMNamedNodeMap> is a wrapper class for the COM interface ''MSXML.IXMLDOMNamedNodeMap'' generated from type information in the ''Microsoft XML, version 2.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -13,7 +15,9 @@ The type library contains no documentation for this interface
 IXMLDOMNamedNodeMap is used as the result of DOM methods that can return dictionary of nodes. We always wrap these with a further object (a subinstance of DOMNamedNodeMap) which implements the full node map protocol, but which is also specialized to the type of the nodes stored there-in, and implements <abstractDictionary>, which makes it much more useful in Smalltalk. For this reason all high-level wrapper methods have been removed from this class.
 
 Note that node maps support access by both string (node name) and integer (positional) keys, i.e. they are ordered, unlike traditional Smalltalk dictionaries. Node maps also include support for namespaces.'!
+
 !IXMLDOMNamedNodeMap categoriesForClass!COM-Interfaces!MSXML-Interfaces! !
+
 !IXMLDOMNamedNodeMap methodsFor!
 
 _newEnum
@@ -232,6 +236,7 @@ SetNamedItem: newItem nameItem: nameItem
 
 	<virtual stdcall: hresult 9 IXMLDOMNode* IXMLDOMNode**>
 	^self invalidCall: _failureCode! !
+
 !IXMLDOMNamedNodeMap categoriesForMethods!
 _newEnum!**auto generated**!properties!public! !
 get__newEnum:!**auto generated**!COM Interfaces-IXMLDOMNamedNodeMap!private! !
@@ -283,6 +288,7 @@ defineFunctions
 		defineFunction: #get__newEnum:
 			argumentTypes: 'IUnknown**'
 ! !
+
 !IXMLDOMNamedNodeMap class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

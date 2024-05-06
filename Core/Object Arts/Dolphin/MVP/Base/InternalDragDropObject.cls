@@ -5,9 +5,13 @@ DragDropObject subclass: #InternalDragDropObject
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 InternalDragDropObject guid: (GUID fromString: '{87b4c54a-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 InternalDragDropObject comment: ''!
+
 !InternalDragDropObject categoriesForClass!MVP-DragDrop! !
+
 !InternalDragDropObject methodsFor!
 
 availableFormats
@@ -35,6 +39,7 @@ isFormatAvailable: formatIdentifier
 	"Answer whether the receiver can render itself in the format identified by formatIdentifier."
 
 	^availableFormats includesKey: formatIdentifier! !
+
 !InternalDragDropObject categoriesForMethods!
 availableFormats!accessing!public! !
 format:data:!accessing!public! !

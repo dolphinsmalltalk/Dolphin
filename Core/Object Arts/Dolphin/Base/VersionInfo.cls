@@ -5,7 +5,9 @@ Object subclass: #VersionInfo
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 VersionInfo guid: (GUID fromString: '{87b4c4cb-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 VersionInfo comment: 'VersionInfo is a wrapper class to simplify access to Win32 DLL and EXE version information.
 
 For example:
@@ -16,7 +18,9 @@ Instance Variables:
 	fileInfo		<ByteArray>. Buffer containing the raw version information resource.
 	prefix		<String>. Prefix used to access language specific information from the version info. string table.
 	fixedInfo		<VS_FIXEDFILEINFO>. The basic version information which is always present.'!
+
 !VersionInfo categoriesForClass!System-Support! !
+
 !VersionInfo methodsFor!
 
 at: valueName
@@ -137,6 +141,7 @@ specialBuild
 	"Answer the <readableString> product name from the receiver."
 
 	^self at: 'SpecialBuild'! !
+
 !VersionInfo categoriesForMethods!
 at:!accessing!public! !
 comments!accessing!public! !
@@ -172,6 +177,7 @@ uninitialize
 	"Assist the version library in departing this world"
 
 	Smalltalk at: #VersionLibrary ifPresent: [:lib | lib closeDefault]! !
+
 !VersionInfo class categoriesForMethods!
 forPath:!instance creation!public! !
 uninitialize!class hierarchy-removing!public! !

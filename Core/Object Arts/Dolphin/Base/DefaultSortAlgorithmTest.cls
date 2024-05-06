@@ -5,9 +5,13 @@ SortAlgorithmTest subclass: #DefaultSortAlgorithmTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DefaultSortAlgorithmTest guid: (GUID fromString: '{71c746e5-ead8-4695-8835-1778d1ca56fd}')!
+
 DefaultSortAlgorithmTest comment: ''!
+
 !DefaultSortAlgorithmTest categoriesForClass!Unclassified! !
+
 !DefaultSortAlgorithmTest methodsFor!
 
 add: aCollection sortBlock: block
@@ -52,6 +56,7 @@ sort: aCollection sortBlock: block
 	self assertSorted: sorted.
 	self add: aCollection sortBlock: block.
 	^sorted! !
+
 !DefaultSortAlgorithmTest categoriesForMethods!
 add:sortBlock:!helpers!private! !
 algorithmToTest!private!unit tests! !

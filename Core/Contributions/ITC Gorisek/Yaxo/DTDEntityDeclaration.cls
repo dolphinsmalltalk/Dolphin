@@ -5,9 +5,13 @@ Object subclass: #DTDEntityDeclaration
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: 'contextBehavior'!
+
 DTDEntityDeclaration guid: (GUID fromString: '{505107dc-2774-4508-bf9d-517bb42532c7}')!
+
 DTDEntityDeclaration comment: ''!
+
 !DTDEntityDeclaration categoriesForClass!XML-Parser! !
+
 !DTDEntityDeclaration methodsFor!
 
 bypass
@@ -56,6 +60,7 @@ value: aString
 
 valueForContext: aContext
 	^self perform: (self class behaviorForContext: aContext)! !
+
 !DTDEntityDeclaration categoriesForMethods!
 bypass!behaviors!public! !
 forbidden!behaviors!public! !
@@ -101,6 +106,7 @@ name: aString value: aValueString
 		name: aString;
 		value: aValueString;
 		yourself! !
+
 !DTDEntityDeclaration class categoriesForMethods!
 behaviorForContext:!accessing!public! !
 contextBehavior!accessing!public! !

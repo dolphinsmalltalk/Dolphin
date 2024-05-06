@@ -5,13 +5,17 @@ ChunkBrowserExpressionChunk subclass: #ChunkBrowserMethodDeleteChunk
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ChunkBrowserMethodDeleteChunk guid: (GUID fromString: '{deb9428a-51f1-4a3f-a73f-d6cb2c444d99}')!
+
 ChunkBrowserMethodDeleteChunk comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2006 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
+
 !ChunkBrowserMethodDeleteChunk categoriesForClass!IDB Goodies! !
+
 !ChunkBrowserMethodDeleteChunk methodsFor!
 
 browseTarget
@@ -65,6 +69,7 @@ isMatch
 		ifNil: [true]
 		ifNotNil:
 			[:arg | (identity2 subStrings anySatisfy: [:each | arg includesSelector: each asSymbol]) not]! !
+
 !ChunkBrowserMethodDeleteChunk categoriesForMethods!
 browseTarget!operations!public! !
 identity1AndIdentity2AsCompiledMethod!helpers!public! !
@@ -90,6 +95,7 @@ isChunkClassFor: aString
 		and:
 			[#(' removeSelector: #' ' class removeSelector: #' ' removeSelectors: #(' ' class removeSelectors: #(')
 				anySatisfy: [:each | (aString indexOfSubCollection: each) = firstSpaceIndex]]! !
+
 !ChunkBrowserMethodDeleteChunk class categoriesForMethods!
 chunkType!constants!public! !
 isChunkClassFor:!public!testing! !

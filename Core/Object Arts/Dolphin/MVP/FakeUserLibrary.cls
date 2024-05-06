@@ -5,9 +5,13 @@ UserLibrary subclass: #FakeUserLibrary
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 FakeUserLibrary guid: (GUID fromString: '{bbf4bdc3-fddb-4f49-8884-67abd17b5abf}')!
+
 FakeUserLibrary comment: ''!
+
 !FakeUserLibrary categoriesForClass!External-Libraries-Win32! !
+
 !FakeUserLibrary methodsFor!
 
 close
@@ -57,6 +61,7 @@ open
 	handle := user32 handle.
 	self beFinalizable.
 	UserLibrary setDefault: self! !
+
 !FakeUserLibrary categoriesForMethods!
 close!public!realizing/unrealizing! !
 free!finalizing!public!realizing/unrealizing! !

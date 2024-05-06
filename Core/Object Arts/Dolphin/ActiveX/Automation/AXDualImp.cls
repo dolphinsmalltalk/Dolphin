@@ -5,13 +5,18 @@ AXDispatchImpAbstract subclass: #AXDualImp
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AXDualImp guid: (GUID fromString: '{c06f3b7c-0868-11d3-93af-00a024ca708a}')!
+
 AXDualImp isAbstract: true!
+
 AXDualImp comment: 'AXDualImp provides a generic implementation of IDispatch for dual interfaces with type information (i.e. a type library). It makes use of ITypeInfo''s ability to invoke the dual part of a dispatch interface when called via the late-bound IDispatch methods.
 
 AXDualImp implements IDispatch in a very simple and efficient manner, but cannot be used for dispatch only interfaces (dispinterfaces), such as most connection points, or where no type library is available.
 '!
+
 !AXDualImp categoriesForClass!COM-Implementations! !
+
 !AXDualImp methodsFor!
 
 GetIDsOfNames: riid rgszNames: rgszNames 
@@ -95,6 +100,7 @@ typeInfo: lcid ifNone: exceptionHandler
 			(lcid isNull or: [lcid asParameter = locale asParameter])
 				ifFalse: [^exceptionHandler value]].
 	^piTypeInfo! !
+
 !AXDualImp categoriesForMethods!
 GetIDsOfNames:rgszNames:cNames:lcid:rgdispid:!COM Interfaces-IDispatch!public! !
 GetTypeInfoCount:!COM Interfaces-IDispatch!public! !

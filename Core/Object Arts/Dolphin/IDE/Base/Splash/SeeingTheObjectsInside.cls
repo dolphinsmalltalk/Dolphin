@@ -5,7 +5,9 @@ GdiplusDoubleBufferedView subclass: #SeeingTheObjectsInside
 	classVariableNames: ''
 	poolDictionaries: 'GdiplusConstants'
 	classInstanceVariableNames: 'splashPlayTheGame difficultyLevel'!
+
 SeeingTheObjectsInside guid: (GUID fromString: '{66a4dee3-a72c-4a2f-a14f-bffd6813ceef}')!
+
 SeeingTheObjectsInside comment: '"Seeing the Objects Inside" is the Dolphin tag line. The implication is that the fine grained approach of Smalltalk helps you, as a developer, to find the objects (and  classes) in your problem domain more easily than you can in many other languages. The SeeingTheObjectsInside class is intended to be a fun way to represent this idea as a game that can be played as part of the Dolphin splash screen. Try to find the hidden Dolphin object inside the larger Dolphin outline. Once found, click on it to dismiss the splash.
 
 If you are a very busy and important person who just doesn''t have time to play a game each time you start an image, it can be disabled from within user preferences. Go to User Preferences/Development System/splashPlayTheGame and set this to false. Save the image to persist the setting.
@@ -15,7 +17,9 @@ You can run a standalone version of the game outside of the splash by evaluating
 SeeingTheObjectsInside show
 
 '!
+
 !SeeingTheObjectsInside categoriesForClass!Unclassified! !
+
 !SeeingTheObjectsInside methodsFor!
 
 addInsideObject: anObject minScale: minScale maxScale: maxScale
@@ -388,6 +392,7 @@ stopStepProcess
 
 sunPosition
 	^(612 @ 98) * self baseScale! !
+
 !SeeingTheObjectsInside categoriesForMethods!
 addInsideObject:minScale:maxScale:!private! !
 background!accessing!private! !
@@ -450,6 +455,7 @@ splashPlayTheGame
 
 splashPlayTheGame: aBoolean 
 	splashPlayTheGame := aBoolean! !
+
 !SeeingTheObjectsInside class categoriesForMethods!
 canDisplay!accessing!public! !
 splashPlayTheGame!public! !

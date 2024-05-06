@@ -5,9 +5,13 @@ GdiplusInitializer subclass: #GdiplusRegionFromRectangleInitializer
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusRegionFromRectangleInitializer guid: (GUID fromString: '{4b87dc0a-0ca6-4f47-93af-ea525ced5f99}')!
+
 GdiplusRegionFromRectangleInitializer comment: ''!
+
 !GdiplusRegionFromRectangleInitializer categoriesForClass!Unclassified! !
+
 !GdiplusRegionFromRectangleInitializer methodsFor!
 
 createHandle
@@ -22,6 +26,7 @@ gdiplusConstructorErrorDescription
 
 rectangle: aRectangle
 	rectangle := aRectangle! !
+
 !GdiplusRegionFromRectangleInitializer categoriesForMethods!
 createHandle!private!realizing/unrealizing! !
 gdiplusConstructorErrorDescription!constants!private! !
@@ -32,6 +37,7 @@ rectangle:!initializing!private! !
 
 fromRectangle: aRectangle
 	^self new rectangle: aRectangle! !
+
 !GdiplusRegionFromRectangleInitializer class categoriesForMethods!
 fromRectangle:!instance creation!public! !
 !

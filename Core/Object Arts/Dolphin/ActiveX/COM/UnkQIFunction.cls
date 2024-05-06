@@ -5,11 +5,15 @@ COMFunctionAbstract subclass: #UnkQIFunction
 	classVariableNames: 'Descriptor'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 UnkQIFunction guid: (GUID fromString: '{28df5741-9369-4150-8e9f-14235fe2e47c}')!
+
 UnkQIFunction comment: 'COMQueryInterfaceFunction is a specialized class of <COMFunction> intended to represent the IUnknown::QueryInterface() method.
 
 As IUnknown is implemented entirely by the <COMObjectStub>, a COMQueryInterfaceFunction sends a #QueryInterface:ppvObject: message to the relevant stub.'!
+
 !UnkQIFunction categoriesForClass!COM-Implementations! !
+
 !UnkQIFunction methodsFor!
 
 callback: stub interface: aCOMInterface withArgumentsAt: anAddress
@@ -41,6 +45,7 @@ selector
 	"Private - Answer the selector sent when the receiver is evaluated."
 
 	^#QueryInterface:ppvObject:! !
+
 !UnkQIFunction categoriesForMethods!
 callback:interface:withArgumentsAt:!evaluating!private! !
 descriptor!accessing!private! !
@@ -67,6 +72,7 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	Descriptor := nil! !
+
 !UnkQIFunction class categoriesForMethods!
 initialize!development!initializing!private! !
 uninitialize!class hierarchy-removing!private! !

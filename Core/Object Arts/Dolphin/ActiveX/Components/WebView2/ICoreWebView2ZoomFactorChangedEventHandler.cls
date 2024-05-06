@@ -5,7 +5,9 @@ ICoreWebView2EventHandler subclass: #ICoreWebView2ZoomFactorChangedEventHandler
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2ZoomFactorChangedEventHandler guid: (IID fromString: '{b52d71d6-c4df-4543-a90c-64a3e60f38cb}')!
+
 ICoreWebView2ZoomFactorChangedEventHandler comment: '`ICoreWebView2ZoomFactorChangedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ZoomFactorChangedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -27,7 +29,9 @@ interface ICoreWebView2ZoomFactorChangedEventHandler : IUnknown
 };
 ```
 '!
+
 !ICoreWebView2ZoomFactorChangedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2ZoomFactorChangedEventHandler methodsFor!
 
 basicRegister: tokenBuffer
@@ -35,6 +39,7 @@ basicRegister: tokenBuffer
 
 basicUnregister
 	source Remove_ZoomFactorChanged: token! !
+
 !ICoreWebView2ZoomFactorChangedEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
@@ -55,6 +60,7 @@ eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
 	^#zoomFactorChanged! !
+
 !ICoreWebView2ZoomFactorChangedEventHandler class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 eventName!constants!public! !

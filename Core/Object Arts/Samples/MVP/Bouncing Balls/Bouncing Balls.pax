@@ -13,7 +13,6 @@ You can control the frame rate and number of balls displayed by editing the Boun
 
 The sample demonstrates the use of double buffering to provide non-flickering animation. In this case we have chosen to use Icons for our sprites since these already have the ability to support masking of the graphic to a non-rectangular shape. Please note that no attempt has been made to make the bouncing motion accurate (i.e. the balls don''t bounce off the walls correctly or off each other at all).'.
 
-
 package classNames
 	add: #Ball;
 	add: #BouncingBallSessionManager;
@@ -42,21 +41,18 @@ Object subclass: #Ball
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RuntimeSessionManager subclass: #BouncingBallSessionManager
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DoubleBufferedView subclass: #BouncingBallView
 	instanceVariableNames: 'balls stepProcess'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

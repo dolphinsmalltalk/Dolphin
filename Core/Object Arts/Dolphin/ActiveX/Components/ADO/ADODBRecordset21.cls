@@ -5,7 +5,9 @@ ADODBRecordset20 subclass: #ADODBRecordset21
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
+
 ADODBRecordset21 guid: (IID fromString: '{00001555-0000-0010-8000-00aa006d2ea4}')!
+
 ADODBRecordset21 comment: '`ADODBRecordset21` is a wrapper class for the COM interface ''ADODB.Recordset21'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -37,7 +39,9 @@ interface Recordset21 : Recordset20
 };
 ```
 '!
+
 !ADODBRecordset21 categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
+
 !ADODBRecordset21 methodsFor!
 
 get_Index: pbstrIndex
@@ -92,6 +96,7 @@ Seek: keyValues SeekOption: seekOption
 
 	<virtual stdcall: hresult 82 variant sdword>
 	^self invalidCall: _failureCode! !
+
 !ADODBRecordset21 categoriesForMethods!
 get_Index:!**auto generated**!COM Interfaces-Recordset21!private! !
 index!**auto generated**!properties!public! !
@@ -116,6 +121,7 @@ defineFunctions
 		defineFunction: #get_Index:
 			argumentTypes: 'bstr*'
 ! !
+
 !ADODBRecordset21 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

@@ -12,7 +12,6 @@ This package contains the basic Tree Models for use within the MVP framework. Th
 
 package basicPackageVersion: '6.1'.
 
-
 package classNames
 	add: #ExpandingTreeModel;
 	add: #Folder;
@@ -41,41 +40,42 @@ Object subclass: #Folder
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #TreeNode
 	instanceVariableNames: 'parent children object'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Model subclass: #TreeModelAbstract
 	instanceVariableNames: 'searchPolicy'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TreeModelAbstract subclass: #TreeModel
 	instanceVariableNames: 'anchorNode objectNodeMap'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TreeModelAbstract subclass: #VirtualTreeModel
 	instanceVariableNames: 'roots getChildrenBlock getParentBlock hasChildrenBlock filter'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TreeModel subclass: #ExpandingTreeModel
 	instanceVariableNames: 'getChildrenBlock hasChildrenBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TreeModel subclass: #FolderHierarchyModel
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

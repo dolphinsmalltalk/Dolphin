@@ -5,9 +5,13 @@ AbstractShellViewTest subclass: #DialogViewTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DialogViewTest guid: (GUID fromString: '{a8b91e26-354f-4420-9358-156da6d19c83}')!
+
 DialogViewTest comment: ''!
+
 !DialogViewTest categoriesForClass!Unclassified! !
+
 !DialogViewTest methodsFor!
 
 createShell: aRectangle text: aString
@@ -209,6 +213,7 @@ testRemainsOnScreen
 
 workAreaNearest: aPoint
 	^(DisplayMonitor nearestPoint: aPoint) workArea! !
+
 !DialogViewTest categoriesForMethods!
 createShell:text:!helpers!private! !
 createSubjectDialog:!helpers!private! !

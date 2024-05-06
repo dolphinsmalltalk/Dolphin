@@ -5,7 +5,9 @@ OLEStructure subclass: #ITEMIDLIST
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ITEMIDLIST guid: (GUID fromString: '{928070c1-45d5-4739-b2b1-01e8c27361dc}')!
+
 ITEMIDLIST comment: 'ITEMIDLIST is an <ExternalStructure> that wraps the Windows ITEMIDLIST struct.  ITEMIDLIST serves the same purpose as a file system path, i.e., to identify objects (be they files, folders, virtual or part of the filesystem) in the Windows Shell namespace.  An ITEMIDLIST contains one or more item IDs (a Windows SHITEMID structure), terminated by a two-byte null.
 
 There are two types of ITEMIDLIST -- full and relative.  A full (or absolute) ITEMIDLIST contains a packed list of item ids that together uniquely identifies a shell object relative to the desktop.  A relative ITEMIDLIST contains a packed list of item ids that together uniquely identifies a shell object relative to its parent folder.  In most cases, a relative ITEMIDLIST will contain only one item id.  However, multi-level relative ITEMIDLISTs are also used.  See individual method comments for which type of ITEMIDLIST is expected.
@@ -14,7 +16,9 @@ For the Shell API, namespace objects are usually identified by a pointer to thei
 
 Instance Variables:
 	back	<ITEMIDLIST>	Used to prevent an ITEMIDLIST being garbage collected when a new ITEMIDLIST has been constructed on the same memory.'!
+
 !ITEMIDLIST categoriesForClass!Unclassified! !
+
 !ITEMIDLIST methodsFor!
 
 append: anITEMIDLIST 
@@ -139,6 +143,7 @@ pointerClass
 	"Private - Answer the default class to use as a pointer"
 
 	^WindowsShellMemory! !
+
 !ITEMIDLIST categoriesForMethods!
 append:!operations!public! !
 back!accessing!private! !
@@ -249,6 +254,7 @@ pointerClass
 
 uninitialize
 	SessionManager current removeEventsTriggeredFor: self! !
+
 !ITEMIDLIST class categoriesForMethods!
 defineFields!public!template definition! !
 exampleCopying!examples!public! !

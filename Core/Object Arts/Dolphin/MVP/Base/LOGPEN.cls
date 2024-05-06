@@ -5,10 +5,13 @@ Win32Structure subclass: #LOGPEN
 	classVariableNames: '_OffsetOf_lopnColor _OffsetOf_lopnStyle _OffsetOf_lopnWidth'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 LOGPEN guid: (GUID fromString: '{87b4c5fb-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 LOGPEN addClassConstant: '_OffsetOf_lopnColor' value: 16rC!
 LOGPEN addClassConstant: '_OffsetOf_lopnStyle' value: 16r0!
 LOGPEN addClassConstant: '_OffsetOf_lopnWidth' value: 16r4!
+
 LOGPEN comment: '<LOGPEN> is an <ExternalStructure> class to wrap the struct ''Win32.LOGPEN'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
@@ -23,7 +26,9 @@ struct tagLOGPEN {
 	unsigned long lopnColor;
 } LOGPEN;
 '!
+
 !LOGPEN categoriesForClass!Win32-Structs! !
+
 !LOGPEN methodsFor!
 
 color
@@ -71,6 +76,7 @@ width: anInteger
 	"Set the <integer> width of the pen described by the receiver."
 
 	bytes sdwordAtOffset: 4 put: anInteger! !
+
 !LOGPEN categoriesForMethods!
 color!accessing!public! !
 color:!accessing!public! !
@@ -105,6 +111,7 @@ defineFields
 
 getFieldNames
 	^#(#lopnStyle #lopnColor)! !
+
 !LOGPEN class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

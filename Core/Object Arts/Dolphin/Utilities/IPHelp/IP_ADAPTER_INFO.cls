@@ -5,7 +5,9 @@ ExternalStructure subclass: #IP_ADAPTER_INFO
 	classVariableNames: '_OffsetOf_AdapterName _OffsetOf_Address _OffsetOf_AddressLength _OffsetOf_ComboIndex _OffsetOf_CurrentIpAddress _OffsetOf_Description _OffsetOf_DhcpEnabled _OffsetOf_DhcpServer _OffsetOf_GatewayList _OffsetOf_HaveWins _OffsetOf_index _OffsetOf_IpAddressList _OffsetOf_LeaseExpires _OffsetOf_LeaseObtained _OffsetOf_Next _OffsetOf_PrimaryWinsServer _OffsetOf_SecondaryWinsServer _OffsetOf_type'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IP_ADAPTER_INFO guid: (GUID fromString: '{30f77c44-1f24-4b31-9311-dc3a730c4d4e}')!
+
 IP_ADAPTER_INFO addClassConstant: '_OffsetOf_AdapterName' value: 16r8!
 IP_ADAPTER_INFO addClassConstant: '_OffsetOf_Address' value: 16r194!
 IP_ADAPTER_INFO addClassConstant: '_OffsetOf_AddressLength' value: 16r190!
@@ -24,6 +26,7 @@ IP_ADAPTER_INFO addClassConstant: '_OffsetOf_Next' value: 16r0!
 IP_ADAPTER_INFO addClassConstant: '_OffsetOf_PrimaryWinsServer' value: 16r228!
 IP_ADAPTER_INFO addClassConstant: '_OffsetOf_SecondaryWinsServer' value: 16r250!
 IP_ADAPTER_INFO addClassConstant: '_OffsetOf_type' value: 16r1A0!
+
 IP_ADAPTER_INFO comment: '<IP_ADAPTER_INFO> is an <ExternalStructure> class to wrap the struct ''Win32.IP_ADAPTER_INFO'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -54,7 +57,9 @@ struct tagIP_ADAPTER_INFO {
 	long LeaseExpires;
 } IP_ADAPTER_INFO;
 '!
+
 !IP_ADAPTER_INFO categoriesForClass!Win32-Structs! !
+
 !IP_ADAPTER_INFO methodsFor!
 
 AdapterName
@@ -146,6 +151,7 @@ type
 	"Answer the <Integer> value of the receiver's 'type' field."
 
 	^bytes dwordAtOffset: _OffsetOf_type! !
+
 !IP_ADAPTER_INFO categoriesForMethods!
 AdapterName!**compiled accessors**!public! !
 Address!**compiled accessors**!public! !
@@ -275,6 +281,7 @@ defineFields
 
 getFieldNames
 	^#(#Next #ComboIndex #AdapterName #Description #AddressLength #Address #index #type #DhcpEnabled #CurrentIpAddress #IpAddressList #GatewayList #DhcpServer #HaveWins #PrimaryWinsServer #SecondaryWinsServer #LeaseObtained #LeaseExpires)! !
+
 !IP_ADAPTER_INFO class categoriesForMethods!
 defineFields!initializing!public! !
 getFieldNames!**compiled accessors**!constants!private! !

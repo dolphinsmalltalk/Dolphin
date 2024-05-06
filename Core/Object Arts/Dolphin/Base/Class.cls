@@ -5,7 +5,9 @@ ClassDescription subclass: #Class
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Class guid: (GUID fromString: '{87b4c4fb-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Class comment: '"Instances" of Class describe the representation and behavior of objects. Class adds more comprehensive programming support facilities to the basic ones provided in the abstract superclass Behavior and more descriptive facilities to the ones provided in the abstract superclass ClassDescription. In particular Class adds the representation for class variable names and shared (pool) variables.
 
 In reality, Class has no instances. All classes in the system are actually instances of a parallel hierarchy of Metaclass instances, but they do have the same shape as Class and are logically, if not physically, instances of it.
@@ -19,7 +21,9 @@ Instance Variables:
 	classCategories	<Array> of <ClassCategory>. The categories of the class, if any.
 	_guid		<GUID>. Unique identifier for the class.
 	'!
+
 !Class categoriesForClass!Kernel-Classes! !
+
 !Class methodsFor!
 
 addClassConstant: aString value: anObject
@@ -670,6 +674,7 @@ variableSubclass: aClassSymbol
 	^subclass
 
 ! !
+
 !Class categoriesForMethods!
 addClassConstant:value:!class variables!development!public! !
 addClassVariable:value:!class hierarchy-mutating!class variables!public! !
@@ -830,6 +835,7 @@ foldLiteralStrings
 									each literalAt: i put: (literalStrings find: literal)]]]].
 	after := literalStrings size.
 	^{total. after}! !
+
 !Class class categoriesForMethods!
 allBehaviors!class hierarchy-accessing!private! !
 allBehaviorsDo:!enumerating!private! !

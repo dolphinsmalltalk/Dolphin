@@ -5,7 +5,9 @@ ICoreWebView2EventHandler subclass: #ICoreWebView2ScriptDialogOpeningEventHandle
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2ScriptDialogOpeningEventHandler guid: (IID fromString: '{ef381bf9-afa8-4e37-91c4-8ac48524bdfb}')!
+
 ICoreWebView2ScriptDialogOpeningEventHandler comment: '`ICoreWebView2ScriptDialogOpeningEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ScriptDialogOpeningEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -27,7 +29,9 @@ interface ICoreWebView2ScriptDialogOpeningEventHandler : IUnknown
 };
 ```
 '!
+
 !ICoreWebView2ScriptDialogOpeningEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2ScriptDialogOpeningEventHandler methodsFor!
 
 basicRegister: tokenBuffer
@@ -35,6 +39,7 @@ basicRegister: tokenBuffer
 
 basicUnregister
 	source Remove_ScriptDialogOpening: token! !
+
 !ICoreWebView2ScriptDialogOpeningEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
@@ -58,6 +63,7 @@ eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
 	^#scriptDialogOpening:! !
+
 !ICoreWebView2ScriptDialogOpeningEventHandler class categoriesForMethods!
 argsClass!constants!public! !
 defineFunctions!**auto generated**!initializing!public! !

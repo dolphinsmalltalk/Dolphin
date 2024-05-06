@@ -5,7 +5,9 @@ ExternalStructure subclass: #MIB_IPFORWARDROW
 	classVariableNames: '_OffsetOf_dwForwardAge _OffsetOf_dwForwardDest _OffsetOf_dwForwardIfIndex _OffsetOf_dwForwardMask _OffsetOf_dwForwardMetric1 _OffsetOf_dwForwardMetric2 _OffsetOf_dwForwardMetric3 _OffsetOf_dwForwardMetric4 _OffsetOf_dwForwardMetric5 _OffsetOf_dwForwardNextHop _OffsetOf_dwForwardNextHopAS _OffsetOf_dwForwardPolicy _OffsetOf_dwForwardProto _OffsetOf_dwForwardType'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MIB_IPFORWARDROW guid: (GUID fromString: '{4e46d963-9a91-4e1a-b1eb-a9597b841a59}')!
+
 MIB_IPFORWARDROW addClassConstant: '_OffsetOf_dwForwardAge' value: 16r1C!
 MIB_IPFORWARDROW addClassConstant: '_OffsetOf_dwForwardDest' value: 16r0!
 MIB_IPFORWARDROW addClassConstant: '_OffsetOf_dwForwardIfIndex' value: 16r10!
@@ -20,6 +22,7 @@ MIB_IPFORWARDROW addClassConstant: '_OffsetOf_dwForwardNextHopAS' value: 16r20!
 MIB_IPFORWARDROW addClassConstant: '_OffsetOf_dwForwardPolicy' value: 16r8!
 MIB_IPFORWARDROW addClassConstant: '_OffsetOf_dwForwardProto' value: 16r18!
 MIB_IPFORWARDROW addClassConstant: '_OffsetOf_dwForwardType' value: 16r14!
+
 MIB_IPFORWARDROW comment: '<MIB_IPFORWARDROW> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_IPFORWARDROW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -46,7 +49,9 @@ struct tagMIB_IPFORWARDROW {
 	unsigned long dwForwardMetric5;
 } MIB_IPFORWARDROW;
 '!
+
 !MIB_IPFORWARDROW categoriesForClass!Win32-Structs! !
+
 !MIB_IPFORWARDROW methodsFor!
 
 dwForwardAge
@@ -118,6 +123,7 @@ dwForwardType
 	"Answer the <Integer> value of the receiver's 'dwForwardType' field."
 
 	^bytes dwordAtOffset: _OffsetOf_dwForwardType! !
+
 !MIB_IPFORWARDROW categoriesForMethods!
 dwForwardAge!**compiled accessors**!public! !
 dwForwardDest!**compiled accessors**!public! !
@@ -207,6 +213,7 @@ defineFields
 
 getFieldNames
 	^#(#dwForwardDest #dwForwardMask #dwForwardPolicy #dwForwardNextHop #dwForwardIfIndex #dwForwardType #dwForwardProto #dwForwardAge #dwForwardNextHopAS #dwForwardMetric1 #dwForwardMetric2 #dwForwardMetric3 #dwForwardMetric4 #dwForwardMetric5)! !
+
 !MIB_IPFORWARDROW class categoriesForMethods!
 defineFields!initializing!public! !
 getFieldNames!**compiled accessors**!constants!private! !

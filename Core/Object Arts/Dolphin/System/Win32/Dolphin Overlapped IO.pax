@@ -9,7 +9,6 @@ This package contains classes and methods for supporting Win32 overlapped I/O.'.
 
 package basicPackageVersion: '6.1'.
 
-
 package classNames
 	add: #OVERLAPPED;
 	yourself.
@@ -40,9 +39,6 @@ ExternalStructure subclass: #OVERLAPPED
 	classVariableNames: '_OffsetOf_hEvent _OffsetOf_Internal _OffsetOf_InternalHigh _OffsetOf_Offset _OffsetOf_OffsetHigh _OffsetOf_Pointer'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -110,6 +106,7 @@ postQueuedCompletionStatus: completionPort dwNumberOfBytesTransferred: dwNumberO
 
 	<stdcall: sdword PostQueuedCompletionStatus sdword dword dword OVERLAPPED*>
 	^self invalidCall: _failureCode! !
+
 !KernelLibrary categoriesForMethods!
 cancelIo:!**auto generated**!public! !
 createIoCompletionPort:existingCompletionPort:completionKey:numberOfConcurrentThreads:!**auto generated**!public! !

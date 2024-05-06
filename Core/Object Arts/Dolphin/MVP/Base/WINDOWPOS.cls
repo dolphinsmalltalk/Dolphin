@@ -5,7 +5,9 @@ Win32Structure subclass: #WINDOWPOS
 	classVariableNames: '_OffsetOf_cx _OffsetOf_cy _OffsetOf_flags _OffsetOf_hwnd _OffsetOf_hwndInsertAfter _OffsetOf_x _OffsetOf_y'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 WINDOWPOS guid: (GUID fromString: '{cd69a071-3606-11d3-93bd-00a024ca708a}')!
+
 WINDOWPOS addClassConstant: '_OffsetOf_cx' value: 16r10!
 WINDOWPOS addClassConstant: '_OffsetOf_cy' value: 16r14!
 WINDOWPOS addClassConstant: '_OffsetOf_flags' value: 16r18!
@@ -13,8 +15,11 @@ WINDOWPOS addClassConstant: '_OffsetOf_hwnd' value: 16r0!
 WINDOWPOS addClassConstant: '_OffsetOf_hwndInsertAfter' value: 16r4!
 WINDOWPOS addClassConstant: '_OffsetOf_x' value: 16r8!
 WINDOWPOS addClassConstant: '_OffsetOf_y' value: 16rC!
+
 WINDOWPOS comment: ''!
+
 !WINDOWPOS categoriesForClass!External-Data-Structured-Win32! !
+
 !WINDOWPOS methodsFor!
 
 cx
@@ -68,6 +73,7 @@ y
 	"Answer the <Integer> value of the receiver's 'y' field."
 
 	^bytes sdwordAtOffset: _OffsetOf_y! !
+
 !WINDOWPOS categoriesForMethods!
 cx!**compiled accessors**!public! !
 cx:!**compiled accessors**!public! !
@@ -112,6 +118,7 @@ defineFields
 
 getFieldNames
 	^#(#hwndInsertAfter #x #y #cx #cy #flags)! !
+
 !WINDOWPOS class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

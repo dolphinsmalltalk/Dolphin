@@ -9,7 +9,6 @@ This package contains Dialog presenter wrappers for the Windows common printer P
 
 package basicPackageVersion: '6.1'.
 
-
 package classNames
 	add: #PrintDialog;
 	add: #PRINTDLGEXW;
@@ -48,24 +47,24 @@ Win32Structure subclass: #PRINTPAGERANGE
 	classVariableNames: '_OffsetOf_nFromPage _OffsetOf_nToPage'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 CommonDialogStructure subclass: #PRINTDLGEXW
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_dwResultAction _OffsetOf_ExclusionFlags _OffsetOf_flags _OffsetOf_Flags2 _OffsetOf_hDC _OffsetOf_hDevMode _OffsetOf_hDevNames _OffsetOf_hInstance _OffsetOf_hwndOwner _OffsetOf_lpCallback _OffsetOf_lphPropertyPages _OffsetOf_lpPageRanges _OffsetOf_lpPrintTemplateName _OffsetOf_lStructSize _OffsetOf_nCopies _OffsetOf_nMaxPage _OffsetOf_nMaxPageRanges _OffsetOf_nMinPage _OffsetOf_nPageRanges _OffsetOf_nPropertyPages _OffsetOf_nStartPage'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 CommonDialogStructure subclass: #PRINTDLGW
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_dwSize _OffsetOf_flags _OffsetOf_hDC _OffsetOf_hDevMode _OffsetOf_hDevNames _OffsetOf_hInstance _OffsetOf_hPrintTemplate _OffsetOf_hSetupTemplate _OffsetOf_hwndOwner _OffsetOf_lCustData _OffsetOf_lpfnHook _OffsetOf_lpfnSetupHook _OffsetOf_lpPrintTemplateName _OffsetOf_lpSetupTemplateName _OffsetOf_nCopies _OffsetOf_nFromPage _OffsetOf_nMaxPage _OffsetOf_nMinPage _OffsetOf_nToPage'
 	poolDictionaries: 'PrintDialogConstants'
 	classInstanceVariableNames: ''!
+
 CommonDialog subclass: #PrintDialog
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'PrintDialogConstants'
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -91,6 +90,7 @@ printDlgEx: lppd
 
 	<stdcall: hresult PrintDlgExW PRINTDLGEXW*>
 	^self invalidCall: _failureCode! !
+
 !ComDlgLibrary categoriesForMethods!
 printDlg:!primitives!private!win32 functions-common dialog box! !
 printDlgEx:!**auto generated**!public! !
@@ -106,6 +106,7 @@ choose
 	| hDC |
 	^(hDC := PrintDialog showModal) isNil
 		ifFalse: [self withOwnedDC: hDC]! !
+
 !PrinterCanvas class categoriesForMethods!
 choose!instance creation!public! !
 !

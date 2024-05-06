@@ -5,9 +5,13 @@ GdiplusTests subclass: #GdiplusAdjustableArrowCapTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusAdjustableArrowCapTest guid: (GUID fromString: '{c1fcc802-8763-11d7-b609-00e0987e8081}')!
+
 GdiplusAdjustableArrowCapTest comment: ''!
+
 !GdiplusAdjustableArrowCapTest categoriesForClass!Unclassified! !
+
 !GdiplusAdjustableArrowCapTest methodsFor!
 
 setUp
@@ -34,6 +38,7 @@ testMiddleInset
 testWidth
 	model width: 17.
 	self assert: model width equals: 17! !
+
 !GdiplusAdjustableArrowCapTest categoriesForMethods!
 setUp!public!setup! !
 testHeight!public!unit tests! !

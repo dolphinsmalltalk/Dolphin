@@ -5,10 +5,15 @@ DolphinTest subclass: #ClassDescriptionTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ClassDescriptionTest guid: (GUID fromString: '{2e47ba8b-6e05-41a9-87ce-ccfeabd45cb7}')!
+
 ClassDescriptionTest isAbstract: true!
+
 ClassDescriptionTest comment: ''!
+
 !ClassDescriptionTest categoriesForClass!Unclassified! !
+
 !ClassDescriptionTest methodsFor!
 
 allClassHierarchyInstancesDo: aMonadicValuable
@@ -26,6 +31,7 @@ testSubclasses
 			It does impose a cost when building classes, but I'm loathe to change it now for fear of what it will break."
 			self assert: each subclasses
 				equals: (each subclasses asSortedCollection: [:a :b | a name <= b name]) asArray]! !
+
 !ClassDescriptionTest categoriesForMethods!
 allClassHierarchyInstancesDo:!helpers!private! !
 testLessOrEqual!public!unit tests! !

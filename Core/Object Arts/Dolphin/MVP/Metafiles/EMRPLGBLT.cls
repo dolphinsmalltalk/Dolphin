@@ -5,7 +5,9 @@ ENHMETARECORD subclass: #EMRPLGBLT
 	classVariableNames: '_OffsetOf_aptlDest _OffsetOf_cbBitsMask _OffsetOf_cbBitsSrc _OffsetOf_cbBmiMask _OffsetOf_cbBmiSrc _OffsetOf_crBkColorSrc _OffsetOf_cxSrc _OffsetOf_cySrc _OffsetOf_iUsageMask _OffsetOf_iUsageSrc _OffsetOf_offBitsMask _OffsetOf_offBitsSrc _OffsetOf_offBmiMask _OffsetOf_offBmiSrc _OffsetOf_rclBounds _OffsetOf_xformSrc _OffsetOf_xMask _OffsetOf_xSrc _OffsetOf_yMask _OffsetOf_ySrc'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 EMRPLGBLT guid: (GUID fromString: '{cdae1f25-39c4-4555-985b-3b2cd197d3e0}')!
+
 EMRPLGBLT addClassConstant: '_OffsetOf_aptlDest' value: 16r18!
 EMRPLGBLT addClassConstant: '_OffsetOf_cbBitsMask' value: 16r88!
 EMRPLGBLT addClassConstant: '_OffsetOf_cbBitsSrc' value: 16r6C!
@@ -26,6 +28,7 @@ EMRPLGBLT addClassConstant: '_OffsetOf_xMask' value: 16r70!
 EMRPLGBLT addClassConstant: '_OffsetOf_xSrc' value: 16r30!
 EMRPLGBLT addClassConstant: '_OffsetOf_yMask' value: 16r74!
 EMRPLGBLT addClassConstant: '_OffsetOf_ySrc' value: 16r34!
+
 EMRPLGBLT comment: '<EMRPLGBLT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRPLGBLT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -59,7 +62,9 @@ struct tagEMRPLGBLT {
 	[helpstring("Size of the mask bitmap bits if any")] DWORD cbBitsMask;
 } EMRPLGBLT;
 '!
+
 !EMRPLGBLT categoriesForClass!Win32-Structs! !
+
 !EMRPLGBLT methodsFor!
 
 aptlDest
@@ -278,6 +283,7 @@ ySrc: anInteger
 	"Set the receiver's 'ySrc' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_ySrc put: anInteger! !
+
 !EMRPLGBLT categoriesForMethods!
 aptlDest!**compiled accessors**!public! !
 aptlDest:!**compiled accessors**!public! !
@@ -425,6 +431,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_PLGBLT! !
+
 !EMRPLGBLT class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

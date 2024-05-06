@@ -5,7 +5,9 @@ ADODB_Collection subclass: #ADODB_DynaCollection
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
+
 ADODB_DynaCollection guid: (IID fromString: '{00000513-0000-0010-8000-00aa006d2ea4}')!
+
 ADODB_DynaCollection comment: '`ADODB_DynaCollection` is a wrapper class for the COM interface ''ADODB._DynaCollection'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -31,7 +33,9 @@ interface _DynaCollection : _Collection
 };
 ```
 '!
+
 !ADODB_DynaCollection categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
+
 !ADODB_DynaCollection methodsFor!
 
 Append: object
@@ -56,6 +60,7 @@ Delete: index
 
 	<virtual stdcall: hresult 12 variant>
 	^self invalidCall: _failureCode! !
+
 !ADODB_DynaCollection categoriesForMethods!
 Append:!**auto generated**!COM Interfaces-_DynaCollection!public! !
 delete:!**auto generated**!methods!public! !
@@ -74,6 +79,7 @@ defineFunctions
 		defineFunction: #Delete:
 			argumentTypes: 'variant'
 ! !
+
 !ADODB_DynaCollection class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

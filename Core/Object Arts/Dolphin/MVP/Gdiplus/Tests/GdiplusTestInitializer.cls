@@ -5,9 +5,13 @@ GdiplusInitializer subclass: #GdiplusTestInitializer
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusTestInitializer guid: (GUID fromString: '{256bd680-0b78-486f-a0a0-99651f0b42a0}')!
+
 GdiplusTestInitializer comment: ''!
+
 !GdiplusTestInitializer categoriesForClass!Unclassified! !
+
 !GdiplusTestInitializer methodsFor!
 
 = aGdiplusTestInitializer
@@ -33,6 +37,7 @@ hash
 initialize
 	super initialize.
 	mockHandle := self! !
+
 !GdiplusTestInitializer categoriesForMethods!
 =!accessing!comparison!public! !
 arg1!accessing!public! !
@@ -47,6 +52,7 @@ initialize!initializing!public! !
 
 new
 	^self basicNew initialize! !
+
 !GdiplusTestInitializer class categoriesForMethods!
 new!instance creation!public! !
 !

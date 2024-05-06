@@ -5,9 +5,13 @@ DolphinTest subclass: #DateTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DateTest guid: (GUID fromString: '{b7ce73f6-9c8d-428d-8aae-86653eb3cf12}')!
+
 DateTest comment: ''!
+
 !DateTest categoriesForClass!Unclassified! !
+
 !DateTest methodsFor!
 
 testFromDays
@@ -77,6 +81,7 @@ testYyyymmdd
 
 
 	! !
+
 !DateTest categoriesForMethods!
 testFromDays!public!unit tests! !
 testFromSeconds!public!unit tests! !

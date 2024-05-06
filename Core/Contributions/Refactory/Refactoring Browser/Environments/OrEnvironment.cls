@@ -5,9 +5,13 @@ BrowserEnvironmentWrapper subclass: #OrEnvironment
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 OrEnvironment guid: (GUID fromString: '{72c876b4-b565-41f0-85a5-957532328c69}')!
+
 OrEnvironment comment: ''!
+
 !OrEnvironment categoriesForClass!Refactoring-Environment! !
+
 !OrEnvironment methodsFor!
 
 classesDo: aBlock
@@ -56,6 +60,7 @@ storeOn: aStream
 	aStream nextPutAll: ' | '.
 	oredEnvironment storeOn: aStream.
 	aStream nextPut: $)! !
+
 !OrEnvironment categoriesForMethods!
 classesDo:!accessing!public! !
 definesClass:!public!testing! !
@@ -74,6 +79,7 @@ onEnvironment: anEnvironment or: anotherEnvironment
 	^(self onEnvironment: anEnvironment)
 		oredEnvironment: anotherEnvironment;
 		yourself! !
+
 !OrEnvironment class categoriesForMethods!
 onEnvironment:or:!instance creation!public! !
 !

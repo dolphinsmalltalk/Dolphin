@@ -5,9 +5,13 @@ AbstractKeyboardTest subclass: #KeyboardTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 KeyboardTest guid: (GUID fromString: '{9cecaad7-bd3c-4b84-aff3-bbf32cb900fc}')!
+
 KeyboardTest comment: ''!
+
 !KeyboardTest categoriesForClass!Unclassified! !
+
 !KeyboardTest methodsFor!
 
 testInvariantMap
@@ -21,6 +25,7 @@ testInvariantMap
 			keyName := invariant keyNameFromVKey: each value ifNone: [].
 			self assert: keyName equals: each key].
 	self assert: ((invariant keyNameFromVKey: delete ifNone: []) beginsWith: 'DEL')! !
+
 !KeyboardTest categoriesForMethods!
 testInvariantMap!public! !
 !

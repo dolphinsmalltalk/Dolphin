@@ -5,10 +5,15 @@ Object subclass: #DolphinCompilerTestMethods
 	classVariableNames: 'Const'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DolphinCompilerTestMethods guid: (GUID fromString: '{c6d8841d-910d-434f-9fec-9d821dd7a202}')!
+
 DolphinCompilerTestMethods addClassConstant: 'Const' value: 16r1!
+
 DolphinCompilerTestMethods comment: ''!
+
 !DolphinCompilerTestMethods categoriesForClass!Kernel-Objects! !
+
 !DolphinCompilerTestMethods methodsFor!
 
 ~~ x
@@ -502,6 +507,7 @@ testWarnUndefinedSelector
 
 testWarnUnimplementedAbstractMethod
 	^self subclassResponsibility! !
+
 !DolphinCompilerTestMethods categoriesForMethods!
 ~~!public!unit tests! !
 ==!public!unit tests! !

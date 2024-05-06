@@ -5,10 +5,15 @@ ExternalAddress variableByteSubclass: #MemoryMappedFileView
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MemoryMappedFileView guid: (GUID fromString: '{ff57d052-5958-43e6-ab68-add0ac6bcb64}')!
+
 MemoryMappedFileView isIndirection: true!
+
 MemoryMappedFileView comment: 'MemoryMappedFileView is an <ExternalAddress> that represents a view onto a block of bytes from a memory-mapped file. It can be treated much like a normal pointer.'!
+
 !MemoryMappedFileView categoriesForClass!External-Data-Unstructured! !
+
 !MemoryMappedFileView methodsFor!
 
 basicFree
@@ -33,6 +38,7 @@ free
 		self beUnfinalizable.
 		self basicFree.
 		self clear]! !
+
 !MemoryMappedFileView categoriesForMethods!
 basicFree!private!realizing/unrealizing! !
 flush!operations!public! !

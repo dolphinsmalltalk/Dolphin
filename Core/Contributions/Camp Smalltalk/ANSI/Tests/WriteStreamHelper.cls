@@ -5,9 +5,13 @@ TestCaseHelper subclass: #WriteStreamHelper
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 WriteStreamHelper guid: (GUID fromString: '{e3ea43ed-5014-4da4-aa30-477dcb59dcd1}')!
+
 WriteStreamHelper comment: ''!
+
 !WriteStreamHelper categoriesForClass!Unclassified! !
+
 !WriteStreamHelper methodsFor!
 
 canonicalObject
@@ -19,6 +23,7 @@ object: anObject!
 protocol
 
 	^#'WriteStream'! !
+
 !WriteStreamHelper categoriesForMethods!
 canonicalObject!public! !
 object:!public! !
@@ -30,6 +35,7 @@ protocol!public! !
 initialize
 	"WriteStreamHelper  initialize"
 	super initialize! !
+
 !WriteStreamHelper class categoriesForMethods!
 initialize!public! !
 !

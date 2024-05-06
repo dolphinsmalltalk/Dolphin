@@ -5,9 +5,13 @@ IniFileAbstract subclass: #IniFile
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IniFile guid: (GUID fromString: '{c373c097-bfde-42ca-968c-28008b7eff49}')!
+
 IniFile comment: 'Implements <abstractDictionary> over a Windows .ini file'!
+
 !IniFile categoriesForClass!Unclassified! !
+
 !IniFile methodsFor!
 
 at: aString ifAbsent: aNiladicValuable
@@ -100,6 +104,7 @@ removeKey: aString ifAbsent: aNiladicValuable
 		writePrivateProfileSection: key
 		lpString: nil
 		lpFileName: filename) ifTrue: [value] ifFalse: [Win32Error signal]! !
+
 !IniFile categoriesForMethods!
 at:ifAbsent:!accessing!public! !
 at:put:!adding!public! !

@@ -5,10 +5,15 @@ Object subclass: #ObjectInside
 	classVariableNames: 'EdgePointResolution'
 	poolDictionaries: 'GdiplusConstants'
 	classInstanceVariableNames: ''!
+
 ObjectInside guid: (GUID fromString: '{c019a761-9b1c-4f55-8dd3-66b8e8b2864f}')!
+
 ObjectInside addClassConstant: 'EdgePointResolution' value: 16rA!
+
 ObjectInside comment: ''!
+
 !ObjectInside categoriesForClass!Kernel-Objects! !
+
 !ObjectInside methodsFor!
 
 alpha
@@ -200,6 +205,7 @@ y
 
 y: aNumber
 	self position: self position x @ aNumber! !
+
 !ObjectInside categoriesForMethods!
 alpha!accessing!public! !
 alpha:!accessing!public! !
@@ -254,6 +260,7 @@ fromImage: aGdiplusImage scaledBy: aFloatScale
 	aFloatScale = 1 ifTrue: [^self fromImage: aGdiplusImage].
 	scaledBitmap := GdiplusBitmap fromImage: aGdiplusImage scaledBy: aFloatScale.
 	^self fromImage: scaledBitmap! !
+
 !ObjectInside class categoriesForMethods!
 chooseFile!public! !
 fromBytes:!public! !

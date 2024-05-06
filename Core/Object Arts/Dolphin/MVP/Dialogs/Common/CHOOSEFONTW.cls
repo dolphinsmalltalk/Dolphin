@@ -5,7 +5,9 @@ CommonDialogStructure subclass: #CHOOSEFONTW
 	classVariableNames: '_OffsetOf_dwSize _OffsetOf_flags _OffsetOf_hDC _OffsetOf_hInstance _OffsetOf_hwndOwner _OffsetOf_iPointSize _OffsetOf_lCustData _OffsetOf_lpfnHook _OffsetOf_lpLogFont _OffsetOf_lpszStyle _OffsetOf_lpTemplateName _OffsetOf_nFontType _OffsetOf_nSizeMax _OffsetOf_nSizeMin _OffsetOf_rgbColors'
 	poolDictionaries: 'CommonDialogConstants'
 	classInstanceVariableNames: ''!
+
 CHOOSEFONTW guid: (GUID fromString: '{87b4c5d2-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 CHOOSEFONTW addClassConstant: '_OffsetOf_dwSize' value: 16r0!
 CHOOSEFONTW addClassConstant: '_OffsetOf_flags' value: 16r14!
 CHOOSEFONTW addClassConstant: '_OffsetOf_hDC' value: 16r8!
@@ -21,11 +23,14 @@ CHOOSEFONTW addClassConstant: '_OffsetOf_nFontType' value: 16r30!
 CHOOSEFONTW addClassConstant: '_OffsetOf_nSizeMax' value: 16r38!
 CHOOSEFONTW addClassConstant: '_OffsetOf_nSizeMin' value: 16r34!
 CHOOSEFONTW addClassConstant: '_OffsetOf_rgbColors' value: 16r18!
+
 CHOOSEFONTW comment: 'CHOOSEFONT is the class of <ExternalStructure> which represent the Windows Common Dialog structure of the same name.
 
 CHOOSEFONT is used in conjunction with <FontDialog> to pop a common file dialog to select a font.
 '!
+
 !CHOOSEFONTW categoriesForClass!External-Data-Structured-Win32! !
+
 !CHOOSEFONTW methodsFor!
 
 color
@@ -105,6 +110,7 @@ rgbColors: anInteger
 	"Set the receiver's 'rgbColors' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_rgbColors put: anInteger! !
+
 !CHOOSEFONTW categoriesForMethods!
 color!public! !
 color:!public! !
@@ -169,6 +175,7 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #hwndOwner #hDC #lpLogFont #iPointSize #flags #rgbColors #lpfnHook #lpszStyle #nFontType #nSizeMin #nSizeMax)! !
+
 !CHOOSEFONTW class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

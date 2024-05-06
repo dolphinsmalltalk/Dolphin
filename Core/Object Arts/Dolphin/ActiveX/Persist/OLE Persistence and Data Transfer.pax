@@ -10,7 +10,6 @@ This package is as yet incomplete.'.
 
 package basicPackageVersion: '7.1'.
 
-
 package classNames
 	add: #BIND_OPTS;
 	add: #BIND_OPTS2;
@@ -65,84 +64,96 @@ IUnknown subclass: #IAdviseSink
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IUnknown subclass: #IBindCtx
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IUnknown subclass: #IDataObject
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IUnknown subclass: #IRunningObjectTable
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IAdviseSink subclass: #IAdviseSink2
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IAdviseSink subclass: #IAdviseSinkEx
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IEnumUnknown subclass: #IEnumMoniker
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IPersistStream subclass: #IMoniker
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 OLEStructure subclass: #BIND_OPTS
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_dwSize _OffsetOf_dwTickCountDeadline _OffsetOf_grfFlags _OffsetOf_grfMode'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 OLEStructure subclass: #BINDINFO
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_cbstgmedData _OffsetOf_dwBindVerb _OffsetOf_dwSize _OffsetOf_grfBindInfoF _OffsetOf_stgmedData _OffsetOf_szCustomVerb _OffsetOf_szExtraInfo'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 OLEStructure subclass: #DVTARGETDEVICE
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_tdDeviceNameOffset _OffsetOf_tdDriverNameOffset _OffsetOf_tdExtDevmodeOffset _OffsetOf_tdPortNameOffset _OffsetOf_tdSize'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 OLEStructure subclass: #FORMATETC
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_cfFormat _OffsetOf_dwAspect _OffsetOf_lindex _OffsetOf_ptd _OffsetOf_tymed'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 OLEStructure subclass: #STATDATA
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_advf _OffsetOf_dwConnection _OffsetOf_formatetc _OffsetOf_pAdvSink'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 BIND_OPTS subclass: #BIND_OPTS2
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_dwClassContext _OffsetOf_dwTrackFlags _OffsetOf_locale _OffsetOf_pServerInfo'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 BIND_OPTS2 subclass: #BIND_OPTS3
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_hwnd'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 OLEFinalizableStructure subclass: #STGMEDIUM
 	instanceVariableNames: 'value'
 	classVariableNames: '_OffsetOf_handle _OffsetOf_lpszFileName _OffsetOf_pstg _OffsetOf_pstm _OffsetOf_pUnkForRelease _OffsetOf_tymed GetSelectors'
 	poolDictionaries: 'OLEPersistConstants'
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -216,6 +227,7 @@ releaseStgMedium: aSTGMEDIUM
 
 	<stdcall: void ReleaseStgMedium STGMEDIUM* >
 	^self invalidCall: _failureCode! !
+
 !OLELibrary categoriesForMethods!
 createBindCtx:ppbc:!OLE Functions-Persistent Objects!private! !
 createClassMoniker:ppmk:!**auto generated**!public! !

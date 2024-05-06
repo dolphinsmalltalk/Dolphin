@@ -5,9 +5,13 @@ PresenterTest subclass: #SliderTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SliderTest guid: (GUID fromString: '{7befb3d7-8dc5-4dbb-92c2-7edaab76f305}')!
+
 SliderTest comment: ''!
+
 !SliderTest categoriesForClass!Unclassified! !
+
 !SliderTest methodsFor!
 
 classToTest
@@ -73,6 +77,7 @@ verifyUpgradedView: anInteger
 
 vuFile
 	^'NumberPresenter.Slider view.vu'! !
+
 !SliderTest categoriesForMethods!
 classToTest!helpers!private! !
 oldDolphinVersionsForStbUpgrade!constants!private! !

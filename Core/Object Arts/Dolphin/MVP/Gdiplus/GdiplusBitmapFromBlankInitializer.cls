@@ -5,9 +5,13 @@ GdiplusInitializer subclass: #GdiplusBitmapFromBlankInitializer
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusBitmapFromBlankInitializer guid: (GUID fromString: '{0a5beb4b-18f8-4ebe-bb4e-68ce5d088f33}')!
+
 GdiplusBitmapFromBlankInitializer comment: ''!
+
 !GdiplusBitmapFromBlankInitializer categoriesForClass!Unclassified! !
+
 !GdiplusBitmapFromBlankInitializer methodsFor!
 
 createHandle
@@ -46,6 +50,7 @@ width: widthInteger height: heightInteger format: aPixelFormat
 	height := heightInteger.
 	format := aPixelFormat.
 	^self! !
+
 !GdiplusBitmapFromBlankInitializer categoriesForMethods!
 createHandle!private!realizing/unrealizing! !
 gdiplusConstructorErrorDescription!constants!private! !
@@ -59,6 +64,7 @@ width: width height: height format: aPixelFormat
 		width: width
 		height: height
 		format: aPixelFormat! !
+
 !GdiplusBitmapFromBlankInitializer class categoriesForMethods!
 width:height:format:!instance creation!public! !
 !

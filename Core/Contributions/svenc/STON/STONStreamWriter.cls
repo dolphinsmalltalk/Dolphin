@@ -5,10 +5,14 @@ Object subclass: #STONStreamWriter
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 STONStreamWriter guid: (GUID fromString: '{6bdb0b54-8382-4d5b-b901-b52c3b1fdb07}')!
+
 STONStreamWriter comment: 'STONStreamWriter helps in streaming writing STON representations.
 This is an abstract class.'!
+
 !STONStreamWriter categoriesForClass!STON-Core-Writer! !
+
 !STONStreamWriter methodsFor!
 
 initialize
@@ -17,6 +21,7 @@ initialize
 
 on: stonWriter
 	writer := stonWriter! !
+
 !STONStreamWriter categoriesForMethods!
 initialize!initialize/release!public! !
 on:!initialize/release!public! !
@@ -31,6 +36,7 @@ on: stonWriter
 	^ self new
 		on: stonWriter;
 		yourself! !
+
 !STONStreamWriter class categoriesForMethods!
 new!public! !
 on:!instance creation!public! !

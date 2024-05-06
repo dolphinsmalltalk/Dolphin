@@ -5,9 +5,13 @@ BYTE subclass: #BOOLEAN
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 BOOLEAN guid: (GUID fromString: '{35efc105-16f9-425a-94d7-298ebbb17d36}')!
+
 BOOLEAN comment: ''!
+
 !BOOLEAN categoriesForClass!Unclassified! !
+
 !BOOLEAN methodsFor!
 
 value
@@ -19,6 +23,7 @@ value: aBoolean
 	"Set the receiver's 'value' field to the value of the argument, aBoolean"
 
 	bytes byteAtOffset: _OffsetOf_value put: aBoolean asParameter! !
+
 !BOOLEAN categoriesForMethods!
 value!**compiled accessors**!public! !
 value:!**compiled accessors**!public! !
@@ -34,6 +39,7 @@ defineFields
 
 fileOutStem
 	^super fileOutStem , '_struct'! !
+
 !BOOLEAN class categoriesForMethods!
 defineFields!public!template definition! !
 fileOutStem!development!private!source filing! !

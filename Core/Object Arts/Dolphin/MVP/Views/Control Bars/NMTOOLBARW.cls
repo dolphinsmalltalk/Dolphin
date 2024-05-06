@@ -5,16 +5,21 @@ NMHDR subclass: #NMTOOLBARW
 	classVariableNames: '_OffsetOf_cchText _OffsetOf_iItem _OffsetOf_pszText _OffsetOf_tbButton'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 NMTOOLBARW guid: (GUID fromString: '{87b4c629-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 NMTOOLBARW addClassConstant: '_OffsetOf_cchText' value: 16r24!
 NMTOOLBARW addClassConstant: '_OffsetOf_iItem' value: 16rC!
 NMTOOLBARW addClassConstant: '_OffsetOf_pszText' value: 16r28!
 NMTOOLBARW addClassConstant: '_OffsetOf_tbButton' value: 16r10!
+
 NMTOOLBARW comment: 'NMTOOLBARW is the class of <ExternalStructure> which represent the Windows Common Control structure of the same name.
 
 NMTOOLBARW accompanies certain notifications that are sent by a Toolbar control to its parent, e.g. when a drop-down button is pressed, such as the browser history list buttons (TBN_DROPDOWN). See the Win32 documentation for further details.
 '!
+
 !NMTOOLBARW categoriesForClass!External-Data-Structured-Win32! !
+
 !NMTOOLBARW methodsFor!
 
 cchText
@@ -36,6 +41,7 @@ tbButton
 	"Answer the <TBBUTTON> value of the receiver's 'tbButton' field."
 
 	^TBBUTTON fromAddress: bytes yourAddress + _OffsetOf_tbButton! !
+
 !NMTOOLBARW categoriesForMethods!
 cchText!**compiled accessors**!public! !
 iItem!**compiled accessors**!public! !
@@ -67,6 +73,7 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #iItem #tbButton #cchText #pszText)! !
+
 !NMTOOLBARW class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

@@ -5,9 +5,13 @@ STONCStyleCommentsSkipStream subclass: #DolphinSTONCStyleCommentsSkipStream
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DolphinSTONCStyleCommentsSkipStream guid: (GUID fromString: '{c5873f76-4d78-4e57-9352-92f7bc94b1f3}')!
+
 DolphinSTONCStyleCommentsSkipStream comment: ''!
+
 !DolphinSTONCStyleCommentsSkipStream categoriesForClass!STON-Core-Utilities! !
+
 !DolphinSTONCStyleCommentsSkipStream methodsFor!
 
 consumeToEOL
@@ -62,6 +66,7 @@ nextNonCommentChar
 				[self consumeComment.
 				stream nextAvailable]
 			ifFalse: [char]! !
+
 !DolphinSTONCStyleCommentsSkipStream categoriesForMethods!
 consumeToEOL!private! !
 insideString!private! !

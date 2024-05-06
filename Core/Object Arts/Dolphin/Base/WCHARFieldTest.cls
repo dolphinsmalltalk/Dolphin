@@ -5,9 +5,13 @@ ExternalFieldTest subclass: #WCHARFieldTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 WCHARFieldTest guid: (GUID fromString: '{5fae7240-e0b0-4632-b957-750ef821559c}')!
+
 WCHARFieldTest comment: ''!
+
 !WCHARFieldTest categoriesForClass!Unclassified! !
+
 !WCHARFieldTest methodsFor!
 
 testReadFrom
@@ -40,6 +44,7 @@ testWriteInto
 	subject writeInto: struct value: (dolphinString at: 2).
 	actual := Utf16String fromByteArray: struct bytes.
 	self assert: actual equals: dolphinString! !
+
 !WCHARFieldTest categoriesForMethods!
 testReadFrom!public! !
 testWriteInto!public! !

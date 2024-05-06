@@ -5,9 +5,13 @@ StSemanticScope subclass: #StClassScope
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StClassScope guid: (GUID fromString: '{b221d07f-4ae8-400c-b48e-28b90fca0050}')!
+
 StClassScope comment: ''!
+
 !StClassScope categoriesForClass!Kernel-Objects! !
+
 !StClassScope methodsFor!
 
 lookupVariable: anStVariableNode
@@ -46,6 +50,7 @@ superVariable
 			[superVariable := (StSuperVariable new)
 						scope: self;
 						yourself]! !
+
 !StClassScope categoriesForMethods!
 lookupVariable:!operations!public! !
 methodClass!accessing!public! !
@@ -58,6 +63,7 @@ superVariable!operations!public! !
 
 methodClass: aClassDescription
 	^self new setMethodClass: aClassDescription! !
+
 !StClassScope class categoriesForMethods!
 methodClass:!instance creation!public! !
 !

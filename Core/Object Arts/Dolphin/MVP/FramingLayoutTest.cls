@@ -5,9 +5,13 @@ LayoutManagerTest subclass: #FramingLayoutTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 FramingLayoutTest guid: (GUID fromString: '{fa16fdd5-bd9e-4198-bc61-f33e43c14edc}')!
+
 FramingLayoutTest comment: ''!
+
 !FramingLayoutTest categoriesForClass!Unclassified! !
+
 !FramingLayoutTest methodsFor!
 
 layoutManagerClass
@@ -92,6 +96,7 @@ testResizeParentRelative
 				+ 5.
 	shell extent: (shell calcExtentFromClientExtent: marginExtents).
 	self assert: button rectangle extent equals: 5 @ 5! !
+
 !FramingLayoutTest categoriesForMethods!
 layoutManagerClass!private!unit tests! !
 testCircularEdgeConstraint!public!unit tests! !

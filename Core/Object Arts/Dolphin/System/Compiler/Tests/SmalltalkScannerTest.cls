@@ -5,9 +5,13 @@ DolphinTest subclass: #SmalltalkScannerTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SmalltalkScannerTest guid: (GUID fromString: '{f7b5ab2e-148e-4a76-acbc-60ae422b54ef}')!
+
 SmalltalkScannerTest comment: ''!
+
 !SmalltalkScannerTest categoriesForClass!Unclassified! !
+
 !SmalltalkScannerTest methodsFor!
 
 assertToken: aStToken isChar: aCharacter
@@ -314,6 +318,7 @@ testSymbolScanning
 			self assert: token sourceInterval equals: (1 to: stop).
 			self deny: subject atEnd].
 	'#--'! !
+
 !SmalltalkScannerTest categoriesForMethods!
 assertToken:isChar:!helpers!private! !
 scan:tokenClass:valueClass:!helpers!private! !

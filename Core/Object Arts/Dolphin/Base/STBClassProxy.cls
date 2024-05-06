@@ -5,9 +5,13 @@ STBProxy subclass: #STBClassProxy
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 STBClassProxy guid: (GUID fromString: '{87b4c6ea-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 STBClassProxy comment: ''!
+
 !STBClassProxy categoriesForClass!System-Binary storage! !
+
 !STBClassProxy methodsFor!
 
 locatorKey: aString
@@ -43,6 +47,7 @@ stbFixup: inFiler at: anInteger
 
 withClassLocator: aClassLocator
 	^(Smalltalk lookup: #ClassStub) ifNotNil: [:classStub | classStub withClassLocator: aClassLocator]! !
+
 !STBClassProxy categoriesForMethods!
 locatorKey:!accessing!private! !
 packageName:!accessing!private! !
@@ -77,6 +82,7 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^1! !
+
 !STBClassProxy class categoriesForMethods!
 forClass:!instance creation!public! !
 stbConvertFrom:!binary filing!public! !

@@ -5,9 +5,13 @@ FILETIME subclass: #LocalFILETIME
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 LocalFILETIME guid: (GUID fromString: '{87b4c623-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 LocalFILETIME comment: 'LocalFILETIME is an ExternalStructure class to represent the Win32 FILETIMEs that are in local time, as opposed to the usual UTC of normal FILETIMEs. See <FILETIME> for further details.'!
+
 !LocalFILETIME categoriesForClass!External-Data-Structured-Win32! !
+
 !LocalFILETIME methodsFor!
 
 asLocalTime
@@ -25,6 +29,7 @@ asUTC
 
 	^FILETIME fromLocalTime: self
 ! !
+
 !LocalFILETIME categoriesForMethods!
 asLocalTime!converting!public! !
 asSYSTEMTIME!converting!public! !
@@ -57,6 +62,7 @@ now
 	"We can get away with passing in the same buffer for output as the input"
 	(lib fileTimeToLocalTime: answer lpLocalFileTime: answer) ifFalse: [lib systemError].
 	^answer! !
+
 !LocalFILETIME class categoriesForMethods!
 fromSYSTEMTIME:!instance creation!public! !
 now!instance creation!public! !

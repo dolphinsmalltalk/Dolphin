@@ -5,10 +5,15 @@ Object subclass: #AbstractRecentMenu
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AbstractRecentMenu guid: (GUID fromString: '{ab893c67-84d1-4718-9d83-44266284c927}')!
+
 AbstractRecentMenu isAbstract: true!
+
 AbstractRecentMenu comment: ''!
+
 !AbstractRecentMenu categoriesForClass!Kernel-Objects! !
+
 !AbstractRecentMenu methodsFor!
 
 addToRecentList: aRecentString 
@@ -82,6 +87,7 @@ setRecentList: anOrderedCollectionOfFilenameStrings
 	"Private - Save anOrderedCollectionOfFilenameStrings as the list of recently opened files."
 
 	self subclassResponsibility! !
+
 !AbstractRecentMenu categoriesForMethods!
 addToRecentList:!public! !
 clearRecentList!public! !
@@ -102,6 +108,7 @@ setRecentList:!helpers!private! !
 
 new
 	^super new initialize! !
+
 !AbstractRecentMenu class categoriesForMethods!
 new!instance creation!public! !
 !

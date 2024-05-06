@@ -5,11 +5,15 @@ IUnknown subclass: #IErrorInfo
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IErrorInfo guid: (IID fromString: '{1cf2b120-547d-101b-8e65-08002b2bd119}')!
+
 IErrorInfo comment: '<IErrorInfo> is a wrapper class for the standard OLE Automation interface IErrorInfo.
 
 IErrorInfo is the interface used to make available extended error information to a client when an exception occurs and an HRESULT failure code is returned.'!
+
 !IErrorInfo categoriesForClass!COM-Interfaces! !
+
 !IErrorInfo methodsFor!
 
 description
@@ -145,6 +149,7 @@ sourceInterface
 	answer := IID new.
 	self GetGUID: answer.
 	^answer! !
+
 !IErrorInfo categoriesForMethods!
 description!accessing!public! !
 excepInfo!accessing!public! !
@@ -180,6 +185,7 @@ defineFunctions
 		defineFunction: #GetHelpContext:
 			argumentTypes: 'dword*'
 ! !
+
 !IErrorInfo class categoriesForMethods!
 defineFunctions!**auto generated**!public! !
 !

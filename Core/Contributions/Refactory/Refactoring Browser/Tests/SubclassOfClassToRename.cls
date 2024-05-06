@@ -5,9 +5,13 @@ ClassToRename subclass: #SubclassOfClassToRename
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SubclassOfClassToRename guid: (GUID fromString: '{b07793cb-e421-4358-b250-e15c44d940e5}')!
+
 SubclassOfClassToRename comment: ''!
+
 !SubclassOfClassToRename categoriesForClass!Refactory-Test data! !
+
 !SubclassOfClassToRename methodsFor!
 
 calls
@@ -30,6 +34,7 @@ rewriteRule1: anObject
 
 symbolReference
 	^#ClassToRename! !
+
 !SubclassOfClassToRename categoriesForMethods!
 calls!accessing!public! !
 calls1!accessing!public! !

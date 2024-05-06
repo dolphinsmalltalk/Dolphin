@@ -5,9 +5,13 @@ CollectionTest subclass: #SetANSITest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SetANSITest guid: (GUID fromString: '{3329b13f-02b2-4a1f-a5dd-0bafd43b261a}')!
+
 SetANSITest comment: ''!
+
 !SetANSITest categoriesForClass!Unclassified! !
+
 !SetANSITest methodsFor!
 
 canonicalElement
@@ -45,6 +49,7 @@ testXaddX
 		should: [:r | co size = oldSize]
 		conformTo: #Set
 		selector: #add:! !
+
 !SetANSITest categoriesForMethods!
 canonicalElement!public! !
 canonicalObject!public! !
@@ -59,6 +64,7 @@ testXaddX!public! !
 helperClassesDo: aBlock
 	super helperClassesDo: aBlock.
 	aBlock value: ExtensibleCollectionHelper.! !
+
 !SetANSITest class categoriesForMethods!
 helperClassesDo:!public! !
 !

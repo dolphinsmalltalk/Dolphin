@@ -5,14 +5,19 @@ OLEStructure subclass: #CATEGORYINFO
 	classVariableNames: '_OffsetOf_catid _OffsetOf_lcid _OffsetOf_szDescription'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 CATEGORYINFO guid: (GUID fromString: '{a8eebb01-0149-481c-8b90-1eeba6516286}')!
+
 CATEGORYINFO addClassConstant: '_OffsetOf_catid' value: 16r0!
 CATEGORYINFO addClassConstant: '_OffsetOf_lcid' value: 16r10!
 CATEGORYINFO addClassConstant: '_OffsetOf_szDescription' value: 16r14!
+
 CATEGORYINFO comment: '<CATEGORYINFO> is an <ExternalStructure> class to wrap the struct ''COMCAT.CATEGORYINFO'' from type information in the ''OLE Component Categories Library'' library.
 
 CATEGORYINFO is used in conjunction with ICatInformation>>EnumCategories() to enumerate details of the categories registered on the host machine.'!
+
 !CATEGORYINFO categoriesForClass!COM Category Manager! !
+
 !CATEGORYINFO methodsFor!
 
 catid
@@ -72,6 +77,7 @@ szDescription: anUtf16String
 		to: _OffsetOf_szDescription + size
 		startingAt: 1.
 	bytes wordAtOffset: _OffsetOf_szDescription + size put: 0! !
+
 !CATEGORYINFO categoriesForMethods!
 catid!**compiled accessors**!public! !
 catid:!**compiled accessors**!public! !
@@ -108,6 +114,7 @@ defineFields
 
 getFieldNames
 	^#(#catid #lcid #szDescription)! !
+
 !CATEGORYINFO class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

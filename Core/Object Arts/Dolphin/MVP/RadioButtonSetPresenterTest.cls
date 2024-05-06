@@ -5,9 +5,13 @@ DolphinTest subclass: #RadioButtonSetPresenterTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RadioButtonSetPresenterTest guid: (GUID fromString: '{0b5f0660-ff27-42a8-a388-e35b1b76b3e4}')!
+
 RadioButtonSetPresenterTest comment: ''!
+
 !RadioButtonSetPresenterTest categoriesForClass!Unclassified! !
+
 !RadioButtonSetPresenterTest methodsFor!
 
 selectedButton
@@ -76,6 +80,7 @@ testValueSelection
 	radioSet value: nil.
 	self assertIsNil: radioSet value.
 	self assertIsNil: self selectedButton! !
+
 !RadioButtonSetPresenterTest categoriesForMethods!
 selectedButton!private!unit tests! !
 selectedButtons!private!unit tests! !

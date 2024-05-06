@@ -3,7 +3,6 @@ package := Package name: 'SSW Widget Enhancements Tests'.
 package paxVersion: 1;
 	basicComment: ''.
 
-
 package classNames
 	add: #TextAndImageButtonTest;
 	yourself.
@@ -29,11 +28,6 @@ TestCase subclass: #TextAndImageButtonTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

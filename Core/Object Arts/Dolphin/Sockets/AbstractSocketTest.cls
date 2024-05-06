@@ -5,10 +5,15 @@ DolphinTest subclass: #AbstractSocketTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AbstractSocketTest guid: (GUID fromString: '{4b35f00d-f9e0-442d-84fd-4721213f82fd}')!
+
 AbstractSocketTest isAbstract: true!
+
 AbstractSocketTest comment: ''!
+
 !AbstractSocketTest categoriesForClass!Unclassified! !
+
 !AbstractSocketTest methodsFor!
 
 serverSocketClass
@@ -29,6 +34,7 @@ testQueryPort
 	| s |
 	s := self serverSocketClass port: 1000.
 	[self assert: s queryPort = 1000] ensure: [s close]! !
+
 !AbstractSocketTest categoriesForMethods!
 serverSocketClass!constants!private! !
 setUp!private!running! !
@@ -43,6 +49,7 @@ isAbstract
 	TestCase instances built from it"
 
 	^self == ##(self)! !
+
 !AbstractSocketTest class categoriesForMethods!
 isAbstract!public!Testing! !
 !

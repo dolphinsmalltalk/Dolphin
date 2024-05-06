@@ -5,9 +5,13 @@ DBSchemaStatement subclass: #DBProceduresStatement
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DBProceduresStatement guid: (GUID fromString: '{3dee7e8f-6c0c-403c-923a-7677f5e7c810}')!
+
 DBProceduresStatement comment: 'DBProceduresStatement is a specialized <DBSchemaStatement> for querying about the stored procedures in a database.'!
+
 !DBProceduresStatement categoriesForClass!ODBC Interface! !
+
 !DBProceduresStatement methodsFor!
 
 executeStatement
@@ -28,6 +32,7 @@ procedureName
 
 procedureName: aString
 	procedureName := aString! !
+
 !DBProceduresStatement categoriesForMethods!
 executeStatement!operations!private! !
 procedureName!accessing!public! !

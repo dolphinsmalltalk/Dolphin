@@ -5,9 +5,13 @@ View subclass: #GdiplusDoubleBufferedView
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusDoubleBufferedView guid: (GUID fromString: '{3c1e8025-eba8-41c4-bd23-e8ba0536f783}')!
+
 GdiplusDoubleBufferedView comment: ''!
+
 !GdiplusDoubleBufferedView categoriesForClass!Unclassified! !
+
 !GdiplusDoubleBufferedView methodsFor!
 
 backSurface
@@ -111,6 +115,7 @@ wmNcHitTest: message wParam: wParam lParam: lParam
 		wmNcHitTest: message
 		wParam: wParam
 		lParam: lParam! !
+
 !GdiplusDoubleBufferedView categoriesForMethods!
 backSurface!accessing!public! !
 flip!operations!public! !
@@ -132,6 +137,7 @@ wmNcHitTest:wParam:lParam:!event handling-win32!private! !
 
 defaultModel	
 	^ListModel new! !
+
 !GdiplusDoubleBufferedView class categoriesForMethods!
 defaultModel!public! !
 !

@@ -5,7 +5,9 @@ CommonDialogStructure subclass: #BROWSEINFOW
 	classVariableNames: '_OffsetOf_flags _OffsetOf_hwndOwner _OffsetOf_iImage _OffsetOf_lParam _OffsetOf_lpfnHook _OffsetOf_lpszTitle _OffsetOf_pidlRoot _OffsetOf_pszDisplayName'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 BROWSEINFOW guid: (GUID fromString: '{87b4c5cc-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 BROWSEINFOW addClassConstant: '_OffsetOf_flags' value: 16r10!
 BROWSEINFOW addClassConstant: '_OffsetOf_hwndOwner' value: 16r0!
 BROWSEINFOW addClassConstant: '_OffsetOf_iImage' value: 16r1C!
@@ -14,10 +16,13 @@ BROWSEINFOW addClassConstant: '_OffsetOf_lpfnHook' value: 16r14!
 BROWSEINFOW addClassConstant: '_OffsetOf_lpszTitle' value: 16rC!
 BROWSEINFOW addClassConstant: '_OffsetOf_pidlRoot' value: 16r4!
 BROWSEINFOW addClassConstant: '_OffsetOf_pszDisplayName' value: 16r8!
+
 BROWSEINFOW comment: 'BROWSEINFO is an <ExternalStructure> class which represents the Windows common dialog structure of the same name.
 
 BROWSEINFO is used in conjunction with the BrowseFolderDialog.'!
+
 !BROWSEINFOW categoriesForClass!External-Data-Structured-Win32! !
+
 !BROWSEINFOW methodsFor!
 
 displayName
@@ -87,6 +92,7 @@ title: text
 	We must hold onto the string to prevent it being prematurely GC'd."
 
 	self lpszTitle: (title := text asUtf16String)! !
+
 !BROWSEINFOW categoriesForMethods!
 displayName!accessing!public! !
 flags!**compiled accessors**!public! !
@@ -133,6 +139,7 @@ defineFields
 
 getFieldNames
 	^#(#hwndOwner #pidlRoot #pszDisplayName #lpszTitle #flags #lpfnHook)! !
+
 !BROWSEINFOW class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

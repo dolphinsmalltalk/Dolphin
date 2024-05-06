@@ -5,12 +5,16 @@ ValuePresenter subclass: #RadioButtonSetPresenter
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RadioButtonSetPresenter guid: (GUID fromString: '{40498d60-542d-11d3-998b-d5ca2c3c1d61}')!
+
 RadioButtonSetPresenter comment: 'RadioButtonSetPresenter is a <valuePresenter> that displays a <valueModel> onto a <Symbol>, where the symbol is the name of the selected <RadioButton> in the set. A RadioButtonSetPresenter expects to be connected to a container view, the child views of which are <RadioButton>s. 
 Only a single <RadioButton> in the set can be selected at any time. When the radio button selection in the set changes (e.g. as a result of user selection), the associated <valueModel> is updated and hence generates a #valueChanged event.
 
 RadioButtonSetPresenter is based on a contribution from Ian Bartholomew.'!
+
 !RadioButtonSetPresenter categoriesForClass!MVP-Presenters!MVP-Resources-Containers! !
+
 !RadioButtonSetPresenter methodsFor!
 
 createSchematicWiring
@@ -88,6 +92,7 @@ radioButtons
 			it can go into an infinite loop."
 			ownedRadioButtons keysAndValuesDo: [:i :each | each isGroupStop: i == 1]].
 	^ownedRadioButtons! !
+
 !RadioButtonSetPresenter categoriesForMethods!
 createSchematicWiring!initializing!public! !
 disable:!public!states-changing! !
@@ -113,6 +118,7 @@ resource_Default_view
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ContainerView) 34 15 nil nil 34 2 8 1409286144 131073 416 nil 327686 ##(Smalltalk.Color) #default nil 5 nil nil nil 416 656390 ##(Smalltalk.GridLayout) 1 3 1 1 170 192 34 6 410 ##(Smalltalk.RadioButton) 34 16 nil 416 34 2 8 1140924425 1 576 721990 2 ##(Smalltalk.ValueHolder) nil nil 1376774 ##(Smalltalk.PluggableSearchPolicy) 459270 ##(Smalltalk.Message) #= 8 #() 706 #hash 8 #() false 496 nil 5 nil nil nil 576 nil 8 1903885040 852486 ##(Smalltalk.NullConverter) nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 1 127 946 181 65 576 898 #text: 34 1 8 'Option 3' 576 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 63 0 0 0 90 0 0 0 95 0 0 0] 8 #() 946 193 193 nil 27 8 'option3' 410 ##(Smalltalk.RadioButton) 34 16 nil 416 34 2 8 1141055497 1 1136 642 nil nil 674 706 #= 8 #() 706 #hash 8 #() false 496 nil 5 nil nil nil 1136 nil 8 1903885040 802 nil nil nil 834 138 144 34 2 898 #createAt:extent: 34 2 946 1 1 946 181 65 1136 898 #text: 34 1 8 'Option 1' 1136 1042 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 90 0 0 0 32 0 0 0] 8 #() 1104 nil 27 8 'option1' 410 ##(Smalltalk.RadioButton) 34 16 nil 416 34 2 8 1140924425 1 1552 642 nil nil 674 706 #= 8 #() 706 #hash 8 #() false 496 nil 5 nil nil nil 1552 nil 8 1903885040 802 nil nil nil 834 138 144 34 2 898 #createAt:extent: 34 2 946 1 65 946 181 63 1552 898 #text: 34 1 8 'Option 2' 1552 1042 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 32 0 0 0 90 0 0 0 63 0 0 0] 8 #() 1104 nil 27 8 'option2' nil 834 138 144 34 1 898 #createAt:extent: 34 2 946 3839 21 946 181 191 416 1042 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 217 7 0 0 105 0 0 0] 34 3 1136 1552 576 1104 nil 27 )! !
+
 !RadioButtonSetPresenter class categoriesForMethods!
 resource_Default_view!public!resources-views! !
 !

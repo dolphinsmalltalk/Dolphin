@@ -5,13 +5,19 @@ Object subclass: #ExternalCallback
 	classVariableNames: 'ArgSizeOffset MaxThunks Registry ThunkBase ThunkSize'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 ExternalCallback guid: (GUID fromString: '{87b4c486-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 ExternalCallback isAbstract: true!
+
 ExternalCallback addClassConstant: 'ArgSizeOffset' value: 16rE!
 ExternalCallback addClassConstant: 'MaxThunks' value: 16r100!
 ExternalCallback addClassConstant: 'ThunkSize' value: 16r10!
+
 ExternalCallback comment: ''!
+
 !ExternalCallback categoriesForClass!System-Support! !
+
 !ExternalCallback methodsFor!
 
 argumentCount
@@ -100,6 +106,7 @@ valueWithArgumentsAt: anAddress
 	the ExternalLibrary class)."
 
 	^self subclassResponsibility! !
+
 !ExternalCallback categoriesForMethods!
 argumentCount!accessing!private! !
 argumentsSize!accessing!private! !
@@ -278,6 +285,7 @@ uninitializeBeforeRemove
 
 unitializeSubclass: anExternalCallbackClass
 	! !
+
 !ExternalCallback class categoriesForMethods!
 allocateThunks!helpers!private! !
 block:argumentTypes:!instance creation!public! !

@@ -5,9 +5,13 @@ Object subclass: #ExceptionSet
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExceptionSet guid: (GUID fromString: '{87b4c485-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 ExceptionSet comment: 'ExceptionSet is a system class forming part of the Dolphin exception handling system''s implementation. It is used to collect together multiple <exceptionSelector>s specified in a comma separated list as the first argument to a #on:do: message to a <niladicBlock>.'!
+
 !ExceptionSet categoriesForClass!Kernel-Exception Handling! !
+
 !ExceptionSet methodsFor!
 
 , anotherException
@@ -41,6 +45,7 @@ selectors: anObject
 	This method was automatically generated, but may be modified."
 
 	selectors := anObject! !
+
 !ExceptionSet categoriesForMethods!
 ,!adding!public! !
 handles:!accessing!public! !
@@ -63,6 +68,7 @@ selectors: anArray
 	"Private - Answer a new instance of the receiver containing representing a set of the <exceptionSelector>s in the <Array> argument."
 
 	^super new selectors: anArray! !
+
 !ExceptionSet class categoriesForMethods!
 new!instance creation!public! !
 selectors:!instance creation!private! !

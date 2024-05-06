@@ -5,11 +5,14 @@ ExternalRectangle subclass: #RECTF
 	classVariableNames: '_OffsetOf_height _OffsetOf_width _OffsetOf_x _OffsetOf_y'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RECTF guid: (GUID fromString: '{9a449c4a-8ae9-45d9-b94d-1e1d91fedcd5}')!
+
 RECTF addClassConstant: '_OffsetOf_height' value: 16rC!
 RECTF addClassConstant: '_OffsetOf_width' value: 16r8!
 RECTF addClassConstant: '_OffsetOf_x' value: 16r0!
 RECTF addClassConstant: '_OffsetOf_y' value: 16r4!
+
 RECTF comment: '<RECTF> is an <ExternalStructure> class to wrap the struct ''Gdiplus.RECTF'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
@@ -26,7 +29,9 @@ struct tagRECTF {
 	float Height;
 } RECTF;
 '!
+
 !RECTF categoriesForClass!Unclassified! !
+
 !RECTF methodsFor!
 
 asRectangle
@@ -83,6 +88,7 @@ y: aFloat
 	"Set the receiver's 'y' field to the value of the argument, aFloat"
 
 	bytes floatAtOffset: _OffsetOf_y put: aFloat! !
+
 !RECTF categoriesForMethods!
 asRectangle!converting!public! !
 bottom!accessing!public! !
@@ -153,6 +159,7 @@ left: left top: top width: width height: height
 
 newBuffer
 	^self basicNew bytes: (ByteArray newFixed: 16)! !
+
 !RECTF class categoriesForMethods!
 defineFields!public!template definition! !
 fromRectangle:!instance creation!public! !

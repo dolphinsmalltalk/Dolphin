@@ -5,13 +5,17 @@ IUnknown subclass: #IServiceProvider
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IServiceProvider guid: (IID fromString: '{6d5140c1-7436-11ce-8034-00aa006009fa}')!
+
 IServiceProvider comment: '<IServiceProvider> is a wrapper class for the COM interface ''OCIDL.IServiceProvider'' generated from type information in the ''OCIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
 WARNING: This comment was automatically generated from the interface''s type information and any changes made here may be overwritten the next time this wrapper class is so generated.'!
+
 !IServiceProvider categoriesForClass!COM-Interfaces! !
+
 !IServiceProvider methodsFor!
 
 queryService: guidService riid: riid 
@@ -39,6 +43,7 @@ QueryService: guidService riid: riid ppvObject: ppvObject
 
 	<virtual stdcall: hresult 4 guid* guid* IUnknown**>
 	^self invalidCall: _failureCode! !
+
 !IServiceProvider categoriesForMethods!
 queryService:riid:!methods!public! !
 QueryService:riid:ppvObject:!COM Interfaces-IServiceProvider!private! !
@@ -57,6 +62,7 @@ defineFunctions
 		defineFunction: #QueryService:riid:ppvObject:
 			argumentTypes: 'GUID* GUID* IUnknown**'
 ! !
+
 !IServiceProvider class categoriesForMethods!
 defineFunctions!initializing!public! !
 !

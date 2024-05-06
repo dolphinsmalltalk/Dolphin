@@ -5,13 +5,17 @@ Bitmap subclass: #DeviceIndependentBitmap
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DeviceIndependentBitmap guid: (GUID fromString: '{48f23686-5426-11d3-998b-bca753d3b065}')!
+
 DeviceIndependentBitmap comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
+
 !DeviceIndependentBitmap categoriesForClass!Graphics-Tools!IDB Goodies! !
+
 !DeviceIndependentBitmap methodsFor!
 
 baseLoadFlags
@@ -187,6 +191,7 @@ width: widthInteger height: heightInteger depth: depthInteger
 
 	"IRV"
 	^self! !
+
 !DeviceIndependentBitmap categoriesForMethods!
 baseLoadFlags!constants!public! !
 bitmapInfoStruct!accessing!public! !
@@ -449,6 +454,7 @@ width: width height: height depth: depth
 		width: width
 		height: height
 		depth: depth! !
+
 !DeviceIndependentBitmap class categoriesForMethods!
 colorTableDepth1!constants!public! !
 colorTableDepth16!constants!public! !

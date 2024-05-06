@@ -5,9 +5,13 @@ AXTypeInfoAnalyzer subclass: #TKindAliasAnalyzer
 	classVariableNames: 'BaseTypes'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TKindAliasAnalyzer guid: (GUID fromString: '{c06f3b79-0868-11d3-93af-00a024ca708a}')!
+
 TKindAliasAnalyzer comment: 'TKindAliasAnalyzer is a class which wraps an OLE Automation <ITypeInfo> interface pointer that describes a ''typedef'' (a declaration of a name for a type), i.e. an ITypeInfo of type kind TKIND_ALIAS. It supports high level behaviours for analyzing the type information associated with typedefs, and resolving them down to the fundamental type referenced.'!
+
 !TKindAliasAnalyzer categoriesForClass!ActiveX Automation! !
+
 !TKindAliasAnalyzer methodsFor!
 
 baseClass
@@ -46,6 +50,7 @@ vt
 	type when represented in a <VARIANT>."
 
 	^self tdesc vartype! !
+
 !TKindAliasAnalyzer categoriesForMethods!
 baseClass!constants!private! !
 classDesc!accessing!constants!private! !
@@ -85,6 +90,7 @@ typekind
 
 wireHandleNames
 	^#('HACCEL' 'HWND' 'HINSTANCE' 'HDC' 'HFILE' 'HGDIOBJ' 'HICON' 'HCURSOR' 'HFONT' 'HDWP' 'HKEY' 'HPEN' 'HRGN' 'HMODULE' 'HTASK' 'HRSRC' 'HBITMAP' 'HGLOBAL' 'HPALETTE' 'HMETAFILE' 'HENHMETAFILE' 'HBRUSH' 'HMENU' 'HIMAGELIST')! !
+
 !TKindAliasAnalyzer class categoriesForMethods!
 basicTypes!constants!must not strip!public! !
 initialize!class initialization!development!public! !

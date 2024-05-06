@@ -14,7 +14,6 @@ For documentation evaluate:
 
 package basicPackageVersion: '6.1'.
 
-
 package classNames
 	add: #BlockingCallMonitor;
 	add: #ServerSocket;
@@ -45,41 +44,42 @@ Object subclass: #BlockingCallMonitor
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #SocketAbstract
 	instanceVariableNames: 'port descriptor asyncError events'
 	classVariableNames: 'AllSockets WaitingSemaphores'
 	poolDictionaries: 'WinSocketConstants'
 	classInstanceVariableNames: ''!
+
 SocketError subclass: #SocketWouldBlock
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalLibrary subclass: #WSockLibrary
 	instanceVariableNames: 'wsaData'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SocketAbstract subclass: #ServerSocket
 	instanceVariableNames: 'acceptSemaphore'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SocketAbstract subclass: #Socket
 	instanceVariableNames: 'address readSemaphore writeSemaphore connectSemaphore readStream writeStream'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 View subclass: #WinAsyncSocket
 	instanceVariableNames: '_reserved1 _reserved2'
 	classVariableNames: 'DefaultInstance SocketMessageMap UserMessageMap WsaEvent WsaHostInfo'
 	poolDictionaries: 'WinSocketConstants'
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

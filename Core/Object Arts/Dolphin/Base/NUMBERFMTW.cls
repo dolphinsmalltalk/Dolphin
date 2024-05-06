@@ -5,13 +5,16 @@ Win32Structure subclass: #NUMBERFMTW
 	classVariableNames: '_OffsetOf_Grouping _OffsetOf_LeadingZero _OffsetOf_lpDecimalSep _OffsetOf_lpThousandSep _OffsetOf_NegativeOrder _OffsetOf_NumDigits'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 NUMBERFMTW guid: (GUID fromString: '{0a4bf3f8-997a-4704-98b0-05a904564613}')!
+
 NUMBERFMTW addClassConstant: '_OffsetOf_Grouping' value: 16r8!
 NUMBERFMTW addClassConstant: '_OffsetOf_LeadingZero' value: 16r4!
 NUMBERFMTW addClassConstant: '_OffsetOf_lpDecimalSep' value: 16rC!
 NUMBERFMTW addClassConstant: '_OffsetOf_lpThousandSep' value: 16r10!
 NUMBERFMTW addClassConstant: '_OffsetOf_NegativeOrder' value: 16r14!
 NUMBERFMTW addClassConstant: '_OffsetOf_NumDigits' value: 16r0!
+
 NUMBERFMTW comment: '`NUMBERFMTW` is an `ExternalStructure` class to wrap the struct NUMBERFMTW from type information in the ''Win32 API'' library.
 
 NUMBERFMTW is used in conjunction with the GetNumberFormat API to produce localised representations of printed decimal numbers.
@@ -28,7 +31,9 @@ struct tagNUMBERFMTW {
 	[helpstring("negative number ordering")] unsigned int NegativeOrder;
 } NUMBERFMTW;
 ```'!
+
 !NUMBERFMTW categoriesForClass!Win32-Structs! !
+
 !NUMBERFMTW methodsFor!
 
 decimalPlaces
@@ -170,6 +175,7 @@ thousandSeparator
 
 thousandSeparator: aString
 	self groupSeparator: aString! !
+
 !NUMBERFMTW categoriesForMethods!
 decimalPlaces!accessing!public! !
 decimalPlaces:!accessing!public! !
@@ -230,6 +236,7 @@ defineFields
 
 getFieldNames
 	^#(#NumDigits #LeadingZero #Grouping #lpDecimalSep #lpThousandSep #NegativeOrder)! !
+
 !NUMBERFMTW class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

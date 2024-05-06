@@ -5,7 +5,9 @@ ADODBConnection15 subclass: #ADODB_Connection
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
+
 ADODB_Connection guid: (IID fromString: '{00001550-0000-0010-8000-00aa006d2ea4}')!
+
 ADODB_Connection comment: '`ADODB_Connection` is a wrapper class for the COM interface ''ADODB._Connection'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -27,7 +29,9 @@ interface _Connection : Connection15
 };
 ```
 '!
+
 !ADODB_Connection categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
+
 !ADODB_Connection methodsFor!
 
 Cancel
@@ -37,6 +41,7 @@ Cancel
 
 	<virtual stdcall: hresult 37>
 	^self invalidCall: _failureCode! !
+
 !ADODB_Connection categoriesForMethods!
 Cancel!**auto generated**!COM Interfaces-_Connection!public! !
 !
@@ -56,6 +61,7 @@ defineFunctions
 	self
 		defineFunction: #Cancel
 ! !
+
 !ADODB_Connection class categoriesForMethods!
 clsid!**auto generated**!constants!private! !
 defineFunctions!**auto generated**!initializing!public! !

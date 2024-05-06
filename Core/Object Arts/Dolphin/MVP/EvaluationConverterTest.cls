@@ -5,9 +5,13 @@ DolphinTest subclass: #EvaluationConverterTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 EvaluationConverterTest guid: (GUID fromString: '{e4302154-42e4-4d4f-acbd-3e3aa6f78982}')!
+
 EvaluationConverterTest comment: ''!
+
 !EvaluationConverterTest categoriesForClass!Unclassified! !
+
 !EvaluationConverterTest methodsFor!
 
 checkWith: string
@@ -30,6 +34,7 @@ testWithDates
 
 testWithTimes
 	self checkWith: 'Time fromString: ''11:55:56'''! !
+
 !EvaluationConverterTest categoriesForMethods!
 checkWith:!private! !
 converter!private! !

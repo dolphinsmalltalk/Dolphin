@@ -5,9 +5,13 @@ Object subclass: #SharedQueue
 	classVariableNames: 'AbsentCookie'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 SharedQueue guid: (GUID fromString: '{87b4c4b8-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 SharedQueue comment: ''!
+
 !SharedQueue categoriesForClass!Kernel-Objects! !
+
 !SharedQueue methodsFor!
 
 errorOutOfSync
@@ -86,6 +90,7 @@ size
 	"Answer the number of objects currently in the queue"
 
 	^accessProtect critical: [contents size]! !
+
 !SharedQueue categoriesForMethods!
 errorOutOfSync!exceptions!private! !
 initialize:!initializing!private! !
@@ -118,6 +123,7 @@ new: anInteger
 	^(self basicNew)
 		initialize: anInteger;
 		yourself! !
+
 !SharedQueue class categoriesForMethods!
 initialize!development!initializing!private! !
 new!instance creation!public! !

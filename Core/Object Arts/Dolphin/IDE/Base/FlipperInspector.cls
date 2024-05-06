@@ -5,9 +5,13 @@ SmalltalkToolShell subclass: #FlipperInspector
 	classVariableNames: 'Renderers'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 FlipperInspector guid: (GUID fromString: '{8dc9ca40-c164-11d5-9849-0800460222f0}')!
+
 FlipperInspector comment: ''!
+
 !FlipperInspector categoriesForClass!MVP-Presenters! !
+
 !FlipperInspector methodsFor!
 
 addToCommandRoute: route
@@ -107,6 +111,7 @@ value: anObject
 
 	self model value: anObject.
 ! !
+
 !FlipperInspector categoriesForMethods!
 addToCommandRoute:!commands!public! !
 createComponents!initializing!private! !
@@ -204,6 +209,7 @@ shellOn: anObject
 
 toolsFolderHelpId
 	^10600! !
+
 !FlipperInspector class categoriesForMethods!
 defaultModel!models!public! !
 defaultRenderers!constants!private! !

@@ -5,17 +5,22 @@ ChunkBrowserSeriesStartChunk subclass: #ChunkBrowserMethodDefineSeriesStartChunk
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ChunkBrowserMethodDefineSeriesStartChunk guid: (GUID fromString: '{d788a393-1fe6-4b1b-ae26-cfbac04db82a}')!
+
 ChunkBrowserMethodDefineSeriesStartChunk comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2006 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
+
 !ChunkBrowserMethodDefineSeriesStartChunk categoriesForClass!IDB Goodies! !
+
 !ChunkBrowserMethodDefineSeriesStartChunk methodsFor!
 
 seriesClass
 	^ChunkBrowserMethodDefineChunk! !
+
 !ChunkBrowserMethodDefineSeriesStartChunk categoriesForMethods!
 seriesClass!constants!public! !
 !
@@ -31,6 +36,7 @@ isChunkClassFor: aString
 		ifFalse:
 			[(aString indexOfSubCollection: ' methodsFor') = firstSpaceIndex
 				or: [(aString indexOfSubCollection: ' class methodsFor') = firstSpaceIndex]]! !
+
 !ChunkBrowserMethodDefineSeriesStartChunk class categoriesForMethods!
 isChunkClassFor:!public!testing! !
 !

@@ -5,9 +5,12 @@ ExternalStructure subclass: #IP_ADAPTER_INDEX_MAP
 	classVariableNames: '_OffsetOf_index _OffsetOf_Name'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IP_ADAPTER_INDEX_MAP guid: (GUID fromString: '{fc9307a0-b028-4f04-81c9-9d74847a63ef}')!
+
 IP_ADAPTER_INDEX_MAP addClassConstant: '_OffsetOf_index' value: 16r0!
 IP_ADAPTER_INDEX_MAP addClassConstant: '_OffsetOf_Name' value: 16r4!
+
 IP_ADAPTER_INDEX_MAP comment: '<IP_ADAPTER_INDEX_MAP> is an <ExternalStructure> class to wrap the struct ''Win32.IP_ADAPTER_INDEX_MAP'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -22,7 +25,9 @@ struct tagIP_ADAPTER_INDEX_MAP {
 	unsigned short Name[128];
 } IP_ADAPTER_INDEX_MAP;
 '!
+
 !IP_ADAPTER_INDEX_MAP categoriesForClass!Win32-Structs! !
+
 !IP_ADAPTER_INDEX_MAP methodsFor!
 
 index
@@ -34,6 +39,7 @@ Name
 	"Answer the <Utf16String> value of the receiver's 'Name' field."
 
 	^Utf16String fromAddress: bytes yourAddress + _OffsetOf_Name! !
+
 !IP_ADAPTER_INDEX_MAP categoriesForMethods!
 index!**compiled accessors**!public! !
 Name!**compiled accessors**!public! !
@@ -65,6 +71,7 @@ defineFields
 
 getFieldNames
 	^#(#index #Name)! !
+
 !IP_ADAPTER_INDEX_MAP class categoriesForMethods!
 defineFields!initializing!public! !
 getFieldNames!**compiled accessors**!constants!private! !

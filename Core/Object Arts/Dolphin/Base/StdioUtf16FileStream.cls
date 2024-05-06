@@ -5,9 +5,13 @@ StdioUnicodeFileStream subclass: #StdioUtf16FileStream
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StdioUtf16FileStream guid: (GUID fromString: '{59d77acf-50ff-4508-a672-0eaf7422f32a}')!
+
 StdioUtf16FileStream comment: ''!
+
 !StdioUtf16FileStream categoriesForClass!Collections-Streams! !
+
 !StdioUtf16FileStream methodsFor!
 
 contentsSpecies
@@ -32,6 +36,7 @@ size
 	"Answer the size of the file in wide characters, excluding the BOM."
 
 	^super size - offset bitShift: -1! !
+
 !StdioUtf16FileStream categoriesForMethods!
 contentsSpecies!constants!private! !
 position!accessing!public! !

@@ -5,7 +5,9 @@ CommonDialogStructure subclass: #PRINTDLGEXW
 	classVariableNames: '_OffsetOf_dwResultAction _OffsetOf_ExclusionFlags _OffsetOf_flags _OffsetOf_Flags2 _OffsetOf_hDC _OffsetOf_hDevMode _OffsetOf_hDevNames _OffsetOf_hInstance _OffsetOf_hwndOwner _OffsetOf_lpCallback _OffsetOf_lphPropertyPages _OffsetOf_lpPageRanges _OffsetOf_lpPrintTemplateName _OffsetOf_lStructSize _OffsetOf_nCopies _OffsetOf_nMaxPage _OffsetOf_nMaxPageRanges _OffsetOf_nMinPage _OffsetOf_nPageRanges _OffsetOf_nPropertyPages _OffsetOf_nStartPage'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PRINTDLGEXW guid: (GUID fromString: '{46f06e70-1bb5-4b02-98ee-6ab442f3b43f}')!
+
 PRINTDLGEXW addClassConstant: '_OffsetOf_dwResultAction' value: 16r50!
 PRINTDLGEXW addClassConstant: '_OffsetOf_ExclusionFlags' value: 16r1C!
 PRINTDLGEXW addClassConstant: '_OffsetOf_flags' value: 16r14!
@@ -27,6 +29,7 @@ PRINTDLGEXW addClassConstant: '_OffsetOf_nMinPage' value: 16r2C!
 PRINTDLGEXW addClassConstant: '_OffsetOf_nPageRanges' value: 16r20!
 PRINTDLGEXW addClassConstant: '_OffsetOf_nPropertyPages' value: 16r44!
 PRINTDLGEXW addClassConstant: '_OffsetOf_nStartPage' value: 16r4C!
+
 PRINTDLGEXW comment: '<PRINTDLGEX> is an <ExternalStructure> class to wrap the struct ''Win32.PRINTDLGEX'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -60,7 +63,9 @@ struct tagPRINTDLGEX {
 	DWORD dwResultAction;
 } PRINTDLGEX;
 '!
+
 !PRINTDLGEXW categoriesForClass!Win32-Structs! !
+
 !PRINTDLGEXW methodsFor!
 
 dwResultAction
@@ -272,6 +277,7 @@ nStartPage: anInteger
 	"Set the receiver's 'nStartPage' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_nStartPage put: anInteger! !
+
 !PRINTDLGEXW categoriesForMethods!
 dwResultAction!**compiled accessors**!public! !
 dwResultAction:!**compiled accessors**!public! !
@@ -375,6 +381,7 @@ defineFields
 
 getFieldNames
 	^#(#lStructSize #hwndOwner #hDevMode #hDevNames #hDC #flags #Flags2 #ExclusionFlags #nPageRanges #nMaxPageRanges #lpPageRanges #nMinPage #nMaxPage #nCopies #hInstance #lpPrintTemplateName #lpCallback #nPropertyPages #lphPropertyPages #nStartPage #dwResultAction)! !
+
 !PRINTDLGEXW class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

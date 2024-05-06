@@ -5,9 +5,13 @@ IniFileAbstract subclass: #IniFileSection
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IniFileSection guid: (GUID fromString: '{958fca51-c92d-44e7-bba0-cfb419fa5b11}')!
+
 IniFileSection comment: 'Implements <abstractDictionary> over a named section of a Windows .ini file'!
+
 !IniFileSection categoriesForClass!Unclassified! !
+
 !IniFileSection methodsFor!
 
 = comparand
@@ -114,6 +118,7 @@ removeKey: aString ifAbsent: aNiladicValuable
 setFilename: filenameString section: sectionNameString
 	filename := filenameString asUtf16String.
 	name := sectionNameString asUtf16String shallowCopy! !
+
 !IniFileSection categoriesForMethods!
 =!comparing!public! !
 at:ifAbsent:!adding!public! !
@@ -134,6 +139,7 @@ setFilename:section:!initializing!private! !
 open: filenameString section: sectionNameString
 	^self new
 		setFilename: filenameString section: sectionNameString! !
+
 !IniFileSection class categoriesForMethods!
 open:section:!public! !
 !

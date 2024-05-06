@@ -5,7 +5,9 @@ ICoreWebView2EventArgs subclass: #ICoreWebView2DOMContentLoadedEventArgs
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2DOMContentLoadedEventArgs guid: (IID fromString: '{16b1e21a-c503-44f2-84c9-70aba5031283}')!
+
 ICoreWebView2DOMContentLoadedEventArgs comment: '`ICoreWebView2DOMContentLoadedEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2DOMContentLoadedEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -26,7 +28,9 @@ interface ICoreWebView2DOMContentLoadedEventArgs : IUnknown
 };
 ```
 '!
+
 !ICoreWebView2DOMContentLoadedEventArgs categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2DOMContentLoadedEventArgs methodsFor!
 
 get_NavigationId: navigationId
@@ -48,6 +52,7 @@ navigationId
 
 printableProperties
 	^#(#navigationId)! !
+
 !ICoreWebView2DOMContentLoadedEventArgs categoriesForMethods!
 get_NavigationId:!**auto generated**!COM Interfaces-ICoreWebView2DOMContentLoadedEventArgs!private! !
 navigationId!**auto generated**!properties!public! !
@@ -64,6 +69,7 @@ defineFunctions
 		defineFunction: #get_NavigationId:
 			argumentTypes: 'qword*'
 ! !
+
 !ICoreWebView2DOMContentLoadedEventArgs class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

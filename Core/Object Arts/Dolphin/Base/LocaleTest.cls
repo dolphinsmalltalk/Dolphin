@@ -5,10 +5,15 @@ DolphinTest subclass: #LocaleTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 LocaleTest guid: (GUID fromString: '{85b9dbfa-a1e2-46f3-ae44-d016f209b03b}')!
+
 LocaleTest isAbstract: true!
+
 LocaleTest comment: ''!
+
 !LocaleTest categoriesForClass!Unclassified! !
+
 !LocaleTest methodsFor!
 
 defaultSubject
@@ -116,6 +121,7 @@ testPrintFloatSeparators
 	"Test printing with specific decimal and group separators."
 
 	self subclassResponsibility! !
+
 !LocaleTest categoriesForMethods!
 defaultSubject!helpers!private! !
 setUp!private!running! !

@@ -5,7 +5,9 @@ StValueNode subclass: #StBraceArrayNode
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StBraceArrayNode guid: (GUID fromString: '{296a5d5c-f22a-48c3-a889-53df20fcd4b2}')!
+
 StBraceArrayNode comment: 'StBraceArrayNode is a parse tree node for runtime arrays.
 
 Instance Variables
@@ -13,7 +15,9 @@ Instance Variables
 	periods: 		<SequenceableCollection> of <Integer> the positions of all the periods that separate the statements
 	right: 		<Integer | nil> position of }
 	statements: 	<SequenceableCollection> of <StStatementNode> the statement nodes'!
+
 !StBraceArrayNode categoriesForClass!System-Compiler! !
+
 !StBraceArrayNode methodsFor!
 
 = anObject
@@ -86,6 +90,7 @@ stopWithoutParentheses
 
 uses: aNode
 	^(statements anySatisfy: [:each | each == aNode]) or: [self isUsed]! !
+
 !StBraceArrayNode categoriesForMethods!
 =!comparing!public! !
 acceptVisitor:!public!visitor! !
@@ -114,6 +119,7 @@ uses:!public!testing! !
 
 statements: statements
 	^self new statements: statements! !
+
 !StBraceArrayNode class categoriesForMethods!
 statements:!instance creation!public! !
 !

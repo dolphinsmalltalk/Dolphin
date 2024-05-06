@@ -5,9 +5,13 @@ RefactoringTest subclass: #AbstractInstanceVariableTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AbstractInstanceVariableTest guid: (GUID fromString: '{c64428af-5374-4e12-8c73-d6b9ec653c13}')!
+
 AbstractInstanceVariableTest comment: ''!
+
 !AbstractInstanceVariableTest categoriesForClass!Refactory-Testing! !
+
 !AbstractInstanceVariableTest methodsFor!
 
 setUp
@@ -124,6 +128,7 @@ testMetaclassInstanceVariables
 testNonExistantName
 	self shouldFail: (AbstractInstanceVariableRefactoring variable: 'foo'
 				class: BasicLintRuleTest)! !
+
 !AbstractInstanceVariableTest categoriesForMethods!
 setUp!public!set up! !
 testAbstractInstanceVariable!public!tests! !

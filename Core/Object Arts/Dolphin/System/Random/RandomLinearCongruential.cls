@@ -5,13 +5,17 @@ Random subclass: #RandomLinearCongruential
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RandomLinearCongruential guid: (GUID fromString: '{23d4b049-ae11-4fd4-872a-7fa0b04b2e6b}')!
+
 RandomLinearCongruential comment: '<RandomLinearCongruential> is a specialized <Random> stream that provides generic implementation of the Linear Congruential class of pseudo-random number generators. 
 
 LCG generators are of the form:
 	X[k] = ((a * X[k-1]) + c) mod m
 The values of a, c, and m are the multiplier, increment and modulus constants respectively. These values are configurable in instances of RandomLinearCongruential, but they must be chosen very carefully to give good results. The instance creation method #newParkMiller answers an instance configured as Park & Miller''s "minimum standard" generator, which is a reasonable choice as a default random number generator, but it is inadequate for crypographic applications. Other suitable values for a, c, and m can easily be found on the net, including those with much larger periods.'!
+
 !RandomLinearCongruential categoriesForClass!Collections-Streams! !
+
 !RandomLinearCongruential methodsFor!
 
 lcg
@@ -34,6 +38,7 @@ setModulus: modInteger multiplier: mulInteger increment: incInteger
 	multiplier := mulInteger.
 	increment := incInteger.
 	seed := 1! !
+
 !RandomLinearCongruential categoriesForMethods!
 lcg!helpers!private! !
 next!accessing!public! !
@@ -79,6 +84,7 @@ newParkMiller2
 		newModulus: 16r7FFFFFFF
 		multiplier: 48271
 		increment: 0! !
+
 !RandomLinearCongruential class categoriesForMethods!
 newANSIC!instance creation!public! !
 newModulus:multiplier:increment:!instance creation!public! !

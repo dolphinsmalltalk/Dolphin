@@ -5,12 +5,17 @@ ExternalStructure subclass: #ODBCDATE
 	classVariableNames: '_OffsetOf_day _OffsetOf_month _OffsetOf_year'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ODBCDATE guid: (GUID fromString: '{87b4c597-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 ODBCDATE addClassConstant: '_OffsetOf_day' value: 16r4!
 ODBCDATE addClassConstant: '_OffsetOf_month' value: 16r2!
 ODBCDATE addClassConstant: '_OffsetOf_year' value: 16r0!
+
 ODBCDATE comment: 'ODBCDATE is a representation of the same named Win32 ODBC structure.'!
+
 !ODBCDATE categoriesForClass!External-Data-Structured-ODBC!ODBC Interface! !
+
 !ODBCDATE methodsFor!
 
 asDate
@@ -60,6 +65,7 @@ year: anInteger
 	"Set the receiver's 'year' field to the value of the argument, anInteger"
 
 	bytes swordAtOffset: _OffsetOf_year put: anInteger! !
+
 !ODBCDATE categoriesForMethods!
 asDate!converting!public! !
 date:!accessing!public! !
@@ -96,6 +102,7 @@ fromDate: aDate
 
 getFieldNames
 	^#(#year #month #day)! !
+
 !ODBCDATE class categoriesForMethods!
 defineFields!public!template definition! !
 fromDate:!instance creation!public! !

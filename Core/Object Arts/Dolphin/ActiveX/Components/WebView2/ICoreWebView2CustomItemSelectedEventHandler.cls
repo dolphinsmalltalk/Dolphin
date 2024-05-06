@@ -5,7 +5,9 @@ ICoreWebView2EventHandler subclass: #ICoreWebView2CustomItemSelectedEventHandler
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2CustomItemSelectedEventHandler guid: (IID fromString: '{49e1d0bc-fe9e-4481-b7c2-32324aa21998}')!
+
 ICoreWebView2CustomItemSelectedEventHandler comment: '`ICoreWebView2CustomItemSelectedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2CustomItemSelectedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -27,7 +29,9 @@ interface ICoreWebView2CustomItemSelectedEventHandler : IUnknown
 };
 ```
 '!
+
 !ICoreWebView2CustomItemSelectedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2CustomItemSelectedEventHandler methodsFor!
 
 basicRegister: tokenBuffer
@@ -35,6 +39,7 @@ basicRegister: tokenBuffer
 
 basicUnregister
 	source Remove_CustomItemSelected: token! !
+
 !ICoreWebView2CustomItemSelectedEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
@@ -55,6 +60,7 @@ eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
 	^#customItemSelected! !
+
 !ICoreWebView2CustomItemSelectedEventHandler class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 eventName!constants!public! !

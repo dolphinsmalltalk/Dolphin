@@ -5,9 +5,13 @@ DolphinTest subclass: #PackageClosureTests
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PackageClosureTests guid: (GUID fromString: '{d6f6b8a7-9e40-4fa0-a52c-d92bcafeeebf}')!
+
 PackageClosureTests comment: ''!
+
 !PackageClosureTests categoriesForClass!Unclassified! !
+
 !PackageClosureTests methodsFor!
 
 consoleAppUnimplemented
@@ -136,6 +140,7 @@ verifyPackageClosure: aBrowserEnvironment missing: aCollectionOfSymbols
 	"To debug this, open an env browser on the deployment scope as follows:
 		aBrowserEnvironment openEditor.
 	The call graph to unimplemented messages can then be investigated starting with the Method/Browse other/All unimplemented command"! !
+
 !PackageClosureTests categoriesForMethods!
 consoleAppUnimplemented!constants!private! !
 environmentForAppDeployment:!helpers!private! !

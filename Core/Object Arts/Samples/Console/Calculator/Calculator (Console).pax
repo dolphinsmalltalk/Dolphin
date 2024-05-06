@@ -44,7 +44,6 @@ XmlPad filename: ''dcalc.xml''
 ```
 '.
 
-
 package classNames
 	add: #CommandLineCalculator;
 	yourself.
@@ -67,11 +66,6 @@ ConsoleSessionManager subclass: #CommandLineCalculator
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

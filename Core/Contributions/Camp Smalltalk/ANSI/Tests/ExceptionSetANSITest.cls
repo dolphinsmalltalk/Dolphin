@@ -5,9 +5,13 @@ MainTestCase subclass: #ExceptionSetANSITest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExceptionSetANSITest guid: (GUID fromString: '{ba94a6b4-592f-4d50-a97b-425f5356665e}')!
+
 ExceptionSetANSITest comment: ''!
+
 !ExceptionSetANSITest categoriesForClass!Unclassified! !
+
 !ExceptionSetANSITest methodsFor!
 
 canonicalObject
@@ -29,6 +33,7 @@ testXconcatenateOp
 testXhandlesX
 	" <exceptionSelector>#handles: "
 	#'Exception'.! !
+
 !ExceptionSetANSITest categoriesForMethods!
 canonicalObject!public! !
 protocol!public! !

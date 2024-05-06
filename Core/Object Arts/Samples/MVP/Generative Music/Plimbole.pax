@@ -39,7 +39,6 @@ XmlPad openOn: ''Plimbole.xml''
 ```
 '.
 
-
 package classNames
 	add: #Plimbole;
 	add: #PlimboleCell;
@@ -74,31 +73,30 @@ Object subclass: #PlimboleCell
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 Model subclass: #Plimbole
 	instanceVariableNames: 'cells recurse tenorVoice altoVoice tenorChannel altoChannel scaleIndex noteDuration gridExtent'
 	classVariableNames: 'MidiChannel Registry StepProcess Tempo'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Presenter subclass: #PlimbolePresenter
 	instanceVariableNames: 'palette'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Shell subclass: #PlimboleShell
 	instanceVariableNames: 'plimbolePresenter'
 	classVariableNames: 'Palettes'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 View subclass: #PlimboleView
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

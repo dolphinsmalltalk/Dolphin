@@ -5,9 +5,13 @@ BasicLintRule subclass: #BlockLintRule
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 BlockLintRule guid: (GUID fromString: '{7468dd67-0d2d-4f26-8882-01746170e78a}')!
+
 BlockLintRule comment: ''!
+
 !BlockLintRule categoriesForClass!Refactory-Lint! !
+
 !BlockLintRule methodsFor!
 
 checkClass: aSmalllintContext 
@@ -32,6 +36,7 @@ undeclaredVariables
 
 	#rbFix. "Dolphin does not support forward refs. to undeclared variables"
 	^Dictionary new! !
+
 !BlockLintRule categoriesForMethods!
 checkClass:!accessing!public! !
 checkMethod:!accessing!public! !
@@ -737,6 +742,7 @@ vernacularSelector
 
 vernacularSelectors
 	^#(#arse #fart)! !
+
 !BlockLintRule class categoriesForMethods!
 abstractClass!possible bugs!public! !
 addRemoveDependents!possible bugs!public! !

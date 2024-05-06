@@ -5,9 +5,13 @@ DolphinTest subclass: #TrueTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TrueTest guid: (GUID fromString: '{e918b165-e08c-4cb2-8369-a5ffff502adb}')!
+
 TrueTest comment: ''!
+
 !TrueTest categoriesForClass!Tests-Kernel-Objects! !
+
 !TrueTest methodsFor!
 
 testAND
@@ -25,6 +29,7 @@ testPrintOn
 	stream := String writeStream.
 	true printOn: stream.
 	self assert: stream contents equals: 'true'! !
+
 !TrueTest categoriesForMethods!
 testAND!public!testing! !
 testNew!public!testing! !

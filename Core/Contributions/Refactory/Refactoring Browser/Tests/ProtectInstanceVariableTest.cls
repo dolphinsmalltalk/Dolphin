@@ -5,9 +5,13 @@ RefactoringTest subclass: #ProtectInstanceVariableTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ProtectInstanceVariableTest guid: (GUID fromString: '{4fadb9c6-abde-452c-90b8-bc1b80b72555}')!
+
 ProtectInstanceVariableTest comment: ''!
+
 !ProtectInstanceVariableTest categoriesForClass!Refactory-Testing! !
+
 !ProtectInstanceVariableTest methodsFor!
 
 testProtectInstanceVariable
@@ -30,6 +34,7 @@ testVariableNotDefined
 	refactoring := ProtectInstanceVariableRefactoring variable: 'rewrite'
 				class: SubclassOfClassToRename.
 	self shouldFail: refactoring! !
+
 !ProtectInstanceVariableTest categoriesForMethods!
 testProtectInstanceVariable!public!tests! !
 testVariableNotDefined!failure tests!public! !

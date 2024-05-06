@@ -6,7 +6,6 @@ package paxVersion: 1;
 Copyright (c) Object Arts Ltd. 1997-2018. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.
 '.
 
-
 package classNames
 	add: #ExternalPoint;
 	add: #ExternalRectangle;
@@ -53,31 +52,37 @@ Object subclass: #Rectangle
 	classVariableNames: 'Empty'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalStructure subclass: #ExternalPoint
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalStructure subclass: #ExternalRectangle
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalPoint subclass: #POINTL
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_x _OffsetOf_y'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalRectangle subclass: #RECT
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_bottom _OffsetOf_left _OffsetOf_right _OffsetOf_top'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ArithmeticValue subclass: #Point
 	instanceVariableNames: 'x y'
 	classVariableNames: 'Zero'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ArithmeticValue subclass: #Point3D
 	instanceVariableNames: 'x y z'
 	classVariableNames: ''
@@ -115,6 +120,7 @@ _offsetRectangle: aRectangle
 	Double-dispatched from the Rectangle itself."
 
 	^aRectangle species origin: aRectangle origin + self corner: aRectangle corner + self! !
+
 !ArithmeticValue categoriesForMethods!
 _expandRectangle:!double dispatch!private! !
 _insetRectangle:!double dispatch!private! !
@@ -133,6 +139,7 @@ fromPoint: aPoint
 		lowSWord: aPoint x;
 		highSWord: aPoint y;
 		yourself! !
+
 !DWORD class categoriesForMethods!
 fromPoint:!instance creation!private! !
 !
@@ -156,6 +163,7 @@ asPoint3D
 	"Answer a Point with the receiver as all three co-ordinates."
 
 	^self @ self @ self! !
+
 !Number categoriesForMethods!
 @!converting!public! !
 asPoint!converting!public! !
@@ -167,6 +175,7 @@ asPoint3D!converting!public! !
 subtractRect: lprcDst lprcSrc1: lprcSrc1 lprcSrc2: lprcSrc2
 	<stdcall: bool SubtractRect RECT* RECT* RECT*>
 	^self invalidCall: _failureCode! !
+
 !UserLibrary categoriesForMethods!
 subtractRect:lprcSrc1:lprcSrc2:!public!rectangle functions! !
 !

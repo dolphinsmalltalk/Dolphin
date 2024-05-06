@@ -5,7 +5,6 @@ package paxVersion: 1;
 	basicComment: 'Refactoring Browser SmallLint
 Copyright (c) John Brant & Don Roberts.'.
 
-
 package classNames
 	add: #BasicLintRule;
 	add: #BlockLintRule;
@@ -50,59 +49,66 @@ Object subclass: #LintRule
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #SmalllintChecker
 	instanceVariableNames: 'rule environment context methodBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #SmalllintContext
 	instanceVariableNames: 'class selector parseTree literals literalSemaphore literalProcess selectors compiledMethod selfMessages superMessages messages'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 BrowserEnvironmentWrapper subclass: #MultiEnvironment
 	instanceVariableNames: 'environmentDictionaries'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AndEnvironment subclass: #SmalllintFilterEnvironment
 	instanceVariableNames: 'lintRuleName'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SelectorEnvironment subclass: #ParseTreeEnvironment
 	instanceVariableNames: 'matcher'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 LintRule subclass: #BasicLintRule
 	instanceVariableNames: 'result openSymbol'
 	classVariableNames: 'FilterDictionary'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 LintRule subclass: #CompositeLintRule
 	instanceVariableNames: 'rules'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 LintRule subclass: #TransformationRule
 	instanceVariableNames: 'rewriteRule changes class'
 	classVariableNames: 'RecursiveSelfRule'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 BasicLintRule subclass: #BlockLintRule
 	instanceVariableNames: 'classBlock methodBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 BasicLintRule subclass: #ParseTreeLintRule
 	instanceVariableNames: 'matcher'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -112,6 +118,7 @@ instanceBehavior
 	"Answer the receiver's singleton instance (the actual class object)."
 
 	^self! !
+
 !Behavior categoriesForMethods!
 instanceBehavior!accessing!public! !
 !
@@ -123,6 +130,7 @@ needsHybridFrame
 
 withAllBlockMethodsDo: operation
 	operation value: self! !
+
 !CompiledCode categoriesForMethods!
 needsHybridFrame!private!testing! !
 withAllBlockMethodsDo:!enumerating!private! !
@@ -157,6 +165,7 @@ equivalentTo: aCompiledMethod
 								in: aCompiledMethod mclass
 								method: aCompiledMethod.
 					selfParseTree = methodParseTree]]]"! !
+
 !CompiledMethod categoriesForMethods!
 equivalentTo:!public!RefactoringBrowser! !
 !
@@ -167,6 +176,7 @@ instanceBehavior
 	"Answer the receiver's singleton instance (the actual class object)."
 
 	^instanceClass! !
+
 !Metaclass categoriesForMethods!
 instanceBehavior!accessing!public! !
 !

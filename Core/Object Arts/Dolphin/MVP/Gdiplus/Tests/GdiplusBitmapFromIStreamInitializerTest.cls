@@ -5,9 +5,13 @@ GdiplusInitializerTests subclass: #GdiplusBitmapFromIStreamInitializerTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusBitmapFromIStreamInitializerTest guid: (GUID fromString: '{264cb8bf-7428-488c-8342-807ed863ef1c}')!
+
 GdiplusBitmapFromIStreamInitializerTest comment: ''!
+
 !GdiplusBitmapFromIStreamInitializerTest categoriesForClass!Unclassified! !
+
 !GdiplusBitmapFromIStreamInitializerTest methodsFor!
 
 gdipCreateBitmapFromStream: stream bitmap: bitmap 
@@ -31,6 +35,7 @@ testIsPersistent
 	"Cant persist an <IStream>"
 
 	self deny: model isPersistent! !
+
 !GdiplusBitmapFromIStreamInitializerTest categoriesForMethods!
 gdipCreateBitmapFromStream:bitmap:!accessing!public! !
 setUp!public!setup! !

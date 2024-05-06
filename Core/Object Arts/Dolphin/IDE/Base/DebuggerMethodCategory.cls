@@ -5,9 +5,13 @@ MethodCategory subclass: #DebuggerMethodCategory
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DebuggerMethodCategory guid: (GUID fromString: '{424b6561-1ba5-4a45-b1e3-6936f126dcd5}')!
+
 DebuggerMethodCategory comment: ''!
+
 !DebuggerMethodCategory categoriesForClass!System-Support! !
+
 !DebuggerMethodCategory methodsFor!
 
 addMethodSilently: aCompiledMethod 
@@ -29,6 +33,7 @@ removeMethodSilently: aCompiledMethod
 		of: aCompiledMethod methodClass
 		maskClear: mask.
 	super removeMethodSilently: aCompiledMethod! !
+
 !DebuggerMethodCategory categoriesForMethods!
 addMethodSilently:!adding!private! !
 mask!accessing!public! !
@@ -54,6 +59,7 @@ initialize
 		at: stepOver name put: stepOver.
 	steppedThrough do: [:each | stepThrough addMethodSilently: each].
 	steppedOver do: [:each | stepOver addMethodSilently: each]! !
+
 !DebuggerMethodCategory class categoriesForMethods!
 initialize!public! !
 !

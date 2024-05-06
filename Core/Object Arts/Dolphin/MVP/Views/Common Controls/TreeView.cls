@@ -5,11 +5,14 @@ IconicListAbstract subclass: #TreeView
 	classVariableNames: 'DisableExpandAllMask NonVirtualMask UpdateModeMask UpdateModes'
 	poolDictionaries: 'TreeViewConstants'
 	classInstanceVariableNames: ''!
+
 TreeView guid: (GUID fromString: '{87b4c732-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 TreeView addClassConstant: 'DisableExpandAllMask' value: 16r1!
 TreeView addClassConstant: 'NonVirtualMask' value: 16r2!
 TreeView addClassConstant: 'UpdateModeMask' value: 16r6!
 TreeView addClassConstant: 'UpdateModes' value: #(#dynamic #static #lazy)!
+
 TreeView comment: 'TreeView is a <treeView> wrapping the Windows "SysTreeView32" common control. It is for single selection use and, therefore, implements the <selectableItems> protocol for use with any <treeModel>. 
 
 A TreeView is capable of displaying its items in one of three modes (#smallIcons, #largeIcons, #noIcons) which can be set using the #viewMode aspect. 
@@ -33,7 +36,9 @@ Class Variables:
 
 
 '!
+
 !TreeView categoriesForClass!MVP-Views! !
+
 !TreeView methodsFor!
 
 addNonVirtualItems: aCollection insertStruct: aTVINSERTSTRUCT
@@ -1223,6 +1228,7 @@ wmKeyDown: message wParam: wParam lParam: lParam
 				wmKeyDown: message
 				wParam: wParam
 				lParam: lParam].! !
+
 !TreeView categoriesForMethods!
 addNonVirtualItems:insertStruct:!adding!private! !
 addRoot:!adding!private! !
@@ -1405,6 +1411,7 @@ winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
 
 	^'SysTreeView32'! !
+
 !TreeView class categoriesForMethods!
 defaultModel!models!public! !
 icon!constants!public! !

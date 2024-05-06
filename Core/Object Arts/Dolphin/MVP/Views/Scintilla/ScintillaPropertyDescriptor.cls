@@ -5,8 +5,11 @@ Object subclass: #ScintillaPropertyDescriptor
 	classVariableNames: 'AlwaysPrintMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ScintillaPropertyDescriptor guid: (GUID fromString: '{49848e62-c4d7-4cba-b9f5-71b0bf864a2a}')!
+
 ScintillaPropertyDescriptor addClassConstant: 'AlwaysPrintMask' value: 16r1!
+
 ScintillaPropertyDescriptor comment: '`ScintillaPropertyDescriptor`s provide metadata for individually settable scalar properties of a `ScintillaView`, e.g. the background colour of a marker.
 
 ## Instance Variables:
@@ -24,7 +27,9 @@ ScintillaPropertyDescriptor comment: '`ScintillaPropertyDescriptor`s provide met
 
 
 '!
+
 !ScintillaPropertyDescriptor categoriesForClass!Kernel-Objects! !
+
 !ScintillaPropertyDescriptor methodsFor!
 
 alwaysPrint
@@ -85,6 +90,7 @@ setSelector: aSymbol getMessage: anInteger
 
 valueFromLResult: anObject 
 	^anObject! !
+
 !ScintillaPropertyDescriptor categoriesForMethods!
 alwaysPrint!public!testing! !
 alwaysPrint:!accessing!public! !
@@ -115,6 +121,7 @@ getSelector: getSymbol defaultValue: anObject setMessage: setInteger setSelector
 
 icon
 	^ScintillaView icon! !
+
 !ScintillaPropertyDescriptor class categoriesForMethods!
 getSelector:defaultValue:setMessage:!instance creation!public! !
 getSelector:defaultValue:setMessage:setSelector:getMessage:!instance creation!public! !

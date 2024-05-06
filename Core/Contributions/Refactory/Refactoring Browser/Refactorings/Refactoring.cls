@@ -5,10 +5,15 @@ Object subclass: #Refactoring
 	classVariableNames: 'AbortSignal RefactoringOptions'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Refactoring guid: (GUID fromString: '{fa372b47-a5ce-4ce3-b6dc-f4a2e26195b5}')!
+
 Refactoring isAbstract: true!
+
 Refactoring comment: ''!
+
 !Refactoring categoriesForClass!Refactory-Refactorings! !
+
 !Refactoring methodsFor!
 
 associationForClassVariable: aName in: aClass ifAbsent: aBlock 
@@ -319,6 +324,7 @@ whichVariableNode: aParseTree inInterval: anInterval name: aName
 		matches: aName do: block;
 		matchesArgument: aName do: block.
 	^matcher executeTree: aParseTree initialAnswer: nil! !
+
 !Refactoring categoriesForMethods!
 associationForClassVariable:in:ifAbsent:!public!utilities! !
 canReferenceVariable:in:!public!testing! !
@@ -427,6 +433,7 @@ setDefaultOption: aSymbol toMessage: aSelector
 uninitialize
 	#rbFix. "Assist uninstallation of Dolphin package."
 	RefactoringOptions := nil! !
+
 !Refactoring class categoriesForMethods!
 abortSignal!accessing!public! !
 initialize!public! !

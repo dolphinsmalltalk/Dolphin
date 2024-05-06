@@ -5,9 +5,13 @@ Object subclass: #SmalllintChecker
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SmalllintChecker guid: (GUID fromString: '{b66e8888-4615-4250-b1d6-66ec532f9df1}')!
+
 SmalllintChecker comment: ''!
+
 !SmalllintChecker categoriesForClass!Refactory-Lint! !
+
 !SmalllintChecker methodsFor!
 
 checkClass: aClass 
@@ -49,6 +53,7 @@ run
 			[:aClass | 
 			self checkClass: aClass.
 			self checkMethodsForClass: aClass]! !
+
 !SmalllintChecker categoriesForMethods!
 checkClass:!private! !
 checkMethodsForClass:!private! !
@@ -79,6 +84,7 @@ runRule: aLintRule onEnvironment: aBrowserEnvironment
 		environment: aBrowserEnvironment;
 		run.
 	^aLintRule! !
+
 !SmalllintChecker class categoriesForMethods!
 new!instance creation!public! !
 newWithContext!instance creation!public! !

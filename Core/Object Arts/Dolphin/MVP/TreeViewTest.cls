@@ -5,9 +5,13 @@ SelectableTreeItemsTest subclass: #TreeViewTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TreeViewTest guid: (GUID fromString: '{9f22e0fe-4151-461c-a92a-f1d9f25e6605}')!
+
 TreeViewTest comment: ''!
+
 !TreeViewTest categoriesForClass!Unclassified! !
+
 !TreeViewTest methodsFor!
 
 classToTest
@@ -126,6 +130,7 @@ testSetTextBlockDoesNotAffectSelection
 			presenter view updateMode: each.
 			super testSetTextBlockDoesNotAffectSelection.
 			presenter view model clear]! !
+
 !TreeViewTest categoriesForMethods!
 classToTest!helpers!private! !
 getItemText:!helpers!private! !

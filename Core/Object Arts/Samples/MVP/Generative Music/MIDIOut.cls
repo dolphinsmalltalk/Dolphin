@@ -5,9 +5,13 @@ Object subclass: #MIDIOut
 	classVariableNames: ''
 	poolDictionaries: 'MidiConstants'
 	classInstanceVariableNames: ''!
+
 MIDIOut guid: (GUID fromString: '{feb23957-1be7-48db-9eef-924631f6e9a9}')!
+
 MIDIOut comment: ''!
+
 !MIDIOut categoriesForClass!Kernel-Objects! !
+
 !MIDIOut methodsFor!
 
 channel: ch msg: msg with: p1 with: p2 
@@ -67,6 +71,7 @@ voice: voiceID channel: channel
 		msg: MidiProgramChange
 		with: voiceID
 		with: channel! !
+
 !MIDIOut categoriesForMethods!
 channel:msg:with:with:!public! !
 close!public! !

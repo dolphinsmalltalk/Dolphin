@@ -5,12 +5,16 @@ RBAbstractCondition subclass: #RBNegationCondition
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RBNegationCondition guid: (GUID fromString: '{b9c3d59c-1ad9-483a-91cc-9d03b95a12a6}')!
+
 RBNegationCondition comment: 'NegationCondition represents negating another condition.
 
 Instance Variables:
 	condition	<AbstractCondition>	the condition that is to be negated'!
+
 !RBNegationCondition categoriesForClass!Refactory-Conditions! !
+
 !RBNegationCondition methodsFor!
 
 check
@@ -29,6 +33,7 @@ errorStringFor: aBoolean
 printOn: aStream 
 	aStream nextPutAll: 'NOT ';
 		print: condition! !
+
 !RBNegationCondition categoriesForMethods!
 check!checking!public! !
 condition:!initialize/release!public! !
@@ -41,6 +46,7 @@ printOn:!printing!public! !
 
 on: aCondition
 	^self new condition: aCondition! !
+
 !RBNegationCondition class categoriesForMethods!
 on:!instance creation!public! !
 !

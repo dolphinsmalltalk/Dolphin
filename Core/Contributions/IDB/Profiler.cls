@@ -5,13 +5,17 @@ Object subclass: #Profiler
 	classVariableNames: 'Default'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Profiler guid: (GUID fromString: '{425d0ead-542e-11d3-998b-d5ca2c3c1d61}')!
+
 Profiler comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
+
 !Profiler categoriesForClass!IDB Goodies! !
+
 !Profiler methodsFor!
 
 initialize
@@ -108,6 +112,7 @@ stopSampling
 	state of the flag will be noticed by the main profiling process and it will start sampling"
 
 	isSampling := false! !
+
 !Profiler categoriesForMethods!
 initialize!initializing!public! !
 profile:forSet:ignoring:!profiling!public! !
@@ -217,6 +222,7 @@ stopSampling
 	"Tells the profiler to stop taking samples until a startSampling instruction is executed"
 
 	self default stopSampling! !
+
 !Profiler class categoriesForMethods!
 default!instance creation!public! !
 icon!constants!public! !

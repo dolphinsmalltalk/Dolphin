@@ -5,9 +5,13 @@ UtfEncodedStringTest subclass: #Utf8StringTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Utf8StringTest guid: (GUID fromString: '{cc364a8d-e3ae-493e-8856-3f10c847c10d}')!
+
 Utf8StringTest comment: ''!
+
 !Utf8StringTest categoriesForClass!Unclassified! !
+
 !Utf8StringTest methodsFor!
 
 assimilateString: aString
@@ -105,6 +109,7 @@ testKeys
 	| subject |
 	subject := self assimilateString: 'a£文🐬1🍺'.
 	self assert: subject keys equals: #(1 2 4 7 11 12)! !
+
 !Utf8StringTest categoriesForMethods!
 assimilateString:!helpers!private! !
 collectionClass!helpers!private! !

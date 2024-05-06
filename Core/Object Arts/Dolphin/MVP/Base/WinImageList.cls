@@ -5,7 +5,9 @@ GraphicsTool subclass: #WinImageList
 	classVariableNames: ''
 	poolDictionaries: 'CommCtrlConstants'
 	classInstanceVariableNames: ''!
+
 WinImageList guid: (GUID fromString: '{87b4c639-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 WinImageList comment: 'WinImageList encapsulates a Windows "image list", which itself can be characterised as a strip of images addressable by integer index.
 
 Instance Variables:
@@ -15,7 +17,9 @@ Instance Variables:
 	createFlags		<integer>. Variious flagss specified when the list was created.
 
 '!
+
 !WinImageList categoriesForClass!Graphics-Tools! !
+
 !WinImageList methodsFor!
 
 addBitmap: aBitmap
@@ -264,6 +268,7 @@ setExtent: aPoint depth: bppInteger initialSize: sizeInteger growBy: growByInteg
 	initialSize := sizeInteger.
 	growBy := growByInteger.
 	createFlags := (aBoolean ifTrue: [ILC_MASK] ifFalse: [0]) bitOr: bppInteger! !
+
 !WinImageList categoriesForMethods!
 addBitmap:!adding!public! !
 addBitmap:mask:!adding!public! !
@@ -378,6 +383,7 @@ newExtent: aPoint masked: aBoolean
 		newExtent: aPoint
 		initialSize: self defaultInitialSize
 		masked: aBoolean! !
+
 !WinImageList class categoriesForMethods!
 defaultColorDepth!constants!public! !
 defaultGrowthGranularity!constants!public! !

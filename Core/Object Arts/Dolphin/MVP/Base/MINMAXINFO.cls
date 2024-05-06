@@ -5,12 +5,15 @@ Win32Structure subclass: #MINMAXINFO
 	classVariableNames: '_OffsetOf_ptMaxPosition _OffsetOf_ptMaxSize _OffsetOf_ptMaxTrackSize _OffsetOf_ptMinTrackSize _OffsetOf_ptReserved'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MINMAXINFO guid: (GUID fromString: '{76ebd637-6ab0-4d00-812c-fa6942e1318e}')!
+
 MINMAXINFO addClassConstant: '_OffsetOf_ptMaxPosition' value: 16r10!
 MINMAXINFO addClassConstant: '_OffsetOf_ptMaxSize' value: 16r8!
 MINMAXINFO addClassConstant: '_OffsetOf_ptMaxTrackSize' value: 16r20!
 MINMAXINFO addClassConstant: '_OffsetOf_ptMinTrackSize' value: 16r18!
 MINMAXINFO addClassConstant: '_OffsetOf_ptReserved' value: 16r0!
+
 MINMAXINFO comment: '<MINMAXINFO> is an <ExternalStructure> class to wrap the struct ''Win.MINMAXINFO'' from type information in the ''Windows API (ANSI)'' library.
 
 The type library contains no documentation for this struct
@@ -27,7 +30,9 @@ typedef struct tagMINMAXINFO {
 	POINTL ptMaxTrackSize;
 } MINMAXINFO;
 '!
+
 !MINMAXINFO categoriesForClass!Win-Structs! !
+
 !MINMAXINFO methodsFor!
 
 ptMaxTrackSize
@@ -57,6 +62,7 @@ ptMinTrackSize: aPOINTL
 		from: ##(_OffsetOf_ptMinTrackSize + 1)
 		to: ##(_OffsetOf_ptMinTrackSize + POINTL basicByteSize)
 		startingAt: 1! !
+
 !MINMAXINFO categoriesForMethods!
 ptMaxTrackSize!**compiled accessors**!public! !
 ptMaxTrackSize:!**compiled accessors**!public! !
@@ -88,6 +94,7 @@ defineFields
 
 getFieldNames
 	^#(#ptMaxSize #ptMaxPosition #ptMinTrackSize #ptMaxTrackSize)! !
+
 !MINMAXINFO class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

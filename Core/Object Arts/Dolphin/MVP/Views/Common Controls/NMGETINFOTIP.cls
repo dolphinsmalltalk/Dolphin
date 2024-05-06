@@ -5,10 +5,15 @@ NMHDR subclass: #NMGETINFOTIP
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 NMGETINFOTIP guid: (GUID fromString: '{c10cd176-4f7d-4640-b3ce-5368bfcbfbbc}')!
+
 NMGETINFOTIP isAbstract: true!
+
 NMGETINFOTIP comment: ''!
+
 !NMGETINFOTIP categoriesForClass!External-Data-Structured-Win32! !
+
 !NMGETINFOTIP methodsFor!
 
 cchTextMax
@@ -41,6 +46,7 @@ text: text
 			tipText := (tipText copyFrom: 1 to: last) , '...'].
 	tipText copyToBuffer: self pszText ofSize: max.
 	^tipText! !
+
 !NMGETINFOTIP categoriesForMethods!
 cchTextMax!accessing!public! !
 pszText!accessing!public! !

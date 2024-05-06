@@ -5,9 +5,13 @@ PresenterTest subclass: #ChoicePresenterTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ChoicePresenterTest guid: (GUID fromString: '{f39cda5e-17b7-48ee-ae77-57c882174716}')!
+
 ChoicePresenterTest comment: ''!
+
 !ChoicePresenterTest categoriesForClass!Unclassified! !
+
 !ChoicePresenterTest methodsFor!
 
 classToTest
@@ -84,6 +88,7 @@ testNilMultiChoice
 	self assert: presenter view hasSelection.
 	self assert: presenter view selectionsByIndex equals: #(3 4).
 	self assert: presenter value equals: #(2 3)! !
+
 !ChoicePresenterTest categoriesForMethods!
 classToTest!helpers!private! !
 testChangeChoices!public!unit tests! !

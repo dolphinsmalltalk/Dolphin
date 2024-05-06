@@ -5,7 +5,9 @@ Object subclass: #ModalMsgLoop
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ModalMsgLoop guid: (GUID fromString: '{9fe23040-75a9-11d3-b376-080046056106}')!
+
 ModalMsgLoop comment: 'ModalMsgLoop is a special process synchronisation object that can be used to block the main UI process while still servicing the message queue, without having to start a new UI process.
 
 For example:
@@ -21,7 +23,9 @@ Instance Variables:
 	loop		<boolean>. Used to control termination of the modal loop.
 
 '!
+
 !ModalMsgLoop categoriesForClass!Unclassified! !
+
 !ModalMsgLoop methodsFor!
 
 initialize
@@ -41,6 +45,7 @@ wait
 	message loop continues to be serviced, but keyboard and mouse input is discarded."
 
 	SessionManager inputState loopWhile: [loop]! !
+
 !ModalMsgLoop categoriesForMethods!
 initialize!initializing!private! !
 signal!process synchronisation!public! !
@@ -53,6 +58,7 @@ new
 	"Answer a new initialized instance of the receiver."
 
 	^super new initialize! !
+
 !ModalMsgLoop class categoriesForMethods!
 new!instance creation!public! !
 !

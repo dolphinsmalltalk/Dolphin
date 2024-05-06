@@ -5,7 +5,9 @@ Color subclass: #IndexedColor
 	classVariableNames: 'InstancesByIndex InstancesByName Names'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IndexedColor guid: (GUID fromString: '{87b4c53a-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 IndexedColor comment: '`IndexedColor` instances represent the 16 standard colours that have been defined in Windows since its inception and that are always available in the standard system palette. There are actually 20 indexed colours, but 4 of these do not necessarily map to a fixed colour name.
 
 As indexed colors are a legacy representation they are now soft-deprecated. They should be avoided in new code and in most circumstances where you might previously have received an `IndexedColor` from a `Color` instance creation method, you will now get an `RGB` instead. IndexedColors are no longer accessible by name through `Color class>>named:`. However, it is expected that `IndexedColor`s will continue to exist in pre-existing view resources and might result from calling certain older APIs.
@@ -31,7 +33,9 @@ Historically we have used a logical system to name the indexed colours, which co
  yellow		yellow
 
 In cases where the names are different, the common colours may also contain a slightly different colour with the same name as the Dolphin indexed colour name. An example is #darkCyan, which is a subtly different shade of turquoise to teal.'!
+
 !IndexedColor categoriesForClass!Drawing! !
+
 !IndexedColor methodsFor!
 
 asCOLORREF
@@ -133,6 +137,7 @@ stbSaveOn: anSTBOutFiler
 
 	"IndexedColors are soft-deprecated - upgrade them to equivalent named colours on save."
 	anSTBOutFiler nextPut: self asRGB! !
+
 !IndexedColor categoriesForMethods!
 asCOLORREF!accessing!public! !
 asParameter!converting!public! !
@@ -205,6 +210,7 @@ withIndex: anInteger
 	"Answer the unique <IndexedColor> whose index is the <integer> argument."
 
 	^InstancesByIndex at: anInteger! !
+
 !IndexedColor class categoriesForMethods!
 black!common colors!public! !
 initialize!development!initializing!public! !

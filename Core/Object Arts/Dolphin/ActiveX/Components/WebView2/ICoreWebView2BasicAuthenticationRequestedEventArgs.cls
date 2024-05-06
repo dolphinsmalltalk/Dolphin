@@ -5,7 +5,9 @@ ICoreWebView2EventArgs subclass: #ICoreWebView2BasicAuthenticationRequestedEvent
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2BasicAuthenticationRequestedEventArgs guid: (IID fromString: '{ef05516f-d897-4f9e-b672-d8e2307a3fb0}')!
+
 ICoreWebView2BasicAuthenticationRequestedEventArgs comment: '`ICoreWebView2BasicAuthenticationRequestedEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2BasicAuthenticationRequestedEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -41,7 +43,9 @@ interface ICoreWebView2BasicAuthenticationRequestedEventArgs : IUnknown
 };
 ```
 '!
+
 !ICoreWebView2BasicAuthenticationRequestedEventArgs categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2BasicAuthenticationRequestedEventArgs methodsFor!
 
 cancel
@@ -154,6 +158,7 @@ uri
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
 	^answer! !
+
 !ICoreWebView2BasicAuthenticationRequestedEventArgs categoriesForMethods!
 cancel!properties!public! !
 cancel:!**auto generated**!properties!public! !
@@ -190,6 +195,7 @@ defineFunctions
 		defineFunction: #GetDeferral:
 			argumentTypes: 'ICoreWebView2Deferral**'
 ! !
+
 !ICoreWebView2BasicAuthenticationRequestedEventArgs class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

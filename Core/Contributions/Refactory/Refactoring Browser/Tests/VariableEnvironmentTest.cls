@@ -5,9 +5,13 @@ BrowserEnvironmentTest subclass: #VariableEnvironmentTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 VariableEnvironmentTest guid: (GUID fromString: '{dd03c304-e6e0-47f2-8f26-e7eef49d29bc}')!
+
 VariableEnvironmentTest comment: ''!
+
 !VariableEnvironmentTest categoriesForClass!Refactory-Testing! !
+
 !VariableEnvironmentTest methodsFor!
 
 testAddRemove
@@ -41,6 +45,7 @@ testInstVars
 	self universalTestFor: writers.
 	self universalTestFor: readers.
 	self assert: refs numberSelectors equals: (writers | readers) numberSelectors! !
+
 !VariableEnvironmentTest categoriesForMethods!
 testAddRemove!public!tests! !
 testInstVars!public!tests! !

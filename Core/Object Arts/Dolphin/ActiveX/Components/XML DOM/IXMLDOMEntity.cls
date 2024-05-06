@@ -5,11 +5,15 @@ IXMLDOMNode subclass: #IXMLDOMEntity
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
 	classInstanceVariableNames: ''!
+
 IXMLDOMEntity guid: (IID fromString: '{2933bf8d-7b36-11d2-b20e-00c04f983e60}')!
+
 IXMLDOMEntity comment: '<IXMLDOMEntity> is a wrapper class for the COM interface ''MSXML.IXMLDOMEntity'' generated from type information in the ''Microsoft XML, version 2.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 This is a specialized DOM node to represent parsed or unparsed entities in the XML document.'!
+
 !IXMLDOMEntity categoriesForClass!COM-Interfaces!MSXML-Interfaces! !
+
 !IXMLDOMEntity methodsFor!
 
 get_notationName: name
@@ -107,6 +111,7 @@ value: arg1
 	is fixed)."
 
 	^self shouldNotImplement! !
+
 !IXMLDOMEntity categoriesForMethods!
 get_notationName:!**auto generated**!COM Interfaces-IXMLDOMEntity!private! !
 get_publicId:!**auto generated**!COM Interfaces-IXMLDOMEntity!private! !
@@ -136,6 +141,7 @@ defineFunctions
 		defineFunction: #get_notationName:
 			argumentTypes: 'bstr*'
 ! !
+
 !IXMLDOMEntity class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

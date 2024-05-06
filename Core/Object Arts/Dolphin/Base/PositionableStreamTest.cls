@@ -5,10 +5,15 @@ StreamTest subclass: #PositionableStreamTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PositionableStreamTest guid: (GUID fromString: '{3abcc3a3-be2b-417d-bdb7-cf6a64cc2c6b}')!
+
 PositionableStreamTest isAbstract: true!
+
 PositionableStreamTest comment: ''!
+
 !PositionableStreamTest categoriesForClass!Unclassified! !
+
 !PositionableStreamTest methodsFor!
 
 arrayedCollections
@@ -854,6 +859,7 @@ writeOperationNotImplemented: aBlock
 		should: aBlock
 		raise: Error
 		matching: [:ex | ex description beginsWith: self streamClass name , ' does not understand']! !
+
 !PositionableStreamTest categoriesForMethods!
 arrayedCollections!private!unit tests! !
 arrays!private!unit tests! !

@@ -5,9 +5,13 @@ RefactoringTest subclass: #AddClassTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AddClassTest guid: (GUID fromString: '{2113113d-2508-4856-9ae0-868f9af9ac5c}')!
+
 AddClassTest comment: ''!
+
 !AddClassTest categoriesForClass!Refactory-Testing! !
+
 !AddClassTest methodsFor!
 
 setUp
@@ -95,6 +99,7 @@ testModelInvalidSubclass
 				subclasses: (Array with: (model classNamed: #Bar))
 				category: #'Refactory-Tesing'.
 	self shouldFail: refactoring! !
+
 !AddClassTest categoriesForMethods!
 setUp!public!set up! !
 testAddClass!public!tests! !

@@ -51,7 +51,6 @@ Known Issues:
 
 package basicPackageVersion: '6.1'.
 
-
 package classNames
 	add: #AXControlSite;
 	add: #AXValueConvertingControlSite;
@@ -106,51 +105,61 @@ IUnknown subclass: #IDolphinAxHost
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IUnknown subclass: #IOleClientSite
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IUnknown subclass: #IOleObject
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IUnknown subclass: #IPropertyNotifySink
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IDispatch subclass: #IAxWinAmbientDispatch
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IDispatch subclass: #IDocHostUIHandlerDispatch
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IDispatch subclass: #IMSControl
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IAxWinAmbientDispatch subclass: #IAxWinAmbientDispatchEx
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 OLEStructure subclass: #OLEVERB
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_fuFlags _OffsetOf_grfAttribs _OffsetOf_lpszVerbName _OffsetOf_lVerb'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ControlView subclass: #AXControlSite
 	instanceVariableNames: 'progId dispControl host sink hostFlags propertyMap ambientDispatch unkControl licenseKey _reserved1 _reserved2'
 	classVariableNames: 'AllowContextMenuMask AllowShowUIMask AllowWindowlessMask DisplayAsDefaultMask FireControlEventsMask FirePropertyEventsMask ReflectMask StandardPropNames TraceEventsMask UserModeMask WM_ATLGETHOST WM_FORWARDMSG'
 	poolDictionaries: 'AXAutomationConstants AXAutomationErrors'
 	classInstanceVariableNames: ''!
+
 AXControlSite subclass: #AXValueConvertingControlSite
 	instanceVariableNames: 'typeconverter'
 	classVariableNames: ''
@@ -171,6 +180,7 @@ axWinInit
 
 	<stdcall: bool AtlAxWinInit>
 	^self invalidCall: _failureCode! !
+
 !VMLibrary categoriesForMethods!
 axWinInit!initializing!public! !
 !

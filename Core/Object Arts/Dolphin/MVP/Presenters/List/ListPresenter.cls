@@ -5,7 +5,9 @@ SelectableItemsPresenter subclass: #ListPresenter
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ListPresenter guid: (GUID fromString: '{87b4c685-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 ListPresenter comment: 'ListPresenter implements a <listPresenter> component that can be used to display the contents of a <listModel> within a <listView>.  It also conforms to <selectableItems> and <indexSelectableItems> to provide methods for accessing the current selection(s) in the list.
 
 Instance Variables:
@@ -14,7 +16,9 @@ Instance Variables:
 
 
 '!
+
 !ListPresenter categoriesForClass!MVP-Presenters! !
+
 !ListPresenter methodsFor!
 
 basicBeSorted
@@ -129,6 +133,7 @@ sortBlock
 
 sortBlock: anObject
 	sortBlock := anObject! !
+
 !ListPresenter categoriesForMethods!
 basicBeSorted!private!sorting! !
 beNotSorted!public!sorting! !
@@ -197,6 +202,7 @@ resource_Drop_down_list
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ComboBox) 34 17 nil nil 34 2 8 1412498947 1025 416 590662 2 ##(Smalltalk.ListModel) 138 144 8 #() nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 327686 ##(Smalltalk.Color) #default nil 5 nil nil nil 416 nil 8 1903738896 459270 ##(Smalltalk.Message) #displayString 8 #() 528 401 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 786 251 51 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 252 7 0 0 35 0 0 0] 8 #() 786 193 193 nil 27 )! !
+
 !ListPresenter class categoriesForMethods!
 defaultModel!models!public! !
 icon!constants!public! !

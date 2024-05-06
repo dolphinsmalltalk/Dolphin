@@ -5,10 +5,14 @@ FolderHierarchyModel subclass: #PackageHierarchyModel
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PackageHierarchyModel guid: (GUID fromString: '{26dea10b-1bc7-477f-a6b8-ca9452ce3d3e}')!
+
 PackageHierarchyModel comment: 'PackageHierarchyModel is a <FolderHierarchyModel> specialized to represent the hierarchy of folders of installed packages.
 '!
+
 !PackageHierarchyModel categoriesForClass!MVP-Models! !
+
 !PackageHierarchyModel methodsFor!
 
 addPackage: aPackage 
@@ -39,6 +43,7 @@ refresh
 
 	self reset.
 	self buildTree! !
+
 !PackageHierarchyModel categoriesForMethods!
 addPackage:!adding!private! !
 buildTree!private!updating! !

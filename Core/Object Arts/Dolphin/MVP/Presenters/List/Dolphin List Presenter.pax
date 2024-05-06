@@ -11,7 +11,6 @@ This package is part of the Dolphin Smalltalk Model View Presenter user-interfac
 
 package basicPackageVersion: '6.1'.
 
-
 package classNames
 	add: #BasicListAbstract;
 	add: #ComboBox;
@@ -52,29 +51,30 @@ SelectableItemsPresenter subclass: #ListPresenter
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ControlView subclass: #ListControlView
 	instanceVariableNames: 'getTextBlock'
 	classVariableNames: 'RevertSelMessage'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ListControlView subclass: #BasicListAbstract
 	instanceVariableNames: 'lastSelIndices'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 BasicListAbstract subclass: #ComboBox
 	instanceVariableNames: 'droppedHeight'
 	classVariableNames: 'Modes'
 	poolDictionaries: 'ComboBoxConstants'
 	classInstanceVariableNames: ''!
+
 BasicListAbstract subclass: #ListBox
 	instanceVariableNames: 'approvedSelIndices'
 	classVariableNames: 'SelectionModeMask SelectionModes'
 	poolDictionaries: 'ListBoxConstants'
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -84,6 +84,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^ListPresenter icon! !
+
 !SelectableItemsPresenter class categoriesForMethods!
 icon!constants!public! !
 !
@@ -98,6 +99,7 @@ wmBeginDrag: message wParam: wParam lParam: lParam
 	listbox := self class withHandle: lParam.
 	^listbox lbnBeginDrag: wParam.
 ! !
+
 !View categoriesForMethods!
 wmBeginDrag:wParam:lParam:!event handling-win32!private! !
 !

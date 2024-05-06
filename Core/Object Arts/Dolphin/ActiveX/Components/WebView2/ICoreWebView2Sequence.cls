@@ -5,12 +5,17 @@ ICoreWebView2Collection subclass: #ICoreWebView2Sequence
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2Sequence guid: (IID fromString: '{9033689d-5414-4ef0-8f8c-b74e4f485261}')!
+
 ICoreWebView2Sequence isAbstract: true!
+
 ICoreWebView2Sequence comment: '`ICoreWebView2Sequence` is not defined in the WebView2 IDL, but is defined here for economy of mechanism, providing a common implementation of most of the Smalltalk `<sequencedReadableCollection>` protocol for the WebView2 collections that support random access by integer index.
 
 Subclasses must provide at least `elementClass` and `GetValueAtIndex:value:` to complete the implementation.'!
+
 !ICoreWebView2Sequence categoriesForClass!COM-Interfaces! !
+
 !ICoreWebView2Sequence methodsFor!
 
 , aSequencedReadableCollection
@@ -289,6 +294,7 @@ with: otherCollection do: operation
 
 	self size = otherCollection size ifFalse: [^self error: 'collections are of different sizes'].
 	self keysAndValuesDo: [:i :elem | operation value: elem value: (otherCollection at: i)]! !
+
 !ICoreWebView2Sequence categoriesForMethods!
 ,!copying!public! !
 after:!public!searching! !

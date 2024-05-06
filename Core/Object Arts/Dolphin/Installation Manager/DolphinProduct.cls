@@ -5,10 +5,15 @@ Object subclass: #DolphinProduct
 	classVariableNames: 'Current EditionsMap'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DolphinProduct guid: (GUID fromString: '{0bcc007b-10ed-40ce-940e-83882e2f70d8}')!
+
 DolphinProduct isAbstract: true!
+
 DolphinProduct comment: ''!
+
 !DolphinProduct categoriesForClass!System-Support! !
+
 !DolphinProduct methodsFor!
 
 allPackages
@@ -414,6 +419,7 @@ versionMask: anInteger
 
 warnOfUnlistedContent
 ! !
+
 !DolphinProduct categoriesForMethods!
 allPackages!accessing!public! !
 basicLoad!operations!private! !
@@ -609,6 +615,7 @@ versionMask: versionMask
 	^(super new)
 		versionMask: versionMask;
 		yourself! !
+
 !DolphinProduct class categoriesForMethods!
 boot!operations!public! !
 current!accessing!public! !

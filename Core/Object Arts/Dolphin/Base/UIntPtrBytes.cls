@@ -5,9 +5,13 @@ ExternalIntegerBytes variableByteSubclass: #UIntPtrBytes
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 UIntPtrBytes guid: (GUID fromString: '{c9f5efed-9b23-441a-b6e4-9a0d3c7282ab}')!
+
 UIntPtrBytes comment: ''!
+
 !UIntPtrBytes categoriesForClass!External-Data-Unstructured! !
+
 !UIntPtrBytes methodsFor!
 
 asInteger
@@ -64,6 +68,7 @@ value: anObject
 	"Set the unsigned <integer> value stored in the receiver."
 
 	self uintPtrAtOffset: 0 put: anObject! !
+
 !UIntPtrBytes categoriesForMethods!
 asInteger!converting!public! !
 asSignedInteger!converting!public! !
@@ -86,6 +91,7 @@ elementSize
 
 valueAtAddress: anAddress 
 	^anAddress asExternalAddress uintPtrAtOffset: 0! !
+
 !UIntPtrBytes class categoriesForMethods!
 elementSize!constants!private! !
 valueAtAddress:!instance creation!private! !

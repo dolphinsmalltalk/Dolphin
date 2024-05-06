@@ -5,11 +5,14 @@ HttpServerStructure subclass: #HTTP_CHANNEL_BIND_INFO
 	classVariableNames: '_OffsetOf_Flags _OffsetOf_Hardening _OffsetOf_NumberOfServiceNames _OffsetOf_ServiceNames'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 HTTP_CHANNEL_BIND_INFO guid: (GUID fromString: '{84ea1900-0bc6-4ac8-9025-7f74436d5dc9}')!
+
 HTTP_CHANNEL_BIND_INFO addClassConstant: '_OffsetOf_Flags' value: 16r4!
 HTTP_CHANNEL_BIND_INFO addClassConstant: '_OffsetOf_Hardening' value: 16r0!
 HTTP_CHANNEL_BIND_INFO addClassConstant: '_OffsetOf_NumberOfServiceNames' value: 16rC!
 HTTP_CHANNEL_BIND_INFO addClassConstant: '_OffsetOf_ServiceNames' value: 16r8!
+
 HTTP_CHANNEL_BIND_INFO comment: '<HTTP_CHANNEL_BIND_INFO> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_CHANNEL_BIND_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -27,7 +30,9 @@ struct tagHTTP_CHANNEL_BIND_INFO {
 	[nonbrowsable, helpstring("The number of names in ServiceNames.")] ULONG NumberOfServiceNames;
 } HTTP_CHANNEL_BIND_INFO;
 '!
+
 !HTTP_CHANNEL_BIND_INFO categoriesForClass!WinHttpServer-Structs! !
+
 !HTTP_CHANNEL_BIND_INFO methodsFor!
 
 Flags
@@ -73,6 +78,7 @@ ServiceNames: aStructureArray
 
 	bytes uintPtrAtOffset: _OffsetOf_ServiceNames put: aStructureArray yourAddress.
 	self NumberOfServiceNames: aStructureArray size! !
+
 !HTTP_CHANNEL_BIND_INFO categoriesForMethods!
 Flags!**compiled accessors**!public! !
 Flags:!**compiled accessors**!public! !
@@ -109,6 +115,7 @@ defineFields
 
 getFieldNames
 	^#(#Hardening #Flags #ServiceNames #NumberOfServiceNames)! !
+
 !HTTP_CHANNEL_BIND_INFO class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

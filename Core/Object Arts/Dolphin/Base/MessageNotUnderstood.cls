@@ -5,9 +5,13 @@ Error subclass: #MessageNotUnderstood
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MessageNotUnderstood guid: (GUID fromString: '{87b4c55d-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 MessageNotUnderstood comment: ''!
+
 !MessageNotUnderstood categoriesForClass!Kernel-Exception Handling! !
+
 !MessageNotUnderstood methodsFor!
 
 _descriptionArguments
@@ -50,6 +54,7 @@ selector
 	<failedMessage>."
 
 	^self message selector! !
+
 !MessageNotUnderstood categoriesForMethods!
 _descriptionArguments!displaying!public! !
 _descriptionFormat!displaying!public! !
@@ -72,6 +77,7 @@ receiver: anObject message: aMessage
 		receiver: anObject;
 		tag: aMessage;
 		signal! !
+
 !MessageNotUnderstood class categoriesForMethods!
 receiver:message:!instance creation!public! !
 !

@@ -5,9 +5,13 @@ SelectableItemsTest subclass: #PackageSelectorTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PackageSelectorTest guid: (GUID fromString: '{eb6a3732-7f1e-4c12-b050-6446fcbde374}')!
+
 PackageSelectorTest comment: ''!
+
 !PackageSelectorTest categoriesForClass!Unclassified! !
+
 !PackageSelectorTest methodsFor!
 
 classToTest
@@ -47,6 +51,7 @@ testFilter
 		selectRootFolder.
 	self assert: presenter autoSelect.
 	self assert: presenter selections asSet equals: Package manager packages asSet! !
+
 !PackageSelectorTest categoriesForMethods!
 classToTest!helpers!private! !
 createPackage:!helpers!private! !

@@ -5,7 +5,9 @@ ICoreWebView2Interface subclass: #ICoreWebView2EnvironmentOptions2
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2EnvironmentOptions2 guid: (IID fromString: '{ff85c98a-1ba7-4a6b-90c8-2b752c89e9e2}')!
+
 ICoreWebView2EnvironmentOptions2 comment: '`ICoreWebView2EnvironmentOptions2` is a wrapper class for the COM interface ''WebView2.ICoreWebView2EnvironmentOptions2'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The IDL contains this comment, which includes an explanation of why ICoreWebView2EnviromentOptions2 is not a sub-interface of ICoreWebView2EnvironmentOptions:
@@ -38,7 +40,9 @@ interface ICoreWebView2EnvironmentOptions2 : IUnknown
 };
 ```
 '!
+
 !ICoreWebView2EnvironmentOptions2 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2EnvironmentOptions2 methodsFor!
 
 exclusiveUserDataFolderAccess
@@ -72,6 +76,7 @@ put_ExclusiveUserDataFolderAccess: value
 
 	<virtual stdcall: hresult 5 sdword>
 	^self invalidCall: _failureCode! !
+
 !ICoreWebView2EnvironmentOptions2 categoriesForMethods!
 exclusiveUserDataFolderAccess!properties!public! !
 exclusiveUserDataFolderAccess:!**auto generated**!properties!public! !
@@ -93,6 +98,7 @@ defineFunctions
 		defineFunction: #put_ExclusiveUserDataFolderAccess:
 			argumentTypes: 'sdword'
 ! !
+
 !ICoreWebView2EnvironmentOptions2 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

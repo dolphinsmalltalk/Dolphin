@@ -5,7 +5,9 @@ ExternalStructure subclass: #PIXELFORMATDESCRIPTOR
 	classVariableNames: '_OffsetOf_bReserved _OffsetOf_cAccumAlphaBits _OffsetOf_cAccumBits _OffsetOf_cAccumBlueBits _OffsetOf_cAccumGreenBits _OffsetOf_cAccumRedBits _OffsetOf_cAlphaBits _OffsetOf_cAlphaShift _OffsetOf_cAuxBuffers _OffsetOf_cBlueBits _OffsetOf_cBlueShift _OffsetOf_cColorBits _OffsetOf_cDepthBits _OffsetOf_cGreenBits _OffsetOf_cGreenShift _OffsetOf_cRedBits _OffsetOf_cRedShift _OffsetOf_cStencilBits _OffsetOf_dwDamageMask _OffsetOf_dwFlags _OffsetOf_dwLayerMask _OffsetOf_dwVisibleMask _OffsetOf_iLayerType _OffsetOf_iPixelType _OffsetOf_nSize _OffsetOf_nVersion'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PIXELFORMATDESCRIPTOR guid: (GUID fromString: '{9b1f091d-48dd-4f2d-98c3-6e6348abdb67}')!
+
 PIXELFORMATDESCRIPTOR addClassConstant: '_OffsetOf_bReserved' value: 16r1B!
 PIXELFORMATDESCRIPTOR addClassConstant: '_OffsetOf_cAccumAlphaBits' value: 16r16!
 PIXELFORMATDESCRIPTOR addClassConstant: '_OffsetOf_cAccumBits' value: 16r12!
@@ -32,6 +34,7 @@ PIXELFORMATDESCRIPTOR addClassConstant: '_OffsetOf_iLayerType' value: 16r1A!
 PIXELFORMATDESCRIPTOR addClassConstant: '_OffsetOf_iPixelType' value: 16r8!
 PIXELFORMATDESCRIPTOR addClassConstant: '_OffsetOf_nSize' value: 16r0!
 PIXELFORMATDESCRIPTOR addClassConstant: '_OffsetOf_nVersion' value: 16r2!
+
 PIXELFORMATDESCRIPTOR comment: '<PIXELFORMATDESCRIPTOR> is an <ExternalStructure> class to wrap the struct ''Win32.PIXELFORMATDESCRIPTOR'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -70,7 +73,9 @@ struct tagPIXELFORMATDESCRIPTOR {
 	unsigned long dwDamageMask;
 } PIXELFORMATDESCRIPTOR;
 '!
+
 !PIXELFORMATDESCRIPTOR categoriesForClass!Win32-Structs! !
+
 !PIXELFORMATDESCRIPTOR methodsFor!
 
 bReserved
@@ -332,6 +337,7 @@ nVersion: anInteger
 	"Set the receiver's 'nVersion' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_nVersion put: anInteger! !
+
 !PIXELFORMATDESCRIPTOR categoriesForMethods!
 bReserved!**compiled accessors**!public! !
 bReserved:!**compiled accessors**!public! !
@@ -456,6 +462,7 @@ defineFields
 
 getFieldNames
 	^#(#nSize #nVersion #dwFlags #iPixelType #cColorBits #cRedBits #cRedShift #cGreenBits #cGreenShift #cBlueBits #cBlueShift #cAlphaBits #cAlphaShift #cAccumBits #cAccumRedBits #cAccumGreenBits #cAccumBlueBits #cAccumAlphaBits #cDepthBits #cStencilBits #cAuxBuffers #iLayerType #bReserved #dwLayerMask #dwVisibleMask #dwDamageMask)! !
+
 !PIXELFORMATDESCRIPTOR class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

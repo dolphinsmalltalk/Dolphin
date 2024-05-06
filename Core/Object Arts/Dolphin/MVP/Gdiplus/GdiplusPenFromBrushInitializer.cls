@@ -5,9 +5,13 @@ GdiplusPenInitializer subclass: #GdiplusPenFromBrushInitializer
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusPenFromBrushInitializer guid: (GUID fromString: '{3cebfbe5-f58d-442f-bf48-8d88151842cf}')!
+
 GdiplusPenFromBrushInitializer comment: ''!
+
 !GdiplusPenFromBrushInitializer categoriesForClass!Unclassified! !
+
 !GdiplusPenFromBrushInitializer methodsFor!
 
 brush
@@ -37,6 +41,7 @@ createHandle
 				pen: gpHandle.
 	status == Ok ifFalse: [self gdiplusErrorWith: status].
 	^gpHandle! !
+
 !GdiplusPenFromBrushInitializer categoriesForMethods!
 brush!private!test accessing! !
 brush:width:!initializing!private! !

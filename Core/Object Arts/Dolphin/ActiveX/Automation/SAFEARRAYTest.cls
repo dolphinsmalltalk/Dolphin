@@ -5,9 +5,13 @@ GenericExternalArrayTest subclass: #SAFEARRAYTest
 	classVariableNames: ''
 	poolDictionaries: 'Win32Errors'
 	classInstanceVariableNames: ''!
+
 SAFEARRAYTest guid: (GUID fromString: '{f0fcec1b-f6cd-4f59-b5da-115cf8d04805}')!
+
 SAFEARRAYTest comment: ''!
+
 !SAFEARRAYTest categoriesForClass!Unclassified! !
+
 !SAFEARRAYTest methodsFor!
 
 arrayClass
@@ -158,6 +162,7 @@ threePoints: recordClass
 				x: each;
 				y: each].
 	^sa! !
+
 !SAFEARRAYTest categoriesForMethods!
 arrayClass!constants!private! !
 elementClassNames!constants!private! !

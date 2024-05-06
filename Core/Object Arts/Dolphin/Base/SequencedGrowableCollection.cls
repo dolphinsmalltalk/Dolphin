@@ -5,8 +5,11 @@ SequenceableCollection subclass: #SequencedGrowableCollection
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SequencedGrowableCollection guid: (GUID fromString: '{87b4c50f-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 SequencedGrowableCollection isAbstract: true!
+
 SequencedGrowableCollection comment: 'SequencedGrowableCollection is the abstract class of sequenceable, contractible, and extensible collections.
 
 SequencedGrowableCollections comply with the ANSI protocols:
@@ -17,7 +20,9 @@ SequencedGrowableCollections comply with the ANSI protocols:
 	sequencedContractibleCollection
 	sequencedCollection
 	sequencedExtensibleCollection'!
+
 !SequencedGrowableCollection categoriesForClass!Collections-Sequenceable! !
+
 !SequencedGrowableCollection methodsFor!
 
 add: newElement
@@ -172,6 +177,7 @@ removeLastIfAbsent: exceptionHandler
 
 	self isEmpty ifTrue: [^exceptionHandler value].
 	^self removeAtIndex: self size! !
+
 !SequencedGrowableCollection categoriesForMethods!
 add:!adding!public! !
 add:after:!adding!public! !

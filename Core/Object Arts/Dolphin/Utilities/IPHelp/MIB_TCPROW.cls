@@ -5,12 +5,15 @@ ExternalStructure subclass: #MIB_TCPROW
 	classVariableNames: '_OffsetOf_dwLocalAddr _OffsetOf_dwLocalPort _OffsetOf_dwRemoteAddr _OffsetOf_dwRemotePort _OffsetOf_dwState'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MIB_TCPROW guid: (GUID fromString: '{f066336f-3aa1-4146-8b59-29b9f4cd065b}')!
+
 MIB_TCPROW addClassConstant: '_OffsetOf_dwLocalAddr' value: 16r4!
 MIB_TCPROW addClassConstant: '_OffsetOf_dwLocalPort' value: 16r8!
 MIB_TCPROW addClassConstant: '_OffsetOf_dwRemoteAddr' value: 16rC!
 MIB_TCPROW addClassConstant: '_OffsetOf_dwRemotePort' value: 16r10!
 MIB_TCPROW addClassConstant: '_OffsetOf_dwState' value: 16r0!
+
 MIB_TCPROW comment: '<MIB_TCPROW> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_TCPROW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -28,7 +31,9 @@ struct tagMIB_TCPROW {
 	unsigned long dwRemotePort;
 } MIB_TCPROW;
 '!
+
 !MIB_TCPROW categoriesForClass!Win32-Structs! !
+
 !MIB_TCPROW methodsFor!
 
 displayOn: aStream 
@@ -69,6 +74,7 @@ portName
 	| psrvent |
 	psrvent := WS2_32Library default getservbyport: self dwLocalPort proto: 'tcp'.
 	^psrvent isNull ifFalse: [psrvent s_name]! !
+
 !MIB_TCPROW categoriesForMethods!
 displayOn:!public! !
 dwLocalAddr!**compiled accessors**!public! !
@@ -116,6 +122,7 @@ defineFields
 
 getFieldNames
 	^#(#dwState #dwLocalAddr #dwLocalPort #dwRemoteAddr #dwRemotePort)! !
+
 !MIB_TCPROW class categoriesForMethods!
 defineFields!initializing!public! !
 getFieldNames!**compiled accessors**!constants!private! !

@@ -5,9 +5,13 @@ UINT_PTRField subclass: #LPVOIDField
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 LPVOIDField guid: (GUID fromString: '{87b4c4f0-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 LPVOIDField comment: '<LPVOIDField> is a <ScalarField> type to represent <ExternalStructure> fields that are untyped pointers to external memory.'!
+
 !LPVOIDField categoriesForClass!External-Data-Types! !
+
 !LPVOIDField methodsFor!
 
 fieldClassName
@@ -18,6 +22,7 @@ readFrom: anExternalStructure
 	receiver's offset in the <ExternalStructure> argument."
 
 	^(anExternalStructure bytes uintPtrAtOffset: offset) asExternalAddress! !
+
 !LPVOIDField categoriesForMethods!
 fieldClassName!automatic generation!constants!development!private! !
 readFrom:!indirect accessing!private! !

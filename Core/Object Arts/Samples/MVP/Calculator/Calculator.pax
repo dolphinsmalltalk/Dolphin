@@ -37,7 +37,6 @@ Smalltalk developmentSystem browseDeploymentLog: ''DCalc.xml''
 
 '.
 
-
 package classNames
 	add: #Calculator;
 	add: #CalculatorSessionManager;
@@ -66,16 +65,12 @@ Shell subclass: #Calculator
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RuntimeSessionManager subclass: #CalculatorSessionManager
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

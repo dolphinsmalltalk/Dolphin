@@ -5,10 +5,15 @@ DolphinTest subclass: #DolphinCollectionTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DolphinCollectionTest guid: (GUID fromString: '{c0608062-bc41-43cf-aefc-c89e6b500e6d}')!
+
 DolphinCollectionTest isAbstract: true!
+
 DolphinCollectionTest comment: ''!
+
 !DolphinCollectionTest categoriesForClass!Unclassified! !
+
 !DolphinCollectionTest methodsFor!
 
 assimilate: anObject
@@ -156,6 +161,7 @@ testSingle
 	self assert: subject single equals: (self assimilate: $a).
 	subject := self newCollection: #($a $b).
 	self should: [subject single] raise: Error! !
+
 !DolphinCollectionTest categoriesForMethods!
 assimilate:!private!unit tests! !
 assimilateElements:!helpers!private! !

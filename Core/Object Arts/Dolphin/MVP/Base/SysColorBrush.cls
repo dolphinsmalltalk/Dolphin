@@ -5,7 +5,9 @@ StockBrush subclass: #SysColorBrush
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SysColorBrush guid: (GUID fromString: '{87b4c63b-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 SysColorBrush comment: '`SysColorBrush` is type of `Brush` that paints in one of the current Windows theme colours.
 
 SysColorBrushes are not normally instantiated directly, but rather by sending the `#brush` message to a suitable system colour, for example `Color face3d brush`.
@@ -13,7 +15,9 @@ SysColorBrushes are not normally instantiated directly, but rather by sending th
 ## Instance Variables:
   `id`		`<integer>` code identifying the theme colour, from the COLOR_xxxx enumeration
 '!
+
 !SysColorBrush categoriesForClass!Graphics-Tools! !
+
 !SysColorBrush methodsFor!
 
 color
@@ -37,6 +41,7 @@ printOn: aStream
 		space;
 		print: self color;
 		nextPut: $)! !
+
 !SysColorBrush categoriesForMethods!
 color!accessing!public! !
 createHandle!private!realizing/unrealizing! !
@@ -49,6 +54,7 @@ newColor: aSystemColor
 	"Private - Answer a new instance of the receiver for painting in the specified solid colour."
 
 	^self fromId: aSystemColor id! !
+
 !SysColorBrush class categoriesForMethods!
 newColor:!instance creation!private! !
 !

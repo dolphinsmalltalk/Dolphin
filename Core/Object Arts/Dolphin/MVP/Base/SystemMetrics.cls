@@ -5,7 +5,9 @@ Object subclass: #SystemMetrics
 	classVariableNames: 'Current'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 SystemMetrics guid: (GUID fromString: '{e56cc456-8490-47f1-bd85-71118b110166}')!
+
 SystemMetrics comment: 'SystemMetrics is a singleton class that provides a central service for accessing Windows configuration details such as the configurable aspects of the GUI''s appearance (height of title bars, fonts, etc). It has quite a large number of instance variables that cache information in order to avoid the expense of repeatedly querying it from the operating system.
 
 Instance Variables:
@@ -27,7 +29,9 @@ Class Variables:
 	Current			<SystemMetrics>. Singleton instance.
 
 '!
+
 !SystemMetrics categoriesForClass!Unclassified! !
+
 !SystemMetrics methodsFor!
 
 borderExtent
@@ -410,6 +414,7 @@ virtualScreenRectangle
 	"Answer the rectangle of the virtual screen, i.e. including desktops on all monitors"
 
 	^self virtualScreenOrigin extent: self virtualScreenExtent! !
+
 !SystemMetrics categoriesForMethods!
 borderExtent!constants!public! !
 cursorExtent!constants!public! !
@@ -497,6 +502,7 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	self reset! !
+
 !SystemMetrics class categoriesForMethods!
 current!instance creation!public! !
 new!instance creation!public! !

@@ -5,13 +5,17 @@ IUnknown subclass: #IRecordInfo
 	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants AXAutomationErrors'
 	classInstanceVariableNames: ''!
+
 IRecordInfo guid: (IID fromString: '{0000002f-0000-0000-c000-000000000046}')!
+
 IRecordInfo comment: '<IRecordInfo> is a wrapper class for the COM interface ''OLEIDL.IRecordInfo'' generated from type information in the ''OLEIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
 Warning: This comment was automatically generated from the interface''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.'!
+
 !IRecordInfo categoriesForClass!COM-Interfaces!OLEIDL-Interfaces! !
+
 !IRecordInfo methodsFor!
 
 byteSize
@@ -279,6 +283,7 @@ typeInfo
 		GetTypeInfo: answer.
 	^answer asObject
 ! !
+
 !IRecordInfo categoriesForMethods!
 byteSize!accessing!public! !
 getField:from:ifAbsent:!accessing!private! !
@@ -351,6 +356,7 @@ defineFunctions
 		defineFunction: #RecordDestroy:
 			argumentTypes: 'void*'
 ! !
+
 !IRecordInfo class categoriesForMethods!
 defineFunctions!initializing!public! !
 !

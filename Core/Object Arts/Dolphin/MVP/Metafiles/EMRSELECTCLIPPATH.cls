@@ -5,8 +5,11 @@ ENHMETARECORD subclass: #EMRSELECTCLIPPATH
 	classVariableNames: '_OffsetOf_iMode'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 EMRSELECTCLIPPATH guid: (GUID fromString: '{c8b98c6c-58b3-4b3c-a5c6-a65f676491c6}')!
+
 EMRSELECTCLIPPATH addClassConstant: '_OffsetOf_iMode' value: 16r8!
+
 EMRSELECTCLIPPATH comment: '<EMRSELECTCLIPPATH> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSELECTCLIPPATH'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -21,7 +24,9 @@ struct tagEMRSELECTCLIPPATH {
 	DWORD iMode;
 } EMRSELECTCLIPPATH;
 '!
+
 !EMRSELECTCLIPPATH categoriesForClass!Win32-Structs! !
+
 !EMRSELECTCLIPPATH methodsFor!
 
 iMode
@@ -33,6 +38,7 @@ iMode: anInteger
 	"Set the receiver's 'iMode' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_iMode put: anInteger! !
+
 !EMRSELECTCLIPPATH categoriesForMethods!
 iMode!**compiled accessors**!public! !
 iMode:!**compiled accessors**!public! !
@@ -75,6 +81,7 @@ iTypes
 					with: EMR_SETSTRETCHBLTMODE
 					with: EMR_SETICMMODE
 					with: EMR_SETTEXTALIGN)! !
+
 !EMRSELECTCLIPPATH class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

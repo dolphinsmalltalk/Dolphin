@@ -5,7 +5,9 @@ ToolbarButton subclass: #ToolbarSystemButton
 	classVariableNames: 'BitmapButtons Bitmaps HistoryButtons StandardButtons ViewButtons'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ToolbarSystemButton guid: (GUID fromString: '{87b4c702-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 ToolbarSystemButton comment: '`ToolbarSystemButton` represents a system defined button for a `Toolbar`. The button image is identified by an index into one of a number of system supplied bitmaps. Unfortunately these are not very useful any more, as Microsoft has not updated some of the bitmaps for decades.
 
 For example (evaluated one expression at a time):
@@ -16,7 +18,9 @@ tb := Toolbar new hasFlatAppearance: true; isTransparent: true; show; extent: 30
 	each selector argumentCount = 0 ifTrue: [tb addItem: (ToolbarButton perform: each selector)]].
 tb destroy.
 ```'!
+
 !ToolbarSystemButton categoriesForClass!MVP-Views-Support! !
+
 !ToolbarSystemButton methodsFor!
 
 bitmapId
@@ -53,6 +57,7 @@ imageIndexIn: aToolbar
 	Answer the index of the bitmap from aToolbar's registered bitmaps."
 
 	^aToolbar addSystemBitmap: self bitmapId index: self bitmapIndex! !
+
 !ToolbarSystemButton categoriesForMethods!
 bitmapId!accessing!public! !
 bitmapId:!accessing!public! !
@@ -176,6 +181,7 @@ stbConvertFrom: anSTBClassFormat
 	newInstance instVarAt: 4 put: (data at: 1).
 	5 to: 6 do: [:i | newInstance instVarAt: i put: (data at: i + 1)].
 	newInstance]! !
+
 !ToolbarSystemButton class categoriesForMethods!
 bitmapId:index:commandDescription:!instance creation!public! !
 initialize!development!initializing!public! !

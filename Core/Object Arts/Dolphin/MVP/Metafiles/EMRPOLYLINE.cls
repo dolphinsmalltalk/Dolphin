@@ -5,10 +5,13 @@ ENHMETARECORD subclass: #EMRPOLYLINE
 	classVariableNames: '_OffsetOf_aptl _OffsetOf_cptl _OffsetOf_rclBounds'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 EMRPOLYLINE guid: (GUID fromString: '{d4e9a638-aade-4ece-a3f4-9e54a0929730}')!
+
 EMRPOLYLINE addClassConstant: '_OffsetOf_aptl' value: 16r1C!
 EMRPOLYLINE addClassConstant: '_OffsetOf_cptl' value: 16r18!
 EMRPOLYLINE addClassConstant: '_OffsetOf_rclBounds' value: 16r8!
+
 EMRPOLYLINE comment: '<EMRPOLYLINE> is an <ExternalStructure> class to wrap the struct ''Win32.EMRPOLYLINE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -25,7 +28,9 @@ struct tagEMRPOLYLINE {
 	POINTL* aptl;
 } EMRPOLYLINE;
 '!
+
 !EMRPOLYLINE categoriesForClass!Win32-Structs! !
+
 !EMRPOLYLINE methodsFor!
 
 aptl
@@ -71,6 +76,7 @@ rclBounds: aRECT
 		from: ##(_OffsetOf_rclBounds + 1)
 		to: ##(_OffsetOf_rclBounds + RECT basicByteSize)
 		startingAt: 1! !
+
 !EMRPOLYLINE categoriesForMethods!
 aptl!**compiled accessors**!public! !
 aptl:!**compiled accessors**!public! !
@@ -121,6 +127,7 @@ iTypes
 		with: EMR_POLYGON
 		with: EMR_POLYBEZIERTO
 		with: EMR_POLYLINETO! !
+
 !EMRPOLYLINE class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

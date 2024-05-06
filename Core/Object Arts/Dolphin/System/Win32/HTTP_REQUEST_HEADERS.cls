@@ -5,8 +5,11 @@ HTTP_HEADERS subclass: #HTTP_REQUEST_HEADERS
 	classVariableNames: '_OffsetOf_KnownHeaders'
 	poolDictionaries: 'WinHttpServerConsts'
 	classInstanceVariableNames: ''!
+
 HTTP_REQUEST_HEADERS guid: (GUID fromString: '{f762b6ac-f56f-4aeb-aca3-d6b628473c2c}')!
+
 HTTP_REQUEST_HEADERS addClassConstant: '_OffsetOf_KnownHeaders' value: 16r10!
+
 HTTP_REQUEST_HEADERS comment: '<HTTP_REQUEST_HEADERS> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_REQUEST_HEADERS'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -22,7 +25,9 @@ struct tagHTTP_REQUEST_HEADERS {
 	[helpstring("Known request headers.")] HTTP_KNOWN_HEADER KnownHeaders[41];
 } HTTP_REQUEST_HEADERS;
 '!
+
 !HTTP_REQUEST_HEADERS categoriesForClass!Win32-Structs! !
+
 !HTTP_REQUEST_HEADERS methodsFor!
 
 KnownHeaders
@@ -43,6 +48,7 @@ KnownHeaders: aStructureArrayOfHTTP_KNOWN_HEADER
 		from: ##(_OffsetOf_KnownHeaders + 1)
 		to: _OffsetOf_KnownHeaders + size
 		startingAt: 1! !
+
 !HTTP_REQUEST_HEADERS categoriesForMethods!
 KnownHeaders!**compiled accessors**!public! !
 KnownHeaders:!**compiled accessors**!public! !
@@ -114,6 +120,7 @@ indexToHeaderMap
 		at: HttpHeaderTranslate put: 'Translate';
 		at: HttpHeaderUserAgent put: 'User-Agent';
 		yourself)! !
+
 !HTTP_REQUEST_HEADERS class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

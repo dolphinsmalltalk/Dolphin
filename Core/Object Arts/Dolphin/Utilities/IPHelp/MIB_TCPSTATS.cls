@@ -5,7 +5,9 @@ ExternalStructure subclass: #MIB_TCPSTATS
 	classVariableNames: '_OffsetOf_dwActiveOpens _OffsetOf_dwAttemptFails _OffsetOf_dwCurrEstab _OffsetOf_dwEstabResets _OffsetOf_dwInErrs _OffsetOf_dwInSegs _OffsetOf_dwMaxConn _OffsetOf_dwNumConns _OffsetOf_dwOutRsts _OffsetOf_dwOutSegs _OffsetOf_dwPassiveOpens _OffsetOf_dwRetransSegs _OffsetOf_dwRtoAlgorithm _OffsetOf_dwRtoMax _OffsetOf_dwRtoMin'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MIB_TCPSTATS guid: (GUID fromString: '{99d7d43b-06c6-4c23-813c-06ca8119f081}')!
+
 MIB_TCPSTATS addClassConstant: '_OffsetOf_dwActiveOpens' value: 16r10!
 MIB_TCPSTATS addClassConstant: '_OffsetOf_dwAttemptFails' value: 16r18!
 MIB_TCPSTATS addClassConstant: '_OffsetOf_dwCurrEstab' value: 16r20!
@@ -21,6 +23,7 @@ MIB_TCPSTATS addClassConstant: '_OffsetOf_dwRetransSegs' value: 16r2C!
 MIB_TCPSTATS addClassConstant: '_OffsetOf_dwRtoAlgorithm' value: 16r0!
 MIB_TCPSTATS addClassConstant: '_OffsetOf_dwRtoMax' value: 16r8!
 MIB_TCPSTATS addClassConstant: '_OffsetOf_dwRtoMin' value: 16r4!
+
 MIB_TCPSTATS comment: '<MIB_TCPSTATS> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_TCPSTATS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -48,7 +51,9 @@ struct tagMIB_TCPSTATS {
 	unsigned long dwNumConns;
 } MIB_TCPSTATS;
 '!
+
 !MIB_TCPSTATS categoriesForClass!Win32-Structs! !
+
 !MIB_TCPSTATS methodsFor!
 
 dwActiveOpens
@@ -125,6 +130,7 @@ dwRtoMin
 	"Answer the <Integer> value of the receiver's 'dwRtoMin' field."
 
 	^bytes dwordAtOffset: _OffsetOf_dwRtoMin! !
+
 !MIB_TCPSTATS categoriesForMethods!
 dwActiveOpens!**compiled accessors**!public! !
 dwAttemptFails!**compiled accessors**!public! !
@@ -219,6 +225,7 @@ defineFields
 
 getFieldNames
 	^#(#dwRtoAlgorithm #dwRtoMin #dwRtoMax #dwMaxConn #dwActiveOpens #dwPassiveOpens #dwAttemptFails #dwEstabResets #dwCurrEstab #dwInSegs #dwOutSegs #dwRetransSegs #dwInErrs #dwOutRsts #dwNumConns)! !
+
 !MIB_TCPSTATS class categoriesForMethods!
 defineFields!initializing!public! !
 getFieldNames!**compiled accessors**!constants!private! !

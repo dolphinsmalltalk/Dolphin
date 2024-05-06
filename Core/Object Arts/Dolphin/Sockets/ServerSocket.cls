@@ -5,13 +5,17 @@ SocketAbstract subclass: #ServerSocket
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ServerSocket guid: (GUID fromString: '{87b4c6e0-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 ServerSocket comment: '** This class is part of the old asynchronous Sockets Connection package which has been superseded by the Dolphin Sockets package **
 
 This class is used by a server to listen for a connection request from a client. 
 
 A ServerSocket is instantiated to listen on a particular port with a particular queue size for incoming client connections. Incoming connection requests will be acknowledged and placed on a queue waiting for the ServerSocket to accept them. This is done using #accept which then answers the socket for the next client connection in the queue. If the queue becomes full at any time because sufficient #accept calls have not been issued then additional client connections are rejected.'!
+
 !ServerSocket categoriesForClass!Windows Sockets! !
+
 !ServerSocket methodsFor!
 
 accept
@@ -114,6 +118,7 @@ waitAccept
 	"Private - Wait on the acceptSemaphore until a connection is accepted."
 
 	self waitOn: acceptSemaphore! !
+
 !ServerSocket categoriesForMethods!
 accept!operations!public! !
 acceptNoWait!operations!public! !
@@ -164,6 +169,7 @@ publishedEventsOfInstances
 	^(super publishedEventsOfInstances)
 		add: #connectionAccepted:;
 		yourself! !
+
 !ServerSocket class categoriesForMethods!
 defaultMaxPendingConnects!constants access!public! !
 new!instance creation!public! !

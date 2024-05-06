@@ -5,7 +5,9 @@ ICoreWebView2Interface subclass: #ICoreWebView2ContextMenuTarget
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2ContextMenuTarget guid: (IID fromString: '{b8611d99-eed6-4f3f-902c-a198502ad472}')!
+
 ICoreWebView2ContextMenuTarget comment: '`ICoreWebView2ContextMenuTarget` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ContextMenuTarget'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -62,7 +64,9 @@ interface ICoreWebView2ContextMenuTarget : IUnknown
 };
 ```
 '!
+
 !ICoreWebView2ContextMenuTarget categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2ContextMenuTarget methodsFor!
 
 frameUri
@@ -307,6 +311,7 @@ sourceUri
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
 	^answer! !
+
 !ICoreWebView2ContextMenuTarget categoriesForMethods!
 frameUri!properties!public! !
 get_FrameUri:!**auto generated**!COM Interfaces-ICoreWebView2ContextMenuTarget!private! !
@@ -371,6 +376,7 @@ defineFunctions
 		defineFunction: #get_SelectionText:
 			argumentTypes: 'lpwstr*'
 ! !
+
 !ICoreWebView2ContextMenuTarget class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

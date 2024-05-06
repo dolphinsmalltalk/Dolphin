@@ -5,9 +5,13 @@ SearchPolicyTest subclass: #IdentitySearchPolicyTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IdentitySearchPolicyTest guid: (GUID fromString: '{05134366-7e1d-469d-98b0-5b757f38592b}')!
+
 IdentitySearchPolicyTest comment: ''!
+
 !IdentitySearchPolicyTest categoriesForClass!Unclassified! !
+
 !IdentitySearchPolicyTest methodsFor!
 
 policyClass
@@ -33,6 +37,7 @@ testCompareWith
 	self assert: (policy compare: 'hash' with: 'hash' copy) not.
 	self assert: (policy compare: $a with: $a).
 	self assert: (policy compare: $a with: $b) not! !
+
 !IdentitySearchPolicyTest categoriesForMethods!
 policyClass!public!unit tests! !
 testCompareWith!public!unit tests! !

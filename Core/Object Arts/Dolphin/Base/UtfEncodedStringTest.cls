@@ -5,10 +5,15 @@ StringTest subclass: #UtfEncodedStringTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 UtfEncodedStringTest guid: (GUID fromString: '{f3d4f4a7-05b6-445f-8380-d0b838804877}')!
+
 UtfEncodedStringTest isAbstract: true!
+
 UtfEncodedStringTest comment: ''!
+
 !UtfEncodedStringTest categoriesForClass!Unclassified! !
+
 !UtfEncodedStringTest methodsFor!
 
 afterTestCases
@@ -660,6 +665,7 @@ withAllTestCases
 				{'a 🐬 è' asUtf8String}.
 				#('Приве́т नमस्ते שָׁלוֹם').
 				#('áèȋöû')}! !
+
 !UtfEncodedStringTest categoriesForMethods!
 afterTestCases!constants!private! !
 beforeTestCases!constants!private! !

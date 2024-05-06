@@ -5,12 +5,17 @@ ExternalStructure subclass: #ODBCTIME
 	classVariableNames: '_OffsetOf_hour _OffsetOf_minute _OffsetOf_second'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ODBCTIME guid: (GUID fromString: '{87b4c598-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 ODBCTIME addClassConstant: '_OffsetOf_hour' value: 16r0!
 ODBCTIME addClassConstant: '_OffsetOf_minute' value: 16r2!
 ODBCTIME addClassConstant: '_OffsetOf_second' value: 16r4!
+
 ODBCTIME comment: 'ODBCTIME is a representation of the same named Win32 ODBC structure.'!
+
 !ODBCTIME categoriesForClass!External-Data-Structured-ODBC!ODBC Interface! !
+
 !ODBCTIME methodsFor!
 
 asTime
@@ -55,6 +60,7 @@ time: aTime
 		hour: aTime hour;
 		minute: aTime minute;
 		second: aTime second truncated "ODBCTIME doesn't support fractional seconds"! !
+
 !ODBCTIME categoriesForMethods!
 asTime!converting!public! !
 hour!**compiled accessors**!public! !
@@ -91,6 +97,7 @@ fromTime: aTime
 
 getFieldNames
 	^#(#hour #minute #second)! !
+
 !ODBCTIME class categoriesForMethods!
 defineFields!public!template definition! !
 fromTime:!instance creation!public! !

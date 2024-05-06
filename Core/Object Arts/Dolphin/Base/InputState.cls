@@ -5,7 +5,9 @@ Object subclass: #InputState
 	classVariableNames: 'EnumHandlesDescriptor MaxIdleSleep SamplingInterval UserInterruptSignal'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 InputState guid: (GUID fromString: '{87b4c494-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 InputState comment: '<InputState> is a singleton responsible for managing the windows message loop and related <Process>es.
 
 Instance Variables:
@@ -24,7 +26,9 @@ Class Variables:
 	UserInterruptSignal		<Signal>. Exception raised when Break key combination is pressed.
 	SamplingInterval		<SmallInteger> approximate millisecond interval between tests of system input queue for host system messsages when running background processes.
 '!
+
 !InputState categoriesForClass!Kernel-Support! !
+
 !InputState methodsFor!
 
 aboutToForkUI
@@ -615,6 +619,7 @@ wndProc: hWnd message: message wParam: wParam lParam: lParam cookie: cookie
 					wParam: wParam
 					lParam: lParam) asUIntPtr]
 					ifCurtailed: [Processor unwindCallback: cookie])! !
+
 !InputState categoriesForMethods!
 aboutToForkUI!idling!private! !
 aboutToIdle!idling!public! !
@@ -687,6 +692,7 @@ newFromOld: anInputState
 	^(self new)
 		initializeFrom: anInputState;
 		yourself! !
+
 !InputState class categoriesForMethods!
 initialize!development!initializing!public! !
 maxIdleSleep!accessing!public! !

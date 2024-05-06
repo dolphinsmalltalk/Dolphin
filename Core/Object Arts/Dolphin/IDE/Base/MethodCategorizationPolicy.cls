@@ -5,9 +5,13 @@ Object subclass: #MethodCategorizationPolicy
 	classVariableNames: 'Default'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MethodCategorizationPolicy guid: (GUID fromString: '{87b4c4a1-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 MethodCategorizationPolicy comment: ''!
+
 !MethodCategorizationPolicy categoriesForClass!System-Support! !
+
 !MethodCategorizationPolicy methodsFor!
 
 allCategoriesOfSelector: selector
@@ -138,6 +142,7 @@ superCategoriesOf: method
 					m := each compiledMethodAt: selector.
 					suggestions addAll: m categories]].
 	^suggestions! !
+
 !MethodCategorizationPolicy categoriesForMethods!
 allCategoriesOfSelector:!enquiries!private! !
 bestSuggestionFor:!enquiries!public! !
@@ -170,6 +175,7 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	Default := nil.! !
+
 !MethodCategorizationPolicy class categoriesForMethods!
 default!instance creation!public! !
 initialize!initializing!private! !

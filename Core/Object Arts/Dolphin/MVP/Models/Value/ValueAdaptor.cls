@@ -5,13 +5,18 @@ ValueModel subclass: #ValueAdaptor
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ValueAdaptor guid: (GUID fromString: '{87b4c676-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 ValueAdaptor isAbstract: true!
+
 ValueAdaptor comment: 'An abstract class whose subclasses allow some part of a subject object (typically an aspect or keyed element) to be treated a <valueModel>.
 
 Instance Variables
 	subject	<Object> whose content will be adapted to be accessed as a <value>'!
+
 !ValueAdaptor categoriesForClass!MVP-Models! !
+
 !ValueAdaptor methodsFor!
 
 displayOn: aStream 
@@ -38,6 +43,7 @@ subject: anObject
 
 	subject := anObject.
 ! !
+
 !ValueAdaptor categoriesForMethods!
 displayOn:!displaying!public! !
 printOn:!printing!public! !
@@ -56,6 +62,7 @@ subject: anObject
 	^(self new)
 		subject: anObject;
 		yourself! !
+
 !ValueAdaptor class categoriesForMethods!
 icon!constants!public! !
 subject:!instance creation!public! !

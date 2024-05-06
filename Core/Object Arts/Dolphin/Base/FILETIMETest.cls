@@ -5,9 +5,13 @@ DolphinTest subclass: #FILETIMETest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 FILETIMETest guid: (GUID fromString: '{60160261-ed86-485b-834c-ef305dad3be9}')!
+
 FILETIMETest comment: ''!
+
 !FILETIMETest categoriesForClass!Unclassified! !
+
 !FILETIMETest methodsFor!
 
 assertFromIntegerInvertible: anInteger
@@ -26,6 +30,7 @@ testFromInteger
 	self assertFromIntegerInvertible: -2 ** 31.
 	self assertFromIntegerInvertible: -2 ** 32.
 	self assertFromIntegerInvertible: -2 ** 63! !
+
 !FILETIMETest categoriesForMethods!
 assertFromIntegerInvertible:!helpers!private! !
 testFromInteger!public!unit tests! !

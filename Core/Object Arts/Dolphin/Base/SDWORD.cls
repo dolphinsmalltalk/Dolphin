@@ -5,7 +5,9 @@ DWORD subclass: #SDWORD
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SDWORD guid: (GUID fromString: '{87b4c5ab-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 SDWORD comment: '<SDWORD> is an <ExternalStructure> class to wrap the Win32 type of the same name.
 
 SDWORD is used to represent signed 32-bit integers in conjunction with Win32 APIs. 
@@ -13,7 +15,9 @@ SDWORD is used to represent signed 32-bit integers in conjunction with Win32 API
 The range of integer values that can be represented by instances of this class is defined by the interval:
 	(-2**31) to: (2**31)-1
 '!
+
 !SDWORD categoriesForClass!External-Data-Structured! !
+
 !SDWORD methodsFor!
 
 isSigned
@@ -36,6 +40,7 @@ value: anInteger
 	"Set the receiver's 'value' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_value put: anInteger! !
+
 !SDWORD categoriesForMethods!
 isSigned!public!testing! !
 unsignedValue:!accessing!public! !
@@ -71,6 +76,7 @@ uninitialize
 	"Private - Uninitialize the receiver prior to its removal from the image."
 
 	VMLibrary default registryAt: self name put: nil! !
+
 !SDWORD class categoriesForMethods!
 defineFields!public!template definition! !
 fromUnsignedInteger:!instance creation!public! !

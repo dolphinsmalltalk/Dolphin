@@ -5,9 +5,13 @@ RefactoringTest subclass: #AddInstanceVariableTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AddInstanceVariableTest guid: (GUID fromString: '{95c6c15d-0113-4ae8-81d5-766bece4b2ac}')!
+
 AddInstanceVariableTest comment: ''!
+
 !AddInstanceVariableTest categoriesForClass!Refactory-Testing! !
+
 !AddInstanceVariableTest methodsFor!
 
 setUp
@@ -101,6 +105,7 @@ testNewHierarchyExistingName
 				variable: 'asdf'
 				class: (model classNamed: #BARFOO).
 	self shouldFail: refactoring! !
+
 !AddInstanceVariableTest categoriesForMethods!
 setUp!public!set up! !
 testAddInstanceVariable!public!tests! !

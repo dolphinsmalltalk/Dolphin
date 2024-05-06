@@ -5,9 +5,13 @@ StdioTextFileStream subclass: #StdioAnsiFileStream
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StdioAnsiFileStream guid: (GUID fromString: '{37ed07fd-6fc6-41d9-aa82-7147a1af19fd}')!
+
 StdioAnsiFileStream comment: ''!
+
 !StdioAnsiFileStream categoriesForClass!Collections-Streams! !
+
 !StdioAnsiFileStream methodsFor!
 
 contentsSpecies
@@ -52,6 +56,7 @@ peekFor: anObject
 		and: [ch == anObject ansiValue or: 
 					[crtlib ungetc: ch stream: stream.
 					false]]! !
+
 !StdioAnsiFileStream categoriesForMethods!
 contentsSpecies!accessing!private! !
 getString:!accessing!private! !

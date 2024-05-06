@@ -5,9 +5,13 @@ RBReplaceRule subclass: #RBStringReplaceRule
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RBStringReplaceRule guid: (GUID fromString: '{bbdb2681-b086-4cdc-9efd-14d33492c0aa}')!
+
 RBStringReplaceRule comment: ''!
+
 !RBStringReplaceRule categoriesForClass!Refactory-ParseTree Matching! !
+
 !RBStringReplaceRule methodsFor!
 
 foundMatchFor: aProgramNode 
@@ -51,6 +55,7 @@ searchForTree: aBRProgramNode replaceWith: replaceNode
 searchForTree: aBRProgramNode replaceWith: replaceString when: aBlock 
 	self searchForTree: aBRProgramNode replaceWith: replaceString.
 	verificationBlock := aBlock! !
+
 !RBStringReplaceRule categoriesForMethods!
 foundMatchFor:!matching!public! !
 methodReplaceString:!initialize/release!public! !
@@ -93,6 +98,7 @@ searchForTree: aRBProgramNode replaceWith: replaceString when: aBlock
 		searchForTree: aRBProgramNode
 		replaceWith: replaceString
 		when: aBlock! !
+
 !RBStringReplaceRule class categoriesForMethods!
 searchFor:replaceWith:!instance creation!public! !
 searchFor:replaceWith:when:!instance creation!public! !

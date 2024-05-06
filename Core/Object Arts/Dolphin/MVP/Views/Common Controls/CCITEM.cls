@@ -5,11 +5,17 @@ Win32Structure subclass: #CCITEM
 	classVariableNames: '_OffsetOf_mask'
 	poolDictionaries: 'CommCtrlConstants'
 	classInstanceVariableNames: ''!
+
 CCITEM guid: (GUID fromString: '{87b4c5ce-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 CCITEM isAbstract: true!
+
 CCITEM addClassConstant: '_OffsetOf_mask' value: 16r0!
+
 CCITEM comment: 'CCITEM is an <ExternalStructure> class which implements shared behaviour and state for the common controls item structures, LVITEM, TCITEM and TVITEM. There is no actual Win32 common control structure of this name.'!
+
 !CCITEM categoriesForClass!External-Data-Structured-Win32! !
+
 !CCITEM methodsFor!
 
 cchTextMax
@@ -197,6 +203,7 @@ textValidMask
 	"This mask value is the same for most of the controls."
 
 	^16r1! !
+
 !CCITEM categoriesForMethods!
 cchTextMax!accessing!public! !
 cchTextMax:!accessing!public! !
@@ -241,6 +248,7 @@ defineFields
 
 	self 
 		defineField: #mask type: DWORDField new offset: 0! !
+
 !CCITEM class categoriesForMethods!
 defineFields!public!template definition! !
 !

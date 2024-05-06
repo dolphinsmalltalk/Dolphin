@@ -5,9 +5,13 @@ GdiplusInitializerTests subclass: #GdiplusPenFromColorInitializerTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusPenFromColorInitializerTest guid: (GUID fromString: '{af606711-5d59-44e2-b217-d6db5d89ffc4}')!
+
 GdiplusPenFromColorInitializerTest comment: ''!
+
 !GdiplusPenFromColorInitializerTest categoriesForClass!Unclassified! !
+
 !GdiplusPenFromColorInitializerTest methodsFor!
 
 gdipCreatePen1: color width: width unit: unit pen: pen 
@@ -35,6 +39,7 @@ testCreateHandleDefaultWidth
 	self assert: constructorArgs second equals: 1.0.
 	self assert: constructorArgs third equals: UnitWorld.
 	self assertLastArgIsHandle! !
+
 !GdiplusPenFromColorInitializerTest categoriesForMethods!
 gdipCreatePen1:width:unit:pen:!accessing!public! !
 setUp!public!setup! !

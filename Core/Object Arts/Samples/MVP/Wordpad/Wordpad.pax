@@ -78,16 +78,12 @@ TextDocument subclass: #WordPad
 	classVariableNames: 'ResourceLib'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Dialog subclass: #WordpadParagraphDialog
 	instanceVariableNames: 'leftPresenter rightPresenter firstLinePresenter alignmentPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

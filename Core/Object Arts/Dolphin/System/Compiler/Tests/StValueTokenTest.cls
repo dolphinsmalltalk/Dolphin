@@ -5,10 +5,15 @@ StTokenTest subclass: #StValueTokenTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StValueTokenTest guid: (GUID fromString: '{e1fb19ba-f9b5-4c51-b277-d6e1ffa5e66a}')!
+
 StValueTokenTest isAbstract: true!
+
 StValueTokenTest comment: ''!
+
 !StValueTokenTest categoriesForClass!Unclassified! !
+
 !StValueTokenTest methodsFor!
 
 exampleSource
@@ -41,6 +46,7 @@ testInstanceCreation
 	self assert: token2 stop equals: 20 + self exampleSource size - 1.
 	self assertIsNil: token2 comments.
 	self assert: token2 value equals: self exampleValue! !
+
 !StValueTokenTest categoriesForMethods!
 exampleSource!constants!private! !
 exampleValue!constants!private! !

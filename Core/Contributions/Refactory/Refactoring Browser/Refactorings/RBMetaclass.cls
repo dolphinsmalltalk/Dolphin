@@ -5,10 +5,14 @@ RBAbstractClass subclass: #RBMetaclass
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RBMetaclass guid: (GUID fromString: '{cf1618c4-6ee9-418d-9fd0-21e81860e79b}')!
+
 RBMetaclass comment: 'RBMetaclass represents a Metaclass.
 '!
+
 !RBMetaclass categoriesForClass!Refactory-Model! !
+
 !RBMetaclass methodsFor!
 
 allClassVariableNames
@@ -39,6 +43,7 @@ realName: aSymbol
 storeOn: aStream 
 	super storeOn: aStream.
 	aStream nextPutAll: ' class'! !
+
 !RBMetaclass categoriesForMethods!
 allClassVariableNames!accessing!public! !
 allPoolDictionaryNames!accessing!public! !
@@ -62,6 +67,7 @@ named: aSymbol
 	^(self new)
 		name: aSymbol;
 		yourself! !
+
 !RBMetaclass class categoriesForMethods!
 existingNamed:!instance creation!public! !
 named:!instance creation!public! !

@@ -3,7 +3,6 @@ package := Package name: 'Smalltalk Parser Tests'.
 package paxVersion: 1;
 	basicComment: ''.
 
-
 package classNames
 	add: #SmalltalkParserErrorTest;
 	add: #SmalltalkScannerTest;
@@ -39,56 +38,60 @@ DolphinTest subclass: #SmalltalkScannerTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DolphinTest subclass: #StTokenTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AbstractParserErrorTest subclass: #SmalltalkParserErrorTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
+
 StTokenTest subclass: #StOptimizedTokenTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StTokenTest subclass: #StValueTokenTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StValueTokenTest subclass: #StIdentifierTokenTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StValueTokenTest subclass: #StLiteralArrayTokenTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StValueTokenTest subclass: #StLiteralTokenTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StValueTokenTest subclass: #StSpecialCharacterTokenTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StLiteralTokenTest subclass: #StNumberLiteralTokenTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

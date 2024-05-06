@@ -5,9 +5,13 @@ MenuPainter subclass: #PopupMenuPainter
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PopupMenuPainter guid: (GUID fromString: '{bebdf8c9-6967-41d3-92af-046ec7b3bff7}')!
+
 PopupMenuPainter comment: ''!
+
 !PopupMenuPainter categoriesForClass!Kernel-Objects! !
+
 !PopupMenuPainter methodsFor!
 
 borderInset
@@ -140,6 +144,7 @@ paintSeparatorOn: aCanvas in: aRectangle
 				bottom: aRectangle bottom)
 		edge: EDGE_ETCHED
 		grfFlags: BF_TOP! !
+
 !PopupMenuPainter categoriesForMethods!
 borderInset!constants!private! !
 calculateGeometry:!public!updating! !

@@ -5,7 +5,9 @@ ICoreWebView2EventArgs subclass: #ICoreWebView2ProcessFailedEventArgs
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2ProcessFailedEventArgs guid: (IID fromString: '{8155a9a4-1474-4a86-8cae-151b0fa6b8ca}')!
+
 ICoreWebView2ProcessFailedEventArgs comment: '`ICoreWebView2ProcessFailedEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ProcessFailedEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -26,7 +28,9 @@ interface ICoreWebView2ProcessFailedEventArgs : IUnknown
 };
 ```
 '!
+
 !ICoreWebView2ProcessFailedEventArgs categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2ProcessFailedEventArgs methodsFor!
 
 exitCode
@@ -113,6 +117,7 @@ reason
 	answer := SDWORD new.
 	self get_reason: answer.
 	^answer asObject! !
+
 !ICoreWebView2ProcessFailedEventArgs categoriesForMethods!
 exitCode!properties!public! !
 frameInfosForFailedProcess!properties!public! !
@@ -140,6 +145,7 @@ defineFunctions
 		defineFunction: #get_ProcessFailedKind:
 			argumentTypes: 'sdword*'
 ! !
+
 !ICoreWebView2ProcessFailedEventArgs class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

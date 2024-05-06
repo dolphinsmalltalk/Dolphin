@@ -5,11 +5,15 @@ Magnitude subclass: #Time
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Time guid: (GUID fromString: '{87b4c655-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Time comment: '`Time` is the class whose instances represent a time of day as the number of seconds since midnight with infinite precision.
 
 Time is a legacy Smalltalk class that represents only a time of day, without any awareness of timezone offset. They are generally assumed to represent a local time. For most purposes you will want to use a `DateAndTime` instead.'!
+
 !Time categoriesForClass!Magnitude-General! !
+
 !Time methodsFor!
 
 < aTime
@@ -148,6 +152,7 @@ subtractTime: aTimeOrDate
 	"Answer a new Time, aTimeOrDate seconds before the receiver."
 
 	^self class fromSeconds: self seconds - aTimeOrDate seconds! !
+
 !Time categoriesForMethods!
 <!comparing!public! !
 =!comparing!public! !
@@ -350,6 +355,7 @@ totalSeconds
 	"Answer the total seconds since Jan. 1, 1901 (as an Integer) in local time."
 	
 	^DateAndTime now localSeconds truncated! !
+
 !Time class categoriesForMethods!
 amMarker!accessing!public! !
 defaultFormat!enquiries!private! !

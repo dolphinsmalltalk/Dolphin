@@ -5,9 +5,13 @@ DolphinTest subclass: #ObjectTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ObjectTest guid: (GUID fromString: '{0699f873-06b5-439d-adcb-6642d40c7360}')!
+
 ObjectTest comment: ''!
+
 !ObjectTest categoriesForClass!Unclassified! !
+
 !ObjectTest methodsFor!
 
 newEventSource
@@ -328,6 +332,7 @@ verifyWeakRegistry: aWeakIdentitDictionary
 	self assert: aWeakIdentitDictionary countElements equals: aWeakIdentitDictionary size.
 	self assert: aWeakIdentitDictionary hasWeakKeys.
 	self deny: aWeakIdentitDictionary hasWeakValues! !
+
 !ObjectTest categoriesForMethods!
 newEventSource!helpers!private! !
 testAssert!public!testing / error handling! !

@@ -5,7 +5,9 @@ Object subclass: #DolphinSureCertificateInfo
 	classVariableNames: 'ValidStbClasses'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DolphinSureCertificateInfo guid: (GUID fromString: '{92dfd157-de8b-4c95-8ed4-fcc86403ef31}')!
+
 DolphinSureCertificateInfo comment: 'A DolphinSureCertificateInfo instance holds the unencoded data for a DolphinSureCertificate.
 
 Instance Variables:
@@ -17,7 +19,9 @@ Instance Variables:
 	publicKeyCipher	<publicKeyCipher> of the certificate''s issuing authority.
 
 '!
+
 !DolphinSureCertificateInfo categoriesForClass!Cryptography-Certificates! !
+
 !DolphinSureCertificateInfo methodsFor!
 
 details
@@ -103,6 +107,7 @@ validityString
 				stream nextPutAll: ' (EXPIRED)' ]]
 		ifFalse: [ stream display: 'indefinitely'].
 	^stream contents! !
+
 !DolphinSureCertificateInfo categoriesForMethods!
 details!accessing!public! !
 details:!accessing!public! !
@@ -146,6 +151,7 @@ serial: aStringSerialNo owner: aStringOwner publicKey: pkey
 	and a public key of pkey"
 
 	^super new serial: aStringSerialNo owner: aStringOwner publicKey: pkey! !
+
 !DolphinSureCertificateInfo class categoriesForMethods!
 binaryReadFrom:context:!binary filing!public! !
 initialize!binary filing!public! !

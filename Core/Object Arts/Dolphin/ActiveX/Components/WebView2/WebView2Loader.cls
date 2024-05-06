@@ -5,9 +5,13 @@ ExternalLibrary subclass: #WebView2Loader
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 WebView2Loader guid: (GUID fromString: '{b4b18867-230d-4b18-8048-0f12821bf5e0}')!
+
 WebView2Loader comment: ''!
+
 !WebView2Loader categoriesForClass!External-Libraries! !
+
 !WebView2Loader methodsFor!
 
 compareBrowserVersions: version1 version2: version2 result: result
@@ -25,6 +29,7 @@ createCoreWebView2EnvironmentWithOptions: browserExecutableFolder userDataFolder
 getAvailableCoreWebView2BrowserVersionString: browserExecutableFolder versionInfo: versionInfo
 	<stdcall: hresult GetAvailableCoreWebView2BrowserVersionString lpwstr lpwstr*>
 	^self invalidCall: _failureCode! !
+
 !WebView2Loader categoriesForMethods!
 compareBrowserVersions:version2:result:!public! !
 createCoreWebView2Environment:!public! !
@@ -39,6 +44,7 @@ fileName
 
 	^'WebView2Loader'
 ! !
+
 !WebView2Loader class categoriesForMethods!
 fileName!constants!public! !
 !

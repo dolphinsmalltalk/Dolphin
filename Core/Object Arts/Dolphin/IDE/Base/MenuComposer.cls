@@ -5,7 +5,9 @@ ValueDialog subclass: #MenuComposer
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 MenuComposer guid: (GUID fromString: '{87b4c6aa-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 MenuComposer comment: 'MenuComposer is a <valueDialogPresenter> that can be used to edit a <Menu> held in its <valueModel>.
 
 Instance Variables:
@@ -13,7 +15,9 @@ Instance Variables:
 	menuViews		<OrderedCollection> of <MenuComposerView>''s representing the menu(s) being edited.
 	conflictingAccelerators	<Set> of <integer> conflicting accelerator codes.
 '!
+
 !MenuComposer categoriesForClass!MVP-Presenters! !
+
 !MenuComposer methodsFor!
 
 addCommand
@@ -486,6 +490,7 @@ update: aMenuComposerView do: operation
 	operation value.
 	aMenuComposerView refreshContents.
 	self openSelectedSubmenuOf: aMenuComposerView! !
+
 !MenuComposer categoriesForMethods!
 addCommand!commands!public! !
 addItem:!adding!private! !
@@ -562,6 +567,7 @@ resource_Default_view
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.DialogView) 34 30 nil nil 8 #(12845056 65536) 416 nil 655878 ##(Smalltalk.ThemeColor) #dialog nil 165 nil 263174 ##(Smalltalk.Font) nil true 524550 ##(Smalltalk.LOGFONTW) 8 #[244 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 83 0 101 0 103 0 111 0 101 0 32 0 85 0 73 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 328198 ##(Smalltalk.Point) 193 193 nil 416 1180166 ##(Smalltalk.ProportionalLayout) 138 ##(Smalltalk.Dictionary) 34 2 721414 ##(Smalltalk.Association) 410 ##(Smalltalk.ContainerView) 34 15 nil 416 34 2 8 1140850688 131073 704 nil nil nil 7 nil nil nil 704 788230 ##(Smalltalk.BorderLayout) 1 1 nil 410 ##(Smalltalk.ReferenceView) 34 14 nil 704 34 2 8 1140850688 131073 800 nil nil nil 7 nil nil nil 800 1180230 1 ##(Smalltalk.ResourceIdentifier) ##(Smalltalk.Presenter) #resource_OK_Cancel_button_block nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 578 15 -3 578 1351 71 800 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 7 0 0 0 254 255 255 255 170 2 0 0 33 0 0 0] 8 #() 578 193 193 nil 27 nil nil nil 170 192 1088 590342 ##(Smalltalk.Rectangle) 578 15 1 578 17 15 898 138 144 34 1 962 #createAt:extent: 34 2 578 5 669 578 1381 81 704 1042 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 2 0 0 0 78 1 0 0 180 2 0 0 118 1 0 0] 34 1 800 1104 nil 27 1 674 410 ##(Smalltalk.MenuComposerArena) 34 20 nil 416 34 2 8 1140850688 393217 1376 nil 327686 ##(Smalltalk.Color) #applicationWorkspace nil 7 265030 4 ##(Smalltalk.Menu) nil true 34 12 984134 2 ##(Smalltalk.CommandMenuItem) 1 1180998 4 ##(Smalltalk.CommandDescription) #cutSelection 8 'Cu&t' 1 1 nil nil nil 1522 1 1554 #copySelection 8 '&Copy' 1 1 nil nil nil 1522 1 1554 #pasteClipboard 8 '&Paste' 1 1 nil nil nil 1522 1 1554 #clearSelection 8 '&Delete' 1 1 nil nil nil 983366 1 ##(Smalltalk.DividerMenuItem) 4097 1522 1 1554 #addMenu 8 'Add &Menu' 1 1 nil nil nil 1522 1 1554 #addCommand 8 '&Add Command' 1 1 nil nil nil 1522 1 1554 #addSeparator 8 'Add &Separator' 1 1 nil nil nil 1746 4097 1474 nil true 34 2 1522 1 1554 #mutateIntoMenu 8 '&Menu' 1 1 nil nil nil 1522 1 1554 #mutateIntoCommand 8 '&Command' 1 1 nil nil nil 8 'M&utate Into' nil 1 nil nil nil nil nil 1760 1522 1 1554 #properties 8 'P&roperties' 1 1 nil nil nil 8 'Menu Composer' nil 1 nil nil nil nil nil nil nil 1376 nil 170 192 1088 1138 578 1 1 578 1 1 nil nil nil nil nil 898 138 144 34 2 962 #createAt:extent: 34 2 578 5 5 578 1381 665 1376 962 #contextMenu: 34 1 1488 1376 1042 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 2 0 0 0 2 0 0 0 180 2 0 0 78 1 0 0] 8 #() 1104 nil 27 3 true 170 192 34 2 1376 8 'arena' 1138 578 5 5 578 5 5 461638 4 ##(Smalltalk.MenuBar) nil true 34 2 1474 nil true 34 3 1522 1 1554 #addMenu 8 '&Menu' 9371 1 nil nil nil 1522 1 1554 #addCommand 8 '&Command' 9373 1 nil nil nil 1522 1 1554 #addSeparator 8 '&Separator' 9595 1 nil nil nil 8 '&Add' nil 1 nil nil 59909 nil nil 1474 nil true 34 6 1522 1 1554 #cutSelection 8 'Cu&t' 9393 1 nil nil nil 1522 1 1554 #copySelection 8 '&Copy' 9351 1 nil nil nil 1522 1 1554 #pasteClipboard 8 '&Paste' 9389 1 nil nil nil 1522 1 1554 #clearSelection 8 '&Delete' 1629 1 nil nil nil 1746 4097 1522 1 1554 #properties 8 'P&roperties' 5363 1 nil nil nil 8 '&Edit' nil 1 nil nil 59921 nil nil 8 'Menu Composer Bar' nil 1 nil nil nil nil nil nil nil nil 27419 nil nil nil 578 521 641 1 nil nil 590598 ##(Smalltalk.Semaphore) nil nil 1 nil 8 1998684880 898 138 144 34 3 962 #createAt:extent: 34 2 578 3839 21 578 1421 871 416 962 #text: 34 1 8 'Menu Composer' 416 962 #updateMenuBar 1088 416 1042 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 69 10 0 0 189 1 0 0] 34 2 1376 704 1104 nil 27 )! !
+
 !MenuComposer class categoriesForMethods!
 defaultModel!models!public! !
 icon!constants!public! !

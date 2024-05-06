@@ -15,7 +15,6 @@ Animal initialize.
 Because this implementation is really a tutorial it has been kept as simple as possible. For this reason, the user interface is rather rudimentary and based on simple message boxes. The knowledge base is implemented as a binary tree of nodes. The main part of the tree consists of Question nodes which have yes/no branches to indicate the next node to go to based on the response to the question. The leaf nodes in the tree are the Animal instances themselves. When the game reaches an Animal this will be its final guess. If it is correct, the game wins. If not, you will be prompted for the animal you were thinking of and a new Animal instance will be created along with a new instance of Question to distinguish the new animal from the original leaf node. These new nodes are installed in the tree and the game can restart. 
 '.
 
-
 package classNames
 	add: #Animal;
 	add: #Question;
@@ -42,16 +41,12 @@ Object subclass: #Animal
 	classVariableNames: 'KnowledgeBase'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #Question
 	instanceVariableNames: 'text yes no'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

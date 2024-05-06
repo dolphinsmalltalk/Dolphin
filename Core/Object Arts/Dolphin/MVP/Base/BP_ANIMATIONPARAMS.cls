@@ -5,11 +5,14 @@ Win32Structure subclass: #BP_ANIMATIONPARAMS
 	classVariableNames: '_OffsetOf_dwDuration _OffsetOf_dwFlags _OffsetOf_dwSize _OffsetOf_style'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 BP_ANIMATIONPARAMS guid: (GUID fromString: '{74d57e87-6087-4e82-ac07-680d0a3db4e6}')!
+
 BP_ANIMATIONPARAMS addClassConstant: '_OffsetOf_dwDuration' value: 16rC!
 BP_ANIMATIONPARAMS addClassConstant: '_OffsetOf_dwFlags' value: 16r4!
 BP_ANIMATIONPARAMS addClassConstant: '_OffsetOf_dwSize' value: 16r0!
 BP_ANIMATIONPARAMS addClassConstant: '_OffsetOf_style' value: 16r8!
+
 BP_ANIMATIONPARAMS comment: '<BP_ANIMATIONPARAMS> is an <ExternalStructure> class to wrap the struct ''Win32.BP_ANIMATIONPARAMS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -26,7 +29,9 @@ struct tagBP_ANIMATIONPARAMS {
 	unsigned long dwDuration;
 } BP_ANIMATIONPARAMS;
 '!
+
 !BP_ANIMATIONPARAMS categoriesForClass!Win32-Structs! !
+
 !BP_ANIMATIONPARAMS methodsFor!
 
 dwDuration
@@ -63,6 +68,7 @@ style: anInteger
 	"Set the receiver's 'style' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_style put: anInteger! !
+
 !BP_ANIMATIONPARAMS categoriesForMethods!
 dwDuration!**compiled accessors**!public! !
 dwDuration:!**compiled accessors**!public! !
@@ -97,6 +103,7 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #dwFlags #style #dwDuration)! !
+
 !BP_ANIMATIONPARAMS class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

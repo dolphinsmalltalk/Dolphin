@@ -5,9 +5,13 @@ ArrayFieldLength subclass: #SizeIsArrayFieldLength
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SizeIsArrayFieldLength guid: (GUID fromString: '{3f017262-aded-499e-9c07-da6937249262}')!
+
 SizeIsArrayFieldLength comment: ''!
+
 !SizeIsArrayFieldLength categoriesForClass!Kernel-Objects! !
+
 !SizeIsArrayFieldLength methodsFor!
 
 buildLengthReader: anExternalField
@@ -113,6 +117,7 @@ sizeIs: aString
 
 sizeIsExpression
 	^SmalltalkParser parseExpression: sizeIs! !
+
 !SizeIsArrayFieldLength categoriesForMethods!
 buildLengthReader:!accessing!private! !
 buildLengthWriter:!accessing!private! !
@@ -135,6 +140,7 @@ sizeIs: aString
 	a field."
 
 	^self new sizeIs: aString! !
+
 !SizeIsArrayFieldLength class categoriesForMethods!
 sizeIs:!instance creation!public! !
 !

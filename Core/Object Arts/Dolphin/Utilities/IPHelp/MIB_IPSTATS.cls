@@ -5,7 +5,9 @@ ExternalStructure subclass: #MIB_IPSTATS
 	classVariableNames: '_OffsetOf_dwDefaultTTL _OffsetOf_dwForwarding _OffsetOf_dwForwDatagrams _OffsetOf_dwFragCreates _OffsetOf_dwFragFails _OffsetOf_dwFragOks _OffsetOf_dwInAddrErrors _OffsetOf_dwInDelivers _OffsetOf_dwInDiscards _OffsetOf_dwInHdrErrors _OffsetOf_dwInReceives _OffsetOf_dwInUnknownProtos _OffsetOf_dwNumAddr _OffsetOf_dwNumIf _OffsetOf_dwNumRoutes _OffsetOf_dwOutDiscards _OffsetOf_dwOutNoRoutes _OffsetOf_dwOutRequests _OffsetOf_dwReasmFails _OffsetOf_dwReasmOks _OffsetOf_dwReasmReqds _OffsetOf_dwReasmTimeout _OffsetOf_dwRoutingDiscards'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MIB_IPSTATS guid: (GUID fromString: '{3390e082-4252-4d18-accb-16911c750fb8}')!
+
 MIB_IPSTATS addClassConstant: '_OffsetOf_dwDefaultTTL' value: 16r4!
 MIB_IPSTATS addClassConstant: '_OffsetOf_dwForwarding' value: 16r0!
 MIB_IPSTATS addClassConstant: '_OffsetOf_dwForwDatagrams' value: 16r14!
@@ -29,6 +31,7 @@ MIB_IPSTATS addClassConstant: '_OffsetOf_dwReasmOks' value: 16r3C!
 MIB_IPSTATS addClassConstant: '_OffsetOf_dwReasmReqds' value: 16r38!
 MIB_IPSTATS addClassConstant: '_OffsetOf_dwReasmTimeout' value: 16r34!
 MIB_IPSTATS addClassConstant: '_OffsetOf_dwRoutingDiscards' value: 16r28!
+
 MIB_IPSTATS comment: '<MIB_IPSTATS> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_IPSTATS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -64,7 +67,9 @@ struct tagMIB_IPSTATS {
 	unsigned long dwNumRoutes;
 } MIB_IPSTATS;
 '!
+
 !MIB_IPSTATS categoriesForClass!Win32-Structs! !
+
 !MIB_IPSTATS methodsFor!
 
 dwDefaultTTL
@@ -181,6 +186,7 @@ dwRoutingDiscards
 	"Answer the <Integer> value of the receiver's 'dwRoutingDiscards' field."
 
 	^bytes dwordAtOffset: _OffsetOf_dwRoutingDiscards! !
+
 !MIB_IPSTATS categoriesForMethods!
 dwDefaultTTL!**compiled accessors**!public! !
 dwForwarding!**compiled accessors**!public! !
@@ -269,6 +275,7 @@ defineFields
 
 getFieldNames
 	^#(#dwForwarding #dwDefaultTTL #dwInReceives #dwInHdrErrors #dwInAddrErrors #dwForwDatagrams #dwInUnknownProtos #dwInDiscards #dwInDelivers #dwOutRequests #dwRoutingDiscards #dwOutDiscards #dwOutNoRoutes #dwReasmTimeout #dwReasmReqds #dwReasmOks #dwReasmFails #dwFragOks #dwFragFails #dwFragCreates #dwNumIf #dwNumAddr #dwNumRoutes)! !
+
 !MIB_IPSTATS class categoriesForMethods!
 defineFields!initializing!public! !
 getFieldNames!**compiled accessors**!constants!private! !

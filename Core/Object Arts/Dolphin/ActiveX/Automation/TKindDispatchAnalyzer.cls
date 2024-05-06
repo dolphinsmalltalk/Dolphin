@@ -5,7 +5,9 @@ AXInterfaceTypeAnalyzer subclass: #TKindDispatchAnalyzer
 	classVariableNames: 'SpecialPropGets'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TKindDispatchAnalyzer guid: (GUID fromString: '{c06f3b72-0868-11d3-93af-00a024ca708a}')!
+
 TKindDispatchAnalyzer comment: 'TKindDispatchAnalyzer is a class which wraps an Active-X Automation <ITypeInfo> interface pointer that describes a ''dispinterface'' (a late-bound Automation interface), i.e. an ITypeInfo of type kind TKIND_DISPATCH. It supports high level behaviours for analyzing the type information associated with dispinterfaces, and for automatically generating a <IDispatch> wrapper subclasses.
 
 Note: Certain dispinterfaces may use combinations of argument types and IDL flags which are not supported by the analyzer''s automatic wrapper method generation capabilities. Where possible generate dual interface wrappers as not only is automated support for these more advanced, but they also offer much better performance. Where not possible it may be necessary to hand craft wrappers for certain methods, perhaps using the auto-generated attempts as a start point. If a previously auto-generated method is moved out of the ''**auto-generated**'' category, then it can be safely modified without fear of it being overwritten.
@@ -16,7 +18,9 @@ Class Variables:
 
 
 '!
+
 !TKindDispatchAnalyzer categoriesForClass!ActiveX Automation! !
+
 !TKindDispatchAnalyzer methodsFor!
 
 asImplType
@@ -74,6 +78,7 @@ vt
 	the receiver."
 
 	^VT_DISPATCH! !
+
 !TKindDispatchAnalyzer categoriesForMethods!
 asImplType!accessing!public! !
 baseClass!constants!private! !
@@ -99,6 +104,7 @@ typekind
 	"Private - Answer the Automation TYPEKIND associated with the receiver."
 	
 	^TKIND_DISPATCH! !
+
 !TKindDispatchAnalyzer class categoriesForMethods!
 initialize!development!initializing!private! !
 typekind!constants!private! !

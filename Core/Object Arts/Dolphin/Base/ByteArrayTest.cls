@@ -5,9 +5,13 @@ ArrayedCollectionTest subclass: #ByteArrayTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ByteArrayTest guid: (GUID fromString: '{f83d3bb0-c4b4-4f92-9d89-fd89e6e25da1}')!
+
 ByteArrayTest comment: ''!
+
 !ByteArrayTest categoriesForClass!Unclassified! !
+
 !ByteArrayTest methodsFor!
 
 assimilate: anObject 
@@ -160,6 +164,7 @@ testWordAtOffsetPut
 
 wordValues
 	^#(16r0 16r1 16r7F 16r80 16r7FFF 16r8000 16rFFFE 16rFFFF)! !
+
 !ByteArrayTest categoriesForMethods!
 assimilate:!public!unit tests! !
 collectionClass!helpers!private! !

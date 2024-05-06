@@ -5,9 +5,13 @@ STBCollectionProxy subclass: #STBSortedCollectionProxy
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 STBSortedCollectionProxy guid: (GUID fromString: '{87b4c6f7-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 STBSortedCollectionProxy comment: ''!
+
 !STBSortedCollectionProxy categoriesForClass!System-Binary storage! !
+
 !STBSortedCollectionProxy methodsFor!
 
 sortAlgorithm
@@ -30,6 +34,7 @@ value
 		setSortAlgorithm: sortAlgorithm;
 		addAllWithoutSorting: array;
 		yourself! !
+
 !STBSortedCollectionProxy categoriesForMethods!
 sortAlgorithm!accessing!private! !
 sortAlgorithm:!accessing!private! !
@@ -63,6 +68,7 @@ stbVersion
 		1 - sortBlock becomes sortAlgorithm"
 
 	^1! !
+
 !STBSortedCollectionProxy class categoriesForMethods!
 forCollection:!instance creation!public! !
 stbConvertFrom:!instance creation!public! !

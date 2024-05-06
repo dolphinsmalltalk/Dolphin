@@ -5,8 +5,11 @@ IpHlpApiTableStruct subclass: #IP_INTERFACE_INFO
 	classVariableNames: '_OffsetOf_table'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IP_INTERFACE_INFO guid: (GUID fromString: '{e886246a-162e-4654-8719-d4c0477f0bf3}')!
+
 IP_INTERFACE_INFO addClassConstant: '_OffsetOf_table' value: 16r4!
+
 IP_INTERFACE_INFO comment: '<IP_INTERFACE_INFO> is an <ExternalStructure> class to wrap the struct ''Win32.IP_INTERFACE_INFO'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -21,7 +24,9 @@ struct tagIP_INTERFACE_INFO {
 	IP_ADAPTER_INDEX_MAP Adapter[1];
 } IP_INTERFACE_INFO;
 '!
+
 !IP_INTERFACE_INFO categoriesForClass!Win32-Structs! !
+
 !IP_INTERFACE_INFO methodsFor!
 
 table
@@ -31,6 +36,7 @@ table
 		fromAddress: bytes yourAddress + _OffsetOf_table
 		length: self dwNumEntries
 		elementClass: IP_ADAPTER_INDEX_MAP! !
+
 !IP_INTERFACE_INFO categoriesForMethods!
 table!**compiled accessors**!public! !
 !
@@ -59,6 +65,7 @@ defineFields
 
 getFieldNames
 	^#(#dwNumEntries #table)! !
+
 !IP_INTERFACE_INFO class categoriesForMethods!
 defineFields!initializing!public! !
 getFieldNames!**compiled accessors**!constants!private! !

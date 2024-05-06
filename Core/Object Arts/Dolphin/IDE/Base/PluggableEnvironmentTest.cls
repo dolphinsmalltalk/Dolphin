@@ -5,9 +5,13 @@ BrowserEnvironmentTest subclass: #PluggableEnvironmentTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PluggableEnvironmentTest guid: (GUID fromString: '{42174aca-9bf1-402a-843a-d752822b7893}')!
+
 PluggableEnvironmentTest comment: ''!
+
 !PluggableEnvironmentTest categoriesForClass!Unclassified! !
+
 !PluggableEnvironmentTest methodsFor!
 
 testReferencesTo
@@ -24,6 +28,7 @@ testReferencesTo
 	self universalTestFor: printString.
 	self assert: printString numberSelectors equals: (env referencesTo: #printString) numberSelectors.
 	self assert: printString numberClasses equals: (env referencesTo: #printString) numberClasses! !
+
 !PluggableEnvironmentTest categoriesForMethods!
 testReferencesTo!public!unit tests! !
 !

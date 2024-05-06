@@ -5,9 +5,13 @@ WeakLookupTable variableSubclass: #WeakIdentityDictionary
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 WeakIdentityDictionary guid: (GUID fromString: '{87b4c534-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 WeakIdentityDictionary comment: ''!
+
 !WeakIdentityDictionary categoriesForClass!Collections-Unordered!Collections-Weak! !
+
 !WeakIdentityDictionary methodsFor!
 
 findKeyOrNil: anObject
@@ -41,6 +45,7 @@ species
 	which is less than useful."
 
 	^IdentityDictionary! !
+
 !WeakIdentityDictionary categoriesForMethods!
 findKeyOrNil:!private!searching! !
 hash:max:!private!searching! !
@@ -65,6 +70,7 @@ new: anInteger
 	^(super new: anInteger)
 		haveWeakKeys;
 		yourself! !
+
 !WeakIdentityDictionary class categoriesForMethods!
 initialize!development!initializing!public! !
 new:!instance creation!public! !

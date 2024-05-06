@@ -5,7 +5,9 @@ ICoreWebView2Interface subclass: #ICoreWebView2Certificate
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2Certificate guid: (IID fromString: '{c5fb2fce-1cac-4aee-9c79-5ed0362eaae0}')!
+
 ICoreWebView2Certificate comment: '`ICoreWebView2Certificate` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Certificate'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -47,7 +49,9 @@ interface ICoreWebView2Certificate : IUnknown
 };
 ```
 '!
+
 !ICoreWebView2Certificate categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2Certificate methodsFor!
 
 derEncodedSerialNumber
@@ -202,6 +206,7 @@ validTo
 	answer := DOUBLE newBuffer.
 	self get_ValidTo: answer.
 	^DateAndTime fromUnixTime: answer value! !
+
 !ICoreWebView2Certificate categoriesForMethods!
 derEncodedSerialNumber!properties!public! !
 displayName!properties!public! !
@@ -247,6 +252,7 @@ defineFunctions
 		defineFunction: #get_PemEncodedIssuerCertificateChain:
 			argumentTypes: 'ICoreWebView2StringCollection**'
 ! !
+
 !ICoreWebView2Certificate class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

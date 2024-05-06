@@ -11,7 +11,6 @@ Note that this package replaces the default <IntegerPrompter> view with one that
 
 package basicPackageVersion: '6.1'.
 
-
 package classNames
 	add: #NMUPDOWN;
 	add: #SpinButton;
@@ -53,19 +52,18 @@ Win32Structure subclass: #UDACCEL
 	classVariableNames: '_OffsetOf_nInc _OffsetOf_nSec'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 NMHDR subclass: #NMUPDOWN
 	instanceVariableNames: 'allow'
 	classVariableNames: '_OffsetOf_iDelta _OffsetOf_iPos'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ValueConvertingControlView subclass: #SpinButton
 	instanceVariableNames: ''
 	classVariableNames: 'AlignmentMap AlignmentMask'
 	poolDictionaries: 'UpDownControlConstants'
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -83,6 +81,7 @@ resource_Spinner_view
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.DialogView) 34 30 nil nil 8 #(13107200 65536) 416 nil 655878 ##(Smalltalk.ThemeColor) #dialog nil 165 nil 263174 ##(Smalltalk.Font) nil true 524550 ##(Smalltalk.LOGFONTW) 8 #[244 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 83 0 101 0 103 0 111 0 101 0 32 0 85 0 73 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 328198 ##(Smalltalk.Point) 193 193 nil 416 852230 ##(Smalltalk.FramingLayout) 170 176 34 8 410 ##(Smalltalk.ReferenceView) 34 14 nil 416 34 2 8 1140850688 131073 672 nil nil nil 7 nil nil nil 672 1180230 1 ##(Smalltalk.ResourceIdentifier) ##(Smalltalk.Presenter) #resource_OK_Cancel_button_block nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 578 25 129 578 419 63 672 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 12 0 0 0 64 0 0 0 221 0 0 0 95 0 0 0] 8 #() 578 193 193 nil 27 1181766 2 ##(Smalltalk.FramingConstraints) 1180678 ##(Smalltalk.FramingCalculation) #fixedParentLeft 5 1026 #fixedParentRight 5 1026 #fixedViewBottom -61 1026 #fixedParentBottom 7 410 ##(Smalltalk.TextEdit) 34 16 nil 416 34 2 8 1140924544 1025 1104 nil 327686 ##(Smalltalk.Color) #default nil 7 nil nil nil 1104 nil 8 1903872368 852742 ##(Smalltalk.IntegerToText) nil 8 '' nil 1 770 138 144 34 4 834 #createAt:extent: 34 2 578 291 31 578 121 41 1104 834 #text: 34 1 8 '0' 1104 834 #selectionRange: 34 1 525062 ##(Smalltalk.Interval) 3 3 3 1104 834 #setMarginWidths: 34 1 8 #(3 3) 1104 914 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 145 0 0 0 15 0 0 0 205 0 0 0 35 0 0 0] 8 #() 976 nil 27 994 1026 #fixedPreviousRight 21 1026 #fixedViewLeft 121 1026 #fixedParentTop 1 1026 #fixedViewTop 41 410 ##(Smalltalk.StaticText) 34 16 nil 416 34 2 8 1140850944 1 1664 721990 2 ##(Smalltalk.ValueHolder) nil nil 1114118 ##(Smalltalk.NeverSearchPolicy) 8 '' nil nil 7 nil nil nil 1664 nil 8 1903849936 852486 ##(Smalltalk.NullConverter) nil nil true 770 138 144 34 2 834 #createAt:extent: 34 2 578 41 31 578 231 81 1664 834 #text: 34 1 8 'Enter number:' 1664 914 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 20 0 0 0 15 0 0 0 135 0 0 0 55 0 0 0] 8 #() 976 nil 27 994 1040 21 1616 231 1632 1 1648 81 410 ##(Smalltalk.SpinButton) 34 15 nil 416 34 2 8 1140916276 1 2080 1730 nil nil 1376774 ##(Smalltalk.PluggableSearchPolicy) 459270 ##(Smalltalk.Message) #= 8 #() 2194 #hash 8 #() 1 1184 nil 7 nil nil nil 2080 nil 8 1903809120 1826 nil nil 770 138 144 34 3 834 #createAt:extent: 34 2 578 411 31 578 29 41 2080 834 #setRange: 34 1 1458 3 201 3 2080 834 #udmSetAccel: 34 1 918854 1 ##(Smalltalk.StructureArray) 8 #[0 0 0 0 1 0 0 0 2 0 0 0 5 0 0 0 5 0 0 0 20 0 0 0] 7 ##(Smalltalk.UDACCEL) nil 17 2080 914 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 205 0 0 0 15 0 0 0 219 0 0 0 35 0 0 0] 8 #() 976 nil 27 994 1600 1 1616 29 1026 #fixedPreviousTop 1 1026 #fixedPreviousBottom 1 170 192 34 6 1664 8 'prompt' 1104 8 'reply' 2080 8 'spinner' 590342 ##(Smalltalk.Rectangle) 578 21 31 578 21 21 nil nil nil nil 13151 nil nil nil nil 1 nil nil 590598 ##(Smalltalk.Semaphore) nil nil 1 nil 8 1998684880 770 138 144 34 3 834 #createAt:extent: 34 2 578 3839 21 578 491 283 416 834 #text: 34 1 8 'Please respond:' 416 834 #updateMenuBar 960 416 914 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 116 8 0 0 151 0 0 0] 34 4 1664 1104 2080 672 976 nil 27 )! !
+
 !IntegerPrompter class categoriesForMethods!
 defaultView!constants!public! !
 resource_Spinner_view!public!resources-views! !
@@ -99,6 +98,7 @@ resource_Spin_button
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.SpinButton) 34 15 nil nil 34 2 8 1140916240 1 416 721990 2 ##(Smalltalk.ValueHolder) nil nil 1376774 ##(Smalltalk.PluggableSearchPolicy) 459270 ##(Smalltalk.Message) #= 8 #() 546 #hash 8 #() 1 327686 ##(Smalltalk.Color) #default nil 7 nil nil nil 416 nil 8 1903809120 852486 ##(Smalltalk.NullConverter) nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 3 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 818 35 51 416 770 #setRange: 34 1 525062 ##(Smalltalk.Interval) 3 201 3 416 770 #udmSetAccel: 34 1 918854 1 ##(Smalltalk.StructureArray) 8 #[0 0 0 0 1 0 0 0 2 0 0 0 5 0 0 0 5 0 0 0 20 0 0 0] 7 ##(Smalltalk.UDACCEL) nil 17 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 144 7 0 0 35 0 0 0] 8 #() 818 193 193 nil 27 )! !
+
 !NumberPresenter class categoriesForMethods!
 resource_Spin_button!public!resources-views! !
 !

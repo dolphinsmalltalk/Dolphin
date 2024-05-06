@@ -5,7 +5,9 @@ ICoreWebView2_14 subclass: #ICoreWebView2_15
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2_15 guid: (IID fromString: '{517b2d1d-7dae-4a66-a4f4-10352ffb9518}')!
+
 ICoreWebView2_15 comment: '`ICoreWebView2_15` is a wrapper class for the COM interface ''WebView2.ICoreWebView2_15'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -37,7 +39,9 @@ interface ICoreWebView2_15 : ICoreWebView2_14
 };
 ```
 '!
+
 !ICoreWebView2_15 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2_15 methodsFor!
 
 Add_FaviconChanged: eventHandler token: token
@@ -77,6 +81,7 @@ Remove_FaviconChanged: token
 
 	<virtual stdcall: hresult 111 sqword>
 	^self invalidCall: _failureCode! !
+
 !ICoreWebView2_15 categoriesForMethods!
 Add_FaviconChanged:token:!**auto generated**!COM Interfaces-ICoreWebView2_15!private! !
 get_FaviconUri:!**auto generated**!COM Interfaces-ICoreWebView2_15!private! !
@@ -100,6 +105,7 @@ defineFunctions
 		defineFunction: #GetFavicon:completedHandler:
 			argumentTypes: 'sdword ICoreWebView2GetFaviconCompletedHandler*'
 ! !
+
 !ICoreWebView2_15 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

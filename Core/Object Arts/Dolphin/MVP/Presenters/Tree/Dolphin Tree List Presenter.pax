@@ -9,7 +9,6 @@ A TreeListPresenter implements a <listPresenter> component that can be used to d
 
 package basicPackageVersion: '6.0'.
 
-
 package classNames
 	add: #TreeListPresenter;
 	yourself.
@@ -38,11 +37,6 @@ TreePresenter subclass: #TreeListPresenter
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

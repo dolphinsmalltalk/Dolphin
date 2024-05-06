@@ -5,7 +5,9 @@ ENHMETARECORD subclass: #ENHMETAHEADER
 	classVariableNames: '_OffsetOf_bOpenGL _OffsetOf_cbPixelFormat _OffsetOf_dSignature _OffsetOf_nBytes _OffsetOf_nDescription _OffsetOf_nHandles _OffsetOf_nPalEntries _OffsetOf_nRecords _OffsetOf_nVersion _OffsetOf_offDescription _OffsetOf_offPixelFormat _OffsetOf_rclBounds _OffsetOf_rclFrame _OffsetOf_sReserved _OffsetOf_szlDevice _OffsetOf_szlMicrometers _OffsetOf_szlMillimeters'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETAHEADER guid: (GUID fromString: '{11d9bf3d-7ee0-4ace-8c78-d192e7518fdf}')!
+
 ENHMETAHEADER addClassConstant: '_OffsetOf_bOpenGL' value: 16r60!
 ENHMETAHEADER addClassConstant: '_OffsetOf_cbPixelFormat' value: 16r58!
 ENHMETAHEADER addClassConstant: '_OffsetOf_dSignature' value: 16r28!
@@ -23,6 +25,7 @@ ENHMETAHEADER addClassConstant: '_OffsetOf_sReserved' value: 16r3A!
 ENHMETAHEADER addClassConstant: '_OffsetOf_szlDevice' value: 16r48!
 ENHMETAHEADER addClassConstant: '_OffsetOf_szlMicrometers' value: 16r64!
 ENHMETAHEADER addClassConstant: '_OffsetOf_szlMillimeters' value: 16r50!
+
 ENHMETAHEADER comment: '<ENHMETAHEADER> is an <ExternalStructure> class to wrap the struct ''Win32.ENHMETAHEADER''.
 
 The type library contains no documentation for this struct
@@ -54,7 +57,9 @@ IDL definition follows:
 			[helpstring(''Size of the reference device in micrometers'')] SIZEL szlMicrometers;
 		} ENHMETAHEADER;
 '!
+
 !ENHMETAHEADER categoriesForClass!Win32-Structs! !
+
 !ENHMETAHEADER methodsFor!
 
 bOpenGL
@@ -236,6 +241,7 @@ szlMillimeters: aSIZE
 		from: ##(_OffsetOf_szlMillimeters + 1)
 		to: ##(_OffsetOf_szlMillimeters + SIZE basicByteSize)
 		startingAt: 1! !
+
 !ENHMETAHEADER categoriesForMethods!
 bOpenGL!**compiled accessors**!public! !
 bOpenGL:!**compiled accessors**!public! !
@@ -330,6 +336,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_HEADER! !
+
 !ENHMETAHEADER class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

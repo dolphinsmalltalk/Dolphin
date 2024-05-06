@@ -5,11 +5,15 @@ IXMLDOMNode subclass: #IXMLDOMProcessingInstruction
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
 	classInstanceVariableNames: ''!
+
 IXMLDOMProcessingInstruction guid: (IID fromString: '{2933bf89-7b36-11d2-b20e-00c04f983e60}')!
+
 IXMLDOMProcessingInstruction comment: '<IXMLDOMProcessingInstruction> is a wrapper class for the COM interface ''MSXML.IXMLDOMProcessingInstruction'' generated from type information in the ''Microsoft XML, version 2.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 This is a specialized DOM node to represent processing instructions. These are used to define processor-specific infromation in the text of the document.'!
+
 !IXMLDOMProcessingInstruction categoriesForClass!COM-Interfaces!MSXML-Interfaces! !
+
 !IXMLDOMProcessingInstruction methodsFor!
 
 = anObject 
@@ -86,6 +90,7 @@ target
 	self get_target: answer.
 	^answer asObject
 ! !
+
 !IXMLDOMProcessingInstruction categoriesForMethods!
 =!comparing!public! !
 childNodes!properties!public! !
@@ -112,6 +117,7 @@ defineFunctions
 		defineFunction: #put_data:
 			argumentTypes: 'bstr'
 ! !
+
 !IXMLDOMProcessingInstruction class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

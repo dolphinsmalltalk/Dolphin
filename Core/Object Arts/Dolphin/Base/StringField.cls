@@ -5,11 +5,15 @@ ArrayField subclass: #StringField
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StringField guid: (GUID fromString: '{87b4c4e0-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 StringField comment: '<StringField> is an <ExternalField> class which can be used to represent embedded null-terminated string fields in <ExternalStructure>s.
 
 StringField can be used for both <String>s and <UnicodeString>s.'!
+
 !StringField categoriesForClass!External-Data-Types! !
+
 !StringField methodsFor!
 
 allocationLength
@@ -57,6 +61,7 @@ writeInto: bytes value: anObject
 		startingAt: 1.
 	"We need 2 null-terminator bytes for a wide-char string of course"
 	1 to: elemSize do: [:i | bytes at: offset + size + i put: 0]! !
+
 !StringField categoriesForMethods!
 allocationLength!accessing!private! !
 printElementSizeExpressionBodyOn:!automatic generation!private! !
@@ -73,6 +78,7 @@ length: anInteger
 	embedded arrays of type aClass, and of byte size anInteger"
 
 	^self type: AnsiString length: anInteger! !
+
 !StringField class categoriesForMethods!
 length:!instance creation!public! !
 !

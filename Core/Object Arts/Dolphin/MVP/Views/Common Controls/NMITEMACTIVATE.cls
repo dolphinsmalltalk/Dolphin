@@ -5,7 +5,9 @@ NMHDR subclass: #NMITEMACTIVATE
 	classVariableNames: '_OffsetOf_iItem _OffsetOf_iSubItem _OffsetOf_lParam _OffsetOf_ptAction _OffsetOf_uChanged _OffsetOf_uKeyFlags _OffsetOf_uNewState _OffsetOf_uOldState'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 NMITEMACTIVATE guid: (GUID fromString: '{78091823-3756-4d5a-816a-a5981291ae81}')!
+
 NMITEMACTIVATE addClassConstant: '_OffsetOf_iItem' value: 16rC!
 NMITEMACTIVATE addClassConstant: '_OffsetOf_iSubItem' value: 16r10!
 NMITEMACTIVATE addClassConstant: '_OffsetOf_lParam' value: 16r28!
@@ -14,8 +16,11 @@ NMITEMACTIVATE addClassConstant: '_OffsetOf_uChanged' value: 16r1C!
 NMITEMACTIVATE addClassConstant: '_OffsetOf_uKeyFlags' value: 16r2C!
 NMITEMACTIVATE addClassConstant: '_OffsetOf_uNewState' value: 16r14!
 NMITEMACTIVATE addClassConstant: '_OffsetOf_uOldState' value: 16r18!
+
 NMITEMACTIVATE comment: ''!
+
 !NMITEMACTIVATE categoriesForClass!External-Data-Structured-Win32! !
+
 !NMITEMACTIVATE methodsFor!
 
 iItem
@@ -55,6 +60,7 @@ uOldState
 	"Answer the <Integer> value of the receiver's 'uOldState' field."
 
 	^bytes dwordAtOffset: _OffsetOf_uOldState! !
+
 !NMITEMACTIVATE categoriesForMethods!
 iItem!**compiled accessors**!public! !
 iSubItem!**compiled accessors**!public! !
@@ -97,6 +103,7 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #iItem #iSubItem #uNewState #uOldState #uChanged #ptAction #uKeyFlags)! !
+
 !NMITEMACTIVATE class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

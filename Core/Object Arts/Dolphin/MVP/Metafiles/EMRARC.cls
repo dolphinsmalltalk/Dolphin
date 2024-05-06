@@ -5,10 +5,13 @@ ENHMETARECORD subclass: #EMRARC
 	classVariableNames: '_OffsetOf_ptlEnd _OffsetOf_ptlStart _OffsetOf_rclBox'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 EMRARC guid: (GUID fromString: '{a4d8acff-7c86-450e-ab37-011f1b1a9754}')!
+
 EMRARC addClassConstant: '_OffsetOf_ptlEnd' value: 16r20!
 EMRARC addClassConstant: '_OffsetOf_ptlStart' value: 16r18!
 EMRARC addClassConstant: '_OffsetOf_rclBox' value: 16r8!
+
 EMRARC comment: '<EMRARC> is an <ExternalStructure> class to wrap the struct ''Win32.EMRARC'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -25,7 +28,9 @@ struct tagEMRARC {
 	POINTL ptlEnd;
 } EMRARC;
 '!
+
 !EMRARC categoriesForClass!Win32-Structs! !
+
 !EMRARC methodsFor!
 
 ptlEnd
@@ -69,6 +74,7 @@ rclBox: aRECT
 		from: ##(_OffsetOf_rclBox + 1)
 		to: ##(_OffsetOf_rclBox + RECT basicByteSize)
 		startingAt: 1! !
+
 !EMRARC categoriesForMethods!
 ptlEnd!**compiled accessors**!public! !
 ptlEnd:!**compiled accessors**!public! !
@@ -112,6 +118,7 @@ iTypes
 		with: EMR_ARCTO
 		with: EMR_CHORD
 		with: EMR_PIE! !
+
 !EMRARC class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

@@ -5,9 +5,13 @@ Object subclass: #CommandLineTestRunner
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 CommandLineTestRunner guid: (GUID fromString: '{69cae7cc-de76-4748-bc30-e39048ddbb3c}')!
+
 CommandLineTestRunner comment: ''!
+
 !CommandLineTestRunner categoriesForClass!Kernel-Objects! !
+
 !CommandLineTestRunner methodsFor!
 
 addLogger: aTestRunLogger
@@ -77,6 +81,7 @@ update: anObject with: argument from: originator
 
 verbose: aBoolean
 	verbose := aBoolean! !
+
 !CommandLineTestRunner categoriesForMethods!
 addLogger:!initializing!private! !
 finishRun:knownSlowTests:!operations!private! !
@@ -98,6 +103,7 @@ verbose:!accessing!public! !
 
 new
 	^super new initialize! !
+
 !CommandLineTestRunner class categoriesForMethods!
 new!instance creation!public! !
 !

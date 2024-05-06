@@ -5,9 +5,13 @@ Object subclass: #Grid
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Grid guid: (GUID fromString: '{87b4c48e-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Grid comment: ''!
+
 !Grid categoriesForClass!MVP-Views-Support! !
+
 !Grid methodsFor!
 
 constrainPoint: aPoint
@@ -31,6 +35,7 @@ resolution: anInteger
 	"Sets the number of pixels between adjacent points in the grid to anInteger."
 
 	resolution := anInteger! !
+
 !Grid categoriesForMethods!
 constrainPoint:!accessing!public! !
 constrainRectangle:!accessing!public! !
@@ -47,6 +52,7 @@ resolution: anInteger
 	^self new
 		resolution: anInteger;
 		yourself! !
+
 !Grid class categoriesForMethods!
 resolution:!instance creation!public! !
 !

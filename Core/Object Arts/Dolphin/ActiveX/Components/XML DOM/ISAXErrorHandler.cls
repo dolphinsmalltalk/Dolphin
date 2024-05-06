@@ -5,7 +5,9 @@ IUnknown subclass: #ISAXErrorHandler
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
 	classInstanceVariableNames: ''!
+
 ISAXErrorHandler guid: (IID fromString: '{a60511c4-ccf5-479e-98a3-dc8dc545b7d0}')!
+
 ISAXErrorHandler comment: '<ISAXErrorHandler> is a wrapper class for the COM interface ''MSXML2.ISAXErrorHandler'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
@@ -40,7 +42,9 @@ interface ISAXErrorHandler : IUnknown
 		[in]HRESULT hrErrorCode);
 };
 '!
+
 !ISAXErrorHandler categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+
 !ISAXErrorHandler methodsFor!
 
 Error: pLocator pwchErrorMessage: pwchErrorMessage hrErrorCode: hrErrorCode
@@ -75,6 +79,7 @@ IgnorableWarning: pLocator pwchErrorMessage: pwchErrorMessage hrErrorCode: hrErr
 
 	<virtual stdcall: hresult 6 ISAXLocator* word* hresult>
 	^self invalidCall: _failureCode! !
+
 !ISAXErrorHandler categoriesForMethods!
 Error:pwchErrorMessage:hrErrorCode:!**auto generated**!COM Interfaces-ISAXErrorHandler!public! !
 FatalError:pwchErrorMessage:hrErrorCode:!**auto generated**!COM Interfaces-ISAXErrorHandler!public! !
@@ -95,6 +100,7 @@ defineFunctions
 		defineFunction: #IgnorableWarning:pwchErrorMessage:hrErrorCode:
 			argumentTypes: 'ISAXLocator* word* hresult'
 ! !
+
 !ISAXErrorHandler class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

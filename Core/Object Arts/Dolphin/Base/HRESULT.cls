@@ -5,10 +5,15 @@ ExternalInteger subclass: #HRESULT
 	classVariableNames: 'Facilities FACILITY_NT_BIT Fail'
 	poolDictionaries: 'FacilityCodes Win32Constants Win32Errors'
 	classInstanceVariableNames: ''!
+
 HRESULT guid: (GUID fromString: '{87b4c5ae-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 HRESULT addClassConstant: 'FACILITY_NT_BIT' value: 16r10000000!
+
 HRESULT comment: ''!
+
 !HRESULT categoriesForClass!External-Data-Unstructured! !
+
 !HRESULT methodsFor!
 
 asSignedInteger
@@ -141,6 +146,7 @@ value: anInteger
 	"Set the receiver's 'value' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_value put: anInteger! !
+
 !HRESULT categoriesForMethods!
 asSignedInteger!converting!public! !
 asUnsignedInteger!converting!public! !
@@ -245,6 +251,7 @@ win32Error: anInteger
 		severity: SEVERITY_ERROR
 		facility: FACILITY_WIN32
 		code: anInteger! !
+
 !HRESULT class categoriesForMethods!
 decodePrimitiveFailureCode:!private!utilities! !
 defineFields!public!template definition! !

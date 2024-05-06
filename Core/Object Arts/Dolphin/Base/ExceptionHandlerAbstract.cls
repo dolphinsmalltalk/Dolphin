@@ -5,10 +5,15 @@ Object subclass: #ExceptionHandlerAbstract
 	classVariableNames: 'RetryCookie'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExceptionHandlerAbstract guid: (GUID fromString: '{87b4c484-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 ExceptionHandlerAbstract isAbstract: true!
+
 ExceptionHandlerAbstract comment: ''!
+
 !ExceptionHandlerAbstract categoriesForClass!Kernel-Exception Handling! !
+
 !ExceptionHandlerAbstract methodsFor!
 
 actionFor: exception
@@ -89,6 +94,7 @@ try: niladicBlock
 			ensure: [process exceptionEnvironment: old].
 	returnContinuation := nil.
 	^answer! !
+
 !ExceptionHandlerAbstract categoriesForMethods!
 actionFor:!helpers!private! !
 markAndTry!debugger-step through!evaluating!private! !
@@ -113,6 +119,7 @@ on: selector do: action
 	selector, and <monadicBlock> exception handler, action."
 
 	^self new on: selector do: action! !
+
 !ExceptionHandlerAbstract class categoriesForMethods!
 initialize!development!initializing!public! !
 on:do:!debugger-step through!instance creation!private! !

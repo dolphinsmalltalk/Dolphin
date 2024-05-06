@@ -5,7 +5,9 @@ ISequentialStream subclass: #IStream
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IStream guid: (IID fromString: '{0000000c-0000-0000-c000-000000000046}')!
+
 IStream comment: 'IStream is a COMInterface class to wrap the standard OLE/COM structured storage interface of the same name.
 
 IStream expands on ISequentialStream to offer the ability to access and adjust the current stream position, and to lock ranges of bytes in the underlying device (ILockBytes). It also offers transactional control, "directory" information, and copying. IStream is widely implmented and (in particular) used by COM objects for persistent storage purposes, marshalling, etc.
@@ -20,7 +22,9 @@ Example:
 	stm reset.				"...rewind..."
 	(STBInFiler on: stm) next.		"...rehydrate the STB''d object..."
 	stm close.				"...finally, close the stream (though finalization would do this anyway."'!
+
 !IStream categoriesForClass!COM-Interfaces! !
+
 !IStream methodsFor!
 
 at: anInteger 
@@ -430,6 +434,7 @@ UnlockRegion: libOffset cb: cb dwLockType: dwLockType
 
 	<virtual stdcall: hresult 12 qword qword dword>
 	^self invalidCall: _failureCode! !
+
 !IStream categoriesForMethods!
 at:!accessing!public! !
 at:put:!accessing!public! !
@@ -547,6 +552,7 @@ onURL: urlString
 		dwReserved: 0
 		lpfnCB: nil.
 	^answer! !
+
 !IStream class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 fromBytes:!instance creation!public! !

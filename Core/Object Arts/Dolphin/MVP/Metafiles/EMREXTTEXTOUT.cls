@@ -5,15 +5,21 @@ ENHMETARECORD subclass: #EMREXTTEXTOUT
 	classVariableNames: '_OffsetOf_EMRTEXT _OffsetOf_exScale _OffsetOf_eyScale _OffsetOf_iGraphicsMode _OffsetOf_rclBounds'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 EMREXTTEXTOUT guid: (GUID fromString: '{2fee36e2-d281-4200-9f3f-7aa01d54e452}')!
+
 EMREXTTEXTOUT isAbstract: true!
+
 EMREXTTEXTOUT addClassConstant: '_OffsetOf_EMRTEXT' value: 16r24!
 EMREXTTEXTOUT addClassConstant: '_OffsetOf_exScale' value: 16r1C!
 EMREXTTEXTOUT addClassConstant: '_OffsetOf_eyScale' value: 16r20!
 EMREXTTEXTOUT addClassConstant: '_OffsetOf_iGraphicsMode' value: 16r18!
 EMREXTTEXTOUT addClassConstant: '_OffsetOf_rclBounds' value: 16r8!
+
 EMREXTTEXTOUT comment: ''!
+
 !EMREXTTEXTOUT categoriesForClass!Win32-Structs! !
+
 !EMREXTTEXTOUT methodsFor!
 
 EMRTEXT
@@ -73,6 +79,7 @@ rclBounds: aRECT
 		from: ##(_OffsetOf_rclBounds + 1)
 		to: ##(_OffsetOf_rclBounds + RECT basicByteSize)
 		startingAt: 1! !
+
 !EMREXTTEXTOUT categoriesForMethods!
 EMRTEXT!**compiled accessors**!public! !
 EMRTEXT:!**compiled accessors**!public! !
@@ -127,6 +134,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^#()! !
+
 !EMREXTTEXTOUT class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 iTypes!constants!public! !

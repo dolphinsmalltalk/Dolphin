@@ -10,7 +10,6 @@ An advanced find dialog with support for advanced find settings over and above t
 
 package basicPackageVersion: '6.1'.
 
-
 package classNames
 	add: #AdvancedFindDetails;
 	add: #AdvancedFindDialog;
@@ -42,16 +41,12 @@ FindDetails subclass: #AdvancedFindDetails
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Dialog subclass: #AdvancedFindDialog
 	instanceVariableNames: 'patternPresenter wholeWordPresenter matchCasePresenter modePresenter directionPresenter actionButton closeButton flags validationBlock wrapPresenter'
 	classVariableNames: 'RegExpMask WildCardMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

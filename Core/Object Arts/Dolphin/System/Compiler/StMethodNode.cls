@@ -5,7 +5,9 @@ StProgramNode subclass: #StMethodNode
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StMethodNode guid: (GUID fromString: '{a10b25e1-f065-457c-90d9-2571ebf23f51}')!
+
 StMethodNode comment: 'StMethodNode is the parse tree node type that represents a Smalltalk method.
 
 Instance Variables:
@@ -17,7 +19,9 @@ Instance Variables:
 	tag	<Interval | nil>	the source location of any resource/primitive tags
 
 '!
+
 !StMethodNode categoriesForClass!System-Compiler! !
+
 !StMethodNode methodsFor!
 
 = anObject 
@@ -194,6 +198,7 @@ tag: anStTagNodeOrNil
 
 uses: aNode 
 	^body == aNode and: [aNode lastIsReturn]! !
+
 !StMethodNode categoriesForMethods!
 =!comparing!public! !
 acceptVisitor:!public!visitor! !
@@ -263,6 +268,7 @@ selectorParts: tokenCollection arguments: variableNodes
 	^(self new)
 		selectorParts: tokenCollection arguments: variableNodes;
 		yourself! !
+
 !StMethodNode class categoriesForMethods!
 new!instance creation!public! !
 selector:arguments:body:!instance creation!public! !

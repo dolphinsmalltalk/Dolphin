@@ -5,10 +5,14 @@ WriteStream subclass: #ReadWriteStream
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ReadWriteStream guid: (GUID fromString: '{87b4c6fd-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 ReadWriteStream comment: 'Class ReadWriteStream is a subclass of WriteStream that represents an accessor that can both read and write elements into its collection. It supports all the protocol of both ReadStream and WriteStream.
 '!
+
 !ReadWriteStream categoriesForClass!Collections-Streams! !
+
 !ReadWriteStream methodsFor!
 
 basicNext
@@ -80,6 +84,7 @@ nextAvailable
 
 	<primitive: 65>
 	^position >= readLimit ifFalse: [collection decodeNextFrom: self]! !
+
 !ReadWriteStream categoriesForMethods!
 basicNext!accessing!public! !
 basicNext:into:startingAt:!accessing!public! !

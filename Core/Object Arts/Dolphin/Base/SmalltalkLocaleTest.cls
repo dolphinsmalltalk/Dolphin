@@ -5,9 +5,13 @@ LocaleTest subclass: #SmalltalkLocaleTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SmalltalkLocaleTest guid: (GUID fromString: '{0a445b92-78d1-4c9c-a3f4-7be49f0c2932}')!
+
 SmalltalkLocaleTest comment: ''!
+
 !SmalltalkLocaleTest categoriesForClass!Unclassified! !
+
 !SmalltalkLocaleTest methodsFor!
 
 defaultSubject
@@ -71,6 +75,7 @@ testPrintFloatSeparators
 		decimalSeparator: $@;
 		thousandSeparator: $^.
 	self assert: (subject printFloat: 1234567890.123 format: format) equals: '1234567890@123'! !
+
 !SmalltalkLocaleTest categoriesForMethods!
 defaultSubject!helpers!private! !
 testNamed!public!unit tests! !

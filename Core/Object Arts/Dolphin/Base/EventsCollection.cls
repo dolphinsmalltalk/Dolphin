@@ -5,9 +5,13 @@ SharedIdentityDictionary variableSubclass: #EventsCollection
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 EventsCollection guid: (GUID fromString: '{87b4c533-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 EventsCollection comment: ''!
+
 !EventsCollection categoriesForClass!Collections-Unordered!System-Support! !
+
 !EventsCollection methodsFor!
 
 addEvent: aSymbol action: aValuable 
@@ -87,6 +91,7 @@ triggerEvent: aSymbol withArguments: anArray
 	with the specified arguments. Answer the result of the last evaluation, or nil if none."
 
 	^(self lookup: aSymbol) ifNotNil: [:msgs | msgs valueWithArguments: anArray]! !
+
 !EventsCollection categoriesForMethods!
 addEvent:action:!adding!private! !
 asMinimumRepresentation!converting!private! !

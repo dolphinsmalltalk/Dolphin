@@ -5,10 +5,15 @@ DolphinCollectionTest subclass: #SequenceableCollectionTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SequenceableCollectionTest guid: (GUID fromString: '{4c32dbcc-4044-442b-95d9-d6e8ad2396cf}')!
+
 SequenceableCollectionTest isAbstract: true!
+
 SequenceableCollectionTest comment: ''!
+
 !SequenceableCollectionTest categoriesForClass!Unclassified! !
+
 !SequenceableCollectionTest methodsFor!
 
 assimilateResultElement: anObject
@@ -862,6 +867,7 @@ verifyIndexOfAnyOf: searchFor startingAt: startInteger in: searchee is: foundInt
 	self assert: (searchee indexOfAnyOf: searchFor startingAt: startInteger) equals: foundInteger.
 	self assert: (searchee indexOfAnyOf: searchFor asArray startingAt: startInteger)
 		equals: foundInteger! !
+
 !SequenceableCollectionTest categoriesForMethods!
 assimilateResultElement:!helpers!private! !
 byteArrayForSequence:!helpers!private! !

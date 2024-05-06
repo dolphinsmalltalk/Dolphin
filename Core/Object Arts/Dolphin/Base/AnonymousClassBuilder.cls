@@ -5,9 +5,13 @@ ClassBuilder subclass: #AnonymousClassBuilder
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AnonymousClassBuilder guid: (GUID fromString: '{cd7cc2b6-31a1-41e9-ad2d-50f3f9b109ab}')!
+
 AnonymousClassBuilder comment: ''!
+
 !AnonymousClassBuilder categoriesForClass!System-Support! !
+
 !AnonymousClassBuilder methodsFor!
 
 installInSuperclass: aClass
@@ -28,6 +32,7 @@ validateClassName
 
 validateSuperclassChainForCreate
 	"The superclass just validates that no superclass has the same name, which is not relevant for the unnamed."! !
+
 !AnonymousClassBuilder categoriesForMethods!
 installInSuperclass:!helpers!private! !
 installNewClass!environment!private! !

@@ -5,7 +5,9 @@ StValueNode subclass: #StAssignmentNode
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StAssignmentNode guid: (GUID fromString: '{3a82c1ca-7ed8-4a69-9e9e-b58b738abc85}')!
+
 StAssignmentNode comment: 'StAssignmentNode is a parse tree node for assignment statements
 
 Instance Variables:
@@ -14,7 +16,9 @@ Instance Variables:
 	variable	<StVariableNode>	the variable being assigned
 
 '!
+
 !StAssignmentNode categoriesForClass!System-Compiler! !
+
 !StAssignmentNode methodsFor!
 
 = anObject 
@@ -97,6 +101,7 @@ variable: aVariableNode value: aValueNode position: anInteger
 	self variable: aVariableNode.
 	self value: aValueNode.
 	assignment := anInteger! !
+
 !StAssignmentNode categoriesForMethods!
 =!comparing!public! !
 acceptVisitor:!public!visitor! !
@@ -134,6 +139,7 @@ variable: aVariableNode value: aValueNode position: anInteger
 			value: aValueNode
 			position: anInteger;
 		yourself! !
+
 !StAssignmentNode class categoriesForMethods!
 variable:value:!instance creation!public! !
 variable:value:position:!instance creation!public! !

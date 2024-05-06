@@ -5,9 +5,13 @@ LintRuleTest subclass: #CompositeLintRuleTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 CompositeLintRuleTest guid: (GUID fromString: '{e17dd387-d4f7-4713-878e-41a7c57e54dd}')!
+
 CompositeLintRuleTest comment: ''!
+
 !CompositeLintRuleTest categoriesForClass!Refactory-Test data! !
+
 !CompositeLintRuleTest methodsFor!
 
 checkClass: aSmalllintContext 
@@ -48,6 +52,7 @@ rules: aCollection
 
 viewResults
 	rules do: [:each | each viewResults]! !
+
 !CompositeLintRuleTest categoriesForMethods!
 checkClass:!accessing!public! !
 checkMethod:!accessing!public! !
@@ -90,6 +95,7 @@ rules: aCollection name: aString
 
 transformations
 	^self ruleFor: TransformationRuleTest protocol: 'transformations'! !
+
 !CompositeLintRuleTest class categoriesForMethods!
 allRules!instance creation!public! !
 lintChecks!all checks!public! !

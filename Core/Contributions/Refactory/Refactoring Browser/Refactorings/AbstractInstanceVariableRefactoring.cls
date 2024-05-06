@@ -5,9 +5,13 @@ VariableRefactoring subclass: #AbstractInstanceVariableRefactoring
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AbstractInstanceVariableRefactoring guid: (GUID fromString: '{0d72d85d-4099-47a8-8916-be81b11662df}')!
+
 AbstractInstanceVariableRefactoring comment: ''!
+
 !AbstractInstanceVariableRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !AbstractInstanceVariableRefactoring methodsFor!
 
 abstractReferences
@@ -46,6 +50,7 @@ preconditions
 transform
 	self createAccessors.
 	self abstractReferences! !
+
 !AbstractInstanceVariableRefactoring categoriesForMethods!
 abstractReferences!public!transforming! !
 accessorsRefactoring!accessing!private! !

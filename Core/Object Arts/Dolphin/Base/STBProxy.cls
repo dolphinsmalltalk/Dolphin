@@ -5,10 +5,15 @@ Object subclass: #STBProxy
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 STBProxy guid: (GUID fromString: '{87b4c4c3-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 STBProxy isAbstract: true!
+
 STBProxy comment: ''!
+
 !STBProxy categoriesForClass!System-Binary storage!System-Binary storage! !
+
 !STBProxy methodsFor!
 
 stbFixup: inFiler at: anInteger
@@ -21,6 +26,7 @@ value
 	"Answer the object that this one represents."
 
 	^self subclassResponsibility! !
+
 !STBProxy categoriesForMethods!
 stbFixup:at:!converting!public! !
 value!converting!public! !
@@ -32,6 +38,7 @@ new
 	"Private - Use specialized instance creation methods"
 
 	^self shouldNotImplement! !
+
 !STBProxy class categoriesForMethods!
 new!instance creation!private! !
 !

@@ -5,9 +5,13 @@ ExternalFieldTest subclass: #ArrayPointerFieldTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ArrayPointerFieldTest guid: (GUID fromString: '{a0c1a616-8f49-45e5-9a9e-f968b315ce71}')!
+
 ArrayPointerFieldTest comment: ''!
+
 !ArrayPointerFieldTest categoriesForClass!Unclassified! !
+
 !ArrayPointerFieldTest methodsFor!
 
 testGenerateAccessorsForSizedString
@@ -75,6 +79,7 @@ testGenerateAccessorsForSizeIsExpression
 	struct Test: string.
 	self assert: struct Size equals: string size * 2.
 	self assert: struct Test equals: string! !
+
 !ArrayPointerFieldTest categoriesForMethods!
 testGenerateAccessorsForSizedString!public! !
 testGenerateAccessorsForSizeIsExpression!public! !

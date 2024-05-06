@@ -5,10 +5,15 @@ Object subclass: #ArrayFieldLength
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ArrayFieldLength guid: (GUID fromString: '{aaa1c03f-5efe-4d73-8a05-b9ea12144883}')!
+
 ArrayFieldLength isAbstract: true!
+
 ArrayFieldLength comment: ''!
+
 !ArrayFieldLength categoriesForClass!Kernel-Objects! !
+
 !ArrayFieldLength methodsFor!
 
 allocationLength
@@ -37,6 +42,7 @@ setElementCount: anArrayedCollection of: anExternalField in: anExternalStructure
 	"Private - Set the length field corresponding to this array field, if any."
 
 	^self subclassResponsibility! !
+
 !ArrayFieldLength categoriesForMethods!
 allocationLength!accessing!private! !
 getElementCountOf:in:!indirect accessing!private! !

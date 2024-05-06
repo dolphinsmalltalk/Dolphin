@@ -5,9 +5,13 @@ GdiplusInitializerTests subclass: #GdiplusImageFromFileInitializerTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusImageFromFileInitializerTest guid: (GUID fromString: '{a57cca61-cd3f-43b3-a963-3e534232e776}')!
+
 GdiplusImageFromFileInitializerTest comment: ''!
+
 !GdiplusImageFromFileInitializerTest categoriesForClass!Unclassified! !
+
 !GdiplusImageFromFileInitializerTest methodsFor!
 
 gdipLoadImageFromFile: filename image: image 
@@ -33,6 +37,7 @@ testCreateHandle
 	self assert: constructorArgs size equals: 2.
 	self assert: constructorArgs first equals: self fileResource pafRgb0000FF_100x100bmp.
 	self assertLastArgIsHandle! !
+
 !GdiplusImageFromFileInitializerTest categoriesForMethods!
 gdipLoadImageFromFile:image:!accessing!public! !
 setUp!public!setup! !

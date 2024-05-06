@@ -5,9 +5,13 @@ CommandPolicy subclass: #DelegatingCommandPolicy
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DelegatingCommandPolicy guid: (GUID fromString: '{aba1d303-40c8-44b1-8bc7-bd99e0efa423}')!
+
 DelegatingCommandPolicy comment: ''!
+
 !DelegatingCommandPolicy categoriesForClass!Unclassified! !
+
 !DelegatingCommandPolicy methodsFor!
 
 visitPresenter: presenter
@@ -17,6 +21,7 @@ visitPresenter: presenter
 	to the parent presenter."
 
 	^presenter addToCommandRoute: self! !
+
 !DelegatingCommandPolicy categoriesForMethods!
 visitPresenter:!operations!private! !
 !

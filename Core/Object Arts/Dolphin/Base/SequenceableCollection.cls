@@ -5,10 +5,15 @@ Collection subclass: #SequenceableCollection
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SequenceableCollection guid: (GUID fromString: '{87b4c50a-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 SequenceableCollection isAbstract: true!
+
 SequenceableCollection comment: 'SequenceableCollection is the class of Collections whose elements are ordered and which are externally named by integer indices.'!
+
 !SequenceableCollection categoriesForClass!Collections-Abstract! !
+
 !SequenceableCollection methodsFor!
 
 , aSequencedReadableCollection
@@ -1282,6 +1287,7 @@ writeStream
 	"Answer a WriteStream on the receiver."
 
 	^WriteStream on: self! !
+
 !SequenceableCollection categoriesForMethods!
 ,!copying!public! !
 _sameAsString:!comparing!private! !
@@ -1479,6 +1485,7 @@ writeStream: anInteger
 	initialize size, anInteger."
 
 	^WriteStream on: (self new: anInteger)! !
+
 !SequenceableCollection class categoriesForMethods!
 binarySearch:for:using:!public!searching! !
 defaultSortAlgorithm!instance creation!public! !

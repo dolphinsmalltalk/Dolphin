@@ -5,9 +5,13 @@ PresenterTest subclass: #MethodWorkspaceTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MethodWorkspaceTest guid: (GUID fromString: '{e5dadb09-1b76-4a90-a763-95cc11d735d8}')!
+
 MethodWorkspaceTest comment: ''!
+
 !MethodWorkspaceTest categoriesForClass!Unclassified! !
+
 !MethodWorkspaceTest methodsFor!
 
 classToTest
@@ -37,6 +41,7 @@ testSelectedOrNearestNode
 	workspace selectionRange: (221 to: 220).
 	node := workspace selectedNode.
 	self assert: node isVariable! !
+
 !MethodWorkspaceTest categoriesForMethods!
 classToTest!helpers!private! !
 testSelectedOrNearestNode!public! !

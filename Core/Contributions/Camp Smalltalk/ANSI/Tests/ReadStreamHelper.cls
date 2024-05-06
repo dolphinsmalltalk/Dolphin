@@ -5,9 +5,13 @@ TestCaseHelper subclass: #ReadStreamHelper
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ReadStreamHelper guid: (GUID fromString: '{b1e7e2f2-0c17-49fd-a43e-698ad5d28f0b}')!
+
 ReadStreamHelper comment: ''!
+
 !ReadStreamHelper categoriesForClass!Unclassified! !
+
 !ReadStreamHelper methodsFor!
 
 canonicalObject
@@ -48,6 +52,7 @@ testXupToX
 	self value: [self canonicalObject upTo: $a]
 		should: [:r | r isEmpty]
 		conformTo: self protocol selector: #upTo:.! !
+
 !ReadStreamHelper categoriesForMethods!
 canonicalObject!public! !
 object:!public! !
@@ -61,6 +66,7 @@ testXupToX!public! !
 initialize
 	"ReadStreamHelper  initialize"
 	super initialize! !
+
 !ReadStreamHelper class categoriesForMethods!
 initialize!public! !
 !

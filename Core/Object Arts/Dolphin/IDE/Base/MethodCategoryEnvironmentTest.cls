@@ -5,9 +5,13 @@ BrowserEnvironmentTest subclass: #MethodCategoryEnvironmentTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MethodCategoryEnvironmentTest guid: (GUID fromString: '{fc1f9c02-ad7f-4715-a48e-c9891c1c5c75}')!
+
 MethodCategoryEnvironmentTest comment: ''!
+
 !MethodCategoryEnvironmentTest categoriesForClass!Unclassified! !
+
 !MethodCategoryEnvironmentTest methodsFor!
 
 testMethodCategoryEnvironment
@@ -32,6 +36,7 @@ testMethodCategoryEnvironment
 	self assert: selectors size equals: 1.
 	self assert: (env includesSelector: #newSortBlock: in: SortAlgorithm class).
 	self deny: (env includesSelector: #icon in: SortAlgorithm class)! !
+
 !MethodCategoryEnvironmentTest categoriesForMethods!
 testMethodCategoryEnvironment!public! !
 !

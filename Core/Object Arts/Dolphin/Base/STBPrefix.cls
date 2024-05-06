@@ -5,7 +5,9 @@ Object subclass: #STBPrefix
 	classVariableNames: 'BytesMask CharacterMask ClassPrefixMask DataPrefix DataPrefixMask IndexShift InstSizeMask InstSizeShift LiteralPrefixMask LocatorLenShift MaxPredefinedRef NonZeroVersionMask ProxyMask ProxyPrefix SmallIntegerMask VariableMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 STBPrefix guid: (GUID fromString: '{87b4c4c2-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 STBPrefix addClassConstant: 'BytesMask' value: 16r10!
 STBPrefix addClassConstant: 'CharacterMask' value: 16r4!
 STBPrefix addClassConstant: 'ClassPrefixMask' value: 16r4!
@@ -20,6 +22,7 @@ STBPrefix addClassConstant: 'NonZeroVersionMask' value: 16r40!
 STBPrefix addClassConstant: 'ProxyMask' value: 16r8!
 STBPrefix addClassConstant: 'SmallIntegerMask' value: 16r1!
 STBPrefix addClassConstant: 'VariableMask' value: 16r20!
+
 STBPrefix comment: 'STBPrefix represents the object prefix encoding used in an STB binary file stream. It encapsulates much of the complexity of the data encoding performed by the STBOutFiler and STBInFiler classes. As the data encoding has been designed to achieve a reasonably compact format there are some restrictions on the order in which the methods can be called.
 
 Instance Variables:
@@ -88,7 +91,9 @@ When testing an instance of this class the tests should be performed in the foll
 						ifTrue: [
 							The object represented is a proxy for the real one and should be sent a #fixup:at: message
 							to yeild the real object]]]."'!
+
 !STBPrefix categoriesForClass!System-Binary storage! !
+
 !STBPrefix methodsFor!
 
 character
@@ -206,6 +211,7 @@ smallInteger
 	"Answer the receiver decoded into a SmallInteger."
 
 	^dword bitShift: -1! !
+
 !STBPrefix categoriesForMethods!
 character!accessing!public! !
 dword!accessing!public! !
@@ -263,6 +269,7 @@ initialize
 
 uninitialize
 	DataPrefix := ProxyPrefix := nil! !
+
 !STBPrefix class categoriesForMethods!
 encodeCharacter:!operations!public! !
 encodeObjectRef:!operations!public! !

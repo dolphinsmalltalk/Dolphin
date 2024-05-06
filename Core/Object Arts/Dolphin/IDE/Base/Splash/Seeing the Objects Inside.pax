@@ -41,21 +41,18 @@ Object subclass: #ObjectInside
 	classVariableNames: 'EdgePointResolution'
 	poolDictionaries: 'GdiplusConstants'
 	classInstanceVariableNames: ''!
+
 Splash subclass: #DolphinSplash
 	instanceVariableNames: 'objectsInside'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusDoubleBufferedView subclass: #SeeingTheObjectsInside
 	instanceVariableNames: 'background dolphinOutline points sun stepProcess random insideObjectsScale dolphinIntensity textureMap objects dolphins dolphinInside splashDelay hintBubble startTime info baseScale'
 	classVariableNames: ''
 	poolDictionaries: 'GdiplusConstants'
 	classInstanceVariableNames: 'splashPlayTheGame difficultyLevel'!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

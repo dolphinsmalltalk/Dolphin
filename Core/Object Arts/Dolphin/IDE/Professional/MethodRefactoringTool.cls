@@ -5,12 +5,16 @@ RefactoringTool subclass: #MethodRefactoringTool
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MethodRefactoringTool guid: (GUID fromString: '{10c7f39b-1ac8-431a-bdc8-4ed608d35a1c}')!
+
 MethodRefactoringTool comment: 'MethodRefactoringTool implements method refactorings for a browser.
 
 There are a number of browser (or browser like tools) that display lists of methods and which support method level refactorings, for example the class & method browsers, the debugger (where the list of methods is those on the stack), and the package browser. This class encapsulates method-level refactoring behaviour so that it does not need to be duplicated in all those places.
 '!
+
 !MethodRefactoringTool categoriesForClass!Unclassified! !
+
 !MethodRefactoringTool methodsFor!
 
 addParameter
@@ -209,6 +213,7 @@ safeRemoveMethods
 
 	presenter performMethodsRefactoring: [:methods | self systemModel safeRemoveMethods: methods]
 		name: 'Safe Remove Methods'! !
+
 !MethodRefactoringTool categoriesForMethods!
 addParameter!commands!public!refactoring! !
 allMethodTemps!event handling!menus!public! !

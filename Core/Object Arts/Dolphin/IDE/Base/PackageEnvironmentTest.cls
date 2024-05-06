@@ -5,9 +5,13 @@ BrowserEnvironmentTest subclass: #PackageEnvironmentTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PackageEnvironmentTest guid: (GUID fromString: '{4375158a-0238-45ad-86e5-967559575ded}')!
+
 PackageEnvironmentTest comment: 'SUnitBrowser openOnTestCase: self'!
+
 !PackageEnvironmentTest categoriesForClass!Refactory-Testing! !
+
 !PackageEnvironmentTest methodsFor!
 
 classNamesFor: aPackageEnvironment
@@ -47,6 +51,7 @@ testPackageEnvironment
 			self assert: (env definesClass: each)].
 	self assert: (env includesSelector: #choose in: Font class).
 	self deny: (env includesSelector: #icon in: Font class)! !
+
 !PackageEnvironmentTest categoriesForMethods!
 classNamesFor:!BrowserEnvironment tests!public! !
 testPackageEnvironment!public!unit tests! !

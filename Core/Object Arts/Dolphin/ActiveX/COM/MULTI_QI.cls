@@ -5,14 +5,19 @@ OLEFinalizableStructure subclass: #MULTI_QI
 	classVariableNames: '_OffsetOf_hr _OffsetOf_pIID _OffsetOf_pItf'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MULTI_QI guid: (GUID fromString: '{87b4c5c2-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 MULTI_QI addClassConstant: '_OffsetOf_hr' value: 16r8!
 MULTI_QI addClassConstant: '_OffsetOf_pIID' value: 16r0!
 MULTI_QI addClassConstant: '_OffsetOf_pItf' value: 16r4!
+
 MULTI_QI comment: 'MULTI_QI is an <ExternalStructure> class to represent the Win32 COM structure of the same name.
 
 Arrays of MULTI_QI structures can be used to query multiple interface pointers in a single request. This is only really important for DCOM as it helps to minimize the number of network round-trips that are performed.'!
+
 !MULTI_QI categoriesForClass!External-Data-Structured-COM! !
+
 !MULTI_QI methodsFor!
 
 hr
@@ -44,6 +49,7 @@ pItf: anIUnknown
 	"Set the receiver's 'pItf' field to the value of the argument, anIUnknown"
 
 	bytes uintPtrAtOffset: _OffsetOf_pItf put: anIUnknown yourAddress! !
+
 !MULTI_QI categoriesForMethods!
 hr!**compiled accessors**!public! !
 hr:!**compiled accessors**!public! !
@@ -84,6 +90,7 @@ defineFields
 
 getFieldNames
 	^#(#pIID #pItf #hr)! !
+
 !MULTI_QI class categoriesForMethods!
 clear:!public!realizing/unrealizing! !
 defineFields!public!template definition! !

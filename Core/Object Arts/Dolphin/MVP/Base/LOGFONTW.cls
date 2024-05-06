@@ -5,8 +5,11 @@ AbstractLOGFONT subclass: #LOGFONTW
 	classVariableNames: '_OffsetOf_lfFaceName'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 LOGFONTW guid: (GUID fromString: '{37140088-772d-4f72-aac2-27311f7805d8}')!
+
 LOGFONTW addClassConstant: '_OffsetOf_lfFaceName' value: 16r1C!
+
 LOGFONTW comment: '<LOGFONTW> is an <ExternalStructure> class to wrap the struct ''Win32.LOGFONTW'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
@@ -34,7 +37,9 @@ struct tagLOGFONTW {
 	unsigned short lfFaceName[32];
 } LOGFONTW;
 '!
+
 !LOGFONTW categoriesForClass!Win32-Structs! !
+
 !LOGFONTW methodsFor!
 
 createFont
@@ -73,6 +78,7 @@ lfFaceName: anUtf16String
 		to: _OffsetOf_lfFaceName + size
 		startingAt: 1.
 	bytes wordAtOffset: _OffsetOf_lfFaceName + size put: 0! !
+
 !LOGFONTW categoriesForMethods!
 createFont!private!realizing/unrealizing! !
 faceName!accessing!public! !
@@ -91,6 +97,7 @@ defineFields
 
 	super defineFields.
 	self defineField: #lfFaceName type: (StringField type: Utf16String length: LF_FACESIZE)! !
+
 !LOGFONTW class categoriesForMethods!
 defineFields!public!template definition! !
 !

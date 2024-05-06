@@ -23,7 +23,6 @@ In the browsers Refactoring commands can be found on the Refactoring sub-menus o
 
 package basicPackageVersion: '6.1'.
 
-
 package classNames
 	add: #CodeMentorPlugin;
 	add: #CodeRefactoringTool;
@@ -266,104 +265,120 @@ Object subclass: #RefactoringTool
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ProfessionalSmalltalkSystem subclass: #RefactoringSmalltalkSystem
 	instanceVariableNames: 'isOAD'
 	classVariableNames: 'RefactoringSignal'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ClassBrowserPlugin subclass: #SmalllintPlugin
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SmalllintPlugin subclass: #CodeMentorPlugin
 	instanceVariableNames: 'failuresPresenter infoSitePresenter infoBrowserPresenter progressPresenter checkerProcess rulesTreeModel isRefreshPending refreshMode'
 	classVariableNames: 'DefaultRefreshMode LintIconMap LintRulesDoc'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SmalllintPlugin subclass: #CodeRewriterPlugin
 	instanceVariableNames: 'searchTextPresenter replaceTextPresenter isMethodPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Dialog subclass: #ConvertToSiblingDialog
 	instanceVariableNames: 'classNamePresenter subclassesPresenter statusModel'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Dialog subclass: #MethodNameDialog
 	instanceVariableNames: 'selectorPresenter parametersPresenter parameterNamesPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MethodNameDialog subclass: #RenameMethodDialog
 	instanceVariableNames: 'scopePresenter scopeDescriptionPresenter allowExistingSelector'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ValueDialog subclass: #RenameAccessorsDialog
 	instanceVariableNames: 'selectorsPresenter scopePresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SmalltalkToolShell subclass: #RewriteChangesBrowser
 	instanceVariableNames: 'changesPresenter differencesPresenter compositeChange'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MethodBrowserShell subclass: #LintRuleFailuresBrowserShell
 	instanceVariableNames: 'lintRule'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RBMethodName subclass: #RBScopedMethodName
 	instanceVariableNames: 'methodClass originalArguments originalSelector scope scopes'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RenameClassRefactoring subclass: #CopyClassRefactoring
 	instanceVariableNames: 'superclass'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RenameMethodRefactoring subclass: #RenameMethodReferencesRefactoring
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoringTool subclass: #CodeRefactoringTool
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
+
 RefactoringTool subclass: #MethodRefactoringTool
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoryChange subclass: #DolphinGlobalChange
 	instanceVariableNames: 'variable'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DolphinGlobalChange subclass: #DolphinAddGlobalChange
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DolphinGlobalChange subclass: #DolphinRemoveGlobalChange
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SmalllintContext subclass: #SmalllintCachingContext
 	instanceVariableNames: ''
 	classVariableNames: 'Literals Mtx Selectors'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -371,6 +386,7 @@ SmalllintContext subclass: #SmalllintCachingContext
 
 displayPrefix
 	^'Abstract'! !
+
 !AbstractClassVariableRefactoring class categoriesForMethods!
 displayPrefix!constants!displaying!public! !
 !
@@ -379,6 +395,7 @@ displayPrefix!constants!displaying!public! !
 
 displayPrefix
 	^'Abstract'! !
+
 !AbstractInstanceVariableRefactoring class categoriesForMethods!
 displayPrefix!displaying!public! !
 !
@@ -391,6 +408,7 @@ displayOn: aStream
 
 	#todo.	"Implement more informative display string"
 	aStream nextPutAll: 'Abstract Variables'! !
+
 !AbstractVariablesRefactoring categoriesForMethods!
 displayOn:!displaying!public! !
 !
@@ -404,6 +422,7 @@ displayOn: aStream
 	aStream 
 		nextPutAll: 'Add class ';
 		display: className! !
+
 !AddClassRefactoring categoriesForMethods!
 displayOn:!displaying!public! !
 !
@@ -412,6 +431,7 @@ displayOn:!displaying!public! !
 
 displayPrefix
 	^'Add'! !
+
 !AddClassVariableRefactoring class categoriesForMethods!
 displayPrefix!displaying!public! !
 !
@@ -420,6 +440,7 @@ displayPrefix!displaying!public! !
 
 displayPrefix
 	^'Add'! !
+
 !AddInstanceVariableRefactoring class categoriesForMethods!
 displayPrefix!displaying!public! !
 !
@@ -433,6 +454,7 @@ displayOn: aStream
 	aStream 
 		nextPutAll: 'Add method to ';
 		print: class! !
+
 !AddMethodRefactoring categoriesForMethods!
 displayOn:!displaying!public! !
 !
@@ -446,6 +468,7 @@ displayOn: aStream
 	aStream 
 		nextPutAll: 'Add parameter to ';
 		print: oldSelector! !
+
 !AddParameterRefactoring categoriesForMethods!
 displayOn:!displaying!public! !
 !
@@ -487,6 +510,7 @@ publishedAspects
 
 searchStrings
 	^result searchStrings! !
+
 !BasicLintRule categoriesForMethods!
 failedClasses!accessing!private! !
 failedMethods!accessing!private! !
@@ -504,6 +528,7 @@ displayOn: aStream
 		nextPutAll: 'Convert ';
 		display: parent;
 		nextPutAll: ' to sibling'! !
+
 !ChildrenToSiblingsRefactoring categoriesForMethods!
 displayOn:!displaying!public! !
 !
@@ -512,6 +537,7 @@ displayOn:!displaying!public! !
 
 directlyDefinesClassVariable: aString 
 	^self classVarNames includes: aString asString! !
+
 !Class categoriesForMethods!
 directlyDefinesClassVariable:!public!testing! !
 !
@@ -663,6 +689,7 @@ selectedOverridableMethods
 	| class |
 	class := self actualClass.
 	^self selectedMethods reject: [:each | each methodClass == class]! !
+
 !ClassBrowserAbstract categoriesForMethods!
 abstractInstanceVariables!commands!private!refactoring! !
 methodRefactoringTool!commands!private!refactoring! !
@@ -708,6 +735,7 @@ directlyDefinesVariable: aVariableName
 hierarchyDefinesVariable: aString 
 	(self definesVariable: aString) ifTrue: [^true].
 	^self allSubclasses anySatisfy: [:each | each directlyDefinesVariable: aString]! !
+
 !ClassDescription categoriesForMethods!
 definesClassVariable:!public!testing! !
 definesInstanceVariable:!public!testing! !
@@ -1125,6 +1153,7 @@ safeRemoveClass
 	and any subclasses are removable (i.e. invoke the 'Remove Class' refactoring)."
 
 	self systemModel safeRemoveClass: self selection! !
+
 !ClassSelector categoriesForMethods!
 abstractClassVariables!commands!public!refactoring! !
 abstractInstanceVariables!commands!public!refactoring! !
@@ -1157,6 +1186,7 @@ safeRemoveClass!commands!public!refactoring! !
 
 displayPrefix
 	^'Create accessors for'! !
+
 !CreateAccessorsForVariableRefactoring class categoriesForMethods!
 displayPrefix!displaying!public! !
 !
@@ -1190,6 +1220,7 @@ performMethodRenameRefactoring: aMonadicValuable
 	home isNil ifTrue: [^self].
 	sender := home sender.
 	(sender notNil and: [sender isRestartable]) ifTrue: [self restartMethodFrame: sender]! !
+
 !Debugger categoriesForMethods!
 canMoveMethods!commands!private!refactoring! !
 hasRefactorableMethodSelected!public!refactoring!testing! !
@@ -1221,6 +1252,7 @@ displayOn: aStream
 		ifFalse: 
 			[toClasses do: [:each | aStream display: each name]
 				separatedBy: [aStream nextPutAll: ', ']]! !
+
 !ExpandReferencedPoolsRefactoring categoriesForMethods!
 displayOn:!displaying!public! !
 !
@@ -1236,6 +1268,7 @@ displayOn: aStream
 		print: class;
 		nextPutAll: '>>';
 		display: selector! !
+
 !ExtractMethodRefactoring categoriesForMethods!
 displayOn:!displaying!public! !
 !
@@ -1255,6 +1288,7 @@ displayOn: aStream
 getOptionVariableToMoveToOf: aClass in: aSelector 
 	^Smalltalk developmentSystem selectTargetVariableOf: aClass
 		parseTree: (aClass parseTreeFor: aSelector)! !
+
 !ExtractMethodToComponentRefactoring categoriesForMethods!
 displayOn:!displaying!public! !
 getOptionVariableToMoveToOf:in:!public! !
@@ -1269,6 +1303,7 @@ displayOn: aStream
 	aStream 
 		nextPutAll: 'Extract to temporary ';
 		print: newVariableName! !
+
 !ExtractToTemporaryRefactoring categoriesForMethods!
 displayOn:!displaying!public! !
 !
@@ -1284,6 +1319,7 @@ displayOn: aStream
 		print: selector;
 		nextPutAll: ' in ';
 		print: class! !
+
 !InlineAllSendersRefactoring categoriesForMethods!
 displayOn:!displaying!public! !
 !
@@ -1299,6 +1335,7 @@ displayOn: aStream
 		print: class;
 		nextPutAll: '>>';
 		print: sourceSelector! !
+
 !InlineMethodRefactoring categoriesForMethods!
 displayOn:!displaying!public! !
 !
@@ -1316,6 +1353,7 @@ displayOn: aStream
 		print: class;
 		nextPutAll: '>>';
 		display: oldSelector! !
+
 !InlineParameterRefactoring categoriesForMethods!
 displayOn:!displaying!public! !
 !
@@ -1333,6 +1371,7 @@ displayOn: aStream
 		print: class;
 		nextPutAll: '>>';
 		display: selector! !
+
 !InlineTemporaryRefactoring categoriesForMethods!
 displayOn:!displaying!public! !
 !
@@ -1348,6 +1387,7 @@ failedMethods
 
 searchStrings
 	^#()! !
+
 !LintRule categoriesForMethods!
 failedClasses!accessing!private! !
 failedMethods!accessing!private! !
@@ -1360,6 +1400,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon! !
+
 !LintRule class categoriesForMethods!
 icon!constants!public! !
 !
@@ -1368,6 +1409,7 @@ icon!constants!public! !
 
 directlyDefinesClassVariable: aString 
 	^self instanceClass directlyDefinesClassVariable: aString! !
+
 !Metaclass categoriesForMethods!
 directlyDefinesClassVariable:!public!testing! !
 !
@@ -1401,6 +1443,7 @@ performMethodRenameRefactoring: aMonadicValuable
 performMethodsRefactoring: aMonadicValuable name: aString 
 	self promptToSaveChanges ifFalse: [^self].
 	^sourcePresenter executeRefactoring: aMonadicValuable with: self selectedMethods! !
+
 !MethodBrowser categoriesForMethods!
 canMoveMethods!helpers!private!refactoring! !
 hasRefactorableMethodSelected!private!refactoring!testing! !
@@ -1429,6 +1472,7 @@ getOptionMethodName: anRBMethodName
 							stream contents].
 			anRBMethodName selector: mname asSymbol].
 	^(MethodNameDialog showModalOn: anRBMethodName) isNil ifFalse: [anRBMethodName]! !
+
 !MethodRefactoring categoriesForMethods!
 getOptionMethodName:!options!public! !
 !
@@ -1498,6 +1542,7 @@ renameVariable: aStVariableNode operation: operationBlock validationBlock: valid
 		ifNotNil: 
 			[:newName | 
 			newName = name ifFalse: [self performMethodRefactoring: [:method | operationBlock value: newName]]]! !
+
 !MethodWorkspace categoriesForMethods!
 canRefactor!public!refactoring!testing! !
 executeRefactoring:!helpers!private!refactoring! !
@@ -1562,6 +1607,7 @@ getOptionVariableTypes: choicesCollection selected: suggestionsCollection
 							nil]
 						ifTrue: [self model classNamed: global name]];
 		showModal! !
+
 !MoveMethodRefactoring categoriesForMethods!
 displayOn:!displaying!public! !
 getOptionSelfArgumentName!public! !
@@ -1581,6 +1627,7 @@ displayOn: aStream
 		print: class;
 		nextPutAll: '>>';
 		display: selector! !
+
 !MoveVariableDefinitionRefactoring categoriesForMethods!
 displayOn:!displaying!public! !
 !
@@ -1749,6 +1796,7 @@ safeRemoveMethods
 	considered as part of the decision as to whether it will be safe to remove the method)."
 
 	self model safeRemoveMethods: self selectedMethods within: self selectionEnvironment! !
+
 !PackageBrowserShell categoriesForMethods!
 addParameter!commands!private!refactoring! !
 addParameterTo:!private!refactoring! !
@@ -1812,6 +1860,7 @@ removeDuplicateMethods
 							devsys removeMethodsDuplicatedInSuperclassOf: eachClass]]])
 		caption: 'Remove Methods Duplicating Superclass'' from Package(s)...';
 		showModal! !
+
 !PackageSelector categoriesForMethods!
 moveAllTempsToInnerScope!commands!private!refactoring! !
 queryRefactoringCommand:!commands!private!refactoring! !
@@ -1822,6 +1871,7 @@ removeDuplicateMethods!development!private! !
 
 displayPrefix
 	^'Protect'! !
+
 !ProtectInstanceVariableRefactoring class categoriesForMethods!
 displayPrefix!displaying!public! !
 !
@@ -1837,6 +1887,7 @@ displayOn: aStream
 		print: variableName;
 		nextPutAll: ' into ';
 		print: class! !
+
 !PullUpClassVariableRefactoring categoriesForMethods!
 displayOn:!displaying!public! !
 !
@@ -1845,6 +1896,7 @@ displayOn:!displaying!public! !
 
 displayPrefix
 	^'Pull up'! !
+
 !PullUpClassVariableRefactoring class categoriesForMethods!
 displayPrefix!displaying!public! !
 !
@@ -1860,6 +1912,7 @@ displayOn: aStream
 		print: variableName;
 		nextPutAll: ' into ';
 		print: class! !
+
 !PullUpInstanceVariableRefactoring categoriesForMethods!
 displayOn:!displaying!public! !
 !
@@ -1868,6 +1921,7 @@ displayOn:!displaying!public! !
 
 displayPrefix
 	^'Pull up'! !
+
 !PullUpInstanceVariableRefactoring class categoriesForMethods!
 displayPrefix!displaying!public! !
 !
@@ -1876,6 +1930,7 @@ displayPrefix!displaying!public! !
 
 displayPrefix
 	^'Push down'! !
+
 !PushDownClassVariableRefactoring class categoriesForMethods!
 displayPrefix!displaying!public! !
 !
@@ -1884,6 +1939,7 @@ displayPrefix!displaying!public! !
 
 displayPrefix
 	^'Push down'! !
+
 !PushDownInstanceVariableRefactoring class categoriesForMethods!
 displayPrefix!displaying!public! !
 !
@@ -1899,6 +1955,7 @@ displayOn: aStream
 		print: (selectors size == 1 ifTrue: [selectors first] ifFalse: [selectors]);
 		nextPutAll: ' from ';
 		print: class! !
+
 !PushDownMethodRefactoring categoriesForMethods!
 displayOn:!displaying!public! !
 !
@@ -1914,6 +1971,7 @@ displayOn: aStream
 		print: (selectors size == 1 ifTrue: [selectors first] ifFalse: [selectors]);
 		nextPutAll: ' from ';
 		print: class! !
+
 !PushUpMethodRefactoring categoriesForMethods!
 displayOn:!displaying!public! !
 !
@@ -1925,6 +1983,7 @@ instVarNames
 
 owningPackage
 	^self realClass ifNotNil: [:class | class owningPackage]! !
+
 !RBAbstractClass categoriesForMethods!
 instVarNames!instance variables!public! !
 owningPackage!accessing!public! !
@@ -1936,6 +1995,7 @@ owningPackage
 	^compiledMethod isNil 
 		ifTrue: [class owningPackage]
 		ifFalse: [compiledMethod owningPackage]! !
+
 !RBMethod categoriesForMethods!
 owningPackage!accessing!public! !
 !
@@ -1948,6 +2008,7 @@ confirm: aString
 	^MessageBox 
 		confirm: aString
 		caption: self displayString! !
+
 !Refactoring categoriesForMethods!
 confirm:!helpers!public! !
 !
@@ -1963,6 +2024,7 @@ renameIcon
 	"Answers an Icon that can be used to represent this class"
 
 	^Icon fromId: 'InPlaceRename.ico'! !
+
 !Refactoring class categoriesForMethods!
 icon!constants!public! !
 renameIcon!constants!public! !
@@ -1981,6 +2043,7 @@ displayOn: aStream
 		ifFalse: [
 			aStream nextPutAll: 'classes: '.
 			classNames do: [:each | aStream display: each] separatedBy: [aStream nextPutAll: ', ']]! !
+
 !RemoveClassRefactoring categoriesForMethods!
 displayOn:!displaying!public! !
 !
@@ -1989,6 +2052,7 @@ displayOn:!displaying!public! !
 
 displayPrefix
 	^'Remove'! !
+
 !RemoveClassVariableRefactoring class categoriesForMethods!
 displayPrefix!displaying!public! !
 !
@@ -1997,6 +2061,7 @@ displayPrefix!displaying!public! !
 
 displayPrefix
 	^'Remove'! !
+
 !RemoveInstanceVariableRefactoring class categoriesForMethods!
 displayPrefix!displaying!public! !
 !
@@ -2012,6 +2077,7 @@ displayOn: aStream
 		print: (selectors size == 1 ifTrue: [selectors first] ifFalse: [selectors]);
 		nextPutAll: ' from ';
 		print: class! !
+
 !RemoveMethodRefactoring categoriesForMethods!
 displayOn:!displaying!public! !
 !
@@ -2029,6 +2095,7 @@ displayOn: aStream
 		print: class;
 		nextPutAll: '>>';
 		display: oldSelector! !
+
 !RemoveParameterRefactoring categoriesForMethods!
 displayOn:!displaying!public! !
 !
@@ -2043,6 +2110,7 @@ displayOn: aStream
 	aStream
 		nextPutAll: ' to ';
 		print: newName! !
+
 !RenameAccessorsForVariableRefactoring categoriesForMethods!
 displayOn:!displaying!public! !
 !
@@ -2054,6 +2122,7 @@ displayPrefix
 
 icon
 	^self renameIcon! !
+
 !RenameAccessorsForVariableRefactoring class categoriesForMethods!
 displayPrefix!displaying!public! !
 icon!constants!public! !
@@ -2070,6 +2139,7 @@ displayOn: aStream
 		display: className;
 		nextPutAll: ' to ';
 		display: newName! !
+
 !RenameClassRefactoring categoriesForMethods!
 displayOn:!displaying!public! !
 !
@@ -2084,6 +2154,7 @@ displayOn: aStream
 	aStream
 		nextPutAll: ' to ';
 		print: newName! !
+
 !RenameClassVariableRefactoring categoriesForMethods!
 displayOn:!displaying!public! !
 !
@@ -2095,6 +2166,7 @@ displayPrefix
 
 icon
 	^self renameIcon! !
+
 !RenameClassVariableRefactoring class categoriesForMethods!
 displayPrefix!displaying!public! !
 icon!constants!public! !
@@ -2114,6 +2186,7 @@ displayOn: aStream
 		display: variableName;
 		nextPutAll: ' (and accessors) to ';
 		print: newName! !
+
 !RenameInstanceVariableAndAccessorsRefactoring categoriesForMethods!
 displayOn:!displaying!public! !
 !
@@ -2128,6 +2201,7 @@ displayOn: aStream
 	aStream
 		nextPutAll: ' to ';
 		print: newName! !
+
 !RenameInstanceVariableRefactoring categoriesForMethods!
 displayOn:!displaying!public! !
 !
@@ -2139,6 +2213,7 @@ displayPrefix
 
 icon
 	^self renameIcon! !
+
 !RenameInstanceVariableRefactoring class categoriesForMethods!
 displayPrefix!displaying!public! !
 icon!constants!public! !
@@ -2156,6 +2231,7 @@ displayOn: aStream
 		nextPutAll: ' to ';
 		print: newSelector
 ! !
+
 !RenameMethodRefactoring categoriesForMethods!
 displayOn:!displaying!public! !
 !
@@ -2164,6 +2240,7 @@ displayOn:!displaying!public! !
 
 icon
 	^self renameIcon! !
+
 !RenameMethodRefactoring class categoriesForMethods!
 icon!constants!public! !
 !
@@ -2183,6 +2260,7 @@ displayOn: aStream
 		print: class;
 		nextPutAll: '>>';
 		display: selector! !
+
 !RenameTemporaryRefactoring categoriesForMethods!
 displayOn:!displaying!public! !
 !
@@ -2191,6 +2269,7 @@ displayOn:!displaying!public! !
 
 icon
 	^self renameIcon! !
+
 !RenameTemporaryRefactoring class categoriesForMethods!
 icon!constants!public! !
 !
@@ -2201,6 +2280,7 @@ newWithCachingContext
 	^(self new)
 		context: SmalllintCachingContext new;
 		yourself! !
+
 !SmalllintChecker class categoriesForMethods!
 newWithCachingContext!instance creation!public! !
 !
@@ -2215,6 +2295,7 @@ queryRefactoringCommand: aCommandQuery
 	into the <CommandQuery>."
 
 	^false! !
+
 !SmalltalkToolShell categoriesForMethods!
 chooseMethodForRefactoring:!private!refactoring! !
 queryRefactoringCommand:!commands!private!refactoring! !
@@ -2231,6 +2312,7 @@ displayOn: aStream
 		print: temporaryVariableName;
 		nextPutAll: ' to inst var of ';
 		print: class! !
+
 !TemporaryToInstanceVariableRefactoring categoriesForMethods!
 displayOn:!displaying!public! !
 !
@@ -2324,6 +2406,7 @@ renameArgument: beforeString to: afterString
 					replace: beforeString with: afterString;
 					yourself);
 		yourself! !
+
 !TransformationRule class categoriesForMethods!
 bitLogicElimination!public!transformations! !
 icon!constants!public! !
@@ -2346,6 +2429,7 @@ displayOn: aStream
 
 displayPrefix
 	^self class displayPrefix! !
+
 !VariableRefactoring categoriesForMethods!
 displayOn:!displaying!public! !
 displayPrefix!displaying!public! !
@@ -2355,6 +2439,7 @@ displayPrefix!displaying!public! !
 
 displayPrefix
 	^self subclassResponsibility! !
+
 !VariableRefactoring class categoriesForMethods!
 displayPrefix!constants!displaying!public! !
 !

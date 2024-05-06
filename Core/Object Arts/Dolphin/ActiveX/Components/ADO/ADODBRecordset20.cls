@@ -5,7 +5,9 @@ ADODBRecordset15 subclass: #ADODBRecordset20
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
+
 ADODBRecordset20 guid: (IID fromString: '{0000154f-0000-0010-8000-00aa006d2ea4}')!
+
 ADODBRecordset20 comment: '`ADODBRecordset20` is a wrapper class for the COM interface ''ADODB.Recordset20'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -75,7 +77,9 @@ interface Recordset20 : Recordset15
 };
 ```
 '!
+
 !ADODBRecordset20 categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
+
 !ADODBRecordset20 methodsFor!
 
 _xSave
@@ -315,6 +319,7 @@ stayInSync: pbStayInSync
 	"Set the 'StayInSync' property of the receiver to the <varbool> value of the argument."
 
 	self put_StayInSync: pbStayInSync! !
+
 !ADODBRecordset20 categoriesForMethods!
 _xSave!**auto generated**!methods!public! !
 _xSave:PersistFormat:!**auto generated**!COM Interfaces-Recordset20!public! !
@@ -378,6 +383,7 @@ defineFunctions
 		defineFunction: #Resync:ResyncValues:
 			argumentTypes: 'sdword sdword'
 ! !
+
 !ADODBRecordset20 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

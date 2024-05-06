@@ -5,7 +5,9 @@ ENHMETARECORD subclass: #EMRBITBLT
 	classVariableNames: '_OffsetOf_cbBitsSrc _OffsetOf_cbBmiSrc _OffsetOf_crBkColorSrc _OffsetOf_cxDest _OffsetOf_cyDest _OffsetOf_dwRop _OffsetOf_iUsageSrc _OffsetOf_offBitsSrc _OffsetOf_offBmiSrc _OffsetOf_rclBounds _OffsetOf_xDest _OffsetOf_xformSrc _OffsetOf_xSrc _OffsetOf_yDest _OffsetOf_ySrc'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 EMRBITBLT guid: (GUID fromString: '{d5466d52-7472-4ffd-bd6b-49157e55918d}')!
+
 EMRBITBLT addClassConstant: '_OffsetOf_cbBitsSrc' value: 16r60!
 EMRBITBLT addClassConstant: '_OffsetOf_cbBmiSrc' value: 16r58!
 EMRBITBLT addClassConstant: '_OffsetOf_crBkColorSrc' value: 16r4C!
@@ -21,6 +23,7 @@ EMRBITBLT addClassConstant: '_OffsetOf_xformSrc' value: 16r34!
 EMRBITBLT addClassConstant: '_OffsetOf_xSrc' value: 16r2C!
 EMRBITBLT addClassConstant: '_OffsetOf_yDest' value: 16r1C!
 EMRBITBLT addClassConstant: '_OffsetOf_ySrc' value: 16r30!
+
 EMRBITBLT comment: '<EMRBITBLT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRBITBLT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -49,7 +52,9 @@ struct tagEMRBITBLT {
 	[helpstring("Size of the source bitmap bits")] DWORD cbBitsSrc;
 } EMRBITBLT;
 '!
+
 !EMRBITBLT categoriesForClass!Win32-Structs! !
+
 !EMRBITBLT methodsFor!
 
 cbBitsSrc
@@ -209,6 +214,7 @@ ySrc: anInteger
 	"Set the receiver's 'ySrc' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_ySrc put: anInteger! !
+
 !EMRBITBLT categoriesForMethods!
 cbBitsSrc!**compiled accessors**!public! !
 cbBitsSrc:!**compiled accessors**!public! !
@@ -296,6 +302,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_BITBLT! !
+
 !EMRBITBLT class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

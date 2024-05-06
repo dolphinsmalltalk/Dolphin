@@ -5,9 +5,13 @@ GdiplusInitializerTests subclass: #GdiplusBitmapFromBitmapInitializerTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusBitmapFromBitmapInitializerTest guid: (GUID fromString: '{acefb85f-8196-4e9b-b4fb-0c12068a6cad}')!
+
 GdiplusBitmapFromBitmapInitializerTest comment: ''!
+
 !GdiplusBitmapFromBitmapInitializerTest categoriesForClass!Unclassified! !
+
 !GdiplusBitmapFromBitmapInitializerTest methodsFor!
 
 gdipCreateBitmapFromHBITMAP: hbm hpal: hpal bitmap: bitmap 
@@ -45,6 +49,7 @@ testCreateHandleFreesDC
 	"SW: note comment in GdiplusBitmap class>>fromBitmap: ... not sure if this should succeed"
 	model createHandle.
 	self assertIsNil: bitmap hdc! !
+
 !GdiplusBitmapFromBitmapInitializerTest categoriesForMethods!
 gdipCreateBitmapFromHBITMAP:hpal:bitmap:!accessing!public! !
 setUp!public!setup! !

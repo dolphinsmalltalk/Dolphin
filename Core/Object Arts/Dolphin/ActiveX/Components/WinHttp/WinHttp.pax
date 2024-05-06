@@ -6,7 +6,6 @@ package paxVersion: 1;
 
 This package implements a Smalltalk mapping for the Microsoft WinHttp component, which provides a simple and high performance HTTP client.'.
 
-
 package classNames
 	add: #IWinHttpRequest;
 	add: #IWinHttpRequestEvents;
@@ -38,16 +37,12 @@ IUnknown subclass: #IWinHttpRequestEvents
 	classVariableNames: ''
 	poolDictionaries: 'WinHttpConstants'
 	classInstanceVariableNames: ''!
+
 IDispatch subclass: #IWinHttpRequest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'WinHttpConstants'
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

@@ -5,15 +5,20 @@ ExternalArray subclass: #GenericExternalArray
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GenericExternalArray guid: (GUID fromString: '{a784c4d3-dd39-4844-b096-400529d9295c}')!
+
 GenericExternalArray isAbstract: true!
+
 GenericExternalArray comment: 'GenericExternalArray is an abstract class of <ExternalArray>s that can be used to represent single-dimensioned arrays of more than one type.
 
 Instance Variables:
 	elementClass	<Class> of element, typically an <ExternalStructure>.
 	owner		<Object>. Object responsible for freeing the underlying array. Typically nil, in which case the receiver is responsible.
 '!
+
 !GenericExternalArray categoriesForClass!External-Data-Structured! !
+
 !GenericExternalArray methodsFor!
 
 asArray
@@ -81,6 +86,7 @@ uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: operation
 			[:i | 
 			operation value: i value: (self newElementAt: address).
 			address := address + spacing]! !
+
 !GenericExternalArray categoriesForMethods!
 asArray!converting!public! !
 base!accessing!private! !
@@ -114,6 +120,7 @@ withAll: aCollection elementClass: structClass
 			answer at: i put: elem.
 			i + 1].
 	^answer! !
+
 !GenericExternalArray class categoriesForMethods!
 length:elementClass:!instance creation!public! !
 withAll:elementClass:!instance creation!public! !

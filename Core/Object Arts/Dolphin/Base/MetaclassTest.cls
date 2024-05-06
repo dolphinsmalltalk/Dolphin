@@ -5,9 +5,13 @@ ClassDescriptionTest subclass: #MetaclassTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MetaclassTest guid: (GUID fromString: '{0643eed4-cf1f-4bfa-84f5-4af3a05fe655}')!
+
 MetaclassTest comment: ''!
+
 !MetaclassTest categoriesForClass!Unclassified! !
+
 !MetaclassTest methodsFor!
 
 allClassHierarchyInstancesDo: aMonadicValuable
@@ -75,6 +79,7 @@ testName
 			[:root |
 			root class
 				allSubclassesDo: [:each | self assert: each name equals: each instanceClass name , ' class']]! !
+
 !MetaclassTest categoriesForMethods!
 allClassHierarchyInstancesDo:!helpers!private! !
 testInstances!public!unit tests! !

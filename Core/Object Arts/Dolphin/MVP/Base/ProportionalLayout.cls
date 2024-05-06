@@ -5,7 +5,9 @@ LinearLayout subclass: #ProportionalLayout
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ProportionalLayout guid: (GUID fromString: '{87b4c64b-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 ProportionalLayout comment: 'ProportionalLayout implements a general purpose <layoutManager> to layout <view> objects within a <compositeView>. The managed views are arranged either vertically or horizontally depending on the setting of the <boolean> #isVertical aspect. The layout manager attempts to keep the relative sizes of the views in proportion according to the arrangement aspects of each view, which must be <number>s. Any view with an arrangement of 0 will be left at its original size. Managed views that are not currently visible are ignored, in which case they are allocated no proportion of the available space.
 
 For example. You have four views in a container managed by a ProportionalLayout; each has an arrangement of 2, 0, 5, 3 respectively. The second view will always keep its current size. The remainder of the space available in the container will be split between the remaining views in the ratios 2:5:3. 
@@ -19,7 +21,9 @@ Instance Variables:
 	isVertical		<boolean>
 
 '!
+
 !ProportionalLayout categoriesForClass!MVP-Layout Managers-General! !
+
 !ProportionalLayout methodsFor!
 
 arrangementOf: aView 
@@ -203,6 +207,7 @@ totalProportionsOf: viewCollection
 	^viewCollection inject: 0 into: [:total :aView |
 			total + (self arrangementOf: aView)].
 ! !
+
 !ProportionalLayout categoriesForMethods!
 arrangementOf:!accessing!public! !
 arrangementOf:put:!accessing!public! !

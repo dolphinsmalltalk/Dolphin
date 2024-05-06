@@ -5,9 +5,13 @@ ExternalLibrary subclass: #DwmApiLibrary
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DwmApiLibrary guid: (GUID fromString: '{fcb369e6-2d71-4ff5-ad95-d88dba33698c}')!
+
 DwmApiLibrary comment: ''!
+
 !DwmApiLibrary categoriesForClass!External-Libraries! !
+
 !DwmApiLibrary methodsFor!
 
 dwmIsCompositionEnabled: pfEnabled
@@ -15,6 +19,7 @@ dwmIsCompositionEnabled: pfEnabled
 
 	<stdcall: hresult DwmIsCompositionEnabled BOOL*>
 	^self invalidCall: _failureCode! !
+
 !DwmApiLibrary categoriesForMethods!
 dwmIsCompositionEnabled:!public! !
 !
@@ -30,6 +35,7 @@ isDesktopCompositionEnabled
 			answer := BOOL new.
 			self default dwmIsCompositionEnabled: answer.
 			answer asObject]! !
+
 !DwmApiLibrary class categoriesForMethods!
 fileName!constants!public! !
 isDesktopCompositionEnabled!public!queries! !

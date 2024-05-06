@@ -5,10 +5,13 @@ ExternalStructure subclass: #MIBICMPSTATS_EX
 	classVariableNames: '_OffsetOf_dwErrors _OffsetOf_dwMsgs _OffsetOf_rgdwTypeCount'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MIBICMPSTATS_EX guid: (GUID fromString: '{82731d6f-0e73-4221-9881-7172ae7d82cd}')!
+
 MIBICMPSTATS_EX addClassConstant: '_OffsetOf_dwErrors' value: 16r4!
 MIBICMPSTATS_EX addClassConstant: '_OffsetOf_dwMsgs' value: 16r0!
 MIBICMPSTATS_EX addClassConstant: '_OffsetOf_rgdwTypeCount' value: 16r8!
+
 MIBICMPSTATS_EX comment: '<MIBICMPSTATS_EX> is an <ExternalStructure> class to wrap the struct ''Win32.MIBICMPSTATS_EX'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -24,7 +27,9 @@ struct tagMIBICMPSTATS_EX {
 	unsigned long rgdwTypeCount[256];
 } MIBICMPSTATS_EX;
 '!
+
 !MIBICMPSTATS_EX categoriesForClass!Win32-Structs! !
+
 !MIBICMPSTATS_EX methodsFor!
 
 dwErrors
@@ -41,6 +46,7 @@ rgdwTypeCount
 	"Answer the <DWORDArray> value of the receiver's 'rgdwTypeCount' field."
 
 	^DWORDArray fromAddress: bytes yourAddress + _OffsetOf_rgdwTypeCount length: 256! !
+
 !MIBICMPSTATS_EX categoriesForMethods!
 dwErrors!**compiled accessors**!public! !
 dwMsgs!**compiled accessors**!public! !
@@ -77,6 +83,7 @@ defineFields
 
 getFieldNames
 	^#(#dwMsgs #dwErrors #rgdwTypeCount)! !
+
 !MIBICMPSTATS_EX class categoriesForMethods!
 defineFields!initializing!public! !
 getFieldNames!**compiled accessors**!constants!private! !

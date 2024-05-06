@@ -5,7 +5,9 @@ Object subclass: #MockScintillaView
 	classVariableNames: ''
 	poolDictionaries: 'ScintillaConstants'
 	classInstanceVariableNames: ''!
+
 MockScintillaView guid: (GUID fromString: '{50616a84-12e3-4960-b005-82a37278383b}')!
+
 MockScintillaView comment: 'To set up:
 
 	mock := MockScintillaView new.
@@ -22,7 +24,9 @@ Then to style:
 		in: mock.
 	"Now can access the ''tokens''"
 	mock tokens'!
+
 !MockScintillaView categoriesForClass!Kernel-Objects! !
+
 !MockScintillaView methodsFor!
 
 applyStyle: aSymbol toNext: anInteger 
@@ -126,6 +130,7 @@ tokens
 								with: style
 								with: (self plainTextRange: each first))]].
 	^answer! !
+
 !MockScintillaView categoriesForMethods!
 applyStyle:toNext:!public!styling! !
 characterAt:!public!unit tests! !

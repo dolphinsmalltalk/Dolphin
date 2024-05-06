@@ -5,7 +5,9 @@ CCITEM subclass: #LVITEMW
 	classVariableNames: '_OffsetOf_cchTextMax _OffsetOf_cColumns _OffsetOf_dwState _OffsetOf_iGroup _OffsetOf_iGroupId _OffsetOf_iImage _OffsetOf_iIndent _OffsetOf_iItem _OffsetOf_iSubItem _OffsetOf_lParam _OffsetOf_piColFmt _OffsetOf_pszText _OffsetOf_puColumns _OffsetOf_stateMask CallbackPrototype'
 	poolDictionaries: 'ListViewConstants'
 	classInstanceVariableNames: ''!
+
 LVITEMW guid: (GUID fromString: '{87b4c620-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 LVITEMW addClassConstant: '_OffsetOf_cchTextMax' value: 16r18!
 LVITEMW addClassConstant: '_OffsetOf_cColumns' value: 16r2C!
 LVITEMW addClassConstant: '_OffsetOf_dwState' value: 16rC!
@@ -20,6 +22,7 @@ LVITEMW addClassConstant: '_OffsetOf_piColFmt' value: 16r34!
 LVITEMW addClassConstant: '_OffsetOf_pszText' value: 16r14!
 LVITEMW addClassConstant: '_OffsetOf_puColumns' value: 16r30!
 LVITEMW addClassConstant: '_OffsetOf_stateMask' value: 16r10!
+
 LVITEMW comment: 'LVITEMW is an <ExternalStructure> class which represents the Windows common control structure of the same name.
 
 LVITEMW is used to communicate information about the items (rows) in a List View control such as the text, icon, state, etc.
@@ -43,7 +46,9 @@ struct tagLVITEMW {
 	[readonly] int iGroup;
 } LVITEMW;
 '!
+
 !LVITEMW categoriesForClass!Win32-Structs! !
+
 !LVITEMW methodsFor!
 
 allCallbacks
@@ -263,6 +268,7 @@ textPointerOffset
 	"Private - Answer the offset of the text pointer in the receiver. "
 
 	^_OffsetOf_pszText! !
+
 !LVITEMW categoriesForMethods!
 allCallbacks!accessing!public! !
 cchTextMax!**compiled accessors**!public! !
@@ -389,6 +395,7 @@ getFieldNames
 
 initialize
 	CallbackPrototype := self new allCallbacks; bytes! !
+
 !LVITEMW class categoriesForMethods!
 allCallbacks!public! !
 defineFields!public!template definition! !

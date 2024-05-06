@@ -5,10 +5,15 @@ Object subclass: #Exception
 	classVariableNames: ''
 	poolDictionaries: 'MessageBoxConstants Win32Constants Win32Errors'
 	classInstanceVariableNames: ''!
+
 Exception guid: (GUID fromString: '{87b4c483-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Exception isAbstract: true!
+
 Exception comment: ''!
+
 !Exception categoriesForClass!Kernel-Exception Handling! !
+
 !Exception methodsFor!
 
 _descriptionArguments
@@ -525,6 +530,7 @@ toTrace: anInteger
 		cr.
 	self raisingFrame printStackOn: traceStream depth: anInteger.
 	traceStream flush! !
+
 !Exception categoriesForMethods!
 _descriptionArguments!displaying!public! !
 _descriptionFormat!displaying!public! !
@@ -654,6 +660,7 @@ signalWith: signallerTag
 	resumable, and the handler which catches it directs that it should be resumed."
 
 	^self signal: nil with: signallerTag! !
+
 !Exception class categoriesForMethods!
 ,!filtering!public! !
 beep!parping!public! !

@@ -5,9 +5,13 @@ GdiplusImage subclass: #GdiplusBitmap
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusBitmap guid: (GUID fromString: '{206fb497-cb98-42d3-a48f-1f83e25cce07}')!
+
 GdiplusBitmap comment: 'GdiplusBitmap expands on GdiplusImage by providing additional methods for creating and manipulating raster images.'!
+
 !GdiplusBitmap categoriesForClass!Unclassified! !
+
 !GdiplusBitmap methodsFor!
 
 asBitmap
@@ -105,6 +109,7 @@ unlockBits: lockedBitmapData
 	(status := GdiplusLibrary default gdipBitmapUnlockBits: self handle
 				lockedBitmapData: lockedBitmapData) = Ok
 		ifFalse: [^GdiplusError signal: 'Error in GdipBitmapUnlockBits' with: status]! !
+
 !GdiplusBitmap categoriesForMethods!
 asBitmap!public! !
 asIcon!public! !
@@ -359,6 +364,7 @@ width: width height: height format: aPixelFormat
 				width: width
 				height: height
 				format: aPixelFormat)! !
+
 !GdiplusBitmap class categoriesForMethods!
 exampleGdipBFromBitmap!examples!public!sunit! !
 exampleGdipBFromByteArray!examples!public!sunit! !

@@ -69,16 +69,12 @@ TextDocument subclass: #Notepad
 	classVariableNames: 'ResourceLib'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RuntimeSessionManager subclass: #NotepadSessionManager
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

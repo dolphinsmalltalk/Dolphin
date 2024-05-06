@@ -5,7 +5,9 @@ ENHMETARECORD subclass: #EMRMASKBLT
 	classVariableNames: '_OffsetOf_cbBitsMask _OffsetOf_cbBitsSrc _OffsetOf_cbBmiMask _OffsetOf_cbBmiSrc _OffsetOf_crBkColorSrc _OffsetOf_cxDest _OffsetOf_cyDest _OffsetOf_dwRop _OffsetOf_iUsageMask _OffsetOf_iUsageSrc _OffsetOf_offBitsMask _OffsetOf_offBitsSrc _OffsetOf_offBmiMask _OffsetOf_offBmiSrc _OffsetOf_rclBounds _OffsetOf_xDest _OffsetOf_xformSrc _OffsetOf_xMask _OffsetOf_xSrc _OffsetOf_yDest _OffsetOf_yMask _OffsetOf_ySrc'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 EMRMASKBLT guid: (GUID fromString: '{99001d44-ed7a-4cee-84b9-dbcf1f67898b}')!
+
 EMRMASKBLT addClassConstant: '_OffsetOf_cbBitsMask' value: 16r7C!
 EMRMASKBLT addClassConstant: '_OffsetOf_cbBitsSrc' value: 16r60!
 EMRMASKBLT addClassConstant: '_OffsetOf_cbBmiMask' value: 16r74!
@@ -28,6 +30,7 @@ EMRMASKBLT addClassConstant: '_OffsetOf_xSrc' value: 16r2C!
 EMRMASKBLT addClassConstant: '_OffsetOf_yDest' value: 16r1C!
 EMRMASKBLT addClassConstant: '_OffsetOf_yMask' value: 16r68!
 EMRMASKBLT addClassConstant: '_OffsetOf_ySrc' value: 16r30!
+
 EMRMASKBLT comment: '<EMRMASKBLT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRMASKBLT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -63,7 +66,9 @@ struct tagEMRMASKBLT {
 	[helpstring("Size of the mask bitmap bits if any")] DWORD cbBitsMask;
 } EMRMASKBLT;
 '!
+
 !EMRMASKBLT categoriesForClass!Win32-Structs! !
+
 !EMRMASKBLT methodsFor!
 
 cbBitsMask
@@ -293,6 +298,7 @@ ySrc: anInteger
 	"Set the receiver's 'ySrc' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_ySrc put: anInteger! !
+
 !EMRMASKBLT categoriesForMethods!
 cbBitsMask!**compiled accessors**!public! !
 cbBitsMask:!**compiled accessors**!public! !
@@ -452,6 +458,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_MASKBLT! !
+
 !EMRMASKBLT class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

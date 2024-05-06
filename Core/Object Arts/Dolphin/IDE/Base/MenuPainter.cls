@@ -5,10 +5,15 @@ Object subclass: #MenuPainter
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 MenuPainter guid: (GUID fromString: '{50ca5bf4-97c5-4fba-a59f-fb43f0a962f9}')!
+
 MenuPainter isAbstract: true!
+
 MenuPainter comment: ''!
+
 !MenuPainter categoriesForClass!Kernel-Objects! !
+
 !MenuPainter methodsFor!
 
 borderInset
@@ -414,6 +419,7 @@ widthOfItemText: aMenuItem using: aCanvas
 				flags: self drawTextFlags]
 					ensure: [aCanvas font: oldFont].
 	^size x! !
+
 !MenuPainter categoriesForMethods!
 borderInset!constants!private! !
 calculateGeometry:!public!updating! !
@@ -468,6 +474,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^Menu icon! !
+
 !MenuPainter class categoriesForMethods!
 forMenu:!public! !
 icon!constants!public! !

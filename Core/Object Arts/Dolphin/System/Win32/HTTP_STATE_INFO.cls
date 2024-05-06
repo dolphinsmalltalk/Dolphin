@@ -5,8 +5,11 @@ HTTP_PROPERTY_FLAGS subclass: #HTTP_STATE_INFO
 	classVariableNames: '_OffsetOf_State'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 HTTP_STATE_INFO guid: (GUID fromString: '{5dc84435-3eb8-42fe-94bf-25f253e612fd}')!
+
 HTTP_STATE_INFO addClassConstant: '_OffsetOf_State' value: 16r4!
+
 HTTP_STATE_INFO comment: '<HTTP_STATE_INFO> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_STATE_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -22,7 +25,9 @@ struct tagHTTP_STATE_INFO {
 	[helpstring("A member of the HTTP_ENABLED_STATE enumeration specifying the whether the configuration object is enabled or disabled.	This can be used to disable a URL Group or Server Session.")] HTTP_ENABLED_STATE State;
 } HTTP_STATE_INFO;
 '!
+
 !HTTP_STATE_INFO categoriesForClass!Win32-Structs! !
+
 !HTTP_STATE_INFO methodsFor!
 
 isActive
@@ -60,6 +65,7 @@ value: anInteger
 			[self
 				Present: true;
 				State: anInteger]! !
+
 !HTTP_STATE_INFO categoriesForMethods!
 isActive!accessing!public! !
 isActive:!accessing!public! !
@@ -104,6 +110,7 @@ inactive
 
 propertyId
 	^HttpServerStateProperty! !
+
 !HTTP_STATE_INFO class categoriesForMethods!
 active!instance creation!public! !
 defineFields!**auto generated**!public!template definition! !

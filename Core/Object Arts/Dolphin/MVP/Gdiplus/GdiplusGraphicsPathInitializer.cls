@@ -5,9 +5,13 @@ GdiplusInitializer subclass: #GdiplusGraphicsPathInitializer
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusGraphicsPathInitializer guid: (GUID fromString: '{1a1a5ea1-6151-11d7-b609-00e0987e8081}')!
+
 GdiplusGraphicsPathInitializer comment: ''!
+
 !GdiplusGraphicsPathInitializer categoriesForClass!Unclassified! !
+
 !GdiplusGraphicsPathInitializer methodsFor!
 
 createHandle
@@ -25,6 +29,7 @@ gdiplusConstructorErrorDescription
 
 isPersistent
 	^false! !
+
 !GdiplusGraphicsPathInitializer categoriesForMethods!
 createHandle!private!realizing/unrealizing! !
 fillMode:!initializing!private! !
@@ -36,6 +41,7 @@ isPersistent!public!testing! !
 
 fillMode: aNumber
 	^self new fillMode: aNumber! !
+
 !GdiplusGraphicsPathInitializer class categoriesForMethods!
 fillMode:!instance creation!public! !
 !

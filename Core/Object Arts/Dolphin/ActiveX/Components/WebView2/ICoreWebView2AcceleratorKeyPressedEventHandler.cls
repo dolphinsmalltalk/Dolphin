@@ -5,7 +5,9 @@ ICoreWebView2EventHandler subclass: #ICoreWebView2AcceleratorKeyPressedEventHand
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2AcceleratorKeyPressedEventHandler guid: (IID fromString: '{b29c7e28-fa79-41a8-8e44-65811c76dcb2}')!
+
 ICoreWebView2AcceleratorKeyPressedEventHandler comment: '`ICoreWebView2AcceleratorKeyPressedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2AcceleratorKeyPressedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -27,7 +29,9 @@ interface ICoreWebView2AcceleratorKeyPressedEventHandler : IUnknown
 };
 ```
 '!
+
 !ICoreWebView2AcceleratorKeyPressedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2AcceleratorKeyPressedEventHandler methodsFor!
 
 basicRegister: tokenBuffer
@@ -35,6 +39,7 @@ basicRegister: tokenBuffer
 
 basicUnregister
 	source Remove_AcceleratorKeyPressed: token! !
+
 !ICoreWebView2AcceleratorKeyPressedEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
@@ -58,6 +63,7 @@ eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
 	^#acceleratorKeyPressed:! !
+
 !ICoreWebView2AcceleratorKeyPressedEventHandler class categoriesForMethods!
 argsClass!constants!public! !
 defineFunctions!**auto generated**!initializing!public! !

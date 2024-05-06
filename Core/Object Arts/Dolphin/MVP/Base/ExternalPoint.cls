@@ -5,10 +5,15 @@ ExternalStructure subclass: #ExternalPoint
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalPoint guid: (GUID fromString: '{5a0c3f56-8db8-4509-8563-3affe77805b2}')!
+
 ExternalPoint isAbstract: true!
+
 ExternalPoint comment: '`PointStructure` is the abstract class of structures representing positions in a 2-dimensional space. There are concrete subclasses for different types of co-ordinate value.'!
+
 !ExternalPoint categoriesForClass!External-Data-Structured! !
+
 !ExternalPoint methodsFor!
 
 asDword
@@ -57,6 +62,7 @@ y
 
 y: anObject
 	self subclassResponsibility! !
+
 !ExternalPoint categoriesForMethods!
 asDword!converting!public! !
 asObject!converting!public! !
@@ -93,6 +99,7 @@ x: x y: y
 		x: x;
 		y: y;
 		yourself! !
+
 !ExternalPoint class categoriesForMethods!
 fromPoint:!instance creation!public! !
 getFieldNames!constants!private! !

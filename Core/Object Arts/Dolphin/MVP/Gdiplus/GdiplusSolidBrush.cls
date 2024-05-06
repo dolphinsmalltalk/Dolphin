@@ -5,9 +5,13 @@ GdiplusBrush subclass: #GdiplusSolidBrush
 	classVariableNames: ''
 	poolDictionaries: 'GdiplusConstants'
 	classInstanceVariableNames: ''!
+
 GdiplusSolidBrush guid: (GUID fromString: '{7f8ddb06-89ba-471a-a00c-73f32cbb0af7}')!
+
 GdiplusSolidBrush comment: 'A solid brush paints a single, constant color that can be opaque or transparent.'!
+
 !GdiplusSolidBrush categoriesForClass!Unclassified! !
+
 !GdiplusSolidBrush methodsFor!
 
 color
@@ -21,6 +25,7 @@ color: aColor
 	| status |
 	(status := GdiplusLibrary default gdipSetSolidFillColor: self asParameter color: aColor argbCode)
 		== Ok ifFalse: [GdiplusError signal: 'GdipSetSolidFillColor failed' with: status]! !
+
 !GdiplusSolidBrush categoriesForMethods!
 color!accessing!public! !
 color:!accessing!public! !
@@ -87,6 +92,7 @@ new
 
 red
 	^self color: Color red! !
+
 !GdiplusSolidBrush class categoriesForMethods!
 black!instance creation!public! !
 blue!instance creation!public! !

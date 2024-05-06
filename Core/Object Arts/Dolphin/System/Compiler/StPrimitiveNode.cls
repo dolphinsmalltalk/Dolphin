@@ -5,9 +5,13 @@ StTagNode subclass: #StPrimitiveNode
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StPrimitiveNode guid: (GUID fromString: '{d70c8417-c320-465f-ac62-6b81d9e844c9}')!
+
 StPrimitiveNode comment: ''!
+
 !StPrimitiveNode categoriesForClass!System-Compiler! !
+
 !StPrimitiveNode methodsFor!
 
 = anObject 
@@ -29,6 +33,7 @@ primitiveIndex
 
 primitiveIndex: anInteger 
 	primitiveIndex := anInteger! !
+
 !StPrimitiveNode categoriesForMethods!
 =!comparing!public! !
 acceptVisitor:!public!visitor! !
@@ -44,6 +49,7 @@ primitiveIndex: anInteger
 	^self new
 		primitiveIndex: anInteger;
 		yourself! !
+
 !StPrimitiveNode class categoriesForMethods!
 primitiveIndex:!instance creation!public! !
 !

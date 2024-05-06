@@ -5,9 +5,13 @@ GdiplusInitializer subclass: #GdiplusPathGradientFromPathInitializer
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusPathGradientFromPathInitializer guid: (GUID fromString: '{8f2007e2-7d6c-11d7-b609-00e0987e8081}')!
+
 GdiplusPathGradientFromPathInitializer comment: ''!
+
 !GdiplusPathGradientFromPathInitializer categoriesForClass!Unclassified! !
+
 !GdiplusPathGradientFromPathInitializer methodsFor!
 
 createHandle
@@ -25,6 +29,7 @@ isPersistent
 
 path: aGdiplusPath
 	path := aGdiplusPath! !
+
 !GdiplusPathGradientFromPathInitializer categoriesForMethods!
 createHandle!private!realizing/unrealizing! !
 gdiplusConstructorErrorDescription!constants!private! !
@@ -36,6 +41,7 @@ path:!initializing!private! !
 
 path: aGdiplusPath
 	^self new path: aGdiplusPath! !
+
 !GdiplusPathGradientFromPathInitializer class categoriesForMethods!
 path:!instance creation!public! !
 !

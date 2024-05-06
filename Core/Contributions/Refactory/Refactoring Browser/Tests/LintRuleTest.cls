@@ -5,10 +5,15 @@ Object subclass: #LintRuleTest
 	classVariableNames: 'Foo1'
 	poolDictionaries: 'CRTConstants'
 	classInstanceVariableNames: ''!
+
 LintRuleTest guid: (GUID fromString: '{ae7ff107-496e-46a9-8127-3cc651c7ccf7}')!
+
 LintRuleTest isAbstract: true!
+
 LintRuleTest comment: ''!
+
 !LintRuleTest categoriesForClass!Refactory-Test data! !
+
 !LintRuleTest methodsFor!
 
 checkClass: aSmalllintContext!
@@ -75,6 +80,7 @@ runOnEnvironment: anEnvironment
 
 viewResults
 	self subclassResponsibility! !
+
 !LintRuleTest categoriesForMethods!
 checkClass:!accessing!public! !
 checkMethod:!accessing!public! !
@@ -100,6 +106,7 @@ viewResults!private! !
 
 new
 	^super new initialize! !
+
 !LintRuleTest class categoriesForMethods!
 new!instance creation!public! !
 !

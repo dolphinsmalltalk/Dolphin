@@ -5,9 +5,13 @@ GdiplusPenInitializer subclass: #GdiplusPenFromColorInitializer
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusPenFromColorInitializer guid: (GUID fromString: '{2f244647-43b8-40cb-92f6-f06f2b1cfdae}')!
+
 GdiplusPenFromColorInitializer comment: ''!
+
 !GdiplusPenFromColorInitializer categoriesForClass!Unclassified! !
+
 !GdiplusPenFromColorInitializer methodsFor!
 
 color: anARGB width: aFloat
@@ -33,6 +37,7 @@ createHandle
 				pen: gpHandle.
 	status == Ok ifFalse: [self gdiplusErrorWith: status].
 	^gpHandle! !
+
 !GdiplusPenFromColorInitializer categoriesForMethods!
 color:width:!initializing!private! !
 createHandle!private!realizing/unrealizing! !

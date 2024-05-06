@@ -5,9 +5,13 @@ Exception subclass: #Error
 	classVariableNames: ''
 	poolDictionaries: 'MessageBoxConstants'
 	classInstanceVariableNames: ''!
+
 Error guid: (GUID fromString: '{0324fe53-ad83-11d2-86eb-0020afab8efe}')!
+
 Error comment: ''!
+
 !Error categoriesForClass!Kernel-Exception Handling! !
+
 !Error methodsFor!
 
 asWarning
@@ -48,6 +52,7 @@ warningClass
 	"Private - Answer the class of Warning to which the receiver is converted by #asWarning."
 	
 	^Warning! !
+
 !Error categoriesForMethods!
 asWarning!converting!private! !
 defaultAction!handling!public! !
@@ -106,6 +111,7 @@ subclassResponsibility: selector
 	"Private - Raise an error that some message was sent to an abstract class."
 
 	^SubclassResponsibilityError signal: selector printString, ' is the responsibility of the subclass'! !
+
 !Error class categoriesForMethods!
 mbIconId!parping!public! !
 nonIntegerIndex:!instance creation!private! !

@@ -5,9 +5,13 @@ Object subclass: #RefactoringManager
 	classVariableNames: 'Instance'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoringManager guid: (GUID fromString: '{91adefd7-2941-4e19-bea0-6541c7033e57}')!
+
 RefactoringManager comment: ''!
+
 !RefactoringManager categoriesForClass!Refactory-Refactorings! !
+
 !RefactoringManager methodsFor!
 
 addRefactoring: aRefactoring 
@@ -28,6 +32,7 @@ printOn: aStream
 				nextPutAll: '		';
 				nextPutAll: name;
 				cr]! !
+
 !RefactoringManager categoriesForMethods!
 addRefactoring:!public!public access! !
 initialize!initialize/release!public! !
@@ -59,6 +64,7 @@ preUnloadActionFor: aParcel
 
 uninitialize
 	self nuke! !
+
 !RefactoringManager class categoriesForMethods!
 instance!instance creation!public! !
 new!instance creation!public! !

@@ -5,13 +5,17 @@ Boolean subclass: #False
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 False guid: (GUID fromString: '{87b4c4fd-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 False comment: 'The False class implements the behaviour of the false (logical false) object.
 
 False is a singleton whose sole instance is the object represented by the reserved word, false. (i.e. any reference to false will always answer true when compared with any other using the #== message).
 
 False implement the ANSI protocols <Object> and <boolean>.'!
+
 !False categoriesForClass!Kernel-Objects! !
+
 !False methodsFor!
 
 and: operand 
@@ -116,6 +120,7 @@ xor: operand
 	Since the receiver is false, the answer depends entirely on the argument."
 
 	^operand! !
+
 !False categoriesForMethods!
 and:!control flow!public! !
 asDword!converting!public! !

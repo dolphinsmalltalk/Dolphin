@@ -5,9 +5,13 @@ DOUBLE subclass: #DATE
 	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
+
 DATE guid: (GUID fromString: '{c06f3b6d-0868-11d3-93af-00a024ca708a}')!
+
 DATE comment: ''!
+
 !DATE categoriesForClass!External-Data-Structured! !
+
 !DATE methodsFor!
 
 asDateAndTime
@@ -20,6 +24,7 @@ value
 	Automation date (an 8-byte floating point day number and fraction of a day)."
 
 	^DateAndTime fromSYSTEMTIME: (SYSTEMTIME fromDATE: super value)! !
+
 !DATE categoriesForMethods!
 asDateAndTime!accessing!public! !
 value!accessing!public! !
@@ -87,6 +92,7 @@ vt
 	type when represented in a <VARIANT>."
 
 	^VT_DATE! !
+
 !DATE class categoriesForMethods!
 fromString:!instance creation!public! !
 fromString:locale:!instance creation!public! !

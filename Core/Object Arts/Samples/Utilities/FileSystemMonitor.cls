@@ -5,7 +5,9 @@ Shell subclass: #FileSystemMonitor
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 FileSystemMonitor guid: (GUID fromString: '{1c0d9cfc-b0a6-4b19-b2c6-cc6e373ff4fa}')!
+
 FileSystemMonitor comment: 'FileSystemMonitor is a <topShell> sample application which is capable of displaying a list of the changes being made to a specified directory hierarchy in the file system. It is mainly intended to demonstrate the FileSystemWatcher class.
 
 Note that if you initiate monitoring on the root of your system drive (typically c:\) with sub-directory monitoring enabled (the default), you may start to receive a very large number of notifications!!
@@ -24,7 +26,9 @@ Instance Variables:
 	includeSubDirs		<BooleanPresenter>
 	changeList			<ListPresenter>
 '!
+
 !FileSystemMonitor categoriesForClass!MVP-Presenters! !
+
 !FileSystemMonitor methodsFor!
 
 about
@@ -134,6 +138,7 @@ queryCommand: aCommandQuery
 
 toggleMonitoring
 	self model isMonitoring: self model isMonitoring not! !
+
 !FileSystemMonitor categoriesForMethods!
 about!enquiries!private! !
 addChange:!helpers!private! !
@@ -180,6 +185,7 @@ shutdownOnExit
 	"Answer whether a runtime session should be shutdown when an instance of the receiver is closed."
 
 	^true! !
+
 !FileSystemMonitor class categoriesForMethods!
 defaultModel!models!public! !
 icon!public! !

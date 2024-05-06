@@ -5,9 +5,13 @@ MethodRefactoring subclass: #RemoveMethodRefactoring
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RemoveMethodRefactoring guid: (GUID fromString: '{b0514c20-922f-4ee5-b5bb-e0ebabdf52bd}')!
+
 RemoveMethodRefactoring comment: ''!
+
 !RemoveMethodRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !RemoveMethodRefactoring methodsFor!
 
 checkReferencesToAnyOf: aSelectorCollection 
@@ -99,6 +103,7 @@ superclassEquivalentlyDefines: aSelector
 
 transform
 	selectors do: [:each | class removeMethod: each]! !
+
 !RemoveMethodRefactoring categoriesForMethods!
 checkReferencesToAnyOf:!preconditions!public! !
 checkReferencesToSuperSendsToAnyOf:!preconditions!public! !
@@ -121,6 +126,7 @@ model: aRBNamespace removeMethods: selectorCollection from: aClass
 
 removeMethods: selectorCollection from: aClass
 	^self new removeMethods: selectorCollection from: aClass! !
+
 !RemoveMethodRefactoring class categoriesForMethods!
 model:removeMethods:from:!instance creation!public! !
 removeMethods:from:!instance creation!public! !

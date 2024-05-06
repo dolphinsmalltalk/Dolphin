@@ -5,9 +5,13 @@ DolphinTest subclass: #SemaphoreTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SemaphoreTest guid: (GUID fromString: '{b3d4af7f-c066-4ac2-8421-722762fe6ec9}')!
+
 SemaphoreTest comment: ''!
+
 !SemaphoreTest categoriesForClass!Unclassified! !
+
 !SemaphoreTest methodsFor!
 
 testCriticalEarlyTermination
@@ -24,6 +28,7 @@ testCriticalEarlyTermination
 	Processor sleep: 10 milliseconds.
 	"The Semaphore should have been released."
 	self assert: s excessSignals identicalTo: 1! !
+
 !SemaphoreTest categoriesForMethods!
 testCriticalEarlyTermination!public!unit tests! !
 !

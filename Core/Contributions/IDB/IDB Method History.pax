@@ -17,7 +17,6 @@ Public Domain Freeware
 
 package basicPackageVersion: '6b'.
 
-
 package classNames
 	add: #ChunkFileMethodScanner;
 	add: #ClassHistoryBrowser;
@@ -79,39 +78,42 @@ Object subclass: #ChunkFileMethodScanner
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #MethodVersion
 	instanceVariableNames: 'methodClass selector source sourceDescriptor'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #SelectorParser
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SmalltalkToolShell subclass: #DiffBrowser
 	instanceVariableNames: 'diffsPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SmalltalkToolShell subclass: #HistoryBrowser
 	instanceVariableNames: 'scanner'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 HistoryBrowser subclass: #ClassHistoryBrowser
 	instanceVariableNames: 'class list'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 HistoryBrowser subclass: #MethodHistoryBrowser
 	instanceVariableNames: 'history class selector debugger selection slider source'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -123,6 +125,7 @@ sourceDescriptorForPosition: positionInteger
 	file index must be in the range 0..15, and the position >= 0."
 
 	^self sourceDescriptorForIndex: sourceFileIndex position: positionInteger! !
+
 !ChunkSourceFiler categoriesForMethods!
 sourceDescriptorForPosition:!private!source filing-file in! !
 !
@@ -148,6 +151,7 @@ canBrowseMethodHistory
 canBrowseMethodHistoryForClass
 	#idbAdded.
 	^self hasClassSelected! !
+
 !ClassBrowserAbstract categoriesForMethods!
 browseMethodHistory!accessing!commands!idb goodies!private! !
 browseMethodHistoryForClass!commands!idb goodies!public! !
@@ -166,6 +170,7 @@ versionHistory
 	"Answer a collection of MethodVersions representing the history of the receiver in this image"
 
 	^ChunkFileMethodScanner forMethod: self selector inClass: self methodClass! !
+
 !CompiledMethod categoriesForMethods!
 loadedVersion!accessing!public! !
 versionHistory!accessing!public! !
@@ -185,6 +190,7 @@ browseMethodHistory
 canBrowseMethodHistory
 	#idbAdded.
 	^self hasEditableMethodSelected! !
+
 !Debugger categoriesForMethods!
 browseMethodHistory!commands!idb goodies!private! !
 canBrowseMethodHistory!accessing!idb goodies!private!testing! !
@@ -200,6 +206,7 @@ browseMethodHistory
 canBrowseMethodHistory
 	#idbAdded.
 	^self browser hasMethodSelected! !
+
 !MethodBrowserShell categoriesForMethods!
 browseMethodHistory!accessing!commands!idb goodies!private! !
 canBrowseMethodHistory!accessing!idb goodies!private!testing! !
@@ -219,6 +226,7 @@ queryMethodHistoryCommand: aCommandQuery
 			[aCommandQuery isEnabled: self canBrowseMethodHistoryForClass.
 			^true].
 	^false! !
+
 !SmalltalkToolShell categoriesForMethods!
 queryMethodHistoryCommand:!commands!private! !
 !

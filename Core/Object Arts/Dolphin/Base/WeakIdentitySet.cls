@@ -5,9 +5,13 @@ WeakSet variableSubclass: #WeakIdentitySet
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 WeakIdentitySet guid: (GUID fromString: '{87b4c539-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 WeakIdentitySet comment: ''!
+
 !WeakIdentitySet categoriesForClass!Collections-Unordered!Collections-Weak! !
+
 !WeakIdentitySet methodsFor!
 
 findElementOrNil: anObject
@@ -23,6 +27,7 @@ findElementOrNil: anObject
 
 hash: anObject max: anInteger
 	^anObject identityHash \\ anInteger + 1! !
+
 !WeakIdentitySet categoriesForMethods!
 findElementOrNil:!private!searching! !
 hash:max:!private!searching! !
@@ -36,6 +41,7 @@ initialize
 	so we must implement to get the bereavement notifications."
 
 	super initialize! !
+
 !WeakIdentitySet class categoriesForMethods!
 initialize!development!initializing!public! !
 !

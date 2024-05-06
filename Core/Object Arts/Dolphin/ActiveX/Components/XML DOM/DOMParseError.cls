@@ -5,11 +5,15 @@ Error subclass: #DOMParseError
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DOMParseError guid: (GUID fromString: '{80a8e9d9-c230-4610-8994-72021cfdadcb}')!
+
 DOMParseError comment: 'DOMParseError is an <Exception> class to wrap the IXMLDOMParseError interface from the Microsoft XML DOM. 
 
 Note that these exceptions are not raised automatically when the parsing of an XML document fails, e.g. in a call to IXMLDOMDocument>>load:, but must be raised (if desired) when the method returns false to indicate a failure.'!
+
 !DOMParseError categoriesForClass!Unclassified! !
+
 !DOMParseError methodsFor!
 
 _descriptionArguments
@@ -45,6 +49,7 @@ _descriptionFormat
 	"Private - Answer a string which is the message format for the receiver's description."
 
 	^'%1 - ''%3'' at %4!!d!!, %5!!d!!'! !
+
 !DOMParseError categoriesForMethods!
 _descriptionArguments!displaying!public! !
 _descriptionFormat!displaying!private! !

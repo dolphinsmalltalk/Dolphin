@@ -5,9 +5,13 @@ StVariable subclass: #StLocalVariable
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StLocalVariable guid: (GUID fromString: '{0a285b01-fe92-41ca-97c5-99914ab50746}')!
+
 StLocalVariable comment: '<StlocalVariable> is an abstract class of <StVariable> with concrete subclasses to describe local variables, either temporaries or arguments. '!
+
 !StLocalVariable categoriesForClass!Kernel-Objects! !
+
 !StLocalVariable methodsFor!
 
 addAssignment: anStVariableNode fromScope: anStSemanticScope
@@ -72,6 +76,7 @@ setNode: anStVariableNode
 
 storage
 	^storage! !
+
 !StLocalVariable categoriesForMethods!
 addAssignment:fromScope:!public! !
 addRead:fromScope:!public! !
@@ -87,6 +92,7 @@ storage!accessing!private! !
 
 node: anStTempDecl
 	^self new setNode: anStTempDecl! !
+
 !StLocalVariable class categoriesForMethods!
 node:!public! !
 !

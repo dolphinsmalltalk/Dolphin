@@ -5,15 +5,20 @@ OLECountedArray subclass: #CADWORD
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 CADWORD guid: (GUID fromString: '{60f684dc-b3e2-4700-8e9c-d1a18764ed84}')!
+
 CADWORD comment: '<CADWORD> is an <ExternalStructure> class to wrap the struct ''OCIDL.CADWORD'' from type information in the ''OCIDL Library'' library.
 
 CADWORD is a counted array of 32-bit unsigned integers. For an example usage see IPerPropertyBrowsing.'!
+
 !CADWORD categoriesForClass!OCIDL-Structs! !
+
 !CADWORD methodsFor!
 
 getElements
 	^DWORDArray fromAddress: self pElems length: self cElems! !
+
 !CADWORD categoriesForMethods!
 getElements!accessing!private! !
 !
@@ -41,6 +46,7 @@ elementClass
 
 	^DWORD
 ! !
+
 !CADWORD class categoriesForMethods!
 defineFields!public!template definition! !
 elementClass!constants!public! !

@@ -5,9 +5,13 @@ MethodRefactoring subclass: #AddMethodRefactoring
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AddMethodRefactoring guid: (GUID fromString: '{0b0bb59d-7de6-47b2-80aa-a0e9868e6ac4}')!
+
 AddMethodRefactoring comment: ''!
+
 !AddMethodRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !AddMethodRefactoring methodsFor!
 
 addMethod: aString toClass: aClass inProtocols: protocolList 
@@ -43,6 +47,7 @@ storeOn: aStream
 
 transform
 	class compile: source classified: protocols! !
+
 !AddMethodRefactoring categoriesForMethods!
 addMethod:toClass:inProtocols:!initialize/release!public! !
 preconditions!preconditions!public! !
@@ -64,6 +69,7 @@ model: aRBNamespace addMethod: aString toClass: aClass inProtocols: protocolList
 			toClass: aClass
 			inProtocols: protocolList;
 		yourself! !
+
 !AddMethodRefactoring class categoriesForMethods!
 addMethod:toClass:inProtocols:!instance creation!public! !
 model:addMethod:toClass:inProtocols:!instance creation!public! !

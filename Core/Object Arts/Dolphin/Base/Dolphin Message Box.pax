@@ -5,7 +5,6 @@ package paxVersion: 1;
 	basicComment: 'Dolphin MessageBox
 Copyright (c) Object Arts Ltd. 1997-2016'.
 
-
 package classNames
 	add: #ConfirmationRequiredWarning;
 	add: #MessageBox;
@@ -34,19 +33,18 @@ Object subclass: #MessageBoxAbstract
 	classVariableNames: 'DefaultCaptions IconStyles'
 	poolDictionaries: 'MessageBoxConstants'
 	classInstanceVariableNames: ''!
+
 Warning subclass: #ConfirmationRequiredWarning
 	instanceVariableNames: 'confirmBlock refuseBlock cancelBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MessageBoxAbstract subclass: #MessageBox
 	instanceVariableNames: 'button uniqueId flags icon styleFlags'
 	classVariableNames: 'ButtonMap ButtonsForStyle ButtonStyles ModeStyles SuppressibleMask'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -66,6 +64,7 @@ shMessageBoxCheck: hwnd pszText: pszText pszTitle: pszTitle uType: uType iDefaul
 
 	<stdcall: sdword SHMessageBoxCheckW handle lpwstr lpwstr dword sdword lpwstr>
 	^self invalidCall: _failureCode! !
+
 !ShlwapiLibrary categoriesForMethods!
 shMessageBoxCheck:pszText:pszTitle:uType:iDefault:pszRegVal:!**auto generated**!public! !
 !

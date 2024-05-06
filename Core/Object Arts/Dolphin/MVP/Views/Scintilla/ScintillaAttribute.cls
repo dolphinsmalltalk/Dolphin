@@ -5,8 +5,11 @@ Object subclass: #ScintillaAttribute
 	classVariableNames: ''
 	poolDictionaries: 'ScintillaConstants'
 	classInstanceVariableNames: 'propertyMap'!
+
 ScintillaAttribute guid: (GUID fromString: '{b73f94fe-0bb9-4c23-aee5-e77b3cf408af}')!
+
 ScintillaAttribute isAbstract: true!
+
 ScintillaAttribute comment: '`ScintillaAttribute` is the abstract superclass of objects that wrap various attributes of `ScintillaView`s. It provides a generic mechanism for setting the attribute value into the underlying control.
 
 ## Instance Variables:
@@ -18,7 +21,9 @@ ScintillaAttribute comment: '`ScintillaAttribute` is the abstract superclass of 
 
 
 '!
+
 !ScintillaAttribute categoriesForClass!MVP-Views-Support! !
+
 !ScintillaAttribute methodsFor!
 
 = aScintillaAttribute 
@@ -122,6 +127,7 @@ view
 
 view: aScintillaView 
 	self subclassResponsibility! !
+
 !ScintillaAttribute categoriesForMethods!
 =!comparing!public! !
 applyToView:initializing:!helpers!private! !
@@ -152,6 +158,7 @@ propertyMap
 
 sortByIdBlock
 	^[:a :b | a basicId ifNil: [true] ifNotNil: [:aId | b basicId ifNil: [false] ifNotNil: [:bId | aId <= bId]]]! !
+
 !ScintillaAttribute class categoriesForMethods!
 icon!constants!development!public! !
 propertyMap!constants!private! !

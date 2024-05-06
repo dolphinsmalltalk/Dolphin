@@ -5,9 +5,13 @@ GdiplusBrush subclass: #GdiplusPathGradientBrush
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusPathGradientBrush guid: (GUID fromString: '{c8f38622-766b-11d7-b609-00e0987e8081}')!
+
 GdiplusPathGradientBrush comment: 'A path gradient brush paints a color gradient in which the color changes from a center point outward to a boundary that is defined by a closed curve or path. The color gradient has one color at the center point and one or multiple colors at the boundary. '!
+
 !GdiplusPathGradientBrush categoriesForClass!Unclassified! !
+
 !GdiplusPathGradientBrush methodsFor!
 
 blendBellShape: focusReal scale: scaleReal 
@@ -342,6 +346,7 @@ wrapMode: aWrapModeConstant
 	(status := GdiplusLibrary default gdipSetPathGradientWrapMode: self asParameter
 				wrapMode: aWrapModeConstant) = Ok 
 		ifFalse: [GdiplusError signal: 'GdipSetPathGradientWrapMode failed' with: status]! !
+
 !GdiplusPathGradientBrush categoriesForMethods!
 blendBellShape:scale:!accessing-properties!public! !
 blendColors!accessing-properties!public! !
@@ -846,6 +851,7 @@ triangle
 		with: 100 @ 0
 		with: 200 @ 200
 		with: 0 @ 200! !
+
 !GdiplusPathGradientBrush class categoriesForMethods!
 exampleGdipPGBlendColors!examples!public!sunit! !
 exampleGdipPGBlendFactors!examples!public!sunit! !

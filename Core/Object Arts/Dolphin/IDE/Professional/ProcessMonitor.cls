@@ -5,7 +5,9 @@ SmalltalkToolShell subclass: #ProcessMonitor
 	classVariableNames: 'UpdateIntervals'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ProcessMonitor guid: (GUID fromString: '{71fe0342-5801-4ae5-a04d-a99350724251}')!
+
 ProcessMonitor comment: 'ProcessMonitor is a <SmalltalkSystemTool> that displays a dynamically updating list of the running Processes (threads) on the system, including information such as the process'' names, priorities, state, and the method they are currently executing. Menu commands are available to debug, inspect, terminate, and change the priorities of the running processes. ProcessMonitor can be used to help with debugging, and is also an excellent way of learning about how processes are used in Dolphin.
 
 All of the system processes can be safely terminated or debugged, as Dolphin will simply start new ones when it notices that they are not available. However changing the priorities of these processes (with the exception of the main UI process) is likely to make the system unstable, and so this is not permitted. User processes can be manipulated in any manner desired.
@@ -26,7 +28,9 @@ Class Variables:
 	UpdateIntervals		<IdentityDictionary>. Map between update speeds and corresponding interval in mS, or nil for paused.
 
 '!
+
 !ProcessMonitor categoriesForClass!MVP-Presenters! !
+
 !ProcessMonitor methodsFor!
 
 createComponents
@@ -233,6 +237,7 @@ updateInterval: aDuration
 
 	updateInterval := aDuration.
 	self setTimer! !
+
 !ProcessMonitor categoriesForMethods!
 createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !
@@ -333,6 +338,7 @@ reuseIfOpen
 
 toolsFolderHelpId
 	^10597! !
+
 !ProcessMonitor class categoriesForMethods!
 defaultUpdateInterval!options!public! !
 defaultUpdateInterval:!options!public! !

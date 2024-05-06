@@ -5,9 +5,13 @@ Object subclass: #ResourceIdentifier
 	classVariableNames: 'SelectorPrefix'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ResourceIdentifier guid: (GUID fromString: '{6235654d-3f88-48c0-80d9-90230e9ede77}')!
+
 ResourceIdentifier comment: ''!
+
 !ResourceIdentifier categoriesForClass!MVP-Resources! !
+
 !ResourceIdentifier methodsFor!
 
 <= aResourceIdentifier
@@ -167,6 +171,7 @@ storeOn: aStream
 		nextPutAll: ' name: ';
 		print: self name;
 		nextPut: $)! !
+
 !ResourceIdentifier categoriesForMethods!
 <=!comparing!public! !
 =!comparing!public! !
@@ -308,6 +313,7 @@ value: a value: b
 
 viewResourceCategoryName
 	^'resources-views'! !
+
 !ResourceIdentifier class categoriesForMethods!
 allResourceIdentifiers!accessing!public! !
 allResourceIdentifiersDo:!accessing!enumerating!public! !

@@ -5,9 +5,12 @@ ExternalStructure subclass: #MIB_ICMP_EX
 	classVariableNames: '_OffsetOf_icmpInStats _OffsetOf_icmpOutStats'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MIB_ICMP_EX guid: (GUID fromString: '{15e74798-3501-497b-a245-8dc4108fba87}')!
+
 MIB_ICMP_EX addClassConstant: '_OffsetOf_icmpInStats' value: 16r0!
 MIB_ICMP_EX addClassConstant: '_OffsetOf_icmpOutStats' value: 16r408!
+
 MIB_ICMP_EX comment: '<MIB_ICMP_EX> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_ICMP_EX'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -22,7 +25,9 @@ struct tagMIB_ICMP_EX {
 	MIBICMPSTATS_EX icmpOutStats;
 } MIB_ICMP_EX;
 '!
+
 !MIB_ICMP_EX categoriesForClass!Win32-Structs! !
+
 !MIB_ICMP_EX methodsFor!
 
 icmpInStats
@@ -34,6 +39,7 @@ icmpOutStats
 	"Answer the <MIBICMPSTATS_EX> value of the receiver's 'icmpOutStats' field."
 
 	^MIBICMPSTATS_EX fromAddress: bytes yourAddress + _OffsetOf_icmpOutStats! !
+
 !MIB_ICMP_EX categoriesForMethods!
 icmpInStats!**compiled accessors**!public! !
 icmpOutStats!**compiled accessors**!public! !
@@ -67,6 +73,7 @@ defineFields
 
 getFieldNames
 	^#(#icmpInStats #icmpOutStats)! !
+
 !MIB_ICMP_EX class categoriesForMethods!
 defineFields!initializing!public! !
 getFieldNames!**compiled accessors**!constants!private! !

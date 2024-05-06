@@ -5,9 +5,13 @@ DolphinTest subclass: #DateAndTimeTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DateAndTimeTest guid: (GUID fromString: '{833a97bb-3e1a-4dcb-a1db-181457c09c0f}')!
+
 DateAndTimeTest comment: ''!
+
 !DateAndTimeTest categoriesForClass!Unclassified! !
+
 !DateAndTimeTest methodsFor!
 
 canonicalInstance
@@ -677,6 +681,7 @@ testYearMonthDayHourMinuteSecondOffsetErrors
 	"However they are really different time points."
 	self deny: subject1 equals: subject2.
 	self deny: subject1 asSeconds equals: subject2 asSeconds! !
+
 !DateAndTimeTest categoriesForMethods!
 canonicalInstance!constants!private! !
 julianEpoch!constants!private! !

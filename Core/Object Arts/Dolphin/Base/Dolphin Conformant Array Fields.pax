@@ -6,7 +6,6 @@ package paxVersion: 1;
 
 Contains support for conformant array fields in structures. Conformant array fields are those where the size of the array is variable and defined by another field in the structure.'.
 
-
 package classNames
 	add: #ConformantArrayFieldLength;
 	yourself.
@@ -35,9 +34,6 @@ ArrayFieldLength subclass: #ConformantArrayFieldLength
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
-"Global Aliases"!
-
-
 "Loose Methods"!
 
 !ArrayField class methodsFor!
@@ -48,6 +44,7 @@ type: aClass lengthField: aSymbol
 	structure being described with the specified <Symbol> name."
 
 	^self type: aClass arrayLength: (ConformantArrayFieldLength lengthField: aSymbol)! !
+
 !ArrayField class categoriesForMethods!
 type:lengthField:!instance creation!public! !
 !
@@ -60,6 +57,7 @@ type: aClass lengthField: aSymbol
 	of the structure with the specified <Symbol> name."
 
 	^self type: aClass arrayLength: (ConformantArrayFieldLength lengthField: aSymbol)! !
+
 !ArrayPointerField class categoriesForMethods!
 type:lengthField:!instance creation!public! !
 !

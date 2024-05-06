@@ -5,7 +5,9 @@ ADODB_DynaCollection subclass: #ADODBParameters
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
+
 ADODBParameters guid: (IID fromString: '{0000150d-0000-0010-8000-00aa006d2ea4}')!
+
 ADODBParameters comment: '`ADODBParameters` is a wrapper class for the COM interface ''ADODB.Parameters'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -30,7 +32,9 @@ interface Parameters : _DynaCollection
 };
 ```
 '!
+
 !ADODBParameters categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
+
 !ADODBParameters methodsFor!
 
 get_Item: index ppvObject: ppvObject
@@ -50,6 +54,7 @@ item: index
 	answer := ADODB_Parameter newPointer.
 	self get_Item: index asVariant ppvObject: answer.
 	^answer asObject! !
+
 !ADODBParameters categoriesForMethods!
 get_Item:ppvObject:!**auto generated**!COM Interfaces-Parameters!private! !
 item:!**auto generated**!properties!public! !
@@ -65,6 +70,7 @@ defineFunctions
 		defineFunction: #get_Item:ppvObject:
 			argumentTypes: 'variant ADODB_Parameter**'
 ! !
+
 !ADODBParameters class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

@@ -5,10 +5,15 @@ ExternalAddress variableByteSubclass: #ExternalMemory
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 ExternalMemory guid: (GUID fromString: '{87b4c51a-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 ExternalMemory isIndirection: true!
+
 ExternalMemory comment: ''!
+
 !ExternalMemory categoriesForClass!External-Data-Unstructured! !
+
 !ExternalMemory methodsFor!
 
 allocate: anInteger
@@ -81,6 +86,7 @@ size
 	sz := self allocator GetSize: self.
 	sz = 16rFFFFFFFF ifTrue: [self error: 'bad heap block'].
 	^sz! !
+
 !ExternalMemory categoriesForMethods!
 allocate:!public!realizing/unrealizing! !
 allocator!constants!private! !
@@ -232,6 +238,7 @@ Realloc: anAddress cb: anInteger
 		dwFlags: 0
 		lpMem: anAddress
 		dwBytes: anInteger) asInteger! !
+
 !ExternalMemory class categoriesForMethods!
 Alloc:!operations!private! !
 allocator!accessing!private! !

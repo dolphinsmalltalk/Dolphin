@@ -5,9 +5,13 @@ RefactoringBrowserTest subclass: #FormatterTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 FormatterTest guid: (GUID fromString: '{9edc9b30-32ca-4970-8068-dd559bb18608}')!
+
 FormatterTest comment: ''!
+
 !FormatterTest categoriesForClass!Browser-Testing! !
+
 !FormatterTest methodsFor!
 
 runMethodTestFor: method
@@ -283,6 +287,7 @@ testSmokeTest
 
 testUnaryMessage
 	self runTestForPairs: #(#('self halt') #('self halt halt'))! !
+
 !FormatterTest categoriesForMethods!
 runMethodTestFor:!private! !
 runTestForPairs:!private! !

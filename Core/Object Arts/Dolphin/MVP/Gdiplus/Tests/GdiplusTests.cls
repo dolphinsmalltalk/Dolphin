@@ -5,10 +5,15 @@ TestCase subclass: #GdiplusTests
 	classVariableNames: ''
 	poolDictionaries: 'GdiplusConstants'
 	classInstanceVariableNames: ''!
+
 GdiplusTests guid: (GUID fromString: '{ea227fda-3570-490b-b8cf-4973dc534043}')!
+
 GdiplusTests isAbstract: true!
+
 GdiplusTests comment: ''!
+
 !GdiplusTests categoriesForClass!Unclassified! !
+
 !GdiplusTests methodsFor!
 
 assertPersistedValid
@@ -63,6 +68,7 @@ tearDown
 			[model free.
 			model := nil].
 	super tearDown! !
+
 !GdiplusTests categoriesForMethods!
 assertPersistedValid!asserting!public! !
 compare:to:!comparing!public! !
@@ -80,6 +86,7 @@ tearDown!public!Running! !
 
 resources
 	^Array with: GdiplusFileResource! !
+
 !GdiplusTests class categoriesForMethods!
 resources!accessing!public! !
 !

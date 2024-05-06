@@ -5,7 +5,9 @@ Object subclass: #PackageManager
 	classVariableNames: 'Current DuplicatePackageSignal PackageNotFoundSignal PrerequisiteNotFoundSignal SystemPackage'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PackageManager guid: (GUID fromString: '{87b4c4a7-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 PackageManager comment: 'The PackageManager class contains a collection of all the Packages currently loaded into
 the system. The class obeys the Singleton pattern.
 
@@ -39,7 +41,9 @@ triggers generated
 	resetPrerequisites	The lazily generated prerequisites data for each of  the packages has been
 			invalidated. This will happen quite often, for example compiling a method.
 			The next time you request the prerequisites of a package it will calculate them.'!
+
 !PackageManager categoriesForClass!Development! !
+
 !PackageManager methodsFor!
 
 addClass: aClass to: aPackageOrNil
@@ -1183,6 +1187,7 @@ youShouldBeProcessingEvents
 	Change monitoring will be enabled if you ignore this warning (recommended)'.
 	[self isProcessingEvents] whileFalse: [self beProcessingEvents].
 	self clearCachedInformation! !
+
 !PackageManager categoriesForMethods!
 addClass:to:!adding!public! !
 addGlobalNamed:to:!adding!public! !
@@ -1380,6 +1385,7 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	self reset.! !
+
 !PackageManager class categoriesForMethods!
 buildSingletonInstance!instance creation!private! !
 current!instance creation!public! !

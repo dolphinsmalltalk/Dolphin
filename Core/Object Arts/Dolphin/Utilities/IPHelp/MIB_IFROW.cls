@@ -5,7 +5,9 @@ ExternalStructure subclass: #MIB_IFROW
 	classVariableNames: '_OffsetOf_bDescr _OffsetOf_bPhysAddr _OffsetOf_dwAdminStatus _OffsetOf_dwDescrLen _OffsetOf_dwIndex _OffsetOf_dwInDiscards _OffsetOf_dwInErrors _OffsetOf_dwInNUcastPkts _OffsetOf_dwInOctets _OffsetOf_dwInUcastPkts _OffsetOf_dwInUnknownProtos _OffsetOf_dwLastChange _OffsetOf_dwMtu _OffsetOf_dwOperStatus _OffsetOf_dwOutDiscards _OffsetOf_dwOutErrors _OffsetOf_dwOutNUcastPkts _OffsetOf_dwOutOctets _OffsetOf_dwOutQLen _OffsetOf_dwOutUcastPkts _OffsetOf_dwPhysAddrLen _OffsetOf_dwSpeed _OffsetOf_dwType _OffsetOf_wszName'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MIB_IFROW guid: (GUID fromString: '{6ead7710-bab6-4715-a112-b56e9b66d9ee}')!
+
 MIB_IFROW addClassConstant: '_OffsetOf_bDescr' value: 16r25C!
 MIB_IFROW addClassConstant: '_OffsetOf_bPhysAddr' value: 16r214!
 MIB_IFROW addClassConstant: '_OffsetOf_dwAdminStatus' value: 16r21C!
@@ -30,6 +32,7 @@ MIB_IFROW addClassConstant: '_OffsetOf_dwPhysAddrLen' value: 16r210!
 MIB_IFROW addClassConstant: '_OffsetOf_dwSpeed' value: 16r20C!
 MIB_IFROW addClassConstant: '_OffsetOf_dwType' value: 16r204!
 MIB_IFROW addClassConstant: '_OffsetOf_wszName' value: 16r0!
+
 MIB_IFROW comment: '<MIB_IFROW> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_IFROW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -66,7 +69,9 @@ struct tagMIB_IFROW {
 	BYTE bDescr[256];
 } MIB_IFROW;
 '!
+
 !MIB_IFROW categoriesForClass!Win32-Structs! !
+
 !MIB_IFROW methodsFor!
 
 bDescr
@@ -188,6 +193,7 @@ wszName
 	"Answer the <Utf16String> value of the receiver's 'wszName' field."
 
 	^Utf16String fromAddress: bytes yourAddress! !
+
 !MIB_IFROW categoriesForMethods!
 bDescr!**compiled accessors**!public! !
 bPhysAddr!**compiled accessors**!public! !
@@ -333,6 +339,7 @@ defineFields
 
 getFieldNames
 	^#(#wszName #dwIndex #dwType #dwMtu #dwSpeed #dwPhysAddrLen #bPhysAddr #dwAdminStatus #dwOperStatus #dwLastChange #dwInOctets #dwInUcastPkts #dwInNUcastPkts #dwInDiscards #dwInErrors #dwInUnknownProtos #dwOutOctets #dwOutUcastPkts #dwOutNUcastPkts #dwOutDiscards #dwOutErrors #dwOutQLen #dwDescrLen #bDescr)! !
+
 !MIB_IFROW class categoriesForMethods!
 defineFields!initializing!public! !
 getFieldNames!**compiled accessors**!constants!private! !

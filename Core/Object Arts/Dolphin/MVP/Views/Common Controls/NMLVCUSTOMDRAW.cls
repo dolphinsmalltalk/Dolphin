@@ -5,14 +5,19 @@ NMCUSTOMDRAW subclass: #NMLVCUSTOMDRAW
 	classVariableNames: '_OffsetOf_clrText _OffsetOf_clrTextBk _OffsetOf_iSubItem'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 NMLVCUSTOMDRAW guid: (GUID fromString: '{7fbf7515-c756-4b0e-8d4f-01debafa1178}')!
+
 NMLVCUSTOMDRAW addClassConstant: '_OffsetOf_clrText' value: 16r30!
 NMLVCUSTOMDRAW addClassConstant: '_OffsetOf_clrTextBk' value: 16r34!
 NMLVCUSTOMDRAW addClassConstant: '_OffsetOf_iSubItem' value: 16r38!
+
 NMLVCUSTOMDRAW comment: '`NMLVCUSTOMDRAW` is an `ExternalStructure` class to represent the Win32 structure of the same name.
 
 `NMLVCUSTOMDRAW` is sent by `ListView` controls to request custom draw information for the text of individual items (and optionally sub-items). We implement the `customDrawContext` protocol against it in order that it can be passed directly to the views customDrawBlock.'!
+
 !NMLVCUSTOMDRAW categoriesForClass!External-Data-Structured-Win32! !
+
 !NMLVCUSTOMDRAW methodsFor!
 
 applyFont
@@ -103,6 +108,7 @@ subItem
 	item := self item.
 	self column ifNotNil: [:col | col getContentsBlock ifNotNil: [:getblock | ^getblock value: item]].
 	^item! !
+
 !NMLVCUSTOMDRAW categoriesForMethods!
 applyFont!operations!private! !
 backcolor!accessing!public! !
@@ -137,6 +143,7 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #dwDrawStage #hdc #rc #dwItemSpec #uItemState #lParam #clrText #clrTextBk #iSubItem)! !
+
 !NMLVCUSTOMDRAW class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

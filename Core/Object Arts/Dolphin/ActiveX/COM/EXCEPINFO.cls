@@ -5,7 +5,9 @@ OLEFinalizableStructure subclass: #EXCEPINFO
 	classVariableNames: '_OffsetOf_dwHelpContext _OffsetOf_pfnDeferredFillIn _OffsetOf_pvReserved _OffsetOf_pwszDescription _OffsetOf_pwszHelpFile _OffsetOf_pwszSource _OffsetOf_scode _OffsetOf_wCode _OffsetOf_wReserved'
 	poolDictionaries: 'Win32Errors'
 	classInstanceVariableNames: ''!
+
 EXCEPINFO guid: (GUID fromString: '{c06f3b63-0868-11d3-93af-00a024ca708a}')!
+
 EXCEPINFO addClassConstant: '_OffsetOf_dwHelpContext' value: 16r10!
 EXCEPINFO addClassConstant: '_OffsetOf_pfnDeferredFillIn' value: 16r18!
 EXCEPINFO addClassConstant: '_OffsetOf_pvReserved' value: 16r14!
@@ -15,8 +17,11 @@ EXCEPINFO addClassConstant: '_OffsetOf_pwszSource' value: 16r4!
 EXCEPINFO addClassConstant: '_OffsetOf_scode' value: 16r1C!
 EXCEPINFO addClassConstant: '_OffsetOf_wCode' value: 16r0!
 EXCEPINFO addClassConstant: '_OffsetOf_wReserved' value: 16r2!
+
 EXCEPINFO comment: 'EXCEPINFO is the class of <ExternalStructure>s representing the OLE Automation structure of the same name. EXCEPINFO is used to return exception details from IDispatch::Invoke().'!
+
 !EXCEPINFO categoriesForClass!External-Data-Structured-COM! !
+
 !EXCEPINFO methodsFor!
 
 _deepCopy: copiesDictionary 
@@ -204,6 +209,7 @@ wstrSource
 	"Answer the receiver's bstrSource field as a <Utf16String>."
 
 	^Utf16String fromAddress: self pwszSource! !
+
 !EXCEPINFO categoriesForMethods!
 _deepCopy:!copying!private! !
 bstrDescription!accessing!public! !
@@ -281,6 +287,7 @@ defineFields
 
 getFieldNames
 	^#(#wCode #pwszSource #pwszDescription #pwszHelpFile #dwHelpContext #pfnDeferredFillIn #scode)! !
+
 !EXCEPINFO class categoriesForMethods!
 clear:!public!realizing/unrealizing! !
 defineFields!public!template definition! !

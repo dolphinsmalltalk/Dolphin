@@ -5,7 +5,9 @@ ICoreWebView2_6 subclass: #ICoreWebView2_7
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2_7 guid: (IID fromString: '{79c24d83-09a3-45ae-9418-487f32a58740}')!
+
 ICoreWebView2_7 comment: '`ICoreWebView2_7` is a wrapper class for the COM interface ''WebView2.ICoreWebView2_7'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -28,7 +30,9 @@ interface ICoreWebView2_7 : ICoreWebView2_6
 };
 ```
 '!
+
 !ICoreWebView2_7 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2_7 methodsFor!
 
 canPrintToPdf
@@ -44,6 +48,7 @@ PrintToPdf: resultFilePath printSettings: printSettings handler: handler
 
 	<virtual stdcall: hresult 81 lpwstr ICoreWebView2PrintSettings* ICoreWebView2PrintToPdfCompletedHandler*>
 	^self invalidCall: _failureCode! !
+
 !ICoreWebView2_7 categoriesForMethods!
 canPrintToPdf!public!testing! !
 PrintToPdf:printSettings:handler:!**auto generated**!COM Interfaces-ICoreWebView2_7!private! !
@@ -59,6 +64,7 @@ defineFunctions
 		defineFunction: #PrintToPdf:printSettings:handler:
 			argumentTypes: 'lpwstr ICoreWebView2PrintSettings* ICoreWebView2PrintToPdfCompletedHandler*'
 ! !
+
 !ICoreWebView2_7 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

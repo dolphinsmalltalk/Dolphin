@@ -5,12 +5,16 @@ ControlView subclass: #GroupBox
 	classVariableNames: ''
 	poolDictionaries: 'ButtonConstants'
 	classInstanceVariableNames: ''!
+
 GroupBox guid: (GUID fromString: '{87b4c727-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 GroupBox comment: 'GroupBox is the <view> implementing the standard Windows group box control. The actual windows class used is BUTTON, but why Microsoft chose this to implement a group box remains a mystery to this day.
 
 GroupBox is named after the Windows control, but it only "groups" the controls it appears to surround visually; i.e. it is not a container view, just a visual decorator.
 '!
+
 !GroupBox categoriesForClass!MVP-Resources-Group Box!MVP-Views! !
+
 !GroupBox methodsFor!
 
 defaultExtent
@@ -43,6 +47,7 @@ onPositionChanged: aPositionEvent
 	aPositionEvent isMove ifTrue: [
 		self parentView invalidateRect: self rectangle].
 	^super onPositionChanged: aPositionEvent! !
+
 !GroupBox categoriesForMethods!
 defaultExtent!constants!private! !
 defaultWindowExStyle!constants!private! !
@@ -86,6 +91,7 @@ winClassName
 	comprehension"
 
 	^'BUTTON'! !
+
 !GroupBox class categoriesForMethods!
 icon!constants!public! !
 resource_Default_view!public!resources-views! !

@@ -5,7 +5,9 @@ Object subclass: #STONReader
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 STONReader guid: (GUID fromString: '{d393ea51-a9cb-4a9f-bdc2-477e3bb22712}')!
+
 STONReader comment: 'STONReader materializes objects using the Smalltalk Object Notation format.
 
 This parser is backwards compatible with standard JSON.
@@ -20,7 +22,9 @@ Customization options are:
 	if false, CR, LF and CRLF are read unmodified
 - newLine <String> default is String cr
 	sequence to use as EOL'!
+
 !STONReader categoriesForClass!STON-Core-Reader! !
+
 !STONReader methodsFor!
 
 acceptUnknownClasses: boolean
@@ -493,6 +497,7 @@ stringStreamContents: block
 	stringStream reset.
 	block value: stringStream.
 	^ stringStream contents! !
+
 !STONReader categoriesForMethods!
 acceptUnknownClasses:!initialize/release!private! !
 allowComplexMapKeys:!initialize/release!private! !
@@ -556,6 +561,7 @@ on: readStream
 	^ self new
 		on: readStream;
 		yourself! !
+
 !STONReader class categoriesForMethods!
 on:!instance creation!public! !
 !

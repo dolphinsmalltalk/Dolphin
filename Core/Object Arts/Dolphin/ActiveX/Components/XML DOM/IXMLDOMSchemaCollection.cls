@@ -5,7 +5,9 @@ IDispatch subclass: #IXMLDOMSchemaCollection
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
 	classInstanceVariableNames: ''!
+
 IXMLDOMSchemaCollection guid: (IID fromString: '{373984c8-b845-449b-91e7-45ac83036ade}')!
+
 IXMLDOMSchemaCollection comment: '<IXMLDOMSchemaCollection> is a wrapper class for the COM interface ''MSXML2.IXMLDOMSchemaCollection'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
@@ -50,7 +52,9 @@ interface IXMLDOMSchemaCollection : IDispatch
 		[out, retval]IUnknown** ppUnk);
 };
 '!
+
 !IXMLDOMSchemaCollection categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+
 !IXMLDOMSchemaCollection methodsFor!
 
 _newEnum
@@ -184,6 +188,7 @@ Remove: namespaceURI
 
 	<virtual stdcall: hresult 10 bstr>
 	^self invalidCall: _failureCode! !
+
 !IXMLDOMSchemaCollection categoriesForMethods!
 _newEnum!**auto generated**!properties!public! !
 add:var:!**auto generated**!methods!public! !
@@ -241,6 +246,7 @@ newXMLSchemaCache30
 
 	^self onCLSID: (CLSID fromString: '{F5078F34-C551-11D3-89B9-0000F81FE221}')
 ! !
+
 !IXMLDOMSchemaCollection class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 newXMLSchemaCache!**auto generated**!instance creation!public! !

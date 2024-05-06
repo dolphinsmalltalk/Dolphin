@@ -6,7 +6,6 @@ package paxVersion: 1;
 
 package basicPackageVersion: '6.1.27'.
 
-
 package classNames
 	add: #DolphinBaseProduct;
 	add: #DolphinCommunityEdition;
@@ -33,31 +32,30 @@ Object subclass: #DolphinProduct
 	classVariableNames: 'Current EditionsMap'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DolphinProduct subclass: #DolphinCoreProduct
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DolphinCoreProduct subclass: #DolphinBaseProduct
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DolphinBaseProduct subclass: #DolphinCommunityEdition
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DolphinBaseProduct subclass: #DolphinProfessional
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

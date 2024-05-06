@@ -5,9 +5,13 @@ DolphinTest subclass: #VersionResourceTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 VersionResourceTest guid: (GUID fromString: '{a475b032-cef9-4aa6-affe-32b7dc1c4640}')!
+
 VersionResourceTest comment: ''!
+
 !VersionResourceTest categoriesForClass!Unclassified! !
+
 !VersionResourceTest methodsFor!
 
 assertResource: res atVersion: newVersion
@@ -93,6 +97,7 @@ testVersionStrings
 	self assertResource: res atVersion: newVersion.
 	res bumpProductVersion.
 	self assertResource: res atVersion: '101.202.304.404'! !
+
 !VersionResourceTest categoriesForMethods!
 assertResource:atVersion:!public!unit tests! !
 assertVersionResource:equalTo:!private!unit tests! !

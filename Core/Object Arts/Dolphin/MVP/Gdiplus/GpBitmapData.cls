@@ -5,13 +5,16 @@ ExternalStructure subclass: #GpBitmapData
 	classVariableNames: '_OffsetOf_Height _OffsetOf_PixelFormat _OffsetOf_Reserved _OffsetOf_Scan0 _OffsetOf_Stride _OffsetOf_Width'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GpBitmapData guid: (GUID fromString: '{8b358d63-cec7-4ae5-87c2-72d86f11e109}')!
+
 GpBitmapData addClassConstant: '_OffsetOf_Height' value: 16r4!
 GpBitmapData addClassConstant: '_OffsetOf_PixelFormat' value: 16rC!
 GpBitmapData addClassConstant: '_OffsetOf_Reserved' value: 16r14!
 GpBitmapData addClassConstant: '_OffsetOf_Scan0' value: 16r10!
 GpBitmapData addClassConstant: '_OffsetOf_Stride' value: 16r8!
 GpBitmapData addClassConstant: '_OffsetOf_Width' value: 16r0!
+
 GpBitmapData comment: '<GpBitmapData> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpBitmapData'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
@@ -30,7 +33,9 @@ struct tagGpBitmapData {
 	unsigned int Reserved;
 } GpBitmapData;
 '!
+
 !GpBitmapData categoriesForClass!Unclassified! !
+
 !GpBitmapData methodsFor!
 
 Height
@@ -82,6 +87,7 @@ Width: anInteger
 	"Set the receiver's 'Width' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_Width put: anInteger! !
+
 !GpBitmapData categoriesForMethods!
 Height!**compiled accessors**!public! !
 Height:!**compiled accessors**!public! !
@@ -123,6 +129,7 @@ defineFields
 
 getFieldNames
 	^#(#Width #Height #Stride #PixelFormat #Scan0)! !
+
 !GpBitmapData class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

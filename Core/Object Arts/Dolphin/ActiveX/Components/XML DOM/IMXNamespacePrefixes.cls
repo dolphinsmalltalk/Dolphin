@@ -5,7 +5,9 @@ IDispatch subclass: #IMXNamespacePrefixes
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
 	classInstanceVariableNames: ''!
+
 IMXNamespacePrefixes guid: (IID fromString: '{c90352f4-643c-4fbc-bb23-e996eb2d51fd}')!
+
 IMXNamespacePrefixes comment: '<IMXNamespacePrefixes> is a wrapper class for the COM interface ''MSXML2.IMXNamespacePrefixes'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
@@ -36,7 +38,9 @@ interface IMXNamespacePrefixes : IDispatch
 		[out, retval]IUnknown** ppUnk);
 };
 '!
+
 !IMXNamespacePrefixes categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+
 !IMXNamespacePrefixes methodsFor!
 
 _newEnum
@@ -105,6 +109,7 @@ length
 	self get_length: answer.
 	^answer asObject
 ! !
+
 !IMXNamespacePrefixes categoriesForMethods!
 _newEnum!**auto generated**!properties!public! !
 get__newEnum:!**auto generated**!COM Interfaces-IMXNamespacePrefixes!private! !
@@ -130,6 +135,7 @@ defineFunctions
 		defineFunction: #get__newEnum:
 			argumentTypes: 'IUnknown**'
 ! !
+
 !IMXNamespacePrefixes class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

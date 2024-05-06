@@ -5,9 +5,13 @@ ExternalCallback subclass: #BlockCallback
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 BlockCallback guid: (GUID fromString: '{87b4c577-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 BlockCallback comment: ''!
+
 !BlockCallback categoriesForClass!System-Support! !
+
 !BlockCallback methodsFor!
 
 block: aBlockClosure
@@ -38,6 +42,7 @@ valueWithArgumentsAt: anAddress
 	the ExternalLibrary class)."
 
 	^block valueWithArgumentsAt: anAddress descriptor: descriptor! !
+
 !BlockCallback categoriesForMethods!
 block:!accessing!private! !
 printOn:!development!printing!public! !

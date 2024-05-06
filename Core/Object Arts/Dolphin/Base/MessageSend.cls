@@ -5,14 +5,18 @@ MessageSendAbstract subclass: #MessageSend
 	classVariableNames: 'EmptySend'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MessageSend guid: (GUID fromString: '{87b4c662-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 MessageSend comment: 'A MessageSend is a fully closed <Message>, including receiver object, the message selector, and an array of sufficient arguments.
 
 When evaluated with additional arguments the supplied arguments supplant those stored in the MessageSend itself by replacement from the right.
 
 Instance Variables:
 	receiver		<Object>, the destination of the message when evaluated'!
+
 !MessageSend categoriesForClass!Kernel-Methods! !
+
 !MessageSend methodsFor!
 
 forwardTo: anObject withArguments: anArgumentArray
@@ -43,6 +47,7 @@ receiver
 receiver: anObject
 	receiver := anObject.
 ! !
+
 !MessageSend categoriesForMethods!
 forwardTo:withArguments:!evaluating!private! !
 receiver!accessing!public! !
@@ -61,6 +66,7 @@ empty
 	EmptySend isNil ifTrue: [
 		EmptySend := self receiver: nil selector: #isNil].
 	^EmptySend! !
+
 !MessageSend class categoriesForMethods!
 empty!instance creation!public! !
 !

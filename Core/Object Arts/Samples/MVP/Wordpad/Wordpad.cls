@@ -5,13 +5,17 @@ TextDocument subclass: #WordPad
 	classVariableNames: 'ResourceLib'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 WordPad guid: (GUID fromString: '{daf98e5f-3a01-477d-b822-6b0e9bc79d14}')!
+
 WordPad comment: 'Wordpad is a <topShell> sample application which implements a limited set of the functionality of the familiar Windows utility. Most of the implementation of the application is actually inherited from Dolphin''s TextDocument framework class or provided by RichTextPresenter and RichTextEdit.
 
 Example:
 	Wordpad show
 '!
+
 !WordPad categoriesForClass!Unclassified! !
+
 !WordPad methodsFor!
 
 about
@@ -63,6 +67,7 @@ setDocumentData: aString
 	super setDocumentData: ((aString beginsWith: '{\rtf') 
 				ifTrue: [RichText fromRtf: aString]
 				ifFalse: [RichText fromString: aString])! !
+
 !WordPad categoriesForMethods!
 about!commands!public! !
 documentPresenterClass!constants!public! !
@@ -134,6 +139,7 @@ resource_Default_view
 \viewkind4\uc1\pard\cf1\lang1033\f0\fs16\par
 }
 ' 2288 1554 #textLimit: 8 #(1073741823) 2288 1554 #resetCharFormat 736 2288 1650 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 25 0 0 0 112 2 0 0 143 1 0 0] 8 #() 1712 nil 27 170 192 34 6 1728 8 'statusbar' 528 8 'toolbar' 2288 8 'document' nil 461638 4 ##(Smalltalk.MenuBar) nil true 34 6 2466 nil true 34 11 2514 1 818 #fileNew 8 '&New' 9373 1 nil nil nil 2514 1 818 #fileOpen 8 '&Open...' 9375 1 nil nil nil 2514 1 818 #fileSave 8 '&Save' 8359 1 nil nil nil 2514 1 818 #fileSaveAs 8 'Save &As...' 1 1 nil nil nil 2674 4097 2514 1 818 #filePrint 8 '&Print...' 9377 1 nil nil nil 2514 1 818 #filePageSetup 8 'Page Set&up...' 1 1 nil nil nil 2674 4097 2514 1 818 #sendDocument 8 'Sen&d...' 1 1 nil nil nil 2674 4097 2514 1 818 #exit 8 'E&xit' 1025 1 nil nil nil 8 '&File' nil 1 nil nil 14159 nil nil 2466 nil true 34 16 2514 1 818 #undo 8 '&Undo' 9397 1 nil nil nil 2674 4097 2514 1 818 #cutSelection 8 'Cu&t' 9393 1 nil nil nil 2514 1 818 #copySelection 8 '&Copy' 9351 1 nil nil nil 2514 1 818 #pasteClipboard 8 '&Paste' 9389 1 nil nil nil 2514 1 818 #pasteSpecial 8 'Paste &Special...' 1 1 nil nil nil 2514 1 818 #clearSelection 8 'Cle&ar' 1629 1 nil nil nil 2514 1 818 #selectAll 8 'Select All' 9347 1 nil nil nil 2674 4097 2514 1 818 #find 8 '&Find...' 9357 1 nil nil nil 2514 1 818 #findNext 8 'Find &Next' 1253 1 nil nil nil 2514 1 818 #findReplace 8 'R&eplace...' 9361 1 nil nil nil 2674 4097 2514 1 818 #links 8 'Lin&ks...' 1 1 nil nil nil 2514 1 818 #objectProperties 8 'Object P&roperties...' 1025 1 nil nil nil 2514 1 818 #editObject 8 '&Object' 1 1 nil nil nil 8 '&Edit' nil 1 nil nil 14187 nil nil 2466 nil true 34 6 2514 1025 818 #viewToolbar 8 '&Toolbar' 1025 1 nil nil nil 2514 1025 818 #viewFormatBar 8 '&Format Bar' 1025 1 nil nil nil 2514 1025 818 #viewRuler 8 '&Ruler' 1025 1 nil nil nil 2514 1025 818 #viewStatusBar 8 '&Status Bar' 1025 1 nil nil nil 2674 4097 2514 1 818 #viewOptions 8 '&Options...' 1 1 nil nil nil 8 '&View' nil 1 nil nil 14199 nil nil 2466 nil true 34 2 2514 1 818 #insertDateAndTime 8 '&Date and Time...' 1 1 nil nil nil 2514 1 818 #insertObject 8 '&Object...' 1 1 nil nil nil 8 '&Insert' nil 1 nil nil 14205 nil nil 2466 nil true 34 4 2514 1 818 #formatFont 8 '&Font...' 1 1 nil nil nil 2514 1 818 #toggleBulletStyle 8 '&Bullet Style' 1 1 nil nil nil 2514 1 818 #formatParagraph 8 '&Paragraph...' 1 1 nil nil nil 2514 1 818 #formatTabs 8 '&Tabs...' 1 1 nil nil nil 8 'F&ormat' nil 1 nil nil 14215 nil nil 2466 nil true 34 3 2514 1 818 #help 8 '&Help Topics' 1025 1 nil nil nil 2674 4097 2514 1 818 #about 8 '&About Dolphin WordPad' 1 1 nil nil nil 8 '&Help' nil 1 nil nil 14221 nil nil 8 '' nil 1 nil nil nil nil nil nil nil nil 1 nil nil nil nil 1 nil nil 1490 138 144 34 3 1554 #createAt:extent: 34 2 674 3839 21 674 1281 961 416 1554 #text: 34 1 8 'Dolphin WordPad' 416 1554 #updateMenuBar 736 416 1650 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 255 9 0 0 234 1 0 0] 34 3 528 2288 1728 1712 nil 27 )! !
+
 !WordPad class categoriesForMethods!
 about!enquiries!private! !
 aboutTemplate!enquiries!private! !

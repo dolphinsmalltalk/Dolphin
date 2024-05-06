@@ -5,11 +5,15 @@ WriteStream subclass: #SocketWriteStream
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SocketWriteStream guid: (GUID fromString: '{87b4c6fe-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 SocketWriteStream comment: 'This class represents a buffered write stream for sending data across a Socket connection.
 
 From an implementation perspective this class is similar to FileStream, in that it uses the inherited stream collection as a buffer, overridding certain operations to note when the buffer is dirty. Data is not sent to the underlying socket until the stream is explictily flushed, or the buffer overflows.'!
+
 !SocketWriteStream categoriesForClass!Collections-Streams!Windows Sockets! !
+
 !SocketWriteStream methodsFor!
 
 close
@@ -107,6 +111,7 @@ socket: aSocket
 	"Private - Sets the socket instance variable to aSocket."
 
 	socket := aSocket! !
+
 !SocketWriteStream categoriesForMethods!
 close!operations!public! !
 flush!buffer!public! !
@@ -143,6 +148,7 @@ on: aSocket text: aBoolean
 		socket: aSocket;
 		on: ((aBoolean ifTrue: [String] ifFalse: [ByteArray]) newFixed: self bufferSize);
 		yourself! !
+
 !SocketWriteStream class categoriesForMethods!
 bufferSize!constants!public! !
 on:!instance creation!public! !

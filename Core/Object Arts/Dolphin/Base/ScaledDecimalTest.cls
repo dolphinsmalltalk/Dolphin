@@ -5,9 +5,13 @@ DolphinTest subclass: #ScaledDecimalTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ScaledDecimalTest guid: (GUID fromString: '{dfe00781-39f5-4b43-ba15-861976d2ff7c}')!
+
 ScaledDecimalTest comment: ''!
+
 !ScaledDecimalTest categoriesForClass!Unclassified! !
+
 !ScaledDecimalTest methodsFor!
 
 floatTestValues
@@ -332,6 +336,7 @@ testZeroRaisedToInteger
 	self assert: (0.0s1 raisedToInteger: 1) scale equals: 1.
 	self assert: (0.0s1 raisedToInteger: 2) equals: 0.
 	self assert: (0.0s1 raisedToInteger: 2) scale equals: 1! !
+
 !ScaledDecimalTest categoriesForMethods!
 floatTestValues!constants!private! !
 fractionTestValues!constants!private! !

@@ -5,14 +5,20 @@ GdiplusInitializer subclass: #GdiplusStringFormatInitializer
 	classVariableNames: 'GenericDefault GenericTypographic'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusStringFormatInitializer guid: (GUID fromString: '{14ad5dde-0284-402d-bbce-89611bcd32c4}')!
+
 GdiplusStringFormatInitializer isAbstract: true!
+
 GdiplusStringFormatInitializer comment: ''!
+
 !GdiplusStringFormatInitializer categoriesForClass!Unclassified! !
+
 !GdiplusStringFormatInitializer methodsFor!
 
 gdiplusConstructorErrorDescription
 	^'Error creating StringFormat'! !
+
 !GdiplusStringFormatInitializer categoriesForMethods!
 gdiplusConstructorErrorDescription!constants!private! !
 !
@@ -40,6 +46,7 @@ onPreStripImage
 
 uninitialize
 	GenericDefault := GenericTypographic := nil! !
+
 !GdiplusStringFormatInitializer class categoriesForMethods!
 formatFlags:language:!instance creation!public! !
 genericDefault!instance creation!public! !

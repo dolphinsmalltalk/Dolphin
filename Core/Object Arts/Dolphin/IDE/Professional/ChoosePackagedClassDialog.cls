@@ -5,10 +5,14 @@ ChooseClassDialog subclass: #ChoosePackagedClassDialog
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ChoosePackagedClassDialog guid: (GUID fromString: '{66f6e532-7d50-44b1-877b-8e46061d0277}')!
+
 ChoosePackagedClassDialog comment: 'ChoosePackagedClassDialog is a specialised <ChooseClassDialog> that allows for filtering of the class hierarchy by package selection.
 '!
+
 !ChoosePackagedClassDialog categoriesForClass!MVP-Presenters! !
+
 !ChoosePackagedClassDialog methodsFor!
 
 classesPresenterClass
@@ -25,6 +29,7 @@ packages: aCollection
 	"Set the packages selected in the receiver. Ignored at this level."
 
 	classesPresenter packages: aCollection! !
+
 !ChoosePackagedClassDialog categoriesForMethods!
 classesPresenterClass!constants!private! !
 onViewOpened!event handling!public! !
@@ -56,6 +61,7 @@ resource_Default_view
 uninitialize
 	Smalltalk developmentSystem classChooserClass == self 
 		ifTrue: [Smalltalk developmentSystem classChooserClass: nil]! !
+
 !ChoosePackagedClassDialog class categoriesForMethods!
 on:!instance creation!public! !
 resource_Default_view!public!resources-views! !

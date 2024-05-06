@@ -5,7 +5,9 @@ ExternalStructure subclass: #MIB_IPADDRROW
 	classVariableNames: '_OffsetOf_dwAddr _OffsetOf_dwBCastAddr _OffsetOf_dwIndex _OffsetOf_dwMask _OffsetOf_dwReasmSize _OffsetOf_Unused1 _OffsetOf_wType'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MIB_IPADDRROW guid: (GUID fromString: '{6b58a372-62e2-40b7-861b-d91fe418bacf}')!
+
 MIB_IPADDRROW addClassConstant: '_OffsetOf_dwAddr' value: 16r0!
 MIB_IPADDRROW addClassConstant: '_OffsetOf_dwBCastAddr' value: 16rC!
 MIB_IPADDRROW addClassConstant: '_OffsetOf_dwIndex' value: 16r4!
@@ -13,6 +15,7 @@ MIB_IPADDRROW addClassConstant: '_OffsetOf_dwMask' value: 16r8!
 MIB_IPADDRROW addClassConstant: '_OffsetOf_dwReasmSize' value: 16r10!
 MIB_IPADDRROW addClassConstant: '_OffsetOf_Unused1' value: 16r14!
 MIB_IPADDRROW addClassConstant: '_OffsetOf_wType' value: 16r16!
+
 MIB_IPADDRROW comment: '<MIB_IPADDRROW> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_IPADDRROW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -32,7 +35,9 @@ struct tagMIB_IPADDRROW {
 	unsigned short wType;
 } MIB_IPADDRROW;
 '!
+
 !MIB_IPADDRROW categoriesForClass!Win32-Structs! !
+
 !MIB_IPADDRROW methodsFor!
 
 dwAddr
@@ -64,6 +69,7 @@ wType
 	"Answer the <Integer> value of the receiver's 'wType' field."
 
 	^bytes wordAtOffset: _OffsetOf_wType! !
+
 !MIB_IPADDRROW categoriesForMethods!
 dwAddr!**compiled accessors**!public! !
 dwBCastAddr!**compiled accessors**!public! !
@@ -117,6 +123,7 @@ defineFields
 
 getFieldNames
 	^#(#dwAddr #dwIndex #dwMask #dwBCastAddr #dwReasmSize #wType)! !
+
 !MIB_IPADDRROW class categoriesForMethods!
 defineFields!initializing!public! !
 getFieldNames!**compiled accessors**!constants!private! !

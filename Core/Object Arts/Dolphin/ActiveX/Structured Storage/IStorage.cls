@@ -5,7 +5,9 @@ IUnknown subclass: #IStorage
 	classVariableNames: ''
 	poolDictionaries: 'OLEStructuredStorageConstants'
 	classInstanceVariableNames: ''!
+
 IStorage guid: (IID fromString: '{0000000b-0000-0000-c000-000000000046}')!
+
 IStorage comment: 'IStorage is a COMInterface class to wrap the standard COM interface of the same name.
 
 IStorage is an abstraction to represent a structured storage mechanism somewhat similar to a file system which contains both streams (files), represented by IStream interfaces, and sub-storages (sub-directories), represented by further IStorage interfaces. The standard system implementation of IStorage provides a file system within a file (or in fact, and byte device which implements ILockBytes). These are commonly called "compound files".
@@ -17,7 +19,9 @@ We do not actually implement this interface in Dolphin, only use it as a means o
 Note that the system compound file implementation can be transaction, unless storages are opened in transacted mode (i.e. STGM_DIRECT). Transacted storages support committing and rolling back changes. The default on freeing (i.e. calling Release()) on a storage is to rollback transacted changes to the last commit point,
 so it is wise to explicitly commit changes using #flush, or by sending #close.
 '!
+
 !IStorage categoriesForClass!COM-Interfaces! !
+
 !IStorage methodsFor!
 
 close
@@ -478,6 +482,7 @@ Stat: pstatstg grfStatFlag: grfStatFlag
 
 	<virtual stdcall: hresult 18 STATSTG* dword>
 	^self invalidCall: _failureCode! !
+
 !IStorage categoriesForMethods!
 close!operations!public! !
 clsid!accessing!public! !
@@ -747,6 +752,7 @@ openOnILockBytes: anILockBytes mode: grfMode
 		reserved: 0
 		ppstgOpen: answer.
 	^answer! !
+
 !IStorage class categoriesForMethods!
 create:!instance creation!public! !
 create:mode:!instance creation!public! !

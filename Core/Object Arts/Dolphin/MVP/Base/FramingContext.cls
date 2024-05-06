@@ -5,9 +5,13 @@ Object subclass: #FramingContext
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 FramingContext guid: (GUID fromString: '{ccf52b24-63ff-41c2-ab62-fe905a47ba3f}')!
+
 FramingContext comment: ''!
+
 !FramingContext categoriesForClass!Kernel-Objects! !
+
 !FramingContext methodsFor!
 
 bottom
@@ -86,6 +90,7 @@ top
 
 width
 	^rectangle width! !
+
 !FramingContext categoriesForMethods!
 bottom!accessing!public! !
 height!accessing!public! !
@@ -121,6 +126,7 @@ layoutContext: aLayoutContext view: aView parentRectangle: aRectangle
 			view: aView
 			parentRectangle: aRectangle;
 		yourself! !
+
 !FramingContext class categoriesForMethods!
 layoutContext:view:parentRectangle:!instance creation!public! !
 !

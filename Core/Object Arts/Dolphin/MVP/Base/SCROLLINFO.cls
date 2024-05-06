@@ -5,7 +5,9 @@ Win32Structure subclass: #SCROLLINFO
 	classVariableNames: '_OffsetOf_dwSize _OffsetOf_fMask _OffsetOf_nMax _OffsetOf_nMin _OffsetOf_nPage _OffsetOf_nPos _OffsetOf_nTrackPos'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SCROLLINFO guid: (GUID fromString: '{87b4c60f-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 SCROLLINFO addClassConstant: '_OffsetOf_dwSize' value: 16r0!
 SCROLLINFO addClassConstant: '_OffsetOf_fMask' value: 16r4!
 SCROLLINFO addClassConstant: '_OffsetOf_nMax' value: 16rC!
@@ -13,8 +15,11 @@ SCROLLINFO addClassConstant: '_OffsetOf_nMin' value: 16r8!
 SCROLLINFO addClassConstant: '_OffsetOf_nPage' value: 16r10!
 SCROLLINFO addClassConstant: '_OffsetOf_nPos' value: 16r14!
 SCROLLINFO addClassConstant: '_OffsetOf_nTrackPos' value: 16r18!
+
 SCROLLINFO comment: ''!
+
 !SCROLLINFO categoriesForClass!External-Data-Structured-Win32! !
+
 !SCROLLINFO methodsFor!
 
 dwSize: anInteger
@@ -119,6 +124,7 @@ range: anInterval
 		nMin: anInterval start;
 		nMax: anInterval stop;
 		maskIn: SIF_RANGE! !
+
 !SCROLLINFO categoriesForMethods!
 dwSize:!**compiled accessors**!public! !
 fMask!**compiled accessors**!public! !
@@ -170,6 +176,7 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #fMask #nMin #nMax #nPage #nPos #nTrackPos)! !
+
 !SCROLLINFO class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

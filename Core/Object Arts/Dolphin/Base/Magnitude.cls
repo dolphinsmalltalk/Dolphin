@@ -5,14 +5,19 @@ Object subclass: #Magnitude
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Magnitude guid: (GUID fromString: '{87b4c49b-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Magnitude isAbstract: true!
+
 Magnitude comment: 'Magnitude is an abstract class which provides the protocol objects which can be compared
 along a linear dimension, e.g. Numbers, Dates, Times.
 
 Subclasses of Magnitude must implement the following comparing protocol (at the very least):
 #<, #=, #hash'!
+
 !Magnitude categoriesForClass!Magnitude-General! !
+
 !Magnitude methodsFor!
 
 < operand
@@ -86,6 +91,7 @@ min: operand
 	^self < operand
 		ifTrue:  [self]
 		ifFalse: [operand]! !
+
 !Magnitude categoriesForMethods!
 <!comparing!public! !
 <=!comparing!public! !

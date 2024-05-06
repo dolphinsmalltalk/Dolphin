@@ -5,9 +5,13 @@ GdiplusTests subclass: #GdiplusExamplesTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusExamplesTest guid: (GUID fromString: '{a138a00e-d195-4a62-8029-e372575e15ea}')!
+
 GdiplusExamplesTest comment: ''!
+
 !GdiplusExamplesTest categoriesForClass!Unclassified! !
+
 !GdiplusExamplesTest methodsFor!
 
 testExampleGdipBFromBitmap
@@ -484,6 +488,7 @@ testExampleGdipTBTilingAShape
 	"This method was auto-generated"
 
 	GdiplusTextureBrush exampleGdipTBTilingAShape! !
+
 !GdiplusExamplesTest categoriesForMethods!
 testExampleGdipBFromBitmap!**auto generated**!public! !
 testExampleGdipBFromByteArray!**auto generated**!public! !
@@ -625,6 +630,7 @@ buildTestCase
 							space;
 							display: each selector.
 						self compile: stream contents categories: {autoCategory}]]! !
+
 !GdiplusExamplesTest class categoriesForMethods!
 buildTestCase!helpers!public! !
 !

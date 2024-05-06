@@ -6,7 +6,6 @@ package paxVersion: 1;
 
 package basicPackageVersion: '6.0'.
 
-
 package methodNames
 	add: #DBConnection -> #accessibleTables;
 	add: #DBConnection -> #autoCommit;
@@ -64,12 +63,6 @@ package setPrerequisites: #(
 	'..\Base\Dolphin').
 
 package!
-
-"Class Definitions"!
-
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -244,6 +237,7 @@ txnIsolationOptions
 uniqueIndexOf: aString 
 	#deprecated.
 	^self uniqueIndicesOf: aString! !
+
 !DBConnection categoriesForMethods!
 accessibleTables!enquiries!public!testing! !
 autoCommit!enquiries!public!testing! !
@@ -293,6 +287,7 @@ interpretTxnIsolationMask: mask
 	#deprecated.
 	^#('SQL_TXN_READ_UNCOMMITTED' 'SQL_TXN_READ_COMMITTED' 'SQL_TXN_REPEATABLE_READ' 'SQL_TXN_SERIALIZABLE' 'SQL_TXN_VERSIONING') 
 		select: [:maskName | (mask bitAnd: (ODBCConstants at: maskName)) ~= 0]! !
+
 !DBConnection class categoriesForMethods!
 interpretTxnIsolationMask:!operations!private! !
 !
@@ -306,6 +301,7 @@ invalidate
 prev
 	#deprecated.	"use #previous"
 	^self previous! !
+
 !DBResultSet categoriesForMethods!
 invalidate!operations!public! !
 prev!accessing!public! !
@@ -316,6 +312,7 @@ prev!accessing!public! !
 asTimeStamp
 	Notification deprecated.
 	^self asDateAndTime asTimeStamp! !
+
 !ODBCTIMESTAMP categoriesForMethods!
 asTimeStamp!converting!public! !
 !
@@ -325,6 +322,7 @@ asTimeStamp!converting!public! !
 fromTimeStamp: aTimeStamp
 	Notification deprecated.
 	^self fromTimeStamp: aTimeStamp asDateAndTime! !
+
 !ODBCTIMESTAMP class categoriesForMethods!
 fromTimeStamp:!instance creation!public! !
 !

@@ -5,13 +5,17 @@ Object subclass: #ChunkBrowserChunk
 	classVariableNames: 'ChunkClasses IconIndices'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ChunkBrowserChunk guid: (GUID fromString: '{81a73b99-1ef4-4578-b810-1fdb663e27f2}')!
+
 ChunkBrowserChunk comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2006 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
+
 !ChunkBrowserChunk categoriesForClass!IDB Goodies! !
+
 !ChunkBrowserChunk methodsFor!
 
 <= aChunkBrowserChunk
@@ -161,6 +165,7 @@ restore
 
 showIn: aTextPresenter
 	aTextPresenter text: rawText! !
+
 !ChunkBrowserChunk categoriesForMethods!
 <=!comparing!public! !
 =!comparing!public! !
@@ -265,6 +270,7 @@ newFor: aString
 	"Answer an initialized instance of the receiving chunk class"
 
 	^self new initialize: aString! !
+
 !ChunkBrowserChunk class categoriesForMethods!
 chunkClasses!constants!public! !
 chunksFromStream:!helpers!public! !

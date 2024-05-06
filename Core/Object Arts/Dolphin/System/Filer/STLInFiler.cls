@@ -5,9 +5,13 @@ STBInFiler subclass: #STLInFiler
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 STLInFiler guid: (GUID fromString: '{0eb5f19a-a120-4002-83d9-c520f502de6d}')!
+
 STLInFiler comment: ''!
+
 !STLInFiler categoriesForClass!System-Binary storage! !
+
 !STLInFiler methodsFor!
 
 basicNext
@@ -44,6 +48,7 @@ registerPredefinedObjects
 	"Private - Post version 3 the out filer stores everything."
 
 	version < 4 ifTrue: [super registerPredefinedObjects] ifFalse: [self registerPredefinedClasses]! !
+
 !STLInFiler categoriesForMethods!
 basicNext!accessing!private! !
 readClassLocator:!helpers!private! !
@@ -73,6 +78,7 @@ signature
 	being in Smalltalk Literal (STL) format."
 
 	^#'!!STL'! !
+
 !STLInFiler class categoriesForMethods!
 peekForSignatureIn:!public!testing! !
 signature!constants!private! !

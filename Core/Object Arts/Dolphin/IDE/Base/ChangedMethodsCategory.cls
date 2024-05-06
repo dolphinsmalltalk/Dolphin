@@ -5,11 +5,15 @@ VirtualMethodCategory subclass: #ChangedMethodsCategory
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ChangedMethodsCategory guid: (GUID fromString: '{51ab4605-0ab6-4cc3-b886-e2c90022ec0a}')!
+
 ChangedMethodsCategory comment: 'ChangedMethodsCategory is a virtual method category membership of which is limited to those methods which have unsaved changes (i.e. they are a method of a changed class with source residing in the change log).
 
 Although this class is strictly redundant (it being implementable as a PluggableVirtualMethodCategory), a specialised implemenation is much faster when enumerating the entire contents because the set of candidate behaviours can be limited.'!
+
 !ChangedMethodsCategory categoriesForClass!System-Support! !
+
 !ChangedMethodsCategory methodsFor!
 
 behaviorsDo: aMonadicValuable 
@@ -26,6 +30,7 @@ includesMethod: aCompiledMethod
 	The 'All' methods category includes all methods!!"
 
 	^aCompiledMethod isChanged! !
+
 !ChangedMethodsCategory categoriesForMethods!
 behaviorsDo:!enumerating!private! !
 includesMethod:!public!testing! !
@@ -46,6 +51,7 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	self removePseud: self pseudPrefix , 'changed'! !
+
 !ChangedMethodsCategory class categoriesForMethods!
 initialize!initializing!private! !
 uninitialize!class hierarchy-removing!private! !

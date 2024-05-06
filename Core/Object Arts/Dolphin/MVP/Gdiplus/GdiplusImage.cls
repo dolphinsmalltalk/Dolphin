@@ -5,9 +5,13 @@ GdiplusBase subclass: #GdiplusImage
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusImage guid: (GUID fromString: '{00b83139-f011-4475-99dd-34afd09c2e06}')!
+
 GdiplusImage comment: 'GdiplusImage provides methods for loading and saving raster images (bitmaps) and vector images (metafiles).  Various methods are available to manipulate and display an image.  Different file types can be read from and saved to - see #encoderMimeTypes and #decoderMimeTypes.'!
+
 !GdiplusImage categoriesForClass!Unclassified! !
+
 !GdiplusImage methodsFor!
 
 addToImageList: aWinImageList mask: aColorOrNil
@@ -736,6 +740,7 @@ width
 	(status := GdiplusLibrary default gdipGetImageWidth: self asParameter width: buf) == Ok
 		ifFalse: [GdiplusError signal: 'GdipGetImageWidth failed' with: status].
 	^buf asInteger! !
+
 !GdiplusImage categoriesForMethods!
 addToImageList:mask:!private! !
 asBitmap!public! !
@@ -1796,6 +1801,7 @@ prompt
 	^((FileOpenDialog new fileTypes: self fileTypes)
 		defaultExtension: 'png';
 		showModal) ifNotNil: [:file | self fromFile: file]! !
+
 !GdiplusImage class categoriesForMethods!
 decoderFileExtensions!enquiries!public! !
 decoderMimeTypes!enquiries!public! !

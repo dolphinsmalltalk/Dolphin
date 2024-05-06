@@ -5,9 +5,13 @@ MainTestCase subclass: #FractionFactoryANSITest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 FractionFactoryANSITest guid: (GUID fromString: '{ddb6a720-93f2-4167-891c-39c44c2c04e7}')!
+
 FractionFactoryANSITest comment: ''!
+
 !FractionFactoryANSITest categoriesForClass!Unclassified! !
+
 !FractionFactoryANSITest methodsFor!
 
 canonicalObject
@@ -19,6 +23,7 @@ protocol
 testXnumeratorXdenominatorX
 	" <Fraction factory>#numerator:denominator: "
 	#'Numeric'.! !
+
 !FractionFactoryANSITest categoriesForMethods!
 canonicalObject!public! !
 protocol!public! !

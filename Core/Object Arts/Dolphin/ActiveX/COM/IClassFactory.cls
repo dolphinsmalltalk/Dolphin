@@ -5,13 +5,17 @@ IUnknown subclass: #IClassFactory
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IClassFactory guid: (IID fromString: '{00000001-0000-0000-c000-000000000046}')!
+
 IClassFactory comment: '<IClassFactory> is a wrapper class for the custom interface ''UNKNWN.IClassFactory'' from type information in the ''IUnknown Type Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface.
 
 WARNING: This comment was automatically generated from the interface''s type information and any changes made here may be overwritten the next time this wrapper class is so generated.'!
+
 !IClassFactory categoriesForClass!COM-Interfaces! !
+
 !IClassFactory methodsFor!
 
 createInstance: pUnkOuter iid: iid
@@ -51,6 +55,7 @@ LockServer: fLock
 
 	<virtual stdcall: hresult 5 sdword>
 	^self invalidCall: _failureCode! !
+
 !IClassFactory categoriesForMethods!
 createInstance:iid:!instance creation!public! !
 CreateInstance:riid:ppvObject:!COM Interfaces-IClassFactory!public! !
@@ -85,6 +90,7 @@ defineFunctions
 			argumentTypes: 'IUnknown* GUID* IUnknown**';
 		defineFunction: #LockServer:
 			argumentTypes: 'bool'! !
+
 !IClassFactory class categoriesForMethods!
 ctxAll!constants!public! !
 ctxServer!constants!public! !

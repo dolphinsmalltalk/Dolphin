@@ -5,9 +5,13 @@ DolphinTest subclass: #DolphinSureTrustedDataTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DolphinSureTrustedDataTest guid: (GUID fromString: '{50b835d2-37e0-4729-8586-d2a1ba5d4a6b}')!
+
 DolphinSureTrustedDataTest comment: ''!
+
 !DolphinSureTrustedDataTest categoriesForClass!Unclassified! !
+
 !DolphinSureTrustedDataTest methodsFor!
 
 testBinaryReadOldCertificate
@@ -24,6 +28,7 @@ testBinaryReadOldCertificate
 	oaCert2 := ObjectArtsCertificate new.
 	self assert: oaCert data equals: oaCert2 data.
 	self assert: oaCert binaryStoreBytes equals: oaCert2 binaryStoreBytes! !
+
 !DolphinSureTrustedDataTest categoriesForMethods!
 testBinaryReadOldCertificate!public! !
 !

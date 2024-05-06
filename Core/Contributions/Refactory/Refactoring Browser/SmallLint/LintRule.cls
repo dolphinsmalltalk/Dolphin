@@ -5,8 +5,11 @@ Object subclass: #LintRule
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 LintRule guid: (GUID fromString: '{0a5056c9-9803-42b3-9c34-5bf472b5d967}')!
+
 LintRule isAbstract: true!
+
 LintRule comment: 'LintRule is an abstract class that represents some check on the code.
 
 Subclasses must implement the following messages:
@@ -22,7 +25,9 @@ Subclasses must implement the following messages:
 
 Instance Variables:
 	name	<String>	the display name of the rule'!
+
 !LintRule categoriesForClass!Refactory-Lint! !
+
 !LintRule methodsFor!
 
 allRules
@@ -90,6 +95,7 @@ rules
 
 viewResults
 	self subclassResponsibility! !
+
 !LintRule categoriesForMethods!
 allRules!accessing!public! !
 checkClass:!accessing!public! !
@@ -116,6 +122,7 @@ viewResults!private! !
 
 new
 	^super new initialize! !
+
 !LintRule class categoriesForMethods!
 new!instance creation!public! !
 !

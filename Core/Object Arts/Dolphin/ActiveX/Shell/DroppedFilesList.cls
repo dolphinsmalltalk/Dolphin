@@ -5,9 +5,13 @@ SequenceableCollection subclass: #DroppedFilesList
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DroppedFilesList guid: (GUID fromString: '{63eb134a-0edd-49f3-85eb-253b0f48741b}')!
+
 DroppedFilesList comment: 'DroppedFilesList represents a <sequencedReadableCollection> of dropped files. The elements are the <readableString> paths of the files that were dropped over a window which has called the DragAcceptFiles API.'!
+
 !DroppedFilesList categoriesForClass!Kernel-Objects! !
+
 !DroppedFilesList methodsFor!
 
 add: newElement 
@@ -71,6 +75,7 @@ size
 						lpszFile: nil
 						cch: 0].
 	^size! !
+
 !DroppedFilesList categoriesForMethods!
 add:!adding!public! !
 at:!accessing!public! !
@@ -86,6 +91,7 @@ size!accessing!public! !
 
 fromHandle: anExternalHandle 
 	^self new setHandle: anExternalHandle! !
+
 !DroppedFilesList class categoriesForMethods!
 fromHandle:!public! !
 !

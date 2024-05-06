@@ -5,7 +5,6 @@ package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk Document Presenter
 Copyright (c) Object Arts Ltd. 1997-2018. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.'.
 
-
 package classNames
 	add: #AbstractDocumentShell;
 	yourself.
@@ -31,11 +30,6 @@ Shell subclass: #AbstractDocumentShell
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

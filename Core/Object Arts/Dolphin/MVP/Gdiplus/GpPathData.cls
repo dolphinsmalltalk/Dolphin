@@ -5,10 +5,13 @@ ExternalStructure subclass: #GpPathData
 	classVariableNames: '_OffsetOf_Count _OffsetOf_Points _OffsetOf_Types'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GpPathData guid: (GUID fromString: '{411a9cb7-6abc-4f55-aa9a-82c7e0d44142}')!
+
 GpPathData addClassConstant: '_OffsetOf_Count' value: 16r0!
 GpPathData addClassConstant: '_OffsetOf_Points' value: 16r4!
 GpPathData addClassConstant: '_OffsetOf_Types' value: 16r8!
+
 GpPathData comment: '<GpPathData> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpPathData'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
@@ -24,7 +27,9 @@ struct tagGpPathData {
 	BYTE* types;
 } GpPathData;
 '!
+
 !GpPathData categoriesForClass!Unclassified! !
+
 !GpPathData methodsFor!
 
 Count
@@ -56,6 +61,7 @@ Types: aBYTE
 	"Set the receiver's 'Types' field to the value of the argument, aBYTE"
 
 	bytes uintPtrAtOffset: _OffsetOf_Types put: aBYTE yourAddress! !
+
 !GpPathData categoriesForMethods!
 Count!**compiled accessors**!public! !
 Count:!**compiled accessors**!public! !
@@ -87,6 +93,7 @@ defineFields
 
 getFieldNames
 	^#(#Count #Points #Types)! !
+
 !GpPathData class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

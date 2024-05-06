@@ -4,7 +4,6 @@ package paxVersion: 1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Simple, fast, but low quality Random stream implemented on the C-runtime library rand() function. Note that this has only 16 bits of randomness.'.
 
-
 package classNames
 	add: #RandomCRT;
 	yourself.
@@ -34,9 +33,6 @@ Random subclass: #RandomCRT
 	poolDictionaries: 'CRTConstants'
 	classInstanceVariableNames: ''!
 
-"Global Aliases"!
-
-
 "Loose Methods"!
 
 !CRTLibrary methodsFor!
@@ -48,6 +44,7 @@ rand
 srand: anInteger
 	<cdecl: void srand dword>
 	^self invalidCall: _failureCode! !
+
 !CRTLibrary categoriesForMethods!
 rand!CRT functions-floating point support!public! !
 srand:!CRT functions-floating point support!public! !

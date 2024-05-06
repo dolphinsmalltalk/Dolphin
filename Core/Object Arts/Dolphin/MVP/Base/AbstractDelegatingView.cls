@@ -5,14 +5,19 @@ View subclass: #AbstractDelegatingView
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AbstractDelegatingView guid: (GUID fromString: '{93fdcca7-1448-41db-abf2-5aa02abef751}')!
+
 AbstractDelegatingView isAbstract: true!
+
 AbstractDelegatingView comment: 'AbstractDelegatingView is an abstract class for views that contain another view internally and delegate their interface to it. An example is ToolBotton, which presents the interace of a toolbar button but actually contains an instance of class Toolbar internally and uses it to do all the work.
 
 Instance Variables:
 	resourceIdentifier	<ResourceIdentifier> only used by ReferenceView sublass. Here for compatibility with previous instances of ReferenceView.
 	referee			<view> which is the delegated view.'!
+
 !AbstractDelegatingView categoriesForClass!MVP-Resources-Misc! !
+
 !AbstractDelegatingView methodsFor!
 
 applyFont
@@ -176,6 +181,7 @@ viewNamed: aString ifNone: aBlock
 	on to our referee."
 
 	^self referee viewNamed: aString ifNone: aBlock! !
+
 !AbstractDelegatingView categoriesForMethods!
 applyFont!font!private!updating! !
 backcolor:!accessing!public! !

@@ -5,7 +5,9 @@ ADODB_ADO subclass: #ADODBField20
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
+
 ADODBField20 guid: (IID fromString: '{0000154c-0000-0010-8000-00aa006d2ea4}')!
+
 ADODBField20 comment: '`ADODBField20` is a wrapper class for the COM interface ''ADODB.Field20'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -88,7 +90,9 @@ interface Field20 : _ADO
 };
 ```
 '!
+
 !ADODBField20 categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
+
 !ADODBField20 methodsFor!
 
 actualSize
@@ -427,6 +431,7 @@ value: pvar
 	"Set the 'Value' property of the receiver to the <variant> value of the argument."
 
 	self put_Value: pvar asVariant! !
+
 !ADODBField20 categoriesForMethods!
 actualSize!**auto generated**!properties!public! !
 appendChunk:!**auto generated**!methods!public! !
@@ -519,6 +524,7 @@ defineFunctions
 		defineFunction: #put_Attributes:
 			argumentTypes: 'sdword'
 ! !
+
 !ADODBField20 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

@@ -5,7 +5,9 @@ AXTypeInfoStructure subclass: #TYPEATTR
 	classVariableNames: '_OffsetOf_cbAlignment _OffsetOf_cbSizeInstance _OffsetOf_cbSizeVft _OffsetOf_cFuncs _OffsetOf_cImplTypes _OffsetOf_cVars _OffsetOf_dwReserved _OffsetOf_guid _OffsetOf_idldescType _OffsetOf_lcid _OffsetOf_lpstrSchema _OffsetOf_memidConstructor _OffsetOf_memidDestructor _OffsetOf_tdescAlias _OffsetOf_typekind _OffsetOf_wMajorVerNum _OffsetOf_wMinorVerNum _OffsetOf_wTypeFlags'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TYPEATTR guid: (GUID fromString: '{c06f3b69-0868-11d3-93af-00a024ca708a}')!
+
 TYPEATTR addClassConstant: '_OffsetOf_cbAlignment' value: 16r34!
 TYPEATTR addClassConstant: '_OffsetOf_cbSizeInstance' value: 16r24!
 TYPEATTR addClassConstant: '_OffsetOf_cbSizeVft' value: 16r32!
@@ -24,6 +26,7 @@ TYPEATTR addClassConstant: '_OffsetOf_typekind' value: 16r28!
 TYPEATTR addClassConstant: '_OffsetOf_wMajorVerNum' value: 16r38!
 TYPEATTR addClassConstant: '_OffsetOf_wMinorVerNum' value: 16r3A!
 TYPEATTR addClassConstant: '_OffsetOf_wTypeFlags' value: 16r36!
+
 TYPEATTR comment: 'TYPEATTR is an <ExternalStructure> class to represent the Active-X Automation TYPEATTR structure.
 
 TYPEATTR contains a number of attributes describing a particular type info. element of a type library. Unfortunately it is overloaded (like its originator ITypeInfo) with the job of describing all of the different types of object for which type information may be present in the library (i.e. interfaces, typedefs, enums, coclasses, dispinterfaces, unions, structs, and modules). This means that some of the members may not be relevant to the programming element described. In general we access the members of this structure through the relevant subclass of AXTypeInfoAnalyzer, thus benefitting from the correct factoring of that hierarchy.
@@ -48,7 +51,9 @@ Fields:
 	tdescAlias		<TYPEDESC> for which this is an alias (typedef).
 	idldescType	<IDLDESC> providing information about the originating IDL.
 '!
+
 !TYPEATTR categoriesForClass!External-Data-Structured-COM! !
+
 !TYPEATTR methodsFor!
 
 basicFree
@@ -215,6 +220,7 @@ wTypeFlags
 	"Answer the <Integer> value of the receiver's 'wTypeFlags' field."
 
 	^bytes wordAtOffset: _OffsetOf_wTypeFlags! !
+
 !TYPEATTR categoriesForMethods!
 basicFree!private!realizing/unrealizing! !
 cbAlignment!**compiled accessors**!public! !
@@ -300,6 +306,7 @@ defineFields
 
 getFieldNames
 	^#(#guid #lcid #memidConstructor #memidDestructor #cbSizeInstance #typekind #cFuncs #cVars #cImplTypes #cbSizeVft #cbAlignment #wTypeFlags #wMajorVerNum #wMinorVerNum #tdescAlias #idldescType)! !
+
 !TYPEATTR class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

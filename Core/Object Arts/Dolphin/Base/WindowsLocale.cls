@@ -5,9 +5,13 @@ Locale subclass: #WindowsLocale
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 WindowsLocale guid: (GUID fromString: '{72672414-3e98-4af9-a1af-684456e4529d}')!
+
 WindowsLocale comment: ''!
+
 !WindowsLocale categoriesForClass!Unclassified! !
+
 !WindowsLocale methodsFor!
 
 amDesignator
@@ -435,6 +439,7 @@ yearMonthFormat
 	"Answer the year/month date format for the receiver locale."
 
 	^self getStringInfo: LOCALE_SYEARMONTH! !
+
 !WindowsLocale categoriesForMethods!
 amDesignator!constants!public! !
 asParameter!converting!public! !
@@ -527,6 +532,7 @@ systemLocales: anInteger
 	KernelLibrary default enumSystemLocales: enum asParameter dwFlags: anInteger.
 	enum free.
 	^locales collect: [:s | self lcid: (Integer readFrom: s asUppercase readStream radix: 16)]! !
+
 !WindowsLocale class categoriesForMethods!
 lcid:withOverrides:!instance creation!private! !
 reset!initializing!private! !

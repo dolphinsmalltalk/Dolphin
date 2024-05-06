@@ -5,9 +5,13 @@ DBConnectionTestResource subclass: #SQLServerNorthwindDB
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SQLServerNorthwindDB guid: (GUID fromString: '{2575aff5-9fad-4133-bf64-34ff8442f774}')!
+
 SQLServerNorthwindDB comment: ''!
+
 !SQLServerNorthwindDB categoriesForClass!Unclassified! !
+
 !SQLServerNorthwindDB methodsFor!
 
 connectString
@@ -58,6 +62,7 @@ serverName
 
 uid
 	^'sa'! !
+
 !SQLServerNorthwindDB categoriesForMethods!
 connectString!private! !
 createDatabase!private! !

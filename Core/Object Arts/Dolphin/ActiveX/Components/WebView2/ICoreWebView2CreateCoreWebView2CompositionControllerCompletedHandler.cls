@@ -5,7 +5,9 @@ ICoreWebView2CompletedHandler subclass: #ICoreWebView2CreateCoreWebView2Composit
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler guid: (IID fromString: '{02fab84b-1428-4fb7-ad45-1b2e64736184}')!
+
 ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler comment: '`ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -27,7 +29,9 @@ interface ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler :
 };
 ```
 '!
+
 !ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler class methodsFor!
 
 defineFunctions
@@ -36,6 +40,7 @@ defineFunctions
 	"
 
 	self defineFunction: #Invoke:arg: argumentTypes: 'hresult ICoreWebView2CompositionController*'! !
+
 !ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler class categoriesForMethods!
 defineFunctions!initializing!public! !
 !

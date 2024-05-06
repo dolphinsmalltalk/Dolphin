@@ -5,7 +5,9 @@ CommonDialogStructure subclass: #CHOOSECOLORW
 	classVariableNames: '_OffsetOf_dwSize _OffsetOf_flags _OffsetOf_hInstance _OffsetOf_hwndOwner _OffsetOf_lCustData _OffsetOf_lpCustColors _OffsetOf_lpfnHook _OffsetOf_lpTemplateName _OffsetOf_rgbResult'
 	poolDictionaries: 'CommonDialogConstants'
 	classInstanceVariableNames: ''!
+
 CHOOSECOLORW guid: (GUID fromString: '{87b4c5d1-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 CHOOSECOLORW addClassConstant: '_OffsetOf_dwSize' value: 16r0!
 CHOOSECOLORW addClassConstant: '_OffsetOf_flags' value: 16r14!
 CHOOSECOLORW addClassConstant: '_OffsetOf_hInstance' value: 16r8!
@@ -15,6 +17,7 @@ CHOOSECOLORW addClassConstant: '_OffsetOf_lpCustColors' value: 16r10!
 CHOOSECOLORW addClassConstant: '_OffsetOf_lpfnHook' value: 16r1C!
 CHOOSECOLORW addClassConstant: '_OffsetOf_lpTemplateName' value: 16r20!
 CHOOSECOLORW addClassConstant: '_OffsetOf_rgbResult' value: 16rC!
+
 CHOOSECOLORW comment: '<CHOOSECOLOR> is an <ExternalStructure> class to wrap the struct ''Win32.CHOOSECOLOR'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
@@ -37,7 +40,9 @@ struct tagCHOOSECOLOR {
 	[hidden] LPSTR lpTemplateName;
 } CHOOSECOLOR;
 '!
+
 !CHOOSECOLORW categoriesForClass!Win32-Structs! !
+
 !CHOOSECOLORW methodsFor!
 
 color
@@ -104,6 +109,7 @@ rgbResult: anInteger
 	"Set the receiver's 'rgbResult' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_rgbResult put: anInteger! !
+
 !CHOOSECOLORW categoriesForMethods!
 color!accessing!public! !
 dwSize:!**compiled accessors**!public! !
@@ -155,6 +161,7 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #hwndOwner #hInstance #rgbResult #lpCustColors #flags #lpfnHook)! !
+
 !CHOOSECOLORW class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

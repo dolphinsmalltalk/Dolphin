@@ -5,9 +5,13 @@ DolphinTestResource subclass: #DolphinTestPackages
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DolphinTestPackages guid: (GUID fromString: '{b3de54cd-bdd2-4043-9a29-0b80a02adcc1}')!
+
 DolphinTestPackages comment: ''!
+
 !DolphinTestPackages categoriesForClass!Unclassified! !
+
 !DolphinTestPackages methodsFor!
 
 a
@@ -51,6 +55,7 @@ tearDown
 						Package manager removePackage: each]].
 	a := b := c := nil.
 	super tearDown! !
+
 !DolphinTestPackages categoriesForMethods!
 a!accessing!public! !
 b!accessing!public! !

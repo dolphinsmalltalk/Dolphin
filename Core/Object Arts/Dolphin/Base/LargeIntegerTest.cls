@@ -5,9 +5,13 @@ IntegerTest subclass: #LargeIntegerTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 LargeIntegerTest guid: (GUID fromString: '{36a14bf1-e5f1-45a2-a72d-6e853ab71f46}')!
+
 LargeIntegerTest comment: ''!
+
 !LargeIntegerTest categoriesForClass!Unclassified! !
+
 !LargeIntegerTest methodsFor!
 
 canonicalInstance
@@ -1370,6 +1374,7 @@ testSubtractSmall
 	self assert: res equals: 16rBFFFFFFF.
 	self assert: res class identicalTo: LargeInteger.
 	self assert: res isImmutable! !
+
 !LargeIntegerTest categoriesForMethods!
 canonicalInstance!constants!private! !
 largeComparisonPairs!constants!private! !

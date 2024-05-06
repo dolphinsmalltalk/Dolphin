@@ -5,9 +5,13 @@ RefactoringTest subclass: #PushDownMethodTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PushDownMethodTest guid: (GUID fromString: '{0795b490-f7d0-4814-9b01-1f2f86ac9c20}')!
+
 PushDownMethodTest comment: ''!
+
 !PushDownMethodTest categoriesForClass!Refactory-Testing! !
+
 !PushDownMethodTest methodsFor!
 
 testPushDownMethod
@@ -46,6 +50,7 @@ testPushDownNonExistantMenu
 				pushDown: #(#someMethodThatDoesNotExist)
 				from: LintRuleTest.
 	self shouldFail: refactoring! !
+
 !PushDownMethodTest categoriesForMethods!
 testPushDownMethod!public!tests! !
 testPushDownMethodOnNonAbstractClass!failure tests!public! !

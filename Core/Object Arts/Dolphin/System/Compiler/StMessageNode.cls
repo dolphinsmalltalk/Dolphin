@@ -5,7 +5,9 @@ StValueNode subclass: #StMessageNode
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StMessageNode guid: (GUID fromString: '{3a681160-291e-495f-a7ce-71b4a751f5d4}')!
+
 StMessageNode comment: 'StMessageNode is a parse tree node that represents a message send.
 
 Instance Variables:
@@ -15,7 +17,9 @@ Instance Variables:
 	selectorParts	<SequenceableCollection of: StValueToken>	the tokens for each keyword
 
 '!
+
 !StMessageNode categoriesForClass!System-Compiler! !
+
 !StMessageNode methodsFor!
 
 = anObject 
@@ -197,6 +201,7 @@ stopWithoutParentheses
 
 value
 	^self selector! !
+
 !StMessageNode categoriesForMethods!
 =!comparing!public! !
 acceptVisitor:!public!visitor! !
@@ -255,6 +260,7 @@ receiver: aValueNode selectorParts: keywordTokens arguments: valueNodes
 			selectorParts: keywordTokens
 			arguments: valueNodes;
 		yourself! !
+
 !StMessageNode class categoriesForMethods!
 receiver:selector:!instance creation!public! !
 receiver:selector:arguments:!instance creation!public! !

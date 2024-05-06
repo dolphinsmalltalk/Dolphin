@@ -4,7 +4,6 @@ package paxVersion: 1;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
-
 package classNames
 	add: #ExampleSetTest;
 	add: #ResumableTestFailureTestCase;
@@ -38,21 +37,25 @@ TestCase subclass: #ExampleSetTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TestCase subclass: #ResumableTestFailureTestCase
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TestCase subclass: #SimpleTestResourceTestCase
 	instanceVariableNames: 'resource'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TestCase subclass: #SUnitTest
 	instanceVariableNames: 'hasRun hasSetup hasRanOnce'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TestResource subclass: #SimpleTestResource
 	instanceVariableNames: 'runningState hasRun hasSetup hasRanOnce'
 	classVariableNames: ''
@@ -63,8 +66,6 @@ TestResource subclass: #SimpleTestResource
 
 ExampleTestResource := SimpleTestResource!
 
-
-"Loose Methods"!
 
 "End of package definition"!
 

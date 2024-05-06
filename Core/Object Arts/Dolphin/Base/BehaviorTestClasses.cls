@@ -5,9 +5,13 @@ DolphinTestClassResource subclass: #BehaviorTestClasses
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 BehaviorTestClasses guid: (GUID fromString: '{bc98a827-49e3-4ce3-902e-fa6452944374}')!
+
 BehaviorTestClasses comment: ''!
+
 !BehaviorTestClasses categoriesForClass!Unclassified! !
+
 !BehaviorTestClasses methodsFor!
 
 classWithAbstractMethod1
@@ -43,6 +47,7 @@ isAvailable
 tearDown
 	super tearDown.
 	classWithAbstractMethod1 := classWithAbstractMethod2 := nil! !
+
 !BehaviorTestClasses categoriesForMethods!
 classWithAbstractMethod1!accessing!public! !
 classWithAbstractMethod2!accessing!public! !

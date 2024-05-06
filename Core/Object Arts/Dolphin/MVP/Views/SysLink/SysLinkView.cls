@@ -5,11 +5,15 @@ StaticView subclass: #SysLinkView
 	classVariableNames: ''
 	poolDictionaries: 'SysLinkConstants'
 	classInstanceVariableNames: ''!
+
 SysLinkView guid: (GUID fromString: '{e19a1369-3c1d-4216-b5b6-c6649e51dc4b}')!
+
 SysLinkView comment: 'SysLinkView is a <valueView> wrapper class for the Windows SysLink control. The SysLink control is similar to a normal <StaticText> control, but may contain embedded links, and triggers #linkClicked: notification events when the links are clicked. The <valueModel> associated with a SysLinkView must always yield a <readableString> value when mapped through the installed type converter. A SysLinkView will normally be used in conjunction with a <TextPresenter>.
 
 Please Note: The underlying Windows control is not supported on Windows 2000 and earlier.'!
+
 !SysLinkView categoriesForClass!MVP-Views! !
+
 !SysLinkView methodsFor!
 
 calculateExtent: aLayoutContext 
@@ -134,6 +138,7 @@ preferredHeight
 	ideal height, given its current width."
 
 	^self sendMessage: LM_GETIDEALHEIGHT! !
+
 !SysLinkView categoriesForMethods!
 calculateExtent:!geometry!private! !
 displayValue!private!updating! !
@@ -163,6 +168,7 @@ winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
 
 	^'SysLink'! !
+
 !SysLinkView class categoriesForMethods!
 initialize!development!initializing!private! !
 uninitialize!class hierarchy-removing!public! !

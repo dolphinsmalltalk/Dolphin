@@ -5,11 +5,16 @@ NMHDR subclass: #NMSELCHANGE
 	classVariableNames: '_OffsetOf_stSelEnd _OffsetOf_stSelStart'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 NMSELCHANGE guid: (GUID fromString: '{7ee1558c-5390-4f86-ada9-ae1300922720}')!
+
 NMSELCHANGE addClassConstant: '_OffsetOf_stSelEnd' value: 16r1C!
 NMSELCHANGE addClassConstant: '_OffsetOf_stSelStart' value: 16rC!
+
 NMSELCHANGE comment: ''!
+
 !NMSELCHANGE categoriesForClass!External-Data-Structured-Win32! !
+
 !NMSELCHANGE methodsFor!
 
 stSelEnd
@@ -21,6 +26,7 @@ stSelStart
 	"Answer the <SYSTEMTIME> value of the receiver's 'stSelStart' field."
 
 	^SYSTEMTIME fromAddress: bytes yourAddress + _OffsetOf_stSelStart! !
+
 !NMSELCHANGE categoriesForMethods!
 stSelEnd!**compiled accessors**!public! !
 stSelStart!**compiled accessors**!public! !
@@ -40,6 +46,7 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #stSelStart #stSelEnd)! !
+
 !NMSELCHANGE class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

@@ -5,9 +5,13 @@ StValueToken subclass: #StLiteralArrayToken
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StLiteralArrayToken guid: (GUID fromString: '{93797e84-0be7-4528-8362-983d06286a99}')!
+
 StLiteralArrayToken comment: ''!
+
 !StLiteralArrayToken categoriesForClass!Unclassified! !
+
 !StLiteralArrayToken methodsFor!
 
 acceptVisitor: aTokenVisitor
@@ -18,6 +22,7 @@ isForByteArray
 
 isLiteralArrayToken
 	^true! !
+
 !StLiteralArrayToken categoriesForMethods!
 acceptVisitor:!public!visitor! !
 isForByteArray!public!testing! !

@@ -5,7 +5,9 @@ StProgramNode subclass: #StReturnNode
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StReturnNode guid: (GUID fromString: '{7c9285e7-8d52-4fc6-9ff5-531771e8fe6e}')!
+
 StReturnNode comment: 'StReturnNode is a parse tree node that represents a return expression.
 
 Instance Variables:
@@ -13,7 +15,9 @@ Instance Variables:
 	value	<StValueNode>	the value that is being returned
 
 '!
+
 !StReturnNode categoriesForClass!System-Compiler! !
+
 !StReturnNode methodsFor!
 
 = anObject 
@@ -57,6 +61,7 @@ value
 value: valueNode 
 	value := valueNode.
 	value parent: self! !
+
 !StReturnNode categoriesForMethods!
 =!comparing!public! !
 acceptVisitor:!public!visitor! !
@@ -79,6 +84,7 @@ return: returnInteger value: aValueNode
 
 value: aNode
 	^self return: nil value: aNode! !
+
 !StReturnNode class categoriesForMethods!
 return:value:!instance creation!public! !
 value:!instance creation!public! !

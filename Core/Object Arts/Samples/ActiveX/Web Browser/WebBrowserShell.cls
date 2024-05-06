@@ -5,9 +5,12 @@ Shell subclass: #WebBrowserShell
 	classVariableNames: 'ImagesBlockedMask LogEventsMask'
 	poolDictionaries: 'WebView2Constants'
 	classInstanceVariableNames: ''!
+
 WebBrowserShell guid: (GUID fromString: '{840f8a35-998b-4346-ab86-95db62f03a47}')!
+
 WebBrowserShell addClassConstant: 'ImagesBlockedMask' value: 16r2!
 WebBrowserShell addClassConstant: 'LogEventsMask' value: 16r1!
+
 WebBrowserShell comment: 'WebBrowserShell is a simple web browser application built around the Microsoft Web Browser control (the basis of Internet Explorer).
 
 This sample does wire up to a few events from the brower control (mainly for illustrative purposes), but if you want to learn more about what events are fired and when you can turn on logging of WebView2 events from the Settings menu, and will then see a trace of all events being logged to the Transcript as the browser is used.
@@ -27,7 +30,9 @@ Try:
   `flags`			`<integer>`. Various flags
 
 '!
+
 !WebBrowserShell categoriesForClass!Samples! !
+
 !WebBrowserShell methodsFor!
 
 areImagesBlocked
@@ -454,6 +459,7 @@ webviewSettings
 zoomReset
 	"<acceleratorKey: 'Ctrl+0'>"
 	browser view zoomFactor: 1! !
+
 !WebBrowserShell categoriesForMethods!
 areImagesBlocked!public!testing! !
 buildPopupForCommand:!commands!private! !
@@ -548,6 +554,7 @@ shutdownOnExit
 	"Answer whether a runtime session should be shutdown when an instance of the receiver is closed."
 
 	^true! !
+
 !WebBrowserShell class categoriesForMethods!
 displayOn:!printing!public! !
 icon!constants!public! !

@@ -5,7 +5,9 @@ IMatch subclass: #IMatch2
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IMatch2 guid: (IID fromString: '{3f4dacb1-160d-11d2-a8e9-00104b365c9f}')!
+
 IMatch2 comment: '`IMatch2` is a wrapper class for the COM interface ''VBScript_RegExp_55.IMatch2'' generated from type information in the ''Microsoft VBScript Regular Expressions 5.5'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -38,7 +40,9 @@ interface IMatch2 : IDispatch
 };
 ```
 '!
+
 !IMatch2 categoriesForClass!COM-Interfaces!VBScript_RegExp_55-Interfaces! !
+
 !IMatch2 methodsFor!
 
 get_SubMatches: ppSubMatches
@@ -59,6 +63,7 @@ subMatches
 	answer := subMatches asArray.
 	subMatches free.
 	^answer! !
+
 !IMatch2 categoriesForMethods!
 get_SubMatches:!**auto generated**!COM Interfaces-IMatch2!private! !
 subMatches!properties!public! !
@@ -74,6 +79,7 @@ defineFunctions
 		defineFunction: #get_SubMatches:
 			argumentTypes: 'IDispatch**'
 ! !
+
 !IMatch2 class categoriesForMethods!
 defineFunctions!initializing!public! !
 !

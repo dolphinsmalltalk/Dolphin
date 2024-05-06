@@ -5,7 +5,9 @@ ControlView subclass: #CommandButton
 	classVariableNames: 'StandardCommands'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 CommandButton guid: (GUID fromString: '{7e1607a8-cdec-4c98-b2a8-c1376e58380e}')!
+
 CommandButton comment: 'CommandButton is the abstract class of  <ControlView>s that act as <commandSource>s, holding a <CommandDescription> detailing the command that should be fired when the button is clicked. The command is subject to the normal command routing followed by all commands in Dolphin, e.g. those initiated from menus, toolbars and keyboard accelerators. See the <CommandDescription> comment for further details.
 
 Concrete subclasses provide implementations based on the Windows BUTTON (PushButton) and SysLink (LinkButton) controls.
@@ -16,7 +18,9 @@ Instance Variables:
 Class Variables:
 	StandardCommands	<IdentityDictionary> map of <selector>s to standard button IDs.
 '!
+
 !CommandButton categoriesForClass!MVP-Resources-Buttons!MVP-Views! !
+
 !CommandButton methodsFor!
 
 command
@@ -91,6 +95,7 @@ validateUserInterface
 		ifTrue: 
 			["The button text should be updated"
 			self text: query text]! !
+
 !CommandButton categoriesForMethods!
 command!accessing!public! !
 command:!accessing!public! !
@@ -140,6 +145,7 @@ initialize
 
 themePartName
 	^'BUTTON'! !
+
 !CommandButton class categoriesForMethods!
 icon!constants!public! !
 initialize!development!initializing!private! !

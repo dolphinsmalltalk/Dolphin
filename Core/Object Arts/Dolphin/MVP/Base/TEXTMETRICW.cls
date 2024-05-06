@@ -5,7 +5,9 @@ Win32Structure subclass: #TEXTMETRICW
 	classVariableNames: '_OffsetOf_tmAscent _OffsetOf_tmAveCharWidth _OffsetOf_tmBreakChar _OffsetOf_tmCharSet _OffsetOf_tmDefaultChar _OffsetOf_tmDescent _OffsetOf_tmDigitizedAspectX _OffsetOf_tmDigitizedAspectY _OffsetOf_tmExternalLeading _OffsetOf_tmFirstChar _OffsetOf_tmHeight _OffsetOf_tmInternalLeading _OffsetOf_tmItalic _OffsetOf_tmLastChar _OffsetOf_tmMaxCharWidth _OffsetOf_tmOverhang _OffsetOf_tmPitchAndFamily _OffsetOf_tmStruckOut _OffsetOf_tmUnderlined _OffsetOf_tmWeight'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TEXTMETRICW guid: (GUID fromString: '{ea0d6df4-3794-11d3-979e-0080c8d59432}')!
+
 TEXTMETRICW addClassConstant: '_OffsetOf_tmAscent' value: 16r4!
 TEXTMETRICW addClassConstant: '_OffsetOf_tmAveCharWidth' value: 16r14!
 TEXTMETRICW addClassConstant: '_OffsetOf_tmBreakChar' value: 16r32!
@@ -26,6 +28,7 @@ TEXTMETRICW addClassConstant: '_OffsetOf_tmPitchAndFamily' value: 16r37!
 TEXTMETRICW addClassConstant: '_OffsetOf_tmStruckOut' value: 16r36!
 TEXTMETRICW addClassConstant: '_OffsetOf_tmUnderlined' value: 16r35!
 TEXTMETRICW addClassConstant: '_OffsetOf_tmWeight' value: 16r1C!
+
 TEXTMETRICW comment: '<TEXTMETRIC> is an <ExternalStructure> class to wrap the struct ''Win.TEXTMETRIC'' from type information in the ''Windows API (ANSI)'' library.
 
 The type library contains no documentation for this struct
@@ -58,7 +61,9 @@ struct tagTEXTMETRIC {
 	BYTE tmCharSet;
 } TEXTMETRIC;
 '!
+
 !TEXTMETRICW categoriesForClass!Win32-Structs! !
+
 !TEXTMETRICW methodsFor!
 
 tmAscent
@@ -160,6 +165,7 @@ tmWeight
 	"Answer the <Integer> value of the receiver's 'tmWeight' field."
 
 	^bytes sdwordAtOffset: _OffsetOf_tmWeight! !
+
 !TEXTMETRICW categoriesForMethods!
 tmAscent!**compiled accessors**!public! !
 tmAveCharWidth!**compiled accessors**!public! !
@@ -243,6 +249,7 @@ packing
 	"Uses non-standard packing"
 
 	^4! !
+
 !TEXTMETRICW class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

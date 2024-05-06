@@ -5,7 +5,9 @@ HttpServerStructure subclass: #HTTP_SSL_PROTOCOL_INFO
 	classVariableNames: '_OffsetOf_CipherStrength _OffsetOf_CipherType _OffsetOf_HashStrength _OffsetOf_HashType _OffsetOf_KeyExchangeStrength _OffsetOf_KeyExchangeType _OffsetOf_Protocol'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 HTTP_SSL_PROTOCOL_INFO guid: (GUID fromString: '{73784afd-f4e5-464e-b716-46ebb0c8c6d1}')!
+
 HTTP_SSL_PROTOCOL_INFO addClassConstant: '_OffsetOf_CipherStrength' value: 16r8!
 HTTP_SSL_PROTOCOL_INFO addClassConstant: '_OffsetOf_CipherType' value: 16r4!
 HTTP_SSL_PROTOCOL_INFO addClassConstant: '_OffsetOf_HashStrength' value: 16r10!
@@ -13,6 +15,7 @@ HTTP_SSL_PROTOCOL_INFO addClassConstant: '_OffsetOf_HashType' value: 16rC!
 HTTP_SSL_PROTOCOL_INFO addClassConstant: '_OffsetOf_KeyExchangeStrength' value: 16r18!
 HTTP_SSL_PROTOCOL_INFO addClassConstant: '_OffsetOf_KeyExchangeType' value: 16r14!
 HTTP_SSL_PROTOCOL_INFO addClassConstant: '_OffsetOf_Protocol' value: 16r0!
+
 HTTP_SSL_PROTOCOL_INFO comment: '<HTTP_SSL_PROTOCOL_INFO> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_SSL_PROTOCOL_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -33,7 +36,9 @@ struct tagHTTP_SSL_PROTOCOL_INFO {
 	[readonly] ULONG KeyExchangeStrength;
 } HTTP_SSL_PROTOCOL_INFO;
 '!
+
 !HTTP_SSL_PROTOCOL_INFO categoriesForClass!WinHttpServer-Structs! !
+
 !HTTP_SSL_PROTOCOL_INFO methodsFor!
 
 CipherStrength
@@ -70,6 +75,7 @@ Protocol
 	"Answer the <Integer> value of the receiver's 'Protocol' field."
 
 	^bytes dwordAtOffset: _OffsetOf_Protocol! !
+
 !HTTP_SSL_PROTOCOL_INFO categoriesForMethods!
 CipherStrength!**compiled accessors**!public! !
 CipherType!**compiled accessors**!public! !
@@ -111,6 +117,7 @@ defineFields
 
 getFieldNames
 	^#(#Protocol #CipherType #CipherStrength #HashType #HashStrength #KeyExchangeType #KeyExchangeStrength)! !
+
 !HTTP_SSL_PROTOCOL_INFO class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

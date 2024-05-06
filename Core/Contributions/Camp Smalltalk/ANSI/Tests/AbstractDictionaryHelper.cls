@@ -5,9 +5,13 @@ TestCaseHelper subclass: #AbstractDictionaryHelper
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AbstractDictionaryHelper guid: (GUID fromString: '{231d61aa-01c6-4120-b38f-813d3790f479}')!
+
 AbstractDictionaryHelper comment: ''!
+
 !AbstractDictionaryHelper categoriesForClass!Unclassified! !
+
 !AbstractDictionaryHelper methodsFor!
 
 emptyObject
@@ -301,6 +305,7 @@ testXvalues
 			checkSum = 110]
 		conformTo: #abstractDictionary
 		selector: #values.! !
+
 !AbstractDictionaryHelper categoriesForMethods!
 emptyObject!public! !
 object!public! !

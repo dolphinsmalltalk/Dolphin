@@ -5,9 +5,13 @@ DolphinTest subclass: #BrushTest
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 BrushTest guid: (GUID fromString: '{1128ddc3-7330-4539-bc63-7a60b93fe7bc}')!
+
 BrushTest comment: ''!
+
 !BrushTest categoriesForClass!Unclassified! !
+
 !BrushTest methodsFor!
 
 testBitmapBrush
@@ -92,6 +96,7 @@ testStbConversion2
 				b: 250).
 	self assert: brush logBrush hatch equals: HS_BDIAGONAL.
 	self assert: brush logBrush style equals: BS_HATCHED! !
+
 !BrushTest categoriesForMethods!
 testBitmapBrush!public!unit tests! !
 testPrintString!public!unit tests! !

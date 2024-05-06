@@ -5,10 +5,15 @@ TestCase subclass: #RefactoringBrowserTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoringBrowserTest guid: (GUID fromString: '{89b8c31b-39f7-49c7-bd85-3b0c202ccf98}')!
+
 RefactoringBrowserTest isAbstract: true!
+
 RefactoringBrowserTest comment: 'SUnitBrowser openOnTestCase: self'!
+
 !RefactoringBrowserTest categoriesForClass!Refactory-Testing! !
+
 !RefactoringBrowserTest methodsFor!
 
 convertInterval: anInterval for: aString 
@@ -44,6 +49,7 @@ proceedThroughWarning: aBlock
 "	aBlock on: RefactoringWarning do: [:ex | ex proceed]"
 	aBlock on: RefactoringWarning do: [:ex | ex resume]
 ! !
+
 !RefactoringBrowserTest categoriesForMethods!
 convertInterval:for:!private! !
 executeRefactoring:!private! !
@@ -57,6 +63,7 @@ shouldInheritSelectors
 	"answer true to inherit selectors from superclasses"
 
 	^false! !
+
 !RefactoringBrowserTest class categoriesForMethods!
 shouldInheritSelectors!public!Testing! !
 !

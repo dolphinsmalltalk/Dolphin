@@ -5,9 +5,13 @@ CommonDialog subclass: #PrintDialog
 	classVariableNames: ''
 	poolDictionaries: 'PrintDialogConstants'
 	classInstanceVariableNames: ''!
+
 PrintDialog guid: (GUID fromString: '{87b4c6b4-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 PrintDialog comment: 'PrintDialog is a <valueDialogPresenter> implementing the Windows PrintDlg common dialog. The associated <valueModel> contains an <integer> representing the device context handle (HDC) for the chosen printer.'!
+
 !PrintDialog categoriesForClass!MVP-Presenters! !
+
 !PrintDialog methodsFor!
 
 basicShowModal
@@ -67,6 +71,7 @@ winStructClass
 	"Private - Answer the class to use for the receiver's associated windows parameter structure."
 
 	^PRINTDLGW! !
+
 !PrintDialog categoriesForMethods!
 basicShowModal!private!realizing/unrealizing! !
 copies!accessing!public! !

@@ -5,9 +5,13 @@ ChunkReader subclass: #SingleChunkReader
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SingleChunkReader guid: (GUID fromString: '{daff2a96-8e7c-400e-9fb0-df8d523f7136}')!
+
 SingleChunkReader comment: ''!
+
 !SingleChunkReader categoriesForClass!Unclassified! !
+
 !SingleChunkReader methodsFor!
 
 fileInFrom: aSourceFiler
@@ -18,6 +22,7 @@ fileInFrom: aSourceFiler
 	(aSourceFiler atEnd or: [(chunk := aSourceFiler nextChunk) isEmpty]) 
 		ifFalse: [self chunk: chunk].
 	^endAction value! !
+
 !SingleChunkReader categoriesForMethods!
 fileInFrom:!private!source filing! !
 !

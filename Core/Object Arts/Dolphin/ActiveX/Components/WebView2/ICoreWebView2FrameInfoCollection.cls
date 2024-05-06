@@ -5,7 +5,9 @@ ICoreWebView2IterableCollection subclass: #ICoreWebView2FrameInfoCollection
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2FrameInfoCollection guid: (IID fromString: '{8f834154-d38e-4d90-affb-6800a7272839}')!
+
 ICoreWebView2FrameInfoCollection comment: '`ICoreWebView2FrameInfoCollection` is a wrapper class for the COM interface ''WebView2.ICoreWebView2FrameInfoCollection'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -26,7 +28,9 @@ interface ICoreWebView2FrameInfoCollection : IUnknown
 };
 ```
 '!
+
 !ICoreWebView2FrameInfoCollection categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2FrameInfoCollection methodsFor!
 
 GetIterator: iterator
@@ -40,6 +44,7 @@ GetIterator: iterator
 
 iteratorClass
 	^ICoreWebView2FrameInfoCollectionIterator! !
+
 !ICoreWebView2FrameInfoCollection categoriesForMethods!
 GetIterator:!**auto generated**!COM Interfaces-ICoreWebView2FrameInfoCollection!private! !
 iteratorClass!constants!private! !
@@ -55,6 +60,7 @@ defineFunctions
 		defineFunction: #GetIterator:
 			argumentTypes: 'ICoreWebView2FrameInfoCollectionIterator**'
 ! !
+
 !ICoreWebView2FrameInfoCollection class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

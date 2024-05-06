@@ -5,9 +5,13 @@ DolphinTest subclass: #ViewComposerTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ViewComposerTest guid: (GUID fromString: '{84c0e504-bdda-4d87-92dc-53b89f80f634}')!
+
 ViewComposerTest comment: ''!
+
 !ViewComposerTest categoriesForClass!Unclassified! !
+
 !ViewComposerTest methodsFor!
 
 doArenaDropOf: subPresenterType operation: aSymbol
@@ -283,6 +287,7 @@ testZOrderPreservedByMutate
 	vc selection: shell.
 	vc mutateTo: ContainerView.
 	self assert: (shell subViews collect: [:each | each name]) asArray equals: #('1' '2' '3')! !
+
 !ViewComposerTest categoriesForMethods!
 doArenaDropOf:operation:!helpers!private! !
 dragResourceFor:!helpers!private! !

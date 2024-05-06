@@ -5,9 +5,13 @@ DolphinTest subclass: #PropertyManagerTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PropertyManagerTest guid: (GUID fromString: '{fb569e34-0ebf-4ccd-abc2-4739486156f3}')!
+
 PropertyManagerTest comment: ''!
+
 !PropertyManagerTest categoriesForClass!Unclassified! !
+
 !PropertyManagerTest methodsFor!
 
 testRegisterIsWeaklyKeyed
@@ -16,6 +20,7 @@ testRegisterIsWeaklyKeyed
 	self assert: subject register hasWeakKeys.
 	self deny: subject register hasWeakValues
 ! !
+
 !PropertyManagerTest categoriesForMethods!
 testRegisterIsWeaklyKeyed!public! !
 !

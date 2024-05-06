@@ -5,12 +5,15 @@ Win32Structure subclass: #HOSTENT
 	classVariableNames: '_OffsetOf_h_addr_list _OffsetOf_h_addrtype _OffsetOf_h_aliases _OffsetOf_h_length _OffsetOf_h_name'
 	poolDictionaries: 'WinSocketConstants'
 	classInstanceVariableNames: ''!
+
 HOSTENT guid: (GUID fromString: '{87b4c5f4-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 HOSTENT addClassConstant: '_OffsetOf_h_addr_list' value: 16rC!
 HOSTENT addClassConstant: '_OffsetOf_h_addrtype' value: 16r8!
 HOSTENT addClassConstant: '_OffsetOf_h_aliases' value: 16r4!
 HOSTENT addClassConstant: '_OffsetOf_h_length' value: 16rA!
 HOSTENT addClassConstant: '_OffsetOf_h_name' value: 16r0!
+
 HOSTENT comment: '<HOSTENT> is an <ExternalStructure> class to wrap the struct ''Win32.HOSTENT'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
@@ -29,7 +32,9 @@ struct tagHOSTENT {
 	[readonly, helpstring("A NULL-terminated list of addresses for the host. Addresses are returned in network byte order.")] void** h_addr_list;
 } HOSTENT;
 '!
+
 !HOSTENT categoriesForClass!Win32-Structs! !
+
 !HOSTENT methodsFor!
 
 address
@@ -98,6 +103,7 @@ reifyNullTerminatedArray: list
 				[addresses add: (addressClass fromAddress: each) address.
 				i := i + VMConstants.IntPtrSize].
 	^addresses asArray! !
+
 !HOSTENT categoriesForMethods!
 address!accessing!public! !
 addressClass!helpers!private! !
@@ -150,6 +156,7 @@ host: aStringHostName
 	| answer |
 	answer := WS2_32Library default gethostbyname: aStringHostName asAnsiString.
 	^answer isNull ifTrue: [SocketError signalWith: Processor activeProcess lastError] ifFalse: [answer]! !
+
 !HOSTENT class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

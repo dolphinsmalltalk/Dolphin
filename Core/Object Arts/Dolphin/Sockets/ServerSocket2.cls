@@ -5,11 +5,15 @@ SocketAbstract2 subclass: #ServerSocket2
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ServerSocket2 guid: (GUID fromString: '{13ab65d3-5229-4982-9d9c-fb0a6fea8376}')!
+
 ServerSocket2 comment: 'This class is used by a server to listen for a connection request from a socket client. 
 
 A ServerSocket2 is instantiated to listen on a particular port with a particular queue size for incoming client connections. Incoming connection requests will be acknowledged and placed on a queue waiting for the ServerSocket2 to accept them. This is done using #accept which then answers the socket for the next client connection in the queue. If the queue becomes full at any time because sufficient #accept calls have not been issued then additional client connections are rejected. The #accept call blocks the calling <Process> until an incoming connection request is available, and so should ideally be performed from a background process dedicated to the job.'!
+
 !ServerSocket2 categoriesForClass!Windows Sockets! !
+
 !ServerSocket2 methodsFor!
 
 accept
@@ -79,6 +83,7 @@ preBindPort: anInteger
 	"Private - Same as #bindPort, but dont call bind."
 
 	self createOnPort: anInteger! !
+
 !ServerSocket2 categoriesForMethods!
 accept!operations!public! !
 bind!operations!private! !
@@ -121,6 +126,7 @@ port: anIntegerPort backlog: anIntegerBacklog
 		bind;
 		listen: anIntegerBacklog;
 		yourself! !
+
 !ServerSocket2 class categoriesForMethods!
 defaultMaxPendingConnects!constants access!public! !
 new!instance creation!public! !

@@ -5,9 +5,13 @@ STBProxy subclass: #STBSingletonProxy
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 STBSingletonProxy guid: (GUID fromString: '{87b4c6f2-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 STBSingletonProxy comment: ''!
+
 !STBSingletonProxy categoriesForClass!System-Binary storage! !
+
 !STBSingletonProxy methodsFor!
 
 class: aClass
@@ -29,6 +33,7 @@ stbFixup: inFiler at: anInteger
 	anObject := class perform: selector.
 	inFiler fixup: anInteger to: anObject.
 	^anObject! !
+
 !STBSingletonProxy categoriesForMethods!
 class:!accessing!public! !
 selector:!accessing!public! !
@@ -53,6 +58,7 @@ forClass: aClass using: aSelectorSymbol
 		class: aClass;
 		selector: aSelectorSymbol;
 		yourself! !
+
 !STBSingletonProxy class categoriesForMethods!
 forClass:!instance creation!public! !
 forClass:using:!instance creation!public! !

@@ -5,7 +5,9 @@ GenericExternalArray subclass: #StructureArray
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StructureArray guid: (GUID fromString: '{87b4c5a5-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 StructureArray comment: 'Generic <ExternalArray> class which can represent single-dimensioned arrays of any class of <ExternalStructure>. Packing and alignment rules are respected.
 
 Note that although StructureArray is capable of fulfilling the tasks of other more specialized <ExternalArray> classes such as <DWORDArray> and <FLOATArray>, it is far less efficient and marginally more inconvenient as indexed access always yields an <ExternalStructure> rather than a fundamental Smalltalk object.
@@ -14,7 +16,9 @@ Instance Variables:
 	elementSpacing	<integer>. Distance (in bytes) between adjacent elements, there may be padding.
 
 '!
+
 !StructureArray categoriesForClass!External-Data-Structured! !
+
 !StructureArray methodsFor!
 
 alignment
@@ -79,6 +83,7 @@ uncheckedAt: anInteger put: anObject
 		to: offset + self elementSize
 		startingAt: 1.
 	^anObject! !
+
 !StructureArray categoriesForMethods!
 alignment!constants!public! !
 basicFree!private!realizing/unrealizing! !
@@ -147,6 +152,7 @@ withAll: aCollection elementClass: anExternalStructureClass initializer: aDyadic
 	answer := self length: aCollection size elementClass: anExternalStructureClass.
 	answer with: aCollection do: aDyadicValuable.
 	^answer! !
+
 !StructureArray class categoriesForMethods!
 fromAddress:length:elementClass:!instance creation!public! !
 length:elementClass:!instance creation!public! !

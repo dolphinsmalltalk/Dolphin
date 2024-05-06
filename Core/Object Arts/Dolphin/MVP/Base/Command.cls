@@ -5,7 +5,9 @@ Object subclass: #Command
 	classVariableNames: 'Current'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Command guid: (GUID fromString: '{87b4c468-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Command comment: 'A Command is used to perform a user interface command as part of the MVP framework. It is effectively a <CommandDescription> that is bound to a particular receiver and its operation can be performed by sending it a #value message.
 
 Command objects come with the additional capablity of being able to optionally undo and redo the command''s action. We assume that the target responsible for executing the command will also have sufficient information to specify how the command should be undone all re-done. The target may get hold of the currently executing command using:
@@ -22,7 +24,9 @@ Instance Variables:
 	undoAction		<niladicValuable> that, when evaluated, will undo the original command.
 	redoAction		<niladicValuable> that, when evaluated, will redo the original command.
 	isBenign			<boolean> indicating that a command has had no effect on the receiver''s state.'!
+
 !Command categoriesForClass!MVP-Commands! !
+
 !Command methodsFor!
 
 beBenign
@@ -107,6 +111,7 @@ value
 	prior := Current.
 	Current := self.
 	^[self commandDescription performAgainst: self receiver] ensure: [Current := prior]! !
+
 !Command categoriesForMethods!
 beBenign!accessing!public! !
 canRedo!accessing!public! !
@@ -146,6 +151,7 @@ receiver: anObject commandDescription: aCommandDescription
 
 	^super new receiver: anObject commandDescription: aCommandDescription
 ! !
+
 !Command class categoriesForMethods!
 current!accessing!public! !
 new!instance creation!private! !

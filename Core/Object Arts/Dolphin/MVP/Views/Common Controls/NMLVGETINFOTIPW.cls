@@ -5,15 +5,20 @@ NMGETINFOTIP subclass: #NMLVGETINFOTIPW
 	classVariableNames: '_OffsetOf_cchTextMax _OffsetOf_dwFlags _OffsetOf_iItem _OffsetOf_iSubItem _OffsetOf_lParam _OffsetOf_pszText'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 NMLVGETINFOTIPW guid: (GUID fromString: '{cfd19e11-86a3-4b65-ae78-55b3c8c34b0c}')!
+
 NMLVGETINFOTIPW addClassConstant: '_OffsetOf_cchTextMax' value: 16r14!
 NMLVGETINFOTIPW addClassConstant: '_OffsetOf_dwFlags' value: 16rC!
 NMLVGETINFOTIPW addClassConstant: '_OffsetOf_iItem' value: 16r18!
 NMLVGETINFOTIPW addClassConstant: '_OffsetOf_iSubItem' value: 16r1C!
 NMLVGETINFOTIPW addClassConstant: '_OffsetOf_lParam' value: 16r20!
 NMLVGETINFOTIPW addClassConstant: '_OffsetOf_pszText' value: 16r10!
+
 NMLVGETINFOTIPW comment: ''!
+
 !NMLVGETINFOTIPW categoriesForClass!External-Data-Structured-Win32! !
+
 !NMLVGETINFOTIPW methodsFor!
 
 cchTextMax
@@ -45,6 +50,7 @@ pszText
 	"Answer the <ExternalAddress> value of the receiver's 'pszText' field."
 
 	^(bytes uintPtrAtOffset: _OffsetOf_pszText) asExternalAddress! !
+
 !NMLVGETINFOTIPW categoriesForMethods!
 cchTextMax!**compiled accessors**!public! !
 dwFlags!**compiled accessors**!public! !
@@ -86,6 +92,7 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #dwFlags #pszText #cchTextMax #iItem #iSubItem)! !
+
 !NMLVGETINFOTIPW class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

@@ -5,18 +5,23 @@ OLEStructure subclass: #DECIMAL
 	classVariableNames: '_OffsetOf_hi32 _OffsetOf_lo64 _OffsetOf_scale _OffsetOf_sign _OffsetOf_wReserved'
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
+
 DECIMAL guid: (GUID fromString: '{e6470841-9795-44b8-ba35-cccbab3e9a0c}')!
+
 DECIMAL addClassConstant: '_OffsetOf_hi32' value: 16r4!
 DECIMAL addClassConstant: '_OffsetOf_lo64' value: 16r8!
 DECIMAL addClassConstant: '_OffsetOf_scale' value: 16r2!
 DECIMAL addClassConstant: '_OffsetOf_sign' value: 16r3!
 DECIMAL addClassConstant: '_OffsetOf_wReserved' value: 16r0!
+
 DECIMAL comment: 'DECIMAL is an ExternalStructure class to represent the Automation structure of the same name.
 
 DECIMAL is a rather complex 16-byte fixed point value with 12-bytes to represent the absolute value, and a byte each for scale and sign, with the top two bytes unused so that a DECIMAL can be stored safely in a VARIANT without overwriting the vartype. DECIMAL corresponds to VT_DECIMAL.
 
 DECIMALs are mapped to/from Dolphin''s <ScaledDecimal> objects, although of course the latter has unlimited  range, and therefore not all ScaledDecimals can be represented in a DECIMAL.'!
+
 !DECIMAL categoriesForClass!External-Data-Structured-COM! !
+
 !DECIMAL methodsFor!
 
 hi32
@@ -85,6 +90,7 @@ value: val
 	intVal := intVal asInteger.
 	self hi32: (intVal bitShift: -64).
 	self lo64: (intVal bitAnd: 16rFFFFFFFFFFFFFFFF)! !
+
 !DECIMAL categoriesForMethods!
 hi32!**compiled accessors**!public! !
 hi32:!**compiled accessors**!public! !
@@ -133,6 +139,7 @@ vt
 	type when represented in a <VARIANT>."
 
 	^VT_DECIMAL! !
+
 !DECIMAL class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

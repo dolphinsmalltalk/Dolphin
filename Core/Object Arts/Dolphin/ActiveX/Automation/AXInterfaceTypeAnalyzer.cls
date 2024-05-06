@@ -5,8 +5,11 @@ AXAPIInfoAnalyzer subclass: #AXInterfaceTypeAnalyzer
 	classVariableNames: 'ReservedDispSelectors ReservedUnkSelectors'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AXInterfaceTypeAnalyzer guid: (GUID fromString: '{c06f3b7d-0868-11d3-93af-00a024ca708a}')!
+
 AXInterfaceTypeAnalyzer isAbstract: true!
+
 AXInterfaceTypeAnalyzer comment: 'AXInterfaceTypeAnalyzer is the abstract superclass of <AXTypeInfoAnalyzer>s describing custom COM interfaces (TKindInterfaceAnalyzer) and dispatch interfaces (TKindDispatchAnalyzer).
 
 AXInterfaceTypeAnalyzers wrap <ITypeInfo> pointers from a type library, providing behaviour which allows one to query information and generate wrapper classes appropriate for COM interfaces.
@@ -20,7 +23,9 @@ Class Variables:
 	ReservedUnkSelectors	<IdentitySet> of <Symbol>. Selectors which should not be overridden by custom interfaces.
 
 '!
+
 !AXInterfaceTypeAnalyzer categoriesForClass!ActiveX Automation! !
+
 !AXInterfaceTypeAnalyzer methodsFor!
 
 classDesc
@@ -117,6 +122,7 @@ superInterface
 
 	^self isDerived
 		ifTrue: [self getImplTypeInfoAt: 1]! !
+
 !AXInterfaceTypeAnalyzer categoriesForMethods!
 classDesc!accessing!private! !
 clsid!accessing!public! !

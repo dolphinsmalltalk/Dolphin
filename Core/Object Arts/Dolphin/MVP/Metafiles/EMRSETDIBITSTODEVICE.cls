@@ -5,7 +5,9 @@ ENHMETARECORD subclass: #EMRSETDIBITSTODEVICE
 	classVariableNames: '_OffsetOf_cbBitsSrc _OffsetOf_cbBmiSrc _OffsetOf_cScans _OffsetOf_cxSrc _OffsetOf_cySrc _OffsetOf_iStartScan _OffsetOf_iUsageSrc _OffsetOf_offBitsSrc _OffsetOf_offBmiSrc _OffsetOf_rclBounds _OffsetOf_xDest _OffsetOf_xSrc _OffsetOf_yDest _OffsetOf_ySrc'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 EMRSETDIBITSTODEVICE guid: (GUID fromString: '{3929212b-c9b8-4281-b17e-91160985d892}')!
+
 EMRSETDIBITSTODEVICE addClassConstant: '_OffsetOf_cbBitsSrc' value: 16r3C!
 EMRSETDIBITSTODEVICE addClassConstant: '_OffsetOf_cbBmiSrc' value: 16r34!
 EMRSETDIBITSTODEVICE addClassConstant: '_OffsetOf_cScans' value: 16r48!
@@ -20,6 +22,7 @@ EMRSETDIBITSTODEVICE addClassConstant: '_OffsetOf_xDest' value: 16r18!
 EMRSETDIBITSTODEVICE addClassConstant: '_OffsetOf_xSrc' value: 16r20!
 EMRSETDIBITSTODEVICE addClassConstant: '_OffsetOf_yDest' value: 16r1C!
 EMRSETDIBITSTODEVICE addClassConstant: '_OffsetOf_ySrc' value: 16r24!
+
 EMRSETDIBITSTODEVICE comment: '<EMRSETDIBITSTODEVICE> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETDIBITSTODEVICE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -47,7 +50,9 @@ struct tagEMRSETDIBITSTODEVICE {
 	DWORD cScans;
 } EMRSETDIBITSTODEVICE;
 '!
+
 !EMRSETDIBITSTODEVICE categoriesForClass!Win32-Structs! !
+
 !EMRSETDIBITSTODEVICE methodsFor!
 
 cbBitsSrc
@@ -193,6 +198,7 @@ ySrc: anInteger
 	"Set the receiver's 'ySrc' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_ySrc put: anInteger! !
+
 !EMRSETDIBITSTODEVICE categoriesForMethods!
 cbBitsSrc!**compiled accessors**!public! !
 cbBitsSrc:!**compiled accessors**!public! !
@@ -304,6 +310,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_SETDIBITSTODEVICE! !
+
 !EMRSETDIBITSTODEVICE class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

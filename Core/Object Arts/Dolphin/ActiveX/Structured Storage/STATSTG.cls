@@ -5,7 +5,9 @@ OLEFinalizableStructure subclass: #STATSTG
 	classVariableNames: '_OffsetOf_atime _OffsetOf_cbSize _OffsetOf_clsid _OffsetOf_ctime _OffsetOf_dwStgFmt _OffsetOf_grfLocksSupported _OffsetOf_grfMode _OffsetOf_grfStateBits _OffsetOf_mtime _OffsetOf_pwcsName _OffsetOf_type'
 	poolDictionaries: 'OLEStructuredStorageConstants'
 	classInstanceVariableNames: ''!
+
 STATSTG guid: (GUID fromString: '{87b4c5c3-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 STATSTG addClassConstant: '_OffsetOf_atime' value: 16r20!
 STATSTG addClassConstant: '_OffsetOf_cbSize' value: 16r8!
 STATSTG addClassConstant: '_OffsetOf_clsid' value: 16r30!
@@ -17,6 +19,7 @@ STATSTG addClassConstant: '_OffsetOf_grfStateBits' value: 16r40!
 STATSTG addClassConstant: '_OffsetOf_mtime' value: 16r10!
 STATSTG addClassConstant: '_OffsetOf_pwcsName' value: 16r0!
 STATSTG addClassConstant: '_OffsetOf_type' value: 16r4!
+
 STATSTG comment: 'STATSTG is an <ExternalStructure> class to represent the OLE Structured Storage structure of the same name.
 
 STATSTG contains directory type information about a structured storage object (storage, stream, or lock bytes)
@@ -35,7 +38,9 @@ Member variables:
 	clsid			<CLSID> of storage object
 	grfStateBits		<integer> bit mask last set by IStorage>>SetStateBits
 	dwStgFmt			<integer> from STGFMT enumeration - the format of the storage object.'!
+
 !STATSTG categoriesForClass!External-Data-Structured-COM! !
+
 !STATSTG methodsFor!
 
 atime
@@ -149,6 +154,7 @@ type: anInteger
 	"Set the receiver's 'type' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_type put: anInteger! !
+
 !STATSTG categoriesForMethods!
 atime!**compiled accessors**!public! !
 atime:!**compiled accessors**!public! !
@@ -219,6 +225,7 @@ defineFields
 
 getFieldNames
 	^#(#pwcsName #type #cbSize #mtime #ctime #atime #grfMode #grfLocksSupported #clsid #grfStateBits #dwStgFmt)! !
+
 !STATSTG class categoriesForMethods!
 clear:!public!realizing/unrealizing! !
 defineFields!public!template definition! !

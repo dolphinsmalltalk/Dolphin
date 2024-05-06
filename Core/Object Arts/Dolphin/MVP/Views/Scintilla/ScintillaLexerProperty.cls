@@ -5,9 +5,13 @@ ScintillaLexerMetadata subclass: #ScintillaLexerProperty
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ScintillaLexerProperty guid: (GUID fromString: '{edef3c1e-b9c0-4eed-8b80-7ecdaeef15d7}')!
+
 ScintillaLexerProperty comment: ''!
+
 !ScintillaLexerProperty categoriesForClass!Kernel-Objects! !
+
 !ScintillaLexerProperty methodsFor!
 
 getDescription
@@ -32,6 +36,7 @@ value: anObject
 		value: (self type < ScintillaConstants.SC_TYPE_STRING
 				ifTrue: [anObject asParameter printString]
 				ifFalse: [anObject])! !
+
 !ScintillaLexerProperty categoriesForMethods!
 getDescription!accessing!private! !
 name!accessing!public! !

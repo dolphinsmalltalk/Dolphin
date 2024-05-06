@@ -5,14 +5,19 @@ GraphicsTool subclass: #GdiplusBase
 	classVariableNames: ''
 	poolDictionaries: 'GdiplusConstants GdiplusGUIDs'
 	classInstanceVariableNames: ''!
+
 GdiplusBase guid: (GUID fromString: '{9368410d-787c-4331-994e-9bc2c3f0fe46}')!
+
 GdiplusBase isAbstract: true!
+
 GdiplusBase comment: 'GdiplusBase is an abstract class that represents the Win32 GDI+ GdiplusBase class.  Instances of this class contain a reference to an initializer which creates the Win32 object - see #createHandle.  In most cases, the initializer can also recreate the instance, though not all can (see #isPersistent), and recreation of an instance does not guarantee the instance will be at the same state as when it was freed.
 
 Since instances of this hierarchy have no (or few) instance variables, most state information is accessed directly through calls to Win32 GDI+ functions.  In some cases, calls are made to the initializer which, as mentioned, does reference instance variables.
 
 Win32 constants, enumerations, and GUIDs are contained in the pool dictionaries GdiplusConstants and GdiplusGUIDs.  GdiplusBase class has helper methods that answer the subsets of constants for a particular Win32 type of constant (e.g., #enumsStringFormatFlags and #guidsEncoder).'!
+
 !GdiplusBase categoriesForClass!Unclassified! !
+
 !GdiplusBase methodsFor!
 
 = anObject
@@ -67,6 +72,7 @@ setInitializer: aGdiplusInitializer
 	self initialize.
 	initializer := aGdiplusInitializer.
 	^self! !
+
 !GdiplusBase categoriesForMethods!
 =!comparison!public! !
 basicFree!private!realizing/unrealizing! !
@@ -365,6 +371,7 @@ showExample: anImage viewMode: aSymbol
 	presenter topShell extent: anImage extent + presenter topShell rectangle extent 
 				- presenter topShell clientRectangle extent.
 	^presenter! !
+
 !GdiplusBase class categoriesForMethods!
 enumNamesWithPrefix:!constants!private! !
 enumsColorAdjustType!constants!public! !

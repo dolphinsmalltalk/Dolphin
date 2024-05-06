@@ -5,9 +5,13 @@ DolphinTest subclass: #TimeTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TimeTest guid: (GUID fromString: '{5eb1cd02-030d-4b2f-b1df-b06465e5bb19}')!
+
 TimeTest comment: ''!
+
 !TimeTest categoriesForClass!Unclassified! !
+
 !TimeTest methodsFor!
 
 comparePrintStreamFor: time hr24: hr24 showSeconds: showSeconds expected: expected
@@ -284,6 +288,7 @@ testStoreOn
 						second: 58).
 	stored := collection storeString.
 	self assert: (Compiler evaluate: stored) equals: collection! !
+
 !TimeTest categoriesForMethods!
 comparePrintStreamFor:hr24:showSeconds:expected:!comparing!private! !
 hoursShould:for:!comparing!private! !

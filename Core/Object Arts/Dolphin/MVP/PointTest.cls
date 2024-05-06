@@ -5,12 +5,16 @@ AbstractPointTest subclass: #PointTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PointTest guid: (GUID fromString: '{98f92001-3f3a-4296-8a76-5e67f93030a6}')!
+
 PointTest comment: 'This is the unit test for the class Point. Unit tests are a good way to exercise the functionality of your system in a repeatable and automatic manner. They are therefore recommended if you plan to release anything. For more information, see: 
 	- http://www.c2.com/cgi/wiki?UnitTest
 	- http://minnow.cc.gatech.edu/squeak/1547
 	- the sunit class category'!
+
 !PointTest categoriesForClass!Unclassified! !
+
 !PointTest methodsFor!
 
 subjectClass
@@ -43,6 +47,7 @@ testStrictlyPositive
 	self assert: (self subjectClass x: 1 y: 1) strictlyPositive.
 	self deny: (self subjectClass x: 1 y: -1) strictlyPositive.
 	self deny: (self subjectClass x: -1 y: 1) strictlyPositive! !
+
 !PointTest categoriesForMethods!
 subjectClass!constants!private! !
 testAbs!public!unit tests! !

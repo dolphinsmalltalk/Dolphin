@@ -5,12 +5,16 @@ HttpServerStructure subclass: #HTTP_HEADERS
 	classVariableNames: '_OffsetOf_pTrailers _OffsetOf_pUnknownHeaders _OffsetOf_TrailerCount _OffsetOf_UnknownHeaderCount HeaderToIndexMap'
 	poolDictionaries: 'WinHttpServerConsts'
 	classInstanceVariableNames: ''!
+
 HTTP_HEADERS guid: (GUID fromString: '{739d04bb-0a15-47ea-8a7d-20b4fd31cc96}')!
+
 HTTP_HEADERS isAbstract: true!
+
 HTTP_HEADERS addClassConstant: '_OffsetOf_pTrailers' value: 16rC!
 HTTP_HEADERS addClassConstant: '_OffsetOf_pUnknownHeaders' value: 16r4!
 HTTP_HEADERS addClassConstant: '_OffsetOf_TrailerCount' value: 16r8!
 HTTP_HEADERS addClassConstant: '_OffsetOf_UnknownHeaderCount' value: 16r0!
+
 HTTP_HEADERS comment: '<HTTP_HEADERS> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_HEADERS'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -28,7 +32,9 @@ struct tagHTTP_HEADERS {
 	[hidden, custom(9d8468d2-88ea-4452-b32c-992c9937e29c, 0), size_is("TrailerCount")] PHTTP_UNKNOWN_HEADER pTrailers;
 } HTTP_HEADERS;
 '!
+
 !HTTP_HEADERS categoriesForClass!WinHttpServer-Structs! !
+
 !HTTP_HEADERS methodsFor!
 
 knownHeaderIndex: headerName
@@ -97,6 +103,7 @@ UnknownHeaderCount: anInteger
 	"Set the receiver's 'UnknownHeaderCount' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_UnknownHeaderCount put: anInteger! !
+
 !HTTP_HEADERS categoriesForMethods!
 knownHeaderIndex:!constants!public! !
 knownHeaderName:!constants!public! !
@@ -152,6 +159,7 @@ knownHeaderIndex: headerName
 
 knownHeaderName: anInteger
 	^self indexToHeaderMap at: anInteger! !
+
 !HTTP_HEADERS class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 headerToIndexMap!public! !

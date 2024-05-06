@@ -5,7 +5,9 @@ HTTP_PROPERTY_FLAGS subclass: #HTTP_LOGGING_INFO
 	classVariableNames: '_OffsetOf_DirectoryName _OffsetOf_DirectoryNameLength _OffsetOf_Fields _OffsetOf_Format _OffsetOf_LoggingFlags _OffsetOf_MaxRecordSize _OffsetOf_NumOfExtFields _OffsetOf_pExtFields _OffsetOf_pSecurityDescriptor _OffsetOf_RolloverSize _OffsetOf_RolloverType _OffsetOf_SoftwareName _OffsetOf_SoftwareNameLength'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 HTTP_LOGGING_INFO guid: (GUID fromString: '{41c67887-c529-4196-9c0f-5bb698324d32}')!
+
 HTTP_LOGGING_INFO addClassConstant: '_OffsetOf_DirectoryName' value: 16r10!
 HTTP_LOGGING_INFO addClassConstant: '_OffsetOf_DirectoryNameLength' value: 16rE!
 HTTP_LOGGING_INFO addClassConstant: '_OffsetOf_Fields' value: 16r18!
@@ -19,6 +21,7 @@ HTTP_LOGGING_INFO addClassConstant: '_OffsetOf_RolloverSize' value: 16r28!
 HTTP_LOGGING_INFO addClassConstant: '_OffsetOf_RolloverType' value: 16r24!
 HTTP_LOGGING_INFO addClassConstant: '_OffsetOf_SoftwareName' value: 16r8!
 HTTP_LOGGING_INFO addClassConstant: '_OffsetOf_SoftwareNameLength' value: 16rC!
+
 HTTP_LOGGING_INFO comment: '<HTTP_LOGGING_INFO> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_LOGGING_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -46,7 +49,9 @@ struct tagHTTP_LOGGING_INFO {
 	[helpstring("Specifies the security descriptor to be applied to the log files and the sub - directories. If null we will inherit the system default. This security descriptor must be self-relative.")] void* pSecurityDescriptor;
 } HTTP_LOGGING_INFO;
 '!
+
 !HTTP_LOGGING_INFO categoriesForClass!Win32-Structs! !
+
 !HTTP_LOGGING_INFO methodsFor!
 
 DirectoryName
@@ -148,6 +153,7 @@ SoftwareNameLength: anInteger
 	"Set the receiver's 'SoftwareNameLength' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_SoftwareNameLength put: anInteger! !
+
 !HTTP_LOGGING_INFO categoriesForMethods!
 DirectoryName!**compiled accessors**!public! !
 DirectoryName:!**compiled accessors**!public! !
@@ -219,6 +225,7 @@ getFieldNames
 
 propertyId
 	^HttpServerLoggingProperty! !
+
 !HTTP_LOGGING_INFO class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

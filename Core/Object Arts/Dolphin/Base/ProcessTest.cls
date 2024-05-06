@@ -5,9 +5,13 @@ DolphinTest subclass: #ProcessTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ProcessTest guid: (GUID fromString: '{3601a8c6-de0f-4218-a7df-40838259fc47}')!
+
 ProcessTest comment: ''!
+
 !ProcessTest categoriesForClass!Unclassified! !
+
 !ProcessTest methodsFor!
 
 assertBlock: copyBlockClosure in: copyProcess2 isCopyOf: srcBlockClosure in: sourceProcess2 visited: anIdentitySet
@@ -577,6 +581,7 @@ testUnwindFromForeignProcess
 	be handled here (it's truncated already)"
 	self shouldnt: [process terminate] raise: Error.
 	self assert: sema excessSignals > 0! !
+
 !ProcessTest categoriesForMethods!
 assertBlock:in:isCopyOf:in:visited:!helpers!private! !
 assertBlockFrame:isCopyOf:visited:!helpers!private! !

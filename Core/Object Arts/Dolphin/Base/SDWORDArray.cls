@@ -5,9 +5,13 @@ ExternalArray subclass: #SDWORDArray
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SDWORDArray guid: (GUID fromString: '{87b4c5a7-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 SDWORDArray comment: 'Specialized <ExternalArray> to represent contiguous single-dimensioned arrays of 32-bit signed integers.'!
+
 !SDWORDArray categoriesForClass!External-Data-Structured! !
+
 !SDWORDArray methodsFor!
 
 uncheckedAt: anInteger 
@@ -18,6 +22,7 @@ uncheckedAt: anInteger
 
 uncheckedAt: indexInteger put: valueInteger 
 	^bytes sdwordAtOffset: (indexInteger - 1) * 4 put: valueInteger! !
+
 !SDWORDArray categoriesForMethods!
 uncheckedAt:!accessing!private! !
 uncheckedAt:put:!accessing!private! !
@@ -29,6 +34,7 @@ elementClass
 	"Answer the class of <ExternalStructure> used to represent elements of the receiver."
 
 	^SDWORD! !
+
 !SDWORDArray class categoriesForMethods!
 elementClass!constants!public! !
 !

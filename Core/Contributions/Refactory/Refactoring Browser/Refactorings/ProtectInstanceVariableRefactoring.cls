@@ -5,9 +5,13 @@ VariableRefactoring subclass: #ProtectInstanceVariableRefactoring
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ProtectInstanceVariableRefactoring guid: (GUID fromString: '{5175a912-5f59-47e5-ab30-66893c7043e5}')!
+
 ProtectInstanceVariableRefactoring comment: ''!
+
 !ProtectInstanceVariableRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !ProtectInstanceVariableRefactoring methodsFor!
 
 getterSetterMethods
@@ -46,6 +50,7 @@ preconditions
 transform
 	self setOption: #inlineExpression toUse: [:ref :string | true].
 	self getterSetterMethods do: [:each | self inline: each]! !
+
 !ProtectInstanceVariableRefactoring categoriesForMethods!
 getterSetterMethods!accessing!private! !
 inline:!public!transforming! !

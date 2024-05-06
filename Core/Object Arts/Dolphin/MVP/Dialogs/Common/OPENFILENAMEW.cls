@@ -5,7 +5,9 @@ CommonDialogStructure subclass: #OPENFILENAMEW
 	classVariableNames: '_OffsetOf_dwReserved _OffsetOf_dwSize _OffsetOf_flags _OffsetOf_flagsEx _OffsetOf_hInstance _OffsetOf_hwndOwner _OffsetOf_lCustData _OffsetOf_lpfnHook _OffsetOf_lpstrCustomFilter _OffsetOf_lpstrDefExt _OffsetOf_lpstrFile _OffsetOf_lpstrFileTitle _OffsetOf_lpstrFilter _OffsetOf_lpstrInitialDir _OffsetOf_lpstrTitle _OffsetOf_lpTemplateName _OffsetOf_nFileExtension _OffsetOf_nFileOffset _OffsetOf_nFilterIndex _OffsetOf_nMaxCustFilter _OffsetOf_nMaxFile _OffsetOf_nMaxFileTitle _OffsetOf_pvReserved'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 OPENFILENAMEW guid: (GUID fromString: '{87b4c603-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OPENFILENAMEW addClassConstant: '_OffsetOf_dwReserved' value: 16r50!
 OPENFILENAMEW addClassConstant: '_OffsetOf_dwSize' value: 16r0!
 OPENFILENAMEW addClassConstant: '_OffsetOf_flags' value: 16r34!
@@ -29,6 +31,7 @@ OPENFILENAMEW addClassConstant: '_OffsetOf_nMaxCustFilter' value: 16r14!
 OPENFILENAMEW addClassConstant: '_OffsetOf_nMaxFile' value: 16r20!
 OPENFILENAMEW addClassConstant: '_OffsetOf_nMaxFileTitle' value: 16r28!
 OPENFILENAMEW addClassConstant: '_OffsetOf_pvReserved' value: 16r4C!
+
 OPENFILENAMEW comment: 'OPENFILENAME is a <Win32Structure> which represent the Windows Common Dialog structure of the same name. It is used in conjunction with the GetOpenFileName() and GetSaveFileName() APIs which pop a common file dialog to browser for a file to load or save respectively. See the <FileDialog> and the Win32 documentation for further details.
 
 The following instance variables hold <String> objects whose addresses have been stored into the structure. This is necessary to prevent premature garbage collection of these objects occurring during an external API call.
@@ -40,7 +43,9 @@ Instance Variables:
 	defExt 		<String>
 	fileTitle		<String>
 	initialDir		<String>'!
+
 !OPENFILENAMEW categoriesForClass!Win32-Structs! !
+
 !OPENFILENAMEW methodsFor!
 
 defaultExtension
@@ -194,6 +199,7 @@ title: aString
 
 	title := aString asUtf16String.
 	self lpstrTitle: title! !
+
 !OPENFILENAMEW categoriesForMethods!
 defaultExtension!accessing!public! !
 defaultExtension:!accessing!public! !
@@ -287,6 +293,7 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #hwndOwner #lpstrFilter #nFilterIndex #lpstrFile #nMaxFile #lpstrFileTitle #nMaxFileTitle #lpstrInitialDir #lpstrTitle #flags #nFileOffset #nFileExtension #lpstrDefExt #lpfnHook #flagsEx)! !
+
 !OPENFILENAMEW class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

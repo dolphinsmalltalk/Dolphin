@@ -5,8 +5,11 @@ HTTP_PROPERTY_FLAGS subclass: #HTTP_BINDING_INFO
 	classVariableNames: '_OffsetOf_RequestQueueHandle'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 HTTP_BINDING_INFO guid: (GUID fromString: '{b253697c-f239-4fb6-b474-b35db2c4848f}')!
+
 HTTP_BINDING_INFO addClassConstant: '_OffsetOf_RequestQueueHandle' value: 16r4!
+
 HTTP_BINDING_INFO comment: '<HTTP_BINDING_INFO> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_BINDING_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -22,7 +25,9 @@ struct tagHTTP_BINDING_INFO {
 	[helpstring("The request queue that is associated with the URL group. The structure can be used to remove an existing binding by setting this parameter to NULL.")] HANDLE RequestQueueHandle;
 } HTTP_BINDING_INFO;
 '!
+
 !HTTP_BINDING_INFO categoriesForClass!Win32-Structs! !
+
 !HTTP_BINDING_INFO methodsFor!
 
 requestQueueHandle
@@ -48,6 +53,7 @@ RequestQueueHandle: anExternalHandle
 	"Set the receiver's 'RequestQueueHandle' field to the value of the argument, anExternalHandle"
 
 	bytes uintPtrAtOffset: _OffsetOf_RequestQueueHandle put: anExternalHandle! !
+
 !HTTP_BINDING_INFO categoriesForMethods!
 requestQueueHandle!accessing!public! !
 RequestQueueHandle!**compiled accessors**!public! !
@@ -79,6 +85,7 @@ getFieldNames
 
 propertyId
 	^HttpServerBindingProperty! !
+
 !HTTP_BINDING_INFO class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

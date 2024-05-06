@@ -5,7 +5,9 @@ ControlBarAbstract subclass: #StatusBar
 	classVariableNames: ''
 	poolDictionaries: 'StatusBarConstants'
 	classInstanceVariableNames: ''!
+
 StatusBar guid: (GUID fromString: '{87b4c72e-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 StatusBar comment: 'StatusBar is a <compositeView> implementing the Windows "Msctls_Statusbar32" common control.
 
 StatusBar holds a list of items, sub-instances of <StatusItem>, matching the order of items in the control. Items may be added and deleted once the view has been created. It also allows a name to be associated with each item. 
@@ -18,7 +20,9 @@ Instance Variables:
 	layoutManager		<layoutManager> or nil, for managing the layout of sub-views.
 
 '!
+
 !StatusBar categoriesForClass!MVP-Views! !
+
 !StatusBar methodsFor!
 
 addItem: aStatusBarItem 
@@ -347,6 +351,7 @@ updateItem: aStatusBarItem
 	self setRightEdges.
 	self setText: aStatusBarItem.
 	self invalidateRect: (self rectangleOfItem: aStatusBarItem)! !
+
 !StatusBar categoriesForMethods!
 addItem:!adding!items!public! !
 addItem:name:!adding!items!public! !
@@ -414,6 +419,7 @@ winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
 
 	^'msctls_statusbar32'! !
+
 !StatusBar class categoriesForMethods!
 icon!constants!public! !
 resource_Status_bar!public!resources-views! !

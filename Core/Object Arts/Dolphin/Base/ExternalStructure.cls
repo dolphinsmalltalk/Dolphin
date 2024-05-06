@@ -5,10 +5,15 @@ Object subclass: #ExternalStructure
 	classVariableNames: 'CompiledMask RecordClasses'
 	poolDictionaries: ''
 	classInstanceVariableNames: 'template flags alignment'!
+
 ExternalStructure guid: (GUID fromString: '{87b4c489-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 ExternalStructure isAbstract: true!
+
 ExternalStructure comment: ''!
+
 !ExternalStructure categoriesForClass!External-Data-Structured! !
+
 !ExternalStructure methodsFor!
 
 _deepenShallowCopy: clone trail: copiesDictionary
@@ -392,6 +397,7 @@ yourAddress
 	"Answer the address of the receiver's contents"
 
 	^bytes yourAddress! !
+
 !ExternalStructure categoriesForMethods!
 _deepenShallowCopy:trail:!copying!private! !
 =!comparing!public! !
@@ -941,6 +947,7 @@ withBytes: aByteObject
 		bytes: aByteObject;
 		initialize;
 		yourself! !
+
 !ExternalStructure class categoriesForMethods!
 alignment!constants!public! !
 atAddress:!instance creation!public! !

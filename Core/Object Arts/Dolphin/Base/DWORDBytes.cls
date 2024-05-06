@@ -5,9 +5,13 @@ ExternalIntegerBytes variableByteSubclass: #DWORDBytes
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DWORDBytes guid: (GUID fromString: '{87b4c516-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 DWORDBytes comment: ''!
+
 !DWORDBytes categoriesForClass!External-Data-Unstructured! !
+
 !DWORDBytes methodsFor!
 
 asDword
@@ -30,6 +34,7 @@ value: anObject
 	"Set the 32-bit unsigned <integer> value stored in the receiver."
 
 	self dwordAtOffset: 0 put: anObject! !
+
 !DWORDBytes categoriesForMethods!
 asDword!converting!public! !
 asInteger!converting!public! !
@@ -47,6 +52,7 @@ elementSize
 
 valueAtAddress: anAddress 
 	^anAddress asExternalAddress dwordAtOffset: 0! !
+
 !DWORDBytes class categoriesForMethods!
 elementSize!constants!private! !
 valueAtAddress:!helpers!private! !

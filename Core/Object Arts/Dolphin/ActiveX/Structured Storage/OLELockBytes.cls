@@ -5,11 +5,15 @@ OLELockBytesAbstract subclass: #OLELockBytes
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 OLELockBytes guid: (GUID fromString: '{87b4c541-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OLELockBytes comment: 'OLELockBytes is an implementation of the ILockBytes interface on a Smalltalk <ByteArray>. It is primarily intended for testing and development purposes (it is a handy way to see exactly what is being written to a stream), and also as an example implementation of a system COM interface.
 
 OLELockBytes is similar to the system provided ILockBytes implementation on top of a global memory handle, except that the underlying storage mechanism is a ByteArray and it is somewhat slower. It doesn''t support locking.'!
+
 !OLELockBytes categoriesForClass!COM-Implementations! !
+
 !OLELockBytes methodsFor!
 
 bytes: anObject 
@@ -79,6 +83,7 @@ WriteAt: offset pv: pBuf cb: cb pcbWritten: pcbWritten
 		with: pBuf.
 	pcbWritten value: cb.
 	^S_OK! !
+
 !OLELockBytes categoriesForMethods!
 bytes:!accessing!private! !
 contents!accessing!public! !
@@ -99,6 +104,7 @@ on: bytes
 	^(self basicNew)
 		bytes: bytes;
 		queryInterface: ILockBytes! !
+
 !OLELockBytes class categoriesForMethods!
 on:!instance creation!public! !
 !

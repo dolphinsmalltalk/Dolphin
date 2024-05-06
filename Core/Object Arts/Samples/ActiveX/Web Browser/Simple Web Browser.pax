@@ -35,7 +35,6 @@ XmlPad openOn: ''WebBrowser.xml''
 
 '.
 
-
 package classNames
 	add: #WebBrowserSessionManager;
 	add: #WebBrowserShell;
@@ -74,16 +73,12 @@ Shell subclass: #WebBrowserShell
 	classVariableNames: 'ImagesBlockedMask LogEventsMask'
 	poolDictionaries: 'WebView2Constants'
 	classInstanceVariableNames: ''!
+
 RuntimeSessionManager subclass: #WebBrowserSessionManager
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

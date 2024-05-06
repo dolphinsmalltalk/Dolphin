@@ -5,10 +5,15 @@ STONReader subclass: #DolphinSTONReader
 	classVariableNames: 'EscapeChars HexDigitValues'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DolphinSTONReader guid: (GUID fromString: '{a8dab6bc-8e16-483a-adee-741c2aa9f0f7}')!
+
 DolphinSTONReader addClassConstant: 'HexDigitValues' value: #(nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 0 1 2 3 4 5 6 7 8 9 nil nil nil nil nil nil nil 10 11 12 13 14 15 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 10 11 12 13 14 15)!
+
 DolphinSTONReader comment: ''!
+
 !DolphinSTONReader categoriesForClass!Unclassified! !
+
 !DolphinSTONReader methodsFor!
 
 atEnd
@@ -412,6 +417,7 @@ storeReference: object
 
 stringStreamContents: block
 	self shouldNotImplement! !
+
 !DolphinSTONReader categoriesForMethods!
 atEnd!private!testing! !
 consumeWhitespace!helpers!private! !
@@ -491,6 +497,7 @@ initializeHexDigitValues
 	$a codePoint to: $f codePoint
 		do: [:each | digitValues at: each + 1 put: each - ##($a codePoint - 10)].
 	self addClassConstant: 'HexDigitValues' value: digitValues! !
+
 !DolphinSTONReader class categoriesForMethods!
 initialize!initializing!public! !
 initializeHexDigitValues!initializing!private! !

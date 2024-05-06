@@ -5,9 +5,13 @@ SequencedReadableCollectionTest subclass: #ByteArrayANSITest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ByteArrayANSITest guid: (GUID fromString: '{43131ce9-7dec-461f-bf8c-be28f0977145}')!
+
 ByteArrayANSITest comment: ''!
+
 !ByteArrayANSITest categoriesForClass!Unclassified! !
+
 !ByteArrayANSITest methodsFor!
 
 canonicalElement
@@ -38,6 +42,7 @@ emptyCollection
 
 protocol
 	^#'ByteArray'! !
+
 !ByteArrayANSITest categoriesForMethods!
 canonicalElement!public! !
 canonicalObject!public! !
@@ -54,6 +59,7 @@ helperClassesDo: aBlock
 	super helperClassesDo: aBlock.
 	aBlock value: SequencedCollectionHelper.
 	aBlock value: SequencedReadableCollectionHelper! !
+
 !ByteArrayANSITest class categoriesForMethods!
 helperClassesDo:!public! !
 !

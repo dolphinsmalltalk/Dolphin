@@ -4,7 +4,6 @@ package paxVersion: 1;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
-
 package classNames
 	add: #ResumableTestFailure;
 	add: #SUnitNameResolver;
@@ -38,11 +37,13 @@ Object subclass: #SUnitNameResolver
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Error subclass: #TestFailure
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TestFailure subclass: #ResumableTestFailure
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -60,6 +61,7 @@ SUnitDelay := Delay!
 
 sunitExitWith: aValue
 	self return: aValue! !
+
 !Exception categoriesForMethods!
 sunitExitWith:!Camp Smalltalk!handler responses!public! !
 !

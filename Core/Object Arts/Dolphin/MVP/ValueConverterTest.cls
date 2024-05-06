@@ -5,9 +5,13 @@ DolphinTest subclass: #ValueConverterTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ValueConverterTest guid: (GUID fromString: '{fd184d86-16e0-422a-a2c7-0084d567972c}')!
+
 ValueConverterTest comment: 'Tests the ValueConverter class.'!
+
 !ValueConverterTest categoriesForClass!Unclassified! !
+
 !ValueConverterTest methodsFor!
 
 onValueChanged
@@ -43,6 +47,7 @@ testValueColon
 	self assert: changed.
 	self assert: converter value equals: newTime displayString.
 	self assert: value value equals: newTime! !
+
 !ValueConverterTest categoriesForMethods!
 onValueChanged!helpers!public! !
 setUp!public!Running! !

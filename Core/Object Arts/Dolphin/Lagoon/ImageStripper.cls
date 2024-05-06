@@ -5,7 +5,9 @@ BasicImageStripper subclass: #ImageStripper
 	classVariableNames: 'AllResourcesStripped ClearGuidsMask CompileStructsMask EmptyMethodDictsMask FoldBytecodesMask FoldMethodDictsMask FoldStringsMask IgnoreViewReferencesMask KeepImageMask LogLiveClassesMask LogPrerequisitesMask LogReferencesMask NoXPManifestMask PreserveAspectsMask PurgeStubbornClassesMask RemoveAbstractUnreachable RetainDevSysMask RetainInstVarNamesMask RetainSubclassRespMask StripClassBuilderMask StripClassesMask StripClassInfoMask StripDeprecatedMask StripMethodsMask StripPackagesMask StripResourcesMask StripShouldNotImplMask ToGoMask UnattendedMask WriteLogMask'
 	poolDictionaries: 'MessageBoxConstants Win32Constants'
 	classInstanceVariableNames: ''!
+
 ImageStripper guid: (GUID fromString: '{87b4c667-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 ImageStripper addClassConstant: 'AllResourcesStripped' value: 16r1!
 ImageStripper addClassConstant: 'ClearGuidsMask' value: 16r1!
 ImageStripper addClassConstant: 'CompileStructsMask' value: 16r100!
@@ -36,6 +38,7 @@ ImageStripper addClassConstant: 'StripShouldNotImplMask' value: 16r8000!
 ImageStripper addClassConstant: 'ToGoMask' value: 16r100000!
 ImageStripper addClassConstant: 'UnattendedMask' value: 16r1000000!
 ImageStripper addClassConstant: 'WriteLogMask' value: 16r400!
+
 ImageStripper comment: 'An ImageStripper holds deployment information that indicates how a Dolphin image should be stripped of redundant objects during deployment. ImageStripper is part of the Application Deployment Kit package.
 
 Instance Variables:
@@ -55,7 +58,9 @@ Instance Variables:
 	rootClasses			<IdentitySet> used to cache the classes in the root package.
 
 '!
+
 !ImageStripper categoriesForClass!MVP-Models! !
+
 !ImageStripper methodsFor!
 
 actualRequiredPackages
@@ -2021,6 +2026,7 @@ writeLogFile
 	its stripping process"
 
 	^flags allMask: WriteLogMask! !
+
 !ImageStripper categoriesForMethods!
 actualRequiredPackages!accessing!private! !
 addClassesReferencedByClass:to:!helpers!private! !
@@ -2227,6 +2233,7 @@ isSafeToEncryptWithProductProtection
 	the deployment of a Protected Product application"
 
 	^false! !
+
 !ImageStripper class categoriesForMethods!
 classBuildingMethodCategoryNames!constants!public! !
 classRemovingMethodCategoryNames!constants!public! !

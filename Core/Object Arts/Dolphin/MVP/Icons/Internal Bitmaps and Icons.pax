@@ -34,7 +34,6 @@ Both InternalIcons and InternalBitmaps will display their full byte array initia
 
 package basicPackageVersion: '0.010'.
 
-
 package classNames
 	add: #InternalBitmap;
 	add: #InternalIcon;
@@ -74,14 +73,12 @@ Object subclass: #InternalBitmap
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 InternalBitmap subclass: #InternalIcon
 	instanceVariableNames: 'tileColor'
 	classVariableNames: ''
 	poolDictionaries: 'GdiplusConstants'
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -150,6 +147,7 @@ to convert to PNG format first?'.
 	^'.
 	internalIcon printOn: methodSourceStream.
 	self class compile: methodSourceStream contents categories: {'public'. 'constants'}! !
+
 !ClassDescription categoriesForMethods!
 createBadgeMethod!development!public! !
 createIconMethod!development!public! !
@@ -191,6 +189,7 @@ printStringUpTo: maxPrintCharacters
 	stream := String writeStream: 32.
 	self printOn: stream upTo: maxPrintCharacters.
 	^stream contents! !
+
 !Collection categoriesForMethods!
 printOn:upTo:!printing!public! !
 printStringUpTo:!printing!public! !
@@ -203,6 +202,7 @@ internalize
 	removes the need for an external file reference"
 
 	^self class fromByteArray: (self asByteArray: 'image/png')! !
+
 !GdiplusImage categoriesForMethods!
 internalize!public! !
 !

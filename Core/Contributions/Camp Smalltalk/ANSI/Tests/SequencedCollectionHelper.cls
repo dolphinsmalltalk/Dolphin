@@ -5,9 +5,13 @@ TestCaseHelper subclass: #SequencedCollectionHelper
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SequencedCollectionHelper guid: (GUID fromString: '{f1389837-c349-4a42-82d3-c77cc0a1add2}')!
+
 SequencedCollectionHelper comment: ''!
+
 !SequencedCollectionHelper categoriesForClass!Unclassified! !
+
 !SequencedCollectionHelper methodsFor!
 
 object
@@ -314,6 +318,7 @@ testXreplaceFromXtoXwithXstartingAtX
 				with: #(1 2)
 				startingAt: 3]
 		raise: TestResult error! !
+
 !SequencedCollectionHelper categoriesForMethods!
 object!public! !
 object:!public! !

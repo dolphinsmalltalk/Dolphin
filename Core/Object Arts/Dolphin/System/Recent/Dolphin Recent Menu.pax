@@ -6,7 +6,6 @@ package paxVersion: 1;
 
 package basicPackageVersion: '6.2.2'.
 
-
 package classNames
 	add: #AbstractRecentMenu;
 	add: #RegistryRecentMenu;
@@ -31,16 +30,12 @@ Object subclass: #AbstractRecentMenu
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AbstractRecentMenu subclass: #RegistryRecentMenu
 	instanceVariableNames: 'productRegistryKey recentRegistryKey'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

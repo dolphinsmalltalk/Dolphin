@@ -5,7 +5,9 @@ LookupTable variableSubclass: #SharedLookupTable
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SharedLookupTable guid: (GUID fromString: '{87b4c52f-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 SharedLookupTable comment: 'SharedLookupTable is the class of <LookupTable>s which permits only a single process to access its contents at any one time (it uses a <Mutex> object for this purpose). 
 
 Instance Variables:
@@ -85,7 +87,9 @@ Certain methods are not overridden for the following reasons:
 	uncheckedAt:put:		Private, used only within critical sections
 	values			Implemented in terms of #do:
 	valuesClass	`	Answers constant'!
+
 !SharedLookupTable categoriesForClass!Collections-Unordered! !
+
 !SharedLookupTable methodsFor!
 
 anySatisfy: aMonadicValuable
@@ -302,6 +306,7 @@ stbSaveOn: anSTBOutFiler
 	"Save out a binary representation of the receiver to anSTBOutFiler."
 
 	mutex critical: [super stbSaveOn: anSTBOutFiler]! !
+
 !SharedLookupTable categoriesForMethods!
 anySatisfy:!enumerating!public! !
 asArray!converting!public! !

@@ -5,9 +5,13 @@ Refactoring subclass: #AbstractVariablesRefactoring
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AbstractVariablesRefactoring guid: (GUID fromString: '{4693691a-7a7d-4b15-a3e9-c4c5554aa27e}')!
+
 AbstractVariablesRefactoring comment: ''!
+
 !AbstractVariablesRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !AbstractVariablesRefactoring methodsFor!
 
 abstractClassVariable: aString 
@@ -156,6 +160,7 @@ transform
 						expandMacros].
 	self abstractInstanceVariables.
 	self abstractClassVariables! !
+
 !AbstractVariablesRefactoring categoriesForMethods!
 abstractClassVariable:!public!transforming! !
 abstractClassVariables!public!transforming! !
@@ -192,6 +197,7 @@ model: aRBNamespace abstractVariablesIn: aBRProgramNode from: fromBehavior toAll
 			toAll: behaviorCollection
 			ignoring: aVariableName;
 		yourself! !
+
 !AbstractVariablesRefactoring class categoriesForMethods!
 model:abstractVariablesIn:from:toAll:!instance creation!public! !
 model:abstractVariablesIn:from:toAll:ignoring:!instance creation!public! !

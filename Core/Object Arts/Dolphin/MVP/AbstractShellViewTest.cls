@@ -5,10 +5,15 @@ DolphinTest subclass: #AbstractShellViewTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AbstractShellViewTest guid: (GUID fromString: '{be6c197d-5333-4ba6-aef4-6b93d2970718}')!
+
 AbstractShellViewTest isAbstract: true!
+
 AbstractShellViewTest comment: ''!
+
 !AbstractShellViewTest categoriesForClass!Unclassified! !
+
 !AbstractShellViewTest methodsFor!
 
 createShell: aRectangle text: aString
@@ -53,6 +58,7 @@ tearDown
 
 workAreaNearest: aPoint
 	^(DisplayMonitor nearestPoint: aPoint) workArea! !
+
 !AbstractShellViewTest categoriesForMethods!
 createShell:text:!helpers!private! !
 getSecondaryMonitorIfAvailable!helpers!private! !

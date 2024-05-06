@@ -5,11 +5,14 @@ Win32Structure subclass: #PALETTEENTRY
 	classVariableNames: '_OffsetOf_peBlue _OffsetOf_peFlags _OffsetOf_peGreen _OffsetOf_peRed'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PALETTEENTRY guid: (GUID fromString: '{87b4c606-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 PALETTEENTRY addClassConstant: '_OffsetOf_peBlue' value: 16r2!
 PALETTEENTRY addClassConstant: '_OffsetOf_peFlags' value: 16r3!
 PALETTEENTRY addClassConstant: '_OffsetOf_peGreen' value: 16r1!
 PALETTEENTRY addClassConstant: '_OffsetOf_peRed' value: 16r0!
+
 PALETTEENTRY comment: '<PALETTEENTRY> is an <ExternalStructure> class to wrap the struct ''Win32.PALETTEENTRY'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
@@ -27,7 +30,9 @@ struct tagPALETTEENTRY {
 	[helpstring("Flags from the PC_ enumeration indicating how the palette entry should be used.")] BYTE peFlags;
 } PALETTEENTRY;
 '!
+
 !PALETTEENTRY categoriesForClass!Win32-Structs! !
+
 !PALETTEENTRY methodsFor!
 
 asColor
@@ -77,6 +82,7 @@ peRed: anInteger
 
 rgbCode
 	^(bytes dwordAtOffset: 0) bitAnd: 16rFFFFFF! !
+
 !PALETTEENTRY categoriesForMethods!
 asColor!converting!public! !
 peBlue!**compiled accessors**!public! !
@@ -131,6 +137,7 @@ threeThreeTwo
 					pe peGreen: ((i bitShift: -2) bitAnd: 2r111) * 255 // 7.
 					pe peBlue: (i bitAnd: 2r11) * 255 // 3].
 	^palette! !
+
 !PALETTEENTRY class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

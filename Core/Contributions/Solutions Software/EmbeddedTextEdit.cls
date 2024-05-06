@@ -5,9 +5,13 @@ TextEdit subclass: #EmbeddedTextEdit
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 EmbeddedTextEdit guid: (GUID fromString: '{b24a4423-0072-4380-bd67-1e317410ebf8}')!
+
 EmbeddedTextEdit comment: ''!
+
 !EmbeddedTextEdit categoriesForClass!Unclassified! !
+
 !EmbeddedTextEdit methodsFor!
 
 actualOffset
@@ -154,6 +158,7 @@ stbSaveOn: anSTBOutFiler
 	handle isNil 
 		ifTrue: [anSTBOutFiler saveObject: self]
 		ifFalse: [super stbSaveOn: anSTBOutFiler]! !
+
 !EmbeddedTextEdit categoriesForMethods!
 actualOffset!accessing!public! !
 column!accessing!public! !
@@ -195,6 +200,7 @@ stbConvertFrom: anSTBClassFormat
 
 stbVersion
 	^20! !
+
 !EmbeddedTextEdit class categoriesForMethods!
 stbConvertFrom:!binary filing!public! !
 stbVersion!binary filing!public! !

@@ -5,14 +5,20 @@ GdiplusInitializer subclass: #GdiplusFontFamilyInitializer
 	classVariableNames: 'GenericSansSerif GenericSerif'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusFontFamilyInitializer guid: (GUID fromString: '{c09d8c09-5f28-11d7-b609-00e0987e8081}')!
+
 GdiplusFontFamilyInitializer isAbstract: true!
+
 GdiplusFontFamilyInitializer comment: ''!
+
 !GdiplusFontFamilyInitializer categoriesForClass!Unclassified! !
+
 !GdiplusFontFamilyInitializer methodsFor!
 
 gdiplusConstructorErrorDescription
 	^'Error creating FontFamily'! !
+
 !GdiplusFontFamilyInitializer categoriesForMethods!
 gdiplusConstructorErrorDescription!constants!private! !
 !
@@ -36,6 +42,7 @@ onPreStripImage
 	which hold sub-instance of the receiver."
 
 	GenericSansSerif := GenericSerif := nil! !
+
 !GdiplusFontFamilyInitializer class categoriesForMethods!
 genericSansSerif!instance creation!public! !
 genericSerif!instance creation!public! !

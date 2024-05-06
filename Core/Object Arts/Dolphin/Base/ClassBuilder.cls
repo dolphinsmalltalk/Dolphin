@@ -5,11 +5,16 @@ Object subclass: #ClassBuilder
 	classVariableNames: 'FixedInitialLayout FixedLayout IgnoreInstsMask RecompileMask Unsubclassable'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ClassBuilder guid: (GUID fromString: '{87b4c461-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 ClassBuilder addClassConstant: 'IgnoreInstsMask' value: 16r2!
 ClassBuilder addClassConstant: 'RecompileMask' value: 16r1!
+
 ClassBuilder comment: ''!
+
 !ClassBuilder categoriesForClass!System-Support! !
+
 !ClassBuilder methodsFor!
 
 beBytes
@@ -927,6 +932,7 @@ validateSuperclassIsSubclassable
 		ifTrue: [
 			((superclass isKindOf: Class) not or: [Unsubclassable includes: superclass])
 				ifTrue: [self error: 'Proposed superclass is not subclassable.']].! !
+
 !ClassBuilder categoriesForMethods!
 beBytes!class type!private! !
 beFixed!class type!private! !
@@ -1344,6 +1350,7 @@ validateSpecAsVariablePointers: spec size: anInteger superclass: proposedSupercl
 	(spec anyMask: Behavior._NullTermMask)
 		ifTrue: [self error: 'Null-terminated subclasses must contain bytes.'].
 	^spec! !
+
 !ClassBuilder class categoriesForMethods!
 allClassVarNamesOf:!helpers!private! !
 allInstVarNamesOf:!helpers!private! !

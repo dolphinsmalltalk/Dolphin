@@ -5,9 +5,13 @@ Object subclass: #Message
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Message guid: (GUID fromString: '{87b4c49e-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Message comment: ''!
+
 !Message categoriesForClass!Kernel-Methods! !
+
 !Message methodsFor!
 
 = aMessage
@@ -133,6 +137,7 @@ valueWithArguments: argArray
 	"Evaluate the receiver with an <Array> of arguments in argArray"
 
 	^self forwardTo: argArray first withArguments: (argArray copyFrom: 2)! !
+
 !Message categoriesForMethods!
 =!comparing!public! !
 argumentCount!accessing!public! !
@@ -179,6 +184,7 @@ selector: aSymbol arguments: anArray
 
 	<primitive: 157>
 	^self new setSelector: aSymbol arguments: anArray! !
+
 !Message class categoriesForMethods!
 selector:!instance creation!public! !
 selector:argument:!instance creation!public! !

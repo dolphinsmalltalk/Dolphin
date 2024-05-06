@@ -8,7 +8,6 @@ Copyright (c) Ian Bartholomew and Object Arts Ltd. 2002.
 
 package basicPackageVersion: '6.1'.
 
-
 package classNames
 	add: #DifferencesPresenter;
 	yourself.
@@ -41,11 +40,6 @@ Presenter subclass: #DifferencesPresenter
 	classVariableNames: 'WordSeparators'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

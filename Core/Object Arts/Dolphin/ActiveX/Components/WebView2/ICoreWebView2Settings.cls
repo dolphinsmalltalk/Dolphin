@@ -5,7 +5,9 @@ ICoreWebView2Interface subclass: #ICoreWebView2Settings
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2Settings guid: (IID fromString: '{e562e4f0-d7fa-43ac-8d71-c05150499f00}')!
+
 ICoreWebView2Settings comment: '`ICoreWebView2Settings` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Settings'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -77,7 +79,9 @@ interface ICoreWebView2Settings : IUnknown
 };
 ```
 '!
+
 !ICoreWebView2Settings categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2Settings methodsFor!
 
 areBrowserAcceleratorKeysEnabled
@@ -600,6 +604,7 @@ userAgent: userAgent
 	"Set the 'UserAgent' property of the receiver to the <lpwstr> value of the argument."
 
 	self put_UserAgent: userAgent asUtf16String! !
+
 !ICoreWebView2Settings categoriesForMethods!
 areBrowserAcceleratorKeysEnabled!properties!public!testing! !
 areBrowserAcceleratorKeysEnabled:!properties!public! !
@@ -716,6 +721,7 @@ defineFunctions
 		defineFunction: #put_IsBuiltInErrorPageEnabled:
 			argumentTypes: 'sdword'
 ! !
+
 !ICoreWebView2Settings class categoriesForMethods!
 defaultUserAgent!COM Interfaces-ICoreWebView2Settings2!private! !
 defineFunctions!**auto generated**!initializing!public! !

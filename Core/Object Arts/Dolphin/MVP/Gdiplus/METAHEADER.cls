@@ -5,7 +5,9 @@ ExternalStructure subclass: #METAHEADER
 	classVariableNames: '_OffsetOf_mtHeaderSize _OffsetOf_mtMaxRecord _OffsetOf_mtNoObjects _OffsetOf_mtNoParameters _OffsetOf_mtSize _OffsetOf_mtType _OffsetOf_mtVersion'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 METAHEADER guid: (GUID fromString: '{0252c31a-1d28-4418-90fa-3243aff6de01}')!
+
 METAHEADER addClassConstant: '_OffsetOf_mtHeaderSize' value: 16r2!
 METAHEADER addClassConstant: '_OffsetOf_mtMaxRecord' value: 16r10!
 METAHEADER addClassConstant: '_OffsetOf_mtNoObjects' value: 16rC!
@@ -13,6 +15,7 @@ METAHEADER addClassConstant: '_OffsetOf_mtNoParameters' value: 16r14!
 METAHEADER addClassConstant: '_OffsetOf_mtSize' value: 16r8!
 METAHEADER addClassConstant: '_OffsetOf_mtType' value: 16r0!
 METAHEADER addClassConstant: '_OffsetOf_mtVersion' value: 16r4!
+
 METAHEADER comment: '<METAHEADER> is an <ExternalStructure> class to wrap the struct ''Gdiplus.METAHEADER'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
@@ -32,7 +35,9 @@ struct tagMETAHEADER {
 	unsigned short mtNoParameters;
 } METAHEADER;
 '!
+
 !METAHEADER categoriesForClass!Unclassified! !
+
 !METAHEADER methodsFor!
 
 mtHeaderSize
@@ -104,6 +109,7 @@ mtVersion: anInteger
 	"Set the receiver's 'mtVersion' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_mtVersion put: anInteger! !
+
 !METAHEADER categoriesForMethods!
 mtHeaderSize!**compiled accessors**!public! !
 mtHeaderSize:!**compiled accessors**!public! !
@@ -151,6 +157,7 @@ defineFields
 
 getFieldNames
 	^#(#mtType #mtHeaderSize #mtVersion #mtSize #mtNoObjects #mtMaxRecord #mtNoParameters)! !
+
 !METAHEADER class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

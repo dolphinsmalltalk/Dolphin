@@ -5,9 +5,13 @@ SharedSet variableSubclass: #SharedIdentitySet
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SharedIdentitySet guid: (GUID fromString: '{87b4c537-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 SharedIdentitySet comment: ''!
+
 !SharedIdentitySet categoriesForClass!Collections-Unordered! !
+
 !SharedIdentitySet methodsFor!
 
 findElementOrNil: anObject
@@ -23,6 +27,7 @@ findElementOrNil: anObject
 
 hash: anObject max: anInteger
 	^anObject identityHash \\ anInteger + 1! !
+
 !SharedIdentitySet categoriesForMethods!
 findElementOrNil:!private!searching! !
 hash:max:!private!searching! !

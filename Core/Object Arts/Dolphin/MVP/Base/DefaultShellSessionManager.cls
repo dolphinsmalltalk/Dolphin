@@ -5,9 +5,13 @@ RuntimeSessionManager subclass: #DefaultShellSessionManager
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DefaultShellSessionManager guid: (GUID fromString: '{6554f3ce-3ad5-4ef5-86ce-14ac1596fe2d}')!
+
 DefaultShellSessionManager comment: ''!
+
 !DefaultShellSessionManager categoriesForClass!System-Support! !
+
 !DefaultShellSessionManager methodsFor!
 
 main
@@ -20,6 +24,7 @@ mainShellClass
 
 mainShellClass: aShellClass 
 	mainShellClass := aShellClass! !
+
 !DefaultShellSessionManager categoriesForMethods!
 main!operations-startup!public! !
 mainShellClass!constants!public! !
@@ -30,6 +35,7 @@ mainShellClass:!constants!public! !
 
 installNew
 	self shouldNotImplement! !
+
 !DefaultShellSessionManager class categoriesForMethods!
 installNew!public! !
 !

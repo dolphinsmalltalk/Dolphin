@@ -5,13 +5,16 @@ SmalltalkToolShell subclass: #Debugger
 	classVariableNames: 'AnimateMask AnimatePause DefaultStackDepth DisassemblyMask EnableDynamicMenus MainMask RestartOnMethodSave ResumableMask RunMask RunToCursorBehavior ShowWalkbacks SkipTable StackDepthIncrement'
 	poolDictionaries: 'CompilerFlags OpcodePool'
 	classInstanceVariableNames: ''!
+
 Debugger guid: (GUID fromString: '{87b4c6bd-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Debugger addClassConstant: 'AnimateMask' value: 16r10!
 Debugger addClassConstant: 'DisassemblyMask' value: 16r4!
 Debugger addClassConstant: 'MainMask' value: 16r1!
 Debugger addClassConstant: 'ResumableMask' value: 16r8!
 Debugger addClassConstant: 'RunMask' value: 16r2!
 Debugger addClassConstant: 'StackDepthIncrement' value: 16r64!
+
 Debugger comment: 'Debugger is a <SmalltalkToolShell> that implements the standard debugging tool. The debugger is usually invoked from a walkback dialog by pressing the Debug button. Walkbacks are displayed in the development environment when a breakpoint (''self halt'') is encountered, or when an unhandled exception occurs. It is also possible to configure the system so that debuggers are opened automatically when breakpoints are encountered or errors occur (see the Debugger options in Dolphin Options), though this is not particularly recommended as it can make the system crash if the error or breakpoint is in some code that is itself used by the Debugger.
 
 Dolphin''s Debugger does not simulate execution as in some Smalltalk''s, but instead uses the VM''s built-in debugging event generation to run the code and interrupt it at appropriate points. This results in more consistent and faster execution, although note that the debugger will recompile methods being stepped through to insert breakpoints and this may cause some peephole compiler optimisations to be lost.
@@ -55,7 +58,9 @@ Class Variables:
 	TerminateOnClose	<Symbol>. Option controlling action on closing debugger in respect of the debugged process.
 	ArgumentClasses	<Set> of <Class>. Generic classes to be used in place of specific classes when naming auto-generated arguments for the Implement In command.
 '!
+
 !Debugger categoriesForClass!MVP-Presenters!MVP-Resources-IDE Tools! !
+
 !Debugger methodsFor!
 
 accept
@@ -1864,6 +1869,7 @@ variableAtIndex: anInteger put: anObject
 					"If on the topFrame, then break before message send not in it"
 					frame = topFrame ifTrue: [offset := offset + 1].
 					process at: offset put: anObject]]! !
+
 !Debugger categoriesForMethods!
 accept!commands!private! !
 accept:methodSource:!operations!private! !
@@ -2246,6 +2252,7 @@ unskipSelector: aSymbol of: aClass
 	"Private - Remove the specified method to the set of those skipped by the debugger."
 
 	(self skipTable lookup: aClass) ifNotNil: [:selectors | selectors removeKey: aSymbol ifAbsent: []]! !
+
 !Debugger class categoriesForMethods!
 animatePause!options!public! !
 animatePause:!options!public! !

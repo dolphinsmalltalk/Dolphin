@@ -5,9 +5,13 @@ Exception subclass: #StackOverflow
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StackOverflow guid: (GUID fromString: '{8d4d9414-edd2-4a90-a4fb-2886ec495d39}')!
+
 StackOverflow comment: 'Exception signalled when the VM detects an unrecoverable stack overflow in a process. Note that this is not a subclass of <Error> in order that it is not trapped by generic error handlers.'!
+
 !StackOverflow categoriesForClass!Kernel-Exception Handling! !
+
 !StackOverflow methodsFor!
 
 _descriptionArguments
@@ -25,6 +29,7 @@ hresult
 	"Answer the <HRESULT> error/status code associated with the receiver."
 
 	^HRESULT win32Error: ERROR_STACK_OVERFLOW! !
+
 !StackOverflow categoriesForMethods!
 _descriptionArguments!displaying!public! !
 defaultAction!handling!public! !

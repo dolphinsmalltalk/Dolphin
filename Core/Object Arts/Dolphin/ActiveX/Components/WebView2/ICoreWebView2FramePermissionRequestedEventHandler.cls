@@ -5,7 +5,9 @@ ICoreWebView2EventHandler subclass: #ICoreWebView2FramePermissionRequestedEventH
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2FramePermissionRequestedEventHandler guid: (IID fromString: '{845d0edd-8bd8-429b-9915-4821789f23e9}')!
+
 ICoreWebView2FramePermissionRequestedEventHandler comment: '`ICoreWebView2FramePermissionRequestedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2FramePermissionRequestedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -27,7 +29,9 @@ interface ICoreWebView2FramePermissionRequestedEventHandler : IUnknown
 };
 ```
 '!
+
 !ICoreWebView2FramePermissionRequestedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2FramePermissionRequestedEventHandler methodsFor!
 
 basicRegister: tokenBuffer
@@ -35,6 +39,7 @@ basicRegister: tokenBuffer
 
 basicUnregister
 	source Remove_PermissionRequested: token! !
+
 !ICoreWebView2FramePermissionRequestedEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
@@ -58,6 +63,7 @@ eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
 	^#framePermissionRequested:! !
+
 !ICoreWebView2FramePermissionRequestedEventHandler class categoriesForMethods!
 argsClass!constants!public! !
 defineFunctions!**auto generated**!initializing!public! !

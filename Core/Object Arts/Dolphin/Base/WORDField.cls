@@ -5,9 +5,13 @@ ScalarField subclass: #WORDField
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 WORDField guid: (GUID fromString: '{87b4c4ef-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 WORDField comment: '<WORDField> is a <ScalarField> class to represent <ExternalStructure> fields that are 16-bit unsigned integers.'!
+
 !WORDField categoriesForClass!External-Data-Types! !
+
 !WORDField methodsFor!
 
 accessorMessage
@@ -26,6 +30,7 @@ writeInto: anExternalStructure value: anInteger
 	anExternalStructure, at the receiver's offset."
 
 	^anExternalStructure bytes wordAtOffset: offset put: anInteger! !
+
 !WORDField categoriesForMethods!
 accessorMessage!automatic generation!private! !
 readFrom:!indirect accessing!private! !
@@ -39,6 +44,7 @@ byteSize
 	A WORD is always 16-bits/2 bytes."
 
 	^2! !
+
 !WORDField class categoriesForMethods!
 byteSize!constants!private! !
 !

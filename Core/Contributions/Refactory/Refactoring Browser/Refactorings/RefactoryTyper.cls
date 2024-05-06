@@ -5,9 +5,13 @@ Object subclass: #RefactoryTyper
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoryTyper guid: (GUID fromString: '{df340d5b-5ca0-48cb-8e8c-5153a7bc6a4c}')!
+
 RefactoryTyper comment: ''!
+
 !RefactoryTyper categoriesForClass!Refactory-Support! !
+
 !RefactoryTyper methodsFor!
 
 collectionNameFor: aString 
@@ -312,6 +316,7 @@ typesFor: anInstVarName
 typesFor: anInstVarName in: aClass 
 	class = aClass ifFalse: [self runOn: aClass].
 	^variableTypes at: anInstVarName ifAbsent: [Set new]! !
+
 !RefactoryTyper categoriesForMethods!
 collectionNameFor:!printing!public! !
 computeEquivalenceClassesForMethodsAndVars!equivalence classes!public! !
@@ -369,6 +374,7 @@ typesFor: variableName in: aParseTree model: aRBNamespace
 	^(self new)
 		model: aRBNamespace;
 		findTypeFor: messages! !
+
 !RefactoryTyper class categoriesForMethods!
 new!instance creation!public! !
 newFor:!instance creation!public! !

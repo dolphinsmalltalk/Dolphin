@@ -5,9 +5,13 @@ GdiplusInitializer subclass: #GdiplusGraphicsPathFromPointsInitializer
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusGraphicsPathFromPointsInitializer guid: (GUID fromString: '{fcef1a11-834c-11d7-b609-00e0987e8081}')!
+
 GdiplusGraphicsPathFromPointsInitializer comment: ''!
+
 !GdiplusGraphicsPathFromPointsInitializer categoriesForClass!Unclassified! !
+
 !GdiplusGraphicsPathFromPointsInitializer methodsFor!
 
 createHandle
@@ -34,6 +38,7 @@ points: points types: types fillMode: aFillModeConstant
 	pathPoints := points.
 	pathTypes := types asByteArray.
 	fillMode := aFillModeConstant! !
+
 !GdiplusGraphicsPathFromPointsInitializer categoriesForMethods!
 createHandle!private!realizing/unrealizing! !
 gdiplusConstructorErrorDescription!constants!private! !
@@ -47,6 +52,7 @@ points: points types: types fillMode: aFillModeConstant
 		points: points
 		types: types
 		fillMode: aFillModeConstant! !
+
 !GdiplusGraphicsPathFromPointsInitializer class categoriesForMethods!
 points:types:fillMode:!public! !
 !

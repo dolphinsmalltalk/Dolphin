@@ -5,8 +5,11 @@ Shell subclass: #Dialog
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Dialog guid: (GUID fromString: '{87b4c69a-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Dialog isAbstract: true!
+
 Dialog comment: 'Dialog is an abstract <dialogPresenter> superclass for allowing model data to be displayed and edited within a top-level modal dialog window. The fact that a Dialog is modal means that any changes made to the displayed data are usually buffered and not written directly back to the model until they are explicitly applied. This happens, usually after clicking an OK button. Hence a user has the opportunity of cancelling out of a Dialog without any changes being made to the underlying model.
 
 When designing a <dialogPresenter> it is necessary to make an initial decision as to how the model data should be edited. If the model is a mutable object, in that it is legal (and sensible) to modify it in place using its aspect accessors, then it is sensible to treat it as a simple <dialogPresenter> and it can be subclassed directly from Dialog itself. If, on the other hand, the model is to be immutable then the dialog should be implemented as a <valueDialogPresenter> and, most likely, be subclassed from the ValueDialog class. The decision made here can often be quite subtle. On the one hand, making changes to a mutable object seems the most direct approach, however, a <valueDialogPresenter> can often be more flexible because it can be connected to anything that supports the <valueModel> protocol. Often the choice comes down to this: If the identity of the underlying model data must remain unchanged then use a standard <dialogPresenter>. If this is not the case then a <valueDialogPresenter> will be more suitable.
@@ -18,7 +21,9 @@ Instance Variables:
 	ownerView	<topView> which owns the dialog and is suspended waiting for it to complete.
 
 '!
+
 !Dialog categoriesForClass!MVP-Presenters!MVP-Resources-Dialogs! !
+
 !Dialog methodsFor!
 
 answer
@@ -132,6 +137,7 @@ subject
 	"Answer the original model onto which the receiver was created"
 	
 	^self model subject! !
+
 !Dialog categoriesForMethods!
 answer!accessing!public! !
 apply!commands!public! !
@@ -198,6 +204,7 @@ showModalOn: aModel
 	Answers the result of dialog if confirmed or nil otherwise"
 
 	^(self createOn: aModel) showModal! !
+
 !Dialog class categoriesForMethods!
 icon!constants!public! !
 resource_Default_view!public!resources-views! !

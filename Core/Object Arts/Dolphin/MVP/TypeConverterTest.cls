@@ -5,9 +5,13 @@ DolphinTest subclass: #TypeConverterTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TypeConverterTest guid: (GUID fromString: '{a68a6616-456e-4a7f-85e0-50d168d1a828}')!
+
 TypeConverterTest comment: ''!
+
 !TypeConverterTest categoriesForClass!Unclassified! !
+
 !TypeConverterTest methodsFor!
 
 setUp
@@ -103,6 +107,7 @@ testLeftNullValue
 		updateModel.
 	self assertIsNil: edit model value.
 	self assert: edit text isEmpty	"#1257"! !
+
 !TypeConverterTest categoriesForMethods!
 setUp!public!unit tests! !
 tearDown!public!unit tests! !

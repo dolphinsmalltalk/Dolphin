@@ -5,7 +5,9 @@ Win32Structure subclass: #MSGBOXPARAMSW
 	classVariableNames: '_OffsetOf_dwContextHelpId _OffsetOf_dwLanguageId _OffsetOf_dwSize _OffsetOf_dwStyle _OffsetOf_hInstance _OffsetOf_hwndOwner _OffsetOf_lpfnMsgBoxCallback _OffsetOf_lpszCaption _OffsetOf_lpszIcon _OffsetOf_lpszText'
 	poolDictionaries: 'MessageBoxConstants'
 	classInstanceVariableNames: ''!
+
 MSGBOXPARAMSW guid: (GUID fromString: '{87b4c600-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 MSGBOXPARAMSW addClassConstant: '_OffsetOf_dwContextHelpId' value: 16r1C!
 MSGBOXPARAMSW addClassConstant: '_OffsetOf_dwLanguageId' value: 16r24!
 MSGBOXPARAMSW addClassConstant: '_OffsetOf_dwSize' value: 16r0!
@@ -16,6 +18,7 @@ MSGBOXPARAMSW addClassConstant: '_OffsetOf_lpfnMsgBoxCallback' value: 16r20!
 MSGBOXPARAMSW addClassConstant: '_OffsetOf_lpszCaption' value: 16r10!
 MSGBOXPARAMSW addClassConstant: '_OffsetOf_lpszIcon' value: 16r18!
 MSGBOXPARAMSW addClassConstant: '_OffsetOf_lpszText' value: 16rC!
+
 MSGBOXPARAMSW comment: 'MSGBOXPARAMS is an <ExternalStructure> class which represents the Windows structure of the same name.
 
 MSGBOXPARAMS is used to contain configuration details for Message Boxes.
@@ -25,7 +28,9 @@ Instance Variables:
 	text	<String> Text to be display in box (address stored in struct, so need to prevent premature GC)
 	caption 	<String> Caption of box (ditto)
 	owner	<ExternalHandle>. Handle of owner view'!
+
 !MSGBOXPARAMSW categoriesForClass!External-Data-Structured-Win32! !
+
 !MSGBOXPARAMSW methodsFor!
 
 caption: aString
@@ -80,6 +85,7 @@ text: aString
 
 	text := aString asUtf16String.
 	self lpszText: text! !
+
 !MSGBOXPARAMSW categoriesForMethods!
 caption:!accessing!public! !
 dwSize:!**compiled accessors**!public! !
@@ -129,6 +135,7 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #hwndOwner #hInstance #lpszText #lpszCaption #dwStyle #lpszIcon #dwLanguageId)! !
+
 !MSGBOXPARAMSW class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

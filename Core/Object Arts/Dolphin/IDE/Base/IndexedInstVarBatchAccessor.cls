@@ -5,9 +5,13 @@ BatchAspectAccessor subclass: #IndexedInstVarBatchAccessor
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IndexedInstVarBatchAccessor guid: (GUID fromString: '{234eecdb-d11a-49c1-9c57-68f684cc8b21}')!
+
 IndexedInstVarBatchAccessor comment: 'Part of the InstVarInspector framework. IndexedInstVarBatchAccessors are used to give access to a group of <IndexedInstVarAccessors> for indexed slots of an object. Batching the accessors up in this way allows the InstVarInspector to only display a certain number of elements at a time. This can substantially improve performance when displaying large indexed objects.'!
+
 !IndexedInstVarBatchAccessor categoriesForClass!MVP-Models! !
+
 !IndexedInstVarBatchAccessor methodsFor!
 
 aspectClass
@@ -36,6 +40,7 @@ keys
 
 subjectIncludesKey: nextKey
 	^nextKey <= self subject basicSize! !
+
 !IndexedInstVarBatchAccessor categoriesForMethods!
 aspectClass!public! !
 getBatchAccessors!accessing!public! !
@@ -54,6 +59,7 @@ subject: anObject batchSize: sizeInteger
 		keys: (1 to: anObject basicSize)
 		startingAt: 1
 		batchSize: sizeInteger! !
+
 !IndexedInstVarBatchAccessor class categoriesForMethods!
 subject:batchSize:!instance creation!public! !
 !

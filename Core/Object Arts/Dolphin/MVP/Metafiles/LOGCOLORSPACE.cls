@@ -5,7 +5,9 @@ ExternalStructure subclass: #LOGCOLORSPACE
 	classVariableNames: '_OffsetOf_lcsCSType _OffsetOf_lcsEndpoints _OffsetOf_lcsFilename _OffsetOf_lcsGammaBlue _OffsetOf_lcsGammaGreen _OffsetOf_lcsGammaRed _OffsetOf_lcsIntent _OffsetOf_lcsSignature _OffsetOf_lcsSize _OffsetOf_lcsVersion'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 LOGCOLORSPACE guid: (GUID fromString: '{2b6b91b8-caef-4fdf-ac3d-f032417ca840}')!
+
 LOGCOLORSPACE addClassConstant: '_OffsetOf_lcsCSType' value: 16rC!
 LOGCOLORSPACE addClassConstant: '_OffsetOf_lcsEndpoints' value: 16r14!
 LOGCOLORSPACE addClassConstant: '_OffsetOf_lcsFilename' value: 16r44!
@@ -16,6 +18,7 @@ LOGCOLORSPACE addClassConstant: '_OffsetOf_lcsIntent' value: 16r10!
 LOGCOLORSPACE addClassConstant: '_OffsetOf_lcsSignature' value: 16r0!
 LOGCOLORSPACE addClassConstant: '_OffsetOf_lcsSize' value: 16r8!
 LOGCOLORSPACE addClassConstant: '_OffsetOf_lcsVersion' value: 16r4!
+
 LOGCOLORSPACE comment: '<LOGCOLORSPACE> is an <ExternalStructure> class to wrap the struct ''Win32.LOGCOLORSPACE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -38,7 +41,9 @@ struct tagLOGCOLORSPACE {
 	BYTE lcsFilename[260];
 } LOGCOLORSPACE;
 '!
+
 !LOGCOLORSPACE categoriesForClass!Win32-Structs! !
+
 !LOGCOLORSPACE methodsFor!
 
 lcsCSType
@@ -150,6 +155,7 @@ lcsVersion: anInteger
 	"Set the receiver's 'lcsVersion' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_lcsVersion put: anInteger! !
+
 !LOGCOLORSPACE categoriesForMethods!
 lcsCSType!**compiled accessors**!public! !
 lcsCSType:!**compiled accessors**!public! !
@@ -210,6 +216,7 @@ defineFields
 
 getFieldNames
 	^#(#lcsSignature #lcsVersion #lcsSize #lcsCSType #lcsIntent #lcsEndpoints #lcsGammaRed #lcsGammaGreen #lcsGammaBlue #lcsFilename)! !
+
 !LOGCOLORSPACE class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

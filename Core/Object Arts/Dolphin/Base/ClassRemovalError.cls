@@ -5,9 +5,13 @@ Error subclass: #ClassRemovalError
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ClassRemovalError guid: (GUID fromString: '{4ed2ccc0-5e2b-42a1-8bef-a537219efec2}')!
+
 ClassRemovalError comment: ''!
+
 !ClassRemovalError categoriesForClass!System-Support! !
+
 !ClassRemovalError methodsFor!
 
 isResumable
@@ -27,6 +31,7 @@ originalError: anError
 	in the receivers tag field."
 
 	originalError := anError! !
+
 !ClassRemovalError categoriesForMethods!
 isResumable!public!testing! !
 originalError!accessing!public! !

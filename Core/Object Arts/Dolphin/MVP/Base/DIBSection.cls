@@ -5,9 +5,13 @@ Bitmap subclass: #DIBSection
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DIBSection guid: (GUID fromString: '{f44c914a-2b3f-11d3-8368-7a8b5a000000}')!
+
 DIBSection comment: ''!
+
 !DIBSection categoriesForClass!Graphics-Tools! !
+
 !DIBSection methodsFor!
 
 baseLoadFlags
@@ -194,6 +198,7 @@ width: w height: h depth: d
 
 	extent := w@h.
 	depth := d! !
+
 !DIBSection categoriesForMethods!
 baseLoadFlags!constants!public! !
 cacheInfo!helpers!private! !
@@ -262,6 +267,7 @@ width: width height: height depth: depth
 		height: height 
 		depth: depth
 		! !
+
 !DIBSection class categoriesForMethods!
 fromGlobalHandle:!instance creation!public! !
 width:height:!instance creation!public! !

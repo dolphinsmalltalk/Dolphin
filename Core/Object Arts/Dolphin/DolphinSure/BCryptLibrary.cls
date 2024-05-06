@@ -5,10 +5,14 @@ ExternalLibrary subclass: #BCryptLibrary
 	classVariableNames: ''
 	poolDictionaries: 'BCryptConstants'
 	classInstanceVariableNames: ''!
+
 BCryptLibrary guid: (GUID fromString: '{84b3c6ee-a194-413c-8071-95953a50412e}')!
+
 BCryptLibrary comment: '"Windows BCrypt (Cryptography Next Generation, CNG) library.
   Replacement for DolphinSureCryptoLibrary class and DLL."'!
+
 !BCryptLibrary categoriesForClass!External-Libraries! !
+
 !BCryptLibrary methodsFor!
 
 closeAlgorithmProvider: aAlgorithmHandle flags: aFlags
@@ -151,6 +155,7 @@ shaHashBuffer: aHashHandle buffer: buffer
 		input: buffer
 		inputSize: buffer size
 		flags: 0! !
+
 !BCryptLibrary categoriesForMethods!
 closeAlgorithmProvider:flags:!public!win32 functions-bcrypt library! !
 createHash:hashHandle:hashObject:hashObjectSize:secret:secretSize:flags:!public!win32 functions-bcrypt library! !
@@ -172,6 +177,7 @@ fileName
 	"Answer the host system file name for the library"
 
 	^ 'BCrypt'! !
+
 !BCryptLibrary class categoriesForMethods!
 fileName!constants!public! !
 !

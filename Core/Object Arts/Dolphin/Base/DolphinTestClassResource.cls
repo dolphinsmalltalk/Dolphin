@@ -5,10 +5,15 @@ DolphinTestResource subclass: #DolphinTestClassResource
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DolphinTestClassResource guid: (GUID fromString: '{e358c277-08b0-4ffe-9f5a-c41be358f898}')!
+
 DolphinTestClassResource isAbstract: true!
+
 DolphinTestClassResource comment: ''!
+
 !DolphinTestClassResource categoriesForClass!Unclassified! !
+
 !DolphinTestClassResource methodsFor!
 
 compileAccessorsFor: aClass 
@@ -70,6 +75,7 @@ setUp
 tearDown
 	super tearDown.
 	self destroyPackage! !
+
 !DolphinTestClassResource categoriesForMethods!
 compileAccessorsFor:!Init / Release!private! !
 compileMethods!accessing!public! !

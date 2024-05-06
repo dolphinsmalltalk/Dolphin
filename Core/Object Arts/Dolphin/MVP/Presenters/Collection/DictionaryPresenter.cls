@@ -5,9 +5,13 @@ HashedCollectionPresenter subclass: #DictionaryPresenter
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DictionaryPresenter guid: (GUID fromString: '{8337cb38-a2d9-47dc-95f6-b262e86adca6}')!
+
 DictionaryPresenter comment: ''!
+
 !DictionaryPresenter categoriesForClass!MVP-Presenters! !
+
 !DictionaryPresenter methodsFor!
 
 defaultAddItem
@@ -50,6 +54,7 @@ removeElement: anAssociation
 	self value: ((self value)
 				removeKey: anAssociation key;
 				yourself)! !
+
 !DictionaryPresenter categoriesForMethods!
 defaultAddItem!helpers!private! !
 elements!accessing!public! !
@@ -63,6 +68,7 @@ defaultModel
 	is initialized."
 
 	^Dictionary new asValue! !
+
 !DictionaryPresenter class categoriesForMethods!
 defaultModel!models!public! !
 !

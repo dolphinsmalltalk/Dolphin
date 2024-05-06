@@ -5,9 +5,13 @@ GdiplusTests subclass: #GdiplusLinearGradientBrushTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusLinearGradientBrushTest guid: (GUID fromString: '{da79074f-df9f-4e17-85cb-3cbe8999807f}')!
+
 GdiplusLinearGradientBrushTest comment: ''!
+
 !GdiplusLinearGradientBrushTest categoriesForClass!Unclassified! !
+
 !GdiplusLinearGradientBrushTest methodsFor!
 
 setSample1
@@ -104,6 +108,7 @@ testPersistentArgument
 	self assert: brush isRealized.
 	self assert: pen initializer brush identicalTo: brush
 	"for gc reasons .. the pen must always hold a reference to the brush"! !
+
 !GdiplusLinearGradientBrushTest categoriesForMethods!
 setSample1!accessing!public! !
 testClone!public!unit tests! !

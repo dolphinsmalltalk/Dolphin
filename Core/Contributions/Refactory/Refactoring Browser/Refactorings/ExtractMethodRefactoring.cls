@@ -5,9 +5,13 @@ MethodRefactoring subclass: #ExtractMethodRefactoring
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExtractMethodRefactoring guid: (GUID fromString: '{f5ea0d09-686d-47ef-9a7d-72fe3bb4cbcc}')!
+
 ExtractMethodRefactoring comment: ''!
+
 !ExtractMethodRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !ExtractMethodRefactoring methodsFor!
 
 checkAssignments: variableNames 
@@ -298,6 +302,7 @@ transform
 					(c compiledMethodAt: selector ifAbsent: []) 
 						ifNotNil: [:m | change package: m owningPackage]]].
 	class compileTree: modifiedParseTree! !
+
 !ExtractMethodRefactoring categoriesForMethods!
 checkAssignments:!public!transforming! !
 checkReturn!public!transforming! !
@@ -338,6 +343,7 @@ model: aRBNamespace extract: anInterval from: aSelector in: aClass
 			from: aSelector
 			in: aClass;
 		yourself! !
+
 !ExtractMethodRefactoring class categoriesForMethods!
 extract:from:in:!instance creation!public! !
 model:extract:from:in:!instance creation!public! !

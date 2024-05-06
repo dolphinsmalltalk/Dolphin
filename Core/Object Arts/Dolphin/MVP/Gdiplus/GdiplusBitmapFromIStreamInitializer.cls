@@ -5,9 +5,13 @@ GdiplusInitializer subclass: #GdiplusBitmapFromIStreamInitializer
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusBitmapFromIStreamInitializer guid: (GUID fromString: '{f3cd9058-7788-4cff-95d9-04dda741ef4e}')!
+
 GdiplusBitmapFromIStreamInitializer comment: ''!
+
 !GdiplusBitmapFromIStreamInitializer categoriesForClass!Unclassified! !
+
 !GdiplusBitmapFromIStreamInitializer methodsFor!
 
 createHandle
@@ -34,6 +38,7 @@ isPersistent
 
 iStream: pStream
 	iStream := pStream! !
+
 !GdiplusBitmapFromIStreamInitializer categoriesForMethods!
 createHandle!private!realizing/unrealizing! !
 gdiplusConstructorErrorDescription!constants!private! !
@@ -45,6 +50,7 @@ iStream:!initializing!private! !
 
 iStream: pStream
 	^self new iStream: pStream! !
+
 !GdiplusBitmapFromIStreamInitializer class categoriesForMethods!
 iStream:!instance creation!public! !
 !

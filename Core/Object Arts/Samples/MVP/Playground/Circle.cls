@@ -5,9 +5,13 @@ RegularPolygon subclass: #Circle
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Circle guid: (GUID fromString: '{87b4c681-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Circle comment: 'A Circle is a particular type of <PlayShape> that may be added to a <Playground>. It is part of the Playground sample package used as a Smalltalk learning aid. See this package''s comment for more details.'!
+
 !Circle categoriesForClass!Samples! !
+
 !Circle methodsFor!
 
 defaultColor
@@ -27,6 +31,7 @@ defaultSides
 	Circles effectively have many sides"
 
 	^100! !
+
 !Circle categoriesForMethods!
 defaultColor!constants!public! !
 defaultPosition!constants!public! !

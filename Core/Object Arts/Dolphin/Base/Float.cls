@@ -5,7 +5,9 @@ Number variableByteSubclass: #Float
 	classVariableNames: 'DefaultDecimalExponents EMax EMin EMinDenormalized FMax FMin FMinDenormalized FpClassDenormal FpClassFinite FpClassInfinite FpClassNaN FpClassNegative FpClassNormal FpClassStrictlyPositive FpClassZero Infinity InvalidOperationFlag Ln2 MantissaHighBit MantissaMask NaN NegativeInfinity Precision SignificantDifference'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Float guid: (GUID fromString: '{87b4c65a-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Float addClassConstant: 'EMax' value: 16r3FF!
 Float addClassConstant: 'EMin' value: -16r3FE!
 Float addClassConstant: 'EMinDenormalized' value: -16r432!
@@ -25,8 +27,11 @@ Float addClassConstant: 'MantissaHighBit' value: 16r10000000000000!
 Float addClassConstant: 'MantissaMask' value: 16rFFFFFFFFFFFFF!
 Float addClassConstant: 'Precision' value: 16r35!
 Float addClassConstant: 'SignificantDifference' value: 1.0e-9!
+
 Float comment: 'Float is the class of double precision floating point Numbers (64-bit) in IEEE-754 format.'!
+
 !Float categoriesForClass!Magnitude-Numbers! !
+
 !Float methodsFor!
 
 - aNumber
@@ -1008,6 +1013,7 @@ truncated
 	"Implementation Note: Rather than calculate the integer approximation by a series of divisions (as in versions of Dolphin prior to 3.02), a process which was both very slow for large Floats and also prone to error, we use precise #asTrueFraction."
 	^self asTrueFraction truncated
 ! !
+
 !Float categoriesForMethods!
 -!arithmetic!public! !
 *!arithmetic!public! !
@@ -1343,6 +1349,7 @@ zero
 	"Answer the receiver's representation of zero."
 
 	^0.0! !
+
 !Float class categoriesForMethods!
 defaultDecimalExponents!accessing!public! !
 defaultDecimalExponents:!accessing!public! !

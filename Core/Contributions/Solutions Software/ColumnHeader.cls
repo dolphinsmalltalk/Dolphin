@@ -5,9 +5,13 @@ Object subclass: #ColumnHeader
 	classVariableNames: ''
 	poolDictionaries: 'HeaderViewConstants'
 	classInstanceVariableNames: ''!
+
 ColumnHeader guid: (GUID fromString: '{9bd93348-662b-499a-84fe-75576dbd2f21}')!
+
 ColumnHeader comment: ''!
+
 !ColumnHeader categoriesForClass!Kernel-Objects! !
+
 !ColumnHeader methodsFor!
 
 alignment
@@ -154,6 +158,7 @@ style: anInteger
 		fmt: anInteger.
 
 	self parent hdmSetItem: item index: self index - 1! !
+
 !ColumnHeader categoriesForMethods!
 alignment!public!style! !
 alignment:!public!style! !

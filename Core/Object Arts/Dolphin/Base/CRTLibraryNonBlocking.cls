@@ -5,9 +5,13 @@ CRTLibrary subclass: #CRTLibraryNonBlocking
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 CRTLibraryNonBlocking guid: (GUID fromString: '{3214435f-9afe-47b3-8f9b-0d4b533d5b1d}')!
+
 CRTLibraryNonBlocking comment: ''!
+
 !CRTLibraryNonBlocking categoriesForClass!External-Libraries! !
+
 !CRTLibraryNonBlocking methodsFor!
 
 _errno
@@ -37,6 +41,7 @@ fgetws: buf n: bufsize stream: aFILE
 fread_s: buffer bufferSize: bufsizeInteger elementSize: elemSizeInteger count: countInteger stream: aFILE
 	<overlap cdecl: sdword fread_s lpvoid intptr intptr intptr handle>
 	^self invalidCall: _failureCode! !
+
 !CRTLibraryNonBlocking categoriesForMethods!
 _errno!CRT functions-process and environment control!public! !
 chmod:pmode:!CRT functions-file handling!public! !

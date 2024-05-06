@@ -5,11 +5,14 @@ ENHMETARECORD subclass: #EMRANGLEARC
 	classVariableNames: '_OffsetOf_eStartAngle _OffsetOf_eSweepAngle _OffsetOf_nRadius _OffsetOf_ptlCenter'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 EMRANGLEARC guid: (GUID fromString: '{76825af3-ec74-45d6-8539-0c31f3e069b9}')!
+
 EMRANGLEARC addClassConstant: '_OffsetOf_eStartAngle' value: 16r14!
 EMRANGLEARC addClassConstant: '_OffsetOf_eSweepAngle' value: 16r18!
 EMRANGLEARC addClassConstant: '_OffsetOf_nRadius' value: 16r10!
 EMRANGLEARC addClassConstant: '_OffsetOf_ptlCenter' value: 16r8!
+
 EMRANGLEARC comment: '<EMRANGLEARC> is an <ExternalStructure> class to wrap the struct ''Win32.EMRANGLEARC'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -27,7 +30,9 @@ struct tagEMRANGLEARC {
 	float eSweepAngle;
 } EMRANGLEARC;
 '!
+
 !EMRANGLEARC categoriesForClass!Win32-Structs! !
+
 !EMRANGLEARC methodsFor!
 
 eStartAngle
@@ -73,6 +78,7 @@ ptlCenter: aPOINTL
 		from: ##(_OffsetOf_ptlCenter + 1)
 		to: ##(_OffsetOf_ptlCenter + POINTL basicByteSize)
 		startingAt: 1! !
+
 !EMRANGLEARC categoriesForMethods!
 eStartAngle!**compiled accessors**!public! !
 eStartAngle:!**compiled accessors**!public! !
@@ -116,6 +122,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_ANGLEARC! !
+
 !EMRANGLEARC class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

@@ -5,9 +5,12 @@ OLEStructure subclass: #PARAMDESCEX
 	classVariableNames: '_OffsetOf_cBytes _OffsetOf_varDefaultValue'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PARAMDESCEX guid: (GUID fromString: '{c06f3b61-0868-11d3-93af-00a024ca708a}')!
+
 PARAMDESCEX addClassConstant: '_OffsetOf_cBytes' value: 16r0!
 PARAMDESCEX addClassConstant: '_OffsetOf_varDefaultValue' value: 16r8!
+
 PARAMDESCEX comment: 'PARAMDESCEX is an <ExternalStructure> to represent the AX Automation PARAMDESCEX structure.
 
 The PARAMDESCEX structure is used to hold the default value (in a variant) for a particular parameter.
@@ -16,13 +19,16 @@ Fields:
 	cBytes		<DWORD> size of structure (24).
 	varDefaultValue	<VARIANT> default value of parameter described by structure.
 '!
+
 !PARAMDESCEX categoriesForClass!External-Data-Structured-COM! !
+
 !PARAMDESCEX methodsFor!
 
 varDefaultValue
 	"Answer the <VARIANT> value of the receiver's 'varDefaultValue' field."
 
 	^VARIANT fromAddress: bytes yourAddress + _OffsetOf_varDefaultValue! !
+
 !PARAMDESCEX categoriesForMethods!
 varDefaultValue!**compiled accessors**!public! !
 !
@@ -49,6 +55,7 @@ defineFields
 
 getFieldNames
 	^#(#varDefaultValue)! !
+
 !PARAMDESCEX class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

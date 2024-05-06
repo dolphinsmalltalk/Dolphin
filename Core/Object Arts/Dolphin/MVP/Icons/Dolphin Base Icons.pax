@@ -8,7 +8,6 @@ Copyright (c) Object Arts Ltd, 2018.
 This package extends base system classes to add icons.
 '.
 
-
 package methodNames
 	add: #Color -> #icon;
 	add: #ColorDefault -> #icon;
@@ -127,12 +126,6 @@ package setPrerequisites: #(
 
 package!
 
-"Class Definitions"!
-
-
-"Global Aliases"!
-
-
 "Loose Methods"!
 
 !AbstractCardContainer class methodsFor!
@@ -146,6 +139,7 @@ icon
 		color: nil)
 		textcolor: Color royalBlue;
 		yourself)! !
+
 !AbstractCardContainer class categoriesForMethods!
 icon!constants!public! !
 !
@@ -158,6 +152,7 @@ icon
 	^##((TextTileIcon text: $\x1F4E2)
 		textcolor: Color darkBlue;
 		yourself)! !
+
 !Announcement class categoriesForMethods!
 icon!constants!public! !
 !
@@ -170,6 +165,7 @@ icon
 	^##((TextTileIcon text: $\x2182 fontName: 'Segoe UI')
 		textcolor: Color darkBlue;
 		yourself)! !
+
 !ArithmeticValue class categoriesForMethods!
 icon!constants!public! !
 !
@@ -182,6 +178,7 @@ icon
 	^##((TextTileIcon text: '#()' fontName: 'Arial')
 		textcolor: Color darkBlue;
 		yourself)! !
+
 !Array class categoriesForMethods!
 icon!constants!public! !
 !
@@ -194,6 +191,7 @@ icon
 	^##((TextTileIcon text: $\x1F86A)
 		textcolor: Color darkBlue;
 		yourself)! !
+
 !Association class categoriesForMethods!
 icon!constants!public! !
 !
@@ -206,6 +204,7 @@ icon
 	^##((TextTileIcon text: '⟅ ⟆' fontName: 'Cambria')
 		textcolor: Color darkBlue;
 		yourself)! !
+
 !Bag class categoriesForMethods!
 icon!constants!public! !
 !
@@ -216,6 +215,7 @@ icon
 	"Answers an Icon that can be used to represent this class."
 
 	^##(self) defaultIcon! !
+
 !Behavior class categoriesForMethods!
 icon!constants!public! !
 !
@@ -226,6 +226,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon! !
+
 !BlockClosure class categoriesForMethods!
 icon!constants!public! !
 !
@@ -236,6 +237,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^Boolean icon! !
+
 !BOOL class categoriesForMethods!
 icon!constants!public! !
 !
@@ -246,6 +248,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon! !
+
 !Boolean class categoriesForMethods!
 icon!constants!public! !
 !
@@ -256,6 +259,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^Boolean icon! !
+
 !BOOLEAN class categoriesForMethods!
 icon!constants!public! !
 !
@@ -268,6 +272,7 @@ icon
 	^##((TextTileIcon text: $\x1F533 fontName: 'Segoe UI Emoji')
 		textcolor: Color forestGreen;
 		yourself)! !
+
 !BooleanPresenter class categoriesForMethods!
 icon!constants!public! !
 !
@@ -280,6 +285,7 @@ icon
 	^##((TextTileIcon text: '#[]' fontName: 'Arial')
 		textcolor: Color darkBlue;
 		yourself)! !
+
 !ByteArray class categoriesForMethods!
 icon!constants!public! !
 !
@@ -292,6 +298,7 @@ icon
 	^##((TextTileIcon text: $\x1F3F7 fontName: 'Segoe UI Emoji')
 		textcolor: Color darkBlue;
 		yourself)! !
+
 !CardLabel class categoriesForMethods!
 icon!constants!public! !
 !
@@ -304,6 +311,7 @@ icon
 	^##((TextTileIcon text: '$b' fontName: 'Cambria')
 		textcolor: Color darkBlue;
 		yourself)! !
+
 !Character class categoriesForMethods!
 icon!constants!public! !
 !
@@ -314,6 +322,7 @@ icon
 	"Answers an Icon that can be used to represent this class."
 
 	^##((TextTileIcon text: $\x2611 fontName: 'Segoe UI Emoji') textcolor: Color hotlight)! !
+
 !CheckButton class categoriesForMethods!
 icon!constants!public! !
 !
@@ -324,6 +333,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon! !
+
 !Collection class categoriesForMethods!
 icon!constants!public! !
 !
@@ -337,6 +347,7 @@ icon
 	though."
 
 	^TextTileIcon text: '' color: self! !
+
 !Color categoriesForMethods!
 icon!accessing!public! !
 !
@@ -350,6 +361,7 @@ icon
 	though."
 
 	^TextTileIcon text: '' color: ColorRef defaultColorRepresentation! !
+
 !ColorDefault categoriesForMethods!
 icon!public! !
 !
@@ -360,6 +372,7 @@ icon
 	"Answer an Icon representing the receiver."
 
 	^##(self) defaultIcon! !
+
 !CompiledCode class categoriesForMethods!
 icon!constants!public! !
 !
@@ -371,6 +384,7 @@ icon
 
 	^self class icon
 ! !
+
 !CompileFailedMethod categoriesForMethods!
 icon!constants!public! !
 !
@@ -381,6 +395,7 @@ icon
 	"Answer an Icon representing the receiver."
 
 	^##(self) defaultIcon! !
+
 !CompileFailedMethod class categoriesForMethods!
 icon!constants!public! !
 !
@@ -391,6 +406,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon! !
+
 !Compiler class categoriesForMethods!
 icon!constants!development!public! !
 !
@@ -401,6 +417,7 @@ icon
 	"Answer the default icon for the receiver and its instances."
 
 	^self severityClass icon! !
+
 !CompilerNotification class categoriesForMethods!
 icon!constants!public! !
 !
@@ -411,6 +428,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon! !
+
 !Date class categoriesForMethods!
 icon!constants!public! !
 !
@@ -421,6 +439,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon! !
+
 !DateAndTime class categoriesForMethods!
 icon!constants!public! !
 !
@@ -431,6 +450,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon! !
+
 !DeadObject class categoriesForMethods!
 icon!constants!development!public! !
 !
@@ -441,6 +461,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon! !
+
 !DeafObject class categoriesForMethods!
 icon!constants!development!public! !
 !
@@ -456,6 +477,7 @@ icon
 	from an ExternalResourceLibrary other than the system default."
 
 	^##(self) defaultIcon! !
+
 !Delay class categoriesForMethods!
 icon!constants!development!public! !
 !
@@ -466,6 +488,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon! !
+
 !Dictionary class categoriesForMethods!
 icon!constants!public! !
 !
@@ -481,6 +504,7 @@ icon
 	from an ExternalResourceLibrary other than the system default."
 
 	^##(self) defaultIcon! !
+
 !DiskVolumeInformation class categoriesForMethods!
 icon!constants!development!public! !
 !
@@ -491,6 +515,7 @@ icon
 	"Answer a suitable iconic representation for the receiver."
 
 	^Float icon! !
+
 !DOUBLE class categoriesForMethods!
 icon!constants!public! !
 !
@@ -501,6 +526,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon! !
+
 !Duration class categoriesForMethods!
 icon!constants!public! !
 !
@@ -511,6 +537,7 @@ icon
 	"Answer the default icon for the receiver and its instances."
 	
 	^Icon error! !
+
 !Error class categoriesForMethods!
 icon!constants!public! !
 !
@@ -526,6 +553,7 @@ icon
 	from an ExternalResourceLibrary other than the system default."
 
 	^##(self) defaultIcon! !
+
 !Exception class categoriesForMethods!
 icon!constants!public! !
 !
@@ -536,6 +564,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^Array icon! !
+
 !ExternalArray class categoriesForMethods!
 icon!constants!public! !
 !
@@ -546,6 +575,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon! !
+
 !ExternalCallback class categoriesForMethods!
 icon!constants!public! !
 !
@@ -556,6 +586,7 @@ icon
 	"Answer a suitable iconic representation for the receiver."
 
 	^Integer icon! !
+
 !ExternalInteger class categoriesForMethods!
 icon!constants!public! !
 !
@@ -566,6 +597,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon! !
+
 !ExternalLibrary class categoriesForMethods!
 icon!constants!public! !
 !
@@ -576,6 +608,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon! !
+
 !ExternalStructure class categoriesForMethods!
 icon!constants!public! !
 !
@@ -588,6 +621,7 @@ icon
 	^##((TextTileIcon text: $\x2716)
 		textcolor: Color red;
 		yourself)! !
+
 !False class categoriesForMethods!
 icon!constants!public! !
 !
@@ -598,6 +632,7 @@ icon
 	"Answers an Icon that can be used to represent this class. "
 
 	^##(self) defaultIcon! !
+
 !File class categoriesForMethods!
 icon!constants!development!public! !
 !
@@ -610,6 +645,7 @@ icon
 	^##((TextTileIcon text: '0.8' fontName: 'Cambria')
 		textcolor: Color darkBlue;
 		yourself)! !
+
 !Float class categoriesForMethods!
 icon!constants!public! !
 !
@@ -620,6 +656,7 @@ icon
 	"Answer a suitable iconic representation for the receiver."
 
 	^Float icon! !
+
 !FLOAT class categoriesForMethods!
 icon!constants!public! !
 !
@@ -632,6 +669,7 @@ icon
 	^##((TextTileIcon text: '⅞' fontName: 'Cambria')
 		textcolor: Color darkBlue;
 		yourself)! !
+
 !Fraction class categoriesForMethods!
 icon!constants!public! !
 !
@@ -642,6 +680,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^(TextTileIcon text: $\x1F5BD)! !
+
 !FramingLayout class categoriesForMethods!
 icon!constants!public! !
 !
@@ -652,6 +691,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon! !
+
 !GUID class categoriesForMethods!
 icon!constants!public! !
 !
@@ -662,6 +702,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon! !
+
 !InputState class categoriesForMethods!
 icon!constants!public! !
 !
@@ -674,6 +715,7 @@ icon
 	^##((TextTileIcon text: '42' fontName: 'Cambria')
 		textcolor: Color darkBlue;
 		yourself)! !
+
 !Integer class categoriesForMethods!
 icon!constants!public! !
 !
@@ -686,6 +728,7 @@ icon
 	^##((TextTileIcon text: '1..5' fontName: 'Cambria')
 		textcolor: Color darkBlue;
 		yourself)! !
+
 !Interval class categoriesForMethods!
 icon!constants!public! !
 !
@@ -696,6 +739,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon! !
+
 !Keyboard class categoriesForMethods!
 icon!constants!public! !
 !
@@ -708,6 +752,7 @@ icon
 	^##((TextTileIcon text: $\x221E fontName: 'Cambria')
 		textcolor: Color darkBlue;
 		yourself)! !
+
 !LargeInteger class categoriesForMethods!
 icon!constants!public! !
 !
@@ -718,6 +763,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(TextTileIcon text: $\x29C9 fontName: 'Cambria')! !
+
 !LayoutManager class categoriesForMethods!
 icon!constants!public! !
 !
@@ -728,6 +774,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(TextTileIcon text: $\x1F517)! !
+
 !Link class categoriesForMethods!
 icon!public! !
 !
@@ -738,6 +785,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon! !
+
 !Locale class categoriesForMethods!
 icon!constants!public! !
 !
@@ -750,6 +798,7 @@ icon
 	^##((TextTileIcon text: '|x|' fontName: 'Cambria')
 		textcolor: Color darkBlue;
 		yourself)! !
+
 !Magnitude class categoriesForMethods!
 icon!constants!public! !
 !
@@ -760,6 +809,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon! !
+
 !MemoryManager class categoriesForMethods!
 icon!constants!development!public! !
 !
@@ -770,6 +820,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon! !
+
 !Message class categoriesForMethods!
 icon!constants!public! !
 !
@@ -780,6 +831,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon! !
+
 !MessageSendAbstract class categoriesForMethods!
 icon!constants!public! !
 !
@@ -790,6 +842,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon! !
+
 !MessageSequenceAbstract class categoriesForMethods!
 icon!constants!public! !
 !
@@ -805,6 +858,7 @@ icon
 	from an ExternalResourceLibrary other than the system default."
 
 	^##(self) defaultIcon! !
+
 !Metaclass class categoriesForMethods!
 icon!constants!public! !
 !
@@ -820,6 +874,7 @@ icon
 	from an ExternalResourceLibrary other than the system default."
 
 	^##(self) defaultIcon! !
+
 !MethodProtocol class categoriesForMethods!
 icon!constants!public! !
 !
@@ -830,6 +885,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon! !
+
 !Model class categoriesForMethods!
 icon!constants!public! !
 !
@@ -840,6 +896,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon! !
+
 !Mutex class categoriesForMethods!
 icon!constants!public! !
 !
@@ -850,6 +907,7 @@ icon
 	"Answer the default icon for the receiver and its instances."
 
 	^Icon information! !
+
 !Notification class categoriesForMethods!
 icon!constants!public! !
 !
@@ -860,6 +918,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^Notification icon! !
+
 !NotificationSignal class categoriesForMethods!
 icon!constants!public! !
 !
@@ -872,6 +931,7 @@ icon
 	^##((TextTileIcon text: $\x2116 fontName: 'Cambria')
 		textcolor: Color darkBlue;
 		yourself)! !
+
 !Number class categoriesForMethods!
 icon!constants!public! !
 !
@@ -882,6 +942,7 @@ icon
 	"Answers an Icon that can be used to represent this class."
 
 	^##(self) defaultIcon! !
+
 !Package class categoriesForMethods!
 icon!constants!public! !
 !
@@ -892,6 +953,7 @@ icon
 	"Answers an Icon that can be used to represent this class."
 
 	^Package icon! !
+
 !PackageManager class categoriesForMethods!
 icon!constants!public! !
 !
@@ -904,6 +966,7 @@ icon
 	^##((TextTileIcon text: $\x2316 fontName: 'Georgia')
 		textcolor: Color darkBlue;
 		yourself)! !
+
 !Point class categoriesForMethods!
 icon!constants!public! !
 !
@@ -914,6 +977,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon! !
+
 !Process class categoriesForMethods!
 icon!constants!public! !
 !
@@ -924,6 +988,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon! !
+
 !ProcessorScheduler class categoriesForMethods!
 icon!constants!public! !
 !
@@ -932,6 +997,7 @@ icon!constants!public! !
 
 icon
 	^##(TextTileIcon text: $\x29BF fontName: 'Cambria')! !
+
 !RadioButton class categoriesForMethods!
 icon!constants!public! !
 !
@@ -942,6 +1008,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##((TextTileIcon text: $\x29BF fontName: 'Cambria') textcolor: Color forestGreen; yourself)! !
+
 !RadioButtonSetPresenter class categoriesForMethods!
 icon!constants!public! !
 !
@@ -952,6 +1019,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(TextTileIcon text: $\x25AD)! !
+
 !Rectangle class categoriesForMethods!
 icon!constants!public! !
 !
@@ -962,6 +1030,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon! !
+
 !ResourceIdentifier class categoriesForMethods!
 icon!constants!development!public! !
 !
@@ -974,6 +1043,7 @@ icon
 	^##((TextTileIcon text: '5⁹⁹' fontName: 'Segoe UI')
 		textcolor: Color darkBlue;
 		yourself)! !
+
 !ScaledDecimal class categoriesForMethods!
 icon!constants!public! !
 !
@@ -986,6 +1056,7 @@ icon
 	^##((TextTileIcon text: $\x227E fontName: 'Cambria')
 		textcolor: Color darkBlue;
 		yourself)! !
+
 !SearchPolicy class categoriesForMethods!
 icon!constants!public! !
 !
@@ -996,6 +1067,7 @@ icon
 	^##((TextTileIcon text: $\x1F6D1 fontName: 'Segoe UI Emoji')
 		textcolor: Color red;
 		yourself)! !
+
 !Semaphore class categoriesForMethods!
 icon!public! !
 !
@@ -1008,6 +1080,7 @@ icon
 	^##((TextTileIcon text: '{ }' fontName: 'Cambria')
 		textcolor: Color darkBlue;
 		yourself)! !
+
 !Set class categoriesForMethods!
 icon!constants!public! !
 !
@@ -1018,6 +1091,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^Error icon! !
+
 !Signal class categoriesForMethods!
 icon!constants!public! !
 !
@@ -1033,6 +1107,7 @@ icon
 	from an ExternalResourceLibrary other than the system default."
 
 	^##(self) defaultIcon! !
+
 !SortAlgorithm class categoriesForMethods!
 icon!constants!public! !
 !
@@ -1048,6 +1123,7 @@ icon
 	from an ExternalResourceLibrary other than the system default."
 
 	^##(self) defaultIcon! !
+
 !Sound class categoriesForMethods!
 icon!constants!public! !
 !
@@ -1063,6 +1139,7 @@ icon
 	from an ExternalResourceLibrary other than the system default."
 
 	^##(self) defaultIcon! !
+
 !SourceManager class categoriesForMethods!
 icon!constants!public! !
 !
@@ -1073,6 +1150,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##((TextTileIcon text: '‘A’' fontName: 'Cambria') textcolor: Color darkBlue)! !
+
 !String class categoriesForMethods!
 icon!constants!public! !
 !
@@ -1085,6 +1163,7 @@ icon
 	^##((TextTileIcon text: '#S' fontName: 'Cambria')
 		textcolor: Color darkBlue;
 		yourself)! !
+
 !Symbol class categoriesForMethods!
 icon!constants!public! !
 !
@@ -1095,6 +1174,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon! !
+
 !SystemDictionary class categoriesForMethods!
 icon!constants!public! !
 !
@@ -1105,6 +1185,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon! !
+
 !Time class categoriesForMethods!
 icon!constants!public! !
 !
@@ -1115,6 +1196,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon! !
+
 !TIME_ZONE_INFORMATION class categoriesForMethods!
 icon!constants!public! !
 !
@@ -1129,6 +1211,7 @@ icon
 	^##((TextTileIcon text: $\x2714 fontName: 'Segoe UI Emoji')
 		textcolor: Color darkGreen;
 		yourself)! !
+
 !True class categoriesForMethods!
 icon!constants!public! !
 !
@@ -1139,6 +1222,7 @@ icon
 	"Answers an Icon that can be used to represent this class."
 
 	^##(TextTileIcon text: $\x2622 fontName: 'Segoe UI Emoji')! !
+
 !UndefinedObject class categoriesForMethods!
 icon!constants!public! !
 !
@@ -1149,6 +1233,7 @@ icon
 	"Answers an Icon that can be used to represent this class."
 
 	^##((TextTileIcon text: '‘U’' fontName: 'Cambria') textcolor: Color darkBlue; yourself)! !
+
 !UtfEncodedString class categoriesForMethods!
 icon!constants!public! !
 !
@@ -1157,6 +1242,7 @@ icon!constants!public! !
 
 icon
 	^value icon! !
+
 !VariableBinding categoriesForMethods!
 icon!constants!public! !
 !
@@ -1167,6 +1253,7 @@ icon
 	"Answer the default icon for the receiver and its instances."
 
 	^Icon warning! !
+
 !Warning class categoriesForMethods!
 icon!constants!public! !
 !
@@ -1177,6 +1264,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^Warning icon! !
+
 !WarningSignal class categoriesForMethods!
 icon!constants!public! !
 !
@@ -1189,6 +1277,7 @@ icon
 	^##((TextTileIcon text: '#()' fontName: 'Arial')
 		textcolor: Color skyBlue;
 		yourself)! !
+
 !WeakArray class categoriesForMethods!
 icon!constants!public! !
 !

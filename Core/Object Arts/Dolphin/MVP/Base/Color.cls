@@ -5,8 +5,11 @@ Object subclass: #Color
 	classVariableNames: 'Black ColorNames CommonColors Default Face3d NamedColors None White Window WindowText'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Color guid: (GUID fromString: '{87b4c465-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Color isAbstract: true!
+
 Color comment: '`Color` is the abstract class of colours. 
 
 Concrete subclasses represent the different types of colour object: `SystemColor` for the logical system colours that vary depending on the Windows theme; `IndexedColor` for a limited range of palletized colours; `RGB` for general purpose representation of colours composed of arbitrary proportions of red, green, and blue, and `ARGB` the same but with alpha (translucency).
@@ -14,7 +17,9 @@ Concrete subclasses represent the different types of colour object: `SystemColor
 The special singleton subclasses `ColorDefault` and `ColorNone` represent the default colour of some Window or control in a specific context, and full transparency.
 
 There are also the virtual colours, `ThemeColor` and `PluggableColor`, to represent symbolic (i.e. named, logical) and dynamic/calculated colours respectively. These can be resolved to an absolute colour from the list of concrete colour types when required.'!
+
 !Color categoriesForClass!Drawing! !
+
 !Color methodsFor!
 
 = aColor
@@ -354,6 +359,7 @@ stbSaveOn: anSTBOutFiler
 				writeClass: Color withPrefix: STBPrefix forData;
 				register: self.
 			anSTBOutFiler nextPut: symbol]! !
+
 !Color categoriesForMethods!
 =!comparing!public! !
 actualColor!accessing!private! !
@@ -1397,6 +1403,7 @@ yellow
 
 yellowGreen
 	^self named: #yellowGreen! !
+
 !Color class categoriesForMethods!
 a:r:g:b:!instance creation!public! !
 addNamed:color:!named colors!public! !

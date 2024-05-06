@@ -5,7 +5,9 @@ OrderedCollection variableSubclass: #SortedCollection
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SortedCollection guid: (GUID fromString: '{87b4c525-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 SortedCollection comment: 'SortedCollection is a class of <SequencedGrowableCollection>s whose elements are ordered in the sequence specified by a user-definable sort order function (the sort "block", actually a <dyadicValuable>). Note that unlike traditional Smalltalk implementations of SortedCollection, Dolphin''s implementation (as of D6) holds a <SortAlgorithm> instance rather than a <dyadicValuable> sort-order block. This allows the sorting algorithm to be pluggable, as well as the sort ordering. Another advantage is that the default sort order need not use a block at all, allowing for improved performance of the default sort by avoiding the need for block activations to perform element comparisons.
 
 SortedCollection complies with the ANSI protocols:
@@ -22,7 +24,9 @@ Elements can be added, removed or inserted, and can be accessed using external i
 Instance Variables:
 	sortBlock		<dyadicValuable>
 	algorithm		<SortAlgorithm>'!
+
 !SortedCollection categoriesForClass!Collections-Sequenceable! !
+
 !SortedCollection methodsFor!
 
 , operand
@@ -326,6 +330,7 @@ stbSaveOn: anSTBOutFiler
 	super stbSaveOn: anSTBOutFiler
 
 	! !
+
 !SortedCollection categoriesForMethods!
 ,!copying!public! !
 add:!adding!public! !
@@ -411,6 +416,7 @@ sortBlock: aDyadicValuable
 withNilsSortBlock
 	^[:a :b | a isNil ifTrue: [true] ifFalse: [b isNil ifTrue: [false] ifFalse: [a <= b]]]
 ! !
+
 !SortedCollection class categoriesForMethods!
 caseSensitiveSortBlock!constants!public! !
 defaultSortBlock!constants!public! !

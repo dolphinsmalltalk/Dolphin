@@ -5,9 +5,13 @@ GdiplusFromFileInitializer subclass: #GdiplusBitmapFromFileInitializer
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusBitmapFromFileInitializer guid: (GUID fromString: '{22318a95-8a19-46a9-8774-f3e8c2d5db86}')!
+
 GdiplusBitmapFromFileInitializer comment: ''!
+
 !GdiplusBitmapFromFileInitializer categoriesForClass!Unclassified! !
+
 !GdiplusBitmapFromFileInitializer methodsFor!
 
 createHandle
@@ -31,6 +35,7 @@ createHandle
 
 gdiplusConstructorErrorDescription
 	^'Error loading Bitmap'! !
+
 !GdiplusBitmapFromFileInitializer categoriesForMethods!
 createHandle!private!realizing/unrealizing! !
 gdiplusConstructorErrorDescription!constants!private! !

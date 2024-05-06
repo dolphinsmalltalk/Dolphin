@@ -5,9 +5,13 @@ Object subclass: #Lesson
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Lesson guid: (GUID fromString: '{430b4d82-364a-44fc-9c2b-5b546c048ef9}')!
+
 Lesson comment: ''!
+
 !Lesson categoriesForClass!Unclassified! !
+
 !Lesson methodsFor!
 
 contents
@@ -25,6 +29,7 @@ title
 title: aString
 	title := aString
 ! !
+
 !Lesson categoriesForMethods!
 contents!accessing!public! !
 contents:!accessing!public! !
@@ -42,6 +47,7 @@ title: aTitle contents: someContents
 		title: aTitle;
 		contents: someContents
 ! !
+
 !Lesson class categoriesForMethods!
 icon!constants!public! !
 title:contents:!instance creation!public! !

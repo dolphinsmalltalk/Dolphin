@@ -9,7 +9,6 @@ This package aliases most of the RBParser classes to the Dolphin equivalents whi
 
 Should be used in place of the full RBParser package, which contains the ''...parser for the Refactoring Browser. It contains both the ability to parse Smalltalk and also to rewrite Smalltalk code. The refactorings use this rewriting behavior to perform the source code transformations.'''.
 
-
 package classNames
 	add: #ParseTreeRewriter;
 	add: #ParseTreeSearcher;
@@ -235,76 +234,91 @@ Object subclass: #RBParseTreeRule
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #RBStringReplacement
 	instanceVariableNames: 'startPosition stopPosition string'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Collection subclass: #RBSmallDictionary
 	instanceVariableNames: 'keys values size'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RBParseTreeRule subclass: #RBReplaceRule
 	instanceVariableNames: 'verificationBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RBParseTreeRule subclass: #RBSearchRule
 	instanceVariableNames: 'answerBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RBReplaceRule subclass: #RBBlockReplaceRule
 	instanceVariableNames: 'replaceBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RBReplaceRule subclass: #RBStringReplaceRule
 	instanceVariableNames: 'replaceTree'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SmalltalkParser subclass: #RBPatternParser
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SmalltalkScanner subclass: #RBPatternScanner
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StParseNodeVisitor subclass: #ParseTreeSearcher
 	instanceVariableNames: 'searches answer argumentSearches context messages'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ParseTreeSearcher subclass: #ParseTreeRewriter
 	instanceVariableNames: 'tree'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StMethodNode subclass: #RBPatternMethodNode
 	instanceVariableNames: 'isList'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StVariableNode subclass: #RBPatternVariableNode
 	instanceVariableNames: 'recurseInto isList isLiteral isStatement isAnything'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StBlockNode subclass: #RBPatternBlockNode
 	instanceVariableNames: 'valueBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RBPatternBlockNode subclass: #RBPatternWrapperBlockNode
 	instanceVariableNames: 'wrappedNode'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StMessageNode subclass: #RBPatternMessageNode
 	instanceVariableNames: 'isList isCascadeList'
 	classVariableNames: ''
@@ -385,6 +399,7 @@ refersToVariable: aString
 		matches: aString do: [:node :answer | true];
 		matches: '[:`@vars | | `@temps | `@.Stmts]' do: [:node :answer | answer or: [((node defines: aString) or: [node body defines: aString]) not and: [searcher executeTree: node body initialAnswer: false]]].
 	^searcher executeTree: self parseTree initialAnswer: false! !
+
 !CompileFailedMethod categoriesForMethods!
 refersToVariable:!development!private!testing! !
 !
@@ -395,6 +410,7 @@ visitPatternWrapperBlockNode: aRBPatternWrapperBlockNode
 	self visitNode: aRBPatternWrapperBlockNode wrappedNode.
 	codeStream nextPut: $`.
 	self bracketWith: '{}' around: [self formatBlock: aRBPatternWrapperBlockNode]! !
+
 !RBConfigurableFormatter categoriesForMethods!
 visitPatternWrapperBlockNode:!public!visitor/double dispatching! !
 !
@@ -407,6 +423,7 @@ visitPatternWrapperBlockNode: aRBPatternWrapperBlockNode
 		acceptBlockNode: aRBPatternWrapperBlockNode
 		startBlockString: '`{'
 		endBlockString: '}'! !
+
 !RBFormatter categoriesForMethods!
 visitPatternWrapperBlockNode:!public!visitor/double dispatching! !
 !
@@ -424,6 +441,7 @@ parseRewriteMethod: aString
 
 parseRewriteMethod: aString onError: aBlock 
 	^RBPatternParser parseMethod: aString onError: aBlock! !
+
 !SmalltalkParser class categoriesForMethods!
 parseRewriteExpression:!parsing!public! !
 parseRewriteExpression:onError:!parsing!public! !
@@ -453,6 +471,7 @@ replaceSourceWith: aNode
 				replaceFrom: self start
 				to: self stop
 				with: aNode formattedCode)! !
+
 !StAbstractVariableNode categoriesForMethods!
 copyInContext:!matching!public! !
 equalTo:withMapping:!comparing!public! !
@@ -507,6 +526,7 @@ replaceSourceWith: aNode
 				replaceFrom: self variable start
 				to: self assignmentPosition + 1
 				with: aNode receiver name , ' ' , aNode selector)! !
+
 !StAssignmentNode categoriesForMethods!
 copyInContext:!matching!public! !
 equalTo:withMapping:!comparing!public! !
@@ -551,6 +571,7 @@ replaceNode: aNode withNode: anotherNode
 	body == aNode ifTrue: [self body: anotherNode].
 	self arguments: (arguments 
 				collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]])! !
+
 !StBlockNode categoriesForMethods!
 copyInContext:!matching!public! !
 equalTo:withMapping:!comparing!public! !
@@ -634,6 +655,7 @@ references: aVariableName
 
 replaceNode: aNode withNode: anotherNode
 	self statements: (statements collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]])! !
+
 !StBraceArrayNode categoriesForMethods!
 addNode:!adding nodes!public! !
 addNode:before:!adding nodes!public! !
@@ -676,6 +698,7 @@ match: aNode inContext: aDictionary
 replaceNode: aNode withNode: anotherNode 
 	self messages: (messages 
 				collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]])! !
+
 !StCascadeNode categoriesForMethods!
 copyInContext:!matching!public! !
 equalTo:withMapping:!comparing!public! !
@@ -714,6 +737,7 @@ match: aNode inContext: aDictionary
 replaceNode: aNode withNode: anotherNode 
 	self contents: (contents 
 				collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]])! !
+
 !StLiteralArrayNode categoriesForMethods!
 copyInContext:!matching!public! !
 equalTo:withMapping:!comparing!public! !
@@ -734,6 +758,7 @@ replaceSourceWith: aNode
 				replaceFrom: self start
 				to: self stop
 				with: aNode formattedCode)! !
+
 !StLiteralNode categoriesForMethods!
 replaceSourceFrom:!private!replacing! !
 replaceSourceWith:!private!replacing! !
@@ -743,6 +768,7 @@ replaceSourceWith:!private!replacing! !
 
 copyInContext: aDictionary
 	^self class literalToken: token removePositions! !
+
 !StLiteralValueNode categoriesForMethods!
 copyInContext:!matching!public! !
 !
@@ -847,6 +873,7 @@ replaceSourceWithMessageNode: aNode
 										and: [(self source at: old start - 1) isSeparator not]) 
 											ifTrue: [' ' , new value]
 											ifFalse: [new value]))]]! !
+
 !StMessageNode categoriesForMethods!
 copyInContext:!matching!public! !
 equalTo:withMapping:!comparing!public! !
@@ -979,6 +1006,7 @@ replaceNode: aNode withNode: anotherNode
 	aNode == body ifTrue: [self body: anotherNode].
 	self arguments: (arguments 
 				collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]])! !
+
 !StMethodNode categoriesForMethods!
 addNode:!accessing!public! !
 addReplacement:!public!replacing! !
@@ -1014,6 +1042,7 @@ match: aNode inContext: aDictionary
 
 replaceNode: aNode withNode: anotherNode 
 	body == aNode ifTrue: [self body: anotherNode]! !
+
 !StOptimizedNode categoriesForMethods!
 copyInContext:!matching!public! !
 equalTo:withMapping:!comparing!public! !
@@ -1031,6 +1060,7 @@ visitPatternWrapperBlockNode: aRBPatternWrapperBlockNode
 	self visitNode: aRBPatternWrapperBlockNode wrappedNode.
 	self visitArgumentNodes: aRBPatternWrapperBlockNode arguments.
 	self visitNode: aRBPatternWrapperBlockNode body! !
+
 !StParseNodeVisitor categoriesForMethods!
 visitPatternBlockNode:!public!visiting! !
 visitPatternWrapperBlockNode:!public!visiting! !
@@ -1186,6 +1216,7 @@ superMessages
 						add: aNode selector;
 						yourself]).
 	^searcher executeTree: self initialAnswer: Set new! !
+
 !StProgramNode categoriesForMethods!
 addReplacement:!public!replacing! !
 asReturn!accessing!public! !
@@ -1225,6 +1256,7 @@ match: aNode inContext: aDictionary
 
 replaceNode: aNode withNode: anotherNode 
 	value == aNode ifTrue: [self value: anotherNode]! !
+
 !StReturnNode categoriesForMethods!
 copyInContext:!matching!public! !
 equalTo:withMapping:!comparing!public! !
@@ -1378,6 +1410,7 @@ replaceNode: aNode withNodes: aCollection
 		do: [:i | newStatements add: (statements at: i)].
 	aCollection do: [:each | each parent: self].
 	statements := newStatements! !
+
 !StSequenceNode categoriesForMethods!
 addNode:!adding nodes!public! !
 addNode:before:!adding nodes!public! !

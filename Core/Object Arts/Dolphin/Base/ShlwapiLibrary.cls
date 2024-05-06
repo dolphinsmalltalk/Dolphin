@@ -5,9 +5,13 @@ ExternalLibrary subclass: #ShlwapiLibrary
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ShlwapiLibrary guid: (GUID fromString: '{64674074-3a82-101b-8181-00aa003743d3}')!
+
 ShlwapiLibrary comment: 'ShlwapiLibrary is the <ExternalLibrary> class to represent the Win32 "Shell Lightweight API Library", SHLWAPI.DLL.'!
+
 !ShlwapiLibrary categoriesForClass!External-Libraries-Win32! !
+
 !ShlwapiLibrary methodsFor!
 
 pathCommonPrefix: pszFile1 pszFile2: pszFile2 achPath: achPath
@@ -57,6 +61,7 @@ pathSetDlgItemPath: hDlg id: id pszPath: pszPath
 
 	<stdcall: void PathSetDlgItemPathW handle sdword lpwstr>
 	^self invalidCall: _failureCode! !
+
 !ShlwapiLibrary categoriesForMethods!
 pathCommonPrefix:pszFile2:achPath:!**auto generated**!public! !
 pathIsURL:!**auto generated**!public! !
@@ -70,6 +75,7 @@ fileName
 	"Answer the host system file name for the library"
 
 	^'SHLWAPI'! !
+
 !ShlwapiLibrary class categoriesForMethods!
 fileName!constants!public! !
 !

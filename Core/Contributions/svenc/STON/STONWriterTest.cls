@@ -5,9 +5,13 @@ TestCase subclass: #STONWriterTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 STONWriterTest guid: (GUID fromString: '{c786d815-b405-4113-a350-3ee3370c7879}')!
+
 STONWriterTest comment: ''!
+
 !STONWriterTest categoriesForClass!STON-Tests-Writer! !
+
 !STONWriterTest methodsFor!
 
 serialize: anObject
@@ -361,6 +365,7 @@ testUserNil
 	| user |
 	user := STONTestUser new.
 	self assert: (self serialize: user) equals: 'TestUser{#enabled:true}'! !
+
 !STONWriterTest categoriesForMethods!
 serialize:!private! !
 serializeAsciiOnly:!private! !

@@ -5,12 +5,15 @@ SmalltalkToolShell subclass: #ViewComposer
 	classVariableNames: 'AdornmentModifiedFlag Clipboard DefaultGridResolution ExtentImage ModifiedFlag MouseClickFlag PositionImage RefreshFlag UndoRedoFlag'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 ViewComposer guid: (GUID fromString: '{045641aa-90d2-43e8-a81c-a3f76d7d35b4}')!
+
 ViewComposer addClassConstant: 'AdornmentModifiedFlag' value: 16r4!
 ViewComposer addClassConstant: 'ModifiedFlag' value: 16r1!
 ViewComposer addClassConstant: 'MouseClickFlag' value: 16r2!
 ViewComposer addClassConstant: 'RefreshFlag' value: 16r8!
 ViewComposer addClassConstant: 'UndoRedoFlag' value: 16r10!
+
 ViewComposer comment: 'The View Composer is Dolphin''s GUI builder. It is used to graphically create views (the user interface components of the MVP framework). 
 
 The view resources are saved down as class-side methods, usually associated with the presenter classes to which the views will be attached. These methods are given selectors of the form, #resource_xxxx_yyyy, where xxxx_yyyy is the resource identifier. The resource methods answer an array of Smalltalk literals that can be used to rebuild an instance of the view when loaded via an STLInFiler.
@@ -18,7 +21,9 @@ The view resources are saved down as class-side methods, usually associated with
 The View Composer works by loading its ''composing view'' as a child of the desktop and positioning it offscreen so that it is invisible to the user. It then uses WM_PRINT messages to render an image of this view which it displays in its arenaPresenter. Using this shadow image of the real view has a couple of benefits. The first is that mouse clicks over the image can be intercepted directly, whereas mouse clicks over the real view would be handled by the Windows controls themselves. We also discovered that placing a real shell view inside another (e.g. as a composing view inside the View Composer) caused the menu bars for the shell view not to be displayed.
 
 '!
+
 !ViewComposer categoriesForClass!MVP-Presenters! !
+
 !ViewComposer methodsFor!
 
 addGrabberFor: aGrabAspectSymbol of: aView
@@ -2475,6 +2480,7 @@ zOrderChangedFor: aView
 	view hierarchy model so that its views update appropriately"
 
 	viewHierarchyPresenter model move: aView asChildOf: (viewHierarchyPresenter model parentOf: aView)! !
+
 !ViewComposer categoriesForMethods!
 addGrabberFor:of:!adornments!private! !
 addGrabbers!adornments!private! !
@@ -2845,6 +2851,7 @@ resource_Vertical_view
 
 toolsFolderHelpId
 	^10593! !
+
 !ViewComposer class categoriesForMethods!
 addToClipboard:!clipboard operations!private! !
 appendToClipboard:!clipboard operations!private! !

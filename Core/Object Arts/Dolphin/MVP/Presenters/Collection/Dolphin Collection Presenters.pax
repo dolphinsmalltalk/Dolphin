@@ -8,7 +8,6 @@ Copyright (c) Object Arts Ltd. 2002.
 
 package basicPackageVersion: '6.2'.
 
-
 package classNames
 	add: #CollectionPresenter;
 	add: #DictionaryPresenter;
@@ -48,24 +47,24 @@ ValuePresenter subclass: #CollectionPresenter
 	classVariableNames: 'ReadOnlyMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 CollectionPresenter subclass: #HashedCollectionPresenter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 CollectionPresenter subclass: #SequenceableCollectionPresenter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 HashedCollectionPresenter subclass: #DictionaryPresenter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -80,6 +79,7 @@ resource_List_tools
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.Toolbar) 34 25 nil nil 34 2 8 1409289036 131137 416 nil 327686 ##(Smalltalk.Color) #face3d nil 517 nil nil nil 416 482 #default 8 1903898080 170 192 8 #() 170 192 34 12 51561 1115206 1 ##(Smalltalk.ToolbarIconButton) 416 1 1180998 4 ##(Smalltalk.CommandDescription) #moveDown 8 'Move Down' 1 1 788806 1 ##(Smalltalk.TextTileIcon) $\x25BC nil nil 482 #highlight nil nil 1 nil nil 51561 51557 610 416 1 642 #moveFirst 8 'Move First' 1 1 690 $\x23EE 8 'Georgia' nil 720 nil nil 3 nil nil 51557 51553 610 416 1 642 #addItem 8 'New Item' 1 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'NewThing.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil 51553 51563 610 416 1 642 #moveLast 8 'Move Last' 1 1 690 $\x23ED 8 'Georgia' nil 720 nil nil 3 nil nil 51563 51559 610 416 1 642 #moveUp 8 'Move Up' 1 1 690 $\x25B2 8 'Segoe UI' nil 720 nil nil 1 nil nil 51559 51555 610 416 1 642 #removeItem 8 'Delete Item' 1 1 866 nil true 912 8 'EditClear.ico' 960 51555 34 8 816 1152 1049158 1 ##(Smalltalk.ToolbarSeparator) 416 1 736 1072 624 992 1250 416 1 nil nil 1 nil nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 1410 321 51 416 1362 #updateSizePosted 560 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 31 8 0 0 35 0 0 0] 8 #() 1410 193 193 nil 27 )! !
+
 !Toolbar class categoriesForMethods!
 resource_List_tools!public!resources-views! !
 !

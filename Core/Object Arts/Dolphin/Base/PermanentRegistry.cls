@@ -5,7 +5,9 @@ ObjectRegistry subclass: #PermanentRegistry
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PermanentRegistry guid: (GUID fromString: '{87b4c67e-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 PermanentRegistry comment: 'PermanentRegistry is a specialized class of <ObjectRegistry>s which maintain a strong reference to registered objects, preventing them from being garbage collected. They are useful where the objects may only be referenced ''externally'' (e.g. COM server objects).
 
 The superclass instance variable ''registry'' is initialized to an <Array> in instances of this class. The slots of the array are populated either with registered objects, or linked onto a free list by index (the content of the slot being the next free entry). The last element of the <Array> is always zero to mark the end of the free list. When a new object is registered the first slot on the free list is used, unless there are no free slots in which case the array is resized to increase its capacity.
@@ -14,7 +16,9 @@ Note: The implementation of the free list in this class using integer indices me
 
 Instance Variables:
 	freeHead		<integer> index of the first free slot in the registry.'!
+
 !PermanentRegistry categoriesForClass!System-Support! !
+
 !PermanentRegistry methodsFor!
 
 addAnsweringIndex: anObject
@@ -52,6 +56,7 @@ removeAtIndex: anInteger
 	(registry basicAt: anInteger) isInteger ifFalse: [
 		registry basicAt: anInteger put: freeHead.
 		freeHead := anInteger]! !
+
 !PermanentRegistry categoriesForMethods!
 addAnsweringIndex:!adding!public! !
 grow!mutating!private! !

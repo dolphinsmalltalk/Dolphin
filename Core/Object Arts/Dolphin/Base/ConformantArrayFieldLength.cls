@@ -5,7 +5,9 @@ ArrayFieldLength subclass: #ConformantArrayFieldLength
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ConformantArrayFieldLength guid: (GUID fromString: '{6158a44a-0df9-4478-8ac1-0112fed71ca1}')!
+
 ConformantArrayFieldLength comment: '<ConformantArrayFieldLength> is a type of <ArrayFieldLength> that can be used to describe conformant array fields where the array element count is stored directly as another field in the described structure. For example, give the C++ structure definitions:
 
 	struct PALETTEENTRY {...};
@@ -29,7 +31,9 @@ Instance Variables:
 	lengthField	<Symbol>. Name of the length field in the ExternalStructure for which this object is providing meta-information.
 
 '!
+
 !ConformantArrayFieldLength categoriesForClass!Kernel-Objects! !
+
 !ConformantArrayFieldLength methodsFor!
 
 getElementCountOf: anExternalField in: anExternalStructure
@@ -74,6 +78,7 @@ setElementCount: anArrayedCollection of: anExternalField in: anExternalStructure
 
 setLengthSelector
 	^(lengthField, ':') asSymbol! !
+
 !ConformantArrayFieldLength categoriesForMethods!
 getElementCountOf:in:!indirect accessing!private! !
 lengthField:!accessing!private! !
@@ -90,6 +95,7 @@ lengthField: aSymbol
 	in the named field of the <ExternalStructure> of which the owning <ExternalField> is a field."
 
 	^self new lengthField: aSymbol! !
+
 !ConformantArrayFieldLength class categoriesForMethods!
 lengthField:!instance creation!public! !
 !

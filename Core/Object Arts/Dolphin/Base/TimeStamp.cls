@@ -5,11 +5,15 @@ Magnitude subclass: #TimeStamp
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TimeStamp guid: (GUID fromString: '{87b4c656-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 TimeStamp comment: '`TimeStamp` represents a `Time` of day on a particular `Date` in an unspecified time zone.
 
 `TimeStamp` is present for backwards compatibility only. For most purposes the ANSI compliant and time zone offset aware `DateAndTime` class should be preferred.'!
+
 !TimeStamp categoriesForClass!Kernel-Chronology! !
+
 !TimeStamp methodsFor!
 
 < aTimeStamp
@@ -151,6 +155,7 @@ time
 
 year
 	^date year! !
+
 !TimeStamp categoriesForMethods!
 <!comparing!public! !
 =!comparing!public! !
@@ -257,6 +262,7 @@ time: aTime
 	"Answer a new instance of the receiver based on aTime."
 
 	^self date: (Date fromDays: 0) time: aTime! !
+
 !TimeStamp class categoriesForMethods!
 current!instance creation!public! !
 currentUTC!instance creation!public! !

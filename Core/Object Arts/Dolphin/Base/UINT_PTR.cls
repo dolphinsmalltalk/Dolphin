@@ -5,9 +5,13 @@ ExternalInteger subclass: #UINT_PTR
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 UINT_PTR guid: (GUID fromString: '{5b2efc4b-7560-43b0-930f-70dc94f37d05}')!
+
 UINT_PTR comment: ''!
+
 !UINT_PTR categoriesForClass!External-Data-Structured-Win32! !
+
 !UINT_PTR methodsFor!
 
 asSignedInteger
@@ -64,6 +68,7 @@ value: anInteger
 	"Set the receiver's 'value' field to the value of the argument, anInteger"
 
 	bytes uintPtrAtOffset: _OffsetOf_value put: anInteger! !
+
 !UINT_PTR categoriesForMethods!
 asSignedInteger!converting!public! !
 asUnsignedInteger!converting!public! !
@@ -84,6 +89,7 @@ defineFields
 	have a single value."
 
 	self defineField: #value type: UINT_PTRField new beOverride! !
+
 !UINT_PTR class categoriesForMethods!
 defineFields!public!template definition! !
 !

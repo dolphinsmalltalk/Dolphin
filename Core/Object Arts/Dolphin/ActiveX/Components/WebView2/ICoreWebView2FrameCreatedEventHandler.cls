@@ -5,7 +5,9 @@ ICoreWebView2EventHandler subclass: #ICoreWebView2FrameCreatedEventHandler
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2FrameCreatedEventHandler guid: (IID fromString: '{38059770-9baa-11eb-a8b3-0242ac130003}')!
+
 ICoreWebView2FrameCreatedEventHandler comment: '`ICoreWebView2FrameCreatedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2FrameCreatedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -27,7 +29,9 @@ interface ICoreWebView2FrameCreatedEventHandler : IUnknown
 };
 ```
 '!
+
 !ICoreWebView2FrameCreatedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2FrameCreatedEventHandler methodsFor!
 
 basicRegister: tokenBuffer
@@ -35,6 +39,7 @@ basicRegister: tokenBuffer
 
 basicUnregister
 	source Remove_FrameCreated: token! !
+
 !ICoreWebView2FrameCreatedEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
@@ -58,6 +63,7 @@ eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
 	^#frameCreated:! !
+
 !ICoreWebView2FrameCreatedEventHandler class categoriesForMethods!
 argsClass!constants!public! !
 defineFunctions!**auto generated**!initializing!public! !

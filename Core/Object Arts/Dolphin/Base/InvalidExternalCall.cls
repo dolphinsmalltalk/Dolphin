@@ -5,11 +5,15 @@ Error subclass: #InvalidExternalCall
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 InvalidExternalCall guid: (GUID fromString: '{87b4c55b-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 InvalidExternalCall comment: 'Exception to represent an invalid attempt to invoke an external procedure call, perhaps because of passing an invalid object type as an argument.
 
 See <ExternalDescriptor>''s class comment for a description of the argument types supported by Dolphin.'!
+
 !InvalidExternalCall categoriesForClass!System-Exception Handling! !
+
 !InvalidExternalCall methodsFor!
 
 _descriptionArguments
@@ -50,6 +54,7 @@ type: anObject
 	invalid call to anObject."
 
 	type := anObject! !
+
 !InvalidExternalCall categoriesForMethods!
 _descriptionArguments!displaying!public! !
 _descriptionFormat!displaying!private! !
@@ -73,6 +78,7 @@ invalidArgument: anInteger got: anObject expected: type
 		argument: anObject;
 		type: type;
 		signalWith: anInteger! !
+
 !InvalidExternalCall class categoriesForMethods!
 invalidArgument:got:expected:!instance creation!private! !
 !

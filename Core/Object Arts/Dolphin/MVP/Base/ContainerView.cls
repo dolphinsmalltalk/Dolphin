@@ -5,7 +5,9 @@ View subclass: #ContainerView
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ContainerView guid: (GUID fromString: '{87b4c70c-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 ContainerView comment: 'ContainerView is an abstract class which implements the <compositeView> protocol for its subclasses. This protocol allows for <compositeView>s to contain sub-views which may be managed by the container.
 
 Instance Variables:
@@ -16,7 +18,9 @@ Instance Variables:
 
 
 '!
+
 !ContainerView categoriesForClass!MVP-Resources-Containers!MVP-Views! !
+
 !ContainerView methodsFor!
 
 actualInsets: aLayoutContext 
@@ -287,6 +291,7 @@ viewNamed: aString ifNone: exceptionHandler
 					found := each viewNamed: aString ifNone: [].
 					found notNil ifTrue: [^found]].
 			exceptionHandler value]! !
+
 !ContainerView categoriesForMethods!
 actualInsets:!accessing!private! !
 actualPreferredExtent:!geometry!private! !
@@ -339,6 +344,7 @@ resource_Default_view
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ContainerView) 34 15 nil nil 34 2 8 1140850688 131073 416 nil nil nil 5 nil nil nil 416 nil 170 192 8 #() nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 1 1 626 701 501 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 94 1 0 0 250 0 0 0] 8 #() 626 193 193 nil 27 )! !
+
 !ContainerView class categoriesForMethods!
 icon!constants!public! !
 resource_Default_view!public!resources-views! !

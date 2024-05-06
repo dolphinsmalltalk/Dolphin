@@ -5,8 +5,11 @@ StParseNodeVisitor subclass: #RBSourceFormatter
 	classVariableNames: 'MaxLineLength PeriodsAtEndOfMethod'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RBSourceFormatter guid: (GUID fromString: '{9fd4de67-3c87-4496-87b9-7c3cf9655f65}')!
+
 RBSourceFormatter isAbstract: true!
+
 RBSourceFormatter comment: 'RBSourceFormatter is the abstract class of <StParseNodeVisitor>s that pretty print Smalltalk source code.
 
 Instance Variables:
@@ -14,7 +17,9 @@ Instance Variables:
 	lineStart		<Integer>	the position of the character that started the current line. This is used for calculating the line length.
 	indent		<Integer>	how many times are we indenting a new line -- indents are normally tabs but could be any whitespace string
 '!
+
 !RBSourceFormatter categoriesForClass!Refactory-ParseTree Matching! !
+
 !RBSourceFormatter methodsFor!
 
 bracketWith: bracketString around: aBlock 
@@ -132,6 +137,7 @@ visitPrimitiveNode: anStPrimitiveNode
 
 visitVariableNode: aVariableNode
 	codeStream nextPutAll: aVariableNode name! !
+
 !RBSourceFormatter categoriesForMethods!
 bracketWith:around:!helpers!private! !
 currentLineLength!accessing!private! !
@@ -191,6 +197,7 @@ periodsAtEndOfMethod
 
 periodsAtEndOfMethod: aBoolean 
 	PeriodsAtEndOfMethod := aBoolean! !
+
 !RBSourceFormatter class categoriesForMethods!
 format:!public!public interface! !
 format:withIndents:!public!public interface! !

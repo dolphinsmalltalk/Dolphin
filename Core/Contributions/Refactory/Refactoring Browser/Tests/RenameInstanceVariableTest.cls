@@ -5,9 +5,13 @@ RefactoringTest subclass: #RenameInstanceVariableTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RenameInstanceVariableTest guid: (GUID fromString: '{1ce9a0d9-f614-43b2-bcf9-c02a3681f34f}')!
+
 RenameInstanceVariableTest comment: ''!
+
 !RenameInstanceVariableTest categoriesForClass!Refactory-Testing! !
+
 !RenameInstanceVariableTest methodsFor!
 
 testAlreadyExistingName
@@ -46,6 +50,7 @@ testRenameInstVar
 								asdf := [:context :aResult | ].
 								methodBlock := [:context :aResult | ].
 								self resultClass: SelectorEnvironment.')! !
+
 !RenameInstanceVariableTest categoriesForMethods!
 testAlreadyExistingName!failure tests!public! !
 testNonExistantName!failure tests!public! !

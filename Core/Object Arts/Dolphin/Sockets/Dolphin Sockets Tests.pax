@@ -4,7 +4,6 @@ package paxVersion: 1;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
-
 package classNames
 	add: #AbstractSocketTest;
 	add: #InternetAddressTest;
@@ -34,31 +33,30 @@ DolphinTest subclass: #AbstractSocketTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DolphinTest subclass: #InternetAddressTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DolphinTest subclass: #SocketErrorTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'WinSocketErrors'
 	classInstanceVariableNames: ''!
+
 AbstractSocketTest subclass: #Socket2Test
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AbstractSocketTest subclass: #SocketTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

@@ -5,8 +5,11 @@ ExternalAddress variableByteSubclass: #REFGUID
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 REFGUID guid: (GUID fromString: '{f44c9141-2b3f-11d3-8368-7a8b5a000000}')!
+
 REFGUID isIndirection: true!
+
 REFGUID comment: 'REFGUID is a pointer class for referencing guids. It is mainly for use in situations where a GUID* pointer is passed back into Smalltalk, e.g. in block callbacks and COM method implementations.
 
 Two distinct classes are provided for guids because, as of version 3.0, all classes in the system have an associated <GUID>. The GUID class is now a standard byte object subclassed directly from Object. The advantage of moving GUID itself out of the ExternalStructure hierarchy is that it avoids doubling the number of objects required to hold the per-class guids. The disadvantage is that GUID instances are no longer able to act as a pointer/references to externally stored guids, and hence we need this class to meet that requirement.
@@ -14,7 +17,9 @@ Two distinct classes are provided for guids because, as of version 3.0, all clas
 e.g.
 
 REFGUID fromAddress: Object guid yourAddress'!
+
 !REFGUID categoriesForClass!External-Data-Unstructured! !
+
 !REFGUID methodsFor!
 
 <=> aGUID
@@ -72,6 +77,7 @@ value: guid
 	"Set the 16-byte GUID pointed at by the receiver to the <GUID>, guid."
 
 	self replaceFrom: 1 to: 16 with: guid startingAt: 1! !
+
 !REFGUID categoriesForMethods!
 <=>!comparing!public! !
 =!comparing!public! !
@@ -92,6 +98,7 @@ fromInteger: anInteger
 	^self new 
 		basicDwordAtOffset: 0 put: anInteger;
 		yourself! !
+
 !REFGUID class categoriesForMethods!
 fromInteger:!instance creation!public! !
 !

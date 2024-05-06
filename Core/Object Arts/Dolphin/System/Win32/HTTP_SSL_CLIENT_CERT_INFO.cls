@@ -5,12 +5,15 @@ HttpServerStructure subclass: #HTTP_SSL_CLIENT_CERT_INFO
 	classVariableNames: '_OffsetOf_CertDeniedByMapper _OffsetOf_CertEncodedSize _OffsetOf_CertFlags _OffsetOf_pCertEncoded _OffsetOf_Token'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 HTTP_SSL_CLIENT_CERT_INFO guid: (GUID fromString: '{2ea1d77c-9411-49f7-af99-3554a22fe89e}')!
+
 HTTP_SSL_CLIENT_CERT_INFO addClassConstant: '_OffsetOf_CertDeniedByMapper' value: 16r10!
 HTTP_SSL_CLIENT_CERT_INFO addClassConstant: '_OffsetOf_CertEncodedSize' value: 16r4!
 HTTP_SSL_CLIENT_CERT_INFO addClassConstant: '_OffsetOf_CertFlags' value: 16r0!
 HTTP_SSL_CLIENT_CERT_INFO addClassConstant: '_OffsetOf_pCertEncoded' value: 16r8!
 HTTP_SSL_CLIENT_CERT_INFO addClassConstant: '_OffsetOf_Token' value: 16rC!
+
 HTTP_SSL_CLIENT_CERT_INFO comment: '<HTTP_SSL_CLIENT_CERT_INFO> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_SSL_CLIENT_CERT_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -29,7 +32,9 @@ struct tagHTTP_SSL_CLIENT_CERT_INFO {
 	[hidden, custom(9d8468d2-88ea-4452-b32c-992c9937e29c, 0)] BOOLEAN CertDeniedByMapper;
 } HTTP_SSL_CLIENT_CERT_INFO;
 '!
+
 !HTTP_SSL_CLIENT_CERT_INFO categoriesForClass!WinHttpServer-Structs! !
+
 !HTTP_SSL_CLIENT_CERT_INFO methodsFor!
 
 CertEncodedSize
@@ -73,6 +78,7 @@ Token: anExternalHandle
 	"Set the receiver's 'Token' field to the value of the argument, anExternalHandle"
 
 	bytes uintPtrAtOffset: _OffsetOf_Token put: anExternalHandle! !
+
 !HTTP_SSL_CLIENT_CERT_INFO categoriesForMethods!
 CertEncodedSize!**compiled accessors**!private! !
 CertEncodedSize:!**compiled accessors**!private! !
@@ -111,6 +117,7 @@ defineFields
 
 getFieldNames
 	^#(#CertFlags #CertEncodedSize #pCertEncoded #Token)! !
+
 !HTTP_SSL_CLIENT_CERT_INFO class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

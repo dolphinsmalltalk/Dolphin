@@ -5,13 +5,16 @@ ExternalStructure subclass: #GpWmfPlaceableFileHeader
 	classVariableNames: '_OffsetOf_BoundingBox _OffsetOf_Checksum _OffsetOf_Hmf _OffsetOf_Inch _OffsetOf_Key _OffsetOf_Reserved'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GpWmfPlaceableFileHeader guid: (GUID fromString: '{e244edf0-9096-42dd-944d-3be54248689f}')!
+
 GpWmfPlaceableFileHeader addClassConstant: '_OffsetOf_BoundingBox' value: 16r6!
 GpWmfPlaceableFileHeader addClassConstant: '_OffsetOf_Checksum' value: 16r14!
 GpWmfPlaceableFileHeader addClassConstant: '_OffsetOf_Hmf' value: 16r4!
 GpWmfPlaceableFileHeader addClassConstant: '_OffsetOf_Inch' value: 16rE!
 GpWmfPlaceableFileHeader addClassConstant: '_OffsetOf_Key' value: 16r0!
 GpWmfPlaceableFileHeader addClassConstant: '_OffsetOf_Reserved' value: 16r10!
+
 GpWmfPlaceableFileHeader comment: '<GpWmfPlaceableFileHeader> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpWmfPlaceableFileHeader'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
@@ -30,7 +33,9 @@ struct tagGpWmfPlaceableFileHeader {
 	short Checksum;
 } GpWmfPlaceableFileHeader;
 '!
+
 !GpWmfPlaceableFileHeader categoriesForClass!Unclassified! !
+
 !GpWmfPlaceableFileHeader methodsFor!
 
 BoundingBox
@@ -96,6 +101,7 @@ Reserved: anInteger
 	"Set the receiver's 'Reserved' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_Reserved put: anInteger! !
+
 !GpWmfPlaceableFileHeader categoriesForMethods!
 BoundingBox!**compiled accessors**!public! !
 BoundingBox:!**compiled accessors**!public! !
@@ -139,6 +145,7 @@ defineFields
 
 getFieldNames
 	^#(#Key #Hmf #BoundingBox #Inch #Reserved #Checksum)! !
+
 !GpWmfPlaceableFileHeader class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

@@ -31,7 +31,6 @@ And to examine the content:
 Smalltalk developmentSystem browseDeploymentLog: ''PersonalMoney.xml''
 ```'.
 
-
 package classNames
 	add: #PersonalAccount;
 	add: #PersonalAccountShell;
@@ -72,36 +71,36 @@ Model subclass: #PersonalAccount
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Model subclass: #PersonalAccountTransaction
 	instanceVariableNames: 'date description amount isDebit'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Model subclass: #PersonalMoney
 	instanceVariableNames: 'owner accounts'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Shell subclass: #PersonalAccountShell
 	instanceVariableNames: 'namePresenter accountNumberPresenter initialBalancePresenter transactionsPresenter currentBalancePresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AbstractDocumentShell subclass: #PersonalMoneyShell
 	instanceVariableNames: 'ownerPresenter accountsPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Dialog subclass: #PersonalAccountTransactionDialog
 	instanceVariableNames: 'datePresenter amountPresenter descriptionPresenter isDebitPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

@@ -5,10 +5,15 @@ UIntPtrBytes variableByteSubclass: #ExternalAddress
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalAddress guid: (GUID fromString: '{87b4c517-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 ExternalAddress isIndirection: true!
+
 ExternalAddress comment: ''!
+
 !ExternalAddress categoriesForClass!External-Data-Unstructured! !
+
 !ExternalAddress methodsFor!
 
 approxSize
@@ -322,6 +327,7 @@ yourAddress
 	the receiver's bytes"
 
 	^self asInteger! !
+
 !ExternalAddress categoriesForMethods!
 approxSize!accessing!private! !
 asExternalAddress!converting!public! !
@@ -380,6 +386,7 @@ fromInteger: anInteger
 	primitive coercion trick."
 
 	^VMLibrary default addressFromInteger: anInteger! !
+
 !ExternalAddress class categoriesForMethods!
 alignment!constants!public! !
 fromAddress:!instance creation!public! !

@@ -5,13 +5,17 @@ SortAlgorithm subclass: #DefaultSortAlgorithm
 	classVariableNames: 'Current'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DefaultSortAlgorithm guid: (GUID fromString: '{4da46cbc-7732-4a19-b7ef-7548a1c4506f}')!
+
 DefaultSortAlgorithm comment: 'DefaultSortAlgorithm implements the default sorting algorithm and sort-ordering as a sorting strategy for use in conjunction with <SortedCollection>s.
 
 Currently DefaultSortAlgorithm is an implementation of the Introsort algorithm. This is a modified Quicksort that switches to Heapsort when it detects that quicksort is going quadratic. The sort-order relationship is fixed and always uses the #<= message to compare elements.
 
 The default sort algorithm is not guaranteed to be a stable sort (in fact in the current implementation it definitely is not), i.e. if the collection has previously been sorted by some other criteria, then this previous ordering of sort equal elements is not maintained when resorting.'!
+
 !DefaultSortAlgorithm categoriesForClass!Kernel-Objects! !
+
 !DefaultSortAlgorithm methodsFor!
 
 compare: operand1 with: operand2 
@@ -164,6 +168,7 @@ sortBlock
 	"Answer a <dyadicVariable> that implements the sort-order comparison in use by the receiver."
 
 	^[:a :b | a <= b]! !
+
 !DefaultSortAlgorithm categoriesForMethods!
 compare:with:!comparing!public! !
 insertionSort:from:to:!private!sorting! !
@@ -186,6 +191,7 @@ newSortBlock: aDyadicValuable
 
 pluggableEquivalentClass
 	^IntrosortAlgorithm! !
+
 !DefaultSortAlgorithm class categoriesForMethods!
 current!instance creation!public! !
 initialize!development!initializing!public! !

@@ -17,7 +17,6 @@ This package is a pre-requisite for hosting Active-X visual controls (OCXs).'.
 
 package basicPackageVersion: '6.1'.
 
-
 package classNames
 	add: #CATEGORYINFO;
 	add: #COMObjectRegistration;
@@ -50,24 +49,24 @@ Object subclass: #COMObjectRegistration
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 IUnknown subclass: #ICatInformation
 	instanceVariableNames: ''
 	classVariableNames: 'CatMan Controls'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IUnknown subclass: #ICatRegister
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 OLEStructure subclass: #CATEGORYINFO
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_catid _OffsetOf_lcid _OffsetOf_szDescription'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -85,6 +84,7 @@ oleRegGetUserType: clsid dwFormOfType: dwFormOfType pszUserType: pszUserType
 
 	<stdcall: sdword OleRegGetUserType guid* dword lpwstr*>
 	^self invalidCall: _failureCode! !
+
 !OLELibrary categoriesForMethods!
 oleRegGetUserType:dwFormOfType:pszUserType:!OLE Functions-OLE!public! !
 !

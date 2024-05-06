@@ -5,7 +5,9 @@ CommonDialog subclass: #ColorDialog
 	classVariableNames: 'CustomColors WM_COLOROK'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ColorDialog guid: (GUID fromString: '{87b4c6b0-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 ColorDialog comment: 'ColorDialog is a <valueDialogPresenter> implementing the Windows ChooseColor common dialog. The associated <valueModel> contains the <color> chosen.
 
 Instance Variables:
@@ -18,7 +20,9 @@ Class Variables:
 
 
 '!
+
 !ColorDialog categoriesForClass!MVP-Presenters! !
+
 !ColorDialog methodsFor!
 
 basicShowModal
@@ -84,6 +88,7 @@ wmColorOk: msgInteger wParam: wParamInteger lParam: lParamInteger
 	"Private - The user has pressed the OK button."
 
 	^(self validationBlock value: winStruct color) ifTrue: [0] ifFalse: [1]! !
+
 !ColorDialog categoriesForMethods!
 basicShowModal!private!realizing/unrealizing! !
 defaultColor!helpers!private! !
@@ -154,6 +159,7 @@ uninitialize
 	"
 
 	SessionManager current removeEventsTriggeredFor: self! !
+
 !ColorDialog class categoriesForMethods!
 customColors!accessing!public! !
 defaultModel!models!public! !

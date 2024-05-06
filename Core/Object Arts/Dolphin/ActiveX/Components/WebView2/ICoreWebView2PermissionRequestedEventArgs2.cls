@@ -5,7 +5,9 @@ ICoreWebView2PermissionRequestedEventArgs subclass: #ICoreWebView2PermissionRequ
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2PermissionRequestedEventArgs2 guid: (IID fromString: '{74d7127f-9de6-4200-8734-42d6fb4ff741}')!
+
 ICoreWebView2PermissionRequestedEventArgs2 comment: '`ICoreWebView2PermissionRequestedEventArgs2` is a wrapper class for the COM interface ''WebView2.ICoreWebView2PermissionRequestedEventArgs2'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -29,7 +31,9 @@ interface ICoreWebView2PermissionRequestedEventArgs2 : ICoreWebView2PermissionRe
 };
 ```
 '!
+
 !ICoreWebView2PermissionRequestedEventArgs2 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2PermissionRequestedEventArgs2 methodsFor!
 
 get_Handled: handled
@@ -63,6 +67,7 @@ put_Handled: handled
 
 	<virtual stdcall: hresult 11 sdword>
 	^self invalidCall: _failureCode! !
+
 !ICoreWebView2PermissionRequestedEventArgs2 categoriesForMethods!
 get_Handled:!**auto generated**!COM Interfaces-ICoreWebView2PermissionRequestedEventArgs2!private! !
 handled!**auto generated**!properties!public! !
@@ -82,6 +87,7 @@ defineFunctions
 		defineFunction: #put_Handled:
 			argumentTypes: 'sdword'
 ! !
+
 !ICoreWebView2PermissionRequestedEventArgs2 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

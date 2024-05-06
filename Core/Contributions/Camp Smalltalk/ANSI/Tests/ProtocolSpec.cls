@@ -5,9 +5,13 @@ ProtocolANYSpec subclass: #ProtocolSpec
 	classVariableNames: 'ClassProtocols DefaultConvTable FixNum OperatorTable Protocols UnaryConvTable UndefinedConformsToNames'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ProtocolSpec guid: (GUID fromString: '{6ada6ff6-f587-4936-8a22-fe3e0022efec}')!
+
 ProtocolSpec comment: ''!
+
 !ProtocolSpec categoriesForClass!Unclassified! !
+
 !ProtocolSpec methodsFor!
 
 <= comperand
@@ -226,6 +230,7 @@ zremoveClass: classOrMetaclass
 	"Remove the receiver's name from the class or the metaclass, classOrMetaclass, list of protocol names. 	??not that great an idea???"
 
 	classOrMetaclass removeAnsiProtocolNamed: self protocolName! !
+
 !ProtocolSpec categoriesForMethods!
 <=!public! !
 addAllMessages:!public! !
@@ -1090,6 +1095,7 @@ xRuleSourceOfMsgSelector: selector inProtocolNamed: protoName
 	proto := ProtocolSpec protocolNamed: protoName.
 	msgSpec := proto messageAtSelector: selector.
 	^msgSpec specForEachReturnValueList asArray first returnValueRuleBlockSource! !
+
 !ProtocolSpec class categoriesForMethods!
 addUndefinedProtocolName:!public! !
 allAnsiProtocols!public! !

@@ -8,7 +8,6 @@ http://wiki.cs.uiuc.edu/CampSmalltalk/Custom+Refactorings+and+Rewrite+Editor+Usa
 
 Unfortunately the project team have chosen to distribute the custom refactorings as a binary ENVY database, rather than a Smalltalk chunk file, so this Dolphin package may not be up to date.'.
 
-
 package classNames
 	add: #RenameAccessorsForVariableRefactoring;
 	add: #RenameClassVariableAndAccessorsRefactoring;
@@ -34,21 +33,18 @@ CreateAccessorsForVariableRefactoring subclass: #RenameAccessorsForVariableRefac
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RenameClassVariableRefactoring subclass: #RenameClassVariableAndAccessorsRefactoring
 	instanceVariableNames: 'accessorsRefactoring'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RenameInstanceVariableRefactoring subclass: #RenameInstanceVariableAndAccessorsRefactoring
 	instanceVariableNames: 'accessorsRefactoring'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

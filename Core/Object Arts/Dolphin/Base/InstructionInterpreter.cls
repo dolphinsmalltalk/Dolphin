@@ -5,15 +5,20 @@ Object subclass: #InstructionInterpreter
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 InstructionInterpreter guid: (GUID fromString: '{369fe97b-c73c-4283-9e17-ff09c8bac2d8}')!
+
 InstructionInterpreter isAbstract: true!
+
 InstructionInterpreter comment: 'InstructionInterpreter is the abstract class of <bytecodeInterpreter>s that can act as the client of a <ByteCodeDispatcher>.
 
 Instance Variables:
 	dispatcher		<ByteCodeDispatcher>
 
 '!
+
 !InstructionInterpreter categoriesForClass!System-Support! !
+
 !InstructionInterpreter methodsFor!
 
 blockCopy: argc stack: stack env: env copy: copy offset1: offset1 offset2: offset2 
@@ -622,6 +627,7 @@ unused: extensionByte1 with: extensionByte2
 unused: extensionByte1 with: extensionByte2 with: extensionByte3
 	"Interpret an unused quad byte instruction."
 ! !
+
 !InstructionInterpreter categoriesForMethods!
 blockCopy:stack:env:copy:offset1:offset2:!instructions-miscellaneous!public! !
 break!instructions-miscellaneous!public! !
@@ -759,6 +765,7 @@ method: aCompiledMethod
 
 new
 	^self basicNew initialize! !
+
 !InstructionInterpreter class categoriesForMethods!
 dispatcher:!instance creation!public! !
 method:!instance creation!public! !

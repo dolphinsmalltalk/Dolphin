@@ -5,9 +5,12 @@ Link variableSubclass: #Process
 	classVariableNames: 'DefaultFpControl DefaultMaxStack DefaultStack'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Process guid: (GUID fromString: '{87b4c64e-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Process addClassConstant: 'DefaultFpControl' value: 16r80007!
 Process addClassConstant: 'DefaultStack' value: 16r1!
+
 Process comment: 'A Process represents an individual thread of execution in the image.
 
 Note that the name "Process" is historic - a Smalltalk Process is much more similar to a "thread" than a true process, since all Processes share the same execution context (the image). Dolphin''s processes do not map directly onto native threads, but are "green" threads. The multi-threading system is implemented internally by the VM and image, with all "green" threads running within a single Win32 thread. This means that a call to a long running (or blocking) external API call will block the entire system, so a facility is provided to "overlap" such calls. This is done by marking the external method with the "overlap" annotation, in which case the VM will perform the call on a separate native thread. For the duration of the overlapped operation the calling Process is blocked, but other Processes in the image will continue to run. 
@@ -48,7 +51,9 @@ Class Variables:
 	DefaultFpControl		<Integer> default floating point control flags to initialize fpControl instance variable.
 	DefaultMaxStack 		<Integer> maximum stack depth (size up to which a Process may grow - virtual memory reserved).
 	DefaultStack			<Integer> initial stack depth (initial virtual memory committed).'!
+
 !Process categoriesForClass!Kernel-Processes! !
+
 !Process methodsFor!
 
 _alreadyPrinted
@@ -636,6 +641,7 @@ topFrame
 	^self isActive 
 		ifTrue: [(self frameAtAddress: thisContext) sender]
 		ifFalse: [self suspendedFrame]! !
+
 !Process categoriesForMethods!
 _alreadyPrinted!accessing!private! !
 at:ifAbsent:!accessing!public! !
@@ -762,6 +768,7 @@ new
 	"Processes should be created by sending one of the #fork family of messages to a block."
 
 	^self shouldNotImplement! !
+
 !Process class categoriesForMethods!
 forContext:priority:maxStack:!instance creation!private! !
 initialize!development!initializing!public! !

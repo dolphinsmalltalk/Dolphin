@@ -3,7 +3,6 @@ package := Package name: 'SSW EditableListView Tests'.
 package paxVersion: 1;
 	basicComment: ''.
 
-
 package classNames
 	add: #EditableListViewTest;
 	yourself.
@@ -36,9 +35,6 @@ TestCase subclass: #EditableListViewTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
-"Global Aliases"!
-
-
 "Loose Methods"!
 
 !PackageClosureTests methodsFor!
@@ -50,6 +46,7 @@ testEditableListViewDemo
 
 	self verifyPackageClosure: (self environmentForAppDeployment: {EditableListViewDemo owningPackage})
 		missing: #(#defineTemplate #evaluate:)! !
+
 !PackageClosureTests categoriesForMethods!
 testEditableListViewDemo!public!unit tests! !
 !

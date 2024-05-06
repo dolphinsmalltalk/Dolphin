@@ -5,9 +5,13 @@ DolphinTest subclass: #CRTLibraryImportTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 CRTLibraryImportTest guid: (GUID fromString: '{a3836ac0-e09a-4f44-b33f-3f87f52f2098}')!
+
 CRTLibraryImportTest comment: ''!
+
 !CRTLibraryImportTest categoriesForClass!SUnit! !
+
 !CRTLibraryImportTest methodsFor!
 
 devOnlyCrtFunctions
@@ -59,6 +63,7 @@ testStubCrtExports
 						separatedBy: [desc nextPutAll: ', '].
 					desc contents]]
 					ensure: [l close]]! !
+
 !CRTLibraryImportTest categoriesForMethods!
 devOnlyCrtFunctions!constants!private! !
 minimumVmVersion!accessing!public! !

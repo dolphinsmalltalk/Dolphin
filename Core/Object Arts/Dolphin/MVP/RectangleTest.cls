@@ -5,9 +5,13 @@ AbstractRectangleTest subclass: #RectangleTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RectangleTest guid: (GUID fromString: '{aceafc61-24f9-482c-a8e7-0aff0e7fcc85}')!
+
 RectangleTest comment: ''!
+
 !RectangleTest categoriesForClass!Unclassified! !
+
 !RectangleTest methodsFor!
 
 subjectClass
@@ -47,6 +51,7 @@ testInsetBy
 	self assert: (desktop insetBy: 1 @ 2) equals: (1 @ 2 corner: 1279 @ 1022).
 	self assert: ((1 @ 2 corner: 3 @ 4) insetBy: (2 @ 0 corner: 0 @ 0)) equals: (3 @ 2 corner: 3 @ 4).
 	#todo	"Add more insetBy: <Rectangle> tests"! !
+
 !RectangleTest categoriesForMethods!
 subjectClass!constants!private! !
 testAreasOutside!public!unit tests! !

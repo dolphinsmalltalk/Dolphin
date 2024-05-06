@@ -5,9 +5,13 @@ ChangeMethodNameRefactoring subclass: #AddParameterRefactoring
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AddParameterRefactoring guid: (GUID fromString: '{afeead23-befe-4021-bb3b-1d7b14e487ba}')!
+
 AddParameterRefactoring comment: ''!
+
 !AddParameterRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !AddParameterRefactoring methodsFor!
 
 addParameterToMethod: aSelector in: aClass newSelector: newSel initializer: init 
@@ -138,6 +142,7 @@ verifyInitializationExpression
 			[self 
 				refactoringError: 'The initialization code cannot be a return node or a list of statements'].
 	self checkVariableReferencesIn: tree! !
+
 !AddParameterRefactoring categoriesForMethods!
 addParameterToMethod:in:newSelector:initializer:!initialize/release!public! !
 checkSendersAccessTo:!preconditions!public! !
@@ -169,6 +174,7 @@ model: aRBNamespace addParameterToMethod: aSelector in: aClass newSelector: newS
 			newSelector: newSelector
 			initializer: init;
 		yourself! !
+
 !AddParameterRefactoring class categoriesForMethods!
 addParameterToMethod:in:newSelector:initializer:!instance creation!public! !
 model:addParameterToMethod:in:newSelector:initializer:!instance creation!public! !

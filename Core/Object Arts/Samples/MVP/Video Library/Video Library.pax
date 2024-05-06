@@ -14,7 +14,6 @@ VideoLibraryShell show
 
 package basicPackageVersion: '2005.6.5.15'.
 
-
 package classNames
 	add: #NewVideoTapeDialog;
 	add: #VideoLibrary;
@@ -58,36 +57,36 @@ Object subclass: #VideoLibrary
 	classVariableNames: 'DefaultInstance'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #VideoRecording
 	instanceVariableNames: 'title date time length'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #VideoTape
 	instanceVariableNames: 'name length recordings'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Shell subclass: #VideoLibraryShell
 	instanceVariableNames: 'ownerPresenter tapesPresenter recordingsPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Dialog subclass: #VideoRecordingDialog
 	instanceVariableNames: 'titlePresenter datePresenter timePresenter lengthPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ValueDialog subclass: #NewVideoTapeDialog
 	instanceVariableNames: 'namePresenter lengthPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

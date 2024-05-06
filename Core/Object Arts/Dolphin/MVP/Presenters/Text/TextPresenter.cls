@@ -5,9 +5,13 @@ ValuePresenter subclass: #TextPresenter
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TextPresenter guid: (GUID fromString: '{87b4c6d2-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 TextPresenter comment: 'TextPresenter is a <valuePresenter> that displays a <valueModel> onto a <readableString> value. A TextPresenter can be connected to any <valueView> capable of displaying <readableString> values. Often, this will be a <TextEdit> although alternative views may be chosen with the installation of an appropriate <typeConverter>.'!
+
 !TextPresenter categoriesForClass!MVP-Presenters!MVP-Resources-Text fields! !
+
 !TextPresenter methodsFor!
 
 clear
@@ -91,6 +95,7 @@ selectionRange: anInterval
 	
 	^self view selectionRange: anInterval
 ! !
+
 !TextPresenter categoriesForMethods!
 clear!operations!public! !
 dragOver:!drag & drop!public! !
@@ -171,6 +176,7 @@ resource_Static_text
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.StaticText) 34 16 nil nil 34 2 8 1140850944 65 416 nil nil nil 7 nil nil nil 416 nil 8 1915124368 852486 ##(Smalltalk.NullConverter) nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3359 21 642 241 39 416 594 #text: 34 1 8 'Static Text' 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 143 6 0 0 10 0 0 0 7 7 0 0 29 0 0 0] 8 #() 642 193 193 nil 27 )! !
+
 !TextPresenter class categoriesForMethods!
 defaultModel!models!public! !
 icon!constants!public! !

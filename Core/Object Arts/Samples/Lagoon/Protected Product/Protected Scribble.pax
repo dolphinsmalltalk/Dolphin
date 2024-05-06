@@ -8,7 +8,6 @@ package paxVersion: 1;
 
 package basicPackageVersion: '2005.6.2.23-CU-9'.
 
-
 package classNames
 	add: #MyCompanySerialNumber;
 	add: #ProtectedScribbleSessionManager;
@@ -34,16 +33,12 @@ ProtectedProductSerialNumber subclass: #MyCompanySerialNumber
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ProtectedProductSessionManager subclass: #ProtectedScribbleSessionManager
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

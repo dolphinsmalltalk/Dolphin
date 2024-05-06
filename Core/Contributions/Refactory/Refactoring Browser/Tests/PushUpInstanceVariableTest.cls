@@ -5,9 +5,13 @@ RefactoringTest subclass: #PushUpInstanceVariableTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PushUpInstanceVariableTest guid: (GUID fromString: '{08db86cb-6161-486b-82f5-70846a431aa1}')!
+
 PushUpInstanceVariableTest comment: ''!
+
 !PushUpInstanceVariableTest categoriesForClass!Refactory-Testing! !
+
 !PushUpInstanceVariableTest methodsFor!
 
 testPullUpInstVar
@@ -25,6 +29,7 @@ testPullUpVariableNotDefined
 	self shouldFail: (PullUpInstanceVariableRefactoring 
 				variable: 'notDefinedVariable'
 				class: LintRuleTest)! !
+
 !PushUpInstanceVariableTest categoriesForMethods!
 testPullUpInstVar!public!tests! !
 testPullUpVariableNotDefined!failure tests!public! !

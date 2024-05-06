@@ -5,9 +5,13 @@ Object subclass: #RBParseTreeRule
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RBParseTreeRule guid: (GUID fromString: '{1a6390df-c5e5-4c38-a2fa-300ea0cddbff}')!
+
 RBParseTreeRule comment: ''!
+
 !RBParseTreeRule categoriesForClass!Refactory-ParseTree Matching! !
+
 !RBParseTreeRule methodsFor!
 
 canMatch: aProgramNode 
@@ -40,6 +44,7 @@ searchString: aString
 
 sentMessages
 	^searchTree sentMessages! !
+
 !RBParseTreeRule categoriesForMethods!
 canMatch:!matching!public! !
 context!accessing!private! !
@@ -67,6 +72,7 @@ search: aString
 	^(self new)
 		searchString: aString;
 		yourself! !
+
 !RBParseTreeRule class categoriesForMethods!
 methodSearch:!instance creation!public! !
 new!instance creation!public! !

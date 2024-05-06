@@ -5,10 +5,15 @@ Object subclass: #GraphicsTool
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 GraphicsTool guid: (GUID fromString: '{87b4c48d-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 GraphicsTool isAbstract: true!
+
 GraphicsTool comment: ''!
+
 !GraphicsTool categoriesForClass!Graphics-Tools! !
+
 !GraphicsTool methodsFor!
 
 asParameter
@@ -200,6 +205,7 @@ stbSaveOn: anSTBOutFiler
 	self isPersistent ifFalse: [self error: 'Cannot #stbSaveOn: ' , self printString].
 	anSTBOutFiler override: handle with: nil.
 	[super stbSaveOn: anSTBOutFiler] ensure: [anSTBOutFiler removeOverrideFor: handle]! !
+
 !GraphicsTool categoriesForMethods!
 asParameter!converting!public! !
 basicFree!private!realizing/unrealizing! !
@@ -275,6 +281,7 @@ onStartup2
 	"Private - Perform system startup processing for all subclasses."
 
 	self subclasses do: [:c | c onStartup2]! !
+
 !GraphicsTool class categoriesForMethods!
 fromHandle:!instance creation!public! !
 fromOwnedHandle:!instance creation!public! !

@@ -5,10 +5,15 @@ SequenceableCollectionTest subclass: #ArrayedCollectionTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ArrayedCollectionTest guid: (GUID fromString: '{48d15c8e-983b-48d0-8c62-51b644ba6bdb}')!
+
 ArrayedCollectionTest isAbstract: true!
+
 ArrayedCollectionTest comment: ''!
+
 !ArrayedCollectionTest categoriesForClass!Unclassified! !
+
 !ArrayedCollectionTest methodsFor!
 
 testReplaceIdentityWith
@@ -23,6 +28,7 @@ testReplaceIdentityWith
 	self assert: a equals: (self newCollection: #($0 $2 $0 $3 $0)).
 	a replaceIdentity: (self assimilate: $6) with: rep.
 	self assert: a equals: (self newCollection: #($0 $2 $0 $3 $0 $0))! !
+
 !ArrayedCollectionTest categoriesForMethods!
 testReplaceIdentityWith!public!unit tests! !
 !

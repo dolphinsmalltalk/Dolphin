@@ -5,11 +5,14 @@ View subclass: #MoenTreeView
 	classVariableNames: 'AutoExpandingMask HasButtonsMask MultilineMask SingleLineMask ViewModes'
 	poolDictionaries: 'ThemeConstants'
 	classInstanceVariableNames: ''!
+
 MoenTreeView guid: (GUID fromString: '{68f4ac03-2f95-11d3-93ba-00a024ca708a}')!
+
 MoenTreeView addClassConstant: 'AutoExpandingMask' value: 16r8000000!
 MoenTreeView addClassConstant: 'HasButtonsMask' value: 16r1!
 MoenTreeView addClassConstant: 'MultilineMask' value: 16rA010!
 MoenTreeView addClassConstant: 'SingleLineMask' value: 16r8024!
+
 MoenTreeView comment: 'MoenTreeView is a <treeView> for displaying a <treeModel> in a graphic layout. It support the single <selectableItems> protocol for handling item selection. MoenTreeViews can be used to display any type of object with the exception of the ''nil'' object which is used to distinguish the root.
 
 For more information on the underlying algorithms see:
@@ -44,7 +47,9 @@ Class Variables:
 	MultilineMask		<integer>. DrawText() flags combination for multiline text node labels.
 	SingleLineMask		<integer>. DrawText() flags combination for singleline text node labels.
 '!
+
 !MoenTreeView categoriesForClass!MVP-Views! !
+
 !MoenTreeView methodsFor!
 
 addTreeFor: anObject parentNode: aMoenTreeNode
@@ -1777,6 +1782,7 @@ zip: aMoenTreeNode
 		ifTrue: [self attachParent: aMoenTreeNode height: (self join: aMoenTreeNode)]
 		ifFalse: [self layoutLeaf: aMoenTreeNode].
 	self zip: aMoenTreeNode parent! !
+
 !MoenTreeView categoriesForMethods!
 addTreeFor:parentNode:!adding!private! !
 anchorNode!accessing!private! !
@@ -2027,6 +2033,7 @@ value: anObject
 
 viewModes
 	^ViewModes! !
+
 !MoenTreeView class categoriesForMethods!
 defaultModel!models!public! !
 icon!constants!public! !

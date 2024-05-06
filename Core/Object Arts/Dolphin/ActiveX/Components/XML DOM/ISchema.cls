@@ -5,7 +5,9 @@ ISchemaItem subclass: #ISchema
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
 	classInstanceVariableNames: ''!
+
 ISchema guid: (IID fromString: '{50ea08b4-dd1b-4664-9a50-c2f40f4bd79a}')!
+
 ISchema comment: '<ISchema> is a wrapper class for the COM interface ''MSXML2.ISchema'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
@@ -53,7 +55,9 @@ interface ISchema : ISchemaItem
 		[out, retval]ISchemaStringCollection** schemaLocations);
 };
 '!
+
 !ISchema categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+
 !ISchema methodsFor!
 
 attributeGroups
@@ -217,6 +221,7 @@ version
 	self get_version: answer.
 	^answer asObject
 ! !
+
 !ISchema categoriesForMethods!
 attributeGroups!**auto generated**!properties!public! !
 attributes!**auto generated**!properties!public! !
@@ -264,6 +269,7 @@ defineFunctions
 		defineFunction: #get_schemaLocations:
 			argumentTypes: 'ISchemaStringCollection**'
 ! !
+
 !ISchema class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

@@ -5,13 +5,17 @@ IProvideClassInfo subclass: #IProvideClassInfo2
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IProvideClassInfo2 guid: (IID fromString: '{a6bc3ac0-dbaa-11ce-9de3-00aa004bb851}')!
+
 IProvideClassInfo2 comment: '<IProvideClassInfo2> is a wrapper class for the COM interface ''OCIDL.IProvideClassInfo2'' generated from type information in the ''OCIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
 IProvideClassInfo2 extends IProvideClassInfo by adding a method to enquire the <GUID>s for various aspects of the COM objects coclass. At present the only aspect defined is the IID of the default source (event) interface.'!
+
 !IProvideClassInfo2 categoriesForClass!COM-Interfaces! !
+
 !IProvideClassInfo2 methodsFor!
 
 getGUID: dwGuidKind 
@@ -35,6 +39,7 @@ GetGUID: dwGuidKind pGUID: pGUID
 
 	<virtual stdcall: hresult 5 dword guid*>
 	^self invalidCall: _failureCode! !
+
 !IProvideClassInfo2 categoriesForMethods!
 getGUID:!**auto generated**!methods!public! !
 GetGUID:pGUID:!**auto generated**!COM Interfaces-IProvideClassInfo2!private! !
@@ -53,6 +58,7 @@ defineFunctions
 		defineFunction: #GetGUID:pGUID:
 			argumentTypes: 'dword GUID*'
 ! !
+
 !IProvideClassInfo2 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

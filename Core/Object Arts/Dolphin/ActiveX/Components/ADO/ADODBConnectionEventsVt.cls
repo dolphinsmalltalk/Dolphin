@@ -5,7 +5,9 @@ IUnknown subclass: #ADODBConnectionEventsVt
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
+
 ADODBConnectionEventsVt guid: (IID fromString: '{00001402-0000-0010-8000-00aa006d2ea4}')!
+
 ADODBConnectionEventsVt comment: '`ADODBConnectionEventsVt` is a wrapper class for the COM interface ''ADODB.ConnectionEventsVt'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -80,7 +82,9 @@ interface ConnectionEventsVt : IUnknown
 };
 ```
 '!
+
 !ADODBConnectionEventsVt categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
+
 !ADODBConnectionEventsVt methodsFor!
 
 beginTransComplete: transactionLevel pError: pError adStatus: adStatus pConnection: pConnection
@@ -314,6 +318,7 @@ WillExecute: source CursorType: cursorType LockType: lockType Options: options a
 
 	<virtual stdcall: hresult 8 bstr* sdword* sdword* sdword* sdword* ADODB_Command* ADODB_Recordset* ADODB_Connection*>
 	^self invalidCall: _failureCode! !
+
 !ADODBConnectionEventsVt categoriesForMethods!
 beginTransComplete:pError:adStatus:pConnection:!**auto generated**!methods!public! !
 BeginTransComplete:pError:adStatus:pConnection:!**auto generated**!COM Interfaces-ConnectionEventsVt!private! !
@@ -361,6 +366,7 @@ defineFunctions
 		defineFunction: #Disconnect:pConnection:
 			argumentTypes: 'sdword* ADODB_Connection*'
 ! !
+
 !ADODBConnectionEventsVt class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

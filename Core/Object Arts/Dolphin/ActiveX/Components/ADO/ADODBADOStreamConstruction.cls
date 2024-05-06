@@ -5,7 +5,9 @@ IDispatch subclass: #ADODBADOStreamConstruction
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
+
 ADODBADOStreamConstruction guid: (IID fromString: '{00000568-0000-0010-8000-00aa006d2ea4}')!
+
 ADODBADOStreamConstruction comment: '`ADODBADOStreamConstruction` is a wrapper class for the COM interface ''ADODB.ADOStreamConstruction'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -30,7 +32,9 @@ interface ADOStreamConstruction : IDispatch
 };
 ```
 '!
+
 !ADODBADOStreamConstruction categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
+
 !ADODBADOStreamConstruction methodsFor!
 
 get_Stream: ppStm
@@ -64,6 +68,7 @@ stream: ppStm
 	"Set the 'Stream' property of the receiver to the <IUnknown*> value of the argument."
 
 	self put_Stream: ppStm! !
+
 !ADODBADOStreamConstruction categoriesForMethods!
 get_Stream:!**auto generated**!COM Interfaces-ADOStreamConstruction!private! !
 put_Stream:!**auto generated**!COM Interfaces-ADOStreamConstruction!private! !
@@ -83,6 +88,7 @@ defineFunctions
 		defineFunction: #put_Stream:
 			argumentTypes: 'IUnknown*'
 ! !
+
 !ADODBADOStreamConstruction class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

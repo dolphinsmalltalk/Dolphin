@@ -5,9 +5,13 @@ AbstractShellViewTest subclass: #ShellViewTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ShellViewTest guid: (GUID fromString: '{7f45346b-99e0-4c3f-bcf8-19cde00771e0}')!
+
 ShellViewTest comment: ''!
+
 !ShellViewTest categoriesForClass!Unclassified! !
+
 !ShellViewTest methodsFor!
 
 createShell: aString centered: aBoolean
@@ -41,6 +45,7 @@ testOpensOnForegroundMonitor
 	"Now a new shell should open on the primary monitor"
 	shell3 := self createShell: self printString , ': shell3' centered: false.
 	self assert: shell3 displayMonitor equals: primary! !
+
 !ShellViewTest categoriesForMethods!
 createShell:centered:!private! !
 testOpensOnForegroundMonitor!public!unit tests! !

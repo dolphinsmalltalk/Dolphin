@@ -5,9 +5,13 @@ StructureArrayPointerField subclass: #PointerArrayPointerField
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PointerArrayPointerField guid: (GUID fromString: '{3a78c2fd-cf0b-4f89-be59-bf48cea436fa}')!
+
 PointerArrayPointerField comment: ''!
+
 !PointerArrayPointerField categoriesForClass!External-Data-Types! !
+
 !PointerArrayPointerField methodsFor!
 
 pointerClass
@@ -15,6 +19,7 @@ pointerClass
 	pointers of the receiver's type."
 
 	^PointerArray! !
+
 !PointerArrayPointerField categoriesForMethods!
 pointerClass!accessing!private! !
 !

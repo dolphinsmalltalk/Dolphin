@@ -5,7 +5,9 @@ Win32Structure subclass: #MENUINFO
 	classVariableNames: '_OffsetOf_cyMax _OffsetOf_dwContextHelpID _OffsetOf_dwMenuData _OffsetOf_dwSize _OffsetOf_dwStyle _OffsetOf_fMask _OffsetOf_hbrBack'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MENUINFO guid: (GUID fromString: '{d51f8f53-401e-4f12-9712-28458e3c48ca}')!
+
 MENUINFO addClassConstant: '_OffsetOf_cyMax' value: 16rC!
 MENUINFO addClassConstant: '_OffsetOf_dwContextHelpID' value: 16r14!
 MENUINFO addClassConstant: '_OffsetOf_dwMenuData' value: 16r18!
@@ -13,8 +15,11 @@ MENUINFO addClassConstant: '_OffsetOf_dwSize' value: 16r0!
 MENUINFO addClassConstant: '_OffsetOf_dwStyle' value: 16r8!
 MENUINFO addClassConstant: '_OffsetOf_fMask' value: 16r4!
 MENUINFO addClassConstant: '_OffsetOf_hbrBack' value: 16r10!
+
 MENUINFO comment: 'MENUINFO is an <ExternalStructure> class to represent the Win32 structure of the same name. The MENUINFO structure suprises by containing information about a menu.'!
+
 !MENUINFO categoriesForClass!External-Data-Structured-Win32! !
+
 !MENUINFO methodsFor!
 
 cyMax
@@ -68,6 +73,7 @@ maskIn: anInteger
 style: anInteger 
 	self dwStyle: anInteger.
 	self maskIn: MIM_STYLE! !
+
 !MENUINFO categoriesForMethods!
 cyMax!**compiled accessors**!public! !
 cyMax:!**compiled accessors**!public! !
@@ -112,6 +118,7 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #fMask #dwStyle #cyMax #dwContextHelpID)! !
+
 !MENUINFO class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

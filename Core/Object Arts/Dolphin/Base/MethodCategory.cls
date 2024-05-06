@@ -5,7 +5,9 @@ Category subclass: #MethodCategory
 	classVariableNames: 'Private Pseuds Public Table'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MethodCategory guid: (GUID fromString: '{87b4c502-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 MethodCategory comment: 'MethodCategory is the class of objects used to classify the methods of classes in taxonomies that are generally unrelated to the class hierarchy.
 
 Instance Variables: (None)
@@ -13,7 +15,9 @@ Instance Variables: (None)
 Class Variables:
 	Pseuds		<Set> of <VirtualMethodCategory>s. The pseudo-categories.
 	Table		<WeakLookupTable> mapping <String> names to <MethodCategory> instances.'!
+
 !MethodCategory categoriesForClass!System-Support! !
+
 !MethodCategory methodsFor!
 
 addClass: class
@@ -141,6 +145,7 @@ selectorsInBehavior: aBehavior
 	"Answer a <sequencedReadableCollection> of <Symbol>s being the selectors of methods in the <Behavior> argument which are members of the receiver."
 
 	^aBehavior selectorsInCategory: self! !
+
 !MethodCategory categoriesForMethods!
 addClass:!adding!public! !
 addMethod:!adding!public! !
@@ -279,6 +284,7 @@ uninitialize
 
 	Pseuds := Set new.
 	Table := WeakLookupTable new! !
+
 !MethodCategory class categoriesForMethods!
 addPseud:!adding!public! !
 allMethodCategories!accessing!public! !

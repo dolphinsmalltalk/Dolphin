@@ -5,12 +5,16 @@ GraphicsTool subclass: #Brush
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Brush guid: (GUID fromString: '{87b4c633-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Brush comment: '`Brush` is a `GraphicsTool` that wraps a Windows GDI Brush object. Brushes are selected into `Canvas`s to paint areas of pixels, for example to fill rectangles.
 
 ## Instance Variables:
   `logBrush` 	`LOGBRUSH`. Windows API structure describing the brush.'!
+
 !Brush categoriesForClass!Graphics-Tools! !
+
 !Brush methodsFor!
 
 createHandle
@@ -55,6 +59,7 @@ printOn: aPuttableStream
 				print: self logBrush;
 				nextPut: $)]
 ! !
+
 !Brush categoriesForMethods!
 createHandle!private!realizing/unrealizing! !
 logBrush!accessing!private! !
@@ -201,6 +206,7 @@ withStyle: styleFlags color: aColour hatch: hatchObject
 				color: aColour;
 				hatch: hatchObject;
 				yourself)! !
+
 !Brush class categoriesForMethods!
 bitmap:!instance creation!public! !
 black!instance creation!public! !

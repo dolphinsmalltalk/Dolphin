@@ -5,9 +5,13 @@ Icon subclass: #IconWithExtent
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IconWithExtent guid: (GUID fromString: '{429114bb-12f2-41ab-8fe0-7585364ac305}')!
+
 IconWithExtent comment: ''!
+
 !IconWithExtent categoriesForClass!Graphics-Tools! !
+
 !IconWithExtent methodsFor!
 
 extent
@@ -29,6 +33,7 @@ loadFromInstance: hModule
 			cxDesired: self extent x
 			cyDesired: self extent y
 			fuLoad: LR_DEFAULTCOLOR! !
+
 !IconWithExtent categoriesForMethods!
 extent!accessing!private! !
 extent:!accessing!private! !

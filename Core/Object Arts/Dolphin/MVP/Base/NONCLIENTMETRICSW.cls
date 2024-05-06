@@ -5,7 +5,9 @@ Win32Structure subclass: #NONCLIENTMETRICSW
 	classVariableNames: '_OffsetOf_dwSize _OffsetOf_iBorderWidth _OffsetOf_iCaptionHeight _OffsetOf_iCaptionWidth _OffsetOf_iMenuHeight _OffsetOf_iMenuWidth _OffsetOf_iPaddedBorderWidth _OffsetOf_iScrollHeight _OffsetOf_iScrollWidth _OffsetOf_iSmCaptionHeight _OffsetOf_iSmCaptionWidth _OffsetOf_lfCationFont _OffsetOf_lfMenuFont _OffsetOf_lfMessageFont _OffsetOf_lfSmCaptionFont _OffsetOf_lfStatusFont'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 NONCLIENTMETRICSW guid: (GUID fromString: '{87b4c602-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 NONCLIENTMETRICSW addClassConstant: '_OffsetOf_dwSize' value: 16r0!
 NONCLIENTMETRICSW addClassConstant: '_OffsetOf_iBorderWidth' value: 16r4!
 NONCLIENTMETRICSW addClassConstant: '_OffsetOf_iCaptionHeight' value: 16r14!
@@ -22,10 +24,13 @@ NONCLIENTMETRICSW addClassConstant: '_OffsetOf_lfMenuFont' value: 16rE0!
 NONCLIENTMETRICSW addClassConstant: '_OffsetOf_lfMessageFont' value: 16r198!
 NONCLIENTMETRICSW addClassConstant: '_OffsetOf_lfSmCaptionFont' value: 16r7C!
 NONCLIENTMETRICSW addClassConstant: '_OffsetOf_lfStatusFont' value: 16r13C!
+
 NONCLIENTMETRICSW comment: '<NONCLIENTMETRICSW> is an <ExternalStructure> class to wrap the Win32 structure of the same name.
 
 From MSDN: "The NONCLIENTMETRICS structure contains the scalable metrics associated with the nonclient area of a nonminimized window. This structure is used by the SPI_GETNONCLIENTMETRICS and SPI_SETNONCLIENTMETRICS actions of SystemParametersInfo."'!
+
 !NONCLIENTMETRICSW categoriesForClass!External-Data-Structured-Win32! !
+
 !NONCLIENTMETRICSW methodsFor!
 
 dwSize: anInteger
@@ -67,6 +72,7 @@ lfMenuFont
 	"Answer the <LOGFONTW> value of the receiver's 'lfMenuFont' field."
 
 	^LOGFONTW fromAddress: bytes yourAddress + _OffsetOf_lfMenuFont! !
+
 !NONCLIENTMETRICSW categoriesForMethods!
 dwSize:!**compiled accessors**!public! !
 iCaptionHeight!**compiled accessors**!public! !
@@ -124,6 +130,7 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #iBorderWidth #iScrollWidth #iScrollHeight #iCaptionWidth #iCaptionHeight #lfCationFont #iSmCaptionWidth #iSmCaptionHeight #lfSmCaptionFont #iMenuWidth #iMenuHeight #lfMenuFont #lfStatusFont #lfMessageFont #iPaddedBorderWidth)! !
+
 !NONCLIENTMETRICSW class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

@@ -5,9 +5,13 @@ GdiplusInitializerTests subclass: #GdiplusBitmapFromBlankInitializerTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusBitmapFromBlankInitializerTest guid: (GUID fromString: '{1c9cb1c1-e014-4fcc-aa39-81767a17af85}')!
+
 GdiplusBitmapFromBlankInitializerTest comment: ''!
+
 !GdiplusBitmapFromBlankInitializerTest categoriesForClass!Unclassified! !
+
 !GdiplusBitmapFromBlankInitializerTest methodsFor!
 
 gdipCreateBitmapFromScan0: width height: height stride: stride format: format scan0: scan0 bitmap: bitmap 
@@ -30,6 +34,7 @@ testCreateHandle
 	self assert: constructorArgs third equals: 0.
 	"self assert: constructorArgs fourth = PixelFormat32bppARGB."
 	self assertLastArgIsHandle! !
+
 !GdiplusBitmapFromBlankInitializerTest categoriesForMethods!
 gdipCreateBitmapFromScan0:height:stride:format:scan0:bitmap:!public!setup! !
 setUp!public!setup! !

@@ -5,9 +5,13 @@ Dictionary variableSubclass: #PoolDictionary
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PoolDictionary guid: (GUID fromString: '{87b4c52a-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 PoolDictionary comment: ''!
+
 !PoolDictionary categoriesForClass!Collections-Unordered!System-Support! !
+
 !PoolDictionary methodsFor!
 
 associationClass
@@ -106,6 +110,7 @@ owningPackage: aPackage
 	"Set the receiver's <Package> to be the argument. Any current package association is lost."
 
 	aPackage addGlobalNamed: self name! !
+
 !PoolDictionary categoriesForMethods!
 associationClass!constants!private! !
 displayOn:!displaying!public! !
@@ -126,6 +131,7 @@ named: aSymbol
 	^(self new)
 		name: aSymbol;
 		yourself! !
+
 !PoolDictionary class categoriesForMethods!
 named:!instance creation!public! !
 !

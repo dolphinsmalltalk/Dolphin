@@ -5,9 +5,13 @@ GdiplusInitializerTests subclass: #GdiplusLinearGradientBrushFromRectInitializer
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusLinearGradientBrushFromRectInitializerTest guid: (GUID fromString: '{4159f1e0-74dd-4646-832a-12d38b4281c9}')!
+
 GdiplusLinearGradientBrushFromRectInitializerTest comment: ''!
+
 !GdiplusLinearGradientBrushFromRectInitializerTest categoriesForClass!Unclassified! !
+
 !GdiplusLinearGradientBrushFromRectInitializerTest methodsFor!
 
 gdipCreateLineBrushFromRectI: rect color1: color1 color2: color2 mode: mode wrapMode: wrapMode lineGradient: lineGradient 
@@ -34,6 +38,7 @@ testCreateHandle
 	self assert: constructorArgs fourth equals: LinearGradientModeBackwardDiagonal.
 	self assert: (constructorArgs at: 5) equals: WrapModeTile.
 	self assertLastArgIsHandle! !
+
 !GdiplusLinearGradientBrushFromRectInitializerTest categoriesForMethods!
 gdipCreateLineBrushFromRectI:color1:color2:mode:wrapMode:lineGradient:!accessing!public! !
 setUp!public!setup! !

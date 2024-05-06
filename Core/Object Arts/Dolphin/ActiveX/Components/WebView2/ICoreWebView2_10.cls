@@ -5,7 +5,9 @@ ICoreWebView2_9 subclass: #ICoreWebView2_10
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2_10 guid: (IID fromString: '{b1690564-6f5a-4983-8e48-31d1143fecdb}')!
+
 ICoreWebView2_10 comment: '`ICoreWebView2_10` is a wrapper class for the COM interface ''WebView2.ICoreWebView2_10'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -30,7 +32,9 @@ interface ICoreWebView2_10 : ICoreWebView2_9
 };
 ```
 '!
+
 !ICoreWebView2_10 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2_10 methodsFor!
 
 Add_BasicAuthenticationRequested: eventHandler token: token
@@ -51,6 +55,7 @@ Remove_BasicAuthenticationRequested: token
 
 	<virtual stdcall: hresult 99 sqword>
 	^self invalidCall: _failureCode! !
+
 !ICoreWebView2_10 categoriesForMethods!
 Add_BasicAuthenticationRequested:token:!**auto generated**!COM Interfaces-ICoreWebView2_10!private! !
 Remove_BasicAuthenticationRequested:!**auto generated**!COM Interfaces-ICoreWebView2_10!private! !
@@ -68,6 +73,7 @@ defineFunctions
 		defineFunction: #Remove_BasicAuthenticationRequested:
 			argumentTypes: 'sqword'
 ! !
+
 !ICoreWebView2_10 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

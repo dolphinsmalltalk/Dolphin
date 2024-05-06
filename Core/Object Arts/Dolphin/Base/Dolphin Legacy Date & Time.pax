@@ -7,7 +7,6 @@ Copyright (c) Object Arts Ltd. 1997-2019
 
 Traditional Smalltalk-80 style `Date` and `Time` classes. These are largely superceded by ANSI compliant `DateAndTime` and `Duration`.'.
 
-
 package classNames
 	add: #Date;
 	add: #Time;
@@ -41,19 +40,18 @@ Magnitude subclass: #Date
 	classVariableNames: 'DaysInMonth DaysUntilMonth DefaultLongPicture YearPivot'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Magnitude subclass: #Time
 	instanceVariableNames: 'seconds'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Magnitude subclass: #TimeStamp
 	instanceVariableNames: 'date time'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -63,6 +61,7 @@ millisecondsToRepeat: anInteger
 	"Answer the time taken to execute the receiver anInteger times"
 
 	^Time millisecondsToRun: [ anInteger timesRepeat: [self value]]! !
+
 !BlockClosure categoriesForMethods!
 millisecondsToRepeat:!development!public! !
 !
@@ -94,6 +93,7 @@ asTimeStamp
 		- if a UTC date/time is needed, send #asUTC first (i.e. `dateAndTime asUTC asTimeStamp`)."
 
 	^TimeStamp date: self asDate time: self asTime! !
+
 !DateAndTime categoriesForMethods!
 asDate!converting!public! !
 asTime!converting!public! !
@@ -111,6 +111,7 @@ asTimeStamp
 	"Answer a <TimeStamp> corresponding to the receiver's point in time."
 
 	^self asDateAndTime asTimeStamp! !
+
 !SYSTEMTIME categoriesForMethods!
 asDate!converting!public! !
 asTimeStamp!converting!public! !

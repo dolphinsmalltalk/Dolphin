@@ -5,9 +5,13 @@ FormattedTextEdit subclass: #EmbeddedFormattedTextEdit
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 EmbeddedFormattedTextEdit guid: (GUID fromString: '{4ef6adf7-0642-4bac-970d-10e4a69ec7f0}')!
+
 EmbeddedFormattedTextEdit comment: ''!
+
 !EmbeddedFormattedTextEdit categoriesForClass!Unclassified! !
+
 !EmbeddedFormattedTextEdit methodsFor!
 
 actualOffset
@@ -154,6 +158,7 @@ stbSaveOn: anSTBOutFiler
 	handle isNil 
 		ifTrue: [anSTBOutFiler saveObject: self]
 		ifFalse: [super stbSaveOn: anSTBOutFiler]! !
+
 !EmbeddedFormattedTextEdit categoriesForMethods!
 actualOffset!accessing!public! !
 column!accessing!public! !
@@ -192,6 +197,7 @@ newForDate
 		format: '__/__/____';
 		typeconverter: DateToText new;
 		yourself! !
+
 !EmbeddedFormattedTextEdit class categoriesForMethods!
 newForDate!constants!development!public! !
 !

@@ -5,9 +5,13 @@ ListViewTest subclass: #MultiSelectListViewTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MultiSelectListViewTest guid: (GUID fromString: '{67f073df-d832-4f4f-a5c1-57d8730e3515}')!
+
 MultiSelectListViewTest comment: ''!
+
 !MultiSelectListViewTest categoriesForClass!Unclassified! !
+
 !MultiSelectListViewTest methodsFor!
 
 initializePresenter
@@ -162,6 +166,7 @@ testNewSelectionsShiftClickWithSelectionMark
 			self verifySelectionsFromMouseDown: event equals: #(3 4 5)].
 	event := self mouseDownEventOnItem: 3 buttons: #(#left #shift).
 	self verifySelectionsFromMouseDown: event equals: #(3)! !
+
 !MultiSelectListViewTest categoriesForMethods!
 initializePresenter!public!Running! !
 marqueeSelectionEventsToItem:!helpers!private! !

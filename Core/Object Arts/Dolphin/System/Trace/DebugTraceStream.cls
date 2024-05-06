@@ -5,7 +5,9 @@ Stream subclass: #DebugTraceStream
 	classVariableNames: 'Current'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DebugTraceStream guid: (GUID fromString: '{42675a9e-7ef6-4e38-8ff1-c6cd5d1563cc}')!
+
 DebugTraceStream comment: 'DebugTraceStream is a singleton class that implements the <puttableStream> protocol (and some) on top of the Win32 OutputDebugString() API. Like the Transcript the output is buffered until either an end of line is emitted (i.e. #cr is sent) or the the stream is explicitly flushed (i.e. #flush is sent). For convenience the singleton instance is assigned to the global named ''Trace''.
 
 Instance Variables:
@@ -14,7 +16,9 @@ Instance Variables:
 
 Class Variables:
 	Current 	<DebugTraceStream>. Singleton instance.'!
+
 !DebugTraceStream categoriesForClass!Collections-Streams! !
+
 !DebugTraceStream methodsFor!
 
 << anObject
@@ -131,6 +135,7 @@ tab: tabCount
 
 	self next: tabCount put: $\t
 ! !
+
 !DebugTraceStream categoriesForMethods!
 <<!accessing!public! !
 atEnd!public!testing! !
@@ -164,6 +169,7 @@ current
 initialize
 	Current := self basicNew initialize.
 	Trace := Current! !
+
 !DebugTraceStream class categoriesForMethods!
 current!instance creation!public! !
 initialize!initializing!public! !

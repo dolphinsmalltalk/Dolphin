@@ -9,7 +9,6 @@ This package contains MVP View wrappers for the standard Windows common controls
 
 package basicPackageVersion: '6.2'.
 
-
 package classNames
 	add: #CCHITTESTINFO;
 	add: #CCITEM;
@@ -81,159 +80,186 @@ Object subclass: #ListViewColumn
 	classVariableNames: 'AutoResizeMask SortInvertedMask'
 	poolDictionaries: 'ListViewConstants'
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #CCHITTESTINFO
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_flags _OffsetOf_pt'
 	poolDictionaries: 'CommCtrlConstants'
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #CCITEM
 	instanceVariableNames: 'text'
 	classVariableNames: '_OffsetOf_mask'
 	poolDictionaries: 'CommCtrlConstants'
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #LVBKIMAGEW
 	instanceVariableNames: 'buf'
 	classVariableNames: '_OffsetOf_cchImageMax _OffsetOf_hbm _OffsetOf_pszImage _OffsetOf_ulFlags _OffsetOf_xOffsetPercent _OffsetOf_yOffsetPercent'
 	poolDictionaries: 'ListViewConstants'
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #LVCOLUMNW
 	instanceVariableNames: 'text'
 	classVariableNames: '_OffsetOf_cchTextMax _OffsetOf_cx _OffsetOf_cxDefault _OffsetOf_cxIdeal _OffsetOf_cxMin _OffsetOf_fmt _OffsetOf_iImage _OffsetOf_iOrder _OffsetOf_iSubItem _OffsetOf_mask _OffsetOf_pszText AlignmentMap'
 	poolDictionaries: 'ListViewConstants'
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #LVFINDINFOW
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_flags _OffsetOf_lParam _OffsetOf_psz _OffsetOf_pt _OffsetOf_vkDirection'
 	poolDictionaries: 'ListViewConstants'
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #TVINSERTSTRUCTW
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_hInsertAfter _OffsetOf_hParent _OffsetOf_item'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 CCHITTESTINFO subclass: #LVHITTESTINFO
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_iItem _OffsetOf_iSubItem'
 	poolDictionaries: 'ListViewConstants'
 	classInstanceVariableNames: ''!
+
 CCHITTESTINFO subclass: #TCHITTESTINFO
 	instanceVariableNames: 'iItem'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 CCHITTESTINFO subclass: #TVHITTESTINFO
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_hItem'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 CCITEM subclass: #LVITEMW
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_cchTextMax _OffsetOf_cColumns _OffsetOf_dwState _OffsetOf_iGroup _OffsetOf_iGroupId _OffsetOf_iImage _OffsetOf_iIndent _OffsetOf_iItem _OffsetOf_iSubItem _OffsetOf_lParam _OffsetOf_piColFmt _OffsetOf_pszText _OffsetOf_puColumns _OffsetOf_stateMask CallbackPrototype'
 	poolDictionaries: 'ListViewConstants'
 	classInstanceVariableNames: ''!
+
 CCITEM subclass: #TCITEMW
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_cchTextMax _OffsetOf_dwState _OffsetOf_iImage _OffsetOf_lParam _OffsetOf_pszText _OffsetOf_stateMask'
 	poolDictionaries: 'TabViewConstants'
 	classInstanceVariableNames: ''!
+
 CCITEM subclass: #TVITEMW
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_cChildren _OffsetOf_cchTextMax _OffsetOf_dwState _OffsetOf_hItem _OffsetOf_iImage _OffsetOf_iSelectedImage _OffsetOf_lParam _OffsetOf_pszText _OffsetOf_stateMask'
 	poolDictionaries: 'TreeViewConstants'
 	classInstanceVariableNames: ''!
+
 TVITEMW subclass: #TVITEMEXW
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_hwnd _OffsetOf_iExpandedImage _OffsetOf_iIntegral _OffsetOf_uStateEx'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 NMHDR subclass: #NMCUSTOMDRAW
 	instanceVariableNames: 'item view canvas font'
 	classVariableNames: '_OffsetOf_dwDrawStage _OffsetOf_dwItemSpec _OffsetOf_hdc _OffsetOf_lParam _OffsetOf_rc _OffsetOf_uItemState'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 NMHDR subclass: #NMGETINFOTIP
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 NMHDR subclass: #NMITEMACTIVATE
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_iItem _OffsetOf_iSubItem _OffsetOf_lParam _OffsetOf_ptAction _OffsetOf_uChanged _OffsetOf_uKeyFlags _OffsetOf_uNewState _OffsetOf_uOldState'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 NMHDR subclass: #NMKEYDOWN
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_flags _OffsetOf_wVKey'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 NMHDR subclass: #NMLISTVIEW
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_iItem _OffsetOf_iSubItem _OffsetOf_lParam _OffsetOf_ptAction _OffsetOf_uChanged _OffsetOf_uNewState _OffsetOf_uOldState'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 NMHDR subclass: #NMLVFINDITEMW
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_iStart _OffsetOf_lvfi'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 NMHDR subclass: #NMLVODSTATECHANGE
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_iFrom _OffsetOf_iTo _OffsetOf_uNewState _OffsetOf_uOldState'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 NMHDR subclass: #NMTREEVIEWW
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_action _OffsetOf_itemNew _OffsetOf_itemOld _OffsetOf_ptDrag'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 NMCUSTOMDRAW subclass: #NMLVCUSTOMDRAW
 	instanceVariableNames: 'column'
 	classVariableNames: '_OffsetOf_clrText _OffsetOf_clrTextBk _OffsetOf_iSubItem'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 NMCUSTOMDRAW subclass: #NMTVCUSTOMDRAW
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_clrText _OffsetOf_clrTextBk _OffsetOf_iLevel'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 NMGETINFOTIP subclass: #NMLVGETINFOTIPW
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_cchTextMax _OffsetOf_dwFlags _OffsetOf_iItem _OffsetOf_iSubItem _OffsetOf_lParam _OffsetOf_pszText'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 NMGETINFOTIP subclass: #NMTVGETINFOTIPW
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_cchTextMax _OffsetOf_hItem _OffsetOf_lParam _OffsetOf_pszText'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ListControlView subclass: #IconicListAbstract
 	instanceVariableNames: 'getImageBlock imageManager stateImageManager getInfoTipBlock customDrawBlock largeIconExtent thumbnailsImageManager'
 	classVariableNames: 'ViewModes'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IconicListAbstract subclass: #ListView
 	instanceVariableNames: 'lastClickedColIndex columns viewMode lastSelIndices iconSpacing lvStyle thumbnailExtent lvFlags backImage backImageOffset backImageAlpha approvedSelIndices _unused35 _unused36 _unused37 _unused38 _unused39 _unused40 _unused41 _unused42 _unused43 _unused44 _unused45'
 	classVariableNames: 'BackImageIsTiledMask LvModes NoImageIndex SelectionStateMask UnknownItem'
 	poolDictionaries: 'ListViewConstants'
 	classInstanceVariableNames: ''!
+
 IconicListAbstract subclass: #TabView
 	instanceVariableNames: 'viewMode'
 	classVariableNames: 'OrientationMask TabOrientations TabViewModes'
 	poolDictionaries: 'TabViewConstants'
 	classInstanceVariableNames: ''!
+
 IconicListAbstract subclass: #TreeView
 	instanceVariableNames: 'handleObjectMap indentSeparation viewMode tvFlags objectHandleMap'
 	classVariableNames: 'DisableExpandAllMask NonVirtualMask UpdateModeMask UpdateModes'
 	poolDictionaries: 'TreeViewConstants'
 	classInstanceVariableNames: ''!
+
 TabView subclass: #TabViewXP
 	instanceVariableNames: '_tvxReserved0 lastSelection _tvxReserved1 _tvxReserved2 _tvxReserved3'
 	classVariableNames: ''
 	poolDictionaries: 'ThemeConstants'
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -248,6 +274,7 @@ resource_Default_view
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ListView) 34 45 nil nil 34 2 8 1409372236 1025 416 590662 2 ##(Smalltalk.ListModel) 138 144 8 #() nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 327686 ##(Smalltalk.Color) #default nil 5 nil nil nil 416 nil 8 1883852064 ##(Smalltalk.BasicListAbstract) ##(Smalltalk.IconicListAbstract) 1049926 1 ##(Smalltalk.IconImageManager) nil nil nil 328198 ##(Smalltalk.Point) 65 65 nil nil 138 144 34 1 920646 5 ##(Smalltalk.ListViewColumn) 8 'Column 1' 201 #left ##(Smalltalk.BasicListAbstract) 459270 ##(Smalltalk.Message) #<= 8 #() nil nil 416 nil 1 nil nil #largeIcons 528 nil 131169 nil 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 658 7039 21 658 491 311 416 882 #text: 34 1 8 'Column 1' 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 191 13 0 0 10 0 0 0 180 14 0 0 165 0 0 0] 8 #() 658 193 193 nil 35 )! !
+
 !FolderPresenter class categoriesForMethods!
 resource_Default_view!public!resources-views! !
 !
@@ -273,6 +300,7 @@ resource_Tab_view
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.TabViewXP) 34 28 nil nil 34 2 8 1409352192 1 416 590662 2 ##(Smalltalk.ListModel) 138 144 8 #() nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 327686 ##(Smalltalk.Color) #face3d nil 5 nil nil nil 416 nil 8 1904010400 459270 ##(Smalltalk.Message) #displayString 8 #() ##(Smalltalk.IconicListAbstract) 1049926 1 ##(Smalltalk.IconImageManager) nil nil nil nil nil #noIcons nil nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 818 701 61 416 770 #tcmSetExtendedStyle:dwExStyle: 8 #(-1 0) 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 221 8 0 0 40 0 0 0] 8 #() 818 193 193 nil 27 )! !
+
 !ListPresenter class categoriesForMethods!
 resource_Enhanced_list_view!public!resources-views! !
 resource_Tab_view!public!resources-views! !

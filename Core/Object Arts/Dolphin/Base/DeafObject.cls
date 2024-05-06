@@ -5,7 +5,9 @@ Object subclass: #DeafObject
 	classVariableNames: 'Current'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DeafObject guid: (GUID fromString: '{87b4c47a-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 DeafObject comment: 'DeafObject is a singleton class whose sole instance is deaf to all requests - i.e. it appears to understand all messages, but takes no action except to answer itself. This ensures that the results of all message sends to the DeafObject are also deaf. DeafObject can be useful for avoiding a proliferation of #isNil tests.
 
 N.B. DeafObject cannot be used to substitute for any object which has special significance to either the Compiler or the VM, a good example being <Boolean>s. The following expression will raise a ''Must be boolean'' error because it is not a true message send:
@@ -17,7 +19,9 @@ Class Variables:
 
 
 '!
+
 !DeafObject categoriesForClass!System-Support! !
+
 !DeafObject methodsFor!
 
 = comparand
@@ -45,6 +49,7 @@ mustBeBoolean
 	indefinitely, causing an unbreakable loop."
 
 	^true! !
+
 !DeafObject categoriesForMethods!
 =!comparing!public! !
 asParameter!converting!public! !
@@ -63,6 +68,7 @@ initialize
 	"Private - Initialize the receiver's class variables."
 
 	Current isNil ifTrue: [Current := self new]! !
+
 !DeafObject class categoriesForMethods!
 current!accessing!public! !
 initialize!development!initializing!private! !

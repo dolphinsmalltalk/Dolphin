@@ -5,7 +5,9 @@ SmalltalkToolShell subclass: #ResourceBrowser
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ResourceBrowser guid: (GUID fromString: '{87b4c6c2-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 ResourceBrowser comment: 'ResourceBrowser is a <SmalltalkToolShell> that implements the Resource Browser tool. This provides an interface onto all the <Resource>s held by the current <ResourceManager>.
 
 Instance Variables:
@@ -13,7 +15,9 @@ Instance Variables:
 	resourceTree			<UndefinedObject> not used.
 	packagesPresenter			<ListPresenter> displaying a list of all the current packages.
 '!
+
 !ResourceBrowser categoriesForClass!MVP-Presenters! !
+
 !ResourceBrowser methodsFor!
 
 canSaveState
@@ -98,6 +102,7 @@ shortCaption
 showResourcesReferencingView: aResourceIdentifier 
 	resourceToolboxPresenter showResourcesReferencingView: aResourceIdentifier.
 	self caption: ('Views referencing <1p>' expandMacrosWith: aResourceIdentifier)! !
+
 !ResourceBrowser categoriesForMethods!
 canSaveState!private!saved state! !
 createComponents!**auto generated**!initializing!private! !
@@ -172,6 +177,7 @@ showAsToolboxFor: aView at: aPoint
 
 toolsFolderHelpId
 	^10594! !
+
 !ResourceBrowser class categoriesForMethods!
 displayOn:!displaying!public! !
 icon!constants!public! !

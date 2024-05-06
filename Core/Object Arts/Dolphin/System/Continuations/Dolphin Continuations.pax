@@ -70,14 +70,12 @@ Object subclass: #Continuation
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #ProcessCopier
 	instanceVariableNames: 'source delta copied clone'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -97,6 +95,7 @@ deepenProcessCopy: aProcessCopier
 	outer isNil ifFalse: [outer := aProcessCopier visit: outer].
 	"Visit the copied values in case referring to an object that must be copied"
 	1 to: self size do: [:i | self at: i put: (aProcessCopier visit: (self at: i))]! !
+
 !BlockClosure categoriesForMethods!
 acceptProcessCopier:!copying!public! !
 callCC!evaluating!public! !
@@ -113,6 +112,7 @@ deepenProcessCopy: aProcessCopier
 	block := aProcessCopier visit: block.
 	"Visit the shared variables in case referring to an object that must be copied"
 	1 to: self size do: [:i | self at: i put: (aProcessCopier visit: (self at: i))]! !
+
 !Context categoriesForMethods!
 acceptProcessCopier:!copying!public! !
 deepenProcessCopy:!copying!public! !
@@ -123,6 +123,7 @@ deepenProcessCopy:!copying!public! !
 deepenProcessCopy: aProcessCopier
 	super deepenProcessCopy: aProcessCopier.
 	handler := aProcessCopier visit: handler! !
+
 !ExceptionHandler categoriesForMethods!
 deepenProcessCopy:!copying!private! !
 !
@@ -136,6 +137,7 @@ deepenProcessCopy: aProcessCopier
 	protectedBlock := aProcessCopier visit: protectedBlock.
 	returnContinuation := aProcessCopier visit: returnContinuation.
 	outer := aProcessCopier visit: outer! !
+
 !ExceptionHandlerAbstract categoriesForMethods!
 acceptProcessCopier:!copying!public! !
 deepenProcessCopy:!copying!private! !
@@ -149,6 +151,7 @@ deepenProcessCopy: aProcessCopier
 	2 to: handlers size
 		by: 2
 		do: [:i | handlers at: i put: (aProcessCopier visit: (handlers at: i))]! !
+
 !ExceptionHandlerSet categoriesForMethods!
 deepenProcessCopy:!copying!private! !
 !
@@ -157,6 +160,7 @@ deepenProcessCopy:!copying!private! !
 
 acceptProcessCopier: aProcessCopier
 	^self! !
+
 !Object categoriesForMethods!
 acceptProcessCopier:!copying!public! !
 !
@@ -200,6 +204,7 @@ postCopy
 	nextLink := debugger := myList := thread := nil.
 	callbackDepth := 0.
 	^self! !
+
 !Process categoriesForMethods!
 acceptProcessCopier:!copying!public! !
 continueWith:!helpers!private! !
@@ -219,6 +224,7 @@ rebase: aProcessCopier
 	senderAddress == 0 ifFalse: [self basicSender: (senderAddress + delta) asStackPointer].
 	self basicSP: (self basicSP + delta) asStackPointer.
 	self basicBP: (self basicBP + delta) asStackPointer! !
+
 !StackFrame categoriesForMethods!
 copyStack!copying!public! !
 rebase:!copying!public! !

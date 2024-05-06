@@ -5,9 +5,13 @@ STBCollectionProxy subclass: #STBIdentityDictionaryProxy
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 STBIdentityDictionaryProxy guid: (GUID fromString: '{87b4c6f6-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 STBIdentityDictionaryProxy comment: ''!
+
 !STBIdentityDictionaryProxy categoriesForClass!System-Binary storage! !
+
 !STBIdentityDictionaryProxy methodsFor!
 
 value
@@ -20,6 +24,7 @@ value
 		by: 2
 		do: [:i | inst at: (array at: i) put: (array at: i + 1)].
 	^inst! !
+
 !STBIdentityDictionaryProxy categoriesForMethods!
 value!converting!public! !
 !
@@ -41,6 +46,7 @@ forCollection: anIdentityDictionary
 		class: anIdentityDictionary class
 		array: tempStream grabContents
 ! !
+
 !STBIdentityDictionaryProxy class categoriesForMethods!
 forCollection:!instance creation!public! !
 !

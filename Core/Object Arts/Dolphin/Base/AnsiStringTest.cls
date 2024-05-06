@@ -5,9 +5,13 @@ StringTest subclass: #AnsiStringTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AnsiStringTest guid: (GUID fromString: '{c1474b06-e77d-41d7-ad4d-10d5114f8471}')!
+
 AnsiStringTest comment: 'Tests AnsiString.'!
+
 !AnsiStringTest categoriesForClass!Unclassified! !
+
 !AnsiStringTest methodsFor!
 
 assimilate: each 
@@ -83,6 +87,7 @@ testIndexOfSubCollectionStartingAtGPF
 			current := String new: 970.
 			self assert: (current indexOfSubCollection: search startingAt: 965) identicalTo: 0.
 			strings add: current]! !
+
 !AnsiStringTest categoriesForMethods!
 assimilate:!helpers!private! !
 assimilateString:!helpers!private! !

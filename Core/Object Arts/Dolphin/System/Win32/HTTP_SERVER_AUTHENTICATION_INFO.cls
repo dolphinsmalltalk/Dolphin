@@ -5,7 +5,9 @@ HTTP_PROPERTY_FLAGS subclass: #HTTP_SERVER_AUTHENTICATION_INFO
 	classVariableNames: '_OffsetOf_AuthSchemes _OffsetOf_BasicParams _OffsetOf_DigestParams _OffsetOf_DisableNTLMCredentialCaching _OffsetOf_ExFlags _OffsetOf_ReceiveContextHandle _OffsetOf_ReceiveMutualAuth'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 HTTP_SERVER_AUTHENTICATION_INFO guid: (GUID fromString: '{7f4599b6-bdfd-4a19-8a4a-a7fd55a9e207}')!
+
 HTTP_SERVER_AUTHENTICATION_INFO addClassConstant: '_OffsetOf_AuthSchemes' value: 16r4!
 HTTP_SERVER_AUTHENTICATION_INFO addClassConstant: '_OffsetOf_BasicParams' value: 16r1C!
 HTTP_SERVER_AUTHENTICATION_INFO addClassConstant: '_OffsetOf_DigestParams' value: 16rC!
@@ -13,6 +15,7 @@ HTTP_SERVER_AUTHENTICATION_INFO addClassConstant: '_OffsetOf_DisableNTLMCredenti
 HTTP_SERVER_AUTHENTICATION_INFO addClassConstant: '_OffsetOf_ExFlags' value: 16rB!
 HTTP_SERVER_AUTHENTICATION_INFO addClassConstant: '_OffsetOf_ReceiveContextHandle' value: 16r9!
 HTTP_SERVER_AUTHENTICATION_INFO addClassConstant: '_OffsetOf_ReceiveMutualAuth' value: 16r8!
+
 HTTP_SERVER_AUTHENTICATION_INFO comment: '<HTTP_SERVER_AUTHENTICATION_INFO> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_SERVER_AUTHENTICATION_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains no documentation for this struct
@@ -33,7 +36,9 @@ struct tagHTTP_SERVER_AUTHENTICATION_INFO {
 	HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS BasicParams;
 } HTTP_SERVER_AUTHENTICATION_INFO;
 '!
+
 !HTTP_SERVER_AUTHENTICATION_INFO categoriesForClass!Win32-Structs! !
+
 !HTTP_SERVER_AUTHENTICATION_INFO methodsFor!
 
 AuthSchemes
@@ -113,6 +118,7 @@ ReceiveMutualAuth: aBoolean
 	"Set the receiver's 'ReceiveMutualAuth' field to the value of the argument, aBoolean"
 
 	bytes byteAtOffset: _OffsetOf_ReceiveMutualAuth put: aBoolean asParameter! !
+
 !HTTP_SERVER_AUTHENTICATION_INFO categoriesForMethods!
 AuthSchemes!**compiled accessors**!public! !
 AuthSchemes:!**compiled accessors**!public! !
@@ -166,6 +172,7 @@ getFieldNames
 
 propertyId
 	^HttpServerAuthenticationProperty! !
+
 !HTTP_SERVER_AUTHENTICATION_INFO class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

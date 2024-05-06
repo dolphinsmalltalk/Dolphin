@@ -5,12 +5,16 @@ BrowserEnvironmentWrapper subclass: #PackageEnvironment
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PackageEnvironment guid: (GUID fromString: '{1e100fa3-4c91-4f2c-8415-03d6fbca4185}')!
+
 PackageEnvironment comment: 'PackageEnvironment is a Dolphin specific BrowserEnvironment that represents the contents of one or more packages.
 
 Instance Variables:
 	packages		<Array> of <Package>'!
+
 !PackageEnvironment categoriesForClass!Refactoring-Environment! !
+
 !PackageEnvironment methodsFor!
 
 classesDo: aBlock
@@ -136,6 +140,7 @@ storeOn: aStream
 	aStream nextPutAll: ' packageNames: '.
 	self packageNames storeOn: aStream.
 	aStream nextPutAll: ';yourself)'! !
+
 !PackageEnvironment categoriesForMethods!
 classesDo:!accessing/classes!public! !
 defaultLabel!constants!private! !
@@ -164,6 +169,7 @@ onEnvironment: anEnvironment packages: aPackage
 	^(self onEnvironment: anEnvironment)
 		packages: aPackage;
 		yourself! !
+
 !PackageEnvironment class categoriesForMethods!
 onEnvironment:packageNames:!instance creation!public! !
 onEnvironment:packages:!instance creation!public! !

@@ -5,9 +5,13 @@ GdiplusInitializer subclass: #GdiplusTextureBrushInitializer
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusTextureBrushInitializer guid: (GUID fromString: '{1a1a5ea3-6151-11d7-b609-00e0987e8081}')!
+
 GdiplusTextureBrushInitializer comment: ''!
+
 !GdiplusTextureBrushInitializer categoriesForClass!Unclassified! !
+
 !GdiplusTextureBrushInitializer methodsFor!
 
 createHandle
@@ -41,6 +45,7 @@ image: anImage wrapMode: aNumber rectangle: aRectangle
 
 isPersistent
 	^image isPersistent! !
+
 !GdiplusTextureBrushInitializer categoriesForMethods!
 createHandle!private!realizing/unrealizing! !
 gdiplusConstructorErrorDescription!constants!private! !
@@ -55,6 +60,7 @@ image: anImage wrapMode: aNumber rectangle: aRectangle
 		image: anImage
 		wrapMode: aNumber
 		rectangle: aRectangle! !
+
 !GdiplusTextureBrushInitializer class categoriesForMethods!
 image:wrapMode:rectangle:!instance creation!public! !
 !

@@ -5,10 +5,14 @@ TreeModel subclass: #FolderHierarchyModel
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 FolderHierarchyModel guid: (GUID fromString: '{2dfe6611-349c-497a-969b-cc0aea7ecc70}')!
+
 FolderHierarchyModel comment: 'FolderHierarchyModel is a specialized <TreeModel> that holds a directory hierarchy, with nodes representing each directory/folder in the hierarchy. The nodes are maintained in sorted order.
 '!
+
 !FolderHierarchyModel categoriesForClass!MVP-Models! !
+
 !FolderHierarchyModel methodsFor!
 
 add: aFolder
@@ -19,7 +23,7 @@ add: aFolder
 	(parent isNil or: [self includes: parent]) ifFalse: [self add: parent].
 	self add: aFolder asChildOf: parent!
 
- addFolder: aString
+addFolder: aString
  	"Add the hierarchy of folders in the <readableString> path argument to the receiver."
  
 	self add: (self folderClass pathname: aString)!
@@ -31,6 +35,7 @@ newNode: anObject
 	^(super newNode: anObject)
 		children: (SortedCollection sortBlock: [:x :y | x object <= y object]);
 		yourself! !
+
 !FolderHierarchyModel categoriesForMethods!
 add:!adding!public! !
 addFolder:!adding!public! !
@@ -42,6 +47,7 @@ newNode:!adding!private! !
 
 defaultSearchPolicy
 	^SearchPolicy equality! !
+
 !FolderHierarchyModel class categoriesForMethods!
 defaultSearchPolicy!constants!public! !
 !

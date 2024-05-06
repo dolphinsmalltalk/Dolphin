@@ -5,9 +5,13 @@ GdiplusInitializerTests subclass: #GdiplusGraphicsFromImageInitializerTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusGraphicsFromImageInitializerTest guid: (GUID fromString: '{de9caa66-14ef-49f9-8e8b-dbda54c36c53}')!
+
 GdiplusGraphicsFromImageInitializerTest comment: ''!
+
 !GdiplusGraphicsFromImageInitializerTest categoriesForClass!Unclassified! !
+
 !GdiplusGraphicsFromImageInitializerTest methodsFor!
 
 gdipGetImageGraphicsContext: image graphics: graphics 
@@ -26,6 +30,7 @@ testCreateHandle
 	self assert: constructorArgs size equals: 2.
 	self assert: constructorArgs first identicalTo: image asParameter.
 	self assertLastArgIsHandle! !
+
 !GdiplusGraphicsFromImageInitializerTest categoriesForMethods!
 gdipGetImageGraphicsContext:graphics:!accessing!public! !
 setUp!public!setup! !

@@ -5,10 +5,15 @@ Win32Structure subclass: #CommonDialogStructure
 	classVariableNames: ''
 	poolDictionaries: 'CommonDialogConstants'
 	classInstanceVariableNames: ''!
+
 CommonDialogStructure guid: (GUID fromString: '{2ddae63c-f325-47b3-abc3-4b9f8bd84ee9}')!
+
 CommonDialogStructure isAbstract: true!
+
 CommonDialogStructure comment: ''!
+
 !CommonDialogStructure categoriesForClass!External-Data-Structured-Win32! !
+
 !CommonDialogStructure methodsFor!
 
 flags
@@ -31,6 +36,7 @@ lpfnHook: anExternalAddress
 
 maskIn: anInteger 
 	self flags: (self flags maskSet: anInteger)! !
+
 !CommonDialogStructure categoriesForMethods!
 flags!accessing!public! !
 flags:!accessing!public! !

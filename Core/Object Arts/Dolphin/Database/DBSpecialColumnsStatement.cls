@@ -5,9 +5,13 @@ DBSchemaStatement subclass: #DBSpecialColumnsStatement
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DBSpecialColumnsStatement guid: (GUID fromString: '{11e39b07-10d8-43b0-8a5c-43c2eecf5eb9}')!
+
 DBSpecialColumnsStatement comment: ''!
+
 !DBSpecialColumnsStatement categoriesForClass!ODBC Interface! !
+
 !DBSpecialColumnsStatement methodsFor!
 
 columnType
@@ -43,6 +47,7 @@ scope
 
 scope: anInteger
 	scope := anInteger! !
+
 !DBSpecialColumnsStatement categoriesForMethods!
 columnType!accessing!public! !
 columnType:!accessing!public! !

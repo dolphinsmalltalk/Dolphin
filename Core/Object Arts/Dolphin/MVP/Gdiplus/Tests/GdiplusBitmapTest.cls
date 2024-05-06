@@ -5,9 +5,13 @@ GdiplusImageTests subclass: #GdiplusBitmapTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusBitmapTest guid: (GUID fromString: '{fa986dbc-acca-46d6-98c9-d51feb7d04d6}')!
+
 GdiplusBitmapTest comment: ''!
+
 !GdiplusBitmapTest categoriesForClass!Unclassified! !
+
 !GdiplusBitmapTest methodsFor!
 
 setUp
@@ -77,6 +81,7 @@ testPixelAfterSave
 			bitmap saveToFile: toFile.
 			image := GdiplusBitmap fromFile: toFile.
 			self assert: (image pixelAt: 1 @ 1) = transparentBlack equals: supported]! !
+
 !GdiplusBitmapTest categoriesForMethods!
 setUp!public!setup! !
 testAsByteArrayRoundTripBmp!public!unit tests! !

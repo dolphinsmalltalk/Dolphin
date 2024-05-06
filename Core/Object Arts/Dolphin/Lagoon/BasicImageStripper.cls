@@ -5,10 +5,15 @@ Object subclass: #BasicImageStripper
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 BasicImageStripper guid: (GUID fromString: '{51ce4971-61e8-431f-9823-437cf7293e8a}')!
+
 BasicImageStripper isAbstract: true!
+
 BasicImageStripper comment: 'Base image stripping methods. These can safely be encrypted during release.'!
+
 !BasicImageStripper categoriesForClass!MVP-Models! !
+
 !BasicImageStripper methodsFor!
 
 actualRequiredPackages
@@ -830,6 +835,7 @@ verifyRequiredPackages
 	packages := self actualRequiredPackages.
 	packages do: [:each | each okToSaveOrDeploy].
 	^packages! !
+
 !BasicImageStripper categoriesForMethods!
 actualRequiredPackages!private! !
 allMethodsInClasses:do:!helpers!private! !
@@ -947,6 +953,7 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^1! !
+
 !BasicImageStripper class categoriesForMethods!
 new!development!instance creation!public! !
 stbConvertFrom:!binary filing!development!private! !

@@ -5,9 +5,13 @@ Folder subclass: #PackageFolder
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PackageFolder guid: (GUID fromString: '{78425858-c3b5-4314-847a-772ff5268a84}')!
+
 PackageFolder comment: ''!
+
 !PackageFolder categoriesForClass!MVP-Models! !
+
 !PackageFolder methodsFor!
 
 icon
@@ -26,6 +30,7 @@ rootName
 	"Private - Answer the name to use for the folder at the root of the current image hierarchy"
 
 	^'$'! !
+
 !PackageFolder categoriesForMethods!
 icon!constants!public! !
 isDolphinFolder!private!testing! !
@@ -46,6 +51,7 @@ forPackage: aPackage
 	"Answer an instance of the receiver for the folder of aPackage"
 
 	^self pathname: aPackage packageFolder! !
+
 !PackageFolder class categoriesForMethods!
 dolphinRoot!instance creation!public! !
 dolphinRootPathname!constants!instance creation!public! !

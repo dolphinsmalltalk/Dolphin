@@ -5,11 +5,15 @@ Object subclass: #PostedActionWindow
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 PostedActionWindow guid: (GUID fromString: '{426dfeaf-6677-40d5-b9ce-713b6f048cc8}')!
+
 PostedActionWindow comment: 'PostedActionWindow is a private class used by <InputState> to represent the special message only window created by the VM. This window is used to synchronise with the message queue.
 
 A queue of niladic valuable actions is maintained. When a new action is posted to this queue, a windows message is posted to the message window. When this is picked up by the message pump, it sends #preTranslateMessage:, and if the message was a posted action (and there are posted actions in the queue) then the next posted action is processed. The effect is that posted actions are processed in synchronisation with the message queue by the main UI thread. The mechanism is unlike the old deferred actions mechanism in that it will work even when a modal message loop implemented outside Dolphin is active (e.g. the menu processing loop), and that it will fire actions interspersed with windows messages in the queue on a FIFO basis, rather than processing all windows messages before processing all deferred actions.'!
+
 !PostedActionWindow categoriesForClass!System-Support! !
+
 !PostedActionWindow methodsFor!
 
 asParameter
@@ -102,6 +106,7 @@ setTimer: idInteger interval: intervalInteger
 		nIDEvent: idInteger
 		uElapse: intervalInteger
 		lpTimerFunc: nil! !
+
 !PostedActionWindow categoriesForMethods!
 asParameter!converting!public! !
 dispatchMessage:wParam:lParam:!dispatching!private! !

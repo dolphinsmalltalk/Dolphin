@@ -5,13 +5,17 @@ ChunkBrowserExpressionChunk subclass: #ChunkBrowserClassGUIDChunk
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ChunkBrowserClassGUIDChunk guid: (GUID fromString: '{9b98323b-e586-4209-a7bc-11eaf78617b6}')!
+
 ChunkBrowserClassGUIDChunk comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2006 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
+
 !ChunkBrowserClassGUIDChunk categoriesForClass!IDB Goodies! !
+
 !ChunkBrowserClassGUIDChunk methodsFor!
 
 browseTarget
@@ -30,6 +34,7 @@ initialize: aString
 
 isMatch
 	^self identity1AsClass ifNotNil: [:arg | arg instanceClass guid asString = id]! !
+
 !ChunkBrowserClassGUIDChunk categoriesForMethods!
 browseTarget!operations!public! !
 initialize:!initializing!public! !
@@ -53,6 +58,7 @@ isChunkClassFor: aString
 				or:
 					[(aString indexOfSubCollection: ' guid: (IID fromString: ''{') = firstSpaceIndex
 						or: [(aString indexOfSubCollection: ' guid: (CLSID fromString: ''{') = firstSpaceIndex]]]! !
+
 !ChunkBrowserClassGUIDChunk class categoriesForMethods!
 chunkType!constants!public! !
 isChunkClassFor:!public!testing! !

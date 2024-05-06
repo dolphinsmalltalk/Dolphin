@@ -4,7 +4,6 @@ package paxVersion: 1;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
-
 package classNames
 	add: #Random;
 	add: #RandomLinearCongruential;
@@ -29,21 +28,18 @@ Stream subclass: #Random
 	classVariableNames: 'Default DefaultGeneratorClass'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Random subclass: #RandomLinearCongruential
 	instanceVariableNames: 'multiplier increment modulus'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RandomLinearCongruential subclass: #RandomParkMiller
 	instanceVariableNames: 'quo rem'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

@@ -5,9 +5,13 @@ MainTestCase subclass: #SetFactoryANSITest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SetFactoryANSITest guid: (GUID fromString: '{13747c2d-58f9-4e5a-9053-f5bd30c4cbce}')!
+
 SetFactoryANSITest comment: ''!
+
 !SetFactoryANSITest categoriesForClass!Unclassified! !
+
 !SetFactoryANSITest methodsFor!
 
 canonicalObject
@@ -43,6 +47,7 @@ testXwithXwithXwithX
 testXwithXwithXwithXwithX
 	" <Set factory>#with:with:with:with: "
 	#'Collection'.! !
+
 !SetFactoryANSITest categoriesForMethods!
 canonicalObject!public! !
 protocol!public! !

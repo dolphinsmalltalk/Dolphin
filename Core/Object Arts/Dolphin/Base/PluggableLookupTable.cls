@@ -5,14 +5,18 @@ LookupTable variableSubclass: #PluggableLookupTable
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PluggableLookupTable guid: (GUID fromString: '{123a1504-7cb8-11d3-93ca-00a024ca708a}')!
+
 PluggableLookupTable comment: 'PluggableLookupTable is the class of <LookupTable>s which support a pluggable <searchPolicy>, and which can thus be configured to behave in the same way as either standard <LookupTable>s (equality search) or <IdentityDictionary>s (identity search), or indeed any user-defined search policy.
 
 Instance Variables:
 	searchPolicy		<searchPolicy>. The policy used to hash and compare elements of the receiver.
 
 '!
+
 !PluggableLookupTable categoriesForClass!Collections-Unordered! !
+
 !PluggableLookupTable methodsFor!
 
 copyEmpty: anInteger
@@ -80,6 +84,7 @@ species
 
 	^LookupTable
 ! !
+
 !PluggableLookupTable categoriesForMethods!
 copyEmpty:!copying!private! !
 findKeyOrNil:!private!searching! !
@@ -110,6 +115,7 @@ searchPolicy: policy
 	"Answer a new, empty, instance of the receiver with the specified <searchPolicy>."
 
 	^self new setSearchPolicy: policy! !
+
 !PluggableLookupTable class categoriesForMethods!
 defaultSearchPolicy!constants!public! !
 new:searchPolicy:!instance creation!public! !

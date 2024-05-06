@@ -5,9 +5,13 @@ GdiplusInitializer subclass: #GdiplusPathGradientFromPointsInitializer
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusPathGradientFromPointsInitializer guid: (GUID fromString: '{8f2007e1-7d6c-11d7-b609-00e0987e8081}')!
+
 GdiplusPathGradientFromPointsInitializer comment: ''!
+
 !GdiplusPathGradientFromPointsInitializer categoriesForClass!Unclassified! !
+
 !GdiplusPathGradientFromPointsInitializer methodsFor!
 
 createHandle
@@ -32,6 +36,7 @@ gdiplusConstructorErrorDescription
 points: points wrapMode: aWrapModeConstant
 	pathPoints := points.
 	wrapMode := aWrapModeConstant! !
+
 !GdiplusPathGradientFromPointsInitializer categoriesForMethods!
 createHandle!private!realizing/unrealizing! !
 gdiplusConstructorErrorDescription!constants!private! !
@@ -42,6 +47,7 @@ points:wrapMode:!initializing!private! !
 
 points: points wrapMode: aWrapModeConstant
 	^self new points: points wrapMode: aWrapModeConstant! !
+
 !GdiplusPathGradientFromPointsInitializer class categoriesForMethods!
 points:wrapMode:!instance creation!public! !
 !

@@ -5,10 +5,15 @@ Object subclass: #ScintillaLexerMetadata
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ScintillaLexerMetadata guid: (GUID fromString: '{46328983-b7d1-40ad-a5aa-68899e36af2e}')!
+
 ScintillaLexerMetadata isAbstract: true!
+
 ScintillaLexerMetadata comment: ''!
+
 !ScintillaLexerMetadata categoriesForClass!Kernel-Objects! !
+
 !ScintillaLexerMetadata methodsFor!
 
 description
@@ -41,6 +46,7 @@ view
 view: aScintillaView id: anObject
 	view := aScintillaView.
 	id := anObject! !
+
 !ScintillaLexerMetadata categoriesForMethods!
 description!accessing!public! !
 displayOn:!printing!public! !
@@ -60,6 +66,7 @@ icon
 view: aScintillaView id: anObject
 	<primitive: 157>
 	^self new view: aScintillaView id: anObject! !
+
 !ScintillaLexerMetadata class categoriesForMethods!
 icon!constants!development!public! !
 view:id:!instance creation!public! !

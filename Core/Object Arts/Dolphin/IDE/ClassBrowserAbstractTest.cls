@@ -5,10 +5,15 @@ DolphinTest subclass: #ClassBrowserAbstractTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ClassBrowserAbstractTest guid: (GUID fromString: '{fa025e63-3880-48ae-82d4-4b3172d507cc}')!
+
 ClassBrowserAbstractTest isAbstract: true!
+
 ClassBrowserAbstractTest comment: ''!
+
 !ClassBrowserAbstractTest categoriesForClass!Unclassified! !
+
 !ClassBrowserAbstractTest methodsFor!
 
 assertIsOnlyMethodVisible: method
@@ -351,6 +356,7 @@ testSwitchFilterPane
 	self assert: (browser instVarNamed: 'methodBrowserPresenter') source equals: testMethod getSource!
 
 visibilityTestPlaceHolder! !
+
 !ClassBrowserAbstractTest categoriesForMethods!
 assertIsOnlyMethodVisible:!helpers!public! !
 browser!accessing!private! !

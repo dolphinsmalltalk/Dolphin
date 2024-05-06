@@ -5,7 +5,9 @@ ICoreWebView2CompletedHandler subclass: #ICoreWebView2CreateCoreWebView2Controll
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2CreateCoreWebView2ControllerCompletedHandler guid: (IID fromString: '{6c4819f3-c9b7-4260-8127-c9f5bde7f68c}')!
+
 ICoreWebView2CreateCoreWebView2ControllerCompletedHandler comment: '`ICoreWebView2CreateCoreWebView2ControllerCompletedHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2CreateCoreWebView2ControllerCompletedHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -27,7 +29,9 @@ interface ICoreWebView2CreateCoreWebView2ControllerCompletedHandler : IUnknown
 };
 ```
 '!
+
 !ICoreWebView2CreateCoreWebView2ControllerCompletedHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2CreateCoreWebView2ControllerCompletedHandler class methodsFor!
 
 defineFunctions
@@ -35,6 +39,7 @@ defineFunctions
 		ICoreWebView2CreateCoreWebView2ControllerCompletedHandler defineTemplate
 	"
 	self defineFunction: #Invoke:arg: argumentTypes: 'hresult ICoreWebView2Controller*'! !
+
 !ICoreWebView2CreateCoreWebView2ControllerCompletedHandler class categoriesForMethods!
 defineFunctions!initializing!public! !
 !

@@ -5,9 +5,13 @@ TestResource subclass: #DBConnectionTestResource
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DBConnectionTestResource guid: (GUID fromString: '{2661c6fe-6796-4f00-a5c4-6ac7f74bb107}')!
+
 DBConnectionTestResource comment: ''!
+
 !DBConnectionTestResource categoriesForClass!Unclassified! !
+
 !DBConnectionTestResource methodsFor!
 
 connect
@@ -42,6 +46,7 @@ setUp
 
 tearDown
 	self dropDatabase! !
+
 !DBConnectionTestResource categoriesForMethods!
 connect!private! !
 connection!private! !

@@ -5,9 +5,12 @@ HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM
 	classVariableNames: '_OffsetOf_AddrLength _OffsetOf_pAddress'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM guid: (GUID fromString: '{00a93e39-c011-4a5b-af4d-13f2df7a38d4}')!
+
 HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM addClassConstant: '_OffsetOf_AddrLength' value: 16r0!
 HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM addClassConstant: '_OffsetOf_pAddress' value: 16r4!
+
 HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM comment: '<HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -23,7 +26,9 @@ struct tagHTTP_SERVICE_CONFIG_IP_LISTEN_PARAM {
 	[helpstring("A pointer to an Internet Protocol (IP) address to be added to or deleted from the listen list.")] SOCKADDR* pAddress;
 } HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM;
 '!
+
 !HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM categoriesForClass!WinHttpServer-Structs! !
+
 !HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM methodsFor!
 
 address
@@ -54,6 +59,7 @@ pAddress: aSOCKADDR
 	"Set the receiver's 'pAddress' field to the value of the argument, aSOCKADDR"
 
 	bytes uintPtrAtOffset: _OffsetOf_pAddress put: aSOCKADDR yourAddress! !
+
 !HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM categoriesForMethods!
 address!accessing!public! !
 address:!accessing!public! !
@@ -84,6 +90,7 @@ defineFields
 
 getFieldNames
 	^#(#AddrLength #pAddress)! !
+
 !HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

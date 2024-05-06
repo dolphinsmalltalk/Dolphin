@@ -5,9 +5,13 @@ Icon subclass: #NullIcon
 	classVariableNames: 'Current'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 NullIcon guid: (GUID fromString: '{126acbb6-e8df-45a9-80c0-8caf5f16875e}')!
+
 NullIcon comment: ''!
+
 !NullIcon categoriesForClass!Graphics-Tools! !
+
 !NullIcon methodsFor!
 
 imageIndex
@@ -15,6 +19,7 @@ imageIndex
 
 	^0
 ! !
+
 !NullIcon categoriesForMethods!
 imageIndex!accessing!public! !
 !
@@ -31,6 +36,7 @@ icon
 
 initialize
 	Current := self new! !
+
 !NullIcon class categoriesForMethods!
 current!instance creation!public! !
 icon!constants!public! !

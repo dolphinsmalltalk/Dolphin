@@ -42,7 +42,6 @@ Changed
 
 package basicPackageVersion: '7'.
 
-
 package classNames
 	add: #DTDEntityDeclaration;
 	add: #DTDExternalEntityDeclaration;
@@ -72,46 +71,48 @@ Object subclass: #DTDEntityDeclaration
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: 'contextBehavior'!
+
 Object subclass: #SAXHandler
 	instanceVariableNames: 'document driver eod'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #XMLTokenizer
 	instanceVariableNames: 'stream nestedStreams entities externalEntities parameterEntities parsingMarkup peekChar validating buffer contentBuffer'
 	classVariableNames: 'CharEscapes NameChars NameDelimiters'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DTDEntityDeclaration subclass: #DTDExternalEntityDeclaration
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DTDEntityDeclaration subclass: #DTDParameterEntityDeclaration
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Error subclass: #SAXMalformedException
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Notification subclass: #SAXWarning
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 XMLTokenizer subclass: #SAXDriver
 	instanceVariableNames: 'saxHandler'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

@@ -9,7 +9,6 @@ This package wraps the OLE StdPicture object (a useful COM object that can load 
 
 package basicPackageVersion: '6.2'.
 
-
 package classNames
 	add: #IPicture;
 	add: #IPictureDisp;
@@ -46,24 +45,24 @@ IUnknown subclass: #IPicture
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IDispatch subclass: #IPictureDisp
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 OLEStructure subclass: #PICTDESC
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_dw1 _OffsetOf_dw2 _OffsetOf_dwSize _OffsetOf_handle _OffsetOf_picType'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Image subclass: #OLEPicture
 	instanceVariableNames: 'picture extent hmExtent'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -116,6 +115,7 @@ oleLoadPicturePath: szURLOrPath punkCaller: punk dwReserved: dw clrReserved: clr
 
 	<stdcall: hresult OleLoadPicturePath lpwstr IUnknown* dword sdword guid* void**>
 	^self invalidCall: _failureCode! !
+
 !OLEAutLibrary categoriesForMethods!
 oleCreatePictureIndirect:riid:fOwn:ppvObj:!OLE Functions-OLE!public! !
 oleLoadPicture:lSize:fRunmode:riid:ppvObj:!OLE Functions-OLE!public! !

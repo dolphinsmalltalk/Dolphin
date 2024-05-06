@@ -5,10 +5,15 @@ DolphinTest subclass: #AbstractRectangleTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AbstractRectangleTest guid: (GUID fromString: '{87bd8e07-c183-4124-a098-05b9e73fbd86}')!
+
 AbstractRectangleTest isAbstract: true!
+
 AbstractRectangleTest comment: ''!
+
 !AbstractRectangleTest categoriesForClass!Unclassified! !
+
 !AbstractRectangleTest methodsFor!
 
 setUp
@@ -61,6 +66,7 @@ testTop
 
 testWidth
 	self assert: oddDesktop width equals: 1280! !
+
 !AbstractRectangleTest categoriesForMethods!
 setUp!public!Running! !
 subjectClass!constants!private! !

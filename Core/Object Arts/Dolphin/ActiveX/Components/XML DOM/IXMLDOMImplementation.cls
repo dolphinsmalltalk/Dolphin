@@ -5,11 +5,15 @@ IDispatch subclass: #IXMLDOMImplementation
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
 	classInstanceVariableNames: ''!
+
 IXMLDOMImplementation guid: (IID fromString: '{2933bf8f-7b36-11d2-b20e-00c04f983e60}')!
+
 IXMLDOMImplementation comment: '<IXMLDOMImplementation> is a wrapper class for the COM interface ''MSXML.IXMLDOMImplementation'' generated from type information in the ''Microsoft XML, version 2.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 This interface provides methods that are independent of any particular instance of the DOM. An instance of this interface can only be aquired using the #implementation method of <IXMLDOMDocument>.'!
+
 !IXMLDOMImplementation categoriesForClass!COM-Interfaces!MSXML-Interfaces! !
+
 !IXMLDOMImplementation methodsFor!
 
 hasFeature: feature version: version 
@@ -48,6 +52,7 @@ isVBCollection
 	"Answer whether the receiver is a VB style collection."
 
 	^false! !
+
 !IXMLDOMImplementation categoriesForMethods!
 hasFeature:version:!methods!public! !
 HasFeature:version:hasFeature:!**auto generated**!COM Interfaces-IXMLDOMImplementation!private! !
@@ -65,6 +70,7 @@ defineFunctions
 		defineFunction: #HasFeature:version:hasFeature:
 			argumentTypes: 'bstr bstr varbool*'
 ! !
+
 !IXMLDOMImplementation class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

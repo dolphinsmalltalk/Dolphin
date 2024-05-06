@@ -4,7 +4,6 @@ package paxVersion: 1;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
-
 package classNames
 	add: #BSTRTest;
 	add: #IDispatchTest;
@@ -40,24 +39,24 @@ DolphinTest subclass: #BSTRTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DolphinTest subclass: #IDispatchTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DolphinTest subclass: #VARIANTTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
+
 GenericExternalArrayTest subclass: #SAFEARRAYTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'Win32Errors'
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -70,6 +69,7 @@ testBSTRFromAddress
 	empty := BSTR new.
 	self assert: (BSTR fromAddress: nil) equals: empty.
 	self assert: (BSTR fromAddress: 0) equals: empty! !
+
 !ExternalAddressTest categoriesForMethods!
 testBSTRFromAddress!public!unit tests! !
 !
@@ -85,6 +85,7 @@ testComPtrs
 		parseStructArg: IDispatch
 		valueType: ExtCallArgSTRUCT
 		refType: ExtCallArgCOMPTR! !
+
 !ExternalDescriptorTest categoriesForMethods!
 testComPtrs!public!unit tests! !
 !

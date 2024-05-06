@@ -5,13 +5,17 @@ PermanentLibrary subclass: #CRTLibrary
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 CRTLibrary guid: (GUID fromString: '{87b4c58b-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 CRTLibrary comment: 'CRTLibrary is the <ExternalLibrary> class to represent the MS C run-time library, MSVCRT.DLL.
 
 The C runtime library is linked with the VM and is therefore permanently available. It provides many useful services (some of which are not wrapped at present) and is used quite extensively by the base image to avoid re-inventing the wheel and to keep the image size down.
 
 If there is a function of the C runtime library which you wish to make use of then you should add it using the existing methods as a guide. It is possible to call vararg functions, but you may need to add a number of methods with increasing numbers of arguments. Note that all the functions use the cdecl calling convention.'!
+
 !CRTLibrary categoriesForClass!External-Libraries! !
+
 !CRTLibrary methodsFor!
 
 __iscsym: aCharacter
@@ -412,6 +416,7 @@ wcsncmp: string1 string2: string2 count: count
 wcsncpy_s: strDestination bufferSize: numberOfElements strSource: strSource count: count
 	<cdecl: sdword wcsncpy_s lpvoid uintptr lpwstr uintptr>
 	^self invalidCall: _failureCode! !
+
 !CRTLibrary categoriesForMethods!
 __iscsym:!CRT functions-character classification!public! !
 __iscsymf:!CRT functions-character classification!public! !
@@ -500,6 +505,7 @@ open
 	"Answer a new instance of the receiver to represent the CRT DLL."
 
 	^(self fromHandle: VMLibrary default crtHandle) initialize! !
+
 !CRTLibrary class categoriesForMethods!
 fileName!constants!public! !
 nonblocking!accessing!public! !

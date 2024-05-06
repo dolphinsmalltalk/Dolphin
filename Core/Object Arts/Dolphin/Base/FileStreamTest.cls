@@ -5,9 +5,13 @@ AbstractFileStreamTest subclass: #FileStreamTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 FileStreamTest guid: (GUID fromString: '{773617be-f790-4ae5-9ed9-f1ea47cbf664}')!
+
 FileStreamTest comment: ''!
+
 !FileStreamTest categoriesForClass!Unclassified! !
+
 !FileStreamTest methodsFor!
 
 assertBufferEmptyOrDirty: fs 
@@ -275,6 +279,7 @@ testWritePastEnd
 	actual := filestream upToEnd.
 	expected := expected contents.
 	self assert: actual equals: expected! !
+
 !FileStreamTest categoriesForMethods!
 assertBufferEmptyOrDirty:!private!unit tests! !
 assertBufferEmptyOrDirty:size:!helpers!private! !

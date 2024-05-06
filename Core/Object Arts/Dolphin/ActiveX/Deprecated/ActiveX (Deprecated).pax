@@ -8,7 +8,6 @@ This package includes legacy classes and methods from Dolphin''s Active-X framew
 
 package basicPackageVersion: '6.0'.
 
-
 package methodNames
 	add: #BSTR -> #asUnicodeString;
 	add: #DATE -> #asDate;
@@ -35,12 +34,6 @@ package setPrerequisites: #(
 
 package!
 
-"Class Definitions"!
-
-
-"Global Aliases"!
-
-
 "Loose Methods"!
 
 !BSTR methodsFor!
@@ -48,6 +41,7 @@ package!
 asUnicodeString
 	Notification deprecated.
 	^self asUtf16String! !
+
 !BSTR categoriesForMethods!
 asUnicodeString!converting!public! !
 !
@@ -61,6 +55,7 @@ asDate
 asTimeStamp
 	Notification deprecated.
 	^self asDateAndTime asTimeStamp! !
+
 !DATE categoriesForMethods!
 asDate!converting!public! !
 asTimeStamp!accessing!public! !
@@ -75,6 +70,7 @@ max
 min
 	#deprecated.
 	^self minimum! !
+
 !DATE class categoriesForMethods!
 max!instance creation!public! !
 min!instance creation!public! !
@@ -85,6 +81,7 @@ min!instance creation!public! !
 asUnicodeString
 	Notification deprecated.
 	^self asUtf16String! !
+
 !LPBSTR categoriesForMethods!
 asUnicodeString!converting!public! !
 !
@@ -100,6 +97,7 @@ asVariant
 	"Answer the <VARIANT> representation of the receiver (a VT_DATE)."
 
 	^self asParameter asVariant! !
+
 !TimeStamp categoriesForMethods!
 asFloat!converting!public! !
 asVariant!converting!public! !
@@ -115,6 +113,7 @@ fromDATE: date
 	systime := SYSTEMTIME new.
 	OLEAutLibrary default variantTimeToSystemTime: date lpSystemTime: systime.
 	^self fromSYSTEMTIME: systime! !
+
 !TimeStamp class categoriesForMethods!
 fromDATE:!instance creation!private! !
 !

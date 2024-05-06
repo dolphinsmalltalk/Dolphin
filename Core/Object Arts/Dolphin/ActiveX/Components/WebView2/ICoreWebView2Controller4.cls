@@ -5,7 +5,9 @@ ICoreWebView2Controller3 subclass: #ICoreWebView2Controller4
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2Controller4 guid: (IID fromString: '{97d418d5-a426-4e49-a151-e1a10f327d9e}')!
+
 ICoreWebView2Controller4 comment: '`ICoreWebView2Controller4` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Controller4'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -29,7 +31,9 @@ interface ICoreWebView2Controller4 : ICoreWebView2Controller3
 };
 ```
 '!
+
 !ICoreWebView2Controller4 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2Controller4 methodsFor!
 
 get_AllowExternalDrop: value
@@ -50,6 +54,7 @@ put_AllowExternalDrop: value
 
 	<virtual stdcall: hresult 38 sdword>
 	^self invalidCall: _failureCode! !
+
 !ICoreWebView2Controller4 categoriesForMethods!
 get_AllowExternalDrop:!**auto generated**!COM Interfaces-ICoreWebView2Controller4!private! !
 put_AllowExternalDrop:!**auto generated**!COM Interfaces-ICoreWebView2Controller4!private! !
@@ -67,6 +72,7 @@ defineFunctions
 		defineFunction: #put_AllowExternalDrop:
 			argumentTypes: 'sdword'
 ! !
+
 !ICoreWebView2Controller4 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

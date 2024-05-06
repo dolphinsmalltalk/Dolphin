@@ -5,10 +5,15 @@ StdioFileStream subclass: #StdioTextFileStream
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StdioTextFileStream guid: (GUID fromString: '{8a9acce8-979d-4821-aa11-a5b4157634af}')!
+
 StdioTextFileStream isAbstract: true!
+
 StdioTextFileStream comment: ''!
+
 !StdioTextFileStream categoriesForClass!Collections-Streams! !
+
 !StdioTextFileStream methodsFor!
 
 basicPrint: anObject 
@@ -139,6 +144,7 @@ upToEnd
 	fewer than the remaining size of the file."
 
 	^self basicNextAvailable: self size - self position + 1! !
+
 !StdioTextFileStream categoriesForMethods!
 basicPrint:!printing!private! !
 cr!accessing!public! !
@@ -163,6 +169,7 @@ StdioTextFileStream methodProtocol: #writeFileStream attributes: #(#ansi #readOn
 
 encodingMode
 	^$t! !
+
 !StdioTextFileStream class categoriesForMethods!
 encodingMode!constants!private! !
 !

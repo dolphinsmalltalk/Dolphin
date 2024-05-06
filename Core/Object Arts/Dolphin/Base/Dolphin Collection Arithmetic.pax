@@ -4,7 +4,6 @@ package paxVersion: 1;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
-
 package methodNames
 	add: #Collection -> #max;
 	add: #Collection -> #sum;
@@ -21,12 +20,6 @@ package setPrerequisites: #(
 
 package!
 
-"Class Definitions"!
-
-
-"Global Aliases"!
-
-
 "Loose Methods"!
 
 !Collection methodsFor!
@@ -38,6 +31,7 @@ sum
 	| sample |
 	sample :=self anyOne.
 	^(self inject: sample into: [:sum :each | sum + each]) - sample! !
+
 !Collection categoriesForMethods!
 max!arithmetic!public! !
 sum!arithmetic!public! !

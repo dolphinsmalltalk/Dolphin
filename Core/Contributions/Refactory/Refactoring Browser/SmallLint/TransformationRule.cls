@@ -5,7 +5,9 @@ LintRule subclass: #TransformationRule
 	classVariableNames: 'RecursiveSelfRule'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TransformationRule guid: (GUID fromString: '{9864c788-a659-4ced-8264-c32a2b4327ec}')!
+
 TransformationRule comment: 'TransformationRule is a LintRule that transforms code using rewrite rules.
 
 Instance Variables:
@@ -17,7 +19,9 @@ Class Variables:
 	RecursiveSelfRule	<ParseTreeSearcher>	a rule that checks our rewrites so we don''t make directly recursive methods (e.g., "foo ^self foo")
 
 '!
+
 !TransformationRule categoriesForClass!Refactory-Lint! !
+
 !TransformationRule methodsFor!
 
 changes
@@ -71,6 +75,7 @@ viewResults
 
 	changes inspect.
 	self resetResult! !
+
 !TransformationRule categoriesForMethods!
 changes!accessing!public! !
 checkMethod:!accessing!public! !
@@ -401,6 +406,7 @@ unwindBlocks
 				"->"	'^[| `@temps | ``@.Statements. ``@object] ifCurtailed: ``@block'))
 		methods: false
 		name: 'Move assignment out of ensure: blocks'! !
+
 !TransformationRule class categoriesForMethods!
 assignmentInIfTrue!public!transformations! !
 atIfAbsent!public!transformations! !

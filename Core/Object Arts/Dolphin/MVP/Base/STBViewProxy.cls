@@ -5,13 +5,18 @@ STBProxy subclass: #STBViewProxy
 	classVariableNames: 'CreationParentIndex CreationStyleIndex EventsIndex HandleIndex'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 STBViewProxy guid: (GUID fromString: '{87b4c6f4-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 STBViewProxy addClassConstant: 'CreationParentIndex' value: 16r2!
 STBViewProxy addClassConstant: 'CreationStyleIndex' value: 16r3!
 STBViewProxy addClassConstant: 'EventsIndex' value: 16rB!
 STBViewProxy addClassConstant: 'HandleIndex' value: 16r1!
+
 STBViewProxy comment: 'STBViewProxy is the class of <STBProxy> objects used to represent <View> instances in STB files.'!
+
 !STBViewProxy categoriesForClass!System-Binary storage! !
+
 !STBViewProxy methodsFor!
 
 beTopView
@@ -206,6 +211,7 @@ viewClass: aClass
 	"Set the class of <View> of which the receiver is representing an instance."
 
 	viewClass := aClass! !
+
 !STBViewProxy categoriesForMethods!
 beTopView!accessing!public! !
 clearSubViews!accessing!public! !
@@ -302,6 +308,7 @@ stbVersion
 	 so if you are changing this number, THINK AGAIN."
 
 	^10! !
+
 !STBViewProxy class categoriesForMethods!
 forView:!instance creation!public! !
 initialize!development!initializing!public! !

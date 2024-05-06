@@ -5,9 +5,13 @@ RefactoringTest subclass: #InlineMethodFromComponentTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 InlineMethodFromComponentTest guid: (GUID fromString: '{1acdc4a3-ec00-4058-80d6-04c846e6c6a9}')!
+
 InlineMethodFromComponentTest comment: ''!
+
 !InlineMethodFromComponentTest categoriesForClass!Refactory-Testing! !
+
 !InlineMethodFromComponentTest methodsFor!
 
 testInlineComponentIntoCascadedMessage
@@ -155,6 +159,7 @@ testModelInlineMethodWithSameVariableNames2
 	self assert: ((refactoring model classNamed: #Object) parseTreeFor: #foo)
 		equals: (RBParser
 				parseMethod: 'foo | a b c | a := InlineMethodFromComponentTest new. b := 1. c := 2. ^c + b + a')! !
+
 !InlineMethodFromComponentTest categoriesForMethods!
 testInlineComponentIntoCascadedMessage!public!tests! !
 testInlineComponentMethodMax!public!tests! !

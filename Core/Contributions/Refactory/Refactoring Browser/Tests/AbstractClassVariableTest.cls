@@ -5,9 +5,13 @@ RefactoringTest subclass: #AbstractClassVariableTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AbstractClassVariableTest guid: (GUID fromString: '{38fd1ddb-aa95-40b7-80bb-c8a7ea9dcd59}')!
+
 AbstractClassVariableTest comment: ''!
+
 !AbstractClassVariableTest categoriesForClass!Refactory-Testing! !
+
 !AbstractClassVariableTest methodsFor!
 
 setUp
@@ -109,6 +113,7 @@ testModelAbstractClassVariableOverridenMethodsInSubclass
 testNonExistantName
 	self shouldFail: (AbstractClassVariableRefactoring variable: #Foo
 				class: BasicLintRuleTest)! !
+
 !AbstractClassVariableTest categoriesForMethods!
 setUp!public!set up! !
 testAbstractClassVariable!public!tests! !

@@ -3,7 +3,6 @@ package := Package name: 'WebView2 Tests'.
 package paxVersion: 1;
 	basicComment: ''.
 
-
 package classNames
 	add: #WebView2EnvironmentOptionsTest;
 	add: #WebView2ViewTest;
@@ -35,14 +34,12 @@ DolphinTest subclass: #WebView2EnvironmentOptionsTest
 	classVariableNames: ''
 	poolDictionaries: 'WebView2Constants'
 	classInstanceVariableNames: ''!
+
 PresenterTest subclass: #WebView2ViewTest
 	instanceVariableNames: 'domContentLoaded navigationCompleted processFailed webViewReady processExitedSink webviewEnvironment processExited'
 	classVariableNames: ''
 	poolDictionaries: 'WebView2Constants'
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -50,6 +47,7 @@ PresenterTest subclass: #WebView2ViewTest
 
 correspondingTestCase
 	^WebView2ViewTest! !
+
 !WebView2View class categoriesForMethods!
 correspondingTestCase!public! !
 !

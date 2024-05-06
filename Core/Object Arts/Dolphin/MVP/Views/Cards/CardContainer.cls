@@ -5,7 +5,9 @@ AbstractCardContainer subclass: #CardContainer
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 CardContainer guid: (GUID fromString: '{87b4c71c-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 CardContainer comment: 'A CardContainer is a <cardView> that allows each of its cards (sub-views) to appear with named tabs. The tab names are specified by the #arrangement aspects of the sub-views and appear in the z-order maintained by the container. The CardContainer uses a TabView to provide the name tabs.
 
 Typically a CardContainer will be used for tab-style property pages within a dialog. For another example, the Categories/Protocols/Variables pane in the Class Hierarchy Browser is implemented using a CardContainer.
@@ -14,7 +16,9 @@ Instance Variables:
 	tabs	<TabView> holding the name tabs.
 
 '!
+
 !CardContainer categoriesForClass!MVP-Views! !
+
 !CardContainer methodsFor!
 
 arrangementOf: aView put: anObject 
@@ -356,6 +360,7 @@ wmPrint: message wParam: wParam lParam: lParam
 		lParam: lParam.
 	canvas windowOrigin: prev.
 	^result! !
+
 !CardContainer categoriesForMethods!
 arrangementOf:put:!accessing!public! !
 backcolor:!accessing!public! !
@@ -415,6 +420,7 @@ resource_Default_view
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.CardContainer) 34 16 nil nil 34 2 8 1409286144 131073 416 nil 327686 ##(Smalltalk.Color) #default nil 5 nil nil nil 416 656710 1 ##(Smalltalk.CardLayout) 138 144 8 #() nil nil nil nil 170 192 560 nil 410 ##(Smalltalk.TabViewXP) 34 28 nil 416 34 2 8 1140916736 1 592 590662 2 ##(Smalltalk.ListModel) 138 144 560 nil 1310726 ##(Smalltalk.IdentitySearchPolicy) nil nil 1 nil nil nil 592 nil 8 1921705120 787814 3 ##(Smalltalk.BlockClosure) 0 nil 918822 ##(Smalltalk.CompiledMethod) 2 3 ##(Smalltalk.ListControlView) #defaultGetTextBlock 575230339 8 #[30 105 226 0 106] #displayString 768 7 257 nil 754 0 nil 786 2 3 ##(Smalltalk.IconicListAbstract) #defaultGetImageBlock 579598755 8 #[30 105 226 0 106] #iconImageIndex 832 7 257 nil 1049926 1 ##(Smalltalk.IconImageManager) nil nil nil nil nil #noIcons nil nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 1 1 1026 701 501 592 978 #tcmSetExtendedStyle:dwExStyle: 8 #(-1 0) 592 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 94 1 0 0 250 0 0 0] 8 #() 1026 193 193 nil 27 914 138 144 34 1 978 #createAt:extent: 34 2 1026 3839 21 1026 701 501 416 1106 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 221 8 0 0 4 1 0 0] 34 1 592 1168 nil 27 )! !
+
 !CardContainer class categoriesForMethods!
 resource_Default_view!public!resources-views! !
 !

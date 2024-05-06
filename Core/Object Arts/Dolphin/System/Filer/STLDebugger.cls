@@ -5,7 +5,9 @@ STLInFiler subclass: #STLDebugger
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 STLDebugger guid: (GUID fromString: '{2594ee50-2952-4436-bb8b-a33cafe7790e}')!
+
 STLDebugger comment: 'The <STLDebugger> is an <STLInFiler> that prints an indented trace of the contents of the STL file it is reading as it proceeds. 
 It is useful for debugging issues with serialized objects, such as tracking down the cause of excessive size of a view resource.
 
@@ -15,7 +17,9 @@ For example to view the contents of a view resource, one can proceed as follows:
 	in := (STLDebugger on: rid resource readStream).
 	in next.
 	in traceStream contents.	"Display-it"'!
+
 !STLDebugger categoriesForClass!System-Binary storage! !
+
 !STLDebugger methodsFor!
 
 basicNext
@@ -185,6 +189,7 @@ traceStream
 
 traceStream: aPuttableStream 
 	traceStream := aPuttableStream! !
+
 !STLDebugger categoriesForMethods!
 basicNext!accessing!private! !
 initialize!initializing!private! !

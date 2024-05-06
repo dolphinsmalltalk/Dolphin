@@ -5,9 +5,13 @@ ScalarField subclass: #BYTEField
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 BYTEField guid: (GUID fromString: '{87b4c4e7-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 BYTEField comment: '<BYTEField> is a <ScalarField> class to represent <ExternalStructure> fields that are 8-bit unsigned integers.'!
+
 !BYTEField categoriesForClass!External-Data-Types! !
+
 !BYTEField methodsFor!
 
 accessorMessage
@@ -26,6 +30,7 @@ writeInto: anExternalStructure value: anInteger
 	anExternalStructure, at the receiver's offset."
 
 	^anExternalStructure bytes byteAtOffset: offset put: anInteger! !
+
 !BYTEField categoriesForMethods!
 accessorMessage!initializing!private! !
 readFrom:!indirect accessing!private! !
@@ -38,6 +43,7 @@ byteSize
 	"Private - Answer the size of the field type the receiver represents in bytes."
 
 	^1! !
+
 !BYTEField class categoriesForMethods!
 byteSize!constants!private! !
 !

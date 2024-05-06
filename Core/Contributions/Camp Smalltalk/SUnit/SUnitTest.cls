@@ -5,9 +5,13 @@ TestCase subclass: #SUnitTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SUnitTest guid: (GUID fromString: '{5e96793e-0810-11d4-a876-0050da643bf9}')!
+
 SUnitTest comment: ''!
+
 !SUnitTest categoriesForClass!SUnitTests! !
+
 !SUnitTest methodsFor!
 
 assertForTestResult: aResult runCount: aRunCount passed: aPassedCount failed: aFailureCount errors: anErrorCount skipped: anInteger
@@ -153,6 +157,7 @@ testSuite
 		failed: 1
 		errors: 1
 		skipped: 0! !
+
 !SUnitTest categoriesForMethods!
 assertForTestResult:runCount:passed:failed:errors:skipped:!helpers!public! !
 error!helpers!private! !
@@ -185,6 +190,7 @@ shouldInheritSelectors
 	"answer true to inherit selectors from superclasses"
 
 	^false! !
+
 !SUnitTest class categoriesForMethods!
 shouldInheritSelectors!public!Testing! !
 !

@@ -50,14 +50,12 @@ SequenceableCollection subclass: #DroppedFilesList
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalLibrary subclass: #ShellLibrary
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ShellConstants Win32Constants'
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -67,6 +65,7 @@ documentsDirectory
 	"Answer the path of the Windows 'My Documents' directory on the host computer for the current user."
 
 	^ShellLibrary default getSpecialFolderLocation: ShellConstants.CSIDL_PERSONAL! !
+
 !SessionManager categoriesForMethods!
 documentsDirectory!accessing!public! !
 !
@@ -80,6 +79,7 @@ wmDropFiles: msgInteger wParam: wParamInteger lParam: lParamInteger
 	| files |
 	files := DroppedFilesList fromHandle: wParamInteger asExternalHandle.
 	self presenter trigger: #dropFiles: with: files! !
+
 !View categoriesForMethods!
 acceptDroppedFiles:!public! !
 wmDropFiles:wParam:lParam:!public! !
@@ -95,6 +95,7 @@ shellMessageMappings
 
 unregisterShellMessages
 	self unregisterMessageMappings: {WM_DROPFILES}! !
+
 !View class categoriesForMethods!
 registerShellMessages!development!initializing!public! !
 shellMessageMappings!constants!must not strip!private! !

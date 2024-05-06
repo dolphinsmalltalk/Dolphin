@@ -7,7 +7,6 @@ Copyright (c) Object Arts Ltd. 1997-2005. Portions Copyright (c) CGI Group (Euro
 
 package basicPackageVersion: '6.0'.
 
-
 package classNames
 	add: #ColorPresenter;
 	add: #ColorView;
@@ -35,16 +34,12 @@ ValuePresenter subclass: #ColorPresenter
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StaticView subclass: #ColorView
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

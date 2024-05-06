@@ -5,12 +5,16 @@ StMessageNode subclass: #RBPatternMessageNode
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RBPatternMessageNode guid: (GUID fromString: '{880ff09f-aa85-4f4d-bd3e-0416f929352d}')!
+
 RBPatternMessageNode comment: 'RBPatternMessageNode is an RBMessageNode that will match other message nodes without their selectors being equal. 
 
 Instance Variables:
 	isList	<Boolean>	are we matching each keyword or matching all keywords together (e.g., `keyword1: would match a one argument method whereas `@keywords: would match 0 or more arguments)'!
+
 !RBPatternMessageNode categoriesForClass!Refactory-Parser! !
+
 !RBPatternMessageNode methodsFor!
 
 copyInContext: aDictionary
@@ -102,6 +106,7 @@ sentMessages
 	^(super sentMessages)
 		remove: self selector ifAbsent: [];
 		yourself! !
+
 !RBPatternMessageNode categoriesForMethods!
 copyInContext:!matching!public! !
 isList!public!testing/matching! !
@@ -129,6 +134,7 @@ receiver: aValueNode selectorParts: keywordTokens arguments: valueNodes
 				receiver: aValueNode
 				selectorParts: keywordTokens
 				arguments: valueNodes]! !
+
 !RBPatternMessageNode class categoriesForMethods!
 receiver:selectorParts:arguments:!instance creation!public! !
 !

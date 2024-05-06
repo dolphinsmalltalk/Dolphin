@@ -5,9 +5,13 @@ DolphinTest subclass: #BehaviorTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 BehaviorTest guid: (GUID fromString: '{157f8981-4d21-430b-bbec-c8b53e6a6f56}')!
+
 BehaviorTest comment: ''!
+
 !BehaviorTest categoriesForClass!Unclassified! !
+
 !BehaviorTest methodsFor!
 
 testHasAbstractMethods
@@ -62,6 +66,7 @@ testWhichMethodsOnlySelfSend
 		equals: #(#returnSendSelfSpecial).
 	self assert: ((subject whichMethodsOnlySelfSend: #value) collect: [:each | each selector]) asArray
 		equals: #(#sendSelfSpecial)! !
+
 !BehaviorTest categoriesForMethods!
 testHasAbstractMethods!public! !
 testIsAbstract!public! !
@@ -74,6 +79,7 @@ testWhichMethodsOnlySelfSend!public! !
 
 resources
 	^{BehaviorTestClasses}! !
+
 !BehaviorTest class categoriesForMethods!
 resources!Accessing!public! !
 !

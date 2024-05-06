@@ -14,7 +14,6 @@ The editor shows how to instruct the component to compile and evaluate script. F
 
 package basicPackageVersion: '6.0'.
 
-
 package classNames
 	add: #ActiveXScriptlet;
 	add: #IScriptControl;
@@ -64,46 +63,48 @@ Object subclass: #ActiveXScriptlet
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IDispatch subclass: #IScriptControl
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSScriptControlConstants'
 	classInstanceVariableNames: ''!
+
 IDispatch subclass: #IScriptError
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSScriptControlConstants'
 	classInstanceVariableNames: ''!
+
 IDispatch subclass: #IScriptModule
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSScriptControlConstants'
 	classInstanceVariableNames: ''!
+
 IDispatch subclass: #IScriptModuleCollection
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSScriptControlConstants'
 	classInstanceVariableNames: ''!
+
 IDispatch subclass: #IScriptProcedure
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSScriptControlConstants'
 	classInstanceVariableNames: ''!
+
 IDispatch subclass: #IScriptProcedureCollection
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MSScriptControlConstants'
 	classInstanceVariableNames: ''!
+
 Dialog subclass: #SimpleAXScriptEditor
 	instanceVariableNames: 'scriptControl languagePresenter scriptPresenter expressionPresenter resultPresenter filename descriptionPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

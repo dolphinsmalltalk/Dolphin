@@ -19,7 +19,6 @@ The parser remains compatible with the RBParser, and so can be used in conjuncti
 
 package basicPackageVersion: '7.0'.
 
-
 package classNames
 	add: #PatternBlockToken;
 	add: #SmalltalkParser;
@@ -96,229 +95,270 @@ Object subclass: #SmalltalkParser
 	classVariableNames: 'AllowEmptyStatements'
 	poolDictionaries: 'ExtCallArgTypes SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
+
 Object subclass: #SmalltalkScanner
 	instanceVariableNames: 'stream buffer tokenStart currentCharacter characterType comments line errorHandler environment'
 	classVariableNames: 'ClassificationTable EscapeChars PatternVariableCharacter'
 	poolDictionaries: 'SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
+
 Object subclass: #StParseNodeVisitor
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #StProgramNode
 	instanceVariableNames: 'parent comments'
 	classVariableNames: 'FormatterClass InlinedBlockSelectors OptimizedSelectors SuperSearch'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #StToken
 	instanceVariableNames: 'start comments'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StProgramNode subclass: #StExternalArgTypeNode
 	instanceVariableNames: 'typeOrdinal structClass indirections start stop'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StProgramNode subclass: #StMethodNode
 	instanceVariableNames: 'selector selectorParts body source arguments tag replacements nodeReplacements methodClass'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StProgramNode subclass: #StReturnNode
 	instanceVariableNames: 'return value'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StProgramNode subclass: #StSequenceNode
 	instanceVariableNames: 'leftBar rightBar statements periods temporaries'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StProgramNode subclass: #StTagNode
 	instanceVariableNames: 'start stop'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StProgramNode subclass: #StValueNode
 	instanceVariableNames: 'parentheses'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StTagNode subclass: #StAnnotationNode
 	instanceVariableNames: 'selector'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StTagNode subclass: #StExternalCallNode
 	instanceVariableNames: 'nameOrOrdinal returnType argumentTypes flags callingConvention'
 	classVariableNames: 'OverlappedMask VirtualMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StTagNode subclass: #StPrimitiveNode
 	instanceVariableNames: 'primitiveIndex errorTemp'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StValueNode subclass: #StAbstractVariableNode
 	instanceVariableNames: 'start variable'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StValueNode subclass: #StAssignmentNode
 	instanceVariableNames: 'variable assignment value'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StValueNode subclass: #StBlockNode
 	instanceVariableNames: 'left right colons body arguments bar'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StValueNode subclass: #StBraceArrayNode
 	instanceVariableNames: 'left statements periods right'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StValueNode subclass: #StCascadeNode
 	instanceVariableNames: 'messages semicolons'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StValueNode subclass: #StLiteralNode
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StValueNode subclass: #StMessageNode
 	instanceVariableNames: 'receiver selector selectorParts arguments'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StValueNode subclass: #StOptimizedNode
 	instanceVariableNames: 'left right body value methodClass source'
 	classVariableNames: 'UnevaluatedCookie'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StAbstractVariableNode subclass: #StSpecialVariableNode
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StAbstractVariableNode subclass: #StVariableNode
 	instanceVariableNames: 'name'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StSpecialVariableNode subclass: #StSelfVariableNode
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StSpecialVariableNode subclass: #StSuperVariableNode
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StSpecialVariableNode subclass: #StThisContextVariableNode
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StVariableNode subclass: #StParameterNode
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StVariableNode subclass: #StTempDeclNode
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StLiteralNode subclass: #StLiteralArrayNode
 	instanceVariableNames: 'isByteArray stop contents start'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StLiteralNode subclass: #StLiteralValueNode
 	instanceVariableNames: 'token'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StToken subclass: #StAssignmentToken
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StToken subclass: #StEofToken
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StToken subclass: #StOptimizedToken
 	instanceVariableNames: 'stopPosition'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StToken subclass: #StValueToken
 	instanceVariableNames: 'value'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StValueToken subclass: #PatternBlockToken
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StValueToken subclass: #StBinarySelectorToken
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StValueToken subclass: #StIdentifierToken
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StValueToken subclass: #StIllegalCharacterToken
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StValueToken subclass: #StKeywordToken
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StValueToken subclass: #StLiteralArrayToken
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StValueToken subclass: #StLiteralToken
 	instanceVariableNames: 'stopPosition'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StValueToken subclass: #StSpecialCharacterToken
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StLiteralToken subclass: #StMultiKeywordLiteralToken
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StLiteralToken subclass: #StNumberLiteralToken
 	instanceVariableNames: 'source'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -328,6 +368,7 @@ parseTreeFor: aSymbol
 	^SmalltalkParser parseMethod: (self sourceCodeAt: aSymbol)
 		in: self
 		onError: [:aString :pos | ^nil]! !
+
 !Behavior categoriesForMethods!
 parseTreeFor:!public!RefactoringBrowser! !
 !
@@ -342,6 +383,7 @@ parseTreeNoError
 
 parseTreeOnError: aBlock 
 	^self subclassResponsibility! !
+
 !CompiledCode categoriesForMethods!
 parseTree!parsing!public! !
 parseTreeNoError!parsing!public! !
@@ -355,6 +397,7 @@ parseTreeOnError: aBlock
 		parseExpression: self getSource
 		in: self methodClass
 		onError: aBlock! !
+
 !CompiledExpression categoriesForMethods!
 parseTreeOnError:!parsing!public! !
 !
@@ -366,6 +409,7 @@ parseTreeOnError: aBlock
 		parseMethod: self getSource
 		in: self methodClass
 		onError: aBlock! !
+
 !CompiledMethod categoriesForMethods!
 parseTreeOnError:!parsing!public! !
 !
@@ -377,6 +421,7 @@ accessesInstVar: aString at: anInteger
 	is the instance variable of its method class with the specified <integer> index."
 
 	^self refersToVariable: aString! !
+
 !CompileFailedMethod categoriesForMethods!
 accessesInstVar:at:!development!public!testing! !
 !

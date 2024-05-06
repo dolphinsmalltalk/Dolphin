@@ -5,9 +5,13 @@ AXTypeInfoAnalyzer subclass: #AXStructureTypeAnalyzer
 	classVariableNames: 'BuiltIns'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AXStructureTypeAnalyzer guid: (GUID fromString: '{17f3ff59-eb25-47b0-8831-7e0d0960d84d}')!
+
 AXStructureTypeAnalyzer comment: ''!
+
 !AXStructureTypeAnalyzer categoriesForClass!Unclassified! !
+
 !AXStructureTypeAnalyzer methodsFor!
 
 baseClass
@@ -79,6 +83,7 @@ suggestedBinding
 	^(ExternalStructure classForGUID: id ifNone: []) 
 		ifNil: [super suggestedBinding]
 		ifNotNil: [:structClass | structClass environment associationAt: structClass name]! !
+
 !AXStructureTypeAnalyzer categoriesForMethods!
 baseClass!constants!private! !
 byteSize!accessing!public! !
@@ -96,6 +101,7 @@ suggestedBinding!accessing!private! !
 initialize
 	BuiltIns := LookupTable new.
 	(Array with: ExternalHandle) do: [:each | BuiltIns at: each guid put: each]! !
+
 !AXStructureTypeAnalyzer class categoriesForMethods!
 initialize!initializing!private! !
 !

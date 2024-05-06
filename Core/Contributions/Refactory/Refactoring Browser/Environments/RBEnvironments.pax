@@ -9,7 +9,6 @@ Ported to Dolphin by Blair McGlashan and Andy Bower at Camp Smalltalk 1 in San D
 
 Browse the ''*-RB fixes'' pseudo-category to find the modifications made as part of the Dolphin port.'.
 
-
 package classNames
 	add: #AndEnvironment;
 	add: #BrowserEnvironment;
@@ -57,54 +56,60 @@ Object subclass: #BrowserEnvironment
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 BrowserEnvironment subclass: #BrowserEnvironmentWrapper
 	instanceVariableNames: 'environment progressBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 BrowserEnvironmentWrapper subclass: #AndEnvironment
 	instanceVariableNames: 'andedEnvironment'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 BrowserEnvironmentWrapper subclass: #CategoryEnvironment
 	instanceVariableNames: 'categories'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 BrowserEnvironmentWrapper subclass: #ClassEnvironment
 	instanceVariableNames: 'classes metaClasses'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 BrowserEnvironmentWrapper subclass: #NotEnvironment
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 BrowserEnvironmentWrapper subclass: #OrEnvironment
 	instanceVariableNames: 'oredEnvironment'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 BrowserEnvironmentWrapper subclass: #ProtocolEnvironment
 	instanceVariableNames: 'class protocols'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 BrowserEnvironmentWrapper subclass: #SelectorEnvironment
 	instanceVariableNames: 'classSelectors metaClassSelectors'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 BrowserEnvironmentWrapper subclass: #VariableEnvironment
 	instanceVariableNames: 'instanceVariables instanceVariableReaders instanceVariableWriters classVariables selectorCache'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -118,6 +123,7 @@ isVariableBinding
 	to #key and #value methods."
 
 	^true! !
+
 !Association categoriesForMethods!
 binding!public!testing! !
 isVariableBinding!public!testing! !
@@ -172,6 +178,7 @@ withAllSubBehaviorsDo: aMonadicValuable
 
 	aMonadicValuable value: self.
 	self allSubBehaviorsDo: aMonadicValuable! !
+
 !Behavior categoriesForMethods!
 allSubBehaviorsDo:!class hierarchy-accessing!enumerating!private! !
 allSubBehaviorsPreOrderDo:!class hierarchy-accessing!private! !
@@ -189,6 +196,7 @@ allLiterals
 
 	#rbFix. "Dolphin uses #literals"
 	^self literals! !
+
 !CompiledCode categoriesForMethods!
 allLiterals!accessing!private! !
 !
@@ -201,6 +209,7 @@ soleInstance
 	#rbFix. "Dolphin normally uses #instanceClass"
 	^instanceClass
 ! !
+
 !Metaclass categoriesForMethods!
 soleInstance!accessing!public! !
 !
@@ -218,6 +227,7 @@ isVariableBinding
 	to #key and #value methods."
 
 	^false! !
+
 !Object categoriesForMethods!
 isBehavior!public!testing! !
 isVariableBinding!public!testing! !

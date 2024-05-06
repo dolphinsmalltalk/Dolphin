@@ -5,14 +5,18 @@ BrowserEnvironmentWrapper subclass: #SelectorEnvironment
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SelectorEnvironment guid: (GUID fromString: '{d6de9b1c-4652-474b-97cd-87838c6d2f62}')!
+
 SelectorEnvironment comment: 'SelectorEnvironment represents a predetermined collection of methods to be browsed.
 
 Instance Variables:
 	classSelectors		<Dictionary key: Symbol value: (Collection of: Symbol)>	selectors for the class side
 	metaClassSelectors	<Dictionary key: Symbol value: (Collection of: Symbol)>	selectors for the metaclass side
 '!
+
 !SelectorEnvironment categoriesForClass!Refactory-Environments! !
+
 !SelectorEnvironment methodsFor!
 
 addClass: aClass 
@@ -193,6 +197,7 @@ storeOn: aStream
 	aStream nextPutAll: ') metaClasses: #('.
 	metaClassSelectors keysAndValuesDo: classBlock.
 	aStream nextPutAll: '))'! !
+
 !SelectorEnvironment categoriesForMethods!
 addClass:!adding!public! !
 addClass:selector:!adding!public! !
@@ -306,6 +311,7 @@ referencesTo: aLiteral in: aBrowserEnvironment
 		label: label;
 		searchStrings: (Array with: aLiteral printString);
 		yourself! !
+
 !SelectorEnvironment class categoriesForMethods!
 implementorsMatching:in:!instance creation!public! !
 implementorsOf:in:!instance creation!public! !

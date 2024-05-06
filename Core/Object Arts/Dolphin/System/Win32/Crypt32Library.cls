@@ -5,7 +5,9 @@ ExternalLibrary subclass: #Crypt32Library
 	classVariableNames: ''
 	poolDictionaries: 'WinCryptConstants'
 	classInstanceVariableNames: ''!
+
 Crypt32Library guid: (GUID fromString: '{02c78993-ba10-47a1-953f-63f60b7693ab}')!
+
 Crypt32Library comment: 'Crypt32Library is the <ExternalLibrary> class to represent the dynamic link library, ''Crypt32.dll''. It was generated generated from type information in the ''Win32 API'' library. It contains methods for each of the functions defined by the corresponding module in that type library.
 
 The type library contains the following helpstring for this module
@@ -13,7 +15,9 @@ The type library contains the following helpstring for this module
 
 Warning: This comment was automatically generated from the module''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.
 '!
+
 !Crypt32Library categoriesForClass!Win32-Modules! !
+
 !Crypt32Library methodsFor!
 
 cryptProtectData: pDataIn szDataDescr: szDataDescr pOptionalEntropy: pOptionalEntropy pvReserved: pvReserved pPromptStruct: pPromptStruct dwFlags: dwFlags pDataOut: pDataOut
@@ -67,6 +71,7 @@ cryptUnprotectMemory: pDataIn cbDataIn: cbDataIn dwFlags: dwFlags
 
 	<stdcall: bool CryptUnprotectMemory void* dword dword>
 	^self invalidCall: _failureCode! !
+
 !Crypt32Library categoriesForMethods!
 cryptProtectData:szDataDescr:pOptionalEntropy:pvReserved:pPromptStruct:dwFlags:pDataOut:!**auto generated**!public! !
 cryptProtectMemory:cbDataIn:dwFlags:!**auto generated**!public! !
@@ -187,6 +192,7 @@ unprotectData: aByteObject additionalEntropy: aByteArrayOrNil machineWide: aBool
 				to: size.
 	unencrypted free.
 	^answer! !
+
 !Crypt32Library class categoriesForMethods!
 example1!examples!must strip!public! !
 fileName!**auto generated**!constants!public! !

@@ -5,7 +5,9 @@ ICoreWebView2EventHandler subclass: #ICoreWebView2BasicAuthenticationRequestedEv
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2BasicAuthenticationRequestedEventHandler guid: (IID fromString: '{58b4d6c2-18d4-497e-b39b-9a96533fa278}')!
+
 ICoreWebView2BasicAuthenticationRequestedEventHandler comment: '`ICoreWebView2BasicAuthenticationRequestedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2BasicAuthenticationRequestedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -27,7 +29,9 @@ interface ICoreWebView2BasicAuthenticationRequestedEventHandler : IUnknown
 };
 ```
 '!
+
 !ICoreWebView2BasicAuthenticationRequestedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2BasicAuthenticationRequestedEventHandler methodsFor!
 
 basicRegister: tokenBuffer
@@ -35,6 +39,7 @@ basicRegister: tokenBuffer
 
 basicUnregister
 	source Remove_BasicAuthenticationRequested: token! !
+
 !ICoreWebView2BasicAuthenticationRequestedEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
@@ -58,6 +63,7 @@ eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
 	^#basicAuthenticationRequested:! !
+
 !ICoreWebView2BasicAuthenticationRequestedEventHandler class categoriesForMethods!
 argsClass!constants!public! !
 defineFunctions!**auto generated**!initializing!public! !

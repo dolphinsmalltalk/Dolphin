@@ -5,11 +5,16 @@ NMHDR subclass: #NMLVFINDITEMW
 	classVariableNames: '_OffsetOf_iStart _OffsetOf_lvfi'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 NMLVFINDITEMW guid: (GUID fromString: '{87b4c626-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 NMLVFINDITEMW addClassConstant: '_OffsetOf_iStart' value: 16rC!
 NMLVFINDITEMW addClassConstant: '_OffsetOf_lvfi' value: 16r10!
+
 NMLVFINDITEMW comment: ''!
+
 !NMLVFINDITEMW categoriesForClass!External-Data-Structured-Win32! !
+
 !NMLVFINDITEMW methodsFor!
 
 iStart
@@ -21,6 +26,7 @@ lvfi
 	"Answer the <LVFINDINFOW> value of the receiver's 'lvfi' field."
 
 	^LVFINDINFOW fromAddress: bytes yourAddress + _OffsetOf_lvfi! !
+
 !NMLVFINDITEMW categoriesForMethods!
 iStart!**compiled accessors**!public! !
 lvfi!**compiled accessors**!public! !
@@ -40,6 +46,7 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #iStart #lvfi)! !
+
 !NMLVFINDITEMW class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

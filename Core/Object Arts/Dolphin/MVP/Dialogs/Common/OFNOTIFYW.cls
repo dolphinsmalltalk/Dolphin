@@ -5,9 +5,12 @@ NMHDR subclass: #OFNOTIFYW
 	classVariableNames: '_OffsetOf_lpOFN _OffsetOf_pszFile'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 OFNOTIFYW guid: (GUID fromString: '{7255745f-1034-4d61-be74-66de1d5068aa}')!
+
 OFNOTIFYW addClassConstant: '_OffsetOf_lpOFN' value: 16rC!
 OFNOTIFYW addClassConstant: '_OffsetOf_pszFile' value: 16r10!
+
 OFNOTIFYW comment: '<OFNOTIFY> is an <ExternalStructure> class to wrap the struct ''Win32.OFNOTIFY'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -23,7 +26,9 @@ struct tagOFNOTIFY {
 	[helpstring("May be NULL")] LPSTR pszFile;
 } OFNOTIFY;
 '!
+
 !OFNOTIFYW categoriesForClass!Win32-Structs! !
+
 !OFNOTIFYW methodsFor!
 
 lpOFN
@@ -35,6 +40,7 @@ pszFile
 	"Answer the <Utf16String> value of the receiver's 'pszFile' field."
 
 	^Utf16String fromAddress: (bytes intPtrAtOffset: _OffsetOf_pszFile)! !
+
 !OFNOTIFYW categoriesForMethods!
 lpOFN!**compiled accessors**!public! !
 pszFile!**compiled accessors**!public! !
@@ -62,6 +68,7 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #lpOFN #pszFile)! !
+
 !OFNOTIFYW class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

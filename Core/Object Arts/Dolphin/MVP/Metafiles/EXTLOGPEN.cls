@@ -5,7 +5,9 @@ ExternalStructure subclass: #EXTLOGPEN
 	classVariableNames: '_OffsetOf_elpBrushStyle _OffsetOf_elpColor _OffsetOf_elpHatch _OffsetOf_elpNumEntries _OffsetOf_elpPenStyle _OffsetOf_elpStyleEntry _OffsetOf_elpWidth'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 EXTLOGPEN guid: (GUID fromString: '{bfe902f1-81d2-4e1d-a5e3-1d0c3cef97e6}')!
+
 EXTLOGPEN addClassConstant: '_OffsetOf_elpBrushStyle' value: 16r8!
 EXTLOGPEN addClassConstant: '_OffsetOf_elpColor' value: 16rC!
 EXTLOGPEN addClassConstant: '_OffsetOf_elpHatch' value: 16r10!
@@ -13,6 +15,7 @@ EXTLOGPEN addClassConstant: '_OffsetOf_elpNumEntries' value: 16r14!
 EXTLOGPEN addClassConstant: '_OffsetOf_elpPenStyle' value: 16r0!
 EXTLOGPEN addClassConstant: '_OffsetOf_elpStyleEntry' value: 16r18!
 EXTLOGPEN addClassConstant: '_OffsetOf_elpWidth' value: 16r4!
+
 EXTLOGPEN comment: '<EXTLOGPEN> is an <ExternalStructure> class to wrap the struct ''Win32.EXTLOGPEN'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -32,7 +35,9 @@ struct tagEXTLOGPEN {
 	DWORD* elpStyleEntry;
 } EXTLOGPEN;
 '!
+
 !EXTLOGPEN categoriesForClass!Win32-Structs! !
+
 !EXTLOGPEN methodsFor!
 
 elpBrushStyle
@@ -111,6 +116,7 @@ elpWidth: anInteger
 	"Set the receiver's 'elpWidth' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_elpWidth put: anInteger! !
+
 !EXTLOGPEN categoriesForMethods!
 elpBrushStyle!**compiled accessors**!public! !
 elpBrushStyle:!**compiled accessors**!public! !
@@ -173,6 +179,7 @@ defineFields
 
 getFieldNames
 	^#(#elpPenStyle #elpWidth #elpBrushStyle #elpColor #elpHatch #elpNumEntries #elpStyleEntry)! !
+
 !EXTLOGPEN class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

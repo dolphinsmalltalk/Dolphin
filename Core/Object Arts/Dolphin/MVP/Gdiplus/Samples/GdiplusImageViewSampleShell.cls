@@ -5,7 +5,9 @@ Shell subclass: #GdiplusImageViewSampleShell
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusImageViewSampleShell guid: (GUID fromString: '{8645634f-e895-424a-a4c8-4db4afb9647e}')!
+
 GdiplusImageViewSampleShell comment: 'GdiplusImageViewSampleShell
 
 Evaluate
@@ -22,7 +24,9 @@ Instance Variables:
 	filename			<String>
 
 '!
+
 !GdiplusImageViewSampleShell categoriesForClass!MVP-Presenters! !
+
 !GdiplusImageViewSampleShell methodsFor!
 
 attemptDisplayOABitmap
@@ -99,6 +103,7 @@ useImageClass
 useImageClass: aClass
 	useImageClass := aClass.
 	self displayImage! !
+
 !GdiplusImageViewSampleShell categoriesForMethods!
 attemptDisplayOABitmap!operations!public! !
 beachBallBytes!accessing!public! !
@@ -140,6 +145,7 @@ resource_Default_view
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ShellView) 34 27 nil nil 8 #(13565952 65536) 416 nil 327686 ##(Smalltalk.Color) #face3d 328198 ##(Smalltalk.Point) 1021 721 549 nil nil nil 416 852230 ##(Smalltalk.FramingLayout) 170 176 34 4 410 ##(Smalltalk.ContainerView) 34 15 nil 416 34 2 8 1140850688 131073 592 nil 480 nil 7 nil nil nil 592 788230 ##(Smalltalk.BorderLayout) 1 1 nil nil nil nil 410 ##(Smalltalk.GdiplusImageView) 34 28 nil 592 34 2 8 1140850944 1 688 721990 2 ##(Smalltalk.ValueHolder) nil false 1310726 ##(Smalltalk.EqualitySearchPolicy) nil 480 nil 7 nil nil nil 688 nil 8 4294903833 852486 ##(Smalltalk.NullConverter) nil nil nil nil #normal 3 590342 ##(Smalltalk.Rectangle) 498 1 1 498 1 1 nil #default #none nil nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 498 21 21 498 949 263 688 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 10 0 0 0 10 0 0 0 228 1 0 0 141 0 0 0] 8 #() 498 193 193 nil 29 170 192 34 2 688 8 'image' 866 498 21 21 498 21 21 930 138 144 34 1 994 #createAt:extent: 34 2 498 1 301 498 989 303 592 1074 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 150 0 0 0 238 1 0 0 45 1 0 0] 34 1 688 1136 nil 27 1181766 2 ##(Smalltalk.FramingConstraints) 1180678 ##(Smalltalk.FramingCalculation) #fixedParentLeft 1 1442 #fixedParentRight 1 1442 #fixedPreviousBottom 1 1442 #fixedParentBottom 1 410 ##(Smalltalk.ContainerView) 34 15 nil 416 34 2 8 1140850688 131073 1520 nil 480 nil 7 nil nil nil 1520 nil 170 192 34 10 410 ##(Smalltalk.ListBox) 34 17 nil 1520 34 2 8 1144062209 1025 1616 590662 2 ##(Smalltalk.ListModel) 138 144 8 #() nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 466 #default nil 7 nil nil nil 1616 nil 8 1903732064 ##(Smalltalk.BasicListAbstract) 1728 false 930 138 144 34 2 994 #createAt:extent: 34 2 498 411 11 498 181 221 1616 994 #horizontalExtent: 8 #(0) 1616 1074 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 205 0 0 0 5 0 0 0 39 1 0 0 115 0 0 0] 8 #() 1136 nil 27 8 'interpolationChoice' 410 ##(Smalltalk.ListBox) 34 17 nil 1520 34 2 8 1144062209 1025 2016 1682 138 144 1728 nil 1760 1776 nil 7 nil nil nil 2016 nil 8 1903732064 ##(Smalltalk.BasicListAbstract) 1728 false 930 138 144 34 2 994 #createAt:extent: 34 2 498 221 11 498 181 221 2016 994 #horizontalExtent: 8 #(0) 2016 1074 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 110 0 0 0 5 0 0 0 200 0 0 0 115 0 0 0] 8 #() 1136 nil 27 8 'viewChoice' 410 ##(Smalltalk.ListBox) 34 17 nil 1520 34 2 8 1144062209 1025 2336 1682 138 144 1728 nil 1760 1776 nil 7 nil nil nil 2336 nil 8 1903732064 ##(Smalltalk.BasicListAbstract) 1728 false 930 138 144 34 2 994 #createAt:extent: 34 2 498 31 11 498 181 221 2336 994 #horizontalExtent: 8 #(0) 2336 1074 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 15 0 0 0 5 0 0 0 105 0 0 0 115 0 0 0] 8 #() 1136 nil 27 8 'edgeChoice' 410 ##(Smalltalk.TextEdit) 34 16 nil 1520 34 2 8 1140924416 1025 2656 nil 1776 nil 7 nil nil nil 2656 nil 8 1903872368 852742 ##(Smalltalk.IntegerToText) nil 8 '' nil 1 930 138 144 34 1 994 #createAt:extent: 34 2 498 831 11 498 141 51 2656 1074 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 159 1 0 0 5 0 0 0 229 1 0 0 30 0 0 0] 8 #() 1136 nil 27 8 'padding' 410 ##(Smalltalk.ListBox) 34 17 nil 1520 34 2 8 1144062209 1025 2960 1682 138 144 1728 nil 1760 1776 nil 7 nil nil nil 2960 nil 8 1903732064 ##(Smalltalk.BasicListAbstract) 1728 false 930 138 144 34 2 994 #createAt:extent: 34 2 498 601 11 498 181 221 2960 994 #horizontalExtent: 8 #(0) 2960 1074 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 44 1 0 0 5 0 0 0 134 1 0 0 115 0 0 0] 8 #() 1136 nil 27 8 'classChoice' nil 930 138 144 34 1 994 #createAt:extent: 34 2 498 1 1 498 989 301 1520 1074 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 238 1 0 0 150 0 0 0] 34 5 2336 2016 2656 1616 2960 1136 nil 27 1410 1456 1 1472 1 1442 #fixedParentTop 1 1442 #fixedViewTop 301 170 192 1728 nil 461638 4 ##(Smalltalk.MenuBar) nil true 34 2 265030 4 ##(Smalltalk.Menu) nil true 34 1 984134 2 ##(Smalltalk.CommandMenuItem) 1 1180998 4 ##(Smalltalk.CommandDescription) #fileOpen 8 '&Open ...' 9375 1 nil nil nil 8 '&File' nil 1 nil nil 10499 nil nil 3554 nil true 34 1 3602 1 3634 #helpAbout 8 'About' 1 1 nil nil nil 8 'Help' nil 1 nil nil 10503 nil nil 8 '' nil 1 nil nil nil nil nil nil nil nil 1 nil nil nil nil 1 nil nil 930 138 144 34 3 994 #createAt:extent: 34 2 498 3839 21 498 1021 721 416 994 #text: 34 1 8 'GdiplusImageView Sample' 416 994 #updateMenuBar 1728 416 1074 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 125 9 0 0 114 1 0 0] 34 2 1520 592 1136 nil 27 )! !
+
 !GdiplusImageViewSampleShell class categoriesForMethods!
 aboutText!enquiries!public! !
 icon!constants!public! !

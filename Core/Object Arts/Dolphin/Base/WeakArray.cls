@@ -5,9 +5,13 @@ ArrayedCollection variableSubclass: #WeakArray
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 WeakArray guid: (GUID fromString: '{87b4c515-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 WeakArray comment: ''!
+
 !WeakArray categoriesForClass!Collections-Arrayed!Collections-Weak! !
+
 !WeakArray methodsFor!
 
 add: newElement
@@ -94,6 +98,7 @@ species
 	and #select: when applied against the receiver"
 
 	^Array! !
+
 !WeakArray categoriesForMethods!
 add:!adding!public! !
 addAnsweringIndex:!adding!public! !
@@ -112,6 +117,7 @@ new: anInteger
 	The new instance is registered with the memory manager as a weakling"
 
 	^(super new: anInteger) initialize! !
+
 !WeakArray class categoriesForMethods!
 new:!instance creation!public! !
 !

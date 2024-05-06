@@ -5,9 +5,13 @@ Font subclass: #StockFont
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StockFont guid: (GUID fromString: '{87b4c63c-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 StockFont comment: ''!
+
 !StockFont categoriesForClass!Graphics-Tools! !
+
 !StockFont methodsFor!
 
 = aFont
@@ -43,6 +47,7 @@ ownedHandle: aHandle
 	"Implementation Note: Stock objects should never be free'd"
 
 	self handle: aHandle! !
+
 !StockFont categoriesForMethods!
 =!comparing!public! !
 createHandle!private!realizing/unrealizing! !
@@ -61,6 +66,7 @@ fromId: anInteger
 		ownsHandle: false;
 		id: anInteger;
 		yourself! !
+
 !StockFont class categoriesForMethods!
 fromId:!instance creation!public! !
 !

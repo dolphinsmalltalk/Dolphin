@@ -5,12 +5,17 @@ IUnknown subclass: #IPersist
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IPersist guid: (IID fromString: '{0000010c-0000-0000-c000-000000000046}')!
+
 IPersist isAbstract: true!
+
 IPersist comment: '<IPersist> is a wrapper class for the custom interface ''OBJIDL.IPersist'' generated from type information in the ''ObjIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 IPersist is at the root of the COM persistance interface hierarchy. The single behaviour provided is an accessor to get the CLSID of the implementing object. Subclasses add the ability to persist to/from ole streams (IPersistStream[Init]), structured storages (IPersistStorage), property bags (IPersistPropertyBag[2]), files (IPersistFile), or a fixed size memory block (IPersistMemory). All of these subinterfaces have some form or Save and Load methods for pickling and reconstituting the implementing COM object.'!
+
 !IPersist categoriesForClass!COM-Interfaces! !
+
 !IPersist methodsFor!
 
 clsid
@@ -45,6 +50,7 @@ IsDirty
 	"Private - Invoke the IsDirty() method of the COM object wrapped by the receiver."
 
 	^self subclassResponsibility! !
+
 !IPersist categoriesForMethods!
 clsid!accessing!public! !
 GetClassID:!**auto generated**!COM Interfaces-OBJIDL.IPersist!primitives!public! !
@@ -65,6 +71,7 @@ defineFunctions
 		defineFunction: #GetClassID:
 			argumentTypes: 'GUID*'
 ! !
+
 !IPersist class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

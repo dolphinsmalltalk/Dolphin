@@ -5,7 +5,9 @@ PointerField subclass: #ArrayPointerField
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ArrayPointerField guid: (GUID fromString: '{87b4c4e3-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 ArrayPointerField comment: 'ArrayPointerField is an <ExternalField> type to represent <ExternalStructure> fields which are pointers to external fixed arrays.
 
 Instance Variables:
@@ -13,7 +15,9 @@ Instance Variables:
 
 
 '!
+
 !ArrayPointerField categoriesForClass!External-Data-Types! !
+
 !ArrayPointerField methodsFor!
 
 arrayLength: sizeObject
@@ -47,6 +51,7 @@ writeInto: anExternalStructure value: anObject
 		of: self
 		in: anExternalStructure.
 	^answer! !
+
 !ArrayPointerField categoriesForMethods!
 arrayLength:!accessing!private! !
 readFrom:!accessing!private! !
@@ -69,6 +74,7 @@ type: aClass length: anInteger
 	pointers to arrays objects of type aClass, of the specified fixed <integer> length."
 
 	^self type: aClass arrayLength: (FixedArrayFieldLength elementCount: anInteger)! !
+
 !ArrayPointerField class categoriesForMethods!
 type:arrayLength:!instance creation!public! !
 type:length:!instance creation!public! !

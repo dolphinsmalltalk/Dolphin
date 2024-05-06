@@ -5,9 +5,13 @@ AbstractParserErrorTest subclass: #CompilerErrorTest
 	classVariableNames: ''
 	poolDictionaries: 'CompilerFlags'
 	classInstanceVariableNames: ''!
+
 CompilerErrorTest guid: (GUID fromString: '{46595911-e729-41d5-92f4-57241cf25eac}')!
+
 CompilerErrorTest comment: ''!
+
 !CompilerErrorTest categoriesForClass!Unclassified! !
+
 !CompilerErrorTest methodsFor!
 
 compilationErrorClass
@@ -169,6 +173,7 @@ writtenNotReadRange: aString
 	| start |
 	start := aString indexOf: $_.
 	^start to: start + 3! !
+
 !CompilerErrorTest categoriesForMethods!
 compilationErrorClass!constants!private! !
 compilationWarningClass!constants!private! !

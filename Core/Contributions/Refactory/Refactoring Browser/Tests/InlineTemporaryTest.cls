@@ -5,9 +5,13 @@ RefactoringTest subclass: #InlineTemporaryTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 InlineTemporaryTest guid: (GUID fromString: '{241fc5f5-5254-43d6-a840-dcd08c4e6b21}')!
+
 InlineTemporaryTest comment: ''!
+
 !InlineTemporaryTest categoriesForClass!Refactory-Testing! !
+
 !InlineTemporaryTest methodsFor!
 
 testInlineTemporary
@@ -45,6 +49,7 @@ testInlineTemporaryReadBeforeWritten
 						for: (RefactoryTestDataApp sourceCodeAt: #inlineTemporary))
 				from: #inlineTemporary
 				in: RefactoryTestDataApp)! !
+
 !InlineTemporaryTest categoriesForMethods!
 testInlineTemporary!public!tests! !
 testInlineTemporaryBadInterval!public!tests! !

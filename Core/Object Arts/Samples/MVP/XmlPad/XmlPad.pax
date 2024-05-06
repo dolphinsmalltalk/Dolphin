@@ -88,19 +88,18 @@ TextDocument subclass: #XmlPad
 	classVariableNames: 'RememberPlacementMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RuntimeSessionManager subclass: #XmlPadSessionManager
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 XmlDomVisitor subclass: #XmlFormatter
 	instanceVariableNames: 'stream indent line newlineNeeded'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -108,6 +107,7 @@ XmlDomVisitor subclass: #XmlFormatter
 
 formatAsText
 	^false! !
+
 !IXMLDOMComment categoriesForMethods!
 formatAsText!public! !
 !
@@ -116,6 +116,7 @@ formatAsText!public! !
 
 formatAsText
 	^true! !
+
 !IXMLDOMEntityReference categoriesForMethods!
 formatAsText!public! !
 !
@@ -124,6 +125,7 @@ formatAsText!public! !
 
 formatAsText
 	^self isText! !
+
 !IXMLDOMNode categoriesForMethods!
 formatAsText!public! !
 !

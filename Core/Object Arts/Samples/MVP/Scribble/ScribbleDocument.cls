@@ -5,11 +5,15 @@ AbstractDocumentShell subclass: #ScribbleDocument
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ScribbleDocument guid: (GUID fromString: '{a1f145eb-f943-4ade-84a5-0274e1390a5b}')!
+
 ScribbleDocument comment: '`ScribbleDocument` is a very simple example of a non-text DocumentShell.
 
 Most of the code associated with storing, capturing and displaying scribbles is in the MVP triad of `ListModel`, `Scribble`, and `ScribbleView`. This document class just adds the ability to save and load scribbles to and from files using the STB binary filer to serialized the model.'!
+
 !ScribbleDocument categoriesForClass!MVP-Presenters! !
+
 !ScribbleDocument methodsFor!
 
 createComponents
@@ -54,6 +58,7 @@ streamOut: aStream
 	"Private - Stream the receiver's model out to aStream"
 
 	self getDocumentData binaryStoreOn: aStream! !
+
 !ScribbleDocument categoriesForMethods!
 createComponents!initializing!public! !
 fileNew!commands!public! !
@@ -105,6 +110,7 @@ shutdownOnExit
 	"Answer whether a runtime session should be shutdown when an instance of the receiver is closed."
 
 	^true! !
+
 !ScribbleDocument class categoriesForMethods!
 defaultFileExtension!constants!public! !
 defaultModel!models!public! !

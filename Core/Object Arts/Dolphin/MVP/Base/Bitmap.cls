@@ -5,7 +5,9 @@ Image subclass: #Bitmap
 	classVariableNames: 'IsSharedMask Map3DColorsMask SharedBitmaps'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Bitmap guid: (GUID fromString: '{87b4c63d-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Bitmap comment: 'Bitmap is the class of <Image>s that represent Windows'' device-dependent Bitmaps.
 
 Instance Variables:
@@ -19,7 +21,9 @@ Class Variables:
 	IsSharedMask		<integer>
 
 '!
+
 !Bitmap categoriesForClass!Graphics-Tools! !
+
 !Bitmap methodsFor!
 
 addToImageList: aWinImageList mask: aColorOrNil
@@ -529,6 +533,7 @@ stbFixup: anSTBInFiler at: newObjectIndex
 			[answer := self asSharedCopy.
 			anSTBInFiler fixup: newObjectIndex to: answer].
 	^answer! !
+
 !Bitmap categoriesForMethods!
 addToImageList:mask:!double dispatch!private! !
 alphaBlendOn:at:!drawing-bitmaps!public! !
@@ -726,6 +731,7 @@ width: widthInteger height: heightInteger planes: planesInteger bitsPerPixel: bp
 				cPlanes: planesInteger
 				cBitsPerPel: bpsInteger
 				lpvBits: anExternalAddressOrNil)! !
+
 !Bitmap class categoriesForMethods!
 compatible:extent:!instance creation!public! !
 compatible:width:height:!instance creation!public! !

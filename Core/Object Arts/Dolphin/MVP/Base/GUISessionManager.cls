@@ -5,9 +5,12 @@ SessionManager subclass: #GUISessionManager
 	classVariableNames: 'NoSplashMask UnattendedMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GUISessionManager guid: (GUID fromString: '{81bc839c-bcd6-4502-a491-418ed5a109e6}')!
+
 GUISessionManager addClassConstant: 'NoSplashMask' value: 16r2!
 GUISessionManager addClassConstant: 'UnattendedMask' value: 16r4!
+
 GUISessionManager comment: 'GUISessionManager is the class of <SessionManager>s used to manage the life-cycle of a graphical (as opposed to command line, or console) application.
 
 Note that Dolphin GUI applications can access the console and standard I/O streams, but a separate console window will be opened.
@@ -16,7 +19,9 @@ Instance Variables:
 	savedWindows	<UndefinedObject>, or <Array> of <ViewState>. Saved state of open windows (image save/load)
 
 '!
+
 !GUISessionManager categoriesForClass!System-Support! !
+
 !GUISessionManager methodsFor!
 
 allocConsole
@@ -182,6 +187,7 @@ windowSystemStartup
 	env := self class environment.
 	#(#Canvas #GraphicsTool #Clipboard #View #ToolbarIconButton #Command) 
 		do: [:s | env at: s ifPresent: [:c | c onStartup]]! !
+
 !GUISessionManager categoriesForMethods!
 allocConsole!operations!private! !
 basicShutdown!operations-shutdown!private! !
@@ -219,6 +225,7 @@ isConsoleApplication
 	(as opposed to a GUI application, which is a completely separate thing under Windows)."
 
 	^false! !
+
 !GUISessionManager class categoriesForMethods!
 icon!constants!development!public! !
 isConsoleApplication!public!testing! !

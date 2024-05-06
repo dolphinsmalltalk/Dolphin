@@ -5,9 +5,12 @@ ExternalStructure subclass: #IP_UNIDIRECTIONAL_ADAPTER_ADDRESS
 	classVariableNames: '_OffsetOf_Address _OffsetOf_NumAdapters'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IP_UNIDIRECTIONAL_ADAPTER_ADDRESS guid: (GUID fromString: '{7f8b1ec9-1399-47a6-94be-768366dac0dc}')!
+
 IP_UNIDIRECTIONAL_ADAPTER_ADDRESS addClassConstant: '_OffsetOf_Address' value: 16r4!
 IP_UNIDIRECTIONAL_ADAPTER_ADDRESS addClassConstant: '_OffsetOf_NumAdapters' value: 16r0!
+
 IP_UNIDIRECTIONAL_ADAPTER_ADDRESS comment: '<IP_UNIDIRECTIONAL_ADAPTER_ADDRESS> is an <ExternalStructure> class to wrap the struct ''Win32.IP_UNIDIRECTIONAL_ADAPTER_ADDRESS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -22,7 +25,9 @@ struct tagIP_UNIDIRECTIONAL_ADAPTER_ADDRESS {
 	unsigned long Address[1];
 } IP_UNIDIRECTIONAL_ADAPTER_ADDRESS;
 '!
+
 !IP_UNIDIRECTIONAL_ADAPTER_ADDRESS categoriesForClass!Win32-Structs! !
+
 !IP_UNIDIRECTIONAL_ADAPTER_ADDRESS methodsFor!
 
 Address
@@ -45,6 +50,7 @@ NumAdapters
 	"Answer the <Integer> value of the receiver's 'NumAdapters' field."
 
 	^bytes dwordAtOffset: _OffsetOf_NumAdapters! !
+
 !IP_UNIDIRECTIONAL_ADAPTER_ADDRESS categoriesForMethods!
 Address!**compiled accessors**!public! !
 Address:!**compiled accessors**!public! !
@@ -71,6 +77,7 @@ defineFields
 
 getFieldNames
 	^#(#NumAdapters #Address)! !
+
 !IP_UNIDIRECTIONAL_ADAPTER_ADDRESS class categoriesForMethods!
 defineFields!initializing!public! !
 getFieldNames!**compiled accessors**!constants!private! !

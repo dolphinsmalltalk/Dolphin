@@ -5,10 +5,15 @@ IUnknown subclass: #IEnumXXXX
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IEnumXXXX guid: (IID fromString: '{87b4c59f-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 IEnumXXXX isAbstract: true!
+
 IEnumXXXX comment: ''!
+
 !IEnumXXXX categoriesForClass!COM-Interfaces! !
+
 !IEnumXXXX methodsFor!
 
 batchSize
@@ -227,6 +232,7 @@ upToEndDo: operation
 	elems do: [:e | operation value: e].
 	elems size < count] 
 			whileFalse! !
+
 !IEnumXXXX categoriesForMethods!
 batchSize!constants!public! !
 Clone:!COM Interfaces-IEnumXXXX!primitives!private! !
@@ -280,6 +286,7 @@ elementClass
 
 	^self subclassResponsibility
 ! !
+
 !IEnumXXXX class categoriesForMethods!
 defineFunctions!initializing!public! !
 elementClass!constants!private! !

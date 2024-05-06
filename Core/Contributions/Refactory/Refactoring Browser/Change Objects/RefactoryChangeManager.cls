@@ -5,9 +5,13 @@ Object subclass: #RefactoryChangeManager
 	classVariableNames: 'Instance UndoSize'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoryChangeManager guid: (GUID fromString: '{5bc74f5c-1bcd-4890-ad8b-bf8a58b6df7f}')!
+
 RefactoryChangeManager comment: ''!
+
 !RefactoryChangeManager categoriesForClass!Refactory-Change Objects! !
+
 !RefactoryChangeManager methodsFor!
 
 addUndo: aRefactoringChange 
@@ -83,6 +87,7 @@ update: anAspectSymbol with: aParameter from: aSender
 	(changeType indexOfSubCollection: 'class' startingAt: 1) 
 		+ (changeType indexOfSubCollection: 'selector' startingAt: 1) > 0 
 		ifTrue: [self clearUndoRedoList]! !
+
 !RefactoryChangeManager categoriesForMethods!
 addUndo:!public!public access! !
 clearUndoRedoList!private! !
@@ -135,6 +140,7 @@ undoSize: anInteger
 
 uninitialize
 	self nuke! !
+
 !RefactoryChangeManager class categoriesForMethods!
 initialize!class initialization!public! !
 instance!instance creation!public! !

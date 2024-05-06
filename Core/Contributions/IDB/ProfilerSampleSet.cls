@@ -5,13 +5,17 @@ Object subclass: #ProfilerSampleSet
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ProfilerSampleSet guid: (GUID fromString: '{425d0eb1-542e-11d3-998b-d5ca2c3c1d61}')!
+
 ProfilerSampleSet comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
+
 !ProfilerSampleSet categoriesForClass!IDB Goodies! !
+
 !ProfilerSampleSet methodsFor!
 
 addItem: anAssociation to: aLookupTable elapsedTime: anInteger 
@@ -223,6 +227,7 @@ update
 	samplingTimeStamp := DateAndTime now.
 	samplesElapsedTime := nil.
 	self trigger: #sampleSetUpdated: with: self! !
+
 !ProfilerSampleSet categoriesForMethods!
 addItem:to:elapsedTime:!helpers!private! !
 addSample:elapsedTime:!profiling!public! !
@@ -266,6 +271,7 @@ new
 	"Should only create a new instance using #name:"
 
 	^self shouldNotImplement! !
+
 !ProfilerSampleSet class categoriesForMethods!
 icon!constants!public! !
 name:!instance creation!public! !

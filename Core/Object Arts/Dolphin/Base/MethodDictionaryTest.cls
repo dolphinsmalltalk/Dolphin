@@ -5,9 +5,13 @@ AbstractDictionaryTest subclass: #MethodDictionaryTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MethodDictionaryTest guid: (GUID fromString: '{d47df8c5-dba6-468f-8bf4-4211e21a132b}')!
+
 MethodDictionaryTest comment: ''!
+
 !MethodDictionaryTest categoriesForClass!Unclassified! !
+
 !MethodDictionaryTest methodsFor!
 
 collectionClass
@@ -55,6 +59,7 @@ testMaintainsLoadFactor
 			self assert: actualSize equals: expectedSize.
 			self assert: actualSlots / 2 <= minimumSlots.
 			self assert: actualSlots equals: expectedSlots]! !
+
 !MethodDictionaryTest categoriesForMethods!
 collectionClass!helpers!private! !
 key3Value!private! !

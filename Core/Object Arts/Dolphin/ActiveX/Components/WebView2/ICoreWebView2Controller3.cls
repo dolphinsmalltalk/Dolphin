@@ -5,7 +5,9 @@ ICoreWebView2Controller2 subclass: #ICoreWebView2Controller3
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2Controller3 guid: (IID fromString: '{f9614724-5d2b-41dc-aef7-73d62b51543b}')!
+
 ICoreWebView2Controller3 comment: '`ICoreWebView2Controller3` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Controller3'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -48,7 +50,9 @@ interface ICoreWebView2Controller3 : ICoreWebView2Controller2
 };
 ```
 '!
+
 !ICoreWebView2Controller3 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2Controller3 methodsFor!
 
 Add_RasterizationScaleChanged: eventHandler token: token
@@ -126,6 +130,7 @@ Remove_RasterizationScaleChanged: token
 
 	<virtual stdcall: hresult 34 sqword>
 	^self invalidCall: _failureCode! !
+
 !ICoreWebView2Controller3 categoriesForMethods!
 Add_RasterizationScaleChanged:token:!**auto generated**!COM Interfaces-ICoreWebView2Controller3!private! !
 get_BoundsMode:!**auto generated**!COM Interfaces-ICoreWebView2Controller3!private! !
@@ -161,6 +166,7 @@ defineFunctions
 		defineFunction: #put_BoundsMode:
 			argumentTypes: 'sdword'
 ! !
+
 !ICoreWebView2Controller3 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

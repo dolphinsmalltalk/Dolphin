@@ -5,7 +5,9 @@ ICoreWebView2EventArgs subclass: #ICoreWebView2WebResourceRequestedEventArgs
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2WebResourceRequestedEventArgs guid: (IID fromString: '{453e667f-12c7-49d4-be6d-ddbe7956f57a}')!
+
 ICoreWebView2WebResourceRequestedEventArgs comment: '`ICoreWebView2WebResourceRequestedEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2WebResourceRequestedEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -38,7 +40,9 @@ interface ICoreWebView2WebResourceRequestedEventArgs : IUnknown
 };
 ```
 '!
+
 !ICoreWebView2WebResourceRequestedEventArgs categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2WebResourceRequestedEventArgs methodsFor!
 
 get_Request: request
@@ -129,6 +133,7 @@ response: response
 	"Set the 'Response' property of the receiver to the <ICoreWebView2WebResourceResponse*> value of the argument."
 
 	self put_Response: response! !
+
 !ICoreWebView2WebResourceRequestedEventArgs categoriesForMethods!
 get_Request:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceRequestedEventArgs!private! !
 get_ResourceContext:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceRequestedEventArgs!private! !
@@ -161,6 +166,7 @@ defineFunctions
 		defineFunction: #get_ResourceContext:
 			argumentTypes: 'sdword*'
 ! !
+
 !ICoreWebView2WebResourceRequestedEventArgs class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

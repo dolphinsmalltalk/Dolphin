@@ -5,11 +5,15 @@ SessionManager subclass: #AXDllSessionManager
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AXDllSessionManager guid: (GUID fromString: '{56681788-e7fe-4454-8973-c3d801c5f034}')!
+
 AXDllSessionManager comment: 'AXDllSessionManager is the class of <SessionManager>s used to manage the life-cycle of a deployed Active-X/COM component DLL that has no GUI elements.
 
 Use this class of SessionManager when deploying your Active-X DLL if it is a non-visual component.'!
+
 !AXDllSessionManager categoriesForClass!Unclassified! !
+
 !AXDllSessionManager methodsFor!
 
 basicTertiaryStartup
@@ -51,6 +55,7 @@ unhandledException: anException
 		self quit: -1].
 	"Resume execution"
 	^anException! !
+
 !AXDllSessionManager categoriesForMethods!
 basicTertiaryStartup!operations-startup!public! !
 keepAlive!idling!public! !
@@ -81,6 +86,7 @@ isRuntime
 	(as opposed to development, or abstract)."
 
 	^true! !
+
 !AXDllSessionManager class categoriesForMethods!
 icon!constants!development!must strip!public! !
 imageExtension!constants!public! !

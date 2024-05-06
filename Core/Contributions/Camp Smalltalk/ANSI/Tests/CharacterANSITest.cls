@@ -5,9 +5,13 @@ MainTestCase subclass: #CharacterANSITest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 CharacterANSITest guid: (GUID fromString: '{bcaf0373-66ad-4e56-9524-56cd4a84e468}')!
+
 CharacterANSITest comment: ''!
+
 !CharacterANSITest categoriesForClass!Unclassified! !
+
 !CharacterANSITest methodsFor!
 
 canonicalObject
@@ -155,6 +159,7 @@ testXisUppercase
 	self value: [$: isUppercase]
 		shouldnt: [:r | r & (upperChars includes: $:)]
 		conformTo: #'Character' selector: #'isUppercase'.! !
+
 !CharacterANSITest categoriesForMethods!
 canonicalObject!public! !
 protocol!public! !

@@ -5,7 +5,9 @@ nil subclass: #Object
 	classVariableNames: '_AssertionFailureSignal _DependentsRegister _EventsRegister _PropertyRegister'
 	poolDictionaries: '_InstanceBehaviorMasks'
 	classInstanceVariableNames: ''!
+
 Object guid: (GUID fromString: '{87b4c451-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Object comment: 'Object is the abstract root of the standard Smalltalk class hierarchy. It has no instance variables (indeed it must not have any), but provides behavior common to all objects.
 
 Instance Variables:
@@ -37,7 +39,9 @@ The following messages defined in Object have optimized implementations inlined 
 	#yourself
 In addition any selector in Object with a ''basic'' prefix may be subject to inlining in future releases, so these should not be overridden.
 '!
+
 !Object categoriesForClass!Kernel-Objects! !
+
 !Object methodsFor!
 
 ?? anObject
@@ -1494,6 +1498,7 @@ yourself
 
 	^self
 ! !
+
 !Object categoriesForMethods!
 ??!converting!public! !
 _deepCopy:!copying!private! !
@@ -1740,6 +1745,7 @@ resourcesLocator
 	environment it is assumed that all resources will be in a Resources subdirectory relative to the installation directory"
 
 	^SessionManager current resourcesLocatorForClass: self! !
+
 !Object class categoriesForMethods!
 binaryReadFrom:!binary filing!public! !
 binaryReadFrom:context:!binary filing!public! !

@@ -6,7 +6,6 @@ package paxVersion: 1;
 
 package basicPackageVersion: '6.2'.
 
-
 package classNames
 	add: #TranscriptShell;
 	yourself.
@@ -34,11 +33,6 @@ Shell subclass: #TranscriptShell
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: 'DefaultExtent FlashOnOutput'!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

@@ -5,12 +5,15 @@ ContainerView subclass: #SlideyInneyOuteyThing
 	classVariableNames: 'AnimatedCardChangeMask AnimatedUnpinMask AnimationDuration AnimationMask Animations HideOnUnpinMask ResizableMask SlideInDelay'
 	poolDictionaries: 'ThemeConstants'
 	classInstanceVariableNames: ''!
+
 SlideyInneyOuteyThing guid: (GUID fromString: '{b9cf8580-efea-4336-84cd-3108804dd202}')!
+
 SlideyInneyOuteyThing addClassConstant: 'AnimatedCardChangeMask' value: 16r8!
 SlideyInneyOuteyThing addClassConstant: 'AnimatedUnpinMask' value: 16r2!
 SlideyInneyOuteyThing addClassConstant: 'AnimationMask' value: 16rC0010!
 SlideyInneyOuteyThing addClassConstant: 'HideOnUnpinMask' value: 16r1!
 SlideyInneyOuteyThing addClassConstant: 'ResizableMask' value: 16r4!
+
 SlideyInneyOuteyThing comment: 'SlideyInneyOuteyThing is a decorator for a <CardContainer> which behaves like one of those slidey-inney-outey-things one sees in Visual Studio.NET, i.e: It display a thin tab strip most of the time, but slides cards smoothly out (as if they were on a sliding "tray") when one hovers over them. . The tray slides out over the top of any sibling views of the SlideyInneyOuteyThing, and so it does not cause any relayout within the parent. The tray can then be pinned into place if desired, in which case the parent is re-layed out to accomodate the full extent of the SlideyInneyOuteyThing. When pinned a SlideyInneyOuteyThing behaves visually like a normal <CardContainer>. When unpinned, the tray will slide back when the user moves outside the tray/tabs for a short period. This is useful for panes which are used only occassionally since they need consume only a little space (for the tabs) when they are not being used.
 
 A SlideyInneyOuteyThing must be used in conjunction with a <SlidingCardTray> as its actual <CardContainer>, and can host only one such card container. The cards themselves must be added to the <SlidingCardTray>, NOT to the SlideyInneyOuteyThing which, as mentioned, is a decorator rather than a card container itself.
@@ -20,7 +23,9 @@ Instance Variables:
 	tray			<SlidingCardTray> which actually contains the cards.
 	slideExtent	<Point>. The extent of the tray when slid out.
 	'!
+
 !SlideyInneyOuteyThing categoriesForClass!MVP-Resources-Card Containers!MVP-Views! !
+
 !SlideyInneyOuteyThing methodsFor!
 
 actualPreferredExtent: aLayoutContext 
@@ -522,6 +527,7 @@ wmPrint: message wParam: wParam lParam: lParam
 		lParam: lParam.
 	canvas windowOrigin: prev.
 	^result! !
+
 !SlideyInneyOuteyThing categoriesForMethods!
 actualPreferredExtent:!geometry!private! !
 addSubView:!hierarchy!public!sub views! !
@@ -621,6 +627,7 @@ resource_Default_view
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.SlideyInneyOuteyThing) 34 23 nil nil 34 2 8 1409286144 131073 416 nil 327686 ##(Smalltalk.Color) #default nil 517 nil nil nil 416 656710 1 ##(Smalltalk.CardLayout) 138 144 8 #() nil nil nil nil 170 192 560 nil 410 ##(Smalltalk.TabViewXP) 34 28 nil 416 34 2 8 1140916864 1 592 590662 2 ##(Smalltalk.ListModel) 138 144 560 nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 496 nil 1 nil nil nil 592 nil 8 1921705120 ##(Smalltalk.BasicListAbstract) ##(Smalltalk.IconicListAbstract) 1049926 1 ##(Smalltalk.IconImageManager) nil nil nil nil nil #noIcons nil nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 1 1 898 701 501 592 850 #tcmSetExtendedStyle:dwExStyle: 8 #(-1 0) 592 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 94 1 0 0 250 0 0 0] 8 #() 898 193 193 nil 27 410 ##(Smalltalk.SlidingCardTray) 34 22 nil 416 34 2 8 1140850688 131073 1056 nil 496 nil 5 nil nil nil 1056 528 170 192 560 nil 592 nil 416 898 33 33 1050182 1 ##(Smalltalk.ButtonInteractor) 1056 nil 1 590342 ##(Smalltalk.Rectangle) 898 649 3 898 681 35 nil 1180998 4 ##(Smalltalk.CommandDescription) #togglePin 8 'Pin or Unpin the tray' 1 1 nil nil nil 786 138 144 34 1 850 #createAt:extent: 34 2 898 9 9 898 685 485 1056 978 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 4 0 0 0 4 0 0 0 90 1 0 0 246 0 0 0] 8 #() 1040 nil 27 898 201 201 401 nil 31 nil nil 786 138 144 34 1 850 #createAt:extent: 34 2 898 3839 21 898 701 501 416 978 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 221 8 0 0 4 1 0 0] 34 2 1056 592 1040 nil 27 )! !
+
 !SlideyInneyOuteyThing class categoriesForMethods!
 icon!constants!public! !
 initialize!class initialization!development!private! !

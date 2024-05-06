@@ -5,9 +5,13 @@ MultilineTextEditTest subclass: #ScintillaViewTest
 	classVariableNames: ''
 	poolDictionaries: 'ScintillaConstants'
 	classInstanceVariableNames: ''!
+
 ScintillaViewTest guid: (GUID fromString: '{3c6fbe95-74e0-4325-97e1-82f12133d503}')!
+
 ScintillaViewTest comment: ''!
+
 !ScintillaViewTest categoriesForClass!Unclassified! !
+
 !ScintillaViewTest methodsFor!
 
 classToTest
@@ -162,6 +166,7 @@ testStateRestoral
 	indicStyle2 := ScintillaIndicatorStyle view: presenter index: INDICATOR_CONTAINER - 1.
 	self assert: indicStyle2 style equals: #hidden.
 ! !
+
 !ScintillaViewTest categoriesForMethods!
 classToTest!helpers!private! !
 initializePresenter!public!Running! !

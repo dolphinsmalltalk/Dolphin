@@ -5,7 +5,9 @@ ICoreWebView2NavigationStartingEventArgs subclass: #ICoreWebView2NavigationStart
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2NavigationStartingEventArgs2 guid: (IID fromString: '{9086be93-91aa-472d-a7e0-579f2ba006ad}')!
+
 ICoreWebView2NavigationStartingEventArgs2 comment: '`ICoreWebView2NavigationStartingEventArgs2` is a wrapper class for the COM interface ''WebView2.ICoreWebView2NavigationStartingEventArgs2'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -29,7 +31,9 @@ interface ICoreWebView2NavigationStartingEventArgs2 : ICoreWebView2NavigationSta
 };
 ```
 '!
+
 !ICoreWebView2NavigationStartingEventArgs2 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2NavigationStartingEventArgs2 methodsFor!
 
 get_AdditionalAllowedFrameAncestors: value
@@ -50,6 +54,7 @@ put_AdditionalAllowedFrameAncestors: value
 
 	<virtual stdcall: hresult 12 lpwstr>
 	^self invalidCall: _failureCode! !
+
 !ICoreWebView2NavigationStartingEventArgs2 categoriesForMethods!
 get_AdditionalAllowedFrameAncestors:!**auto generated**!COM Interfaces-ICoreWebView2NavigationStartingEventArgs2!private! !
 put_AdditionalAllowedFrameAncestors:!**auto generated**!COM Interfaces-ICoreWebView2NavigationStartingEventArgs2!private! !
@@ -67,6 +72,7 @@ defineFunctions
 		defineFunction: #put_AdditionalAllowedFrameAncestors:
 			argumentTypes: 'lpwstr'
 ! !
+
 !ICoreWebView2NavigationStartingEventArgs2 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

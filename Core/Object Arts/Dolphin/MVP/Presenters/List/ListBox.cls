@@ -5,8 +5,11 @@ BasicListAbstract subclass: #ListBox
 	classVariableNames: 'SelectionModeMask SelectionModes'
 	poolDictionaries: 'ListBoxConstants'
 	classInstanceVariableNames: ''!
+
 ListBox guid: (GUID fromString: '{87b4c72c-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 ListBox addClassConstant: 'SelectionModeMask' value: 16r808!
+
 ListBox comment: 'ListBox is the <listView> implementing the standard Windows LISTBOX control. It is for single selection use and, therefore, implements the <selectableItems> protocol  for use with any <listModel>.
 
 Instance Variables:
@@ -15,7 +18,9 @@ Instance Variables:
 Class Variables:
 	LbnMap	<IdentityDictionary> mapping Windows notification messages to <selector>s.
 '!
+
 !ListBox categoriesForClass!MVP-Views! !
+
 !ListBox methodsFor!
 
 anchorIndex
@@ -617,6 +622,7 @@ state
 		add: (MessageSend receiver: self selector: #horizontalExtent: argument: self horizontalExtent);
 		yourself
 ! !
+
 !ListBox categoriesForMethods!
 anchorIndex!public!selection! !
 anchorIndex:!public!selection! !
@@ -720,6 +726,7 @@ winClassName
 
 	^'LISTBOX'
 ! !
+
 !ListBox class categoriesForMethods!
 initialize!development!initializing!private! !
 listboxMessageMappings!constants!must not strip!private! !

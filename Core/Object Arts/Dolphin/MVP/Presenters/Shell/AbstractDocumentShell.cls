@@ -5,14 +5,19 @@ Shell subclass: #AbstractDocumentShell
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AbstractDocumentShell guid: (GUID fromString: '{7f3ab0c3-d1ed-4fb5-b64e-bfba5d74d038}')!
+
 AbstractDocumentShell isAbstract: true!
+
 AbstractDocumentShell comment: '`AbstractDocumentShell` is an abstract class of `<documentPresenter>`s, i.e. `Shell` presenters present a documented model which can be loaded from and saved to a file.
 
 Instance Variables:
 	filename		`<readableString>` or `nil`, describing the document filename (if it has been set).
 '!
+
 !AbstractDocumentShell categoriesForClass!MVP-Presenters! !
+
 !AbstractDocumentShell methodsFor!
 
 addToRecentList: aFilenameString 
@@ -318,6 +323,7 @@ updateCaption
 				nextPutAll: suffix].
 	self isModified ifTrue: [stream nextPut: $*].
 	self caption: stream contents! !
+
 !AbstractDocumentShell categoriesForMethods!
 addToRecentList:!public! !
 basicCaption!accessing!private! !
@@ -408,6 +414,7 @@ openOn: aStringFilename
 	^(self show)
 		openOn: aStringFilename;
 		yourself! !
+
 !AbstractDocumentShell class categoriesForMethods!
 defaultFileExtension!constants!public! !
 filename:!instance creation!public! !

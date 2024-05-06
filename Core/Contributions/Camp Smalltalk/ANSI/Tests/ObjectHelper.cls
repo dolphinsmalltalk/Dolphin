@@ -5,9 +5,13 @@ TestCaseHelper subclass: #ObjectHelper
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ObjectHelper guid: (GUID fromString: '{6b634eea-466c-4a57-9256-1e3d3c87879a}')!
+
 ObjectHelper comment: ''!
+
 !ObjectHelper categoriesForClass!Unclassified! !
+
 !ObjectHelper methodsFor!
 
 canonicalObject
@@ -295,6 +299,7 @@ testXyourself
 	anObject := self canonicalObject.
 	self value: [anObject yourself] should: [:r | r == anObject]
 		conformTo: self protocol selector: #'yourself'! !
+
 !ObjectHelper categoriesForMethods!
 canonicalObject!public! !
 object:!public! !
@@ -328,6 +333,7 @@ testXyourself!public! !
 
 initialize
 	super initialize! !
+
 !ObjectHelper class categoriesForMethods!
 initialize!public! !
 !

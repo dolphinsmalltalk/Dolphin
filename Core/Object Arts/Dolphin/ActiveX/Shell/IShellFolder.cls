@@ -5,9 +5,13 @@ IUnknown subclass: #IShellFolder
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IShellFolder guid: (IID fromString: '{000214e6-0000-0000-c000-000000000046}')!
+
 IShellFolder comment: ''!
+
 !IShellFolder categoriesForClass!COM-Interfaces! !
+
 !IShellFolder methodsFor!
 
 BindToObject: bindToObject pbc: pbc riid: riid ppvOut: ppvOut
@@ -108,6 +112,7 @@ SetNameOf: setNameOf pidl: pidl lpszName: lpszName uFlags: uFlags ppidlOut: ppid
 
 	<virtual stdcall: hresult 13 handle lpvoid lpwstr dword lppvoid>
 	^self invalidCall: _failureCode! !
+
 !IShellFolder categoriesForMethods!
 BindToObject:pbc:riid:ppvOut:!COM Interfaces-IShellFolder!public! !
 BindToStorage:pbc:riid:ppv:!COM Interfaces-IShellFolder!public! !
@@ -152,6 +157,7 @@ defineFunctions
 		defineFunction: #SetNameOf:pidl:lpszName:uFlags:ppidlOut:
 			argumentTypes: 'handle lpvoid lpwstr dword lppvoid'
 ! !
+
 !IShellFolder class categoriesForMethods!
 defineFunctions!initializing!public! !
 !

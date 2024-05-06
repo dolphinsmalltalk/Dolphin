@@ -5,9 +5,13 @@ SearchPolicyTest subclass: #AlwaysSearchPolicyTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AlwaysSearchPolicyTest guid: (GUID fromString: '{260acd79-36cb-42b0-b7ff-86b9991ebe0f}')!
+
 AlwaysSearchPolicyTest comment: ''!
+
 !AlwaysSearchPolicyTest categoriesForClass!Unclassified! !
+
 !AlwaysSearchPolicyTest methodsFor!
 
 policyClass
@@ -30,6 +34,7 @@ testCompareWith
 	self assert: (policy compare: #hash with: #identityHash).
 	self assert: (policy compare: $a with: $a).
 	self assert: (policy compare: $a with: $b)! !
+
 !AlwaysSearchPolicyTest categoriesForMethods!
 policyClass!private!unit tests! !
 testCompareWith!public!unit tests! !

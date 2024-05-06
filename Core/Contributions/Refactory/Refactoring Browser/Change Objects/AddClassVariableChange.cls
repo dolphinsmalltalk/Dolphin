@@ -5,9 +5,13 @@ RefactoryVariableChange subclass: #AddClassVariableChange
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AddClassVariableChange guid: (GUID fromString: '{bf346b83-3f40-4ec7-bc19-26c86114e7e2}')!
+
 AddClassVariableChange comment: ''!
+
 !AddClassVariableChange categoriesForClass!Refactory-Change Objects! !
+
 !AddClassVariableChange methodsFor!
 
 asUndoOperation
@@ -30,6 +34,7 @@ printOn: aStream
 
 variable
 	^variable asSymbol! !
+
 !AddClassVariableChange categoriesForMethods!
 asUndoOperation!converting!public! !
 changeString!printing!public! !

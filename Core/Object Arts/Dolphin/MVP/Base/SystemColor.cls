@@ -5,7 +5,9 @@ Color subclass: #SystemColor
 	classVariableNames: 'ColorsById NamesById'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 SystemColor guid: (GUID fromString: '{87b4c53c-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 SystemColor comment: '`SystemColor` instances represent the logical colours defined by the current Windows colour scheme, for example the colour of dialog backgrounds, window captions, etc.
 
 SystemColors are usually accessed by name, either through a specific instance creation method of the `Color` superclass, e.g. `Color window` or by request by symbolic name, e.g. `Color named: #inactiveCaption`. They can also be accessed by their COLOR_XXX code, e.g. `SystemColor withIndex: Win32Constants.COLOR_SCROLLBAR`
@@ -18,7 +20,9 @@ SystemColors are usually accessed by name, either through a specific instance cr
   `NamesById`		`<Dictionary>`
 
 '!
+
 !SystemColor categoriesForClass!Drawing! !
+
 !SystemColor methodsFor!
 
 asParameter
@@ -92,6 +96,7 @@ shallowCopy
 	"The receiver's instances are unique for each named value."
 
 	^self! !
+
 !SystemColor categoriesForMethods!
 asParameter!converting!public! !
 asRGB!converting!public! !
@@ -143,6 +148,7 @@ withIndex: anInteger
 	"
 
 	^ColorsById at: anInteger + 1! !
+
 !SystemColor class categoriesForMethods!
 initialize!class initialization!development!public! !
 stbReadFrom:format:!binary filing!public! !

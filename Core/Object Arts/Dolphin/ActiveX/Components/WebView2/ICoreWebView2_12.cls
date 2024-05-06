@@ -5,7 +5,9 @@ ICoreWebView2_11 subclass: #ICoreWebView2_12
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2_12 guid: (IID fromString: '{35d69927-bcfa-4566-9349-6b3e0d154cac}')!
+
 ICoreWebView2_12 comment: '`ICoreWebView2_12` is a wrapper class for the COM interface ''WebView2.ICoreWebView2_12'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -33,7 +35,9 @@ interface ICoreWebView2_12 : ICoreWebView2_11
 };
 ```
 '!
+
 !ICoreWebView2_12 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2_12 methodsFor!
 
 Add_StatusBarTextChanged: eventHandler token: token
@@ -63,6 +67,7 @@ Remove_StatusBarTextChanged: token
 
 	<virtual stdcall: hresult 104 sqword>
 	^self invalidCall: _failureCode! !
+
 !ICoreWebView2_12 categoriesForMethods!
 Add_StatusBarTextChanged:token:!**auto generated**!COM Interfaces-ICoreWebView2_12!private! !
 get_StatusBarText:!**auto generated**!COM Interfaces-ICoreWebView2_12!private! !
@@ -83,6 +88,7 @@ defineFunctions
 		defineFunction: #get_StatusBarText:
 			argumentTypes: 'lpwstr*'
 ! !
+
 !ICoreWebView2_12 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

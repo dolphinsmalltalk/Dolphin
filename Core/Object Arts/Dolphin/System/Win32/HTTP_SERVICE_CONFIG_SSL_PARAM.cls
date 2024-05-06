@@ -5,7 +5,9 @@ HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_SSL_PARAM
 	classVariableNames: '_OffsetOf_AppId _OffsetOf_DefaultCertCheckMode _OffsetOf_DefaultFlags _OffsetOf_DefaultRevocationFreshnessTime _OffsetOf_DefaultRevocationUrlRetrievalTimeout _OffsetOf_pDefaultSslCtlIdentifier _OffsetOf_pDefaultSslCtlStoreName _OffsetOf_pSslCertStoreName _OffsetOf_pSslHash _OffsetOf_SslHashLength'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 HTTP_SERVICE_CONFIG_SSL_PARAM guid: (GUID fromString: '{7fe46aef-bb33-40ac-a388-846c53efde1d}')!
+
 HTTP_SERVICE_CONFIG_SSL_PARAM addClassConstant: '_OffsetOf_AppId' value: 16r8!
 HTTP_SERVICE_CONFIG_SSL_PARAM addClassConstant: '_OffsetOf_DefaultCertCheckMode' value: 16r1C!
 HTTP_SERVICE_CONFIG_SSL_PARAM addClassConstant: '_OffsetOf_DefaultFlags' value: 16r30!
@@ -16,6 +18,7 @@ HTTP_SERVICE_CONFIG_SSL_PARAM addClassConstant: '_OffsetOf_pDefaultSslCtlStoreNa
 HTTP_SERVICE_CONFIG_SSL_PARAM addClassConstant: '_OffsetOf_pSslCertStoreName' value: 16r18!
 HTTP_SERVICE_CONFIG_SSL_PARAM addClassConstant: '_OffsetOf_pSslHash' value: 16r4!
 HTTP_SERVICE_CONFIG_SSL_PARAM addClassConstant: '_OffsetOf_SslHashLength' value: 16r0!
+
 HTTP_SERVICE_CONFIG_SSL_PARAM comment: '<HTTP_SERVICE_CONFIG_SSL_PARAM> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_SERVICE_CONFIG_SSL_PARAM'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -39,7 +42,9 @@ struct tagHTTP_SERVICE_CONFIG_SSL_PARAM {
 	[helpstring("Default Flags - see HTTP_SERVICE_CONFIG_SSL_FLAG* below.")] DWORD DefaultFlags;
 } HTTP_SERVICE_CONFIG_SSL_PARAM;
 '!
+
 !HTTP_SERVICE_CONFIG_SSL_PARAM categoriesForClass!WinHttpServer-Structs! !
+
 !HTTP_SERVICE_CONFIG_SSL_PARAM methodsFor!
 
 AppId
@@ -146,6 +151,7 @@ SslHashLength: anInteger
 	"Set the receiver's 'SslHashLength' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_SslHashLength put: anInteger! !
+
 !HTTP_SERVICE_CONFIG_SSL_PARAM categoriesForMethods!
 AppId!**compiled accessors**!public! !
 AppId:!**compiled accessors**!public! !
@@ -206,6 +212,7 @@ defineFields
 
 getFieldNames
 	^#(#SslHashLength #pSslHash #AppId #pSslCertStoreName #DefaultCertCheckMode #DefaultRevocationFreshnessTime #DefaultRevocationUrlRetrievalTimeout #pDefaultSslCtlIdentifier #pDefaultSslCtlStoreName #DefaultFlags)! !
+
 !HTTP_SERVICE_CONFIG_SSL_PARAM class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

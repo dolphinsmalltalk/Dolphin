@@ -5,9 +5,13 @@ DolphinTest subclass: #BSTRTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 BSTRTest guid: (GUID fromString: '{d5abc1df-26e1-4722-bcb6-51e4b5c406f6}')!
+
 BSTRTest comment: ''!
+
 !BSTRTest categoriesForClass!Unclassified! !
+
 !BSTRTest methodsFor!
 
 stringConversionCases
@@ -34,6 +38,7 @@ testAsUtf8String
 			ptr := LPBSTR fromAddress: subject basicYourAddress.
 			self assert: ptr asUtf8String isKindOf: Utf8String.
 			self assert: ptr asUtf8String equals: each]! !
+
 !BSTRTest categoriesForMethods!
 stringConversionCases!constants!private! !
 testAsString!public!unit tests! !

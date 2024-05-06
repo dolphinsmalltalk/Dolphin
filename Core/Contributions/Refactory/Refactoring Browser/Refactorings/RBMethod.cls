@@ -5,7 +5,9 @@ Object subclass: #RBMethod
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RBMethod guid: (GUID fromString: '{4f76178d-295e-4b31-9cda-d786b96c5ed7}')!
+
 RBMethod comment: 'RBMethod represents a method in an RBAbstractClass.
 
 Instance Variables:
@@ -13,7 +15,9 @@ Instance Variables:
 	compiledMethod	<CompiledCode | nil>	the CompiledMethod object (if we have been compiled)
 	selector	<Symbol>	our name
 	source	<String>	our source'!
+
 !RBMethod categoriesForClass!Refactory-Model! !
+
 !RBMethod methodsFor!
 
 literal: anObject containsReferenceTo: aSymbol
@@ -90,6 +94,7 @@ source
 
 source: aString 
 	source := aString! !
+
 !RBMethod categoriesForMethods!
 literal:containsReferenceTo:!private! !
 method!accessing!public! !
@@ -122,6 +127,7 @@ for: aRBClass source: aString selector: aSelector
 		selector: aSelector;
 		source: aString;
 		yourself! !
+
 !RBMethod class categoriesForMethods!
 for:fromMethod:andSelector:!instance creation!public! !
 for:source:selector:!instance creation!public! !

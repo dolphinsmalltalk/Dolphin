@@ -5,7 +5,9 @@ Collection subclass: #Bag
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Bag guid: (GUID fromString: '{87b4c509-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Bag comment: 'A Bag is a variable sized, unordered, collection which is extensible and contractible, but not accesssible using external keys. Bag is similar to Set, but can contain duplicate elements (which it counts). Elements are considered to  be duplicates if they compare as equal using #=.
 
 Bag conforms to the ANSI protocols:
@@ -13,7 +15,9 @@ Bag conforms to the ANSI protocols:
 	collection
 	extensibleCollection
 	Bag'!
+
 !Bag categoriesForClass!Collections-Unordered! !
+
 !Bag methodsFor!
 
 = anObject
@@ -158,6 +162,7 @@ size
 
 valuesAndCountsDo: aBlock 
 	contents keysAndValuesDo: aBlock! !
+
 !Bag categoriesForMethods!
 =!comparing!public! !
 add:!adding!public! !
@@ -211,6 +216,7 @@ new: count
 
 	^super new 
 		contents: (LookupTable new: count)! !
+
 !Bag class categoriesForMethods!
 identityNew!instance creation!public! !
 identityNew:!instance creation!public! !

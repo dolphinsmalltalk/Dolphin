@@ -5,13 +5,16 @@ CCITEM subclass: #TCITEMW
 	classVariableNames: '_OffsetOf_cchTextMax _OffsetOf_dwState _OffsetOf_iImage _OffsetOf_lParam _OffsetOf_pszText _OffsetOf_stateMask'
 	poolDictionaries: 'TabViewConstants'
 	classInstanceVariableNames: ''!
+
 TCITEMW guid: (GUID fromString: '{87b4c621-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 TCITEMW addClassConstant: '_OffsetOf_cchTextMax' value: 16r10!
 TCITEMW addClassConstant: '_OffsetOf_dwState' value: 16r4!
 TCITEMW addClassConstant: '_OffsetOf_iImage' value: 16r14!
 TCITEMW addClassConstant: '_OffsetOf_lParam' value: 16r18!
 TCITEMW addClassConstant: '_OffsetOf_pszText' value: 16rC!
 TCITEMW addClassConstant: '_OffsetOf_stateMask' value: 16r8!
+
 TCITEMW comment: 'TCITEM is an <ExternalStructure> class which represents the Windows common control structure of the same name.
 
 TCITEM is used to communicate information about the items (tabs) in a Tab Control.
@@ -27,7 +30,9 @@ TCITEM is used to communicate information about the items (tabs) in a Tab Contro
 
         LPARAM	lParam;  
     } TCITEMA, *LPTCITEMA;'!
+
 !TCITEMW categoriesForClass!External-Data-Structured-Win32! !
+
 !TCITEMW methodsFor!
 
 cchTextMax
@@ -119,6 +124,7 @@ textPointerOffset
 	"Private - Answer the offset of the text pointer in the receiver. "
 
 	^_OffsetOf_pszText! !
+
 !TCITEMW categoriesForMethods!
 cchTextMax!**compiled accessors**!public! !
 cchTextMax:!**compiled accessors**!public! !
@@ -169,6 +175,7 @@ defineFields
 
 getFieldNames
 	^#(#mask #dwState #stateMask #pszText #cchTextMax #iImage #lParam)! !
+
 !TCITEMW class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

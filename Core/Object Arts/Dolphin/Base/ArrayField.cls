@@ -5,12 +5,16 @@ EmbeddedField subclass: #ArrayField
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ArrayField guid: (GUID fromString: '{87b4c4de-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 ArrayField comment: 'ArrayField is an <ExternalField> type to represent <ExternalStructure> fields which are fixed arrays whose contents are actually embedded in the structure, as opposed to being merely pointed at from the structure.
 
 Instance Variables:
 	arrayLength		<ArrayFieldLength> describing the length of the array.'!
+
 !ArrayField categoriesForClass!External-Data-Types! !
+
 !ArrayField methodsFor!
 
 alignment
@@ -115,6 +119,7 @@ writeInto: anExternalStructure value: aByteObject
 		setElementCount: aByteObject
 		of: self
 		in: anExternalStructure! !
+
 !ArrayField categoriesForMethods!
 alignment!constants!public! !
 allocationLength!accessing!private! !
@@ -152,6 +157,7 @@ type: aClass length: anInteger
 	embedded arrays of type aClass, with anInteger elements."
 
 	^self type: aClass arrayLength: (FixedArrayFieldLength elementCount: anInteger)! !
+
 !ArrayField class categoriesForMethods!
 type:arrayLength:!instance creation!public! !
 type:length:!instance creation!public! !

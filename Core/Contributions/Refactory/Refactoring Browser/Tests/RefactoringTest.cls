@@ -5,9 +5,13 @@ RefactoringBrowserTest subclass: #RefactoringTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoringTest guid: (GUID fromString: '{bab50ae8-d54a-4645-9a41-ea07018cedf6}')!
+
 RefactoringTest comment: ''!
+
 !RefactoringTest categoriesForClass!Refactory-Testing! !
+
 !RefactoringTest methodsFor!
 
 readFile: aString 
@@ -123,6 +127,7 @@ testPrintRefactoringManager
 		show: RefactoringManager instance printString;
 		cr;
 		flush! !
+
 !RefactoringTest categoriesForMethods!
 readFile:!public!set up! !
 setUp!public!set up! !

@@ -5,10 +5,15 @@ StdioTextFileStream subclass: #StdioUnicodeFileStream
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StdioUnicodeFileStream guid: (GUID fromString: '{a1e19207-b693-4313-ad8d-1f288be1a89e}')!
+
 StdioUnicodeFileStream isAbstract: true!
+
 StdioUnicodeFileStream comment: ''!
+
 !StdioUnicodeFileStream categoriesForClass!Collections-Streams! !
+
 !StdioUnicodeFileStream methodsFor!
 
 basicNextAvailable
@@ -69,6 +74,7 @@ setStream: anExternalAddress name: aString flags: anInteger
 
 translationMode
 	^CRTConstants._O_U16TEXT! !
+
 !StdioUnicodeFileStream categoriesForMethods!
 basicNextAvailable!accessing!private! !
 basicNextPut:!accessing!private! !
@@ -85,6 +91,7 @@ translationMode!constants!private! !
 
 encodingType
 	^#utf16le! !
+
 !StdioUnicodeFileStream class categoriesForMethods!
 encodingType!constants!public! !
 !

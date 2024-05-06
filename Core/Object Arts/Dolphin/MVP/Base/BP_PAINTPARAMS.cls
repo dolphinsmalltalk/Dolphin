@@ -5,13 +5,18 @@ Win32Structure subclass: #BP_PAINTPARAMS
 	classVariableNames: '_OffsetOf_dwFlags _OffsetOf_dwSize _OffsetOf_pBlendFunction _OffsetOf_prcExclude'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 BP_PAINTPARAMS guid: (GUID fromString: '{caca75ff-b81a-424e-9ffe-ae0e691932d5}')!
+
 BP_PAINTPARAMS addClassConstant: '_OffsetOf_dwFlags' value: 16r4!
 BP_PAINTPARAMS addClassConstant: '_OffsetOf_dwSize' value: 16r0!
 BP_PAINTPARAMS addClassConstant: '_OffsetOf_pBlendFunction' value: 16rC!
 BP_PAINTPARAMS addClassConstant: '_OffsetOf_prcExclude' value: 16r8!
+
 BP_PAINTPARAMS comment: ''!
+
 !BP_PAINTPARAMS categoriesForClass!Win32-Structs! !
+
 !BP_PAINTPARAMS methodsFor!
 
 blendFunction
@@ -55,6 +60,7 @@ prcExclude: aRECT
 	"Set the receiver's 'prcExclude' field to the value of the argument, aRECT"
 
 	bytes uintPtrAtOffset: _OffsetOf_prcExclude put: aRECT yourAddress! !
+
 !BP_PAINTPARAMS categoriesForMethods!
 blendFunction!accessing!public! !
 blendFunction:!accessing!public! !
@@ -91,6 +97,7 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #dwFlags #prcExclude #pBlendFunction)! !
+
 !BP_PAINTPARAMS class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

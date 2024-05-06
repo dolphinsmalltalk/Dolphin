@@ -5,7 +5,9 @@ Object subclass: #ProcessCopier
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ProcessCopier guid: (GUID fromString: '{8645a83f-7f36-4167-b325-234f811a2264}')!
+
 ProcessCopier comment: '<ProcessCopier> is responsible for copying the stack of a <Process> in such a way that the copy is an independent runnable process that can be continued from the point at which the source <Process> was when the copy was taken, but which shares no temporary variables (or other execution state) with the source process. This is required to implement <Continuation>s in Dolphin, but may have other uses.
 
 Copying a <Process> in Dolphin involves the following steps:
@@ -24,7 +26,9 @@ The resulting <Process> copy will be suspended at the requested frame, but expec
 	copyProcess interruptWith: [Process returnValue: nil toFrame: copyProcess basicSuspendedFrame].
 
 Alternatively the copy can be patched up by pushing an appropriate return value onto the stack, and then it can be directly #resume''d. See Process>>copy for an example.'!
+
 !ProcessCopier categoriesForClass!System-Continuations! !
+
 !ProcessCopier methodsFor!
 
 copyObject: anObject 
@@ -100,6 +104,7 @@ recordVisitTo: anObject
 
 visit: anObject
 	^anObject acceptProcessCopier: self! !
+
 !ProcessCopier categoriesForMethods!
 copyObject:!copying!public! !
 copyStack:!copying!private! !
@@ -122,6 +127,7 @@ copyStack: aStackFrame
 	the <StackFrame> argument. The answer will be suspended, but continuable."
 
 	^self new copyStack: aStackFrame! !
+
 !ProcessCopier class categoriesForMethods!
 copyStack:!operations!public! !
 !

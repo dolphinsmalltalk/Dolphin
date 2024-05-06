@@ -5,9 +5,13 @@ MethodRefactoring subclass: #RenameTemporaryRefactoring
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RenameTemporaryRefactoring guid: (GUID fromString: '{605981c4-3d80-4ce9-b0ac-9691e8a47ded}')!
+
 RenameTemporaryRefactoring comment: ''!
+
 !RenameTemporaryRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !RenameTemporaryRefactoring methodsFor!
 
 class: aClass selector: aSelector interval: anInterval newName: aString 
@@ -75,6 +79,7 @@ transform
 		ifTrue: [self refactoringError: oldName , ' isn''t defined by the method'].
 	self renameNode: definingNode.
 	class compileTree: parseTree! !
+
 !RenameTemporaryRefactoring categoriesForMethods!
 class:selector:interval:newName:!initialize/release!public! !
 oldName:!accessing!private! !
@@ -101,6 +106,7 @@ renameTemporaryFrom: anInterval to: newName in: aClass selector: aSelector
 		selector: aSelector
 		interval: anInterval
 		newName: newName! !
+
 !RenameTemporaryRefactoring class categoriesForMethods!
 model:renameTemporaryFrom:to:in:selector:!instance creation!public! !
 renameTemporaryFrom:to:in:selector:!instance creation!public! !

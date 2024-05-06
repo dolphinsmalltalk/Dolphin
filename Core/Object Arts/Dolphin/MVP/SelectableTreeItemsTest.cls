@@ -5,10 +5,15 @@ SelectableItemsTest subclass: #SelectableTreeItemsTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SelectableTreeItemsTest guid: (GUID fromString: '{cccec658-6b6a-4d9f-a9ac-2701da23a46e}')!
+
 SelectableTreeItemsTest isAbstract: true!
+
 SelectableTreeItemsTest comment: ''!
+
 !SelectableTreeItemsTest categoriesForClass!Unclassified! !
+
 !SelectableTreeItemsTest methodsFor!
 
 addAllObjects: objects 
@@ -228,6 +233,7 @@ testSetTextBlockDoesNotAffectSelection
 
 treeModel
 	^presenter model! !
+
 !SelectableTreeItemsTest categoriesForMethods!
 addAllObjects:!private!unit tests! !
 addAllTestObjects!private!unit tests! !

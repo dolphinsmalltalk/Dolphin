@@ -5,7 +5,9 @@ ValueAdaptor subclass: #ValueKeyedAdaptor
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ValueKeyedAdaptor guid: (GUID fromString: '{87b4c67a-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 ValueKeyedAdaptor comment: 'A ValueKeyedAdaptor is capable of adapting a keyed element of a subject object (typically a Collection) and treating this as a <value>. A keyed element one which can be accessed from the subject object using #at: and #at:put:.
 
 Instance Variables:
@@ -13,7 +15,9 @@ Instance Variables:
 	putSelector	<selector> message used to set the aspect
 	getSelector	<selector> message used to get the aspect
 '!
+
 !ValueKeyedAdaptor categoriesForClass!MVP-Models! !
+
 !ValueKeyedAdaptor methodsFor!
 
 = comperand
@@ -94,6 +98,7 @@ value
 	sending a message to the receiver's subject with the key."
 	
 	^self subject perform: self getSelector with: self key! !
+
 !ValueKeyedAdaptor categoriesForMethods!
 =!comparing!public! !
 canGet!private!testing! !
@@ -121,6 +126,7 @@ subject: anObject key: aKey
 	an element of anObject identified by aKey"
 
 	^(super new) subject: anObject key: aKey; yourself! !
+
 !ValueKeyedAdaptor class categoriesForMethods!
 new!instance creation!private! !
 subject:key:!instance creation!public! !

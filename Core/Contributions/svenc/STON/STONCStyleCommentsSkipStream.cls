@@ -5,7 +5,9 @@ Object subclass: #STONCStyleCommentsSkipStream
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 STONCStyleCommentsSkipStream guid: (GUID fromString: '{cbe95784-18b0-4161-a8b1-142a76001d59}')!
+
 STONCStyleCommentsSkipStream comment: 'I am STONCStyleCommentsSkipStream, a character ReadStream wrapping another character ReadStream. I skip C style comments, much like a classic C preprocessor.
 
 C, C++, Java, JavaScript style comments are either the multiline
@@ -26,7 +28,9 @@ Here is an example:
 	
 Comments inside single and double quote delimited strings are ignored. Backslash escapes for single and double quotes inside strings are honored.
 '!
+
 !STONCStyleCommentsSkipStream categoriesForClass!STON-Core-Utilities! !
+
 !STONCStyleCommentsSkipStream methodsFor!
 
 atEnd
@@ -211,6 +215,7 @@ upToEnd
 
 wrappedStream
 	^ stream! !
+
 !STONCStyleCommentsSkipStream categoriesForMethods!
 atEnd!public!testing! !
 close!initialize/release!public! !
@@ -245,6 +250,7 @@ on: readStream
 	^ self new
 		on: readStream;
 		yourself! !
+
 !STONCStyleCommentsSkipStream class categoriesForMethods!
 on:!instance creation!public! !
 !

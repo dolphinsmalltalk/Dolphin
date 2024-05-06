@@ -5,13 +5,18 @@ ICoreWebView2Interface subclass: #ICoreWebView2Collection
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2Collection guid: (IID fromString: '{d7f78fbc-5e73-4009-9f6b-5a822b0a6313}')!
+
 ICoreWebView2Collection isAbstract: true!
+
 ICoreWebView2Collection comment: '`ICoreWebView2Collection` is not defined in the WebView2 IDL, but is defined here for economy of mechanism, providing a common implmentaton of most of the Smalltalk `<collection>` protocol.
 
 Subclasses must implement `do:` only.
 '!
+
 !ICoreWebView2Collection categoriesForClass!COM-Interfaces! !
+
 !ICoreWebView2Collection methodsFor!
 
 allSatisfy: discriminator
@@ -169,6 +174,7 @@ size
 	and subclasses will probably want to override it."
 
 	^self countElements! !
+
 !ICoreWebView2Collection categoriesForMethods!
 allSatisfy:!enumerating!public! !
 anySatisfy:!enumerating!public! !

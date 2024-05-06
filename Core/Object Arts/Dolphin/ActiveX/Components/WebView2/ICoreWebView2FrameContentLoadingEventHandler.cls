@@ -5,7 +5,9 @@ ICoreWebView2EventHandler subclass: #ICoreWebView2FrameContentLoadingEventHandle
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2FrameContentLoadingEventHandler guid: (IID fromString: '{0d6156f2-d332-49a7-9e03-7d8f2feeee54}')!
+
 ICoreWebView2FrameContentLoadingEventHandler comment: '`ICoreWebView2FrameContentLoadingEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2FrameContentLoadingEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -27,7 +29,9 @@ interface ICoreWebView2FrameContentLoadingEventHandler : IUnknown
 };
 ```
 '!
+
 !ICoreWebView2FrameContentLoadingEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2FrameContentLoadingEventHandler methodsFor!
 
 basicRegister: tokenBuffer
@@ -35,6 +39,7 @@ basicRegister: tokenBuffer
 
 basicUnregister
 	source Remove_ContentLoading: token! !
+
 !ICoreWebView2FrameContentLoadingEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
@@ -58,6 +63,7 @@ eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
 	^#frameContentLoading:! !
+
 !ICoreWebView2FrameContentLoadingEventHandler class categoriesForMethods!
 argsClass!constants!public! !
 defineFunctions!**auto generated**!initializing!public! !

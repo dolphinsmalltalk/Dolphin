@@ -5,9 +5,13 @@ StBlockNode subclass: #RBPatternBlockNode
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RBPatternBlockNode guid: (GUID fromString: '{63f4ab8a-d94e-4a65-bdae-742311429c7c}')!
+
 RBPatternBlockNode comment: ''!
+
 !RBPatternBlockNode categoriesForClass!Refactory-Parser! !
+
 !RBPatternBlockNode methodsFor!
 
 acceptVisitor: aProgramNodeVisitor
@@ -103,6 +107,7 @@ replacingBlock
 
 sentMessages
 	^OrderedCollection new! !
+
 !RBPatternBlockNode categoriesForMethods!
 acceptVisitor:!public!visitor! !
 addArgumentWithNameBasedOn:to:!matching!public! !

@@ -5,11 +5,14 @@ ExternalStructure subclass: #GpPropertyItem
 	classVariableNames: '_OffsetOf_id _OffsetOf_length _OffsetOf_Type _OffsetOf_Value'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GpPropertyItem guid: (GUID fromString: '{dad9cd42-c61c-4040-bcd2-2f2e8d725fca}')!
+
 GpPropertyItem addClassConstant: '_OffsetOf_id' value: 16r0!
 GpPropertyItem addClassConstant: '_OffsetOf_length' value: 16r4!
 GpPropertyItem addClassConstant: '_OffsetOf_Type' value: 16r8!
 GpPropertyItem addClassConstant: '_OffsetOf_Value' value: 16rC!
+
 GpPropertyItem comment: '<GpPropertyItem> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpPropertyItem'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
@@ -26,7 +29,9 @@ struct tagGpPropertyItem {
 	void* Value;
 } GpPropertyItem;
 '!
+
 !GpPropertyItem categoriesForClass!Unclassified! !
+
 !GpPropertyItem methodsFor!
 
 id
@@ -103,6 +108,7 @@ valueArray
 	"Next line won't work with an arary returned, i.e., if length > 8."
 	type == 10 ifTrue: [^(address sdwordAtOffset: 0) / (address sdwordAtOffset: 4)].
 	self error: 'unrecognised type'! !
+
 !GpPropertyItem categoriesForMethods!
 id!**compiled accessors**!public! !
 id:!**compiled accessors**!public! !
@@ -141,6 +147,7 @@ defineFields
 
 getFieldNames
 	^#(#id #length #Type #Value)! !
+
 !GpPropertyItem class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

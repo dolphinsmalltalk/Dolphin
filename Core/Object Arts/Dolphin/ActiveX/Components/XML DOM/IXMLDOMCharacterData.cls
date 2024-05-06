@@ -5,11 +5,15 @@ IXMLDOMNode subclass: #IXMLDOMCharacterData
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
 	classInstanceVariableNames: ''!
+
 IXMLDOMCharacterData guid: (IID fromString: '{2933bf84-7b36-11d2-b20e-00c04f983e60}')!
+
 IXMLDOMCharacterData comment: '<IXMLDOMCharacterData> is a wrapper class for the COM interface ''MSXML.IXMLDOMCharacterData'' generated from type information in the ''Microsoft XML, version 2.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 This interface is an abstract root for the character-oriented node types in the DOM.'!
+
 !IXMLDOMCharacterData categoriesForClass!COM-Interfaces!MSXML-Interfaces! !
+
 !IXMLDOMCharacterData methodsFor!
 
 = anObject 
@@ -157,6 +161,7 @@ SubstringData: offset count: count data: data
 
 	<virtual stdcall: hresult 47 sdword sdword bstr*>
 	^self invalidCall: _failureCode! !
+
 !IXMLDOMCharacterData categoriesForMethods!
 =!comparing!public! !
 AppendData:!**auto generated**!COM Interfaces-IXMLDOMCharacterData!public! !
@@ -200,6 +205,7 @@ defineFunctions
 		defineFunction: #ReplaceData:count:data:
 			argumentTypes: 'sdword sdword bstr'
 ! !
+
 !IXMLDOMCharacterData class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

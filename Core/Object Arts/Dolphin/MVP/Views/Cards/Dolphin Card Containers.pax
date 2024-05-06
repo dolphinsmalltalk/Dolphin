@@ -7,7 +7,6 @@ Copyright (c) Object Arts Ltd. 1997-2005. Portions Copyright (c) CGI Group (Euro
 
 package basicPackageVersion: '6.1'.
 
-
 package classNames
 	add: #AbstractCardContainer;
 	add: #CardContainer;
@@ -44,29 +43,30 @@ Object subclass: #CardLabel
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 LayoutManager subclass: #CardLayout
 	instanceVariableNames: 'names currentCard events _unused4 _unused5'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ContainerView subclass: #AbstractCardContainer
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AbstractCardContainer subclass: #CardContainer
 	instanceVariableNames: 'tabs'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AbstractCardContainer subclass: #WizardCardContainer
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -91,6 +91,7 @@ resource_Wizard_card_container
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.WizardCardContainer) 34 15 nil nil 34 2 8 1140850688 131073 416 nil 327686 ##(Smalltalk.Color) #default nil 7 nil nil nil 416 656710 1 ##(Smalltalk.CardLayout) 138 144 8 #() nil nil nil nil 170 192 560 nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 706 701 501 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 221 8 0 0 4 1 0 0] 8 #() 706 193 193 nil 27 )! !
+
 !Presenter class categoriesForMethods!
 resource_Card_container!public!resources-views! !
 resource_Wizard_card_container!public!resources-views! !

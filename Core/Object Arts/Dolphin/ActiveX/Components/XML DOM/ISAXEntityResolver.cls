@@ -5,7 +5,9 @@ IUnknown subclass: #ISAXEntityResolver
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
 	classInstanceVariableNames: ''!
+
 ISAXEntityResolver guid: (IID fromString: '{99bca7bd-e8c4-4d5f-a0cf-6d907901ff07}')!
+
 ISAXEntityResolver comment: '<ISAXEntityResolver> is a wrapper class for the COM interface ''MSXML2.ISAXEntityResolver'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
@@ -30,7 +32,9 @@ interface ISAXEntityResolver : IUnknown
 		[out, retval]VARIANT* pvarInput);
 };
 '!
+
 !ISAXEntityResolver categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+
 !ISAXEntityResolver methodsFor!
 
 resolveEntity: pwchPublicId pwchSystemId: pwchSystemId
@@ -55,6 +59,7 @@ ResolveEntity: pwchPublicId pwchSystemId: pwchSystemId pvarInput: pvarInput
 
 	<virtual stdcall: hresult 4 word* word* variant*>
 	^self invalidCall: _failureCode! !
+
 !ISAXEntityResolver categoriesForMethods!
 resolveEntity:pwchSystemId:!**auto generated**!methods!public! !
 ResolveEntity:pwchSystemId:pvarInput:!**auto generated**!COM Interfaces-ISAXEntityResolver!private! !
@@ -70,6 +75,7 @@ defineFunctions
 		defineFunction: #ResolveEntity:pwchSystemId:pvarInput:
 			argumentTypes: 'word* word* variant*'
 ! !
+
 !ISAXEntityResolver class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

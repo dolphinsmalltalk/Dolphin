@@ -5,9 +5,13 @@ GdiplusBase subclass: #GdiplusPen
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusPen guid: (GUID fromString: '{f98f70c8-58ea-4592-bc70-1907f78c8bc8}')!
+
 GdiplusPen comment: 'GdiplusPen is used to draw lines and curves.  In general, where an object has an outside and an inside, GdiplusPen draws the outside and GdiplusBrush is used to fill the inside.'!
+
 !GdiplusPen categoriesForClass!Unclassified! !
+
 !GdiplusPen methodsFor!
 
 alignment
@@ -246,6 +250,7 @@ width: aNumber
 	| status |
 	(status := GdiplusLibrary default gdipSetPenWidth: self asParameter width: aNumber) = Ok 
 		ifFalse: [GdiplusError signal: 'GdipSetPenWidth failed' with: status]! !
+
 !GdiplusPen categoriesForMethods!
 alignment!accessing!public! !
 alignment:!accessing!public! !
@@ -604,6 +609,7 @@ new
 
 red
 	^self color: Color red! !
+
 !GdiplusPen class categoriesForMethods!
 black!instance creation!public! !
 blue!instance creation!public! !

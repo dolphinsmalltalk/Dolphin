@@ -5,9 +5,13 @@ RefactoryClassChange subclass: #AddClassChange
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AddClassChange guid: (GUID fromString: '{441f8dc3-4a20-4e6d-9311-c190ceb74f11}')!
+
 AddClassChange comment: ''!
+
 !AddClassChange categoriesForClass!Refactory-Change Objects! !
+
 !AddClassChange methodsFor!
 
 = anAddClassChange 
@@ -137,6 +141,7 @@ printOn: aStream
 superclassName
 	className isNil ifTrue: [self fillOutDefinition].
 	^superclassName! !
+
 !AddClassChange categoriesForMethods!
 =!comparing!public! !
 asUndoOperation!converting!public! !
@@ -166,6 +171,7 @@ superclassName!accessing!public! !
 
 definition: aString 
 	^self new definition: aString! !
+
 !AddClassChange class categoriesForMethods!
 definition:!instance creation!public! !
 !

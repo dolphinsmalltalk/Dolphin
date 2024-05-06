@@ -5,7 +5,9 @@ Object subclass: #STONTestUser
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 STONTestUser guid: (GUID fromString: '{dc73b82c-2449-48f5-82a0-c000b743f362}')!
+
 STONTestUser comment: 'STONTestUser is used to support unit tests.
 
 Instance Variables
@@ -13,7 +15,9 @@ Instance Variables
 	password:	<String>
 	username:	<String>
 '!
+
 !STONTestUser categoriesForClass!STON-Tests-Base! !
+
 !STONTestUser methodsFor!
 
 = anObject
@@ -51,6 +55,7 @@ username
 
 username: anObject
 	username := anObject! !
+
 !STONTestUser categoriesForMethods!
 =!comparing!public! !
 enabled!accessing!public! !
@@ -83,6 +88,7 @@ new
 
 stonName
 	^ #TestUser! !
+
 !STONTestUser class categoriesForMethods!
 dummy!instance creation!public! !
 new!public! !

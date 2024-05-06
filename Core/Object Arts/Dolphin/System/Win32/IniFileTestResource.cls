@@ -5,9 +5,13 @@ TestResource subclass: #IniFileTestResource
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IniFileTestResource guid: (GUID fromString: '{8e42730b-5040-4528-ae15-41e9f153c025}')!
+
 IniFileTestResource comment: ''!
+
 !IniFileTestResource categoriesForClass!Unclassified! !
+
 !IniFileTestResource methodsFor!
 
 emptyFile
@@ -44,6 +48,7 @@ S3Key1=123
 tearDown
 	super tearDown.
 	(File exists: self fileLocator basePath) ifTrue: [[File deleteDirectory: self fileLocator basePath] on: Error do: [:ex | ]]! !
+
 !IniFileTestResource categoriesForMethods!
 emptyFile!public! !
 fileLocator!accessing!public! !

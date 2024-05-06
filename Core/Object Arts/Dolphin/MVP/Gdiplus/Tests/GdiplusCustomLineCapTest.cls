@@ -5,9 +5,13 @@ GdiplusTests subclass: #GdiplusCustomLineCapTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusCustomLineCapTest guid: (GUID fromString: '{11ce56c0-847e-11d7-b609-00e0987e8081}')!
+
 GdiplusCustomLineCapTest comment: ''!
+
 !GdiplusCustomLineCapTest categoriesForClass!Unclassified! !
+
 !GdiplusCustomLineCapTest methodsFor!
 
 setUp
@@ -64,6 +68,7 @@ testWidthScale
 	self assert: model widthScale equals: 1.
 	model widthScale: 2.5.
 	self assert: model widthScale equals: 2.5! !
+
 !GdiplusCustomLineCapTest categoriesForMethods!
 setUp!public!setup! !
 testBaseCap!public!unit tests! !

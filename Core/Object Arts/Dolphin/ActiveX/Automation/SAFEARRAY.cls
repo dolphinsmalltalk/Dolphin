@@ -5,13 +5,16 @@ GenericExternalArray subclass: #SAFEARRAY
 	classVariableNames: '_OffsetOf_cbElements _OffsetOf_cDims _OffsetOf_cLocks _OffsetOf_fFeatures _OffsetOf_pvData _OffsetOf_rgsabound'
 	poolDictionaries: 'AXAutomationConstants AXAutomationErrors'
 	classInstanceVariableNames: ''!
+
 SAFEARRAY guid: (GUID fromString: '{c06f3b6a-0868-11d3-93af-00a024ca708a}')!
+
 SAFEARRAY addClassConstant: '_OffsetOf_cbElements' value: 16r4!
 SAFEARRAY addClassConstant: '_OffsetOf_cDims' value: 16r0!
 SAFEARRAY addClassConstant: '_OffsetOf_cLocks' value: 16r8!
 SAFEARRAY addClassConstant: '_OffsetOf_fFeatures' value: 16r2!
 SAFEARRAY addClassConstant: '_OffsetOf_pvData' value: 16rC!
 SAFEARRAY addClassConstant: '_OffsetOf_rgsabound' value: 16r10!
+
 SAFEARRAY comment: 'SAFEARRAY is an <ExternalArray> class to represent the OLE Automation arrays.
 
 SAFEARRAYs are a flexible representation of potentially multiple dimensioned arrays of almost any of the Variant (Visual Basic) types.
@@ -24,7 +27,9 @@ Instance Variables:
 	data		<ExternalAddress>. Pointer to data of array, when locked.
 	start		<integer>. Lower bound of rightmost (least significant) dimension.
 '!
+
 !SAFEARRAY categoriesForClass!External-Data-Structured! !
+
 !SAFEARRAY methodsFor!
 
 _deepenShallowCopy: clone trail: copiesDictionary
@@ -399,6 +404,7 @@ with: otherCollection do: operation
 		operation
 			value: elem
 			value: (otherCollection at: i)]! !
+
 !SAFEARRAY categoriesForMethods!
 _deepenShallowCopy:trail:!copying!private! !
 accessData!helpers!private! !
@@ -659,6 +665,7 @@ vt
 	depend on the element type, but it will always include this array modifier."
 
 	^VT_ARRAY! !
+
 !SAFEARRAY class categoriesForMethods!
 clear:!public!realizing/unrealizing! !
 createVector:vt:extra:!helpers!private! !

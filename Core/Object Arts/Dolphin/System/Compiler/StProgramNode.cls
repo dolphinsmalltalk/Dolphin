@@ -5,10 +5,14 @@ Object subclass: #StProgramNode
 	classVariableNames: 'FormatterClass InlinedBlockSelectors OptimizedSelectors SuperSearch'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StProgramNode guid: (GUID fromString: '{3e45084e-5de8-40c0-b448-c53339a17b52}')!
+
 StProgramNode isAbstract: true!
+
 StProgramNode addClassConstant: 'InlinedBlockSelectors' value: #(#ifTrue: #ifTrue:ifFalse: #ifFalse: #ifFalse:ifTrue: #whileTrue: #whileTrue #whileFalse: #whileFalse #to:do: #to:by:do: #and: #or: #repeat #ifNil: #ifNotNil: #ifNil:ifNotNil: #ifNotNil:ifNil:)!
 StProgramNode addClassConstant: 'OptimizedSelectors' value: #(#ifTrue: #ifTrue:ifFalse: #ifFalse: #ifFalse:ifTrue: #whileTrue: #whileTrue #whileFalse: #whileFalse #to:do: #to:by:do: #and: #or: #repeat #ifNil: #ifNotNil: #ifNil:ifNotNil: #ifNotNil:ifNil: #yourself)!
+
 StProgramNode comment: 'StProgramNode is an abstract class that represents a parse tree node in a Smalltalk program.
 
 Subclasses must implement the following messages:
@@ -31,7 +35,9 @@ Instance Variables:
 	parent	<StProgramNode>	the node we''re contained in
 
 '!
+
 !StProgramNode categoriesForClass!System-Compiler! !
+
 !StProgramNode methodsFor!
 
 acceptVisitor: aProgramNodeVisitor
@@ -389,6 +395,7 @@ whoDefines: aName
 	^(self defines: aName) 
 		ifTrue: [self]
 		ifFalse: [parent notNil ifTrue: [parent whoDefines: aName] ifFalse: [nil]]! !
+
 !StProgramNode categoriesForMethods!
 acceptVisitor:!public!visitor! !
 addComments:!accessing!public! !
@@ -502,6 +509,7 @@ inlinedBlockSelectors
 
 optimizedSelectors
 	^OptimizedSelectors! !
+
 !StProgramNode class categoriesForMethods!
 defaultFormatterClass!constants!public! !
 formatterClass!accessing!public! !

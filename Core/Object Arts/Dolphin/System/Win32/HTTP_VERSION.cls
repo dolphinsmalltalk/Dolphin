@@ -5,9 +5,12 @@ HttpServerStructure subclass: #HTTP_VERSION
 	classVariableNames: '_OffsetOf_MajorVersion _OffsetOf_MinorVersion'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 HTTP_VERSION guid: (GUID fromString: '{f6a0c406-b01a-4701-aa8c-d4c1a0d2b1a5}')!
+
 HTTP_VERSION addClassConstant: '_OffsetOf_MajorVersion' value: 16r0!
 HTTP_VERSION addClassConstant: '_OffsetOf_MinorVersion' value: 16r2!
+
 HTTP_VERSION comment: '<HTTP_VERSION> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_VERSION'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -23,7 +26,9 @@ struct tagHTTP_VERSION {
 	[readonly, helpstring("Minor version of the HTTP protocol.")] USHORT MinorVersion;
 } HTTP_VERSION;
 '!
+
 !HTTP_VERSION categoriesForClass!WinHttpServer-Structs! !
+
 !HTTP_VERSION methodsFor!
 
 MajorVersion
@@ -41,6 +46,7 @@ printFields: aCollection on: aStream limit: anInteger
 		print: self MajorVersion;
 		nextPut: $.;
 		print: self MinorVersion! !
+
 !HTTP_VERSION categoriesForMethods!
 MajorVersion!**compiled accessors**!public! !
 MinorVersion!**compiled accessors**!public! !
@@ -68,6 +74,7 @@ defineFields
 
 getFieldNames
 	^#(#MajorVersion #MinorVersion)! !
+
 !HTTP_VERSION class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

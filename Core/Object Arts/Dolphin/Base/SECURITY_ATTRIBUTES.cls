@@ -5,10 +5,13 @@ Win32Structure subclass: #SECURITY_ATTRIBUTES
 	classVariableNames: '_OffsetOf_bInheritHandle _OffsetOf_dwSize _OffsetOf_lpSecurityDescriptor'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SECURITY_ATTRIBUTES guid: (GUID fromString: '{f44c9145-2b3f-11d3-8368-7a8b5a000000}')!
+
 SECURITY_ATTRIBUTES addClassConstant: '_OffsetOf_bInheritHandle' value: 16r8!
 SECURITY_ATTRIBUTES addClassConstant: '_OffsetOf_dwSize' value: 16r0!
 SECURITY_ATTRIBUTES addClassConstant: '_OffsetOf_lpSecurityDescriptor' value: 16r4!
+
 SECURITY_ATTRIBUTES comment: '<SECURITY_ATTRIBUTES> is an <ExternalStructure> class to wrap the struct ''Win32.SECURITY_ATTRIBUTES'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
@@ -25,7 +28,9 @@ struct tagSECURITY_ATTRIBUTES {
 	[helpstring("Specifies whether the returned handle is inherited when a new process is created. If this member is TRUE, the new process inherits the handle.")] BOOL bInheritHandle;
 } SECURITY_ATTRIBUTES;
 '!
+
 !SECURITY_ATTRIBUTES categoriesForClass!Win32-Structs! !
+
 !SECURITY_ATTRIBUTES methodsFor!
 
 bInheritHandle
@@ -52,6 +57,7 @@ lpSecurityDescriptor: anExternalAddress
 	"Set the receiver's 'lpSecurityDescriptor' field to the value of the argument, anExternalAddress"
 
 	bytes uintPtrAtOffset: _OffsetOf_lpSecurityDescriptor put: anExternalAddress! !
+
 !SECURITY_ATTRIBUTES categoriesForMethods!
 bInheritHandle!**compiled accessors**!public! !
 bInheritHandle:!**compiled accessors**!public! !
@@ -82,6 +88,7 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #lpSecurityDescriptor #bInheritHandle)! !
+
 !SECURITY_ATTRIBUTES class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

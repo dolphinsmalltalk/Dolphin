@@ -5,9 +5,13 @@ AbstractDictionaryTest subclass: #DictionaryTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DictionaryTest guid: (GUID fromString: '{733b8918-1913-46df-995e-67541bd596aa}')!
+
 DictionaryTest comment: ''!
+
 !DictionaryTest categoriesForClass!Unclassified! !
+
 !DictionaryTest methodsFor!
 
 collectionClass
@@ -33,6 +37,7 @@ testAtIfAbsentPutValue
 	self assert: dictionary size identicalTo: initialSize + 1.
 	self assert: (dictionary at: f ifAbsentPutValue: 2) identicalTo: f.
 	self assert: dictionary size identicalTo: initialSize + 1! !
+
 !DictionaryTest categoriesForMethods!
 collectionClass!helpers!private! !
 testAllInstancesValid!public!unit tests! !

@@ -5,9 +5,13 @@ EventsCollection variableSubclass: #NullEventsCollection
 	classVariableNames: 'Current'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 NullEventsCollection guid: (GUID fromString: '{9d0ad247-c847-4473-9195-be26bea0567b}')!
+
 NullEventsCollection comment: 'NullEventsCollection is a special events collection used when a receiver has no event subscriptions. Its purpose is to increase performance for this common case.'!
+
 !NullEventsCollection categoriesForClass!Kernel-Objects! !
+
 !NullEventsCollection methodsFor!
 
 asMinimumRepresentation
@@ -63,6 +67,7 @@ triggerEvent: aSymbol withArguments: anArray
 	with the specified arguments. Answer the result of the last evaluation, or nil if none."
 
 	^nil! !
+
 !NullEventsCollection categoriesForMethods!
 asMinimumRepresentation!converting!private! !
 hasActionsForEvent:!private!testing! !
@@ -83,6 +88,7 @@ current
 
 initialize
 	Current := self new! !
+
 !NullEventsCollection class categoriesForMethods!
 current!accessing!public! !
 initialize!initializing!public! !

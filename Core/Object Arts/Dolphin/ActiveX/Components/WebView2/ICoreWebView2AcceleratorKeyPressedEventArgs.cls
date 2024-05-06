@@ -5,7 +5,9 @@ ICoreWebView2EventArgs subclass: #ICoreWebView2AcceleratorKeyPressedEventArgs
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2AcceleratorKeyPressedEventArgs guid: (IID fromString: '{9f760f8a-fb79-42be-9990-7b56900fa9c7}')!
+
 ICoreWebView2AcceleratorKeyPressedEventArgs comment: '`ICoreWebView2AcceleratorKeyPressedEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2AcceleratorKeyPressedEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -41,7 +43,9 @@ interface ICoreWebView2AcceleratorKeyPressedEventArgs : IUnknown
 };
 ```
 '!
+
 !ICoreWebView2AcceleratorKeyPressedEventArgs categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2AcceleratorKeyPressedEventArgs methodsFor!
 
 get_Handled: handled
@@ -157,6 +161,7 @@ virtualKey
 
 windowsKeyEvent
 	^#('WM_KEYDOWN' 'WM_KEYUP' 'WM_SYSKEYDOWN' 'WM_SYSKEYUP') at: self keyEventKind + 1! !
+
 !ICoreWebView2AcceleratorKeyPressedEventArgs categoriesForMethods!
 get_Handled:!**auto generated**!COM Interfaces-ICoreWebView2AcceleratorKeyPressedEventArgs!private! !
 get_KeyEventKind:!**auto generated**!COM Interfaces-ICoreWebView2AcceleratorKeyPressedEventArgs!private! !
@@ -195,6 +200,7 @@ defineFunctions
 		defineFunction: #put_Handled:
 			argumentTypes: 'sdword'
 ! !
+
 !ICoreWebView2AcceleratorKeyPressedEventArgs class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

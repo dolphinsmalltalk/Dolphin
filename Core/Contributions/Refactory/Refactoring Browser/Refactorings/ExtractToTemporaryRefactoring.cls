@@ -5,9 +5,13 @@ MethodRefactoring subclass: #ExtractToTemporaryRefactoring
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExtractToTemporaryRefactoring guid: (GUID fromString: '{78588408-02af-46be-9f03-34d63854d1f1}')!
+
 ExtractToTemporaryRefactoring comment: ''!
+
 !ExtractToTemporaryRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !ExtractToTemporaryRefactoring methodsFor!
 
 checkVariableName
@@ -106,6 +110,7 @@ verifySelectedInterval
 				onError: [:message :position | self refactoringError: 'Invalid selection'].
 	selectedParseTree isSequence 
 		ifTrue: [self refactoringError: 'Cannot assign temp from multiple statements']! !
+
 !ExtractToTemporaryRefactoring categoriesForMethods!
 checkVariableName!preconditions!public! !
 compileNewMethod!public!transforming! !
@@ -137,6 +142,7 @@ model: aRBNamespace extract: anInterval to: aString from: aSelector in: aClass
 			from: aSelector
 			in: aClass;
 		yourself! !
+
 !ExtractToTemporaryRefactoring class categoriesForMethods!
 extract:to:from:in:!instance creation!public! !
 model:extract:to:from:in:!instance creation!public! !

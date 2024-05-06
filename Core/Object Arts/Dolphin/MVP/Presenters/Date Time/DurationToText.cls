@@ -5,13 +5,17 @@ AbstractToTextConverter subclass: #DurationToText
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DurationToText guid: (GUID fromString: '{b7c9ede3-d5d2-494f-8569-58ec71e88b89}')!
+
 DurationToText comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
+
 !DurationToText categoriesForClass!IDB Goodies!MVP-Type Converters-Text! !
+
 !DurationToText methodsFor!
 
 format
@@ -49,6 +53,7 @@ rightToLeft: aString
 		hours: (values at: 3) truncated
 		minutes: (values at: 2) truncated
 		seconds: (values at: 1)! !
+
 !DurationToText categoriesForMethods!
 format!accessing!public! !
 format:!accessing!public! !

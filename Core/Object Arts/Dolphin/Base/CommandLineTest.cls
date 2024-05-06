@@ -5,9 +5,13 @@ TestCase subclass: #CommandLineTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 CommandLineTest guid: (GUID fromString: '{3a8a3bc5-3ef6-46c1-933b-754c6b06457e}')!
+
 CommandLineTest comment: ''!
+
 !CommandLineTest categoriesForClass!SUnit! !
+
 !CommandLineTest methodsFor!
 
 dolphinLauncherExe
@@ -477,6 +481,7 @@ testUnrecognizedOption
 				options: 'abc:';
 				yourself.
 	self expectError: 'Unrecognized option: d' parsing: commandLine! !
+
 !CommandLineTest categoriesForMethods!
 dolphinLauncherExe!private! !
 dproImageName!private! !

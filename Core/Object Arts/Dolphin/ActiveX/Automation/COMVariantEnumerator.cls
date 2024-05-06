@@ -5,9 +5,13 @@ COMEnumerator subclass: #COMVariantEnumerator
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 COMVariantEnumerator guid: (GUID fromString: '{537c1340-a1b1-11d3-b376-080046056106}')!
+
 COMVariantEnumerator comment: 'COMInterfaceEnumerator is Dolphin''s implementation of <IEnumVARIANT>.'!
+
 !COMVariantEnumerator categoriesForClass!COM-Implementations! !
+
 !COMVariantEnumerator methodsFor!
 
 nextElement
@@ -16,6 +20,7 @@ nextElement
 	we get a true copy for an output argument."
 
 	^contents next copy detach! !
+
 !COMVariantEnumerator categoriesForMethods!
 nextElement!COM Interfaces-IEnumXXXX!private! !
 !

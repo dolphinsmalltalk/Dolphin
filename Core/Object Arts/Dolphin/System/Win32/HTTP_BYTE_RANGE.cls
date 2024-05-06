@@ -5,9 +5,12 @@ HttpServerStructure subclass: #HTTP_BYTE_RANGE
 	classVariableNames: '_OffsetOf_Length _OffsetOf_StartingOffset'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 HTTP_BYTE_RANGE guid: (GUID fromString: '{3426318c-022f-4dd9-9e4e-a04febf70a10}')!
+
 HTTP_BYTE_RANGE addClassConstant: '_OffsetOf_Length' value: 16r8!
 HTTP_BYTE_RANGE addClassConstant: '_OffsetOf_StartingOffset' value: 16r0!
+
 HTTP_BYTE_RANGE comment: '<HTTP_BYTE_RANGE> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_BYTE_RANGE'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -23,7 +26,9 @@ struct tagHTTP_BYTE_RANGE {
 	[helpstring("Size, in bytes, of the range. If this member is HTTP_BYTE_RANGE_TO_EOF, the range extends from the starting offset to the end of the file or data block.")] ULARGE_INTEGER Length;
 } HTTP_BYTE_RANGE;
 '!
+
 !HTTP_BYTE_RANGE categoriesForClass!WinHttpServer-Structs! !
+
 !HTTP_BYTE_RANGE methodsFor!
 
 Length
@@ -45,6 +50,7 @@ StartingOffset: anInteger
 	"Set the receiver's 'StartingOffset' field to the value of the argument, anInteger"
 
 	bytes qwordAtOffset: _OffsetOf_StartingOffset put: anInteger! !
+
 !HTTP_BYTE_RANGE categoriesForMethods!
 Length!**compiled accessors**!public! !
 Length:!**compiled accessors**!public! !
@@ -73,6 +79,7 @@ defineFields
 
 getFieldNames
 	^#(#StartingOffset #Length)! !
+
 !HTTP_BYTE_RANGE class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

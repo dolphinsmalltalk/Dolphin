@@ -5,9 +5,13 @@ OLEFinalizableStructure subclass: #AXRecord
 	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants AXAutomationErrors'
 	classInstanceVariableNames: ''!
+
 AXRecord guid: (GUID fromString: '{4c783c74-4472-47ad-901f-ceb9de79dd8b}')!
+
 AXRecord comment: ''!
+
 !AXRecord categoriesForClass!Unclassified! !
+
 !AXRecord methodsFor!
 
 basicFree
@@ -129,6 +133,7 @@ setRecordInfo: anIRecordInfo owner: dataOwner
 
 	recordInfo := anIRecordInfo.
 	owner := dataOwner! !
+
 !AXRecord categoriesForMethods!
 basicFree!private!realizing/unrealizing! !
 byteSize!accessing!public! !
@@ -185,6 +190,7 @@ newWithRecordInfo: recInfo
 		setRecordInfo: recInfo owner: nil;
 		initialize;
 		yourself! !
+
 !AXRecord class categoriesForMethods!
 clear:!public!realizing/unrealizing! !
 fromAddress:!instance creation!public! !

@@ -3,7 +3,6 @@ package := Package name: 'OLE Persistence and Data Transfer Tests'.
 package paxVersion: 1;
 	basicComment: ''.
 
-
 package classNames
 	add: #IMonikerTest;
 	yourself.
@@ -31,11 +30,6 @@ DolphinTest subclass: #IMonikerTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

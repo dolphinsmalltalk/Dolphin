@@ -5,10 +5,15 @@ ExternalMemory variableByteSubclass: #COMTaskMemory
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 COMTaskMemory guid: (GUID fromString: '{87b4c51b-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 COMTaskMemory isIndirection: true!
+
 COMTaskMemory comment: ''!
+
 !COMTaskMemory categoriesForClass!External-Data-Unstructured! !
+
 !COMTaskMemory class methodsFor!
 
 allocator
@@ -24,6 +29,7 @@ initialize
 	"
 
 	self extraInstanceSpec: 4! !
+
 !COMTaskMemory class categoriesForMethods!
 allocator!accessing!private! !
 initialize!development!initializing!private! !

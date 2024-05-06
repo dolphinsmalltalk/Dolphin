@@ -5,9 +5,13 @@ CollectionPresenter subclass: #HashedCollectionPresenter
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 HashedCollectionPresenter guid: (GUID fromString: '{1a16cca4-5c91-49d9-9a87-4b4a340299d9}')!
+
 HashedCollectionPresenter comment: ''!
+
 !HashedCollectionPresenter categoriesForClass!MVP-Presenters! !
+
 !HashedCollectionPresenter methodsFor!
 
 addElement: anObject
@@ -55,6 +59,7 @@ removeItem
 	item := listPresenter selection.
 	self removeElement: item.
 	self onValueChanged! !
+
 !HashedCollectionPresenter categoriesForMethods!
 addElement:!adding!private! !
 addItem:!operations!public! !

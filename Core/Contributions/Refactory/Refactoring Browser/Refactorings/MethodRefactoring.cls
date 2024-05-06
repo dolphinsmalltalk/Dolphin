@@ -5,9 +5,13 @@ Refactoring subclass: #MethodRefactoring
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MethodRefactoring guid: (GUID fromString: '{f93954e7-217f-4070-b44d-b7d1f1bc74d3}')!
+
 MethodRefactoring comment: ''!
+
 !MethodRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !MethodRefactoring methodsFor!
 
 buildSelectorString: aSelector
@@ -29,6 +33,7 @@ buildSelectorString: aSelector withPermuteMap: anIntegerCollection
 				nextPutAll: i printString;
 				nextPut: $ ].
 	^stream contents! !
+
 !MethodRefactoring categoriesForMethods!
 buildSelectorString:!private! !
 buildSelectorString:withPermuteMap:!private! !

@@ -5,12 +5,16 @@ ObjectRegistry subclass: #WeakRegistry
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 WeakRegistry guid: (GUID fromString: '{87b4c67f-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 WeakRegistry comment: 'WeakRegistry comment: ''WeakRegistry is the class of <ObjectRegistry>s which maintain only a weak reference to registered objects. Thus registration in a WeakRegistry will not prevent the registrant from being garbage collected, which makes it useful where a unique identifier is needed for an object only for as long as it is still referred to from elsewhere in the image. An example usage is the register of extant <ExternalCallback> objects.
 
 The superclass instance variable ''''registry'''' is initialized to an <WeakArray> in instances of this class. The slots of the array are populated either with registered objects, or with the corpse object (i.e. the DeadObject singleton instance). When a new object is registered the first slot currently occuppied by a corpse is used, unless there are no ''''dead'''' entries, in which case the weak array is resized to increase its capacity. The integer key associated with a registered object is its index in the array.
 '!
+
 !WeakRegistry categoriesForClass!System-Support! !
+
 !WeakRegistry methodsFor!
 
 addAnsweringIndex: anObject
@@ -33,6 +37,7 @@ removeAtIndex: anInteger
 	object := registry basicAt: anInteger.
 	registry basicAt: anInteger put: DeadObject current.
 	^object! !
+
 !WeakRegistry categoriesForMethods!
 addAnsweringIndex:!adding!public! !
 initialize:!initializing!private! !

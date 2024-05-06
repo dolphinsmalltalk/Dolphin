@@ -5,14 +5,18 @@ ValueConvertingControlView subclass: #ScrollBar
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ScrollBar guid: (GUID fromString: '{87b4c738-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 ScrollBar comment: 'ScrollBar is a <valueView> implementing the Windows "msctls_progress32" common control. The <valueModel> associated with a ScrollBar must always yield an <integer> value when mapped through the installed type converter. A ScrollBar will normally be used in conjunction with a <NumberPresenter>.
 
 Instance Variables:
 	continuousTracking	<boolean> indicating whether the bar issues notification messages while being dragged.
 
 '!
+
 !ScrollBar categoriesForClass!MVP-Views! !
+
 !ScrollBar methodsFor!
 
 calculateExtent: aLayoutContext 
@@ -182,6 +186,7 @@ state
 		yourself
 
 ! !
+
 !ScrollBar categoriesForMethods!
 calculateExtent:!geometry!private! !
 defaultExtent!constants!private! !
@@ -230,6 +235,7 @@ winClassName
 
 	^'SCROLLBAR'
 ! !
+
 !ScrollBar class categoriesForMethods!
 defaultHeight!constants!public! !
 defaultModel!models!public! !

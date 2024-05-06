@@ -5,16 +5,21 @@ OLEFinalizableStructure subclass: #STGMEDIUM
 	classVariableNames: '_OffsetOf_handle _OffsetOf_lpszFileName _OffsetOf_pstg _OffsetOf_pstm _OffsetOf_pUnkForRelease _OffsetOf_tymed GetSelectors'
 	poolDictionaries: 'OLEPersistConstants'
 	classInstanceVariableNames: ''!
+
 STGMEDIUM guid: (GUID fromString: '{cc17569a-49c6-475d-a47c-86eaae187d18}')!
+
 STGMEDIUM addClassConstant: '_OffsetOf_handle' value: 16r4!
 STGMEDIUM addClassConstant: '_OffsetOf_lpszFileName' value: 16r4!
 STGMEDIUM addClassConstant: '_OffsetOf_pstg' value: 16r4!
 STGMEDIUM addClassConstant: '_OffsetOf_pstm' value: 16r4!
 STGMEDIUM addClassConstant: '_OffsetOf_pUnkForRelease' value: 16r8!
 STGMEDIUM addClassConstant: '_OffsetOf_tymed' value: 16r0!
+
 STGMEDIUM comment: 'Note: It might be preferable to apply the conditional elimination refactoring and employ different STGMEDIUM subclasses to represent the different types, but as we frequently don''t get to create the STGMEDIUM, we''d need some kind of downcast. I''m thinking about it though. At least we can use ReleaseStgMedium() to avoid the need for a switch on release.
 '!
+
 !STGMEDIUM categoriesForClass!No category! !
+
 !STGMEDIUM methodsFor!
 
 bitmap
@@ -208,6 +213,7 @@ value
 	"Answer the 'value' currently contained in the receiver (which is a tag discriminated union)."
 
 	^self perform: (GetSelectors at: self tymed)! !
+
 !STGMEDIUM categoriesForMethods!
 bitmap!accessing!public! !
 bitmap:!accessing!public! !
@@ -314,6 +320,7 @@ initializeMessageMap
 						TYMED_ISTREAM -> #pstm.
 						TYMED_ISTORAGE -> #pstg.
 						TYMED_NULL -> #null}! !
+
 !STGMEDIUM class categoriesForMethods!
 clear:!public!realizing/unrealizing! !
 defineFields!public!template definition! !

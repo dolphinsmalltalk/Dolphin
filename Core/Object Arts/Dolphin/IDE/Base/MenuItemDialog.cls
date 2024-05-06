@@ -5,7 +5,9 @@ Dialog subclass: #MenuItemDialog
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MenuItemDialog guid: (GUID fromString: '{ec0e406d-75f7-437d-8d69-34cfd92846b7}')!
+
 MenuItemDialog comment: 'MenuItemDialog is the abstract class of <dialogPresenter>s used to edit menu entries.
 
 Instance Variables:
@@ -15,7 +17,9 @@ Instance Variables:
 	imageModel			<ValueAspectAdaptor>
 	iconIdPresenter		<TextPresenter>
 '!
+
 !MenuItemDialog categoriesForClass!Unclassified! !
+
 !MenuItemDialog methodsFor!
 
 chooseIcon
@@ -84,6 +88,7 @@ queryCommand: aCommandQuery
 			[aCommandQuery isEnabled: imageModel value notNil.
 			^true].
 	^super queryCommand: aCommandQuery ! !
+
 !MenuItemDialog categoriesForMethods!
 chooseIcon!commands!private! !
 clearIcon!commands!private! !
@@ -103,6 +108,7 @@ icon
 
 	^Menu icon
 ! !
+
 !MenuItemDialog class categoriesForMethods!
 icon!constants!public! !
 !

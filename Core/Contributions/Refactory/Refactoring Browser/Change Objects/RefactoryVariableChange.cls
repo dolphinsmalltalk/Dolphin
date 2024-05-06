@@ -5,10 +5,15 @@ RefactoryClassChange subclass: #RefactoryVariableChange
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoryVariableChange guid: (GUID fromString: '{e776f08f-009c-4de7-ae6e-6658922002a0}')!
+
 RefactoryVariableChange isAbstract: true!
+
 RefactoryVariableChange comment: ''!
+
 !RefactoryVariableChange categoriesForClass!Refactory-Change Objects! !
+
 !RefactoryVariableChange methodsFor!
 
 = aRefactoryVariableChange 
@@ -44,6 +49,7 @@ primitiveExecute
 
 variable
 	^variable! !
+
 !RefactoryVariableChange categoriesForMethods!
 =!comparing!public! !
 changeObject!private! !
@@ -68,6 +74,7 @@ remove: aVariable from: aBehavior
 	but is here so we don't need to copy it to all subclasses"
 
 	^self new class: aBehavior variable: aVariable! !
+
 !RefactoryVariableChange class categoriesForMethods!
 add:to:!instance creation!public! !
 remove:from:!instance creation!public! !

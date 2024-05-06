@@ -5,9 +5,13 @@ AbstractKeyboardTest subclass: #AcceleratorTableTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AcceleratorTableTest guid: (GUID fromString: '{ffc00c13-8da5-4b75-b82d-f96bba254efe}')!
+
 AcceleratorTableTest comment: ''!
+
 !AcceleratorTableTest categoriesForClass!Unclassified! !
+
 !AcceleratorTableTest methodsFor!
 
 numMultCode
@@ -91,6 +95,7 @@ testRoundTrippingKeyNames
 	localised := AcceleratorTable keyStringFromCode: self numMultCode.
 	self assert: localised equals: 'Alt+Num *'.
 	self assert: (AcceleratorTable keyCodeFromString: localised) equals: self numMultCode! !
+
 !AcceleratorTableTest categoriesForMethods!
 numMultCode!constants!private! !
 testKeycodeFromString!public!unit tests! !

@@ -5,13 +5,16 @@ ExternalStructure subclass: #OVERLAPPED
 	classVariableNames: '_OffsetOf_hEvent _OffsetOf_Internal _OffsetOf_InternalHigh _OffsetOf_Offset _OffsetOf_OffsetHigh _OffsetOf_Pointer'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 OVERLAPPED guid: (GUID fromString: '{301c9a7a-d4b4-42d5-895d-e658d212df5b}')!
+
 OVERLAPPED addClassConstant: '_OffsetOf_hEvent' value: 16r10!
 OVERLAPPED addClassConstant: '_OffsetOf_Internal' value: 16r0!
 OVERLAPPED addClassConstant: '_OffsetOf_InternalHigh' value: 16r4!
 OVERLAPPED addClassConstant: '_OffsetOf_Offset' value: 16r8!
 OVERLAPPED addClassConstant: '_OffsetOf_OffsetHigh' value: 16rC!
 OVERLAPPED addClassConstant: '_OffsetOf_Pointer' value: 16r8!
+
 OVERLAPPED comment: '<OVERLAPPED> is an <ExternalStructure> class to wrap the struct ''Win32.OVERLAPPED'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
@@ -35,7 +38,9 @@ struct tagOVERLAPPED {
 	[helpstring("A handle to the event that will be set to a signaled state by the system when the operation has completed.")] HANDLE hEvent;
 } OVERLAPPED;
 '!
+
 !OVERLAPPED categoriesForClass!Win32-Structs! !
+
 !OVERLAPPED methodsFor!
 
 hEvent
@@ -77,6 +82,7 @@ OffsetHigh: anInteger
 	"Set the receiver's 'OffsetHigh' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_OffsetHigh put: anInteger! !
+
 !OVERLAPPED categoriesForMethods!
 hEvent!**compiled accessors**!public! !
 hEvent:!**compiled accessors**!public! !
@@ -121,6 +127,7 @@ defineFields
 
 getFieldNames
 	^#(#Internal #InternalHigh #Offset #OffsetHigh #hEvent)! !
+
 !OVERLAPPED class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

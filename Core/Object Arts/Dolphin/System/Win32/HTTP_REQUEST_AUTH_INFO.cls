@@ -5,7 +5,9 @@ HttpServerStructure subclass: #HTTP_REQUEST_AUTH_INFO
 	classVariableNames: '_OffsetOf_AccessToken _OffsetOf_AuthStatus _OffsetOf_AuthType _OffsetOf_ContextAttributes _OffsetOf_Flags _OffsetOf_MutualAuthDataLength _OffsetOf_PackageNameLength _OffsetOf_PackedContext _OffsetOf_PackedContextLength _OffsetOf_PackedContextType _OffsetOf_pMutualAuthData _OffsetOf_pPackageName _OffsetOf_SecStatus'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 HTTP_REQUEST_AUTH_INFO guid: (GUID fromString: '{e0696c2e-1353-45e2-bdcc-a52b6142b827}')!
+
 HTTP_REQUEST_AUTH_INFO addClassConstant: '_OffsetOf_AccessToken' value: 16r10!
 HTTP_REQUEST_AUTH_INFO addClassConstant: '_OffsetOf_AuthStatus' value: 16r0!
 HTTP_REQUEST_AUTH_INFO addClassConstant: '_OffsetOf_AuthType' value: 16rC!
@@ -19,6 +21,7 @@ HTTP_REQUEST_AUTH_INFO addClassConstant: '_OffsetOf_PackedContextType' value: 16
 HTTP_REQUEST_AUTH_INFO addClassConstant: '_OffsetOf_pMutualAuthData' value: 16r28!
 HTTP_REQUEST_AUTH_INFO addClassConstant: '_OffsetOf_pPackageName' value: 16r30!
 HTTP_REQUEST_AUTH_INFO addClassConstant: '_OffsetOf_SecStatus' value: 16r4!
+
 HTTP_REQUEST_AUTH_INFO comment: '`HTTP_REQUEST_AUTH_INFO` is an `ExternalStructure` class to wrap the struct ''WinHttpServer.HTTP_REQUEST_AUTH_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -46,7 +49,9 @@ struct tagHTTP_REQUEST_AUTH_INFO {
 } HTTP_REQUEST_AUTH_INFO;
 ```
 '!
+
 !HTTP_REQUEST_AUTH_INFO categoriesForClass!WinHttpServer-Structs! !
+
 !HTTP_REQUEST_AUTH_INFO methodsFor!
 
 AccessToken
@@ -184,6 +189,7 @@ SecStatus: anInteger
 	"Set the receiver's 'SecStatus' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_SecStatus put: anInteger! !
+
 !HTTP_REQUEST_AUTH_INFO categoriesForMethods!
 AccessToken!**compiled accessors**!public! !
 AccessToken:!**compiled accessors**!public! !
@@ -256,6 +262,7 @@ defineFields
 
 getFieldNames
 	^#(#AuthStatus #SecStatus #Flags #AuthType #AccessToken #ContextAttributes #PackedContextLength #PackedContextType #PackedContext #MutualAuthDataLength #pMutualAuthData #PackageNameLength #pPackageName)! !
+
 !HTTP_REQUEST_AUTH_INFO class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

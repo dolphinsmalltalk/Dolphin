@@ -5,9 +5,13 @@ MainTestCase subclass: #FractionANSITest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 FractionANSITest guid: (GUID fromString: '{e0b31193-571f-4628-a0fb-3c93132af2c3}')!
+
 FractionANSITest comment: ''!
+
 !FractionANSITest categoriesForClass!Unclassified! !
+
 !FractionANSITest methodsFor!
 
 canonicalObject
@@ -990,6 +994,7 @@ testXtruncated
 		conformTo: #'number' selector: #'truncated'.
 	self value: [(-1/2) truncated] should: [:r | r = 0]
 		conformTo: #'number' selector: #'truncated'.! !
+
 !FractionANSITest categoriesForMethods!
 canonicalObject!public! !
 protocol!public! !

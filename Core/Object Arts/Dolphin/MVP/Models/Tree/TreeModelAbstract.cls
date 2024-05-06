@@ -5,8 +5,11 @@ Model subclass: #TreeModelAbstract
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TreeModelAbstract guid: (GUID fromString: '{87b4c66d-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 TreeModelAbstract isAbstract: true!
+
 TreeModelAbstract comment: 'TreeModelAbstract is the abstract superclass for classes implementing the <treeModel> protocol. All of the manipulations that modify  the underlying tree structure will trigger notification events such that Observers will be informed of the changes. The <treeModel> protocol defines the following events:
 
 #treeChanged:
@@ -19,7 +22,9 @@ Instance Variables:
 	searchPolicy		Pluggable <searchPolicy> used for comparing objects against those in the tree.
 
 '!
+
 !TreeModelAbstract categoriesForClass!MVP-Models! !
+
 !TreeModelAbstract methodsFor!
 
 add: leaf asChildOf: branch
@@ -426,6 +431,7 @@ withAllParents: anObject
 	^(self allParentsOf: anObject)
 		addLast: anObject;
 		yourself! !
+
 !TreeModelAbstract categoriesForMethods!
 add:asChildOf:!adding!public! !
 addRoot:!accessing!public! !
@@ -525,6 +531,7 @@ withRoots: aCollection searchPolicy: aSearchPolicy
 
 	^self basicNew
 		setRoots: aCollection searchPolicy: aSearchPolicy! !
+
 !TreeModelAbstract class categoriesForMethods!
 defaultSearchPolicy!constants!public! !
 icon!constants!public! !

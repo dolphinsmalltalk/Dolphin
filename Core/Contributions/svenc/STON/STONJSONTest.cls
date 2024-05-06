@@ -5,9 +5,13 @@ TestCase subclass: #STONJSONTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 STONJSONTest guid: (GUID fromString: '{437baf49-fca6-405c-9fb7-18b0c8f89f50}')!
+
 STONJSONTest comment: 'STONJSONTests contains unit tests for the JSON functionality available in STON.'!
+
 !STONJSONTest categoriesForClass!STON-Tests-Facade! !
+
 !STONJSONTest methodsFor!
 
 testBooleans
@@ -116,6 +120,7 @@ testUnknown
 	
 	self should: [ STONJSON toString: 1@2 ] raise: STONWriterError.
 	self should: [ STONJSON toString: #(1 2 3) asOrderedCollection ] raise: STONWriterError.! !
+
 !STONJSONTest categoriesForMethods!
 testBooleans!public!tests! !
 testCircular!public!tests! !

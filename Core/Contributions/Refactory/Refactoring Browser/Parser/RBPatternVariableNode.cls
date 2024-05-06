@@ -5,7 +5,9 @@ StVariableNode subclass: #RBPatternVariableNode
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RBPatternVariableNode guid: (GUID fromString: '{f486bd69-8849-4076-8297-971b56451981}')!
+
 RBPatternVariableNode comment: 'RBPatternVariableNode is a parse tree node that is used to match several other types of nodes (literals, variables, value nodes, statement nodes, and sequences of statement nodes).
 
 The different types of matches are determined by the name of the node. If the name contains a # character, then it will match a literal. If it contains, a . then it matches statements. If it contains no extra characters, then it matches only variables. These options are mutually exclusive.
@@ -21,7 +23,9 @@ Instance Variables:
 	recurseInto	<Boolean>	search for more matches in the node we match (`)
 
 '!
+
 !RBPatternVariableNode categoriesForClass!Refactory-Parser! !
+
 !RBPatternVariableNode methodsFor!
 
 copyInContext: aDictionary 
@@ -102,6 +106,7 @@ recurseInto
 setName: aString start: anInteger
 	super setName: aString start: anInteger.
 	self initializePatternVariables! !
+
 !RBPatternVariableNode categoriesForMethods!
 copyInContext:!matching!public! !
 identifierToken:!initialize/release!public! !
@@ -126,6 +131,7 @@ identifierToken: anIdentifierToken
 	^anIdentifierToken isPatternVariable
 		ifTrue: [self named: anIdentifierToken value start: anIdentifierToken start]
 		ifFalse: [RBVariableNode named: anIdentifierToken value start: anIdentifierToken start]! !
+
 !RBPatternVariableNode class categoriesForMethods!
 identifierToken:!instance creation!public! !
 !

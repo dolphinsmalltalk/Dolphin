@@ -5,9 +5,13 @@ RefactoringTest subclass: #RemoveMethodTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RemoveMethodTest guid: (GUID fromString: '{c62df609-c02a-4070-ae2d-e28d2e5b1603}')!
+
 RemoveMethodTest comment: ''!
+
 !RemoveMethodTest categoriesForClass!Refactory-Testing! !
+
 !RemoveMethodTest methodsFor!
 
 testModelRecursiveMethodThatIsNotReferencedFromOtherMethods
@@ -44,6 +48,7 @@ testRemoveReferenced
 testRemoveSameMethodButSendsSuper
 	self shouldWarn: (RemoveMethodRefactoring removeMethods: #(#new)
 				from: BasicLintRuleTest class)! !
+
 !RemoveMethodTest categoriesForMethods!
 testModelRecursiveMethodThatIsNotReferencedFromOtherMethods!public!tests! !
 testRemoveMethod!public!tests! !

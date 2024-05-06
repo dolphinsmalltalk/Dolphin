@@ -5,9 +5,13 @@ Object subclass: #VideoRecording
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 VideoRecording guid: (GUID fromString: '{62802c23-5ba3-4772-bfbe-a848ea29c27c}')!
+
 VideoRecording comment: 'VideoRecording is represents a programme recorded on a VideoTape. This class is part of the Video Library sample package. Please see the package comment for more details.'!
+
 !VideoRecording categoriesForClass!Samples! !
+
 !VideoRecording methodsFor!
 
 date
@@ -133,6 +137,7 @@ title: titleString
 	Accessor Method"
 
 	title := titleString! !
+
 !VideoRecording categoriesForMethods!
 date!accessing!public! !
 date:!accessing!public! !
@@ -164,6 +169,7 @@ new
 	"
 
 	^super new initialize! !
+
 !VideoRecording class categoriesForMethods!
 icon!constants!public! !
 new!instance creation!public! !

@@ -5,10 +5,13 @@ HttpServerStructure subclass: #HTTP_REQUEST_INFO
 	classVariableNames: '_OffsetOf_InfoLength _OffsetOf_InfoType _OffsetOf_pInfo'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 HTTP_REQUEST_INFO guid: (GUID fromString: '{8c37d370-da00-4186-b515-ebe6b57d8cc6}')!
+
 HTTP_REQUEST_INFO addClassConstant: '_OffsetOf_InfoLength' value: 16r4!
 HTTP_REQUEST_INFO addClassConstant: '_OffsetOf_InfoType' value: 16r0!
 HTTP_REQUEST_INFO addClassConstant: '_OffsetOf_pInfo' value: 16r8!
+
 HTTP_REQUEST_INFO comment: '<HTTP_REQUEST_INFO> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_REQUEST_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains no documentation for this struct
@@ -24,7 +27,9 @@ struct tagHTTP_REQUEST_INFO {
 	[nonbrowsable, helpstring("The request info data"), size_is("InfoLength")] void* pInfo;
 } HTTP_REQUEST_INFO;
 '!
+
 !HTTP_REQUEST_INFO categoriesForClass!WinHttpServer-Structs! !
+
 !HTTP_REQUEST_INFO methodsFor!
 
 info
@@ -72,6 +77,7 @@ pInfo: anExternalArray
 
 printFields: aCollection on: aStream limit: anInteger
 	aStream print: self info! !
+
 !HTTP_REQUEST_INFO categoriesForMethods!
 info!accessing!public! !
 InfoLength!**compiled accessors**!private! !
@@ -106,6 +112,7 @@ defineFields
 
 getFieldNames
 	^#(#InfoType #InfoLength #pInfo)! !
+
 !HTTP_REQUEST_INFO class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

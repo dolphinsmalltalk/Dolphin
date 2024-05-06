@@ -5,13 +5,16 @@ ValueConvertingControlView subclass: #TextEdit
 	classVariableNames: 'AlignmentMap EnMap FindDialogMessage FindDisabledMask FormatMap ModifiedMask ReadOnlyMask StaticMask UpdatePerCharMask WantTabMask'
 	poolDictionaries: 'TextEditConstants'
 	classInstanceVariableNames: ''!
+
 TextEdit guid: (GUID fromString: '{87b4c73a-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 TextEdit addClassConstant: 'FindDisabledMask' value: 16r20!
 TextEdit addClassConstant: 'ModifiedMask' value: 16r8!
 TextEdit addClassConstant: 'ReadOnlyMask' value: 16r1!
 TextEdit addClassConstant: 'StaticMask' value: 16r10!
 TextEdit addClassConstant: 'UpdatePerCharMask' value: 16r2!
 TextEdit addClassConstant: 'WantTabMask' value: 16r4!
+
 TextEdit comment: 'TextEdit is a <valueView> class that implements the Windows "EDIT" control for the displaying and editing of single line text. The <valueModel> associated with a TextEdit must always yield a <readableString> value when mapped through the installed type converter. A TextEdit will normally be used in conjunction with a <TextPresenter>. 
 
 The alignment of the text can be specified using the alignment aspect which can assume of of the following values: (#left, #center, #right). The #updatePerChar aspect, if set to true, will ensure that the editor''s associated model will be kept up to date with the view as each character is typed. If false, the update only takes place when the view loses focus.
@@ -27,7 +30,9 @@ Class Variables:
 	AlignmentMap	<LookupTable> mapping alignment <Symbol>s to Windows styles.
 	UpdatePerCharMask	<integer> mask for the update-per-char mode flag.
 '!
+
 !TextEdit categoriesForClass!MVP-Views! !
+
 !TextEdit methodsFor!
 
 alignment
@@ -1277,6 +1282,7 @@ wmSetFocus: message wParam: wParam lParam: lParam
 	Handled by #enSetFocus notification."
 
 	^nil! !
+
 !TextEdit categoriesForMethods!
 alignment!accessing!public! !
 alignment:!accessing!public! !
@@ -1479,6 +1485,7 @@ winClassName
 
 	^'EDIT'
 ! !
+
 !TextEdit class categoriesForMethods!
 icon!constants!public! !
 initialize!development!initializing!private! !

@@ -5,8 +5,11 @@ ListControlView subclass: #BasicListAbstract
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 BasicListAbstract guid: (GUID fromString: '{87b4c725-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 BasicListAbstract isAbstract: true!
+
 BasicListAbstract comment: 'BasicListAbstract is an abstract class conforming to the <listView> protocol. Its concrete subclasses are implementations of the original Windows list boxes and combination boxes. All <listView>s are intended to be used in conjunction with a <listModel> holding the list items.
 
 Instance Variables:
@@ -15,7 +18,9 @@ Instance Variables:
 	lastSel		<integer> or <Array> indicating the index(es) of the last single or multiple selection.
 
 '!
+
 !BasicListAbstract categoriesForClass!MVP-Views! !
+
 !BasicListAbstract methodsFor!
 
 basicAdd: anObject 
@@ -242,6 +247,7 @@ updateSelectionCache
 	"Private - If there is a cached selection, update it."
 
 	lastSelIndices notEmpty ifTrue: [lastSelIndices := self getSelectionsByIndex]! !
+
 !BasicListAbstract categoriesForMethods!
 basicAdd:!adding!private! !
 basicRefreshContents!private!updating! !
@@ -282,6 +288,7 @@ value: anObject
 	valuable, mainly to save space in view resources."
 
 	^anObject displayString! !
+
 !BasicListAbstract class categoriesForMethods!
 value:!evaluating!private! !
 !

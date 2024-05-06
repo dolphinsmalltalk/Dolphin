@@ -5,11 +5,16 @@ Win32Structure subclass: #TBADDBITMAP
 	classVariableNames: '_OffsetOf_hInst _OffsetOf_nID'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TBADDBITMAP guid: (GUID fromString: '{87b4c613-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 TBADDBITMAP addClassConstant: '_OffsetOf_hInst' value: 16r0!
 TBADDBITMAP addClassConstant: '_OffsetOf_nID' value: 16r4!
+
 TBADDBITMAP comment: ''!
+
 !TBADDBITMAP categoriesForClass!External-Data-Structured!External-Data-Structured-Win32! !
+
 !TBADDBITMAP methodsFor!
 
 hInst: anInteger
@@ -21,6 +26,7 @@ nID: anInteger
 	"Set the receiver's 'nID' field to the value of the argument, anInteger"
 
 	bytes uintPtrAtOffset: _OffsetOf_nID put: anInteger! !
+
 !TBADDBITMAP categoriesForMethods!
 hInst:!**compiled accessors**!public! !
 nID:!**compiled accessors**!public! !
@@ -44,6 +50,7 @@ defineFields
 
 getFieldNames
 	^#(#hInst #nID)! !
+
 !TBADDBITMAP class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

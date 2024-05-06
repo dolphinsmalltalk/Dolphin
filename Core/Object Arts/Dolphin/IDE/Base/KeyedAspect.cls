@@ -5,9 +5,13 @@ Aspect subclass: #KeyedAspect
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 KeyedAspect guid: (GUID fromString: '{87b4c4d9-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 KeyedAspect comment: 'Part of the PublishedAspectorInspector framework. KeyedAspect instances are used to describe the published aspects of a keyed collection. Typically these are accessed via #at: and #at:put: messages as governed by the KeyedAspectAccessor class.'!
+
 !KeyedAspect categoriesForClass!Attribute-Definition! !
+
 !KeyedAspect methodsFor!
 
 = comperand
@@ -49,6 +53,7 @@ writeInto: subjectObject value: valueObject
 	to valueObject."
 
 	^subjectObject at: self key put: valueObject! !
+
 !KeyedAspect categoriesForMethods!
 =!comparing!public! !
 displayAspectNameOf:on:!displaying!private! !
@@ -67,6 +72,7 @@ key: aKey
 	"Answer an instance of the receiver created with aKey"
 
 	^self name: aKey! !
+
 !KeyedAspect class categoriesForMethods!
 key:!instance creation!public! !
 !

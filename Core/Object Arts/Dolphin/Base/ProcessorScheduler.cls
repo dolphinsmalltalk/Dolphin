@@ -5,7 +5,9 @@ Object subclass: #ProcessorScheduler
 	classVariableNames: 'ConstWriteSignal InterruptSelectors'
 	poolDictionaries: 'Win32Errors'
 	classInstanceVariableNames: ''!
+
 ProcessorScheduler guid: (GUID fromString: '{87b4c4aa-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 ProcessorScheduler comment: 'The singleton instance of ProcessorScheduler (the global, Processor) manages the set of live, ready to run, processes, scheduling the interpreter in a round-robin fashion but in strict priority order.
 
 Processor is the destination for all asynchronous interrupts from the VM, and also manages ''callbacks'' (i.e. invocations of Smalltalk code from external systems, such as the dispatching of windows messages to the window procedure). In particular the Processor ensures that processes return from callbacks in strict LIFO order so that synchronization with the native machine stack is maintained.
@@ -24,7 +26,9 @@ Instance Variables:
 		
 Class Variables:
 	InterruptSelectors	<Array> of <Symbol> selectors for each of the interrupt numbers sent by the VM.'!
+
 !ProcessorScheduler categoriesForClass!Kernel-Processes! !
+
 !ProcessorScheduler methodsFor!
 
 activePriority
@@ -628,6 +632,7 @@ zeroDivide: interruptArg
 
 	self enableInterrupts.
 	ZeroDivide dividend: interruptArg! !
+
 !ProcessorScheduler categoriesForMethods!
 activePriority!processes-accessing!public! !
 activeProcess!debugger-step over!processes-accessing!public! !
@@ -732,6 +737,7 @@ newPriorities: highestPriority activeProcess: aProcess
 	"Private - Create Processor during boot."
 
 	^self basicNew setHighestPriority: highestPriority activeProcess: aProcess! !
+
 !ProcessorScheduler class categoriesForMethods!
 initialize!development!initializing!public! !
 initializeInterruptSelectors!initializing!must not strip!private! !

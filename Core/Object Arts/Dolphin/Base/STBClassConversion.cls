@@ -5,9 +5,13 @@ Object subclass: #STBClassConversion
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 STBClassConversion guid: (GUID fromString: '{87b4c4c0-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 STBClassConversion comment: ''!
+
 !STBClassConversion categoriesForClass!System-Binary storage! !
+
 !STBClassConversion methodsFor!
 
 converterBlock
@@ -78,6 +82,7 @@ version: versionInteger prefix: anInteger filer: anSTBInFiler
 	self isBytes: (anInteger allMask: STBPrefix.BytesMask).
 	isVariable := anInteger allMask: STBPrefix.VariableMask.
 	filer := anSTBInFiler! !
+
 !STBClassConversion categoriesForMethods!
 converterBlock!accessing!public! !
 converterBlock:!accessing!public! !
@@ -104,6 +109,7 @@ forFiler: anSTBInFiler class: aClass version: oldVersion prefix: anInteger
 				filer: anSTBInFiler.
 	format converterBlock: (aClass stbConvertFrom: format).
 	^format! !
+
 !STBClassConversion class categoriesForMethods!
 forFiler:class:version:prefix:!instance creation!public! !
 !

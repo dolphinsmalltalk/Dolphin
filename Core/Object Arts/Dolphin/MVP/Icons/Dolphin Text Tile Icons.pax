@@ -6,7 +6,6 @@ package paxVersion: 1;
 Copyright (c) Object Arts Ltd. 2018.
 '.
 
-
 package classNames
 	add: #TextTileIcon;
 	yourself.
@@ -32,11 +31,6 @@ Object subclass: #TextTileIcon
 	classVariableNames: 'FontStyleNames RotationMask StringFormat'
 	poolDictionaries: 'GdiplusConstants'
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

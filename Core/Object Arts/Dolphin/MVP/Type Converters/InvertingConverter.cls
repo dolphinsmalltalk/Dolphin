@@ -5,7 +5,9 @@ TypeConverter subclass: #InvertingConverter
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 InvertingConverter guid: (GUID fromString: '{87b4c705-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 InvertingConverter comment: 'An InvertingConverter is a <typeConverter> used to wrap another converter to reverse the direction of conversion. Normally an InvertingConverter is not instantiated explicitly but by using the #inverted method of TypeConverter.
 
 Example:
@@ -19,7 +21,9 @@ Instance Variables:
 	wrapped	<typeConverter> being inverted.
 
 '!
+
 !InvertingConverter categoriesForClass!MVP-Type Converters-General! !
+
 !InvertingConverter methodsFor!
 
 convertFromLeftToRight: anObject
@@ -54,6 +58,7 @@ wrappedConverter: aTypeConverter
 
 	wrappedConverter := aTypeConverter
 ! !
+
 !InvertingConverter categoriesForMethods!
 convertFromLeftToRight:!converting!public! !
 convertFromRightToLeft:!converting!public! !
@@ -74,6 +79,7 @@ new
 	"Use #inverting:"
 
 	self shouldNotImplement! !
+
 !InvertingConverter class categoriesForMethods!
 inverting:!instance creation!public! !
 new!instance creation!public! !

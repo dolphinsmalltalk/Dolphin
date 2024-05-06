@@ -5,9 +5,13 @@ MultilineTextEditTest subclass: #RichTextEditTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RichTextEditTest guid: (GUID fromString: '{bc34bf3f-4b1c-44a8-9c0c-b25db1e72469}')!
+
 RichTextEditTest comment: ''!
+
 !RichTextEditTest categoriesForClass!Unclassified! !
+
 !RichTextEditTest methodsFor!
 
 classToTest
@@ -143,6 +147,7 @@ text
 	"As of v2.0 of the RichEdit control, it strips out CRs internally, and so positions will be out relative to the original text"
 
 	^'Ḽơᶉëᶆ ȋṕšᶙṁ ḍỡḽǭᵳ ʂǐť ӓṁệẗ, ĉṓɲṩḙċťᶒțûɾ ấɖḯƥĭṩčįɳġ ḝłįʈ'! !
+
 !RichTextEditTest categoriesForMethods!
 classToTest!helpers!private! !
 margins!private!unit tests! !

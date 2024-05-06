@@ -5,9 +5,13 @@ InputState subclass: #GuiInputState
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GuiInputState guid: (GUID fromString: '{63335fe2-2ac2-43b5-9747-3c264e8b7fdf}')!
+
 GuiInputState comment: ''!
+
 !GuiInputState categoriesForClass!Kernel-Support! !
+
 !GuiInputState methodsFor!
 
 aboutToForkUI
@@ -139,6 +143,7 @@ visibleWindows
 			| hWnd |
 			hWnd := each asParameter.
 			hWnd notNil and: [hWnd ~= hDesktop and: [(user isWindow: hWnd) and: [user isWindowVisible: hWnd]]]]! !
+
 !GuiInputState categoriesForMethods!
 aboutToForkUI!idling!private! !
 allTopLevelWindowHandlesDo:!enumerating!private! !

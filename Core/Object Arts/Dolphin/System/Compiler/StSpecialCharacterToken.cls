@@ -5,9 +5,13 @@ StValueToken subclass: #StSpecialCharacterToken
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StSpecialCharacterToken guid: (GUID fromString: '{6d27cd5e-b145-43c8-b556-242906a6b9d8}')!
+
 StSpecialCharacterToken comment: ''!
+
 !StSpecialCharacterToken categoriesForClass!System-Compiler! !
+
 !StSpecialCharacterToken methodsFor!
 
 acceptVisitor: aTokenVisitor
@@ -21,6 +25,7 @@ isSpecial: aCharacter
 
 length
 	^1! !
+
 !StSpecialCharacterToken categoriesForMethods!
 acceptVisitor:!public!visitor! !
 isSpecial!public!testing! !

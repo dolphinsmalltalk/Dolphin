@@ -5,9 +5,13 @@ DolphinTest subclass: #FolderTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 FolderTest guid: (GUID fromString: '{8b810291-5941-433e-a94c-b16bc3505368}')!
+
 FolderTest comment: ''!
+
 !FolderTest categoriesForClass!Unclassified! !
+
 !FolderTest methodsFor!
 
 folderClass
@@ -52,6 +56,7 @@ testParent
 testParentOfDriveRoot
 	self assertIsNil: c parent.
 	self assertIsNil: windows parent parent! !
+
 !FolderTest categoriesForMethods!
 folderClass!constants!private! !
 rootFolder!public!unit tests! !

@@ -5,9 +5,13 @@ GdiplusInitializerTests subclass: #GdiplusLinearGradientBrushFromPointsInitializ
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusLinearGradientBrushFromPointsInitializerTest guid: (GUID fromString: '{2ca114c0-deee-48f6-ade7-9bc53b50d22c}')!
+
 GdiplusLinearGradientBrushFromPointsInitializerTest comment: ''!
+
 !GdiplusLinearGradientBrushFromPointsInitializerTest categoriesForClass!Unclassified! !
+
 !GdiplusLinearGradientBrushFromPointsInitializerTest methodsFor!
 
 gdipCreateLineBrushI: point1 point2: point2 color1: color1 color2: color2 wrapMode: wrapMode lineGradient: lineGradient 
@@ -33,6 +37,7 @@ testCreateHandle
 	self assert: constructorArgs third equals: 1.
 	self assert: constructorArgs fourth equals: 2.
 	self assert: (constructorArgs at: 5) equals: WrapModeTile! !
+
 !GdiplusLinearGradientBrushFromPointsInitializerTest categoriesForMethods!
 gdipCreateLineBrushI:point2:color1:color2:wrapMode:lineGradient:!accessing!public! !
 setUp!public!setup! !

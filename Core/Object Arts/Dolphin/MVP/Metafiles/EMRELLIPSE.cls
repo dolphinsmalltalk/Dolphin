@@ -5,8 +5,11 @@ ENHMETARECORD subclass: #EMRELLIPSE
 	classVariableNames: '_OffsetOf_rclBox'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 EMRELLIPSE guid: (GUID fromString: '{23d57ddc-4a1e-4927-ae53-094c3485ebb1}')!
+
 EMRELLIPSE addClassConstant: '_OffsetOf_rclBox' value: 16r8!
+
 EMRELLIPSE comment: '<EMRELLIPSE> is an <ExternalStructure> class to wrap the struct ''Win32.EMRELLIPSE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -21,7 +24,9 @@ struct tagEMRELLIPSE {
 	[helpstring("Inclusive-inclusive bounding rectangle")] RECTL rclBox;
 } EMRELLIPSE;
 '!
+
 !EMRELLIPSE categoriesForClass!Win32-Structs! !
+
 !EMRELLIPSE methodsFor!
 
 rclBox
@@ -37,6 +42,7 @@ rclBox: aRECT
 		from: ##(_OffsetOf_rclBox + 1)
 		to: ##(_OffsetOf_rclBox + RECT basicByteSize)
 		startingAt: 1! !
+
 !EMRELLIPSE categoriesForMethods!
 rclBox!**compiled accessors**!public! !
 rclBox:!**compiled accessors**!public! !
@@ -68,6 +74,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_ELLIPSE with: EMR_RECTANGLE! !
+
 !EMRELLIPSE class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

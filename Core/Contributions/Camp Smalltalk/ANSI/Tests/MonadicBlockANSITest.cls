@@ -5,9 +5,13 @@ MainTestCase subclass: #MonadicBlockANSITest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MonadicBlockANSITest guid: (GUID fromString: '{13d65db6-1141-4cc4-adc4-90b57ad5ff87}')!
+
 MonadicBlockANSITest comment: ''!
+
 !MonadicBlockANSITest categoriesForClass!Unclassified! !
+
 !MonadicBlockANSITest methodsFor!
 
 canonicalObject
@@ -38,6 +42,7 @@ testXvalueX
 	#'Valuable'.
 	self value: [blk1args value: 1] should: [:r | r = #(1)]
 		conformTo: #'monadicValuable' selector: #'value:'.! !
+
 !MonadicBlockANSITest categoriesForMethods!
 canonicalObject!public! !
 protocol!public! !

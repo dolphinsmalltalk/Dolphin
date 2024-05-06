@@ -46,7 +46,6 @@ XmlPad openOn: ''EtchASketch.xml''
 ```
 '.
 
-
 package classNames
 	add: #EtchASketch;
 	add: #EtchASketchDocument;
@@ -79,16 +78,12 @@ Presenter subclass: #EtchASketch
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ScribbleDocument subclass: #EtchASketchDocument
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

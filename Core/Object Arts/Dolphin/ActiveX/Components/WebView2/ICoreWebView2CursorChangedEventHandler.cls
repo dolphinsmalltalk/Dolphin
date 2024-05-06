@@ -5,7 +5,9 @@ ICoreWebView2EventHandler subclass: #ICoreWebView2CursorChangedEventHandler
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2CursorChangedEventHandler guid: (IID fromString: '{9da43ccc-26e1-4dad-b56c-d8961c94c571}')!
+
 ICoreWebView2CursorChangedEventHandler comment: '`ICoreWebView2CursorChangedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2CursorChangedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -27,7 +29,9 @@ interface ICoreWebView2CursorChangedEventHandler : IUnknown
 };
 ```
 '!
+
 !ICoreWebView2CursorChangedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2CursorChangedEventHandler methodsFor!
 
 basicRegister: tokenBuffer
@@ -35,6 +39,7 @@ basicRegister: tokenBuffer
 
 basicUnregister
 	source Remove_CursorChanged: token! !
+
 !ICoreWebView2CursorChangedEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
@@ -55,6 +60,7 @@ eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
 	^#cursorChanged! !
+
 !ICoreWebView2CursorChangedEventHandler class categoriesForMethods!
 defineFunctions!initializing!public! !
 eventName!constants!public! !

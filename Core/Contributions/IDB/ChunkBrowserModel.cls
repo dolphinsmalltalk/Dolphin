@@ -5,13 +5,17 @@ Model subclass: #ChunkBrowserModel
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ChunkBrowserModel guid: (GUID fromString: '{806c497c-fe7e-440d-a6eb-4e4ae9d6aced}')!
+
 ChunkBrowserModel comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2006 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
+
 !ChunkBrowserModel categoriesForClass!IDB Goodies! !
+
 !ChunkBrowserModel methodsFor!
 
 chunkClass
@@ -67,6 +71,7 @@ pickedChunks
 
 unpickAll
 	chunks do: [:each | each picked: false]! !
+
 !ChunkBrowserModel categoriesForMethods!
 chunkClass!accessing!public! !
 chunkCount!helpers!public! !

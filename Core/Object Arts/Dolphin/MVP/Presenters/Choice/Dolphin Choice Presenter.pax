@@ -7,7 +7,6 @@ Copyright (c) Object Arts Ltd. 1997-2003. Portions Copyright (c) CGI Group (Euro
 
 package basicPackageVersion: '6.2'.
 
-
 package classNames
 	add: #ChoicePresenter;
 	yourself.
@@ -35,11 +34,6 @@ ValuePresenter subclass: #ChoicePresenter
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

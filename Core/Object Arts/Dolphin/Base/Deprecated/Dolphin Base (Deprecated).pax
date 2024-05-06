@@ -10,7 +10,6 @@ This package includes legacy classes and methods from Dolphin''s base package th
 
 package basicPackageVersion: '6.1'.
 
-
 package classNames
 	add: #ConformantArrayField;
 	add: #ConformantArrayPointerField;
@@ -188,31 +187,37 @@ ArrayField subclass: #ConformantArrayField
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StructureArrayField subclass: #ConformantStructureArrayField
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ArrayPointerField subclass: #ConformantArrayPointerField
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StructureArrayPointerField subclass: #ConformantStructureArrayPointerField
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #MEMORY_BASIC_INFORMATION
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_AllocationBase _OffsetOf_AllocationProtect _OffsetOf_BaseAddress _OffsetOf_Protect _OffsetOf_RegionSize _OffsetOf_State _OffsetOf_Type'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 OSVERSIONINFOEXW subclass: #OSVERSIONINFO
 	instanceVariableNames: 'osName'
 	classVariableNames: 'Current'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 STBProxy subclass: #STBSymbolProxy
 	instanceVariableNames: 'string'
 	classVariableNames: ''
@@ -240,6 +245,7 @@ causeName
 
 	#deprecated.	"Could be more than one cause"
 	^self causeNames last! !
+
 !_FPIEEE_RECORD categoriesForMethods!
 causeCode!accessing!public! !
 causeName!accessing!public! !
@@ -250,6 +256,7 @@ causeName!accessing!public! !
 valueType
 	#deprecated.
 	^self format! !
+
 !_FPIEEE_VALUE categoriesForMethods!
 valueType!accessing!public! !
 !
@@ -261,6 +268,7 @@ quoAndRem: aNumber
 	Notification deprecated.
 	quo := self quo: aNumber.
 	^{quo. self - (quo * aNumber)}! !
+
 !ArithmeticValue categoriesForMethods!
 quoAndRem:!arithmetic!public! !
 !
@@ -274,6 +282,7 @@ makeIndirect
 makeNullTerminated
 	Notification deprecated.
 	self isNullTerminated: true! !
+
 !Behavior categoriesForMethods!
 makeIndirect!instance specification-accessing!private! !
 makeNullTerminated!instance specification-accessing!private! !
@@ -284,6 +293,7 @@ makeNullTerminated!instance specification-accessing!private! !
 byteCodeSegments
 	#deprecated.
 	^self segments! !
+
 !ByteCodeDispatcher categoriesForMethods!
 byteCodeSegments!accessing!public! !
 !
@@ -294,6 +304,7 @@ categoryIcon
 	"Answer an Icon representing the Category objects which the receiver collects." 
 
 	^self icon! !
+
 !Category class categoriesForMethods!
 categoryIcon!constants!public! !
 !
@@ -303,6 +314,7 @@ categoryIcon!constants!public! !
 safeCodePoint: anInteger
 	Notification deprecated.
 	^self codePoint: anInteger ifInvalid: [Utf8Default]! !
+
 !Character class categoriesForMethods!
 safeCodePoint:!instance creation!public! !
 !
@@ -318,6 +330,7 @@ noClassCategoryName
 	category has been set for a Class."
 
 	^self classCategoryClass unclassifiedName! !
+
 !Class categoriesForMethods!
 addClassVarName:!class variables!public! !
 noClassCategoryName!constants!public! !
@@ -334,6 +347,7 @@ defaultIconFrom: anExternalResourceLibrary
 	^(self environment at: #Icon) fromId: self defaultIconName in: anExternalResourceLibrary.
 
 	! !
+
 !ClassDescription categoriesForMethods!
 defaultIconFrom:!constants!public! !
 !
@@ -343,6 +357,7 @@ defaultIconFrom:!constants!public! !
 extra
 	#deprecated.
 	^extras isEmpty ifFalse: [extras anyOne]! !
+
 !CompilerNotification categoriesForMethods!
 extra!accessing!public! !
 !
@@ -607,6 +622,7 @@ thread_errno
 	<overlap cdecl: sdword _errno>
 	#deprecated. "Use CRTLibraryNonBlocking>>errno"
 	^self invalidCall: _failureCode! !
+
 !CRTLibrary categoriesForMethods!
 _controlfp:mask:!CRT functions-floating point support!public! !
 _ecvt:count:dec:sign:!CRT functions-floating point support!public! !
@@ -679,6 +695,7 @@ weekday
 weekdayIndex
 	Notification deprecated.
 	^(self asDays + 1) \\ 7 + 1! !
+
 !Date categoriesForMethods!
 evaluateYYMMDD:!helpers!public! !
 monthIndex!accessing!public! !
@@ -721,6 +738,7 @@ shortNameOfDay: dayIndex
 shortNameOfMonth: monthIndex
 	Notification deprecated.
 	^self monthAbbreviation: monthIndex! !
+
 !Date class categoriesForMethods!
 dateAndTimeNow!enquiries!public! !
 dayOfWeek:!enquiries!public! !
@@ -754,6 +772,7 @@ receiver: anObject selector: aSymbol
 receiver: anObject selector: aSymbol closure: extraObject
 	#deprecated.	"Use #receiver:selector:descriptor: and #closure:"
 	^(self receiver: anObject selector: aSymbol) closure: extraObject! !
+
 !ExternalCallback class categoriesForMethods!
 receiver:prototype:!instance creation!public! !
 receiver:prototype:closure:!instance creation!public! !
@@ -769,6 +788,7 @@ oneStringArg
 
 	#deprecated.
 	^self argumentTypes: 'lpstr'! !
+
 !ExternalDescriptor class categoriesForMethods!
 oneStringArg!instance creation!public! !
 !
@@ -780,6 +800,7 @@ invalidCall
 
 	Notification deprecated. 
 	^self invalidCall: 0! !
+
 !ExternalLibrary categoriesForMethods!
 invalidCall!exceptions!public! !
 !
@@ -793,6 +814,7 @@ do: aOneArgumentBlock
 do: operation separatedBy: separator 
 	#deprecated.
 	self fieldsDo: operation separatedBy: separator! !
+
 !ExternalStructure categoriesForMethods!
 do:!enumerating!public! !
 do:separatedBy:!enumerating!public! !
@@ -809,6 +831,7 @@ readCharacter
 	#deprecated.	"May read a partial character - better to open a stream on the file and read next character from that."
 	string := String new: 1.
 	^(self read: string count: 1) == 0 ifTrue: [nil] ifFalse: [string at: 1]! !
+
 !File categoriesForMethods!
 readCharacter!operations!public! !
 !
@@ -825,6 +848,7 @@ for: matchString inAndBelow: dirString do: operation
 		forAll: matchString
 		in: dirString
 		do: [:each | operation value: each directory value: each]! !
+
 !File class categoriesForMethods!
 change:extension:!filename manipulation!public! !
 for:inAndBelow:do:!enumerating!public! !
@@ -849,6 +873,7 @@ lowSWord
 	#deprecated.
 	^(DWORD fromInteger: self) lowSWord
 ! !
+
 !Integer categoriesForMethods!
 digitSize!accessing!public! !
 highSWord!bit manipulation!public! !
@@ -905,6 +930,7 @@ setFilePointer: aHandle lDistanceToMove: loInteger lpDistanceToMoveHigh: anAddre
 	<stdcall: dword SetFilePointer handle dword lpvoid dword>
 	#deprecated. "Use #setFilePointerEx:liDistanceToMove:lpNewFilePointer:dwMoveMethod:"
 	^self invalidCall: _failureCode! !
+
 !KernelLibrary categoriesForMethods!
 compareStringOrdinal:cchCount1:lpString2:cchCount2:bIgnoreCase:!public!win32 functions-national language support! !
 getDateFormat:dwFlags:lpDate:lpFormat:lpDateStr:cchDate:!public!win32 functions-national language support! !
@@ -925,6 +951,7 @@ clear
 	super clear.
 	OSVERSIONINFO clear
 ! !
+
 !KernelLibrary class categoriesForMethods!
 clear!initializing!private! !
 !
@@ -952,6 +979,7 @@ isMonthBeforeDay
 
 	Notification deprecated. "Use dateFormat"
 	^self dateOrder ~= 1! !
+
 !Locale categoriesForMethods!
 dateOrder!constants!public! !
 dateSeparator!constants!public! !
@@ -1003,6 +1031,7 @@ yesNo
 yesNoCancel
 	#deprecated.
 	self buttonStyle: #yesNoCancel! !
+
 !MessageBox categoriesForMethods!
 abortRetryIgnore!accessing-styles!public! !
 error!modes!public! !
@@ -1026,6 +1055,7 @@ notify
 warning
 	#deprecated.
 	self iconStyle: #warning! !
+
 !MessageBoxAbstract categoriesForMethods!
 notify!modes!public! !
 warning!modes!public! !
@@ -1040,6 +1070,7 @@ fpeMask
 fpeMask: anInteger
 	#deprecated.	"Use Float>>exceptionMask: or #setFpControl:mask:"
 	^self setFpControl: anInteger mask: CRTConstants._MCW_EM! !
+
 !Process categoriesForMethods!
 fpeMask!accessing!public! !
 fpeMask:!accessing!private! !
@@ -1050,6 +1081,7 @@ fpeMask:!accessing!private! !
 sortBlock: aDyadicValuable
 	Notification deprecated.
 	^self newSortBlock: aDyadicValuable! !
+
 !SortAlgorithm class categoriesForMethods!
 sortBlock:!instance creation!public! !
 !
@@ -1063,6 +1095,7 @@ value: anObject1 value: anObject2
 
 	Notification deprecated.
 	^anObject1 <= anObject2! !
+
 !SortedCollection class categoriesForMethods!
 value:value:!evaluating!private! !
 !
@@ -1072,6 +1105,7 @@ value:value:!evaluating!private! !
 for: aClass 
 	#deprecated.
 	^self forClass: aClass! !
+
 !STBClassProxy class categoriesForMethods!
 for:!instance creation!public! !
 !
@@ -1081,6 +1115,7 @@ for:!instance creation!public! !
 for: aCollection 
 	#deprecated.
 	^self forCollection: aCollection! !
+
 !STBCollectionProxy class categoriesForMethods!
 for:!instance creation!public! !
 !
@@ -1090,6 +1125,7 @@ for:!instance creation!public! !
 isLiteralPrefix
 	#deprecated.
 	^dword anyMask: LiteralPrefixMask! !
+
 !STBPrefix categoriesForMethods!
 isLiteralPrefix!public!testing! !
 !
@@ -1103,6 +1139,7 @@ for: aClass
 for: aClass using: aSelectorSymbol 
 	#deprecated.
 	^self forClass: aClass using: aSelectorSymbol! !
+
 !STBSingletonProxy class categoriesForMethods!
 for:!instance creation!public! !
 for:using:!instance creation!public! !
@@ -1113,6 +1150,7 @@ for:using:!instance creation!public! !
 nextOrNil
 	#deprecated.
 	^self nextAvailable! !
+
 !Stream categoriesForMethods!
 nextOrNil!accessing!public! !
 !
@@ -1126,6 +1164,7 @@ asUnicodeString
 equals: comperand
 	Notification deprecated.	"As of v7.1.6, Strings and Symbols with the same characters are always equal."
 	^self = comperand! !
+
 !String categoriesForMethods!
 asUnicodeString!converting!public! !
 equals:!comparing!public! !
@@ -1140,6 +1179,7 @@ fromUnicodeString: anAddressOrUnicodeString
 unicodeClass
 	#deprecated.
 	^self utf16Class! !
+
 !String class categoriesForMethods!
 fromUnicodeString:!instance creation!public! !
 unicodeClass!constants!public! !
@@ -1158,6 +1198,7 @@ milliseconds
 minutes
 	Notification deprecated.
 	^self minute! !
+
 !Time categoriesForMethods!
 hours!accessing!public! !
 milliseconds!accessing!public! !
@@ -1181,6 +1222,7 @@ microsecondsToRun: timedBlock
 	(including the overhead)."
 
 	^timedBlock timeToRun asMicroseconds asInteger! !
+
 !Time class categoriesForMethods!
 dateAndTimeNow!accessing!public! !
 microsecondsToRun:!operations!public! !
@@ -1209,6 +1251,7 @@ time: aTime
 	self isImmutable: false.
 	time := aTime
 ! !
+
 !TimeStamp categoriesForMethods!
 date:!accessing!public! !
 dateAndTime!accessing!public! !
@@ -1222,6 +1265,7 @@ timeSeparator
 
 	Notification deprecated. "Use timeFormat"
 	^self getStringInfo: LOCALE_STIME! !
+
 !WindowsLocale categoriesForMethods!
 timeSeparator!constants!public! !
 !
@@ -1232,6 +1276,7 @@ timeGetTime
 	<stdcall: dword timeGetTime>
 	#deprecated.	"Use Time class>>millisecondClockValue (which is highly accurate, and does not wrap after ~49.7 days either)"
 	^self invalidCall: _failureCode! !
+
 !WinMMLibrary categoriesForMethods!
 timeGetTime!public!win32 functions-timer! !
 !

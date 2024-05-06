@@ -5,10 +5,15 @@ COMInterfaceImp subclass: #AXDispatchImpAbstract
 	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants AXAutomationErrors Win32Constants'
 	classInstanceVariableNames: ''!
+
 AXDispatchImpAbstract guid: (GUID fromString: '{10dee4fb-246c-4582-9a3b-2ca93e0636c2}')!
-AXDispatchImpAbstract isNonInstantiable: true!
+
+AXDispatchImpAbstract isAbstract: true!
+
 AXDispatchImpAbstract comment: ''!
+
 !AXDispatchImpAbstract categoriesForClass!Unclassified! !
+
 !AXDispatchImpAbstract methodsFor!
 
 decodeArgs: aDISPPARAMS 
@@ -150,6 +155,7 @@ typeInfoCount
 	"Answer 1 if type information is available, else 0."
 
 	^0! !
+
 !AXDispatchImpAbstract categoriesForMethods!
 decodeArgs:!helpers!private! !
 errorDispatching:exception:excepInfo:!operations!private! !

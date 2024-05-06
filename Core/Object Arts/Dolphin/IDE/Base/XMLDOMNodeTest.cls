@@ -5,9 +5,13 @@ DolphinTest subclass: #XMLDOMNodeTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 XMLDOMNodeTest guid: (GUID fromString: '{956b7839-a2fb-47f1-9c74-2aacae4bdffb}')!
+
 XMLDOMNodeTest comment: ''!
+
 !XMLDOMNodeTest categoriesForClass!Unclassified! !
+
 !XMLDOMNodeTest methodsFor!
 
 testDisplayOn
@@ -42,6 +46,7 @@ testSetNodeTypeAndValue
 	elem setNodeTypeAndValue: false.
 	self assert: elem dataType equals: 'boolean'.
 	self assert: elem nodeTypedValue not! !
+
 !XMLDOMNodeTest categoriesForMethods!
 testDisplayOn!public!unit tests! !
 testDownCast!public!unit tests! !

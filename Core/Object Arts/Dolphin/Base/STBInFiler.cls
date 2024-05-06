@@ -5,9 +5,13 @@ STBFiler subclass: #STBInFiler
 	classVariableNames: 'UpgradingMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 STBInFiler guid: (GUID fromString: '{87b4c6e7-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 STBInFiler comment: ''!
+
 !STBInFiler categoriesForClass!System-Binary storage! !
+
 !STBInFiler methodsFor!
 
 basicNext
@@ -237,6 +241,7 @@ resetAndValidateStream
 
 setRefOffset: anInteger
 	readMap setSize: anInteger! !
+
 !STBInFiler categoriesForMethods!
 basicNext!accessing!private! !
 classAt:!accessing!private! !
@@ -281,6 +286,7 @@ peekForSignatureIn: aReadStream
 	position := aReadStream position.
 	^(aReadStream nextAvailable: self signature size) asByteArray = self signature
 		or: [aReadStream position: position. false]! !
+
 !STBInFiler class categoriesForMethods!
 initialize!development!initializing!public! !
 peekForSignatureIn:!public!testing! !

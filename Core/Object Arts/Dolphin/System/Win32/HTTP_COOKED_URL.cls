@@ -5,7 +5,9 @@ HttpServerStructure subclass: #HTTP_COOKED_URL
 	classVariableNames: '_OffsetOf_AbsPathLength _OffsetOf_FullUrlLength _OffsetOf_HostLength _OffsetOf_pAbsPath _OffsetOf_pFullUrl _OffsetOf_pHost _OffsetOf_pQueryString _OffsetOf_QueryStringLength'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 HTTP_COOKED_URL guid: (GUID fromString: '{24928162-1798-46a3-b2c1-3c6ee66c08be}')!
+
 HTTP_COOKED_URL addClassConstant: '_OffsetOf_AbsPathLength' value: 16r4!
 HTTP_COOKED_URL addClassConstant: '_OffsetOf_FullUrlLength' value: 16r0!
 HTTP_COOKED_URL addClassConstant: '_OffsetOf_HostLength' value: 16r2!
@@ -14,6 +16,7 @@ HTTP_COOKED_URL addClassConstant: '_OffsetOf_pFullUrl' value: 16r8!
 HTTP_COOKED_URL addClassConstant: '_OffsetOf_pHost' value: 16rC!
 HTTP_COOKED_URL addClassConstant: '_OffsetOf_pQueryString' value: 16r14!
 HTTP_COOKED_URL addClassConstant: '_OffsetOf_QueryStringLength' value: 16r6!
+
 HTTP_COOKED_URL comment: '<HTTP_COOKED_URL> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_COOKED_URL'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -35,7 +38,9 @@ struct tagHTTP_COOKED_URL {
 	[readonly, helpstring("Pointer to the first question mark (?) in the string, or NULL if there is none."), size_is("QueryStringLength>>1"), string] LPCWSTR pQueryString;
 } HTTP_COOKED_URL;
 '!
+
 !HTTP_COOKED_URL categoriesForClass!WinHttpServer-Structs! !
+
 !HTTP_COOKED_URL methodsFor!
 
 AbsPathLength
@@ -78,6 +83,7 @@ QueryStringLength
 	"Private - Answer the <Integer> value of the receiver's 'QueryStringLength' field."
 
 	^bytes wordAtOffset: _OffsetOf_QueryStringLength! !
+
 !HTTP_COOKED_URL categoriesForMethods!
 AbsPathLength!**compiled accessors**!private! !
 FullUrlLength!**compiled accessors**!private! !
@@ -122,6 +128,7 @@ defineFields
 
 getFieldNames
 	^#(#FullUrlLength #HostLength #AbsPathLength #QueryStringLength #pFullUrl #pHost #pAbsPath #pQueryString)! !
+
 !HTTP_COOKED_URL class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

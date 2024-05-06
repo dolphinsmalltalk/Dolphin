@@ -5,9 +5,13 @@ Notification subclass: #Warning
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Warning guid: (GUID fromString: '{87b4c571-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Warning comment: 'Warning is the class of <Notification>s which represent exceptional conditions that are not considered errors, but which should still be reported to the user with the option to continue or abort the computation.'!
+
 !Warning categoriesForClass!Kernel-Exception Handling! !
+
 !Warning methodsFor!
 
 defaultAction
@@ -19,6 +23,7 @@ defaultAction
 
 	"Will not return unless execution is to be resumed"
 	^SessionManager current onUnhandledWarning: self! !
+
 !Warning categoriesForMethods!
 defaultAction!handling!public! !
 !
@@ -34,6 +39,7 @@ severityClass
 	"Answer an exception class describing the severity of the notification."
 
 	^Warning! !
+
 !Warning class categoriesForMethods!
 mbIconId!parping!public! !
 severityClass!constants!public! !

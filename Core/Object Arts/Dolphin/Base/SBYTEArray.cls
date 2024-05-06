@@ -5,9 +5,13 @@ ExternalArray subclass: #SBYTEArray
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SBYTEArray guid: (GUID fromString: '{8bfb3d84-076e-4c1c-b62f-d0d7e6258c10}')!
+
 SBYTEArray comment: 'Specialized <ExternalArray> to represent contiguous single-dimensioned arrays of 8-bit signed integers.'!
+
 !SBYTEArray categoriesForClass!External-Data-Structured! !
+
 !SBYTEArray methodsFor!
 
 uncheckedAt: anInteger
@@ -21,6 +25,7 @@ uncheckedAt: indexInteger put: valueInteger
 	with the <integer> argument. No bounds checks are performed on the subscript."
 
 	^bytes sbyteAtOffset: indexInteger - 1 put: valueInteger! !
+
 !SBYTEArray categoriesForMethods!
 uncheckedAt:!accessing!private! !
 uncheckedAt:put:!private! !
@@ -32,6 +37,7 @@ elementClass
 	"Answer the class of <ExternalStructure> used to represent elements of the receiver."
 
 	^BYTE! !
+
 !SBYTEArray class categoriesForMethods!
 elementClass!constants!public! !
 !

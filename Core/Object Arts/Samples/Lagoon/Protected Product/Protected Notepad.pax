@@ -8,7 +8,6 @@ Note that this is intended to be an EXAMPLE of how to replace the default crypto
 
 package basicPackageVersion: '2005.6.2.23-CU-8'.
 
-
 package classNames
 	add: #AnotherCompanySerialNumber;
 	add: #ProtectedNotepadSessionManager;
@@ -34,16 +33,12 @@ ProtectedProductSerialNumber subclass: #AnotherCompanySerialNumber
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ProtectedProductSessionManager subclass: #ProtectedNotepadSessionManager
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

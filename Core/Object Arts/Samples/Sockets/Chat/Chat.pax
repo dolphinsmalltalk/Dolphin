@@ -26,7 +26,6 @@ Then just press Connect to connect locally (it is not necessary to enter localho
 You should now be able to chat between the two sessions by entering messages and clicking the Send button (or pressing Alt+S). To close the connection click Disconnect or close either of the Chat windows.
 '.
 
-
 package classNames
 	add: #Chat;
 	yourself.
@@ -59,11 +58,6 @@ Presenter subclass: #Chat
 	classVariableNames: 'Statii'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

@@ -5,11 +5,15 @@ CompiledCode variableSubclass: #CompiledMethod
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 CompiledMethod guid: (GUID fromString: '{87b4c544-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 CompiledMethod comment: 'CompiledMethod is the class of CompiledCode objects representing actual methods of objects, as opposed to unbound expressions (see CompiledExpression).
 
 '!
+
 !CompiledMethod categoriesForClass!Kernel-Methods! !
+
 !CompiledMethod methodsFor!
 
 <= aCompiledMethod
@@ -188,6 +192,7 @@ storeSourceString: aString
 	"Private - Record aString as the source for the receiver. Delegate to the receiver's source manager"
 
 	self class sourceManager storeSourceString: aString forMethod: self! !
+
 !CompiledMethod categoriesForMethods!
 <=!comparing!public! !
 categories!categories-accessing!development!public! !
@@ -243,6 +248,7 @@ fromString: aString
 	isMeta ifTrue: [theClass := theClass class].
 	selector := stream upToEnd asSymbol.
 	^theClass compiledMethodAt: selector ifAbsent: []! !
+
 !CompiledMethod class categoriesForMethods!
 defaultSortBlock!private!sorting! !
 fromString:!converting!development!public! !

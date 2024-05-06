@@ -5,8 +5,11 @@ StValueNode subclass: #StAbstractVariableNode
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StAbstractVariableNode guid: (GUID fromString: '{38ecca66-7d53-4b09-90f6-5c6f0e76ba79}')!
+
 StAbstractVariableNode isAbstract: true!
+
 StAbstractVariableNode comment: 'StAbstrctVariableNode is an abstract parse tree node with subclasses to represent variable references and definitions.
 
 Instance Variables:
@@ -14,7 +17,9 @@ Instance Variables:
 	variable	A subtype of <StVariable> describing the type of variable that this node is referencing or defining. Only set if semantic analysis has been run.
 
 '!
+
 !StAbstractVariableNode categoriesForClass!System-Compiler! !
+
 !StAbstractVariableNode methodsFor!
 
 = anObject
@@ -59,6 +64,7 @@ variable
 
 variable: anStVariable
 	variable := anStVariable! !
+
 !StAbstractVariableNode categoriesForMethods!
 =!comparing!public! !
 hash!comparing!public! !
@@ -90,6 +96,7 @@ named: aString start: anInteger
 	^(self new)
 		setName: aString start: anInteger;
 		yourself! !
+
 !StAbstractVariableNode class categoriesForMethods!
 identifierToken:!instance creation!public! !
 named:!instance creation!public! !

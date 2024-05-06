@@ -5,7 +5,9 @@ ICoreWebView2Interface subclass: #ICoreWebView2FrameInfo
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2FrameInfo guid: (IID fromString: '{da86b8a1-bdf3-4f11-9955-528cefa59727}')!
+
 ICoreWebView2FrameInfo comment: '`ICoreWebView2FrameInfo` is a wrapper class for the COM interface ''WebView2.ICoreWebView2FrameInfo'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -29,7 +31,9 @@ interface ICoreWebView2FrameInfo : IUnknown
 };
 ```
 '!
+
 !ICoreWebView2FrameInfo categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2FrameInfo methodsFor!
 
 get_name: name
@@ -72,6 +76,7 @@ source
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
 	^answer! !
+
 !ICoreWebView2FrameInfo categoriesForMethods!
 get_name:!**auto generated**!COM Interfaces-ICoreWebView2FrameInfo!private! !
 get_Source:!**auto generated**!COM Interfaces-ICoreWebView2FrameInfo!private! !
@@ -92,6 +97,7 @@ defineFunctions
 		defineFunction: #get_Source:
 			argumentTypes: 'lpwstr*'
 ! !
+
 !ICoreWebView2FrameInfo class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

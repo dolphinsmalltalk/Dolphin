@@ -5,10 +5,15 @@ ListControlTest subclass: #ListViewTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ListViewTest guid: (GUID fromString: '{bce10a8d-244e-4377-846c-bcbef9d853a1}')!
+
 ListViewTest isAbstract: true!
+
 ListViewTest comment: ''!
+
 !ListViewTest categoriesForClass!Unclassified! !
+
 !ListViewTest methodsFor!
 
 classToTest
@@ -368,6 +373,7 @@ verifyClicks: anArray
 
 verifyColumnWidths: widths
 	presenter columnsList with: widths do: [:col :width | self assert: col width equals: width]! !
+
 !ListViewTest categoriesForMethods!
 classToTest!helpers!private! !
 forceColumnResize!helpers!private! !

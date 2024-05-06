@@ -5,9 +5,13 @@ WindowsEvent subclass: #ColorEvent
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ColorEvent guid: (GUID fromString: '{87b4c54c-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 ColorEvent comment: ''!
+
 !ColorEvent categoriesForClass!MVP-Views-Events! !
+
 !ColorEvent methodsFor!
 
 canvas
@@ -17,6 +21,7 @@ canvas
 
 hdc
 	^self wParam! !
+
 !ColorEvent categoriesForMethods!
 canvas!accessing!public! !
 hdc!accessing!public! !

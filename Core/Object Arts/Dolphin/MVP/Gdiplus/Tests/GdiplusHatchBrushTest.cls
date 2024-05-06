@@ -5,9 +5,13 @@ GdiplusTests subclass: #GdiplusHatchBrushTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusHatchBrushTest guid: (GUID fromString: '{be9147c0-8247-11d7-b609-00e0987e8081}')!
+
 GdiplusHatchBrushTest comment: ''!
+
 !GdiplusHatchBrushTest categoriesForClass!Unclassified! !
+
 !GdiplusHatchBrushTest methodsFor!
 
 setSampleDiagCross
@@ -40,6 +44,7 @@ testFillingCrossDiagonal
 	bitmap graphics fillRectangle: (Point zero extent: bitmap extent) brush: model.
 	self assert: (bitmap pixelAt: 0 @ 0) equals: (bitmap pixelAt: 1 @ 1).
 	self deny: (bitmap pixelAt: 0 @ 0) equals: (bitmap pixelAt: 1 @ 0)! !
+
 !GdiplusHatchBrushTest categoriesForMethods!
 setSampleDiagCross!public! !
 setUp!public! !

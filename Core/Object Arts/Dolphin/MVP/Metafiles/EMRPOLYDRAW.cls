@@ -5,11 +5,14 @@ ENHMETARECORD subclass: #EMRPOLYDRAW
 	classVariableNames: '_OffsetOf_abTypes _OffsetOf_aptl _OffsetOf_cptl _OffsetOf_rclBounds'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 EMRPOLYDRAW guid: (GUID fromString: '{5be172c2-6045-4143-8550-377acd60fd3f}')!
+
 EMRPOLYDRAW addClassConstant: '_OffsetOf_abTypes' value: 16r24!
 EMRPOLYDRAW addClassConstant: '_OffsetOf_aptl' value: 16r1C!
 EMRPOLYDRAW addClassConstant: '_OffsetOf_cptl' value: 16r18!
 EMRPOLYDRAW addClassConstant: '_OffsetOf_rclBounds' value: 16r8!
+
 EMRPOLYDRAW comment: '<EMRPOLYDRAW> is an <ExternalStructure> class to wrap the struct ''Win32.EMRPOLYDRAW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -27,7 +30,9 @@ struct tagEMRPOLYDRAW {
 	[helpstring("Array of point types")] BYTE* abTypes;
 } EMRPOLYDRAW;
 '!
+
 !EMRPOLYDRAW categoriesForClass!Win32-Structs! !
+
 !EMRPOLYDRAW methodsFor!
 
 abTypes
@@ -93,6 +98,7 @@ rclBounds: aRECT
 		from: ##(_OffsetOf_rclBounds + 1)
 		to: ##(_OffsetOf_rclBounds + RECT basicByteSize)
 		startingAt: 1! !
+
 !EMRPOLYDRAW categoriesForMethods!
 abTypes!public! !
 abTypes:!public! !
@@ -142,6 +148,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_POLYDRAW! !
+
 !EMRPOLYDRAW class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

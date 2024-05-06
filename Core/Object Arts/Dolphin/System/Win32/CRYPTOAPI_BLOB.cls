@@ -5,9 +5,12 @@ ExternalStructure subclass: #CRYPTOAPI_BLOB
 	classVariableNames: '_OffsetOf_cbData _OffsetOf_pbData'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 CRYPTOAPI_BLOB guid: (GUID fromString: '{e93356a1-821e-4719-8038-f2813b7615d2}')!
+
 CRYPTOAPI_BLOB addClassConstant: '_OffsetOf_cbData' value: 16r0!
 CRYPTOAPI_BLOB addClassConstant: '_OffsetOf_pbData' value: 16r4!
+
 CRYPTOAPI_BLOB comment: '<CRYPTOAPI_BLOB> is an <ExternalStructure> class to wrap the struct ''Win32.CRYPTOAPI_BLOB'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
@@ -23,7 +26,9 @@ struct tagCRYPTOAPI_BLOB {
 	BYTE* pbData;
 } CRYPTOAPI_BLOB;
 '!
+
 !CRYPTOAPI_BLOB categoriesForClass!Win32-Structs! !
+
 !CRYPTOAPI_BLOB methodsFor!
 
 basicFree
@@ -79,6 +84,7 @@ pbData: anExternalArray
 
 	bytes uintPtrAtOffset: _OffsetOf_pbData put: anExternalArray yourAddress.
 	self cbData: anExternalArray size! !
+
 !CRYPTOAPI_BLOB categoriesForMethods!
 basicFree!private!realizing/unrealizing! !
 basicPbData!private!realizing/unrealizing! !
@@ -121,6 +127,7 @@ fromBytes: aByteObject
 
 getFieldNames
 	^#(#cbData #pbData)! !
+
 !CRYPTOAPI_BLOB class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 fromBytes:!public! !

@@ -42,12 +42,6 @@ package setPrerequisites: #(
 
 package!
 
-"Class Definitions"!
-
-
-"Global Aliases"!
-
-
 "Loose Methods"!
 
 !KernelLibrary methodsFor!
@@ -92,6 +86,7 @@ setFileAttributes: aFileName value: attributes
 
 	<stdcall: bool SetFileAttributesW lpwstr dword>
 	^self invalidCall: _failureCode! !
+
 !KernelLibrary categoriesForMethods!
 getExitCodeProcess:lpExitCode:!public! !
 getExitCodeThread:lpExitCode:!public! !

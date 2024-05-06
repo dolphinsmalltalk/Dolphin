@@ -5,9 +5,12 @@ SmalltalkToolShell subclass: #ClassBrowserAbstract
 	classVariableNames: 'FilterObjectMethodsMask GrayedMethodFadeFactor HistoryListSize LooseMethodColor ShowInheritedMethodsMask WordWrapDefinition'
 	poolDictionaries: ''
 	classInstanceVariableNames: 'defaultShowInheritedMethods defaultFilterObjectMethods plugins'!
+
 ClassBrowserAbstract guid: (GUID fromString: '{87b4c6bc-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 ClassBrowserAbstract addClassConstant: 'FilterObjectMethodsMask' value: 16r2!
 ClassBrowserAbstract addClassConstant: 'ShowInheritedMethodsMask' value: 16r1!
+
 ClassBrowserAbstract comment: 'ClassBrowserAbstract is an abstract <SmalltalkToolShell> that implements most of the functionality required for a class browser development tool. Concrete subclasses implement the Class Hierarchy Browser and System Browser development tools.
 
 Instance Variables:
@@ -39,7 +42,9 @@ Class Instance Variables:
 	DefaultShowInheritedMethods	<boolean>
 	DefaultFilterObjectMethods		<boolean>
 '!
+
 !ClassBrowserAbstract categoriesForClass!MVP-Presenters! !
+
 !ClassBrowserAbstract methodsFor!
 
 accept
@@ -2545,6 +2550,7 @@ variablesMethodFilter
 	| indices |
 	indices := self variablesIndices.
 	^[:m | (self isMethodVisible: m) and: [m byteCodeDispatcher accessesInstVarAtAnyOf: indices]]! !
+
 !ClassBrowserAbstract categoriesForMethods!
 accept!commands!public! !
 acceptItCommand!helpers!private! !
@@ -2919,6 +2925,7 @@ wordWrapSource: aBoolean
 	"Sets the source word wrapping state for instances of the receiver to aBoolean."
 
 	MethodBrowser wordWrap: aBoolean! !
+
 !ClassBrowserAbstract class categoriesForMethods!
 addPlugin:!initializing!private! !
 availablePluginClasses!helpers!private! !

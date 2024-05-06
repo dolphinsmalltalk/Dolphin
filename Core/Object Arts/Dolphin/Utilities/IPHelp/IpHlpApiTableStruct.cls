@@ -5,10 +5,15 @@ ExternalStructure subclass: #IpHlpApiTableStruct
 	classVariableNames: '_OffsetOf_dwNumEntries'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IpHlpApiTableStruct guid: (GUID fromString: '{4571e3b9-bbac-4c7c-a961-a048818d482b}')!
+
 IpHlpApiTableStruct addClassConstant: '_OffsetOf_dwNumEntries' value: 16r0!
+
 IpHlpApiTableStruct comment: ''!
+
 !IpHlpApiTableStruct categoriesForClass!External-Data-Structured! !
+
 !IpHlpApiTableStruct methodsFor!
 
 dwNumEntries
@@ -18,6 +23,7 @@ dwNumEntries
 
 table
 	^self subclassResponsibility! !
+
 !IpHlpApiTableStruct categoriesForMethods!
 dwNumEntries!**compiled accessors**!public! !
 table!accessing!public! !
@@ -34,6 +40,7 @@ defineFields
 
 getFieldNames
 	^#(#dwNumEntries)! !
+
 !IpHlpApiTableStruct class categoriesForMethods!
 defineFields!initializing!public! !
 getFieldNames!**compiled accessors**!constants!private! !

@@ -5,11 +5,15 @@ ImageStripper subclass: #AXDllImageStripper
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AXDllImageStripper guid: (GUID fromString: '{e6c57f56-c672-49b5-8157-893092e6eb6f}')!
+
 AXDllImageStripper comment: 'AXDllImageStripper is a specialized <ImageStripper> for stripping and deploying in-process ActiveX/COM component DLLs.
 
 See the ''ActiveX In-Process Server Kit'' package comment for further details.'!
+
 !AXDllImageStripper categoriesForClass!Unclassified! !
+
 !AXDllImageStripper methodsFor!
 
 defaultSessionManagerClass
@@ -87,6 +91,7 @@ updateTypelibResource: anExternalHandle
 		lpData: resourceBytes
 		cbData: resourceBytes size)
 			ifFalse: [KernelLibrary default systemError]! !
+
 !AXDllImageStripper categoriesForMethods!
 defaultSessionManagerClass!constants!public! !
 prepareToStrip!operations!public! !
@@ -115,6 +120,7 @@ publishedAspectsOfInstances
 	^(super publishedAspectsOfInstances)
 		add: (Aspect fileSave: #typeLibPath);
 		yourself! !
+
 !AXDllImageStripper class categoriesForMethods!
 defaultOptions!constants!development!private! !
 publishedAspectsOfInstances!constants!development!must strip!public! !

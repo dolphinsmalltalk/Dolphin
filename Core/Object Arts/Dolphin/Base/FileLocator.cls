@@ -5,7 +5,9 @@ Object subclass: #FileLocator
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 FileLocator guid: (GUID fromString: '{391014f8-ebb8-4dd3-bd5d-fb6f303de483}')!
+
 FileLocator comment: 'A FileLocator is an abstract root for a hierarchy of subclasses that implement the <fileLocator> protocol. 
 A <fileLocator> is used map between an external resource pathname and an internal name. First an external name is mapped to an internal form using #relativePathTo:. The latter can be held in the image and later mapped back to it''s is full external name using #localFileSpecFor:.
 
@@ -36,7 +38,9 @@ Class Variables:
 	ImageRelative	<ImageRelativeFileLocator> instance used for locating files relative to the image directory.
 
 '!
+
 !FileLocator categoriesForClass!System-Support! !
+
 !FileLocator methodsFor!
 
 basePath
@@ -73,6 +77,7 @@ relativePathTo: aString
 
 relativeToBase: aFilename 
 	^File relativePathOf: aFilename to: self basePath! !
+
 !FileLocator categoriesForMethods!
 basePath!accessing!public! !
 findOrImportForeignClass!operations!private! !
@@ -120,6 +125,7 @@ installRelative
 installRelative: aFilenameString
 	^self installRelative localFileSpecFor: aFilenameString
 ! !
+
 !FileLocator class categoriesForMethods!
 absolute!accessing!public! !
 default!accessing!public! !

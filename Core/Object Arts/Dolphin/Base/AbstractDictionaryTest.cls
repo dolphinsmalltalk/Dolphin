@@ -5,10 +5,15 @@ DolphinCollectionTest subclass: #AbstractDictionaryTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AbstractDictionaryTest guid: (GUID fromString: '{5d8b76ad-dcc1-44ff-8a2a-cf5e50c4b434}')!
+
 AbstractDictionaryTest isAbstract: true!
+
 AbstractDictionaryTest comment: ''!
+
 !AbstractDictionaryTest categoriesForClass!Unclassified! !
+
 !AbstractDictionaryTest methodsFor!
 
 assertCommutativelyEqual: aDictionary other: anotherDictionary
@@ -245,6 +250,7 @@ testStrongTalkTests
 	self assert: new]
 			on: ConfirmationRequiredWarning
 			do: [:ex | ex refuse]! !
+
 !AbstractDictionaryTest categoriesForMethods!
 assertCommutativelyEqual:other:!helpers!private! !
 checkValidity:!benchmarking!private! !

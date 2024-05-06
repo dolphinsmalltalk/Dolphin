@@ -5,11 +5,15 @@ GdiplusBase subclass: #GdiplusStringFormat
 	classVariableNames: 'GenericDefault GenericTypographic'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusStringFormat guid: (GUID fromString: '{f4b7aa81-5fd1-11d7-b609-00e0987e8081}')!
+
 GdiplusStringFormat comment: 'GdiplusStringFormat contains text layout information (such as alignment, orientation, tab stops, and clipping) and display manipulations (such as trimming, font substitution for characters that are not supported by the requested font, and digit substitution for languages that do not use Western European digits). A GdiplusStringFormat instance can be passed to the GdiplusGraphics>>drawString methods to format a string.
 
 '!
+
 !GdiplusStringFormat categoriesForClass!Unclassified! !
+
 !GdiplusStringFormat methodsFor!
 
 alignment
@@ -185,6 +189,7 @@ trimming: aStringTrimmingConstant
 	(status := GdiplusLibrary default gdipSetStringFormatTrimming: self asParameter
 				trimming: aStringTrimmingConstant) == Ok 
 		ifFalse: [GdiplusError signal: 'GdipSetStringFormatTrimming failed' with: status]! !
+
 !GdiplusStringFormat categoriesForMethods!
 alignment!accessing!public! !
 alignment:!accessing!public! !
@@ -379,6 +384,7 @@ onPreStripImage
 
 uninitialize
 	GenericDefault := GenericTypographic := nil! !
+
 !GdiplusStringFormat class categoriesForMethods!
 centered!instance creation!public! !
 exampleGdipSFFormatText!examples!public!sunit! !

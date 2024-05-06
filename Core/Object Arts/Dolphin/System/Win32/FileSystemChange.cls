@@ -5,9 +5,13 @@ Object subclass: #FileSystemChange
 	classVariableNames: 'ActionMap'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 FileSystemChange guid: (GUID fromString: '{ad5f4ada-4f26-46de-a418-b5a0e0c6b937}')!
+
 FileSystemChange comment: ''!
+
 !FileSystemChange categoriesForClass!Kernel-Objects! !
+
 !FileSystemChange methodsFor!
 
 = aFileSystemChange 
@@ -41,6 +45,7 @@ setCode: anInteger fileName: aString
 	time := FILETIME now.
 	code := anInteger.
 	fileNames := Array with: aString! !
+
 !FileSystemChange categoriesForMethods!
 =!comparing!public! !
 action!public! !
@@ -60,6 +65,7 @@ code: anInteger fileName: aString
 
 initialize
 	ActionMap := #(#fileAdded: #fileRemoved: #fileModified: #fileRenamedFrom:to: 5)! !
+
 !FileSystemChange class categoriesForMethods!
 code:fileName:!instance creation!public! !
 initialize!initializing!public! !

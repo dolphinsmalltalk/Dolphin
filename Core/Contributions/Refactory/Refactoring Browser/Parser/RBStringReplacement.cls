@@ -5,9 +5,13 @@ Object subclass: #RBStringReplacement
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RBStringReplacement guid: (GUID fromString: '{f2893320-1a6f-47e8-9052-eb2682fdb92c}')!
+
 RBStringReplacement comment: 'Private class used to represent a text replacement in the Refactoring Browser.'!
+
 !RBStringReplacement categoriesForClass!Kernel-Objects! !
+
 !RBStringReplacement methodsFor!
 
 startPosition
@@ -27,6 +31,7 @@ string
 
 string: aString 
 	string := aString! !
+
 !RBStringReplacement categoriesForMethods!
 startPosition!accessing!public! !
 startPosition:!accessing!private! !
@@ -44,6 +49,7 @@ replaceFrom: startInteger to: stopInteger with: aString
 		stopPosition: stopInteger;
 		string: aString;
 		yourself! !
+
 !RBStringReplacement class categoriesForMethods!
 replaceFrom:to:with:!instance creation!public! !
 !

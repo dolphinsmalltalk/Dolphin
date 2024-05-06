@@ -5,9 +5,13 @@ DolphinTest subclass: #SmalltalkSystemShellTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SmalltalkSystemShellTest guid: (GUID fromString: '{6d373cd5-f02e-4adb-bce9-f0755886a74b}')!
+
 SmalltalkSystemShellTest comment: ''!
+
 !SmalltalkSystemShellTest categoriesForClass!Unclassified! !
+
 !SmalltalkSystemShellTest methodsFor!
 
 setUp
@@ -32,6 +36,7 @@ testIconOrdering
 	self systemFolderPresenter up.
 	finalContents := self systemFolderPresenter contents asArray.
 	self assert: finalContents equals: initialContents! !
+
 !SmalltalkSystemShellTest categoriesForMethods!
 setUp!private!unit tests! !
 systemFolderPresenter!private!unit tests! !

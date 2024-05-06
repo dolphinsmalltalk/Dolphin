@@ -5,9 +5,12 @@ ENHMETARECORD subclass: #EMRGLSRECORD
 	classVariableNames: '_OffsetOf_cbData _OffsetOf_Data'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 EMRGLSRECORD guid: (GUID fromString: '{d78026c9-e670-487f-ac4b-de420ffcc257}')!
+
 EMRGLSRECORD addClassConstant: '_OffsetOf_cbData' value: 16r8!
 EMRGLSRECORD addClassConstant: '_OffsetOf_Data' value: 16rC!
+
 EMRGLSRECORD comment: '<EMRGLSRECORD> is an <ExternalStructure> class to wrap the struct ''Win32.EMRGLSRECORD'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -23,7 +26,9 @@ struct tagEMRGLSRECORD {
 	BYTE* Data;
 } EMRGLSRECORD;
 '!
+
 !EMRGLSRECORD categoriesForClass!Win32-Structs! !
+
 !EMRGLSRECORD methodsFor!
 
 cbData
@@ -52,6 +57,7 @@ Data: anExternalArray
 		to: _OffsetOf_Data + size
 		startingAt: 1.
 	self cbData: anExternalArray size! !
+
 !EMRGLSRECORD categoriesForMethods!
 cbData!**compiled accessors**!public! !
 cbData:!**compiled accessors**!public! !
@@ -91,6 +97,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_GLSRECORD! !
+
 !EMRGLSRECORD class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

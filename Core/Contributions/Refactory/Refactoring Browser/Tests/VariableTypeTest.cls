@@ -5,9 +5,13 @@ RefactoringBrowserTest subclass: #VariableTypeTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 VariableTypeTest guid: (GUID fromString: '{886b4afa-23a6-4006-86bc-7f424cafad38}')!
+
 VariableTypeTest comment: ''!
+
 !VariableTypeTest categoriesForClass!Refactory-Testing! !
+
 !VariableTypeTest methodsFor!
 
 testBasicLintRuleTypes
@@ -54,6 +58,7 @@ testParseTreeTypes
 				model: model.
 	self assert: types size equals: 1.
 	self assert: (types includes: (model classFor: self class))! !
+
 !VariableTypeTest categoriesForMethods!
 testBasicLintRuleTypes!public!unit tests! !
 testCompositeLintRuleTypes!public!tests! !

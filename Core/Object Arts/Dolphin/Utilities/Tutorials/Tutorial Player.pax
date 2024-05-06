@@ -4,7 +4,6 @@ package paxVersion: 1;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
-
 package classNames
 	add: #AbstractTutorial;
 	add: #Lesson;
@@ -39,21 +38,18 @@ Object subclass: #AbstractTutorial
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #Lesson
 	instanceVariableNames: 'title contents'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Shell subclass: #TutorialPlayer
 	instanceVariableNames: 'tutorialPosition tutorial title workspace'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

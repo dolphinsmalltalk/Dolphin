@@ -4,7 +4,6 @@ package paxVersion: 1;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
-
 package classNames
 	add: #AbstractClassVariableTest;
 	add: #AbstractInstanceVariableTest;
@@ -103,241 +102,289 @@ TestCase subclass: #RefactoringBrowserTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoringBrowserTest subclass: #BrowserEnvironmentTest
 	instanceVariableNames: 'browser universalEnvironment totalSelectors'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoringBrowserTest subclass: #FormatterTest
 	instanceVariableNames: 'settings'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoringBrowserTest subclass: #ParserTest
 	instanceVariableNames: 'currentSelector classSearches rewrites'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoringBrowserTest subclass: #RBClassTest
 	instanceVariableNames: 'objectClass newClass messageNodeClass'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoringBrowserTest subclass: #RBMethodTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoringBrowserTest subclass: #RBNamespaceTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoringBrowserTest subclass: #RefactoringTest
 	instanceVariableNames: 'manager changeSet model'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoringBrowserTest subclass: #ReferenceFinderTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoringBrowserTest subclass: #SmalllintTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoringBrowserTest subclass: #VariableTypeTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 BrowserEnvironmentTest subclass: #VariableEnvironmentTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoringTest subclass: #AbstractClassVariableTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoringTest subclass: #AbstractInstanceVariableTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoringTest subclass: #AddClassTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoringTest subclass: #AddClassVariableTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoringTest subclass: #AddInstanceVariableTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoringTest subclass: #AddMethodTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoringTest subclass: #AddParameterTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoringTest subclass: #ChildrenToSiblingsTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoringTest subclass: #CreateAccessorsForVariableTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoringTest subclass: #ExtractMethodTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoringTest subclass: #ExtractMethodToComponentTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoringTest subclass: #ExtractToTemporaryTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoringTest subclass: #InlineAllMethodTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoringTest subclass: #InlineMethodFromComponentTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoringTest subclass: #InlineMethodTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoringTest subclass: #InlineParameterTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoringTest subclass: #InlineTemporaryTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoringTest subclass: #MoveMethodTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoringTest subclass: #MoveVariableDefinitionTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoringTest subclass: #ProtectInstanceVariableTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoringTest subclass: #PullUpClassVariableTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoringTest subclass: #PushDownClassVariableTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoringTest subclass: #PushDownInstanceVariableTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoringTest subclass: #PushDownMethodTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoringTest subclass: #PushUpInstanceVariableTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoringTest subclass: #PushUpMethodTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoringTest subclass: #RemoveClassTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoringTest subclass: #RemoveClassVariableTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoringTest subclass: #RemoveInstanceVariableTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoringTest subclass: #RemoveMethodTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoringTest subclass: #RemoveParameterTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoringTest subclass: #RenameClassTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoringTest subclass: #RenameClassVariableTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoringTest subclass: #RenameInstanceVariableTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoringTest subclass: #RenameMethodTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoringTest subclass: #RenameTemporaryTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoringTest subclass: #TemporaryToInstanceVariableTest
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -356,6 +403,7 @@ RBFormatter1 := RBConfigurableFormatter!
 isEqualTo: aBlockClosure
 	self class = aBlockClosure class ifFalse: [^false].
 	^self method isEqualTo: aBlockClosure method! !
+
 !BlockClosure categoriesForMethods!
 isEqualTo:!public!testing! !
 !
@@ -364,6 +412,7 @@ isEqualTo:!public!testing! !
 
 isEqualTo: aByteArray
 	^self = aByteArray! !
+
 !ByteArray categoriesForMethods!
 isEqualTo:!comparing!public! !
 !
@@ -379,6 +428,7 @@ isEqualTo: anObject
 							[:each | 
 							(anObject detect: [:eachOther | each isEqualTo: eachOther]
 								ifNone: [notFound]) ~~ notFound]]]! !
+
 !Collection categoriesForMethods!
 isEqualTo:!comparing!public! !
 !
@@ -405,6 +455,7 @@ isEqualTo: aMethod
 				ifTrue: [(b class == BlockClosure and: [b method == aMethod]) ifFalse: [^false]]
 				ifFalse: [(a isEqualTo: b) ifFalse: [^false]]].
 	^true! !
+
 !CompiledCode categoriesForMethods!
 isEqualTo:!public!testing! !
 !
@@ -413,6 +464,7 @@ isEqualTo:!public!testing! !
 
 isEqualTo: anObject
 	^self class == anObject class and: [self = anObject]! !
+
 !Interval categoriesForMethods!
 isEqualTo:!public! !
 !
@@ -421,6 +473,7 @@ isEqualTo:!public! !
 
 isEqualTo: anObject
 	^self = anObject! !
+
 !Object categoriesForMethods!
 isEqualTo:!public!testing! !
 !
@@ -435,6 +488,7 @@ withCRs
 	stream := self class writeStream: self size.
 	self do: [:each | each = $\ ifTrue: [stream nextPutAll: self class lineDelimiter] ifFalse: [stream nextPut: each]].
 	^stream contents! !
+
 !String categoriesForMethods!
 isEqualTo:!comparing!public! !
 withCRs!converting!public! !
@@ -444,6 +498,7 @@ withCRs!converting!public! !
 
 isEqualTo: aSystemDictionary 
 	^aSystemDictionary == self! !
+
 !SystemDictionary categoriesForMethods!
 isEqualTo:!public! !
 !

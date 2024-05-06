@@ -5,10 +5,15 @@ RefactoryChange subclass: #RefactoryClassChange
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoryClassChange guid: (GUID fromString: '{5955dfd7-6b22-491c-b86d-3e6a0061c426}')!
+
 RefactoryClassChange isAbstract: true!
+
 RefactoryClassChange comment: ''!
+
 !RefactoryClassChange categoriesForClass!Refactory-Change Objects! !
+
 !RefactoryClassChange methodsFor!
 
 = aRefactoryClassChange 
@@ -76,6 +81,7 @@ renameChangesForClass: aClassName to: newClassName
 				changeClassName: newClassName;
 				yourself].
 	^self! !
+
 !RefactoryClassChange categoriesForMethods!
 =!comparing!public! !
 asUndoOperation!converting!public! !

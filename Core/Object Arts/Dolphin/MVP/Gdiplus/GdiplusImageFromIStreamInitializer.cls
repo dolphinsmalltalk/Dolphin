@@ -5,9 +5,13 @@ GdiplusInitializer subclass: #GdiplusImageFromIStreamInitializer
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusImageFromIStreamInitializer guid: (GUID fromString: '{0a3984b0-2193-4a59-abd8-6f6d3f8ed0f7}')!
+
 GdiplusImageFromIStreamInitializer comment: ''!
+
 !GdiplusImageFromIStreamInitializer categoriesForClass!Unclassified! !
+
 !GdiplusImageFromIStreamInitializer methodsFor!
 
 createHandle
@@ -45,6 +49,7 @@ isPersistent
 
 iStream: pStream
 	iStream := pStream! !
+
 !GdiplusImageFromIStreamInitializer categoriesForMethods!
 createHandle!private!realizing/unrealizing! !
 gdiplusConstructorErrorDescription!constants!public!realizing/unrealizing! !
@@ -56,6 +61,7 @@ iStream:!constants!initializing!private!realizing/unrealizing!testing! !
 
 iStream: pStream
 	^self new iStream: pStream! !
+
 !GdiplusImageFromIStreamInitializer class categoriesForMethods!
 iStream:!instance creation!public! !
 !

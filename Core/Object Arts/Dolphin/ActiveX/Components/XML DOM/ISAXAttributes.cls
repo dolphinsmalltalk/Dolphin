@@ -5,7 +5,9 @@ IUnknown subclass: #ISAXAttributes
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
 	classInstanceVariableNames: ''!
+
 ISAXAttributes guid: (IID fromString: '{f078abe1-45d2-4832-91ea-4466ce2f25c9}')!
+
 ISAXAttributes comment: '<ISAXAttributes> is a wrapper class for the COM interface ''MSXML2.ISAXAttributes'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
@@ -102,7 +104,9 @@ interface ISAXAttributes : IUnknown
 		[out]int* pcchValue);
 };
 '!
+
 !ISAXAttributes categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+
 !ISAXAttributes methodsFor!
 
 getIndexFromName: pwchUri cchUri: cchUri pwchLocalName: pwchLocalName cchLocalName: cchLocalName
@@ -460,6 +464,7 @@ GetValueFromQName: pwchQName cchQName: cchQName ppwchValue: ppwchValue pcchValue
 
 	<virtual stdcall: hresult 16 word* sdword word** sdword*>
 	^self invalidCall: _failureCode! !
+
 !ISAXAttributes categoriesForMethods!
 getIndexFromName:cchUri:pwchLocalName:cchLocalName:!**auto generated**!methods!public! !
 GetIndexFromName:cchUri:pwchLocalName:cchLocalName:pnIndex:!**auto generated**!COM Interfaces-ISAXAttributes!private! !
@@ -523,6 +528,7 @@ defineFunctions
 		defineFunction: #GetValueFromQName:cchQName:ppwchValue:pcchValue:
 			argumentTypes: 'word* sdword word** sdword*'
 ! !
+
 !ISAXAttributes class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

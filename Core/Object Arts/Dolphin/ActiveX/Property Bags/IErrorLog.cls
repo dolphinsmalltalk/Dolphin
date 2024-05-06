@@ -5,11 +5,15 @@ IUnknown subclass: #IErrorLog
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IErrorLog guid: (IID fromString: '{3127ca40-446e-11ce-8135-00aa004bb851}')!
+
 IErrorLog comment: '<IErrorLog> is a wrapper class for the COM interface ''OCIDL.IErrorLog'' generated from type information in the ''OCIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The IErrorLog interface is an abstraction for an error log that is used to communicate detailed error information between a client and an object, and example being the error log associated with an IPersistPropertyBag::Load() operation.'!
+
 !IErrorLog categoriesForClass!COM-Interfaces! !
+
 !IErrorLog methodsFor!
 
 addError: pszPropName pExcepInfo: pExcepInfo
@@ -27,6 +31,7 @@ AddError: pszPropName pExcepInfo: pExcepInfo
 
 	<virtual stdcall: hresult 4 lpwstr EXCEPINFO*>
 	^self invalidCall: _failureCode! !
+
 !IErrorLog categoriesForMethods!
 addError:pExcepInfo:!**auto generated**!methods!public! !
 AddError:pExcepInfo:!**auto generated**!COM Interfaces-IErrorLog!private! !
@@ -45,6 +50,7 @@ defineFunctions
 		defineFunction: #AddError:pExcepInfo:
 			argumentTypes: 'lpwstr EXCEPINFO*'
 ! !
+
 !IErrorLog class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

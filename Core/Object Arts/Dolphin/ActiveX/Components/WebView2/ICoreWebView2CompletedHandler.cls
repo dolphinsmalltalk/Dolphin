@@ -5,8 +5,11 @@ ICoreWebView2Interface subclass: #ICoreWebView2CompletedHandler
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2CompletedHandler guid: (IID fromString: '{27d65498-b891-4319-88fb-fcd3c81271f3}')!
+
 ICoreWebView2CompletedHandler isAbstract: true!
+
 ICoreWebView2CompletedHandler comment: '`ICoreWebView2EventHandler` is not defined in the WebView2 IDL, but is defined here for economy of mechanism.
 
 The concrete subclasses represent COM interfaces used to provide the callback object that is notified when an asynchronous request completes.
@@ -15,4 +18,6 @@ There are 10 or more completion handler interfaces defined that are all similar 
 
 
 '!
+
 !ICoreWebView2CompletedHandler categoriesForClass!COM-Interfaces! !
+

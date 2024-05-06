@@ -5,7 +5,9 @@ IUnknown subclass: #IDolphinAxHost
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IDolphinAxHost guid: (IID fromString: '{4ea0745e-6c01-4bb4-b0ae-47a53ba9174a}')!
+
 IDolphinAxHost comment: '<IDolphinAxHost> is a wrapper class for the COM interface ''ActiveXHost.IDolphinAxHost'' generated from type information in the ''Dolphin Smalltalk Active-X Host Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -42,7 +44,9 @@ interface IDolphinAxHost : IUnknown {
 		[out, retval] VARIANT_BOOL* pbIsWindowless);
 };
 '!
+
 !IDolphinAxHost categoriesForClass!ActiveXHost-Interfaces!COM-Interfaces! !
+
 !IDolphinAxHost methodsFor!
 
 createControlLicEx: lpTricsData hWnd: hWnd pStream: pStream piAdvise: piAdvise bstrLic: bstrLic
@@ -130,6 +134,7 @@ SetExternalUIHandler: pDisp
 
 	<virtual stdcall: hresult 5 IDocHostUIHandlerDispatch*>
 	^self invalidCall: _failureCode! !
+
 !IDolphinAxHost categoriesForMethods!
 createControlLicEx:hWnd:pStream:piAdvise:bstrLic:!**auto generated**!methods!public! !
 CreateControlLicEx:hWnd:pStream:ppUnk:piAdvise:bstrLic:!**auto generated**!COM Interfaces-IDolphinAxHost!private! !
@@ -159,6 +164,7 @@ defineFunctions
 		defineFunction: #get_IsWindowless:
 			argumentTypes: 'varbool*'
 ! !
+
 !IDolphinAxHost class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

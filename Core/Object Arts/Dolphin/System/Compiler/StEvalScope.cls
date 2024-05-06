@@ -5,9 +5,13 @@ StSemanticScope subclass: #StEvalScope
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StEvalScope guid: (GUID fromString: '{c90dad3d-8211-445e-aa23-907eee35e6b8}')!
+
 StEvalScope comment: ''!
+
 !StEvalScope categoriesForClass!Kernel-Objects! !
+
 !StEvalScope methodsFor!
 
 lookupVariable: anStVariableNode
@@ -23,6 +27,7 @@ lookupVariable: anStVariableNode
 
 setPools: anArray
 	pools := anArray! !
+
 !StEvalScope categoriesForMethods!
 lookupVariable:!operations!public! !
 setPools:!initializing!private! !
@@ -32,6 +37,7 @@ setPools:!initializing!private! !
 
 pools: pools
 	^self new setPools: pools! !
+
 !StEvalScope class categoriesForMethods!
 pools:!instance creation!public! !
 !

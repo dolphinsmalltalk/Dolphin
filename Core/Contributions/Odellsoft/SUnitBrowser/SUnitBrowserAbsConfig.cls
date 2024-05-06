@@ -5,9 +5,13 @@ Object subclass: #SUnitBrowserAbsConfig
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SUnitBrowserAbsConfig guid: (GUID fromString: '{2490833e-133b-46b7-acca-aaa4c120ac4b}')!
+
 SUnitBrowserAbsConfig comment: ''!
+
 !SUnitBrowserAbsConfig categoriesForClass!Unclassified! !
+
 !SUnitBrowserAbsConfig methodsFor!
 
 initialize
@@ -90,6 +94,7 @@ useDisplayNames: aBoolean
 	self
 		propertyAt: #useDisplayNames
 		put: aBoolean! !
+
 !SUnitBrowserAbsConfig categoriesForMethods!
 initialize!initializing!private! !
 properties!accessing!private! !
@@ -117,6 +122,7 @@ new
 	^super new
 		initialize;
 		yourself! !
+
 !SUnitBrowserAbsConfig class categoriesForMethods!
 new!instantiating!public! !
 !

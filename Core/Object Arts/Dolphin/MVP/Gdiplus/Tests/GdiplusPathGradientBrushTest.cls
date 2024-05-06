@@ -5,9 +5,13 @@ GdiplusTests subclass: #GdiplusPathGradientBrushTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusPathGradientBrushTest guid: (GUID fromString: '{fcef1a0f-834c-11d7-b609-00e0987e8081}')!
+
 GdiplusPathGradientBrushTest comment: ''!
+
 !GdiplusPathGradientBrushTest categoriesForClass!Unclassified! !
+
 !GdiplusPathGradientBrushTest methodsFor!
 
 rgb
@@ -171,6 +175,7 @@ testWrapMode
 			[:e |
 			model wrapMode: e value.
 			self assert: model wrapMode equals: e value]! !
+
 !GdiplusPathGradientBrushTest categoriesForMethods!
 rgb!accessing!public! !
 setSample2Points!accessing!public! !

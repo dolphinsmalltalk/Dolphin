@@ -5,7 +5,9 @@ ExternalStructure subclass: #GpImageCodecInfo
 	classVariableNames: '_OffsetOf_Clsid _OffsetOf_CodecName _OffsetOf_DllName _OffsetOf_FilenameExtension _OffsetOf_Flags _OffsetOf_FormatDescription _OffsetOf_FormatID _OffsetOf_MimeType _OffsetOf_SigCount _OffsetOf_SigMask _OffsetOf_SigPattern _OffsetOf_SigSize _OffsetOf_Version'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GpImageCodecInfo guid: (GUID fromString: '{059e6e3a-2877-4ea7-a11c-7e5c1ac62165}')!
+
 GpImageCodecInfo addClassConstant: '_OffsetOf_Clsid' value: 16r0!
 GpImageCodecInfo addClassConstant: '_OffsetOf_CodecName' value: 16r20!
 GpImageCodecInfo addClassConstant: '_OffsetOf_DllName' value: 16r24!
@@ -19,6 +21,7 @@ GpImageCodecInfo addClassConstant: '_OffsetOf_SigMask' value: 16r48!
 GpImageCodecInfo addClassConstant: '_OffsetOf_SigPattern' value: 16r44!
 GpImageCodecInfo addClassConstant: '_OffsetOf_SigSize' value: 16r40!
 GpImageCodecInfo addClassConstant: '_OffsetOf_Version' value: 16r38!
+
 GpImageCodecInfo comment: '<GpImageCodecInfo> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpImageCodecInfo'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
@@ -44,7 +47,9 @@ struct tagGpImageCodecInfo {
 	BYTE* SigMask;
 } GpImageCodecInfo;
 '!
+
 !GpImageCodecInfo categoriesForClass!Unclassified! !
+
 !GpImageCodecInfo methodsFor!
 
 Clsid
@@ -184,6 +189,7 @@ Version: anInteger
 	"Set the receiver's 'Version' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_Version put: anInteger! !
+
 !GpImageCodecInfo categoriesForMethods!
 Clsid!**compiled accessors**!public! !
 Clsid:!**compiled accessors**!public! !
@@ -255,6 +261,7 @@ defineFields
 
 getFieldNames
 	^#(#Clsid #FormatID #CodecName #DllName #FormatDescription #FilenameExtension #MimeType #Flags #Version #SigCount #SigSize #SigPattern #SigMask)! !
+
 !GpImageCodecInfo class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

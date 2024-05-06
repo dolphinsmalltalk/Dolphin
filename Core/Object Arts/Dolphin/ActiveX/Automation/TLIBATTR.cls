@@ -5,13 +5,16 @@ OLEStructure subclass: #TLIBATTR
 	classVariableNames: '_OffsetOf_guid _OffsetOf_lcid _OffsetOf_syskind _OffsetOf_wLibFlags _OffsetOf_wMajorVerNum _OffsetOf_wMinorVerNum'
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
+
 TLIBATTR guid: (GUID fromString: '{c06f3b71-0868-11d3-93af-00a024ca708a}')!
+
 TLIBATTR addClassConstant: '_OffsetOf_guid' value: 16r0!
 TLIBATTR addClassConstant: '_OffsetOf_lcid' value: 16r10!
 TLIBATTR addClassConstant: '_OffsetOf_syskind' value: 16r14!
 TLIBATTR addClassConstant: '_OffsetOf_wLibFlags' value: 16r1C!
 TLIBATTR addClassConstant: '_OffsetOf_wMajorVerNum' value: 16r18!
 TLIBATTR addClassConstant: '_OffsetOf_wMinorVerNum' value: 16r1A!
+
 TLIBATTR comment: 'TLIBATTR is an ExternalStructure class to represent the OLE Automation TLIBATTR structure.
 
 TLIBATTR is a simple structure containing basic descriptive details about a type library, namely:
@@ -22,7 +25,9 @@ TLIBATTR is a simple structure containing basic descriptive details about a type
 	and some flags	(#wLibFlags)
 
 TLIBATTR is probably only of interest for the purposes of browsing type libraries and is of no obvious use in applications.'!
+
 !TLIBATTR categoriesForClass!External-Data-Structured-COM! !
+
 !TLIBATTR methodsFor!
 
 comparisonSize
@@ -87,6 +92,7 @@ wMinorVerNum
 	"Answer the <Integer> value of the receiver's 'wMinorVerNum' field."
 
 	^bytes wordAtOffset: _OffsetOf_wMinorVerNum! !
+
 !TLIBATTR categoriesForMethods!
 comparisonSize!accessing!private! !
 guid!**compiled accessors**!public! !
@@ -143,6 +149,7 @@ defineFields
 
 getFieldNames
 	^#(#guid #lcid #wMajorVerNum #wMinorVerNum #wLibFlags)! !
+
 !TLIBATTR class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

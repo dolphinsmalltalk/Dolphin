@@ -5,9 +5,13 @@ ScintillaLexerMetadataTest subclass: #ScintillaLexerPropertyTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ScintillaLexerPropertyTest guid: (GUID fromString: '{1b677d4d-c0bc-462a-8bc4-8a83f2b32b67}')!
+
 ScintillaLexerPropertyTest comment: ''!
+
 !ScintillaLexerPropertyTest categoriesForClass!Unclassified! !
+
 !ScintillaLexerPropertyTest methodsFor!
 
 testViewId
@@ -25,6 +29,7 @@ testViewId
 	prop2 := testMethod value: ScintillaLexerProperty withArguments: {view. 1}.
 	self assert: prop2 view identicalTo: view.
 	self assert: prop2 id equals: 1! !
+
 !ScintillaLexerPropertyTest categoriesForMethods!
 testViewId!public!unit tests! !
 !

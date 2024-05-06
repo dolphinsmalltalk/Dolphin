@@ -5,9 +5,12 @@ Object variableSubclass: #ExternalDescriptor
 	classVariableNames: 'CallingConventions ExternalReferenceTypes ExternalValueTypes RetClassIndex RetTypeMask TypeNames TypeSizes'
 	poolDictionaries: 'ExtCallArgTypes'
 	classInstanceVariableNames: ''!
+
 ExternalDescriptor guid: (GUID fromString: '{87b4c487-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 ExternalDescriptor addClassConstant: 'RetClassIndex' value: 16r4!
 ExternalDescriptor addClassConstant: 'RetTypeMask' value: 16r3F!
+
 ExternalDescriptor comment: 'The argument/return types supported by the primitive DLL call function are:
 
 	void 	Only valid as a return type - the method answers self
@@ -99,7 +102,9 @@ ExternalDescriptor comment: 'The argument/return types supported by the primitiv
 	<struct>**Equivalent to lppvoid.
 	
 Note that in general, the UndefinedObject, nil, is interchangeable with 0, or NULL, when interfacing with external library functions. Nullness can be tested with the #isNull message, with the UndefinedObject and SmallInteger zero answering true.'!
+
 !ExternalDescriptor categoriesForClass!System-Support! !
+
 !ExternalDescriptor methodsFor!
 
 argumentCount
@@ -249,6 +254,7 @@ returnType
 	type := self retType.
 	class := (self class typeHasArgument: type) ifTrue: [self at: (descriptor at: RetClassIndex) + 1].
 	^self class nameOf: type type: class! !
+
 !ExternalDescriptor categoriesForMethods!
 argumentCount!accessing!private! !
 argumentIndexFromOffset:!helpers!private! !
@@ -615,6 +621,7 @@ typeHasArgument: ordinalType
 	accompanying it."
 
 	^ordinalType >= ExtCallArgSTRUCT! !
+
 !ExternalDescriptor class categoriesForMethods!
 argumentTypes:!instance creation!public! !
 callingConvention:returnType:argumentTypes:!instance creation!public! !

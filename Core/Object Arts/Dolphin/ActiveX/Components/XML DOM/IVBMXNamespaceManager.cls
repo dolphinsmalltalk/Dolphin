@@ -5,7 +5,9 @@ IDispatch subclass: #IVBMXNamespaceManager
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
 	classInstanceVariableNames: ''!
+
 IVBMXNamespaceManager guid: (IID fromString: '{c90352f5-643c-4fbc-bb23-e996eb2d51fd}')!
+
 IVBMXNamespaceManager comment: '<IVBMXNamespaceManager> is a wrapper class for the COM interface ''MSXML2.IVBMXNamespaceManager'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
@@ -62,7 +64,9 @@ interface IVBMXNamespaceManager : IDispatch
 		[out, retval]VARIANT* uri);
 };
 '!
+
 !IVBMXNamespaceManager categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+
 !IVBMXNamespaceManager methodsFor!
 
 allowOverride
@@ -243,6 +247,7 @@ Reset
 
 	<virtual stdcall: hresult 10>
 	^self invalidCall: _failureCode! !
+
 !IVBMXNamespaceManager categoriesForMethods!
 allowOverride!**auto generated**!properties!public! !
 allowOverride:!**auto generated**!properties!public! !
@@ -311,6 +316,7 @@ newMXNamespaceManager60
 
 	^self onCLSID: (CLSID fromString: '{88D96A11-F192-11D4-A65F-0040963251E5}')
 ! !
+
 !IVBMXNamespaceManager class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 newMXNamespaceManager!**auto generated**!instance creation!public! !

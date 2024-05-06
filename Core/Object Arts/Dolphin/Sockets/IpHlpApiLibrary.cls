@@ -5,7 +5,9 @@ ExternalLibrary subclass: #IPHlpApiLibrary
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IPHlpApiLibrary guid: (GUID fromString: '{a63698ae-5cef-4f53-bf10-c4a77a8b979a}')!
+
 IPHlpApiLibrary comment: 'IPHlpApiLibrary is the <ExternalLibrary> class to represent the dynamic link library, ''iphlpapi.DLL''. It was generated generated from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library. It contains methods for each of the functions defined by the corresponding module in that type library.
 
 The type library contains the following helpstring for this module
@@ -237,7 +239,9 @@ module IPHlpApi
 		[in, out]unsigned long* Size);
 };
 '!
+
 !IPHlpApiLibrary categoriesForClass!Win32-Modules! !
+
 !IPHlpApiLibrary methodsFor!
 
 parseNetworkString: networkString types: types addressInfo: addressInfo portNumber: portNumber prefixLength: prefixLength
@@ -253,6 +257,7 @@ parseNetworkString: networkString types: types addressInfo: addressInfo portNumb
 
 	<stdcall: dword ParseNetworkString lpwstr dword NET_ADDRESS_INFO* word* byte*>
 	^self invalidCall: _failureCode! !
+
 !IPHlpApiLibrary categoriesForMethods!
 parseNetworkString:types:addressInfo:portNumber:prefixLength:!**auto generated**!public! !
 !
@@ -264,6 +269,7 @@ fileName
 
 	^'iphlpapi'
 ! !
+
 !IPHlpApiLibrary class categoriesForMethods!
 fileName!**auto generated**!constants!public! !
 !

@@ -5,9 +5,13 @@ StParseNodeVisitor subclass: #RBReadBeforeWrittenTester
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RBReadBeforeWrittenTester guid: (GUID fromString: '{a344e3a6-5cf4-4eb9-ae6a-990cae954e18}')!
+
 RBReadBeforeWrittenTester comment: ''!
+
 !RBReadBeforeWrittenTester categoriesForClass!Refactory-ParseTree Matching! !
+
 !RBReadBeforeWrittenTester methodsFor!
 
 checkNewTemps: aBoolean 
@@ -128,6 +132,7 @@ visitSequenceNode: aSequenceNode
 
 visitVariableNode: aVariableNode
 	self variableRead: aVariableNode! !
+
 !RBReadBeforeWrittenTester categoriesForMethods!
 checkNewTemps:!initializing!public! !
 copyDictionary:!helpers!private! !
@@ -169,6 +174,7 @@ variablesReadBeforeWrittenIn: aParseTree
 	^(self new)
 		executeTree: aParseTree;
 		read! !
+
 !RBReadBeforeWrittenTester class categoriesForMethods!
 isVariable:readBeforeWrittenIn:!accessing!public! !
 isVariable:writtenBeforeReadIn:!accessing!public! !

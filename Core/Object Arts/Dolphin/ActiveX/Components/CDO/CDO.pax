@@ -26,7 +26,6 @@ The Microsoft documentation on the CDO object model can be found on MSDN.
 
 package basicPackageVersion: '6.0'.
 
-
 package classNames
 	add: #CDOIBodyPart;
 	add: #CDOIBodyParts;
@@ -72,81 +71,90 @@ IDispatch subclass: #CDOIBodyPart
 	classVariableNames: ''
 	poolDictionaries: 'CDOConstants'
 	classInstanceVariableNames: ''!
+
 IDispatch subclass: #CDOIBodyParts
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'CDOConstants'
 	classInstanceVariableNames: ''!
+
 IDispatch subclass: #CDOIConfiguration
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'CDOConstants'
 	classInstanceVariableNames: ''!
+
 IDispatch subclass: #CDOIDataSource
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'CDOConstants'
 	classInstanceVariableNames: ''!
+
 IDispatch subclass: #CDOIDropDirectory
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'CDOConstants'
 	classInstanceVariableNames: ''!
+
 IDispatch subclass: #CDOIMessage
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'CDOConstants'
 	classInstanceVariableNames: ''!
+
 IDispatch subclass: #CDOIMessages
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'CDOConstants'
 	classInstanceVariableNames: ''!
+
 IDispatch subclass: #CDOINNTPEarlyScriptConnector
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'CDOConstants'
 	classInstanceVariableNames: ''!
+
 IDispatch subclass: #CDOINNTPFinalScriptConnector
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'CDOConstants'
 	classInstanceVariableNames: ''!
+
 IDispatch subclass: #CDOINNTPOnPost
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'CDOConstants'
 	classInstanceVariableNames: ''!
+
 IDispatch subclass: #CDOINNTPOnPostEarly
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'CDOConstants'
 	classInstanceVariableNames: ''!
+
 IDispatch subclass: #CDOINNTPOnPostFinal
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'CDOConstants'
 	classInstanceVariableNames: ''!
+
 IDispatch subclass: #CDOINNTPPostScriptConnector
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'CDOConstants'
 	classInstanceVariableNames: ''!
+
 IDispatch subclass: #CDOISMTPOnArrival
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'CDOConstants'
 	classInstanceVariableNames: ''!
+
 IDispatch subclass: #CDOISMTPScriptConnector
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'CDOConstants'
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

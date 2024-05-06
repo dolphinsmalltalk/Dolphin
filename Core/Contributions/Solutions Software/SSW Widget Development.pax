@@ -6,7 +6,6 @@ Provided under the same licence terms as Dolphin Smalltalk 7'.
 
 package basicPackageVersion: '7.1.0'.
 
-
 package methodNames
 	add: 'EditableListView class' -> #publishedAspectsOfInstances;
 	add: 'EditableListViewColumn class' -> #publishedAspectsOfInstances;
@@ -32,12 +31,6 @@ package setPrerequisites: #(
 
 package!
 
-"Class Definitions"!
-
-
-"Global Aliases"!
-
-
 "Loose Methods"!
 
 !EditableListView class methodsFor!
@@ -51,6 +44,7 @@ publishedAspectsOfInstances
 		add: (Aspect integer: #rowHeight);
 		add: (Aspect name: #smallImageExtent);
 		yourself! !
+
 !EditableListView class categoriesForMethods!
 publishedAspectsOfInstances!constants!development!public! !
 !
@@ -81,6 +75,7 @@ publishedAspectsOfInstances
 		add: (Aspect string: #infoTip);
 		add: (Aspect block: #isValidContentsBlock);
     		yourself! !
+
 !EditableListViewColumn class categoriesForMethods!
 publishedAspectsOfInstances!development!public! !
 !
@@ -93,6 +88,7 @@ publishedAspectsOfInstances
 	^(super publishedAspectsOfInstances)
 		add: (Aspect boolean: #is3State);
 		yourself! !
+
 !EmbeddedCheckBox class categoriesForMethods!
 publishedAspectsOfInstances!development!public! !
 !
@@ -105,6 +101,7 @@ publishedAspectsOfInstances
 	^(super publishedAspectsOfInstances)
 		add: (Aspect boolean: #isAlwaysDrawnEnabled);
 		yourself! !
+
 !EmbeddedCheckButton class categoriesForMethods!
 publishedAspectsOfInstances!development!public! !
 !
@@ -117,6 +114,7 @@ publishedAspectsOfInstances
     	^(super publishedAspectsOfInstances)
     		add: (Aspect boolean: #allowNilSelection);
     		yourself! !
+
 !EmbeddedComboBox class categoriesForMethods!
 publishedAspectsOfInstances!constants!development!public! !
 !
@@ -129,6 +127,7 @@ publishedAspectsOfInstances
     	^super publishedAspectsOfInstances 
 		add: (Aspect name: #offset);
     		yourself! !
+
 !EmbeddedTextEdit class categoriesForMethods!
 publishedAspectsOfInstances!constants!development!public! !
 !
@@ -143,6 +142,7 @@ publishedAspectsOfInstances
     		add: (Aspect string: #separatorChars);
     		add: (Aspect set: #placeholderChar);
     		yourself! !
+
 !FormattedTextEdit class categoriesForMethods!
 publishedAspectsOfInstances!constants!development!public! !
 !
@@ -157,6 +157,7 @@ publishedAspectsOfInstances
 		add: (Aspect boolean: #isRightButton);
 		add: (Aspect dictionary: #transitionDurations);
 		yourself! !
+
 !OwnerDrawnButton class categoriesForMethods!
 publishedAspectsOfInstances!development!public! !
 !
@@ -170,6 +171,7 @@ publishedAspectsOfInstances
 		add: (Aspect name: #imageExtent);
 		add: (Aspect menu: #dropDownMenu);
 		yourself! !
+
 !TextAndImageButton class categoriesForMethods!
 publishedAspectsOfInstances!development!public! !
 !

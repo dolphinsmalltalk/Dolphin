@@ -137,209 +137,246 @@ Object subclass: #COMFunctionAbstract
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #COMInterfaceImp
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'OLEConstants Win32Errors'
 	classInstanceVariableNames: ''!
+
 Object subclass: #COMObjectStub
 	instanceVariableNames: 'cookie object count interfaces outerUnknown'
 	classVariableNames: 'IdentityRegistry'
 	poolDictionaries: 'Win32Errors'
 	classInstanceVariableNames: ''!
+
 SequenceableCollection subclass: #OLEEnumerator
 	instanceVariableNames: 'interface'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalAddress variableByteSubclass: #BSTR
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalMemory variableByteSubclass: #COMTaskMemory
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 COMFunctionAbstract subclass: #COMFunction
 	instanceVariableNames: 'selector descriptor'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 COMFunctionAbstract subclass: #UnkAddRefFunction
 	instanceVariableNames: ''
 	classVariableNames: 'Descriptor'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 COMFunctionAbstract subclass: #UnkQIFunction
 	instanceVariableNames: ''
 	classVariableNames: 'Descriptor'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 COMFunctionAbstract subclass: #UnkReleaseFunction
 	instanceVariableNames: ''
 	classVariableNames: 'Descriptor'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 COMInterfaceImp subclass: #COMClassFactory
 	instanceVariableNames: 'serverClass clsid registration'
 	classVariableNames: 'Factories Instances LockCount'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 COMInterfaceImp subclass: #COMEnumerator
 	instanceVariableNames: 'enumClass contents'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 COMClassFactory subclass: #COMSingletonClassFactory
 	instanceVariableNames: 'current'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 COMEnumerator subclass: #COMInterfaceEnumerator
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalLibrary subclass: #OLEAutLibrary
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalLibrary subclass: #OLELibrary
 	instanceVariableNames: 'comOnly'
 	classVariableNames: 'DefaultIMalloc'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalStructure subclass: #COMInterface
 	instanceVariableNames: 'implementor'
 	classVariableNames: '_OffsetOf_argSizes _OffsetOf_interfaceCookie _OffsetOf_objectCookie _OffsetOf_vtbl InterfaceClasses'
 	poolDictionaries: 'OLEConstants Win32Constants Win32Errors'
 	classInstanceVariableNames: 'argSizes functions typeLib'!
+
 ExternalStructure subclass: #OLEStructure
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'OLEConstants'
 	classInstanceVariableNames: ''!
+
 COMInterface subclass: #IUnknown
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IUnknown subclass: #IClassFactory
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IUnknown subclass: #IEnumXXXX
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IUnknown subclass: #IErrorInfo
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IUnknown subclass: #IMalloc
 	instanceVariableNames: ''
 	classVariableNames: 'Shared Task'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IUnknown subclass: #IServiceProvider
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IUnknown subclass: #ISupportErrorInfo
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IClassFactory subclass: #IClassFactory2
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IEnumXXXX subclass: #IEnumString
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IEnumXXXX subclass: #IEnumStruct
 	instanceVariableNames: 'elementClass'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IEnumXXXX subclass: #IEnumUnknown
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalArray subclass: #OLECountedArray
 	instanceVariableNames: 'elements'
 	classVariableNames: '_OffsetOf_cElems _OffsetOf_pElems'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 OLECountedArray subclass: #CADWORD
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 OLECountedArray subclass: #CALPOLESTR
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 OLEStructure subclass: #COAUTHIDENTITY
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_Domain _OffsetOf_DomainLength _OffsetOf_Flags _OffsetOf_Password _OffsetOf_PasswordLength _OffsetOf_User _OffsetOf_UserLength'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 OLEStructure subclass: #COAUTHINFO
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_dwAuthnLevel _OffsetOf_dwAuthnSvc _OffsetOf_dwAuthzSvc _OffsetOf_dwCapabilities _OffsetOf_dwImpersonationLevel _OffsetOf_pAuthIdentityData _OffsetOf_pwszServerPrincName'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 OLEStructure subclass: #COSERVERINFO
 	instanceVariableNames: 'hostName'
 	classVariableNames: '_OffsetOf_dwReserved1 _OffsetOf_dwReserved2 _OffsetOf_pAuthInfo _OffsetOf_pwszName'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 OLEStructure subclass: #LICINFO
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_dwSize _OffsetOf_fLicVerified _OffsetOf_fRuntimeKeyAvail'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 OLEStructure subclass: #OLEFinalizableStructure
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 OLEFinalizableStructure subclass: #EXCEPINFO
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_dwHelpContext _OffsetOf_pfnDeferredFillIn _OffsetOf_pvReserved _OffsetOf_pwszDescription _OffsetOf_pwszHelpFile _OffsetOf_pwszSource _OffsetOf_scode _OffsetOf_wCode _OffsetOf_wReserved'
 	poolDictionaries: 'Win32Errors'
 	classInstanceVariableNames: ''!
+
 OLEFinalizableStructure subclass: #MULTI_QI
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_hr _OffsetOf_pIID _OffsetOf_pItf'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GUID variableByteSubclass: #CLSID
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GUID variableByteSubclass: #IID
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -353,6 +390,7 @@ copyToCOMTaskMemory
 	size := self byteSize.
 	^(COMTaskMemory new: size)
 		replaceFrom: 1 to: size with: self startingAt: 1! !
+
 !ByteArray categoriesForMethods!
 copyToCOMTaskMemory!copying!public! !
 !
@@ -370,6 +408,7 @@ queryInterface: interfaceClass ifNone: exceptionHandler
 	^interfaceClass == IMalloc
 		ifTrue: [interfaceClass on: self]
 		ifFalse: [exceptionHandler value]! !
+
 !ExternalMemory class categoriesForMethods!
 queryInterface:ifNone:!accessing-interfaces!public! !
 !
@@ -381,6 +420,7 @@ copyToCOMTaskMemory
 	receiver have been copied."
 
 	^self copy: COMTaskMemory from: 1 to: self byteSize! !
+
 !ExternalStructure categoriesForMethods!
 copyToCOMTaskMemory!copying!public! !
 !
@@ -414,6 +454,7 @@ unregisterCOMStub: cookie
 
 	comStubs isNil ifTrue: [comStubs := PermanentRegistry new].
 	comStubs removeAtIndex: cookie! !
+
 !ProcessorScheduler categoriesForMethods!
 comCallback:id:subId:withArgumentsAt:cookie:!callbacks!not restartable!private!vm entry points! !
 registerCOMStub:!accessing!private! !
@@ -432,6 +473,7 @@ comStartup
 	IUnknown onStartup.
 	"Attach the outer unknown passed by the stub, if any"
 	self outer notNull ifTrue: [startupArgs at: 2 put: (IUnknown attach: self outer)]! !
+
 !SessionManager categoriesForMethods!
 comStartup!operations-startup!private! !
 !
@@ -449,6 +491,7 @@ copyToCOMTaskMemory
 	characters."
 
 	^COMTaskMemory fromString: self! !
+
 !String categoriesForMethods!
 asBSTR!converting!public! !
 copyToCOMTaskMemory!copying!public! !

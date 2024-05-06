@@ -5,9 +5,13 @@ DolphinTest subclass: #CodeMentorTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 CodeMentorTest guid: (GUID fromString: '{57ac07f6-6b32-42d2-a0cd-7488ae11ec92}')!
+
 CodeMentorTest comment: ''!
+
 !CodeMentorTest categoriesForClass!Unclassified! !
+
 !CodeMentorTest methodsFor!
 
 testLintRulesXml
@@ -23,6 +27,7 @@ testLintRulesXml
 			xpath := './/LintRule[name="<1s>"]' expandMacrosWith: name.
 			node := xml selectSingleNode: xpath.
 			self deny: node isNil]! !
+
 !CodeMentorTest categoriesForMethods!
 testLintRulesXml!public!unit tests! !
 !

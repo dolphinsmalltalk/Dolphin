@@ -9,7 +9,6 @@ This package contains Dialog presenter wrappers for the Windows common dialogs f
 
 package basicPackageVersion: '6.2'.
 
-
 package classNames
 	add: #CHOOSECOLORW;
 	add: #CHOOSEFONTW;
@@ -59,84 +58,96 @@ ExternalLibrary subclass: #ComDlgLibrary
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #CommonDialogStructure
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'CommonDialogConstants'
 	classInstanceVariableNames: ''!
+
 CommonDialogStructure subclass: #CHOOSECOLORW
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_dwSize _OffsetOf_flags _OffsetOf_hInstance _OffsetOf_hwndOwner _OffsetOf_lCustData _OffsetOf_lpCustColors _OffsetOf_lpfnHook _OffsetOf_lpTemplateName _OffsetOf_rgbResult'
 	poolDictionaries: 'CommonDialogConstants'
 	classInstanceVariableNames: ''!
+
 CommonDialogStructure subclass: #CHOOSEFONTW
 	instanceVariableNames: 'logFont'
 	classVariableNames: '_OffsetOf_dwSize _OffsetOf_flags _OffsetOf_hDC _OffsetOf_hInstance _OffsetOf_hwndOwner _OffsetOf_iPointSize _OffsetOf_lCustData _OffsetOf_lpfnHook _OffsetOf_lpLogFont _OffsetOf_lpszStyle _OffsetOf_lpTemplateName _OffsetOf_nFontType _OffsetOf_nSizeMax _OffsetOf_nSizeMin _OffsetOf_rgbColors'
 	poolDictionaries: 'CommonDialogConstants'
 	classInstanceVariableNames: ''!
+
 CommonDialogStructure subclass: #FINDREPLACEW
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_dwSize _OffsetOf_flags _OffsetOf_hInstance _OffsetOf_hwndOwner _OffsetOf_lCustData _OffsetOf_lpfnHook _OffsetOf_lpstrFindWhat _OffsetOf_lpstrReplaceWith _OffsetOf_lpTemplateName _OffsetOf_wFindWhatLen _OffsetOf_wReplaceWithLen'
 	poolDictionaries: 'CommonDialogConstants'
 	classInstanceVariableNames: ''!
+
 CommonDialogStructure subclass: #OPENFILENAMEW
 	instanceVariableNames: 'fileName title filter defExt initialDir'
 	classVariableNames: '_OffsetOf_dwReserved _OffsetOf_dwSize _OffsetOf_flags _OffsetOf_flagsEx _OffsetOf_hInstance _OffsetOf_hwndOwner _OffsetOf_lCustData _OffsetOf_lpfnHook _OffsetOf_lpstrCustomFilter _OffsetOf_lpstrDefExt _OffsetOf_lpstrFile _OffsetOf_lpstrFileTitle _OffsetOf_lpstrFilter _OffsetOf_lpstrInitialDir _OffsetOf_lpstrTitle _OffsetOf_lpTemplateName _OffsetOf_nFileExtension _OffsetOf_nFileOffset _OffsetOf_nFilterIndex _OffsetOf_nMaxCustFilter _OffsetOf_nMaxFile _OffsetOf_nMaxFileTitle _OffsetOf_pvReserved'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 NMHDR subclass: #OFNOTIFYEXW
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_lpOFN _OffsetOf_pidl _OffsetOf_psf'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 NMHDR subclass: #OFNOTIFYW
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_lpOFN _OffsetOf_pszFile'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ValueDialog subclass: #CommonDialog
 	instanceVariableNames: 'winStruct hook'
 	classVariableNames: ''
 	poolDictionaries: 'CommonDialogConstants Win32Constants'
 	classInstanceVariableNames: 'hookHandlers'!
+
 CommonDialog subclass: #ColorDialog
 	instanceVariableNames: 'validationBlock'
 	classVariableNames: 'CustomColors WM_COLOROK'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 CommonDialog subclass: #FileDialog
 	instanceVariableNames: 'style fileTypes validationBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 CommonDialog subclass: #FindDialog
 	instanceVariableNames: 'findWhatBuf findDetails'
 	classVariableNames: 'HookHandlers'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 CommonDialog subclass: #FontDialog
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 FileDialog subclass: #FileOpenDialog
 	instanceVariableNames: 'maxFileCount'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 FileDialog subclass: #FileSaveDialog
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 FindDialog subclass: #FindReplaceDialog
 	instanceVariableNames: 'replaceWith'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -146,6 +157,7 @@ choose
 	"Answer a new instance of the receiver chosen from the common color dialog."
 
 	^ColorDialog showModal! !
+
 !Color class categoriesForMethods!
 choose!instance creation!public! !
 !
@@ -156,6 +168,7 @@ title
 	"Answer the receiver's 'title' (i.e. the display name)."
 
 	^self class titleOf: self name! !
+
 !File categoriesForMethods!
 title!accessing!public! !
 !
@@ -180,6 +193,7 @@ titleOf: aString
 		lpszTitle: buf
 		cbBuf: len) < 0 ifTrue: [lib systemError: 123].
 	^buf! !
+
 !File class categoriesForMethods!
 titleOf:!filename manipulation!public! !
 !
@@ -191,6 +205,7 @@ choose
 	font dialog."
 
 	^FontDialog showModal! !
+
 !Font class categoriesForMethods!
 choose!instance creation!public! !
 !

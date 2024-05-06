@@ -5,9 +5,13 @@ RefactoringBrowserTest subclass: #RBClassTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RBClassTest guid: (GUID fromString: '{5220987d-f53e-4675-8166-5035964aa131}')!
+
 RBClassTest comment: ''!
+
 !RBClassTest categoriesForClass!Refactory-Testing! !
+
 !RBClassTest methodsFor!
 
 setUp
@@ -56,6 +60,7 @@ testHierarchy
 	meta := objectClass metaclass.
 	self assert: (objectClass withAllSubclasses includes: meta).
 	self assert: (meta withAllSuperclasses includes: objectClass)! !
+
 !RBClassTest categoriesForMethods!
 setUp!public!set up! !
 testDefinesClassVariable!method tests!public! !

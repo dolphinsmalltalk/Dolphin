@@ -6,7 +6,6 @@ package paxVersion: 1;
 
 package basicPackageVersion: 'OA 6 CU 1'.
 
-
 package classNames
 	add: #ElgamalSerialNumberProtector;
 	add: #PC1ProductProtector;
@@ -35,36 +34,36 @@ Object subclass: #ProductProtector
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #ProtectedProductSerialNumber
 	instanceVariableNames: 'value stringValue'
 	classVariableNames: 'FixedLicenceMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #SerialNumberProtector
 	instanceVariableNames: 'key'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ProductProtector subclass: #PC1ProductProtector
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SerialNumberProtector subclass: #ElgamalSerialNumberProtector
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SerialNumberProtector subclass: #PC1SerialNumberProtector
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

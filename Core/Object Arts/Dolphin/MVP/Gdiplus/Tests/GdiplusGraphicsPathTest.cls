@@ -5,9 +5,13 @@ GdiplusTests subclass: #GdiplusGraphicsPathTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusGraphicsPathTest guid: (GUID fromString: '{fcef1a10-834c-11d7-b609-00e0987e8081}')!
+
 GdiplusGraphicsPathTest comment: ''!
+
 !GdiplusGraphicsPathTest categoriesForClass!Unclassified! !
+
 !GdiplusGraphicsPathTest methodsFor!
 
 setSample3Points
@@ -50,6 +54,7 @@ testFillMode
 testPointCount
 	self setSample3Points.
 	self assert: model pointCount equals: 3! !
+
 !GdiplusGraphicsPathTest categoriesForMethods!
 setSample3Points!public! !
 setSampleEllipse!public! !

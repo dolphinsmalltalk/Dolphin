@@ -5,7 +5,9 @@ ICoreWebView2EventArgs subclass: #ICoreWebView2MoveFocusRequestedEventArgs
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2MoveFocusRequestedEventArgs guid: (IID fromString: '{2d6aa13b-3839-4a15-92fc-d88b3c0d9c9d}')!
+
 ICoreWebView2MoveFocusRequestedEventArgs comment: '`ICoreWebView2MoveFocusRequestedEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2MoveFocusRequestedEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -32,7 +34,9 @@ interface ICoreWebView2MoveFocusRequestedEventArgs : IUnknown
 };
 ```
 '!
+
 !ICoreWebView2MoveFocusRequestedEventArgs categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2MoveFocusRequestedEventArgs methodsFor!
 
 get_Handled: value
@@ -83,6 +87,7 @@ reason
 	answer := SDWORD new.
 	self get_reason: answer.
 	^answer asObject! !
+
 !ICoreWebView2MoveFocusRequestedEventArgs categoriesForMethods!
 get_Handled:!**auto generated**!COM Interfaces-ICoreWebView2MoveFocusRequestedEventArgs!private! !
 get_reason:!**auto generated**!COM Interfaces-ICoreWebView2MoveFocusRequestedEventArgs!private! !
@@ -106,6 +111,7 @@ defineFunctions
 		defineFunction: #put_Handled:
 			argumentTypes: 'sdword'
 ! !
+
 !ICoreWebView2MoveFocusRequestedEventArgs class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

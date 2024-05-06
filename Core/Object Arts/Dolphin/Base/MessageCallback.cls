@@ -5,9 +5,13 @@ ExternalCallback subclass: #MessageCallback
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MessageCallback guid: (GUID fromString: '{87b4c578-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 MessageCallback comment: ''!
+
 !MessageCallback categoriesForClass!System-Support! !
+
 !MessageCallback methodsFor!
 
 closure
@@ -50,6 +54,7 @@ valueWithArgumentsAt: anAddress
 	"Private - Evaluate the receiver with arguments instantiated from the raw data at anAddress."
 
 	^receiver perform: selector withArgumentsAt: anAddress descriptor: descriptor! !
+
 !MessageCallback categoriesForMethods!
 closure!accessing!public! !
 closure:!accessing!public! !

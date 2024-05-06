@@ -5,7 +5,9 @@ RefactoringTool subclass: #CodeRefactoringTool
 	classVariableNames: ''
 	poolDictionaries: 'SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
+
 CodeRefactoringTool guid: (GUID fromString: '{9f149efa-c85c-464f-8eb3-43de901960b3}')!
+
 CodeRefactoringTool comment: '.CodeRefactoringTool implements code refactorings for a code workspace. Its container will typically be a <MethodWorkspace>.
 
 CodeRefactoringTool implements the following refactorings:
@@ -25,7 +27,9 @@ CodeRefactoringTool implements the following refactorings:
 	Rename Message*
 
 *Can rename messages sent to self, super, static variables and literals, and when hosted in the debugger temporaries and instance variables as well, i.e. where the type of the receiver is known so that the method to rename can be located.'!
+
 !CodeRefactoringTool categoriesForClass!Unclassified! !
+
 !CodeRefactoringTool methodsFor!
 
 addClassVariable: aStVariableNode to: aClass 
@@ -788,6 +792,7 @@ stubTextFor: aStMessageNode inClass: aClass
 		crtab;
 		nextPutAll: body.
 	^source contents! !
+
 !CodeRefactoringTool categoriesForMethods!
 addClassVariable:to:!commands!private! !
 addGlobalVariable:!commands!private! !

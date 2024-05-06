@@ -5,10 +5,15 @@ DolphinTest subclass: #AbstractPointTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AbstractPointTest guid: (GUID fromString: '{a0f6e2b2-8bd1-44bc-b0ad-3343d7aa2c0f}')!
+
 AbstractPointTest isAbstract: true!
+
 AbstractPointTest comment: ''!
+
 !AbstractPointTest categoriesForClass!Unclassified! !
+
 !AbstractPointTest methodsFor!
 
 subjectClass
@@ -36,6 +41,7 @@ testMakePoint
 	point2 := testMethod value: self subjectClass withArguments: #(101 202).
 	self assert: point2 x equals: 101.
 	self assert: point2 y equals: 202! !
+
 !AbstractPointTest categoriesForMethods!
 subjectClass!constants!private! !
 testAsPoint!public!unit tests! !

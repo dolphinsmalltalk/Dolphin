@@ -5,13 +5,17 @@ ChunkBrowserChunk subclass: #ChunkBrowserExpressionChunk
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ChunkBrowserExpressionChunk guid: (GUID fromString: '{0f9c053e-f249-49b6-9da5-fcece45be89f}')!
+
 ChunkBrowserExpressionChunk comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2006 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
+
 !ChunkBrowserExpressionChunk categoriesForClass!IDB Goodies! !
+
 !ChunkBrowserExpressionChunk methodsFor!
 
 restore
@@ -30,6 +34,7 @@ restoreAndLog: aBoolean
 			answer := index -> e errorMessage.
 			e resume].
 	^answer! !
+
 !ChunkBrowserExpressionChunk categoriesForMethods!
 restore!operations!public! !
 restoreAndLog:!operations!public! !

@@ -5,9 +5,13 @@ SequencedGrowableCollectionTest subclass: #OrderedCollectionTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 OrderedCollectionTest guid: (GUID fromString: '{c951706f-236d-4671-b849-626652dda25e}')!
+
 OrderedCollectionTest comment: ''!
+
 !OrderedCollectionTest categoriesForClass!Unclassified! !
+
 !OrderedCollectionTest methodsFor!
 
 collectionClass
@@ -340,6 +344,7 @@ testStrongTalkTests
 				addLast: 1;
 				addLast: 3;
 				yourself)! !
+
 !OrderedCollectionTest categoriesForMethods!
 collectionClass!constants!private! !
 newCollection:!helpers!private! !

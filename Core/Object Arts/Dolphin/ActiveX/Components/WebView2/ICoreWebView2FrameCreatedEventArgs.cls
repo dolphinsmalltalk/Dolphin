@@ -5,7 +5,9 @@ ICoreWebView2EventArgs subclass: #ICoreWebView2FrameCreatedEventArgs
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2FrameCreatedEventArgs guid: (IID fromString: '{4d6e7b5e-9baa-11eb-a8b3-0242ac130003}')!
+
 ICoreWebView2FrameCreatedEventArgs comment: '`ICoreWebView2FrameCreatedEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2FrameCreatedEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -26,7 +28,9 @@ interface ICoreWebView2FrameCreatedEventArgs : IUnknown
 };
 ```
 '!
+
 !ICoreWebView2FrameCreatedEventArgs categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2FrameCreatedEventArgs methodsFor!
 
 frame
@@ -45,6 +49,7 @@ get_Frame: frame
 
 	<virtual stdcall: hresult 4 ICoreWebView2Frame**>
 	^self invalidCall: _failureCode! !
+
 !ICoreWebView2FrameCreatedEventArgs categoriesForMethods!
 frame!**auto generated**!properties!public! !
 get_Frame:!**auto generated**!COM Interfaces-ICoreWebView2FrameCreatedEventArgs!private! !
@@ -60,6 +65,7 @@ defineFunctions
 		defineFunction: #get_Frame:
 			argumentTypes: 'ICoreWebView2Frame**'
 ! !
+
 !ICoreWebView2FrameCreatedEventArgs class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

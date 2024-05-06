@@ -5,11 +5,14 @@ OLEStructure subclass: #OLEVERB
 	classVariableNames: '_OffsetOf_fuFlags _OffsetOf_grfAttribs _OffsetOf_lpszVerbName _OffsetOf_lVerb'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 OLEVERB guid: (GUID fromString: '{33eb8491-3919-4df6-8dbe-d88c4be8d413}')!
+
 OLEVERB addClassConstant: '_OffsetOf_fuFlags' value: 16r8!
 OLEVERB addClassConstant: '_OffsetOf_grfAttribs' value: 16rC!
 OLEVERB addClassConstant: '_OffsetOf_lpszVerbName' value: 16r4!
 OLEVERB addClassConstant: '_OffsetOf_lVerb' value: 16r0!
+
 OLEVERB comment: '<OLEVERB> is an <ExternalStructure> class to wrap the struct ''Win32.OLEVERB'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -26,7 +29,9 @@ struct tagOLEVERB {
 	DWORD grfAttribs;
 } OLEVERB;
 '!
+
 !OLEVERB categoriesForClass!Win32-Structs! !
+
 !OLEVERB methodsFor!
 
 fuFlags
@@ -79,6 +84,7 @@ printOn: aStream
 		nextPutAll: ': ';
 		print: self lpszVerbName;
 		nextPut: $)! !
+
 !OLEVERB categoriesForMethods!
 fuFlags!**compiled accessors**!public! !
 fuFlags:!**compiled accessors**!public! !
@@ -115,6 +121,7 @@ defineFields
 
 getFieldNames
 	^#(#lVerb #lpszVerbName #fuFlags #grfAttribs)! !
+
 !OLEVERB class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

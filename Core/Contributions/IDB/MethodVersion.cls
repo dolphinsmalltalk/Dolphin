@@ -5,9 +5,13 @@ Object subclass: #MethodVersion
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MethodVersion guid: (GUID fromString: '{86708dac-e70b-48ba-ab25-b32573c75cca}')!
+
 MethodVersion comment: ''!
+
 !MethodVersion categoriesForClass!Kernel-Objects! !
+
 !MethodVersion methodsFor!
 
 = aMethodVersionOrCompiledMethod
@@ -107,6 +111,7 @@ sourceDescriptor
 
 sourceFileIndex
 	^methodClass sourceManager sourceIndexFromDescriptor: sourceDescriptor! !
+
 !MethodVersion categoriesForMethods!
 =!comparing!public! !
 displayOn:!printing!public! !
@@ -137,6 +142,7 @@ forCompiledMethod: aCompiledMethod
 forSource: aString at: anInteger in: aSourceFiler
 
 	^self new forSource: aString at: anInteger in: aSourceFiler! !
+
 !MethodVersion class categoriesForMethods!
 forCompiledMethod:!instance creation!public! !
 forSource:at:in:!instance creation!public! !

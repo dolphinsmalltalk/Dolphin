@@ -5,9 +5,13 @@ GdiplusTests subclass: #GdiplusBaseTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusBaseTest guid: (GUID fromString: '{d588d133-82ff-4f74-baa7-bdc2164bda4b}')!
+
 GdiplusBaseTest comment: ''!
+
 !GdiplusBaseTest categoriesForClass!Unclassified! !
+
 !GdiplusBaseTest methodsFor!
 
 concreteGdiplusBaseSubclass
@@ -34,6 +38,7 @@ testComparisonIdentity
 				fromInitializer: (initializer := GdiplusTestInitializer new arg1: 123).
 	self assert: model equals: (self concreteGdiplusBaseSubclass fromInitializer: initializer).
 	model hash! !
+
 !GdiplusBaseTest categoriesForMethods!
 concreteGdiplusBaseSubclass!private! !
 testComparisonEquality!public!unit tests! !

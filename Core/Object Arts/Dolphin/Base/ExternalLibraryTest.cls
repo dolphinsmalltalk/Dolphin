@@ -5,9 +5,13 @@ DolphinTest subclass: #ExternalLibraryTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalLibraryTest guid: (GUID fromString: '{52518745-7c3c-4567-8599-3090af0e6567}')!
+
 ExternalLibraryTest comment: ''!
+
 !ExternalLibraryTest categoriesForClass!Unclassified! !
+
 !ExternalLibraryTest methodsFor!
 
 makeTestMethodFrom: anExternalMethod overlapped: aBoolean 
@@ -90,6 +94,7 @@ verifyInvalidCallArguments: aBoolean
 		should: [apiCall value: GDILibrary default withArguments: #(nil 0 0 0 0 0 0 0 0 nil nil 0 's')]
 		raise: HRESULTError
 		matching: [:ex | ex hresult = (HRESULT fromPrimitiveFailureCode: _PrimitiveFailureCode.InvalidParameter)]! !
+
 !ExternalLibraryTest categoriesForMethods!
 makeTestMethodFrom:overlapped:!helpers!private! !
 testInvalidCallArguments!public!unit tests! !

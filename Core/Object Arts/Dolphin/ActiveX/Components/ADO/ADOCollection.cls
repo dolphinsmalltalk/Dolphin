@@ -5,13 +5,17 @@ SequenceableCollection subclass: #ADOCollection
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ADOCollection guid: (GUID fromString: '{34245405-a032-4a2a-95c0-96cc6854b57b}')!
+
 ADOCollection comment: 'ADOCollection is a <sequencedReadableCollection> wrapper around the ADODB <ADO_Collection> interfaces. Its purpose is to make all the power of Smalltalk sequenceable collections available on the much more limited ADO interfaces, and to provide seamless integration into the Smalltalk development environment (i.e. so that the ADO collections print, inspect, and generally act like arrays). 
 All ADO interface methods that return a collection of some sort have been modified to return a subinstance of this class.
 
 Instance Variables:
 	interface		<ADO_Collection> subinstance.'!
+
 !ADOCollection categoriesForClass!Unclassified! !
+
 !ADOCollection methodsFor!
 
 add: newElement
@@ -95,6 +99,7 @@ uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: aDyadicValuable
 			[:i | 
 			subscript sdword: i - 1.
 			aDyadicValuable value: i value: (interface item: subscript)]! !
+
 !ADOCollection categoriesForMethods!
 add:!adding!public! !
 at:!accessing!public! !
@@ -120,6 +125,7 @@ on: anADO_Collection
 		interface: anADO_Collection
 
 	! !
+
 !ADOCollection class categoriesForMethods!
 on:!instance creation!public! !
 !

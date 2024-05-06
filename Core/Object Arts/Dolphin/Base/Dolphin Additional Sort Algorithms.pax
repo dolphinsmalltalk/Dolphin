@@ -20,7 +20,6 @@ There are a number of additional algorithms that it would be interesting to impl
 
 package basicPackageVersion: '6.0'.
 
-
 package classNames
 	add: #HeapsortAlgorithm;
 	add: #InsertionSortAlgorithm;
@@ -47,31 +46,30 @@ PluggableSortAlgorithm subclass: #HeapsortAlgorithm
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PluggableSortAlgorithm subclass: #InsertionSortAlgorithm
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PluggableSortAlgorithm subclass: #MergesortAlgorithm
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PluggableSortAlgorithm subclass: #QuicksortAlgorithm
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PluggableSortAlgorithm subclass: #ShellsortAlgorithm
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

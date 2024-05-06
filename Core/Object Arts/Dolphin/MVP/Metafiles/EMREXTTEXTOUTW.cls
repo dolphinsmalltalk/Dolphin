@@ -5,10 +5,15 @@ EMREXTTEXTOUT subclass: #EMREXTTEXTOUTW
 	classVariableNames: '_OffsetOf_text'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 EMREXTTEXTOUTW guid: (GUID fromString: '{984a2e2c-3699-4a16-9ed7-8f174e2ca081}')!
+
 EMREXTTEXTOUTW addClassConstant: '_OffsetOf_text' value: 16r4C!
+
 EMREXTTEXTOUTW comment: ''!
+
 !EMREXTTEXTOUTW categoriesForClass!Win32-Structs! !
+
 !EMREXTTEXTOUTW methodsFor!
 
 text
@@ -27,6 +32,7 @@ text: anObject
 		to: _OffsetOf_text + size
 		startingAt: 1.
 	bytes wordAtOffset: _OffsetOf_text + size put: 0! !
+
 !EMREXTTEXTOUTW categoriesForMethods!
 text!public! !
 text:!public! !
@@ -50,6 +56,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_EXTTEXTOUTW! !
+
 !EMREXTTEXTOUTW class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

@@ -5,9 +5,13 @@ ValuePresenter subclass: #ImagePresenter
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ImagePresenter guid: (GUID fromString: '{87b4c6d0-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 ImagePresenter comment: 'ImagePresenter is a <valuePresenter> that displays a <valueModel> onto an <image> value. A ImagePresenter can be connected to any <valueView> capable of displaying <image> values. Normally, this will be an <ImageView> or <StaticImage>, although alternative views may be chosen with the installation of an appropriate <typeConverter>.'!
+
 !ImagePresenter categoriesForClass!MVP-Presenters!MVP-Resources-Images! !
+
 !ImagePresenter class methodsFor!
 
 icon
@@ -54,6 +58,7 @@ resource_Static_icon
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.StaticIcon) 34 17 nil nil 34 2 8 1149239555 1 416 721990 2 ##(Smalltalk.ValueHolder) nil nil 1376774 ##(Smalltalk.PluggableSearchPolicy) 459270 ##(Smalltalk.Message) #== 8 #() 546 #hash 8 #() nil nil nil 7 nil nil nil 416 nil 8 1915124368 852486 ##(Smalltalk.NullConverter) nil nil false nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 11 11 786 241 221 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 125 0 0 0 115 0 0 0] 8 #() 786 193 193 nil 27 )! !
+
 !ImagePresenter class categoriesForMethods!
 icon!constants!public! !
 resource_Animated_view!public!resources-views! !

@@ -5,7 +5,9 @@ SmalltalkToolShell subclass: #ProtocolBrowserShell
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ProtocolBrowserShell guid: (GUID fromString: '{e168a511-4549-11d3-9fe9-00a0cc3e4a32}')!
+
 ProtocolBrowserShell comment: 'ProtocolBrowserShell is a <SmalltalkToolShell> that implements the Protocol Browser tool. This displays a list of all the <MethodProtocol>s known to the system. Selecting a protocol displays the selectors within it and the classes that conform to it. From within the Protocol Browser it is possible to perform a wide range of protocol housekeeping activities.
 
 Instance Variables:
@@ -15,7 +17,9 @@ Instance Variables:
 
 
 '!
+
 !ProtocolBrowserShell categoriesForClass!MVP-Presenters! !
+
 !ProtocolBrowserShell methodsFor!
 
 actualClass
@@ -368,6 +372,7 @@ updateCaption
 	text := self class displayString.
 	self hasProtocol ifTrue: [text := self protocol displayString].
 	self caption: text! !
+
 !ProtocolBrowserShell categoriesForMethods!
 actualClass!accessing!public! !
 actualClass:!accessing!public! !
@@ -450,6 +455,7 @@ resource_Default_view
 
 toolsFolderHelpId
 	^10596! !
+
 !ProtocolBrowserShell class categoriesForMethods!
 displayOn:!displaying!public! !
 icon!constants!public! !

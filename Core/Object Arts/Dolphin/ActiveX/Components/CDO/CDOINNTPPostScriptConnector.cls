@@ -5,14 +5,18 @@ IDispatch subclass: #CDOINNTPPostScriptConnector
 	classVariableNames: ''
 	poolDictionaries: 'CDOConstants'
 	classInstanceVariableNames: ''!
+
 CDOINNTPPostScriptConnector guid: (IID fromString: '{cd000031-8b95-11d1-82db-00c04fb1625d}')!
+
 CDOINNTPPostScriptConnector comment: '<CDOINNTPPostScriptConnector> is a wrapper class for the COM interface ''CDO.INNTPPostScriptConnector'' generated from type information in the ''Microsoft CDO for Windows 2000 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"INNTPPostScriptConnector interface"
 
 Warning: This comment was automatically generated from the interface''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.'!
+
 !CDOINNTPPostScriptConnector categoriesForClass!CDO-Interfaces!COM-Interfaces! !
+
 !CDOINNTPPostScriptConnector methodsFor!
 
 isExtensible
@@ -24,6 +28,7 @@ isVBCollection
 	"Answer whether the receiver is a VB style collection."
 
 	^false! !
+
 !CDOINNTPPostScriptConnector categoriesForMethods!
 isExtensible!**auto generated**!public!testing! !
 isVBCollection!**auto generated**!public!testing! !
@@ -44,6 +49,7 @@ initializeTypeLib
 	"
 
 	typeLib := CDOLib! !
+
 !CDOINNTPPostScriptConnector class categoriesForMethods!
 clsid!**auto generated**!constants!private! !
 initializeTypeLib!**auto generated**!initializing!private! !

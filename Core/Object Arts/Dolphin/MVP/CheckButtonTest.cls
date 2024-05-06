@@ -5,10 +5,15 @@ PresenterTest subclass: #CheckButtonTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 CheckButtonTest guid: (GUID fromString: '{e0bdffe5-2de1-45be-9686-3c62aed4734f}')!
+
 CheckButtonTest isAbstract: true!
+
 CheckButtonTest comment: ''!
+
 !CheckButtonTest categoriesForClass!Unclassified! !
+
 !CheckButtonTest methodsFor!
 
 getTextExtent: actualText
@@ -40,6 +45,7 @@ testCalculateExtent
 	subject text: 'abc'.
 	textWidth := (self getTextExtent: 'abc') x.
 	self assert: (subject extent x between: textWidth and: textWidth + 25)! !
+
 !CheckButtonTest categoriesForMethods!
 getTextExtent:!helpers!private! !
 testCalculateExtent!public!unit tests! !

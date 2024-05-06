@@ -5,7 +5,9 @@ COMInterfaceImp subclass: #AXPropertyBagErrorLog
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AXPropertyBagErrorLog guid: (GUID fromString: '{9c956c62-af27-11d3-b376-080046056106}')!
+
 AXPropertyBagErrorLog comment: 'AXErrorLog is a simple implementation of an Active-X error log object which supports the interface <IErrorLog>. It is used, for example, to record errors occurring during a call to IPersistPropertyBag::Load().
 
 Instance Variables:
@@ -14,7 +16,9 @@ Instance Variables:
 	guid		<GUID> of the object being loaded (e.g. CLSID).
 
 '!
+
 !AXPropertyBagErrorLog categoriesForClass!Unclassified! !
+
 !AXPropertyBagErrorLog methodsFor!
 
 AddError: pszPropName pExcepInfo: pExcepInfo 
@@ -79,6 +83,7 @@ supportedInterfaces
 	"Answer the set of interface classes supported by the receiver."
 
 	^#(##(IErrorLog) ##(IEnumErrorInfo))! !
+
 !AXPropertyBagErrorLog categoriesForMethods!
 AddError:pExcepInfo:!COM Interfaces-IErrorLog!public! !
 guid!accessing!private! !

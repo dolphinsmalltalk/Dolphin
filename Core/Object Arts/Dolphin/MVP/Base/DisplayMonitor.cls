@@ -5,10 +5,13 @@ Object subclass: #DisplayMonitor
 	classVariableNames: 'MONITOR_DEFAULTTONEAREST MONITOR_DEFAULTTONULL MONITOR_DEFAULTTOPRIMARY'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DisplayMonitor guid: (GUID fromString: '{2ab65289-2a77-4c76-9ab2-82178699a48c}')!
+
 DisplayMonitor addClassConstant: 'MONITOR_DEFAULTTONEAREST' value: 16r2!
 DisplayMonitor addClassConstant: 'MONITOR_DEFAULTTONULL' value: 16r0!
 DisplayMonitor addClassConstant: 'MONITOR_DEFAULTTOPRIMARY' value: 16r1!
+
 DisplayMonitor comment: '`DisplayMonitor` is a simple abstraction over the Windows Multiple Display Monitors API. It allows one to enumerate the attached monitors, and to identify:
   - the primary monitor;
   - the monitor on which a point in desktop co-ordinates is displayed; 
@@ -21,7 +24,9 @@ Having identified a `DisplayMonitor`, one can then query the desktop co-ordinate
   `info`		`OS.MONITORINFO`
 
 '!
+
 !DisplayMonitor categoriesForClass!Kernel-Objects! !
+
 !DisplayMonitor methodsFor!
 
 = anObject
@@ -112,6 +117,7 @@ workArea
 	"Answer a `Rectangle` which is the desktop area displayed by this monitor, excluding any areas used by the window manager, such as the taskbar. Note that the origin can be negative for displays other than the primary that are organised to be right of the primary."
 
 	^self info rcWork asRectangle! !
+
 !DisplayMonitor categoriesForMethods!
 =!comparing!public! !
 adjustPosition:forExtent:!geometry!public! !
@@ -236,6 +242,7 @@ primary
 	^(UserLibrary default monitorFromWindow: nil dwFlags: MONITOR_DEFAULTTOPRIMARY)
 		ifNil: [Win32Error signal]
 		ifNotNil: [:hMonitor | self fromHandle: hMonitor]! !
+
 !DisplayMonitor class categoriesForMethods!
 active!instance creation!public! !
 allIntersecting:!instance creation!public! !

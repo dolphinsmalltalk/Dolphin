@@ -5,9 +5,13 @@ StLiteralNode subclass: #StLiteralValueNode
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StLiteralValueNode guid: (GUID fromString: '{93764089-2da7-47ec-8bee-95e969f27b94}')!
+
 StLiteralValueNode comment: ''!
+
 !StLiteralValueNode categoriesForClass!Unclassified! !
+
 !StLiteralValueNode methodsFor!
 
 = anObject 
@@ -38,6 +42,7 @@ value
 
 valueClass
 	^token value class! !
+
 !StLiteralValueNode categoriesForMethods!
 =!comparing!public! !
 acceptVisitor:!public!visitor! !
@@ -59,6 +64,7 @@ literalToken: aLiteralToken
 
 value: aValue 
 	^self literalToken: (StLiteralToken value: aValue)! !
+
 !StLiteralValueNode class categoriesForMethods!
 literalToken:!instance creation!public! !
 value:!instance creation!public! !

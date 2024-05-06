@@ -5,7 +5,9 @@ Object subclass: #MoenContour
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MoenContour guid: (GUID fromString: '{68f4ac01-2f95-11d3-93ba-00a024ca708a}')!
+
 MoenContour comment: 'MoenContour is a private helper class which is part of the implementation of the <MoenTreeView>
 
 Instance Variables:
@@ -14,7 +16,9 @@ Instance Variables:
 	upperHead	<MoenLink>
 	upperTail		<MoenLink>
 '!
+
 !MoenContour categoriesForClass!MVP-Views-Support! !
+
 !MoenContour methodsFor!
 
 lowerHead
@@ -56,6 +60,7 @@ upperTail
 
 upperTail: aMoenLink
 	upperTail := aMoenLink! !
+
 !MoenContour categoriesForMethods!
 lowerHead!accessing!private! !
 lowerHead:!accessing!private! !

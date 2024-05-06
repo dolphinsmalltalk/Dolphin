@@ -5,9 +5,13 @@ AXAutomationAspect subclass: #DispatchAspect
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DispatchAspect guid: (GUID fromString: '{dfbf2467-3a73-4b93-8b67-936af2754ec7}')!
+
 DispatchAspect comment: 'DispatchAspect is a specialised <Aspect> for accessing properties of Automation objects through IDispatch. It is an extension of the PublishedAspectorInspector framework.'!
+
 !DispatchAspect categoriesForClass!Attribute-Definition! !
+
 !DispatchAspect methodsFor!
 
 dispid
@@ -36,6 +40,7 @@ writeInto: subjectObject value: valueObject
 			[:ex | 
 			MessageBox errorMsg: ex description
 				caption: ('Error setting property <1p>' expandMacrosWith: self name)]! !
+
 !DispatchAspect categoriesForMethods!
 dispid!accessing!public! !
 dispid:!accessing!private! !

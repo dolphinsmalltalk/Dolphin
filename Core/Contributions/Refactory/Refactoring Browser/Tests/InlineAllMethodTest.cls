@@ -5,9 +5,13 @@ RefactoringTest subclass: #InlineAllMethodTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 InlineAllMethodTest guid: (GUID fromString: '{c022453d-1c4d-4bf0-a604-9abd6f068965}')!
+
 InlineAllMethodTest comment: ''!
+
 !InlineAllMethodTest categoriesForClass!Refactory-Testing! !
+
 !InlineAllMethodTest methodsFor!
 
 testInlineMethodWithMultipleSendersInMethod
@@ -37,6 +41,7 @@ testRecursiveMethod
 				in: class).
 	self assert: (class parseTreeFor: #foo) equals: (RBParser parseMethod: 'foo ^self foo').
 	self assert: (class parseTreeFor: #bar) equals: (RBParser parseMethod: 'bar ^self foo')! !
+
 !InlineAllMethodTest categoriesForMethods!
 testInlineMethodWithMultipleSendersInMethod!public!tests! !
 testRecursiveMethod!public!tests! !

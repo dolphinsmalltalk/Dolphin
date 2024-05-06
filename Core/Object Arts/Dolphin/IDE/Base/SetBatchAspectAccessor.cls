@@ -5,9 +5,13 @@ IndexedInstVarBatchAccessor subclass: #SetBatchAspectAccessor
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SetBatchAspectAccessor guid: (GUID fromString: '{cacfd817-4dcb-46be-bba9-bcb1585438f2}')!
+
 SetBatchAspectAccessor comment: ''!
+
 !SetBatchAspectAccessor categoriesForClass!MVP-Models! !
+
 !SetBatchAspectAccessor methodsFor!
 
 aspectClass
@@ -29,6 +33,7 @@ getBatchAccessors
 			i := i + 1].
 	(self nextBatch: i) ifNotNil: [:nextBatch | accessors add: nextBatch].
 	^accessors! !
+
 !SetBatchAspectAccessor categoriesForMethods!
 aspectClass!public! !
 getBatchAccessors!public! !

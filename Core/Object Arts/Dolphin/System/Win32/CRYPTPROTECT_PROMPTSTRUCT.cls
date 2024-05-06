@@ -5,11 +5,14 @@ Win32Structure subclass: #CRYPTPROTECT_PROMPTSTRUCT
 	classVariableNames: '_OffsetOf_dwPromptFlags _OffsetOf_dwSize _OffsetOf_hwndApp _OffsetOf_szPrompt'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 CRYPTPROTECT_PROMPTSTRUCT guid: (GUID fromString: '{870680a4-0d5d-45b2-88b4-74774c010bc5}')!
+
 CRYPTPROTECT_PROMPTSTRUCT addClassConstant: '_OffsetOf_dwPromptFlags' value: 16r4!
 CRYPTPROTECT_PROMPTSTRUCT addClassConstant: '_OffsetOf_dwSize' value: 16r0!
 CRYPTPROTECT_PROMPTSTRUCT addClassConstant: '_OffsetOf_hwndApp' value: 16r8!
 CRYPTPROTECT_PROMPTSTRUCT addClassConstant: '_OffsetOf_szPrompt' value: 16rC!
+
 CRYPTPROTECT_PROMPTSTRUCT comment: '<CRYPTPROTECT_PROMPTSTRUCT> is an <ExternalStructure> class to wrap the struct ''Win32.CRYPTPROTECT_PROMPTSTRUCT'' from type information in the ''Win32 API'' library.
 
 The type library contains no documentation for this struct
@@ -22,7 +25,9 @@ typedef
 struct tagCRYPTPROTECT_PROMPTSTRUCT {
 } CRYPTPROTECT_PROMPTSTRUCT;
 '!
+
 !CRYPTPROTECT_PROMPTSTRUCT categoriesForClass!Win32-Structs! !
+
 !CRYPTPROTECT_PROMPTSTRUCT methodsFor!
 
 dwPromptFlags
@@ -59,6 +64,7 @@ szPrompt: anUtf16String
 	"Set the receiver's 'szPrompt' field to the value of the argument, anUtf16String"
 
 	bytes uintPtrAtOffset: _OffsetOf_szPrompt put: anUtf16String yourAddress! !
+
 !CRYPTPROTECT_PROMPTSTRUCT categoriesForMethods!
 dwPromptFlags!**compiled accessors**!public! !
 dwPromptFlags:!**compiled accessors**!public! !
@@ -94,6 +100,7 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #dwPromptFlags #hwndApp #szPrompt)! !
+
 !CRYPTPROTECT_PROMPTSTRUCT class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

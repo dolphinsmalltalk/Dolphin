@@ -5,12 +5,16 @@ Interactor subclass: #CapturingInteractor
 	classVariableNames: 'HotMask LeftDownMask MiddleDownMask RightDownMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 CapturingInteractor guid: (GUID fromString: '{d6b9eec9-b8fc-41a9-abc6-1df89013c95e}')!
+
 CapturingInteractor isAbstract: true!
+
 CapturingInteractor addClassConstant: 'HotMask' value: 16r1!
 CapturingInteractor addClassConstant: 'LeftDownMask' value: 16r4!
 CapturingInteractor addClassConstant: 'MiddleDownMask' value: 16r8!
 CapturingInteractor addClassConstant: 'RightDownMask' value: 16r10!
+
 CapturingInteractor comment: '`CapturingInteractor` is an abstract class of `<interactor>`s that intercept user input events and potentially absorbs them so that they do not reach the presenter. i.e. if a <CapturingInteractor> is installed into a view then it may appear to ignore all user input. Subclasses may use the input for other purposes, or selectively forward it on to the `<presenter>`.
 
 ## Instance Variables:
@@ -24,7 +28,9 @@ CapturingInteractor comment: '`CapturingInteractor` is an abstract class of `<in
   `LeftDownMask`		`<integer>` flags mask to record left-button down.
 
 '!
+
 !CapturingInteractor categoriesForClass!Unclassified! !
+
 !CapturingInteractor methodsFor!
 
 buttonsReleased
@@ -228,6 +234,7 @@ setCapture
 	source := self view.
 	oldInteractor := source interactor: self.
 	source setCapture! !
+
 !CapturingInteractor categoriesForMethods!
 buttonsReleased!event handling!private! !
 captureMouse!initializing!public! !
@@ -278,6 +285,7 @@ stbConvertToVersion1: instVars
 		at: 3 put: 0.
 	converted replaceFrom: 4 to: converted size with: instVars startingAt: 3.
 	^converted! !
+
 !CapturingInteractor class categoriesForMethods!
 stbConvertToVersion1:!binary filing!private! !
 !

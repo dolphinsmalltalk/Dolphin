@@ -5,11 +5,17 @@ OLEStructure subclass: #AbstractELEMDESC
 	classVariableNames: '_OffsetOf_tdescElem'
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
+
 AbstractELEMDESC guid: (GUID fromString: '{24cbeadb-8708-4bb1-a28d-207ebd2a8c8e}')!
+
 AbstractELEMDESC isAbstract: true!
+
 AbstractELEMDESC addClassConstant: '_OffsetOf_tdescElem' value: 16r0!
+
 AbstractELEMDESC comment: ''!
+
 !AbstractELEMDESC categoriesForClass!External-Data-Structured-COM! !
+
 !AbstractELEMDESC methodsFor!
 
 analyzer
@@ -73,6 +79,7 @@ typeName
 	"Answer the Dolphin external type name for the type described by the receiver."
 
 	^self tdesc typeName! !
+
 !AbstractELEMDESC categoriesForMethods!
 analyzer!accessing!private! !
 classDesc!accessing!private! !
@@ -94,6 +101,7 @@ defineFields
 	"
 
 	self defineField: #tdescElem type: (StructureField type: TYPEDESC) beReadOnly beNonBrowsable! !
+
 !AbstractELEMDESC class categoriesForMethods!
 defineFields!public!template definition! !
 !

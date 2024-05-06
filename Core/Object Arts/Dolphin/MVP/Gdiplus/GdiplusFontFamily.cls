@@ -5,11 +5,15 @@ GdiplusBase subclass: #GdiplusFontFamily
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusFontFamily guid: (GUID fromString: '{c09d8c08-5f28-11d7-b609-00e0987e8081}')!
+
 GdiplusFontFamily comment: 'GdiplusFontFamily represents a set of fonts that make up a font family. A font family is a group of fonts that have the same typeface but different styles.
 
 '!
+
 !GdiplusFontFamily categoriesForClass!Unclassified! !
+
 !GdiplusFontFamily methodsFor!
 
 basicFree
@@ -51,6 +55,7 @@ name
 				language: 0) = Ok
 		ifFalse: [GdiplusError signal: 'GdipGetFamilyName failed' with: status].
 	^name asString trimNulls! !
+
 !GdiplusFontFamily categoriesForMethods!
 basicFree!private!realizing/unrealizing! !
 clone!copying!public! !
@@ -97,6 +102,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^Font icon! !
+
 !GdiplusFontFamily class categoriesForMethods!
 exampleGdipFFClone!examples!public!sunit! !
 fromName:!instance creation!public! !

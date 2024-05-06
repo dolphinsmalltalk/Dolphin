@@ -5,9 +5,13 @@ VariableRefactoring subclass: #RenameInstanceVariableRefactoring
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RenameInstanceVariableRefactoring guid: (GUID fromString: '{9ad927e1-5ba7-4dcf-bcd0-6555ab567203}')!
+
 RenameInstanceVariableRefactoring comment: ''!
+
 !RenameInstanceVariableRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !RenameInstanceVariableRefactoring methodsFor!
 
 preconditions
@@ -53,6 +57,7 @@ transform
 		renameInstanceVariable: variableName
 		to: newName
 		around: [self renameReferences]! !
+
 !RenameInstanceVariableRefactoring categoriesForMethods!
 preconditions!preconditions!public! !
 rename:to:in:!initialize/release!public! !
@@ -76,6 +81,7 @@ rename: aVarName to: aName in: aClass
 		rename: aVarName
 		to: aName
 		in: aClass! !
+
 !RenameInstanceVariableRefactoring class categoriesForMethods!
 model:rename:to:in:!instance creation!public! !
 rename:to:in:!instance creation!public! !

@@ -5,7 +5,9 @@ RBSourceFormatter subclass: #RBConfigurableFormatter
 	classVariableNames: 'FormatCommentWithStatements IndentsForKeywords IndentString LineUpBlockBrackets MethodSignatureOnMultipleLines MinimumNewLinesBetweenStatements NewLineAfterCascade NewLineBeforeFirstCascade NewLineBeforeFirstKeyword NewLinesAfterMethodComment NewLinesAfterMethodPattern NewLinesAfterTemporaries NumberOfArgumentsForMultiLine PeriodsAtEndOfBlock RetainBlankLinesBetweenStatements StringFollowingReturn StringInsideBlocks StringInsideParentheses TraditionalBinaryPrecedence UseTraditionalBinaryPrecedenceForParentheses'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RBConfigurableFormatter guid: (GUID fromString: '{70ffaafa-37c2-4408-bfa3-e5417f61cd58}')!
+
 RBConfigurableFormatter comment: 'RBConfigurableFormatter formats the Refactoring Browser''s parse trees. It has many more formatting options than the RBFormatter.  For some refactorings the RB must reformat the code after the change, so it is good to have a formatter configured to your tastes.
 
 To switch to this formatter, execute "StProgramNode formatterClass: RBConfigurableFormatter", or look for the #formatterClass option under ''Development System'' in User Preferences.
@@ -16,7 +18,9 @@ Instance Variables:
 	originalSource	<String>	the original source before we started formatting. This is used to extract the comments from the original source.
 
 '!
+
 !RBConfigurableFormatter categoriesForClass!System-Compiler-Formatters! !
+
 !RBConfigurableFormatter methodsFor!
 
 addNewLinesBeforeStatementStartingAt: anInteger 
@@ -410,6 +414,7 @@ writeString: aString
 	codeStream nextPutAll: aString.
 	index > 0 
 		ifTrue: [lineStart := codeStream position - (aString size - index)]! !
+
 !RBConfigurableFormatter categoriesForMethods!
 addNewLinesBeforeStatementStartingAt:!helpers!private! !
 format:!operations!public! !
@@ -617,6 +622,7 @@ useTraditionalBinaryPrecedenceForParentheses
 
 useTraditionalBinaryPrecedenceForParentheses: aBoolean 
 	UseTraditionalBinaryPrecedenceForParentheses := aBoolean! !
+
 !RBConfigurableFormatter class categoriesForMethods!
 format:!public!public interface! !
 format:withIndents:!public!public interface! !

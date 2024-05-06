@@ -5,9 +5,13 @@ Error subclass: #BoundsError
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 BoundsError guid: (GUID fromString: '{87b4c558-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 BoundsError comment: ''!
+
 !BoundsError categoriesForClass!Kernel-Exception Handling! !
+
 !BoundsError methodsFor!
 
 _descriptionFormat
@@ -24,6 +28,7 @@ receiver: anObject
 	"Set the object which generated the bounds error to be anObject"
 	
 	receiver := anObject! !
+
 !BoundsError categoriesForMethods!
 _descriptionFormat!displaying!public! !
 receiver!accessing!public! !

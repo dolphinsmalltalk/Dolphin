@@ -5,10 +5,13 @@ HttpServerStructure subclass: #HTTP_RESPONSE_INFO
 	classVariableNames: '_OffsetOf_Length _OffsetOf_pInfo _OffsetOf_Type'
 	poolDictionaries: 'WinHttpServerConsts'
 	classInstanceVariableNames: ''!
+
 HTTP_RESPONSE_INFO guid: (GUID fromString: '{cdf58c2c-140f-4611-b847-12837ce3155f}')!
+
 HTTP_RESPONSE_INFO addClassConstant: '_OffsetOf_Length' value: 16r4!
 HTTP_RESPONSE_INFO addClassConstant: '_OffsetOf_pInfo' value: 16r8!
 HTTP_RESPONSE_INFO addClassConstant: '_OffsetOf_Type' value: 16r0!
+
 HTTP_RESPONSE_INFO comment: '<HTTP_RESPONSE_INFO> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_RESPONSE_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains no documentation for this struct
@@ -24,7 +27,9 @@ struct tagHTTP_RESPONSE_INFO {
 	[nonbrowsable, helpstring("Response information data"), size_is("Length")] void* pInfo;
 } HTTP_RESPONSE_INFO;
 '!
+
 !HTTP_RESPONSE_INFO categoriesForClass!WinHttpServer-Structs! !
+
 !HTTP_RESPONSE_INFO methodsFor!
 
 info
@@ -74,6 +79,7 @@ Type: anInteger
 	"Set the receiver's 'Type' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_Type put: anInteger! !
+
 !HTTP_RESPONSE_INFO categoriesForMethods!
 info!accessing!public! !
 Length!**compiled accessors**!private! !
@@ -108,6 +114,7 @@ defineFields
 
 getFieldNames
 	^#(#Type #Length #pInfo)! !
+
 !HTTP_RESPONSE_INFO class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

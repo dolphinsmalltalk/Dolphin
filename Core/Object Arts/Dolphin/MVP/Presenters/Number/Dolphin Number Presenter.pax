@@ -9,7 +9,6 @@ This package is part of the Dolphin Smalltalk Model View Presenter user-interfac
 
 package basicPackageVersion: '6.1'.
 
-
 package classNames
 	add: #IntegerToText;
 	add: #NumberPresenter;
@@ -38,21 +37,18 @@ ValuePresenter subclass: #NumberPresenter
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AbstractToTextConverter subclass: #NumberToText
 	instanceVariableNames: '_reserved1'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 NumberToText subclass: #IntegerToText
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

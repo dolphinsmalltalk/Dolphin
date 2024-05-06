@@ -5,7 +5,9 @@ ICoreWebView2_8 subclass: #ICoreWebView2_9
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2_9 guid: (IID fromString: '{4d7b2eab-9fdc-468d-b998-a9260b5ed651}')!
+
 ICoreWebView2_9 comment: '`ICoreWebView2_9` is a wrapper class for the COM interface ''WebView2.ICoreWebView2_9'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -49,7 +51,9 @@ interface ICoreWebView2_9 : ICoreWebView2_8
 };
 ```
 '!
+
 !ICoreWebView2_9 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2_9 methodsFor!
 
 Add_IsDefaultDownloadDialogOpenChanged: handler token: token
@@ -133,6 +137,7 @@ Remove_IsDefaultDownloadDialogOpenChanged: token
 
 	<virtual stdcall: hresult 90 sqword>
 	^self invalidCall: _failureCode! !
+
 !ICoreWebView2_9 categoriesForMethods!
 Add_IsDefaultDownloadDialogOpenChanged:token:!**auto generated**!COM Interfaces-ICoreWebView2_9!private! !
 CloseDefaultDownloadDialog!**auto generated**!COM Interfaces-ICoreWebView2_9!private! !
@@ -169,6 +174,7 @@ defineFunctions
 		defineFunction: #put_DefaultDownloadDialogMargin:
 			argumentTypes: 'POINTL'
 ! !
+
 !ICoreWebView2_9 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

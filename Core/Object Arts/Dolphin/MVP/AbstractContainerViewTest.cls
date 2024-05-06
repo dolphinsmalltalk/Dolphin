@@ -5,10 +5,15 @@ DolphinTest subclass: #AbstractContainerViewTest
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 AbstractContainerViewTest guid: (GUID fromString: '{79c3a28a-ce43-49e3-a030-adb99de3efea}')!
+
 AbstractContainerViewTest isAbstract: true!
+
 AbstractContainerViewTest comment: ''!
+
 !AbstractContainerViewTest categoriesForClass!Unclassified! !
+
 !AbstractContainerViewTest methodsFor!
 
 backgroundColor
@@ -175,6 +180,7 @@ waitForScreenUpdate
 	"5 timesRepeat: 
 			[SessionManager current inputState pumpMessages.
 			Processor sleep: 100]"! !
+
 !AbstractContainerViewTest categoriesForMethods!
 backgroundColor!private! !
 bitmapOfPrintView:!helpers!private! !

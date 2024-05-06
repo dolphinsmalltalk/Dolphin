@@ -5,13 +5,16 @@ ScintillaAttribute subclass: #ScintillaTextStyle
 	classVariableNames: 'EolFilledMask HotspotMask InvisibleMask ItalicMask PredefinedStyleNames ReadOnlyMask UnderlinedMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ScintillaTextStyle guid: (GUID fromString: '{441d5422-db7d-4872-a16d-d6ca9d88e0b8}')!
+
 ScintillaTextStyle addClassConstant: 'EolFilledMask' value: 16rC0!
 ScintillaTextStyle addClassConstant: 'HotspotMask' value: 16rC00!
 ScintillaTextStyle addClassConstant: 'InvisibleMask' value: 16r3000!
 ScintillaTextStyle addClassConstant: 'ItalicMask' value: 16rC!
 ScintillaTextStyle addClassConstant: 'ReadOnlyMask' value: 16r300!
 ScintillaTextStyle addClassConstant: 'UnderlinedMask' value: 16r30!
+
 ScintillaTextStyle comment: '`ScintillaStyle` instances represent the visual styles that can be applied to colour text in a particular `ScintillaView`.
 
 There are a number of predefined styles:
@@ -54,7 +57,9 @@ Note that Scintilla style information is now queryable from the control, but thi
 	`ReadOnlyMask`		`<integer>` bitmask used to specify whether the text should be read-only.
 	`UnderlinedMask`		`<integer>` bitmask used to specify an underlined font in `flags` inst. var.
 '!
+
 !ScintillaTextStyle categoriesForClass!MVP-Views-Support! !
+
 !ScintillaTextStyle methodsFor!
 
 = anObject
@@ -342,6 +347,7 @@ weight
 
 weight: anInteger 
 	weight := anInteger! !
+
 !ScintillaTextStyle categoriesForMethods!
 =!comparing!public! !
 backcolor!accessing!public! !
@@ -554,6 +560,7 @@ stbConvertFrom: anSTBClassFormat
 
 stbVersion
 	^1! !
+
 !ScintillaTextStyle class categoriesForMethods!
 buildPropertyMap!constants!must not strip!private! !
 caseNames!constants!public! !

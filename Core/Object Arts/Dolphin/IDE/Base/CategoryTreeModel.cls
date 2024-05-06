@@ -5,14 +5,18 @@ TreeModel subclass: #CategoryTreeModel
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 CategoryTreeModel guid: (GUID fromString: '{87b4c671-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 CategoryTreeModel comment: 'CategoryTreeModel represents a <treeModel> holding <Category> objects.
 
 Instance Variables:
 	title	<IntermediateCategory> the root of the tree.
 
 '!
+
 !CategoryTreeModel categoriesForClass!MVP-Models! !
+
 !CategoryTreeModel methodsFor!
 
 addCategory: aCategory
@@ -61,6 +65,7 @@ title: category
 	"Set the topmost node of the tree to be the specified <Category>"
 
 	title := category! !
+
 !CategoryTreeModel categoriesForMethods!
 addCategory:!adding!private! !
 list:!accessing!public! !
@@ -72,6 +77,7 @@ title:!accessing!public! !
 
 defaultSearchPolicy
 	^SearchPolicy equality! !
+
 !CategoryTreeModel class categoriesForMethods!
 defaultSearchPolicy!constants!public! !
 !

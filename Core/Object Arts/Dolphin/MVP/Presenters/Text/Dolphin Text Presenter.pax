@@ -9,7 +9,6 @@ This package is part of the Dolphin Smalltalk Model View Presenter user-interfac
 
 package basicPackageVersion: '6.2'.
 
-
 package classNames
 	add: #FINDTEXTEX;
 	add: #MultilineTextEdit;
@@ -53,39 +52,42 @@ Win32Structure subclass: #TEXTRANGE
 	classVariableNames: '_OffsetOf_chrg _OffsetOf_lpstrText'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TEXTRANGE subclass: #FINDTEXTEX
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_chrgText'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AbstractDocumentShell subclass: #TextDocument
 	instanceVariableNames: 'documentPresenter statusModel modifiedModel'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ValuePresenter subclass: #TextPresenter
 	instanceVariableNames: 'findDetails'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ValueConvertingControlView subclass: #TextEdit
 	instanceVariableNames: 'teFlags'
 	classVariableNames: 'AlignmentMap EnMap FindDialogMessage FindDisabledMask FormatMap ModifiedMask ReadOnlyMask StaticMask UpdatePerCharMask WantTabMask'
 	poolDictionaries: 'TextEditConstants'
 	classInstanceVariableNames: ''!
+
 TextEdit subclass: #MultilineTextEdit
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ButtonConstants'
 	classInstanceVariableNames: ''!
+
 MultilineTextEdit subclass: #MultilineTextEditWithImage
 	instanceVariableNames: 'backBitmap backMode backBrush'
 	classVariableNames: 'BackModes'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -99,6 +101,7 @@ replaceSelectionIn: aTextEdit
 	and #selectionRtf: methods."
 
 	aTextEdit selectionPlainText: self! !
+
 !String categoriesForMethods!
 replaceSelectionIn:!double dispatch!public! !
 !

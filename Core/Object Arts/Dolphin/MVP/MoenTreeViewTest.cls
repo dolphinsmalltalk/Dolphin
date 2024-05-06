@@ -5,9 +5,13 @@ DolphinTest subclass: #MoenTreeViewTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MoenTreeViewTest guid: (GUID fromString: '{547f1350-3d63-4e8c-9ea3-e13001609555}')!
+
 MoenTreeViewTest comment: 'SUnitBrowser openOnTestCase: self'!
+
 !MoenTreeViewTest categoriesForClass!Unclassified! !
+
 !MoenTreeViewTest methodsFor!
 
 assertChildNode: node
@@ -1228,6 +1232,7 @@ testRemoveSelection
 	treeModel remove: 'A'.
 	"Selection moves to parent"
 	self assert: treeView selection equals: 'ROOT2'! !
+
 !MoenTreeViewTest categoriesForMethods!
 assertChildNode:!helpers!private! !
 assertCollapsedChild:!helpers!private! !

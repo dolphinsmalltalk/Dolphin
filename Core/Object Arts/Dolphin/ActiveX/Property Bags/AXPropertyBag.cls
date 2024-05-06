@@ -5,9 +5,13 @@ COMInterfaceImp subclass: #AXPropertyBag
 	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
+
 AXPropertyBag guid: (GUID fromString: '{9c956c61-af27-11d3-b376-080046056106}')!
+
 AXPropertyBag comment: ''!
+
 !AXPropertyBag categoriesForClass!Unclassified! !
+
 !AXPropertyBag methodsFor!
 
 asVariant
@@ -210,6 +214,7 @@ Write: pszPropName pVar: pVar
 				ifTrue: [self class new save: pVar value clearDirty: clearDirty saveAll: saveAll]
 				ifFalse: [pVar value]).
 	^hr! !
+
 !AXPropertyBag categoriesForMethods!
 asVariant!converting!public! !
 inStream:!accessing!public! !

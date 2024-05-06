@@ -5,7 +5,9 @@ STBFiler subclass: #STBOutFiler
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 STBOutFiler guid: (GUID fromString: '{87b4c6e8-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 STBOutFiler comment: '<STBOutFiler> is the basic binary filer for serializing a tree of <Object>s to a byte stream.
 
 Instance Variables:
@@ -15,7 +17,9 @@ Instance Variables:
 	proxyOverrides	<IdentityDictionary>. Map of <Object>s to the <STBProxy>s (or special values) output in their place.
 
 '!
+
 !STBOutFiler categoriesForClass!System-Binary storage! !
+
 !STBOutFiler methodsFor!
 
 basicNextPut: anObject
@@ -222,6 +226,7 @@ writePreambleFor: anObject
 	self
 		writeClass: anObject class withPrefix: STBPrefix forData;
 		register: anObject! !
+
 !STBOutFiler categoriesForMethods!
 basicNextPut:!operations!private! !
 nextPut:!operations!public! !
@@ -256,6 +261,7 @@ uninitialize
 	them away."
 
 	STBPrefix uninitialize! !
+
 !STBOutFiler class categoriesForMethods!
 uninitialize!class hierarchy-removing!private! !
 !

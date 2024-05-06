@@ -5,9 +5,13 @@ ArrayedCollectionTest subclass: #RunArrayTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RunArrayTest guid: (GUID fromString: '{656416ed-47db-44fd-a18d-124febcc1ddf}')!
+
 RunArrayTest comment: ''!
+
 !RunArrayTest categoriesForClass!Unclassified! !
+
 !RunArrayTest methodsFor!
 
 collectionClass
@@ -21,6 +25,7 @@ testReplaceIdentityWith
 
 testResize
 	self shouldnt: [super testResize] implement: #resize:! !
+
 !RunArrayTest categoriesForMethods!
 collectionClass!helpers!private! !
 testReplaceFromToWithStartingAt!public! !

@@ -5,9 +5,13 @@ Object subclass: #TestSuite
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TestSuite guid: (GUID fromString: '{5e96793c-0810-11d4-a876-0050da643bf9}')!
+
 TestSuite comment: ''!
+
 !TestSuite categoriesForClass!SUnit! !
+
 !TestSuite methodsFor!
 
 addDependentToHierachy: anObject
@@ -65,6 +69,7 @@ run: aResult
 tests
 	tests isNil ifTrue: [tests := OrderedCollection new].
 	^tests! !
+
 !TestSuite categoriesForMethods!
 addDependentToHierachy:!Dependencies!public! !
 addTest:!Accessing!public! !
@@ -87,6 +92,7 @@ named: aString
 	^self new
 		name: aString;
 		yourself! !
+
 !TestSuite class categoriesForMethods!
 named:!Creation!public! !
 !

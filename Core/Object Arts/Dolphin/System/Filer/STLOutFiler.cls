@@ -5,9 +5,13 @@ STBOutFiler subclass: #STLOutFiler
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 STLOutFiler guid: (GUID fromString: '{72dee7e2-3402-4813-99f6-379ffc717b86}')!
+
 STLOutFiler comment: ''!
+
 !STLOutFiler categoriesForClass!System-Binary storage! !
+
 !STLOutFiler methodsFor!
 
 putCharacter: aCharacter
@@ -55,6 +59,7 @@ writeInteger: anInteger
 
 writeNil
 	stream nextPut: nil! !
+
 !STLOutFiler categoriesForMethods!
 putCharacter:!helpers!private! !
 putLiteral:!private! !
@@ -73,6 +78,7 @@ signature
 	being in Smalltalk Literal (STL) format."
 
 	^#'!!STL'! !
+
 !STLOutFiler class categoriesForMethods!
 signature!constants!private! !
 !

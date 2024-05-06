@@ -5,14 +5,18 @@ IDispatch subclass: #CDOINNTPOnPostFinal
 	classVariableNames: ''
 	poolDictionaries: 'CDOConstants'
 	classInstanceVariableNames: ''!
+
 CDOINNTPOnPostFinal guid: (IID fromString: '{cd000028-8b95-11d1-82db-00c04fb1625d}')!
+
 CDOINNTPOnPostFinal comment: '<CDOINNTPOnPostFinal> is a wrapper class for the COM interface ''CDO.INNTPOnPostFinal'' generated from type information in the ''Microsoft CDO for Windows 2000 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"The interface to implement when creating NNTP OnPostFinal event sinks"
 
 Warning: This comment was automatically generated from the interface''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.'!
+
 !CDOINNTPOnPostFinal categoriesForClass!CDO-Interfaces!COM-Interfaces! !
+
 !CDOINNTPOnPostFinal methodsFor!
 
 isExtensible
@@ -36,6 +40,7 @@ OnPostFinal: msg EventStatus: eventStatus
 
 	<virtual stdcall: hresult 8 CDOIMessage* sdword*>
 	^self invalidCall: _failureCode! !
+
 !CDOINNTPOnPostFinal categoriesForMethods!
 isExtensible!**auto generated**!public!testing! !
 isVBCollection!**auto generated**!public!testing! !
@@ -60,6 +65,7 @@ initializeTypeLib
 	"
 
 	typeLib := CDOLib! !
+
 !CDOINNTPOnPostFinal class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 initializeTypeLib!**auto generated**!initializing!private! !

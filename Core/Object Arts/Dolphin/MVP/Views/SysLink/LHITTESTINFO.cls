@@ -5,11 +5,16 @@ Win32Structure subclass: #LHITTESTINFO
 	classVariableNames: '_OffsetOf_item _OffsetOf_pt'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 LHITTESTINFO guid: (GUID fromString: '{1498d0d0-6502-4ce2-8cf9-caa0625685ef}')!
+
 LHITTESTINFO addClassConstant: '_OffsetOf_item' value: 16r8!
 LHITTESTINFO addClassConstant: '_OffsetOf_pt' value: 16r0!
+
 LHITTESTINFO comment: ''!
+
 !LHITTESTINFO categoriesForClass!External-Data-Structured-Win32! !
+
 !LHITTESTINFO methodsFor!
 
 item
@@ -30,6 +35,7 @@ pt: aPOINTL
 		from: ##(_OffsetOf_pt + 1)
 		to: ##(_OffsetOf_pt + POINTL basicByteSize)
 		startingAt: 1! !
+
 !LHITTESTINFO categoriesForMethods!
 item!**compiled accessors**!public! !
 pt!**compiled accessors**!public! !
@@ -50,6 +56,7 @@ defineFields
 
 getFieldNames
 	^#(#pt #item)! !
+
 !LHITTESTINFO class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

@@ -5,10 +5,15 @@ Object subclass: #MessageSequenceAbstract
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MessageSequenceAbstract guid: (GUID fromString: '{87b4c4a0-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 MessageSequenceAbstract isAbstract: true!
+
 MessageSequenceAbstract comment: ''!
+
 !MessageSequenceAbstract categoriesForClass!Kernel-Objects! !
+
 !MessageSequenceAbstract methodsFor!
 
 add: anEventMessageSend
@@ -93,6 +98,7 @@ valueWithArguments: argArray
 	| answer |
 	self messagesDo: [:each | answer := each valueWithArguments: argArray].
 	^answer! !
+
 !MessageSequenceAbstract categoriesForMethods!
 add:!adding!public! !
 argumentCount!accessing!public! !
@@ -117,6 +123,7 @@ new
 	"Answer an instance of the receiver; instance require initialization"
 
 	^super new initialize! !
+
 !MessageSequenceAbstract class categoriesForMethods!
 new!instance creation!public! !
 !

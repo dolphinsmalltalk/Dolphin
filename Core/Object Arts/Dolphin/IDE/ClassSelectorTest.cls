@@ -5,10 +5,15 @@ SelectableItemsTest subclass: #ClassSelectorTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ClassSelectorTest guid: (GUID fromString: '{165b5ae1-4f70-45e2-94d3-cc4f11c068dc}')!
+
 ClassSelectorTest isAbstract: true!
+
 ClassSelectorTest comment: ''!
+
 !ClassSelectorTest categoriesForClass!Unclassified! !
+
 !ClassSelectorTest methodsFor!
 
 create: aClassSymbol subclassOf: aClass
@@ -302,6 +307,7 @@ testSelection
 			self assertIsNil: presenter selectionOrNil.
 			self should: [presenter selection] raise: Error].
 	self removeClassesABC! !
+
 !ClassSelectorTest categoriesForMethods!
 create:subclassOf:!helpers!private! !
 create:subclassOf:inPackage:!helpers!private! !
@@ -326,6 +332,7 @@ testSelection!public!unit tests! !
 
 resources
 	^Array with: DolphinTestPackages! !
+
 !ClassSelectorTest class categoriesForMethods!
 resources!Accessing!public! !
 !

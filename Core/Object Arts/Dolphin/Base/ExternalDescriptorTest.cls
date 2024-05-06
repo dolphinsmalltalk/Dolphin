@@ -5,9 +5,13 @@ DolphinTest subclass: #ExternalDescriptorTest
 	classVariableNames: ''
 	poolDictionaries: 'ExtCallArgTypes'
 	classInstanceVariableNames: ''!
+
 ExternalDescriptorTest guid: (GUID fromString: '{d809ef14-78cf-4e10-8dc1-0249d46b4b5f}')!
+
 ExternalDescriptorTest comment: ''!
+
 !ExternalDescriptorTest categoriesForClass!Unclassified! !
+
 !ExternalDescriptorTest methodsFor!
 
 externalTypes
@@ -142,6 +146,7 @@ testStructs
 		parseStructArg: _FPIEEE_VALUE
 		valueType: ExtCallArgSTRUCT
 		refType: ExtCallArgLP! !
+
 !ExternalDescriptorTest categoriesForMethods!
 externalTypes!accessing!private! !
 parseStructArg:valueType:refType:!private!unit tests! !

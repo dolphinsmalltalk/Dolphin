@@ -9,7 +9,6 @@ This package wraps the fundamental OLE persistence interfaces in the IPersist hi
 
 package basicPackageVersion: '6.0'.
 
-
 package classNames
 	add: #IPersist;
 	add: #IPersistMemory;
@@ -44,24 +43,24 @@ IUnknown subclass: #IPersist
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IPersist subclass: #IPersistMemory
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IPersist subclass: #IPersistStream
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IPersistStream subclass: #IPersistStreamInit
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -74,6 +73,7 @@ readFromIStream: anIStream
 	answer := self newPointer.
 	OLELibrary default oleLoadFromStream: anIStream iidInterface: self iid ppvObj: answer.
 	^answer! !
+
 !COMInterface class categoriesForMethods!
 readFromIStream:!instance creation!public! !
 !
@@ -95,6 +95,7 @@ nextPutObject: unkObj
 			self nextPutCLSID: ip clsid]
 		ifFalse: [OLELibrary default oleSaveToStream: ips pStm: self]
 ! !
+
 !IStream categoriesForMethods!
 nextPutObject:!accessing!public! !
 !
@@ -136,6 +137,7 @@ oleSaveToStream: pPStm pStm: pStm
 
 	<stdcall: hresult OleSaveToStream IPersistStream* IStream*>
 	^self invalidCall: _failureCode! !
+
 !OLELibrary categoriesForMethods!
 oleLoadFromStream:iidInterface:ppvObj:!OLE Functions-Persistent Objects!primitives!public! !
 oleSaveToStream:pStm:!OLE Functions-Persistent Objects!primitives!public! !

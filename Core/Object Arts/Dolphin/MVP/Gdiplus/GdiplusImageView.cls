@@ -5,7 +5,9 @@ ImageViewAbstract subclass: #GdiplusImageView
 	classVariableNames: ''
 	poolDictionaries: 'GdiplusConstants'
 	classInstanceVariableNames: ''!
+
 GdiplusImageView guid: (GUID fromString: '{eede5c5a-f1e0-4e07-b766-9ea7d3169055}')!
+
 GdiplusImageView comment: 'GdiplusImageView is a <valueView> for displaying static <image>s based on Object-Art''''s ImageView
 
 It can display either GDI or Gdiplus based images.
@@ -28,7 +30,9 @@ Class Variables:
 	IsEraseBackgroundMask	<SmallInteger>
 
 '!
+
 !GdiplusImageView categoriesForClass!MVP-Views! !
+
 !GdiplusImageView methodsFor!
 
 default: imageExtent in: displayRect 
@@ -117,6 +121,7 @@ paintImageOn: aCanvas
 		drawBorderOn: aCanvas
 		imageRect: imageRect
 		displayRect: displayRect! !
+
 !GdiplusImageView categoriesForMethods!
 default:in:!geometry!private! !
 imageAttributes!accessing!public! !
@@ -206,6 +211,7 @@ stbConvertFromVersion13: anArray
 
 stbVersion
 	^14! !
+
 !GdiplusImageView class categoriesForMethods!
 interpolationStyles!constants!public! !
 interpolationStyleTable!constants!public! !

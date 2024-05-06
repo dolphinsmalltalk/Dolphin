@@ -5,12 +5,15 @@ Magnitude subclass: #DateAndTime
 	classVariableNames: 'FiletimeEpochSeconds JulianDateOffset LilianDayOffset SmalltalkEpochRD UnixEpochSeconds'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DateAndTime guid: (GUID fromString: '{87b4c653-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 DateAndTime addClassConstant: 'FiletimeEpochSeconds' value: -16r234474600!
 DateAndTime addClassConstant: 'JulianDateOffset' value: 16r22A11020C0!
 DateAndTime addClassConstant: 'LilianDayOffset' value: -16r8D0C7!
 DateAndTime addClassConstant: 'SmalltalkEpochRD' value: 16rA96C9!
 DateAndTime addClassConstant: 'UnixEpochSeconds' value: 16r81C94B00!
+
 DateAndTime comment: '`DateAndTime` is an implementation of the ANSI Smalltalk protocols `<DateAndTime>` (instance side) and `<DateAndTime factory>` (class side).
 
 *Derived from original work copyright © 2005 Ian Bartholomew, with additions by Richard Harmon, however the internal representation has been changed.*
@@ -31,7 +34,9 @@ DateAndTime comment: '`DateAndTime` is an implementation of the ANSI Smalltalk p
 ## Class Variables
 
   `SmalltalkEpochRD`	`<integer>` Rata Die of the traditional Smalltalk epoch (1st Jan 1901)'!
+
 !DateAndTime categoriesForClass!IDB Goodies!Magnitude-General! !
+
 !DateAndTime methodsFor!
 
 - operand 
@@ -396,6 +401,7 @@ year
 	"Answer an <integer> representing the year of the local time which includes the receiver."
 
 	^self dayMonthYearDo: [:d :m :y | y]! !
+
 !DateAndTime categoriesForMethods!
 -!arithmetic!public! !
 +!arithmetic!public! !
@@ -889,6 +895,7 @@ yesterday
 	"Answer a new <DateAndTime> representing midnight local time on the previous day."
 
 	^self today - 1 days! !
+
 !DateAndTime class categoriesForMethods!
 clockPrecision!constants!public! !
 daysInMonth:forYear:!enquiries!public! !

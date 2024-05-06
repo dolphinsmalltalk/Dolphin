@@ -5,9 +5,13 @@ GdiplusInitializer subclass: #GdiplusGraphicsFromHDCInitializer
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusGraphicsFromHDCInitializer guid: (GUID fromString: '{83cb0a86-604f-48a0-9336-619cfce00e47}')!
+
 GdiplusGraphicsFromHDCInitializer comment: ''!
+
 !GdiplusGraphicsFromHDCInitializer categoriesForClass!Unclassified! !
+
 !GdiplusGraphicsFromHDCInitializer methodsFor!
 
 canvas: aCanvas
@@ -31,6 +35,7 @@ createHandle
 
 gdiplusConstructorErrorDescription
 	^'Error creating Graphics'! !
+
 !GdiplusGraphicsFromHDCInitializer categoriesForMethods!
 canvas:!initializing!private! !
 createHandle!private!realizing/unrealizing! !
@@ -43,6 +48,7 @@ canvas: aCanvas
 	"Creates a Graphics object that is associated with a specified device context."
 
 	^self new canvas: aCanvas! !
+
 !GdiplusGraphicsFromHDCInitializer class categoriesForMethods!
 canvas:!instance creation!public! !
 !

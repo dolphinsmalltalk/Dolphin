@@ -5,10 +5,14 @@ Shell subclass: #SmalltalkToolShell
 	classVariableNames: 'CanUseIdeaSpaceMask HistoryDwellTime ReuseIfOpenMask SearchFieldFlashes'
 	poolDictionaries: ''
 	classInstanceVariableNames: 'optionFlags defaultView defaultExtent defaultSlideyPinsMap additionalKeyBindings commandQueryHandlers'!
+
 SmalltalkToolShell guid: (GUID fromString: '{87b4c6a0-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 SmalltalkToolShell isAbstract: true!
+
 SmalltalkToolShell addClassConstant: 'CanUseIdeaSpaceMask' value: 16r2!
 SmalltalkToolShell addClassConstant: 'ReuseIfOpenMask' value: 16r1!
+
 SmalltalkToolShell comment: 'SmalltalkToolShell is an abstract <topPresenter> providing umbrella functionality for most of the Dolphin development tools. 
 
 All of the tools have the singleton instance of SmalltalkSystem as their model. This makes sense because the SmalltalkSystem is effectively a Facade onto the Smalltalk development image; all user interface modifications to the image should go through this central point. In this way, a tool is effectively acting as a view onto the development image. It is also convenient since all <model>s are also <commandTarget>s. This means that some user interface commands can be directly picked up and acted upon by the SmalltalkSystem without any intervention being required from the tool itself.
@@ -22,7 +26,9 @@ Class Instance Variables:
 	defaultExtent		<Point> specifying the default size of new views, nil if none set.
 	additionalAccelerators	<Array> of 2-element <Array>s, being command <Symbol> accelerator key <String> pairs
 '!
+
 !SmalltalkToolShell categoriesForClass!MVP-Presenters!MVP-Resources-IDE Tools! !
+
 !SmalltalkToolShell methodsFor!
 
 applyOptions
@@ -339,6 +345,7 @@ systemModel
 
 workspaceClass
 	^Smalltalk developmentSystem workspaceClass! !
+
 !SmalltalkToolShell categoriesForMethods!
 applyOptions!private! !
 browseIt!commands!public! !
@@ -660,6 +667,7 @@ toolsFolderIcon
 		show: self 
 		description: self toolDescription
 		helpId: self toolsFolderHelpId! !
+
 !SmalltalkToolShell class categoriesForMethods!
 activeIdeaSpace!public! !
 buildIdeaSpacePopup!private! !

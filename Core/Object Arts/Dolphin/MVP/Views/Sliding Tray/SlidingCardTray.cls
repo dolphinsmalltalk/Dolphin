@@ -5,7 +5,9 @@ CardContainer subclass: #SlidingCardTray
 	classVariableNames: 'PinImageList'
 	poolDictionaries: 'TabViewConstants ThemeConstants'
 	classInstanceVariableNames: ''!
+
 SlidingCardTray guid: (GUID fromString: '{c8908738-f06b-4eac-89ba-67add22cec3b}')!
+
 SlidingCardTray comment: 'A SlidingCardTray is a specialised <CardContainer> for use in conjunction with a <SlideyInneyOuteyView> to implement a tabbed view which slides out the contained cards when the user hovers over the tabs, and slides them back in again when the user leaves the window for a short while. 
 
 Instance Variables:
@@ -14,7 +16,9 @@ Instance Variables:
 	pinSize		<Point>. Size of the pin displayed on the tray caption bar.
 	pinInteractor	<ButtonInteractor> for the pin.
 	'!
+
 !SlidingCardTray categoriesForClass!MVP-Views! !
+
 !SlidingCardTray methodsFor!
 
 calcClientRectangleFromRectangle: aRectangle 
@@ -343,6 +347,7 @@ wmPrint: message wParam: wParam lParam: lParam
 				lParam: lParam.
 	(lParam allMask: PRF_NONCLIENT) ifTrue: [self paintEdgesOn: (Canvas withNonOwnedDC: wParam)].
 	^result! !
+
 !SlidingCardTray categoriesForMethods!
 calcClientRectangleFromRectangle:!event handling-win32!private! !
 calculateExtent:!geometry!private! !
@@ -394,6 +399,7 @@ initialize
 
 themePartName
 	^'EXPLORERBAR'! !
+
 !SlidingCardTray class categoriesForMethods!
 initialize!initializing!private! !
 themePartName!constants!public!theming! !

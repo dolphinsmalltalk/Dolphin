@@ -5,10 +5,15 @@ DolphinTest subclass: #SortAlgorithmTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SortAlgorithmTest guid: (GUID fromString: '{50fde7dc-5db4-4eda-9ee2-61882b8ee3e5}')!
+
 SortAlgorithmTest isAbstract: true!
+
 SortAlgorithmTest comment: ''!
+
 !SortAlgorithmTest categoriesForClass!Unclassified! !
+
 !SortAlgorithmTest methodsFor!
 
 add: aCollection sortBlock: block
@@ -258,6 +263,7 @@ testSortIntegers
 	self sortMagnitudes: collection.
 	collection := 1 to: self integerSortSize.
 	self sortMagnitudes: collection! !
+
 !SortAlgorithmTest categoriesForMethods!
 add:sortBlock:!helpers!private! !
 algorithmToTest!private!unit tests! !

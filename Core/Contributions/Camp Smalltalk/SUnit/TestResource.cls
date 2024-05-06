@@ -5,10 +5,15 @@ Object subclass: #TestResource
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: 'current'!
+
 TestResource guid: (GUID fromString: '{69aeb725-622f-43db-a9c7-095932055892}')!
+
 TestResource isAbstract: true!
+
 TestResource comment: ''!
+
 !TestResource categoriesForClass!Unclassified! !
+
 !TestResource methodsFor!
 
 description
@@ -49,6 +54,7 @@ setUp
 tearDown
 	"Does nothing. Subclasses should override this
 	to tear down their resource"! !
+
 !TestResource categoriesForMethods!
 description!Accessing!public! !
 description:!Accessing!public! !
@@ -92,6 +98,7 @@ resources
 
 signalInitializationError
 	^TestResult signalErrorWith: 'Resource ' , self name , ' could not be initialized'! !
+
 !TestResource class categoriesForMethods!
 current!Accessing!public! !
 current:!Accessing!public! !

@@ -4,7 +4,6 @@ package paxVersion: 1;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
-
 package classNames
 	add: #BasicLintRuleTest;
 	add: #ClassToRename;
@@ -46,46 +45,48 @@ Object subclass: #LintRuleTest
 	classVariableNames: 'Foo1'
 	poolDictionaries: 'CRTConstants'
 	classInstanceVariableNames: ''!
+
 Object subclass: #RefactoryTestDataApp
 	instanceVariableNames: 'temporaryVariable'
 	classVariableNames: ''
 	poolDictionaries: 'CRTConstants'
 	classInstanceVariableNames: ''!
+
 LintRuleTest subclass: #BasicLintRuleTest
 	instanceVariableNames: 'classBlock methodBlock result'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 LintRuleTest subclass: #CompositeLintRuleTest
 	instanceVariableNames: 'rules'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 LintRuleTest subclass: #FooLintRuleTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 FooLintRuleTest subclass: #TransformationRuleTest
 	instanceVariableNames: 'rewriteRule builder class'
 	classVariableNames: 'RecursiveSelfRule'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Model subclass: #ClassToRename
 	instanceVariableNames: 'rewriteRule builder class'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: 'notUsed'!
+
 ClassToRename subclass: #SubclassOfClassToRename
 	instanceVariableNames: 'rewriteRule1'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

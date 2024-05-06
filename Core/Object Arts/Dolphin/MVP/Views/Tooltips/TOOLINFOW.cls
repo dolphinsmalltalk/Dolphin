@@ -5,7 +5,9 @@ Win32Structure subclass: #TOOLINFOW
 	classVariableNames: '_OffsetOf_dwSize _OffsetOf_hinst _OffsetOf_hwnd _OffsetOf_lParam _OffsetOf_lpReserved _OffsetOf_lpszText _OffsetOf_rect _OffsetOf_uFlags _OffsetOf_uId'
 	poolDictionaries: 'TooltipConstants'
 	classInstanceVariableNames: ''!
+
 TOOLINFOW guid: (GUID fromString: '{87b4c617-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 TOOLINFOW addClassConstant: '_OffsetOf_dwSize' value: 16r0!
 TOOLINFOW addClassConstant: '_OffsetOf_hinst' value: 16r20!
 TOOLINFOW addClassConstant: '_OffsetOf_hwnd' value: 16r8!
@@ -15,6 +17,7 @@ TOOLINFOW addClassConstant: '_OffsetOf_lpszText' value: 16r24!
 TOOLINFOW addClassConstant: '_OffsetOf_rect' value: 16r10!
 TOOLINFOW addClassConstant: '_OffsetOf_uFlags' value: 16r4!
 TOOLINFOW addClassConstant: '_OffsetOf_uId' value: 16rC!
+
 TOOLINFOW comment: 'TOOLINFOA is an <ExternalStructure> class to represent the Win32 structure of the same name.
 
 This structure is used in conjunction with the tooltips.
@@ -23,7 +26,9 @@ Instance Variables:
 	text	<String>. Used to maintain a reference to the tip text string to prevent its premature GC.
 
 '!
+
 !TOOLINFOW categoriesForClass!External-Data-Structured!External-Data-Structured-Win32! !
+
 !TOOLINFOW methodsFor!
 
 dwSize: anInteger
@@ -126,6 +131,7 @@ uId: anInteger
 	"Set the receiver's 'uId' field to the value of the argument, anInteger"
 
 	bytes uintPtrAtOffset: _OffsetOf_uId put: anInteger! !
+
 !TOOLINFOW categoriesForMethods!
 dwSize:!**compiled accessors**!public! !
 hinst!**compiled accessors**!public! !
@@ -176,6 +182,7 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #uFlags #hwnd #uId #rect #hinst #lpszText #lParam)! !
+
 !TOOLINFOW class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

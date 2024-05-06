@@ -5,9 +5,13 @@ Shell subclass: #TestRunner
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TestRunner guid: (GUID fromString: '{5e967948-0810-11d4-a876-0050da643bf9}')!
+
 TestRunner comment: 'A TestRunner is a simple graphical user interface to run test cases. A window can be opened via "TestRunner show". '!
+
 !TestRunner categoriesForClass!SUnit! !
+
 !TestRunner methodsFor!
 
 allTestSuite
@@ -154,6 +158,7 @@ updateWindow
 		ifTrue: [self displayPass]
 		ifFalse: [self displayFail].
 	self updateDefects! !
+
 !TestRunner categoriesForMethods!
 allTestSuite!helpers!public! !
 createSchematicWiring!helpers!private! !
@@ -229,6 +234,7 @@ toolDescription
 
 toolsFolderHelpId
 	^10632! !
+
 !TestRunner class categoriesForMethods!
 defaultView!public!views! !
 icon!constants!public! !

@@ -5,9 +5,12 @@ ExternalStructure subclass: #TIMEVAL
 	classVariableNames: '_OffsetOf_tv_sec _OffsetOf_tv_usec'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TIMEVAL guid: (GUID fromString: '{c4066d09-c93b-488e-b9b9-585ddddb41ea}')!
+
 TIMEVAL addClassConstant: '_OffsetOf_tv_sec' value: 16r0!
 TIMEVAL addClassConstant: '_OffsetOf_tv_usec' value: 16r4!
+
 TIMEVAL comment: '<Timeval> is an <ExternalStructure> class to wrap the struct ''WINSOCK2Lib.timeval'' from type information in the ''Windows Sockets 2 Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -21,7 +24,9 @@ typedef struct tagtimeval {
 	long tv_usec;
 } timeval;
 '!
+
 !TIMEVAL categoriesForClass!WINSOCK2Lib-Structs! !
+
 !TIMEVAL methodsFor!
 
 tv_sec
@@ -43,6 +48,7 @@ tv_usec: anInteger
 	"Set the receiver's 'tv_usec' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_tv_usec put: anInteger! !
+
 !TIMEVAL categoriesForMethods!
 tv_sec!**compiled accessors**!public! !
 tv_sec:!**compiled accessors**!public! !
@@ -68,6 +74,7 @@ defineFields
 
 getFieldNames
 	^#(#tv_sec #tv_usec)! !
+
 !TIMEVAL class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

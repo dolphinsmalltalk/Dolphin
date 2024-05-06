@@ -5,9 +5,13 @@ RenameClassRefactoring subclass: #CopyClassRefactoring
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 CopyClassRefactoring guid: (GUID fromString: '{c6843969-c4d4-4f0f-8de1-ceae5725b831}')!
+
 CopyClassRefactoring comment: ''!
+
 !CopyClassRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !CopyClassRefactoring methodsFor!
 
 copyClass
@@ -90,6 +94,7 @@ transform
 	self copyPoolsTo: clone.
 	self copyMethodsFrom: class to: clone.
 	self copyMethodsFrom: class metaclass to: clone metaclass! !
+
 !CopyClassRefactoring categoriesForMethods!
 copyClass!private!transforming! !
 copyClassVarsTo:!private!transforming! !
@@ -118,6 +123,7 @@ model: aRBNamespace clone: aClass as: aNewName superclass: superClass
 		to: aNewName)
 		superclass: superClass;
 		yourself! !
+
 !CopyClassRefactoring class categoriesForMethods!
 clone:as:superclass:!instance creation!public! !
 model:clone:as:superclass:!instance creation!public! !

@@ -5,11 +5,14 @@ ENHMETARECORD subclass: #EMRSETICMPROFILE
 	classVariableNames: '_OffsetOf_cbData _OffsetOf_cbName _OffsetOf_Data _OffsetOf_dwFlags'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 EMRSETICMPROFILE guid: (GUID fromString: '{f0dd9705-d88e-4c84-a38c-d8afd0882dc4}')!
+
 EMRSETICMPROFILE addClassConstant: '_OffsetOf_cbData' value: 16r10!
 EMRSETICMPROFILE addClassConstant: '_OffsetOf_cbName' value: 16rC!
 EMRSETICMPROFILE addClassConstant: '_OffsetOf_Data' value: 16r14!
 EMRSETICMPROFILE addClassConstant: '_OffsetOf_dwFlags' value: 16r8!
+
 EMRSETICMPROFILE comment: '<EMRSETICMPROFILE> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETICMPROFILE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -27,7 +30,9 @@ struct tagEMRSETICMPROFILE {
 	[helpstring("Array size is cbName + cbData")] BYTE Data[1];
 } EMRSETICMPROFILE;
 '!
+
 !EMRSETICMPROFILE categoriesForClass!Win32-Structs! !
+
 !EMRSETICMPROFILE methodsFor!
 
 cbData
@@ -78,6 +83,7 @@ dwFlags: anInteger
 	"Set the receiver's 'dwFlags' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_dwFlags put: anInteger! !
+
 !EMRSETICMPROFILE categoriesForMethods!
 cbData!**compiled accessors**!public! !
 cbData:!**compiled accessors**!public! !
@@ -130,6 +136,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_SETICMPROFILEA with: EMR_SETICMPROFILEW! !
+
 !EMRSETICMPROFILE class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

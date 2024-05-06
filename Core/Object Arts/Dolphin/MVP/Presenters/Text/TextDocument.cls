@@ -5,14 +5,18 @@ AbstractDocumentShell subclass: #TextDocument
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TextDocument guid: (GUID fromString: '{87b4c6bb-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 TextDocument comment: '`TextDocument` is a `<documentPresenter>` capable of displaying and editing a `<readableString>` document.
 
 Instance Variables:
 	documentPresenter	`TextPresenter` holding the document text.
 
 '!
+
 !TextDocument categoriesForClass!MVP-Presenters! !
+
 !TextDocument methodsFor!
 
 createComponents
@@ -109,6 +113,7 @@ saveUserSettings
 validateUserInterface
 	modifiedModel value: self isModified.
 	^super validateUserInterface! !
+
 !TextDocument categoriesForMethods!
 createComponents!initializing!public! !
 documentPresenterClass!constants!public! !
@@ -155,6 +160,7 @@ shutdownOnExit
 	"Answer whether a runtime session should be shutdown when an instance of the receiver is closed."
 
 	^true! !
+
 !TextDocument class categoriesForMethods!
 defaultFileExtension!constants!public! !
 defaultModel!models!public! !

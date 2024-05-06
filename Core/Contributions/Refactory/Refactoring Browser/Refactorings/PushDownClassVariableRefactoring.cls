@@ -5,9 +5,13 @@ VariableRefactoring subclass: #PushDownClassVariableRefactoring
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PushDownClassVariableRefactoring guid: (GUID fromString: '{e2937b6b-aa4b-4464-8c56-b8b005f6c4f9}')!
+
 PushDownClassVariableRefactoring comment: ''!
+
 !PushDownClassVariableRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !PushDownClassVariableRefactoring methodsFor!
 
 findDestinationClass
@@ -61,6 +65,7 @@ transform
 	class removeClassVariable: variableName.
 	destinationClass isNil ifTrue: [^self].
 	destinationClass addClassVariable: variableName! !
+
 !PushDownClassVariableRefactoring categoriesForMethods!
 findDestinationClass!preconditions!public! !
 preconditions!preconditions!public! !

@@ -5,7 +5,9 @@ Object subclass: #MoenTreeNode
 	classVariableNames: 'ExpandedMask HasExpandedMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MoenTreeNode guid: (GUID fromString: '{63ce49d1-2faf-11d3-93ba-00a024ca708a}')!
+
 MoenTreeNode comment: 'MoenTreeNode is a private helper class which is part of the implementation of the <MoenTreeView>.
 
 Each node in a MoenTreeView is represented by an instance of this class.
@@ -27,7 +29,9 @@ Class Variables:
 	ExpandedMask	<integer>. Bit mask for setting/testing ''expanded'' flag
 	HasExpandedMask	<integer>. Bit mask for setting/testing ''hasExpanded'' flag.
 '!
+
 !MoenTreeNode categoriesForClass!MVP-Views-Support! !
+
 !MoenTreeNode methodsFor!
 
 buttonRectangle
@@ -258,6 +262,7 @@ visiblePreOrderDo: operation
 
 	operation value: self.
 	self visibleChildrenDo: [:each | each visiblePreOrderDo: operation]! !
+
 !MoenTreeNode categoriesForMethods!
 buttonRectangle!accessing!private! !
 buttonSize!constants!private! !
@@ -317,6 +322,7 @@ new
 
 object: anObject parent: aMoenTreeNode
 	^self basicNew setObject: anObject parent: aMoenTreeNode! !
+
 !MoenTreeNode class categoriesForMethods!
 initialize!development!private! !
 new!instance creation!public! !

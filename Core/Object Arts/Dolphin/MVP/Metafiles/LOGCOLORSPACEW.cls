@@ -5,7 +5,9 @@ ExternalStructure subclass: #LOGCOLORSPACEW
 	classVariableNames: '_OffsetOf_lcsCSType _OffsetOf_lcsEndpoints _OffsetOf_lcsFilename _OffsetOf_lcsGammaBlue _OffsetOf_lcsGammaGreen _OffsetOf_lcsGammaRed _OffsetOf_lcsIntent _OffsetOf_lcsSignature _OffsetOf_lcsSize _OffsetOf_lcsVersion'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 LOGCOLORSPACEW guid: (GUID fromString: '{8b3e3016-08e0-4e61-835b-ff4cfbcec91a}')!
+
 LOGCOLORSPACEW addClassConstant: '_OffsetOf_lcsCSType' value: 16rC!
 LOGCOLORSPACEW addClassConstant: '_OffsetOf_lcsEndpoints' value: 16r14!
 LOGCOLORSPACEW addClassConstant: '_OffsetOf_lcsFilename' value: 16r44!
@@ -16,6 +18,7 @@ LOGCOLORSPACEW addClassConstant: '_OffsetOf_lcsIntent' value: 16r10!
 LOGCOLORSPACEW addClassConstant: '_OffsetOf_lcsSignature' value: 16r0!
 LOGCOLORSPACEW addClassConstant: '_OffsetOf_lcsSize' value: 16r8!
 LOGCOLORSPACEW addClassConstant: '_OffsetOf_lcsVersion' value: 16r4!
+
 LOGCOLORSPACEW comment: '<LOGCOLORSPACEW> is an <ExternalStructure> class to wrap the struct ''Win32.LOGCOLORSPACEW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -38,7 +41,9 @@ struct tagLOGCOLORSPACEW {
 	BYTE lcsFilename[260];
 } LOGCOLORSPACEW;
 '!
+
 !LOGCOLORSPACEW categoriesForClass!Win32-Structs! !
+
 !LOGCOLORSPACEW methodsFor!
 
 lcsCSType
@@ -150,6 +155,7 @@ lcsVersion: anInteger
 	"Set the receiver's 'lcsVersion' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_lcsVersion put: anInteger! !
+
 !LOGCOLORSPACEW categoriesForMethods!
 lcsCSType!**compiled accessors**!public! !
 lcsCSType:!**compiled accessors**!public! !
@@ -210,6 +216,7 @@ defineFields
 
 getFieldNames
 	^#(#lcsSignature #lcsVersion #lcsSize #lcsCSType #lcsIntent #lcsEndpoints #lcsGammaRed #lcsGammaGreen #lcsGammaBlue #lcsFilename)! !
+
 !LOGCOLORSPACEW class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

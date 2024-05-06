@@ -5,7 +5,9 @@ ICoreWebView2Interface subclass: #ICoreWebView2Profile
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2Profile guid: (IID fromString: '{79110ad3-cd5d-4373-8bc3-c60658f17a5f}')!
+
 ICoreWebView2Profile comment: '`ICoreWebView2Profile` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Profile'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -44,7 +46,9 @@ interface ICoreWebView2Profile : IUnknown
 };
 ```
 '!
+
 !ICoreWebView2Profile categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2Profile methodsFor!
 
 ClearBrowsingData: dataKinds handler: handler
@@ -190,6 +194,7 @@ put_PreferredColorScheme: value
 
 	<virtual stdcall: hresult 10 sdword>
 	^self invalidCall: _failureCode! !
+
 !ICoreWebView2Profile categoriesForMethods!
 ClearBrowsingData:handler:!COM Interfaces-ICoreWebView2Profile2!private! !
 ClearBrowsingDataAll:!COM Interfaces-ICoreWebView2Profile2!private! !
@@ -234,6 +239,7 @@ defineFunctions
 		defineFunction: #put_PreferredColorScheme:
 			argumentTypes: 'sdword'
 ! !
+
 !ICoreWebView2Profile class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

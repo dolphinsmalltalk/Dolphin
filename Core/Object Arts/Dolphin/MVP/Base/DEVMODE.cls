@@ -5,7 +5,9 @@ ExternalStructure subclass: #DEVMODE
 	classVariableNames: '_OffsetOf_dmBitsPerPel _OffsetOf_dmCollate _OffsetOf_dmColor _OffsetOf_dmCopies _OffsetOf_dmDefaultSource _OffsetOf_dmDeviceName _OffsetOf_dmDisplayFlags _OffsetOf_dmDisplayFrequency _OffsetOf_dmDitherType _OffsetOf_dmDriverExtra _OffsetOf_dmDriverVersion _OffsetOf_dmDuplex _OffsetOf_dmFields _OffsetOf_dmFormName _OffsetOf_dmICMIntent _OffsetOf_dmICMMethod _OffsetOf_dmLogPixels _OffsetOf_dmMediaType _OffsetOf_dmOrientation _OffsetOf_dmPaperLength _OffsetOf_dmPaperSize _OffsetOf_dmPaperWidth _OffsetOf_dmPelsHeight _OffsetOf_dmPelsWidth _OffsetOf_dmPrintQuality _OffsetOf_dmReserved1 _OffsetOf_dmReserved2 _OffsetOf_dmScale _OffsetOf_dmSize _OffsetOf_dmSpecVersion _OffsetOf_dmTTOption _OffsetOf_dmYResolution'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DEVMODE guid: (GUID fromString: '{62ad7874-bbbf-4852-99d9-8040855ecb49}')!
+
 DEVMODE addClassConstant: '_OffsetOf_dmBitsPerPel' value: 16r68!
 DEVMODE addClassConstant: '_OffsetOf_dmCollate' value: 16r44!
 DEVMODE addClassConstant: '_OffsetOf_dmColor' value: 16r3C!
@@ -38,6 +40,7 @@ DEVMODE addClassConstant: '_OffsetOf_dmSize' value: 16r24!
 DEVMODE addClassConstant: '_OffsetOf_dmSpecVersion' value: 16r20!
 DEVMODE addClassConstant: '_OffsetOf_dmTTOption' value: 16r42!
 DEVMODE addClassConstant: '_OffsetOf_dmYResolution' value: 16r40!
+
 DEVMODE comment: '<DEVMODE> is an <ExternalStructure> class to wrap the struct ''Win32.DEVMODE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -82,7 +85,9 @@ struct tagDEVMODE {
 	DWORD dmReserved2;
 } DEVMODE;
 '!
+
 !DEVMODE categoriesForClass!Win32-Structs! !
+
 !DEVMODE class methodsFor!
 
 defineFields
@@ -164,6 +169,7 @@ defineFields
 
 getFieldNames
 	^#(#dmDeviceName #dmSpecVersion #dmDriverVersion #dmSize #dmDriverExtra #dmFields #dmOrientation #dmPaperSize #dmPaperLength #dmPaperWidth #dmScale #dmCopies #dmDefaultSource #dmPrintQuality #dmColor #dmDuplex #dmYResolution #dmTTOption #dmCollate #dmFormName #dmLogPixels #dmBitsPerPel #dmPelsWidth #dmPelsHeight #dmDisplayFlags #dmDisplayFrequency #dmICMMethod #dmICMIntent #dmMediaType #dmDitherType)! !
+
 !DEVMODE class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

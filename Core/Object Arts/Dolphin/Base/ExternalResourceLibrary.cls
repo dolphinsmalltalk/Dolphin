@@ -5,9 +5,13 @@ ExternalLibrary subclass: #ExternalResourceLibrary
 	classVariableNames: 'Libraries'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalResourceLibrary guid: (GUID fromString: '{87b4c57f-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 ExternalResourceLibrary comment: 'ExternalResourceLibrary is a generic type of <ExternalLibrary>, instance of which can be used to access resources (e.g. icons, bitmaps, strings) from arbitrary modules (DLLs and EXES). A registry of open resource libraries is maintained so that each module is represented by a single instance, and aliasing of the library names is supported to map old Dolphin resources to new libraries should the latter be renamed.'!
+
 !ExternalResourceLibrary categoriesForClass!External-Libraries! !
+
 !ExternalResourceLibrary methodsFor!
 
 attemptToOpen: aString
@@ -68,6 +72,7 @@ stbSaveOn: anSTBOutFiler
 	anSTBOutFiler
 		saveObject: self
 		as: (STBExternalResourceLibraryProxy forLibrary: self)! !
+
 !ExternalResourceLibrary categoriesForMethods!
 attemptToOpen:!helpers!instance creation!private! !
 fileName!accessing!public! !
@@ -175,6 +180,7 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^1! !
+
 !ExternalResourceLibrary class categoriesForMethods!
 aliasFor:!enquiries!public! !
 defaultLoadFlags!constants!private! !

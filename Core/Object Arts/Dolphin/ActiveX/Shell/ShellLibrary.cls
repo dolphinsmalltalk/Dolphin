@@ -5,9 +5,13 @@ ExternalLibrary subclass: #ShellLibrary
 	classVariableNames: ''
 	poolDictionaries: 'ShellConstants Win32Constants'
 	classInstanceVariableNames: ''!
+
 ShellLibrary guid: (GUID fromString: '{64674052-3a82-101b-8181-00aa003743d3}')!
+
 ShellLibrary comment: 'ShellLibrary is the <ExternalLibrary> class to represent the Win32 system library, Shell32.DLL'!
+
 !ShellLibrary categoriesForClass!External-Libraries-Win32! !
+
 !ShellLibrary methodsFor!
 
 dragAcceptFiles: hwnd fAccept: fAccept
@@ -189,6 +193,7 @@ shGetFolderPath: hwndOwner nFolder: nFolder hToken: hToken dwFlags: dwFlags pszP
 
 	<stdcall: hresult SHGetFolderPathW handle sdword handle dword lpwstr>
 	^self invalidCall: _failureCode! !
+
 !ShellLibrary categoriesForMethods!
 dragAcceptFiles:fAccept:!**auto generated**!public! !
 dragFinish:!**auto generated**!public! !
@@ -214,6 +219,7 @@ fileName
 	"Answer the file name of the external library which the receiver represents."
 
 	^'Shell32'! !
+
 !ShellLibrary class categoriesForMethods!
 fileName!constants!public! !
 !

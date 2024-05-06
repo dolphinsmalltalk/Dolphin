@@ -5,9 +5,13 @@ DolphinTest subclass: #IMonikerTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IMonikerTest guid: (GUID fromString: '{12c38016-378e-4ac7-9a33-8e88d5f9f709}')!
+
 IMonikerTest comment: ''!
+
 !IMonikerTest categoriesForClass!Unclassified! !
+
 !IMonikerTest methodsFor!
 
 getMonikerRegisteredClass: anIMoniker
@@ -222,6 +226,7 @@ testTimeOfLastChange
 	"3) Pointer moniker, not implemented:"
 	subject := IMoniker forPointer: IMalloc task.
 	self shouldRaiseNotImplemented: [subject timeOfLastChange]! !
+
 !IMonikerTest categoriesForMethods!
 getMonikerRegisteredClass:!helpers!private! !
 should:raiseHRESULT:!helpers!private! !

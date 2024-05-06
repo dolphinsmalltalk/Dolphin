@@ -6,7 +6,6 @@ package paxVersion: 1;
 
 package basicPackageVersion: '6.1'.
 
-
 package classNames
 	add: #STLDebugger;
 	add: #STLInFiler;
@@ -53,19 +52,18 @@ STBInFiler subclass: #STLInFiler
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 STLInFiler subclass: #STLDebugger
 	instanceVariableNames: 'indentLevel traceStream printOffsets slotName'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 STBOutFiler subclass: #STLOutFiler
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -75,6 +73,7 @@ literalPrintOn: aWriteStream
 	self printPrefixOn: aWriteStream.
 	self do: [:each | each literalPrintOn: aWriteStream] separatedBy: [aWriteStream space].
 	self printSuffixOn: aWriteStream! !
+
 !ArrayedCollection categoriesForMethods!
 literalPrintOn:!public! !
 !
@@ -83,6 +82,7 @@ literalPrintOn:!public! !
 
 literalPrintOn: aWriteStream
 	self printOn: aWriteStream! !
+
 !Boolean categoriesForMethods!
 literalPrintOn:!public! !
 !
@@ -91,6 +91,7 @@ literalPrintOn:!public! !
 
 literalPrintOn: aWriteStream
 	self printOn: aWriteStream! !
+
 !Character categoriesForMethods!
 literalPrintOn:!public! !
 !
@@ -102,6 +103,7 @@ literalPrintOn: aWriteStream
 		nextPutAll: '##(Smalltalk.';
 		display: self name;
 		nextPutAll: ')'! !
+
 !Class categoriesForMethods!
 literalPrintOn:!public! !
 !
@@ -110,6 +112,7 @@ literalPrintOn:!public! !
 
 literalPrintOn: aWriteStream 
 	self printOn: aWriteStream! !
+
 !Number categoriesForMethods!
 literalPrintOn:!public! !
 !
@@ -159,6 +162,7 @@ literalStoreOn: aStream
 	method to perform such isolation"
 
 	(STLOutFiler on: aStream) nextPut: self! !
+
 !Object categoriesForMethods!
 literalStoreArray!literal filing!public! !
 literalStoreEvaluationOn:!literal filing!public! !
@@ -199,6 +203,7 @@ literalReadFrom: aStream context: anObject
 	^(STLInFiler on: aStream)
 		context: anObject;
 		next! !
+
 !Object class categoriesForMethods!
 fromLiteralStoreArray:!literal filing!public! !
 fromLiteralStoreArray:context:!literal filing!public! !
@@ -213,6 +218,7 @@ literalPrintOn: aWriteStream
 		nextPutAll: '##(Smalltalk.';
 		display: self name;
 		nextPutAll: ') '! !
+
 !PoolConstantsDictionary categoriesForMethods!
 literalPrintOn:!public! !
 !
@@ -221,6 +227,7 @@ literalPrintOn:!public! !
 
 literalPrintOn: aWriteStream
 	aWriteStream nextPutAll: '##(Smalltalk.Processor)'! !
+
 !ProcessorScheduler categoriesForMethods!
 literalPrintOn:!public! !
 !
@@ -233,6 +240,7 @@ literalPrintOn: aWriteStream
 	Prints incorrectly, so trim nulls"
 
 	self trimNulls printOn: aWriteStream! !
+
 !String categoriesForMethods!
 literalPrintOn:!public! !
 !
@@ -241,6 +249,7 @@ literalPrintOn:!public! !
 
 literalPrintOn: aWriteStream 
 	self printOn: aWriteStream! !
+
 !Symbol categoriesForMethods!
 literalPrintOn:!public! !
 !
@@ -249,6 +258,7 @@ literalPrintOn:!public! !
 
 literalPrintOn: aWriteStream
 	aWriteStream nextPutAll: '##(Smalltalk)'! !
+
 !SystemDictionary categoriesForMethods!
 literalPrintOn:!public! !
 !
@@ -257,6 +267,7 @@ literalPrintOn:!public! !
 
 literalPrintOn: aWriteStream
 	self printOn: aWriteStream! !
+
 !UndefinedObject categoriesForMethods!
 literalPrintOn:!public! !
 !

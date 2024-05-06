@@ -5,10 +5,15 @@ ExternalField subclass: #ScalarField
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ScalarField guid: (GUID fromString: '{87b4c4dd-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 ScalarField isAbstract: true!
+
 ScalarField comment: '<ScalarField> is the abstract class of <ExternalField>s to describe <ExternalStructure> fields of simple scalar types, e.g. ints, boolean, etc.'!
+
 !ScalarField categoriesForClass!External-Data-Types! !
+
 !ScalarField methodsFor!
 
 accessorMessage
@@ -32,6 +37,7 @@ printMutatorValueOn: aWriteStream parameter: aString
 	compiled into a mutator method where the value parameter is named by the <String> argument."
 
 	aWriteStream nextPutAll: aString! !
+
 !ScalarField categoriesForMethods!
 accessorMessage!automatic generation!private! !
 byteSize!constants!private! !
@@ -46,6 +52,7 @@ byteSize
 	A large number of fields are the same size as an integer."
 
 	^VMConstants.IntSize! !
+
 !ScalarField class categoriesForMethods!
 byteSize!constants!private! !
 !

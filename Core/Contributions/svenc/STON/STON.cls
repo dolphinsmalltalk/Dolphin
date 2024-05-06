@@ -5,7 +5,9 @@ Object subclass: #STON
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 STON guid: (GUID fromString: '{9f4c50c0-4b3c-4c6c-b0b5-98940098a150}')!
+
 STON comment: 'STON implements serialization and materialization using the Smalltalk Object Notation format.
 
 I am a class side facade offering a high level API to write and read objects using STON.
@@ -165,7 +167,9 @@ S y n t a x
 	  E+
 	  E-
 '!
+
 !STON categoriesForClass!STON-Core-Base! !
+
 !STON class methodsFor!
 
 associationClass
@@ -235,6 +239,7 @@ toStringPretty: object
 
 writer
 	^ STONWriter new! !
+
 !STON class categoriesForMethods!
 associationClass!accessing!public! !
 classNameKey!accessing!public! !

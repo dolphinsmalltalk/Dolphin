@@ -5,9 +5,13 @@ Object subclass: #Package
 	classVariableNames: '_Uncommitted BinaryPacLoader ChangedIcon CheckTimestamps ClashSignal PreDeclareClassesOnLoad SourcePackageIcon UnsaveableSignal'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Package guid: (GUID fromString: '{87b4c4a6-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Package comment: ''!
+
 !Package categoriesForClass!Development! !
+
 !Package methodsFor!
 
 about
@@ -1721,6 +1725,7 @@ It will probably load, but it may not operate correctly.
 If you experience subsequent problems please contact the package supplier for an updated version.' 
 				expandMacrosWith: self name
 				with: versionString)! !
+
 !Package categoriesForMethods!
 about!commands!public! !
 aboutBlock!accessing!public! !
@@ -2268,6 +2273,7 @@ unsaveableSignal
 	a package with uncommitted or cyclic pre-requisites."
 
 	^UnsaveableSignal! !
+
 !Package class categoriesForMethods!
 binaryGlobalExtension!constants!private! !
 binaryPacLoader:!accessing!private! !

@@ -5,13 +5,17 @@ PermanentLibrary subclass: #GDILibrary
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GDILibrary guid: (GUID fromString: '{64674044-3a82-101b-8181-00aa003743d3}')!
+
 GDILibrary comment: 'GDILibrary is the <ExternalLibrary> class to represent the Windows system DLL, GDI32.DLL.
 
 The default instance of this class provides access to most of the Win32 graphics API. New functions may be added as required, but the external function naming convention should be followed.
 
 All functions in this library use the stdcall calling convention.'!
+
 !GDILibrary categoriesForClass!External-Data-Structured-Win32! !
+
 !GDILibrary methodsFor!
 
 addFontResource: fontFile
@@ -1216,6 +1220,7 @@ textOut: hdc nXStart: nXStart nYStart: nYStart lpString: lpString cbString: cbSt
 
 	<stdcall: bool TextOutW handle sdword sdword lpwstr sdword>
 	^self invalidCall: _failureCode! !
+
 !GDILibrary categoriesForMethods!
 addFontResource:!public!win32 functions-font and text! !
 beginPath:!**auto generated**!public!win32 functions-path! !
@@ -1326,6 +1331,7 @@ fileName
 	receiver represents"
 
 	^'GDI32'! !
+
 !GDILibrary class categoriesForMethods!
 fileName!constants!public! !
 !

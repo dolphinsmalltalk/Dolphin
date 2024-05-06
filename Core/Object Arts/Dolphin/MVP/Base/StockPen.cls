@@ -5,9 +5,13 @@ Pen subclass: #StockPen
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StockPen guid: (GUID fromString: '{87b4c642-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 StockPen comment: ''!
+
 !StockPen categoriesForClass!Graphics-Tools! !
+
 !StockPen methodsFor!
 
 createHandle
@@ -28,6 +32,7 @@ ownedHandle: aHandle
 	"Implementation Note: Stock objects should never be free'd"
 
 	self handle: aHandle! !
+
 !StockPen categoriesForMethods!
 createHandle!private!realizing/unrealizing! !
 id:!private!realizing/unrealizing! !
@@ -43,6 +48,7 @@ fromId: anInteger
 		ownsHandle: false;
 		id: anInteger;
 		yourself! !
+
 !StockPen class categoriesForMethods!
 fromId:!instance creation!public! !
 !

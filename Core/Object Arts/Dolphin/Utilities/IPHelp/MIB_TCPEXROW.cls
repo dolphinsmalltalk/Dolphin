@@ -5,8 +5,11 @@ MIB_TCPROW subclass: #MIB_TCPEXROW
 	classVariableNames: '_OffsetOf_dwProcessId'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MIB_TCPEXROW guid: (GUID fromString: '{f2b03657-a3d2-486f-9d24-d597de178487}')!
+
 MIB_TCPEXROW addClassConstant: '_OffsetOf_dwProcessId' value: 16r14!
+
 MIB_TCPEXROW comment: '<MIB_TCPEXROW> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_TCPEXROW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -25,13 +28,16 @@ struct tagMIB_TCPEXROW {
 	unsigned long dwProcessId;
 } MIB_TCPEXROW;
 '!
+
 !MIB_TCPEXROW categoriesForClass!Win32-Structs! !
+
 !MIB_TCPEXROW methodsFor!
 
 dwProcessId
 	"Answer the <Integer> value of the receiver's 'dwProcessId' field."
 
 	^bytes dwordAtOffset: _OffsetOf_dwProcessId! !
+
 !MIB_TCPEXROW categoriesForMethods!
 dwProcessId!**compiled accessors**!public! !
 !
@@ -62,6 +68,7 @@ defineFields
 
 getFieldNames
 	^#(#dwState #dwLocalAddr #dwLocalPort #dwRemoteAddr #dwRemotePort #dwProcessId)! !
+
 !MIB_TCPEXROW class categoriesForMethods!
 defineFields!initializing!public! !
 getFieldNames!**compiled accessors**!constants!private! !

@@ -5,7 +5,9 @@ ArithmeticValue subclass: #Point3D
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Point3D guid: (GUID fromString: '{87b4c659-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Point3D comment: 'A Point3D represents an x-y-z pair of numbers usually indicating a point in a three-dimensional Cartesian coordinate volume. Following the convention for Point, Point3D is often attributed a "left-handed" coordinate system. However, this is not essential and either left or right-handed systems may be adopted depending on the application.
 
 A Point3D is typically created using the binary message @ to a Point:
@@ -17,7 +19,9 @@ Arithmetic operations can be carried out between two Point3Ds or between a Point
 (150 @ 200 @ 400) + (50 @ 50 @ 50) "Addition of Point3Ds"
 (150 @ 200 @ 400) + 100 "Addition of scalar"
 (150 @ 200 @ 400) * 3 "Scaling"'!
+
 !Point3D categoriesForClass!Graphics-Geometry! !
+
 !Point3D methodsFor!
 
 - anArithmeticValue
@@ -244,6 +248,7 @@ z: aNumber
 	"Set the z coordinate of the receiver"
 
 	z := aNumber! !
+
 !Point3D categoriesForMethods!
 -!arithmetic!public! !
 *!arithmetic!public! !
@@ -339,6 +344,7 @@ zero
 	"Answer the receiver's representation of zero."
 
 	^0 @ 0 @ 0! !
+
 !Point3D class categoriesForMethods!
 fromFLOATArray:!public! !
 icon!constants!public! !

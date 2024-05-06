@@ -5,7 +5,9 @@ HttpServerStructure subclass: #HTTP_DATA_CHUNK
 	classVariableNames: '_OffsetOf_DataChunkType _OffsetOf_FromFileHandle_ByteRange _OffsetOf_FromFileHandle_FileHandle _OffsetOf_FromFragmentCache_FragmentNameLength _OffsetOf_FromFragmentCache_pFragmentName _OffsetOf_FromFragmentCacheEx_ByteRange _OffsetOf_FromFragmentCacheEx_pFragmentName _OffsetOf_FromMemory_BufferLength _OffsetOf_FromMemory_pBuffer'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 HTTP_DATA_CHUNK guid: (GUID fromString: '{831e8135-6bb5-45e2-b278-10b1c489883a}')!
+
 HTTP_DATA_CHUNK addClassConstant: '_OffsetOf_DataChunkType' value: 16r0!
 HTTP_DATA_CHUNK addClassConstant: '_OffsetOf_FromFileHandle_ByteRange' value: 16r8!
 HTTP_DATA_CHUNK addClassConstant: '_OffsetOf_FromFileHandle_FileHandle' value: 16r18!
@@ -15,6 +17,7 @@ HTTP_DATA_CHUNK addClassConstant: '_OffsetOf_FromFragmentCacheEx_ByteRange' valu
 HTTP_DATA_CHUNK addClassConstant: '_OffsetOf_FromFragmentCacheEx_pFragmentName' value: 16r18!
 HTTP_DATA_CHUNK addClassConstant: '_OffsetOf_FromMemory_BufferLength' value: 16rC!
 HTTP_DATA_CHUNK addClassConstant: '_OffsetOf_FromMemory_pBuffer' value: 16r8!
+
 HTTP_DATA_CHUNK comment: '<HTTP_DATA_CHUNK> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_DATA_CHUNK'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -47,7 +50,9 @@ struct tagHTTP_DATA_CHUNK {
 	};
 } HTTP_DATA_CHUNK;
 '!
+
 !HTTP_DATA_CHUNK categoriesForClass!WinHttpServer-Structs! !
+
 !HTTP_DATA_CHUNK methodsFor!
 
 data: aByteObject
@@ -159,6 +164,7 @@ printableFields
 	^Array
 		with: (#(#FromMemory_pBuffer #FromFileHandle_FileHandle #FromFragmentCache_pFragmentName #FromFragmentCacheEx_pFragmentName)
 				at: self DataChunkType + 1)! !
+
 !HTTP_DATA_CHUNK categoriesForMethods!
 data:!accessing!public! !
 DataChunkType!**compiled accessors**!public! !
@@ -232,6 +238,7 @@ defineFields
 
 getFieldNames
 	^#(#DataChunkType #FromFileHandle_ByteRange #FromFragmentCache_FragmentNameLength #FromFragmentCacheEx_ByteRange #FromMemory_pBuffer #FromFragmentCache_pFragmentName #FromMemory_BufferLength #FromFileHandle_FileHandle #FromFragmentCacheEx_pFragmentName)! !
+
 !HTTP_DATA_CHUNK class categoriesForMethods!
 data:!instance creation!public! !
 defineFields!**auto generated**!public!template definition! !

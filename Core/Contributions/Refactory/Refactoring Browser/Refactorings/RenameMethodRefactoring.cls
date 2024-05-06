@@ -5,9 +5,13 @@ ChangeMethodNameRefactoring subclass: #RenameMethodRefactoring
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RenameMethodRefactoring guid: (GUID fromString: '{fca8f1a0-da69-4108-82f9-2b61aa651e4b}')!
+
 RenameMethodRefactoring comment: ''!
+
 !RenameMethodRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !RenameMethodRefactoring methodsFor!
 
 hasPermutedArguments
@@ -58,6 +62,7 @@ storeOn: aStream
 		nextPutAll: ' permuation: '.
 	permutation storeOn: aStream.
 	aStream nextPut: $)! !
+
 !RenameMethodRefactoring categoriesForMethods!
 hasPermutedArguments!public!testing! !
 implementorsCanBePrimitives!public!testing! !
@@ -84,6 +89,7 @@ renameMethod: aSelector in: aClass to: newSelector permutation: aMap
 		in: aClass
 		to: newSelector
 		permutation: aMap! !
+
 !RenameMethodRefactoring class categoriesForMethods!
 model:renameMethod:in:to:permutation:!instance creation!public! !
 renameMethod:in:to:permutation:!instance creation!public! !

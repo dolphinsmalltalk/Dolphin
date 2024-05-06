@@ -5,7 +5,9 @@ AXTypeInfoObject subclass: #AXTypeLibraryAnalyzer
 	classVariableNames: 'TypeLibs'
 	poolDictionaries: 'AXAutomationErrors Win32Constants'
 	classInstanceVariableNames: ''!
+
 AXTypeLibraryAnalyzer guid: (GUID fromString: '{c06f3b76-0868-11d3-93af-00a024ca708a}')!
+
 AXTypeLibraryAnalyzer comment: 'AXTypeLibraryAnalyzer is a wrapper class around <ITypeLib> which adds higher level wrapper functions which make ITypeLib easier to use. It is also the starting point for Dolphin''s automatic generation of wrapper classes &c for Active-X objects described by type libraries.
 
 A Type Library is a repository of meta-information, typically about Active-X (COM, OLE, choose your favourite name) objects and interfaces. AXTypeLibraryAnalyzer permits one to enquire about general attributes of a Type Library, but more importantly it enables one to enumerate through the individual meta-elements by acquiring <AXTypeInfoAnalyzer> objects which describe them. For example it is easy to acquire all of the meta-information of a particular type from the library by sending one of the following selectors:
@@ -36,7 +38,9 @@ Instance Variables:
 Class Variables:
 	TypeLibs			<WeakLookupTable>. Repository of instances of the receiver, one per type library.
 '!
+
 !AXTypeLibraryAnalyzer categoriesForClass!ActiveX Automation! !
+
 !AXTypeLibraryAnalyzer methodsFor!
 
 = comparand
@@ -571,6 +575,7 @@ vtblInterfaces
 	described by the receiver. This will include dual interfaces."
 
 	^self selectTypes: [:t | t typekind == TKIND_INTERFACE]! !
+
 !AXTypeLibraryAnalyzer categoriesForMethods!
 =!comparing!public! !
 aliasMap!accessing!private! !
@@ -762,6 +767,7 @@ uninitialize
 
 	TypeLibs := WeakLookupTable new.
 	SessionManager current removeEventsTriggeredFor: self! !
+
 !AXTypeLibraryAnalyzer class categoriesForMethods!
 allOpenableTypeLibs!accessing!public! !
 allTypeLibs!accessing!public! !

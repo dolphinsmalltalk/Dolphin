@@ -7,7 +7,6 @@ Copyright (c) Object Arts Ltd. 2005.'.
 
 package basicPackageVersion: '6.0'.
 
-
 package classNames
 	add: #KeyValuePrompter;
 	yourself.
@@ -35,11 +34,6 @@ Dialog subclass: #KeyValuePrompter
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

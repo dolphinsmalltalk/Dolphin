@@ -5,7 +5,9 @@ ICoreWebView2EventHandler subclass: #ICoreWebView2IsMutedChangedEventHandler
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2IsMutedChangedEventHandler guid: (IID fromString: '{57d90347-cd0e-4952-a4a2-7483a2756f08}')!
+
 ICoreWebView2IsMutedChangedEventHandler comment: '`ICoreWebView2IsMutedChangedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2IsMutedChangedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -27,7 +29,9 @@ interface ICoreWebView2IsMutedChangedEventHandler : IUnknown
 };
 ```
 '!
+
 !ICoreWebView2IsMutedChangedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2IsMutedChangedEventHandler methodsFor!
 
 basicRegister: tokenBuffer
@@ -35,6 +39,7 @@ basicRegister: tokenBuffer
 
 basicUnregister
 	source Remove_IsMutedChanged: token! !
+
 !ICoreWebView2IsMutedChangedEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
@@ -55,6 +60,7 @@ eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
 	^#isMutedChanged! !
+
 !ICoreWebView2IsMutedChangedEventHandler class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 eventName!constants!public! !

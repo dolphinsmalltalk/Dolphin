@@ -5,7 +5,9 @@ BrowserEnvironmentWrapper subclass: #VariableEnvironment
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 VariableEnvironment guid: (GUID fromString: '{e9cada30-17fa-4434-96e9-1e962bb36333}')!
+
 VariableEnvironment comment: 'VariableEnvironment defines a set of methods (and their classes) that read and/or write to any of a set of named instance and class variables. It is used to implement the browse variable references, readers & writers commands in the browsers.
 
 
@@ -20,7 +22,9 @@ Note that in Dolphin all <abstractDictionary>s are implemented as instances of <
 
 
 '!
+
 !VariableEnvironment categoriesForClass!Refactory-Environments! !
+
 !VariableEnvironment methodsFor!
 
 accessorMethods
@@ -340,6 +344,7 @@ storeOn: aStream
 			(self perform: each) storeOn: aStream.
 			aStream nextPutAll: '; '].
 	aStream nextPutAll: ' yourself)'! !
+
 !VariableEnvironment categoriesForMethods!
 accessorMethods!constants!private! !
 addClass:classVariable:!accessing!public! !
@@ -434,6 +439,7 @@ writersOfInstanceVariable: aString in: aClass
 		on: BrowserEnvironment new
 		writersOfInstanceVariable: aString
 		in: aClass! !
+
 !VariableEnvironment class categoriesForMethods!
 on:readersOfInstanceVariable:in:!instance creation!public! !
 on:referencesToClassVariable:in:!instance creation!public! !

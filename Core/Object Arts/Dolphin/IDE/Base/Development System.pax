@@ -10,7 +10,6 @@ This package contains the basic/essential Dolphin Smalltalk development system t
 
 package basicPackageVersion: '2016.7.0.4'.
 
-
 package classNames
 	add: #AbstractPublishedAspectInspector;
 	add: #AllMethodsCategory;
@@ -747,581 +746,697 @@ Object subclass: #Grabber
 	classVariableNames: 'Cursors'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 Object subclass: #MenuPainter
 	instanceVariableNames: 'menu conflictingMnemonics conflictingAccelerators'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 Object subclass: #MethodCategorizationPolicy
 	instanceVariableNames: ''
 	classVariableNames: 'Default'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #MethodSearch
 	instanceVariableNames: 'findDetails regexp literal'
 	classVariableNames: 'IgnoreCaseMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #SmalltalkSystemIcon
 	instanceVariableNames: 'openBlock icon description tool helpId'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #VisualShellFinder
 	instanceVariableNames: 'mouseTracker foundObject foundCursor notFoundCursor shellClassFilter'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AttributeDescriptor subclass: #Aspect
 	instanceVariableNames: 'name presenterBlock editBlock immediateActionBlock category'
 	classVariableNames: 'EditInPlaceMask MultilineValueMask ReadOnlyPresenterBlockMask ValueWorkspaceEditorMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Aspect subclass: #KeyedAspect
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 KeyedAspect subclass: #AnonymousKeyedAspect
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 KeyedAspect subclass: #InstVarAspect
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 KeyedAspect subclass: #KeyedAspectBatch
 	instanceVariableNames: 'batchSize keys accessorClass'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AnonymousKeyedAspect subclass: #BasicKeyedAspect
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 BrowserEnvironmentWrapper subclass: #MethodCategoryEnvironment
 	instanceVariableNames: 'categories'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 BrowserEnvironmentWrapper subclass: #MethodProtocolEnvironment
 	instanceVariableNames: 'protocols'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 BrowserEnvironmentWrapper subclass: #PackageEnvironment
 	instanceVariableNames: 'packages'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 BrowserEnvironmentWrapper subclass: #PluggableEnvironment
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Category subclass: #IntermediateCategory
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MethodCategory subclass: #DebuggerMethodCategory
 	instanceVariableNames: 'mask'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MethodCategory subclass: #VirtualMethodCategory
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 VirtualMethodCategory subclass: #AllMethodsCategory
 	instanceVariableNames: ''
 	classVariableNames: 'Current'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 VirtualMethodCategory subclass: #ChangedMethodsCategory
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 VirtualMethodCategory subclass: #MethodPrivacyCategory
 	instanceVariableNames: 'privacy'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 VirtualMethodCategory subclass: #PluggableVirtualMethodCategory
 	instanceVariableNames: 'filter isSlowToEnumerate'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 VirtualMethodCategory subclass: #ReferencesCategory
 	instanceVariableNames: 'literal'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 VirtualMethodCategory subclass: #UnclassifiedMethodsCategory
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ReferencesCategory subclass: #PackedReferencesCategory
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ReferencesCategory subclass: #SingleUnarySendMethodCategory
 	instanceVariableNames: 'selector'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ReferencesCategory subclass: #SpecialReferencesCategory
 	instanceVariableNames: 'index'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ChunkReader subclass: #SingleChunkReader
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Error subclass: #InvalidInstallationError
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RelativeFileLocator subclass: #PackageRelativeFileLocator
 	instanceVariableNames: 'packageName'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Folder subclass: #PackageFolder
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MenuPainter subclass: #MenuBarPainter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MenuPainter subclass: #PopupMenuPainter
 	instanceVariableNames: 'itemWidth textOffset submenuOffset acceleratorOffset'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MethodSearch subclass: #MethodSourceSearch
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Model subclass: #SmalltalkSystem
 	instanceVariableNames: 'systemFolderClass workspaceClass defaultInspectorClass defaultBrowserClass systemFolder packageBrowserClass debuggerClass viewComposerClass protocolBrowserClass workspaceShellClass resourceBrowserClass changedIcon hierarchyBrowserClass preferAlternateInspectors formatterClass classChooserClass resourceIdentifierDialogClass findDetails methodWorkspaceClass allSelectors argumentClasses methodExplorerClass aboutBoxClass testBrowserClass toolbarBitmapSize displayItLocale'
 	classVariableNames: 'Current FileDrops RegisteredTools'
 	poolDictionaries: 'CompilerFlags SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
+
 TreeModel subclass: #CategoryTreeModel
 	instanceVariableNames: 'title'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 FolderHierarchyModel subclass: #PackageHierarchyModel
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 VirtualTreeModel subclass: #ClassHierarchyModel
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ValueAdaptor subclass: #AspectAccessor
 	instanceVariableNames: 'aspectDescriptor'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AspectAccessor subclass: #BatchAspectAccessor
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 BatchAspectAccessor subclass: #IndexedInstVarBatchAccessor
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 BatchAspectAccessor subclass: #KeyedAspectBatchAccessor
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IndexedInstVarBatchAccessor subclass: #SetBatchAspectAccessor
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 KeyedAspectBatchAccessor subclass: #AnonymousKeyedAspectBatchAccessor
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Presenter subclass: #ClassBrowserPlugin
 	instanceVariableNames: ''
 	classVariableNames: 'DefaultPlugins'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Presenter subclass: #PackageDependencyPresenter
 	instanceVariableNames: 'treePresenter tracesPresenter traces packages'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Presenter subclass: #SmalltalkSearchPresenter
 	instanceVariableNames: 'environment'
 	classVariableNames: 'AutoCompleteDwell'
 	poolDictionaries: 'ScintillaConstants'
 	classInstanceVariableNames: ''!
+
 Presenter subclass: #SmalltalkWorkspace
 	instanceVariableNames: 'evaluationContext errorModel findDetails workspacePool evaluationPools compilationErrors textStyles searchEnvironment modifiedModel flags indicatorStyles'
 	classVariableNames: 'Abbreviations AnnotationMode AutoCompleteDwell AutoCompleteMask DefaultCaretColor DefaultFont DefaultTabWidth FontQuality IndicatorStyles IsAutoCompletionCaseInsensitive IsAutoCompletionEnabled IsAutoCompletionSpaceAdded IsAutoCompletionTruncating KeyBindings KeywordCompletions MaxAutoCompletionListSize StandardUnaryReturnTypes TextStyles UseDirectWrite VariableTipsMask WordWrap WrapIndentMode'
 	poolDictionaries: 'CompilerFlags ScintillaConstants'
 	classInstanceVariableNames: 'additionalKeyBindings commandQueryHandlers'!
+
 Presenter subclass: #TwinLevelInspector
 	instanceVariableNames: 'contentsPresenter inspectorPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ClassBrowserPlugin subclass: #AstPlugin
 	instanceVariableNames: 'astPresenter sourcePresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ClassBrowserPlugin subclass: #ClassAspectPlugin
 	instanceVariableNames: 'textPresenter originalText currentClass'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ClassAspectPlugin subclass: #ClassCommentPlugin
 	instanceVariableNames: ''
 	classVariableNames: 'TextStyles WordWrap'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PackageDependencyPresenter subclass: #PackageDependents
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PackageDependencyPresenter subclass: #PackagePrerequisites
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SelectableItemsPresenter subclass: #ClassSelector
 	instanceVariableNames: 'flags classesPresenter searchEnvironment'
 	classVariableNames: 'ClassModeMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: 'commandQueryHandlers'!
+
 SelectableItemsPresenter subclass: #PackageSelector
 	instanceVariableNames: 'filterPresenter packagesPresenter autoSelect'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: 'commandQueryHandlers'!
+
 ClassSelector subclass: #ClassHierarchySelector
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ClassSelector subclass: #ClassListSelector
 	instanceVariableNames: 'classesListPresenter environment'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ListPresenter subclass: #MethodBrowser
 	instanceVariableNames: 'methodsPresenter sourcePresenter filter searchEnvironment refactoringTool versionModel'
 	classVariableNames: 'AdditionalAccelerators AutoFormat InfoTips WordWrap'
 	poolDictionaries: 'CompilerFlags'
 	classInstanceVariableNames: 'commandQueryHandlers'!
+
 ListPresenter subclass: #ResourceListPresenter
 	instanceVariableNames: 'filterBlock resourcesPresenter previewPresenter resourceIdModel'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ListPresenter subclass: #ResourceToolboxPresenter
 	instanceVariableNames: 'categoriesPresenter resourcesPresenter iconMap'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Shell subclass: #SmalltalkToolShell
 	instanceVariableNames: 'searchPresenter fontSizePresenter'
 	classVariableNames: 'CanUseIdeaSpaceMask HistoryDwellTime ReuseIfOpenMask SearchFieldFlashes'
 	poolDictionaries: ''
 	classInstanceVariableNames: 'optionFlags defaultView defaultExtent defaultSlideyPinsMap additionalKeyBindings commandQueryHandlers'!
+
 AbstractDocumentShell subclass: #SmalltalkWorkspaceDocument
 	instanceVariableNames: 'workspacePresenter searchPresenter'
 	classVariableNames: 'CanUseIdeaSpace DefaultExtent DefaultView LanguageExtensions ReuseIfOpen VariableTips'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Dialog subclass: #AspectEditorDialog
 	instanceVariableNames: 'aspectPresenterInDialog hookPresenter subjectModel aspect aspectRectangle'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Dialog subclass: #CreateSubclassDialog
 	instanceVariableNames: 'packagesPresenter subclassesPresenter namePresenter usePackagePresenter package superclassPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Dialog subclass: #MenuItemDialog
 	instanceVariableNames: 'titlePresenter commandPresenter iconPresenter imageModel iconIdPresenter inspector cardsPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Dialog subclass: #ResourceIdentifierDialog
 	instanceVariableNames: 'classesPresenter resourceNamePresenter classValue'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MenuItemDialog subclass: #CommandMenuItemDialog
 	instanceVariableNames: 'acceleratorPresenter isRadioButtonStylePresenter isDefaultPresenter isModalPresenter'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 MenuItemDialog subclass: #MenuDialog
 	instanceVariableNames: 'autoDismissPresenter checkColumnModePresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ValueDialog subclass: #CategoryPrompter
 	instanceVariableNames: 'treePresenter flags categoryClass'
 	classVariableNames: 'AllowIntermediatesMask AllowReadOnlyMask'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 ValueDialog subclass: #ChooseClassDialog
 	instanceVariableNames: 'classesPresenter allowNil'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ValueDialog subclass: #MenuComposer
 	instanceVariableNames: 'arena menuViews conflictingAccelerators'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 ValueDialog subclass: #PackagePrompter
 	instanceVariableNames: 'packagesPresenter notPackagedPresenter defaultPackage validationBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MenuComposer subclass: #MenuBarComposer
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SmalltalkToolShell subclass: #ClassBrowserAbstract
 	instanceVariableNames: 'classesPresenter categoriesPresenter methodBrowserPresenter definitionPresenter modePresenter flags history variablesPresenter protocolsPresenter filterPresenter packageModel statusModel versionModel cardsPresenter loadedPlugins methodCategories'
 	classVariableNames: 'FilterObjectMethodsMask GrayedMethodFadeFactor HistoryListSize LooseMethodColor ShowInheritedMethodsMask WordWrapDefinition'
 	poolDictionaries: ''
 	classInstanceVariableNames: 'defaultShowInheritedMethods defaultFilterObjectMethods plugins'!
+
 SmalltalkToolShell subclass: #Debugger
 	instanceVariableNames: 'process topFrame temp tempCount depth flags breakWhen stackPresenter sourcePresenter tempsPresenter inspectorPresenter breakAction suspendingList _method refactoringTool'
 	classVariableNames: 'AnimateMask AnimatePause DefaultStackDepth DisassemblyMask EnableDynamicMenus MainMask RestartOnMethodSave ResumableMask RunMask RunToCursorBehavior ShowWalkbacks SkipTable StackDepthIncrement'
 	poolDictionaries: 'CompilerFlags OpcodePool'
 	classInstanceVariableNames: ''!
+
 SmalltalkToolShell subclass: #FlipperInspector
 	instanceVariableNames: 'cards'
 	classVariableNames: 'Renderers'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SmalltalkToolShell subclass: #InspectorShell
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SmalltalkToolShell subclass: #MethodBrowserShell
 	instanceVariableNames: 'browserPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SmalltalkToolShell subclass: #PackageBrowserShell
 	instanceVariableNames: 'packagesPresenter classesPresenter methodsPresenter methodRefactoringTool globalsPresenter resourcesPresenter currentCard commentPresenter cardsPresenter updateFlags scriptTextPresenter scriptNamesPresenter prerequisitesPresenter dependentsPresenter statusModel versionModel'
 	classVariableNames: 'UpdateMap WordWrapComment'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 SmalltalkToolShell subclass: #ResourceBrowser
 	instanceVariableNames: 'resourceToolboxPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SmalltalkToolShell subclass: #SmalltalkSystemShell
 	instanceVariableNames: 'systemFolderPresenter'
 	classVariableNames: 'Backcolor BackImage BackImageAlphaPercent BackImageIsTiled Default HotKey PlaySystemSounds ResetWhenInvisible Textcolor ViewMode'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SmalltalkToolShell subclass: #ViewComposer
 	instanceVariableNames: 'toolboxPresenter status arenaPresenter inspector composingView ownsComposingView resourceIdentifier addPositionOffset grabbers selections grid viewHierarchyPresenter adornmentRegion primarySelection vcFlags modificationStatus image clipboard undoList'
 	classVariableNames: 'AdornmentModifiedFlag Clipboard DefaultGridResolution ExtentImage ModifiedFlag MouseClickFlag PositionImage RefreshFlag UndoRedoFlag'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 ClassBrowserAbstract subclass: #ClassBrowserShell
 	instanceVariableNames: ''
 	classVariableNames: 'LocalHierarchyMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MethodBrowserShell subclass: #MethodExplorerShell
 	instanceVariableNames: 'historyTree historyList'
 	classVariableNames: 'HistoryListSize'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SmalltalkWorkspace subclass: #MethodWorkspace
 	instanceVariableNames: 'parseTree refactoringTool'
 	classVariableNames: 'AutoParseDwell AutoParseMask IsAutoParseEnabled'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SmalltalkWorkspace subclass: #ValueWorkspace
 	instanceVariableNames: 'textModel'
 	classVariableNames: 'ValueIsSelfCookie'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ValuePresenter subclass: #BasicInspector
 	instanceVariableNames: 'variableNamesPresenter sourcePresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ValuePresenter subclass: #InspectorAbstract
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 BasicInspector subclass: #CompiledMethodInspector
 	instanceVariableNames: ''
 	classVariableNames: 'MethodTypes'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 BasicInspector subclass: #DictionaryInspector
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 BasicInspector subclass: #SequenceableCollectionInspector
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 BasicInspector subclass: #StructureInspector
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 InspectorAbstract subclass: #AspectInspector
 	instanceVariableNames: 'aspectTreePresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: 'treeUpdateMode treeHasGridLines'!
+
 InspectorAbstract subclass: #VisualObjectFinder
 	instanceVariableNames: 'mouseTracker finderIcon heading workspace foundView'
 	classVariableNames: 'FindNonDolphinWindows'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AspectInspector subclass: #AbstractPublishedAspectInspector
 	instanceVariableNames: 'aspectValueHolder aspectPresenter isRootAspectVisible isSingleLevelOnly'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AspectInspector subclass: #InstVarInspector
 	instanceVariableNames: 'sourcePresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AbstractPublishedAspectInspector subclass: #PropertyInspector
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AbstractPublishedAspectInspector subclass: #PublishedAspectInspector
 	instanceVariableNames: 'displayPresenter workspacePresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoryClassChange subclass: #DolphinMoveClassChange
 	instanceVariableNames: 'superclassName'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ScintillaStyler subclass: #SmalltalkStyler
 	instanceVariableNames: 'arrayDepth view last inTag stack'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SmalltalkStyler subclass: #SmalltalkExpressionStyler
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SmalltalkStyler subclass: #SmalltalkMethodStyler
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SingletonSearchPolicy subclass: #CompiledMethodSearchPolicy
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GUISessionManager subclass: #DevelopmentSessionManager
 	instanceVariableNames: 'imageStamp installationDirectory backupOnImageSave productDetails showSplashAtStartup'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SmalltalkScanner subclass: #SmalltalkStylingScanner
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SmalltalkSystemIcon subclass: #SmalltalkSystemFolder
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 STBInFiler subclass: #STBDebugger
 	instanceVariableNames: 'indentLevel traceStream printOffsets'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StParseNodeVisitor subclass: #MessageNodeCollector
 	instanceVariableNames: 'messages'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StSemanticAnalyser subclass: #BrowserSemanticAnalyser
 	instanceVariableNames: 'isStub'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 View subclass: #MenuComposerView
 	instanceVariableNames: 'selectionIndex painter'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 ContainerView subclass: #MenuComposerArena
 	instanceVariableNames: 'dragImageList dragPoint dragMenuIndex dragSource _unused'
 	classVariableNames: ''
 	poolDictionaries: 'CommCtrlConstants'
 	classInstanceVariableNames: ''!
+
 ShellView subclass: #DebuggerShellView
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DialogView subclass: #WalkbackDialog
 	instanceVariableNames: 'callStack resumable caption debuggable'
 	classVariableNames: 'CallStackId Commands IconId'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ImageViewAbstract subclass: #ImageListView
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ImageView subclass: #ViewComposerArena
 	instanceVariableNames: 'composer'
 	classVariableNames: ''
@@ -1375,6 +1490,7 @@ printFieldsOn: aStream limit: anInteger
 						display: each;
 						nextPut: $=;
 						print: value]]! !
+
 !_FPIEEE_RECORD categoriesForMethods!
 printFieldsOn:limit:!printing!private! !
 !
@@ -1394,6 +1510,7 @@ printFieldsOn: aStream limit: anInteger
 				print: self formatName
 			"Don't attempt to display the value as often this may result in overflow/underflow exceptions"]
 		ifFalse: [aStream nextPutAll: '<invalid>']! !
+
 !_FPIEEE_VALUE categoriesForMethods!
 printFieldsOn:limit:!printing!private! !
 !
@@ -1414,6 +1531,7 @@ publishedEventsOfInstances
 	^(super publishedEventsOfInstances)
 		add: #currentCardChanged;
 		yourself! !
+
 !AbstractCardContainer class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 publishedEventsOfInstances!events!public! !
@@ -1440,6 +1558,7 @@ printAccessorExpression: aSymbol on: aWriteStream
 		space.
 	self printOffsetExpression: aSymbol on: aWriteStream.
 	aWriteStream nextPutAll: '))'! !
+
 !AbstractCHARField categoriesForMethods!
 characterCreationMessage!automatic generation!private! !
 printAccessorExpression:on:!automatic generation!private! !
@@ -1457,6 +1576,7 @@ saveStateOn: aWriteStream
 	self getDocumentData literalStoreEvaluationOn: aWriteStream.
 	aWriteStream nextPutAll: (';
 		filename: <1p>]' expandMacrosWith: self filename)! !
+
 !AbstractDocumentShell categoriesForMethods!
 saveStateOn:!private!saved state! !
 !
@@ -1466,6 +1586,7 @@ saveStateOn:!private!saved state! !
 includesResource: aResourceIdentifier 
 	^(environment includesResource: aResourceIdentifier) 
 		and: [andedEnvironment includesResource: aResourceIdentifier]! !
+
 !AndEnvironment categoriesForMethods!
 includesResource:!public!testing! !
 !
@@ -1476,6 +1597,7 @@ assignToResourceIdentifier: aResourceIdentifier
 	"Private - Assign the receiver, as a literal resource array, to aResourceIdentifier"
 
 	aResourceIdentifier assignLiteralResourceData: self! !
+
 !Array categoriesForMethods!
 assignToResourceIdentifier:!private! !
 !
@@ -1484,6 +1606,7 @@ assignToResourceIdentifier:!private! !
 
 newBatchAccessor
 	^KeyedAspectBatchAccessor subject: self batchSize: self publishedKeyedAspectsBatchSize! !
+
 !ArrayedCollection categoriesForMethods!
 newBatchAccessor!public! !
 !
@@ -1556,6 +1679,7 @@ printMutatorBody: aSymbol on: aWriteStream
 		nextPutAll: ' 1.';
 		crtab.
 	arrayLength printSetSizeFor: self on: aWriteStream! !
+
 !ArrayField categoriesForMethods!
 printAccessorExpressionSuffixOn:!automatic generation!private! !
 printMutatorBody:on:!automatic generation!private! !
@@ -1581,6 +1705,7 @@ printMutatorBody: aSymbol on: aWriteStream
 		nextPut: $.;
 		crtab.
 	arrayLength printSetSizeFor: self on: aWriteStream! !
+
 !ArrayPointerField categoriesForMethods!
 printAccessorExpressionSuffixOn:!automatic generation!private! !
 printMutatorBody:on:!automatic generation!private! !
@@ -1590,6 +1715,7 @@ printMutatorBody:on:!automatic generation!private! !
 
 debugPrintString
 	^key debugPrintString , ' -> ' , value debugPrintString! !
+
 !Association categoriesForMethods!
 debugPrintString!public! !
 !
@@ -1613,6 +1739,7 @@ publishedAspectsOfInstances
 		add: (Aspect boolean: #isDefault);
 		add: (Aspect string: #licenseKey);
 		yourself! !
+
 !AXControlSite class categoriesForMethods!
 publishedAspectsOfInstances!constants!must strip!public! !
 !
@@ -1632,6 +1759,7 @@ publishedAspectsOfInstances
 						beImmutable;
 		add: (Aspect name: #value);
 		yourself! !
+
 !AXValueConvertingControlSite class categoriesForMethods!
 publishedAspectsOfInstances!constants!must strip!public! !
 !
@@ -1644,6 +1772,7 @@ publishedAspectsOfInstances
     	^(super publishedAspectsOfInstances)
     		add: (Aspect collection: #elements);
     		yourself! !
+
 !Bag class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -1656,6 +1785,7 @@ publishedAspectsOfInstances
 	^(super publishedAspectsOfInstances)
 		add: (Aspect boolean: #canHScroll);
 		yourself! !
+
 !BasicListAbstract class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -1720,6 +1850,7 @@ whichSelectorsReferTo: anObject
 	This is really only included for Blue Book compatibility."
 
 	^(self whichMethodsReferTo: anObject) collect: [:each | each selector]! !
+
 !Behavior categoriesForMethods!
 changedMethods!methods-accessing!private! !
 hasAbstractMethods!public!testing! !
@@ -1740,6 +1871,7 @@ newInstanceAspect: aSymbol class: aspectClass
     	which is appropriate for representing aspects of the receiver's type."
 
 	^aspectClass bitmap: aSymbol! !
+
 !Bitmap class categoriesForMethods!
 newInstanceAspect:class:!adapters!private! !
 !
@@ -1762,6 +1894,7 @@ cpuCyclesToRun
 			forkAt: Processor userInterruptPriority.
 	sem wait.
 	^stop value - start value! !
+
 !BlockClosure categoriesForMethods!
 cpuCyclesToRun!operations!public! !
 !
@@ -1780,6 +1913,7 @@ publishedAspectsOfInstances
 						yourself)].
 	aspects add: (Aspect name: #method).
 	^aspects! !
+
 !BlockClosure class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -1828,6 +1962,7 @@ mapInitialIpFrom: aCompiledMethod to: debugCompiledMethod
 	i := self class findIP: ip inTextMap: map.
 	self assert: [(map at: i) key = ip].
 	^(debugMap at: i) key! !
+
 !BlockFrame categoriesForMethods!
 debugIpFor:!private! !
 isRestartable!private!testing! !
@@ -1839,6 +1974,7 @@ mapInitialIpFrom:to:!private! !
 
 literalTextStyle
 	^#literalPseudo! !
+
 !Boolean categoriesForMethods!
 literalTextStyle!constants!private! !
 !
@@ -1850,6 +1986,7 @@ newInstanceAspect: aSymbol class: aspectClass
     	which is appropriate for representing aspects of the receiver's type."
 
 	^aspectClass boolean: aSymbol! !
+
 !Boolean class categoriesForMethods!
 newInstanceAspect:class:!adapters!private! !
 !
@@ -1864,6 +2001,7 @@ publishedAspectsOfInstances
 					chooseFrom: #('nil' '#(''false'' ''true'')' '#(''no'' ''yes'')' '#(''off'' ''on'')')) 
 						beImmutable;
 		yourself! !
+
 !BooleanToText class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -1883,6 +2021,7 @@ printAccessorExpressionSuffixOn: aWriteStream
 	aWriteStream
 		space;
 		display: #asBoolean! !
+
 !BOOLField categoriesForMethods!
 newAspect:class:!adapters!private! !
 printAccessorExpressionSuffixOn:!automatic generation!private! !
@@ -1892,6 +2031,7 @@ printAccessorExpressionSuffixOn:!automatic generation!private! !
 
 icon
 	^Boolean icon! !
+
 !BOOLField class categoriesForMethods!
 icon!public! !
 !
@@ -1904,6 +2044,7 @@ arrangementAspect
     
     	^Aspect choice: #arrangement from: #(north south east west center) andNil: #none
     ! !
+
 !BorderLayout categoriesForMethods!
 arrangementAspect!accessing!private! !
 !
@@ -1917,6 +2058,7 @@ publishedAspectsOfInstances
     		add: (Aspect integer: #horizontalGap);
     		add: (Aspect integer: #verticalGap);
     		yourself! !
+
 !BorderLayout class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -1987,6 +2129,7 @@ search
 search: aMethodSearch 
 	search := aMethodSearch.
 	self addSearchString: search pattern! !
+
 !BrowserEnvironment categoriesForMethods!
 allMethods!public! !
 allResourcesDo:!enumerating!public! !
@@ -2012,6 +2155,7 @@ openEditor
 	"Open an appropriate Dolphin browser on this environment."
 
 	Smalltalk developmentSystem browseEnvironment: self! !
+
 !BrowserEnvironmentWrapper categoriesForMethods!
 includesResource:!public!testing! !
 openEditor!browsing!public! !
@@ -2041,6 +2185,7 @@ publishedEventsOfInstances
     		add: #currentCardChanging:;
     		yourself.
     ! !
+
 !CardContainer class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 publishedEventsOfInstances!events!public! !
@@ -2054,6 +2199,7 @@ publishedAspectsOfInstances
 		add: (Aspect block: #iconBlock);
 		add: (Aspect integer: #helpId);
 		yourself! !
+
 !CardLabel class categoriesForMethods!
 publishedAspectsOfInstances!public! !
 !
@@ -2068,6 +2214,7 @@ publishedEventsOfInstances
     		add: #currentCardChanged;
     		yourself.
     ! !
+
 !CardLayout class categoriesForMethods!
 publishedEventsOfInstances!events!public! !
 !
@@ -2078,6 +2225,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon! !
+
 !Category class categoriesForMethods!
 icon!constants!public! !
 !
@@ -2086,6 +2234,7 @@ icon!constants!public! !
 
 literalTextStyle
 	^#literalCharacter! !
+
 !Character categoriesForMethods!
 literalTextStyle!constants!private! !
 !
@@ -2099,6 +2248,7 @@ accessorMessage
 
 characterCreationMessage
 	^#ansiValue:! !
+
 !CHARField categoriesForMethods!
 accessorMessage!public! !
 characterCreationMessage!automatic generation!private! !
@@ -2112,6 +2262,7 @@ publishedAspectsOfInstances
 	^(super publishedAspectsOfInstances)
 		add: (Aspect boolean: #is3State);
 		yourself! !
+
 !CheckBox class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -2128,6 +2279,7 @@ publishedAspectsOfInstances
 		add: (Aspect name: #image);
 		add: (Aspect choice: #alignment from: AlignmentMap keys asSortedCollection);
 		yourself! !
+
 !CheckButton class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -2187,6 +2339,7 @@ renameClassVar: oldString to: newString
 	self classPool changeKey: oldString to: newString.
 	self logDefinition.
 	self environment classUpdated: self! !
+
 !Class categoriesForMethods!
 changeIndex!accessing!private! !
 changeIndexValue:!accessing!private! !
@@ -2209,6 +2362,7 @@ publishedEventsOfInstances
     		add: #classUpdated:;
     		yourself.
     ! !
+
 !ClassBuilder class categoriesForMethods!
 publishedEventsOfInstances!events!public! !
 !
@@ -2392,6 +2546,7 @@ renameInstVar: oldString to: newString
 	self setInstanceVariables: (self instVarNames copyReplacing: oldString withObject: newString).
 	self logDefinition.
 	self environment classUpdated: self! !
+
 !ClassDescription categoriesForMethods!
 browse!public! !
 categoriesFor:are:!public!source filing-methods! !
@@ -2422,6 +2577,7 @@ openEditor
 	"Open an appropriate Dolphin browser on this environment."
 
 	^Smalltalk developmentSystem browseEnvironment: self.! !
+
 !ClassEnvironment categoriesForMethods!
 includesResource:!public!testing! !
 openEditor!browsing!public! !
@@ -2491,6 +2647,7 @@ publishedKeyedAspectsBatchSize
     
     	^200
     ! !
+
 !Collection categoriesForMethods!
 aspectDisplayOn:!private! !
 debugPrintString!printing!public! !
@@ -2508,6 +2665,7 @@ newInstanceAspect: aSymbol class: aspectClass
     	which is appropriate for representing aspects of the receiver's type."
 
 	^aspectClass collection: aSymbol! !
+
 !Collection class categoriesForMethods!
 newInstanceAspect:class:!adapters!private! !
 !
@@ -2519,6 +2677,7 @@ newInstanceAspect: aSymbol class: aspectClass
     	which is appropriate for representing aspects of the receiver's type."
 
 	^aspectClass color: aSymbol! !
+
 !Color class categoriesForMethods!
 newInstanceAspect:class:!adapters!private! !
 !
@@ -2532,6 +2691,7 @@ publishedAspectsOfInstances
 		removeKey: #backcolor;
 		add: (Aspect color: #value);
 		yourself! !
+
 !ColorView class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -2543,6 +2703,7 @@ visualObjectAtPoint: aPoint
 	within the receiver"
 
 	^self presenter! !
+
 !ComboBox categoriesForMethods!
 visualObjectAtPoint:!enquiries!private! !
 !
@@ -2557,6 +2718,7 @@ publishedAspectsOfInstances
     		add: (Aspect choice: #mode from: Modes);
     		add: (Aspect boolean: #canHScroll);
     		yourself! !
+
 !ComboBox class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -2573,6 +2735,7 @@ publishedAspectsOfInstances
     		add: (Aspect boolean: #isModalCommand);
 		add: (Aspect icon: #image);
     		yourself! !
+
 !CommandDescription class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -2583,6 +2746,7 @@ edit
     	"Private - Edit the receiver in a dialog box."
     
     	(CommandMenuItemDialog createOn: self) showModal! !
+
 !CommandMenuItem categoriesForMethods!
 edit!operations!private! !
 !
@@ -2598,6 +2762,7 @@ publishedAspectsOfInstances
 		add: (Aspect boolean: #isDefault);
 		add: (Aspect icon: #image);
 		yourself! !
+
 !CommandMenuItem class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -2672,6 +2837,7 @@ isSimpleSelfSend: aSymbol
 
 stylerClass
 	^self subclassResponsibility! !
+
 !CompiledCode categoriesForMethods!
 alternateInspectorClass!constants!private! !
 asDebugMethod!private! !
@@ -2701,6 +2867,7 @@ publishedAspectsOfInstances
 		add: (Aspect collection: #tempsMap) beReadOnly;
 		add: (Aspect collection: #textMap) beReadOnly;
 		yourself! !
+
 !CompiledCode class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -2722,6 +2889,7 @@ asDebugMethod
 
 stylerClass
 	^Smalltalk developmentSystem expressionStylerClass! !
+
 !CompiledExpression categoriesForMethods!
 asDebugMethod!private! !
 stylerClass!constants!public! !
@@ -2773,6 +2941,7 @@ searchForInTool: aSmalltalkToolShell
 
 stylerClass
 	^Smalltalk developmentSystem methodStylerClass! !
+
 !CompiledMethod categoriesForMethods!
 asDebugMethod!private! !
 browse!public! !
@@ -2798,6 +2967,7 @@ publishedAspectsOfInstances
     		add: (Aspect name: #selector) beReadOnly;
     		yourself
     ! !
+
 !CompiledMethod class categoriesForMethods!
 overriddenIcon!constants!private! !
 publishedAspectsOfInstances!constants!public! !
@@ -2810,6 +2980,7 @@ asDebugMethod
     	expression/statement."
     
 	^self! !
+
 !CompileFailedMethod categoriesForMethods!
 asDebugMethod!private! !
 !
@@ -2836,6 +3007,7 @@ okToContinue
 		ifFalse: 
 			[mb buttonStyle: #okCancel.
 			mb open == #ok]! !
+
 !CompilerNotification categoriesForMethods!
 okToContinue!public!testing! !
 !
@@ -2862,6 +3034,7 @@ publishedAspectsOfInstances
 		add: (Aspect choice: #layoutManager evaluationFrom: choices) beImmutable;
 		add: (Aspect boolean: #clipChildren);
 		yourself! !
+
 !ContainerView class categoriesForMethods!
 applicableLayoutManagerCategories!constants!public! !
 publishedAspectsOfInstances!constants!public! !
@@ -2891,6 +3064,7 @@ publishedAspectsOfInstances
 		removeKey: #text;
 		yourself
 	"add: (Aspect boolean: #isVertical);"! !
+
 !ControlBarAbstract class categoriesForMethods!
 applicableLayoutManagerCategories!constants!public! !
 publishedAspectsOfInstances!constants!public! !
@@ -2906,6 +3080,7 @@ publishedAspectsOfInstances
     		yourself
     	"We really need these notifications, so probably not wise to allow them to be turned off"
     	"add: (Aspect boolean: #wantParentNotifications);"! !
+
 !ControlView class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -2917,6 +3092,7 @@ newInstanceAspect: aSymbol class: aspectClass
 	which is appropriate for representing aspects of the receiver's type."
 
 	^aspectClass date: aSymbol! !
+
 !Date class categoriesForMethods!
 newInstanceAspect:class:!adapters!private! !
 !
@@ -2931,6 +3107,7 @@ publishedAspects
 		add: (self modelClass newInstanceAspect: #maximum class: Aspect);
 		add: (self modelClass newInstanceAspect: #value class: Aspect);
 		yourself! !
+
 !DateTimeCommonControl categoriesForMethods!
 publishedAspects!public! !
 !
@@ -2948,6 +3125,7 @@ publishedAspectsOfInstances
 		add: (Aspect boolean: #isRightAligned);
 		add: (Aspect name: #displayFormat);
 		yourself! !
+
 !DateTimePicker class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -2961,6 +3139,7 @@ publishedAspectsOfInstances
     		add: (Aspect string: #format);
     		add: (Aspect name: #locale);
     		yourself! !
+
 !DateToText class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -3017,6 +3196,7 @@ publishedAspects
 	^(self publishedKeyedAspects)
 		addAll: self class publishedAspectsOfInstances;
 		yourself! !
+
 !Dictionary categoriesForMethods!
 alternateInspectorClass!constants!public! !
 debugPrintString!printing!public! !
@@ -3031,6 +3211,7 @@ newInstanceAspect: aSymbol class: aspectClass
     	which is appropriate for representing aspects of the receiver's type."
 
 	^aspectClass dictionary: aSymbol! !
+
 !Dictionary class categoriesForMethods!
 newInstanceAspect:class:!adapters!private! !
 !
@@ -3042,6 +3223,7 @@ newInstanceAspect: aSymbol class: aspectClass
     	which is appropriate for representing aspects of the receiver's type."
 
 	^aspectClass float: aSymbol! !
+
 !DOUBLE class categoriesForMethods!
 newInstanceAspect:class:!adapters!private! !
 !
@@ -3053,6 +3235,7 @@ newAspect: aSymbol class: aspectClass
     	which is appropriate for representing aspects of the receiver's type."
 
 	^aspectClass name: aSymbol! !
+
 !DOUBLEField categoriesForMethods!
 newAspect:class:!adapters!private! !
 !
@@ -3084,6 +3267,7 @@ printAccessorExpression: aSymbol on: aWriteStream
 				space.
 			self printOffsetExpression: aSymbol on: aWriteStream].
 	aWriteStream nextPut: $)! !
+
 !EmbeddedField categoriesForMethods!
 printAccessorExpression:on:!automatic generation!private! !
 !
@@ -3138,6 +3322,7 @@ publishedKeyedAspectsBatchSize
     
     	^100
     ! !
+
 !ExternalArray categoriesForMethods!
 printOn:!printing!public! !
 publishedAspects!constants!public! !
@@ -3155,6 +3340,7 @@ newInstanceAspect: aSymbol class: aspectClass
 
 shouldOverrideGetFieldNames
 	^false! !
+
 !ExternalArray class categoriesForMethods!
 newInstanceAspect:class:!adapters!private! !
 shouldOverrideGetFieldNames!compiling!private! !
@@ -3283,6 +3469,7 @@ valueParameterName
 	the field described by the receiver."
 
 	^self makeInstanceName: self fieldClassName! !
+
 !ExternalField categoriesForMethods!
 autoGenCategories!private! !
 autoGenComment!constants!private! !
@@ -3317,6 +3504,7 @@ printOn: aStream
 						base: 16
 						showRadix: true]].
 	aStream nextPut: $)! !
+
 !ExternalInteger categoriesForMethods!
 printOn:!printing!public! !
 !
@@ -3333,6 +3521,7 @@ newInstanceAspect: aSymbol class: aspectClass
     	which is appropriate for representing aspects of the receiver's type."
 
 	^aspectClass integer: aSymbol! !
+
 !ExternalInteger class categoriesForMethods!
 decompileDefinition!public! !
 newInstanceAspect:class:!adapters!private! !
@@ -3348,6 +3537,7 @@ publishedKeyedAspects
     
     	^LookupTable new
     		! !
+
 !ExternalIntegerBytes categoriesForMethods!
 debugPrintString!printing!public! !
 publishedKeyedAspects!constants!public! !
@@ -3360,6 +3550,7 @@ newInstanceAspect: aSymbol class: aspectClass
 	which is appropriate for representing aspects of the receiver's type."
 
 	^aspectClass integer: aSymbol! !
+
 !ExternalIntegerBytes class categoriesForMethods!
 newInstanceAspect:class:!adapters!private! !
 !
@@ -3373,6 +3564,7 @@ publishedAspectsOfInstances
     		add: (Aspect name: #descriptor) beReadOnly;
     		yourself
     ! !
+
 !ExternalMethod class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -3390,6 +3582,7 @@ printOn: aStream
 		nextPutAll: ', ';
 		print: self bottomRight;
 		nextPut: $)! !
+
 !ExternalRectangle categoriesForMethods!
 printOn:!printing!public! !
 !
@@ -3398,6 +3591,7 @@ printOn:!printing!public! !
 
 shouldOverrideGetFieldNames
 	^false! !
+
 !ExternalScalar class categoriesForMethods!
 shouldOverrideGetFieldNames!compiling!private! !
 !
@@ -3480,6 +3674,7 @@ publishedAspects
 					field := self template at: each.
 					field isBrowsable ifTrue: [aspects add: (field newAspect: each class: Aspect)]]].
 	^aspects! !
+
 !ExternalStructure categoriesForMethods!
 alternateInspectorClass!constants!public! !
 printableFields!printing!private! !
@@ -3615,6 +3810,7 @@ shouldOverrideGetFieldNames
 							inherited := self superclass class lookupMethod: #getFieldNames.
 							inherited methodClass == ExternalStructure class
 								or: [self fieldNamesFromTemplate asSet ~= (inherited literalAt: 1) asSet]]]]! !
+
 !ExternalStructure class categoriesForMethods!
 autoGenCategory!compiling!constants!private! !
 compileAllDefinitions!compiling!public! !
@@ -3642,6 +3838,7 @@ printOn: aStream
 		nextPut: $(;
 		display: self;
 		nextPut: $)! !
+
 !FILETIME categoriesForMethods!
 printOn:!printing!public! !
 !
@@ -3661,6 +3858,7 @@ printMutatorBody: aSymbol on: aWriteStream
 	is after the fields in the <sequencedReadableCollection> that is the 2nd argument."
 
 	^self shouldNotImplement! !
+
 !FillerField categoriesForMethods!
 printAccessorExpression:on:!automatic generation!private! !
 printMutatorBody:on:!automatic generation!private! !
@@ -3673,6 +3871,7 @@ newInstanceAspect: aSymbol class: aspectClass
     	which is appropriate for representing aspects of the receiver's type."
 
 	^aspectClass float: aSymbol! !
+
 !Float class categoriesForMethods!
 newInstanceAspect:class:!adapters!private! !
 !
@@ -3684,6 +3883,7 @@ newInstanceAspect: aSymbol class: aspectClass
     	which is appropriate for representing aspects of the receiver's type."
 
 	^aspectClass float: aSymbol! !
+
 !FLOAT class categoriesForMethods!
 newInstanceAspect:class:!adapters!private! !
 !
@@ -3695,6 +3895,7 @@ newAspect: aSymbol class: aspectClass
     	which is appropriate for representing aspects of the receiver's type."
 
 	^aspectClass name: aSymbol! !
+
 !FLOATField categoriesForMethods!
 newAspect:class:!adapters!private! !
 !
@@ -3709,6 +3910,7 @@ publishedAspectsOfInstances
 		add: (Aspect integer: #verticalGap);
 		add: (Aspect choice: #alignment from: AlignmentMap keys asSortedCollection);
 		yourself! !
+
 !FlowLayout class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -3720,6 +3922,7 @@ newInstanceAspect: aSymbol class: aspectClass
     	which is appropriate for representing aspects of the receiver's type."
 
 	^aspectClass font: aSymbol! !
+
 !Font class categoriesForMethods!
 newInstanceAspect:class:!adapters!private! !
 !
@@ -3733,6 +3936,7 @@ publishedAspectsOfInstances
     		add: (Aspect font: #value);
     		add: (Aspect string: #previewText);
     		yourself! !
+
 !FontView class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -3751,6 +3955,7 @@ allCalculations
 
 	^(('instance creation' asMethodCategory methodsInBehavior: self class)
 		select: [:each | each argumentCount = 0]) collect: [:each | each value: self withArguments: #()]! !
+
 !FramingCalculation class categoriesForMethods!
 allCalculations!accessing!public! !
 !
@@ -3778,6 +3983,7 @@ publishedAspectsOfInstances
 		add: (Aspect integer: #rightOffset);
 		add: (Aspect choice: #rightFraming from: (leftRightChoices copyWithout: #fixedViewRight));
 		yourself! !
+
 !FramingConstraints class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -3790,6 +3996,7 @@ arrangementAspect
     	this must be marked as immutable to ensure that the changes are flushed back correctly"
 
 	^(Aspect name: #arrangement) beImmutable! !
+
 !FramingLayout categoriesForMethods!
 arrangementAspect!accessing!private! !
 !
@@ -3840,6 +4047,7 @@ example1
 		bottomFraming: #fixedViewTop.
 	layout resize: text2 to: (140 @ 40 corner: 290 @ 80).
 	shell show! !
+
 !FramingLayout class categoriesForMethods!
 example1!examples!public! !
 !
@@ -3862,6 +4070,7 @@ newInstanceAspect: aSymbol class: aspectClass
 			imagePresenter])
 		bePresenterBlockReadOnly;
 		yourself! !
+
 !GdiplusImage class categoriesForMethods!
 newInstanceAspect:class:!adapters!private! !
 !
@@ -3877,6 +4086,7 @@ publishedAspectsOfInstances
     		add: (Aspect integer: #rows);
     		add: (Aspect integer: #columns);
     		yourself! !
+
 !GridLayout class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -3889,6 +4099,7 @@ publishedAspectsOfInstances
     	^(super publishedAspectsOfInstances)
 		removeKey: #forecolor;		"#1191: Windows BUTTON control doesn't support changing the foreground colour"
     		yourself! !
+
 !GroupBox class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -3902,6 +4113,7 @@ printAccessorExpressionSuffixOn: aWriteStream
 	aWriteStream
 		space;
 		display: #asExternalHandle! !
+
 !HANDLEField categoriesForMethods!
 printAccessorExpressionSuffixOn:!automatic generation!private! !
 !
@@ -3917,6 +4129,7 @@ publishedAspectsOfInstances
     		add: (Aspect name: #defaultKeyMask);
     		removeKey: #typeconverter;
     		yourself! !
+
 !HotKey class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -3935,6 +4148,7 @@ newInstanceAspect: aSymbol class: aspectClass
     	which is appropriate for representing aspects of the receiver's type."
 
 	^aspectClass icon: aSymbol! !
+
 !Icon class categoriesForMethods!
 choose!public! !
 newInstanceAspect:class:!adapters!private! !
@@ -3963,6 +4177,7 @@ publishedEventsOfInstances
     		add: #aboutToEditLabel:accept:;
     		add: #labelOf:editedTo:accept:;
 		yourself! !
+
 !IconicListAbstract class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 publishedEventsOfInstances!events!public! !
@@ -3979,6 +4194,7 @@ resource_ImageList_view
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ImageListView) 34 21 nil nil 34 2 8 1140850944 1 416 721990 2 ##(Smalltalk.ValueHolder) nil false 1310726 ##(Smalltalk.EqualitySearchPolicy) nil 327686 ##(Smalltalk.Color) #default nil 7 nil nil nil 416 nil nil 852486 ##(Smalltalk.NullConverter) nil nil nil nil #normal 1 nil #none 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 722 225 201 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 239 7 0 0 110 0 0 0] 8 #() 722 193 193 nil 27 )! !
+
 !ImagePresenter class categoriesForMethods!
 resource_ImageList_view!public!resources-views! !
 !
@@ -3996,6 +4212,7 @@ publishedAspectsOfInstances
 		add: (Aspect rectangle: #insets);
 		add: (Aspect choice: #imageBorder from: self edgeStyles);
 		yourself! !
+
 !ImageViewAbstract class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -4010,6 +4227,7 @@ publishedEventsOfInstances
     		add: #aboutToIdle;
     		yourself.
     ! !
+
 !InputState class categoriesForMethods!
 publishedEventsOfInstances!events!public! !
 !
@@ -4029,6 +4247,7 @@ choose
 			[(File splitExtensionFrom: filename) asLowercase = 'png' 
 				ifTrue: [self fromFile: filename]
 				ifFalse: [Icon fromFile: filename]]! !
+
 !InternalIcon class categoriesForMethods!
 choose!public! !
 !
@@ -4040,6 +4259,7 @@ debugPrintString
 
 newBatchAccessor
 	^IndexedInstVarBatchAccessor subject: self batchSize: self publishedKeyedAspectsBatchSize! !
+
 !Interval categoriesForMethods!
 debugPrintString!printing!public! !
 newBatchAccessor!public! !
@@ -4050,6 +4270,7 @@ newBatchAccessor!public! !
 queryThreadCycleTime: anExternalHandle cycleTime: aULARGE_INTEGER
 	<stdcall: bool QueryThreadCycleTime handle qword*>
 	^self invalidCall: _failureCode! !
+
 !KernelLibrary categoriesForMethods!
 queryThreadCycleTime:cycleTime:!public!win32 functions-performance monitoring! !
 !
@@ -4069,6 +4290,7 @@ debugPrintString
 						nextPutAll: '-bit ';
 						print: self class]]
 		ifFalse: [self printString]! !
+
 !LargeInteger categoriesForMethods!
 debugPrintString!printing!public! !
 !
@@ -4081,6 +4303,7 @@ arrangementAspect
     	arrangement"
     
     	^Aspect name: #arrangement! !
+
 !LayoutManager categoriesForMethods!
 arrangementAspect!accessing!private! !
 !
@@ -4096,6 +4319,7 @@ publishedAspectsOfInstances
 		add: (Aspect extent: #horizontalExtent);
 		add: (Aspect choice: #selectionMode from: self selectionModes keys asSortedCollection);
 		yourself! !
+
 !ListBox class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -4111,6 +4335,7 @@ visualObjectAtPoint: aPoint
 	^(self itemFromPoint: aPoint) 
 		ifNil: [object]
 		ifNotNil: [:item | self objectFromHandle: item ifAbsent: [object]]! !
+
 !ListControlView categoriesForMethods!
 visualObjectAtPoint:!enquiries!private! !
 !
@@ -4133,6 +4358,7 @@ publishedEventsOfInstances
     		add: #selectionChanging:;
     		yourself.
     ! !
+
 !ListControlView class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 publishedEventsOfInstances!events!public! !
@@ -4150,6 +4376,7 @@ publishedEventsOfInstances
 		add: #item:removedAtIndex:;
 		add: #listChanged;
 		yourself! !
+
 !ListModel class categoriesForMethods!
 publishedEventsOfInstances!events!public! !
 !
@@ -4197,6 +4424,7 @@ publishedEventsOfInstances
 		add: #nodeExpanded:;
 		add: #nodeCollapsed:;
 		yourself.! !
+
 !ListTreeView class categoriesForMethods!
 publishedAspectsOfInstances!constants!do copy!must strip!public! !
 publishedEventsOfInstances!constants!do copy!events!public! !
@@ -4237,6 +4465,7 @@ publishedEventsOfInstances
     		add: #aboutToEditLabel:accept:;
     		yourself.
     ! !
+
 !ListView class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 publishedEventsOfInstances!events!public! !
@@ -4259,6 +4488,7 @@ publishedAspectsOfInstances
     		add: (Aspect block: #getInfoTipBlock);
     		add: (Aspect block: #customDrawBlock);
     		yourself! !
+
 !ListViewColumn class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -4279,6 +4509,7 @@ printFieldsOn: aStream limit: anInteger
 				space;
 				display: 'hatch=';
 				print: symbol]! !
+
 !LOGBRUSH categoriesForMethods!
 printFieldsOn:limit:!printing!private! !
 !
@@ -4295,6 +4526,7 @@ printFieldsOn: aStream limit: anInteger
 		space;
 		display: 'color=';
 		print: self color! !
+
 !LOGPEN categoriesForMethods!
 printFieldsOn:limit:!printing!private! !
 !
@@ -4314,6 +4546,7 @@ printAccessorExpressionSuffixOn: aWriteStream
 	aWriteStream
 		space;
 		display: #asExternalAddress! !
+
 !LPVOIDField categoriesForMethods!
 newAspect:class:!adapters!private! !
 printAccessorExpressionSuffixOn:!automatic generation!private! !
@@ -4334,6 +4567,7 @@ printableFields
 			(self stateMask allMask: LVIS_STATEIMAGEMASK) 
 				ifTrue: [fields add: #iStateImage]].
 	^fields! !
+
 !LVITEMW categoriesForMethods!
 printableFields!printing!private! !
 !
@@ -4350,6 +4584,7 @@ painterClass
 	MenuComposerView."
 
 	^PopupMenuPainter! !
+
 !Menu categoriesForMethods!
 edit!constants!private! !
 painterClass!constants!private! !
@@ -4373,6 +4608,7 @@ publishedAspectsOfInstances
 		add: (Aspect boolean: #hasSharedImageColumn);
 		add: (Aspect icon: #image);
 		yourself! !
+
 !Menu class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -4384,6 +4620,7 @@ painterClass
 	MenuComposerView."
 
 	^MenuBarPainter! !
+
 !MenuBar categoriesForMethods!
 painterClass!constants!private! !
 !
@@ -4402,6 +4639,7 @@ publishedAspectsOfInstances
 	^(super publishedAspectsOfInstances)
 		removeKey: #text;
 		yourself! !
+
 !MenuBar class categoriesForMethods!
 newInstanceAspect:class:!adapters!private! !
 publishedAspectsOfInstances!constants!public! !
@@ -4413,6 +4651,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^Menu icon! !
+
 !MenuItem class categoriesForMethods!
 icon!constants!public! !
 !
@@ -4438,6 +4677,7 @@ methodChanged: aCompiledMethod
 	its owning package (if any) is also so marked."
 
 	self instanceClass methodChanged: aCompiledMethod! !
+
 !Metaclass categoriesForMethods!
 changeIndex!accessing!private! !
 isChanged:!public!source filing! !
@@ -4452,6 +4692,7 @@ all
     
     	^AllMethodsCategory current
     ! !
+
 !MethodCategory class categoriesForMethods!
 all!instance creation!public! !
 !
@@ -4467,6 +4708,7 @@ icon
 			self isReadOnly
 				ifTrue: [self class readOnlyIcon]
 				ifFalse: [self class icon]]! !
+
 !MethodProtocol categoriesForMethods!
 icon!constants!public! !
 !
@@ -4491,6 +4733,7 @@ readOnlyIcon
 	"Private - Answers an Icon that can be used to represent a read-only protocol."
 
 	^Icon fromId: 'METHODPROTOCOL_READONLY.ICO'! !
+
 !MethodProtocol class categoriesForMethods!
 ansiIcon!constants!private! !
 publishedEventsOfInstances!events!public! !
@@ -4506,6 +4749,7 @@ visualObjectAtPoint: aPoint
 	| object |
 	object := super visualObjectAtPoint: aPoint.
 	^(self itemFromPoint: aPoint) ifNil: [object] ifNotNil: [:node | node object]! !
+
 !MoenTreeView categoriesForMethods!
 visualObjectAtPoint:!enquiries!private! !
 !
@@ -4537,6 +4781,7 @@ publishedEventsOfInstances
     		add: #selectionChanging:;
     		yourself.
     ! !
+
 !MoenTreeView class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 publishedEventsOfInstances!events!public! !
@@ -4570,6 +4815,7 @@ publishedAspectsOfInstances
 							choices: days;
 							yourself]);
 		yourself! !
+
 !MonthCalendarView class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -4592,6 +4838,7 @@ printOn: aStream
 		space;
 		print: self lParam;
 		nextPut: $)! !
+
 !MSG categoriesForMethods!
 printOn:!printing!public! !
 !
@@ -4608,6 +4855,7 @@ publishedAspectsOfInstances
     		add: (Aspect boolean: #wantReturn);
     		add: (Aspect boolean: #wordWrap);
     		yourself! !
+
 !MultilineTextEdit class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -4616,6 +4864,7 @@ publishedAspectsOfInstances!constants!public! !
 
 literalTextStyle
 	^#literalNumber! !
+
 !Number categoriesForMethods!
 literalTextStyle!constants!private! !
 !
@@ -4725,6 +4974,7 @@ publishedEvents
 
 searchForInTool: aSmalltalkToolShell 
 	aSmalltalkToolShell searchForObject: self! !
+
 !Object categoriesForMethods!
 alternateInspectorClass!constants!public! !
 aspectDisplayOn:!private! !
@@ -4777,6 +5027,7 @@ publishedEventsOfInstances
     	locally"	
     
     	^Set new.! !
+
 !Object class categoriesForMethods!
 publishedAspects!constants!public! !
 publishedAspectsOfInstances!constants!public! !
@@ -4789,6 +5040,7 @@ publishedEventsOfInstances!events!public! !
 includesResource: aResourceIdentifier 
 	^(environment includesResource: aResourceIdentifier) 
 		and: [oredEnvironment includesResource: aResourceIdentifier]! !
+
 !OrEnvironment categoriesForMethods!
 includesResource:!public!testing! !
 !
@@ -4849,6 +5101,7 @@ publishedAspects
 
 searchForInTool: aSmalltalkToolShell 
 	aSmalltalkToolShell searchForPackage: self! !
+
 !Package categoriesForMethods!
 browse!enumerating!public! !
 defaultAbout!public! !
@@ -4896,6 +5149,7 @@ publishedEventsOfInstances
 		add: #ownedChanged;
 		add: #prerequisitesReset;
 		yourself! !
+
 !Package class categoriesForMethods!
 changedIcon!constants!private! !
 dolphinPackageIcon!public! !
@@ -4920,6 +5174,7 @@ isConnected
 
 sourceControl
 	^self! !
+
 !PackageManager categoriesForMethods!
 getVersionInfoFor:!public!source tracking system! !
 isConnected!public!source tracking system! !
@@ -4945,6 +5200,7 @@ publishedEventsOfInstances
 		add: #aboutToSave:;
 		add: #packageInstalled:;
 		yourself! !
+
 !PackageManager class categoriesForMethods!
 publishedEventsOfInstances!events!public! !
 !
@@ -4959,6 +5215,7 @@ publishedAspectsOfInstances
     		add: (Aspect integer: #width);
     		add: (Aspect choice: #styleName from: self styleNames);
     		yourself! !
+
 !Pen class categoriesForMethods!
 publishedAspectsOfInstances!public! !
 !
@@ -4972,6 +5229,7 @@ publishedAspectsOfInstances
     		add: (Aspect name: #leftToRightBlock);
     		add: (Aspect name: #rightToLeftBlock);
     		yourself! !
+
 !PluggableTypeConverter class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -4985,6 +5243,7 @@ publishedAspectsOfInstances
     		add: (Aspect integer: #x);
     		add: (Aspect integer: #y);
     		yourself! !
+
 !Point class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -4999,6 +5258,7 @@ publishedAspectsOfInstances
     		add: (Aspect integer: #y);
     		add: (Aspect integer: #z);
     		yourself! !
+
 !Point3D class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -5039,6 +5299,7 @@ printMutatorBody: aSymbol on: aWriteStream
 		nextPutAll: self valueParameterName;
 		space;
 		display: #yourAddress! !
+
 !PointerField categoriesForMethods!
 printAccessorExpression:on:!automatic generation!private! !
 printMutatorBody:on:!automatic generation!private! !
@@ -5079,6 +5340,7 @@ referencesTo: keyString
 	^(env referencesTo: var)
 		label: ('Methods referencing <1d>.<2s>' expandMacrosWith: self with: keyString);
 		yourself! !
+
 !PoolConstantsDictionary categoriesForMethods!
 browse!operations-browsing!public! !
 errorModify:value:!exceptions!private! !
@@ -5095,6 +5357,7 @@ aspectDisplayOn: aStream
   	N.B. This is a development time only method that supports the PublishedAspectInspector."
   
   	self displayOn: aStream! !
+
 !PoolDictionary categoriesForMethods!
 aspectDisplayOn:!private! !
 !
@@ -5124,6 +5387,7 @@ editNewDefaultView
 	vc
 		openOnCopyOf: self defaultResourceIdentifier;
 		resourceIdentifier: resourceIdentifier! !
+
 !Presenter class categoriesForMethods!
 addView:asResource:!operations!public! !
 editNewDefaultView!operations!public! !
@@ -5290,6 +5554,7 @@ walkback: aString topFrame: aStackFrame resumable: aBoolean
 			self suspendUnconditionally]
 		ifFalse: [answer == #terminate ifTrue: [self terminate]]
 	"Drop through to resume..."! !
+
 !Process categoriesForMethods!
 attachDebugger:topFrame:resumable:!private! !
 debug!private! !
@@ -5315,6 +5580,7 @@ singleStep: interruptArg
 		ifTrue: [self enableInterrupts]
 		ifFalse: [debugger onStep: interruptArg]
 ! !
+
 !ProcessorScheduler categoriesForMethods!
 singleStep:!interrupts-handling!private! !
 !
@@ -5328,6 +5594,7 @@ publishedAspectsOfInstances
     		add: (Aspect name: #range);
 		add: (Aspect boolean: #isSmooth);
     		yourself! !
+
 !ProgressBar class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -5340,6 +5607,7 @@ publishedAspectsOfInstances
     	^(super publishedAspectsOfInstances)
     		add: (Aspect boolean: #isVertical);
     		yourself! !
+
 !ProportionalLayout class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -5369,6 +5637,7 @@ inspect
 	"Open and answer an inspector window on the receiver"
 
 	^self basicInspect! !
+
 !ProtoObject categoriesForMethods!
 basicInspect!public! !
 debugPrintString!printing!public! !
@@ -5397,6 +5666,7 @@ publishedAspectsOfInstances
     	^(LookupTable new)
     		add: (Aspect name: #yourself);
     		yourself! !
+
 !ProtoObject class categoriesForMethods!
 icon!public! !
 publishedAspects!constants!public! !
@@ -5424,6 +5694,7 @@ publishedAspectsOfInstances
 		removeKey: #forecolor;
 		yourself.
 	^answer! !
+
 !PushButton class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -5437,6 +5708,7 @@ printOn: aStream
 		basicPrint: self;
 		nextPut: $(; display: self; nextPut: $)
 ! !
+
 !QWORD categoriesForMethods!
 printOn:!printing!public! !
 !
@@ -5485,6 +5757,7 @@ publishedAspects
 					yourself);
 		add: (Aspect boolean: #useTraditionalBinaryPrecedenceForParentheses);
 		yourself! !
+
 !RBConfigurableFormatter class categoriesForMethods!
 publishedAspects!constants!public! !
 !
@@ -5505,6 +5778,7 @@ publishedAspects
 					isNullable: false;
 					yourself);
 		yourself! !
+
 !RBFormatter class categoriesForMethods!
 publishedAspects!constants!public! !
 !
@@ -5520,6 +5794,7 @@ publishedAspects
 					yourself);
 		add: (Aspect boolean: #periodsAtEndOfMethod);
 		yourself.! !
+
 !RBSourceFormatter class categoriesForMethods!
 publishedAspects!constants!public! !
 !
@@ -5535,6 +5810,7 @@ publishedAspectsOfInstances
     		add: (Aspect integer: #bottom);
     		add: (Aspect integer: #right);
     		yourself! !
+
 !Rectangle class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -5543,6 +5819,7 @@ publishedAspectsOfInstances!constants!public! !
 
 displayOn: aStream
 	aStream nextPutAll: self displayString! !
+
 !RefactoryChange categoriesForMethods!
 displayOn:!printing!public! !
 !
@@ -5554,6 +5831,7 @@ visualObjectAtPoint: aPoint
 	within the receiver"
 
 	^self referee visualObjectAtPoint: aPoint! !
+
 !ReferenceView categoriesForMethods!
 visualObjectAtPoint:!enquiries!private! !
 !
@@ -5575,6 +5853,7 @@ publishedAspectsOfInstances
     		removeKey: #isEnabled;
     		removeKey: #text;
     		yourself! !
+
 !ReferenceView class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -5583,6 +5862,7 @@ publishedAspectsOfInstances!constants!public! !
 
 debugPrintString
 	^self printString! !
+
 !RegKeyAbstract categoriesForMethods!
 debugPrintString!printing!public! !
 !
@@ -5654,6 +5934,7 @@ reassign
 	view := Smalltalk developmentSystem loadViewResource: self resource inContext: View desktop.
 	self assign: view literalStoreArray.
 	view destroy! !
+
 !ResourceIdentifier categoriesForMethods!
 assign:!accessing!public! !
 assignLiteralResourceData:!accessing!private! !
@@ -5678,6 +5959,7 @@ publishedAspectsOfInstances
 		add: (Aspect name: #owningClass);
 		add: (Aspect string: #name);
 		yourself! !
+
 !ResourceIdentifier class categoriesForMethods!
 prompt!instance creation!public! !
 publishedAspectsOfInstances!constants!public! !
@@ -5695,6 +5977,7 @@ publishedAspectsOfInstances
     		removeKey: #format;
     		removeKey: #alignment;
     		yourself! !
+
 !RichTextEdit class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -5708,6 +5991,7 @@ publishedEventsOfInstances
 	^(super publishedEventsOfInstances)
 		add: #linkClicked:;
 		yourself! !
+
 !RichTextPresenter class categoriesForMethods!
 publishedEventsOfInstances!events!public! !
 !
@@ -5750,6 +6034,7 @@ printMutatorBody: aSymbol on: aWriteStream
 		display: keywords second;
 		space.
 	self printMutatorValueOn: aWriteStream parameter: self valueParameterName! !
+
 !ScalarField categoriesForMethods!
 newAspect:class:!adapters!private! !
 printAccessorExpression:on:!automatic generation!private! !
@@ -5760,6 +6045,7 @@ printMutatorBody:on:!automatic generation!private! !
 
 icon
 	^Integer icon! !
+
 !ScalarField class categoriesForMethods!
 icon!public! !
 !
@@ -5772,6 +6058,7 @@ publishedAspectsOfInstances
 	^(super publishedAspectsOfInstances)
 		add: (Aspect integer: #id) beReadOnly;
 		yourself! !
+
 !ScintillaAttribute class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -5790,6 +6077,7 @@ publishedAspectsOfInstances
 		add: (Aspect integer: #alpha);
 		add: (Aspect integer: #foreAlpha);
 		yourself! !
+
 !ScintillaIndicatorStyle class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -5803,6 +6091,7 @@ publishedAspectsOfInstances
 		add: (Aspect choice: #commandSymbol from: Commands values asSortedCollection);
 		add: (Aspect hotkey: #acceleratorKey);
 		yourself! !
+
 !ScintillaKeyBinding class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -5820,6 +6109,7 @@ publishedAspectsOfInstances
 		add: (Aspect choice: #cursorType from: CursorTypes values);
 		add: (Aspect color: #backcolor);
 		yourself! !
+
 !ScintillaMargin class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -5837,6 +6127,7 @@ publishedAspectsOfInstances
 		add: (Aspect integer: #alpha);
 		add: (Aspect color: #selectionBackcolor);
 		yourself! !
+
 !ScintillaMarkerDefinition class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -5882,6 +6173,7 @@ publishedAspectsOfInstances
 		add: (Aspect name: #name);
 		add: (Aspect number: #weight);
 		yourself! !
+
 !ScintillaTextStyle class categoriesForMethods!
 newInstanceAspect:class:!adapters!private! !
 publishedAspectsOfInstances!constants!public! !
@@ -5909,6 +6201,7 @@ publishedAspects
 		add: (Aspect name: #textStyles presenterBlock: createPresenter) beImmutable;
 		add: (Aspect name: #annotationStyles presenterBlock: createPresenter) beImmutable;
 		yourself! !
+
 !ScintillaView categoriesForMethods!
 publishedAspects!constants!public! !
 !
@@ -5982,6 +6275,7 @@ publishedEventsOfInstances
 		add: #updateUI:;
 		add: #zoomed;
 		yourself! !
+
 !ScintillaView class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 publishedEventsOfInstances!events!public! !
@@ -5998,6 +6292,7 @@ publishedAspectsOfInstances
     		add: (Aspect boolean: #isTrackingContinuous);
     		add: (Aspect boolean: #isVertical);
     		yourself! !
+
 !ScrollBar class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -6012,6 +6307,7 @@ publishedAspectsOfInstances
     		add: (Aspect name: #lineExtent);
     		removeKey: #layoutManager;
     		yourself! !
+
 !ScrollingDecorator class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -6024,6 +6320,7 @@ publishedAspectsOfInstances
 	^(super publishedAspectsOfInstances)
 		add: (Aspect boolean: #shouldStretchToFit);
 		yourself! !
+
 !ScrollingDecoratorLayout class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -6034,6 +6331,7 @@ method
 	"Answer the singleton sub-instance of the receiver which supports a search policy based appropriate for CompiledMethods."
 
 	^CompiledMethodSearchPolicy current! !
+
 !SearchPolicy class categoriesForMethods!
 method!instance creation!public! !
 !
@@ -6042,6 +6340,7 @@ method!instance creation!public! !
 
 addMethods: methodCollection 
 	methodCollection do: [:each | self addClass: each methodClass selector: each selector]! !
+
 !SelectorEnvironment categoriesForMethods!
 addMethods:!adding!public! !
 !
@@ -6050,6 +6349,7 @@ addMethods:!adding!public! !
 
 debugPrintString
 	^self printString! !
+
 !Semaphore categoriesForMethods!
 debugPrintString!printing!public! !
 !
@@ -6064,6 +6364,7 @@ alternateInspectorClass
 
 newBatchAccessor
 	^KeyedAspectBatchAccessor subject: self batchSize: self publishedKeyedAspectsBatchSize! !
+
 !SequenceableCollection categoriesForMethods!
 alternateInspectorClass!constants!public! !
 newBatchAccessor!public! !
@@ -6076,6 +6377,7 @@ newInstanceAspect: aSymbol class: aspectClass
     	which is appropriate for representing aspects of the receiver's type."
 
 	^aspectClass sequenceableCollection: aSymbol! !
+
 !SequenceableCollection class categoriesForMethods!
 newInstanceAspect:class:!adapters!private! !
 !
@@ -6094,6 +6396,7 @@ publishedEventsOfInstances
 		add: #queryEndSession:;
     		yourself.
     ! !
+
 !SessionManager class categoriesForMethods!
 publishedEventsOfInstances!events!public! !
 !
@@ -6102,6 +6405,7 @@ publishedEventsOfInstances!events!public! !
 
 newBatchAccessor
 	^SetBatchAspectAccessor subject: self batchSize: self publishedKeyedAspectsBatchSize! !
+
 !Set categoriesForMethods!
 newBatchAccessor!private! !
 !
@@ -6113,6 +6417,7 @@ newInstanceAspect: aSymbol class: aspectClass
     	which is appropriate for representing aspects of the receiver's type."
 
 	^aspectClass set: aSymbol! !
+
 !Set class categoriesForMethods!
 newInstanceAspect:class:!adapters!private! !
 !
@@ -6134,6 +6439,7 @@ unregisterAsToolWith: aSmalltalkSystem
     	without amendment."
     
     	! !
+
 !Shell class categoriesForMethods!
 registerAsToolWith:!operations!public! !
 unregisterAsToolWith:!operations!public! !
@@ -6191,6 +6497,7 @@ publishedEventsOfInstances
     		add: #closeRequested:;
     		yourself.
     ! !
+
 !ShellView class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 publishedEventsOfInstances!events!public! !
@@ -6204,6 +6511,7 @@ publishedAspects
 	^(super publishedAspects)
 		add: (Aspect choice: #tickStyle from: self applicableTickStyles keys asSortedCollection);
 		yourself! !
+
 !Slider categoriesForMethods!
 publishedAspects!constants!public! !
 !
@@ -6223,6 +6531,7 @@ publishedAspectsOfInstances
 	#(#hasAutoTicks #isVertical #hasTicks #hasToolTips) 
 		do: [:each | aspects add: (Aspect boolean: each)].
 	^aspects! !
+
 !Slider class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -6240,6 +6549,7 @@ publishedAspects
 				add: (Aspect boolean: #hasThousandsSeparators);
 				add: (Aspect choice: #radix from: #(10 16))].
 	^aspects! !
+
 !SpinButton categoriesForMethods!
 publishedAspects!accessing!must strip!public! !
 !
@@ -6268,6 +6578,7 @@ publishedEventsOfInstances
     		add: #nudge:;
     		yourself.
     ! !
+
 !SpinButton class categoriesForMethods!
 publishedAspectsOfInstances!accessing!must strip!public! !
 publishedEventsOfInstances!events!public! !
@@ -6284,6 +6595,7 @@ publishedAspectsOfInstances
 		do: [:each | aspects removeKey: each].
 	aspects add: (Aspect boolean: #hasFlatAppearance).
 	^aspects! !
+
 !Splitter class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -6294,6 +6606,7 @@ displayOn: aStream
 	aStream
 		nextPutAll: 'Var ';
 		print: self name! !
+
 !StAbstractVariableNode categoriesForMethods!
 displayOn:!printing!public! !
 !
@@ -6366,6 +6679,7 @@ stackWorkspace
     	used for working space)."
 
 	^self sender isNil ifTrue: [0] ifFalse: [self sp - index - self frameSize + 1]! !
+
 !StackFrame categoriesForMethods!
 debugIpFor:!private! !
 debugPrintOn:!public! !
@@ -6390,6 +6704,7 @@ publishedAspectsOfInstances
 		add: (Aspect collection: #tempNames) beReadOnly;
 		add: (Aspect name: #environment);
 		yourself! !
+
 !StackFrame class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -6398,6 +6713,7 @@ publishedAspectsOfInstances!constants!public! !
 
 displayOn: aStream
 	aStream nextPutAll: ':='! !
+
 !StAssignmentNode categoriesForMethods!
 displayOn:!printing!public! !
 !
@@ -6410,6 +6726,7 @@ publishedAspectsOfInstances
     	^(super publishedAspectsOfInstances)
     		add: (Aspect bitmap: #image);
     		yourself! !
+
 !StaticBitmap class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -6422,6 +6739,7 @@ publishedAspectsOfInstances
     	^(super publishedAspectsOfInstances)
     		add: (Aspect icon: #image);
     		yourself! !
+
 !StaticIcon class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -6434,6 +6752,7 @@ publishedAspectsOfInstances
     	^(super publishedAspectsOfInstances)
     		add: (Aspect choice: #style from: StyleMap keys asSortedCollection);
     		yourself! !
+
 !StaticRectangle class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -6456,6 +6775,7 @@ publishedAspectsOfInstances
     		add: (Aspect choice: #alignment from: AlignmentMap keys asSortedCollection);
     		removeKey: #value;
     		yourself! !
+
 !StaticText class categoriesForMethods!
 applicableTypeConverterCategories!constants!public! !
 publishedAspectsOfInstances!constants!public! !
@@ -6469,6 +6789,7 @@ publishedAspectsOfInstances
     	^(super publishedAspectsOfInstances)
     		add: (Aspect boolean: #isSunken);
     		yourself! !
+
 !StaticView class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -6485,6 +6806,7 @@ publishedAspectsOfInstances
 					addEvaluationFrom: (Array with: ('<1p> <2d>' expandMacrosWith: StatusBarItem with: #new))) 
 						beImmutable;
 		yourself! !
+
 !StatusBar class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -6498,6 +6820,7 @@ publishedAspectsOfInstances
     		add: (Aspect block: #getImageBlock);
     		add: (Aspect block: #getTextBlock);
     		yourself! !
+
 !StatusBarItem class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -6512,6 +6835,7 @@ publishedAspectsOfInstances
     		add: (Aspect integer: #width);
     		add: (Aspect string: #name);
     		yourself! !
+
 !StatusBarItemAbstract class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -6520,6 +6844,7 @@ publishedAspectsOfInstances!constants!public! !
 
 displayOn: aStream
 	aStream nextPutAll: '[]'! !
+
 !StBlockNode categoriesForMethods!
 displayOn:!printing!public! !
 !
@@ -6529,6 +6854,7 @@ displayOn:!printing!public! !
 displayOn: aStream
 	aStream nextPutAll: 'Cascade'
 ! !
+
 !StCascadeNode categoriesForMethods!
 displayOn:!printing!public! !
 !
@@ -6537,6 +6863,7 @@ displayOn:!printing!public! !
 
 displayOn: aStream
 	aStream nextPutAll: '#()'! !
+
 !StLiteralArrayNode categoriesForMethods!
 displayOn:!printing!public! !
 !
@@ -6545,6 +6872,7 @@ displayOn:!printing!public! !
 
 textStyle
 	^self value literalTextStyle! !
+
 !StLiteralToken categoriesForMethods!
 textStyle!constants!public! !
 !
@@ -6553,6 +6881,7 @@ textStyle!constants!public! !
 
 displayOn: aStream
 	self value printOn: aStream! !
+
 !StLiteralValueNode categoriesForMethods!
 displayOn:!printing!public! !
 !
@@ -6563,6 +6892,7 @@ displayOn: aStream
 	aStream
 		nextPutAll: 'Msg ';
 		print: self selector! !
+
 !StMessageNode categoriesForMethods!
 displayOn:!printing!public! !
 !
@@ -6571,6 +6901,7 @@ displayOn:!printing!public! !
 
 textStyle
 	^#literalNumber! !
+
 !StNumberLiteralToken categoriesForMethods!
 textStyle!constants!public! !
 !
@@ -6579,6 +6910,7 @@ textStyle!constants!public! !
 
 displayOn: aStream
 	aStream nextPutAll: '##()'! !
+
 !StOptimizedNode categoriesForMethods!
 displayOn:!printing!public! !
 !
@@ -6589,6 +6921,7 @@ displayOn: aStream
 	aStream
 		nextPut: $:;
 		display: self name! !
+
 !StParameterNode categoriesForMethods!
 displayOn:!printing!public! !
 !
@@ -6605,6 +6938,7 @@ displayOn: aStream
 				nextPutAll: ' error: ';
 				display: errorTemp name].
 	aStream nextPut: $>! !
+
 !StPrimitiveNode categoriesForMethods!
 displayOn:!printing!public! !
 !
@@ -6658,6 +6992,7 @@ publishedAspects
 					tree view expandAll.
 					tree]).
 	^aspects! !
+
 !StProgramNode categoriesForMethods!
 debugPrintString!printing!public! !
 postComments!accessing!public! !
@@ -6669,6 +7004,7 @@ publishedAspects!constants!public! !
 
 displayOn: aStream
 	aStream nextPut: $^! !
+
 !StReturnNode categoriesForMethods!
 displayOn:!printing!public! !
 !
@@ -6720,6 +7056,7 @@ publishedAspects
 	purely as a string, rather than as a collection of characters."
 
 	^LookupTable with: (self newAspect: #yourself class: Aspect)! !
+
 !String categoriesForMethods!
 aspectDisplayOn:!private! !
 debugPrintString!printing!public! !
@@ -6760,6 +7097,7 @@ printMutatorBody: aSymbol on: aWriteStream
 		display: keywords second;
 		space;
 		nextPut: $0! !
+
 !StringField categoriesForMethods!
 printAccessorExpressionSuffixOn:!automatic generation!private! !
 printMutatorBody:on:!automatic generation!private! !
@@ -6772,6 +7110,7 @@ newInstanceAspect: aSymbol class: aspectClass
 	which is appropriate for representing aspects of the receiver's type."
 
 	^aspectClass string: aSymbol! !
+
 !StringField class categoriesForMethods!
 newInstanceAspect:class:!adapters!private! !
 !
@@ -6790,6 +7129,7 @@ printAccessorExpressionSuffixOn: aWriteStream
 		display: #elementClass:;
 		space;
 		display: self fieldClass! !
+
 !StructureArrayField categoriesForMethods!
 printAccessorExpressionSuffixOn:!automatic generation!private! !
 !
@@ -6808,6 +7148,7 @@ printAccessorExpressionSuffixOn: aWriteStream
 		display: #elementClass:;
 		space;
 		display: self elementClass! !
+
 !StructureArrayPointerField categoriesForMethods!
 printAccessorExpressionSuffixOn:!automatic generation!private! !
 !
@@ -6850,6 +7191,7 @@ printMutatorBody: aSymbol on: aWriteStream
 		display: keywords fourth;
 		space;
 		display: 1! !
+
 !StructureField categoriesForMethods!
 printMutatorBody:on:!automatic generation!private! !
 !
@@ -6866,6 +7208,7 @@ printOn: aStream
 		ifTrue: [aStream nextPutAll: 'NULL']
 		ifFalse: [aStream print: self value].
 	aStream nextPut: $).! !
+
 !StructurePointer categoriesForMethods!
 printOn:!printing!public! !
 !
@@ -6878,6 +7221,7 @@ valueClass
 	"The scope will be an StClassScope which knows the method class."
 
 	^scope methodClass! !
+
 !StSelfVariable categoriesForMethods!
 valueClass!accessing!public! !
 !
@@ -6886,6 +7230,7 @@ valueClass!accessing!public! !
 
 valueClassIn: aClass
 	^aClass! !
+
 !StSelfVariableNode categoriesForMethods!
 valueClassIn:!public! !
 !
@@ -6894,6 +7239,7 @@ valueClassIn:!public! !
 
 displayOn: aStream
 	aStream nextPutAll: '...'! !
+
 !StSequenceNode categoriesForMethods!
 displayOn:!printing!public! !
 !
@@ -6905,6 +7251,7 @@ displayOn: aStream
 
 valueClassIn: aClass
 	^self subclassResponsibility! !
+
 !StSpecialVariableNode categoriesForMethods!
 displayOn:!printing!public! !
 valueClassIn:!public! !
@@ -6923,6 +7270,7 @@ valueClass
 	suggesting the variable type."
 
 	^binding isImmutable ifTrue: [binding value basicClass]! !
+
 !StStaticVariable categoriesForMethods!
 valueClass!accessing!public! !
 !
@@ -6933,6 +7281,7 @@ valueClass
 	"Answer the class of the variables value, if this is known, or nil if unknown."
 
 	^scope methodClass superclass! !
+
 !StSuperVariable categoriesForMethods!
 valueClass!accessing!public! !
 !
@@ -6941,6 +7290,7 @@ valueClass!accessing!public! !
 
 valueClassIn: aClass
 	^aClass superclass! !
+
 !StSuperVariableNode categoriesForMethods!
 valueClassIn:!public! !
 !
@@ -6952,6 +7302,7 @@ displayOn: aStream
 		nextPut: $|;
 		display: name;
 		nextPut: $|! !
+
 !StTempDeclNode categoriesForMethods!
 displayOn:!printing!public! !
 !
@@ -6962,6 +7313,7 @@ valueClass
 	"Answer the class of the variables value, if this is known, or nil if unknown."
 
 	^Integer! !
+
 !StThisContextVariable categoriesForMethods!
 valueClass!accessing!public! !
 !
@@ -6970,6 +7322,7 @@ valueClass!accessing!public! !
 
 valueClassIn: aClass
 	^Integer! !
+
 !StThisContextVariableNode categoriesForMethods!
 valueClassIn:!public! !
 !
@@ -6991,6 +7344,7 @@ preComments
 	"Answer the set of comments associated with the receiver that are before the token"
 
 	^self comments ifNil: [#()] ifNotNil: [:all | all select: [:each | each stop < start]]! !
+
 !StToken categoriesForMethods!
 postComments!accessing!public! !
 preComments!accessing!public! !
@@ -7004,6 +7358,7 @@ valueClass
 	untyped."
 
 	^nil! !
+
 !StVariable categoriesForMethods!
 valueClass!accessing!public! !
 !
@@ -7019,6 +7374,7 @@ publishedAspectsOfInstances
 		add: (Aspect name: #startPoint);
 		add: (Aspect name: #endPoint);
 		yourself! !
+
 !StyledGradientBrush class categoriesForMethods!
 publishedAspectsOfInstances!public! !
 !
@@ -7033,6 +7389,7 @@ publishedAspectsOfInstances
 		add: (Aspect name: #dashPattern);
 		add: (Aspect number: #width);
 		yourself	"For now we don't allow the width to be adjusted in the VC because there are problems"! !
+
 !StyledPen class categoriesForMethods!
 publishedAspectsOfInstances!public! !
 !
@@ -7052,6 +7409,7 @@ literalTextStyle
 
 searchForInTool: aSmalltalkToolShell 
 	aSmalltalkToolShell searchForSymbol: self! !
+
 !Symbol categoriesForMethods!
 aspectDisplayOn:!private! !
 literalTextStyle!constants!private! !
@@ -7065,6 +7423,7 @@ newInstanceAspect: aSymbol class: aspectClass
     	which is appropriate for representing aspects of the receiver's type."
 
 	^(aspectClass name: aSymbol) beImmutable! !
+
 !Symbol class categoriesForMethods!
 newInstanceAspect:class:!adapters!private! !
 !
@@ -7092,6 +7451,7 @@ publishedEventsOfInstances
 		add: #protocolUpdated:;
 		add: #protocolRemoved:;
 		yourself! !
+
 !SystemDictionary class categoriesForMethods!
 publishedEventsOfInstances!events!public! !
 !
@@ -7107,6 +7467,7 @@ printOn: aStream
 		display: self; 
 		nextPut: $)
 ! !
+
 !SYSTEMTIME categoriesForMethods!
 printOn:!printing!public! !
 !
@@ -7121,6 +7482,7 @@ publishedAspectsOfInstances
 	answer add: (Aspect choice: #tabOrientation from: TabOrientations values).
 	#(#hasFlatSeparators #hasButtons #isMultiline) do: [:each | answer add: (Aspect boolean: each)].
 	^answer! !
+
 !TabView class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -7157,6 +7519,7 @@ publishedEventsOfInstances
     		add: #textOverflow;
     		yourself.
     ! !
+
 !TextEdit class categoriesForMethods!
 applicableTypeConverterCategories!constants!public! !
 publishedAspectsOfInstances!constants!public! !
@@ -7170,6 +7533,7 @@ newInstanceAspect: aSymbol class: aspectClass
     	which is appropriate for representing aspects of the receiver's type."
 
 	^aspectClass icon: aSymbol! !
+
 !TextTileIcon class categoriesForMethods!
 newInstanceAspect:class:!adapters!private! !
 !
@@ -7181,6 +7545,7 @@ newInstanceAspect: aSymbol class: aspectClass
 	which is appropriate for representing aspects of the receiver's type."
 
 	^aspectClass time: aSymbol! !
+
 !Time class categoriesForMethods!
 newInstanceAspect:class:!adapters!private! !
 !
@@ -7193,6 +7558,7 @@ publishedAspectsOfInstances
     	^(super publishedAspectsOfInstances)
     		add: (Aspect string: #format);
     		yourself! !
+
 !TimeToText class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -7350,6 +7716,7 @@ resource_Workspace_tools
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.Toolbar) 34 25 nil nil 34 2 8 1409289164 131137 416 nil nil nil 517 nil nil nil 416 327686 ##(Smalltalk.Color) #default 8 1906519520 170 192 8 #() 170 192 34 10 29263 1115206 1 ##(Smalltalk.ToolbarIconButton) 416 1 1180998 4 ##(Smalltalk.CommandDescription) #inspectIt 8 'Inspect It' 1 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'InspectIt.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil 29263 29259 594 416 1 626 #displayIt 8 'Display It' 1 1 674 nil true 720 8 'DisplayIt.ico' 768 29259 29265 594 416 1 626 #debugIt 8 'Deb&ug It' 1 1 674 nil true 720 8 'Debugger.ico' 768 29265 29261 594 416 1 626 #evaluateIt 8 'Evaluate It' 1 1 674 nil true 720 8 'EvaluateIt.ico' 768 29261 29325 594 416 1 626 #printIt 8 'Print It' 1 1 674 nil true 720 8 'PrintIt.ico' 768 29325 34 6 800 1040 960 608 880 1049158 1 ##(Smalltalk.ToolbarSeparator) 416 1 nil nil 1 nil nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 1282 51 231 416 1234 #updateSizePosted 544 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 152 7 0 0 125 0 0 0] 8 #() 1282 193 193 nil 27 )! !
+
 !Toolbar class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 publishedEventsOfInstances!events!public! !
@@ -7378,6 +7745,7 @@ publishedAspects
 			aspects add: (Aspect choice: #bitmapIndex
 						from: (0 to: bmp extent x // (self toolbar ifNil: [16] ifNotNil: [:tb | tb actualBitmapSize x])))].
 	^aspects! !
+
 !ToolbarBitmapButton categoriesForMethods!
 publishedAspects!constants!public! !
 !
@@ -7390,6 +7758,7 @@ publishedAspectsOfInstances
 	^(super publishedAspectsOfInstances)
 		add: (Aspect bitmap: #bitmap) beImmutable;
 		yourself! !
+
 !ToolbarBitmapButton class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -7406,6 +7775,7 @@ publishedAspectsOfInstances
 		add: (Aspect boolean: #isDropdownStyle);
 		add: (Aspect boolean: #isDropDownOnly);
 		yourself! !
+
 !ToolbarButton class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -7423,6 +7793,7 @@ publishedAspectsOfInstances
 	^(super publishedAspectsOfInstances)
 		add: (Aspect integer: #width);
 		yourself! !
+
 !ToolbarSeparator class categoriesForMethods!
 icon!constants!public! !
 publishedAspectsOfInstances!constants!public! !
@@ -7442,6 +7813,7 @@ publishedAspects
 					nullValue: nil);
 		yourself
 ! !
+
 !ToolbarSystemButton categoriesForMethods!
 publishedAspects!public! !
 !
@@ -7457,6 +7829,7 @@ publishedAspectsOfInstances
 					fromMap: Bitmaps
 					nullValue: nil);
 		yourself! !
+
 !ToolbarSystemButton class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -7478,6 +7851,7 @@ publishedAspectsOfInstances
 		add: (Aspect boolean: #isDropDownOnly);
 		yourself
 	"removeKey: #forecolor;"! !
+
 !ToolButton class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -7500,6 +7874,7 @@ publishedAspectsOfInstances
 		add: (Aspect name: #margins) beImmutable;
 		yourself
 ! !
+
 !Tooltip class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -7510,6 +7885,7 @@ help
     	"Brings up a help page for the receiver"
     
 	SmalltalkSystem current openHelpTopicForTool: self! !
+
 !TranscriptShell categoriesForMethods!
 help!commands!public! !
 !
@@ -7523,6 +7899,7 @@ publishedAspects
     		add: (Aspect name: #defaultExtent);
     		add: (Aspect boolean: #flashOnOutput);
     		yourself! !
+
 !TranscriptShell class categoriesForMethods!
 publishedAspects!public! !
 !
@@ -7541,6 +7918,7 @@ publishedEventsOfInstances
 		add: #item:removedFromParent:;
 		add: #item:addedInParent:;
 		yourself! !
+
 !TreeModelAbstract class categoriesForMethods!
 publishedEventsOfInstances!events!public! !
 !
@@ -7559,6 +7937,7 @@ publishedAspectsOfInstances
 		add: (Aspect choice: #updateMode from: UpdateModes);
 		yourself.
 	^aspects! !
+
 !TreeView class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -7572,6 +7951,7 @@ publishedAspectsOfInstances
     		add: (Aspect name: #leftNullValue);
     		add: (Aspect name: #rightNullValue);
     		yourself! !
+
 !TypeConverter class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -7589,6 +7969,7 @@ aspectDisplayOn: aStream
 
 literalTextStyle
 	^#literalPseudo! !
+
 !UndefinedObject categoriesForMethods!
 aspectDisplayOn:!private! !
 literalTextStyle!constants!private! !
@@ -7603,6 +7984,7 @@ publishedEventsOfInstances
     	^super publishedEventsOfInstances
     		yourself.
     ! !
+
 !ValueConverter class categoriesForMethods!
 publishedEventsOfInstances!events!public! !
 !
@@ -7628,6 +8010,7 @@ publishedAspectsOfInstances
 		add: (Aspect choice: #typeconverter evaluationFrom: applicableTypeConverters) beImmutable;
 		add: (Aspect name: #value);
 		yourself! !
+
 !ValueConvertingControlView class categoriesForMethods!
 applicableTypeConverterCategories!constants!public! !
 publishedAspectsOfInstances!constants!public! !
@@ -7643,6 +8026,7 @@ publishedEventsOfInstances
     		add: #valueChanged;
     		yourself.
     ! !
+
 !ValueDialog class categoriesForMethods!
 publishedEventsOfInstances!events!public! !
 !
@@ -7658,6 +8042,7 @@ debugPrintString
 
 	^self basicPrintString
 ! !
+
 !ValueModel categoriesForMethods!
 debugPrintString!printing!public! !
 !
@@ -7679,6 +8064,7 @@ publishedEventsOfInstances
     		add: #valueChanged;
     		yourself.
     ! !
+
 !ValueModel class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 publishedEventsOfInstances!events!public! !
@@ -7694,6 +8080,7 @@ publishedEventsOfInstances
     		add: #valueChanged;
     		yourself.
     ! !
+
 !ValuePresenter class categoriesForMethods!
 publishedEventsOfInstances!events!public! !
 !
@@ -7711,6 +8098,7 @@ includesMethodUncached: aCompiledMethod
 updateCachesForMethod: aCompiledMethod 
 	#todo.	"Not necessary to flush the whole cache for the class here"
 	self flushCachesFor: aCompiledMethod methodClass! !
+
 !VariableEnvironment categoriesForMethods!
 includesMethodUncached:!public!testing! !
 updateCachesForMethod:!helpers!private! !
@@ -7729,6 +8117,7 @@ publishedAspectsOfInstances
     		add: (Aspect string: #specialBuild) beReadOnly;
     		add: (Aspect name: #fixedInfo);
     		yourself! !
+
 !VersionInfo class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -7761,6 +8150,7 @@ visualObjectAtPoint: aPoint
 	within the receiver"
 
 	^self presenter! !
+
 !View categoriesForMethods!
 aspectDisplayOn:!private! !
 publishedAspects!constants!public! !
@@ -7855,6 +8245,7 @@ publishedEventsOfInstances
 		add: #sysKeyRelease:;
 		add: #sysKeyTyped:;
 		yourself! !
+
 !View class categoriesForMethods!
 editNewDefaultView!operations!public! !
 makeDefaultResource!operations!private! !
@@ -7872,6 +8263,7 @@ publishedAspectsOfInstances
     		add: (Aspect string: #fileVersionString) beReadOnly;
     		add: (Aspect string: #productVersionString) beReadOnly;
     		yourself! !
+
 !VS_FIXEDFILEINFO class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 !
@@ -7885,6 +8277,7 @@ accessorMessage
 
 characterCreationMessage
 	^#utf16Value:! !
+
 !WCHARField categoriesForMethods!
 accessorMessage!automatic generation!private! !
 characterCreationMessage!automatic generation!private! !
@@ -7900,6 +8293,7 @@ publishedEventsOfInstances
     		add: #elementsExpired:;
     		yourself.
     ! !
+
 !WeakSet class categoriesForMethods!
 publishedEventsOfInstances!events!public! !
 !
@@ -7922,6 +8316,7 @@ publishedEventsOfInstances
 	^super publishedEventsOfInstances
 		addAll: self webview2Events;
 		yourself! !
+
 !WebView2View class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 publishedEventsOfInstances!events!public! !
@@ -7953,6 +8348,7 @@ printOn: aStream
 					ifTrue: 
 						[first ifTrue: [first := false] ifFalse: [aStream nextPut: $|].
 						aStream nextPutAll: each]]! !
+
 !WINDOWPOS categoriesForMethods!
 printOn:!printing!public! !
 !
@@ -7964,6 +8360,7 @@ newInstanceAspect: aSymbol class: aspectClass
     	which is appropriate for representing aspects of the receiver's type."
 
 	^aspectClass imageList: aSymbol! !
+
 !WinImageList class categoriesForMethods!
 newInstanceAspect:class:!adapters!private! !
 !

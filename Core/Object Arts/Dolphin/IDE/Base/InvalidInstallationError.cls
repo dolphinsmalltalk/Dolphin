@@ -5,9 +5,13 @@ Error subclass: #InvalidInstallationError
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 InvalidInstallationError guid: (GUID fromString: '{089355c5-e178-4599-a5b0-18d7bebd8acf}')!
+
 InvalidInstallationError comment: ''!
+
 !InvalidInstallationError categoriesForClass!Kernel-Exception Handling! !
+
 !InvalidInstallationError methodsFor!
 
 _descriptionFormat
@@ -15,6 +19,7 @@ _descriptionFormat
 
 	^'This copy of Dolphin Smalltalk has not been installed correctly; please re-install from the original source medium.'
 ! !
+
 !InvalidInstallationError categoriesForMethods!
 _descriptionFormat!displaying!public! !
 !

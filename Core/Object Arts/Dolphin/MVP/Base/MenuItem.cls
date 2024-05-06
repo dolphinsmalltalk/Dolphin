@@ -5,10 +5,14 @@ Object subclass: #MenuItem
 	classVariableNames: 'Dividers StringSeparator StylesMask'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 MenuItem guid: (GUID fromString: '{87b4c49d-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 MenuItem isAbstract: true!
+
 MenuItem addClassConstant: 'StringSeparator' value: $/!
 MenuItem addClassConstant: 'StylesMask' value: 16rFFFFF!
+
 MenuItem comment: 'MenuItem is an abstract class whose subclasses represent the items held by a <Menu>.
 
 Instance Variables:
@@ -20,7 +24,9 @@ Class Variables:
 	StringSeparator	<Character> separator to use when parsing menu definitions using #fromString:
 
 '!
+
 !MenuItem categoriesForClass!MVP-Views-Support! !
+
 !MenuItem methodsFor!
 
 acceleratorKey
@@ -168,6 +174,7 @@ text
 	"Answer the menu text (i.e. the text that appears in the menu) for the receiver."
 
 	^self subclassResponsibility! !
+
 !MenuItem categoriesForMethods!
 acceleratorKey!accessing!public! !
 acceleratorKey:!accessing!private! !
@@ -272,6 +279,7 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^1! !
+
 !MenuItem class categoriesForMethods!
 errorIllegalMenuString:!exceptions!private! !
 fromString:!instance creation!public! !

@@ -5,15 +5,20 @@ Win32Structure subclass: #LVBKIMAGEW
 	classVariableNames: '_OffsetOf_cchImageMax _OffsetOf_hbm _OffsetOf_pszImage _OffsetOf_ulFlags _OffsetOf_xOffsetPercent _OffsetOf_yOffsetPercent'
 	poolDictionaries: 'ListViewConstants'
 	classInstanceVariableNames: ''!
+
 LVBKIMAGEW guid: (GUID fromString: '{33fccb1a-f5ba-4ae8-93ad-63d00b9aa869}')!
+
 LVBKIMAGEW addClassConstant: '_OffsetOf_cchImageMax' value: 16rC!
 LVBKIMAGEW addClassConstant: '_OffsetOf_hbm' value: 16r4!
 LVBKIMAGEW addClassConstant: '_OffsetOf_pszImage' value: 16r8!
 LVBKIMAGEW addClassConstant: '_OffsetOf_ulFlags' value: 16r0!
 LVBKIMAGEW addClassConstant: '_OffsetOf_xOffsetPercent' value: 16r10!
 LVBKIMAGEW addClassConstant: '_OffsetOf_yOffsetPercent' value: 16r14!
+
 LVBKIMAGEW comment: ''!
+
 !LVBKIMAGEW categoriesForClass!External-Data-Structured-Win32! !
+
 !LVBKIMAGEW methodsFor!
 
 bitmap: aBitmapOrNil 
@@ -129,6 +134,7 @@ yOffsetPercent: anInteger
 	"Set the receiver's 'yOffsetPercent' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_yOffsetPercent put: anInteger! !
+
 !LVBKIMAGEW categoriesForMethods!
 bitmap:!accessing!public! !
 cchImageMax:!**compiled accessors**!public! !
@@ -170,6 +176,7 @@ defineFields
 
 getFieldNames
 	^#(#ulFlags #hbm #pszImage #cchImageMax #xOffsetPercent #yOffsetPercent)! !
+
 !LVBKIMAGEW class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

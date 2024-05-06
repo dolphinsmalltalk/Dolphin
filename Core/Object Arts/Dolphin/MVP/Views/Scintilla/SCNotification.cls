@@ -5,7 +5,9 @@ NMHDR subclass: #SCNotification
 	classVariableNames: '_OffsetOf_annotationLinesAdded _OffsetOf_ch _OffsetOf_characterSource _OffsetOf_foldLevelNow _OffsetOf_foldLevelPrev _OffsetOf_length _OffsetOf_linesAdded _OffsetOf_listCompletionMethod _OffsetOf_listType _OffsetOf_lParam _OffsetOf_margin _OffsetOf_message _OffsetOf_modificationType _OffsetOf_modifiers _OffsetOf_scLine _OffsetOf_scPosition _OffsetOf_text _OffsetOf_token _OffsetOf_updated _OffsetOf_wParam _OffsetOf_x _OffsetOf_y'
 	poolDictionaries: 'ScintillaConstants'
 	classInstanceVariableNames: ''!
+
 SCNotification guid: (GUID fromString: '{b4e498b9-ad7b-4519-86f5-1e6232fbd0bd}')!
+
 SCNotification addClassConstant: '_OffsetOf_annotationLinesAdded' value: 16r54!
 SCNotification addClassConstant: '_OffsetOf_ch' value: 16r10!
 SCNotification addClassConstant: '_OffsetOf_characterSource' value: 16r60!
@@ -28,10 +30,13 @@ SCNotification addClassConstant: '_OffsetOf_updated' value: 16r58!
 SCNotification addClassConstant: '_OffsetOf_wParam' value: 16r2C!
 SCNotification addClassConstant: '_OffsetOf_x' value: 16r48!
 SCNotification addClassConstant: '_OffsetOf_y' value: 16r4C!
+
 SCNotification comment: '<SCNotification> is an <ExternalStructure> class to wrap the struct ''ScintillaLib.SCNotification'' from type information in the ''Scintiall 1.46 Type Library'' library.
 
 Note that the ''text'' field is not null terminated (the number of characters is specified by the ''length'' field), and is only valid for SCN_MODIFIED notifications where the SC_MOD_DELETETEXT or SC_MOD_INSERTTEXT ''modificationType'' is specified.'!
+
 !SCNotification categoriesForClass!ScintillaLib-Structs! !
+
 !SCNotification methodsFor!
 
 annotationLinesAdded
@@ -271,6 +276,7 @@ y
 	"Answer the <Integer> value of the receiver's 'y' field."
 
 	^bytes sdwordAtOffset: _OffsetOf_y! !
+
 !SCNotification categoriesForMethods!
 annotationLinesAdded!**compiled accessors**!public! !
 ch!**compiled accessors**!public! !
@@ -340,6 +346,7 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #scPosition #ch #modifiers #modificationType #text #length #linesAdded #message #wParam #lParam #scLine #foldLevelNow #foldLevelPrev #margin #listType #x #y #token #annotationLinesAdded #updated #listCompletionMethod #characterSource)! !
+
 !SCNotification class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

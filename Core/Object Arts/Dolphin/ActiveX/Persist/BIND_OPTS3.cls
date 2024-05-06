@@ -5,10 +5,15 @@ BIND_OPTS2 subclass: #BIND_OPTS3
 	classVariableNames: '_OffsetOf_hwnd'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 BIND_OPTS3 guid: (GUID fromString: '{4ff80f9b-48b3-4cb4-af46-8c77a6173a31}')!
+
 BIND_OPTS3 addClassConstant: '_OffsetOf_hwnd' value: 16r20!
+
 BIND_OPTS3 comment: 'BIND_OPTS3 is an <ExternalStructure> class to represent the OLE Persistence and Data Transfer structure of the same name.'!
+
 !BIND_OPTS3 categoriesForClass!External-Data-Structured-COM! !
+
 !BIND_OPTS3 methodsFor!
 
 dwSize: anInteger
@@ -25,6 +30,7 @@ hwnd: anExternalHandle
 	"Set the receiver's 'hwnd' field to the value of the argument, anExternalHandle"
 
 	bytes uintPtrAtOffset: _OffsetOf_hwnd put: anExternalHandle! !
+
 !BIND_OPTS3 categoriesForMethods!
 dwSize:!**compiled accessors**!public! !
 hwnd!**compiled accessors**!public! !
@@ -56,6 +62,7 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #grfFlags #grfMode #dwTickCountDeadline #dwTrackFlags #dwClassContext #locale #pServerInfo #hwnd)! !
+
 !BIND_OPTS3 class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

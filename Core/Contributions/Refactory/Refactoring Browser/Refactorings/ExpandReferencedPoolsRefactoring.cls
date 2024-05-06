@@ -5,7 +5,9 @@ Refactoring subclass: #ExpandReferencedPoolsRefactoring
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExpandReferencedPoolsRefactoring guid: (GUID fromString: '{5567e549-3f11-4042-99cd-794dab099550}')!
+
 ExpandReferencedPoolsRefactoring comment: 'ExpandReferencedPoolsRefactoring is a refactoring that expands a PoolDictionary''s scope for a method that is being moved from one class to another. This refactoring is primarily used to support other, more complicated refactorings such as MoveMethod.
 
 Instance Variables:
@@ -15,7 +17,9 @@ Instance Variables:
 	toClasses	<Collection of: RBClass>	The classes into which the pools must be expanded.
 
 '!
+
 !ExpandReferencedPoolsRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !ExpandReferencedPoolsRefactoring methodsFor!
 
 computePoolsToMove
@@ -85,6 +89,7 @@ whichPoolDefines: varName
 				do: [:each | ((self poolVariableNamesIn: each) includes: varName) ifTrue: [^each]].
 			currentClass := currentClass superclass].
 	^nil! !
+
 !ExpandReferencedPoolsRefactoring categoriesForMethods!
 computePoolsToMove!public!transforming! !
 forMethod:fromClass:toClasses:!initialize/release!public! !
@@ -113,6 +118,7 @@ model: aRBNamespace forMethod: aParseTree fromClass: aClass toClasses: classColl
 			fromClass: aClass
 			toClasses: classCollection;
 		yourself! !
+
 !ExpandReferencedPoolsRefactoring class categoriesForMethods!
 forMethod:fromClass:toClasses:!instance creation!public! !
 model:forMethod:fromClass:toClasses:!instance creation!public! !

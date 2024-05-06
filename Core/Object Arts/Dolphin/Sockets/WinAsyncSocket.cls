@@ -5,7 +5,9 @@ View subclass: #WinAsyncSocket
 	classVariableNames: 'DefaultInstance SocketMessageMap UserMessageMap WsaEvent WsaHostInfo'
 	poolDictionaries: 'WinSocketConstants'
 	classInstanceVariableNames: ''!
+
 WinAsyncSocket guid: (GUID fromString: '{87b4c717-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 WinAsyncSocket comment: '** This class is part of the old asynchronous Sockets Connection package which has been superseded by the Dolphin Sockets package **
 
 WinAsyncSocket  represents a hidden singleton <view> capable of receiving callbacks from the Windows WSA asynchronous socket library functions. Its singleton instance receives notifications of WSA_XXX events by means of Windows messages. These notifications are interpreted and then passed on to the appropriate handler methods within a <SocketAbstract>. 
@@ -22,7 +24,9 @@ Class Variables:
 	DefaultInstance		<WinAsyncSocket> which is the singleton instance of this class.
 
 '!
+
 !WinAsyncSocket categoriesForClass!Windows Sockets! !
+
 !WinAsyncSocket methodsFor!
 
 applyFont
@@ -90,6 +94,7 @@ wsaEvent: message wParam: wParam lParam: lParam
 	event := lParam lowWord.
 	selector := SocketMessageMap at: event ifAbsent: nil.
 	selector notNil ifTrue: [socket perform: selector]! !
+
 !WinAsyncSocket categoriesForMethods!
 applyFont!font!private!updating! !
 cancelSocket:!operations!private! !
@@ -151,6 +156,7 @@ uninitialize
 		ifTrue: 
 			[DefaultInstance destroy.
 			DefaultInstance := nil]! !
+
 !WinAsyncSocket class categoriesForMethods!
 default!accessing!public! !
 defaultWmUserOffset!constants!private! !

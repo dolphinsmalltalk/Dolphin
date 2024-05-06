@@ -5,9 +5,13 @@ ValueDialog subclass: #PackagePrompter
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PackagePrompter guid: (GUID fromString: '{ed9a3d68-797c-4678-adf9-520204c0023f}')!
+
 PackagePrompter comment: 'self show'!
+
 !PackagePrompter categoriesForClass!MVP-Presenters! !
+
 !PackagePrompter methodsFor!
 
 createComponents
@@ -82,6 +86,7 @@ validationBlock: aBlock
 	is valid. The OK button is not enabled until the validationBlock answers true."
 
 	validationBlock := aBlock! !
+
 !PackagePrompter categoriesForMethods!
 createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !
@@ -140,6 +145,7 @@ showModalOn: aModel caption: aString default: aPackage validationBlock: aBlock
 		caption: aString;
 		validationBlock: aBlock;
 		showModal! !
+
 !PackagePrompter class categoriesForMethods!
 defaultValidationBlock!constants!public! !
 icon!accessing!constants!public! !

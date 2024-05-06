@@ -5,13 +5,16 @@ MultilineTextEdit subclass: #ScintillaView
 	classVariableNames: 'AnnotationStylesOffset BackgroundDwellEvents BraceHilightingMask CodePages DefaultCallTipTabWidth DefaultKeyBindings DefaultTextStyles FoldingMask Library MarginStylesOffset'
 	poolDictionaries: 'ScintillaConstants Win32Constants'
 	classInstanceVariableNames: ''!
+
 ScintillaView guid: (GUID fromString: '{47a3310b-b7e4-4aa9-b6e6-640ad9fe7a3a}')!
+
 ScintillaView addClassConstant: 'AnnotationStylesOffset' value: 16r200!
 ScintillaView addClassConstant: 'BackgroundDwellEvents' value: 16r4!
 ScintillaView addClassConstant: 'BraceHilightingMask' value: 16r1!
 ScintillaView addClassConstant: 'DefaultCallTipTabWidth' value: 16r20!
 ScintillaView addClassConstant: 'FoldingMask' value: 16r2!
 ScintillaView addClassConstant: 'MarginStylesOffset' value: 16r100!
+
 ScintillaView comment: '`ScintillaView` is a `<valueView>` class that wraps the ["Scintilla" programmers'' edit control](https://www.scintilla.org/index.html). 
 
 Scintilla is a very powerful control with an extensive range of features. It is inevitably somewhat complex, and you are urged to read the [Scintilla documentation](https://www.scintilla.org/ScintillaDoc.html) if you want to use this control in your own applications. In order to expose the full capabilities of Scintilla, this class and its supporting classes are also somewhat complex, but as far as reasonably possible this complexity is hidden from common use cases.
@@ -106,7 +109,9 @@ N.B. Scintilla is an excellent editor control, but does not do much parameter va
   `MarginStylesOffset`		`<integer>`
   `FoldingMask`			`<integer>` bit mask for access the folding (outlining) enabled flag.
 '!
+
 !ScintillaView categoriesForClass!MVP-Views! !
+
 !ScintillaView methodsFor!
 
 acceptAutoCompletion
@@ -11315,6 +11320,7 @@ zoomOut
 				msg: SCI_ZOOMOUT
 				wParam: 0
 				lParam: 0]! !
+
 !ScintillaView categoriesForMethods!
 acceptAutoCompletion!**auto generated**!autocompletion!commands!public!scintilla interface! !
 activeHotspotBackcolor!caret, selection, and hotspot styles!public! !
@@ -13106,6 +13112,7 @@ xmlTextStyles
 							b: 102);
 				yourself).
 	^styles! !
+
 !ScintillaView class categoriesForMethods!
 annotationModes!constants!public! !
 autoCompletionSortModes!constants!private! !

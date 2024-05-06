@@ -5,7 +5,9 @@ ISchemaItem subclass: #ISchemaType
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
 	classInstanceVariableNames: ''!
+
 ISchemaType guid: (IID fromString: '{50ea08b8-dd1b-4664-9a50-c2f40f4bd79a}')!
+
 ISchemaType comment: '<ISchemaType> is a wrapper class for the COM interface ''MSXML2.ISchemaType'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
@@ -78,7 +80,9 @@ interface ISchemaType : ISchemaItem
 		[out, retval]ISchemaStringCollection** patterns);
 };
 '!
+
 !ISchemaType categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+
 !ISchemaType methodsFor!
 
 baseTypes
@@ -389,6 +393,7 @@ whitespace
 	self get_whitespace: answer.
 	^answer asObject
 ! !
+
 !ISchemaType categoriesForMethods!
 baseTypes!**auto generated**!properties!public! !
 derivedBy!**auto generated**!properties!public! !
@@ -468,6 +473,7 @@ defineFunctions
 		defineFunction: #get_patterns:
 			argumentTypes: 'ISchemaStringCollection**'
 ! !
+
 !ISchemaType class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

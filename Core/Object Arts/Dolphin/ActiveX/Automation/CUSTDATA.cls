@@ -5,15 +5,20 @@ OLEFinalizableStructure subclass: #CUSTDATA
 	classVariableNames: '_OffsetOf_cCustData _OffsetOf_prgCustData WellKnownCustomAttributes'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 CUSTDATA guid: (GUID fromString: '{c06f3b7b-0868-11d3-93af-00a024ca708a}')!
+
 CUSTDATA addClassConstant: '_OffsetOf_cCustData' value: 16r0!
 CUSTDATA addClassConstant: '_OffsetOf_prgCustData' value: 16r4!
+
 CUSTDATA comment: '<CUSTDATA> is an <ExternalStructure> class to wrap the struct ''OAIDL.CUSTDATA'' from type information in the ''Ole Automation Type Library'' library.
 
 The type library contains no documentation for this struct
 
 Warning: This comment was automatically generated from the struct''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.'!
+
 !CUSTDATA categoriesForClass!External-Data-Structured-COM! !
+
 !CUSTDATA methodsFor!
 
 basicFree
@@ -50,6 +55,7 @@ prgCustData
 		fromAddress: (bytes intPtrAtOffset: _OffsetOf_prgCustData)
 		length: self cCustData
 		elementClass: CUSTDATAITEM! !
+
 !CUSTDATA categoriesForMethods!
 basicFree!private!realizing/unrealizing! !
 buildContents!printing-IDL!private! !
@@ -92,6 +98,7 @@ initialize
 		at: (GUID fromString: '{82a85647-bd20-4075-823b-d9758c4391eb}') put: #length_is;
 		at: (GUID fromString: '{be29f9d9-7844-49e1-aacb-8e19386529df}') put: #size_is;
 		shrink! !
+
 !CUSTDATA class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

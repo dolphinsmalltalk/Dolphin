@@ -5,7 +5,9 @@ ICoreWebView2NewWindowRequestedEventArgs subclass: #ICoreWebView2NewWindowReques
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2NewWindowRequestedEventArgs2 guid: (IID fromString: '{bbc7baed-74c6-4c92-b63a-7f5aeae03de3}')!
+
 ICoreWebView2NewWindowRequestedEventArgs2 comment: '`ICoreWebView2NewWindowRequestedEventArgs2` is a wrapper class for the COM interface ''WebView2.ICoreWebView2NewWindowRequestedEventArgs2'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -26,7 +28,9 @@ interface ICoreWebView2NewWindowRequestedEventArgs2 : ICoreWebView2NewWindowRequ
 };
 ```
 '!
+
 !ICoreWebView2NewWindowRequestedEventArgs2 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2NewWindowRequestedEventArgs2 methodsFor!
 
 get_name: value
@@ -37,6 +41,7 @@ get_name: value
 
 	<virtual stdcall: hresult 12 lpwstr*>
 	^self invalidCall: _failureCode! !
+
 !ICoreWebView2NewWindowRequestedEventArgs2 categoriesForMethods!
 get_name:!**auto generated**!COM Interfaces-ICoreWebView2NewWindowRequestedEventArgs2!private! !
 !
@@ -51,6 +56,7 @@ defineFunctions
 		defineFunction: #get_name:
 			argumentTypes: 'lpwstr*'
 ! !
+
 !ICoreWebView2NewWindowRequestedEventArgs2 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

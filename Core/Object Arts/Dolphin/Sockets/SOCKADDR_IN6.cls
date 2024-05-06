@@ -5,13 +5,16 @@ SOCKADDR subclass: #SOCKADDR_IN6
 	classVariableNames: '_OffsetOf_sin6_addr _OffsetOf_sin6_family _OffsetOf_sin6_flowinfo _OffsetOf_sin6_port _OffsetOf_sin6_scope_id _OffsetOf_sin6_scope_struct'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SOCKADDR_IN6 guid: (GUID fromString: '{a989cfcf-96f5-40b8-9904-cb33f7c78940}')!
+
 SOCKADDR_IN6 addClassConstant: '_OffsetOf_sin6_addr' value: 16r8!
 SOCKADDR_IN6 addClassConstant: '_OffsetOf_sin6_family' value: 16r0!
 SOCKADDR_IN6 addClassConstant: '_OffsetOf_sin6_flowinfo' value: 16r4!
 SOCKADDR_IN6 addClassConstant: '_OffsetOf_sin6_port' value: 16r2!
 SOCKADDR_IN6 addClassConstant: '_OffsetOf_sin6_scope_id' value: 16r18!
 SOCKADDR_IN6 addClassConstant: '_OffsetOf_sin6_scope_struct' value: 16r18!
+
 SOCKADDR_IN6 comment: '<SOCKADDR_IN6> is an <ExternalStructure> class to wrap the struct ''Win32.SOCKADDR_IN6'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
@@ -33,7 +36,9 @@ struct tagSOCKADDR_IN6 {
 	};
 } SOCKADDR_IN6;
 '!
+
 !SOCKADDR_IN6 categoriesForClass!Win32-Structs! !
+
 !SOCKADDR_IN6 methodsFor!
 
 flowInfo
@@ -109,6 +114,7 @@ sin6_scope_id: anInteger
 	"Set the receiver's 'sin6_scope_id' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_sin6_scope_id put: anInteger! !
+
 !SOCKADDR_IN6 categoriesForMethods!
 flowInfo!accessing!public! !
 flowInfo:!accessing!public! !
@@ -161,6 +167,7 @@ defineFields
 
 getFieldNames
 	^#(#sin6_family #sin6_port #sin6_flowinfo #sin6_addr #sin6_scope_id)! !
+
 !SOCKADDR_IN6 class categoriesForMethods!
 addressFamily!constants!public! !
 defineFields!**auto generated**!public!template definition! !

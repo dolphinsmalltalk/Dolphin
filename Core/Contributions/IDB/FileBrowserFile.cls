@@ -5,13 +5,17 @@ FileBrowserAbstract subclass: #FileBrowserFile
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 FileBrowserFile guid: (GUID fromString: '{782ed51a-5423-11d3-998b-bca753d3b065}')!
+
 FileBrowserFile comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
+
 !FileBrowserFile categoriesForClass!IDB Goodies! !
+
 !FileBrowserFile methodsFor!
 
 isChunkFile
@@ -60,6 +64,7 @@ type
 	"Answer the value of the receiver's 'type' instance variable."
 
 	^type! !
+
 !FileBrowserFile categoriesForMethods!
 isChunkFile!public!testing! !
 isHTMLFile!public!testing! !

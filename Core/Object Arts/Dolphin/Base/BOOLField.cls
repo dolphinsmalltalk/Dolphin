@@ -5,9 +5,13 @@ ScalarField subclass: #BOOLField
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 BOOLField guid: (GUID fromString: '{87b4c4e6-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 BOOLField comment: '<BOOLField> is a <ScalarField> class to represent <ExternalStructure> fields that are boolean values encoded as 32-bit integers, where 0 is False, and any other value is True.'!
+
 !BOOLField categoriesForClass!External-Data-Types! !
+
 !BOOLField methodsFor!
 
 accessorMessage
@@ -41,6 +45,7 @@ writeInto: anExternalStructure value: anObject
 	<Boolean> argument, anObject."
 
 	anExternalStructure bytes dwordAtOffset: offset put: anObject asParameter! !
+
 !BOOLField categoriesForMethods!
 accessorMessage!automatic generation!private! !
 fieldClassName!automatic generation!constants!development!private! !

@@ -5,13 +5,17 @@ IPersist subclass: #IPersistStream
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IPersistStream guid: (IID fromString: '{00000109-0000-0000-c000-000000000046}')!
+
 IPersistStream comment: '<IPersistStream> is a wrapper class for the custom interface ''OBJIDL.IPersistStream'' generated from type information in the ''ObjIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface.
 
 WARNING: This comment was automatically generated from the interface''s type information and any changes made here may be overwritten the next time this wrapper class is so generated.'!
+
 !IPersistStream categoriesForClass!COM-Interfaces! !
+
 !IPersistStream methodsFor!
 
 GetSizeMax: pcbSize
@@ -86,6 +90,7 @@ storeOn: anIStream clearDirty: aBoolean
 	the stream to be in the standard format)."
 
 	self Save: anIStream fClearDirty: aBoolean! !
+
 !IPersistStream categoriesForMethods!
 GetSizeMax:!**auto generated**!COM Interfaces-OBJIDL.IPersistStream!primitives!public! !
 IsDirty!**auto generated**!COM Interfaces-OBJIDL.IPersistStream!primitives!public! !
@@ -115,6 +120,7 @@ defineFunctions
 		defineFunction: #GetSizeMax:
 			argumentTypes: 'qword*'
 ! !
+
 !IPersistStream class categoriesForMethods!
 defineFunctions!initializing!public! !
 !

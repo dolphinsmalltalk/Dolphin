@@ -5,9 +5,13 @@ COMInterfaceImp subclass: #EnumRECT
 	classVariableNames: 'CRECTS'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 EnumRECT guid: (GUID fromString: '{e3913c41-9396-11d3-b376-0800460222f0}')!
+
 EnumRECT comment: 'EnumRECT is a sample implementation of the generic COM enumeration interface, IEnumXXX, specialized to enumeration RECT (rectangle) structures.'!
+
 !EnumRECT categoriesForClass!Samples! !
+
 !EnumRECT methodsFor!
 
 Clone: ppEnum 
@@ -94,6 +98,7 @@ supportedInterfaces
 	"Answer the set of interface classes supported by the receiver."
 
 	^Array with: IEnumRECT! !
+
 !EnumRECT categoriesForMethods!
 Clone:!COM Interfaces-IEnumXXXX!public! !
 initialize!initializing!public! !
@@ -114,6 +119,7 @@ new
 	"Answer a new initialized instance of the receiver."
 
 	^super new initialize! !
+
 !EnumRECT class categoriesForMethods!
 initialize!initializing!private! !
 new!instance creation!public! !

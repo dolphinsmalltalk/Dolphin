@@ -26,7 +26,6 @@ The above scenario uses the default encryption which may not be suitable for all
 
 package basicPackageVersion: '6.0'.
 
-
 package classNames
 	add: #ProtectedProductSessionManager;
 	yourself.
@@ -53,11 +52,6 @@ RuntimeSessionManager subclass: #ProtectedProductSessionManager
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

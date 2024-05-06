@@ -5,9 +5,13 @@ AbstractSocketTest subclass: #Socket2Test
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Socket2Test guid: (GUID fromString: '{25407553-d303-4d50-ad3d-b05b28a27c47}')!
+
 Socket2Test comment: ''!
+
 !Socket2Test categoriesForClass!Unclassified! !
+
 !Socket2Test methodsFor!
 
 clientSocketClass
@@ -55,6 +59,7 @@ testSTBMessages
 	ready wait.
 	messages := messages asArray.
 	self assert: messages equals: sent! !
+
 !Socket2Test categoriesForMethods!
 clientSocketClass!constants!private! !
 serverSocketClass!constants!private!unit tests! !

@@ -5,9 +5,13 @@ ClassBrowserAbstract subclass: #EnvironmentBrowserShell
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 EnvironmentBrowserShell guid: (GUID fromString: '{b6ccd231-d2fb-4d98-b006-6a3ba26a4849}')!
+
 EnvironmentBrowserShell comment: ''!
+
 !EnvironmentBrowserShell categoriesForClass!MVP-Presenters! !
+
 !EnvironmentBrowserShell methodsFor!
 
 browseExecutableManifest
@@ -172,6 +176,7 @@ toggleLocalHierarchy
 			classesPresenter model: self model classHierarchy.
 			actualClass notNil ifTrue: [self actualClass: actualClass]].
 	self validateUserInterface! !
+
 !EnvironmentBrowserShell categoriesForMethods!
 browseExecutableManifest!commands!public! !
 browseExecutableManifestFile:!commands!public! !
@@ -262,6 +267,7 @@ toolsFolderIcon
 				caption: desc;
 				show]
 		helpId: self toolsFolderHelpId! !
+
 !EnvironmentBrowserShell class categoriesForMethods!
 displayOn:!displaying!public! !
 icon!constants!public! !

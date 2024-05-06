@@ -5,9 +5,13 @@ DolphinTest subclass: #PublishedAspectInspectorTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PublishedAspectInspectorTest guid: (GUID fromString: '{26c95677-a861-4030-8d8e-b6bed0a6c3ef}')!
+
 PublishedAspectInspectorTest comment: ''!
+
 !PublishedAspectInspectorTest categoriesForClass!Unclassified! !
+
 !PublishedAspectInspectorTest methodsFor!
 
 aspectAccessorNamed: aSymbol
@@ -667,6 +671,7 @@ testSetToNil
 	inspector setAspectValue: nil.
 	self assert: treePresenter view itemCount identicalTo: 2.
 	self repaint! !
+
 !PublishedAspectInspectorTest categoriesForMethods!
 aspectAccessorNamed:!helpers!private! !
 aspectPresenter!accessing!private! !

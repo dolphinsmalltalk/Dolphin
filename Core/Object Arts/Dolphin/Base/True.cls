@@ -5,13 +5,17 @@ Boolean subclass: #True
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 True guid: (GUID fromString: '{87b4c4fe-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 True comment: 'The True class implements the behavior of the true (logical truth) object.
 
 Trueis a singleton whose sole instance is the object represented by the reserved word, true. true is an identity object (i.e. any reference to true will always answer true when compared with any other using the #== message).
 
 True implement the ANSI protocols <Object> and <boolean>.'!
+
 !True categoriesForClass!Kernel-Objects! !
+
 !True methodsFor!
 
 and: operand 
@@ -116,6 +120,7 @@ xor: operand
 	Since the receiver is true, the answer is true only if the argument is false."
 
 	^operand not! !
+
 !True categoriesForMethods!
 and:!control flow!public! !
 asDword!converting!public! !

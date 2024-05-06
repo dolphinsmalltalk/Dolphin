@@ -5,7 +5,9 @@ ISchemaItem subclass: #ISchemaAttribute
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
 	classInstanceVariableNames: ''!
+
 ISchemaAttribute guid: (IID fromString: '{50ea08b6-dd1b-4664-9a50-c2f40f4bd79a}')!
+
 ISchemaAttribute comment: '<ISchemaAttribute> is a wrapper class for the COM interface ''MSXML2.ISchemaAttribute'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
@@ -44,7 +46,9 @@ interface ISchemaAttribute : ISchemaItem
 		[out, retval]VARIANT_BOOL* reference);
 };
 '!
+
 !ISchemaAttribute categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+
 !ISchemaAttribute methodsFor!
 
 defaultValue
@@ -154,6 +158,7 @@ use
 	self get_use: answer.
 	^answer asObject
 ! !
+
 !ISchemaAttribute categoriesForMethods!
 defaultValue!**auto generated**!properties!public! !
 fixedValue!**auto generated**!properties!public! !
@@ -189,6 +194,7 @@ defineFunctions
 		defineFunction: #get_isReference:
 			argumentTypes: 'varbool*'
 ! !
+
 !ISchemaAttribute class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

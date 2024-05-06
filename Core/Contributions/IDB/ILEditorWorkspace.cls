@@ -5,13 +5,17 @@ View subclass: #ILEditorWorkspace
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ILEditorWorkspace guid: (GUID fromString: '{367ecf4d-c63b-44a0-a054-07d7fcc14c7b}')!
+
 ILEditorWorkspace comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
+
 !ILEditorWorkspace categoriesForClass!IDB Goodies! !
+
 !ILEditorWorkspace methodsFor!
 
 clearZone
@@ -330,6 +334,7 @@ zoomDescription
 		nextPutAll: ' Zoom: ';
 		display: zoom;
 		contents! !
+
 !ILEditorWorkspace categoriesForMethods!
 clearZone!event handling!public! !
 connectModel!models!public! !
@@ -378,6 +383,7 @@ resource_Default_view
 	"
 
 	^#(#'!!STL' 3 788558 10 ##(STBViewProxy)  8 ##(ILEditorWorkspace)  98 16 0 0 98 2 8 1140850688 1 416 0 721158 ##(SystemColor)  31 0 519 0 0 0 416 0 0 0 0 983302 ##(MessageSequence)  202 208 98 1 721670 ##(MessageSend)  8 #createAt:extent: 98 2 328198 ##(Point)  11 11 658 225 201 416 983302 ##(WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 117 0 0 0 105 0 0 0] 98 0 658 193 193 0 27 )! !
+
 !ILEditorWorkspace class categoriesForMethods!
 resource_Default_view!public!resources-views! !
 !

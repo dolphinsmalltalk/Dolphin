@@ -5,10 +5,13 @@ Win32Structure subclass: #DTBGOPTS
 	classVariableNames: '_OffsetOf_dwFlags _OffsetOf_dwSize _OffsetOf_rcClip'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DTBGOPTS guid: (GUID fromString: '{cdf611d8-4c3f-48a1-b3eb-fd222762e69b}')!
+
 DTBGOPTS addClassConstant: '_OffsetOf_dwFlags' value: 16r4!
 DTBGOPTS addClassConstant: '_OffsetOf_dwSize' value: 16r0!
 DTBGOPTS addClassConstant: '_OffsetOf_rcClip' value: 16r8!
+
 DTBGOPTS comment: '<DTBGOPTS> is an <ExternalStructure> class to wrap the struct ''Win32.DTBGOPTS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains the following helpstring for this struct
@@ -25,7 +28,9 @@ struct tagDTBGOPTS {
 	[helpstring("clipping rectangle")] RECT rcClip;
 } DTBGOPTS;
 '!
+
 !DTBGOPTS categoriesForClass!Win32-Structs! !
+
 !DTBGOPTS methodsFor!
 
 dwFlags
@@ -61,6 +66,7 @@ rcClip: aRECT
 		from: ##(_OffsetOf_rcClip + 1)
 		to: ##(_OffsetOf_rcClip + RECT basicByteSize)
 		startingAt: 1! !
+
 !DTBGOPTS categoriesForMethods!
 dwFlags!**compiled accessors**!public! !
 dwFlags:!**compiled accessors**!public! !
@@ -91,6 +97,7 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #dwFlags #rcClip)! !
+
 !DTBGOPTS class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

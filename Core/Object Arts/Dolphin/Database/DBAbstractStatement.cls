@@ -5,8 +5,11 @@ Object subclass: #DBAbstractStatement
 	classVariableNames: 'CursorTypes'
 	poolDictionaries: 'ODBCConstants ODBCRetCodes'
 	classInstanceVariableNames: ''!
+
 DBAbstractStatement guid: (GUID fromString: '{f63fc993-6a18-49de-a8d2-07b192c69097}')!
+
 DBAbstractStatement isAbstract: true!
+
 DBAbstractStatement comment: 'A DBAbstractStatements represent commands that can be executed by against a <DBConnection>. DBAbstractStatement is itself abstract. Its most commonly used concrete subclass is <DBStatement>, which can be used to execute SQL statements. Other subclasses represent individual queries that can be performed against the metadata in the database schema using the specific functions provided for this purpose in ODBC. Whatever the form of the command the subclass of statement represents, all yield a <DBResultSet>.
 
 Instance Variables:
@@ -14,7 +17,9 @@ Instance Variables:
 	parent		<DBConnection>. The connection on which the statement was (or will be) executed
 	executed		<Boolean>. Indicates if the command has been executed yet.
 	cursorType	<Symbol>. The symbolic name of the cursor type, e.g. #forwardOnly'!
+
 !DBAbstractStatement categoriesForClass!ODBC Interface! !
+
 !DBAbstractStatement methodsFor!
 
 allocatedHandle
@@ -345,6 +350,7 @@ statusArray: anArrayOfWORDs
 
 suppressErrorsDo: aNiladicBlock 
 	aNiladicBlock on: DBError do: [:e | e toTrace]! !
+
 !DBAbstractStatement categoriesForMethods!
 allocatedHandle!accessing!private! !
 asParameter!accessing!public! !
@@ -469,6 +475,7 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^2! !
+
 !DBAbstractStatement class categoriesForMethods!
 initialize!initializing!public! !
 new!instance creation!private! !

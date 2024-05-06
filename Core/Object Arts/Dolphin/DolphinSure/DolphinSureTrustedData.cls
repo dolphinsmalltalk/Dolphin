@@ -5,7 +5,9 @@ Object subclass: #DolphinSureTrustedData
 	classVariableNames: 'ValidStbClasses'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DolphinSureTrustedData guid: (GUID fromString: '{6ba876e9-8f00-4f03-bed6-f2f6af4edbf1}')!
+
 DolphinSureTrustedData comment: 'A DolphinSureTrustedData object represents data that has been encrypted with a particular publisher''s certificate.  The intent is that the data can be guaranteed as originating from a particular publisher (identified by the encapsulated certificate) and that it can also be trusted not to have been modified since it was published.  It is not used as a means of transmitting "secret" data (since anyone can directly see it) but as a means of transmitting signed data.
 
 In order to create a piece of signed/trusted data it is necessary to have a DolphinSureCertificate and a matching private key.  These can be obtained by applying to a DolphinSure certificate authority such as Object Arts Ltd (http://www.object-arts.com/DolphinSure). The raw data is signed by first hasing with the SecurehashAlgorithm and then encrypting the result using the DigitalSignatureAlgorithm and the private key of the publisher''s certificate. The point is that, the key can be easily verified to match the hash of the data and it is therefore very difficult to forge another message that pertains to be from the same source.
@@ -38,7 +40,9 @@ Instance Variables:
 	publisherCertificate		<DolphinSureCertificate> identifying the message publisher.
 
 '!
+
 !DolphinSureTrustedData categoriesForClass!Cryptography-Support! !
+
 !DolphinSureTrustedData methodsFor!
 
 data
@@ -145,6 +149,7 @@ validDataPublishedBy: aPublisherCertificate
 
 	self publisherCertificate = aPublisherCertificate ifFalse: [TrustedDataError signal].
 	^self validData! !
+
 !DolphinSureTrustedData categoriesForMethods!
 data!accessing!public! !
 data:description:privateKey:!accessing!public! !
@@ -254,6 +259,7 @@ signatureAlgorithm
 	"Private - Answer the signature algorithm of the receiver"
 
 	^DigitalSignatureAlgorithm! !
+
 !DolphinSureTrustedData class categoriesForMethods!
 binaryReadFrom:context:!binary filing!public! !
 data:description:publisherCertificate:privateKey:!instance creation!public! !

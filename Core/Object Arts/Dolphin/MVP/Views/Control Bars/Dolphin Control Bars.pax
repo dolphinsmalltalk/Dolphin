@@ -9,7 +9,6 @@ This package contains MVP View wrappers for the Windows "control bar" controls (
 
 package basicPackageVersion: '6.2'.
 
-
 package classNames
 	add: #ControlBarAbstract;
 	add: #NMMOUSE;
@@ -56,96 +55,108 @@ Object subclass: #StatusBarItemAbstract
 	classVariableNames: 'BorderStyles'
 	poolDictionaries: 'StatusBarConstants'
 	classInstanceVariableNames: ''!
+
 Object subclass: #ToolbarItem
 	instanceVariableNames: 'toolbar'
 	classVariableNames: ''
 	poolDictionaries: 'ToolbarConstants'
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #TBADDBITMAP
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_hInst _OffsetOf_nID'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #TBBUTTON
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_dwData _OffsetOf_fsState _OffsetOf_fsStyle _OffsetOf_iBitmap _OffsetOf_idCommand _OffsetOf_iString'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #TBBUTTONINFOW
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_cchText _OffsetOf_cx _OffsetOf_dwMask _OffsetOf_dwSize _OffsetOf_fsState _OffsetOf_fsStyle _OffsetOf_idCommand _OffsetOf_iImage _OffsetOf_lParam _OffsetOf_pszText'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 NMHDR subclass: #NMMOUSE
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_dwHitInfo _OffsetOf_dwItemData _OffsetOf_dwItemSpec _OffsetOf_pt'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 NMHDR subclass: #NMTOOLBARW
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_cchText _OffsetOf_iItem _OffsetOf_pszText _OffsetOf_tbButton'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StatusBarItemAbstract subclass: #StatusBarItem
 	instanceVariableNames: 'getTextBlock getImageBlock reserved1'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 StatusBarItemAbstract subclass: #StatusBarNullItem
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ToolbarItem subclass: #ToolbarButton
 	instanceVariableNames: 'style commandDescription commandId'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ToolbarItem subclass: #ToolbarSeparator
 	instanceVariableNames: 'width'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ToolbarButton subclass: #ToolbarBitmapButton
 	instanceVariableNames: 'bitmap bitmapIndex'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ToolbarButton subclass: #ToolbarIconButton
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ToolbarButton subclass: #ToolbarSystemButton
 	instanceVariableNames: 'bitmapId bitmapIndex'
 	classVariableNames: 'BitmapButtons Bitmaps HistoryButtons StandardButtons ViewButtons'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AbstractNonReferenceDelegatingView subclass: #ToolButton
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ControlView subclass: #ControlBarAbstract
 	instanceVariableNames: 'names'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ControlBarAbstract subclass: #StatusBar
 	instanceVariableNames: 'parts leftOverSeparator layoutManager'
 	classVariableNames: ''
 	poolDictionaries: 'StatusBarConstants'
 	classInstanceVariableNames: ''!
+
 ControlBarAbstract subclass: #Toolbar
 	instanceVariableNames: 'idMap items bitmapsStart insets tbFlags indent bitmapSize buttonSize tipText layoutManager'
 	classVariableNames: 'LabelsMask'
 	poolDictionaries: 'ToolbarConstants'
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

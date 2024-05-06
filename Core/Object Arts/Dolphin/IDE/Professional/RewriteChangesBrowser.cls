@@ -5,9 +5,13 @@ SmalltalkToolShell subclass: #RewriteChangesBrowser
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RewriteChangesBrowser guid: (GUID fromString: '{99c85442-1f6a-4912-a74b-7449ae28471b}')!
+
 RewriteChangesBrowser comment: ''!
+
 !RewriteChangesBrowser categoriesForClass!MVP-Presenters! !
+
 !RewriteChangesBrowser methodsFor!
 
 acceptAllChanges
@@ -176,6 +180,7 @@ setInitialFocus
 
 updateCaption
 	self caption: compositeChange displayString! !
+
 !RewriteChangesBrowser categoriesForMethods!
 acceptAllChanges!commands!public! !
 acceptChanges!commands!public! !
@@ -232,6 +237,7 @@ resource_Default_view
 ((each changeClass compiledMethodAt: each selector ifAbsent:[])
 	ifNil: [each changeClass]
 	ifNotNil: [:method | method]) owningPackage]' 8 #[33 105 17 158 17 159 34 192 100 223 3 73 158 110 70 161 106] #changeClass #selector #compiledMethodAt:ifAbsent: #owningPackage 5328 4626 0 nil 4658 1 83886081 ##(Smalltalk.UndefinedObject) 8 'doIt' 34 2 8 '[]' nil 8 #[29 105 60 106] 5408 7 1 nil 7 65793 nil nil 3920 nil 1 nil nil 4818 8 'Change' 261 #left 4866 #yourself 8 #() 4866 #<= 5552 4866 #changeString 5552 nil 3920 nil 3 nil nil #report 8 #() nil 131169 nil 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 882 138 144 34 3 946 #createAt:extent: 34 2 674 1 1 674 1169 213 3920 946 #contextMenu: 34 1 4080 3920 946 #text: 34 1 8 'Class' 3920 1026 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 72 2 0 0 106 0 0 0] 8 #() 1088 nil 35 5 true 170 192 34 2 3920 8 'changes' nil 882 138 144 34 1 946 #createAt:extent: 34 2 674 1 101 674 1169 543 3216 1026 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 50 0 0 0 72 2 0 0 65 1 0 0] 34 3 3920 3376 3680 1088 nil 27 170 192 34 4 528 8 'toolbar' 2768 8 'statusbar' nil 461638 4 ##(Smalltalk.MenuBar) nil true 34 6 4066 nil true 34 3 4114 1 2242 #saveImage 8 'Sa&ve Image' 1 1 2274 nil true 2320 8 'Snapshot.ico' 2368 nil nil 4322 4097 4114 1 2242 #exit 8 '&Close' 17639 1 788806 1 ##(Smalltalk.TextTileIcon) $\x2716 nil nil nil nil nil 1 nil nil nil nil 8 '&File' nil 134217729 nil nil 57969 nil nil 4066 nil true 34 6 4114 1 2242 #copySelection 8 '&Copy' 9351 1 2274 nil true 2320 8 'EditCopy.ico' 2368 nil nil 4114 1 2242 #selectAll 8 'Select &All' 9347 1 nil nil nil 4322 4097 4114 1 2242 #find 8 '&Find...' 9357 1 2274 nil true 2320 47 786694 ##(Smalltalk.ShellLibrary) nil nil 4114 1 2242 #findNext 8 'Find &Next' 1253 1 2274 nil true 2320 8 'FindNext.ico' 2368 nil nil 4114 1 2242 #findReplace 8 '&Replace...' 9361 1 nil nil nil 8 '&Edit' nil 134217729 nil nil 57981 nil nil 4066 nil true 34 10 4114 1 2242 #acceptChanges 8 '&Accept <1?Change:Changes>' 1 1 nil nil nil 4114 1 2242 #acceptClassChanges 8 'Accept &Class Changes' 1 1 nil nil nil 4114 1 2242 #acceptPackageChanges 8 'Accept &Package Changes' 1 1 nil nil nil 4114 1 2242 #acceptAllChanges 8 'Accept A&ll Changes' 1 1 nil nil nil 4322 4097 4114 1 2242 #removeChanges 8 '&Remove <1?Change:Changes>' 1 1 nil nil nil 4114 1 2242 #removeClassChanges 8 'R&emove Class Changes' 1 1 nil nil nil 4114 1 2242 #removePackageChanges 8 'Re&move Package Changes' 1 1 nil nil nil 4322 4097 4114 2097153 2242 #browseIt 8 '&Browse Method' 1 1 4560 nil nil 8 '&Change' nil 134217729 nil nil 57999 nil nil 4066 nil true 8 #() 8 '&Tools' #toolsMenu 134217729 nil nil 58001 nil nil 4066 nil true 8 #() 8 'Wi&ndow' #windowMenu 134217729 nil nil 58003 nil nil 4066 nil true 34 15 4114 1 2242 #helpContents 8 '&Contents' 1025 1 2274 nil true 2320 8 'Help.ico' 2368 nil nil 4114 1 2242 #help 8 'On this &Tool' 1249 1 nil nil nil 4114 1 2242 #helpWhatsThis 8 'What''s This?' 5345 1 nil nil nil 4322 4097 4114 1 2242 #learnSmalltalk 8 'Learn Smalltalk' 1 1 6354 $\x1F393 nil 706 #orchid 706 #white nil nil 1 nil nil nil nil 4322 4097 4114 1 2242 #helpWhatsNew 8 'What''s &New' 1 1 nil nil nil 4114 1 2242 #helpGuidedTour 8 '&Guided Tour' 1 1 nil nil nil 4114 1 2242 #helpTutorials 8 'Tutorials' 1 1 nil nil nil 4322 4097 4114 1 2242 #dolphinHomePage 8 'Dolphin Homepage' 1 1 2274 nil true 2320 8 '!!APPLICATION' 2368 nil nil 4114 1 2242 #dolphinNewsgroup 8 'Dolphin Newsgroup/Forum' 1 1 nil nil nil 4114 1 2242 #dolphinWikiWeb 8 'Dolphin WikiWeb' 1 1 nil nil nil 4322 4097 4114 1 2242 #aboutDolphin 8 '&About Dolphin Smalltalk' 1 1 6354 $\x1F42C nil nil 706 #darkSlateBlue nil nil 1 nil nil nil nil 8 '&Help' #help 134217729 nil nil nil nil nil 8 '' nil 134217729 nil nil nil nil nil nil nil nil 1 nil nil nil nil 1 nil nil 882 138 144 34 2 946 #createAt:extent: 34 2 674 6143 21 674 1201 801 416 946 #text: 34 1 8 'Rewrite Results Browser' 416 1026 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 87 14 0 0 154 1 0 0] 34 3 528 3216 2768 1088 nil 27)! !
+
 !RewriteChangesBrowser class categoriesForMethods!
 icon!constants!public! !
 publishedAspects!operations!public! !

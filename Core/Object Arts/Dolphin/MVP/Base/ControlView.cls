@@ -5,7 +5,9 @@ View subclass: #ControlView
 	classVariableNames: 'CommonControlCallError'
 	poolDictionaries: 'CommCtrlConstants'
 	classInstanceVariableNames: ''!
+
 ControlView guid: (GUID fromString: '{87b4c70d-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 ControlView comment: 'ControlView is the abstract superclass for all <view>s that are based on Windows controls. In general, controls are responsible for their own painting and so it is not necessary, or advisable, to override #onPaintRequired: in any of the ControlView subclasses.
 
 Some controls, but not all, allow control over the foreground and background colours used when painting. If neither of the #forecolor and #backcolor aspects is explicitly set then the default control colours will be used.
@@ -21,7 +23,9 @@ Class Variables:
 	NmMap			<IdentityDictionary> map of Windows notification messages to <selector>s.
 
 '!
+
 !ControlView categoriesForClass!MVP-Views! !
+
 !ControlView methodsFor!
 
 applyFont
@@ -414,6 +418,7 @@ wmWindowPosChanged: message wParam: wParam lParam: lParam
 	super wmWindowPosChanged: message wParam: wParam lParam: lParam.
 	^nil	"Accept default processing"
 ! !
+
 !ControlView categoriesForMethods!
 applyFont!font!private!updating! !
 backcolorChanged!helpers!private! !
@@ -492,6 +497,7 @@ winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
 
 	^self subclassResponsibility! !
+
 !ControlView class categoriesForMethods!
 commonControlCallError!constants!public! !
 initialize!development!initializing!private! !

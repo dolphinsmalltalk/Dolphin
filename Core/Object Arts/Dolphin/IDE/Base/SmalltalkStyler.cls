@@ -5,8 +5,11 @@ ScintillaStyler subclass: #SmalltalkStyler
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SmalltalkStyler guid: (GUID fromString: '{eb307480-e6d7-4715-934e-59caf9618538}')!
+
 SmalltalkStyler isAbstract: true!
+
 SmalltalkStyler comment: 'SmalltalkStyler is a <ScintillaStyler> that is capable of colouring Smalltalk source text according to the established Dolphin syntax colouring convention; in fact it is somewhat more sophisticated than the earlier compiler based colouring, and can differentiate a larger set of syntactic elements. The text styles emitted are:
 
 #argDecl			Formal parameter name in method signature
@@ -44,7 +47,9 @@ The colouring is largely based on identification of tokens through lexical analy
 
 Pure lexical analysis has the drawback that it isn''t able to distinguish between different uses of the same token type. In Smalltalk there are a number of such ambiguities, for example identifiers that might be variable names or unary selectors. Another example is the use of the vertical bar symbol as a temporary declaration delimiter and also as a binary selector. In order to handle these cases efficiently a number of extra style names are introduced to record an informal parse state as the colouring progresses. Since the style set up for the last token (mostly) encodes the parse state, it is possible to style the current token without looking any further back. This does, however, mean that there are more styles than are strictly needed for visual purposes - for example there are styles for opening and closing temp bars, but it is unlikely one would want these to have a different appearance. There is one case, that of literal arrays, where it is necessary to look back further when styling. This is because literal arrays may contain unquoted literal symbols and nester arrays, at least in Smalltalk-80 syntax.
 '!
+
 !SmalltalkStyler categoriesForClass!Kernel-Objects! !
+
 !SmalltalkStyler methodsFor!
 
 applyStyle: aSymbol toNext: anInteger 
@@ -392,6 +397,7 @@ visitSpecialCharacterToken: aStSpecialCharacterToken
 			^#specialCharacter].
 	(char == $] and: [self lastIsLiteralByte]) ifTrue: [^#literalBytes].
 	^#specialCharacter! !
+
 !SmalltalkStyler categoriesForMethods!
 applyStyle:toNext:!helpers!private! !
 atStart!private!testing! !
@@ -440,6 +446,7 @@ SmalltalkStyler methodProtocol: #stTokenVisitor attributes: #(#readOnly) selecto
 
 language
 	^'Smalltalk'! !
+
 !SmalltalkStyler class categoriesForMethods!
 language!constants!public! !
 !

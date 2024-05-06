@@ -5,9 +5,13 @@ ExternalLibrary subclass: #Msimg32Library
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Msimg32Library guid: (GUID fromString: '{5a76781d-d74e-48fe-8991-46ae340fcc94}')!
+
 Msimg32Library comment: 'Deprecated. Use equivalent functions in GDILIbrary instead.'!
+
 !Msimg32Library categoriesForClass!Deprecated! !
+
 !Msimg32Library methodsFor!
 
 alphaBlend: hdcDest nXOriginDest: nXOriginDest nYOriginDest: nYOriginDest nWidthDest: nWidthDest nHeightDest: nHeightDest hdcSrc: hdcSrc nXOriginSrc: nXOriginSrc nYOriginSrc: nYOriginSrc nWidthSrc: nWidthSrc nHeightSrc: nHeightSrc blend: blend
@@ -49,6 +53,7 @@ transparentBlt: hdcDest nXOriginDest: nXOriginDest nYOriginDest: nYOriginDest nW
 		wSrc: nWidthSrc
 		hSrc: nHeightSrc
 		crTransparent: crTransparent! !
+
 !Msimg32Library categoriesForMethods!
 alphaBlend:nXOriginDest:nYOriginDest:nWidthDest:nHeightDest:hdcSrc:nXOriginSrc:nYOriginSrc:nWidthSrc:nHeightSrc:blend:!public!win32 functions-bitmap! !
 gradientFill:pVertex:dwNumVertex:pMesh:dwNumMesh:dwMode:!**auto generated**!public! !
@@ -62,6 +67,7 @@ fileName
 	receiver represents"
 
 	^'msimg32'! !
+
 !Msimg32Library class categoriesForMethods!
 fileName!constants!public! !
 !

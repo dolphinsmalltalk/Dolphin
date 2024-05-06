@@ -5,9 +5,13 @@ ExternalLibrary subclass: #HTMLHelpLibrary
 	classVariableNames: ''
 	poolDictionaries: 'HTMLHelpConstants'
 	classInstanceVariableNames: ''!
+
 HTMLHelpLibrary guid: (GUID fromString: '{9e0d2430-3877-11d3-93bd-00a024ca708a}')!
+
 HTMLHelpLibrary comment: ''!
+
 !HTMLHelpLibrary categoriesForClass!Unclassified! !
+
 !HTMLHelpLibrary methodsFor!
 
 close
@@ -80,6 +84,7 @@ htmlHelpUrl: url style: styleOrNil
 		pszFile: (styleOrNil isNil ifTrue: [url] ifFalse: [url , '>' , styleOrNil])
 		uCommand: HH_DISPLAY_TOPIC
 		dwData: 0! !
+
 !HTMLHelpLibrary categoriesForMethods!
 close!public!realizing/unrealizing! !
 handle:!accessing!private! !
@@ -105,6 +110,7 @@ htmlHelpCloseAll
 
 	(default notNil and: [default isOpen]) ifTrue: [
 		default htmlHelpCloseAll]! !
+
 !HTMLHelpLibrary class categoriesForMethods!
 fileName!constants!public! !
 htmlHelpCloseAll!operations!public! !

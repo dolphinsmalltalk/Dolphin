@@ -5,9 +5,13 @@ DolphinTest subclass: #AddMethodChangeTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AddMethodChangeTest guid: (GUID fromString: '{08457a65-10d4-409d-93df-440bce0fac93}')!
+
 AddMethodChangeTest comment: ''!
+
 !AddMethodChangeTest categoriesForClass!Unclassified! !
+
 !AddMethodChangeTest methodsFor!
 
 changeClass
@@ -26,6 +30,7 @@ testPrintOn
 	self assertIsNil: change protocol.
 	self assert: change printString readStream nextLine
 		equals: '!!AddMethodChangeTest class methodsFor: ''''!!'! !
+
 !AddMethodChangeTest categoriesForMethods!
 changeClass!public!unit tests! !
 testPrintOn!public!unit tests! !

@@ -5,9 +5,13 @@ Random subclass: #RandomCRT
 	classVariableNames: ''
 	poolDictionaries: 'CRTConstants'
 	classInstanceVariableNames: ''!
+
 RandomCRT guid: (GUID fromString: '{f895d18e-e50f-4651-8a7d-9d04137dd05e}')!
+
 RandomCRT comment: ''!
+
 !RandomCRT categoriesForClass!Collections-Streams! !
+
 !RandomCRT methodsFor!
 
 next
@@ -37,6 +41,7 @@ seed: anInteger
 
 	CRTLibrary default srand: anInteger.
 	super seed: anInteger! !
+
 !RandomCRT categoriesForMethods!
 next!accessing!public! !
 peek!accessing!public! !

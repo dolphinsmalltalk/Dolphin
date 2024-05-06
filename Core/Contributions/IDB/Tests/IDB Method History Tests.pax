@@ -3,7 +3,6 @@ package := Package name: 'IDB Method History Tests'.
 package paxVersion: 1;
 	basicComment: ''.
 
-
 package classNames
 	add: #MethodHistoryTest;
 	yourself.
@@ -27,11 +26,6 @@ TestCase subclass: #MethodHistoryTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

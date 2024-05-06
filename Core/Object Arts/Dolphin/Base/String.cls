@@ -5,9 +5,13 @@ ArrayedCollection variableByteSubclass: #String
 	classVariableNames: 'EncodingAnsi Encodings EncodingUtf16 EncodingUtf32 EncodingUtf8 LineDelimiter'
 	poolDictionaries: ''
 	classInstanceVariableNames: 'empty'!
+
 String guid: (GUID fromString: '{87b4c514-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 String isNullTerminated: true!
+
 String isAbstract: true!
+
 String addClassConstant: 'EncodingAnsi' value: 16r0!
 String addClassConstant: 'Encodings' value: #(#ansi #utf8 #utf16le #utf32)!
 String addClassConstant: 'EncodingUtf16' value: 16r2!
@@ -15,6 +19,7 @@ String addClassConstant: 'EncodingUtf32' value: 16r3!
 String addClassConstant: 'EncodingUtf8' value: 16r1!
 String addClassConstant: 'LineDelimiter' value: '
 '!
+
 String comment: '`String` is the abstract class of `ArrayedCollection`s representing strings of `Character`s (although note that the Character''s represent code units when accessed by index, and may not constitute a full Unicode code point). 
 
 String has subclasses for strings in the most common encodings, e.g. Ansi (`AnsiString`), UTF-8 (`Utf8String`), and UTF-16LE (`Utf16String`). 
@@ -31,7 +36,9 @@ N.B. Dolphin Strings are, unlike Smalltalk-80 strings, null-terminated. Space fo
  sequencedCollection
  readableString
  String'!
+
 !String categoriesForClass!Collections-Text! !
+
 !String methodsFor!
 
 , aSequencedReadableCollection
@@ -1197,6 +1204,7 @@ withNormalizedLineDelimiters
 							target nextPutAll: eol]
 						ifFalse: [target nextPut: each]]].
 	^target contents! !
+
 !String categoriesForMethods!
 ,!copying!public! !
 _cmp:!comparing!private! !
@@ -1704,6 +1712,7 @@ withAll: aCollectionOfCharacters
 	stream := self writeStream: aCollectionOfCharacters size.
 	aCollectionOfCharacters do: [:each | stream nextPut: each].
 	^stream grabContents! !
+
 !String class categoriesForMethods!
 ansiClass!constants!public! !
 basicEncoding!accessing!public! !

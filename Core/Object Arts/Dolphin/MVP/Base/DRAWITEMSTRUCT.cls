@@ -5,7 +5,9 @@ Win32Structure subclass: #DRAWITEMSTRUCT
 	classVariableNames: '_OffsetOf_CtlID _OffsetOf_CtlType _OffsetOf_hDC _OffsetOf_hwndItem _OffsetOf_itemAction _OffsetOf_itemData _OffsetOf_itemID _OffsetOf_itemState _OffsetOf_rcItem'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DRAWITEMSTRUCT guid: (GUID fromString: '{87b4c5e9-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 DRAWITEMSTRUCT addClassConstant: '_OffsetOf_CtlID' value: 16r4!
 DRAWITEMSTRUCT addClassConstant: '_OffsetOf_CtlType' value: 16r0!
 DRAWITEMSTRUCT addClassConstant: '_OffsetOf_hDC' value: 16r18!
@@ -15,11 +17,14 @@ DRAWITEMSTRUCT addClassConstant: '_OffsetOf_itemData' value: 16r2C!
 DRAWITEMSTRUCT addClassConstant: '_OffsetOf_itemID' value: 16r8!
 DRAWITEMSTRUCT addClassConstant: '_OffsetOf_itemState' value: 16r10!
 DRAWITEMSTRUCT addClassConstant: '_OffsetOf_rcItem' value: 16r1C!
+
 DRAWITEMSTRUCT comment: '<DRAWITEMSTRUCT> is an <ExternalStructure> class to wrap the struct ''Win.DRAWITEMSTRUCT'' from type information in the ''Windows API (ANSI)'' library.
 
 From MSDN: "The DRAWITEMSTRUCT structure provides information the owner window must have to determine how to paint an owner-drawn control or menu item. The owner window of the owner-drawn control or menu item receives a pointer to this structure as the lParam parameter of the WM_DRAWITEM message."
 '!
+
 !DRAWITEMSTRUCT categoriesForClass!Win-Structs! !
+
 !DRAWITEMSTRUCT methodsFor!
 
 CtlID
@@ -71,6 +76,7 @@ rcItem
 	"Answer the <RECT> value of the receiver's 'rcItem' field."
 
 	^RECT fromAddress: bytes yourAddress + _OffsetOf_rcItem! !
+
 !DRAWITEMSTRUCT categoriesForMethods!
 CtlID!**compiled accessors**!public! !
 CtlType!**compiled accessors**!public! !
@@ -117,6 +123,7 @@ defineFields
 
 getFieldNames
 	^#(#CtlType #CtlID #itemID #itemAction #itemState #hwndItem #hDC #rcItem)! !
+
 !DRAWITEMSTRUCT class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

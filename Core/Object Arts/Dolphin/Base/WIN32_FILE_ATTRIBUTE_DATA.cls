@@ -5,13 +5,16 @@ Win32Structure subclass: #WIN32_FILE_ATTRIBUTE_DATA
 	classVariableNames: '_OffsetOf_dwFileAttributes _OffsetOf_ftCreationTime _OffsetOf_ftLastAccessTime _OffsetOf_ftLastWriteTime _OffsetOf_nFileSizeHigh _OffsetOf_nFileSizeLow'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 WIN32_FILE_ATTRIBUTE_DATA guid: (GUID fromString: '{93f205f7-0707-40b3-813b-cad835330f3e}')!
+
 WIN32_FILE_ATTRIBUTE_DATA addClassConstant: '_OffsetOf_dwFileAttributes' value: 16r0!
 WIN32_FILE_ATTRIBUTE_DATA addClassConstant: '_OffsetOf_ftCreationTime' value: 16r4!
 WIN32_FILE_ATTRIBUTE_DATA addClassConstant: '_OffsetOf_ftLastAccessTime' value: 16rC!
 WIN32_FILE_ATTRIBUTE_DATA addClassConstant: '_OffsetOf_ftLastWriteTime' value: 16r14!
 WIN32_FILE_ATTRIBUTE_DATA addClassConstant: '_OffsetOf_nFileSizeHigh' value: 16r1C!
 WIN32_FILE_ATTRIBUTE_DATA addClassConstant: '_OffsetOf_nFileSizeLow' value: 16r20!
+
 WIN32_FILE_ATTRIBUTE_DATA comment: '`WIN32_FILE_ATTRIBUTE_DATA` is an `ExternalStructure` class to wrap the struct ''Win32.WIN32_FILE_ATTRIBUTE_DATA'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
@@ -32,7 +35,9 @@ struct tagWIN32_FILE_ATTRIBUTE_DATA {
 } WIN32_FILE_ATTRIBUTE_DATA;
 ```
 '!
+
 !WIN32_FILE_ATTRIBUTE_DATA categoriesForClass!Win32-Structs! !
+
 !WIN32_FILE_ATTRIBUTE_DATA methodsFor!
 
 dwFileAttributes
@@ -81,6 +86,7 @@ nFileSizeLow
 	"Answer the <Integer> value of the receiver's 'nFileSizeLow' field."
 
 	^bytes dwordAtOffset: _OffsetOf_nFileSizeLow! !
+
 !WIN32_FILE_ATTRIBUTE_DATA categoriesForMethods!
 dwFileAttributes!**compiled accessors**!public! !
 fileSize!accessing!public! !
@@ -122,6 +128,7 @@ defineFields
 
 getFieldNames
 	^#(#dwFileAttributes #ftCreationTime #ftLastAccessTime #ftLastWriteTime #nFileSizeHigh #nFileSizeLow)! !
+
 !WIN32_FILE_ATTRIBUTE_DATA class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

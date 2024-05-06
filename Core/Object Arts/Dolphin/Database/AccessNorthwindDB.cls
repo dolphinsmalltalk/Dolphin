@@ -5,9 +5,13 @@ DBConnectionTestResource subclass: #AccessNorthwindDB
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AccessNorthwindDB guid: (GUID fromString: '{65bcf4a5-dc5c-461b-a4df-2f29574d34c3}')!
+
 AccessNorthwindDB comment: ''!
+
 !AccessNorthwindDB categoriesForClass!Unclassified! !
+
 !AccessNorthwindDB methodsFor!
 
 connectString
@@ -26,6 +30,7 @@ createDatabase
 dropDatabase
 	super dropDatabase.
 	File delete: filename! !
+
 !AccessNorthwindDB categoriesForMethods!
 connectString!private! !
 createDatabase!private! !

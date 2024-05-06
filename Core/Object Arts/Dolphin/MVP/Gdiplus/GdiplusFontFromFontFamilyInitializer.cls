@@ -5,9 +5,13 @@ GdiplusInitializer subclass: #GdiplusFontFromFontFamilyInitializer
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusFontFromFontFamilyInitializer guid: (GUID fromString: '{f4b7aa80-5fd1-11d7-b609-00e0987e8081}')!
+
 GdiplusFontFromFontFamilyInitializer comment: ''!
+
 !GdiplusFontFromFontFamilyInitializer categoriesForClass!Unclassified! !
+
 !GdiplusFontFromFontFamilyInitializer methodsFor!
 
 createHandle
@@ -30,6 +34,7 @@ fontFamily: aFontFamily emSize: aNumberSize style: aNumberStyle unit: aNumberUni
 
 gdiplusConstructorErrorDescription
 	^'Error creating Font'! !
+
 !GdiplusFontFromFontFamilyInitializer categoriesForMethods!
 createHandle!private!realizing/unrealizing! !
 fontFamily:emSize:style:unit:!initializing!private! !
@@ -44,6 +49,7 @@ fontFamily: fontFamily emSize: emSize style: style unit: unit
 		emSize: emSize
 		style: style
 		unit: unit! !
+
 !GdiplusFontFromFontFamilyInitializer class categoriesForMethods!
 fontFamily:emSize:style:unit:!instance creation!public! !
 !

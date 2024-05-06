@@ -5,9 +5,13 @@ RefactoringBrowserTest subclass: #BrowserEnvironmentTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 BrowserEnvironmentTest guid: (GUID fromString: '{d900c35c-e907-4c85-a762-35dd60264a6c}')!
+
 BrowserEnvironmentTest comment: ''!
+
 !BrowserEnvironmentTest categoriesForClass!Refactory-Testing! !
+
 !BrowserEnvironmentTest methodsFor!
 
 categoriesFor: anEnvironment
@@ -323,6 +327,7 @@ universalTestFor: aBrowserEnvironment
 	self classesFor: aBrowserEnvironment.
 	self keysFor: aBrowserEnvironment.
 	self assert: aBrowserEnvironment problemCount = 0 equals: aBrowserEnvironment isEmpty! !
+
 !BrowserEnvironmentTest categoriesForMethods!
 categoriesFor:!public!universal tests! !
 classesFor:!BrowserEnvironment tests!public! !

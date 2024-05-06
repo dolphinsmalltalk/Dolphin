@@ -5,9 +5,13 @@ ValueAspectAdaptor subclass: #ValueModelAspectAdaptor
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ValueModelAspectAdaptor guid: (GUID fromString: '{29f1d21e-3179-4fa5-beff-50f95911c88a}')!
+
 ValueModelAspectAdaptor comment: ''!
+
 !ValueModelAspectAdaptor categoriesForClass!Unclassified! !
+
 !ValueModelAspectAdaptor methodsFor!
 
 notifyChanged
@@ -33,6 +37,7 @@ subject: anObject
 				to: self
 				with: #valueChanged].
 	subject := anObject! !
+
 !ValueModelAspectAdaptor categoriesForMethods!
 notifyChanged!private! !
 subject!private! !

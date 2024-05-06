@@ -5,9 +5,12 @@ AbstractIN_ADDR subclass: #IN6_ADDR
 	classVariableNames: '_OffsetOf_Bytes _OffsetOf_Words'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IN6_ADDR guid: (GUID fromString: '{bebf4c25-ce63-4511-b68e-2434810fa9c3}')!
+
 IN6_ADDR addClassConstant: '_OffsetOf_Bytes' value: 16r0!
 IN6_ADDR addClassConstant: '_OffsetOf_Words' value: 16r0!
+
 IN6_ADDR comment: '<IN6_ADDR> is an <ExternalStructure> class to wrap the struct ''Win32.IN6_ADDR'' from type information in the ''Win32 API'' library.
 
 The type library contains no documentation for this struct
@@ -24,7 +27,9 @@ struct tagIN6_ADDR {
 	};
 } IN6_ADDR;
 '!
+
 !IN6_ADDR categoriesForClass!Win32-Structs! !
+
 !IN6_ADDR methodsFor!
 
 Bytes
@@ -42,6 +47,7 @@ Bytes: anExternalArray
 		from: ##(_OffsetOf_Bytes + 1)
 		to: size
 		startingAt: 1! !
+
 !IN6_ADDR categoriesForMethods!
 Bytes!**compiled accessors**!public! !
 Bytes:!**compiled accessors**!public! !
@@ -73,6 +79,7 @@ defineFields
 
 getFieldNames
 	^#(#Bytes)! !
+
 !IN6_ADDR class categoriesForMethods!
 addressFamily!constants!public! !
 defineFields!**auto generated**!public!template definition! !

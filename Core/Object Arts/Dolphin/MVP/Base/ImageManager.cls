@@ -5,9 +5,13 @@ Object subclass: #ImageManager
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 ImageManager guid: (GUID fromString: '{87b4c492-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 ImageManager comment: ''!
+
 !ImageManager categoriesForClass!Graphics-Tools! !
+
 !ImageManager methodsFor!
 
 addImage: anImage
@@ -201,6 +205,7 @@ stbSaveOn: anSTBOutFiler
 
 	self purgeImages.
 	super stbSaveOn: anSTBOutFiler! !
+
 !ImageManager categoriesForMethods!
 addImage:!adding!public! !
 addImage:extent:!adding!public! !
@@ -250,6 +255,7 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^1! !
+
 !ImageManager class categoriesForMethods!
 new!instance creation!public! !
 stbConvertFrom:!binary filing!public! !

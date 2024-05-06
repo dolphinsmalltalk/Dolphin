@@ -5,12 +5,15 @@ ENHMETARECORD subclass: #EMRFRAMERGN
 	classVariableNames: '_OffsetOf_cbRgnData _OffsetOf_ihBrush _OffsetOf_rclBounds _OffsetOf_RGNDATA _OffsetOf_szlStroke'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 EMRFRAMERGN guid: (GUID fromString: '{490fda83-42a6-4848-8a5e-d866c05155e5}')!
+
 EMRFRAMERGN addClassConstant: '_OffsetOf_cbRgnData' value: 16r18!
 EMRFRAMERGN addClassConstant: '_OffsetOf_ihBrush' value: 16r1C!
 EMRFRAMERGN addClassConstant: '_OffsetOf_rclBounds' value: 16r8!
 EMRFRAMERGN addClassConstant: '_OffsetOf_RGNDATA' value: 16r28!
 EMRFRAMERGN addClassConstant: '_OffsetOf_szlStroke' value: 16r20!
+
 EMRFRAMERGN comment: '<EMRFRAMERGN> is an <ExternalStructure> class to wrap the struct ''Win32.EMRFRAMERGN'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -29,7 +32,9 @@ struct tagEMRFRAMERGN {
 	BYTE* RGNDATA;
 } EMRFRAMERGN;
 '!
+
 !EMRFRAMERGN categoriesForClass!Win32-Structs! !
+
 !EMRFRAMERGN methodsFor!
 
 cbRgnData
@@ -96,6 +101,7 @@ szlStroke: aSIZE
 		from: ##(_OffsetOf_szlStroke + 1)
 		to: ##(_OffsetOf_szlStroke + SIZE basicByteSize)
 		startingAt: 1! !
+
 !EMRFRAMERGN categoriesForMethods!
 cbRgnData!**compiled accessors**!public! !
 cbRgnData:!**compiled accessors**!public! !
@@ -152,6 +158,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_FRAMERGN! !
+
 !EMRFRAMERGN class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

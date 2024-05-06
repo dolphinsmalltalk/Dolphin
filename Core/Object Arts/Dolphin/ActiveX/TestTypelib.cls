@@ -5,9 +5,13 @@ TestResource subclass: #TestTypelib
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 TestTypelib guid: (GUID fromString: '{bda93d8c-df4b-4461-8950-9db6e8797384}')!
+
 TestTypelib comment: ''!
+
 !TestTypelib categoriesForClass!Unclassified! !
+
 !TestTypelib methodsFor!
 
 analyzer
@@ -34,6 +38,7 @@ tearDown
 			analyzer free.
 			analyzer := nil].
 	super tearDown! !
+
 !TestTypelib categoriesForMethods!
 analyzer!private!unit tests! !
 libid!Init / Release!public! !

@@ -5,9 +5,13 @@ Object subclass: #VisualShellFinder
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 VisualShellFinder guid: (GUID fromString: '{69da66cc-5c94-4f46-893b-41ba51969fb8}')!
+
 VisualShellFinder comment: ''!
+
 !VisualShellFinder categoriesForClass!Kernel-Objects! !
+
 !VisualShellFinder methodsFor!
 
 cancelTrackingAt: aPoint
@@ -76,6 +80,7 @@ visualShellAt: aPoint
 	self shellClassFilter isNil ifTrue: [^shell].
 	self shellClassFilter detect: [:each | shell isKindOf: each] ifNone: [^nil].
 	^shell! !
+
 !VisualShellFinder categoriesForMethods!
 cancelTrackingAt:!private!tracking! !
 continueTrackingAt:from:!private!tracking! !
@@ -108,6 +113,7 @@ forAnyOf: aSetOfShellClasses
 
 new
 	^super new initialize! !
+
 !VisualShellFinder class categoriesForMethods!
 for:!public! !
 forAnyOf:!public! !

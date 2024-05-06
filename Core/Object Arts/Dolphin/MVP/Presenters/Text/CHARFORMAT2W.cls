@@ -5,7 +5,9 @@ Win32Structure subclass: #CHARFORMAT2W
 	classVariableNames: '_OffsetOf_bAnimation _OffsetOf_bCharSet _OffsetOf_bPitchAndFamily _OffsetOf_bRevAuthor _OffsetOf_bUnderlineColor _OffsetOf_bUnderlyineType _OffsetOf_crBackColor _OffsetOf_crTextColor _OffsetOf_dwCookie _OffsetOf_dwEffects _OffsetOf_dwMask _OffsetOf_dwSize _OffsetOf_lcid _OffsetOf_sSpacing _OffsetOf_sStyle _OffsetOf_szFaceName _OffsetOf_wKerning _OffsetOf_wWeight _OffsetOf_yHeight _OffsetOf_yOffset'
 	poolDictionaries: 'CommonDialogConstants RichEditConstants'
 	classInstanceVariableNames: ''!
+
 CHARFORMAT2W guid: (GUID fromString: '{87b4c5cf-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 CHARFORMAT2W addClassConstant: '_OffsetOf_bAnimation' value: 16r71!
 CHARFORMAT2W addClassConstant: '_OffsetOf_bCharSet' value: 16r18!
 CHARFORMAT2W addClassConstant: '_OffsetOf_bPitchAndFamily' value: 16r19!
@@ -26,10 +28,13 @@ CHARFORMAT2W addClassConstant: '_OffsetOf_wKerning' value: 16r6E!
 CHARFORMAT2W addClassConstant: '_OffsetOf_wWeight' value: 16r5A!
 CHARFORMAT2W addClassConstant: '_OffsetOf_yHeight' value: 16rC!
 CHARFORMAT2W addClassConstant: '_OffsetOf_yOffset' value: 16r10!
+
 CHARFORMAT2W comment: 'CHARFORMAT2W is an <ExternalStructure> class to represent the Win32 structure of the same name.
 
 The CHARFORMAT2W structure contains information about character formatting in a rich edit control.'!
+
 !CHARFORMAT2W categoriesForClass!External-Data-Structured-Win32! !
+
 !CHARFORMAT2W methodsFor!
 
 bAnimation
@@ -448,6 +453,7 @@ yHeight: anInteger
 	"Set the receiver's 'yHeight' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_yHeight put: anInteger! !
+
 !CHARFORMAT2W categoriesForMethods!
 bAnimation!**compiled accessors**!public! !
 bAnimation:!**compiled accessors**!public! !
@@ -555,6 +561,7 @@ fromChooseFont: aCHOOSEFRONT
 
 getFieldNames
 	^#(#dwSize #dwMask #dwEffects #yHeight #yOffset #crTextColor #bCharSet #bPitchAndFamily #szFaceName #wWeight #sSpacing #crBackColor #lcid #sStyle #wKerning #bUnderlyineType #bAnimation #bRevAuthor #bUnderlineColor)! !
+
 !CHARFORMAT2W class categoriesForMethods!
 defineFields!public!template definition! !
 fromChooseFont:!public! !

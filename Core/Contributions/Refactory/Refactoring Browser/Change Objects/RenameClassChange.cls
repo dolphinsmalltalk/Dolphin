@@ -5,9 +5,13 @@ CompositeRefactoryChange subclass: #RenameClassChange
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RenameClassChange guid: (GUID fromString: '{a88eaba4-304f-4675-8b55-d3301bc1166d}')!
+
 RenameClassChange comment: ''!
+
 !RenameClassChange categoriesForClass!Refactory-Change Objects! !
+
 !RenameClassChange methodsFor!
 
 = aRenameClassChange 
@@ -57,6 +61,7 @@ renameChangesForClass: aClassName to: newClassName
 	oldName asSymbol == aClassName 
 		ifTrue: [change rename: newClassName to: newName].
 	^change! !
+
 !RenameClassChange categoriesForMethods!
 =!comparing!public! !
 changeClass!accessing!public! !
@@ -74,6 +79,7 @@ rename: oldString to: newString
 	^(self new)
 		rename: oldString to: newString;
 		yourself! !
+
 !RenameClassChange class categoriesForMethods!
 rename:to:!instance creation!public! !
 !

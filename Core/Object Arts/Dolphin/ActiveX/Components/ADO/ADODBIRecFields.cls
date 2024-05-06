@@ -5,13 +5,17 @@ IUnknown subclass: #ADODBIRecFields
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
+
 ADODBIRecFields guid: (IID fromString: '{00000563-0000-0010-8000-00aa006d2ea4}')!
+
 ADODBIRecFields comment: '<ADODBIRecFields> is a wrapper class for the COM interface ''ADODB.IRecFields'' generated from type information in the ''Microsoft ActiveX Data Objects 2.5 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
 Warning: This comment was automatically generated from the interface''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.'!
+
 !ADODBIRecFields categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
+
 !ADODBIRecFields methodsFor!
 
 ADOCheck
@@ -21,6 +25,7 @@ ADOCheck
 
 	<virtual stdcall: hresult 4>
 	^self invalidCall: _failureCode! !
+
 !ADODBIRecFields categoriesForMethods!
 ADOCheck!**auto generated**!COM Interfaces-IRecFields!public! !
 !
@@ -34,6 +39,7 @@ defineFunctions
 	self
 		defineFunction: #ADOCheck
 ! !
+
 !ADODBIRecFields class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

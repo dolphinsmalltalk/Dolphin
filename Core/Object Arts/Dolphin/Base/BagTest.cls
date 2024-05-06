@@ -5,9 +5,13 @@ DolphinTest subclass: #BagTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 BagTest guid: (GUID fromString: '{31d1ecfc-cd30-4437-906f-69585c9e9c94}')!
+
 BagTest comment: ''!
+
 !BagTest categoriesForClass!Unclassified! !
+
 !BagTest methodsFor!
 
 testDeepCopy
@@ -18,6 +22,7 @@ testDeepCopy
 			copy := bag deepCopy.
 			any := copy detect: [:each | true].
 			self assert: (copy includes: any)]! !
+
 !BagTest categoriesForMethods!
 testDeepCopy!public! !
 !

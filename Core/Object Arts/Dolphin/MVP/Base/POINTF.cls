@@ -5,13 +5,18 @@ ExternalPoint subclass: #POINTF
 	classVariableNames: '_OffsetOf_x _OffsetOf_y'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 POINTF guid: (GUID fromString: '{c6f719de-eec5-45f6-bd44-71200f76bd34}')!
+
 POINTF addClassConstant: '_OffsetOf_x' value: 16r0!
 POINTF addClassConstant: '_OffsetOf_y' value: 16r4!
+
 POINTF comment: '`POINTF` is an `ExternalStructure` class to wrap the struct of the same name.
 
 `POINTF` is a cartesian coordinate with single precision floating point x and y values.'!
+
 !POINTF categoriesForClass!External-Data-Structured! !
+
 !POINTF methodsFor!
 
 asDword
@@ -38,6 +43,7 @@ y: aFloat
 	"Set the receiver's 'y' field to the value of the argument, aFloat"
 
 	bytes floatAtOffset: _OffsetOf_y put: aFloat! !
+
 !POINTF categoriesForMethods!
 asDword!converting!public! !
 x!**compiled accessors**!public! !
@@ -75,6 +81,7 @@ x: x y: y
 				floatAtOffset: 4 put: y;
 				yourself)
 ! !
+
 !POINTF class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 x:y:!instance creation!public! !

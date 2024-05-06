@@ -5,9 +5,13 @@ UtfEncodedStringTest subclass: #Utf16StringTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Utf16StringTest guid: (GUID fromString: '{e12792f7-8bb1-44b6-84ca-e8a620c9bc70}')!
+
 Utf16StringTest comment: ''!
+
 !Utf16StringTest categoriesForClass!Unclassified! !
+
 !Utf16StringTest methodsFor!
 
 assimilate: each 
@@ -97,6 +101,7 @@ testUtf8StringConversion
 	self assert: bstr asArray equals: wideString asArray.
 	self assert: bstr asUtf16String equals: wideString.
 	self assert: bstr asUtf8String equals: byteString! !
+
 !Utf16StringTest categoriesForMethods!
 assimilate:!helpers!private! !
 assimilateString:!helpers!private! !

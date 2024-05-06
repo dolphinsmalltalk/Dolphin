@@ -5,7 +5,9 @@ ClassBrowserPlugin subclass: #ResourceListPlugin
 	classVariableNames: 'ShowInheritedResourcesMask ShowSubclassResourcesMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ResourceListPlugin guid: (GUID fromString: '{9bf86123-58b4-42e2-bdf8-063f7e315276}')!
+
 ResourceListPlugin comment: 'ResourceListPlugin is a <classBrowserPlugin> that displays a list of the view resources associated with a class, optionally including those inherited from superclasses and/or those owned by subclasses.
 
 Instance Variables:
@@ -17,7 +19,9 @@ Class Variables:
 	ShowInheritedResourcesMask		<integer>
 
 '!
+
 !ResourceListPlugin categoriesForClass!Browser-Plugins!MVP-Presenters! !
+
 !ResourceListPlugin methodsFor!
 
 createComponents
@@ -129,6 +133,7 @@ toggleShowSubclassResources
 	"Toggle between showing resources inherited from superclasses or not"
 
 	self isShowingSubclassResources: self isShowingSubclassResources not! !
+
 !ResourceListPlugin categoriesForMethods!
 createComponents!commands!initializing!private! !
 createSchematicWiring!initializing!public! !
@@ -168,6 +173,7 @@ resource_Default_view
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ContainerView) 34 15 nil nil 34 2 8 1409286144 131073 416 nil nil nil 5 nil nil nil 416 788230 ##(Smalltalk.BorderLayout) 1 1 nil nil nil nil 410 ##(Smalltalk.ReferenceView) 34 14 nil 416 34 2 8 1140850688 131073 512 nil nil nil 5 265030 4 ##(Smalltalk.Menu) nil true 34 8 984134 2 ##(Smalltalk.CommandMenuItem) 2097153 1180998 4 ##(Smalltalk.CommandDescription) #editResource 8 '&Edit' 1 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'ViewComposer.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil nil nil 626 1 658 #browseReferences 8 'Browse &References' 1 1 nil nil nil 626 1 658 #showResource 8 '&Show' 1 1 706 nil true 752 8 'TestView.ico' 800 nil nil 626 1 658 #newView 8 '&New...' 1 1 nil nil nil 983366 1 ##(Smalltalk.DividerMenuItem) 4097 626 1 658 #deleteResource 8 '&Delete' 1 1 706 nil true 752 8 'EditClear.ico' 800 nil nil 1010 4097 578 nil true 34 7 626 1 658 #toggleShowInheritedResources 8 'Show I&nherited' 1 1 nil nil nil 626 1 658 #toggleShowSubclassResources 8 'Show &Subclass' 1 1 nil nil nil 1010 4097 626 1 658 #tileIconMode 8 '&Tiles' 1 1 nil nil nil 626 1 658 #largeIconMode 8 '&Icons' 1 1 nil nil nil 626 1025 658 #listMode 8 '&List' 1 1 nil nil nil 626 1025 658 #reportMode 8 '&Details' 1 1 nil nil nil 8 '&View' nil 134217729 nil nil nil nil nil 8 '' nil 134217729 nil nil nil nil nil nil nil 512 1180230 1 ##(Smalltalk.ResourceIdentifier) ##(Smalltalk.ResourceListPresenter) #resource_Package_view nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 1 1 1650 1061 501 512 1602 #contextMenu: 34 1 592 512 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 18 2 0 0 250 0 0 0] 8 #() 1650 193 193 nil 27 170 192 34 2 512 8 'resources' nil 1538 138 144 34 1 1602 #createAt:extent: 34 2 1650 3839 21 1650 1061 501 416 1730 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 145 9 0 0 4 1 0 0] 34 1 512 1792 nil 27 )! !
+
 !ResourceListPlugin class categoriesForMethods!
 icon!constants!public! !
 initialize!initializing!public! !

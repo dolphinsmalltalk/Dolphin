@@ -5,9 +5,13 @@ VariableRefactoring subclass: #PullUpClassVariableRefactoring
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PullUpClassVariableRefactoring guid: (GUID fromString: '{78a67e45-73e9-4f56-b6f1-38e6886593bf}')!
+
 PullUpClassVariableRefactoring comment: ''!
+
 !PullUpClassVariableRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !PullUpClassVariableRefactoring methodsFor!
 
 preconditions
@@ -29,6 +33,7 @@ transform
 	subclass := self subclassDefiningVariable.
 	subclass removeClassVariable: variableName.
 	class addClassVariable: variableName! !
+
 !PullUpClassVariableRefactoring categoriesForMethods!
 preconditions!preconditions!public! !
 subclassDefiningVariable!accessing!private! !

@@ -5,9 +5,13 @@ DolphinTest subclass: #ExternalAddressTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalAddressTest guid: (GUID fromString: '{55d8e17d-e5d8-4060-b20d-34dd8826180f}')!
+
 ExternalAddressTest comment: ''!
+
 !ExternalAddressTest categoriesForClass!Unclassified! !
+
 !ExternalAddressTest methodsFor!
 
 stringFromAddressTestClass: aStringClass
@@ -40,6 +44,7 @@ testStringsFromAddress
 			self stringFromAddressTestClass: each.
 			self assertIsNil: (each fromAddress: nil).
 			self assertIsNil: (each fromAddress: 0)]! !
+
 !ExternalAddressTest categoriesForMethods!
 stringFromAddressTestClass:!helpers!public! !
 testExternalAddressAtAddress!public!unit tests! !

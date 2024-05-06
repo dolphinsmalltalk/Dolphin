@@ -5,9 +5,13 @@ DolphinTest subclass: #PushButtonTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PushButtonTest guid: (GUID fromString: '{e927fec8-865b-4be1-928d-fd9eb29c16c4}')!
+
 PushButtonTest comment: ''!
+
 !PushButtonTest categoriesForClass!Unclassified! !
+
 !PushButtonTest methodsFor!
 
 assertButton: aPushButton isDefault: aBoolean
@@ -106,6 +110,7 @@ tryDefaultButtonsA: buttonA B: buttonB
 	buttonB isDefault: false.
 	self assertButton: buttonA isDefault: true.
 	self assertButton: buttonB isDefault: false! !
+
 !PushButtonTest categoriesForMethods!
 assertButton:isDefault:!helpers!private! !
 getButton:textExtent:!helpers!private! !

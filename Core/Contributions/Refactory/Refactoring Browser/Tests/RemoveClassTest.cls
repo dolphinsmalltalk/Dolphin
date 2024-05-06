@@ -5,9 +5,13 @@ RefactoringTest subclass: #RemoveClassTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RemoveClassTest guid: (GUID fromString: '{32d88853-b152-4b03-9590-22d6b1be0d4d}')!
+
 RemoveClassTest comment: ''!
+
 !RemoveClassTest categoriesForClass!Refactory-Testing! !
+
 !RemoveClassTest methodsFor!
 
 testBadName
@@ -25,6 +29,7 @@ testRemoveClass
 testRemoveReferenced
 	self 
 		shouldFail: (RemoveClassRefactoring classNames: #(#BasicLintRuleTest))! !
+
 !RemoveClassTest categoriesForMethods!
 testBadName!failure tests!public! !
 testRemoveClass!public!tests! !

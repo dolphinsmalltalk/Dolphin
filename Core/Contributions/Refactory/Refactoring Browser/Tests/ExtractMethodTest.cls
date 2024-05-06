@@ -5,9 +5,13 @@ RefactoringTest subclass: #ExtractMethodTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExtractMethodTest guid: (GUID fromString: '{e6d6d232-8068-4ed9-97f4-59b812529daf}')!
+
 ExtractMethodTest comment: ''!
+
 !ExtractMethodTest categoriesForClass!Refactory-Testing! !
+
 !ExtractMethodTest methodsFor!
 
 testBadInterval
@@ -179,6 +183,7 @@ testNonExistantSelector
 				extract: (10 to: 20)
 				from: #checkClass1:
 				in: BasicLintRuleTest)! !
+
 !ExtractMethodTest categoriesForMethods!
 testBadInterval!failure tests!public! !
 testExtractFailure!failure tests!public! !

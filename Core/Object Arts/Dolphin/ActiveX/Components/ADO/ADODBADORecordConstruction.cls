@@ -5,7 +5,9 @@ IDispatch subclass: #ADODBADORecordConstruction
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
+
 ADODBADORecordConstruction guid: (IID fromString: '{00000567-0000-0010-8000-00aa006d2ea4}')!
+
 ADODBADORecordConstruction comment: '`ADODBADORecordConstruction` is a wrapper class for the COM interface ''ADODB.ADORecordConstruction'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -33,7 +35,9 @@ interface ADORecordConstruction : IDispatch
 };
 ```
 '!
+
 !ADODBADORecordConstruction categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
+
 !ADODBADORecordConstruction methodsFor!
 
 get_Row: ppRow
@@ -82,6 +86,7 @@ row: ppRow
 	"Set the 'Row' property of the receiver to the <IUnknown*> value of the argument."
 
 	self put_Row: ppRow! !
+
 !ADODBADORecordConstruction categoriesForMethods!
 get_Row:!**auto generated**!COM Interfaces-ADORecordConstruction!private! !
 parentRow:!**auto generated**!properties!public! !
@@ -105,6 +110,7 @@ defineFunctions
 		defineFunction: #put_ParentRow:
 			argumentTypes: 'IUnknown*'
 ! !
+
 !ADODBADORecordConstruction class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

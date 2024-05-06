@@ -5,13 +5,17 @@ ITypeLib subclass: #ITypeLib2
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ITypeLib2 guid: (IID fromString: '{00020411-0000-0000-c000-000000000046}')!
+
 ITypeLib2 comment: '<ITypeLib2> is a wrapper class for the COM interface ''OAIDL.ITypeLib2'' generated from type information in the ''Ole Automation Type Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface.
 
 WARNING: This comment was automatically generated from the interface''s type information and any changes made here may be overwritten the next time this wrapper class is so generated.'!
+
 !ITypeLib2 categoriesForClass!COM-Interfaces! !
+
 !ITypeLib2 methodsFor!
 
 getAllCustData
@@ -102,6 +106,7 @@ GetLibStatistics: pcUniqueNames pcchUniqueNames: pcchUniqueNames
 
 	<virtual stdcall: hresult 15 dword* dword*>
 	^self invalidCall: _failureCode! !
+
 !ITypeLib2 categoriesForMethods!
 getAllCustData!**auto generated**!public! !
 GetAllCustData:!COM Interfaces-OAIDL.ITypeLib2!private! !
@@ -130,6 +135,7 @@ defineFunctions
 		defineFunction: #GetAllCustData:
 			argumentTypes: 'CUSTDATA*'
 ! !
+
 !ITypeLib2 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

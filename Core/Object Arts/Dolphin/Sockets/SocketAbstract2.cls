@@ -5,9 +5,13 @@ Object subclass: #SocketAbstract2
 	classVariableNames: ''
 	poolDictionaries: 'WinSocketConstants'
 	classInstanceVariableNames: ''!
+
 SocketAbstract2 guid: (GUID fromString: '{e811faf7-4001-4b49-bda0-90a3ffae784f}')!
+
 SocketAbstract2 comment: 'This class is the abstract superclass of all sockets classes for TCP/IP network communication.'!
+
 !SocketAbstract2 categoriesForClass!Windows Sockets! !
+
 !SocketAbstract2 methodsFor!
 
 asParameter
@@ -104,6 +108,7 @@ socketErrorOverlap
 	"Private - Raise a <SocketError> in response to an error in an overlapped socket library call."
 
 	SocketError signalWith: Processor activeProcess lastError! !
+
 !SocketAbstract2 categoriesForMethods!
 asParameter!converting!public! !
 close!operations!public! !

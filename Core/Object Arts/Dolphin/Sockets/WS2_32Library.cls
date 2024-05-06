@@ -5,7 +5,9 @@ ExternalLibrary subclass: #WS2_32Library
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 WS2_32Library guid: (GUID fromString: '{d368efd5-8705-4c18-ada5-9a1e95868480}')!
+
 WS2_32Library comment: 'WS2_32Library is the <ExternalLibrary> class to represent the dynamic link library, ''WS2_32.dll''. It was generated generated from type information in the ''Windows Sockets 2 Type Library'' library. It contains methods for each of the functions defined by the corresponding module in that type library.
 
 This library contains functions pertaining to the use of TCP/IP sockets under Windows through the Sockets 2 (blocking) API.
@@ -530,7 +532,9 @@ module WS2_32 {
 		void* lpCompletionRoutine);
 };
 '!
+
 !WS2_32Library categoriesForClass!External-Libraries-Sockets!Windows Sockets! !
+
 !WS2_32Library methodsFor!
 
 accept: s addr: addr addrlen: addrlen
@@ -912,6 +916,7 @@ wsaStartup: wVersionRequested lpWSAData: lpWSAData
 
 	<stdcall: sdword WSAStartup word WSADATA*>
 	^self invalidCall: _failureCode! !
+
 !WS2_32Library categoriesForMethods!
 accept:addr:addrlen:!public!win32 functions-sockets library! !
 bind:name:namelen:!public!win32 functions-sockets library! !
@@ -959,6 +964,7 @@ fileName
 	receiver represents"
 
 	^'WS2_32'! !
+
 !WS2_32Library class categoriesForMethods!
 fileName!constants!public! !
 !

@@ -5,7 +5,9 @@ Win32Structure subclass: #NOTIFYICONDATAW
 	classVariableNames: '_OffsetOf_dwSize _OffsetOf_hIcon _OffsetOf_hWnd _OffsetOf_szTip _OffsetOf_uCallbackMessage _OffsetOf_uFlags _OffsetOf_uID'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 NOTIFYICONDATAW guid: (GUID fromString: '{70cb825f-18f0-4968-9638-a8444b0bd805}')!
+
 NOTIFYICONDATAW addClassConstant: '_OffsetOf_dwSize' value: 16r0!
 NOTIFYICONDATAW addClassConstant: '_OffsetOf_hIcon' value: 16r14!
 NOTIFYICONDATAW addClassConstant: '_OffsetOf_hWnd' value: 16r4!
@@ -13,8 +15,11 @@ NOTIFYICONDATAW addClassConstant: '_OffsetOf_szTip' value: 16r18!
 NOTIFYICONDATAW addClassConstant: '_OffsetOf_uCallbackMessage' value: 16r10!
 NOTIFYICONDATAW addClassConstant: '_OffsetOf_uFlags' value: 16rC!
 NOTIFYICONDATAW addClassConstant: '_OffsetOf_uID' value: 16r8!
+
 NOTIFYICONDATAW comment: ''!
+
 !NOTIFYICONDATAW categoriesForClass!No category! !
+
 !NOTIFYICONDATAW methodsFor!
 
 dwSize: anInteger
@@ -87,6 +92,7 @@ uID: anInteger
 	"Set the receiver's 'uID' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_uID put: anInteger! !
+
 !NOTIFYICONDATAW categoriesForMethods!
 dwSize:!**compiled accessors**!public! !
 hIcon:!**compiled accessors**!public! !
@@ -130,6 +136,7 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #hWnd #uID #uFlags #uCallbackMessage #hIcon #szTip)! !
+
 !NOTIFYICONDATAW class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

@@ -5,10 +5,14 @@ Dictionary variableSubclass: #SystemDictionary
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SystemDictionary guid: (GUID fromString: '{87b4c52c-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 SystemDictionary comment: 'Class of the root of the system. SystemDictionary''s single instance (Smalltalk) 
 provides associative access to all global objects in the system.'!
+
 !SystemDictionary categoriesForClass!Collections-Unordered! !
+
 !SystemDictionary methodsFor!
 
 add: anAssociation
@@ -189,6 +193,7 @@ triggerGlobalRenamed: anAssociation from: oldSymbol
 		trigger: #globalRenamed:from:
 		with: anAssociation
 		with: oldSymbol! !
+
 !SystemDictionary categoriesForMethods!
 add:!adding!public! !
 allBehaviors!class hierarchy-accessing!private! !

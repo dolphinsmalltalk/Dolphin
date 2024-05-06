@@ -5,10 +5,15 @@ ListControlTest subclass: #ListBoxTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ListBoxTest guid: (GUID fromString: '{0cceab03-640d-4bd6-8e8c-1da96bf288d2}')!
+
 ListBoxTest isAbstract: true!
+
 ListBoxTest comment: ''!
+
 !ListBoxTest categoriesForClass!Unclassified! !
+
 !ListBoxTest methodsFor!
 
 classToTest
@@ -49,6 +54,7 @@ testNewSelectionsClickOutsideListWithModifiers
 
 verifyClicks: anArray
 	self assert: clicks size equals: anArray size! !
+
 !ListBoxTest categoriesForMethods!
 classToTest!helpers!private! !
 newSelectionAfterLeftClickOutsideList:!helpers!private! !

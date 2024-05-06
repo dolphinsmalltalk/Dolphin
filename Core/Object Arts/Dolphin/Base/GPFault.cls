@@ -5,9 +5,13 @@ Win32Fault subclass: #GPFault
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GPFault guid: (GUID fromString: '{87b4c567-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 GPFault comment: ''!
+
 !GPFault categoriesForClass!System-Exception Handling! !
+
 !GPFault methodsFor!
 
 _descriptionArguments
@@ -30,6 +34,7 @@ isReading
 	"Answer whether the fault occurred attempting to read from memory (as opposed to writing)."
 
 	^(exceptionRecord information at: 1) == 0! !
+
 !GPFault categoriesForMethods!
 _descriptionArguments!displaying!public! !
 _descriptionFormat!displaying!public! !

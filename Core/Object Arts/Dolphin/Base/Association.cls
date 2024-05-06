@@ -5,10 +5,14 @@ Magnitude subclass: #Association
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Association guid: (GUID fromString: '{87b4c650-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Association comment: 'Association is a simple class to encapsulate the relationship between
 a key and a value. It is used for the elements of Dictionaries.'!
+
 !Association categoriesForClass!Collections-Support! !
+
 !Association methodsFor!
 
 < anAssociation 
@@ -93,6 +97,7 @@ value: aValue
 
 	value := aValue
 ! !
+
 !Association categoriesForMethods!
 <!comparing!public! !
 <=!comparing!public! !
@@ -120,6 +125,7 @@ key: aKey value: aValue
 
 	<primitive: 157>
 	^self new key: aKey value: aValue! !
+
 !Association class categoriesForMethods!
 key:value:!instance creation!public! !
 !

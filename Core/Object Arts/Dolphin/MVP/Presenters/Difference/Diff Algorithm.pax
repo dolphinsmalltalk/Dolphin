@@ -48,7 +48,6 @@ Test example using files /tmp/[12]
 
 package basicPackageVersion: '6.0'.
 
-
 package classNames
 	add: #LinkElement;
 	yourself.
@@ -79,9 +78,6 @@ Link subclass: #LinkElement
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
-"Global Aliases"!
-
-
 "Loose Methods"!
 
 !Dictionary class methodsFor!
@@ -94,6 +90,7 @@ withPositionsOf: aCollection inInterval: anInterval
 	anInterval 
 		do: [:index | (d at: (aCollection at: index) ifAbsentPut: [OrderedCollection new]) add: index].
 	^d! !
+
 !Dictionary class categoriesForMethods!
 withPositionsOf:inInterval:!equivalence classes!public! !
 !
@@ -168,6 +165,7 @@ longestCommonSubsequenceInInterval: aInterval withCollection: anOrderedCollectio
 			link nextLink notNil]
 					whileTrue: [link := link nextLink]].
 	^matchVector! !
+
 !SequenceableCollection categoriesForMethods!
 inverseMatchVector:!computing differences!public! !
 longestCommonSubsequenceInInterval:withCollection:inInterval:!computing differences!public! !
@@ -194,6 +192,7 @@ replaceNextLargerWith: aValue
 	(self basicAt: index) = aValue ifTrue: [^nil].
 	self basicAt: index put: aValue.
 	^index - firstIndex + 1! !
+
 !SortedCollection categoriesForMethods!
 replaceNextLargerWith:!adding!public! !
 !

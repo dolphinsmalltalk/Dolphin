@@ -23,7 +23,6 @@ teresa rotateBy: 30.
 simon growBy: 50.
 '.
 
-
 package classNames
 	add: #Circle;
 	add: #Playground;
@@ -54,36 +53,36 @@ Object subclass: #PlayShape
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PlayShape subclass: #RegularPolygon
 	instanceVariableNames: 'color sides position rotation radius'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RegularPolygon subclass: #Circle
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RegularPolygon subclass: #Square
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RegularPolygon subclass: #Triangle
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ShellView subclass: #Playground
 	instanceVariableNames: 'shapes'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

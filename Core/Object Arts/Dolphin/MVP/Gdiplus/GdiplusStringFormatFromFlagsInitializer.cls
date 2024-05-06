@@ -5,9 +5,13 @@ GdiplusStringFormatInitializer subclass: #GdiplusStringFormatFromFlagsInitialize
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusStringFormatFromFlagsInitializer guid: (GUID fromString: '{f4b7aa82-5fd1-11d7-b609-00e0987e8081}')!
+
 GdiplusStringFormatFromFlagsInitializer comment: ''!
+
 !GdiplusStringFormatFromFlagsInitializer categoriesForClass!Unclassified! !
+
 !GdiplusStringFormatFromFlagsInitializer methodsFor!
 
 createHandle
@@ -23,6 +27,7 @@ createHandle
 formatFlags: flagsNumber language: languageNumber
 	formatFlags := flagsNumber.
 	language := languageNumber! !
+
 !GdiplusStringFormatFromFlagsInitializer categoriesForMethods!
 createHandle!private!realizing/unrealizing! !
 formatFlags:language:!initializing!private! !
@@ -32,6 +37,7 @@ formatFlags:language:!initializing!private! !
 
 formatFlags: flagsNumber language: languageNumber
 	^self new formatFlags: flagsNumber language: languageNumber! !
+
 !GdiplusStringFormatFromFlagsInitializer class categoriesForMethods!
 formatFlags:language:!instance creation!public! !
 !

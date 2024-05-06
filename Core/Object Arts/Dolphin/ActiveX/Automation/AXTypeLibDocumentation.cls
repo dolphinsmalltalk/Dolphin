@@ -5,7 +5,9 @@ Object subclass: #AXTypeLibDocumentation
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AXTypeLibDocumentation guid: (GUID fromString: '{c06f3b78-0868-11d3-93af-00a024ca708a}')!
+
 AXTypeLibDocumentation comment: 'AXTypeLibDocumentation is a simple class to hold documentary information from a type library - either from an ITypeLib or an ITypeInfo.
 
 Instance Variables:
@@ -13,7 +15,9 @@ Instance Variables:
 	helpstring 	<String>. Short help text (a one-liner) describing the element.
 	helpcontext 	<DWORD>. Help file cross-reference.
 	helpfile		<String>. Path of help file (only valid on documentation for the library).'!
+
 !AXTypeLibDocumentation categoriesForClass!ActiveX Automation! !
+
 !AXTypeLibDocumentation methodsFor!
 
 helpcontext
@@ -45,6 +49,7 @@ printOn: aStream
 		nextPut: $(;
 		print: self name;
 		nextPut: $)! !
+
 !AXTypeLibDocumentation categoriesForMethods!
 helpcontext!accessing!public! !
 helpfile!accessing!public! !

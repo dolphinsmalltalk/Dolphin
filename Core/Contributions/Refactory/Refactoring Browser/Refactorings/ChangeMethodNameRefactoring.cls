@@ -5,15 +5,20 @@ MethodRefactoring subclass: #ChangeMethodNameRefactoring
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ChangeMethodNameRefactoring guid: (GUID fromString: '{3f93d212-d92e-4bbb-b225-17bed064896e}')!
+
 ChangeMethodNameRefactoring isAbstract: true!
+
 ChangeMethodNameRefactoring comment: 'Abstract superclass for refactorings that change a methods selector, e.g. add/remove parameter and rename.
 
 Dolphin modifications to this class are:
 	#preconditions 			Cosmetic - includes list of affected classes in warning
 	#renameImplementors		Maintains previous package of loose methods
 	#renameMethod:in:to:permuation:	General change to ensure display string always valid '!
+
 !ChangeMethodNameRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !ChangeMethodNameRefactoring methodsFor!
 
 hasPermutedArguments
@@ -134,6 +139,7 @@ transform
 	self removeRenamedImplementors
 
 ! !
+
 !ChangeMethodNameRefactoring categoriesForMethods!
 hasPermutedArguments!public!testing! !
 implementors!accessing!private! !

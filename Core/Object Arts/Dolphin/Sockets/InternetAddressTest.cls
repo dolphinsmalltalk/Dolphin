@@ -5,9 +5,13 @@ DolphinTest subclass: #InternetAddressTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 InternetAddressTest guid: (GUID fromString: '{3d606958-5c0e-4788-a978-70bf30cf372d}')!
+
 InternetAddressTest comment: ''!
+
 !InternetAddressTest categoriesForClass!Unclassified! !
+
 !InternetAddressTest methodsFor!
 
 testAllForHost
@@ -54,6 +58,7 @@ testLocalHost
 	self assert: local host asLowercase equals: computerName.
 	self assert: ((InternetAddress ipAddress: local ipAddress) host subStrings: $.) first asLowercase
 		equals: computerName! !
+
 !InternetAddressTest categoriesForMethods!
 testAllForHost!public!unit tests! !
 testHost!public!unit tests! !

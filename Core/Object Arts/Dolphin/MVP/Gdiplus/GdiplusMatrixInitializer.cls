@@ -5,9 +5,13 @@ GdiplusInitializer subclass: #GdiplusMatrixInitializer
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusMatrixInitializer guid: (GUID fromString: '{1a1a5ea6-6151-11d7-b609-00e0987e8081}')!
+
 GdiplusMatrixInitializer comment: ''!
+
 !GdiplusMatrixInitializer categoriesForClass!Unclassified! !
+
 !GdiplusMatrixInitializer methodsFor!
 
 createHandle
@@ -34,6 +38,7 @@ m11: aReal11 m12: aReal12 m21: aReal21 m22: aReal22 m31: aReal31 m32: aReal32
 	m22 := aReal22.
 	m31 := aReal31.
 	m32 := aReal32! !
+
 !GdiplusMatrixInitializer categoriesForMethods!
 createHandle!private!realizing/unrealizing! !
 gdiplusConstructorErrorDescription!constants!private! !
@@ -50,6 +55,7 @@ m11: aReal11 m12: aReal12 m21: aReal21 m22: aReal22 m31: aReal31 m32: aReal32
 		m22: aReal22
 		m31: aReal31
 		m32: aReal32! !
+
 !GdiplusMatrixInitializer class categoriesForMethods!
 m11:m12:m21:m22:m31:m32:!instance creation!public! !
 !

@@ -5,9 +5,13 @@ DolphinTest subclass: #MessageTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MessageTest guid: (GUID fromString: '{aaa1f3a5-03cb-48f2-b067-a1ec0392ad2b}')!
+
 MessageTest comment: ''!
+
 !MessageTest categoriesForClass!Unclassified! !
+
 !MessageTest methodsFor!
 
 testSelectorArguments
@@ -23,6 +27,7 @@ testSelectorArguments
 	"Invoke the method directly so we don't need to install it."
 	msg2 := testMethod value: Message withArguments: #(#x:y: #(123 456)).
 	self assert: msg2 equals: msg1! !
+
 !MessageTest categoriesForMethods!
 testSelectorArguments!public!unit tests! !
 !

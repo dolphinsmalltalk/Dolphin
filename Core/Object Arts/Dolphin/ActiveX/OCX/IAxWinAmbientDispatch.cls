@@ -5,7 +5,9 @@ IDispatch subclass: #IAxWinAmbientDispatch
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IAxWinAmbientDispatch guid: (IID fromString: '{b6ea2051-048a-11d1-82b9-00c04fb9942e}')!
+
 IAxWinAmbientDispatch comment: '<IAxWinAmbientDispatch> is a wrapper class for the COM interface ''ActiveXHost.IAxWinAmbientDispatch'' generated from type information in the ''Dolphin Smalltalk Active-X Host Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
@@ -108,7 +110,9 @@ interface IAxWinAmbientDispatch : IDispatch {
 		[out, retval] BSTR* pbstrOptionKeyPath);
 };
 '!
+
 !IAxWinAmbientDispatch categoriesForClass!COM-Interfaces!DolphinVM-Interfaces! !
+
 !IAxWinAmbientDispatch methodsFor!
 
 allowContextMenu
@@ -620,6 +624,7 @@ userMode: pbUserMode
 
 	self put_UserMode: pbUserMode
 ! !
+
 !IAxWinAmbientDispatch categoriesForMethods!
 allowContextMenu!**auto generated**!properties!public! !
 allowContextMenu:!**auto generated**!properties!public! !
@@ -716,6 +721,7 @@ defineFunctions
 		defineFunction: #put_OptionKeyPath: argumentTypes: 'bstr';
 		defineFunction: #get_OptionKeyPath1: argumentTypes: 'bstr*';
 		defineFunction: #get_IsWindowless: argumentTypes: 'varbool*'! !
+
 !IAxWinAmbientDispatch class categoriesForMethods!
 defineFunctions!initializing!public! !
 !

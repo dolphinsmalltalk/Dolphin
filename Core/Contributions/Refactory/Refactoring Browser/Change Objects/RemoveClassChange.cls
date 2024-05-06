@@ -5,9 +5,13 @@ RefactoryClassChange subclass: #RemoveClassChange
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RemoveClassChange guid: (GUID fromString: '{d652f7f1-4258-4cf0-8a95-562b45ae0e17}')!
+
 RemoveClassChange comment: ''!
+
 !RemoveClassChange categoriesForClass!Refactory-Change Objects! !
+
 !RemoveClassChange methodsFor!
 
 asUndoOperation
@@ -35,6 +39,7 @@ printOn: aStream
 		nextPutAll: self displayClassName;
 		nextPutAll: ' removeFromSystem';
 		nextPut: $!!! !
+
 !RemoveClassChange categoriesForMethods!
 asUndoOperation!converting!public! !
 changeString!printing!public! !
@@ -49,6 +54,7 @@ remove: aClass
 
 removeClassName: aSymbol 
 	^self new changeClassName: aSymbol! !
+
 !RemoveClassChange class categoriesForMethods!
 remove:!instance creation!public! !
 removeClassName:!instance creation!public! !

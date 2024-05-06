@@ -5,9 +5,13 @@ Object subclass: #RefactoryTestDataApp
 	classVariableNames: ''
 	poolDictionaries: 'CRTConstants'
 	classInstanceVariableNames: ''!
+
 RefactoryTestDataApp guid: (GUID fromString: '{dd22adf0-7b3f-4465-aa71-377108619c45}')!
+
 RefactoryTestDataApp comment: 'Test class for Smalllint. Contains lots of smelly code'!
+
 !RefactoryTestDataApp categoriesForClass!Refactory-Test data! !
+
 !RefactoryTestDataApp methodsFor!
 
 == comparand 
@@ -404,6 +408,7 @@ yourselfNotUsed
 		printString;
 		printString;
 		yourself! !
+
 !RefactoryTestDataApp categoriesForMethods!
 ==!comparing!public! !
 anySatisfy!lint!public! !
@@ -492,6 +497,7 @@ yourselfNotUsed!lint!public! !
 comment
 	#rbFix.	"Added to test #overridesSpecialMessage"
 	^'Test class for Smalllint. Contains lots of smelly code'! !
+
 !RefactoryTestDataApp class categoriesForMethods!
 comment!accessing!public! !
 !

@@ -5,12 +5,16 @@ BrowserEnvironmentWrapper subclass: #CategoryEnvironment
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 CategoryEnvironment guid: (GUID fromString: '{01ea18f1-d09f-4a63-b569-62a1d8d6c1cd}')!
+
 CategoryEnvironment comment: 'CategoryEnvironment represents a collection of classes (and all the methods they own) that belong to at least one of a particular set of class categories. 
 
 Instance Variables:
 	categories	<Collection of: Symbol>	the category names to browse'!
+
 !CategoryEnvironment categoriesForClass!Refactory-Environments! !
+
 !CategoryEnvironment methodsFor!
 
 categories
@@ -62,6 +66,7 @@ storeOn: aStream
 	aStream nextPutAll: ' categories: '.
 	categories asArray storeOn: aStream.
 	aStream nextPut: $)! !
+
 !CategoryEnvironment categoriesForMethods!
 categories!accessing!public! !
 categories:!initialize/release!public! !
@@ -81,6 +86,7 @@ storeOn:!printing!public! !
 onEnvironment: anEnvironment categories: aCollection
 	^(self onEnvironment: anEnvironment)
 		categories: aCollection; yourself! !
+
 !CategoryEnvironment class categoriesForMethods!
 onEnvironment:categories:!instance creation!public! !
 !

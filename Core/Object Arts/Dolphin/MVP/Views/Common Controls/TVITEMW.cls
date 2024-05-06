@@ -5,7 +5,9 @@ CCITEM subclass: #TVITEMW
 	classVariableNames: '_OffsetOf_cChildren _OffsetOf_cchTextMax _OffsetOf_dwState _OffsetOf_hItem _OffsetOf_iImage _OffsetOf_iSelectedImage _OffsetOf_lParam _OffsetOf_pszText _OffsetOf_stateMask'
 	poolDictionaries: 'TreeViewConstants'
 	classInstanceVariableNames: ''!
+
 TVITEMW guid: (GUID fromString: '{87b4c622-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 TVITEMW addClassConstant: '_OffsetOf_cChildren' value: 16r20!
 TVITEMW addClassConstant: '_OffsetOf_cchTextMax' value: 16r14!
 TVITEMW addClassConstant: '_OffsetOf_dwState' value: 16r8!
@@ -15,6 +17,7 @@ TVITEMW addClassConstant: '_OffsetOf_iSelectedImage' value: 16r1C!
 TVITEMW addClassConstant: '_OffsetOf_lParam' value: 16r24!
 TVITEMW addClassConstant: '_OffsetOf_pszText' value: 16r10!
 TVITEMW addClassConstant: '_OffsetOf_stateMask' value: 16rC!
+
 TVITEMW comment: 'TVITEM is an <ExternalStructure> class which represents the Windows common control structure of the same name.
 
 TVITEM is used to communicate information about the items (nodes) in a Tree View control such as the text, icon, state, etc.
@@ -31,7 +34,9 @@ TVITEM is used to communicate information about the items (nodes) in a Tree View
         int       cChildren;
         LPARAM	lParam;
     } TVITEM;'!
+
 !TVITEMW categoriesForClass!External-Data-Structured-Win32! !
+
 !TVITEMW methodsFor!
 
 allCallbacks
@@ -188,6 +193,7 @@ textPointerOffset
 	"Private - Answer the offset of the text pointer in the receiver. "
 
 	^_OffsetOf_pszText! !
+
 !TVITEMW categoriesForMethods!
 allCallbacks!accessing!public! !
 beStateExpandedOnce!accessing!public! !
@@ -260,6 +266,7 @@ defineFields
 
 getFieldNames
 	^#(#mask #hItem #dwState #stateMask #pszText #cchTextMax #iImage #iSelectedImage #cChildren #lParam)! !
+
 !TVITEMW class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

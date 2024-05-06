@@ -5,7 +5,9 @@ TypeConverter subclass: #MappingConverter
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MappingConverter guid: (GUID fromString: '{996f6c3c-194a-4481-ad8f-1d4c9e509c8a}')!
+
 MappingConverter comment: '<MappingConverter> is a <TypeConverter> that can be used to convert between values from fixed sets where there is a one-to-one correspondence between a value of the left type and a value of right type.
 
 Instance Variables:
@@ -13,7 +15,9 @@ Instance Variables:
 	rightToLeftMap		<LookupTable> inversion of leftToRightMap.
 
 '!
+
 !MappingConverter categoriesForClass!MVP-Type Converters-General! !
+
 !MappingConverter methodsFor!
 
 leftToRight: anObject 
@@ -45,6 +49,7 @@ rightToLeftMap: aLookupTable
 	leftToRightMap := aLookupTable copyEmpty.
 	rightToLeftMap 
 		keysAndValuesDo: [:eachKey :eachValue | leftToRightMap at: eachValue put: eachKey]! !
+
 !MappingConverter categoriesForMethods!
 leftToRight:!operations!private! !
 leftToRightMap!accessing!private! !
@@ -71,6 +76,7 @@ rightToLeft: aLookupTable
 	^self new 
 		rightToLeftMap: aLookupTable;
 		yourself! !
+
 !MappingConverter class categoriesForMethods!
 leftToRight:!instance creation!public! !
 rightToLeft:!instance creation!public! !

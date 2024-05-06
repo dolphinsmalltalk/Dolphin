@@ -5,7 +5,9 @@ VirtualMethodCategory subclass: #PluggableVirtualMethodCategory
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PluggableVirtualMethodCategory guid: (GUID fromString: '{cf4b4026-94a0-45e3-9949-2dca5b07b1e8}')!
+
 PluggableVirtualMethodCategory comment: 'PluggableMethodCategory is a virtual method category class the dynamically generated membership of which includes all methods that pass a configurable filter. See the class side #initialize method for examples.
 
 Instance Variables:
@@ -13,7 +15,9 @@ Instance Variables:
 
 Class Variables:
 	None'!
+
 !PluggableVirtualMethodCategory categoriesForClass!System-Support! !
+
 !PluggableVirtualMethodCategory methodsFor!
 
 includesMethod: aCompiledMethod 
@@ -37,6 +41,7 @@ setFilter: aMonadicValuable
 setName: aString 
 	super setName: aString.
 	filter := [:each | true]! !
+
 !PluggableVirtualMethodCategory categoriesForMethods!
 includesMethod:!public!testing! !
 isSlowToEnumerate!public!testing! !
@@ -86,6 +91,7 @@ uninitialize
 
 	#('compilation failures' 'primitives') 
 		do: [:each | self removePseud: self pseudPrefix , each]! !
+
 !PluggableVirtualMethodCategory class categoriesForMethods!
 initialize!initializing!private! !
 newNamed:withFilter:!instance creation!public! !

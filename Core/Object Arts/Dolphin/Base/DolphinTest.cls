@@ -5,10 +5,15 @@ TestCase subclass: #DolphinTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DolphinTest guid: (GUID fromString: '{6444f9c6-8a25-4f8a-bade-5f08d7c882be}')!
+
 DolphinTest isAbstract: true!
+
 DolphinTest comment: ''!
+
 !DolphinTest categoriesForClass!Unclassified! !
+
 !DolphinTest methodsFor!
 
 assertIs: cloneObject deepCopyOf: sourceObject 
@@ -86,6 +91,7 @@ shouldRaiseZeroDivide: aBlock
 
 versionFromParts: versionNumbers
 	^versionNumbers inject: 0 into: [:sum :each | (sum << 16) + each]! !
+
 !DolphinTest categoriesForMethods!
 assertIs:deepCopyOf:!public!unit tests! !
 assertIs:deepCopyOf:visited:!private!unit tests! !

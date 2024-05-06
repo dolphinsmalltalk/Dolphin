@@ -5,13 +5,17 @@ ClassAspectPlugin subclass: #ClassCommentPlugin
 	classVariableNames: 'TextStyles WordWrap'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ClassCommentPlugin guid: (GUID fromString: '{9bbb729c-f516-492e-b991-7ad0c238a37f}')!
+
 ClassCommentPlugin comment: '`ClassCommentPlugin` is a `<classBrowserPlugin>` for displaying/editing class comments.
 
 The default view uses Scintilla with its built in markdown lexer. This provides some limited assistance for editing comments in markdown, but there is no renderer currently.
 
 '!
+
 !ClassCommentPlugin categoriesForClass!Browser-Plugins! !
+
 !ClassCommentPlugin methodsFor!
 
 applyOptions
@@ -55,6 +59,7 @@ setWordWrap
 
 systemUpdateEvent
 	^#classCommented:! !
+
 !ClassCommentPlugin categoriesForMethods!
 applyOptions!options!private! !
 aspect!constants!private! !
@@ -129,6 +134,7 @@ wordWrap: aBoolean
 	WordWrap == aBoolean ifTrue: [^self].
 	WordWrap := aBoolean.
 	self allSubinstances do: [:each | each setWordWrap]! !
+
 !ClassCommentPlugin class categoriesForMethods!
 defaultBackcolor!accessing!public! !
 defaultBackcolor:!accessing!public! !

@@ -5,7 +5,9 @@ View subclass: #DesktopView
 	classVariableNames: 'Current'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DesktopView guid: (GUID fromString: '{87b4c70e-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 DesktopView comment: 'DesktopView is a <compositeView> representing the Windows desktop. 
 
 Instance Variables:
@@ -15,7 +17,9 @@ Class Variables:
 	Current	<DesktopView> singleton instance of the desktop.
 
 '!
+
 !DesktopView categoriesForClass!MVP-Views! !
+
 !DesktopView methodsFor!
 
 actualFont
@@ -330,6 +334,7 @@ workArea
 	occuppied by the tool bar."
 
 	^(SystemMetrics current getSysParamStruct: SPI_GETWORKAREA type: RECT) asRectangle! !
+
 !DesktopView categoriesForMethods!
 actualFont!accessing!private! !
 addCommandHistory:!accessing!private! !
@@ -438,6 +443,7 @@ uninitialize
 		winFinalize;
 		handle: nil.
 	Current := nil! !
+
 !DesktopView class categoriesForMethods!
 current!accessing!public! !
 current:!accessing!public! !

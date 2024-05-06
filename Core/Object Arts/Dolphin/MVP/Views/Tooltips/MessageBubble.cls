@@ -5,7 +5,9 @@ MessageBoxAbstract subclass: #MessageBubble
 	classVariableNames: 'IconIds'
 	poolDictionaries: 'TooltipConstants Win32Constants'
 	classInstanceVariableNames: ''!
+
 MessageBubble guid: (GUID fromString: '{00e5c07e-c4fc-471c-b037-25bc55861176}')!
+
 MessageBubble comment: 'MessageBubble is similar to <MessageBox>, and has a similar protocol. The principle difference is that messages are displayed using a Tooltip (normally a balloon tooltip), rather than in a traditional dialog. This provides a general capability for Dolphin applications to implement speech bubble style help like that which sometimes pops up for tray icons in Windows XP. 
 
 The other main differences from <MessageBox> are:
@@ -41,7 +43,9 @@ Instance Variables:
 	maxWidth	<integer> soft maximum width of the message text, or nil if default.
 
 '!
+
 !MessageBubble categoriesForClass!Kernel-Objects! !
+
 !MessageBubble methodsFor!
 
 activateTooltip: aTOOLINFO 
@@ -334,6 +338,7 @@ willFade: aBoolean
 	style has no effect after opening."
 
 	tooltipStyle := tooltipStyle mask: TTS_NOFADE set: aBoolean not! !
+
 !MessageBubble categoriesForMethods!
 activateTooltip:!private!realizing/unrealizing! !
 addTool!private!realizing/unrealizing! !
@@ -394,6 +399,7 @@ initialize
 				with: MB_ICONINFORMATION
 				with: MB_ICONWARNING
 				with: MB_ICONERROR)! !
+
 !MessageBubble class categoriesForMethods!
 icon!constants!development!public! !
 initialize!private! !

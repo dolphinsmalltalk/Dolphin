@@ -5,9 +5,13 @@ Object subclass: #CompilationResult
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 CompilationResult guid: (GUID fromString: '{87b4c46e-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 CompilationResult comment: ''!
+
 !CompilationResult categoriesForClass!System-Support! !
+
 !CompilationResult methodsFor!
 
 buildTempsMap
@@ -94,6 +98,7 @@ textMap
 
 	textMap isNil ifTrue: [self buildTextMap].
 	^textMap! !
+
 !CompilationResult categoriesForMethods!
 buildTempsMap!development!private! !
 buildTextMap!development!private! !
@@ -121,6 +126,7 @@ method: aCompiledMethod rawTextMap: textArray rawTempsMap: tempsArray
 		method: aCompiledMethod
 		rawTextMap: textArray
 		rawTempsMap: tempsArray! !
+
 !CompilationResult class categoriesForMethods!
 method:rawTextMap:rawTempsMap:!instance creation!public! !
 !

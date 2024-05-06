@@ -5,7 +5,9 @@ ScintillaAttribute subclass: #ScintillaMarkerDefinition
 	classVariableNames: 'FolderNames'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ScintillaMarkerDefinition guid: (GUID fromString: '{6191c503-f964-4afb-9973-c2106886ccf9}')!
+
 ScintillaMarkerDefinition comment: '`ScintillaMarkerDefinition` instances represent the configured types of `ScintillaMarker`s for a particular `ScintillaView`.
 
 Markers can be displayed in any symbol margins configured for the view to mark particular lines.
@@ -25,7 +27,9 @@ Markers can be displayed in any symbol margins configured for the view to mark p
 
 
 '!
+
 !ScintillaMarkerDefinition categoriesForClass!MVP-Views-Support! !
+
 !ScintillaMarkerDefinition methodsFor!
 
 alpha
@@ -135,6 +139,7 @@ view
 
 view: aScintillaView 
 	view := aScintillaView! !
+
 !ScintillaMarkerDefinition categoriesForMethods!
 alpha!accessing!public! !
 alpha:!accessing!public! !
@@ -500,6 +505,7 @@ stbVersion
 visibleCharacterGlyphs
 	^(Character byteCharacterSet select: [:each | each isGraph]) asArray
 		collect: [:each | each asSymbol]! !
+
 !ScintillaMarkerDefinition class categoriesForMethods!
 arrows!constants!public! !
 boxTree!constants!public! !

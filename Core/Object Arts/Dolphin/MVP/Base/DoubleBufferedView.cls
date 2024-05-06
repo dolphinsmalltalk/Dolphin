@@ -5,9 +5,13 @@ View subclass: #DoubleBufferedView
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DoubleBufferedView guid: (GUID fromString: '{f0757e5d-e398-4ede-9e0f-8c6ccb3699fc}')!
+
 DoubleBufferedView comment: ''!
+
 !DoubleBufferedView categoriesForClass!Unclassified! !
+
 !DoubleBufferedView methodsFor!
 
 canvas
@@ -118,6 +122,7 @@ wmNcHitTest: message wParam: wParam lParam: lParam
 		wmNcHitTest: message
 		wParam: wParam
 		lParam: lParam! !
+
 !DoubleBufferedView categoriesForMethods!
 canvas!accessing!public! !
 filerProxy!binary filing!private! !

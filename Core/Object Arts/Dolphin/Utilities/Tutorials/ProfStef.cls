@@ -5,7 +5,9 @@ TutorialPlayer subclass: #ProfStef
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: 'default'!
+
 ProfStef guid: (GUID fromString: '{60f1ec8a-daba-4ccb-bbe6-a35d8192215a}')!
+
 ProfStef comment: 'A ProfStef is the Smalltalk teacher. To start the tutorial, evaluate:
 ProfStef go.
 
@@ -17,12 +19,15 @@ ProfStef goOn: MyOwnTutorial
 
 To see a table of contents with all defined tutorials:
 ProfStef contents'!
+
 !ProfStef categoriesForClass!Unclassified! !
+
 !ProfStef methodsFor!
 
 onViewDestroyed
 	super onViewDestroyed.
 	self class reset! !
+
 !ProfStef categoriesForMethods!
 onViewDestroyed!event handling!private! !
 !
@@ -76,6 +81,7 @@ show
 	profStef := self default.
 	profStef view beActive.
 	^profStef! !
+
 !ProfStef class categoriesForMethods!
 default!initialize!public! !
 defaultModel!public! !

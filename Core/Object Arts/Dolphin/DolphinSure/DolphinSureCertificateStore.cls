@@ -5,7 +5,9 @@ Object subclass: #DolphinSureCertificateStore
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DolphinSureCertificateStore guid: (GUID fromString: '{39c8afb3-b270-4b5a-bd4f-c370eeb7c57b}')!
+
 DolphinSureCertificateStore comment: 'A DolphinSureCertificateStore is used to store DolphinSureCertificates for later retrieval.  The implementation uses the Windows Registry under HKEY_CURRENT_USER and certificates are stored as binary bytes (streamed out using STB). They can be looked up by serial number.
 
 Currently, three such stores are defined and can be accessed by the following class methods:
@@ -20,7 +22,9 @@ Instance Variables:
 	regKey		<RegKey> identifying the registry location of certificates held by this store.
 
 '!
+
 !DolphinSureCertificateStore categoriesForClass!Cryptography-Certificates! !
+
 !DolphinSureCertificateStore methodsFor!
 
 <= aDolphinSureCertificateStore
@@ -122,6 +126,7 @@ serials
 	"Answer anOrderedCollection of the certificate serial numbers in the receiver"
 
 	^self regKey subValues associations collect: [:each | each key]! !
+
 !DolphinSureCertificateStore categoriesForMethods!
 <=!comparing!public! !
 addCertificate:!adding!public! !
@@ -199,6 +204,7 @@ temporaryTrust
 
 uninitialize
 	SessionManager current removeEventsTriggeredFor: self! !
+
 !DolphinSureCertificateStore class categoriesForMethods!
 allStores!enquiries!public! !
 certificateStoreRoot!accessing!private! !

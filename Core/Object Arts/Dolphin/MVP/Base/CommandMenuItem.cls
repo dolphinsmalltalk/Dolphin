@@ -5,7 +5,9 @@ MenuItem subclass: #CommandMenuItem
 	classVariableNames: 'IsDefaultMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 CommandMenuItem guid: (GUID fromString: '{87b4c660-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 CommandMenuItem comment: 'CommandMenuItem represents a <commandSource> menu item held by a <Menu>. The item is configured with a <CommandDescription> to be fired when the item is chosen.. 
 
 Instance Variables:
@@ -18,7 +20,9 @@ Class Variables:
 
 
 '!
+
 !CommandMenuItem categoriesForClass!MVP-Views-Support! !
+
 !CommandMenuItem methodsFor!
 
 acceleratorKey
@@ -179,6 +183,7 @@ text
 	"Answer the menu text (i.e. the text that appears in the menu) for the receiver."
 
 	^self commandDescription menuText! !
+
 !CommandMenuItem categoriesForMethods!
 acceleratorKey!accessing!public! !
 acceleratorKey:!accessing!public! !
@@ -251,6 +256,7 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^2! !
+
 !CommandMenuItem class categoriesForMethods!
 command:description:!instance creation!public! !
 command:description:image:!instance creation!public! !

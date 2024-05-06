@@ -5,12 +5,17 @@ AbstractLOGFONT subclass: #LOGFONT
 	classVariableNames: '_OffsetOf_lfFaceName'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 LOGFONT guid: (GUID fromString: '{87b4c5f9-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 LOGFONT addClassConstant: '_OffsetOf_lfFaceName' value: 16r1C!
+
 LOGFONT comment: '<LOGFONT> is an <ExternalStructure> class to wrap the Win32 structure LOGFONTA. 
 
 LOGFONT has been replaced by LOGFONTW, but is retained due to references from pre-existing view resources (which contain Font instances that reference LOGFONT instances). It will be deprecated in a future release.'!
+
 !LOGFONT categoriesForClass!DxVBLibA-Structs! !
+
 !LOGFONT methodsFor!
 
 createFont
@@ -48,6 +53,7 @@ lfFaceName: anAnsiString
 		to: _OffsetOf_lfFaceName + size
 		startingAt: 1.
 	bytes byteAtOffset: _OffsetOf_lfFaceName + size put: 0! !
+
 !LOGFONT categoriesForMethods!
 createFont!private!realizing/unrealizing! !
 faceName!accessing!public! !
@@ -66,6 +72,7 @@ defineFields
 
 	super defineFields.
 	self defineField: #lfFaceName type: (StringField type: AnsiString length: LF_FACESIZE)! !
+
 !LOGFONT class categoriesForMethods!
 defineFields!public!template definition! !
 !

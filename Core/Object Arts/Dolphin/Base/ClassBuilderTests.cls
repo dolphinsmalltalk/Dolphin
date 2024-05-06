@@ -5,9 +5,13 @@ DolphinTest subclass: #ClassBuilderTests
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ClassBuilderTests guid: (GUID fromString: '{889ced5d-011b-4995-82ec-dcc53ee38da2}')!
+
 ClassBuilderTests comment: ''!
+
 !ClassBuilderTests categoriesForClass!Tests-Kernel-Classes! !
+
 !ClassBuilderTests methodsFor!
 
 classBuilderTestClass
@@ -368,6 +372,7 @@ testReshapeSubClass
 	self assert: testInstance class identicalTo: self classBuilderTestSubclass1.
 	self assert: testClass identicalTo: self classBuilderTestSubclass1.
 	self assert: testMeta identicalTo: self classBuilderTestSubclass1 class! !
+
 !ClassBuilderTests categoriesForMethods!
 classBuilderTestClass!public!unit tests! !
 classBuilderTestSubclass1!public!unit tests! !
@@ -393,6 +398,7 @@ testReshapeSubClass!public!unit tests! !
 
 resources
 	^Array with: ClassBuilderTestClasses! !
+
 !ClassBuilderTests class categoriesForMethods!
 resources!Accessing!public! !
 !

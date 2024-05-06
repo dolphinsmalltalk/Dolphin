@@ -5,9 +5,13 @@ DolphinTest subclass: #Base64CodecTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Base64CodecTest guid: (GUID fromString: '{29f3cfca-13c2-49dd-bcac-20c64297a7f0}')!
+
 Base64CodecTest comment: ''!
+
 !Base64CodecTest categoriesForClass!Unclassified! !
+
 !Base64CodecTest methodsFor!
 
 roundTrip: bytes
@@ -97,6 +101,7 @@ testVM
 	decoded := ByteArray writeStream.
 	Base64Codec decodeFrom: encoded contents readStream onto: decoded.
 	self assert: decoded contents equals: f contents! !
+
 !Base64CodecTest categoriesForMethods!
 roundTrip:!helpers!private! !
 testLineLength!public!unit tests! !

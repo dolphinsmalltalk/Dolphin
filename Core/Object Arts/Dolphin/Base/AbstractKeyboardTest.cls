@@ -5,10 +5,15 @@ DolphinTest subclass: #AbstractKeyboardTest
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 AbstractKeyboardTest guid: (GUID fromString: '{973884cb-33cb-45e6-a489-48d76699c608}')!
+
 AbstractKeyboardTest isAbstract: true!
+
 AbstractKeyboardTest comment: ''!
+
 !AbstractKeyboardTest categoriesForClass!Unclassified! !
+
 !AbstractKeyboardTest methodsFor!
 
 setCurrentKeyboardLayout: aString
@@ -21,6 +26,7 @@ setCurrentKeyboardLayout: aString
 
 tearDown
 	savedLayout ifNotNil: [Keyboard layoutName: savedLayout]! !
+
 !AbstractKeyboardTest categoriesForMethods!
 setCurrentKeyboardLayout:!helpers!private! !
 tearDown!private!Running! !

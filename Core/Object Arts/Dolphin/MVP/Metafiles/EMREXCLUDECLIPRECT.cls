@@ -5,8 +5,11 @@ ENHMETARECORD subclass: #EMREXCLUDECLIPRECT
 	classVariableNames: '_OffsetOf_rclClip'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 EMREXCLUDECLIPRECT guid: (GUID fromString: '{8747d7ee-6f40-4b1b-a573-4097e175337d}')!
+
 EMREXCLUDECLIPRECT addClassConstant: '_OffsetOf_rclClip' value: 16r8!
+
 EMREXCLUDECLIPRECT comment: '<EMREXCLUDECLIPRECT> is an <ExternalStructure> class to wrap the struct ''Win32.EMREXCLUDECLIPRECT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -21,7 +24,9 @@ struct tagEMREXCLUDECLIPRECT {
 	RECTL rclClip;
 } EMREXCLUDECLIPRECT;
 '!
+
 !EMREXCLUDECLIPRECT categoriesForClass!Win32-Structs! !
+
 !EMREXCLUDECLIPRECT methodsFor!
 
 rclClip
@@ -37,6 +42,7 @@ rclClip: aRECT
 		from: ##(_OffsetOf_rclClip + 1)
 		to: ##(_OffsetOf_rclClip + RECT basicByteSize)
 		startingAt: 1! !
+
 !EMREXCLUDECLIPRECT categoriesForMethods!
 rclClip!**compiled accessors**!public! !
 rclClip:!**compiled accessors**!public! !
@@ -68,6 +74,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_EXCLUDECLIPRECT with: EMR_INTERSECTCLIPRECT! !
+
 !EMREXCLUDECLIPRECT class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

@@ -5,12 +5,15 @@ Win32Structure subclass: #DIBSECTION
 	classVariableNames: '_OffsetOf_dsBitfields _OffsetOf_dsBm _OffsetOf_dsBmih _OffsetOf_dshSection _OffsetOf_dsOffset'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DIBSECTION guid: (GUID fromString: '{87b4c5e7-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 DIBSECTION addClassConstant: '_OffsetOf_dsBitfields' value: 16r40!
 DIBSECTION addClassConstant: '_OffsetOf_dsBm' value: 16r0!
 DIBSECTION addClassConstant: '_OffsetOf_dsBmih' value: 16r18!
 DIBSECTION addClassConstant: '_OffsetOf_dshSection' value: 16r4C!
 DIBSECTION addClassConstant: '_OffsetOf_dsOffset' value: 16r50!
+
 DIBSECTION comment: '<DIBSECTION> is an <ExternalStructure> class to wrap the struct ''Win.DIBSECTION'' from type information in the ''Windows API (ANSI)'' library.
 
 The type library contains no documentation for this struct
@@ -28,7 +31,9 @@ struct tagDIBSECTION {
 	long dsOffset;
 } DIBSECTION;
 '!
+
 !DIBSECTION categoriesForClass!Win32-Structs! !
+
 !DIBSECTION methodsFor!
 
 dsBitfields
@@ -83,6 +88,7 @@ dsOffset: anInteger
 	"Set the receiver's 'dsOffset' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_dsOffset put: anInteger! !
+
 !DIBSECTION categoriesForMethods!
 dsBitfields!**compiled accessors**!public! !
 dsBm!**compiled accessors**!public! !
@@ -125,6 +131,7 @@ fileOutStem
 
 getFieldNames
 	^#(#dsBm #dsBmih #dsBitfields #dshSection #dsOffset)! !
+
 !DIBSECTION class categoriesForMethods!
 defineFields!public!template definition! !
 fileOutStem!private!source filing! !

@@ -5,9 +5,13 @@ Object subclass: #AXMethodName
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AXMethodName guid: (GUID fromString: '{fdfdeb82-6021-4e02-9882-cc75d3a22b22}')!
+
 AXMethodName comment: ''!
+
 !AXMethodName categoriesForClass!Kernel-Objects! !
+
 !AXMethodName methodsFor!
 
 argumentCount
@@ -68,6 +72,7 @@ setKeywords: keywordsCollection argumentNames: argsCollection indices: indexColl
 	argumentNames := argsCollection.
 	indices := indexCollection.
 	^self! !
+
 !AXMethodName categoriesForMethods!
 argumentCount!accessing!public! !
 argumentNames!accessing!public! !
@@ -93,6 +98,7 @@ keywords: keywordsCollection argumentNames: argumentsCollection indices: indexCo
 		setKeywords: keywordsCollection
 		argumentNames: argumentsCollection
 		indices: indexCollection! !
+
 !AXMethodName class categoriesForMethods!
 icon!constants!public! !
 keywords:argumentNames:indices:!instance creation!public! !

@@ -5,9 +5,13 @@ GdiplusInitializer subclass: #GdiplusBitmapFromIconInitializer
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusBitmapFromIconInitializer guid: (GUID fromString: '{c320278a-5152-4eda-8a58-6911de50cc40}')!
+
 GdiplusBitmapFromIconInitializer comment: ''!
+
 !GdiplusBitmapFromIconInitializer categoriesForClass!Unclassified! !
+
 !GdiplusBitmapFromIconInitializer methodsFor!
 
 createHandle
@@ -29,6 +33,7 @@ gdiplusConstructorErrorDescription
 
 icon: anIcon
 	icon := anIcon! !
+
 !GdiplusBitmapFromIconInitializer categoriesForMethods!
 createHandle!private!realizing/unrealizing! !
 gdiplusConstructorErrorDescription!constants!private! !
@@ -41,6 +46,7 @@ icon: anIcon
 	"Creates a Bitmap object based on an icon."
 
 	^self new icon: anIcon! !
+
 !GdiplusBitmapFromIconInitializer class categoriesForMethods!
 icon:!instance creation!public! !
 !

@@ -5,11 +5,14 @@ TEXTMETRICW subclass: #NEWTEXTMETRICW
 	classVariableNames: '_OffsetOf_ntmAvgWidth _OffsetOf_ntmCellHeight _OffsetOf_ntmFlags _OffsetOf_ntmSizeEM'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 NEWTEXTMETRICW guid: (GUID fromString: '{5a49e86c-3d79-4c3d-b5be-65a1b21f73ed}')!
+
 NEWTEXTMETRICW addClassConstant: '_OffsetOf_ntmAvgWidth' value: 16r48!
 NEWTEXTMETRICW addClassConstant: '_OffsetOf_ntmCellHeight' value: 16r44!
 NEWTEXTMETRICW addClassConstant: '_OffsetOf_ntmFlags' value: 16r3C!
 NEWTEXTMETRICW addClassConstant: '_OffsetOf_ntmSizeEM' value: 16r40!
+
 NEWTEXTMETRICW comment: '<NEWTEXTMETRIC> is an <ExternalStructure> class to wrap the struct ''Win.NEWTEXTMETRIC'' from type information in the ''Windows API'' library.
 
 IDL definition follows:
@@ -23,7 +26,9 @@ struct tagNEWTEXTMETRIC {
 	UINT ntmAvgWidth;
 } NEWTEXTMETRIC;
 '!
+
 !NEWTEXTMETRICW categoriesForClass!Win-Structs! !
+
 !NEWTEXTMETRICW methodsFor!
 
 ntmAvgWidth
@@ -45,6 +50,7 @@ ntmSizeEM
 	"Answer the <Integer> value of the receiver's 'ntmSizeEM' field."
 
 	^bytes dwordAtOffset: _OffsetOf_ntmSizeEM! !
+
 !NEWTEXTMETRICW categoriesForMethods!
 ntmAvgWidth!**compiled accessors**!public! !
 ntmCellHeight!**compiled accessors**!public! !
@@ -77,6 +83,7 @@ defineFields
 
 getFieldNames
 	^#(#tmHeight #tmAscent #tmDescent #tmInternalLeading #tmExternalLeading #tmAveCharWidth #tmMaxCharWidth #tmWeight #tmOverhang #tmDigitizedAspectX #tmDigitizedAspectY #tmFirstChar #tmLastChar #tmDefaultChar #tmBreakChar #tmItalic #tmUnderlined #tmStruckOut #tmPitchAndFamily #tmCharSet #ntmFlags #ntmSizeEM #ntmCellHeight #ntmAvgWidth)! !
+
 !NEWTEXTMETRICW class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

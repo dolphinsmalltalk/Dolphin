@@ -5,7 +5,9 @@ PermanentLibrary subclass: #NTLibrary
 	classVariableNames: 'IsWine'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 NTLibrary guid: (GUID fromString: '{8293e458-7d81-4aba-97a5-c1001c4b2153}')!
+
 NTLibrary comment: 'NtDllLibrary is the <ExternalLibrary> class to represent the dynamic link library, ''ntdll.dll''. It was generated generated from type information in the ''Win32 API'' library. It contains methods for each of the functions defined by the corresponding module in that type library.
 
 The type library contains the following helpstring For this Module
@@ -13,7 +15,9 @@ The type library contains the following helpstring For this Module
 
 Warning: This comment was automatically generated from the Module''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.
 '!
+
 !NTLibrary categoriesForClass!External-Libraries! !
+
 !NTLibrary methodsFor!
 
 ntQueryTimerResolution: pulMinimumResolution maximum: pulMaximumResolution actual: pulActualResolution
@@ -41,6 +45,7 @@ wineGetVersion
 
 	<stdcall: lpstr wine_get_version>
 	^nil	"instead of reporting an error"! !
+
 !NTLibrary categoriesForMethods!
 ntQueryTimerResolution:maximum:actual:!public! !
 rtlNtStatusToDosError:!public!win32 functions-error handling! !
@@ -68,6 +73,7 @@ openDefault
 	lib := super openDefault.
 	IsWine := lib wineGetVersion notNil.
 	^lib! !
+
 !NTLibrary class categoriesForMethods!
 fileName!**auto generated**!constants!public! !
 isWine!public!testing! !

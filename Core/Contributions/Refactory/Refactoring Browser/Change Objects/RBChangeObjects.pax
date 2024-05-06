@@ -9,7 +9,6 @@ Ported to Dolphin by Blair McGlashan and Andy Bower at Camp Smalltalk 1 in San D
 
 Browse the ''*-RB fixes'' pseudo-category to find the modifications made as part of the Dolphin port.'.
 
-
 package classNames
 	add: #AddClassChange;
 	add: #AddClassVariableChange;
@@ -54,111 +53,126 @@ Object subclass: #ChangeSet
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #RefactoryChange
 	instanceVariableNames: 'name'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #RefactoryChangeManager
 	instanceVariableNames: 'undo redo isPerformingRefactoring'
 	classVariableNames: 'Instance UndoSize'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoryChange subclass: #CompositeRefactoryChange
 	instanceVariableNames: 'changes'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoryChange subclass: #RefactoryClassChange
 	instanceVariableNames: 'className isMeta'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 CompositeRefactoryChange subclass: #RenameClassChange
 	instanceVariableNames: 'oldName newName'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 CompositeRefactoryChange subclass: #RenameVariableChange
 	instanceVariableNames: 'className isMeta oldName newName'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RenameVariableChange subclass: #RenameClassVariableChange
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RenameVariableChange subclass: #RenameInstanceVariableChange
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoryClassChange subclass: #AddClassChange
 	instanceVariableNames: 'definition superclassName instanceVariableNames classVariableNames poolDictionaryNames category'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoryClassChange subclass: #AddMethodChange
 	instanceVariableNames: 'source selector protocols'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoryClassChange subclass: #RefactoryVariableChange
 	instanceVariableNames: 'variable'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoryClassChange subclass: #RemoveClassChange
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoryClassChange subclass: #RemoveMethodChange
 	instanceVariableNames: 'selector'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AddMethodChange subclass: #DolphinAddMethodChange
 	instanceVariableNames: 'packageName compilationFlags method'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoryVariableChange subclass: #AddClassVariableChange
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoryVariableChange subclass: #AddInstanceVariableChange
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoryVariableChange subclass: #AddPoolVariableChange
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoryVariableChange subclass: #RemoveClassVariableChange
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoryVariableChange subclass: #RemoveInstanceVariableChange
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoryVariableChange subclass: #RemovePoolVariableChange
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

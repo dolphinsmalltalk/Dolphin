@@ -5,7 +5,9 @@ ADODBRecordset21 subclass: #ADODB_Recordset
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
+
 ADODB_Recordset guid: (IID fromString: '{00001556-0000-0010-8000-00aa006d2ea4}')!
+
 ADODB_Recordset comment: '`ADODB_Recordset` is a wrapper class for the COM interface ''ADODB._Recordset'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -31,7 +33,9 @@ interface _Recordset : Recordset21
 };
 ```
 '!
+
 !ADODB_Recordset categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
+
 !ADODB_Recordset methodsFor!
 
 save
@@ -54,6 +58,7 @@ Save: destination PersistFormat: persistFormat
 
 	<virtual stdcall: hresult 85 variant sdword>
 	^self invalidCall: _failureCode! !
+
 !ADODB_Recordset categoriesForMethods!
 save!**auto generated**!methods!public! !
 save:persistFormat:!**auto generated**!methods!public! !
@@ -84,6 +89,7 @@ example1
 	rs open: 'Employees' activeConnection: 'DSN=Northwind'.
 	"Get the employees names"
 	rs collect: [:each | (each item: 'LastName') value].! !
+
 !ADODB_Recordset class categoriesForMethods!
 clsid!**auto generated**!constants!private! !
 defineFunctions!**auto generated**!initializing!public! !

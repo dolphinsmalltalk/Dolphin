@@ -5,9 +5,13 @@ DolphinTest subclass: #FileTest
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 FileTest guid: (GUID fromString: '{26ae9922-21e2-489a-845c-3c1dc1c2a3cf}')!
+
 FileTest comment: ''!
+
 !FileTest categoriesForClass!Unclassified! !
+
 !FileTest methodsFor!
 
 buildTestPathOfLength: anInteger
@@ -697,6 +701,7 @@ testSplitStemFrom
 	self printFilenameOfLength: CRTConstants._MAX_FNAME * 2 on: path.
 	path := path contents.
 	self assert: (File splitStemFrom: path) equals: ((path copyFrom: 4) upTo: $.)! !
+
 !FileTest categoriesForMethods!
 buildTestPathOfLength:!helpers!private! !
 createTestDirectories!helpers!private! !

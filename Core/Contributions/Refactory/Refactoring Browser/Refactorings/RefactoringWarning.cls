@@ -5,9 +5,13 @@ Warning subclass: #RefactoringWarning
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoringWarning guid: (GUID fromString: '{80575ec0-f0f1-47c6-a7d6-2cb4a3440aaa}')!
+
 RefactoringWarning comment: ''!
+
 !RefactoringWarning categoriesForClass!Refactory-Support! !
+
 !RefactoringWarning methodsFor!
 
 defaultAction
@@ -20,6 +24,7 @@ refactoring
 
 refactoring: anObject
 	refactoring := anObject! !
+
 !RefactoringWarning categoriesForMethods!
 defaultAction!actions!private! !
 refactoring!accessing!public! !
@@ -37,6 +42,7 @@ refactoring: aRefactoring signal: messageText with: tag
 	^(self new)
 		refactoring: aRefactoring;
 		signal: messageText with: tag! !
+
 !RefactoringWarning class categoriesForMethods!
 refactoring:signal:!public! !
 refactoring:signal:with:!public! !

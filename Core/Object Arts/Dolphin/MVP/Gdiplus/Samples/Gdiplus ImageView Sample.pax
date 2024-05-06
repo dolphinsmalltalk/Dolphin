@@ -7,7 +7,6 @@ package paxVersion: 1;
 
 package basicPackageVersion: '6.0'.
 
-
 package classNames
 	add: #GdiplusImageViewSampleShell;
 	yourself.
@@ -45,11 +44,6 @@ Shell subclass: #GdiplusImageViewSampleShell
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

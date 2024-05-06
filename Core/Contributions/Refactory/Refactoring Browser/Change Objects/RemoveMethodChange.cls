@@ -5,9 +5,13 @@ RefactoryClassChange subclass: #RemoveMethodChange
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RemoveMethodChange guid: (GUID fromString: '{4789e594-4494-4fee-920c-514289353e57}')!
+
 RemoveMethodChange comment: ''!
+
 !RemoveMethodChange categoriesForClass!Refactory-Change Objects! !
+
 !RemoveMethodChange methodsFor!
 
 = aRemoveMethodChange 
@@ -45,6 +49,7 @@ source
 
 	#rbFix. "For common interface with AddMethodChange"
 	^''! !
+
 !RemoveMethodChange categoriesForMethods!
 =!comparing!public! !
 asUndoOperation!converting!public! !
@@ -64,6 +69,7 @@ remove: aSymbol from: aClass
 		changeClass: aClass;
 		selector: aSymbol;
 		yourself! !
+
 !RemoveMethodChange class categoriesForMethods!
 remove:from:!instance creation!public! !
 !

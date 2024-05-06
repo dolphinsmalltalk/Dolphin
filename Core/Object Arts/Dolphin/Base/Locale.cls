@@ -5,10 +5,15 @@ Object subclass: #Locale
 	classVariableNames: 'Invariant NoUserOverrideMask SystemDefault TimeZoneInfo UserDefault'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 Locale guid: (GUID fromString: '{87b4c49a-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Locale addClassConstant: 'NoUserOverrideMask' value: 16r1000000!
+
 Locale comment: ''!
+
 !Locale categoriesForClass!System-Support! !
+
 !Locale methodsFor!
 
 amDesignator
@@ -674,6 +679,7 @@ yearMonthFormat
 	"Answer the year/month date format for the receiver locale."
 
 	^self subclassResponsibility! !
+
 !Locale categoriesForMethods!
 amDesignator!constants!public! !
 basicLcid!accessing!private! !
@@ -876,6 +882,7 @@ userDefault: aLocale
 	oldDefault := UserDefault.
 	UserDefault := aLocale.
 	^oldDefault! !
+
 !Locale class categoriesForMethods!
 default!accessing!public! !
 getTimeZoneInfo!enquiries!public! !

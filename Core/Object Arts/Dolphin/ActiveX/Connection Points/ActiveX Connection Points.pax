@@ -13,7 +13,6 @@ An example of the use of AXEventSink can be found in the AXControlSite class of 
 
 package basicPackageVersion: '6.1'.
 
-
 package classNames
 	add: #AXEventSink;
 	add: #CONNECTDATA;
@@ -42,31 +41,30 @@ AXDispatchImpAbstract subclass: #AXEventSink
 	classVariableNames: 'GenericEventMask NoIndividualEventsMask TraceMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IUnknown subclass: #IConnectionPoint
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IUnknown subclass: #IConnectionPointContainer
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IEnumUnknown subclass: #IEnumConnectionPoints
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 OLEStructure subclass: #CONNECTDATA
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_dwCookie _OffsetOf_punk'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

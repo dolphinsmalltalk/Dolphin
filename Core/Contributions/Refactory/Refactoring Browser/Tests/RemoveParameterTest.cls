@@ -5,9 +5,13 @@ RefactoringTest subclass: #RemoveParameterTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RemoveParameterTest guid: (GUID fromString: '{e5ff0a30-1644-4902-8240-701881d750fe}')!
+
 RemoveParameterTest comment: ''!
+
 !RemoveParameterTest categoriesForClass!Refactory-Testing! !
+
 !RemoveParameterTest methodsFor!
 
 testNonExistantName
@@ -48,6 +52,7 @@ testRemoveParameter
 		equals: (RBParser parseMethod: 'callMethod
 								^(self renameThisMethod)').
 	self deny: (class directlyDefinesMethod: ('rename' , 'ThisMethod:') asSymbol)! !
+
 !RemoveParameterTest categoriesForMethods!
 testNonExistantName!failure tests!public! !
 testPrimitiveMethods!failure tests!public! !

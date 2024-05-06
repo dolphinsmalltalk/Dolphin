@@ -5,9 +5,13 @@ Object variableSubclass: #MethodContext
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MethodContext guid: (GUID fromString: '{87b4c4a2-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 MethodContext comment: 'MethodContext is present only to assist in the conversion of old view resources. It is no longer used.'!
+
 !MethodContext categoriesForClass!Deprecated! !
+
 !MethodContext methodsFor!
 
 frame
@@ -18,6 +22,7 @@ method
 
 receiver
 	^receiver! !
+
 !MethodContext categoriesForMethods!
 frame!accessing!private! !
 method!accessing!private! !
@@ -48,6 +53,7 @@ stbConvertFrom: format
 stbVersion
 	^2
 ! !
+
 !MethodContext class categoriesForMethods!
 stbConvertFrom:!binary filing!private! !
 stbVersion!binary filing!constants!private! !

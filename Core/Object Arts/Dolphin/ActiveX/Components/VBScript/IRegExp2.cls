@@ -5,7 +5,9 @@ IRegExpAbstract subclass: #IRegExp2
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IRegExp2 guid: (IID fromString: '{3f4dacb0-160d-11d2-a8e9-00104b365c9f}')!
+
 IRegExp2 comment: '`IRegExp2` is a wrapper class for the COM interface ''VBScript_RegExp_55.IRegExp2'' generated from type information in the ''Microsoft VBScript Regular Expressions 5.5'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -63,7 +65,9 @@ interface IRegExp2 : IDispatch
 };
 ```
 '!
+
 !IRegExp2 categoriesForClass!COM-Interfaces!VBScript_RegExp_55-Interfaces! !
+
 !IRegExp2 methodsFor!
 
 Execute: sourceString ppMatches: ppMatches
@@ -152,6 +156,7 @@ Test: sourceString pMatch: pMatch
 
 	<virtual stdcall: hresult 17 bstr varbool*>
 	^self invalidCall: _failureCode! !
+
 !IRegExp2 categoriesForMethods!
 Execute:ppMatches:!**auto generated**!COM Interfaces-IRegExp2!private! !
 get_Multiline:!**auto generated**!COM Interfaces-IRegExp2!private! !
@@ -195,6 +200,7 @@ defineFunctions
 		defineFunction: #Replace:replaceVar:pDestString:
 			argumentTypes: 'bstr variant bstr*'
 ! !
+
 !IRegExp2 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

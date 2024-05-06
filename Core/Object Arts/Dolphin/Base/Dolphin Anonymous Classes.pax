@@ -5,7 +5,6 @@ package paxVersion: 1;
 	basicComment: 'Dolphin Anonymous Classes
 Copyright (c) Object Arts Ltd. 2019.'.
 
-
 package classNames
 	add: #AnonymousClassBuilder;
 	yourself.
@@ -37,9 +36,6 @@ ClassBuilder subclass: #AnonymousClassBuilder
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
-"Global Aliases"!
-
-
 "Loose Methods"!
 
 !Class methodsFor!
@@ -52,6 +48,7 @@ isAnonymous
 newAnonymousSubclass
 	^(ClassBuilder forAnonymousSubclassOf: self)
 		createNewClass! !
+
 !Class categoriesForMethods!
 isAnonymous!public!testing! !
 newAnonymousSubclass!public! !
@@ -63,6 +60,7 @@ forAnonymousSubclassOf: aClass
 	^AnonymousClassBuilder new
 		superclass: aClass;
 		yourself! !
+
 !ClassBuilder class categoriesForMethods!
 forAnonymousSubclassOf:!instance creation!public! !
 !
@@ -73,6 +71,7 @@ isAnonymous
 	"Answer whether this is an anonymous (unbound) class."
 
 	^self subclassResponsibility! !
+
 !ClassDescription categoriesForMethods!
 isAnonymous!public!testing! !
 !
@@ -83,6 +82,7 @@ isAnonymous
 	"Answer whether this is an anonymous (unbound) class."
 
 	^self instanceClass isAnonymous! !
+
 !Metaclass categoriesForMethods!
 isAnonymous!public!testing! !
 !

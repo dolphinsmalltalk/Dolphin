@@ -5,9 +5,13 @@ Icon subclass: #Cursor
 	classVariableNames: 'AppStarting Arrow Cross Current DDCopy DDCopyScroll DDLink DDLinkScroll DDMove DDMoveScroll DDNone Hand Help IBeam No SizeAll SizeNESW SizeNS SizeNWSE SizeWE SplitHorizontal SplitVertical UpArrow Wait'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Cursor guid: (GUID fromString: '{87b4c640-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Cursor comment: ''!
+
 !Cursor categoriesForClass!Graphics-Tools! !
+
 !Cursor methodsFor!
 
 imageType
@@ -85,6 +89,7 @@ showWhile: aBlock
 	^aBlock ensure: 
 			[Current := previous.
 			UserLibrary default setCursor: actual]! !
+
 !Cursor categoriesForMethods!
 imageType!constants!private! !
 load:fromInstance:extent:!private!realizing/unrealizing! !
@@ -333,6 +338,7 @@ wait
 
 	Wait isNil ifTrue: [Wait := self fromSystemId: IDC_WAIT].
 	^Wait! !
+
 !Cursor class categoriesForMethods!
 appStarting!accessing!public! !
 arrow!instance creation!public! !

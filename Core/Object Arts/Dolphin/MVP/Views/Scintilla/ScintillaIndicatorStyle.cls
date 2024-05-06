@@ -5,8 +5,11 @@ QueryableScintillaAttribute subclass: #ScintillaIndicatorStyle
 	classVariableNames: 'HoverForecolor HoverStyle IndicatorStyles StyleNames'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ScintillaIndicatorStyle guid: (GUID fromString: '{2de64fd7-5b9f-4ac7-81c6-912b56b41a4f}')!
+
 ScintillaIndicatorStyle addClassConstant: 'IndicatorStyles' value: #(#underline #squiggle #tt #hatch #strikeOut #hidden #box #roundBox #straightBox #dash #dots #squiggleLow #dotBox #squigglePixmap #compositionThick #compositionThin #fullBox #textFore #point #pointCharacter)!
+
 ScintillaIndicatorStyle comment: '`ScintillaIndicatorStyle` instances represent the indicator configuration for a particular `ScintillaView`.
 
 Indicators are orthogonal to visual styles, and can be used to highlight areas of text regardless of styling. A common example usage would be highlight erroneous text by underlining it with a squiggly line.
@@ -60,7 +63,9 @@ A fixed set of named styles is supported, although this tends to get added to ov
   `IndicatorStyles`	`Array`
   `StyleNames`		`<Object>`
 '!
+
 !ScintillaIndicatorStyle categoriesForClass!MVP-Views-Support! !
+
 !ScintillaIndicatorStyle methodsFor!
 
 alpha
@@ -211,6 +216,7 @@ validateAlpha: anInteger
 	^(anInteger between: SC_ALPHA_TRANSPARENT and: SC_ALPHA_OPAQUE)
 		ifTrue: [anInteger]
 		ifFalse: [self error: 'Invalid alpha value ' , anInteger displayString]! !
+
 !ScintillaIndicatorStyle categoriesForMethods!
 alpha!accessing!public! !
 alpha:!accessing!public! !
@@ -341,6 +347,7 @@ stbConvertFrom: anSTBClassFormat
 
 stbVersion
 	^3! !
+
 !ScintillaIndicatorStyle class categoriesForMethods!
 buildPropertyMap!constants!must not strip!private! !
 initialize!development!initializing!public! !

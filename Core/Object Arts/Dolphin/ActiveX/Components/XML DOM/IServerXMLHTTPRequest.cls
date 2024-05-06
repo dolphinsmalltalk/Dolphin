@@ -5,7 +5,9 @@ IXMLHttpRequest subclass: #IServerXMLHTTPRequest
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
 	classInstanceVariableNames: ''!
+
 IServerXMLHTTPRequest guid: (IID fromString: '{2e9196bf-13ba-4dd4-91ca-6c571f281495}')!
+
 IServerXMLHTTPRequest comment: '<IServerXMLHTTPRequest> is a wrapper class for the COM interface ''MSXML2.IServerXMLHTTPRequest'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
@@ -43,7 +45,9 @@ interface IServerXMLHTTPRequest : IXMLHTTPRequest
 		[in]VARIANT value);
 };
 '!
+
 !IServerXMLHTTPRequest categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+
 !IServerXMLHTTPRequest methodsFor!
 
 getOption: option
@@ -130,6 +134,7 @@ WaitForResponse: timeoutInSeconds isSuccessful: isSuccessful
 
 	<virtual stdcall: hresult 23 variant varbool*>
 	^self invalidCall: _failureCode! !
+
 !IServerXMLHTTPRequest categoriesForMethods!
 getOption:!**auto generated**!methods!public! !
 GetOption:value:!**auto generated**!COM Interfaces-IServerXMLHTTPRequest!private! !
@@ -169,6 +174,7 @@ newServerXMLHTTP30
 
 	^self onCLSID: (CLSID fromString: '{AFB40FFD-B609-40A3-9828-F88BBE11E4E3}')
 ! !
+
 !IServerXMLHTTPRequest class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 newServerXMLHTTP!**auto generated**!instance creation!public! !

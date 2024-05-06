@@ -5,8 +5,11 @@ ExternalScalar subclass: #ExternalInteger
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalInteger guid: (GUID fromString: '{87b4c594-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 ExternalInteger isAbstract: true!
+
 ExternalInteger comment: 'ExternalInteger is an abstract class of ExternalStructures to represent machine native integer formats. Various subclasses are defined to represent the signed and unsigned forms with varying numbers of bits:
 
 8-bit
@@ -22,7 +25,9 @@ ExternalInteger comment: 'ExternalInteger is an abstract class of ExternalStruct
 	signed	LARGE_INTEGER
 	unsigned	ULARGE_INTEGER
 '!
+
 !ExternalInteger categoriesForClass!External-Data-Unstructured! !
+
 !ExternalInteger methodsFor!
 
 asInteger
@@ -70,6 +75,7 @@ isSigned
 	"Answer whether the receiver holds a signed 2's complement binary value, as opposed to an unsigned binary value."
 
 	^false! !
+
 !ExternalInteger categoriesForMethods!
 asInteger!converting!public! !
 asSignedInteger!converting!public! !
@@ -93,6 +99,7 @@ fromInteger: anInteger
 	"Answer a new instance of the receiver with contents copied from anInteger"
 
 	^self new value: anInteger! !
+
 !ExternalInteger class categoriesForMethods!
 defineTemplate!public!template definition! !
 fromInteger:!instance creation!public! !

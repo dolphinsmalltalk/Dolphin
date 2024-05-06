@@ -5,9 +5,13 @@ TestCase subclass: #STONWriteReadTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 STONWriteReadTest guid: (GUID fromString: '{8084b7c8-9c64-46ad-a994-4ca3445bcee8}')!
+
 STONWriteReadTest comment: 'STONWriteReadTests test serialization followed by materialization.'!
+
 !STONWriteReadTest categoriesForClass!STON-Tests-Writer! !
+
 !STONWriteReadTest methodsFor!
 
 environment
@@ -286,6 +290,7 @@ testUUIDs
 		UUID new.
 		UUID nilUUID }.
 	self serializeAndMaterialize: uuids! !
+
 !STONWriteReadTest categoriesForMethods!
 environment!private! !
 materialize:!private! !

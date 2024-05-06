@@ -5,9 +5,13 @@ ListView subclass: #MultipleSelectionListView
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MultipleSelectionListView guid: (GUID fromString: '{87b4c733-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 MultipleSelectionListView comment: 'MultipleSelectionListView has now been deprecated - instances should be replaced by <ListView> instances configured to operate in multiple selection mode.  Note that ListView corrects the historical design error in MultipleSelectionListView in that the single selection protocols (#selection[:], #selectionByIndex[:], etc) always operate on a single item (this class redefines the single selection protocols to operate on collections). For multiple selections the multiple selection protocols (e.g. #selections[:], #selectionsByIndex[:], etc) must be used.'!
+
 !MultipleSelectionListView categoriesForClass!MVP-Views! !
+
 !MultipleSelectionListView methodsFor!
 
 defaultWindowStyle
@@ -50,6 +54,7 @@ selectionOrNil
 	"Legacy behaviour"
 
 	^self selectionIfNone: [#()]! !
+
 !MultipleSelectionListView categoriesForMethods!
 defaultWindowStyle!constants!private! !
 isMultiSelect:!public!testing! !
@@ -75,6 +80,7 @@ publishedAspectsOfInstances
 	aspects := super publishedAspectsOfInstances.
 	(aspects at: #isMultiSelect) beReadOnly.
 	^aspects! !
+
 !MultipleSelectionListView class categoriesForMethods!
 icon!constants!public! !
 publishedAspectsOfInstances!constants!development!public! !

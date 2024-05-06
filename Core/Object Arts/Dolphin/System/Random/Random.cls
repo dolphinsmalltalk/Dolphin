@@ -5,15 +5,20 @@ Stream subclass: #Random
 	classVariableNames: 'Default DefaultGeneratorClass'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Random guid: (GUID fromString: '{87b4c6f9-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Random isAbstract: true!
+
 Random comment: 'Random is a subclass of <Stream> that determines its elements based on an algorithm employing a number as a seed. Random itself is abstract, but has various concrete subclasses that implement different pseudo-random number generation algorithms. Attempts to instantiate an instance of Random will answer an instance of the default generator, which is usually the Park & Miller multiplicative congruential generator. This is a good generator, but uses FP arithmetic and is therefore rather slower than the typical quick''n''dirty generator one finds in most C runtime libraries. 
 
 Random provides a concrete implementation of #atEnd, but because the size of the collection is infinite, it never ends.
 
 Instance Variables:
 	seed		<Integer>. Random seed'!
+
 !Random categoriesForClass!Collections-Streams! !
+
 !Random methodsFor!
 
 atEnd
@@ -76,6 +81,7 @@ skip: anInteger
 
 	anInteger < 0 ifTrue: [self error: 'Cannot move backwards in Random number stream'].
 	anInteger timesRepeat: [self next]! !
+
 !Random categoriesForMethods!
 atEnd!public!testing! !
 chiSquareTest:max:!examples!private! !
@@ -128,6 +134,7 @@ systemClockSeed
 	seed := Delay microsecondClockValue // 1000 bitAnd: 16r3FFFFFFF.
 	seed = 0 ifTrue: [seed := 1].
 	^seed! !
+
 !Random class categoriesForMethods!
 default!instance creation!public! !
 defaultGeneratorClass!accessing!public! !

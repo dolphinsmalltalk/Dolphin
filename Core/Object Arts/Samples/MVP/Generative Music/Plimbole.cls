@@ -5,7 +5,9 @@ Model subclass: #Plimbole
 	classVariableNames: 'MidiChannel Registry StepProcess Tempo'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Plimbole guid: (GUID fromString: '{f27f7ff6-a16b-433c-bf1b-d38b3db9ec3c}')!
+
 Plimbole comment: 'This is the Model class for the Plimbole Generative Music Sequencer. Plimbole has been designed to embrace the MVP design rules such that the main functionality is based in the model and is independent of the UI. To demostrate this you can create a Plimbole instance, load it with a piece and then start it playing:
 
 plimbole := Plimbole new register.
@@ -14,7 +16,9 @@ plimbole play.
 
 Make sure that you stop it and unregister any references to the object or it will hold the midi channel open.
 plimbole stop unregister.'!
+
 !Plimbole categoriesForClass!MVP-Models! !
+
 !Plimbole methodsFor!
 
 addCell: aPlimboleCell 
@@ -372,6 +376,7 @@ voiceChannelForNoteIndex: n
 	"Private - Decode whether note index n is a tenor or alto voice. Tenor is channel 1 and alto is channel 2"
 
 	^(n+1) < (self gridExtent x / 2) ifTrue: [tenorChannel ] ifFalse: [altoChannel ]! !
+
 !Plimbole categoriesForMethods!
 addCell:!operations!public! !
 altoChannel!public! !
@@ -505,6 +510,7 @@ unregister: aPlimbole
 		self stop.
 		self midiOutChannel free ].
 ! !
+
 !Plimbole class categoriesForMethods!
 beatTime!accessing!constants!public! !
 icon!constants!public! !

@@ -5,12 +5,17 @@ CommonDialog subclass: #FileDialog
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 FileDialog guid: (GUID fromString: '{87b4c6b1-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 FileDialog isAbstract: true!
+
 FileDialog comment: 'FileDialog is an abstract superclass for <valueDialogPresenter>s implementing the Windows common file dialogs. 
 
 '!
+
 !FileDialog categoriesForClass!MVP-Presenters! !
+
 !FileDialog methodsFor!
 
 allFilesType
@@ -334,6 +339,7 @@ wmNotify: msgInteger wParam: wParamInteger lParam: lParamInteger
 		yourself) lookup: ##(CDN_FIRST + 1) - (ptr sdwordAtOffset: 8))
 		ifNil: [0]
 		ifNotNil: [:action | self perform: action with: ptr]! !
+
 !FileDialog categoriesForMethods!
 allFilesType!constants!private! !
 averageFilenameLength!constants!private! !
@@ -396,6 +402,7 @@ initializeDefaultHooks
 
 textFilesType
 	^#('Text Files (*.txt)' '*.txt')! !
+
 !FileDialog class categoriesForMethods!
 allFilesType!constants!private! !
 defaultModel!models!public! !

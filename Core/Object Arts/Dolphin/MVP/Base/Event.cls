@@ -5,9 +5,13 @@ Object subclass: #Event
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Event guid: (GUID fromString: '{04134010-906c-40dd-b5e7-7f26e4216aa0}')!
+
 Event comment: ''!
+
 !Event categoriesForClass!Kernel-Objects! !
+
 !Event methodsFor!
 
 hwnd
@@ -21,6 +25,7 @@ window
 	must be a registered Dolphin window."
 
 	^window! !
+
 !Event categoriesForMethods!
 hwnd!accessing!private! !
 setSource:!initializing!private! !
@@ -38,6 +43,7 @@ icon
 	"Answers an Icon that can be used to represent this class."
 
 	^##(self) defaultIcon! !
+
 !Event class categoriesForMethods!
 forSource:!instance creation!public! !
 icon!constants!public! !

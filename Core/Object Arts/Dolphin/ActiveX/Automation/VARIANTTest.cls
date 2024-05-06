@@ -5,9 +5,13 @@ DolphinTest subclass: #VARIANTTest
 	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
+
 VARIANTTest guid: (GUID fromString: '{f436bdf8-12ff-47e4-ad1a-c96795760912}')!
+
 VARIANTTest comment: ''!
+
 !VARIANTTest categoriesForClass!Unclassified! !
+
 !VARIANTTest methodsFor!
 
 isValidNullString: aString
@@ -438,6 +442,7 @@ testUI8
 	"dwordAtOffset:put: is unusual in accepting negative values"
 	var qword: -1.
 	self assert: var value equals: 2 ** 64 - 1! !
+
 !VARIANTTest categoriesForMethods!
 isValidNullString:!private!testing! !
 testARRAY!public!unit tests! !
@@ -478,6 +483,7 @@ testUI8!public!unit tests! !
 
 supportsI8
 	^true! !
+
 !VARIANTTest class categoriesForMethods!
 supportsI8!private!testing! !
 !

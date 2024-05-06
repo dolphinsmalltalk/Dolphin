@@ -5,7 +5,9 @@ ICoreWebView2EventHandler subclass: #ICoreWebView2DocumentTitleChangedEventHandl
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2DocumentTitleChangedEventHandler guid: (IID fromString: '{f5f2b923-953e-4042-9f95-f3a118e1afd4}')!
+
 ICoreWebView2DocumentTitleChangedEventHandler comment: '`ICoreWebView2DocumentTitleChangedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2DocumentTitleChangedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -27,7 +29,9 @@ interface ICoreWebView2DocumentTitleChangedEventHandler : IUnknown
 };
 ```
 '!
+
 !ICoreWebView2DocumentTitleChangedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2DocumentTitleChangedEventHandler methodsFor!
 
 basicRegister: tokenBuffer
@@ -35,6 +39,7 @@ basicRegister: tokenBuffer
 
 basicUnregister
 	source Remove_DocumentTitleChanged: token! !
+
 !ICoreWebView2DocumentTitleChangedEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
@@ -55,6 +60,7 @@ eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
 	^#documentTitleChanged! !
+
 !ICoreWebView2DocumentTitleChangedEventHandler class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 eventName!constants!public! !

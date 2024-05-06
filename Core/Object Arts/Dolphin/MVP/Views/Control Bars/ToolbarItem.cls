@@ -5,15 +5,20 @@ Object subclass: #ToolbarItem
 	classVariableNames: ''
 	poolDictionaries: 'ToolbarConstants'
 	classInstanceVariableNames: ''!
+
 ToolbarItem guid: (GUID fromString: '{87b4c4c6-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 ToolbarItem isAbstract: true!
+
 ToolbarItem comment: '`ToolbarItem` is an abstract class whose subclasses represent the items held by a `Toolbar`.
 
 ## Instance Variables:
   `toolbar`		`Toolbar`
 
 '!
+
 !ToolbarItem categoriesForClass!MVP-Views-Support! !
+
 !ToolbarItem methodsFor!
 
 commandId
@@ -93,6 +98,7 @@ update
 
 validateUserInterface: route
 	"Set the UI state of the receiver. Overridden in subclasses"! !
+
 !ToolbarItem categoriesForMethods!
 commandId!commands!private! !
 getCommandId!commands!private! !
@@ -153,6 +159,7 @@ findTools
 
 stbVersion
 	^1! !
+
 !ToolbarItem class categoriesForMethods!
 buttonClass!constants!public! !
 editTools!instance creation!public! !

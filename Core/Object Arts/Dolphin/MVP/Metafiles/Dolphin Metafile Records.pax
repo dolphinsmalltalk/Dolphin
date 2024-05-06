@@ -7,7 +7,6 @@ Copyright (c) Object Arts Ltd. 2010.'.
 
 package basicPackageVersion: '6.1'.
 
-
 package classNames
 	add: #CIEXYZ;
 	add: #CIEXYZTRIPLE;
@@ -115,394 +114,468 @@ ExternalStructure subclass: #CIEXYZ
 	classVariableNames: '_OffsetOf_ciexyzX _OffsetOf_ciexyzY _OffsetOf_ciexyzZ'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalStructure subclass: #CIEXYZTRIPLE
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_ciexyzBlue _OffsetOf_ciexyzGreen _OffsetOf_ciexyzRed'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalStructure subclass: #COLORADJUSTMENT
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_caBlueGamma _OffsetOf_caBrightness _OffsetOf_caColorfulness _OffsetOf_caContrast _OffsetOf_caFlags _OffsetOf_caGreenGamma _OffsetOf_caIlluminantIndex _OffsetOf_caRedGamma _OffsetOf_caRedGreenTint _OffsetOf_caReferenceBlack _OffsetOf_caReferenceWhite _OffsetOf_caSize'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalStructure subclass: #EMRTEXT
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_fOptions _OffsetOf_nChars _OffsetOf_offDx _OffsetOf_offString _OffsetOf_ptlReference _OffsetOf_rcl'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalStructure subclass: #EXTLOGFONTW
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_elfCulture _OffsetOf_elfFullName _OffsetOf_elfLogFont _OffsetOf_elfMatch _OffsetOf_elfPanose _OffsetOf_elfReserved _OffsetOf_elfStyle _OffsetOf_elfStyleSize _OffsetOf_elfVendorId _OffsetOf_elfVersion'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalStructure subclass: #EXTLOGPEN
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_elpBrushStyle _OffsetOf_elpColor _OffsetOf_elpHatch _OffsetOf_elpNumEntries _OffsetOf_elpPenStyle _OffsetOf_elpStyleEntry _OffsetOf_elpWidth'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalStructure subclass: #LOGCOLORSPACE
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_lcsCSType _OffsetOf_lcsEndpoints _OffsetOf_lcsFilename _OffsetOf_lcsGammaBlue _OffsetOf_lcsGammaGreen _OffsetOf_lcsGammaRed _OffsetOf_lcsIntent _OffsetOf_lcsSignature _OffsetOf_lcsSize _OffsetOf_lcsVersion'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalStructure subclass: #LOGCOLORSPACEW
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_lcsCSType _OffsetOf_lcsEndpoints _OffsetOf_lcsFilename _OffsetOf_lcsGammaBlue _OffsetOf_lcsGammaGreen _OffsetOf_lcsGammaRed _OffsetOf_lcsIntent _OffsetOf_lcsSignature _OffsetOf_lcsSize _OffsetOf_lcsVersion'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalStructure subclass: #PIXELFORMATDESCRIPTOR
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_bReserved _OffsetOf_cAccumAlphaBits _OffsetOf_cAccumBits _OffsetOf_cAccumBlueBits _OffsetOf_cAccumGreenBits _OffsetOf_cAccumRedBits _OffsetOf_cAlphaBits _OffsetOf_cAlphaShift _OffsetOf_cAuxBuffers _OffsetOf_cBlueBits _OffsetOf_cBlueShift _OffsetOf_cColorBits _OffsetOf_cDepthBits _OffsetOf_cGreenBits _OffsetOf_cGreenShift _OffsetOf_cRedBits _OffsetOf_cRedShift _OffsetOf_cStencilBits _OffsetOf_dwDamageMask _OffsetOf_dwFlags _OffsetOf_dwLayerMask _OffsetOf_dwVisibleMask _OffsetOf_iLayerType _OffsetOf_iPixelType _OffsetOf_nSize _OffsetOf_nVersion'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalStructure subclass: #XFORM
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_eDx _OffsetOf_eDy _OffsetOf_eM11 _OffsetOf_eM12 _OffsetOf_eM21 _OffsetOf_eM22'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #EMRALPHABLEND
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_cbBitsSrc _OffsetOf_cbBmiSrc _OffsetOf_crBkColorSrc _OffsetOf_cxDest _OffsetOf_cxSrc _OffsetOf_cyDest _OffsetOf_cySrc _OffsetOf_dwRop _OffsetOf_iUsageSrc _OffsetOf_offBitsSrc _OffsetOf_offBmiSrc _OffsetOf_rclBounds _OffsetOf_xDest _OffsetOf_xformSrc _OffsetOf_xSrc _OffsetOf_yDest _OffsetOf_ySrc'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #EMRANGLEARC
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_eStartAngle _OffsetOf_eSweepAngle _OffsetOf_nRadius _OffsetOf_ptlCenter'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #EMRARC
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_ptlEnd _OffsetOf_ptlStart _OffsetOf_rclBox'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #EMRBITBLT
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_cbBitsSrc _OffsetOf_cbBmiSrc _OffsetOf_crBkColorSrc _OffsetOf_cxDest _OffsetOf_cyDest _OffsetOf_dwRop _OffsetOf_iUsageSrc _OffsetOf_offBitsSrc _OffsetOf_offBmiSrc _OffsetOf_rclBounds _OffsetOf_xDest _OffsetOf_xformSrc _OffsetOf_xSrc _OffsetOf_yDest _OffsetOf_ySrc'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #EMRCOLORCORRECTPALETTE
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_ihPalette _OffsetOf_nFirstEntry _OffsetOf_nPalEntries _OffsetOf_nReserved'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #EMRCOLORMATCHTOTARGET
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_cbData _OffsetOf_cbName _OffsetOf_Data _OffsetOf_dwAction _OffsetOf_dwFlags'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #EMRCREATEBRUSHINDIRECT
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_ihBrush _OffsetOf_lb'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #EMRCREATECOLORSPACE
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_ihCS _OffsetOf_lcs'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #EMRCREATECOLORSPACEW
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_cbData _OffsetOf_Data _OffsetOf_dwFlags _OffsetOf_ihCS _OffsetOf_lcs'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #EMRCREATEDIBPATTERNBRUSHPT
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_cbBits _OffsetOf_cbBmi _OffsetOf_ihBrush _OffsetOf_iUsage _OffsetOf_offBits _OffsetOf_offBmi'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #EMRCREATEMONOBRUSH
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_cbBits _OffsetOf_cbBmi _OffsetOf_ihBrush _OffsetOf_iUsage _OffsetOf_offBits _OffsetOf_offBmi'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #EMRCREATEPALETTE
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_ihPal _OffsetOf_lgpl'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #EMRCREATEPEN
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_ihPen _OffsetOf_lopn'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #EMRELLIPSE
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_rclBox'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #EMREOF
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_nPalEntries _OffsetOf_nSizeLast _OffsetOf_offPalEntries'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #EMREXCLUDECLIPRECT
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_rclClip'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #EMREXTCREATEFONTINDIRECTW
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_elfw _OffsetOf_ihFont'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #EMREXTCREATEPEN
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_cbBits _OffsetOf_cbBmi _OffsetOf_elp _OffsetOf_ihPen _OffsetOf_offBits _OffsetOf_offBmi'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #EMREXTFLOODFILL
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_crColor _OffsetOf_iMode _OffsetOf_ptlStart'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #EMREXTSELECTCLIPRGN
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_cbRgnData _OffsetOf_iMode _OffsetOf_RGNDATA'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #EMREXTTEXTOUT
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_EMRTEXT _OffsetOf_exScale _OffsetOf_eyScale _OffsetOf_iGraphicsMode _OffsetOf_rclBounds'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #EMRFILLPATH
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_rclBounds'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #EMRFILLRGN
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_cbRgnData _OffsetOf_ihBrush _OffsetOf_rclBounds _OffsetOf_RGNDATA'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #EMRFRAMERGN
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_cbRgnData _OffsetOf_ihBrush _OffsetOf_rclBounds _OffsetOf_RGNDATA _OffsetOf_szlStroke'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #EMRGDICOMMENT
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_cbData _OffsetOf_Data'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #EMRGLSBOUNDEDRECORD
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_cbData _OffsetOf_Data _OffsetOf_rclBounds'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #EMRGLSRECORD
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_cbData _OffsetOf_Data'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #EMRGRADIENTFILL
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_nTri _OffsetOf_nVer _OffsetOf_rclBounds _OffsetOf_ulMode _OffsetOf_Ver'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #EMRINVERTRGN
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_cbRgnData _OffsetOf_rclBounds _OffsetOf_RGNDATA'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #EMRLINETO
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_ptl'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #EMRMASKBLT
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_cbBitsMask _OffsetOf_cbBitsSrc _OffsetOf_cbBmiMask _OffsetOf_cbBmiSrc _OffsetOf_crBkColorSrc _OffsetOf_cxDest _OffsetOf_cyDest _OffsetOf_dwRop _OffsetOf_iUsageMask _OffsetOf_iUsageSrc _OffsetOf_offBitsMask _OffsetOf_offBitsSrc _OffsetOf_offBmiMask _OffsetOf_offBmiSrc _OffsetOf_rclBounds _OffsetOf_xDest _OffsetOf_xformSrc _OffsetOf_xMask _OffsetOf_xSrc _OffsetOf_yDest _OffsetOf_yMask _OffsetOf_ySrc'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #EMRMODIFYWORLDTRANSFORM
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_iMode _OffsetOf_XFORM'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #EMROFFSETCLIPRGN
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_ptlOffset'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #EMRPIXELFORMAT
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_pfd'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #EMRPLGBLT
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_aptlDest _OffsetOf_cbBitsMask _OffsetOf_cbBitsSrc _OffsetOf_cbBmiMask _OffsetOf_cbBmiSrc _OffsetOf_crBkColorSrc _OffsetOf_cxSrc _OffsetOf_cySrc _OffsetOf_iUsageMask _OffsetOf_iUsageSrc _OffsetOf_offBitsMask _OffsetOf_offBitsSrc _OffsetOf_offBmiMask _OffsetOf_offBmiSrc _OffsetOf_rclBounds _OffsetOf_xformSrc _OffsetOf_xMask _OffsetOf_xSrc _OffsetOf_yMask _OffsetOf_ySrc'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #EMRPOLYDRAW
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_abTypes _OffsetOf_aptl _OffsetOf_cptl _OffsetOf_rclBounds'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #EMRPOLYDRAW16
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_abTypes _OffsetOf_apts _OffsetOf_cpts _OffsetOf_rclBounds'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #EMRPOLYLINE
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_aptl _OffsetOf_cptl _OffsetOf_rclBounds'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #EMRPOLYLINE16
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_apts _OffsetOf_cpts _OffsetOf_rclBounds'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #EMRPOLYPOLYLINE
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_aPolyCounts _OffsetOf_aptl _OffsetOf_cptl _OffsetOf_nPolys _OffsetOf_rclBounds'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #EMRPOLYPOLYLINE16
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_aPolyCounts _OffsetOf_apts _OffsetOf_cpts _OffsetOf_nPolys _OffsetOf_rclBounds'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #EMRPOLYTEXTOUTA
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_aemrtext _OffsetOf_cStrings _OffsetOf_exScale _OffsetOf_eyScale _OffsetOf_iGraphicsMode _OffsetOf_rclBounds'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #EMRRESIZEPALETTE
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_cEntries _OffsetOf_ihPal'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #EMRRESTOREDC
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_iRelative'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #EMRROUNDRECT
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_rclBox _OffsetOf_szlCorner'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #EMRSCALEVIEWPORTEXTEX
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_xDenom _OffsetOf_xNum _OffsetOf_yDenom _OffsetOf_yNum'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #EMRSELECTCLIPPATH
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_iMode'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #EMRSELECTOBJECT
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_ihObject'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #EMRSELECTPALETTE
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_ihPal'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #EMRSETARCDIRECTION
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_iArcDirection'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #EMRSETBKCOLOR
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_crColor'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #EMRSETCOLORADJUSTMENT
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_COLORADJUSTMENT'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #EMRSETCOLORSPACE
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_ihCS'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #EMRSETDIBITSTODEVICE
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_cbBitsSrc _OffsetOf_cbBmiSrc _OffsetOf_cScans _OffsetOf_cxSrc _OffsetOf_cySrc _OffsetOf_iStartScan _OffsetOf_iUsageSrc _OffsetOf_offBitsSrc _OffsetOf_offBmiSrc _OffsetOf_rclBounds _OffsetOf_xDest _OffsetOf_xSrc _OffsetOf_yDest _OffsetOf_ySrc'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #EMRSETICMPROFILE
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_cbData _OffsetOf_cbName _OffsetOf_Data _OffsetOf_dwFlags'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #EMRSETMAPPERFLAGS
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_dwFlags'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #EMRSETMITERLIMIT
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_eMiterLimit'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #EMRSETPALETTEENTRIES
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_aPalEntries _OffsetOf_cEntries _OffsetOf_ihPal _OffsetOf_iStart'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #EMRSETPIXELV
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_crColor _OffsetOf_ptlPixel'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #EMRSETVIEWPORTEXTEX
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_szlExtent'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #EMRSETVIEWPORTORGEX
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_ptlOrigin'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #EMRSETWORLDTRANSFORM
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_XFORM'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #EMRSTRETCHBLT
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_cbBitsSrc _OffsetOf_cbBmiSrc _OffsetOf_crBkColorSrc _OffsetOf_cxDest _OffsetOf_cxSrc _OffsetOf_cyDest _OffsetOf_cySrc _OffsetOf_dwRop _OffsetOf_iUsageSrc _OffsetOf_offBitsSrc _OffsetOf_offBmiSrc _OffsetOf_rclBounds _OffsetOf_xDest _OffsetOf_xformSrc _OffsetOf_xSrc _OffsetOf_yDest _OffsetOf_ySrc'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #EMRSTRETCHDIBITS
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_cbBitsSrc _OffsetOf_cbBmiSrc _OffsetOf_cxDest _OffsetOf_cxSrc _OffsetOf_cyDest _OffsetOf_cySrc _OffsetOf_dwRop _OffsetOf_iUsageSrc _OffsetOf_offBitsSrc _OffsetOf_offBmiSrc _OffsetOf_rclBounds _OffsetOf_xDest _OffsetOf_xSrc _OffsetOf_yDest _OffsetOf_ySrc'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #EMRTRANSPARENTBLT
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_cbBitsSrc _OffsetOf_cbBmiSrc _OffsetOf_crBkColorSrc _OffsetOf_cxDest _OffsetOf_cxSrc _OffsetOf_cyDest _OffsetOf_cySrc _OffsetOf_dwRop _OffsetOf_iUsageSrc _OffsetOf_offBitsSrc _OffsetOf_offBmiSrc _OffsetOf_rclBounds _OffsetOf_xDest _OffsetOf_xformSrc _OffsetOf_xSrc _OffsetOf_yDest _OffsetOf_ySrc'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 EMREXTTEXTOUT subclass: #EMREXTTEXTOUTA
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_text'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 EMREXTTEXTOUT subclass: #EMREXTTEXTOUTW
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_text'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalPoint subclass: #POINTS
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_x _OffsetOf_y'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -516,6 +589,7 @@ fromAddress: anAddress
 	iType := anAddress dwordAtOffset: 0.
 	recordClass := (RecordTypes lookup: iType) ?? ENHMETARECORD.
 	^anAddress isNull ifFalse: [recordClass basicNew initializeAtAddress: anAddress]! !
+
 !ENHMETARECORD class categoriesForMethods!
 fromAddress:!instance creation!public! !
 !

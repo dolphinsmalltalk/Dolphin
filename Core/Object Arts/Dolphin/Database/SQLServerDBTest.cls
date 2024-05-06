@@ -5,9 +5,13 @@ DBConnectionTest subclass: #SQLServerDBTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SQLServerDBTest guid: (GUID fromString: '{375baeed-7973-4ad7-bb24-296438e82792}')!
+
 SQLServerDBTest comment: ''!
+
 !SQLServerDBTest categoriesForClass!Unclassified! !
+
 !SQLServerDBTest methodsFor!
 
 databaseResource
@@ -114,6 +118,7 @@ testViewsQuery
 				types: '''VIEW'''.
 	self assert: (views
 				noDifference: #('Alphabetical list of products' 'Category Sales for 1997' 'Current Product List' 'Customer and Suppliers by City' 'Invoices' 'Order Details Extended' 'Order Subtotals' 'Orders Qry' 'Product Sales for 1997' 'Products Above Average Price' 'Products by Category' 'Quarterly Orders' 'Sales by Category' 'Sales Totals by Amount' 'Summary of Sales by Quarter' 'Summary of Sales by Year'))! !
+
 !SQLServerDBTest categoriesForMethods!
 databaseResource!private! !
 dbmsFeaturesMap!private! !
@@ -130,6 +135,7 @@ testViewsQuery!public! !
 
 resources
 	^{SQLServerNorthwindDB}! !
+
 !SQLServerDBTest class categoriesForMethods!
 resources!public! !
 !

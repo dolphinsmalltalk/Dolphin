@@ -7,7 +7,6 @@ Copyright (c) John Brant & Don Roberts.
 
 Ported to Dolphin by Blair McGlashan and Andy Bower at Camp Smalltalk 1 in San Diego, 2000.'.
 
-
 package classNames
 	add: #ReferenceFinder;
 	yourself.
@@ -30,11 +29,6 @@ Object subclass: #ReferenceFinder
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

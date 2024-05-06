@@ -5,9 +5,13 @@ MenuPainter subclass: #MenuBarPainter
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MenuBarPainter guid: (GUID fromString: '{b83154cc-4e8d-4ee0-9b6e-b8c6826bab88}')!
+
 MenuBarPainter comment: ''!
+
 !MenuBarPainter categoriesForClass!Kernel-Objects! !
+
 !MenuBarPainter methodsFor!
 
 borderInset
@@ -92,6 +96,7 @@ paintSeparatorOn: aCanvas in: aRectangle
 		pen: Color highlight3d pen;
 		lineFrom: position + (1 @ 0) to: position + (1 @ cy)] 
 			ensure: [aCanvas pen: oldPen]! !
+
 !MenuBarPainter categoriesForMethods!
 borderInset!constants!private! !
 calculateGeometry:!public!updating! !

@@ -5,9 +5,13 @@ SUnitAbsModel subclass: #SUnitBrowserModel
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SUnitBrowserModel guid: (GUID fromString: '{1069426e-b3a6-4841-bc3e-0468720bf1d1}')!
+
 SUnitBrowserModel comment: ''!
+
 !SUnitBrowserModel categoriesForClass!Unclassified! !
+
 !SUnitBrowserModel methodsFor!
 
 areAllTestsCompleted
@@ -443,6 +447,7 @@ withSelectedItem: aSingleArgumentBlock
 		ifTrue: [^self].
 
 	aSingleArgumentBlock value: selectedItem! !
+
 !SUnitBrowserModel categoriesForMethods!
 areAllTestsCompleted!private!querying! !
 basicNumberOfTests!accessing!private! !
@@ -586,6 +591,7 @@ stateClass
 
 uninitialize
 	defaultConfiguration := nil! !
+
 !SUnitBrowserModel class categoriesForMethods!
 builderClass!constants!public! !
 caseClass!constants!public! !

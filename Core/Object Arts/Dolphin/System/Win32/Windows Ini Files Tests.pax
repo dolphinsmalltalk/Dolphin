@@ -5,7 +5,6 @@ package paxVersion: 1;
 	basicComment: 'Tests for Dolphin Smalltalk Windows Ini Files
 Copyright (c) Object Arts Ltd, 2017-18'.
 
-
 package classNames
 	add: #IniFileTest;
 	add: #IniFileTestResource;
@@ -32,16 +31,12 @@ DolphinTest subclass: #IniFileTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TestResource subclass: #IniFileTestResource
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

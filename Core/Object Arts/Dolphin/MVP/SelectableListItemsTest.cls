@@ -5,10 +5,15 @@ SelectableItemsTest subclass: #SelectableListItemsTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SelectableListItemsTest guid: (GUID fromString: '{48f12746-e517-4013-8077-973b1d783f60}')!
+
 SelectableListItemsTest isAbstract: true!
+
 SelectableListItemsTest comment: ''!
+
 !SelectableListItemsTest categoriesForClass!Unclassified! !
+
 !SelectableListItemsTest methodsFor!
 
 autoSelectsFirst
@@ -345,6 +350,7 @@ testUpdateSelectedObject
 		shouldnt: [presenter selectionByIndex: 2]
 		trigger: #selectionChanging:
 		against: presenter! !
+
 !SelectableListItemsTest categoriesForMethods!
 autoSelectsFirst!private!testing! !
 objectsToTest!helpers!private! !

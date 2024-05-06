@@ -5,9 +5,13 @@ CommunityEditionSmalltalkSystem subclass: #ProfessionalSmalltalkSystem
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ProfessionalSmalltalkSystem guid: (GUID fromString: '{ff97cec8-db85-4932-b9c0-163380844b27}')!
+
 ProfessionalSmalltalkSystem comment: ''!
+
 !ProfessionalSmalltalkSystem categoriesForClass!MVP-Models! !
+
 !ProfessionalSmalltalkSystem methodsFor!
 
 browseDeployedPackage: aPackage
@@ -126,6 +130,7 @@ systemBrowserClass: toolClass
 	to be used by default in the development environment."
 
 	systemBrowserClass := toolClass! !
+
 !ProfessionalSmalltalkSystem categoriesForMethods!
 browseDeployedPackage:!helpers!public! !
 browseDeploymentLog:!helpers!public! !
@@ -182,6 +187,7 @@ uninstallCurrent
 			[(self superclass basicNew)
 				initializeFrom: Current;
 				become: Current]! !
+
 !ProfessionalSmalltalkSystem class categoriesForMethods!
 initialize!initializing!private! !
 installCurrent!initializing!private! !

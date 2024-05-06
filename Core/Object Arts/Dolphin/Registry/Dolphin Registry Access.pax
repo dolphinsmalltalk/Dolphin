@@ -18,7 +18,6 @@ userRoot removeKey: notes pathFromRoot.'.
 
 package basicPackageVersion: '6.0'.
 
-
 package classNames
 	add: #RegKey;
 	add: #RegKeyAbstract;
@@ -62,24 +61,24 @@ Object subclass: #RegQueryInfo
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Dictionary variableSubclass: #RegKeyAbstract
 	instanceVariableNames: 'handle name rootKey parentPath keyInfo sam'
 	classVariableNames: 'AccessModes ValueTypes'
 	poolDictionaries: 'Win32Errors WinRegConstants'
 	classInstanceVariableNames: ''!
+
 RegKeyAbstract variableSubclass: #RegKey
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RegKeyAbstract variableSubclass: #RegKeyValues
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -245,6 +244,7 @@ regSetValueEx: kKey lpValueName: lpValueName reserved: dwReserved dwType: dwType
 
 	<stdcall: sdword RegSetValueExW handle lpwstr dword dword lpvoid dword>
 	^self invalidCall: _failureCode! !
+
 !AdvApiLibrary categoriesForMethods!
 regCloseKey:!public!win32 functions-registry! !
 regConnectRegistry:hKey:phkResult:!public!win32 functions-registry! !

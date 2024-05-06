@@ -9,7 +9,6 @@ A RichTextPresenter is a <TextPresenter> specialised for the display of RTF. The
 
 package basicPackageVersion: '6.1'.
 
-
 package classNames
 	add: #CHARFORMAT2W;
 	add: #EDITSTREAM;
@@ -60,49 +59,54 @@ Object subclass: #RichText
 	classVariableNames: 'Converter ConverterMutex'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #CHARFORMAT2W
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_bAnimation _OffsetOf_bCharSet _OffsetOf_bPitchAndFamily _OffsetOf_bRevAuthor _OffsetOf_bUnderlineColor _OffsetOf_bUnderlyineType _OffsetOf_crBackColor _OffsetOf_crTextColor _OffsetOf_dwCookie _OffsetOf_dwEffects _OffsetOf_dwMask _OffsetOf_dwSize _OffsetOf_lcid _OffsetOf_sSpacing _OffsetOf_sStyle _OffsetOf_szFaceName _OffsetOf_wKerning _OffsetOf_wWeight _OffsetOf_yHeight _OffsetOf_yOffset'
 	poolDictionaries: 'CommonDialogConstants RichEditConstants'
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #EDITSTREAM
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_dwCookie _OffsetOf_dwError _OffsetOf_pfnCallback'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #FORMATRANGE
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_cpMax _OffsetOf_cpMin _OffsetOf_hdc _OffsetOf_hdcTarget _OffsetOf_rc _OffsetOf_rcPage'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #GETTEXTEX
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_cb _OffsetOf_codepage _OffsetOf_flags _OffsetOf_lpDefaultChar _OffsetOf_lpUsedDefChar'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #PARAFORMAT
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_cTabCount _OffsetOf_dwMask _OffsetOf_dwSize _OffsetOf_dxOffset _OffsetOf_dxRightIndent _OffsetOf_dxStartIndent _OffsetOf_rgxTabs _OffsetOf_wAlignment _OffsetOf_wEffects _OffsetOf_wNumbering'
 	poolDictionaries: 'RichEditConstants'
 	classInstanceVariableNames: ''!
+
 NMHDR subclass: #ENLINK
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_chrg _OffsetOf_lParam _OffsetOf_msg _OffsetOf_wParam'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TextPresenter subclass: #RichTextPresenter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'CommonDialogConstants RichEditConstants'
 	classInstanceVariableNames: ''!
+
 MultilineTextEdit subclass: #RichTextEdit
 	instanceVariableNames: 'streamIn winStruct'
 	classVariableNames: 'AutoUrlDetectionMask Library ParagraphAlignmentMap StreamingDescriptor StreamInIndex'
 	poolDictionaries: 'CommonDialogConstants RichEditConstants'
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -121,6 +125,7 @@ getRichTextIfNone: exceptionHandler
 	result of evaluating the <niladicValuable> exceptionHandler."
 
 	^self getRegisteredFormat: #RichText ifNone: exceptionHandler! !
+
 !Clipboard categoriesForMethods!
 getRichText!accessing!public! !
 getRichTextIfNone:!accessing!public! !
@@ -132,6 +137,7 @@ asRichText
 	"Answer the receiver converted to a RichText instance"
 
 	^RichText fromString: self! !
+
 !String categoriesForMethods!
 asRichText!converting!public! !
 !
@@ -166,6 +172,7 @@ selectionRtf: aString
 	RichText/Strings."
 
 	! !
+
 !TextEdit categoriesForMethods!
 richText!accessing!public! !
 richTextClass!accessing!private! !
@@ -180,6 +187,7 @@ richText
 	May be overridden by subclasses which actually contain rich text."
 
 	^self plainText asRichText! !
+
 !View categoriesForMethods!
 richText!accessing!public! !
 !

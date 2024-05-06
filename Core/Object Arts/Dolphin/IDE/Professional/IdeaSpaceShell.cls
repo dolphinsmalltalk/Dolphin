@@ -5,9 +5,13 @@ SmalltalkToolShell subclass: #IdeaSpaceShell
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 IdeaSpaceShell guid: (GUID fromString: '{402cf4f5-0b2e-4533-9664-c99fe1bf84fa}')!
+
 IdeaSpaceShell comment: ''!
+
 !IdeaSpaceShell categoriesForClass!MVP-Presenters! !
+
 !IdeaSpaceShell methodsFor!
 
 absorbCard: card 
@@ -516,6 +520,7 @@ watermarkBitmap
 	bitmap := Bitmap fromFile: 'Resources\IdeaSpaceBackdrop.bmp'
 				usingLocator: FileLocator installRelative.
 	^bitmap createWatermarkAlphaPercent: 60 backcolor: backgroundPresenter view backcolor! !
+
 !IdeaSpaceShell categoriesForMethods!
 absorbCard:!private! !
 addIdeaCardTools:!helpers!private! !
@@ -668,6 +673,7 @@ resource_Default_view
 
 toolsFolderHelpId
 	^10599! !
+
 !IdeaSpaceShell class categoriesForMethods!
 defaultAdditionalAccelerators!constants!public! !
 defaultFileExtension!constants!public! !

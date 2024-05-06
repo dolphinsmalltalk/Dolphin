@@ -5,7 +5,9 @@ ICoreWebView2Interface subclass: #ICoreWebView2ContextMenuItem
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2ContextMenuItem guid: (IID fromString: '{7aed49e3-a93f-497a-811c-749c6b6b6c65}')!
+
 ICoreWebView2ContextMenuItem comment: '`ICoreWebView2ContextMenuItem` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ContextMenuItem'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -63,7 +65,9 @@ interface ICoreWebView2ContextMenuItem : IUnknown
 };
 ```
 '!
+
 !ICoreWebView2ContextMenuItem categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2ContextMenuItem methodsFor!
 
 Add_CustomItemSelected: eventHandler token: token
@@ -293,6 +297,7 @@ shortcutKeyDescription
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
 	^answer! !
+
 !ICoreWebView2ContextMenuItem categoriesForMethods!
 Add_CustomItemSelected:token:!**auto generated**!COM Interfaces-ICoreWebView2ContextMenuItem!private! !
 children!**auto generated**!properties!public! !
@@ -355,6 +360,7 @@ defineFunctions
 		defineFunction: #Remove_CustomItemSelected:
 			argumentTypes: 'sqword'
 ! !
+
 !ICoreWebView2ContextMenuItem class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

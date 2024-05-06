@@ -5,9 +5,13 @@ ControlView subclass: #Tooltip
 	classVariableNames: ''
 	poolDictionaries: 'TooltipConstants'
 	classInstanceVariableNames: ''!
+
 Tooltip guid: (GUID fromString: '{ba32bd21-5167-4bd1-949c-ab76875cdeb7}')!
+
 Tooltip comment: 'Tooltip is a <ControlView> class which wraps the Windows Tool Tip control.'!
+
 !Tooltip categoriesForClass!MVP-Views! !
+
 !Tooltip methodsFor!
 
 add: aTOOLINFOA tool: aView 
@@ -321,6 +325,7 @@ ttnShow: anNMHDR
 	"Private - Handler for the TTN_SHOW message, which is forwarded to the presenter."
 
 	^self presenter onShow! !
+
 !Tooltip categoriesForMethods!
 add:tool:!operations!private! !
 alwaysTip!public!testing! !
@@ -386,6 +391,7 @@ winClassName
 
 	^'tooltips_class32'
 ! !
+
 !Tooltip class categoriesForMethods!
 icon!constants!public! !
 themePartName!constants!private! !

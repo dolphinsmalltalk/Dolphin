@@ -5,9 +5,13 @@ Refactoring subclass: #RemoveClassRefactoring
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RemoveClassRefactoring guid: (GUID fromString: '{80687cb5-257c-4125-9d59-58ebcea2ebcb}')!
+
 RemoveClassRefactoring comment: ''!
+
 !RemoveClassRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !RemoveClassRefactoring methodsFor!
 
 checkMethodReferencesTo: aSymbol 
@@ -81,6 +85,7 @@ transform
 	self
 		reparentSubclasses;
 		removeClasses! !
+
 !RemoveClassRefactoring categoriesForMethods!
 checkMethodReferencesTo:!preconditions!private! !
 checkReferencesTo:!preconditions!public! !
@@ -103,6 +108,7 @@ model: aRBNamespace classNames: aClassNameCollection
 		model: aRBNamespace;
 		classNames: aClassNameCollection;
 		yourself! !
+
 !RemoveClassRefactoring class categoriesForMethods!
 classNames:!instance creation!public! !
 model:classNames:!instance creation!public! !

@@ -5,9 +5,13 @@ ThemeLibrary subclass: #VistaThemeLibrary
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 VistaThemeLibrary guid: (GUID fromString: '{a07fa8a2-68a8-4f59-9459-e71f9bece9ac}')!
+
 VistaThemeLibrary comment: ''!
+
 !VistaThemeLibrary categoriesForClass!Win32-Modules! !
+
 !VistaThemeLibrary methodsFor!
 
 beginBufferedAnimation: hwnd hdcTarget: hdcTarget prcTarget: prcTarget dwFormat: dwFormat pPaintParams: pPaintParams pAnimationParams: pAnimationParams phdcFrom: phdcFrom phdcTo: phdcTo
@@ -174,6 +178,7 @@ onStartup
 	"Private - Perform any initialization required at system startup time"
 
 	self bufferedPaintInit! !
+
 !VistaThemeLibrary categoriesForMethods!
 beginBufferedAnimation:hdcTarget:prcTarget:dwFormat:pPaintParams:pAnimationParams:phdcFrom:phdcTo:!**auto generated**!public! !
 beginBufferedPaint:prcTarget:dwFormat:pPaintParams:phDC:!**auto generated**!public! !

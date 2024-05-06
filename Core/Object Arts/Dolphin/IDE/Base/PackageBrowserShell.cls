@@ -5,7 +5,9 @@ SmalltalkToolShell subclass: #PackageBrowserShell
 	classVariableNames: 'UpdateMap WordWrapComment'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 PackageBrowserShell guid: (GUID fromString: '{87b4c6c0-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 PackageBrowserShell comment: 'PackageBrowserShell is a <SmalltalkToolShell> that implements the Package Browser tool. This provides a user interface onto all the <Package>s held by the current <PackageManager>. 
 
 Instance Variables:
@@ -29,7 +31,9 @@ Class Variables:
 	UpdateMap 
 	WordWrapComment		<boolean> indicating that the comment pane should word wrap.
 '!
+
 !PackageBrowserShell categoriesForClass!MVP-Presenters! !
+
 !PackageBrowserShell methodsFor!
 
 accept
@@ -1260,6 +1264,7 @@ upgradeResources
 	"Private - Uprade & resave the selected resources, by loading them into a ViewComposer."
 
 	self resourceIdentifiers do: [:each | each reassign]! !
+
 !PackageBrowserShell categoriesForMethods!
 accept!commands!public! !
 addToCommandRoute:!commands!public! !
@@ -1465,6 +1470,7 @@ wordWrapComment: aBoolean
 	"Sets the comment word wrapping state for instances of the receiver to aBoolean."
 
 	WordWrapComment := aBoolean! !
+
 !PackageBrowserShell class categoriesForMethods!
 displayOn:!displaying!public! !
 icon!constants!public! !

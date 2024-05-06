@@ -5,9 +5,13 @@ Win32Error subclass: #SocketError
 	classVariableNames: 'ErrorClasses'
 	poolDictionaries: 'WinSocketConstants WinSocketErrors'
 	classInstanceVariableNames: ''!
+
 SocketError guid: (GUID fromString: '{87b4c560-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 SocketError comment: 'This exception signals that a general Socket error has occurred. The actual error can be identified using #statusCode and its textual description is available using #osErrorMessage.'!
+
 !SocketError categoriesForClass!Windows Sockets! !
+
 !SocketError methodsFor!
 
 errorAsString
@@ -19,6 +23,7 @@ errorAsString
 errorCode
 	#deprecated. "6.0"
 	^self statusCode! !
+
 !SocketError categoriesForMethods!
 errorAsString!displaying!public! !
 errorCode!accessing!public! !
@@ -47,6 +52,7 @@ signalWith: anInteger
 
 	^(ErrorClasses at: anInteger ifAbsent: [self]) basicSignalWith: anInteger
 ! !
+
 !SocketError class categoriesForMethods!
 basicSignalWith:!instance creation!private! !
 errorCode!enquiries!private! !

@@ -5,13 +5,17 @@ TreeNode subclass: #ProfilerTreeNode
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ProfilerTreeNode guid: (GUID fromString: '{425d0ebd-542e-11d3-998b-d5ca2c3c1d61}')!
+
 ProfilerTreeNode comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
+
 !ProfilerTreeNode categoriesForClass!IDB Goodies! !
+
 !ProfilerTreeNode methodsFor!
 
 addFrame: aStackFrame elapsedTime: anInteger
@@ -146,6 +150,7 @@ time
 	This method was automatically generated, but may be modified."
 
 	^time! !
+
 !ProfilerTreeNode categoriesForMethods!
 addFrame:elapsedTime:!profiling!public! !
 allClasses!operations!public! !

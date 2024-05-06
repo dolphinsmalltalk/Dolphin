@@ -5,9 +5,13 @@ GdiplusTests subclass: #GpColorMatrixTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GpColorMatrixTest guid: (GUID fromString: '{00610fdc-d988-4d65-a319-78a2dd28b367}')!
+
 GpColorMatrixTest comment: ''!
+
 !GpColorMatrixTest categoriesForClass!Unclassified! !
+
 !GpColorMatrixTest methodsFor!
 
 assertIsIdentity
@@ -36,6 +40,7 @@ testConstruction
 testIdentity
 	self assert: (matrix atPoint: 1 @ 1) equals: 1.
 	self assertIsIdentity! !
+
 !GpColorMatrixTest categoriesForMethods!
 assertIsIdentity!public!unit tests! !
 setUp!public!setup! !

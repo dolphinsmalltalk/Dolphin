@@ -5,9 +5,12 @@ HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY
 	classVariableNames: '_OffsetOf_AddrCount _OffsetOf_AddrList'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY guid: (GUID fromString: '{3eebcb9d-9dc3-4701-a044-c16df022085b}')!
+
 HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY addClassConstant: '_OffsetOf_AddrCount' value: 16r0!
 HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY addClassConstant: '_OffsetOf_AddrList' value: 16r8!
+
 HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY comment: '<HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -23,7 +26,9 @@ struct tagHTTP_SERVICE_CONFIG_IP_LISTEN_QUERY {
 	[helpstring("An array of SOCKADDR_STORAGE structures that contains IP addresses in either IPv4 or IPv6 form. To determine what form an address in the list has, cast it to a SOCKADDR and examine the sa_family element."), size_is("AddrCount")] SOCKADDR_STORAGE AddrList[1];
 } HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY;
 '!
+
 !HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY categoriesForClass!WinHttpServer-Structs! !
+
 !HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY methodsFor!
 
 AddrCount
@@ -55,6 +60,7 @@ AddrList: aStructureArrayOfSOCKADDR_STORAGE
 		to: _OffsetOf_AddrList + size
 		startingAt: 1.
 	self AddrCount: aStructureArrayOfSOCKADDR_STORAGE size! !
+
 !HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY categoriesForMethods!
 AddrCount!**compiled accessors**!private! !
 AddrCount:!**compiled accessors**!private! !
@@ -83,6 +89,7 @@ defineFields
 
 getFieldNames
 	^#(#AddrCount #AddrList)! !
+
 !HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

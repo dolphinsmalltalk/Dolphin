@@ -5,8 +5,11 @@ ENHMETARECORD subclass: #EMRSETMITERLIMIT
 	classVariableNames: '_OffsetOf_eMiterLimit'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 EMRSETMITERLIMIT guid: (GUID fromString: '{bc8dabd4-f8b4-4f42-895c-1b712c75fc43}')!
+
 EMRSETMITERLIMIT addClassConstant: '_OffsetOf_eMiterLimit' value: 16r8!
+
 EMRSETMITERLIMIT comment: '<EMRSETMITERLIMIT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETMITERLIMIT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -21,7 +24,9 @@ struct tagEMRSETMITERLIMIT {
 	float eMiterLimit;
 } EMRSETMITERLIMIT;
 '!
+
 !EMRSETMITERLIMIT categoriesForClass!Win32-Structs! !
+
 !EMRSETMITERLIMIT methodsFor!
 
 eMiterLimit
@@ -33,6 +38,7 @@ eMiterLimit: aFloat
 	"Set the receiver's 'eMiterLimit' field to the value of the argument, aFloat"
 
 	bytes floatAtOffset: _OffsetOf_eMiterLimit put: aFloat! !
+
 !EMRSETMITERLIMIT categoriesForMethods!
 eMiterLimit!**compiled accessors**!public! !
 eMiterLimit:!**compiled accessors**!public! !
@@ -66,6 +72,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_SETMITERLIMIT! !
+
 !EMRSETMITERLIMIT class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

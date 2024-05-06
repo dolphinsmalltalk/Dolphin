@@ -5,7 +5,9 @@ InternalBitmap subclass: #InternalIcon
 	classVariableNames: ''
 	poolDictionaries: 'GdiplusConstants'
 	classInstanceVariableNames: ''!
+
 InternalIcon guid: (GUID fromString: '{7446a3c1-e3ae-45b8-bca2-bbd493a5c7d3}')!
+
 InternalIcon comment: 'An InternalIcon is capable of holding it''s image bytes internally in the Smalltalk image. Thus it is no longer necessary to refer to external files outside the image to make use of Icon resources. This has several advantages, including the ability to version InternalIcon resources into STS as part of a Smalltalk method and the fact that fewer external files need to be distributed with an application.
 
 USAGE:
@@ -23,7 +25,9 @@ InternalIcon chooseFile
 This will prompt you for a suitable image file (again PNG files work best) and will load the image bytes into a literal byte array from which the InternalIcon can be instantiated when required. 
 
 '!
+
 !InternalIcon categoriesForClass!Kernel-Objects! !
+
 !InternalIcon methodsFor!
 
 = comperand 
@@ -125,6 +129,7 @@ tileColor
 
 tileColor: aColor 
 	tileColor := aColor! !
+
 !InternalIcon categoriesForMethods!
 =!comparing!comparison!public! !
 addToImageList:mask:!double dispatch!private! !
@@ -217,6 +222,7 @@ stbConvertFrom: anSTBClassFormat
 
 stbVersion
 	^1! !
+
 !InternalIcon class categoriesForMethods!
 badgeTile:color:!instance creation!public! !
 badgeTile:color:extent:!instance creation!public! !

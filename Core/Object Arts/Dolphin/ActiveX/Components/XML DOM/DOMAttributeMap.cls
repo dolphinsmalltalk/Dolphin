@@ -5,9 +5,13 @@ DOMNamedNodeMap variableSubclass: #DOMAttributeMap
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DOMAttributeMap guid: (GUID fromString: '{a514645c-f053-4be4-87c8-99381ec1c930}')!
+
 DOMAttributeMap comment: 'Specialized <DOMNamedNodeMap> which contains <IXMLDOMAttribute>s. This is used to represent the dictionary of attributes associated with a DOM node. The keys and values are strings.'!
+
 !DOMAttributeMap categoriesForClass!Collections-Unordered! !
+
 !DOMAttributeMap methodsFor!
 
 associationClass
@@ -20,6 +24,7 @@ createNamedNode: key
 	"Private - Instantiate and answer a new named node of the type contained in the receiver."
 
 	^parentNode ownerDocument createAttribute: key! !
+
 !DOMAttributeMap categoriesForMethods!
 associationClass!constants!private! !
 createNamedNode:!helpers!private! !

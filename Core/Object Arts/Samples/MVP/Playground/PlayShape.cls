@@ -5,8 +5,11 @@ Object subclass: #PlayShape
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PlayShape guid: (GUID fromString: '{87b4c4a8-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 PlayShape isAbstract: true!
+
 PlayShape comment: 'A PlayShape represent a basic shape that may be added to a <Playground> window and then manipulated with messages. It is part of the Playground sample package and can be used as a Smalltalk learning aid. See this package''s comment for more details.
 
 PlayShape is an abstract class. That is, it does not contain sufficient information or implementation to stand on its own. Only subclasses of PlayShape (such as Square, Circle etc) should ever be created. PlayShape does provides a number of methods that implement basic operations that the subclasses can rely on but they are not, in themselves, complete. For example, the #drawOn: method cannot actually draw the final shape since it does not have enough information. If you accidentally try to create an instance of PlayShape and add it to a Playground then you will receive a walkback describing that "#drawOn: is the responsibility of a subclass". This indicates the abstract nature of the PlayShape class.
@@ -15,7 +18,9 @@ Instance Variables:
 	playground	<Playground> or nil owning the shape.
 
 '!
+
 !PlayShape categoriesForClass!Samples! !
+
 !PlayShape methodsFor!
 
 delay
@@ -51,6 +56,7 @@ redraw
 
 	playground invalidate; update.
 	self delay! !
+
 !PlayShape categoriesForMethods!
 delay!operations!public! !
 drawOn:!drawing!private! !

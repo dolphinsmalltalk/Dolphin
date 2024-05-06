@@ -5,7 +5,9 @@ Object subclass: #ScintillaMarker
 	classVariableNames: ''
 	poolDictionaries: 'ScintillaConstants'
 	classInstanceVariableNames: ''!
+
 ScintillaMarker guid: (GUID fromString: '{2aad3a52-111c-4781-b79b-22f044e4a6f7}')!
+
 ScintillaMarker comment: 'ScintillaMarkers represent the visible ''markers'' displayed in the margins of <ScintillaView>s.
 
 Instance Variables:
@@ -15,7 +17,9 @@ Instance Variables:
 	handle		<integer>. Handle allocated by Scintilla to uniquely identify the marker.
 
 '!
+
 !ScintillaMarker categoriesForClass!MVP-Views-Support! !
+
 !ScintillaMarker methodsFor!
 
 addToView: aScintillaView 
@@ -83,6 +87,7 @@ view
 
 view: anObject
 	view := anObject! !
+
 !ScintillaMarker categoriesForMethods!
 addToView:!helpers!public! !
 cacheCurrentLine!accessing!public! !
@@ -109,6 +114,7 @@ definition: aScintillaMarkerDefinition line: anInteger
 
 icon
 	^ScintillaView icon! !
+
 !ScintillaMarker class categoriesForMethods!
 definition:line:!instance creation!public! !
 icon!constants!development!public! !

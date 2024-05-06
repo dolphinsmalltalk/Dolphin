@@ -5,11 +5,14 @@ SOCKADDR subclass: #SOCKADDR_IN
 	classVariableNames: '_OffsetOf_sin_addr _OffsetOf_sin_family _OffsetOf_sin_port _OffsetOf_sin_zero'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SOCKADDR_IN guid: (GUID fromString: '{87b4c611-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 SOCKADDR_IN addClassConstant: '_OffsetOf_sin_addr' value: 16r4!
 SOCKADDR_IN addClassConstant: '_OffsetOf_sin_family' value: 16r0!
 SOCKADDR_IN addClassConstant: '_OffsetOf_sin_port' value: 16r2!
 SOCKADDR_IN addClassConstant: '_OffsetOf_sin_zero' value: 16r8!
+
 SOCKADDR_IN comment: '<SOCKADDR_IN> is an <ExternalStructure> class to wrap the struct ''Win32.SOCKADDR_IN'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
@@ -27,7 +30,9 @@ struct tagSOCKADDR_IN {
 	[hidden, helpstring("Padding to make structure the same size as SOCKADDR.")] BYTE sin_zero[8];
 } SOCKADDR_IN;
 '!
+
 !SOCKADDR_IN categoriesForClass!Win32-Structs! !
+
 !SOCKADDR_IN methodsFor!
 
 port
@@ -73,6 +78,7 @@ sin_port: anInteger
 	"Set the receiver's 'sin_port' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_sin_port put: anInteger! !
+
 !SOCKADDR_IN categoriesForMethods!
 port!accessing!public! !
 port:!accessing!public! !
@@ -109,6 +115,7 @@ defineFields
 
 getFieldNames
 	^#(#sin_family #sin_port #sin_addr)! !
+
 !SOCKADDR_IN class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

@@ -5,9 +5,13 @@ PresenterTest subclass: #ScrollingDecoratorTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ScrollingDecoratorTest guid: (GUID fromString: '{67f9d5dd-3f9b-4f9f-9d72-207bdf40d661}')!
+
 ScrollingDecoratorTest comment: ''!
+
 !ScrollingDecoratorTest categoriesForClass!Unclassified! !
+
 !ScrollingDecoratorTest methodsFor!
 
 classToTest
@@ -57,6 +61,7 @@ testSubViewResizeSmallerThanParent
 	presenter subViews first extent: 50 @ 50.
 	presenter layout.
 	self assert: presenter subViews first extent equals: 50 @ 50! !
+
 !ScrollingDecoratorTest categoriesForMethods!
 classToTest!helpers!private! !
 initializePresenter!public!Running! !

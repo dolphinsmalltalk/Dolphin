@@ -5,9 +5,13 @@ DolphinGlobalChange subclass: #DolphinAddGlobalChange
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DolphinAddGlobalChange guid: (GUID fromString: '{2c271662-7065-4aeb-b1ab-1312d4674e99}')!
+
 DolphinAddGlobalChange comment: 'DolphinAddGlobalChange is a Dolphin specific <RefactoryChange> that defines a global variable, initialising it to nil.'!
+
 !DolphinAddGlobalChange categoriesForClass!Refactory-Change Objects! !
+
 !DolphinAddGlobalChange methodsFor!
 
 asUndoOperation
@@ -18,6 +22,7 @@ changeString
 
 primitiveExecute
 	Smalltalk at: variable put: nil! !
+
 !DolphinAddGlobalChange categoriesForMethods!
 asUndoOperation!converting!public! !
 changeString!printing!public! !
@@ -30,6 +35,7 @@ addGlobal: aVariable
 	^(self new)
 		variable: aVariable;
 		yourself! !
+
 !DolphinAddGlobalChange class categoriesForMethods!
 addGlobal:!instance creation!public! !
 !

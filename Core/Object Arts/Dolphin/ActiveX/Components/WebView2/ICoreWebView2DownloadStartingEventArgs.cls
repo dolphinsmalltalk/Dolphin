@@ -5,7 +5,9 @@ ICoreWebView2EventArgs subclass: #ICoreWebView2DownloadStartingEventArgs
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2DownloadStartingEventArgs guid: (IID fromString: '{e99bbe21-43e9-4544-a732-282764eafa60}')!
+
 ICoreWebView2DownloadStartingEventArgs comment: '`ICoreWebView2DownloadStartingEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2DownloadStartingEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -47,7 +49,9 @@ interface ICoreWebView2DownloadStartingEventArgs : IUnknown
 };
 ```
 '!
+
 !ICoreWebView2DownloadStartingEventArgs categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2DownloadStartingEventArgs methodsFor!
 
 cancel
@@ -181,6 +185,7 @@ resultFilePath: resultFilePath
 	"Set the 'ResultFilePath' property of the receiver to the <lpwstr> value of the argument."
 
 	self put_ResultFilePath: resultFilePath asUtf16String! !
+
 !ICoreWebView2DownloadStartingEventArgs categoriesForMethods!
 cancel!properties!public! !
 cancel:!properties!public! !
@@ -224,6 +229,7 @@ defineFunctions
 		defineFunction: #GetDeferral:
 			argumentTypes: 'ICoreWebView2Deferral**'
 ! !
+
 !ICoreWebView2DownloadStartingEventArgs class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

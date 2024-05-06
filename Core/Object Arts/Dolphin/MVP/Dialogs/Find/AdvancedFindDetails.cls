@@ -5,9 +5,13 @@ FindDetails subclass: #AdvancedFindDetails
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AdvancedFindDetails guid: (GUID fromString: '{6c4e30d4-924f-4c0a-be20-50f5ec823741}')!
+
 AdvancedFindDetails comment: ''!
+
 !AdvancedFindDetails categoriesForClass!Kernel-Objects! !
+
 !AdvancedFindDetails methodsFor!
 
 findIn: aView range: anIntervalOfInteger
@@ -45,6 +49,7 @@ regularExpression
 		multiline: true;
 		global: true."
 	^regexp! !
+
 !AdvancedFindDetails categoriesForMethods!
 findIn:range:!public! !
 hasValidRegularExpression!public!testing! !
@@ -60,6 +65,7 @@ regexpClass
 
 searchModes
 	^super searchModes copyWith: #regularExpression! !
+
 !AdvancedFindDetails class categoriesForMethods!
 regexpClass!constants!public! !
 searchModes!constants!public! !

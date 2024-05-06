@@ -5,7 +5,9 @@ Win32Structure subclass: #PANOSE
 	classVariableNames: '_OffsetOf_bArmStyle _OffsetOf_bContrast _OffsetOf_bFamilyType _OffsetOf_bLetterform _OffsetOf_bMidline _OffsetOf_bProportion _OffsetOf_bSerifStyle _OffsetOf_bStrokeVariation _OffsetOf_bWeight _OffsetOf_bXHeight'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PANOSE guid: (GUID fromString: '{ab0b82a7-5304-49c0-9937-e7474bc1a82f}')!
+
 PANOSE addClassConstant: '_OffsetOf_bArmStyle' value: 16r6!
 PANOSE addClassConstant: '_OffsetOf_bContrast' value: 16r4!
 PANOSE addClassConstant: '_OffsetOf_bFamilyType' value: 16r0!
@@ -16,9 +18,12 @@ PANOSE addClassConstant: '_OffsetOf_bSerifStyle' value: 16r1!
 PANOSE addClassConstant: '_OffsetOf_bStrokeVariation' value: 16r5!
 PANOSE addClassConstant: '_OffsetOf_bWeight' value: 16r2!
 PANOSE addClassConstant: '_OffsetOf_bXHeight' value: 16r9!
+
 PANOSE comment: '<PANOSE> is an <ExternalStructure> class to wrap the struct ''Win.PANOSE'' from type information in the ''Windows API (ANSI)'' library.
 '!
+
 !PANOSE categoriesForClass!Win-Structs! !
+
 !PANOSE methodsFor!
 
 bArmStyle
@@ -70,6 +75,7 @@ bXHeight
 	"Answer the <Integer> value of the receiver's 'bXHeight' field."
 
 	^bytes byteAtOffset: _OffsetOf_bXHeight! !
+
 !PANOSE categoriesForMethods!
 bArmStyle!**compiled accessors**!public! !
 bContrast!**compiled accessors**!public! !
@@ -118,6 +124,7 @@ defineFields
 
 getFieldNames
 	^#(#bFamilyType #bSerifStyle #bWeight #bProportion #bContrast #bStrokeVariation #bArmStyle #bLetterform #bMidline #bXHeight)! !
+
 !PANOSE class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

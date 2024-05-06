@@ -5,15 +5,20 @@ AbstractRGB subclass: #ColorRef
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ColorRef guid: (GUID fromString: '{ed5fcdeb-52e8-4a5c-9eb7-38bf3a3aa575}')!
+
 ColorRef isAbstract: true!
+
 ColorRef comment: '`ColorRef` is the abstract class of palette independent (absolute) color values used with most Win32 GDI APIs that have a specific integer encoding described in the Windows documentation as a COLORREF.
 
 ## Instance Variables:
   `code`		`<integer>`; a Windows `COLORREF` value. e.g. an `RGB` value.
 
 '!
+
 !ColorRef categoriesForClass!Unclassified! !
+
 !ColorRef methodsFor!
 
 asColorRef
@@ -47,6 +52,7 @@ red
 	"Answer the receiver's red component component expressed as an <integer> in the range [0,255]."
 
 	^code bitAnd: 16rFF! !
+
 !ColorRef categoriesForMethods!
 asColorRef!converting!public! !
 asCOLORREF!accessing!public! !
@@ -89,6 +95,7 @@ stbReadFrom: anSTBInFiler format: anSTBClassConversion
 	answer := self fromCOLORREF: anSTBInFiler basicNext.
 	anSTBInFiler fixup: ref to: answer.
 	^answer! !
+
 !ColorRef class categoriesForMethods!
 defaultColorRepresentation!constants!private! !
 fromCOLORREF:!instance creation!private! !

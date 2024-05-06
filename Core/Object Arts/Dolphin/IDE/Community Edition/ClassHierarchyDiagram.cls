@@ -5,7 +5,9 @@ SmalltalkToolShell subclass: #ClassHierarchyDiagram
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ClassHierarchyDiagram guid: (GUID fromString: '{493664d4-3394-11d3-93bd-00a024ca708a}')!
+
 ClassHierarchyDiagram comment: 'ClassHierarchyDiagram is a <SmalltalkToolShell> that displays the current class hierarchy in a graphical format using a <MoenTreeView>.
 
 Instance Variables:
@@ -13,7 +15,9 @@ Instance Variables:
 	commentPresenter	<SmalltalkWorkspace> displaying the comment of the selected class.
 
 '!
+
 !ClassHierarchyDiagram categoriesForClass!MVP-Presenters! !
+
 !ClassHierarchyDiagram methodsFor!
 
 canSaveState
@@ -59,6 +63,7 @@ onViewOpened
 
 searchForClass: aClass 
 	classesPresenter selection: aClass instanceClass ifAbsent: [super searchForClass: aClass]! !
+
 !ClassHierarchyDiagram categoriesForMethods!
 canSaveState!private!saved state! !
 createComponents!initializing!private! !
@@ -116,6 +121,7 @@ resource_Default_view
 
 toolsFolderHelpId
 	^10590! !
+
 !ClassHierarchyDiagram class categoriesForMethods!
 defaultAdditionalAccelerators!initializing!private! !
 displayOn:!displaying!public! !

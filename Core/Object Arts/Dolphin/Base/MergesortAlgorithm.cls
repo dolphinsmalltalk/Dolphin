@@ -5,13 +5,17 @@ PluggableSortAlgorithm subclass: #MergesortAlgorithm
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MergesortAlgorithm guid: (GUID fromString: '{cc7f696a-5bc0-4ad0-a342-d93af7cca0a3}')!
+
 MergesortAlgorithm comment: 'MergesortAlgorithm implements the Mergesort algorithm as a pluggable sorting strategy for use in conjunction with <SortedCollection>s.
 
 Mergesort is a simple, recursive, divide-and-conquer sort that works by dividing the range to sort in half, recursively sorting the two halves, and then merging the two halves. It requires auxiliary storage of the same size as the range to be sorted.
 
 Mergesort is a fast O(n log n) algorithm with no worst cases that has the additional advantage of preserving the existing positions of sort-equal elements (i.e. it is stable). Although theoretically slower than Quicksort, in Smalltalk there is not a great deal of difference because Quicksort will typically perform more comparisons, and the speed of evaluation of the comparison block can become dominant in all but simple cases. Mergesort''s only significant disadvantage is that it requires auxiliary storage of a size sufficient to hold the sorted interval, typically doubling a collections space requirement while it is being sorted.'!
+
 !MergesortAlgorithm categoriesForClass!Kernel-Objects! !
+
 !MergesortAlgorithm methodsFor!
 
 merge: anObject aux: anArray from: startInteger to: stopInteger pivot: midInteger 
@@ -82,6 +86,7 @@ sort: anObject from: startInteger to: stopInteger aux: anArray
 		from: startInteger
 		to: stopInteger
 		pivot: mid! !
+
 !MergesortAlgorithm categoriesForMethods!
 merge:aux:from:to:pivot:!operations!private! !
 sort:from:to:!operations!public! !

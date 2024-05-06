@@ -5,12 +5,15 @@ Win32Structure subclass: #MONITORINFO
 	classVariableNames: '_OffsetOf_dwFlags _OffsetOf_dwSize _OffsetOf_rcMonitor _OffsetOf_rcWork MONITORINFOF_PRIMARY'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MONITORINFO guid: (GUID fromString: '{58b4f5d6-cd16-4d5d-894d-9b158a5d9e76}')!
+
 MONITORINFO addClassConstant: '_OffsetOf_dwFlags' value: 16r24!
 MONITORINFO addClassConstant: '_OffsetOf_dwSize' value: 16r0!
 MONITORINFO addClassConstant: '_OffsetOf_rcMonitor' value: 16r4!
 MONITORINFO addClassConstant: '_OffsetOf_rcWork' value: 16r14!
 MONITORINFO addClassConstant: 'MONITORINFOF_PRIMARY' value: 16r1!
+
 MONITORINFO comment: '`MONITORINFO` is an `External.Structure` class to wrap the struct ''Win32.MONITORINFO'' from type information in the ''Win32 API'' library.
 
 The type library contains no documentation for this struct
@@ -28,7 +31,9 @@ struct tagMONITORINFO {
 } MONITORINFO;
 ```
 '!
+
 !MONITORINFO categoriesForClass!Win32-Structs! !
+
 !MONITORINFO methodsFor!
 
 dwFlags
@@ -55,6 +60,7 @@ rcWork
 	"Answer the <RECTL> value of the receiver's 'rcWork' field."
 
 	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rcWork! !
+
 !MONITORINFO categoriesForMethods!
 dwFlags!**compiled accessors**!public! !
 dwSize:!**compiled accessors**!public! !
@@ -88,6 +94,7 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #rcMonitor #rcWork #dwFlags)! !
+
 !MONITORINFO class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

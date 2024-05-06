@@ -5,9 +5,13 @@ TestCase subclass: #STONTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 STONTest guid: (GUID fromString: '{b7f68843-9e21-424e-96cd-9c4a89a45e6c}')!
+
 STONTest comment: ''!
+
 !STONTest categoriesForClass!STON-Tests-Facade! !
+
 !STONTest methodsFor!
 
 testFromString
@@ -62,6 +66,7 @@ testToString
 	| object |
 	object := STON listClass withAll: {1 . 0 . -1 . true . false . nil}.
 	self assert: (STON toString: object) equals: '[1,0,-1,true,false,nil]'! !
+
 !STONTest categoriesForMethods!
 testFromString!public! !
 testFromStringWithComments!public! !

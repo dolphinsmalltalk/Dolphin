@@ -5,10 +5,14 @@ StSpecialVariableNode subclass: #StSelfVariableNode
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StSelfVariableNode guid: (GUID fromString: '{29220d9b-e07e-475a-95e2-b31f4bf41079}')!
+
 StSelfVariableNode comment: 'StSelfVariableNode is an parse tree node that represents the special variable ''self''.
 '!
+
 !StSelfVariableNode categoriesForClass!System-Compiler! !
+
 !StSelfVariableNode methodsFor!
 
 acceptVisitor: aProgramNodeVisitor
@@ -24,6 +28,7 @@ name
 
 specialVariableInScope: anStSemanticScope
 	^anStSemanticScope selfVariable! !
+
 !StSelfVariableNode categoriesForMethods!
 acceptVisitor:!public!visitor! !
 isSelfVariable!public!testing! !

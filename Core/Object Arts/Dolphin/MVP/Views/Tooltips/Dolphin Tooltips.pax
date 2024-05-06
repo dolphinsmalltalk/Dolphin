@@ -9,7 +9,6 @@ This package contains an MVP View wrapper for the Windows Tooltip control, and a
 
 package basicPackageVersion: '6.1'.
 
-
 package classNames
 	add: #MessageBubble;
 	add: #OneOffNoteBubble;
@@ -47,24 +46,24 @@ Object subclass: #OneOffNoteBubble
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #TOOLINFOW
 	instanceVariableNames: 'text'
 	classVariableNames: '_OffsetOf_dwSize _OffsetOf_hinst _OffsetOf_hwnd _OffsetOf_lParam _OffsetOf_lpReserved _OffsetOf_lpszText _OffsetOf_rect _OffsetOf_uFlags _OffsetOf_uId'
 	poolDictionaries: 'TooltipConstants'
 	classInstanceVariableNames: ''!
+
 MessageBoxAbstract subclass: #MessageBubble
 	instanceVariableNames: 'iconId tooltip position itemFlags timeout tooltipStyle timeoutProcess font forecolor backcolor margins maxWidth'
 	classVariableNames: 'IconIds'
 	poolDictionaries: 'TooltipConstants Win32Constants'
 	classInstanceVariableNames: ''!
+
 ControlView subclass: #Tooltip
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'TooltipConstants'
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -72,6 +71,7 @@ ControlView subclass: #Tooltip
 
 toolTipWindow
 	^Tooltip fromHandle: self hwndFrom! !
+
 !NMTTDISPINFOW categoriesForMethods!
 toolTipWindow!accessing!public! !
 !

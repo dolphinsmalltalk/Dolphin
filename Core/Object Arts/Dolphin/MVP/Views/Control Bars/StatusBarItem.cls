@@ -5,7 +5,9 @@ StatusBarItemAbstract subclass: #StatusBarItem
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 StatusBarItem guid: (GUID fromString: '{87b4c6e6-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 StatusBarItem comment: 'StatusItem is a class describing the standard items that can be held by a <StatusBar>. These can have both text and an image associated with them.
 
 Instance Variables:
@@ -14,7 +16,9 @@ Instance Variables:
 	imageManager	<IconImageManager>
 
 '!
+
 !StatusBarItem categoriesForClass!MVP-Views-Support! !
+
 !StatusBarItem methodsFor!
 
 defaultGetImageBlock
@@ -133,6 +137,7 @@ printOn: aStream
 		nextPut: $(;
 		print: (self parentView notNil ifTrue: [self name]);
 		nextPut: $)! !
+
 !StatusBarItem categoriesForMethods!
 defaultGetImageBlock!adapters!constants!private! !
 defaultGetTextBlock!adapters!constants!private! !
@@ -155,6 +160,7 @@ value: anObject
 	"#deprecated."
 
 	^anObject iconImageIndex! !
+
 !StatusBarItem class categoriesForMethods!
 value:!evaluating!private! !
 !

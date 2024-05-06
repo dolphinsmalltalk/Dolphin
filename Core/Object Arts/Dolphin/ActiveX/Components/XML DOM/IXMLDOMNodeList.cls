@@ -5,11 +5,15 @@ IDispatch subclass: #IXMLDOMNodeList
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
 	classInstanceVariableNames: ''!
+
 IXMLDOMNodeList guid: (IID fromString: '{2933bf82-7b36-11d2-b20e-00c04f983e60}')!
+
 IXMLDOMNodeList comment: '<IXMLDOMNodeList> is a wrapper class for the COM interface ''MSXML.IXMLDOMNodeList'' generated from type information in the ''Microsoft XML, version 2.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 IXMLDOMNodeList is used as the result of DOM methods that can return lists of nodes. We always wrap these with a further object (an instance of DOMNodeList) which implements the full node list protocol, but is also a <sequencedReadableCollection>, and which is therefore much more useful in Smalltalk. For this reason all high-level wrapper methods have been removed from this class.'!
+
 !IXMLDOMNodeList categoriesForClass!COM-Interfaces!MSXML-Interfaces! !
+
 !IXMLDOMNodeList methodsFor!
 
 _newEnum
@@ -109,6 +113,7 @@ Reset
 
 	<virtual stdcall: hresult 11>
 	^self invalidCall: _failureCode! !
+
 !IXMLDOMNodeList categoriesForMethods!
 _newEnum!**auto generated**!properties!public! !
 get__newEnum:!**auto generated**!COM Interfaces-IXMLDOMNodeList!private! !
@@ -140,6 +145,7 @@ defineFunctions
 		defineFunction: #get__newEnum:
 			argumentTypes: 'IUnknown**'
 ! !
+
 !IXMLDOMNodeList class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

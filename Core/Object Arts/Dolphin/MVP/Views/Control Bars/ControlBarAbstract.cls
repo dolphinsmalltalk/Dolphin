@@ -5,15 +5,20 @@ ControlView subclass: #ControlBarAbstract
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ControlBarAbstract guid: (GUID fromString: '{87b4c726-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 ControlBarAbstract isAbstract: true!
+
 ControlBarAbstract comment: 'ControlBarAbstract is an abstract <compositeView> whose subclasses implement the standard Windows status bar and toolbar controls. It is necessary for control bars to support <compositeView> so that they are able to host additional sub-views under the management of a layout manager.
 
 Instance Variables:
 	names	<IdentityDictionary> mapping sub-views to their names.
 
 '!
+
 !ControlBarAbstract categoriesForClass!MVP-Resources-Tool/Status bars!MVP-Views! !
+
 !ControlBarAbstract methodsFor!
 
 actualInsets: aLayoutContext 
@@ -268,6 +273,7 @@ viewNamed: aString ifNone: aBlock
 			found := each viewNamed: aString ifNone: [].
 			found notNil ifTrue: [^found]].
 	^aBlock value! !
+
 !ControlBarAbstract categoriesForMethods!
 actualInsets:!accessing!private! !
 actualPreferredExtent:!private! !
@@ -318,6 +324,7 @@ stbConvertFromVersion12: anArray
 	creationStyle := anArray at: 3.
 	creationStyle at: 1 put: ((creationStyle at: 1) bitOr: CCS_NOPARENTALIGN).
 	^super stbConvertFromVersion12: anArray! !
+
 !ControlBarAbstract class categoriesForMethods!
 icon!constants!public! !
 stbConvertFromVersion12:!binary filing!private! !

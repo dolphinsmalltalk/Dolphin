@@ -5,9 +5,13 @@ SharedLookupTable variableSubclass: #DeferredValueTable
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DeferredValueTable guid: (GUID fromString: '{2acf1f74-b319-4eed-8755-3bcc738462c0}')!
+
 DeferredValueTable comment: 'A DeferredValueTable is a <LookupTable> specialised to hold <DeferredValue>s. '!
+
 !DeferredValueTable categoriesForClass!Unclassified! !
+
 !DeferredValueTable methodsFor!
 
 at: key ifAbsent: exceptionHandler
@@ -82,6 +86,7 @@ priority: anInteger
 	"Set the <Process> priority at which the deferred values will be calculated."
 
 	priority := anInteger! !
+
 !DeferredValueTable categoriesForMethods!
 at:ifAbsent:!accessing!public! !
 at:ifAbsentPut:!accessing!public! !

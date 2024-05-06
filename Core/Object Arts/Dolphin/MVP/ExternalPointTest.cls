@@ -5,10 +5,15 @@ AbstractPointTest subclass: #ExternalPointTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalPointTest guid: (GUID fromString: '{9f425d20-35a5-4ddb-892b-1be3b6997ee3}')!
+
 ExternalPointTest isAbstract: true!
+
 ExternalPointTest comment: ''!
+
 !ExternalPointTest categoriesForClass!Unclassified! !
+
 !ExternalPointTest methodsFor!
 
 testAsDword
@@ -32,6 +37,7 @@ testValue
 	self assert: point class equals: Point.
 	self assert: point x equals: 101.
 	self assert: point y equals: 202! !
+
 !ExternalPointTest categoriesForMethods!
 testAsDword!public!unit tests! !
 testAsObject!public!unit tests! !

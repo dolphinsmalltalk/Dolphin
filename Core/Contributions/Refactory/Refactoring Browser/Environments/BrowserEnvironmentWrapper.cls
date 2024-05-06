@@ -5,12 +5,16 @@ BrowserEnvironment subclass: #BrowserEnvironmentWrapper
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 BrowserEnvironmentWrapper guid: (GUID fromString: '{73290c8c-a79f-4c55-805c-41c6ed19a64b}')!
+
 BrowserEnvironmentWrapper comment: 'BrowserEnvironmentWrapper is a wrapper for BrowserEnvironments that limits what is shown. While it does not have any #subclassResponsibility methods, it is an abstract class since it doesn''t provide any useful behavior by itself
 
 Instance Variables:
 	environment	<BrowserEnvironment>	the environment we''re wrapping'!
+
 !BrowserEnvironmentWrapper categoriesForClass!Refactory-Environments! !
+
 !BrowserEnvironmentWrapper methodsFor!
 
 allClasses
@@ -114,6 +118,7 @@ storeOn: aStream
 		nextPutAll: ' onEnvironment: '.
 	environment storeOn: aStream.
 	aStream nextPut: $)! !
+
 !BrowserEnvironmentWrapper categoriesForMethods!
 allClasses!enumerating!public! !
 allClassesDo:!enumerating!private! !
@@ -144,6 +149,7 @@ onEnvironment: anEnvironment
 		initialize;
 		onEnvironment: anEnvironment;
 		yourself! !
+
 !BrowserEnvironmentWrapper class categoriesForMethods!
 new!instance creation!public! !
 onEnvironment:!instance creation!public! !

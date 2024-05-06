@@ -5,9 +5,13 @@ Notification subclass: #HRESULTNotification
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 HRESULTNotification guid: (GUID fromString: '{87b4c56e-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 HRESULTNotification comment: ''!
+
 !HRESULTNotification categoriesForClass!System-Exception Handling! !
+
 !HRESULTNotification methodsFor!
 
 _descriptionArguments
@@ -26,6 +30,7 @@ hresult
 	"Answer the HRESULT error code associated with the receiver."
 
 	^self tag! !
+
 !HRESULTNotification categoriesForMethods!
 _descriptionArguments!displaying!public! !
 _descriptionFormat!displaying!public! !

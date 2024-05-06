@@ -5,8 +5,11 @@ InstructionInterpreter subclass: #MessageSendCollector
 	classVariableNames: 'SendInstructions'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MessageSendCollector guid: (GUID fromString: '{5228f2f4-3ec1-4fdb-a520-c6e478fcd8ad}')!
+
 MessageSendCollector addClassConstant: 'SendInstructions' value: #(nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSpecialSend: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendZeroArgs: #shortSendSelfZeroArgs: #shortSendSelfZeroArgs: #shortSendSelfZeroArgs: #shortSendSelfZeroArgs: #shortSendSelfZeroArgs: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendOneArg: #shortSendTwoArgs: #shortSendTwoArgs: #shortSendTwoArgs: #shortSendTwoArgs: #shortSendTwoArgs: #shortSendTwoArgs: #shortSendTwoArgs: #shortSendTwoArgs: nil nil #shortSpecialSendEx: #shortSpecialSendEx: #shortSpecialSendEx: #shortSpecialSendEx: nil nil nil nil nil nil nil nil nil nil nil nil #send: #supersend: #specialSend: nil nil nil nil nil nil nil #sendTempZeroArgs: nil nil nil nil #sendSelfZeroArgs: nil nil nil nil nil nil nil #longSend:with: #longSupersend:with: nil nil nil nil nil nil nil nil nil nil nil nil #exLongSend:with:with: #exLongSupersend:with:with: nil)!
+
 MessageSendCollector comment: 'MessageSendCollector is an <InstructionInterpreter> that evaluates user supplied blocks against all the message send instructions it is dispatched. It is typically used to collect all the message sends in a method, hence the name.
 
 Instance Variables:
@@ -14,7 +17,9 @@ Instance Variables:
 	superMessageBlock		<monadicValuable>
 
 '!
+
 !MessageSendCollector categoriesForClass!Kernel-Objects! !
+
 !MessageSendCollector methodsFor!
 
 dispatchNext
@@ -55,6 +60,7 @@ superMessagesDo: aBlockClosure
 
 supersendSelector: aSymbol 
 	superMessageBlock value: aSymbol! !
+
 !MessageSendCollector categoriesForMethods!
 dispatchNext!interpreting!private! !
 initialize!initializing!private! !
@@ -78,6 +84,7 @@ dispatcher: aByteCodeDispatcher
 initialize
 	self addClassConstant: 'SendInstructions'
 		value: (ByteCodeDispatcher instructions collect: [:each | ('*send*' match: each) ifTrue: [each]])! !
+
 !MessageSendCollector class categoriesForMethods!
 dispatcher:!instance creation!public! !
 initialize!class initialization!development!public! !

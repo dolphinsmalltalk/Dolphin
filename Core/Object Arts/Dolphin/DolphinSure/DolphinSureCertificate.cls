@@ -5,11 +5,15 @@ DolphinSureTrustedData subclass: #DolphinSureCertificate
 	classVariableNames: 'UntrustedContentWarning'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 DolphinSureCertificate guid: (GUID fromString: '{e143e2b9-bce4-4c55-b0f7-7060dd84d239}')!
+
 DolphinSureCertificate comment: 'A DolphinSureCertificate can be used when signing a piece of DolphinSureTrustedData.  It can be used to guarantee that the trusted data is from a particular publisher and because it contains a public key that is used to encode the data one can feel confident that the data has not been modified in transit. Note that, a DolphinSureCertificate is also trusted data itself.  This prevents an attacker from forging the certificate.
 
 If you wish to be able to make use of DolphinSureTrustedData within your applications, either directly or when you wish to digitally sign Dolphin web applets, then you will need to apply for a publisher''s certificate from Object Arts or create one yourself.'!
+
 !DolphinSureCertificate categoriesForClass!Cryptography-Certificates! !
+
 !DolphinSureCertificate methodsFor!
 
 = anObject
@@ -218,6 +222,7 @@ validityString
 
 	^self info validityString
 	 ! !
+
 !DolphinSureCertificate categoriesForMethods!
 =!comparing!public! !
 backgroundImageFile!constants!private! !
@@ -290,6 +295,7 @@ untrustedContentWarning
 	by the receiver."
 
 	UntrustedContentWarning := WarningSignal description: 'Untrusted Content %1'! !
+
 !DolphinSureCertificate class categoriesForMethods!
 icon!constants!development!public! !
 info:authority:authorityPrivateKey:!instance creation!public! !

@@ -5,14 +5,18 @@ ExternalInteger subclass: #DWORD
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DWORD guid: (GUID fromString: '{87b4c5aa-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 DWORD comment: '<DWORD> is an <ExternalStructure> class to wrap the Win32 type of the same name.
 
 DWORD is used to represent unsigned 32-bit integers in conjunction with Win32 APIs. 
 
 The range of integer values that can be represented by instances of this class is defined by the interval:
 	0 to: (2**32)-1'!
+
 !DWORD categoriesForClass!External-Data-Unstructured! !
+
 !DWORD methodsFor!
 
 asSignedInteger
@@ -82,6 +86,7 @@ value: anInteger
 	"Set the receiver's 'value' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_value put: anInteger! !
+
 !DWORD categoriesForMethods!
 asSignedInteger!converting!public! !
 asUnsignedInteger!converting!public! !
@@ -116,6 +121,7 @@ uninitialize
 	"Private - Uninitialize the receiver prior to its removal from the image."
 
 	VMLibrary default registryAt: self name put: nil! !
+
 !DWORD class categoriesForMethods!
 defineFields!public!template definition! !
 initialize!development!initializing!private! !

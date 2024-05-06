@@ -5,9 +5,13 @@ LinkedList subclass: #Semaphore
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 Semaphore guid: (GUID fromString: '{87b4c524-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Semaphore comment: ''!
+
 !Semaphore categoriesForClass!Kernel-Processes! !
+
 !Semaphore methodsFor!
 
 = anObject
@@ -203,6 +207,7 @@ wait: timeout ret: returnValueHolder
 
 	<primitive: 86>
 	^self primitiveFailed: _failureCode! !
+
 !Semaphore categoriesForMethods!
 =!comparing!public! !
 add:afterIndex:!adding!public! !
@@ -247,6 +252,7 @@ new
 	(i.e. it's initial value is zero)."
 
 	^self basicNew initialize! !
+
 !Semaphore class categoriesForMethods!
 boolean!instance creation!public! !
 forMutualExclusion!instance creation!public! !

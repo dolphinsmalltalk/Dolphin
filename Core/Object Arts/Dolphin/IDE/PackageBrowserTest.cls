@@ -5,9 +5,13 @@ DolphinTest subclass: #PackageBrowserTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PackageBrowserTest guid: (GUID fromString: '{c635384e-76c1-4b7d-b532-6a2ec1916dbe}')!
+
 PackageBrowserTest comment: ''!
+
 !PackageBrowserTest categoriesForClass!Unclassified! !
+
 !PackageBrowserTest methodsFor!
 
 addRemoveRenameClasses
@@ -494,6 +498,7 @@ testRepackageMethods
 	self assertMethodsInSync.
 	methodsPresenter ensureVisible.
 	self assertMethodsInSync! !
+
 !PackageBrowserTest categoriesForMethods!
 addRemoveRenameClasses!private!unit tests! !
 assertClassesInSync!private!unit tests! !
@@ -528,6 +533,7 @@ testRepackageMethods!public!unit tests! !
 
 resources
 	^Array with: DolphinTestPackages! !
+
 !PackageBrowserTest class categoriesForMethods!
 resources!public! !
 !

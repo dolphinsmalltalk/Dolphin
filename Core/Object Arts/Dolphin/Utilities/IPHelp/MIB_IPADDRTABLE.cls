@@ -5,8 +5,11 @@ IpHlpApiTableStruct subclass: #MIB_IPADDRTABLE
 	classVariableNames: '_OffsetOf_table'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MIB_IPADDRTABLE guid: (GUID fromString: '{cffa7131-3c9d-4864-9a6a-cfe3ff42a661}')!
+
 MIB_IPADDRTABLE addClassConstant: '_OffsetOf_table' value: 16r4!
+
 MIB_IPADDRTABLE comment: '<MIB_IPADDRTABLE> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_IPADDRTABLE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -21,7 +24,9 @@ struct tagMIB_IPADDRTABLE {
 	MIB_IPADDRROW table[1];
 } MIB_IPADDRTABLE;
 '!
+
 !MIB_IPADDRTABLE categoriesForClass!Win32-Structs! !
+
 !MIB_IPADDRTABLE methodsFor!
 
 table
@@ -31,6 +36,7 @@ table
 		fromAddress: bytes yourAddress + _OffsetOf_table
 		length: self dwNumEntries
 		elementClass: MIB_IPADDRROW! !
+
 !MIB_IPADDRTABLE categoriesForMethods!
 table!**compiled accessors**!public! !
 !
@@ -59,6 +65,7 @@ defineFields
 
 getFieldNames
 	^#(#dwNumEntries #table)! !
+
 !MIB_IPADDRTABLE class categoriesForMethods!
 defineFields!initializing!public! !
 getFieldNames!**compiled accessors**!constants!private! !

@@ -5,7 +5,9 @@ Win32Structure subclass: #LVCOLUMNW
 	classVariableNames: '_OffsetOf_cchTextMax _OffsetOf_cx _OffsetOf_cxDefault _OffsetOf_cxIdeal _OffsetOf_cxMin _OffsetOf_fmt _OffsetOf_iImage _OffsetOf_iOrder _OffsetOf_iSubItem _OffsetOf_mask _OffsetOf_pszText AlignmentMap'
 	poolDictionaries: 'ListViewConstants'
 	classInstanceVariableNames: ''!
+
 LVCOLUMNW guid: (GUID fromString: '{87b4c5fc-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 LVCOLUMNW addClassConstant: '_OffsetOf_cchTextMax' value: 16r10!
 LVCOLUMNW addClassConstant: '_OffsetOf_cx' value: 16r8!
 LVCOLUMNW addClassConstant: '_OffsetOf_cxDefault' value: 16r24!
@@ -17,13 +19,16 @@ LVCOLUMNW addClassConstant: '_OffsetOf_iOrder' value: 16r1C!
 LVCOLUMNW addClassConstant: '_OffsetOf_iSubItem' value: 16r14!
 LVCOLUMNW addClassConstant: '_OffsetOf_mask' value: 16r0!
 LVCOLUMNW addClassConstant: '_OffsetOf_pszText' value: 16rC!
+
 LVCOLUMNW comment: 'LVCOLUMN is an <ExternalStructure> class which represents the Windows List View common control structure of the same name.
 
 LVCOLUMN is used in conjunction with the ListView to specify the details of individual columns when in report mode.
 
 Instance Variables:
 	text	<String> column header text whose address is stored in the structure.'!
+
 !LVCOLUMNW categoriesForClass!External-Data-Structured!External-Data-Structured-Win32! !
+
 !LVCOLUMNW methodsFor!
 
 alignment: alignmentSymbol
@@ -185,6 +190,7 @@ width: pixelWidth
 	"Set the width of the column to pixelWidth."
 
 	self cx: pixelWidth; maskIn: LVCF_WIDTH! !
+
 !LVCOLUMNW categoriesForMethods!
 alignment:!accessing!public! !
 cchTextMax:!**compiled accessors**!public! !
@@ -262,6 +268,7 @@ initialize
 			at: #center put: LVCFMT_CENTER;
 			shrink;
 			yourself)! !
+
 !LVCOLUMNW class categoriesForMethods!
 defineFields!public!template definition! !
 fromColumn:in:!instance creation!public! !

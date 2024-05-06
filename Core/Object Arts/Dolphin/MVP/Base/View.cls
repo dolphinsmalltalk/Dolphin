@@ -5,7 +5,9 @@ Object subclass: #View
 	classVariableNames: 'CreateCenteredMask DragSourceMask DropTargetMask LayoutValidMask ManagedMask MessageMap MinimizedMask NextId NoInheritMenuMask StateRestoringMask UIValidMask UsePreferredExtentMask ViewClosedError WndClassAtom'
 	poolDictionaries: 'Win32Constants Win32Errors'
 	classInstanceVariableNames: 'theme'!
+
 View guid: (GUID fromString: '{87b4c4cc-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 View addClassConstant: 'CreateCenteredMask' value: 16r40!
 View addClassConstant: 'DragSourceMask' value: 16r4!
 View addClassConstant: 'DropTargetMask' value: 16r8!
@@ -16,6 +18,7 @@ View addClassConstant: 'NoInheritMenuMask' value: 16r200!
 View addClassConstant: 'StateRestoringMask' value: 16r20!
 View addClassConstant: 'UIValidMask' value: 16r10!
 View addClassConstant: 'UsePreferredExtentMask' value: 16r100!
+
 View comment: 'View is an abstract class which is the root of the view hierarchy of classes. Instances of view or its subclasses are used to display Model data in windows. View is part of the Model-View-Presenter or MVP framework:
 
 SmalltalkSystem help: ''Overviews/ModelViewPresenter''.
@@ -53,7 +56,9 @@ Class Variables:
 	WndClassAtom		<integer>
 
 '!
+
 !View categoriesForClass!MVP-Resources-Misc!MVP-Views! !
+
 !View methodsFor!
 
 actualBackcolor
@@ -4603,6 +4608,7 @@ zOrderTop
 
 	UserLibrary default bringWindowToTop: handle.
 	self parentView onZOrderChanged! !
+
 !View categoriesForMethods!
 actualBackcolor!accessing!private! !
 actualFont!accessing!font!private! !
@@ -5776,6 +5782,7 @@ wndClassName
 	defaults."
 
 	^'DolphinWindow'! !
+
 !View class categoriesForMethods!
 active!enquiries!public! !
 activeHandle!enquiries!private! !

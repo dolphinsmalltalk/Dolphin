@@ -31,7 +31,6 @@ Smalltalk developmentSystem browseDeploymentLog: ''cat.xml''.
 XmlPad filename: ''cat.xml''
 ```'.
 
-
 package classNames
 	add: #Catenate;
 	yourself.
@@ -54,11 +53,6 @@ ConsoleSessionManager subclass: #Catenate
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

@@ -5,7 +5,9 @@ ICoreWebView2Environment5 subclass: #ICoreWebView2Environment6
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2Environment6 guid: (IID fromString: '{e59ee362-acbd-4857-9a8e-d3644d9459a9}')!
+
 ICoreWebView2Environment6 comment: '`ICoreWebView2Environment6` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Environment6'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -26,7 +28,9 @@ interface ICoreWebView2Environment6 : ICoreWebView2Environment5
 };
 ```
 '!
+
 !ICoreWebView2Environment6 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2Environment6 methodsFor!
 
 CreatePrintSettings: printSettings
@@ -37,6 +41,7 @@ CreatePrintSettings: printSettings
 
 	<virtual stdcall: hresult 15 ICoreWebView2PrintSettings**>
 	^self invalidCall: _failureCode! !
+
 !ICoreWebView2Environment6 categoriesForMethods!
 CreatePrintSettings:!**auto generated**!COM Interfaces-ICoreWebView2Environment6!private! !
 !
@@ -51,6 +56,7 @@ defineFunctions
 		defineFunction: #CreatePrintSettings:
 			argumentTypes: 'ICoreWebView2PrintSettings**'
 ! !
+
 !ICoreWebView2Environment6 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

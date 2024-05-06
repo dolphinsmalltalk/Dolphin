@@ -8,7 +8,6 @@ Copyright (c) Object Arts Ltd, 2000-2001.
 
 package basicPackageVersion: '6.1'.
 
-
 package classNames
 	add: #AXPropertyBag;
 	add: #AXPropertyBagErrorLog;
@@ -43,56 +42,60 @@ COMInterfaceImp subclass: #AXPropertyBag
 	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
+
 COMInterfaceImp subclass: #AXPropertyBagErrorLog
 	instanceVariableNames: 'errors guid'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Error subclass: #AXPropertyReadError
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IUnknown subclass: #IErrorLog
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IUnknown subclass: #IPropertyBag
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IUnknown subclass: #IPropertyBag2
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IEnumUnknown subclass: #IEnumErrorInfo
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IPersist subclass: #IPersistPropertyBag
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IPersistPropertyBag subclass: #IPersistPropertyBag2
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 OLEStructure subclass: #PROPBAG2
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_cfType _OffsetOf_clsid _OffsetOf_dwHint _OffsetOf_dwType _OffsetOf_pstrName _OffsetOf_vt'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

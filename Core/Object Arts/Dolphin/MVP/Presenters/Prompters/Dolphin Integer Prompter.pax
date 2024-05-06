@@ -7,7 +7,6 @@ Copyright (c) Object Arts Ltd. 2003.'.
 
 package basicPackageVersion: '6.0'.
 
-
 package classNames
 	add: #IntegerPrompter;
 	yourself.
@@ -37,11 +36,6 @@ Prompter subclass: #IntegerPrompter
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

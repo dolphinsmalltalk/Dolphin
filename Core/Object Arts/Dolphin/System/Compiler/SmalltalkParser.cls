@@ -5,7 +5,9 @@ Object subclass: #SmalltalkParser
 	classVariableNames: 'AllowEmptyStatements'
 	poolDictionaries: 'ExtCallArgTypes SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
+
 SmalltalkParser guid: (GUID fromString: '{f15a9f2f-3a15-47cd-8ef9-0534b6f91c17}')!
+
 SmalltalkParser comment: 'Instance Variables:
 	scanner		<SmalltalkScanner> performing lexical analysis over the source text
 	currentToken	<StToken>
@@ -25,7 +27,9 @@ Class Variables:
 Pools:
 	ExtCallArgTypes 		Maps standard external type names, as recognised by the old Dolphin Compiler to the parameter types to be used for passing by value and by reference.
 	SmalltalkParseErrorCodes	Maps compiler error/warning names to their corresponding integer code'!
+
 !SmalltalkParser categoriesForClass!System-Compiler! !
+
 !SmalltalkParser methodsFor!
 
 addCommentsTo: aNode 
@@ -1110,6 +1114,7 @@ validateTemp: aVariableNode of: aNode temps: anOrderedCollection
 
 variableNodeClass
 	^StVariableNode! !
+
 !SmalltalkParser categoriesForMethods!
 addCommentsTo:!helpers!private! !
 assignmentNodeClass!constants!private! !
@@ -1309,6 +1314,7 @@ parseMethodPattern: aString
 
 warningClass
 	^CompilerWarningNotification! !
+
 !SmalltalkParser class categoriesForMethods!
 allowEmptyStatements!accessing!public! !
 allowEmptyStatements:!accessing!public! !

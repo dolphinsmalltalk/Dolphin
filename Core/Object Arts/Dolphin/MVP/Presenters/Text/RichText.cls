@@ -5,9 +5,13 @@ Object subclass: #RichText
 	classVariableNames: 'Converter ConverterMutex'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RichText guid: (GUID fromString: '{87b4c4b2-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 RichText comment: ''!
+
 !RichText categoriesForClass!System-Support! !
+
 !RichText methodsFor!
 
 = anObject
@@ -104,6 +108,7 @@ setTextInto: aView
 	message back to aView."
 	
 	aView richText: self! !
+
 !RichText categoriesForMethods!
 =!comparing!public! !
 asParameter!converting!public! !
@@ -186,6 +191,7 @@ uninitialize
 	Converter isNil ifTrue: [^self].
 	Converter destroy.
 	Converter := nil! !
+
 !RichText class categoriesForMethods!
 fromRtf:!instance creation!public! !
 fromString:!instance creation!public! !

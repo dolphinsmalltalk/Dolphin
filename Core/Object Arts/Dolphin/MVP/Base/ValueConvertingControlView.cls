@@ -5,15 +5,20 @@ ControlView subclass: #ValueConvertingControlView
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ValueConvertingControlView guid: (GUID fromString: '{87b4c72a-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 ValueConvertingControlView isAbstract: true!
+
 ValueConvertingControlView comment: 'ValueConvertingControlView is the abstract superclass of <view>s that implement Windows controls obeying the <valueValue> protocol. Such views may be associated with any <valueModel>. One important aspect of a ValueConvertingControlView is that it supports a #typeConverter aspect. By supplying a <typeConverter> in this way, it is possible to attachthe view to a wide range of <valueModel>s containing different types of object. The <typeConverter> is responsible for mapping the model''s value to a suitable form in order for the view to display and, for the reverse process, taking a modified view''s content and setting it back as  the appropriate type of object in the model.
 
 Instance Variables:
 	typeconverter	<typeConverter> used to convert between model values and display values.
 
 '!
+
 !ValueConvertingControlView categoriesForClass!MVP-Views! !
+
 !ValueConvertingControlView methodsFor!
 
 connectModel
@@ -141,6 +146,7 @@ value: anObject
 	"Set the receiver's model value to anObject"
 
 	self model value: anObject! !
+
 !ValueConvertingControlView categoriesForMethods!
 connectModel!models!public! !
 defaultExtent!constants!private! !
@@ -175,6 +181,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon! !
+
 !ValueConvertingControlView class categoriesForMethods!
 defaultModel!models!public! !
 icon!constants!public! !

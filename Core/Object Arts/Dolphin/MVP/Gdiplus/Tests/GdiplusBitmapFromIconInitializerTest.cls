@@ -5,9 +5,13 @@ GdiplusInitializerTests subclass: #GdiplusBitmapFromIconInitializerTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusBitmapFromIconInitializerTest guid: (GUID fromString: '{bf0526be-e212-4666-8678-2c66a571d808}')!
+
 GdiplusBitmapFromIconInitializerTest comment: ''!
+
 !GdiplusBitmapFromIconInitializerTest categoriesForClass!Unclassified! !
+
 !GdiplusBitmapFromIconInitializerTest methodsFor!
 
 gdipCreateBitmapFromHICON: hicon bitmap: bitmap 
@@ -34,6 +38,7 @@ testCreateHandleRealizesIcon
 	self assertIsNil: icon basicHandle.
 	model createHandle.
 	self denyIsNil: icon basicHandle! !
+
 !GdiplusBitmapFromIconInitializerTest categoriesForMethods!
 gdipCreateBitmapFromHICON:bitmap:!accessing!public! !
 setUp!public!setup! !

@@ -5,9 +5,13 @@ GdiplusInitializer subclass: #GdiplusRegionInitializer
 	classVariableNames: 'Default'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusRegionInitializer guid: (GUID fromString: '{c8f38620-766b-11d7-b609-00e0987e8081}')!
+
 GdiplusRegionInitializer comment: ''!
+
 !GdiplusRegionInitializer categoriesForClass!Unclassified! !
+
 !GdiplusRegionInitializer methodsFor!
 
 createHandle
@@ -19,6 +23,7 @@ createHandle
 
 gdiplusConstructorErrorDescription
 	^'Error creating Region'! !
+
 !GdiplusRegionInitializer categoriesForMethods!
 createHandle!private! !
 gdiplusConstructorErrorDescription!private! !
@@ -37,6 +42,7 @@ onPreStripImage
 	which holds an instance of the receiver."
 
 	Default := nil! !
+
 !GdiplusRegionInitializer class categoriesForMethods!
 default!instance creation!private! !
 new!development!instance creation!public! !

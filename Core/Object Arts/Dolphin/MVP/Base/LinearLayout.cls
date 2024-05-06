@@ -5,10 +5,15 @@ LayoutManager subclass: #LinearLayout
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 LinearLayout guid: (GUID fromString: '{f3556fda-7d0c-4e04-9193-43add8df9ffa}')!
+
 LinearLayout isAbstract: true!
+
 LinearLayout comment: ''!
+
 !LinearLayout categoriesForClass!MVP-Layout Managers-Abstract! !
+
 !LinearLayout methodsFor!
 
 beHorizontal
@@ -79,6 +84,7 @@ preferredLayoutExtentOf: aCompositeView context: aLayoutContext
 		do: [:each | accumulate value: (each layoutExtent: aLayoutContext)].
 	insets := aCompositeView actualInsets: aLayoutContext.
 	^box + insets topLeft + insets bottomRight! !
+
 !LinearLayout categoriesForMethods!
 beHorizontal!modes!public! !
 beVertical!modes!public! !

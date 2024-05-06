@@ -5,12 +5,15 @@ HttpServerStructure subclass: #HTTP_REQUEST_TOKEN_BINDING_INFO
 	classVariableNames: '_OffsetOf_KeyType _OffsetOf_TlsUnique _OffsetOf_TlsUniqueSize _OffsetOf_TokenBinding _OffsetOf_TokenBindingSize'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 HTTP_REQUEST_TOKEN_BINDING_INFO guid: (GUID fromString: '{9a86eb3d-22ee-4cc3-980d-f3427eecdb0c}')!
+
 HTTP_REQUEST_TOKEN_BINDING_INFO addClassConstant: '_OffsetOf_KeyType' value: 16r10!
 HTTP_REQUEST_TOKEN_BINDING_INFO addClassConstant: '_OffsetOf_TlsUnique' value: 16r8!
 HTTP_REQUEST_TOKEN_BINDING_INFO addClassConstant: '_OffsetOf_TlsUniqueSize' value: 16rC!
 HTTP_REQUEST_TOKEN_BINDING_INFO addClassConstant: '_OffsetOf_TokenBinding' value: 16r0!
 HTTP_REQUEST_TOKEN_BINDING_INFO addClassConstant: '_OffsetOf_TokenBindingSize' value: 16r4!
+
 HTTP_REQUEST_TOKEN_BINDING_INFO comment: '<HTTP_REQUEST_TOKEN_BINDING_INFO> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_REQUEST_TOKEN_BINDING_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains no documentation for this struct
@@ -28,7 +31,9 @@ struct tagHTTP_REQUEST_TOKEN_BINDING_INFO {
 	LPWSTR KeyType;
 } HTTP_REQUEST_TOKEN_BINDING_INFO;
 '!
+
 !HTTP_REQUEST_TOKEN_BINDING_INFO categoriesForClass!WinHttpServer-Structs! !
+
 !HTTP_REQUEST_TOKEN_BINDING_INFO methodsFor!
 
 KeyType
@@ -80,6 +85,7 @@ TokenBindingSize: anInteger
 	"Set the receiver's 'TokenBindingSize' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_TokenBindingSize put: anInteger! !
+
 !HTTP_REQUEST_TOKEN_BINDING_INFO categoriesForMethods!
 KeyType!**compiled accessors**!public! !
 KeyType:!**compiled accessors**!public! !
@@ -120,6 +126,7 @@ defineFields
 
 getFieldNames
 	^#(#TokenBinding #TokenBindingSize #TlsUnique #TlsUniqueSize #KeyType)! !
+
 !HTTP_REQUEST_TOKEN_BINDING_INFO class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

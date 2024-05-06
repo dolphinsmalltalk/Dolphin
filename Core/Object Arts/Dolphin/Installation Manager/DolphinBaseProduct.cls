@@ -5,9 +5,13 @@ DolphinCoreProduct subclass: #DolphinBaseProduct
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DolphinBaseProduct guid: (GUID fromString: '{2a3b6d22-63cb-4287-905e-8221eb59e17d}')!
+
 DolphinBaseProduct comment: ''!
+
 !DolphinBaseProduct categoriesForClass!System-Support! !
+
 !DolphinBaseProduct methodsFor!
 
 calcSystemFolderExtentFor: aPoint 
@@ -166,6 +170,7 @@ warnOfUnlistedContent
 			[self unlistedContentException 
 				signal: 'The deployed image will include the following unlisted pre-requisite packages: ' 
 						, unlistedContent displayString]! !
+
 !DolphinBaseProduct categoriesForMethods!
 calcSystemFolderExtentFor:!helpers!private! !
 contents!accessing!public! !
@@ -184,6 +189,7 @@ shortProductName
 	"Answer the abbreviated product name"
 	
 	^'DBASE'! !
+
 !DolphinBaseProduct class categoriesForMethods!
 productName!accessing!public! !
 shortProductName!accessing!public! !

@@ -5,7 +5,9 @@ IXMLDOMSchemaCollection subclass: #IXMLDOMSchemaCollection2
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
 	classInstanceVariableNames: ''!
+
 IXMLDOMSchemaCollection2 guid: (IID fromString: '{50ea08b0-dd1b-4664-9a50-c2f40f4bd79a}')!
+
 IXMLDOMSchemaCollection2 comment: '<IXMLDOMSchemaCollection2> is a wrapper class for the COM interface ''MSXML2.IXMLDOMSchemaCollection2'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
@@ -42,7 +44,9 @@ interface IXMLDOMSchemaCollection2 : IXMLDOMSchemaCollection
 		[out, retval]ISchemaItem** item);
 };
 '!
+
 !IXMLDOMSchemaCollection2 categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+
 !IXMLDOMSchemaCollection2 methodsFor!
 
 get_validateOnLoad: validateOnLoad
@@ -128,6 +132,7 @@ validateOnLoad: validateOnLoad
 
 	self put_validateOnLoad: validateOnLoad
 ! !
+
 !IXMLDOMSchemaCollection2 categoriesForMethods!
 get_validateOnLoad:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection2!private! !
 getDeclaration:!**auto generated**!methods!public! !
@@ -169,6 +174,7 @@ newXMLSchemaCache60
 
 	^self onCLSID: (CLSID fromString: '{88D96A07-F192-11D4-A65F-0040963251E5}')
 ! !
+
 !IXMLDOMSchemaCollection2 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 newXMLSchemaCache40!**auto generated**!instance creation!public! !

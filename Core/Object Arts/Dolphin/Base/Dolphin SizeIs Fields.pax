@@ -6,7 +6,6 @@ package paxVersion: 1;
 
 Contains support for sophisticated conformant field types that can interpret a MIDL size_is expression involving simple arithmetic.'.
 
-
 package classNames
 	add: #ArithmeticExpressionVisitor;
 	add: #SizeIsArrayFieldLength;
@@ -37,19 +36,18 @@ ArrayFieldLength subclass: #SizeIsArrayFieldLength
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StParseNodeVisitor subclass: #ArithmeticExpressionVisitor
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ArithmeticExpressionVisitor subclass: #SizeIsExpressionFormatter
 	instanceVariableNames: 'codeStream structClass variable'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -125,6 +123,7 @@ solveFor: aString
 					variable: term;
 					value: op argument;
 					solveFor: aString]! !
+
 !StAssignmentNode categoriesForMethods!
 solveFor:!operations!private! !
 !
@@ -143,6 +142,7 @@ inverseArithmeticOperator
 		at: #* put: #/;
 		at: #// put: #*;
 		shrink) at: self selector! !
+
 !StMessageNode categoriesForMethods!
 inverseArithmeticOperator!public! !
 !

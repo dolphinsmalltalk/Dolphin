@@ -5,7 +5,9 @@ ValueConvertingControlView subclass: #WebView2View
 	classVariableNames: 'CanNavigateToStrings DisableBrowserAcceleratorKeysMask DisableBuiltInErrorPageMask DisableDefaultContextMenuMask DisableDefaultScriptDialogsMask DisableDevToolsMask DisableExternalDropsMask DisableGeneralAutofillMask DisableHostObjectsMask DisablePasswordAutosaveMask DisablePinchZoomMask DisableScriptMask DisableSSOMask DisableStatusBarMask DisableSwipeNavigationMask DisableWebmessageMask DisableZoomControlMask EnableCustomErrorReportingMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 WebView2View guid: (GUID fromString: '{3a9f720c-51f6-49f2-8267-f2b3b878129c}')!
+
 WebView2View addClassConstant: 'CanNavigateToStrings' value: 16r2000!
 WebView2View addClassConstant: 'DisableBrowserAcceleratorKeysMask' value: 16r2!
 WebView2View addClassConstant: 'DisableBuiltInErrorPageMask' value: 16r20!
@@ -24,8 +26,11 @@ WebView2View addClassConstant: 'DisableSwipeNavigationMask' value: 16r8000!
 WebView2View addClassConstant: 'DisableWebmessageMask' value: 16r100!
 WebView2View addClassConstant: 'DisableZoomControlMask' value: 16r200!
 WebView2View addClassConstant: 'EnableCustomErrorReportingMask' value: 16r20000!
+
 WebView2View comment: '`WebView2View` is a `<valueView>` that wraps the Microsoft Edge WebView2 embeddable browser to display content downloaded from a URL, or provided as a string.'!
+
 !WebView2View categoriesForClass!MVP-Resources-Misc! !
+
 !WebView2View methodsFor!
 
 allowContextMenu
@@ -576,6 +581,7 @@ zoomFactor: aNumber
 	self webviewController zoomFactor = aNumber ifTrue: [^self].
 	self webviewController zoomFactor: aNumber.
 	self presenter trigger: #zoomFactorChanged! !
+
 !WebView2View categoriesForMethods!
 allowContextMenu!public!settings! !
 allowContextMenu:!public!settings! !
@@ -705,6 +711,7 @@ winClassName
 	to instances of the receiver."
 
 	^self wndClassName! !
+
 !WebView2View class categoriesForMethods!
 icon!constants!public! !
 initialize!development!initializing!private! !

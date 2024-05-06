@@ -5,7 +5,9 @@ COMInterfaceImp subclass: #COMEnumerator
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 COMEnumerator guid: (GUID fromString: '{e3913c43-9396-11d3-b376-0800460222f0}')!
+
 COMEnumerator comment: 'COMEnumerator is Dolphin''s generic implementation of COM enumerators, i.e. IEnumXXXX. It can enumerate over any sequenceable collection of externally representable objects.
 
 Instance Variables:
@@ -13,7 +15,9 @@ Instance Variables:
 	contents		<ReadStream>
 
 '!
+
 !COMEnumerator categoriesForClass!COM-Implementations! !
+
 !COMEnumerator methodsFor!
 
 arrayBufferAt: buf length: count
@@ -96,6 +100,7 @@ supportedInterfaces
 	This will vary on a per-instance basis."
 
 	^Array with: enumClass! !
+
 !COMEnumerator categoriesForMethods!
 arrayBufferAt:length:!COM Interfaces-IEnumXXXX!private! !
 Clone:!COM Interfaces-IEnumXXXX!public! !
@@ -125,6 +130,7 @@ newEnumerator: enumClass onStream: stream
 	^self new
 		setEnumClass: enumClass contents: stream;
 		queryInterface: enumClass! !
+
 !COMEnumerator class categoriesForMethods!
 newEnumerator:on:!instance creation!public! !
 newEnumerator:onStream:!instance creation!public! !

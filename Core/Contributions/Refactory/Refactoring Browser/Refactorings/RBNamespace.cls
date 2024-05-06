@@ -5,9 +5,13 @@ Object subclass: #RBNamespace
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RBNamespace guid: (GUID fromString: '{e04ee960-3b00-47a4-b10a-e93cb600dad5}')!
+
 RBNamespace comment: ''!
+
 !RBNamespace categoriesForClass!Refactory-Model! !
+
 !RBNamespace methodsFor!
 
 addChangeToClass: aRBClass 
@@ -319,6 +323,7 @@ rootClasses
 
 whichCategoryIncludes: aSymbol
 	^self environment whichCategoryIncludes: aSymbol! !
+
 !RBNamespace categoriesForMethods!
 addChangeToClass:!changes!private! !
 addClassVariable:to:!changes!private! !
@@ -375,6 +380,7 @@ onEnvironment: aBrowserEnvironment
 	^(self new)
 		environment: aBrowserEnvironment;
 		yourself! !
+
 !RBNamespace class categoriesForMethods!
 new!instance creation!public! !
 onEnvironment:!instance creation!public! !

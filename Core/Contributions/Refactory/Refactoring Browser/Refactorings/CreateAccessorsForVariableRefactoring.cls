@@ -5,9 +5,13 @@ VariableRefactoring subclass: #CreateAccessorsForVariableRefactoring
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 CreateAccessorsForVariableRefactoring guid: (GUID fromString: '{c3f653b0-6efe-4cb6-a2a6-781aac3447ec}')!
+
 CreateAccessorsForVariableRefactoring comment: ''!
+
 !CreateAccessorsForVariableRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !CreateAccessorsForVariableRefactoring methodsFor!
 
 classVariable: aBoolean 
@@ -144,6 +148,7 @@ usesAssignmentOf: aString in: aClass classVariable: isClassVar
 								checkClass: each
 								selector: sel
 								using: matcher]]! !
+
 !CreateAccessorsForVariableRefactoring categoriesForMethods!
 classVariable:!initialize/release!public! !
 createGetterAccessor!public!transforming! !
@@ -178,6 +183,7 @@ model: aRBNamespace variable: aVarName class: aClass classVariable: aBoolean
 variable: aVarName class: aClass classVariable: aBoolean 
 	^(self variable: aVarName class: aClass)
 		classVariable: aBoolean; yourself! !
+
 !CreateAccessorsForVariableRefactoring class categoriesForMethods!
 model:variable:class:classVariable:!instance creation!public! !
 variable:class:classVariable:!instance creation!public! !

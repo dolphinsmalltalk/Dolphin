@@ -5,9 +5,13 @@ AbstractContainerViewTest subclass: #ContainerViewTest
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 ContainerViewTest guid: (GUID fromString: '{4e892cf1-595a-44ad-9a6d-0c319b32d174}')!
+
 ContainerViewTest comment: ''!
+
 !ContainerViewTest categoriesForClass!Unclassified! !
+
 !ContainerViewTest methodsFor!
 
 containerClass
@@ -39,6 +43,7 @@ test1PixBorderPrint
 		checkRectangle: ((self borderRectangleOf: containerView) insetBy: 1 asPoint)
 		inBitmap: printBitmap
 		color: self backgroundColor! !
+
 !ContainerViewTest categoriesForMethods!
 containerClass!private! !
 test1PixBorderPrint!public! !

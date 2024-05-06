@@ -5,7 +5,9 @@ ADODBField20 subclass: #ADODBField
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
+
 ADODBField guid: (IID fromString: '{00001569-0000-0010-8000-00aa006d2ea4}')!
+
 ADODBField comment: '`ADODBField` is a wrapper class for the COM interface ''ADODB.Field'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -30,7 +32,9 @@ interface Field : Field20
 };
 ```
 '!
+
 !ADODBField categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
+
 !ADODBField methodsFor!
 
 get_Status: pFStatus
@@ -49,6 +53,7 @@ status
 	answer := SDWORD new.
 	self get_Status: answer.
 	^answer asObject! !
+
 !ADODBField categoriesForMethods!
 get_Status:!**auto generated**!COM Interfaces-Field!private! !
 status!**auto generated**!properties!public! !
@@ -64,6 +69,7 @@ defineFunctions
 		defineFunction: #get_Status:
 			argumentTypes: 'sdword*'
 ! !
+
 !ADODBField class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

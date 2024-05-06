@@ -5,7 +5,9 @@ ListPresenter subclass: #FolderPresenter
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 FolderPresenter guid: (GUID fromString: '{87b4c6c7-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 FolderPresenter comment: 'FolderPresenter is a <treePresenter> component that can be used to display the contents of a <treeModel> within a <listView>. The list is used to display the contents of individual parent nodes within the tree. This is similar to the way a folder view (hence the name) is used to display a directory''s contents in the Windows Shell.. For presentation of a tree but viewing it as a complete hierarchy see the TreePresenter class.
 
 A FolderPresenter can navigate the tree hierarchy using the #expand:, #collapse: and #up <treePresenter> methods. 
@@ -17,7 +19,9 @@ Instance Variables:
 	openBlock		<dyadicValuable> specifying how an object should be opened.
 
 '!
+
 !FolderPresenter categoriesForClass!MVP-Presenters! !
+
 !FolderPresenter methodsFor!
 
 beNotSorted
@@ -230,6 +234,7 @@ viewModel
 	connected to the receiver's contentsModel - not the receiver's tree model"
 
 	^self contents! !
+
 !FolderPresenter categoriesForMethods!
 beNotSorted!accessing!public!sorting! !
 collapse:!operations!public! !
@@ -272,6 +277,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) instanceClass defaultIcon! !
+
 !FolderPresenter class categoriesForMethods!
 defaultModel!models!public! !
 icon!constants!public! !

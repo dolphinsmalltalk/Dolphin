@@ -16,7 +16,6 @@ the user is required to pause and restart the movement)
 
 SlidingBallDemo new show'.
 
-
 package classNames
 	add: #SlidingBallDemo;
 	add: #SlidingBallSessionManager;
@@ -42,16 +41,12 @@ RuntimeSessionManager subclass: #SlidingBallSessionManager
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DoubleBufferedView subclass: #SlidingBallDemo
 	instanceVariableNames: 'start end circle stepProcess'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

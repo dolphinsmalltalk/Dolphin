@@ -5,9 +5,13 @@ GdiplusInitializer subclass: #GdiplusHatchBrushInitializer
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusHatchBrushInitializer guid: (GUID fromString: '{1a1a5ea5-6151-11d7-b609-00e0987e8081}')!
+
 GdiplusHatchBrushInitializer comment: ''!
+
 !GdiplusHatchBrushInitializer categoriesForClass!Unclassified! !
+
 !GdiplusHatchBrushInitializer methodsFor!
 
 createHandle
@@ -28,6 +32,7 @@ style: aNumber forecolor: foreColor backcolor: backColor
 	style := aNumber.
 	forecolor := foreColor.
 	backcolor := backColor! !
+
 !GdiplusHatchBrushInitializer categoriesForMethods!
 createHandle!private!realizing/unrealizing! !
 gdiplusConstructorErrorDescription!constants!private! !
@@ -41,6 +46,7 @@ style: aNumber forecolor: foreARGB backcolor: backARGB
 		style: aNumber
 		forecolor: foreARGB
 		backcolor: backARGB! !
+
 !GdiplusHatchBrushInitializer class categoriesForMethods!
 style:forecolor:backcolor:!instance creation!public! !
 !

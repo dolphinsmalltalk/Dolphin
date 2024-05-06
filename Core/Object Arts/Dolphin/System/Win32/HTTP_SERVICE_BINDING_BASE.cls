@@ -5,8 +5,11 @@ HttpServerStructure subclass: #HTTP_SERVICE_BINDING_BASE
 	classVariableNames: '_OffsetOf_Type'
 	poolDictionaries: 'WinHttpServerConsts'
 	classInstanceVariableNames: ''!
+
 HTTP_SERVICE_BINDING_BASE guid: (GUID fromString: '{80f84f87-9667-42d4-ace4-1004dfe14475}')!
+
 HTTP_SERVICE_BINDING_BASE addClassConstant: '_OffsetOf_Type' value: 16r0!
+
 HTTP_SERVICE_BINDING_BASE comment: '<HTTP_SERVICE_BINDING_BASE> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_SERVICE_BINDING_BASE'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -21,7 +24,9 @@ struct tagHTTP_SERVICE_BINDING_BASE {
 	[helpstring("Indicates whether the data is in ASCII or Unicode.")] HTTP_SERVICE_BINDING_TYPE Type;
 } HTTP_SERVICE_BINDING_BASE;
 '!
+
 !HTTP_SERVICE_BINDING_BASE categoriesForClass!WinHttpServer-Structs! !
+
 !HTTP_SERVICE_BINDING_BASE methodsFor!
 
 Type
@@ -33,6 +38,7 @@ Type: anInteger
 	"Set the receiver's 'Type' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_Type put: anInteger! !
+
 !HTTP_SERVICE_BINDING_BASE categoriesForMethods!
 Type!**compiled accessors**!public! !
 Type:!**compiled accessors**!public! !
@@ -67,6 +73,7 @@ fromAddress: anAddress
 
 getFieldNames
 	^#(#Type)! !
+
 !HTTP_SERVICE_BINDING_BASE class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 fromAddress:!instance creation!public! !

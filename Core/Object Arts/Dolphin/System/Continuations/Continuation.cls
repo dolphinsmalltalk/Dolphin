@@ -5,7 +5,9 @@ Object subclass: #Continuation
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Continuation guid: (GUID fromString: '{04fb1134-b5e1-4651-b95b-aee8814a0ec6}')!
+
 Continuation comment: 'Dolphin implementation of the Call Continuation class inspired by that implemented for Seaside in Squeak by Avi Bryant.
 
 A Continuation represents the pending execution stack of a partially completed computation (or process), captured at some particular point. The Contination can be resumed by restarting it with a particular value (Continuation supports the <monadicValuable> protocol), at which point the computation takes off again from the point at which it was captured. A Continuation may be continued in this way as many times as desired, and because it can be continued with different values the end result of each computation can be different.
@@ -14,7 +16,9 @@ In effect a Continuation reifies the dynamic execution state of a Process at a p
 
 We believe the implementation of this class to be largely portable with the exception of #continue:with:, which restarts the copied stack in a Dolphin specific manner, terminating the calling process too (though note that this is delegated off to the Process). The means by which the stack is actually copied is very Dolphin specific, see the <ProcessCopier> class for more details.
 '!
+
 !Continuation categoriesForClass!System-Continuations! !
+
 !Continuation methodsFor!
 
 argumentCount
@@ -56,6 +60,7 @@ valueWithArguments: anArray
 	^anArray size == 1 
 		ifTrue: [self value: anArray first]
 		ifFalse: [self error: 'Continuation is only possible with a single argument']! !
+
 !Continuation categoriesForMethods!
 argumentCount!accessing!public! !
 continue:with:!helpers!private! !
@@ -96,6 +101,7 @@ factorialExample: x
 
 fromContext: aStackFrame
 	^self new stack: aStackFrame copyStack! !
+
 !Continuation class categoriesForMethods!
 factorialExample:!examples!public! !
 fromContext:!instance creation!public! !

@@ -5,7 +5,9 @@ StProgramNode subclass: #StSequenceNode
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StSequenceNode guid: (GUID fromString: '{73c3638c-06a8-4c0d-99ae-a572d08b5150}')!
+
 StSequenceNode comment: 'StSequenceNode is a parse tree node that represents a sequence of statements. Both StBlockNodes and StMethodNodes contain these.
 
 Instance Variables:
@@ -16,7 +18,9 @@ Instance Variables:
 	temporaries	<SequenceableCollection> of <StVariableNode>	the temporaries defined
 
 '!
+
 !StSequenceNode categoriesForClass!System-Compiler! !
+
 !StSequenceNode methodsFor!
 
 = anObject 
@@ -158,6 +162,7 @@ whichNodeIsContainedBy: anInterval
 			[(temporaries isEmpty and: [statements size == 1]) 
 				ifTrue: [^statements first]].
 	^node! !
+
 !StSequenceNode categoriesForMethods!
 =!comparing!public! !
 acceptVisitor:!public!visitor! !
@@ -207,6 +212,7 @@ temporaries: variableNodes statements: statementNodes
 		temporaries: variableNodes;
 		statements: statementNodes;
 		yourself! !
+
 !StSequenceNode class categoriesForMethods!
 leftBar:temporaries:rightBar:!instance creation!public! !
 statements:!instance creation!public! !

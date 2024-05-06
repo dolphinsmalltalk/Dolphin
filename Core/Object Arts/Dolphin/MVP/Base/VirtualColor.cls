@@ -5,10 +5,15 @@ Color subclass: #VirtualColor
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 VirtualColor guid: (GUID fromString: '{aa0eebfb-75db-4ed8-a11f-55ac6b62948e}')!
+
 VirtualColor isAbstract: true!
+
 VirtualColor comment: '`VirtualColor` is the abstract class of `Color`s with an indirectly stored or calculated color value that can vary at run time.'!
+
 !VirtualColor categoriesForClass!Drawing! !
+
 !VirtualColor methodsFor!
 
 argbCode
@@ -40,6 +45,7 @@ rgbCode
 	"Answer the receiver's color value in 24-bit RGB encoding with 8-bits per component in (blue, green, red) order."
 
 	^self actualColor rgbCode! !
+
 !VirtualColor categoriesForMethods!
 argbCode!converting!public! !
 asParameter!converting!public! !

@@ -5,8 +5,11 @@ Object subclass: #Model
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Model guid: (GUID fromString: '{87b4c4a3-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Model isAbstract: true!
+
 Model comment: 'Model is an abstract class whose subclasses implement the <model> protocol and represent domain level data that is likely to be observed by other objects. The Model hierarchy is part of the MVP framework although <model> classes may well be used outside of this framework. 
 
 SmalltalkSystem help: ''Overviews/ModelViewPresenter''.
@@ -21,7 +24,9 @@ Instance Variables:
 
 
 '!
+
 !Model categoriesForClass!MVP-Models! !
+
 !Model methodsFor!
 
 getEvents
@@ -49,6 +54,7 @@ stbSaveOn: anSTBOutFiler
 
 	anSTBOutFiler override: events with: nil.
 	super stbSaveOn: anSTBOutFiler.! !
+
 !Model categoriesForMethods!
 getEvents!events!private! !
 postCopy!copying!public! !
@@ -116,6 +122,7 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^1! !
+
 !Model class categoriesForMethods!
 new!instance creation!public! !
 stbConvert:fromVersion:!binary filing!private! !

@@ -5,9 +5,12 @@ HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_CACHE_SET
 	classVariableNames: '_OffsetOf_KeyDesc _OffsetOf_ParamDesc'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 HTTP_SERVICE_CONFIG_CACHE_SET guid: (GUID fromString: '{7d7f269d-ce99-4ee1-979d-387f6f2147be}')!
+
 HTTP_SERVICE_CONFIG_CACHE_SET addClassConstant: '_OffsetOf_KeyDesc' value: 16r0!
 HTTP_SERVICE_CONFIG_CACHE_SET addClassConstant: '_OffsetOf_ParamDesc' value: 16r4!
+
 HTTP_SERVICE_CONFIG_CACHE_SET comment: '<HTTP_SERVICE_CONFIG_CACHE_SET> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_SERVICE_CONFIG_CACHE_SET'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -23,7 +26,9 @@ struct tagHTTP_SERVICE_CONFIG_CACHE_SET {
 	ULONG ParamDesc;
 } HTTP_SERVICE_CONFIG_CACHE_SET;
 '!
+
 !HTTP_SERVICE_CONFIG_CACHE_SET categoriesForClass!WinHttpServer-Structs! !
+
 !HTTP_SERVICE_CONFIG_CACHE_SET methodsFor!
 
 KeyDesc
@@ -45,6 +50,7 @@ ParamDesc: anInteger
 	"Set the receiver's 'ParamDesc' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_ParamDesc put: anInteger! !
+
 !HTTP_SERVICE_CONFIG_CACHE_SET categoriesForMethods!
 KeyDesc!**compiled accessors**!public! !
 KeyDesc:!**compiled accessors**!public! !
@@ -73,6 +79,7 @@ defineFields
 
 getFieldNames
 	^#(#KeyDesc #ParamDesc)! !
+
 !HTTP_SERVICE_CONFIG_CACHE_SET class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

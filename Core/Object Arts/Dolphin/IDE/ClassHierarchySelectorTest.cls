@@ -5,9 +5,13 @@ ClassSelectorTest subclass: #ClassHierarchySelectorTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ClassHierarchySelectorTest guid: (GUID fromString: '{92fa03e6-71b4-4ff0-8fb9-901b0058396f}')!
+
 ClassHierarchySelectorTest comment: ''!
+
 !ClassHierarchySelectorTest categoriesForClass!Unclassified! !
+
 !ClassHierarchySelectorTest methodsFor!
 
 classToTest
@@ -28,6 +32,7 @@ resetSelection
 	super resetSelection.
 	self assertContains: Object.
 	self assertContains: Behavior! !
+
 !ClassHierarchySelectorTest categoriesForMethods!
 classToTest!helpers!private! !
 removalOfSelectionLeaves:!helpers!private! !

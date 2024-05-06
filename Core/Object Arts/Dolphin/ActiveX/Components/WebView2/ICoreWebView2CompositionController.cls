@@ -5,7 +5,9 @@ ICoreWebView2Interface subclass: #ICoreWebView2CompositionController
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2CompositionController guid: (IID fromString: '{3df9b733-b9ae-4a15-86b4-eb9ee9826469}')!
+
 ICoreWebView2CompositionController comment: '`ICoreWebView2CompositionController` is a wrapper class for the COM interface ''WebView2.ICoreWebView2CompositionController'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -52,7 +54,9 @@ interface ICoreWebView2CompositionController : IUnknown
 };
 ```
 '!
+
 !ICoreWebView2CompositionController categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2CompositionController methodsFor!
 
 Add_CursorChanged: eventHandler token: token
@@ -191,6 +195,7 @@ uiaProvider
 	answer := IUnknown newPointer.
 	self get_UIAProvider: answer.
 	^answer asObject! !
+
 !ICoreWebView2CompositionController categoriesForMethods!
 Add_CursorChanged:token:!**auto generated**!COM Interfaces-ICoreWebView2CompositionController!events!private! !
 currentCursor!properties!public! !
@@ -237,6 +242,7 @@ defineFunctions
 		defineFunction: #Remove_CursorChanged:
 			argumentTypes: 'sqword'
 ! !
+
 !ICoreWebView2CompositionController class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

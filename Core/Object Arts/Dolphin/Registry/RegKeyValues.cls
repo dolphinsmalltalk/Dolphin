@@ -5,11 +5,15 @@ RegKeyAbstract variableSubclass: #RegKeyValues
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RegKeyValues guid: (GUID fromString: '{87b4c536-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 RegKeyValues comment: 'RegKeyValues is the class of objects which represent the dictionary of named values under a particular key in  the Windows Registration Database.
 
 RegKeyValues implements the <abstractDictionary> protocol mapping value names to keys and the registry values to dictionary values.'!
+
 !RegKeyValues categoriesForClass!Collections-Unordered!System-Support! !
+
 !RegKeyValues methodsFor!
 
 associationAt: key ifAbsent: exceptionHandler
@@ -135,6 +139,7 @@ subValues
 	"Answer an <abstractDictionary> of sub-keys in the receiver (a RegKeyValues)."
 
 	^self! !
+
 !RegKeyValues categoriesForMethods!
 associationAt:ifAbsent:!accessing!public! !
 at:ifAbsent:!accessing!public! !
@@ -156,6 +161,7 @@ icon
 	"Answers an Icon that can be used to represent this class."
 
 	^##(self) defaultIcon! !
+
 !RegKeyValues class categoriesForMethods!
 icon!constants!public! !
 !

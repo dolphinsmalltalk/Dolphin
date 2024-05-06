@@ -5,9 +5,13 @@ RefactoringTest subclass: #CreateAccessorsForVariableTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 CreateAccessorsForVariableTest guid: (GUID fromString: '{cf036663-3be7-40e4-9e4f-c090ff6abb4b}')!
+
 CreateAccessorsForVariableTest comment: ''!
+
 !CreateAccessorsForVariableTest categoriesForClass!Refactory-Testing! !
+
 !CreateAccessorsForVariableTest methodsFor!
 
 setUp
@@ -65,6 +69,7 @@ testNonExistantName
 					variable: 'foo'
 					class: BasicLintRuleTest
 					classVariable: true)! !
+
 !CreateAccessorsForVariableTest categoriesForMethods!
 setUp!public!set up! !
 testExistingInstanceVariableAccessors!public!tests! !

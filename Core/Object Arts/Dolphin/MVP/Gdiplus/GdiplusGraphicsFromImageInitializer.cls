@@ -5,9 +5,13 @@ GdiplusInitializer subclass: #GdiplusGraphicsFromImageInitializer
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusGraphicsFromImageInitializer guid: (GUID fromString: '{2b0e6f89-db02-4889-b235-64d9b48047f7}')!
+
 GdiplusGraphicsFromImageInitializer comment: ''!
+
 !GdiplusGraphicsFromImageInitializer categoriesForClass!Unclassified! !
+
 !GdiplusGraphicsFromImageInitializer methodsFor!
 
 createHandle
@@ -32,6 +36,7 @@ gdiplusConstructorErrorDescription
 
 image: aGdiplusImage
 	image := aGdiplusImage! !
+
 !GdiplusGraphicsFromImageInitializer categoriesForMethods!
 createHandle!private!realizing/unrealizing! !
 gdiplusConstructorErrorDescription!constants!private! !
@@ -42,6 +47,7 @@ image:!initializing!private! !
 
 image: aGdiplusImage
 	^self new image: aGdiplusImage! !
+
 !GdiplusGraphicsFromImageInitializer class categoriesForMethods!
 image:!instance creation!public! !
 !

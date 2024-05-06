@@ -5,9 +5,13 @@ Win32Error subclass: #FileException
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 FileException guid: (GUID fromString: '{87b4c566-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 FileException comment: ''!
+
 !FileException categoriesForClass!File-Exception Handling! !
+
 !FileException methodsFor!
 
 _descriptionArguments
@@ -34,6 +38,7 @@ isResumable
 setFile: aFile resumable: aBoolean 
 	file := aFile.
 	resumable := aBoolean! !
+
 !FileException categoriesForMethods!
 _descriptionArguments!displaying!public! !
 _descriptionFormat!displaying!public! !
@@ -63,6 +68,7 @@ signalOn: aFile
 
 signalOn: aFile resumable: aBoolean 
 	^(self on: aFile resumable: aBoolean) signal! !
+
 !FileException class categoriesForMethods!
 on:!instance creation!public! !
 on:resumable:!instance creation!public! !

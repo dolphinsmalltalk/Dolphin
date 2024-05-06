@@ -5,9 +5,13 @@ Exception subclass: #Notification
 	classVariableNames: ''
 	poolDictionaries: 'MessageBoxConstants'
 	classInstanceVariableNames: ''!
+
 Notification guid: (GUID fromString: '{87b4c556-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Notification comment: 'Notification is the class of exceptional conditions which are not considered errors.'!
+
 !Notification categoriesForClass!Kernel-Exception Handling! !
+
 !Notification methodsFor!
 
 defaultAction
@@ -30,6 +34,7 @@ isResumable
 	Notifications are almost always resumable."
 
 	^true! !
+
 !Notification categoriesForMethods!
 defaultAction!handling!public! !
 hresult!accessing!public! !
@@ -54,6 +59,7 @@ severityClass
 	"Answer an exception class describing the severity of the notification."
 
 	^Notification! !
+
 !Notification class categoriesForMethods!
 deprecated!instance creation!public! !
 mbIconId!parping!public! !

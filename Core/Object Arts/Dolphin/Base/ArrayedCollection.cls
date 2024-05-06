@@ -5,10 +5,15 @@ SequenceableCollection subclass: #ArrayedCollection
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ArrayedCollection guid: (GUID fromString: '{87b4c50c-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 ArrayedCollection isAbstract: true!
+
 ArrayedCollection comment: 'ArrayedCollection is the class of <SequenceableCollection>s of a fixed size which are indexable by integer keys from 1 to the size of the collection.'!
+
 !ArrayedCollection categoriesForClass!Collections-Abstract! !
+
 !ArrayedCollection methodsFor!
 
 add: newElement
@@ -219,6 +224,7 @@ sortUsing: aSortAlgorithm
 		sort: self
 		from: 1
 		to: self size! !
+
 !ArrayedCollection categoriesForMethods!
 add:!adding!public! !
 allSatisfy:!enumerating!public! !
@@ -321,6 +327,7 @@ withAll: newElements
 	answer := self new: newElements size.
 	newElements inject: 1 into: [:i :elem | answer at: i put: elem. i + 1].
 	^answer! !
+
 !ArrayedCollection class categoriesForMethods!
 new!instance creation!public! !
 new:withAll:!instance creation!public! !

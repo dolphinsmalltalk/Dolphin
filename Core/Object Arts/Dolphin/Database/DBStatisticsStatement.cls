@@ -5,9 +5,13 @@ DBSchemaStatement subclass: #DBStatisticsStatement
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DBStatisticsStatement guid: (GUID fromString: '{f9a75139-7d9a-4fba-8c1a-249cc03ff080}')!
+
 DBStatisticsStatement comment: 'DBTablesStatement is a specialized <DBSchemaStatement> for querying about the indices of tables in a database.'!
+
 !DBStatisticsStatement categoriesForClass!ODBC Interface! !
+
 !DBStatisticsStatement methodsFor!
 
 accurate
@@ -47,6 +51,7 @@ type: statisticsTypeInteger
 
 unique: aBoolean 
 	self type: (aBoolean ifTrue: [SQL_INDEX_UNIQUE] ifFalse: [SQL_INDEX_ALL])! !
+
 !DBStatisticsStatement categoriesForMethods!
 accurate!accessing!public! !
 accurate:!accessing!public! !

@@ -5,9 +5,13 @@ Object subclass: #PropertyManager
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PropertyManager guid: (GUID fromString: '{87b4c4ab-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 PropertyManager comment: ''!
+
 !PropertyManager categoriesForClass!System-Support! !
+
 !PropertyManager methodsFor!
 
 initialize
@@ -70,6 +74,7 @@ removePropertyOf: anObject at: aSymbol ifAbsent: aBlock
 	propertyDict removeKey: aSymbol ifAbsent: [^aBlock value].
 	propertyDict isEmpty ifTrue: [register removeKey: anObject].
 	! !
+
 !PropertyManager categoriesForMethods!
 initialize!initializing!private! !
 propertyOf:at:!adding!public! !
@@ -88,6 +93,7 @@ new
 	"Answers an instance of the receiver; instances require initialization"
 
 	^super new initialize! !
+
 !PropertyManager class categoriesForMethods!
 new!instance creation!public! !
 !

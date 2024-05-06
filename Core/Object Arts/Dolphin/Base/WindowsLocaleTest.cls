@@ -5,9 +5,13 @@ LocaleTest subclass: #WindowsLocaleTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 WindowsLocaleTest guid: (GUID fromString: '{1cc6ee0d-11ce-44fd-940d-7126f73516ba}')!
+
 WindowsLocaleTest comment: ''!
+
 !WindowsLocaleTest categoriesForClass!Unclassified! !
+
 !WindowsLocaleTest methodsFor!
 
 defaultSubject
@@ -177,6 +181,7 @@ testPrintNoLeadingZero
 	format hasLeadingZero: false.
 	self assert: (subject printFloat: 1234567890.123 format: format) equals: '1,234,567,890.12'.
 	self assert: (subject printFloat: 0.123 format: format) equals: '.12'! !
+
 !WindowsLocaleTest categoriesForMethods!
 defaultSubject!helpers!private! !
 testDisplayFloatOnNegativeModes!public!unit tests! !

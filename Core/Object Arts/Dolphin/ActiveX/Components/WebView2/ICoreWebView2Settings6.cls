@@ -5,7 +5,9 @@ ICoreWebView2Settings5 subclass: #ICoreWebView2Settings6
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2Settings6 guid: (IID fromString: '{11cb3acd-9bc8-43b8-83bf-f40753714f87}')!
+
 ICoreWebView2Settings6 comment: '`ICoreWebView2Settings6` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Settings6'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -29,7 +31,9 @@ interface ICoreWebView2Settings6 : ICoreWebView2Settings5
 };
 ```
 '!
+
 !ICoreWebView2Settings6 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2Settings6 methodsFor!
 
 get_IsSwipeNavigationEnabled: enabled
@@ -50,6 +54,7 @@ put_IsSwipeNavigationEnabled: enabled
 
 	<virtual stdcall: hresult 33 sdword>
 	^self invalidCall: _failureCode! !
+
 !ICoreWebView2Settings6 categoriesForMethods!
 get_IsSwipeNavigationEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings6!private! !
 put_IsSwipeNavigationEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings6!private! !
@@ -67,6 +72,7 @@ defineFunctions
 		defineFunction: #put_IsSwipeNavigationEnabled:
 			argumentTypes: 'sdword'
 ! !
+
 !ICoreWebView2Settings6 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

@@ -5,7 +5,9 @@ ICoreWebView2Interface subclass: #ICoreWebView2ControllerOptions
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2ControllerOptions guid: (IID fromString: '{12aae616-8ccb-44ec-bcb3-eb1831881635}')!
+
 ICoreWebView2ControllerOptions comment: '`ICoreWebView2ControllerOptions` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ControllerOptions'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -35,7 +37,9 @@ interface ICoreWebView2ControllerOptions : IUnknown
 };
 ```
 '!
+
 !ICoreWebView2ControllerOptions categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2ControllerOptions methodsFor!
 
 get_IsInPrivateModeEnabled: value
@@ -108,6 +112,7 @@ put_ProfileName: value
 
 	<virtual stdcall: hresult 5 lpwstr>
 	^self invalidCall: _failureCode! !
+
 !ICoreWebView2ControllerOptions categoriesForMethods!
 get_IsInPrivateModeEnabled:!**auto generated**!COM Interfaces-ICoreWebView2ControllerOptions!private! !
 get_ProfileName:!**auto generated**!COM Interfaces-ICoreWebView2ControllerOptions!private! !
@@ -136,6 +141,7 @@ defineFunctions
 		defineFunction: #put_IsInPrivateModeEnabled:
 			argumentTypes: 'sdword'
 ! !
+
 !ICoreWebView2ControllerOptions class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

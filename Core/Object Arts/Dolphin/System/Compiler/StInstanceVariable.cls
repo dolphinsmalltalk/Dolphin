@@ -5,7 +5,9 @@ StVariable subclass: #StInstanceVariable
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StInstanceVariable guid: (GUID fromString: '{9e27c3fe-9793-4a23-9fcd-4f2cb4c86f2b}')!
+
 StInstanceVariable comment: '<StInstanceVariable> is a concrete class of <StVariable> to describe instance variables.
 
 Instance Variables:
@@ -13,7 +15,9 @@ Instance Variables:
 	name		<String> identifier of the instance variable.
 
 '!
+
 !StInstanceVariable categoriesForClass!Kernel-Objects! !
+
 !StInstanceVariable methodsFor!
 
 index
@@ -36,6 +40,7 @@ setIndex: anInteger name: aString
 	index := anInteger.
 	name := aString.
 	self initialize! !
+
 !StInstanceVariable categoriesForMethods!
 index!accessing!public! !
 isInstanceVariable!public!testing! !
@@ -47,6 +52,7 @@ setIndex:name:!initializing!private! !
 
 index: anInteger name: aString
 	^self new setIndex: anInteger name: aString! !
+
 !StInstanceVariable class categoriesForMethods!
 index:name:!public! !
 !

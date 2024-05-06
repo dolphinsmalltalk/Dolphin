@@ -5,10 +5,15 @@ StParseNodeVisitor subclass: #ArithmeticExpressionVisitor
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ArithmeticExpressionVisitor guid: (GUID fromString: '{aef2d77a-820d-495f-9347-bffdde83a15d}')!
+
 ArithmeticExpressionVisitor isAbstract: true!
+
 ArithmeticExpressionVisitor comment: ''!
+
 !ArithmeticExpressionVisitor categoriesForClass!Refactory-ParseTree Matching! !
+
 !ArithmeticExpressionVisitor methodsFor!
 
 errorInvalidArithmeticExpression: aStProgramNode
@@ -55,6 +60,7 @@ visitStatements: aNodeCollection
 
 visitVariableNode: aVariableNode
 	^self subclassResponsibility! !
+
 !ArithmeticExpressionVisitor categoriesForMethods!
 errorInvalidArithmeticExpression:!exceptions!private! !
 visitArgumentNode:!public!visiting! !

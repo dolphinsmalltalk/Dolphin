@@ -5,7 +5,9 @@ Dialog subclass: #CreateSubclassDialog
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 CreateSubclassDialog guid: (GUID fromString: '{97279c55-7e9a-41d4-ac28-bf3c10201966}')!
+
 CreateSubclassDialog comment: 'CreateSubclassDialog implements a dialog for gather the information necessary to create classes in the IDE. 
 
 Instance Variables:
@@ -17,7 +19,9 @@ Instance Variables:
 	superclassPresenter		<TextPresenter> used to display the superclass of the new class.
 
 '!
+
 !CreateSubclassDialog categoriesForClass!MVP-Presenters! !
+
 !CreateSubclassDialog methodsFor!
 
 canApply
@@ -140,6 +144,7 @@ updatePackage
 		ifFalse: 
 			[usePackagePresenter value: true.
 			packagesPresenter selection: package]! !
+
 !CreateSubclassDialog categoriesForMethods!
 canApply!private!testing! !
 chooseSuperclass!commands!public! !
@@ -209,6 +214,7 @@ subclassOf: aClassOrNil inPackage: aPackage
 	^dialog
 		showModal;
 		yourself! !
+
 !CreateSubclassDialog class categoriesForMethods!
 icon!accessing!constants!public! !
 newSubclassOf:inPackage:!instance creation!public! !

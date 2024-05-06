@@ -58,10 +58,5 @@ Shell subclass: #BetterHelloWorld
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
-"Global Aliases"!
-
-
-"Loose Methods"!
-
 "End of package definition"!
 

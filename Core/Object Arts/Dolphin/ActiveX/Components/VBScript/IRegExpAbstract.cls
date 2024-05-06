@@ -5,10 +5,15 @@ IDispatch subclass: #IRegExpAbstract
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IRegExpAbstract guid: (IID fromString: '{427e61d6-dda9-489b-9102-c745ec40641b}')!
+
 IRegExpAbstract isAbstract: true!
+
 IRegExpAbstract comment: '`IRegExpAbstract` is an abstract class implementing methods common between the Microsoft Scripting IRegExp COM interfaces.'!
+
 !IRegExpAbstract categoriesForClass!COM-Interfaces! !
+
 !IRegExpAbstract methodsFor!
 
 execute: aString
@@ -160,6 +165,7 @@ test: aString
 
 Test: sourceString pMatch: pMatch
 	^self subclassResponsibility! !
+
 !IRegExpAbstract categoriesForMethods!
 execute:!operations!public! !
 Execute:ppMatches:!private! !
@@ -196,6 +202,7 @@ clsid
 
 pattern: aString
 	^self new pattern: aString! !
+
 !IRegExpAbstract class categoriesForMethods!
 clsid!constants!private! !
 pattern:!instance creation!public! !

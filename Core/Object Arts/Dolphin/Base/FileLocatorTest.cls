@@ -5,9 +5,13 @@ DolphinTest subclass: #FileLocatorTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 FileLocatorTest guid: (GUID fromString: '{635f7234-ba5a-4a72-97b1-40d81990cad7}')!
+
 FileLocatorTest comment: ''!
+
 !FileLocatorTest categoriesForClass!Unclassified! !
+
 !FileLocatorTest methodsFor!
 
 testImageRelativeFileLocator
@@ -109,6 +113,7 @@ literalStoreArray
 	self assert: ((Object fromBinaryStoreBytes: bytes) asIdentitySet - singletons) isEmpty.
 	bytes := singletons binaryStoreBytes.
 	self assert: ((Object fromBinaryStoreBytes: bytes) asIdentitySet - singletons) isEmpty! !
+
 !FileLocatorTest categoriesForMethods!
 testImageRelativeFileLocator!public!unit tests! !
 testInstallRelativeFileLocator!public!unit tests! !

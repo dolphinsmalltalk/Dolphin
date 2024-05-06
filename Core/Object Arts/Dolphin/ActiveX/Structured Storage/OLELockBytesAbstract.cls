@@ -5,11 +5,16 @@ COMInterfaceImp subclass: #OLELockBytesAbstract
 	classVariableNames: ''
 	poolDictionaries: 'OLEStructuredStorageConstants'
 	classInstanceVariableNames: ''!
+
 OLELockBytesAbstract guid: (GUID fromString: '{043e5260-ad92-11d3-b376-080046056106}')!
+
 OLELockBytesAbstract isAbstract: true!
+
 OLELockBytesAbstract comment: 'OLELockBytesAbstract is an abstract superclass which provides common behaviour for implementations of the OLE Structured Storage <ILockBytes> interface. <ILockBytes> is the abstraction used by OLE to represent an array of bytes.
 '!
+
 !OLELockBytesAbstract categoriesForClass!COM-Implementations! !
+
 !OLELockBytesAbstract methodsFor!
 
 contents
@@ -121,6 +126,7 @@ WriteAt: offset pv: pBuf cb: cb pcbWritten: pcbWritten
 		with: pBuf.
 	pcbWritten value: cb.
 	^S_OK! !
+
 !OLELockBytesAbstract categoriesForMethods!
 contents!accessing!public! !
 copyBytesInto:from:to:!COM Interfaces-ILockBytes!private! !

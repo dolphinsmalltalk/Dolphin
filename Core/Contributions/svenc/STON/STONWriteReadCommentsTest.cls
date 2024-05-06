@@ -5,9 +5,13 @@ STONWriteReadTest subclass: #STONWriteReadCommentsTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 STONWriteReadCommentsTest guid: (GUID fromString: '{bf56364e-5655-4f45-abbe-c24e5e081d0c}')!
+
 STONWriteReadCommentsTest comment: 'Unit test writing and reading of comments'!
+
 !STONWriteReadCommentsTest categoriesForClass!STON-Tests-Writer! !
+
 !STONWriteReadCommentsTest methodsFor!
 
 materialize: string
@@ -23,6 +27,7 @@ serialize: anObject
 			on: stream;
 			nextPut: anObject.
 		stream << '/* final comment */' ]! !
+
 !STONWriteReadCommentsTest categoriesForMethods!
 materialize:!private! !
 serialize:!private! !

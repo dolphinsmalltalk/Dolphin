@@ -5,7 +5,9 @@ ISchemaParticle subclass: #ISchemaModelGroup
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
 	classInstanceVariableNames: ''!
+
 ISchemaModelGroup guid: (IID fromString: '{50ea08bb-dd1b-4664-9a50-c2f40f4bd79a}')!
+
 ISchemaModelGroup comment: '<ISchemaModelGroup> is a wrapper class for the COM interface ''MSXML2.ISchemaModelGroup'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
@@ -29,7 +31,9 @@ interface ISchemaModelGroup : ISchemaParticle
 		[out, retval]ISchemaItemCollection** particles);
 };
 '!
+
 !ISchemaModelGroup categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+
 !ISchemaModelGroup methodsFor!
 
 get_particles: particles
@@ -49,6 +53,7 @@ particles
 	self get_particles: answer.
 	^answer asObject
 ! !
+
 !ISchemaModelGroup categoriesForMethods!
 get_particles:!**auto generated**!COM Interfaces-ISchemaModelGroup!private! !
 particles!**auto generated**!properties!public! !
@@ -64,6 +69,7 @@ defineFunctions
 		defineFunction: #get_particles:
 			argumentTypes: 'ISchemaItemCollection**'
 ! !
+
 !ISchemaModelGroup class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

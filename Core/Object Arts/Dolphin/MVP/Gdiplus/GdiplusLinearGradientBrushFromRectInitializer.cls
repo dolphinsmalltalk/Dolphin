@@ -5,9 +5,13 @@ GdiplusLinearGradientBrushInitializer subclass: #GdiplusLinearGradientBrushFromR
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusLinearGradientBrushFromRectInitializer guid: (GUID fromString: '{e5737bca-1af2-4189-9de4-d6c506a8c20a}')!
+
 GdiplusLinearGradientBrushFromRectInitializer comment: ''!
+
 !GdiplusLinearGradientBrushFromRectInitializer categoriesForClass!Unclassified! !
+
 !GdiplusLinearGradientBrushFromRectInitializer methodsFor!
 
 createHandle
@@ -42,6 +46,7 @@ rect: aRectangle color1: startColor color2: endColor mode: aLinearGradientMode
 	color1 := startColor.
 	color2 := endColor.
 	mode := aLinearGradientMode! !
+
 !GdiplusLinearGradientBrushFromRectInitializer categoriesForMethods!
 createHandle!private!realizing/unrealizing! !
 rect:color1:color2:mode:!initializing!private! !

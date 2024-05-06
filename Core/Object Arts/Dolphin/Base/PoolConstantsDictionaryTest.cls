@@ -5,9 +5,13 @@ AbstractDictionaryTest subclass: #PoolConstantsDictionaryTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PoolConstantsDictionaryTest guid: (GUID fromString: '{9c4827fc-93b3-4424-bec2-99f6bd7d76e9}')!
+
 PoolConstantsDictionaryTest comment: ''!
+
 !PoolConstantsDictionaryTest categoriesForClass!Unclassified! !
+
 !PoolConstantsDictionaryTest methodsFor!
 
 collectionClass
@@ -55,6 +59,7 @@ testRemoveKeyString
 	dictionary := self newDictionary.
 	self assert: (dictionary removeKey: 'key') identicalTo: 1.
 	self should: [dictionary removeKey: 'key'] raise: NotFoundError! !
+
 !PoolConstantsDictionaryTest categoriesForMethods!
 collectionClass!helpers!private! !
 key3Value!private! !

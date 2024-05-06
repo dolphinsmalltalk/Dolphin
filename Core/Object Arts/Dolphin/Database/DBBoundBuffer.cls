@@ -5,13 +5,17 @@ DBRowBuffer subclass: #DBBoundBuffer
 	classVariableNames: ''
 	poolDictionaries: 'ODBCConstants ODBCCTypes'
 	classInstanceVariableNames: ''!
+
 DBBoundBuffer guid: (GUID fromString: '{87b4c547-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 DBBoundBuffer comment: 'A DBBoundRow represnts a database row buffer that is directly bound to allocated memory for its columns. 
 
 This is the normal type of buffer used by the Database Connection as it is more efficient when multiple rows are fetched.
 
 '!
+
 !DBBoundBuffer categoriesForClass!ODBC Interface! !
+
 !DBBoundBuffer methodsFor!
 
 bind: aDBStatement
@@ -37,6 +41,7 @@ bind: aDBStatement
 getData: aDBStatement
 	"Private - Not currently relevant to a bound row, though it might be if
 	we wanted to use SQLGetData for long values."! !
+
 !DBBoundBuffer categoriesForMethods!
 bind:!operations!private! !
 getData:!data retrieval!private! !

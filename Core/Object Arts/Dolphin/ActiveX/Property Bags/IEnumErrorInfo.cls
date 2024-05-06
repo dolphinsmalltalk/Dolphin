@@ -5,9 +5,13 @@ IEnumUnknown subclass: #IEnumErrorInfo
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IEnumErrorInfo guid: (IID fromString: '{502052c4-0fe9-4a5f-9a7d-2335d7584ded}')!
+
 IEnumErrorInfo comment: ''!
+
 !IEnumErrorInfo categoriesForClass!Unclassified! !
+
 !IEnumErrorInfo class methodsFor!
 
 defineFunctions
@@ -21,6 +25,7 @@ elementClass
 	"Answer the class of element enumerated by the receiver."
 
 	^IErrorInfo! !
+
 !IEnumErrorInfo class categoriesForMethods!
 defineFunctions!initializing!public! !
 elementClass!constants!public! !

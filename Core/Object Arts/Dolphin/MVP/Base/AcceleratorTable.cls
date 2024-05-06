@@ -5,13 +5,17 @@ GraphicsTool subclass: #AcceleratorTable
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AcceleratorTable guid: (GUID fromString: '{87b4c632-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 AcceleratorTable comment: '`AcceleratorTable` is the class used to represent the table of "accelerator" key sequences associated with a top-level view. These key-sequences provide keyboard shortcuts to commands on the menu or toolbar (or any other command sources).
 
 ## Instance Variables:
   `commands`		`IdentityDictionary` mapping between a key code `<integer>` and the associated `CommandDescription`
 '!
+
 !AcceleratorTable categoriesForClass!Graphics-Tools! !
+
 !AcceleratorTable methodsFor!
 
 addCommand: aCommandDescription 
@@ -86,6 +90,7 @@ postCopy
 	super postCopy.
 	commands := commands copy.
 	^self! !
+
 !AcceleratorTable categoriesForMethods!
 addCommand:!adding!public! !
 basicFree!private!realizing/unrealizing! !
@@ -226,6 +231,7 @@ stbConvertFrom: anSTBClassFormat
 
 stbVersion
 	^1! !
+
 !AcceleratorTable class categoriesForMethods!
 icon!constants!public! !
 invariantKeyStringFromCode:!enquiries!public! !

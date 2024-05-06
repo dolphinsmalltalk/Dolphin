@@ -5,9 +5,13 @@ VariableRefactoring subclass: #RemoveClassVariableRefactoring
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RemoveClassVariableRefactoring guid: (GUID fromString: '{eb266eb6-0cdb-4099-9a72-207d060e9210}')!
+
 RemoveClassVariableRefactoring comment: ''!
+
 !RemoveClassVariableRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !RemoveClassVariableRefactoring methodsFor!
 
 preconditions
@@ -31,6 +35,7 @@ preconditions
 
 transform
 	class removeClassVariable: variableName! !
+
 !RemoveClassVariableRefactoring categoriesForMethods!
 preconditions!preconditions!public! !
 transform!public!transforming! !

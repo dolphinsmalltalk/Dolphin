@@ -5,10 +5,15 @@ SearchPolicy subclass: #SingletonSearchPolicy
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: 'current'!
+
 SingletonSearchPolicy guid: (GUID fromString: '{0f05b43d-e5e5-41cc-91d2-4e924305aafb}')!
+
 SingletonSearchPolicy isAbstract: true!
+
 SingletonSearchPolicy comment: ''!
+
 !SingletonSearchPolicy categoriesForClass!Collections-Support! !
+
 !SingletonSearchPolicy methodsFor!
 
 name
@@ -20,6 +25,7 @@ stbSaveOn: anSTBOutFiler
 	"Save out a binary representation of the receiver to anSTBOutFiler."
 
 	anSTBOutFiler writePreambleFor: self! !
+
 !SingletonSearchPolicy categoriesForMethods!
 name!accessing!public! !
 stbSaveOn:!binary filing!public! !
@@ -50,6 +56,7 @@ uninitialize
 	"Private - Tidy up the receiver in preparation for removal from the system."
 
 	current := nil! !
+
 !SingletonSearchPolicy class categoriesForMethods!
 current!instance creation!public! !
 onPreStripImage!class hierarchy-removing!private! !

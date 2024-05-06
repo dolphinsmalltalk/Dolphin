@@ -5,7 +5,9 @@ TextDocument subclass: #Notepad
 	classVariableNames: 'ResourceLib'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Notepad guid: (GUID fromString: '{64abbec0-8140-42d2-aecd-6d329b3b41e0}')!
+
 Notepad comment: '`Notepad` is a `<topShell>` sample application which implements most of the functionality of the familiar Windows utility. The major areas of missing functionality are printing, zoom and the status bar. Most of the implementation of the application is actually inherited from Dolphin''s `TextDocument` framework class.
 
 Note that some resources are extracted from the Windows executable, but none of the functionality of that executable is reused (or indeed could be, as Notepad.exe doesn''t export any functions).
@@ -21,7 +23,9 @@ Class Variables:
 
 
 '!
+
 !Notepad categoriesForClass!Samples! !
+
 !Notepad methodsFor!
 
 aboutNotepad
@@ -74,6 +78,7 @@ saveChangesPrompt
 	docName := self hasFilename ifTrue: [self filename] ifFalse: ['Untitled'].
 	^'The text in the <1s> file has changed.<n><n>Do you want to save the changes?' 
 		expandMacrosWith: docName! !
+
 !Notepad categoriesForMethods!
 aboutNotepad!commands!public! !
 chooseFont!commands!public! !
@@ -143,6 +148,7 @@ uninitialize
 	"
 
 	self closeResourceLib! !
+
 !Notepad class categoriesForMethods!
 about!enquiries!private! !
 aboutTemplate!enquiries!private! !

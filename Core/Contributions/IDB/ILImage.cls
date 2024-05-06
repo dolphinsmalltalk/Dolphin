@@ -5,13 +5,17 @@ Object subclass: #ILImage
 	classVariableNames: 'TransparentRGB'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 ILImage guid: (GUID fromString: '{5402d9a6-19ee-41a2-8586-d104cd17118c}')!
+
 ILImage comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
+
 !ILImage categoriesForClass!IDB Goodies! !
+
 !ILImage methodsFor!
 
 bitmapCache
@@ -234,6 +238,7 @@ transparentColorIndex
 
 width
 	^extent x! !
+
 !ILImage categoriesForMethods!
 bitmapCache!accessing!public! !
 clearBitmapCache!helpers!public! !
@@ -291,6 +296,7 @@ transparentRGB: anRGB
 	Dynamically changed to match the current background color"
 
 	TransparentRGB := anRGB! !
+
 !ILImage class categoriesForMethods!
 defaultTransparentRGB!constants!public! !
 extent:!instance creation!public! !

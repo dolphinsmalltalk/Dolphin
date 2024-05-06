@@ -5,9 +5,13 @@ ExternalField subclass: #PointerField
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PointerField guid: (GUID fromString: '{87b4c4dc-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 PointerField comment: 'PointerField is an <ExternalField> type to represent fields of <ExternalStructure>s that are pointers to external data.'!
+
 !PointerField categoriesForClass!External-Data-Types! !
+
 !PointerField methodsFor!
 
 byteSize
@@ -50,6 +54,7 @@ writeInto: anExternalStructure value: anObject
 	the class instance variable 'template')."
 
 	^anExternalStructure bytes uintPtrAtOffset: offset put: anObject yourAddress! !
+
 !PointerField categoriesForMethods!
 byteSize!accessing!private! !
 fieldClassName!automatic generation!constants!development!private! !
@@ -66,6 +71,7 @@ type: aClass
 	pointers to objects of type aClass"
 
 	^super new pointerClass: aClass! !
+
 !PointerField class categoriesForMethods!
 type:!instance creation!public! !
 !

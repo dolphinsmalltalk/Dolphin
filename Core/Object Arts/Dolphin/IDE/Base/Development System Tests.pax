@@ -4,7 +4,6 @@ package paxVersion: 1;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
-
 package classNames
 	add: #AbstractParserErrorTest;
 	add: #CompiledMethodTest;
@@ -77,114 +76,132 @@ Object subclass: #DolphinCompilerTestMethods
 	classVariableNames: 'Const'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DolphinCompilerTestMethods subclass: #DolphinCompilerTestMethodsSubclass
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StParseNodeVisitor subclass: #StStyler
 	instanceVariableNames: 'view arrayDepth'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TestCase subclass: #RewriteTestCase
 	instanceVariableNames: 'env'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DolphinTest subclass: #AbstractParserErrorTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
+
 DolphinTest subclass: #CompiledMethodTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DolphinTest subclass: #CompilerTest
 	instanceVariableNames: 'defaultCompileFlags'
 	classVariableNames: 'TempInstrs'
 	poolDictionaries: 'CompilerFlags OpcodePool SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
+
 DolphinTest subclass: #KeyedAspectTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DolphinTest subclass: #ProductReleaseTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DolphinTest subclass: #RegKeyTest
 	instanceVariableNames: 'testKey'
 	classVariableNames: ''
 	poolDictionaries: 'WinRegConstants'
 	classInstanceVariableNames: ''!
+
 DolphinTest subclass: #SmalltalkParserTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ExtCallArgTypes SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
+
 DolphinTest subclass: #SmalltalkSystemTest
 	instanceVariableNames: 'devsys'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DolphinTest subclass: #VersionResourceTest
 	instanceVariableNames: 'updatePath sourceModule sourceSize sourceBytes'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DolphinTest subclass: #VMTest
 	instanceVariableNames: 'expiryHandler'
 	classVariableNames: ''
 	poolDictionaries: 'CRTConstants'
 	classInstanceVariableNames: ''!
+
 DolphinTest subclass: #XMLDOMNodeTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AbstractParserErrorTest subclass: #CompilerErrorTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'CompilerFlags'
 	classInstanceVariableNames: ''!
+
 PresenterTest subclass: #SmalltalkWorkspaceTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ImageViewAbstractTest subclass: #ImageListViewTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 BrowserEnvironmentTest subclass: #MethodCategoryEnvironmentTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 BrowserEnvironmentTest subclass: #PackageEnvironmentTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 BrowserEnvironmentTest subclass: #PluggableEnvironmentTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DolphinTestClassResource subclass: #CompilerTestClasses
 	instanceVariableNames: 'testClass'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -208,6 +225,7 @@ testResourceBrowserPreview
 	resources := resourceView viewNamed: 'resources'.
 	self assert: (resources viewNamed: 'resources') extent x equals: resources extent x.
 	resourceView destroy! !
+
 !BorderLayoutTest categoriesForMethods!
 testResourceBrowserPreview!public!unit tests! !
 !
@@ -228,6 +246,7 @@ testPrintOnUnsigned
 	| subject |
 	subject := DWORD fromInteger: 123.
 	self assert: subject printString equals: 'a DWORD(16r7B)'! !
+
 !ExternalIntegerTest categoriesForMethods!
 testPrintOnNull!public!unit tests! !
 testPrintOnSigned!public!unit tests! !
@@ -249,6 +268,7 @@ testTokensFromTo
 			expected := (SmalltalkScanner on: presenter text readStream) contents
 						collect: [:each | (styler styleNameFor: each) -> (text copyFrom: each start to: each stop)].
 			self assert: tokens equals: expected]! !
+
 !ScintillaViewTest categoriesForMethods!
 testTokensFromTo!public!unit tests! !
 !

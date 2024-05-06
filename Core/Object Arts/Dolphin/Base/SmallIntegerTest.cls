@@ -5,9 +5,13 @@ IntegerTest subclass: #SmallIntegerTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SmallIntegerTest guid: (GUID fromString: '{3fc98bda-cdeb-45ea-a355-2968f5fd5e3a}')!
+
 SmallIntegerTest comment: ''!
+
 !SmallIntegerTest categoriesForClass!Unclassified! !
+
 !SmallIntegerTest methodsFor!
 
 canonicalInstance
@@ -298,6 +302,7 @@ testSubtract
 	"Coercion to float"
 
 	self assert: (5 - 2.125 equals: 2.875)! !
+
 !SmallIntegerTest categoriesForMethods!
 canonicalInstance!public!unit tests! !
 testAbs!public!unit tests! !
@@ -492,6 +497,7 @@ quoTestCases
 				{-16r40000000. Float pi negated. 341782637}.
 				{16r3FFFFFFF. Float pi. 341782637}.
 				{16r3FFFFFFF. Float pi negated. -341782637}}! !
+
 !SmallIntegerTest class categoriesForMethods!
 bitShiftTestCases!constants!public! !
 integerDivideTestCases!constants!public! !

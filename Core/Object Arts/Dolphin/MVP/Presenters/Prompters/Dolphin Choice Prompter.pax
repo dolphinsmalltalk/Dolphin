@@ -8,7 +8,6 @@ Copyright (c) Object Arts Ltd. 1997-2003. Portions Copyright (c) CGI Group (Euro
 
 package basicPackageVersion: '6.0'.
 
-
 package classNames
 	add: #ChoicePrompter;
 	yourself.
@@ -38,11 +37,6 @@ ValueDialog subclass: #ChoicePrompter
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

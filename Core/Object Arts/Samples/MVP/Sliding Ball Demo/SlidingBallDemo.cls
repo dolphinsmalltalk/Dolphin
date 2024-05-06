@@ -5,7 +5,9 @@ DoubleBufferedView subclass: #SlidingBallDemo
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SlidingBallDemo guid: (GUID fromString: '{e5ba81f2-42e7-43ee-832f-3a24fadebfee}')!
+
 SlidingBallDemo comment: 'I would like the example to have two rectangles connected by a line.
 One button (called "start") that when presssed will show a small
 circle travel along the line from one rectangle to the other. Upon
@@ -19,7 +21,9 @@ the work space (I would consider another button that would be where
 the user is required to pause and restart the movement)
 
 SlidingBallDemo new show'!
+
 !SlidingBallDemo categoriesForClass!Unclassified! !
+
 !SlidingBallDemo methodsFor!
 
 circleExtent
@@ -153,6 +157,7 @@ stopStepProcess
 	self isRunning ifTrue: [
 		self stepProcess terminate.
 		stepProcess := nil ]! !
+
 !SlidingBallDemo categoriesForMethods!
 circleExtent!constants!public! !
 circleVelocity!constants!public! !

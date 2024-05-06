@@ -9,7 +9,6 @@ This package is part of the Dolphin Smalltalk Model View Presenter user-interfac
 
 package basicPackageVersion: '6.0'.
 
-
 package classNames
 	add: #DatePresenter;
 	add: #DateToText;
@@ -41,31 +40,30 @@ ValuePresenter subclass: #DatePresenter
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ValuePresenter subclass: #TimePresenter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AbstractToTextConverter subclass: #DateToText
 	instanceVariableNames: 'locale format'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AbstractToTextConverter subclass: #DurationToText
 	instanceVariableNames: 'format'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AbstractToTextConverter subclass: #TimeToText
 	instanceVariableNames: 'format'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

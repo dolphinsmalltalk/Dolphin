@@ -5,9 +5,13 @@ ScalarField subclass: #SWORDField
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SWORDField guid: (GUID fromString: '{87b4c4ee-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 SWORDField comment: '<SWORDField> is a <ScalarField> class to represent <ExternalStructure> fields that are 16-bit signed integers.'!
+
 !SWORDField categoriesForClass!External-Data-Types! !
+
 !SWORDField methodsFor!
 
 accessorMessage
@@ -26,6 +30,7 @@ writeInto: anExternalStructure value: anInteger
 	anExternalStructure, at the receiver's offset."
 
 	^anExternalStructure bytes swordAtOffset: offset put: anInteger! !
+
 !SWORDField categoriesForMethods!
 accessorMessage!automatic generation!private! !
 readFrom:!indirect accessing!private! !
@@ -39,6 +44,7 @@ byteSize
 	A WORD is always 16-bits/2 bytes."
 
 	^2! !
+
 !SWORDField class categoriesForMethods!
 byteSize!constants!private! !
 !

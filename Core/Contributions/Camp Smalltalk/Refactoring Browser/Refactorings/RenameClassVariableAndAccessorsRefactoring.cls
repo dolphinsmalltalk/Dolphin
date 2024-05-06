@@ -5,9 +5,13 @@ RenameClassVariableRefactoring subclass: #RenameClassVariableAndAccessorsRefacto
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RenameClassVariableAndAccessorsRefactoring guid: (GUID fromString: '{57103af9-2346-41c7-b725-60356588c950}')!
+
 RenameClassVariableAndAccessorsRefactoring comment: ''!
+
 !RenameClassVariableAndAccessorsRefactoring categoriesForClass!Unclassified! !
+
 !RenameClassVariableAndAccessorsRefactoring methodsFor!
 
 initializeAccessorsRefactoring
@@ -38,6 +42,7 @@ transform
 	super transform.
 	self performComponentRefactoring: accessorsRefactoring.
 			! !
+
 !RenameClassVariableAndAccessorsRefactoring categoriesForMethods!
 initializeAccessorsRefactoring!initialize-release!public! !
 rename:to:in:!initialize/release!public! !

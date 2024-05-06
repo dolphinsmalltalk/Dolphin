@@ -5,9 +5,13 @@ DolphinTestClassResource subclass: #ClassBuilderTestClasses
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ClassBuilderTestClasses guid: (GUID fromString: '{b9045f26-8b7d-468f-969a-7e228869fe20}')!
+
 ClassBuilderTestClasses comment: ''!
+
 !ClassBuilderTestClasses categoriesForClass!Unclassified! !
+
 !ClassBuilderTestClasses methodsFor!
 
 compileMethods
@@ -64,6 +68,7 @@ testSubclass1
 
 testSubclass2
 	^testSubclass2! !
+
 !ClassBuilderTestClasses categoriesForMethods!
 compileMethods!public!unit tests! !
 createClasses!private!unit tests! !

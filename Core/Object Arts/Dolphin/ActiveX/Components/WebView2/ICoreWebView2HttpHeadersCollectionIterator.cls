@@ -5,7 +5,9 @@ ICoreWebView2Interface subclass: #ICoreWebView2HttpHeadersCollectionIterator
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2HttpHeadersCollectionIterator guid: (IID fromString: '{0702fc30-f43b-47bb-ab52-a42cb552ad9f}')!
+
 ICoreWebView2HttpHeadersCollectionIterator comment: '`ICoreWebView2HttpHeadersCollectionIterator` is a wrapper class for the COM interface ''WebView2.ICoreWebView2HttpHeadersCollectionIterator'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -33,7 +35,9 @@ interface ICoreWebView2HttpHeadersCollectionIterator : IUnknown
 };
 ```
 '!
+
 !ICoreWebView2HttpHeadersCollectionIterator categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2HttpHeadersCollectionIterator methodsFor!
 
 do: aMonadicValuable
@@ -97,6 +101,7 @@ MoveNext: hasNext
 
 	<virtual stdcall: hresult 6 sdword*>
 	^self invalidCall: _failureCode! !
+
 !ICoreWebView2HttpHeadersCollectionIterator categoriesForMethods!
 do:!enumerating!public! !
 get_HasCurrentHeader:!**auto generated**!COM Interfaces-ICoreWebView2HttpHeadersCollectionIterator!private! !
@@ -120,6 +125,7 @@ defineFunctions
 		defineFunction: #MoveNext:
 			argumentTypes: 'sdword*'
 ! !
+
 !ICoreWebView2HttpHeadersCollectionIterator class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

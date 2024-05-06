@@ -5,8 +5,11 @@ Object subclass: #MessageBoxAbstract
 	classVariableNames: 'DefaultCaptions IconStyles'
 	poolDictionaries: 'MessageBoxConstants'
 	classInstanceVariableNames: ''!
+
 MessageBoxAbstract guid: (GUID fromString: '{32ce06b2-35c6-41eb-a41f-6b20f935676d}')!
+
 MessageBoxAbstract isAbstract: true!
+
 MessageBoxAbstract comment: 'MessageBoxAbstract is the abstract class of dialogs that display a message to the user to acknowledge. Subclasses might include a number of responses that the user can make, typically by pressing buttons, making them useful for asking questions as well as displaying informational messages.
 
 Instance Variables:
@@ -19,7 +22,9 @@ Class Variables:
 	IconStyles			<IdentityDictionary>
 
 '!
+
 !MessageBoxAbstract categoriesForClass!Kernel-Objects! !
+
 !MessageBoxAbstract methodsFor!
 
 beep
@@ -116,6 +121,7 @@ warning: warningString
 	self text: warningString.
 	self iconStyle: #warning.
 	^self open! !
+
 !MessageBoxAbstract categoriesForMethods!
 beep!parping!private! !
 caption!accessing!public! !
@@ -214,6 +220,7 @@ warning: warningString caption: titleString
 	(self new)
 		caption: titleString;
 		warning: warningString! !
+
 !MessageBoxAbstract class categoriesForMethods!
 defaultCaption:!constants!private! !
 errorMsg:!instance creation!public! !

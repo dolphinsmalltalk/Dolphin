@@ -5,9 +5,13 @@ Object subclass: #OneOffNoteBubble
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 OneOffNoteBubble guid: (GUID fromString: '{1b63c41e-9df7-4c2c-b128-3fc143dac05a}')!
+
 OneOffNoteBubble comment: ''!
+
 !OneOffNoteBubble categoriesForClass!Kernel-Objects! !
+
 !OneOffNoteBubble class methodsFor!
 
 addPreviouslyViewedNote: aSymbol
@@ -99,6 +103,7 @@ resetPreviouslyViewedNotes
 	"
 
 	RegKey userRoot removeKey: self registryKeyName ifAbsent: []! !
+
 !OneOffNoteBubble class categoriesForMethods!
 addPreviouslyViewedNote:!private! !
 defaultCaption!constants!private! !

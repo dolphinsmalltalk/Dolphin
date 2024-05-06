@@ -5,7 +5,9 @@ IDispatch subclass: #IFontDisp
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IFontDisp guid: (IID fromString: '{bef6e003-a874-101a-8bba-00aa00300cab}')!
+
 IFontDisp comment: '`IFontDisp` is a wrapper class generated for the dispatch interface ''stdole.Font'' from type information in the ''OLE Automation'' library. It contains methods to get and set the properties and invoke the methods exposed by that interface.
 
 IFontDisp is a standard dispinterface used to represent OLE Fonts, for example to get/set the font ambient property of an ActiveX control site.
@@ -55,7 +57,9 @@ short Charset;
 };
 ```
 '!
+
 !IFontDisp categoriesForClass!COM-Interfaces! !
+
 !IFontDisp methodsFor!
 
 bold
@@ -165,6 +169,7 @@ weight: newVal
 		short Weight"
 
 	self setPropertyId: 7 value: newVal! !
+
 !IFontDisp categoriesForMethods!
 bold!**auto generated**!properties!public! !
 bold:!**auto generated**!properties!public! !
@@ -206,6 +211,7 @@ fromFont: aFont
 		riid: IFontDisp iid
 		ppvObj: answer.
 	^answer! !
+
 !IFontDisp class categoriesForMethods!
 clsid!**auto generated**!constants!private! !
 fromFont:!instance creation!public! !

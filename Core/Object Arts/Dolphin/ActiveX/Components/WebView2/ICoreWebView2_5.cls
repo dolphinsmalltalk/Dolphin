@@ -5,7 +5,9 @@ ICoreWebView2_4 subclass: #ICoreWebView2_5
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2_5 guid: (IID fromString: '{bedb11b8-d63c-11eb-b8bc-0242ac130003}')!
+
 ICoreWebView2_5 comment: '`ICoreWebView2_5` is a wrapper class for the COM interface ''WebView2.ICoreWebView2_5'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -30,7 +32,9 @@ interface ICoreWebView2_5 : ICoreWebView2_4
 };
 ```
 '!
+
 !ICoreWebView2_5 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2_5 methodsFor!
 
 Add_ClientCertificateRequested: eventHandler token: token
@@ -51,6 +55,7 @@ Remove_ClientCertificateRequested: token
 
 	<virtual stdcall: hresult 79 sqword>
 	^self invalidCall: _failureCode! !
+
 !ICoreWebView2_5 categoriesForMethods!
 Add_ClientCertificateRequested:token:!**auto generated**!COM Interfaces-ICoreWebView2_5!private! !
 Remove_ClientCertificateRequested:!**auto generated**!COM Interfaces-ICoreWebView2_5!private! !
@@ -68,6 +73,7 @@ defineFunctions
 		defineFunction: #Remove_ClientCertificateRequested:
 			argumentTypes: 'sqword'
 ! !
+
 !ICoreWebView2_5 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

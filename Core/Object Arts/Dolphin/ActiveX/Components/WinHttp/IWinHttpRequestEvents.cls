@@ -5,7 +5,9 @@ IUnknown subclass: #IWinHttpRequestEvents
 	classVariableNames: ''
 	poolDictionaries: 'WinHttpConstants'
 	classInstanceVariableNames: ''!
+
 IWinHttpRequestEvents guid: (IID fromString: '{f97f4e15-b787-4212-80d1-d380cbbf982e}')!
+
 IWinHttpRequestEvents comment: '<IWinHttpRequestEvents> is a wrapper class for the COM interface ''WinHttp.IWinHttpRequestEvents'' generated from type information in the ''Microsoft WinHTTP Services, version 5.1'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
@@ -39,7 +41,9 @@ interface IWinHttpRequestEvents : IUnknown
 		[in]BSTR ErrorDescription);
 };
 '!
+
 !IWinHttpRequestEvents categoriesForClass!COM-Interfaces!WinHttp-Interfaces! !
+
 !IWinHttpRequestEvents methodsFor!
 
 OnError: errorNumber errorDescription: errorDescription
@@ -78,6 +82,7 @@ OnResponseStart: status contentType: contentType
 
 	<virtual stdcall: void 4 sdword bstr>
 	^self invalidCall: _failureCode! !
+
 !IWinHttpRequestEvents categoriesForMethods!
 OnError:errorDescription:!**auto generated**!COM Interfaces-IWinHttpRequestEvents!public! !
 OnResponseDataAvailable:!**auto generated**!COM Interfaces-IWinHttpRequestEvents!public! !
@@ -104,6 +109,7 @@ defineFunctions
 			returnType: 'void'
 			argumentTypes: 'sdword bstr'
 ! !
+
 !IWinHttpRequestEvents class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

@@ -5,9 +5,12 @@ HTTP_REQUEST_V1 subclass: #HTTP_REQUEST_V2
 	classVariableNames: '_OffsetOf_pRequestInfo _OffsetOf_RequestInfoCount'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 HTTP_REQUEST_V2 guid: (GUID fromString: '{5f3f936f-b824-47af-a69e-62dc4730010c}')!
+
 HTTP_REQUEST_V2 addClassConstant: '_OffsetOf_pRequestInfo' value: 16r1D4!
 HTTP_REQUEST_V2 addClassConstant: '_OffsetOf_RequestInfoCount' value: 16r1D0!
+
 HTTP_REQUEST_V2 comment: '<HTTP_REQUEST_V2> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_REQUEST_V2'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -24,7 +27,9 @@ struct tagHTTP_REQUEST_V2 {
 	[helpstring("A pointer to an array of HTTP_REQUEST_INFO structures that contains additional information about the request."), size_is("RequestInfoCount")] PHTTP_REQUEST_INFO pRequestInfo;
 } HTTP_REQUEST_V2;
 '!
+
 !HTTP_REQUEST_V2 categoriesForClass!Win32-Structs! !
+
 !HTTP_REQUEST_V2 methodsFor!
 
 pRequestInfo
@@ -56,6 +61,7 @@ RequestInfoCount: anInteger
 	"Set the receiver's 'RequestInfoCount' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_RequestInfoCount put: anInteger! !
+
 !HTTP_REQUEST_V2 categoriesForMethods!
 pRequestInfo!**compiled accessors**!public! !
 pRequestInfo:!**compiled accessors**!public! !
@@ -87,6 +93,7 @@ defineFields
 
 getFieldNames
 	^#(#Flags #ConnectionId #RequestId #UrlContext #Version #Verb #UnknownVerbLength #RawUrlLength #pUnknownVerb #pRawUrl #CookedUrl #Address #Headers #BytesReceived #EntityChunkCount #pEntityChunks #RawConnectionId #pSslInfo #RequestInfoCount #pRequestInfo)! !
+
 !HTTP_REQUEST_V2 class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

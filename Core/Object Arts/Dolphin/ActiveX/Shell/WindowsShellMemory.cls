@@ -5,10 +5,15 @@ ExternalMemory variableByteSubclass: #WindowsShellMemory
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 WindowsShellMemory guid: (GUID fromString: '{7d4a2961-9f62-11d3-b376-080046056106}')!
+
 WindowsShellMemory isIndirection: true!
+
 WindowsShellMemory comment: ''!
+
 !WindowsShellMemory categoriesForClass!Unclassified! !
+
 !WindowsShellMemory class methodsFor!
 
 allocator
@@ -24,6 +29,7 @@ initialize
 	"
 
 	self extraInstanceSpec: 4! !
+
 !WindowsShellMemory class categoriesForMethods!
 allocator!accessing!private! !
 initialize!development!initializing!private! !

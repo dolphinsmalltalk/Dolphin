@@ -5,9 +5,13 @@ DolphinTest subclass: #EventMessageSendTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 EventMessageSendTest guid: (GUID fromString: '{d55436fd-a2dc-4d79-a1c1-c8b5351a6ef1}')!
+
 EventMessageSendTest comment: ''!
+
 !EventMessageSendTest categoriesForClass!Tests-Kernel-Objects! !
+
 !EventMessageSendTest methodsFor!
 
 testNoArguments
@@ -47,6 +51,7 @@ testTwoArguments
 				arguments: #(1 2).
 	MemoryManager current collectGarbage.
 	self should: [m value = #(1 2)]! !
+
 !EventMessageSendTest categoriesForMethods!
 testNoArguments!public!testing! !
 testOneArgument!public!testing! !

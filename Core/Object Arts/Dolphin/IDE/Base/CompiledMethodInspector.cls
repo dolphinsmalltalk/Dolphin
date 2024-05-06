@@ -5,9 +5,13 @@ BasicInspector subclass: #CompiledMethodInspector
 	classVariableNames: 'MethodTypes'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 CompiledMethodInspector guid: (GUID fromString: '{87b4c691-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 CompiledMethodInspector comment: 'CompiledMethodInspector is a <compositePresenter> that implements a specialised inspect facility onto a <CompiledMethod>. This provides additional functionality to view the source, and the decompiled bytecodes.'!
+
 !CompiledMethodInspector categoriesForClass!MVP-Presenters! !
+
 !CompiledMethodInspector methodsFor!
 
 disassemblyText
@@ -34,6 +38,7 @@ text
 	^(index between: 2 and: self headerSize)
 		ifTrue: [ field ]
 		ifFalse: [ field printString ]! !
+
 !CompiledMethodInspector categoriesForMethods!
 disassemblyText!accessing!private! !
 source!accessing!public! !
@@ -67,6 +72,7 @@ initialize
 		'Return instance variable'
 		'Set instance variable').
 ! !
+
 !CompiledMethodInspector class categoriesForMethods!
 headerList!constants!public! !
 initialize!initializing!private! !

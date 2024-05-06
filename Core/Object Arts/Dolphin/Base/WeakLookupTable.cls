@@ -5,9 +5,13 @@ SharedLookupTable variableSubclass: #WeakLookupTable
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 WeakLookupTable guid: (GUID fromString: '{87b4c532-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 WeakLookupTable comment: ''!
+
 !WeakLookupTable categoriesForClass!Collections-Unordered!Collections-Weak! !
+
 !WeakLookupTable methodsFor!
 
 copyEmpty: anInteger
@@ -208,6 +212,7 @@ valuesClass
 	is configured to inform the receiver when it suffers losses."
 
 	^MourningWeakArray! !
+
 !WeakLookupTable categoriesForMethods!
 copyEmpty:!copying!private! !
 do:!enumerating!public! !
@@ -260,6 +265,7 @@ newWithWeakValues: anInteger
 
 	^super new: anInteger
 ! !
+
 !WeakLookupTable class categoriesForMethods!
 initialize!development!initializing!public! !
 new:!instance creation!public! !

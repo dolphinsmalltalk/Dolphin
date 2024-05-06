@@ -5,9 +5,12 @@ HttpServiceConfigQuery subclass: #HTTP_SERVICE_CONFIG_SSL_QUERY
 	classVariableNames: '_OffsetOf_dwToken _OffsetOf_KeyDesc'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 HTTP_SERVICE_CONFIG_SSL_QUERY guid: (GUID fromString: '{d0a38bb4-ba56-4dc6-9079-ac7694ef98ac}')!
+
 HTTP_SERVICE_CONFIG_SSL_QUERY addClassConstant: '_OffsetOf_dwToken' value: 16r8!
 HTTP_SERVICE_CONFIG_SSL_QUERY addClassConstant: '_OffsetOf_KeyDesc' value: 16r4!
+
 HTTP_SERVICE_CONFIG_SSL_QUERY comment: '<HTTP_SERVICE_CONFIG_SSL_QUERY> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_SERVICE_CONFIG_SSL_QUERY'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -24,7 +27,9 @@ struct tagHTTP_SERVICE_CONFIG_SSL_QUERY {
 	DWORD dwToken;
 } HTTP_SERVICE_CONFIG_SSL_QUERY;
 '!
+
 !HTTP_SERVICE_CONFIG_SSL_QUERY categoriesForClass!Win32-Structs! !
+
 !HTTP_SERVICE_CONFIG_SSL_QUERY methodsFor!
 
 dwToken
@@ -46,6 +51,7 @@ KeyDesc: aSOCKADDR
 	"Set the receiver's 'KeyDesc' field to the value of the argument, aSOCKADDR"
 
 	bytes uintPtrAtOffset: _OffsetOf_KeyDesc put: aSOCKADDR yourAddress! !
+
 !HTTP_SERVICE_CONFIG_SSL_QUERY categoriesForMethods!
 dwToken!**compiled accessors**!public! !
 dwToken:!**compiled accessors**!public! !
@@ -76,6 +82,7 @@ defineFields
 
 getFieldNames
 	^#(#QueryDesc #KeyDesc #dwToken)! !
+
 !HTTP_SERVICE_CONFIG_SSL_QUERY class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

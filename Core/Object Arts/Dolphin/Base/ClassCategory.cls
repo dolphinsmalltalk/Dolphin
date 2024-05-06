@@ -5,9 +5,13 @@ Category subclass: #ClassCategory
 	classVariableNames: 'Table Unclassified'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ClassCategory guid: (GUID fromString: '{87b4c500-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 ClassCategory comment: ''!
+
 !ClassCategory categoriesForClass!System-Support! !
+
 !ClassCategory methodsFor!
 
 addClass: class
@@ -42,6 +46,7 @@ removeClass: aClass
 
 	aClass removeFromCategory: self.
 	^aClass! !
+
 !ClassCategory categoriesForMethods!
 addClass:!adding!public! !
 classes!public! !
@@ -113,6 +118,7 @@ uninitialize
 
 	Table := nil.
 	Unclassified := nil! !
+
 !ClassCategory class categoriesForMethods!
 allClassCategories!accessing!public! !
 initialize!initializing!private! !

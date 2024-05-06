@@ -5,9 +5,13 @@ MethodRefactoring subclass: #InlineTemporaryRefactoring
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 InlineTemporaryRefactoring guid: (GUID fromString: '{462b284d-15e3-4d89-ac1a-048036a38c69}')!
+
 InlineTemporaryRefactoring comment: ''!
+
 !InlineTemporaryRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !InlineTemporaryRefactoring methodsFor!
 
 checkMultipleAssignments
@@ -94,6 +98,7 @@ verifySelectedInterval
 	self determineVariableDefinition.
 	self checkMultipleAssignments.
 	self checkReadBeforeWritten! !
+
 !InlineTemporaryRefactoring categoriesForMethods!
 checkMultipleAssignments!preconditions!private! !
 checkReadBeforeWritten!preconditions!private! !
@@ -126,6 +131,7 @@ model: aRBNamespace inline: anInterval from: aSelector in: aClass
 			from: aSelector
 			in: aClass;
 		yourself! !
+
 !InlineTemporaryRefactoring class categoriesForMethods!
 inline:from:in:!instance creation!public! !
 model:inline:from:in:!instance creation!public! !

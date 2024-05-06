@@ -5,9 +5,13 @@ TestCase subclass: #ResumableTestFailureTestCase
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ResumableTestFailureTestCase guid: (GUID fromString: '{e9e5d84b-1ac0-46b4-ae21-c00825895f1f}')!
+
 ResumableTestFailureTestCase comment: ''!
+
 !ResumableTestFailureTestCase categoriesForClass!SUnit! !
+
 !ResumableTestFailureTestCase methodsFor!
 
 errorTest
@@ -46,6 +50,7 @@ testResumable
 				yourself.
 	result := suite run.
 	self assert: result failures size equals: 2! !
+
 !ResumableTestFailureTestCase categoriesForMethods!
 errorTest!public!Running! !
 failureLog!public!Running! !

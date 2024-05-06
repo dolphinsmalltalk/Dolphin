@@ -5,9 +5,13 @@ RefactoryVariableChange subclass: #AddInstanceVariableChange
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AddInstanceVariableChange guid: (GUID fromString: '{b6ad3820-2921-48e3-abf0-439da4482d55}')!
+
 AddInstanceVariableChange comment: ''!
+
 !AddInstanceVariableChange categoriesForClass!Refactory-Change Objects! !
+
 !AddInstanceVariableChange methodsFor!
 
 asUndoOperation
@@ -27,6 +31,7 @@ printOn: aStream
 		nextPutAll: ' addInstVarNamed: ';
 		nextPutAll: variable;
 		nextPut: $!!! !
+
 !AddInstanceVariableChange categoriesForMethods!
 asUndoOperation!converting!public! !
 changeString!printing!public! !

@@ -5,9 +5,13 @@ AbstractTextEditTest subclass: #TextEditTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TextEditTest guid: (GUID fromString: '{5237b507-a634-4555-81af-e15822492437}')!
+
 TextEditTest comment: ''!
+
 !TextEditTest categoriesForClass!Unclassified! !
+
 !TextEditTest methodsFor!
 
 classToTest
@@ -43,6 +47,7 @@ testCalculateExtent
 
 text
 	^'The quick brown fox jumped over the lazy dog'! !
+
 !TextEditTest categoriesForMethods!
 classToTest!helpers!private! !
 margins!private!unit tests! !

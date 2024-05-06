@@ -5,12 +5,17 @@ Object subclass: #SocketAbstract
 	classVariableNames: 'AllSockets WaitingSemaphores'
 	poolDictionaries: 'WinSocketConstants'
 	classInstanceVariableNames: ''!
+
 SocketAbstract guid: (GUID fromString: '{87b4c4bb-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 SocketAbstract isAbstract: true!
+
 SocketAbstract comment: '** This class is part of the old asynchronous Sockets Connection package which has been superseded by the Dolphin Sockets package **
 
 This class is the abstract superclass of all sockets classes for TCP/IP network communication.'!
+
 !SocketAbstract categoriesForClass!Windows Sockets! !
+
 !SocketAbstract methodsFor!
 
 allowAsyncEvents
@@ -215,6 +220,7 @@ waitOn: aSemaphore
 	self class waitingSemaphores add: aSemaphore.
 	[aSemaphore wait] ensure: [self class waitingSemaphores remove: aSemaphore ifAbsent: []].
 	self asyncError isNil ifFalse: [self asyncError signal]! !
+
 !SocketAbstract categoriesForMethods!
 allowAsyncEvents!operations!private! !
 asParameter!converting!public! !
@@ -326,6 +332,7 @@ waitingSemaphores
 
 	WaitingSemaphores isNil ifTrue: [WaitingSemaphores := SharedSet new].
 	^WaitingSemaphores! !
+
 !SocketAbstract class categoriesForMethods!
 addSocket:!accessing!private! !
 allSockets!accessing!private! !

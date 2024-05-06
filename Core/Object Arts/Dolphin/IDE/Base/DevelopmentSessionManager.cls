@@ -5,9 +5,13 @@ GUISessionManager subclass: #DevelopmentSessionManager
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DevelopmentSessionManager guid: (GUID fromString: '{5902537a-8d40-49c3-94f3-2cd287656c38}')!
+
 DevelopmentSessionManager comment: ''!
+
 !DevelopmentSessionManager categoriesForClass!System-Support! !
+
 !DevelopmentSessionManager methodsFor!
 
 advanceImageVersionMinor
@@ -702,6 +706,7 @@ versionString
 	special := self productVersionSpecial.
 	special notEmpty ifTrue: [verString := verString , ' ' , special].
 	^'<1s> <2d>' expandMacrosWith: self applicationShortName with: verString! !
+
 !DevelopmentSessionManager categoriesForMethods!
 advanceImageVersionMinor!operations-saving!public! !
 allowDuplicate!operations-startup!public! !
@@ -805,6 +810,7 @@ imageExtension
 	should be associated with this particular image."
 
 	^'img7'! !
+
 !DevelopmentSessionManager class categoriesForMethods!
 git:!public! !
 icon!constants!public! !

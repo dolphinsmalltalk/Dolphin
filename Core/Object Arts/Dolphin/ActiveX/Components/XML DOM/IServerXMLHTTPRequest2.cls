@@ -5,7 +5,9 @@ IServerXMLHTTPRequest subclass: #IServerXMLHTTPRequest2
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
 	classInstanceVariableNames: ''!
+
 IServerXMLHTTPRequest2 guid: (IID fromString: '{2e01311b-c322-4b0a-bd77-b90cfdc8dce7}')!
+
 IServerXMLHTTPRequest2 comment: '<IServerXMLHTTPRequest2> is a wrapper class for the COM interface ''MSXML2.IServerXMLHTTPRequest2'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
@@ -34,7 +36,9 @@ interface IServerXMLHTTPRequest2 : IServerXMLHTTPRequest
 		[in]BSTR bstrPassword);
 };
 '!
+
 !IServerXMLHTTPRequest2 categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+
 !IServerXMLHTTPRequest2 methodsFor!
 
 setProxy: proxySetting
@@ -78,6 +82,7 @@ SetProxyCredentials: bstrUserName bstrPassword: bstrPassword
 
 	<virtual stdcall: hresult 27 bstr bstr>
 	^self invalidCall: _failureCode! !
+
 !IServerXMLHTTPRequest2 categoriesForMethods!
 setProxy:!**auto generated**!methods!public! !
 setProxy:varProxyServer:varBypassList:!**auto generated**!methods!public! !
@@ -109,6 +114,7 @@ newServerXMLHTTP60
 
 	^self onCLSID: (CLSID fromString: '{88D96A0B-F192-11D4-A65F-0040963251E5}')
 ! !
+
 !IServerXMLHTTPRequest2 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 newServerXMLHTTP40!**auto generated**!instance creation!public! !

@@ -5,9 +5,13 @@ Refactoring subclass: #SplitClassRefactoring
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SplitClassRefactoring guid: (GUID fromString: '{22a704e1-3527-4416-ad61-b066186fc300}')!
+
 SplitClassRefactoring comment: ''!
+
 !SplitClassRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !SplitClassRefactoring methodsFor!
 
 abstractReferenceTo: each 
@@ -98,6 +102,7 @@ transform
 		createNewClass;
 		createReference;
 		abstractVariableReferences! !
+
 !SplitClassRefactoring categoriesForMethods!
 abstractReferenceTo:!private!transforming! !
 abstractVariableReferences!public!transforming! !
@@ -129,6 +134,7 @@ model: aRBNamespace class: class instanceVariables: instVars newClassName: class
 			newClassName: className
 			referenceVariableName: newVariable;
 		yourself! !
+
 !SplitClassRefactoring class categoriesForMethods!
 class:instanceVariables:newClassName:referenceVariableName:!instance creation!public! !
 model:class:instanceVariables:newClassName:referenceVariableName:!instance creation!public! !

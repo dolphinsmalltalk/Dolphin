@@ -5,7 +5,9 @@ ICoreWebView2HttpHeadersCollection subclass: #ICoreWebView2HttpResponseHeaders
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2HttpResponseHeaders guid: (IID fromString: '{03c5ff5a-9b45-4a88-881c-89a9f328619c}')!
+
 ICoreWebView2HttpResponseHeaders comment: '`ICoreWebView2HttpResponseHeaders` is a wrapper class for the COM interface ''WebView2.ICoreWebView2HttpResponseHeaders'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -42,7 +44,9 @@ interface ICoreWebView2HttpResponseHeaders : IUnknown
 };
 ```
 '!
+
 !ICoreWebView2HttpResponseHeaders categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2HttpResponseHeaders methodsFor!
 
 AppendHeader: name value: value
@@ -104,6 +108,7 @@ RemoveHeader: name
 	"Headers cannot be removed."
 
 	self shouldNotImplement! !
+
 !ICoreWebView2HttpResponseHeaders categoriesForMethods!
 AppendHeader:value:!**auto generated**!COM Interfaces-ICoreWebView2HttpResponseHeaders!private! !
 at:put:!accessing!public! !
@@ -132,6 +137,7 @@ defineFunctions
 		defineFunction: #GetIterator:
 			argumentTypes: 'ICoreWebView2HttpHeadersCollectionIterator**'
 ! !
+
 !ICoreWebView2HttpResponseHeaders class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

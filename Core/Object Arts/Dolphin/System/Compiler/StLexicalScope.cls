@@ -5,11 +5,16 @@ StSemanticScope subclass: #StLexicalScope
 	classVariableNames: 'FarReturnMask NeedsSelfMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StLexicalScope guid: (GUID fromString: '{cf1f5402-a16a-4f0c-8c08-630e2b5fbf47}')!
+
 StLexicalScope addClassConstant: 'FarReturnMask' value: 16r2!
 StLexicalScope addClassConstant: 'NeedsSelfMask' value: 16r1!
+
 StLexicalScope comment: ''!
+
 !StLexicalScope categoriesForClass!Kernel-Objects! !
+
 !StLexicalScope methodsFor!
 
 argumentCount
@@ -130,6 +135,7 @@ unreferencedArguments
 			["All arguments to primitive methods are implicitly referenced"
 			#()]
 		ifFalse: [locals select: [:each | each isArgument and: [each isRead not]]]! !
+
 !StLexicalScope categoriesForMethods!
 argumentCount!accessing!public! !
 declareArgument:!helpers!private! !
@@ -163,6 +169,7 @@ unreferencedArguments!accessing!public! !
 initialize
 	self addClassConstant: 'NeedsSelfMask' value: 16r1.
 	self addClassConstant: 'FarReturnMask' value: 16r2! !
+
 !StLexicalScope class categoriesForMethods!
 initialize!class initialization!development!public! !
 !

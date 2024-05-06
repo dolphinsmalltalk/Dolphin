@@ -5,7 +5,9 @@ Win32Structure subclass: #DISPLAY_DEVICEW
 	classVariableNames: '_OffsetOf_DeviceID _OffsetOf_DeviceKey _OffsetOf_DeviceName _OffsetOf_DeviceString _OffsetOf_dwSize _OffsetOf_StateFlags DISPLAY_DEVICE_ATTACHED_TO_DESKTOP DISPLAY_DEVICE_MIRRORING_DRIVER DISPLAY_DEVICE_MULTI_DRIVER DISPLAY_DEVICE_PRIMARY_DEVICE DISPLAY_DEVICE_VGA_COMPATIBLE'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DISPLAY_DEVICEW guid: (GUID fromString: '{b21c0d9e-8924-4788-ad73-e7751f9f1c6b}')!
+
 DISPLAY_DEVICEW addClassConstant: '_OffsetOf_DeviceID' value: 16r148!
 DISPLAY_DEVICEW addClassConstant: '_OffsetOf_DeviceKey' value: 16r248!
 DISPLAY_DEVICEW addClassConstant: '_OffsetOf_DeviceName' value: 16r4!
@@ -17,6 +19,7 @@ DISPLAY_DEVICEW addClassConstant: 'DISPLAY_DEVICE_MIRRORING_DRIVER' value: 16r8!
 DISPLAY_DEVICEW addClassConstant: 'DISPLAY_DEVICE_MULTI_DRIVER' value: 16r2!
 DISPLAY_DEVICEW addClassConstant: 'DISPLAY_DEVICE_PRIMARY_DEVICE' value: 16r4!
 DISPLAY_DEVICEW addClassConstant: 'DISPLAY_DEVICE_VGA_COMPATIBLE' value: 16r10!
+
 DISPLAY_DEVICEW comment: '`DISPLAY_DEVICEW` is an `External.Structure` class to wrap the struct ''Win32.DISPLAY_DEVICEW'' from type information in the ''Win32 API'' library.
 
 The type library contains no documentation for this struct
@@ -36,7 +39,9 @@ struct tagDISPLAY_DEVICEW {
 } DISPLAY_DEVICEW;
 ```
 '!
+
 !DISPLAY_DEVICEW categoriesForClass!Win32-Structs! !
+
 !DISPLAY_DEVICEW methodsFor!
 
 DeviceID
@@ -71,6 +76,7 @@ StateFlags
 	"Answer the <Integer> value of the receiver's 'StateFlags' field."
 
 	^bytes dwordAtOffset: _OffsetOf_StateFlags! !
+
 !DISPLAY_DEVICEW categoriesForMethods!
 DeviceID!**compiled accessors**!public! !
 DeviceName!**compiled accessors**!public! !
@@ -110,6 +116,7 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #DeviceName #DeviceString #StateFlags #DeviceID)! !
+
 !DISPLAY_DEVICEW class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

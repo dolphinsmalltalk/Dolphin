@@ -5,7 +5,9 @@ Object subclass: #COMObjectRegistration
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 COMObjectRegistration guid: (GUID fromString: '{e3aace46-398d-4cb8-8d6e-d9bf407b92fa}')!
+
 COMObjectRegistration comment: '<COMObjectRegistration> is a simple class to aggregate the registration information for a COM object such as its CLSID and description. It is used in conjunction with the COM Category Manager interface, <ICatInformation>.
 
 Instance Variables:
@@ -14,7 +16,9 @@ Instance Variables:
 	toolboxBmp	<Image>. Iconic representation for the coclass.
 
 '!
+
 !COMObjectRegistration categoriesForClass!COM Category Manager! !
+
 !COMObjectRegistration methodsFor!
 
 = comparand
@@ -123,6 +127,7 @@ toolboxImage
 							toolboxImage := Bitmap fromId: id in: resLib.
 							toolboxImage setMap3DColors: true]]].
 	^toolboxImage! !
+
 !COMObjectRegistration categoriesForMethods!
 =!comparing!public! !
 clsid!accessing!public! !
@@ -143,6 +148,7 @@ clsid: aCLSID
 	"Answer a new instance of the receiver for the specified class id."
 
 	^self new clsid: aCLSID; yourself! !
+
 !COMObjectRegistration class categoriesForMethods!
 clsid:!instance creation!public! !
 !

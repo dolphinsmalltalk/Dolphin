@@ -5,9 +5,13 @@ STONReaderError subclass: #DolphinSTONReaderError
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DolphinSTONReaderError guid: (GUID fromString: '{d7312cd7-5a35-4ac6-a193-dc8ea803cf35}')!
+
 DolphinSTONReaderError comment: ''!
+
 !DolphinSTONReaderError categoriesForClass!STON-Core-Exceptions! !
+
 !DolphinSTONReaderError methodsFor!
 
 _descriptionArguments
@@ -23,6 +27,7 @@ _descriptionFormat
 
 messageText
 	^ messageText! !
+
 !DolphinSTONReaderError categoriesForMethods!
 _descriptionArguments!displaying!public! !
 _descriptionFormat!displaying!public! !

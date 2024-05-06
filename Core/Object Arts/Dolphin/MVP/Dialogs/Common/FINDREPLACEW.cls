@@ -5,7 +5,9 @@ CommonDialogStructure subclass: #FINDREPLACEW
 	classVariableNames: '_OffsetOf_dwSize _OffsetOf_flags _OffsetOf_hInstance _OffsetOf_hwndOwner _OffsetOf_lCustData _OffsetOf_lpfnHook _OffsetOf_lpstrFindWhat _OffsetOf_lpstrReplaceWith _OffsetOf_lpTemplateName _OffsetOf_wFindWhatLen _OffsetOf_wReplaceWithLen'
 	poolDictionaries: 'CommonDialogConstants'
 	classInstanceVariableNames: ''!
+
 FINDREPLACEW guid: (GUID fromString: '{87b4c5f2-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 FINDREPLACEW addClassConstant: '_OffsetOf_dwSize' value: 16r0!
 FINDREPLACEW addClassConstant: '_OffsetOf_flags' value: 16rC!
 FINDREPLACEW addClassConstant: '_OffsetOf_hInstance' value: 16r8!
@@ -17,9 +19,12 @@ FINDREPLACEW addClassConstant: '_OffsetOf_lpstrReplaceWith' value: 16r14!
 FINDREPLACEW addClassConstant: '_OffsetOf_lpTemplateName' value: 16r24!
 FINDREPLACEW addClassConstant: '_OffsetOf_wFindWhatLen' value: 16r18!
 FINDREPLACEW addClassConstant: '_OffsetOf_wReplaceWithLen' value: 16r1A!
+
 FINDREPLACEW comment: 'FINDREPLACE is a <Win32lStructure> which represents the Windows common dialog structure of the same name. It is used in conjunction with the FindText() and ReplaceText() APIs to to contain information about a search or replace operation.
 '!
+
 !FINDREPLACEW categoriesForClass!External-Data-Structured!External-Data-Structured-Win32! !
+
 !FINDREPLACEW methodsFor!
 
 dwSize: anInteger
@@ -140,6 +145,7 @@ wReplaceWithLen: anInteger
 	"Set the receiver's 'wReplaceWithLen' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_wReplaceWithLen put: anInteger! !
+
 !FINDREPLACEW categoriesForMethods!
 dwSize:!**compiled accessors**!public! !
 findDetails!event handling!public! !
@@ -201,6 +207,7 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #hwndOwner #flags #lpstrFindWhat #lpstrReplaceWith #wFindWhatLen #wReplaceWithLen #lpfnHook)! !
+
 !FINDREPLACEW class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

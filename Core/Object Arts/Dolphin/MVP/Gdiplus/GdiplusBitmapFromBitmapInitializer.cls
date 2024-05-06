@@ -5,9 +5,13 @@ GdiplusInitializer subclass: #GdiplusBitmapFromBitmapInitializer
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusBitmapFromBitmapInitializer guid: (GUID fromString: '{72187357-d718-4876-aaea-2cfefd2c5fd7}')!
+
 GdiplusBitmapFromBitmapInitializer comment: ''!
+
 !GdiplusBitmapFromBitmapInitializer categoriesForClass!Unclassified! !
+
 !GdiplusBitmapFromBitmapInitializer methodsFor!
 
 bitmap: aBitmap
@@ -41,6 +45,7 @@ createHandle
 
 gdiplusConstructorErrorDescription
 	^'Error creating Bitmap'! !
+
 !GdiplusBitmapFromBitmapInitializer categoriesForMethods!
 bitmap:!initializing!private! !
 createHandle!private!realizing/unrealizing! !
@@ -56,6 +61,7 @@ bitmap: aBitmap
 	"SW: Would there be any need to allow the user to supply the HPALETTE ?"
 
 	^self new bitmap: aBitmap! !
+
 !GdiplusBitmapFromBitmapInitializer class categoriesForMethods!
 bitmap:!instance creation!public! !
 !

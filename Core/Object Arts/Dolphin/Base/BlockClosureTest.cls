@@ -5,9 +5,13 @@ DolphinTest subclass: #BlockClosureTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 BlockClosureTest guid: (GUID fromString: '{346b84aa-d94e-4ee6-9461-5195ef00255b}')!
+
 BlockClosureTest comment: ''!
+
 !BlockClosureTest categoriesForClass!Unclassified! !
+
 !BlockClosureTest methodsFor!
 
 blockWithCopiedValue: anObject
@@ -332,6 +336,7 @@ testValueWithArguments
 		should: [[:i | 3 + 4] valueWithArguments: #(1 2)]
 		raise: Error
 		matching: [:err | err description = 'Block expects 1 argument(s), 2 given']! !
+
 !BlockClosureTest categoriesForMethods!
 blockWithCopiedValue:!helpers!private! !
 nestedReturn!helpers!private! !

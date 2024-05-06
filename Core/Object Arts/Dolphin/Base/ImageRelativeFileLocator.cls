@@ -5,7 +5,9 @@ RelativeFileLocator subclass: #ImageRelativeFileLocator
 	classVariableNames: 'Current'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ImageRelativeFileLocator guid: (GUID fromString: '{42513a65-8d78-44a8-b475-bdfd1e7fb6fc}')!
+
 ImageRelativeFileLocator comment: 'An ImageRelativeFileLocator is used to indicate the location of an external file that may be referenced within the image. 
 Instances of this class always locate files relative to the image directory, unless the file is outside the local directory hierarchy below the image directory, in which case an absolute path is used.
 
@@ -15,13 +17,16 @@ Try the following examples:
 
 relativePath := FileLocator imageRelative relativePathTo: SessionManager current imageFileName. "Display It - should be ''.\dolphin.img''"
 FileLocator imageRelative localFileSpecFor: relativePath. "Display It - should be the full image path"'!
+
 !ImageRelativeFileLocator categoriesForClass!System-Support! !
+
 !ImageRelativeFileLocator methodsFor!
 
 stbSaveOn: anSTBOutFiler 
 	"Save out a binary representation of the receiver to anSTBOutFiler."
 
 	anSTBOutFiler writePreambleFor: self! !
+
 !ImageRelativeFileLocator categoriesForMethods!
 stbSaveOn:!binary filing!public! !
 !
@@ -52,6 +57,7 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	Current := nil! !
+
 !ImageRelativeFileLocator class categoriesForMethods!
 current!accessing!public! !
 onPreStripImage!class hierarchy-removing!private! !

@@ -5,9 +5,13 @@ Error subclass: #AXPropertyReadError
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AXPropertyReadError guid: (GUID fromString: '{395bcbe7-6d49-461d-8e8e-617d944548f7}')!
+
 AXPropertyReadError comment: ''!
+
 !AXPropertyReadError categoriesForClass!Unclassified! !
+
 !AXPropertyReadError methodsFor!
 
 errorLog
@@ -29,6 +33,7 @@ initialize
 	"Private - Initialize the receiver's instance variables."
 
 	messageText := 'Error loading from property bag'.! !
+
 !AXPropertyReadError categoriesForMethods!
 errorLog!accessing!public! !
 errorLog:!accessing!public! !

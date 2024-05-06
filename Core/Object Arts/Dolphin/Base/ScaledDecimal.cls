@@ -5,7 +5,9 @@ Number subclass: #ScaledDecimal
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ScaledDecimal guid: (GUID fromString: '{f44c914b-2b3f-11d3-8368-7a8b5a000000}')!
+
 ScaledDecimal comment: 'ScaledDecimal is a Number class to represent fixed point decimal numbers. It supports unbounded precision, with no practical limit to the number of digits before and after the decimal point.
 
 ScaledDecimal conforms to the following ANSI protocols:
@@ -20,7 +22,9 @@ A ScaledDecimal represents a value as a Fraction and the number of digits after 
 
 We are grateful to Richard A. Harmon for contributing his ANSI compliant ScaledDecimal implementation from which this class was derived.
 '!
+
 !ScaledDecimal categoriesForClass!Magnitude-Numbers! !
+
 !ScaledDecimal methodsFor!
 
 - operand
@@ -295,6 +299,7 @@ truncated
 
 	^fraction truncated
 ! !
+
 !ScaledDecimal categoriesForMethods!
 -!arithmetic!public! !
 *!arithmetic!public! !
@@ -374,6 +379,7 @@ zero
 		newFromNumber: 0
 		scale: 0
 ! !
+
 !ScaledDecimal class categoriesForMethods!
 basicNewFromFraction:scale:!instance creation!private! !
 maxPrecision!accessing!private! !

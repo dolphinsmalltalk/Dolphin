@@ -5,9 +5,13 @@ ExternalLibrary subclass: #URLMonLibrary
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 URLMonLibrary guid: (GUID fromString: '{08630ee6-54c6-11d3-bdd1-004005a6900b}')!
+
 URLMonLibrary comment: ''!
+
 !URLMonLibrary categoriesForClass!External-Libraries-Win32! !
+
 !URLMonLibrary methodsFor!
 
 overlappedURLDownloadToCacheFile: pCaller szURL: szURL szFilename: szFilename dwBufLength: dwBufLegth dwReserved: dwReserved pBSC: pBsc
@@ -136,6 +140,7 @@ urlOpenPullStream: pCaller szURL: szURL ppStream: ppStream dwReserved: dwReserve
 
 	<stdcall: hresult URLOpenPullStreamW IUnknown* lpwstr IStream** dword lpvoid>
 	^self invalidCall: _failureCode! !
+
 !URLMonLibrary categoriesForMethods!
 overlappedURLDownloadToCacheFile:szURL:szFilename:dwBufLength:dwReserved:pBSC:!public!win32 functions-internet! !
 overlappedURLDownloadToFile:szURL:szFilename:dwReserved:pBSC:!public!win32 functions-internet! !
@@ -153,6 +158,7 @@ fileName
 	"Answer the host system file name for the library"
 
 	^'URLMON'! !
+
 !URLMonLibrary class categoriesForMethods!
 fileName!constants!public! !
 !

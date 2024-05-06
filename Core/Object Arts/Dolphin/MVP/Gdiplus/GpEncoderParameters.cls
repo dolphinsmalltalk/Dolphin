@@ -5,9 +5,12 @@ ExternalStructure subclass: #GpEncoderParameters
 	classVariableNames: '_OffsetOf_Count _OffsetOf_Parameter'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GpEncoderParameters guid: (GUID fromString: '{7aa7c3a4-85d9-4298-ad05-11c85d76c885}')!
+
 GpEncoderParameters addClassConstant: '_OffsetOf_Count' value: 16r0!
 GpEncoderParameters addClassConstant: '_OffsetOf_Parameter' value: 16r4!
+
 GpEncoderParameters comment: '<GpEncoderParameters> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpEncoderParameters'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
@@ -22,7 +25,9 @@ struct tagGpEncoderParameters {
 	GpEncoderParameter Parameter[1];
 } GpEncoderParameters;
 '!
+
 !GpEncoderParameters categoriesForClass!Unclassified! !
+
 !GpEncoderParameters methodsFor!
 
 byteSize
@@ -59,6 +64,7 @@ Parameter: aStructureArrayOfGpEncoderParameter
 		to: _OffsetOf_Parameter + size
 		startingAt: 1.
 	self Count: aStructureArrayOfGpEncoderParameter size! !
+
 !GpEncoderParameters categoriesForMethods!
 byteSize!accessing!public! !
 Count!**compiled accessors**!public! !
@@ -101,6 +107,7 @@ length: anInteger
 	^(self new: self byteSize + ((anInteger - 1) * GpEncoderParameter byteSize))
 		Count: anInteger;
 		yourself! !
+
 !GpEncoderParameters class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

@@ -5,14 +5,19 @@ OLEStructure subclass: #PICTDESC
 	classVariableNames: '_OffsetOf_dw1 _OffsetOf_dw2 _OffsetOf_dwSize _OffsetOf_handle _OffsetOf_picType'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PICTDESC guid: (GUID fromString: '{a1a65a80-aef9-11d3-b376-080046056106}')!
+
 PICTDESC addClassConstant: '_OffsetOf_dw1' value: 16rC!
 PICTDESC addClassConstant: '_OffsetOf_dw2' value: 16r10!
 PICTDESC addClassConstant: '_OffsetOf_dwSize' value: 16r0!
 PICTDESC addClassConstant: '_OffsetOf_handle' value: 16r8!
 PICTDESC addClassConstant: '_OffsetOf_picType' value: 16r4!
+
 PICTDESC comment: ''!
+
 !PICTDESC categoriesForClass!Unclassified! !
+
 !PICTDESC methodsFor!
 
 dw1
@@ -59,6 +64,7 @@ picType: anInteger
 	"Set the receiver's 'picType' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_picType put: anInteger! !
+
 !PICTDESC categoriesForMethods!
 dw1!**compiled accessors**!public! !
 dw1:!**compiled accessors**!public! !
@@ -135,6 +141,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^OLEPicture icon! !
+
 !PICTDESC class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

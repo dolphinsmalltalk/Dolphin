@@ -5,9 +5,13 @@ GdiplusBase subclass: #GdiplusImageAttributes
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusImageAttributes guid: (GUID fromString: '{c5f76a31-54e8-45a9-905c-14e9d8ae7c0d}')!
+
 GdiplusImageAttributes comment: 'A GdiplusImageAttributes object contains information about how bitmap and metafile colors are manipulated during rendering.  Accessors are available to adjust color, grayscale, gamma, brightness, transparency, and more.  Typically you will initialize an instance, change some settings, and pass the instance to a GdiplusGraphics drawImage method.'!
+
 !GdiplusImageAttributes categoriesForClass!Unclassified! !
+
 !GdiplusImageAttributes methodsFor!
 
 basicFree
@@ -100,6 +104,7 @@ threshold: aFloat type: aColorAdjustTypeConstant
 				enableFlag: true asParameter
 				threshold: aFloat) = Ok 
 		ifFalse: [GdiplusError signal: 'GdipSetImageAttributesThreshold  failed' with: status]! !
+
 !GdiplusImageAttributes categoriesForMethods!
 basicFree!private!realizing/unrealizing! !
 colorKeys:colorLow:colorHigh:!accessing!public! !
@@ -560,6 +565,7 @@ exampleRemapInput
 
 new
 	^self fromInitializer: GdiplusImageAttributesInitializer default! !
+
 !GdiplusImageAttributes class categoriesForMethods!
 exampleColorBars1!examples!private! !
 exampleColorBars2!examples!private! !

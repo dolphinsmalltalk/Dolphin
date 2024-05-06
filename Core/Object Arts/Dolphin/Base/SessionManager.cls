@@ -5,10 +5,14 @@ Object subclass: #SessionManager
 	classVariableNames: 'Current EmbeddingMask PreStartFile SettingsChangeTimerId'
 	poolDictionaries: 'Win32Constants Win32Errors'
 	classInstanceVariableNames: ''!
+
 SessionManager guid: (GUID fromString: '{87b4c4b7-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 SessionManager isAbstract: true!
+
 SessionManager addClassConstant: 'EmbeddingMask' value: 16r1!
 SessionManager addClassConstant: 'SettingsChangeTimerId' value: 16r2!
+
 SessionManager comment: 'SessionManager is the class of objects responsible for managing the lifecyle of an application, from startup to shutdown. SessionManagers are also responsible for determining the global policy for dealing with unhandled Exceptions. 
 
 SessionManager itself is abstract, with two further abstract subclasses that divide applications into two groups: <ConsoleSessionManager> whose subclasses implement Console (that is, command line, DOS style) applications, and <GUISessionManager> whose subclasses implement GUI (that is, Windows) applications.
@@ -36,7 +40,9 @@ Class Variables:
 	Current		<SessionManager>. Singleton instance, being the current session manager.
 
 '!
+
 !SessionManager categoriesForClass!System-Support! !
+
 !SessionManager methodsFor!
 
 allocConsole
@@ -1156,6 +1162,7 @@ windowsDirectory
 	"Answer the path of the Windows directory on the host computer for the current session."
 
 	^File windowsDirectory! !
+
 !SessionManager categoriesForMethods!
 allocConsole!operations!private! !
 allowDuplicate!operations-startup!public! !
@@ -1387,6 +1394,7 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	Current class==self ifTrue: [Current := nil]! !
+
 !SessionManager class categoriesForMethods!
 asSessionManagerClass!converting!public! !
 current!accessing!public! !

@@ -5,14 +5,18 @@ ValueConvertingControlView subclass: #StaticView
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StaticView guid: (GUID fromString: '{87b4c739-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 StaticView comment: 'StaticView is an abstract <valueView> class for implementing the Windows ''STATIC'' control class. The subclasses are intended to display model data but they do not allow it to be edited by the user.
 
 Instance Variables:
 	unused	<UndefinedObject> reserved for future use.
 
 '!
+
 !StaticView categoriesForClass!MVP-Views! !
+
 !StaticView methodsFor!
 
 defaultBackcolor
@@ -82,6 +86,7 @@ onPositionChanged: aPositionEvent
 updateModel
 	"Flush changes in the view back to the associated model.
 	Static views don't allow such changes"! !
+
 !StaticView categoriesForMethods!
 defaultBackcolor!colors!constants!private! !
 defaultExtent!constants!private! !
@@ -108,6 +113,7 @@ winClassName
 
 	^'STATIC'
 ! !
+
 !StaticView class categoriesForMethods!
 stbConvertFromVersion12:!binary filing!private! !
 winClassName!constants!private! !

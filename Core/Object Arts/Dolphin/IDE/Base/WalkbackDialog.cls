@@ -5,9 +5,12 @@ DialogView subclass: #WalkbackDialog
 	classVariableNames: 'CallStackId Commands IconId'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 WalkbackDialog guid: (GUID fromString: '{87b4c723-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 WalkbackDialog addClassConstant: 'CallStackId' value: 16r3E9!
 WalkbackDialog addClassConstant: 'IconId' value: 16r3F1!
+
 WalkbackDialog comment: '
 Instance Variables:
 	callStack		<readableString> containing the walkback trace.
@@ -23,7 +26,9 @@ Class Variables:
 	KillId		<integer> ID of the "kill" button.
 
 '!
+
 !WalkbackDialog categoriesForClass!MVP-Views! !
+
 !WalkbackDialog methodsFor!
 
 actualBackcolor
@@ -161,6 +166,7 @@ wmSize: message wParam: wParam lParam: lParam
 	#todo "Resize the controls".
 	^nil
 ! !
+
 !WalkbackDialog categoriesForMethods!
 actualBackcolor!accessing!private! !
 callStack:!accessing!public! !
@@ -196,6 +202,7 @@ initialize
 				yourself).
 	self addClassConstant: 'CallStackId' value: 1001.
 	self addClassConstant: 'IconId' value: 1009! !
+
 !WalkbackDialog class categoriesForMethods!
 initialize!initializing!private! !
 !

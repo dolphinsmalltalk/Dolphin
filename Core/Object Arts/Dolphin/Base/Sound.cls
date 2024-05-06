@@ -5,7 +5,9 @@ Object subclass: #Sound
 	classVariableNames: 'Registry'
 	poolDictionaries: 'MessageBoxConstants Win32Constants'
 	classInstanceVariableNames: ''!
+
 Sound guid: (GUID fromString: '{87b4c4bc-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Sound comment: 'Sound is the class of objects that represent wave audio resources (.wav files).
 
 Instance Variables:
@@ -18,7 +20,9 @@ Class Variables:
 	Registry		<IdentityDictionary>. Registry of standard named sounds.
 
 "test"'!
+
 !Sound categoriesForClass!Multimedia! !
+
 !Sound methodsFor!
 
 fileLocator: aFileLocator	
@@ -68,6 +72,7 @@ woofAndWait
 	| flags |
 	flags := (type bitAnd: ##(SND_ASYNC bitInvert)) bitOr: SND_SYNC.
 	self play: flags! !
+
 !Sound categoriesForMethods!
 fileLocator:!accessing!private! !
 location:!accessing!private! !
@@ -206,6 +211,7 @@ woofFor: aSymbol ifAbsent: exceptionBlock
 	| sound |
 	sound := Registry lookup: aSymbol.
 	sound notNil ifTrue: [sound woof] ifFalse: [exceptionBlock value]! !
+
 !Sound class categoriesForMethods!
 beep!parping!public! !
 beep:!not an aspect!parping!public! !

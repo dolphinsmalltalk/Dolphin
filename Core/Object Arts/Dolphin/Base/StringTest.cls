@@ -5,10 +5,15 @@ ArrayedCollectionTest subclass: #StringTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StringTest guid: (GUID fromString: '{262b323f-d574-423e-8571-63b1fab0d021}')!
+
 StringTest isAbstract: true!
+
 StringTest comment: ''!
+
 !StringTest categoriesForClass!Unclassified! !
+
 !StringTest methodsFor!
 
 afterTestCases
@@ -1182,6 +1187,7 @@ verifyPattern: patternString mismatch: matchString
 
 withAllTestCases
 	^#(#('') #('a') #('abc') #('£€') #(#($a $£ $1 $\x20AC) 'a£1€'))! !
+
 !StringTest categoriesForMethods!
 afterTestCases!constants!private! !
 assimilate:!helpers!private! !

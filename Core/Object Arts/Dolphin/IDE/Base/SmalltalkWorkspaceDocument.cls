@@ -5,7 +5,9 @@ AbstractDocumentShell subclass: #SmalltalkWorkspaceDocument
 	classVariableNames: 'CanUseIdeaSpace DefaultExtent DefaultView LanguageExtensions ReuseIfOpen VariableTips'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SmalltalkWorkspaceDocument guid: (GUID fromString: '{87b4c6ba-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 SmalltalkWorkspaceDocument comment: '`SmalltalkWorkspaceDocument` is a `<documentPresenter>` that can be used for displaying Smalltalk ST and CLS files. It also allows for the evaluation of Smalltalk expressions and the execution of various other commands targeted at the `SmalltalkSystem` singleton instance.
 
 Instance Variables:
@@ -15,7 +17,9 @@ Class Variables:
 	ReuseIfOpen	`<boolean>` indicating whether an open workspace should be re-used in preference to opening a new one.
 
 '!
+
 !SmalltalkWorkspaceDocument categoriesForClass!MVP-Presenters!MVP-Resources-IDE Tools! !
+
 !SmalltalkWorkspaceDocument methodsFor!
 
 aboutDolphin
@@ -334,6 +338,7 @@ workspace
 	"Answers the SmalltalkWorkspace held by the receiver."
 
 	^workspacePresenter! !
+
 !SmalltalkWorkspaceDocument categoriesForMethods!
 aboutDolphin!commands!public! !
 applyOptions!public! !
@@ -650,6 +655,7 @@ wordWrap: aBoolean
 
 workspaceClass
 	^Smalltalk developmentSystem workspaceClass! !
+
 !SmalltalkWorkspaceDocument class categoriesForMethods!
 activeIdeaSpace!public! !
 canUseIdeaSpace!accessing!public! !

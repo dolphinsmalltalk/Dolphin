@@ -5,7 +5,9 @@ ExternalStructure subclass: #MIBICMPSTATS
 	classVariableNames: '_OffsetOf_dwAddrMaskReps _OffsetOf_dwAddrMasks _OffsetOf_dwDestUnreachs _OffsetOf_dwEchoReps _OffsetOf_dwEchos _OffsetOf_dwErrors _OffsetOf_dwMsgs _OffsetOf_dwParmProbs _OffsetOf_dwRedirects _OffsetOf_dwSrcQuenchs _OffsetOf_dwTimeExcds _OffsetOf_dwTimestampReps _OffsetOf_dwTimestamps'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MIBICMPSTATS guid: (GUID fromString: '{2dac7cde-bfec-4391-a2e5-1ddf10a3c471}')!
+
 MIBICMPSTATS addClassConstant: '_OffsetOf_dwAddrMaskReps' value: 16r30!
 MIBICMPSTATS addClassConstant: '_OffsetOf_dwAddrMasks' value: 16r2C!
 MIBICMPSTATS addClassConstant: '_OffsetOf_dwDestUnreachs' value: 16r8!
@@ -19,6 +21,7 @@ MIBICMPSTATS addClassConstant: '_OffsetOf_dwSrcQuenchs' value: 16r14!
 MIBICMPSTATS addClassConstant: '_OffsetOf_dwTimeExcds' value: 16rC!
 MIBICMPSTATS addClassConstant: '_OffsetOf_dwTimestampReps' value: 16r28!
 MIBICMPSTATS addClassConstant: '_OffsetOf_dwTimestamps' value: 16r24!
+
 MIBICMPSTATS comment: '<MIBICMPSTATS> is an <ExternalStructure> class to wrap the struct ''Win32.MIBICMPSTATS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -44,7 +47,9 @@ struct tagMIBICMPSTATS {
 	unsigned long dwAddrMaskReps;
 } MIBICMPSTATS;
 '!
+
 !MIBICMPSTATS categoriesForClass!Win32-Structs! !
+
 !MIBICMPSTATS methodsFor!
 
 dwAddrMaskReps
@@ -111,6 +116,7 @@ dwTimestamps
 	"Answer the <Integer> value of the receiver's 'dwTimestamps' field."
 
 	^bytes dwordAtOffset: _OffsetOf_dwTimestamps! !
+
 !MIBICMPSTATS categoriesForMethods!
 dwAddrMaskReps!**compiled accessors**!public! !
 dwAddrMasks!**compiled accessors**!public! !
@@ -195,6 +201,7 @@ defineFields
 
 getFieldNames
 	^#(#dwMsgs #dwErrors #dwDestUnreachs #dwTimeExcds #dwParmProbs #dwSrcQuenchs #dwRedirects #dwEchos #dwEchoReps #dwTimestamps #dwTimestampReps #dwAddrMasks #dwAddrMaskReps)! !
+
 !MIBICMPSTATS class categoriesForMethods!
 defineFields!initializing!public! !
 getFieldNames!**compiled accessors**!constants!private! !

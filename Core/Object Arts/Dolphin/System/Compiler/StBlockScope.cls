@@ -5,11 +5,16 @@ StLexicalScope subclass: #StBlockScope
 	classVariableNames: 'EmptyBlockMask NeedsOuterMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StBlockScope guid: (GUID fromString: '{ee914772-f4ae-4569-87aa-95cdd445d7ef}')!
+
 StBlockScope addClassConstant: 'EmptyBlockMask' value: 16r200!
 StBlockScope addClassConstant: 'NeedsOuterMask' value: 16r100!
+
 StBlockScope comment: ''!
+
 !StBlockScope categoriesForClass!Kernel-Objects! !
+
 !StBlockScope methodsFor!
 
 isEmptyBlock
@@ -32,6 +37,7 @@ needsOuter
 	to escape from the method context active when the block was created."
 
 	^flags anyMask: NeedsOuterMask! !
+
 !StBlockScope categoriesForMethods!
 isEmptyBlock!public! !
 markEmpty!public! !
@@ -48,6 +54,7 @@ forScopeNode: anStBlockNode outer: anStLexicalScope
 initialize
 	self addClassConstant: 'NeedsOuterMask' value: 16r100.
 	self addClassConstant: 'EmptyBlockMask' value: 16r200! !
+
 !StBlockScope class categoriesForMethods!
 forScopeNode:outer:!instance creation!public! !
 initialize!class initialization!development!public! !

@@ -5,9 +5,13 @@ ProductProtector subclass: #PC1ProductProtector
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PC1ProductProtector guid: (GUID fromString: '{5cdc0f05-2865-415a-b78e-f13223e1192f}')!
+
 PC1ProductProtector comment: 'One of these uses the PC1 cypher to encode/decode the bytecodes of all the methods that are to be protected.  Each method is encoded with a different instance of PC1Cipher which has been given a separate key derived from our secret key joined to the method''s name.'!
+
 !PC1ProductProtector categoriesForClass!Unclassified! !
+
 !PC1ProductProtector methodsFor!
 
 cipherClass: aClass 
@@ -76,6 +80,7 @@ hashKeyWith: aString
 
 methodsOf: aClass do: aBlockClosure 
 	aClass methodDictionary do: [:each | each whileMutableDo: [aBlockClosure value: each]]! !
+
 !PC1ProductProtector categoriesForMethods!
 cipherClass:!operations!private! !
 cipherForMethod:!helpers!private! !

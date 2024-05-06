@@ -5,10 +5,14 @@ RBSourceFormatter subclass: #RBFormatter
 	classVariableNames: 'MaximumArgumentsPerLine SelectorsToLeaveOnLine SelectorsToStartOnNewLine'
 	poolDictionaries: 'ExtCallArgTypes'
 	classInstanceVariableNames: ''!
+
 RBFormatter guid: (GUID fromString: '{75e99f13-8ba7-47c0-87c4-8987b5a20900}')!
+
 RBFormatter comment: 'RBFormatter is an <StParseNodeVisitor> for pretty printing Smalltalk methods.
 '!
+
 !RBFormatter categoriesForClass!System-Compiler-Formatters! !
+
 !RBFormatter methodsFor!
 
 acceptBlockNode: aBlockNode startBlockString: startBlockString endBlockString: endBlockString
@@ -363,6 +367,7 @@ visitSequenceNode: aSequenceNode
 	self formatTemporariesFor: aSequenceNode.
 	self formatMethodCommentFor: aSequenceNode indentBefore: false.
 	self formatStatementsFor: aSequenceNode! !
+
 !RBFormatter categoriesForMethods!
 acceptBlockNode:startBlockString:endBlockString:!private!visitor/double dispatching! !
 firstLineLength!accessing!public! !
@@ -434,6 +439,7 @@ selectorsToStartOnNewLine
 
 selectorsToStartOnNewLine: anArrayOfSymbols
 	SelectorsToStartOnNewLine := anArrayOfSymbols! !
+
 !RBFormatter class categoriesForMethods!
 initialize!initializing!public! !
 maximumArgumentsPerLine!options!public! !

@@ -5,9 +5,13 @@ SelectableItemsTest subclass: #SlideyInneyOuteyThingTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SlideyInneyOuteyThingTest guid: (GUID fromString: '{beb204cd-8c17-44a4-8305-c23345382e1e}')!
+
 SlideyInneyOuteyThingTest comment: ''!
+
 !SlideyInneyOuteyThingTest categoriesForClass!Unclassified! !
+
 !SlideyInneyOuteyThingTest methodsFor!
 
 classToTest
@@ -86,6 +90,7 @@ verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	self assert: view isTrayResizable.
 	self assert: view isHiddenOnUnpin.
 	self assert: view inheritContextMenu! !
+
 !SlideyInneyOuteyThingTest categoriesForMethods!
 classToTest!helpers!private! !
 initializePresenter!public!Running! !

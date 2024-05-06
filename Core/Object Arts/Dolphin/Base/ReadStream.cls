@@ -5,10 +5,14 @@ PositionableStream subclass: #ReadStream
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ReadStream guid: (GUID fromString: '{87b4c6fa-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 ReadStream comment: 'Class ReadStream is a concrete subclass of PositionableStream that represents
 an accessor that can only read elements from a collection.'!
+
 !ReadStream categoriesForClass!Collections-Streams! !
+
 !ReadStream methodsFor!
 
 basicNext
@@ -92,6 +96,7 @@ nextAvailable
 
 	<primitive: 65>
 	^position >= readLimit ifFalse: [collection decodeNextFrom: self]! !
+
 !ReadStream categoriesForMethods!
 basicNext!accessing!public! !
 basicNext:into:startingAt:!accessing!public! !

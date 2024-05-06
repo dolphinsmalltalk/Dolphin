@@ -5,7 +5,9 @@ ListView subclass: #ListTreeView
 	classVariableNames: 'ClosedImageIndex DisableExpandAllMask DoSortRootsMask HasButtonsMask HasLinesAtRootMask HasLinesMask LeafImageIndex OpenImageIndex UseSmartRefreshMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: 'stateImageManager stateImageBlock'!
+
 ListTreeView guid: (GUID fromString: '{f2d6215c-2adc-4032-aacb-8c4da10950ab}')!
+
 ListTreeView addClassConstant: 'ClosedImageIndex' value: 16r3!
 ListTreeView addClassConstant: 'DisableExpandAllMask' value: 16r1!
 ListTreeView addClassConstant: 'DoSortRootsMask' value: 16r10!
@@ -15,6 +17,7 @@ ListTreeView addClassConstant: 'HasLinesMask' value: 16r8!
 ListTreeView addClassConstant: 'LeafImageIndex' value: 16r1!
 ListTreeView addClassConstant: 'OpenImageIndex' value: 16r2!
 ListTreeView addClassConstant: 'UseSmartRefreshMask' value: 16r20!
+
 ListTreeView comment: 'Copyright © Chris Uppal, 2002 - 2004.
 chris.uppal@metagnostic.org
 
@@ -79,7 +82,9 @@ Instances can be set not to keep a record of which nodes were expanded when thei
 Instances can be set not to collapse the entire subtree below a node in response to #onTreeChanged: notification.  The default is to collapse the sub-tree because that''s what TreeView does.  This is controlled by the #useSmartUpdate aspect.
 
 	-- chris'!
+
 !ListTreeView categoriesForClass!MVP-Views! !
+
 !ListTreeView methodsFor!
 
 addAll: aCollection afterIndex: anIndex
@@ -1933,6 +1938,7 @@ wantExtendedSelection
 	extend the selection"
 
 	^self isMultiSelect and: [Keyboard default isShiftDown]! !
+
 !ListTreeView categoriesForMethods!
 addAll:afterIndex:!do copy!expanding/collapsing!private! !
 addExpanded:!do copy!helpers!private! !
@@ -2374,6 +2380,7 @@ stbVersion
 	Note that we multiply *our* local version by the prime, this is necessary
 	to allow for older instances to appear to have a local version of 0"
 	^ self stbEncodingPrime * self localStbVersion + super stbVersion.! !
+
 !ListTreeView class categoriesForMethods!
 convertToLocalVersion0:from:!binary filing!do copy!private! !
 convertToLocalVersion1:from:!binary filing!do copy!private! !

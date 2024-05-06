@@ -5,7 +5,9 @@ STBInFiler subclass: #STBDebugger
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 STBDebugger guid: (GUID fromString: '{87b4c6e9-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 STBDebugger comment: 'The <STBDebugger> is an <STBInFiler> that prints an indented trace of the contents of the STB file it is reading as it proceeds.
 It is useful for debugging issues with serialized objects..
 
@@ -16,7 +18,9 @@ For example to view the contents of a view resource, one can proceed as follows:
 	in next.
 	in traceStream contents.	"Display-it"
 '!
+
 !STBDebugger categoriesForClass!System-Binary storage! !
+
 !STBDebugger methodsFor!
 
 basicNext
@@ -165,6 +169,7 @@ traceStream
 
 traceStream: aPuttableStream 
 	traceStream := aPuttableStream! !
+
 !STBDebugger categoriesForMethods!
 basicNext!accessing!private! !
 initialize!initializing!private! !

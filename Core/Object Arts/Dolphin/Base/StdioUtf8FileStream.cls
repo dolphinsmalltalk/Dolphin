@@ -5,9 +5,13 @@ StdioUnicodeFileStream subclass: #StdioUtf8FileStream
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StdioUtf8FileStream guid: (GUID fromString: '{c1c28046-101f-4bf6-92f9-e30cea1e8d82}')!
+
 StdioUtf8FileStream comment: ''!
+
 !StdioUtf8FileStream categoriesForClass!Collections-Streams! !
+
 !StdioUtf8FileStream methodsFor!
 
 contents
@@ -58,6 +62,7 @@ upToEnd
 	the current position to the end)."
 
 	^super upToEnd asUtf8String! !
+
 !StdioUtf8FileStream categoriesForMethods!
 contents!accessing!public! !
 contentsSpecies!constants!private! !
@@ -72,6 +77,7 @@ upToEnd!accessing!public! !
 
 encodingType
 	^#utf8! !
+
 !StdioUtf8FileStream class categoriesForMethods!
 encodingType!constants!public! !
 !

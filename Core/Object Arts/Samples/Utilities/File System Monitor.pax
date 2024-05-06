@@ -9,7 +9,6 @@ This utility implements a simple file system monitoring utility that allows one 
 
 FileSystemMonitor show'.
 
-
 package classNames
 	add: #FileSystemMonitor;
 	add: #FileSystemMonitorSessionManager;
@@ -49,14 +48,12 @@ Shell subclass: #FileSystemMonitor
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RuntimeSessionManager subclass: #FileSystemMonitorSessionManager
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -64,6 +61,7 @@ RuntimeSessionManager subclass: #FileSystemMonitorSessionManager
 
 icon
 	^FileSystemMonitor icon! !
+
 !FileSystemChangeReader class categoriesForMethods!
 icon!initializing!public! !
 !

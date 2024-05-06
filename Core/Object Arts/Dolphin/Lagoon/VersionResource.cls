@@ -5,9 +5,13 @@ Object subclass: #VersionResource
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 VersionResource guid: (GUID fromString: '{b76ab5bc-4ba7-40d2-88fe-6a76d28fc30b}')!
+
 VersionResource comment: ''!
+
 !VersionResource categoriesForClass!System-Support! !
+
 !VersionResource methodsFor!
 
 bumpProductVersion
@@ -375,6 +379,7 @@ writeVersionInfoTo: aWriteStream
 	self stringTables notEmpty ifTrue: [self writeStringFileInfoTo: aWriteStream].
 	self translations notEmpty ifTrue: [self writeVarFileInfoTo: aWriteStream].
 	self writeBlockSizeTo: aWriteStream at: blockStart! !
+
 !VersionResource categoriesForMethods!
 bumpProductVersion!operations!public! !
 decodeVersionString:!helpers!private! !
@@ -456,6 +461,7 @@ getVersionResourceOfModule: anExternalResourceLibrary
 
 new
 	^super new initialize! !
+
 !VersionResource class categoriesForMethods!
 forModule:!instance creation!public! !
 forPath:!instance creation!public! !

@@ -5,8 +5,11 @@ Object subclass: #DragDropSession
 	classVariableNames: 'Current DefaultImages OperationDescriptions'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 DragDropSession guid: (GUID fromString: '{87b4c481-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 DragDropSession isAbstract: true!
+
 DragDropSession comment: 'DragDropSessions are used to manage the modal process of dragging and dropping an object or objects from one window to another. 
 
 Instance Variables:
@@ -29,7 +32,9 @@ Class Variables:
 	DefaultImages			<IdentityDictionary> mapping the <Symbol> names of the standard drag images to default <Image>s.
 
 '!
+
 !DragDropSession categoriesForClass!MVP-DragDrop! !
+
 !DragDropSession methodsFor!
 
 addDragee: anObject
@@ -404,6 +409,7 @@ supportedOperations: ops
 	drop target."
 
 	operationsSupportedByDropTarget := ops! !
+
 !DragDropSession categoriesForMethods!
 addDragee:!adding!public! !
 addDragObject:!adding!public! !
@@ -535,6 +541,7 @@ uninitialize
 
 	Current := nil.
 	DefaultImages := nil! !
+
 !DragDropSession class categoriesForMethods!
 current!accessing!public! !
 defaultDragImages!accessing!public! !

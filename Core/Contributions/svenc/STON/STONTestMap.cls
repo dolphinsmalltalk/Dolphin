@@ -5,9 +5,13 @@ Dictionary variableSubclass: #STONTestMap
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 STONTestMap guid: (GUID fromString: '{588069da-7c8c-4590-b393-27c089007c6a}')!
+
 STONTestMap comment: ''!
+
 !STONTestMap categoriesForClass!Unclassified! !
+
 !STONTestMap methodsFor!
 
 printElementsOn: stream
@@ -16,6 +20,7 @@ printElementsOn: stream
 		nextPut: $#;
 		print: self size;
 		nextPut: $)! !
+
 !STONTestMap categoriesForMethods!
 printElementsOn:!public! !
 !
@@ -75,6 +80,7 @@ sizeFor: anInteger
 
 stonName
 	^ #TestMap! !
+
 !STONTestMap class categoriesForMethods!
 classTree!public!ston/core! !
 classTree:!public!ston/core! !

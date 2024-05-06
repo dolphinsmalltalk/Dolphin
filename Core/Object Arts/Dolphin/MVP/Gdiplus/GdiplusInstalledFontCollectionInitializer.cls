@@ -5,9 +5,13 @@ GdiplusInitializer subclass: #GdiplusInstalledFontCollectionInitializer
 	classVariableNames: 'Default'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusInstalledFontCollectionInitializer guid: (GUID fromString: '{c09d8c04-5f28-11d7-b609-00e0987e8081}')!
+
 GdiplusInstalledFontCollectionInitializer comment: ''!
+
 !GdiplusInstalledFontCollectionInitializer categoriesForClass!Unclassified! !
+
 !GdiplusInstalledFontCollectionInitializer methodsFor!
 
 createHandle
@@ -19,6 +23,7 @@ createHandle
 
 gdiplusConstructorErrorDescription
 	^'Error creating InstalledFontCollection'! !
+
 !GdiplusInstalledFontCollectionInitializer categoriesForMethods!
 createHandle!private!realizing/unrealizing! !
 gdiplusConstructorErrorDescription!constants!private! !
@@ -37,6 +42,7 @@ onPreStripImage
 	which holds an instance of the receiver."
 
 	Default := nil! !
+
 !GdiplusInstalledFontCollectionInitializer class categoriesForMethods!
 default!instance creation!private! !
 new!development!instance creation!public! !

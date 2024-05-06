@@ -5,12 +5,16 @@ RefactoryChange subclass: #CompositeRefactoryChange
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 CompositeRefactoryChange guid: (GUID fromString: '{74a295ee-f099-43f1-bd6e-d82d0b07d9d9}')!
+
 CompositeRefactoryChange comment: 'RefactoryBuilder represents a series of changes (RefactoryChange) that need to be performed. It provides transaction-like behavior by defering all changes until it is told to commit them (#doIt).
 
 Instance Variables:
 	changes	<SequenceableCollection of: RefactoryChange>	the changes that need to be performed'!
+
 !CompositeRefactoryChange categoriesForClass!Refactory-Change Objects! !
+
 !CompositeRefactoryChange methodsFor!
 
 = aRefactoryBuilder 
@@ -144,6 +148,7 @@ renameChangesForClass: aClassName to: newClassName
 
 renameClass: class to: newName 
 	^self addChange: (RenameClassChange rename: class name to: newName)! !
+
 !CompositeRefactoryChange categoriesForMethods!
 =!comparing!public! !
 addChange:!accessing!public! !
@@ -184,6 +189,7 @@ named: aString
 	^(self new)
 		name: aString;
 		yourself! !
+
 !CompositeRefactoryChange class categoriesForMethods!
 named:!instance creation!public! !
 !

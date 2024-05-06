@@ -5,13 +5,16 @@ ENHMETARECORD subclass: #EMRCREATEMONOBRUSH
 	classVariableNames: '_OffsetOf_cbBits _OffsetOf_cbBmi _OffsetOf_ihBrush _OffsetOf_iUsage _OffsetOf_offBits _OffsetOf_offBmi'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 EMRCREATEMONOBRUSH guid: (GUID fromString: '{93fa5260-561a-45ad-93b2-64f1c310bc26}')!
+
 EMRCREATEMONOBRUSH addClassConstant: '_OffsetOf_cbBits' value: 16r1C!
 EMRCREATEMONOBRUSH addClassConstant: '_OffsetOf_cbBmi' value: 16r14!
 EMRCREATEMONOBRUSH addClassConstant: '_OffsetOf_ihBrush' value: 16r8!
 EMRCREATEMONOBRUSH addClassConstant: '_OffsetOf_iUsage' value: 16rC!
 EMRCREATEMONOBRUSH addClassConstant: '_OffsetOf_offBits' value: 16r18!
 EMRCREATEMONOBRUSH addClassConstant: '_OffsetOf_offBmi' value: 16r10!
+
 EMRCREATEMONOBRUSH comment: '<EMRCREATEMONOBRUSH> is an <ExternalStructure> class to wrap the struct ''Win32.EMRCREATEMONOBRUSH'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -31,7 +34,9 @@ struct tagEMRCREATEMONOBRUSH {
 	[helpstring("Size of the bitmap bits")] DWORD cbBits;
 } EMRCREATEMONOBRUSH;
 '!
+
 !EMRCREATEMONOBRUSH categoriesForClass!Win32-Structs! !
+
 !EMRCREATEMONOBRUSH methodsFor!
 
 cbBits
@@ -93,6 +98,7 @@ offBmi: anInteger
 	"Set the receiver's 'offBmi' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_offBmi put: anInteger! !
+
 !EMRCREATEMONOBRUSH categoriesForMethods!
 cbBits!**compiled accessors**!public! !
 cbBits:!**compiled accessors**!public! !
@@ -144,6 +150,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_CREATEMONOBRUSH! !
+
 !EMRCREATEMONOBRUSH class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

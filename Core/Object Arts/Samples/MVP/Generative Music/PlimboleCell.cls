@@ -5,9 +5,13 @@ Object subclass: #PlimboleCell
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 PlimboleCell guid: (GUID fromString: '{a9d9ae5c-52b6-43b7-9e6c-1bb39ef49f8a}')!
+
 PlimboleCell comment: ''!
+
 !PlimboleCell categoriesForClass!Kernel-Objects! !
+
 !PlimboleCell methodsFor!
 
 arrowImage
@@ -98,6 +102,7 @@ x
 
 y
 	^self location y! !
+
 !PlimboleCell categoriesForMethods!
 arrowImage!private! !
 color!accessing!public! !
@@ -132,6 +137,7 @@ location: aLocationPoint direction: directionIndex
 	^(super new)
 		setLocation: aLocationPoint direction: directionIndex;
 		yourself! !
+
 !PlimboleCell class categoriesForMethods!
 arrowIcon!public! !
 icon!constants!public! !

@@ -9,7 +9,6 @@ TreePresenter was originally packaged in the base MVP package, but this causes t
 
 package basicPackageVersion: '6.0'.
 
-
 package classNames
 	add: #TreePresenter;
 	yourself.
@@ -36,11 +35,6 @@ SelectableItemsPresenter subclass: #TreePresenter
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

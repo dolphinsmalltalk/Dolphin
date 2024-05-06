@@ -5,7 +5,9 @@ IDispatch subclass: #ISchemaItemCollection
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
 	classInstanceVariableNames: ''!
+
 ISchemaItemCollection guid: (IID fromString: '{50ea08b2-dd1b-4664-9a50-c2f40f4bd79a}')!
+
 ISchemaItemCollection comment: '<ISchemaItemCollection> is a wrapper class for the COM interface ''MSXML2.ISchemaItemCollection'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
@@ -45,7 +47,9 @@ interface ISchemaItemCollection : IDispatch
 		[out, retval]IUnknown** ppUnk);
 };
 '!
+
 !ISchemaItemCollection categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+
 !ISchemaItemCollection methodsFor!
 
 _newEnum
@@ -158,6 +162,7 @@ length
 	self get_length: answer.
 	^answer asObject
 ! !
+
 !ISchemaItemCollection categoriesForMethods!
 _newEnum!**auto generated**!properties!public! !
 get__newEnum:!**auto generated**!COM Interfaces-ISchemaItemCollection!private! !
@@ -191,6 +196,7 @@ defineFunctions
 		defineFunction: #get__newEnum:
 			argumentTypes: 'IUnknown**'
 ! !
+
 !ISchemaItemCollection class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

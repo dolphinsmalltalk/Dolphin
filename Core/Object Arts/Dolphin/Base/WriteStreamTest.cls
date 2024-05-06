@@ -5,9 +5,13 @@ PositionableStreamTest subclass: #WriteStreamTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 WriteStreamTest guid: (GUID fromString: '{9d14176b-5486-40dc-bc22-694add104427}')!
+
 WriteStreamTest comment: ''!
+
 !WriteStreamTest categoriesForClass!Unclassified! !
+
 !WriteStreamTest methodsFor!
 
 streamClass
@@ -130,6 +134,7 @@ testUpToUtf
 	| stream |
 	stream := self streamOn: '1£/🐬'.
 	self readOperationNotImplemented: [stream upTo: Character dolphin]! !
+
 !WriteStreamTest categoriesForMethods!
 streamClass!helpers!private! !
 streamOn:!helpers!private! !
@@ -157,6 +162,7 @@ allTestSelectors
 	| roCategory |
 	roCategory := 'gettableStream only' asMethodCategory.
 	^super allTestSelectors reject: [:each | roCategory includesMethod: (self lookupMethod: each)]! !
+
 !WriteStreamTest class categoriesForMethods!
 allTestSelectors!Accessing!public! !
 !

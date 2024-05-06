@@ -428,906 +428,1087 @@ Object subclass: #Canvas
 	classVariableNames: 'DesktopResolution'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 Object subclass: #Clipboard
 	instanceVariableNames: 'isOpen registeredFormats idToName'
 	classVariableNames: 'Current'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 Object subclass: #Color
 	instanceVariableNames: ''
 	classVariableNames: 'Black ColorNames CommonColors Default Face3d NamedColors None White Window WindowText'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #Command
 	instanceVariableNames: 'commandDescription receiver undoAction redoAction isBenign'
 	classVariableNames: 'Current'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #CommandDescription
 	instanceVariableNames: 'command description acceleratorKey flags image'
 	classVariableNames: 'CommandDescriptionRegistry CurrentId DefaultMask ModalMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #CommandPolicy
 	instanceVariableNames: 'source path'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #CommandQuery
 	instanceVariableNames: 'commandDescription receiver source text flags image'
 	classVariableNames: 'CheckedMask DefaultMask EnabledMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #DisplayMonitor
 	instanceVariableNames: 'handle info devices'
 	classVariableNames: 'MONITOR_DEFAULTTONEAREST MONITOR_DEFAULTTONULL MONITOR_DEFAULTTOPRIMARY'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #DragDropObject
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #DragDropSession
 	instanceVariableNames: 'dragSource dragPoint suggestedSource dragObjects defaultOperation dropTarget suggestedTarget operationsSupportedByDropTarget operation inDropTargetScrollZone dragImages scrollProcess'
 	classVariableNames: 'Current DefaultImages OperationDescriptions'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 Object subclass: #Event
 	instanceVariableNames: 'window'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #FindDetails
 	instanceVariableNames: 'pattern replaceWith searchMode flags action'
 	classVariableNames: 'IgnoreCaseMask UpMask WholeWordMask WrapMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #FramingCalculation
 	instanceVariableNames: 'name framingBlock offsetBlock flags'
 	classVariableNames: 'Calculations IndependentMask ProportionalMask VerticalMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #FramingConstraints
 	instanceVariableNames: 'leftFraming leftOffset rightFraming rightOffset topFraming topOffset bottomFraming bottomOffset'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #FramingContext
 	instanceVariableNames: 'layoutContext view rectangle parentRect'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #GraphicsTool
 	instanceVariableNames: 'handle ownsHandle'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 Object subclass: #Grid
 	instanceVariableNames: 'resolution'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #HistoryList
 	instanceVariableNames: 'history position maxAge searchPolicy'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #ImageManager
 	instanceVariableNames: 'images imageLists maskcolor backcolor'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 Object subclass: #Interactor
 	instanceVariableNames: 'presenter'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 Object subclass: #LayoutContext
 	instanceVariableNames: 'container positions'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 Object subclass: #LayoutManager
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #MenuItem
 	instanceVariableNames: 'flags'
 	classVariableNames: 'Dividers StringSeparator StylesMask'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 Object subclass: #Presenter
 	instanceVariableNames: 'model view parentPresenter events subPresenters names helpId'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 Object subclass: #SystemMetrics
 	instanceVariableNames: 'menuCheckExtent smallIconExtent largeIconExtent dragHysteresis scrollThumbExtent sizingFrameExtent dialogFrameExtent borderExtent nonClientMetrics menuFont edgeExtent hasFlatMenus iconTitleFont hasSmoothScrollingLists isVistaOrLater defaultColorDepth hasIconScaleDown isNotWine'
 	classVariableNames: 'Current'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 Object subclass: #View
 	instanceVariableNames: 'handle creationParent creationStyle presenter model backcolor preferredExtent flags contextMenu font events interactor'
 	classVariableNames: 'CreateCenteredMask DragSourceMask DropTargetMask LayoutValidMask ManagedMask MessageMap MinimizedMask NextId NoInheritMenuMask StateRestoringMask UIValidMask UsePreferredExtentMask ViewClosedError WndClassAtom'
 	poolDictionaries: 'Win32Constants Win32Errors'
 	classInstanceVariableNames: 'theme'!
+
 Object subclass: #ViewState
 	instanceVariableNames: 'view state placement subViewStates'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Canvas subclass: #PrinterCanvas
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Color subclass: #AbstractRGB
 	instanceVariableNames: 'code'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Color subclass: #IndexedColor
 	instanceVariableNames: 'index'
 	classVariableNames: 'InstancesByIndex InstancesByName Names'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Color subclass: #SystemColor
 	instanceVariableNames: 'id'
 	classVariableNames: 'ColorsById NamesById'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 Color subclass: #VirtualColor
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AbstractRGB subclass: #ARGB
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AbstractRGB subclass: #ColorRef
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ColorRef subclass: #ColorDefault
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ColorRef subclass: #ColorNone
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ColorRef subclass: #RGB
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 VirtualColor subclass: #PluggableColor
 	instanceVariableNames: 'valuable'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 VirtualColor subclass: #ThemeColor
 	instanceVariableNames: 'name actualColor'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 CommandDescription subclass: #ClosedCommandDescription
 	instanceVariableNames: 'queryBlock receiver'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 CommandPolicy subclass: #DelegatingCommandPolicy
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 CommandPolicy subclass: #LegacyCommandPolicy
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DragDropObject subclass: #InternalDragDropObject
 	instanceVariableNames: 'availableFormats'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DragDropSession subclass: #InternalDragDropSession
 	instanceVariableNames: 'lastImageKey imageList oldCursor dragButton operationDescriptions'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Event subclass: #SelectionChangeEvent
 	instanceVariableNames: 'newSelections oldSelections cause'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Event subclass: #WindowsEvent
 	instanceVariableNames: 'message wParam lParam lResult'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 SelectionChangeEvent subclass: #SelectionChangedEvent
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SelectionChangeEvent subclass: #SelectionChangingEvent
 	instanceVariableNames: 'permit'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 WindowsEvent subclass: #ColorEvent
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 WindowsEvent subclass: #KeyEvent
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 WindowsEvent subclass: #PaintEvent
 	instanceVariableNames: 'hdc paintStruct'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 WindowsEvent subclass: #PointEvent
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 WindowsEvent subclass: #PositionEvent
 	instanceVariableNames: 'lpwp'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 WindowsEvent subclass: #ScrollEvent
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 WindowsEvent subclass: #SettingsChangeEvent
 	instanceVariableNames: 'area'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 WindowsEvent subclass: #SizeEvent
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PointEvent subclass: #MouseEvent
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MouseEvent subclass: #MouseWheelEvent
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalLibrary subclass: #CommCtrlLibrary
 	instanceVariableNames: ''
 	classVariableNames: 'InitFlags'
 	poolDictionaries: 'CommCtrlConstants'
 	classInstanceVariableNames: ''!
+
 ExternalLibrary subclass: #DwmApiLibrary
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalLibrary subclass: #HTMLHelpLibrary
 	instanceVariableNames: 'cookie'
 	classVariableNames: ''
 	poolDictionaries: 'HTMLHelpConstants'
 	classInstanceVariableNames: ''!
+
 ExternalLibrary subclass: #ThemeLibrary
 	instanceVariableNames: ''
 	classVariableNames: 'IsAppThemed'
 	poolDictionaries: 'ThemeConstants'
 	classInstanceVariableNames: ''!
+
 PermanentLibrary subclass: #GDILibrary
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ThemeLibrary subclass: #MockThemeLibrary
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ThemeLibrary subclass: #VistaThemeLibrary
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalStructure subclass: #DEVMODE
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_dmBitsPerPel _OffsetOf_dmCollate _OffsetOf_dmColor _OffsetOf_dmCopies _OffsetOf_dmDefaultSource _OffsetOf_dmDeviceName _OffsetOf_dmDisplayFlags _OffsetOf_dmDisplayFrequency _OffsetOf_dmDitherType _OffsetOf_dmDriverExtra _OffsetOf_dmDriverVersion _OffsetOf_dmDuplex _OffsetOf_dmFields _OffsetOf_dmFormName _OffsetOf_dmICMIntent _OffsetOf_dmICMMethod _OffsetOf_dmLogPixels _OffsetOf_dmMediaType _OffsetOf_dmOrientation _OffsetOf_dmPaperLength _OffsetOf_dmPaperSize _OffsetOf_dmPaperWidth _OffsetOf_dmPelsHeight _OffsetOf_dmPelsWidth _OffsetOf_dmPrintQuality _OffsetOf_dmReserved1 _OffsetOf_dmReserved2 _OffsetOf_dmScale _OffsetOf_dmSize _OffsetOf_dmSpecVersion _OffsetOf_dmTTOption _OffsetOf_dmYResolution'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalStructure subclass: #ExternalSize
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalStructure subclass: #NCCALCSIZE_PARAMS
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_lppos _OffsetOf_rgrc'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalPoint subclass: #POINTF
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_x _OffsetOf_y'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalSize subclass: #SIZE
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_cx _OffsetOf_cy'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #AbstractLOGFONT
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_lfCharSet _OffsetOf_lfClipPrecision _OffsetOf_lfEscapement _OffsetOf_lfHeight _OffsetOf_lfItalic _OffsetOf_lfOrientation _OffsetOf_lfOutPrecision _OffsetOf_lfPitchAndFamily _OffsetOf_lfQuality _OffsetOf_lfStrikeOut _OffsetOf_lfUnderline _OffsetOf_lfWeight _OffsetOf_lfWidth'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #ACCEL
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_cmd _OffsetOf_fVirt _OffsetOf_key'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #BITMAP
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_bmBits _OffsetOf_bmBitsPixel _OffsetOf_bmHeight _OffsetOf_bmPlanes _OffsetOf_bmType _OffsetOf_bmWidth _OffsetOf_bmWidthBytes'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #BITMAPINFO
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_bmiColors _OffsetOf_bmiHeader'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #BITMAPINFOHEADER
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_biBitCount _OffsetOf_biClrImportant _OffsetOf_biClrUsed _OffsetOf_biCompression _OffsetOf_biHeight _OffsetOf_biPlanes _OffsetOf_biSizeImage _OffsetOf_biWidth _OffsetOf_biXPelsPerMeter _OffsetOf_biYPelsPerMeter _OffsetOf_dwSize'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #BLENDFUNCTION
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_AlphaFormat _OffsetOf_BlendFlags _OffsetOf_BlendOp _OffsetOf_SourceConstantAlpha'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #BP_ANIMATIONPARAMS
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_dwDuration _OffsetOf_dwFlags _OffsetOf_dwSize _OffsetOf_style'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #BP_PAINTPARAMS
 	instanceVariableNames: 'blendFunction'
 	classVariableNames: '_OffsetOf_dwFlags _OffsetOf_dwSize _OffsetOf_pBlendFunction _OffsetOf_prcExclude'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #CHARRANGE
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_cpMax _OffsetOf_cpMin'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #DIBSECTION
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_dsBitfields _OffsetOf_dsBm _OffsetOf_dsBmih _OffsetOf_dshSection _OffsetOf_dsOffset'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #DISPLAY_DEVICEW
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_DeviceID _OffsetOf_DeviceKey _OffsetOf_DeviceName _OffsetOf_DeviceString _OffsetOf_dwSize _OffsetOf_StateFlags DISPLAY_DEVICE_ATTACHED_TO_DESKTOP DISPLAY_DEVICE_MIRRORING_DRIVER DISPLAY_DEVICE_MULTI_DRIVER DISPLAY_DEVICE_PRIMARY_DEVICE DISPLAY_DEVICE_VGA_COMPATIBLE'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #DOCINFOW
 	instanceVariableNames: 'docName'
 	classVariableNames: '_OffsetOf_dwSize _OffsetOf_fwType _OffsetOf_lpszDatatype _OffsetOf_lpszDocName _OffsetOf_lpszOutput'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #DRAWITEMSTRUCT
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_CtlID _OffsetOf_CtlType _OffsetOf_hDC _OffsetOf_hwndItem _OffsetOf_itemAction _OffsetOf_itemData _OffsetOf_itemID _OffsetOf_itemState _OffsetOf_rcItem'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #DTBGOPTS
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_dwFlags _OffsetOf_dwSize _OffsetOf_rcClip'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #FLASHWINFO
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_dwFlags _OffsetOf_dwSize _OffsetOf_dwTimeout _OffsetOf_hwnd _OffsetOf_uCount'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #GRADIENT_RECT
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_lowerRight _OffsetOf_upperLeft'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #GRADIENT_TRIANGLE
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_Vertex1 _OffsetOf_Vertex2 _OffsetOf_Vertex3'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #ICONINFO
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_fIcon _OffsetOf_hbmColor _OffsetOf_hbmMask _OffsetOf_xHotspot _OffsetOf_yHotspot'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #LASTINPUTINFO
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_dwSize _OffsetOf_dwTime'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #LOGBRUSH
 	instanceVariableNames: 'hatch'
 	classVariableNames: '_OffsetOf_lbColor _OffsetOf_lbHatch _OffsetOf_lbStyle'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #LOGPALETTE
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_palNumEntries _OffsetOf_palPalEntry _OffsetOf_palVersion'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #LOGPEN
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_lopnColor _OffsetOf_lopnStyle _OffsetOf_lopnWidth'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #MARGINS
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_cxLeftWidth _OffsetOf_cxRightWidth _OffsetOf_cyBottomHeight _OffsetOf_cyTopHeight'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #MEASUREITEMSTRUCT
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_CtlID _OffsetOf_CtlType _OffsetOf_itemData _OffsetOf_itemHeight _OffsetOf_itemID _OffsetOf_itemWidth'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #MENUINFO
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_cyMax _OffsetOf_dwContextHelpID _OffsetOf_dwMenuData _OffsetOf_dwSize _OffsetOf_dwStyle _OffsetOf_fMask _OffsetOf_hbrBack'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #MENUITEMINFOW
 	instanceVariableNames: 'text bitmap'
 	classVariableNames: '_OffsetOf_cch _OffsetOf_dwItemData _OffsetOf_dwSize _OffsetOf_dwTypeData _OffsetOf_fMask _OffsetOf_fState _OffsetOf_fType _OffsetOf_hbmpChecked _OffsetOf_hbmpItem _OffsetOf_hbmpUnchecked _OffsetOf_hSubMenu _OffsetOf_wID'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #MINMAXINFO
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_ptMaxPosition _OffsetOf_ptMaxSize _OffsetOf_ptMaxTrackSize _OffsetOf_ptMinTrackSize _OffsetOf_ptReserved'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #MONITORINFO
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_dwFlags _OffsetOf_dwSize _OffsetOf_rcMonitor _OffsetOf_rcWork MONITORINFOF_PRIMARY'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #NMHDR
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_code _OffsetOf_hwndFrom _OffsetOf_idFrom'
 	poolDictionaries: 'CommCtrlConstants'
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #NONCLIENTMETRICSW
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_dwSize _OffsetOf_iBorderWidth _OffsetOf_iCaptionHeight _OffsetOf_iCaptionWidth _OffsetOf_iMenuHeight _OffsetOf_iMenuWidth _OffsetOf_iPaddedBorderWidth _OffsetOf_iScrollHeight _OffsetOf_iScrollWidth _OffsetOf_iSmCaptionHeight _OffsetOf_iSmCaptionWidth _OffsetOf_lfCationFont _OffsetOf_lfMenuFont _OffsetOf_lfMessageFont _OffsetOf_lfSmCaptionFont _OffsetOf_lfStatusFont'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #NOTIFYICONDATAW
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_dwSize _OffsetOf_hIcon _OffsetOf_hWnd _OffsetOf_szTip _OffsetOf_uCallbackMessage _OffsetOf_uFlags _OffsetOf_uID'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #OUTLINETEXTMETRICW
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_dwSize _OffsetOf_otmAscent _OffsetOf_otmDescent _OffsetOf_otmEMSquare _OffsetOf_otmFiller _OffsetOf_otmfsSelection _OffsetOf_otmfsType _OffsetOf_otmItalicAngle _OffsetOf_otmLineGap _OffsetOf_otmMacAscent _OffsetOf_otmMacDescent _OffsetOf_otmMacLineGap _OffsetOf_otmPanoseNumber _OffsetOf_otmpFaceName _OffsetOf_otmpFamilyName _OffsetOf_otmpFullName _OffsetOf_otmpStyleName _OffsetOf_otmptSubscriptOffset _OffsetOf_otmptSubscriptSize _OffsetOf_otmptSuperscriptOffset _OffsetOf_otmptSuperscriptSize _OffsetOf_otmrcFontBox _OffsetOf_otmsCapEmHeight _OffsetOf_otmsCharSlopeRise _OffsetOf_otmsCharSlopeRun _OffsetOf_otmsStrikeoutPosition _OffsetOf_otmsStrikeoutSize _OffsetOf_otmsUnderscorePosition _OffsetOf_otmsUnderscoreSize _OffsetOf_otmsXHeight _OffsetOf_otmTextMetrics _OffsetOf_otmusMinimumPPEM'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #PAINTSTRUCT
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_fErase _OffsetOf_fIncUpdate _OffsetOf_fRestore _OffsetOf_hdc _OffsetOf_rcPaint _OffsetOf_rgbReserved'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #PALETTEENTRY
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_peBlue _OffsetOf_peFlags _OffsetOf_peGreen _OffsetOf_peRed'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #PANOSE
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_bArmStyle _OffsetOf_bContrast _OffsetOf_bFamilyType _OffsetOf_bLetterform _OffsetOf_bMidline _OffsetOf_bProportion _OffsetOf_bSerifStyle _OffsetOf_bStrokeVariation _OffsetOf_bWeight _OffsetOf_bXHeight'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #RGBQUAD
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_rgbBlue _OffsetOf_rgbGreen _OffsetOf_rgbRed _OffsetOf_rgbReserved'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #RGNDATA
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_dwSize _OffsetOf_iType _OffsetOf_nCount _OffsetOf_nRgnSize _OffsetOf_rcBound'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #SCROLLINFO
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_dwSize _OffsetOf_fMask _OffsetOf_nMax _OffsetOf_nMin _OffsetOf_nPage _OffsetOf_nPos _OffsetOf_nTrackPos'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #TEXTMETRICW
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_tmAscent _OffsetOf_tmAveCharWidth _OffsetOf_tmBreakChar _OffsetOf_tmCharSet _OffsetOf_tmDefaultChar _OffsetOf_tmDescent _OffsetOf_tmDigitizedAspectX _OffsetOf_tmDigitizedAspectY _OffsetOf_tmExternalLeading _OffsetOf_tmFirstChar _OffsetOf_tmHeight _OffsetOf_tmInternalLeading _OffsetOf_tmItalic _OffsetOf_tmLastChar _OffsetOf_tmMaxCharWidth _OffsetOf_tmOverhang _OffsetOf_tmPitchAndFamily _OffsetOf_tmStruckOut _OffsetOf_tmUnderlined _OffsetOf_tmWeight'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #TRACKMOUSEEVENT
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_dwFlags _OffsetOf_dwHoverTime _OffsetOf_dwSize _OffsetOf_hwndTrack'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #TRIVERTEX
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_alpha _OffsetOf_blue _OffsetOf_green _OffsetOf_red _OffsetOf_x _OffsetOf_y'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #WINDOWPLACEMENT
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_dwSize _OffsetOf_flags _OffsetOf_ptMaxPosition _OffsetOf_ptMinPosition _OffsetOf_rcNormalPosition _OffsetOf_showCmd'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #WINDOWPOS
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_cx _OffsetOf_cy _OffsetOf_flags _OffsetOf_hwnd _OffsetOf_hwndInsertAfter _OffsetOf_x _OffsetOf_y'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #WNDCLASS
 	instanceVariableNames: 'menuName className'
 	classVariableNames: '_OffsetOf_cbClsExtra _OffsetOf_cbWndExtra _OffsetOf_hbrBackground _OffsetOf_hCursor _OffsetOf_hIcon _OffsetOf_hInstance _OffsetOf_lpfnWndProc _OffsetOf_lpszClassName _OffsetOf_lpszMenuName _OffsetOf_style'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AbstractLOGFONT subclass: #LOGFONT
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_lfFaceName'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AbstractLOGFONT subclass: #LOGFONTW
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_lfFaceName'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MONITORINFO subclass: #MONITORINFOEXW
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_szDevice'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 NMHDR subclass: #NMTTDISPINFOW
 	instanceVariableNames: 'text'
 	classVariableNames: '_OffsetOf_hinst _OffsetOf_lParam _OffsetOf_lpszText _OffsetOf_szText _OffsetOf_uFlags'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TEXTMETRICW subclass: #NEWTEXTMETRICW
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_ntmAvgWidth _OffsetOf_ntmCellHeight _OffsetOf_ntmFlags _OffsetOf_ntmSizeEM'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GraphicsTool subclass: #AcceleratorTable
 	instanceVariableNames: 'commands'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GraphicsTool subclass: #Brush
 	instanceVariableNames: 'logBrush'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GraphicsTool subclass: #Font
 	instanceVariableNames: 'logfont resolution'
 	classVariableNames: 'System'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GraphicsTool subclass: #Image
 	instanceVariableNames: 'fileLocator identifier instanceHandle'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GraphicsTool subclass: #Menu
 	instanceVariableNames: 'items text name flags image imageManager id _reserved1 _reserved2'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GraphicsTool subclass: #Pen
 	instanceVariableNames: 'logPen'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GraphicsTool subclass: #Region
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GraphicsTool subclass: #WinImageList
 	instanceVariableNames: 'extent initialSize growBy createFlags'
 	classVariableNames: ''
 	poolDictionaries: 'CommCtrlConstants'
 	classInstanceVariableNames: ''!
+
 Brush subclass: #HatchBrush
 	instanceVariableNames: 'id color'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Brush subclass: #StockBrush
 	instanceVariableNames: 'id'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StockBrush subclass: #SysColorBrush
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Font subclass: #StockFont
 	instanceVariableNames: 'id'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Image subclass: #Bitmap
 	instanceVariableNames: 'hdc flags extent'
 	classVariableNames: 'IsSharedMask Map3DColorsMask SharedBitmaps'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Image subclass: #Icon
 	instanceVariableNames: ''
 	classVariableNames: 'Blank DefaultApplication Error Information Question Warning WinLogo'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Bitmap subclass: #DIBSection
 	instanceVariableNames: 'depth imageBits'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Icon subclass: #Cursor
 	instanceVariableNames: ''
 	classVariableNames: 'AppStarting Arrow Cross Current DDCopy DDCopyScroll DDLink DDLinkScroll DDMove DDMoveScroll DDNone Hand Help IBeam No SizeAll SizeNESW SizeNS SizeNWSE SizeWE SplitHorizontal SplitVertical UpArrow Wait'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Icon subclass: #NullIcon
 	instanceVariableNames: ''
 	classVariableNames: 'Current'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Menu subclass: #MenuBar
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Pen subclass: #StockPen
 	instanceVariableNames: 'id'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ImageManager subclass: #IconImageManager
 	instanceVariableNames: 'bitmaps'
 	classVariableNames: 'Current'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 InputState subclass: #GuiInputState
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Interactor subclass: #CapturingInteractor
 	instanceVariableNames: 'oldInteractor stateFlags'
 	classVariableNames: 'HotMask LeftDownMask MiddleDownMask RightDownMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 CapturingInteractor subclass: #MouseTracker
 	instanceVariableNames: 'dragButton target startPoint startPointLocal origin hysteresis _unused10 trackPosition constrain'
 	classVariableNames: 'TrackingMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MouseTracker subclass: #DraggableViewInteractor
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 LayoutManager subclass: #BorderLayout
 	instanceVariableNames: 'horizontalGap verticalGap north south east west center'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 LayoutManager subclass: #FlowLayout
 	instanceVariableNames: 'horizontalGap verticalGap flags'
 	classVariableNames: 'AlignmentMap AlignmentMask'
 	poolDictionaries: 'AlignmentFlags'
 	classInstanceVariableNames: ''!
+
 LayoutManager subclass: #FramingLayout
 	instanceVariableNames: 'framings'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 LayoutManager subclass: #GridLayout
 	instanceVariableNames: 'rows columns horizontalGap verticalGap'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 LayoutManager subclass: #LinearLayout
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 LinearLayout subclass: #ProportionalLayout
 	instanceVariableNames: 'proportions isVertical'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MenuItem subclass: #CommandMenuItem
 	instanceVariableNames: 'commandDescription image _reserved'
 	classVariableNames: 'IsDefaultMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MenuItem subclass: #DividerMenuItem
 	instanceVariableNames: ''
 	classVariableNames: 'BarBreak Break DividerLookup Separator'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Presenter subclass: #SelectableItemsPresenter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Presenter subclass: #Shell
 	instanceVariableNames: 'caption commandHistory'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Presenter subclass: #ValuePresenter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Shell subclass: #Dialog
 	instanceVariableNames: 'confirmed ownerView'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Dialog subclass: #ValueDialog
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SessionManager subclass: #GUISessionManager
 	instanceVariableNames: 'savedWindows'
 	classVariableNames: 'NoSplashMask UnattendedMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GUISessionManager subclass: #RuntimeSessionManager
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RuntimeSessionManager subclass: #DefaultShellSessionManager
 	instanceVariableNames: 'mainShellClass'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 STBProxy subclass: #STBViewProxy
 	instanceVariableNames: 'viewClass instVars state placement subViews resolution events version'
 	classVariableNames: 'CreationParentIndex CreationStyleIndex EventsIndex HandleIndex'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 View subclass: #AbstractDelegatingView
 	instanceVariableNames: 'resourceIdentifier referee'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 View subclass: #ContainerView
 	instanceVariableNames: 'layoutManager names insets'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 View subclass: #ControlView
 	instanceVariableNames: 'forecolor oldWndProc'
 	classVariableNames: 'CommonControlCallError'
 	poolDictionaries: 'CommCtrlConstants'
 	classInstanceVariableNames: ''!
+
 View subclass: #DesktopView
 	instanceVariableNames: 'resolution defaultExtentBlock dvReserved1 dvReserved2'
 	classVariableNames: 'Current'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 View subclass: #DoubleBufferedView
 	instanceVariableNames: 'backSurface requiresRender'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 View subclass: #Splitter
 	instanceVariableNames: ''
 	classVariableNames: 'FlatMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AbstractDelegatingView subclass: #AbstractNonReferenceDelegatingView
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AbstractDelegatingView subclass: #ReferenceView
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ContainerView subclass: #ShellView
 	instanceVariableNames: 'menuBar acceleratorTable combinedAcceleratorTable lastFocus defaultButton largeIcon smallIcon maxExtent minExtent flashes svFlags _svReserved2'
 	classVariableNames: 'CreateHookBlock DefaultButtonIndex DefaultExtentBlock DialogMessageMap TransientMask'
 	poolDictionaries: 'ButtonConstants'
 	classInstanceVariableNames: ''!
+
 ShellView subclass: #DialogView
 	instanceVariableNames: 'endModal isModal oldWndProc'
 	classVariableNames: 'InProcLoopMask'
 	poolDictionaries: 'ThemeConstants'
 	classInstanceVariableNames: ''!
+
 ShellView subclass: #Splash
 	instanceVariableNames: 'splashDelay bitmap overlayWith'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 ControlView subclass: #CommandButton
 	instanceVariableNames: 'commandDescription'
 	classVariableNames: 'StandardCommands'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ControlView subclass: #GroupBox
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ButtonConstants'
 	classInstanceVariableNames: ''!
+
 ControlView subclass: #StaticRectangle
 	instanceVariableNames: ''
 	classVariableNames: 'StyleMap'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ControlView subclass: #ValueConvertingControlView
 	instanceVariableNames: 'typeconverter'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 CommandButton subclass: #PushButton
 	instanceVariableNames: 'image isDefault note _reserved1 _reserved2'
 	classVariableNames: 'ButtonStyleMap'
 	poolDictionaries: 'ButtonConstants'
 	classInstanceVariableNames: ''!
+
 ValueConvertingControlView subclass: #CheckButton
 	instanceVariableNames: 'image'
 	classVariableNames: 'AlignmentMap'
 	poolDictionaries: 'ButtonConstants'
 	classInstanceVariableNames: ''!
+
 ValueConvertingControlView subclass: #StaticView
 	instanceVariableNames: 'unused'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 CheckButton subclass: #CheckBox
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StaticView subclass: #ImageViewAbstract
 	instanceVariableNames: 'image viewMode ivFlags insets imageBorder'
 	classVariableNames: 'DoubleBufferMask EdgeStyles EraseWholeMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StaticView subclass: #StaticText
 	instanceVariableNames: ''
 	classVariableNames: 'AlignmentMap'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StaticText subclass: #StaticPath
 	instanceVariableNames: 'text'
 	classVariableNames: ''
@@ -1347,6 +1528,7 @@ copyToClipboard
 	"Copy the #String format of the receiver to the clipboard."
 
 	Clipboard current setRegisteredFormat: #AnsiString data: self! !
+
 !AnsiString categoriesForMethods!
 copyToClipboard!copying!public! !
 !
@@ -1361,6 +1543,7 @@ defaultIcon
 	^(self environment at: #Icon) fromId: self defaultIconName.
 
 	! !
+
 !ClassDescription categoriesForMethods!
 defaultIcon!constants!public! !
 !
@@ -1371,6 +1554,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon! !
+
 !ConsoleSessionManager class categoriesForMethods!
 icon!constants!development!public! !
 !
@@ -1385,6 +1569,7 @@ getConsoleWindow
 
 	<stdcall: handle GetConsoleWindow>
 	^self invalidCall: _failureCode! !
+
 !KernelLibrary categoriesForMethods!
 getConsoleWindow!**auto generated**!public!win32 functions-console! !
 !
@@ -1399,6 +1584,7 @@ queryCommand: query
 
 	query isEnabled: true; receiver: self receiver.
 	^true! !
+
 !MessageSend categoriesForMethods!
 queryCommand:!commands!private! !
 !
@@ -1417,6 +1603,7 @@ icon
 
 iconImageIndex
 	^self icon imageIndex! !
+
 !Object categoriesForMethods!
 addToImageList:mask:!double dispatch!private! !
 icon!constants!public! !
@@ -1434,6 +1621,7 @@ icon
 	from an ExternalResourceLibrary other than the system default."
 
 	^##(self) defaultIcon! !
+
 !Object class categoriesForMethods!
 icon!constants!public! !
 !
@@ -1476,6 +1664,7 @@ show
 
 	^self owningClass show: self name.
 ! !
+
 !ResourceIdentifier categoriesForMethods!
 canShow!public!testing! !
 fixupIcon!helpers!private! !
@@ -1498,6 +1687,7 @@ setTextInto: aView
 	message back to aView."
 
 	aView plainText: self! !
+
 !String categoriesForMethods!
 copyToClipboard!copying!public! !
 setTextInto:!double dispatch!private! !
@@ -1509,6 +1699,7 @@ copyToClipboard
 	"Copy the #String format of the receiver to the clipboard."
 
 	Clipboard current setRegisteredFormat: #String data: self! !
+
 !Symbol categoriesForMethods!
 copyToClipboard!copying!public! !
 !
@@ -1517,6 +1708,7 @@ copyToClipboard!copying!public! !
 
 asResourceId
 	^self! !
+
 !UndefinedObject categoriesForMethods!
 asResourceId!converting!public! !
 !
@@ -3155,6 +3347,7 @@ windowFromPoint: aPOINTL
 
 	<stdcall: handle WindowFromPoint POINTL>
 	^self invalidCall: _failureCode! !
+
 !UserLibrary categoriesForMethods!
 adjustWindowRectEx:dwStyle:bMenu:dwExStyle:!public!win32 functions-coordinate space and transformation! !
 animateWindow:dwTime:dwFlags:!**auto generated**!public! !

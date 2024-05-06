@@ -5,9 +5,13 @@ STBProxy subclass: #STBResourceSTBByteArrayAccessorProxy
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 STBResourceSTBByteArrayAccessorProxy guid: (GUID fromString: '{87b4c6f0-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 STBResourceSTBByteArrayAccessorProxy comment: ''!
+
 !STBResourceSTBByteArrayAccessorProxy categoriesForClass!System-Binary storage! !
+
 !STBResourceSTBByteArrayAccessorProxy methodsFor!
 
 bytes: aByteArray
@@ -26,6 +30,7 @@ stbFixup: inFiler at: anInteger
 	(accessor := ResourceSTBByteArrayAccessor onByteArray: bytes) classLocator: classLocator.
 
 	self become: accessor! !
+
 !STBResourceSTBByteArrayAccessorProxy categoriesForMethods!
 bytes:!accessing!private! !
 stbFixup:at:!converting!public! !
@@ -46,6 +51,7 @@ forAccessor: aResourceSTBByteArrayAccessor
 	^self basicNew
 		bytes: aResourceSTBByteArrayAccessor byteArray;
 		yourself! !
+
 !STBResourceSTBByteArrayAccessorProxy class categoriesForMethods!
 for:!instance creation!public! !
 forAccessor:!instance creation!public! !

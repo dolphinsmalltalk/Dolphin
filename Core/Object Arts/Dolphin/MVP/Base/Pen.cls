@@ -5,14 +5,18 @@ GraphicsTool subclass: #Pen
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Pen guid: (GUID fromString: '{87b4c637-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Pen comment: 'Pen is a <GraphicsTool> that wraps a Windows GDI Pen object. Pens are selected into <Canvas>s to draw lines in various styles, widths, and colours.
 
 Instance Variables:
 	logPen	<LOGPEN>. Logical description of the pen.
 
 '!
+
 !Pen categoriesForClass!Graphics-Tools! !
+
 !Pen methodsFor!
 
 color
@@ -72,6 +76,7 @@ width: anInteger
 	self width = anInteger ifTrue: [^self].
 	logPen width: anInteger.
 	self free! !
+
 !Pen categoriesForMethods!
 color!accessing!public! !
 color:!accessing!public! !
@@ -185,6 +190,7 @@ withStyleName: aString
 		withStyle: (self styleNames indexOf: aString) - 1
 		width: 0
 		color: Color black! !
+
 !Pen class categoriesForMethods!
 black!instance creation!public! !
 blue!instance creation!public! !

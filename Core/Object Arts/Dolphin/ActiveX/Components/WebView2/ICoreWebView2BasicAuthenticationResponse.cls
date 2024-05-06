@@ -5,7 +5,9 @@ ICoreWebView2Interface subclass: #ICoreWebView2BasicAuthenticationResponse
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2BasicAuthenticationResponse guid: (IID fromString: '{07023f7d-2d77-4d67-9040-6e7d428c6a40}')!
+
 ICoreWebView2BasicAuthenticationResponse comment: '`ICoreWebView2BasicAuthenticationResponse` is a wrapper class for the COM interface ''WebView2.ICoreWebView2BasicAuthenticationResponse'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -35,7 +37,9 @@ interface ICoreWebView2BasicAuthenticationResponse : IUnknown
 };
 ```
 '!
+
 !ICoreWebView2BasicAuthenticationResponse categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2BasicAuthenticationResponse methodsFor!
 
 get_Password: password
@@ -114,6 +118,7 @@ userName: userName
 	"Set the 'UserName' property of the receiver to the <lpwstr> value of the argument."
 
 	self put_UserName: userName asUtf16String! !
+
 !ICoreWebView2BasicAuthenticationResponse categoriesForMethods!
 get_Password:!**auto generated**!COM Interfaces-ICoreWebView2BasicAuthenticationResponse!private! !
 get_UserName:!**auto generated**!COM Interfaces-ICoreWebView2BasicAuthenticationResponse!private! !
@@ -142,6 +147,7 @@ defineFunctions
 		defineFunction: #put_Password:
 			argumentTypes: 'lpwstr'
 ! !
+
 !ICoreWebView2BasicAuthenticationResponse class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

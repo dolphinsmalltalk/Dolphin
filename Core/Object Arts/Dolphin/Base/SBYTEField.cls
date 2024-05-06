@@ -5,9 +5,13 @@ ScalarField subclass: #SBYTEField
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SBYTEField guid: (GUID fromString: '{d9145096-c1d5-4c8d-b640-605d284b0c42}')!
+
 SBYTEField comment: ''!
+
 !SBYTEField categoriesForClass!External-Data-Types! !
+
 !SBYTEField methodsFor!
 
 accessorMessage
@@ -26,6 +30,7 @@ writeInto: anExternalStructure value: anInteger
 	anExternalStructure, at the receiver's offset."
 
 	^anExternalStructure bytes sbyteAtOffset: offset put: anInteger! !
+
 !SBYTEField categoriesForMethods!
 accessorMessage!initializing!private! !
 readFrom:!indirect accessing!private! !
@@ -38,6 +43,7 @@ byteSize
 	"Private - Answer the size of the field type the receiver represents in bytes."
 
 	^1! !
+
 !SBYTEField class categoriesForMethods!
 byteSize!constants!private! !
 !

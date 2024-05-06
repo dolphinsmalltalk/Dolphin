@@ -5,9 +5,13 @@ PresenterTest subclass: #StaticTextTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StaticTextTest guid: (GUID fromString: '{92e427a0-a55c-4346-a3a1-68b30ee8a1a9}')!
+
 StaticTextTest comment: ''!
+
 !StaticTextTest categoriesForClass!Unclassified! !
+
 !StaticTextTest methodsFor!
 
 classToTest
@@ -74,6 +78,7 @@ lines'.
 	self assert: actual y equals: expected y.
 	"The width calculated by the GDI GetTextExtentPoint32 function is slightly different than the DrawTextEx calculation used by the control (and now#calculateExtent:) so we don't expect a precise result"
 	self assert: (actual x - expected x) abs < 3! !
+
 !StaticTextTest categoriesForMethods!
 classToTest!helpers!private! !
 testCalculateExtentMultiline!public! !

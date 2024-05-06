@@ -5,10 +5,15 @@ OLEStructure subclass: #OLEFinalizableStructure
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 OLEFinalizableStructure guid: (GUID fromString: '{87b4c5b9-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OLEFinalizableStructure isAbstract: true!
+
 OLEFinalizableStructure comment: ''!
+
 !OLEFinalizableStructure categoriesForClass!External-Data-Structured-COM! !
+
 !OLEFinalizableStructure methodsFor!
 
 initialize
@@ -35,6 +40,7 @@ onStartup
 	self beUnfinalizable.
 	self isPointer ifTrue: [
 		bytes := nil]! !
+
 !OLEFinalizableStructure categoriesForMethods!
 initialize!initializing!private! !
 needsFree!private!realizing/unrealizing! !
@@ -67,6 +73,7 @@ onStartup
 
 uninitialize
 	SessionManager current removeEventsTriggeredFor: self! !
+
 !OLEFinalizableStructure class categoriesForMethods!
 clear:!public!realizing/unrealizing! !
 initialize!development!initializing!private! !

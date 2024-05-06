@@ -5,9 +5,13 @@ DolphinTest subclass: #DisplayMonitorTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DisplayMonitorTest guid: (GUID fromString: '{a26059de-9a66-4eea-892a-2cc388096fb2}')!
+
 DisplayMonitorTest comment: ''!
+
 !DisplayMonitorTest categoriesForClass!Unclassified! !
+
 !DisplayMonitorTest methodsFor!
 
 testActive
@@ -143,6 +147,7 @@ testPrintString
 			[| secondary |
 			secondary := all detect: [:each | each isPrimary not].
 			self assert: secondary printString equals: 'a DisplayMonitor(<1p>)' << secondary deviceName]! !
+
 !DisplayMonitorTest categoriesForMethods!
 testActive!public!unit tests! !
 testAllIntersecting!public!unit tests! !

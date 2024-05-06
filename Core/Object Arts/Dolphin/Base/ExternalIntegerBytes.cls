@@ -5,10 +5,15 @@ ByteArray variableByteSubclass: #ExternalIntegerBytes
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalIntegerBytes guid: (GUID fromString: '{f5016870-059b-445b-a045-9e17ef13beec}')!
+
 ExternalIntegerBytes isAbstract: true!
+
 ExternalIntegerBytes comment: ''!
+
 !ExternalIntegerBytes categoriesForClass!External-Data-Unstructured! !
+
 !ExternalIntegerBytes methodsFor!
 
 = anObject
@@ -89,6 +94,7 @@ value
 
 value: anObject 
 	^self subclassResponsibility! !
+
 !ExternalIntegerBytes categoriesForMethods!
 =!comparing!public! !
 asInteger!converting!public! !
@@ -141,6 +147,7 @@ new
 
 valueAtAddress: anAddress 
 	^self subclassResponsibility! !
+
 !ExternalIntegerBytes class categoriesForMethods!
 atAddress:!instance creation!public! !
 fromAddress:!instance creation!public! !

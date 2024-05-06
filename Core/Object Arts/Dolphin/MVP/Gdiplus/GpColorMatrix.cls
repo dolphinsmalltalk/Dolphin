@@ -5,8 +5,11 @@ ExternalStructure subclass: #GpColorMatrix
 	classVariableNames: '_OffsetOf_m'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GpColorMatrix guid: (GUID fromString: '{6b5ab37e-5cc3-447e-99ef-9135f516ccc0}')!
+
 GpColorMatrix addClassConstant: '_OffsetOf_m' value: 16r0!
+
 GpColorMatrix comment: '<GpColorMatrix> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpColorMatrix'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
@@ -20,7 +23,9 @@ struct tagGpColorMatrix {
 	single m[5][5];
 } GpColorMatrix;
 '!
+
 !GpColorMatrix categoriesForClass!Unclassified! !
+
 !GpColorMatrix methodsFor!
 
 atPoint: aPoint 
@@ -53,6 +58,7 @@ row: rowInteger col: colInteger
 
 row: rowInteger col: colInteger put: aNumber
 	self m at: (rowInteger - 1) * 5 + colInteger put: aNumber! !
+
 !GpColorMatrix categoriesForMethods!
 atPoint:!accessing!public! !
 atPoint:put:!accessing!public! !
@@ -97,6 +103,7 @@ withAll: anArray
 	anArray should have 25 <Magnitude> elements"
 
 	^self new m: (FLOATArray withAll: anArray)! !
+
 !GpColorMatrix class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

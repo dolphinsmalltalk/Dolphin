@@ -5,8 +5,11 @@ ControlBarAbstract subclass: #Toolbar
 	classVariableNames: 'LabelsMask'
 	poolDictionaries: 'ToolbarConstants'
 	classInstanceVariableNames: ''!
+
 Toolbar guid: (GUID fromString: '{87b4c72f-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Toolbar addClassConstant: 'LabelsMask' value: 16r1!
+
 Toolbar comment: '`Toolbar` is a `<compositeView>` implementing the Windows _ToolbarWindow32_ common control.
 
 Toolbar holds a list of `<ToolbarItem>` items matching the order of items in the control. Items may be added and deleted once the view has been created.  It also allows a name to be associated with each item. 
@@ -29,7 +32,9 @@ Toolbar holds a list of `<ToolbarItem>` items matching the order of items in the
 
 
 '!
+
 !Toolbar categoriesForClass!MVP-Views! !
+
 !Toolbar methodsFor!
 
 actualBitmapSize
@@ -1053,6 +1058,7 @@ wmNotify: message wParam: wParam lParam: lParam
 	code := pnmhdr sdwordAtOffset: 8.
 	(code == TTN_GETDISPINFOW or: [code == TTN_GETDISPINFOW]) ifTrue: [^self nmNotify: pnmhdr].
 	^super wmNotify: message wParam: wParam lParam: lParam! !
+
 !Toolbar categoriesForMethods!
 actualBitmapSize!geometry!public! !
 addBitmap:index:!helpers!private! !
@@ -1268,6 +1274,7 @@ winClassName
 
 	^'ToolbarWindow32'
 ! !
+
 !Toolbar class categoriesForMethods!
 initialize!development!initializing!private! !
 resource_Default_view!public!resources-views! !

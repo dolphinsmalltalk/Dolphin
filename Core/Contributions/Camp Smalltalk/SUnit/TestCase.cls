@@ -5,10 +5,15 @@ Object subclass: #TestCase
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TestCase guid: (GUID fromString: '{5e96793a-0810-11d4-a876-0050da643bf9}')!
+
 TestCase isAbstract: true!
+
 TestCase comment: ''!
+
 !TestCase categoriesForClass!SUnit! !
+
 !TestCase methodsFor!
 
 addDependentToHierachy: anObject 
@@ -207,6 +212,7 @@ skip: aComment
 	TestSkip signal: aComment!
 
 tearDown! !
+
 !TestCase categoriesForMethods!
 addDependentToHierachy:!dependencies!public! !
 assert:!asserting!public! !
@@ -319,6 +325,7 @@ testSelectors
 
 version
 	^'3.1'! !
+
 !TestCase class categoriesForMethods!
 allTestSelectors!Accessing!public! !
 buildSuite!Building Suites!public! !

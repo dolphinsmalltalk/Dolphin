@@ -5,9 +5,13 @@ TestRunLogger subclass: #TestRunConsoleLogger
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TestRunConsoleLogger guid: (GUID fromString: '{c279d11f-90f1-4fe3-bfa6-09a2d85a208e}')!
+
 TestRunConsoleLogger comment: ''!
+
 !TestRunConsoleLogger categoriesForClass!Kernel-Objects! !
+
 !TestRunConsoleLogger methodsFor!
 
 finishedCase: aTestCaseResult
@@ -105,6 +109,7 @@ summarizeTimings: aTestResult baseline: aCollection threshold: aDuration
 				tab;
 				print: each case;
 				cr]! !
+
 !TestRunConsoleLogger categoriesForMethods!
 finishedCase:!logging!public! !
 finishedRun:knownSlowTests:!logging!public! !
@@ -121,6 +126,7 @@ on: aPuttableStream
 	^(self new)
 		stream: aPuttableStream;
 		yourself! !
+
 !TestRunConsoleLogger class categoriesForMethods!
 on:!public! !
 !

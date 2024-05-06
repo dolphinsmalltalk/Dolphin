@@ -5,12 +5,17 @@ GdiplusBase subclass: #GdiplusFontCollection
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusFontCollection guid: (GUID fromString: '{c09d8c02-5f28-11d7-b609-00e0987e8081}')!
+
 GdiplusFontCollection isAbstract: true!
+
 GdiplusFontCollection comment: 'GdiplusFontCollection is an abstract class that contains methods for enumerating the font families in a collection of fonts.
 
 '!
+
 !GdiplusFontCollection categoriesForClass!Unclassified! !
+
 !GdiplusFontCollection methodsFor!
 
 basicFree
@@ -46,6 +51,7 @@ familyCount
 	(status := GdiplusLibrary default gdipGetFontCollectionFamilyCount: self asParameter numFound: count) 
 		= Ok ifFalse: [GdiplusError signal: 'GdipGetFontCollectionFamilyCount failed' with: status].
 	^count asInteger! !
+
 !GdiplusFontCollection categoriesForMethods!
 basicFree!private!realizing/unrealizing! !
 families!accessing!public! !
@@ -58,6 +64,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^Font icon! !
+
 !GdiplusFontCollection class categoriesForMethods!
 icon!constants!development!public! !
 !

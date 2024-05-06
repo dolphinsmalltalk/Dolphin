@@ -5,9 +5,13 @@ ScalarField subclass: #SDWORDField
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SDWORDField guid: (GUID fromString: '{87b4c4ec-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 SDWORDField comment: '<SDWORDField> is a <ScalarField> class to represent <ExternalStructure> fields that are 32-bit signed integers.'!
+
 !SDWORDField categoriesForClass!External-Data-Types! !
+
 !SDWORDField methodsFor!
 
 accessorMessage
@@ -26,6 +30,7 @@ writeInto: anExternalStructure value: anInteger
 	anExternalStructure, at the receiver's offset."
 
 	^anExternalStructure bytes sdwordAtOffset: offset put: anInteger! !
+
 !SDWORDField categoriesForMethods!
 accessorMessage!initializing!private! !
 readFrom:!indirect accessing!private! !
@@ -39,6 +44,7 @@ byteSize
 	An SDWORD is always 4 bytes."
 
 	^4! !
+
 !SDWORDField class categoriesForMethods!
 byteSize!constants!private! !
 !

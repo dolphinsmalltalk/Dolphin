@@ -12,7 +12,6 @@ For documentation evaluate:
 
 package basicPackageVersion: '6.1'.
 
-
 package classNames
 	add: #AbstractIN_ADDR;
 	add: #FD_SET;
@@ -64,131 +63,150 @@ Object subclass: #InternetAddress
 	classVariableNames: ''
 	poolDictionaries: 'WinSocketConstants'
 	classInstanceVariableNames: ''!
+
 Object subclass: #SocketAbstract2
 	instanceVariableNames: 'port descriptor'
 	classVariableNames: ''
 	poolDictionaries: 'WinSocketConstants'
 	classInstanceVariableNames: ''!
+
 Win32Error subclass: #SocketError
 	instanceVariableNames: ''
 	classVariableNames: 'ErrorClasses'
 	poolDictionaries: 'WinSocketConstants WinSocketErrors'
 	classInstanceVariableNames: ''!
+
 SocketError subclass: #SocketClosed
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SocketError subclass: #SocketWaitCancelled
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalLibrary subclass: #IPHlpApiLibrary
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalLibrary subclass: #WS2_32Library
 	instanceVariableNames: 'wsaData'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalStructure subclass: #AbstractIN_ADDR
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalStructure subclass: #FD_SET
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_fd_array _OffsetOf_fd_count'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalStructure subclass: #NET_ADDRESS_INFO
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_Format _OffsetOf_IpAddress _OffsetOf_Ipv4Address _OffsetOf_Ipv6Address _OffsetOf_NamedAddress_Address _OffsetOf_NamedAddress_Port'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalStructure subclass: #SOCKADDR
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_sa_data _OffsetOf_sa_family'
 	poolDictionaries: 'WinSocketConstants'
 	classInstanceVariableNames: ''!
+
 ExternalStructure subclass: #TIMEVAL
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_tv_sec _OffsetOf_tv_usec'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AbstractIN_ADDR subclass: #IN_ADDR
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_s_addr _OffsetOf_s_b1 _OffsetOf_s_b2 _OffsetOf_s_b3 _OffsetOf_s_b4 _OffsetOf_s_w1 _OffsetOf_s_w2'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AbstractIN_ADDR subclass: #IN6_ADDR
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_Bytes _OffsetOf_Words'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SOCKADDR subclass: #SOCKADDR_IN
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_sin_addr _OffsetOf_sin_family _OffsetOf_sin_port _OffsetOf_sin_zero'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SOCKADDR subclass: #SOCKADDR_IN6
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_sin6_addr _OffsetOf_sin6_family _OffsetOf_sin6_flowinfo _OffsetOf_sin6_port _OffsetOf_sin6_scope_id _OffsetOf_sin6_scope_struct'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SOCKADDR subclass: #SOCKADDR_STORAGE
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf___ss_align _OffsetOf___ss_pad1 _OffsetOf___ss_pad2 _OffsetOf_ss_family'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #HOSTENT
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_h_addr_list _OffsetOf_h_addrtype _OffsetOf_h_aliases _OffsetOf_h_length _OffsetOf_h_name'
 	poolDictionaries: 'WinSocketConstants'
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #PROTOENT
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_p_aliases _OffsetOf_p_name _OffsetOf_p_proto'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #SERVENT
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_s_aliases _OffsetOf_s_name _OffsetOf_s_port _OffsetOf_s_proto'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #WSADATA
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_iMaxSockets _OffsetOf_iMaxUdpDg _OffsetOf_lpVendorInfo _OffsetOf_szDescription _OffsetOf_szSystemStatus _OffsetOf_wHighVersion _OffsetOf_wVersion'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SocketAbstract2 subclass: #ServerSocket2
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SocketAbstract2 subclass: #Socket2
 	instanceVariableNames: 'address readStream writeStream isText'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ReadStream subclass: #SocketReadStream
 	instanceVariableNames: 'socket'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 WriteStream subclass: #SocketWriteStream
 	instanceVariableNames: 'socket dirty'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

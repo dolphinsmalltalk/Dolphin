@@ -5,10 +5,15 @@ ValuePresenter subclass: #InspectorAbstract
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 InspectorAbstract guid: (GUID fromString: '{a5e858b2-45f7-4ae8-8f14-c11aad5f3ba4}')!
+
 InspectorAbstract isAbstract: true!
+
 InspectorAbstract comment: ''!
+
 !InspectorAbstract categoriesForClass!MVP-Presenters! !
+
 !InspectorAbstract methodsFor!
 
 browseClass
@@ -54,6 +59,7 @@ object: anObject
 
 systemModel
 	^SmalltalkSystem current! !
+
 !InspectorAbstract categoriesForMethods!
 browseClass!commands!private! !
 browseHierarchy!commands!private! !
@@ -72,6 +78,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^BasicInspector icon! !
+
 !InspectorAbstract class categoriesForMethods!
 icon!constants!public! !
 !

@@ -7,7 +7,6 @@ Copyright (c) Object Arts Ltd. 2010.'.
 
 package basicPackageVersion: '6.1'.
 
-
 package classNames
 	add: #ENHMETAHEADER;
 	add: #ENHMETARECORD;
@@ -56,19 +55,18 @@ ExternalStructure subclass: #ENHMETARECORD
 	classVariableNames: '_OffsetOf_iType _OffsetOf_nSize RecordTypes'
 	poolDictionaries: 'EnhancedMetafileRecordTypes'
 	classInstanceVariableNames: ''!
+
 ENHMETARECORD subclass: #ENHMETAHEADER
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_bOpenGL _OffsetOf_cbPixelFormat _OffsetOf_dSignature _OffsetOf_nBytes _OffsetOf_nDescription _OffsetOf_nHandles _OffsetOf_nPalEntries _OffsetOf_nRecords _OffsetOf_nVersion _OffsetOf_offDescription _OffsetOf_offPixelFormat _OffsetOf_rclBounds _OffsetOf_rclFrame _OffsetOf_sReserved _OffsetOf_szlDevice _OffsetOf_szlMicrometers _OffsetOf_szlMillimeters'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Image subclass: #Metafile
 	instanceVariableNames: 'header'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -89,6 +87,7 @@ getMetafileIfNone: exceptionHandler
 			[| hemf |
 			hemf := UserLibrary default getClipboardData: CF_ENHMETAFILE.
 			hemf isNull ifTrue: [exceptionHandler value] ifFalse: [(Metafile fromHandle: hemf) copy]]! !
+
 !Clipboard categoriesForMethods!
 getMetafile!accessing!public! !
 getMetafileIfNone:!accessing!public! !
@@ -247,6 +246,7 @@ setEnhMetaFileBits: cbBuffer lpData: lpData
 
 	<stdcall: handle SetEnhMetaFileBits dword byte*>
 	^self invalidCall: _failureCode! !
+
 !GDILibrary categoriesForMethods!
 closeEnhMetaFile:!public!win32 functions-metafile! !
 copyEnhMetaFile:lpszFile:!public!win32 functions-metafile! !

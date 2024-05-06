@@ -5,9 +5,13 @@ PresenterTest subclass: #WebView2ViewTest
 	classVariableNames: ''
 	poolDictionaries: 'WebView2Constants'
 	classInstanceVariableNames: ''!
+
 WebView2ViewTest guid: (GUID fromString: '{3cee0357-fcb9-4dd8-8e6f-9962dbca8e5c}')!
+
 WebView2ViewTest comment: ''!
+
 !WebView2ViewTest categoriesForClass!Unclassified! !
+
 !WebView2ViewTest methodsFor!
 
 classToTest
@@ -339,6 +343,7 @@ waitAtMost: aDuration while: aNiladicValuable
 
 waitForNavigationCompleted
 	^self waitAtMost: 60 seconds while: [navigationCompleted isNil]! !
+
 !WebView2ViewTest categoriesForMethods!
 classToTest!helpers!private! !
 initializePresenter!public!Running! !

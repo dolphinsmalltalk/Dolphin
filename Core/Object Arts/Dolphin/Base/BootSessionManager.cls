@@ -5,9 +5,13 @@ SessionManager subclass: #BootSessionManager
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 BootSessionManager guid: (GUID fromString: '{9dbc5fa6-dace-4809-88b9-83242b7f7d72}')!
+
 BootSessionManager comment: 'BootSessionManager is the class of <SessionManager>s installed when the Dolphin image is booting from sources.'!
+
 !BootSessionManager categoriesForClass!Development! !
+
 !BootSessionManager methodsFor!
 
 allocConsole
@@ -314,6 +318,7 @@ updateBootImage
 	"The only thing done currently is to reload the BCL."
 
 	self reloadBootPackages! !
+
 !BootSessionManager categoriesForMethods!
 allocConsole!operations!private! !
 basicTertiaryStartup!operations-startup!public! !
@@ -351,6 +356,7 @@ imageExtension
 	"Answer the suffix for an executable image file"
 
 	^'img7'.! !
+
 !BootSessionManager class categoriesForMethods!
 imageExtension!constants!public! !
 !

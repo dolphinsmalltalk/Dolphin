@@ -5,9 +5,13 @@ DolphinCollectionTest subclass: #SetTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SetTest guid: (GUID fromString: '{2108692a-0ee3-46ea-a9d6-46b3227871c6}')!
+
 SetTest comment: ''!
+
 !SetTest categoriesForClass!Unclassified! !
+
 !SetTest methodsFor!
 
 assertCommutativelyEqual: aSet other: anotherSet
@@ -204,6 +208,7 @@ testShallowCopy
 	copy := set shallowCopy.
 	self assertIs: copy shallowCopyOf: set.
 	self assertValidSet: copy! !
+
 !SetTest categoriesForMethods!
 assertCommutativelyEqual:other:!helpers!private! !
 assertIs:shallowCopyOf:!private!unit tests! !

@@ -5,9 +5,13 @@ ClassSelectorTest subclass: #PackagedClassSelectorTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PackagedClassSelectorTest guid: (GUID fromString: '{85913f04-2759-4d36-864b-eac86b435a51}')!
+
 PackagedClassSelectorTest comment: ''!
+
 !PackagedClassSelectorTest categoriesForClass!Unclassified! !
+
 !PackagedClassSelectorTest methodsFor!
 
 assertContains: anObject
@@ -142,6 +146,7 @@ testFilteredPackagedHierarchyMove
 	"Tidy up"
 	self removeClassesDEF.
 	self removeClassesABC! !
+
 !PackagedClassSelectorTest categoriesForMethods!
 assertContains:!helpers!private! !
 classToTest!helpers!private! !

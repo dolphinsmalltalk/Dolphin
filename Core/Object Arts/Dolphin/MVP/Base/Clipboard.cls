@@ -5,9 +5,13 @@ Object subclass: #Clipboard
 	classVariableNames: 'Current'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 Clipboard guid: (GUID fromString: '{87b4c463-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Clipboard comment: ''!
+
 !Clipboard categoriesForClass!System-Support! !
+
 !Clipboard methodsFor!
 
 addRegisteredFormat: formatName id: id converter: aTypeConverter
@@ -339,6 +343,7 @@ setText: text
 	to the clipboard the text is considered to terminate at the first null character."
 
 	self setRegisteredFormat: #String data: text! !
+
 !Clipboard categoriesForMethods!
 addRegisteredFormat:id:converter:!operations!public! !
 apply:!operations!private! !
@@ -413,6 +418,7 @@ onStartup
 	initialization."
 
 	Current := nil! !
+
 !Clipboard class categoriesForMethods!
 current!instance creation!public! !
 icon!constants!public! !

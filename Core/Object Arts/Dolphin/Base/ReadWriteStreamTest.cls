@@ -5,9 +5,13 @@ PositionableStreamTest subclass: #ReadWriteStreamTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ReadWriteStreamTest guid: (GUID fromString: '{575c0e65-e28f-4acb-a9c8-8294fa8503a3}')!
+
 ReadWriteStreamTest comment: ''!
+
 !ReadWriteStreamTest categoriesForClass!Unclassified! !
+
 !ReadWriteStreamTest methodsFor!
 
 streamClass
@@ -55,6 +59,7 @@ testResetAfterWrite
 	stream reset.
 	self assert: stream next equals: $a.
 	self closeTempStream: stream! !
+
 !ReadWriteStreamTest categoriesForMethods!
 streamClass!helpers!private! !
 streamOn:!helpers!private! !

@@ -5,7 +5,9 @@ IUnknown subclass: #ISAXDTDHandler
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
 	classInstanceVariableNames: ''!
+
 ISAXDTDHandler guid: (IID fromString: '{e15c1baf-afb3-4d60-8c36-19a8c45defed}')!
+
 ISAXDTDHandler comment: '<ISAXDTDHandler> is a wrapper class for the COM interface ''MSXML2.ISAXDTDHandler'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
@@ -43,7 +45,9 @@ interface ISAXDTDHandler : IUnknown
 		[in]int cchNotationName);
 };
 '!
+
 !ISAXDTDHandler categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+
 !ISAXDTDHandler methodsFor!
 
 NotationDecl: pwchName cchName: cchName pwchPublicId: pwchPublicId cchPublicId: cchPublicId pwchSystemId: pwchSystemId cchSystemId: cchSystemId
@@ -75,6 +79,7 @@ UnparsedEntityDecl: pwchName cchName: cchName pwchPublicId: pwchPublicId cchPubl
 
 	<virtual stdcall: hresult 5 word* sdword word* sdword word* sdword word* sdword>
 	^self invalidCall: _failureCode! !
+
 !ISAXDTDHandler categoriesForMethods!
 NotationDecl:cchName:pwchPublicId:cchPublicId:pwchSystemId:cchSystemId:!**auto generated**!COM Interfaces-ISAXDTDHandler!public! !
 UnparsedEntityDecl:cchName:pwchPublicId:cchPublicId:pwchSystemId:cchSystemId:pwchNotationName:cchNotationName:!**auto generated**!COM Interfaces-ISAXDTDHandler!public! !
@@ -92,6 +97,7 @@ defineFunctions
 		defineFunction: #UnparsedEntityDecl:cchName:pwchPublicId:cchPublicId:pwchSystemId:cchSystemId:pwchNotationName:cchNotationName:
 			argumentTypes: 'word* sdword word* sdword word* sdword word* sdword'
 ! !
+
 !ISAXDTDHandler class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

@@ -5,9 +5,13 @@ MessageSequenceAbstract subclass: #MessageSequence
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MessageSequence guid: (GUID fromString: '{87b4c665-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 MessageSequence comment: ''!
+
 !MessageSequence categoriesForClass!Kernel-Methods! !
+
 !MessageSequence methodsFor!
 
 add: aMessage
@@ -55,6 +59,7 @@ size
 	"Answers the number of messages in the sequence"
 
 	^list size! !
+
 !MessageSequence categoriesForMethods!
 add:!adding!public! !
 add:afterIndex:!adding!public! !
@@ -75,6 +80,7 @@ withMessages: aSequencedReadableCollection
 	answer := self new.
 	answer list addAll: aSequencedReadableCollection.
 	^answer! !
+
 !MessageSequence class categoriesForMethods!
 withMessages:!instance creation!public! !
 !

@@ -9,7 +9,6 @@ Many of the classes here are the vestigial remains of the legacy resource framew
 
 package basicPackageVersion: '6.1.1'.
 
-
 package classNames
 	add: #BytecodeRewriter;
 	add: #Resource;
@@ -54,59 +53,66 @@ Object subclass: #BytecodeRewriter
 	classVariableNames: 'DispatchMap'
 	poolDictionaries: 'OpcodePool'
 	classInstanceVariableNames: ''!
+
 Object subclass: #Resource
 	instanceVariableNames: 'accessor icon'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #ResourceAccessor
 	instanceVariableNames: 'flags'
 	classVariableNames: 'ChangedMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Resource subclass: #ViewResource
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ResourceAccessor subclass: #ResourceDummyAccessor
 	instanceVariableNames: 'object'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ResourceAccessor subclass: #ResourceGeneratorAccessor
 	instanceVariableNames: 'class selector'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ResourceAccessor subclass: #ResourceSTBAccessor
 	instanceVariableNames: 'classLocator'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ResourceSTBAccessor subclass: #ResourceSTBByteArrayAccessor
 	instanceVariableNames: 'byteArray'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ResourceSTBAccessor subclass: #ResourceSTBFileAccessor
 	instanceVariableNames: 'fileName'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 STBProxy subclass: #STBResourceSTBByteArrayAccessorProxy
 	instanceVariableNames: 'bytes'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 STBProxy subclass: #STBResourceSTBFileAccessorProxy
 	instanceVariableNames: 'fileName bytes'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -176,6 +182,7 @@ stbConvertFrom: anSTBClassFormat
 					1 to: data size do: [:i | newBlock instVarAt: i put: (data at: i)]]].
 	upgrading ifTrue: [newBlock := self attemptToUpgradeBlock: newBlock data: data].
 	newBlock]! !
+
 !BlockClosure class categoriesForMethods!
 convertBlockToClosure:!binary filing!development!private! !
 convertMethodContext:!binary filing!development!private! !
@@ -204,6 +211,7 @@ fileOutResource: aResourceIdentifier
 		cr.
 	aResourceIdentifier resource asInternalResource binaryStoreBytes base64StoreOn: stream.
 	self emitChunk: ')'! !
+
 !ChunkSourceFiler categoriesForMethods!
 fileOutResource:!public!source filing-file out! !
 !
@@ -216,6 +224,7 @@ assignBinaryResourceData: aViewResource
 	view := aViewResource loadWithContext: viewClass desktop forEdit: true.
 	self assign: view literalStoreArray.
 	view destroy! !
+
 !ResourceIdentifier categoriesForMethods!
 assignBinaryResourceData:!private! !
 !
@@ -227,6 +236,7 @@ resourceAt: aResourceIdentifier ifAbsent: aBlock
 	Answers the resource data associated with aResourceIdentifier"
 
 	^aResourceIdentifier resource! !
+
 !ResourceIdentifier class categoriesForMethods!
 resourceAt:ifAbsent:!accessing!public! !
 !
@@ -240,6 +250,7 @@ initializeFromSessionManager: oldSessionManager
 
 	super initializeFromSessionManager: oldSessionManager.
 	Smalltalk at: #ResourceAccessor ifPresent: [:ra | ra ensureAccessorsAreInternal]! !
+
 !RuntimeSessionManager categoriesForMethods!
 initializeFromSessionManager:!initializing!private! !
 !

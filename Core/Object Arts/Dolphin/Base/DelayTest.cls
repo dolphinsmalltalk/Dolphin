@@ -5,9 +5,13 @@ DolphinTest subclass: #DelayTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DelayTest guid: (GUID fromString: '{0b7c6875-1051-4b80-b137-cd1c02754bcd}')!
+
 DelayTest comment: ''!
+
 !DelayTest categoriesForClass!Unclassified! !
+
 !DelayTest methodsFor!
 
 expectDelay: expectedDuration for: nowMicroseconds
@@ -116,6 +120,7 @@ testSimultaneousWaitAndSignalWithOtherLongerDelay
 testSimultaneousWaitAndSignalWithOtherShorterDelay
 	[(Delay forMilliseconds: 15) wait] forkAt: Processor userInterruptPriority.
 	self testSimultaneousWaitAndSignal! !
+
 !DelayTest categoriesForMethods!
 expectDelay:for:!helpers!private! !
 setUp!private!running! !

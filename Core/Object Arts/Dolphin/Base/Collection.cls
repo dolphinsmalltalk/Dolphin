@@ -5,10 +5,15 @@ Object subclass: #Collection
 	classVariableNames: 'AbsentCookie'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Collection guid: (GUID fromString: '{87b4c464-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Collection isAbstract: true!
+
 Collection comment: ''!
+
 !Collection categoriesForClass!Collections-Abstract! !
+
 !Collection methodsFor!
 
 _beginsString: aString
@@ -610,6 +615,7 @@ union: comperand
 		addAll: comperand;
 		yourself
 ! !
+
 !Collection categoriesForMethods!
 _beginsString:!comparing!double dispatch!private! !
 _endsString:!comparing!double dispatch!private! !
@@ -754,6 +760,7 @@ withAll: newElements
 	^(self new: newElements size)
 		addAll: newElements;
 		yourself! !
+
 !Collection class categoriesForMethods!
 defaultSortAlgorithmClass!instance creation!public! !
 initialize!development!initializing!private! !

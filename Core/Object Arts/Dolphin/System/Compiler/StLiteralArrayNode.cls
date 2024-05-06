@@ -5,9 +5,13 @@ StLiteralNode subclass: #StLiteralArrayNode
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StLiteralArrayNode guid: (GUID fromString: '{d0aec5f6-fbc7-4020-8545-2bca5eeb2bca}')!
+
 StLiteralArrayNode comment: ''!
+
 !StLiteralArrayNode categoriesForClass!Unclassified! !
+
 !StLiteralArrayNode methodsFor!
 
 = anObject 
@@ -65,6 +69,7 @@ value
 
 valueClass
 	^isByteArray ifTrue: [ByteArray] ifFalse: [Array]! !
+
 !StLiteralArrayNode categoriesForMethods!
 =!comparing!public! !
 acceptVisitor:!public!visitor! !
@@ -98,6 +103,7 @@ value: aValue
 		contents: (aValue asArray collect: [:each | StLiteralNode value: each])
 		stopPosition: nil
 		isByteArray: aValue class ~~ Array! !
+
 !StLiteralArrayNode class categoriesForMethods!
 startPosition:contents:stopPosition:isByteArray:!instance creation!public! !
 value:!instance creation!public! !

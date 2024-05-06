@@ -5,9 +5,13 @@ TestResource subclass: #SimpleTestResource
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SimpleTestResource guid: (GUID fromString: '{8276a29a-e3aa-40ab-83f8-c49d4189cb1e}')!
+
 SimpleTestResource comment: ''!
+
 !SimpleTestResource categoriesForClass!Unclassified! !
+
 !SimpleTestResource methodsFor!
 
 hasRun
@@ -55,6 +59,7 @@ stoppedStateSymbol
 tearDown
 
 	self runningState: self stoppedStateSymbol! !
+
 !SimpleTestResource categoriesForMethods!
 hasRun!Accessing!public! !
 hasSetup!Accessing!public! !
@@ -75,6 +80,7 @@ tearDown!public!Running! !
 isAvailable
 
 	^super isAvailable and: [self current isStarted]! !
+
 !SimpleTestResource class categoriesForMethods!
 isAvailable!public! !
 !

@@ -5,9 +5,13 @@ TestCaseHelper subclass: #SequencedStreamHelper
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SequencedStreamHelper guid: (GUID fromString: '{3feae730-232c-4723-a408-dba6827c7b33}')!
+
 SequencedStreamHelper comment: ''!
+
 !SequencedStreamHelper categoriesForClass!Unclassified! !
+
 !SequencedStreamHelper methodsFor!
 
 canonicalObject
@@ -92,6 +96,7 @@ testXsetToEnd
 		should: [:r | "r UNSPECIFIED"  self canonicalObject position
 								= self canonicalObject contents size]
 		conformTo: self protocol selector: #'setToEnd'.! !
+
 !SequencedStreamHelper categoriesForMethods!
 canonicalObject!public! !
 object!public! !
@@ -110,6 +115,7 @@ testXsetToEnd!public! !
 initialize
 	"SequencedStreamHelper  initialize"
 	super initialize! !
+
 !SequencedStreamHelper class categoriesForMethods!
 initialize!public! !
 !

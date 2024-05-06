@@ -5,9 +5,13 @@ StValueToken subclass: #StLiteralToken
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StLiteralToken guid: (GUID fromString: '{85fe993e-366b-4f11-9b9c-e5ac73674129}')!
+
 StLiteralToken comment: ''!
+
 !StLiteralToken categoriesForClass!System-Compiler! !
+
 !StLiteralToken methodsFor!
 
 acceptVisitor: aTokenVisitor
@@ -54,6 +58,7 @@ stop: anInteger
 
 valueClass
 	^self value basicClass! !
+
 !StLiteralToken categoriesForMethods!
 acceptVisitor:!public!visitor! !
 formatOn:source:!printing!public! !
@@ -90,6 +95,7 @@ value: anObject
 		comments: nil
 		value: literal
 		stop: nil! !
+
 !StLiteralToken class categoriesForMethods!
 start:comments:value:stop:!instance creation!public! !
 value:!instance creation!public! !

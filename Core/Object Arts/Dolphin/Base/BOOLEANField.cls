@@ -5,9 +5,13 @@ BOOLField subclass: #BOOLEANField
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 BOOLEANField guid: (GUID fromString: '{974dbcdb-1a08-4f67-bd4b-6f7283e4d06e}')!
+
 BOOLEANField comment: '<BOOLField> is a <ScalarField> class to represent <ExternalStructure> fields that are boolean values encoded as 8-bit integers, where 0 is False, and any other value is True.'!
+
 !BOOLEANField categoriesForClass!External-Data-Types! !
+
 !BOOLEANField methodsFor!
 
 accessorMessage
@@ -26,6 +30,7 @@ writeInto: anExternalStructure value: aBoolean
 	integer byte value 1 for true, or 0 for false."
 
 	anExternalStructure bytes byteAtOffset: offset put: aBoolean asParameter! !
+
 !BOOLEANField categoriesForMethods!
 accessorMessage!automatic generation!private! !
 readFrom:!indirect accessing!private! !
@@ -38,6 +43,7 @@ byteSize
 	"Private - Answer the size of the field type the receiver represents in bytes."
 
 	^1! !
+
 !BOOLEANField class categoriesForMethods!
 byteSize!constants!private! !
 !

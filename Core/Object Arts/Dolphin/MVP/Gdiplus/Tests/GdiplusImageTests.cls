@@ -5,10 +5,15 @@ GdiplusTests subclass: #GdiplusImageTests
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusImageTests guid: (GUID fromString: '{f51a7675-4fec-411d-a3a4-3a11dd7d104a}')!
+
 GdiplusImageTests isAbstract: true!
+
 GdiplusImageTests comment: ''!
+
 !GdiplusImageTests categoriesForClass!Unclassified! !
+
 !GdiplusImageTests methodsFor!
 
 testAsByteArrayRoundTrip
@@ -38,6 +43,7 @@ testSaveToFileJpeg
 	"GdiplusImage>>#saveToFile: should be matching against GpImageCodecInfo's FilenameExtension ... not its MimeType"
 
 	model saveToFile: (File temporaryFilenameWithPrefix: 'gdipTests') , '.jpg'! !
+
 !GdiplusImageTests categoriesForMethods!
 testAsByteArrayRoundTrip!public!unit tests! !
 testClone!public!unit tests! !

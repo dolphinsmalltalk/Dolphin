@@ -5,7 +5,9 @@ RBMethodName subclass: #RBScopedMethodName
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RBScopedMethodName guid: (GUID fromString: '{50a0d881-8784-4db2-b798-817a44da9e38}')!
+
 RBScopedMethodName comment: 'Dolphin extension of RBMethodName. Holds a scope (a BrowserEnvironment) that defines the context within which the rename is performed.
 
 Instance Variables:
@@ -16,7 +18,9 @@ Instance Variables:
 	scopes				<LookupTable> mapping <String> name to <BrowserEnvironment>. Possible rename scopes.
 
 '!
+
 !RBScopedMethodName categoriesForClass!Refactory-Support! !
+
 !RBScopedMethodName methodsFor!
 
 addScope: aBrowserEnvironment 
@@ -90,6 +94,7 @@ setSelector: aSymbol arguments: anArray
 	super setSelector: aSymbol arguments: anArray.
 	scopes := LookupTable new.
 	self addScope: BrowserEnvironment new name: 'Global'! !
+
 !RBScopedMethodName categoriesForMethods!
 addScope:!adding!public! !
 addScope:name:!adding!public! !
@@ -114,6 +119,7 @@ fromMethod: aCompiledMethod
 	^(self new)
 		initializeForMethod: aCompiledMethod;
 		yourself! !
+
 !RBScopedMethodName class categoriesForMethods!
 fromMethod:!instance creation!public! !
 !

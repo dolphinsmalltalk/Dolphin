@@ -5,10 +5,15 @@ DolphinTest subclass: #IntegerTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IntegerTest guid: (GUID fromString: '{025b6e24-5e2b-49b1-9f4b-55b831a5aef3}')!
+
 IntegerTest isAbstract: true!
+
 IntegerTest comment: ''!
+
 !IntegerTest categoriesForClass!Unclassified! !
+
 !IntegerTest methodsFor!
 
 canonicalInstance
@@ -102,6 +107,7 @@ testTwoComplementRightShift
 	self should: 
 			[(small bitShift: -1) ~= (small + 1 bitShift: -1) 
 				== ((large bitShift: -1) ~= (large + 1 bitShift: -1))]! !
+
 !IntegerTest categoriesForMethods!
 canonicalInstance!constants!private! !
 testClassReadFromRadix!public!unit tests! !

@@ -5,7 +5,9 @@ Win32Structure subclass: #STARTUPINFOW
 	classVariableNames: '_OffsetOf_cbReserved2 _OffsetOf_dwFillAttribute _OffsetOf_dwFlags _OffsetOf_dwSize _OffsetOf_dwX _OffsetOf_dwXCountChars _OffsetOf_dwXSize _OffsetOf_dwY _OffsetOf_dwYCountChars _OffsetOf_dwYSize _OffsetOf_hStdError _OffsetOf_hStdInput _OffsetOf_hStdOutput _OffsetOf_lpDesktop _OffsetOf_lpReserved _OffsetOf_lpReserved2 _OffsetOf_lpTitle _OffsetOf_wShowWindow'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 STARTUPINFOW guid: (GUID fromString: '{f44c9146-2b3f-11d3-8368-7a8b5a000000}')!
+
 STARTUPINFOW addClassConstant: '_OffsetOf_cbReserved2' value: 16r32!
 STARTUPINFOW addClassConstant: '_OffsetOf_dwFillAttribute' value: 16r28!
 STARTUPINFOW addClassConstant: '_OffsetOf_dwFlags' value: 16r2C!
@@ -24,8 +26,11 @@ STARTUPINFOW addClassConstant: '_OffsetOf_lpReserved' value: 16r4!
 STARTUPINFOW addClassConstant: '_OffsetOf_lpReserved2' value: 16r34!
 STARTUPINFOW addClassConstant: '_OffsetOf_lpTitle' value: 16rC!
 STARTUPINFOW addClassConstant: '_OffsetOf_wShowWindow' value: 16r30!
+
 STARTUPINFOW comment: ''!
+
 !STARTUPINFOW categoriesForClass!External-Data-Structured-Win32! !
+
 !STARTUPINFOW methodsFor!
 
 desktop: aString
@@ -157,6 +162,7 @@ wShowWindow: anInteger
 	"Set the receiver's 'wShowWindow' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_wShowWindow put: anInteger! !
+
 !STARTUPINFOW categoriesForMethods!
 desktop:!accessing!public! !
 dwFlags!**compiled accessors**!public! !
@@ -234,6 +240,7 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #lpDesktop #lpTitle #dwX #dwY #dwXSize #dwYSize #dwXCountChars #dwYCountChars #dwFillAttribute #dwFlags #wShowWindow #hStdInput #hStdOutput #hStdError)! !
+
 !STARTUPINFOW class categoriesForMethods!
 defineFields!automatic generation!public! !
 getFieldNames!**compiled accessors**!constants!private! !

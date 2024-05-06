@@ -5,7 +5,9 @@ Object subclass: #ImageStripperProgress
 	classVariableNames: 'CaptionId ExplanationId MessageMap ProgressId StatusId'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 ImageStripperProgress guid: (GUID fromString: '{3645214b-fff1-40c6-91d4-32740d2f6a66}')!
+
 ImageStripperProgress comment: 'ImageStripperProgress is a <topPresenter> used by the <ImageStripper> to display the progress of an image stripping operation.
 
 Instance Variables:
@@ -16,7 +18,9 @@ Instance Variables:
 	monitorProgressPeriod	<Integer> number of milliseconds between progress monitoring periods
 
 '!
+
 !ImageStripperProgress categoriesForClass!Unclassified! !
+
 !ImageStripperProgress methodsFor!
 
 addToCommandRoute: route
@@ -377,6 +381,7 @@ wmSetCursor: message wParam: wParam lParam: lParam
 	"Set the wait cursor"
 	UserLibrary default setCursor: cursor. 
 	^0.! !
+
 !ImageStripperProgress categoriesForMethods!
 addToCommandRoute:!commands!public! !
 ambientFontChanged!private!updating! !
@@ -458,6 +463,7 @@ onPreStripImage
 
 show
 	^self new show! !
+
 !ImageStripperProgress class categoriesForMethods!
 initialize!initializing!must not strip!public! !
 onPreStripImage!private! !

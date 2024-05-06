@@ -5,9 +5,13 @@ MethodBrowserShell subclass: #LintRuleFailuresBrowserShell
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 LintRuleFailuresBrowserShell guid: (GUID fromString: '{1f17dd01-e9d4-4f6b-a722-e0f62aed9b74}')!
+
 LintRuleFailuresBrowserShell comment: ''!
+
 !LintRuleFailuresBrowserShell categoriesForClass!MVP-Presenters! !
+
 !LintRuleFailuresBrowserShell methodsFor!
 
 addToCommandRoute: route
@@ -55,6 +59,7 @@ removeMethod
 	index := self browser selectionsByIndex first.
 	self browser model removeAll: methods.
 	self browser selectionByIndex: index ifAbsent: []! !
+
 !LintRuleFailuresBrowserShell categoriesForMethods!
 addToCommandRoute:!commands!public! !
 lintRule!accessing!public! !
@@ -67,6 +72,7 @@ removeMethod!commands!public! !
 
 initialize
 	self canUseIdeaSpace: true! !
+
 !LintRuleFailuresBrowserShell class categoriesForMethods!
 initialize!initializing!private! !
 !

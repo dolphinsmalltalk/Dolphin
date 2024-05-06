@@ -5,10 +5,15 @@ RefactoryClassChange subclass: #AddMethodChange
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AddMethodChange guid: (GUID fromString: '{67095785-de4e-4bb9-ae66-cb2d970c8a5f}')!
+
 AddMethodChange isAbstract: true!
+
 AddMethodChange comment: ''!
+
 !AddMethodChange categoriesForClass!Refactory-Change Objects! !
+
 !AddMethodChange methodsFor!
 
 = anAddMethodChange 
@@ -99,6 +104,7 @@ selector
 			[selector := RBParser parseMethodPattern: source.
 			selector isNil ifTrue: [selector := #unknown]].
 	^selector! !
+
 !AddMethodChange categoriesForMethods!
 =!comparing!public! !
 asUndoOperation!converting!public! !
@@ -129,6 +135,7 @@ compile: aString in: aBehavior classified: aProtocol
 		class: aBehavior
 		protocol: aProtocol
 		source: aString! !
+
 !AddMethodChange class categoriesForMethods!
 compile:in:!instance creation!public! !
 compile:in:classified:!instance creation!public! !

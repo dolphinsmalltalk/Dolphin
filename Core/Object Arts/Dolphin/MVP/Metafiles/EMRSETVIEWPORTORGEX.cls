@@ -5,8 +5,11 @@ ENHMETARECORD subclass: #EMRSETVIEWPORTORGEX
 	classVariableNames: '_OffsetOf_ptlOrigin'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 EMRSETVIEWPORTORGEX guid: (GUID fromString: '{69136774-602e-4324-aff6-a261d792e0ff}')!
+
 EMRSETVIEWPORTORGEX addClassConstant: '_OffsetOf_ptlOrigin' value: 16r8!
+
 EMRSETVIEWPORTORGEX comment: '<EMRSETVIEWPORTORGEX> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETVIEWPORTORGEX'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -21,7 +24,9 @@ struct tagEMRSETVIEWPORTORGEX {
 	POINTL ptlOrigin;
 } EMRSETVIEWPORTORGEX;
 '!
+
 !EMRSETVIEWPORTORGEX categoriesForClass!Win32-Structs! !
+
 !EMRSETVIEWPORTORGEX methodsFor!
 
 ptlOrigin
@@ -37,6 +42,7 @@ ptlOrigin: aPOINTL
 		from: ##(_OffsetOf_ptlOrigin + 1)
 		to: ##(_OffsetOf_ptlOrigin + POINTL basicByteSize)
 		startingAt: 1! !
+
 !EMRSETVIEWPORTORGEX categoriesForMethods!
 ptlOrigin!**compiled accessors**!public! !
 ptlOrigin:!**compiled accessors**!public! !
@@ -73,6 +79,7 @@ iTypes
 		with: EMR_SETVIEWPORTORGEX
 		with: EMR_SETWINDOWORGEX
 		with: EMR_SETBRUSHORGEX! !
+
 !EMRSETVIEWPORTORGEX class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

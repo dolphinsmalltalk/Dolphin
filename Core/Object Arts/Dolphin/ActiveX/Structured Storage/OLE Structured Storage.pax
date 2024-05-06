@@ -18,7 +18,6 @@ Lastly the package includes wrappers for functions in the URLMonLibrary which pr
 
 package basicPackageVersion: '6.1'.
 
-
 package classNames
 	add: #ILockBytes;
 	add: #IRootStorage;
@@ -92,54 +91,60 @@ COMInterfaceImp subclass: #OLELockBytesAbstract
 	classVariableNames: ''
 	poolDictionaries: 'OLEStructuredStorageConstants'
 	classInstanceVariableNames: ''!
+
 OLELockBytesAbstract subclass: #OLELockBytes
 	instanceVariableNames: 'bytes'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 OLELockBytesAbstract subclass: #OLELockFileBytes
 	instanceVariableNames: 'file'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalLibrary subclass: #URLMonLibrary
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IUnknown subclass: #ILockBytes
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'OLEStructuredStorageConstants'
 	classInstanceVariableNames: ''!
+
 IUnknown subclass: #IRootStorage
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IUnknown subclass: #ISequentialStream
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'OLEStructuredStorageConstants'
 	classInstanceVariableNames: ''!
+
 IUnknown subclass: #IStorage
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'OLEStructuredStorageConstants'
 	classInstanceVariableNames: ''!
+
 ISequentialStream subclass: #IStream
 	instanceVariableNames: 'name mode'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 OLEFinalizableStructure subclass: #STATSTG
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_atime _OffsetOf_cbSize _OffsetOf_clsid _OffsetOf_ctime _OffsetOf_dwStgFmt _OffsetOf_grfLocksSupported _OffsetOf_grfMode _OffsetOf_grfStateBits _OffsetOf_mtime _OffsetOf_pwcsName _OffsetOf_type'
 	poolDictionaries: 'OLEStructuredStorageConstants'
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -381,6 +386,7 @@ writeFmtUserTypeStg: pStg cf: cf lpszUserType: lpszUserType
 
 	<stdcall: hresult WriteFmtUserTypeStg IStorage* word lpwstr>
 	^self invalidCall: _failureCode! !
+
 !OLELibrary categoriesForMethods!
 createILockBytesOnHGlobal:fDeleteOnRelease:pplkbyt:!**auto generated**!OLE Functions-Structured Storage!public! !
 createStreamOnHGlobal:fDeleteOnRelease:ppstm:!OLE Functions-Structured Storage!public! !
@@ -599,6 +605,7 @@ Write: pv cb: cb pcbWritten: pcbWritten
 		startingAt: 1.
 	pcbWritten bytes notNull ifTrue: [pcbWritten value: cb].
 	^Win32Errors.S_OK! !
+
 !SequencedStream categoriesForMethods!
 Commit:!public! !
 CopyTo:cb:pcbRead:pcbWritten:!public! !
@@ -627,6 +634,7 @@ shCreateMemStream: pInit cbInit: cbInit
 
 	<stdcall: IStream* 12 byte* dword>
 	^self invalidCall: _failureCode! !
+
 !ShlwapiLibrary categoriesForMethods!
 shCreateMemStream:cbInit:!**auto generated**!public! !
 !

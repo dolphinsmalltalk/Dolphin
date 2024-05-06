@@ -5,9 +5,13 @@ Object variableSubclass: #CompiledCode
 	classVariableNames: 'InfoCacheKeys InfoCacheValues PrivateMask'
 	poolDictionaries: 'OpcodePool'
 	classInstanceVariableNames: ''!
+
 CompiledCode guid: (GUID fromString: '{87b4c46f-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 CompiledCode isAbstract: true!
+
 CompiledCode addClassConstant: 'PrivateMask' value: 16r1!
+
 CompiledCode comment: 'CompiledCode is the class of executable objects containing an array of instructions (bytecodes) and an array of literals (the literal frame).
 
 The method header of the receiver is a SmallInteger containing a set of flags containing information such as the number of arguments, the number of temporaries, etc, is layed out as follows (subject to change):
@@ -32,7 +36,9 @@ Primitive indices 0 thru 8 describe the method type as follows:
 	8	Reserved for future use.
 
 Note: These are implementation details, and should not be relied upon as they may be changed in future versions.'!
+
 !CompiledCode categoriesForClass!Kernel-Methods! !
+
 !CompiledCode methodsFor!
 
 = aMethod 
@@ -609,6 +615,7 @@ writesInstVar: aString at: anInteger
 
 	^(self extraIndex between: 1 and: 6) not 
 		and: [self byteCodeDispatcher writesInstVarAt: anInteger]! !
+
 !CompiledCode categoriesForMethods!
 =!comparing!public! !
 accessesInstVar:!development!public!testing! !
@@ -749,6 +756,7 @@ packByteCodes: anArray
 					bitShift: -1.
 	self assert: [codes class == SmallInteger].
 	^codes! !
+
 !CompiledCode class categoriesForMethods!
 elementsExpired:of:!finalizing!private! !
 initialize!development!initializing!private! !

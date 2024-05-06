@@ -5,15 +5,20 @@ ControlView subclass: #ListControlView
 	classVariableNames: 'RevertSelMessage'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ListControlView guid: (GUID fromString: '{8db728e5-721c-4e56-b449-5fd43d00e1ba}')!
+
 ListControlView isAbstract: true!
+
 ListControlView comment: 'ListControlView is the abstract class of <ControlView>s that display a list of items, for example the standard Windows Listbox, Listview and Treeview controls, each of which has a concrete subclass to represent it.
 
 Instance Variables:
 	getTextBlock		<monadicValuable> evaluated to get the text to be displayed for an entry in the list.
 
 '!
+
 !ListControlView categoriesForClass!MVP-Views! !
+
 !ListControlView methodsFor!
 
 addSelections: aCollection 
@@ -600,6 +605,7 @@ updateSelectionCache
 	"Private - If there is a cached selection, update it."
 
 	! !
+
 !ListControlView categoriesForMethods!
 addSelections:!public!selection! !
 addSelections:ifAbsent:!public!selection! !
@@ -705,6 +711,7 @@ onStartup
 	the fact."
 
 	RevertSelMessage := self registerMessage: 'RevertSelection'! !
+
 !ListControlView class categoriesForMethods!
 defaultModel!models!public! !
 icon!constants!public! !

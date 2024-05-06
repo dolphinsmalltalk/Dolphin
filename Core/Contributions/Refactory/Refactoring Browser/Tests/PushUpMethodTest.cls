@@ -5,9 +5,13 @@ RefactoringTest subclass: #PushUpMethodTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PushUpMethodTest guid: (GUID fromString: '{890376aa-d3a6-46bb-badd-a03b14ffd1cd}')!
+
 PushUpMethodTest comment: ''!
+
 !PushUpMethodTest categoriesForClass!Refactory-Testing! !
+
 !PushUpMethodTest methodsFor!
 
 testPushUpAndCopyDown
@@ -111,6 +115,7 @@ testPushUpWithSuperSendThatCannotBeCopiedDown
 				model: model
 				pushUp: #(#foo)
 				from: class)! !
+
 !PushUpMethodTest categoriesForMethods!
 testPushUpAndCopyDown!public!tests! !
 testPushUpClassMethod!failure tests!public! !

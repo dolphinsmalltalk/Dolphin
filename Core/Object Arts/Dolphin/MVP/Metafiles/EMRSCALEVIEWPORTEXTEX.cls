@@ -5,11 +5,14 @@ ENHMETARECORD subclass: #EMRSCALEVIEWPORTEXTEX
 	classVariableNames: '_OffsetOf_xDenom _OffsetOf_xNum _OffsetOf_yDenom _OffsetOf_yNum'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 EMRSCALEVIEWPORTEXTEX guid: (GUID fromString: '{cb3c696e-59b6-4d1f-9413-f0a1fd89aaeb}')!
+
 EMRSCALEVIEWPORTEXTEX addClassConstant: '_OffsetOf_xDenom' value: 16rC!
 EMRSCALEVIEWPORTEXTEX addClassConstant: '_OffsetOf_xNum' value: 16r8!
 EMRSCALEVIEWPORTEXTEX addClassConstant: '_OffsetOf_yDenom' value: 16r14!
 EMRSCALEVIEWPORTEXTEX addClassConstant: '_OffsetOf_yNum' value: 16r10!
+
 EMRSCALEVIEWPORTEXTEX comment: '<EMRSCALEVIEWPORTEXTEX> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSCALEVIEWPORTEXTEX'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -27,7 +30,9 @@ struct tagEMRSCALEVIEWPORTEXTEX {
 	long yDenom;
 } EMRSCALEVIEWPORTEXTEX;
 '!
+
 !EMRSCALEVIEWPORTEXTEX categoriesForClass!Win32-Structs! !
+
 !EMRSCALEVIEWPORTEXTEX methodsFor!
 
 xDenom
@@ -69,6 +74,7 @@ yNum: anInteger
 	"Set the receiver's 'yNum' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_yNum put: anInteger! !
+
 !EMRSCALEVIEWPORTEXTEX categoriesForMethods!
 xDenom!**compiled accessors**!public! !
 xDenom:!**compiled accessors**!public! !
@@ -120,6 +126,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_SCALEVIEWPORTEXTEX with: EMR_SCALEWINDOWEXTEX! !
+
 !EMRSCALEVIEWPORTEXTEX class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

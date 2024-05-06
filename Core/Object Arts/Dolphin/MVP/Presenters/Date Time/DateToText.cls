@@ -5,7 +5,9 @@ AbstractToTextConverter subclass: #DateToText
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DateToText guid: (GUID fromString: '{87b4c708-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 DateToText comment: 'DateToText is a <textTypeConverter> dedicated to transformations between <Date>s and text.
 
 Instance Variables:
@@ -17,7 +19,9 @@ Class Variables:
 
 
 '!
+
 !DateToText categoriesForClass!MVP-Type Converters-Text! !
+
 !DateToText methodsFor!
 
 actualFormat
@@ -74,6 +78,7 @@ rightToLeft: aString
 	"Answers the result of converting aString to a Date"
 	
 	^Date fromString: aString format: self actualFormat! !
+
 !DateToText categoriesForMethods!
 actualFormat!accessing!private! !
 actualLocale!accessing!private! !
@@ -115,6 +120,7 @@ yearPivot: anInteger
 	Years less than the pivot will be assumed to be in the next century"
 
 	Date yearPivot: anInteger! !
+
 !DateToText class categoriesForMethods!
 stbConvertFrom:!binary filing!public! !
 stbVersion!binary filing!public! !

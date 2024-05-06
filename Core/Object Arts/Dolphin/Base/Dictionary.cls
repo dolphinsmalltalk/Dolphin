@@ -5,7 +5,9 @@ Set variableSubclass: #Dictionary
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Dictionary guid: (GUID fromString: '{87b4c526-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Dictionary comment: 'Class Dictionary represents a set of associations between keys and values. The values can be randomly accessed using the associated key. 
 
 The elements of a Dictionary are instances of <Association>, a simple data structure for storing and retrieving the members of a key-value pair.
@@ -14,7 +16,9 @@ Conforms to the following ANSI protocols:
 	collection
 	abstractDictionary
 	Dictionary'!
+
 !Dictionary categoriesForClass!Collections-Unordered! !
+
 !Dictionary methodsFor!
 
 _deepCopyElementsInto: aDictionary trail: anIdentityDictionary 
@@ -535,6 +539,7 @@ values
 	answer := OrderedCollection new: self size.
 	self do: [:value | answer addLast: value].
 	^answer! !
+
 !Dictionary categoriesForMethods!
 _deepCopyElementsInto:trail:!copying!private! !
 =!comparing!public! !

@@ -5,7 +5,9 @@ Model subclass: #PersonalAccount
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PersonalAccount guid: (GUID fromString: '{87b4c668-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 PersonalAccount comment: 'A PersonalAccount holds all details pertaining to a single account in the PersonalMoney system. 
 
 Instance Variables
@@ -17,7 +19,9 @@ Instance Variables
 
 
 '!
+
 !PersonalAccount categoriesForClass!MVP-Models!Samples! !
+
 !PersonalAccount methodsFor!
 
 accountNumber
@@ -122,6 +126,7 @@ transactions
 	"Answer the transactions collection"
 
 	^transactions! !
+
 !PersonalAccount categoriesForMethods!
 accountNumber!accessing!public! !
 accountNumber:!accessing!public! !
@@ -150,6 +155,7 @@ publishedEventsOfInstances
 		add: #currentBalanceChanged;
 		yourself.
 ! !
+
 !PersonalAccount class categoriesForMethods!
 publishedEventsOfInstances!development!events!public! !
 !

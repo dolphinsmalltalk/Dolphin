@@ -5,10 +5,15 @@ Refactoring subclass: #VariableRefactoring
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 VariableRefactoring guid: (GUID fromString: '{0ef75a5c-d99d-489e-b05f-2cf5a57d0f2c}')!
+
 VariableRefactoring isAbstract: true!
+
 VariableRefactoring comment: ''!
+
 !VariableRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !VariableRefactoring methodsFor!
 
 storeOn: aStream 
@@ -26,6 +31,7 @@ variable: aVarName class: aClass
 	variableName := aVarName.
 	class := self classObjectFor: aClass.
 ! !
+
 !VariableRefactoring categoriesForMethods!
 storeOn:!printing!public! !
 variable:class:!initialize/release!public! !
@@ -41,6 +47,7 @@ model: aRBNamespace variable: aVarName class: aClass
 
 variable: aVarName class: aClass
 	^self new variable: aVarName class: aClass! !
+
 !VariableRefactoring class categoriesForMethods!
 model:variable:class:!instance creation!public! !
 variable:class:!instance creation!public! !

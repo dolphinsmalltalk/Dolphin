@@ -5,14 +5,18 @@ IDispatch subclass: #CDOINNTPEarlyScriptConnector
 	classVariableNames: ''
 	poolDictionaries: 'CDOConstants'
 	classInstanceVariableNames: ''!
+
 CDOINNTPEarlyScriptConnector guid: (IID fromString: '{cd000034-8b95-11d1-82db-00c04fb1625d}')!
+
 CDOINNTPEarlyScriptConnector comment: '<CDOINNTPEarlyScriptConnector> is a wrapper class for the COM interface ''CDO.INNTPEarlyScriptConnector'' generated from type information in the ''Microsoft CDO for Windows 2000 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"INNTPFinalScriptConnector interface"
 
 Warning: This comment was automatically generated from the interface''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.'!
+
 !CDOINNTPEarlyScriptConnector categoriesForClass!CDO-Interfaces!COM-Interfaces! !
+
 !CDOINNTPEarlyScriptConnector methodsFor!
 
 isExtensible
@@ -24,6 +28,7 @@ isVBCollection
 	"Answer whether the receiver is a VB style collection."
 
 	^false! !
+
 !CDOINNTPEarlyScriptConnector categoriesForMethods!
 isExtensible!**auto generated**!public!testing! !
 isVBCollection!**auto generated**!public!testing! !
@@ -44,6 +49,7 @@ initializeTypeLib
 	"
 
 	typeLib := CDOLib! !
+
 !CDOINNTPEarlyScriptConnector class categoriesForMethods!
 clsid!**auto generated**!constants!private! !
 initializeTypeLib!**auto generated**!initializing!private! !

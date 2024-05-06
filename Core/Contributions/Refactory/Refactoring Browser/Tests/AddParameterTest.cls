@@ -5,9 +5,13 @@ RefactoringTest subclass: #AddParameterTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AddParameterTest guid: (GUID fromString: '{b520d120-f80f-4ce2-b6be-e01706dc902b}')!
+
 AddParameterTest comment: ''!
+
 !AddParameterTest categoriesForClass!Refactory-Testing! !
+
 !AddParameterTest methodsFor!
 
 setUp
@@ -171,6 +175,7 @@ testPrimitiveMethods
 				newSelector: #at:foo:
 				initializer: '1'.
 	self shouldFail: refactoring.! !
+
 !AddParameterTest categoriesForMethods!
 setUp!public!set up! !
 testAddParameterForTwoArgumentMessage!public!tests! !

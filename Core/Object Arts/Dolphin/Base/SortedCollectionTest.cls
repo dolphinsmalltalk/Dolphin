@@ -5,9 +5,13 @@ OrderedCollectionTest subclass: #SortedCollectionTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SortedCollectionTest guid: (GUID fromString: '{5ae7c3bc-62c7-454a-9917-c6accd854be1}')!
+
 SortedCollectionTest comment: ''!
+
 !SortedCollectionTest categoriesForClass!Unclassified! !
+
 !SortedCollectionTest methodsFor!
 
 collectionClass
@@ -69,6 +73,7 @@ verifyConcatenation: b with: a
 		ifTrue: [self assert: ((a symmetricDifference: result) noDifference: b)]
 		ifFalse: [super verifyConcatenation: b with: a].
 	^result! !
+
 !SortedCollectionTest categoriesForMethods!
 collectionClass!constants!private! !
 testAddAllFirst!public!unit tests! !

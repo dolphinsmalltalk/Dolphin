@@ -5,11 +5,15 @@ COMFunctionAbstract subclass: #UnkAddRefFunction
 	classVariableNames: 'Descriptor'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 UnkAddRefFunction guid: (GUID fromString: '{19c5e908-2db4-4e67-8984-b11c9cf2e982}')!
+
 UnkAddRefFunction comment: 'COMAddRefFunction is a specialized class of <COMFunction> intended to represent the IUnknown::AddRef() method.
 
 As IUnknown is implemented entirely by the <COMObjectStub>, a COMAddRefFunction sends a #AddRef message to the relevant stub.'!
+
 !UnkAddRefFunction categoriesForClass!COM-Implementations! !
+
 !UnkAddRefFunction methodsFor!
 
 callback: stub interface: aCOMInterface withArgumentsAt: pArgs
@@ -31,6 +35,7 @@ selector
 	"Private - Answer the selector sent when the receiver is evaluated."
 
 	^#AddRef! !
+
 !UnkAddRefFunction categoriesForMethods!
 callback:interface:withArgumentsAt:!evaluating!private! !
 descriptor!accessing!private! !
@@ -53,6 +58,7 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	Descriptor := nil! !
+
 !UnkAddRefFunction class categoriesForMethods!
 initialize!development!initializing!private! !
 uninitialize!class hierarchy-removing!private! !

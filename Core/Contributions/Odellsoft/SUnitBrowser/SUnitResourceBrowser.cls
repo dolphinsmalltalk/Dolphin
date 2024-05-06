@@ -5,9 +5,13 @@ SUnitAbsBrowser subclass: #SUnitResourceBrowser
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SUnitResourceBrowser guid: (GUID fromString: '{ee3accb0-4f35-4387-82fe-150498fd8b82}')!
+
 SUnitResourceBrowser comment: ''!
+
 !SUnitResourceBrowser categoriesForClass!Unclassified! !
+
 !SUnitResourceBrowser methodsFor!
 
 browserName
@@ -122,6 +126,7 @@ wrapAllTestResourcesFromModel
 
 	^self model listItems collect: [:each | SUnitTestResourceWrapper newOn: each model: self model].
 ! !
+
 !SUnitResourceBrowser categoriesForMethods!
 browserName!commands!private! !
 browseTestCases!commands!private! !
@@ -198,6 +203,7 @@ uninitialize
 	"
 
 	self uninitializeToolClass: self! !
+
 !SUnitResourceBrowser class categoriesForMethods!
 defaultModel!accessing!private! !
 defaultModelClass!accessing!private! !

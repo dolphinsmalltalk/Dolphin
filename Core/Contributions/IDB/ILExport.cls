@@ -5,13 +5,17 @@ Object subclass: #ILExport
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ILExport guid: (GUID fromString: '{9a0859d6-5add-4465-b138-4f154e114e37}')!
+
 ILExport comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
+
 !ILExport categoriesForClass!IDB Goodies! !
+
 !ILExport methodsFor!
 
 createBitmap: aPoint
@@ -45,6 +49,7 @@ createColorTable: aBag force256: aBoolean
 
 setImages: aCollection
 	images := aCollection! !
+
 !ILExport categoriesForMethods!
 createBitmap:!operations!public! !
 createColorTable:force256:!operations!public! !
@@ -55,6 +60,7 @@ setImages:!accessing!public! !
 
 export: aCollection to: aStream
 	(self new setImages: aCollection) exportTo: aStream! !
+
 !ILExport class categoriesForMethods!
 export:to:!operations!public! !
 !

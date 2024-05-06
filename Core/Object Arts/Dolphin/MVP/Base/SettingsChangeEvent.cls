@@ -5,9 +5,13 @@ WindowsEvent subclass: #SettingsChangeEvent
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SettingsChangeEvent guid: (GUID fromString: '{8d98098a-b8d5-4e20-97c1-7410fb47c17f}')!
+
 SettingsChangeEvent comment: ''!
+
 !SettingsChangeEvent categoriesForClass!MVP-Views-Events! !
+
 !SettingsChangeEvent methodsFor!
 
 area
@@ -24,6 +28,7 @@ printLParamOn: aStream
 
 uiAction
 	^wParam! !
+
 !SettingsChangeEvent categoriesForMethods!
 area!accessing!public! !
 isColorSetChange!public!testing! !

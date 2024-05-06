@@ -5,9 +5,13 @@ InlineMethodRefactoring subclass: #InlineMethodFromComponentRefactoring
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 InlineMethodFromComponentRefactoring guid: (GUID fromString: '{f56f3dba-48f3-4b00-8281-fcdff1f92c33}')!
+
 InlineMethodFromComponentRefactoring comment: ''!
+
 !InlineMethodFromComponentRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !InlineMethodFromComponentRefactoring methodsFor!
 
 abstractVariableReferences
@@ -121,6 +125,7 @@ transform
 	self abstractVariableReferences.
 	self renameSelfReferences.
 	super transform! !
+
 !InlineMethodFromComponentRefactoring categoriesForMethods!
 abstractVariableReferences!public!transforming! !
 addArgumentToSelector:!public!transforming! !

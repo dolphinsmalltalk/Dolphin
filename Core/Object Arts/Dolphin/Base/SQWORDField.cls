@@ -5,9 +5,13 @@ ScalarField subclass: #SQWORDField
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SQWORDField guid: (GUID fromString: '{87b4c4ed-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 SQWORDField comment: '<SQWORDField> is a <ScalarField> class to represent <ExternalStructure> fields that are 64-bit signed integers.'!
+
 !SQWORDField categoriesForClass!External-Data-Types! !
+
 !SQWORDField methodsFor!
 
 accessorMessage
@@ -26,6 +30,7 @@ writeInto: anExternalStructure value: anInteger
 	anExternalStructure, at the receiver's offset."
 
 	^anExternalStructure bytes sqwordAtOffset: offset put: anInteger! !
+
 !SQWORDField categoriesForMethods!
 accessorMessage!automatic generation!private! !
 readFrom:!indirect accessing!private! !
@@ -39,6 +44,7 @@ byteSize
 	A QWORD is always 8 bytes."
 
 	^8! !
+
 !SQWORDField class categoriesForMethods!
 byteSize!constants!private! !
 !

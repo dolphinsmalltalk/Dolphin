@@ -9,7 +9,6 @@ This package provides a wrapping around the IP Help API, which is useful for TCP
 
 package basicPackageVersion: '6.1'.
 
-
 package classNames
 	add: #FIXED_INFO;
 	add: #IP_ADAPTER_INDEX_MAP;
@@ -145,174 +144,204 @@ ExternalStructure subclass: #FIXED_INFO
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalStructure subclass: #IP_ADAPTER_INDEX_MAP
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_index _OffsetOf_Name'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalStructure subclass: #IP_ADAPTER_INFO
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_AdapterName _OffsetOf_Address _OffsetOf_AddressLength _OffsetOf_ComboIndex _OffsetOf_CurrentIpAddress _OffsetOf_Description _OffsetOf_DhcpEnabled _OffsetOf_DhcpServer _OffsetOf_GatewayList _OffsetOf_HaveWins _OffsetOf_index _OffsetOf_IpAddressList _OffsetOf_LeaseExpires _OffsetOf_LeaseObtained _OffsetOf_Next _OffsetOf_PrimaryWinsServer _OffsetOf_SecondaryWinsServer _OffsetOf_type'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalStructure subclass: #IP_ADDR_STRING
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_Context _OffsetOf_IpAddress _OffsetOf_IpMask _OffsetOf_Next'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalStructure subclass: #IP_PER_ADAPTER_INFO
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_AutoconfigActive _OffsetOf_AutoconfigEnabled _OffsetOf_CurrentDnsServer _OffsetOf_DnsServerList'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalStructure subclass: #IP_UNIDIRECTIONAL_ADAPTER_ADDRESS
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_Address _OffsetOf_NumAdapters'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalStructure subclass: #IpHlpApiTableStruct
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_dwNumEntries'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalStructure subclass: #MIB_ICMP
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_stats'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalStructure subclass: #MIB_ICMP_EX
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_icmpInStats _OffsetOf_icmpOutStats'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalStructure subclass: #MIB_IFNUMBER
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_dwValue'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalStructure subclass: #MIB_IFROW
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_bDescr _OffsetOf_bPhysAddr _OffsetOf_dwAdminStatus _OffsetOf_dwDescrLen _OffsetOf_dwIndex _OffsetOf_dwInDiscards _OffsetOf_dwInErrors _OffsetOf_dwInNUcastPkts _OffsetOf_dwInOctets _OffsetOf_dwInUcastPkts _OffsetOf_dwInUnknownProtos _OffsetOf_dwLastChange _OffsetOf_dwMtu _OffsetOf_dwOperStatus _OffsetOf_dwOutDiscards _OffsetOf_dwOutErrors _OffsetOf_dwOutNUcastPkts _OffsetOf_dwOutOctets _OffsetOf_dwOutQLen _OffsetOf_dwOutUcastPkts _OffsetOf_dwPhysAddrLen _OffsetOf_dwSpeed _OffsetOf_dwType _OffsetOf_wszName'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalStructure subclass: #MIB_IPADDRROW
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_dwAddr _OffsetOf_dwBCastAddr _OffsetOf_dwIndex _OffsetOf_dwMask _OffsetOf_dwReasmSize _OffsetOf_Unused1 _OffsetOf_wType'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalStructure subclass: #MIB_IPFORWARDROW
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_dwForwardAge _OffsetOf_dwForwardDest _OffsetOf_dwForwardIfIndex _OffsetOf_dwForwardMask _OffsetOf_dwForwardMetric1 _OffsetOf_dwForwardMetric2 _OffsetOf_dwForwardMetric3 _OffsetOf_dwForwardMetric4 _OffsetOf_dwForwardMetric5 _OffsetOf_dwForwardNextHop _OffsetOf_dwForwardNextHopAS _OffsetOf_dwForwardPolicy _OffsetOf_dwForwardProto _OffsetOf_dwForwardType'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalStructure subclass: #MIB_IPNETROW
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_bPhysAddr _OffsetOf_dwAddr _OffsetOf_dwIndex _OffsetOf_dwPhysAddrLen _OffsetOf_dwType'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalStructure subclass: #MIB_IPSTATS
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_dwDefaultTTL _OffsetOf_dwForwarding _OffsetOf_dwForwDatagrams _OffsetOf_dwFragCreates _OffsetOf_dwFragFails _OffsetOf_dwFragOks _OffsetOf_dwInAddrErrors _OffsetOf_dwInDelivers _OffsetOf_dwInDiscards _OffsetOf_dwInHdrErrors _OffsetOf_dwInReceives _OffsetOf_dwInUnknownProtos _OffsetOf_dwNumAddr _OffsetOf_dwNumIf _OffsetOf_dwNumRoutes _OffsetOf_dwOutDiscards _OffsetOf_dwOutNoRoutes _OffsetOf_dwOutRequests _OffsetOf_dwReasmFails _OffsetOf_dwReasmOks _OffsetOf_dwReasmReqds _OffsetOf_dwReasmTimeout _OffsetOf_dwRoutingDiscards'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalStructure subclass: #MIB_TCPROW
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_dwLocalAddr _OffsetOf_dwLocalPort _OffsetOf_dwRemoteAddr _OffsetOf_dwRemotePort _OffsetOf_dwState'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalStructure subclass: #MIB_TCPSTATS
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_dwActiveOpens _OffsetOf_dwAttemptFails _OffsetOf_dwCurrEstab _OffsetOf_dwEstabResets _OffsetOf_dwInErrs _OffsetOf_dwInSegs _OffsetOf_dwMaxConn _OffsetOf_dwNumConns _OffsetOf_dwOutRsts _OffsetOf_dwOutSegs _OffsetOf_dwPassiveOpens _OffsetOf_dwRetransSegs _OffsetOf_dwRtoAlgorithm _OffsetOf_dwRtoMax _OffsetOf_dwRtoMin'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalStructure subclass: #MIB_UDPROW
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_dwLocalAddr _OffsetOf_dwLocalPort'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalStructure subclass: #MIB_UDPSTATS
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_dwInDatagrams _OffsetOf_dwInErrors _OffsetOf_dwNoPorts _OffsetOf_dwNumAddrs _OffsetOf_dwOutDatagrams'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalStructure subclass: #MIBICMPINFO
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_icmpInStats _OffsetOf_icmpOutStats'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalStructure subclass: #MIBICMPSTATS
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_dwAddrMaskReps _OffsetOf_dwAddrMasks _OffsetOf_dwDestUnreachs _OffsetOf_dwEchoReps _OffsetOf_dwEchos _OffsetOf_dwErrors _OffsetOf_dwMsgs _OffsetOf_dwParmProbs _OffsetOf_dwRedirects _OffsetOf_dwSrcQuenchs _OffsetOf_dwTimeExcds _OffsetOf_dwTimestampReps _OffsetOf_dwTimestamps'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalStructure subclass: #MIBICMPSTATS_EX
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_dwErrors _OffsetOf_dwMsgs _OffsetOf_rgdwTypeCount'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IpHlpApiTableStruct subclass: #IP_ADAPTER_ORDER_MAP
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_table'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IpHlpApiTableStruct subclass: #IP_INTERFACE_INFO
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_table'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IpHlpApiTableStruct subclass: #MIB_IFTABLE
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_table'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IpHlpApiTableStruct subclass: #MIB_IPADDRTABLE
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_table'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IpHlpApiTableStruct subclass: #MIB_IPFORWARDTABLE
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_table'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IpHlpApiTableStruct subclass: #MIB_IPNETTABLE
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_table'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IpHlpApiTableStruct subclass: #MIB_TCPTABLE
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_table'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IpHlpApiTableStruct subclass: #MIB_UDPTABLE
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_table'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MIB_TCPTABLE subclass: #MIB_TCPEXTABLE
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MIB_UDPTABLE subclass: #MIB_UDPEXTABLE
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MIB_TCPROW subclass: #MIB_TCPEXROW
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_dwProcessId'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MIB_UDPROW subclass: #MIB_UDPEXROW
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_dwProcessId'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -1101,6 +1130,7 @@ UnenableRouter: pOverlapped lpdwEnableCount: lpdwEnableCount
 
 	<stdcall: dword UnenableRouter  OVERLAPPED* dword*>
 	^self invalidCall! !
+
 !IPHlpApiLibrary categoriesForMethods!
 AddIPAddress:ipMask:ifIndex:nteContext:nteInstance:!**auto generated**!public! !
 AllocateAndGetTcpExTableFromStack:bOrder:heap:zero:flags:!**auto generated**!public! !

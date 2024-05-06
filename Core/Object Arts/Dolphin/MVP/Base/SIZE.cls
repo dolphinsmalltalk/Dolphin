@@ -5,11 +5,16 @@ ExternalSize subclass: #SIZE
 	classVariableNames: '_OffsetOf_cx _OffsetOf_cy'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SIZE guid: (GUID fromString: '{3bfb9cb3-8eba-450f-9479-ba75abeb8463}')!
+
 SIZE addClassConstant: '_OffsetOf_cx' value: 16r0!
 SIZE addClassConstant: '_OffsetOf_cy' value: 16r4!
+
 SIZE comment: '`SIZE` is an `ExternalStructure` class to wrap the standard Win32 structure of the same name. `SIZE` is used in many places to represent a 2-dimensional distance where the x and y dimensions are expressed as 32-bit signed integers. `SIZEL` is an alias for the same class/structure.'!
+
 !SIZE categoriesForClass!Win32-Structs! !
+
 !SIZE methodsFor!
 
 cx
@@ -43,6 +48,7 @@ width
 
 width: anObject
 	bytes sdwordAtOffset: _OffsetOf_cx put: anObject! !
+
 !SIZE categoriesForMethods!
 cx!**compiled accessors**!public! !
 cx:!**compiled accessors**!public! !
@@ -91,6 +97,7 @@ width: cx height: cy
 				sdwordAtOffset: 0 put: cx;
 				sdwordAtOffset: 4 put: cy;
 				yourself)! !
+
 !SIZE class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

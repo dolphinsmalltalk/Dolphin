@@ -5,10 +5,14 @@ ExternalLibrary subclass: #OLELibrary
 	classVariableNames: 'DefaultIMalloc'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 OLELibrary guid: (GUID fromString: '{64674066-3a82-101b-8181-00aa003743d3}')!
+
 OLELibrary comment: 'OLELibrary is the <ExternalLibrary> class to represent the Win32 System DLL, OLE32.DLL.
 This library contains functions pertaining to the use of OLE and COM.'!
+
 !OLELibrary categoriesForClass!External-Libraries-ActiveX! !
+
 !OLELibrary methodsFor!
 
 close
@@ -318,6 +322,7 @@ uninitialize
 	self comOnly
 		ifTrue: [self coUninitialize]
 		ifFalse: [self oleUninitialize]! !
+
 !OLELibrary categoriesForMethods!
 close!public!realizing/unrealizing! !
 clsidFromProgID:lpclsid:!**auto generated**!OLE Functions-GUID!public! !
@@ -359,6 +364,7 @@ fileName
 	the receiver represents."
 
 	^'OLE32'! !
+
 !OLELibrary class categoriesForMethods!
 fileName!constants!public! !
 !

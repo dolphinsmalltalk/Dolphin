@@ -5,9 +5,13 @@ ExternalLibrary subclass: #RPCLibrary
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RPCLibrary guid: (GUID fromString: '{87b4c584-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 RPCLibrary comment: ''!
+
 !RPCLibrary categoriesForClass!External-Libraries-Win32! !
+
 !RPCLibrary methodsFor!
 
 rpcStringFree: lppstr
@@ -71,6 +75,7 @@ uuidToString: uuid stringUuid: lppstr
 
 	<stdcall: sdword UuidToStringA void* char**>
 	^self invalidCall: _failureCode! !
+
 !RPCLibrary categoriesForMethods!
 rpcStringFree:!primitives!public!win32 functions-rpc! !
 uuidCompare:uuid2:status:!primitives!public!win32 functions-rpc! !
@@ -86,6 +91,7 @@ fileName
 	"Answer the host system file name of the external library which the receiver represents"
 
 	^'RPCRT4'! !
+
 !RPCLibrary class categoriesForMethods!
 fileName!constants!public! !
 !

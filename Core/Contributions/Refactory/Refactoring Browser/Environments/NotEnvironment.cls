@@ -5,11 +5,15 @@ BrowserEnvironmentWrapper subclass: #NotEnvironment
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 NotEnvironment guid: (GUID fromString: '{8aa751c1-7180-4413-8b57-c60fc841bf12}')!
+
 NotEnvironment comment: 'NotEnvironment is a <BrowserEnvironmentWrapper> which includes all methods in the system that are not in the <BrowserEnvironment> it wraps. NotEnvironments are constructed by sending the #not message to an existing <BrowserEnvironment>.
 
 Note that a NotEnvironment may include classes that are also included in the environment it inverts, because both may include methods of that class if the original environment includes only a slice of methods in the class.'!
+
 !NotEnvironment categoriesForClass!Refactory-Environments! !
+
 !NotEnvironment methodsFor!
 
 defaultLabel
@@ -46,6 +50,7 @@ numberSelectors
 storeOn: aStream
 	environment storeOn: aStream.
 	aStream nextPutAll: ' not'! !
+
 !NotEnvironment categoriesForMethods!
 defaultLabel!constants!private! !
 definesClass:!public!testing! !

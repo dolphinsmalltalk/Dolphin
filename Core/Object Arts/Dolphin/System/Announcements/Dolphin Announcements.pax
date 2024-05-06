@@ -4,7 +4,6 @@ package paxVersion: 1;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
-
 package classNames
 	add: #Announcement;
 	add: #AnnouncementSet;
@@ -43,44 +42,48 @@ Object subclass: #Announcement
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #AnnouncementSubscription
 	instanceVariableNames: 'announcer announcementClass subscriber action'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #Announcer
 	instanceVariableNames: 'registry'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #SubscriptionRegistry
 	instanceVariableNames: 'subscriptions monitor'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #WeakSubscriptionBuilder
 	instanceVariableNames: 'announcer'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 WeakArray variableSubclass: #WeakAnnouncementSubscription
 	instanceVariableNames: 'announcer announcementClass action'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Set variableSubclass: #AnnouncementSet
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 EventMessageSend variableSubclass: #WeakMessageSend
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -92,6 +95,7 @@ announcementSubscriber
 asWeakMessageSend
 	self receiver notNil ifTrue: [self error: 'Only clean blocks can be weak'].
 	^self! !
+
 !BlockClosure categoriesForMethods!
 announcementSubscriber!public! !
 asWeakMessageSend!public! !
@@ -105,6 +109,7 @@ asWeakMessageSend
 		receiver: receiver
 		selector: selector
 		arguments: args copy! !
+
 !MessageSend categoriesForMethods!
 asWeakMessageSend!commands!public! !
 !
@@ -113,6 +118,7 @@ asWeakMessageSend!commands!public! !
 
 announcementSubscriber
 	^self receiver! !
+
 !MessageSendAbstract categoriesForMethods!
 announcementSubscriber!public! !
 !
@@ -131,6 +137,7 @@ handlesAnnouncement: anAnnouncement
 		announce: #FOO should raise DNU bar"
 
 	^anAnnouncement == self! !
+
 !Symbol categoriesForMethods!
 asAnnouncement!converting!public! !
 handlesAnnouncement:!converting!public! !

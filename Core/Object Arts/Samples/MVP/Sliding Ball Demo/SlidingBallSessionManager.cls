@@ -5,15 +5,20 @@ RuntimeSessionManager subclass: #SlidingBallSessionManager
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SlidingBallSessionManager guid: (GUID fromString: '{df9f9b7f-7863-4331-9258-06e55d9fb118}')!
+
 SlidingBallSessionManager comment: ''!
+
 !SlidingBallSessionManager categoriesForClass!Unclassified! !
+
 !SlidingBallSessionManager methodsFor!
 
 main
 	"Start up the sample application"
 
 	self mainShellClass new show! !
+
 !SlidingBallSessionManager categoriesForMethods!
 main!operations-startup!public! !
 !
@@ -24,6 +29,7 @@ mainShellClass
 	"Answer the class of the application's main window (a <Shell> presenter)."
 
 	^SlidingBallDemo! !
+
 !SlidingBallSessionManager class categoriesForMethods!
 mainShellClass!constants!public! !
 !

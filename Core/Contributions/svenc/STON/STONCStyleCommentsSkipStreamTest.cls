@@ -5,9 +5,13 @@ TestCase subclass: #STONCStyleCommentsSkipStreamTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 STONCStyleCommentsSkipStreamTest guid: (GUID fromString: '{a5305b0e-412c-473c-8718-a2fe44c28b38}')!
+
 STONCStyleCommentsSkipStreamTest comment: ''!
+
 !STONCStyleCommentsSkipStreamTest categoriesForClass!STON-Tests-Reader! !
+
 !STONCStyleCommentsSkipStreamTest methodsFor!
 
 testBlockReading
@@ -82,6 +86,7 @@ testSTON
 		should: [ STON fromStream: (STONCStyleCommentsSkipStream on: '//456' readStream) ] 
 		raise: STONReaderError
 ! !
+
 !STONCStyleCommentsSkipStreamTest categoriesForMethods!
 testBlockReading!public!testing! !
 testCommentInString!public!testing! !

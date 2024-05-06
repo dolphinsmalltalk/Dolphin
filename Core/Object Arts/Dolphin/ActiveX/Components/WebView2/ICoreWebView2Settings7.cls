@@ -5,7 +5,9 @@ ICoreWebView2Settings6 subclass: #ICoreWebView2Settings7
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2Settings7 guid: (IID fromString: '{488dc902-35ef-42d2-bc7d-94b65c4bc49c}')!
+
 ICoreWebView2Settings7 comment: '`ICoreWebView2Settings7` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Settings7'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -29,7 +31,9 @@ interface ICoreWebView2Settings7 : ICoreWebView2Settings6
 };
 ```
 '!
+
 !ICoreWebView2Settings7 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2Settings7 methodsFor!
 
 get_HiddenPdfToolbarItems: hidden_pdf_toolbar_items
@@ -50,6 +54,7 @@ put_HiddenPdfToolbarItems: hidden_pdf_toolbar_items
 
 	<virtual stdcall: hresult 35 sdword>
 	^self invalidCall: _failureCode! !
+
 !ICoreWebView2Settings7 categoriesForMethods!
 get_HiddenPdfToolbarItems:!**auto generated**!COM Interfaces-ICoreWebView2Settings7!private! !
 put_HiddenPdfToolbarItems:!**auto generated**!COM Interfaces-ICoreWebView2Settings7!private! !
@@ -67,6 +72,7 @@ defineFunctions
 		defineFunction: #put_HiddenPdfToolbarItems:
 			argumentTypes: 'sdword'
 ! !
+
 !ICoreWebView2Settings7 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

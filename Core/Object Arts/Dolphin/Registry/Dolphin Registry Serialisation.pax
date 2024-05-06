@@ -9,7 +9,6 @@ This package implements object serialisation to/from the system Registry. It is 
 
 package basicPackageVersion: '6.1'.
 
-
 package methodNames
 	add: #ByteArray -> #storeUnderRegKey:as:;
 	add: #ClassDescription -> #readFromRegKey:;
@@ -39,12 +38,6 @@ package setPrerequisites: #(
 
 package!
 
-"Class Definitions"!
-
-
-"Global Aliases"!
-
-
 "Loose Methods"!
 
 !ByteArray methodsFor!
@@ -57,6 +50,7 @@ storeUnderRegKey: aRegKey as: aString
 		valueAt: aString
 		put: self
 		type: #binary! !
+
 !ByteArray categoriesForMethods!
 storeUnderRegKey:as:!public! !
 !
@@ -91,6 +85,7 @@ readFromRegKey: aRegKey
 				ifTrue: [inst instVarAt: (instVars at: instVar) put: value]
 				ifFalse: [inst basicAt: i put: value]].
 	^inst! !
+
 !ClassDescription categoriesForMethods!
 readFromRegKey:!public! !
 !
@@ -99,6 +94,7 @@ readFromRegKey:!public! !
 
 regKeyType
 	^#dword! !
+
 !DWORDBytes categoriesForMethods!
 regKeyType!constants!public! !
 !
@@ -119,6 +115,7 @@ storeUnderRegKey: aRegKey as: aString
 		valueAt: #value
 			put: self
 			type: self regKeyType! !
+
 !ExternalIntegerBytes categoriesForMethods!
 regKeyType!constants!public! !
 storeUnderRegKey:as:!public! !
@@ -156,6 +153,7 @@ storeUnderRegKey: aRegKey as: aString
 						to: size
 						with: self
 						startingAt: 1) storeUnderRegKey: key as: 'value']]! !
+
 !LargeInteger categoriesForMethods!
 storeUnderRegKey:as:!public! !
 !
@@ -172,6 +170,7 @@ readFromRegKey: aRegKey
 	answer := self basicNew: size.
 	1 to: size do: [:i | answer basicAt: i put: (bytes basicAt: i)].
 	^answer! !
+
 !LargeInteger class categoriesForMethods!
 readFromRegKey:!public! !
 !
@@ -201,6 +200,7 @@ storeUnderRegKey: aRegKey as: aString
 	instVars 
 		keysAndValuesDo: [:i :name | name first = $_ ifFalse: [(self instVarAt: i) storeUnderRegKey: key as: name]].
 	1 to: self basicSize do: [:i | (self basicAt: i) storeUnderRegKey: key as: i displayString]! !
+
 !Object categoriesForMethods!
 storeUnderRegKey:as:!public! !
 !
@@ -213,6 +213,7 @@ fromRegKey: aRegKey
 	| params |
 	params := aRegKey value.
 	^(self environment at: params first asSymbol) readFromRegKey: aRegKey! !
+
 !Object class categoriesForMethods!
 fromRegKey:!public! !
 !
@@ -234,6 +235,7 @@ storeUnderRegKey: aRegKey as: aString
 				valueAt: aString
 				put: (ULARGE_INTEGER fromInteger: self)
 				type: #qword]! !
+
 !SmallInteger categoriesForMethods!
 storeUnderRegKey:as:!public! !
 !
@@ -248,6 +250,7 @@ storeUnderRegKey: aRegKey as: aString
 		valueAt: aString
 		put: self asString
 		type: #string! !
+
 !String categoriesForMethods!
 storeUnderRegKey:as:!public! !
 !
@@ -262,6 +265,7 @@ storeUnderRegKey: aRegKey as: aString
 		valueAt: nil
 		put: (String writeStream display: self class; nextPut: Character null; display: self; contents)
 		type: #stringArray! !
+
 !Symbol categoriesForMethods!
 storeUnderRegKey:as:!public! !
 !
@@ -275,6 +279,7 @@ readFromRegKey: aRegKey
 	params := aRegKey value.
 	self assert: [params first = self name].
 	^self intern: params second! !
+
 !Symbol class categoriesForMethods!
 readFromRegKey:!public! !
 !
@@ -285,6 +290,7 @@ regKeyType
 	"Note: The compiler will optimise out the conditional because it is constant."
 
 	^VMConstants.IsWin64 ifTrue: [#qword] ifFalse: [#dword]! !
+
 !UIntPtrBytes categoriesForMethods!
 regKeyType!public! !
 !
@@ -296,6 +302,7 @@ storeUnderRegKey: aRegKey as: aString
 	aRegKey, with the <readableString> name, aString."
 
 	"Implementation Note: We don't need to store anything for nil's when performing serialisation to the registry."! !
+
 !UndefinedObject categoriesForMethods!
 storeUnderRegKey:as:!public! !
 !

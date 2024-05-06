@@ -5,9 +5,13 @@ RefactoringTest subclass: #ChildrenToSiblingsTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ChildrenToSiblingsTest guid: (GUID fromString: '{ca54e227-44a3-41c9-aab6-bd11a852bf74}')!
+
 ChildrenToSiblingsTest comment: ''!
+
 !ChildrenToSiblingsTest categoriesForClass!Refactory-Testing! !
+
 !ChildrenToSiblingsTest methodsFor!
 
 setUp
@@ -95,6 +99,7 @@ testModelChildrenToSibling
 	self assert: (class metaclass parseTreeFor: #bar)
 		equals: (RBParser parseMethod: 'bar
 							^self printString')! !
+
 !ChildrenToSiblingsTest categoriesForMethods!
 setUp!public!set up! !
 testBadName!failure tests!public! !

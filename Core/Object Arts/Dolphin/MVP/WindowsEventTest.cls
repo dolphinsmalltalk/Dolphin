@@ -5,9 +5,13 @@ DolphinTest subclass: #WindowsEventTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 WindowsEventTest guid: (GUID fromString: '{08ec4909-75d4-4bef-bbb8-0f443b78f834}')!
+
 WindowsEventTest comment: ''!
+
 !WindowsEventTest categoriesForClass!Unclassified! !
+
 !WindowsEventTest methodsFor!
 
 newEvent: anInteger
@@ -37,6 +41,7 @@ testPrintString
 	instance := self newEvent: 999.
 	self assert: instance printString
 		equals: ('a WindowsEvent(<1p> 16r3E7 3 4)' expandMacrosWith: instance window)! !
+
 !WindowsEventTest categoriesForMethods!
 newEvent:!private!unit tests! !
 testInstanceCreation!public!unit tests! !

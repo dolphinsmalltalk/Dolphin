@@ -5,9 +5,13 @@ WindowsEvent subclass: #PointEvent
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PointEvent guid: (GUID fromString: '{87b4c551-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 PointEvent comment: ''!
+
 !PointEvent categoriesForClass!Events!MVP-Views-Events! !
+
 !PointEvent methodsFor!
 
 position
@@ -35,6 +39,7 @@ y
 	"Answer the y-position of the pointer."
 
 	^self lParamY! !
+
 !PointEvent categoriesForMethods!
 position!accessing!public! !
 printLParamOn:!printing!private! !

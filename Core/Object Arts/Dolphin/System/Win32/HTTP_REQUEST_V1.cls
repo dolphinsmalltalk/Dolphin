@@ -5,7 +5,9 @@ HttpServerStructure subclass: #HTTP_REQUEST_V1
 	classVariableNames: '_OffsetOf_Address _OffsetOf_BytesReceived _OffsetOf_ConnectionId _OffsetOf_CookedUrl _OffsetOf_EntityChunkCount _OffsetOf_Flags _OffsetOf_Headers _OffsetOf_pEntityChunks _OffsetOf_pRawUrl _OffsetOf_pSslInfo _OffsetOf_pUnknownVerb _OffsetOf_RawConnectionId _OffsetOf_RawUrlLength _OffsetOf_RequestId _OffsetOf_UnknownVerbLength _OffsetOf_UrlContext _OffsetOf_Verb _OffsetOf_Version'
 	poolDictionaries: 'WinHttpServerConsts'
 	classInstanceVariableNames: ''!
+
 HTTP_REQUEST_V1 guid: (GUID fromString: '{7927a79c-8c4e-423a-bf24-f1b36b4df5c4}')!
+
 HTTP_REQUEST_V1 addClassConstant: '_OffsetOf_Address' value: 16r4C!
 HTTP_REQUEST_V1 addClassConstant: '_OffsetOf_BytesReceived' value: 16r1B0!
 HTTP_REQUEST_V1 addClassConstant: '_OffsetOf_ConnectionId' value: 16r8!
@@ -24,6 +26,7 @@ HTTP_REQUEST_V1 addClassConstant: '_OffsetOf_UnknownVerbLength' value: 16r28!
 HTTP_REQUEST_V1 addClassConstant: '_OffsetOf_UrlContext' value: 16r18!
 HTTP_REQUEST_V1 addClassConstant: '_OffsetOf_Verb' value: 16r24!
 HTTP_REQUEST_V1 addClassConstant: '_OffsetOf_Version' value: 16r20!
+
 HTTP_REQUEST_V1 comment: '<HTTP_REQUEST_V1> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_REQUEST_V1'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -55,7 +58,9 @@ struct tagHTTP_REQUEST_V1 {
 	[helpstring("A pointer to an HTTP_SSL_INFO structure that contains Secure Sockets Layer (SSL) information about the connection on which the request was received.")] HTTP_SSL_INFO* pSslInfo;
 } HTTP_REQUEST_V1;
 '!
+
 !HTTP_REQUEST_V1 categoriesForClass!WinHttpServer-Structs! !
+
 !HTTP_REQUEST_V1 methodsFor!
 
 Address
@@ -314,6 +319,7 @@ Version: aHTTP_VERSION
 		from: ##(_OffsetOf_Version + 1)
 		to: ##(_OffsetOf_Version + HTTP_VERSION basicByteSize)
 		startingAt: 1! !
+
 !HTTP_REQUEST_V1 categoriesForMethods!
 Address!**compiled accessors**!public! !
 Address:!**compiled accessors**!public! !
@@ -411,6 +417,7 @@ defineFields
 
 getFieldNames
 	^#(#Flags #ConnectionId #RequestId #UrlContext #Version #Verb #UnknownVerbLength #RawUrlLength #pUnknownVerb #pRawUrl #CookedUrl #Address #Headers #BytesReceived #EntityChunkCount #pEntityChunks #RawConnectionId #pSslInfo)! !
+
 !HTTP_REQUEST_V1 class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

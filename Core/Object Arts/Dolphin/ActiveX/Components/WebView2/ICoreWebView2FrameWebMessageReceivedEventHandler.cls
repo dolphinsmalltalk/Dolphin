@@ -5,7 +5,9 @@ ICoreWebView2EventHandler subclass: #ICoreWebView2FrameWebMessageReceivedEventHa
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2FrameWebMessageReceivedEventHandler guid: (IID fromString: '{e371e005-6d1d-4517-934b-a8f1629c62a5}')!
+
 ICoreWebView2FrameWebMessageReceivedEventHandler comment: '`ICoreWebView2FrameWebMessageReceivedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2FrameWebMessageReceivedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -27,7 +29,9 @@ interface ICoreWebView2FrameWebMessageReceivedEventHandler : IUnknown
 };
 ```
 '!
+
 !ICoreWebView2FrameWebMessageReceivedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2FrameWebMessageReceivedEventHandler methodsFor!
 
 basicRegister: tokenBuffer
@@ -35,6 +39,7 @@ basicRegister: tokenBuffer
 
 basicUnregister
 	source Remove_WebMessageReceived: token! !
+
 !ICoreWebView2FrameWebMessageReceivedEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
@@ -58,6 +63,7 @@ eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
 	^#frameWebMessageReceived:! !
+
 !ICoreWebView2FrameWebMessageReceivedEventHandler class categoriesForMethods!
 argsClass!constants!public! !
 defineFunctions!**auto generated**!initializing!public! !

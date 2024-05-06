@@ -5,9 +5,13 @@ ScalarField subclass: #DWORDField
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DWORDField guid: (GUID fromString: '{87b4c4e9-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 DWORDField comment: '<DWORDField> is a <ScalarField> class to represent <ExternalStructure> fields that are 32-bit unsigned integers.'!
+
 !DWORDField categoriesForClass!External-Data-Types! !
+
 !DWORDField methodsFor!
 
 accessorMessage
@@ -26,6 +30,7 @@ writeInto: anExternalStructure value: anInteger
 	anExternalStructure, at the receiver's offset."
 
 	^anExternalStructure bytes dwordAtOffset: offset put: anInteger! !
+
 !DWORDField categoriesForMethods!
 accessorMessage!automatic generation!private! !
 readFrom:!indirect accessing!private! !
@@ -39,6 +44,7 @@ byteSize
 	A DWORD is always 4 bytes."
 
 	^4! !
+
 !DWORDField class categoriesForMethods!
 byteSize!constants!private! !
 !

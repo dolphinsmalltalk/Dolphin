@@ -5,9 +5,13 @@ Object variableSubclass: #Context
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Context guid: (GUID fromString: '{4fb74aa3-f021-4955-a690-e1a29440af80}')!
+
 Context comment: ''!
+
 !Context categoriesForClass!Kernel-Processes! !
+
 !Context methodsFor!
 
 block
@@ -37,6 +41,7 @@ printOn: aStream
 				basicPrint: self;
 				nextPutAll: ' for ';
 				print: block]! !
+
 !Context categoriesForMethods!
 block!accessing!private! !
 frameClass!constants!public! !

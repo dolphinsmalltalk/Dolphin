@@ -5,9 +5,13 @@ ExceptionHandlerAbstract subclass: #ExceptionHandlerSet
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExceptionHandlerSet guid: (GUID fromString: '{87b4c576-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 ExceptionHandlerSet comment: 'ExceptionHandlerSet is a private class that is part of the implementation of ANSI Smalltalk Exceptions in Dolphin. It is used to represent a collection of exception filters and handler blocks. The implementation is subject to change and should not be instantiated directly.'!
+
 !ExceptionHandlerSet categoriesForClass!Kernel-Exception Handling! !
+
 !ExceptionHandlerSet methodsFor!
 
 actionFor: exception
@@ -21,6 +25,7 @@ actionFor: exception
 
 setHandlers: aSequenceableCollection
 	handlers := aSequenceableCollection! !
+
 !ExceptionHandlerSet categoriesForMethods!
 actionFor:!debugger-step over!helpers!private! !
 setHandlers:!initializing!private! !
@@ -30,6 +35,7 @@ setHandlers:!initializing!private! !
 
 handlers: aSequencedReadableCollectionOfAssociations
 	^self basicNew setHandlers: aSequencedReadableCollectionOfAssociations! !
+
 !ExceptionHandlerSet class categoriesForMethods!
 handlers:!debugger-step over!instance creation!private! !
 !

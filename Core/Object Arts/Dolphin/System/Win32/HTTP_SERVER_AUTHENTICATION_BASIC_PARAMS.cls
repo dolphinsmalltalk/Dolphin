@@ -5,9 +5,12 @@ HttpServerStructure subclass: #HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS
 	classVariableNames: '_OffsetOf_Realm _OffsetOf_RealmLength'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS guid: (GUID fromString: '{813ff062-e4ed-4b4c-8eef-9d94a1fb65c4}')!
+
 HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS addClassConstant: '_OffsetOf_Realm' value: 16r4!
 HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS addClassConstant: '_OffsetOf_RealmLength' value: 16r0!
+
 HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS comment: '<HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains no documentation for this struct
@@ -22,7 +25,9 @@ struct tagHTTP_SERVER_AUTHENTICATION_BASIC_PARAMS {
 	LPWSTR Realm;
 } HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS;
 '!
+
 !HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS categoriesForClass!WinHttpServer-Structs! !
+
 !HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS methodsFor!
 
 Realm
@@ -44,6 +49,7 @@ RealmLength: anInteger
 	"Set the receiver's 'RealmLength' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_RealmLength put: anInteger! !
+
 !HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS categoriesForMethods!
 Realm!**compiled accessors**!public! !
 Realm:!**compiled accessors**!public! !
@@ -72,6 +78,7 @@ defineFields
 
 getFieldNames
 	^#(#RealmLength #Realm)! !
+
 !HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

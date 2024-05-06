@@ -5,11 +5,17 @@ ExternalStructure subclass: #ExternalScalar
 	classVariableNames: '_OffsetOf_value'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalScalar guid: (GUID fromString: '{704554ca-46f7-49b2-92df-edcbe398040a}')!
+
 ExternalScalar isAbstract: true!
+
 ExternalScalar addClassConstant: '_OffsetOf_value' value: 16r0!
+
 ExternalScalar comment: ''!
+
 !ExternalScalar categoriesForClass!External-Data-Structured! !
+
 !ExternalScalar methodsFor!
 
 = anObject
@@ -32,6 +38,7 @@ value: anObject
 	"Set the receiver's value field to the value of anObject."
 
 	^self subclassResponsibility! !
+
 !ExternalScalar categoriesForMethods!
 =!comparing!public! !
 displayOn:!printing!private! !
@@ -46,6 +53,7 @@ defineFields
 
 getFieldNames
 	^#(#value)! !
+
 !ExternalScalar class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!constants!private! !

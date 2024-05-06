@@ -5,11 +5,15 @@ GdiplusBase subclass: #GdiplusMatrix
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusMatrix guid: (GUID fromString: '{1a1a5ea7-6151-11d7-b609-00e0987e8081}')!
+
 GdiplusMatrix comment: 'GdiplusMatrix represents a 3 ×3 matrix that, in turn, represents an affine transformation. An instance stores only six of the 9 numbers in a 3 ×3 matrix because all 3 ×3 matrices that represent affine transformations have the same third column (0, 0, 1).  An instance is typically used to transform characteristics of another object (see definitions of #transform:).
 
 '!
+
 !GdiplusMatrix categoriesForClass!Unclassified! !
+
 !GdiplusMatrix methodsFor!
 
 asArray
@@ -91,6 +95,7 @@ translateTransform: aPoint order: aMatrixOrderConstant
 				offsetY: aPoint y
 				order: aMatrixOrderConstant) = Ok 
 		ifFalse: [GdiplusError signal: 'GdipTranslateMatrix failed' with: status]! !
+
 !GdiplusMatrix categoriesForMethods!
 asArray!converting!public! !
 basicFree!private!realizing/unrealizing! !
@@ -226,6 +231,7 @@ rectangle: aRectangle point: aPoint
 		m22: aRectangle height
 		m31: aPoint x
 		m32: aPoint y! !
+
 !GdiplusMatrix class categoriesForMethods!
 exampleGdipMShadows!examples!public!sunit! !
 exampleGdipMShear!examples!public!sunit! !

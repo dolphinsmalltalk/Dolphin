@@ -5,7 +5,9 @@ HistoryBrowser subclass: #ClassHistoryBrowser
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ClassHistoryBrowser guid: (GUID fromString: '{30a97c72-065a-4c23-9f8e-dc13497f6eda}')!
+
 ClassHistoryBrowser comment: 'Searches the sources and changes files to provide a change history for a class and opens a browser on the results.
 
 Usage:
@@ -29,7 +31,9 @@ MethodHistoryBrowser automatically removes duplicate consecutive entries.
 (C) 2005 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
+
 !ClassHistoryBrowser categoriesForClass!IDB Goodies! !
+
 !ClassHistoryBrowser methodsFor!
 
 about
@@ -149,6 +153,7 @@ updateHistory
 						at: 4 put: (selectorChunks select: [:each | each isFromChanges]) size;
 						yourself)].
 	list list: methodHistory! !
+
 !ClassHistoryBrowser categoriesForMethods!
 about!commands!public! !
 browseHistory!commands!public! !
@@ -180,6 +185,7 @@ resource_Default_view
 
 showOnClass: aClass
 	^self show setClass: aClass! !
+
 !ClassHistoryBrowser class categoriesForMethods!
 resource_Default_view!public!resources-views! !
 showOnClass:!instance creation!public! !

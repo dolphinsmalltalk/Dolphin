@@ -5,7 +5,9 @@ ArrayedCollection variableSubclass: #Array
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Array guid: (GUID fromString: '{87b4c510-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Array comment: 'Array is the class of <ArrayedCollection>s whose elements are arbitraty <Object>s.
 
 Array complies with the ANSI protocols:
@@ -14,7 +16,9 @@ Array complies with the ANSI protocols:
 	sequencedReadableCollection
 	sequencedCollection
 	Array'!
+
 !Array categoriesForClass!Collections-Arrayed! !
+
 !Array methodsFor!
 
 addAnsweringIndex: newElement
@@ -98,6 +102,7 @@ storeOn: aStream
 			aStream nextPut: ${.
 			self do: [:each | each storeOn: aStream] separatedBy: [aStream nextPutAll: '. '].
 			aStream nextPut: $}]! !
+
 !Array categoriesForMethods!
 addAnsweringIndex:!adding!public! !
 asArray!converting!public! !
@@ -166,6 +171,7 @@ with: element1 with: element2 with: element3 with: element4 with: element5
 
 	<primitive: 157>
 	^{element1. element2. element3. element4. element5}! !
+
 !Array class categoriesForMethods!
 empty!instance creation!public! !
 newFromStack:!instance creation!must not strip!private! !

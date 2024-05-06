@@ -5,10 +5,14 @@ ExternalLibrary subclass: #OLEAutLibrary
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 OLEAutLibrary guid: (GUID fromString: '{6467404a-3a82-101b-8181-00aa003743d3}')!
+
 OLEAutLibrary comment: 'OLEAutLibrary is the <ExternalLibrary> class to represent the Win32 System DLL, OLEAUT32.DLL.
 This library contains functions pertaining to the use of Active-X Automation.'!
+
 !OLEAutLibrary categoriesForClass!ActiveX Automation!External-Libraries-ActiveX! !
+
 !OLEAutLibrary methodsFor!
 
 getErrorInfo: dwReserved pperrinfo: pperrinfo
@@ -61,6 +65,7 @@ sysStringLen: aBSTR
 
 	<stdcall: hresult SysStringLen bstr>
 	^self invalidCall: _failureCode! !
+
 !OLEAutLibrary categoriesForMethods!
 getErrorInfo:pperrinfo:!Automation Functions-Error Handling API!primitives!public! !
 sysAllocString:!Automation Functions-String Manipulation!primitives!public! !
@@ -76,6 +81,7 @@ fileName
 	the receiver represents."
 
 	^'OLEAUT32'! !
+
 !OLEAutLibrary class categoriesForMethods!
 fileName!constants!public! !
 !

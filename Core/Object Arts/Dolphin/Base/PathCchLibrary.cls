@@ -5,9 +5,12 @@ ExternalLibrary subclass: #PathCchLibrary
 	classVariableNames: 'PATHCCH_ALLOW_LONG_PATHS PATHCCH_MAX_CCH'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PathCchLibrary guid: (GUID fromString: '{fef67ac9-c054-4034-859d-92ec9eae8407}')!
+
 PathCchLibrary addClassConstant: 'PATHCCH_ALLOW_LONG_PATHS' value: 16r1!
 PathCchLibrary addClassConstant: 'PATHCCH_MAX_CCH' value: 16r8000!
+
 PathCchLibrary comment: 'PathCchLibrary is the `ExternalLibrary` class to represent the dynamic link library, ''api-ms-win-core-path-l1-1-0.dll''. It was generated from type information in the ''Win32 API'' library. It contains methods for each of the functions defined by the corresponding module in that type library.
 
 The type library contains the following helpstring for this module
@@ -15,7 +18,9 @@ The type library contains the following helpstring for this module
 
 ** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated.
 '!
+
 !PathCchLibrary categoriesForClass!Win32-Modules! !
+
 !PathCchLibrary methodsFor!
 
 pathAllocCanonicalize: pszPathIn dwFlags: dwFlags ppszPathOut: ppszPathOut
@@ -250,6 +255,7 @@ pathIsUNCEx: pszPath ppszServer: ppszServer
 
 	<stdcall: bool PathIsUNCEx lpwstr lpwstr*>
 	^self invalidCall: _failureCode! !
+
 !PathCchLibrary categoriesForMethods!
 pathAllocCanonicalize:dwFlags:ppszPathOut:!**auto generated**!private!win32 functions-path! !
 pathAllocCombine:pszMore:dwFlags:ppszPathOut:!**auto generated**!private!win32 functions-path! !
@@ -284,6 +290,7 @@ initialize
 	self
 		addClassConstant: 'PATHCCH_ALLOW_LONG_PATHS' value: 16r1;
 		addClassConstant: 'PATHCCH_MAX_CCH' value: 16r8000! !
+
 !PathCchLibrary class categoriesForMethods!
 fileName!constants!public! !
 initialize!development!initializing!private! !

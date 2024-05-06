@@ -5,9 +5,13 @@ ExternalFieldTest subclass: #StructureArrayPointerFieldTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StructureArrayPointerFieldTest guid: (GUID fromString: '{05db20c0-4d73-4853-8820-50302b095632}')!
+
 StructureArrayPointerFieldTest comment: ''!
+
 !StructureArrayPointerFieldTest categoriesForClass!Unclassified! !
+
 !StructureArrayPointerFieldTest methodsFor!
 
 testGenerateAccessorsForSizedArray
@@ -45,6 +49,7 @@ testGenerateAccessorsForSizedArray
 	struct Test: data.
 	self assert: struct Size equals: 2.
 	self assert: struct Test equals: data! !
+
 !StructureArrayPointerFieldTest categoriesForMethods!
 testGenerateAccessorsForSizedArray!public! !
 !

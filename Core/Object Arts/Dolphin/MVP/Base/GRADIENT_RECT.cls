@@ -5,9 +5,12 @@ Win32Structure subclass: #GRADIENT_RECT
 	classVariableNames: '_OffsetOf_lowerRight _OffsetOf_upperLeft'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GRADIENT_RECT guid: (GUID fromString: '{01040b06-a9e6-4438-8a6b-a8502a2c7794}')!
+
 GRADIENT_RECT addClassConstant: '_OffsetOf_lowerRight' value: 16r4!
 GRADIENT_RECT addClassConstant: '_OffsetOf_upperLeft' value: 16r0!
+
 GRADIENT_RECT comment: '<GRADIENT_RECT> is an <ExternalStructure> class to wrap the struct ''Win32.GRADIENT_RECT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains the following helpstring for this struct
@@ -23,7 +26,9 @@ struct tagGRADIENT_RECT {
 	ULONG LowerRight;
 } GRADIENT_RECT;
 '!
+
 !GRADIENT_RECT categoriesForClass!Win32-Structs! !
+
 !GRADIENT_RECT methodsFor!
 
 lowerRight
@@ -45,6 +50,7 @@ upperLeft: anInteger
 	"Set the receiver's 'upperLeft' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_upperLeft put: anInteger! !
+
 !GRADIENT_RECT categoriesForMethods!
 lowerRight!**compiled accessors**!public! !
 lowerRight:!**compiled accessors**!public! !
@@ -72,6 +78,7 @@ defineFields
 
 getFieldNames
 	^#(#upperLeft #lowerRight)! !
+
 !GRADIENT_RECT class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

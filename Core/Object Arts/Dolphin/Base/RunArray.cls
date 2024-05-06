@@ -5,9 +5,13 @@ ArrayedCollection subclass: #RunArray
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RunArray guid: (GUID fromString: '{87b4c513-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 RunArray comment: ''!
+
 !RunArray categoriesForClass!Collections-Arrayed! !
+
 !RunArray methodsFor!
 
 allSatisfy: discriminator
@@ -131,6 +135,7 @@ size
 
 species
 	^Array! !
+
 !RunArray categoriesForMethods!
 allSatisfy:!enumerating!public! !
 anySatisfy:!enumerating!public! !
@@ -215,6 +220,7 @@ withAll: aCollection
 			[runs nextPut: runLength.
 			values nextPut: current].
 	^self runs: runs contents values: values contents! !
+
 !RunArray class categoriesForMethods!
 new!instance creation!public! !
 new:!instance creation!public! !

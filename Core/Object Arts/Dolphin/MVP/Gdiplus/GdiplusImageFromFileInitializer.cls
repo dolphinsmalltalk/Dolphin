@@ -5,9 +5,13 @@ GdiplusFromFileInitializer subclass: #GdiplusImageFromFileInitializer
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusImageFromFileInitializer guid: (GUID fromString: '{b5f81fe6-1de3-4f3d-bffd-2380b0ea2a90}')!
+
 GdiplusImageFromFileInitializer comment: ''!
+
 !GdiplusImageFromFileInitializer categoriesForClass!Unclassified! !
+
 !GdiplusImageFromFileInitializer methodsFor!
 
 createHandle
@@ -27,6 +31,7 @@ createHandle
 
 gdiplusConstructorErrorDescription
 	^'Error loading Image'! !
+
 !GdiplusImageFromFileInitializer categoriesForMethods!
 createHandle!private!realizing/unrealizing! !
 gdiplusConstructorErrorDescription!constants!private! !

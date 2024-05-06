@@ -5,12 +5,15 @@ ExternalStructure subclass: #MIB_IPNETROW
 	classVariableNames: '_OffsetOf_bPhysAddr _OffsetOf_dwAddr _OffsetOf_dwIndex _OffsetOf_dwPhysAddrLen _OffsetOf_dwType'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MIB_IPNETROW guid: (GUID fromString: '{5aa4fcea-d4da-49bb-a756-7ca522c111d3}')!
+
 MIB_IPNETROW addClassConstant: '_OffsetOf_bPhysAddr' value: 16r8!
 MIB_IPNETROW addClassConstant: '_OffsetOf_dwAddr' value: 16r10!
 MIB_IPNETROW addClassConstant: '_OffsetOf_dwIndex' value: 16r0!
 MIB_IPNETROW addClassConstant: '_OffsetOf_dwPhysAddrLen' value: 16r4!
 MIB_IPNETROW addClassConstant: '_OffsetOf_dwType' value: 16r14!
+
 MIB_IPNETROW comment: '<MIB_IPNETROW> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_IPNETROW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -28,7 +31,9 @@ struct tagMIB_IPNETROW {
 	unsigned long dwType;
 } MIB_IPNETROW;
 '!
+
 !MIB_IPNETROW categoriesForClass!Win32-Structs! !
+
 !MIB_IPNETROW methodsFor!
 
 bPhysAddr
@@ -55,6 +60,7 @@ dwType
 	"Answer the <Integer> value of the receiver's 'dwType' field."
 
 	^bytes dwordAtOffset: _OffsetOf_dwType! !
+
 !MIB_IPNETROW categoriesForMethods!
 bPhysAddr!**compiled accessors**!public! !
 dwAddr!**compiled accessors**!public! !
@@ -101,6 +107,7 @@ defineFields
 
 getFieldNames
 	^#(#dwIndex #dwPhysAddrLen #bPhysAddr #dwAddr #dwType)! !
+
 !MIB_IPNETROW class categoriesForMethods!
 defineFields!initializing!public! !
 getFieldNames!**compiled accessors**!constants!private! !

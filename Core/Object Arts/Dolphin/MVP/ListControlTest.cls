@@ -5,10 +5,15 @@ SelectableListItemsTest subclass: #ListControlTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ListControlTest guid: (GUID fromString: '{a10a1ba0-5afc-41f3-8b51-2b9e52718424}')!
+
 ListControlTest isAbstract: true!
+
 ListControlTest comment: ''!
+
 !ListControlTest categoriesForClass!Unclassified! !
+
 !ListControlTest methodsFor!
 
 assertCaretVisible
@@ -411,6 +416,7 @@ verifySingleSelectionsByIndex
 		trigger: #selectionChanged
 		against: presenter.
 	self assert: presenter selectionsByIndex equals: #()! !
+
 !ListControlTest categoriesForMethods!
 assertCaretVisible!helpers!private! !
 expectedSelectionsForSendShiftClickTests!constants!private! !

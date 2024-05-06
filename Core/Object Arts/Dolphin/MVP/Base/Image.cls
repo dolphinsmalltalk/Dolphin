@@ -5,8 +5,11 @@ GraphicsTool subclass: #Image
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Image guid: (GUID fromString: '{87b4c635-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Image isAbstract: true!
+
 Image comment: 'Image is the class of <GraphicsTools>s that represent pictures which can be drawn onto the display (or other device).
 
 Instance Variables:
@@ -15,7 +18,9 @@ Instance Variables:
 	instanceHandle	<ExternalLibrary> (usually <ExternalResourceLibrary) represent the module from which the image was loaded.
 
 '!
+
 !Image categoriesForClass!Graphics-Tools! !
+
 !Image methodsFor!
 
 = anObject 
@@ -235,6 +240,7 @@ printOn: aStream
 						nextPutAll: #fromId:;
 						space;
 						print: id]]! !
+
 !Image categoriesForMethods!
 =!comparing!public! !
 addToImageList:mask:!private!testing! !
@@ -352,6 +358,7 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^3! !
+
 !Image class categoriesForMethods!
 fromFile:!instance creation!public! !
 fromFile:usingLocator:!instance creation!public! !

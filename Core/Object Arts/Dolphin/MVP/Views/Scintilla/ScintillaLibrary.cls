@@ -5,9 +5,13 @@ ExternalLibrary subclass: #ScintillaLibrary
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ScintillaLibrary guid: (GUID fromString: '{846bc1f2-ad71-411e-8c63-c99780a5a626}')!
+
 ScintillaLibrary comment: 'ExternalLibrary class to wrap the Scintilla DLL (SciLexer.dll).'!
+
 !ScintillaLibrary categoriesForClass!External-Libraries! !
+
 !ScintillaLibrary methodsFor!
 
 directFunction: sciThis msg: msg wParam: wParam lParam: lParam
@@ -37,6 +41,7 @@ versionFormatString
 	"
 
 	^'%2!!d!!.%3!!d!!.%4!!d!!'! !
+
 !ScintillaLibrary categoriesForMethods!
 directFunction:msg:wParam:lParam:!operations!private! !
 directFunction:msg:wParam:lpParam:!operations!private! !
@@ -56,6 +61,7 @@ versionString
 	"Answer the version of the Scintilla control for which this library was generated."
 
 	^'4.4.4'! !
+
 !ScintillaLibrary class categoriesForMethods!
 fileName!constants!public! !
 versionString!**auto generated**!constants!public!scintilla interface! !

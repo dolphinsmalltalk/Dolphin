@@ -5,9 +5,13 @@ DolphinTest subclass: #ProductReleaseTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ProductReleaseTest guid: (GUID fromString: '{685d25f7-ba9b-419b-af63-61526013895c}')!
+
 ProductReleaseTest comment: ''!
+
 !ProductReleaseTest categoriesForClass!Unclassified! !
+
 !ProductReleaseTest methodsFor!
 
 checkNoClass: aSymbol
@@ -26,6 +30,7 @@ testCompilationFailures
 	| failed |
 	failed := '*-compilation failures' asMethodCategory methods.
 	self assert: failed asArray equals: #()! !
+
 !ProductReleaseTest categoriesForMethods!
 checkNoClass:!public!unit tests! !
 isReleased!private!unit tests! !

@@ -5,7 +5,9 @@ ICoreWebView2EventHandler subclass: #ICoreWebView2WindowCloseRequestedEventHandl
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2WindowCloseRequestedEventHandler guid: (IID fromString: '{5c19e9e0-092f-486b-affa-ca8231913039}')!
+
 ICoreWebView2WindowCloseRequestedEventHandler comment: '`ICoreWebView2WindowCloseRequestedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2WindowCloseRequestedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -27,7 +29,9 @@ interface ICoreWebView2WindowCloseRequestedEventHandler : IUnknown
 };
 ```
 '!
+
 !ICoreWebView2WindowCloseRequestedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2WindowCloseRequestedEventHandler methodsFor!
 
 basicRegister: tokenBuffer
@@ -35,6 +39,7 @@ basicRegister: tokenBuffer
 
 basicUnregister
 	source Remove_WindowCloseRequested: token! !
+
 !ICoreWebView2WindowCloseRequestedEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
@@ -55,6 +60,7 @@ eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
 	^#windowCloseRequested! !
+
 !ICoreWebView2WindowCloseRequestedEventHandler class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 eventName!constants!public! !

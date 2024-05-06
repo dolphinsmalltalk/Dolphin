@@ -5,7 +5,9 @@ Model subclass: #PersonalAccountTransaction
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PersonalAccountTransaction guid: (GUID fromString: '{87b4c669-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 PersonalAccountTransaction comment: 'A PersonalAccountTransaction holds details regarding a single transaction for an account within the PersonalMoney system.
 
 Instance Variables
@@ -13,7 +15,9 @@ Instance Variables
 	description		<String> describing the purpose of the transactions.
 	date		<Date> on which the transaction was made.
 	isDebit		<Boolean> that indicates whether the transaction is a debit or credit.'!
+
 !PersonalAccountTransaction categoriesForClass!MVP-Models!Samples! !
+
 !PersonalAccountTransaction methodsFor!
 
 actualAmount
@@ -95,6 +99,7 @@ printOn: aStream
 		nextPut: $(;
 		display: self;
 		nextPut: $)! !
+
 !PersonalAccountTransaction categoriesForMethods!
 actualAmount!accessing!public! !
 amount!accessing!public! !

@@ -5,12 +5,16 @@ Set variableSubclass: #PluggableSet
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PluggableSet guid: (GUID fromString: '{faa6a208-2202-4d7e-b342-d9590b9bf6c8}')!
+
 PluggableSet comment: 'PluggableSet is the class of <Set>s which support a pluggable <searchPolicy>, and which can thus be configured to behave in the same way as either standard <Set>s (equality search) or <IdentitySet>s (identity search), or indeed any user-defined search policy.
 
 Instance Variables:
 	searchPolicy		<searchPolicy>. The policy used to hash and compare elements of the receiver.'!
+
 !PluggableSet categoriesForClass!Collections-Unordered! !
+
 !PluggableSet methodsFor!
 
 copyEmpty: anInteger
@@ -78,6 +82,7 @@ species
 
 	^Set
 ! !
+
 !PluggableSet categoriesForMethods!
 copyEmpty:!copying!private! !
 findElementOrNil:!private!searching! !
@@ -108,6 +113,7 @@ searchPolicy: policy
 	"Answer a new, empty, instance of the receiver with the specified <searchPolicy>."
 
 	^self new setSearchPolicy: policy! !
+
 !PluggableSet class categoriesForMethods!
 defaultSearchPolicy!constants!public! !
 new:searchPolicy:!instance creation!public! !

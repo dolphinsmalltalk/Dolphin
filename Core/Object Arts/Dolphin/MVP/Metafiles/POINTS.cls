@@ -5,9 +5,12 @@ ExternalPoint subclass: #POINTS
 	classVariableNames: '_OffsetOf_x _OffsetOf_y'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 POINTS guid: (GUID fromString: '{3278b910-3376-47e3-be99-02afe78a6230}')!
+
 POINTS addClassConstant: '_OffsetOf_x' value: 16r0!
 POINTS addClassConstant: '_OffsetOf_y' value: 16r2!
+
 POINTS comment: '<POINTS> is an <ExternalStructure> class to wrap the struct ''Win32.POINTS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -22,7 +25,9 @@ struct tagPOINTS {
 	short y;
 } POINTS;
 '!
+
 !POINTS categoriesForClass!Win32-Structs! !
+
 !POINTS methodsFor!
 
 asDword
@@ -58,6 +63,7 @@ y: anInteger
 	"Set the receiver's 'y' field to the value of the argument, anInteger"
 
 	bytes swordAtOffset: _OffsetOf_y put: anInteger! !
+
 !POINTS categoriesForMethods!
 asDword!converting!public! !
 asUIntPtr!converting!public! !
@@ -90,6 +96,7 @@ x: x y: y
 				swordAtOffset: _OffsetOf_x put: x;
 				swordAtOffset: _OffsetOf_y put: y;
 				yourself)! !
+
 !POINTS class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 x:y:!instance creation!public! !

@@ -5,8 +5,11 @@ Object subclass: #TypeConverter
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TypeConverter guid: (GUID fromString: '{87b4c4c8-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 TypeConverter isAbstract: true!
+
 TypeConverter comment: 'A <TypeConverter> is capable of converting one type of object into another and vice versa. Very often a TypeConverter forms part of a <ValueConverter> model that sits between a subject value and some client of that value. The subject value is referred to as the ''left'' value and the value the client sees is the ''right'' value. In a typical usage (within the MVP framework) the ''left'' type is the type of the Model value, and the right type is the display value (usually a String).
 
 TypeConverter is itself an abstract class and concrete subclasses must be created to provide specific type convertions. Subclasses should implement #leftToRight: and #rightToLeft: methods to perform the conversions. These methods are, however, private. The public interface for conversion is as defined in the <typeConverter> method protocol.
@@ -22,7 +25,9 @@ Instance Variables:
 
 
 '!
+
 !TypeConverter categoriesForClass!MVP-Type Converters-Abstract! !
+
 !TypeConverter methodsFor!
 
 convertFromLeftToRight: anObject 
@@ -93,6 +98,7 @@ rightToLeft: anObject
 	Must be overridden by subclasses to perform specific conversions"
 
 	^self subclassResponsibility! !
+
 !TypeConverter categoriesForMethods!
 convertFromLeftToRight:!converting!public! !
 convertFromRightToLeft:!converting!public! !
@@ -120,6 +126,7 @@ new
 	"Answer a new instance of the receiver. Instances require initialization"
 
 	^super new initialize! !
+
 !TypeConverter class categoriesForMethods!
 icon!constants!public! !
 new!instance creation!public! !

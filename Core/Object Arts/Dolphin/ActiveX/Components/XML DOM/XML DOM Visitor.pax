@@ -7,7 +7,6 @@ Copyright (c) Object Arts Ltd, 2000-2006
 
 An abstract visitor for XML DOM trees.'.
 
-
 package classNames
 	add: #XmlDomVisitor;
 	yourself.
@@ -47,15 +46,13 @@ Object subclass: #XmlDomVisitor
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
-"Global Aliases"!
-
-
 "Loose Methods"!
 
 !IXMLDOMAttribute methodsFor!
 
 acceptVisitor: anXmlNodeVisitor
 	anXmlNodeVisitor visitAttribute: self! !
+
 !IXMLDOMAttribute categoriesForMethods!
 acceptVisitor:!public!visitor! !
 !
@@ -64,6 +61,7 @@ acceptVisitor:!public!visitor! !
 
 acceptVisitor: anXmlNodeVisitor
 	anXmlNodeVisitor visitCDATA: self! !
+
 !IXMLDOMCDATASection categoriesForMethods!
 acceptVisitor:!public!visitor! !
 !
@@ -72,6 +70,7 @@ acceptVisitor:!public!visitor! !
 
 acceptVisitor: anXmlNodeVisitor
 	anXmlNodeVisitor visitComment: self! !
+
 !IXMLDOMComment categoriesForMethods!
 acceptVisitor:!public!visitor! !
 !
@@ -80,6 +79,7 @@ acceptVisitor:!public!visitor! !
 
 acceptVisitor: anXmlNodeVisitor
 	anXmlNodeVisitor visitDocument: self! !
+
 !IXMLDOMDocument categoriesForMethods!
 acceptVisitor:!public!visitor! !
 !
@@ -88,6 +88,7 @@ acceptVisitor:!public!visitor! !
 
 acceptVisitor: anXmlNodeVisitor
 	anXmlNodeVisitor visitDocumentType: self! !
+
 !IXMLDOMDocumentType categoriesForMethods!
 acceptVisitor:!public!visitor! !
 !
@@ -96,6 +97,7 @@ acceptVisitor:!public!visitor! !
 
 acceptVisitor: anXmlNodeVisitor
 	anXmlNodeVisitor visitElement: self! !
+
 !IXMLDOMElement categoriesForMethods!
 acceptVisitor:!public!visitor! !
 !
@@ -104,6 +106,7 @@ acceptVisitor:!public!visitor! !
 
 acceptVisitor: anXmlNodeVisitor
 	anXmlNodeVisitor visitEntity: self! !
+
 !IXMLDOMEntity categoriesForMethods!
 acceptVisitor:!public!visitor! !
 !
@@ -112,6 +115,7 @@ acceptVisitor:!public!visitor! !
 
 acceptVisitor: anXmlNodeVisitor
 	anXmlNodeVisitor visitEntityReference: self! !
+
 !IXMLDOMEntityReference categoriesForMethods!
 acceptVisitor:!public!visitor! !
 !
@@ -120,6 +124,7 @@ acceptVisitor:!public!visitor! !
 
 acceptVisitor: anXmlNodeVisitor
 	anXmlNodeVisitor visitDomNode: self! !
+
 !IXMLDOMNode categoriesForMethods!
 acceptVisitor:!public!visitor! !
 !
@@ -128,6 +133,7 @@ acceptVisitor:!public!visitor! !
 
 acceptVisitor: anXmlNodeVisitor
 	anXmlNodeVisitor visitNotation: self! !
+
 !IXMLDOMNotation categoriesForMethods!
 acceptVisitor:!public!visitor! !
 !
@@ -136,6 +142,7 @@ acceptVisitor:!public!visitor! !
 
 acceptVisitor: anXmlNodeVisitor
 	anXmlNodeVisitor visitProcessingInstruction: self! !
+
 !IXMLDOMProcessingInstruction categoriesForMethods!
 acceptVisitor:!public!visitor! !
 !
@@ -144,6 +151,7 @@ acceptVisitor:!public!visitor! !
 
 acceptVisitor: anXmlNodeVisitor
 	anXmlNodeVisitor visitText: self! !
+
 !IXMLDOMText categoriesForMethods!
 acceptVisitor:!public!visitor! !
 !

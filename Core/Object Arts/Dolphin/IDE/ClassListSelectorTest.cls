@@ -5,9 +5,13 @@ ClassSelectorTest subclass: #ClassListSelectorTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ClassListSelectorTest guid: (GUID fromString: '{1e05f062-5ab2-4d18-b534-77cb8b7ca82e}')!
+
 ClassListSelectorTest comment: ''!
+
 !ClassListSelectorTest categoriesForClass!Unclassified! !
+
 !ClassListSelectorTest methodsFor!
 
 assertContains: anObject
@@ -143,6 +147,7 @@ testAddRemoveListItems
 
 treeModel
 	^presenter selectableItems treeModel! !
+
 !ClassListSelectorTest categoriesForMethods!
 assertContains:!helpers!private! !
 classToTest!helpers!private! !

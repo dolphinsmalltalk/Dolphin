@@ -5,9 +5,12 @@ Win32Structure subclass: #SHITEMID
 	classVariableNames: '_OffsetOf_abID _OffsetOf_cb'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SHITEMID guid: (GUID fromString: '{a7de965e-05a0-4e48-a2b0-5dab55449c53}')!
+
 SHITEMID addClassConstant: '_OffsetOf_abID' value: 16r2!
 SHITEMID addClassConstant: '_OffsetOf_cb' value: 16r0!
+
 SHITEMID comment: '<SHITEMID> is an <ExternalStructure> class to wrap the struct ''IShellFolderEx.SHITEMID'' from type information in the ''IShellFolder Extended Type Library v1.0'' library.
 
 The type library contains no documentation for this struct.
@@ -21,7 +24,9 @@ typedef struct tagSHITEMID {
 	BYTE abID[1];
 } SHITEMID;
 '!
+
 !SHITEMID categoriesForClass!Win32-Structs! !
+
 !SHITEMID methodsFor!
 
 abID
@@ -33,6 +38,7 @@ cb
 	"Private - Answer the <Integer> value of the receiver's 'cb' field."
 
 	^bytes wordAtOffset: _OffsetOf_cb! !
+
 !SHITEMID categoriesForMethods!
 abID!**compiled accessors**!public! !
 cb!**compiled accessors**!private! !
@@ -69,6 +75,7 @@ packing
 	"Uses byte packing"
 
 	^1! !
+
 !SHITEMID class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

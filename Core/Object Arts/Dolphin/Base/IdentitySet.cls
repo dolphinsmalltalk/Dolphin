@@ -5,9 +5,13 @@ Set variableSubclass: #IdentitySet
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IdentitySet guid: (GUID fromString: '{87b4c527-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 IdentitySet comment: ''!
+
 !IdentitySet categoriesForClass!Collections-Unordered! !
+
 !IdentitySet methodsFor!
 
 findElementOrNil: anObject
@@ -36,6 +40,7 @@ identityIncludes: anObject
 	identical."
 
 	^(self basicAt: (self findElementOrNil: anObject)) notNil! !
+
 !IdentitySet categoriesForMethods!
 findElementOrNil:!private!searching! !
 hash:max:!private!searching! !

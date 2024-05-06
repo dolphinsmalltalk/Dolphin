@@ -5,9 +5,13 @@ Object subclass: #MsgParmSpec
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MsgParmSpec guid: (GUID fromString: '{c7af3382-899b-43cc-b598-00e1f2aee1a5}')!
+
 MsgParmSpec comment: ''!
+
 !MsgParmSpec categoriesForClass!Unclassified! !
+
 !MsgParmSpec methodsFor!
 
 parmAliasingAttribute
@@ -64,6 +68,7 @@ storeSIFString
 	aStream := WriteStream on: (String new: 50).
 	self storeSIFOn: aStream.
 	^ aStream contents! !
+
 !MsgParmSpec categoriesForMethods!
 parmAliasingAttribute!public! !
 parmName!public! !
@@ -165,6 +170,7 @@ privateValidProtocolNames: protocolNamesIn ifError: errorBlock
 			(protocolName isKindOf: Symbol) ifFalse: [^errorBlock value].
 			protocolNamesTmp add: protocolName].
 	^protocolNamesTmp! !
+
 !MsgParmSpec class categoriesForMethods!
 aliasingAttributes!public! !
 new!public! !

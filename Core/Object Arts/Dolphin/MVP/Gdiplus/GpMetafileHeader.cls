@@ -5,7 +5,9 @@ ExternalStructure subclass: #GpMetafileHeader
 	classVariableNames: '_OffsetOf_DpiX _OffsetOf_DpiY _OffsetOf_EmfHeader _OffsetOf_EmfPlusFlags _OffsetOf_EmfPlusHeaderSize _OffsetOf_height _OffsetOf_LogicalDpiX _OffsetOf_LogicalDpiY _OffsetOf_size _OffsetOf_type _OffsetOf_Version _OffsetOf_width _OffsetOf_WmfHeader _OffsetOf_x _OffsetOf_y'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GpMetafileHeader guid: (GUID fromString: '{83583420-dbfc-415f-ab1b-93e52a2206ef}')!
+
 GpMetafileHeader addClassConstant: '_OffsetOf_DpiX' value: 16r10!
 GpMetafileHeader addClassConstant: '_OffsetOf_DpiY' value: 16r14!
 GpMetafileHeader addClassConstant: '_OffsetOf_EmfHeader' value: 16r28!
@@ -21,6 +23,7 @@ GpMetafileHeader addClassConstant: '_OffsetOf_width' value: 16r20!
 GpMetafileHeader addClassConstant: '_OffsetOf_WmfHeader' value: 16r28!
 GpMetafileHeader addClassConstant: '_OffsetOf_x' value: 16r18!
 GpMetafileHeader addClassConstant: '_OffsetOf_y' value: 16r1C!
+
 GpMetafileHeader comment: '<GpMetafileHeader> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpMetafileHeader'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
@@ -47,7 +50,9 @@ struct tagGpMetafileHeader {
 	int LogicalDpiY;
 } GpMetafileHeader;
 '!
+
 !GpMetafileHeader categoriesForClass!Unclassified! !
+
 !GpMetafileHeader methodsFor!
 
 DpiX
@@ -207,6 +212,7 @@ y: anInteger
 	"Set the receiver's 'y' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_y put: anInteger! !
+
 !GpMetafileHeader categoriesForMethods!
 DpiX!**compiled accessors**!public! !
 DpiX:!**compiled accessors**!public! !
@@ -318,6 +324,7 @@ defineFields
 
 getFieldNames
 	^#(#type #size #Version #EmfPlusFlags #DpiX #DpiY #x #y #width #height #EmfHeader #WmfHeader #EmfPlusHeaderSize #LogicalDpiX #LogicalDpiY)! !
+
 !GpMetafileHeader class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

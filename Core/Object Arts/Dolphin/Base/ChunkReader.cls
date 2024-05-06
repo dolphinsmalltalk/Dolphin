@@ -5,11 +5,15 @@ Object subclass: #ChunkReader
 	classVariableNames: 'Null'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ChunkReader guid: (GUID fromString: '{87b4c460-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 ChunkReader comment: '
 	The source reader is delegated the task of reading chunks
 	from the input stream, and so can impose its own format.'!
+
 !ChunkReader categoriesForClass!Kernel-Support! !
+
 !ChunkReader methodsFor!
 
 chunk: chunkString
@@ -47,6 +51,7 @@ setChunkBlock: perChunk context: contextObject endAction: finalOperation
 	chunkBlock := perChunk.
 	endAction := finalOperation.
 	context := contextObject! !
+
 !ChunkReader categoriesForMethods!
 chunk:!operations!private! !
 chunkBlock!accessing!public! !
@@ -101,6 +106,7 @@ onPreStripImage
 	any lazily initialized class variables in order to assist the stripping process."
 
 	Null := nil! !
+
 !ChunkReader class categoriesForMethods!
 do:!instance creation!public! !
 do:atEnd:!instance creation!public! !

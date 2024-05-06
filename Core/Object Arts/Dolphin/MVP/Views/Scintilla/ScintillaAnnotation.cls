@@ -5,9 +5,13 @@ Object subclass: #ScintillaAnnotation
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ScintillaAnnotation guid: (GUID fromString: '{2d20c021-0cef-46f7-ba44-4c4191189df9}')!
+
 ScintillaAnnotation comment: ''!
+
 !ScintillaAnnotation categoriesForClass!MVP-Views-Support! !
+
 !ScintillaAnnotation methodsFor!
 
 = comparand 
@@ -42,6 +46,7 @@ text
 	"Answer the text  of the annotation."
 
 	^text! !
+
 !ScintillaAnnotation categoriesForMethods!
 =!comparing!public! !
 hash!comparing!public! !
@@ -69,6 +74,7 @@ line: anInteger text: aString styles: aSequencedReadableCollectionOfSymbol
 			text: aString
 			styles: aSequencedReadableCollectionOfSymbol;
 		yourself! !
+
 !ScintillaAnnotation class categoriesForMethods!
 icon!constants!development!public! !
 line:text:style:!public! !

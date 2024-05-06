@@ -5,9 +5,13 @@ DolphinTest subclass: #MenuPainterTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MenuPainterTest guid: (GUID fromString: '{3118e3fb-ce52-409f-9738-275074c5c9a6}')!
+
 MenuPainterTest comment: ''!
+
 !MenuPainterTest categoriesForClass!Unclassified! !
+
 !MenuPainterTest methodsFor!
 
 subjectClass
@@ -27,6 +31,7 @@ testSplitMenuText
 	self assert: (subject splitMenuText: 'c&&ab') equals: #('c&&ab' '' '').
 	self assert: (subject splitMenuText: '🐬&&&🍺🐬') equals: #('🐬&&' '🍺' '🐬').
 	self assert: (subject splitMenuText: '') equals: #('' '' '')! !
+
 !MenuPainterTest categoriesForMethods!
 subjectClass!constants!private! !
 testSplitMenuText!public! !

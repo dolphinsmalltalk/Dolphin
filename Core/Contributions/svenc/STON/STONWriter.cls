@@ -5,7 +5,9 @@ Object subclass: #STONWriter
 	classVariableNames: 'STONCharacters STONSimpleSymbolCharacters'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 STONWriter guid: (GUID fromString: '{ad80eebc-c783-428d-8dbf-ebde1ffe8ddf}')!
+
 STONWriter comment: 'STONWriter serializes objects using the Smalltalk Object Notation format. 
 
 Customization options are:
@@ -34,7 +36,9 @@ Customization options are:
 	
 Note that in default STON mode I only use the following named character escapes: \b \t \n \f \'' and \\ while in JSON mode \'' is replaced by \"
 '!
+
 !STONWriter categoriesForClass!STON-Core-Writer! !
+
 !STONWriter methodsFor!
 
 asciiOnly: boolean
@@ -422,6 +426,7 @@ writeSymbol: symbol
 					writeStream nextPutAll: symbol ]
 				ifFalse: [
 					self encodeString: symbol ] ]! !
+
 !STONWriter categoriesForMethods!
 asciiOnly:!initialize/release!public! !
 close!initialize/release!public! !
@@ -514,6 +519,7 @@ on: writeStream
 	^ self new
 		on: writeStream;
 		yourself! !
+
 !STONWriter class categoriesForMethods!
 initialize!class initialization!public! !
 initializeSTONCharacters!class initialization!public! !

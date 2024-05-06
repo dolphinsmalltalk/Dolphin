@@ -5,9 +5,13 @@ ExternalArray subclass: #SWORDArray
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SWORDArray guid: (GUID fromString: '{87b4c5a8-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 SWORDArray comment: 'Specialized <ExternalArray> to represent contiguous single-dimensioned arrays of 16-bit signed integers.'!
+
 !SWORDArray categoriesForClass!External-Data-Structured! !
+
 !SWORDArray methodsFor!
 
 uncheckedAt: anInteger 
@@ -21,6 +25,7 @@ uncheckedAt: indexInteger put: valueInteger
 	with the <integer> argument. No bounds checks are performed on the subscript."
 
 	^bytes swordAtOffset: indexInteger + indexInteger - 2 put: valueInteger! !
+
 !SWORDArray categoriesForMethods!
 uncheckedAt:!accessing!private! !
 uncheckedAt:put:!accessing!private! !
@@ -32,6 +37,7 @@ elementClass
 	"Answer the class of <ExternalStructure> used to represent elements of the receiver."
 
 	^SWORD! !
+
 !SWORDArray class categoriesForMethods!
 elementClass!constants!public! !
 !

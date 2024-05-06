@@ -12,7 +12,6 @@ Public Domain Freeware
 
 package basicPackageVersion: '6a'.
 
-
 package classNames
 	add: #MultipleFileOpenDialog;
 	yourself.
@@ -35,11 +34,6 @@ FileOpenDialog subclass: #MultipleFileOpenDialog
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

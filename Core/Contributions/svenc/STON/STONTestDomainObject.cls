@@ -5,7 +5,9 @@ Object subclass: #STONTestDomainObject
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 STONTestDomainObject guid: (GUID fromString: '{ef1278a4-658e-4799-870c-89c6de6b7c53}')!
+
 STONTestDomainObject comment: 'STONTestDomainObject is used to support unit tests.
 
 Instance Variables
@@ -18,7 +20,9 @@ Instance Variables
 	integer:		<Integer>
 	modified:	<DateAndTime>
 	tags:			<Array of: Symbol>'!
+
 !STONTestDomainObject categoriesForClass!STON-Tests-Base! !
+
 !STONTestDomainObject methodsFor!
 
 = anObject
@@ -114,6 +118,7 @@ tags
 
 tags: anObject
 	tags := anObject! !
+
 !STONTestDomainObject categoriesForMethods!
 =!comparing!public! !
 boolean!accessing!public! !
@@ -157,6 +162,7 @@ dummy
 
 stonName
 	^ #TestDomainObject! !
+
 !STONTestDomainObject class categoriesForMethods!
 dummy!instance creation!public! !
 stonName!public!ston/core! !

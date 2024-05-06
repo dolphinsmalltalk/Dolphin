@@ -5,10 +5,15 @@ PresenterTest subclass: #ReferenceViewTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ReferenceViewTest guid: (GUID fromString: '{a38c1b83-5cc7-4717-8bc4-29b681abe8f9}')!
+
 ReferenceViewTest isAbstract: true!
+
 ReferenceViewTest comment: ''!
+
 !ReferenceViewTest categoriesForClass!Unclassified! !
+
 !ReferenceViewTest methodsFor!
 
 classToTest
@@ -29,6 +34,7 @@ testRecreate
 	presenter recreate.
 	self assert: presenter subViews size equals: 1.
 	self assert: presenter referee hasBorder! !
+
 !ReferenceViewTest categoriesForMethods!
 classToTest!helpers!private! !
 initializePresenter!public!Running! !

@@ -5,13 +5,17 @@ CompiledMethod variableSubclass: #CompileFailedMethod
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 CompileFailedMethod guid: (GUID fromString: '{87b4c545-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 CompileFailedMethod comment: 'In certain situations (package loading, method dropping etc) a method compilation will fail and yet a stub CompileFailedMethod is still installed in the class. This stub is useful since it allows the original method source to be accessible via the browsers and allows category information to be maintained for the failed method.
 
 If you want to locate all of these compilation failures remaining in your image siimply evaluate:
 
 SmalltalkSystem current browseCompileFailedMethods'!
+
 !CompileFailedMethod categoriesForClass!System-Compiler! !
+
 !CompileFailedMethod methodsFor!
 
 getDebugInfo
@@ -30,6 +34,7 @@ getDebugInfo
 
 isCompilationFailure
 	^true! !
+
 !CompileFailedMethod categoriesForMethods!
 getDebugInfo!development!private! !
 isCompilationFailure!public!testing! !
@@ -75,6 +80,7 @@ buildSourceForSelector: aSymbol class: aBehavior
 		crtab;
 		nextPutAll: ' self error: ''This method did not compile'''.
 	^stream contents! !
+
 !CompileFailedMethod class categoriesForMethods!
 buildSourceForSelector:class:!helpers!private! !
 !

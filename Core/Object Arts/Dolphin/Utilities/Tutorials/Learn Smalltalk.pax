@@ -4,7 +4,6 @@ package paxVersion: 1;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
-
 package classNames
 	add: #ProfStef;
 	add: #SmalltalkSyntaxTutorial;
@@ -34,14 +33,12 @@ AbstractTutorial subclass: #SmalltalkSyntaxTutorial
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TutorialPlayer subclass: #ProfStef
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: 'default'!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -51,6 +48,7 @@ learnSmalltalk
 	"Open the Learn Smalltalk tutorial"
 
 	ProfStef show! !
+
 !SmalltalkSystem categoriesForMethods!
 learnSmalltalk!commands!operations!public! !
 !

@@ -5,9 +5,13 @@ MultilineTextEdit subclass: #EmbeddedMultilineTextEdit
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 EmbeddedMultilineTextEdit guid: (GUID fromString: '{f464e637-7c1a-4a4a-a066-653a45da17fd}')!
+
 EmbeddedMultilineTextEdit comment: ''!
+
 !EmbeddedMultilineTextEdit categoriesForClass!Unclassified! !
+
 !EmbeddedMultilineTextEdit methodsFor!
 
 column
@@ -150,6 +154,7 @@ verticalAlignment
 verticalAlignment: aSymbol
 
 	column := aSymbol! !
+
 !EmbeddedMultilineTextEdit categoriesForMethods!
 column!accessing!private! !
 column:!accessing!private! !
@@ -190,6 +195,7 @@ stbConvertFrom: anSTBClassFormat
 
 stbVersion
 	^20! !
+
 !EmbeddedMultilineTextEdit class categoriesForMethods!
 stbConvertFrom:!binary filing!public! !
 stbVersion!binary filing!public! !

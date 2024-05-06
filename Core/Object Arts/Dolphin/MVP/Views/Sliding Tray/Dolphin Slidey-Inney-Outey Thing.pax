@@ -6,7 +6,6 @@ package paxVersion: 1;
 
 package basicPackageVersion: '6.1'.
 
-
 package classNames
 	add: #ButtonInteractor;
 	add: #SlideyInneyOuteyThing;
@@ -37,21 +36,18 @@ CapturingInteractor subclass: #ButtonInteractor
 	classVariableNames: 'ButtonStateMask PressedMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ContainerView subclass: #SlideyInneyOuteyThing
 	instanceVariableNames: 'tabs tray trayExtent animationDuration tickCounter siotFlags _siotReserved1 _siotReserved2'
 	classVariableNames: 'AnimatedCardChangeMask AnimatedUnpinMask AnimationDuration AnimationMask Animations HideOnUnpinMask ResizableMask SlideInDelay'
 	poolDictionaries: 'ThemeConstants'
 	classInstanceVariableNames: ''!
+
 CardContainer subclass: #SlidingCardTray
 	instanceVariableNames: '_sctReserved0 slider pinSize pinInteractor _sctReserved1 _sctReserved2'
 	classVariableNames: 'PinImageList'
 	poolDictionaries: 'TabViewConstants ThemeConstants'
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

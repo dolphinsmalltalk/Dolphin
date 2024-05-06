@@ -5,7 +5,9 @@ ADODB_ADO subclass: #ADODBCommand15
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
+
 ADODBCommand15 guid: (IID fromString: '{00001508-0000-0010-8000-00aa006d2ea4}')!
+
 ADODBCommand15 comment: '`ADODBCommand15` is a wrapper class for the COM interface ''ADODB.Command15'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -83,7 +85,9 @@ interface Command15 : _ADO
 };
 ```
 '!
+
 !ADODBCommand15 categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
+
 !ADODBCommand15 methodsFor!
 
 activeConnection
@@ -386,6 +390,7 @@ value
 	This is the default value (DISPID_VALUE) property of the receiver."
 
 	^self parameters! !
+
 !ADODBCommand15 categoriesForMethods!
 activeConnection!**auto generated**!properties!public! !
 activeConnection:!**auto generated**!properties!public! !
@@ -464,6 +469,7 @@ defineFunctions
 		defineFunction: #put_Name:
 			argumentTypes: 'bstr'
 ! !
+
 !ADODBCommand15 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

@@ -5,9 +5,13 @@ RBPatternBlockNode subclass: #RBPatternWrapperBlockNode
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RBPatternWrapperBlockNode guid: (GUID fromString: '{9c1e1f14-cb93-4be7-a1dd-a621ba57b12e}')!
+
 RBPatternWrapperBlockNode comment: ''!
+
 !RBPatternWrapperBlockNode categoriesForClass!Refactory-Parser! !
+
 !RBPatternWrapperBlockNode methodsFor!
 
 acceptVisitor: aProgramNodeVisitor
@@ -36,6 +40,7 @@ wrappedNode
 wrappedNode: aRBProgramNode 
 	wrappedNode := aRBProgramNode.
 	aRBProgramNode parent: self! !
+
 !RBPatternWrapperBlockNode categoriesForMethods!
 acceptVisitor:!public!visitor! !
 copyInContext:!matching!public! !

@@ -10,7 +10,6 @@ This package contains classes to monitor the Windows file system for change such
 
 package basicPackageVersion: '6.1'.
 
-
 package classNames
 	add: #FILE_NOTIFY_INFORMATION;
 	add: #FileSystemChange;
@@ -47,29 +46,30 @@ Object subclass: #FileSystemChange
 	classVariableNames: 'ActionMap'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #FileSystemChangeReader
 	instanceVariableNames: 'handle directory watchSubDirs notificationMask callback buffer overlapStruct filters'
 	classVariableNames: 'ActionMap FileIOCompletionRoutineDescriptor'
 	poolDictionaries: 'FileSystemWatcherConstants Win32Constants Win32Errors'
 	classInstanceVariableNames: ''!
+
 ExternalStructure subclass: #FILE_NOTIFY_INFORMATION
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_Action _OffsetOf_FileName _OffsetOf_FileNameLength _OffsetOf_NextEntryOffset'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 FileSystemChangeReader subclass: #FileSystemChangeStream
 	instanceVariableNames: 'queue'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 FileSystemChangeReader subclass: #FileSystemWatcher
 	instanceVariableNames: 'events'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -91,6 +91,7 @@ readDirectoryChangesW: hDirectory lpBuffer: lpBuffer nBufferLength: nBufferLengt
 
 	<stdcall: sdword ReadDirectoryChangesW sdword void* dword bool dword dword* OVERLAPPED* lpvoid>
 	^self invalidCall: _failureCode! !
+
 !KernelLibrary categoriesForMethods!
 readDirectoryChangesW:lpBuffer:nBufferLength:bWatchSubtree:dwNotifyFilter:lpBytesReturned:lpOverlapped:lpCompletionRoutine:!**auto generated**!public! !
 !

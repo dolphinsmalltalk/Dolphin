@@ -5,7 +5,9 @@ Object subclass: #Behavior
 	classVariableNames: '_BasicSpecMask _BytesSubMask _FundamentalShapeMask _IndirectMask _MournerMask _NonInstantiableMask _NullMethodDictionary _NullTermMask _PointersMask _ShapeMask _SizeMask _VariableMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Behavior guid: (GUID fromString: '{87b4c459-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Behavior addClassConstant: '_BasicSpecMask' value: 16r7FFF!
 Behavior addClassConstant: '_BytesSubMask' value: 16r4800!
 Behavior addClassConstant: '_FundamentalShapeMask' value: 16r30FF!
@@ -17,6 +19,7 @@ Behavior addClassConstant: '_PointersMask' value: 16r2000!
 Behavior addClassConstant: '_ShapeMask' value: 16r70FF!
 Behavior addClassConstant: '_SizeMask' value: 16rFF!
 Behavior addClassConstant: '_VariableMask' value: 16r1000!
+
 Behavior comment: 'Class `Behavior` is the abstract class which defines the minimum state necessary for objects that have instances, providing the basic information about those instances to the Compiler and the VM.
 
 Instance Variables:
@@ -56,7 +59,9 @@ Behavior defines a number of bit masks which are used to describe objects. These
 						instance variables.
 
 Behavior implements the ANSI protocols `<Object>`, `<classDescription>`, `<instantiator>`, and `<Object class>`.'!
+
 !Behavior categoriesForClass!Kernel-Classes! !
+
 !Behavior methodsFor!
 
 addSelector: aSymbol withMethod: aCompiledMethod
@@ -1092,6 +1097,7 @@ withAllSuperclassesDo: aMonadicValuable
 
 	aMonadicValuable value: self.
 	self allSuperclassesDo: aMonadicValuable! !
+
 !Behavior categoriesForMethods!
 addSelector:withMethod:!methods-accessing!private! !
 addSubclass:!class hierarchy-adding!private! !
@@ -1225,6 +1231,7 @@ initialize
 		value: ((MethodDictionary new)
 				isImmutable: true;
 				yourself)! !
+
 !Behavior class categoriesForMethods!
 initialize!development!initializing!public! !
 !

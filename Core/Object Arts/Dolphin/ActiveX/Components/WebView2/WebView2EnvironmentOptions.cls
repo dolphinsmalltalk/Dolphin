@@ -2,15 +2,20 @@
 
 COMInterfaceImp subclass: #WebView2EnvironmentOptions
 	instanceVariableNames: 'additionalBrowserArguments flags locale browserVersion'
-	classVariableNames: ''
+	classVariableNames: 'AllowSSOMask CustomCrashReportingMask ExclusiveUserDataFolderAccessMask'
 	poolDictionaries: 'WebView2Constants'
 	classInstanceVariableNames: ''!
+
 WebView2EnvironmentOptions guid: (GUID fromString: '{a29cb496-0b83-42f6-b6b1-2670cb4d42fb}')!
+
 WebView2EnvironmentOptions addClassConstant: 'AllowSSOMask' value: 16r1!
 WebView2EnvironmentOptions addClassConstant: 'CustomCrashReportingMask' value: 16r4!
 WebView2EnvironmentOptions addClassConstant: 'ExclusiveUserDataFolderAccessMask' value: 16r2!
+
 WebView2EnvironmentOptions comment: ''!
+
 !WebView2EnvironmentOptions categoriesForClass!COM-Implementations! !
+
 !WebView2EnvironmentOptions methodsFor!
 
 additionalBrowserArguments
@@ -196,6 +201,7 @@ supportedInterfaces
 		ICoreWebView2EnvironmentOptions2.
 		ICoreWebView2EnvironmentOptions3.
 		ICoreWebView2EnvironmentOptions4}! !
+
 !WebView2EnvironmentOptions categoriesForMethods!
 additionalBrowserArguments!accessing!public! !
 additionalBrowserArguments:!accessing!public! !
@@ -234,6 +240,7 @@ WebView2EnvironmentOptions methodProtocol: #ICoreWebView2EnvironmentOptions2 att
 
 icon
 	^ICoreWebView2 icon! !
+
 !WebView2EnvironmentOptions class categoriesForMethods!
 icon!constants!development!public! !
 !

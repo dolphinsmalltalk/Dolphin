@@ -5,14 +5,18 @@ RBAbstractCondition subclass: #RBConjunctiveCondition
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RBConjunctiveCondition guid: (GUID fromString: '{a39b3587-7d58-4929-b47c-00c804e537be}')!
+
 RBConjunctiveCondition comment: 'ConjunctiveCondition represents and-ing two AbstractConditions together.
 
 Instance Variables:
 	failed	<Symbol>	which condition failed (#leftFailed, #rightFailed, or #unknownFailed)
 	left	<AbstractCondition>	the condition on the left side of the and
 	right	<AbstractCondition>	the condition on the right side of the and'!
+
 !RBConjunctiveCondition categoriesForClass!Refactory-Conditions! !
+
 !RBConjunctiveCondition methodsFor!
 
 check
@@ -66,6 +70,7 @@ rightFailed
 
 unknownFailed
 	^(left errorStringFor: false) , ' OR ' , (right errorStringFor: false)! !
+
 !RBConjunctiveCondition categoriesForMethods!
 check!checking!public! !
 errorBlockFor:!private! !

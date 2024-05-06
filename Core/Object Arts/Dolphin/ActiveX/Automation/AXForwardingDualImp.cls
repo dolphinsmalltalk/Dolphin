@@ -5,9 +5,13 @@ AXDualImp subclass: #AXForwardingDualImp
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AXForwardingDualImp guid: (GUID fromString: '{609232b8-a27b-4709-941c-128cd9948bda}')!
+
 AXForwardingDualImp comment: ''!
+
 !AXForwardingDualImp categoriesForClass!Unclassified! !
+
 !AXForwardingDualImp methodsFor!
 
 interfaceClass
@@ -35,6 +39,7 @@ server: anObject
 	the server is set before the interface is queried."
 
 	server := anObject! !
+
 !AXForwardingDualImp categoriesForMethods!
 interfaceClass!accessing!public! !
 interfaceClass:!accessing!public! !

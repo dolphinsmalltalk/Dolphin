@@ -5,7 +5,9 @@ Win32Structure subclass: #TBBUTTONINFOW
 	classVariableNames: '_OffsetOf_cchText _OffsetOf_cx _OffsetOf_dwMask _OffsetOf_dwSize _OffsetOf_fsState _OffsetOf_fsStyle _OffsetOf_idCommand _OffsetOf_iImage _OffsetOf_lParam _OffsetOf_pszText'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TBBUTTONINFOW guid: (GUID fromString: '{7fe067e4-441c-11d3-97ac-0080c8d59432}')!
+
 TBBUTTONINFOW addClassConstant: '_OffsetOf_cchText' value: 16r1C!
 TBBUTTONINFOW addClassConstant: '_OffsetOf_cx' value: 16r12!
 TBBUTTONINFOW addClassConstant: '_OffsetOf_dwMask' value: 16r4!
@@ -16,8 +18,11 @@ TBBUTTONINFOW addClassConstant: '_OffsetOf_idCommand' value: 16r8!
 TBBUTTONINFOW addClassConstant: '_OffsetOf_iImage' value: 16rC!
 TBBUTTONINFOW addClassConstant: '_OffsetOf_lParam' value: 16r14!
 TBBUTTONINFOW addClassConstant: '_OffsetOf_pszText' value: 16r18!
+
 TBBUTTONINFOW comment: ''!
+
 !TBBUTTONINFOW categoriesForClass!External-Data-Structured-Win32! !
+
 !TBBUTTONINFOW methodsFor!
 
 cx
@@ -84,6 +89,7 @@ iImage: anInteger
 	"Set the receiver's 'iImage' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_iImage put: anInteger! !
+
 !TBBUTTONINFOW categoriesForMethods!
 cx!**compiled accessors**!public! !
 cx:!**compiled accessors**!public! !
@@ -133,6 +139,7 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #dwMask #idCommand #iImage #fsState #fsStyle #cx)! !
+
 !TBBUTTONINFOW class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

@@ -5,9 +5,13 @@ GdiplusInitializer subclass: #GdiplusImageAttributesInitializer
 	classVariableNames: 'Default'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusImageAttributesInitializer guid: (GUID fromString: '{88f79e30-7465-481e-afda-b77fcd6e29bd}')!
+
 GdiplusImageAttributesInitializer comment: ''!
+
 !GdiplusImageAttributesInitializer categoriesForClass!Unclassified! !
+
 !GdiplusImageAttributesInitializer methodsFor!
 
 createHandle
@@ -26,6 +30,7 @@ createHandle
 
 gdiplusConstructorErrorDescription
 	^'Error creating ImageAttributes'! !
+
 !GdiplusImageAttributesInitializer categoriesForMethods!
 createHandle!private!realizing/unrealizing! !
 gdiplusConstructorErrorDescription!constants!private! !
@@ -44,6 +49,7 @@ onPreStripImage
 	which holds an instance of the receiver."
 
 	Default := nil! !
+
 !GdiplusImageAttributesInitializer class categoriesForMethods!
 default!instance creation!private! !
 new!development!instance creation!public! !

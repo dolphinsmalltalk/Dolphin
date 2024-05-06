@@ -8,7 +8,6 @@ Copyright (c) Object Arts Ltd, 2004.
 
 package basicPackageVersion: '6.1'.
 
-
 package classNames
 	add: #MemoryMappedFileTest;
 	yourself.
@@ -34,11 +33,6 @@ DolphinTest subclass: #MemoryMappedFileTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

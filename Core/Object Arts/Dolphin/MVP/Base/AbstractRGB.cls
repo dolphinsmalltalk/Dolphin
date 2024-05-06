@@ -5,12 +5,17 @@ Color subclass: #AbstractRGB
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AbstractRGB guid: (GUID fromString: '{3f709950-6d41-46a2-bf1f-f6092de13e68}')!
+
 AbstractRGB isAbstract: true!
+
 AbstractRGB comment: '`AbstractColor` is the abstract class of colours specified by individual colour components.
 
  Concrete subclasses `RGB` represent colours composed of arbitrary proportions of red, green, and blue, and `ARGB` the same but with alpha (translucency).'!
+
 !AbstractRGB categoriesForClass!Drawing! !
+
 !AbstractRGB methodsFor!
 
 asGrayscale
@@ -208,6 +213,7 @@ setCode: anInteger
 	"Private - Set the <integer> value of the ColorRef (i.e. that encoded integer value passed to API calls to represent the color)."
 
 	code := anInteger! !
+
 !AbstractRGB categoriesForMethods!
 asGrayscale!converting!public! !
 asInteger!converting!public! !

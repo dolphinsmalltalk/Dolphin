@@ -5,9 +5,13 @@ GdiplusBrush subclass: #GdiplusTextureBrush
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusTextureBrush guid: (GUID fromString: '{1a1a5ea2-6151-11d7-b609-00e0987e8081}')!
+
 GdiplusTextureBrush comment: 'A texture brush paints an image. The image or texture is either a portion of a specified image or a scaled version of a specified image. The type of image (metafile or nonmetafile) determines whether the texture is a portion of the image or a scaled version of the image. '!
+
 !GdiplusTextureBrush categoriesForClass!Unclassified! !
+
 !GdiplusTextureBrush methodsFor!
 
 rotateTransform: aRealAngle 
@@ -33,6 +37,7 @@ transform: aGdiplusMatrix
 	(status := GdiplusLibrary default gdipSetTextureTransform: self asParameter
 				matrix: aGdiplusMatrix asParameter) = Ok 
 		ifFalse: [GdiplusError signal: 'GdipSetTextureTransform failed' with: status]! !
+
 !GdiplusTextureBrush categoriesForMethods!
 rotateTransform:!operations!public! !
 rotateTransform:order:!operations!public! !
@@ -108,6 +113,7 @@ image: anImage wrapMode: aWrapModeConstant rectangle: aRectangle
 				image: anImage
 				wrapMode: aWrapModeConstant
 				rectangle: aRectangle)! !
+
 !GdiplusTextureBrush class categoriesForMethods!
 exampleGdipTBFillAShape!examples!public!sunit! !
 exampleGdipTBTilingAShape!examples!public!sunit! !

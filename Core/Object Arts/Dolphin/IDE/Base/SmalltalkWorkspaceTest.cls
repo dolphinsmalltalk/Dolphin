@@ -5,9 +5,13 @@ PresenterTest subclass: #SmalltalkWorkspaceTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SmalltalkWorkspaceTest guid: (GUID fromString: '{6bb24dc3-1c9a-49ac-a5e2-143892b9350c}')!
+
 SmalltalkWorkspaceTest comment: ''!
+
 !SmalltalkWorkspaceTest categoriesForClass!Unclassified! !
+
 !SmalltalkWorkspaceTest methodsFor!
 
 classToTest
@@ -38,6 +42,7 @@ testReformatSourcePartial
 bar bar] value: #foo value: #bar'.
 	"No selection, cursor positioned after reformatted text"
 	self assert: presenter selectionRange equals: (31 to: 30)! !
+
 !SmalltalkWorkspaceTest categoriesForMethods!
 classToTest!helpers!private! !
 doReformatSource!helpers!private! !

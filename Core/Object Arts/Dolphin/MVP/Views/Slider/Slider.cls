@@ -5,12 +5,17 @@ ValueConvertingControlView subclass: #Slider
 	classVariableNames: 'HorizontalTickStyles TickStyleMask VerticalTickStyles'
 	poolDictionaries: 'TrackBarConstants'
 	classInstanceVariableNames: ''!
+
 Slider guid: (GUID fromString: '{425d0eab-542e-11d3-998b-d5ca2c3c1d61}')!
+
 Slider addClassConstant: 'TickStyleMask' value: 16rC!
+
 Slider comment: 'Slider is a <valueView> implementing the Windows "msctls_trackbar32" common control. The <valueModel> associated with a Slider must always yield an <integer> value when mapped through the installed type converter. A Slider will normally be used in conjunction with a <NumberPresenter>.
 
 Thanks to Ian Bartholomew for donating his original version of this class.'!
+
 !Slider categoriesForClass!MVP-Views! !
+
 !Slider methodsFor!
 
 applicableTickStyles
@@ -393,6 +398,7 @@ tickStyle: aSymbol
 		baseStyle: (HorizontalTickStyles at: aSymbol ifAbsent: [VerticalTickStyles at: aSymbol])
 		maskedBy: TickStyleMask
 		recreateIfChanged: false! !
+
 !Slider categoriesForMethods!
 applicableTickStyles!constants!private! !
 autoTickFrequency:!accessing!private! !
@@ -494,6 +500,7 @@ winClassName
 	"Answer the name of the Windows window class to use when realizing the receiver."
 
 	^'msctls_trackbar32'! !
+
 !Slider class categoriesForMethods!
 defaultModel!models!public! !
 icon!constants!public! !

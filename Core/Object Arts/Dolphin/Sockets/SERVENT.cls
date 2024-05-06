@@ -5,11 +5,14 @@ Win32Structure subclass: #SERVENT
 	classVariableNames: '_OffsetOf_s_aliases _OffsetOf_s_name _OffsetOf_s_port _OffsetOf_s_proto'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SERVENT guid: (GUID fromString: '{87b4c610-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 SERVENT addClassConstant: '_OffsetOf_s_aliases' value: 16r4!
 SERVENT addClassConstant: '_OffsetOf_s_name' value: 16r0!
 SERVENT addClassConstant: '_OffsetOf_s_port' value: 16r8!
 SERVENT addClassConstant: '_OffsetOf_s_proto' value: 16rC!
+
 SERVENT comment: '<SERVENT> is an <ExternalStructure> class to wrap the struct ''Win32.SERVENT'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
@@ -27,7 +30,9 @@ struct tagSERVENT {
 	[readonly, helpstring("The name of the protocol to use when contacting the service.")] LPCSTR s_proto;
 } SERVENT;
 '!
+
 !SERVENT categoriesForClass!Win32-Structs! !
+
 !SERVENT methodsFor!
 
 aliases
@@ -69,6 +74,7 @@ s_proto
 	"Answer the <AnsiString> value of the receiver's 's_proto' field."
 
 	^AnsiString fromAddress: (bytes intPtrAtOffset: _OffsetOf_s_proto)! !
+
 !SERVENT categoriesForMethods!
 aliases!public! !
 port!accessing!public! !
@@ -125,6 +131,7 @@ fromString: aString
 
 getFieldNames
 	^#(#s_name #s_port #s_proto)! !
+
 !SERVENT class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 fromInteger:!public! !

@@ -5,9 +5,13 @@ RBParseTreeRule subclass: #RBSearchRule
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RBSearchRule guid: (GUID fromString: '{47f7b2b8-bdd2-449f-866d-e373a574dc60}')!
+
 RBSearchRule comment: ''!
+
 !RBSearchRule categoriesForClass!Refactory-ParseTree Matching! !
+
 !RBSearchRule methodsFor!
 
 canMatch: aProgramNode 
@@ -25,6 +29,7 @@ searchForMethod: aString thenDo: aBlock
 searchForTree: aBRProgramNode thenDo: aBlock 
 	searchTree := aBRProgramNode.
 	answerBlock := aBlock! !
+
 !RBSearchRule categoriesForMethods!
 canMatch:!public!testing! !
 searchFor:thenDo:!initialize/release!public! !
@@ -42,6 +47,7 @@ searchForMethod: aString thenDo: aBlock
 
 searchForTree: aBRProgramNode thenDo: aBlock 
 	^self new searchForTree: aBRProgramNode thenDo: aBlock! !
+
 !RBSearchRule class categoriesForMethods!
 searchFor:thenDo:!instance creation!public! !
 searchForMethod:thenDo:!instance creation!public! !

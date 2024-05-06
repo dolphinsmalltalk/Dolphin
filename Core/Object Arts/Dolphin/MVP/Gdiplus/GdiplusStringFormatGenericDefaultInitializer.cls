@@ -5,9 +5,13 @@ GdiplusStringFormatInitializer subclass: #GdiplusStringFormatGenericDefaultIniti
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusStringFormatGenericDefaultInitializer guid: (GUID fromString: '{c8f38621-766b-11d7-b609-00e0987e8081}')!
+
 GdiplusStringFormatGenericDefaultInitializer comment: ''!
+
 !GdiplusStringFormatGenericDefaultInitializer categoriesForClass!Unclassified! !
+
 !GdiplusStringFormatGenericDefaultInitializer methodsFor!
 
 createHandle
@@ -16,6 +20,7 @@ createHandle
 	(status := self library gdipStringFormatGetGenericDefault: gpHandle) == Ok
 		ifFalse: [self gdiplusErrorWith: status].
 	^gpHandle! !
+
 !GdiplusStringFormatGenericDefaultInitializer categoriesForMethods!
 createHandle!private!realizing/unrealizing! !
 !
@@ -24,6 +29,7 @@ createHandle!private!realizing/unrealizing! !
 
 uninitialize
 	GenericDefault := nil! !
+
 !GdiplusStringFormatGenericDefaultInitializer class categoriesForMethods!
 uninitialize!class hierarchy-removing!private! !
 !

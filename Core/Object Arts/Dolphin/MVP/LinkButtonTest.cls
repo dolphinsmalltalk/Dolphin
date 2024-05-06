@@ -5,9 +5,13 @@ PresenterTest subclass: #LinkButtonTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 LinkButtonTest guid: (GUID fromString: '{2af000e8-54bd-40b6-8dc6-d0014babc42c}')!
+
 LinkButtonTest comment: ''!
+
 !LinkButtonTest categoriesForClass!Unclassified! !
+
 !LinkButtonTest methodsFor!
 
 classToTest
@@ -51,6 +55,7 @@ testQueryCommandEnablement
 		invalidateUserInterface;
 		validateUserInterface.
 	self assert: presenter isEnabled! !
+
 !LinkButtonTest categoriesForMethods!
 classToTest!helpers!private! !
 testClickLinkFiresCommand!public!unit tests! !

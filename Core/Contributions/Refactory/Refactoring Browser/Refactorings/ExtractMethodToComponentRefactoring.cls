@@ -5,9 +5,13 @@ MethodRefactoring subclass: #ExtractMethodToComponentRefactoring
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExtractMethodToComponentRefactoring guid: (GUID fromString: '{944c6f77-b242-48b5-bdee-ae64884630f6}')!
+
 ExtractMethodToComponentRefactoring comment: ''!
+
 !ExtractMethodToComponentRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !ExtractMethodToComponentRefactoring methodsFor!
 
 extract: anInterval from: aSelector in: aClass 
@@ -77,6 +81,7 @@ transform
 		extractMethod;
 		moveMethod;
 		inlineForwarder! !
+
 !ExtractMethodToComponentRefactoring categoriesForMethods!
 extract:from:in:!initialize/release!public! !
 extractMethod!public!transforming! !
@@ -102,6 +107,7 @@ model: aRBNamespace extract: anInterval from: aSelector in: aClass
 			from: aSelector
 			in: aClass;
 		yourself! !
+
 !ExtractMethodToComponentRefactoring class categoriesForMethods!
 extract:from:in:!instance creation!public! !
 model:extract:from:in:!instance creation!public! !

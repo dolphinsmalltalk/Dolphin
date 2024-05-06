@@ -5,9 +5,13 @@ ClassRefactoring subclass: #RenameClassRefactoring
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RenameClassRefactoring guid: (GUID fromString: '{4b70f70b-e0fc-4588-8c6f-6a913fd411bd}')!
+
 RenameClassRefactoring comment: ''!
+
 !RenameClassRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !RenameClassRefactoring methodsFor!
 
 className: aName newName: aNewName 
@@ -60,6 +64,7 @@ transform
 		renameClass: class
 		to: newName
 		around: [self renameReferences]! !
+
 !RenameClassRefactoring categoriesForMethods!
 className:newName:!initialize/release!public! !
 preconditions!preconditions!public! !
@@ -78,6 +83,7 @@ model: aRBNamespace rename: aClass to: aNewName
 
 rename: aClass to: aNewName
 	^self new className: aClass name newName: aNewName! !
+
 !RenameClassRefactoring class categoriesForMethods!
 model:rename:to:!instance creation!public! !
 rename:to:!instance creation!public! !

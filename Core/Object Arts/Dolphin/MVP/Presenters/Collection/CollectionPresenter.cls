@@ -5,13 +5,17 @@ ValuePresenter subclass: #CollectionPresenter
 	classVariableNames: 'ReadOnlyMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 CollectionPresenter guid: (GUID fromString: '{cef6a076-8a4e-4dc8-9732-9241724d99e3}')!
+
 CollectionPresenter comment: 'CollectionPresenter is a <valuePresenter> that presents a <Collection> accessed via its <valueModel>. It provides a number of [operations]for editing the list. As changes are made to the list it is applied back to the presenter''s <valueModel>.
 
 Instance Variables:
 	listPresenter	<ListPresenter> presenting the list accessed as the value of the presenter''s model.
 '!
+
 !CollectionPresenter categoriesForClass!MVP-Presenters!MVP-Resources-Lists! !
+
 !CollectionPresenter methodsFor!
 
 addItem
@@ -190,6 +194,7 @@ setAddItemBlock: aNiladicValuable
 	"Set the block to evaluate when adding new items to the receiver's collection"
 
 	addItemBlock := aNiladicValuable! !
+
 !CollectionPresenter categoriesForMethods!
 addItem!commands!public! !
 addItem:!operations!public! !
@@ -239,6 +244,7 @@ resource_Default_view
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ContainerView) 34 15 nil nil 34 2 8 1409286144 131073 416 nil nil nil 5 nil nil nil 416 788230 ##(Smalltalk.BorderLayout) 1 1 410 ##(Smalltalk.Toolbar) 34 25 nil 416 34 2 8 1409289036 131137 512 nil nil nil 517 nil nil nil 512 327686 ##(Smalltalk.Color) #default 8 1883845616 170 192 8 #() 170 192 34 4 28771 1115206 1 ##(Smalltalk.ToolbarIconButton) 512 1 1180998 4 ##(Smalltalk.CommandDescription) #removeItem 8 'Delete Item' 1 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'EditClear.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil 28771 28769 690 512 1 722 #addItem 8 'New Item' 1 1 770 nil true 816 8 'NewThing.ico' 864 28769 34 3 896 704 1049158 1 ##(Smalltalk.ToolbarSeparator) 512 1 nil nil 1 nil nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 1 1 1138 501 51 512 1090 #updateSizePosted 640 512 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 250 0 0 0 25 0 0 0] 8 #() 1138 193 193 nil 27 nil nil nil 410 ##(Smalltalk.ListView) 34 45 nil 416 34 2 8 1140936781 1025 1280 590662 2 ##(Smalltalk.ListModel) 138 144 640 nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 592 nil 1029 265030 4 ##(Smalltalk.Menu) nil true 34 1 984134 2 ##(Smalltalk.CommandMenuItem) 1 722 #removeItem 8 '&Delete' 1 1 770 nil true 816 8 'EditClear.ico' 864 nil nil 8 '' nil 134217729 nil nil nil nil nil nil nil 1280 nil 8 1883852064 459270 ##(Smalltalk.Message) #displayString 8 #() ##(Smalltalk.IconicListAbstract) 1049926 1 ##(Smalltalk.IconImageManager) nil nil nil nil nil nil 138 144 34 1 920646 5 ##(Smalltalk.ListViewColumn) 8 '' 493 #left 1602 #displayString 1632 1602 #<= 8 #() nil nil 1280 nil 3 nil nil #report 640 nil 133217 nil 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 1026 138 144 34 2 1090 #createAt:extent: 34 2 1138 1 51 1138 501 251 1280 1090 #contextMenu: 34 1 1440 1280 1202 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 25 0 0 0 250 0 0 0 150 0 0 0] 8 #() 1264 nil 35 170 192 34 2 1280 8 'list' nil 1026 138 144 34 1 1090 #createAt:extent: 34 2 1138 7039 21 1138 501 301 416 1202 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 191 13 0 0 10 0 0 0 185 14 0 0 160 0 0 0] 34 2 512 1280 1264 nil 27 )! !
+
 !CollectionPresenter class categoriesForMethods!
 defaultModel!models!public! !
 icon!constants!public! !

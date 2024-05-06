@@ -5,7 +5,9 @@ ADODBCommand25 subclass: #ADODB_Command
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
+
 ADODB_Command guid: (IID fromString: '{986761e8-7269-4890-aa65-ad7c03697a6d}')!
+
 ADODB_Command comment: '`ADODB_Command` is a wrapper class for the COM interface ''ADODB._Command'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -44,7 +46,9 @@ interface _Command : Command25
 };
 ```
 '!
+
 !ADODB_Command categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
+
 !ADODB_Command methodsFor!
 
 commandStream
@@ -142,6 +146,7 @@ setCommandStream: pvStream
 	"Set the 'CommandStream' property of the receiver to the <IUnknown*> value of the argument."
 
 	self putref_CommandStream: pvStream! !
+
 !ADODB_Command categoriesForMethods!
 commandStream!**auto generated**!properties!public! !
 dialect!**auto generated**!properties!public! !
@@ -183,6 +188,7 @@ defineFunctions
 		defineFunction: #get_NamedParameters:
 			argumentTypes: 'varbool*'
 ! !
+
 !ADODB_Command class categoriesForMethods!
 clsid!**auto generated**!constants!private! !
 defineFunctions!**auto generated**!initializing!public! !

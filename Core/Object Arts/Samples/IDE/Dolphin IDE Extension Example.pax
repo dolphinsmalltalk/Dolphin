@@ -14,7 +14,6 @@ Two extensions are implemented:
 These extensions can be turned on and off independently as options under ''Object Arts IDE Extensions'' in ''User Preferences''.
 '.
 
-
 package classNames
 	add: #OAIDEExtensions;
 	yourself.
@@ -47,9 +46,6 @@ Object subclass: #OAIDEExtensions
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
-"Global Aliases"!
-
-
 "Loose Methods"!
 
 !ClassCommentPlugin methodsFor!
@@ -65,6 +61,7 @@ emitClassLayoutDescription
 		on: Error
 		do: [:ex | MessageBox errorMsg: ex description].
 	desc isNil ifFalse: [textPresenter replaceSelection: desc]! !
+
 !ClassCommentPlugin categoriesForMethods!
 emitClassLayoutDescription!commands!development!public! !
 !

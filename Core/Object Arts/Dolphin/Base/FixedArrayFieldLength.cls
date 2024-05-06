@@ -5,9 +5,13 @@ ArrayFieldLength subclass: #FixedArrayFieldLength
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 FixedArrayFieldLength guid: (GUID fromString: '{f257b54a-a33a-4696-b457-e7e6d4dc0509}')!
+
 FixedArrayFieldLength comment: ''!
+
 !FixedArrayFieldLength categoriesForClass!Kernel-Objects! !
+
 !FixedArrayFieldLength methodsFor!
 
 allocationLength
@@ -48,6 +52,7 @@ setElementCount: anArrayedCollection of: anExternalField in: anExternalStructure
 	"anExternalField describes a fixed length array - nothing to do here"
 
 	! !
+
 !FixedArrayFieldLength categoriesForMethods!
 allocationLength!accessing!private! !
 elementCount!accessing!private! !
@@ -66,6 +71,7 @@ elementCount: anInteger
 	number of elements on behalf of some kind of <ArrayField>."
 
 	^self new elementCount: anInteger! !
+
 !FixedArrayFieldLength class categoriesForMethods!
 elementCount:!instance creation!public! !
 !

@@ -5,7 +5,9 @@ PermanentLibrary subclass: #KernelLibrary
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 KernelLibrary guid: (GUID fromString: '{64674048-3a82-101b-8181-00aa003743d3}')!
+
 KernelLibrary comment: 'KernelLibrary is the <ExternalLibrary> which represents the Win32 System DLL, KERNEL32.DLL. 
 
 The default instance of this class provides access to most of the base operating system services. New functions may be added as required, but the external function naming convention should be followed.
@@ -13,7 +15,9 @@ The default instance of this class provides access to most of the base operating
 KernelLibrary is a special case in that its handle is cached by the VM on startup into the VM registry, and it is the means by which all other libraries are opened.
 
 All functions in this library use the stdcall calling convention.'!
+
 !KernelLibrary categoriesForClass!External-Libraries-Win32! !
+
 !KernelLibrary methodsFor!
 
 addAtom: aString
@@ -1705,6 +1709,7 @@ writeFile: aHandle lpBuffer: anAddress nNumberOfBytesToWrite: anIntegerBytesToWr
 zeroMemory: pvDest length: cBytes
 	<stdcall: void RtlZeroMemory void* dword>
 	^self invalidCall: _failureCode! !
+
 !KernelLibrary categoriesForMethods!
 addAtom:!public!win32 functions-atom! !
 allocConsole!**auto generated**!public!win32 functions-console! !
@@ -1872,6 +1877,7 @@ open
 	VM object registry on startup."
 
 	^self fromHandle: VMLibrary default kernelHandle! !
+
 !KernelLibrary class categoriesForMethods!
 fileName!constants!public! !
 open!instance creation!public! !

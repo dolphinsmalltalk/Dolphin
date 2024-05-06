@@ -5,9 +5,13 @@ STONWriter subclass: #DolphinSTONWriter
 	classVariableNames: 'ExtendedCharacters'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DolphinSTONWriter guid: (GUID fromString: '{56f95579-e6b4-4cd5-8ca6-c7cf2f754593}')!
+
 DolphinSTONWriter comment: ''!
+
 !DolphinSTONWriter categoriesForClass!Unclassified! !
+
 !DolphinSTONWriter methodsFor!
 
 encodeString: aString
@@ -85,6 +89,7 @@ writeObject: anObject extra: extraPairs
 										ifNotNil: [:value | dictionary at: each asSymbol put: value]
 										ifNil: [anObject stonShouldWriteNilInstVars ifTrue: [dictionary at: each asSymbol put: nil]]]].
 					extraPairs do: [:each | dictionary at: each key put: each value]]]! !
+
 !DolphinSTONWriter categoriesForMethods!
 encodeString:!private! !
 escape:with:!initialize/release!public! !
@@ -102,6 +107,7 @@ writeObject:extra:!public!writing! !
 initialize
 	STONCharacters isImmutable: true.
 	STONSimpleSymbolCharacters isImmutable: true! !
+
 !DolphinSTONWriter class categoriesForMethods!
 initialize!class initialization!public! !
 !

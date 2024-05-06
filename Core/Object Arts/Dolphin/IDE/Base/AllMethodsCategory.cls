@@ -5,7 +5,9 @@ VirtualMethodCategory subclass: #AllMethodsCategory
 	classVariableNames: 'Current'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AllMethodsCategory guid: (GUID fromString: '{9f018e33-e5e0-4806-a700-6b15a55681e5}')!
+
 AllMethodsCategory comment: 'AllMethodsCategory is a virtual method category class the dynamically generated membership of which includes all methods.
 
 Instance Variables:
@@ -13,7 +15,9 @@ Instance Variables:
 
 Class Variables:
 	None'!
+
 !AllMethodsCategory categoriesForClass!System-Support! !
+
 !AllMethodsCategory methodsFor!
 
 includesMethod: aCompiledMethod 
@@ -21,6 +25,7 @@ includesMethod: aCompiledMethod
 	The 'All' methods category includes all methods!!"
 
 	^true! !
+
 !AllMethodsCategory categoriesForMethods!
 includesMethod:!public!testing! !
 !
@@ -49,6 +54,7 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	Current := nil! !
+
 !AllMethodsCategory class categoriesForMethods!
 current!accessing!public! !
 initialize!initializing!private! !

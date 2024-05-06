@@ -4,7 +4,6 @@ package paxVersion: 1;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
-
 package classNames
 	add: #StArgumentVariable;
 	add: #StBlockScope;
@@ -50,99 +49,114 @@ Object subclass: #StSemanticScope
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #StVariable
 	instanceVariableNames: 'scope reads writes'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StParseNodeVisitor subclass: #StSemanticAnalyser
 	instanceVariableNames: 'methodNode methodClass evaluationContext currentScope scopes literals stringLiterals addToFrame tempDecls inStaticExpression evalScope annotations'
 	classVariableNames: 'OptimizedMessages RestrictedSelectors SpecialSelectors'
 	poolDictionaries: 'SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
+
 StSemanticScope subclass: #StClassScope
 	instanceVariableNames: 'methodClass instanceVariables selfVariable superVariable'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StSemanticScope subclass: #StEvalScope
 	instanceVariableNames: 'pools'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StSemanticScope subclass: #StLexicalScope
 	instanceVariableNames: 'locals node thisContextVariable flags'
 	classVariableNames: 'FarReturnMask NeedsSelfMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StLexicalScope subclass: #StBlockScope
 	instanceVariableNames: ''
 	classVariableNames: 'EmptyBlockMask NeedsOuterMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StLexicalScope subclass: #StMethodScope
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StBlockScope subclass: #StOptimizedBlockScope
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StVariable subclass: #StInstanceVariable
 	instanceVariableNames: 'index name'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StVariable subclass: #StLocalVariable
 	instanceVariableNames: 'node storage'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StVariable subclass: #StSpecialVariable
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StVariable subclass: #StStaticVariable
 	instanceVariableNames: 'binding'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StLocalVariable subclass: #StArgumentVariable
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StLocalVariable subclass: #StGeneratedTempVariable
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StLocalVariable subclass: #StTempVariable
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StSpecialVariable subclass: #StSelfVariable
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StSpecialVariable subclass: #StSuperVariable
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StSpecialVariable subclass: #StThisContextVariable
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -154,6 +168,7 @@ analyze
 		for: self methodClass
 		context: nil
 		pools: #()! !
+
 !StMethodNode categoriesForMethods!
 analyze!public! !
 !

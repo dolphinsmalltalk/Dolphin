@@ -5,9 +5,13 @@ DolphinTest subclass: #GUIDTest
 	classVariableNames: 'Default'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GUIDTest guid: (GUID fromString: '{e1371d2f-b622-4825-b412-b44260477b09}')!
+
 GUIDTest comment: ''!
+
 !GUIDTest categoriesForClass!Tests-Network-UUID! !
+
 !GUIDTest methodsFor!
 
 assertNull: guid
@@ -117,6 +121,7 @@ testUniqueness
 	generated := Set new: size.
 	size timesRepeat: [generated add: self subjectClass newUnique].
 	self assert: generated size equals: size! !
+
 !GUIDTest categoriesForMethods!
 assertNull:!private!unit tests! !
 subjectClass!constants!private! !

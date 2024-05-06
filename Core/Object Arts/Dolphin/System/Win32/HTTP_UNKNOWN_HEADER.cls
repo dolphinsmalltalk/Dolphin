@@ -5,11 +5,14 @@ HttpServerStructure subclass: #HTTP_UNKNOWN_HEADER
 	classVariableNames: '_OffsetOf_NameLength _OffsetOf_pName _OffsetOf_pRawValue _OffsetOf_RawValueLength'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 HTTP_UNKNOWN_HEADER guid: (GUID fromString: '{98a27339-73e3-4d54-baf2-915b818916b1}')!
+
 HTTP_UNKNOWN_HEADER addClassConstant: '_OffsetOf_NameLength' value: 16r0!
 HTTP_UNKNOWN_HEADER addClassConstant: '_OffsetOf_pName' value: 16r4!
 HTTP_UNKNOWN_HEADER addClassConstant: '_OffsetOf_pRawValue' value: 16r8!
 HTTP_UNKNOWN_HEADER addClassConstant: '_OffsetOf_RawValueLength' value: 16r2!
+
 HTTP_UNKNOWN_HEADER comment: '<HTTP_UNKNOWN_HEADER> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_UNKNOWN_HEADER'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -27,7 +30,9 @@ struct tagHTTP_UNKNOWN_HEADER {
 	[helpstring("The header value."), size_is("RawValueLength"), string] LPCSTR pRawValue;
 } HTTP_UNKNOWN_HEADER;
 '!
+
 !HTTP_UNKNOWN_HEADER categoriesForClass!WinHttpServer-Structs! !
+
 !HTTP_UNKNOWN_HEADER methodsFor!
 
 NameLength
@@ -71,6 +76,7 @@ RawValueLength: anInteger
 	"Set the receiver's 'RawValueLength' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_RawValueLength put: anInteger! !
+
 !HTTP_UNKNOWN_HEADER categoriesForMethods!
 NameLength!**compiled accessors**!private! !
 NameLength:!**compiled accessors**!private! !
@@ -107,6 +113,7 @@ defineFields
 
 getFieldNames
 	^#(#NameLength #RawValueLength #pName #pRawValue)! !
+
 !HTTP_UNKNOWN_HEADER class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

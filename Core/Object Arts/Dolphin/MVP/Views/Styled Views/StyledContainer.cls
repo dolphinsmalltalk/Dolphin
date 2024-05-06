@@ -5,9 +5,13 @@ ContainerView subclass: #StyledContainer
 	classVariableNames: 'Nest'
 	poolDictionaries: 'GdiplusConstants ThemeConstants Win32Constants'
 	classInstanceVariableNames: ''!
+
 StyledContainer guid: (GUID fromString: '{5c05af7c-9f44-44b6-a823-0b80c9e8e8cb}')!
+
 StyledContainer comment: 'A GroupContainer is a <ContainerView> with improved edge and frame styling'!
+
 !StyledContainer categoriesForClass!MVP-Resources-Containers! !
+
 !StyledContainer methodsFor!
 
 actualCornerRadii
@@ -447,6 +451,7 @@ wmPrint: message wParam: wParam lParam: lParam
 		wParam: wParam
 		lParam: lParam.
 	^true! !
+
 !StyledContainer categoriesForMethods!
 actualCornerRadii!private! !
 actualEdges!private! !
@@ -502,6 +507,7 @@ resource_Default_view
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.StyledContainer) 34 22 nil nil 34 2 8 1174405120 131073 416 nil nil nil 7 nil nil nil 416 nil 170 192 8 #() nil 138 144 8 #(#top #bottom #left #right) 590598 ##(Smalltalk.StyledPen) 327686 ##(Smalltalk.Color) #black 5 8 #(1) 1246214 ##(Smalltalk.StyledGradientBrush) 578 #face3d nil 328198 ##(Smalltalk.Point) 327734 ##(Smalltalk.Float) 8 0 0 0 0 0 0 224 63 1 674 706 8 0 0 0 0 0 0 224 63 3 8 #(20 20 20 20) true nil 1 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 674 3839 21 674 701 501 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 221 8 0 0 4 1 0 0] 8 #() 674 193 193 nil 27 )! !
+
 !StyledContainer class categoriesForMethods!
 clearNest!public! !
 resource_Default_view!public!resources-views! !

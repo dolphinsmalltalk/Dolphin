@@ -5,10 +5,14 @@ ImageViewAbstract subclass: #ImageListView
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ImageListView guid: (GUID fromString: '{3089fd81-d572-4492-a0ac-037b8ad4125e}')!
+
 ImageListView comment: 'ImageListView is debugging aid for displaying the entire content of an image list, e.g. in an inspector open on an image list.
 '!
+
 !ImageListView categoriesForClass!MVP-Views! !
+
 !ImageListView methodsFor!
 
 paintImageOn: aCanvas 
@@ -34,6 +38,7 @@ paintImageOn: aCanvas
 				on: aCanvas
 				at: origin + ((i \\ perRow * cx) @ (i // perRow * cy))].
 	^displayRect origin: origin extent: (perRow * cx) @ (rows * cy)! !
+
 !ImageListView categoriesForMethods!
 paintImageOn:!drawing!event handling!private! !
 !

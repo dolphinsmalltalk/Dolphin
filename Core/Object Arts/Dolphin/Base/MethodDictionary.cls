@@ -5,13 +5,17 @@ IdentityDictionary variableSubclass: #MethodDictionary
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MethodDictionary guid: (GUID fromString: '{87b4c530-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 MethodDictionary comment: 'MethodDictionary is a specialized form of <IdentityDictionary> designed for ease and speed of access by the execution machinery. As the name implies, method dictionaries are used to map method selectors to the corresponding compiled method in a particular class.
 
 The primary difference from an ordinary identity dictionary in the current implementation is that method dictionaries are a power of 2 in size to speed up the masking of hash values to the permissible range during method lookup.
 
 You should not rely on the implementation details of this class, and nor should you change them or the instance shape.'!
+
 !MethodDictionary categoriesForClass!Collections-Unordered!Kernel-Support! !
+
 !MethodDictionary methodsFor!
 
 findKeyOrNil: anObject
@@ -64,6 +68,7 @@ removeKey: key ifAbsent: exceptionHandler
 			newMe removeIndex: index.
 			self become: newMe.
 			value]! !
+
 !MethodDictionary categoriesForMethods!
 findKeyOrNil:!private!searching! !
 hash:max:!private!searching! !
@@ -84,6 +89,7 @@ sizeFor: anInteger
 	by the VM, and avoid any dependency on the superclass sizing scheme."
 
 	^anInteger < 2 ifTrue: [2] ifFalse: [1 bitShift: ((anInteger - 1) * 100 // 75 + 1) highBit]! !
+
 !MethodDictionary class categoriesForMethods!
 defaultCapacity!constants!private! !
 sizeFor:!instance creation!private! !

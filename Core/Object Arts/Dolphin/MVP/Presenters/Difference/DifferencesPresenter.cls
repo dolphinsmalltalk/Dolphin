@@ -5,7 +5,9 @@ Presenter subclass: #DifferencesPresenter
 	classVariableNames: 'WordSeparators'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DifferencesPresenter guid: (GUID fromString: '{772ec3bd-72dc-4bae-9e30-92d686ea4e3b}')!
+
 DifferencesPresenter comment: 'DifferencesPresenter is a component that can be used to compare two pieces of text, highlighting the differences. 
 
 Two pieces of text are compared using the #compare:with: message. The text can be plain or rich text. If rich text is compared, then the styling will be preserved in the resulting display, except of course that the highlighting of any differences takes precedence. 
@@ -15,7 +17,9 @@ The differencing algorithm allows comparison and highlighting of differences on 
 DifferencesPresenter is based on Ian Bartholomew''s DiffBrowser.
 
 '!
+
 !DifferencesPresenter categoriesForClass!MVP-Presenters! !
+
 !DifferencesPresenter methodsFor!
 
 afterText: afterString 
@@ -257,6 +261,7 @@ wordSeparators
 
 wordSeparators: aString 
 	wordSeparators := aString! !
+
 !DifferencesPresenter categoriesForMethods!
 afterText:!accessing!public! !
 afterTitle:!accessing!public! !
@@ -310,6 +315,7 @@ wordSeparators
 
 wordSeparators: aString 
 	WordSeparators := aString! !
+
 !DifferencesPresenter class categoriesForMethods!
 initialize!initializing!public! !
 resource_Default_view!public!resources-views! !

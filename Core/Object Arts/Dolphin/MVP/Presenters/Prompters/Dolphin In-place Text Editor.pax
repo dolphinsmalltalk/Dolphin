@@ -6,7 +6,6 @@ package paxVersion: 1;
 Copyright (c) Object Arts Ltd. 2009
 '.
 
-
 package classNames
 	add: #InplaceTextEditor;
 	yourself.
@@ -34,11 +33,6 @@ Presenter subclass: #InplaceTextEditor
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

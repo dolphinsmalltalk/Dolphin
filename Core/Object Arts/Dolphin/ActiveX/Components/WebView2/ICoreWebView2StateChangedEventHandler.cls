@@ -5,7 +5,9 @@ ICoreWebView2EventHandler subclass: #ICoreWebView2StateChangedEventHandler
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2StateChangedEventHandler guid: (IID fromString: '{81336594-7ede-4ba9-bf71-acf0a95b58dd}')!
+
 ICoreWebView2StateChangedEventHandler comment: '`ICoreWebView2StateChangedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2StateChangedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -27,7 +29,9 @@ interface ICoreWebView2StateChangedEventHandler : IUnknown
 };
 ```
 '!
+
 !ICoreWebView2StateChangedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2StateChangedEventHandler methodsFor!
 
 basicRegister: tokenBuffer
@@ -35,6 +39,7 @@ basicRegister: tokenBuffer
 
 basicUnregister
 	source Remove_StateChanged: token! !
+
 !ICoreWebView2StateChangedEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
@@ -55,6 +60,7 @@ eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
 	^#dowloadStateChanged! !
+
 !ICoreWebView2StateChangedEventHandler class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 eventName!constants!public! !

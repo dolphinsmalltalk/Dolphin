@@ -5,7 +5,9 @@ ICoreWebView2Interface subclass: #ICoreWebView2PrintSettings
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2PrintSettings guid: (IID fromString: '{377f3721-c74e-48ca-8db1-df68e51d60e2}')!
+
 ICoreWebView2PrintSettings comment: '`ICoreWebView2PrintSettings` is a wrapper class for the COM interface ''WebView2.ICoreWebView2PrintSettings'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -101,7 +103,9 @@ interface ICoreWebView2PrintSettings : IUnknown
 };
 ```
 '!
+
 !ICoreWebView2PrintSettings categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2PrintSettings methodsFor!
 
 downCast
@@ -535,6 +539,7 @@ shouldPrintSelectionOnly: shouldPrintSelectionOnly
 	"Set the 'ShouldPrintSelectionOnly' property of the receiver to the <sdword> value of the argument."
 
 	self put_ShouldPrintSelectionOnly: shouldPrintSelectionOnly asParameter! !
+
 !ICoreWebView2PrintSettings categoriesForMethods!
 downCast!converting!public! !
 footerUri!properties!public! !
@@ -654,6 +659,7 @@ defineFunctions
 		defineFunction: #put_FooterUri:
 			argumentTypes: 'lpwstr'
 ! !
+
 !ICoreWebView2PrintSettings class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

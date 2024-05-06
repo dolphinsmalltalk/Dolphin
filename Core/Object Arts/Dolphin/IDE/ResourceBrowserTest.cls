@@ -5,9 +5,13 @@ DolphinTest subclass: #ResourceBrowserTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ResourceBrowserTest guid: (GUID fromString: '{8d888ba2-f5b7-402c-9bff-e88b2cde2fab}')!
+
 ResourceBrowserTest comment: ''!
+
 !ResourceBrowserTest categoriesForClass!Unclassified! !
+
 !ResourceBrowserTest methodsFor!
 
 getShellResource
@@ -62,6 +66,7 @@ testBasicContents
 	self assert: self resourceList size > 100.
 	self assert: (self resourceList includes: (ResourceIdentifier class: Shell)).
 	self assert: (self resourceList includes: (ResourceIdentifier class: SystemBrowserShell))! !
+
 !ResourceBrowserTest categoriesForMethods!
 getShellResource!private!unit tests! !
 resourceBrowser!private!unit tests! !

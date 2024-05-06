@@ -5,9 +5,13 @@ XMLNodeWithEntities subclass: #XMLElement
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 XMLElement guid: (GUID fromString: '{41122550-bc8f-4a1a-8913-ab228b16dc0f}')!
+
 XMLElement comment: ''!
+
 !XMLElement categoriesForClass!XML-Parser! !
+
 !XMLElement methodsFor!
 
 addContent: contentString
@@ -135,6 +139,7 @@ valueFor: aSymbol
 
 valueFor: aSymbol ifAbsent: aBlock 
 	^self attributes at: aSymbol ifAbsent: aBlock! !
+
 !XMLElement categoriesForMethods!
 addContent:!initialize!public! !
 attributeAt:!accessing!public! !
@@ -174,6 +179,7 @@ named: aString attributes: attributeList
 	^self new
 		name: aString;
 		setAttributes: attributeList! !
+
 !XMLElement class categoriesForMethods!
 named:!instance creation!public! !
 named:attributes:!instance creation!public! !

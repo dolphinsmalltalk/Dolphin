@@ -5,13 +5,16 @@ ExternalStructure subclass: #EMRTEXT
 	classVariableNames: '_OffsetOf_fOptions _OffsetOf_nChars _OffsetOf_offDx _OffsetOf_offString _OffsetOf_ptlReference _OffsetOf_rcl'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 EMRTEXT guid: (GUID fromString: '{b8857668-f891-426b-8df0-ccc12b909e4d}')!
+
 EMRTEXT addClassConstant: '_OffsetOf_fOptions' value: 16r10!
 EMRTEXT addClassConstant: '_OffsetOf_nChars' value: 16r8!
 EMRTEXT addClassConstant: '_OffsetOf_offDx' value: 16r24!
 EMRTEXT addClassConstant: '_OffsetOf_offString' value: 16rC!
 EMRTEXT addClassConstant: '_OffsetOf_ptlReference' value: 16r0!
 EMRTEXT addClassConstant: '_OffsetOf_rcl' value: 16r14!
+
 EMRTEXT comment: '<EMRTEXT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRTEXT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -30,7 +33,9 @@ struct tagEMRTEXT {
 	[helpstring("Offset to the inter-character spacing array. This is always given.")] DWORD offDx;
 } EMRTEXT;
 '!
+
 !EMRTEXT categoriesForClass!Win32-Structs! !
+
 !EMRTEXT methodsFor!
 
 fOptions
@@ -100,6 +105,7 @@ rcl: aRECT
 		from: ##(_OffsetOf_rcl + 1)
 		to: ##(_OffsetOf_rcl + RECT basicByteSize)
 		startingAt: 1! !
+
 !EMRTEXT categoriesForMethods!
 fOptions!**compiled accessors**!public! !
 fOptions:!**compiled accessors**!public! !
@@ -144,6 +150,7 @@ defineFields
 
 getFieldNames
 	^#(#ptlReference #nChars #offString #fOptions #rcl #offDx)! !
+
 !EMRTEXT class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

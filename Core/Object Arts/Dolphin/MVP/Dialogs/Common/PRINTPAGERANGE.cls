@@ -5,9 +5,12 @@ Win32Structure subclass: #PRINTPAGERANGE
 	classVariableNames: '_OffsetOf_nFromPage _OffsetOf_nToPage'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PRINTPAGERANGE guid: (GUID fromString: '{7842b7d1-890a-4558-b36e-ebf17614a05b}')!
+
 PRINTPAGERANGE addClassConstant: '_OffsetOf_nFromPage' value: 16r0!
 PRINTPAGERANGE addClassConstant: '_OffsetOf_nToPage' value: 16r4!
+
 PRINTPAGERANGE comment: '<PRINTPAGERANGE> is an <ExternalStructure> class to wrap the struct ''Win32.PRINTPAGERANGE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -22,7 +25,9 @@ struct tagPRINTPAGERANGE {
 	DWORD nToPage;
 } PRINTPAGERANGE;
 '!
+
 !PRINTPAGERANGE categoriesForClass!Win32-Structs! !
+
 !PRINTPAGERANGE methodsFor!
 
 nFromPage
@@ -44,6 +49,7 @@ nToPage: anInteger
 	"Set the receiver's 'nToPage' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_nToPage put: anInteger! !
+
 !PRINTPAGERANGE categoriesForMethods!
 nFromPage!**compiled accessors**!public! !
 nFromPage:!**compiled accessors**!public! !
@@ -71,6 +77,7 @@ defineFields
 
 getFieldNames
 	^#(#nFromPage #nToPage)! !
+
 !PRINTPAGERANGE class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

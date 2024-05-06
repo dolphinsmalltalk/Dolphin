@@ -5,10 +5,15 @@ DolphinTest subclass: #PresenterTest
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 PresenterTest guid: (GUID fromString: '{80e6f4ef-64d4-40f6-857c-5b74578eb87b}')!
+
 PresenterTest isAbstract: true!
+
 PresenterTest comment: ''!
+
 !PresenterTest categoriesForClass!Unclassified! !
+
 !PresenterTest methodsFor!
 
 classToTest
@@ -72,6 +77,7 @@ view
 
 waitForInputIdle
 	SessionManager inputState pumpMessages! !
+
 !PresenterTest categoriesForMethods!
 classToTest!helpers!private! !
 destroyPresenter!public!Running! !

@@ -5,9 +5,13 @@ StParseNodeVisitor subclass: #StSemanticAnalyser
 	classVariableNames: 'OptimizedMessages RestrictedSelectors SpecialSelectors'
 	poolDictionaries: 'SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
+
 StSemanticAnalyser guid: (GUID fromString: '{3922cac3-8a81-45a8-adb3-2795a6e7bc2f}')!
+
 StSemanticAnalyser comment: 'StSemanticAnalyser is a <StParseNodeVisitor> that performs semantic analysis of an AST.'!
+
 !StSemanticAnalyser categoriesForClass!System-Compiler! !
+
 !StSemanticAnalyser methodsFor!
 
 accessStaticVariable: aStVariableNode
@@ -657,6 +661,7 @@ visitVariableNode: aStVariableNode
 					(var writes isEmpty and: [(self isReceiverOfNilTest: aStVariableNode) not])
 						ifTrue: [self signalError: CWarnReadBeforeWritten forNode: aStVariableNode]]
 				ifFalse: [var isStaticVariable ifTrue: [self readStaticVariable: aStVariableNode]]]! !
+
 !StSemanticAnalyser categoriesForMethods!
 accessStaticVariable:!helpers!private! !
 addLiteral:value:!helpers!private! !
@@ -767,6 +772,7 @@ initialize
 	OptimizedMessages do: [:each | RestrictedSelectors addAll: each].
 	RestrictedSelectors isImmutable: true.
 	self addClassConstant: 'SpecialSelectors' value: VMLibrary default specialSelectors! !
+
 !StSemanticAnalyser class categoriesForMethods!
 analyzeParseTree:for:context:pools:!accessing!public! !
 initialize!development!initializing!public! !

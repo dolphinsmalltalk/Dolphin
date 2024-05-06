@@ -5,7 +5,9 @@ ICoreWebView2_3 subclass: #ICoreWebView2_4
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2_4 guid: (IID fromString: '{20d02d59-6df2-42dc-bd06-f98a694b1302}')!
+
 ICoreWebView2_4 comment: '`ICoreWebView2_4` is a wrapper class for the COM interface ''WebView2.ICoreWebView2_4'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -37,7 +39,9 @@ interface ICoreWebView2_4 : ICoreWebView2_3
 };
 ```
 '!
+
 !ICoreWebView2_4 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2_4 methodsFor!
 
 Add_DownloadStarting: eventHandler token: token
@@ -72,6 +76,7 @@ Remove_FrameCreated: token
 
 	<virtual stdcall: hresult 75 sqword>
 	^self invalidCall: _failureCode! !
+
 !ICoreWebView2_4 categoriesForMethods!
 Add_DownloadStarting:token:!**auto generated**!COM Interfaces-ICoreWebView2_4!private! !
 Add_FrameCreated:token:!**auto generated**!COM Interfaces-ICoreWebView2_4!private! !
@@ -95,6 +100,7 @@ defineFunctions
 		defineFunction: #Remove_DownloadStarting:
 			argumentTypes: 'sqword'
 ! !
+
 !ICoreWebView2_4 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

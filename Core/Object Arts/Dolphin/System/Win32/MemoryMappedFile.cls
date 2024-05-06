@@ -5,7 +5,9 @@ Object subclass: #MemoryMappedFile
 	classVariableNames: ''
 	poolDictionaries: 'MMFConstants Win32Constants'
 	classInstanceVariableNames: ''!
+
 MemoryMappedFile guid: (GUID fromString: '{87c4eee1-16f8-422b-b9e6-2e1c2963affd}')!
+
 MemoryMappedFile comment: 'MemoryMappedFile is an abstraction over the Win32 Memory-Mapped File API.
 
 Instance Variables:
@@ -16,7 +18,9 @@ Instance Variables:
 	ownsFile		<boolean>. Whether or not the mapping opened the file (and should therefore close it when free''d)
 
 '!
+
 !MemoryMappedFile categoriesForClass!Kernel-Objects! !
+
 !MemoryMappedFile methodsFor!
 
 asParameter
@@ -122,6 +126,7 @@ setFile: aFile owned: aBoolean name: aString
 	ownsFile := aBoolean.
 	name := aString.
 	maximumSize := 0! !
+
 !MemoryMappedFile categoriesForMethods!
 asParameter!converting!public! !
 basicFree!private!realizing/unrealizing! !
@@ -185,6 +190,7 @@ open: aString mode: aSymbol check: aBoolean
 			owned: true
 			name: nil;
 		yourself! !
+
 !MemoryMappedFile class categoriesForMethods!
 icon!constants!public! !
 onFile:!instance creation!public! !

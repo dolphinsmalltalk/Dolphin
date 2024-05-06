@@ -5,8 +5,11 @@ ENHMETARECORD subclass: #EMRPIXELFORMAT
 	classVariableNames: '_OffsetOf_pfd'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 EMRPIXELFORMAT guid: (GUID fromString: '{d3d01d9c-95db-40f4-9304-d212a548def1}')!
+
 EMRPIXELFORMAT addClassConstant: '_OffsetOf_pfd' value: 16r8!
+
 EMRPIXELFORMAT comment: '<EMRPIXELFORMAT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRPIXELFORMAT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -21,7 +24,9 @@ struct tagEMRPIXELFORMAT {
 	PIXELFORMATDESCRIPTOR pfd;
 } EMRPIXELFORMAT;
 '!
+
 !EMRPIXELFORMAT categoriesForClass!Win32-Structs! !
+
 !EMRPIXELFORMAT methodsFor!
 
 pfd
@@ -37,6 +42,7 @@ pfd: aPIXELFORMATDESCRIPTOR
 		from: ##(_OffsetOf_pfd + 1)
 		to: ##(_OffsetOf_pfd + PIXELFORMATDESCRIPTOR basicByteSize)
 		startingAt: 1! !
+
 !EMRPIXELFORMAT categoriesForMethods!
 pfd!**compiled accessors**!public! !
 pfd:!**compiled accessors**!public! !
@@ -70,6 +76,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_PIXELFORMAT! !
+
 !EMRPIXELFORMAT class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

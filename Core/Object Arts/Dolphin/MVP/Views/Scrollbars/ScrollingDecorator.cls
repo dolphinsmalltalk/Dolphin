@@ -5,7 +5,9 @@ ContainerView subclass: #ScrollingDecorator
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ScrollingDecorator guid: (GUID fromString: '{87b4c719-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 ScrollingDecorator comment: 'A ScrollingDecorator is a <compositeView> that implements the <scrollingDecoratorView> protocol to allow scrolling around the area occupied by the sub-view it decorates. It has a fixed <ScrollingDecoratorLayout> manager and expects to have only one managed sub-view that it is responsible for scrolling around (typically this will be another <compositeView>). The scrollable area is determined by the #layoutExtent: of the sub-view.
 
 Instance Variables:
@@ -14,7 +16,9 @@ Instance Variables:
 	lineExtent	<Point> holding the scroll amount representing a scroll distance of one line.
 
 For example, the View Composer uses a ScrollingDecorator to scroll around the editing arena. Another common usage is with the MoenTreeView, which may have quite large extent when displaying large trees, but which has no scrolling capability of its own.'!
+
 !ScrollingDecorator categoriesForClass!MVP-Views! !
+
 !ScrollingDecorator methodsFor!
 
 addSubView: aView 
@@ -343,6 +347,7 @@ verticalScrollTo: anInteger
 
 wheelScrollLines
 	^SystemMetrics current getSysParamSdword: SPI_GETWHEELSCROLLLINES! !
+
 !ScrollingDecorator categoriesForMethods!
 addSubView:!hierarchy!public!sub views! !
 defaultLayoutManager!constants!private! !
@@ -397,6 +402,7 @@ resource_Default_view
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ScrollingDecorator) 34 18 nil nil 34 2 8 1143996416 131073 416 nil nil nil 5 nil nil nil 416 1573190 1 ##(Smalltalk.ScrollingDecoratorLayout) true 170 192 8 #() nil 328198 ##(Smalltalk.Point) 1 1 true 546 17 17 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 546 1 1 546 701 501 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 94 1 0 0 250 0 0 0] 8 #() 546 193 193 nil 27 )! !
+
 !ScrollingDecorator class categoriesForMethods!
 icon!constants!public! !
 resource_Default_view!public!resources-views! !

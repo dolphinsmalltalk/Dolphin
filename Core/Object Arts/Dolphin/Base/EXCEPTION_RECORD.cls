@@ -5,13 +5,16 @@ Win32Structure subclass: #EXCEPTION_RECORD
 	classVariableNames: '_OffsetOf_ExceptionAddress _OffsetOf_ExceptionCode _OffsetOf_ExceptionFlags _OffsetOf_ExceptionInformation _OffsetOf_ExceptionRecord _OffsetOf_NumberParameters'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 EXCEPTION_RECORD guid: (GUID fromString: '{87b4c5f0-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 EXCEPTION_RECORD addClassConstant: '_OffsetOf_ExceptionAddress' value: 16rC!
 EXCEPTION_RECORD addClassConstant: '_OffsetOf_ExceptionCode' value: 16r0!
 EXCEPTION_RECORD addClassConstant: '_OffsetOf_ExceptionFlags' value: 16r4!
 EXCEPTION_RECORD addClassConstant: '_OffsetOf_ExceptionInformation' value: 16r14!
 EXCEPTION_RECORD addClassConstant: '_OffsetOf_ExceptionRecord' value: 16r8!
 EXCEPTION_RECORD addClassConstant: '_OffsetOf_NumberParameters' value: 16r10!
+
 EXCEPTION_RECORD comment: '<EXCEPTION_RECORD> is an <ExternalStructure> class to wrap the struct ''Win32.EXCEPTION_RECORD'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
@@ -31,7 +34,9 @@ struct tagEXCEPTION_RECORD {
 	[hidden, readonly, helpstring("An array of additional arguments that describe the exception. The RaiseException function can specify this array of arguments. For most exception codes, the array elements are undefined.")] ULONG_PTR ExceptionInformation[15];
 } EXCEPTION_RECORD;
 '!
+
 !EXCEPTION_RECORD categoriesForClass!Win32-Structs! !
+
 !EXCEPTION_RECORD methodsFor!
 
 ExceptionAddress
@@ -87,6 +92,7 @@ NumberParameters
 	"Answer the <Integer> value of the receiver's 'NumberParameters' field."
 
 	^bytes dwordAtOffset: _OffsetOf_NumberParameters! !
+
 !EXCEPTION_RECORD categoriesForMethods!
 ExceptionAddress!**compiled accessors**!public! !
 ExceptionCode!**compiled accessors**!public! !
@@ -126,6 +132,7 @@ defineFields
 
 getFieldNames
 	^#(#ExceptionCode #ExceptionFlags #ExceptionRecord #ExceptionAddress #NumberParameters)! !
+
 !EXCEPTION_RECORD class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

@@ -5,9 +5,13 @@ DolphinTest subclass: #ColorTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ColorTest guid: (GUID fromString: '{7b5098b5-74d7-46c5-99de-ae2e0558fe5c}')!
+
 ColorTest comment: ''!
+
 !ColorTest categoriesForClass!Unclassified! !
+
 !ColorTest methodsFor!
 
 shouldRaiseNotARealColorError: aNiladicValuable
@@ -525,6 +529,7 @@ testStlRoundTrip
 	self assert: rehydrated equals: subject.
 	self assert: rehydrated actualColor identicalTo: Color window
 ! !
+
 !ColorTest categoriesForMethods!
 shouldRaiseNotARealColorError:!helpers!private! !
 testActualColor!public!unit tests! !

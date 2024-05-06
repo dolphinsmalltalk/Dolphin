@@ -5,14 +5,18 @@ StaticView subclass: #StaticText
 	classVariableNames: 'AlignmentMap'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StaticText guid: (GUID fromString: '{87b4c740-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 StaticText comment: 'StaticText is a <valueView> class for a Window STATIC control for displaying text in one of a number of text styles. The <valueModel> associated with a StaticText must always yield a <readableString> value when mapped through the installed type converter. A StaticText will normally be used in conjunction with a <TextPresenter>. The alignment of the text (and therefore the style of the underlying Windows control) can be specified using the alignment aspect which can assume of of the following values: (#left, #center, #right, #leftNoWrap, #simple).
 
 Class Variables:
 	AlignmentMap	<LookupTable> of <Symbol> alignment specifiers to Windows styles.
 
 '!
+
 !StaticText categoriesForClass!MVP-Views! !
+
 !StaticText methodsFor!
 
 alignment
@@ -144,6 +148,7 @@ value: anObject
 	receiver's window directly via #displayValue:."
 
 	self displayValue: (self typeconverter convertFromLeftToRight: anObject)! !
+
 !StaticText categoriesForMethods!
 alignment!accessing!public! !
 alignment:!accessing!public! !
@@ -186,6 +191,7 @@ initialize
 				shrink;
 				isImmutable: true;
 				yourself)! !
+
 !StaticText class categoriesForMethods!
 icon!constants!public! !
 initialize!development!initializing!private! !

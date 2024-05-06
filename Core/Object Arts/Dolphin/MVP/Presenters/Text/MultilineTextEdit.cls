@@ -5,9 +5,13 @@ TextEdit subclass: #MultilineTextEdit
 	classVariableNames: ''
 	poolDictionaries: 'ButtonConstants'
 	classInstanceVariableNames: ''!
+
 MultilineTextEdit guid: (GUID fromString: '{87b4c743-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 MultilineTextEdit comment: 'MultilineTextEdit is a <valueView> class that implements the Windows "EDIT" control with an ES_MULTILINE style for the displaying and editing of multi-line text. The <valueModel> associated with a MultilineTextEdit  must always yield a <readableString> value when mapped through the installed type converter. A MultilineTextEdit will normally be used in conjunction with a <TextPresenter>. '!
+
 !MultilineTextEdit categoriesForClass!MVP-Views! !
+
 !MultilineTextEdit methodsFor!
 
 calculateExtent: aLayoutContext 
@@ -351,6 +355,7 @@ wordWrap: aBoolean
 	<boolean> argument. This is a synonym for #canHScroll:, except that its effect is reversed."
 
 	self canHScroll: aBoolean not! !
+
 !MultilineTextEdit categoriesForMethods!
 calculateExtent:!geometry!private! !
 canHScroll!public!testing! !
@@ -399,6 +404,7 @@ maxTextLimit
 	"Private - Answer the absolute maximum amount of text that the receiver can ever hold."
 
 	^16rFFFFFFFF! !
+
 !MultilineTextEdit class categoriesForMethods!
 maxTextLimit!constants!private! !
 !

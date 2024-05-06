@@ -5,9 +5,13 @@ DolphinTest subclass: #STLFilerTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 STLFilerTest guid: (GUID fromString: '{5f151d4d-927e-4254-aed9-c51056aef954}')!
+
 STLFilerTest comment: ''!
+
 !STLFilerTest categoriesForClass!Unclassified! !
+
 !STLFilerTest methodsFor!
 
 checkSimpleReadWriteOf: value 
@@ -96,6 +100,7 @@ writeLiteralsFor: value
 	out := STLOutFiler on: Array writeStream.
 	out nextPut: value.
 	^out stream contents! !
+
 !STLFilerTest categoriesForMethods!
 checkSimpleReadWriteOf:!private!unit tests! !
 checkSimpleReadWriteOf:context:!private!unit tests! !

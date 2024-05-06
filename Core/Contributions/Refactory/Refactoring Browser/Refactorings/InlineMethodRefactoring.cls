@@ -5,9 +5,13 @@ MethodRefactoring subclass: #InlineMethodRefactoring
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 InlineMethodRefactoring guid: (GUID fromString: '{a2564755-9eb0-4805-9bf7-edbb2fcf1995}')!
+
 InlineMethodRefactoring comment: ''!
+
 !InlineMethodRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !InlineMethodRefactoring methodsFor!
 
 addSelfReturn
@@ -355,6 +359,7 @@ writeGuardClauses
 			with: '`@methodName: `@args | `@temps | `@.s1. `@boolean ifTrue: [`@.s2. ^self] ifFalse: [| `@t1 | `@.Stmts1. ^`@r1]'.
 	[rewriter executeTree: inlineParseTree] 
 		whileTrue: [inlineParseTree := rewriter tree]! !
+
 !InlineMethodRefactoring categoriesForMethods!
 addSelfReturn!public!transforming! !
 addTemporary:assignedTo:!public!transforming! !
@@ -409,6 +414,7 @@ model: aRBNamespace inline: anInterval inMethod: aSelector forClass: aClass
 			inMethod: aSelector
 			forClass: aClass;
 		yourself! !
+
 !InlineMethodRefactoring class categoriesForMethods!
 initialize!class initialization!public! !
 inline:inMethod:forClass:!instance creation!public! !

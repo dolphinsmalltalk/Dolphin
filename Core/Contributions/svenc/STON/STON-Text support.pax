@@ -3,7 +3,6 @@ package := Package name: 'STON-Text support'.
 package paxVersion: 1;
 	basicComment: ''.
 
-
 package methodNames
 	add: #RunArray -> #fromSton:;
 	add: #RunArray -> #stonOn:;
@@ -21,12 +20,6 @@ package setPrerequisites: #(
 
 package!
 
-"Class Definitions"!
-
-
-"Global Aliases"!
-
-
 "Loose Methods"!
 
 !RunArray methodsFor!
@@ -40,6 +33,7 @@ stonOn: stonWriter
 	"Overwritten to get back the standard object behavior"
 	
 	stonWriter writeObject: self! !
+
 !RunArray categoriesForMethods!
 fromSton:!public!ston! !
 stonOn:!public!ston! !
@@ -51,6 +45,7 @@ fromSton: stonReader
 	^ self new
 		fromSton: stonReader;
 		yourself! !
+
 !RunArray class categoriesForMethods!
 fromSton:!public!ston! !
 !

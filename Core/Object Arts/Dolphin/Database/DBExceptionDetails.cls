@@ -5,7 +5,9 @@ Object subclass: #DBExceptionDetails
 	classVariableNames: ''
 	poolDictionaries: 'ODBCConstants ODBCRetCodes'
 	classInstanceVariableNames: ''!
+
 DBExceptionDetails guid: (GUID fromString: '{87b4c474-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 DBExceptionDetails comment: 'An instance of DBExceptionDetails holds information about the state of a DB connection object when a DBError or DBWarning is signalled. It is available by sending #tag to the exception object. 
 
 Instance Variables:
@@ -18,7 +20,9 @@ Instance Variables:
 Depending on the activity in progress at the time of the exception, one or more of these may contain nil.
 
 '!
+
 !DBExceptionDetails categoriesForClass!ODBC Interface! !
+
 !DBExceptionDetails methodsFor!
 
 addErrorDetails: newErrorDetails
@@ -142,6 +146,7 @@ retCodeError: anInteger
 					(ODBCRetCodes keyAtValue: code
 				                ifAbsent: ['Unknown']));
 			yourself)! !
+
 !DBExceptionDetails categoriesForMethods!
 addErrorDetails:!operations!private! !
 buildErrorInfo!operations!private! !

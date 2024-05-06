@@ -5,9 +5,13 @@ SearchPolicyTest subclass: #EqualitySearchPolicyTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 EqualitySearchPolicyTest guid: (GUID fromString: '{753e6e11-d8ca-4aa8-a751-8b5031838d22}')!
+
 EqualitySearchPolicyTest comment: ''!
+
 !EqualitySearchPolicyTest categoriesForClass!Unclassified! !
+
 !EqualitySearchPolicyTest methodsFor!
 
 policyClass
@@ -32,6 +36,7 @@ testCompareWith
 	self deny: (policy compare: #hash with: #identityHash).
 	self assert: (policy compare: $a with: $a).
 	self assert: (policy compare: $a with: $b) not! !
+
 !EqualitySearchPolicyTest categoriesForMethods!
 policyClass!public!unit tests! !
 testCompareWith!public!unit tests! !

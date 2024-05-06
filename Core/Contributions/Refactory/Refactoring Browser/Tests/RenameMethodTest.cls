@@ -5,9 +5,13 @@ RefactoringTest subclass: #RenameMethodTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RenameMethodTest guid: (GUID fromString: '{56462b45-7329-483d-afc5-f1c199753156}')!
+
 RenameMethodTest comment: ''!
+
 !RenameMethodTest categoriesForClass!Refactory-Testing! !
+
 !RenameMethodTest methodsFor!
 
 setUp
@@ -101,6 +105,7 @@ testRenameTestMethod1
 		equals: (RBParser parseMethod: 'classBlock: aBlock
 	classBlock := aBlock testMethod2').
 	self deny: (class directlyDefinesMethod: ('test' , 'Method1') asSymbol)! !
+
 !RenameMethodTest categoriesForMethods!
 setUp!public!set up! !
 testExistingSelector!failure tests!public! !

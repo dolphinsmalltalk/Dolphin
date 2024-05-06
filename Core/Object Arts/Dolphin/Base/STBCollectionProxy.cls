@@ -5,9 +5,13 @@ STBProxy subclass: #STBCollectionProxy
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 STBCollectionProxy guid: (GUID fromString: '{87b4c6eb-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 STBCollectionProxy comment: ''!
+
 !STBCollectionProxy categoriesForClass!System-Binary storage! !
+
 !STBCollectionProxy methodsFor!
 
 array: anArray
@@ -30,6 +34,7 @@ value
 	"Answer a new collection of class class and elements array."
 
 	^class withAll: array! !
+
 !STBCollectionProxy categoriesForMethods!
 array:!accessing!private! !
 class:!accessing!private! !
@@ -52,6 +57,7 @@ forCollection: aCollection
 	"Answer a new instance representing aCollection."
 
 	^self class: aCollection class array: aCollection asArray! !
+
 !STBCollectionProxy class categoriesForMethods!
 class:array:!instance creation!public! !
 forCollection:!instance creation!public! !

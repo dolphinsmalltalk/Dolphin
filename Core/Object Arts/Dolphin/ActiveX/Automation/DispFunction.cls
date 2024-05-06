@@ -5,9 +5,13 @@ COMFunction subclass: #DispFunction
 	classVariableNames: ''
 	poolDictionaries: 'Win32Errors'
 	classInstanceVariableNames: ''!
+
 DispFunction guid: (GUID fromString: '{4596042f-9e7a-4481-8f6c-d71e47fc990c}')!
+
 DispFunction comment: ''!
+
 !DispFunction categoriesForClass!Unclassified! !
+
 !DispFunction methodsFor!
 
 callback: stub interface: aCOMInterface withArgumentsAt: anAddress 
@@ -31,6 +35,7 @@ callback: stub interface: aCOMInterface withArgumentsAt: anAddress
 				withArgumentsAt: anAddress
 				descriptor: descriptor]
 		ifNil: [E_NOTIMPL]! !
+
 !DispFunction categoriesForMethods!
 callback:interface:withArgumentsAt:!evaluating!private! !
 !

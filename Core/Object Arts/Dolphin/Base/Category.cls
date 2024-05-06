@@ -5,8 +5,11 @@ Object subclass: #Category
 	classVariableNames: 'PermanentCategories'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Category guid: (GUID fromString: '{87b4c45f-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Category isAbstract: true!
+
 Category comment: 'The abstract Category class is used to organize <Class> and <CompiledMethod> objects into subgroupings independent of the implementation hierarchy. This structuring is for the benefit of the user navigating through thousands of classes and methods in the Dolphin Smalltalk development system, and has no run-time significance.
 
 Instance Variables:
@@ -16,7 +19,9 @@ Instance Variables:
 Class Variables:
 	PermanentCategories		<Set> of all categories which are always available, even if empty
 	'!
+
 !Category categoriesForClass!System-Support! !
+
 !Category methodsFor!
 
 <= comperand
@@ -141,6 +146,7 @@ subNames
 	on category separator."
 
 	^self class separator split: self name! !
+
 !Category categoriesForMethods!
 <=!comparing!public! !
 =!comparing!public! !
@@ -207,6 +213,7 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	PermanentCategories := nil.! !
+
 !Category class categoriesForMethods!
 name:!instance creation!public! !
 new!instance creation!public! !

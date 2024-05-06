@@ -5,9 +5,13 @@ RefactoringBrowserTest subclass: #RBNamespaceTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RBNamespaceTest guid: (GUID fromString: '{79170e4b-f3f8-4b46-8093-dac62f866cba}')!
+
 RBNamespaceTest comment: ''!
+
 !RBNamespaceTest categoriesForClass!Refactory-Testing! !
+
 !RBNamespaceTest methodsFor!
 
 testAllClassesDo
@@ -153,6 +157,7 @@ testRoots
 	self assert: (model rootClasses asSortedCollection: [:a :b | a name < b name]) asArray
 		equals: ((Class rootsOfTheWorld collect: [:each | model classFor: each])
 				asSortedCollection: [:a :b | a name < b name]) asArray! !
+
 !RBNamespaceTest categoriesForMethods!
 testAllClassesDo!class tests!public! !
 testDefineClassAfterDeletedChange!class tests!public! !

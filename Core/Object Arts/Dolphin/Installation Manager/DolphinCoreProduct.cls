@@ -5,9 +5,13 @@ DolphinProduct subclass: #DolphinCoreProduct
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DolphinCoreProduct guid: (GUID fromString: '{610c5616-617f-4b75-9c31-7589f234a3c2}')!
+
 DolphinCoreProduct comment: ''!
+
 !DolphinCoreProduct categoriesForClass!System-Support! !
+
 !DolphinCoreProduct methodsFor!
 
 contents
@@ -112,6 +116,7 @@ fullName
 	"Answer the full product name associated with the receiver"
 
 	^'Dolphin Smalltalk Core'! !
+
 !DolphinCoreProduct categoriesForMethods!
 contents!accessing!public! !
 defaultSystemFolderColor!constants!private! !
@@ -135,6 +140,7 @@ shortProductName
 	"Answer the abbreviated product name"
 	
 	^'DCORE'! !
+
 !DolphinCoreProduct class categoriesForMethods!
 productLevel!constants!private! !
 productName!accessing!public! !

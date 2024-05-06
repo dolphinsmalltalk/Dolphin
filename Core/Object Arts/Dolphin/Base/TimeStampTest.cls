@@ -5,9 +5,13 @@ DolphinTest subclass: #TimeStampTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TimeStampTest guid: (GUID fromString: '{152f98a5-e614-445f-bb23-7db28a4d01b8}')!
+
 TimeStampTest comment: ''!
+
 !TimeStampTest categoriesForClass!Unclassified! !
+
 !TimeStampTest methodsFor!
 
 currentTimeStamp
@@ -93,6 +97,7 @@ testFromSYSTEMTIME
 	self assert: ts time second truncated equals: sysTime wSecond.
 	self assert: ts time millisecond equals: sysTime wMilliseconds.
 	self assert: sysTime asTimeStamp equals: ts! !
+
 !TimeStampTest categoriesForMethods!
 currentTimeStamp!helpers!private! !
 testAddSeconds!public! !

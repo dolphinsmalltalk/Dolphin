@@ -5,8 +5,11 @@ Object subclass: #AXTypeInfoObject
 	classVariableNames: 'ClassCommentStyleMap GuidClash HighLevelWrapperStyleMap SuperclassClash TracingStyleMap'
 	poolDictionaries: 'AXAutomationConstants AXTypeGenerationFlags'
 	classInstanceVariableNames: ''!
+
 AXTypeInfoObject guid: (GUID fromString: '{27440177-dfab-46d4-bf61-a8fada69a263}')!
+
 AXTypeInfoObject isAbstract: true!
+
 AXTypeInfoObject comment: '
 	
 Instance Variables:
@@ -18,7 +21,9 @@ Class Variables:
 	SuperclassClash		<WarningSignal>
 
 '!
+
 !AXTypeInfoObject categoriesForClass!Kernel-Objects! !
+
 !AXTypeInfoObject methodsFor!
 
 asParameter
@@ -130,6 +135,7 @@ suggestedGlobalName
 tlbInterface
 	tlbInterface isNull ifTrue: [self realize].
 	^tlbInterface! !
+
 !AXTypeInfoObject categoriesForMethods!
 asParameter!converting!public! !
 attributes!accessing!public! !

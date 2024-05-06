@@ -5,7 +5,9 @@ ShellView subclass: #Playground
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Playground guid: (GUID fromString: '{87b4c721-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Playground comment: 'A Playground window is part of the Playground sample package learning aid for Smalltalk. A Playground is a <topView> window into which one or more geometric objects can be placed. These objects can then be manipulated by sending messages to them, usually from a workspace.
 
 The objects to be placed in a Playground are normally of a class that is derived from the class <PlayShape>. Typical shapes might be <Triangle>, <Square>, <Circle> etc.The shapes can be added and removed from a <Playground> using the #add: and #remove: methods respectively. You can request a collection of all the shapes currently in the playground using #shapes. Once you have identified a particular shape you can send messages to communicate with it directly.
@@ -16,7 +18,9 @@ Instance Variables:
 	shapes		<OrderedCollection> of shapes within the playground.
 
 '!
+
 !Playground categoriesForClass!MVP-Views!Samples! !
+
 !Playground methodsFor!
 
 add: aPlayShape
@@ -62,6 +66,7 @@ shapes
 	"Answer the collection of shapes held by the receiver"
 
 	^shapes! !
+
 !Playground categoriesForMethods!
 add:!adding!public! !
 clear!operations!public! !
@@ -82,6 +87,7 @@ new
 	"Create and show a new instance of the receiver. Answer the new instance"
 
 	^super new show caption: 'A Playground'.! !
+
 !Playground class categoriesForMethods!
 icon!constants!public! !
 new!instance creation!public! !

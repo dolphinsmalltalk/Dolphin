@@ -5,9 +5,13 @@ TestCase subclass: #EditableListViewTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 EditableListViewTest guid: (GUID fromString: '{d26230d4-ebc5-4253-9863-c59849d538e1}')!
+
 EditableListViewTest comment: ''!
+
 !EditableListViewTest categoriesForClass!Unclassified! !
+
 !EditableListViewTest methodsFor!
 
 editableListViewBytes15
@@ -39,6 +43,7 @@ testStbConversion15
 
 	[self assert: (elv instVarAt: (instVarNames indexOf: 'originalColumns')) equals: nil.
 	self assert: (elv instVarAt: (instVarNames indexOf: 'headerControl')) equals: nil] ensure: [elv close]! !
+
 !EditableListViewTest categoriesForMethods!
 editableListViewBytes15!constants!private! !
 elvWithEmbeddedComboBoxBytes20!constants!private! !

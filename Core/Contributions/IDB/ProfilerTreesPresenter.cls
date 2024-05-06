@@ -5,13 +5,17 @@ ProfilerPresenter subclass: #ProfilerTreesPresenter
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ProfilerTreesPresenter guid: (GUID fromString: '{425d0eb6-542e-11d3-998b-d5ca2c3c1d61}')!
+
 ProfilerTreesPresenter comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
+
 !ProfilerTreesPresenter categoriesForClass!IDB Goodies! !
+
 !ProfilerTreesPresenter methodsFor!
 
 collapse
@@ -163,6 +167,7 @@ update
 
 workspacePresenter
 	^self presenterNamed: 'workspace'! !
+
 !ProfilerTreesPresenter categoriesForMethods!
 collapse!commands!public! !
 createComponents!initializing!public! !
@@ -193,6 +198,7 @@ resource_Default_view
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ContainerView) 34 15 nil nil 34 2 8 1409286144 131073 416 nil 327686 ##(Smalltalk.Color) #default nil 5 nil nil nil 416 1180166 ##(Smalltalk.ProportionalLayout) 170 176 34 2 410 ##(Smalltalk.Splitter) 34 12 nil 416 34 2 8 1140850688 1 576 nil 496 nil 5 nil nil nil 1510470 1 ##(Smalltalk.DraggableViewInteractor) 576 nil 1 #left nil nil nil 328198 ##(Smalltalk.Point) 1 1 674 9 9 nil 688 nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 674 1 227 674 701 7 576 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 113 0 0 0 94 1 0 0 116 0 0 0] 8 #() 674 193 193 nil 27 1 true 170 192 34 2 410 ##(Smalltalk.TreeView) 34 27 nil 416 34 2 8 1140916775 1025 976 590918 3 ##(Smalltalk.TreeModel) nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 525062 ##(Smalltalk.TreeNode) nil nil nil 170 192 8 #() 496 nil 5 265030 4 ##(Smalltalk.Menu) nil true 34 2 984134 2 ##(Smalltalk.CommandMenuItem) 1 1180998 4 ##(Smalltalk.CommandDescription) #expand 8 'Expand' 591 1 nil nil nil 1218 1 1250 #collapse 8 'Collapse' 587 1 nil nil nil 8 '' nil 1 nil nil nil nil nil nil nil 976 nil 8 1921400880 ##(Smalltalk.BasicListAbstract) ##(Smalltalk.IconicListAbstract) 1049926 1 ##(Smalltalk.IconImageManager) nil nil nil nil nil 170 176 1152 nil #smallIcons 1 170 ##(Smalltalk.PluggableLookupTable) 1152 722 138 144 34 2 786 #createAt:extent: 34 2 674 1 1 674 701 227 976 786 #contextMenu: 34 1 1184 976 866 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 94 1 0 0 113 0 0 0] 8 #() 928 nil 27 8 'tree' nil 722 138 144 34 1 786 #createAt:extent: 34 2 674 3839 21 674 701 461 416 866 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 221 8 0 0 240 0 0 0] 34 3 976 576 410 ##(Smalltalk.CardContainer) 34 16 nil 416 34 2 8 1140850688 131073 1808 nil 496 nil 5 nil nil nil 1808 656710 1 ##(Smalltalk.CardLayout) 138 144 34 2 721414 ##(Smalltalk.Association) 8 'Workspace' 410 ##(Smalltalk.ReferenceView) 34 14 nil 1808 34 2 8 1140850688 131073 1984 nil nil nil 5 nil nil nil 1984 1180230 1 ##(Smalltalk.ResourceIdentifier) ##(Smalltalk.MethodWorkspace) #resource_Default_view nil 722 138 144 34 1 786 #createAt:extent: 34 2 674 9 53 674 685 169 1984 866 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 4 0 0 0 26 0 0 0 90 1 0 0 110 0 0 0] 1152 928 nil 27 1938 8 'Disassembly' 410 ##(Smalltalk.ReferenceView) 34 14 nil 1808 34 2 8 1140850688 131073 2256 nil nil nil 5 nil nil nil 2256 2050 ##(Smalltalk.SmalltalkWorkspace) #resource_Default_view nil 722 138 144 34 1 786 #createAt:extent: 34 2 674 9 53 674 685 169 2256 866 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 4 0 0 0 26 0 0 0 90 1 0 0 110 0 0 0] 1152 928 nil 27 1984 nil nil nil 170 192 34 4 1984 8 'workspace' 2256 8 'disassembly' nil 410 ##(Smalltalk.TabViewXP) 34 28 nil 1808 34 2 8 1140916736 1 2544 590662 2 ##(Smalltalk.ListModel) 138 144 34 2 1968 2240 nil 1088 482 #face3d nil 1 nil nil nil 2544 nil 8 1921705120 ##(Smalltalk.BasicListAbstract) ##(Smalltalk.IconicListAbstract) 1392 nil nil nil nil nil #noIcons nil nil nil nil nil 722 138 144 34 3 786 #createAt:extent: 34 2 674 1 1 674 701 229 2544 786 #basicSelectionsByIndex: 34 1 8 #(1) 2544 786 #tcmSetExtendedStyle:dwExStyle: 8 #(-1 0) 2544 866 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 94 1 0 0 114 0 0 0] 8 #() 928 nil 27 722 138 144 34 1 786 #createAt:extent: 34 2 674 1 233 674 701 229 1808 866 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 116 0 0 0 94 1 0 0 230 0 0 0] 34 3 1984 2256 2544 928 nil 27 928 nil 27 )! !
+
 !ProfilerTreesPresenter class categoriesForMethods!
 resource_Default_view!public!resources-views! !
 !

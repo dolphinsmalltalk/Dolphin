@@ -5,9 +5,13 @@ RefactoringTest subclass: #InlineParameterTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 InlineParameterTest guid: (GUID fromString: '{6a76ec20-1cb3-4e28-84e7-947775648e57}')!
+
 InlineParameterTest comment: ''!
+
 !InlineParameterTest categoriesForClass!Refactory-Testing! !
+
 !InlineParameterTest methodsFor!
 
 testInlineBlockFailure
@@ -30,6 +34,7 @@ testInlineLiteralArray
 	self assert: (class parseTreeFor: #sendInlineParameterMethod)
 		equals: (RBParser parseMethod: 'sendInlineParameterMethod ^self inlineParameterMethod').
 	self deny: (class directlyDefinesMethod: ('inline' , 'ParameterMethod:') asSymbol)! !
+
 !InlineParameterTest categoriesForMethods!
 testInlineBlockFailure!failure tests!public! !
 testInlineLiteralArray!public!tests! !

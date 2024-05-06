@@ -5,9 +5,13 @@ RefactoringTest subclass: #RenameClassVariableTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RenameClassVariableTest guid: (GUID fromString: '{5d45357d-1056-4b27-b1a1-1df41ee18851}')!
+
 RenameClassVariableTest comment: ''!
+
 !RenameClassVariableTest categoriesForClass!Refactory-Testing! !
+
 !RenameClassVariableTest methodsFor!
 
 testAlreadyExistingName
@@ -58,6 +62,7 @@ testRenameClassVar
 												[builder compile: rewriteRule tree printString
 													in: class
 													classified: aSmalllintContext protocols]]')! !
+
 !RenameClassVariableTest categoriesForMethods!
 testAlreadyExistingName!failure tests!public! !
 testMetaClassFailure!failure tests!public! !

@@ -5,9 +5,13 @@ GdiplusBrush subclass: #GdiplusLinearGradientBrush
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusLinearGradientBrush guid: (GUID fromString: '{0ea671c7-823f-4367-89b3-c28e45a365ea}')!
+
 GdiplusLinearGradientBrush comment: 'GdiplusLinearGradientBrush paints a color gradient in which the color changes evenly from the starting boundary line of an instance to its ending boundary line. Boundary lines are two parallel straight lines. The color gradient is perpendicular to the boundary lines, changing gradually across the stroke from starting to ending boundary lines. The color gradient has one color at the starting boundary line and another color at the ending boundary line.'!
+
 !GdiplusLinearGradientBrush categoriesForClass!Unclassified! !
+
 !GdiplusLinearGradientBrush methodsFor!
 
 blendCount
@@ -77,6 +81,7 @@ startingColor: startColor endingColor: endColor
 				color1: startColor argbCode
 				color2: endColor argbCode) == Ok
 		ifFalse: [GdiplusError signal: 'GdipSetLineColors failed' with: status]! !
+
 !GdiplusLinearGradientBrush categoriesForMethods!
 blendCount!accessing!private! !
 blendFactors!accessing!public! !
@@ -247,6 +252,7 @@ rect: rect color1: color1 color2: color2 mode: aLinearGradientMode
 				color1: color1
 				color2: color2
 				mode: aLinearGradientMode)! !
+
 !GdiplusLinearGradientBrush class categoriesForMethods!
 exampleGdipLGChangingColors!examples!public!sunit! !
 exampleGdipLGCustom!examples!public!sunit! !

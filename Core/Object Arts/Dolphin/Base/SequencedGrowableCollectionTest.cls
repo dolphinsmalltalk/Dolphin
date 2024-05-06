@@ -5,10 +5,15 @@ SequenceableCollectionTest subclass: #SequencedGrowableCollectionTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SequencedGrowableCollectionTest guid: (GUID fromString: '{7c5c4663-14ac-4420-85af-2c2644e54463}')!
+
 SequencedGrowableCollectionTest isAbstract: true!
+
 SequencedGrowableCollectionTest comment: ''!
+
 !SequencedGrowableCollectionTest categoriesForClass!Unclassified! !
+
 !SequencedGrowableCollectionTest methodsFor!
 
 testAddAllFirst
@@ -161,6 +166,7 @@ testCopyWithoutIndex
 						removeFirst;
 						yourself.
 			self assert: (subject copyWithoutIndex: each second) equals: (self newCollection: each third)]! !
+
 !SequencedGrowableCollectionTest categoriesForMethods!
 testAddAllFirst!public!unit tests! !
 testAddAllFirst2!public!unit tests! !

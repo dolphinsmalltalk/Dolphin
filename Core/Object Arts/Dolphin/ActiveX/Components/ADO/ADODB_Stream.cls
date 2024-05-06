@@ -5,7 +5,9 @@ IDispatch subclass: #ADODB_Stream
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
+
 ADODB_Stream guid: (IID fromString: '{00001565-0000-0010-8000-00aa006d2ea4}')!
+
 ADODB_Stream comment: '`ADODB_Stream` is a wrapper class for the COM interface ''ADODB._Stream'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -108,7 +110,9 @@ interface _Stream : IDispatch
 };
 ```
 '!
+
 !ADODB_Stream categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
+
 !ADODB_Stream methodsFor!
 
 Cancel
@@ -514,6 +518,7 @@ WriteText: data Options: options
 
 	<virtual stdcall: hresult 32 bstr sdword>
 	^self invalidCall: _failureCode! !
+
 !ADODB_Stream categoriesForMethods!
 Cancel!**auto generated**!COM Interfaces-_Stream!public! !
 charset!**auto generated**!properties!public! !
@@ -627,6 +632,7 @@ defineFunctions
 			argumentTypes: 'bstr sdword';
 		defineFunction: #Cancel
 ! !
+
 !ADODB_Stream class categoriesForMethods!
 clsid!**auto generated**!constants!private! !
 defineFunctions!**auto generated**!initializing!public! !

@@ -5,7 +5,9 @@ SelectableItemsPresenter subclass: #ClassSelector
 	classVariableNames: 'ClassModeMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: 'commandQueryHandlers'!
+
 ClassSelector guid: (GUID fromString: '{cb9d5680-134d-4c0b-9052-ad4536946a49}')!
+
 ClassSelector comment: 'A ClassSelector is an abstract class used to implement the common behaviour for selecting a class from the Smalltalk class hierarchy. It also provides the ability to source and sink drag and drop operations. Dropping a class object onto another class in the tree will change the superclass of the dropped class. A drop of a <CompiledMethod> will copy or move the method to the class under the drop, maintaining its existing method categories. Class objects may also be dragged from a ClassHierarchySelector in a variety of formats: as <Class> objects, as <String> definitions, or as a chunk format definitions.
 
 Note that a ClassSelector maintains whether it is in ''''class'''' (actually metaclass) or ''''instance'''' mode. A number of commands and operations supported by the receiver can be applied to either <Metaclass> or <Class> objects, and which is operated on is determined by the selection and the mode. See #actualClass and its references.
@@ -15,7 +17,9 @@ Instance Variables:
 
 Class Variables:
 	ClassModeMask	<integer>. Masks flags inst. var. to determine if in class mode.'!
+
 !ClassSelector categoriesForClass!MVP-Presenters! !
+
 !ClassSelector methodsFor!
 
 actualClass
@@ -836,6 +840,7 @@ systemModel
 
 testBrowserClass
 	^self systemModel testBrowserClass! !
+
 !ClassSelector categoriesForMethods!
 actualClass!accessing!public! !
 actualClass:!accessing!public! !
@@ -925,6 +930,7 @@ initialize
 
 setCommandQueryHandlers: anArray 
 	commandQueryHandlers := anArray! !
+
 !ClassSelector class categoriesForMethods!
 getCommandQueryHandlers!accessing!private! !
 initialize!initializing!private! !

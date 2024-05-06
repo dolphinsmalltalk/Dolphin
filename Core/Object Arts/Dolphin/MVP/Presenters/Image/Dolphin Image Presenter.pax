@@ -7,7 +7,6 @@ Copyright (c) Object Arts Ltd. 1997-2005. Portions Copyright (c) CGI Group (Euro
 
 package basicPackageVersion: '6.1'.
 
-
 package classNames
 	add: #AnimatedImageView;
 	add: #ImagePresenter;
@@ -39,36 +38,36 @@ ValuePresenter subclass: #ImagePresenter
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StaticView subclass: #StaticImage
 	instanceVariableNames: 'image'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ImageViewAbstract subclass: #ImageView
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StaticImage subclass: #StaticBitmap
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StaticImage subclass: #StaticIcon
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DoubleBufferedView subclass: #AnimatedImageView
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

@@ -5,7 +5,9 @@ HttpServerStructure subclass: #HTTP_LOG_FIELDS_DATA
 	classVariableNames: '_OffsetOf_ClientIp _OffsetOf_ClientIpLength _OffsetOf_Cookie _OffsetOf_CookieLength _OffsetOf_Host _OffsetOf_HostLength _OffsetOf_Method _OffsetOf_MethodLength _OffsetOf_MethodNum _OffsetOf_ProtocolStatus _OffsetOf_Referrer _OffsetOf_ReferrerLength _OffsetOf_ServerIp _OffsetOf_ServerIpLength _OffsetOf_ServerName _OffsetOf_ServerNameLength _OffsetOf_ServerPort _OffsetOf_ServiceName _OffsetOf_ServiceNameLength _OffsetOf_SubStatus _OffsetOf_Type _OffsetOf_UriQuery _OffsetOf_UriQueryLength _OffsetOf_UriStem _OffsetOf_UriStemLength _OffsetOf_UserAgent _OffsetOf_UserAgentLength _OffsetOf_UserName _OffsetOf_UserNameLength _OffsetOf_Win32Status'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 HTTP_LOG_FIELDS_DATA guid: (GUID fromString: '{35c62b99-abf3-46f3-b967-7b54dc2641cc}')!
+
 HTTP_LOG_FIELDS_DATA addClassConstant: '_OffsetOf_ClientIp' value: 16r24!
 HTTP_LOG_FIELDS_DATA addClassConstant: '_OffsetOf_ClientIpLength' value: 16r8!
 HTTP_LOG_FIELDS_DATA addClassConstant: '_OffsetOf_Cookie' value: 16r44!
@@ -36,6 +38,7 @@ HTTP_LOG_FIELDS_DATA addClassConstant: '_OffsetOf_UserAgentLength' value: 16r16!
 HTTP_LOG_FIELDS_DATA addClassConstant: '_OffsetOf_UserName' value: 16r1C!
 HTTP_LOG_FIELDS_DATA addClassConstant: '_OffsetOf_UserNameLength' value: 16r4!
 HTTP_LOG_FIELDS_DATA addClassConstant: '_OffsetOf_Win32Status' value: 16r50!
+
 HTTP_LOG_FIELDS_DATA comment: '<HTTP_LOG_FIELDS_DATA> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_LOG_FIELDS_DATA'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -79,7 +82,9 @@ struct tagHTTP_LOG_FIELDS_DATA {
 	USHORT SubStatus;
 } HTTP_LOG_FIELDS_DATA;
 '!
+
 !HTTP_LOG_FIELDS_DATA categoriesForClass!WinHttpServer-Structs! !
+
 !HTTP_LOG_FIELDS_DATA methodsFor!
 
 ClientIp
@@ -393,6 +398,7 @@ Win32Status: anInteger
 	"Set the receiver's 'Win32Status' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_Win32Status put: anInteger! !
+
 !HTTP_LOG_FIELDS_DATA categoriesForMethods!
 ClientIp!**compiled accessors**!public! !
 ClientIp:!**compiled accessors**!public! !
@@ -533,6 +539,7 @@ defineFields
 
 getFieldNames
 	^#(#Type #UserNameLength #UriStemLength #ClientIpLength #ServerNameLength #ServiceNameLength #ServerIpLength #MethodLength #UriQueryLength #HostLength #UserAgentLength #CookieLength #ReferrerLength #UserName #UriStem #ClientIp #ServerName #ServiceName #ServerIp #Method #UriQuery #Host #UserAgent #Cookie #Referrer #ServerPort #ProtocolStatus #Win32Status #MethodNum #SubStatus)! !
+
 !HTTP_LOG_FIELDS_DATA class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

@@ -5,9 +5,13 @@ SequenceableCollectionTest subclass: #IntervalTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IntervalTest guid: (GUID fromString: '{73485185-925f-48a9-bdf0-df459c5acb25}')!
+
 IntervalTest comment: ''!
+
 !IntervalTest categoriesForClass!Unclassified! !
+
 !IntervalTest methodsFor!
 
 assimilate: anObject 
@@ -208,6 +212,7 @@ testStoreOn
 			expr := each storeString.
 			copy := Compiler evaluate: expr.
 			self assert: copy equals: each]! !
+
 !IntervalTest categoriesForMethods!
 assimilate:!public!unit tests! !
 assimilateResultElement:!helpers!private! !

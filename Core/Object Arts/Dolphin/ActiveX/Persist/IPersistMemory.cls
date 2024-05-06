@@ -5,13 +5,17 @@ IPersist subclass: #IPersistMemory
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IPersistMemory guid: (IID fromString: '{bd1ae5e0-a6ae-11ce-bd37-504200c10000}')!
+
 IPersistMemory comment: '<IPersistMemory> is a wrapper class for the COM interface ''OCIDL.IPersistMemory'' generated from type information in the ''OCIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
 Warning: This comment was automatically generated from the interface''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.'!
+
 !IPersistMemory categoriesForClass!COM-Interfaces!OCIDL-Interfaces! !
+
 !IPersistMemory methodsFor!
 
 getSizeMax
@@ -108,6 +112,7 @@ Save: pMem fClearDirty: fClearDirty cbSize: cbSize
 
 	<virtual stdcall: hresult 7 byte* sdword dword>
 	^self invalidCall: _failureCode! !
+
 !IPersistMemory categoriesForMethods!
 getSizeMax!**auto generated**!methods!public! !
 GetSizeMax:!**auto generated**!COM Interfaces-IPersistMemory!private! !
@@ -140,6 +145,7 @@ defineFunctions
 			argumentTypes: 'dword*';
 		defineFunction: #InitNew
 ! !
+
 !IPersistMemory class categoriesForMethods!
 defineFunctions!initializing!public! !
 !

@@ -5,9 +5,13 @@ MethodRefactoring subclass: #MoveVariableDefinitionRefactoring
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MoveVariableDefinitionRefactoring guid: (GUID fromString: '{fe31ff59-c938-404b-92bb-579e93af7fe9}')!
+
 MoveVariableDefinitionRefactoring comment: ''!
+
 !MoveVariableDefinitionRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !MoveVariableDefinitionRefactoring methodsFor!
 
 checkNodes: sequenceNodes 
@@ -106,6 +110,7 @@ usesDirectly: aParseTree
 			do: [:aNode :answer | answer];
 		matches: name do: [:aNode :answer | true].
 	^searcher executeTree: aParseTree initialAnswer: false! !
+
 !MoveVariableDefinitionRefactoring categoriesForMethods!
 checkNodes:!public!transforming! !
 checkParseTree!public!transforming! !
@@ -132,6 +137,7 @@ model: aRBNamespace bindTight: anInterval in: aClass selector: aSelector
 			selector: aSelector
 			interval: anInterval;
 		yourself! !
+
 !MoveVariableDefinitionRefactoring class categoriesForMethods!
 bindTight:in:selector:!instance creation!public! !
 model:bindTight:in:selector:!instance creation!public! !

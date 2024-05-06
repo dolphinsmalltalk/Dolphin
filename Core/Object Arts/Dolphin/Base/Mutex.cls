@@ -5,7 +5,9 @@ Object subclass: #Mutex
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 Mutex guid: (GUID fromString: '{87b4c4a4-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Mutex comment: 'Mutex is the class of process synchronisation objects which provide mutually exclusive access to critical sections, potentially permitting a single process to enter such critical sections multiple times recursively (in some other Smalltalk systems this class is in fact called, RecursionLock).
 
 If any process is in a Mutex, then no other process is permitted to enter that Mutex, but that process may re-enter.
@@ -18,7 +20,9 @@ Instance Variables:
 
 	owner		<Process> which currently owns the instance, or nil if no owner
 	semaphore	<Semaphore> used for mutual exclusion	'!
+
 !Mutex categoriesForClass!Kernel-Processes! !
+
 !Mutex methodsFor!
 
 critical: aNiladicBlock
@@ -120,6 +124,7 @@ signal
 
 	Processor activeProcess == owner ifTrue: [
 		owner := nil. semaphore signal]! !
+
 !Mutex categoriesForMethods!
 critical:!debugger-step over!process synchronisation!public! !
 critical:ifLocked:!process synchronisation!public! !
@@ -137,6 +142,7 @@ new
 	"Answer a new initialized instance of the receiver."
 
 	^super new initialize! !
+
 !Mutex class categoriesForMethods!
 new!instance creation!public! !
 !

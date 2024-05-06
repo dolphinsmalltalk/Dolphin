@@ -5,9 +5,13 @@ MethodRefactoring subclass: #PushDownMethodRefactoring
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PushDownMethodRefactoring guid: (GUID fromString: '{3a03ada6-57cd-40af-b730-0fca36de9319}')!
+
 PushDownMethodRefactoring comment: ''!
+
 !PushDownMethodRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !PushDownMethodRefactoring methodsFor!
 
 preconditions
@@ -64,6 +68,7 @@ storeOn: aStream
 transform
 	selectors do: [:each | self pushDown: each].
 	selectors do: [:each | class removeMethod: each]! !
+
 !PushDownMethodRefactoring categoriesForMethods!
 preconditions!preconditions!public! !
 pushDown:!public!transforming! !
@@ -82,6 +87,7 @@ model: aRBNamespace pushDown: selectorCollection from: aClass
 
 pushDown: selectorCollection from: aClass 
 	^self new pushDown: selectorCollection from: aClass! !
+
 !PushDownMethodRefactoring class categoriesForMethods!
 model:pushDown:from:!instance creation!public! !
 pushDown:from:!instance creation!public! !

@@ -5,7 +5,9 @@ AXMemberDesc subclass: #FUNCDESC
 	classVariableNames: '_OffsetOf_callconv _OffsetOf_cParams _OffsetOf_cParamsOpt _OffsetOf_cScodes _OffsetOf_elemdescFunc _OffsetOf_funckind _OffsetOf_invkind _OffsetOf_lprgelemdescParam _OffsetOf_lprgscode _OffsetOf_memid _OffsetOf_oVft _OffsetOf_wFuncFlags'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 FUNCDESC guid: (GUID fromString: '{c06f3b6e-0868-11d3-93af-00a024ca708a}')!
+
 FUNCDESC addClassConstant: '_OffsetOf_callconv' value: 16r14!
 FUNCDESC addClassConstant: '_OffsetOf_cParams' value: 16r18!
 FUNCDESC addClassConstant: '_OffsetOf_cParamsOpt' value: 16r1A!
@@ -18,6 +20,7 @@ FUNCDESC addClassConstant: '_OffsetOf_lprgscode' value: 16r4!
 FUNCDESC addClassConstant: '_OffsetOf_memid' value: 16r0!
 FUNCDESC addClassConstant: '_OffsetOf_oVft' value: 16r1C!
 FUNCDESC addClassConstant: '_OffsetOf_wFuncFlags' value: 16r30!
+
 FUNCDESC comment: 'FUNCDESC is an <ExternalStructure> class to represent the Active-X Automation FUNCDESC structure.
 
 A FUNCDESC describes various attributes of a function including, for example, the number of parameters, and their types.
@@ -36,7 +39,9 @@ Fields:
 	elemdescFunc	<ELEMDESC> describing the return type from the function
 	wFuncFlags	<WORD>. Various flags about the function.
 '!
+
 !FUNCDESC categoriesForClass!External-Data-Structured-COM! !
+
 !FUNCDESC methodsFor!
 
 argumentNameFor: paramName
@@ -372,6 +377,7 @@ wFuncFlags
 	"Answer the <Integer> value of the receiver's 'wFuncFlags' field."
 
 	^bytes wordAtOffset: _OffsetOf_wFuncFlags! !
+
 !FUNCDESC categoriesForMethods!
 argumentNameFor:!helpers!private! !
 argumentNames!accessing!public! !
@@ -478,6 +484,7 @@ stbConvertFrom: anSTBClassFormat
 
 stbVersion
 	^1! !
+
 !FUNCDESC class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

@@ -5,9 +5,13 @@ Error subclass: #CRTError
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 CRTError guid: (GUID fromString: '{259ae719-09c3-4401-a9be-6f089698b6f7}')!
+
 CRTError comment: 'Exception to represent C-runtime library errors.'!
+
 !CRTError categoriesForClass!System-Exception Handling! !
+
 !CRTError methodsFor!
 
 _descriptionArguments
@@ -49,6 +53,7 @@ strerror
 		errnum: self errno) == 0
 		ifTrue: [buf trimNulls]
 		ifFalse: [self errno printString]! !
+
 !CRTError categoriesForMethods!
 _descriptionArguments!displaying!public! !
 _descriptionFormat!displaying!public! !

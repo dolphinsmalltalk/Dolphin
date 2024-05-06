@@ -5,9 +5,13 @@ ListBoxTest subclass: #SingleSelectListBoxTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SingleSelectListBoxTest guid: (GUID fromString: '{8e5a59a5-f500-4d07-9ea2-b1019c9302b2}')!
+
 SingleSelectListBoxTest comment: ''!
+
 !SingleSelectListBoxTest categoriesForClass!Unclassified! !
+
 !SingleSelectListBoxTest methodsFor!
 
 testSelectionModeChange
@@ -46,6 +50,7 @@ testSelectionModeChange
 		against: presenter.
 	"#115: Changing list box selection mode fails if there are selections"
 	self assert: presenter view selectionsByIndex equals: #(2)! !
+
 !SingleSelectListBoxTest categoriesForMethods!
 testSelectionModeChange!public!unit tests! !
 !
@@ -54,6 +59,7 @@ testSelectionModeChange!public!unit tests! !
 
 classToTest
 	^ListPresenter! !
+
 !SingleSelectListBoxTest class categoriesForMethods!
 classToTest!helpers!private! !
 !

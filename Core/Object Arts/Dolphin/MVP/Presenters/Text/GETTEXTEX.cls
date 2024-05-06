@@ -5,14 +5,19 @@ Win32Structure subclass: #GETTEXTEX
 	classVariableNames: '_OffsetOf_cb _OffsetOf_codepage _OffsetOf_flags _OffsetOf_lpDefaultChar _OffsetOf_lpUsedDefChar'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GETTEXTEX guid: (GUID fromString: '{1ac7d35c-befe-4c13-b0b2-0c96f50feca0}')!
+
 GETTEXTEX addClassConstant: '_OffsetOf_cb' value: 16r0!
 GETTEXTEX addClassConstant: '_OffsetOf_codepage' value: 16r8!
 GETTEXTEX addClassConstant: '_OffsetOf_flags' value: 16r4!
 GETTEXTEX addClassConstant: '_OffsetOf_lpDefaultChar' value: 16rC!
 GETTEXTEX addClassConstant: '_OffsetOf_lpUsedDefChar' value: 16r10!
+
 GETTEXTEX comment: ''!
+
 !GETTEXTEX categoriesForClass!External-Data-Structured-Win32! !
+
 !GETTEXTEX methodsFor!
 
 cb
@@ -34,6 +39,7 @@ flags: anInteger
 	"Set the receiver's 'flags' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_flags put: anInteger! !
+
 !GETTEXTEX categoriesForMethods!
 cb!**compiled accessors**!public! !
 cb:!**compiled accessors**!public! !
@@ -57,6 +63,7 @@ defineFields
 
 getFieldNames
 	^#(#cb #flags #codepage)! !
+
 !GETTEXTEX class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

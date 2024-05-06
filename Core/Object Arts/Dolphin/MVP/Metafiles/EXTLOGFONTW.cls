@@ -5,7 +5,9 @@ ExternalStructure subclass: #EXTLOGFONTW
 	classVariableNames: '_OffsetOf_elfCulture _OffsetOf_elfFullName _OffsetOf_elfLogFont _OffsetOf_elfMatch _OffsetOf_elfPanose _OffsetOf_elfReserved _OffsetOf_elfStyle _OffsetOf_elfStyleSize _OffsetOf_elfVendorId _OffsetOf_elfVersion'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 EXTLOGFONTW guid: (GUID fromString: '{2cdcae37-591a-42a5-a44a-b92e4c362921}')!
+
 EXTLOGFONTW addClassConstant: '_OffsetOf_elfCulture' value: 16r130!
 EXTLOGFONTW addClassConstant: '_OffsetOf_elfFullName' value: 16r5C!
 EXTLOGFONTW addClassConstant: '_OffsetOf_elfLogFont' value: 16r0!
@@ -16,6 +18,7 @@ EXTLOGFONTW addClassConstant: '_OffsetOf_elfStyle' value: 16rDC!
 EXTLOGFONTW addClassConstant: '_OffsetOf_elfStyleSize' value: 16r120!
 EXTLOGFONTW addClassConstant: '_OffsetOf_elfVendorId' value: 16r12C!
 EXTLOGFONTW addClassConstant: '_OffsetOf_elfVersion' value: 16r11C!
+
 EXTLOGFONTW comment: '<EXTLOGFONT> is an <ExternalStructure> class to wrap the struct ''Win32.EXTLOGFONT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -38,7 +41,9 @@ struct tagEXTLOGFONT {
 	PANOSE elfPanose;
 } EXTLOGFONT;
 '!
+
 !EXTLOGFONTW categoriesForClass!Win32-Structs! !
+
 !EXTLOGFONTW methodsFor!
 
 elfFullName
@@ -138,6 +143,7 @@ elfVendorId: anExternalArray
 		from: ##(_OffsetOf_elfVendorId + 1)
 		to: _OffsetOf_elfVendorId + size
 		startingAt: 1! !
+
 !EXTLOGFONTW categoriesForMethods!
 elfFullName!**compiled accessors**!public! !
 elfFullName:!**compiled accessors**!public! !
@@ -192,6 +198,7 @@ defineFields
 
 getFieldNames
 	^#(#elfLogFont #elfFullName #elfStyle #elfStyleSize #elfMatch #elfVendorId #elfPanose)! !
+
 !EXTLOGFONTW class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

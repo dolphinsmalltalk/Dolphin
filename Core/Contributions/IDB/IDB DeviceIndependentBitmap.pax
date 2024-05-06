@@ -49,14 +49,12 @@ Win32Structure subclass: #BITMAPFILEHEADER
 	classVariableNames: '_OffsetOf_bfOffBits _OffsetOf_bfReserved1 _OffsetOf_bfReserved2 _OffsetOf_bfSize _OffsetOf_bfType'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Bitmap subclass: #DeviceIndependentBitmap
 	instanceVariableNames: 'depth bitmapStruct bitmapInfoStruct bitmapInfoHeaderStruct dibSectionStruct'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -155,6 +153,7 @@ setDeviceIndependentBitmap: aDeviceIndependentBitmap formatId: formatId
 		startingAt: 1.
 	KernelLibrary default globalUnlock: hMem.
 	self setData: hMem formatId: formatId! !
+
 !Clipboard categoriesForMethods!
 getDeviceIndependentBitmap!accessing!idb goodies!public! !
 getDeviceIndependentBitmapIfNone:!accessing!idb goodies!public! !

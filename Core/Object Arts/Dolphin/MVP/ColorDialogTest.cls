@@ -5,9 +5,13 @@ DolphinTest subclass: #ColorDialogTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ColorDialogTest guid: (GUID fromString: '{9f86c1ad-cb21-4061-be85-0cd9561cda37}')!
+
 ColorDialogTest comment: ''!
+
 !ColorDialogTest categoriesForClass!Unclassified! !
+
 !ColorDialogTest methodsFor!
 
 testColorDefault
@@ -22,6 +26,7 @@ testColorDefault
 	model value: Color black.
 	subject extractResult: true.
 	self assert: model value equals: Color default! !
+
 !ColorDialogTest categoriesForMethods!
 testColorDefault!public! !
 !

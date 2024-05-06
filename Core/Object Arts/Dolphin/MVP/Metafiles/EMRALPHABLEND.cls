@@ -5,7 +5,9 @@ ENHMETARECORD subclass: #EMRALPHABLEND
 	classVariableNames: '_OffsetOf_cbBitsSrc _OffsetOf_cbBmiSrc _OffsetOf_crBkColorSrc _OffsetOf_cxDest _OffsetOf_cxSrc _OffsetOf_cyDest _OffsetOf_cySrc _OffsetOf_dwRop _OffsetOf_iUsageSrc _OffsetOf_offBitsSrc _OffsetOf_offBmiSrc _OffsetOf_rclBounds _OffsetOf_xDest _OffsetOf_xformSrc _OffsetOf_xSrc _OffsetOf_yDest _OffsetOf_ySrc'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 EMRALPHABLEND guid: (GUID fromString: '{7ecd9c96-2cd7-4bbd-8fb5-91caa4c50908}')!
+
 EMRALPHABLEND addClassConstant: '_OffsetOf_cbBitsSrc' value: 16r60!
 EMRALPHABLEND addClassConstant: '_OffsetOf_cbBmiSrc' value: 16r58!
 EMRALPHABLEND addClassConstant: '_OffsetOf_crBkColorSrc' value: 16r4C!
@@ -23,6 +25,7 @@ EMRALPHABLEND addClassConstant: '_OffsetOf_xformSrc' value: 16r34!
 EMRALPHABLEND addClassConstant: '_OffsetOf_xSrc' value: 16r2C!
 EMRALPHABLEND addClassConstant: '_OffsetOf_yDest' value: 16r1C!
 EMRALPHABLEND addClassConstant: '_OffsetOf_ySrc' value: 16r30!
+
 EMRALPHABLEND comment: '<EMRALPHABLEND> is an <ExternalStructure> class to wrap the struct ''Win32.EMRALPHABLEND'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -53,7 +56,9 @@ struct tagEMRALPHABLEND {
 	long cySrc;
 } EMRALPHABLEND;
 '!
+
 !EMRALPHABLEND categoriesForClass!Win32-Structs! !
+
 !EMRALPHABLEND methodsFor!
 
 cbBitsSrc
@@ -233,6 +238,7 @@ ySrc: anInteger
 	"Set the receiver's 'ySrc' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_ySrc put: anInteger! !
+
 !EMRALPHABLEND categoriesForMethods!
 cbBitsSrc!**compiled accessors**!public! !
 cbBitsSrc:!**compiled accessors**!public! !
@@ -362,6 +368,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_ALPHABLEND! !
+
 !EMRALPHABLEND class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

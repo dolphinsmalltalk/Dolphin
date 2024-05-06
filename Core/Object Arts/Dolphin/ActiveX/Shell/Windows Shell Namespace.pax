@@ -11,7 +11,6 @@ For example:
 
 	BrowseFolderDialog showModal	"Ctrl+D"'.
 
-
 package classNames
 	add: #BrowseFolderDialog;
 	add: #BROWSEINFOW;
@@ -53,34 +52,36 @@ ExternalMemory variableByteSubclass: #WindowsShellMemory
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IUnknown subclass: #IShellFolder
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 OLEStructure subclass: #ITEMIDLIST
 	instanceVariableNames: 'back'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #SHITEMID
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_abID _OffsetOf_cb'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 CommonDialogStructure subclass: #BROWSEINFOW
 	instanceVariableNames: 'title displayName'
 	classVariableNames: '_OffsetOf_flags _OffsetOf_hwndOwner _OffsetOf_iImage _OffsetOf_lParam _OffsetOf_lpfnHook _OffsetOf_lpszTitle _OffsetOf_pidlRoot _OffsetOf_pszDisplayName'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 CommonDialog subclass: #BrowseFolderDialog
 	instanceVariableNames: 'style bfFlags'
 	classVariableNames: 'InitializedMask'
 	poolDictionaries: 'ShellConstants'
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -128,6 +129,7 @@ SHGetMalloc: ppMalloc
 SHGetPathFromIDList: pidl pszPath: pszPath
 	<stdcall: bool SHGetPathFromIDListW handle lpwstr>
 	^self invalidCall: _failureCode! !
+
 !ShellLibrary categoriesForMethods!
 allocator!accessing!public! !
 getDesktopFolder!accessing!public! !

@@ -12,7 +12,6 @@ For documentation evaluate:
 
 package basicPackageVersion: '6.0'.
 
-
 package classNames
 	add: #DolphinSureTrustWarning;
 	yourself.
@@ -50,9 +49,6 @@ Dialog subclass: #DolphinSureTrustWarning
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -114,6 +110,7 @@ show
 	"Shows the receiver as a splash screen"
 
 	(Splash bitmap: self image) show	! !
+
 !DolphinSureCertificate categoriesForMethods!
 image!drawing!public! !
 imagePrint:on:labelBox:textBox:!drawing!helpers!private! !

@@ -5,13 +5,17 @@ ChunkBrowserExpressionChunk subclass: #ChunkBrowserOtherChunk
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ChunkBrowserOtherChunk guid: (GUID fromString: '{593d449b-5b54-4990-9db8-1925ea103e40}')!
+
 ChunkBrowserOtherChunk comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2006 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
+
 !ChunkBrowserOtherChunk categoriesForClass!IDB Goodies! !
+
 !ChunkBrowserOtherChunk methodsFor!
 
 = aChunk
@@ -56,6 +60,7 @@ isMatch
 
 restore
 	^nil! !
+
 !ChunkBrowserOtherChunk categoriesForMethods!
 =!comparing!public! !
 browseTarget!operations!public! !
@@ -74,6 +79,7 @@ restore!operations!public! !
 
 chunkType
 	^#Other! !
+
 !ChunkBrowserOtherChunk class categoriesForMethods!
 chunkType!constants!public! !
 !

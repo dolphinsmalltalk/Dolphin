@@ -5,7 +5,9 @@ ICoreWebView2EventHandler subclass: #ICoreWebView2ProcessInfosChangedEventHandle
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2ProcessInfosChangedEventHandler guid: (IID fromString: '{f4af0c39-44b9-40e9-8b11-0484cfb9e0a1}')!
+
 ICoreWebView2ProcessInfosChangedEventHandler comment: '`ICoreWebView2ProcessInfosChangedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ProcessInfosChangedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -27,7 +29,9 @@ interface ICoreWebView2ProcessInfosChangedEventHandler : IUnknown
 };
 ```
 '!
+
 !ICoreWebView2ProcessInfosChangedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2ProcessInfosChangedEventHandler methodsFor!
 
 basicRegister: tokenBuffer
@@ -35,6 +39,7 @@ basicRegister: tokenBuffer
 
 basicUnregister
 	source Remove_ProcessInfosChanged: token! !
+
 !ICoreWebView2ProcessInfosChangedEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
@@ -55,6 +60,7 @@ eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
 	^#processInfosChanged! !
+
 !ICoreWebView2ProcessInfosChangedEventHandler class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 eventName!constants!public! !

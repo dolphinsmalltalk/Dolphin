@@ -5,13 +5,17 @@ ChunkBrowserSeriesChunk subclass: #ChunkBrowserMethodDefineChunk
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ChunkBrowserMethodDefineChunk guid: (GUID fromString: '{1f404fda-a397-4d69-b6af-f3bc30e06df4}')!
+
 ChunkBrowserMethodDefineChunk comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2006 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
+
 !ChunkBrowserMethodDefineChunk categoriesForClass!IDB Goodies! !
+
 !ChunkBrowserMethodDefineChunk methodsFor!
 
 browseTarget
@@ -71,6 +75,7 @@ restore
 
 sourceFromImage
 	^self identity1AndIdentity2AsCompiledMethod getSource! !
+
 !ChunkBrowserMethodDefineChunk categoriesForMethods!
 browseTarget!operations!public! !
 canShowDifferences!public!testing! !
@@ -84,6 +89,7 @@ sourceFromImage!accessing!public! !
 
 chunkType
 	^#'Method Define'! !
+
 !ChunkBrowserMethodDefineChunk class categoriesForMethods!
 chunkType!constants!public! !
 !

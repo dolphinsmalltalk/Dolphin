@@ -5,7 +5,9 @@ TreeModelAbstract subclass: #TreeModel
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TreeModel guid: (GUID fromString: '{87b4c66f-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 TreeModel comment: 'TreeModel implements the <treeModel> protocol and organises a collection of objects into a tree like data structure. The tree is built of a hierarchy of <TreeNodes>. Objects can be added to the tree using #add:asChildOf: and they can be removed using #remove:. An object already in the tree can be moved from one location in the hierarchy to another by using the #move:asChildOf: message. Root nodes in the tree can be considered as having a parent of nil. 
 
 Instance Variables:
@@ -13,7 +15,9 @@ Instance Variables:
 	objectNodeMap	<IdentityDictionary> mapping tree objects to <TreeNodes>
 
 '!
+
 !TreeModel categoriesForClass!MVP-Models! !
+
 !TreeModel methodsFor!
 
 add: leafObject asChildOf: parentObject
@@ -243,6 +247,7 @@ size
 	"Answer the number of elements in the receiver"
 
 	^objectNodeMap size! !
+
 !TreeModel categoriesForMethods!
 add:asChildOf:!adding!public! !
 add:asChildOfNode:!adding!private! !
@@ -307,6 +312,7 @@ stbConvertFromVersion2: anArray
 	^answer
 
 ! !
+
 !TreeModel class categoriesForMethods!
 new!instance creation!public! !
 stbConvertFromVersion1:!binary filing!private! !

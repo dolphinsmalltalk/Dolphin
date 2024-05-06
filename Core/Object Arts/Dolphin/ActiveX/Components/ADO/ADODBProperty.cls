@@ -5,7 +5,9 @@ IDispatch subclass: #ADODBProperty
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
+
 ADODBProperty guid: (IID fromString: '{00000503-0000-0010-8000-00aa006d2ea4}')!
+
 ADODBProperty comment: '`ADODBProperty` is a wrapper class for the COM interface ''ADODB.Property'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -44,7 +46,9 @@ interface Property : IDispatch
 };
 ```
 '!
+
 !ADODBProperty categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
+
 !ADODBProperty methodsFor!
 
 attributes
@@ -160,6 +164,7 @@ value: pval
 	"Set the 'Value' property of the receiver to the <variant> value of the argument."
 
 	self put_Value: pval asVariant! !
+
 !ADODBProperty categoriesForMethods!
 attributes!**auto generated**!properties!public! !
 attributes:!**auto generated**!properties!public! !
@@ -198,6 +203,7 @@ defineFunctions
 		defineFunction: #put_Attributes:
 			argumentTypes: 'sdword'
 ! !
+
 !ADODBProperty class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

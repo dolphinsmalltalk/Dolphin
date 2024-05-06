@@ -15,7 +15,6 @@ Please Note: The underlying SysLink control which this package relies on is not 
 
 package basicPackageVersion: '6.1'.
 
-
 package classNames
 	add: #LHITTESTINFO;
 	add: #LinkButton;
@@ -55,29 +54,30 @@ Win32Structure subclass: #LHITTESTINFO
 	classVariableNames: '_OffsetOf_item _OffsetOf_pt'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Win32Structure subclass: #LITEM
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_iLink _OffsetOf_mask _OffsetOf_state _OffsetOf_stateMask _OffsetOf_szID _OffsetOf_szURL'
 	poolDictionaries: 'SysLinkConstants'
 	classInstanceVariableNames: ''!
+
 NMHDR subclass: #NMLINK
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_item'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 CommandButton subclass: #LinkButton
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'SysLinkConstants'
 	classInstanceVariableNames: ''!
+
 StaticView subclass: #SysLinkView
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'SysLinkConstants'
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -92,6 +92,7 @@ resource_Link_text
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.SysLinkView) 34 16 nil nil 34 2 8 1409286400 1 416 721990 2 ##(Smalltalk.ValueHolder) nil false 1310726 ##(Smalltalk.EqualitySearchPolicy) nil nil nil 5 nil nil nil 416 nil 8 1841618176 852486 ##(Smalltalk.NullConverter) nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 6143 21 706 221 31 416 658 #text: 34 1 8 '<A HREF="https://github.com/dolphinsmalltalk">Dolphin Smalltalk Home</A>' 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 109 12 0 0 25 0 0 0] 8 #() 706 193 193 nil 27 )! !
+
 !TextPresenter class categoriesForMethods!
 resource_Link_text!public!resources-views! !
 !

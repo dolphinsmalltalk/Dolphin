@@ -5,7 +5,9 @@ SequenceableCollection subclass: #DBResultSet
 	classVariableNames: ''
 	poolDictionaries: 'ODBCConstants ODBCRetCodes'
 	classInstanceVariableNames: ''!
+
 DBResultSet guid: (GUID fromString: '{87b4c512-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 DBResultSet comment: 'A DBResultSet represents the results of a <DBStatement>. This provides access to a number of rows which are instances of <DBRow> or one of its subclasses. You can navigate around the rows using #first, #next, #last and #prev. You can also access rows by their integer index in the set using #at:.
 
 Instance Variables:
@@ -14,7 +16,9 @@ Instance Variables:
 	cols		<Array> of <DBColAttr>. Metadata for each column.
 
 '!
+
 !DBResultSet categoriesForClass!ODBC Interface! !
+
 !DBResultSet methodsFor!
 
 , operand
@@ -539,6 +543,7 @@ with: otherCollection do: operation
 			[operation value: buffer asObject value: (otherCollection at: i).
 			i := i + 1].
 	i > otherCollection size ifFalse: [^self error: 'collections are of different sizes']! !
+
 !DBResultSet categoriesForMethods!
 ,!copying!public! !
 add:!adding!public! !
@@ -625,6 +630,7 @@ statement: aDBStatement
 	^self new
 		statement: aDBStatement;
 		yourself! !
+
 !DBResultSet class categoriesForMethods!
 new!instance creation!public! !
 onStartup!event handling!public! !

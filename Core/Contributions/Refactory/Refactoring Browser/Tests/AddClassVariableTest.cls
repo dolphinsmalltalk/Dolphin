@@ -5,9 +5,13 @@ RefactoringTest subclass: #AddClassVariableTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AddClassVariableTest guid: (GUID fromString: '{f9de1392-b16f-4543-891c-a1831dca7b74}')!
+
 AddClassVariableTest comment: ''!
+
 !AddClassVariableTest categoriesForClass!Refactory-Testing! !
+
 !AddClassVariableTest methodsFor!
 
 setUp
@@ -65,6 +69,7 @@ testModelMetaclass
 				variable: #ClassVarName3
 				class: (model classNamed: #Bar) metaclass.
 	self shouldFail: refactoring! !
+
 !AddClassVariableTest categoriesForMethods!
 setUp!public!set up! !
 testAddClassVariable!public!tests! !

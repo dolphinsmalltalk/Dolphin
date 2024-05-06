@@ -5,7 +5,9 @@ StValueNode subclass: #StOptimizedNode
 	classVariableNames: 'UnevaluatedCookie'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StOptimizedNode guid: (GUID fromString: '{d6ca95fa-6dec-4ced-8780-c36c6450314f}')!
+
 StOptimizedNode comment: 'StOptimizedNode is an parse tree node that represents ##(...) expressions. These expressions are evaluated at compile time and directly inserted into the method.
 
 Instance Variables:
@@ -14,7 +16,9 @@ Instance Variables:
 	right	<Integer>	position of )
 
 '!
+
 !StOptimizedNode categoriesForClass!System-Compiler! !
+
 !StOptimizedNode methodsFor!
 
 = anObject 
@@ -101,6 +105,7 @@ value
 
 value: anObject
 	value := anObject! !
+
 !StOptimizedNode categoriesForMethods!
 =!comparing!public! !
 acceptVisitor:!public!visitor! !
@@ -145,6 +150,7 @@ left: leftInteger body: aSequenceNode right: rightInteger
 
 new
 	^super new initialize! !
+
 !StOptimizedNode class categoriesForMethods!
 body:!instance creation!public! !
 initialize!public! !

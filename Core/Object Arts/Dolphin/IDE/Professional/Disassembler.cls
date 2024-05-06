@@ -5,14 +5,18 @@ InstructionInterpreter subclass: #Disassembler
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Disassembler guid: (GUID fromString: '{87b4c47e-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Disassembler comment: 'Disassembler is an <InstructionInterpreter> for disassembling Dolphin <CompiledMethod>s.
 
 Instance Variables:
 	stream		<puttableStream>. The stream to which disassembled instructions are written.
 
 '!
+
 !Disassembler categoriesForClass!System-Support! !
+
 !Disassembler methodsFor!
 
 blockCopy: argc stack: stack env: env copy: copy offset1: offset1 offset2: offset2 
@@ -555,6 +559,7 @@ unused: extensionByte1 with: extensionByte2 with: extensionByte3
 		nextPutAll: ' and ';
 		print: extensionByte3;
 		cr! !
+
 !Disassembler categoriesForMethods!
 blockCopy:stack:env:copy:offset1:offset2:!instructions-miscellaneous!private! !
 break!instructions-miscellaneous!private! !
@@ -649,6 +654,7 @@ disassemble: aSymbol in: aClass
 	"Answer a String containing a disassembly of aClass' method with selector, aSymbol."
 
 	^self disassemble: (aClass compiledMethodAt: aSymbol)! !
+
 !Disassembler class categoriesForMethods!
 disassemble:!instance creation!public! !
 disassemble:in:!instance creation!public! !

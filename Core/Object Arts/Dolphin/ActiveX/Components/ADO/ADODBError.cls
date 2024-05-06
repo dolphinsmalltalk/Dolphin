@@ -5,7 +5,9 @@ IDispatch subclass: #ADODBError
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
+
 ADODBError guid: (IID fromString: '{00000500-0000-0010-8000-00aa006d2ea4}')!
+
 ADODBError comment: '`ADODBError` is a wrapper class for the COM interface ''ADODB.Error'' generated from type information in the ''Microsoft ActiveX Data Objects 6.1 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -47,7 +49,9 @@ interface Error : IDispatch
 };
 ```
 '!
+
 !ADODBError categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
+
 !ADODBError methodsFor!
 
 description
@@ -187,6 +191,7 @@ value
 	This is the default value (DISPID_VALUE) property of the receiver."
 
 	^self description! !
+
 !ADODBError categoriesForMethods!
 description!**auto generated**!properties!public! !
 get_Description:!**auto generated**!COM Interfaces-Error!private! !
@@ -230,6 +235,7 @@ defineFunctions
 		defineFunction: #get_NativeError:
 			argumentTypes: 'sdword*'
 ! !
+
 !ADODBError class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

@@ -5,10 +5,15 @@ Object subclass: #GdiplusInitializer
 	classVariableNames: ''
 	poolDictionaries: 'GdiplusConstants'
 	classInstanceVariableNames: ''!
+
 GdiplusInitializer guid: (GUID fromString: '{4687fd64-6607-4be7-b45b-f533ef511bc5}')!
+
 GdiplusInitializer isAbstract: true!
+
 GdiplusInitializer comment: 'An instance of GdiplusInitializer serves as a proxy for a GdiplusBase factory.  Instances of subclasses contain enough information to create and recreate a corresponding GdiplusBase subclass instance. '!
+
 !GdiplusInitializer categoriesForClass!Unclassified! !
+
 !GdiplusInitializer methodsFor!
 
 createHandle
@@ -38,6 +43,7 @@ library
 
 library: anObject
 	library := anObject! !
+
 !GdiplusInitializer categoriesForMethods!
 createHandle!private!realizing/unrealizing! !
 gdiplusConstructorErrorDescription!constants!private! !

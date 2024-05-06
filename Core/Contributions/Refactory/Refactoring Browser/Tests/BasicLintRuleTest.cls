@@ -5,9 +5,13 @@ LintRuleTest subclass: #BasicLintRuleTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 BasicLintRuleTest guid: (GUID fromString: '{0c2676b4-1e69-400c-8d24-80f8510c0996}')!
+
 BasicLintRuleTest comment: ''!
+
 !BasicLintRuleTest categoriesForClass!Refactory-Test data! !
+
 !BasicLintRuleTest methodsFor!
 
 checkClass: aSmalllintContext 
@@ -49,6 +53,7 @@ resultClass: aClass
 
 viewResults
 	result openEditor! !
+
 !BasicLintRuleTest categoriesForMethods!
 checkClass:!accessing!public! !
 checkMethod:!accessing!public! !
@@ -1150,6 +1155,7 @@ yourselfNotUsed
 			(addSearcher executeTree: context parseTree initialAnswer: false)
 				ifTrue: [result addClass: context selectedClass selector: context selector]].
 	^detector! !
+
 !BasicLintRuleTest class categoriesForMethods!
 abstractClass!possible bugs!public! !
 addRemoveDependents!possible bugs!public! !

@@ -5,9 +5,13 @@ WindowsEvent subclass: #PositionEvent
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 PositionEvent guid: (GUID fromString: '{cd69a072-3606-11d3-93bd-00a024ca708a}')!
+
 PositionEvent comment: 'PositionEvent is the class of <Event> associated with a window reposition event originating from a WM_WINDOWPOSCHANGING or WM_WINDOWPOSCHANGED message.'!
+
 !PositionEvent categoriesForClass!MVP-Views-Events! !
+
 !PositionEvent methodsFor!
 
 extent
@@ -127,6 +131,7 @@ y
 	"Answer the y-position of the window origin."
 
 	^self lpwp y! !
+
 !PositionEvent categoriesForMethods!
 extent!accessing!public! !
 extent:!accessing!public! !
@@ -161,6 +166,7 @@ window: aView message: msgInteger wParam: wInteger lParam: lInteger
 		message: msgInteger
 		wParam: wInteger
 		lParam: lInteger asExternalAddress! !
+
 !PositionEvent class categoriesForMethods!
 window:message:wParam:lParam:!instance creation!public! !
 !

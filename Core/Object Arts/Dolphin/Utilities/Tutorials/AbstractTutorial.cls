@@ -5,14 +5,18 @@ Object subclass: #AbstractTutorial
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AbstractTutorial guid: (GUID fromString: '{8351f1af-403d-4300-b06d-942ca7abe1db}')!
+
 AbstractTutorial comment: 'Parent class of all ProfStef tutorials.
 
 To create your own tutorial:
 - subclass AbstractTutorial
 - implement a few methods which returns a Lesson instance
 - implement tutorial which returns a Collection of selectors to the methods you''ve created.'!
+
 !AbstractTutorial categoriesForClass!Kernel-Objects! !
+
 !AbstractTutorial methodsFor!
 
 indexOfLesson: aSelector
@@ -58,6 +62,7 @@ welcome
 		title: 'Welcome' 
 		contents: '"Hi, this is a test tutorial."'
 ! !
+
 !AbstractTutorial categoriesForMethods!
 indexOfLesson:!accessing!public! !
 lessonAt:!accessing!public! !
@@ -78,6 +83,7 @@ icon
 		color: Color orchid)
 		textcolor: Color white;
 		yourself)! !
+
 !AbstractTutorial class categoriesForMethods!
 icon!constants!public! !
 !

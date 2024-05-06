@@ -5,11 +5,15 @@ IXMLDOMNode subclass: #IXMLDOMElement
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
 	classInstanceVariableNames: ''!
+
 IXMLDOMElement guid: (IID fromString: '{2933bf86-7b36-11d2-b20e-00c04f983e60}')!
+
 IXMLDOMElement comment: '<IXMLDOMElement> is a wrapper class for the COM interface ''MSXML.IXMLDOMElement'' generated from type information in the ''Microsoft XML, version 2.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 This is a specialized DOM node to represent elements (i.e. structures).'!
+
 !IXMLDOMElement categoriesForClass!COM-Interfaces!MSXML-Interfaces! !
+
 !IXMLDOMElement methodsFor!
 
 = anObject 
@@ -199,6 +203,7 @@ tagName
 	self get_tagName: answer.
 	^answer asObject
 ! !
+
 !IXMLDOMElement categoriesForMethods!
 =!comparing!public! !
 get_tagName:!**auto generated**!COM Interfaces-IXMLDOMElement!private! !
@@ -245,6 +250,7 @@ defineFunctions
 			argumentTypes: 'bstr IXMLDOMNodeList**';
 		defineFunction: #Normalize
 ! !
+
 !IXMLDOMElement class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

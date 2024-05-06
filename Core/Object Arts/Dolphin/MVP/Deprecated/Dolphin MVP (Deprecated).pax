@@ -9,7 +9,6 @@ This package includes legacy classes and methods from Dolphin''s base package th
 
 package basicPackageVersion: '6.2'.
 
-
 package classNames
 	add: #ComparisonPolicy;
 	add: #Msimg32Library;
@@ -169,16 +168,19 @@ Object subclass: #ComparisonPolicy
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalLibrary subclass: #Msimg32Library
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ListBox subclass: #MultipleSelectionListBox
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ListView subclass: #MultipleSelectionListView
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -208,6 +210,7 @@ addKey: vKeyCode commandDescription: aCommandDescription
 	#deprecated.
 	aCommandDescription acceleratorKey: vKeyCode.
 	self addCommand: aCommandDescription! !
+
 !AcceleratorTable categoriesForMethods!
 accelerators!accessing!public! !
 addKey:commandDescription:!adding!public! !
@@ -225,6 +228,7 @@ keyModifierNames: anInteger do: aMonadicValuable
 		keyModifierNames: anInteger
 		keyboard: Keyboard default
 		do: aMonadicValuable! !
+
 !AcceleratorTable class categoriesForMethods!
 keyModifierNames:!enquiries!public! !
 keyModifierNames:do:!enquiries!public! !
@@ -235,6 +239,7 @@ keyModifierNames:do:!enquiries!public! !
 asARGB
 	Notification deprecated.	"Generally speaking it should not be necessary to convert colours explicitly to ARGB representation, rather any Color should be accepted and converted at the point of passing to an external API if needed."
 	^self! !
+
 !ARGB categoriesForMethods!
 asARGB!converting!public! !
 !
@@ -244,6 +249,7 @@ asARGB!converting!public! !
 basicSelectionByIndex: anInteger 
 	#deprecated.	"Present for loading of old view resources"
 	self setSingleSelection: anInteger! !
+
 !BasicListAbstract categoriesForMethods!
 basicSelectionByIndex:!private!selection! !
 !
@@ -257,6 +263,7 @@ beAlpha
 beNotAlpha
 	#deprecated.
 	self usePerPixelAlpha: false! !
+
 !BLENDFUNCTION categoriesForMethods!
 beAlpha!accessing!public! !
 beNotAlpha!accessing!public! !
@@ -288,6 +295,7 @@ hasWest
 	"Answer whether a view has been arranged to the right edge."
 
 	^self west notNil! !
+
 !BorderLayout categoriesForMethods!
 hasCenter!accessing!public! !
 hasEast!accessing!public! !
@@ -316,6 +324,7 @@ ltGray
 	"Answer the stock light grey brush."
 	Notification deprecated.
 	^self silver! !
+
 !Brush class categoriesForMethods!
 dkGray!instance creation!public! !
 hatchedDiagonal!instance creation!public! !
@@ -336,6 +345,7 @@ setBkMode: mode
 setTextColor: colour
 	Notification deprecated.	"6.0 (reprise)"
 	^self forecolor: colour! !
+
 !Canvas categoriesForMethods!
 origin:!operations!public! !
 setBkMode:!modes!public! !
@@ -353,6 +363,7 @@ resource_Multiselection_list_box
 	"
 
 	^#(#'!!STL' 3 788558 10 ##(Smalltalk.STBViewProxy)  8 ##(Smalltalk.MultipleSelectionListBox)  98 17 0 0 98 2 8 1412499713 1025 416 590662 2 ##(Smalltalk.ListModel)  202 208 98 0 0 1114638 ##(Smalltalk.STBSingletonProxy)  8 ##(Smalltalk.SearchPolicy)  8 #identity 524550 ##(Smalltalk.ColorRef)  8 4278190080 0 5 0 0 0 416 0 8 4294906339 459270 ##(Smalltalk.Message)  8 #displayString 98 0 544 32 983302 ##(Smalltalk.MessageSequence)  202 208 98 2 721670 ##(Smalltalk.MessageSend)  8 #createAt:extent: 98 2 328198 ##(Smalltalk.Point)  2799 21 882 251 351 416 818 8 #horizontalExtent: 98 1 1 416 983302 ##(Smalltalk.WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 119 5 0 0 10 0 0 0 244 5 0 0 185 0 0 0] 98 0 882 193 193 0 27 )! !
+
 !ChoicePresenter class categoriesForMethods!
 resource_Multiselection_list_box!public!resources-views! !
 !
@@ -377,6 +388,7 @@ getObjectBinaryStoreBytesIfNone: exceptionHandler
 setText: text format: formatName
 	Notification deprecated.	"Just use setData:format:"
 	self setRegisteredFormat: formatName data: text! !
+
 !Clipboard categoriesForMethods!
 getObjectBinaryStoreBytes!accessing!public! !
 getObjectBinaryStoreBytesIfNone:!accessing!public! !
@@ -402,6 +414,7 @@ saturation
 
 	Notification deprecated.
 	^self asRGB hls at: 3! !
+
 !Color categoriesForMethods!
 asARGB!converting!public! !
 asIndexedColor!converting!public! !
@@ -413,6 +426,7 @@ saturation!accessing!public! !
 buttonFace
 	Notification deprecated.
 	^Color face3d! !
+
 !Color class categoriesForMethods!
 buttonFace!instance creation!public! !
 !
@@ -422,6 +436,7 @@ buttonFace!instance creation!public! !
 saturation
 	Notification deprecated.
 	^0! !
+
 !ColorNone categoriesForMethods!
 saturation!public! !
 !
@@ -440,6 +455,7 @@ asIndexedColorUsingPalette: hPalette
 	"Answer the receiver as the nearest <IndexedColour> using hPalette"
 
 	^self asRGB asIndexedColorUsingPalette: hPalette! !
+
 !ColorRef categoriesForMethods!
 asIndexedColor!converting!public! !
 asIndexedColorUsingPalette:!converting!public! !
@@ -452,6 +468,7 @@ whatsThis: object
 	#deprecated. "The Windows Help program is no longer supported on Windows 10 and later."
 	helpId := object helpId.
 	View active winHelpPopup: self popupHelpFile topic: helpId! !
+
 !GUISessionManager categoriesForMethods!
 whatsThis:!commands!public! !
 !
@@ -465,6 +482,7 @@ asIndexedColor
 
 	Notification deprecated.
 	^self! !
+
 !IndexedColor categoriesForMethods!
 asIndexedColor!converting!public! !
 !
@@ -474,6 +492,7 @@ asIndexedColor!converting!public! !
 basicSelectionByIndex: sel
 	#deprecated.	"Presenter for old view resources"
 	self basicSelectionsByIndex: sel! !
+
 !ListBox categoriesForMethods!
 basicSelectionByIndex:!private!selection! !
 !
@@ -498,6 +517,7 @@ updateItem: anObject
 updateItem: anObject ifAbsent: exceptionHandler
 	#deprecated.	"Use #refresh:ifAbsent:"
 	^self refresh: anObject ifAbsent: exceptionHandler! !
+
 !ListModel categoriesForMethods!
 updateAtIndex:!public!updating! !
 updateItem:!private!updating! !
@@ -525,6 +545,7 @@ resource_Multiselection_list_box
 	"
 
 	^#(#'!!STL' 3 788558 10 ##(STBViewProxy)  8 ##(MultipleSelectionListBox)  98 17 0 0 98 2 8 1144064257 1025 416 590662 2 ##(ListModel)  202 208 98 0 0 1114638 ##(STBSingletonProxy)  8 ##(SearchPolicy)  8 #identity 524550 ##(ColorRef)  8 4278190080 0 7 0 0 0 416 0 8 4294903705 459270 ##(Message)  8 #displayString 98 0 544 32 983302 ##(MessageSequence)  202 208 98 2 721670 ##(MessageSend)  8 #createAt:extent: 98 2 328198 ##(Point)  11 11 882 251 351 416 818 8 #horizontalExtent: 98 1 1 416 983302 ##(WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 130 0 0 0 180 0 0 0] 98 0 882 193 193 0 27 )! !
+
 !ListPresenter class categoriesForMethods!
 resource_Multiselection_enhanced_list_view!public!resources-views! !
 resource_Multiselection_list_box!public!resources-views! !
@@ -551,6 +572,7 @@ hasTrackSelect
 hasTrackSelect: aBoolean 
 	#deprecated. "6.0"
 	self hasHotTracking: aBoolean! !
+
 !ListView categoriesForMethods!
 autoArrange!arranging!public! !
 autoArrange:!accessing-styles!public! !
@@ -566,6 +588,7 @@ offset: aPoint
 	self
 		xOffsetPercent: aPoint x;
 		yOffsetPercent: aPoint y! !
+
 !LVBKIMAGEW categoriesForMethods!
 offset:!public! !
 !
@@ -608,6 +631,7 @@ replace: aString with: aMenu
 	Notification deprecated.	"Searching a menu by display string is a poor practice."
 	index := items indexOf: (self find: aString).
 	self itemAt: index put: aMenu! !
+
 !Menu categoriesForMethods!
 find:!public!searching! !
 find:ifAbsent:!public!searching! !
@@ -624,6 +648,7 @@ updateItem: element andChildren: andChildren imagesOnly: aBoolean
 		invalidateItem: element
 		andChildren: andChildren
 		imagesOnly: aBoolean! !
+
 !MoenTreeView categoriesForMethods!
 updateItem:andChildren:imagesOnly:!painting!public! !
 !
@@ -637,6 +662,7 @@ handle: hWnd wParam: wParam hdc: hdc paintStruct: ps
 		wParam: wParam
 		hdc: hdc
 		paintStruct: ps! !
+
 !PaintEvent class categoriesForMethods!
 handle:wParam:hdc:paintStruct:!instance creation!public! !
 !
@@ -652,6 +678,7 @@ asIndexedColorUsingPalette: hPalette
 	^index < 0 
 		ifTrue: [GDILibrary default systemError]
 		ifFalse: [IndexedColor withIndex: (index bitOr: 16r1000000)]! !
+
 !RGB categoriesForMethods!
 asIndexedColorUsingPalette:!converting!public! !
 !
@@ -661,6 +688,7 @@ asIndexedColorUsingPalette:!converting!public! !
 stdColor: aSymbol
 	Notification deprecated.
 	^self named: aSymbol! !
+
 !RGB class categoriesForMethods!
 stdColor:!instance creation!public! !
 !
@@ -670,6 +698,7 @@ stdColor:!instance creation!public! !
 type
 	Notification deprecated.
 	^self styleName! !
+
 !ScintillaIndicator categoriesForMethods!
 type!accessing!public! !
 !
@@ -710,6 +739,7 @@ styleName: aSymbol
 	Notification deprecated.
 	self style: aSymbol
 ! !
+
 !ScintillaIndicatorStyle categoriesForMethods!
 alphaPercent!accessing!public! !
 alphaPercent:!accessing!public! !
@@ -724,6 +754,7 @@ styleName:!accessing!public! !
 styleNames
 	Notification deprecated.
 	^IndicatorStyles! !
+
 !ScintillaIndicatorStyle class categoriesForMethods!
 styleNames!initializing!public! !
 !
@@ -765,6 +796,7 @@ isKeyboardInputUnicode: keysUnicodeBoolean
 				msg: SCI_SETKEYSUNICODE
 				wParam: keysUnicodeBoolean asParameter
 				lParam: 0]! !
+
 !ScintillaView categoriesForMethods!
 highlightRange:withIndicator:!indicators!public! !
 indicatorDefinitions:!indicators!public! !
@@ -781,6 +813,7 @@ continuousTracking
 continuousTracking: aBoolean 
 	#deprecated.
 	self isTrackingContinuous: aBoolean! !
+
 !ScrollingDecorator categoriesForMethods!
 continuousTracking!modes!public! !
 continuousTracking:!modes!public! !
@@ -795,6 +828,7 @@ hasThickFrame
 hasThickFrame: aBoolean 
 	#deprecated. "6.0: #1375"
 	self isResizable: aBoolean! !
+
 !ShellView categoriesForMethods!
 hasThickFrame!accessing-styles!public! !
 hasThickFrame:!accessing-styles!public! !
@@ -825,6 +859,7 @@ selection
 selection: anIntervalOrNil 
 	Notification deprecated.
 	self selectionRange: anIntervalOrNil! !
+
 !Slider categoriesForMethods!
 hasTicksBoth!accessing-styles!public!updating! !
 hasTicksBoth:!accessing-styles!public!updating! !
@@ -839,6 +874,7 @@ selection:!accessing!public! !
 for: aView 
 	#deprecated.
 	self setView: aView! !
+
 !STBViewProxy categoriesForMethods!
 for:!accessing!public! !
 !
@@ -848,6 +884,7 @@ for:!accessing!public! !
 for: aView 
 	#deprecated.
 	^self forView: aView! !
+
 !STBViewProxy class categoriesForMethods!
 for:!instance creation!public! !
 !
@@ -861,6 +898,7 @@ asIndexedColor
 
 	Notification deprecated.
 	^(Color fromRgbCode: self rgbCode) asIndexedColor! !
+
 !SystemColor categoriesForMethods!
 asIndexedColor!converting!public! !
 !
@@ -870,6 +908,7 @@ asIndexedColor!converting!public! !
 fromId: anInteger
 	Notification deprecated.
 	^self withIndex: anInteger! !
+
 !SystemColor class categoriesForMethods!
 fromId:!instance creation!public! !
 !
@@ -887,6 +926,7 @@ hasMenuImages
 
 	#deprecated. "We no longer support OSs earlier than Vista, let alone XP."
 	^true! !
+
 !SystemMetrics categoriesForMethods!
 hasFlashWindow!capability enquiries!public! !
 hasMenuImages!capability enquiries!public! !
@@ -943,6 +983,7 @@ isUppercase: aBoolean
 lines
 	#deprecated. "5.0"
 	^self lineCount! !
+
 !TextEdit categoriesForMethods!
 find:range:down:wholeWord:matchCase:!private!searching & replacing! !
 findNextWrapped:down:wholeWord:matchCase:!public!searching & replacing! !
@@ -963,6 +1004,7 @@ text: labelString font: fontString color: aColor
 		text: labelString
 		fontName: fontString
 		color: aColor! !
+
 !TextTileIcon class categoriesForMethods!
 text:font:color:!instance creation!public! !
 !
@@ -976,6 +1018,7 @@ disableExpandAll
 disableExpandAll: aBoolean 
 	#deprecated.
 	self isExpandAllEnabled: aBoolean not! !
+
 !TreeView categoriesForMethods!
 disableExpandAll!accessing!public! !
 disableExpandAll:!accessing!public! !
@@ -998,6 +1041,7 @@ rightExceptionalValue
 rightExceptionalValue: anObject
 	#deprecated.
 	^self rightNullValue: anObject! !
+
 !TypeConverter categoriesForMethods!
 leftExceptionalValue!accessing!public! !
 leftExceptionalValue:!accessing!public! !
@@ -1019,6 +1063,7 @@ winHelp: hwndMain lpszHelp: lpszHelp uCommand: uCommand dwData: dwData
 
 	<stdcall: bool WinHelpA handle lpstr dword uintptr>
 	^self invalidCall: _failureCode! !
+
 !UserLibrary categoriesForMethods!
 winHelp:lpszHelp:uCommand:dwData:!**auto generated**!public! !
 !
@@ -1060,6 +1105,7 @@ winHelpPopup: helpFileString topic: topicId at: aPointOrNil
 		lpszHelp: helpFileString
 		uCommand: HELP_CONTEXTPOPUP
 		dwData: topicId! !
+
 !View categoriesForMethods!
 defaultWindowProcessing:!dispatching!public! !
 hasWindowEdge!accessing-styles!public! !
@@ -1077,6 +1123,7 @@ asIndexedColor
 
 	Notification deprecated.
 	^self actualColor asIndexedColor! !
+
 !VirtualColor categoriesForMethods!
 asIndexedColor!converting!public! !
 !
@@ -1090,6 +1137,7 @@ message: msgInteger handle: wndHandle wParam: wInteger lParam: lInteger
 		message: msgInteger
 		wParam: wInteger
 		lParam: lInteger! !
+
 !WindowsEvent class categoriesForMethods!
 message:handle:wParam:lParam:!public! !
 !
@@ -1106,6 +1154,7 @@ width: cx height: cy flags: flags size: sizeInteger growthGranularity: growthInt
 		initialSize: sizeInteger
 		growBy: growthInteger
 		masked: false! !
+
 !WinImageList class categoriesForMethods!
 width:height:flags:size:growthGranularity:!instance creation!public! !
 !

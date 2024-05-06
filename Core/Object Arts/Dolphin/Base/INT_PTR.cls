@@ -5,9 +5,13 @@ UINT_PTR subclass: #INT_PTR
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 INT_PTR guid: (GUID fromString: '{7454f675-5169-482b-9a37-5fe37154d567}')!
+
 INT_PTR comment: ''!
+
 !INT_PTR categoriesForClass!External-Data-Structured! !
+
 !INT_PTR methodsFor!
 
 isSigned
@@ -30,6 +34,7 @@ value: anInteger
 	"Set the receiver's 'value' field to the value of the argument, anInteger"
 
 	bytes intPtrAtOffset: _OffsetOf_value put: anInteger! !
+
 !INT_PTR categoriesForMethods!
 isSigned!public!testing! !
 unsignedValue:!accessing!public! !
@@ -44,6 +49,7 @@ defineFields
 	have a single value."
 
 	self defineField: #value type: INT_PTRField new beOverride! !
+
 !INT_PTR class categoriesForMethods!
 defineFields!public!template definition! !
 !

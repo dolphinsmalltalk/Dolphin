@@ -5,10 +5,13 @@ OLEStructure subclass: #LICINFO
 	classVariableNames: '_OffsetOf_dwSize _OffsetOf_fLicVerified _OffsetOf_fRuntimeKeyAvail'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 LICINFO guid: (GUID fromString: '{87b4c5b8-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 LICINFO addClassConstant: '_OffsetOf_dwSize' value: 16r0!
 LICINFO addClassConstant: '_OffsetOf_fLicVerified' value: 16r8!
 LICINFO addClassConstant: '_OffsetOf_fRuntimeKeyAvail' value: 16r4!
+
 LICINFO comment: 'LICINFO is an ExternalStructure class to represent the COM structure of the same name. LICINFO is used for licensing purposes in conjunction with IClassFactory2. Please refer to COM reference materials for further information.
 
 Member variables:
@@ -17,7 +20,9 @@ Member variables:
 	fLicVerified		<Boolean>
 
 *Renamed dwSize for compatibility with standard initialization code.'!
+
 !LICINFO categoriesForClass!External-Data-Structured-COM! !
+
 !LICINFO methodsFor!
 
 dwSize: anInteger
@@ -34,6 +39,7 @@ fRuntimeKeyAvail
 	"Answer the <Boolean> value of the receiver's 'fRuntimeKeyAvail' field."
 
 	^(bytes dwordAtOffset: _OffsetOf_fRuntimeKeyAvail) asBoolean! !
+
 !LICINFO categoriesForMethods!
 dwSize:!**compiled accessors**!public! !
 fLicVerified!**compiled accessors**!public! !
@@ -61,6 +67,7 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #fRuntimeKeyAvail #fLicVerified)! !
+
 !LICINFO class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

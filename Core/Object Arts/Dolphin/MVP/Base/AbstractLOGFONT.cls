@@ -5,8 +5,11 @@ Win32Structure subclass: #AbstractLOGFONT
 	classVariableNames: '_OffsetOf_lfCharSet _OffsetOf_lfClipPrecision _OffsetOf_lfEscapement _OffsetOf_lfHeight _OffsetOf_lfItalic _OffsetOf_lfOrientation _OffsetOf_lfOutPrecision _OffsetOf_lfPitchAndFamily _OffsetOf_lfQuality _OffsetOf_lfStrikeOut _OffsetOf_lfUnderline _OffsetOf_lfWeight _OffsetOf_lfWidth'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AbstractLOGFONT guid: (GUID fromString: '{8f358ad9-379c-415d-a076-730db113b289}')!
+
 AbstractLOGFONT isAbstract: true!
+
 AbstractLOGFONT addClassConstant: '_OffsetOf_lfCharSet' value: 16r17!
 AbstractLOGFONT addClassConstant: '_OffsetOf_lfClipPrecision' value: 16r19!
 AbstractLOGFONT addClassConstant: '_OffsetOf_lfEscapement' value: 16r8!
@@ -20,8 +23,11 @@ AbstractLOGFONT addClassConstant: '_OffsetOf_lfStrikeOut' value: 16r16!
 AbstractLOGFONT addClassConstant: '_OffsetOf_lfUnderline' value: 16r15!
 AbstractLOGFONT addClassConstant: '_OffsetOf_lfWeight' value: 16r10!
 AbstractLOGFONT addClassConstant: '_OffsetOf_lfWidth' value: 16r4!
+
 AbstractLOGFONT comment: ''!
+
 !AbstractLOGFONT categoriesForClass!DxVBLibA-Structs! !
+
 !AbstractLOGFONT methodsFor!
 
 createFont
@@ -152,6 +158,7 @@ lfWidth: anInteger
 	"Set the receiver's 'lfWidth' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_lfWidth put: anInteger! !
+
 !AbstractLOGFONT categoriesForMethods!
 createFont!private!realizing/unrealizing! !
 faceName!accessing!public! !
@@ -206,6 +213,7 @@ defineFields
 
 getFieldNames
 	^#(#lfHeight #lfWidth #lfEscapement #lfOrientation #lfWeight #lfItalic #lfUnderline #lfStrikeOut #lfCharSet #lfOutPrecision #lfClipPrecision #lfQuality #lfPitchAndFamily #lfFaceName)! !
+
 !AbstractLOGFONT class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!constants!private! !

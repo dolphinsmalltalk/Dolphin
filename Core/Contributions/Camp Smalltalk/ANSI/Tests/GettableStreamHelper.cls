@@ -5,9 +5,13 @@ TestCaseHelper subclass: #GettableStreamHelper
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GettableStreamHelper guid: (GUID fromString: '{7d036737-d26d-4eb6-966b-b4807d3b7cb6}')!
+
 GettableStreamHelper comment: ''!
+
 !GettableStreamHelper categoriesForClass!Unclassified! !
+
 !GettableStreamHelper methodsFor!
 
 canonicalObject
@@ -149,6 +153,7 @@ testXupToX
 	self value: [self canonicalObject upTo: $a]
 		should: [:r | r isEmpty]
 		conformTo: self protocol selector: #'upTo:'.! !
+
 !GettableStreamHelper categoriesForMethods!
 canonicalObject!public! !
 object:!public! !
@@ -171,6 +176,7 @@ testXupToX!public! !
 initialize
 	"GettableStreamHelper  initialize"
 	super initialize! !
+
 !GettableStreamHelper class categoriesForMethods!
 initialize!public! !
 !

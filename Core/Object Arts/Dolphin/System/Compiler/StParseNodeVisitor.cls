@@ -5,11 +5,15 @@ Object subclass: #StParseNodeVisitor
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StParseNodeVisitor guid: (GUID fromString: '{8cf81be6-059c-46da-86e3-b21a6781066b}')!
+
 StParseNodeVisitor comment: 'BRProgramNodeVisitor is an abstract visitor for the BRProgramNodes.
 
 '!
+
 !StParseNodeVisitor categoriesForClass!Refactory-ParseTree Matching! !
+
 !StParseNodeVisitor methodsFor!
 
 processBlock: aBlockNode
@@ -109,6 +113,7 @@ visitThisContextVariableNode: anStSelfVariableNode
 
 visitVariableNode: aVariableNode
 	^aVariableNode! !
+
 !StParseNodeVisitor categoriesForMethods!
 processBlock:!helpers!private! !
 visitAnnotationNode:!public!visiting! !
@@ -144,6 +149,7 @@ visitVariableNode:!public!visiting! !
 
 new
 	^super new initialize! !
+
 !StParseNodeVisitor class categoriesForMethods!
 new!instance creation!public! !
 !

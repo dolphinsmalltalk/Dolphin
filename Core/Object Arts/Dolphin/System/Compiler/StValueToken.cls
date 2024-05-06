@@ -5,9 +5,13 @@ StToken subclass: #StValueToken
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StValueToken guid: (GUID fromString: '{c37072cc-edda-4bac-aa9f-a73b3f4255d5}')!
+
 StValueToken comment: ''!
+
 !StValueToken categoriesForClass!System-Compiler! !
+
 !StValueToken methodsFor!
 
 length
@@ -25,6 +29,7 @@ value
 
 value: anObject
 	value := anObject! !
+
 !StValueToken categoriesForMethods!
 length!accessing!private! !
 printOn:!printing!public! !
@@ -41,6 +46,7 @@ start: anInteger comments: aCollectionOrNil value: aString
 		comments: aCollectionOrNil;
 		value: aString;
 		yourself! !
+
 !StValueToken class categoriesForMethods!
 start:comments:value:!instance creation!public! !
 !

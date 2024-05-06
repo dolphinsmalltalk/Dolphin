@@ -5,9 +5,13 @@ ScalarField subclass: #UINT_PTRField
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 UINT_PTRField guid: (GUID fromString: '{19012b00-96f4-4181-a7e1-0a85a4268d7b}')!
+
 UINT_PTRField comment: '<UINT_PTRField> is a <ScalarField> class to represent <ExternalStructure> fields that are unsigned integers the same size as a pointer on the host machine architecture. Currently these are always 32-bit as Dolphin is a 32-bit process.'!
+
 !UINT_PTRField categoriesForClass!External-Data-Types! !
+
 !UINT_PTRField methodsFor!
 
 accessorMessage
@@ -26,6 +30,7 @@ writeInto: anExternalStructure value: anInteger
 	<ExternalStructure, anExternalStructure, at the receiver's offset ."
 
 	^anExternalStructure bytes uintPtrAtOffset: offset put: anInteger! !
+
 !UINT_PTRField categoriesForMethods!
 accessorMessage!automatic generation!private! !
 readFrom:!indirect accessing!private! !
@@ -39,6 +44,7 @@ byteSize
 	This size will vary between 32 and 64-bit machines."
 
 	^VMConstants.IntPtrSize! !
+
 !UINT_PTRField class categoriesForMethods!
 byteSize!constants!private! !
 !

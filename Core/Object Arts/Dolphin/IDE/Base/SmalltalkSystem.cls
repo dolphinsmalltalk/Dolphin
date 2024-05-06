@@ -5,7 +5,9 @@ Model subclass: #SmalltalkSystem
 	classVariableNames: 'Current FileDrops RegisteredTools'
 	poolDictionaries: 'CompilerFlags SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
+
 SmalltalkSystem guid: (GUID fromString: '{87b4c66c-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 SmalltalkSystem comment: 'SmalltalkSystem is a Facade onto the Dolphin Smalltalk development environment. Most of the development tools hold the Singleton instance of SmalltalkSystem as their model and use it to act as a go-between between programmer, user interface, and the development image.
 
 Instance Variables:
@@ -19,7 +21,9 @@ Class Variables:
 	Current			<SmalltalkSystem>
 
 '!
+
 !SmalltalkSystem categoriesForClass!MVP-Models!System-Support! !
+
 !SmalltalkSystem methodsFor!
 
 aboutBoxClass
@@ -4226,6 +4230,7 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 					[lines - 1 timesRepeat: [justified cr].
 					newline value]].
 	^justified contents! !
+
 !SmalltalkSystem categoriesForMethods!
 aboutBoxClass!constants!private! !
 aboutBoxClass:!constants!private! !
@@ -4779,6 +4784,7 @@ unregisterTool: aToolClass
 	(aToolClass class conformsToProtocol: #installableSystemTool) 
 		ifTrue: [aToolClass unregisterAsToolWith: self].
 	self registeredTools remove: aToolClass ifAbsent: []! !
+
 !SmalltalkSystem class categoriesForMethods!
 current!instance creation!public! !
 help:!operations!public! !

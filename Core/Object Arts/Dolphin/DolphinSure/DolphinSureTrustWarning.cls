@@ -5,7 +5,9 @@ Dialog subclass: #DolphinSureTrustWarning
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DolphinSureTrustWarning guid: (GUID fromString: '{6abda145-ee5e-4214-9709-78362121ec65}')!
+
 DolphinSureTrustWarning comment: 'A DolphinSureTrustWarning dialog is used to presenter a publisher''s digital certificate and to prompt the user to see if contents from this publisher should be trusted. The model for this dialog is the certificate itself and, if it is accepted, it is entered into a temporary or permanent trust store as appropriate.  
 
 DolphinSureTrustWarning showModal
@@ -16,7 +18,9 @@ Instance Variables:
 	alwaysTrust	<BooleanPresenter> used to indicate whether the user always wants to trust this certificate.
 
 '!
+
 !DolphinSureTrustWarning categoriesForClass!System-Binary class loading! !
+
 !DolphinSureTrustWarning methodsFor!
 
 alwaysTrust
@@ -63,6 +67,7 @@ validateUserInterface
 	super validateUserInterface.
 	alwaysTrust view isEnabled: self model canBePermanentlyTrusted
 ! !
+
 !DolphinSureTrustWarning categoriesForMethods!
 alwaysTrust!accessing!public! !
 createComponents!initializing!public! !
@@ -100,6 +105,7 @@ showModalOn: aDolphinSureCertificate description: aStringDescription
 		description: aStringDescription;
 		showModal
 ! !
+
 !DolphinSureTrustWarning class categoriesForMethods!
 defaultModel!models!public! !
 resource_Default_view!public!resources-views! !

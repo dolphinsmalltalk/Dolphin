@@ -5,12 +5,15 @@ OLEFinalizableStructure subclass: #VARIANT
 	classVariableNames: '_OffsetOf_dblVal _OffsetOf_vt _OffsetOf_wReserved1 _OffsetOf_wReserved2 _OffsetOf_wReserved3 Unspecified VTClasses VTNames'
 	poolDictionaries: 'AXAutomationConstants AXAutomationErrors Win32Constants'
 	classInstanceVariableNames: ''!
+
 VARIANT guid: (GUID fromString: '{c06f3b65-0868-11d3-93af-00a024ca708a}')!
+
 VARIANT addClassConstant: '_OffsetOf_dblVal' value: 16r8!
 VARIANT addClassConstant: '_OffsetOf_vt' value: 16r0!
 VARIANT addClassConstant: '_OffsetOf_wReserved1' value: 16r2!
 VARIANT addClassConstant: '_OffsetOf_wReserved2' value: 16r4!
 VARIANT addClassConstant: '_OffsetOf_wReserved3' value: 16r6!
+
 VARIANT comment: 'VARIANT is an <ExternalStructure> to represent the OLE Automation VARIANT and VARIANTARG types.
 
 A VARIANT is basically a discriminated union which can represent all the parameter types which can be passed to and returned from member functions of Automation compatible (oleautomation) interfaces by Automation controllers and servers. These types are constrained by those which VB can handle, and hence there are no unsigned integers. A VARIANT''s type tag is stored as a 16-bit <integer> at the start of the structure, and is accessing with the #vt/vt: methods. Note that not all of the VT_XXX types are actually supported by the various variant manipulation functions provided by the Automation library, e.g. VT_LPSTR, as some are intended for type description and other purposes.
@@ -22,7 +25,9 @@ It is worth noting that with the default Win32 packing (Zp8), VARIANT aligns on 
 Class Variables:
 	Accessors		<LookupTable> mapping variant type codes to accessor methods for extracting an object of that type.
 '!
+
 !VARIANT categoriesForClass!External-Data-Structured-COM! !
+
 !VARIANT methodsFor!
 
 _deepCopy: copiesDictionary
@@ -707,6 +712,7 @@ word: newValue
 
 	bytes wordAtOffset: 8 put: newValue asInteger.
 	self vt: VT_UI2! !
+
 !VARIANT categoriesForMethods!
 _deepCopy:!copying!private! !
 <!comparing!public! !
@@ -1157,6 +1163,7 @@ vt
 	type when represented in a <VARIANT>."
 
 	^VT_VARIANT! !
+
 !VARIANT class categoriesForMethods!
 classForVT:!enquiries!public! !
 clear:!public!realizing/unrealizing! !

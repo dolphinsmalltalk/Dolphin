@@ -5,8 +5,11 @@ Object subclass: #RefactoryChange
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RefactoryChange guid: (GUID fromString: '{2e46050f-612f-4e62-a0cf-281408d71404}')!
+
 RefactoryChange isAbstract: true!
+
 RefactoryChange comment: 'RefactoryChange is an abstract class that represent some change to a class or method. They are used in combination with RefactoryBuilders to give transaction-like behavior.
 
 Subclasses must implement the following messages:
@@ -15,7 +18,9 @@ Subclasses must implement the following messages:
 
 Instance Variables:
 	class	<Behavior>	the class that is to be changed'!
+
 !RefactoryChange categoriesForClass!Refactory-Change Objects! !
+
 !RefactoryChange methodsFor!
 
 addMethodChangeClass
@@ -69,6 +74,7 @@ renameChangesForClass: aClassName to: newClassName
 	name to perform the compiles."
 
 	self subclassResponsibility! !
+
 !RefactoryChange categoriesForMethods!
 addMethodChangeClass!constants!public! !
 changeForClass:selector:!accessing!public! !
@@ -91,6 +97,7 @@ renameChangesForClass:to:!accessing!public! !
 
 new
 	^super new initialize! !
+
 !RefactoryChange class categoriesForMethods!
 new!instance creation!public! !
 !

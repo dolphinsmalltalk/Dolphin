@@ -5,10 +5,15 @@ ClassBrowserPlugin subclass: #SmalllintPlugin
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SmalllintPlugin guid: (GUID fromString: '{321fcbfb-84d2-40ae-bf8f-f4b816723a1b}')!
+
 SmalllintPlugin isAbstract: true!
+
 SmalllintPlugin comment: ''!
+
 !SmalllintPlugin categoriesForClass!MVP-Presenters! !
+
 !SmalllintPlugin methodsFor!
 
 browserEnvironment
@@ -67,6 +72,7 @@ systemModel
 	"Private - Answer the development system model."
 
 	^Smalltalk developmentSystem! !
+
 !SmalllintPlugin categoriesForMethods!
 browserEnvironment!operations!private! !
 checkerForRule:environment:!helpers!private! !

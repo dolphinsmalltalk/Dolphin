@@ -5,9 +5,13 @@ UINT_PTRField subclass: #HANDLEField
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 HANDLEField guid: (GUID fromString: '{92844ae1-5120-4fc8-822f-111a92ac0485}')!
+
 HANDLEField comment: '<HANDLEField> is a <ScalarField> type to represent <ExternalStructure> fields that are opaque pointers, or "handles".'!
+
 !HANDLEField categoriesForClass!External-Data-Types! !
+
 !HANDLEField methodsFor!
 
 fieldClassName
@@ -18,6 +22,7 @@ readFrom: anExternalStructure
 	field at the receiver's offset in the <ExternalStructure> argument."
 
 	^(anExternalStructure bytes uintPtrAtOffset: offset) asExternalHandle! !
+
 !HANDLEField categoriesForMethods!
 fieldClassName!automatic generation!constants!development!private! !
 readFrom:!indirect accessing!private! !

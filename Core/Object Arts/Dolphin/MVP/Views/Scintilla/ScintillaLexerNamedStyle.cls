@@ -5,11 +5,15 @@ ScintillaLexerMetadata subclass: #ScintillaLexerNamedStyle
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ScintillaLexerNamedStyle guid: (GUID fromString: '{75e1ab33-a3b6-477a-9d03-35dd22b204a3}')!
+
 ScintillaLexerNamedStyle comment: 'Metadata about the pre-defined styles supported by a particular lexer.
 
 Not currently integrated in any useful way with the Scintilla style support in Dolphin''s Scintilla View wrapper. For example ScintillaView class>>xmlTextStyles answers a pre-configured set of styles definitions for each of the named styles of the XML lexer. The association is made through the style id, however.'!
+
 !ScintillaLexerNamedStyle categoriesForClass!Kernel-Objects! !
+
 !ScintillaLexerNamedStyle methodsFor!
 
 getDescription
@@ -30,6 +34,7 @@ tags
 view: aScintillaView id: anInteger
 	view := aScintillaView.
 	id := anInteger! !
+
 !ScintillaLexerNamedStyle categoriesForMethods!
 getDescription!accessing!private! !
 getName!accessing!private! !

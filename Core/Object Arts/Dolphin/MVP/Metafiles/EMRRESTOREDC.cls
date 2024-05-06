@@ -5,8 +5,11 @@ ENHMETARECORD subclass: #EMRRESTOREDC
 	classVariableNames: '_OffsetOf_iRelative'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 EMRRESTOREDC guid: (GUID fromString: '{77f6595f-287e-4df2-be4c-dfd546be3718}')!
+
 EMRRESTOREDC addClassConstant: '_OffsetOf_iRelative' value: 16r8!
+
 EMRRESTOREDC comment: '<EMRRESTOREDC> is an <ExternalStructure> class to wrap the struct ''Win32.EMRRESTOREDC'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -21,7 +24,9 @@ struct tagEMRRESTOREDC {
 	[helpstring("Specifies a relative instance")] long iRelative;
 } EMRRESTOREDC;
 '!
+
 !EMRRESTOREDC categoriesForClass!Win32-Structs! !
+
 !EMRRESTOREDC methodsFor!
 
 iRelative
@@ -33,6 +38,7 @@ iRelative: anInteger
 	"Set the receiver's 'iRelative' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_iRelative put: anInteger! !
+
 !EMRRESTOREDC categoriesForMethods!
 iRelative!**compiled accessors**!public! !
 iRelative:!**compiled accessors**!public! !
@@ -66,6 +72,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_RESTOREDC! !
+
 !EMRRESTOREDC class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

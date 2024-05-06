@@ -5,9 +5,13 @@ ImageManager subclass: #IconImageManager
 	classVariableNames: 'Current'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IconImageManager guid: (GUID fromString: '{87b4c645-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 IconImageManager comment: ''!
+
 !IconImageManager categoriesForClass!Graphics-Tools! !
+
 !IconImageManager methodsFor!
 
 bitmapForIcon: anIcon extent: aPoint
@@ -36,6 +40,7 @@ stbSaveOn: anSTBOutFiler
 	"Save out a binary representation of the receiver to anSTBOutFiler."
 
 	anSTBOutFiler writePreambleFor: self! !
+
 !IconImageManager categoriesForMethods!
 bitmapForIcon:extent:!public!searching! !
 initialize!initializing!private! !
@@ -80,6 +85,7 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	Current := nil! !
+
 !IconImageManager class categoriesForMethods!
 current!instance creation!public! !
 new!instance creation!private! !

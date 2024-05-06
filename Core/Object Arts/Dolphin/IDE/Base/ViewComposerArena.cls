@@ -5,10 +5,14 @@ ImageView subclass: #ViewComposerArena
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ViewComposerArena guid: (GUID fromString: '{1cb40e20-1cef-4edd-8012-223620292a00}')!
+
 ViewComposerArena comment: 'ViewComposerArena is used by the ViewComposer to contain the view being edited. It''s main function is to pass a #drawAdornment
 message to the associated ViewComposer each time a paint message is received.'!
+
 !ViewComposerArena categoriesForClass!MVP-Views! !
+
 !ViewComposerArena methodsFor!
 
 composer
@@ -42,6 +46,7 @@ requestDropOperations: session
 	drag and drop operation symbols."
 
 	composer requestDropOperations: session! !
+
 !ViewComposerArena categoriesForMethods!
 composer!public! !
 composer:!public! !

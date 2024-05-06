@@ -5,9 +5,13 @@ DolphinTest subclass: #SmalltalkStylerTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SmalltalkStylerTest guid: (GUID fromString: '{a4d5d58a-e2a3-4f2b-8877-0c480d6f3b01}')!
+
 SmalltalkStylerTest comment: ''!
+
 !SmalltalkStylerTest categoriesForClass!Unclassified! !
+
 !SmalltalkStylerTest methodsFor!
 
 restyleFromEachPosition: anObject resumeable: aBoolean 
@@ -516,6 +520,7 @@ testUnaryMessageToByteArray
 		in: mock.
 	tokens := mock tokens asArray.
 	self assert: tokens equals: #(#(##(1 to: 4) #literalBytes '#[1]') #(##(5 to: 5) #unaryMessage 'x'))! !
+
 !SmalltalkStylerTest categoriesForMethods!
 restyleFromEachPosition:resumeable:!private!unit tests! !
 scannerClass!private!unit tests! !

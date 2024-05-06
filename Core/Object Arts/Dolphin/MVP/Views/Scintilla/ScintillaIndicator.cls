@@ -5,14 +5,18 @@ Object subclass: #ScintillaIndicator
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ScintillaIndicator guid: (GUID fromString: '{d8f9d545-39f0-4f15-b405-d14dfe355b3d}')!
+
 ScintillaIndicator comment: 'ScintillaIndicators represent the indicators displayed as various styles of underlining in a <ScintillaView>.
 
 Instance Variables:
 	type	<Integer>. Id, normally in the range 1..3, of the corresponding <ScintillaIndicatorDefinition>.
 	range	<Interval> in the text which is so highlighted.
 	tag		<Object>. Any user-defined object to be associated with the indicator, e.g. for bubble help.'!
+
 !ScintillaIndicator categoriesForClass!MVP-Views-Support! !
+
 !ScintillaIndicator methodsFor!
 
 printOn: aStream
@@ -49,6 +53,7 @@ tag
 	example, to provide bubble help explaining the indicator."
 
 	^tag! !
+
 !ScintillaIndicator categoriesForMethods!
 printOn:!printing!public! !
 range!accessing!public! !
@@ -75,6 +80,7 @@ styleName: aSymbolOrInteger range: anInterval tag: anObject
 			range: anInterval
 			tag: anObject;
 		yourself! !
+
 !ScintillaIndicator class categoriesForMethods!
 icon!constants!development!public! !
 styleName:range:!instance creation!public! !

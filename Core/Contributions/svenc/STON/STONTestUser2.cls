@@ -5,9 +5,13 @@ STONTestUser subclass: #STONTestUser2
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 STONTestUser2 guid: (GUID fromString: '{2b83d7a9-b33a-4c5e-a872-6a271dcf9f7e}')!
+
 STONTestUser2 comment: 'STONTestUser2 extends STONTestUser with explicit implementations of #fromSton: and #stonOn:'!
+
 !STONTestUser2 categoriesForClass!STON-Tests-Base! !
+
 !STONTestUser2 methodsFor!
 
 fromSton: stonReader
@@ -23,6 +27,7 @@ stonOn: stonWriter
 			at: #username put: username;
 			at: #password put: password;
 			at: #enabled put: enabled ]! !
+
 !STONTestUser2 categoriesForMethods!
 fromSton:!public!ston/core! !
 stonOn:!public!ston/core! !
@@ -32,6 +37,7 @@ stonOn:!public!ston/core! !
 
 stonName
 	^ #TestUser2! !
+
 !STONTestUser2 class categoriesForMethods!
 stonName!public!ston/core! !
 !

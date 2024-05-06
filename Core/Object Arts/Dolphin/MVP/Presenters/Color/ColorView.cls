@@ -5,9 +5,13 @@ StaticView subclass: #ColorView
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ColorView guid: (GUID fromString: '{87b4c73c-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 ColorView comment: 'ColorView is a <valueView> for displaying static <color>s. The <valueModel> associated with a ColorView must always yield a <color> value when mapped through the installed type converter. A ColorView will normally be used in conjunction with a <ColorPresenter>.'!
+
 !ColorView categoriesForClass!MVP-Views! !
+
 !ColorView methodsFor!
 
 basicActualBackcolor
@@ -32,6 +36,7 @@ paintTransparentBackgroundOn: aCanvas
 	aCanvas
 		brush: (HatchBrush diamond: Color whiteSmoke);
 		fillRectangle: self clientRectangle! !
+
 !ColorView categoriesForMethods!
 basicActualBackcolor!accessing!private! !
 displayValue!private!updating! !
@@ -50,6 +55,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon! !
+
 !ColorView class categoriesForMethods!
 defaultModel!models!public! !
 icon!constants!public! !

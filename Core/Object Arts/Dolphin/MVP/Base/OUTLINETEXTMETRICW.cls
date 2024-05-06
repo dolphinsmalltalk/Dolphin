@@ -5,7 +5,9 @@ Win32Structure subclass: #OUTLINETEXTMETRICW
 	classVariableNames: '_OffsetOf_dwSize _OffsetOf_otmAscent _OffsetOf_otmDescent _OffsetOf_otmEMSquare _OffsetOf_otmFiller _OffsetOf_otmfsSelection _OffsetOf_otmfsType _OffsetOf_otmItalicAngle _OffsetOf_otmLineGap _OffsetOf_otmMacAscent _OffsetOf_otmMacDescent _OffsetOf_otmMacLineGap _OffsetOf_otmPanoseNumber _OffsetOf_otmpFaceName _OffsetOf_otmpFamilyName _OffsetOf_otmpFullName _OffsetOf_otmpStyleName _OffsetOf_otmptSubscriptOffset _OffsetOf_otmptSubscriptSize _OffsetOf_otmptSuperscriptOffset _OffsetOf_otmptSuperscriptSize _OffsetOf_otmrcFontBox _OffsetOf_otmsCapEmHeight _OffsetOf_otmsCharSlopeRise _OffsetOf_otmsCharSlopeRun _OffsetOf_otmsStrikeoutPosition _OffsetOf_otmsStrikeoutSize _OffsetOf_otmsUnderscorePosition _OffsetOf_otmsUnderscoreSize _OffsetOf_otmsXHeight _OffsetOf_otmTextMetrics _OffsetOf_otmusMinimumPPEM'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 OUTLINETEXTMETRICW guid: (GUID fromString: '{52831a87-901f-4a84-894b-ab539352b71f}')!
+
 OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_dwSize' value: 16r0!
 OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmAscent' value: 16r64!
 OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmDescent' value: 16r68!
@@ -38,8 +40,11 @@ OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmsUnderscoreSize' value: 16rC0
 OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmsXHeight' value: 16r74!
 OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmTextMetrics' value: 16r4!
 OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmusMinimumPPEM' value: 16r94!
+
 OUTLINETEXTMETRICW comment: '<OUTLINETEXTMETRIC> is an <ExternalStructure> class to wrap the struct ''Win.OUTLINETEXTMETRIC'' from type information in the ''Windows API (ANSI)'' library.'!
+
 !OUTLINETEXTMETRICW categoriesForClass!Win-Structs! !
+
 !OUTLINETEXTMETRICW methodsFor!
 
 dwSize: anInteger
@@ -218,6 +223,7 @@ styleName
 	e.g. regular, bold, italic, etc"
 
 	^Utf16String fromAddress: bytes yourAddress + self otmpStyleName! !
+
 !OUTLINETEXTMETRICW categoriesForMethods!
 dwSize:!**compiled accessors**!public! !
 faceName!accessing!public! !
@@ -336,6 +342,7 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #otmTextMetrics #otmPanoseNumber #otmfsSelection #otmfsType #otmsCharSlopeRise #otmsCharSlopeRun #otmItalicAngle #otmEMSquare #otmAscent #otmDescent #otmLineGap #otmsCapEmHeight #otmsXHeight #otmrcFontBox #otmMacAscent #otmMacDescent #otmMacLineGap #otmusMinimumPPEM #otmptSubscriptSize #otmptSubscriptOffset #otmptSuperscriptSize #otmptSuperscriptOffset #otmsStrikeoutSize #otmsStrikeoutPosition #otmsUnderscoreSize #otmsUnderscorePosition #otmpFamilyName #otmpFaceName #otmpStyleName #otmpFullName)! !
+
 !OUTLINETEXTMETRICW class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

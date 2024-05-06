@@ -5,9 +5,13 @@ VirtualTreeModel subclass: #ClassHierarchyModel
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ClassHierarchyModel guid: (GUID fromString: '{87b4c673-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 ClassHierarchyModel comment: 'ClassHierarchyModel implements a <treeModel> representing the hierarchy (or a subset of it) of <Class>es in the system.'!
+
 !ClassHierarchyModel categoriesForClass!MVP-Models! !
+
 !ClassHierarchyModel methodsFor!
 
 approxSize
@@ -54,6 +58,7 @@ setRoots: aCollection
 
 	super setRoots: aCollection.
 	self observeEnvironment! !
+
 !ClassHierarchyModel categoriesForMethods!
 approxSize!accessing!private! !
 defaultGetChildrenBlock!initializing!private! !
@@ -72,6 +77,7 @@ withAllClasses
 
 	^self withRoots: Smalltalk allRoots
 ! !
+
 !ClassHierarchyModel class categoriesForMethods!
 withAllClasses!instance creation!public! !
 !

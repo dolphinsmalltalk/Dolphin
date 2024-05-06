@@ -5,9 +5,13 @@ GdiplusInitializerTests subclass: #GdiplusGraphicsFromHDCInitializerTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusGraphicsFromHDCInitializerTest guid: (GUID fromString: '{8fde00f2-25d2-4046-907f-a52febba1a57}')!
+
 GdiplusGraphicsFromHDCInitializerTest comment: ''!
+
 !GdiplusGraphicsFromHDCInitializerTest categoriesForClass!Unclassified! !
+
 !GdiplusGraphicsFromHDCInitializerTest methodsFor!
 
 gdipCreateFromHDC: hdc graphics: graphics 
@@ -30,6 +34,7 @@ testCreateHandle
 	self assert: constructorArgs size equals: 2.
 	self assert: constructorArgs first identicalTo: canvas asParameter.
 	self assertLastArgIsHandle! !
+
 !GdiplusGraphicsFromHDCInitializerTest categoriesForMethods!
 gdipCreateFromHDC:graphics:!accessing!public! !
 setUp!public!setup! !

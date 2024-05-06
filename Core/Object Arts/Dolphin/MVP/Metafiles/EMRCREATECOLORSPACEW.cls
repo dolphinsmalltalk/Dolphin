@@ -5,12 +5,15 @@ ENHMETARECORD subclass: #EMRCREATECOLORSPACEW
 	classVariableNames: '_OffsetOf_cbData _OffsetOf_Data _OffsetOf_dwFlags _OffsetOf_ihCS _OffsetOf_lcs'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 EMRCREATECOLORSPACEW guid: (GUID fromString: '{27b16b33-1f59-4046-ae08-0652f9c089f1}')!
+
 EMRCREATECOLORSPACEW addClassConstant: '_OffsetOf_cbData' value: 16r158!
 EMRCREATECOLORSPACEW addClassConstant: '_OffsetOf_Data' value: 16r15C!
 EMRCREATECOLORSPACEW addClassConstant: '_OffsetOf_dwFlags' value: 16r154!
 EMRCREATECOLORSPACEW addClassConstant: '_OffsetOf_ihCS' value: 16r8!
 EMRCREATECOLORSPACEW addClassConstant: '_OffsetOf_lcs' value: 16rC!
+
 EMRCREATECOLORSPACEW comment: '<EMRCREATECOLORSPACEW> is an <ExternalStructure> class to wrap the struct ''Win32.EMRCREATECOLORSPACEW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -29,7 +32,9 @@ struct tagEMRCREATECOLORSPACEW {
 	[helpstring("Array size is cbData")] BYTE* Data;
 } EMRCREATECOLORSPACEW;
 '!
+
 !EMRCREATECOLORSPACEW categoriesForClass!Win32-Structs! !
+
 !EMRCREATECOLORSPACEW methodsFor!
 
 cbData
@@ -92,6 +97,7 @@ lcs: aLOGCOLORSPACEW
 		from: ##(_OffsetOf_lcs + 1)
 		to: ##(_OffsetOf_lcs + LOGCOLORSPACEW basicByteSize)
 		startingAt: 1! !
+
 !EMRCREATECOLORSPACEW categoriesForMethods!
 cbData!**compiled accessors**!public! !
 cbData:!**compiled accessors**!public! !
@@ -148,6 +154,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_CREATECOLORSPACEW! !
+
 !EMRCREATECOLORSPACEW class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

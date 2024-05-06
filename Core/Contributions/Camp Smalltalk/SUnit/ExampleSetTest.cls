@@ -5,9 +5,13 @@ TestCase subclass: #ExampleSetTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExampleSetTest guid: (GUID fromString: '{5e96793d-0810-11d4-a876-0050da643bf9}')!
+
 ExampleSetTest comment: ''!
+
 !ExampleSetTest categoriesForClass!SUnitTests! !
+
 !ExampleSetTest methodsFor!
 
 setUp
@@ -44,6 +48,7 @@ testRemove
 	full remove: 5.
 	self assert: (full includes: #abc).
 	self deny: (full includes: 5)! !
+
 !ExampleSetTest categoriesForMethods!
 setUp!public!Running! !
 testAdd!public!Testing! !

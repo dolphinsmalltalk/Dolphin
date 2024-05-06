@@ -5,9 +5,13 @@ DolphinTest subclass: #MethodCategoryTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MethodCategoryTest guid: (GUID fromString: '{bf38215d-fed2-4dc6-9f36-92956bc1b19d}')!
+
 MethodCategoryTest comment: ''!
+
 !MethodCategoryTest categoriesForClass!Unclassified! !
+
 !MethodCategoryTest methodsFor!
 
 testMethodsInBehavior
@@ -21,6 +25,7 @@ testMethodsInBehavior
 	testBehavior methodDictionary: (MethodDictionary with: #key -> keyMethod).
 	methods := subject methodsInBehavior: testBehavior.
 	self assert: methods asArray equals: {keyMethod}! !
+
 !MethodCategoryTest categoriesForMethods!
 testMethodsInBehavior!public! !
 !

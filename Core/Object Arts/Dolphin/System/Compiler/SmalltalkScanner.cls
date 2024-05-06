@@ -5,8 +5,11 @@ Object subclass: #SmalltalkScanner
 	classVariableNames: 'ClassificationTable EscapeChars PatternVariableCharacter'
 	poolDictionaries: 'SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
+
 SmalltalkScanner guid: (GUID fromString: '{f76f2335-9125-488e-a570-5a759a6e67b7}')!
+
 SmalltalkScanner addClassConstant: 'ClassificationTable' value: #(#separator nil nil nil nil nil nil nil nil #separator #separator #separator #separator #separator nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil #separator #binary nil nil nil #binary #binary nil #special #special #binary #binary #binary #binary #special #binary #digit #digit #digit #digit #digit #digit #digit #digit #digit #digit #special #special #binary #binary #binary #binary #binary #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #special #binary #special #special #alphabetic nil #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #special #binary #special #binary nil)!
+
 SmalltalkScanner comment: 'SmalltalkScanner is the Smalltalk lexical analyzer. It converts source text to a stream of <StToken>''s.
 
 Note that SmalltalkScanner is based on the RBScanner class written by John Brant and Don Roberts for their Refactoring Browser. It has been extended for Dolphin to incorporate additional error reporting capabilities (such as the line number on which the error occurred), and the ability to parse Dolphin''s FFI call syntax.
@@ -29,7 +32,9 @@ Class Instance Variables:
 	classificationTable	<Array>. Used to classify characters into types.
 
 '!
+
 !SmalltalkScanner categoriesForClass!System-Compiler! !
+
 !SmalltalkScanner methodsFor!
 
 addComment: anInterval 
@@ -754,6 +759,7 @@ unterminatedQualifiedRef
 unterminatedString
 	self lexicalError: LErrStringNotClosed.
 	^self literalErrorToken: buffer contents stop: self previousStepPosition! !
+
 !SmalltalkScanner categoriesForMethods!
 addComment:!private!scanning! !
 atEnd!public!testing! !
@@ -896,6 +902,7 @@ on: aStream errorHandler: parseErrorHandler
 
 patternVariableCharacter
 	^PatternVariableCharacter! !
+
 !SmalltalkScanner class categoriesForMethods!
 classify:!public!scanning! !
 initialize!development!initializing!public! !

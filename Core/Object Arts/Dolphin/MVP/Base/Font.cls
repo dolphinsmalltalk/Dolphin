@@ -5,9 +5,13 @@ GraphicsTool subclass: #Font
 	classVariableNames: 'System'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Font guid: (GUID fromString: '{87b4c634-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Font comment: ''!
+
 !Font categoriesForClass!Graphics-Tools! !
+
 !Font methodsFor!
 
 = aFont
@@ -242,6 +246,7 @@ weight: anInteger
 	logfont lfWeight: anInteger.
 	"Cause the receiver to be re-realized"
 	self free! !
+
 !Font categoriesForMethods!
 =!comparing!public! !
 beBold!accessing!public! !
@@ -350,6 +355,7 @@ uninitialize
 	"Uninitialize the class variables of the receiver as it is about to be removed from the system."
 
 	System := nil! !
+
 !Font class categoriesForMethods!
 default!instance creation!public! !
 defaultPointSize!constants!private! !

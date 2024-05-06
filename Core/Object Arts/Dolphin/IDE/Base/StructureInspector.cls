@@ -5,9 +5,13 @@ BasicInspector subclass: #StructureInspector
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StructureInspector guid: (GUID fromString: '{87b4c697-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 StructureInspector comment: 'StructureInspector is a <compositePresenter> that implements a specialised inspect facility onto a <ExternalStructure>. This allows the structure to be inspected via its name fields.'!
+
 !StructureInspector categoriesForClass!MVP-Presenters! !
+
 !StructureInspector methodsFor!
 
 fields
@@ -41,6 +45,7 @@ setField: anInteger to: anObject
 				setField: (self variableNamesList at: anInteger + self headerSize)
 				value: anObject]
 		ifFalse: [super setField: anInteger to: anObject]! !
+
 !StructureInspector categoriesForMethods!
 fields!accessing!private! !
 getField:!accessing!private! !

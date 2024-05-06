@@ -5,9 +5,13 @@ DolphinTestClassResource subclass: #MustBeBooleanTestClasses
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MustBeBooleanTestClasses guid: (GUID fromString: '{7a283553-a0fa-4c3f-8502-7d21d0babca4}')!
+
 MustBeBooleanTestClasses comment: ''!
+
 !MustBeBooleanTestClasses categoriesForClass!Unclassified! !
+
 !MustBeBooleanTestClasses methodsFor!
 
 createClasses
@@ -36,6 +40,7 @@ tearDown
 
 trueClass
 	^trueClass! !
+
 !MustBeBooleanTestClasses categoriesForMethods!
 createClasses!public!unit tests! !
 falseClass!accessing!public! !

@@ -5,11 +5,14 @@ HttpServerStructure subclass: #HTTP_MULTIPLE_KNOWN_HEADERS
 	classVariableNames: '_OffsetOf_Flags _OffsetOf_HeaderId _OffsetOf_KnownHeaderCount _OffsetOf_KnownHeaders'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 HTTP_MULTIPLE_KNOWN_HEADERS guid: (GUID fromString: '{a12486b1-fdf5-4d31-a4b7-af9848ffe5c6}')!
+
 HTTP_MULTIPLE_KNOWN_HEADERS addClassConstant: '_OffsetOf_Flags' value: 16r4!
 HTTP_MULTIPLE_KNOWN_HEADERS addClassConstant: '_OffsetOf_HeaderId' value: 16r0!
 HTTP_MULTIPLE_KNOWN_HEADERS addClassConstant: '_OffsetOf_KnownHeaderCount' value: 16r8!
 HTTP_MULTIPLE_KNOWN_HEADERS addClassConstant: '_OffsetOf_KnownHeaders' value: 16rC!
+
 HTTP_MULTIPLE_KNOWN_HEADERS comment: '<HTTP_MULTIPLE_KNOWN_HEADERS> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_MULTIPLE_KNOWN_HEADERS'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -27,7 +30,9 @@ struct tagHTTP_MULTIPLE_KNOWN_HEADERS {
 	[helpstring("A pointer to the first element in the array of HTTP_KNOWN_HEADER structures."), size_is("KnownHeaderCount")] PHTTP_KNOWN_HEADER KnownHeaders;
 } HTTP_MULTIPLE_KNOWN_HEADERS;
 '!
+
 !HTTP_MULTIPLE_KNOWN_HEADERS categoriesForClass!WinHttpServer-Structs! !
+
 !HTTP_MULTIPLE_KNOWN_HEADERS methodsFor!
 
 Flags
@@ -73,6 +78,7 @@ KnownHeaders: aStructureArray
 
 	bytes uintPtrAtOffset: _OffsetOf_KnownHeaders put: aStructureArray yourAddress.
 	self KnownHeaderCount: aStructureArray size! !
+
 !HTTP_MULTIPLE_KNOWN_HEADERS categoriesForMethods!
 Flags!**compiled accessors**!public! !
 Flags:!**compiled accessors**!public! !
@@ -109,6 +115,7 @@ defineFields
 
 getFieldNames
 	^#(#HeaderId #Flags #KnownHeaderCount #KnownHeaders)! !
+
 !HTTP_MULTIPLE_KNOWN_HEADERS class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

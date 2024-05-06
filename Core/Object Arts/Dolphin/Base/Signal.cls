@@ -5,9 +5,13 @@ Object subclass: #Signal
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Signal guid: (GUID fromString: '{87b4c4b9-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Signal comment: ''!
+
 !Signal categoriesForClass!Kernel-Exception Handling! !
+
 !Signal methodsFor!
 
 , arg
@@ -130,6 +134,7 @@ signalWith: signalerTag
 	This method will not normally return to its sender."
 	
 	^self newException signalWith: signalerTag! !
+
 !Signal categoriesForMethods!
 ,!filtering!public! !
 defaultAction:!handling!private! !
@@ -172,6 +177,7 @@ resumableDescription: anObject
 	^self new 
 		description: anObject;
 		makeResumable! !
+
 !Signal class categoriesForMethods!
 description:!instance creation!public! !
 new!instance creation!public! !

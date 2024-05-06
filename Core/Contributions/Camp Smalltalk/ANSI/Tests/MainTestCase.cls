@@ -5,10 +5,15 @@ TestCaseProtocol subclass: #MainTestCase
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MainTestCase guid: (GUID fromString: '{9d4aa044-4c93-4a47-9e3f-c74f8b18381e}')!
+
 MainTestCase isAbstract: true!
+
 MainTestCase comment: ''!
+
 !MainTestCase categoriesForClass!Unclassified! !
+
 !MainTestCase methodsFor!
 
 performTest
@@ -27,6 +32,7 @@ setUp
 		helper1 attachTo: self.
 		helper1 object: self canonicalObject.
 		helpers := helpers copyWith: helper1]! !
+
 !MainTestCase categoriesForMethods!
 performTest!public! !
 receiverFor:!public! !
@@ -69,6 +75,7 @@ removeAllCodeThatShouldBeInHelpers
 	"Warning - only works for Squeak"
 	"MainTestCase removeAllCodeThatShouldBeInHelpers"
 	self allSubclasses do: [:each | each deleteEmptyMethodsImplementedByHelpers]! !
+
 !MainTestCase class categoriesForMethods!
 allTestSelectors!public! !
 deleteEmptyMethodsImplementedByHelpers!public! !

@@ -5,9 +5,13 @@ MessageSequenceAbstract subclass: #EventMessageSequence
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 EventMessageSequence guid: (GUID fromString: '{87b4c664-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 EventMessageSequence comment: ''!
+
 !EventMessageSequence categoriesForClass!System-Support! !
+
 !EventMessageSequence methodsFor!
 
 add: aMessageSend
@@ -84,6 +88,7 @@ size
 	"Answers the number of messages in the receiver"
 
 	^tally! !
+
 !EventMessageSequence categoriesForMethods!
 add:!adding!public! !
 elementsExpired:of:!finalizing!private! !

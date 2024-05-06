@@ -5,8 +5,11 @@ IpHlpApiTableStruct subclass: #MIB_UDPTABLE
 	classVariableNames: '_OffsetOf_table'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MIB_UDPTABLE guid: (GUID fromString: '{49fa1814-6ebf-49d7-8eaf-86aa73efed72}')!
+
 MIB_UDPTABLE addClassConstant: '_OffsetOf_table' value: 16r4!
+
 MIB_UDPTABLE comment: '<MIB_UDPTABLE> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_UDPTABLE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -21,7 +24,9 @@ struct tagMIB_UDPTABLE {
 	MIB_UDPROW table[1];
 } MIB_UDPTABLE;
 '!
+
 !MIB_UDPTABLE categoriesForClass!Win32-Structs! !
+
 !MIB_UDPTABLE methodsFor!
 
 table
@@ -31,6 +36,7 @@ table
 		fromAddress: bytes yourAddress + _OffsetOf_table
 		length: self dwNumEntries
 		elementClass: MIB_UDPROW! !
+
 !MIB_UDPTABLE categoriesForMethods!
 table!**compiled accessors**!public! !
 !
@@ -59,6 +65,7 @@ defineFields
 
 getFieldNames
 	^#(#dwNumEntries #table)! !
+
 !MIB_UDPTABLE class categoriesForMethods!
 defineFields!initializing!public! !
 getFieldNames!**compiled accessors**!constants!private! !

@@ -5,9 +5,13 @@ DolphinTest subclass: #KeyedAspectTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 KeyedAspectTest guid: (GUID fromString: '{d76395c9-f61a-49dc-b5b1-87a2adf2020f}')!
+
 KeyedAspectTest comment: ''!
+
 !KeyedAspectTest categoriesForClass!Unclassified! !
+
 !KeyedAspectTest methodsFor!
 
 collectionKeyedAspectsTest: subject
@@ -70,6 +74,7 @@ testLookupTablePublishedKeyedAspects
 
 testOrderedCollectionPublishedKeyedAspects
 	self sequenceableCollectionKeyedAspectsTest: OrderedCollection! !
+
 !KeyedAspectTest categoriesForMethods!
 collectionKeyedAspectsTest:!helpers!private! !
 dictionaryKeyedAspectsTest:!helpers!private! !

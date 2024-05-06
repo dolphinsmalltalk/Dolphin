@@ -5,6 +5,10 @@ ExternalStructure subclass: #FIXED_INFO
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 FIXED_INFO guid: (GUID fromString: '{1c5b1ada-6747-4950-aa9c-611767556dad}')!
+
 FIXED_INFO comment: ''!
+
 !FIXED_INFO categoriesForClass!Win32-Structs! !
+

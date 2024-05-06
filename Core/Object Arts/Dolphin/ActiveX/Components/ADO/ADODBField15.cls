@@ -5,7 +5,9 @@ ADODB_ADO subclass: #ADODBField15
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
+
 ADODBField15 guid: (IID fromString: '{00001505-0000-0010-8000-00aa006d2ea4}')!
+
 ADODBField15 comment: '<ADODBField15> is a wrapper class for the COM interface ''ADODB.Field15'' generated from type information in the ''Microsoft ActiveX Data Objects 2.5 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -65,7 +67,9 @@ interface Field15 : _ADO {
 		[out, retval] VARIANT* pvar);
 };
 '!
+
 !ADODBField15 categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
+
 !ADODBField15 methodsFor!
 
 actualSize
@@ -284,6 +288,7 @@ value: pvar
 	"Set the 'Value' property of the receiver to the <variant> value of the argument."
 
 	self put_Value: pvar asVariant! !
+
 !ADODBField15 categoriesForMethods!
 actualSize!**auto generated**!properties!public! !
 appendChunk:!**auto generated**!methods!public! !
@@ -347,6 +352,7 @@ defineFunctions
 		defineFunction: #get_UnderlyingValue:
 			argumentTypes: 'variant*'
 ! !
+
 !ADODBField15 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

@@ -5,9 +5,13 @@ ClassSelector subclass: #ClassHierarchySelector
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ClassHierarchySelector guid: (GUID fromString: '{e11cf5f9-c2ec-47e1-ba1f-fa2fc4c88ad7}')!
+
 ClassHierarchySelector comment: 'A ClassHierarchySelector is used to display a tree of classes. It implements the behaviour common to the class hierarchy panes in the <ClassBrowserShell> and <ClassHierarchyDiagram>.'!
+
 !ClassHierarchySelector categoriesForClass!MVP-Presenters!MVP-Resources-IDE Tools! !
+
 !ClassHierarchySelector methodsFor!
 
 createComponents
@@ -42,6 +46,7 @@ newClass
 	package := aClass isNil ifFalse: [aClass owningPackage].
 	(self systemModel createSubclassOf: aClass inPackage: package) 
 		ifNotNil: [:newClass | self actualClass: newClass]! !
+
 !ClassHierarchySelector categoriesForMethods!
 createComponents!initializing!public! !
 customDrawClassTree:!helpers!private! !
@@ -77,6 +82,7 @@ resource_Moen_view
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ScrollingDecorator) 34 18 nil nil 34 2 8 1412431872 131073 416 nil 327686 ##(Smalltalk.Color) #default nil 5 265030 4 ##(Smalltalk.Menu) nil true 34 2 984134 2 ##(Smalltalk.CommandMenuItem) 1 1180998 4 ##(Smalltalk.CommandDescription) #findClass 8 'Find...' 1 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'FindClass.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil nil nil 514 nil true 34 4 562 1 594 #browseClassPackage 8 'Package <1d>' 1 1 642 nil true 688 8 'Package.ico' 736 nil nil 983366 1 ##(Smalltalk.DividerMenuItem) 4097 562 1 594 #browseClass 8 '&Class' 1 1 642 nil true 688 8 'ClassBrowserShell.ico' 736 nil nil 562 2097153 594 #browseClassReferences 8 'Class &References' 1 1 nil nil nil 8 '&Browse' #browse 134217729 nil nil nil nil nil 8 '&Class' nil 134217729 nil nil nil nil nil nil nil 416 1573190 1 ##(Smalltalk.ScrollingDecoratorLayout) true 170 192 34 2 410 ##(Smalltalk.MoenTreeView) 34 30 nil 416 34 2 8 1140916224 1 1136 590918 3 ##(Smalltalk.TreeModel) nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 525062 ##(Smalltalk.TreeNode) nil nil nil 170 192 8 #() 496 nil 541 nil nil nil 1136 788998 ##(Smalltalk.MoenTreeNode) nil 721926 ##(Smalltalk.MoenContour) nil nil nil nil 328198 ##(Smalltalk.Point) 1 1 1408 nil nil nil nil nil 7 459270 ##(Smalltalk.Message) #name 8 #() ##(Smalltalk.IconicListAbstract) 3 3 1049926 1 ##(Smalltalk.IconImageManager) 1394 21 21 41 nil 197382 ##(Smalltalk.Pen) nil true 393478 ##(Smalltalk.LOGPEN) 8 #[0 0 0 0 1 0 0 0 0 0 0 0 212 208 200 0] 1394 33 33 1394 19999 19999 65609 1394 1 1 1394 35 1 nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 1394 1 1 1394 771 521 1136 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 129 1 0 0 4 1 0 0] 8 #() 1394 193 193 nil 27 8 'classes' nil 1394 1 1 true 1394 33 33 1666 138 144 34 2 1730 #createAt:extent: 34 2 1394 3839 21 1394 771 521 416 1730 #contextMenu: 34 1 528 416 1810 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 0 9 0 0 14 1 0 0] 34 1 1136 1872 nil 27 )! !
+
 !ClassHierarchySelector class categoriesForMethods!
 defaultModel!models!public! !
 resource_Default_view!public!resources-views! !

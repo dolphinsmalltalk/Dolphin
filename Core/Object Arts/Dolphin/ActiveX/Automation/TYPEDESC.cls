@@ -5,12 +5,15 @@ OLEStructure subclass: #TYPEDESC
 	classVariableNames: '_OffsetOf_hreftype _OffsetOf_lpadesc _OffsetOf_lptdesc _OffsetOf_vt VTIndirections'
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
+
 TYPEDESC guid: (GUID fromString: '{c06f3b7a-0868-11d3-93af-00a024ca708a}')!
+
 TYPEDESC addClassConstant: '_OffsetOf_hreftype' value: 16r0!
 TYPEDESC addClassConstant: '_OffsetOf_lpadesc' value: 16r0!
 TYPEDESC addClassConstant: '_OffsetOf_lptdesc' value: 16r0!
 TYPEDESC addClassConstant: '_OffsetOf_vt' value: 16r4!
 TYPEDESC addClassConstant: 'VTIndirections' value: #[0 0 0 0 0 0 0 0 0 1 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 ]!
+
 TYPEDESC comment: 'TYPEDESC is an ExternalStructure class to represent the AX Automation structure, TYPEDESC.
 
 The TYPEDESC structure describes the type of a variable, function parameter, or return value, and is one of the key structures in the type library model.
@@ -27,7 +30,9 @@ Note that this structure is only 6-bytes long, and requires packing when embedde
 Instance Variables:
 	owner		<ExternalStructure>. Backpointer to original structure to keep it alive, and also to locate ITypeInfo.
 '!
+
 !TYPEDESC categoriesForClass!External-Data-Structured-COM! !
+
 !TYPEDESC methodsFor!
 
 analyzer
@@ -189,6 +194,7 @@ vtName
 	"Private - Answer the Dolphin external type name for the receiver's variant type."
 
 	^VARIANT nameOfVT: self vartype! !
+
 !TYPEDESC categoriesForMethods!
 analyzer!accessing!private! !
 arrayDesc!development!private! !
@@ -260,6 +266,7 @@ initialize
 				at: VT_UNKNOWN + 1 put: 1;
 				at: VT_SAFEARRAY + 1 put: 1;
 				yourself)! !
+
 !TYPEDESC class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

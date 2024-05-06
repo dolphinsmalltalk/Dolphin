@@ -5,10 +5,15 @@ PresenterTest subclass: #AbstractTextEditTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AbstractTextEditTest guid: (GUID fromString: '{823252e0-79ac-489c-ac11-ca4151d3e1c3}')!
+
 AbstractTextEditTest isAbstract: true!
+
 AbstractTextEditTest comment: ''!
+
 !AbstractTextEditTest categoriesForClass!Unclassified! !
+
 !AbstractTextEditTest methodsFor!
 
 margins
@@ -44,6 +49,7 @@ testPositionOfChar
 
 text
 	^self subclassResponsibility! !
+
 !AbstractTextEditTest categoriesForMethods!
 margins!private!unit tests! !
 testPositionOfChar!public!unit tests! !

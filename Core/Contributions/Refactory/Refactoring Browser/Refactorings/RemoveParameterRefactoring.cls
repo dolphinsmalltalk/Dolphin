@@ -5,9 +5,13 @@ ChangeMethodNameRefactoring subclass: #RemoveParameterRefactoring
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RemoveParameterRefactoring guid: (GUID fromString: '{275c77ed-2071-4c69-8d2f-063d31a8d03b}')!
+
 RemoveParameterRefactoring comment: ''!
+
 !RemoveParameterRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !RemoveParameterRefactoring methodsFor!
 
 computeNewSelector
@@ -72,6 +76,7 @@ storeOn: aStream
 		nextPutAll: ' selector: #';
 		nextPutAll: oldSelector.
 	aStream nextPut: $)! !
+
 !RemoveParameterRefactoring categoriesForMethods!
 computeNewSelector!private! !
 getNewSelector!public!transforming! !
@@ -93,6 +98,7 @@ model: aRBNamespace removeParameter: aString in: aClass selector: aSelector
 
 removeParameter: aString in: aClass selector: aSelector
 	^self new removeParameter: aString in: aClass selector: aSelector! !
+
 !RemoveParameterRefactoring class categoriesForMethods!
 model:removeParameter:in:selector:!instance creation!public! !
 removeParameter:in:selector:!instance creation!public! !

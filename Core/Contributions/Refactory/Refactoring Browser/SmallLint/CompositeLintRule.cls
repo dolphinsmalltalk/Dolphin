@@ -5,14 +5,18 @@ LintRule subclass: #CompositeLintRule
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 CompositeLintRule guid: (GUID fromString: '{ac469ac9-0c11-4be1-90b2-f1a9192e9d98}')!
+
 CompositeLintRule comment: 'CompositeLintRule groups LintRules into a single rule (composite pattern).
 
 Instance Variables:
 	rules	<Collection of: LintRule>	the rules that make up the composite
 
 '!
+
 !CompositeLintRule categoriesForClass!Refactory-Lint! !
+
 !CompositeLintRule methodsFor!
 
 checkClass: aSmalllintContext 
@@ -53,6 +57,7 @@ rules: aCollection
 
 viewResults
 	rules do: [:each | each viewResults]! !
+
 !CompositeLintRule categoriesForMethods!
 checkClass:!accessing!public! !
 checkMethod:!accessing!public! !
@@ -100,6 +105,7 @@ rules: aCollection name: aString
 
 transformations
 	^self ruleFor: TransformationRule protocol: 'transformations'! !
+
 !CompositeLintRule class categoriesForMethods!
 allRules!instance creation!public! !
 lintChecks!all checks!public! !

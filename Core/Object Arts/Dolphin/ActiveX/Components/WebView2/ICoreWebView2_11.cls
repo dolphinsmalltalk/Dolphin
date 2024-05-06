@@ -5,7 +5,9 @@ ICoreWebView2_10 subclass: #ICoreWebView2_11
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2_11 guid: (IID fromString: '{0be78e56-c193-4051-b943-23b460c08bdb}')!
+
 ICoreWebView2_11 comment: '`ICoreWebView2_11` is a wrapper class for the COM interface ''WebView2.ICoreWebView2_11'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -36,7 +38,9 @@ interface ICoreWebView2_11 : ICoreWebView2_10
 };
 ```
 '!
+
 !ICoreWebView2_11 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2_11 methodsFor!
 
 Add_ContextMenuRequested: eventHandler token: token
@@ -69,6 +73,7 @@ Remove_ContextMenuRequested: token
 
 	<virtual stdcall: hresult 102 sqword>
 	^self invalidCall: _failureCode! !
+
 !ICoreWebView2_11 categoriesForMethods!
 Add_ContextMenuRequested:token:!**auto generated**!COM Interfaces-ICoreWebView2_11!private! !
 CallDevToolsProtocolMethodForSession:methodName:parametersAsJson:handler:!**auto generated**!COM Interfaces-ICoreWebView2_11!private! !
@@ -89,6 +94,7 @@ defineFunctions
 		defineFunction: #Remove_ContextMenuRequested:
 			argumentTypes: 'sqword'
 ! !
+
 !ICoreWebView2_11 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

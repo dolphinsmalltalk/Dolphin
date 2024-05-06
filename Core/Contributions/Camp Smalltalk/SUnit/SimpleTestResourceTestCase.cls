@@ -5,9 +5,13 @@ TestCase subclass: #SimpleTestResourceTestCase
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SimpleTestResourceTestCase guid: (GUID fromString: '{8998ffb7-787b-4da1-99fd-2f92b2c4e993}')!
+
 SimpleTestResourceTestCase comment: ''!
+
 !SimpleTestResourceTestCase categoriesForClass!SUnit! !
+
 !SimpleTestResourceTestCase methodsFor!
 
 dummy
@@ -46,6 +50,7 @@ testResourcesCollection
 	| collection |
 	collection := self resources.
 	self assert: collection size equals: 1! !
+
 !SimpleTestResourceTestCase categoriesForMethods!
 dummy!public! !
 error!public! !
@@ -61,6 +66,7 @@ testResourcesCollection!public! !
 
 resources
 	^Set new add: SimpleTestResource; yourself! !
+
 !SimpleTestResourceTestCase class categoriesForMethods!
 resources!public! !
 !

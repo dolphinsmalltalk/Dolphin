@@ -5,9 +5,13 @@ StVariable subclass: #StStaticVariable
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StStaticVariable guid: (GUID fromString: '{b667998a-be56-4e79-bf77-13e991611554}')!
+
 StStaticVariable comment: '<StStaticVariable> is a concrete class of <StVariable> to describe static variables, i.e. class variables, pool variables, and global variables.'!
+
 !StStaticVariable categoriesForClass!Kernel-Objects! !
+
 !StStaticVariable methodsFor!
 
 binding
@@ -36,6 +40,7 @@ setScope: anStLexicalScope binding: aVariableBinding
 	scope := anStLexicalScope.
 	binding := aVariableBinding.
 	self initialize! !
+
 !StStaticVariable categoriesForMethods!
 binding!public! !
 isConstant!public!testing! !
@@ -48,6 +53,7 @@ setScope:binding:!initializing!private! !
 
 scope: anStLexicalScope binding: aVariableBinding
 	^self new setScope: anStLexicalScope binding: aVariableBinding! !
+
 !StStaticVariable class categoriesForMethods!
 scope:binding:!public! !
 !

@@ -5,7 +5,9 @@ OLEStructure subclass: #FONTDESC
 	classVariableNames: '_OffsetOf_cySize _OffsetOf_dwSize _OffsetOf_fItalic _OffsetOf_fStrikethrough _OffsetOf_fUnderline _OffsetOf_lpstrName _OffsetOf_sCharset _OffsetOf_sWeight'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 FONTDESC guid: (GUID fromString: '{73f5f101-a4da-11d3-b376-080046056106}')!
+
 FONTDESC addClassConstant: '_OffsetOf_cySize' value: 16r8!
 FONTDESC addClassConstant: '_OffsetOf_dwSize' value: 16r0!
 FONTDESC addClassConstant: '_OffsetOf_fItalic' value: 16r14!
@@ -14,10 +16,13 @@ FONTDESC addClassConstant: '_OffsetOf_fUnderline' value: 16r18!
 FONTDESC addClassConstant: '_OffsetOf_lpstrName' value: 16r4!
 FONTDESC addClassConstant: '_OffsetOf_sCharset' value: 16r12!
 FONTDESC addClassConstant: '_OffsetOf_sWeight' value: 16r10!
+
 FONTDESC comment: 'FONTDESC is an <ExternalStructure> class to represent the OLE structure of the same name.
 
 FONTDESC is similar to a LOGFONT in that it represents a logical description of a Font, although in this case an OLE Font object (see IFont and IFontDisp). FONTDESC is simpler than LOGFONT, however.'!
+
 !FONTDESC categoriesForClass!External-Data-Structured-COM! !
+
 !FONTDESC methodsFor!
 
 cySize
@@ -115,6 +120,7 @@ sWeight: anInteger
 	"Set the receiver's 'sWeight' field to the value of the argument, anInteger"
 
 	bytes swordAtOffset: _OffsetOf_sWeight put: anInteger! !
+
 !FONTDESC categoriesForMethods!
 cySize!**compiled accessors**!public! !
 cySize:!**compiled accessors**!public! !
@@ -185,6 +191,7 @@ fromFont: font
 
 getFieldNames
 	^#(#dwSize #lpstrName #cySize #sWeight #sCharset #fItalic #fUnderline #fStrikethrough)! !
+
 !FONTDESC class categoriesForMethods!
 defineFields!public!template definition! !
 fromFont:!instance creation!public! !

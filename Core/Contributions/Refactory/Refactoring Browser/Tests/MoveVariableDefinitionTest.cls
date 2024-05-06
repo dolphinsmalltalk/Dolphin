@@ -5,9 +5,13 @@ RefactoringTest subclass: #MoveVariableDefinitionTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MoveVariableDefinitionTest guid: (GUID fromString: '{dc2344f4-f0f3-4fc5-af74-d852d5d036ae}')!
+
 MoveVariableDefinitionTest comment: ''!
+
 !MoveVariableDefinitionTest categoriesForClass!Refactory-Testing! !
+
 !MoveVariableDefinitionTest methodsFor!
 
 testMoveDefinition
@@ -82,6 +86,7 @@ testNonExistantName
 				selector: #displayName.
 	self proceedThroughWarning: 
 			[self should: [self executeRefactoring: aRefactoring] raise: Refactoring abortSignal]! !
+
 !MoveVariableDefinitionTest categoriesForMethods!
 testMoveDefinition!public!tests! !
 testMoveDefinitionIntoBlockThatIsAReceiverOfACascadedMessage!public!tests! !

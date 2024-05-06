@@ -5,14 +5,18 @@ OSVERSIONINFOEXW subclass: #OSVERSIONINFO
 	classVariableNames: 'Current'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 OSVERSIONINFO guid: (GUID fromString: '{87b4c604-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 OSVERSIONINFO comment: 'OSVERSIONINFO is an ExternalStructure class to represent the Win32 OSVERSIONINFOEX structure.
 
 OSVERSIONINFO was used to retrieve version information about the host OS on which an application is running. However the Windows API GetVersionEx has been deprecated by Microsoft, and consequently the functions of this class that relied on information returned by GetVersionEx are deprecated. The Version Helper functions on VMLibrary should be used instead. 
 
 Note that rather than test for a specific OS version in class library methods, it is preferable to define a capability enquiry with an appropriate intention revealing name, e.g. see those in SystemMetrics. In other words, don''t check for the OS version info that supports the functionality you required from your application code you should use (or define and use) a query to test for the specific feature or functionality on which you depend.
 '!
+
 !OSVERSIONINFO categoriesForClass!Deprecated! !
+
 !OSVERSIONINFO methodsFor!
 
 calculateOsName
@@ -147,6 +151,7 @@ osName
 
 	osName isNil ifTrue: [osName := self calculateOsName].
 	^osName! !
+
 !OSVERSIONINFO categoriesForMethods!
 calculateOsName!helpers!private! !
 hasThemes!accessing!private! !
@@ -202,6 +207,7 @@ uninitialize
 
 	self clear.
 ! !
+
 !OSVERSIONINFO class categoriesForMethods!
 clear!initializing!private! !
 current!instance creation!public! !

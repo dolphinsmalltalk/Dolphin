@@ -5,12 +5,16 @@ AndEnvironment subclass: #SmalllintFilterEnvironment
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SmalllintFilterEnvironment guid: (GUID fromString: '{7fcd066a-29bc-4257-8ede-900b16e13492}')!
+
 SmalllintFilterEnvironment comment: 'SmalllintFilterEnvironment is a special environment that is used to filter out invalid Smalllint results.
 
 Instance Variables:
 	lintRuleName	<String>	the name of the lint rule that we are looking at'!
+
 !SmalllintFilterEnvironment categoriesForClass!Refactory-Environments! !
+
 !SmalllintFilterEnvironment methodsFor!
 
 addFilterForClass: aBehavior 
@@ -30,6 +34,7 @@ isForSmalllint
 
 lintRuleName: aString 
 	lintRuleName := aString! !
+
 !SmalllintFilterEnvironment categoriesForMethods!
 addFilterForClass:!accessing!actions!public! !
 addFilterForClass:andSelector:!accessing!actions!public! !

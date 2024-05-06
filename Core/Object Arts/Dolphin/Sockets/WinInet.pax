@@ -5,7 +5,6 @@ package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk WinInet Library Wrapper
 Copyright (c) Object Arts Ltd, 1997-2006.'.
 
-
 package classNames
 	add: #WinInetLibrary;
 	yourself.
@@ -28,11 +27,6 @@ ExternalLibrary subclass: #WinInetLibrary
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

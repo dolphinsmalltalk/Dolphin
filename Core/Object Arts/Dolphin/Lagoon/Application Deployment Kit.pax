@@ -13,7 +13,6 @@ For documentation evaluate:
 
 package basicPackageVersion: '6.2'.
 
-
 package classNames
 	add: #ApplicationDeploymentWizard;
 	yourself.
@@ -107,9 +106,6 @@ ValueDialog subclass: #ApplicationDeploymentWizard
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
-"Global Aliases"!
-
-
 "Loose Methods"!
 
 !BasicImageStripper methodsFor!
@@ -132,6 +128,7 @@ setEvents: anEventsCollectionOrNil
 	Answer the receiver."
 
 	events := anEventsCollectionOrNil! !
+
 !BasicImageStripper categoriesForMethods!
 getEvents!events!private! !
 postCopy!copying!public! !
@@ -362,6 +359,7 @@ writeLogFile: aBoolean
 	to aBoolean."
 
 	flags := flags mask: WriteLogMask set: aBoolean! !
+
 !ImageStripper categoriesForMethods!
 canDeploy!public!testing! !
 compileExternalStructures:!accessing!public! !
@@ -472,6 +470,7 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^6! !
+
 !ImageStripper class categoriesForMethods!
 for:!instance creation!public! !
 publishedAspectsOfInstances!development!public! !
@@ -505,6 +504,7 @@ rehydrateImageStripper: stripperClass
 			["If the package has been renamed the STB'd image stripper might lose its root package"
 			stripper rootPackage isNil ifTrue: [stripper rootPackage: self]].
 	^stripper! !
+
 !Package categoriesForMethods!
 hasImageStripper!private!testing! !
 imageStripper!accessing!public! !
@@ -518,6 +518,7 @@ deploy
 
 	ApplicationDeploymentWizard showModalOn: (self singlePackage aspectValue: #imageStripper).
 ! !
+
 !PackageSelector categoriesForMethods!
 deploy!commands!public! !
 !
@@ -533,6 +534,7 @@ publishedAspectsOfInstances
 		add: (Aspect name: #stringTables);
 		add: (Aspect name: #translations);
 		yourself! !
+
 !VersionResource class categoriesForMethods!
 publishedAspectsOfInstances!constants!development!public! !
 !
@@ -549,6 +551,7 @@ printOn: target
 		nextPutAll: ', wType='; print: self wType;
 		nextPut: $)
 	! !
+
 !VS_VERSION_INFO_HEADER categoriesForMethods!
 printOn:!printing!public! !
 !

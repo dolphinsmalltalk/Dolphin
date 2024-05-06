@@ -5,9 +5,13 @@ RefactoringTest subclass: #MoveMethodTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MoveMethodTest guid: (GUID fromString: '{7313b46f-a4cc-4401-8345-57823fb459af}')!
+
 MoveMethodTest comment: ''!
+
 !MoveMethodTest categoriesForClass!Refactory-Testing! !
+
 !MoveMethodTest methodsFor!
 
 testMoveMethodIntoArgument
@@ -162,6 +166,7 @@ testMovePrimitiveMethod
 				class: Object
 				variable: 'OrderedCollection'.
 	self shouldFail: refactoring! !
+
 !MoveMethodTest categoriesForMethods!
 testMoveMethodIntoArgument!public!tests! !
 testMoveMethodIntoClassVariable!public!tests! !

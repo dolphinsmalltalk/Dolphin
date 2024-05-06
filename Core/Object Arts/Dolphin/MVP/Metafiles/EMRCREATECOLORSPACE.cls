@@ -5,9 +5,12 @@ ENHMETARECORD subclass: #EMRCREATECOLORSPACE
 	classVariableNames: '_OffsetOf_ihCS _OffsetOf_lcs'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 EMRCREATECOLORSPACE guid: (GUID fromString: '{20d38d2a-27f0-4a74-ad30-adb4de0f37c1}')!
+
 EMRCREATECOLORSPACE addClassConstant: '_OffsetOf_ihCS' value: 16r8!
 EMRCREATECOLORSPACE addClassConstant: '_OffsetOf_lcs' value: 16rC!
+
 EMRCREATECOLORSPACE comment: '<EMRCREATECOLORSPACE> is an <ExternalStructure> class to wrap the struct ''Win32.EMRCREATECOLORSPACE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -23,7 +26,9 @@ struct tagEMRCREATECOLORSPACE {
 	LOGCOLORSPACE lcs;
 } EMRCREATECOLORSPACE;
 '!
+
 !EMRCREATECOLORSPACE categoriesForClass!Win32-Structs! !
+
 !EMRCREATECOLORSPACE methodsFor!
 
 ihCS
@@ -49,6 +54,7 @@ lcs: aLOGCOLORSPACE
 		from: ##(_OffsetOf_lcs + 1)
 		to: ##(_OffsetOf_lcs + LOGCOLORSPACE basicByteSize)
 		startingAt: 1! !
+
 !EMRCREATECOLORSPACE categoriesForMethods!
 ihCS!**compiled accessors**!public! !
 ihCS:!**compiled accessors**!public! !
@@ -84,6 +90,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_CREATECOLORSPACE! !
+
 !EMRCREATECOLORSPACE class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

@@ -5,9 +5,13 @@ ClassRefactoring subclass: #ChildrenToSiblingsRefactoring
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ChildrenToSiblingsRefactoring guid: (GUID fromString: '{23f61ab3-e5ef-433b-821d-21c019236bef}')!
+
 ChildrenToSiblingsRefactoring comment: ''!
+
 !ChildrenToSiblingsRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !ChildrenToSiblingsRefactoring methodsFor!
 
 abstractSuperclass
@@ -179,6 +183,7 @@ transform
 		pushUpMethods;
 		changeIsKindOfReferences;
 		reparentSubclasses! !
+
 !ChildrenToSiblingsRefactoring categoriesForMethods!
 abstractSuperclass!accessing!private! !
 addSuperclass!public!transforming! !
@@ -221,6 +226,7 @@ name: aClassName class: aClass subclasses: subclassCollection
 			class: aClass
 			subclasses: subclassCollection;
 		yourself! !
+
 !ChildrenToSiblingsRefactoring class categoriesForMethods!
 model:name:class:subclasses:!instance creation!public! !
 name:class:subclasses:!instance creation!public! !

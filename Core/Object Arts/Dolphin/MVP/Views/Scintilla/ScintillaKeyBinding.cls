@@ -5,7 +5,9 @@ Object subclass: #ScintillaKeyBinding
 	classVariableNames: 'Commands VirtualKeyMap'
 	poolDictionaries: 'ScintillaConstants Win32Constants'
 	classInstanceVariableNames: ''!
+
 ScintillaKeyBinding guid: (GUID fromString: '{bf35c065-fef0-4aa1-8dcd-e40e73c5447a}')!
+
 ScintillaKeyBinding comment: 'ScintillaKeyBinding is a support class for the ScintillaView, used to represent the key bindings defined in a particular instance. The control itself defines a large set of default mappings, but these can be replaced and/or augmented.
 
 Instance Variables:
@@ -17,7 +19,9 @@ Class Variables:
 	Commands		<IdentityDictionary> mapping Dolphin accelerator key codes to command symbols.
 
 '!
+
 !ScintillaKeyBinding categoriesForClass!MVP-Views-Support! !
+
 !ScintillaKeyBinding methodsFor!
 
 = comparand 
@@ -92,6 +96,7 @@ translateVirtualKey: vkInteger
 	key code (SCK_xxx)"
 
 	^VirtualKeyMap at: (vkInteger bitAnd: 16rFF) + 1! !
+
 !ScintillaKeyBinding categoriesForMethods!
 =!comparing!public! !
 acceleratorKey!accessing!public! !
@@ -279,6 +284,7 @@ newAcceleratorKey: keyInteger message: sciInteger
 
 newChord: aString message: sciInteger
 	^self newAcceleratorKey: (AcceleratorTable keyCodeFromInvariantString: aString) message: sciInteger! !
+
 !ScintillaKeyBinding class categoriesForMethods!
 icon!constants!development!public! !
 initialize!development!initializing!private! !

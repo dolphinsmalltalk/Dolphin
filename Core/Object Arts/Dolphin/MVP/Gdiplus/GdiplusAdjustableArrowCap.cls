@@ -5,9 +5,13 @@ GdiplusCustomLineCap subclass: #GdiplusAdjustableArrowCap
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusAdjustableArrowCap guid: (GUID fromString: '{c1fcc800-8763-11d7-b609-00e0987e8081}')!
+
 GdiplusAdjustableArrowCap comment: 'GdiplusAdjustableArrowCap creates a line cap that looks like an arrow.'!
+
 !GdiplusAdjustableArrowCap categoriesForClass!Unclassified! !
+
 !GdiplusAdjustableArrowCap methodsFor!
 
 height
@@ -77,6 +81,7 @@ width: aNumber
 	| status |
 	(status := GdiplusLibrary default gdipSetAdjustableArrowCapWidth: self asParameter width: aNumber) 
 		= Ok ifFalse: [GdiplusError signal: 'GdipSetAdjustableArrowCapWidth failed' with: status]! !
+
 !GdiplusAdjustableArrowCap categoriesForMethods!
 height!accessing!public! !
 height:!accessing!public! !
@@ -135,6 +140,7 @@ height: heightReal width: widthReal isFilled: isFilledBoolean
 
 strokePath: aStrokePath
 	^self shouldNotImplement! !
+
 !GdiplusAdjustableArrowCap class categoriesForMethods!
 exampleGdipAACArrowCap!examples!public!unit tests! !
 height:width:isFilled:!instance creation!public! !

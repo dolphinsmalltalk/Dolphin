@@ -5,9 +5,13 @@ CreateAccessorsForVariableRefactoring subclass: #RenameAccessorsForVariableRefac
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RenameAccessorsForVariableRefactoring guid: (GUID fromString: '{9e8e6c09-efcb-4259-82e5-b37dde861a8c}')!
+
 RenameAccessorsForVariableRefactoring comment: ''!
+
 !RenameAccessorsForVariableRefactoring categoriesForClass!Unclassified! !
+
 !RenameAccessorsForVariableRefactoring methodsFor!
 
 createGetterAccessor
@@ -73,6 +77,7 @@ setSetterMethod
 
 	setterMethod isNil ifTrue: [setterMethod := self findSetterMethod]
 			! !
+
 !RenameAccessorsForVariableRefactoring categoriesForMethods!
 createGetterAccessor!public!transforming! !
 createSetterAccessor!public!transforming! !

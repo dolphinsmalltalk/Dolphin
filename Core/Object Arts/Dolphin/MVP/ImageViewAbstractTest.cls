@@ -5,10 +5,15 @@ PresenterTest subclass: #ImageViewAbstractTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ImageViewAbstractTest guid: (GUID fromString: '{ed83beab-fa00-4772-a8d4-fcf6e16c948a}')!
+
 ImageViewAbstractTest isAbstract: true!
+
 ImageViewAbstractTest comment: ''!
+
 !ImageViewAbstractTest categoriesForClass!Unclassified! !
+
 !ImageViewAbstractTest methodsFor!
 
 image
@@ -50,6 +55,7 @@ testInvalidateOnResize
 				lpRect: rect
 				bErase: false).
 	self assert: rect extent equals: extent * 2 - (50 @ 100)! !
+
 !ImageViewAbstractTest categoriesForMethods!
 image!private!Running! !
 setUp!private!Running! !

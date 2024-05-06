@@ -5,7 +5,9 @@ IUnknown subclass: #ITypeInfo
 	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants AXAutomationErrors'
 	classInstanceVariableNames: ''!
+
 ITypeInfo guid: (IID fromString: '{00020401-0000-0000-c000-000000000046}')!
+
 ITypeInfo comment: 'ITypeInfo is a COMInterface class which wraps an OLE Automation ITypeInfo interface pointer.
 
 ITypeInfo contains member functions which allow one to enquire about the structure and attributes of individual elements of a Type Library. Unfortunately it is rather poorly factored (much in need of conditional elimination in fact) in that an ITypeInfo can describe any one of the following automation elements:
@@ -29,7 +31,9 @@ These types correspond to the members of the TYPEKIND enumeration, respectively:
 	- TYPEKIND_UNION
 
 As an ITypeInfo can describe any of these quite disparate types, it contains a union of all the necessary methods to access all the possible information for each possible type. This makes it rather a large and complex interface, and also means that a number of the methods may not be relevant any individual ITypeInfo instance - one has to do a switch on type(kind) to determine which are relevant. With this in mind we have chosen to provide a separate hierarchy of classes to wrap ITypeInfo - see AXTypeInfoAnalyzer and subclasses.'!
+
 !ITypeInfo categoriesForClass!COM-Interfaces! !
+
 !ITypeInfo methodsFor!
 
 AddressOfMember: addressOfMember invKind: invKind ppv: ppv
@@ -578,6 +582,7 @@ typeLib
 
 	^self libraryAndIndex key
 ! !
+
 !ITypeInfo categoriesForMethods!
 AddressOfMember:invKind:ppv:!COM Interfaces-OAIDL.ITypeInfo!private! !
 asImplType!accessing!converting!public! !
@@ -686,6 +691,7 @@ defineFunctions
 			returnType: 'void' 
 			argumentTypes: 'VARDESC*'
 ! !
+
 !ITypeInfo class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

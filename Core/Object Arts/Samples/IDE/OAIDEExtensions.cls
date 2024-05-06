@@ -5,7 +5,9 @@ Object subclass: #OAIDEExtensions
 	classVariableNames: 'ClassCommentTemplateMask Current KeyHelpMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 OAIDEExtensions guid: (GUID fromString: '{7803cf6a-7f63-44a5-80a6-feb5e0af07a2}')!
+
 OAIDEExtensions comment: 'Class to host Object Arts extensions to the standard Dolphin IDE tools.
 
 This is mainly intended as a sample to demonstrate how to implement IDE extensions in Dolphin. It illustrates:
@@ -14,7 +16,9 @@ This is mainly intended as a sample to demonstrate how to implement IDE extensio
 - using <ClosedCommandDescription>s to build "closed" commands that are pre-targeted at a particular receiver and which can manage their own enablement/disablement state.
 - registering with the system to appear in ''User Preferences'' so that extensions can be enabled and disabled by the user.
 - use of the IE web browser control to display generated HTML.'!
+
 !OAIDEExtensions categoriesForClass!Kernel-Objects! !
+
 !OAIDEExtensions methodsFor!
 
 allToolClasses
@@ -357,6 +361,7 @@ variableDescriptionsFor: aClass
 						cr].
 			stream cr].
 	^stream contents! !
+
 !OAIDEExtensions categoriesForMethods!
 allToolClasses!constants!private! !
 allVisibleSubViewsOf:do:!helpers!private! !
@@ -427,6 +432,7 @@ uninitialize
 	Current isNil ifTrue: [^self].
 	Current release.
 	Current := nil! !
+
 !OAIDEExtensions class categoriesForMethods!
 current!accessing!public! !
 initialize!initializing!public! !

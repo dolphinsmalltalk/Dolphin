@@ -5,11 +5,14 @@ ExternalStructure subclass: #GpWMFRect16
 	classVariableNames: '_OffsetOf_bottom _OffsetOf_left _OffsetOf_right _OffsetOf_top'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GpWMFRect16 guid: (GUID fromString: '{1713ca90-9e3e-465b-9c3d-3c7b201f00ee}')!
+
 GpWMFRect16 addClassConstant: '_OffsetOf_bottom' value: 16r6!
 GpWMFRect16 addClassConstant: '_OffsetOf_left' value: 16r0!
 GpWMFRect16 addClassConstant: '_OffsetOf_right' value: 16r4!
 GpWMFRect16 addClassConstant: '_OffsetOf_top' value: 16r2!
+
 GpWMFRect16 comment: '<GpWMFRect16> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpWMFRect16'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
@@ -26,7 +29,9 @@ struct tagGpWMFRect16 {
 	short bottom;
 } GpWMFRect16;
 '!
+
 !GpWMFRect16 categoriesForClass!Unclassified! !
+
 !GpWMFRect16 methodsFor!
 
 bottom
@@ -68,6 +73,7 @@ top: anInteger
 	"Set the receiver's 'top' field to the value of the argument, anInteger"
 
 	bytes swordAtOffset: _OffsetOf_top put: anInteger! !
+
 !GpWMFRect16 categoriesForMethods!
 bottom!**compiled accessors**!public! !
 bottom:!**compiled accessors**!public! !
@@ -103,6 +109,7 @@ defineFields
 
 getFieldNames
 	^#(#left #top #right #bottom)! !
+
 !GpWMFRect16 class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

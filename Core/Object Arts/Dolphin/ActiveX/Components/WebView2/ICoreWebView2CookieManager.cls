@@ -5,7 +5,9 @@ ICoreWebView2Interface subclass: #ICoreWebView2CookieManager
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2CookieManager guid: (IID fromString: '{177cd9e7-b6f5-451a-94a0-5d7a3a4c4141}')!
+
 ICoreWebView2CookieManager comment: '`ICoreWebView2CookieManager` is a wrapper class for the COM interface ''WebView2.ICoreWebView2CookieManager'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -55,7 +57,9 @@ interface ICoreWebView2CookieManager : IUnknown
 };
 ```
 '!
+
 !ICoreWebView2CookieManager categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2CookieManager methodsFor!
 
 addOrUpdateCookie: cookie
@@ -195,6 +199,7 @@ getCookies: uriString thenDo: aDyadicValuable
 				queryInterface: ICoreWebView2GetCookiesCompletedHandler.
 	self GetCookies: uriString asUtf16String handler: handler.
 	handler free! !
+
 !ICoreWebView2CookieManager categoriesForMethods!
 addOrUpdateCookie:!**auto generated**!methods!public! !
 AddOrUpdateCookie:!**auto generated**!COM Interfaces-ICoreWebView2CookieManager!private! !
@@ -237,6 +242,7 @@ defineFunctions
 			argumentTypes: 'lpwstr lpwstr lpwstr';
 		defineFunction: #DeleteAllCookies
 ! !
+
 !ICoreWebView2CookieManager class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

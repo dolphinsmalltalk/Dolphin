@@ -5,9 +5,13 @@ SingletonSearchPolicy subclass: #AlwaysSearchPolicy
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AlwaysSearchPolicy guid: (GUID fromString: '{2e18d23b-3270-41b5-8abe-acaaf5d21a3c}')!
+
 AlwaysSearchPolicy comment: ''!
+
 !AlwaysSearchPolicy categoriesForClass!Collections-Support! !
+
 !AlwaysSearchPolicy methodsFor!
 
 compare: operand1 with: operand2
@@ -27,6 +31,7 @@ name
 	"Answer the name of the `SearchPolicy`. This is nil apart from the named singletons."
 
 	^#always! !
+
 !AlwaysSearchPolicy categoriesForMethods!
 compare:with:!comparing!public! !
 hash:!comparing!public! !

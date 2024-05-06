@@ -5,9 +5,13 @@ StackFrame subclass: #BlockFrame
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 BlockFrame guid: (GUID fromString: '{87b4c6e5-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 BlockFrame comment: ''!
+
 !BlockFrame categoriesForClass!Kernel-Methods! !
+
 !BlockFrame methodsFor!
 
 argumentCount
@@ -50,6 +54,7 @@ method: aCompiledMethod
 			block := block shallowCopy.
 			self environment: block].
 	block method: aCompiledMethod! !
+
 !BlockFrame categoriesForMethods!
 argumentCount!accessing!public! !
 block!accessing!private! !

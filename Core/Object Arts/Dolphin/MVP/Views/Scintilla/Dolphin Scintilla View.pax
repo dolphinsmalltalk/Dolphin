@@ -36,7 +36,6 @@ OR PERFORMANCE OF THIS SOFTWARE. "'.
 
 package basicPackageVersion: '3.6.6'.
 
-
 package classNames
 	add: #NullScintillaStyler;
 	add: #QueryableScintillaAttribute;
@@ -110,121 +109,145 @@ Object subclass: #ScintillaAnnotation
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #ScintillaAttribute
 	instanceVariableNames: 'id'
 	classVariableNames: ''
 	poolDictionaries: 'ScintillaConstants'
 	classInstanceVariableNames: 'propertyMap'!
+
 Object subclass: #ScintillaIndicator
 	instanceVariableNames: 'styleName range tag'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #ScintillaKeyBinding
 	instanceVariableNames: 'acceleratorKey message'
 	classVariableNames: 'Commands VirtualKeyMap'
 	poolDictionaries: 'ScintillaConstants Win32Constants'
 	classInstanceVariableNames: ''!
+
 Object subclass: #ScintillaLexerMetadata
 	instanceVariableNames: 'view id'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #ScintillaListItem
 	instanceVariableNames: 'text icon'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #ScintillaMarker
 	instanceVariableNames: 'view definition line handle'
 	classVariableNames: ''
 	poolDictionaries: 'ScintillaConstants'
 	classInstanceVariableNames: ''!
+
 Object subclass: #ScintillaPropertyDescriptor
 	instanceVariableNames: 'getSelector defaultValue setMessage setSelector getMessage flags'
 	classVariableNames: 'AlwaysPrintMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #ScintillaStyler
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ScintillaConstants'
 	classInstanceVariableNames: ''!
+
 ExternalLibrary subclass: #ScintillaLibrary
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 NMHDR subclass: #SCNotification
 	instanceVariableNames: 'view textString'
 	classVariableNames: '_OffsetOf_annotationLinesAdded _OffsetOf_ch _OffsetOf_characterSource _OffsetOf_foldLevelNow _OffsetOf_foldLevelPrev _OffsetOf_length _OffsetOf_linesAdded _OffsetOf_listCompletionMethod _OffsetOf_listType _OffsetOf_lParam _OffsetOf_margin _OffsetOf_message _OffsetOf_modificationType _OffsetOf_modifiers _OffsetOf_scLine _OffsetOf_scPosition _OffsetOf_text _OffsetOf_token _OffsetOf_updated _OffsetOf_wParam _OffsetOf_x _OffsetOf_y'
 	poolDictionaries: 'ScintillaConstants'
 	classInstanceVariableNames: ''!
+
 ValueDialog subclass: #ScintillaTextStylesDialog
 	instanceVariableNames: 'stylesPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ValuePresenter subclass: #ScintillaStylesCollectionPresenter
 	instanceVariableNames: 'collectionPresenter detailPresenter settingSelection'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ValuePresenter subclass: #ScintillaTextStylePresenter
 	instanceVariableNames: 'facePresenter pointSizePresenter forecolorPresenter backcolorPresenter isItalicPresenter isBoldPresenter isUnderlinedPresenter casePresenter characterSetPresenter previewPresenter fillToEndOfLinePresenter normalStyle defaultStyle isInvisiblePresenter isHotspotPresenter isReadOnlyPresenter namePresenter idPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ScintillaAttribute subclass: #QueryableScintillaAttribute
 	instanceVariableNames: 'view'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ScintillaAttribute subclass: #ScintillaMarkerDefinition
 	instanceVariableNames: 'code forecolor backcolor view name alpha selectionBackcolor _reserved9 _reserved10 _reserved11 _reserved12'
 	classVariableNames: 'FolderNames'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ScintillaAttribute subclass: #ScintillaTextStyle
 	instanceVariableNames: 'forecolor backcolor flags faceName centiPointSize characterSet case name description weight _reserved12'
 	classVariableNames: 'EolFilledMask HotspotMask InvisibleMask ItalicMask PredefinedStyleNames ReadOnlyMask UnderlinedMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 QueryableScintillaAttribute subclass: #ScintillaIndicatorStyle
 	instanceVariableNames: 'forecolor style under name alpha hoverStyle hoverForecolor flags foreAlpha _reserved12'
 	classVariableNames: 'HoverForecolor HoverStyle IndicatorStyles StyleNames'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 QueryableScintillaAttribute subclass: #ScintillaMargin
 	instanceVariableNames: 'width type isSensitive mask cursorType backcolor'
 	classVariableNames: 'CursorTypes MarginTypes'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ScintillaTextStyle subclass: #ScintillaCallTipStyle
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ScintillaLexerMetadata subclass: #ScintillaLexerNamedStyle
 	instanceVariableNames: 'name'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ScintillaLexerMetadata subclass: #ScintillaLexerProperty
 	instanceVariableNames: 'type'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ScintillaPropertyDescriptor subclass: #ScintillaColorPropertyDescriptor
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ScintillaStyler subclass: #NullScintillaStyler
 	instanceVariableNames: 'normalStyleName'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MultilineTextEdit subclass: #ScintillaView
 	instanceVariableNames: 'this currentTextStyles styleIdMap styler markerDefinitions markers wordChars registeredImages modificationEventMask autoCStops autoCFillups whitespaceBackcolor whitespaceForecolor selectionBackcolor selectionForecolor indicators callTipTabWidth punctuation callTipHighlightColor braceChars whitespaces scFlags allTextStyles foldMarginColor foldMarginHiColor foldMarkerStyle foldFlags stringClass keyBindings indicatorStyles secondarySelectionForecolor secondarySelectionBackcolor annotationStyles caretForecolor secondaryCaretForecolor edgeColor currentLineBackcolor activeHotspotForecolor activeHotspotBackcolor _unused56 _unused57 _unused58 _unused59 _unused60 _unused61 _unused62 _unused63 _unused64 _unused65'
 	classVariableNames: 'AnnotationStylesOffset BackgroundDwellEvents BraceHilightingMask CodePages DefaultCallTipTabWidth DefaultKeyBindings DefaultTextStyles FoldingMask Library MarginStylesOffset'
@@ -249,6 +272,7 @@ resource_Scintilla_view
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ScintillaView) 34 50 nil nil 34 2 8 1445007428 1025 416 721990 2 ##(Smalltalk.ValueHolder) nil false 1310726 ##(Smalltalk.EqualitySearchPolicy) nil 327686 ##(Smalltalk.Color) #default nil 5 nil nil nil 416 nil 8 1533163101 852486 ##(Smalltalk.NullConverter) nil nil 9 nil 170 192 34 4 #normal 1182790 1 ##(Smalltalk.ScintillaTextStyle) 1 nil nil 1 nil nil nil nil #normal nil nil nil #callTip 658 77 546 #gray 546 #white 1 nil nil nil nil #callTip nil nil nil nil 1245510 1 ##(Smalltalk.NullScintillaStyler) #normal 170 192 34 2 #default 1641542 2 ##(Smalltalk.ScintillaMarkerDefinition) 1 nil nil nil 416 #circle nil nil nil nil nil nil 138 ##(Smalltalk.IdentitySet) 8 #() nil 170 176 848 nil nil nil nil nil 546 #silver nil nil 65 nil nil nil 8 '' 3 170 192 34 2 #container 624 nil nil nil nil 130003 nil 170 192 34 6 1 1510470 3 ##(Smalltalk.ScintillaIndicatorStyle) 1 416 546 #commonGreen 3 false 1 nil nil nil nil nil nil 3 978 3 416 546 #blue 5 false 3 nil nil nil nil nil nil 5 978 5 416 546 #red 1 false 5 nil nil nil nil nil nil nil nil 170 192 34 6 #Warning 658 1027 546 #darkGoldenrod 546 #ivory 1 nil nil nil nil #Warning nil nil nil #Notification 658 1029 nil 546 #gainsboro 1 nil nil nil nil #Notification nil nil nil #Error 658 1031 546 #firebrick 546 #floralWhite 1 nil nil nil nil #Error nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 8 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 7039 21 1362 631 501 416 1314 #textLimit: 8 #(1073741823) 416 1314 #caretPeriod: 8 #(530) 416 1314 #margins: 34 1 34 3 985158 3 ##(Smalltalk.ScintillaMargin) 1 416 1 3 nil nil nil nil 1522 3 416 33 nil 3 67108863 nil nil 1522 5 416 1 nil 3 -67108863 nil nil 416 1314 #tabWidth: 8 #(4) 416 1314 #targetRange: 34 1 525062 ##(Smalltalk.Interval) 1 -1 3 416 1314 #maxCompletionListHeight: 8 #(9) 416 1314 #edgeColumn: 8 #(1) 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 191 13 0 0 10 0 0 0 250 14 0 0 4 1 0 0] 8 #() 1362 193 193 nil 29 )! !
+
 !TextPresenter class categoriesForMethods!
 resource_Scintilla_view!public!resources-views! !
 !

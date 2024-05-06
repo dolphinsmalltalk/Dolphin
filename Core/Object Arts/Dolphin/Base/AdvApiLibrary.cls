@@ -5,12 +5,16 @@ ExternalLibrary subclass: #AdvApiLibrary
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AdvApiLibrary guid: (GUID fromString: '{64674054-3a82-101b-8181-00aa003743d3}')!
+
 AdvApiLibrary comment: 'AdvApiLibrary is the <ExternalLibrary> class to represent the Win32 system DLL, ADVAPI32.DLL.
 
 This DLL contains functions mainly to do with accessing the registry, high-level access to which is available via Dolphin''s Registry Access package.
 '!
+
 !AdvApiLibrary categoriesForClass!External-Libraries-Win32! !
+
 !AdvApiLibrary methodsFor!
 
 deregisterEventSource: anExternalHandle
@@ -56,6 +60,7 @@ reportEvent: hEventLog wType: wType wCategory: wCategory dwEventId: dwEventId lp
 
 	<stdcall: bool ReportEventW handle word word dword lpvoid word dword lpvoid lpvoid>
 	^self invalidCall: _failureCode! !
+
 !AdvApiLibrary categoriesForMethods!
 deregisterEventSource:!public!win32 functions-events! !
 getUserName:nSize:!public!win32 functions-system information! !
@@ -69,6 +74,7 @@ fileName
 	"Answer the host system file name for the library"
 
 	^'ADVAPI32'! !
+
 !AdvApiLibrary class categoriesForMethods!
 fileName!constants!public! !
 !

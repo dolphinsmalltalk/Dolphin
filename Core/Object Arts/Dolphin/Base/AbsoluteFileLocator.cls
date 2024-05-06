@@ -5,7 +5,9 @@ FileLocator subclass: #AbsoluteFileLocator
 	classVariableNames: 'Current'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AbsoluteFileLocator guid: (GUID fromString: '{0c174885-6aa9-43e4-98c3-a59915f5b3d7}')!
+
 AbsoluteFileLocator comment: 'An AbsoluteFileLocator is used to indicate the location of an external file that may be referenced within the image. 
 Instances of this class always locate files by their full absolute path.
 
@@ -13,7 +15,9 @@ Try the following examples:
 
 relativePath := FileLocator absolute relativePathTo: SessionManager current imageFileName. "Display It"
 FileLocator absolute localFileSpecFor: relativePath. "Display It"'!
+
 !AbsoluteFileLocator categoriesForClass!System-Support! !
+
 !AbsoluteFileLocator methodsFor!
 
 localFileSpecFor: aStringFilename
@@ -35,6 +39,7 @@ stbSaveOn: anSTBOutFiler
 	"Save out a binary representation of the receiver to anSTBOutFiler."
 
 	anSTBOutFiler writePreambleFor: self! !
+
 !AbsoluteFileLocator categoriesForMethods!
 localFileSpecFor:!accessing!public! !
 relativePathTo:!accessing!public! !
@@ -67,6 +72,7 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	Current := nil! !
+
 !AbsoluteFileLocator class categoriesForMethods!
 current!accessing!public! !
 onPreStripImage!class hierarchy-removing!private! !

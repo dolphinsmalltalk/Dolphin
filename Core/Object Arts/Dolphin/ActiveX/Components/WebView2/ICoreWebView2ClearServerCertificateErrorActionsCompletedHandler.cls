@@ -5,7 +5,9 @@ ICoreWebView2CompletedHandler subclass: #ICoreWebView2ClearServerCertificateErro
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2ClearServerCertificateErrorActionsCompletedHandler guid: (IID fromString: '{3b40aac6-acfe-4ffd-8211-f607b96e2d5b}')!
+
 ICoreWebView2ClearServerCertificateErrorActionsCompletedHandler comment: '`ICoreWebView2ClearServerCertificateErrorActionsCompletedHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ClearServerCertificateErrorActionsCompletedHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -26,7 +28,9 @@ interface ICoreWebView2ClearServerCertificateErrorActionsCompletedHandler : IUnk
 };
 ```
 '!
+
 !ICoreWebView2ClearServerCertificateErrorActionsCompletedHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2ClearServerCertificateErrorActionsCompletedHandler class methodsFor!
 
 defineFunctions
@@ -34,6 +38,7 @@ defineFunctions
 		ICoreWebView2ClearServerCertificateErrorActionsCompletedHandler defineTemplate"
 
 	self defineFunction: #Invoke: argumentTypes: 'hresult'! !
+
 !ICoreWebView2ClearServerCertificateErrorActionsCompletedHandler class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

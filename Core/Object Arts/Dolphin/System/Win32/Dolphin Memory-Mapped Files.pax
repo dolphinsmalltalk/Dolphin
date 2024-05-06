@@ -24,7 +24,6 @@ Copy-on-write memory mapped files are not currently supported by this package.'.
 
 package basicPackageVersion: '6.1'.
 
-
 package classNames
 	add: #MemoryMappedFile;
 	add: #MemoryMappedFileView;
@@ -60,14 +59,12 @@ Object subclass: #MemoryMappedFile
 	classVariableNames: ''
 	poolDictionaries: 'MMFConstants Win32Constants'
 	classInstanceVariableNames: ''!
+
 ExternalAddress variableByteSubclass: #MemoryMappedFileView
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -134,6 +131,7 @@ unmapViewOfFile: lpBaseAddress
 
 	<stdcall: sdword UnmapViewOfFile void*>
 	^self invalidCall: _failureCode! !
+
 !KernelLibrary categoriesForMethods!
 createFileMapping:lpAttributes:flProtect:dwMaximumSizeHigh:dwMaximumSizeLow:lpName:!public!win32 functions-file management! !
 flushViewOfFile:dwNumberOfBytesToFlush:!public!win32 functions-memory management! !

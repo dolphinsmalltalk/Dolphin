@@ -5,10 +5,15 @@ GdiplusInitializer subclass: #GdiplusFromFileInitializer
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusFromFileInitializer guid: (GUID fromString: '{9bcb004e-83e4-4d47-9adf-ec7927a69088}')!
+
 GdiplusFromFileInitializer isAbstract: true!
+
 GdiplusFromFileInitializer comment: ''!
+
 !GdiplusFromFileInitializer categoriesForClass!Unclassified! !
+
 !GdiplusFromFileInitializer methodsFor!
 
 absoluteFilename
@@ -17,6 +22,7 @@ absoluteFilename
 filename: aFilename fileLocator: aFileLocator
 	filename := aFilename.
 	fileLocator := aFileLocator! !
+
 !GdiplusFromFileInitializer categoriesForMethods!
 absoluteFilename!enquiries!public! !
 filename:fileLocator:!initializing!private! !
@@ -26,6 +32,7 @@ filename:fileLocator:!initializing!private! !
 
 filename: aFilename fileLocator: aFileLocator
 	^self new filename: aFilename fileLocator: aFileLocator! !
+
 !GdiplusFromFileInitializer class categoriesForMethods!
 filename:fileLocator:!instance creation!public! !
 !

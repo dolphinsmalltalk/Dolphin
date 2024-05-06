@@ -5,9 +5,13 @@ MethodRefactoring subclass: #MoveMethodRefactoring
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 MoveMethodRefactoring guid: (GUID fromString: '{12a63bdc-2ded-4523-bc81-881a6bc3f085}')!
+
 MoveMethodRefactoring comment: ''!
+
 !MoveMethodRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !MoveMethodRefactoring methodsFor!
 
 abstractVariables
@@ -290,6 +294,7 @@ transform
 verifyTemporaryVariableDoesNotOverride
 	(parseTree allDefinedVariables includes: selfVariableName) ifTrue: [^false].
 	^(moveToClasses anySatisfy: [:each | each definesVariable: selfVariableName]) not! !
+
 !MoveMethodRefactoring categoriesForMethods!
 abstractVariables!public!transforming! !
 abstractVariablesRefactoring!public!transforming! !
@@ -338,6 +343,7 @@ selector: aSymbol class: aClass variable: aVariableName
 			class: aClass
 			variable: aVariableName;
 		yourself! !
+
 !MoveMethodRefactoring class categoriesForMethods!
 model:selector:class:variable:!instance creation!public! !
 selector:class:variable:!instance creation!public! !

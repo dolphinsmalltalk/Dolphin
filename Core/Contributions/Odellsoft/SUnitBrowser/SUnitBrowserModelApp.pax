@@ -78,54 +78,60 @@ Object subclass: #SUnitAbsModel
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: 'defaultConfiguration'!
+
 Object subclass: #SUnitBrowserAbsConfig
 	instanceVariableNames: 'properties'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #SUnitBrowserAbsUIState
 	instanceVariableNames: 'model'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Object subclass: #SUnitBrowserResult
 	instanceVariableNames: 'testResult model failures errors passed'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SUnitAbsModel subclass: #SUnitBrowserModel
 	instanceVariableNames: 'suiteBuilder suite testResult numberOfTests'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SUnitAbsModel subclass: #SUnitResourceBrowserModel
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SUnitBrowserAbsConfig subclass: #SUnitBrowserConfig
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SUnitBrowserAbsConfig subclass: #SUnitResourceBrowserConfig
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SUnitBrowserAbsUIState subclass: #SUnitBrowserUIState
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SUnitBrowserAbsUIState subclass: #SUnitResourceBrowserUIState
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -137,6 +143,7 @@ sunitbRemoveAll: aCollection
 		self
 			remove: element
 			ifAbsent: []]! !
+
 !Collection categoriesForMethods!
 sunitbRemoveAll:!public!sunit browser model! !
 !
@@ -164,6 +171,7 @@ sunitbAsProperNouns
 		last := each].
 
 	^stream contents! !
+
 !String categoriesForMethods!
 sunitbAsProperNouns!public!sunit browser model! !
 !
@@ -220,6 +228,7 @@ signature
 step
 
 	self debugAsFailure! !
+
 !TestCase categoriesForMethods!
 allTests!public!sunit browser model! !
 canBrowse!public!sunit browser model! !
@@ -243,6 +252,7 @@ canBrowse
 displayName
 
 	^self name sunitbAsProperNouns! !
+
 !TestResource categoriesForMethods!
 canBrowse!public!sunit browser model! !
 displayName!public!sunit browser model! !
@@ -293,6 +303,7 @@ numberOfTests
 				inject: 0
 				into: [:total :each | total + each numberOfTests]]
 		ifFalse: [0]! !
+
 !TestSuite categoriesForMethods!
 allTests!public!sunit browser model! !
 buildSuite!public!sunit browser model! !

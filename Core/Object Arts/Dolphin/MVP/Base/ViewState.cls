@@ -5,7 +5,9 @@ Object subclass: #ViewState
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ViewState guid: (GUID fromString: '{87b4c4cd-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 ViewState comment: '`ViewState` is capable of holding the relevant state of any `View` so that it may be restored to the same state at a later date. Normally, a `ViewState` is used during an image save to capture the state of all of the open views so that they may be restored when the image is restarted, but it is also used when dynamic recreation of a view is required such as when changing certainWindow styles that may only be applied when a Window is created.
 
 Instance Variables
@@ -13,7 +15,9 @@ Instance Variables
 	state		`<monadicValuable>`
 	placement
 	subViewStates'!
+
 !ViewState categoriesForClass!MVP-Views-Support! !
+
 !ViewState methodsFor!
 
 recordStateOf: aView forRecreate: aBoolean
@@ -37,6 +41,7 @@ restore
 		placement: placement;
 		basicInvalidateLayout;
 		isStateRestoring: false! !
+
 !ViewState categoriesForMethods!
 recordStateOf:forRecreate:!initializing!private! !
 restore!operations!public! !
@@ -56,6 +61,7 @@ recordStateOf: aView forRecreate: aBoolean
 
 	^super new 
 		recordStateOf: aView forRecreate: aBoolean! !
+
 !ViewState class categoriesForMethods!
 new!instance creation!private! !
 recordStateOf:forRecreate:!instance creation!public! !

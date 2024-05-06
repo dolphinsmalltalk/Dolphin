@@ -5,12 +5,16 @@ ExternalLibrary subclass: #WSockLibrary
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 WSockLibrary guid: (GUID fromString: '{87b4c589-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 WSockLibrary comment: '** This class is part of the old asynchronous Sockets Connection package which has been superseded by the Dolphin Sockets package **
 
 This is the ExternalLibrary class to represent the Win32 System DLL, WSOCK32.DLL. 
 This library contains functions pertaining to the use of TCP/IP sockets under Windows.'!
+
 !WSockLibrary categoriesForClass!External-Libraries-Sockets!Windows Sockets! !
+
 !WSockLibrary methodsFor!
 
 accept: p1 addr: p2 addrlen: p3
@@ -426,6 +430,7 @@ wsaStartup: p1 lpWSAData: p2
 
 	<stdcall: sdword WSAStartup word lpvoid>
 	^self invalidCall: _failureCode! !
+
 !WSockLibrary categoriesForMethods!
 accept:addr:addrlen:!public!win32 functions-sockets library! !
 bind:addr:namelen:!public!win32 functions-sockets library! !
@@ -482,6 +487,7 @@ fileName
 	receiver represents"
 
 	^'WSOCK32'! !
+
 !WSockLibrary class categoriesForMethods!
 fileName!constants!public! !
 !

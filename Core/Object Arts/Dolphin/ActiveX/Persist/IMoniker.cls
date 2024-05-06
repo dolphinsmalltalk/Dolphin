@@ -5,13 +5,17 @@ IPersistStream subclass: #IMoniker
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IMoniker guid: (IID fromString: '{0000000f-0000-0000-c000-000000000046}')!
+
 IMoniker comment: '<IMoniker> is a wrapper class for the custom interface ''OBJIDL.IMoniker'' generated from type information in the ''ObjIDL Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface.
 
 WARNING: This comment was automatically generated from the interface''s type information and any changes made here may be overwritten the next time this wrapper class is so generated.'!
+
 !IMoniker categoriesForClass!OBJIDL-Interfaces! !
+
 !IMoniker methodsFor!
 
 = anObject
@@ -402,6 +406,7 @@ timeOfLastChange
 		pFileTime: answer.
 	pbc free.
 	^answer! !
+
 !IMoniker categoriesForMethods!
 =!comparing!public! !
 asString!converting!public! !
@@ -521,6 +526,7 @@ forPointer: anIUnknown
 	answer := self newPointer.
 	OLELibrary default createPointerMoniker: anIUnknown ppmk: answer.
 	^answer! !
+
 !IMoniker class categoriesForMethods!
 defineFunctions!initializing!public! !
 forCLSID:!instance creation!public! !

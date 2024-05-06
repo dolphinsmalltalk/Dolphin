@@ -5,11 +5,15 @@ CompiledCode variableSubclass: #CompiledExpression
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 CompiledExpression guid: (GUID fromString: '{87b4c543-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 CompiledExpression comment: 'CompiledExpression is the class of CompiledCode objects representing unbound compiled expressions, i.e. compiled code resulting from the compilation of arbitrary code segments, rather than actual methods of objects (see also CompiledMethod).
 
 '!
+
 !CompiledExpression categoriesForClass!Kernel-Methods! !
+
 !CompiledExpression methodsFor!
 
 evaluate: aString for: anObject evaluationPools: anArrayOfPools
@@ -79,6 +83,7 @@ value: anObject
 	as its receiver, answering the result."
 
 	^self value: anObject withArguments: #()! !
+
 !CompiledExpression categoriesForMethods!
 evaluate:for:evaluationPools:!evaluating!public! !
 evaluationPools!accessing!development!public! !

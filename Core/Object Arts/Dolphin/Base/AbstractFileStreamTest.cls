@@ -5,10 +5,15 @@ ReadWriteStreamTest subclass: #AbstractFileStreamTest
 	classVariableNames: 'RandomData1 RandomData2'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AbstractFileStreamTest guid: (GUID fromString: '{fc7d3bee-d1b0-477d-a33c-33ee6cfb0339}')!
+
 AbstractFileStreamTest isAbstract: true!
+
 AbstractFileStreamTest comment: ''!
+
 !AbstractFileStreamTest categoriesForClass!Unclassified! !
+
 !AbstractFileStreamTest methodsFor!
 
 arrayedCollections
@@ -396,6 +401,7 @@ testTruncate
 
 writeableCollections
 	^self strings , self byteArrays! !
+
 !AbstractFileStreamTest categoriesForMethods!
 arrayedCollections!private! !
 assertBufferEmptyOrDirty:!helpers!private! !

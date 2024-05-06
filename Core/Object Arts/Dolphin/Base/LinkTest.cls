@@ -5,9 +5,13 @@ DolphinTest subclass: #LinkTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 LinkTest guid: (GUID fromString: '{761927ef-cc81-4a3e-b25a-0eef922c3370}')!
+
 LinkTest comment: ''!
+
 !LinkTest categoriesForClass!Unclassified! !
+
 !LinkTest methodsFor!
 
 testClassNextLink
@@ -23,6 +27,7 @@ testClassNextLink
 	"Invoke the method directly so we don't need to install it."
 	link1 := testMethod value: Link withArguments: {link2}.
 	self assert: link1 nextLink identicalTo: link2! !
+
 !LinkTest categoriesForMethods!
 testClassNextLink!public!unit tests! !
 !

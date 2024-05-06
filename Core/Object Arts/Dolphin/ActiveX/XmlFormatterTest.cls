@@ -5,9 +5,13 @@ DolphinTest subclass: #XmlFormatterTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 XmlFormatterTest guid: (GUID fromString: '{834290a8-1967-49c5-ad9f-f47cb1ed5d12}')!
+
 XmlFormatterTest comment: ''!
+
 !XmlFormatterTest categoriesForClass!Unclassified! !
+
 !XmlFormatterTest methodsFor!
 
 assertReformat: text toCanonical: canonical 
@@ -159,6 +163,7 @@ testDocumentType
 "
 DiffBrowser compare: reformatted with: text
 "! !
+
 !XmlFormatterTest categoriesForMethods!
 assertReformat:toCanonical:!helpers!private! !
 newDocument!helpers!private! !

@@ -4,7 +4,6 @@ package paxVersion: 1;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
-
 package classNames
 	add: #MIDIOut;
 	add: #MidiOutChannel;
@@ -39,14 +38,12 @@ Object subclass: #MIDIOut
 	classVariableNames: ''
 	poolDictionaries: 'MidiConstants'
 	classInstanceVariableNames: ''!
+
 Object subclass: #MidiOutChannel
 	instanceVariableNames: 'midiout noteProcess octaveShift'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -99,6 +96,7 @@ midiOutShortMsgHmo: hmo dwMsg: dwMsg
 
 	<stdcall: dword midiOutShortMsg dword dword>
 	^self invalidCall: _failureCode! !
+
 !WinMMLibrary categoriesForMethods!
 midiOutCloseHmo:!public! !
 midiOutGetNumDevs!public! !

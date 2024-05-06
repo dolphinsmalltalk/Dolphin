@@ -5,10 +5,15 @@ ExternalStructure subclass: #ExternalRectangle
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ExternalRectangle guid: (GUID fromString: '{e552b3f7-8653-46d4-b764-1e59cf1c15f7}')!
+
 ExternalRectangle isAbstract: true!
+
 ExternalRectangle comment: '`RectangleStructure` is the abstract class of structures representing rectangular geometries. There are concrete subclasses for different types of position and extent values.'!
+
 !ExternalRectangle categoriesForClass!Win32-Structs! !
+
 !ExternalRectangle methodsFor!
 
 area
@@ -114,6 +119,7 @@ width
 	"Answer the width of the receiver."
 
 	^self right - self left! !
+
 !ExternalRectangle categoriesForMethods!
 area!accessing!public! !
 asObject!converting!public! !
@@ -192,6 +198,7 @@ origin: originPoint extent: extentPoint
 		top: originPoint y
 		width: extentPoint x
 		height: extentPoint y! !
+
 !ExternalRectangle class categoriesForMethods!
 extent:!instance creation!public! !
 fromRectangle:!instance creation!public! !

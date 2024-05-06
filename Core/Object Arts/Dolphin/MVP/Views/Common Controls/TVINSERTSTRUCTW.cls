@@ -5,12 +5,17 @@ Win32Structure subclass: #TVINSERTSTRUCTW
 	classVariableNames: '_OffsetOf_hInsertAfter _OffsetOf_hParent _OffsetOf_item'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TVINSERTSTRUCTW guid: (GUID fromString: '{87b4c618-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 TVINSERTSTRUCTW addClassConstant: '_OffsetOf_hInsertAfter' value: 16r4!
 TVINSERTSTRUCTW addClassConstant: '_OffsetOf_hParent' value: 16r0!
 TVINSERTSTRUCTW addClassConstant: '_OffsetOf_item' value: 16r8!
+
 TVINSERTSTRUCTW comment: ''!
+
 !TVINSERTSTRUCTW categoriesForClass!External-Data-Structured-Win32! !
+
 !TVINSERTSTRUCTW methodsFor!
 
 hInsertAfter: anInteger
@@ -36,6 +41,7 @@ item: aTVITEMEXW
 		from: ##(_OffsetOf_item + 1)
 		to: ##(_OffsetOf_item + TVITEMEXW basicByteSize)
 		startingAt: 1! !
+
 !TVINSERTSTRUCTW categoriesForMethods!
 hInsertAfter:!**compiled accessors**!public! !
 hParent:!**compiled accessors**!public! !
@@ -57,6 +63,7 @@ defineFields
 
 getFieldNames
 	^#(#hParent #hInsertAfter #item)! !
+
 !TVINSERTSTRUCTW class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

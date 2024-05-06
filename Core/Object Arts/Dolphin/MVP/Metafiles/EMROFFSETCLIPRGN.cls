@@ -5,8 +5,11 @@ ENHMETARECORD subclass: #EMROFFSETCLIPRGN
 	classVariableNames: '_OffsetOf_ptlOffset'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 EMROFFSETCLIPRGN guid: (GUID fromString: '{a0baa6e7-981f-4e05-8c52-19525eb0e92e}')!
+
 EMROFFSETCLIPRGN addClassConstant: '_OffsetOf_ptlOffset' value: 16r8!
+
 EMROFFSETCLIPRGN comment: '<EMROFFSETCLIPRGN> is an <ExternalStructure> class to wrap the struct ''Win32.EMROFFSETCLIPRGN'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -21,7 +24,9 @@ struct tagEMROFFSETCLIPRGN {
 	POINTL ptlOffset;
 } EMROFFSETCLIPRGN;
 '!
+
 !EMROFFSETCLIPRGN categoriesForClass!Win32-Structs! !
+
 !EMROFFSETCLIPRGN methodsFor!
 
 ptlOffset
@@ -37,6 +42,7 @@ ptlOffset: aPOINTL
 		from: ##(_OffsetOf_ptlOffset + 1)
 		to: ##(_OffsetOf_ptlOffset + POINTL basicByteSize)
 		startingAt: 1! !
+
 !EMROFFSETCLIPRGN categoriesForMethods!
 ptlOffset!**compiled accessors**!public! !
 ptlOffset:!**compiled accessors**!public! !
@@ -70,6 +76,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_OFFSETCLIPRGN! !
+
 !EMROFFSETCLIPRGN class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

@@ -7,7 +7,6 @@ Copyright (c) Object Arts Ltd. 2002.'.
 
 package basicPackageVersion: '6.0'.
 
-
 package classNames
 	add: #FolderPresenter;
 	yourself.
@@ -33,11 +32,6 @@ ListPresenter subclass: #FolderPresenter
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

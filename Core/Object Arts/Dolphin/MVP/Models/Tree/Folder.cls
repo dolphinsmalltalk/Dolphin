@@ -5,9 +5,13 @@ Object subclass: #Folder
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Folder guid: (GUID fromString: '{a5b3954d-5310-45c1-b09e-ee7dd70d6cd5}')!
+
 Folder comment: ''!
+
 !Folder categoriesForClass!MVP-Models! !
+
 !Folder methodsFor!
 
 <= comperand
@@ -98,6 +102,7 @@ volumeName
 	^[(DiskVolumeInformation forPath: self pathname) explorerName] 
 		on: Win32Error
 		do: [:ex | File removePathDelimiter: self pathname]! !
+
 !Folder categoriesForMethods!
 <=!comparing!public! !
 =!comparing!public! !
@@ -137,6 +142,7 @@ root
 	"Answer an instance of the receiver representing the current root folder."
 
 	^self pathname: ''! !
+
 !Folder class categoriesForMethods!
 icon!constants!development!public! !
 new!instance creation!public! !

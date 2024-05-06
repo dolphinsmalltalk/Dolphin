@@ -5,9 +5,13 @@ CollectionTest subclass: #DictionaryANSITest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DictionaryANSITest guid: (GUID fromString: '{98945f32-e6d5-4ec3-b98b-8a6806ee7a34}')!
+
 DictionaryANSITest comment: ''!
+
 !DictionaryANSITest categoriesForClass!Unclassified! !
+
 !DictionaryANSITest methodsFor!
 
 canonicalElement
@@ -50,6 +54,7 @@ testXatXputX
 testXincludesKeyX
 	" <abstractDictionary>#includesKey: "
 	#'Collection'.! !
+
 !DictionaryANSITest categoriesForMethods!
 canonicalElement!public! !
 canonicalObject!public! !
@@ -71,6 +76,7 @@ helperClassesDo: aBlock
 
 	aBlock value: AbstractDictionaryHelper.
 	super helperClassesDo: aBlock! !
+
 !DictionaryANSITest class categoriesForMethods!
 helperClassesDo:!public! !
 !

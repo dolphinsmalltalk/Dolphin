@@ -5,9 +5,13 @@ RefactoringTest subclass: #InlineMethodTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 InlineMethodTest guid: (GUID fromString: '{f70132aa-f38c-4f5d-ad58-1801c2c8f8b1}')!
+
 InlineMethodTest comment: ''!
+
 !InlineMethodTest categoriesForClass!Refactory-Testing! !
+
 !InlineMethodTest methodsFor!
 
 testBadInterval
@@ -261,6 +265,7 @@ testReturn
 						for: (BasicLintRuleTest class sourceCodeAt: #utilityMethods))
 				inMethod: #utilityMethods
 				forClass: BasicLintRuleTest class)! !
+
 !InlineMethodTest categoriesForMethods!
 testBadInterval!failure tests!public! !
 testInlineMethod!public!tests! !

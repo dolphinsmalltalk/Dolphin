@@ -5,9 +5,13 @@ GdiplusFontFamilyInitializer subclass: #GdiplusFontFamilyFromNameInitializer
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusFontFamilyFromNameInitializer guid: (GUID fromString: '{2688e140-b9b7-4e51-9b2d-f8bba5c90e2b}')!
+
 GdiplusFontFamilyFromNameInitializer comment: ''!
+
 !GdiplusFontFamilyFromNameInitializer categoriesForClass!Unclassified! !
+
 !GdiplusFontFamilyFromNameInitializer methodsFor!
 
 createHandle
@@ -26,6 +30,7 @@ createHandle
 name: aString fontCollection: aFontCollection
 	name := aString.
 	fontCollection := aFontCollection! !
+
 !GdiplusFontFamilyFromNameInitializer categoriesForMethods!
 createHandle!private!realizing/unrealizing! !
 name:fontCollection:!initializing!private! !

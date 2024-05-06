@@ -5,7 +5,9 @@ ICoreWebView2Interface subclass: #ICoreWebView2Deferral
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2Deferral guid: (IID fromString: '{c10e7f7b-b585-46f0-a623-8befbf3e4ee0}')!
+
 ICoreWebView2Deferral comment: '`ICoreWebView2Deferral` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Deferral'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -25,7 +27,9 @@ interface ICoreWebView2Deferral : IUnknown
 };
 ```
 '!
+
 !ICoreWebView2Deferral categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2Deferral methodsFor!
 
 complete
@@ -40,6 +44,7 @@ Complete
 
 	<virtual stdcall: hresult 4>
 	^self invalidCall: _failureCode! !
+
 !ICoreWebView2Deferral categoriesForMethods!
 complete!**auto generated**!methods!public! !
 Complete!**auto generated**!COM Interfaces-ICoreWebView2Deferral!private! !
@@ -54,6 +59,7 @@ defineFunctions
 	self
 		defineFunction: #Complete
 ! !
+
 !ICoreWebView2Deferral class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

@@ -5,13 +5,17 @@ PermanentLibrary subclass: #UserLibrary
 	classVariableNames: ''
 	poolDictionaries: 'MessageBoxConstants'
 	classInstanceVariableNames: ''!
+
 UserLibrary guid: (GUID fromString: '{64674046-3a82-101b-8181-00aa003743d3}')!
+
 UserLibrary comment: 'UserLibrary is the <ExternalLibrary> class to represent the Windows system DLL, User32.DLL.
 
 The default instance of this class provides access to most of the Win32 window management API. New functions may be added as required, but the external function naming convention should be followed.
 
 All functions in this library use the stdcall calling convention.'!
+
 !UserLibrary categoriesForClass!External-Libraries-Win32! !
+
 !UserLibrary methodsFor!
 
 blockInput: aBoolean
@@ -748,6 +752,7 @@ vkKeyScan: aChar
 
 	<stdcall: sword VkKeyScanW char>
 	^self invalidCall: _failureCode! !
+
 !UserLibrary categoriesForMethods!
 blockInput:!public!win32 functions-window! !
 charLower:!public!win32 functions-string manipulation! !
@@ -830,6 +835,7 @@ fileName
 	the receiver represents."
 
 	^'USER32'! !
+
 !UserLibrary class categoriesForMethods!
 clear!initializing!private! !
 fileName!constants!public! !

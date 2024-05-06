@@ -5,9 +5,12 @@ Object subclass: #DBColAttr
 	classVariableNames: 'CTypesExtraBytes SQLToCTypes'
 	poolDictionaries: 'DBColFlags ODBCConstants ODBCCTypes ODBCTypes'
 	classInstanceVariableNames: ''!
+
 DBColAttr guid: (GUID fromString: '{87b4c471-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 DBColAttr addClassConstant: 'CTypesExtraBytes' value: #(0 2 2 2 0 0 0 0 0 0 1 0 1 1 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0)!
 DBColAttr addClassConstant: 'SQLToCTypes' value: #(-11 -8 -8 -8 -7 -6 -25 -2 -2 -2 1 99 1 1 1 4 5 8 7 8 nil nil nil 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 91 92 93)!
+
 DBColAttr comment: 'A DBColAttr instance describes an SQL column in a table or in a DBRow within a DBResultSet. 
 
 Instance Variables:
@@ -23,7 +26,9 @@ Class Variables:
 	ODBCBaseTypes	<IdentityDictionary>
 
 '!
+
 !DBColAttr categoriesForClass!ODBC Interface! !
+
 !DBColAttr methodsFor!
 
 columnNumber
@@ -252,6 +257,7 @@ updateRuleMask: anInteger
 		self specialFlagAt:
 			(1 bitShift: (anInteger+8)) 
 			put: true ]! !
+
 !DBColAttr categoriesForMethods!
 columnNumber!accessing!public! !
 columnNumber:!accessing!private! !
@@ -341,6 +347,7 @@ new
 	"Answer a new initialized instance of the receiver."
 
 	^super new initialize! !
+
 !DBColAttr class categoriesForMethods!
 initialize!initializing!private! !
 new!instance creation!public! !

@@ -5,7 +5,9 @@ Object subclass: #DeadObject
 	classVariableNames: 'Current'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DeadObject guid: (GUID fromString: '{87b4c479-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 DeadObject comment: 'DeadObject is a singleton whose sole instance is used to mark the slots previously occuppied by dead objects in objects with weak references. This class serves no other purpose than to provide a unique ''Corpse'' object which prints in a recognisable form.
 
 N.B. It is not a good idea to create a new current DeadObject as this may break existing weak collection and/or confuse the VM.
@@ -15,7 +17,9 @@ Class Variables:
 
 
 '!
+
 !DeadObject categoriesForClass!System-Support! !
+
 !DeadObject class methodsFor!
 
 current
@@ -33,6 +37,7 @@ removeFromSystem
 	This class is critical to system operation and must not be removed."
 
 	^self shouldNotImplement! !
+
 !DeadObject class categoriesForMethods!
 current!accessing!booting!public! !
 initialize!booting!development!initializing!private! !

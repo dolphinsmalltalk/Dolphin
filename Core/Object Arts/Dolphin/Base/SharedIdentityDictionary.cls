@@ -5,9 +5,13 @@ SharedLookupTable variableSubclass: #SharedIdentityDictionary
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SharedIdentityDictionary guid: (GUID fromString: '{87b4c531-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 SharedIdentityDictionary comment: ''!
+
 !SharedIdentityDictionary categoriesForClass!Collections-Unordered! !
+
 !SharedIdentityDictionary methodsFor!
 
 findKeyOrNil: anObject
@@ -34,6 +38,7 @@ searchPolicy
 	"Answer the receiver's <searchPolicy>."
 
 	^SearchPolicy identity! !
+
 !SharedIdentityDictionary categoriesForMethods!
 findKeyOrNil:!private!searching! !
 hash:max:!private!searching! !

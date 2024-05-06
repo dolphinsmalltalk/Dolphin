@@ -5,9 +5,13 @@ DBConnectionTest subclass: #AccessDBTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AccessDBTest guid: (GUID fromString: '{4f4de5da-13fa-4842-941a-f825ce1db278}')!
+
 AccessDBTest comment: ''!
+
 !AccessDBTest categoriesForClass!Unclassified! !
+
 !AccessDBTest methodsFor!
 
 databaseResource
@@ -97,6 +101,7 @@ testViewsQuery
 	views := connection views.
 	self assert: (views
 				noDifference: #('Alphabetical List of Products' 'Category Sales for 1997' 'Current Product List' 'Customers and Suppliers by City' 'Employee Sales by Country' 'Invoices' 'Invoices Filter' 'Order Details Extended' 'Order Subtotals' 'Orders Qry' 'Product Sales for 1997' 'Products Above Average Price' 'Products by Category' 'Quarterly Orders' 'Quarterly Orders by Product' 'Sales by Category' 'Sales by Year' 'Ten Most Expensive Products'))! !
+
 !AccessDBTest categoriesForMethods!
 databaseResource!private! !
 dbmsFeaturesMap!private! !
@@ -113,6 +118,7 @@ testViewsQuery!public!unit tests! !
 
 resources
 	^{AccessNorthwindDB}! !
+
 !AccessDBTest class categoriesForMethods!
 resources!public! !
 !

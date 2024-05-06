@@ -5,14 +5,18 @@ IDispatch subclass: #CDOIMessage
 	classVariableNames: ''
 	poolDictionaries: 'CDOConstants'
 	classInstanceVariableNames: ''!
+
 CDOIMessage guid: (IID fromString: '{cd000020-8b95-11d1-82db-00c04fb1625d}')!
+
 CDOIMessage comment: '<CDOIMessage> is a wrapper class for the COM interface ''CDO.IMessage'' generated from type information in the ''Microsoft CDO for Windows 2000 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
 	"Defines abstract methods and properties used to manage a complete message"
 
 Warning: This comment was automatically generated from the interface''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.'!
+
 !CDOIMessage categoriesForClass!CDO-Interfaces!COM-Interfaces! !
+
 !CDOIMessage methodsFor!
 
 addAttachment: url userName: userName password: password
@@ -1230,6 +1234,7 @@ to: pTo
 	self
 		put_To: pTo
 ! !
+
 !CDOIMessage categoriesForMethods!
 addAttachment:userName:password:!**auto generated**!methods!public! !
 AddAttachment:UserName:Password:ppBody:!**auto generated**!COM Interfaces-IMessage!private! !
@@ -1481,6 +1486,7 @@ initializeTypeLib
 	"
 
 	typeLib := CDOLib! !
+
 !CDOIMessage class categoriesForMethods!
 clsid!**auto generated**!constants!private! !
 defineFunctions!**auto generated**!initializing!public! !

@@ -5,7 +5,9 @@ IDispatch subclass: #IVBSAXErrorHandler
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
 	classInstanceVariableNames: ''!
+
 IVBSAXErrorHandler guid: (IID fromString: '{d963d3fe-173c-4862-9095-b92f66995f52}')!
+
 IVBSAXErrorHandler comment: '<IVBSAXErrorHandler> is a wrapper class for the COM interface ''MSXML2.IVBSAXErrorHandler'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
@@ -41,7 +43,9 @@ interface IVBSAXErrorHandler : IDispatch
 		[in]long nErrorCode);
 };
 '!
+
 !IVBSAXErrorHandler categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+
 !IVBSAXErrorHandler methodsFor!
 
 error: oLocator strErrorMessage: strErrorMessage nErrorCode: nErrorCode
@@ -119,6 +123,7 @@ isVBCollection
 	"Answer whether the receiver is a VB style collection."
 
 	^false! !
+
 !IVBSAXErrorHandler categoriesForMethods!
 error:strErrorMessage:nErrorCode:!**auto generated**!methods!public! !
 Error:strErrorMessage:nErrorCode:!**auto generated**!COM Interfaces-IVBSAXErrorHandler!private! !
@@ -144,6 +149,7 @@ defineFunctions
 		defineFunction: #IgnorableWarning:strErrorMessage:nErrorCode:
 			argumentTypes: 'IVBSAXLocator* bstr* sdword'
 ! !
+
 !IVBSAXErrorHandler class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

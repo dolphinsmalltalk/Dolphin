@@ -5,9 +5,13 @@ GdiplusInitializerTests subclass: #GdiplusPenFromBrushInitializerTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusPenFromBrushInitializerTest guid: (GUID fromString: '{911c5add-1255-427e-b2e6-26d9d8f38caf}')!
+
 GdiplusPenFromBrushInitializerTest comment: ''!
+
 !GdiplusPenFromBrushInitializerTest categoriesForClass!Unclassified! !
+
 !GdiplusPenFromBrushInitializerTest methodsFor!
 
 gdipCreatePen2: brush width: width unit: unit pen: pen 
@@ -37,6 +41,7 @@ testCreateHandleDefaultWidth
 	self assert: constructorArgs first identicalTo: brush basicHandle.
 	self assert: constructorArgs second equals: 1.0.
 	self assertLastArgIsHandle! !
+
 !GdiplusPenFromBrushInitializerTest categoriesForMethods!
 gdipCreatePen2:width:unit:pen:!accessing!public! !
 setUp!public!setup! !

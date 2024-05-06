@@ -4,7 +4,6 @@ package paxVersion: 1;
 	preDeclareClassesOnLoad: false;
 	basicComment: ''.
 
-
 package classNames
 	add: #TestRunner;
 	yourself.
@@ -40,9 +39,6 @@ Shell subclass: #TestRunner
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
-"Global Aliases"!
-
-
 "Loose Methods"!
 
 !TestCase class methodsFor!
@@ -53,6 +49,7 @@ icon
 	^##((TextTileIcon text: $\x1F9EA fontName: 'Segoe UI Emoji')
 		textcolor: Color lightSeaGreen;
 		yourself)! !
+
 !TestCase class categoriesForMethods!
 icon!constants!public! !
 !

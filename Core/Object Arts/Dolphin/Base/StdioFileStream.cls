@@ -5,11 +5,15 @@ SequencedStream subclass: #StdioFileStream
 	classVariableNames: 'ClassForEncoding Codecs DeviceMask NonBlockingMask ReadOnlyMask'
 	poolDictionaries: 'CRTConstants'
 	classInstanceVariableNames: ''!
+
 StdioFileStream guid: (GUID fromString: '{7b8405b3-0819-421f-8110-ca2763bcb59a}')!
+
 StdioFileStream isAbstract: true!
+
 StdioFileStream addClassConstant: 'DeviceMask' value: 16r40!
 StdioFileStream addClassConstant: 'NonBlockingMask' value: 16r2!
 StdioFileStream addClassConstant: 'ReadOnlyMask' value: 16r1!
+
 StdioFileStream comment: 'StdioFileStream is a <FileStream> implemented over C runtime library stdio streams. FileStream itself should be used by preference in most cases.
 
 Instance Variables:
@@ -20,7 +24,9 @@ Instance Variables:
 	fd		<integer>. Current file number associated with the stream.
 
 '!
+
 !StdioFileStream categoriesForClass!Collections-Streams! !
+
 !StdioFileStream methodsFor!
 
 asParameter
@@ -434,6 +440,7 @@ upTo: anObject
 	of the collection. If the receiver is at its end, answer an empty Collection."
 
 	^self bufferPrototype decodeFrom: self upTo: anObject! !
+
 !StdioFileStream categoriesForMethods!
 asParameter!converting!public! !
 atEnd!public!testing! !
@@ -739,6 +746,7 @@ write: aString type: aSymbol
 		mode: #truncate
 		check: false
 		type: aSymbol! !
+
 !StdioFileStream class categoriesForMethods!
 attach:toFd:mode:!instance creation!public! !
 attach:toFd:mode:type:!instance creation!public! !

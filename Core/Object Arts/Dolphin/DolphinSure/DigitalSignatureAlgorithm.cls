@@ -5,7 +5,9 @@ Object subclass: #DigitalSignatureAlgorithm
 	classVariableNames: 'HighBitOfByte SmallPrimes'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DigitalSignatureAlgorithm guid: (GUID fromString: '{b1b2a1d8-34b1-4c43-90dc-767320f26e47}')!
+
 DigitalSignatureAlgorithm comment: 'This class implements the Digital Signature Algorithm (DSA) of the U.S. government''s "Digital Signature Standard" (DSS). The DSA algorithm was proposed in 1991 and became a standard in May 1994. The official description is available as a Federal Information Processing Standards Publication (FIPS PUB 186, May 19, 1994). A companion standard, the Secure Hash Standard, or SHS (FIPS PUB 180-1, April 17, 1995), describes a 160-bit message digest algorithm known as the Secure Hash Algorithm (SHA). This message digest is used to compute the document signature.
 
 This class was ported from the Squeak original.
@@ -33,7 +35,9 @@ Patents and Export Restrictions:
 Many digital signature technologies are patented. DSA is also patented, but the patent is owned by the U.S. government which has made DSA available royalty-free. There is a claim that the government patent infringes on an earlier patent by Schnorr, but the government is requiring the use of DSA, so they apparently believe this claim is not strong enough to be a serious threat to their own patent.
 
 Most cryptography technology, including digital signature technology, requires an export license for it to be distributed outside the U.S. Recent legislation may have relaxed the export license requirements, but it would be prudent to check the current regulations before exporting this code.'!
+
 !DigitalSignatureAlgorithm categoriesForClass!Cryptography-Support! !
+
 !DigitalSignatureAlgorithm methodsFor!
 
 computeSignatureForMessageHash: hash privateKey: privateKey 
@@ -507,6 +511,7 @@ verifySignature: aSignature ofMessageHash: hash publicKey: publicKey
 	v := self remainder: (self remainder: v0 mod: p) mod: q.
 	^ v = r
 ! !
+
 !DigitalSignatureAlgorithm categoriesForMethods!
 computeSignatureForMessageHash:privateKey:!operations!public!signing! !
 dsaSign:q:g:k:x:h:!operations!private! !
@@ -646,6 +651,7 @@ verify: signatureString isSignatureOf: aStringOrStream publicKey: publicKey
 
 	^ dsa verifySignature: sig ofMessageHash: h publicKey: publicKey
 ! !
+
 !DigitalSignatureAlgorithm class categoriesForMethods!
 example!examples!private! !
 generateFullKeySet!key generation!operations!public! !

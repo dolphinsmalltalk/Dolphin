@@ -5,9 +5,13 @@ Presenter subclass: #Scribble
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Scribble guid: (GUID fromString: '{87b4c686-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Scribble comment: 'Scribble is a <presenter> component that displays a <listModel> of <InkStroke>s within a <ScribbleView>. It is used to for accepting ''ink'' as a series of mouse or pen strokes and populate the model with this data. Scribble is part of the Scribble sample package. For examples of use please see the package comment.'!
+
 !Scribble categoriesForClass!MVP-Presenters!Samples! !
+
 !Scribble methodsFor!
 
 cancelTrackingAt: aPoint 
@@ -67,6 +71,7 @@ startTrackingAt: aPoint
 	"Create a new stroke"
 	newStroke := InkStroke new.
 	^newStroke addPoint: aPoint.! !
+
 !Scribble categoriesForMethods!
 cancelTrackingAt:!private!tracking! !
 continueTrackingAt:from:!private!tracking! !
@@ -113,6 +118,7 @@ sampleDescription
 	"Private - Answer the description of the receiver to be used in the samples folder."
 
 	^'Scribble Pad'! !
+
 !Scribble class categoriesForMethods!
 defaultModel!models!public! !
 icon!constants!public! !

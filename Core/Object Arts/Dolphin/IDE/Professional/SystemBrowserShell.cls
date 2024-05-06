@@ -5,14 +5,18 @@ ClassBrowserAbstract subclass: #SystemBrowserShell
 	classVariableNames: 'AutoSelectPackages'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SystemBrowserShell guid: (GUID fromString: '{4e96e0df-9db3-4d86-89d0-91d646c5209f}')!
+
 SystemBrowserShell comment: 'SystemBrowserShell is a <SmalltalkToolShell> implementing the System Browser development tool. It displays a view of the system that allows for the filtering of classes by package ownership. Please note the System Browser is NOT intended to display unpackaged classes. Unpackaged classes can only be viewed and edited in the Class Hierarchy Browser (see <ClassBrowserShell>).
 
 Class Variables:
 	AutoSelectPackages		<Boolean>. Controls whether the packages in a folder are automatically selected when a new folder is selected (the default).
 
 '!
+
 !SystemBrowserShell categoriesForClass!MVP-Presenters! !
+
 !SystemBrowserShell methodsFor!
 
 canSaveMethod
@@ -141,6 +145,7 @@ selectionEnvironment
 
 slideyPinNames
 	^super slideyPinNames , #('packagesSlidey')! !
+
 !SystemBrowserShell categoriesForMethods!
 canSaveMethod!commands!private! !
 createComponents!initializing!public! !
@@ -219,6 +224,7 @@ uninitialize
 	| devsys |
 	devsys := Smalltalk developmentSystem.
 	devsys systemBrowserClass == self ifTrue: [devsys systemBrowserClass: nil]! !
+
 !SystemBrowserShell class categoriesForMethods!
 autoSelectPackages!accessing!private! !
 autoSelectPackages:!accessing!private! !

@@ -12,7 +12,6 @@ Public Domain Freeware
 
 package basicPackageVersion: '6a'.
 
-
 package classNames
 	add: #PackageBackup;
 	yourself.
@@ -36,11 +35,6 @@ Object subclass: #PackageBackup
 	classVariableNames: 'BackupFolder Instance'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

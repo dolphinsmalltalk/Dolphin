@@ -5,7 +5,9 @@ Presenter subclass: #ValuePresenter
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ValuePresenter guid: (GUID fromString: '{87b4c689-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 ValuePresenter comment: 'ValuePresenter is a <valuePresenter>s that presents the contents of a <valueModel> within a <valueView>.
 
 When designing a <presenter> it is necessary to make an initial decision as to how its model data should be displayed and edited. If the model is a mutable object, in that it is legal (and sensible) to modify it in place, then it is usual to treat it as a simple <presenter> and create a class descended directly from Presenter itself. If, on the other hand, the model is to be immutable then the presenter should be implemented as a <valuePresenter>. If the identity of the underlying model data must remain unchanged then use a standard <presenter>. If this is not the case then a <valuePresenter> will be more suitable.
@@ -13,7 +15,9 @@ When designing a <presenter> it is necessary to make an initial decision as to h
 In many cases a <valuePresenter> will be implemented as a subclass of ValuePresenter. However, this is not essential and instances of ValuePresenter can be created and use directly.
 
 '!
+
 !ValuePresenter categoriesForClass!MVP-Presenters! !
+
 !ValuePresenter methodsFor!
 
 findDetails
@@ -63,6 +67,7 @@ value: anObject
 
 	self model value: anObject.
 ! !
+
 !ValuePresenter categoriesForMethods!
 findDetails!accessing!public! !
 model:!accessing!public! !
@@ -88,6 +93,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon! !
+
 !ValuePresenter class categoriesForMethods!
 defaultModel!models!public! !
 icon!constants!public! !

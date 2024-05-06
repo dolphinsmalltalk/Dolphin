@@ -5,9 +5,13 @@ COMInterfaceImp subclass: #WebView2CompletionHandler
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 WebView2CompletionHandler guid: (GUID fromString: '{bc802953-baa6-43ff-94e2-d9e70d14522b}')!
+
 WebView2CompletionHandler comment: ''!
+
 !WebView2CompletionHandler categoriesForClass!COM-Implementations! !
+
 !WebView2CompletionHandler methodsFor!
 
 completionBlock: aValuable
@@ -32,6 +36,7 @@ queryInterface: anInterfaceClass ifNone: exceptionHandler
 
 supportedInterfaces
 	^ICoreWebView2CompletedHandler subclasses! !
+
 !WebView2CompletionHandler categoriesForMethods!
 completionBlock:!initializing!private! !
 Invoke:!COM Interfaces-ICoreWebView2CompletedHandler!public! !
@@ -49,6 +54,7 @@ completionBlock: aPresenter
 
 icon
 	^ICoreWebView2 icon! !
+
 !WebView2CompletionHandler class categoriesForMethods!
 completionBlock:!public! !
 icon!constants!development!public! !

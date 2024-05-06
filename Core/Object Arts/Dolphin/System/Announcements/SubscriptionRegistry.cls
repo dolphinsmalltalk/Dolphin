@@ -5,13 +5,17 @@ Object subclass: #SubscriptionRegistry
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SubscriptionRegistry guid: (GUID fromString: '{a785d939-edab-48ad-b4a7-0bf0a69ec5f3}')!
+
 SubscriptionRegistry comment: 'The subscription registry is a threadsafe storage for the subscriptions to an Announcer.
 
 In Pharo, subscriptionsFor: protocol is not implemented.
 This is because Announcer does not provide public access to its registery for encapsulation reasons.
 (We do not want access to the announcer from action blocks to break encapsulation to other subscribers)'!
+
 !SubscriptionRegistry categoriesForClass!Announcements-Core! !
+
 !SubscriptionRegistry methodsFor!
 
 add: subscription
@@ -102,6 +106,7 @@ subscriptionsOf: aSubscriber do: aBlock
 			subscription subscriber == aSubscriber 
 				ifTrue: [ aBlock value: subscription ]	]
 ! !
+
 !SubscriptionRegistry categoriesForMethods!
 add:!add/remove!public! !
 deliver:!announcing!public! !
@@ -123,6 +128,7 @@ subscriptionsOf:do:!iterating!public! !
 
 new	
 	^super new initialize! !
+
 !SubscriptionRegistry class categoriesForMethods!
 new!public! !
 !

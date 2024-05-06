@@ -5,7 +5,9 @@ ICoreWebView2CompletedHandler subclass: #ICoreWebView2WebResourceResponseViewGet
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2WebResourceResponseViewGetContentCompletedHandler guid: (IID fromString: '{875738e1-9fa2-40e3-8b74-2e8972dd6fe7}')!
+
 ICoreWebView2WebResourceResponseViewGetContentCompletedHandler comment: '`ICoreWebView2WebResourceResponseViewGetContentCompletedHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2WebResourceResponseViewGetContentCompletedHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -27,7 +29,9 @@ interface ICoreWebView2WebResourceResponseViewGetContentCompletedHandler : IUnkn
 };
 ```
 '!
+
 !ICoreWebView2WebResourceResponseViewGetContentCompletedHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2WebResourceResponseViewGetContentCompletedHandler class methodsFor!
 
 defineFunctions
@@ -36,6 +40,7 @@ defineFunctions
 	"
 
 	self defineFunction: #Invoke:arg: argumentTypes: 'hresult IStream*'! !
+
 !ICoreWebView2WebResourceResponseViewGetContentCompletedHandler class categoriesForMethods!
 defineFunctions!initializing!public! !
 !

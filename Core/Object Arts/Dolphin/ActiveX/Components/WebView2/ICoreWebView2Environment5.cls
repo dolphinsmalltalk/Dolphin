@@ -5,7 +5,9 @@ ICoreWebView2Environment4 subclass: #ICoreWebView2Environment5
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2Environment5 guid: (IID fromString: '{319e423d-e0d7-4b8d-9254-ae9475de9b17}')!
+
 ICoreWebView2Environment5 comment: '`ICoreWebView2Environment5` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Environment5'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -30,7 +32,9 @@ interface ICoreWebView2Environment5 : ICoreWebView2Environment4
 };
 ```
 '!
+
 !ICoreWebView2Environment5 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2Environment5 methodsFor!
 
 Add_BrowserProcessExited: eventHandler token: token
@@ -51,6 +55,7 @@ Remove_BrowserProcessExited: token
 
 	<virtual stdcall: hresult 14 sqword>
 	^self invalidCall: _failureCode! !
+
 !ICoreWebView2Environment5 categoriesForMethods!
 Add_BrowserProcessExited:token:!**auto generated**!COM Interfaces-ICoreWebView2Environment5!private! !
 Remove_BrowserProcessExited:!**auto generated**!COM Interfaces-ICoreWebView2Environment5!private! !
@@ -68,6 +73,7 @@ defineFunctions
 		defineFunction: #Remove_BrowserProcessExited:
 			argumentTypes: 'sqword'
 ! !
+
 !ICoreWebView2Environment5 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

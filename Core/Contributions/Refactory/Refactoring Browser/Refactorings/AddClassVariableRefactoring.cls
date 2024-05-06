@@ -5,9 +5,13 @@ VariableRefactoring subclass: #AddClassVariableRefactoring
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 AddClassVariableRefactoring guid: (GUID fromString: '{b5dcf149-adbd-42de-9205-bcc093e0f2fc}')!
+
 AddClassVariableRefactoring comment: ''!
+
 !AddClassVariableRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !AddClassVariableRefactoring methodsFor!
 
 preconditions
@@ -19,6 +23,7 @@ preconditions
 
 transform
 	class addClassVariable: variableName! !
+
 !AddClassVariableRefactoring categoriesForMethods!
 preconditions!preconditions!public! !
 transform!public!transforming! !

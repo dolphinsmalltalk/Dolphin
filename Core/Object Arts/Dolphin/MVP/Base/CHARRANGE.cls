@@ -5,9 +5,12 @@ Win32Structure subclass: #CHARRANGE
 	classVariableNames: '_OffsetOf_cpMax _OffsetOf_cpMin'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 CHARRANGE guid: (GUID fromString: '{3fd4e349-a730-484e-afb1-5f2fd9036259}')!
+
 CHARRANGE addClassConstant: '_OffsetOf_cpMax' value: 16r4!
 CHARRANGE addClassConstant: '_OffsetOf_cpMin' value: 16r0!
+
 CHARRANGE comment: '<CHARRANGE> is an <ExternalStructure> class to wrap the struct ''Win.CHARRANGE'' from type information in the ''Windows API (ANSI)'' library.
 
 The type library contains no documentation for this struct
@@ -22,7 +25,9 @@ struct tagCHARRANGE {
 	long cpMax;
 } CHARRANGE;
 '!
+
 !CHARRANGE categoriesForClass!Win-Structs! !
+
 !CHARRANGE methodsFor!
 
 asObject
@@ -49,6 +54,7 @@ cpMin: anInteger
 	"Set the receiver's 'cpMin' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_cpMin put: anInteger! !
+
 !CHARRANGE categoriesForMethods!
 asObject!accessing!public! !
 cpMax!**compiled accessors**!public! !
@@ -76,6 +82,7 @@ defineFields
 
 getFieldNames
 	^#(#cpMin #cpMax)! !
+
 !CHARRANGE class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

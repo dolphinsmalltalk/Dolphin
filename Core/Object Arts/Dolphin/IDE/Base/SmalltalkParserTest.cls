@@ -5,9 +5,13 @@ DolphinTest subclass: #SmalltalkParserTest
 	classVariableNames: ''
 	poolDictionaries: 'ExtCallArgTypes SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
+
 SmalltalkParserTest guid: (GUID fromString: '{947b6d13-1a2a-43c0-8053-bde0fccfbd44}')!
+
 SmalltalkParserTest comment: 'SUnitBrowser openOnTestCase: self'!
+
 !SmalltalkParserTest categoriesForClass!Refactory-Testing! !
+
 !SmalltalkParserTest methodsFor!
 
 assertToken: aStToken isChar: aCharacter
@@ -212,6 +216,7 @@ testFloatScanning
 	#('5.1234a' '0.5e' '1.5e2e3' '1.5e2e-3' '1.5e-Integer zero' '1.5e-' '1.5e+' '1.7976931348623158+e308')
 		do: [:each | self scanNonNumericEnd: each class: StNumberLiteralToken].
 	self scanNonNumericEnd: '5.F' class: StNumberLiteralToken! !
+
 !SmalltalkParserTest categoriesForMethods!
 assertToken:isChar:!helpers!private! !
 parserClass!constants!private! !
@@ -228,6 +233,7 @@ testFloatScanning!public!unit tests! !
 
 parserClass
 	^SmalltalkParser! !
+
 !SmalltalkParserTest class categoriesForMethods!
 parserClass!accessing!public! !
 !

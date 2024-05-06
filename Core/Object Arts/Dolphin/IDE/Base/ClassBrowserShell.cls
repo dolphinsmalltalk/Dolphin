@@ -5,8 +5,11 @@ ClassBrowserAbstract subclass: #ClassBrowserShell
 	classVariableNames: 'LocalHierarchyMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ClassBrowserShell guid: (GUID fromString: '{5655079d-fa03-4ca0-85c5-73cd64654603}')!
+
 ClassBrowserShell addClassConstant: 'LocalHierarchyMask' value: 16r10!
+
 ClassBrowserShell comment: 'ClassBrowserShell is a <SmalltalkToolShell> implementing the Class Hierarchy Browser development tool.
 
 Instance Variables:
@@ -15,7 +18,9 @@ Instance Variables:
 Class Variables:
 	LocalHierarchyMask		<integer> mask flag for the local hierarchy mode.
 '!
+
 !ClassBrowserShell categoriesForClass!MVP-Presenters! !
+
 !ClassBrowserShell methodsFor!
 
 createComponents
@@ -108,6 +113,7 @@ toggleLocalHierarchy
 			classesPresenter model: self model classHierarchy.
 			actualClass notNil ifTrue: [self actualClass: actualClass]].
 	self validateUserInterface! !
+
 !ClassBrowserShell categoriesForMethods!
 createComponents!initializing!public! !
 defaultHelpId!public! !
@@ -158,6 +164,7 @@ resource_Default_view
 
 toolsFolderHelpId
 	^10520! !
+
 !ClassBrowserShell class categoriesForMethods!
 displayOn:!displaying!public! !
 icon!constants!public! !

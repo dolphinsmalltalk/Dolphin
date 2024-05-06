@@ -5,9 +5,13 @@ MethodRefactoring subclass: #TemporaryToInstanceVariableRefactoring
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TemporaryToInstanceVariableRefactoring guid: (GUID fromString: '{c0ad3ff1-c5d3-48f7-9104-4ee2542c6ba6}')!
+
 TemporaryToInstanceVariableRefactoring comment: ''!
+
 !TemporaryToInstanceVariableRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !TemporaryToInstanceVariableRefactoring methodsFor!
 
 checkForValidTemporaryVariable
@@ -66,6 +70,7 @@ transform
 	class addInstanceVariable: temporaryVariableName.
 	(matcher := ParseTreeRewriter removeTemporaryNamed: temporaryVariableName) executeTree: parseTree.
 	class compileTree: matcher tree classified: protocols! !
+
 !TemporaryToInstanceVariableRefactoring categoriesForMethods!
 checkForValidTemporaryVariable!preconditions!public! !
 class:selector:variable:!initialize/release!public! !
@@ -89,6 +94,7 @@ model: aRBNamespace class: aClass selector: aSelector variable: aVariableName
 			selector: aSelector
 			variable: aVariableName;
 		yourself! !
+
 !TemporaryToInstanceVariableRefactoring class categoriesForMethods!
 class:selector:variable:!instance creation!public! !
 model:class:selector:variable:!instance creation!public! !

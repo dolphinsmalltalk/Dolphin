@@ -5,7 +5,9 @@ ICoreWebView2Interface subclass: #ICoreWebView2Controller
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2Controller guid: (IID fromString: '{4d00c0d1-9434-4eb6-8078-8697a560334f}')!
+
 ICoreWebView2Controller comment: '`ICoreWebView2Controller` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Controller'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -96,7 +98,9 @@ interface ICoreWebView2Controller : IUnknown
 };
 ```
 '!
+
 !ICoreWebView2Controller categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2Controller methodsFor!
 
 Add_AcceleratorKeyPressed: eventHandler token: token
@@ -576,6 +580,7 @@ zoomFactor: zoomFactor
 	"Set the 'ZoomFactor' property of the receiver to the <double> value of the argument."
 
 	self put_ZoomFactor: zoomFactor! !
+
 !ICoreWebView2Controller categoriesForMethods!
 Add_AcceleratorKeyPressed:token:!**auto generated**!COM Interfaces-ICoreWebView2Controller!private! !
 Add_GotFocus:token:!**auto generated**!COM Interfaces-ICoreWebView2Controller!private! !
@@ -692,6 +697,7 @@ defineFunctions
 		defineFunction: #get_CoreWebView2:
 			argumentTypes: 'ICoreWebView2**'
 ! !
+
 !ICoreWebView2Controller class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

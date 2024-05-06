@@ -5,10 +5,14 @@ StaticView subclass: #ImageViewAbstract
 	classVariableNames: 'DoubleBufferMask EdgeStyles EraseWholeMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ImageViewAbstract guid: (GUID fromString: '{49987909-4a1f-4e2e-8b1f-2cc2f3ca2c3c}')!
+
 ImageViewAbstract isAbstract: true!
+
 ImageViewAbstract addClassConstant: 'DoubleBufferMask' value: 16r2!
 ImageViewAbstract addClassConstant: 'EraseWholeMask' value: 16r1!
+
 ImageViewAbstract comment: 'ImageViewAbstract is an abstract class of <valueView>s for displaying static <image>s. The <valueModel> associated with an image view must always yield an <image> value when mapped through the installed type converter. An ImageViewAbstract will normally be used in conjunction with a <ImagePresenter>. The mode in which the image is displayed can be controlled using the #viewMode aspect which can be set to one of the following: (#normal, #centered, #scale, #scaleToFit, or #scaleBestFit). 
 
 Instance Variables:
@@ -17,7 +21,9 @@ Instance Variables:
 	ivFlags		<integer> flags controlling styles/modes, etc.
 	insets 		<Rectangle> specifying insets of the image from its border on each edge.
 	imageBorder	<Symbol> identifying style of the border (if any) drawn around the image'!
+
 !ImageViewAbstract categoriesForClass!MVP-Views! !
+
 !ImageViewAbstract methodsFor!
 
 calcRectangle: displayRect
@@ -294,6 +300,7 @@ wmPrintClient: message wParam: wParam lParam: lParam
 	self ensureLayoutValid.
 	self paintOn: (Canvas withNonOwnedDC: wParam).
 	^0! !
+
 !ImageViewAbstract categoriesForMethods!
 calcRectangle:!geometry!private! !
 calculateExtent:!geometry!private! !
@@ -374,6 +381,7 @@ winClassName
 	to instances of the receiver."
 
 	^self wndClassName! !
+
 !ImageViewAbstract class categoriesForMethods!
 edgeStyles!constants!public! !
 edgeStyleTable!constants!public! !

@@ -5,7 +5,9 @@ IDispatch subclass: #IMXWriter
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
 	classInstanceVariableNames: ''!
+
 IMXWriter guid: (IID fromString: '{4d7ff4ba-1565-4ea8-94e1-6e724a46f98d}')!
+
 IMXWriter comment: '<IMXWriter> is a wrapper class for the COM interface ''MSXML2.IMXWriter'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
@@ -76,7 +78,9 @@ interface IMXWriter : IDispatch
 	HRESULT __stdcall flush();
 };
 '!
+
 !IMXWriter categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+
 !IMXWriter methodsFor!
 
 byteOrderMark
@@ -385,6 +389,7 @@ version: strVersion
 
 	self put_version: strVersion
 ! !
+
 !IMXWriter categoriesForMethods!
 byteOrderMark!**auto generated**!properties!public! !
 byteOrderMark:!**auto generated**!properties!public! !
@@ -512,6 +517,7 @@ newMXXMLWriter60
 
 	^self onCLSID: (CLSID fromString: '{88D96A0F-F192-11D4-A65F-0040963251E5}')
 ! !
+
 !IMXWriter class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 newMXHTMLWriter!**auto generated**!instance creation!public! !

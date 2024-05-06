@@ -5,12 +5,15 @@ ENHMETARECORD subclass: #EMRGRADIENTFILL
 	classVariableNames: '_OffsetOf_nTri _OffsetOf_nVer _OffsetOf_rclBounds _OffsetOf_ulMode _OffsetOf_Ver'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 EMRGRADIENTFILL guid: (GUID fromString: '{1302823f-242e-4301-b5eb-ee7a20a4b787}')!
+
 EMRGRADIENTFILL addClassConstant: '_OffsetOf_nTri' value: 16r1C!
 EMRGRADIENTFILL addClassConstant: '_OffsetOf_nVer' value: 16r18!
 EMRGRADIENTFILL addClassConstant: '_OffsetOf_rclBounds' value: 16r8!
 EMRGRADIENTFILL addClassConstant: '_OffsetOf_ulMode' value: 16r20!
 EMRGRADIENTFILL addClassConstant: '_OffsetOf_Ver' value: 16r24!
+
 EMRGRADIENTFILL comment: '<EMRGRADIENTFILL> is an <ExternalStructure> class to wrap the struct ''Win32.EMRGRADIENTFILL'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -29,7 +32,9 @@ struct tagEMRGRADIENTFILL {
 	TRIVERTEX Ver[1];
 } EMRGRADIENTFILL;
 '!
+
 !EMRGRADIENTFILL categoriesForClass!Win32-Structs! !
+
 !EMRGRADIENTFILL methodsFor!
 
 nTri
@@ -95,6 +100,7 @@ Ver: aStructureArrayOfTRIVERTEX
 		to: _OffsetOf_Ver + size
 		startingAt: 1.
 	self nVer: aStructureArrayOfTRIVERTEX size! !
+
 !EMRGRADIENTFILL categoriesForMethods!
 nTri!**compiled accessors**!public! !
 nTri:!**compiled accessors**!public! !
@@ -151,6 +157,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_GRADIENTFILL! !
+
 !EMRGRADIENTFILL class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

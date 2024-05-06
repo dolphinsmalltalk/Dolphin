@@ -5,7 +5,9 @@ ICoreWebView2Sequence subclass: #ICoreWebView2StringCollection
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICoreWebView2StringCollection guid: (IID fromString: '{f41f3f8a-bcc3-11eb-8529-0242ac130003}')!
+
 ICoreWebView2StringCollection comment: '`ICoreWebView2StringCollection` is a wrapper class for the COM interface ''WebView2.ICoreWebView2StringCollection'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
@@ -30,7 +32,9 @@ interface ICoreWebView2StringCollection : IUnknown
 };
 ```
 '!
+
 !ICoreWebView2StringCollection categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+
 !ICoreWebView2StringCollection methodsFor!
 
 at: index
@@ -55,6 +59,7 @@ GetValueAtIndex: index value: value
 
 	<virtual stdcall: hresult 5 dword lpwstr*>
 	^self invalidCall: _failureCode! !
+
 !ICoreWebView2StringCollection categoriesForMethods!
 at:!methods!public! !
 elementClass!constants!private! !
@@ -73,6 +78,7 @@ defineFunctions
 		defineFunction: #GetValueAtIndex:value:
 			argumentTypes: 'dword lpwstr*'
 ! !
+
 !ICoreWebView2StringCollection class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

@@ -5,9 +5,13 @@ Locale subclass: #SmalltalkLocale
 	classVariableNames: 'Current'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SmalltalkLocale guid: (GUID fromString: '{06088e6e-01bc-4518-a4a5-73088615fdd8}')!
+
 SmalltalkLocale comment: ''!
+
 !SmalltalkLocale categoriesForClass!Unclassified! !
+
 !SmalltalkLocale methodsFor!
 
 amDesignator
@@ -347,6 +351,7 @@ yearMonthFormat
 	"Answer the year/month date format for the receiver locale."
 
 	^'MMMM yyyy'! !
+
 !SmalltalkLocale categoriesForMethods!
 amDesignator!constants!public! !
 basicLcid!accessing!private! !
@@ -408,6 +413,7 @@ initialize
 
 reset
 	Current numberFormat: nil! !
+
 !SmalltalkLocale class categoriesForMethods!
 current!instance creation!public! !
 initialize!class initialization!public! !

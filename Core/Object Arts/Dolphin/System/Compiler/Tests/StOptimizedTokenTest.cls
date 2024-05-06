@@ -5,9 +5,13 @@ StTokenTest subclass: #StOptimizedTokenTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StOptimizedTokenTest guid: (GUID fromString: '{9b15fc9c-7c2c-41cb-b2b9-7a8e037ee1be}')!
+
 StOptimizedTokenTest comment: ''!
+
 !StOptimizedTokenTest categoriesForClass!Unclassified! !
+
 !StOptimizedTokenTest methodsFor!
 
 subjectClass
@@ -34,6 +38,7 @@ testInstanceCreation
 	self assert: token2 start equals: 20.
 	self assert: token2 stop equals: 22.
 	self assert: token2 comments equals: nil! !
+
 !StOptimizedTokenTest categoriesForMethods!
 subjectClass!constants!private! !
 testInstanceCreation!public!unit tests! !

@@ -5,7 +5,9 @@ ExternalStructure subclass: #COLORADJUSTMENT
 	classVariableNames: '_OffsetOf_caBlueGamma _OffsetOf_caBrightness _OffsetOf_caColorfulness _OffsetOf_caContrast _OffsetOf_caFlags _OffsetOf_caGreenGamma _OffsetOf_caIlluminantIndex _OffsetOf_caRedGamma _OffsetOf_caRedGreenTint _OffsetOf_caReferenceBlack _OffsetOf_caReferenceWhite _OffsetOf_caSize'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 COLORADJUSTMENT guid: (GUID fromString: '{dbe19b72-cea9-47cf-80f1-de6d59eefd32}')!
+
 COLORADJUSTMENT addClassConstant: '_OffsetOf_caBlueGamma' value: 16rA!
 COLORADJUSTMENT addClassConstant: '_OffsetOf_caBrightness' value: 16r12!
 COLORADJUSTMENT addClassConstant: '_OffsetOf_caColorfulness' value: 16r14!
@@ -18,6 +20,7 @@ COLORADJUSTMENT addClassConstant: '_OffsetOf_caRedGreenTint' value: 16r16!
 COLORADJUSTMENT addClassConstant: '_OffsetOf_caReferenceBlack' value: 16rC!
 COLORADJUSTMENT addClassConstant: '_OffsetOf_caReferenceWhite' value: 16rE!
 COLORADJUSTMENT addClassConstant: '_OffsetOf_caSize' value: 16r0!
+
 COLORADJUSTMENT comment: '<COLORADJUSTMENT> is an <ExternalStructure> class to wrap the struct ''Win32.COLORADJUSTMENT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -42,7 +45,9 @@ struct tagCOLORADJUSTMENT {
 	short caRedGreenTint;
 } COLORADJUSTMENT;
 '!
+
 !COLORADJUSTMENT categoriesForClass!Win32-Structs! !
+
 !COLORADJUSTMENT methodsFor!
 
 caBlueGamma
@@ -164,6 +169,7 @@ caSize: anInteger
 	"Set the receiver's 'caSize' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_caSize put: anInteger! !
+
 !COLORADJUSTMENT categoriesForMethods!
 caBlueGamma!**compiled accessors**!public! !
 caBlueGamma:!**compiled accessors**!public! !
@@ -232,6 +238,7 @@ defineFields
 
 getFieldNames
 	^#(#caSize #caFlags #caIlluminantIndex #caRedGamma #caGreenGamma #caBlueGamma #caReferenceBlack #caReferenceWhite #caContrast #caBrightness #caColorfulness #caRedGreenTint)! !
+
 !COLORADJUSTMENT class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

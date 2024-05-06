@@ -5,7 +5,9 @@ TestResource subclass: #GdiplusFileResource
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusFileResource guid: (GUID fromString: '{fca5bf8a-3e20-4e92-9cb5-dedf99daae36}')!
+
 GdiplusFileResource comment: 'A TestResource that writes a number of files to disk that can then be accessed by TestCases.
 
 The motivation behind this resource is to avoid the need to maintain external files that the TestCases depend on.
@@ -31,7 +33,9 @@ Best Practice
 
 
 '!
+
 !GdiplusFileResource categoriesForClass!Unclassified! !
+
 !GdiplusFileResource methodsFor!
 
 eyeJpgBytes
@@ -5466,6 +5470,7 @@ writeBytes: aByteArray filename: aAbsFilename
 	| fs |
 	fs := FileStream write: aAbsFilename text: false.
 	[fs nextPutAll: aByteArray] ensure: [fs close]! !
+
 !GdiplusFileResource categoriesForMethods!
 eyeJpgBytes!accessing-bytes!public! !
 fileLocator!accessing!public! !
@@ -5506,6 +5511,7 @@ promptImageAsHex
 		display: '^'.
 	(image asByteArray: image mimeType) hexStoreOn: strm.
 	^strm contents! !
+
 !GdiplusFileResource class categoriesForMethods!
 promptImageAsHex!private! !
 !

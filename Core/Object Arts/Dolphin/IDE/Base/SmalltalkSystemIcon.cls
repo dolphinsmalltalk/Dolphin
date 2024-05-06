@@ -5,9 +5,13 @@ Object subclass: #SmalltalkSystemIcon
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 SmalltalkSystemIcon guid: (GUID fromString: '{87b4c4ba-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 SmalltalkSystemIcon comment: ''!
+
 !SmalltalkSystemIcon categoriesForClass!MVP-Models! !
+
 !SmalltalkSystemIcon methodsFor!
 
 = aSmalltalkSystemIcon
@@ -81,6 +85,7 @@ tool: aToolClass icon: anIcon description: aString openBlock: aMonadicValuable h
 
 whatsThis
 	SessionManager current whatsThis: self! !
+
 !SmalltalkSystemIcon categoriesForMethods!
 =!comparing!public! !
 description!accessing!public! !
@@ -175,6 +180,7 @@ tool: aToolClass icon: anIcon description: aStringDescription openBlock: aDyadic
 		description: aStringDescription
 		openBlock: aDyadicValuable
 		helpId: anIntegerOrNil! !
+
 !SmalltalkSystemIcon class categoriesForMethods!
 icon!constants!public! !
 icon:description:openBlock:!instance creation!public! !

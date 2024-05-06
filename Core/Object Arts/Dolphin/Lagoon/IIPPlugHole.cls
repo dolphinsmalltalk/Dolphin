@@ -5,11 +5,15 @@ IUnknown subclass: #IIPPlugHole
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IIPPlugHole guid: (IID fromString: '{7dac28a4-28f3-4cc9-8bf1-c17fb4cac8bd}')!
+
 IIPPlugHole comment: '<IIPPlugHole> is a wrapper class for the COM interface ''InProcDolphin.IIPPlugHole'' generated from type information in the ''Dolphin Smalltalk InProcStub Library 1.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 This interface is implemented by the Dolphin in-process DLL peer which forwards the DllGetClassObject, DllCanUnloadNow, DllRegisterServer and DllUnregisterServer calls to the image through the IInProcDolphin registered with it as the Peer property.'!
+
 !IIPPlugHole categoriesForClass!COM-Interfaces!IPDolphin-Interfaces! !
+
 !IIPPlugHole methodsFor!
 
 get_Peer: pVal
@@ -34,6 +38,7 @@ put_Peer: pVal
 
 	<virtual stdcall: hresult 5 IUnknown*>
 	^self invalidCall: _failureCode! !
+
 !IIPPlugHole categoriesForMethods!
 get_Peer:!**auto generated**!COM Interfaces-IInProcPlugHole!private! !
 put_Peer:!**auto generated**!COM Interfaces-IInProcPlugHole!private! !
@@ -52,6 +57,7 @@ defineFunctions
 		defineFunction: #put_Peer:
 			argumentTypes: 'IUnknown*'
 ! !
+
 !IIPPlugHole class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

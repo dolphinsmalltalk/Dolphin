@@ -5,7 +5,9 @@ Object subclass: #ListViewColumn
 	classVariableNames: 'AutoResizeMask SortInvertedMask'
 	poolDictionaries: 'ListViewConstants'
 	classInstanceVariableNames: ''!
+
 ListViewColumn guid: (GUID fromString: '{87b4c499-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 ListViewColumn comment: 'ListViewColumn is a description of a column held by a <ListView>. Note that, columns are only displayed when a list is in #report mode.
 
 Each column is configurable using a number of valuables (usually blocks) which determine how the item objects held by the list are mapped to information to be presented in the column.The first mapping is achieved by the getContentsBlock which, given the list item, determines the object that the column actually represents. How this contents object is then mapped to the displayed text is determined by the getTextBlock. Similarly, the getImageBlock is used to map a contents object to the index of an image to display in the column (the ImageManager that will be used to obtain the actual image is that of the ListView itself). In order to determine how a column will be sorted (an operation that is automatically perform when a column header is clicked) the getSortValueBlock can be set. This takes a contents object and maps it to an appropriate sort value. If it is necessary for a column to display "tip text" then a getInfoTipBlock can be used to specify the mapping between a contents object and this text. Lastly the customDrawBlock can be used to control the appearance for individual column entries. The above blocks are initialized to defaults with the following actions:
@@ -35,7 +37,9 @@ Instance Variables:
 	isAutoResize	<boolean> indicating whether the column should dynamically resize to fill available space.
 	getInfoTipBlock	<monadicValuable> mapping a content object to a <readableString> for the column''s tip text.
 	customDrawBlock <monadicValuable> evaluated to customise the appearance of individual column entries.'!
+
 !ListViewColumn categoriesForClass!MVP-Views-Support! !
+
 !ListViewColumn methodsFor!
 
 alignment
@@ -402,6 +406,7 @@ width: anInteger
 
 	self basicWidth: anInteger.
 	self parent ifNotNil: [:view | view setWidthOfColumn: self index to: anInteger]! !
+
 !ListViewColumn categoriesForMethods!
 alignment!alignment!public! !
 alignment:!alignment!public! !
@@ -534,6 +539,7 @@ text: titleString width: widthPixels
 		text: titleString;
 		width: widthPixels;
 		yourself! !
+
 !ListViewColumn class categoriesForMethods!
 icon!constants!public! !
 initialize!development!initializing!private! !

@@ -5,13 +5,17 @@ Object subclass: #FileBrowserAbstract
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 FileBrowserAbstract guid: (GUID fromString: '{782ed519-5423-11d3-998b-bca753d3b065}')!
+
 FileBrowserAbstract comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
+
 !FileBrowserAbstract categoriesForClass!IDB Goodies! !
+
 !FileBrowserAbstract methodsFor!
 
 name
@@ -43,6 +47,7 @@ setName: aString parent: aFileBrowserFolderOrNil
 	name := aString.
 	parent := aFileBrowserFolderOrNil.
 	^self! !
+
 !FileBrowserAbstract categoriesForMethods!
 name!accessing!public! !
 parent!accessing!public! !
@@ -57,6 +62,7 @@ name: aString parent: aFileBrowserFolderOrNil
 	"Answers a new instance of the receiver"
 
 	^self new setName: aString parent: aFileBrowserFolderOrNil! !
+
 !FileBrowserAbstract class categoriesForMethods!
 name:parent:!instance creation!public! !
 !

@@ -5,9 +5,12 @@ ContainerView subclass: #ShellView
 	classVariableNames: 'CreateHookBlock DefaultButtonIndex DefaultExtentBlock DialogMessageMap TransientMask'
 	poolDictionaries: 'ButtonConstants'
 	classInstanceVariableNames: ''!
+
 ShellView guid: (GUID fromString: '{87b4c71a-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 ShellView addClassConstant: 'DefaultButtonIndex' value: 16r14!
 ShellView addClassConstant: 'TransientMask' value: 16r1!
+
 ShellView comment: '`ShellView` implements the `<topView>` protocol for top-level windows whose parent is the desktop. `ShellView` is also a `<topPresenter>` so that it is able to stand in as a `Shell` when there is no associated presenter.
 
 Instance Variables:
@@ -33,7 +36,9 @@ Class Variables:
 
 
 '!
+
 !ShellView categoriesForClass!MVP-Views! !
+
 !ShellView methodsFor!
 
 acceleratorTable
@@ -1216,6 +1221,7 @@ wmWindowPosChanged: message wParam: wParam lParam: lParam
 	super wmWindowPosChanged: message wParam: wParam lParam: lParam.
 	^nil	"Accept default processing"
 ! !
+
 !ShellView categoriesForMethods!
 acceleratorTable!accelerator!public! !
 acceleratorTable:!accelerator!public! !
@@ -1462,6 +1468,7 @@ stbConvertFromVersion9: anArray
 
 themePartName
 	^'WINDOW'! !
+
 !ShellView class categoriesForMethods!
 asSessionManagerClass!converting!public!VM and session managerment! !
 createHookBlock!accessing!private!realizing/unrealizing! !

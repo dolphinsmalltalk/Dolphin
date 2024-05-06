@@ -5,9 +5,13 @@ MethodRefactoring subclass: #InlineAllSendersRefactoring
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 InlineAllSendersRefactoring guid: (GUID fromString: '{09ac0050-928c-41f2-8a20-8d0490a9c4fb}')!
+
 InlineAllSendersRefactoring comment: ''!
+
 !InlineAllSendersRefactoring categoriesForClass!Refactory-Refactorings! !
+
 !InlineAllSendersRefactoring methodsFor!
 
 checkInlinedMethods
@@ -97,6 +101,7 @@ transform
 		inlineSelfSends;
 		removeMethod;
 		checkInlinedMethods! !
+
 !InlineAllSendersRefactoring categoriesForMethods!
 checkInlinedMethods!public!transforming! !
 inlineMessagesInClass:andSelector:!public!transforming! !
@@ -122,6 +127,7 @@ model: aRBNamespace sendersOf: aSelector in: aClass
 
 sendersOf: aSelector in: aClass 
 	^self new sendersOf: aSelector in: aClass! !
+
 !InlineAllSendersRefactoring class categoriesForMethods!
 model:sendersOf:in:!instance creation!public! !
 sendersOf:in:!instance creation!public! !

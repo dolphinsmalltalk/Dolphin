@@ -9,7 +9,6 @@ This formatters are essentially the same as RBFormatter, except that they are ab
 
 Browse the ''*-RB fixes'' pseudo-category to find the modifications made as part of the Dolphin port.'.
 
-
 package classNames
 	add: #RBConfigurableFormatter;
 	add: #RBFormatter;
@@ -35,21 +34,18 @@ StParseNodeVisitor subclass: #RBSourceFormatter
 	classVariableNames: 'MaxLineLength PeriodsAtEndOfMethod'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RBSourceFormatter subclass: #RBConfigurableFormatter
 	instanceVariableNames: 'lookaheadCode originalSource'
 	classVariableNames: 'FormatCommentWithStatements IndentsForKeywords IndentString LineUpBlockBrackets MethodSignatureOnMultipleLines MinimumNewLinesBetweenStatements NewLineAfterCascade NewLineBeforeFirstCascade NewLineBeforeFirstKeyword NewLinesAfterMethodComment NewLinesAfterMethodPattern NewLinesAfterTemporaries NumberOfArgumentsForMultiLine PeriodsAtEndOfBlock RetainBlankLinesBetweenStatements StringFollowingReturn StringInsideBlocks StringInsideParentheses TraditionalBinaryPrecedence UseTraditionalBinaryPrecedenceForParentheses'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RBSourceFormatter subclass: #RBFormatter
 	instanceVariableNames: 'firstLineLength'
 	classVariableNames: 'MaximumArgumentsPerLine SelectorsToLeaveOnLine SelectorsToStartOnNewLine'
 	poolDictionaries: 'ExtCallArgTypes'
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

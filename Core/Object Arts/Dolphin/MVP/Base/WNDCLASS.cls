@@ -5,7 +5,9 @@ Win32Structure subclass: #WNDCLASS
 	classVariableNames: '_OffsetOf_cbClsExtra _OffsetOf_cbWndExtra _OffsetOf_hbrBackground _OffsetOf_hCursor _OffsetOf_hIcon _OffsetOf_hInstance _OffsetOf_lpfnWndProc _OffsetOf_lpszClassName _OffsetOf_lpszMenuName _OffsetOf_style'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 WNDCLASS guid: (GUID fromString: '{87b4c61c-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 WNDCLASS addClassConstant: '_OffsetOf_cbClsExtra' value: 16r8!
 WNDCLASS addClassConstant: '_OffsetOf_cbWndExtra' value: 16rC!
 WNDCLASS addClassConstant: '_OffsetOf_hbrBackground' value: 16r1C!
@@ -16,9 +18,12 @@ WNDCLASS addClassConstant: '_OffsetOf_lpfnWndProc' value: 16r4!
 WNDCLASS addClassConstant: '_OffsetOf_lpszClassName' value: 16r24!
 WNDCLASS addClassConstant: '_OffsetOf_lpszMenuName' value: 16r20!
 WNDCLASS addClassConstant: '_OffsetOf_style' value: 16r0!
+
 WNDCLASS comment: 'WNDCLASS is the class of <ExternalStructure> which represent the Windows structure of the same name. It is used to retrieve and specify Windows "Class" information, e.g. when registering a window class.
 '!
+
 !WNDCLASS categoriesForClass!External-Data-Structured-Win32! !
+
 !WNDCLASS methodsFor!
 
 className: aString
@@ -86,6 +91,7 @@ style: anInteger
 	"Set the receiver's 'style' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_style put: anInteger! !
+
 !WNDCLASS categoriesForMethods!
 className:!accessing!public! !
 hbrBackground:!**compiled accessors**!public! !
@@ -138,6 +144,7 @@ defineFields
 
 getFieldNames
 	^#(#style #lpfnWndProc #hInstance #hIcon #hCursor #hbrBackground #lpszMenuName #lpszClassName)! !
+
 !WNDCLASS class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

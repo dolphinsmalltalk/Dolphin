@@ -5,8 +5,11 @@ Object subclass: #RBAbstractClass
 	classVariableNames: 'LookupSuperclass'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RBAbstractClass guid: (GUID fromString: '{99469076-f20a-4a7f-91f1-c2d06d948a14}')!
+
 RBAbstractClass isAbstract: true!
+
 RBAbstractClass comment: 'RBAbstractClass is an abstract class. It represents classes in the system. Refactorings operate on these objects, producing change objects. These change objects are then performed on the real code.
 
 Subclasses must implement the following messages:
@@ -33,7 +36,9 @@ Class Variables:
 	LookupSuperclass	<Object>	a special object denoting that our superclass hasn''t been assigned yet
 
 '!
+
 !RBAbstractClass categoriesForClass!Refactory-Model! !
+
 !RBAbstractClass methodsFor!
 
 = aRBClass 
@@ -507,6 +512,7 @@ withAllSuperclasses
 	^(self allSuperclasses)
 		addFirst: self;
 		yourself! !
+
 !RBAbstractClass categoriesForMethods!
 =!comparing!public! !
 addInstanceVariable:!public!variable accessing! !
@@ -605,6 +611,7 @@ new
 	^(super new)
 		initialize;
 		yourself! !
+
 !RBAbstractClass class categoriesForMethods!
 initialize!class initialization!public! !
 new!instance creation!public! !

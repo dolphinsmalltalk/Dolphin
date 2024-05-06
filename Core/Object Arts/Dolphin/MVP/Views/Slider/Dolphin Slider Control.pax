@@ -13,7 +13,6 @@ Thanks to Ian Bartholomew for donating his original version of this view.'.
 
 package basicPackageVersion: '6.1'.
 
-
 package classNames
 	add: #Slider;
 	yourself.
@@ -50,9 +49,6 @@ ValueConvertingControlView subclass: #Slider
 	poolDictionaries: 'TrackBarConstants'
 	classInstanceVariableNames: ''!
 
-"Global Aliases"!
-
-
 "Loose Methods"!
 
 !NumberPresenter class methodsFor!
@@ -66,6 +62,7 @@ resource_Slider_view
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.Slider) 34 18 nil nil 34 2 8 1140916225 1 416 721990 2 ##(Smalltalk.ValueHolder) nil false 1376774 ##(Smalltalk.PluggableSearchPolicy) 459270 ##(Smalltalk.Message) #= 8 #() 546 #hash 8 #() 1 nil nil 7 nil nil nil 416 nil 8 1915076416 852486 ##(Smalltalk.NullConverter) nil nil 21 nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3777 21 786 501 71 416 738 #range: 34 1 525062 ##(Smalltalk.Interval) 1 201 21 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 96 7 0 0 10 0 0 0 90 8 0 0 45 0 0 0] 8 #() 786 193 193 nil 27 )! !
+
 !NumberPresenter class categoriesForMethods!
 resource_Slider_view!public!resources-views! !
 !

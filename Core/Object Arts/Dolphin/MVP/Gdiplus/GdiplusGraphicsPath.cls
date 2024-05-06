@@ -5,11 +5,15 @@ GdiplusBase subclass: #GdiplusGraphicsPath
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 GdiplusGraphicsPath guid: (GUID fromString: '{1a1a5ea0-6151-11d7-b609-00e0987e8081}')!
+
 GdiplusGraphicsPath comment: 'GdiplusGraphicsPath stores a sequence of lines, curves, and shapes.  The entire sequence can be drawn by calling the drawPath method of a GdiplusGraphics object.  You can partition the sequence of lines, curves, and shapes into figures, and with the help of a GdiplusGraphicsPathIterator object, selected figures can be drawn.  Selected portions of the path can also be drawn by placing markers in the sequence.
 
 '!
+
 !GdiplusGraphicsPath categoriesForClass!Unclassified! !
+
 !GdiplusGraphicsPath methodsFor!
 
 addArc: aRectangle angles: aPoint 
@@ -150,6 +154,7 @@ startFigure
 	| status |
 	(status := GdiplusLibrary default gdipStartPathFigure: self asParameter) = Ok 
 		ifFalse: [GdiplusError signal: 'GdipStartPathFigure failed' with: status]! !
+
 !GdiplusGraphicsPath categoriesForMethods!
 addArc:angles:!operations!public! !
 addClosedCurve:!operations!public! !
@@ -253,6 +258,7 @@ points: points types: types fillMode: aFillModeConstant
 				points: points
 				types: types
 				fillMode: aFillModeConstant)! !
+
 !GdiplusGraphicsPath class categoriesForMethods!
 exampleGdipGPCreatingFigures!examples!public!sunit! !
 exampleGdipGPFillingFigures!examples!public!sunit! !

@@ -5,18 +5,23 @@ Win32Structure subclass: #BITMAPFILEHEADER
 	classVariableNames: '_OffsetOf_bfOffBits _OffsetOf_bfReserved1 _OffsetOf_bfReserved2 _OffsetOf_bfSize _OffsetOf_bfType'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 BITMAPFILEHEADER guid: (GUID fromString: '{48f23680-5426-11d3-998b-bca753d3b065}')!
+
 BITMAPFILEHEADER addClassConstant: '_OffsetOf_bfOffBits' value: 16rA!
 BITMAPFILEHEADER addClassConstant: '_OffsetOf_bfReserved1' value: 16r6!
 BITMAPFILEHEADER addClassConstant: '_OffsetOf_bfReserved2' value: 16r8!
 BITMAPFILEHEADER addClassConstant: '_OffsetOf_bfSize' value: 16r2!
 BITMAPFILEHEADER addClassConstant: '_OffsetOf_bfType' value: 16r0!
+
 BITMAPFILEHEADER comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew
 ian@idb.me.uk
 Public Domain Freeware'!
+
 !BITMAPFILEHEADER categoriesForClass!External-Data-Structured-Win32!IDB Goodies! !
+
 !BITMAPFILEHEADER methodsFor!
 
 bfOffBits
@@ -68,6 +73,7 @@ bfType: anInteger
 	"Set the receiver's 'bfType' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_bfType put: anInteger! !
+
 !BITMAPFILEHEADER categoriesForMethods!
 bfOffBits!**compiled accessors**!public! !
 bfOffBits:!**compiled accessors**!public! !
@@ -110,6 +116,7 @@ packing
 	1-byte boundaries - probably a 16-bit inheritance."
 
 	^1! !
+
 !BITMAPFILEHEADER class categoriesForMethods!
 defineFields!initializing!public! !
 getFieldNames!**compiled accessors**!constants!private! !

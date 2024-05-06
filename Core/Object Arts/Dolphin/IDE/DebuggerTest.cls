@@ -5,9 +5,13 @@ DolphinTest subclass: #DebuggerTest
 	classVariableNames: ''
 	poolDictionaries: 'OpcodePool'
 	classInstanceVariableNames: ''!
+
 DebuggerTest guid: (GUID fromString: '{29cfd485-34b1-41d6-a030-30d1fe5a9edd}')!
+
 DebuggerTest comment: ''!
+
 !DebuggerTest categoriesForClass!Unclassified! !
+
 !DebuggerTest methodsFor!
 
 setUp
@@ -69,6 +73,7 @@ testRemapIPOfSendSelf
 	"Test remapping of the instruction in the middle of the block"
 	byte := debugMethod byteCodes at: startIP + 3.
 	self assert: (byte = Pop or: [byte = PopPushSelf])! !
+
 !DebuggerTest categoriesForMethods!
 setUp!private!unit tests! !
 tearDown!private!unit tests! !

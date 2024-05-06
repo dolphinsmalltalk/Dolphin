@@ -5,9 +5,13 @@ ArrayedCollectionTest subclass: #ArrayTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ArrayTest guid: (GUID fromString: '{e642efa8-51b6-4f91-a4a0-e83c824052d6}')!
+
 ArrayTest comment: ''!
+
 !ArrayTest categoriesForClass!Unclassified! !
+
 !ArrayTest methodsFor!
 
 collectionClass
@@ -164,6 +168,7 @@ testWithWithWithWithWith
 	"Invoke the method directly so we don't need to install it."
 	array2 := testMethod value: Array withArguments: #(1 2 3 4 5).
 	self assert: array2 equals: array! !
+
 !ArrayTest categoriesForMethods!
 collectionClass!helpers!private! !
 testCyclicRefPrinting!public! !

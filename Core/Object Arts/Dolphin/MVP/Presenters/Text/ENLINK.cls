@@ -5,11 +5,14 @@ NMHDR subclass: #ENLINK
 	classVariableNames: '_OffsetOf_chrg _OffsetOf_lParam _OffsetOf_msg _OffsetOf_wParam'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ENLINK guid: (GUID fromString: '{af755b00-4b08-4d23-991b-a340afd83bc2}')!
+
 ENLINK addClassConstant: '_OffsetOf_chrg' value: 16r18!
 ENLINK addClassConstant: '_OffsetOf_lParam' value: 16r14!
 ENLINK addClassConstant: '_OffsetOf_msg' value: 16rC!
 ENLINK addClassConstant: '_OffsetOf_wParam' value: 16r10!
+
 ENLINK comment: '<ENLINK> is an <ExternalStructure> class to wrap the struct ''Win32.ENLINK'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -27,7 +30,9 @@ struct tagENLINK {
 	CHARRANGE chrg;
 } ENLINK;
 '!
+
 !ENLINK categoriesForClass!Win32-Structs! !
+
 !ENLINK methodsFor!
 
 chrg
@@ -49,6 +54,7 @@ wParam
 	"Answer the <Integer> value of the receiver's 'wParam' field."
 
 	^bytes uintPtrAtOffset: _OffsetOf_wParam! !
+
 !ENLINK categoriesForMethods!
 chrg!**compiled accessors**!public! !
 lParam!**compiled accessors**!public! !
@@ -82,6 +88,7 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #msg #wParam #lParam #chrg)! !
+
 !ENLINK class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

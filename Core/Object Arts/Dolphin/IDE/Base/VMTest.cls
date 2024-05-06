@@ -5,11 +5,15 @@ DolphinTest subclass: #VMTest
 	classVariableNames: ''
 	poolDictionaries: 'CRTConstants'
 	classInstanceVariableNames: ''!
+
 VMTest guid: (GUID fromString: '{d03f75a2-8c1c-4559-8177-eff37d37a6e8}')!
+
 VMTest comment: 'Test the VM primitives and other VM related operations.
 
 SUnitBrowser openOnTestCase: self'!
+
 !VMTest categoriesForClass!Unclassified! !
+
 !VMTest methodsFor!
 
 assertImmutableAtPut: anObject
@@ -3642,6 +3646,7 @@ verifyPrimitiveNextPutAllOnUtfStrings: method
 								value: eachTarget
 								value: eachArg
 								value: each]]]! !
+
 !VMTest categoriesForMethods!
 assertImmutableAtPut:!private!unit tests! !
 assertImmutableBasicAtPut:!private!unit tests! !
@@ -3803,6 +3808,7 @@ verifyPrimitiveNextPutAllOnUtfStrings:!helpers!private! !
 
 resources
 	^{MustBeBooleanTestClasses}! !
+
 !VMTest class categoriesForMethods!
 resources!Accessing!public! !
 !

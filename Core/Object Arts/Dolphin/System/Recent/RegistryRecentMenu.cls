@@ -5,9 +5,13 @@ AbstractRecentMenu subclass: #RegistryRecentMenu
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RegistryRecentMenu guid: (GUID fromString: '{24a5959d-a131-48d9-a17d-b8038aea48b2}')!
+
 RegistryRecentMenu comment: ''!
+
 !RegistryRecentMenu categoriesForClass!Kernel-Objects! !
+
 !RegistryRecentMenu methodsFor!
 
 getRecentList
@@ -58,6 +62,7 @@ setRecentList: anOrderedCollectionOfFilenameStrings
 				nextPutAll: each;
 				cr].
 	self productRegistryAt: self recentRegistryKey put: stream contents! !
+
 !RegistryRecentMenu categoriesForMethods!
 getRecentList!helpers!private! !
 initialize!initializing!private! !
@@ -76,6 +81,7 @@ withProductKey: aKeyString
 	^(super new)
 		setProductRegistryKey: aKeyString;
 		yourself! !
+
 !RegistryRecentMenu class categoriesForMethods!
 withProductKey:!instance creation!public! !
 !

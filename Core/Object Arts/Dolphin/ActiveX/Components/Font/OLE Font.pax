@@ -9,7 +9,6 @@ This package wraps the standard OLE ''Font'' component.'.
 
 package basicPackageVersion: '6.1'.
 
-
 package classNames
 	add: #IFont;
 	add: #IFontDisp;
@@ -41,14 +40,12 @@ IUnknown subclass: #IFont
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IDispatch subclass: #IFontDisp
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
 
 "Loose Methods"!
 
@@ -74,6 +71,7 @@ fromOleFont: pFont
 		lfPitchAndFamily:
 "		faceName: pFont name;
 		yourself! !
+
 !AbstractLOGFONT class categoriesForMethods!
 fromOleFont:!instance creation!public! !
 !
@@ -85,6 +83,7 @@ fromOleFont: pFont
 	<IFont>|<IFontDisp> argument, anIFont, is an interface."
 
 	^self fromLogFont: (LOGFONTW fromOleFont: pFont)! !
+
 !Font class categoriesForMethods!
 fromOleFont:!instance creation!public! !
 !

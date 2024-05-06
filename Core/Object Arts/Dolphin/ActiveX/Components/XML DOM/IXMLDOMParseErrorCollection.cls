@@ -5,7 +5,9 @@ IDispatch subclass: #IXMLDOMParseErrorCollection
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
 	classInstanceVariableNames: ''!
+
 IXMLDOMParseErrorCollection guid: (IID fromString: '{3efaa429-272f-11d2-836f-0000f87a7782}')!
+
 IXMLDOMParseErrorCollection comment: '<IXMLDOMParseErrorCollection> is a wrapper class for the COM interface ''MSXML2.IXMLDOMParseErrorCollection'' generated from type information in the ''Microsoft XML, v6.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
@@ -41,7 +43,9 @@ interface IXMLDOMParseErrorCollection : IDispatch
 		[out, retval]IUnknown** ppUnk);
 };
 '!
+
 !IXMLDOMParseErrorCollection categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+
 !IXMLDOMParseErrorCollection methodsFor!
 
 _newEnum
@@ -136,6 +140,7 @@ Reset
 
 	<virtual stdcall: hresult 11>
 	^self invalidCall: _failureCode! !
+
 !IXMLDOMParseErrorCollection categoriesForMethods!
 _newEnum!**auto generated**!properties!public! !
 get__newEnum:!**auto generated**!COM Interfaces-IXMLDOMParseErrorCollection!private! !
@@ -167,6 +172,7 @@ defineFunctions
 		defineFunction: #get__newEnum:
 			argumentTypes: 'IUnknown**'
 ! !
+
 !IXMLDOMParseErrorCollection class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

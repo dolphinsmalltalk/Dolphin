@@ -5,10 +5,15 @@ CompositeRefactoryChange subclass: #RenameVariableChange
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RenameVariableChange guid: (GUID fromString: '{e500a4e5-c686-4c27-903e-02242b8aa5f6}')!
+
 RenameVariableChange isAbstract: true!
+
 RenameVariableChange comment: ''!
+
 !RenameVariableChange categoriesForClass!Refactory-Change Objects! !
+
 !RenameVariableChange methodsFor!
 
 = aRenameVariableChange 
@@ -78,6 +83,7 @@ printOn: aStream
 
 renameVariable
 	^self subclassResponsibility! !
+
 !RenameVariableChange categoriesForMethods!
 =!comparing!public! !
 changeClass!accessing!public! !
@@ -105,6 +111,7 @@ rename: oldName to: newName in: aClass
 		newName: newName;
 		changeClass: aClass;
 		yourself! !
+
 !RenameVariableChange class categoriesForMethods!
 rename:to:in:!instance creation!public! !
 !

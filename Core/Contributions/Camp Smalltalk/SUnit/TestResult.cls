@@ -5,9 +5,13 @@ Object subclass: #TestResult
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 TestResult guid: (GUID fromString: '{5e96793b-0810-11d4-a876-0050da643bf9}')!
+
 TestResult comment: ''!
+
 !TestResult categoriesForClass!SUnit! !
+
 !TestResult methodsFor!
 
 addError: aTestCase signal: anException
@@ -170,6 +174,7 @@ tests
 		addAll: self errors;
 		addAll: self defects;
 		yourself! !
+
 !TestResult categoriesForMethods!
 addError:signal:!adding!private! !
 addFailure:signal:!adding!private! !
@@ -233,6 +238,7 @@ signalFailureWith: aString
 
 skip
 	^TestSkip! !
+
 !TestResult class categoriesForMethods!
 error!Exceptions!public! !
 exError!Exceptions!public! !

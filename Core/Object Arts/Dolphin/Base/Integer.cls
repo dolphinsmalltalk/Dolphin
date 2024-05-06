@@ -5,10 +5,15 @@ Number subclass: #Integer
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Integer guid: (GUID fromString: '{87b4c65c-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 Integer isAbstract: true!
+
 Integer comment: ''!
+
 !Integer categoriesForClass!Magnitude-Numbers! !
+
 !Integer methodsFor!
 
 - operand
@@ -787,6 +792,7 @@ yourAddress
 	"Assume that the integer is being used as an address, so answer self."
 
 	^self! !
+
 !Integer categoriesForMethods!
 -!arithmetic!public! !
 &!bit manipulation!public! !
@@ -968,6 +974,7 @@ readPositiveFrom: aStream radix: anInteger
 					[aStream pop.
 					^value]].
 	^value! !
+
 !Integer class categoriesForMethods!
 primesUpTo:!enquiries!public! !
 readFrom:!instance creation!public! !

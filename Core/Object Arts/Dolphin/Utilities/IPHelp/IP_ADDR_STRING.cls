@@ -5,11 +5,14 @@ ExternalStructure subclass: #IP_ADDR_STRING
 	classVariableNames: '_OffsetOf_Context _OffsetOf_IpAddress _OffsetOf_IpMask _OffsetOf_Next'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IP_ADDR_STRING guid: (GUID fromString: '{ba94c426-f5a5-47e8-b2c5-43d6c2456846}')!
+
 IP_ADDR_STRING addClassConstant: '_OffsetOf_Context' value: 16r24!
 IP_ADDR_STRING addClassConstant: '_OffsetOf_IpAddress' value: 16r4!
 IP_ADDR_STRING addClassConstant: '_OffsetOf_IpMask' value: 16r14!
 IP_ADDR_STRING addClassConstant: '_OffsetOf_Next' value: 16r0!
+
 IP_ADDR_STRING comment: '<IP_ADDR_STRING> is an <ExternalStructure> class to wrap the struct ''Win32.IP_ADDR_STRING'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -26,7 +29,9 @@ struct tagIP_ADDR_STRING {
 	unsigned long Context;
 } IP_ADDR_STRING;
 '!
+
 !IP_ADDR_STRING categoriesForClass!Win32-Structs! !
+
 !IP_ADDR_STRING methodsFor!
 
 Context
@@ -48,6 +53,7 @@ Next
 	"Answer the <IP_ADDR_STRING> value of the receiver's 'Next' field."
 
 	^IP_ADDR_STRING fromAddress: (bytes intPtrAtOffset: _OffsetOf_Next)! !
+
 !IP_ADDR_STRING categoriesForMethods!
 Context!**compiled accessors**!public! !
 IpAddress!**compiled accessors**!public! !
@@ -93,6 +99,7 @@ defineFields
 
 getFieldNames
 	^#(#Next #IpAddress #IpMask #Context)! !
+
 !IP_ADDR_STRING class categoriesForMethods!
 defineFields!initializing!public! !
 getFieldNames!**compiled accessors**!constants!private! !

@@ -5,7 +5,9 @@ ValueHolder subclass: #ValueBuffer
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ValueBuffer guid: (GUID fromString: '{87b4c67d-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 ValueBuffer comment: 'A ValueBuffer can be used to buffer changes to a subject <valueModel>. It presents the same <value> protocol as its subject but, when the value is changed, the change is not immediately passed to the subject. This only happens when the ValueBuffer receives an #apply message to indicate that any changes should flushed.
 
 It is important to note that, in order to be used with a ValueBuffer
@@ -17,7 +19,9 @@ Instance Variables:
 
 
 '!
+
 !ValueBuffer categoriesForClass!MVP-Models! !
+
 !ValueBuffer methodsFor!
 
 apply
@@ -82,6 +86,7 @@ value
 	value otherwise answer that of the subject"
 
 	^modified ifTrue: [super value] ifFalse: [subject value]! !
+
 !ValueBuffer categoriesForMethods!
 apply!accessing!commands!public! !
 gate!accessing!public! !
@@ -111,6 +116,7 @@ subject: aSubjectValueModel
 	"Answer an instance of the receiver that buffers the value of aSubjectValueModel."
 
 	^super new subject: aSubjectValueModel! !
+
 !ValueBuffer class categoriesForMethods!
 icon!constants!public! !
 new!instance creation!private! !

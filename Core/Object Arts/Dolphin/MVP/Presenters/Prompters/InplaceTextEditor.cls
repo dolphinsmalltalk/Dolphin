@@ -5,7 +5,9 @@ Presenter subclass: #InplaceTextEditor
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 InplaceTextEditor guid: (GUID fromString: '{772412aa-7ca7-476c-b034-e5397984a86d}')!
+
 InplaceTextEditor comment: 'InplaceTextEditor is a special kind of "prompter" that appears as an in-place text edit control over the text being edited. It behaves like a modal dialog, in that control is not returned to the called until the in-place edit has been committed or cancelled. This makes for an easier programming model than the alternative of a modeless view shown from the activating command, and delayed response to events when a modeless view is cancelled/committed to complete the command. However InplaceTextEditor is not actually a true dialog, because if it were then when shown it would have the undesirable effect of de-activating the owning top-level window while the editor is open.
 
 The in-place text editor is shown with an initial size that is sufficient to display the existing edited text (with the edit controls adornments such as borders and margins), plus sufficient extra space for any character in the current font to be typed. As more characters are typed, the edit box grows dynamically. If characters are deleted then the edit control shrinks, but never below the initial size.
@@ -22,7 +24,9 @@ Instance Variables:
 	ownerView		<View>. The view for which text is being edited in place. Defaults to the view with focus.
 	validationBlock		<monadicValuable> used to validate the input when a commit action is attempted.
 '!
+
 !InplaceTextEditor categoriesForClass!MVP-Presenters! !
+
 !InplaceTextEditor methodsFor!
 
 answer
@@ -256,6 +260,7 @@ value: anObject
 	the original subject model until #apply is received"
 
 	self model value: anObject.! !
+
 !InplaceTextEditor categoriesForMethods!
 answer!accessing!public! !
 apply!commands!public! !
@@ -319,6 +324,7 @@ resource_Default_view
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.TextEdit) 34 16 nil nil 34 2 8 1149304832 1 416 721990 2 ##(Smalltalk.ValueHolder) nil false 1310726 ##(Smalltalk.EqualitySearchPolicy) nil 327686 ##(Smalltalk.Color) #window nil 1543 nil nil nil 416 nil 8 1903872368 852486 ##(Smalltalk.NullConverter) nil 8 '' 65 983302 ##(Smalltalk.MessageSequence) 138 144 34 3 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 754 191 41 416 706 #text: 34 1 8 'Text to be edited' 416 706 #setMarginWidths: 34 1 8 #(2 2) 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 222 7 0 0 30 0 0 0] 8 #() 754 193 193 nil 27 )! !
+
 !InplaceTextEditor class categoriesForMethods!
 createOn:!public! !
 defaultModel!models!public! !

@@ -5,7 +5,9 @@ Object subclass: #BlockingCallMonitor
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 BlockingCallMonitor guid: (GUID fromString: '{87b4c45b-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 BlockingCallMonitor comment: 'This class can be used to monitor the progress of blocking calls running on a separate process.
 
 A BlockingCallMonitor instance can be configured to evaluate a particular block or monadic valuable (set using #callBlock:) on it''s own process. The process can be started using either #monitorOnce or #monitor depending on whether the call should be made once or repeatedly. It is expected that the call will block this process for a period of time. When the call does eventually complete, the BlockingCallMonitor is responsible for evaluating another block or monadic valuable (set using #completionBlock:). This is passed the result of the call as its argument. Should an error occur during the evaluation of the blocking call then the monitor will choose to evaluate its error block (set using #errorBlock:).
@@ -15,7 +17,9 @@ A BlockingCallMonitor must always be provided with a callBlock but does provide 
 By default, the monitor process is run at the same priority as the process that instantiated the BlockingCallMonitor object. This can, however, be changed using #priority: prior to commencement of monitoring. Once started, an active monitor process should always be terminated to ensure that the BlockingCallMonitor can be successfully garbage collected.
 
 This class is useful in situations where a known blocking call is to be made, either singly or repeatedly, and you need to be informed when the call has completed or signalled an error. It simplifies the requirement to start a backgound process to perform and monitor the call by encapulating it within a re-useable class.'!
+
 !BlockingCallMonitor categoriesForClass!Windows Sockets! !
+
 !BlockingCallMonitor methodsFor!
 
 callBlock: aNiladicValuable 
@@ -82,6 +86,7 @@ terminate
 			mp := monitorProcess.
 			monitorProcess := nil.
 			mp terminate]! !
+
 !BlockingCallMonitor categoriesForMethods!
 callBlock:!accessing!public! !
 completionBlock:!accessing!public! !
@@ -117,6 +122,7 @@ publishedEventsOfInstances
 	^(super publishedEventsOfInstances)
 		add: #completedWith:;
 		yourself! !
+
 !BlockingCallMonitor class categoriesForMethods!
 callBlock:!instance creation!public! !
 new!instance creation!public! !

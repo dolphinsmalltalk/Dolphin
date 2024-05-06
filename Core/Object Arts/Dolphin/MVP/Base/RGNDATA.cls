@@ -5,14 +5,19 @@ Win32Structure subclass: #RGNDATA
 	classVariableNames: '_OffsetOf_dwSize _OffsetOf_iType _OffsetOf_nCount _OffsetOf_nRgnSize _OffsetOf_rcBound'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 RGNDATA guid: (GUID fromString: '{87b4c60e-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 RGNDATA addClassConstant: '_OffsetOf_dwSize' value: 16r0!
 RGNDATA addClassConstant: '_OffsetOf_iType' value: 16r4!
 RGNDATA addClassConstant: '_OffsetOf_nCount' value: 16r8!
 RGNDATA addClassConstant: '_OffsetOf_nRgnSize' value: 16rC!
 RGNDATA addClassConstant: '_OffsetOf_rcBound' value: 16r10!
+
 RGNDATA comment: ''!
+
 !RGNDATA categoriesForClass!External-Data-Structured-Win32! !
+
 !RGNDATA methodsFor!
 
 dwSize: anInteger
@@ -63,6 +68,7 @@ rcBound: aRECT
 		from: ##(_OffsetOf_rcBound + 1)
 		to: ##(_OffsetOf_rcBound + RECT basicByteSize)
 		startingAt: 1! !
+
 !RGNDATA categoriesForMethods!
 dwSize:!**compiled accessors**!public! !
 iType!**compiled accessors**!public! !
@@ -110,6 +116,7 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #iType #nCount #nRgnSize #rcBound)! !
+
 !RGNDATA class categoriesForMethods!
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

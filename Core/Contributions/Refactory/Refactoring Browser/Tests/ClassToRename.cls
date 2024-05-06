@@ -5,9 +5,13 @@ Model subclass: #ClassToRename
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: 'notUsed'!
+
 ClassToRename guid: (GUID fromString: '{83c27f52-b80f-487b-bd8c-b4035ca0cf2e}')!
+
 ClassToRename comment: ''!
+
 !ClassToRename categoriesForClass!Refactory-Test data! !
+
 !ClassToRename methodsFor!
 
 method1
@@ -15,6 +19,7 @@ method1
 
 method2
 	^self method1! !
+
 !ClassToRename categoriesForMethods!
 method1!performing!public! !
 method2!performing!public! !
@@ -24,6 +29,7 @@ method2!performing!public! !
 
 new
 	^super new initialize! !
+
 !ClassToRename class categoriesForMethods!
 new!performing!public! !
 !

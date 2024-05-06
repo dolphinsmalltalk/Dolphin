@@ -5,9 +5,13 @@ Win32Error subclass: #Win32Fault
 	classVariableNames: 'ExceptionNames'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 Win32Fault guid: (GUID fromString: '{3b2fccea-10b3-4da2-9932-179927f451a2}')!
+
 Win32Fault comment: ''!
+
 !Win32Fault categoriesForClass!System-Exception Handling! !
+
 !Win32Fault methodsFor!
 
 _descriptionArguments
@@ -62,6 +66,7 @@ tagFromExceptionCode: anInteger
 	code, anInteger."
 
 	^HRESULT ntStatusCode: anInteger! !
+
 !Win32Fault categoriesForMethods!
 _descriptionArguments!displaying!public! !
 _descriptionFormat!displaying!public! !
@@ -104,6 +109,7 @@ signal: messageText with: anEXCEPTION_RECORD
 	^self new 
 		exceptionRecord: anEXCEPTION_RECORD;
 		signal! !
+
 !Win32Fault class categoriesForMethods!
 initialize!development!initializing!private! !
 signal:with:!instance creation!public! !

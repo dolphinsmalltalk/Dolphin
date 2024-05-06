@@ -7,7 +7,6 @@ Copyright (c) Object Arts Ltd. 1997-2018. Portions Copyright (c) CGI Group (Euro
 
 This package contains the obsolete `DocumentShell` presenter, which has been superceded by `AbstractDocumentShell`.'.
 
-
 package classNames
 	add: #DocumentShell;
 	yourself.
@@ -31,11 +30,6 @@ AbstractDocumentShell subclass: #DocumentShell
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

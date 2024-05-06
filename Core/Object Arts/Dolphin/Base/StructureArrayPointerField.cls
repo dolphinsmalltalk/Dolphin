@@ -5,9 +5,13 @@ ArrayPointerField subclass: #StructureArrayPointerField
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StructureArrayPointerField guid: (GUID fromString: '{87b4c4e4-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 StructureArrayPointerField comment: 'StructureArrayPointerField is an <ExternalField> type to represent <ExternalStructure> members which are pointers to arrays of structures.'!
+
 !StructureArrayPointerField categoriesForClass!External-Data-Types! !
+
 !StructureArrayPointerField methodsFor!
 
 elementClass
@@ -31,6 +35,7 @@ readFrom: anExternalStructure
 		fromAddress: (anExternalStructure bytes sdwordAtOffset: offset)
 		length: (arrayLength getElementCountOf: self in: anExternalStructure)
 		elementClass: self elementClass! !
+
 !StructureArrayPointerField categoriesForMethods!
 elementClass!accessing!private! !
 pointerClass!accessing!private! !

@@ -5,13 +5,17 @@ IUnknown subclass: #ADODBADOCommandConstruction
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
+
 ADODBADOCommandConstruction guid: (IID fromString: '{00000517-0000-0010-8000-00aa006d2ea4}')!
+
 ADODBADOCommandConstruction comment: '<ADODBADOCommandConstruction> is a wrapper class for the COM interface ''ADODB.ADOCommandConstruction'' generated from type information in the ''Microsoft ActiveX Data Objects 2.5 Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
 Warning: This comment was automatically generated from the interface''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.'!
+
 !ADODBADOCommandConstruction categoriesForClass!ADODB-Interfaces!COM-Interfaces! !
+
 !ADODBADOCommandConstruction methodsFor!
 
 get_OLEDBCommand: ppOLEDBCommand
@@ -45,6 +49,7 @@ put_OLEDBCommand: ppOLEDBCommand
 
 	<virtual stdcall: hresult 5 IUnknown*>
 	^self invalidCall: _failureCode! !
+
 !ADODBADOCommandConstruction categoriesForMethods!
 get_OLEDBCommand:!**auto generated**!COM Interfaces-ADOCommandConstruction!private! !
 oledbCommand!**auto generated**!properties!public! !
@@ -64,6 +69,7 @@ defineFunctions
 		defineFunction: #put_OLEDBCommand:
 			argumentTypes: 'IUnknown*'
 ! !
+
 !ADODBADOCommandConstruction class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

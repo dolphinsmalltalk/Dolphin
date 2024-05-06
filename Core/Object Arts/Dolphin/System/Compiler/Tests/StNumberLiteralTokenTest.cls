@@ -5,9 +5,13 @@ StLiteralTokenTest subclass: #StNumberLiteralTokenTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 StNumberLiteralTokenTest guid: (GUID fromString: '{0b7f81b0-219f-40ce-9090-d116cb09e568}')!
+
 StNumberLiteralTokenTest comment: ''!
+
 !StNumberLiteralTokenTest categoriesForClass!Unclassified! !
+
 !StNumberLiteralTokenTest methodsFor!
 
 subjectClass
@@ -42,6 +46,7 @@ testInstanceCreation
 	self assert: token2 value equals: 0.125
 
 ! !
+
 !StNumberLiteralTokenTest categoriesForMethods!
 subjectClass!constants!private! !
 testInstanceCreation!public!unit tests! !

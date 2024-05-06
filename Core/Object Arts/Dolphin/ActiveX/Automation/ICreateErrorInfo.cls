@@ -5,12 +5,16 @@ IUnknown subclass: #ICreateErrorInfo
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ICreateErrorInfo guid: (IID fromString: '{22f03340-547d-101b-8e65-08002b2bd119}')!
+
 ICreateErrorInfo comment: '<ICreateErrorInfo> is a wrapper class for the custom interface ''OAIDL.ICreateErrorInfo'' from type information in the ''Ole Automation Type Library'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface.
 '!
+
 !ICreateErrorInfo categoriesForClass!COM-Interfaces! !
+
 !ICreateErrorInfo methodsFor!
 
 errorInfo
@@ -72,6 +76,7 @@ SetSource: szSource
 
 	<virtual stdcall: hresult 5 lpwstr>
 	^self invalidCall: _failureCode! !
+
 !ICreateErrorInfo categoriesForMethods!
 errorInfo!accessing-interfaces!public! !
 SetDescription:!**auto generated**!COM Interfaces-OAIDL.ICreateErrorInfo!private! !
@@ -122,6 +127,7 @@ new
 	answer := self newPointer.
 	OLEAutLibrary default createErrorInfo: answer.
 	^answer! !
+
 !ICreateErrorInfo class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 fromEXCEPINFO:guid:!instance creation!public! !

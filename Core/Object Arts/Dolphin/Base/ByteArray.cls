@@ -5,7 +5,9 @@ ArrayedCollection variableByteSubclass: #ByteArray
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ByteArray guid: (GUID fromString: '{87b4c511-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 ByteArray comment: 'ByteArray is the class of <ArrayedCollection>s whose elements are bytes (i.e. <integer>s in the range 0..255).
 
 ByteArray complies with the ANSI protocols:
@@ -14,7 +16,9 @@ ByteArray complies with the ANSI protocols:
 	sequencedReadableCollection
 	sequencedCollection
 	ByteArray'!
+
 !ByteArray categoriesForClass!Collections-Arrayed! !
+
 !ByteArray methodsFor!
 
 _sameAsString: aString
@@ -713,6 +717,7 @@ wordAtOffset: anInteger put: anObject
 		retryWordAtOffset: anInteger
 		put: anObject
 		failureCode: _failureCode! !
+
 !ByteArray categoriesForMethods!
 _sameAsString:!comparing!private! !
 =!comparing!primitives!public! !
@@ -845,6 +850,7 @@ stbReadFrom: anSTBInFiler format: anSTBClassConversion
 	answer := stream next: size.
 	anSTBInFiler register: answer.
 	^answer! !
+
 !ByteArray class categoriesForMethods!
 elementSize!constants!private! !
 empty!instance creation!public! !

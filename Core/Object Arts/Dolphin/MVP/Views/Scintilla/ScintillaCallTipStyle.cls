@@ -5,9 +5,13 @@ ScintillaTextStyle subclass: #ScintillaCallTipStyle
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ScintillaCallTipStyle guid: (GUID fromString: '{81c766f0-616e-4cf1-bc4b-8eba6720f2d7}')!
+
 ScintillaCallTipStyle comment: ''!
+
 !ScintillaCallTipStyle categoriesForClass!MVP-Views-Support! !
+
 !ScintillaCallTipStyle methodsFor!
 
 initialize
@@ -15,6 +19,7 @@ initialize
 	backcolor := Color tooltip.
 	forecolor := Color tooltipText.
 	self name: #callTip! !
+
 !ScintillaCallTipStyle categoriesForMethods!
 initialize!initializing!private! !
 !
@@ -34,6 +39,7 @@ initialize
 							setMessage: SCI_STYLESETFORE);
 				isImmutable: true;
 				yourself! !
+
 !ScintillaCallTipStyle class categoriesForMethods!
 initialize!development!initializing!public! !
 !

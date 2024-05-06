@@ -5,9 +5,13 @@ AbstractParserErrorTest subclass: #SmalltalkParserErrorTest
 	classVariableNames: ''
 	poolDictionaries: 'SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
+
 SmalltalkParserErrorTest guid: (GUID fromString: '{67c4b011-40fa-43b7-83a4-cd8d616c16d0}')!
+
 SmalltalkParserErrorTest comment: ''!
+
 !SmalltalkParserErrorTest categoriesForClass!Unclassified! !
+
 !SmalltalkParserErrorTest methodsFor!
 
 compilationErrorClass
@@ -414,6 +418,7 @@ writtenNotReadRange: aString
 	| start |
 	start := aString lastIndexOf: $_.
 	^start to: start + 3! !
+
 !SmalltalkParserErrorTest categoriesForMethods!
 compilationErrorClass!helpers!private! !
 compilationWarningClass!helpers!private! !

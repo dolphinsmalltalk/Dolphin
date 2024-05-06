@@ -16,7 +16,6 @@ The [Microsoft ADO documentation can be found online](https://docs.microsoft.com
 
 package basicPackageVersion: '6.0'.
 
-
 package classNames
 	add: #ADOCollection;
 	add: #ADODB_ADO;
@@ -83,191 +82,222 @@ SequenceableCollection subclass: #ADOCollection
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ADOCollection subclass: #ADODynaCollection
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 IUnknown subclass: #ADODBADOCommandConstruction
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
+
 IUnknown subclass: #ADODBADOConnectionConstruction15
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
+
 IUnknown subclass: #ADODBConnectionEventsVt
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
+
 IUnknown subclass: #ADODBIRecFields
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
+
 IUnknown subclass: #ADODBRecordsetEventsVt
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
+
 ADODBADOConnectionConstruction15 subclass: #ADODBADOConnectionConstruction
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
+
 IDispatch subclass: #ADODB_ADO
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
+
 IDispatch subclass: #ADODB_Collection
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
+
 IDispatch subclass: #ADODB_Stream
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
+
 IDispatch subclass: #ADODBADORecordConstruction
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
+
 IDispatch subclass: #ADODBADORecordsetConstruction
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
+
 IDispatch subclass: #ADODBADOStreamConstruction
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
+
 IDispatch subclass: #ADODBError
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
+
 IDispatch subclass: #ADODBProperty
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
+
 ADODB_ADO subclass: #ADODB_Parameter
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
+
 ADODB_ADO subclass: #ADODB_Record
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
+
 ADODB_ADO subclass: #ADODBCommand15
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
+
 ADODB_ADO subclass: #ADODBConnection15
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
+
 ADODB_ADO subclass: #ADODBField15
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
+
 ADODB_ADO subclass: #ADODBField20
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
+
 ADODB_ADO subclass: #ADODBRecordset15
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
+
 ADODBCommand15 subclass: #ADODBCommand25
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
+
 ADODBCommand25 subclass: #ADODB_Command
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
+
 ADODBConnection15 subclass: #ADODB_Connection
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
+
 ADODBField20 subclass: #ADODBField
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
+
 ADODBRecordset15 subclass: #ADODBRecordset20
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
+
 ADODBRecordset20 subclass: #ADODBRecordset21
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
+
 ADODBRecordset21 subclass: #ADODB_Recordset
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
+
 ADODB_Collection subclass: #ADODB_DynaCollection
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
+
 ADODB_Collection subclass: #ADODBErrors
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
+
 ADODB_Collection subclass: #ADODBFields15
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
+
 ADODB_Collection subclass: #ADODBProperties
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
+
 ADODB_DynaCollection subclass: #ADODBParameters
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
+
 ADODBFields15 subclass: #ADODBFields20
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
+
 ADODBFields20 subclass: #ADODBFields
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ADODBConstants'
 	classInstanceVariableNames: ''!
-
-"Global Aliases"!
-
-
-"Loose Methods"!
 
 "End of package definition"!
 

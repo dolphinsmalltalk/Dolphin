@@ -5,7 +5,9 @@ IDispatch subclass: #IVBSAXLocator
 	classVariableNames: ''
 	poolDictionaries: 'MSXMLConstants'
 	classInstanceVariableNames: ''!
+
 IVBSAXLocator guid: (IID fromString: '{796e7ac5-5aa2-4eff-acad-3faaf01a3288}')!
+
 IVBSAXLocator comment: '<IVBSAXLocator> is a wrapper class for the COM interface ''MSXML2.IVBSAXLocator'' generated from type information in the ''Microsoft XML, v4.0'' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains the following helpstring for this interface
@@ -38,7 +40,9 @@ interface IVBSAXLocator : IDispatch
 		[out, retval]BSTR* strSystemId);
 };
 '!
+
 !IVBSAXLocator categoriesForClass!COM-Interfaces!MSXML2-Interfaces! !
+
 !IVBSAXLocator methodsFor!
 
 columnNumber
@@ -126,6 +130,7 @@ systemId
 	self get_systemId: answer.
 	^answer asObject
 ! !
+
 !IVBSAXLocator categoriesForMethods!
 columnNumber!**auto generated**!properties!public! !
 get_columnNumber:!**auto generated**!COM Interfaces-IVBSAXLocator!private! !
@@ -155,6 +160,7 @@ defineFunctions
 		defineFunction: #get_systemId:
 			argumentTypes: 'bstr*'
 ! !
+
 !IVBSAXLocator class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !

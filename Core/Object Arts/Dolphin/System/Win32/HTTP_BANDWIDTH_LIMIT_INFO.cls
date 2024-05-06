@@ -5,8 +5,11 @@ HttpQosSetting subclass: #HTTP_BANDWIDTH_LIMIT_INFO
 	classVariableNames: '_OffsetOf_MaxBandwidth'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 HTTP_BANDWIDTH_LIMIT_INFO guid: (GUID fromString: '{197b6874-68bb-4a22-b2fa-9e02210f4cd9}')!
+
 HTTP_BANDWIDTH_LIMIT_INFO addClassConstant: '_OffsetOf_MaxBandwidth' value: 16r4!
+
 HTTP_BANDWIDTH_LIMIT_INFO comment: '<HTTP_BANDWIDTH_LIMIT_INFO> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_BANDWIDTH_LIMIT_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -22,7 +25,9 @@ struct tagHTTP_BANDWIDTH_LIMIT_INFO {
 	[helpstring("The maximum allowed bandwidth rate in bytesper second. Setting the value to HTTP_LIMIT_INFINITE allows unlimited bandwidth rate. The value cannot be smaller than HTTP_MIN_ALLOWED_BANDWIDTH_THROTTLING_RATE.")] ULONG MaxBandwidth;
 } HTTP_BANDWIDTH_LIMIT_INFO;
 '!
+
 !HTTP_BANDWIDTH_LIMIT_INFO categoriesForClass!WinHttpServer-Structs! !
+
 !HTTP_BANDWIDTH_LIMIT_INFO methodsFor!
 
 MaxBandwidth
@@ -48,6 +53,7 @@ value: anInteger
 			[self
 				Present: true;
 				MaxBandwidth: anInteger]! !
+
 !HTTP_BANDWIDTH_LIMIT_INFO categoriesForMethods!
 MaxBandwidth!**compiled accessors**!public! !
 MaxBandwidth:!**compiled accessors**!public! !
@@ -82,6 +88,7 @@ maxBandwidth: anInteger
 
 qosType
 	^HttpQosSettingTypeBandwidth! !
+
 !HTTP_BANDWIDTH_LIMIT_INFO class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

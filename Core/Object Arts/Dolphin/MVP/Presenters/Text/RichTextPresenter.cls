@@ -5,9 +5,13 @@ TextPresenter subclass: #RichTextPresenter
 	classVariableNames: ''
 	poolDictionaries: 'CommonDialogConstants RichEditConstants'
 	classInstanceVariableNames: ''!
+
 RichTextPresenter guid: (GUID fromString: '{87b4c6d4-026e-11d3-9fd7-00a0cc3e4a32}')!
+
 RichTextPresenter comment: 'RichTextPresenter is a <valuePresenter> that displays a <valueModel> onto a <richString> value. A RichTextPresenter can be connected to any <valueView> capable of displaying <richString> values. Often, this will be a <RichTextEdit> although alternative views may be chosen with the installation of an appropriate <typeConverter>.'!
+
 !RichTextPresenter categoriesForClass!MVP-Presenters! !
+
 !RichTextPresenter methodsFor!
 
 alignParagraphCenter
@@ -94,6 +98,7 @@ toggleUnderlined
 	"Toggle underline mode for the selection in the receiver"
 
 	self view isUnderlined: self view isUnderlined not! !
+
 !RichTextPresenter categoriesForMethods!
 alignParagraphCenter!commands!public! !
 alignParagraphLeft!commands!public! !
@@ -140,6 +145,7 @@ resource_Static_text
 \viewkind4\uc1\pard\qc\f0\fs22 Type \b Rich \b0\i Static \i0 text \ul here\ulnone .\f1\par
 }
 ' 416 1314 #textLimit: 8 #(1073741823) 416 1314 #resetCharFormat 8 #() 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 81 8 0 0 75 0 0 0] 8 #() 1362 193 193 nil 27 )! !
+
 !RichTextPresenter class categoriesForMethods!
 defaultModel!models!public! !
 resource_Default_view!public!resources-views! !

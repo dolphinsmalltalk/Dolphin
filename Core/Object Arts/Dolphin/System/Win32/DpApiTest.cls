@@ -5,9 +5,13 @@ DolphinTest subclass: #DpApiTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 DpApiTest guid: (GUID fromString: '{9165806d-c1a3-45e6-bf08-54ea3a21b04c}')!
+
 DpApiTest comment: ''!
+
 !DpApiTest categoriesForClass!Unclassified! !
+
 !DpApiTest methodsFor!
 
 testProtectUnprotectData
@@ -36,6 +40,7 @@ verifyRoundTrip: aByteObject
 		should: [Crypt32Library unprotectData: encryptedExtra additionalEntropy: #[4 5 6]]
 		raise: Win32Error
 		matching: [:ex | ex tag statusCode = Win32Errors.ERROR_INVALID_DATA]! !
+
 !DpApiTest categoriesForMethods!
 testProtectUnprotectData!public!unit tests! !
 verifyRoundTrip:!helpers!private! !

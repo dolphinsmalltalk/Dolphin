@@ -5,9 +5,13 @@ ListPresenter subclass: #ResourceToolboxPresenter
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 ResourceToolboxPresenter guid: (GUID fromString: '{9b3e71d1-8684-48c9-b045-890f2cd430e6}')!
+
 ResourceToolboxPresenter comment: ''!
+
 !ResourceToolboxPresenter categoriesForClass!MVP-Resources-IDE Tools! !
+
 !ResourceToolboxPresenter methodsFor!
 
 add: aResourceIdentifier toCategory: aString 
@@ -246,6 +250,7 @@ systemModel
 	"Private - Answer the development system model."
 
 	^Smalltalk developmentSystem! !
+
 !ResourceToolboxPresenter categoriesForMethods!
 add:toCategory:!operations!private! !
 addResourceIdentifierFor:!helpers!private! !
@@ -309,6 +314,7 @@ resource_Default_view
 
 resourceManager
 	^SessionManager current resourceManager! !
+
 !ResourceToolboxPresenter class categoriesForMethods!
 defaultModel!models!private! !
 icon!constants!public! !

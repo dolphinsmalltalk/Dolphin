@@ -5,8 +5,11 @@ ENHMETARECORD subclass: #EMRSETBKCOLOR
 	classVariableNames: '_OffsetOf_crColor'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
 EMRSETBKCOLOR guid: (GUID fromString: '{22221f37-ae5e-4040-aa50-03d7ca9f82cb}')!
+
 EMRSETBKCOLOR addClassConstant: '_OffsetOf_crColor' value: 16r8!
+
 EMRSETBKCOLOR comment: '<EMRSETBKCOLOR> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETBKCOLOR'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -21,7 +24,9 @@ struct tagEMRSETBKCOLOR {
 	COLORREF crColor;
 } EMRSETBKCOLOR;
 '!
+
 !EMRSETBKCOLOR categoriesForClass!Win32-Structs! !
+
 !EMRSETBKCOLOR methodsFor!
 
 crColor
@@ -33,6 +38,7 @@ crColor: anInteger
 	"Set the receiver's 'crColor' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_crColor put: anInteger! !
+
 !EMRSETBKCOLOR categoriesForMethods!
 crColor!**compiled accessors**!public! !
 crColor:!**compiled accessors**!public! !
@@ -66,6 +72,7 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_SETBKCOLOR with: EMR_SETTEXTCOLOR! !
+
 !EMRSETBKCOLOR class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
