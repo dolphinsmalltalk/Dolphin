@@ -3099,8 +3099,13 @@ recreationFunction
 	"Private - Answer a function object that encapsulates a CreateWindow API call to recreate the receiver's window."
 
 	| func |
-	func := self creationFunction: self getRect dpi: self dpi.
+	func := self creationFunction: self recreationRectangle dpi: self dpi.
 	^self isMixedDpiHost ifTrue: [CreateMixedDpiHost decorating: func] ifFalse: [func]!
+
+recreationRectangle
+	"Private - Answer a <rectangle> that specifies the position and extent at which the receiver should be recreated."
+
+	^self getRect!
 
 rectangle
 	"Answer a Rectangle containing the receiver's outer rectangle in the coordinate system of its parent."
@@ -5123,6 +5128,7 @@ queryMouseTracking!enquiries!private! !
 recreate!public!realizing/unrealizing! !
 recreateAround:!private!realizing/unrealizing! !
 recreationFunction!geometry!private!realizing/unrealizing! !
+recreationRectangle!geometry!private!realizing/unrealizing! !
 rectangle!geometry!public! !
 rectangle:!geometry!public! !
 refreshContents!public!updating! !

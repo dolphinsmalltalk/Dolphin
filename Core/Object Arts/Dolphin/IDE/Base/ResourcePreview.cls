@@ -63,7 +63,7 @@ imageFromResource: aResourceIdentifier
 recreationFunction
 	"Private - Answer a function object that encapsulates a CreateWindow API call to recreate the receiver's window."
 
-	^self creationFunction: self getRect dpi: DesignDesktop dpi!
+	^self creationFunction: self recreationRectangle dpi: DesignDesktop dpi!
 
 refreshContents
 	backcolor := Color applicationWorkspace.
@@ -80,6 +80,7 @@ setModel: aModel
 						rightToLeft: [:img | nil])
 						rightNullValue: View icon;
 						yourself))! !
+
 !ResourcePreview categoriesForMethods!
 createWindow:!private!realizing/unrealizing! !
 creationFunction:dpi:!private!realizing/unrealizing! !
@@ -105,6 +106,7 @@ dpiAwareness: aDpiAwareness
 
 initialize
 	DesignDesktop := DesignDesktopView default! !
+
 !ResourcePreview class categoriesForMethods!
 dpiAwareness!public! !
 dpiAwareness:!public! !
