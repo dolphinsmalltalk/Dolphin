@@ -1,0 +1,32 @@
+﻿| package |
+package := Package name: 'XML DOM Tests'.
+package paxVersion: 1;
+	basicComment: ''.
+
+package classNames
+	add: #XmlFormatterTest;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: #(
+	'..\..\..\..\Base\Tests\Dolphin Base Tests'
+	'..\XML DOM'
+	'..\..\..\..\..\Samples\MVP\XmlPad\XmlPad').
+
+package!
+
+"Class Definitions"!
+
+DolphinTest subclass: #XmlFormatterTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"End of package definition"!
+

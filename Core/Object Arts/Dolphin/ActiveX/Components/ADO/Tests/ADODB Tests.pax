@@ -1,0 +1,32 @@
+﻿| package |
+package := Package name: 'ADODB Tests'.
+package paxVersion: 1;
+	basicComment: ''.
+
+package classNames
+	add: #ADODBTest;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: #(
+	'..\ADODB'
+	'..\..\..\..\Database\Database Tests'
+	'..\..\..\..\Base\Dolphin').
+
+package!
+
+"Class Definitions"!
+
+DBTest subclass: #ADODBTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"End of package definition"!
+

@@ -17,8 +17,10 @@ Package manager
 	install: 'Core\Object Arts\Dolphin\System\Win32\Dolphin MMF Tests.pax';
 	install: 'Core\Object Arts\Dolphin\System\Win32\Windows Data Protection API Tests.pax';
 	install: 'Core\Object Arts\Dolphin\System\Win32\Windows Ini Files Tests.pax';
+	install: 'Core\Object Arts\Dolphin\ActiveX\COM\Tests\OLE COM Tests.pax';
 	install: 'Core\Object Arts\Dolphin\ActiveX\Persist\Tests\OLE Persistence and Data Transfer Tests.pax';
-	install: 'Core\Object Arts\Dolphin\ActiveX\Automation\ActiveX Automation Tests.pax';
+	install: 'Core\Object Arts\Dolphin\ActiveX\Automation\Tests\ActiveX Automation Tests.pax';
+	install: 'Core\Object Arts\Dolphin\ActiveX\Connection Points\Tests\ActiveX Connection Points Tests.pax';
 	install: 'Core\Object Arts\Dolphin\IDE\Base\Development System Tests.pax';
 	install: 'Core\Object Arts\Dolphin\System\Compiler\Tests\Smalltalk Parser Tests.pax';
 	install: 'Core\Object Arts\Dolphin\IDE\Dolphin IDE Tests.pax';
@@ -27,7 +29,8 @@ Package manager
 	install: 'Core\Object Arts\Dolphin\Sockets\Dolphin Sockets Tests.pax';
 	install: 'Core\Object Arts\Dolphin\System\STON\Dolphin STON Tests.pax';
 	install: 'Core\Object Arts\Dolphin\Database\Database Tests.pax';
-	install: 'Core\Object Arts\Dolphin\ActiveX\ActiveX Tests.pax';
+	install: 'Core\Object Arts\Dolphin\ActiveX\Components\ADO\Tests\ADODB Tests.pax';
+	install: 'Core\Object Arts\Dolphin\ActiveX\Components\XML DOM\Tests\XML DOM Tests.pax';
 	install: 'Core\Object Arts\Dolphin\ActiveX\Components\WebView2\WebView2 Tests';
 	yourself.
 !

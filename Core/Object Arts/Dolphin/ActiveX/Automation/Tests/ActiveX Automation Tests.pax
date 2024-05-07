@@ -5,9 +5,11 @@ package paxVersion: 1;
 	basicComment: ''.
 
 package classNames
+	add: #AXTypeLibraryAnalyzerTest;
 	add: #BSTRTest;
 	add: #IDispatchTest;
 	add: #SAFEARRAYTest;
+	add: #TestTypelib;
 	add: #VARIANTTest;
 	yourself.
 
@@ -23,16 +25,23 @@ package globalAliases: (Set new
 	yourself).
 
 package setPrerequisites: #(
-	'ActiveX Automation'
-	'..\..\..\Samples\ActiveX\Random\COM Random Stream'
-	'..\..\Base\Dolphin'
-	'..\..\Base\Tests\Dolphin Base Tests'
-	'..\..\MVP\Base\Dolphin Basic Geometry'
-	'..\COM\OLE COM').
+	'..\ActiveX Automation'
+	'..\..\..\..\Samples\ActiveX\Random\COM Random Stream'
+	'..\..\..\Base\Dolphin'
+	'..\..\..\Base\Tests\Dolphin Base Tests'
+	'..\..\..\MVP\Base\Dolphin Basic Geometry'
+	'..\..\COM\OLE COM'
+	'..\..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit').
 
 package!
 
 "Class Definitions"!
+
+DolphinTest subclass: #AXTypeLibraryAnalyzerTest
+	instanceVariableNames: 'analyzer'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 
 DolphinTest subclass: #BSTRTest
 	instanceVariableNames: ''
@@ -56,6 +65,12 @@ GenericExternalArrayTest subclass: #SAFEARRAYTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'Win32Errors'
+	classInstanceVariableNames: ''!
+
+TestResource subclass: #TestTypelib
+	instanceVariableNames: 'analyzer'
+	classVariableNames: ''
+	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 
 "Loose Methods"!

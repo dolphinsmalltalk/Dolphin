@@ -1,0 +1,34 @@
+﻿| package |
+package := Package name: 'ActiveX Connection Points Tests'.
+package paxVersion: 1;
+	basicComment: ''.
+
+package classNames
+	add: #AXEventSinkTest;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: #(
+	'..\..\Automation\Tests\ActiveX Automation Tests'
+	'..\ActiveX Connection Points'
+	'..\..\..\Base\Dolphin'
+	'..\..\..\Base\Tests\Dolphin Base Tests'
+	'..\..\COM\OLE COM').
+
+package!
+
+"Class Definitions"!
+
+DolphinTest subclass: #AXEventSinkTest
+	instanceVariableNames: 'sink object received'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"End of package definition"!
+
