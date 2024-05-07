@@ -56,7 +56,7 @@ package setPrerequisites: #(
 	'..\..\MVP\Dialogs\Common\Dolphin Common Dialogs'
 	'..\..\Base\Dolphin Legacy Date & Time'
 	'..\..\MVP\Base\Dolphin MVP Base'
-	'..\..\MVP\Dolphin MVP Tests'
+	'..\..\MVP\Tests\Dolphin MVP Tests'
 	'..\..\Registry\Dolphin Registry Access'
 	'..\..\Lagoon\Lagoon Image Stripper'
 	'..\..\ActiveX\COM\OLE COM'

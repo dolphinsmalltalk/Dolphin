@@ -22,7 +22,7 @@ package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
 	'..\..\..\Base\Tests\Dolphin Base Tests'
 	'..\..\..\MVP\Base\Dolphin MVP Base'
-	'..\..\..\MVP\Dolphin MVP Tests'
+	'..\..\..\MVP\Tests\Dolphin MVP Tests'
 	'WebView2').
 
 package!

@@ -44,7 +44,7 @@ package setPrerequisites: #(
 	'..\MVP\Presenters\Boolean\Dolphin Boolean Presenter'
 	'..\MVP\Views\Common Controls\Dolphin Common Controls'
 	'..\MVP\Base\Dolphin MVP Base'
-	'..\MVP\Dolphin MVP Tests'
+	'..\MVP\Tests\Dolphin MVP Tests'
 	'Professional\Dolphin Professional Tools'
 	'Professional\Dolphin Refactoring Browser'
 	'..\MVP\Views\Scintilla\Dolphin Scintilla View'

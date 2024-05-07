@@ -35,6 +35,13 @@ flags
 
 	^lParam dwordAtOffset: WINDOWPOS._OffsetOf_flags!
 
+flags: anInteger
+	"Answer an <integer> containing the SWP_XXX flags associated with this position change event."
+
+	"Implementation Note: For most PositionEvents we only need to access the flags, so optimise for this case, avoiding creation of a WINDOWPOS structure."
+
+	lParam dwordAtOffset: WINDOWPOS._OffsetOf_flags put: anInteger!
+
 height
 	"Answer the height of the window after the size event.
 	N.B. This is not the height of the client area, but the external dimension.
@@ -136,6 +143,7 @@ y
 extent!accessing!public! !
 extent:!accessing!public! !
 flags!accessing!public! !
+flags:!accessing!public! !
 height!accessing!public! !
 height:!accessing!public! !
 isActivate!public!testing! !

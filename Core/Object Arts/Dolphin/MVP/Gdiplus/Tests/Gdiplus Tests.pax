@@ -195,7 +195,7 @@ package setPrerequisites: #(
 	'..\..\Presenters\Image\Dolphin Image Presenter'
 	'..\..\..\Base\Dolphin Message Box'
 	'..\..\Base\Dolphin MVP Base'
-	'..\..\Dolphin MVP Tests'
+	'..\..\Tests\Dolphin MVP Tests'
 	'..\Gdiplus'
 	'..\..\..\ActiveX\Structured Storage\OLE Structured Storage'
 	'..\..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'

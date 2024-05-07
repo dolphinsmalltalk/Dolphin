@@ -1,12 +1,17 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-DolphinTest subclass: #'PositionEventTest'
+DolphinTest subclass: #PositionEventTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
+
 PositionEventTest guid: (GUID fromString: '{dfddf958-2f9b-4f9e-b2ba-59c2fa09ebf8}')!
+
 PositionEventTest comment: ''!
+
+!PositionEventTest categoriesForClass!Unclassified! !
+
 !PositionEventTest methodsFor!
 
 testIsRectangleChanged

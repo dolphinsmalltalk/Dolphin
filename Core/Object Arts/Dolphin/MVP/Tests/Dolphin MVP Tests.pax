@@ -70,6 +70,7 @@ package classNames
 	add: #POINTLTest;
 	add: #POINTSTest;
 	add: #PointTest;
+	add: #PositionEventTest;
 	add: #PresenterTest;
 	add: #ProgressBarTest;
 	add: #ProportionalLayoutTest;
@@ -136,50 +137,50 @@ package globalAliases: (Set new
 	yourself).
 
 package setPrerequisites: #(
-	'..\IDE\Base\Development System'
-	'..\Base\Dolphin'
-	'Presenters\Accelerator\Dolphin Accelerator Presenter'
-	'..\Base\Dolphin Anonymous Classes'
-	'..\Base\Tests\Dolphin Base Tests'
-	'Base\Dolphin Basic Geometry'
-	'Presenters\Boolean\Dolphin Boolean Presenter'
-	'Views\Cards\Dolphin Card Containers'
-	'Presenters\Choice\Dolphin Choice Presenter'
-	'Presenters\Color\Dolphin Color Presenter'
-	'Views\Common Controls\Dolphin Common Controls'
-	'Dialogs\Common\Dolphin Common Dialogs'
-	'Views\Control Bars\Dolphin Control Bars'
-	'Views\Date Time\Dolphin Date Time Controls'
-	'Presenters\Date Time\Dolphin Date Time Presenters'
-	'Presenters\Difference\Dolphin Differences Presenter'
-	'Presenters\Font\Dolphin Font Presenter'
-	'Presenters\Image\Dolphin Image Presenter'
-	'Presenters\Prompters\Dolphin In-place Text Editor'
-	'..\Base\Dolphin Legacy Date & Time'
-	'Models\List\Dolphin List Models'
-	'Presenters\List\Dolphin List Presenter'
-	'..\System\Filer\Dolphin Literal Filer'
-	'..\System\Filer\Dolphin Literal Filer Tests'
-	'Metafiles\Dolphin Metafile Records'
-	'Views\MoenTree\Dolphin MoenTree View'
-	'Base\Dolphin MVP Base'
-	'Presenters\Number\Dolphin Number Presenter'
-	'Dialogs\Progress\Dolphin Progress Dialog'
-	'Presenters\Radio\Dolphin Radio Buttons'
-	'..\System\Random\Dolphin Random Stream'
-	'Presenters\Text\Dolphin Rich Text Presenter'
-	'Views\Scintilla\Dolphin Scintilla View'
-	'Views\Scrollbars\Dolphin Scrollbars'
-	'Views\Slider\Dolphin Slider Control'
-	'Views\Sliding Tray\Dolphin Slidey-Inney-Outey Thing'
-	'Views\SpinButton\Dolphin SpinButton Control'
-	'Views\Styled Views\Dolphin Styled Views'
-	'Views\SysLink\Dolphin SysLink Control'
-	'Presenters\Text\Dolphin Text Presenter'
-	'Models\Tree\Dolphin Tree Models'
-	'Presenters\Tree\Dolphin Tree Presenter'
-	'Type Converters\Dolphin Type Converters'
-	'Models\Value\Dolphin Value Models').
+	'..\..\IDE\Base\Development System'
+	'..\..\Base\Dolphin'
+	'..\Presenters\Accelerator\Dolphin Accelerator Presenter'
+	'..\..\Base\Dolphin Anonymous Classes'
+	'..\..\Base\Tests\Dolphin Base Tests'
+	'..\Base\Dolphin Basic Geometry'
+	'..\Presenters\Boolean\Dolphin Boolean Presenter'
+	'..\Views\Cards\Dolphin Card Containers'
+	'..\Presenters\Choice\Dolphin Choice Presenter'
+	'..\Presenters\Color\Dolphin Color Presenter'
+	'..\Views\Common Controls\Dolphin Common Controls'
+	'..\Dialogs\Common\Dolphin Common Dialogs'
+	'..\Views\Control Bars\Dolphin Control Bars'
+	'..\Views\Date Time\Dolphin Date Time Controls'
+	'..\Presenters\Date Time\Dolphin Date Time Presenters'
+	'..\Presenters\Difference\Dolphin Differences Presenter'
+	'..\Presenters\Font\Dolphin Font Presenter'
+	'..\Presenters\Image\Dolphin Image Presenter'
+	'..\Presenters\Prompters\Dolphin In-place Text Editor'
+	'..\..\Base\Dolphin Legacy Date & Time'
+	'..\Models\List\Dolphin List Models'
+	'..\Presenters\List\Dolphin List Presenter'
+	'..\..\System\Filer\Dolphin Literal Filer'
+	'..\..\System\Filer\Dolphin Literal Filer Tests'
+	'..\Metafiles\Dolphin Metafile Records'
+	'..\Views\MoenTree\Dolphin MoenTree View'
+	'..\Base\Dolphin MVP Base'
+	'..\Presenters\Number\Dolphin Number Presenter'
+	'..\Dialogs\Progress\Dolphin Progress Dialog'
+	'..\Presenters\Radio\Dolphin Radio Buttons'
+	'..\..\System\Random\Dolphin Random Stream'
+	'..\Presenters\Text\Dolphin Rich Text Presenter'
+	'..\Views\Scintilla\Dolphin Scintilla View'
+	'..\Views\Scrollbars\Dolphin Scrollbars'
+	'..\Views\Slider\Dolphin Slider Control'
+	'..\Views\Sliding Tray\Dolphin Slidey-Inney-Outey Thing'
+	'..\Views\SpinButton\Dolphin SpinButton Control'
+	'..\Views\Styled Views\Dolphin Styled Views'
+	'..\Views\SysLink\Dolphin SysLink Control'
+	'..\Presenters\Text\Dolphin Text Presenter'
+	'..\Models\Tree\Dolphin Tree Models'
+	'..\Presenters\Tree\Dolphin Tree Presenter'
+	'..\Type Converters\Dolphin Type Converters'
+	'..\Models\Value\Dolphin Value Models').
 
 package!
 
@@ -315,6 +316,12 @@ DolphinTest subclass: #Point3DTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+DolphinTest subclass: #PositionEventTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 
 DolphinTest subclass: #PresenterTest

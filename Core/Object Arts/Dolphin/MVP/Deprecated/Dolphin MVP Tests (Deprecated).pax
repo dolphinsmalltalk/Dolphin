@@ -22,7 +22,7 @@ package setPrerequisites: #(
 	'..\Models\List\Dolphin List Models'
 	'Dolphin MVP (Deprecated)'
 	'..\Base\Dolphin MVP Base'
-	'..\Dolphin MVP Tests').
+	'..\Tests\Dolphin MVP Tests').
 
 package!
 
