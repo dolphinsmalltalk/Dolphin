@@ -26,7 +26,7 @@ package setPrerequisites: #(
 	'..\..\..\IDE\Base\Development System'
 	'..\..\..\IDE\Base\Development System Tests'
 	'..\..\..\Base\Dolphin'
-	'..\..\..\Base\Dolphin Base Tests'
+	'..\..\..\Base\Tests\Dolphin Base Tests'
 	'..\Smalltalk Parser').
 
 package!

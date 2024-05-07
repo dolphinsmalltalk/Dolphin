@@ -158,23 +158,23 @@ package globalAliases: (Set new
 	yourself).
 
 package setPrerequisites: #(
-	'..\ActiveX\Components\Scripting\ActiveX Scripting'
-	'..\System\Trace\Debug Trace Stream'
-	'..\IDE\Base\Development System'
-	'Dolphin'
-	'Dolphin Additional Sort Algorithms'
-	'Dolphin Anonymous Classes'
-	'..\MVP\Base\Dolphin Basic Geometry'
-	'Dolphin Command-line Parser'
-	'..\System\Random\Dolphin CRT Random Stream'
-	'Dolphin Legacy Date & Time'
-	'Dolphin Message Box'
-	'..\MVP\Base\Dolphin MVP Base'
-	'..\System\Random\Dolphin Random Stream'
-	'..\Registry\Dolphin Registry Access'
-	'..\System\Compiler\Smalltalk Parser'
-	'..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
-	'..\ActiveX\Components\XML DOM\XML DOM').
+	'..\..\ActiveX\Components\Scripting\ActiveX Scripting'
+	'..\..\System\Trace\Debug Trace Stream'
+	'..\..\IDE\Base\Development System'
+	'..\Dolphin'
+	'..\Dolphin Additional Sort Algorithms'
+	'..\Dolphin Anonymous Classes'
+	'..\..\MVP\Base\Dolphin Basic Geometry'
+	'..\Dolphin Command-line Parser'
+	'..\..\System\Random\Dolphin CRT Random Stream'
+	'..\Dolphin Legacy Date & Time'
+	'..\Dolphin Message Box'
+	'..\..\MVP\Base\Dolphin MVP Base'
+	'..\..\System\Random\Dolphin Random Stream'
+	'..\..\Registry\Dolphin Registry Access'
+	'..\..\System\Compiler\Smalltalk Parser'
+	'..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
+	'..\..\ActiveX\Components\XML DOM\XML DOM').
 
 package setManualPrerequisites: #(
 	'Dolphin Anonymous Classes').

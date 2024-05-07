@@ -1,6 +1,6 @@
 ﻿"Load in all the regression tests"
 Package manager 
-	install: 'Core\Object Arts\Dolphin\Base\Dolphin Base Tests.pax';
+	install: 'Core\Object Arts\Dolphin\Base\Tests\Dolphin Base Tests.pax';
 	install: 'Core\Object Arts\Dolphin\DolphinSure\DolphinSure Tests.pax';
 	install: 'Core\Object Arts\Dolphin\System\Continuations\Continuation Tests.pax';
 	install: 'Core\Object Arts\Dolphin\System\Announcements\Dolphin Announcements Tests.pax';

@@ -50,7 +50,7 @@ package globalAliases: (Set new
 
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
-	'..\..\Base\Dolphin Base Tests'
+	'..\..\Base\Tests\Dolphin Base Tests'
 	'..\..\Base\Dolphin Legacy Date & Time'
 	'..\..\MVP\Base\Dolphin MVP Base'
 	'..\Random\Dolphin Random Stream'

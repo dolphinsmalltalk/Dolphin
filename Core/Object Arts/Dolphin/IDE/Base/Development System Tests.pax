@@ -49,7 +49,7 @@ package setPrerequisites: #(
 	'..\..\System\Continuations\Continuation Tests'
 	'Development System'
 	'..\..\Base\Dolphin'
-	'..\..\Base\Dolphin Base Tests'
+	'..\..\Base\Tests\Dolphin Base Tests'
 	'..\..\System\Base64\Dolphin Base64'
 	'..\..\MVP\Base\Dolphin Basic Geometry'
 	'..\..\MVP\Views\Common Controls\Dolphin Common Controls'

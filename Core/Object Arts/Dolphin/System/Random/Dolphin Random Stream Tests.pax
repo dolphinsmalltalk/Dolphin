@@ -16,7 +16,7 @@ package globalAliases: (Set new
 
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
-	'..\..\Base\Dolphin Base Tests'
+	'..\..\Base\Tests\Dolphin Base Tests'
 	'Dolphin Random Stream').
 
 package!

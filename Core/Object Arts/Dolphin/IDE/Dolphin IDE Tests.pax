@@ -39,7 +39,7 @@ package globalAliases: (Set new
 package setPrerequisites: #(
 	'Base\Development System'
 	'..\Base\Dolphin'
-	'..\Base\Dolphin Base Tests'
+	'..\Base\Tests\Dolphin Base Tests'
 	'..\MVP\Base\Dolphin Basic Geometry'
 	'..\MVP\Presenters\Boolean\Dolphin Boolean Presenter'
 	'..\MVP\Views\Common Controls\Dolphin Common Controls'

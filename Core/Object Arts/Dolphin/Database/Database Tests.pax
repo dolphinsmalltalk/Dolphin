@@ -24,7 +24,7 @@ package setPrerequisites: #(
 	'Database Connection Base'
 	'..\IDE\Base\Development System'
 	'..\Base\Dolphin'
-	'..\Base\Dolphin Base Tests'
+	'..\Base\Tests\Dolphin Base Tests'
 	'..\Base\Dolphin Legacy Date & Time'
 	'..\..\..\Contributions\Burning River\ExternalProcess\ExternalProcess'
 	'..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit').

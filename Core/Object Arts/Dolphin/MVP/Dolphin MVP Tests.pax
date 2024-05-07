@@ -140,7 +140,7 @@ package setPrerequisites: #(
 	'..\Base\Dolphin'
 	'Presenters\Accelerator\Dolphin Accelerator Presenter'
 	'..\Base\Dolphin Anonymous Classes'
-	'..\Base\Dolphin Base Tests'
+	'..\Base\Tests\Dolphin Base Tests'
 	'Base\Dolphin Basic Geometry'
 	'Presenters\Boolean\Dolphin Boolean Presenter'
 	'Views\Cards\Dolphin Card Containers'
