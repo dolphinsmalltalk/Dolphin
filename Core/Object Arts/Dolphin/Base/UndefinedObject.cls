@@ -47,6 +47,11 @@ displayOn: aStream
 	"Append a representation of the receiver to aStream as a user would want to see it.
 	The default is to do nothing, since, from the end-user perspective, the receiver is a null."!
 
+displayString
+	"Answer a String whose characters are a representation of the receiver as a user in the default locale would want to see it. In this case an empty string, since from the end-user perspective the receiver is a null."
+
+	^''!
+
 ifNil: nilBlock 
 	"As the receiver is the nil object, answer the result of evaluating the <niladicValuable>,
 	nilBlock."
@@ -208,6 +213,7 @@ _deepCopy:!copying!private! !
 bindingFor:!binding!public! !
 deepCopy!copying!public! !
 displayOn:!displaying!public! !
+displayString!displaying!public! !
 ifNil:!control flow!public! !
 ifNil:ifNotNil:!control flow!public! !
 ifNotNil:!control flow!public! !

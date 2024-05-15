@@ -705,35 +705,19 @@ sharedCopyOf: aBitmap
 
 	^SharedBitmaps at: aBitmap fullIdentifier ifAbsentPut: [aBitmap isShared: true. aBitmap]!
 
-stbConvertFrom: anSTBClassFormat 
-	"Convert from version 0 Bitmap. 
+stbConvertFromVersion0: anArray
+	"Private - Convert from version 0 Bitmap. 
 	Version 1 adds a caching inst var for the extent to avoid having to keep querying 
-	the BITMAPINFOHEADER.. 
-	Version 2  converts flags from a boolean to a Map3DColorsMask.
-	Version 3 adds Image>>locator instance variable"
+	the BITMAPINFOHEADER."
 
-	^
-	[:data | 
-	| newInstance |
-	newInstance := self basicNew.
-	1 to: data size do: [:i | newInstance instVarAt: i put: (data at: i)].
-	anSTBClassFormat version < 3 
-		ifTrue: 
-			[data size to: 1
-				by: -1
-				do: 
-					[:i | 
-					| offset |
-					offset := i <= 2 ifTrue: [0] ifFalse: [1].
-					newInstance instVarAt: i + offset put: (newInstance instVarAt: i)].
-			newInstance fileLocator: FileLocator default].
-	anSTBClassFormat version < 2 
-		ifTrue: 
-			[| isMap3D |
-			isMap3D := newInstance instVarAt: 7.
-			newInstance instVarAt: 7 put: 0.
-			newInstance setMap3DColors: isMap3D].
-	newInstance]!
+	^self stbConvertFromVersion1: (anArray copyWith: nil)!
+
+stbConvertFromVersion1: anArray
+	"Private - Convert from version 1 Bitmaps. 
+	Version 2 converts flags from a boolean to a Map3DColorsMask"
+
+	anArray at: 6 put: ((anArray at: 6) ifTrue: [Map3DColorsMask] ifFalse: [0]).
+	^self stbConvertFromVersion2: anArray!
 
 width: widthInteger height: heightInteger depth: depthInteger 
 	"Answer a new instance of the receiver of extent (widthInteger, heightInteger), and the
@@ -768,7 +752,8 @@ fromView:!instance creation!public! !
 fromView:background:!instance creation!public! !
 initialize!development!initializing!private! !
 sharedCopyOf:!instance creation!public! !
-stbConvertFrom:!binary filing!public! !
+stbConvertFromVersion0:!binary filing!private! !
+stbConvertFromVersion1:!binary filing!private! !
 width:height:depth:!instance creation!public! !
 width:height:planes:bitsPerPixel:bits:!instance creation!public! !
 !

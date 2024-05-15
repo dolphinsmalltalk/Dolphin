@@ -38,14 +38,6 @@ aboutBlock: aMonadicValuableOrNil
 
 !
 
-aboutBlockBytes: aByteArray
-	"Private - Set the receiver's about block by rehydrating that in serialized
-	form in the <ByteArray> argument."
-
-	aboutBlock := Object fromBinaryStoreBytes: aByteArray
-
-!
-
 addAllPrerequisitesTo: aSet
 	"Private - Add to <aSet> all those Packages which must be loaded in
 	before the receiver may be loaded in."
@@ -726,6 +718,11 @@ isInstalled
 
 	^self manager includesPackage: self!
 
+isMultifilePAC
+	"Very early versions of Dolphin had a multi-file format for .PAC files. The .pac was a mix of STB binary and text. Single-file packages, the default, contained all the source but a flag could be set to file out the class definitions and sources as separate files. The resources (as STB'd binary content) and loose methods were still stored into the .pac. This was an attempt at providing a format more suitable for storing in file-based source code control systems, and was superseded by the .pax format."
+
+	^doNotReuse == false!
+
 isSourceGlobal: aGlobal
 	"Private - Answer true if aGlobal can be filed out as an external source file"
 
@@ -768,10 +765,8 @@ loadPAC
 	[timestamp := stream file lastWriteTime asInteger.
 	(STBInFiler peekForSignatureIn: stream)
 		ifTrue: 
-			[stream reset.
-			BinaryPacLoader
-				ifNil: [self error: 'Legacy binary package loading support is not available']
-				ifNotNil: [:loader | loader value: self value: stream]]
+			[stream close.
+			self class binaryPackageLoader loadPackage: self]
 		ifFalse: [self loadPAC: stream]]
 			ensure: [stream close]!
 
@@ -1132,6 +1127,10 @@ paxVersion: anInteger
 
 	self propertyAt: #paxVersion put: anInteger!
 
+postinstall
+	doNotReuse := nil.
+	self fileInScript: #postinstall!
+
 preDeclareClassesOnLoad
 	"Answer whether Package loading from a .pax should, by default, declare classes before loading any code. See the class side implementation of this message for further details."
 
@@ -1142,6 +1141,9 @@ preDeclareClassesOnLoad: aBoolean
 		ifFalse: 
 			[preDeclareClassesOnLoad := aBoolean.
 			self isChanged: true]!
+
+preinstall
+	self fileInScript: #preinstall!
 
 prerequisiteNames
 	"Private - Answer the <readableString> names of the receiver's prerequisite packages, i.e.
@@ -1363,6 +1365,12 @@ sourceDescriptor
 
 sourceDescriptor: anObject
 	comment := anObject!
+
+sourceFilerClass
+	^ChunkSourceFiler!
+
+sourceFilerOn: stream
+	^self sourceFilerClass on: stream!
 
 sourceGlobalNames
 	"Private - Answer a <collection> of <Symbols>'s, being the names of the global variables 
@@ -1730,7 +1738,6 @@ If you experience subsequent problems please contact the package supplier for an
 about!commands!public! !
 aboutBlock!accessing!public! !
 aboutBlock:!accessing!public! !
-aboutBlockBytes:!accessing!private! !
 addAllPrerequisitesTo:!accessing!private! !
 addClass:!adding!public! !
 addGlobalNamed:!adding!public! !
@@ -1821,6 +1828,7 @@ isDefaultPackage!public!testing! !
 isGlobalAlias:!private!testing! !
 isImportedClass:!private!testing! !
 isInstalled!public!testing! !
+isMultifilePAC!public! !
 isSourceGlobal:!private!testing! !
 isSystemPackage!public!testing! !
 load!operations!private! !
@@ -1860,8 +1868,10 @@ packageVersion:!accessing!public! !
 path!accessing!public! !
 paxVersion!accessing!private! !
 paxVersion:!accessing!private! !
+postinstall!operations!public! !
 preDeclareClassesOnLoad!accessing!public! !
 preDeclareClassesOnLoad:!accessing!public! !
+preinstall!operations!public! !
 prerequisiteNames!accessing!private! !
 prerequisites!enumerating!public! !
 printOn:!printing!public! !
@@ -1892,6 +1902,8 @@ setPrerequisites:!accessing!private! !
 shrink!private! !
 sourceDescriptor!accessing!private! !
 sourceDescriptor:!accessing!private! !
+sourceFilerClass!public! !
+sourceFilerOn:!public! !
 sourceGlobalNames!accessing!private! !
 sourceGlobalVariables!accessing!private! !
 sourceManager!accessing!public! !
@@ -1928,6 +1940,10 @@ binaryGlobalExtension
 	"Private - Answer the file extension for the files to which binary globals are stored."
 
 	^ 'stb'!
+
+binaryPackageLoader
+	^(Smalltalk at: #LegacyBinaryPackageLoader)
+		ifNil: [self error: 'Legacy binary package loading support is not available']!
 
 binaryPacLoader: aDyadicValuable
 	BinaryPacLoader := aDyadicValuable!
@@ -2080,184 +2096,6 @@ sourcePackageExtension
 
 	^ 'pax'!
 
-stbConvertFrom: anSTBClassFormat
-	"Convert version 0 packages by mutating class names from Strings
-	into Symbols. There is no layout change."
-
-	Notification signal: 'Converting package from version ',
-						anSTBClassFormat version printString, ' to: ',
-						self stbVersion printString.
-
-	^[:data |
-		(anSTBClassFormat version to: self stbVersion - 1)
-			inject: data into: [:inject :version |
-				self perform: ('stbConvertFromVersion', version displayString, ':') asSymbol with: inject]]
-		
-		
-		!
-
-stbConvertFromVersion0: data
-	"Private - Convert version 0 packages by mutating class names from Strings
-	into Symbols. There is no layout change. Answer the mutated data.
-
-	Version 0 Package		-->		Version 1 Package
-	1	name						1	name
-	2	packagePathname			2	packagePathname
-	3	comment					3	comment
-	4	classNames				4	classNames
-	5	methodNames				5	methodNames
-	6	globalNames				6	globalNames
-	7	prerequisiteNames			7	prerequisiteNames
-	8	preinstall				8	preinstall
-	9	postinstall				9	postinstall
-	10	singleFile				10	singleFile"
-
-	| classNames globalNames |
-	classNames := data instVarAt: 4.
-	classNames become: (classNames collect: [:n | n asSymbol]).
-	classNames becomeA: IdentitySet.
-	globalNames := data instVarAt: 6.
-	globalNames becomeA: IdentitySet.
-	^data!
-
-stbConvertFromVersion1: anArray 
-	"Private - Convert version 1 packages  to version2. The preinstall and
-	postinstall instance variables are replaced by a dictionary which holds
-	those scripts and any more we define. Answer the mutated data.
-
-	Version 1 Package		-->		Version 2 Package
-	1	name						1	name
-	2	packagePathname			2	packagePathname
-	3	comment					3	comment
-	4	classNames				4	classNames
-	5	methodNames				5	methodNames
-	6	globalNames				6	globalNames
-	7	prerequisiteNames			7	prerequisiteNames
-	8	preinstall				8	singleFile
-	9	postinstall				9	scripts
-	10	singleFile"
-
-	| preinstall postinstall newData scripts |
-	preinstall := anArray at: 8.
-	postinstall := anArray at: 9.
-	"need to temporarily convert data Array into a Package so we can
-	use public methods to add preinstall/postinstall scripts"
-	newData := Array new: 9.
-	1 to: 7 do: [:index | newData at: index put: (anArray at: index)].
-	newData at: 8 put: (anArray at: 10).
-	scripts := IdentityDictionary new.
-	(preinstall notNil and: [preinstall notEmpty]) ifTrue: [scripts at: #preinstall put: preinstall].
-	(postinstall notNil and: [postinstall notEmpty]) 
-		ifTrue: [scripts at: #postinstall put: postinstall].
-	newData at: 9 put: scripts.
-	^newData!
-
-stbConvertFromVersion2: anArray 
-	"Private - Convert version 2 packages to version3. The only change is the
-	addition of a list of resources owned by a packkage which doesn't also
-	own the class which the resource is from. This is similar to the methodNames
-	support.
-
-	Version 2 Package		-->		Version 3 Package
-	1	name						1	name
-	2	packagePathname			2	packagePathname
-	3	comment					3	comment
-	4	classNames				4	classNames
-	5	methodNames				5	methodNames
-	6	globalNames				6	globalNames
-	7	prerequisiteNames			7	prerequisiteNames
-	8	singleFile				8	singleFile
-	9	scripts					9	scripts
-								10 resourceNames"
-
-	^anArray copyWith: Set new!
-
-stbConvertFromVersion3: anArray 
-	"Private - Convert version 3 packages to version 4. The main change is the
-	addition of an imageStripperBytes instance variable to hold a filed imageStripper
-	to be associated with the package. We hold the image stripper in this form to allow
-	filing of the package into images that do not have ImageStripper installed. 
-	Additionally we must convert the full stored pathname of the package to a
-	name relative to the image base."
-
-	"Note that this is currently the last converter in the chain and answers the
-	coverted Package object rather than an Array. This will need to be changed
-	to answer an Array if an additional converter is added."
-
-	"Version 3 Package		-->		Version 4 Package
-	1	name						1	name
-	2	packagePathname			2	packagePathname
-	3	comment					3	comment
-	4	classNames				4	classNames
-	5	methodNames				5	methodNames
-	6	globalNames				6	globalNames
-	7	prerequisiteNames			7	prerequisiteNames
-	8	singleFile					8	singleFile
-	9	scripts					9	scripts
-	10 	resourceNames				10	resourceNames
-								11 imageStripperBytes"
-
-	"Copy over adding a nil imageStripperBytes slot"
-	| newData packagePathName |
-	newData := anArray copyWith: nil.
-
-	"Convert the imagePathName to a relative path"
-	packagePathName := File relativePathOf: (anArray at: 2) to: SessionManager current imageBase.
-	newData at: 2 put: packagePathName.
-	^newData!
-
-stbConvertFromVersion4: anArray 
-	"Private - Convert version 4 packages (Dolphin 3.0) to version 5 (Dolphin 3.05).
-	Adds an aboutBlock (12) and versionString (13) instance variables."
-
-	^(Array new: 13)
-		replaceFrom: 1
-			to: 11
-			with: anArray
-			startingAt: 1;
-		yourself!
-
-stbConvertFromVersion5: anArray 
-	"Private - Convert version 5 (Dolphin 3.05) packages to version 6 (new PAX format).
-	singleFile instance variable is no longer used."
-
-	"Version 5 Package		-->		Version 4 Package
-	1	name						1	name
-	2	packagePathname			2	packagePathname
-	3	comment					3	comment
-	4	classNames				4	classNames
-	5	methodNames				5	methodNames
-	6	globalNames				6	globalNames
-	7	prerequisiteNames			7	prerequisiteNames
-	8	singleFile					8	events
-	9	scripts					9	scripts
-	10 	resourceNames				10	doNotReuse
-	11 	imageStripperBytes			11	imageStripperBytes
-	12 	aboutBlock				12	aboutBlock
-	13 	packageVersion			13	packageVersion
-								14	manualPrerequisites
-								15	timestamp
-								16	untracedGlobals"
-
-	| newPackage |
-	anArray at: 8 put: nil.	"singleFile"
-	anArray at: 10 put: nil.
-	^anArray!
-
-stbConvertFromVersion6: anArray 
-	"Private - Convert version 6 to 7: Adds changeIndex and paxVersion instance variables."
-
-	| newPackage |
-	"Last converter in the chain"
-	newPackage := self new.
-	anArray keysAndValuesDo: [:eachKey :eachValue | newPackage instVarAt: eachKey put: eachValue].
-	^newPackage!
-
-stbVersion
-	"Answer the current binary filer version number for instances of the receiver."
-
-	^7!
-
 uncommitted
 	"Answer the special package used to 'hold' uncommitted classes and other globals."
 
@@ -2276,6 +2114,7 @@ unsaveableSignal
 
 !Package class categoriesForMethods!
 binaryGlobalExtension!constants!private! !
+binaryPackageLoader!constants!private! !
 binaryPacLoader:!accessing!private! !
 clashSignal!constants!private! !
 defaultSortBlock!constants!public! !
@@ -2297,15 +2136,6 @@ preDeclareClassesOnLoad:!accessing!public! !
 readFrom:!instance creation!private! !
 sourceGlobalExtension!constants!private! !
 sourcePackageExtension!constants!private! !
-stbConvertFrom:!binary filing!public! !
-stbConvertFromVersion0:!binary filing!private! !
-stbConvertFromVersion1:!binary filing!private! !
-stbConvertFromVersion2:!binary filing!private! !
-stbConvertFromVersion3:!binary filing!private! !
-stbConvertFromVersion4:!binary filing!private! !
-stbConvertFromVersion5:!binary filing!private! !
-stbConvertFromVersion6:!binary filing!private! !
-stbVersion!binary filing!public! !
 uncommitted!accessing!public! !
 uninitialize!class hierarchy-removing!private! !
 unsaveableSignal!constants!private! !

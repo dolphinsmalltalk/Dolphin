@@ -94,6 +94,35 @@ shouldRaiseZeroDivide: aBlock
 		on: HRESULTError do: [:e | e hresult asInteger = -2147352558 ifTrue: [raised := true]].
 	self assert: raised!
 
+verifyPropertyManagerOf: subject
+	self
+		should: [subject propertyAt: #foo]
+		raise: NotFoundError
+		matching: [:ex | ex tag == #foo and: [ex receiver == subject]].
+	self
+		should: [subject removePropertyAt: #foo]
+		raise: NotFoundError
+		matching: [:ex | ex tag == #foo and: [ex receiver == subject]].
+	self assert: (subject propertyAt: #foo ifAbsent: ['bar']) equals: 'bar'.
+	self assert: (subject removePropertyAt: #foo ifAbsent: ['bar']) equals: 'bar'.
+	subject propertyAt: #foo put: 123.
+	self assert: (subject propertyAt: #foo) equals: 123.
+	subject propertyAt: #bar put: 'abc'.
+	self assert: (subject propertyAt: #bar) equals: 'abc'.
+	subject propertyAt: #foobar put: 'def'.
+	self assert: (subject removePropertyAt: #foo) equals: 123.
+	self
+		should: [subject removePropertyAt: #foo]
+		raise: NotFoundError
+		matching: [:ex | ex tag == #foo and: [ex receiver == subject]].
+	self assert: (subject removePropertyAt: #bar ifAbsent: ['bar']) equals: 'abc'.
+	self assert: (subject removePropertyAt: #bar ifAbsent: ['bar']) equals: 'bar'.
+	self assert: (subject propertyAt: #foobar) equals: 'def'.
+	subject removeAllProperties.
+	self assertIsNil: (subject propertyAt: #foobar ifAbsent: []).
+	subject propertyAt: #foo put: #bar.
+	self assert: (subject propertyAt: #foo) equals: #bar!
+
 versionFromParts: versionNumbers
 	^versionNumbers inject: 0 into: [:sum :each | (sum << 16) + each]! !
 
@@ -112,6 +141,7 @@ resourceFilename:!helpers!public! !
 resourceStream:text:!helpers!public! !
 runKnownBug:test:!public!unit tests! !
 shouldRaiseZeroDivide:!Accessing!public! !
+verifyPropertyManagerOf:!helpers!public! !
 versionFromParts:!public!unit tests! !
 !
 

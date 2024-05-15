@@ -202,6 +202,37 @@ Utf16StringOTE* __fastcall ST::Utf16String::New(OTE* oteString)
 }
 
 ///////////////////////////////////////////////////////////////////////////////
+//
+CharOTE* Character::NewUtf16(char16_t codeUnit)
+{
+	SmallInteger code;
+
+	// If not a surrogate, may have an ANSI character that can represent the code point
+	if (!U_IS_SURROGATE(codeUnit))
+	{
+		AnsiString::CU ansiCodeUnit = 0;
+		if (codeUnit == 0 || (ansiCodeUnit = Interpreter::m_unicodeToAnsiCharMap[codeUnit]) != 0)
+		{
+			return NewAnsi(static_cast<unsigned char>(ansiCodeUnit));
+		}
+
+		// Non-ansi, non-surrogate, so return a full UTF-32 Character
+		code = (static_cast<SmallInteger>(StringEncoding::Utf32) << 24) | codeUnit;
+	}
+	else
+	{
+		// Return a UTF-16 Character for surrogates so it is possible to detect surrogates in the image
+		code = (static_cast<SmallInteger>(StringEncoding::Utf16) << 24) | codeUnit;
+	}
+
+	CharOTE* character = reinterpret_cast<CharOTE*>(ObjectMemory::newPointerObject(Pointers.ClassCharacter));
+	character->m_location->m_code = ObjectMemoryIntegerObjectOf(code);
+	character->beImmutable();
+
+	return character;
+}
+
+///////////////////////////////////////////////////////////////////////////////
 // 
 
 inline void Interpreter::push(LPCWSTR pStr)
@@ -261,7 +292,7 @@ argcount_t Interpreter::pushArgsAt(const ExternalDescriptor* descriptor, uint8_t
 				break;
 
 			case ExtCallArgType::Char:
-				pushObject((OTE*)Character::NewUnicode(*reinterpret_cast<char32_t*>(lpParms)));
+				pushObject((OTE*)Character::NewUtf32(*reinterpret_cast<char32_t*>(lpParms)));
 				lpParms += sizeof(uintptr_t);
 				break;
 

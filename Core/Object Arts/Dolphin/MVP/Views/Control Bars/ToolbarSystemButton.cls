@@ -147,40 +147,11 @@ new
 		description: 'No command'!
 
 stbConvertFrom: anSTBClassFormat
-	"Version 1 is refactored so that bitmap and bitmapIndex instance variables are no longer inherited.
+	"ToolbarSystemButton used to be a subclass of what is now effectively ToolbarBitmapButton, but was then ToolbarButton, now the abstract superclass of both."
 
-	Version 0 inst var layout was:
-		ToolbarItem
-			1: commandId
-			2: unused
-			3: window (toolbar)
-			4: style
-			5: commandDescription
-		ToolbarButton
-			6: bitmap	(bitmapId)
-			7: bitmapIndex
-		ToolbarSystemButton
-
-	Version 1 inst var layout is:
-		ToolbarItem
-			1: toolbar
-		ToolbarButton (now abstract)
-			2: style
-			3: commandDescription
-			4: commandId
-		ToolbarSystemButton
-			5: bitmapId
-			6: bitmapIndex
-	"
-
-	^
-	[:data |
-	| newInstance |
-	newInstance := self basicNew.
-	1 to: 3 do: [:i | newInstance instVarAt: i put: (data at: i + 2)].
-	newInstance instVarAt: 4 put: (data at: 1).
-	5 to: 6 do: [:i | newInstance instVarAt: i put: (data at: i + 1)].
-	newInstance]! !
+	anSTBClassFormat version == 0
+		ifTrue: [^[:data | (self stbConvertFromVersion0: data) becomeA: self]].
+	^super stbConvertFrom: anSTBClassFormat! !
 
 !ToolbarSystemButton class categoriesForMethods!
 bitmapId:index:commandDescription:!instance creation!public! !

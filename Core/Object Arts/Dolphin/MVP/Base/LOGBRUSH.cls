@@ -127,15 +127,14 @@ defineFields
 getFieldNames
 	^#(#lbStyle #lbColor #lbHatch)!
 
-stbConvertFrom: anSTBClassFormat 
+stbConvertFrom: anSTBClassFormat
 	"Version 1 adds hatch instance variables to hold Bitmap preventing it being GC'd (#1052)."
 
 	^
-	[:data | 
-	| newInstance |
-		newInstance := self basicNew.
-		1 to: data size do: [:i | newInstance instVarAt: i put: (data at: i)].
-		newInstance]!
+	[:data |
+	LOGBRUSH basicNew
+		bytes: (data at: 1);
+		yourself]!
 
 stbVersion
 	^1! !

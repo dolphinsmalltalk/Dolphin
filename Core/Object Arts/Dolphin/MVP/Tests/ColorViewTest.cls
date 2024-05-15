@@ -17,23 +17,15 @@ ColorViewTest comment: ''!
 classToTest
 	^ColorView!
 
-oldDolphinVersionsForStbUpgrade
-	^1 to: 4!
-
-verifyUpgradedView: anInteger
+verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	| view |
-	super verifyUpgradedView: anInteger.
+	super verifyUpgradedView: anInteger identifier: aResourceIdentifier.
 	view := self view.
-	self assert: view displayValue equals: (anInteger < 13 ifTrue: [Color black] ifFalse: [Color blue])!
-
-vuFile
-	^'ColorPresenter.Color view.vu'! !
+	self assert: view displayValue equals: (anInteger < 13 ifTrue: [Color black] ifFalse: [Color blue])! !
 
 !ColorViewTest categoriesForMethods!
 classToTest!helpers!private! !
-oldDolphinVersionsForStbUpgrade!constants!private! !
-verifyUpgradedView:!helpers!private! !
-vuFile!constants!private! !
+verifyUpgradedView:identifier:!helpers!private! !
 !
 
 !ColorViewTest class methodsFor!

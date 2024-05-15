@@ -381,13 +381,13 @@ resource_Yes_button
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.PushButton) 34 20 nil nil 34 2 8 1140924416 1 416 nil nil nil 5 nil nil nil 416 nil 8 1915188384 1180998 4 ##(Smalltalk.CommandDescription) #yes 8 '&Yes' 1 1 nil nil false nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 3 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 21 21 658 141 51 416 610 #isEnabled: 8 #(false) 416 610 #text: 34 1 8 '&Yes' 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 10 0 0 0 10 0 0 0 80 0 0 0 35 0 0 0] 8 #() 658 193 193 nil 29 )!
 
-stbConvertFromVersion1: anArray 
-	"Private - Perform an STB conversion from a version 1 (or earlier) <View> to version 2."
+stbConvertFromVersion1: anArray
+	"Private - Perform an STB conversion from a version 1 (or earlier) <View> to version 2.
+	Originally PushButtons held a command symbol, rather than a <CommandDescription>."
 
-	| array |
-	array := super stbConvertFromVersion1: anArray.
-	array at: 13 put: (CommandDescription command: (array at: 13)).
-	^array!
+	^(super stbConvertFromVersion1: anArray)
+		at: 13 put: (CommandDescription command: (anArray at: 13));
+		yourself!
 
 stbConvertFromVersion9: anArray 
 	"Private - Perform an STB conversion from a version 9 (or earlier) <View> to version 10,

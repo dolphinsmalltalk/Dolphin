@@ -27,16 +27,12 @@ Class Variables:
 actualFormat
 	"Private - Answers the actual date format to use for the conversion"
 
-	^self format notNil
-		ifTrue: [ self format ]
-		ifFalse: [ self actualLocale dateFormat ]!
+	^self format ifNil: [self actualLocale dateFormat]!
 
 actualLocale
 	"Private - Answers the actual locale to use for the conversion"
 
-	^self locale notNil
-		ifTrue: [ self locale ]
-		ifFalse: [ Locale default ]!
+	^self locale ifNil: [Locale default]!
 
 format
 	"Answers the format for the conversion. This is either a String identifying
@@ -92,16 +88,23 @@ rightToLeft:!operations!public! !
 
 !DateToText class methodsFor!
 
-stbConvertFrom: anSTBClassFormat 
-	"Convert from version 0 Bitmap. Version 1 adds a locale inst var"
+stbConvertFrom: anSTBClassFormat
+	"Convert from version 0 DateToText. Version 1 adds a locale inst var"
 
-	^
-	[:data | 
-	| newInstance |
-	newInstance := self basicNew.
-	1 to: data size do: [:i | newInstance instVarAt: i put: (data at: i)].
-	newInstance locale: Locale default.
-	newInstance]!
+	anSTBClassFormat version == 0
+		ifTrue: 
+			[^
+			[:data |
+			(Array new: self instSize)
+				at: 1 put: (data at: 1);
+				at: 2 put: (data at: 2);
+				at: 3 put: Locale default;
+				replaceFrom: 4
+					to: 4 + data size - 3
+					with: data
+					startingAt: 3;
+				becomeA: self]].
+	^super stbConvertFrom: anSTBClassFormat!
 
 stbVersion
 	"Answer the current binary filer version number for instances of the receiver."

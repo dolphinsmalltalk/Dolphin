@@ -19,14 +19,61 @@ LocaleTest comment: ''!
 defaultSubject
 	^self subclassResponsibility!
 
+displayScaledDecimal: aScaledDecimal in: aLocale 
+	| stream |
+	stream := String writeStream.
+	aLocale displayScaledDecimal: aScaledDecimal on: stream.
+	^stream contents!
+
 setUp
 	super setUp.
 	savedLocale := Locale userDefault.
-	Locale userDefault: (Locale lcid: 1081)!
+	"Deliberately switch to another default locale to catch any reliance on Locale specific dependencies in the test"
+	Locale userDefault: (Locale named: 'tr-Tr')!
 
 tearDown
-	savedLocale ifNotNil: [Locale userDefault: savedLocale. savedLocale := nil].
+	savedLocale
+		ifNotNil: 
+			[Locale userDefault: savedLocale.
+			savedLocale := nil].
 	super tearDown!
+
+testDisplayFloatOn
+	self subclassResponsibility!
+
+testDisplayName
+	self subclassResponsibility!
+
+testDisplayScaledDecimainOn
+	| subject |
+	subject := self defaultSubject.
+	self assert: (self displayScaledDecimal: 0.0s2 in: subject) equals: '0.00'.
+	self assert: (self displayScaledDecimal: -1.25s in: subject) equals: '-1.25'.
+	self assert: (self displayScaledDecimal: -0.0001s in: subject) equals: '-0.0001'.
+	"ScaledDecimals support arbitrary precision"
+	self
+		assert: (self displayScaledDecimal: -123456789123456789123456789.1234567890987654321s in: subject)
+		equals: '-123456789123456789123456789.1234567890987654321'!
+
+testIsTurkic
+	self deny: self defaultSubject isTurkic!
+
+testName
+	self subclassResponsibility!
+
+testNoUserOverrides
+	self assert: self defaultSubject noUserOverrides.
+	self deny: (Locale named: 'en-US') noUserOverrides!
+
+testPrimary
+	"Sad, but true"
+
+	self assert: (Locale named: 'en-GB') primary equals: (Locale named: 'en-US').
+	self assert: (Locale named: 'fr-CA') primary equals: (Locale named: 'fr-FR').
+	self assert: Locale invariant primary equals: Locale invariant.
+	self assert: (Locale lcid: NlsConstants.LOCALE_CUSTOM_DEFAULT) primary
+		equals: Locale userDefault primary.
+	self assert: Locale smalltalk primary equals: (Locale named: 'en-US')!
 
 testPrintDateTimeOnFormat
 	| subject now expected |
@@ -37,7 +84,8 @@ testPrintDateTimeOnFormat
 				minute: 26
 				second: 21 + (827 / 1000).
 	subject := self defaultSubject.
-	expected := '6:26 ', subject pmDesignator, ' (and 21.827 seconds) on Sunday, 7 of April 2019 somewhere'.
+	expected := '6:26 ' , subject pmDesignator
+				, ' (and 21.827 seconds) on Sunday, 7 of April 2019 somewhere'.
 	{now. now asParameter. TimeStamp fromDateAndTime: now} do: 
 			[:each |
 			| actual |
@@ -81,13 +129,37 @@ testPrintDurationOnFormat
 						format: '+hh:mm'].
 	self assert: actual equals: '-12:06'!
 
-testPrintFloat
-	self subclassResponsibility!
-
 testPrintFloatGrouping
 	"Test printing with different number grouping."
 
-	self subclassResponsibility!
+	| format subject |
+	subject := self defaultSubject.
+	format := subject numberFormat copy.
+	#(#(0 '0' '1234567890.12') #(1 '1' '1,2,3,4,5,6,7,8,9,0.12') #(2 '2' '12,34,56,78,90.12') #(3 '3' '1,234,567,890.12') #(4 '4' '12,3456,7890.12') #(5 '5' '12345,67890.12') #(6 '6' '1234,567890.12') #(7 '7' '123,4567890.12') #(8 '8' '12,34567890.12') #(9 '9' '1,234567890.12') #(10 '1;0;0' '123456789,0.12') #(11 '1;1' '1,2,3,4,5,6,7,8,9,0.12') #(12 '1;2' '1,23,45,67,89,0.12') #(32 '3;2' '1,23,45,67,890.12') #(92 '9;2' '1,234567890.12'))
+		do: 
+			[:each |
+			format grouping: each first.
+			self assert: format numberGrouping equals: each second.
+			format numberGrouping: each second.
+			self assert: format grouping equals: each first.
+			self assert: (subject printFloat: 1234567890.123 format: format) equals: each last].	"The grouping is actually much more flexible than the documentation suggests. Up to four number groups are supported (the last repeating)."
+	#(#(98 '9;8' '2,00000000,00000000,00000000,000000000.00') #(89 '8;9' '20000000,000000000,000000000,00000000.00') #(99 '9;9' '2000000,000000000,000000000,000000000.00') #(120 '1;2;0;0' '2000000000000000000000000000000,00,0.00') #(123 '1;2;3' '2,000,000,000,000,000,000,000,000,000,000,00,0.00') #(1230 '1;2;3;0;0' '2000000000000000000000000000,000,00,0.00') #(1234 '1;2;3;4' '2000,0000,0000,0000,0000,0000,0000,000,00,0.00') #(4321 '4;3;2;1' '2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,00,000,0000.00') #(9999 '9;9;9;9' '2000000,000000000,000000000,000000000.00'))
+		do: 
+			[:each |
+			format grouping: each first.
+			self assert: format numberGrouping equals: each second.
+			format numberGrouping: each second.
+			self assert: format grouping equals: each first.
+			self assert: (subject printFloat: 2.0e33 format: format) equals: each last].
+	#(-1 10000) do: 
+			[:each |
+			self should: [format grouping: each] raise: Error.
+			format Grouping: each.
+			self
+				should: [subject printFloat: 1.23 format: format]
+				raise: HRESULTError
+				matching: [:ex | ex tag = (HRESULT win32Error: Win32Errors.ERROR_INVALID_PARAMETER)]].
+	self should: [format numberGrouping: '1;2;3;4;5'] raise: Error!
 
 testPrintFloatNumDigits
 	"Test printing different numbers of decimal places, and also what happens beyond the limits as the GetNumberFormatAPI only supports 0..9 decimal digits."
@@ -118,19 +190,88 @@ testPrintFloatNumDigits
 				matching: [:ex | ex tag = (HRESULT win32Error: Win32Errors.ERROR_INVALID_PARAMETER)]]!
 
 testPrintFloatSeparators
-	"Test printing with specific decimal and group separators."
+	"Test printing with different number grouping."
 
-	self subclassResponsibility! !
+	| format subject |
+	subject := self defaultSubject.
+	format := subject numberFormat copy.
+	format
+		decimalPlaces: 3;
+		grouping: 43;
+		decimalSeparator: $@;
+		groupSeparator: $^.
+	self assert: (subject printFloat: 1234567890.123 format: format) equals: '123^456^7890@123'!
+
+testStbRoundTrip
+	| rehydrated bytes subject |
+	subject := self defaultSubject.
+	bytes := {subject. {subject}} binaryStoreBytes.
+	rehydrated := Object fromBinaryStoreBytes: bytes.
+	self assert: rehydrated first identicalTo: subject.
+	self assert: rehydrated second first identicalTo: subject.!
+
+testStlRoundTrip
+	| rehydrated stl subject |
+	subject := self defaultSubject.
+	stl := {subject. {subject}} literalStoreArray.
+	rehydrated := Object fromLiteralStoreArray: stl.
+	self assert: rehydrated first identicalTo: subject.
+	self assert: rehydrated second first identicalTo: subject!
+
+verifyEnglishDayOfWeek: aLocale
+	"Note that this test is not sensitive to the configured first day of the week, because Locale>>dayOfWeek: always uses the US convention that Sunday is day 1. This is for interoperability with `Core.Date`."
+
+	^#('SUnday' 'MONDAY' 'Tue' 'Wednesday' 'THU' 'friday' 'sat')
+		keysAndValuesDo: [:eachKey :eachValue | self assert: (aLocale dayOfWeek: eachValue) equals: eachKey]!
+
+verifyEnglishDayOfWeekNames: aLocale
+	"Note that this test is not sensitive to the configured first day of the week, because Locale>>dayOfWeekName: always uses the US convention that Sunday is day 1. This is for interoperability with `Core.Date`."
+
+	^self assert: ((1 to: 7) collect: [:i | aLocale dayOfWeekName: i])
+		equals: #('Sunday' 'Monday' 'Tuesday' 'Wednesday' 'Thursday' 'Friday' 'Saturday')!
+
+verifyEnglishMonthAbbreviations: aLocale
+	^self assert: ((1 to: 12) collect: [:i | aLocale monthAbbreviation: i])
+		equals: #('Jan' 'Feb' 'Mar' 'Apr' 'May' 'Jun' 'Jul' 'Aug' 'Sep' 'Oct' 'Nov' 'Dec')!
+
+verifyEnglishMonthNames: aLocale
+	^self assert: ((1 to: 12) collect: [:i | aLocale monthName: i])
+		equals: #('January' 'February' 'March' 'April' 'May' 'June' 'July' 'August' 'September' 'October' 'November' 'December')!
+
+verifyEnglishNamesOfDays: aLocale
+	"Note that this test is not sensitive to the configured first day of the week, because Locale>>nameOfDay: always uses the convention that Monday is day 1. For reasons of backwards compatibility with a historic Core.Date API, this is not consistent with some other Locale APIs that use the US convention. Locale>>dayOfWeekName: is a similar API that follows the US convention."
+
+	^self assert: ((1 to: 7) collect: [:i | aLocale nameOfDay: i])
+		equals: #('Monday' 'Tuesday' 'Wednesday' 'Thursday' 'Friday' 'Saturday' 'Sunday')!
+
+verifyIndexOfEnglishMonths: aLocale
+	#('january' 'feb' 'march' 'apr' 'may' 'jun' 'july' 'aug' 'september' 'oct' 'november' 'dec')
+		keysAndValuesDo: [:eachKey :eachValue | self assert: (aLocale indexOfMonth: eachValue) equals: eachKey]! !
 
 !LocaleTest categoriesForMethods!
 defaultSubject!helpers!private! !
+displayScaledDecimal:in:!helpers!private! !
 setUp!private!running! !
 tearDown!private!running! !
+testDisplayFloatOn!public!unit tests! !
+testDisplayName!public!unit tests! !
+testDisplayScaledDecimainOn!public!unit tests! !
+testIsTurkic!public!unit tests! !
+testName!public!unit tests! !
+testNoUserOverrides!public!unit tests! !
+testPrimary!public!unit tests! !
 testPrintDateTimeOnFormat!public!unit tests! !
 testPrintDurationOnFormat!public!unit tests! !
-testPrintFloat!public!unit tests! !
 testPrintFloatGrouping!public!unit tests! !
 testPrintFloatNumDigits!public!unit tests! !
 testPrintFloatSeparators!public!unit tests! !
+testStbRoundTrip!public!unit tests! !
+testStlRoundTrip!public!unit tests! !
+verifyEnglishDayOfWeek:!helpers!private! !
+verifyEnglishDayOfWeekNames:!helpers!private! !
+verifyEnglishMonthAbbreviations:!helpers!private! !
+verifyEnglishMonthNames:!helpers!private! !
+verifyEnglishNamesOfDays:!helpers!private! !
+verifyIndexOfEnglishMonths:!helpers!private! !
 !
 

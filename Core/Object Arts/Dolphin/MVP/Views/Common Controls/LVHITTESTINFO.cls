@@ -2,12 +2,13 @@
 
 CCHITTESTINFO subclass: #LVHITTESTINFO
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_iItem _OffsetOf_iSubItem'
+	classVariableNames: '_OffsetOf_flags _OffsetOf_iItem _OffsetOf_iSubItem'
 	poolDictionaries: 'ListViewConstants'
 	classInstanceVariableNames: ''!
 
 LVHITTESTINFO guid: (GUID fromString: '{87b4c61e-026e-11d3-9fd7-00a0cc3e4a32}')!
 
+LVHITTESTINFO addClassConstant: '_OffsetOf_flags' value: 16r8!
 LVHITTESTINFO addClassConstant: '_OffsetOf_iItem' value: 16rC!
 LVHITTESTINFO addClassConstant: '_OffsetOf_iSubItem' value: 16r10!
 
@@ -20,6 +21,11 @@ This Supercedes the LV_HITTESTINFO class present in release 2.1 and earlier.'!
 !LVHITTESTINFO categoriesForClass!External-Data-Structured-Win32! !
 
 !LVHITTESTINFO methodsFor!
+
+flags
+	"Answer the <Integer> value of the receiver's 'flags' field."
+
+	^bytes sdwordAtOffset: _OffsetOf_flags!
 
 handle
 	"Private - Answer the item 'handle' associated with the receiver.
@@ -38,6 +44,7 @@ iSubItem
 	^bytes sdwordAtOffset: _OffsetOf_iSubItem! !
 
 !LVHITTESTINFO categoriesForMethods!
+flags!**compiled accessors**!public! !
 handle!accessing!private! !
 iItem!**compiled accessors**!public! !
 iSubItem!**compiled accessors**!public! !
@@ -59,6 +66,7 @@ defineFields
 
 	super defineFields.
 	self
+		defineField: #flags type: SDWORDField readOnly;
 		defineField: #iItem type: SDWORDField readOnly;
 		defineField: #iSubItem type: SDWORDField readOnly
 !

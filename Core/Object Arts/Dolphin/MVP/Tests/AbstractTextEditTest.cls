@@ -50,9 +50,9 @@ testPositionOfChar
 text
 	^self subclassResponsibility!
 
-verifyUpgradedView: anInteger
+verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	| view |
-	super verifyUpgradedView: anInteger.
+	super verifyUpgradedView: anInteger identifier: aResourceIdentifier.
 	view := self view.
 	self assert: view view identicalTo: view.
 	self assertIsNil: view preferredExtent.
@@ -61,13 +61,12 @@ verifyUpgradedView: anInteger
 	self assertIsNil: view font.
 	self assertIsNil: view getEvents.
 	self assert: view interactor identicalTo: view.
-	self assertIsNil: view forecolor.
-	self assert: view typeconverter isNullConverter! !
+	self assertIsNil: view forecolor! !
 
 !AbstractTextEditTest categoriesForMethods!
 margins!constants!private! !
 testPositionOfChar!public!unit tests! !
 text!constants!private! !
-verifyUpgradedView:!helpers!private! !
+verifyUpgradedView:identifier:!helpers!private! !
 !
 

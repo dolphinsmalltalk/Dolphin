@@ -14,10 +14,25 @@ SystemBrowserTest comment: ''!
 
 !SystemBrowserTest methodsFor!
 
-browserClass
-	^SystemBrowserShell! !
+classToTest
+	^SystemBrowserShell!
+
+testBrowseItOpensSystemBrowserOnPackageOfLooseMethod
+	| default |
+	#nocreate.
+	#'1512'.
+	default := SmalltalkSystem current defaultBrowserClass.
+	
+	[| method |
+	SmalltalkSystem current defaultBrowserClass: SystemBrowserShell.
+	method := Object compiledMethodAt: #asValue.
+	self assert: method isLoose.
+	presenter := method browse.
+	self assert: presenter packages equals: {method owningPackage}]
+			ensure: [SmalltalkSystem current defaultBrowserClass: default]! !
 
 !SystemBrowserTest categoriesForMethods!
-browserClass!public!Running! !
+classToTest!public!Running! !
+testBrowseItOpensSystemBrowserOnPackageOfLooseMethod!public!unit tests! !
 !
 

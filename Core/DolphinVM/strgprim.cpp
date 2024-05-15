@@ -31,7 +31,7 @@ CHAR Interpreter::m_unicodeToAnsiCharMap[65536];
 
 #pragma comment(lib, "icuuc.lib")
 
-CharOTE* Character::NewUnicode(char32_t value)
+CharOTE* Character::NewUtf32(char32_t value)
 {
 	if (__isascii(value))
 	{

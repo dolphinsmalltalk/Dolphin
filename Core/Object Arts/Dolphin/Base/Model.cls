@@ -82,18 +82,17 @@ stbConvert: anArray fromVersion: anInteger
 	anInteger < 3 ifTrue: [instVars := self stbConvertFromVersion2: instVars].
 	^instVars!
 
-stbConvertFrom: anSTBClassFormat 
-	"Private - Convert from previous version resource. 
+stbConvertFrom: anSTBClassFormat
+	"Convert from previous version resource. 
 	Version Changes:
 		1: Added 'events' instance variable to Model."
 
 	^
-	[:data | 
-	| answer instVars |
+	[:data |
+	| instVars |
 	instVars := self stbConvert: data fromVersion: anSTBClassFormat version.
-	answer := self basicNew.
-	1 to: instVars size do: [:i | answer instVarAt: i put: (instVars at: i)].
-	answer]!
+	"Allow for the fact that the conversions may be assuming that appending inst vars with a default value of nil does not require conversion"
+	(instVars resize: self instSize) becomeA: self]!
 
 stbConvertFromVersion0: anArray 
 	"Private - Perform an STB conversion from a version 0 <Model> to version 1.
@@ -126,7 +125,7 @@ stbVersion
 !Model class categoriesForMethods!
 new!instance creation!public! !
 stbConvert:fromVersion:!binary filing!private! !
-stbConvertFrom:!binary filing!private! !
+stbConvertFrom:!binary filing!public! !
 stbConvertFromVersion0:!binary filing!private! !
 stbConvertFromVersion1:!binary filing!private! !
 stbConvertFromVersion2:!binary filing!private! !

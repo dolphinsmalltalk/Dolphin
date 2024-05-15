@@ -47,20 +47,19 @@ displayValue: anObject
 			["If the text has changed then set the new text for anObject"
 			self text: newText]!
 
-itemFromPoint: aPoint 
-	"Private - Answer the <integer> index of the link in the receiver under the <Point> argument
+itemFromPoint: aPoint
+	"Private - Answer the 1-based <integer> index of the link in the receiver under the <Point> argument
 	(expressed in client coordinates), or nil if none."
 
 	| struct |
-	struct := LHITTESTINFO new.
-	struct pt: aPoint asParameter.
+	struct := LHITTESTINFO position: aPoint.
 	"Note that the MSDN docs for LM_HITTEST are in error: It doesn't return details of the
 	 last link clicked, but really is a hit testing function for finding the item under a point."
-	^(self 
+	^(self
 		sendMessage: LM_HITTEST
 		wParam: 0
-		lpParam: struct) asBoolean 
-		ifTrue: [struct item copy]!
+		lpParam: struct) asBoolean
+		ifTrue: [struct handle]!
 
 linkAt: anInteger 
 	"Answer an <LITEM>s, describing the links with the specified <integer> index in

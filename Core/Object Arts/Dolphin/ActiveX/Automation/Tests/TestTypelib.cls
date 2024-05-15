@@ -3,7 +3,7 @@
 TestResource subclass: #TestTypelib
 	instanceVariableNames: 'analyzer'
 	classVariableNames: ''
-	poolDictionaries: 'Win32Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
 TestTypelib guid: (GUID fromString: '{bda93d8c-df4b-4461-8950-9db6e8797384}')!
@@ -27,7 +27,7 @@ setUp
 				load: self libid
 				major: 1
 				minor: 0
-				locale: LOCALE_USER_DEFAULT]
+				locale: NlsConstants.LOCALE_USER_DEFAULT]
 			on: HRESULTError
 			do: [:ex | ex hresult asInteger = AXAutomationErrors.TYPE_E_LIBNOTREGISTERED ifFalse: [ex pass]]!
 

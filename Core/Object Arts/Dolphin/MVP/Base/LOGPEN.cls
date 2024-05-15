@@ -70,12 +70,21 @@ style: anInteger
 width
 	"Answer <integer> width of the pen described by the receiver."
 
-	^bytes sdwordAtOffset: 4!
+	"The [LOGPEN structure documentation](https://learn.microsoft.com/en-us/windows/win32/api/wingdi/ns-wingdi-logpen) states:
+		
+	lopnWidth
+		The POINT structure that contains the pen width, in logical units. If the pointer [sic] member is NULL, the pen is one pixel wide on raster devices. The y member in the POINT structure for lopnWidth is not used.
+
+	i.e lopnWidth.x value of 0 and 1 are equivalent. Slightly odd choice, but it does mean that a solid single-pixel black pen has a LOGPEN that is all zeros."
+
+	| lopnWidthX |
+	lopnWidthX := bytes sdwordAtOffset: _OffsetOf_lopnWidth.
+	^lopnWidthX == 0 ifTrue: [1] ifFalse: [lopnWidthX]!
 
 width: anInteger 
 	"Set the <integer> width of the pen described by the receiver."
 
-	bytes sdwordAtOffset: 4 put: anInteger! !
+	bytes sdwordAtOffset: _OffsetOf_lopnWidth put: anInteger! !
 
 !LOGPEN categoriesForMethods!
 color!accessing!public! !

@@ -196,33 +196,34 @@ invalidArgErrorClass
 invalidCall: anInteger
 	"An invalid external call was attempted through one of the receiver's methods. The argument is the failure code from the external call primitive."
 
-	| frame descriptor method |
 	anInteger >= 0
 		ifTrue: 
 			[| error |
 			error := KernelLibrary default getLastError.
 			^error == 0 ifTrue: [self primitiveFailed: anInteger] ifFalse: [self systemError: error]].
-	frame := Processor activeProcess topFrame sender.
-	method := frame method.
+	^self invalidCall: anInteger fromFrame: Processor activeProcess topFrame sender!
+
+invalidCall: anInteger fromFrame: aStackFrame
+	| method descriptor |
+	method := aStackFrame method.
 	descriptor := method descriptor.
 	"Reporting of errors related to individual arguments is limited to a maximum of 12 arguments, although API functions with such large numbers of parameters are very rare.
 	If the error is with parameter 13+, then it will be the generic _PrimitiveFailureCode.InvalidParameter."
-	^(anInteger >= _PrimitiveFailureCode.InvalidParameter1
-		and: [anInteger <= _PrimitiveFailureCode.InvalidParameter12])
-			ifTrue: 
-				[| arg i |
-				i := descriptor argumentIndexFromOffset: anInteger - _PrimitiveFailureCode.InvalidParameter1.
-				arg := frame method isVirtualFunction ifTrue: [i - 1] ifFalse: [i].
-				self invalidArgErrorClass
-					invalidArgument: arg
-					got: (frame arguments at: arg)
-					expected: (descriptor argumentTypes at: i)]
-			ifFalse: 
-				[descriptor retType == ExtCallArgTypes.ExtCallArgNTSTATUS
-					ifTrue: 
-						[HRESULTError
-							signalWith: ((HRESULT decodePrimitiveFailureCode: anInteger) bitOr: HRESULT.FACILITY_NT_BIT)]
-					ifFalse: [HRESULTError signalFailureCode: anInteger]]!
+	^(anInteger >= _PrimitiveFailureCode.InvalidParameter1 and: [anInteger <= _PrimitiveFailureCode.InvalidParameter12])
+		ifTrue: 
+			[| arg i |
+			i := descriptor argumentIndexFromOffset: anInteger - _PrimitiveFailureCode.InvalidParameter1.
+			arg := method isVirtualFunction ifTrue: [i - 1] ifFalse: [i].
+			self invalidArgErrorClass
+				invalidArgument: arg
+				got: (aStackFrame arguments at: arg)
+				expected: (descriptor argumentTypes at: i)]
+		ifFalse: 
+			[descriptor retType == ExtCallArgTypes.ExtCallArgNTSTATUS
+				ifTrue: 
+					[HRESULTError
+						signalWith: ((HRESULT decodePrimitiveFailureCode: anInteger) bitOr: HRESULT.FACILITY_NT_BIT)]
+				ifFalse: [HRESULTError signalFailureCode: anInteger]]!
 
 isOpen
 	"Answer whether the external library represented by the receiver is open."
@@ -316,6 +317,7 @@ handle!accessing!private! !
 handle:!accessing!private! !
 invalidArgErrorClass!constants!private! !
 invalidCall:!exceptions!public! !
+invalidCall:fromFrame:!exceptions!public! !
 isOpen!public!testing! !
 loadFlags!constants!private! !
 loadString:!accessing!public! !

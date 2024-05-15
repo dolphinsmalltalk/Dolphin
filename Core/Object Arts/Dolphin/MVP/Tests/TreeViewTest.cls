@@ -22,9 +22,6 @@ getItemText: anObject
 	treeView := presenter view.
 	^treeView getItemText: (treeView handleFromObject: anObject)!
 
-oldDolphinVersionsForStbUpgrade
-	^1 to: 5!
-
 paintTree
 	false
 		ifTrue: 
@@ -134,9 +131,9 @@ testSetTextBlockDoesNotAffectSelection
 			super testSetTextBlockDoesNotAffectSelection.
 			presenter view model clear]!
 
-verifyUpgradedView: anInteger
+verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	| view |
-	super verifyUpgradedView: anInteger.
+	super verifyUpgradedView: anInteger identifier: aResourceIdentifier.
 	view := self view.
 	self assert: view backcolor identicalTo: Color default.
 	self assert: view updateMode identicalTo: #dynamic.
@@ -145,17 +142,11 @@ verifyUpgradedView: anInteger
 	self assert: view isExpandAllEnabled.
 	self assert: view isVirtual.
 	anInteger < 13
-		ifTrue: [self assert: self view indentSeparation equals: 16 * self view dpi // USER_DEFAULT_SCREEN_DPI]!
-
-vuFile
-	"Was TreePresenter.TreeView in D1 & 2"
-
-	^'TreePresenter.Default view.vu'! !
+		ifTrue: [self assert: self view indentSeparation equals: 16 * self view dpi // USER_DEFAULT_SCREEN_DPI]! !
 
 !TreeViewTest categoriesForMethods!
 classToTest!helpers!private! !
 getItemText:!helpers!private! !
-oldDolphinVersionsForStbUpgrade!constants!private! !
 paintTree!helpers!private! !
 refreshTree:!helpers!private! !
 testCollapseOneLevel!public!unit tests! !
@@ -167,8 +158,7 @@ testSelectionSetter!public!unit tests! !
 testSelectionsPreservedOnRecreate!public!unit tests! !
 testSetImageBlockDoesNotAffectSelection!public!unit tests! !
 testSetTextBlockDoesNotAffectSelection!public!unit tests! !
-verifyUpgradedView:!helpers!private! !
-vuFile!constants!private! !
+verifyUpgradedView:identifier:!helpers!private! !
 !
 
 !TreeViewTest class methodsFor!

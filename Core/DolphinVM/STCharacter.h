@@ -32,7 +32,9 @@ namespace ST
 		static constexpr SmallInteger Utf8Mask = 0x1000000;
 
 		static CharOTE* NewAnsi(unsigned char value);
-		static CharOTE* NewUnicode(char32_t value);
+		//static CharOTE* NewUtf8(char8_t value);
+		static CharOTE* NewUtf16(char16_t value);
+		static CharOTE* NewUtf32(char32_t value);
 
 		__declspec(property(get = getEncoding)) StringEncoding Encoding;
 		StringEncoding getEncoding() const { return static_cast<StringEncoding>((m_code >> 25) & 0x3); }

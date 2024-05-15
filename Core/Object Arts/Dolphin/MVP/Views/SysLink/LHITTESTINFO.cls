@@ -1,15 +1,14 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Win32Structure subclass: #LHITTESTINFO
+CCHITTESTINFO subclass: #LHITTESTINFO
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_item _OffsetOf_pt'
+	classVariableNames: '_OffsetOf_item'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
 LHITTESTINFO guid: (GUID fromString: '{1498d0d0-6502-4ce2-8cf9-caa0625685ef}')!
 
 LHITTESTINFO addClassConstant: '_OffsetOf_item' value: 16r8!
-LHITTESTINFO addClassConstant: '_OffsetOf_pt' value: 16r0!
 
 LHITTESTINFO comment: ''!
 
@@ -17,29 +16,19 @@ LHITTESTINFO comment: ''!
 
 !LHITTESTINFO methodsFor!
 
+handle
+	"Private - Answer the item 'handle' associated with the receiver."
+
+	^(bytes sdwordAtOffset: ##(_OffsetOf_item + LITEM._OffsetOf_iLink)) + 1!
+
 item
 	"Answer the <LITEM> value of the receiver's 'item' field."
 
-	^LITEM fromAddress: bytes yourAddress + _OffsetOf_item!
-
-pt
-	"Answer the <POINTL> value of the receiver's 'pt' field."
-
-	^POINTL fromAddress: bytes yourAddress!
-
-pt: aPOINTL
-	"Set the receiver's 'pt' field to the value of the argument, aPOINTL"
-
-	aPOINTL
-		replaceBytesOf: bytes
-		from: ##(_OffsetOf_pt + 1)
-		to: ##(_OffsetOf_pt + POINTL basicByteSize)
-		startingAt: 1! !
+	^LITEM fromAddress: bytes yourAddress + _OffsetOf_item! !
 
 !LHITTESTINFO categoriesForMethods!
+handle!accessing!private! !
 item!**compiled accessors**!public! !
-pt!**compiled accessors**!public! !
-pt:!**compiled accessors**!public! !
 !
 
 !LHITTESTINFO class methodsFor!
@@ -50,9 +39,8 @@ defineFields
 		LHITTESTINFO compileDefinition
 	"
 
-	self
-		defineField: #pt type: (StructureField type:  POINTL);
-		defineField: #item type: (StructureField type: LITEM) beReadOnly!
+	super defineFields.
+	self defineField: #item type: (StructureField type: LITEM) beReadOnly!
 
 getFieldNames
 	^#(#pt #item)! !

@@ -54,6 +54,7 @@ package globalAliases: (Set new
 	yourself).
 
 package setPrerequisites: #(
+	'..\..\..\Dolphin\IDE\Base\Development System'
 	'..\..\..\Dolphin\Base\Dolphin'
 	'..\..\..\Dolphin\MVP\Base\Dolphin Basic Geometry'
 	'..\..\..\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars'

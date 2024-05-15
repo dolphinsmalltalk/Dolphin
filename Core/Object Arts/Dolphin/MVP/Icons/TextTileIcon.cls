@@ -486,15 +486,29 @@ new
 	^self shouldNotImplement!
 
 stbConvertFrom: anSTBClassFormat
-	"Version 1 added textcolor, icon, style and flags instance variables. flags must be initialized to zero, the rest can be nil."
+	"Version 1 added textcolor, icon (nil'd for STB), style and flags instance variables. flags must be initialized to zero, the rest can be nil.
+	Version 2 moved the font style into the flags."
 
-	^
-	[:data | 
-	| newInstance |
-	newInstance := self basicNew.
-	1 to: data size do: [:i | newInstance instVarAt: i put: (data at: i)].
-	newInstance flags: 0.
-	newInstance]!
+	| ver |
+	ver := anSTBClassFormat version.
+	ver == 1
+		ifTrue: 
+			[^
+			[:data |
+			| style |
+			style := data at: 6.
+			data at: 6 put: nil.
+			data becomeA: self.
+			style ifNotNil: [data fontStyle: (FontStyleNames at: style + 1)].
+			data]].
+	ver == 0
+		ifTrue: 
+			[^
+			[:data |
+			(data resize: self instSize)
+				at: 7 put: 0;
+				becomeA: self]].
+	^super stbConvertFrom: anSTBClassFormat!
 
 stbVersion
 	^1!

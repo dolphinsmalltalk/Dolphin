@@ -119,10 +119,14 @@ sortBlock!accessing!public! !
 
 !SortAlgorithm class methodsFor!
 
+defaultSort: aDyadicValuable
+	^DefaultSortAlgorithm newSortBlock: aDyadicValuable!
+
 newSortBlock: aDyadicValuable
 	^self subclassResponsibility! !
 
 !SortAlgorithm class categoriesForMethods!
+defaultSort:!instance creation!public! !
 newSortBlock:!instance creation!public! !
 !
 

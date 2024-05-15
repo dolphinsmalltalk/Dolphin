@@ -356,7 +356,7 @@ stbSaveOn: anSTBOutFiler
 		ifNotNil: 
 			[:symbol |
 			anSTBOutFiler
-				writeClass: Color withPrefix: STBPrefix forData;
+				writeClassPrefix: Color;
 				register: self.
 			anSTBOutFiler nextPut: symbol]! !
 

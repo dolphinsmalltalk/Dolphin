@@ -219,15 +219,14 @@ splitKeyString: aString
 stbConvertFrom: anSTBClassFormat 
 	"Version 1 changes format of the 'commands' (formerly 'accelerators') instance variable."
 
-	^
-	[:data | 
-	| newInstance map |
-	newInstance := self basicNew.
-	1 to: data size do: [:i | newInstance instVarAt: i put: (data at: i)].
-	map := IdentityDictionary new.
-	newInstance commands do: [:each | map at: each key put: each value].
-	newInstance commands: map.
-	newInstance]!
+	anSTBClassFormat version == 0
+		ifTrue: 
+			[^
+			[:data |
+			data becomeA: self.
+			data commands: (IdentityDictionary withAll: data commands).
+			data]].
+	^super stbConvertFrom: anSTBClassFormat!
 
 stbVersion
 	^1! !

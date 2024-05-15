@@ -17,9 +17,6 @@ ComboBoxTest comment: ''!
 classToTest
 	^ComboBox!
 
-oldDolphinVersionsForStbUpgrade
-	^1 to: 4!
-
 testGeometry
 	"Combobox's have an inconsistency with regards to placement because the dropped height must be included when the placement is set, but is not included in the placement when retrieved. Obviously we abstract this away so that the rectangle reported by the object is that part of the control that is always visible (edit box and drop-down), and likewise this is what is specified when the rectangle is set. This was incorrectly managed in a number of versions of Dolphin."
 
@@ -51,25 +48,23 @@ testGeometry
 	SessionManager inputState pumpMessages.
 	self assert: presenter getDroppedControlRect height equals: rect height!
 
-verifyUpgradedView: anInteger
+verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	| view |
-	super verifyUpgradedView: anInteger.
+	super verifyUpgradedView: anInteger identifier: aResourceIdentifier.
 	view := self view.
 	self assert: view backcolor identicalTo: Color default.
 	self assertIsNil: view forecolor.
 	self assert: view droppedHeight equals: 200 * view dpi // USER_DEFAULT_SCREEN_DPI.
 	self assert: view interactor identicalTo: view.
-	self assert: view mode identicalTo: #dropDown!
-
-vuFile
-	^'ListPresenter.Combo box.vu'! !
+	self assert: view mode
+		identicalTo: (aResourceIdentifier selector == #resource_Drop_down_list
+				ifTrue: [#dropDownList]
+				ifFalse: [#dropDown])! !
 
 !ComboBoxTest categoriesForMethods!
 classToTest!helpers!private! !
-oldDolphinVersionsForStbUpgrade!constants!private! !
 testGeometry!public!unit tests! !
-verifyUpgradedView:!helpers!private! !
-vuFile!constants!private! !
+verifyUpgradedView:identifier:!helpers!private! !
 !
 
 !ComboBoxTest class methodsFor!

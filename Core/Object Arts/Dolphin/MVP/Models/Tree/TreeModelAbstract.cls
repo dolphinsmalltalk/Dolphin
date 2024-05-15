@@ -507,16 +507,16 @@ stbConvertFromVersion2: anArray
 	"Private - Perform an STB conversion from a version 2 <TreeModelAbstract> to version 3.
 	Version 3 adds 'searchPolicy' instance variable."
 
-	| answer |
-	answer := Array new: anArray size + 1.
-	answer at: 1 put: (anArray at: 1).
-	answer at: 2 put: self defaultSearchPolicy.
-	answer 
+	| size |
+	size := anArray size + 1.
+	^(Array new: size)
+		at: 1 put: (anArray at: 1);
+		at: 2 put: self defaultSearchPolicy;
 		replaceFrom: 3
-		to: answer size
-		with: anArray
-		startingAt: 2.
-	^answer!
+			to: size
+			with: anArray
+			startingAt: 2;
+		yourself!
 
 stbVersion
 	^3!

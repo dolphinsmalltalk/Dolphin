@@ -143,6 +143,24 @@ testSDwordAtOffsetPut
 	self should: [array sdwordAtOffset: 0 put: -16r80000001] raise: Error.
 	self should: [array sdwordAtOffset: 0 put: 16r80000000] raise: Error!
 
+testStbRoundTrip
+	| subject bytes rehydrated |
+	subject := (0 to: 255) asByteArray.
+	bytes := subject binaryStoreBytes.
+	rehydrated := Object fromBinaryStoreBytes: bytes.
+	self assert: rehydrated size equals: 256.
+	self assert: rehydrated class identicalTo: ByteArray.
+	self assert: rehydrated equals: subject!
+
+testStlRoundTrip
+	| subject array rehydrated |
+	subject := (0 to: 255) asByteArray.
+	array := subject literalStoreArray.
+	rehydrated := Object fromLiteralStoreArray: array.
+	self assert: rehydrated size equals: 256.
+	self assert: rehydrated class identicalTo: ByteArray.
+	self assert: rehydrated equals: subject!
+
 testWordAtOffsetPut
 	"#1457"
 
@@ -177,6 +195,8 @@ testMixedConcatenation!public! !
 testSbyteAtOffset!public!unit tests! !
 testSbyteAtOffsetPut!public!unit tests! !
 testSDwordAtOffsetPut!public!unit tests! !
+testStbRoundTrip!public!unit tests! !
+testStlRoundTrip!public!unit tests! !
 testWordAtOffsetPut!public!unit tests! !
 wordValues!constants!private! !
 !

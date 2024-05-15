@@ -2707,9 +2707,9 @@ onStartup
 
 onStateRestored
 	"Override point for subclasses to perform post-state restoral actions. State may be restored in three circumstances:
-		1) Rehydration from binary filed state
-		2) Restore after image save
-		3) Recreation after the change of style flag that can only be specified at view creation time."!
+		1) Rehydration from binary filed state (presenter will not be connected)
+		2) Restore after image save (presenter will be connected)
+		3) Recreation after the change of style flag that can only be specified at view creation time (presenter may be connected)."!
 
 onSubViewAdded: aView
 	"Received when aView has been added to the receiver.
@@ -2763,17 +2763,11 @@ onViewClosed
 !
 
 onViewCreated
-	"The receiver has just been fully created. This is a suitable place to perform
-	initialization of the window from the receiver's instance variables."
+	"The receiver has just been fully created. This may be a suitable place to performinitialization of the window from the receiver's instance variables."
 
-	"Implementation Note: In earlier versions of Dolphin (prior to D6) the equivalent
-	#onFullyCreated message was sent on receipt of a WM_PARENTNOTIFY Windows message sent to the
-	Window's parent, and thus was not available for views that used the WS_EXNOPARENTNOTIFY
-	extended style, or which were created as immediate children of the desktop or any other
-	Windows not subclassed by Dolphin. In D6 and later it is sent from Smalltalk code when the
-	CreateWindow API call has returned (as opposed to in response to the parent notification
-	message sent by Windows just before the CreateWindow call returned), and so is reliably sent
-	to all views, regardless of their style, or whether they are a child window."
+	"Implementation Note: In earlier versions of Dolphin (prior to D6) the equivalent #onFullyCreated message was sent on receipt of a WM_PARENTNOTIFY Windows message sent to the Window's parent, and thus was not available for views that used the WS_EXNOPARENTNOTIFY extended style, or which were created as immediate children of the desktop or any other Windows not subclassed by Dolphin. In D6 and later it is sent from Smalltalk code when the CreateWindow API call has returned (as opposed to in response to the parent notification message sent by Windows just before the CreateWindow call returned), and so is reliably sent to all views, regardless of their style, or whether they are a child window. However, at the time it is received, the view may or may not be connected to it's presenter and also the sub-views will not have been created. These issues particularly the inconsistency as to whether or not the presenter receives the message, made the event difficult to understand and work with. Consequently, as of D8 the message presenter message is soft-deprecated, and you should replace existing overrides of it. If you need to perform initialisation of the presenter from the view, you should override #onViewAvailable or #onViewOpened, and potentially #onViewStateRestored:
+		- #onViewAvailable is sent to a presenter when its view is first created, but before the view is attached. This means events will not be propagated when changing view aspects that notify changes. It is not sent on state restoral after image load or view recreation.
+		- #onViewOpened is sent when the view is first opened, and after it has been attached. Events will be propagated for changes to view aspects that notify changes."
 !
 
 onViewDestroyed
@@ -2788,6 +2782,12 @@ onViewOpened
 	"Handler for view opened"
 
 	self presenter trigger: #viewOpened.!
+
+onViewStateRestored
+	"The receiver's view has had it's state restored, either on restoring saved views at image load time, or due to the view being recreated (ie.g. when a style is changed that requires it).
+	Like #onViewCreated, this message not received by the presenter's of MVP triads when the views are first created from resources, because at that point the views are not connected to their final presenters. Unlike #onViewCreated, when it is received all the sub-views will have been created and restored. See also #onViewOpened and #onViewAvailable."
+
+	self onStateRestored!
 
 onVScroll: aScrollEvent
 	"Default handler for a vertical scroll event.
@@ -3213,10 +3213,9 @@ requestLayoutRectangle: aRectangle
 	self parentView validateLayout!
 
 resetStateRestoring
-	self isStateRestoring
-		ifTrue: 
-			[self clearStateRestoring.
-			self onStateRestored]!
+	self isStateRestoring ifFalse: [^self].
+	self clearStateRestoring.
+	self presenter onViewStateRestored!
 
 resolution
 	"Answer the logical pixels per inch for the receiver; i.e. the window's ogical pixels per inch"
@@ -3644,9 +3643,9 @@ subViews
 	"Answer a sequenceable collection of the sub views of the receiver in z-order sequence"
 
 	| answer |
-	answer := OrderedCollection new.
-	self subViewsDo: [:each | answer addLast: each].
-	^answer!
+	answer := WriteStream on: {}.
+	self subViewsDo: [:each | answer nextPut: each].
+	^answer grabContents!
 
 subViewsDo: aMonadicValuable
 	"Evaluate the <monadicValuable> argument for each of the receiver's sub-views, in z-order
@@ -5089,6 +5088,7 @@ onViewClosed!event handling!public! !
 onViewCreated!event handling!public! !
 onViewDestroyed!event handling!public! !
 onViewOpened!event handling!public! !
+onViewStateRestored!event handling!public! !
 onVScroll:!event handling!public! !
 onXButtonDoubleClicked:!event handling!public! !
 onXButtonPressed:!event handling!public! !
@@ -5141,7 +5141,7 @@ requestDragObjects:!drag & drop!public! !
 requestDropOperations:!drag & drop!public! !
 requestLayoutExtent:!geometry!public! !
 requestLayoutRectangle:!geometry!public! !
-resetStateRestoring!accessing!private! !
+resetStateRestoring!operations!private! !
 resolution!accessing!public! !
 resolutionScaledBy:!geometry!private! !
 restore:resolution:!geometry!private! !
@@ -5851,14 +5851,13 @@ stbConvertFromVersion7: anArray
 	newArray := Array new: anArray size + 2.
 	newArray 
 		replaceFrom: 1
-		to: 10
-		with: anArray
-		startingAt: 1.
-	newArray 
+			to: 10
+			with: anArray
+			startingAt: 1;
 		replaceFrom: 13
-		to: newArray size
-		with: anArray
-		startingAt: 11.
+			to: newArray size
+			with: anArray
+			startingAt: 11.
 	^newArray!
 
 stbConvertFromVersion8: anArray 

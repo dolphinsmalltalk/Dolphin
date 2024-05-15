@@ -27,13 +27,6 @@ blockInput: aBoolean
 	<stdcall: bool BlockInput bool>
 	^self invalidCall: _failureCode!
 
-charLower: aCharacter
-	"Answer the lowercase equivalent of aCharacter. This will be dependent on the semantics of the 
-	language selected by the user during setup or by using Control Panel."
-
-	<stdcall: word CharLowerW intptr>
-	^self invalidCall: _failureCode!
-
 charLowerBuffA: anAnsiString cchLength: anInteger
 	"Convert a byte String to lowercase IN PLACE. This will be dependent on the semantics of the 
 	language selected by the user during setup or by using Control Panel.
@@ -52,13 +45,6 @@ charLowerBuffW: aUtf16String cchLength: anInteger
 		DWORD CharLowerBuffW(LPWSTR  lpsz, DWORD cchLength);"
 
 	<stdcall: dword CharLowerBuffW lpwstr dword>
-	^self invalidCall: _failureCode!
-
-charUpper: aCharacter
-	"Answer the uppercase equivalent of aCharacter. This will be dependent on the semantics 
-	of the language selected by the user during setup or by using Control Panel."
-
-	<stdcall: word CharUpperW intptr>
 	^self invalidCall: _failureCode!
 
 charUpperBuffA: anAnsiString cchLength: anInteger
@@ -294,46 +280,6 @@ getSystemMetrics: index
 
 inSendMessage
 	<stdcall: bool InSendMessage>
-	^self invalidCall: _failureCode!
-
-isCharAlpha: aCharacter
-	"Answer whether a character is an alphabetic character. This will dependent on the semantics of the 
-	language selected by the user during setup or by using Control Panel.
-		BOOL IsCharAlpha(
-			TCHAR  ch 	// character to test  
-		);"
-
-	<stdcall: bool IsCharAlphaW char>
-	^self invalidCall: _failureCode!
-
-isCharAlphaNumeric: aCharacter
-	"Answer whether a character is an alphabetic character or a digit. This will dependent on the 
-	semantics of the language selected by the user during setup or by using Control Panel.
-		BOOL IsCharAlphaNumeric(
-			TCHAR  ch 	// character to test  
-		);"
-
-	<stdcall: bool IsCharAlphaNumericW char>
-	^self invalidCall: _failureCode!
-
-isCharLower: aCharacter
-	"Answer whether a character is a lowercase letter. This will dependent on the semantics of the 
-	language selected by the user during setup or by using Control Panel.
-		BOOL IsCharLower(
-			TCHAR  ch 	// character to test  
-		);"
-
-	<stdcall: bool IsCharLowerW char>
-	^self invalidCall: _failureCode!
-
-isCharUpper: aCharacter
-	"Answer whether a character is an uppercase letter. This will dependent on the semantics of 
-	the language selected by the user during setup or by using Control Panel.
-		BOOL IsCharUpper(
-			TCHAR  ch 	// character to test  
-		);"
-
-	<stdcall: bool IsCharUpperW char>
 	^self invalidCall: _failureCode!
 
 isWindow: hWnd
@@ -729,10 +675,8 @@ vkKeyScan: aChar
 
 !UserLibrary categoriesForMethods!
 blockInput:!public!win32 functions-window! !
-charLower:!public!win32 functions-string manipulation! !
 charLowerBuffA:cchLength:!public!win32 functions-string manipulation! !
 charLowerBuffW:cchLength:!public!win32 functions-string manipulation! !
-charUpper:!public!win32 functions-string manipulation! !
 charUpperBuffA:cchLength:!public!win32 functions-string manipulation! !
 charUpperBuffW:cchLength:!public!win32 functions-string manipulation! !
 createDialogParam:lpTemplate:hWndParent:lpDialogFunc:dwInitParam:!public!win32 functions-dialog box! !
@@ -757,10 +701,6 @@ getSysColor:!public!win32 functions-system information! !
 getSysColorBrush:!public!win32 functions-cursor! !
 getSystemMetrics:!public!win32 functions-system information! !
 inSendMessage!public!win32 functions-message and message queue! !
-isCharAlpha:!public!win32 functions-string manipulation! !
-isCharAlphaNumeric:!public!win32 functions-string manipulation! !
-isCharLower:!public!win32 functions-string manipulation! !
-isCharUpper:!public!win32 functions-string manipulation! !
 isWindow:!public!win32 functions-window! !
 isWindowEnabled:!public!win32 functions-window! !
 isWindowVisible:!public!win32 functions-window! !

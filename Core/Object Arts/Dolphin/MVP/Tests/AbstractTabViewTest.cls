@@ -72,7 +72,7 @@ verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	super verifyUpgradedView: anInteger identifier: aResourceIdentifier.
 	view := self view.
 	self assertIsNil: view customDrawBlock.
-	self assert: view largeIconExtent equals: Icon largeExtent.
+	self assert: view largeIconExtent equals: SystemMetrics default largeIconExtent.
 	self assert: view viewMode identicalTo: #noIcons! !
 
 !AbstractTabViewTest categoriesForMethods!

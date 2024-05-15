@@ -91,6 +91,12 @@ asUtf16String
 
 	^self!
 
+asUtf16StringCopy
+	"Answer a UTF16-encoded copy of the receiver."
+
+	<primitive: 155>
+	^self shallowCopy!
+
 at: anInteger
 	"Answer the character at index, anInteger, in the receiver."
 
@@ -392,6 +398,7 @@ asByteString:!converting!private! !
 asLowercase!converting!public! !
 asUppercase!converting!public! !
 asUtf16String!converting!public! !
+asUtf16StringCopy!converting!public! !
 at:!accessing!public! !
 before:ifAbsent:!public!searching! !
 bom!constants!encode/decode!private! !
@@ -432,7 +439,7 @@ codePage
 	"Note: This is not a real code page, and cannot be used with most APIs expecting a code page
 	identifier. It's main purpose is to distinguish UTF-16 in some circumstances."
 
-	^Win32Constants.CP_UNICODE!
+	^NlsConstants.CP_UNICODE!
 
 coerceString: aString
 	"Answer an instance of the receiver containing the same characters as the <String> argument."

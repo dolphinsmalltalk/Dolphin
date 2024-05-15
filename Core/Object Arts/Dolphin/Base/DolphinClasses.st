@@ -219,7 +219,7 @@ Object subclass: #Link
 Object subclass: #Locale
 	instanceVariableNames: 'numberFormat'
 	classVariableNames: 'Invariant NoUserOverrideMask SystemDefault TimeZoneInfo UserDefault'
-	poolDictionaries: 'Win32Constants'
+	poolDictionaries: 'NlsConstants'
 	classInstanceVariableNames: ''!
 
 Object subclass: #Magnitude
@@ -1262,7 +1262,7 @@ PermanentLibrary subclass: #CRTLibrary
 
 PermanentLibrary subclass: #KernelLibrary
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: 'EnumNamesDescriptor'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
@@ -1662,6 +1662,12 @@ RelativeFileLocator subclass: #InstallRelativeFileLocator
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
+RelativeFileLocator subclass: #PackageRelativeFileLocator
+	instanceVariableNames: 'packageName'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
 InstructionInterpreter subclass: #MessageSendCollector
 	instanceVariableNames: 'messageBlock superMessageBlock'
 	classVariableNames: 'SendInstructions'
@@ -1674,14 +1680,26 @@ Link variableSubclass: #Process
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
-Locale subclass: #SmalltalkLocale
-	instanceVariableNames: ''
-	classVariableNames: 'Current'
+Locale subclass: #AbstractWindowsLocale
+	instanceVariableNames: 'info'
+	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
-Locale subclass: #WindowsLocale
-	instanceVariableNames: 'lcid info'
+Locale subclass: #SmalltalkLocale
+	instanceVariableNames: 'integerBase'
+	classVariableNames: 'ControlCodePictures Current Hex'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+AbstractWindowsLocale subclass: #InvariantLocale
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+AbstractWindowsLocale subclass: #WindowsLocale
+	instanceVariableNames: 'lcid tag'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -1700,7 +1718,7 @@ Magnitude subclass: #Association
 
 Magnitude subclass: #Character
 	instanceVariableNames: 'code'
-	classVariableNames: 'AnsiCharacters AnsiCodePage AnsiCodePoints CharacterSet EncodingMask EscapeChars Utf16LeadMask Utf16Mask Utf16SurrogateMask Utf16TrailMask Utf32Mask Utf8Default Utf8Mask Utf8SurrogateMask'
+	classVariableNames: 'AnsiCharacters AnsiCodePage AnsiCodePoints CharacterSet EncodingMask EscapeChars U_LOWERCASE_LETTER U_PRIVATE_USE_CHAR U_UPPERCASE_LETTER UCHAR_WHITE_SPACE Utf16LeadMask Utf16Mask Utf16SurrogateMask Utf16TrailMask Utf32Mask Utf8Default Utf8Mask Utf8SurrogateMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 

@@ -276,7 +276,7 @@ new
 stbConvertFrom: anSTBClassFormat
 	"Convert from earlier version models.
 		1: 'flags' instance variable pushed up.
-		2: 'image' instance variable and spare added"
+		2: 'image' instance variable added to CommandMenuItem subclass"
 
 	| ver |
 	ver := anSTBClassFormat version.
@@ -302,7 +302,7 @@ commandDescription:!instance creation!public! !
 initialize!development!initializing!private! !
 new!instance creation!public! !
 stbConvertFrom:!binary filing!public! !
-stbConvertFromVersion0:!binary filing!development!private! !
+stbConvertFromVersion0:!binary filing!private! !
 stbConvertFromVersion1:!binary filing!private! !
 stbVersion!binary filing!public! !
 !

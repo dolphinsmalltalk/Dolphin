@@ -580,7 +580,7 @@ characterForCodeUnit: anInteger
 codePage
 	"Answer the Windows code page constants for the receiver's encoding."
 
-	^Win32Constants.CP_UTF8!
+	^NlsConstants.CP_UTF8!
 
 fromAddress: anAddress
 	"Answer a new String instantiated from the null terminated string at anAddress."

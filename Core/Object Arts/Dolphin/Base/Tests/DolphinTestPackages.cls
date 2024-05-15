@@ -43,16 +43,13 @@ setUp
 !
 
 tearDown
-	(Array
-		with: a
-		with: b
-		with: c) do: 
-				[:each |
-				each notNil
-					ifTrue: 
-						[(Array with: each packageFileName with: each fileOutName)
-							do: [:filename | (File exists: filename) ifTrue: [File delete: filename]].
-						Package manager removePackage: each]].
+	| toRemove |
+	toRemove := {a. b. c} select: [:each | each notNil].
+	toRemove do: 
+			[:each |
+			{each packageFileName. each fileOutName}
+				do: [:filename | (File exists: filename) ifTrue: [File delete: filename]]].
+	Package manager removePackages: toRemove.
 	a := b := c := nil.
 	super tearDown! !
 

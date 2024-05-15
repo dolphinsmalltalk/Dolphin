@@ -276,14 +276,14 @@ initialize
 				yourself)!
 
 stbConvertFrom: anSTBClassFormat
-	^
-	[:vars |
-	| instance |
-	instance := self new.
-	vars keysAndValuesDo: [:eachKey :eachValue | instance instVarAt: eachKey put: eachValue].
-	instance backcolor
-		ifNotNil: [:int | instance basicBackcolor: (int isZero ifFalse: [Color fromCOLORREF: int])].
-	instance]!
+	anSTBClassFormat version < 3
+		ifTrue: 
+			[^
+			[:vars |
+			vars resize: self instSize.
+			(vars at: 8) ifNotNil: [:int | vars at: 8 put: (int isZero ifFalse: [Color fromCOLORREF: int])].
+			vars becomeA: self]].
+	^super stbConvertFrom: anSTBClassFormat!
 
 stbVersion
 	^3! !

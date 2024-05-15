@@ -151,3 +151,7 @@ getFullPathName: aPathnameString
 primitiveNextPutAll: aCollection
 	<primitive: 173>
 	^aCollection appendToStream: self! !
+
+SourceManager default fileIn: 'Core\Object Arts\Dolphin\Base\NlsConstants.st'!
+NlsConstants owningPackage: Object owningPackage!
+KernelLibrary addClassVariable: 'EnumNamesDescriptor' value: (ExternalDescriptor descriptor: #[0 1 9 0 17] literals: #())!

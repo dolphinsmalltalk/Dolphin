@@ -50,18 +50,17 @@ forCollection: aSortedCollection
 		sortAlgorithm: aSortedCollection algorithm;
 		yourself!
 
-stbConvertFrom: anSTBClassFormat 
+stbConvertFrom: anSTBClassFormat
 	"Convert from version 0 proxy - the sort algorithm is lost."
 
-	anSTBClassFormat version > self stbVersion 
-		ifTrue: [^super stbConvertFrom: anSTBClassFormat].
-	^
-	[:data | 
-	| convertedProxy |
-	convertedProxy := self basicNew.
-	1 to: data size do: [:i | convertedProxy instVarAt: i put: (data at: i)].
-	convertedProxy sortAlgorithm: (SortedCollection defaultSortAlgorithmClass sortBlock: convertedProxy sortAlgorithm).
-	convertedProxy]!
+	anSTBClassFormat version == 0
+		ifTrue: [^[:data | (self stbConvertFromVersion0: data) becomeA: self]].
+	^super stbConvertFrom: anSTBClassFormat!
+
+stbConvertFromVersion0: anArray
+	^anArray
+		at: 3 put: (SortedCollection defaultSortAlgorithmClass newSortBlock: (anArray at: 3));
+		yourself!
 
 stbVersion
 	"Answer the current binary filer version number for instances of the receiver.
@@ -72,6 +71,7 @@ stbVersion
 !STBSortedCollectionProxy class categoriesForMethods!
 forCollection:!instance creation!public! !
 stbConvertFrom:!instance creation!public! !
+stbConvertFromVersion0:!instance creation!public! !
 stbVersion!instance creation!public! !
 !
 

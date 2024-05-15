@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-LocaleTest subclass: #SmalltalkLocaleTest
+AbstractInvariantLocaleTest subclass: #SmalltalkLocaleTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -17,15 +17,23 @@ SmalltalkLocaleTest comment: ''!
 defaultSubject
 	^Locale smalltalk!
 
-testNamed
-	self assert: (Locale named: #Smalltalk) identicalTo: self defaultSubject!
+subjectName
+	^'smalltalk'!
 
-testPrimary
-	self assert: self defaultSubject primary code equals: 'en-US'!
-
-testPrintFloat
+testDisplayCharacterOn
 	| subject |
-	subject := Locale smalltalk.
+	subject := self defaultSubject.
+	#($a 'a' $£ '£' $€ '€' $\x20 '␣' $🐬 '🐬' $\0 '␀' $\x7F '␡' $\x80 '(U+0080)' $\xFEFF '(U+FEFF)' $\xEFFFD '(U+EFFFD)')
+		pairsDo: 
+			[:ch :expected |
+			| stream |
+			stream := String writeStream.
+			subject displayCharacter: ch on: stream.
+			self assert: stream contents equals: expected]!
+
+testDisplayFloatOn
+	| subject |
+	subject := self defaultSubject.
 	{{Float infinity. 'Float.Infinity'}.
 		{Float negativeInfinity. 'Float.NegativeInfinity'}.
 		{Float nan. 'Float.NaN'}.
@@ -48,8 +56,17 @@ testPrintFloat
 		{50000000000001.25. '5.000000000000125e13'}} do: 
 				[:each |
 				| actual |
-				actual := subject printFloat: each first.
+				actual := String streamContents: [:stm | subject displayFloat: each first on: stm].
 				self assert: actual equals: each second]!
+
+testDisplayName
+	self assert: self defaultSubject displayName equals: 'Smalltalk'!
+
+testNamed
+	self assert: (Locale named: #Smalltalk) identicalTo: self defaultSubject!
+
+testPrimary
+	self assert: self defaultSubject primary code equals: 'en-US'!
 
 testPrintFloatGrouping
 	"Test printing with different number grouping."
@@ -73,15 +90,30 @@ testPrintFloatSeparators
 	format
 		decimalPlaces: 3;
 		decimalSeparator: $@;
-		thousandSeparator: $^.
-	self assert: (subject printFloat: 1234567890.123 format: format) equals: '1234567890@123'! !
+		groupSeparator: $^.
+	self assert: (subject printFloat: 1234567890.123 format: format) equals: '1234567890@123'!
+
+testStlConvertFromVersion0
+	| subject |
+	"From: | obj | obj := Object new. {Locale invariant. obj. {Locale invariant}. #foo. obj} literalStoreEvaluationString"
+	subject := Object
+				fromLiteralStoreArray: #(#'!!STL' 4 34 5 983302 ##(Smalltalk.SmalltalkLocale) nil 393222 ##(Smalltalk.Object) 34 1 432 #foo 464).
+	"We expect a newly constructed instance with the same lcid, but the other data is discarded"
+	self assert: subject first identicalTo: self defaultSubject.
+	self assert: subject third first identicalTo: self defaultSubject.
+	self assert: subject fourth identicalTo: #foo.
+	self assert: subject second identicalTo: subject last! !
 
 !SmalltalkLocaleTest categoriesForMethods!
 defaultSubject!helpers!private! !
+subjectName!constants!public! !
+testDisplayCharacterOn!public!unit tests! !
+testDisplayFloatOn!public!unit tests! !
+testDisplayName!public!unit tests! !
 testNamed!public!unit tests! !
 testPrimary!public!unit tests! !
-testPrintFloat!public! !
 testPrintFloatGrouping!public!unit tests! !
 testPrintFloatSeparators!public!unit tests! !
+testStlConvertFromVersion0!public!unit tests! !
 !
 

@@ -525,6 +525,12 @@ testExtCallArgBstr
 	self assert: (OLEAutLibrary default sysStringLen: beers) equals: 2.
 	self assert: (OLEAutLibrary default sysStringLen: beers asUtf16String) equals: 2!
 
+testExtCallArgChar32
+	| method |
+	method := Compiler compile: 'test: aCharacter <stdcall: char32 AnswerDWORD char32>' in: VMLibrary.
+	#($\0 $\t $\x7F $\x80 $ÿ $Ā $€ $𐀀 $🐬 $\xFFFD)
+		do: [:each | self assert: (method value: VMLibrary default withArguments: {each}) equals: each]!
+
 testExtCallArgLppvoid
 	"Regression test for https://github.com/dolphinsmalltalk/Dolphin/issues/940
 	The issue was intermittent failure of some Active-X related tests that were passing out (and in some cases handling incoming) pointers to buffers that were arrays of pointers and doing so by taking the address of the buffer (yielding an integer) before calling the function with an lppvoid argument type.
@@ -558,6 +564,9 @@ testExtCallOverlappedArgLppvoid
 testExtCallOverlappedArgLpwstr
 	self skipIfVMDoesNotSupportArgumentConversionsThatAllocateMemoryInOverlappedCalls.
 	self verifyExtCallArgLpwstr: true!
+
+testExtCallOverlappedBool8
+	self verifyExtCallRetBool8: true!
 
 testExtCallOverlappedCrtFault
 	self verifyExtCallCrtFault: true!
@@ -603,6 +612,9 @@ testExtCallOverlappedIntDivZero
 
 	self verifyExtCallIntDivZero: true!
 
+testExtCallOverlappedRetErrno
+	self verifyExtCallRetErrno: true!
+
 testExtCallOverlappedRetHRESULT
 	"Test that HRESULT return codes are translated into exceptions correctly by overlapped calls."
 
@@ -626,6 +638,9 @@ testExtCallOverlappedTermination
 	1 to: 5 do: [:i | self earlyTermination: false].
 	"2) Call is terminated before completion, but is allowed to start"
 	1 to: 5 do: [:i | self earlyTermination: true]!
+
+testExtCallRetErrno
+	self verifyExtCallRetErrno: false!
 
 testExtCallRetHRESULT
 	"Test that HRESULT return codes are translated into exceptions correctly."
@@ -3274,6 +3289,38 @@ verifyExtCallIntDivZero: aBoolean
 		raise: ZeroDivide
 		matching: [:ex | ex dividend = 123]!
 
+verifyExtCallRetBool8: aBoolean
+	| method |
+	method := Compiler
+				compile: ('bool8: anInteger
+	%<<1?overlap :>stdcall: bool8 AnswerDWORD sdword>
+	^self invalidCall: _failureCode'
+						expandMacrosWith: aBoolean)
+				in: VMLibrary.
+	1 to: 255 do: [:i | self assert: (method value: VMLibrary default withArguments: {i})].
+	self assert: (method value: VMLibrary default withArguments: {-1}).
+	self deny: (method value: VMLibrary default withArguments: {0}).
+	"Bits outside the first byte should be ignored"
+	self deny: (method value: VMLibrary default withArguments: {16r100}).
+	self deny: (method value: VMLibrary default withArguments: {-32768})!
+
+verifyExtCallRetErrno: aBoolean
+	| method |
+	method := self
+				compile: ('errno: anInteger
+	%<<1?overlap :>stdcall: errno AnswerDWORD dword>
+	^''Failure '', _failureCode printString'
+						expandMacrosWith: aBoolean)
+				in: VMLibrary.
+	self assert: (method value: VMLibrary default withArguments: {0}) identicalTo: 0.
+
+	"Any non-zero result should fail. It is assumed the codes don't exceed the SmallInteger range"
+	{SmallInteger minimum. -1. 1. SmallInteger maximum} do: 
+			[:each |
+			| result |
+			result := method value: VMLibrary default withArguments: {each}.
+			self assert: result equals: 'Failure ' , each printString]!
+
 verifyExtCallRetHRESULT: aBoolean
 	| method |
 	method := self
@@ -3677,6 +3724,7 @@ testCRTFault!public!unit tests! !
 testDwordAtOffsetPut!public!unit tests! !
 testEvaluationOrder!public!unit tests! !
 testExtCallArgBstr!public!unit tests! !
+testExtCallArgChar32!public!unit tests! !
 testExtCallArgLppvoid!public!unit tests! !
 testExtCallArgLpwstr!public!unit tests! !
 testExtCallCrtFault!public! !
@@ -3685,16 +3733,19 @@ testExtCallGpf!public! !
 testExtCallIntDivZero!public! !
 testExtCallOverlappedArgLppvoid!public!unit tests! !
 testExtCallOverlappedArgLpwstr!public!unit tests! !
+testExtCallOverlappedBool8!public!unit tests! !
 testExtCallOverlappedCrtFault!public! !
 testExtCallOverlappedFpFault!public! !
 testExtCallOverlappedGC!public!unit tests! !
 testExtCallOverlappedGpf!public! !
 testExtCallOverlappedIntDivZero!public! !
+testExtCallOverlappedRetErrno!public!unit tests! !
 testExtCallOverlappedRetHRESULT!public!unit tests! !
 testExtCallOverlappedRetLpwstr!public!unit tests! !
 testExtCallOverlappedRetNtStatus!public!unit tests! !
 testExtCallOverlappedSuspendAndTerminate!public!unit tests! !
 testExtCallOverlappedTermination!public!unit tests! !
+testExtCallRetErrno!public!unit tests! !
 testExtCallRetHRESULT!public!unit tests! !
 testExtCallRetLpwstr!public!unit tests! !
 testExtCallRetNtStatus!public!unit tests! !
@@ -3794,6 +3845,8 @@ verifyExtCallCrtFault:!helpers!private! !
 verifyExtCallFpFault:!helpers!private! !
 verifyExtCallGpf:!helpers!private! !
 verifyExtCallIntDivZero:!helpers!private! !
+verifyExtCallRetBool8:!helpers!private! !
+verifyExtCallRetErrno:!helpers!private! !
 verifyExtCallRetHRESULT:!helpers!private! !
 verifyExtCallRetLpwstr:!helpers!private! !
 verifyExtCallRetNtStatus:!helpers!private! !

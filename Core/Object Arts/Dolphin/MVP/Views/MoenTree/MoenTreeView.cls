@@ -654,10 +654,7 @@ initialize
 	getTextBlock := self defaultGetTextBlock.
 	getImageBlock := self defaultGetImageBlock.
 	imageManager := IconImageManager current.
-	self linePen: (Pen 
-				withStyle: PS_SOLID
-				width: 1
-				color: Color face3d).
+	self linePen: (Pen color: Color.Face3d).
 	anchorNode := MoenTreeNode object: nil parent: nil.
 	anchorNode
 		hasExpanded: true;
@@ -1968,7 +1965,7 @@ initialize
 				isImmutable: true;
 				yourself)!
 
-stbConvertFromVersion10: anArray 
+stbConvertFromVersion10: anArray
 	"Private - Perform an STB conversion from a version 9 (or earlier) <View> to version 10,
 	i.e. use #reserved1 inst. var. for flags."
 
@@ -1978,7 +1975,7 @@ stbConvertFromVersion10: anArray
 	roots := array at: 13.
 	lastRoot := nil.
 	roots reverseDo: 
-			[:each | 
+			[:each |
 			each sibling: lastRoot.
 			lastRoot := each].
 	anchorNode child: lastRoot.
@@ -1997,12 +1994,22 @@ stbConvertFromVersion11: anArray
 
 stbConvertFromVersion4: anArray
 	"Private - Perform an STB conversion from a version 4 (or earlier) <MoenTreeView> to version 5,
-	i.e. trees IdentitiyDictionary replaced with roots OrderedCollection."
+	i.e. trees IdentityDictionary replaced with roots OrderedCollection."
 
 	| array |
 	array := super stbConvertFromVersion4: anArray.
 	array at: 11 put: (array at: 11) values asOrderedCollection.
+	"iconExtent"
+	(array at: 21) ifNil: [array at: 21 put: 16@16].
 	^array!
+
+stbConvertFromVersion6: anArray
+	^(super stbConvertFromVersion6: anArray)
+		at: 20 put: (anArray at: 20) pen;
+		yourself!
+
+stbConvertFromVersion7: anArray
+	^(super stbConvertFromVersion7: anArray) , { 9999 @ 9999. 0. 10 @ 10. ((anArray at: 21) x + 1) @ 0 }!
 
 stbConvertFromVersion9: anArray 
 	"Private - Perform an STB conversion from a version 9 (or earlier) <View> to version 10,
@@ -2036,6 +2043,8 @@ initialize!development!initializing!private! !
 stbConvertFromVersion10:!binary filing!private! !
 stbConvertFromVersion11:!binary filing!private! !
 stbConvertFromVersion4:!binary filing!private! !
+stbConvertFromVersion6:!binary filing!private! !
+stbConvertFromVersion7:!binary filing!private! !
 stbConvertFromVersion9:!binary filing!private! !
 themePartName!constants!public!theming! !
 value:!evaluating!private! !

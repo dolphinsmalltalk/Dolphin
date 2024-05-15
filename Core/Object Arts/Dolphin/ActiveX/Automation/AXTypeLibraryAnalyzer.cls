@@ -656,7 +656,7 @@ fromRegistration: registration
 	"Answer an instance of the receiver loaded from the <AXTypeLibRegistration>,
 	registration."
 
-	^self load: registration libid major: registration majorVersion minor: registration minorVersion locale: LOCALE_SYSTEM_DEFAULT
+	^self load: registration libid major: registration majorVersion minor: registration minorVersion locale: NlsConstants.LOCALE_SYSTEM_DEFAULT
 !
 
 initialize

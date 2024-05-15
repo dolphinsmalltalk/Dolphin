@@ -60,6 +60,15 @@ extern getDllCallAddress:near32
 atoi PROTO C :DWORD
 GetProcAddress  PROTO STDCALL :HINSTANCE, :LPCSTR
 
+NewAnsiChar EQU ?NewAnsi@Character@ST@@SIPAV?$TOTE@VCharacter@ST@@@@E@Z
+extern NewAnsiChar:near32
+
+NewUtf32Char EQU ?NewUtf32@Character@ST@@SIPAV?$TOTE@VCharacter@ST@@@@_U@Z
+extern NewUtf32Char:near32
+
+NewUtf16Char EQU ?NewUtf16@Character@ST@@SIPAV?$TOTE@VCharacter@ST@@@@_S@Z
+extern NewUtf16Char:near32
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Exports
 
@@ -101,6 +110,8 @@ TEMP2	EQU		edx
 DESCRIPTOR EQU	ebx
 ;; And the _IP register as the loop counter
 INDEX	EQU		edi
+
+MAX_UCSCHAR EQU 010ffffh
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -621,20 +632,52 @@ pushLPVOIDLoopNext:
 	PushLoopNext <ARG>								; else push pointer out of object
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Simple. Permit only Characters
+;; Permit only ANSI Characters or SmallIntegers 0..255
 
 extCallArgCHAR:
 	ASSUME	ARG:Oop										; ARG is input Oop from dispatch loop
 
 	test	ARG, 1										; Is it a SmallInteger?
-	jnz		preCallFail									; Yes, not valid (only Characters)
+	jnz		@F											; Yes
 	ASSUME	ARG:PTR OTE									; No, its an object of unknown type
 
 	mov		TEMP2, [ARG].m_oteClass
 	ASSUME	TEMP:PTR OTE
 	
 	mov		TEMP, [ARG].m_location
-	cmp		TEMP2, [Pointers.ClassCharacter]				; Is it a Character?
+	cmp		TEMP2, [Pointers.ClassCharacter]			; Is it a Character?
+
+	jne		preCallFail									; No? Fail it
+	ASSUME	ARG:PTR Character							; Yes
+
+	call	CharacterGetCodePoint
+	cmp		eax, 0ffh
+	ja		preCallFail
+
+	ASSUME	ARG:DWORD
+	PushLoopNext <ARG>
+
+@@:
+	sar		ARG, 1
+	cmp		ARG, 0ffh
+	ja		preCallFail									; -ve or > 255, not a valid ANSI code unit
+	PushLoopNext <ARG>
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Permit only Characters or SmallIntegers in Unicode range
+
+extCallArgChar32:
+	ASSUME	ARG:Oop										; ARG is input Oop from dispatch loop
+
+	test	ARG, 1										; Is it a SmallInteger?
+	jnz		@F											; Yes
+	ASSUME	ARG:PTR OTE									; No, its an object of unknown type
+
+	mov		TEMP2, [ARG].m_oteClass
+	ASSUME	TEMP:PTR OTE
+	
+	mov		TEMP, [ARG].m_location
+	cmp		TEMP2, [Pointers.ClassCharacter]			; Is it a Character?
 
 	jne		preCallFail									; No? Fail it
 	ASSUME	ARG:PTR Character							; Yes
@@ -642,6 +685,41 @@ extCallArgCHAR:
 	call	CharacterGetCodePoint
 
 	ASSUME	ARG:DWORD
+	PushLoopNext <ARG>
+
+@@:
+	sar		ARG, 1
+	cmp		ARG, MAX_UCSCHAR
+	ja		preCallFail									; -ve or > MAX_UCSCHAR, not a valid code point
+	PushLoopNext <ARG>
+
+extCallArgChar16:
+	ASSUME	ARG:Oop										; ARG is input Oop from dispatch loop
+
+	test	ARG, 1										; Is it a SmallInteger?
+	jnz		@F											; Yes
+	ASSUME	ARG:PTR OTE									; No, its an object of unknown type
+
+	mov		TEMP2, [ARG].m_oteClass
+	ASSUME	TEMP:PTR OTE
+	
+	mov		TEMP, [ARG].m_location
+	cmp		TEMP2, [Pointers.ClassCharacter]			; Is it a Character?
+
+	jne		preCallFail									; No? Fail it
+	ASSUME	ARG:PTR Character							; Yes
+
+	call	CharacterGetCodePoint						; This is not correct - we need to get Utf16 code unit, and fail if not representable as such
+	cmp		eax, 0ffffh
+	ja		preCallFail
+
+	ASSUME	ARG:DWORD
+	PushLoopNext <ARG>
+
+@@:
+	sar		ARG, 1
+	cmp		ARG, 0ffffh
+	ja		preCallFail									; Out of range
 	PushLoopNext <ARG>
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -755,6 +833,7 @@ extCallArgINTPTR:
 extCallArgSDWORD:
 extCallArgHRESULT:
 extCallArgNTSTATUS:
+extCallArgErrno:
 	ASSUME	ARG:Oop											; ARG is input Oop from dispatch loop
 	
 	sar		ARG, 1											; Is it a SmallInteger?
@@ -871,6 +950,7 @@ pushHANDLELoopNext:
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+extCallArgBool8:
 extCallArgBOOL:
 	ASSUME	ARG:Oop											; ARG is input Oop from dispatch loop
 
@@ -1676,16 +1756,34 @@ extCallRetLPVOID:
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 extCallRetCHAR:
-	and		RESULT, 0ffh
-	mov		TEMP, [OBJECTTABLE]
-
-	; Fast mult by 16 (the size of an OT entry)
-	shl		RESULT, 4
-	add		TEMP, FIRSTCHAROFFSET
-	add		RESULT, TEMP
-
+	mov		ecx, RESULT
+	call	NewAnsiChar
 	AnswerResult
 
+AnswerCharResult MACRO
+	ASSUME	eax:PTR OTE
+
+	_AnswerResult
+	ASSUME	RESULT:PTR OTE
+	cmp [RESULT].m_count, 0
+	je @F
+	mov	eax, _SP
+	ret
+@@:
+	AddToZct <a>
+	mov	eax, _SP								; primitiveSuccess(0)
+	ret	
+ENDM
+
+extCallRetChar32:
+	mov		ecx, RESULT
+	call	NewUtf32Char
+	AnswerCharResult
+
+extCallRetChar16:
+	mov		ecx, RESULT
+	call	NewUtf16Char
+	AnswerCharResult
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -1745,6 +1843,24 @@ extCallRetNTSTATUS:
 
 	ret
 
+extCallRetErrno:
+	test	RESULT, RESULT
+	jnz		@F
+	mov		RESULT, SMALLINTZERO
+	AnswerResult
+
+@@:
+	lea		RESULT, [RESULT*2+1]
+
+	mov		ecx, callContext
+	ASSUME	ecx:PTR InterpRegisters
+
+	mov		_SP, [ecx].m_stackPointer
+	mov		_IP, [ecx].m_instructionPointer
+	mov		_BP, [ecx].m_basePointer
+
+	ret
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 extCallRetUINTPTR:
@@ -1781,13 +1897,17 @@ sdwordOverflow:
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 extCallRetBOOL:
-	ASSUME	RESULT:BOOL
-
+	mov		ecx, [oteTrue]
 	test	RESULT, RESULT
-	mov		RESULT, [oteTrue]
-	jnz		answerResult
-	add		RESULT, SIZEOF OTE
-answerResult:
+	mov		RESULT, [oteFalse]
+	cmovne	RESULT, ecx
+	AnswerResult
+
+extCallRetBool8:
+	mov		ecx, [oteTrue]
+	test	RESULTB, RESULTB
+	mov		RESULT, [oteFalse]
+	cmovne	RESULT, ecx
 	AnswerResult
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -2003,12 +2123,12 @@ pushOopTable	DD	OFFSET FLAT:extCallArgVOID			; 0
 	DD	OFFSET FLAT:extCallArgUINTPTR		; 26
 	DD	OFFSET FLAT:extCallArgINTPTR		; 27
 	DD	OFFSET FLAT:extCallArgNTSTATUS		; 28
-	DD	OFFSET FLAT:extCallArgReserved		; 29
-	DD	OFFSET FLAT:extCallArgReserved		; 30
-	DD	OFFSET FLAT:extCallArgReserved		; 31
-	DD	OFFSET FLAT:extCallArgReserved		; 32
-	DD	OFFSET FLAT:extCallArgReserved		; 33
-	DD	OFFSET FLAT:extCallArgReserved		; 34
+	DD	OFFSET FLAT:extCallArgErrno			; 29
+	DD	OFFSET FLAT:extCallArgBool8			; 30
+	DD	OFFSET FLAT:extCallArgChar32		; 31
+	DD	OFFSET FLAT:extCallArgChar16		; 32
+	DD	OFFSET FLAT:extCallArgReserved		; 33 - char8	(UTF-8 character)
+	DD	OFFSET FLAT:extCallArgReserved		; 34 - LPSTR8	(Utf8String)
 	DD	OFFSET FLAT:extCallArgReserved		; 35
 	DD	OFFSET FLAT:extCallArgReserved		; 36
 	DD	OFFSET FLAT:extCallArgReserved		; 37
@@ -2068,12 +2188,12 @@ returnOopTable	DD	OFFSET FLAT:extCallRetVOID			; 0
 	DD	OFFSET FLAT:extCallRetUINTPTR		; 26
 	DD	OFFSET FLAT:extCallRetINTPTR		; 27
 	DD	OFFSET FLAT:extCallRetNTSTATUS		; 28
-	DD	OFFSET FLAT:extCallRetReserved		; 29
-	DD	OFFSET FLAT:extCallRetReserved		; 30
-	DD	OFFSET FLAT:extCallRetReserved		; 31
-	DD	OFFSET FLAT:extCallRetReserved	    ; 32
-	DD	OFFSET FLAT:extCallRetReserved	    ; 33
-	DD	OFFSET FLAT:extCallRetReserved	    ; 34
+	DD	OFFSET FLAT:extCallRetErrno			; 29
+	DD	OFFSET FLAT:extCallRetBool8			; 30
+	DD	OFFSET FLAT:extCallRetChar32		; 31
+	DD	OFFSET FLAT:extCallRetChar16	    ; 32
+	DD	OFFSET FLAT:extCallRetReserved	    ; 33 - char8	(UTF-8 character)
+	DD	OFFSET FLAT:extCallRetReserved	    ; 34 - LPSTR8	(Utf8String)
 	DD	OFFSET FLAT:extCallRetReserved	    ; 35
 	DD	OFFSET FLAT:extCallRetReserved	    ; 36
 	DD	OFFSET FLAT:extCallRetReserved	    ; 37

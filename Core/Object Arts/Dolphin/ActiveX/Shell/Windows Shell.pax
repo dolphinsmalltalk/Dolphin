@@ -30,6 +30,7 @@ package methodNames
 
 package globalNames
 	add: #ShellConstants;
+	add: #SHSTOCKICONID;
 	yourself.
 
 package binaryGlobalNames: (Set new
@@ -72,13 +73,8 @@ Win32Structure subclass: #SHSTOCKICONINFO
 shellStock: anInteger
 	"Answer a new instance of receiver representing the shell stock icon with the specified SHSTOCKICONID and default large icon extent."
 
-	| info |
-	info := SHSTOCKICONINFO newBuffer.
-	ShellLibrary default
-		shGetStockIconInfo: anInteger
-		uFlags: ShellConstants.SHGSI_ICONLOCATION
-		psii: info.
-	^self fromId: anInteger in: (ExternalResourceLibrary open: info szPath)! !
+	^self fromId: anInteger
+		in: (ExternalResourceLibrary open: (ShellLibrary default getStockIconLocation: anInteger))! !
 
 !Icon class categoriesForMethods!
 shellStock:!instance creation!public! !

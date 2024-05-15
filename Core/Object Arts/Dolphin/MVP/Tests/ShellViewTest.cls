@@ -28,9 +28,6 @@ createShell: aString centered: aBoolean
 		show;
 		yourself!
 
-oldDolphinVersionsForStbUpgrade
-	^1 to: 5!
-
 testOpensOnForegroundMonitor
 	"Test that shell opens on the monitor of the monitor with cursor, but preferring the monitor with the foreground window if the program manager has focus."
 
@@ -52,27 +49,22 @@ testOpensOnForegroundMonitor
 	shell3 := self createShell: self printString , ': shell3' centered: false.
 	self assert: shell3 displayMonitor equals: primary!
 
-verifyUpgradedView: anInteger
+verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	| view |
-	super verifyUpgradedView: anInteger.
+	super verifyUpgradedView: anInteger identifier: aResourceIdentifier.
 	view := self view.
 	self assert: view interactor identicalTo: view.
 	self assertIsNil: view largeIcon.
 	self assertIsNil: view smallIcon.
 	self assertIsNil: view maxExtent.
 	self assertIsNil: view minExtent.
-	self assert: view defaultButtonId equals: 0!
-
-vuFile
-	^'Shell.Default view.vu'! !
+	self assert: view defaultButtonId equals: 0! !
 
 !ShellViewTest categoriesForMethods!
 classToTest!helpers!private! !
 createShell:centered:!helpers!private! !
-oldDolphinVersionsForStbUpgrade!constants!private! !
 testOpensOnForegroundMonitor!public!unit tests! !
-verifyUpgradedView:!helpers!private! !
-vuFile!constants!private! !
+verifyUpgradedView:identifier:!helpers!private! !
 !
 
 !ShellViewTest class methodsFor!

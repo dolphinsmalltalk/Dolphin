@@ -395,9 +395,9 @@ verifyColumnWidths: widths
 				closeTo: width * presenter scaleFactor
 				precision: 3]!
 
-verifyUpgradedView: anInteger
+verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	| view |
-	super verifyUpgradedView: anInteger.
+	super verifyUpgradedView: anInteger identifier: aResourceIdentifier.
 	view := self view.
 	self assert: view backcolor identicalTo: Color default.
 	self assert: view allColumns size equals: 1.
@@ -437,6 +437,6 @@ testSetTextBlockDoesNotAffectSelection!public!unit tests! !
 testSetTextImageDoesNotAffectSelection!public!unit tests! !
 verifyClicks:!helpers!private! !
 verifyColumnWidths:!helpers!private! !
-verifyUpgradedView:!helpers!private! !
+verifyUpgradedView:identifier:!helpers!private! !
 !
 

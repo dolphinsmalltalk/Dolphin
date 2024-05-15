@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-GraphicsTool subclass: #Pen
-	instanceVariableNames: 'logPen'
+AbstractPen subclass: #Pen
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -19,10 +19,7 @@ Instance Variables:
 
 !Pen methodsFor!
 
-color
-	^logPen color!
-
-color: aColor 
+color: aColor
 	self color = aColor ifTrue: [^self].
 	logPen color: (aColor ifNil: [Color black]).
 	self free!
@@ -33,40 +30,56 @@ createHandle
 
 	^GDILibrary default createPenIndirect: logPen!
 
-handle: anExternalHandle 
-	"Private - Set the handle for the receiver and query its logical info."
-
-	super handle: anExternalHandle.
-	logPen := LOGPEN new.
-	self getData: logPen!
-
 logPen: aLOGPEN 
 	"Private - Set the receiver's logical attributes."
 
 	logPen := aLOGPEN.
 	self free!
 
-style
-	^logPen style!
+printOn: aPuttableStream
+	"Append, to the <puttableStream> argument a string whose characters are a the same as those which would result from sending a #printString message to the receiver."
 
-style: flags 
+	| styleName width color |
+	width := self width.
+	styleName := self styleName.
+	color := self color.
+	(width == 1 and: [color = Color.Black])
+		ifTrue: 
+			[aPuttableStream
+				print: self class;
+				space;
+				nextPutAll: self styleName.
+			^self].
+	aPuttableStream
+		nextPut: $(;
+		print: self class.
+	styleName == #solid
+		ifFalse: 
+			[aPuttableStream
+				nextPutAll: ' styleName: ';
+				print: styleName].
+	width = 1
+		ifFalse: 
+			[aPuttableStream
+				nextPutAll: ' width: ';
+				print: width].
+	color = Color.Black
+		ifFalse: 
+			[aPuttableStream
+				nextPutAll: ' color: ';
+				print: color].
+	aPuttableStream nextPut: $)!
+
+style: flags
 	self style = flags ifTrue: [^self].
 	logPen style: flags.
 	self free!
 
-styleName
-	^self class styleNames at: self style + 1!
-
-styleName: aSymbol 
+styleName: aSymbol
 	"Set the style of the receiver to that named. Note that dotted/dashed styles 
 	are only supported if the pen is one pixel wide."
 
-	self style: (self class styleNames indexOf: aSymbol) - 1!
-
-width
-	"Answer the width (in pels) of the line drawn by the receiver."
-
-	^logPen width!
+	self style: (self class styleNamed: aSymbol)!
 
 width: anInteger 
 	"Set the <integer> width (in pixels) of the line drawn by the receiver.
@@ -78,25 +91,16 @@ width: anInteger
 	self free! !
 
 !Pen categoriesForMethods!
-color!accessing!public! !
 color:!accessing!public! !
 createHandle!private!realizing/unrealizing! !
-handle:!accessing!private! !
 logPen:!accessing!private! !
-style!accessing!private! !
+printOn:!development!printing!public! !
 style:!accessing!private! !
-styleName!accessing!public! !
 styleName:!accessing!public! !
-width!accessing!public! !
 width:!accessing!public! !
 !
 
 !Pen class methodsFor!
-
-black
-	"Answer the stock black pen."
-
-	^StockPen fromId: BLACK_PEN!
 
 blue
 	"Answer a blue pen."
@@ -109,16 +113,16 @@ color: aColor
 	^aColor pen!
 
 dashDot
-	^self withStyleName: #dashDot!
+	^self style: PS_DASHDOT!
 
 dashDotDot
-	^self withStyleName: #dashDotDot!
+	^self style: PS_DASHDOTDOT!
 
 dashed
-	^self withStyleName: #dashed!
+	^self style: PS_DASH!
 
 dotted
-	^self withStyleName: #dotted!
+	^self style: PS_DOT!
 
 fromLogPen: aLOGPEN
 	"Answer a new instance of the receiver containing the given logical pen."
@@ -134,30 +138,24 @@ green
 	^self color: Color green
 !
 
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon!
-
 insideFrame
-	^self withStyleName: #insideFrame!
+	^self style: PS_INSIDEFRAME!
 
 newColor: aColor 
 	"Private - Answer a new instance of the receiver for painting 1-pixel wide lines in the specified solid colour."
 
 	^self 
-		withStyle: BS_SOLID
-		width: 1
+		style: PS_SOLID
+		width: 0
 		color: aColor!
 
 none
 	"Answer a null <Pen>"
 
 	^self
-		withStyle: PS_NULL
-		width: 1
-		color: Color none
-	!
+		style: PS_NULL
+		width: 0
+		color: Color.None!
 
 red
 	"Answer a red pen."
@@ -166,33 +164,111 @@ red
 !
 
 solid
-	^self black.!
+	^self width: 1!
 
-styleNames
-	^#(#solid #dash #dot #dashDot #dashDotDot #null #insideFrame)!
+style: styleFlags
+	"Answer a new black 1-pixel pen of the specified style."
 
-white
-	"Answer the stock white pen."
+	^self
+		style: styleFlags
+		width: 0
+		color: Color.Black!
 
-	^StockPen fromId: WHITE_PEN!
+style: anInteger color: aColour
+	"Answer a new 1-pixel wide pen with the specified style and colour attributes."
 
-withStyle: styleFlags width: anInteger color: aColour
-	"Answer a new instance of the receiver with the specified style, width and colour attributes."
+	^self
+		style: anInteger
+		width: 0
+		color: aColour!
+
+style: styleInteger width: widthInteger
+	"Answer a new black pen with the the specified style and width."
+
+	^self
+		style: styleInteger
+		width: widthInteger
+		color: Color.Black!
+
+style: styleInteger width: widthInteger color: aColour
+	"Answer a new pen with the specified style, width and colour attributes."
 
 	^self fromLogPen: (LOGPEN newBuffer
-				style: styleFlags;
+				lopnStyle: styleInteger;
+				width: widthInteger;
+				color: aColour;
+				yourself)!
+
+styleName: aString
+	"Answer a new 1-pixedl black pen of the named style."
+
+	^self
+		styleName: aString
+		width: 0
+		color: Color black!
+
+styleName: aSymbol color: aColor
+	"Answer a new 1-pixel wide pen of the named style, and specified colour."
+
+	^self
+		styleName: aSymbol
+		width: 0
+		color: aColor!
+
+styleName: aSymbol width: anInteger
+	"Answer a new black pen with the of the named style and specified width."
+
+	^self
+		styleName: aSymbol
+		width: anInteger
+		color: Color.Black!
+
+styleName: aSymbol width: anInteger color: aColour
+	"Answer a new pen of the named style with the specified width and colour."
+
+	^self fromLogPen: (LOGPEN newBuffer
+				lopnStyle: (self styleNamed: aSymbol);
 				width: anInteger;
 				color: aColour;
 				yourself)!
 
-withStyleName: aString
+styleNamed: aString
+	| style |
+	style := (self styleNames indexOf: aString) - 1.
+	style < 0 ifTrue: [self error: 'Unrecognised Pen style <1p>'  << aString].
+	^style!
+
+width: anInteger
+	"Answer a new solid black pen of the specified width."
+
 	^self
-		withStyle: (self styleNames indexOf: aString) - 1
+		style: PS_SOLID
+		width: anInteger
+		color: Color.Black!
+
+width: anInteger color: aColor
+	"Answer a new solid pen of the specified width and Color."
+
+	^self
+		style: PS_SOLID
+		width: anInteger
+		color: aColor!
+
+withStyle: styleFlags width: anInteger color: aColor
+	#deprecated.
+	^self
+		style: styleFlags
+		width: anInteger
+		color: aColor!
+
+withStyleName: aString
+	#deprecated.
+	^self
+		styleName: aString
 		width: 0
 		color: Color black! !
 
 !Pen class categoriesForMethods!
-black!instance creation!public! !
 blue!instance creation!public! !
 color:!instance creation!public! !
 dashDot!instance creation!public! !
@@ -201,14 +277,22 @@ dashed!instance creation!public! !
 dotted!instance creation!public! !
 fromLogPen:!instance creation!public! !
 green!instance creation!public! !
-icon!constants!public! !
 insideFrame!instance creation!public! !
 newColor:!instance creation!private! !
 none!instance creation!public! !
 red!instance creation!public! !
 solid!instance creation!public! !
-styleNames!constants!private! !
-white!instance creation!public! !
+style:!instance creation!public! !
+style:color:!instance creation!public! !
+style:width:!instance creation!public! !
+style:width:color:!instance creation!public! !
+styleName:!public! !
+styleName:color:!instance creation!public! !
+styleName:width:!instance creation!public! !
+styleName:width:color:!instance creation!public! !
+styleNamed:!public! !
+width:!instance creation!public! !
+width:color:!instance creation!public! !
 withStyle:width:color:!instance creation!public! !
 withStyleName:!public! !
 !

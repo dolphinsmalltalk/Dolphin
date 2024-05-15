@@ -17,9 +17,6 @@ SliderTest comment: ''!
 classToTest
 	^Slider!
 
-oldDolphinVersionsForStbUpgrade
-	^#(4)!
-
 testHasTicks
 	presenter hasTicks: false.
 	self deny: presenter hasTicks.
@@ -59,9 +56,9 @@ verifyStbUpgrade: anInteger
 				<< {Slider >> #selection:. MessageSendAbstract >> #value}.
 	^#()!
 
-verifyUpgradedView: anInteger
+verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	| view |
-	super verifyUpgradedView: anInteger.
+	super verifyUpgradedView: anInteger identifier: aResourceIdentifier.
 	view := self view.
 	self assert: view interactor identicalTo: view.
 	self assert: view hasTicks.
@@ -75,18 +72,13 @@ verifyUpgradedView: anInteger
 		ifFalse: 
 			[self assertIsNil: view backcolor.
 			self assert: view hasAutoTicks.
-			self assert: view range equals: (0 to: 100 by: 10)]!
-
-vuFile
-	^'NumberPresenter.Slider view.vu'! !
+			self assert: view range equals: (0 to: 100 by: 10)]! !
 
 !SliderTest categoriesForMethods!
 classToTest!helpers!private! !
-oldDolphinVersionsForStbUpgrade!constants!private! !
 testHasTicks!public!unit tests! !
 testRange!public!unit tests! !
 verifyStbUpgrade:!helpers!private! !
-verifyUpgradedView:!helpers!private! !
-vuFile!constants!private! !
+verifyUpgradedView:identifier:!helpers!private! !
 !
 

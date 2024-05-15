@@ -109,13 +109,12 @@ idlString
 		self newUnique idlString
 	"
 
-	| pSz answer status |
+	| pSz answer |
 	pSz := ExternalAddress new.
-	(status := RPCLibrary default uuidToString: self stringUuid: pSz) == 0 ifFalse: [RPCError signal: status].
+	RPCLibrary default uuidToString: self stringUuid: pSz.
 	answer := AnsiString fromAddress: pSz.
 	RPCLibrary default rpcStringFree: pSz.
-	^answer
-!
+	^answer!
 
 isNull
 	"Answer whether the receiver is a null external data item
@@ -295,24 +294,19 @@ fromBytes: guidBytes
 !
 
 fromIdlString: aString
-	"Answer a new instance of the receiver instantiated from the argument, aString,
-	which is in IDL format."
+	"Answer a new instance of the receiver instantiated from the argument, aString, which is in IDL format, e.g. '87b4c48f-026e-11d3-9fd7-00a0cc3e4a32'"
 
-	| answer status |
+	| answer |
 	answer := self newNull.
-	(status := RPCLibrary default uuidFromString: aString uuid: answer) == 0
-		ifFalse: [RPCError signalWith: status].
+	RPCLibrary default uuidFromString: aString uuid: answer.
 	^answer!
 
 fromString: aString
-	"Answer a new instance of the receiver instantiated from the argument, aString, which is in Microsoft™ GUID format.
-	Implementation Note: Subclasses override this because OLE defines more specific functions for that purpose, which we use to be good boys, even though it appears not to be necessary (i.e. if we drop down a level and use the underlying RPC library function, it works anyway)."
+	"Answer a new instance of the receiver instantiated from the argument, aString, which is in Microsoft™ GUID format, e.g. '{87b4c48f-026e-11d3-9fd7-00a0cc3e4a32}'"
 
-	| answer status |
+	| answer |
 	answer := self newNull.
-	(status := RPCLibrary default uuidFromString: (aString copyFrom: 2 to: aString size - 1)
-				uuid: answer) == 0
-		ifFalse: [RPCError signalWith: status].
+	RPCLibrary default uuidFromString: (aString copyFrom: 2 to: aString size - 1) uuid: answer.
 	^answer!
 
 init: addressOrBytes

@@ -35,6 +35,7 @@ Win32Errors at: 'ERROR_PROC_NOT_FOUND' put: 16r7F!
 Win32Errors at: 'ERROR_STACK_OVERFLOW' put: 16r3E9!
 Win32Errors at: 'ERROR_SUCCESS' put: 16r0!
 Win32Errors at: 'NO_ERROR' put: 16r0!
+Win32Errors at: 'RPC_S_INVALID_STRING_UUID' put: 16r6A9!
 Win32Errors at: 'S_FALSE' put: 16r1!
 Win32Errors at: 'S_OK' put: 16r0!
 Win32Errors at: 'SEVERITY_ERROR' put: 16r1!

@@ -17,12 +17,9 @@ CheckBoxTest comment: ''!
 classToTest
 	^CheckBox!
 
-oldDolphinVersionsForStbUpgrade
-	^1 to: 4!
-
-verifyUpgradedView: anInteger
+verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	| view |
-	super verifyUpgradedView: anInteger.
+	super verifyUpgradedView: anInteger identifier: aResourceIdentifier.
 	view := self view.
 	self assert: view alignment identicalTo: #leftCenter.
 	self assertIsNil: view image.
@@ -30,18 +27,11 @@ verifyUpgradedView: anInteger
 	anInteger < 8
 		ifTrue: 
 			["ComparisonPolicy should have been replaced"
-			self assert: presenter model comparisonPolicy class equals: NeverSearchPolicy]!
-
-vuFile
-	"Originally BooleanPresenter.Check box"
-
-	^'BooleanPresenter.Default view.vu'! !
+			self assert: presenter model comparisonPolicy class equals: NeverSearchPolicy]! !
 
 !CheckBoxTest categoriesForMethods!
 classToTest!helpers!private! !
-oldDolphinVersionsForStbUpgrade!constants!private! !
-verifyUpgradedView:!helpers!private! !
-vuFile!constants!private! !
+verifyUpgradedView:identifier:!helpers!private! !
 !
 
 !CheckBoxTest class methodsFor!

@@ -300,7 +300,7 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver.
 
 	1: 	Add largeIcon and smallIcon instance variables to ShellViews and subclasses
-	2:	 Map command->commandDescription for PushButtons
+	2:	Map command->commandDescription for PushButtons
 	3: 	Add iconSpacing to ListView and subclasses.
 	4: 	Add getInfoTipBlock instance variable to IconicListAbstract and subclasses
 	5: 	Add maxExtent and minExtent instance variables to ShellView and subclasses
@@ -308,11 +308,10 @@ stbVersion
 	7: 	Add resolution instance variable
 	8: 	Add events and unused instance variable to View, and events inst. var. to proxy.
 	9: 	ShellView defaultButton <PushButton> changed to defaultButtonId <integer>.
-	10: 	version instance variable added to record STB version of specific view class.
+	10:	'version' instance variable added to record STB version of specific view class.
 	11.	Full WINDOWPLACEMENT replaced by just the showCmd."
 
-	"STBViewProxy should no longer need to be changed to upgrade view classes,
-	 so if you are changing this number, THINK AGAIN."
+	"STBViewProxy should no longer need to be changed to upgrade view classes, so if you are changing this number, THINK AGAIN."
 
 	^11! !
 

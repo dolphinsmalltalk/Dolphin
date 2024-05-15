@@ -181,7 +181,13 @@ text
 	^self subclassResponsibility!
 
 toStrings
-	^self subclassResponsibility! !
+	^String writeStream
+		nextPutAll: self description;
+		nextPut: $/;
+		nextPutAll: self commandDescription acceleratorKeyDisplayString;
+		nextPut: $/;
+		nextPutAll: self command;
+		contents! !
 
 !MenuItem categoriesForMethods!
 acceleratorKey!accessing!public! !
@@ -232,12 +238,12 @@ dividers
 						at: '||'
 							put: (DividerMenuItem basicNew
 									flags: MFT_MENUBARBREAK;
-									isImmutable: true ;
+									isImmutable: true;
 									yourself);
 						at: '|'
 							put: (DividerMenuItem basicNew
 									flags: MFT_MENUBREAK;
-									isImmutable: true ;
+									isImmutable: true;
 									yourself);
 						yourself]!
 
@@ -281,33 +287,6 @@ onPreStripImage
 
 	self uninitialize!
 
-stbConvertFrom: anSTBClassFormat 
-	"Convert from earlier version models.
-		1: Added 'typeFlags' instance variable.
-		2: 'image' instance variable added to CommandMenuItem subclass"
-
-	^anSTBClassFormat version < 1 
-		ifTrue: 
-			[
-			[:data | 
-			| newInst |
-			newInst := self basicNew.
-			data keysAndValuesDo: [:i :v | newInst instVarAt: i + 1 put: v].
-			newInst flags: MFT_STRING.
-			newInst]]
-		ifFalse: 
-			[
-			[:data | 
-			| newInst |
-			newInst := self basicNew.
-			1 to: data size do: [:i | newInst instVarAt: i put: (data at: i)].
-			newInst]]!
-
-stbVersion
-	"Answer the current binary filer version number for instances of the receiver."
-
-	^1!
-
 uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
@@ -320,8 +299,6 @@ fromString:!instance creation!public! !
 initialize!development!initializing!private! !
 new!instance creation!private! !
 onPreStripImage!class hierarchy-removing!private! !
-stbConvertFrom:!binary filing!public! !
-stbVersion!binary filing!public! !
 uninitialize!class hierarchy-removing!private! !
 !
 

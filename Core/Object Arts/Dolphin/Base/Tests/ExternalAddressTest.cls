@@ -38,6 +38,14 @@ testREFGUIDfromAddress
 	self assert: g yourAddress equals: ref yourAddress.
 	self assert: g asString equals: ref asString!
 
+testStbRoundTrip
+	| subject bytes rehydrated |
+	subject := ExternalAddress fromInteger: 16rDEADBEEF.
+	bytes := subject binaryStoreBytes.
+	rehydrated := Object fromBinaryStoreBytes: bytes.
+	"Addresses are never saved in STB - we always get back nil"
+	self assertIsNil: rehydrated!
+
 testStringsFromAddress
 	{AnsiString. Utf8String. Utf16String} do: 
 			[:each |
@@ -50,6 +58,7 @@ stringFromAddressTestClass:!helpers!public! !
 testExternalAddressAtAddress!public!unit tests! !
 testExternalAddressFromAddress!public!unit tests! !
 testREFGUIDfromAddress!public!unit tests! !
+testStbRoundTrip!public!unit tests! !
 testStringsFromAddress!public!unit tests! !
 !
 

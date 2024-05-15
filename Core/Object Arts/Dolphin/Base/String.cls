@@ -146,7 +146,7 @@ _separateSubStringsIn: aReadableString
 	string1 := self asUtf16String.
 	string2 := comparand asUtf16String.
 	^(KernelLibrary default
-		compareString: Win32Constants.LOCALE_USER_DEFAULT
+		compareString: NlsConstants.LOCALE_USER_DEFAULT
 		dwCmpFlags: 0
 		lpString1: string1
 		cchCount1: string1 size
@@ -166,8 +166,8 @@ _separateSubStringsIn: aReadableString
 	string1 := self asUtf16String.
 	string2 := aString asUtf16String.
 	^(KernelLibrary default
-		compareString: Win32Constants.LOCALE_USER_DEFAULT
-		dwCmpFlags: Win32Constants.NORM_IGNORECASE
+		compareString: NlsConstants.LOCALE_USER_DEFAULT
+		dwCmpFlags: NlsConstants.NORM_IGNORECASE
 		lpString1: string1
 		cchCount1: string1 size
 		lpString2: string2
@@ -265,7 +265,7 @@ asPhrase
 asResourceId
 	"On Windows wide string APIs will be expecting string resource names to be in UTF-16."
 
-	^self asUtf16String!
+	^Locale invariant lowercaseString: self!
 
 associations
 	"Answer a <sequencedReadableCollection> containing the receiver's associations, representing the keys (indices) and values (Characters) in the receiver."
@@ -310,6 +310,14 @@ asUtf16String
 
 	<primitive: 215>
 	^Utf16String withAll: self!
+
+asUtf16StringCopy
+	"Answer a UTF16-encoded copy of the receiver."
+
+	<primitive: 215>
+	^Utf16String writeStream
+		nextPutAll: self;
+		contents!
 
 asUtf8String
 	"Answer a UTF-8 encoded string representation of the receiver."
@@ -366,12 +374,12 @@ beginsWith: aString ignoreCase: aBoolean
 	cch := string2 size.
 	^cch <= string1 size and: 
 			[(KernelLibrary default
-				compareString: Win32Constants.LOCALE_USER_DEFAULT
-				dwCmpFlags: (aBoolean ifTrue: [Win32Constants.NORM_IGNORECASE] ifFalse: [0])
+				compareString: NlsConstants.LOCALE_USER_DEFAULT
+				dwCmpFlags: (aBoolean ifTrue: [NlsConstants.NORM_IGNORECASE] ifFalse: [0])
 				lpString1: string1
 				cchCount1: cch
 				lpString2: string2
-				cchCount2: cch) == Win32Constants.CSTR_EQUAL]!
+				cchCount2: cch) == NlsConstants.CSTR_EQUAL]!
 
 between: min and: max
 	"Answer whether the receiver is inclusively between the <magnitude> arguments, 
@@ -602,11 +610,10 @@ findString: aString startingAt: anInteger
 	<primitive: 149>
 	^self basicIndexOfSubCollection: (self class coerceString: aString) startingAt: anInteger!
 
-findString: aString startingAt: anInteger ignoreCase: aBoolean 
+findString: aString startingAt: anInteger ignoreCase: aBoolean
 	"Answer the index of the <String> argument within the receiver, ignoring case differences, starting at the <integer>
 	argument. If the receiver does not contain aString, answer 0."
 
-	| meLower subLower |
 	#todo.	"More efficient implementation needed."
 	aBoolean ifFalse: [^self findString: aString startingAt: anInteger].
 	^self asUppercase findString: aString asUppercase startingAt: anInteger!
@@ -1118,26 +1125,12 @@ subStringsAnsi: separators
 titleCased
 	"Answer a <readableString> which is a copy of the receiver but with the first letter of each major word capitalized."
 
-	| kernel src dest len |
-	kernel := KernelLibrary default.
-	src := self asUtf16String.
-	len := kernel
-				lcMapString: Win32Constants.LOCALE_USER_DEFAULT
-				dwMapFlags: Win32Constants.LCMAP_TITLECASE
-				lpScrStr: src
-				cchSrc: src size
-				lpDestStr: nil
-				cchDest: 0.
-	len == 0 ifTrue: [kernel systemError].
-	dest := Utf16String newFixed: len.
-	kernel
-		lcMapString: Win32Constants.LOCALE_USER_DEFAULT
-		dwMapFlags: Win32Constants.LCMAP_TITLECASE
-		lpScrStr: src
-		cchSrc: src size
-		lpDestStr: dest
-		cchDest: len.
-	^dest!
+	^self titleCased: Locale.UserDefault!
+
+titleCased: aLocale
+	"Answer a <readableString> which is a copy of the receiver but with the first letter of each major word capitalized."
+
+	^aLocale titlecaseString: self!
 
 trimBlanks
 	"Answer a copy of the receiver with leading and trailing white space removed."
@@ -1233,6 +1226,7 @@ asSymbol!converting!public! !
 asUIntPtr!converting!public! !
 asUppercase!converting!public! !
 asUtf16String!converting!public! !
+asUtf16StringCopy!converting!public! !
 asUtf8String!converting!public! !
 at:!accessing!public! !
 at:ifAbsent:!accessing!public! !
@@ -1309,6 +1303,7 @@ subStrings!public!tokenizing! !
 subStrings:!public!tokenizing! !
 subStringsAnsi:!copying!public! !
 titleCased!converting!public! !
+titleCased:!converting!public! !
 trimBlanks!copying!public! !
 trimNulls!copying!public! !
 truncateTo:!converting!public! !
@@ -1548,7 +1543,7 @@ initialize
 installedCodePages
 	"Answer the names of all code pages installed on the host system."
 
-	^self systemCodePages: Win32Constants.CP_INSTALLED!
+	^self systemCodePages: NlsConstants.CP_INSTALLED!
 
 lf
 	^AnsiString with: $\n!
@@ -1624,7 +1619,7 @@ supportedCodePages
 		self supportedCodePages
 	"
 
-	^self systemCodePages: Win32Constants.CP_SUPPORTED!
+	^self systemCodePages: NlsConstants.CP_SUPPORTED!
 
 systemCodePages: anInteger
 	"Private - Answer a collection of system locales, depending on the flags argument,

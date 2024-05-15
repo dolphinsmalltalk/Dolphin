@@ -59,7 +59,7 @@ toStrings
 
 !MenuBar categoriesForMethods!
 createHandle!private!realizing/unrealizing! !
-fromStrings:!converting!private! !
+fromStrings:!converting!public! !
 isMenuBar!public!testing! !
 printOn:!printing!public! !
 queryAlong:!operations!public! !

@@ -7,6 +7,7 @@ package paxVersion: 1;
 package classNames
 	add: #AbstractDictionaryTest;
 	add: #AbstractFileStreamTest;
+	add: #AbstractInvariantLocaleTest;
 	add: #AbstractKeyboardTest;
 	add: #AlwaysSearchPolicyTest;
 	add: #AnsiStringTest;
@@ -29,6 +30,7 @@ package classNames
 	add: #CollectionCombinator;
 	add: #CommandLineTest;
 	add: #CommandLineTestRunner;
+	add: #CRTLibraryTest;
 	add: #DateAndTimeTest;
 	add: #DateTest;
 	add: #DefaultSortAlgorithmTest;
@@ -43,6 +45,7 @@ package classNames
 	add: #DOUBLEArrayTest;
 	add: #DurationTest;
 	add: #DWORDArrayTest;
+	add: #DWORDBytesTest;
 	add: #EqualitySearchPolicyTest;
 	add: #EventMessageSendTest;
 	add: #ExceptionTesterClasses;
@@ -50,6 +53,7 @@ package classNames
 	add: #ExternalArrayTest;
 	add: #ExternalDescriptorTest;
 	add: #ExternalFieldTest;
+	add: #ExternalIntegerBytesTest;
 	add: #ExternalIntegerTest;
 	add: #ExternalLibraryTest;
 	add: #ExternalResourceLibraryTest;
@@ -71,6 +75,7 @@ package classNames
 	add: #IntegerTest;
 	add: #IntervalTest;
 	add: #IntrosortAlgorithmTest;
+	add: #InvariantLocaleTest;
 	add: #KeyboardTest;
 	add: #LargeIntegerTest;
 	add: #LayoutPlacementTest;
@@ -79,7 +84,6 @@ package classNames
 	add: #LookupTableTest;
 	add: #MemoryManagerTest;
 	add: #MenuPainterTest;
-	add: #MenuTest;
 	add: #MergesortAlgorithmTest;
 	add: #MessageTest;
 	add: #MetaclassTest;
@@ -261,6 +265,12 @@ DolphinTest subclass: #ClassDescriptionTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
+DolphinTest subclass: #CRTLibraryTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
 DolphinTest subclass: #DateAndTimeTest
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -327,6 +337,12 @@ DolphinTest subclass: #ExternalFieldTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
+DolphinTest subclass: #ExternalIntegerBytesTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
 DolphinTest subclass: #ExternalIntegerTest
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -366,7 +382,7 @@ DolphinTest subclass: #FileLocatorTest
 DolphinTest subclass: #FileTest
 	instanceVariableNames: 'tempFile'
 	classVariableNames: ''
-	poolDictionaries: 'Win32Constants'
+	poolDictionaries: 'CRTConstants Win32Constants'
 	classInstanceVariableNames: ''!
 
 DolphinTest subclass: #FILETIMETest
@@ -429,12 +445,6 @@ DolphinTest subclass: #MenuPainterTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
-DolphinTest subclass: #MenuTest
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
 DolphinTest subclass: #MessageTest
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -460,7 +470,7 @@ DolphinTest subclass: #ObjectTest
 	classInstanceVariableNames: ''!
 
 DolphinTest subclass: #PackageTest
-	instanceVariableNames: 'loadedPackages checkTimestamps'
+	instanceVariableNames: 'loadedPackages checkTimestamps defaultPackage'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -789,6 +799,12 @@ ExternalFieldTest subclass: #WCHARFieldTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
+ExternalIntegerBytesTest subclass: #DWORDBytesTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
 IntegerTest subclass: #LargeIntegerTest
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -801,13 +817,25 @@ IntegerTest subclass: #SmallIntegerTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
-LocaleTest subclass: #SmalltalkLocaleTest
+LocaleTest subclass: #AbstractInvariantLocaleTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
 LocaleTest subclass: #WindowsLocaleTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+AbstractInvariantLocaleTest subclass: #InvariantLocaleTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+AbstractInvariantLocaleTest subclass: #SmalltalkLocaleTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

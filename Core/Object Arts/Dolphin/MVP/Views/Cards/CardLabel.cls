@@ -76,15 +76,11 @@ CardLabel methodProtocol: #whatsThisHelp attributes: #(#readOnly) selectors: #(#
 new
 	^self text: 'Label'!
 
-stbConvertFrom: anSTBClassFormat 
+stbConvertFrom: anSTBClassFormat
 	"Version 1 adds helpId instance variable."
 
-	^
-	[:data | 
-	| newInstance |
-	newInstance := self basicNew.
-	1 to: data size do: [:i | newInstance instVarAt: i put: (data at: i)].
-	newInstance]!
+	anSTBClassFormat version == 0 ifTrue: [^[:data | (data resize: 3) becomeA: CardLabel]].
+	^super stbConvertFrom: anSTBClassFormat!
 
 stbVersion
 	"Answer the current binary filer version number for instances of the receiver."

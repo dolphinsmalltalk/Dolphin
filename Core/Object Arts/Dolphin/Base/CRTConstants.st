@@ -70,8 +70,10 @@ CRTConstants at: '_SW_ZERODIVIDE' put: 16r8!
 CRTConstants at: '_TRUNCATE' put: -16r1!
 CRTConstants at: 'EBADF' put: 16r9!
 CRTConstants at: 'EINVAL' put: 16r16!
+CRTConstants at: 'ERANGE' put: 16r22!
 CRTConstants at: 'RAND_MAX' put: 16r7FFF!
 CRTConstants at: 'SEEK_CUR' put: 16r1!
 CRTConstants at: 'SEEK_END' put: 16r2!
 CRTConstants at: 'SEEK_SET' put: 16r0!
+CRTConstants at: 'STRUNCATE' put: 16r50!
 CRTConstants shrink!

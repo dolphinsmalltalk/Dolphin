@@ -26,6 +26,15 @@ destroyPresenter
 	shell = View desktop ifTrue: [presenter destroy] ifFalse: [shell close].
 	presenter := nil!
 
+getTextExtent: actualText
+	| subject textExtent canvas |
+	subject := self view.
+	canvas := subject canvas.
+	canvas font: subject actualFont.
+	textExtent := canvas textExtent: actualText.
+	canvas free.
+	^textExtent!
+
 initializePresenter
 	self classToTest
 		ifNotNil: 
@@ -66,11 +75,6 @@ leftClickAt: aPoint
 nonProportionalFont
 	^Font name: 'Courier'!
 
-oldDolphinVersionsForStbUpgrade
-	"Answer an <sequencedReadableCollection> of <Integer>, being the Dolphin versions for which there is a test view binary resource in a .vu file to attempt to upgrade."
-
-	^#()!
-
 oldStlResources
 	^self class resourceIdentifiers!
 
@@ -86,17 +90,24 @@ tearDown
 
 testStbUpgradeFromBinaryResources
 	"Test upgrades of old STB version .vu resources. These were used in versions of Dolphin prior to 6.0, after which the STL format was introduced and the resources stored as literal arrays in class methods.
-	In most cases the D5 resources are the same as the D4 version so are not tested. Later Dolphin versions had view resources in STL form, and these are tested separated."
+	The STL resources of later Dolphin versions are tested separately."
 
 	"In order to test a subclass:
-		- Drop copies of the binary .vu resource files into appropriate subdirectories of the Resources\Tests\ViewResources folder for each relevant pre-D6 version.
-		- Override the oldDolphinVersions method to return a collection of the major versions to be tested
+		- Create a subdirectory under the Resources\Tests\ViewResources folder
+		- Drop copies of the binary .vu resource files exported from the old Dolphin images at different stbVersions. 
+		- Rename the .vu files to include the integer stbVersion of the view in the file separated by a semi-colon from the rest of the filename. If you are uncertain of the version, either open and dump it using the STBDebugger, or rename to '<class>.<resource>;0.vu', and then run the test. The test will fail on an assertion that the version is not 0, informing you of the actual version.
 		- Override the #verifyUpgradedView: method to add any further validation of the upgrade process, if required."
 
+	| resourceDir |
 	#nocreate.
-	self oldDolphinVersionsForStbUpgrade do: 
+	resourceDir := self resourceFilename: 'ViewResources\' , self classToTest name.
+	(File exists: resourceDir) ifFalse: [^self].
+	File
+		for: '*.vu'
+		in: resourceDir
+		do: 
 			[:each |
-			self assert: (self verifyStbUpgrade: each) asArray equals: #().
+			self verifyStbUpgrade: each path.
 			self destroyPresenter]!
 
 testStlUpgradesFromLiteralResources
@@ -109,34 +120,48 @@ testStlUpgradesFromLiteralResources
 	#nocreate.
 	self oldStlResources do: 
 			[:each |
-			self verifyStlUpgrade: each resource.
+			self verifyStlUpgrade: each.
 			self destroyPresenter]!
 
-verifyStbUpgrade: anInteger
-	| stream filer version notifications |
-	stream := self resourceStream: 'ViewResources/D<1p>/<2s>' << {anInteger. self vuFile} text: false.
-	filer := STBInFiler on: stream.
-	presenter := filer
+verifyStbUpgrade: pathString
+	| filename stbVersion stream filer version notifications viewProxy parts |
+	filename := File splitStemFrom: pathString.
+	parts := $; split: filename.
+	stbVersion := Integer fromString: parts last.
+	stream := FileStream read: pathString text: false.
+	"stream reset. Tools.STBDebugger dumpToTranscript: stream. stream reset"
+	filer := (STBInFiler on: stream)
 				context: View desktop;
-				basicNext.
+				yourself.
+	viewProxy := [filer basicNext] on: Notification do: [:ex | self fail: 'Unexpected Notification'].
 	stream close.
-	version := presenter version.
+	version := viewProxy version.
+	"Sanity check we got what it said on the tin"
+	self assert: version equals: stbVersion.
+	"filer will become: proxy to view"
+	presenter := viewProxy.
 	notifications := OrderedCollection new.
-	[filer evaluateDeferredActions] on: Notification do: [:n | notifications add: n].
-	self verifyUpgradedView: version.
+	[filer evaluateDeferredActions] on: Notification
+		do: 
+			[:ex |
+			notifications add: ex.
+			ex resume].
+	parts := $. split: parts first.
+	self verifyUpgradedView: version
+		identifier: (ResourceIdentifier class: (Smalltalk at: parts first) name: parts last).
 	^notifications!
 
-verifyStlUpgrade: anArray
+verifyStlUpgrade: aResourceIdentifier
 	| version filer |
-	filer := STLInFiler on: anArray readStream.
+	filer := STLInFiler on: aResourceIdentifier resource readStream.
 	presenter := filer
 				context: View desktop;
 				basicNext.
 	version := presenter version.
 	filer evaluateDeferredActions.
-	self verifyUpgradedView: version!
+	self verifyUpgradedView: version identifier: aResourceIdentifier!
 
-verifyUpgradedView: anInteger
+verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	| view |
 	view := self view.
 	self assert: view isKindOf: self viewClass.
@@ -148,19 +173,16 @@ view
 viewClass
 	^self classToTest!
 
-vuFile
-	^self shouldNotImplement!
-
 waitForInputIdle
 	SessionManager inputState pumpMessages! !
 
 !PresenterTest categoriesForMethods!
 classToTest!constants!private! !
 destroyPresenter!public!Running! !
+getTextExtent:!helpers!private! !
 initializePresenter!public!Running! !
 leftClickAt:!helpers!private! !
-nonProportionalFont!public! !
-oldDolphinVersionsForStbUpgrade!constants!private! !
+nonProportionalFont!constants!private! !
 oldStlResources!constants!private! !
 setUp!public!Running! !
 shouldSetupPresenter!helpers!private! !
@@ -169,10 +191,9 @@ testStbUpgradeFromBinaryResources!public!unit tests! !
 testStlUpgradesFromLiteralResources!public!unit tests! !
 verifyStbUpgrade:!helpers!private! !
 verifyStlUpgrade:!helpers!private! !
-verifyUpgradedView:!helpers!private! !
+verifyUpgradedView:identifier:!helpers!private! !
 view!accessing!private! !
 viewClass!constants!private! !
-vuFile!constants!private! !
 waitForInputIdle!helpers!private! !
 !
 

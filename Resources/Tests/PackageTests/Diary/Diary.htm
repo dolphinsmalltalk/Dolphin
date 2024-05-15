@@ -1,0 +1,43 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+
+<html>
+
+<head>
+<title>Simple Diary Tutorial</title>
+<meta name="GENERATOR" content="Microsoft FrontPage 1.1">
+</head>
+
+<body bgcolor="#FFFFFF">
+<h1>Diary Tutorial</h1>
+<p>This is a simple Diary application demonstrating use of the Dolphin framework for creating applications. It's fairly 
+rudimentary at the moment but it should give some pointers about how to proceed if you want to create your own 
+applications before the ViewComposer becomes fully operational.</p>
+<p>Load Diary.pac using the <a href="http://www.intuitive.co.uk/Dolphin/Overviews/PackageSystemOverview.htm">package browser</a>.</p>
+<p>You will gain four new classes:</p>
+<h3>Domain classes</h3>
+<p><em>Diary<br>
+DiaryEvent</em></p>
+<h3>Tool classes</h3>
+<p><em>DiaryTool<br>
+DiaryEventEditor</em></p>
+<h2>Getting started</h2>
+<p>To bring up a diary try:</p>
+<blockquote>
+<p><tt>MyDiary := Diary new show</tt></p>
+</blockquote>
+<p>The user interface is fairly simplistic but straightforward.You can create additional views onto the same diary using:</p>
+<blockquote>
+<p><tt>(DiaryTool on: MyDiary) inShell</tt></p>
+</blockquote>
+<p>Each view will keep in step.</p>
+<p>To shut down the diary you must free it to stop the monitor process from keeping a reference to it. Close all tool 
+windows and evaluate:</p>
+<blockquote>
+<p><tt>MyDiary free.<br>
+Smalltalk removeKey: #MyDiary.</tt></p>
+</blockquote>
+<p>To better understand the application framework please visit the Dolphin Education Centre and check out: 
+<a href="http://www.intuitive.co.uk/Dolphin/Overviews/ApplicationFramework.htm">ApplicationFramework.htm</a></p>
+</body>
+
+</html>

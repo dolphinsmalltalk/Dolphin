@@ -17,11 +17,8 @@ StaticPathTest comment: ''!
 classToTest
 	^StaticPath!
 
-oldDolphinVersionsForStbUpgrade
-	^#(5)!
-
 testCalculateExtent
-	| actualText canvas shell expected actual |
+	| actualText shell expected actual |
 	shell := presenter parentView.
 	shell extent: 300 @ 100.
 	shell layoutManager: FlowLayout new.
@@ -32,10 +29,7 @@ testCalculateExtent
 	"If debugging through it can be useful to see the size the control actually wants to be"
 	presenter usePreferredExtent: true.
 	presenter extent: 20 @ 10.
-	canvas := presenter canvas.
-	canvas font: presenter actualFont.
-	expected := presenter calcExtentFromClientExtent: (canvas textExtent: actualText).
-	canvas free.
+	expected := presenter calcExtentFromClientExtent: (self getTextExtent: actualText).
 	actual := presenter calculateExtent: (LayoutContext forContainer: shell).
 	self assert: actual equals: expected!
 
@@ -53,24 +47,19 @@ testLayout
 	displayedText := presenter getWindowText.
 	self assert: (displayedText indexOfSubCollection: '...') identicalTo: 0!
 
-verifyUpgradedView: anInteger
+verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	| view |
-	super verifyUpgradedView: anInteger.
+	super verifyUpgradedView: anInteger identifier: aResourceIdentifier.
 	view := self view.
 	self assertIsNil: view backcolor.
 	self assert: view interactor identicalTo: view.
-	self assert: view plainText equals: 'c:\Program Files\Dolphin Smalltalk'!
-
-vuFile
-	^'TextPresenter.Path text.vu'! !
+	self assert: view plainText equals: 'c:\Program Files\Dolphin Smalltalk'! !
 
 !StaticPathTest categoriesForMethods!
 classToTest!helpers!private! !
-oldDolphinVersionsForStbUpgrade!constants!private! !
 testCalculateExtent!public!unit tests! !
 testLayout!public!unit tests! !
-verifyUpgradedView:!helpers!private! !
-vuFile!constants!private! !
+verifyUpgradedView:identifier:!helpers!private! !
 !
 
 !StaticPathTest class methodsFor!

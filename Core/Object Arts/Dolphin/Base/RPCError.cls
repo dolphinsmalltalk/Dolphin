@@ -12,3 +12,14 @@ RPCError comment: 'Exception class for errors associated with the RPCLibrary'!
 
 !RPCError categoriesForClass!System-Exception Handling! !
 
+!RPCError class methodsFor!
+
+fromHRESULT: aHRESULT
+	^self new
+		tag: aHRESULT;
+		yourself! !
+
+!RPCError class categoriesForMethods!
+fromHRESULT:!instance creation!public! !
+!
+

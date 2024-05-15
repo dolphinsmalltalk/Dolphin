@@ -83,7 +83,7 @@ Object subclass: #ListViewColumn
 
 Win32Structure subclass: #CCHITTESTINFO
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_flags _OffsetOf_pt'
+	classVariableNames: '_OffsetOf_pt'
 	poolDictionaries: 'CommCtrlConstants'
 	classInstanceVariableNames: ''!
 
@@ -119,19 +119,19 @@ Win32Structure subclass: #TVINSERTSTRUCTW
 
 CCHITTESTINFO subclass: #LVHITTESTINFO
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_iItem _OffsetOf_iSubItem'
+	classVariableNames: '_OffsetOf_flags _OffsetOf_iItem _OffsetOf_iSubItem'
 	poolDictionaries: 'ListViewConstants'
 	classInstanceVariableNames: ''!
 
 CCHITTESTINFO subclass: #TCHITTESTINFO
 	instanceVariableNames: 'iItem'
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_flags'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
 CCHITTESTINFO subclass: #TVHITTESTINFO
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_hItem'
+	classVariableNames: '_OffsetOf_flags _OffsetOf_hItem'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 

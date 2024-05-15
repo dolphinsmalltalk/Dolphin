@@ -17,9 +17,6 @@ StaticTextTest comment: ''!
 classToTest
 	^StaticText!
 
-oldDolphinVersionsForStbUpgrade
-	^1 to: 4!
-
 testCalculateExtentMultiline
 	"Test preferred extent calculation in multi-line 'alignment' modes:
 		- In #leftNoWrap mode we expect that the calculated width is that required for the longest line, and that the height is the number of actual cr/lf separated lines.
@@ -61,7 +58,7 @@ lines'.
 testCalculateExtentSimple
 	"Test preferred extent calculation in the #simple (SS_SIMPLE) mode. This is a single-line mode that does not process tabs, nor the mnemonic prefixes. Furthermore any embedded cr/lfs are stripped out."
 
-	| actualText firstLine canvas shell expected actual |
+	| actualText firstLine shell expected actual |
 	shell := presenter parentView.
 	shell designExtent: 500 @ 100.
 	shell layoutManager: FlowLayout new.
@@ -76,33 +73,25 @@ lines'.
 	"If debugging through it can be useful to see the size the control actually wants to be"
 	presenter usePreferredExtent: true.
 	presenter designExtent: 20 @ 10.
-	canvas := presenter canvas.
-	canvas font: presenter actualFont.
-	expected := presenter calcExtentFromClientExtent: (canvas textExtent: firstLine).
-	canvas free.
+	expected := presenter calcExtentFromClientExtent: (self getTextExtent: firstLine).
 	actual := presenter calculateExtent: (LayoutContext forContainer: shell).
 	self assert: actual y equals: expected y.
 	"The width calculated by the GDI GetTextExtentPoint32 function is slightly different than the DrawTextEx calculation used by the control (and now#calculateExtent:) so we don't expect a precise result"
 	self assert: (actual x - expected x) abs < (3 * presenter scaleFactor)!
 
-verifyUpgradedView: anInteger
+verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	| view |
-	super verifyUpgradedView: anInteger.
+	super verifyUpgradedView: anInteger identifier: aResourceIdentifier.
 	view := self view.
 	"Backcolor of StaticViews left as nil in v12 to inherit from parent"
 	self assertIsNil: view backcolor.
-	self assert: view interactor identicalTo: view!
-
-vuFile
-	^'TextPresenter.Static text.vu'! !
+	self assert: view interactor identicalTo: view! !
 
 !StaticTextTest categoriesForMethods!
 classToTest!helpers!private! !
-oldDolphinVersionsForStbUpgrade!constants!private! !
 testCalculateExtentMultiline!public!unit tests! !
 testCalculateExtentSimple!public!unit tests! !
-verifyUpgradedView:!helpers!private! !
-vuFile!constants!private! !
+verifyUpgradedView:identifier:!helpers!private! !
 !
 
 !StaticTextTest class methodsFor!

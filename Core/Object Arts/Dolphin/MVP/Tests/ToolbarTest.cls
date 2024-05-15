@@ -17,12 +17,9 @@ ToolbarTest comment: ''!
 classToTest
 	^Toolbar!
 
-oldDolphinVersionsForStbUpgrade
-	^1 to: 5!
-
-verifyUpgradedView: anInteger
+verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	| view |
-	super verifyUpgradedView: anInteger.
+	super verifyUpgradedView: anInteger identifier: aResourceIdentifier.
 	view := self view.
 	self assert: (view items allSatisfy: [:each | each isKindOf: ToolbarItem]).
 	self assert: view interactor identicalTo: view.
@@ -32,16 +29,11 @@ verifyUpgradedView: anInteger
 	self assert: view forecolor identicalTo: Color default.
 	self assert: view isTransparent.
 	self deny: view hasLabels.
-	self assert: (view baseStyleAllMask: CommCtrlConstants.CCS_NOPARENTALIGN)!
-
-vuFile
-	^'Toolbar.List tools.vu'! !
+	self assert: (view baseStyleAllMask: CommCtrlConstants.CCS_NOPARENTALIGN)! !
 
 !ToolbarTest categoriesForMethods!
 classToTest!helpers!private! !
-oldDolphinVersionsForStbUpgrade!constants!private! !
-verifyUpgradedView:!helpers!private! !
-vuFile!constants!private! !
+verifyUpgradedView:identifier:!helpers!private! !
 !
 
 !ToolbarTest class methodsFor!

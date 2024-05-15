@@ -7,6 +7,7 @@ Dolphin Instruction Set
 #pragma once
 
 #include <cstdint>
+#include <crtdbg.h>
 #include "EnumHelpers.h"
 
 ///////////////////////

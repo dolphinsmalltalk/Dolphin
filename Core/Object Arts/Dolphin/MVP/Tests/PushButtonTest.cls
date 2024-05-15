@@ -29,18 +29,19 @@ getButton: aPushButton textExtent: actualText
 	canvas free.
 	^textExtent!
 
-oldDolphinVersionsForStbUpgrade
-	^1 to: 5!
-
 showDialogWithButtons
 	dialog := DialogView show.
 	dialogButtonA := dialog addSubView: PushButton new.
 	dialogButtonB := dialog addSubView: PushButton new!
 
 showShellWithButtons
-	shell := ShellView show.
+	shell := ShellView new.
+	shell
+		createAt: 100 @ 100 extent: 500 @ 75;
+		layoutManager: FlowLayout new.
 	shellButtonA := shell addSubView: PushButton new.
-	shellButtonB := shell addSubView: PushButton new!
+	shellButtonB := shell addSubView: PushButton new.
+	shell show!
 
 tearDown
 	shell
@@ -63,17 +64,14 @@ testCalculateExtent
 	"Use a non-proportional font to make calculating the expected result predictable"
 	actualText := '	The quick brown 狐狸 jumped over the lazy Лиса'.
 	shellButtonA text: actualText.
-	shell
-		extent: 500 @ 75;
-		layoutManager: FlowLayout new.
 	actualText := '	The quick brown 狐狸 jumped over the lazy Лиса'.
 	shellButtonA text: actualText.
 	textWidth := (self getButton: shellButtonA textExtent: actualText) x.
-	self assert: (shellButtonA extent x between: textWidth and: textWidth + 25).
+	self assert: (shellButtonA width closeTo: textWidth precision: 25).
 	"Button should shrink if given less text"
 	shellButtonA text: 'abc'.
 	textWidth := (self getButton: shellButtonA textExtent: 'abc') x.
-	self assert: (shellButtonA extent x between: textWidth and: textWidth + 25)!
+	self assert: (shellButtonA width closeTo: textWidth precision: 25)!
 
 testDialogDefaultButtons
 	#nocreate.
@@ -120,36 +118,33 @@ tryDefaultButtonsA: buttonA B: buttonB
 	self assertButton: buttonA isDefault: true.
 	self assertButton: buttonB isDefault: false!
 
-verifyStbUpgrade: anInteger
-	| notifications |
-	notifications := super verifyStbUpgrade: anInteger.
-	self assert: self view backcolor identicalTo: Color default.
-	^notifications!
-
-verifyUpgradedView: anInteger
+verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	| view command |
-	super verifyUpgradedView: anInteger.
+	super verifyUpgradedView: anInteger identifier: aResourceIdentifier.
 	view := self view.
+	anInteger >= 13
+		ifTrue: 
+			["The resource had a nil backcolor"
+			self assertIsNil: self view backcolor]
+		ifFalse: [self assert: self view backcolor identicalTo: Color default].
 	self assertIsNil: view image.
-	self assert: view text equals: ''.
-	self deny: view isDefault.
-	self assert: view note equals: ''.
 	command := view commandDescription.
-	self assertIsNil: command command.
-	self assertIsNil: command description.
+	"Need to find the D2.1 stbVersion 3 resource for the OK button"
+	self assert: view text equals: '&OK'.
+	self assert: view isDefault.
+	"The original D1 resource had a bug that the command wasn't actually set in the OK button resource. This was fixed in D2.0, although the STB version was stil 1."
+	anInteger = 1 ifFalse: [self assert: command command identicalTo: #ok].
+	self assert: command description equals: '&OK'.
+	self assert: view note equals: ''.
 	self deny: command hasAcceleratorKey.
 	self assert: command isAbortable.
 	self deny: command isModalCommand.
-	self assertIsNil: command image!
-
-vuFile
-	^'PushButton.Push button.vu'! !
+	self assertIsNil: command image! !
 
 !PushButtonTest categoriesForMethods!
 assertButton:isDefault:!helpers!private! !
 classToTest!helpers!private! !
 getButton:textExtent:!helpers!private! !
-oldDolphinVersionsForStbUpgrade!constants!private! !
 showDialogWithButtons!helpers!private! !
 showShellWithButtons!helpers!private! !
 tearDown!public!running! !
@@ -157,35 +152,33 @@ testCalculateExtent!public!unit tests! !
 testDialogDefaultButtons!public!unit tests! !
 testShellDefaultButtons!public!unit tests! !
 tryDefaultButtonsA:B:!private!unit tests! !
-verifyStbUpgrade:!helpers!private! !
-verifyUpgradedView:!helpers!private! !
-vuFile!constants!private! !
+verifyUpgradedView:identifier:!helpers!private! !
 !
 
 !PushButtonTest class methodsFor!
 
-resource_Push_button_D6
-	"Answer the literal data from which the 'Push button' resource can be reconstituted.
+resource_OK_button_D6
+	"Answer the literal data from which the 'OK button' resource can be reconstituted.
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
 
 	If you wish to modify this resource evaluate:
-	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Push_button)
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_OK_button)
 	"
 
-	^#(#'!!STL' 3 788558 10 ##(STBViewProxy) 8 ##(PushButton) 98 17 0 0 98 2 8 1140924416 1 416 0 0 0 5 0 0 0 416 0 8 4294906781 1180998 4 ##(CommandDescription) 0 0 1 1 0 0 32 983302 ##(MessageSequence) 202 208 98 2 721670 ##(MessageSend) 8 #createAt:extent: 98 2 328198 ##(Point) 11 11 674 141 51 416 610 8 #isEnabled: 98 1 32 416 983302 ##(WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 75 0 0 0 30 0 0 0] 98 0 674 193 193 0 27)!
+	^#(#'!!STL' 3 788558 10 ##(STBViewProxy) 8 ##(PushButton) 98 17 0 0 98 2 8 1140924416 1 416 0 0 0 5 0 0 0 416 0 8 4294906781 1180998 4 ##(CommandDescription) 8 #ok 8 '&OK' 1 1 0 0 16 983302 ##(MessageSequence) 202 208 98 3 721670 ##(MessageSend) 8 #createAt:extent: 98 2 328198 ##(Point) 11 11 706 141 51 416 642 8 #isEnabled: 98 1 32 416 642 8 #text: 98 1 8 '&OK' 416 983302 ##(WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 75 0 0 0 30 0 0 0] 98 0 706 193 193 0 27)!
 
-resource_Push_button_D7
-	"Answer the literal data from which the 'Push button' resource can be reconstituted.
+resource_OK_button_D7
+	"Answer the literal data from which the 'OK button' resource can be reconstituted.
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
 
 	If you wish to modify this resource evaluate:
-	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Push_button)
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_OK_button)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.PushButton) 34 20 nil nil 34 2 8 1140924416 1 416 nil nil nil 5 nil nil nil 416 nil 8 1915188384 1180998 4 ##(Smalltalk.CommandDescription) nil nil 1 1 nil nil false nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 11 11 642 141 51 416 594 #isEnabled: 8 #(false) 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 75 0 0 0 30 0 0 0] 8 #() 642 193 193 nil 29)! !
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.PushButton) 34 20 nil nil 34 2 8 1140924416 1 416 nil nil nil 5 nil nil nil 416 nil 8 1915188384 1180998 4 ##(Smalltalk.CommandDescription) #ok 8 '&OK' 1 1 nil nil true nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 3 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 11 11 658 141 51 416 610 #isEnabled: 8 #(false) 416 610 #text: 34 1 8 '&OK' 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 75 0 0 0 30 0 0 0] 8 #() 658 193 193 nil 29 )! !
 
 !PushButtonTest class categoriesForMethods!
-resource_Push_button_D6!public!resources-views! !
-resource_Push_button_D7!public!resources-views! !
+resource_OK_button_D6!public! !
+resource_OK_button_D7!public! !
 !
 

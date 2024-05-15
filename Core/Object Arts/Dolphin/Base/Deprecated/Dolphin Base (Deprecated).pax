@@ -67,7 +67,6 @@ package methodNames
 	add: #CRTLibrary -> #fseek:offset:origin:;
 	add: #CRTLibrary -> #ftell:;
 	add: #CRTLibrary -> #getenv:;
-	add: #CRTLibrary -> #iswspace:;
 	add: #CRTLibrary -> #ldexp:exp:;
 	add: #CRTLibrary -> #log:;
 	add: #CRTLibrary -> #log10:;
@@ -95,6 +94,7 @@ package methodNames
 	add: #Integer -> #digitSize;
 	add: #Integer -> #highSWord;
 	add: #Integer -> #lowSWord;
+	add: #Integer -> #printStringRadix:showRadix:;
 	add: #KernelLibrary -> #compareStringOrdinal:cchCount1:lpString2:cchCount2:bIgnoreCase:;
 	add: #KernelLibrary -> #getDateFormat:dwFlags:lpDate:lpFormat:lpDateStr:cchDate:;
 	add: #KernelLibrary -> #getFileSize:lpFileSizeHigh:;
@@ -539,11 +539,6 @@ getenv: varname
 	#deprecated.	"Insecure - see MSDN"
 	^self invalidCall: _failureCode!
 
-iswspace: aCharacter
-	<cdecl: bool iswspace char>
-	#deprecated.	"Unused"
-	^self invalidCall: _failureCode!
-
 ldexp: aFloat exp: anInteger
 	<cdecl: double ldexp double sdword>
 	#deprecated.
@@ -660,7 +655,6 @@ frexp:expptr:!CRT functions-floating point support!public! !
 fseek:offset:origin:!CRT functions-stream I/O!public! !
 ftell:!CRT functions-stream I/O!public! !
 getenv:!CRT functions-process and environment control!public! !
-iswspace:!CRT functions-character classification!public! !
 ldexp:exp:!CRT functions-floating point support!public! !
 log:!CRT functions-floating point support!public! !
 log10:!CRT functions-floating point support!public! !
@@ -873,12 +867,22 @@ lowSWord
 
 	#deprecated.
 	^(DWORD fromInteger: self) lowSWord
-! !
+!
+
+printStringRadix: base showRadix: flag
+	"Answer a String which represents the receiver in the radix, base (an Integer).
+	The radix prefix is included if the boolean flag is true."
+
+	| aStream |
+	aStream := String writeStream: 16.
+	self printOn: aStream base: base showRadix: flag.
+	^aStream contents! !
 
 !Integer categoriesForMethods!
 digitSize!accessing!public! !
 highSWord!bit manipulation!public! !
 lowSWord!bit manipulation!public! !
+printStringRadix:showRadix:!printing!public! !
 !
 
 !KernelLibrary methodsFor!

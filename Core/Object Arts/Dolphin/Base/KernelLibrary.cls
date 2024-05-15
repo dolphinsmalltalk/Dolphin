@@ -2,7 +2,7 @@
 
 PermanentLibrary subclass: #KernelLibrary
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: 'EnumNamesDescriptor'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
@@ -116,13 +116,13 @@ copyFile: fromString lpNewFileName: toString bfailIfExists: fail
 	^self invalidCall: _failureCode!
 
 copyMemory: destination source: source length: length
-	| errno |
-	(errno := CRTLibrary default
-				memcpy_s: destination
-				destSize: length
-				src: source
-				count: length) == 0
-		ifFalse: [CRTError signalWith: errno]!
+	"CopyMemory is a macro defined to RtlCopyMemory, which in turn is a macro defined to memcpy"
+
+	CRTLibrary default
+		memcpy_s: destination
+		destSize: length
+		src: source
+		count: length!
 
 createDirectory: path lpSecurityAttributes: aSECURITYATTRIBUTES
 	"Create a new directory with the specified <String> path, 
@@ -247,6 +247,21 @@ endUpdateResource: hUpdate fDiscard: aBoolean
 	<stdcall: bool EndUpdateResourceW handle bool>
 	^self invalidCall: _failureCode!
 
+enumDateFormats: localeInteger dwFlags: flagsInteger
+	| enum formats |
+	formats := Array writeStream: 4.
+	enum := ExternalCallback block: 
+					[:format |
+					formats nextPut: format.
+					true]
+				descriptor: EnumNamesDescriptor.
+	(self
+		enumDateFormats: enum asParameter
+		locale: localeInteger
+		dwFlags: flagsInteger) ifFalse: [self systemError].
+	enum free.
+	^formats contents!
+
 enumDateFormats: aCallbackThunk locale: locale dwFlags: dwFlags
 	"Enumerates the long or short date formats that are available for the specified locale, including 
 	date formats for any alternate calendars. The argument, dwFlags, determines whether the long 
@@ -267,6 +282,18 @@ enumSystemCodePages: aCallbackThunk dwFlags: dwFlags
 	<stdcall: bool EnumSystemCodePagesW lpvoid dword>
 	^self invalidCall: _failureCode!
 
+enumSystemLocales: flagsInteger
+	| enum locales |
+	locales := Array writeStream: 30.
+	enum := ExternalCallback block: 
+					[:format |
+					locales nextPut: format.
+					true]
+				descriptor: EnumNamesDescriptor.
+	(self enumSystemLocales: enum asParameter dwFlags: flagsInteger) ifFalse: [self systemError].
+	enum free.
+	^locales contents!
+
 enumSystemLocales: aCallbackThunk dwFlags: dwFlags
 	"Enumerates the locales that are either installed on or supported by a system, depending on the 
 	dwFlags parameter. The callback is invoked repeatedly until all locales are exhausted, or the
@@ -280,6 +307,21 @@ enumSystemLocales: aCallbackThunk dwFlags: dwFlags
 	<stdcall: bool EnumSystemLocalesW lpvoid dword>
 	^self invalidCall: _failureCode!
 
+enumTimeFormats: localeInteger dwFlags: flagsInteger
+	| enum formats |
+	formats := Array writeStream: 4.
+	enum := ExternalCallback block: 
+					[:format |
+					formats nextPut: format.
+					true]
+				descriptor: EnumNamesDescriptor.
+	(self
+		enumTimeFormats: enum asParameter
+		locale: localeInteger
+		dwFlags: flagsInteger) ifFalse: [self systemError].
+	enum free.
+	^formats contents!
+
 enumTimeFormats: aCallbackThunk locale: locale dwFlags: dwFlags
 	"Enumerates the time formats that are available for the specified locale. The function passes
 	the time format strings, one at a time, to the callback thunk, aCallbackThunk, continuing
@@ -292,6 +334,25 @@ enumTimeFormats: aCallbackThunk locale: locale dwFlags: dwFlags
 		);"
 
 	<stdcall: bool EnumTimeFormatsW lpvoid dword dword>
+	^self invalidCall: _failureCode!
+
+enumUILanguages: flagsInteger
+	| enum languages |
+	languages := Array writeStream: 4.
+	enum := ExternalCallback block: 
+					[:language :lParam |
+					languages nextPut: language.
+					true]
+				descriptor: (ExternalDescriptor returnType: 'bool' argumentTypes: 'lpwstr uintptr').
+	(self
+		enumUILanguages: enum asParameter
+		dwFlags: flagsInteger
+		lParam: 0) ifFalse: [self systemError].
+	enum free.
+	^languages contents!
+
+enumUILanguages: aCallbackThunk dwFlags: dwFlags lParam: lParam
+	<stdcall: bool EnumUILanguagesW lpvoid dword uintptr>
 	^self invalidCall: _failureCode!
 
 expandEnvironmentStrings: aString 
@@ -537,6 +598,27 @@ getCalendarInfo: locale calendar: calendar calType: calType lpCalData: lpCalData
 	<stdcall: sdword GetCalendarInfoW dword dword dword lpwstr sdword dword*>
 	^self invalidCall: _failureCode!
 
+getCalendarInfoString: locale calendar: calendar calType: calType
+	| buf size |
+	size := self
+				getCalendarInfo: locale
+				calendar: calendar
+				calType: calType
+				lpCalData: nil
+				cchData: 0
+				lpValue: nil.
+	size == 0 ifTrue: [^self systemError].
+	"Note that even if we include LOCALE_USE_CP_ACP with calType flags, the string returned by the function may still be encoded at least partially incorrectly, e.g. for CAL_SNAME of ja-JP we get '西暦 (�' rather than '西暦 (日本語)'. Therefore we stick with UTF-16 API even if the running with CP_ACP == CP_UTF8."
+	buf := Utf16String newFixed: size - 1.
+	self
+		getCalendarInfo: locale
+		calendar: calendar
+		calType: calType
+		lpCalData: buf
+		cchData: size
+		lpValue: nil.
+	^buf!
+
 getCommandLine
 	"Answer a pointer to the command-line string.
 
@@ -757,6 +839,18 @@ getLastError
 	<stdcall: dword GetLastError>
 	^self invalidCall: _failureCode!
 
+getLocaleInfo: lcid integer: lcType
+	| buf |
+	buf := ByteArray newFixed: 4.
+	"Note that the API is expecting a data count expressed as the number of (wide) characters, so for a 32-bit buffer the correct size is 2."
+	(self
+		getLocaleInfo: lcid
+		lCType: (lcType bitOr: NlsConstants.LOCALE_RETURN_NUMBER)
+		lpLCData: buf
+		cchData: 2) == 0
+		ifTrue: [self systemError].
+	^buf dwordAtOffset: 0!
+
 getLocaleInfo: locale lCType: lcType lpLCData: outputStringOutput cchData: anInteger
 	"Answer information about a locale. 
 		int GetLocaleInfo(
@@ -768,6 +862,22 @@ getLocaleInfo: locale lCType: lcType lpLCData: outputStringOutput cchData: anInt
 
 	<stdcall: sdword GetLocaleInfoW dword dword lpvoid sdword>
 	^self invalidCall: _failureCode!
+
+getLocaleInfo: lcid string: lcType
+	| size buf |
+	size := self
+				getLocaleInfo: lcid
+				lCType: lcType
+				lpLCData: nil
+				cchData: 0.
+	size == 0 ifTrue: [^self systemError].
+	buf := Utf16String newFixed: size - 1.
+	self
+		getLocaleInfo: lcid
+		lCType: lcType
+		lpLCData: buf
+		cchData: size.
+	^buf!
 
 getLocalTime: aWinSYSTEMTIME
 	"Retrieve the current local date and time.
@@ -943,6 +1053,13 @@ getThreadTimes: hThread lpCreationTime: creationFILETIME lpExitTime: exitFILETIM
 	"
 
 	<stdcall: bool GetThreadTimes handle FILETIME* FILETIME* FILETIME* FILETIME*>
+	^self invalidCall: _failureCode!
+
+getThreadUILanguage
+	"Returns the language identifier of the first user interface language for the current thread.
+		LANGID GetThreadUILanguage();"
+
+	<stdcall: word GetThreadUILanguage>
 	^self invalidCall: _failureCode!
 
 getTickCount
@@ -1125,6 +1242,10 @@ heapValidate: aHandle dwFlags: anInteger lpMem: anAddress
 		);"
 
 	<stdcall: bool HeapValidate handle dword lpvoid>
+	^self invalidCall: _failureCode!
+
+isValidLocale: locale dwFlags: dwFlags
+	<stdcall: bool IsValidLocale dword dword>
 	^self invalidCall: _failureCode!
 
 isWow64
@@ -1730,10 +1851,15 @@ deleteFile:!public!win32 functions-file management! !
 deviceIoControl:dwIoControlCode:lpInBuffer:nInBufferSize:lpOutBuffer:nOutBufferSize:lpBytesReturned:lpoverlapped:!public! !
 duplicateHandle:hSourceHandle:hTargetProcessHandle:lpTargetHandle:dwDesiredAccess:bInheritHandle:dwOptions:!public!win32 functions-handles and objects! !
 endUpdateResource:fDiscard:!public!win32 functions-resource! !
+enumDateFormats:dwFlags:!public!win32 functions-national language support! !
 enumDateFormats:locale:dwFlags:!public!win32 functions-national language support! !
 enumSystemCodePages:dwFlags:!public!win32 functions-national language support! !
+enumSystemLocales:!public!win32 functions-national language support! !
 enumSystemLocales:dwFlags:!public!win32 functions-national language support! !
+enumTimeFormats:dwFlags:!public!win32 functions-national language support! !
 enumTimeFormats:locale:dwFlags:!public!win32 functions-national language support! !
+enumUILanguages:!public!win32 functions-national language support! !
+enumUILanguages:dwFlags:lParam:!public!win32 functions-national language support! !
 expandEnvironmentStrings:!public!win32 functions-process and thread! !
 expandEnvironmentStrings:lpDst:nSize:!public!win32 functions-process and thread! !
 fileTimeToLocalTime:lpLocalFileTime:!public!win32 functions-date and time! !
@@ -1750,6 +1876,7 @@ freeLibrary:!public!win32 functions-dynamic link library! !
 getACP!**auto generated**!public!win32 functions-national language support! !
 getAtomName:lpBuffer:nSize:!public!win32 functions-atom! !
 getCalendarInfo:calendar:calType:lpCalData:cchData:lpValue:!**auto generated**!public!win32 functions-national language support! !
+getCalendarInfoString:calendar:calType:!public!win32 functions-national language support! !
 getCommandLine!public!win32 functions-process and thread! !
 getComputerName:nSize:!public!win32 functions-system information! !
 getConsoleTitle:nSize:!**auto generated**!public!win32 functions-console! !
@@ -1771,7 +1898,9 @@ getFinalPathNameByHandle:lpszFilePath:cchFilePath:dwFlags:!public!win32 function
 getFullPathName:!public!win32 functions-file management! !
 getFullPathName:nBufferLength:lpBuffer:lpFilePart:!public!win32 functions-file management! !
 getLastError!public!win32 functions-error! !
+getLocaleInfo:integer:!public!win32 functions-national language support! !
 getLocaleInfo:lCType:lpLCData:cchData:!public!win32 functions-national language support! !
+getLocaleInfo:string:!public!win32 functions-national language support! !
 getLocalTime:!public!win32 functions-date and time! !
 getModuleFileName:lpFilename:nSize:!public!win32 functions-dynamic link library! !
 getModuleHandle:!public!win32 functions-dynamic link library! !
@@ -1790,6 +1919,7 @@ getSystemWindowsDirectory:uSize:!public!win32 functions-system information! !
 getTempFileName:lpPrefixString:uUnique:lpTempFileName:!public!win32 functions-file management! !
 getTempPath:lpBuffer:!public!win32 functions-file management! !
 getThreadTimes:lpCreationTime:lpExitTime:lpKernelTime:lpUserTime:!public!win32 functions-process and thread! !
+getThreadUILanguage!public!win32 functions-national language support! !
 getTickCount!public!win32 functions-date and time!win32 functions-system information! !
 getTimeZoneInformation:!public!win32 functions-date and time! !
 getUserDefaultLCID!public!win32 functions-national language support! !
@@ -1805,6 +1935,7 @@ heapFree:dwFlags:lpMem:!public!win32 functions-memory management! !
 heapReAlloc:dwFlags:lpMem:dwBytes:!public!win32 functions-memory management! !
 heapSize:dwFlags:lpMem:!public!win32 functions-memory management! !
 heapValidate:dwFlags:lpMem:!public!win32 functions-memory management! !
+isValidLocale:dwFlags:!**auto generated**!public!win32 functions-national language support! !
 isWow64!enquiries!public! !
 isWow64Process:wow64Process:!public!win32 functions-system information! !
 lcMapString:dwMapFlags:lpScrStr:cchSrc:lpDestStr:cchDest:!public!win32 functions-national language support! !
@@ -1870,6 +2001,10 @@ fileName
 
 	^'KERNEL32'!
 
+initialize
+	self addClassVariable: 'EnumNamesDescriptor'
+		value: (ExternalDescriptor returnType: 'bool' argumentTypes: 'lpwstr')!
+
 open
 	"Answer a new instance of the receiver to represent the Kernel32 DLL. Special handling 
 	is required for this library because opening a library is normally done through the 
@@ -1880,6 +2015,7 @@ open
 
 !KernelLibrary class categoriesForMethods!
 fileName!constants!public! !
+initialize!class initialization!public! !
 open!instance creation!public! !
 !
 

@@ -342,23 +342,41 @@ imageManager
 
 	^ImageManager new!
 
-stbConvertFrom: anSTBClassFormat 
-	"Version 3 adds locator instance variable."
+stbConvertFrom: anSTBClassFormat
+	| version |
+	version := anSTBClassFormat version.
+	version == 2 ifTrue: [^[:data | (self stbConvertFromVersion2: data) becomeA: self]].
+	version == 1 ifTrue: [^[:data | (self stbConvertFromVersion1: data) becomeA: self]].
+	version == 0 ifTrue: [^[:data | (self stbConvertFromVersion0: data) becomeA: self]].
+	^super stbConvertFrom: anSTBClassFormat!
 
-	^
-	[:data | 
-	| newInstance |
-	newInstance := self basicNew.
-	anSTBClassFormat version < 3 
-		ifTrue: 
-			[1 to: data size
-				do: 
-					[:i | 
-					| offset |
-					offset := i <= 2 ifTrue: [0] ifFalse: [1].
-					newInstance instVarAt: i + offset put: (data at: i)].
-			newInstance fileLocator: FileLocator default].
-	newInstance]!
+stbConvertFromVersion0: anArray
+	"Private - Only relevant for Bitmaps"
+
+	^self stbConvertFromVersion1: anArray!
+
+stbConvertFromVersion1: anArray
+	"Private - Only relevant for Bitmaps"
+
+	^self stbConvertFromVersion2: anArray!
+
+stbConvertFromVersion2: anArray
+	"Private - Version 3 added locator (FileLocator) instance variable."
+
+	| count |
+	count := anArray size + 1.
+	^(Array new: count)
+		replaceFrom: 1
+			to: 2
+			with: anArray
+			startingAt: 1;
+		at: 3 put: FileLocator default;
+		at: 4 put: (anArray at: 3) asResourceId;
+		replaceFrom: 5
+			to: count
+			with: anArray
+			startingAt: 4;
+		yourself!
 
 stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
@@ -374,6 +392,9 @@ fromSystemId:!instance creation!public! !
 icon!constants!public! !
 imageManager!accessing!public! !
 stbConvertFrom:!binary filing!public! !
+stbConvertFromVersion0:!binary filing!public! !
+stbConvertFromVersion1:!binary filing!public! !
+stbConvertFromVersion2:!binary filing!public! !
 stbVersion!binary filing!public! !
 !
 

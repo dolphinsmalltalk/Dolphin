@@ -62,18 +62,18 @@ removeAllPropertiesOf: anObject
 removePropertyOf: anObject at: aSymbol
 	"Removes a property value matching aSymbol for anObject"
 
-	self removePropertyOf: anObject at: aSymbol ifAbsent: [anObject errorNotFound: aSymbol]
+	^self removePropertyOf: anObject at: aSymbol ifAbsent: [anObject errorNotFound: aSymbol]
 !
 
 removePropertyOf: anObject at: aSymbol ifAbsent: aBlock
 	"Removes a property value matching aSymbol for anObject. If no such property
 	exists then aBlock will be evaluated"
 
-	| propertyDict |
+	| propertyDict removed |
 	propertyDict := register at: anObject ifAbsent: [^aBlock value].
-	propertyDict removeKey: aSymbol ifAbsent: [^aBlock value].
+	removed := propertyDict removeKey: aSymbol ifAbsent: [^aBlock value].
 	propertyDict isEmpty ifTrue: [register removeKey: anObject].
-	! !
+	^removed! !
 
 !PropertyManager categoriesForMethods!
 initialize!initializing!private! !

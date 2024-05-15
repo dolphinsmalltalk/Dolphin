@@ -78,7 +78,7 @@ printOn: aStream
 		space;
 		display: self styleName!
 
-queryAlong: aCommandPolicy 
+queryAlong: aCommandPolicy
 	"Answer an enabled <CommandQuery> as dividers must always be enabled."
 
 	^CommandQuery new beEnabled!
@@ -166,6 +166,11 @@ stbConvertFrom: anSTBClassFormat
 	anSTBClassFormat version == 0 ifTrue: [^[:data | data becomeA: DividerMenuItem]].
 	^super stbConvertFrom: anSTBClassFormat!
 
+stbVersion
+	"Answer the current binary filer version number for instances of the receiver."
+
+	^1!
+
 styleNameChoices
 	"Answer an Array of available style names for instances of the receiver."
 
@@ -184,6 +189,7 @@ new!instance creation!public! !
 onPreStripImage!class hierarchy-removing!private! !
 separator!instance creation!public! !
 stbConvertFrom:!binary filing!public! !
+stbVersion!binary filing!public! !
 styleNameChoices!constants!public! !
 uninitialize!class hierarchy-removing!private! !
 !

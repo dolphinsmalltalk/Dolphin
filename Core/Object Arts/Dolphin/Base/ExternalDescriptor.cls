@@ -347,41 +347,45 @@ initializeExternalRefTypes
 	"Private - Reference types are the types to be used for the value type with one level of indirection, where the name
 	of a struct class appears, this is assumed to be associated with an ExtCallArgLP argument type."
 
-	ExternalReferenceTypes := Array new: ExtCallArgMax + 1.
-	ExternalReferenceTypes
-		at: ExtCallArgVOID + 1 put: ExtCallArgLPVOID;
-		at: ExtCallArgLPPVOID + 1 put: nil;
-		at: ExtCallArgCHAR + 1 put: ExtCallArgLPSTR;
-		at: ExtCallArgBYTE + 1 put: ExtCallArgLPVOID;
-		at: ExtCallArgSBYTE + 1 put: ExtCallArgLPVOID;
-		at: ExtCallArgWORD + 1 put: #WORD;
-		at: ExtCallArgSWORD + 1 put: #SWORD;
-		at: ExtCallArgDWORD + 1 put: #DWORD;
-		at: ExtCallArgSDWORD + 1 put: #SDWORD;
-		at: ExtCallArgUINTPTR + 1 put: #UINT_PTR;
-		at: ExtCallArgINTPTR + 1 put: #INT_PTR;
-		at: ExtCallArgBOOL + 1 put: #DWORD;
-		at: ExtCallArgHANDLE + 1 put: #DWORD;
-		at: ExtCallArgDOUBLE + 1 put: #DOUBLE;
-		at: ExtCallArgLPSTR + 1 put: ExtCallArgLPPVOID;
-		at: ExtCallArgOOP + 1 put: ExtCallArgLPPVOID;
-		at: ExtCallArgFLOAT + 1 put: #FLOAT;
-		at: ExtCallArgLPVOID + 1 put: ExtCallArgLPPVOID;
-		at: ExtCallArgHRESULT + 1 put: #HRESULT;
-		at: ExtCallArgLPWSTR + 1 put: ExtCallArgLPPVOID;
-		at: ExtCallArgQWORD + 1 put: #ULARGE_INTEGER;
-		at: ExtCallArgSQWORD + 1 put: #LARGE_INTEGER;
-		at: ExtCallArgOTE + 1 put: ExtCallArgLPPVOID;
-		at: ExtCallArgBSTR + 1 put: ExtCallArgLPPVOID;
-		at: ExtCallArgVARIANT + 1 put: #VARIANT;
-		at: ExtCallArgDATE + 1 put: #DATE;
-		at: ExtCallArgVARBOOL + 1 put: #VARIANT_BOOL;
-		at: ExtCallArgGUID + 1 put: #REFGUID;
-		at: ExtCallArgSTRUCT + 1 put: ExtCallArgLP;
-		at: ExtCallArgSTRUCT4 + 1 put: ExtCallArgLP;
-		at: ExtCallArgSTRUCT8 + 1 put: ExtCallArgLP;
-		at: ExtCallArgNTSTATUS + 1 put: #SDWORD.
-	ExternalReferenceTypes isImmutable: true!
+	ExternalReferenceTypes := (Array new: ExtCallArgMax + 1)
+				at: ExtCallArgVOID + 1 put: ExtCallArgLPVOID;
+				at: ExtCallArgLPPVOID + 1 put: nil;
+				at: ExtCallArgCHAR + 1 put: ExtCallArgLPSTR;
+				at: ExtCallArgBYTE + 1 put: ExtCallArgLPVOID;
+				at: ExtCallArgSBYTE + 1 put: ExtCallArgLPVOID;
+				at: ExtCallArgWORD + 1 put: #WORD;
+				at: ExtCallArgSWORD + 1 put: #SWORD;
+				at: ExtCallArgDWORD + 1 put: #DWORD;
+				at: ExtCallArgSDWORD + 1 put: #SDWORD;
+				at: ExtCallArgUINTPTR + 1 put: #UINT_PTR;
+				at: ExtCallArgINTPTR + 1 put: #INT_PTR;
+				at: ExtCallArgBOOL + 1 put: #DWORD;
+				at: ExtCallArgHANDLE + 1 put: #DWORD;
+				at: ExtCallArgDOUBLE + 1 put: #DOUBLE;
+				at: ExtCallArgLPSTR + 1 put: ExtCallArgLPPVOID;
+				at: ExtCallArgOOP + 1 put: ExtCallArgLPPVOID;
+				at: ExtCallArgFLOAT + 1 put: #FLOAT;
+				at: ExtCallArgLPVOID + 1 put: ExtCallArgLPPVOID;
+				at: ExtCallArgHRESULT + 1 put: #HRESULT;
+				at: ExtCallArgLPWSTR + 1 put: ExtCallArgLPPVOID;
+				at: ExtCallArgQWORD + 1 put: #ULARGE_INTEGER;
+				at: ExtCallArgSQWORD + 1 put: #LARGE_INTEGER;
+				at: ExtCallArgOTE + 1 put: ExtCallArgLPPVOID;
+				at: ExtCallArgBSTR + 1 put: ExtCallArgLPPVOID;
+				at: ExtCallArgVARIANT + 1 put: #VARIANT;
+				at: ExtCallArgDATE + 1 put: #DATE;
+				at: ExtCallArgVARBOOL + 1 put: #VARIANT_BOOL;
+				at: ExtCallArgGUID + 1 put: #REFGUID;
+				at: ExtCallArgSTRUCT + 1 put: ExtCallArgLP;
+				at: ExtCallArgSTRUCT4 + 1 put: ExtCallArgLP;
+				at: ExtCallArgSTRUCT8 + 1 put: ExtCallArgLP;
+				at: ExtCallArgNTSTATUS + 1 put: #SDWORD;
+				at: ExtCallArgErrno + 1 put: #SDWORD;
+				at: ExtCallArgBool8 + 1 put: ExtCallArgLPVOID;
+				at: ExtCallArgChar32 + 1 put: ExtCallArgLPVOID;
+				at: ExtCallArgChar16 + 1 put: ExtCallArgLPWSTR;
+				isImmutable: true;
+				yourself!
 
 initializeExternalTypes
 	ExternalValueTypes := LookupTable new.
@@ -413,7 +417,11 @@ initializeExternalTypes
 		at: 'varbool' put: ExtCallArgVARBOOL;
 		at: 'guid' put: ExtCallArgGUID;
 		at: 'date' put: ExtCallArgDATE;
-		at: 'ntstatus' put: ExtCallArgNTSTATUS.
+		at: 'ntstatus' put: ExtCallArgNTSTATUS;
+		at: 'errno' put: ExtCallArgErrno;
+		at: 'bool8' put: ExtCallArgBool8;
+		at: 'char32' put: ExtCallArgChar32;
+		at: 'char16' put: ExtCallArgChar16.
 	"void is only valid as a return type, not an argument type."
 	ExternalValueTypes at: 'void' put: ExtCallArgVOID.
 

@@ -3,7 +3,7 @@
 Object subclass: #Locale
 	instanceVariableNames: 'numberFormat'
 	classVariableNames: 'Invariant NoUserOverrideMask SystemDefault TimeZoneInfo UserDefault'
-	poolDictionaries: 'Win32Constants'
+	poolDictionaries: 'NlsConstants'
 	classInstanceVariableNames: ''!
 
 Locale guid: (GUID fromString: '{87b4c49a-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -15,6 +15,11 @@ Locale comment: ''!
 !Locale categoriesForClass!System-Support! !
 
 !Locale methodsFor!
+
+= anObject
+	"Answer whether the receiver and argument are equivalent (i.e. represent the same Locale)."
+
+	^self == anObject or: [anObject species == self species and: [anObject name = self name]]!
 
 amDesignator
 	"Answer the String used in the receiver locale to designate AM (morning)."
@@ -159,7 +164,7 @@ dayOfWeek: aString
 	"Answer the 1-based <integer> index in a week, of the day named by the <String> argument, aString.
 	Note that Sunday is always 1, and Saturday always 7 (but see #firstDayOfWeek)"
 
-	^self subclassResponsibility!
+	^self dayNames at: (self lowercaseString: aString)!
 
 dayOfWeekAbbreviation: anInteger
 	"Answer a <String> that is the abbreviated name for the day of the week in this Locale whose index is the <integer> argument, where Sunday is 1 and Saturday is 7."
@@ -185,6 +190,9 @@ decimalSeparator
 	"Answer the decimal separator <String> used in the receiver locale in the representation of numbers with a fractional part, e.g. '.' or ','."
 
 	^self subclassResponsibility!
+
+displayCharacter: aCharacter on: aPuttableStream
+	aPuttableStream nextPut: aCharacter!
 
 displayDate: aDate on: aWriteStream
 	"Append to the <puttableStream> argument, aWriteStream, a String whose characters are a representation of the <Date>, aDate, that a user in this <Locale> might expect to see."
@@ -218,8 +226,18 @@ displayFloat: aFloat on: aWriteStream
 		on: aWriteStream
 		format: self numberFormat!
 
+displayInteger: anInteger on: aStream
+	"Append, to aStream, a String whose characters are a representation of the <Integer> first argument as a user would want to see it."
+
+	anInteger printOn: aStream base: 10!
+
 displayName
 	"The name of the locale in its native language."
+
+	^self subclassResponsibility!
+
+displayScaledDecimal: aScaledDecimal on: aWriteStream
+	"Append to the <puttableStream> argument, aWriteStream, a String whose characters are a representation of the <ScaledDecimal>, aScaled, that a user in this <Locale> might expect to see."
 
 	^self subclassResponsibility!
 
@@ -334,6 +352,11 @@ getNumberFormat
 		negativeNumberMode: self negativeNumberMode;
 		yourself!
 
+hash
+	"Answer whether the receiver and argument are equivalent (i.e. represent the same Locale)."
+
+	^self name hash!
+
 hasLeadingZero
 	"Answer whether a leading zero is prepended to a displayed number in this locale if it has only a fractional.
 	So for example if this is true then 0.5 is displayed as '0.5', but if false as '.5'."
@@ -343,12 +366,27 @@ hasLeadingZero
 indexOfMonth: aString
 	"Answer the 1-based <integer> index in a year (i.e. 1..12) of the month named by the <String> argument, asString, which is expected to be the full locale specific name of a month, or its abbreviated form, in upper or lower case."
 
-	^self subclassResponsibility!
+	^self monthNames at: (self lowercaseString: aString)!
 
 infinity
 	"Answer the <String> representation for positive infinity in this locale (e.g the '∞' symbol)"
 
 	^self subclassResponsibility!
+
+iso639LanguageName
+	"The two-character <String> name of the language of the primary language of the locale as defined in ISO-639."
+
+	^self subclassResponsibility!
+
+isTurkic
+	"Answer whether the receiver is a turkic locale (tr or az language)."
+
+	^false!
+
+languageId
+	"Answer the <integer> Windows primary language id (the 10 low-order bits of the LCID)."
+
+	^self lcid bitAnd: 16r3FF!
 
 lastTwoDigitYear
 	"Answer the <integer> year that is the end of the 100 year interval into which 2-digit years are interpreted.
@@ -366,6 +404,32 @@ listSeparator
 
 	^self subclassResponsibility!
 
+localizedDisplayName
+	"Answer the <String> name of the Locale in the current UI language of the host system."
+
+	^self subclassResponsibility!
+
+localizeDecimal: aString format: aNUMBERFMT
+	| lcid localized size kernel32 |
+	kernel32 := KernelLibrary default.
+	size := kernel32
+				getNumberFormat: (lcid := self lcid)
+				dwFlags: 0
+				lpValue: aString
+				lpFormat: aNUMBERFMT
+				lpNumberStr: nil
+				cchNumber: 0.
+	size == 0 ifTrue: [^kernel32 systemError].
+	localized := Utf16String new: size - 1.
+	kernel32
+		getNumberFormat: lcid
+		dwFlags: 0
+		lpValue: aString
+		lpFormat: aNUMBERFMT
+		lpNumberStr: localized
+		cchNumber: size.
+	^localized!
+
 longDateFormat
 	"Answer the long date format for the receiver locale. See #dateFormat for a description of the available format tokens."
 
@@ -376,6 +440,50 @@ longTimeFormat
 
 	^self subclassResponsibility!
 
+lowercaseString: aString
+	"Answer the lowercase equivalent of the `String` argument, using the case conversions conventional for this locale."
+
+	^self mapString: aString flags: self mapLowercaseFlags!
+
+mapLowercaseFlags
+	^LCMAP_LOWERCASE!
+
+mapString: aString flags: anInteger
+	| src cchSrc cchDest dest kernel32 |
+	kernel32 := KernelLibrary default.
+	(kernel32
+		lcMapString: self lcid
+		dwMapFlags: anInteger
+		lpScrStr: (src := aString asUtf16StringCopy)
+		cchSrc: (cchSrc := src size)
+		lpDestStr: src
+		cchDest: cchSrc) == cchSrc
+		ifTrue: [^src].
+	"At the time of writing, Windows doesn't implement Unicode case conversions that change the number of code units. Maybe it will in future. If and when that happens, the above in-place conversion may fail, in which (rare) case fall back on the slower way making a pair of calls; the first to establish the required buffer size, and the 2nd to perform the actual conversion."
+	cchDest := kernel32
+				lcMapString: self lcid
+				dwMapFlags: anInteger
+				lpScrStr: src
+				cchSrc: cchSrc
+				lpDestStr: nil
+				cchDest: 0.
+	dest := Utf16String newFixed: cchDest.
+	^(kernel32
+		lcMapString: self lcid
+		dwMapFlags: anInteger
+		lpScrStr: src
+		cchSrc: cchSrc
+		lpDestStr: dest
+		cchDest: cchDest) == 0
+		ifFalse: [dest]
+		ifTrue: [Win32Error signal]!
+
+mapTitlecaseFlags
+	^LCMAP_TITLECASE!
+
+mapUppercaseFlags
+	^LCMAP_UPPERCASE!
+
 monthAbbreviation: anInteger
 	"Answer a <String> that is the localised short name of the month whose index is the argument, anInteger, where January is 1 and December is 12."
 
@@ -383,6 +491,11 @@ monthAbbreviation: anInteger
 
 monthName: anInteger
 	"Answer a <String> that is the localised long name of the month whose index is the <integer> argument, anInteger, where January is 1 and December is 12."
+
+	^self subclassResponsibility!
+
+monthNames
+	"Answer a <LookupTable> keyed by lower-cased <readableString> locale-specific month names (and abbreviated month names), with the corresponding month number as values. The names are in lowercase."
 
 	^self subclassResponsibility!
 
@@ -650,6 +763,28 @@ shortTimeFormat
 
 	^self subclassResponsibility!
 
+stbSaveOn: anSTBOutFiler
+	"Output the receiver to anSTBOutFiler."
+
+	| id |
+	anSTBOutFiler
+		writeClassPrefix: Locale;
+		register: self.
+	self = UserDefault
+		ifTrue: 
+			[anSTBOutFiler nextPut: #userDefault.
+			^self].
+	id := self basicLcid.
+	id = KernelLibrary default getSystemDefaultLCID
+		ifTrue: 
+			[anSTBOutFiler nextPut: #systemDefault.
+			^self].
+	id = KernelLibrary default getThreadUILanguage
+		ifTrue: 
+			[anSTBOutFiler nextPut: #uiDefault.
+			^self].
+	anSTBOutFiler nextPut: id!
+
 tag
 	"Answer the RFC4646 language tag for this locale."
 
@@ -675,12 +810,23 @@ timeFormat
 
 	^self longTimeFormat!
 
+titlecaseString: aString
+	"Answer the title-cased equivalent of the `String` argument, using the case conversions conventional for this locale."
+
+	^self mapString: aString flags: self mapTitlecaseFlags!
+
+uppercaseString: aString
+	"Answer the uppercase equivalent of the `String` argument, using the case conversions conventional for this locale."
+
+	^self mapString: aString flags: self mapUppercaseFlags!
+
 yearMonthFormat
 	"Answer the year/month date format for the receiver locale."
 
 	^self subclassResponsibility! !
 
 !Locale categoriesForMethods!
+=!comparing!public! !
 amDesignator!constants!public! !
 basicLcid!accessing!private! !
 dateAndTimeFormatters!printing!private! !
@@ -691,11 +837,14 @@ dayOfWeekName:!constants!public! !
 dayOfWeekShortAbbreviation:!constants!public! !
 decimalPlaces!constants!public! !
 decimalSeparator!constants!public! !
+displayCharacter:on:!public! !
 displayDate:on:!printing!public! !
 displayDateTime:on:!printing!public! !
 displayDuration:on:!printing!public! !
 displayFloat:on:!printing!public! !
+displayInteger:on:!printing!public! !
 displayName!displaying!public! !
+displayScaledDecimal:on:!printing!public! !
 displayTime:on:!printing!public! !
 durationFormat!constants!public! !
 durationFormatters!printing!private! !
@@ -703,16 +852,28 @@ englishDisplayName!constants!public! !
 englishLanguageName!constants!public! !
 firstDayOfWeek!constants!public! !
 getNumberFormat!helpers!private! !
+hash!comparing!public! !
 hasLeadingZero!constants!public! !
 indexOfMonth:!enquiries!public! !
 infinity!constants!public! !
+iso639LanguageName!constants!public! !
+isTurkic!public!testing! !
+languageId!accessing!public! !
 lastTwoDigitYear!constants!public! !
 lcid!accessing!public! !
 listSeparator!constants!public! !
+localizedDisplayName!constants!public! !
+localizeDecimal:format:!printing!public! !
 longDateFormat!constants!public! !
 longTimeFormat!constants!public! !
+lowercaseString:!converting!public! !
+mapLowercaseFlags!constants!private! !
+mapString:flags:!converting!private! !
+mapTitlecaseFlags!constants!private! !
+mapUppercaseFlags!constants!private! !
 monthAbbreviation:!enquiries!public! !
 monthName:!enquiries!public! !
+monthNames!constants!public! !
 name!constants!public! !
 nan!constants!public! !
 nativeDigits!constants!public! !
@@ -740,9 +901,12 @@ shortAmDesignator!constants!public! !
 shortDateFormat!constants!public! !
 shortPmDesignator!constants!public! !
 shortTimeFormat!constants!public! !
+stbSaveOn:!binary filing!public! !
 tag!constants!public! !
 thousandSeparator!constants!public! !
 timeFormat!constants!public! !
+titlecaseString:!converting!public! !
+uppercaseString:!converting!public! !
 yearMonthFormat!constants!public! !
 !
 
@@ -781,7 +945,7 @@ installedSystemLocales
 invariant
 	"Answer the instance of the receiver which represents the invariant locale."
 
-	^Invariant ifNil: [Invariant := self lcid: LOCALE_INVARIANT]!
+	^Invariant ifNil: [Invariant := InvariantLocale new initialize]!
 
 lcid: anLCID
 	"Answer an instance of the receiver to represent the Locale with the specified id."
@@ -811,9 +975,10 @@ named: aString
 named: aString withOverrides: aBoolean
 	"Private - Answer a sub-instance of the receiver to represent the Locale with the specified name."
 
-	| lcid |
-	(aString sameAs: 'smalltalk') ifTrue: [^self smalltalk].
-	(aString sameAs: 'invariant') ifTrue: [^self invariant].
+	| lcid lower |
+	lower := aString asLowercase.
+	lower = 'smalltalk' ifTrue: [^self smalltalk].
+	lower = 'invariant' ifTrue: [^self invariant].
 	lcid := KernelLibrary default localeNameToLCID: aString dwFlags: 0.
 	lcid == 0 ifTrue: [KernelLibrary default systemError].
 	^WindowsLocale lcid: lcid withOverrides: aBoolean!
@@ -864,7 +1029,7 @@ stbConvertFrom: anSTBClassFormat
 
 	^[:data | data error: 'Not used']!
 
-stbReadFrom: anSTBInFiler format: anSTBClassConversion
+stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
 	"Read an instance of the receiver from the binary filer, aSTBInFiler."
 
 	"Implementation Note: Overridden in order to maintain unique instances without using a STBSingletonProxy."
@@ -899,6 +1064,9 @@ systemDefault
 timeZoneInformation
 	^TimeZoneInfo ifNil: [TimeZoneInfo := self getTimeZoneInfo]!
 
+uiDefault
+	^self lcid: KernelLibrary default getThreadUILanguage!
+
 userDefault
 	"Answer the instance of the receiver which represents the default user locale."
 
@@ -928,11 +1096,12 @@ reset!initializing!private! !
 smalltalk!instance creation!public! !
 standard:!instance creation!public! !
 stbConvertFrom:!public! !
-stbReadFrom:format:!public! !
+stbReadFrom:format:size:!public! !
 stbVersion!public! !
 supportedSystemLocales!enquiries!private! !
 systemDefault!instance creation!public! !
 timeZoneInformation!enquiries!public! !
+uiDefault!instance creation!public! !
 userDefault!instance creation!public! !
 userDefault:!instance creation!public! !
 !

@@ -40,6 +40,7 @@ package globalAliases: (Set new
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
 	'..\..\Base\Dolphin Basic Geometry'
+	'..\Common Controls\Dolphin Common Controls'
 	'..\..\Base\Dolphin MVP Base'
 	'..\..\Presenters\Text\Dolphin Text Presenter'
 	'..\..\Type Converters\Dolphin Type Converters'
@@ -49,16 +50,16 @@ package!
 
 "Class Definitions"!
 
-Win32Structure subclass: #LHITTESTINFO
-	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_item _OffsetOf_pt'
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
 Win32Structure subclass: #LITEM
 	instanceVariableNames: ''
 	classVariableNames: '_OffsetOf_iLink _OffsetOf_mask _OffsetOf_state _OffsetOf_stateMask _OffsetOf_szID _OffsetOf_szURL'
 	poolDictionaries: 'SysLinkConstants'
+	classInstanceVariableNames: ''!
+
+CCHITTESTINFO subclass: #LHITTESTINFO
+	instanceVariableNames: ''
+	classVariableNames: '_OffsetOf_item'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
 NMHDR subclass: #NMLINK

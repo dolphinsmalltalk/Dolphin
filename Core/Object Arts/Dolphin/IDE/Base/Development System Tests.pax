@@ -23,6 +23,7 @@ package classNames
 	add: #SmalltalkParserTest;
 	add: #SmalltalkSystemTest;
 	add: #SmalltalkWorkspaceTest;
+	add: #SourceBrowserTest;
 	add: #StStyler;
 	add: #VersionResourceTest;
 	add: #VMTest;
@@ -54,10 +55,13 @@ package setPrerequisites: #(
 	'..\..\MVP\Base\Dolphin Basic Geometry'
 	'..\..\MVP\Views\Common Controls\Dolphin Common Controls'
 	'..\..\MVP\Dialogs\Common\Dolphin Common Dialogs'
+	'..\Community Edition\Dolphin Community Edition Tools'
 	'..\..\Base\Dolphin Legacy Date & Time'
 	'..\..\MVP\Base\Dolphin MVP Base'
 	'..\..\MVP\Tests\Dolphin MVP Tests'
 	'..\..\Registry\Dolphin Registry Access'
+	'..\..\MVP\Presenters\Text\Dolphin Rich Text Presenter'
+	'..\..\MVP\Presenters\Text\Dolphin Text Presenter'
 	'..\..\Lagoon\Lagoon Image Stripper'
 	'..\..\ActiveX\COM\OLE COM'
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments'
@@ -168,6 +172,12 @@ AbstractParserErrorTest subclass: #CompilerErrorTest
 	classInstanceVariableNames: ''!
 
 PresenterTest subclass: #SmalltalkWorkspaceTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+PresenterTest subclass: #SourceBrowserTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

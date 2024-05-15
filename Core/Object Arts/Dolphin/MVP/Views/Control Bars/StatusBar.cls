@@ -234,22 +234,18 @@ rectangleOfItem: aStatusBarItem
 	^self itemRect: (self indexOfItem: aStatusBarItem)!
 
 removeItem: aStatusBarItem
-	"Remove aStatusOwnerDraw from the receivers contents of visible parts.
-	Answer aStatusOwnerDraw.
+	"Remove the specified <StatusBarItem> from the receiver's visible parts. Answer the argument."
 
-	Note that we always ensure that there is one part, the leftOverSeparator,
-	registered with the common control to get around a bug in the control."
+	"Note that we always ensure that there is one part, the leftOverSeparator, registered with the common control to get around a bug in the control."
 
-	| partIndex |
-	partIndex := parts indexOfItem: aStatusBarItem.
-	parts size = 1 ifTrue: [self addItem: leftOverSeparator].
-	parts remove: aStatusBarItem.
+	| index |
+	index := self indexOfItem: aStatusBarItem.
+	index == 0 ifTrue: [^self errorNotFound: aStatusBarItem].
+	parts size == 1 ifTrue: [self addItem: leftOverSeparator].
+	parts := parts copyWithoutIndex: index.
 	aStatusBarItem parentView: nil.
 	self setRightEdges.
-	parts
-		from: partIndex
-		to: parts size
-		do: [:part | self setItemText: part].
+	index to: parts size do: [:i | self setItemText: (parts at: i) at: i].
 	^aStatusBarItem!
 
 resolutionScaledBy: aPoint
@@ -365,6 +361,19 @@ setItemText: aStatusBarItem
 		lpParam: lParam) == 0
 		ifTrue: [^self errorInCommonControlCall]!
 
+setItemText: aStatusBarItem at: anInteger
+	"Private - Set the SB_SETTEXT of the receiver's common control for specified one of the receiver's <StatusBarItem>s."
+
+	"In the case of owner-drawn items, this amounts to an instruction to the control to request re-draw of the item, and we don't need to pass the text here."
+
+	| style |
+	style := aStatusBarItem style.
+	(self
+		sendMessage: SB_SETTEXT
+		wParam: (style bitOr: anInteger - 1)
+		lpParam: ((style allMask: SBT_OWNERDRAW) ifFalse: [aStatusBarItem getText asUtf16String])) == 0
+		ifTrue: [self errorInCommonControlCall]!
+
 setRightEdges
 	"Private - Inform the common control of the right edge for each of the receiver's parts."
 
@@ -448,6 +457,7 @@ sbGetTipText:!accessing!private! !
 setControlBackcolor:!helpers!private! !
 setItem:tipText:!operations!private! !
 setItemText:!accessing!private! !
+setItemText:at:!accessing!private! !
 setRightEdges!helpers!private! !
 setRightEdges:!helpers!private! !
 setWindowText:!accessing!private!win32 bug fix! !

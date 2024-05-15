@@ -17,7 +17,7 @@ package classNames
 	add: #DebuggerTest;
 	add: #IdeaSpaceShellTest;
 	add: #MethodWorkspaceTest;
-	add: #PackageBrowserTest;
+	add: #PackageBrowserShellTest;
 	add: #PackagedClassSelectorTest;
 	add: #PackageFolderTest;
 	add: #PackageManagerTest;
@@ -28,6 +28,10 @@ package classNames
 	add: #SmalltalkSystemShellTest;
 	add: #SystemBrowserTest;
 	add: #ViewComposerTest;
+	yourself.
+
+package methodNames
+	add: 'ClassBrowserShell class' -> #correspondingTestCase;
 	yourself.
 
 package binaryGlobalNames: (Set new
@@ -78,12 +82,6 @@ DolphinTest subclass: #AddMethodChangeTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
-DolphinTest subclass: #ClassBrowserAbstractTest
-	instanceVariableNames: 'browser methodsPresenter packageA plugins'
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
 DolphinTest subclass: #CodeMentorTest
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -94,18 +92,6 @@ DolphinTest subclass: #DebuggerTest
 	instanceVariableNames: 'process savedShowWalkbacks savedView'
 	classVariableNames: ''
 	poolDictionaries: 'OpcodePool'
-	classInstanceVariableNames: ''!
-
-DolphinTest subclass: #IdeaSpaceShellTest
-	instanceVariableNames: 'ideaShell browserPlugins'
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-DolphinTest subclass: #PackageBrowserTest
-	instanceVariableNames: 'packageA packageB packageC dolphinTestA dolphinTestB dolphinTestC shell cardsPresenter classesPresenter methodsPresenter globalsPresenter resourcesPresenter dependencyPresenters methodAA methodAB methodAC methodBA methodBB methodCA'
-	classVariableNames: ''
-	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
 DolphinTest subclass: #PackageManagerTest
@@ -120,26 +106,56 @@ DolphinTest subclass: #PublishedAspectInspectorTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
-DolphinTest subclass: #ResourceBrowserTest
-	instanceVariableNames: 'resourceBrowser testClass'
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
 DolphinTest subclass: #SmalltalkStylerTest
 	instanceVariableNames: 'mock scintilla'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
-DolphinTest subclass: #SmalltalkSystemShellTest
-	instanceVariableNames: 'systemShell'
+DolphinTest subclass: #ViewComposerTest
+	instanceVariableNames: 'vc sampleClass'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
-DolphinTest subclass: #ViewComposerTest
-	instanceVariableNames: 'vc sampleClass'
+FolderTest subclass: #PackageFolderTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+PresenterTest subclass: #ClassBrowserAbstractTest
+	instanceVariableNames: 'methodsPresenter packageA plugins'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+PresenterTest subclass: #IdeaSpaceShellTest
+	instanceVariableNames: 'browserPlugins'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+PresenterTest subclass: #MethodWorkspaceTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+PresenterTest subclass: #PackageBrowserShellTest
+	instanceVariableNames: 'packageA packageB packageC dolphinTestA dolphinTestB dolphinTestC cardsPresenter classesPresenter methodsPresenter variablesPresenter resourcesPresenter dependencyPresenters methodAA methodAB methodAC methodBA methodBB methodCA'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+PresenterTest subclass: #ResourceBrowserTest
+	instanceVariableNames: 'testClass'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+PresenterTest subclass: #SmalltalkSystemShellTest
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -151,18 +167,6 @@ ClassBrowserAbstractTest subclass: #ClassBrowserTest
 	classInstanceVariableNames: ''!
 
 ClassBrowserAbstractTest subclass: #SystemBrowserTest
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-FolderTest subclass: #PackageFolderTest
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-PresenterTest subclass: #MethodWorkspaceTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -197,6 +201,18 @@ ClassSelectorTest subclass: #PackagedClassSelectorTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+
+"Loose Methods"!
+
+!ClassBrowserShell class methodsFor!
+
+correspondingTestCase
+	^ClassBrowserTest
+! !
+
+!ClassBrowserShell class categoriesForMethods!
+correspondingTestCase!public! !
+!
 
 "End of package definition"!
 

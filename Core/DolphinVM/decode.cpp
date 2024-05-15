@@ -335,51 +335,10 @@ wostream& operator<<(wostream& st, const CharOTE* ote)
 
 	st << L'$';
 	SmallInteger code = ObjectMemoryIntegerValueOf(ch->m_code);
-	char32_t codeUnit = code & 0xffffff;
-	if (__isascii(codeUnit))
-	{
-		if (isgraph(codeUnit))
-		{
-			return st << static_cast<char>(codeUnit);
-		}
-	}
-	else
-	{
-		switch (ch->Encoding)
-		{
-		case StringEncoding::Ansi:
-		{
-			char16_t codePoint = Interpreter::m_ansiToUnicodeCharMap[codeUnit & 0xff];
-			if (iswgraph(codePoint))
-			{
-				return st << static_cast<char16_t>(codePoint);
-			}
-			break;
-		}
-		case StringEncoding::Utf16:
-			if (iswgraph(static_cast<char16_t>(codeUnit)))
-			{
-				return st << static_cast<char16_t>(codeUnit);
-			}
-			break;
-
-		case StringEncoding::Utf8:
-			break;
-
-		case StringEncoding::Utf32:
-			if (U_IS_BMP(codeUnit) && iswgraph(static_cast<char16_t>(codeUnit)))
-			{
-				return st << static_cast<char16_t>(codeUnit);
-			}
-			break;
-
-		default:
-			ASSERT(false);
-			__assume(false);
-		}
-	}
-
-	return st << L"\\x" << std::hex << codeUnit;
+	char32_t codePoint = ch->Encoding == StringEncoding::Ansi ? Interpreter::m_ansiToUnicodeCharMap[code & 0xff] : code & 0xffffff;
+	return (U_IS_BMP(codePoint) && u_isgraph(codePoint))
+		? st << static_cast<char16_t>(codePoint)
+		: st << L"\\x" << std::hex << codePoint;
 }
 
 wostream& operator<<(wostream& st, const FloatOTE* ote)

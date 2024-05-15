@@ -842,15 +842,14 @@ fromHexString: aString
 	^answer!
 
 stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
-	"Read an instance of the receiver from the binary filer, aSTBInFiler. Note that we can
-	ignore the format argument, since ByteArray is a pre-registered class that cannot be
-	versioned. The format we read here is the same as that which would be read by the in-filer
-	itself, but we can do the job more efficiently since we know that a block read from the
-	stream is possible."
+	"Read an instance of the receiver from the binary filer, aSTBInFiler. Note that we can ignore the format argument, since ByteArray is a pre-registered class that cannot be versioned. The format we read here is the same as that which would be read by the in-filer itself, but we can do the job more efficiently since we know that a block read from the byte stream is possible."
 
-	| stream size answer |
-	stream := anSTBInFiler stream.
-	answer := stream next: anInteger.
+	| answer |
+	answer := self basicNew: anInteger.
+	anSTBInFiler stream
+		basicNext: anInteger
+		into: answer
+		startingAt: 1.
 	anSTBInFiler register: answer.
 	^answer! !
 

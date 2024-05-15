@@ -18,20 +18,6 @@ If there is a function of the C runtime library which you wish to make use of th
 
 !CRTLibrary methodsFor!
 
-__iscsym: aCharacter
-	"Answer whether the argument is a letter, underscore, or digit.
-		int __iscsym(int c)"
-
-	<cdecl: bool __iscsym char>
-	^self invalidCall: _failureCode!
-
-__iscsymf: aCharacter
-	"Answer whether the argument is a letter or underscore.
-		int __iscsymf(int c)"
-
-	<cdecl: bool __iscsymf char>
-	^self invalidCall: _failureCode!
-
 _chdir: aString
 	"Change the current working directory to that identified by the path, aString.
 
@@ -126,7 +112,7 @@ _isatty: anInteger
 	^self invalidCall: _failureCode!
 
 _makepath_s: path bufferSize: sizeInBytes drive: drive dir: dir fname: fname ext: ext
-	<cdecl: sdword _makepath_s char* intptr char* char* char* char*>
+	<cdecl: errno _makepath_s char* intptr char* char* char* char*>
 	^self invalidCall: _failureCode!
 
 _open_osfhandle: osfhandle flags: flags
@@ -150,7 +136,7 @@ _spawnvp: mode cmdname: aString argv: argv
 	^self invalidCall: _failureCode!
 
 _splitpath_s: path drive: drive driveLen: driveInteger dir: dir dirLen: dirInteger fname: fname fnameLen: nameInteger ext: ext extLen: extInteger
-	<cdecl: sdword _splitpath_s char* char* intptr char* intptr char* intptr char* intptr>
+	<cdecl: errno _splitpath_s char* char* intptr char* intptr char* intptr char* intptr>
 	^self invalidCall: _failureCode!
 
 _statusfp
@@ -276,33 +262,13 @@ initialize
 	self synchronizeLocale.
 	^self!
 
-iswcntrl: aCharacter
-	"Answer whether the argument is a control character.
-		int iswcntrl( wint_t c )"
+invalidCall: anInteger
+	"Private - An invalid external call was attempted through one of the receiver's methods. The argument is the failure code from the external call primitive. If the function has an errno return type, then the value may be a errno_t value (a small positive integer) from the CRT error codes. Usually only the more modern 'secure' CRT functions have a signature with an errno_t return code. One of these error codes, STRUNCATE, is more of a status code than an error, indicating that the function truncated input, e.g. when copying to a buffer. For all other errno's we throw a CRTError exception."
 
-	<cdecl: bool iswcntrl char>
-	^self invalidCall: _failureCode!
-
-iswgraph: aCharacter
-	"Answer whether the argument is a printable character other than a space.
-		int iswgraph( wint_t c )"
-
-	<cdecl: bool iswgraph char>
-	^self invalidCall: _failureCode!
-
-iswprint: aCharacter
-	"Answer whether the argument is a printable character.
-		int iswprint( wint_t c )"
-
-	<cdecl: bool iswprint char>
-	^self invalidCall: _failureCode!
-
-iswpunct: aCharacter
-	"Answer whether the argument is a punctuation character.
-		int iswpunct( wint_t c )"
-
-	<cdecl: bool iswpunct char>
-	^self invalidCall: _failureCode!
+	^anInteger < 0
+		ifTrue: [self invalidCall: anInteger fromFrame: Processor activeProcess topFrame sender]
+		ifFalse: 
+			[anInteger == CRTConstants.STRUNCATE ifTrue: [anInteger] ifFalse: [CRTError signalWith: anInteger]]!
 
 memcmp: buf1 buf2: buf2 count: count
 	"Compare the first count bytes in two buffers, answering <0 if buf1 is < buf2, 0 if equal,
@@ -314,7 +280,7 @@ memcmp: buf1 buf2: buf2 count: count
 	^self invalidCall: _failureCode!
 
 memcpy_s: dest destSize: destSize src: src count: count
-	<cdecl: sdword memcpy_s void* dword void* dword>
+	<cdecl: errno memcpy_s void* dword void* dword>
 	^self invalidCall: _failureCode!
 
 memset: dest c: c count: count
@@ -334,7 +300,7 @@ setlocale: category locale: localeString
 	^self invalidCall: _failureCode!
 
 strcat_s: destString bufferSize: anInteger strSource: sourceString
-	<cdecl: sdword strcat_s lpstr intptr lpstr>
+	<cdecl: errno strcat_s lpstr intptr lpstr>
 	^self invalidCall: _failureCode!
 
 strcmp: string1 string2: string2
@@ -369,7 +335,7 @@ strncmp: string1 string2: string2 count: count
 	^self invalidCall: _failureCode!
 
 strncpy_s: desString bufferSize: anInteger strSource: sourceString count: countInteger
-	<cdecl: sdword strncpy_s lpvoid uintptr lpstr uintptr>
+	<cdecl: errno strncpy_s lpvoid uintptr lpstr uintptr>
 	^self invalidCall: _failureCode!
 
 strpbrk: string strCharSet: strCharSet
@@ -414,12 +380,10 @@ wcsncmp: string1 string2: string2 count: count
 	^self invalidCall: _failureCode!
 
 wcsncpy_s: strDestination bufferSize: numberOfElements strSource: strSource count: count
-	<cdecl: sdword wcsncpy_s lpvoid uintptr lpwstr uintptr>
+	<cdecl: errno wcsncpy_s lpvoid uintptr lpwstr uintptr>
 	^self invalidCall: _failureCode! !
 
 !CRTLibrary categoriesForMethods!
-__iscsym:!CRT functions-character classification!public! !
-__iscsymf:!CRT functions-character classification!public! !
 _chdir:!CRT functions-directory control!public! !
 _chmod:pmode:!CRT functions-file handling!public! !
 _clearfp!CRT functions-floating point support!public! !
@@ -464,10 +428,7 @@ fread_s:bufferSize:elementSize:count:stream:!CRT functions-stream I/O!public! !
 free:!CRT functions-memory allocation!public! !
 fwrite:size:count:stream:!CRT functions-stream I/O!public! !
 initialize!initializing!private! !
-iswcntrl:!CRT functions-character classification!public! !
-iswgraph:!CRT functions-character classification!public! !
-iswprint:!CRT functions-character classification!public! !
-iswpunct:!CRT functions-character classification!public! !
+invalidCall:!exceptions!public! !
 memcmp:buf2:count:!CRT functions-buffer manipulation!public! !
 memcpy_s:destSize:src:count:!public! !
 memset:c:count:!CRT functions-buffer manipulation!public! !

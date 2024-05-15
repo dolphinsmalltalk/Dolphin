@@ -32,8 +32,6 @@ uncompress
 
 ; CRT functions imported by the image
 
-	__iscsym
-	__iscsymf
 	_chdir
 	_chmod
 	_clearfp
@@ -75,10 +73,6 @@ uncompress
 	fread_s
 	free
 	fwrite
-	iswcntrl
-	iswgraph
-	iswprint
-	iswpunct
 	memcmp
 	memcpy_s
 	memset
@@ -93,6 +87,15 @@ uncompress
 	strncmp
 	strncpy_s
 	strpbrk
+	u_charType
+	u_getUnicodeVersion
+	u_hasBinaryProperty
+	u_isalpha
+	u_iscntrl
+	u_ispunct
+	u_isgraph
+	u_tolower
+	u_toupper
 	ungetc
 	ungetwc
 	wcscspn

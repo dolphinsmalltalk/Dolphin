@@ -509,6 +509,16 @@ size
 	^lastIndex - firstIndex + 1
 !
 
+sort
+	"Perform an in-place sort of the contents of the receiver using the default sort algorithm and sort order, which is defined by the result of sending #<= to pairs of elements."
+
+	self sortUsing: self class defaultSortAlgorithm!
+
+sort: aDyadicValuable
+	"Perform an in-place sort against the receiver using the specified <dyadicValuable> sort block."
+
+	self sortUsing: (SortAlgorithm defaultSort: aDyadicValuable)!
+
 sortUsing: aSortAlgorithm
 	"Perform an in-place sort against the receiver using the specified sort algorithm"
 	
@@ -574,6 +584,8 @@ reverseDo:!enumerating!public! !
 select:!enumerating!public! !
 setSize:!accessing!public! !
 size!accessing!public! !
+sort!public!sorting! !
+sort:!public!sorting! !
 sortUsing:!public!sorting! !
 stbSaveOn:!binary filing!public! !
 uncheckedFrom:to:keysAndValuesDo:!enumerating!private! !

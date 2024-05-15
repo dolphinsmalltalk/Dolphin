@@ -288,11 +288,11 @@ stbConvertFromVersion10: anArray
 	i.e. merge column and primaryColumns instance variables into one, and add a couple 
 	of new spare inst. var slots."
 
-	| array |
-	array := super stbConvertFromVersion10: anArray.
 	"Set lastSelIndices to empty"
-	array at: 16 put: #().
-	^array!
+
+	^(super stbConvertFromVersion10: anArray)
+		at: 16 put: #();
+		yourself!
 
 uninitialize
 	View unregisterMessageMappings: {WM_CTLCOLORLISTBOX}!

@@ -1988,7 +1988,7 @@ viewSave
 	"Save the view as a resource."
 
 	self hasResource ifFalse: [^self viewSaveAs].
-	self resourceIdentifier assign: composingView literalStoreArray.
+	self resourceIdentifier assignView: composingView.
 	self isModified: false!
 
 viewSaveAs

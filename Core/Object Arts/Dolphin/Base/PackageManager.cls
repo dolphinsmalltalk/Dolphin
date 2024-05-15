@@ -1092,6 +1092,12 @@ removePackage: aPackage
 	self loadedChanged.
 	^aPackage.!
 
+removePackages: aCollectionOfPackages
+	(aCollectionOfPackages anySatisfy: [:each | each == self systemPackage])
+		ifTrue: [^self errorRemovingSystemPackage].
+	aCollectionOfPackages do: [:each | self basicRemovePackage: each].
+	self loadedChanged!
+
 renamePackage: aPackage to: aStringPathname 
 	"Attempts to rename aPackage held by the receiver to aStringName."
 
@@ -1285,6 +1291,7 @@ prerequisiteNotFoundSignal!constants!public! !
 rebaseBasePackagesTo:!public!removing! !
 release!initializing!private! !
 removePackage:!public!removing! !
+removePackages:!public!removing! !
 renamePackage:to:!public!removing! !
 resetPrerequisites!private!updating! !
 resourceRepackaged:from:to:!events!private! !

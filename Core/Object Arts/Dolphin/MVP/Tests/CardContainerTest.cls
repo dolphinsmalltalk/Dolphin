@@ -15,18 +15,10 @@ CardContainerTest comment: ''!
 !CardContainerTest methodsFor!
 
 classToTest
-	^CardContainer!
-
-oldDolphinVersionsForStbUpgrade
-	^1 to: 4!
-
-vuFile
-	^'CompositePresenter.Card container.vu'! !
+	^CardContainer! !
 
 !CardContainerTest categoriesForMethods!
 classToTest!helpers!private! !
-oldDolphinVersionsForStbUpgrade!constants!private! !
-vuFile!constants!private! !
 !
 
 !CardContainerTest class methodsFor!

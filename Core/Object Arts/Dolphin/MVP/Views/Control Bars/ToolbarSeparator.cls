@@ -91,12 +91,8 @@ stbConvertFrom: anSTBClassFormat
 			2: width
 	"
 
-	^
-	[:data |
-	self basicNew
-		instVarAt: 1 put: (data at: 3);
-		instVarAt: 2 put: (data at: 6);
-		yourself]!
+	anSTBClassFormat version == 0 ifTrue: [^[:data | { data at: 3. data at: 6 } becomeA: self]].
+	^super stbConvertFrom: anSTBClassFormat!
 
 width: pixelWidth
 	"Answer a new instance of the receiver whose width is set to pixelWidth."

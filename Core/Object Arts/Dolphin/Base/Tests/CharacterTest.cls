@@ -44,18 +44,46 @@ testAsLowercase
 	self assert: $a asLowercase identicalTo: $a.
 	self assert: $A asLowercase identicalTo: $a.
 	self assert: $\0 asLowercase identicalTo: $\0.
-	"Euro symbol - still a unique ANSI encoded char"
-	self assert: (Character ansiValue: 128) asLowercase identicalTo: (Character ansiValue: 128).
+	self assert: $I asLowercase identicalTo: $i.
+	"Boundary case - largest Ascii value"
+	self assert: $\x7F asLowercase identicalTo: $\x7F.
+	"U+0080 doesn't appear in 1252 (for example)"
+	self assert: $\x80 asLowercase equals: $\x80.
+	self assert: $\xFF asLowercase equals: $\xFF.
+	self assert: $\x178 asLowercase equals: $\xFF.
+	"Boundary case - BMP - largest value 16-bit char is U+FFFD, the replacement char"
+	self assert: $\xFFFD asLowercase equals: $\xFFFD.
+	"U+10000 Linear B Syllable B008 A"
+	self assert: $\x10000 asLowercase equals: $\x10000.
+
+	"U+20AC Euro symbol - still a unique ANSI encoded char"
+	self assert: $€ asLowercase equals: $€.
 	"Turkish, but 8-bit"
-	self assert: (Character codePoint: 16rC7) asLowercase equals: (Character codePoint: 16rE7).
+	self assert: $Ç asLowercase equals: $ç.
+	"Turkish dotted İ"
+	self assert: $İ asLowercase equals: $i.
 	"Cyrillic, 16-bit"
-	self assert: (Character codePoint: 16r0400) asLowercase equals: (Character codePoint: 16r450).
+	self assert: $Ѐ asLowercase equals: $ѐ.
 	"Greek delta"
-	self assert: (Character codePoint: 16r394) asLowercase equals: (Character codePoint: 16r3B4).
+	self assert: $Δ asLowercase equals: $δ.
+	"U+1E9E Latin Capital Letter Sharp S  -> (U+00DF Latin Small Letter Sharp S)."
+	self assert: $ẞ asLowercase equals: $ß.
 	"Thai 7 - not a letter"
-	self assert: (Character codePoint: 16rE57) asLowercase equals: (Character codePoint: 16rE57).
-	"Symbol outside BMP"
-	self assert: Character dolphin asLowercase equals: Character dolphin!
+	self assert: $๗ asLowercase equals: $๗.
+	"U+01C5 Latin Capital Letter D with Small Letter Z with Caron -> U+01C6 Latin Small Letter Dz with Caron"
+	self assert: $ǅ asLowercase equals: $ǆ.
+	"U+037F Greek Capital Letter Yot -> U+03F3 Greek Letter Yot"
+	self assert: $Ϳ asLowercase equals: $ϳ.
+	"U+052A Cyrillic Capital Letter Dzzhe -> U+052B Cyrillic Small Letter Dzzhe"
+	self assert: $Ԫ asLowercase equals: $ԫ.
+	"Outside BMP"
+	"Emoji"
+	self assert: $🐬 asLowercase equals: $🐬.
+	"Supplementary multi-lingual plane"
+	"U+16E5A Medefaidrin Capital Letter Oe -> U+16E7A Medefaidrin Small Letter Oe (Unicode 11+)"
+	VMLibrary default u_getUnicodeVersion first >= 11 ifTrue: [self assert: $𖹚 asLowercase equals: $𖹺].
+	"U+1E921 Adlam Capital Letter Sha -> U+1E943 Adlam Small Letter Sha"
+	self assert: $𞤡 asLowercase equals: $𞥃!
 
 testAsUppercase
 	"Ascii chars have unique instances in the ANSI set"
@@ -63,18 +91,48 @@ testAsUppercase
 	self assert: $A asUppercase identicalTo: $A.
 	self assert: $a asUppercase identicalTo: $A.
 	self assert: $\0 asUppercase identicalTo: $\0.
-	"Euro symbol - still a unique ANSI encoded char"
-	self assert: (Character ansiValue: 128) asUppercase identicalTo: (Character ansiValue: 128).
+	self assert: $i asUppercase identicalTo: $I.
+	"Euro symbol - still a unique ANSI encoded char on typical code page, but might not be running with one"
+	self assert: $€ asUppercase equals: $€.
+	"Boundary case - largest Ascii value"
+	self assert: $\x7F asUppercase identicalTo: $\x7F.
+	"U+0080 doesn't appear in 1252 (for example)"
+	self assert: $\x80 asUppercase equals: $\x80.
+	self assert: $\xFF asUppercase equals: $\x178.
+	"Boundary case - BMP - largest value 16-bit char is U+FFFD, the replacement char"
+	self assert: $\xFFFD asUppercase equals: $\xFFFD.
+	"U+10000 Linear B Syllable B008 A"
+	self assert: $\x10000 asUppercase equals: $\x10000.
+	"U+1000 Myanmar Letter Ka"
+	self assert: $\x1000 asUppercase equals: $\x1000.
 	"Turkish, but 8-bit"
-	self assert: (Character codePoint: 16rE7) asUppercase equals: (Character codePoint: 16rC7).
+	self assert: $ç asUppercase equals: $Ç.
+	"Turkish dottless-i"
+	self assert: $ı asUppercase equals: $I.
 	"Cyrillic, 16-bit"
-	self assert: (Character codePoint: 16r0450) asUppercase equals: (Character codePoint: 16r400).
+	self assert: $ѐ asUppercase equals: $Ѐ.
 	"Greek delta"
-	self assert: (Character codePoint: 16r3B4) asUppercase equals: (Character codePoint: 16r394).
+	self assert: $δ asUppercase equals: $Δ.
+	"U+00DF Latin Small Letter Sharp S (eszett) - there has been an official capitalized version for some time (U+1E9E Latin Capital Letter Sharp S), but not converted by ICU at this time. For a string conversion it would convert eszett to SS, but as this is a single character conversion it can't do that."
+	self assert: $ß asUppercase equals: $ß.
+	"Ditton U+FB04, ffl ligature, can't be converted as it requires 3 uppercase code points"
+	self assert: $ﬄ asUppercase equals: $ﬄ. 
 	"Thai 7 - not a letter"
-	self assert: (Character codePoint: 16rE57) asUppercase equals: (Character codePoint: 16rE57).
-	"Symbol outside BMP"
-	self assert: Character dolphin asUppercase equals: Character dolphin!
+	self assert: $๗ asUppercase equals: $๗.
+	"U+01C6 Latin Small Letter Dz with Caron -> U+01C4 Latin Capital Letter DZ with Caron"
+	self assert: $ǆ asUppercase equals: $Ǆ.
+	"U+03F3 Greek Letter Yot -> U+037F Greek Capital Letter Yot"
+	self assert: $ϳ asUppercase equals: $Ϳ.
+	"U+052B Cyrillic Small Letter Dzzhe -> U+052A Cyrillic Capital Letter Dzzhe "
+	self assert: $ԫ asUppercase equals: $Ԫ.
+	"Outside BMP"
+	"Emoji"
+	self assert: $🐬 asUppercase equals: $🐬.
+	"Supplementary multi-lingual plane"
+	"U+16E7A Medefaidrin Small Letter Oe -> U+16E5A Medefaidrin Capital Letter Oe (Unicode 11+)"
+	VMLibrary default u_getUnicodeVersion first >= 11 ifTrue: [self assert: $𖹺 asUppercase equals: $𖹚].
+	" U+1E943 Adlam Small Letter Sha -> U+1E921 Adlam Capital Letter Sha"
+	self assert: $𞥃 asUppercase equals: $𞤡!
 
 testAsUtf16String
 	#(#($A #[65 0]) #($\x7F #[16r7F 0]) #($\x20AC #[16rAC 16r20]) #($\x7FF #[16rFF 16r07]) #($\x800 #[16r00 16r08]) #($\x10000 #[16r00 16rD8 16r00 16rDC]) #($\x1F42C #[16r3D 16rD8 16r2C 16rDC]))
@@ -196,42 +254,107 @@ testIsAlphaNumeric
 	"Control char"
 	self deny: $\0 isAlphaNumeric.
 	"Left-to-right mark"
-	self deny: (Character codePoint: 16r200E) isLowerCase.
+	self deny: $\x200E isLowerCase.
 	"Turkish, but 8-bit"
-	self assert: (Character codePoint: 16rC7) isAlphaNumeric.
-	self assert: (Character codePoint: 16rE7) isAlphaNumeric.
+	self assert: $Ç isAlphaNumeric.
+	self assert: $ç isAlphaNumeric.
 	" Cyrillic ie with grave, 16-bit"
-	self assert: (Character codePoint: 16r400) isAlphaNumeric.
-	self assert: (Character codePoint: 16r450) isAlphaNumeric.
-	"Arabic indic digit zero"
-	self assert: (Character codePoint: 16r660) isAlphaNumeric.
+	self assert: $Ѐ isAlphaNumeric.
+	self assert: $ѐ isAlphaNumeric.
+	"Arabic indic digit zero - not considered alphanumeric because this is ANSI standard definition, and only ASCII digits are included"
+	self deny: $٠ isAlphaNumeric.
+	"Ditto Thai digit for 7"
+	self deny: $๗ isAlphaNumeric.
 	"Arabic percent sign"
-	self deny: (Character codePoint: 16r066A) isAlphaNumeric.
-	"Thai digit for 7"
-	self assert: (Character codePoint: 16rE57) isAlphaNumeric!
+	self deny: $٪ isAlphaNumeric!
 
 testIsControl
 	"Tests Character>>isControl"
 
 	"C0 and C1 control codes"
 
-	(0 to: 31) , (127 to: 15) do: [:i | self assert: (Character codePoint: i) isControl].
+	($\0 to: $\b) , ($\xE to: $\x1F) do: [:each | self assert: each isControl].
+	self assert: $\x7F isControl.
+	"Space is specifically not a control character"
+	self deny: $\x20 isControl.
 	"All other ASCII chars are not control codes"
-	32 to: 126 do: [:i | self deny: (Character codePoint: i) isControl].
+	16r21 to: 16r7E do: [:i | self deny: (Character codePoint: i) isControl].
 	"Left to right mark"
-	self assert: (Character codePoint: 16r200E) isControl.
+	self assert: $\x200E isControl.
 	"Turkish, but ANSI"
-	self deny: (Character codePoint: 16rC7) isControl.
+	self deny: $Ç isControl.
 	"Cyrillic letter ie with grave"
-	self deny: (Character codePoint: 16r0400) isControl.
+	self deny: $Ѐ isControl.
 	"Thai 7"
-	self deny: (Character codePoint: 16rE57) isControl!
+	self deny: $๗ isControl.
+	"Khmer Vowel Inherent Aq - a non-spacing mark, not a control"
+	self deny: $឴ isControl.
+	"BOM"
+	self assert: $\xFEFF isControl!
 
 testIsDigit
-	#($0 $1 $2 $3 $4 $5 $6 $7 $8 $9) do: [:each | self assert: each isDigit].
+	self assert: ((0 to: 255) select: [:each | (Character codePoint: each) isDigit])
+		equals: ($0 asciiValue to: $9 asciiValue).
+
+	"Arabic indic digits - are decimal digits, but not by the ANSI isDigit definition"
+	($٠ to: $٩) do: [:each | self deny: each isDigit].
 	self deny: $a isDigit.
-	self deny: Character null isDigit.
-	self deny: (Character codePoint: 16r1F37B) isDigit!
+	self deny: $\0 isDigit.
+	self deny: $🍻 isDigit.
+
+	"Mathematical bold digit 1, U+1D7CF is a digit, but not according to #isDigit"
+	self deny: $𝟏 isDigit!
+
+testIsEnglishLetter
+	"Ascii only"
+
+	self assert: ((0 to: 255) select: [:each | (Character codePoint: each) isEnglishLetter])
+		equals: ($A asciiValue to: $Z asciiValue) , ($a asciiValue to: $z asciiValue).
+	#($\x40 $\x16 $\x5B $\x60 $\x16 $\x7B $ñ $\x3B2 $\x1F42C $\x6D3 $\x2A77F)
+		do: [:each | self deny: each isEnglishLetter]!
+
+testIsGraph
+	"Graph characters are non-blank printable characters."
+
+	"Control characters"
+
+	self deny: $\0 isGraph.
+	self deny: $\b isGraph.
+	self deny: $\a isGraph.
+	"Blank control characters"
+	self deny: $\f isGraph.
+	self deny: $\t isGraph.
+	self deny: $\v isGraph.
+	self deny: $\n isGraph.
+	"Space"
+	self deny: $\x20 isGraph.
+	"Punctuation"
+	self assert: $. isGraph.
+	"Alpha"
+	self assert: $a isGraph.
+	self assert: $Z isGraph.
+	"Digits"
+	self assert: $0 isGraph.
+	self assert: $9 isGraph.
+	"Left-to-right mark - a control character"
+	self deny: $\x200E isGraph.
+	"U+200B: Zero width space"
+	self deny: $\x200B isGraph.
+	"Greek"
+	self assert: $δ isGraph.
+	self assert: $; isGraph.	"Greek question mark"
+	"Arabic indic digit zero"
+	self assert: $٠ isGraph.
+	"Arabic percent sign"
+	self assert: $٪ isGraph.
+	"Emoji"
+	self assert: $🐬 isGraph.
+	"U+17B4: Khmer Vowel Inherent Aq"
+	self assert: $឴ isGraph.
+	"U+E0020 Tag Space. An emoji modifier, not a standalone graph"
+	self deny: $\xE0020 isGraph.
+	"BOM"
+	self deny: $\xFEFF isGraph!
 
 testIsHexDigit
 	| dolphin |
@@ -247,63 +370,179 @@ testIsHexDigit
 	dolphin := dolphin asUtf16String.
 	1 to: 2 do: [:each | self deny: (dolphin at: each) isHexDigit]!
 
+testIsLetter
+	self assert: ((0 to: 255) select: [:each | (Character codePoint: each) isEnglishLetter])
+		equals: ($A asciiValue to: $Z asciiValue) , ($a asciiValue to: $z asciiValue).
+	#($_ $\x20 $\t $\r $0) do: [:each | self deny: each isLetter].
+	#($ñ $β $ۓ $𪝿 $ꟹ) do: [:each | self assert: each isLetter].
+	"Some Arabic letters"
+	'ٮٯٱٲٳٴٵٶٷٸٹٺٻټٽپٿڀځڂڃڄڅچڇڈډڊڋڌڍڎڏڐڑڒړڔڕږڗژڙښڛڜڝڞڟڠڡڢڣڤڥڦڧڨکڪګڬڭڮگڰڱڲڳڴڵڶڷڸڹںڻڼڽھڿۀہۂۃۄۅۆۇۈۉۊۋیۍێۏېۑےۓە'
+		codePointsDo: [:each | self assert: each isLetter].
+	"Kanji"
+	'文字化け' do: [:each | self assert: each isLetter].
+
+	"Arabic Letter Superscript Alef"
+	self deny: $ٰ isLetter.
+
+	"Emoji"
+	self deny: $🐬 isLetter.
+	"Combining Greek Ypogegrammeni (diacritical mark)"
+	self deny: $ͅ isLetter.
+	"Hebrew Point Hataf Segol (non-spacing mark)"
+	self deny: $ֱ isLetter.
+	"U+0E47 Thai Maitaikhu (non-spacing mark)"
+	self deny: $็ isLetter!
+
 testIsLowercase
-	self assert: $a isLowerCase.
+	($a to: $z) do: [:each | self assert: each isLowercase].
+	"Greek"
+	'αβγδεζηθικλμνξοπρςστυφχψω'
+		codePointsDo: [:each | self assert: each isLowercase].
+	'ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΣΤΥΦΧΨΩ'
+		codePointsDo: [:each | self deny: each isLowercase].
+	"Cyrillic"
+	'кракозябры' codePointsDo: [:each | self assert: each isLowercase].
+	"Other"
+	'ąⱡîɋṹẵ' codePointsDo: [:each | self assert: each isLowercase].
 	self deny: $A isLowerCase.
 	self deny: $0 isLowerCase.
 	self deny: $\0 isLowerCase.
+	self deny: Character eof isLowercase.
 	"Left-to-right mark"
-	self deny: (Character codePoint: 16r200E) isLowerCase.
+	self deny: $\x200E isLowerCase.
 	"Turkish, but 8-bit"
-	self deny: (Character codePoint: 16rC7) isLowercase.
-	self assert: (Character codePoint: 16rE7) isLowerCase.
+	self deny: $Ç isLowercase.
+	self assert: $ç isLowerCase.
 	"Cyrillic, 16-bit"
-	self deny: (Character codePoint: 16r0400) isLowercase.
-	self assert: (Character codePoint: 16r450) isLowerCase.
+	self deny: $Ѐ isLowercase.
+	self assert: $ѐ isLowerCase.
 	"Greek delta"
-	self assert: (Character codePoint: 16r3B4) isLowercase.
-	self deny: (Character codePoint: 16r394) isLowercase.
+	self assert: $δ isLowercase.
+	self deny: $Δ isLowercase.
+	"U+00DF Latin Small Letter Sharp S (eszett)"
+	self assert: $ß isLowercase.
 	"Thai 7"
-	self deny: (Character codePoint: 16rE57) isLowercase.
+	self deny: $๗ isLowercase.
+	"Cyrillic Small Letter Rounded Ve"
+	self assert: $\x1C80 isLowercase.
+	"U+00AA: Feminine Ordinal Indicator (other letter, not in lowercase category)"
+	self deny: $\xAA isLowercase.
 	"Outside BMP"
-	self deny: Character dolphin isLowercase!
+	self deny: $🐬 isLowercase.
+	self deny: $𪝿 isLowercase.
+	self deny: $𐒽 isLowercase.
+	"U+10428: Deseret Small Letter Long I"
+	self assert: $𐐨 isLowercase!
+
+testIsPrintable
+	"Control characters"
+
+	self deny: $\0 isPrintable.
+	self deny: $\b isPrintable.
+	self deny: $\a isPrintable.
+	self deny: Character eof isPrintable.
+	"Blanks that are also considered control characters, but are printable"
+	#($\f $\t $\v $\n) do: [:each | self assert: each isPrintable].
+	"Space"
+	self assert: $\x20 isPrintable.
+	"Punctuation"
+	self assert: $. isPrintable.
+	"Alpha"
+	($A to: $Z) , ($a to: $z) do: [:each | self assert: each isPrintable].
+	"Digits"
+	($0 to: $9) do: [:each | self assert: each isPrintable].
+	"Left-to-right mark - a control character"
+	self deny: $\x200E isPrintable.
+	"Greek"
+	self assert: $δ isPrintable.
+	self assert: $; isPrintable.
+	"Arabic indic digit zero"
+	self assert: $٠ isPrintable.
+	"Arabic percent sign"
+	self assert: $٪ isPrintable.
+	"Emoji"
+	self assert: Character dolphin isPrintable.
+	"BOM - not printable"
+	self deny: $\xFEFF isPrintable!
+
+testIsPrivateUse
+	self deny: $\0 isPrivateUse.
+	self deny: $A isPrivateUse.
+	self deny: $\x20AC isPrivateUse.
+	self deny: $£ isPrivateUse.
+	self deny: Character replacement isPrivateUse.
+	self deny: Character dolphin isPrivateUse.
+	self deny:  ('🐬' asUtf16String at: 1) isPrivateUse.
+	self deny:  ('🐬' asUtf16String at: 2) isPrivateUse.
+	self deny: (Character utf16Value: 16rDFFF) isPrivateUse.
+	self assert: $\xE000 isPrivateUse!
 
 testIsPunctuation
-	self deny: $a isPunctuation.
-	self deny: $0 isPunctuation.
-	self assert: $. isPunctuation.
-	"Solidus"
-	self assert: $/ isPunctuation.
+	"Letters"
+
+	($A to: $Z) , ($a to: $z) do: [:each | self deny: each isPunctuation].
+	"Control chars"
+	self deny: $\b isPunctuation.
+	self deny: $\a isPunctuation.
+	self deny: $\0 isPunctuation.
+	self deny: Character eof isPunctuation.
+	"Blanks"
+	#($\f $\t $\v $\n) do: [:each | self deny: each isPunctuation].
+	"Spaces"
+	self deny: $\x20 isPunctuation.
+	"Digits"
+	($0 to: $9) do: [:each | self deny: each isPunctuation].
+	"Punctuation, ASCII and a few others, e.g. Greek question mark, French speech marks, section mark, runic single, triple danda, arabic percent sign"
+	#($!! $" $# $% $& $' $( $) $* $, $- $. $/ $: $; $? $@ $« $§ $᛫ $꩟ $٪)
+		do: [:each | self assert: each isPunctuation].
+	"Currencies are not punctuation"
+	self deny: $$ isPunctuation.
+	"Nor are mathematical symbols"
+	self deny: $+ isPunctuation.
+	"Nor relational operators"
+	self deny: $< isPunctuation.
 	"Left-to-right mark"
-	self deny: (Character codePoint: 16r200E) isLowerCase.
+	self deny: $\x200E isPunctuation.
 	"Greek"
-	self deny: (Character codePoint: 16r3B4) isPunctuation.
-	self assert: (Character codePoint: 16r37E) isPunctuation.
+	self deny: $δ isPunctuation.
+	self assert: $; isPunctuation.
 	"Arabic indic digit zero"
-	self deny: (Character codePoint: 16r660) isPunctuation.
-	"Arabic percent sign"
-	self assert: (Character codePoint: 16r066A) isPunctuation!
+	self deny: $٠ isPunctuation.
+	"U+0830 Samaritan Nequdaa (Other Punctuation)"
+	self assert: $࠰ isPunctuation.
+	"Emoji"
+	self deny: $🐬 isPunctuation!
 
 testIsUppercase
+	($A to: $Z) do: [:each | self assert: each isUppercase].
 	self deny: $a isUppercase.
-	self assert: $A isUppercase.
 	self deny: $0 isUppercase.
 	self deny: $\0 isUppercase.
+	self deny: $\x20 isUppercase.
+	self deny: $\n isUppercase.
+	self deny: $!! isUppercase.
 	"Left-to-right mark"
-	self deny: (Character codePoint: 16r200E) isLowerCase.
+	self deny: $\x200E isLowerCase.
 	"Turkish, but 8-bit"
-	self assert: (Character codePoint: 16rC7) isUppercase.
-	self deny: (Character codePoint: 16rE7) isUppercase.
+	self assert: $Ç isUppercase.
+	self deny: $ç isUppercase.
 	"Cyrillic, 16-bit"
-	self assert: (Character codePoint: 16r0400) isUppercase.
-	self deny: (Character codePoint: 16r450) isUppercase.
+	self assert: $Ѐ isUppercase.
+	self deny: $ѐ isUppercase.
 	"Greek delta"
-	self deny: (Character codePoint: 16r3B4) isUppercase.
-	self assert: (Character codePoint: 16r394) isUppercase.
+	self assert: $Δ isUppercase.
+	self deny: $δ isUppercase.
+	"U+1E9E Latin Capital Letter Sharp S."
+	self assert: $ẞ isUpperCase.
 	"Thai 7"
-	self deny: (Character codePoint: 16rE57) isUpperCase.
+	self deny: $๗ isUpperCase.
 	"Outside BMP"
-	self deny: Character dolphin isUppercase!
+	self deny: $🐬 isUppercase.
+	self deny: $𠃀 isUppercase.
+	self deny: $𐓦 isUppercase.
+	self assert: $𐒽 isUppercase.
+	"U+1D49C: Mathematical Script Capital A"
+	self assert: $𝒜 isUppercase!
 
 testIsUtf16SurrogateTests
 	"Exhaustively tests:
@@ -447,26 +686,50 @@ testIsUtf8SurrogateTests
 			self assert: ch isUtf8Lead.
 			self deny: ch isUtf8Trail]!
 
+testIsWhitespace
+	"Graph characters are non-blank printable characters."
+
+	#($\x20 $\n $\r $\t $\f $\v) do: [:each | self assert: each isWhitespace].
+	"NEL - Next line"
+	self assert: $\x85 isWhitespace.
+	"Non-break space"
+	self assert: $\xA0 isWhitespace.
+	"U+1680 Ogham Space Mark"
+	self assert: $\x1680 isWhitespace.
+	"U+2003 Em Space (printer's separator, aka mutton)"
+	self assert: $\x2003 isWhitespace.
+	"U+2028 Line Separator"
+	self assert: $\x2028 isWhitespace.
+	"U+2028 Paragraph Separator"
+	self assert: $\x2029 isWhitespace.
+	"U+202F Narrow No-Break Space"
+	self assert: $\x202F isWhitespace.
+	"U+205F Medium Mathematical Space"
+	self assert: $\x205F isWhitespace.
+	"U+3000 Ideographic Space"
+	self assert: $\x3000 isWhitespace.
+	"Some non-spaces"
+	#($\0 $\b $a $A $0 $\x1C $\x200E $\x16 $δ $٠ $@ $🐬 $\x180E)
+		do: [:each | self deny: each isWhitespace]!
+
 testPrintString
 	self assert: $a printString equals: '$a'.
 	self assert: $a printString equals: '$a'.
-	(1 to: 6) , (14 to: 32) do: 
-			[:i |
-			self assert: (Character codePoint: i) printString
-				equals: '$\x' , (i printStringBase: 16)].
+	(1 to: 6) , (14 to: 32)
+		do: [:i | self assert: (Character codePoint: i) printString equals: '$\x' , (i printStringBase: 16)].
 	(33 to: 126) do: [:i | self deny: ((Character codePoint: i) printString beginsWith: '$\x')].
-	self assert: (Character codePoint: 0) printString equals: '$\0'.
-	self assert: (Character codePoint: 7) printString equals: '$\a'.
-	self assert: (Character codePoint: 8) printString equals: '$\b'.
-	self assert: (Character codePoint: 9) printString equals: '$\t'.
-	self assert: (Character codePoint: 10) printString equals: '$\n'.
-	self assert: (Character codePoint: 11) printString equals: '$\v'.
-	self assert: (Character codePoint: 12) printString equals: '$\f'.
-	self assert: (Character codePoint: 13) printString equals: '$\r'.
-	self assert: (Character codePoint: 127) printString equals: '$\x7F'.
-	self assert: (Character codePoint: 16r394) printString equals: '$\x394'.
+	self assert: $\0 printString equals: '$\0'.
+	self assert: $\a printString equals: '$\a'.
+	self assert: $\b printString equals: '$\b'.
+	self assert: $\t printString equals: '$\t'.
+	self assert: $\n printString equals: '$\n'.
+	self assert: $\v printString equals: '$\v'.
+	self assert: $\f printString equals: '$\f'.
+	self assert: $\r printString equals: '$\r'.
+	self assert: $\x7F printString equals: '$\x7F'.
+	self assert: $\x394 printString equals: '$Δ'.
 	"Left-to-right mark"
-	self assert: (Character codePoint: 16r200E) printString equals: '$\x200E'!
+	self assert: $\x200E printString equals: '$\x200E'!
 
 testSize
 	self assert: $a size equals: 0.
@@ -526,12 +789,18 @@ testIdentity!public!unit tests! !
 testIsAlphaNumeric!public!unit tests! !
 testIsControl!public!unit tests! !
 testIsDigit!public!unit tests! !
+testIsEnglishLetter!public!unit tests! !
+testIsGraph!public!unit tests! !
 testIsHexDigit!public!unit tests! !
+testIsLetter!public!unit tests! !
 testIsLowercase!public!unit tests! !
+testIsPrintable!public!unit tests! !
+testIsPrivateUse!public!unit tests! !
 testIsPunctuation!public!unit tests! !
 testIsUppercase!public!unit tests! !
 testIsUtf16SurrogateTests!public!unit tests! !
 testIsUtf8SurrogateTests!public!unit tests! !
+testIsWhitespace!public!unit tests! !
 testPrintString!public!unit tests! !
 testSize!public!unit tests! !
 testSplit!public!unit tests! !

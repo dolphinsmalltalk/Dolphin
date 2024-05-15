@@ -67,9 +67,6 @@ evaluateInModalDialog: aBlock owner: ownerView centered: aBoolean
 	dialog showModalTo: ownerView.
 	self deny: dialog isOpen!
 
-oldDolphinVersionsForStbUpgrade
-	^1 to: 4!
-
 testCenteringInOwner
 	"Test that a modal dialog is centered in its owner."
 
@@ -244,9 +241,6 @@ testRemainsOnScreen
 		equals: (self workAreaNearest: workArea topRight) topRight
 				- (self dialogExtent x @ 0 * monitor dpi // 96)!
 
-vuFile
-	^'Dialog.OK-Cancel dialog.vu'!
-
 workAreaNearest: aPoint
 	^(DisplayMonitor nearestPoint: aPoint) workArea! !
 
@@ -257,7 +251,6 @@ createSubjectDialog:!helpers!private! !
 createTestShells:!helpers!private! !
 dialogExtent!constants!private! !
 evaluateInModalDialog:owner:centered:!helpers!private! !
-oldDolphinVersionsForStbUpgrade!constants!private! !
 testCenteringInOwner!public!unit tests! !
 testCenteringInOwnerModeless!public!unit tests! !
 testInplaceNotRepositioned!public!unit tests! !
@@ -265,7 +258,6 @@ testNearOwnerModal!public!unit tests! !
 testNearOwnerModeless!public!unit tests! !
 testRecreate!public!unit tests! !
 testRemainsOnScreen!public!unit tests! !
-vuFile!constants!private! !
 workAreaNearest:!helpers!private! !
 !
 

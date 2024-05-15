@@ -14,10 +14,10 @@ ClassBrowserTest comment: ''!
 
 !ClassBrowserTest methodsFor!
 
-browserClass
+classToTest
 	^ClassBrowserShell! !
 
 !ClassBrowserTest categoriesForMethods!
-browserClass!public!Running! !
+classToTest!public!Running! !
 !
 

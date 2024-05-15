@@ -192,8 +192,9 @@ basicUpTo: anObject
 beBinary
 	"Treat the elements of the stream as bytes (Integers)."
 
-	Notification deprecated.	"Only works correctly for switching from AnsiString"
-	(collection isKindOf: UtfEncodedString) ifTrue: [self error: 'Unable to switch from UTF encoded content to binary'].
+	#deprecated.	"Only works correctly for switching from AnsiString"
+	(collection isKindOf: UtfEncodedString)
+		ifTrue: [self error: 'Unable to switch from UTF encoded content to binary'].
 	collection := collection asByteArray!
 
 beText

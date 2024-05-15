@@ -23,9 +23,6 @@ margins
 nonProportionalFont
 	^Font name: 'Consolas'!
 
-oldDolphinVersionsForStbUpgrade
-	^1 to: 4!
-
 setUp
 	super setUp.
 	savedLocale := Locale userDefault.
@@ -146,27 +143,23 @@ text
 
 	^'Ḽơᶉëᶆ ȋṕšᶙṁ ḍỡḽǭᵳ ʂǐť ӓṁệẗ, ĉṓɲṩḙċťᶒțûɾ ấɖḯƥĭṩčįɳġ ḝłįʈ'!
 
-verifyUpgradedView: anInteger
-	super verifyUpgradedView: anInteger.
+verifyUpgradedView: anInteger identifier: aResourceIdentifier
+	super verifyUpgradedView: anInteger identifier: aResourceIdentifier.
 	self view plainText: self printString.
-	self assert: (self view instVarNamed: 'teFlags') equals: 4!
-
-vuFile
-	^'RichTextPresenter.Default view.vu'! !
+	self assert: (self view instVarNamed: 'teFlags') equals: TextEdit.WantTabMask.
+	self assert: (self view instVarAt: RichTextEdit instSize) isKindOf: EDITSTREAM! !
 
 !RichTextEditTest categoriesForMethods!
 classToTest!helpers!private! !
 margins!private!unit tests! !
 nonProportionalFont!constants!private! !
-oldDolphinVersionsForStbUpgrade!constants!private! !
 setUp!private!unit tests! !
 tearDown!private!running! !
 testCharNearestPosition!public!unit tests! !
 testStreamInAnsiText!public!unit tests! !
 testStreamInUtfText!public!unit tests! !
 text!constants!public! !
-verifyUpgradedView:!helpers!private! !
-vuFile!constants!private! !
+verifyUpgradedView:identifier:!helpers!private! !
 !
 
 !RichTextEditTest class methodsFor!

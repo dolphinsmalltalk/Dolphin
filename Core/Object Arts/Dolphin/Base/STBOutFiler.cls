@@ -187,6 +187,9 @@ writeClass: class withPrefix: anSTBPrefix
 			self writeClass: class withLocator: locatorString.
 			self register: class]!
 
+writeClassPrefix: aClass 
+	self writeClass: aClass withPrefix: STBPrefix forData!
+
 writeInstanceVariables: objectToSave
 	"Private - Dump the instance variables of the <Object> argument to the binary stream."
 
@@ -246,6 +249,7 @@ serializeObject:!operations!private! !
 setRefOffset:!accessing!private! !
 writeClass:withLocator:!operations!private! !
 writeClass:withPrefix:!operations!private! !
+writeClassPrefix:!operations!public! !
 writeInstanceVariables:!operations!private! !
 writeInteger:!helpers!private! !
 writeNil!operations!private! !

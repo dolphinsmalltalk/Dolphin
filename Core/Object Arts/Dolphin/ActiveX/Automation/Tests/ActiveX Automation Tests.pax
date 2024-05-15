@@ -70,7 +70,7 @@ GenericExternalArrayTest subclass: #SAFEARRAYTest
 TestResource subclass: #TestTypelib
 	instanceVariableNames: 'analyzer'
 	classVariableNames: ''
-	poolDictionaries: 'Win32Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
 "Loose Methods"!

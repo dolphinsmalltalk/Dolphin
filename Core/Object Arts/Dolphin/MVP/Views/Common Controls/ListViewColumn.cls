@@ -497,34 +497,21 @@ stbConvertFrom: anSTBClassFormat
 		4: Add customDrawBlock instance variable.
 		5: Old isAutoResize variable becomes flags variable."
 
-	^
-	[:data | 
-	| newInstance ver |
-	newInstance := self basicNew.
-	1 to: data size do: [:i | newInstance instVarAt: i put: (data at: i)].
+	| ver |
 	ver := anSTBClassFormat version.
-	ver < 1 
+	ver <= 1
 		ifTrue: 
-			["Leave the new getImageBlock inst. var. nilled"
-
-			].
-	ver < 2 ifTrue: [newInstance instVarAt: 10 put: false].
-	ver < 3 
-		ifTrue: 
-			["Leave the getInfoTipBlock inst. var. nilled"
-
-			].
-	ver < 4 
-		ifTrue: 
-			["Leave the new customDrawBlock inst. var. nilled"
-
-			].
-	ver < 5 
-		ifTrue: 
-			[| wasAutoResize |
-			wasAutoResize := newInstance instVarAt: 10.
-			newInstance instVarAt: 10 put: (wasAutoResize ifTrue: [AutoResizeMask] ifFalse: [0])].
-	newInstance]!
+			[^
+			[:data |
+			(data resize: self instSize)
+				at: 10 put: 0;
+				becomeA: self]].
+	^
+	[:data |
+	data resize: self instSize.
+	(data at: 10) isInteger
+		ifFalse: [data at: 10 put: ((data at: 10) == true ifTrue: [AutoResizeMask] ifFalse: [0])].
+	data becomeA: self]!
 
 stbVersion
 	"Answer the current binary filer version number for instances of the receiver."

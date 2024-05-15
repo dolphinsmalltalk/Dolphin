@@ -147,7 +147,13 @@ never
 	false to #compare:with: (i.e. under this comparison policy two objects 
 	are never considered equal)."
 
-	^NeverSearchPolicy current! !
+	^NeverSearchPolicy current!
+
+newCompareBlock: discriminator hashBlock: hasher
+	"Answer a new instance of the receiver configured with the <dyadicValuable comparison block,
+	discriminator, and the <monadicValuable> hashing block, hasher."
+
+	^PluggableSearchPolicy basicNew compareBlock: discriminator hashBlock: hasher! !
 
 !SearchPolicy class categoriesForMethods!
 always!instance creation!public! !
@@ -156,5 +162,6 @@ caseInsensitive!instance creation!public! !
 equality!instance creation!public! !
 identity!instance creation!public! !
 never!instance creation!public! !
+newCompareBlock:hashBlock:!instance creation!public! !
 !
 

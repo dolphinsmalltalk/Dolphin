@@ -47,7 +47,7 @@ basePath
 	^SessionManager current imageBase!
 
 findOrImportForeignClass
-	"An attempt is being made by a <ClassLocator> to load a class when the dynamic loading
+	"Private - An attempt is being made by a <ClassLocator> to load a class when the dynamic loading
 	capability is not installed. This is normally available as part of the Web Deployment Kit.
 	Raise an error to the effect that the class cannot be found."
 

@@ -195,29 +195,17 @@ new
 
 	^self shouldNotImplement!
 
-stbConvert: anArray fromVersion: anInteger 
-	"Private - Convert from earlier version view by updating and answering the array of instance
-	variables, instVarArray. "
-
-	| instVars |
-	instVars := anArray.
-	anInteger < 1 ifTrue: [instVars := self stbConvertToVersion1: instVars].
-	^instVars!
-
 stbConvertFrom: anSTBClassFormat
 	"Convert from previous binary filer version. 
 	Version Changes:
 		1) Adds stateFlags variable to CapturingInteractor"
 
-	^
-	[:data |
-	| answer instVars |
-	instVars := self stbConvert: data fromVersion: anSTBClassFormat version.
-	answer := self basicNew.
-	1 to: instVars size do: [:i | answer instVarAt: i put: (instVars at: i)].
-	answer]!
+	anSTBClassFormat version < 1 ifTrue: [^[:data | (self stbConvertFromVersion0: data) becomeA: self]].
+	^super stbConvertFrom: anSTBClassFormat!
 
-stbConvertToVersion1: anArray
+stbConvertFromVersion0: anArray
+	"No change at this level"
+
 	^anArray!
 
 stbVersion
@@ -227,9 +215,8 @@ stbVersion
 forPresenter:!instance creation!public! !
 icon!constants!public! !
 new!instance creation!public! !
-stbConvert:fromVersion:!binary filing!private! !
 stbConvertFrom:!binary filing!public! !
-stbConvertToVersion1:!binary filing!private! !
+stbConvertFromVersion0:!binary filing!private! !
 stbVersion!binary filing!public! !
 !
 

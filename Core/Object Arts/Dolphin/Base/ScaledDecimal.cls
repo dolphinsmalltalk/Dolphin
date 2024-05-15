@@ -99,6 +99,30 @@ asScaledDecimal: newScale
 		newFromNumber: fraction
 		scale: newScale!
 
+basicDisplayOn: aPuttableStream
+	"Private - Append to the <puttableStream> argument a String whose characters are a representation of the receiver in a Smalltalk decimal number format."
+
+	| scaler quo num denom scaled |
+	scaler := scale exp10.
+	num := fraction numerator.
+	denom := fraction denominator.
+	scaled := (num * scaler + (denom bitShift: -1)) // denom.
+	num negative
+		ifTrue: 
+			[aPuttableStream nextPut: $-.
+			scaled := scaled negated].
+	quo := scaled quo: scaler.
+	quo printOn: aPuttableStream base: 10.
+	scale > 0
+		ifTrue: 
+			[| rem |
+			aPuttableStream nextPut: $..
+			rem := scaled.
+			scale timesRepeat: 
+					[rem := (rem - (quo * scaler)) * 10.
+					quo := rem quo: scaler.
+					aPuttableStream nextPut: (Character digitValue: quo)]]!
+
 coerce: coercee
 	"Private - Coerce the <ArithmeticValue>, coercee, which must be of a lower generality than the receiver, to be the 
 	same type as the receiver."
@@ -326,6 +350,7 @@ addToScaledDecimal:!double dispatch!private! !
 asFloat!converting!public! !
 asFraction!converting!public! !
 asScaledDecimal:!converting!public! !
+basicDisplayOn:!printing!private! !
 coerce:!coercing!private! !
 denominator!accessing!public! !
 displayOn:!printing!public! !

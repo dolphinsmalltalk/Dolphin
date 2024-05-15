@@ -847,47 +847,6 @@ BlockClosure methodProtocol: #niladicValuable attributes: #(#readOnly) selectors
 
 !BlockClosure class methodsFor!
 
-attemptToRecompile: aBlockClosure
-	| oldMethod result newBlock newMethod receiver |
-	oldMethod := aBlockClosure method.
-	Notification signal: 'Recompiling block: ' , aBlockClosure printString.
-	oldMethod class ~~ CompiledExpression
-		ifTrue: 
-			[Notification signal: 'Unable to recompile block because it was created by a method '.
-			^aBlockClosure].
-	receiver := aBlockClosure receiver.
-	result := Compiler
-				compileForEvaluation: oldMethod getSource
-				in: (receiver isNil ifTrue: [UndefinedObject] ifFalse: [oldMethod methodClass])
-				evaluationPools: oldMethod evaluationPools
-				flags: 0.
-	newMethod := result method.
-	newMethod isNil
-		ifTrue: 
-			[Notification signal: 'Error recompiling block'.
-			^aBlockClosure].
-	newBlock := [newMethod value: receiver withArguments: #()] on: Error
-				do: 
-					[:ex |
-					Notification signal: 'Error creating block: ' , ex printString.
-					nil].
-	^newBlock ?? aBlockClosure!
-
-attemptToUpgradeBlock: aBlockClosure data: data 
-	| recompiledBlock newMethod |
-	recompiledBlock := self attemptToRecompile: aBlockClosure.
-	recompiledBlock isClean ifFalse: [^recompiledBlock].
-
-	"Danger Will Robinson: If the new block is clean, then it will be referenced from the literal frame of its home method.
-	When the STBInFiler #become:s the array with the answer to swap the refs, the array of old vars will end up
-	stored in the literal frame as useless junk that we don't want, therefore we pre-emptively replace the ref from
-	the literal frame with the array so that it is all correct when swapped [my brain exploded before I understood that, Ed]"
-	newMethod := recompiledBlock method.
-	newMethod whileMutableDo: 
-			[1 to: newMethod literalCount
-				do: [:i | (newMethod at: i) == recompiledBlock ifTrue: [newMethod at: i put: data]]].
-	^recompiledBlock!
-
 stbVersion
 	"Answer the current binary filer version number for instances of the receiver.
 		0 	- Original Smalltalk-80 style blocks (pre Dolphin 6.0)
@@ -898,8 +857,6 @@ stbVersion
 	^3! !
 
 !BlockClosure class categoriesForMethods!
-attemptToRecompile:!binary filing!development!private! !
-attemptToUpgradeBlock:data:!binary filing!development!private! !
 stbVersion!binary filing!public! !
 !
 

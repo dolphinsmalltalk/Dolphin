@@ -2789,6 +2789,10 @@ availablePluginClasses
 
 	^(ClassCategory name: 'Browser-Plugins') classes!
 
+basicPlugins
+	plugins ifNil: [self plugins: self defaultPluginsCollection].
+	^plugins!
+
 classCommentIcon
 	"Private - Answer the <Icon> to use for the class comment tab"
 
@@ -2869,7 +2873,7 @@ looseMethodColor: aColor
 plugins
 	"Answer the plugins installed by instances of the receiver"
 
-	plugins isNil ifTrue: [self plugins: self defaultPluginsCollection].
+	self basicPlugins.
 	^SystemMetrics current hasWebView
 		ifTrue: [plugins]
 		ifFalse: 
@@ -2929,6 +2933,7 @@ wordWrapSource: aBoolean
 !ClassBrowserAbstract class categoriesForMethods!
 addPlugin:!initializing!private! !
 availablePluginClasses!helpers!private! !
+basicPlugins!accessing!private! !
 classCommentIcon!helpers!private! !
 defaultAdditionalAccelerators!constants!private! !
 defaultFilterObjectMethods!accessing!options!public! !

@@ -621,6 +621,12 @@ onViewOpened
 
 	self basicOnViewOpened!
 
+onViewStateRestored
+	"The receiver's view has had it's state restored, either on restoring saved views at image load time, or due to the view being recreated (ie.g. when a style is changed that requires it).
+	Like #onViewCreated, this message not received by the presenter's of MVP triads when the views are first created from resources, because at that point the views are not connected to their final presenters. Unlike #onViewCreated, when it is received all the sub-views will have been created and restored. See also #onViewOpened and #onViewAvailable."
+
+	self view onStateRestored!
+
 onXButtonDoubleClicked: aMouseEvent 
 	"Default handler for a mouse X button double-click event."
 
@@ -898,6 +904,7 @@ onViewClosed!event handling!public! !
 onViewCreated!event handling!public! !
 onViewDestroyed!event handling!public! !
 onViewOpened!event handling!public! !
+onViewStateRestored!event handling!public! !
 onXButtonDoubleClicked:!event handling!public! !
 onXButtonPressed:!event handling!public! !
 onXButtonReleased:!event handling!public! !

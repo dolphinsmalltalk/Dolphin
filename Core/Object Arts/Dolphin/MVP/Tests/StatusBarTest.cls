@@ -17,8 +17,29 @@ StatusBarTest comment: ''!
 classToTest
 	^StatusBar!
 
-oldDolphinVersionsForStbUpgrade
-	^1 to: 4!
+testAddAndRemoveItems
+	| items |
+	"There must always at least one item - a dummy one is present if we haven't added any"
+	self assert: presenter items size equals: 1.
+	self assert: presenter contents isEmpty.
+	items := {
+				StatusBarItem new
+					width: 147;
+					model: 'Foo' asValue;
+					yourself
+			}.
+	presenter items: items.
+	self assert: presenter items asArray equals: items.
+	self assert: presenter contents asArray equals: items.
+	self assert: items first parentView equals: presenter.
+	presenter removeItem: items first.
+	self assert: presenter items size equals: 1.
+	self assert: presenter contents isEmpty.
+	self assertIsNil: items first parentView.
+	presenter addItem: items first.
+	self assert: presenter items asArray equals: items.
+	self assert: presenter contents asArray equals: items.
+	self assert: items first parentView equals: presenter!
 
 testItemLayout
 	"This test assumes that the bar is large enough to fit all the fixed size items without truncation."
@@ -163,26 +184,23 @@ testToggleItemAutoResize
 	self assert: subject width equals: -1.
 	self assert: subject rectangle width equals: expectedWidth!
 
-verifyUpgradedView: anInteger
+verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	| view |
-	super verifyUpgradedView: anInteger.
+	super verifyUpgradedView: anInteger identifier: aResourceIdentifier.
 	view := self view.
 	self assert: view backcolor
 		identicalTo: (anInteger < 13 ifTrue: [Color face3d] ifFalse: [Color default]).
-	self assert: (view contents allSatisfy: [:each | each isKindOf: StatusBarItemAbstract]).
-	self assert: (view baseStyleAllMask: CommCtrlConstants.CCS_NOPARENTALIGN)!
-
-vuFile
-	^'StatusBar.Status bar.vu'! !
+	self assert: (view contents
+				allSatisfy: [:each | (each isKindOf: StatusBarItemAbstract) and: [each isOwnerDrawn]]).
+	self assert: (view baseStyleAllMask: CommCtrlConstants.CCS_NOPARENTALIGN)! !
 
 !StatusBarTest categoriesForMethods!
 classToTest!helpers!private! !
-oldDolphinVersionsForStbUpgrade!constants!private! !
+testAddAndRemoveItems!public!unit tests! !
 testItemLayout!public!unit tests! !
 testItemLayout:!helpers!private! !
 testToggleItemAutoResize!public!unit tests! !
-verifyUpgradedView:!helpers!private! !
-vuFile!constants!private! !
+verifyUpgradedView:identifier:!helpers!private! !
 !
 
 !StatusBarTest class methodsFor!

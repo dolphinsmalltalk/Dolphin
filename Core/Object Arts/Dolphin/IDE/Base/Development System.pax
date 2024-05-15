@@ -89,7 +89,6 @@ package classNames
 	add: #PackageHierarchyModel;
 	add: #PackagePrerequisites;
 	add: #PackagePrompter;
-	add: #PackageRelativeFileLocator;
 	add: #PackageSelector;
 	add: #PackedReferencesCategory;
 	add: #PluggableEnvironment;
@@ -356,6 +355,7 @@ package methodNames
 	add: #RegKeyAbstract -> #debugPrintString;
 	add: #ResourceIdentifier -> #assign:;
 	add: #ResourceIdentifier -> #assignLiteralResourceData:;
+	add: #ResourceIdentifier -> #assignView:;
 	add: #ResourceIdentifier -> #browse;
 	add: #ResourceIdentifier -> #edit;
 	add: #ResourceIdentifier -> #editViewUsing:;
@@ -442,6 +442,7 @@ package methodNames
 	add: #WINDOWPOS -> #printOn:;
 	add: 'AbstractCardContainer class' -> #publishedAspectsOfInstances;
 	add: 'AbstractCardContainer class' -> #publishedEventsOfInstances;
+	add: 'AbstractPen class' -> #publishedAspectsOfInstances;
 	add: 'AXControlSite class' -> #publishedAspectsOfInstances;
 	add: 'AXValueConvertingControlSite class' -> #publishedAspectsOfInstances;
 	add: 'Bag class' -> #publishedAspectsOfInstances;
@@ -550,7 +551,6 @@ package methodNames
 	add: 'Package class' -> #publishedAspectsOfInstances;
 	add: 'Package class' -> #publishedEventsOfInstances;
 	add: 'PackageManager class' -> #publishedEventsOfInstances;
-	add: 'Pen class' -> #publishedAspectsOfInstances;
 	add: 'PluggableTypeConverter class' -> #publishedAspectsOfInstances;
 	add: 'Point class' -> #publishedAspectsOfInstances;
 	add: 'Point3D class' -> #publishedAspectsOfInstances;
@@ -930,12 +930,6 @@ ChunkReader subclass: #SingleChunkReader
 
 Error subclass: #InvalidInstallationError
 	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-RelativeFileLocator subclass: #PackageRelativeFileLocator
-	instanceVariableNames: 'packageName'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -1604,6 +1598,21 @@ saveStateOn: aWriteStream
 
 !AbstractDocumentShell categoriesForMethods!
 saveStateOn:!private!saved state! !
+!
+
+!AbstractPen class methodsFor!
+
+publishedAspectsOfInstances
+    	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
+    
+    	^(super publishedAspectsOfInstances)
+    		add: (Aspect color: #color);
+    		add: (Aspect integer: #width);
+    		add: (Aspect choice: #styleName from: self styleNames);
+    		yourself! !
+
+!AbstractPen class categoriesForMethods!
+publishedAspectsOfInstances!public! !
 !
 
 !AndEnvironment methodsFor!
@@ -5236,21 +5245,6 @@ publishedEventsOfInstances
 publishedEventsOfInstances!events!public! !
 !
 
-!Pen class methodsFor!
-
-publishedAspectsOfInstances
-    	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
-    
-    	^(super publishedAspectsOfInstances)
-    		add: (Aspect color: #color);
-    		add: (Aspect integer: #width);
-    		add: (Aspect choice: #styleName from: self styleNames);
-    		yourself! !
-
-!Pen class categoriesForMethods!
-publishedAspectsOfInstances!public! !
-!
-
 !PluggableTypeConverter class methodsFor!
 
 publishedAspectsOfInstances
@@ -5922,6 +5916,9 @@ assignLiteralResourceData: aLiteralArray
 	(methodClass whichCategoriesIncludeSelector: sel) do: [:each | categories add: each name].
 	methodClass compile: source categories: categories!
 
+assignView: aView
+	self assign: aView literalStoreArray!
+
 browse
 	^self edit!
 
@@ -5936,7 +5933,7 @@ editViewUsing: aMonadicBlock
 	view := DesignDesktopView default loadViewResource: self resource forEdit: true.
 	
 	[aMonadicBlock value: view.
-	self assign: view literalStoreArray] ensure: [view destroy]!
+	self assignView: view] ensure: [view destroy]!
 
 emit: aResourceArray asStringOn: aWriteStream 
 	aWriteStream nextPutAll: '#('.
@@ -5964,11 +5961,12 @@ reassign
 	| view designDesktop |
 	designDesktop := DesignDesktopView default.
 	view := designDesktop loadViewResource: self resource forEdit: true.
-	[self assign: view literalStoreArray] ensure: [view destroy]! !
+	[self assignView: view] ensure: [view destroy]! !
 
 !ResourceIdentifier categoriesForMethods!
 assign:!accessing!public! !
 assignLiteralResourceData:!accessing!private! !
+assignView:!accessing!public! !
 browse!public! !
 edit!operations!public! !
 editViewUsing:!operations!public! !
@@ -8223,7 +8221,7 @@ editNewDefaultView
 			[MessageBox
 				confirm: ('<1d> already exists. Do you wish to overwrite it?' expandMacrosWith: resourceIdentifier)])
 		ifFalse: [^self].
-	resourceIdentifier assign: view literalStoreArray.
+	resourceIdentifier assignView: view.
 	view destroy.
 	Smalltalk developmentSystem openViewComposerOn: resourceIdentifier!
 
@@ -8237,7 +8235,7 @@ makeResource: aStringName inClass: aClass
 	| resID view shell |
 	shell := ShellView new create.
 	view := shell addSubView: self new.
-	(resID := ResourceIdentifier class: aClass name: aStringName) assign: view literalStoreArray.
+	(resID := ResourceIdentifier class: aClass name: aStringName) assignView: view.
 	shell destroy.
 	^resID!
 

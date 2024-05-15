@@ -153,10 +153,11 @@ initialize
 printOn: aStream
 	"Append a representation of the receiver to aStream."
 
+	aStream basicPrint: self.
+	(parentView isKindOf: View) ifFalse: [^self].
 	aStream
-		basicPrint: self;
 		nextPut: $(;
-		print: (parentView notNil ifTrue: [self name]);
+		print: self name;
 		nextPut: $)!
 
 textWidth: aString on: aCanvas

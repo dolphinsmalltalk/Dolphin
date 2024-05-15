@@ -52,9 +52,9 @@ testLabelWithAmpersand
 	actual := (anon classPool at: 'Rect') extent.
 	self assert: actual equals: extent!
 
-verifyUpgradedView: anInteger
+verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	| view |
-	super verifyUpgradedView: anInteger.
+	super verifyUpgradedView: anInteger identifier: aResourceIdentifier.
 	view := self view.
 	self assertIsNil: (view instVarNamed: 'lastSelection')!
 
@@ -70,7 +70,7 @@ view
 !TabViewXPTest categoriesForMethods!
 classToTest!helpers!private! !
 testLabelWithAmpersand!public!unit tests! !
-verifyUpgradedView:!helpers!private! !
+verifyUpgradedView:identifier:!helpers!private! !
 view!accessing!private! !
 !
 

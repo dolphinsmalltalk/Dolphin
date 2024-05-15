@@ -141,15 +141,23 @@ startCaptureOn:!initializing!public! !
 
 !ButtonInteractor class methodsFor!
 
-stbConvertToVersion1: anArray
+stbConvertFromVersion0: anArray
 	"At version 1 the old flags inst var is subsumed by superclass stateFlags inst var."
 
-	^(super stbConvertToVersion1: anArray)
+	| converted |
+	converted := Array new: 6.
+	^converted
+		at: 1 put: (anArray at: 1);
+		at: 2 put: (anArray at: 2);
 		at: 3 put: (anArray at: 4);
-		at: 5 put: nil;
+		at: 4 put: (anArray at: 3);
+		replaceFrom: 6
+			to: converted size
+			with: anArray
+			startingAt: 5;
 		yourself! !
 
 !ButtonInteractor class categoriesForMethods!
-stbConvertToVersion1:!binary filing!private! !
+stbConvertFromVersion0:!binary filing!private! !
 !
 

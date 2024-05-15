@@ -118,6 +118,16 @@ getSpecialFolderLocation: anInteger
 		pszPath: pszPath.
 	^pszPath trimNulls!
 
+getStockIconLocation: anInteger
+	| info path |
+	info := SHSTOCKICONINFO newBuffer.
+	self
+		shGetStockIconInfo: anInteger
+		uFlags: ShellConstants.SHGSI_ICONLOCATION
+		psii: info.
+	path := info szPath.
+	^path!
+
 isUserAnAdmin
 	"Invoke the IsUserAnAdmin() function of the module wrapped by the receiver.
 	Helpstring: Tests whether the current user is a member of the Administrator's group
@@ -215,7 +225,8 @@ extractAssociatedIcon:lpIconPath:lpiIcon:!**auto generated**!public! !
 findExecutable:!public!win32 functions-shell library! !
 findExecutable:directory:!public!win32 functions-shell library! !
 findExecutable:lpDirectory:lpResult:!public!win32 functions-shell library! !
-getSpecialFolderLocation:!**auto generated**!public! !
+getSpecialFolderLocation:!enquiries!public! !
+getStockIconLocation:!enquiries!public! !
 isUserAnAdmin!**auto generated**!public! !
 SHChangeNotify:uFlags:dwItem1:dwItem2:!public!win32 functions-shell library! !
 shellExecute:lpOperation:lpFile:lpParameters:lpDirectory:nShowCmd:!public!win32 functions-shell library! !

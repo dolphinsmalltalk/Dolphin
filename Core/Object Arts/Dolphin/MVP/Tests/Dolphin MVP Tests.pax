@@ -5,6 +5,7 @@ package paxVersion: 1;
 	basicComment: ''.
 
 package classNames
+	add: #AbstractBitmapTest;
 	add: #AbstractCardContainerTest;
 	add: #AbstractContainerViewTest;
 	add: #AbstractMultilineTextEditTest;
@@ -15,6 +16,8 @@ package classNames
 	add: #AbstractTextEditTest;
 	add: #AcceleratorTableTest;
 	add: #ARGBTest;
+	add: #BitmapTest;
+	add: #BooleanToTextTest;
 	add: #BorderLayoutTest;
 	add: #BrushTest;
 	add: #CanvasTest;
@@ -29,11 +32,15 @@ package classNames
 	add: #ComboBoxTest;
 	add: #CommandDescriptionTest;
 	add: #ContainerViewTest;
+	add: #CursorTest;
 	add: #DateTimePickerTest;
+	add: #DateToTextTest;
 	add: #DialogViewTest;
+	add: #DIBSectionTest;
 	add: #DifferencesPresenterTest;
 	add: #DisplayMonitorTest;
 	add: #DpiAwarenessTest;
+	add: #DurationToTextTest;
 	add: #EvaluationConverterTest;
 	add: #ExternalPointTest;
 	add: #ExternalRectangleTest;
@@ -43,28 +50,35 @@ package classNames
 	add: #FolderTest;
 	add: #FontTest;
 	add: #FontViewTest;
+	add: #FramingConstraintsTest;
 	add: #FramingLayoutTest;
 	add: #GridLayoutTest;
 	add: #GroupBoxTest;
 	add: #HotKeyTest;
 	add: #IconTest;
+	add: #ImageTest;
 	add: #ImageViewAbstractTest;
 	add: #ImageViewTest;
 	add: #InplaceTextEditorTest;
+	add: #IntegerToTextTest;
 	add: #InternalDragDropSessionTest;
 	add: #LayoutManagerTest;
 	add: #LinkButtonTest;
 	add: #ListBoxTest;
 	add: #ListControlTest;
+	add: #ListModelTest;
 	add: #ListPresenterTest;
 	add: #ListViewTest;
+	add: #MenuTest;
+	add: #MetafileTest;
 	add: #MockScintillaView;
 	add: #MoenTreeViewTest;
-	add: #MoenTreeViewTest2;
 	add: #MonthCalendarViewTest;
 	add: #MultilineTextEditTest;
 	add: #MultiSelectListBoxTest;
 	add: #MultiSelectListViewTest;
+	add: #NumberToTextTest;
+	add: #PenTest;
 	add: #PluggableColorTest;
 	add: #Point3DTest;
 	add: #POINTLTest;
@@ -86,6 +100,7 @@ package classNames
 	add: #ScintillaLexerMetadataTest;
 	add: #ScintillaLexerPropertyTest;
 	add: #ScintillaViewTest;
+	add: #ScribbleViewTest;
 	add: #ScrollBarTest;
 	add: #ScrollingDecoratorTest;
 	add: #SelectableItemsTest;
@@ -111,12 +126,16 @@ package classNames
 	add: #TabViewTest;
 	add: #TabViewXPTest;
 	add: #TextEditTest;
+	add: #TextTileIconTest;
 	add: #ThemeColorTest;
+	add: #TimeToTextTest;
 	add: #ToolbarTest;
 	add: #TreePresenterTest;
 	add: #TreeViewTest;
 	add: #TypeConverterTest;
+	add: #ValueBufferTest;
 	add: #ValueConverterTest;
+	add: #ValueHolderTest;
 	add: #ViewTest;
 	add: #VirtualColorTest;
 	add: #WINDOWPLACEMENTTest;
@@ -162,6 +181,7 @@ package setPrerequisites: #(
 	'..\..\System\Filer\Dolphin Literal Filer'
 	'..\..\System\Filer\Dolphin Literal Filer Tests'
 	'..\Metafiles\Dolphin Metafile Records'
+	'..\Metafiles\Dolphin Metafiles'
 	'..\Views\MoenTree\Dolphin MoenTree View'
 	'..\Base\Dolphin MVP Base'
 	'..\Presenters\Number\Dolphin Number Presenter'
@@ -177,10 +197,13 @@ package setPrerequisites: #(
 	'..\Views\Styled Views\Dolphin Styled Views'
 	'..\Views\SysLink\Dolphin SysLink Control'
 	'..\Presenters\Text\Dolphin Text Presenter'
+	'..\Icons\Dolphin Text Tile Icons'
 	'..\Models\Tree\Dolphin Tree Models'
 	'..\Presenters\Tree\Dolphin Tree Presenter'
 	'..\Type Converters\Dolphin Type Converters'
-	'..\Models\Value\Dolphin Value Models').
+	'..\Models\Value\Dolphin Value Models'
+	'..\..\..\Samples\MVP\Scribble\Scribble'
+	'..\..\ActiveX\Shell\Windows Shell').
 
 package!
 
@@ -288,7 +311,13 @@ DolphinTest subclass: #FontTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
-DolphinTest subclass: #IconTest
+DolphinTest subclass: #FramingConstraintsTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+DolphinTest subclass: #ImageTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -306,8 +335,14 @@ DolphinTest subclass: #LayoutManagerTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
-DolphinTest subclass: #MoenTreeViewTest
-	instanceVariableNames: 'treeModel treeView nodeA nodeB nodeC nodeD nodeE nodeF shell scroller useShell'
+DolphinTest subclass: #MenuTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+DolphinTest subclass: #PenTest
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -328,12 +363,6 @@ DolphinTest subclass: #PresenterTest
 	instanceVariableNames: 'presenter'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
-	classInstanceVariableNames: ''!
-
-DolphinTest subclass: #RadioButtonSetPresenterTest
-	instanceVariableNames: 'radioSet'
-	classVariableNames: ''
-	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
 DolphinTest subclass: #ResourceIdentifierTest
@@ -360,14 +389,32 @@ DolphinTest subclass: #SystemMetricsTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
+DolphinTest subclass: #TextTileIconTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
 DolphinTest subclass: #TypeConverterTest
 	instanceVariableNames: 'edit savedLocale'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
+DolphinTest subclass: #ValueBufferTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
 DolphinTest subclass: #ValueConverterTest
 	instanceVariableNames: 'converter value startTime newTime changed'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+DolphinTest subclass: #ValueHolderTest
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -433,6 +480,48 @@ AbstractRectangleTest subclass: #RectangleTest
 	classInstanceVariableNames: ''!
 
 ExternalRectangleTest subclass: #RECTLTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+SequencedGrowableCollectionTest subclass: #ListModelTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+ImageTest subclass: #AbstractBitmapTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+ImageTest subclass: #CursorTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+ImageTest subclass: #IconTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+ImageTest subclass: #MetafileTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+AbstractBitmapTest subclass: #BitmapTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+AbstractBitmapTest subclass: #DIBSectionTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -564,7 +653,19 @@ PresenterTest subclass: #PushButtonTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
+PresenterTest subclass: #RadioButtonSetPresenterTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
 PresenterTest subclass: #ReferenceViewTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+PresenterTest subclass: #ScribbleViewTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -804,8 +905,8 @@ ListViewTest subclass: #SingleSelectListViewTest
 	poolDictionaries: 'ListViewConstants'
 	classInstanceVariableNames: ''!
 
-SelectableTreeItemsTest subclass: #MoenTreeViewTest2
-	instanceVariableNames: ''
+SelectableTreeItemsTest subclass: #MoenTreeViewTest
+	instanceVariableNames: 'nodeA nodeB nodeC nodeD nodeE nodeF shell scroller useShell'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -871,6 +972,42 @@ ImageViewAbstractTest subclass: #ImageViewTest
 	classInstanceVariableNames: ''!
 
 ScintillaLexerMetadataTest subclass: #ScintillaLexerPropertyTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+TypeConverterTest subclass: #BooleanToTextTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+TypeConverterTest subclass: #DateToTextTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+TypeConverterTest subclass: #DurationToTextTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+TypeConverterTest subclass: #IntegerToTextTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+TypeConverterTest subclass: #NumberToTextTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+TypeConverterTest subclass: #TimeToTextTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

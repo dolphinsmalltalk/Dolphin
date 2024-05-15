@@ -22,12 +22,16 @@ displayOn: aStream
 displayString
 	^key!
 
+isClassBinding
+	^value class isMeta and: [key == value name]!
+
 refersToLiteral: anObject
 	^self == anObject! !
 
 !VariableBinding categoriesForMethods!
 displayOn:!printing!public! !
 displayString!displaying!public! !
+isClassBinding!public!testing! !
 refersToLiteral:!private!testing! !
 !
 

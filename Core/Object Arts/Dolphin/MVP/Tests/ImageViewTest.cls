@@ -24,26 +24,18 @@ image
 	bitmap free.
 	^bitmap!
 
-oldDolphinVersionsForStbUpgrade
-	^2 to: 4!
-
-verifyUpgradedView: anInteger
+verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	| view |
-	super verifyUpgradedView: anInteger.
+	super verifyUpgradedView: anInteger identifier: aResourceIdentifier.
 	view := self view.
 	self assert: view backcolor equals: Color default.
 	self assert: view interactor identicalTo: view.
-	self assert: view viewMode identicalTo: #scaleToFit!
-
-vuFile
-	^'ImagePresenter.Basic image.vu'! !
+	self assert: view viewMode identicalTo: #scaleToFit! !
 
 !ImageViewTest categoriesForMethods!
 classToTest!helpers!private! !
 image!private!Running! !
-oldDolphinVersionsForStbUpgrade!constants!private! !
-verifyUpgradedView:!helpers!private! !
-vuFile!constants!private! !
+verifyUpgradedView:identifier:!helpers!private! !
 !
 
 !ImageViewTest class methodsFor!

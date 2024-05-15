@@ -41,12 +41,26 @@ testReformatSourcePartial
 	self assert: presenter text equals: '[:foo :bar | foo foo.
 bar bar] value: #foo value: #bar'.
 	"No selection, cursor positioned after reformatted text"
-	self assert: presenter selectionRange equals: (31 to: 30)! !
+	self assert: presenter selectionRange equals: (31 to: 30)!
+
+verifyUpgradedView: anInteger identifier: aResourceIdentifier
+	| view expectedViewClass |
+	view := self view.
+	expectedViewClass := ##(IdentityDictionary withAll: {
+						#resource_Multiline_text -> MultilineTextEdit.
+						#resource_Rich_text -> RichTextEdit.
+						#resource_Default_view -> RichTextEdit.
+						#resource_Method_source -> RichTextEdit.
+					})
+				at: aResourceIdentifier selector.
+	self assert: view isKindOf: expectedViewClass.
+	self assert: view isOpen! !
 
 !SmalltalkWorkspaceTest categoriesForMethods!
 classToTest!helpers!private! !
 doReformatSource!helpers!private! !
 testReformatSource!public!unit tests! !
 testReformatSourcePartial!public!unit tests! !
+verifyUpgradedView:identifier:!helpers!private! !
 !
 

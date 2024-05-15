@@ -251,7 +251,8 @@ resize: anInteger
 	"Private - Resize the receiver to accomodate anInteger elements.
 	Answer the receiver."
 
-	^self list resize: anInteger!
+	self list resize: anInteger.
+	^self!
 
 searchPolicy
 	"Answer the receiver's current <searchPolicy>."
@@ -378,6 +379,9 @@ newWithSearchPolicy: searchPolicy
 
 	^self on: OrderedCollection new searchPolicy: searchPolicy!
 
+ofSize: anInteger
+	^self on: (OrderedCollection ofSize: anInteger)!
+
 on: aSequenceableCollection
 	"Answer an instance of the receiver wrapped around the <sequencedCollection> argument
 	and using the default <SearchPolicy>."
@@ -412,6 +416,7 @@ new!instance creation!public! !
 new:!instance creation!public! !
 newEquality!instance creation!public! !
 newWithSearchPolicy:!instance creation!public! !
+ofSize:!instance creation!private! !
 on:!instance creation!public! !
 on:searchPolicy:!instance creation!public! !
 stbConvertFrom:!binary filing!public! !

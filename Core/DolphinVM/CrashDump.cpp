@@ -12,7 +12,7 @@
 #include "interprt.h"
 #include "VMExcept.h"
 #include "RegKey.h"
-#include <VirtualMemoryStats.h>
+#include "VirtualMemoryStats.h"
 #include <codecvt>
 
 constexpr size_t DefaultStackDepth = 300;

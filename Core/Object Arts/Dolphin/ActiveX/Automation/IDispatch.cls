@@ -90,7 +90,7 @@ basicInvokeId: id flags: wFlags parms: parms retVal: varRes
 	hr := self 
 				Invoke: id
 				riid: IID null
-				lcid: LOCALE_USER_DEFAULT
+				lcid: NlsConstants.LOCALE_USER_DEFAULT
 				wFlags: wFlags
 				pdispparams: parms
 				pvarResult: varRes
@@ -252,7 +252,7 @@ getIDsOfNames: names
 				GetIDsOfNames: IID null
 				rgszNames: rgszNames
 				cNames: cNames
-				lcid: LOCALE_USER_DEFAULT
+				lcid: NlsConstants.LOCALE_USER_DEFAULT
 				rgdispid: rgDispId.
 	^hr < 0
 		ifTrue: [hr = DISP_E_UNKNOWNNAME ifTrue: [self errorNotFound: names] ifFalse: [self hresultError: hr]]
@@ -408,7 +408,7 @@ idOfName: name ifAbsent: exceptionHandler
 				GetIDsOfNames: IID null
 				rgszNames: (DWORD fromInteger: uName yourAddress)
 				cNames: 1
-				lcid: LOCALE_USER_DEFAULT
+				lcid: NlsConstants.LOCALE_USER_DEFAULT
 				rgdispid: dispId.
 	^hr < 0
 		ifTrue: [hr = DISP_E_UNKNOWNNAME ifTrue: [exceptionHandler value] ifFalse: [self hresultError: hr]]
@@ -687,7 +687,7 @@ typeInfoIfNone: exceptionHandler
 	typeInfo isNull 
 		ifTrue: 
 			[| piTypeInfo |
-			piTypeInfo := self getTypeInfo: LOCALE_USER_DEFAULT
+			piTypeInfo := self getTypeInfo: NlsConstants.LOCALE_USER_DEFAULT
 						ifNone: [^super typeInfoIfNone: [^exceptionHandler value]].
 			typeInfo := (AXTypeInfoAnalyzer onTypeInfo: piTypeInfo) defaultInterface].
 	^typeInfo!

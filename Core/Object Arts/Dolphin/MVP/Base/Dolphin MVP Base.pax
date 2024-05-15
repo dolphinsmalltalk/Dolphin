@@ -40,6 +40,7 @@ package basicScriptAt: #preuninstall put: 'MemoryManager current collectGarbage;
 package classNames
 	add: #AbstractDelegatingView;
 	add: #AbstractNonReferenceDelegatingView;
+	add: #AbstractPen;
 	add: #AbstractRGB;
 	add: #AbstractSplash;
 	add: #ACCEL;
@@ -1251,6 +1252,12 @@ TEXTMETRICW subclass: #NEWTEXTMETRICW
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
+GraphicsTool subclass: #AbstractPen
+	instanceVariableNames: 'logPen'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
 GraphicsTool subclass: #AcceleratorTable
 	instanceVariableNames: 'commands'
 	classVariableNames: ''
@@ -1281,12 +1288,6 @@ GraphicsTool subclass: #Menu
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
-GraphicsTool subclass: #Pen
-	instanceVariableNames: 'logPen'
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
 GraphicsTool subclass: #Region
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -1297,6 +1298,18 @@ GraphicsTool subclass: #WinImageList
 	instanceVariableNames: 'extent initialSize growBy createFlags'
 	classVariableNames: ''
 	poolDictionaries: 'CommCtrlConstants'
+	classInstanceVariableNames: ''!
+
+AbstractPen subclass: #Pen
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+AbstractPen subclass: #StockPen
+	instanceVariableNames: 'id'
+	classVariableNames: ''
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
 Brush subclass: #HatchBrush
@@ -1355,12 +1368,6 @@ Icon subclass: #NullIcon
 
 Menu subclass: #MenuBar
 	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-Pen subclass: #StockPen
-	instanceVariableNames: 'id'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

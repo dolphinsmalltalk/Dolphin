@@ -2,7 +2,7 @@
 
 Magnitude subclass: #Character
 	instanceVariableNames: 'code'
-	classVariableNames: 'AnsiCharacters AnsiCodePage AnsiCodePoints CharacterSet EncodingMask EscapeChars Utf16LeadMask Utf16Mask Utf16SurrogateMask Utf16TrailMask Utf32Mask Utf8Default Utf8Mask Utf8SurrogateMask'
+	classVariableNames: 'AnsiCharacters AnsiCodePage AnsiCodePoints CharacterSet EncodingMask EscapeChars U_LOWERCASE_LETTER U_PRIVATE_USE_CHAR U_UPPERCASE_LETTER UCHAR_WHITE_SPACE Utf16LeadMask Utf16Mask Utf16SurrogateMask Utf16TrailMask Utf32Mask Utf8Default Utf8Mask Utf8SurrogateMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
@@ -10,6 +10,10 @@ Character guid: (GUID fromString: '{87b4c651-026e-11d3-9fd7-00a0cc3e4a32}')!
 
 Character addClassConstant: 'EncodingMask' value: 16r3F000000!
 Character addClassConstant: 'EscapeChars' value: #($0 nil nil nil nil nil nil $a $b $t $n $v $f $r)!
+Character addClassConstant: 'U_LOWERCASE_LETTER' value: 16r2!
+Character addClassConstant: 'U_PRIVATE_USE_CHAR' value: 16r11!
+Character addClassConstant: 'U_UPPERCASE_LETTER' value: 16r1!
+Character addClassConstant: 'UCHAR_WHITE_SPACE' value: 16r1F!
 Character addClassConstant: 'Utf16LeadMask' value: 16rD800!
 Character addClassConstant: 'Utf16Mask' value: 16r2000000!
 Character addClassConstant: 'Utf16SurrogateMask' value: 16rFC00!
@@ -133,16 +137,11 @@ asInteger
 	^self codePoint!
 
 asLowercase
-	"Answer a <Character> which is the lowercase equivalent of the receiver."
+	"Answer a <Character> which is the lowercase equivalent of the receiver. Note that this is single code point mapping, so does not properly take account of composite characters. Case-conversions for a string should always be performed directly, and never character-by-character."
 
-	"Implementation Note: Apart from the ANSI asLowercase character mappings (basically all the
-	uppercase letters are mapped to lowercase letters), this implementation will map other
-	characters, depending on the configured locale of the host OS."
+	"Implementation Note: Unicode standard mappings as implemented by ICU, and as such supports letters outside the BMP (unlike the Windows API). Does not depend on host OS locale (e.g. Turkish dotted-I mapping will always take place)."
 
-	| ucp |
-	^(ucp := self codePoint) <= 16rFFFF
-		ifTrue: [self class codePoint: (UserLibrary default charLower: ucp)]
-		ifFalse: [self]!
+	^VMLibrary default u_tolower: self!
 
 asString
 	"Answer a new <String> whose sole element is the receiver."
@@ -155,16 +154,11 @@ asSymbol
 	^Symbol internCharacter: self!
 
 asUppercase
-	"Answer a <Character> which is the uppercase equivalent of the receiver."
+	"Answer a <Character> which is the uppercase equivalent of the receiver. Note that this is single code point mapping, so does not properly take account of context. Case-conversions for a string should always be performed directly, and never character-by-character."
 
-	"Implementation Note: Apart from the ASCII asUppercase character mappings (basically all the
-	lowercase letters are mapped to uppercase letters), this implementation will map other
-	characters, depending on the configured locale of the host OS."
+	"Implementation Note: Unicode standard mappings as implemented by ICU, and as such supports letters outside the BMP (unlike the Windows API). Does not depend on host OS locale."
 
-	| ucp |
-	^(ucp := self codePoint) <= 16rFFFF
-		ifTrue: [self class codePoint: (UserLibrary default charUpper: ucp)]
-		ifFalse: [self]!
+	^VMLibrary default u_toupper: self!
 
 asUtf16String
 	"Answer a new UTF-16 encoded <String> whose sole element is the receiver."
@@ -209,6 +203,13 @@ codePoint
 			["If this is a UTF-8 or UTF-16 surrogate, the code point will be invalid"
 			code bitAnd: 16rFFFFFF]!
 
+codePointString
+	"Answer the Unicode code string for the receiver as typically shown in tables of Unicode characters, e.g. [U+0061](https://codepoints.net/U+0061) for $a"
+
+	| codePoint |
+	codePoint := self codePoint.
+	^'U+' , (codePoint printStringBase: 16 nDigits: ((codePoint numberOfDigitsInBase: 16) max: 4))!
+
 codeUnit
 	"Answer the <integer> character code for the character in its native encoding. This can
 	never be greater than 16r10FFFF, which is the maximum Unicode code point."
@@ -234,10 +235,10 @@ digitValue
 			[(#[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 2 3 4 5 6 7 8 9 10 0 0 0 0 0 0 0 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36]
 				at: code + 1) - 1]!
 
-displayOn: aStream
-	"Append the end-user display representation of the receiver to aStream."
+displayOn: aPuttableStream
+	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
-	aStream nextPut: self!
+	Locale userDefault displayCharacter: self on: aPuttableStream!
 
 encoding
 	"Answer a <Symbol> naming the encoding of the character, which will be one of #ansi, #utf8, #utf16 or #utf32."
@@ -257,7 +258,9 @@ hash
 isAlphaNumeric
 	"Answer whether the receiver is a letter or a digit."
 
-	^UserLibrary default isCharAlphaNumeric: self!
+	"Implementation Note: ANSI NCITS 319-1998 defines this as (self isLetter|self isDigit), and therefore it can include any letters, not just the ASCII letters. See #isLetter for the current limitations in Dolphin with respect to recognition of some Unicode letters outside the BMP."
+
+	^self isLetter or: [self isDigit]!
 
 isAscii
 	"Answer whether the receiver is an ascii character"
@@ -278,13 +281,19 @@ isCharacter
 	^true!
 
 isControl
-	"Answer whether the receiver is a control character."
+	"Answer whether the receiver is a control character. Note that this also includes newlines, tabs, etc, but not space."
 
-	^CRTLibrary default iswcntrl: self!
+	"One of the following:
+				- ISO 8-bit control character (U+0000..U+001f and U+007f..U+009f)
+				- U_CONTROL_CHAR (Cc)
+				- U_FORMAT_CHAR (Cf)
+				- U_LINE_SEPARATOR (Zl)
+				- U_PARAGRAPH_SEPARATOR (Zp)"
+
+	^VMLibrary default u_iscntrl: self!
 
 isDigit
-	"Answer whether the receiver is a representation of a decimal-digit character
-	(i.e. it is one of $0 $1 $2 $3 $4 $5 $6 $7 $8 $9)."
+	"Answer whether the receiver is a representation of a decimal-digit character (i.e. it is one of $0 $1 $2 $3 $4 $5 $6 $7 $8 $9)."
 
 	^code >= ##($0 codePoint) and: [code <= ##($9 codePoint)]!
 
@@ -297,22 +306,21 @@ isEnglishLetter
 				and: [codePoint >= ##($a codePoint) or: [codePoint <= ##($Z codePoint)]]]!
 
 isGraph
-	"Answer whether the receiver is a printable character other than a space."
+	"Answer whether the receiver is a printable character, other than blanks. See also #isPrintable"
 
-	#todo. "The CRT functions for character classificiation don't work correctly for characters outside the BMP"
-	^CRTLibrary default iswgraph: self!
+	^VMLibrary default u_isgraph: self!
 
 isHexDigit
-	"Answer whether the receiver is a valid Smalltalk hexadecimal digit (i.e. digits and the
-	uppercase characters A through F)."
+	"Answer whether the receiver is a valid Smalltalk hexadecimal digit (i.e. digits and the uppercase characters A through F)."
 
 	^self isDigit or: [code >= ##($A codePoint) and: [code <= ##($F codePoint)]]!
 
 isLetter
 	"Answer whether the receiver is an alphabetic character."
 
-	^UserLibrary default isCharAlpha: self
-!
+	"Implementation Note: ANSI NCITS 319-1998 specifies that this at least includes the letters of the English alphabet (upper and lowercase), but that implementations may consider other Characters to be letters. In Dolphin 8 it is intended that this answer true for all Characters with Unicode codepoints in one of the letter (L) general categories. To escape the inadequacies of the underlying Windows API (which cannot handle any letters defined outside the Unicode BMP, and which seems to have some incorrect classifications even with in the BMP, e.g. it classifies the Thai Maitaikhu non-spacing mark as a letter, but does not classify U+A7F9, MODIFIER LETTER SMALL LIGATURE OE, as one), we now use ICU."
+
+	^VMLibrary default u_isalpha: self!
 
 isLinefeed
 	"Answer whether the receiver is the line-feed character."
@@ -330,7 +338,9 @@ isLiteral
 isLowercase
 	"Answer whether the receiver is a lowercase letter."
 
-	^UserLibrary default isCharLower: self!
+	"Implementation Note: ANSI NCITS 319-1998 specifies that this at least includes the lowercase letters of the English alphabet, but that implementations may consider other Characters to be lowercase letters. In Dolphin it is intended that this answer true for all Characters with Unicode codepoints in one of the Lowercase Letter (Ll) general category. To escape the inadequacies of the underlying Windows API (which cannot handle any letters defined outside the Unicode BMP, and which seems to have some incorrect classifications even within the BMP), we now use ICU."
+
+	^(VMLibrary default u_charType: self) == U_LOWERCASE_LETTER!
 
 isLowerCase
 	"Answer whether the receiver is a lowercase letter."
@@ -338,16 +348,23 @@ isLowerCase
 	^self isLowercase!
 
 isPrintable
-	"Answer whether the receiver is a printable character."
+	"Answer whether the receiver is a printable character - everything except pure control characters."
 
-	#todo. "The CRT functions for character classificiation don't work correctly for characters outside the BMP"
-	^CRTLibrary default iswprint: self!
+	^self isControl not or: [self isWhitespace]!
+
+isPrivateUse
+	"Answer whether the receiver has a codepoint in one of the private use areas."
+
+	"From the unicode.org FAQ: “The main range in the BMP is U+E000..U+F8FF, containing 6,400 private-use characters. That range is often referred to as the Private Use Area (PUA). But there are also two large ranges of supplementary private-use characters, consisting of most of the code points on Planes 15 and 16: U+F0000..U+FFFFD and U+100000..U+10FFFD”. We just use ICU."
+
+	^(VMLibrary default u_charType: self) == U_PRIVATE_USE_CHAR!
 
 isPunctuation
 	"Answer whether the receiver is a punctuation character."
 
-	#todo. "The CRT functions for character classificiation don't work correctly for characters outside the BMP"
-	^CRTLibrary default iswpunct: self!
+	"Implementation Note: It is intended that this answer true for all Characters with Unicode codepoints in one of general Punctuation (P) categories.  To escape the inadequacies of the underlying Windows API (which cannot handle any letters defined outside the Unicode BMP, and which seems to have some incorrect classifications even within the BMP), we now use ICU."
+
+	^VMLibrary default u_ispunct: self!
 
 isSeparator
 	"Answer whether the receiver is an ASCII separator character (i.e. whitespace)."
@@ -362,7 +379,9 @@ isSurrogate
 isUppercase
 	"Answer whether the receiver is an uppercase letter."
 
-	^UserLibrary default isCharUpper: self!
+	"Implementation Note: The ANSI NCITS 319-1998 specifies that this at least includes the uppercase letters of the English alphabet, but that implementations may consider other Characters to be uppercase letters. In Dolphin it is intended that this answer true for all Characters with Unicode codepoints in one of the Uppercase Letter (Lu) general category. To escape the inadequacies of the underlying Windows API (which cannot handle any letters defined outside the Unicode BMP, and which seems to have some incorrect classifications even within the BMP), we now use ICU."
+
+	^(VMLibrary default u_charType: self) == U_UPPERCASE_LETTER!
 
 isUpperCase
 	"Answer whether the receiver is an uppercase letter."
@@ -412,10 +431,22 @@ isVowel
 	^'aAeEiIoOuU' identityIncludes: self!
 
 isWhitespace
-	"Answer whether the receiver is a white space character.
-	This is a synonym for #isSeparator as currently defined."
+	"Answer whether the receiver represents a Unicode codepoint classified in one of the Separator (Z) general categories. See also #isSeparator, which for reasons of backwards compatibility only acknowledges the ASCII whitespace characters."
 
-	^self isSeparator!
+	"Implementation Note: It is intended that this answer true for all Characters with Unicode codepoints in one of general Separator (Z) categories. To escape the inadequacies of the underlying Windows API (which cannot handle any letters defined outside the Unicode BMP, and which seems to have some incorrect classifications even within the BMP), we now use one of the queries (there are a few) in ICU.
+
+	There are several ICU whitespace functions:
+		- u_isUWhiteSpace=UCHAR_WHITE_SPACE: Unicode White_Space property;
+			most of general categories 'Z' (separators) + most whitespace ISO controls (including no-break spaces, but excluding IS1..IS4)
+		- u_isWhitespace: Java isWhitespace; Z + whitespace ISO controls but excluding no-break spaces
+		- u_isJavaSpaceChar: Java isSpaceChar; just Z (including no-break spaces)
+		- u_isspace: Z + whitespace ISO controls (including no-break spaces)
+		- u_isblank: 'horizontal spaces' = TAB + Zs
+	
+	u_isUWhitespace (or the exactly equivalent binary property query as here) seems best for our purposes.
+	"
+
+	^VMLibrary default u_hasBinaryProperty: self which: UCHAR_WHITE_SPACE!
 
 join: aCollection
 	"Answer a new <String> composed from the elements of the <collection> argument separated by the instances of the receiver."
@@ -442,7 +473,7 @@ printEscapedOn: aStream
 printOn: aStream
 	"Append the literal representation of the receiver to the <puttableStream> argument."
 
-	(code > 32 and: [code < 127 or: [code <= 255 and: [self isGraph]]])
+	(self isGraph and: [self isPrivateUse not and: [self ~= Utf8Default]])
 		ifTrue: 
 			[aStream
 				nextPut: $$;
@@ -539,6 +570,7 @@ basicEncoding!accessing!private! !
 basicShallowCopy!copying!public! !
 code!accessing!private! !
 codePoint!accessing!public! !
+codePointString!printing!public! !
 codeUnit!accessing!public! !
 deepCopy!copying!public! !
 digitValue!accessing!public! !
@@ -561,6 +593,7 @@ isLiteral!public!testing! !
 isLowercase!public!testing! !
 isLowerCase!public!testing! !
 isPrintable!public!testing! !
+isPrivateUse!public!testing! !
 isPunctuation!public!testing! !
 isSeparator!public!testing! !
 isSurrogate!public!testing! !

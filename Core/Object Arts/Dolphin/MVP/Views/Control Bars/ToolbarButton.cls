@@ -573,10 +573,19 @@ sortType
 		description: 'Sort by Type'!
 
 stbConvertFrom: anSTBClassFormat
+	anSTBClassFormat version == 0
+		ifTrue: 
+			[^
+			[:data |
+			"Need to remap former concrete ToolbarButtons to ToolbarBitmapButtons."
+			(self stbConvertFromVersion0: data) becomeA: ToolbarBitmapButton]].
+	^super stbConvertFrom: anSTBClassFormat!
+
+stbConvertFromVersion0: anArray
 	"Version 0 inst var layout was:
 		ToolbarItem
 			1: commandId
-			2: unused
+			2: text (unused)
 			3: window (toolbar)
 			4: style
 			5: commandDescription
@@ -596,14 +605,7 @@ stbConvertFrom: anSTBClassFormat
 			6: bitmapIndex
 	"
 
-	^
-	[:data |
-	| newInstance |
-	newInstance := self bitmapButtonClass basicNew.
-	1 to: 3 do: [:i | newInstance instVarAt: i put: (data at: i + 2)].
-	newInstance instVarAt: 4 put: (data at: 1).
-	5 to: 6 do: [:i | newInstance instVarAt: i put: (data at: i + 1)].
-	newInstance]!
+	^{ anArray at: 3. anArray at: 4. anArray at: 5. anArray at: 1. anArray at: 6. anArray at: 7 }!
 
 systemBitmap: anInteger image: bitmapIndex command: aCommand description: aString
 	^self systemButtonClass
@@ -659,6 +661,7 @@ sortName!instance creation-system buttons!public! !
 sortSize!instance creation-system buttons!public! !
 sortType!instance creation-system buttons!public! !
 stbConvertFrom:!binary filing!private! !
+stbConvertFromVersion0:!binary filing!private! !
 systemBitmap:image:command:description:!instance creation-system buttons!private! !
 systemButtonClass!constants!instance creation!public! !
 undo!instance creation!public! !

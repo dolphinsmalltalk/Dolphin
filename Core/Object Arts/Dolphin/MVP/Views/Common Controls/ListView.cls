@@ -2658,16 +2658,9 @@ stbConvertFromVersion2: anArray
 	"Private - Perform an STB conversion from a version 2 (or earlier) <View> to version 3,
 	i.e. add iconSpacing inst var in ListView and subclasses"
 
-	| newArray size array |
+	| array |
 	array := super stbConvertFromVersion2: anArray.
-	size := array size.
-	newArray := Array new: size + 1.
-	newArray 
-		replaceFrom: 1
-		to: size
-		with: array
-		startingAt: 1.
-	^newArray!
+	^array resize: array size + 1!
 
 stbConvertFromVersion5: anArray 
 	"Private - Perform an STB conversion from a version 5 (or earlier) <View> to version 6,

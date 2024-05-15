@@ -2,12 +2,13 @@
 
 CCHITTESTINFO subclass: #TVHITTESTINFO
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_hItem'
+	classVariableNames: '_OffsetOf_flags _OffsetOf_hItem'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
 TVHITTESTINFO guid: (GUID fromString: '{87b4c61f-026e-11d3-9fd7-00a0cc3e4a32}')!
 
+TVHITTESTINFO addClassConstant: '_OffsetOf_flags' value: 16r8!
 TVHITTESTINFO addClassConstant: '_OffsetOf_hItem' value: 16rC!
 
 TVHITTESTINFO comment: 'TVHITTESTINFO is an ExternalStructure class to represent the Win32 common control structure of the same name.
@@ -19,6 +20,11 @@ This Supercedes the TV_HITTESTINFO class present in release 2.1 and earlier.'!
 !TVHITTESTINFO categoriesForClass!External-Data-Structured-Win32! !
 
 !TVHITTESTINFO methodsFor!
+
+flags
+	"Answer the <Integer> value of the receiver's 'flags' field."
+
+	^bytes sdwordAtOffset: _OffsetOf_flags!
 
 handle
 	"Private - Answer the item 'handle' associated with the receiver.
@@ -37,6 +43,7 @@ item
 	^self hItem! !
 
 !TVHITTESTINFO categoriesForMethods!
+flags!**compiled accessors**!public! !
 handle!accessing!private! !
 hItem!**compiled accessors**!public! !
 item!accessing!public! !
@@ -58,6 +65,7 @@ defineFields
 
 	super defineFields.
 	self
+		defineField: #flags type: SDWORDField readOnly;
 		defineField: #hItem type: DWORDField readOnly!
 
 getFieldNames

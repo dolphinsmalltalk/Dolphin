@@ -3,7 +3,7 @@
 DolphinTest subclass: #FileTest
 	instanceVariableNames: 'tempFile'
 	classVariableNames: ''
-	poolDictionaries: 'Win32Constants'
+	poolDictionaries: 'CRTConstants Win32Constants'
 	classInstanceVariableNames: ''!
 
 FileTest guid: (GUID fromString: '{26ae9922-21e2-489a-845c-3c1dc1c2a3cf}')!
@@ -84,6 +84,9 @@ deleteDirectory: aString
 
 deleteTestDirectories
 	File deleteDirectory: 'c:\FileTest1\'!
+
+maxFname
+	^_MAX_FNAME!
 
 printFilenameOfLength: anInteger on: path
 	(1 to: anInteger) do: [:i | path nextPut: (Character codePoint: $a codePoint + (i % 10))].
@@ -471,23 +474,22 @@ testRemoveDirectory
 
 testRemoveExtension
 	| path |
-	self should: [File removeExtension: nil] raise: Error.
 	self assert: (File removeExtension: 'a.') equals: 'a'.
 	self assert: (File removeExtension: '.exe') equals: ''.
 	self assert: (File removeExtension: '.') equals: ''.
 	self assert: (File removeExtension: '') equals: ''.
-	self assert: (File removeExtension: '1234.1234.exe') equals: '1234.1234'.
+	self assert: (File removeExtension: '1234.123🐬.exe') equals: '1234.123🐬'.
 	self assert: (File removeExtension: '1234.1234.+') equals: '1234.1234'.
 	self assert: (File removeExtension: 'a.b\c') equals: 'a.b\c'.
 	self assert: (File removeExtension: 'a.b\') equals: 'a.b\'.
 	self assert: (File removeExtension: 'c:/a/b.txt') equals: 'c:/a/b'.
 	path := String writeStream.
 	path nextPutAll: 'c:\'.
-	self printFilenameOfLength: CRTConstants._MAX_FNAME on: path.
+	self printFilenameOfLength: self maxFname on: path.
 	path := path contents.
 	self assert: (File removeExtension: path) equals: (path subStrings: $.) first.
 	"Doesn't matter if the path is notionally too long"
-	path := self buildTestPathOfLength: CRTConstants._MAX_PATH * 2.
+	path := self buildTestPathOfLength: MAX_PATH * 2.
 	self assert: (File removeExtension: path) equals: (path subStrings: $.) first!
 
 testRemovePathDelimiter
@@ -610,7 +612,7 @@ testSniffEncodingUtf8
 testSplitDriveFrom
 	self should: [File splitDriveFrom: nil] raise: Error.
 	self assert: (File splitDriveFrom: 'c:\a\a2/b.txt') equals: 'c:'.
-	self assert: (File splitDriveFrom: 'a\b.txt') equals: ''.
+	self assert: (File splitDriveFrom: 'a\🐬.txt') equals: ''.
 	self assert: (File splitDriveFrom: 'b.txt') equals: ''.
 	self assert: (File splitDriveFrom: '.txt') equals: ''.
 	self assert: (File splitDriveFrom: '.') equals: ''.
@@ -622,30 +624,29 @@ testSplitDriveFrom
 
 testSplitExtensionFrom
 	| path ext unicode |
-	self should: [File splitExtensionFrom: nil] raise: Error.
 	unicode := $\x1F595 asUtf16String , '2'.
 	self assert: (File splitExtensionFrom: 'c:\a\a2/b.' , unicode) equals: unicode.
 	self assert: (File splitExtensionFrom: 'a\b.txt') equals: 'txt'.
-	self assert: (File splitExtensionFrom: 'b.txt') equals: 'txt'.
+	self assert: (File splitExtensionFrom: 'b.a🐬£') equals: 'a🐬£'.
 	self assert: (File splitExtensionFrom: 'b.') equals: ''.
 	self assert: (File splitExtensionFrom: '.txt') equals: 'txt'.
 	self assert: (File splitExtensionFrom: '.') equals: ''.
 	self assert: (File splitExtensionFrom: '') equals: ''.
 	self assert: (File splitExtensionFrom: 'c:\a\b\') equals: ''.
-	self assert: (File splitExtensionFrom: 'c:/a b\c d.txt') equals: 'txt'.
+	self assert: (File splitExtensionFrom: 'c:/a b\c d.a🐬b') equals: 'a🐬b'.
 	self assert: (File splitExtensionFrom: '1234.1234.exe') equals: 'exe'.
 	self assert: (File splitExtensionFrom: 'a.b\c') equals: ''.
 	self assert: (File splitExtensionFrom: 'a.b\') equals: ''.
-	path := self buildTestPathOfLength: CRTConstants._MAX_PATH.
+	path := self buildTestPathOfLength: MAX_PATH.
 	self assert: (File splitExtensionFrom: path) equals: 'txt'.
 	"The CRT functions works even if the path is too long because we ignore everything but the extension"
 	path := path , 'x'.
 	self assert: (File splitExtensionFrom: path) equals: 'txtx'.
-	path := self buildTestPathOfLength: CRTConstants._MAX_PATH * 2.
+	path := self buildTestPathOfLength: MAX_PATH * 2.
 	self assert: (File splitExtensionFrom: path) equals: 'txt'.
 	"Try a very filename with very long extension (of max length)."
 	path := String writeStream.
-	self printFilenameOfLength: CRTConstants._MAX_FNAME * 2 on: path.
+	self printFilenameOfLength: self maxFname * 2 on: path.
 	path := path contents.
 	ext := (path subStrings: $.) last.
 	self assert: (File splitExtensionFrom: path) equals: ext.
@@ -658,7 +659,7 @@ testSplitFilenameFrom
 	self should: [File splitFilenameFrom: nil] raise: Error.
 	self assert: (File splitFilenameFrom: '.') equals: '.'.
 	self assert: (File splitFilenameFrom: 'c:\a\a2/b.txt') equals: 'b.txt'.
-	self assert: (File splitFilenameFrom: 'a\b.txt') equals: 'b.txt'.
+	self assert: (File splitFilenameFrom: 'a£b\🐬.txt') equals: '🐬.txt'.
 	self assert: (File splitFilenameFrom: 'b.txt') equals: 'b.txt'.
 	self assert: (File splitFilenameFrom: 'b.') equals: 'b.'.
 	self assert: (File splitFilenameFrom: '.txt') equals: '.txt'.
@@ -669,36 +670,69 @@ testSplitFilenameFrom
 	self assert: (File splitFilenameFrom: '1234.1234.exe') equals: '1234.1234.exe'.
 	self assert: (File splitFilenameFrom: 'a.b\c') equals: 'c'.
 	self assert: (File splitFilenameFrom: 'a.b\') equals: ''.
-	path := self buildTestPathOfLength: CRTConstants._MAX_PATH.
+	path := self buildTestPathOfLength: MAX_PATH.
 	self assert: (File splitFilenameFrom: path) equals: (path subStrings: $\) last.
 	"Try a very long filename (> max length), this will still work."
 	path := String writeStream.
 	path nextPutAll: 'c:\'.
-	self printFilenameOfLength: CRTConstants._MAX_FNAME * 2 on: path.
+	self printFilenameOfLength: self maxFname * 2 on: path.
 	path := path contents.
 	self assert: (File splitFilenameFrom: path) equals: (path copyFrom: 4)!
 
+testSplitPathFrom
+	| path |
+	self should: [File splitPathFrom: nil] raise: Error.
+	self assert: (File splitPathFrom: '.') equals: ''.
+	self assert: (File splitPathFrom: 'c:\a\a2/b.txt') equals: 'c:\a\a2/'.
+	self assert: (File splitPathFrom: 'c:\a\b.txt') equals: 'c:\a\'.
+	self assert: (File splitPathFrom: 'c:\a\b\') equals: 'c:\a\b\'.
+	self assert: (File splitPathFrom: 'c:\b.txt') equals: 'c:\'.
+	self assert: (File splitPathFrom: 'c:\') equals: 'c:\'.
+	self assert: (File splitPathFrom: 'c:') equals: 'c:'.
+	self assert: (File splitPathFrom: 'a\b.txt') equals: 'a\'.
+	self assert: (File splitPathFrom: 'b.txt') equals: ''.
+	self assert: (File splitPathFrom: 'b.') equals: ''.
+	self assert: (File splitPathFrom: '.txt') equals: ''.
+	self assert: (File splitPathFrom: '') equals: ''.
+	self assert: (File splitPathFrom: 'c:\a\b\') equals: 'c:\a\b\'.
+	self assert: (File splitPathFrom: 'c:/a b\c 🖕d.txt') equals: 'c:/a b\'.
+	self assert: (File splitPathFrom: '1234.1234.exe') equals: ''.
+	self assert: (File splitPathFrom: 'a.b\c') equals: 'a.b\'.
+	self assert: (File splitPathFrom: 'a.b\') equals: 'a.b\'.
+	path := self buildTestPathOfLength: MAX_PATH.
+	self assert: (File splitPathFrom: path) equals: ($\ join: (path subStrings: $\) allButLast) , '\'.
+	"Try a very long filename (> max length), this will still work."
+	path := String writeStream.
+	path nextPutAll: 'c:\'.
+	self printFilenameOfLength: self maxFname * 2 on: path.
+	path nextPutAll: '/a.txt'.
+	path := path contents.
+	self assert: (File splitPathFrom: path) equals: (path upTo: $/) , '/'!
+
 testSplitStemFrom
 	| path |
-	self should: [File splitStemFrom: nil] raise: Error.
 	self assert: (File splitStemFrom: '.') equals: ''.
-	self assert: (File splitStemFrom: 'c:\a\a2/b.txt') equals: 'b'.
+	self assert: (File splitStemFrom: 'c:\a\a🐬/b.txt') equals: 'b'.
 	self assert: (File splitStemFrom: 'a\b.txt') equals: 'b'.
 	self assert: (File splitStemFrom: 'b.txt') equals: 'b'.
+	self assert: (File splitStemFrom: 'a🐬.txt') equals: 'a🐬'.
 	self assert: (File splitStemFrom: 'b.') equals: 'b'.
 	self assert: (File splitStemFrom: '.txt') equals: ''.
 	self assert: (File splitStemFrom: '') equals: ''.
+	self assert: (File splitStemFrom: '\') equals: ''.
+	self assert: (File splitStemFrom: 'c:\') equals: ''.
+	self assert: (File splitStemFrom: 'c:\.txt') equals: ''.
 	self assert: (File splitStemFrom: 'c:\a\b\') equals: ''.
-	self assert: (File splitStemFrom: 'c:/a b\c d.txt') equals: 'c d'.
+	self assert: (File splitStemFrom: 'c:/a b\c 🐬.txt') equals: 'c 🐬'.
 	self assert: (File splitStemFrom: '1234.1234.exe') equals: '1234.1234'.
 	self assert: (File splitStemFrom: 'a.b\c') equals: 'c'.
 	self assert: (File splitStemFrom: 'a.b\') equals: ''.
-	path := self buildTestPathOfLength: CRTConstants._MAX_PATH.
+	path := self buildTestPathOfLength: MAX_PATH.
 	self assert: (File splitStemFrom: path) equals: ((path subStrings: $\) last upTo: $.).
 	"Try a very long filename (> max length), this will still work."
 	path := String writeStream.
 	path nextPutAll: 'c:\'.
-	self printFilenameOfLength: CRTConstants._MAX_FNAME * 2 on: path.
+	self printFilenameOfLength: self maxFname * 2 on: path.
 	path := path contents.
 	self assert: (File splitStemFrom: path) equals: ((path copyFrom: 4) upTo: $.)! !
 
@@ -707,6 +741,7 @@ buildTestPathOfLength:!helpers!private! !
 createTestDirectories!helpers!private! !
 deleteDirectory:!helpers!public! !
 deleteTestDirectories!private!Running! !
+maxFname!constants!private! !
 printFilenameOfLength:on:!helpers!private! !
 relativePathOf:to:!helpers!public! !
 removeDirectory:!helpers!private! !
@@ -739,6 +774,7 @@ testSniffEncodingUtf8!public!unit tests! !
 testSplitDriveFrom!public!unit tests! !
 testSplitExtensionFrom!public!unit tests! !
 testSplitFilenameFrom!public!unit tests! !
+testSplitPathFrom!public!unit tests! !
 testSplitStemFrom!public!unit tests! !
 !
 

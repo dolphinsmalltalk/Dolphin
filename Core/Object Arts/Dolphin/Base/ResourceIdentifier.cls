@@ -75,13 +75,17 @@ hiddenObjects
 	Implementation note. This is not particularly fast since it loads the resource
 	classes it needs into the image. View resources will not be realized as windows however."
 
-	| stlInFilerClass resource |
-	stlInFilerClass := Smalltalk at: #STLInFiler.
-	resource := self resource.
-	resource ifNil: [^self error: ('Resource [', owningClass name, '>>', selector, '] does not exist')].
-	^(stlInFilerClass on: resource readStream)
-		basicNext;
-		readMap!
+	(Smalltalk lookup: #STLInFiler)
+		ifNotNil: 
+			[:stlInFilerClass |
+			self resource
+				ifNil: [self error: 'Resource [' , owningClass name , '>>#' , selector , '] does not exist']
+				ifNotNil: 
+					[:resource |
+					^(stlInFilerClass on: resource readStream)
+						basicNext;
+						readMap]].
+	^#()!
 
 icon: anIcon
 	anIcon isNil ifTrue: [self removePropertyAt: #icon ifAbsent: []] ifFalse: [self propertyAt: #_icon put: anIcon]!
@@ -91,6 +95,9 @@ isChanged
 
 isChanged: aBoolean 
 	self shouldNotImplement!
+
+legacyStlVersion
+	^4!
 
 load
 	"Load and answer the resource represented by the receiver."
@@ -186,6 +193,7 @@ hiddenObjects!accessing!private! !
 icon:!accessing!public! !
 isChanged!development!public!source filing!testing! !
 isChanged:!development!public!source filing! !
+legacyStlVersion!private! !
 load!operations!public! !
 name!accessing!public! !
 name:!accessing!public! !
@@ -286,19 +294,20 @@ selectorFromName: aString
 				ifFalse: [each isAlphaNumeric ifTrue: [selector nextPut: each]]].
 	^selector contents asSymbol!
 
-stbConvertFrom: anSTBClassFormat 
+stbConvertFrom: anSTBClassFormat
 	"Convert from previous version resource. 
 	Version Changes:
 		1) removes stores a selector as the resource name rather than a string name (this change was made an age ago, and not properly converted)
 	"
 
-	^
-	[:data | 
-	| answer |
-	answer := self basicNew.
-	1 to: data size do: [:i | answer instVarAt: i put: (data at: i)].
-	answer selector isSymbol ifFalse: [answer name: answer selector].
-	answer]!
+	anSTBClassFormat version == 0
+		ifTrue: 
+			[^
+			[:data |
+			data becomeA: self.
+			data selector isSymbol ifFalse: [data name: data selector].
+			data]].
+	^super stbConvertFrom: anSTBClassFormat!
 
 stbVersion
 	^1!

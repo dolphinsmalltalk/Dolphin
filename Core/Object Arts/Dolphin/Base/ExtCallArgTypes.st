@@ -2,13 +2,17 @@
 
 Smalltalk at: #ExtCallArgTypes put: (PoolConstantsDictionary named: #ExtCallArgTypes)!
 ExtCallArgTypes at: 'ExtCallArgBOOL' put: 16r9!
+ExtCallArgTypes at: 'ExtCallArgBool8' put: 16r1E!
 ExtCallArgTypes at: 'ExtCallArgBSTR' put: 16r15!
 ExtCallArgTypes at: 'ExtCallArgBYTE' put: 16r3!
 ExtCallArgTypes at: 'ExtCallArgCHAR' put: 16r2!
+ExtCallArgTypes at: 'ExtCallArgChar16' put: 16r20!
+ExtCallArgTypes at: 'ExtCallArgChar32' put: 16r1F!
 ExtCallArgTypes at: 'ExtCallArgCOMPTR' put: 16r37!
 ExtCallArgTypes at: 'ExtCallArgDATE' put: 16r17!
 ExtCallArgTypes at: 'ExtCallArgDOUBLE' put: 16rB!
 ExtCallArgTypes at: 'ExtCallArgDWORD' put: 16r7!
+ExtCallArgTypes at: 'ExtCallArgErrno' put: 16r1D!
 ExtCallArgTypes at: 'ExtCallArgFLOAT' put: 16rE!
 ExtCallArgTypes at: 'ExtCallArgGUID' put: 16r19!
 ExtCallArgTypes at: 'ExtCallArgHANDLE' put: 16rA!

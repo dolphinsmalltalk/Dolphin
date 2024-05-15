@@ -17,16 +17,26 @@ SysLinkViewTest comment: ''!
 classToTest
 	^SysLinkView!
 
-verifyUpgradedView: anInteger
+testItemFromPoint
+	| ext |
+	presenter displayValue: '<A HREF="http://www.foo.com">Foo</A> <A HREF="http://www.bar.com">Bar</A>'.
+	self waitForInputIdle.
+	self assert: (presenter itemFromPoint: 0 @ 0) equals: 1.
+	ext := self getTextExtent: 'Foo '.
+	self assert: (presenter itemFromPoint: ext x @0) equals: 2.
+	self assertIsNil: (presenter itemFromPoint: 1000 @ 1000)!
+
+verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	| view |
-	super verifyUpgradedView: anInteger.
+	super verifyUpgradedView: anInteger identifier: aResourceIdentifier.
 	view := self view.
 	self assertIsNil: view backcolor.
 	self assert: view text equals: '<A HREF="http://www.object-arts.com">Object Arts Home</A>'! !
 
 !SysLinkViewTest categoriesForMethods!
 classToTest!helpers!private! !
-verifyUpgradedView:!helpers!private! !
+testItemFromPoint!public! !
+verifyUpgradedView:identifier:!helpers!private! !
 !
 
 !SysLinkViewTest class methodsFor!

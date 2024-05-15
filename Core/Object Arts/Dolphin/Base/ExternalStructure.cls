@@ -907,8 +907,8 @@ setGuid: aGUID
 
 stbReadFrom: anSTBInFiler format: anSTBClassConversion size: anInteger
 	self ensureDefined.
-	^super
-		stbReadFrom: anSTBInFiler
+	^anSTBInFiler
+		readObjectOfClass: self
 		format: anSTBClassConversion
 		size: anInteger!
 

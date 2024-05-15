@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-DolphinTest subclass: #IdeaSpaceShellTest
-	instanceVariableNames: 'ideaShell browserPlugins'
+PresenterTest subclass: #IdeaSpaceShellTest
+	instanceVariableNames: 'browserPlugins'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -14,6 +14,9 @@ IdeaSpaceShellTest comment: ''!
 
 !IdeaSpaceShellTest methodsFor!
 
+classToTest
+	^IdeaSpaceShell!
+
 create: aClassSymbol subclassOf: aClass
 	| newClass |
 	newClass := aClass subclass: aClassSymbol instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' classInstanceVariableNames: ''.
@@ -23,38 +26,46 @@ create: aClassSymbol subclassOf: aClass
 createThreeCards
 	| tools |
 	tools := Array new: 3.
-	ideaShell view noRedrawDo: 
+	presenter view noRedrawDo: 
 			[tools at: 1 put: self newInspectorShellCard.
 			tools at: 2 put: self newInspectorShellCard.
 			tools at: 3 put: self newInspectorShellCard].
-	self assert: ideaShell cards size equals: 3.
+	self assert: presenter cards size equals: 3.
 	tools do: 
 			[:each |
-			self assert: each view parentView identicalTo: ideaShell cardsPresenter view.
-			self assert: each parentPresenter identicalTo: ideaShell cardsPresenter].
+			self assert: each view parentView identicalTo: presenter cardsPresenter view.
+			self assert: each parentPresenter identicalTo: presenter cardsPresenter].
 	^tools!
 
+destroyPresenter
+	presenter ifNil: [^self].
+	presenter destroy.
+	presenter := nil!
+
+initializePresenter
+	presenter := IdeaSpaceShell show!
+
 newClassBrowserCard
-	^ideaShell newEmbeddedCardOfClass: ClassBrowserShell!
+	^presenter newEmbeddedCardOfClass: ClassBrowserShell!
 
 newEnvironmentBrowserCard
-	^ideaShell newEmbeddedCardOfClass: EnvironmentBrowserShell!
+	^presenter newEmbeddedCardOfClass: EnvironmentBrowserShell!
 
 newInspectorShellCard
-	^ideaShell newEmbeddedCardOfClass: InspectorShell!
+	^presenter newEmbeddedCardOfClass: InspectorShell!
 
 newSystemBrowserCard
-	^ideaShell newEmbeddedCardOfClass: SystemBrowserShell!
+	^presenter newEmbeddedCardOfClass: SystemBrowserShell!
 
 newViewBrowserCard
-	^ideaShell newEmbeddedCardOfClass: ResourceBrowser!
+	^presenter newEmbeddedCardOfClass: ResourceBrowser!
 
 newViewComposerCard
-	^ideaShell newEmbeddedCardOfClass: ViewComposer!
+	^presenter newEmbeddedCardOfClass: ViewComposer!
 
 newWorkspaceCard
 	| workspace |
-	workspace := ideaShell newEmbeddedCardOfClass: SmalltalkWorkspaceDocument.
+	workspace := presenter newEmbeddedCardOfClass: SmalltalkWorkspaceDocument.
 	self assert: workspace workspace view isKindOf: ScintillaView.
 	^workspace
 		filename: (FileLocator installRelative localFileSpecFor: 'Boot.st');
@@ -63,7 +74,6 @@ newWorkspaceCard
 
 setUp
 	super setUp.
-	ideaShell := IdeaSpaceShell show.
 	browserPlugins := ClassBrowserAbstract subclasses collect: 
 					[:each |
 					| plugins |
@@ -72,57 +82,55 @@ setUp
 					each -> plugins]!
 
 tearDown
-	ideaShell destroy.
-	ideaShell := nil.
-	browserPlugins do: [:each | each key plugins: each value].
-	super tearDown!
+	super tearDown.
+	browserPlugins do: [:each | each key plugins: each value]!
 
 testAbsorbCard
 	| tool1 tool2 vcToolbar cardLayout |
 	SmalltalkSystemShell default setFocus.
 	tool1 := InspectorShell show.
-	self assert: ideaShell cards isEmpty.
+	self assert: presenter cards isEmpty.
 
 	"Find the original VC toolbar"
 	vcToolbar := tool1 view viewNamed: 'toolbar'.
 	self assert: vcToolbar isOpen.
 
 	"Absorb the VC into the IdeaSpace"
-	ideaShell absorbCard: tool1.
-	self assert: ideaShell cards size equals: 1.
+	presenter absorbCard: tool1.
+	self assert: presenter cards size equals: 1.
 
 	"Check view and presenter hierarchy"
-	self assert: tool1 view parentView identicalTo: ideaShell cardsPresenter view.
-	self assert: tool1 parentPresenter identicalTo: ideaShell cardsPresenter.
-	self assert: (ideaShell cardsPresenter subPresenters includes: tool1).
-	self assert: (ideaShell cardsPresenter view subViews includes: tool1 view).
-	cardLayout := ideaShell cardsPresenter view layoutManager.
+	self assert: tool1 view parentView identicalTo: presenter cardsPresenter view.
+	self assert: tool1 parentPresenter identicalTo: presenter cardsPresenter.
+	self assert: (presenter cardsPresenter subPresenters includes: tool1).
+	self assert: (presenter cardsPresenter view subViews includes: tool1 view).
+	cardLayout := presenter cardsPresenter view layoutManager.
 	self assert: (cardLayout cards includes: tool1 view).
 	self assert: (cardLayout cardViews includes: tool1 view).
 
 	"Original menu bar should have gone, IdeaSpace should now show this"
-	self assert: ideaShell view menuBar identicalTo: tool1 view menuBar.
+	self assert: presenter view menuBar identicalTo: tool1 view menuBar.
 
 	"Add another card and make sure it goes at the right place"
 	SmalltalkSystemShell default setFocus.
 	tool2 := SmalltalkWorkspaceDocument show.
-	ideaShell absorbCard: tool2.
-	self assert: ideaShell cards size equals: 2.
-	self assert: ideaShell isCurrentCardLast!
+	presenter absorbCard: tool2.
+	self assert: presenter cards size equals: 2.
+	self assert: presenter isCurrentCardLast!
 
 testAbsorbedCardRemoval
 	| tool |
 	SmalltalkSystemShell default setFocus.
 	tool := InspectorShell show.
-	self assert: ideaShell cards isEmpty.
+	self assert: presenter cards isEmpty.
 
 	"Absorb the VC into the IdeaSpace"
-	ideaShell absorbCard: tool.
-	self assert: ideaShell cards size equals: 1.
+	presenter absorbCard: tool.
+	self assert: presenter cards size equals: 1.
 
 	"Test card removal"
-	ideaShell removeCard: tool.
-	self assert: ideaShell cards isEmpty!
+	presenter removeCard: tool.
+	self assert: presenter cards isEmpty!
 
 testBreakoutCard
 	| toolToolbar cardToolbar tools |
@@ -135,11 +143,11 @@ testBreakoutCard
 	self assert: cardToolbar parentView identicalTo: tools third view.
 
 	"Breakout the card onto the desktop"
-	ideaShell breakoutCurrentCard.
+	presenter breakoutCurrentCard.
 
 	"There should only be two cards left in the IS"
-	self assert: ideaShell cards size equals: 2.
-	self assert: ideaShell cardsPresenter subPresenters size equals: 2.
+	self assert: presenter cards size equals: 2.
+	self assert: presenter cardsPresenter subPresenters size equals: 2.
 
 	"The card should now be a child of the desktop"
 	self assert: tools third view isKindOf: ShellView.
@@ -151,21 +159,21 @@ testBreakoutCard
 	self deny: cardToolbar isOpen.
 
 	"Breakout the other cards to leave the IdeaSpace empty"
-	ideaShell hide.
-	ideaShell
+	presenter hide.
+	presenter
 		breakoutCurrentCard;
 		breakoutCurrentCard.
 	tools do: 
 			[:each |
 			each exit.
 			self deny: each isOpen].
-	ideaShell show.
+	presenter show.
 	"There should no cards left in the IS"
-	self assert: ideaShell cards isEmpty.
-	self assert: ideaShell cardsPresenter subPresenters isEmpty.
+	self assert: presenter cards isEmpty.
+	self assert: presenter cardsPresenter subPresenters isEmpty.
 
 	"Ideaspace caption and background should be flipped"
-	self assert: ideaShell caption equals: 'Idea Space'!
+	self assert: presenter caption equals: 'Idea Space'!
 
 testBreakoutCardOrdering
 	| cards |
@@ -173,14 +181,14 @@ testBreakoutCardOrdering
 
 	"Breakout the first card (this used to fail)"
 	cards first ensureVisible.
-	ideaShell breakoutCurrentCard.
+	presenter breakoutCurrentCard.
 	cards first exit!
 
 testHistoryRemove
 	| hist cards |
-	ideaShell view disableRedraw.
+	presenter view disableRedraw.
 	cards := self createThreeCards.
-	hist := ideaShell instVarNamed: 'cardHistory'.
+	hist := presenter instVarNamed: 'cardHistory'.
 	self assert: hist position equals: 3.
 	self deny: hist hasFuture.
 	cards second view ensureVisible.
@@ -189,64 +197,64 @@ testHistoryRemove
 	cards third view ensureVisible.
 	self assert: hist position equals: 7.
 	self deny: hist hasFuture.
-	ideaShell closeCard.
-	self assert: ideaShell cards size equals: 2.
+	presenter closeCard.
+	self assert: presenter cards size equals: 2.
 	self assert: hist position equals: 4.
 	self deny: hist hasFuture.
-	ideaShell closeCard.
-	super assert: ideaShell cards size = 1.
+	presenter closeCard.
+	super assert: presenter cards size = 1.
 	self assert: hist position equals: 1.
 	self deny: hist hasFuture.
-	ideaShell closeCard.
-	self assert: ideaShell cards size equals: 0.
+	presenter closeCard.
+	self assert: presenter cards size equals: 0.
 	self assert: hist isEmpty.
 	"Similar but with non-sequential visit history - idea here is to test that removing cards
 	pops back to the previous visit and does not in itself generate more visits"
 	cards := self createThreeCards.
-	self assert: ideaShell cards size equals: 3.
-	hist := ideaShell instVarNamed: 'cardHistory'.
+	self assert: presenter cards size equals: 3.
+	hist := presenter instVarNamed: 'cardHistory'.
 	self assert: hist position equals: 3.
 	self deny: hist hasFuture.
 	cards first view ensureVisible.
 	cards third view ensureVisible.
 	self assert: hist position equals: 5.
 	self deny: hist hasFuture.
-	ideaShell closeCard.
-	self assert: ideaShell currentCard identicalTo: cards first.
-	self assert: ideaShell cards size equals: 2.
+	presenter closeCard.
+	self assert: presenter currentCard identicalTo: cards first.
+	self assert: presenter cards size equals: 2.
 	self assert: hist position equals: 3.
 	self deny: hist hasFuture.
 	self assert: hist hasPast.
-	ideaShell closeCard.
-	self assert: ideaShell currentCard identicalTo: cards second.
-	self assert: ideaShell cards size equals: 1.
+	presenter closeCard.
+	self assert: presenter currentCard identicalTo: cards second.
+	self assert: presenter cards size equals: 1.
 	self assert: hist position equals: 1.
 	self deny: hist hasFuture.
-	ideaShell closeCard.
-	self assert: ideaShell cards size equals: 0.
+	presenter closeCard.
+	self assert: presenter cards size equals: 0.
 	self assert: hist isEmpty!
 
 testRemoveCard
 	| sb cb |
 	sb := self newSystemBrowserCard.
-	cb := self newClassBrowserCard.
-	super assert: ideaShell cards size = 2.
+	self newClassBrowserCard.
+	super assert: presenter cards size = 2.
 	sb exit.
-	super assert: ideaShell cards size = 1.
-	ideaShell closeCard.
-	super assert: ideaShell cards isEmpty!
+	super assert: presenter cards size = 1.
+	presenter closeCard.
+	super assert: presenter cards isEmpty!
 
 testSaveRestore
 	"Test Save and Restore of various Ideaspace tools"
 
 	| sb cb ws saveString newSb newCb newEb newWs newVc newRb sbPackages rid wsDocData wsPools wsFilename |
 	"This test is pretty slow, but we can speed it up by ~30% by disabling redraw while populating the test subject"
-	ideaShell view
+	presenter view
 		hide;
 		disableRedraw.
 	"System Browser on False"
 	sb := self newSystemBrowserCard.
-	sbPackages := {ClassBrowserShell owningPackage. false class owningPackage}.
+	sbPackages := { ClassBrowserShell owningPackage. false class owningPackage }.
 	sb packages: sbPackages.
 	sb actualClass: false class.
 
@@ -278,22 +286,22 @@ testSaveRestore
 	"Make the system browser the current card"
 	sb ensureVisible.
 	"Enabling redraw will also unhide"
-	ideaShell view enableRedraw.
+	presenter view enableRedraw.
 
 	"Save it"
-	saveString := ideaShell saveStateString.
-	ideaShell view destroy.
+	saveString := presenter saveStateString.
+	presenter view destroy.
 	"Restore state into a new idea space"
-	ideaShell := IdeaSpaceShell create.
-	ideaShell configureFromSavedStateString: saveString.
-	self assert: ideaShell cards size equals: 6.
-	newSb := ideaShell cards first.
-	newCb := ideaShell cards second.
-	newEb := ideaShell cards third.
-	newWs := ideaShell cards fourth.
-	newVc := ideaShell cards fifth.
-	newRb := ideaShell cards sixth.
-	self assert: ideaShell currentCard identicalTo: newSb.
+	presenter := IdeaSpaceShell create.
+	presenter configureFromSavedStateString: saveString.
+	self assert: presenter cards size equals: 6.
+	newSb := presenter cards first.
+	newCb := presenter cards second.
+	newEb := presenter cards third.
+	newWs := presenter cards fourth.
+	newVc := presenter cards fifth.
+	newRb := presenter cards sixth.
+	self assert: presenter currentCard identicalTo: newSb.
 	self assert: newSb isKindOf: SystemBrowserShell.
 	self assert: newSb actualClass identicalTo: false class.
 	self assert: newSb packages equals: sbPackages.
@@ -317,7 +325,7 @@ testSaveRestoreEmpty
 	"Test Save and Restore an empty IdeaSpace"
 
 	| saveString newIdeaShell |
-	saveString := ideaShell saveStateString.
+	saveString := presenter saveStateString.
 	newIdeaShell := IdeaSpaceShell create.
 	newIdeaShell configureFromSavedStateString: saveString.
 	newIdeaShell show.
@@ -331,16 +339,22 @@ testSaveRestoreErrors
 	cb := self newClassBrowserCard.
 	aaaClass := self create: #AAAClass subclassOf: Object.
 	cb actualClass: aaaClass.
-	saveString := ideaShell saveStateString.
+	saveString := presenter saveStateString.
 	aaaClass removeFromSystem.
 	newIdeaShell := IdeaSpaceShell show.
 	self should: [newIdeaShell configureFromSavedStateString: saveString]
 		raise: Compiler notificationClass.
-	newIdeaShell view destroy! !
+	newIdeaShell view destroy!
+
+viewClass
+	^ShellView! !
 
 !IdeaSpaceShellTest categoriesForMethods!
+classToTest!constants!private! !
 create:subclassOf:!helpers!private! !
 createThreeCards!helpers!private! !
+destroyPresenter!private!Running! !
+initializePresenter!private!unit tests! !
 newClassBrowserCard!private!unit tests! !
 newEnvironmentBrowserCard!private!unit tests! !
 newInspectorShellCard!private!unit tests! !
@@ -359,5 +373,6 @@ testRemoveCard!public!unit tests! !
 testSaveRestore!public!unit tests! !
 testSaveRestoreEmpty!public!unit tests! !
 testSaveRestoreErrors!public!unit tests! !
+viewClass!constants!private! !
 !
 

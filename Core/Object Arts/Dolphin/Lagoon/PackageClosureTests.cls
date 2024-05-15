@@ -16,9 +16,10 @@ PackageClosureTests comment: ''!
 
 consoleAppUnimplemented
 	"Private - Expected missing selectors in a console app:
-		- defineTemplate - sent by ExternalStructure class>>ensureDefined, but this caller is replaced by an empty stub on actual deployment"
+		- defineTemplate - sent by ExternalStructure class>>ensureDefined, but this caller is replaced by an empty stub on actual deployment
+		- packages - sent by PackageRelativeFileLocator>>#package, but class will be removed on actual deployment"
 
-	^#(#defineTemplate)!
+	^#(#defineTemplate #packages)!
 
 environmentForAppDeployment: aCollectionOfPackages
 	| env names devMethods removedClasses |
@@ -67,9 +68,10 @@ simpleGuiAppUnimplementedMessages
 		- createThumbnailExtent:mask: - send by View>>addToImageList:extent: when GDI+ is loaded, but only if understood. This will show up in the UnimplementedMessages section of the actual deployment log for GUI apps.
 		- defineTemplate- sent from ExternalStructure>>ensureDefined, which is replaced with a no-op stub in deployed apps. Should not be in the UnimplementedMessages section of the actual deployment log for GUI apps.
 		- ttmRelayEvent: - only sent (from MVP base) if the Dolphin ToolTips package is loaded. This will show up in the UnimplementedMessages section of the actual deployment log for GUI apps.
-		- evaluate: Compiler deliberately removed from the scope of the test to reduce noise. Should not be in the UnimplementedMessages section of the actual deployment log for GUI apps."
+		- evaluate: Compiler deliberately removed from the scope of the test to reduce noise. Should not be in the UnimplementedMessages section of the actual deployment log for GUI apps.
+		- packages - sent by PackageRelativeFileLocator, but the class will be removed on actual deployment"
 
-	^#(#createThumbnailExtent:mask: #ttmRelayEvent: #defineTemplate #evaluate:)!
+	^#(#createThumbnailExtent:mask: #ttmRelayEvent: #defineTemplate #evaluate: #packages)!
 
 testCommandLineHelloWorld
 	"Tests predicted unimplemented messages of a minimal console application. Note that the actual set will be less and can be determined by deploying the application with deployment logging enabled, and looking at the UnimplementedMesages element in the resulting log. In the case of 'Hello World' the unimplemented message set should actually be empty when deploying."
@@ -82,7 +84,7 @@ testEtchASketch
 
 	| env |
 	env := self environmentForAppDeployment: {EtchASketch owningPackage}.
-	self verifyPackageClosure: env missing: #(#ttmRelayEvent: #defineTemplate #evaluate:).
+	self verifyPackageClosure: env missing: #(#ttmRelayEvent: #defineTemplate #evaluate: #packages).
 	"This isn't necessarily sufficient for InternalIcon, etc, to survive into the deployed app, but is necessary for that to be so."
 	self assert: (env includesClass: InternalIcon).
 	self assert: (env includesClass: STBOutFiler).
@@ -121,7 +123,7 @@ testSimpleWebBrowser
 	env := self environmentForAppDeployment: {WebBrowserShell owningPackage}.
 	"This list is shorter in D8 - the last 4 are development-only methods of the type-library analyzer. Active-X Automation gets pulled in because there are a couple of methods in ICoreWebView2 with VARIANT parameters."
 	self verifyPackageClosure: env
-		missing: #(#ttmRelayEvent: #defineTemplate #evaluate: #arrayType: #generateGlobalDefinition: #majorVersion #minorVersion)!
+		missing: #(#ttmRelayEvent: #defineTemplate #evaluate: #arrayType: #generateGlobalDefinition: #majorVersion #minorVersion #packages)!
 
 testSystemPackage
 	| aPackage |
