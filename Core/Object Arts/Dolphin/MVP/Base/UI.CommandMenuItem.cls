@@ -298,7 +298,7 @@ new
 stbConvertFrom: anSTBClassFormat
 	"Convert from earlier version models.
 		1: 'flags' instance variable pushed up.
-		2: 'image' instance variable and spare added"
+		2: 'image' instance variable added to CommandMenuItem subclass"
 
 	| ver |
 	ver := anSTBClassFormat version.

@@ -16,15 +16,6 @@ UI.Tests.CheckButtonTest comment: ''!
 
 !UI.Tests.CheckButtonTest methodsFor!
 
-getTextExtent: actualText
-	| subject textExtent canvas |
-	subject := self view.
-	canvas := subject canvas.
-	canvas font: subject actualFont.
-	textExtent := canvas textExtent: actualText.
-	canvas free.
-	^textExtent!
-
 testCalculateExtent
 	"Test that checkboxes are able to resize to fit their text (and button). We really don't need to verify this precisely as we aren't testing the control's behaviour, rather that it does size to fit."
 
@@ -41,13 +32,12 @@ testCalculateExtent
 	textWidth := (self getTextExtent: actualText) x.
 	"To keep the test simple, we use a guess at the size of the checkbox plus padding that ought to be large enough. We don't care about precise accuracy."
 	buttonAndPadding := 20 * subject dpi // 96.
-	self assert: (subject extent x between: textWidth and: textWidth + buttonAndPadding).
+	self assert: (subject width between: textWidth and: textWidth + buttonAndPadding).
 	subject text: 'abc'.
 	textWidth := (self getTextExtent: 'abc') x.
-	self assert: (subject extent x between: textWidth and: textWidth + buttonAndPadding)! !
+	self assert: (subject width between: textWidth and: textWidth + buttonAndPadding)! !
 
 !UI.Tests.CheckButtonTest categoriesForMethods!
-getTextExtent:!helpers!private! !
 testCalculateExtent!public!unit tests! !
 !
 

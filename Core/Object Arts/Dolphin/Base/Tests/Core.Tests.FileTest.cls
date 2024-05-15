@@ -861,7 +861,7 @@ buildTestPathOfLength:!helpers!private! !
 createTestDirectories!helpers!private! !
 deleteDirectory:!helpers!public! !
 deleteTestDirectories!private!Running! !
-maxFname!public!unit tests! !
+maxFname!constants!private! !
 printFilenameOfLength:on:!helpers!private! !
 relativePathOf:to:!helpers!public! !
 removeDirectory:!helpers!private! !

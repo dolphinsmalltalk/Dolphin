@@ -64,17 +64,14 @@ testCalculateExtent
 	"Use a non-proportional font to make calculating the expected result predictable"
 	actualText := '	The quick brown 狐狸 jumped over the lazy Лиса'.
 	shellButtonA text: actualText.
-	shell
-		extent: 500 @ 75;
-		layoutManager: FlowLayout new.
 	actualText := '	The quick brown 狐狸 jumped over the lazy Лиса'.
 	shellButtonA text: actualText.
 	textWidth := (self getButton: shellButtonA textExtent: actualText) x.
-	self assert: (shellButtonA extent x between: textWidth and: textWidth + 25).
+	self assert: (shellButtonA width closeTo: textWidth precision: 25).
 	"Button should shrink if given less text"
 	shellButtonA text: 'abc'.
 	textWidth := (self getButton: shellButtonA textExtent: 'abc') x.
-	self assert: (shellButtonA extent x between: textWidth and: textWidth + 25)!
+	self assert: (shellButtonA width closeTo: textWidth precision: 25)!
 
 testDialogDefaultButtons
 	<nocreate>

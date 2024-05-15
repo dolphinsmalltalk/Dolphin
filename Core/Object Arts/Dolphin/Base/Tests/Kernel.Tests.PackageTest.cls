@@ -2,7 +2,7 @@
 
 Core.Tests.DolphinTest
 	subclass: #'Kernel.Tests.PackageTest'
-	instanceVariableNames: 'loadedPackages checkTimestamps'
+	instanceVariableNames: 'loadedPackages checkTimestamps defaultPackage'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -262,7 +262,8 @@ setUp
 	super setUp.
 	var := Package classPool associationAt: 'CheckTimestamps'.
 	checkTimestamps := var value.
-	var value: true!
+	var value: true.
+	defaultPackage := PackageManager current defaultPackage!
 
 tearDown
 	| scribbleClass |
@@ -273,6 +274,7 @@ tearDown
 	scribbleClass := #{Smalltalk.Scribble} value.
 	#(#looseA #looseC) do: [:each | scribbleClass removeSelector: each ifAbsent: nil].
 	#(#resource_Scribble_test) do: [:each | scribbleClass class removeSelector: each ifAbsent: nil].
+	PackageManager current defaultPackage: defaultPackage.
 	super tearDown!
 
 testForwardRefLoadPac

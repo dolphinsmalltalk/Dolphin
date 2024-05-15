@@ -122,7 +122,7 @@ testAssignResource!public!unit tests! !
 testDeserializeAll!public!unit tests! !
 testReferenceToNonExistentView!public!unit tests! !
 testResourceSelector!public!unit tests! !
-testStbConvertFromVersion0!public! !
+testStbConvertFromVersion0!public!unit tests! !
 testStoreOn!public!unit tests! !
 !
 

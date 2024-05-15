@@ -149,6 +149,15 @@ testStbRoundTrip
 	self assert: rehydrated class identicalTo: ByteArray.
 	self assert: rehydrated equals: subject!
 
+testStlRoundTrip
+	| subject array rehydrated |
+	subject := (0 to: 255) asByteArray.
+	array := subject literalStoreArray.
+	rehydrated := Object fromLiteralStoreArray: array.
+	self assert: rehydrated size equals: 256.
+	self assert: rehydrated class identicalTo: ByteArray.
+	self assert: rehydrated equals: subject!
+
 testUInt16AtOffsetPut
 	"#1457"
 
@@ -202,7 +211,8 @@ testInt32AtOffsetPut!public!unit tests! !
 testInt8AtOffset!public!unit tests! !
 testInt8AtOffsetPut!public!unit tests! !
 testMixedConcatenation!public! !
-testStbRoundTrip!public! !
+testStbRoundTrip!public!unit tests! !
+testStlRoundTrip!public!unit tests! !
 testUInt16AtOffsetPut!public!unit tests! !
 testUInt32AtOffsetPut!public!unit tests! !
 uint16Values!constants!private! !

@@ -296,12 +296,12 @@ tabFocus
 tabWidth: anInteger
 	"Change the visible size of a tab to be a multiple of the width of a space character."
 
-	| canvas spaceWidth |
+	| canvas |
 	canvas := self canvas.
 	canvas font: self actualFont.
-	spaceWidth := (canvas textExtent: ' ') x.
+	self setTabStops: anInteger * (canvas textExtent: ' ') x.
 	canvas free.
-	self setTabStops: anInteger * spaceWidth!
+!
 
 textAtLine: lineIndex
 	"Private - Answer the text of a line at the given line index (1-based)."

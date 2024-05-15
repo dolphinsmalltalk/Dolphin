@@ -65,6 +65,16 @@ uuidFromString: uuid uuid: lppstr
 	<stdcall: errno UuidFromStringA char* void*>
 	^self invalidCall: _failureCode!
 
+uuidHash: uuid status: status
+	"
+		unsigned short RPC_ENTRY UuidHash( 
+			UUID *  Uuid, 	
+			RPC_STATUS *  Status	
+		);"
+
+	<stdcall: word UuidHash void* uint32*>
+	^self invalidCall: _failureCode!
+
 uuidToString: uuid stringUuid: lppstr
 	"Converts a UUID to a string.
 		RPC_STATUS RPC_ENTRY UuidToString( 
@@ -81,6 +91,7 @@ rpcStringFree:!primitives!public!win32 functions-rpc! !
 uuidCompare:uuid2:status:!primitives!public!win32 functions-rpc! !
 uuidCreate:!primitives!public!win32 functions-rpc! !
 uuidFromString:uuid:!primitives!public!win32 functions-rpc! !
+uuidHash:status:!primitives!public!win32 functions-rpc! !
 uuidToString:stringUuid:!primitives!public!win32 functions-rpc! !
 !
 

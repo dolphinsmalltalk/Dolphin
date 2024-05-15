@@ -2020,7 +2020,7 @@ viewSave
 	self hasResource ifFalse: [^self viewSaveAs].
 	rid := self resourceIdentifier.
 
-	[rid assign: composingView literalStoreArray.
+	[rid assignView: composingView.
 	self isModified: false] on: Compiler errorClass
 			do: 
 				[:ex |

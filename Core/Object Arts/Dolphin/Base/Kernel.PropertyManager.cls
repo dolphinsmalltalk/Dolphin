@@ -64,7 +64,7 @@ removeAllPropertiesOf: anObject
 removePropertyOf: anObject at: aSymbol
 	"Removes a property value matching aSymbol for anObject"
 
-	self removePropertyOf: anObject at: aSymbol ifAbsent: [anObject errorNotFound: aSymbol]
+	^self removePropertyOf: anObject at: aSymbol ifAbsent: [anObject errorNotFound: aSymbol]
 !
 
 removePropertyOf: anObject at: aSymbol ifAbsent: aBlock

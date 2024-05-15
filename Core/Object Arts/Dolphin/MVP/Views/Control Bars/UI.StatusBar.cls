@@ -339,6 +339,19 @@ setItemText: aStatusBarItem at: anInteger
 		wParam: (style bitOr: anInteger - 1)
 		lpParam: ((style allMask: SBT_OWNERDRAW) ifFalse: [aStatusBarItem getText asUtf16String])!
 
+setItemText: aStatusBarItem at: anInteger
+	"Private - Set the SB_SETTEXT of the receiver's common control for specified one of the receiver's <StatusBarItem>s."
+
+	"In the case of owner-drawn items, this amounts to an instruction to the control to request re-draw of the item, and we don't need to pass the text here."
+
+	| style |
+	style := aStatusBarItem style.
+	(self
+		sendMessage: SB_SETTEXT
+		wParam: (style bitOr: anInteger - 1)
+		lpParam: ((style allMask: SBT_OWNERDRAW) ifFalse: [aStatusBarItem getText asUtf16String])) == 0
+		ifTrue: [self errorInCommonControlCall]!
+
 setRightEdges
 	"Private - Inform the common control of the right edge for each of the receiver's parts."
 

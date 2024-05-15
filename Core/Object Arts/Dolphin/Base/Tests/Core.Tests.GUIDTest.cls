@@ -83,7 +83,11 @@ testFromString
 	guid := self subjectClass fromString: string.
 	self assert: guid size equals: 16.
 	self assert: guid asString size equals: 38.
-	self assert: src equals: guid!
+	self assert: src equals: guid.
+	self
+		should: [GUID fromString: 'foo']
+		raise: OS.RPCError
+		matching: [:ex | ex statusCode = OS.Win32Errors.RPC_S_INVALID_STRING_UUID]!
 
 testFromStringNull
 	self assertNull: (self subjectClass fromString: self subjectClass null asString)!

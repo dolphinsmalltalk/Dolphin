@@ -58,7 +58,7 @@ lines'.
 testCalculateExtentSimple
 	"Test preferred extent calculation in the #simple (SS_SIMPLE) mode. This is a single-line mode that does not process tabs, nor the mnemonic prefixes. Furthermore any embedded cr/lfs are stripped out."
 
-	| actualText firstLine canvas shell expected actual |
+	| actualText firstLine shell expected actual |
 	shell := presenter parentView.
 	shell designExtent: 500 @ 100.
 	shell layoutManager: FlowLayout new.
@@ -73,10 +73,7 @@ lines'.
 	"If debugging through it can be useful to see the size the control actually wants to be"
 	presenter usePreferredExtent: true.
 	presenter designExtent: 20 @ 10.
-	canvas := presenter canvas.
-	canvas font: presenter actualFont.
-	expected := presenter calcExtentFromClientExtent: (canvas textExtent: firstLine).
-	canvas free.
+	expected := presenter calcExtentFromClientExtent: (self getTextExtent: firstLine).
 	actual := presenter calculateExtent: (LayoutContext forContainer: shell).
 	self assert: actual y equals: expected y.
 	"The width calculated by the GDI GetTextExtentPoint32 function is slightly different than the DrawTextEx calculation used by the control (and now#calculateExtent:) so we don't expect a precise result"

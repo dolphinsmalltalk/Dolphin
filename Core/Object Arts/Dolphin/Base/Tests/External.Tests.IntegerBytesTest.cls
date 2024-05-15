@@ -37,6 +37,15 @@ testStbRoundTrip
 	self assert: rehydrated class identicalTo: self subjectClass.
 	self assert: rehydrated equals: subject!
 
+testStlRoundTrip
+	| subject array rehydrated |
+	subject := self subjectClass fromInteger: self canonicalValue.
+	array := subject literalStoreArray.
+	rehydrated := Object fromLiteralStoreArray: array.
+	self assert: rehydrated size equals: self subjectClass elementSize.
+	self assert: rehydrated class identicalTo: self subjectClass.
+	self assert: rehydrated equals: subject!
+
 testStlVersion4
 	"STL 4 representation from D7 - the individual bytes are written to the stream"
 
@@ -69,6 +78,7 @@ stlVersion4!constants!private! !
 stlVersion6!constants!private! !
 subjectClass!constants!private! !
 testStbRoundTrip!public!unit tests! !
+testStlRoundTrip!public!unit tests! !
 testStlVersion4!public!unit tests! !
 testStlVersion6!public!unit tests! !
 !

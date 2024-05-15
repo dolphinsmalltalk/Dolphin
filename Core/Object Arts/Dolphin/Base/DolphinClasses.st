@@ -2249,6 +2249,7 @@ Kernel.SharedPool
 			'ERROR_SUCCESS' -> 16r0.
 			'NO_ERROR' -> 16r0.
 			'RO_E_CLOSED' -> -16r7FFFFFED.
+			'RPC_S_INVALID_STRING_UUID' -> 16r6A9.
 			'S_FALSE' -> 16r1.
 			'S_OK' -> 16r0.
 			'SEVERITY_ERROR' -> 16r1.

@@ -23,7 +23,7 @@ margins
 testCalculateExtent
 	"Test preferred extent calculation correctly accounts for tabs and does not process mnemonic prefixes."
 
-	| actualText canvas shell expected actual textToMeasure |
+	| actualText shell expected actual textToMeasure |
 	"Use a non-proportional font to make calculating the expected result predictable"
 	presenter view font: self nonProportionalFont.
 	shell := presenter parentView.
@@ -34,12 +34,9 @@ testCalculateExtent
 	"If debugging through it can be useful to see the size the control actually wants to be to check that all the text is displayed without extra space or clipping"
 	presenter usePreferredExtent: true.
 	presenter extent: 20 @ 10.
-	canvas := presenter canvas.
-	canvas font: presenter actualFont.
 	textToMeasure := actualText copyReplaceAll: (String with: Character tab)
 				with: (String new: 8 withAll: Character space).
-	expected := presenter calcExtentFromClientExtent: (canvas textExtent: textToMeasure).
-	canvas free.
+	expected := presenter calcExtentFromClientExtent: (self getTextExtent: textToMeasure).
 	actual := presenter calculateExtent: (LayoutContext forContainer: shell).
 	self assert: actual y equals: expected y.
 	"The width calculated by the GDI GetTextExtentPoint32 function is slightly different than the DrawTextEx calculation used by the control (and now#calculateExtent:) so we don't expect a precise result"

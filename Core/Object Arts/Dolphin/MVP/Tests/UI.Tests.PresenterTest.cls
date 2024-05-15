@@ -26,6 +26,15 @@ destroyPresenter
 	shell = View desktop ifTrue: [presenter destroy] ifFalse: [shell close].
 	presenter := nil!
 
+getTextExtent: actualText
+	| subject textExtent canvas |
+	subject := self view.
+	canvas := subject canvas.
+	canvas font: subject actualFont.
+	textExtent := canvas textExtent: actualText.
+	canvas free.
+	^textExtent!
+
 hasTestStbViewResources
 	| resourceDir |
 	resourceDir := self resourceDir.
@@ -195,6 +204,7 @@ waitForInputIdle
 !UI.Tests.PresenterTest categoriesForMethods!
 classToTest!constants!private! !
 destroyPresenter!public!Running! !
+getTextExtent:!helpers!private! !
 hasTestStbViewResources!private!testing! !
 hasTestStlViewResources!private!testing! !
 initializePresenter!public!Running! !

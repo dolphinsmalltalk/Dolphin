@@ -692,7 +692,7 @@ Core.Tests.DolphinTest
 
 Core.Tests.DolphinTest
 	subclass: #'Kernel.Tests.PackageTest'
-	instanceVariableNames: 'loadedPackages checkTimestamps'
+	instanceVariableNames: 'loadedPackages checkTimestamps defaultPackage'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

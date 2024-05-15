@@ -223,7 +223,7 @@ asQualifiedReference
 asResourceId
 	"On Windows wide string APIs will be expecting string resource names to be in UTF-16."
 
-	^self asUtf16String!
+	^Locale invariant lowercaseString: self!
 
 associations
 	"Answer a <sequencedReadableCollection> containing the receiver's associations, representing the keys (indices) and values (Characters) in the receiver."

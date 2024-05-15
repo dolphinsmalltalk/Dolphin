@@ -707,7 +707,7 @@ text: textString
 	text := textString	!
 
 toStrings
-	^{ text asUtf8String } , (items collect: [:each | each toStrings])!
+	^{ text } , (items collect: [:each | each toStrings])!
 
 typeFlags
 	"Private - Answer the MENUITEMINFO style flags of the receiver (see

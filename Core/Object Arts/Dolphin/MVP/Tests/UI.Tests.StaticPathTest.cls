@@ -18,7 +18,7 @@ classToTest
 	^StaticPath!
 
 testCalculateExtent
-	| actualText canvas shell expected actual |
+	| actualText shell expected actual |
 	shell := presenter parentView.
 	shell extent: 300 @ 100.
 	shell layoutManager: FlowLayout new.
@@ -29,10 +29,7 @@ testCalculateExtent
 	"If debugging through it can be useful to see the size the control actually wants to be"
 	presenter usePreferredExtent: true.
 	presenter extent: 20 @ 10.
-	canvas := presenter canvas.
-	canvas font: presenter actualFont.
-	expected := presenter calcExtentFromClientExtent: (canvas textExtent: actualText).
-	canvas free.
+	expected := presenter calcExtentFromClientExtent: (self getTextExtent: actualText).
 	actual := presenter calculateExtent: (LayoutContext forContainer: shell).
 	self assert: actual equals: expected!
 

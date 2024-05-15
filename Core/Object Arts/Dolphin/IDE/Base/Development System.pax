@@ -385,6 +385,7 @@ package setMethodNames: #(
 	#(#{External.WCHARField} #accessorMessage)
 	#(#{External.WCHARField} #characterCreationMessage)
 	#(#{Graphics.AbstractFont class} #newInstanceAspect:class:)
+	#(#{Graphics.AbstractPen class} #publishedAspectsOfInstances)
 	#(#{Graphics.Bitmap class} #newInstanceAspect:class:)
 	#(#{Graphics.Color class} #newInstanceAspect:class:)
 	#(#{Graphics.Gdiplus.Image class} #newInstanceAspect:class:)
@@ -4789,6 +4790,21 @@ newInstanceAspect: aSymbol class: aspectClass
 newInstanceAspect:class:!adapters!private! !
 !
 
+!Graphics.AbstractPen class methodsFor!
+
+publishedAspectsOfInstances
+    	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
+    
+    	^(super publishedAspectsOfInstances)
+    		add: (Aspect color: #color);
+    		add: (Aspect integer: #width);
+    		add: (Aspect choice: #styleName from: self styleNames);
+    		yourself! !
+
+!Graphics.AbstractPen class categoriesForMethods!
+publishedAspectsOfInstances!public! !
+!
+
 !Graphics.Bitmap class methodsFor!
 
 newInstanceAspect: aSymbol class: aspectClass 
@@ -9050,7 +9066,7 @@ editViewUsing: aMonadicBlock
 	view := DesignDesktopView default loadViewResource: self resource forEdit: true.
 	
 	[aMonadicBlock value: view.
-	self assign: view literalStoreArray] ensure: [view destroy]!
+	self assignView: view] ensure: [view destroy]!
 
 hiddenObjects
 	"Private - Answers a <collection> of the <Object>s that are contained in the receiver's resource
@@ -9089,7 +9105,7 @@ reassign
 	| view designDesktop |
 	designDesktop := DesignDesktopView default.
 	view := designDesktop loadViewResource: self resource forEdit: true.
-	[self assign: view literalStoreArray] ensure: [view destroy]!
+	[self assignView: view] ensure: [view destroy]!
 
 sourceFilerClass
 	^(self owningPackage ifNil: [self owningClass]) sourceFilerClass! !
