@@ -116,6 +116,9 @@ ceiling
 		ifTrue: [anInteger]
 		ifFalse: [anInteger + 1]!
 
+closeTo: aNumber precision: precisionFloat
+	^(self - aNumber) abs <= precisionFloat!
+
 coerce: anArithmeticValue
 	"Private - Coerce the <arithmeticValue> argument (which is assumed to be of a lower generality than the receiver) to a type compatible with the receiver."
 
@@ -454,6 +457,7 @@ addToInteger:!double dispatch!private! !
 addToPoint3D:!double dispatch!private! !
 addToScaledDecimal:!double dispatch!private! !
 ceiling!public!truncation and round off! !
+closeTo:precision:!comparing!public! !
 coerce:!coercing!private! !
 divideIntoFloat:!double dispatch!private! !
 divideIntoFraction:!double dispatch!private! !

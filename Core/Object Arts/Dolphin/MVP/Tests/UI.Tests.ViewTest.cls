@@ -24,6 +24,16 @@ simulateIconTitleFontChange: aShellView
 				wParam: SPI_SETICONTITLELOGFONT
 				lParam: 0)!
 
+testDesignRectangle
+	| rect view designRect |
+	view := presenter view.
+	rect := view getRect.
+	designRect := rect scaledBy: USER_DEFAULT_SCREEN_DPI / view dpi.
+	self assert: view designExtent equals: designRect extent.
+	view designRectangle: designRect.
+	self assert: (view extent closeTo: rect extent precision: 1).
+	self assert: (view position closeTo: rect origin precision: 1)!
+
 testFontChangePropagationFromDesktop
 	"Note that this test may be quite slow if there are more than a few windows open. The particular culprit is the TreeView - it responds very slowly to a WM_SETFONT, although this is partly because it has to have available the text of all the nodes in order to be able to calculate its layout correctly. When the TreeView is in #dynamic update mode, which is true of the trees in the class browser, getting the current text involves sending a callback to request the text. Since the callback has to be sent for every node currently in the tree (not just the displayed nodes) this can take some time. Even when not in #dynamic update mode, the calculation done by the control is not fast. The test also has to change the desktop font twice, so the propagation cost is incurred twice."
 
@@ -90,6 +100,7 @@ testRecreateMaintainsModelConnection
 !UI.Tests.ViewTest categoriesForMethods!
 classToTest!helpers!private! !
 simulateIconTitleFontChange:!helpers!private! !
+testDesignRectangle!public!unit tests! !
 testFontChangePropagationFromDesktop!public!unit tests! !
 testFontChangePropagationFromSettingsChange!public!unit tests! !
 testFontChangePropagationFromShell!public!unit tests! !

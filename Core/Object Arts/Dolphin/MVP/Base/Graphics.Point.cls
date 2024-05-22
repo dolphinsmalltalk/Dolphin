@@ -126,8 +126,8 @@ asUInt32
 asUIntPtr
 	"Answer the receiver in a form suitable for passing/returning as a Windows LRESULT (32 or 64-bit, depending on host OS) return value. The default is self (which will cause the default window proc. of the window to be called for most objects other than Integers when used as a return value)."
 
-	^(self x bitAnd: VMConstants.HalfPtrMask)
-		bitOr: ((self y bitAnd: VMConstants.HalfPtrMask) bitShift: VMConstants.HalfPtrBits)!
+	^(self x asInteger bitAnd: VMConstants.HalfPtrMask)
+		bitOr: ((self y asInteger bitAnd: VMConstants.HalfPtrMask) bitShift: VMConstants.HalfPtrBits)!
 
 ceiling
 	"Answer a new Point with the x and y values of the receiver truncated

@@ -39,6 +39,19 @@ testAsUInt32OutOfRange
 	uint := subject asUInt32.
 	self assert: uint equals: 16r00020001!
 
+testAsUIntPtr
+	| result |
+	result := ((17 / 4) @ (11 / 4)) asUIntPtr.
+	self assert: result >> VMConstants.HalfPtrBits equals: 3.
+	self assert: (result bitAnd: VMConstants.HalfPtrMask) equals: 4!
+
+testCloseToPrecision
+	self assert: (125@-125 closeTo: 126@-126 precision: 1).
+	self assert: (125@-125 closeTo: 124@-124 precision: 1).
+	self deny: (125@-125 closeTo: -126@126 precision: 1).
+	self deny: (125@-125 closeTo: 127@-125 precision: 1).
+	self deny: (125@-125 closeTo: 125@-123 precision: 1)!
+
 testDivideLarge
 	| largeNeg largePos subject |
 	largeNeg := SmallInteger minimum - 1.
@@ -67,6 +80,8 @@ subjectSupportNonIntegralValues!private!testing! !
 testAbs!public!unit tests! !
 testAsUInt32!public!unit tests! !
 testAsUInt32OutOfRange!public!unit tests! !
+testAsUIntPtr!public! !
+testCloseToPrecision!public!unit tests! !
 testDivideLarge!public! !
 testEquals!public!unit tests! !
 testStrictlyPositive!public!unit tests! !
