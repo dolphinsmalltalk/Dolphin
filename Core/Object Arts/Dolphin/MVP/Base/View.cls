@@ -936,7 +936,7 @@ designExtent: aPoint
 designRectangle: aRectangle
 	"Set the dimensions of the receiver's outer window to the equivalent of the device-indepent pixel (DIPs are 96-dpi) extent, aPoint, at the receiver's current resolution."
 
-	self rectangle: (aRectangle scaledBy: self scaleFactor)!
+	self rectangle: (aRectangle scaledBy: self scaleFactor) truncated!
 
 destroy
 	"Force the receiver closed. N.B. The receiver will receive WM_DESTROY

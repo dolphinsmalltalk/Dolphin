@@ -313,7 +313,15 @@ show
 	"Shows the view of the receiver.
 	Pick up the default extent if any."
 
-	self class defaultExtent ifNotNil: [:ext | self view designExtent: ext].
+	self class defaultExtent
+		ifNotNil: 
+			[:designExtent |
+			| shell extent |
+			"Ensure that the resized view will fit on its current monitor"
+			shell := self view.
+			extent := designExtent * shell dpi // USER_DEFAULT_SCREEN_DPI.
+			shell rectangle: ((shell displayMonitor adjustPosition: shell position forExtent: extent)
+						extent: extent)].
 	^super show!
 
 slideyPinMap

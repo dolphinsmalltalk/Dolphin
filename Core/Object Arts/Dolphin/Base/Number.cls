@@ -95,9 +95,6 @@ closeTo: aNumber
 
 	^ self closeTo: aNumber precision: 0.0001!
 
-closeTo: aNumber precision: precisionFloat
-	^(self - aNumber) abs <= precisionFloat!
-
 copy
 	"Answer a copy of the receiver (by default a copy which shares the receiver's 
 	instance variables). Numbers are immutable, so we answer the receiver itself."
@@ -302,7 +299,6 @@ asInteger!converting!public! !
 asScaledDecimal:!converting!public! !
 asTrueFraction!converting!public! !
 closeTo:!comparing!public! !
-closeTo:precision:!comparing!public! !
 copy!copying!public! !
 cos!mathematical!public! !
 days!converting!durations!public! !
