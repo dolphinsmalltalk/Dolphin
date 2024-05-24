@@ -52,7 +52,7 @@ testStrokeCaps
 			e value <= 3
 				ifTrue: 
 					[model startCap: e value endCap: e value.
-					self assert: model strokeCaps equals: (Array with: e value with: e value).
+					self assert: model strokeCaps equals: {e value. e value}.
 					self assert: model startCap equals: e value.
 					self assert: model endCap equals: e value]
 				ifFalse: [self should: [model startCap: e value endCap: e value] raise: GdiplusError]]!

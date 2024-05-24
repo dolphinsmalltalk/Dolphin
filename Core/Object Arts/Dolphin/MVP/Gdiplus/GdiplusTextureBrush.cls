@@ -19,24 +19,19 @@ rotateTransform: aRealAngle
 
 	self rotateTransform: aRealAngle order: MatrixOrderPrepend!
 
-rotateTransform: aRealAngle order: aMatrixOrderConstant 
+rotateTransform: aRealAngle order: aMatrixOrderConstant
 	"Set the receiver's transformation matrix to the product of itself and a rotation matrix 
 	defined by aRealAngle with the order of transformation specified by aMatrixOrderConstant."
 
-	| status |
-	(status := GdiplusLibrary default 
-				gdipRotateTextureTransform: self asParameter
-				angle: aRealAngle
-				order: aMatrixOrderConstant) = Ok 
-		ifFalse: [GdiplusError signal: 'GdipRotateTextureTransform failed' with: status]!
+	GdiplusLibrary default
+		gdipRotateTextureTransform: self asParameter
+		angle: aRealAngle
+		order: aMatrixOrderConstant!
 
-transform: aGdiplusMatrix 
+transform: aGdiplusMatrix
 	"Set aGdiplusMatrix as the transformation matrix of the receiver."
 
-	| status |
-	(status := GdiplusLibrary default gdipSetTextureTransform: self asParameter
-				matrix: aGdiplusMatrix asParameter) = Ok 
-		ifFalse: [GdiplusError signal: 'GdipSetTextureTransform failed' with: status]! !
+	GdiplusLibrary default gdipSetTextureTransform: self asParameter matrix: aGdiplusMatrix asParameter! !
 
 !GdiplusTextureBrush categoriesForMethods!
 rotateTransform:!operations!public! !

@@ -15,20 +15,16 @@ GdiplusGraphicsPathFromPointsInitializer comment: ''!
 !GdiplusGraphicsPathFromPointsInitializer methodsFor!
 
 createHandle
-	| gpHandle status points |
+	| gpHandle points |
 	gpHandle := ExternalHandle new.
-	points :=POINTLArray marshal: pathPoints.
-	status := self library
-				gdipCreatePath2I: points
-				types: pathTypes
-				count: pathPoints size
-				fillMode: fillMode
-				path: gpHandle.
-	status == Ok ifFalse: [self gdiplusErrorWith: status].
+	points := POINTLArray marshal: pathPoints.
+	self library
+		gdipCreatePath2I: points
+		types: pathTypes
+		count: pathPoints size
+		fillMode: fillMode
+		path: gpHandle.
 	^gpHandle!
-
-gdiplusConstructorErrorDescription
-	^'Error creating GraphicsPath'!
 
 points: points types: types fillMode: aFillModeConstant 
 	pathPoints := points.
@@ -37,7 +33,6 @@ points: points types: types fillMode: aFillModeConstant
 
 !GdiplusGraphicsPathFromPointsInitializer categoriesForMethods!
 createHandle!private!realizing/unrealizing! !
-gdiplusConstructorErrorDescription!constants!private! !
 points:types:fillMode:!initializing!private! !
 !
 

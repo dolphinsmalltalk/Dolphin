@@ -15,18 +15,13 @@ GdiplusPrivateFontCollectionInitializer comment: ''!
 !GdiplusPrivateFontCollectionInitializer methodsFor!
 
 createHandle
-	| gpHandle status |
+	| gpHandle |
 	gpHandle := ExternalHandle new.
-	status := self library gdipNewPrivateFontCollection: gpHandle.
-	status == Ok ifFalse: [self gdiplusErrorWith: status].
-	^gpHandle!
-
-gdiplusConstructorErrorDescription
-	^'Error creating PrivateFontCollection'! !
+	self library gdipNewPrivateFontCollection: gpHandle.
+	^gpHandle! !
 
 !GdiplusPrivateFontCollectionInitializer categoriesForMethods!
 createHandle!private!realizing/unrealizing! !
-gdiplusConstructorErrorDescription!constants!private! !
 !
 
 !GdiplusPrivateFontCollectionInitializer class methodsFor!

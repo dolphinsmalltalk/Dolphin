@@ -22,21 +22,16 @@ createHandle
 	    return new Bitmap(hicon);
 	}"
 
-	| gpHandle status |
+	| gpHandle |
 	gpHandle := ExternalHandle new.
-	status := self library gdipCreateBitmapFromHICON: icon asParameter bitmap: gpHandle.
-	status == Ok ifFalse: [self gdiplusErrorWith: status].
+	self library gdipCreateBitmapFromHICON: icon asParameter bitmap: gpHandle.
 	^gpHandle!
-
-gdiplusConstructorErrorDescription
-	^'Error creating Bitmap'!
 
 icon: anIcon
 	icon := anIcon! !
 
 !GdiplusBitmapFromIconInitializer categoriesForMethods!
 createHandle!private!realizing/unrealizing! !
-gdiplusConstructorErrorDescription!constants!private! !
 icon:!initializing!private! !
 !
 

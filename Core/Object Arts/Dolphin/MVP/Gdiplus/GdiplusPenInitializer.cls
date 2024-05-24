@@ -14,15 +14,6 @@ GdiplusPenInitializer comment: ''!
 
 !GdiplusPenInitializer categoriesForClass!Unclassified! !
 
-!GdiplusPenInitializer methodsFor!
-
-gdiplusConstructorErrorDescription
-	^'Error creating Pen'! !
-
-!GdiplusPenInitializer categoriesForMethods!
-gdiplusConstructorErrorDescription!constants!private! !
-!
-
 !GdiplusPenInitializer class methodsFor!
 
 brush: aGdiplusBrush width: aFloat

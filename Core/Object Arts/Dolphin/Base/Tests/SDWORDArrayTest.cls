@@ -15,9 +15,13 @@ SDWORDArrayTest comment: ''!
 !SDWORDArrayTest methodsFor!
 
 arrayClass
-	^SDWORDArray! !
+	^SDWORDArray!
+
+numericElementClass
+	^SDWORD! !
 
 !SDWORDArrayTest categoriesForMethods!
 arrayClass!constants!private! !
+numericElementClass!constants!private! !
 !
 

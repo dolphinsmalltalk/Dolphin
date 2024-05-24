@@ -16,80 +16,66 @@ GdiplusGraphicsPath comment: 'GdiplusGraphicsPath stores a sequence of lines, cu
 
 !GdiplusGraphicsPath methodsFor!
 
-addArc: aRectangle angles: aPoint 
+addArc: aRectangle angles: aPoint
 	"Add an arc to the receiver whose bounds are aRectangle and whose start and sweep 
 	angles are specified by aPoint."
 
-	| status |
-	(status := GdiplusLibrary default 
-				gdipAddPathArcI: self asParameter
-				x: aRectangle left
-				y: aRectangle top
-				width: aRectangle width
-				height: aRectangle height
-				startAngle: aPoint x
-				sweepAngle: aPoint y) = Ok 
-		ifFalse: [GdiplusError signal: 'GdipAddPathArcI failed' with: status]!
+	GdiplusLibrary default
+		gdipAddPathArcI: self asParameter
+		x: aRectangle left
+		y: aRectangle top
+		width: aRectangle width
+		height: aRectangle height
+		startAngle: aPoint x
+		sweepAngle: aPoint y!
 
-addClosedCurve: aPointsCollection 
-	| status |
-	(status := GdiplusLibrary default 
-				gdipAddPathClosedCurveI: self asParameter
-				points:(POINTLArray marshal: aPointsCollection)
-				count: aPointsCollection size) = Ok 
-		ifFalse: [GdiplusError signal: 'GdipAddPathClosedCurveI failed' with: status]!
+addClosedCurve: aPointsCollection
+	GdiplusLibrary default
+		gdipAddPathClosedCurveI: self asParameter
+		points: (POINTLArray marshal: aPointsCollection)
+		count: aPointsCollection size!
 
-addCurve: aPointsCollection 
-	| status |
-	(status := GdiplusLibrary default 
-				gdipAddPathCurveI: self asParameter
-				points: (POINTLArray marshal: aPointsCollection)
-				count: aPointsCollection size) = Ok 
-		ifFalse: [GdiplusError signal: 'GdipAddPathCurveI failed' with: status]!
+addCurve: aPointsCollection
+	GdiplusLibrary default
+		gdipAddPathCurveI: self asParameter
+		points: (POINTLArray marshal: aPointsCollection)
+		count: aPointsCollection size!
 
-addEllipse: aRectangle 
+addEllipse: aRectangle
 	"Add an ellipse to the receiver whose bounds are aRectangle."
 
-	| status |
-	(status := GdiplusLibrary default 
-				gdipAddPathEllipseI: self asParameter
-				x: aRectangle left
-				y: aRectangle top
-				width: aRectangle width
-				height: aRectangle height) = Ok 
-		ifFalse: [GdiplusError signal: 'GdipAddPathEllipseI failed' with: status]!
+	GdiplusLibrary default
+		gdipAddPathEllipseI: self asParameter
+		x: aRectangle left
+		y: aRectangle top
+		width: aRectangle width
+		height: aRectangle height!
 
-addLineFrom: startPoint to: endPoint 
-	| status |
-	(status := GdiplusLibrary default 
-				gdipAddPathLineI: self asParameter
-				x1: startPoint x
-				y1: startPoint y
-				x2: endPoint x
-				y2: endPoint y) = Ok 
-		ifFalse: [GdiplusError signal: 'GdipAddPathLineI failed' with: status]!
+addLineFrom: startPoint to: endPoint
+	GdiplusLibrary default
+		gdipAddPathLineI: self asParameter
+		x1: startPoint x
+		y1: startPoint y
+		x2: endPoint x
+		y2: endPoint y!
 
 addLines: aPointsCollection 
 	1 to: aPointsCollection size - 1
 		do: [:i | self addLineFrom: (aPointsCollection at: i) to: (aPointsCollection at: i + 1)]!
 
-addPolygon: aPointsCollection 
-	| status |
-	(status := GdiplusLibrary default 
-				gdipAddPathPolygonI: self asParameter
-				points: (POINTLArray marshal: aPointsCollection)
-				count: aPointsCollection size) = Ok 
-		ifFalse: [GdiplusError signal: 'GdipAddPathPolygonI failed' with: status]!
+addPolygon: aPointsCollection
+	GdiplusLibrary default
+		gdipAddPathPolygonI: self asParameter
+		points: (POINTLArray marshal: aPointsCollection)
+		count: aPointsCollection size!
 
-addRectangle: aRectangle 
-	| status |
-	(status := GdiplusLibrary default 
-				gdipAddPathRectangleI: self asParameter
-				x: aRectangle left
-				y: aRectangle top
-				width: aRectangle width
-				height: aRectangle height) = Ok 
-		ifFalse: [GdiplusError signal: 'GdipAddPathRectangleI failed' with: status]!
+addRectangle: aRectangle
+	GdiplusLibrary default
+		gdipAddPathRectangleI: self asParameter
+		x: aRectangle left
+		y: aRectangle top
+		width: aRectangle width
+		height: aRectangle height!
 
 basicFree
 	"Private - Free up external resources held by the receiver.  Ignore any errors which might arise."
@@ -107,53 +93,44 @@ bounds: aGdiplusMatrix withPen: aGdiplusPen
 	calculated.  aGdiplusPen influences the size of the bounding rectangle which will be 
 	large enough to enclose the receiver even if the path is drawn with a wide pen."
 
-	| status rect |
+	| rect |
 	rect := GpRect newBuffer.
-	(status := GdiplusLibrary default
-				gdipGetPathWorldBoundsI: self asParameter
-				bounds: rect
-				matrix: aGdiplusMatrix asParameter
-				pen: aGdiplusPen asParameter) == Ok
-		ifFalse: [GdiplusError signal: 'GdipGetPathWorldBoundsI failed' with: status].
+	GdiplusLibrary default
+		gdipGetPathWorldBoundsI: self asParameter
+		bounds: rect
+		matrix: aGdiplusMatrix asParameter
+		pen: aGdiplusPen asParameter.
 	^rect asRectangle!
 
 boundsWithPen: aGdiplusPen
 	^self bounds: nil withPen: aGdiplusPen!
 
 closeFigure
-	| status |
-	(status := GdiplusLibrary default gdipClosePathFigure: self asParameter) = Ok 
-		ifFalse: [GdiplusError signal: 'GdipClosePathFigure failed' with: status]!
+	GdiplusLibrary default gdipClosePathFigure: self asParameter!
 
 fillMode
 	"Answer the receiver's fillMode, a FillMode constant."
 
-	| status fillMode |
+	| fillMode |
 	fillMode := SDWORD new.
-	(status := GdiplusLibrary default gdipGetPathFillMode: self asParameter fillMode: fillMode) = Ok 
-		ifFalse: [GdiplusError signal: 'GdipGetPathFillMode failed' with: status].
+	GdiplusLibrary default gdipGetPathFillMode: self asParameter fillMode: fillMode.
 	^fillMode asInteger!
 
-fillMode: aFillModeConstant 
+fillMode: aFillModeConstant
 	"Set the receiver's fillMode to aFillModeConstant."
 
-	| status |
-	(status := GdiplusLibrary default gdipSetPathFillMode: self asParameter fillMode: aFillModeConstant) 
-		= Ok ifFalse: [GdiplusError signal: 'GdipSetPathFillMode failed' with: status]!
+	GdiplusLibrary default gdipSetPathFillMode: self asParameter fillMode: aFillModeConstant!
 
 pointCount
 	"Answer the number of points in the receiver."
 
-	| status count |
+	| count |
 	count := SDWORD new.
-	(status := GdiplusLibrary default gdipGetPointCount: self asParameter count: count) = Ok 
-		ifFalse: [GdiplusError signal: 'GdipGetPointCount failed' with: status].
+	GdiplusLibrary default gdipGetPointCount: self asParameter count: count.
 	^count asInteger!
 
 startFigure
-	| status |
-	(status := GdiplusLibrary default gdipStartPathFigure: self asParameter) = Ok 
-		ifFalse: [GdiplusError signal: 'GdipStartPathFigure failed' with: status]! !
+	GdiplusLibrary default gdipStartPathFigure: self asParameter! !
 
 !GdiplusGraphicsPath categoriesForMethods!
 addArc:angles:!operations!public! !

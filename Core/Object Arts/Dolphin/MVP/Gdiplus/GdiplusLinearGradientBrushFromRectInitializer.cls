@@ -35,16 +35,15 @@ createHandle
                                                               WrapModeTile,
                                                               &brush);"
 
-	| gpHandle status |
+	| gpHandle |
 	gpHandle := ExternalHandle new.
-	status := self library
-				gdipCreateLineBrushFromRectI: (GpRect marshal: rect)
-				color1: color1 argbCode
-				color2: color2 argbCode
-				mode: mode
-				wrapMode: WrapModeTile
-				lineGradient: gpHandle.
-	status == Ok ifFalse: [self gdiplusErrorWith: status].
+	self library
+		gdipCreateLineBrushFromRectI: (GpRect marshal: rect)
+		color1: color1 argbCode
+		color2: color2 argbCode
+		mode: mode
+		wrapMode: WrapModeTile
+		lineGradient: gpHandle.
 	^gpHandle!
 
 rect: aRectangle color1: startColor color2: endColor mode: aLinearGradientMode

@@ -498,6 +498,17 @@ retryDwordAtOffset: anInteger put: anObject failureCode: failureCode
 			(intVal >= 0 and: [intVal <= 16rFFFFFFFF]) ifTrue: [^self dwordAtOffset: anInteger put: intVal]].
 	^self updatePrimitiveFailed: failureCode atOffset: anInteger!
 
+retrySDwordAtOffset: anInteger put: anObject failureCode: failureCode
+	"Private - Fallback code for storing signed 32-bit integer into the receiver when a primitive fails. Either raises an appropriate error, or converts the argument to an Integer and retries."
+
+	failureCode == _PrimitiveFailureCode.InvalidParameter2
+		ifTrue: 
+			[| intVal |
+			"Not a suitable value. Attempt to coerce to Integer and retry. Will error if anObject does understand #asInteger."
+			intVal := anObject asInteger.
+			intVal isSDWORD ifTrue: [^self dwordAtOffset: anInteger put: intVal]].
+	^self updatePrimitiveFailed: failureCode atOffset: anInteger!
+
 retrySWordAtOffset: anInteger put: anObject failureCode: failureCode
 	"Private - Fallback code for storing signed word into the reciever when a primitive fails.
 	Either raises an appropriate error, or converts the argument to an Integer and retries."
@@ -563,11 +574,10 @@ sdwordAtOffset: anInteger put: anObject
 	be representable in 32-bits. Uses the dwordAtOffset:put: primitive."
 
 	<primitive: 123>
-	| value |
-	value := anObject asInteger.
-	value isSDWORD ifFalse: [^self errorCantHold: anObject].
-	1 to: 4 do: [:index | self basicAt: anInteger + index put: (value digitAt: index)].
-	^anObject!
+	^self
+		retrySDwordAtOffset: anInteger
+		put: anObject
+		failureCode: _failureCode!
 
 sqwordAtOffset: anInteger
 	"Answer the signed 8-byte integer at the specified <integer> offset (i.e. zero relative) in
@@ -768,6 +778,7 @@ qwordAtOffset:put:!accessing!public! !
 replaceBytesOf:from:to:startingAt:!double dispatch!primitives!private! !
 replaceFrom:to:with:startingAt:!public!replacing! !
 retryDwordAtOffset:put:failureCode:!accessing!private! !
+retrySDwordAtOffset:put:failureCode:!accessing!private! !
 retrySWordAtOffset:put:failureCode:!accessing!private! !
 retryUIntPtrAtOffset:put:failureCode:!accessing!helpers!private! !
 retryWordAtOffset:put:failureCode:!accessing!private! !

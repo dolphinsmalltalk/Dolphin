@@ -328,7 +328,7 @@ ExternalStructure subclass: #GpEncoderParameter
 	classInstanceVariableNames: ''!
 
 ExternalStructure subclass: #GpEncoderParameters
-	instanceVariableNames: ''
+	instanceVariableNames: 'valueBuffer'
 	classVariableNames: '_OffsetOf_Count _OffsetOf_Parameter'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

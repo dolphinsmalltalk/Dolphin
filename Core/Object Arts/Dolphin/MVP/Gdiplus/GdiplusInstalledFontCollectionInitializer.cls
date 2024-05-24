@@ -17,16 +17,11 @@ GdiplusInstalledFontCollectionInitializer comment: ''!
 createHandle
 	| gpHandle status |
 	gpHandle := ExternalHandle new.
-	status := self library gdipNewInstalledFontCollection: gpHandle.
-	status == Ok ifFalse: [self gdiplusErrorWith: status].
-	^gpHandle!
-
-gdiplusConstructorErrorDescription
-	^'Error creating InstalledFontCollection'! !
+	self library gdipNewInstalledFontCollection: gpHandle.
+	^gpHandle! !
 
 !GdiplusInstalledFontCollectionInitializer categoriesForMethods!
 createHandle!private!realizing/unrealizing! !
-gdiplusConstructorErrorDescription!constants!private! !
 !
 
 !GdiplusInstalledFontCollectionInitializer class methodsFor!

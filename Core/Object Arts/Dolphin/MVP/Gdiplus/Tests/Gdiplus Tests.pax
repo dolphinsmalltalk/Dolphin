@@ -434,7 +434,7 @@ GdiplusInitializerTests subclass: #GdiplusSolidBrushFromColorInitializerTest
 	classInstanceVariableNames: ''!
 
 TestResource subclass: #GdiplusFileResource
-	instanceVariableNames: ''
+	instanceVariableNames: 'tempFileLocator'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -734,10 +734,7 @@ exampleGdipCLCStrokeCaps
 	| bitmap graphics path customCap pen rect |
 	bitmap := GdiplusBitmap extent: 450 @ 300.
 	graphics := bitmap graphics.
-	path := GdiplusGraphicsPath new addLines: (Array 
-						with: -15 @ -15
-						with: 0 @ 0
-						with: 15 @ -15).
+	path := GdiplusGraphicsPath new addLines: {-15 @ -15. 0 @ 0. 15 @ -15}.
 	customCap := GdiplusCustomLineCap strokePath: path.
 	customCap startCap: LineCapTriangle endCap: LineCapRound.
 	pen := GdiplusPen red width: 5.5.
@@ -1147,7 +1144,7 @@ exampleGdipGTransformPoints
 	| bitmap pen points graphics |
 	bitmap := GdiplusBitmap extent: 300 @ 200.
 	pen := GdiplusPen blue width: 5.
-	points := Array with: 10 @ 10 with: 150 @ 50.
+	points := {10 @ 10. 150 @ 50}.
 	graphics := bitmap graphics.
 	graphics
 		drawLineFrom: points first
@@ -1401,10 +1398,7 @@ exampleGdipGPCreatingFigures
 	path addLineFrom: 100 @ 0 to: 250 @ 20.
 	path startFigure.
 	path addLineFrom: 50 @ 20 to: 5 @ 90.
-	path addCurve: (Array 
-				with: 40 @ 60
-				with: 50 @ 70
-				with: 30 @ 90).
+	path addCurve: {40 @ 60. 50 @ 70. 30 @ 90}.
 	path addLineFrom: 50 @ 150 to: 150 @ 180.
 	path closeFigure.
 	graphics drawPath: path pen: pen.
@@ -1819,29 +1813,24 @@ exampleGdipIJPEGCompression
 		Guid: EncoderQuality;
 		Type: EncoderParameterValueTypeLong;
 		NumberOfValues: 1.
-	quality := DWORD new.
+	quality := DWORDBytes new.
 	encoderParameter Value: quality yourAddress.
 	images := OrderedCollection new.
 	#(0 30 70 100) do: 
-			[:num | 
+			[:num |
 			quality value: num.
-			toFile := self fileResource fileLocator 
-						localFileSpecFor: 'test' , num displayString , '.jpg'.
+			toFile := self fileResource fileLocator localFileSpecFor: 'test' , num displayString , '.jpg'.
 			image saveToFile: toFile encoderParams: encoderParameters.
 			images add: (GdiplusImage fromFile: toFile)].
 	bitmap := GdiplusBitmap extent: 810 @ 610.
-	points := Array 
-				with: 0 @ 0
-				with: 410 @ 0
-				with: 0 @ 310
-				with: 410 @ 310.
+	points := {0 @ 0. 410 @ 0. 0 @ 310. 410 @ 310}.
 	images keysAndValuesDo: 
-			[:i :e | 
+			[:i :e |
 			| point fileSize text |
 			fileSize := ((File find: e filename) first fileSize / 1024) rounded.
 			point := points at: i.
 			text := (File splitFilenameFrom: e filename) , ' (' , fileSize displayString , ' kb)'.
-			(bitmap graphics)
+			bitmap graphics
 				drawImage: e
 					at: point
 					extent: 400 @ 300;
@@ -1885,7 +1874,7 @@ exampleGdipILosslessRotation
 	image := GdiplusImage fromFile: self fileResource pafEyeJpg.
 	"self assert: [image extent / 16 truncated * 16 = image extent]."
 	encoderParameters := GpEncoderParameters new Count: 1.
-	encValue := DWORD fromInteger: EncoderValueTransformRotate90.
+	encValue := DWORDBytes fromInteger: EncoderValueTransformRotate90.
 	(encoderParameters Parameter first)
 		Guid: EncoderTransformation;
 		Type: EncoderParameterValueTypeLong;
@@ -1958,7 +1947,7 @@ exampleGdipIMultiFrame
 	| encoderParameters parameter value encoderClsid image1 image2 image3 toFile strm guids |
 	encoderParameters := GpEncoderParameters new Count: 1.
 	parameter := encoderParameters Parameter first.
-	value := DWORD new.
+	value := DWORDBytes new.
 	parameter
 		Guid: EncoderSaveFlag;
 		Type: EncoderParameterValueTypeLong;
@@ -2321,11 +2310,7 @@ exampleGdipISkewing
 				usingLocator: FileLocator installRelative) thumbnailWithHeight: 75.
 	graphics
 		drawImage: image at: 10 @ 10;
-		drawImage: image
-			points: (Array 
-					with: 200 @ 20
-					with: 110 @ 200
-					with: 250 @ 50).
+		drawImage: image points: {200 @ 20. 110 @ 200. 250 @ 50}.
 	^bitmap!
 
 exampleGdipIThumbnails
@@ -2721,14 +2706,14 @@ exampleGdipIAShearColors
 		self exampleGdipIAShearColors showExample
  	"
 
-	| bitmap image brush colorMatrix imageAttributes |
+	| bitmap image colorMatrix imageAttributes |
 	image := self exampleColorBars4.
 	colorMatrix := GpColorMatrix identity.
 	colorMatrix atPoint: 3 @ 1 put: 0.5.
 	imageAttributes := GdiplusImageAttributes new.
 	imageAttributes colorMatrix: colorMatrix.
 	bitmap := GdiplusBitmap extent: 600 @ 150.
-	(bitmap graphics)
+	bitmap graphics
 		drawImage: image at: 10 @ 10;
 		drawImage: image
 			at: 200 @ 10
@@ -2738,7 +2723,7 @@ exampleGdipIAShearColors
 			unit: UnitPixel
 			attributes: imageAttributes.
 	image := GdiplusImage fromFile: self fileResource pafEyeJpg.
-	bitmap graphics 
+	bitmap graphics
 		drawImage: image
 		at: 400 @ 10
 		extent: image extent / 4
@@ -2878,11 +2863,7 @@ exampleGdipLGChangingColors
 	| bitmap graphics points colors brush |
 	bitmap := GdiplusBitmap new.
 	graphics := bitmap graphics.
-	points := Array
-				with: 0 @ 0
-				with: 300 @ 0
-				with: 0 @ 200
-				with: 300 @ 200.
+	points := {0 @ 0. 300 @ 0. 0 @ 200. 300 @ 200}.
 	colors := #(#red #green #blue #magenta #cyan).
 	brush := GdiplusLinearGradientBrush
 				point1: 0 @ 0
@@ -2891,8 +2872,7 @@ exampleGdipLGChangingColors
 				color2: Color blue.
 	points keysAndValuesDo: 
 			[:i :point |
-			brush startingColor: (Color named: (colors at: i))
-				endingColor: (Color named: (colors at: i + 1)).
+			brush startingColor: (Color named: (colors at: i)) endingColor: (Color named: (colors at: i + 1)).
 			graphics fillRectangle: (point extent: 300 @ 200) brush: brush].
 	^bitmap!
 
@@ -2966,11 +2946,7 @@ exampleGdipLGModeConstants
 	| bitmap graphics points enum brush |
 	bitmap := GdiplusBitmap new.
 	graphics := bitmap graphics.
-	points := Array
-				with: 0 @ 0
-				with: 300 @ 0
-				with: 0 @ 200
-				with: 300 @ 200.
+	points := {0 @ 0. 300 @ 0. 0 @ 200. 300 @ 200}.
 	points keysAndValuesDo: 
 			[:i :point |
 			enum := self enumsLinearGradientMode at: i.
@@ -2993,11 +2969,7 @@ exampleGdipLGTiling
 	| bitmap graphics points enum brush |
 	bitmap := GdiplusBitmap new.
 	graphics := bitmap graphics.
-	points := Array
-				with: 0 @ 0
-				with: 300 @ 0
-				with: 0 @ 200
-				with: 300 @ 200.
+	points := {0 @ 0. 300 @ 0. 0 @ 200. 300 @ 200}.
 	points keysAndValuesDo: 
 			[:i :point |
 			enum := self enumsLinearGradientMode at: i.
@@ -3128,11 +3100,7 @@ exampleGdipPGBlendColors
 	| bitmap graphics brush colors |
 	bitmap := GdiplusBitmap extent: 400 @ 400.
 	graphics := bitmap graphics.
-	brush := GdiplusPathGradientBrush points: (Array 
-						with: 100 @ 0
-						with: 200 @ 200
-						with: 0 @ 200)
-				wrapMode: WrapModeTile.
+	brush := GdiplusPathGradientBrush points: {100 @ 0. 200 @ 200. 0 @ 200} wrapMode: WrapModeTile.
 	colors := self rgb.
 	graphics
 		fillRectangle: (0 @ 0 extent: 200 @ 200) brush: brush;
@@ -3177,7 +3145,7 @@ exampleGdipPGBlendFactors
 	(brush := GdiplusPathGradientBrush path: path)
 		wrapMode: WrapModeTile;
 		centerColor: Color blue;
-		surroundColors: (Array with: Color green with: Color red).
+		surroundColors: {Color green. Color red}.
 	graphics fillRectangle: (0 @ 150 extent: 200 @ 150) brush: brush.
 	brush blendFactors: #(0 0.4 0.8 1) positions: #(0 0.1 0.9 1).
 	graphics fillRectangle: (200 @ 150 extent: 200 @ 150) brush: brush.
@@ -3196,17 +3164,13 @@ exampleGdipPGBounds
 
 	| bitmap points brush bounds |
 	bitmap := GdiplusBitmap extent: 250 @ 300.
-	points := Array 
-				with: 0 @ 0
-				with: 120 @ 20
-				with: 70 @ 80
-				with: 30 @ 180.
+	points := {0 @ 0. 120 @ 20. 70 @ 80. 30 @ 180}.
 	"We are going to translate the brush, shifting its origin. This didn't work correctly in the original code, as noted in a comment, because the bounding rectangle was assumed to be returned as an origin and corner pair, but rectangles in Gdiplus are always origin and extent. It is essential that GpRect's are used with the integer GDIP APIs, not RECT(L)s."
 	points := points collect: [:e | e + (20 @ 30)].
 	brush := GdiplusPathGradientBrush points: points.
 	bitmap graphics translateTransform: 20 @ 30.
 	bounds := brush bounds.
-	(bitmap graphics)
+	bitmap graphics
 		fillRectangle: bounds brush: brush;
 		drawRectangle: bounds pen: GdiplusPen new;
 		drawPolygon: points pen: GdiplusPen red.
@@ -3260,9 +3224,9 @@ exampleGdipPGFocusScales
 	| bitmap brush focusBrush |
 	bitmap := GdiplusBitmap extent: 500 @ 250.
 	brush := GdiplusPathGradientBrush points: self triangle.
-	brush blendColors: (Array with: Color red with: Color blue) positions: #(0 1).
+	brush blendColors: {Color red. Color blue} positions: #(0 1).
 	focusBrush := brush clone focusScales: 0.2 @ 0.6.
-	(bitmap graphics)
+	bitmap graphics
 		fillRectangle: (0 @ 0 extent: 200 @ 200) brush: brush;
 		drawString: 'Original' at: 0 @ 0;
 		translateTransform: 250 @ 0;
@@ -3326,10 +3290,7 @@ exampleGdipPGMultiply
 	| bitmap graphics points matrix brush |
 	bitmap := GdiplusBitmap extent: 650 @ 350.
 	graphics := bitmap graphics.
-	points := Array 
-				with: 0 @ 0
-				with: 150 @ 0
-				with: 150 @ 150.
+	points := {0 @ 0. 150 @ 0. 150 @ 150}.
 	brush := GdiplusPathGradientBrush points: points.
 	graphics
 		fillRectangle: (0 @ 0 extent: 200 @ 200) brush: brush;
@@ -3377,7 +3338,7 @@ exampleGdipPGSurroundColors
 	bitmap graphics fillRectangle: (0 @ 0 extent: 200 @ 200) brush: brush.
 	brush surroundColor: Color red.
 	bitmap graphics fillRectangle: (200 @ 0 extent: 200 @ 200) brush: brush.
-	brush surroundColors: (Array with: Color red with: Color green).
+	brush surroundColors: {Color red. Color green}.
 	bitmap graphics fillRectangle: (0 @ 200 extent: 200 @ 200) brush: brush.
 	brush surroundColors: self rgb.
 	bitmap graphics fillRectangle: (200 @ 200 extent: 200 @ 200) brush: brush.
@@ -3396,25 +3357,21 @@ exampleGdipPGSurroundColors2
 		wrapMode: WrapModeTile;
 		centerColor: Color yellow.
 	bitmap graphics fillRectangle: (0 @ 0 extent: 200 @ 150) brush: brush.
-	brush surroundColors: (Array with: Color red).
+	brush surroundColors: {Color red}.
 	bitmap graphics fillRectangle: (200 @ 0 extent: 200 @ 150) brush: brush.
-	brush surroundColors: (Array with: Color red with: Color green).
+	brush surroundColors: {Color red. Color green}.
 	bitmap graphics fillRectangle: (400 @ 0 extent: 200 @ 150) brush: brush.
 	brush surroundColors: self rgb.
 	bitmap graphics fillRectangle: (0 @ 150 extent: 200 @ 150) brush: brush.
-	brush surroundColors: self rgb , (Array with: Color cyan).
+	brush surroundColors: self rgb , {Color cyan}.
 	bitmap graphics fillRectangle: (200 @ 150 extent: 200 @ 150) brush: brush.
-	brush surroundColors: self rgb , (Array with: Color cyan with: Color magenta).
+	brush surroundColors: self rgb , {Color cyan. Color magenta}.
 	bitmap graphics fillRectangle: (400 @ 150 extent: 200 @ 150) brush: brush.
-	brush 
-		surroundColors: self rgb , (Array 
-						with: Color cyan
-						with: Color magenta
-						with: Color black).
+	brush surroundColors: self rgb , {Color cyan. Color magenta. Color black}.
 	bitmap graphics fillRectangle: (0 @ 300 extent: 200 @ 150) brush: brush.
-	brush 
-		surroundColors: (Array new: 13 withAll: Color cyan) , (Array new: 13 withAll: Color magenta) 
-				, (Array new: 13 withAll: Color yellow) , (Array new: 13 withAll: Color red) 
+	brush
+		surroundColors: (Array new: 13 withAll: Color cyan) , (Array new: 13 withAll: Color magenta)
+				, (Array new: 13 withAll: Color yellow) , (Array new: 13 withAll: Color red)
 				, (Array new: 13 withAll: Color blue).
 	bitmap graphics fillRectangle: (200 @ 300 extent: 200 @ 150) brush: brush.
 	brush surroundColor: Color red.
@@ -3471,26 +3428,17 @@ exampleGdipPGWrapMode
 
 	| bitmap pathPoints brush points modes |
 	bitmap := GdiplusBitmap extent: 600 @ 400.
-	pathPoints := Array 
-				with: 5 @ 5
-				with: 25 @ 30
-				with: 35 @ 60
-				with: 10 @ 50.
-	points := Array 
-				with: 0 @ 0
-				with: 200 @ 0
-				with: 400 @ 0
-				with: 0 @ 200
-				with: 200 @ 200.
+	pathPoints := {5 @ 5. 25 @ 30. 35 @ 60. 10 @ 50}.
+	points := {0 @ 0. 200 @ 0. 400 @ 0. 0 @ 200. 200 @ 200}.
 	"Take out 'reverse' in next line and see the effect on WrapModeClamp."
 	modes := self enumsWrapMode reverse.
 	self assert: [points size = modes size].
 	modes with: points
 		do: 
-			[:assoc :point | 
+			[:assoc :point |
 			brush := GdiplusPathGradientBrush points: pathPoints wrapMode: assoc value.
 			brush centerColor: Color red.
-			(bitmap graphics)
+			bitmap graphics
 				fillRectangle: (point + 10 extent: 180 @ 180) brush: brush;
 				drawString: assoc key at: point].
 	^bitmap!
@@ -3519,7 +3467,7 @@ examplesWorkspace
 	path := GdiplusGraphicsPath new addEllipse: (10 @ 10 corner: 300 @ 200).
 	brush := GdiplusPathGradientBrush path: path.
 	brush centerColor: Color red.
-	colors := Array with: Color blue.
+	colors := {Color blue}.
 	brush surroundColors: colors.
 	brush blendTriangularShape: 0.2 scale: 0.7.
 	graphics fillRectangle: (10 @ 10 corner: 350 @ 350) brush: brush.
@@ -3530,7 +3478,7 @@ examplesWorkspace
 	path := GdiplusGraphicsPath new addEllipse: (10 @ 10 corner: 300 @ 200).
 	brush := GdiplusPathGradientBrush path: path.
 	brush centerColor: Color red.
-	colors := Array with: Color blue.
+	colors := {Color blue}.
 	brush surroundColors: colors.
 	brush blendBellShape: 0.2 scale: 0.7.
 	graphics fillRectangle: (10 @ 10 corner: 350 @ 350) brush: brush.
@@ -3538,11 +3486,7 @@ examplesWorkspace
 
 	"#bounds"
 	graphics := (bitmap := GdiplusBitmap new) graphics.
-	points := Array 
-				with: 30 @ 20
-				with: 150 @ 40
-				with: 100 @ 100
-				with: 60 @ 200.
+	points := {30 @ 20. 150 @ 40. 100 @ 100. 60 @ 200}.
 	"	points := points collect: [:e | e - (30@20)].		"
 	"	points := points collect: [:e | e + (100@100)].	"
 	brush := GdiplusPathGradientBrush points: points.
@@ -3556,16 +3500,10 @@ examplesWorkspace
 rgb
 	"Private - Answer a 3-element Array containing red, green, and blue Colors."
 
-	^Array 
-		with: Color red
-		with: Color green
-		with: Color blue!
+	^{Color red. Color green. Color blue}!
 
 triangle
-	^Array 
-		with: 100 @ 0
-		with: 200 @ 200
-		with: 0 @ 200! !
+	^{100 @ 0. 200 @ 200. 0 @ 200}! !
 
 !GdiplusPathGradientBrush class categoriesForMethods!
 exampleGdipPGBlendColors!examples!public!sunit! !
@@ -3940,29 +3878,25 @@ exampleGdipRClipWithRegion
 	bitmap := GdiplusBitmap extent: 200 @ 200.
 	graphics := bitmap graphics.
 	path := GdiplusGraphicsPath new.
-	path addPolygon: (Array 
-				with: 10 @ 10
-				with: 150 @ 10
-				with: 100 @ 75
-				with: 100 @ 150).
+	path addPolygon: {10 @ 10. 150 @ 10. 100 @ 75. 100 @ 150}.
 	region := GdiplusRegion fromPath: path.
 	pen := GdiplusPen black.
 	graphics drawPath: path pen: pen.
 	graphics clipRegion: region combineMode: nil.
 	fontFamily := GdiplusFontFamily fromName: 'Arial'.
-	font := GdiplusFont 
+	font := GdiplusFont
 				fontFamily: fontFamily
 				emSize: 36
 				style: FontStyleBold
 				unit: UnitPixel.
 	brush := GdiplusSolidBrush red.
-	graphics 
+	graphics
 		drawString: 'A Clipping Region'
 		font: font
 		at: 15 @ 15
 		format: nil
 		brush: brush.
-	graphics 
+	graphics
 		drawString: 'A Clipping Region'
 		font: font
 		at: 15 @ 68

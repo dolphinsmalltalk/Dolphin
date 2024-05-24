@@ -15,30 +15,25 @@ GdiplusCustomLineCapInitializer comment: ''!
 !GdiplusCustomLineCapInitializer methodsFor!
 
 createHandle
-	| gpHandle status |
+	| gpHandle |
 	gpHandle := ExternalHandle new.
-	status := self library
-				gdipCreateCustomLineCap: fillPath asParameter
-				strokePath: strokePath asParameter
-				baseCap: baseCap
-				baseInset: baseInset
-				customCap: gpHandle.
-	status == Ok ifFalse: [self gdiplusErrorWith: status].
+	self library
+		gdipCreateCustomLineCap: fillPath asParameter
+		strokePath: strokePath asParameter
+		baseCap: baseCap
+		baseInset: baseInset
+		customCap: gpHandle.
 	^gpHandle!
 
 fillPath: aFillPath strokePath: aStrokePath baseCap: aLineCapConstant baseInset: aRealBaseInset 
 	fillPath := aFillPath.
 	strokePath := aStrokePath.
 	baseCap := aLineCapConstant.
-	baseInset := aRealBaseInset!
-
-gdiplusConstructorErrorDescription
-	^'Error creating CustomLineCap'! !
+	baseInset := aRealBaseInset! !
 
 !GdiplusCustomLineCapInitializer categoriesForMethods!
 createHandle!private!realizing/unrealizing! !
 fillPath:strokePath:baseCap:baseInset:!initializing!private! !
-gdiplusConstructorErrorDescription!constants!private! !
 !
 
 !GdiplusCustomLineCapInitializer class methodsFor!

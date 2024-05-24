@@ -17,8 +17,7 @@ GdiplusStringFormatGenericTypographicInitializer comment: ''!
 createHandle
 	| gpHandle status |
 	gpHandle := ExternalHandle new.
-	(status := self library gdipStringFormatGetGenericTypographic: gpHandle) == Ok
-		ifFalse: [self gdiplusErrorWith: status].
+	self library gdipStringFormatGetGenericTypographic: gpHandle.
 	^gpHandle!
 
 isGenericTypographic

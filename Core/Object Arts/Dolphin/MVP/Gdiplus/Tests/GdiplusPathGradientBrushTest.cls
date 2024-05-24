@@ -15,26 +15,17 @@ GdiplusPathGradientBrushTest comment: ''!
 !GdiplusPathGradientBrushTest methodsFor!
 
 rgb
-	^Array 
-		with: Color red
-		with: Color green
-		with: Color blue!
+	^{Color red. Color green. Color blue}!
 
 setSample2Points
-	model := GdiplusPathGradientBrush points: (Array with: 100 @ 0 with: 200 @ 150)!
+	model := GdiplusPathGradientBrush points: {100 @ 0. 200 @ 150}!
 
 setSample3Points
-	model := GdiplusPathGradientBrush points: (Array 
-						with: 100 @ 0
-						with: 200 @ 200
-						with: 0 @ 200)!
+	model := GdiplusPathGradientBrush points: {100 @ 0. 200 @ 200. 0 @ 200}!
 
 setSample3PointsPath
-	model := GdiplusPathGradientBrush path: (GdiplusGraphicsPath 
-						points: (Array 
-								with: 100 @ 0
-								with: 200 @ 150
-								with: 0 @ 150)
+	model := GdiplusPathGradientBrush path: (GdiplusGraphicsPath
+						points: {100 @ 0. 200 @ 150. 0 @ 150}
 						types: (ByteArray new: 3 withAll: PathPointTypeLine)
 						fillMode: nil)!
 
@@ -48,11 +39,7 @@ setSamplePathEmpty
 testBlendColors
 	| colors positions |
 	self setSampleEllipsePath.
-	colors := Array
-				with: Color red
-				with: Color green
-				with: Color blue
-				with: Color magenta.
+	colors := {Color red. Color green. Color blue. Color magenta}.
 	positions := #(0 1.0e-001 0.5 1).
 	model blendColors: colors positions: positions.
 	self assert: model blendColorsCount equals: colors size.

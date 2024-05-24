@@ -15,18 +15,13 @@ GdiplusRegionInitializer comment: ''!
 !GdiplusRegionInitializer methodsFor!
 
 createHandle
-	| gpHandle status |
+	| gpHandle |
 	gpHandle := ExternalHandle new.
-	status := self library gdipCreateRegion: gpHandle.
-	status == Ok ifFalse: [self gdiplusErrorWith: status].
-	^gpHandle!
-
-gdiplusConstructorErrorDescription
-	^'Error creating Region'! !
+	self library gdipCreateRegion: gpHandle.
+	^gpHandle! !
 
 !GdiplusRegionInitializer categoriesForMethods!
 createHandle!private! !
-gdiplusConstructorErrorDescription!private! !
 !
 
 !GdiplusRegionInitializer class methodsFor!

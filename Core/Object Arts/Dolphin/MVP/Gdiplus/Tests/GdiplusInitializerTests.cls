@@ -19,10 +19,6 @@ GdiplusInitializerTests comment: ''!
 assertLastArgIsHandle
 	self assert: constructorArgs last class identicalTo: ExternalHandle!
 
-testErrorWith
-	self should: [model gdiplusErrorWith: 123] raise: GdiplusError matching: [:ex | ex tag = 123]
-!
-
 testIsPersistent
 	"By default initializers can be persisted"
 
@@ -30,7 +26,6 @@ testIsPersistent
 
 !GdiplusInitializerTests categoriesForMethods!
 assertLastArgIsHandle!asserting!public! !
-testErrorWith!public!unit tests! !
 testIsPersistent!public!unit tests! !
 !
 

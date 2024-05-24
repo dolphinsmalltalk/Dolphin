@@ -15,10 +15,9 @@ GdiplusFontFamilyGenericSerifInitializer comment: ''!
 !GdiplusFontFamilyGenericSerifInitializer methodsFor!
 
 createHandle
-	| gpHandle status |
+	| gpHandle |
 	gpHandle := ExternalHandle new.
-	status := self library gdipGetGenericFontFamilySerif: gpHandle.
-	status == Ok ifFalse: [self gdiplusErrorWith: status].
+	self library gdipGetGenericFontFamilySerif: gpHandle.
 	^gpHandle! !
 
 !GdiplusFontFamilyGenericSerifInitializer categoriesForMethods!

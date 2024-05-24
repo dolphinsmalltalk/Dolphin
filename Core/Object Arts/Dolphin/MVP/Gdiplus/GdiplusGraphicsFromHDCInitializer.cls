@@ -27,19 +27,14 @@ createHandle
 	"MSDN: When you use this constructor to create a Graphics object, make sure that the
 	Graphics object is deleted or goes out of scope before the device context is released."
 
-	| gpHandle status |
+	| gpHandle |
 	gpHandle := ExternalHandle new.
-	status := self library gdipCreateFromHDC: canvas asParameter graphics: gpHandle.
-	status == Ok ifFalse: [self gdiplusErrorWith: status].
-	^gpHandle!
-
-gdiplusConstructorErrorDescription
-	^'Error creating Graphics'! !
+	self library gdipCreateFromHDC: canvas asParameter graphics: gpHandle.
+	^gpHandle! !
 
 !GdiplusGraphicsFromHDCInitializer categoriesForMethods!
 canvas:!initializing!private! !
 createHandle!private!realizing/unrealizing! !
-gdiplusConstructorErrorDescription!constants!private! !
 !
 
 !GdiplusGraphicsFromHDCInitializer class methodsFor!

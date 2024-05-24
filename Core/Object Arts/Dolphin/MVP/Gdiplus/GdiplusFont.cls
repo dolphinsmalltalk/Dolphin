@@ -22,19 +22,17 @@ basicFree
 emSize
 	"Answer the font size (commonly called the em size) of this Font object. The size is in the units of this Font object."
 
-	| status size |
+	| size |
 	size := FLOAT new.
-	(status := GdiplusLibrary default gdipGetFontSize: self asParameter size: size) = Ok 
-		ifFalse: [GdiplusError signal: 'GdipGetFontSize failed' with: status].
+	GdiplusLibrary default gdipGetFontSize: self asParameter size: size.
 	^size value!
 
 family
 	"Answer the FontFamily on which the receiver is based."
 
-	| status gpHandle |
+	| gpHandle |
 	gpHandle := GdiplusInstalledFontCollection new families first.
-	(status := GdiplusLibrary default gdipGetFamily: self asParameter family: gpHandle asParameter) 
-		= Ok ifFalse: [GdiplusError signal: 'GdipGetFamily failed' with: status].
+	GdiplusLibrary default gdipGetFamily: self asParameter family: gpHandle asParameter.
 	^gpHandle!
 
 height
@@ -46,27 +44,25 @@ height
 	^self heightAtDpi: SystemMetrics current dpi!
 
 heightAtDpi: anInteger
-	| height status |
+	| height |
 	height := FLOAT new.
-	(status := GdiplusLibrary default
-				gdipGetFontHeightGivenDPI: self asParameter
-				dpi: anInteger
-				height: height) = Ok
-		ifFalse: [GdiplusError signal: 'GdipGetFontHeightGivenDPI failed' with: status].
+	GdiplusLibrary default
+		gdipGetFontHeightGivenDPI: self asParameter
+		dpi: anInteger
+		height: height.
 	^height value!
 
-heightFromGraphics: aGdiplusGraphics 
+heightFromGraphics: aGdiplusGraphics
 	"Answer the receiver's line spacing, in units. The line spacing is the vertical distance
 	between the base lines of two consecutive lines of text. Thus, the line spacing includes
 	the blank space between lines along with the height of the character itself."
 
 	| status height |
 	height := FLOAT new.
-	(status := GdiplusLibrary default 
-				gdipGetFontHeight: self asParameter
-				graphics: aGdiplusGraphics asParameter
-				height: height) = Ok 
-		ifFalse: [GdiplusError signal: 'GdipGetFontHeight failed' with: status].
+	GdiplusLibrary default
+		gdipGetFontHeight: self asParameter
+		graphics: aGdiplusGraphics asParameter
+		height: height.
 	^height value!
 
 name
@@ -77,10 +73,9 @@ name
 unit
 	"Answer an Integer, that represents the receiver's unit of measure."
 
-	| status unit |
+	| unit |
 	unit := SDWORD new.
-	(status := GdiplusLibrary default gdipGetFontUnit: self asParameter unit: unit) = Ok 
-		ifFalse: [GdiplusError signal: 'GdipGetFontUnit failed' with: status].
+	GdiplusLibrary default gdipGetFontUnit: self asParameter unit: unit.
 	^unit value! !
 
 !GdiplusFont categoriesForMethods!

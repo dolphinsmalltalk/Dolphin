@@ -65,12 +65,10 @@ basicFree
 
 	GdiplusLibrary default gdipDisposeImage: handle!
 
-basicRotate: aRotateConstant 
+basicRotate: aRotateConstant
 	"Rotate the receiver according to aRotateConstant."
 
-	| status |
-	(status := GdiplusLibrary default gdipImageRotateFlip: self asParameter rfType: aRotateConstant) 
-		= Ok ifFalse: [^GdiplusError signal: 'Error rotating image' with: status]!
+	GdiplusLibrary default gdipImageRotateFlip: self asParameter rfType: aRotateConstant!
 
 bounds
 	"Answer the receiver's bounding rectangle.  Most images will have Point zero as the 
@@ -80,7 +78,7 @@ bounds
 	bounds := self getBounds first.
 	^bounds origin rounded corner: bounds corner rounded!
 
-buildCompressionParameters: anIntegerOrNil 
+buildCompressionParameters: anIntegerOrNil
 	| quality params encoderParameter |
 	params := GpEncoderParameters new.
 	params Count: 1.
@@ -88,18 +86,18 @@ buildCompressionParameters: anIntegerOrNil
 		Guid: EncoderQuality;
 		Type: EncoderParameterValueTypeLong;
 		NumberOfValues: 1.
-	quality := DWORD new.
+	quality := DWORDBytes fromInteger: anIntegerOrNil.
 	encoderParameter Value: quality yourAddress.
-	quality value: anIntegerOrNil.
+	"We have to ensure not to leave a dangling pointer to the parameter value"
+	params valueBuffer: quality.
 	^params!
 
 clone
 	"Answer a copy of the receiver."
 
-	| status gpHandle |
+	| gpHandle |
 	gpHandle := ExternalHandle new.
-	(status := GdiplusLibrary default gdipCloneImage: self handle cloneImage: gpHandle) = Ok 
-		ifFalse: [^GdiplusError signal: 'Error in GdipCloneImage' with: status].
+	GdiplusLibrary default gdipCloneImage: self handle cloneImage: gpHandle.
 	^(self class fromOwnedHandle: gpHandle)
 		initializer: initializer;
 		yourself!
@@ -121,10 +119,9 @@ copyToClipboard
 	self asBitmap copyToClipboard!
 
 dpi
-	| buf status |
+	| buf |
 	buf := ByteArray new: 4.
-	(status := GdiplusLibrary default gdipGetImageHorizontalResolution: self asParameter resolution: buf)
-		== Ok ifFalse: [GdiplusError signal: 'gdipGetImageHorizontalResolution failed' with: status].
+	GdiplusLibrary default gdipGetImageHorizontalResolution: self asParameter resolution: buf.
 	^buf floatAtOffset: 0!
 
 drawOn: aCanvas 
@@ -176,30 +173,28 @@ drawOnGraphics: aGraphics at: dstOrigin extent: dstExtent from: srcOrigin extent
 		unit: srcUnit
 		attributes: anImageAttributes!
 
-encoderParameterList: aCLSID 
+encoderParameterList: aCLSID
 	"Answer a list of the parameters supported by the image encoder specified by aCLSID."
 
-	| status size buffer |
+	| size buffer |
 	size := self encoderParameterListSize: aCLSID.
 	buffer := GpEncoderParameters new: size.
-	(status := GdiplusLibrary default 
-				gdipGetEncoderParameterList: self asParameter
-				clsidEncoder: aCLSID
-				size: size
-				buffer: buffer) = Ok 
-		ifFalse: [GdiplusError signal: 'GdipGetEncoderParameterList failed' with: status].
+	GdiplusLibrary default
+		gdipGetEncoderParameterList: self asParameter
+		clsidEncoder: aCLSID
+		size: size
+		buffer: buffer.
 	^buffer!
 
-encoderParameterListSize: aCLSID 
+encoderParameterListSize: aCLSID
 	"Answer the size, in bytes, of the parameter list for the image encoder specified by aCLSID."
 
-	| status size |
-	size := DWORD new.
-	(status := GdiplusLibrary default 
-				gdipGetEncoderParameterListSize: self asParameter
-				clsidEncoder: aCLSID
-				size: size) = Ok 
-		ifFalse: [GdiplusError signal: 'GdipGetEncoderParameterListSize failed' with: status].
+	| size |
+	size := DWORDBytes new.
+	GdiplusLibrary default
+		gdipGetEncoderParameterListSize: self asParameter
+		clsidEncoder: aCLSID
+		size: size.
 	^size asInteger!
 
 erase
@@ -213,14 +208,12 @@ erase
 extent
 	"Answer a <Point> specifying the dimensions of the receiver in pixels."
 
-	| buf status lib width |
+	| buf lib width |
 	buf := ByteArray newFixed: 4.
 	lib := GdiplusLibrary default.
-	(status := lib gdipGetImageWidth: self asParameter width: buf) == Ok
-		ifFalse: [GdiplusError signal: 'GdipGetImageWidth failed' with: status].
+	lib gdipGetImageWidth: self asParameter width: buf.
 	width := buf dwordAtOffset: 0.
-	(status := lib gdipGetImageHeight: self asParameter height: buf) == Ok
-		ifFalse: [GdiplusError signal: 'GdipGetImageHeight failed' with: status].
+	lib gdipGetImageHeight: self asParameter height: buf.
 	^width @ (buf dwordAtOffset: 0)!
 
 filename
@@ -232,10 +225,9 @@ filename
 flags
 	"Answer an <Integer> specifying single-bit flags (attributes) of the receiver."
 
-	| flags status |
-	flags := DWORD new.
-	(status := GdiplusLibrary default gdipGetImageFlags: self asParameter flags: flags) = Ok
-		ifFalse: [^GdiplusError signal: 'GdipGetImageFlags failed' with: status].
+	| flags |
+	flags := DWORDBytes new.
+	GdiplusLibrary default gdipGetImageFlags: self asParameter flags: flags.
 	^flags asInteger!
 
 flipX
@@ -253,16 +245,15 @@ frameCount
 
 	^self frameCount: self frameDimensionsList first!
 
-frameCount: aFrameDimensionGUID 
+frameCount: aFrameDimensionGUID
 	"Answer the number of frames in the specified dimension of the receiver."
 
-	| status count |
-	count := DWORD new.
-	(status := GdiplusLibrary default 
-				gdipImageGetFrameCount: self asParameter
-				dimensionID: aFrameDimensionGUID asParameter
-				count: count) = Ok 
-		ifFalse: [GdiplusError signal: 'GdipImageGetFrameCount failed' with: status].
+	| count |
+	count := DWORDBytes new.
+	GdiplusLibrary default
+		gdipImageGetFrameCount: self asParameter
+		dimensionID: aFrameDimensionGUID asParameter
+		count: count.
 	^count asInteger!
 
 frameDimension
@@ -277,22 +268,20 @@ frameDimensionsCount
 	"Answer an Integer that is the number of frame dimensions in the receiver.  Most image files, 
 	single- or multi-frame, have just 1, but they can have more."
 
-	| status count |
-	count := DWORD new.
-	(status := GdiplusLibrary default gdipImageGetFrameDimensionsCount: self asParameter count: count) 
-		= Ok ifFalse: [GdiplusError signal: 'GdipImageGetFrameDimensionsCount failed' with: status].
+	| count |
+	count := DWORDBytes new.
+	GdiplusLibrary default gdipImageGetFrameDimensionsCount: self asParameter count: count.
 	^count asInteger!
 
 frameDimensionsList
 	"Answer a collection of GUIDs that represent the receiver's frame dimensions."
 
-	| status guids |
+	| guids |
 	guids := StructureArray length: self frameDimensionsCount elementClass: GUID.
-	(status := GdiplusLibrary default 
-				gdipImageGetFrameDimensionsList: self asParameter
-				dimensionIDs: guids
-				count: guids size) = Ok 
-		ifFalse: [GdiplusError signal: 'GdipImageGetFrameDimensionsList failed' with: status].
+	GdiplusLibrary default
+		gdipImageGetFrameDimensionsList: self asParameter
+		dimensionIDs: guids
+		count: guids size.
 	^guids asArray!
 
 frames
@@ -316,15 +305,14 @@ getBounds
 	"Private - Answer a 2-element array, the first element a bounding Rectangle, the second 
 	element the UnitConstant that indicates the unit of measure for the bounding rectangle."
 
-	| status rect unit |
+	| rect unit |
 	rect := RECTF new.
 	unit := SDWORD new.
-	(status := GdiplusLibrary default
-				gdipGetImageBounds: self asParameter
-				srcRect: rect
-				srcUnit: unit) = Ok
-		ifFalse: [^GdiplusError signal: 'GdipGetImageBounds failed' with: status].
-	^Array with: rect asRectangle with: unit value!
+	GdiplusLibrary default
+		gdipGetImageBounds: self asParameter
+		srcRect: rect
+		srcUnit: unit.
+	^{rect asRectangle. unit value}!
 
 graphics
 	"Answer a GdiplusGraphics instance based on the receiver."
@@ -351,10 +339,9 @@ hasThumbnailData
 height
 	"Answer an <Integer> specifying the height of the receiver in pixels."
 
-	| buf status |
+	| buf |
 	buf := ByteArray newFixed: 4.
-	(status := GdiplusLibrary default gdipGetImageHeight: self asParameter height: buf) == Ok
-		ifFalse: [GdiplusError signal: 'GdipGetImageHeight failed' with: status].
+	GdiplusLibrary default gdipGetImageHeight: self asParameter height: buf.
 	^buf dwordAtOffset: 0!
 
 isLandscape
@@ -381,38 +368,32 @@ mimeType
 palette
 	"Answer the receiver's color palette, a <GpColorPalette>."
 
-	| size palette status |
+	| size palette |
 	size := self paletteSize.
 	palette := GpColorPalette new: size.
-	(status := GdiplusLibrary default 
-				gdipGetImagePalette: self asParameter
-				palette: palette
-				size: size) = Ok 
-		ifFalse: [^GdiplusError signal: 'GdipGetImagePalette failed' with: status].
+	GdiplusLibrary default
+		gdipGetImagePalette: self asParameter
+		palette: palette
+		size: size.
 	^palette!
 
-palette: aGpColorPalette 
+palette: aGpColorPalette
 	"Set the receiver's color palette to aGpColorPalette."
 
-	| status |
-	(status := GdiplusLibrary default gdipSetImagePalette: self asParameter
-				palette: aGpColorPalette asParameter) = Ok 
-		ifFalse: [^GdiplusError signal: 'GdipSetImagePalette failed' with: status]!
+	GdiplusLibrary default gdipSetImagePalette: self asParameter palette: aGpColorPalette asParameter!
 
 paletteSize
 	"Private - Answer the size, in bytes, of the receiver's color palette."
 
-	| size status |
-	size := DWORD new.
-	(status := GdiplusLibrary default gdipGetImagePaletteSize: self asParameter size: size) = Ok 
-		ifFalse: [^GdiplusError signal: 'GdipGetImagePaletteSize failed' with: status].
+	| size |
+	size := DWORDBytes new.
+	GdiplusLibrary default gdipGetImagePaletteSize: self asParameter size: size.
 	^size asInteger!
 
 pixelFormat
-	| flags status |
+	| flags |
 	flags := SDWORD new.
-	(status := GdiplusLibrary default gdipGetImagePixelFormat: self asParameter format: flags) = Ok 
-		ifFalse: [^GdiplusError signal: 'GdipGetImagePixelFormat failed' with: status].
+	GdiplusLibrary default gdipGetImagePixelFormat: self asParameter format: flags.
 	^flags asInteger!
 
 properties
@@ -423,11 +404,9 @@ properties
 propertiesCount
 	"Private - Answer an <Integer> specifying the number of properties of the receiver."
 
-	| propertyCount status |
-	propertyCount := DWORD new.
-	(status := GdiplusLibrary default gdipGetPropertyCount: self asParameter
-				numOfProperty: propertyCount) = Ok 
-		ifFalse: [^GdiplusError signal: 'GdipGetPropertyCount failed' with: status].
+	| propertyCount |
+	propertyCount := DWORDBytes new.
+	GdiplusLibrary default gdipGetPropertyCount: self asParameter numOfProperty: propertyCount.
 	^propertyCount asInteger!
 
 propertiesSize
@@ -439,61 +418,55 @@ propertiesSizeAndCount
 	"Private - Answer a two-element array containing the total size, in bytes, of all the
 	property items, and the number of property items, stored in the receiver."
 
-	| size count status |
+	| size count |
 	size := SDWORD new.
 	count := SDWORD new.
-	(status := GdiplusLibrary default 
-				gdipGetPropertySize: self asParameter
-				totalBufferSize: size
-				numProperties: count) = Ok 
-		ifFalse: [^GdiplusError signal: 'GdipGetPropertySize failed' with: status].
-	^Array with: size asInteger with: count asInteger!
+	GdiplusLibrary default
+		gdipGetPropertySize: self asParameter
+		totalBufferSize: size
+		numProperties: count.
+	^{size asInteger. count asInteger}!
 
-property: aGpPropertyItem 
+property: aGpPropertyItem
 	"Set aGpPropertyItem to be one of the receiver's property items."
 
-	| status |
-	(status := GdiplusLibrary default gdipSetPropertyItem: self asParameter item: aGpPropertyItem) = Ok 
-		ifFalse: [^GdiplusError signal: 'GdipSetPropertyItem failed' with: status]!
+	GdiplusLibrary default gdipSetPropertyItem: self asParameter item: aGpPropertyItem!
 
-propertyFromId: aPropertyTagConstant 
+propertyFromId: aPropertyTagConstant
 	"Answer the receiver's <GpPropertyItem> identified by aPropertyTagConstant."
 
-	| propertyItem propSize status |
+	| propertyItem propSize |
 	propSize := self propertySize: aPropertyTagConstant.
 	propertyItem := GpPropertyItem new: propSize.
-	(status := GdiplusLibrary default 
-				gdipGetPropertyItem: self asParameter
-				propId: aPropertyTagConstant
-				propSize: propSize
-				buffer: propertyItem) = Ok 
-		ifFalse: [^GdiplusError signal: 'GdipGetPropertyItem failed' with: status].
+	GdiplusLibrary default
+		gdipGetPropertyItem: self asParameter
+		propId: aPropertyTagConstant
+		propSize: propSize
+		buffer: propertyItem.
 	^propertyItem!
 
 propertyIdList
 	"Answer an <Integer> list of all the property IDs of the receiver."
 
-	| list status count |
+	| list count |
 	count := self propertiesCount.
 	count = 0 ifTrue: [^#()].
 	list := DWORDArray new: count.
-	(status := GdiplusLibrary default 
-				gdipGetPropertyIdList: self asParameter
-				numOfProperty: self propertiesCount
-				list: list) = Ok 
-		ifFalse: [^GdiplusError signal: 'GdipGetPropertyIdList failed' with: status].
+	GdiplusLibrary default
+		gdipGetPropertyIdList: self asParameter
+		numOfProperty: self propertiesCount
+		list: list.
 	^list asArray!
 
-propertySize: aPropertyTagConstant 
+propertySize: aPropertyTagConstant
 	"Private - Answer the integer size of the receiver's property identified by aPropertyTagConstant."
 
-	| size status |
-	size := DWORD new.
-	(status := GdiplusLibrary default 
-				gdipGetPropertyItemSize: self asParameter
-				propId: aPropertyTagConstant
-				size: size) = Ok 
-		ifFalse: [^GdiplusError signal: 'GdipGetPropertyItemSize failed' with: status].
+	| size |
+	size := DWORDBytes new.
+	GdiplusLibrary default
+		gdipGetPropertyItemSize: self asParameter
+		propId: aPropertyTagConstant
+		size: size.
 	^size asInteger!
 
 propertyTagDateTime
@@ -532,13 +505,11 @@ rectScaledToFit: aRectangle centered: aBoolean
 resolution
 	"Answer a <Point> specifying the horizontal and vertical DPI of the receiver."
 
-	| buf status dpiX |
+	| buf dpiX |
 	buf := ByteArray new: 4.
-	(status := GdiplusLibrary default gdipGetImageHorizontalResolution: self asParameter resolution: buf)
-		== Ok ifFalse: [GdiplusError signal: 'gdipGetImageHorizontalResolution failed' with: status].
+	GdiplusLibrary default gdipGetImageHorizontalResolution: self asParameter resolution: buf.
 	dpiX := buf floatAtOffset: 0.
-	(status := GdiplusLibrary default gdipGetImageVerticalResolution: self asParameter resolution: buf)
-		== Ok ifFalse: [GdiplusError signal: 'GdipGetImageVerticalResolution failed' with: status].
+	GdiplusLibrary default gdipGetImageVerticalResolution: self asParameter resolution: buf.
 	^dpiX asInteger @ (buf floatAtOffset: 0) asInteger!
 
 rotateLeft
@@ -551,22 +522,18 @@ rotateRight
 
 	self basicRotate: Rotate90FlipNone!
 
-saveAdd: aGpEncoderParameters 
+saveAdd: aGpEncoderParameters
 	"Close the receiver's disk file.  Used with multi-frame images."
 
-	| status |
-	(status := GdiplusLibrary default gdipSaveAdd: self asParameter encoderParams: aGpEncoderParameters) 
-		= Ok ifFalse: [^GdiplusError signal: 'GdipSaveAdd failed' with: status]!
+	GdiplusLibrary default gdipSaveAdd: self asParameter encoderParams: aGpEncoderParameters!
 
-saveAddImage: aGdiplusImage encoderParams: aGpEncoderParameters 
+saveAddImage: aGdiplusImage encoderParams: aGpEncoderParameters
 	"Add aGdiplusImage to the receiver and save it as a frame in the receiver's disk file."
 
-	| status |
-	(status := GdiplusLibrary default 
-				gdipSaveAddImage: self asParameter
-				newImage: aGdiplusImage asParameter
-				encoderParams: aGpEncoderParameters) = Ok 
-		ifFalse: [^GdiplusError signal: 'GdipSaveAddImage failed' with: status]!
+	GdiplusLibrary default
+		gdipSaveAddImage: self asParameter
+		newImage: aGdiplusImage asParameter
+		encoderParams: aGpEncoderParameters!
 
 saveFramesToFiles
 	"Save the receiver's frames to files with names constructed from the receiver's filename and the frame 
@@ -608,13 +575,11 @@ saveToFile: pathString clsidEncoder: aCLSIDEncoder encoderParams: aGpEncoderPara
 	NB:  In general, this method should not be called directly (i.e., use other save methods)
 	since the image encoder is normally derived from the pathString."
 
-	| status |
-	(status := GdiplusLibrary default
-				gdipSaveImageToFile: self asParameter
-				filename: pathString
-				clsidEncoder: aCLSIDEncoder
-				encoderParams: aGpEncoderParameters) = Ok
-		ifFalse: [^GdiplusError signal: 'Error saving image' with: status]!
+	GdiplusLibrary default
+		gdipSaveImageToFile: self asParameter
+		filename: pathString
+		clsidEncoder: aCLSIDEncoder
+		encoderParams: aGpEncoderParameters!
 
 saveToFile: pathString compression: anIntegerOrNil 
 	"Save the receiver to the specified file, and with the specified <integer> compression
@@ -647,21 +612,20 @@ saveToIStream: pStream mimeType: mimeString
 		mimeType: mimeString
 		encoderParams: nil!
 
-saveToIStream: pStream mimeType: mimeString encoderParams: aGpEncoderParameters 
+saveToIStream: pStream mimeType: mimeString encoderParams: aGpEncoderParameters
 	"Save the receiver to the specified IStream using  the image encoder associated with mimeString
 	and parameters specified by aGpEncoderParameters."
 
 	"MSDN: Do not save an image to the same stream that was used to construct the image. 
 	Doing so might damage the stream. "
 
-	| encoder status |
+	| encoder |
 	encoder := self class encoderClsid: mimeString.
-	status := GdiplusLibrary default 
-				gdipSaveImageToStream: self asParameter
-				stream: pStream
-				clsidEncoder: encoder
-				encoderParams: aGpEncoderParameters.
-	status = Ok ifFalse: [^GdiplusError signal: 'Error saving image' with: status]!
+	GdiplusLibrary default
+		gdipSaveImageToStream: self asParameter
+		stream: pStream
+		clsidEncoder: encoder
+		encoderParams: aGpEncoderParameters!
 
 selectActiveFrame: anInteger
 	"Switch to the frame in the receiver specified by zero-indexed anInteger, in the receiver's first frame
@@ -669,17 +633,15 @@ selectActiveFrame: anInteger
 
 	self selectActiveFrame: anInteger dimensionID: self frameDimensionsList first asParameter!
 
-selectActiveFrame: anInteger dimensionID: aFrameDimensionGUID 
+selectActiveFrame: anInteger dimensionID: aFrameDimensionGUID
 	"Switch to the frame in the receiver specified by zero-indexed anInteger, in the frame 
 	dimension specified by aFrameDimensionGUID.  All changes made to the previously 
 	active frame are discarded unless saved before switching."
 
-	| status |
-	(status := GdiplusLibrary default 
-				gdipImageSelectActiveFrame: self asParameter
-				dimensionID: aFrameDimensionGUID asParameter
-				frameIndex: anInteger) = Ok 
-		ifFalse: [GdiplusError signal: 'GdipImageSelectActiveFrame failed' with: status]!
+	GdiplusLibrary default
+		gdipImageSelectActiveFrame: self asParameter
+		dimensionID: aFrameDimensionGUID asParameter
+		frameIndex: anInteger!
 
 showExample
 	"Private - for developmental ease, so that any image or bitmap is easily displayed from a workspace."
@@ -710,44 +672,42 @@ thumbnailWidth
 		ifTrue: [(self propertyFromId: PropertyTagThumbnailWidth) valueArray first]
 		ifFalse: [0]!
 
-thumbnailWithExtent: aPoint 
+thumbnailWithExtent: aPoint
 	"Answer a copy of the receiver sized to aPoint.  If the receiver has embedded thumbnail data,
 	that data will be used, else it will generate the thumbnail.  NB:  If the receiver has an embedded
 	thumbnail and it is smaller than aPoint, the thumbnail will be resized to aPoint, in which case
 	the resolution will not be as good as if the receiver was resized directly, assuming that the 
 	receiver's size is greater than aPoint.  See also GdiplusBitmap class>>fromImage:extent:"
 
-	| gpImage status |
+	| gpImage |
 	gpImage := ExternalHandle new.
-	(status := GdiplusLibrary default 
-				gdipGetImageThumbnail: self asParameter
-				thumbWidth: aPoint x
-				thumbHeight: aPoint y
-				thumbImage: gpImage
-				pfnCallback: nil
-				callbackData: nil) = Ok 
-		ifFalse: [^GdiplusError signal: 'Error in GdipGetImageThumbnail' with: status].
+	GdiplusLibrary default
+		gdipGetImageThumbnail: self asParameter
+		thumbWidth: aPoint x
+		thumbHeight: aPoint y
+		thumbImage: gpImage
+		pfnCallback: nil
+		callbackData: nil.
 	^(self class fromOwnedHandle: gpImage)
 		initializer: (self class fromFile: self filename) initializer;
 		yourself!
 
-thumbnailWithExtent2: aPoint 
+thumbnailWithExtent2: aPoint
 	"Answer a copy of the receiver sized to aPoint.  If the receiver has embedded thumbnail data,
 	that data will be used, else it will generate the thumbnail.  NB:  If the receiver has an embedded
 	thumbnail and it is smaller than aPoint, the thumbnail will be resized to aPoint, in which case
 	the resolution will not be as good as if the receiver was resized directly, assuming that the 
 	receiver's size is greater than aPoint.  See also GdiplusBitmap class>>fromImage:extent:"
 
-	| gpImage status |
+	| gpImage |
 	gpImage := ExternalHandle new.
-	(status := GdiplusLibrary default 
-				gdipGetImageThumbnail: self asParameter
-				thumbWidth: aPoint x
-				thumbHeight: aPoint y
-				thumbImage: gpImage
-				pfnCallback: nil
-				callbackData: nil) = Ok 
-		ifFalse: [^GdiplusError signal: 'Error in GdipGetImageThumbnail' with: status].
+	GdiplusLibrary default
+		gdipGetImageThumbnail: self asParameter
+		thumbWidth: aPoint x
+		thumbHeight: aPoint y
+		thumbImage: gpImage
+		pfnCallback: nil
+		callbackData: nil.
 	^(self class fromOwnedHandle: gpImage)
 		initializer: self initializer;
 		yourself!
@@ -762,10 +722,9 @@ thumbnailWithHeight: anInteger
 width
 	"Answer an <Integer> specifying the width of the receiver in pixels."
 
-	| buf status |
+	| buf |
 	buf := ByteArray newFixed: 4.
-	(status := GdiplusLibrary default gdipGetImageWidth: self asParameter width: buf) == Ok
-		ifFalse: [GdiplusError signal: 'GdipGetImageWidth failed' with: status].
+	GdiplusLibrary default gdipGetImageWidth: self asParameter width: buf.
 	^buf dwordAtOffset: 0! !
 
 !GdiplusImage categoriesForMethods!
@@ -938,17 +897,16 @@ fileTypes
 	all := String writeStream.
 	types := OrderedCollection new.
 	self decoders do: 
-			[:each | 
+			[:each |
 			| extensions |
 			extensions := each FilenameExtension asString asLowercase.
 			all
 				nextPut: $;;
 				nextPutAll: extensions.
-			types addLast: (Array 
-						with: ('<1s> (<2s>)' expandMacrosWith: each FormatDescription asString with: extensions)
-						with: extensions)].
+			types addLast: {'<1s> (<2s>)' expandMacrosWith: each FormatDescription asString with: extensions.
+						extensions}].
 	types
-		addLast: (Array with: 'All Images' with: all contents);
+		addLast: {'All Images'. all contents};
 		addLast: FileDialog allFilesType.
 	^types asArray!
 
@@ -974,7 +932,7 @@ fromIStream: pStream
 
 	^self fromInitializer: (GdiplusImageFromIStreamInitializer iStream: pStream)!
 
-getImageCodecs: aBoolean 
+getImageCodecs: aBoolean
 	"Private - Answer a <StructureArray> of <GpImageCodecInfo>s, describing either the available encoders
 	or decoders, depending on the <boolean> argument."
 
@@ -986,30 +944,28 @@ getImageCodecs: aBoolean
 	collection we might as well leave it as a single block of memory accessed via a
 	StructureArray."
 
-	| numCodecs lib codecs buf byteSize status |
-	numCodecs := DWORD new.
-	byteSize := DWORD new.
+	| numCodecs lib codecs buf byteSize |
+	numCodecs := DWORDBytes new.
+	byteSize := DWORDBytes new.
 	lib := GdiplusLibrary default.
-	status := aBoolean 
-				ifTrue: [lib gdipGetImageEncodersSize: numCodecs size: byteSize]
-				ifFalse: [lib gdipGetImageDecodersSize: numCodecs size: byteSize].
-	status = Ok ifFalse: [^GdiplusError signal: 'Error in GdipGetImage[De|En]codersSize' with: status].
+	aBoolean
+		ifTrue: [lib gdipGetImageEncodersSize: numCodecs size: byteSize]
+		ifFalse: [lib gdipGetImageDecodersSize: numCodecs size: byteSize].
 	numCodecs := numCodecs asInteger.
 	byteSize := byteSize asInteger.
 	buf := ExternalMemory new: byteSize.
-	status := aBoolean 
-				ifTrue: 
-					[lib 
-						gdipGetImageEncoders: numCodecs
-						size: byteSize
-						encoders: buf]
-				ifFalse: 
-					[lib 
-						gdipGetImageDecoders: numCodecs
-						size: byteSize
-						decoders: buf].
-	status = Ok ifFalse: [^GdiplusError signal: 'Error in GdipGetImage[De|En]coders' with: status].
-	codecs := StructureArray 
+	aBoolean
+		ifTrue: 
+			[lib
+				gdipGetImageEncoders: numCodecs
+				size: byteSize
+				encoders: buf]
+		ifFalse: 
+			[lib
+				gdipGetImageDecoders: numCodecs
+				size: byteSize
+				decoders: buf].
+	codecs := StructureArray
 				fromAddress: buf
 				length: numCodecs
 				elementClass: GpImageCodecInfo.

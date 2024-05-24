@@ -26,13 +26,10 @@ Instance Variables:
 = comparand
 	| size |
 	self == comparand ifTrue: [^true].
-	#todo "ANSI draft says must be same class, not just same species".
-	(self species == comparand species) ifFalse: [^false].
-	size := self size.
+	self species == comparand species ifFalse: [^false].
+	size := self length.
 	size = comparand size ifFalse: [^false].
-	1 to: size do: [ :i |
-		(self at: i) = (comparand at: i)
-			ifFalse: [^false]].
+	1 to: size do: [:i | (self uncheckedAt: i) = (comparand at: i) ifFalse: [^false]].
 	^true!
 
 anySatisfy: discriminator
@@ -251,6 +248,15 @@ from: startInteger to: stopInteger keysAndValuesDo: operation
 		to: stopInteger
 		keysAndValuesDo: operation!
 
+hash
+	"Answer the <integer> hash value for the receiver."
+
+	"Implementation Note: This is a copy of the (not terribly good) hash function of SequenceableCollection, because ExternalArrays should compare equal to Arrays of equivalent values."
+
+	| size |
+	(size := self length) == 0 ifTrue: [^17171].
+	^size + (self at: 1) hash + (self at: size) hash!
+
 includes: target
 	"Answer whether the argument, target, is one of the elements of the receiver.
 	Implementation Note: Override superclass to revert to element search."
@@ -320,6 +326,9 @@ lookup: keyInteger
 	"Answer the value named by the <Integer> argument, keyInteger, or nil if there is no such key in the receiver."
 
 	^(keyInteger > 0 and: [keyInteger <= self size]) ifTrue: [self uncheckedAt: keyInteger]!
+
+maxEncoding
+	^1!
 
 notEmpty
 	"Answer whether the receiver contains any elements."
@@ -427,7 +436,7 @@ with: aCollection do: aDyadicValuable
 			addr + spacing]! !
 
 !ExternalArray categoriesForMethods!
-=!public! !
+=!comparing!public! !
 anySatisfy:!enumerating!public! !
 appendToStream:!double dispatch!private! !
 asArray!converting!public! !
@@ -451,6 +460,7 @@ first!accessing!public! !
 from:do:!enumerating!public! !
 from:keysAndValuesDo:!enumerating!public! !
 from:to:keysAndValuesDo:!enumerating!public! !
+hash!comparing!public! !
 includes:!public!searching! !
 includesKey:!public!testing! !
 initializePointer!public! !
@@ -462,6 +472,7 @@ last!accessing!public! !
 length!accessing!public! !
 length:!accessing!public! !
 lookup:!accessing!public! !
+maxEncoding!constants!public! !
 notEmpty!public!testing! !
 packing!constants!private! !
 replaceBytesOf:from:to:startingAt:!double dispatch!private! !

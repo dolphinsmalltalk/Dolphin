@@ -15,14 +15,10 @@ GdiplusRegionFromPathInitializer comment: ''!
 !GdiplusRegionFromPathInitializer methodsFor!
 
 createHandle
-	| gpHandle status |
+	| gpHandle |
 	gpHandle := ExternalHandle new.
-	status := self library gdipCreateRegionPath: path asParameter region: gpHandle.
-	status == Ok ifFalse: [self gdiplusErrorWith: status].
+	self library gdipCreateRegionPath: path asParameter region: gpHandle.
 	^gpHandle!
-
-gdiplusConstructorErrorDescription
-	^'Error creating Region'!
 
 isPersistent
 	^path isPersistent!
@@ -32,7 +28,6 @@ path: aPath
 
 !GdiplusRegionFromPathInitializer categoriesForMethods!
 createHandle!private!realizing/unrealizing! !
-gdiplusConstructorErrorDescription!initializing!private! !
 isPersistent!public! !
 path:!initializing!private! !
 !

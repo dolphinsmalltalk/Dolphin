@@ -18,10 +18,14 @@ arrayClass
 	^DOUBLEArray!
 
 elementFromValue: anObject 
-	^anObject asFloat! !
+	^anObject asFloat!
+
+numericElementClass
+	^DOUBLE! !
 
 !DOUBLEArrayTest categoriesForMethods!
 arrayClass!constants!private! !
 elementFromValue:!private!unit tests! !
+numericElementClass!constants!private! !
 !
 

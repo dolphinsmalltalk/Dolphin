@@ -15,9 +15,13 @@ WORDArrayTest comment: ''!
 !WORDArrayTest methodsFor!
 
 arrayClass
-	^WORDArray! !
+	^WORDArray!
+
+numericElementClass
+	^WORD! !
 
 !WORDArrayTest categoriesForMethods!
 arrayClass!constants!private! !
+numericElementClass!constants!private! !
 !
 

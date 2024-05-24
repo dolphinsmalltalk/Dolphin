@@ -97,7 +97,7 @@ tearDown!public!Running! !
 !GdiplusTests class methodsFor!
 
 resources
-	^Array with: GdiplusFileResource! !
+	^{GdiplusFileResource}! !
 
 !GdiplusTests class categoriesForMethods!
 resources!accessing!public! !

@@ -15,11 +15,8 @@ GdiplusGraphicsPathTest comment: ''!
 !GdiplusGraphicsPathTest methodsFor!
 
 setSample3Points
-	model := GdiplusGraphicsPath 
-				points: (Array 
-						with: 100 @ 0
-						with: 200 @ 150
-						with: 0 @ 150)
+	model := GdiplusGraphicsPath
+				points: {100 @ 0. 200 @ 150. 0 @ 150}
 				types: (ByteArray new: 3 withAll: PathPointTypeLine)
 				fillMode: nil!
 

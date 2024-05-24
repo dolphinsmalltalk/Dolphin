@@ -720,6 +720,14 @@ createDirectoryPath: path
 			pos := end + 1].
 	^created!
 
+createTemporaryDirectory
+	"Create a new, unique, temporary directory, and answer it's <readableString> path. It is the caller's responsibility to delete the directory when done."
+
+	| path |
+	path := self composePath: self tempPath subPath: GUID newUnique idlString.
+	self createDirectory: path.
+	^path!
+
 default: pathString extension: extString
 	"Defaults the extension of pathString to extString if there is no current extension.
 	Answers the filename with new or existing extension."
@@ -1574,6 +1582,7 @@ composeStem:extension:!filename manipulation!public! !
 copy:to:!file operations!public! !
 createDirectory:!file operations!public! !
 createDirectoryPath:!file operations!public! !
+createTemporaryDirectory!file operations!public! !
 default:extension:!filename manipulation!public! !
 delete:!file operations!public! !
 deleteDirectory:!file operations!public! !

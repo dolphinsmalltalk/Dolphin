@@ -17,29 +17,27 @@ GdiplusLinearGradientBrush comment: 'GdiplusLinearGradientBrush paints a color g
 blendCount
 	"Private - Answer the number of blend factors currently set for the receiver."
 
-	| status count |
+	| count |
 	count := SDWORD new.
-	(status := GdiplusLibrary default gdipGetLineBlendCount: self asParameter count: count) = Ok 
-		ifFalse: [GdiplusError signal: 'GdipGetLineBlendCount failed' with: status].
+	GdiplusLibrary default gdipGetLineBlendCount: self asParameter count: count.
 	^count asInteger!
 
 blendFactors
 	"Answer a two-element array that holds two arrays that contain the receiver's blend factors 
 	and their corresponding blend positions."
 
-	| status count factorsArray positionsArray |
+	| count factorsArray positionsArray |
 	count := self blendCount.
 	factorsArray := FLOATArray new length: count.
 	positionsArray := FLOATArray new length: count.
-	status := GdiplusLibrary default 
-				gdipGetLineBlend: self asParameter
-				blend: factorsArray
-				positions: positionsArray
-				count: count.
-	status = Ok ifFalse: [GdiplusError signal: 'GdipGetBlend failed' with: status].
-	^Array with: factorsArray asArray with: positionsArray asArray!
+	GdiplusLibrary default
+		gdipGetLineBlend: self asParameter
+		blend: factorsArray
+		positions: positionsArray
+		count: count.
+	^{factorsArray asArray. positionsArray asArray}!
 
-blendFactors: factorsArray positions: positionsArray 
+blendFactors: factorsArray positions: positionsArray
 	"Set the receiver's blend factors and blend positions to create a custom blend."
 
 	| status |
@@ -47,18 +45,16 @@ blendFactors: factorsArray positions: positionsArray
 	self assert: [positionsArray size >= 2].
 	self assert: [factorsArray allSatisfy: [:each | each between: 0 and: 1]].
 	self assert: [positionsArray first = 0 and: [positionsArray last = 1]].
-	status := GdiplusLibrary default 
-				gdipSetLineBlend: self asParameter
-				blend: (FLOATArray withAll: factorsArray)
-				positions: (FLOATArray withAll: positionsArray)
-				count: positionsArray size.
-	status = Ok ifFalse: [GdiplusError signal: 'GdipSetLineBlend failed' with: status]!
+	GdiplusLibrary default
+		gdipSetLineBlend: self asParameter
+		blend: (FLOATArray withAll: factorsArray)
+		positions: (FLOATArray withAll: positionsArray)
+		count: positionsArray size!
 
 bounds
-	| rect status |
+	| rect |
 	rect := GpRect newBuffer.
-	(status := GdiplusLibrary default gdipGetLineRectI: self asParameter rect: rect) == Ok
-		ifFalse: [GdiplusError signal: 'GdipGetLineRectI: failed' with: status].
+	GdiplusLibrary default gdipGetLineRectI: self asParameter rect: rect.
 	^rect asRectangle!
 
 colors
@@ -70,20 +66,16 @@ endingColor
 isGammaCorrected
 	"Answer whether gamma correction is applied to the receiver when rendering."
 
-	| status result |
+	| result |
 	result := SDWORD new.
-	(status := GdiplusLibrary default gdipGetLineGammaCorrection: self asParameter
-				useGammaCorrection: result) = Ok 
-		ifFalse: [GdiplusError signal: 'GdipgetLineGammaCorrection failed' with: status].
+	GdiplusLibrary default gdipGetLineGammaCorrection: self asParameter useGammaCorrection: result.
 	^result ~= 0!
 
-isGammaCorrected: aBoolean 
+isGammaCorrected: aBoolean
 	"Set whether gamma correction is applied to the receiver when rendering."
 
-	| status |
-	(status := GdiplusLibrary default gdipSetLineGammaCorrection: self asParameter
-				useGammaCorrection: aBoolean asParameter) = Ok 
-		ifFalse: [GdiplusError signal: 'GdipSetLineGammaCorrection failed' with: status]!
+	GdiplusLibrary default gdipSetLineGammaCorrection: self asParameter
+		useGammaCorrection: aBoolean asParameter!
 
 startingColor
 	^initializer color1!
@@ -91,12 +83,10 @@ startingColor
 startingColor: startColor endingColor: endColor
 	"Set the receiver's starting and ending colors."
 
-	| status |
-	(status := GdiplusLibrary default
-				gdipSetLineColors: self asParameter
-				color1: startColor argbCode
-				color2: endColor argbCode) == Ok
-		ifFalse: [GdiplusError signal: 'GdipSetLineColors failed' with: status]!
+	GdiplusLibrary default
+		gdipSetLineColors: self asParameter
+		color1: startColor argbCode
+		color2: endColor argbCode!
 
 wrapMode
 	"Answer a number that indicates if and how painting is done outside the receiver's boundary path."

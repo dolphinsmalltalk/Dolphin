@@ -19,35 +19,28 @@ GdiplusCustomLineCap comment: 'GdiplusCustomLineCap defines the style of graphic
 baseCap
 	"Answer a LineCap integer that represents the style of the base cap used at the end of a line."
 
-	| status linecap |
+	| linecap |
 	linecap := SDWORD new.
-	(status := GdiplusLibrary default gdipGetCustomLineCapBaseCap: self asParameter baseCap: linecap) 
-		= Ok ifFalse: [GdiplusError signal: 'GdipGetCustomLineCapBaseCap failed' with: status].
+	GdiplusLibrary default gdipGetCustomLineCapBaseCap: self asParameter baseCap: linecap.
 	^linecap value!
 
-baseCap: aLineCapConstant 
+baseCap: aLineCapConstant
 	"Set the style of the base cap used at the end of a line to that represented by aLineCapConstant."
 
-	| status |
-	(status := GdiplusLibrary default gdipSetCustomLineCapBaseCap: self asParameter
-				baseCap: aLineCapConstant) = Ok 
-		ifFalse: [GdiplusError signal: 'GdipSetCustomLineCapBaseCap failed' with: status]!
+	GdiplusLibrary default gdipSetCustomLineCapBaseCap: self asParameter baseCap: aLineCapConstant!
 
 baseInset
 	"Answer the distance between the base cap to the start of the line."
 
-	| status baseInset |
+	| baseInset |
 	baseInset := FLOAT new.
-	(status := GdiplusLibrary default gdipGetCustomLineCapBaseInset: self asParameter inset: baseInset)
-		= Ok ifFalse: [GdiplusError signal: 'GdipGetCustomLineCapBaseInset failed' with: status].
+	GdiplusLibrary default gdipGetCustomLineCapBaseInset: self asParameter inset: baseInset.
 	^baseInset value!
 
-baseInset: aNumber 
+baseInset: aNumber
 	"Set the distance between the base cap to the start of the line."
 
-	| status |
-	(status := GdiplusLibrary default gdipSetCustomLineCapBaseInset: self asParameter inset: aNumber) 
-		= Ok ifFalse: [GdiplusError signal: 'GdipSetCustomLineCapBaseInset failed' with: status]!
+	GdiplusLibrary default gdipSetCustomLineCapBaseInset: self asParameter inset: aNumber!
 
 basicFree
 	"Private - Free up external resources held by the receiver.  Ignore any errors which might arise."
@@ -57,10 +50,9 @@ basicFree
 clone
 	"Answer a copy of the receiver."
 
-	| status gpHandle |
+	| gpHandle |
 	gpHandle := ExternalHandle new.
-	(status := GdiplusLibrary default gdipCloneCustomLineCap: self handle clonedCap: gpHandle) = Ok 
-		ifFalse: [^GdiplusError signal: 'Error in GdipCloneCustomLineCap' with: status].
+	GdiplusLibrary default gdipCloneCustomLineCap: self handle clonedCap: gpHandle.
 	^(self class fromOwnedHandle: gpHandle)
 		initializer: initializer;
 		yourself!
@@ -75,65 +67,52 @@ startCap
 
 	^self strokeCaps at: 1!
 
-startCap: startLineCapConstant endCap: endLineCapConstant 
+startCap: startLineCapConstant endCap: endLineCapConstant
 	"Set the style of the stroke cap used at the start and ends of lines."
 
-	| status |
-	(status := GdiplusLibrary default 
-				gdipSetCustomLineCapStrokeCaps: self asParameter
-				startCap: startLineCapConstant
-				endCap: endLineCapConstant) = Ok 
-		ifFalse: [GdiplusError signal: 'GdipSetCustomLineCapStrokeCaps failed' with: status]!
+	GdiplusLibrary default
+		gdipSetCustomLineCapStrokeCaps: self asParameter
+		startCap: startLineCapConstant
+		endCap: endLineCapConstant!
 
 strokeCaps
 	"Private - Answer a 2-element integer array that contains the styles of the start and ending stroke caps."
 
-	| status startCap endCap |
+	| startCap endCap |
 	startCap := SDWORD new.
 	endCap := SDWORD new.
-	(status := GdiplusLibrary default
-				gdipGetCustomLineCapStrokeCaps: self asParameter
-				startCap: startCap
-				endCap: endCap) = Ok
-		ifFalse: [GdiplusError signal: 'GdipGetCustomLineCapStrokeCaps failed' with: status].
-	^Array with: startCap value with: endCap value!
+	GdiplusLibrary default
+		gdipGetCustomLineCapStrokeCaps: self asParameter
+		startCap: startCap
+		endCap: endCap.
+	^{startCap value. endCap value}!
 
 strokeJoin
 	"Answer the style of line join (how intersecting lines are joined) for the stroke."
 
-	| status lineJoin |
+	| lineJoin |
 	lineJoin := SDWORD new.
-	(status := GdiplusLibrary default gdipGetCustomLineCapStrokeJoin: self asParameter
-				lineJoin: lineJoin) = Ok 
-		ifFalse: [GdiplusError signal: 'GdipGetCustomLineCapStrokeJoin failed' with: status].
+	GdiplusLibrary default gdipGetCustomLineCapStrokeJoin: self asParameter lineJoin: lineJoin.
 	^lineJoin value!
 
-strokeJoin: aLineJoinConstant 
+strokeJoin: aLineJoinConstant
 	"Set the style of line join (how intersecting lines are joined) for the stroke."
 
-	| status |
-	(status := GdiplusLibrary default gdipSetCustomLineCapStrokeJoin: self asParameter
-				lineJoin: aLineJoinConstant) = Ok 
-		ifFalse: [GdiplusError signal: 'GdipSetCustomLineCapStrokeJoin failed' with: status]!
+	GdiplusLibrary default gdipSetCustomLineCapStrokeJoin: self asParameter lineJoin: aLineJoinConstant!
 
 widthScale
 	"Answer the amount to scale the receiver relative to the width of the GdiplusPen used to draw lines."
 
-	| status widthScale |
+	| widthScale |
 	widthScale := FLOAT new.
-	(status := GdiplusLibrary default gdipGetCustomLineCapWidthScale: self asParameter
-				widthScale: widthScale) = Ok
-		ifFalse: [GdiplusError signal: 'GdipGetCustomLineCapWidthScale failed' with: status].
+	GdiplusLibrary default gdipGetCustomLineCapWidthScale: self asParameter widthScale: widthScale.
 	^widthScale value!
 
-widthScale: aNumber 
+widthScale: aNumber
 	"Set the amount to scale the receiver relative to the width of the GdiplusPen used to 
 	draw lines. The default value of 1.0 does not scale the line cap."
 
-	| status |
-	(status := GdiplusLibrary default gdipSetCustomLineCapWidthScale: self asParameter
-				widthScale: aNumber) = Ok 
-		ifFalse: [GdiplusError signal: 'GdipSetCustomLineCapWidthScale failed' with: status]! !
+	GdiplusLibrary default gdipSetCustomLineCapWidthScale: self asParameter widthScale: aNumber! !
 
 !GdiplusCustomLineCap categoriesForMethods!
 baseCap!accessing!public! !

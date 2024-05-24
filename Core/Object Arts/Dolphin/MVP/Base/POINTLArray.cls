@@ -28,7 +28,8 @@ uncheckedAt: anInteger put: aPoint
 
 	| offset |
 	offset := anInteger - 1 bitShift: 3.
-	^(bytes sdwordAtOffset: offset put: aPoint x) @ (bytes sdwordAtOffset: offset + 4 put: aPoint y)! !
+	^Point x: (bytes sdwordAtOffset: offset put: aPoint x)
+		y: (bytes sdwordAtOffset: offset + 4 put: aPoint y)! !
 
 !POINTLArray categoriesForMethods!
 uncheckedAt:!accessing!private! !

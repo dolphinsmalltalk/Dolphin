@@ -24,10 +24,9 @@ basicFree
 clone
 	"Answer a copy of the receiver."
 
-	| status gpHandle |
+	| gpHandle |
 	gpHandle := ExternalHandle new.
-	(status := GdiplusLibrary default gdipCloneFontFamily: self asParameter clonedFontFamily: gpHandle) 
-		= Ok ifFalse: [GdiplusError signal: 'GdipCloneFontFamily failed' with: status].
+	GdiplusLibrary default gdipCloneFontFamily: self asParameter clonedFontFamily: gpHandle.
 	^(self class fromOwnedHandle: gpHandle)
 		initializer: initializer;
 		yourself!
@@ -35,25 +34,23 @@ clone
 lineSpacing
 	"Answer the vertical distance between the base lines of two consecutive lines of text."
 
-	| status lineSpacing |
-	lineSpacing := DWORD new.
-	(status := GdiplusLibrary default 
-				gdipGetLineSpacing: self asParameter
-				style: 0
-				lineSpacing: lineSpacing) = Ok 
-		ifFalse: [GdiplusError signal: 'GdipGetLineSpacing failed' with: status].
+	| lineSpacing |
+	lineSpacing := DWORDBytes new.
+	GdiplusLibrary default
+		gdipGetLineSpacing: self asParameter
+		style: 0
+		lineSpacing: lineSpacing.
 	^lineSpacing asInteger!
 
 name
 	"Answer the String name of the receiver (e.g., 'Arial')."
 
-	| status name |
+	| name |
 	name := Utf16String newFixed: LF_FACESIZE.
-	(status := GdiplusLibrary default
-				gdipGetFamilyName: self asParameter
-				name: name
-				language: 0) = Ok
-		ifFalse: [GdiplusError signal: 'GdipGetFamilyName failed' with: status].
+	GdiplusLibrary default
+		gdipGetFamilyName: self asParameter
+		name: name
+		language: 0.
 	^name asString trimNulls! !
 
 !GdiplusFontFamily categoriesForMethods!

@@ -17,39 +17,35 @@ GdiplusBitmap comment: 'GdiplusBitmap expands on GdiplusImage by providing addit
 asBitmap
 	"Answer a <Bitmap> with the receiver's image."
 
-	| status hbmReturn |
+	| hbmReturn |
 	hbmReturn := ExternalHandle new.
-	(status := GdiplusLibrary default
-				gdipCreateHBITMAPFromBitmap: self asParameter
-				hbmReturn: hbmReturn
-				background: 0) == Ok
-		ifFalse: [^GdiplusError signal: 'Error in GdipCreateHBITMAPFromBitmap' with: status].
+	GdiplusLibrary default
+		gdipCreateHBITMAPFromBitmap: self asParameter
+		hbmReturn: hbmReturn
+		background: 0.
 	^Bitmap fromOwnedHandle: hbmReturn!
 
 asIcon
 	"Answer an <Icon> with the receiver's image."
 
-	| status hbmReturn |
+	| hbmReturn |
 	hbmReturn := ExternalHandle new.
-	(status := GdiplusLibrary default 
-				gdipCreateHICONFromBitmap: self asParameter hbmReturn: hbmReturn) == Ok 
-		ifFalse: [^GdiplusError signal: 'Error in GdipCreateHICONFromBitmap' with: status].
+	GdiplusLibrary default gdipCreateHICONFromBitmap: self asParameter hbmReturn: hbmReturn.
 	^Icon fromOwnedHandle: hbmReturn!
 
-cloneBitmapRectangle: aRectangle format: aPixelFormatConstant 
+cloneBitmapRectangle: aRectangle format: aPixelFormatConstant
 	"Private - Answer a copy of the receiver."
 
-	| status gpHandle |
+	| gpHandle |
 	gpHandle := ExternalHandle new.
-	(status := GdiplusLibrary default 
-				gdipCloneBitmapAreaI: aRectangle left
-				y: aRectangle top
-				width: aRectangle width
-				height: aRectangle height
-				format: aPixelFormatConstant
-				srcBitmap: self handle
-				dstBitmap: gpHandle) = Ok 
-		ifFalse: [^GdiplusError signal: 'Error in GdipCloneBitmapAreaI' with: status].
+	GdiplusLibrary default
+		gdipCloneBitmapAreaI: aRectangle left
+		y: aRectangle top
+		width: aRectangle width
+		height: aRectangle height
+		format: aPixelFormatConstant
+		srcBitmap: self handle
+		dstBitmap: gpHandle.
 	^(self class fromOwnedHandle: gpHandle)
 		initializer: initializer;
 		yourself!
@@ -62,33 +58,18 @@ cloneFormat: aPixelFormatConstant
 dpi: anInteger
 	"Set  the horizontal and vertical DPI of the receiver to that specified by the <integer> argument."
 
-	| status |
-	(status := GdiplusLibrary default
-				gdipBitmapSetResolution: self asParameter
-				xdpi: anInteger
-				ydpi: anInteger) == Ok
-		ifFalse: [GdiplusError signal: 'gdipBitmapSetResolution: failed' with: status]!
+	GdiplusLibrary default
+		gdipBitmapSetResolution: self asParameter
+		xdpi: anInteger
+		ydpi: anInteger!
 
 lockBits: rect flags: flags format: format lockedBitmapData: lockedBitmapData
-	| status |
-	(status := GdiplusLibrary default
-				gdipBitmapLockBits: self handle
-				rect: rect
-				flags: flags
-				format: format
-				lockedBitmapData: lockedBitmapData) = Ok
-		ifFalse: [^GdiplusError signal: 'Error in GdipBitmapLockBits' with: status]
-	"Invoke the GdipBitmapLockBits() function of the module wrapped by the receiver.
-
-		Status __stdcall GdipBitmapLockBits(
-			[in] ExternalHandle bitmap,
-			[in] GpRect* rect,
-			[in] unsigned int flags,
-			[in] int format,
-			[out, retval] GpBitmapData* lockedBitmapData);
-
-	<stdcall: sdword GdipBitmapLockBits  handle GpRect* dword sdword GpBitmapData*>
-	^self invalidCall"!
+	GdiplusLibrary default
+		gdipBitmapLockBits: self handle
+		rect: rect
+		flags: flags
+		format: format
+		lockedBitmapData: lockedBitmapData!
 
 pixelAt: aPoint
 	"Answer an ARGB that is the color of the receiver at aPoint."
@@ -100,35 +81,28 @@ pixelAt: aPoint
 				x: aPoint x
 				y: aPoint y
 				color: color.
-	status == Ok ifFalse: [GdiplusError signal: 'GdipBitmapGetPixel  failed' with: status].
+	status == Ok ifFalse: [GdiplusError signal: 'GdipBitmapGetPixel failed' with: status].
 	^Color fromArgbCode: (color dwordAtOffset: 0)!
 
-pixelAt: aPoint put: anARGB 
+pixelAt: aPoint put: anARGB
 	"Set the pixel at aPoint to be anARGB"
 
-	| status |
-	status := GdiplusLibrary default 
-				gdipBitmapSetPixel: self asParameter
-				x: aPoint x
-				y: aPoint y
-				color: anARGB argbCode.
-	status = Ok ifFalse: [GdiplusError signal: 'GdipBitmapSetPixel  failed' with: status]!
+	GdiplusLibrary default
+		gdipBitmapSetPixel: self asParameter
+		x: aPoint x
+		y: aPoint y
+		color: anARGB argbCode!
 
 resolution: aPoint
 	"Set  the horizontal and vertical DPI of the receiver to those specified by the <point> argument."
 
-	| status |
-	(status := GdiplusLibrary default
-				gdipBitmapSetResolution: self asParameter
-				xdpi: aPoint x
-				ydpi: aPoint y) == Ok
-		ifFalse: [GdiplusError signal: 'gdipBitmapSetResolution: failed' with: status]!
+	GdiplusLibrary default
+		gdipBitmapSetResolution: self asParameter
+		xdpi: aPoint x
+		ydpi: aPoint y!
 
 unlockBits: lockedBitmapData
-	| status |
-	(status := GdiplusLibrary default gdipBitmapUnlockBits: self handle
-				lockedBitmapData: lockedBitmapData) = Ok
-		ifFalse: [^GdiplusError signal: 'Error in GdipBitmapUnlockBits' with: status]! !
+	GdiplusLibrary default gdipBitmapUnlockBits: self handle lockedBitmapData: lockedBitmapData! !
 
 !GdiplusBitmap categoriesForMethods!
 asBitmap!public! !

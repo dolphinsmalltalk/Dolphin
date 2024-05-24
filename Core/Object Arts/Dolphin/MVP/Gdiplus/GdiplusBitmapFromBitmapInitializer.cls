@@ -27,7 +27,7 @@ createHandle
 
 	    lastResult = DllExports::GdipCreateBitmapFromHBITMAP(hbm, hpal, &bitmap);"
 
-	| gpHandle status hPalette |
+	| gpHandle hPalette |
 	gpHandle := ExternalHandle new.
 	hPalette := bitmap createPalette.
 
@@ -36,20 +36,15 @@ createHandle
 
 	"SW: This handles 'currently' ,,, but what about 'or was previously' ???"
 	bitmap freeDC.
-	status := self library
-				gdipCreateBitmapFromHBITMAP: bitmap asParameter
-				hpal: hPalette
-				bitmap: gpHandle.
-	status == Ok ifFalse: [self gdiplusErrorWith: status].
-	^gpHandle!
-
-gdiplusConstructorErrorDescription
-	^'Error creating Bitmap'! !
+	self library
+		gdipCreateBitmapFromHBITMAP: bitmap asParameter
+		hpal: hPalette
+		bitmap: gpHandle.
+	^gpHandle! !
 
 !GdiplusBitmapFromBitmapInitializer categoriesForMethods!
 bitmap:!initializing!private! !
 createHandle!private!realizing/unrealizing! !
-gdiplusConstructorErrorDescription!constants!private! !
 !
 
 !GdiplusBitmapFromBitmapInitializer class methodsFor!

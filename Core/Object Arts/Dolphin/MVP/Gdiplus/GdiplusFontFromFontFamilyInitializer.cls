@@ -15,30 +15,25 @@ GdiplusFontFromFontFamilyInitializer comment: ''!
 !GdiplusFontFromFontFamilyInitializer methodsFor!
 
 createHandle
-	| gpHandle status |
+	| gpHandle |
 	gpHandle := ExternalHandle new.
-	status := self library
-				gdipCreateFont: fontFamily
-				emSize: emSize
-				style: style
-				unit: unit
-				font: gpHandle.
-	status == Ok ifFalse: [self gdiplusErrorWith: status].
+	self library
+		gdipCreateFont: fontFamily
+		emSize: emSize
+		style: style
+		unit: unit
+		font: gpHandle.
 	^gpHandle!
 
 fontFamily: aFontFamily emSize: aNumberSize style: aNumberStyle unit: aNumberUnit
 	fontFamily := aFontFamily.
 	emSize := aNumberSize.
 	style := aNumberStyle.
-	unit := aNumberUnit!
-
-gdiplusConstructorErrorDescription
-	^'Error creating Font'! !
+	unit := aNumberUnit! !
 
 !GdiplusFontFromFontFamilyInitializer categoriesForMethods!
 createHandle!private!realizing/unrealizing! !
 fontFamily:emSize:style:unit:!initializing!private! !
-gdiplusConstructorErrorDescription!constants!private! !
 !
 
 !GdiplusFontFromFontFamilyInitializer class methodsFor!

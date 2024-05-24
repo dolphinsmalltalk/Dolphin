@@ -19,22 +19,17 @@ bitmap: aBitmap graphics: aGraphics
 	graphics := aGraphics!
 
 createHandle
-	| gpHandle status |
+	| gpHandle |
 	gpHandle := ExternalHandle new.
-	status := self library
-				gdipCreateCachedBitmap: bitmap asParameter
-				graphics: graphics asParameter
-				cachedBitmap: gpHandle.
-	status == Ok ifFalse: [self gdiplusErrorWith: status].
-	^gpHandle!
-
-gdiplusConstructorErrorDescription
-	^'Error creating CachedBitmap'! !
+	self library
+		gdipCreateCachedBitmap: bitmap asParameter
+		graphics: graphics asParameter
+		cachedBitmap: gpHandle.
+	^gpHandle! !
 
 !GdiplusCachedBitmapInitializer categoriesForMethods!
 bitmap:graphics:!initializing!private! !
 createHandle!private!realizing/unrealizing! !
-gdiplusConstructorErrorDescription!constants!private! !
 !
 
 !GdiplusCachedBitmapInitializer class methodsFor!

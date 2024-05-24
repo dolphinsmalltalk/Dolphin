@@ -15,13 +15,12 @@ GdiplusStringFormatFromFlagsInitializer comment: ''!
 !GdiplusStringFormatFromFlagsInitializer methodsFor!
 
 createHandle
-	| gpHandle status |
+	| gpHandle |
 	gpHandle := ExternalHandle new.
-	status := self library
-				gdipCreateStringFormat: formatFlags
-				language: language
-				format: gpHandle.
-	status == Ok ifFalse: [self gdiplusErrorWith: status].
+	self library
+		gdipCreateStringFormat: formatFlags
+		language: language
+		format: gpHandle.
 	^gpHandle!
 
 formatFlags: flagsNumber language: languageNumber

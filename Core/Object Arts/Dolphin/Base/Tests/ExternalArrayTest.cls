@@ -54,7 +54,7 @@ testAtAndAtPut
 			| elem |
 			elem := self elementFromValue: each.
 			self assert: (array at: each put: elem) equals: elem.
-			self assert: (self elementToValue: (array at: each)) equals: each].
+			self assert: (self elementToValue: (array at: each)) equals: (self canonicalizeValue: each)].
 	array := self newNumericArray: 2.
 	#(-1 0 3) do: 
 			[:each |
@@ -65,7 +65,7 @@ testAtAndAtPut
 			| elem |
 			elem := self elementFromValue: each.
 			self assert: (array at: each put: elem) equals: elem.
-			self assert: (self elementToValue: (array at: each)) equals: each].
+			self assert: (self elementToValue: (array at: each)) equals: (self canonicalizeValue: each)].
 	array := self newNumericArray: 3.
 	#(-1 0 4) do: 
 			[:each |
@@ -76,7 +76,87 @@ testAtAndAtPut
 			| elem |
 			elem := self elementFromValue: each.
 			self assert: (array at: each put: elem) equals: elem.
-			self assert: (self elementToValue: (array at: each)) equals: each]!
+			self assert: (self elementToValue: (array at: each)) equals: (self canonicalizeValue: each)]!
+
+testComparing
+	| subject array |
+	subject := self newNumericArray: 0.
+	self assert: subject equals: #().
+	self assert: subject hash equals: #() hash.
+	subject := self newNumericArray: 5.
+	array := subject asArray.
+	self assert: subject hash equals: array hash.
+	self assert: subject equals: array.
+	self assert: array equals: subject!
+
+testCopyFromTo
+	| array |
+	array := self newNumericArray: 0.
+	self assert: (array copyFrom: 1 to: 0) equals: #().
+	self
+		should: [array copyFrom: 0 to: 0]
+		raise: BoundsError
+		matching: [:ex | ex tag = 0].
+	self
+		should: [array copyFrom: 1 to: 2]
+		raise: BoundsError
+		matching: [:ex | ex tag = 1].
+	array := self newNumericArray: 1.
+	self assert: (array copyFrom: 1 to: 0) equals: #().
+	self assert: (array copyFrom: 1 to: 1) equals: {self elementFromValue: 1}.
+	2 to: 3
+		do: 
+			[:i |
+			self
+				should: [array copyFrom: 1 to: i]
+				raise: BoundsError
+				matching: [:ex | ex tag = 2]].
+	array := self newNumericArray: 2.
+	self assert: (array copyFrom: 1 to: 0) equals: #().
+	self assert: (array copyFrom: 1 to: 1) equals: {self elementFromValue: 1}.
+	self assert: (array copyFrom: 2 to: 2) equals: {self elementFromValue: 2}.
+	self assert: (array copyFrom: 1 to: 2) equals: {self elementFromValue: 1. self elementFromValue: 2}.
+	3 to: 4
+		do: 
+			[:i |
+			self
+				should: [array copyFrom: 1 to: i]
+				raise: BoundsError
+				matching: [:ex | ex tag = 3]].
+	array := self newNumericArray: 3.
+	self assert: (array copyFrom: 1 to: 0) equals: #().
+	self assert: (array copyFrom: 1 to: 1) equals: {self elementFromValue: 1}.
+	self assert: (array copyFrom: 2 to: 2) equals: {self elementFromValue: 2}.
+	self assert: (array copyFrom: 3 to: 3) equals: {self elementFromValue: 3}.
+	self assert: (array copyFrom: 1 to: 2) equals: {self elementFromValue: 1. self elementFromValue: 2}.
+	self assert: (array copyFrom: 2 to: 3) equals: {self elementFromValue: 2. self elementFromValue: 3}.
+	self assert: (array copyFrom: 1 to: 3)
+		equals: {self elementFromValue: 1. self elementFromValue: 2. self elementFromValue: 3}.
+	1 to: 3
+		do: 
+			[:j |
+			4 to: 5
+				do: 
+					[:i |
+					self
+						should: [array copyFrom: j to: i]
+						raise: BoundsError
+						matching: [:ex | ex tag = 4]]]!
+
+testDoSeparatedBy
+	0 to: 4
+		do: 
+			[:count |
+			| interstices array elements |
+			array := self newNumericArray: count.
+			elements := Array writeStream.
+			interstices := 0.
+			array do: [:each | elements nextPut: each] separatedBy: [interstices := interstices + 1].
+			self assert: elements contents equals: ((1 to: count) collect: [:i | self elementFromValue: i]).
+			self assert: interstices equals: (count - 1 max: 0)]!
+
+testElementClass
+	self assert: (self newNumericArray: 1) elementClass identicalTo: self numericElementClass!
 
 testFromToKeysAndValuesDo
 	"Empty array"
@@ -184,20 +264,29 @@ testFromToKeysAndValuesDo
 						keysAndValuesDo: [:eachKey :eachValue | ]]
 				raise: BoundsError]!
 
+testMarshal
+	| subject |
+	subject := self arrayClass marshal: ((1 to: 3) collect: [:each | self canonicalizeValue: each]).
+	self assert: subject equals: (self newNumericArray: 3).
+	self assert: (self arrayClass marshal: subject) identicalTo: subject!
+
+testMaxEncoding
+	| subject |
+	subject := self newNumericArray: 5.
+	self assert: subject maxEncoding equals: 1!
+
 testWithDo
 	| count validationBlock subject |
 	count := 1.
 	validationBlock := 
 			[:a :b |
 			self assert: b equals: count.
-			self assert: a value equals: b.
-			count := count + 1.
-			a value: count].
+			self assert: a value equals: (self canonicalizeValue: b).
+			count := count + 1].
 	#(1 2 5) do: 
 			[:each |
 			subject := self newNumericArray: each.
 			subject with: (1 to: each) do: validationBlock.
-			self assert: subject asArray equals: (2 to: each + 1).
 			count := 1].
 	subject := self newNumericArray: 5.
 	{0. 1. subject size - 1. subject size + 1} do: 
@@ -211,14 +300,20 @@ testWithDo
 
 !ExternalArrayTest categoriesForMethods!
 arrayClass!constants!private! !
-arrayValueString:!private!unit tests! !
-canonicalizeValue:!private!unit tests! !
-elementFromValue:!private!unit tests! !
-elementToValue:!private!unit tests! !
+arrayValueString:!helpers!private! !
+canonicalizeValue:!helpers!private! !
+elementFromValue:!helpers!private! !
+elementToValue:!helpers!private! !
 newArrayOfIntegers:!helpers!private! !
 newNumericArray:!helpers!private! !
 testAtAndAtPut!public!unit tests! !
+testComparing!public!unit tests! !
+testCopyFromTo!public!unit tests! !
+testDoSeparatedBy!public!unit tests! !
+testElementClass!public!unit tests! !
 testFromToKeysAndValuesDo!public!unit tests! !
+testMarshal!public!unit tests! !
+testMaxEncoding!public!unit tests! !
 testWithDo!public!unit tests! !
 !
 

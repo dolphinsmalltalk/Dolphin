@@ -105,6 +105,12 @@ default
 	^self imageRelative
 !
 
+folderRelative: aString
+	^FolderRelativeFileLocator basePath: aString!
+
+imageFolderRelative: aString
+	^self folderRelative: (self imageRelative localFileSpecFor: aString)!
+
 imageRelative
 	"Answers an instance of the receiver that can be used to locate external files
 	relative to the current image  directory."
@@ -127,9 +133,11 @@ installRelative: aFilenameString
 ! !
 
 !FileLocator class categoriesForMethods!
-absolute!accessing!public! !
+absolute!instance creation!public! !
 default!accessing!public! !
-imageRelative!accessing!public! !
+folderRelative:!instance creation!public! !
+imageFolderRelative:!instance creation!public! !
+imageRelative!instance creation!public! !
 imageRelative:!accessing!public! !
 installRelative!accessing!public! !
 installRelative:!accessing!public! !

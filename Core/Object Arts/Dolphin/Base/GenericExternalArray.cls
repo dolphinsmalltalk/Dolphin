@@ -51,6 +51,13 @@ elementClass: aClass
 
 	elementClass := aClass!
 
+hash
+	"Answer the SmallInteger hash value for the receiver.
+	In order for internal structure to have the same value as pointer structures
+	we use the VM export here."
+
+	^VMLibrary default hashBytes: self base count: self comparisonSize!
+
 needsFree
 	"Private - Answer whether the receiver requires freeing of any external resources.
 	In most cases we don't want to free if this object is a reference to an array of
@@ -105,6 +112,7 @@ asArray!converting!public! !
 base!accessing!private! !
 elementClass!accessing!public! !
 elementClass:!accessing!private! !
+hash!comparing!public! !
 needsFree!initializing!private!realizing/unrealizing! !
 newElementAt:!helpers!private! !
 owner:!accessing!private! !

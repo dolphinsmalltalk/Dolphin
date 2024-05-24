@@ -17,8 +17,7 @@ GdiplusStringFormatGenericDefaultInitializer comment: ''!
 createHandle
 	| gpHandle status |
 	gpHandle := ExternalHandle new.
-	(status := self library gdipStringFormatGetGenericDefault: gpHandle) == Ok
-		ifFalse: [self gdiplusErrorWith: status].
+	self library gdipStringFormatGetGenericDefault: gpHandle.
 	^gpHandle!
 
 isGenericDefault

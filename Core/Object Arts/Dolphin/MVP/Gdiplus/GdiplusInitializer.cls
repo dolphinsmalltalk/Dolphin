@@ -19,12 +19,6 @@ GdiplusInitializer comment: 'An instance of GdiplusInitializer serves as a proxy
 createHandle
 	^self subclassResponsibility!
 
-gdiplusConstructorErrorDescription
-	^self subclassResponsibility!
-
-gdiplusErrorWith: status
-	^GdiplusError signal: self gdiplusConstructorErrorDescription with: status!
-
 isPersistent
 	"Answer true if the receiver holds sufficient information such that
 	it can recreate itself when the image is saved and restored. This is also
@@ -46,8 +40,6 @@ library: anObject
 
 !GdiplusInitializer categoriesForMethods!
 createHandle!private!realizing/unrealizing! !
-gdiplusConstructorErrorDescription!constants!private! !
-gdiplusErrorWith:!exceptions!private! !
 isPersistent!public!testing! !
 library!accessing!private! !
 library:!private!test accessing! !

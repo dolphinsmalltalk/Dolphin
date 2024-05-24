@@ -25,19 +25,14 @@ createHandle
 	        lastResult = DllExports::GdipCreateSolidFill(color.GetValue(), &brush);
 	    };"
 
-	| gpHandle status |
+	| gpHandle |
 	gpHandle := ExternalHandle new.
-	(status := self library gdipCreateSolidFill: color argbCode brush: gpHandle) == Ok
-		ifFalse: [self gdiplusErrorWith: status].
-	^gpHandle!
-
-gdiplusConstructorErrorDescription
-	^'Error creating SolidBrush'! !
+	self library gdipCreateSolidFill: color argbCode brush: gpHandle.
+	^gpHandle! !
 
 !GdiplusSolidBrushFromColorInitializer categoriesForMethods!
 color:!initializing!private! !
 createHandle!private!realizing/unrealizing! !
-gdiplusConstructorErrorDescription!constants!private! !
 !
 
 !GdiplusSolidBrushFromColorInitializer class methodsFor!

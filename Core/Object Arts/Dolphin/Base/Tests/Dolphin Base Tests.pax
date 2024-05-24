@@ -95,6 +95,7 @@ package classNames
 	add: #ObjectTest;
 	add: #OrderedCollectionTest;
 	add: #PackageTest;
+	add: #POINTLArrayTest;
 	add: #PoolConstantsDictionaryTest;
 	add: #PositionableStreamTest;
 	add: #ProcessTest;
@@ -740,6 +741,12 @@ ExternalArrayTest subclass: #FLOATArrayTest
 	classInstanceVariableNames: ''!
 
 ExternalArrayTest subclass: #GenericExternalArrayTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+ExternalArrayTest subclass: #POINTLArrayTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

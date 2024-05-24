@@ -24,32 +24,29 @@ basicFree
 	!
 
 families
-	| status numSought numFound gpHandles clonedHandle families |
+	| numSought numFound gpHandles clonedHandle families |
 	numSought := self familyCount.
 	numFound := SDWORD new.
 	gpHandles := DWORDArray new: numSought.
-	(status := GdiplusLibrary default 
-				gdipGetFontCollectionFamilyList: self asParameter
-				numSought: numSought
-				gpfamilies: gpHandles
-				numFound: numFound) = Ok 
-		ifFalse: [GdiplusError signal: 'GdipGetFontCollectionFamilyList failed' with: status].
+	GdiplusLibrary default
+		gdipGetFontCollectionFamilyList: self asParameter
+		numSought: numSought
+		gpfamilies: gpHandles
+		numFound: numFound.
 	families := OrderedCollection new.
 	gpHandles asOrderedCollection do: 
-			[:e | 
+			[:e |
 			clonedHandle := ExternalHandle new.
-			(status := GdiplusLibrary default gdipCloneFontFamily: e clonedFontFamily: clonedHandle) = Ok 
-				ifTrue: [families add: (GdiplusFontFamily new handle: clonedHandle)]
-				ifFalse: [GdiplusError signal: 'GdipCloneFontFamily failed' with: status]].
+			GdiplusLibrary default gdipCloneFontFamily: e clonedFontFamily: clonedHandle.
+			families add: (GdiplusFontFamily new handle: clonedHandle)].
 	^families!
 
 familyCount
 	"Answer the number of font families contained in the receiver."
 
-	| status count |
+	| count |
 	count := SDWORD new.
-	(status := GdiplusLibrary default gdipGetFontCollectionFamilyCount: self asParameter numFound: count) 
-		= Ok ifFalse: [GdiplusError signal: 'GdipGetFontCollectionFamilyCount failed' with: status].
+	GdiplusLibrary default gdipGetFontCollectionFamilyCount: self asParameter numFound: count.
 	^count asInteger! !
 
 !GdiplusFontCollection categoriesForMethods!

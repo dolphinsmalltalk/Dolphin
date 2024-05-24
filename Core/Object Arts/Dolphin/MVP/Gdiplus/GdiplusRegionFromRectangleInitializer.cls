@@ -15,21 +15,16 @@ GdiplusRegionFromRectangleInitializer comment: ''!
 !GdiplusRegionFromRectangleInitializer methodsFor!
 
 createHandle
-	| gpHandle status |
+	| gpHandle |
 	gpHandle := ExternalHandle new.
-	status := self library gdipCreateRegionRectI: (GpRect marshal: rectangle) region: gpHandle.
-	status == Ok ifFalse: [self gdiplusErrorWith: status].
+	self library gdipCreateRegionRectI: (GpRect marshal: rectangle) region: gpHandle.
 	^gpHandle!
-
-gdiplusConstructorErrorDescription
-	^'Error creating Region'!
 
 rectangle: aRectangle
 	rectangle := aRectangle! !
 
 !GdiplusRegionFromRectangleInitializer categoriesForMethods!
 createHandle!private!realizing/unrealizing! !
-gdiplusConstructorErrorDescription!constants!private! !
 rectangle:!initializing!private! !
 !
 

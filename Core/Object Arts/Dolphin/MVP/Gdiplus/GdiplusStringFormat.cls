@@ -20,19 +20,15 @@ alignment
 	"Answer a StringAlignment constant  that specifies how the receiver will align 
 	characters of a string within a layout rectangle."
 
-	| status answer |
+	| answer |
 	answer := SDWORD new.
-	(status := GdiplusLibrary default gdipGetStringFormatAlign: self asParameter align: answer) == Ok 
-		ifFalse: [GdiplusError signal: 'GdipGetStringFormatAlign failed' with: status].
+	GdiplusLibrary default gdipGetStringFormatAlign: self asParameter align: answer.
 	^answer asInteger!
 
-alignment: aStringAlignmentConstant 
+alignment: aStringAlignmentConstant
 	"Set how the receiver will align characters of a string horizontally within a layout rectangle."
 
-	| status |
-	(status := GdiplusLibrary default gdipSetStringFormatAlign: self asParameter
-				align: aStringAlignmentConstant) == Ok 
-		ifFalse: [GdiplusError signal: 'GdipSetStringFormatAlign failed' with: status]!
+	GdiplusLibrary default gdipSetStringFormatAlign: self asParameter align: aStringAlignmentConstant!
 
 basicFree
 	"Private - Free up external resources held by the receiver.  Ignore any errors which might arise."
@@ -49,10 +45,9 @@ centered
 clone
 	"Answer a copy of the receiver."
 
-	| status gpHandle |
+	| gpHandle |
 	gpHandle := ExternalHandle new.
-	(status := GdiplusLibrary default gdipCloneStringFormat: self asParameter newFormat: gpHandle) == Ok 
-		ifFalse: [GdiplusError signal: 'GdipCloneStringFormat failed' with: status].
+	GdiplusLibrary default gdipCloneStringFormat: self asParameter newFormat: gpHandle.
 	^(self class fromOwnedHandle: gpHandle)
 		initializer: initializer;
 		yourself!
@@ -65,36 +60,32 @@ far
 flags
 	"Get the receiver's flags, which are from StringFormatFlags enumeration."
 
-	| buf status |
+	| buf |
 	buf := DWORDBytes new.
-	(status := GdiplusLibrary default gdipGetStringFormatFlags: self asParameter flags: buf) == Ok 
-		ifFalse: [GdiplusError signal: 'GdipSetStringFormatFlags failed' with: status].
+	GdiplusLibrary default gdipGetStringFormatFlags: self asParameter flags: buf.
 	^buf asSignedInteger!
 
-flags: anInteger 
+flags: anInteger
 	"Set the receiver's flags to specify one or more of text layout information (such as orientation 
 	and clipping) and display manipulations (such as ellipsis insertion, digit substitution, and 
 	representation of characters that are not supported by a font).  anInteger represents zero or
 	more StringFormatFlags constants."
 
-	| status |
-	(status := GdiplusLibrary default gdipSetStringFormatFlags: self asParameter flags: anInteger) == Ok 
-		ifFalse: [GdiplusError signal: 'GdipSetStringFormatFlags failed' with: status]!
+	GdiplusLibrary default gdipSetStringFormatFlags: self asParameter flags: anInteger!
 
 getTabOffsets
 	"Private - Answer a two-element Array, the first element containing the receiver's initial 
 	tab offset, the second element containing an array of additional tab offsets."
 
-	| status count first array |
+	| count first array |
 	count := self tabStopCount.
 	first := FLOAT newBuffer.
 	array := FLOATArray new: count.
-	(status := GdiplusLibrary default 
-				gdipGetStringFormatTabStops: self asParameter
-				count: count
-				firstTabOffset: first
-				tabStops: array) == Ok 
-		ifFalse: [GdiplusError signal: 'GdipGetStringFormatTabStops failed' with: status].
+	GdiplusLibrary default
+		gdipGetStringFormatTabStops: self asParameter
+		count: count
+		firstTabOffset: first
+		tabStops: array.
 	count == 0 ifTrue: [^{}].
 	first := first value.
 	first = 0 ifFalse: [array at: 1 put: (array at: 1) + first].
@@ -107,30 +98,25 @@ isGenericTypographic
 	^initializer isGenericTypographic!
 
 lineAlignment
-	| buf status |
+	| buf |
 	buf := DWORDBytes new.
-	(status := GdiplusLibrary default gdipGetStringFormatLineAlign: self asParameter align: buf) == Ok
-		ifFalse: [GdiplusError signal: 'GdipSetStringFormatLineAlign failed' with: status].
+	GdiplusLibrary default gdipGetStringFormatLineAlign: self asParameter align: buf.
 	^buf asSignedInteger!
 
-lineAlignment: aStringAlignmentConstant 
+lineAlignment: aStringAlignmentConstant
 	"Set how the receiver will align a string vertically in a layout rectangle."
 
-	| status |
-	(status := GdiplusLibrary default gdipSetStringFormatLineAlign: self asParameter
-				align: aStringAlignmentConstant) == Ok 
-		ifFalse: [GdiplusError signal: 'GdipSetStringFormatLineAlign failed' with: status]!
+	GdiplusLibrary default gdipSetStringFormatLineAlign: self asParameter
+		align: aStringAlignmentConstant!
 
 measurableCharacterRangeCount
-	| buf status |
+	| buf |
 	buf := ByteArray newFixed: 4.
-	(status := GdiplusLibrary default
-		gdipGetStringFormatMeasurableCharacterRangeCount: self asParameter
-		count: buf) == Ok ifFalse: [GdiplusError signal: 'GdipSetStringFormatMeasurableCharacterRanges failed' with: status].
+	GdiplusLibrary default gdipGetStringFormatMeasurableCharacterRangeCount: self asParameter count: buf.
 	^buf sdwordAtOffset: 0!
 
 measurableCharacterRanges: characterRanges
-	| charRanges count status |
+	| charRanges count |
 	count := characterRanges size.
 	charRanges := ByteArray new: count * 8.
 	1 to: count
@@ -141,10 +127,10 @@ measurableCharacterRanges: characterRanges
 			charRanges
 				sdwordAtOffset: (j - 1) * 8 put: each start - 1;
 				sdwordAtOffset: j * 8 - 4 put: each size].
-	(status := GdiplusLibrary default
+	GdiplusLibrary default
 		gdipSetStringFormatMeasurableCharacterRanges: self asParameter
 		rangeCount: characterRanges size
-		ranges: charRanges) == Ok ifFalse: [GdiplusError signal: 'GdipSetStringFormatMeasurableCharacterRanges failed' with: status].!
+		ranges: charRanges!
 
 near
 	"Set the receiver so that text will be horizontally near aligned in a layout rectangle."
@@ -170,30 +156,27 @@ printOn: aStream
 				print: (trimmings at: self trimming + 1)].
 	aStream nextPut: $)!
 
-setTabStops: aRealArray first: aReal 
+setTabStops: aRealArray first: aReal
 	"Private - Set the receiver's tab-stops."
 
-	| status |
-	(status := GdiplusLibrary default 
-				gdipSetStringFormatTabStops: self asParameter
-				firstTabOffset: aReal asParameter
-				count: aRealArray size
-				tabStops: (FLOATArray withAll: aRealArray)) == Ok 
-		ifFalse: [GdiplusError signal: 'GdipSetStringFormatTabStops failed' with: status]!
+	GdiplusLibrary default
+		gdipSetStringFormatTabStops: self asParameter
+		firstTabOffset: aReal asParameter
+		count: aRealArray size
+		tabStops: (FLOATArray withAll: aRealArray)!
 
 tabOffsets
 	"Answer an Array containing the receiver's tab offsets, including the initial offset."
 
-	| status count first array |
+	| count first array |
 	count := self tabStopCount.
 	first := FLOAT newBuffer.
 	array := FLOATArray new: count.
-	(status := GdiplusLibrary default
-				gdipGetStringFormatTabStops: self asParameter
-				count: count
-				firstTabOffset: first
-				tabStops: array) == Ok
-		ifFalse: [GdiplusError signal: 'GdipGetStringFormatTabStops failed' with: status].
+	GdiplusLibrary default
+		gdipGetStringFormatTabStops: self asParameter
+		count: count
+		firstTabOffset: first
+		tabStops: array.
 	count == 0 ifTrue: [^{}].
 	first := first value.
 	first = 0 ifFalse: [array at: 1 put: (array at: 1) + first].
@@ -204,40 +187,35 @@ tabOffsets: aRealArray
 
 	| status tabOffsets |
 	tabOffsets := FLOATArray marshal: aRealArray.
-	(status := GdiplusLibrary default
-				gdipSetStringFormatTabStops: self asParameter
-				firstTabOffset: 0
-				count: tabOffsets size
-				tabStops: tabOffsets) == Ok
-		ifFalse: [GdiplusError signal: 'GdipSetStringFormatTabStops failed' with: status]!
+	GdiplusLibrary default
+		gdipSetStringFormatTabStops: self asParameter
+		firstTabOffset: 0
+		count: tabOffsets size
+		tabStops: tabOffsets!
 
 tabStopCount
 	"Private - Answer the number of tab-stops in the receiver."
 
-	| status count |
+	| count |
 	count := SDWORD new.
-	(status := GdiplusLibrary default gdipGetStringFormatTabStopCount: self asParameter count: count) 
-		== Ok ifFalse: [GdiplusError signal: 'GdipGetStringFormatTabStopCount failed' with: status].
+	GdiplusLibrary default gdipGetStringFormatTabStopCount: self asParameter count: count.
 	^count asInteger!
 
 trimming
 	"Answer a StringTrimming constant that indicates how the receiver will trim characters 
 	from a string that's too large to fit in a layout rectangle."
 
-	| status answer |
+	| answer |
 	answer := SDWORD new.
-	(status := GdiplusLibrary default gdipGetStringFormatTrimming: self asParameter trimming: answer) 
-		== Ok ifFalse: [GdiplusError signal: 'GdipGetStringFormatTrimming failed' with: status].
+	GdiplusLibrary default gdipGetStringFormatTrimming: self asParameter trimming: answer.
 	^answer asInteger!
 
-trimming: aStringTrimmingConstant 
+trimming: aStringTrimmingConstant
 	"Set the receiver's trimming style to aStringTrimmingConstant.  This indicates how the 
 	receiver will trim characters from a string that's too large to fit in a layout rectangle."
 
-	| status |
-	(status := GdiplusLibrary default gdipSetStringFormatTrimming: self asParameter
-				trimming: aStringTrimmingConstant) == Ok 
-		ifFalse: [GdiplusError signal: 'GdipSetStringFormatTrimming failed' with: status]! !
+	GdiplusLibrary default gdipSetStringFormatTrimming: self asParameter
+		trimming: aStringTrimmingConstant! !
 
 !GdiplusStringFormat categoriesForMethods!
 alignment!accessing!public! !

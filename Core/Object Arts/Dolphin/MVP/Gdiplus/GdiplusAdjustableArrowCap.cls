@@ -17,70 +17,56 @@ GdiplusAdjustableArrowCap comment: 'GdiplusAdjustableArrowCap creates a line cap
 height
 	"Answer the height of the receiver's cap."
 
-	| status height |
+	| height |
 	height := FLOAT new.
-	(status := GdiplusLibrary default gdipGetAdjustableArrowCapHeight: self asParameter height: height)
-		= Ok ifFalse: [GdiplusError signal: 'GdipGetAdjustableArrowCapHeight failed' with: status].
+	GdiplusLibrary default gdipGetAdjustableArrowCapHeight: self asParameter height: height.
 	^height value!
 
-height: aNumber 
+height: aNumber
 	"Set the height of the receiver's arrow cap."
 
-	| status |
-	(status := GdiplusLibrary default gdipSetAdjustableArrowCapHeight: self asParameter height: aNumber) 
-		= Ok ifFalse: [GdiplusError signal: 'GdipSetAdjustableArrowCapHeight failed' with: status]!
+	GdiplusLibrary default gdipSetAdjustableArrowCapHeight: self asParameter height: aNumber!
 
 isFilled
 	"Answer whether the receiver's cap is filled."
 
-	| status isFilled |
+	| isFilled |
 	isFilled := SDWORD new.
-	(status := GdiplusLibrary default gdipGetAdjustableArrowCapFillState: self asParameter
-				fillState: isFilled) = Ok 
-		ifFalse: [GdiplusError signal: 'GdipGetAdjustableArrowCapFillState failed' with: status].
+	GdiplusLibrary default gdipGetAdjustableArrowCapFillState: self asParameter fillState: isFilled.
 	^isFilled value asBoolean!
 
-isFilled: aBoolean 
+isFilled: aBoolean
 	"Set whether the receiver's arrow cap should be filled."
 
-	| status |
-	(status := GdiplusLibrary default gdipSetAdjustableArrowCapFillState: self asParameter
-				fillState: aBoolean asParameter) = Ok 
-		ifFalse: [GdiplusError signal: 'GdipSetAdjustableArrowCapFillState failed' with: status]!
+	GdiplusLibrary default gdipSetAdjustableArrowCapFillState: self asParameter
+		fillState: aBoolean asParameter!
 
 middleInset
 	"Answer the middleInset of the receiver's cap."
 
-	| status middleInset |
+	| middleInset |
 	middleInset := FLOAT new.
-	(status := GdiplusLibrary default gdipGetAdjustableArrowCapMiddleInset: self asParameter
-				middleInset: middleInset) = Ok
-		ifFalse: [GdiplusError signal: 'GdipGetAdjustableArrowCapMiddleInset failed' with: status].
+	GdiplusLibrary default gdipGetAdjustableArrowCapMiddleInset: self asParameter
+		middleInset: middleInset.
 	^middleInset value!
 
-middleInset: aNumber 
+middleInset: aNumber
 	"Set the middleInset of the receiver's arrow cap."
 
-	| status |
-	(status := GdiplusLibrary default gdipSetAdjustableArrowCapMiddleInset: self asParameter
-				middleInset: aNumber) = Ok 
-		ifFalse: [GdiplusError signal: 'GdipSetAdjustableArrowCapMiddleInset failed' with: status]!
+	GdiplusLibrary default gdipSetAdjustableArrowCapMiddleInset: self asParameter middleInset: aNumber!
 
 width
 	"Answer the width of the receiver's cap."
 
-	| status width |
+	| width |
 	width := FLOAT new.
-	(status := GdiplusLibrary default gdipGetAdjustableArrowCapWidth: self asParameter width: width)
-		= Ok ifFalse: [GdiplusError signal: 'GdipGetAdjustableArrowCapWidth failed' with: status].
+	GdiplusLibrary default gdipGetAdjustableArrowCapWidth: self asParameter width: width.
 	^width value!
 
-width: aNumber 
+width: aNumber
 	"Set the width of the receiver's arrow cap."
 
-	| status |
-	(status := GdiplusLibrary default gdipSetAdjustableArrowCapWidth: self asParameter width: aNumber) 
-		= Ok ifFalse: [GdiplusError signal: 'GdipSetAdjustableArrowCapWidth failed' with: status]! !
+	GdiplusLibrary default gdipSetAdjustableArrowCapWidth: self asParameter width: aNumber! !
 
 !GdiplusAdjustableArrowCap categoriesForMethods!
 height!accessing!public! !

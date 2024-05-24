@@ -18,10 +18,14 @@ arrayClass
 	^FLOATArray!
 
 elementFromValue: anObject 
-	^anObject asFloat! !
+	^anObject asFloat!
+
+numericElementClass
+	^FLOAT! !
 
 !FLOATArrayTest categoriesForMethods!
 arrayClass!constants!private! !
 elementFromValue:!private!unit tests! !
+numericElementClass!constants!private! !
 !
 

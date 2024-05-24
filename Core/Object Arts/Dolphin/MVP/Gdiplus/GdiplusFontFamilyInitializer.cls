@@ -14,15 +14,6 @@ GdiplusFontFamilyInitializer comment: ''!
 
 !GdiplusFontFamilyInitializer categoriesForClass!Unclassified! !
 
-!GdiplusFontFamilyInitializer methodsFor!
-
-gdiplusConstructorErrorDescription
-	^'Error creating FontFamily'! !
-
-!GdiplusFontFamilyInitializer categoriesForMethods!
-gdiplusConstructorErrorDescription!constants!private! !
-!
-
 !GdiplusFontFamilyInitializer class methodsFor!
 
 genericSansSerif

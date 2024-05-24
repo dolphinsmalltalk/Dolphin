@@ -15,19 +15,15 @@ GdiplusPathGradientFromPointsInitializer comment: ''!
 !GdiplusPathGradientFromPointsInitializer methodsFor!
 
 createHandle
-	| gpHandle status points |
+	| gpHandle points |
 	gpHandle := ExternalHandle new.
 	points := POINTLArray marshal: pathPoints.
-	status := self library
-				gdipCreatePathGradientI: points
-				count: pathPoints size
-				wrapMode: wrapMode
-				polyGradient: gpHandle.
-	status == Ok ifFalse: [self gdiplusErrorWith: status].
+	self library
+		gdipCreatePathGradientI: points
+		count: pathPoints size
+		wrapMode: wrapMode
+		polyGradient: gpHandle.
 	^gpHandle!
-
-gdiplusConstructorErrorDescription
-	^'Error creating PathGradient'!
 
 points: points wrapMode: aWrapModeConstant
 	pathPoints := points.
@@ -35,7 +31,6 @@ points: points wrapMode: aWrapModeConstant
 
 !GdiplusPathGradientFromPointsInitializer categoriesForMethods!
 createHandle!private!realizing/unrealizing! !
-gdiplusConstructorErrorDescription!constants!private! !
 points:wrapMode:!initializing!private! !
 !
 

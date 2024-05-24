@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 ExternalStructure subclass: #GpEncoderParameters
-	instanceVariableNames: ''
+	instanceVariableNames: 'valueBuffer'
 	classVariableNames: '_OffsetOf_Count _OffsetOf_Parameter'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -63,7 +63,10 @@ Parameter: aStructureArrayOfGpEncoderParameter
 		from: ##(_OffsetOf_Parameter + 1)
 		to: _OffsetOf_Parameter + size
 		startingAt: 1.
-	self Count: aStructureArrayOfGpEncoderParameter size! !
+	self Count: aStructureArrayOfGpEncoderParameter size!
+
+valueBuffer: aByteArray
+	valueBuffer := aByteArray! !
 
 !GpEncoderParameters categoriesForMethods!
 byteSize!accessing!public! !
@@ -71,6 +74,7 @@ Count!**compiled accessors**!public! !
 Count:!**compiled accessors**!public! !
 Parameter!**compiled accessors**!public! !
 Parameter:!**compiled accessors**!public! !
+valueBuffer:!accessing!public! !
 !
 
 !GpEncoderParameters class methodsFor!

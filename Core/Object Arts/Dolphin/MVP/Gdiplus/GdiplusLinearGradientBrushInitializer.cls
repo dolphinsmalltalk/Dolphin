@@ -14,15 +14,6 @@ GdiplusLinearGradientBrushInitializer comment: ''!
 
 !GdiplusLinearGradientBrushInitializer categoriesForClass!Unclassified! !
 
-!GdiplusLinearGradientBrushInitializer methodsFor!
-
-gdiplusConstructorErrorDescription
-	^'Error creating LinearGradientBrush'! !
-
-!GdiplusLinearGradientBrushInitializer categoriesForMethods!
-gdiplusConstructorErrorDescription!constants!private! !
-!
-
 !GdiplusLinearGradientBrushInitializer class methodsFor!
 
 point1: point1 point2: point2 color1: aColor1 color2: aColor2

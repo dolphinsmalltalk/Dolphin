@@ -28,9 +28,6 @@ arg1: anObject
 createHandle
 	^mockHandle!
 
-gdiplusConstructorErrorDescription
-	^'Error in Gdiplus TestConstructor'!
-
 hash
 	^arg1 hash!
 
@@ -43,7 +40,6 @@ initialize
 arg1!accessing!public! !
 arg1:!accessing!public! !
 createHandle!private!realizing/unrealizing! !
-gdiplusConstructorErrorDescription!constants!public! !
 hash!accessing!public! !
 initialize!initializing!public! !
 !

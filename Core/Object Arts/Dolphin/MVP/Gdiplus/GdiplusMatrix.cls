@@ -17,11 +17,7 @@ GdiplusMatrix comment: 'GdiplusMatrix represents a 3 ×3 matrix that, in turn, r
 !GdiplusMatrix methodsFor!
 
 asArray
-	| status array |
-	array := FLOATArray new: 6.
-	(status := GdiplusLibrary default gdipGetMatrixElements: self asParameter matrixOut: array) = Ok 
-		ifFalse: [GdiplusError signal: 'GdipGetMatrixElements failed' with: status].
-	^array asArray!
+	^self elements asArray!
 
 basicFree
 	"Private - Free up external resources held by the receiver.  Ignore any errors which might arise."
@@ -53,19 +49,17 @@ displayOn: aStream
 	aStream nextPut: $)!
 
 elements
-	| elements status |
+	| elements |
 	elements := FLOATArray new: 6.
-	(status := GdiplusLibrary default gdipGetMatrixElements: self asParameter matrixOut: elements) == Ok
-		ifFalse: [^GdiplusError signal: 'GdipGetMatrixElements failed' with: status].
+	GdiplusLibrary default gdipGetMatrixElements: self asParameter matrixOut: elements.
 	^elements!
 
 isIdentity
 	"Answer whether the receiver is an identity matrix, i.e. (1, 0, 0, 1, 0, 0)"
 
-	| result status |
+	| result |
 	result := ByteArray newFixed: 4.
-	(status := GdiplusLibrary default gdipIsMatrixIdentity: self asParameter result: result) == Ok
-		ifFalse: [GdiplusError signal: 'GdipIsMatrixIdentity failed' with: status].
+	GdiplusLibrary default gdipIsMatrixIdentity: self asParameter result: result.
 	^(result sdwordAtOffset: 0) ~~ 0!
 
 printOn: aStream
@@ -88,59 +82,50 @@ printOn: aStream
 rotateTransform: aRealAngle
 	self rotateTransform: aRealAngle order: MatrixOrderPrepend!
 
-rotateTransform: aRealAngle order: aMatrixOrderConstant 
-	| status |
-	(status := GdiplusLibrary default 
-				gdipRotateMatrix: self asParameter
-				angle: aRealAngle
-				order: aMatrixOrderConstant) == Ok 
-		ifFalse: [GdiplusError signal: 'GdipRotateMatrix failed' with: status]!
+rotateTransform: aRealAngle order: aMatrixOrderConstant
+	GdiplusLibrary default
+		gdipRotateMatrix: self asParameter
+		angle: aRealAngle
+		order: aMatrixOrderConstant!
 
 scaleTransform: aPoint
 	self scaleTransform: aPoint order: MatrixOrderPrepend!
 
-scaleTransform: aPoint order: aMatrixOrderConstant 
-	| status |
-	(status := GdiplusLibrary default 
-				gdipScaleMatrix: self asParameter
-				scaleX: aPoint x asFloat
-				scaleY: aPoint y asFloat
-				order: aMatrixOrderConstant) == Ok 
-		ifFalse: [GdiplusError signal: 'GdipScaleMatrix failed' with: status]!
+scaleTransform: aPoint order: aMatrixOrderConstant
+	GdiplusLibrary default
+		gdipScaleMatrix: self asParameter
+		scaleX: aPoint x asFloat
+		scaleY: aPoint y asFloat
+		order: aMatrixOrderConstant!
 
 shearTransform: aPoint
 	self shearTransform: aPoint order: MatrixOrderPrepend!
 
-shearTransform: aPoint order: aMatrixOrderConstant 
-	| status |
-	(status := GdiplusLibrary default 
-				gdipShearMatrix: self asParameter
-				shearX: aPoint x asFloat
-				shearY: aPoint y asFloat
-				order: aMatrixOrderConstant) == Ok 
-		ifFalse: [GdiplusError signal: 'GdipShearMatrix failed' with: status]!
+shearTransform: aPoint order: aMatrixOrderConstant
+	GdiplusLibrary default
+		gdipShearMatrix: self asParameter
+		shearX: aPoint x asFloat
+		shearY: aPoint y asFloat
+		order: aMatrixOrderConstant!
 
 transformPoints: aPointsCollection
-	| nativePoints status |
+	| nativePoints |
 	nativePoints := POINTLArray marshal: aPointsCollection.
-	(status := GdiplusLibrary default
-				gdipTransformMatrixPointsI: self handle
-				pts: nativePoints
-				count: aPointsCollection size) == Ok
-		ifFalse: [GdiplusError signal: 'GdipTransformMatrixPoints: failed' with: status].
+	GdiplusLibrary default
+		gdipTransformMatrixPointsI: self handle
+		pts: nativePoints
+		count: aPointsCollection size.
 	^nativePoints!
 
 translateTransform: aPoint
 	self translateTransform: aPoint order: MatrixOrderPrepend!
 
-translateTransform: aPoint order: aMatrixOrderConstant 
-	| status |
-	(status := GdiplusLibrary default 
-				gdipTranslateMatrix: self asParameter
-				offsetX: aPoint x
-				offsetY: aPoint y
-				order: aMatrixOrderConstant) == Ok 
-		ifFalse: [GdiplusError signal: 'GdipTranslateMatrix failed' with: status]! !
+translateTransform: aPoint order: aMatrixOrderConstant
+	GdiplusLibrary default
+		gdipTranslateMatrix: self asParameter
+		offsetX: aPoint x
+		offsetY: aPoint y
+		order: aMatrixOrderConstant! !
 
 !GdiplusMatrix categoriesForMethods!
 asArray!converting!public! !
