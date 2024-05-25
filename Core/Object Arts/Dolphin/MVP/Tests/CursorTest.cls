@@ -29,6 +29,10 @@ imageFile
 subjectClass
 	^Cursor!
 
+testExtent
+	self deny: self canonicalInstance handle equals: Cursor question handle.
+	self assert: self canonicalInstance extent equals: self expectedImageExtent!
+
 testFromOwnedHandle
 	| subject |
 	subject := Cursor fromOwnedHandle: Cursor cross copyHandle.
@@ -45,8 +49,7 @@ testFromResource
 	self assert: cursor2 equals: cursor1.
 	self assert: cursor1 hash equals: cursor2 hash.
 	self assert: cursor1 handle equals: cursor2 handle.
-	self assert: cursor1 imageIndex equals: cursor2 imageIndex.
-	self assert: cursor1 extent equals: Cursor largeExtent!
+	self assert: cursor1 imageIndex equals: cursor2 imageIndex!
 
 testFromSystemId
 	| cursor1 cursor2 |
@@ -60,6 +63,9 @@ testFromSystemId
 	self deny: cursor1 equals: Cursor hand.
 	self deny: cursor1 handle equals: self defaultHandle.
 	self assert: cursor1 handle equals: cursor2 handle!
+
+testHotspot
+	self assert: self canonicalInstance hotspot equals: 0 @ 0!
 
 testStbConvertFromVersion1_resource
 	| bytes cursor |
@@ -89,10 +95,12 @@ defaultHandle!constants!private! !
 expectedImageExtent!constants!private! !
 imageFile!constants!private! !
 subjectClass!constants!private! !
-testFromOwnedHandle!public! !
-testFromResource!public! !
-testFromSystemId!public! !
-testStbConvertFromVersion1_resource!public! !
-testStbConvertFromVersion1_system!public! !
+testExtent!public!unit tests! !
+testFromOwnedHandle!public!unit tests! !
+testFromResource!public!unit tests! !
+testFromSystemId!public!unit tests! !
+testHotspot!public!unit tests! !
+testStbConvertFromVersion1_resource!public!unit tests! !
+testStbConvertFromVersion1_system!public!unit tests! !
 !
 
