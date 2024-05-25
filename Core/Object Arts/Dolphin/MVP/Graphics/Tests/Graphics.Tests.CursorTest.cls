@@ -23,6 +23,10 @@ imageFile
 subjectClass
 	^Cursor!
 
+testExtent
+	self deny: self canonicalInstance handle equals: Cursor question handle.
+	self assert: self canonicalInstance extent equals: self expectedImageExtent!
+
 testFromHandle
 	| subject |
 	subject := Cursor fromHandle: Cursor cross handle.
@@ -46,8 +50,7 @@ testFromResource
 	self assert: cursor2 equals: cursor1.
 	self assert: cursor1 hash equals: cursor2 hash.
 	self assert: cursor1 handle equals: cursor2 handle.
-	self assert: cursor1 imageIndex equals: cursor2 imageIndex.
-	self assert: cursor1 extent equals: SystemMetrics default largeIconExtent!
+	self assert: cursor1 imageIndex equals: cursor2 imageIndex!
 
 testFromSystemId
 	| cursor1 cursor2 |
@@ -62,6 +65,9 @@ testFromSystemId
 	self deny: cursor1 equals: Cursor hand.
 	self deny: cursor1 handle equals: Cursor defaultHandle.
 	self assert: cursor1 handle equals: cursor2 handle!
+
+testHotspot
+	self assert: self canonicalInstance hotspot equals: 0 @ 0!
 
 testStbConvertFromVersion1_resource
 	| bytes cursor |
@@ -154,10 +160,12 @@ testStlConvertFromVersion3_system
 expectedImageExtent!constants!private! !
 imageFile!constants!private! !
 subjectClass!constants!private! !
+testExtent!public!unit tests! !
 testFromHandle!public! !
 testFromOwnedHandle!public! !
 testFromResource!public! !
 testFromSystemId!public! !
+testHotspot!public!unit tests! !
 testStbConvertFromVersion1_resource!public!unit tests! !
 testStbConvertFromVersion1_system!public!unit tests! !
 testStbConvertFromVersion3_resource!public!unit tests! !
