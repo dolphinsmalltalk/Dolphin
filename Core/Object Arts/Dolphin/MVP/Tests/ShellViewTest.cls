@@ -28,6 +28,29 @@ createShell: aString centered: aBoolean
 		show;
 		yourself!
 
+testDefaultPositioning
+	"Test that newly opened shells open with a default extent based on the monitor and emulate the well-established windows cascading behaviour."
+
+	| shell1 monitor i nextShell defaultExtent lastShell |
+	shell1 := self createShell: 'Shell1' centered: false.
+	monitor := shell1 monitor.
+	self assert: monitor identicalTo: DisplayMonitor active.
+	defaultExtent := monitor defaultWindowExtent.
+	self assert: shell1 extent equals: defaultExtent.
+	lastShell := shell1.
+	i := 1.
+	
+	[(i := i + 1) < 20 and: 
+			[nextShell := self createShell: 'Shell2' centered: false.
+			nextShell position > shell1 position]]
+			whileTrue: 
+				[self assert: nextShell monitor identicalTo: monitor.
+				self assert: nextShell extent equals: defaultExtent.
+				self assert: nextShell position equals: lastShell position + monitor cascadeOffset.
+				lastShell := nextShell].
+	"Should have wrapped"
+	self assert: nextShell position equals: monitor cascadeOffset!
+
 testOpensOnForegroundMonitor
 	"Test that shell opens on the monitor of the monitor with cursor, but preferring the monitor with the foreground window if the program manager has focus."
 
@@ -63,6 +86,7 @@ verifyUpgradedView: anInteger identifier: aResourceIdentifier
 !ShellViewTest categoriesForMethods!
 classToTest!helpers!private! !
 createShell:centered:!helpers!private! !
+testDefaultPositioning!public!unit tests! !
 testOpensOnForegroundMonitor!public!unit tests! !
 verifyUpgradedView:identifier:!helpers!private! !
 !

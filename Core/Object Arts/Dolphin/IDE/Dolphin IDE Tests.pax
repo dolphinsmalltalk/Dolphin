@@ -26,6 +26,7 @@ package classNames
 	add: #ResourceBrowserTest;
 	add: #SmalltalkStylerTest;
 	add: #SmalltalkSystemShellTest;
+	add: #SmalltalkWorkspaceDocumentTest;
 	add: #SystemBrowserTest;
 	add: #ViewComposerTest;
 	yourself.
@@ -155,6 +156,12 @@ PresenterTest subclass: #ResourceBrowserTest
 	classInstanceVariableNames: ''!
 
 PresenterTest subclass: #SmalltalkSystemShellTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+PresenterTest subclass: #SmalltalkWorkspaceDocumentTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
