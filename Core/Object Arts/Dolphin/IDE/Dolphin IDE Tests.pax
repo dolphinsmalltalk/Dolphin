@@ -26,6 +26,7 @@ package setClassNames: #(
 	#{Tools.Tests.SmalltalkSearchPresenterTest}
 	#{Tools.Tests.SmalltalkStylerTest}
 	#{Tools.Tests.SmalltalkSystemShellTest}
+	#{Tools.Tests.SmalltalkWorkspaceDocumentTest}
 	#{Tools.Tests.SystemBrowserTest}
 	#{Tools.Tests.ViewComposerTest}
 ).
@@ -198,6 +199,14 @@ UI.Tests.PresenterTest
 
 UI.Tests.PresenterTest
 	subclass: #'Tools.Tests.SmalltalkSystemShellTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+UI.Tests.PresenterTest
+	subclass: #'Tools.Tests.SmalltalkWorkspaceDocumentTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
