@@ -56,7 +56,10 @@ package setPrerequisites: #(
 	'..\..\MVP\Views\Common Controls\Dolphin Common Controls'
 	'..\..\MVP\Dialogs\Common\Dolphin Common Dialogs'
 	'..\Community Edition\Dolphin Community Edition Tools'
+	'..\..\MVP\Views\Control Bars\Dolphin Control Bars'
 	'..\..\Base\Dolphin Legacy Date & Time'
+	'..\..\MVP\Models\List\Dolphin List Models'
+	'..\..\MVP\Presenters\List\Dolphin List Presenter'
 	'..\..\MVP\Base\Dolphin MVP Base'
 	'..\..\MVP\Tests\Dolphin MVP Tests'
 	'..\..\Registry\Dolphin Registry Access'
@@ -69,6 +72,7 @@ package setPrerequisites: #(
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Tests\RBTests'
 	'..\..\System\Compiler\Smalltalk Parser'
 	'..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
+	'..\..\ActiveX\Shell\Windows Shell'
 	'..\..\ActiveX\Components\XML DOM\XML DOM').
 
 package!

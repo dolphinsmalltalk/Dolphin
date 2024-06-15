@@ -47,18 +47,30 @@ package setPrerequisites: #(
 	'..\Base\Tests\Dolphin Base Tests'
 	'..\MVP\Base\Dolphin Basic Geometry'
 	'..\MVP\Presenters\Boolean\Dolphin Boolean Presenter'
+	'..\MVP\Views\Cards\Dolphin Card Containers'
 	'..\MVP\Views\Common Controls\Dolphin Common Controls'
+	'..\MVP\Views\Control Bars\Dolphin Control Bars'
+	'..\MVP\Presenters\Image\Dolphin Image Presenter'
+	'..\MVP\Models\List\Dolphin List Models'
+	'..\MVP\Presenters\List\Dolphin List Presenter'
 	'..\MVP\Base\Dolphin MVP Base'
 	'..\MVP\Tests\Dolphin MVP Tests'
 	'Professional\Dolphin Professional Tools'
+	'..\MVP\Presenters\Radio\Dolphin Radio Buttons'
 	'Professional\Dolphin Refactoring Browser'
 	'..\MVP\Views\Scintilla\Dolphin Scintilla View'
+	'..\MVP\Views\Scrollbars\Dolphin Scrollbars'
+	'..\MVP\Views\Sliding Tray\Dolphin Slidey-Inney-Outey Thing'
 	'..\MVP\Presenters\Text\Dolphin Text Presenter'
+	'..\MVP\Models\Tree\Dolphin Tree Models'
 	'..\MVP\Presenters\Tree\Dolphin Tree Presenter'
+	'..\MVP\Type Converters\Dolphin Type Converters'
+	'..\MVP\Models\Value\Dolphin Value Models'
 	'..\..\..\Contributions\IDB\IDB Method History'
 	'..\..\..\Contributions\Refactory\Refactoring Browser\Change Objects\RBChangeObjects'
 	'..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments'
 	'..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
+	'..\ActiveX\Shell\Windows Shell'
 	'..\ActiveX\Components\XML DOM\XML DOM').
 
 package!
@@ -101,20 +113,8 @@ DolphinTest subclass: #PackageManagerTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
-DolphinTest subclass: #PublishedAspectInspectorTest
-	instanceVariableNames: 'inspector treePresenter displayPresenter'
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
 DolphinTest subclass: #SmalltalkStylerTest
 	instanceVariableNames: 'mock scintilla'
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
-DolphinTest subclass: #ViewComposerTest
-	instanceVariableNames: 'vc sampleClass'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -149,6 +149,12 @@ PresenterTest subclass: #PackageBrowserShellTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
+PresenterTest subclass: #PublishedAspectInspectorTest
+	instanceVariableNames: 'treePresenter displayPresenter'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
 PresenterTest subclass: #ResourceBrowserTest
 	instanceVariableNames: 'testClass'
 	classVariableNames: ''
@@ -163,6 +169,12 @@ PresenterTest subclass: #SmalltalkSystemShellTest
 
 PresenterTest subclass: #SmalltalkWorkspaceDocumentTest
 	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+PresenterTest subclass: #ViewComposerTest
+	instanceVariableNames: 'sampleClass'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

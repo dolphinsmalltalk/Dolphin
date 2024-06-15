@@ -306,7 +306,10 @@ testSelection
 				against: presenter.
 			self assertIsNil: presenter selectionOrNil.
 			self should: [presenter selection] raise: Error].
-	self removeClassesABC! !
+	self removeClassesABC!
+
+viewClass
+	^ContainerView! !
 
 !ClassSelectorTest categoriesForMethods!
 create:subclassOf:!helpers!private! !
@@ -326,6 +329,7 @@ testAddRemove!public!unit tests! !
 testHierarchyMove!public!unit tests! !
 testPackageMove!public!unit tests! !
 testSelection!public!unit tests! !
+viewClass!constants!private! !
 !
 
 !ClassSelectorTest class methodsFor!
