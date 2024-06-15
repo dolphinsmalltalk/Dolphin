@@ -36,6 +36,42 @@ package setMethodNames: #(
 	#(#{Tools.ClassBrowserShell class} #correspondingTestCase)
 ).
 
+package setVariableNames: #(
+	#{Smalltalk.ClassBrowserAbstract}
+	#{Smalltalk.ClassListSelector}
+	#{Smalltalk.MethodBrowser}
+	#{Smalltalk.MethodWorkspace}
+	#{Smalltalk.PackageDependencyPresenter}
+	#{Smalltalk.PackageSelector}
+	#{Smalltalk.PublishedAspectInspector}
+	#{Smalltalk.ResourceListPresenter}
+	#{Smalltalk.ResourceToolboxPresenter}
+	#{Smalltalk.SmalltalkExpressionStyler}
+	#{Smalltalk.SmalltalkMethodStyler}
+	#{Smalltalk.SmalltalkSystem}
+	#{Smalltalk.SmalltalkWorkspace}
+	#{Smalltalk.ViewComposer}
+	#{Smalltalk.ViewComposerArena}
+).
+
+package setAliasVariableNames: #(
+	#{Smalltalk.ClassBrowserAbstract}
+	#{Smalltalk.ClassListSelector}
+	#{Smalltalk.MethodBrowser}
+	#{Smalltalk.MethodWorkspace}
+	#{Smalltalk.PackageDependencyPresenter}
+	#{Smalltalk.PackageSelector}
+	#{Smalltalk.PublishedAspectInspector}
+	#{Smalltalk.ResourceListPresenter}
+	#{Smalltalk.ResourceToolboxPresenter}
+	#{Smalltalk.SmalltalkExpressionStyler}
+	#{Smalltalk.SmalltalkMethodStyler}
+	#{Smalltalk.SmalltalkSystem}
+	#{Smalltalk.SmalltalkWorkspace}
+	#{Smalltalk.ViewComposer}
+	#{Smalltalk.ViewComposerArena}
+).
+
 package setPrerequisites: #(
 	'Base\Development System'
 	'Base\Development System Tests'
@@ -46,9 +82,12 @@ package setPrerequisites: #(
 	'..\MVP\Presenters\Boolean\Dolphin Boolean Presenter'
 	'..\MVP\Views\Cards\Dolphin Card Containers'
 	'..\MVP\Views\Common Controls\Dolphin Common Controls'
+	'Community Edition\Dolphin Community Edition Tools'
 	'..\MVP\Views\Control Bars\Dolphin Control Bars'
 	'..\MVP\Graphics\Dolphin GDI Graphics'
+	'..\MVP\Presenters\Image\Dolphin Image Presenter'
 	'..\MVP\Models\List\Dolphin List Models'
+	'..\MVP\Presenters\List\Dolphin List Presenter'
 	'..\System\Filer\Dolphin Literal Filer (Old versions)'
 	'..\MVP\Deprecated\Dolphin MVP (Deprecated)'
 	'..\MVP\Base\Dolphin MVP Base'
@@ -59,6 +98,7 @@ package setPrerequisites: #(
 	'Professional\Dolphin Refactoring Browser'
 	'..\MVP\Views\Scintilla\Dolphin Scintilla View'
 	'..\MVP\Views\Scintilla\Tests\Dolphin Scintilla View Tests'
+	'..\MVP\Views\Scrollbars\Dolphin Scrollbars'
 	'..\MVP\Views\Sliding Tray\Dolphin Slidey-Inney-Outey Thing'
 	'..\MVP\Views\Splitter\Dolphin Splitter Control'
 	'..\MVP\Views\Static\Rectangle\Dolphin StaticRectangle Control'
@@ -118,24 +158,8 @@ Core.Tests.DolphinTest
 	classConstants: {}!
 
 Core.Tests.DolphinTest
-	subclass: #'Tools.Tests.PublishedAspectInspectorTest'
-	instanceVariableNames: 'inspector treePresenter displayPresenter'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-Core.Tests.DolphinTest
 	subclass: #'Tools.Tests.SmalltalkStylerTest'
 	instanceVariableNames: 'mock scintilla'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-
-Core.Tests.DolphinTest
-	subclass: #'Tools.Tests.ViewComposerTest'
-	instanceVariableNames: 'vc sampleClass'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -182,6 +206,14 @@ UI.Tests.PresenterTest
 	classConstants: {}!
 
 UI.Tests.PresenterTest
+	subclass: #'Tools.Tests.PublishedAspectInspectorTest'
+	instanceVariableNames: 'treePresenter displayPresenter'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+UI.Tests.PresenterTest
 	subclass: #'Tools.Tests.ResourceBrowserTest'
 	instanceVariableNames: 'testClass'
 	classVariableNames: ''
@@ -208,6 +240,14 @@ UI.Tests.PresenterTest
 UI.Tests.PresenterTest
 	subclass: #'Tools.Tests.SmalltalkWorkspaceDocumentTest'
 	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+UI.Tests.PresenterTest
+	subclass: #'Tools.Tests.ViewComposerTest'
+	instanceVariableNames: 'sampleClass'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -268,6 +308,39 @@ Tools.Tests.ClassSelectorTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
+"Variable Aliases"!
+
+Smalltalk.ClassBrowserAbstract := Tools.ClassBrowserAbstract!
+
+Smalltalk.ClassListSelector := Tools.ClassListSelector!
+
+Smalltalk.MethodBrowser := Tools.MethodBrowser!
+
+Smalltalk.MethodWorkspace := Tools.MethodWorkspace!
+
+Smalltalk.PackageDependencyPresenter := Tools.PackageDependencyPresenter!
+
+Smalltalk.PackageSelector := Tools.PackageSelector!
+
+Smalltalk.PublishedAspectInspector := Tools.PublishedAspectInspector!
+
+Smalltalk.ResourceListPresenter := Tools.ResourceListPresenter!
+
+Smalltalk.ResourceToolboxPresenter := Tools.ResourceToolboxPresenter!
+
+Smalltalk.SmalltalkExpressionStyler := Tools.SmalltalkExpressionStyler!
+
+Smalltalk.SmalltalkMethodStyler := Tools.SmalltalkMethodStyler!
+
+Smalltalk.SmalltalkSystem := Tools.SmalltalkSystem!
+
+Smalltalk.SmalltalkWorkspace := Tools.SmalltalkWorkspace!
+
+Smalltalk.ViewComposer := Tools.ViewComposer!
+
+Smalltalk.ViewComposerArena := Tools.ViewComposerArena!
+
 
 "Loose Methods"!
 

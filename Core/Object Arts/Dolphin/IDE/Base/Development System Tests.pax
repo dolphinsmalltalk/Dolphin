@@ -41,6 +41,14 @@ package setMethodNames: #(
 	#(#{UI.Tests.BorderLayoutTest} #testResourceBrowserPreview)
 ).
 
+package setVariableNames: #(
+	#{Smalltalk.SourceBrowser}
+).
+
+package setAliasVariableNames: #(
+	#{Smalltalk.SourceBrowser}
+).
+
 package setPrerequisites: #(
 	'Development System'
 	'..\..\Base\Dolphin'
@@ -48,18 +56,24 @@ package setPrerequisites: #(
 	'..\..\Base\Tests\Dolphin Base Tests'
 	'..\..\MVP\Base\Dolphin Basic Geometry'
 	'..\..\System\Filer\Dolphin Binary Filer'
+	'..\..\MVP\Views\Common Controls\Dolphin Common Controls'
 	'..\..\MVP\Dialogs\Common\Dolphin Common Dialogs'
 	'..\..\MVP\Dialogs\Common\Dolphin Common Font Dialog'
 	'..\Community Edition\Dolphin Community Edition Tools'
+	'..\..\MVP\Views\Control Bars\Dolphin Control Bars'
 	'..\..\MVP\Graphics\Dolphin GDI Graphics'
+	'..\..\MVP\Models\List\Dolphin List Models'
+	'..\..\MVP\Presenters\List\Dolphin List Presenter'
 	'..\..\System\Filer\Dolphin Literal Filer (Old versions)'
 	'..\..\System\Filer\Dolphin Literal Out Filer'
+	'..\..\MVP\Deprecated\Dolphin MVP (Deprecated)'
 	'..\..\MVP\Base\Dolphin MVP Base'
 	'..\..\MVP\Tests\Dolphin MVP Tests'
 	'..\..\Installation Manager\Dolphin Products'
 	'..\..\MVP\Presenters\Text\Dolphin Rich Text Presenter'
 	'..\..\MVP\Views\Scintilla\Tests\Dolphin Scintilla View Tests'
 	'..\..\System\Filer\Dolphin STx Filer Core'
+	'..\..\System\Filer\Dolphin STx Filer Core (Old versions)'
 	'..\..\MVP\Presenters\Text\Dolphin Text Presenter'
 	'..\..\MVP\Type Converters\Dolphin Type Converters'
 	'..\..\MVP\Models\Value\Dolphin Value Models'
@@ -74,6 +88,7 @@ package setPrerequisites: #(
 	'..\..\System\Compiler\Smalltalk Parser'
 	'..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
 	'..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnitPreload'
+	'..\..\ActiveX\Shell\Windows Shell'
 ).
 
 package!
@@ -223,6 +238,11 @@ Refactory.Browser.Tests.BrowserEnvironmentTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+
+"Variable Aliases"!
+
+Smalltalk.SourceBrowser := Tools.SourceBrowser!
+
 
 "Loose Methods"!
 
