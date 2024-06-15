@@ -23,6 +23,21 @@ currentDpi: anInteger
 newDpi
 	^self wParam lowWord!
 
+printOn: aStream
+	"Append a textual representation of the receiver to aStream."
+
+	aStream
+		basicPrint: self;
+		nextPut: $(;
+		print: self window;
+		nextPutAll: ' currentDpi: ';
+		print: self currentDpi;
+		nextPutAll: ' newDpi: ';
+		print: self newDpi;
+		nextPutAll: ' proposedRect: ';
+		print: self proposedRect;
+		nextPut: $)!
+
 proposedRect
 	^RECTL fromAddress: self lParam! !
 
@@ -30,6 +45,7 @@ proposedRect
 currentDpi!accessing!public! !
 currentDpi:!accessing!initializing!private! !
 newDpi!event handling-win32!private! !
+printOn:!development!printing!public! !
 proposedRect!event handling-win32!private! !
 !
 

@@ -1,14 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 ShellView subclass: #DialogView
-	instanceVariableNames: 'endModal isModal oldWndProc'
-	classVariableNames: 'InProcLoopMask'
+	instanceVariableNames: 'endModal isModal oldWndProc owner _reserved32 _reserved33 _reserved34'
+	classVariableNames: 'InProcLoopMask OwnerInstVarIndex'
 	poolDictionaries: 'ThemeConstants'
 	classInstanceVariableNames: ''!
 
 DialogView guid: (GUID fromString: '{87b4c71e-026e-11d3-9fd7-00a0cc3e4a32}')!
 
 DialogView addClassConstant: 'InProcLoopMask' value: 16r100000!
+DialogView addClassConstant: 'OwnerInstVarIndex' value: 16r1F!
 
 DialogView comment: 'DialogView is a specialisation of <topView> that provides the ability to be displayed modally and to return a value.
 
@@ -149,6 +150,14 @@ endDialog: result
 
 	UserLibrary default endDialog: handle nResult: result asUIntPtr!
 
+filerProxy
+	"Private - Answer a filer proxy that represents the receiver."
+
+	| proxy |
+	proxy := super filerProxy.
+	proxy instVars at: OwnerInstVarIndex put: nil.
+	^proxy!
+
 getItemText: anInteger
 	"Private - Get the text of the receiver's control with the specified id.
 	We do not use the GetDlgItemText() function, since this does not provide us with a way of
@@ -215,7 +224,7 @@ onInitDialog
 	"Since the dialog itself (though not its controls) is loaded from a resource template the window styles will not match those	set for the receiver. Transfer our styles across here"
 	self styles: self styles.
 
-	"Similarly, Windows always creates dialog as a child of the desktop. Force the required parent (really owner) here"
+	"Similarly, Windows always creates dialog as a child of the desktop. Force the required parent here. Note that this is not the same as the dialog owner - that is passed to the dialog creation function, and is generally the active window at create time though need not be."
 	UserLibrary default setParent: handle hWndNewParent: creationParent asParameter.
 
 	"Tabbed dialogs, e.g. wizards, need the tab theme explicitly enabled"
@@ -226,6 +235,15 @@ onInitDialog
 
 	"Tell Windows NOT to set the focus. We set focus later after we have populated the dialog (though subclasses loaded from a Windows dialog template resource may wish to return true here)"
 	^false!
+
+owner
+	^owner!
+
+owner: aView
+	owner == aView ifTrue: [^self].
+	handle
+		ifNotNil: [self error: 'The dialog owner cannot be changed after the dialog window has been created.'].
+	owner := aView!
 
 performCommand: aCommand
 	"Performs aCommand on the receiver and answer the result.
@@ -243,6 +261,13 @@ preTranslateKeyboardInput: aMSG
 
 	^(self translateAccelerator: aMSG) or: [self isDialogMessage: aMSG]!
 
+resolveOwner
+	^owner
+		ifNil: 
+			[owner := View active.
+			(owner isNil or: [owner == self]) ifTrue: [owner := View desktop].
+			owner]!
+
 resourceLib
 	"Answer the library/handle of the module containing the receiver's template.
 	Note: This library MUST NOT be opened as a datafile (i.e. with the LOAD_LIBRARY_AS_DATAFILE
@@ -254,7 +279,7 @@ resourceLib
 restore: anInteger resolution: aPoint
 	"The initial position for a dialog is ignored, so we just need to scale to the correct resolution for (what will be) the owner window"
 
-	self basicRestore: anInteger scalingBy: View active resolution / aPoint!
+	self basicRestore: anInteger scalingBy: self dpi / aPoint!
 
 runModalInProcessLoop
 	"Private - Create a modal message loop until our continue flag suggests exit. Note that here
@@ -284,11 +309,13 @@ runModalLoop
 setInitialPosition: aRectangle
 	"Private - Set the initial position and extent of the dialog window immediately after creation."
 
+	"Normally the size and position of a Windows dialog is determined by windows, with the extent being calculated based on the template, and the dialog then centred on owner window's monitor. As we have a generic empty template the extent will almost certainly be incorrect for the content that we are likely loading from a view resource. Also we allow the dialog to be positioned in various ways. Changing the initial dialog rectangle assigned by windows may cause a DPI change if the new rectangle is over a different monitor."
+
 	UserLibrary default
 		setWindowPos: handle
 		hWndInsertAfter: nil
-		x: aRectangle top
-		y: aRectangle left
+		x: aRectangle left
+		y: aRectangle top
 		cx: aRectangle width
 		cy: aRectangle height
 		uFlags: ##(SWP_NOACTIVATE | SWP_NOZORDER | SWP_NOSENDCHANGING)!
@@ -333,46 +360,35 @@ setItem: anInteger text: aString
 showModal
 	"Private - Show the receiver as a dialog modal to the current active window. Note that if the Dialog has already been created, it will have taken activation, and it is no longer possible to determine the previously active window."
 
-	^self showModalTo: nil!
-
-showModalTo: aView
-	"Private - Show the (already created) receiver as a dialog modal to aView."
-
-	| enableOwningView owningView |
-	"The act of creating a dialog box, even without showing it, steals activation, so it may be too late to find the previously active window now if the dialog has already been created"
-	owningView := aView ifNil: [View active].
-	(owningView isNil or: [owningView == self]) ifTrue: [owningView := View desktop].
-	"Allow the create to fail, in which case return nil as the result"
-	self handle isNil ifTrue: [^nil].
-	(enableOwningView := owningView isEnabled) ifTrue: [owningView isEnabled: false].
+	| enableOwner |
+	self handle ifNil: [^nil].
+	(enableOwner := owner isEnabled) ifTrue: [owner isEnabled: false].
 	
 	["Only now can we adjust the position of the dialog (if required)."
-	owningView repositionShell: self.
+	owner repositionShell: self.
 	self
 		layout;
 		show.
 	self isInProc ifTrue: [self runModalInProcessLoop] ifFalse: [self runModalLoop]]
 			ensure: 
 				["Seems windows may re-enable a disabled view itself, so we re-establish enablement state regardless"
-				owningView isEnabled: enableOwningView.
-				enableOwningView ifTrue: [owningView beActive].
-				"Force the owning view to re-paint and update its cursor in case actions following closure of the dialog are lengthy"
-				owningView update.
+				owner isEnabled: enableOwner.
+				enableOwner ifTrue: [owner beActive].	"Force the owning view to re-paint and update its cursor in case actions following closure of the dialog are lengthy"
+				owner update.
 				UserLibrary default
-					sendMessage: owningView asParameter
+					sendMessage: owner asParameter
 					msg: WM_SETCURSOR
 					wParam: 0
-					lParam: (enableOwningView ifTrue: [HTCLIENT] ifFalse: [HTERROR]).
-				owningView := nil.
-				"We do not destroy the dialog until its owningView is re-enabled to prevent another
+					lParam: (enableOwner ifTrue: [HTCLIENT] ifFalse: [HTERROR]).
+				owner := nil.	"We do not destroy the dialog until its owningView is re-enabled to prevent another
 		window coming to the front."
 				self basicDestroy].
 	^self answer!
 
-showModeless: aView
-	"Private - Show the (already created) receiver as a modeless dialog for the specified owner window."
+showModeless
+	"Private - Show the receiver as a modeless dialog."
 
-	aView repositionShell: self.
+	self resolveOwner repositionShell: self.
 	self show!
 
 state
@@ -432,6 +448,7 @@ dmGetDefId:wParam:lParam:!default button!event handling-win32!private! !
 dmSetDefId:wParam:lParam:!default button!event handling-win32!private! !
 enableItem:state:!accessing!private! !
 endDialog:!operations!public! !
+filerProxy!binary filing!private! !
 getItemText:!accessing!private! !
 has3dLook!accessing!public! !
 has3dLook:!accessing!public! !
@@ -444,8 +461,11 @@ isPersistentView!public!testing! !
 isPropertyPage!public!testing! !
 oldWndProc:!accessing!private! !
 onInitDialog!event handling!public! !
+owner!accessing!public! !
+owner:!accessing!public! !
 performCommand:!commands!public! !
 preTranslateKeyboardInput:!dispatching!public! !
+resolveOwner!private!realizing/unrealizing! !
 resourceLib!constants!public! !
 restore:resolution:!geometry!private! !
 runModalInProcessLoop!operations!private! !
@@ -456,8 +476,7 @@ setItem:icon:!accessing!private! !
 setItem:int:!accessing!private! !
 setItem:text:!accessing!private! !
 showModal!private!realizing/unrealizing! !
-showModalTo:!private!realizing/unrealizing! !
-showModeless:!private!realizing/unrealizing! !
+showModeless!private!realizing/unrealizing! !
 state!accessing!private! !
 subclassWindow:!operations!private! !
 templateId!constants!private! !
@@ -472,7 +491,8 @@ icon
 	^##(self) defaultIcon!
 
 initialize
-	self addClassConstant: 'InProcLoopMask' value: 16r100000!
+	self addClassConstant: 'InProcLoopMask' value: 16r100000.
+	self addClassConstant: 'OwnerViewInstVarIndex' value: (self indexOfInstVar: 'owner')!
 
 new
 	"Answer an instance of the receiver on a nil model"
@@ -485,6 +505,50 @@ on: aSubjectModel
 	^super new model: aSubjectModel.
 !
 
+stbConvert: instVarArray fromVersion: verInteger
+	"Convert from earlier version view by updating and answering the array of instance variables
+	(for the View), instVarArray."
+
+	| instVars |
+	instVars := instVarArray.
+	verInteger < 13 ifTrue: [instVars := super stbConvert: instVarArray fromVersion: verInteger].
+	verInteger < 14 ifTrue: [instVars := self stbConvertFromVersion13: instVars].
+	^instVars!
+
+stbConvertFromVersion13: anArray
+	"Private - Perform an STB conversion from a version 13 <DialogView> to version 14.
+	Adds ownerView instance variable and a few spares."
+
+	| count |
+	count := anArray size + 4.
+	^(Array new: count)
+		replaceFrom: 1
+			to: 30
+			with: anArray
+			startingAt: 1;
+		replaceFrom: 35
+			to: count
+			with: anArray
+			startingAt: 31;
+		yourself!
+
+stbFixupProxy: aSTBViewProxy filer: aSTBInFiler
+	| vars |
+	vars := aSTBViewProxy instVars.
+	(vars at: CreationParentInstVarIndex) ifNotNil: [^self].
+	aSTBInFiler context
+		ifNotNil: 
+			[:context |
+			vars
+				at: CreationParentInstVarIndex put: context view;
+				at: OwnerInstVarIndex put: context dialogOwner].
+	aSTBInFiler deferAction: [aSTBViewProxy restoreTopView]!
+
+stbVersion
+	"14: Adds ownerView, and three spares"
+
+	^14!
+
 winClassName
 	^'#32770'! !
 
@@ -493,6 +557,10 @@ icon!constants!public! !
 initialize!development!initializing!public! !
 new!instance creation!public! !
 on:!instance creation!public! !
+stbConvert:fromVersion:!binary filing!public! !
+stbConvertFromVersion13:!binary filing!private! !
+stbFixupProxy:filer:!binary filing!converting!public! !
+stbVersion!binary filing!public! !
 winClassName!constants!private! !
 !
 

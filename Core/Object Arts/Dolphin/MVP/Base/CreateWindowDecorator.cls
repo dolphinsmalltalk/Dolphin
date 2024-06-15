@@ -16,6 +16,9 @@ CreateWindowDecorator comment: ''!
 
 !CreateWindowDecorator methodsFor!
 
+createShellWindow: aShellView
+	decorated createShellWindow: aShellView!
+
 decorated
 	^decorated!
 
@@ -48,6 +51,7 @@ scaleToDpi: anInteger
 	decorated scaleToDpi: anInteger! !
 
 !CreateWindowDecorator categoriesForMethods!
+createShellWindow:!operations!public! !
 decorated!accessing!private! !
 decorated:!accessing!private! !
 dpi!accessing!public! !

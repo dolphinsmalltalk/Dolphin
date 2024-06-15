@@ -136,7 +136,7 @@ showModal
 	"Create and show the receiver's modal dialog. Answer the 'result' (as defined by the
 	subclass) or nil if no selection was made."
 
-	"Implemenation Note: The common dialogs steal the message loop and send WM_ENTERIDLE
+	"Implementation Note: The common dialogs steal the message loop and send WM_ENTERIDLE
 	messages only erratically. We therefore start up the idle timer to allow us to run
 	background processes now and again."
 

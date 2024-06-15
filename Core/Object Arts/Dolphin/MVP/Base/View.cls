@@ -2,13 +2,14 @@
 
 Object subclass: #View
 	instanceVariableNames: 'handle creationParent creationStyles presenter model backcolor preferredExtent flags contextMenu font events interactor'
-	classVariableNames: 'CreateCenteredMask DragSourceMask DropTargetMask LayoutValidMask ManagedMask MessageMap MinimizedMask MixedDpiAwarenessMask NextId NoInheritMenuMask ProxyRestoringMask RestoringMask StateRestoringMask UIValidMask UsePreferredExtentMask ViewClosedError WndClassAtom'
+	classVariableNames: 'CreateCenteredMask CreationParentInstVarIndex DragSourceMask DropTargetMask LayoutValidMask ManagedMask MessageMap MinimizedMask MixedDpiAwarenessMask NextId NoInheritMenuMask ProxyRestoringMask RestoringMask StateRestoringMask UIValidMask UsePreferredExtentMask ViewClosedError WndClassAtom'
 	poolDictionaries: 'Win32Constants Win32Errors'
 	classInstanceVariableNames: 'theme'!
 
 View guid: (GUID fromString: '{87b4c4cc-026e-11d3-9fd7-00a0cc3e4a32}')!
 
 View addClassConstant: 'CreateCenteredMask' value: 16r40!
+View addClassConstant: 'CreationParentInstVarIndex' value: 16r2!
 View addClassConstant: 'DragSourceMask' value: 16r4!
 View addClassConstant: 'DropTargetMask' value: 16r8!
 View addClassConstant: 'LayoutValidMask' value: 16r1!
@@ -344,6 +345,8 @@ basicAddSubView: aView
 
 basicCreateWindow: aCreateWindow
 	"Private - Create and attach/subclass the actual Window for this View."
+
+	"Note that if you debug through this the window may not be subclasses/attached to its handle correctly."
 
 	self onAboutToCreate.
 	self primHookWindowCreate: true.
@@ -945,6 +948,11 @@ destroy
 
 	^self basicDestroy!
 
+dialogOwner
+	"Answer the <View> that should be specified as the default owner of dialogs of which the receiver is the parent. This is passed as the hWndParent parameter to the CreateDialogXxx API call. For child dialogs (e.g. dialogs embedded as tabs or pages in a wizard) this parameter does specify the parent of the dialog box. For top-level dialog boxes, this is really the 'owner' of the dialog rather than the parent. The significance of the owner relationship is that Windows will enable/disable the owner of a modal dialog when it is shown/closed, and will also activate the dialog to the foreground when the user attempts to activate the owner (e.g. by left-click).  Since [A window can have a parent or an owner but not both](https://devblogs.microsoft.com/oldnewthing/20100315-00/?p=14613), then with the exception of the desktop view, as the receiver is the parent it should be passed as the owner/parent parameter."
+
+	^self!
+
 disable
 	"Disable the receiver from receiving input events."
 
@@ -1043,6 +1051,8 @@ dispatchUser: userId wParam: wParam lParam: lParam map: aLookupTable
 				with: lParam]!
 
 displayMonitor
+	"Answer the <DisplayMonitor> on which the receiver is displayed, or nil if not visible on any monitor."
+
 	^DisplayMonitor displayingView: self!
 
 displayOn: aStream 
@@ -2221,13 +2231,19 @@ literalStoreOn: aStream
 		nextPut: self!
 
 loadViewResource: aResourceArray forEdit: isLoadingForEdit
-	"Add an instance of the resource held in anSTLArray. Answer the new view."
+	"Load an instance of the resource held in aResourceArray. Answer the new view."
 
+	^self
+		loadViewResource: aResourceArray
+		withContext: self
+		forEdit: isLoadingForEdit!
+
+loadViewResource: aResourceArray withContext: aViewContext forEdit: isLoadingForEdit
 	| filer child |
 	filer := aResourceArray stbInFiler.
 	child := filer
 				isUpgrading: isLoadingForEdit;
-				context: self;
+				context: aViewContext;
 				basicNext.
 	[filer evaluateDeferredActions] ifCurtailed: [child destroy].
 	^child!
@@ -2826,6 +2842,9 @@ onZOrderChanged
 openTheme
 	"Generally the theme handle is common to the class and is opened lazily on demand. Generally no instance specific action is required."!
 
+owner
+	^View fromHandle: self getOwner!
+
 parentPresenter
 	"Answer the presenter that can be considered the parent of the receiver.
 	Part of the Presenter protocol used when the receiver is in fact its own presenter"
@@ -2860,7 +2879,7 @@ placement
 	View>>placement:"
 
 	| placement |
-	placement := WINDOWPLACEMENT new.
+	placement := WINDOWPLACEMENT newBuffer.
 	(UserLibrary default getWindowPlacement: handle lpwndpl: placement)
 		ifFalse: [UserLibrary default systemError].
 
@@ -3071,7 +3090,7 @@ recreate
 	"Recreate the receiver if it is currently open. Useful for applying styles that are only
 	available as pre-creation options"
 
-	self recreateAround: []!
+	self recreateAround: [:state |]!
 
 recreateAround: aNiladicValuable
 	| prevSibling existingPresenter savedEvents state |
@@ -3535,8 +3554,8 @@ state
 
 	| answer |
 	answer := MessageSequence new.
-	handle notNull
-		ifTrue: 
+	handle isNull
+		ifFalse: 
 			[answer add: (MessageSend
 						receiver: self
 						selector: #createWindow:
@@ -3547,13 +3566,14 @@ state
 								receiver: self
 								selector: #isEnabled:
 								argument: false)].
-			self contextMenu isNil
-				ifFalse: 
-					["views do not have context menus by default"
+			self contextMenu
+				ifNotNil: 
+					[:menu |
+					"views do not have context menus by default"
 					answer add: (MessageSend
 								receiver: self
 								selector: #contextMenu:
-								argument: self contextMenu)]].
+								argument: menu)]].
 	^answer!
 
 state: aMessageSequence
@@ -4840,6 +4860,7 @@ designExtent!accessing!geometry!public! !
 designExtent:!accessing!geometry!public! !
 designRectangle:!accessing!geometry!public! !
 destroy!public!realizing/unrealizing! !
+dialogOwner!accessing!public! !
 disable!operations!public! !
 disableRedraw!drawing!public! !
 disconnectFromModel!operations!private! !
@@ -4847,7 +4868,7 @@ dispatchMessage:wParam:lParam:!dispatching!private! !
 dispatchRegistered:wParam:lParam:!dispatching!private! !
 dispatchUser:wParam:lParam:!dispatching!private! !
 dispatchUser:wParam:lParam:map:!dispatching!private! !
-displayMonitor!accessing!public! !
+displayMonitor!enquiries!public! !
 displayOn:!displaying!public! !
 displayOnFormats!displaying!private! !
 displayOnMaxCharacters!constants!displaying!private! !
@@ -5010,6 +5031,7 @@ layoutExtent:!geometry!public! !
 layoutManager!geometry!public! !
 literalStoreOn:!literal filing!public! !
 loadViewResource:forEdit:!binary filing!public! !
+loadViewResource:withContext:forEdit:!binary filing!public! !
 managedSubViews!hierarchy!public!sub views! !
 managedSubViewsDo:!hierarchy!public!sub views! !
 mapPoint:to:!geometry!public! !
@@ -5021,7 +5043,7 @@ metrics!accessing!public! !
 minExtent!accessing!public! !
 model!accessing!public! !
 model:!accessing!public! !
-monitor!operations!public! !
+monitor!enquiries!public! !
 name!accessing!public! !
 name:!accessing!public! !
 nameOf:!hierarchy!public!sub views! !
@@ -5095,6 +5117,7 @@ onXButtonPressed:!event handling!public! !
 onXButtonReleased:!event handling!public! !
 onZOrderChanged!event handling!public! !
 openTheme!private!theming! !
+owner!hierarchy!private! !
 parentPresenter!presenter!public! !
 parentView!hierarchy!public! !
 parentView:!hierarchy!private! !
@@ -5877,6 +5900,13 @@ stbConvertProxy: anSTBViewProxy
 	anSTBViewProxy instVars: (self stbConvert: anSTBViewProxy instVars 
 							fromVersion: anSTBViewProxy version)!
 
+stbFixupProxy: aSTBViewProxy filer: aSTBInFiler
+	| vars |
+	vars := aSTBViewProxy instVars.
+	(vars at: CreationParentInstVarIndex) ifNotNil: [^self].
+	aSTBInFiler context ifNotNil: [:context | vars at: CreationParentInstVarIndex put: context view].
+	aSTBInFiler deferAction: [aSTBViewProxy restoreTopView]!
+
 stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
@@ -6033,6 +6063,7 @@ stbConvertFromVersion7:!binary filing!private! !
 stbConvertFromVersion8:!binary filing!private! !
 stbConvertFromVersion9:!binary filing!private! !
 stbConvertProxy:!binary filing!public! !
+stbFixupProxy:filer:!binary filing!converting!public! !
 stbVersion!binary filing!public! !
 theme!public!theming! !
 themePartName!constants!public!theming! !

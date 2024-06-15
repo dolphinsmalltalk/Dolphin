@@ -341,7 +341,7 @@ onViewClosed
 paintAdornments: aCanvas
 	| primary |
 	primary := composer primarySelection.
-	primary ifNil: [^self].
+	(primary notNil and: [primary isOpen]) ifFalse: [^self].
 	aCanvas
 		pen: Color highlight pen;
 		brush: Brush white.

@@ -101,6 +101,10 @@ package methodNames
 	add: 'SortAlgorithm class' -> #icon;
 	add: 'Sound class' -> #icon;
 	add: 'SourceManager class' -> #icon;
+	add: 'STBClassConversion class' -> #icon;
+	add: 'STBFiler class' -> #icon;
+	add: 'STBPrefix class' -> #icon;
+	add: 'STBProxy class' -> #icon;
 	add: 'String class' -> #icon;
 	add: 'Symbol class' -> #icon;
 	add: 'SystemDictionary class' -> #icon;
@@ -1234,6 +1238,52 @@ icon
 	^##(self) defaultIcon! !
 
 !SourceManager class categoriesForMethods!
+icon!constants!public! !
+!
+
+!STBClassConversion class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^STBFiler icon! !
+
+!STBClassConversion class categoriesForMethods!
+icon!constants!public! !
+!
+
+!STBFiler class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##((TextTileIcon text: $\x2707 fontName: 'Arial')
+		textcolor: Color navy;
+		yourself)! !
+
+!STBFiler class categoriesForMethods!
+icon!constants!public! !
+!
+
+!STBPrefix class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^STBFiler icon! !
+
+!STBPrefix class categoriesForMethods!
+icon!constants!public! !
+!
+
+!STBProxy class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^STBFiler icon! !
+
+!STBProxy class categoriesForMethods!
 icon!constants!public! !
 !
 

@@ -16,6 +16,13 @@ CreateWindowApiCall comment: ''!
 
 !CreateWindowApiCall methodsFor!
 
+createShellWindow: aShellView
+	self resolveShellGeometry: aShellView.
+	"Set the dpi of the shell to that of the monitor we think it is created on, and to which we have scaled the position/extent. This will mean that even if we made the wrong choice, and Windows thinks it is placed on another monitor, when it is moved between monitors it should at least rescale correctly. Note that we would at least need to clear any cached DPI, as otherwise the shell will keep getting rescaled from its original DPI. Basically the cached ShellView DPI needs to always be the same as the actual DPI, except during the per-monitor transition process when Windows is sending WM_DPICHANGED_BEFOREPARENT to all the children. In order for the children to rescale correctly, they need to know the DPI to which they were last scaled, which is the primary reason to cache the DPI in ShellView."
+	aShellView
+		dpi: dpi;
+		basicCreateWindow: self!
+
 dpi
 	"Answer the <integer> logical dots-per-inch at which the <rectangle> of the receiver is measured."
 
@@ -56,6 +63,9 @@ rectangle
 
 	^rectangle!
 
+resolveShellGeometry: aShellView
+	self subclassResponsibility!
+
 scaleToDpi: anInteger
 	"Private - Scale the receiver in-place from it's current DPI to that specified by the <SmallInteger> argument."
 
@@ -69,6 +79,7 @@ scaleToDpi: anInteger
 	dpi := anInteger! !
 
 !CreateWindowApiCall categoriesForMethods!
+createShellWindow:!operations!public! !
 dpi!accessing!public! !
 dpi:!accessing!public! !
 extent:!accessing!public! !
@@ -76,6 +87,7 @@ position:!accessing!public! !
 position:extent:dpi:!initializing!public! !
 printOn:!printing!public! !
 rectangle!accessing!public! !
+resolveShellGeometry:!operations!private! !
 scaleToDpi:!helpers!high DPI!private! !
 !
 

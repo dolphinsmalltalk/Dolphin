@@ -84,6 +84,9 @@ testContainingPoint
 	self
 		assertIsNil: (DisplayMonitor containingPoint: SystemMetrics current virtualScreenRectangle corner + 1)!
 
+testDesktop
+	self assert: View desktop monitor identicalTo: DisplayMonitor primary!
+
 testDeviceName
 	self deny: DisplayMonitor primary deviceName equals: ''!
 
@@ -163,6 +166,7 @@ testAllIntersecting!public!unit tests! !
 testAllPhysicalMonitors!public!unit tests! !
 testComparing!public!unit tests! !
 testContainingPoint!public!unit tests! !
+testDesktop!public!unit tests! !
 testDeviceName!public!unit tests! !
 testDisplayingAndNearestView!public!unit tests! !
 testIntersecting!public!unit tests! !

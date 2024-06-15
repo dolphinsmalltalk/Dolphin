@@ -768,7 +768,7 @@ AbstractContainerViewTest subclass: #StyledContainerTest
 	classInstanceVariableNames: ''!
 
 AbstractShellViewTest subclass: #DialogViewTest
-	instanceVariableNames: 'owner shell2'
+	instanceVariableNames: 'owner'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

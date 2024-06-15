@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 AbstractShellViewTest subclass: #DialogViewTest
-	instanceVariableNames: 'owner shell2'
+	instanceVariableNames: 'owner'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -17,23 +17,22 @@ DialogViewTest comment: ''!
 classToTest
 	^DialogView!
 
-createShell: aRectangle text: aString
-	| shell |
-	shell := ShellView new.
-	shells addLast: shell.
-	^shell
-		create;
-		rectangle: aRectangle;
-		text: aString;
-		show;
-		yourself!
-
 createSubjectDialog: aBoolean
-	| dialog |
-	dialog := DialogView new.
-	dialog isInitiallyCentered: aBoolean.
-	dialog createAt: CreateWindow.UseDefaultGeometry extent: self dialogExtent.
-	^dialog!
+	"We request default position, so the dialog should be created initially on the monitor of the owner."
+	^self createSubjectDialog: aBoolean at: CreateWindow.UseDefaultGeometry!
+
+createSubjectDialog: aBoolean at: aPosition
+	| expectedOwner subject |
+	subject := DialogView new
+				isInitiallyCentered: aBoolean;
+				owner: owner;
+				createAt: aPosition extent: self dialogExtent;
+				text: self printString;
+				yourself.
+	expectedOwner := owner ifNil: [View active ifNil: [View desktop]].
+	self assert: subject owner identicalTo: expectedOwner.
+	self assert: (subject getOwner ifNil: [View desktopHandle]) equals: expectedOwner handle.
+	^subject!
 
 createTestShells: aDisplayMonitor
 	"If there is more than one monitor, put the dialog owner on a monitor other than the primary monitor (regression test for #1116)"
@@ -43,28 +42,28 @@ createTestShells: aDisplayMonitor
 						translatedBy: aDisplayMonitor workArea origin)
 				text: self printString , ' owner'.
 	"Create a 2nd shell to take activation from the owner. We do this because normally dialogs are opened modal to the active window."
-	shell2 := self
-				createShell: (((50 @ 25 extent: 320 @ 240) scaledBy: DisplayMonitor primary dpi / 96) truncated
-						translatedBy: DisplayMonitor primary workArea origin)
-				text: self printString , ' shell2'!
+	self createShell: (((50 @ 25 extent: 320 @ 240) scaledBy: DisplayMonitor primary dpi / 96) truncated
+				translatedBy: DisplayMonitor primary workArea origin)
+		text: self printString , ' shell2'!
 
 dialogExtent
 	"Answer the extent to use for the test dialogs. Note that this is fixed - we deliberately don't scale it to monitor dpi."
 
 	^250 @ 350!
 
-evaluateInModalDialog: aBlock owner: ownerView centered: aBoolean
+evaluateInModalDialog: aBlock centered: aBoolean
 	| dialog |
 	dialog := self createSubjectDialog: aBoolean.
+	self assert: dialog owner equals: (owner ifNil: [View desktop]).
 	
 	[
 	[[dialog isOpen not or: [dialog isModal]] whileFalse: [2 milliseconds wait].
 	aBlock value: dialog]
 			ensure: [dialog isModal: false]]
 			fork.
-	"Use an in-proc loop so the test doesn't cause a new main proc to be spawned. It also allows us to easily terminate the dialog just be setting the isModal flag"
+	"Use an in-proc loop so the test doesn't cause a new main proc to be spawned. It also allows us to easily terminate the dialog just by setting the isModal flag"
 	dialog isInProc: true.
-	dialog showModalTo: ownerView.
+	dialog showModal.
 	self deny: dialog isOpen!
 
 testCenteringInOwner
@@ -75,12 +74,10 @@ testCenteringInOwner
 	secondary := self getSecondaryMonitorIfAvailable.
 	self createTestShells: secondary.
 	expectedCenter := owner mapPointToScreen: owner clientRectangle center.
-	self
-		evaluateInModalDialog: 
+	self evaluateInModalDialog: 
 			[:dialog |
 			actualCenter := dialog mapPointToScreen: dialog clientRectangle center.
 			dialogMonitor := dialog displayMonitor]
-		owner: owner
 		centered: true.
 	self assert: dialogMonitor equals: secondary.
 	"We expect the client area of the dialog to be centred over the client area of the owner. There might be some rounding error causing the centers to be offset by at most 1"
@@ -90,12 +87,11 @@ testCenteringInOwner
 	cursorPos := secondary workArea center.
 	self setUpFakeUserLibrary.
 	self assertIsNil: View active.
-	self
-		evaluateInModalDialog: 
+	owner := nil.
+	self evaluateInModalDialog: 
 			[:dialog |
 			actualCenter := dialog mapPointToScreen: dialog clientRectangle center.
 			dialogMonitor := dialog displayMonitor]
-		owner: nil
 		centered: true.
 	self assert: dialogMonitor equals: secondary!
 
@@ -106,7 +102,7 @@ testCenteringInOwnerModeless
 	secondary := self getSecondaryMonitorIfAvailable.
 	self createTestShells: secondary.
 	dialog := self createSubjectDialog: true.
-	dialog showModeless: owner.
+	dialog showModeless.
 	self assert: dialog displayMonitor equals: secondary.
 	dialog
 		text: 'Now you see me';
@@ -115,11 +111,42 @@ testCenteringInOwnerModeless
 	self deny: dialog hasSysMenu.
 	self assert: dialog text equals: 'Now you see me'!
 
+testCreatedNearOwnerModeless
+	"Test that a modeless dialog which is not initially centred is at least displayed on the same monitor as its owner"
+
+	| secondary subject rect |
+	secondary := self getSecondaryMonitorIfAvailable.
+	self createTestShells: secondary.
+	subject := self createSubjectDialog: false.
+	self assert: subject displayMonitor equals: owner monitor.
+	rect := subject getRect.
+	self assert: rect extent equals: self dialogExtent * owner dpi // USER_DEFAULT_SCREEN_DPI.
+	"Deliberately reposition to other monitor"
+	subject position: subject position - subject displayMonitor origin.
+	self assert: subject displayMonitor equals: DisplayMonitor primary.
+	"Should be rescaled (if dpi's different), but rounding error is possible"
+	self
+		assert: subject extent
+		closeTo: self dialogExtent * DisplayMonitor primary dpi // USER_DEFAULT_SCREEN_DPI
+		precision: 1.
+	subject showModeless.
+	"When shown, should reposition back to owner monitor"
+	self assert: subject displayMonitor equals: secondary.
+	self
+		assert: subject position
+		closeTo: rect origin
+		precision: 1.
+	self
+		assert: subject extent
+		closeTo: rect extent
+		precision: 1.
+	subject destroy!
+
 testInplaceNotRepositioned
 	| desktopMonitors position dialog leftMonitor ownerRect |
 	desktopMonitors := DisplayMonitor desktopMonitors.
 	leftMonitor := desktopMonitors first.
-	"This test requires multiple monitors arranged in a typical horizontal configuration. It could be made to work in a vertical configuration, but there much value."
+	"This test requires multiple monitors arranged in a typical horizontal configuration. It could be made to work in a vertical configuration, but there isn't much value."
 	self skipUnless: 
 			[desktopMonitors size > 1
 				and: [(desktopMonitors at: 2) workArea origin >= leftMonitor workArea topRight]].
@@ -136,7 +163,7 @@ testInplaceNotRepositioned
 	self deny: dialog displayMonitor equals: leftMonitor.
 	position := dialog position.
 	"Show the dialog - it shouldn't get moved"
-	dialog showModeless: owner.
+	dialog showModeless.
 	self deny: dialog displayMonitor equals: leftMonitor.
 	self assert: dialog position equals: position.
 	dialog destroy!
@@ -144,53 +171,43 @@ testInplaceNotRepositioned
 testNearOwnerModal
 	"Test that a modal dialog that is not initially centred is at least shown on the same display as its owner."
 
-	| secondary dialogMonitor |
+	| secondary dialogMonitor rect |
 	secondary := self getSecondaryMonitorIfAvailable.
 	self createTestShells: secondary.
-	self
-		evaluateInModalDialog: [:dialog | dialogMonitor := dialog displayMonitor]
-		owner: owner
+	self evaluateInModalDialog: 
+			[:dialog |
+			dialogMonitor := dialog displayMonitor.
+			rect := dialog getRect]
 		centered: false.
 	self assert: dialogMonitor equals: secondary.
+	self assert: rect extent equals: self dialogExtent * owner dpi // USER_DEFAULT_SCREEN_DPI.
 	"Lose activation and reposition the cursor to the secondary monitor"
 	cursorPos := secondary workArea center.
 	self setUpFakeUserLibrary.
 	self assertIsNil: View active.
-	self
-		evaluateInModalDialog: [:dialog | dialogMonitor := dialog displayMonitor]
-		owner: nil
-		centered: false.
+	self evaluateInModalDialog: [:dialog | dialogMonitor := dialog displayMonitor] centered: false.
 	self assert: dialogMonitor equals: secondary!
 
-testNearOwnerModeless
-	"Test that a modeless dialog which is not initially centred is at least displayed on the same monitor as its owner"
-
-	| secondary position dialog |
-	secondary := self getSecondaryMonitorIfAvailable.
-	self createTestShells: secondary.
-	dialog := self createSubjectDialog: false.
-	self assert: dialog displayMonitor equals: DisplayMonitor primary.
-	position := dialog position.
-	dialog showModeless: owner.
-	self assert: dialog displayMonitor equals: secondary.
-	"We should maintain the same position relative to the display origin"
-	self assert: dialog position - dialog displayMonitor origin equals: position.
-	dialog destroy!
-
 testRecreate
-	"Test that a modeless dialog recreates with its previous state."
+	"Test that a modeless dialog recreates with correct owner, positioning, etc."
 
-	| secondary position dialog |
+	| secondary subject rect |
 	secondary := self getSecondaryMonitorIfAvailable.
 	self createTestShells: secondary.
-	dialog := self createSubjectDialog: false.
-	self assert: dialog displayMonitor equals: DisplayMonitor primary.
-	position := dialog position.
-	dialog showModeless: owner.
-	self assert: dialog displayMonitor equals: secondary.
-	"We should maintain the same position relative to the display origin"
-	self assert: dialog position - dialog displayMonitor origin equals: position.
-	dialog destroy!
+	subject := self createSubjectDialog: false.
+	rect := subject rectangle.
+	self assert: rect extent equals: self dialogExtent * owner dpi // USER_DEFAULT_SCREEN_DPI.
+	subject showModeless.
+	self assert: subject getOwner equals: owner handle.
+	self assert: subject displayMonitor equals: owner monitor.
+	self assert: subject getRect equals: rect.
+	self assert: subject getWindowText equals: self printString.
+	subject recreate.
+	self assert: subject getOwner equals: owner handle.
+	self assert: subject isWindowVisible.
+	self assert: subject getRect equals: rect.
+	self assert: subject getWindowText equals: self printString.
+!
 
 testRemainsOnScreen
 	"Test that an initially centred dialog is positioned so that it is fully visible, even if this means not being completely centred in the owner."
@@ -203,62 +220,71 @@ testRemainsOnScreen
 						extent: 75 @ 50 * monitor dpi // 96)
 				text: self printString.
 	captureRect := [:dialog | rect := dialog rectangle].
-	self
-		evaluateInModalDialog: captureRect
-		owner: owner
-		centered: true.
+	self evaluateInModalDialog: captureRect centered: true.
 	"Note that there may be areas of the virtual screen that are not visible on any monitor, either because the monitors are deliberately staggered, or are of different sizes"
 	self assert: rect origin equals: monitor workArea topLeft.
 	"Now bottom-left"
 	monitor := DisplayMonitor nearestPoint: workArea bottomLeft.
 	owner rectangle: (Rectangle origin: workArea bottomLeft + (25 @ -100 * monitor dpi // 96)
 				extent: 75 @ 50 * monitor dpi // 96).
-	self
-		evaluateInModalDialog: captureRect
-		owner: owner
-		centered: true.
+	self evaluateInModalDialog: captureRect centered: true.
 	self assert: rect origin
 		equals: monitor workArea bottomLeft - (0 @ self dialogExtent y * monitor dpi // 96).
 	"Now bottom-right"
 	monitor := DisplayMonitor nearestPoint: workArea bottomRight.
 	owner rectangle: (Rectangle origin: workArea bottomRight + (-75 @ -100 * monitor dpi // 96)
 				extent: 75 @ 50 * monitor dpi // 96).
-	self
-		evaluateInModalDialog: captureRect
-		owner: owner
-		centered: true.
+	self evaluateInModalDialog: captureRect centered: true.
 	self assert: rect origin
 		equals: monitor workArea bottomRight - (self dialogExtent * monitor dpi // 96).
 	"Finally, top-right"
 	monitor := DisplayMonitor nearestPoint: workArea topRight.
 	owner rectangle: (Rectangle origin: workArea topRight + (-75 @ 25 * monitor dpi // 96)
 				extent: 75 @ 50 * monitor dpi // 96).
-	self
-		evaluateInModalDialog: captureRect
-		owner: owner
-		centered: true.
+	self evaluateInModalDialog: captureRect centered: true.
 	self assert: rect origin
 		equals: (self workAreaNearest: workArea topRight) topRight
 				- (self dialogExtent x @ 0 * monitor dpi // 96)!
 
-workAreaNearest: aPoint
-	^(DisplayMonitor nearestPoint: aPoint) workArea! !
+testShownNearOwnerModeless
+	"Test that a modeless dialog which is not initially centred is at least displayed on the same monitor as its owner"
+
+	| secondary subject rect |
+	secondary := self getSecondaryMonitorIfAvailable.
+	self createTestShells: secondary.
+	"Test the case of creating a dialog with a desired position on a monitor other than the owner monitor. This will initially get created on the owner monitor (since we the Windows APIs for creating dialogs do not provide any way to control the position and extent), and then get moved. When moved, a DPI change may occur, making this a rather complex case to implement correctly."
+	subject := self createSubjectDialog: false at: 10 @ 10.
+	self assert: subject displayMonitor equals: DisplayMonitor primary.
+	rect := subject getRect.
+	self
+		assert: rect extent
+		closeTo: self dialogExtent * DisplayMonitor primary dpi // USER_DEFAULT_SCREEN_DPI
+		precision: 1.
+	subject showModeless.
+	self assert: subject displayMonitor equals: secondary.
+	"We should maintain the same position relative to the display origin"
+	self assert: subject position - secondary origin equals: rect origin.
+	self
+		assert: subject extent
+		closeTo: self dialogExtent * secondary dpi // USER_DEFAULT_SCREEN_DPI
+		precision: 1.
+	subject destroy! !
 
 !DialogViewTest categoriesForMethods!
 classToTest!helpers!private! !
-createShell:text:!helpers!private! !
 createSubjectDialog:!helpers!private! !
+createSubjectDialog:at:!helpers!private! !
 createTestShells:!helpers!private! !
 dialogExtent!constants!private! !
-evaluateInModalDialog:owner:centered:!helpers!private! !
+evaluateInModalDialog:centered:!private! !
 testCenteringInOwner!public!unit tests! !
 testCenteringInOwnerModeless!public!unit tests! !
+testCreatedNearOwnerModeless!public!unit tests! !
 testInplaceNotRepositioned!public!unit tests! !
 testNearOwnerModal!public!unit tests! !
-testNearOwnerModeless!public!unit tests! !
 testRecreate!public!unit tests! !
 testRemainsOnScreen!public!unit tests! !
-workAreaNearest:!helpers!private! !
+testShownNearOwnerModeless!public! !
 !
 
 !DialogViewTest class methodsFor!

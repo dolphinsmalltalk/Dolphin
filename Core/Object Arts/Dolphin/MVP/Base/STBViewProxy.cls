@@ -2,13 +2,12 @@
 
 STBProxy subclass: #STBViewProxy
 	instanceVariableNames: 'viewClass instVars state showCmd subViews resolution events version'
-	classVariableNames: 'CreationParentIndex EventsIndex HandleIndex'
+	classVariableNames: 'EventsIndex HandleIndex'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 
 STBViewProxy guid: (GUID fromString: '{87b4c6f4-026e-11d3-9fd7-00a0cc3e4a32}')!
 
-STBViewProxy addClassConstant: 'CreationParentIndex' value: 16r2!
 STBViewProxy addClassConstant: 'EventsIndex' value: 16rB!
 STBViewProxy addClassConstant: 'HandleIndex' value: 16r1!
 
@@ -20,9 +19,9 @@ STBViewProxy comment: 'STBViewProxy is the class of <STBProxy> objects used to r
 
 beTopView
 	"Make the receiver's represented object appear as a top view, ie. one with an unspecified parent.
-	This will be detected on input and it will be assigned the parent stored in the STBInFiler context."
+	This will be detected on deserialisation and it will be assigned the parent stored in the STBInFiler context."
 
-	instVars at: CreationParentIndex put: nil!
+	instVars at: View.CreationParentInstVarIndex  put: nil!
 
 clearSubViews
 	"Set the receiver's subViews inst var to an empty collection. i.e. don't save the children of the
@@ -61,7 +60,7 @@ instVars: anArray
 isTopView
 	"Private - Answer whether the receiver represents a top view, ie. one with an unspecified parent."
 
-	^(instVars at: CreationParentIndex) isNil!
+	^(instVars at: View.CreationParentInstVarIndex) isNil!
 
 nameOf: aView
 	^nil!
@@ -102,13 +101,11 @@ restoreFromProxy: aView
 	^self shouldNotImplement!
 
 restoreTopView
-	"Private - Mutate the hierarchy of proxies below the receiver into real Views.
-	Since this is the top of the hierarchy we must inform the context in which this
-	hierarchy is being realized that it has a new subview"
+	"Private - Mutate the hierarchy of proxies below the receiver into real Views. Since this is the top of the (sub-)hierarchy we must inform the context in which this hierarchy is being realized that it has a new subview"
 
 	| topView |
 	topView := self restoreView.
-	topView parentView onSubViewAdded: topView.!
+	topView parentView onSubViewAdded: topView!
 
 restoreView
 	"Private - Mutate the hierarchy of proxies below the receiver into real Views.
@@ -171,19 +168,20 @@ stbFixup: inFiler at: anInteger
 	Note that individual View class STB conversions may need to be performed at this
 	point."
 
-	version == viewClass stbVersion ifFalse: [ "The View's individual class version has changed"
-		"Transcript print: self; nextPutAll: ': upgrading from version '; print: version; nextPutAll: ' to: '; print: viewClass stbVersion; cr."
-		viewClass stbVersion < 9 ifTrue: [self error: 'View STB versions must start at 9, not ', viewClass stbVersion printString].
-		"The #stbConvertProxy: method can replace inst. vars, and even the viewClass"
-		viewClass stbConvertProxy: self].
+	version == viewClass stbVersion
+		ifFalse: 
+			["The View's individual class version has changed"
 
-	"For top shells we also defer a send of the receiver's #restoreView method. 
+			"Transcript print: self; nextPutAll: ': upgrading from version '; print: version; nextPutAll: ' to: '; print: viewClass stbVersion; cr."
+			viewClass stbVersion < 9
+				ifTrue: [self error: 'View STB versions must start at 9, not ' , viewClass stbVersion printString].
+			"The #stbConvertProxy: method can replace inst. vars, and even the viewClass"
+			viewClass stbConvertProxy: self].
+
+	"For top shells we also defer a send of the receiver's #restoreTopView method. 
 	A top view is one with a nil 'creationParent' array entry. The actual parent
 	to use is answered by inFiler #context."
-	self isTopView ifTrue: [
-		instVars at: CreationParentIndex put: inFiler context.
-		inFiler deferAction: [self restoreTopView]].
-
+	viewClass stbFixupProxy: self filer: inFiler.
 	^self!
 
 subViews

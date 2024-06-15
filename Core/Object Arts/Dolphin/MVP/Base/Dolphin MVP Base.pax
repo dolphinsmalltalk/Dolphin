@@ -209,6 +209,7 @@ package classNames
 	add: #StaticRectangle;
 	add: #StaticText;
 	add: #StaticView;
+	add: #STBViewContext;
 	add: #STBViewProxy;
 	add: #StockBrush;
 	add: #StockFont;
@@ -652,6 +653,12 @@ Object subclass: #Presenter
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 
+Object subclass: #STBViewContext
+	instanceVariableNames: 'parent owner'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
 Object subclass: #SystemMetrics
 	instanceVariableNames: 'dpi menuCheckExtent smallIconExtent largeIconExtent dragHysteresis scrollThumbExtent sizingFrameExtent dialogFrameExtent borderExtent nonClientMetrics menuFont edgeExtent iconTitleFont defaultColorDepth tileIconExtent'
 	classVariableNames: 'Current Default HasFlatMenus Instances IsNotWine MouseHoverTime SysParamVariables WheelScrollLines'
@@ -660,7 +667,7 @@ Object subclass: #SystemMetrics
 
 Object subclass: #View
 	instanceVariableNames: 'handle creationParent creationStyles presenter model backcolor preferredExtent flags contextMenu font events interactor'
-	classVariableNames: 'CreateCenteredMask DragSourceMask DropTargetMask LayoutValidMask ManagedMask MessageMap MinimizedMask MixedDpiAwarenessMask NextId NoInheritMenuMask ProxyRestoringMask RestoringMask StateRestoringMask UIValidMask UsePreferredExtentMask ViewClosedError WndClassAtom'
+	classVariableNames: 'CreateCenteredMask CreationParentInstVarIndex DragSourceMask DropTargetMask LayoutValidMask ManagedMask MessageMap MinimizedMask MixedDpiAwarenessMask NextId NoInheritMenuMask ProxyRestoringMask RestoringMask StateRestoringMask UIValidMask UsePreferredExtentMask ViewClosedError WndClassAtom'
 	poolDictionaries: 'Win32Constants Win32Errors'
 	classInstanceVariableNames: 'theme'!
 
@@ -1500,7 +1507,7 @@ RuntimeSessionManager subclass: #DefaultShellSessionManager
 
 STBProxy subclass: #STBViewProxy
 	instanceVariableNames: 'viewClass instVars state showCmd subViews resolution events version'
-	classVariableNames: 'CreationParentIndex EventsIndex HandleIndex'
+	classVariableNames: 'EventsIndex HandleIndex'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 
@@ -1565,8 +1572,8 @@ ShellView subclass: #AbstractSplash
 	classInstanceVariableNames: ''!
 
 ShellView subclass: #DialogView
-	instanceVariableNames: 'endModal isModal oldWndProc'
-	classVariableNames: 'InProcLoopMask'
+	instanceVariableNames: 'endModal isModal oldWndProc owner _reserved32 _reserved33 _reserved34'
+	classVariableNames: 'InProcLoopMask OwnerInstVarIndex'
 	poolDictionaries: 'ThemeConstants'
 	classInstanceVariableNames: ''!
 

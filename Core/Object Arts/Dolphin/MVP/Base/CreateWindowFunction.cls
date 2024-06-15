@@ -21,6 +21,11 @@ create: aView
 
 	^self subclassResponsibility!
 
+createShellWindow: aShellView
+	"Position and create the native Window for the <ShellView> argument."
+
+	self subclassResponsibility!
+
 dpi
 	"Answer the <integer> logical dots-per-inch at which the <rectangle> of the receiver is measured."
 
@@ -40,11 +45,6 @@ hasDefaultExtent
 	"Answer whether the window should be created at the default extent determined by Windows, or if not a top-level window an extent yet to be determined."
 
 	^self extent = UseDefaultGeometry!
-
-hasDefaultPosition
-	"Answer whether the window should be created at the default position for the parent, or if not a top-level window a position yet to be determined."
-
-	^self position = UseDefaultGeometry!
 
 position
 	"Answer a <point> expressing the position (top-left corner) of the window to be created. The position is measured at the receiver's DPI."
@@ -73,11 +73,11 @@ scaleToDpiOf: aView
 
 !CreateWindowFunction categoriesForMethods!
 create:!operations!public! !
+createShellWindow:!operations!public! !
 dpi!accessing!high DPI!public! !
 dpi:!accessing!high DPI!public! !
 extent!accessing!public! !
 hasDefaultExtent!public!testing! !
-hasDefaultPosition!public!testing! !
 position!accessing!public! !
 position:extent:dpi:!initializing!public! !
 rectangle!accessing!public! !
