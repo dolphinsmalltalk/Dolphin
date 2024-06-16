@@ -1,8 +1,8 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 View subclass: #MoenTreeView
-	instanceVariableNames: 'anchorNode getTextBlock getImageBlock mtvFlags leading imageManager calculatedExtent parentSpacing selection linePen iconExtent maxTextExtent dtFlags margin textInset _mtvReserved0 _mtvReserved1 _mtvReserved2'
-	classVariableNames: 'AutoExpandingMask HasButtonsMask MultilineMask SingleLineMask ViewModes'
+	instanceVariableNames: 'anchorNode getTextBlock getImageBlock mtvFlags leading imageManager calculatedExtent parentSpacing selection linePen iconExtent maxTextExtent dtFlags margin textInset viewMode _mtvReserved1 _mtvReserved2'
+	classVariableNames: 'AutoExpandingMask HasButtonsMask MultilineMask SingleLineMask TextInset ViewModes'
 	poolDictionaries: 'ThemeConstants'
 	classInstanceVariableNames: ''!
 
@@ -12,6 +12,7 @@ MoenTreeView addClassConstant: 'AutoExpandingMask' value: 16r8000000!
 MoenTreeView addClassConstant: 'HasButtonsMask' value: 16r1!
 MoenTreeView addClassConstant: 'MultilineMask' value: 16rA010!
 MoenTreeView addClassConstant: 'SingleLineMask' value: 16r8024!
+MoenTreeView addClassConstant: 'TextInset' value: 16r1!
 
 MoenTreeView comment: 'MoenTreeView is a <treeView> for displaying a <treeModel> in a graphic layout. It support the single <selectableItems> protocol for handling item selection. MoenTreeViews can be used to display any type of object with the exception of the ''nil'' object which is used to distinguish the root.
 
@@ -556,7 +557,7 @@ hasChildren: aMoenTreeNode
 		ifFalse: [self model hasChildren: aMoenTreeNode object]!
 
 hasIcons
-	^iconExtent > 0 and: [getImageBlock notNil]!
+	^viewMode ~~ #noIcons and: [getImageBlock notNil]!
 
 hasSelection
 	"Answer true if the receiver has a selection."
@@ -622,11 +623,13 @@ hitTest: aPoint search: node
 	^nil!
 
 iconExtent: aPoint
-	"Private - Set the extent of the iconic images used when painting the node labels.
+	"Private - Set the extent of the iconic images used when painting the node labels. Note that the argument is measured at 96-dpi, so we scale it to the receiver's current dpi.
 	Also take this opportunity to cache the inset of the text that is therefore necessary."
 
-	iconExtent := aPoint.
-	textInset := (iconExtent x + 1) @ 0.
+	| dpi |
+	dpi := self dpi.
+	iconExtent := aPoint * dpi // USER_DEFAULT_SCREEN_DPI.
+	textInset := (iconExtent x + (TextInset * dpi // USER_DEFAULT_SCREEN_DPI)) @ 0.
 	self invalidateGeometry!
 
 imageManager
@@ -1530,6 +1533,10 @@ resetSelection
 
 	self basicSelection: nil cause: #unknown!
 
+resolutionScaledBy: aPoint
+	super resolutionScaledBy: aPoint.
+	self setIconExtent!
+
 selectedNode
 	"Private - Answer the selected node or nil if no selection.
 	Implementation Note: Manipulating selection often requires valid node rectangles, so we must
@@ -1592,6 +1599,9 @@ setDefaultCanvasColors: canvas
 	canvas
 		backcolor: self actualBackcolor;
 		forecolor: self forecolor!
+
+setIconExtent
+	(ViewModes lookup: viewMode) ifNotNil: [:point | self iconExtent: point]!
 
 showDropHighlight: node
 	"Private - Shows a drop highlight for the specified node within the receiver."
@@ -1728,10 +1738,23 @@ viewMode
 	"Answer the <Symbol>ic name of the receiver's view mode, e.g. #smallIcons. This controls
 	whether or not icons are displayed, and their size if they are."
 
-	^ViewModes keyAtEqualValue: iconExtent ifAbsent: [#custom]!
+	^viewMode!
 
 viewMode: aSymbol
-	(ViewModes lookup: aSymbol) ifNotNil: [:point | self iconExtent: point]!
+	viewMode := aSymbol.
+	self setIconExtent!
+
+wmDpiChangedBeforeParent: message wParam: wParam lParam: lParam
+	| result |
+	result := super
+				wmDpiChangedBeforeParent: message
+				wParam: wParam
+				lParam: lParam.
+	self hasIcons
+		ifTrue: 
+			["The change of icon size may have changed what is visible, so bring the selection back into view (even if it was not visible before)."
+			self ensureSelectionVisible].
+	^result!
 
 wmKillFocus: message wParam: wParam lParam: lParam
 	"Private - This window is losing focus. Update the colouring of the selection."
@@ -1896,6 +1919,7 @@ removeNode:!event handling!public! !
 removeTree:!private!removing! !
 requestDragObjects:!drag & drop!public! !
 resetSelection!public!selection! !
+resolutionScaledBy:!geometry!private! !
 selectedNode!private!selection! !
 selection!public!selection! !
 selection:!public!selection! !
@@ -1904,6 +1928,7 @@ selectionIfNone:!public!selection! !
 selectionOrNil!public!selection! !
 selectionOrNil:!public!selection! !
 setDefaultCanvasColors:!helpers!private! !
+setIconExtent!geometry!private! !
 showDropHighlight:!drag & drop!private! !
 toggleExpanded:cause:!operations!private! !
 treeLayout!accessing!private! !
@@ -1919,6 +1944,7 @@ updateTree:imagesOnly:!painting!public! !
 value:!evaluating!private! !
 viewMode!public! !
 viewMode:!public! !
+wmDpiChangedBeforeParent:wParam:lParam:!event handling-win32!private! !
 wmKillFocus:wParam:lParam:!event handling-win32!private! !
 wmNcCalcSize:wParam:lParam:!event handling-win32!private! !
 wmSetFocus:wParam:lParam:!event handling-win32!private! !
@@ -1954,16 +1980,27 @@ initialize
 	self addClassConstant: 'HasButtonsMask' value: 16r1.
 	self addClassConstant: 'AutoExpandingMask' value: 16r8000000.
 	self addClassConstant: 'ViewModes'
-		value: (IdentityDictionary new
-				at: #noIcons put: -1 @ 0;
-				at: #smallIcons put: 16 @ 16;
-				at: #mediumIcons put: 24 @ 24;
-				at: #largeIcons put: 32 @ 32;
-				at: #tileIcons put: 48 @ 48;
-				at: #custom put: nil;
-				shrink;
+		value: ((IdentityDictionary withAll: {#noIcons -> (-1 @ 0).
+						#smallIcons -> (16 @ 16).
+						#mediumSmallIcons -> (20 @ 20).
+						#mediumIcons -> (24 @ 24).
+						#largeIcons -> (32 @ 32).
+						#tileIcons -> (48 @ 48).
+						#thumbnails -> (64 @ 64).
+						#custom -> nil})
 				isImmutable: true;
-				yourself)!
+				yourself).
+	self addClassConstant: 'TextInset' value: 1!
+
+stbConvert: instVarArray fromVersion: verInteger
+	"Convert from earlier version view by updating and answering the array of instance variables
+	(for the View), instVarArray."
+
+	| instVars |
+	instVars := instVarArray.
+	verInteger < 13 ifTrue: [instVars := super stbConvert: instVarArray fromVersion: verInteger].
+	verInteger < 14 ifTrue: [instVars := self stbConvertFromVersion13: instVars].
+	^instVars!
 
 stbConvertFromVersion10: anArray
 	"Private - Perform an STB conversion from a version 9 (or earlier) <View> to version 10,
@@ -1992,6 +2029,16 @@ stbConvertFromVersion11: anArray
 
 	^(super stbConvertFromVersion11: anArray), #(nil nil nil)!
 
+stbConvertFromVersion13: anArray
+	"Private - Perform an STB conversion from a version 13 to version 14.
+	Uses first reserved inst var for viewMode."
+
+	^anArray
+		at: ##(self indexOfInstVar: 'viewMode')
+			put: (ViewModes keyAtEqualValue: (anArray at: ##(self indexOfInstVar: 'iconExtent'))
+					ifAbsent: [#custom]);
+		yourself!
+
 stbConvertFromVersion4: anArray
 	"Private - Perform an STB conversion from a version 4 (or earlier) <MoenTreeView> to version 5,
 	i.e. trees IdentityDictionary replaced with roots OrderedCollection."
@@ -2019,6 +2066,11 @@ stbConvertFromVersion9: anArray
 		at: 16 put: AutoExpandingMask;
 		yourself!
 
+stbVersion
+	"Answer the current binary filer version number for instances of the receiver."
+
+	^14!
+
 themePartName
 	^#TreeView!
 
@@ -2040,12 +2092,15 @@ viewModes
 defaultModel!models!public! !
 icon!constants!public! !
 initialize!development!initializing!private! !
+stbConvert:fromVersion:!binary filing!public! !
 stbConvertFromVersion10:!binary filing!private! !
 stbConvertFromVersion11:!binary filing!private! !
+stbConvertFromVersion13:!binary filing!private! !
 stbConvertFromVersion4:!binary filing!private! !
 stbConvertFromVersion6:!binary filing!private! !
 stbConvertFromVersion7:!binary filing!private! !
 stbConvertFromVersion9:!binary filing!private! !
+stbVersion!binary filing!public! !
 themePartName!constants!public!theming! !
 value:!evaluating!private! !
 viewModes!constants!public! !
