@@ -1114,7 +1114,7 @@ resource_Container_view
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Container_view)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ContainerView) 34 15 nil nil 34 2 8 1140850688 131073 416 nil nil nil 5 nil nil nil 416 nil 170 192 8 #() nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 11 11 626 701 501 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 99 1 0 0 255 0 0 0] 8 #() 626 193 193 nil 27 )!
+	^#(#'!!STL' 4 788558 11 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ContainerView) 34 15 nil nil 34 2 8 1140850688 131073 416 nil nil nil 5 nil nil nil 416 nil 170 192 8 #() nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createWindow: 34 1 787462 ##(Smalltalk.CreateWindow) 262406 ##(Smalltalk.RECT) 8 #[5 0 0 0 5 0 0 0 99 1 0 0 255 0 0 0] 193 448 8 '' 416 1 8 #() 328198 ##(Smalltalk.Point) 193 193 nil 27 )!
 
 resource_Default_view
 	"Answer the literal data from which the 'Default view' resource can be reconstituted.
@@ -1124,7 +1124,7 @@ resource_Default_view
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ContainerView) 34 15 nil nil 34 2 8 1409286144 131073 416 nil nil nil 5 nil nil nil 416 nil 170 192 8 #() nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3141 1581 626 701 501 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 34 6 0 0 22 3 0 0 128 7 0 0 16 4 0 0] 8 #() 626 193 193 nil 27 )!
+	^#(#'!!STL' 4 788558 11 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ContainerView) 34 15 nil nil 34 2 8 1409286144 131073 416 nil nil nil 5 nil nil nil 416 nil 170 192 8 #() nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createWindow: 34 1 787462 ##(Smalltalk.CreateWindow) 262406 ##(Smalltalk.RECT) 8 #[34 6 0 0 22 3 0 0 128 7 0 0 16 4 0 0] 193 448 8 '' 416 1 8 #() 328198 ##(Smalltalk.Point) 193 193 nil 27 )!
 
 resource_OK_Cancel_button_block
 	"Answer the literal data from which the 'OK Cancel button block' resource can be reconstituted.
@@ -1134,7 +1134,7 @@ resource_OK_Cancel_button_block
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_OK_Cancel_button_block)
 	"
 
-	^#(#'!!STL' 4 788558 11 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ContainerView) 34 15 nil nil 34 2 8 1409286144 131073 416 nil nil nil 5 nil nil nil 416 656198 1 ##(Smalltalk.FlowLayout) 17 17 21 170 192 8 #() 590342 ##(Smalltalk.Rectangle) 328198 ##(Smalltalk.Point) 11 15 578 1 1 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createWindow: 34 1 787462 ##(Smalltalk.CreateWindow) 262406 ##(Smalltalk.RECT) 8 #[255 9 0 0 10 0 0 0 169 10 0 0 42 0 0 0] 193 448 8 '' 416 3 34 2 410 ##(Smalltalk.PushButton) 34 20 nil 416 34 2 8 1141055488 1 848 nil nil nil 5 nil nil nil 848 nil 8 1797935936 1180998 4 ##(Smalltalk.CommandDescription) #ok 8 'OK' 1 1 nil nil true nil nil nil 626 138 144 34 1 690 #createWindow: 34 1 738 770 8 #[12 0 0 0 7 0 0 0 87 0 0 0 30 0 0 0] 193 880 8 'OK' 848 3 8 #() 578 193 193 nil 29 410 ##(Smalltalk.PushButton) 34 20 nil 416 34 2 8 1140924416 1 1152 nil nil nil 5 nil nil nil 1152 nil 8 1797935936 930 #cancel 8 'Cancel' 1 1 nil nil false nil nil nil 626 138 144 34 1 690 #createWindow: 34 1 738 770 8 #[95 0 0 0 7 0 0 0 170 0 0 0 30 0 0 0] 193 1184 8 'Cancel' 1152 3 8 #() 578 193 193 nil 29 578 193 193 nil 27 )!
+	^#(#'!!STL' 4 788558 11 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ContainerView) 34 15 nil nil 34 2 8 1409286144 131073 416 nil nil nil 5 nil nil nil 416 656198 1 ##(Smalltalk.FlowLayout) 17 17 21 170 192 8 #() 590342 ##(Smalltalk.Rectangle) 328198 ##(Smalltalk.Point) 11 15 578 1 1 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createWindow: 34 1 787462 ##(Smalltalk.CreateWindow) 262406 ##(Smalltalk.RECT) 8 #[255 9 0 0 10 0 0 0 169 10 0 0 42 0 0 0] 193 448 8 '' 416 1 34 2 410 ##(Smalltalk.PushButton) 34 20 nil 416 34 2 8 1141055488 1 848 nil nil nil 5 nil nil nil 848 nil 8 1759007584 1180998 4 ##(Smalltalk.CommandDescription) #ok 8 'OK' 1 1 nil nil true nil nil nil 626 138 144 34 1 690 #createWindow: 34 1 738 770 8 #[12 0 0 0 7 0 0 0 87 0 0 0 30 0 0 0] 193 880 8 'OK' 848 3 8 #() 578 193 193 nil 29 410 ##(Smalltalk.PushButton) 34 20 nil 416 34 2 8 1140924416 1 1152 nil nil nil 5 nil nil nil 1152 nil 8 1759007584 930 #cancel 8 'Cancel' 1 1 nil nil false nil nil nil 626 138 144 34 1 690 #createWindow: 34 1 738 770 8 #[95 0 0 0 7 0 0 0 170 0 0 0 30 0 0 0] 193 1184 8 'Cancel' 1152 3 8 #() 578 193 193 nil 29 578 193 193 nil 27 )!
 
 setAdditionalAccelerators: anArray
 	| bindings |

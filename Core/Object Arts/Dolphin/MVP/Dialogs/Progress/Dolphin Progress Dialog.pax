@@ -63,7 +63,7 @@ resource_Progress_bar
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Progress_bar)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ProgressBar) 34 15 nil nil 34 2 8 1409286144 1 416 721990 2 ##(Smalltalk.ValueHolder) nil nil 1114118 ##(Smalltalk.NeverSearchPolicy) 1 327686 ##(Smalltalk.Color) #default nil 5 nil nil nil 416 nil 8 1903758288 852486 ##(Smalltalk.NullConverter) nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 738 411 51 416 690 #range: 34 1 525062 ##(Smalltalk.Interval) 1 201 3 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 76 8 0 0 35 0 0 0] 8 #() 738 193 193 nil 27 )! !
+	^#(#'!!STL' 4 788558 11 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ProgressBar) 34 15 nil nil 34 2 8 1409286144 1 416 721990 2 ##(Smalltalk.ValueHolder) nil nil 1114118 ##(Smalltalk.NeverSearchPolicy) 1 327686 ##(Smalltalk.Color) #default nil 7 nil nil nil 416 nil 8 1758792528 852486 ##(Smalltalk.NullConverter) nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createWindow: 34 1 787462 ##(Smalltalk.CreateWindow) 262406 ##(Smalltalk.RECT) 8 #[127 7 0 0 10 0 0 0 76 8 0 0 35 0 0 0] 193 448 8 '' 416 690 #range: 34 1 525062 ##(Smalltalk.Interval) 1 201 3 416 3 8 #() 328198 ##(Smalltalk.Point) 193 193 nil 27 )! !
 
 !NumberPresenter class categoriesForMethods!
 resource_Progress_bar!public!resources-views! !

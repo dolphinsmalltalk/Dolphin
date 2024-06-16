@@ -506,7 +506,7 @@ resource_Default_view
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.StyledContainer) 34 22 nil nil 34 2 8 1174405120 131073 416 nil nil nil 7 nil nil nil 416 nil 170 192 8 #() nil 138 144 8 #(#top #bottom #left #right) 590598 ##(Smalltalk.StyledPen) 327686 ##(Smalltalk.Color) #black 5 8 #(1) 1246214 ##(Smalltalk.StyledGradientBrush) 578 #face3d nil 328198 ##(Smalltalk.Point) 327734 ##(Smalltalk.Float) 8 0 0 0 0 0 0 224 63 1 674 706 8 0 0 0 0 0 0 224 63 3 8 #(20 20 20 20) true nil 1 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 674 3839 21 674 701 501 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 221 8 0 0 4 1 0 0] 8 #() 674 193 193 nil 27 )! !
+	^#(#'!!STL' 4 788558 11 ##(Smalltalk.STBViewProxy) ##(Smalltalk.StyledContainer) 34 22 nil nil 34 2 8 1174405120 131073 416 nil nil nil 7 nil nil nil 416 nil 170 192 8 #() nil 138 144 8 #(#top #bottom #left #right) 590598 ##(Smalltalk.StyledPen) 327686 ##(Smalltalk.Color) #black 5 8 #(1) 1246214 ##(Smalltalk.StyledGradientBrush) 578 #face3d nil 328198 ##(Smalltalk.Point) 327734 ##(Smalltalk.Float) 8 0 0 0 0 0 0 224 63 1 674 706 8 0 0 0 0 0 0 224 63 3 8 #(20 20 20 20) true nil 1 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createWindow: 34 1 787462 ##(Smalltalk.CreateWindow) 262406 ##(Smalltalk.RECT) 8 #[127 7 0 0 10 0 0 0 221 8 0 0 4 1 0 0] 193 448 8 '' 416 3 8 #() 674 193 193 nil 27 )! !
 
 !StyledContainer class categoriesForMethods!
 clearNest!public! !
