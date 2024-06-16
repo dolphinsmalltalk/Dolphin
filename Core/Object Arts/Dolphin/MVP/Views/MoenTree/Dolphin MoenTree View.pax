@@ -62,7 +62,7 @@ Core.Link
 
 UI.View
 	subclass: #'UI.MoenTreeView'
-	instanceVariableNames: 'anchorNode getTextBlock getImageBlock mtvFlags leading imageManager calculatedExtent parentSpacing selection linePen iconExtent maxTextExtent dtFlags margin textInset _mtvReserved0 _mtvReserved1 _mtvReserved2'
+	instanceVariableNames: 'anchorNode getTextBlock getImageBlock mtvFlags leading imageManager calculatedExtent parentSpacing selection linePen iconExtent maxTextExtent dtFlags margin textInset viewMode _mtvReserved1 _mtvReserved2'
 	classVariableNames: ''
 	imports: #(#{OS.ThemeConstants})
 	classInstanceVariableNames: ''
@@ -71,6 +71,7 @@ UI.View
 			'HasButtonsMask' -> 16r1.
 			'MultilineMask' -> 16rA010.
 			'SingleLineMask' -> 16r8024.
+			'TextInset' -> 16r1.
 			'ViewModes'
 				-> (IdentityDictionary withAll: {
 								#custom -> nil.
