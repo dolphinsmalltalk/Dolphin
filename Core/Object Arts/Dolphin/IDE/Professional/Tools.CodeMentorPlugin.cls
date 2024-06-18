@@ -311,9 +311,9 @@ infoBrowserPresenter
 	"Private - Answer an HTML browser than can be used to display LintRule descriptions. We create this lazily
 	to avoid slowing down the opening of browsers that make use of the Code Mentor"
 
-	infoBrowserPresenter isNil
-		ifTrue: 
-			[infoBrowserPresenter := URLPresenter createIn: infoSitePresenter.
+	^infoBrowserPresenter
+		ifNil: 
+			[infoBrowserPresenter := URLPresenter create: 'WebView2' in: infoSitePresenter.
 			"Attempt to suppress the standard context menu"
 			infoBrowserPresenter view
 				canNavigateToStrings: true;
@@ -322,8 +322,9 @@ infoBrowserPresenter
 			infoBrowserPresenter
 				when: #navigationStarting:
 				send: #onNavigationStarting:
-				to: self].
-	^infoBrowserPresenter!
+				to: self.
+			infoSitePresenter view invalidate.
+			infoBrowserPresenter]!
 
 initialize
 	"Private - Initialize the receiver"
