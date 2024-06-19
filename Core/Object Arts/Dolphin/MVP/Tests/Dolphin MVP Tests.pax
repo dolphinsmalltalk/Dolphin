@@ -202,8 +202,7 @@ package setPrerequisites: #(
 	'..\Presenters\Tree\Dolphin Tree Presenter'
 	'..\Type Converters\Dolphin Type Converters'
 	'..\Models\Value\Dolphin Value Models'
-	'..\..\..\Samples\MVP\Scribble\Scribble'
-	'..\..\ActiveX\Shell\Windows Shell').
+	'..\..\..\Samples\MVP\Scribble\Scribble').
 
 package!
 

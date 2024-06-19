@@ -30,8 +30,10 @@ subjectClass
 	^Cursor!
 
 testExtent
-	self deny: self canonicalInstance handle equals: Cursor question handle.
-	self assert: self canonicalInstance extent equals: self expectedImageExtent!
+	| subject |
+	subject := self canonicalInstance.
+	self deny: subject handle equals: Cursor question handle.
+	self assert: subject extent equals: self expectedImageExtent!
 
 testFromOwnedHandle
 	| subject |
@@ -49,7 +51,8 @@ testFromResource
 	self assert: cursor2 equals: cursor1.
 	self assert: cursor1 hash equals: cursor2 hash.
 	self assert: cursor1 handle equals: cursor2 handle.
-	self assert: cursor1 imageIndex equals: cursor2 imageIndex!
+	self assert: cursor1 imageIndex equals: cursor2 imageIndex.
+	cursor1 free!
 
 testFromSystemId
 	| cursor1 cursor2 |
@@ -62,7 +65,8 @@ testFromSystemId
 	self assert: cursor1 extent equals: Cursor defaultExtent.
 	self deny: cursor1 equals: Cursor hand.
 	self deny: cursor1 handle equals: self defaultHandle.
-	self assert: cursor1 handle equals: cursor2 handle!
+	self assert: cursor1 handle equals: cursor2 handle.
+	cursor1 free!
 
 testHotspot
 	self assert: self canonicalInstance hotspot equals: 0 @ 0!
@@ -75,7 +79,7 @@ testStbConvertFromVersion1_resource
 	self assert: cursor ownsHandle.
 	self assert: cursor identifier equals: 'vsplit'.
 	self assert: cursor instanceHandle equals: VMLibrary default.
-	self assert: cursor extent equals: Icon largeExtent.
+	self assertIsNil: cursor basicHandle.
 	cursor free!
 
 testStbConvertFromVersion1_system
@@ -87,7 +91,8 @@ testStbConvertFromVersion1_system
 	self assert: cursor ownsHandle.
 	self assert: cursor identifier equals: Win32Constants.IDC_APPSTARTING.
 	self assert: cursor equals: Cursor appStarting.
-	self assert: cursor handle equals: Cursor appStarting handle! !
+	self assert: cursor handle equals: Cursor appStarting handle.
+	cursor free! !
 
 !CursorTest categoriesForMethods!
 canonicalInstance!helpers!private! !

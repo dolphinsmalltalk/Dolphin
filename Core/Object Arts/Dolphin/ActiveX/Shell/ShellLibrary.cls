@@ -118,16 +118,6 @@ getSpecialFolderLocation: anInteger
 		pszPath: pszPath.
 	^pszPath trimNulls!
 
-getStockIconLocation: anInteger
-	| info path |
-	info := SHSTOCKICONINFO newBuffer.
-	self
-		shGetStockIconInfo: anInteger
-		uFlags: ShellConstants.SHGSI_ICONLOCATION
-		psii: info.
-	path := info szPath.
-	^path!
-
 isUserAnAdmin
 	"Invoke the IsUserAnAdmin() function of the module wrapped by the receiver.
 	Helpstring: Tests whether the current user is a member of the Administrator's group
@@ -202,18 +192,6 @@ shGetFolderPath: hwndOwner nFolder: nFolder hToken: hToken dwFlags: dwFlags pszP
 			LPWSTR pszPath);"
 
 	<stdcall: hresult SHGetFolderPathW handle sdword handle dword lpwstr>
-	^self invalidCall: _failureCode!
-
-shGetStockIconInfo: siid uFlags: uFlags psii: psii
-	"Invoke the SHGetStockIconInfo() function of the module wrapped by the receiver.
-	Helpstring: Retrieves information about system-defined Shell icons.
-
-		HRESULT __stdcall SHGetStockIconInfo(
-			SHSTOCKICONID siid,
-			unsigned int uFlags,
-			[in, out]SHSTOCKICONINFO* psii);"
-
-	<stdcall: hresult SHGetStockIconInfo sdword dword SHSTOCKICONINFO*>
 	^self invalidCall: _failureCode! !
 
 !ShellLibrary categoriesForMethods!
@@ -226,7 +204,6 @@ findExecutable:!public!win32 functions-shell library! !
 findExecutable:directory:!public!win32 functions-shell library! !
 findExecutable:lpDirectory:lpResult:!public!win32 functions-shell library! !
 getSpecialFolderLocation:!enquiries!public! !
-getStockIconLocation:!enquiries!public! !
 isUserAnAdmin!**auto generated**!public! !
 SHChangeNotify:uFlags:dwItem1:dwItem2:!public!win32 functions-shell library! !
 shellExecute:lpOperation:lpFile:lpParameters:lpDirectory:nShowCmd:!public!win32 functions-shell library! !
@@ -234,7 +211,6 @@ shellOpen:!public!win32 functions-shell library! !
 shellOpen:directory:!public!win32 functions-shell library! !
 shellOpen:directory:parameters:!public!win32 functions-shell library! !
 shGetFolderPath:nFolder:hToken:dwFlags:pszPath:!**auto generated**!public!win32 functions-shell library! !
-shGetStockIconInfo:uFlags:psii:!public!win32 functions-shell library! !
 !
 
 !ShellLibrary class methodsFor!

@@ -38,7 +38,9 @@ testFromFileFallback
 	self assert: image1 hash equals: image2 hash.
 	self deny: image1 imageIndex equals: image2 imageIndex.
 	self assert: image1 extent equals: self expectedImageExtent.
-	self verifyImage: image1 sameAs: image2!
+	SessionManager current productVersion >= 8 ifTrue: [self verifyImage: image1 sameAs: image2].
+	image1 free.
+	image2 free!
 
 testFromResource
 	| icon1 icon2 |
@@ -47,25 +49,11 @@ testFromResource
 	self assert: icon1 equals: icon2.
 	self assert: icon2 equals: icon1.
 	self assert: icon1 hash equals: icon2 hash.
-	self assert: icon1 handle equals: icon2 handle.
+	SessionManager current productVersion >= 8 ifTrue: [self assert: icon1 handle equals: icon2 handle].
 	self assert: icon1 imageIndex equals: icon2 imageIndex.
-	self assert: icon1 extent equals: Icon defaultExtent!
-
-testFromShellStock
-	| icon1 icon2 path icon3 |
-	icon1 := Icon shellStock: SHSTOCKICONID.SIID_DOCASSOC.
-	icon2 := Icon shellStock: SHSTOCKICONID.SIID_DOCASSOC.
-	path := ShellLibrary default getStockIconLocation: SHSTOCKICONID.SIID_DOCASSOC.
-	icon3 := Icon fromId: SHSTOCKICONID.SIID_DOCASSOC in: (ExternalResourceLibrary open: path).
-	self assert: icon1 equals: icon2.
-	self assert: icon2 equals: icon1.
-	self assert: icon1 imageIndex equals: icon2 imageIndex.
-	self assert: icon1 extent equals: Icon largeExtent.
-	"Icon3 is the same actual icon, in Dolphin 8 they will be considered different because the initializer is different, but we can't determine that in D7."
-	self assert: icon1 equals: icon3.
-	self assert: icon1 hash equals: icon2 hash.
-	self assert: icon1 handle equals: icon2 handle.
-	self assert: icon1 handle equals: icon3 handle!
+	self assert: icon1 extent equals: Icon defaultExtent.
+	icon1 free.
+	icon2 free!
 
 testFromSystemId
 	| icon1 icon2 |
@@ -78,7 +66,9 @@ testFromSystemId
 	self assert: icon1 extent equals: Icon largeExtent.
 	self deny: icon1 equals: Icon question.
 	self deny: icon1 handle equals: self defaultHandle.
-	self assert: icon1 handle equals: icon2 handle!
+	SessionManager current productVersion >= 8 ifTrue: [self assert: icon1 handle equals: icon2 handle].
+	icon1 free.
+	icon2 free!
 
 testImageIndexDoesntRealize
 	"A test for #2270. Ensure that #imageIndex won't realize an icon that has previously been added to an ImageManager"
@@ -112,7 +102,9 @@ testStbConvertFromVersion1_system
 	self assert: icon identifier equals: Win32Constants.IDI_ERROR.
 	self assert: icon instanceHandle equals: 0.
 	self assert: icon equals: Error icon.
-	self assert: icon handle equals: Error icon handle!
+	SessionManager current productVersion >= 8
+		ifTrue: [self assert: icon handle equals: Error icon handle].
+	icon free!
 
 verifyImage: anIcon1 sameAs: anIcon2
 	"Private - Assumes icons were loaded with LR_SHARED."
@@ -127,7 +119,6 @@ imageFile!constants!private! !
 subjectClass!constants!private! !
 testFromFileFallback!public!unit tests! !
 testFromResource!public!unit tests! !
-testFromShellStock!public!unit tests! !
 testFromSystemId!public!unit tests! !
 testImageIndexDoesntRealize!public!unit tests! !
 testStbConvertFromVersion1_resource!public!unit tests! !

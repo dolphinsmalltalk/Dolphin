@@ -1250,8 +1250,8 @@ verifyUpgradedView: anInteger identifier: aResourceIdentifier
 	self assert: view anchorNode isExpanded.
 	self assert: view anchorNode hasExpanded.
 	self assert: view hasWordWrap.
-	self assert: (view instVarNamed: 'iconExtent') equals: 16 @ 16.
-	self assert: (view instVarNamed: 'textInset') equals: 17 @ 0.
+	self assert: (view instVarNamed: 'iconExtent') equals: Icon smallExtent .
+	self assert: (view instVarNamed: 'textInset') equals: Icon smallExtent x + (view dpi // USER_DEFAULT_SCREEN_DPI) @ 0.
 	self assert: view margin isKindOf: Point.
 	self assert: view maxTextExtent equals: 9999 @ 9999.
 	self assert: view linePen isKindOf: Pen! !
