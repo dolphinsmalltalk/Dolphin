@@ -24,8 +24,10 @@ subjectClass
 	^Cursor!
 
 testExtent
-	self deny: self canonicalInstance handle equals: Cursor question handle.
-	self assert: self canonicalInstance extent equals: self expectedImageExtent!
+	| subject |
+	subject := self canonicalInstance.
+	self deny: subject handle equals: Cursor question handle.
+	self assert: subject extent equals: self expectedImageExtent!
 
 testFromHandle
 	| subject |
@@ -50,7 +52,9 @@ testFromResource
 	self assert: cursor2 equals: cursor1.
 	self assert: cursor1 hash equals: cursor2 hash.
 	self assert: cursor1 handle equals: cursor2 handle.
-	self assert: cursor1 imageIndex equals: cursor2 imageIndex!
+	self assert: cursor1 imageIndex equals: cursor2 imageIndex.
+	self assert: cursor1 extent equals: Cursor defaultExtent.
+	cursor1 free!
 
 testFromSystemId
 	| cursor1 cursor2 |
@@ -64,7 +68,8 @@ testFromSystemId
 	self assert: cursor1 extent equals: Cursor defaultExtent.
 	self deny: cursor1 equals: Cursor hand.
 	self deny: cursor1 handle equals: Cursor defaultHandle.
-	self assert: cursor1 handle equals: cursor2 handle!
+	self assert: cursor1 handle equals: cursor2 handle.
+	cursor1 free!
 
 testHotspot
 	self assert: self canonicalInstance hotspot equals: 0 @ 0!
@@ -78,7 +83,7 @@ testStbConvertFromVersion1_resource
 	self assert: cursor initializer isKindOf: ImageFromStringResourceInitializer.
 	self assert: cursor initializer identifier equals: 'VSPLIT'.
 	self assert: cursor initializer module equals: VM.
-	self assert: cursor extent equals: SystemMetrics default largeIconExtent.
+	self assert: cursor extent equals: Cursor defaultExtent.
 	cursor free!
 
 testStbConvertFromVersion1_system
@@ -92,7 +97,8 @@ testStbConvertFromVersion1_system
 	self assert: cursor initializer identifier equals: Win32Constants.IDC_APPSTARTING.
 	self assert: cursor initializer isLoadShared.
 	self assert: cursor equals: Cursor appStarting.
-	self assert: cursor handle equals: Cursor appStarting handle!
+	self assert: cursor handle equals: Cursor appStarting handle.
+	self assert: cursor extent equals: Cursor defaultExtent.!
 
 testStbConvertFromVersion3_resource
 	| bytes cursor |
@@ -103,7 +109,7 @@ testStbConvertFromVersion3_resource
 	self assert: cursor initializer isKindOf: ImageFromStringResourceInitializer.
 	self assert: cursor initializer identifier equals: 'VSPLIT'.
 	self assert: cursor initializer module equals: VM.
-	self assert: cursor extent equals: SystemMetrics default largeIconExtent.
+	self assert: cursor extent equals: Cursor defaultExtent.
 	cursor free!
 
 testStbConvertFromVersion3_system
@@ -117,7 +123,8 @@ testStbConvertFromVersion3_system
 	self assert: cursor initializer identifier equals: Win32Constants.IDC_APPSTARTING.
 	self assert: cursor initializer isLoadShared.
 	self assert: cursor equals: Cursor appStarting.
-	self assert: cursor handle equals: Cursor appStarting handle!
+	self assert: cursor handle equals: Cursor appStarting handle.
+	self assert: cursor extent equals: Cursor defaultExtent.!
 
 testStlConvertFromVersion3_file
 	| rehydrated comparand |
@@ -133,7 +140,7 @@ testStlConvertFromVersion3_file
 	self assert: rehydrated extent equals: Icon largeExtent!
 
 testStlConvertFromVersion3_resource
-	| rehydrated comparand |
+	| rehydrated |
 	rehydrated := Object
 				fromLiteralStoreArray: #(#'!!STL' 4 394566 3 ##(Smalltalk.Cursor) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'HSPLIT' 591366 ##(Smalltalk.VMLibrary)).
 	self assert: rehydrated isPersistent.
@@ -142,7 +149,7 @@ testStlConvertFromVersion3_resource
 	self assert: rehydrated initializer isKindOf: ImageFromStringResourceInitializer.
 	self assert: rehydrated initializer identifier equals: 'HSPLIT'.
 	self assert: rehydrated initializer module equals: VM.
-	self assert: rehydrated extent equals: SystemMetrics default largeIconExtent.
+	self assert: rehydrated extent equals: Cursor defaultExtent.
 	rehydrated free!
 
 testStlConvertFromVersion3_system

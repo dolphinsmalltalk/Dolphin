@@ -29,7 +29,9 @@ testFromFileFallback
 	self assert: image1 hash equals: image2 hash.
 	self deny: image1 imageIndex equals: image2 imageIndex.
 	self assert: image1 extent equals: self expectedImageExtent.
-	self verifyImage: image1 sameAs: image2!
+	self isDolphin8OrLater ifTrue: [self verifyImage: image1 sameAs: image2].
+	image1 free.
+	image2 free!
 
 testFromResource
 	| icon1 icon2 |
@@ -40,9 +42,14 @@ testFromResource
 	self assert: icon1 hash equals: icon2 hash.
 	self assert: icon1 handle equals: icon2 handle.
 	self assert: icon1 imageIndex equals: icon2 imageIndex.
-	self assert: icon1 extent equals: Icon defaultExtent!
+	self isDolphin8OrLater ifTrue: [self assert: icon1 handle equals: icon2 handle].
+	self assert: icon1 imageIndex equals: icon2 imageIndex.
+	self assert: icon1 extent equals: Icon defaultExtent.
+	icon1 free.
+	icon2 free!
 
 testFromShellStock
+	<skipUnless: #isDolphin8OrLater>
 	| icon1 icon2 stockInfo icon3 |
 	icon1 := Icon shellStock: SHSTOCKICONID.SIID_DOCASSOC.
 	icon2 := Icon shellStock: SHSTOCKICONID.SIID_DOCASSOC.
@@ -70,7 +77,9 @@ testFromSystemId
 	self assert: icon1 extent equals: Icon largeExtent.
 	self deny: icon1 equals: Icon question.
 	self deny: icon1 handle equals: Icon defaultHandle.
-	self assert: icon1 handle equals: icon2 handle!
+	self isDolphin8OrLater ifTrue: [self assert: icon1 handle equals: icon2 handle].
+	icon1 free.
+	icon2 free!
 
 testImageIndexDoesntRealize
 	"A test for #2270. Ensure that #imageIndex won't realize an icon that has previously been added to an ImageManager"
@@ -112,7 +121,8 @@ testStbConvertFromVersion1_system
 	self assert: icon initializer identifier equals: Win32Constants.IDI_ERROR.
 	self assert: icon initializer isLoadShared.
 	self assert: icon equals: Error icon.
-	self assert: icon handle equals: Error icon handle!
+	self isDolphin8OrLater ifTrue: [self assert: icon handle equals: Error icon handle].
+	icon free!
 
 testStbConvertFromVersion3_resource
 	| bytes icon |
@@ -138,7 +148,8 @@ testStbConvertFromVersion3_system
 	self assert: icon initializer identifier equals: Win32Constants.IDI_ERROR.
 	self assert: icon initializer isLoadShared.
 	self assert: icon equals: Error icon.
-	self assert: icon handle equals: Error icon handle!
+	self isDolphin8OrLater ifTrue: [self assert: icon handle equals: Error icon handle].
+	icon free!
 
 testStlConvertFromVersion3_file
 	| rehydrated comparand |
@@ -191,22 +202,22 @@ verifyImage: anIcon1 sameAs: anIcon2
 	self assert: anIcon1 handle equals: anIcon2 handle! !
 
 !Graphics.Tests.IconTest categoriesForMethods!
-imageFile!public! !
+imageFile!constants!private! !
 subjectClass!constants!private! !
-testFromFileFallback!public! !
-testFromResource!public! !
-testFromShellStock!public! !
-testFromSystemId!public! !
-testImageIndexDoesntRealize!public! !
-testNullIcon!public! !
+testFromFileFallback!public!unit tests! !
+testFromResource!public!unit tests! !
+testFromShellStock!public!unit tests! !
+testFromSystemId!public!unit tests! !
+testImageIndexDoesntRealize!public!unit tests! !
+testNullIcon!public!unit tests! !
 testStbConvertFromVersion1_resource!public!unit tests! !
 testStbConvertFromVersion1_system!public!unit tests! !
 testStbConvertFromVersion3_resource!public!unit tests! !
 testStbConvertFromVersion3_system!public!unit tests! !
-testStlConvertFromVersion3_file!public! !
-testStlConvertFromVersion3_resource!public! !
-testStlConvertFromVersion3_system!public! !
-testWithExtent!public! !
+testStlConvertFromVersion3_file!public!unit tests! !
+testStlConvertFromVersion3_resource!public!unit tests! !
+testStlConvertFromVersion3_system!public!unit tests! !
+testWithExtent!public!unit tests! !
 verifyImage:sameAs:!helpers!private! !
 !
 

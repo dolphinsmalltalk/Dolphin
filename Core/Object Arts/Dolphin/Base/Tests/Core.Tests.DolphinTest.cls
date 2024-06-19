@@ -59,6 +59,9 @@ createTestPackage
 isAtLeastVmVersion: anArray
 	^VM versionInfo fileVersion >= (self versionFromParts: anArray)!
 
+isDolphin8OrLater
+	^SessionManager current productVersion major >= 8!
+
 isInForeground
 	^SessionManager current isForegroundProcess!
 
@@ -136,6 +139,7 @@ compare:to:epsilon:!comparing!public! !
 createPackage:!helpers!public! !
 createTestPackage!helpers!public! !
 isAtLeastVmVersion:!private!testing! !
+isDolphin8OrLater!private!testing! !
 isInForeground!helpers!public! !
 isLogging!Accessing!public! !
 isOnline!public!unit tests! !
