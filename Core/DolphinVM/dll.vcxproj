@@ -248,7 +248,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="DolphinSmalltalk.tlb" />
-    <None Include="Res\ist.rc2" />
+    <None Include="Res\version.rc2" />
     <MessageTable Include="Res\MESSAGES.MC" />
     <None Include="VM.def" />
   </ItemGroup>

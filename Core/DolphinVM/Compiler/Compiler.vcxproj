@@ -250,6 +250,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Compiler.def" />
+    <None Include="version.rc2" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="compiler.rc" />

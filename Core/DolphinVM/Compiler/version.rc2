@@ -33,11 +33,11 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "Object Arts Ltd."
-            VALUE "FileDescription", "Dolphin Smalltalk Virtual Machine"
+            VALUE "FileDescription", "Dolphin Smalltalk Compiler"
             VALUE "FileVersion", DOLPHIN_ASSEMBLY_VERSION
             VALUE "InternalName", "Dolphin"
             VALUE "LegalCopyright", DOLPHIN_COPYRIGHT
-            VALUE "OriginalFilename", "DolphinVM7.DLL"
+            VALUE "OriginalFilename", "DolphinCR7.DLL"
             VALUE "ProductName", "Dolphin Smalltalk 7"
             VALUE "ProductVersion", GIT_TAG
         END
@@ -47,6 +47,5 @@ BEGIN
         VALUE "Translation", 0x409, 1252
     END
 END
-
 
 /////////////////////////////////////////////////////////////////////////////

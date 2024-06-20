@@ -20,13 +20,14 @@
       <VersionHeaderLines Include="// This file generated on $([System.DateTime]::Now)" />
       <VersionHeaderLines Include="#define DOLPHIN_ASSEMBLY_VERSION &quot;$(DolphinVersion)&quot;" />
       <VersionHeaderLines Include="#define DOLPHIN_VERINFO_VERSION $(DolphinVersion.Replace('.',','))" />
+      <VersionHeaderLines Include='#define DOLPHIN_COPYRIGHT "Copyright © Object Arts Ltd 1997-2024."'/>
       <VersionHeaderLines Include="#if defined(_DEBUG)" />
       <VersionHeaderLines Include="  #define GIT_TAG &quot;$(GitTag) (Debug)&quot;" />
       <VersionHeaderLines Include="#else" />
       <VersionHeaderLines Include="  #define GIT_TAG &quot;$(GitTag)&quot;" />
       <VersionHeaderLines Include="#endif" />
     </ItemGroup>
-    <WriteLinesToFile Overwrite="true" File="$(VersionHeader)" Encoding="Ascii" Lines="@(VersionHeaderLines)" />
+    <WriteLinesToFile Overwrite="true" File="$(VersionHeader)" Lines="@(VersionHeaderLines)" />
     <ItemGroup>
       <Manifest>
         <AssemblyIdentity>ObjectArts.DolphinSmalltalk.Dolphin, version=$(DolphinVersion), processorArchitecture=x86, type=win32</AssemblyIdentity>

@@ -1,5 +1,7 @@
 // Microsoft Visual C++ generated resource script.
 //
+#pragma code_page(65001)
+
 #include "resource.h"
 
 #define APSTUDIO_READONLY_SYMBOLS
@@ -8,60 +10,9 @@
 // Generated from the TEXTINCLUDE 2 resource.
 //
 #include "winres.h"
-
+#include "Version.h"
 /////////////////////////////////////////////////////////////////////////////
 #undef APSTUDIO_READONLY_SYMBOLS
-
-/////////////////////////////////////////////////////////////////////////////
-// English (United States) resources
-
-#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
-LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
-#pragma code_page(1252)
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// Version
-//
-
-VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2011,6,2,0
- PRODUCTVERSION 2011,6,2,0
- FILEFLAGSMASK 0x1fL
-#ifdef _DEBUG
- FILEFLAGS 0x3L
-#else
- FILEFLAGS 0x2L
-#endif
- FILEOS 0x4L
- FILETYPE 0x1L
- FILESUBTYPE 0x0L
-BEGIN
-    BLOCK "StringFileInfo"
-    BEGIN
-        BLOCK "040904e4"
-        BEGIN
-            VALUE "CompanyName", "Object Arts Ltd."
-            VALUE "FileDescription", "Dolphin Smalltalk Compiler"
-            VALUE "FileVersion", "2016, 7, 0, 0"
-            VALUE "InternalName", "Dolphin"
-            VALUE "LegalCopyright", "Copyright © Object Arts 1997-2016"
-            VALUE "OriginalFilename", "DolphinCR7.DLL"
-            VALUE "ProductName", "Dolphin Smalltalk 7"
-#include "Version.h"
-            VALUE "ProductVersion", GIT_TAG
-            VALUE "WARNING", "Please edit this as a text file rather than with the resource editor to preserve GIT_TAG"
-		END
-    END
-    BLOCK "VarFileInfo"
-    BEGIN
-        VALUE "Translation", 0x409, 1252
-    END
-END
-
-#endif    // English (United States) resources
-/////////////////////////////////////////////////////////////////////////////
-
 
 /////////////////////////////////////////////////////////////////////////////
 // English (United Kingdom) resources
@@ -83,14 +34,13 @@ END
 
 2 TEXTINCLUDE 
 BEGIN
-	"#include ""winres.h""\r\n"
-	"\0"
+    "#include ""winres.h""\r\n"
+    "#include ""Version.h""\0"
 END
 
 3 TEXTINCLUDE 
 BEGIN
-    "\r\n"
-    "\0"
+    "#include ""version.rc2""  // non-Microsoft Visual C++ edited resources\0"
 END
 
 #endif    // APSTUDIO_INVOKED
@@ -118,8 +68,7 @@ END
 //
 // Generated from the TEXTINCLUDE 3 resource.
 //
-
-
+#include "version.rc2"  // non-Microsoft Visual C++ edited resources
 /////////////////////////////////////////////////////////////////////////////
 #endif    // not APSTUDIO_INVOKED
 
