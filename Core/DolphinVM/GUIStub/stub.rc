@@ -45,7 +45,7 @@ BEGIN
             VALUE "Comments", "Powered by Dolphin Smalltalk"
             VALUE "FileDescription", "Dolphin Application"
             VALUE "FileVersion", "1, 0, 0, 1"
-            VALUE "LegalCopyright", "Portions Copyright © Object Arts 1997-2021."
+            VALUE "LegalCopyright", "Portions Copyright © Object Arts 1997-2024."
             VALUE "OriginalFilename", "GUIStub.exe"
             VALUE "ProductName", "A Dolphin  Application"
             VALUE "ProductVersion", "1, 0, 0, 1"

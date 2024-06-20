@@ -248,7 +248,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Compiler.def" />
-    <None Include="Compiler.rc2" />
+    <None Include="version.rc2" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="compiler.rc" />

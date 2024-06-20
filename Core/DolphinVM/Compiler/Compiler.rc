@@ -1,5 +1,7 @@
 // Microsoft Visual C++ generated resource script.
 //
+#pragma code_page(65001)
+
 #include "resource.h"
 
 #define APSTUDIO_READONLY_SYMBOLS
@@ -34,13 +36,11 @@ END
 BEGIN
     "#include ""winres.h""\r\n"
     "#include ""Version.h""\0"
-    "\0"
 END
 
 3 TEXTINCLUDE 
 BEGIN
-    "#include ""compiler.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
-    "\0"
+    "#include ""version.rc2""  // non-Microsoft Visual C++ edited resources\0"
 END
 
 #endif    // APSTUDIO_INVOKED
@@ -67,8 +67,7 @@ END
 //
 // Generated from the TEXTINCLUDE 3 resource.
 //
-#include "compiler.rc2"  // non-Microsoft Visual C++ edited resources
-
+#include "version.rc2"  // non-Microsoft Visual C++ edited resources
 /////////////////////////////////////////////////////////////////////////////
 #endif    // not APSTUDIO_INVOKED
 

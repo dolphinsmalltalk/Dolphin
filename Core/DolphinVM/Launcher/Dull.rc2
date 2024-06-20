@@ -43,7 +43,7 @@ BLOCK "StringFileInfo"
 			VALUE "FileDescription", "Dolphin Smalltalk Launcher"
 			VALUE "FileVersion", DOLPHIN_FILE_VERSION
 			VALUE "InternalName", "Dolphin"
-			VALUE "LegalCopyright", "Copyright © Object Arts 1997-2021"
+			VALUE "LegalCopyright", "Copyright © Object Arts 1997-2024"
 			VALUE "OriginalFilename", "Dolphin8.exe"
 			VALUE "ProductName", "Dolphin Smalltalk"
 			VALUE "ProductVersion", DOLPHIN_PRODUCT_VERSION

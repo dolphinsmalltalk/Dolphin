@@ -73,7 +73,7 @@ BEGIN
             VALUE "FileDescription", "Dolphin  In-Proc COM Server Stub"
             VALUE "FileVersion", "1, 0, 0, 1"
             VALUE "InternalName", "IPDolphin"
-            VALUE "LegalCopyright", "Portions Copyright © Object Arts 2002-2021."
+            VALUE "LegalCopyright", "Portions Copyright © Object Arts 2002-2024."
             VALUE "OriginalFilename", "IPDolphin.DLL"
             VALUE "ProductName", "A Dolphin COM Component"
             VALUE "ProductVersion", "1, 0, 0, 1"

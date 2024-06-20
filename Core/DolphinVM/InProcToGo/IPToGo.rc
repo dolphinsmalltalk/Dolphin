@@ -92,11 +92,10 @@ BEGIN
             VALUE "FileDescription", "Dolphin ToGo In-Proc COM Server Stub"
             VALUE "FileVersion", "1, 0, 0, 1"
             VALUE "InternalName", "IPDolphin To Go"
-            VALUE "LegalCopyright", "Portions Copyright © Object Arts 1997-2021"
+            VALUE "LegalCopyright", "Portions Copyright © Object Arts 1997-2024"
             VALUE "OriginalFilename", "IPDolphinToGo.DLL"
             VALUE "ProductName", "A Dolphin COM Component"
             VALUE "ProductVersion", "1, 0, 0, 1"
-            VALUE "WARNING", "Please edit this as a text file rather than with the resource editor to preserve GIT_TAG"
         END
     END
     BLOCK "VarFileInfo"

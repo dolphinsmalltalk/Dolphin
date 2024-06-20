@@ -27,13 +27,14 @@
       <VersionHeaderLines Include="// This file generated on $([System.DateTime]::Now)" />
       <VersionHeaderLines Include="#define DOLPHIN_FILE_VERSION &quot;$(FourPartVersion)&quot;" />
       <VersionHeaderLines Include="#define DOLPHIN_VERINFO_VERSION $(FourPartVersion.Replace('.',','))" />
+      <VersionHeaderLines Include='#define DOLPHIN_COPYRIGHT "Copyright © Object Arts Ltd 1997-2024."'/>
       <VersionHeaderLines Include="#if defined(_DEBUG)" />
       <VersionHeaderLines Include="  #define DOLPHIN_PRODUCT_VERSION &quot;$(SemanticVersion)-debug&quot;" />
       <VersionHeaderLines Include="#else" />
       <VersionHeaderLines Include="  #define DOLPHIN_PRODUCT_VERSION &quot;$(SemanticVersion)&quot;" />
       <VersionHeaderLines Include="#endif" />
     </ItemGroup>
-    <WriteLinesToFile Overwrite="true" File="$(VersionHeader)" Encoding="Ascii" Lines="@(VersionHeaderLines)" />
+    <WriteLinesToFile Overwrite="true" File="$(VersionHeader)" Lines="@(VersionHeaderLines)" />
     <ItemGroup>
       <Manifest>
         <AssemblyIdentity>ObjectArts.DolphinSmalltalk.Dolphin, version=$(FourPartVersion), processorArchitecture=x86, type=win32</AssemblyIdentity>

@@ -36,9 +36,8 @@ BEGIN
             VALUE "FileDescription", "Dolphin Smalltalk Virtual Machine"
             VALUE "FileVersion", DOLPHIN_FILE_VERSION
             VALUE "InternalName", "Dolphin"
-            VALUE "LegalCopyright", "Portions Copyright © Object Arts Ltd 1997-2021."
+            VALUE "LegalCopyright", DOLPHIN_COPYRIGHT
             VALUE "OriginalFilename", "DolphinVM8.DLL"
-            VALUE "PrivateBuild", ""
             VALUE "ProductName", "Dolphin Smalltalk"
             VALUE "ProductVersion", DOLPHIN_PRODUCT_VERSION
         END

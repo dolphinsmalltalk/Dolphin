@@ -10,7 +10,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="DolphinSmalltalk.tlb" />
-    <None Include="Res\ist.rc2" />
+    <None Include="Res\version.rc2" />
     <None Include="VM.def" />
   </ItemGroup>
   <ItemGroup>
