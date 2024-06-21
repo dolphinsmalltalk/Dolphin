@@ -32,7 +32,7 @@ This class provides at least a basic interface to all of Scintilla''s extensive 
 	Searching and replacing 	(`TextEdit` implementation is inherited, but does not include RegExp replace)
 	Overtype
 	Cut, copy and paste		(implements standard MVP protocols)
-	Undo and Redo
+	Undo and Redo			(but not yet save and restore mechanism introduced in 5.4.2)
 	Mouse capture			(supported as `#willCaptureMouse` aspect, but not really required - use MVP''s `MouseTracker` instead)
 	Line endings
 	Words					See `CharacterClassification`
@@ -72,6 +72,7 @@ Features of Scintilla that are not currently exposed at any level higher than th
 	Printing					(partial support for some properties is provided)
 	Multiple views				(alternatives exist using the MVP framework, though this could be useful in some applications)
 	Margin text
+	Undo Save & Restore		(nascent)
 	
 N.B. Scintilla is an excellent editor control with very rich functionality, but it does not do much parameter validation. Thus if using the low-level API be careful not to pass in invalid parameters as these may cause unexpected behaviour. For example if length passed to `SCI_SETSTYLING` is -1, then the control goes into a loop (at the time of writing).
 
@@ -5325,6 +5326,15 @@ sciChangeInsertion: lengthInteger text: textString
 		wParam: lengthInteger
 		lpParam: textString!
 
+sciChangeLastUndoActionText: lengthInteger text: textString
+	"Private - Set the text and length of the most recently pushed action"
+
+	library
+		directFunction: this
+		msg: SCI_CHANGELASTUNDOACTIONTEXT
+		wParam: lengthInteger
+		lpParam: textString!
+
 sciChangeLexerState: startInteger end: endInteger
 	"Private - Indicate that the internal state of a lexer has changed over a range and therefore there may be a need to redraw."
 
@@ -6522,6 +6532,90 @@ sciGetTextRangeFull: trTextRangeFull
 		wParam: 0
 		lpParam: trTextRangeFull!
 
+sciGetUndoActionPosition: actionInteger
+	"Private - What is the position of an action?"
+
+	^(library
+		directFunction: this
+		msg: SCI_GETUNDOACTIONPOSITION
+		wParam: actionInteger
+		lParam: 0) + 1!
+
+sciGetUndoActions
+	"Private - How many undo actions are in the history?"
+
+	^library
+		directFunction: this
+		msg: SCI_GETUNDOACTIONS
+		wParam: 0
+		lParam: 0!
+
+sciGetUndoActionText: actionInteger
+	"Private - What is the text of an action?"
+
+	| len |
+	len := library
+				directFunction: this
+				msg: SCI_GETUNDOACTIONTEXT
+				wParam: actionInteger
+				lpParam: nil.
+	^len == 0
+		ifTrue: [stringClass empty]
+		ifFalse: 
+			[| result |
+			result := stringClass newFixed: len.
+			library
+				directFunction: this
+				msg: SCI_GETUNDOACTIONTEXT
+				wParam: actionInteger
+				lpParam: result.
+			result]!
+
+sciGetUndoActionType: actionInteger
+	"Private - What is the type of an action?"
+
+	^library
+		directFunction: this
+		msg: SCI_GETUNDOACTIONTYPE
+		wParam: actionInteger
+		lParam: 0!
+
+sciGetUndoCurrent
+	"Private - Which action is the current point?"
+
+	^library
+		directFunction: this
+		msg: SCI_GETUNDOCURRENT
+		wParam: 0
+		lParam: 0!
+
+sciGetUndoDetach
+	"Private - Which action is the detach point?"
+
+	^library
+		directFunction: this
+		msg: SCI_GETUNDODETACH
+		wParam: 0
+		lParam: 0!
+
+sciGetUndoSavePoint
+	"Private - Which action is the save point?"
+
+	^library
+		directFunction: this
+		msg: SCI_GETUNDOSAVEPOINT
+		wParam: 0
+		lParam: 0!
+
+sciGetUndoTentative
+	"Private - Which action is the tentative point?"
+
+	^library
+		directFunction: this
+		msg: SCI_GETUNDOTENTATIVE
+		wParam: 0
+		lParam: 0!
+
 sciGetViewWS
 	"Private - Are white space characters currently visible? Returns one of SCWS_* constants."
 
@@ -7079,6 +7173,15 @@ sciPropertyType: nameString
 		msg: SCI_PROPERTYTYPE
 		wpParam: nameString
 		lParam: 0!
+
+sciPushUndoActionType: typeInteger pos: posInteger
+	"Private - Push one action onto undo history with no text"
+
+	library
+		directFunction: this
+		msg: SCI_PUSHUNDOACTIONTYPE
+		wParam: typeInteger
+		lParam: posInteger - 1!
 
 sciRegisterImage: typeInteger xpmData: xpmDataString
 	"Private - Register an XPM image for use in autocompletion lists."
@@ -7898,6 +8001,42 @@ sciSetText: textString
 		msg: SCI_SETTEXT
 		wParam: 0
 		lpParam: textString!
+
+sciSetUndoCurrent: actionInteger
+	"Private - Set action as the current point"
+
+	library
+		directFunction: this
+		msg: SCI_SETUNDOCURRENT
+		wParam: actionInteger
+		lParam: 0!
+
+sciSetUndoDetach: actionInteger
+	"Private - Set action as the detach point"
+
+	library
+		directFunction: this
+		msg: SCI_SETUNDODETACH
+		wParam: actionInteger
+		lParam: 0!
+
+sciSetUndoSavePoint: actionInteger
+	"Private - Set action as the save point"
+
+	library
+		directFunction: this
+		msg: SCI_SETUNDOSAVEPOINT
+		wParam: actionInteger
+		lParam: 0!
+
+sciSetUndoTentative: actionInteger
+	"Private - Set action as the tentative point"
+
+	library
+		directFunction: this
+		msg: SCI_SETUNDOTENTATIVE
+		wParam: actionInteger
+		lParam: 0!
 
 sciSetViewWS: viewWSInteger
 	"Private - Make white space characters invisible, always visible or visible outside indentation."
@@ -10565,6 +10704,7 @@ sciCallTipShow:definition:!**auto generated**!call tips!private!scintilla interf
 sciCallTipUseStyle:!**auto generated**!call tips!private!scintilla interface! !
 sciCanPaste!**auto generated**!clipboard operations!private!scintilla interface! !
 sciChangeInsertion:text:!**auto generated**!private!scintilla interface!text retrieval & modification! !
+sciChangeLastUndoActionText:text:!**auto generated**!private!scintilla interface!undo save and restore! !
 sciChangeLexerState:end:!**auto generated**!lexer!private!scintilla interface! !
 sciChangeSelectionMode:!**auto generated**!private!scintilla interface!selection! !
 sciCharPositionFromPoint:y:!**auto generated**!information!private!scintilla interface! !
@@ -10683,6 +10823,14 @@ sciGetTargetEndVirtualSpace!**auto generated**!private!scintilla interface!searc
 sciGetTargetStartVirtualSpace!**auto generated**!private!scintilla interface!search & replace using target! !
 sciGetTechnology!**auto generated**!other settings!private!scintilla interface! !
 sciGetTextRangeFull:!**auto generated**!private!scintilla interface! !
+sciGetUndoActionPosition:!**auto generated**!private!scintilla interface!undo save and restore! !
+sciGetUndoActions!**auto generated**!private!scintilla interface!undo save and restore! !
+sciGetUndoActionText:!**auto generated**!private!scintilla interface!undo save and restore! !
+sciGetUndoActionType:!**auto generated**!private!scintilla interface!undo save and restore! !
+sciGetUndoCurrent!**auto generated**!private!scintilla interface!undo save and restore! !
+sciGetUndoDetach!**auto generated**!private!scintilla interface!undo save and restore! !
+sciGetUndoSavePoint!**auto generated**!private!scintilla interface!undo save and restore! !
+sciGetUndoTentative!**auto generated**!private!scintilla interface!undo save and restore! !
 sciGetViewWS!**auto generated**!private!scintilla interface!white space! !
 sciGetVirtualSpaceOptions!**auto generated**!multiple selection and virtual space!private!scintilla interface! !
 sciGetWhitespaceChars!**auto generated**!character classes!private!scintilla interface!white space!words! !
@@ -10737,6 +10885,7 @@ sciPositionRelativeCodeUnits:relative:!**auto generated**!by character or utf16 
 sciPrivateLexerCall:pointer:!**auto generated**!lexer!private!scintilla interface! !
 sciPropertyNames!**auto generated**!private!scintilla interface! !
 sciPropertyType:!**auto generated**!lexer!private!scintilla interface! !
+sciPushUndoActionType:pos:!**auto generated**!private!scintilla interface!undo save and restore! !
 sciRegisterImage:xpmData:!**auto generated**!autocompletion!helpers!private!scintilla interface! !
 sciRegisterRGBAImage:pixels:!**auto generated**!autocompletion!private!scintilla interface! !
 sciReleaseAllExtendedStyles!**auto generated**!private!scintilla interface!style definition! !
@@ -10828,6 +10977,10 @@ sciSetTargetRange:end:!**auto generated**!private!scintilla interface!selection!
 sciSetTargetStartVirtualSpace:!**auto generated**!private!scintilla interface!search & replace using target! !
 sciSetTechnology:!**auto generated**!other settings!private!scintilla interface! !
 sciSetText:!**auto generated**!private!scintilla interface!text retrieval & modification! !
+sciSetUndoCurrent:!**auto generated**!private!scintilla interface!undo save and restore! !
+sciSetUndoDetach:!**auto generated**!private!scintilla interface!undo save and restore! !
+sciSetUndoSavePoint:!**auto generated**!private!scintilla interface!undo save and restore! !
+sciSetUndoTentative:!**auto generated**!private!scintilla interface!undo save and restore! !
 sciSetViewWS:!**auto generated**!private!scintilla interface!white space! !
 sciSetVirtualSpaceOptions:!**auto generated**!multiple selection and virtual space!private!scintilla interface! !
 sciSetVisiblePolicy:visibleSlop:!**auto generated**!private!scintilla interface!scrolling! !
