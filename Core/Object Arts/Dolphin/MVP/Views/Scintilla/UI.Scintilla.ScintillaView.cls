@@ -2876,6 +2876,26 @@ imeMode: aSymbol
 				ifNil: [SC_IME_WINDOWED]
 				ifNotNil: [(self class imeInteractionModes keyAtValue: aSymbol) - 1])!
 
+inactiveSecondarySelectionBackcolor
+	"Answer the background <Color> of the secondary selections when the view does not have focus. The colour can have translucency (alpha), but will be drawn opaquely if the #selectionLayer is not set to #underText or #overText, the default #selectionLayer being #base."
+
+	^self getElementColor: SC_ELEMENT_SELECTION_INACTIVE_ADDITIONAL_BACK!
+
+inactiveSecondarySelectionBackcolor: aColor
+	"Set the background colour of secondary selections when another window has focus"
+
+	self setOrResetElement: SC_ELEMENT_SELECTION_INACTIVE_ADDITIONAL_BACK color: aColor!
+
+inactiveSecondarySelectionForecolor
+	"Answer the foreground <Color> (i.e. text colour) of secondary selections when the view does not have focus. The colour can have translucency (alpha), but will be drawn opaquely if the #selectionLayer is not set to #underText or #overText, the default #selectionLayer being #base."
+
+	^self getElementColor: SC_ELEMENT_SELECTION_INACTIVE_ADDITIONAL_TEXT!
+
+inactiveSecondarySelectionForecolor: aColor
+	"Set the foreground colour of secondary selections when another window has focus"
+
+	self setOrResetElement: SC_ELEMENT_SELECTION_INACTIVE_ADDITIONAL_TEXT color: aColor!
+
 inactiveSelectionBackcolor
 	"Answer the background <Color> of the selection when the view does not have focus. The colour can have translucency (alpha), but will be drawn opaquely if the #selectionLayer is not set to #underText or #overText, the default #selectionLayer being #base."
 
@@ -10421,6 +10441,10 @@ idOfStyleNamed:!helpers!private! !
 imageIndexForIcon:!autocompletion!helpers!private! !
 imeMode!ime!other settings!public! !
 imeMode:!other settings!public! !
+inactiveSecondarySelectionBackcolor!caret, selection, and hotspot styles!element colors!public! !
+inactiveSecondarySelectionBackcolor:!caret, selection, and hotspot styles!element colors!public! !
+inactiveSecondarySelectionForecolor!caret, selection, and hotspot styles!element colors!public! !
+inactiveSecondarySelectionForecolor:!caret, selection, and hotspot styles!element colors!public! !
 inactiveSelectionBackcolor!caret, selection, and hotspot styles!element colors!public! !
 inactiveSelectionBackcolor:!caret, selection, and hotspot styles!element colors!public! !
 inactiveSelectionForecolor!caret, selection, and hotspot styles!element colors!public! !
