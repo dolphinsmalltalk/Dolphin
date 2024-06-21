@@ -276,7 +276,7 @@ isKeyboardInputUnicode!**auto generated**!other settings!public!scintilla interf
 isKeyboardInputUnicode:!**auto generated**!other settings!public!scintilla interface! !
 marginCount!margins!public!scintilla interface! !
 marginCount:!margins!public!scintilla interface! !
-sciFormatRange:fr:!private!scintilla interface! !
+sciFormatRange:fr:!printing!private!scintilla interface! !
 sciSetEdgeColumn:!long lines!private!scintilla interface! !
 secondarySelectionAlpha:!caret, selection, and hotspot styles!public! !
 selectionAlpha:!caret, selection, and hotspot styles!public! !
